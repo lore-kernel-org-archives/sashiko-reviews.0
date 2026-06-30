@@ -1,211 +1,186 @@
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012061.outbound.protection.outlook.com [52.101.66.61])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C361A2FB965;
-	Tue, 30 Jun 2026 08:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.61
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782809045; cv=fail; b=UAS2M6QC/r9PkZYvYrUWEGB+ZfWfmBDkPoSAorWhsVBIge16uIXIq0vlmlRFqFLfO795w/sWJKvYZPGRpzu7v8k1Msv4OQ16MEEM91d2VZE5iNJgdVRGQaAlTSSmZ0tNqxpTjex2KGblpJE3HawJ7OL++ptv5/uCdf6ok8odU5E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782809045; c=relaxed/simple;
-	bh=Ti6hKpGdQW9veoCcDha6F4ZhyE+vRkZf1l3giJfkv9w=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=d40gdqjz6Cur0NuAcKE4bE44BDgARD8xjec/FaywymnZ9F3cTF+MgaFPmKrg5cQzx2Z9tVtA5Lxx/iMKnLG078AwkHDnkmDkWkQy2OPaHGvGuYqNVh3pR86KsWSiP7F7Y2r8npTE3m0oCt1mgrDdAUkSORZc1kQkcIOb2RUDVSI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=kxlA/3pa; arc=fail smtp.client-ip=52.101.66.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F60338657D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 09:37:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782812279; cv=none; b=PTtvqsa6D5ldVJIusEq4/qPNldTzE/XAyi2wu1rC6RakZlKcQTUkm0JiwdMQVuDetYFOMpeEuMuh6gEG7t5CLlkFYLDAAsC5LefuH+mSFZwM1foCMUTbs08mAo3PDkp468zH6xhtSk8rH/PqAaDym51VcA/51xRuJduKLlbKLzM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782812279; c=relaxed/simple;
+	bh=HOI0xlAGYy7l5QgfD46kgY9CHumk4KFjvm+/+5OcIyI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oq6HRr+jVLsB8NYaTPjHMscSuqJ8gNYLsMnwPxmcR3hMVNKzxNN2P9hcinGDxIVeEcCqBuGpztCgTQGMhXrmo0I6AmVgZRLEzvhUkuiG04VM7OsprVql+h5jQDu0NzmPQeRYXyKC4OoIQks45F6UTEZNsvb5Niaa8gHgM91fKhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G+Gf0iuU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VNMOJsFU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="kxlA/3pa"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KX9FV4tBnCF3G8yYN3ssKlbjbU1tTvh+RfY0K7ntEhDaPr4n8inxPhQd5xxF98BsGJ3d9bIVZ69NWtg2yCaHcbH3LqYbivHdNIN9to8BuUETeT8A004VKxUemm2fd8IHD0OOB1cfYoM+sSGL72zKa+7kTLt3U8P2X3lvaQhwi6n0rvuYv/QymzT0hE05bRUuARPZ2H1fb5FNccM1wmY/Hl19NYra5xm0FY2IKpPEu6yRS6H5ZWtxxNuCM4CL9mt/Nj0aRmM1p5tvIyA/4HrTsDr4Rg9XI9eSqcNOl6yeMiM1qeXxK1SbqZ4FwPkVgmoX8dwEbN6cGh08k2pl7Y3KoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DRKQS8/Fx2uVVqpGYRF40J06jLAmTHUi4bRmP3XHW+M=;
- b=DvbxpcAkr5okvkWBQ0XXl9QsPk8e3j5LSZCDt7m5D4ZXUCLuXCBL1979hWWYKRRn1QLTi7SCnFaU4+BpPh2j5ACgipgYhfihRKPb84SR2pfJgalWlGUEOZS0vN0bADdbNPJbrEdDTx7+naOzQIHahfzMG8eyNNjbMNBCWJ6Eh0i+RKlRbkaRPjzMAzO+ZvM/QN/2K5WWIYWUqiJ3URGX4JkvwgvOrEMsu+t63TU/NMFCeAPUdgllHN3n3df7A3faT6zAxdSvbA/trmkQ/7dwTHkdR4xzQvwBtc+18UGX4NBncbb/VM9eD8BmZ2MWONlk3EW0fop2juv3L2jWJpE2zA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DRKQS8/Fx2uVVqpGYRF40J06jLAmTHUi4bRmP3XHW+M=;
- b=kxlA/3pawxsZOxRW/eTVNT+MlLsa4koEyT4OFHZkAIUdohO+mNXNmhKoQK0i2Ai78eMlgNSkzMa8Jq0wQBCEiiTjeMEoFyBaQuRYa4kXNQk4dy956RR1mUe+3ymGtCWXxVCofYeWm3db8gj4pBmTG7YeQzQ5/SQY09vHXcyddx88P15Wav6H0ZIIJCev/D/kicL1c5tRHSM6CYGIO5mxlsVejn95PzW++AHHBVdr7/xHu7/joznvFAHZvh6DD4/jpKF0IiBDExvml8wsEWGPgvR1/IHW0TJx+pGso+yur+sCWp+gg9TmTVpsMdQQUpO6j6+wbpYCHlXuaH4qLAVnzQ==
-Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
- (2603:10a6:800:315::13) by VE1PR04MB7263.eurprd04.prod.outlook.com
- (2603:10a6:800:1af::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
- 2026 08:44:00 +0000
-Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
- ([fe80::feda:fd0e:147f:f994]) by VI0PR04MB12114.eurprd04.prod.outlook.com
- ([fe80::feda:fd0e:147f:f994%6]) with mapi id 15.21.0159.015; Tue, 30 Jun 2026
- 08:44:00 +0000
-From: Sherry Sun <sherry.sun@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "conor+dt@kernel.org" <conor+dt@kernel.org>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Subject: RE: [PATCH V4 7/7] arm64: dts: imx95: Move power supply properties to
- Root Port node
-Thread-Topic: [PATCH V4 7/7] arm64: dts: imx95: Move power supply properties
- to Root Port node
-Thread-Index: AQHdCFZ60lQv9beb0E+3/dbCJIY8NLZWoVeAgAAmhkA=
-Date: Tue, 30 Jun 2026 08:44:00 +0000
-Message-ID:
- <VI0PR04MB12114892687F49EA79DF376C092F72@VI0PR04MB12114.eurprd04.prod.outlook.com>
-References: <20260630060710.3294811-1-sherry.sun@oss.nxp.com>
- <20260630060710.3294811-8-sherry.sun@oss.nxp.com>
- <20260630062347.7FE471F000E9@smtp.kernel.org>
-In-Reply-To: <20260630062347.7FE471F000E9@smtp.kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI0PR04MB12114:EE_|VE1PR04MB7263:EE_
-x-ms-office365-filtering-correlation-id: dd62fe0b-b785-4044-235e-08ded683bb35
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|19092799006|376014|366016|23010399003|6133799003|18002099003|4143699003|11063799006|22082099003|56012099006|38070700021;
-x-microsoft-antispam-message-info:
- Nu1OrIU0/6ZyYPEEDw4FSA4bC3FDhQNjKIjaEWOd0sRd4Urgua+90PrxsdpQlnn8dnyRPgrk0EHxiI6lffCCYrFCIeqNrDaV2rWQ8bc5Pjmbkg0AdzQoN4NiM2kGDVm6hSH2OQmme6RWRKiyOtkFX/jh3dkfE0U45ETsh5gBPsD3EfYHF8odKPwxKAcg3xFJjdE24eQWTd8RNBhJuVmTdfp0PyC5wmGNdf1goMM2wWxOwqMdLQr44RkJhSoRfXeawiPyc5ngMkfDVp5Fu5EuPoZp25FaAlcMwlgW9HRQcozc/imdWGEmgi/lH8YCMFCNR6aGa9K4CS4znffvPaZ+Qag1ABo0NM9NZBA/p6mYatJneIi+3Hra4lQzIAuGENGYQuwaQEt//O42voXxz46MmGxjjIvjv+d6xu52zNTLfcrRINWigSn40KTI9MJ6s5tIC9VG5pYNk6RkwmNj9Tmzc7PQvYg6HyBp1MzTcuiFN/kcOL8H8q+dIVVvsY7K3TZO7fA305KwermNaB89CfLBwRFG2FlRSSWbKjKCQCWyghhQiIzddpj5GD6tp//9M9Wxds0qq5obhKZJt34XJD8XU83GRdngFyVoMVe27p5ShGyu/dicvRtvPPUr6CqoVVqusfwjcn1S2iS74J352qCSBeKgKMbPfXKuTPktFLi+p1RlA/YsXf6oKZi/edl6p4RmuvmUzbB4KjMUpDN4pn5vkvbhF/l6XAQxTzREtBzJogw=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR04MB12114.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(376014)(366016)(23010399003)(6133799003)(18002099003)(4143699003)(11063799006)(22082099003)(56012099006)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?mt3tjmXGUpY1yA5iPj4I7J+48FmimfMAl9Fjyq0bkGm88kFIQEen0p6z8ynR?=
- =?us-ascii?Q?K0bBSbKPfNJvTClI5d3+aL5SiYFy1BdjNznv2S4EKwGh57KKylWDcp4hJDjJ?=
- =?us-ascii?Q?9Fkwv/A8lZ7lLVIGCpTkOYxcoj6Q7QeAGkPRYcq7l5pnumAU9Bw6tweP4nbO?=
- =?us-ascii?Q?DYJcNSVikw9SMKcUAZLyqnOHt6SOqEh7ttIbLUvpanCa0htf3K5MaAFsesyc?=
- =?us-ascii?Q?tiDEiQFm7CoBIC0VPw4QoQNb8uivDICEDUUDbGbIm67ryIjnlhLWqCdtui8E?=
- =?us-ascii?Q?VPhziPnTcWZbTd86NGtzghDo7NOqNmzSI09caXWQJ7VVEX+OsTnU6JDV/lya?=
- =?us-ascii?Q?PW7LdZu+RaELn4lurLMu9d78EswV47zecQjp5vhGDT0bmTXDFlXB7fQb4zly?=
- =?us-ascii?Q?lZ2Y3K02EbH2VNqg2QiJ1iBuxXXyjkuTk98yJQZC+25Y40KiWuYLNC5msYuX?=
- =?us-ascii?Q?aSrTUraybTHKAmDE3C2yA8zY3CQzTmaQiwZfAr4n7/NmLtMQODZ/jUYYJsmE?=
- =?us-ascii?Q?NJIaVMoaMonL9E8rbxa8U5T88E5e81mlP5HK8xu9/O9tLoBs+aqX320zOUL9?=
- =?us-ascii?Q?JDk5pLHVRBnDDvlBITdsjM6Tob8DsEQ9ikwxezS90BosP17kOUaN2pWY9Dqz?=
- =?us-ascii?Q?SyQA13GGOJ5qnkRj952Mbm1GKxuYg1UbCHoUHLbCbwAthpdczDwMq/6f0arP?=
- =?us-ascii?Q?yUcXoa0lAea80xOyDq/Yo5lHPd/kxg88MJffpBhd6iNt/wjRwjkf+8tWmTuE?=
- =?us-ascii?Q?2J8v4Wt4YAdBh/OejsSmQy++o3alDVB6BZJaHmH46bgnvsRgWAh+0wL9S4p/?=
- =?us-ascii?Q?ASacHO952aa/Sph10kxu7uCMOQc5ZFfdU171DK56zemNBC5Eua2NyRKjMbmK?=
- =?us-ascii?Q?IQnszf0Jf77ilXF9sgegffwzFzRXdmCBp6CcRat3ZkTElKQlgbvQxqAqBCts?=
- =?us-ascii?Q?pBXqvXglugRHGtS3531h3dAf93QhrSV4aYyjd8uGxHcyg2y2V/b7RZXyHXnT?=
- =?us-ascii?Q?V2l5db1HAPaeLpUlB6kuQ1UuvzL8qkWcHxspjbYjxS2cIqkd1NaRLVeqElAG?=
- =?us-ascii?Q?v4SXoERgLQuN0UqSrPDoClmPeuKJcK9pL99s0ORchkn93tX3Y+hWKCAdiLMk?=
- =?us-ascii?Q?RW9Mr9C181wn1hnzep64zyLXv67cdhzpCihfSrHFIafTaeTjyDeYhxlfAJlP?=
- =?us-ascii?Q?eJ4kurCHdIaPBXaQ9HUIOUgPaOckLB2AiAiknp6pkHoGi9WQYUq/poGXqGk+?=
- =?us-ascii?Q?R7oaVpBmemPZr7fc+bcCAxUWBTj7Ksy7eC6aH38LZr/eu17m2SzSITThWNCp?=
- =?us-ascii?Q?2VD4E0OBKQjAPL42+rH1MkbRbVJB8oAKpsDHI6ieRahV3OZ8ctwGEFGaKVuK?=
- =?us-ascii?Q?F6mCACb6rBW1GMyNNdr1jkjdlXPXczjuZjTKWxGxPZ/9fLwanDOM/Ik87jip?=
- =?us-ascii?Q?5LQOaVZaXXjzz7kO0CNf37lGqm5laA/w00gv2ATTG1/ZRZF0VwtyLlvs6RX0?=
- =?us-ascii?Q?INrtesKNwsbRqDcCbGqKui1vW9WqI2Dl17r/mPKGONajbkdIIbM0ORanXhFF?=
- =?us-ascii?Q?N1CYl+6GLejBPYxSJFkn6mQVbgT9nqqRO7+Q5fRlaUxbxnwnk7WH6yLUA4Da?=
- =?us-ascii?Q?XkwZ5zakbp5VouqECA6128yk+aD/XyYK0teL7MLZHIhNaqOp2n732++2dTVM?=
- =?us-ascii?Q?FceJ1ztUTfmLzjvayyQyxo5UfHYf4A8cjekPW4Uspy2yn0bJ?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G+Gf0iuU";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VNMOJsFU"
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65U6CM761096406
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 09:37:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fsS4SrOC/St+FjQR2wWV5f9LyPOGuDEpJPbxdHbxdEU=; b=G+Gf0iuUl+YM7JIR
+	cEzl2rOirYJX9ImhOf62a0uwEKgZVdgjMyRc4vszYOZKnfDYbPe7BrFcfjuV9rpq
+	JZl41+GQOD9bcQBHeKEryHBRydPY9cUnG9nNJKAUNgreHCmhgbgbj4fYkrCT0czH
+	8S4v9n2bnR1Jf1Gco5Ld3dWMA9MD9g9u1i45PrgtdPQzelZm2gAesQ1ZLjmBWSmP
+	eI6lNeFjlvSlO8hd0qC3XPF6iHf+fXB8T+3yeYy19RlLdbuJkFfDT9nKe3Cky//3
+	J5rcUbcSI8E7jqhD3iG28MTiSUIL1e5sOxUTBmuZcWscDOWzgga7ffuiU32N1eKg
+	3ZZAPA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f441gsv5x-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 09:37:56 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-915f6ff639aso1145691685a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 02:37:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782812276; x=1783417076; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fsS4SrOC/St+FjQR2wWV5f9LyPOGuDEpJPbxdHbxdEU=;
+        b=VNMOJsFUi5/8tDNTEplGc+NZLzX210kLjmmPaCpETvYXGEcWDloLeTlE/K2MziJ5rg
+         0vXaKknSaYMcJCXYYUC86kDxcVZ/rvY8edl3uGzZnPtyEJDGhISkSG/cGNvdf8IZRBnU
+         SVyHH7TlIeqK+n7WLDQOoZoLk2wxEZEfH77FH1v/Pa0YIVUOpWnD3jllMQLKnwSE/W4/
+         oy/6oxA4mbiVOVS0dL7B4FigWNbkb1pn9JE+MvpLEDYu8RUze9m1+QkKvcINnI0UUspN
+         Pz4BV/QIHS72K+0LEgM1c/FZ2Se3qH0Z7hD1RL5H1NcKdGJMMNkovOfdxSRFLr44qolK
+         E/Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782812276; x=1783417076;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fsS4SrOC/St+FjQR2wWV5f9LyPOGuDEpJPbxdHbxdEU=;
+        b=ThIejVlLkFl3ixb+DUGXnTsI63vYDJSPVULPrklTT42FMwZII31WnKj/ptDuMPbxP3
+         8i89NNK2eCffPynyVFzZZpHO1VKUtd37tniw3wEqImCshf9Va2kMr04L5r/Sc3S4kvMO
+         pXANl36lGIQSjKXXnw6j0Xro2jAFLhwb32zWHuId/whHtZLERTpCrZfqN5Gsnputelh7
+         FFKWgDyQ7AWspw0bhI97g2tJTiXKpjNnWbbfcdxYn10n46W0mj4A9B23VN/PoAp3P+T7
+         CeWoUiPpjGo74RYx9xGaApj01lBpbcF2+bQGqr4b1OQGQHSmnL3Ei6raMqhNvhXwpYjd
+         f9wQ==
+X-Gm-Message-State: AOJu0Yzs+82zvRGN7EvAfwlGoxcHoNe95AODsuSCfVQnzHktpcz6iVv6
+	8ULFa0RnbzWXbxM6W4GenlKW3l5MzaO0tmdzrozsyREIugvZgPzB7AXYS+ndA9PlQbeBdnwPv+F
+	qvUYgYTnyr8WQPNWYvCwrMtnytlwFNAxU7UWqHnvfui4fDdxXPMys629+vjLRPsIwTQJ4dT9Btw
+	aPVbM=
+X-Gm-Gg: AfdE7cmKBSY0lDeBqkIC4gMQjbqZ9iDoICBN9+3odb+SXM5pHUXiObyClP9wfPmOsqg
+	ximXon7g7gaxqNAKFmBZ4rPuYhubA9duQyFYW+T2KltGgE/6tciUym3GrYq2+vwrNGm1pkxUez4
+	1H/ItZq4kS62pm/3S9Hzf5vcjoxFmomAcOgAXOVZTfGoKN26kqjk7GBaEnAS6xOswvh7wS+VjDi
+	8l0jB483X2FVqmFtjk00nWOTbDvWY29yHowri1pFqjsXNPU7osZC1dKmK21StItkFBLGgPAEFRQ
+	JM/x/yMnhqrIWDK3vSvFAEZJ++LYI0JSMj/gRVsBy7OQFFrWU5oBCdLlWvyVH24lQ9jKBBP74xB
+	KyUWOcXGtP22jIO/YoKVS4zcleAv7lmi1DnpYkuTeY3wxKvHRJHy3J0m50gIs3Dhht0eGPb4E1Q
+	==
+X-Received: by 2002:a05:620a:4412:b0:92b:a326:3bdc with SMTP id af79cd13be357-92e624ccfadmr452299685a.20.1782812275655;
+        Tue, 30 Jun 2026 02:37:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:4412:b0:92b:a326:3bdc with SMTP id af79cd13be357-92e624ccfadmr452297585a.20.1782812275232;
+        Tue, 30 Jun 2026 02:37:55 -0700 (PDT)
+Received: from YUANJIEY2.ap.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e622e7fe3sm199003685a.27.2026.06.30.02.37.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 02:37:54 -0700 (PDT)
+Date: Tue, 30 Jun 2026 17:37:49 +0800
+From: yuanjiey <yuanjie.yang@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add base HAMOA-IOT-COME board
+Message-ID: <akOObU-nX0cDEhrd@YUANJIEY2.ap.qualcomm.com>
+References: <20260630071022.3256-1-yuanjie.yang@oss.qualcomm.com>
+ <20260630071022.3256-3-yuanjie.yang@oss.qualcomm.com>
+ <20260630072606.E55491F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR04MB12114.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd62fe0b-b785-4044-235e-08ded683bb35
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jun 2026 08:44:00.2166
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ERSwt0lrJhMqZnG29stOXkvj6d2ENjvY48pLY4XBpBcmhbJ3i6CrK9sewIXpDHoFGSuLbQTWgU5GZELfNqCkzw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR04MB7263
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260630072606.E55491F000E9@smtp.kernel.org>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA4NSBTYWx0ZWRfX4n+Nl8aslx2f
+ a9XY9k4uQyoZSA4BZNh/DYuVfmwMxFny/z9LE9ttSO3ApBgIELF2DkRm+WUbgKBoB5Q6NTi/vyD
+ u57PWNRq5YtYROC+ZqZiw3MQogZPIgg=
+X-Proofpoint-ORIG-GUID: 2R8y0GfOy8_tYxreh-NqBmfkM0jQ94mz
+X-Authority-Analysis: v=2.4 cv=F8dnsKhN c=1 sm=1 tr=0 ts=6a438e74 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=8wtVhhPeGe0wYdhAELwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA4NSBTYWx0ZWRfXx7oihHAsdHfv
+ pRGKeu47HYMXQb67NWN+Ui6jgUjBJjD2AKr7M5h2xfiyKs/fvMdK8ZuLDU9gpkkwr6LAOH12ElF
+ OexEO24QbLwwWDCoV9hnvmC4nml10Z0vywlgKpdURaP2AZZJR+s+IRmAuuSY7p6+n9UdTlzlHaH
+ QlMbAE/mShlTwqnFgnydSW9VvOjvSxRXpoh0M3dacN45ENYUG+wndSR33NeIQRjlppFw7RqVL3Z
+ hASPB39ZmR/mx0eQoN7inFfjRrMtCu4Iqe2d4zEFshWQvkwIo26t5AdS469dm9LOq8Nf5FateXm
+ y6IKj8IavTtleZid+RtbBB/gOWkjnEmb2xeKRb+oqSuu+oGoY9Gacd/9SJWRXPtu/HCoHQGMBcs
+ xAqnTCH8qsu9rnMrUwbEbYUCZceBbTZXbqRhi6mk4fIuzQ+1ZTnoTzxsSF9IOZNGRPXdT05cSd0
+ VWqgkmhCf7sjEMZcW/g==
+X-Proofpoint-GUID: 2R8y0GfOy8_tYxreh-NqBmfkM0jQ94mz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 clxscore=1011
+ impostorscore=0 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606300085
 
-> Subject: Re: [PATCH V4 7/7] arm64: dts: imx95: Move power supply properti=
-es
-> to Root Port node
->=20
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s)
-> to consider:
-> - [High] Removing legacy power supply properties from the PCIe controller
-> nodes breaks backwards compatibility for older kernels booting with the
-> updated Device Tree.
+On Tue, Jun 30, 2026 at 07:26:06AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Unused PCIe controllers (pcie4, pcie5, pcie6a) are left enabled in the ComE carrier board, causing boot delays and power waste.
 > --
->=20
-> commit 332f451afbc5374b9f81acdbad51ee15f1b90088
-> Author: Sherry Sun <sherry.sun@nxp.com>
->=20
-> arm64: dts: imx95: Move power supply properties to Root Port node
->=20
-> This commit moves power supply properties from the PCIe controller nodes
-> to the Root Port child nodes. This change is made to support the new PCI
-> pwrctrl framework.
->=20
-> > diff --git a/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-> > b/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-> > index 7d820a0f80b22..6aedcbbe915a5 100644
-> > --- a/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-> > +++ b/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-> > @@ -555,8 +555,6 @@ &pcie0 {
-> >  	pinctrl-names =3D "default";
-> >  	/* This property is deprecated, use reset-gpios from the Root Port
-> node. */
-> >  	reset-gpio =3D <&gpio5 13 GPIO_ACTIVE_LOW>;
-> > -	vpcie-supply =3D <&reg_m2_pwr>;
-> > -	vpcie3v3aux-supply =3D <&reg_m2_pwr>;
->=20
-> [Severity: High]
-> Does removing these legacy power supply properties break backwards
-> compatibility for older kernels booting with this updated Device Tree?
->=20
-> Since older kernels lack the pwrctrl framework to handle the new Root Por=
-t
-> properties, they rely on finding vpcie-supply and vpcie3v3aux-supply in t=
-he
-> PCIe host node. Without them, the legacy pci-imx6 driver silently skips
-> enabling the power regulators, and PCIe initialization will fail because =
-the slot
-> remains unpowered.
->=20
-> The reset-gpio property was intentionally left to preserve backward
-> compatibility, but removing the power supplies appears to defeat that eff=
-ort.
-> Keeping the legacy regulator properties (even if marked as
-> deprecated) should be safe, as the kernel regulator framework uses refere=
-nce
-> counting and allows both the legacy driver and the new pwrctrl framework =
-to
-> concurrently enable the same regulator without conflict.
+> 
+> commit 5654913fbfd858b8d2bf4684318b0d7145c8a5b6
+> Author: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> 
+> arm64: dts: qcom: Add base HAMOA-IOT-COME board
+> 
+> This commit adds the device tree for the HAMOA-IOT-COME platform, which
+> consists of a SoM mounted on a carrier board. It includes initial support
+> for components like UART, Regulators, USB, PCIe, Pinctrl, and UFS.
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-come.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-come.dts
+> > new file mode 100644
+> > index 0000000000000..99c47cd953b83
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-come.dts
+> [ ... ]
+> > +&pcie3_port0 {
+> > +	vpcie12v-supply = <&vreg_pcie_12v>;
+> > +	vpcie3v3-supply = <&vreg_pcie_3v3>;
+> > +	vpcie3v3aux-supply = <&vreg_pcie_3v3_aux>;
+> > +
+> > +	reset-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
+> > +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
+> > +};
+> 
+> [Severity: Medium]
+> The included hamoa-iot-som.dtsi enables pcie4, pcie5, and pcie6a with
+> status = "okay", but this carrier board does not disable them or provide
+> the required reset-gpios routing.
+> 
+> Will this result in the pcie-qcom driver powering on their PHYs and timing
+> out during link training?
+> 
+> It appears dw_pcie_wait_for_link() will loop and time out after 900ms per
+> controller without a connected device or toggled reset signal. This causes
+> boot delays of nearly 2.7 seconds and leaves unused PHYs powered on.
+> 
+> Should these unused controllers be explicitly disabled here with
+> status = "disabled"?
 
-As documented in Documentation/devicetree/bindings/ABI.rst, "a stable
-binding means that a newer kernel will not break on an older device
-tree, but that doesn't mean the binding is frozen for all time." The
-compatibility guarantee is one-directional: new kernels must support
-old DTS files, but old kernels are not required to work with new DTS
-files.
+Yes, Hamoa COMe does not include NVMe, Bluetooth, or Wi‑Fi,
+So I think PCIe 4.0, 5.0, and 6.0 are not required. try to explicitly disabled in
+DT is a way
+ 
+Thanks,
+Yuanjie
 
-The driver already preserves the legacy fallback path for this:
 
-    /* Legacy regulator handling for DT backward compatibility. */
-    if (imx_pcie->vpcie) {
-        ret =3D regulator_enable(imx_pcie->vpcie);
-        ...
-    }
-
-So a new kernel running with an old DTS that still has vpcie-supply on
-the controller node will continue to work correctly.
-
-Users are not expected to pair a new DTS with an old kernel. Doing so
-would break in many other ways beyond this single property.
-
-The reset-gpio property was kept to avoid build break if pci patch and
-dts patch are not merged together, this deprecated reset-gpio property
-will be removed later.
-
-Best Regards
-Sherry
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260630071022.3256-1-yuanjie.yang@oss.qualcomm.com?part=2
