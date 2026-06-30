@@ -1,165 +1,145 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460343E073D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 18:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC053BC680;
+	Tue, 30 Jun 2026 18:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782843616; cv=none; b=hdlLZcFHNNrln0fG501XLw8szURxTs0S1ZZTyODzQx/zKMJsKqZqZJemLIBHQpHPWsVo74CjGrEHhI60/7KuDYNCtB3D0l3l0xbpKAin7YR8n6ZVNIFROHl9PeVFkte3ON11Z7Sa3BJsTGtdZEqmvgJH3/BdPTcUlN02cVf0KDc=
+	t=1782844984; cv=none; b=bHRBHAONQDkhufXnnas0IUfdqQy8F0mI4P+VkCOLL8z0299GRdwT/LKo2hi7HQElRoXAanXk/i54kFUaUBPinG2C36HHeW77JwnijLf2jYiLOGjz87s1lecLzIX524N1kpaca2Eu9ZOmCaS/9tPlEq/o6SDfOa/ww9w8QYUBSXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782843616; c=relaxed/simple;
-	bh=3MWWgnBNxcNxcJyS1JYLu2pwY6mLlM3CWAfqQAGyALo=;
+	s=arc-20240116; t=1782844984; c=relaxed/simple;
+	bh=KCpPnllPAwe9Z27cf/4FimUMcyNxdIrK1MgP/ku1r34=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S6ZPno8phQq3O0hXhEqRaUR6NsDltlMCKJPqHTgUrYLSM2SUVTKpzA42QR0Bikk/wwEax4nlKGcafjlOKrfMTgGjd2b0wr+ZKkq7OycghsUIjGf9Ow+187HKgnwTwCvRQsXdxyY+WhF/Y6ZmLeWuEATxkzPbUZTJnN4A7z3qlm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lDqsmq6b; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=bFpUSuIUFPPidwaSqzPyCwrNa97HYzJBAqFtqE/fXynVW3/eT3XQFrxi4oyyco7vza7sSrDDW8PujDutS9kEC9/5mjYZJZOrOekyQSzF1pwfW5vppBes4eoFeESyVPOuV/rX7WprF6cVqFjR5k6NKmWKWbJel+J/M+70sALKHBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQtWrNY6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lDqsmq6b"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4924593f45dso61146805e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 11:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782843614; x=1783448414; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wX3a5DZftWQLzIO2gAwJsDiCFshv0dUhsjO14dVAZWo=;
-        b=lDqsmq6bvS/M766V2KD437CWpSvWymenz0meDF30UrFaOdrPwNqjhTb1kG4zorR6+B
-         OXapeVELl6nWxe0ZWPHnpClTAoCL8K2VZaFHtCR+RqhblYTH+ZXyGmDfVORyYzvO5lU7
-         CZ3vdtdj716yzRFFRjlRmS2Ne5aUQV3ula2GefztvYhyLI/4tTgSAK1CybCZmN3lx+qB
-         5O6L66ONK5oMNuoFj1G/fVdP+/Y2l6gCdrDs7U3GR3NXFsjXE63n3porvr7leyC8MKmM
-         pCNsqfVRE9442/gIlciGQKKmo7D2s3xWueBa1QwLPFZxDsEU027emzW2DZZeBfSIghu2
-         /+cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782843614; x=1783448414;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wX3a5DZftWQLzIO2gAwJsDiCFshv0dUhsjO14dVAZWo=;
-        b=p9kokDazEHi98urbgyGFNcLWxVGCSZBV2U45wUZA+JG4u6SwaxK/PuAj3TgCdVl8l9
-         ni2T/n10XK1mmSC9xObZMaSwPPY9yRSGAvvpSqajdRrUD7OgXCfan/ONHLNcXL5RIcd5
-         k2wZSD7m5C304T9tiJYn+pfbcdhQUAyUGiKEOG3Be02ht6jY0a5L1E7hLTxVkq8P+wiR
-         2bkvn8fYmYC54d1spPnulRbJ/R0z6CeIcaaIZd5aBwAB5MVyFNzID4Y4fsNdqDORCzXr
-         viCJWcBm7hM38tnso8GugStxhCjswX/3i//oR/r0wWll5BDss7biy+t+XuAxSyAUnlta
-         1J0w==
-X-Gm-Message-State: AOJu0YyIHJPcPNoXCDYQ4z5rsFOU2ZBA5Ih6kmop0ciXNflgLogyt2L+
-	k7FGlvxcwkwEh9KwfOAMC5lGI9POQTj/nahehOC8M3Ue1U62FWF1Q4ACtIAvgw==
-X-Gm-Gg: AfdE7ckOmp0eeRl07gEg+jsu+t52LCejsz0tJZeMAyyvQKhRk1zMoK+aFZsmvFSyhnD
-	NsXBEUna76cbFKUdjTYXzP+I5EsFbaQUB1jA1ncf+9a2edzDY+P9RRTRvdogRXHPRnbvdndwV0q
-	Y1B5Kbek2PEMDy14NXdRdjwSjLVDlS/ZflR4xV2yb8LaA8j0oQ7oiBIOBlW0f1GXMGbdzi+edfT
-	7lhmxcQ8Z6wZQfIHW64NSzTgufN4BXmIaWs6OBfE5R9Ou2GvrsKcvOLbDxEeH1cEq4aR/SFLDZz
-	Xe3uSY7GtGfxF/NszADBBbK1PY02R0PKs0D9ua2eK2L2KItdPCGn4YHojzVRrAhnmbUCZIXDhUn
-	vyrS3bRPP+Xp/pxhFR8u0fbx9XDh6kPTPNl2d/49YOpr7q4V6EfVwgq5wF6KyZtjsO6zEdxvxCI
-	g68/7lBgM4Mp/kcbc/fO2O+9u3VyQLrIiR
-X-Received: by 2002:a05:600c:4695:b0:493:aa24:792b with SMTP id 5b1f17b1804b1-493bda6fdc1mr26258915e9.22.1782843613521;
-        Tue, 30 Jun 2026 11:20:13 -0700 (PDT)
-Received: from mail.gmail.com ([2a04:ee41:4:b2de:1ac0:4dff:fe0f:3782])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493be810be8sm12316055e9.9.2026.06.30.11.20.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 11:20:13 -0700 (PDT)
-Date: Tue, 30 Jun 2026 18:30:15 +0000
-From: Anton Protopopov <a.s.protopopov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>, bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v3 1/2] bpf: Enforce gotox targets against
- subprog bounds
-Message-ID: <akQLN49YynM4hf+H@mail.gmail.com>
-References: <20260628-f01-03-gotox-bpf-next-v3-0-b744432e1361@mails.tsinghua.edu.cn>
- <20260628-f01-03-gotox-bpf-next-v3-1-b744432e1361@mails.tsinghua.edu.cn>
- <20260628142401.80DC21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQtWrNY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6874A1F000E9;
+	Tue, 30 Jun 2026 18:43:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782844982;
+	bh=oQ+QKmGqWrf4GF4IimLK8GVC3TpRZgBWH53NHUwQR9E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=NQtWrNY6deyk6hU0I6nlk4xSdhwxHXR6kR9B4J1sHsU6FnRp2n6GEO/jH3bNsx4xQ
+	 Hl+pa43WV1nCLHUEpRdsJwFV5obDUWIqJbkI+UVSscYCYT2Z9vjt8zaCw9JAon8U9J
+	 wiqkI67jof5FRKXkHetzhSr//hCaDgM14Tn601cxT7MlY+liS/bC6vYVX57Ltxm5B5
+	 d7R1n0y5BJUJ87vGwq73g5/UwgcMIDIPDUF5fS9bYKAZ3LdkulFhDu8tIxMOnefWid
+	 kOtkPEWL+FE8GMUnU9bja8mUEfopDaar4Y4+cTeWsG2ycAXC/eWU8LP65eOWp9jsBg
+	 rLKJc+WuAT/Lg==
+Date: Tue, 30 Jun 2026 11:43:01 -0700
+From: Oliver Upton <oupton@kernel.org>
+To: Leonardo Bras <leo.bras@arm.com>
+Cc: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
+	kvmarm@lists.linux.dev, kvm@vger.kernel.org,
+	Wei-Lin Chang <weilin.chang@arm.com>
+Subject: Re: [PATCH v2 02/13] KVM: arm64: Enable eager hugepage splitting if
+ HDBSS is available
+Message-ID: <akQONWoRRZXu1-56@kernel.org>
+References: <20260629111820.1873540-1-leo.bras@arm.com>
+ <20260629111820.1873540-3-leo.bras@arm.com>
+ <20260629113645.BE6801F000E9@smtp.kernel.org>
+ <akKFlzAdB43lRpi1@LeoBrasDK>
+ <akKmHqRaZEUjN3zY@kernel.org>
+ <akO9iHJmKN7MzTjM@LeoBrasDK>
+ <akPkVASjWWYQpkx1@kernel.org>
+ <akP4ZDjZIu2_CfVF@LeoBrasDK>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260628142401.80DC21F000E9@smtp.kernel.org>
+In-Reply-To: <akP4ZDjZIu2_CfVF@LeoBrasDK>
 
-On 26/06/28 02:24PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Tue, Jun 30, 2026 at 06:09:56PM +0100, Leonardo Bras wrote:
+> On Tue, Jun 30, 2026 at 08:44:20AM -0700, Oliver Upton wrote:
+> > On Tue, Jun 30, 2026 at 01:58:48PM +0100, Leonardo Bras wrote:
+> > > On Mon, Jun 29, 2026 at 10:06:38AM -0700, Oliver Upton wrote:
+> > > > > But this raises a topic I would like to understand:
+> > > > > - Do we actually need this to be a block_size to assure correctness? or is 
+> > > > >   it just about efficiency?
+> > > > 
+> > > > What value is there in having a chunk size larger than the largest
+> > > > possible block mapping? The whole UAPI is deliberately tied up with page
+> > > > table geometry.
+> > > 
+> > > Not larger, possibly smallerv My concern was the difference in pages to 
+> > > split between 4k, 16k and 64k.
+> > 
+> > Ok, well in any case the upper bound is going to be the largest possible
+> > block mapping for a given page granule.
+> >
 > 
-> Pre-existing issues:
-> - [Critical] The patch adds a runtime bounds check to prevent `gotox` targets from jumping outside the current subprogram, but fails to ensure that dynamically observed targets were actually modeled during Control Flow Graph (CFG) construction. This allows an attacker to follow unmodeled control-flow edges and bypass static liveness-based state pruning.
-> --
-> 
-> commit 5e0bdd5b4a7e2ce073913482349669d9387d6a32
-> Author: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-> 
-> bpf: Enforce gotox targets against subprog bounds
-> 
-> During CFG construction, the verifier records the modeled gotox target set
-> in insn_aux_data->jt. This patch adds a check to reject targets outside the
-> calling subprogram bounds when check_indirect_jump() follows targets from
-> the runtime PTR_TO_INSN register's actual INSN_ARRAY map.
-> 
-> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> > --- a/kernel/bpf/verifier.c
-> > +++ b/kernel/bpf/verifier.c
-> [ ... ]
-> > @@ -17188,6 +17190,23 @@ static int check_indirect_jump(struct bpf_verifier_env *env, struct bpf_insn *in
-> >  		return -EINVAL;
-> >  	}
-> >  
-> > +	subprog = bpf_find_containing_subprog(env, env->insn_idx);
-> > +	if (verifier_bug_if(!subprog, env,
-> > +			    "gotox insn %d is outside subprog bounds\n",
-> > +			    env->insn_idx))
-> > +		return -EFAULT;
-> > +	subprog_start = subprog->start;
-> > +	subprog_end = (subprog + 1)->start;
-> > +
-> > +	for (i = 0; i < n; i++) {
-> > +		u32 target = env->gotox_tmp_buf->items[i];
-> > +
-> > +		if (target < subprog_start || target >= subprog_end) {
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this bounds check alone fully protect
-> against unmodeled control-flow edges?
-> 
-> During CFG construction in kernel/bpf/cfg.c:jt_from_subprog(), if an
-> INSN_ARRAY map's minimum offset falls outside the subprogram, the heuristic
-> skips the map entirely:
-> 
->     if (jt_cur->items[0] >= subprog_start && jt_cur->items[0] < subprog_end) {
-> 
-> If an attacker creates an INSN_ARRAY map containing both an out-of-bounds
-> offset (e.g., 0) and a valid in-bounds target Y, the CFG construction drops
-> Y completely because items[0] is less than subprog_start.
-> 
-> Later at runtime, if the attacker restricts the bounds to index exactly Y,
-> this check passes because Y is within subprog_start and subprog_end. The
-> verifier then explores the gotox to Y edge that was never modeled in the
-> CFG jump tables.
+> Sure, we can do this.
 
-The robot is right here, the check should verify that the map was
-actually checked during the config stage. I think the easiest way
-to check this is do the same check: verify that the whole map fits
-within the subprogram. (An optimization would be to cache this info
-somehow.  Every jump table map can only lie within one subprog, so
-subprog index cached is enough.)
+I'm describing the UAPI behavior of what we already have. Please do not
+change anything and continue to leave userspace in charge of eager
+splitting / chunk size.
 
-Could you please address this and add a corresponding selftest?
+> > > > 
+> > > > Overall, I'm not buying the argument for changing the behavior of
+> > > > KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE. There are very good reasons for
+> > > > *not* eagerly splitting the entire address space, especially if you know
+> > > > the working set of the VM is small.
+> > > > 
+> > > > You can still use HDBSS without eagerly splitting, so long as block
+> > > > mappings are {DBM, S2AP_W} = {0, 0} and leaf mappings (which have
+> > > > a writable PFN) are {1, 0}.
+> > > > 
+> > > 
+> > > Block mappings being read-only, and leaf mappings being writable-clean, 
+> > > then? Could you please ellaborate on why does not it need eager-split?
+> > 
+> > Read-only translations will continue to generate permission faults
+> > whereas writable-clean descriptors can be updated by hardware. You get
+> > the opportunity to split a block mapping lazily while preserving
+> > hardware dirty tracking for page mappings.
+> > 
+> 
+> So you suggest we only enable DBM bit after we split the block, that will 
+> happen only after a block is dirtied for the first time after dirty-log 
+> starts? 
 
-You also have lost some acks for this patch from v2, please
-don't forget to add them the next time.
+If the VMM wants to do lazy splitting, yes. Otherwise this would happen
+as part of eager page splitting for block mappings that are known to be
+writable.
 
-> Because liveness analysis relies strictly on the statically modeled CFG,
-> could traversing this unmodeled edge cause liveness to incorrectly assume
-> registers are dead, allowing an unsound state pruning bypass?
+> > The approach I think we may need is:
+> > 
+> >  - Use a software bit in the PTE to stash whether or not a PFN is
+> >    'software-writable' when constructing the stage-2. By this I mean
+> >    we've already faulted it in for write from the primary MMU.
+> > 
+> >  - At the time of write protection, reap the hardware-writable state
+> >    from all PTEs but preserve the software-writable bit.
+> > 
+> >  - Whenever splitting a block mapping, set the DBM bit in the page-level
+> >    PTEs if the block was software-writable and HDBSS is present.
+> > 
+> > That way you'd have sufficient metadata in the PTE to safely set DBM.
 > 
-> Should this logic verify that the dynamic target is actually present in
-> env->insn_aux_data[env->insn_idx].jt, rather than only verifying the target
-> is within subprogram boundaries?
+> I remember that, for some reason I can't recall, it would not be great to 
+> set DBM during dirty-log start, and instead we should have it since VM 
+> creation. Maybe it had to do with part of the pagetable using the old 
+> encoding (no DBM), and the other part using the new one.
 > 
-> > +			verbose(env, "gotox target %u outside subprog\n", target);
-> > +			return -EINVAL;
-> > +		}
-> > +	}
-> > +
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260628-f01-03-gotox-bpf-next-v3-0-b744432e1361@mails.tsinghua.edu.cn?part=1
+> IIRC, only blocks that are backed by writable memory (S1) were supposed to 
+> receive the DBM bit. We could use that info for deciding what to split, 
+> then.
+
+That's why I'm saying to use a software bit. We can't leave DBM=1 on
+block mappings and set VTCR_EL2.HD=1 for obvious reasons.
+
+> Another option would be to split when we are collecting a dirty-entry from 
+> HDBSS, but for live migration that would mean we have to transfer the whole 
+> block (possibly a large LEVEL1 block), because we have no idea which part 
+> of it got dirty.
+
+We need to do dirty tracking at page granularity. The only scenario
+where we have writable block mappings while dirty logging is enabled on
+a memslot is if the VMM enabled KVM_DIRTY_LOG_INITIALLY_SET.
+
+Thanks,
+Oliver
