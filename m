@@ -1,142 +1,128 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F9B3E9C26
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 10:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3B73F4845
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 10:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782815307; cv=none; b=qE1U3+ZiATIhvn8ibE7HL41T3bsG1lE90yZn4K6QmsYNYPajt5rseoGkRPcqlxqRuTP/HvP3Nt5hWSz8M2mF6m2JeEnoOgKx3puyHaVrwcWQXpsiAkMd73qoA6cZXgdPjka/sQS1Lcuq9JFXvYjJyEusm0eJUJpP1UDyo9I5HHA=
+	t=1782815420; cv=none; b=dmFvXEqdePi17hppyWcn7nIii6xghsVN88hfbvUCXbNf3LPsauFrulrDDy+Z6gYcG8pGpI5RsZWLe/tc6jQ2J5sDFqOA5yRFS/j9PwEjPHOm9EHRHIaY7/mn5ege7pHhq/oQkIklEwuGkTUXqSMlf4Ee8NlGVqamh1lGYMLZ5/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782815307; c=relaxed/simple;
-	bh=iAQY6TCrDj8LfUpuZjFjTTB1GWYcGsCqzNYYlW2+uJs=;
+	s=arc-20240116; t=1782815420; c=relaxed/simple;
+	bh=szU59hRjxNggmvqXcXeIzPI3Ogt4CFjbpOmT1DpW5Gw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BMcfLRqU0fpSbVa+sO4wK4VTd3UeEFS7YtsACZ65hosYAWkFPSOa/vzGpHENDRsmRetKnk8Of6bgyxgmy78S+QJenaMqXyglkKDXD2pT1R/VfWDHDQ/gkQlkQAFeJXxnTdx3JTSjou99WydiaaBJaGF/SYpI+4l0BI7EMon8P7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=A5lRI0nm; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	 MIME-Version:Content-Type; b=hRb+pR41pnxEDq3CzpgQdr+4w5iGNkAFwp5O5E6Exw2/WAo8OBbjOYqc3x7Wu+63SNCqMy+XJmNs9sdsFUfKtTz+yhCiG8Mz2V59299spZzuFmqe5Xe2SiB6SbCsacGEApKfodIhnMDm5gcDVAy/De7EPWcj1+wcp55g6XHktlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ATzHyXVo; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="A5lRI0nm"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id ADC421A0C75;
-	Tue, 30 Jun 2026 10:28:23 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 7AC176025A;
-	Tue, 30 Jun 2026 10:28:23 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5D3C1106F1D96;
-	Tue, 30 Jun 2026 12:28:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1782815302; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=+45Kh3Satp3HBEK6If/oF4JoJaoBdx7zAqswznQZd8E=;
-	b=A5lRI0nmyKuAE7DExkUqwE3nvY8dreV4gtcQPOB0GX52Cj+7BpicSwuwNtlHwCRNZ9KnH4
-	JV3sNbXy6IiTZXvoyl+h+64ra9dtRJps61BbP4ADeCteWmLtvWPzxdyrF9/bImWU5Qan0t
-	zsk22dgw27mXa9URexNbfMuMCBr86TlrhX26gDbVyVbfY2NOgcKbCrIE64i3an4C046AAD
-	kFvkgF4G9TKP+tJ2DUzfrG/afQCVNxVONsGPeMh5W74SOTgWMXnxN7E/J3wJwoJEL8VK4I
-	VZDN+xWCWJ3qtue/K3BoRq6c+pH+SARBEnjlbpHeChQ4oIcvovKtfkeOYxwkYQ==
-From: Gregory CLEMENT <gregory.clement@bootlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-rt-devel@lists.linux.dev
-Subject: Re: [PATCH] scsi: ufs: core: Avoid sleeping in hard interrupt
- context when PREEMP_RT is enabled.
-In-Reply-To: <20260630102343.728131F000E9@smtp.kernel.org>
-References: <20260630-ufshcd-spinlock-sleep-fix-v1-1-339b05a1c6f4@bootlin.com>
- <20260630102343.728131F000E9@smtp.kernel.org>
-Date: Tue, 30 Jun 2026 12:28:21 +0200
-Message-ID: <878q7wb9ve.fsf@BLaptop.bootlin.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ATzHyXVo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1782815417;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rt+GIzX8xwbGOeudcihqYde9U4BtzFfzJJUO9ZPZWtM=;
+	b=ATzHyXVoEGRnKPCkM/zCdXziZjmeIl/anGNO8u3O6XfmnNsVhHK5v9u5W2wqXGjjZUsidm
+	/SFKBdWdCN+WqxzYqj5E0XleqdREUAvzGTEnHcT06RYA+sdu1TxhGSqliCJKSx5TkjJne6
+	Pon4Ji4SJidcbbB796246CImGHg2AZ0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-7-CusS0v3IO8ucsPPMmVvxHg-1; Tue, 30 Jun 2026 06:30:15 -0400
+X-MC-Unique: CusS0v3IO8ucsPPMmVvxHg-1
+X-Mimecast-MFC-AGG-ID: CusS0v3IO8ucsPPMmVvxHg_1782815415
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-493a7fa8481so3458075e9.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 03:30:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782815414; x=1783420214;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rt+GIzX8xwbGOeudcihqYde9U4BtzFfzJJUO9ZPZWtM=;
+        b=qRF5X2XqtYKLGFPCyKfPPAThgPXjbz6XEYH4ZBKoix+iWShlciw99NROf3wGOQofIX
+         3eD4fQJbauSYnAA7kV1ojr0xiItq1eD9OqQQG8zsoKBuW9v9aEIFHpULpXN5nUzXgRRm
+         28ggIycH3jBXWIYIj/HkIQWBsj+C3UBhRCwtWpJt43Aen1EwV7XhhULQY3fY+O2zuXVP
+         sKlIli76L+NncEn+AoMMMcrcECKAO2Utpfjgq5bJSVKc9AydTBeyGRVwIikitR9/8L20
+         W/TGS3h3tDWl8n6QjcxVAZSz4NLCGSwqWAvP4B7OmdTjmhV7NjEMaLp+b2vrpJ1vSzC7
+         LW/g==
+X-Forwarded-Encrypted: i=1; AHgh+RprDsfc9JpzXzLcdapf/yRR+PIX0D7bWzwG2HkSt5cF8l2BSkif2uywOOMfldMh+lefqzRjhyaiwcAbSN4YyYo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwtZaW+/lZVa++YNhl9+sV908mLqqujn/98YxjZymc8V/aTffJ+
+	nqJ//j7MpI3RpCb1G03bZfGO3mj8UOIAAhcqdvT4ZsMv9NIUOezGf4LO3MZfku24BvBRaYWG971
+	wX9I2THW0GNMjseONuF4jvM04X7CUzQwKnIVbv4tSTfblKTowR3BjeVbqUDJRGSQs78ZQhQ==
+X-Gm-Gg: AfdE7cl46mNJy9eGdKnhYgRm5arkCTH1wKd6LP14LGV2nkNaGgSlhyZMJ9+a4wycUI0
+	0R1yS5ggvGPW0m82Iwz2tqRkHeqNOpbuAnXE+1+4jZPCGfR2ZTgh4ZEL919/TtvPfwH9BOlltBP
+	aYdV6WS83XL1XCadAi1vsOkULKEeOmyOIIyOyDBQy/ZJB6RYTanyxYY5rnCqwQ8C1rnNrgY0CbM
+	dWlnTWjixce64EINyaNIayzvso1rxRE704oihy6382wsyA8U3XXJIzOQPw81apRsTywTH096WQl
+	4fFIV06rGFggkc4Kar6/QTTbLmwQCMoGIe6y1AXsOMoWRfeNps2850hiacAHSJWQeGMAMrqtgaG
+	cSjeUJnKcZW5645yngpW2XnJc1gBOI9UU4gExxBIvhLK38RN2oMIikLk=
+X-Received: by 2002:a05:6000:4a13:b0:472:e43b:5e8c with SMTP id ffacd0b85a97d-475dff5e567mr2010142f8f.20.1782815414192;
+        Tue, 30 Jun 2026 03:30:14 -0700 (PDT)
+X-Received: by 2002:a05:6000:4a13:b0:472:e43b:5e8c with SMTP id ffacd0b85a97d-475dff5e567mr2010076f8f.20.1782815413538;
+        Tue, 30 Jun 2026 03:30:13 -0700 (PDT)
+Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47563d194b0sm6895099f8f.1.2026.06.30.03.30.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 03:30:12 -0700 (PDT)
+From: Javier Martinez Canillas <javierm@redhat.com>
+To: Amit Barzilai <amit.barzilai22@gmail.com>
+Cc: airlied@gmail.com, dri-devel@lists.freedesktop.org,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+ sashiko-reviews@lists.linux.dev, simona@ffwll.ch, tzimmermann@suse.de
+Subject: Re: [PATCH 1/3] drm/ssd130x: fix column and row end address in
+ partial updates for ssd132x
+In-Reply-To: <20260630095600.8392-1-amit.barzilai22@gmail.com>
+References: <87mrwdd8t5.fsf@ocarina.mail-host-address-is-not-set>
+ <20260630095600.8392-1-amit.barzilai22@gmail.com>
+Date: Tue, 30 Jun 2026 12:30:11 +0200
+Message-ID: <87echococs.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: v4QhhVD1iDz82Y2iivILrMNibw990tMpXqs_WBY-fRc_1782815415
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
 
-Hello,
+Amit Barzilai <amit.barzilai22@gmail.com> writes:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Low] The static function `ufshcd_intr` becomes unused when `CONFIG_PRE=
-EMPT_RT` is enabled, causing a compiler warning.
-> - [Low] Typo in the newly added source code comment.
+Hello Amit,
 
-Both of Sachiko's comments are valid. I am addressing these issues in
-the next version.
+> Javier Martinez Canillas <javierm@redhat.com> writes:
+>> Sorry, I was on PTO and couldn't take a look to your series. I plan to do
+>> it this week.
+>
+> Thank you for the update and there is no need to apologize.
+>
+>> One question, though. How did you find these issues and came up with the
+>> fixes ?
+>>
+>> It was just reading the code and the datasheets or were the issues (and
+>> fixes?) identified by an LLM? If the latter, then you need to add an
+>> Assisted-by tag to your pa+tches.
+>
+> I found the bug and solution while debugging the ssd1351 extention to ssd130x.
+> I used an LLM to make sure my patches made sense and to recheck my patch logically
+> and I wasn't sure whether that was enough to warrant the tag.
 
-Gregory
+That's a good question. I don't really know to be honest.
 
-> --
->
-> commit 6afdc0b243918ce89eb55cea6349f608516d9d03
-> Author: Gregory CLEMENT <gregory.clement@bootlin.com>
->
-> scsi: ufs: core: Avoid sleeping in hard interrupt context when PREEMP_RT =
-is enabled.
->
-> This commit addresses a sleeping-in-hard-irq context bug under PREEMPT_RT=
-.=20
-> It mitigates the issue by bypassing the hard IRQ handler and directly=20
-> registering the threaded interrupt handler when PREEMPT_RT is enabled.
->
->> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
->> index d3044a3089b53..6d82658a1a66b 100644
->> --- a/drivers/ufs/core/ufshcd.c
->> +++ b/drivers/ufs/core/ufshcd.c
->> @@ -11235,9 +11235,17 @@ int ufshcd_init(struct ufs_hba *hba, void __iom=
-em *mmio_base, unsigned int irq)
->>  	 */
->>  	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
->>=20=20
->> -	/* IRQ registration */
->> +	/* IRQ registration
->> +	 * In the case of PREMMP_RT, directly use the threaded
->
-> [Severity: Low]
-> This isn't a bug, but there is a typo in this comment ("PREMMP_RT" instead
-> of "PREEMPT_RT"). The commit subject also has a small typo ("PREEMP_RT").
->
->> +	 * interrupt to avoid using a spinlock (which could sleep)
->> +	 * in the hard IRQ handler.
->> +	 */
->> +#ifdef CONFIG_PREEMPT_RT
->> +	err =3D devm_request_irq(dev, irq, ufshcd_threaded_intr, IRQF_SHARED, =
-UFSHCD, hba);
->> +#else
->>  	err =3D devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_thread=
-ed_intr,
->>  					IRQF_ONESHOT | IRQF_SHARED, UFSHCD, hba);
->> +#endif
->
-> [Severity: Low]
-> Will this cause a compiler warning for an unused function when building w=
-ith
-> CONFIG_PREEMPT_RT=3Dy?=20
->
-> Because the reference to ufshcd_intr() is compiled out in the #else block=
-,=20
-> but its static definition remains unconditionally compiled earlier in the=
-=20
-> file:
->
-> static irqreturn_t ufshcd_intr(int irq, void *__hba)
-> {
->     ...
-> }
->
-> Could this break builds that have CONFIG_WERROR=3Dy enabled due to the=20
-> -Wunused-function warning?
->
->>  	if (err) {
->>  		dev_err(hba->dev, "request irq failed\n");
->>  		goto out_disable;
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630-ufshcd-s=
-pinlock-sleep-fix-v1-1-339b05a1c6f4@bootlin.com?part=3D1
+If was only to review your manually written changes then I guess there's
+no need to add the tag.
 
---=20
-Gr=C3=A9gory CLEMENT, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+> I'll submit a v2 of this series with the tag - let me know if you'd prefer it handled
+> differently.
+>
+
+Up to you. As said, I don't know were we draw the line so I will let you decide
+if you want a v2 with the tags.
+
+-- 
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
+
