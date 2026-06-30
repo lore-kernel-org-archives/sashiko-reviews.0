@@ -1,78 +1,59 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out203-205-221-209.mail.qq.com (out203-205-221-209.mail.qq.com [203.205.221.209])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2963F54A7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 11:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD9B34751E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 11:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.209
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782817709; cv=none; b=OjLw9onw3ivuk9+VQChf71gnjVpH4QUg06th+QYYsGI5wb+B+Sjz3g8qjZKtF/30QQqYOCuZIfMsDeIhVQZ7hSQYYK2fo4lA0UBoazuA8Z8HUYbdrlYcL/v+BM8GyAwOQflxgbtxsf6bTegImEycLRwWVC74+XBEo3WMmUSZVzk=
+	t=1782818164; cv=none; b=Xn23ApCaMX9s7Eqzt03hhk7lM5vUN4I7XQBTZRu67foRsliAvwO+L9DO1wwojkWV80hTVxkPbBlQ3t4fMmvvLyQtgU7xnoMfBacez3As2Qv3drOhDj34fe+MqwVIuKZFszOaj4s6PV+QgIfx/4VGCEYejJ3i6y6IOwMVIB80K+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782817709; c=relaxed/simple;
-	bh=FFv+G1bNALM7Oqtoa8gRsZ+SgIOPgrI9YhEQRmTYKbg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sD1tc0dCXLAxtyM3pQBOyBiMtwEhEOkZAUBvJXB0vH7kulchPnasLl6QijAbjZiopWmJJMdBP6M6cBs6rQbTiIih3vjiGEZvalJR9K8s6HRGv5+nlX/HKSkitR8KL8SQqw1AVEUmhMrzUs3V8mG2v1Gdtx7sq7sPCu6dnXqoakI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=il8vgD9q; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782818164; c=relaxed/simple;
+	bh=aZtOcJQEs3HeA6J5ZhXO3LIiRB522Qn7mauZCnQEyGI=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version; b=F1DoCiDncwVwH5MGNMbdFtabr27ZJQvpL4dPPuU+rvMDcxPH1gT17MylhONFjkEyE74V44aAqEPOZcJQroaZUAfhotKIg7L89wK/XRUnlQzaC4r0O4WK8xIH2lQq+9k+o13xBzBSjluUHFatpteIXocvfJhKvWXFeCvIYMVVYDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=tSH21SUf; arc=none smtp.client-ip=203.205.221.209
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="il8vgD9q"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49270caa5c0so34364655e9.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 04:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782817707; x=1783422507; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XMWydGJ/5vZA6A1OvcajkdrQDyn8CAFtASnTxLQovUY=;
-        b=il8vgD9qbKGUPAU6hVuRve0roClQmi+aX8sihapkoDJHiC1y/Vx2vs4j5tVQtfHCpH
-         E6mmKPl7lo5WPlIm6m0BQa25pCL3i03rzBYDEbicBNg4bmSbhSGMNajrHjyWjtwn7ZJB
-         zAsq4QNvXsvMOeRK5eIoI+jl4vM2o3Sw7EMj3diO4LBQn6u8whH5B+z9FtXdIcgzi58N
-         JTp5Uaw9gSK9Aou6BIo5L0tGQhgleaMh6PrSdOV4Edv+r7IXR+5XhZ785VB1qQcsxGh5
-         vgDLu6GiDeqGjqG9g3zZHTvF3vba8TGMiphJcKD8mXA0UQx3JjS8/SGKLH/DA/1FO7I4
-         wPBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782817707; x=1783422507;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=XMWydGJ/5vZA6A1OvcajkdrQDyn8CAFtASnTxLQovUY=;
-        b=HjyGMC30fnHoe9cgldoAs2sRoEz0VJaRY61TVFSuDlFfOXfihF9b6AKD6Ug2W8+uLH
-         pvDJVbu8iVuK8A/cc+np2caER1+tgcMhrCxwentxnlBldnnIoNc+XAvTpqEC7eN2RVyu
-         CoWdeyGxvvJQt2HQLssKLtXrNbY/fOi0R7uCL1uRVOXuPz7N9zEUJdQ1582jepURLuqP
-         QXHk0vrAq3y8b3A4hUV0P1uP/EildQgxyTJfbhtGndIHVV6fsR+mR2or7qw4gwCbYtWJ
-         gjIHYZhV/B8/l4LUHwxJ6GV1KLpF0kMj6B3Z9hT1QEn4xC8I3df0/3dilrdAHOdjr+u7
-         ZZXw==
-X-Forwarded-Encrypted: i=1; AFNElJ+2aHRLnYHrw1ajLl3Y0Paajji6Wne49OoN/i7+GrjvQWCa7YPmgKgVYRXBs0OmLzKls1pv9vq3AL9VVHyZAOY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzIkmv6eJ131pVzJVGz5CgRBVsiNFwM/K1YYwhk4r240tUn6p1W
-	FXbIn7O5PuSPHcliLg5zuTqS+AVUVu5oqfoXWI5QfNUnmhwcGPQiLGg7
-X-Gm-Gg: AfdE7cmMOpcSwEx0lBnNcmY63xV+VWmjPiDDxRiSKr9VDFe6t2rTD2kDnwKMb1aX8WL
-	6nocw1rGfobZc1ISq3fBw4MU/n3xB+EuSV11n+/T76YDvLRFSHx8nzxnSFJSkfLQgy3hmOA6a0z
-	pEoXVXj2KcI39KaWWGcux6oQzJT4HBJhk3Kesiv0SnlwVpiQBedLHS1M1Vs5BASYofeb8f6n0Uj
-	ewsMcSiU1zAqZlyLgvkZmOhScgs8Bw3VXdEf415Ztl6eebmehE/18yOt8GXE4CfUi0iuQ1us1Y9
-	auVlS0S5uUz8tfww7SCb7lkHhV34Ax5JorJArRfmaD4w1cCEbOOgD9tlqq6Vke4svPUQb6wVQFE
-	0cQZnz9SZT9iv0nTLxsIKl3YXrE3Mb9tug04sb16tOyKATn42WgKPoUwmb/WeyZvZq49ZhWQIvf
-	jaxdUirJ+28NVpx1Vvrcz+B7YYVvo=
-X-Received: by 2002:a05:600c:1f8b:b0:493:a438:7f98 with SMTP id 5b1f17b1804b1-493b82acce9mr47208375e9.18.1782817706582;
-        Tue, 30 Jun 2026 04:08:26 -0700 (PDT)
-Received: from anthony.local ([2a06:c701:49b2:4c00:12ff:e0ff:fea5:3d2e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493b8d0462asm61791645e9.11.2026.06.30.04.08.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 04:08:26 -0700 (PDT)
-From: Amit Barzilai <amit.barzilai22@gmail.com>
-To: javierm@redhat.com
-Cc: airlied@gmail.com,
-	dri-devel@lists.freedesktop.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	simona@ffwll.ch,
-	tzimmermann@suse.de
-Subject: Re: [PATCH 1/3] drm/ssd130x: fix column and row end address in partial updates for ssd132x
-Date: Tue, 30 Jun 2026 14:08:06 +0300
-Message-ID: <20260630110806.23204-1-amit.barzilai22@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <87echococs.fsf@ocarina.mail-host-address-is-not-set>
-References: <87echococs.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="tSH21SUf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1782818160; bh=gyqfkTLrC6kduqPSVXaxDqy1JRHoGg4HTQ/Xtx9D1OE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=tSH21SUf877HKM3nl4vDw/uvDEVS8pElISt5BhX797O2Oham8HzfXPnNg6VfobEPw
+	 IbPUQWzAo9cJHmdC0DlnW8pvsMte8VdPSn8QV3uzuwMzWhx1D4yLVutL9uySrIDl6x
+	 uP3/O3ljzbcaTSnMgM0NpXiL3uTs0rftJfUNc3Ho=
+Received: from lxu-ped-host.. ([111.198.231.89])
+	by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
+	id 3ABBB8EE; Tue, 30 Jun 2026 19:14:43 +0800
+X-QQ-mid: xmsmtpt1782818083t01f49fsd
+Message-ID: <tencent_94C3BFC44F9761376546C493608362896E05@qq.com>
+X-QQ-XMAILINFO: Nx5J06Esz7r7xbYMHuFPJJR67lhKId4a74qy8RLwQpfc9eLqmmxkaIlif2mxU0
+	 y5jvZVjn20x0Yk8tg2OrRLVvw7LFykBaSBEWFm8pRq71WQhWf39m53PXvD6gms/yr54UhKrI8ZUk
+	 ind/KSi5Kt/cv5vvqh6Imn76DhM1PqFxHRbW3WvfiIUhnh5yp5ysyfvEZjIGnVlrYjs6YgPICBBD
+	 3wAHH6HigA87siexD9lwqlPrzbvb9WpKVNkn0Huq0y4CteKH3dQ8mPn+u3JMx8xOETFXV5GTK1eZ
+	 OgBEWI9TRAJ1m840KlmvoS87CyEWNh9QQprfZEXhFIsPCtwGXMrxgkp7UPAjo2d+YgTvO1KEnFhx
+	 jKhY9ix8i4GdXEmiCkHKu1veTWpANsMf4XXKiZds+iCkIYAtOAcvt2Qe2+nufQnvBIk6AnEUIavS
+	 R5io8ocfGfpvdKcmDIWMPImqBG9dQcC49+Igw5eA98py+0tOF9iyN4vgeiTCGSP4umCDyt5ISoyY
+	 8SMlRLyGAg/5Z/KOT7QSXbldl4toH9vogoDNSOHksIvy9xq9XIVDhxK+jLnKgOgTmwpeGMDU7nHV
+	 Gg08/1+eghIb66uS264YjCRNwSJ1qH/0ppqG8hN+o6XewXhK92oqZ2ngR0ny5e3RLrXCyKOeiZ1a
+	 Ew65vPZWsbfR2M1Q7Er3/Nl0c7C8ztsr8yZlobX9ZR0nCFCAEkpcEwhmQuidQJBG/5JU7sMkROvz
+	 SvfXdVVDR989vrDysGwqh+jkAn5ZxwVq3Hqh6M0dv7I4gFtQsZwvL+e6HKf2/b1QOjcliVqUhJ/6
+	 dcpJHZDzjl9ZeDF1cK29MKSdGfrBKEmUQ3bhIf1QeN8ztdaENUK8TyZxYVTJ8dw9osZp5aHDjZJM
+	 /T0DPUqlTRFVbXQwNZTzzwkZ2Hy/gVeMrak8EqD0wktZjZoNFGQZ2dPcZj7bK+yFvkHPWV3tA9jr
+	 gddq55CE5JsBMijjaJbeQcZHHzWeEtqKhPl+KMKg+YR5BllqgMYcRYciQoLVVsMiJ7Rbuv5ovJTi
+	 lk1GCMB7VnE1wL5g5t
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+From: Edward Adam Davis <eadavis@qq.com>
+To: sashiko-bot@kernel.org
+Cc: bpf@vger.kernel.org,
+	eadavis@qq.com,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] bpf: Fix smp_processor_id() call trace for preemptible kernels
+Date: Tue, 30 Jun 2026 19:14:43 +0800
+X-OQ-MSGID: <20260630111442.947614-2-eadavis@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260630094823.897BD1F00A3D@smtp.kernel.org>
+References: <20260630094823.897BD1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -81,13 +62,48 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Javier Martinez Canillas <javierm@redhat.com> writes:
-> Up to you. As said, I don't know were we draw the line so I will let you decide
-> if you want a v2 with the tags.
+On Tue, 30 Jun 2026 09:48:23 +0000, Sashiko wrote:
+> [Severity: High]
+> Does this fix the issue at the right layer? By adding the preemption
+> protection here, it masks the fact that the caller is running with migration
+> enabled, which leaves sibling APIs vulnerable.
+> 
+> For example, in __rhtab_map_lookup_and_delete_batch() in
+> kernel/bpf/hashtab.c, the batch loop iterates and calls rhtab_delete_elem()
+> without disabling migration.
+> 
+> If the map elements contain special fields (like BPF_KPTR),
+> rhtab_delete_elem() will first call rhtab_check_and_free_fields(), which
+> eventually calls bpf_mem_free().
+> 
+> Since bpf_mem_free() also uses this_cpu_ptr() without get_cpu() protection:
+> 
+> kernel/bpf/memalloc.c:bpf_mem_free() {
+>     ...
+>     unit_free(this_cpu_ptr(ma->caches)->cache + idx, ptr);
+>     ...
+> }
+> 
+> Will this result in the exact same BUG being triggered on that path? Should
+> the missing migration protection be added to
+> __rhtab_map_lookup_and_delete_batch() instead of modifying the allocator
+> here?
 
-I don't believe the usage was enough to warrant the tag, since the LLM only reviewed changes I'd
-already written and reasoned out myself - let's keep v1 as is.
+Like this?
 
--- 
-Thanks,
-Amit
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 9f394e1aa2e8..7b98c2eea685 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -3345,8 +3345,10 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 	}
+ 
+ 	if (do_delete) {
++		get_cpu();
+ 		for (i = 0; i < total; i++)
+ 			rhtab_delete_elem(rhtab, del_elems[i], NULL, 0);
++		put_cpu();
+ 	}
+ 
+ 	rcu_read_unlock();
+
