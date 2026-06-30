@@ -1,33 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010039.outbound.protection.outlook.com [52.101.46.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C259A27281E;
-	Tue, 30 Jun 2026 06:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782802276; cv=none; b=cdr1ZBh1GSagFjo+iX2UargbOcJGLO9udgBtKrzUc9wSQ6zpRsiAIBcAS8RH/6iLhiEfNdsyznhFEELCSVmTNhZsC0abAIPKziK3AqvYveJVovR1JYpL0Lkxbn2UoonrTltIcMyX7WzVZN8z5ixHTcMGVuDKorH0yIhtHEQZ2PI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782802276; c=relaxed/simple;
-	bh=QBin0qkNZgo/BsEPYLFb4Jn00X9Axcdrc+nWuJwDOSc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sMQ896ewVg1y80I6Odz8Ml/cqNJ3JZtRdYENletM9SLouFnWG2KOchrIwXEg5R+QqhiBxdI3ZK73OZhKa9m35FQxfH0dYX6DB1WFN9EnWZz7opED89bv+kuACNCC+QencBjPqZ8ECg43eq3KGXHZkzTsjhJ0MCudLQxBu6IlcLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nuAzmqSz; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0F22BEFF5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 08:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.39
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782807399; cv=fail; b=QPY3zEqqrH5xDxc/NOiBjTvLtBfIjCnMJ4U7dBalRtDGGlArMIVzLW3zzFw6rorRDdpxQ4DdGjHG3BlhtEBZJ3w8s9tPocLBNtLb0WYQImOiCUb35d5yphcXQxCtqOkyhG/JVX/RIcXlWiW7jd5KwXSRdyYW+mYauUfEz1NEQlY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782807399; c=relaxed/simple;
+	bh=8ixM2KX9HVuryp+Nx5pqh6K7SW5d1y01mqwaWRS/kY0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=OCb8ensQgPWGiWIOMkpMeDWOhlta92tQwChQDUXwzXrNjaSdJZM27bR8SwZYJxucagUg2T1vNcG6eYOJ5XoKY1CjiXR3+JpjGE9vLllt/oPawRMPYAcWwmUNrBCwFeFE1Bd181LkDb/rzw++5OxE+tkqR4MRNhKUl9WbyRhqOeE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=LaHGuXnB; arc=fail smtp.client-ip=52.101.46.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nuAzmqSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EB51F000E9;
-	Tue, 30 Jun 2026 06:51:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782802274;
-	bh=2CWiK2qTlwNJH+WrP0XISRBQa0J5WKaVN+xGiPxGTxY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=nuAzmqSzXiDIkcN+qlLSQqSWGFp45xJpf2cgRW/hWvpXKxQiuX7dBMdnZepQiiZPo
-	 hA1/4Iv9100Yr6CBRankbnCiQkGeuOnCsciBkNrS1ukwbHtfwtxuXBCE/LUHOUuGcz
-	 Wf3ur/qt7JuLqLr9kO7IXSzwFnyhUwimmBVFqjg5VJzj4HmoIsmy/9to05UvEAmkUq
-	 QHWu1YGtfuY2zpY5vCBj0BXhZ1+cUDFz7+PjRcaz/qbp+/zgqjsxN24IYOm/8TV1C3
-	 4/N9jR866WVbJuSMM+rtrpMT3382CjEhbka5xLkiV7HS6IGcC/tebkhPRCTFLbfN6/
-	 pPRX0S6DaVfXg==
-Message-ID: <b963bde4-25fb-4cf3-9fa5-4eb417cf49ef@kernel.org>
-Date: Tue, 30 Jun 2026 08:51:10 +0200
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="LaHGuXnB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B3H8NHCw/RmXfezQGXMztvrCiztN96osyvf9HFEtyO6RUuK5eeLj90CUygqLeiI2nj1Ohgk0R4d4LXZnX3H7d9aWSp4Uj+hJEGByPDlVSOEahJC4ccZBNbaquRjqKx10G18BRoGUcBGapDUgAEnVkO5TO2K7SebypPFsZZ0mrb2EpnaIg8tQggIlPsD/AV0P5fCAXY1Wu/EU9gADztLQrliY4Rc6TLkeeDeKpWO1yECbgPuOUCSbGRtQ+/9GgSrlRg5RfRWT9ucQrnPmd8x6q3IhBIhb+j+eS05cjI5UOZTKu6iTZLQr5MPsw0q76RvgNyLga0zchZBMDx+mAjeZ9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rKQWl+l2XaVOwegCSWCoBKhTPM0pH0mvM38FRdnJxKQ=;
+ b=t75vjp2rz+/9WaiWjxoytPDYD5i0Viy/AA9Y9N374vqJ94xxLdlLAJuKiwksEvm+WrjGlVCRAwBkd3rp5D+yecuwwZevX7F9eVC8r2QEsqpBZWBDIzyHX2NRAfPZOnkTiieik+LDCnGuEbAh4rleA2O4XJi0ByPSYlhyiA/fFDl6gDqDCiE10Qi14Tfzur8Lwx+ChyDyYiCT4/Een5YaQ6KYK+ff+D2jvpZ37IlxwFOBktsy8zPhUq2SLCuf+ZUiHX6fNYpsUUxoXdBpJceASprCPgBWCNOopX9p0Ov68g/drnjx/qA/UXqoPKokiNeVW7AOumQHGZ0hBB83251x/w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rKQWl+l2XaVOwegCSWCoBKhTPM0pH0mvM38FRdnJxKQ=;
+ b=LaHGuXnByKf+JDTNiav5E+Xizq0akIvvb1rRu2X6HPLUpDsfNLJApXhRAb5BKX41QxzE/74H7o0mt9XiZegbi7YcH5U2Pu3qslN67NptO3kvURwJQvjx3CtoeHtLv216PRTW/buUmXQgxJGJQSSLv5Klsr9i+DyqRK8NwgcV/rw=
+Received: from SJ0PR13CA0154.namprd13.prod.outlook.com (2603:10b6:a03:2c7::9)
+ by SJ0PR12MB6927.namprd12.prod.outlook.com (2603:10b6:a03:483::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Tue, 30 Jun
+ 2026 08:16:32 +0000
+Received: from SJ5PEPF000001F5.namprd05.prod.outlook.com
+ (2603:10b6:a03:2c7:cafe::9e) by SJ0PR13CA0154.outlook.office365.com
+ (2603:10b6:a03:2c7::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.8 via Frontend Transport; Tue, 30
+ Jun 2026 08:16:32 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ5PEPF000001F5.mail.protection.outlook.com (10.167.242.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Tue, 30 Jun 2026 08:16:32 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 30 Jun
+ 2026 03:16:31 -0500
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 30 Jun
+ 2026 01:16:31 -0700
+Received: from [10.136.39.208] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Tue, 30 Jun 2026 03:16:30 -0500
+Message-ID: <45be33f3-0853-44e8-834b-ce52bf241fb5@amd.com>
+Date: Tue, 30 Jun 2026 13:46:29 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,367 +71,125 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] can: Add Loongson CAN-FD controller driver
-To: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>, sashiko-reviews@lists.linux.dev
-References: <cover.1782787997.git.zhoubinbin@loongson.cn>
- <b80d271f63f6318a4060220e8107785bd147f1bd.1782787997.git.zhoubinbin@loongson.cn>
- <20260630031622.14F981F000E9@smtp.kernel.org>
-From: Vincent Mailhol <mailhol@kernel.org>
+Subject: Re: [PATCH v5 3/8] arm64/runtime-const: Introduce
+ runtime_const_mask_32()
+To: <sashiko-reviews@lists.linux.dev>
+CC: Alexander Gordeev <agordeev@linux.ibm.com>, Heiko Carstens
+	<hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+	<linux-s390@vger.kernel.org>
+References: <20260630045531.3939-1-kprateek.nayak@amd.com>
+ <20260630045531.3939-4-kprateek.nayak@amd.com>
+ <20260630050742.0BBB21F000E9@smtp.kernel.org>
 Content-Language: en-US
-Autocrypt: addr=mailhol@kernel.org; keydata=
- xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
- JFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbEBrZXJuZWwub3JnPsKZBBMWCgBBFiEE7Y9wBXTm
- fyDldOjiq1/riG27mcIFAmdfB/kCGwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcC
- F4AACgkQq1/riG27mcKBHgEAygbvORJOfMHGlq5lQhZkDnaUXbpZhxirxkAHwTypHr4A/joI
- 2wLjgTCm5I2Z3zB8hqJu+OeFPXZFWGTuk0e2wT4JzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrb
- YZzu0JG5w8gxE6EtQe6LmxKMqP6EyR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDl
- dOjiq1/riG27mcIFAmceMvMCGwwFCQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8V
- zsZwr/S44HCzcz5+jkxnVVQ5LZ4BANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
-In-Reply-To: <20260630031622.14F981F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: K Prateek Nayak <kprateek.nayak@amd.com>
+In-Reply-To: <20260630050742.0BBB21F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F5:EE_|SJ0PR12MB6927:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8646c670-239a-4296-a0af-08ded67fe4fa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|82310400026|36860700016|376014|1800799024|13003099007|18002099003|22082099003|3023799007|56012099006|11063799006|5023799004|4143699003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	QjVQMLtzJdyqIYDEREDljdXHKIAQ8ixNGUp6+3HNqGo2ZRBYD7VTPR3oB66S+4ShSmUNmfgCCzmtx+3wiwkBOgJbWSiqllejakJWe1o46v3LdRNfWm/CAHmnRRzUh/nLC6jYwUJfDheHQwIISt2lPrQMIQw1XPGa3KzleJzl1CvQxiGSbVHFAXrELz6mTthiQRwvh9YIvPQmEs7zlkc52VCvAR2vsqr4GUwyn+W7NhvKWTx4+6gb/QmgrjQPMFRN9+JrcKvZGm7IzPB8p03fHe9dY+32xCFEvyeDk8jozK6h8jbvL02Aleuu3hBL/QM2O6dATdK4McRQqyDhvi1wabkrjldd7Fk8JXDT85SgXwWoPUFKCGZQLx0IFLV4yiIy0TcUeZV/nQwAUMwBhbrOhyi6lhuaifUvAsP3a2ZfQlzY8FXGSoV9jCthV07vvVrymWQxBgkKCUjELHjjB+kGJRRd1OIY1Xfyt74y0qjkHkbmWgKUH5myGKYz6YBYSU+rucYixvczk5nTQlXL/CbnbflXfX8JxIZcqpfM+fYozr/g82OSTzMwEi4t7o8UxgOpN8k30G+wYxyjG8EguAjJLAxjhQG/YZOtP8KB4tTpED79dwAsyec3KCVmgD8YJtwgx2lfTBN+PQXMT75lYeKibQy4vaOen2JkJt+dK5SGjKYcghDOwboOH79yuRQJTxYGNbjRD9kkCf18Ez5v8Wy0OA==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(36860700016)(376014)(1800799024)(13003099007)(18002099003)(22082099003)(3023799007)(56012099006)(11063799006)(5023799004)(4143699003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	IsyDmfF9vFc687suBupwGhp9caQxLx7dOwUpdamgphKTdTSy3cC2ObrwtR6QNCewqaRv5fPe90CDJEWtVYclA2dIDXS3z2nlHnXccFQwQcFpTD1dwtLmwscLDg7ilt7PCPKha2Kf+o1Ob/jRyPUS5Nc8ODb84p3zt6cIIk3KtizpF37gmXr/oUCK4XGQDrBgjXMY57OChisO3DCRyRVls+5ejyfj8gA8ZCpRZGjJlMJF0J1qlQusTTWV3cXOlLtMQueLllkV0MQ6Xhc3FjdJNG7nPS3mQ0EWUTUJZoI4x5pj9368oYytFAGl6fs+Z9hrvs6c7zJGHIFBUhLNZCMd210FYHFxJ/8VBxQr99XSCAXiWe/8cW8FKv/BlhgC5PM/PKh+h/PsxIXHPMfo8ufqPVzAfdf5NMBzGnSae7buJJylgt5NNu9zEjlbWJyT+g//
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 08:16:32.3244
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8646c670-239a-4296-a0af-08ded67fe4fa
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001F5.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6927
 
-Hi Binbin,
+Hello,
 
-Thanks for the v3. Please first have a look at the sashiko bot findings.
-Some of these are legit.
-
-I will continue my review after you address the relevant findings.
-
-On 30/06/2026 at 05:16, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 18 potential issue(s) to consider:
-> - [High] Missing `skb` check in `CAN_STATE_ERROR_ACTIVE` case leads to a NULL pointer dereference.
-> - [High] SKB allocation failure or invalid frame in RX path permanently stalls NAPI and corrupts RX FIFO.
-> - [High] NAPI poll list corruption due to calling `napi_complete_done` while returning `quota`.
-> - [High] Missing `napi_disable()` on error paths in `loongson_canfd_open()` leads to a kernel panic on subsequent open attempts.
-> - [High] Race condition in `loongson_canfd_start_xmit` causes unexpected packet drops due to un-reaped TX buffers.
-> - [High] Missing bounds check on the hardware-provided word count `REG_FRAME_META1_RWCNT` causes heap buffer overflow.
-> - [High] Unchecked return value of `device_property_read_u32` leaves `clk_rate` uninitialized.
-> - [High] Premature hardware restart on Bus-Off when auto-restart is configured.
-> - [High] Bitwise NOT on a 16-bit variable unintentionally unmasks all interrupts due to integer promotion.
-> - [High] Overwriting of `isr` variable causes lost error interrupts and permanent interrupt masking.
-> - [High] Using `regmap_update_bits` on command-style SET/CLR registers causes conflicting hardware commands.
-> - [High] Calling `kfree_skb()` with hardware interrupts disabled.
-> - [High] Potential infinite loop in TX interrupt handler due to repeated status reads of posted writes.
-> - [Medium] The driver advertises 'hardware timestamping' in commit message but does not implement it.
-> - [Medium] `ndev->stats.rx_errors` is modified concurrently from both hardirq and NAPI softirq contexts without locking.
-> - [Medium] Incorrect check for RTR frames causes invalid RX byte statistics.
-> - [Medium] Missing `cf->len8_dlc` assignment for Classic CAN frames.
-> - [Low] Syntax error due to variable declarations immediately following a switch case label.
+On 6/30/2026 10:37 AM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Calling `__fls(val)` before `BUG_ON(!val)` invokes undefined behavior for `val == 0`, potentially allowing the compiler to optimize away the safety check.
+> - [Low] The commit message incorrectly references `amd64` instead of `arm64` and misspells `density`.
 > --
 > 
-> commit e0d474f047900e47a73eaa207fc07dd8c35084bf
-> Author: Binbin Zhou <zhoubinbin@loongson.cn>
-> Subject: can: Add Loongson CAN-FD controller driver
+> commit e9b79c78d336baf757f7578713831df9b1c4c1b9
+> Author: K Prateek Nayak <kprateek.nayak@amd.com>
 > 
-> This commit adds support for the CAN-FD controller integrated into 
-> Loongson-2K series SoCs. It implements NAPI for the RX path, TX buffer 
-> management, bus error reporting, and various timing configurations.
+> arm64/runtime-const: Introduce runtime_const_mask_32()
 > 
-> [Severity: Medium]
-> The commit message states the driver supports hardware timestamping, but is
-> this functionality actually implemented? Looking at the driver code, it sets
-> ethtool_op_get_ts_info but does not seem to extract the timestamp field from
-> the hardware or write to skb_hwtstamps in the receive path.
+> This patch introduces runtime_const_mask_32 to optimize the mask operation
+> in the futex hash computation hot path using the UBFX instruction. It also
+> adds __runtime_fixup_mask to patch the 32-bit mask in the asm block once
+> the mask is known.
 > 
->> diff --git a/drivers/net/can/loongson_canfd.c b/drivers/net/can/loongson_canfd.c
->> new file mode 100644
->> index 0000000000000..1c7381129c2b6
->> --- /dev/null
->> +++ b/drivers/net/can/loongson_canfd.c
-> [ ... ]
->> @@ -891,37 +891,24 @@ static int loongson_canfd_chip_start(struct net_device *ndev)
-> [ ... ]
->> +	/* Configure interrupts */
->> +	int_ena = REG_INT_STAT_RBNEI | REG_INT_STAT_TXBHCI |
->> +		  REG_INT_STAT_EWLI | REG_INT_STAT_FCSI;
->> +
->> +	/* Bus error reporting */
->> +	if (priv->can.ctrlmode & CAN_CTRLMODE_BERR_REPORTING)
->> +		int_ena |= REG_INT_STAT_ALI | REG_INT_STAT_BEI;
->> +
->> +	/* It's after reset, so there is no need to clear anything */
->> +	regmap_write(priv->regmap, LOONGSON_CANFD_INT_MASK, ~int_ena);
+> Link: https://developer.arm.com/documentation/ddi0602/2026-03/Base-Instructions/ [1]
+> Link: https://lore.kernel.org/lkml/20260430094730.31624-4-kprateek.nayak@amd.com/ [2]
 > 
-> [Severity: High]
-> Will this bitwise NOT operation unmask all interrupts on the controller?
-> Because int_ena is a 16-bit unsigned integer, the bitwise NOT causes integer
-> promotion to a 32-bit signed int, filling the upper 16 bits with 1s. Since
-> the upper bits of this register clear the mask, does this unintentionally
-> enable every possible interrupt?
-> 
->> +	regmap_write(priv->regmap, LOONGSON_CANFD_INT_ENA, int_ena);
-> [ ... ]
->> @@ -1048,46 +1048,22 @@ static netdev_tx_t loongson_canfd_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-> [ ... ]
->> +	for_each_clear_bit(i, &tx_brp, LOONGSON_CANFD_TXBUF_NUM) {
->> +		u32 transmission_complete_mask = 0x3 << (i * 2);
->> +
->> +		if (!(tx_bs & transmission_complete_mask)) {
->> +			buf_id = i;
->> +			break;
->> +		}
->> +	}
->> +
->> +	if (!loongson_canfd_insert_frame(priv, cf, buf_id, can_is_canfd_skb(skb))) {
->> +		netdev_err(ndev, "TXNF set but cannot insert frame into TXTB! HW Bug?");
->> +		kfree_skb(skb);
-> 
-> [Severity: High]
-> Could a race condition here cause silent packet drops? The hardware clears
-> tx_brp immediately on completion, but tx_bs is cleared later in the ISR.
-> If all inactive buffers are awaiting a reap, the loop finishes without
-> finding a buffer, leaving buf_id at 0. This would cause the insert check to
-> fail, dropping the packet while incorrectly returning NETDEV_TX_OK.
-> 
-> [Severity: High]
-> Is it safe to call kfree_skb here? The tx_lock is held with
-> spinlock_irqsave which disables local interrupts. Calling kfree_skb with
-> hard interrupts disabled can lead to kernel warnings and potential deadlocks.
-> Should this use dev_kfree_skb_any instead?
-> 
->> +		ndev->stats.tx_dropped++;
->> +		return NETDEV_TX_OK;
->> +	}
-> [ ... ]
->> @@ -1105,37 +1105,25 @@ static void loongson_canfd_read_rx_frame(struct loongson_canfd_priv *priv, struct canfd_frame *cf,
-> [ ... ]
->> +	/* Data Length Code */
->> +	len = FIELD_GET(REG_FRAME_META1_DLC, meta1);
->> +	if (len > 8) {
->> +		if (meta1 & REG_FRAME_META1_FDF)
->> +			len = wc << 2;
->> +		else
->> +			len = 8;
->> +	}
->> +
->> +	cf->len = len;
-> 
-> [Severity: Medium]
-> Does this properly support the CAN_CTRLMODE_CC_LEN8_DLC feature? For Classic
-> CAN frames with a DLC greater than 8, the length is appropriately capped to
-> 8, but the original DLC is not saved to cf->len8_dlc. This might break
-> userspace protocols that rely on the original DLC data.
-> 
->> +	if (unlikely(len > wc * LOONGSON_CANFD_DW_BYTE))
->> +		len = wc * LOONGSON_CANFD_DW_BYTE;
->> +
->> +	/* Data */
->> +	for (i = 0; i < len; i += LOONGSON_CANFD_DW_BYTE)
->> +		regmap_read(priv->regmap, LOONGSON_CANFD_RX_DATA, (u32 *)(cf->data + i));
-> 
-> [Severity: High]
-> Can a malformed hardware word count cause a heap buffer overflow? The len
-> variable is checked against the hardware-provided word count, but not against
-> CANFD_MAX_DLEN. If the hardware yields an invalid read word count, the length
-> could exceed the 64-byte payload limit, causing out of bounds memory writes
-> to the skb data.
-> 
-> [ ... ]
->> @@ -1164,28 +1164,22 @@ static int loongson_canfd_rx(struct net_device *ndev)
-> [ ... ]
->> +	/* Flexible Data-rate Format */
->> +	if (meta1 & REG_FRAME_META1_FDF)
->> +		skb = alloc_canfd_skb(ndev, &cf);
->> +	else
->> +		skb = alloc_can_skb(ndev, (struct can_frame **)&cf);
->> +	if (unlikely(!skb))
->> +		return 0;
-> 
-> [Severity: High]
-> If the skb allocation fails, does returning 0 early permanently stall the
-> NAPI loop? Since the rest of the data payload is not read from the hardware
-> FIFO, the RX stream might desynchronize. Also, returning 0 here causes the
-> caller to exit its loop without completing NAPI, potentially leaving it
-> permanently in a scheduled state.
-> 
->> +
->> +	loongson_canfd_read_rx_frame(priv, cf, meta0, meta1);
->> +
->> +	if (cf->can_id != CAN_RTR_FLAG)
->> +		stats->rx_bytes += cf->len;
-> 
-> [Severity: Medium]
-> Is this RTR check accurate? The can_id field contains both the CAN ID and
-> the flags, so a direct inequality comparison to CAN_RTR_FLAG might evaluate
-> true for almost all RTR frames, erroneously inflating the RX byte statistics
-> for frames with no actual payload.
-> 
-> [ ... ]
->> @@ -1203,32 +1203,26 @@ static enum can_state loongson_canfd_read_fault_state(struct net_device *ndev)
-> [ ... ]
->> +	switch (FIELD_GET(REG_FSTAT_MASK, fstat)) {
->> +	case REG_FSTAT_ERA:
->> +		u32 ewl, erl, rec_tec, max_tec;
+>> instruction is used for amd64 to improve instruction dinsity and
+>> performance.
 > 
 > [Severity: Low]
-> Will this compile on strict C11 compilers? The C11 standard does not allow
-> variable declarations immediately following a switch case label.
+> This isn't a bug, but there are a couple of typos here. Should "amd64" be
+> "arm64", and "dinsity" be "density"?
+
+Ah! Yes. Sorry about that. I'll wait for a while for more comments and
+spin a v5.1 if necessary to fix those typos.
+
 > 
+>> diff --git a/arch/arm64/include/asm/runtime-const.h b/arch/arm64/include/asm/runtime-const.h
+>> index 838145bc289d2..371c9a4bc2d4b 100644
+>> --- a/arch/arm64/include/asm/runtime-const.h
+>> +++ b/arch/arm64/include/asm/runtime-const.h
 > [ ... ]
->> @@ -1278,82 +1278,28 @@ static void loongson_canfd_err_interrupt(struct net_device *ndev, u32 isr)
-> [ ... ]
->> +	if ((isr & REG_INT_STAT_FCSI) || (isr & REG_INT_STAT_EWLI)) {
->> +		netdev_info(ndev, "state changes from %s to %s\n",
->> +			    can_get_state_str(priv->can.state), can_get_state_str(state));
+>> +static inline void __runtime_fixup_mask(void *where, unsigned long val)
+>> +{
+>> +     unsigned int width = __fls(val) + 1;
+>> +     __le32 *p = where;
+>> +     u32 insn;
 >> +
->> +		if (priv->can.state == state)
->> +			netdev_warn(ndev, "cur and pre state is the same!(miss intr?)\n");
->> +
->> +		isr = REG_INT_STAT_FCSI | REG_INT_STAT_EWLI;
-> 
-> [Severity: High]
-> Does overwriting the isr variable here permanently disable other interrupts?
-> If arbitration lost or bus error flags are pending, this assignment destroys
-> them. Later in the function, isr is shifted to unmask interrupts, meaning the
-> erased flags will never be unmasked again.
-> 
->> +		priv->can.state = state;
->> +		switch (state) {
->> +		case CAN_STATE_BUS_OFF:
->> +			priv->can.can_stats.bus_off++;
->> +			if (priv->can.restart_ms)
->> +				regmap_write(priv->regmap, LOONGSON_CANFD_CMD,
->> +					     REG_CMD_ERCRST);
-> 
-> [Severity: High]
-> Does this prematurely restart the hardware upon a bus-off event? Instantly
-> writing the error reset command clears the hardware error state and rejoins
-> the bus immediately, ignoring the restart delay contract enforced by the core
-> can_bus_off timer.
-> 
+>> +     /*
 > [ ... ]
->> +		case CAN_STATE_ERROR_ACTIVE:
->> +			cf->can_id |= CAN_ERR_CNT;
->> +			cf->data[1] = CAN_ERR_CRTL_ACTIVE;
->> +			cf->data[6] = bec.txerr;
-> 
-> [Severity: High]
-> Could this lead to a null pointer dereference? The alloc_can_err_skb call
-> earlier in the function can fail and leave cf uninitialized. While the other
-> switch cases check if skb is valid before modifying cf data, this case does
-> not, which would crash if memory pressure prevents allocation.
-> 
-> [ ... ]
->> +	/* Check for Bus Error interrupt */
->> +	if (isr & REG_INT_STAT_BEI) {
->> +		isr = REG_INT_STAT_BEI;
->> +		netdev_err(ndev, "Bus Error interrupt\n");
->> +		priv->can.can_stats.bus_error++;
->> +		stats->rx_errors++;
+>> +      */
+>> +     BUG_ON(!val || width > 32 || (GENMASK(width - 1, 0) != val));
 > 
 > [Severity: Medium]
-> Is it safe to increment stats->rx_errors without locking here? This counter
-> is modified from hardirq context here and concurrently from softirq context
-> in the NAPI poll routine, which could cause lost increments due to data races
-> on 32-bit systems.
+> Does evaluating __fls(val) before the BUG_ON(!val) check invoke undefined
+> behavior if val is 0?
 > 
-> [ ... ]
->> @@ -1391,37 +1391,25 @@ static int loongson_canfd_rx_napi(struct napi_struct *napi, int quota)
-> [ ... ]
->> +	/* Check for RX FIFO Overflow */
->> +	regmap_read(priv->regmap, LOONGSON_CANFD_STAT, &sts);
->> +	if (sts & REG_STAT_DOR) {
->> +		struct net_device_stats *stats = &ndev->stats;
->> +		struct can_frame *cf;
->> +		struct sk_buff *skb;
->> +
->> +		netdev_info(ndev, "Loongson canfd RX overflow\n");
->> +		stats->rx_over_errors++;
->> +		stats->rx_errors++;
+> Looking at __fls(), it uses __builtin_clzl(word) which is undefined when
+> the argument is 0:
 > 
-> [Severity: Medium]
-> As noted above, stats->rx_errors is updated concurrently in both softirq and
-> hardirq contexts without locking.
+> include/asm-generic/bitops/builtin-__fls.h:__fls() {
+>     return (sizeof(word) * 8) - 1 - __builtin_clzl(word);
+> }
 > 
-> [ ... ]
->> +	if (rxbuf_is_empty && ret != 0) {
->> +		if (napi_complete_done(napi, work_done)) {
-> 
-> [Severity: High]
-> Should this check if work_done is less than quota? If exactly quota frames
-> are processed and the hardware buffer becomes empty, this logic calls
-> napi_complete_done and then returns quota to the networking core. Returning
-> the full quota instructs the core to reschedule the instance, but the state
-> has already been manipulated, which can corrupt the NAPI poll list.
-> 
-> [ ... ]
->> @@ -1425,33 +1425,18 @@ static void loongson_canfd_tx_interrupt(struct net_device *ndev)
-> [ ... ]
->> +	while ((buf_id = loongson_canfd_get_txbuf_id(priv, &sts)) < LOONGSON_CANFD_TXBUF_NUM) {
->> +		switch (sts) {
->> +		case TX_BS_VALID:
->> +			stats->tx_bytes += can_get_echo_skb(ndev, buf_id, NULL);
->> +			stats->tx_packets++;
->> +			break;
-> 
-> [Severity: High]
-> Could this result in an inescapable infinite loop? When the driver writes a
-> clear command to the posted MMIO register at the end of the loop, it
-> immediately reads the status register back in the while condition. Because
-> the hardware takes cycles to clear the bit, the old status is read, causing
-> the driver to repeatedly process the same buffer and spin in the ISR.
-> 
->> +		case TX_BS_FAIL:
->> +			u32 cnt;
-> 
-> [Severity: Low]
-> Similar to the fault state read function, this violates C11 syntax by
-> declaring a variable immediately following a switch case label.
-> 
-> [ ... ]
->> @@ -1584,20 +1584,14 @@ static void loongson_canfd_chip_stop(struct net_device *ndev)
->>  {
->>  	struct loongson_canfd_priv *priv = netdev_priv(ndev);
->>  
->>  	/* Disable interrupts and disable CAN */
->>  	regmap_update_bits(priv->regmap, LOONGSON_CANFD_INT_ENA, REG_INT_ENA_CLR, REG_INT_ENA_CLR);
->>  	regmap_update_bits(priv->regmap, LOONGSON_CANFD_INT_MASK,
->>  			   REG_INT_MASK_SET, REG_INT_MASK_SET);
-> 
-> [Severity: High]
-> Are these regmap_update_bits calls safe for W1S/W1C command registers? This
-> function reads the current 1s from the lower half of INT_ENA and writes them
-> back along with the clear mask in the upper half, which commands the hardware
-> to simultaneously set and clear the exact same interrupts.
-> 
-> [ ... ]
->> @@ -1604,45 +1604,22 @@ static int loongson_canfd_open(struct net_device *ndev)
-> [ ... ]
->> +err_chip_start:
->> +	free_irq(ndev->irq, ndev);
->> +err_irq:
->> +	close_candev(ndev);
->> +	return ret;
->> +}
-> 
-> [Severity: High]
-> Are we missing a napi_disable call on these error paths? If the driver fails
-> to open, the candev is closed but NAPI is left enabled. A subsequent attempt
-> to bring the interface up will call napi_enable on an already enabled
-> instance, triggering a BUG_ON in the core.
-> 
-> [ ... ]
->> @@ -1690,46 +1690,24 @@ static int loongson_canfd_probe(struct platform_device *pdev)
-> [ ... ]
->> +	regmap = devm_regmap_init_mmio(dev, base, &loongson_cangfd_regmap);
->> +	if (IS_ERR(regmap))
->> +		return PTR_ERR(regmap);
->> +
->> +	device_property_read_u32(dev, "clock-frequency", &clk_rate);
->> +
->> +	irq = platform_get_irq(pdev, 0);
-> 
-> [Severity: High]
-> Should the return value of device_property_read_u32 be checked? If the
-> property is missing, clk_rate retains uninitialized stack garbage which is
-> then assigned to priv->can.clock.freq, leading to unpredictable hardware
-> timing.
+> Could the compiler use Value Range Propagation to assume val is non-zero
+> due to the __fls() call, and silently optimize away the !val safety guard?
 
+How does that work? "width" is calculated as __fls(val) so why would the
+compiler make assumption on the possible values of "val" based on that call
+alone?
 
-Yours sincerely,
-Vincent Mailhol
+I suppose you are referring to an issue like
+https://gcc.gnu.org/pipermail/gcc/2023-November/242808.html but that is
+-O3 and under normal circumstances, the propagation is stopped if the
+compiler believes there is possibility of undefined behavior:
+https://github.com/gcc-mirror/gcc/blob/7ebc766bdbc8584699acb3f8fd30b2c393923c06/gcc/gimple-range-op.cc#L937-L944
+
+That said, I can fix it in the next version to always check for 0 before
+__fls().
+
+-- 
+Thanks and Regards,
+Prateek
 
