@@ -1,93 +1,103 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAF019C553
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 21:20:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25038270EC1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 21:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782854433; cv=none; b=F5tC/umlf3VbLhHuCAwJ/L461HMpNAjdVR+JdanRKwF7kmJh2V107yM3Tr1HTO8jkd5ee6NCgtPDLL6BZWJRjsyVXvY/y6FWNzvTt1gk4udz3+jxCT7sZiIj3v4l4DyPZJ8rqrFBtTopmlHs476ixTMbgqwSVJGX/uvGYSWpbTs=
+	t=1782854486; cv=none; b=gqN2U/smlyYfgbEhgKUY0ZEQIliDKL6FCbYjNWttSRIdqVf9VB1y0W6I715PZXmzw4kld7ljaa5FTzj9XIourBwC88YqyErjQ2+AbeabJpRfDMYDWXJP/a+hP9E2BoiHO/o4lvlnKG4YCcLZ9BxRj6R7MTCFn+AitkmOLUwT8Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782854433; c=relaxed/simple;
-	bh=/n+duGFnZj9vgLfVjFxc1+AFLhU6/tMFkRyk4mmlD4E=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=rRGTVRfyNs+oYfHTcjInn/XFNohfl933j2Xa+e3VP8cNe0iVS4+oyuMStbyoq9th+mMcT+/TjYvir1dO2O8+ZQ3Box/hJv/xOnPXfZqplsgOK8BTB21audkS+PDgjpYmi8pjxZvULvzmAsf3lIDOXxt81BfYxa3FxXdrVhKx8NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lZRBhrM+; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1782854486; c=relaxed/simple;
+	bh=FRMd5OI4LJv2i3m9weFAH1wMNxpiw/W4YgAGijey6+s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GQqwDSnLnjY58sKBebdzc9/KyQKEjjF/tZAw+hAnyHxGL8Rcpzj4qT38GP6vB7cToSQfLwpmnmAlpws/IuHdMFHWR0JJl+iAcwq7PpIFYh59fGEFTCcJTKvKg/hJ5E73f88UH7E+lgNzLUCD5STFFOBLbRMNvhwffFSdLQtWrgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=FcMWE7Jm; arc=none smtp.client-ip=159.69.126.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lZRBhrM+"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-37e16f658abso3241a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 14:20:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782854431; x=1783459231; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FzftopFDP8FiWfjOlsWLNJMxrI9W6RqxZpV3xiWeDtY=;
-        b=lZRBhrM+gI3fasKhQi6eqr5zcSA+93TR3kcdXRlrpa+LxaoUTx/DyDFXzd9sq6rKDl
-         bG68gS2A+fus2qFU9eq+8Bhg0CnOVgpW6SNc/nEUNuAubUTpiRSaUiGSCZQ4fqQcyzaZ
-         BbViMvRnDaE4Z0Jr0v2vGdQUp4qEhtEEeFmOdaNrFFgHiAKfcsdGcAnXpod7mQ1jHh2v
-         0TjNpY3u9yKERAx+M4ofVn8kpByC28ulTz9nZ2jvMvW6GEvNfwi5C1YgJLAAx39l++QP
-         K4TPTgs8+QnqRNdfy8V1/JFy1XhP4jEoTRrIXEw2z6TEK3tSRHg/5jNv7uKgISqG0mu5
-         tM2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782854431; x=1783459231;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FzftopFDP8FiWfjOlsWLNJMxrI9W6RqxZpV3xiWeDtY=;
-        b=QHZrAcEjn3jAiVUC8ljnp2BfCIn+jaSy1njH5KC8P9lWF6XDoOmUL+qiLMNUTfJ3gQ
-         C0bcUHqegmIGEWtSSW9FKoeaHtN3kJarvzuWjbDNmyvSwZ4aT4nRQBFh1FbxTDhaFyHQ
-         M7YcvXbGEEK8Jfc5clnFU3bDGWIRjP8WHf1nR8bxadOPeF0TJJ7pqK1ZyLt66DQLwpUI
-         LsKW8wFPL2YGtIXJK/1OBrL50qs92N+5ZDM+Zz/lamo6cxznEqKD2fYvCJduo7siWOO9
-         CkDxKWKmcc1AOVHnIsu1VXNwwPvkLal/j9WmtlFPnZ2mXDk96kObYO98r4wyw856vtUk
-         odsA==
-X-Gm-Message-State: AOJu0YzkzwQko0YTPgCYdqB2JEE0+jTCPsJjYMnBk5U7WbAHNbFLB3UO
-	sBgwQM1PjwIHbBe6CO1zV0/T0ATtg9wMuAbzJz1ShodybHAy4v3V+MKaT0tsvAJG8Rz97qNFecL
-	0rhn+9IkFzi3ZTjraNhUQQu4MT/MyGWTcj2eBrRYCoFCxvkV7u7/FybUH1KJRiXNsWwkRX9K5XD
-	GWl/9HK/CEzxyRHvPqEgJpYZn8YdI0AfEZ86nwuWyfnxa/KgN2
-X-Received: from pjbjx19.prod.google.com ([2002:a17:90b:46d3:b0:37f:6c08:3ef1])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4a51:b0:37d:f7fe:4bbc
- with SMTP id 98e67ed59e1d1-3805272a49dmr4084697a91.21.1782854431153; Tue, 30
- Jun 2026 14:20:31 -0700 (PDT)
-Date: Tue, 30 Jun 2026 14:20:30 -0700
-In-Reply-To: <20260630211845.8E8201F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="FcMWE7Jm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1782854483;
+	bh=FRMd5OI4LJv2i3m9weFAH1wMNxpiw/W4YgAGijey6+s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FcMWE7Jmm/ju3EsDCHhj9O7xY3HSukMgCMpOdBp5csGrzlxlHVnBPznF+hXo5MAiP
+	 VIQ164efTHu5O6Dp53FTQ2eGLiX/InwNNh57j/facgUSLTt+5Tmzr79KzzdWeO92NS
+	 51qtZ22ckzk3pw/+akolOR25G+m1phQIyNtkm68E=
+Date: Tue, 30 Jun 2026 23:21:23 +0200
+From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
+To: linux-hwmon@vger.kernel.org
+Cc: sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 2/2] hwmon: (cros_ec) Handle temperature conversion
+ overflows
+Message-ID: <5e04ce9b-61b9-4ea8-bb2e-1563c88a1dde@t-8ch.de>
+References: <20260630-cros_ec-hwmon-overflow-v1-0-3d2ecd3eb0f2@weissschuh.net>
+ <20260630-cros_ec-hwmon-overflow-v1-2-3d2ecd3eb0f2@weissschuh.net>
+ <20260630211028.69BA21F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260630210156.457151-1-seanjc@google.com> <20260630210156.457151-3-seanjc@google.com>
- <20260630211845.8E8201F000E9@smtp.kernel.org>
-Message-ID: <akQzHkKVBCDcEfOm@google.com>
-Subject: Re: [PATCH v2 2/3] KVM: SVM: Do all per-VM AVIC initialization during
- vCPU precreation phase
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260630211028.69BA21F000E9@smtp.kernel.org>
 
-On Tue, Jun 30, 2026, sashiko-bot@kernel.org wrote:
+On 2026-06-30 21:10:27+0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
-> > index 4a0a2dbd1687f..d71a2fed1a08b 100644
-> > --- a/arch/x86/kvm/svm/avic.c
-> > +++ b/arch/x86/kvm/svm/avic.c
+> - [Low] Using `BUILD_BUG()` with runtime variables introduces build fragility because it relies on compiler Value Range Propagation (VRP) to eliminate the branch.
+> --
+> 
+> commit a22cd7f1036247302ddc232e1cbd36ceb641e202
+> Author: Thomas Weißschuh <linux@weissschuh.net>
+> 
+> hwmon: (cros_ec) Handle temperature conversion overflows
+> 
+> The calculations converting between the different temperature units can
+> overflow, resulting in incorrect data. Detect these overflows and report them.
+> 
+> > diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
+> > index 44291799dd8e4..4b402142b46f3 100644
+> > --- a/drivers/hwmon/cros_ec_hwmon.c
+> > +++ b/drivers/hwmon/cros_ec_hwmon.c
 > 
 > [ ... ]
 > 
-> > @@ -308,47 +308,32 @@ static int avic_alloc_physical_id_table(struct kvm *kvm)
+> > @@ -150,14 +152,28 @@ static bool cros_ec_hwmon_is_error_temp(u8 temp)
+> >  /* This differs slightly from the variant in units.h to avoid rounding inconsistencies. */
+> >  #define CROS_EC_HWMON_ABSOLUTE_ZERO_MILLICELSIUS (-273000)
 > 
 > [ ... ]
 > 
-> > -int avic_vm_init(struct kvm *kvm)
-> > +static void avic_add_vm_to_ga_log_list(struct kvm *kvm)
+> > -static long cros_ec_hwmon_temp_to_millicelsius(u8 temp)
+> > +static long __flatten cros_ec_hwmon_temp_to_millicelsius(u8 temp)
 > >  {
+> > -	return cros_ec_hwmon_kelvin_to_millicelsius((((long)temp) + EC_TEMP_SENSOR_OFFSET));
+> > +	long ret;
+> > +
+> > +	if (check_add_overflow(temp, EC_TEMP_SENSOR_OFFSET, &ret))
+> > +		BUILD_BUG();
 > 
 > [Severity: Low]
-> Does the function prototype for avic_vm_init() in arch/x86/kvm/svm/svm.h also
-> need to be removed? The declaration appears to still be present even though
-> the implementation is removed here.
+> Does the use of BUILD_BUG() with the runtime variable temp risk spurious build
+> failures?
+> Relying on the compiler's Value Range Propagation (VRP) to eliminate the
+> check_add_overflow() branch can lead to broken builds when compiling with
+> CONFIG_CC_OPTIMIZE_FOR_DEBUGGING (which uses -Og) or on older toolchains where
+> VRP fails to eliminate the branch.
 
-Doh.  Assuming no other issues, I'll fixup when applying.
+CC_OPTIMIZE_FOR_DEBUGGING is not a thing (anymore?).
+
+This patch passed the 0day build farm, so all relevant compilers should
+be handling this correctly.
+
+> > +
+> > +	if (cros_ec_hwmon_kelvin_to_millicelsius_overflow(ret, &ret))
+> > +		BUILD_BUG();
+> > +
+> > +	return ret;
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260630-cros_ec-hwmon-overflow-v1-0-3d2ecd3eb0f2@weissschuh.net?part=2
