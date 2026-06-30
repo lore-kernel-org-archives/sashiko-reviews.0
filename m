@@ -1,134 +1,229 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0CA34EEFD;
-	Tue, 30 Jun 2026 15:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782834263; cv=none; b=Ev1MV37M6Dy8lI6RCeJ72DhXo6Dp34gs9Kp4JNO+q54B5LauaCdqbUE9Q4RpSeHr0/6EkUGOz8zb9Gx4Yowj+ffGclo8jG9yoqc7limZ+kmhNvxEMSG2w6sec67NkzNk28Zz2dIEtILJ6TsAaFK4cw3/WyCZk/4yuhTV1SGr5ew=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782834263; c=relaxed/simple;
-	bh=xJlETisceaoQr6SOFhAjR4tLS6ntrZvAD9La15OrU+Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QTOg/2iIZ+0c/ddBTU8h1t2lPcsgoZc7UA1udaDvu/SN9nokkAfj9RHFlQ7FDWwO0YSDpeX+JC/kbT3Y359/GGGA2arhtXrsb3eLcE7l+rrB+SJYr8MyLk0cVOZcWvOWuwpqZft7Izck1vYYitqKkQ+LaqT6lfc8zAqTfYq2Z4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EPJtyVuV; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932C24657CC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 15:52:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782834755; cv=fail; b=YMb6YSTk5sqAaZGTpuj4ADvgZHtksiMcZh4uvJT6FUKqxTmw5zKRmFg5oahgIiNsbp/yxr0i4lZ+j7KTnvqUPPVaqrHMXPLqkwyiRCahS45cyUvDhqTDOGccUWPy7V3oLfJKXoYPLqvZd0FSA8ocsQWQFiZpby/UdiPaSwEECbI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782834755; c=relaxed/simple;
+	bh=GtpXbRjz1ZhzeOMaDIjEd6iGtdLVPmklWR8wnvHvkiw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TmYxZaPXzTB0hIq9qho9/k/xNwdAFPX26L2kKy9zURBrYtJCQT/jyZ1mcDIzK+3CEWDdeZoWigJIJmwBIxt76y/tbo9hF3wYIuKsdPHWBb/w9PMFacI9M68e3ZwG7ve92klVRJdS0Tg8F4ErPlPdszEjk3CDQmArg/8ZgEw53Z8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X3/btmwW; arc=fail smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EPJtyVuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895A21F000E9;
-	Tue, 30 Jun 2026 15:44:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782834261;
-	bh=kC71ZF1kU53NLjP9UflQ+W4nP0189uDbEuX/DDRpMDo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=EPJtyVuVdzjkHUcPss+Ig2MSQjEu5Ef8JMWUxUcjBPCJL6k3RrqZsGxPXV85bt7ml
-	 6g35L5LEW+F1PCyzAx2FIGPPnpjXuionvHgkkWl4r77GYyns05i/DQIaMTJbCU0Ltb
-	 PIKheb/4o1RbneFocrwvReKWLB886gaVK0dbM6OHAOayE8XeSDRyF4n+ZiRxM1jXIf
-	 gDgDf+FKDLERrDaQ2TYEga6t4ejSkUMKJAwBNSwqhC5vcjBPPy6EGuFRgRK0nASk+I
-	 pdBVTkPRCU5YOoD4Oc9dVqQ/KKPc47FjM7Y9RiAK4lbjjA7L6pIjzIJV0U+ZmWhj6e
-	 qz4lvMSQQ2BEA==
-Date: Tue, 30 Jun 2026 08:44:20 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: Leonardo Bras <leo.bras@arm.com>
-Cc: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev, kvm@vger.kernel.org,
-	Wei-Lin Chang <weilin.chang@arm.com>
-Subject: Re: [PATCH v2 02/13] KVM: arm64: Enable eager hugepage splitting if
- HDBSS is available
-Message-ID: <akPkVASjWWYQpkx1@kernel.org>
-References: <20260629111820.1873540-1-leo.bras@arm.com>
- <20260629111820.1873540-3-leo.bras@arm.com>
- <20260629113645.BE6801F000E9@smtp.kernel.org>
- <akKFlzAdB43lRpi1@LeoBrasDK>
- <akKmHqRaZEUjN3zY@kernel.org>
- <akO9iHJmKN7MzTjM@LeoBrasDK>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X3/btmwW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782834751; x=1814370751;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=GtpXbRjz1ZhzeOMaDIjEd6iGtdLVPmklWR8wnvHvkiw=;
+  b=X3/btmwWs+DC2Iit7ISoQmKb8l1eFiwjWu9RvHQcasuJxEA3L8KT4QrF
+   1OSPcULopkEQoVWBpW9zc1UzWwDt2qUUKnzwa/aIvVWMS9VLEpgx30yIy
+   UB2ZHYqDBC7i0JTa/43MQG8U2xTTAGXP2Pa0LyL8TzdBJEhyGjpHNmiiI
+   Ez0+asCf6x0AsiSabROS0zSFoBhm/qSwp7yuHZJ1BYthcgm9f0d+ucQVA
+   L++7HWMYq7Js07T6f3ISLSv6eg3JMZf1Ta5KOTyDabjKE4RThVApAWe6Y
+   7ewqjCpfwOMFHtmm8ghtvSqrOu8FbyJKOR3jM2PJy2NiNFghDdUNw2hMN
+   g==;
+X-CSE-ConnectionGUID: RJipUirSQ9+tNxibTzemmA==
+X-CSE-MsgGUID: GPY+K3fCTOOxwE/Po8STng==
+X-IronPort-AV: E=McAfee;i="6800,10657,11833"; a="95055890"
+X-IronPort-AV: E=Sophos;i="6.24,234,1774335600"; 
+   d="scan'208";a="95055890"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2026 08:52:30 -0700
+X-CSE-ConnectionGUID: Zbef3C60QWilM8gB4eA61w==
+X-CSE-MsgGUID: czdNGLXIS+SGAelynF3pNA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,234,1774335600"; 
+   d="scan'208";a="254210152"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2026 08:52:29 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Tue, 30 Jun 2026 08:52:29 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43 via Frontend Transport; Tue, 30 Jun 2026 08:52:29 -0700
+Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.65) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Tue, 30 Jun 2026 08:52:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kAtx20VAguLhZ3eOBEVs62O1DANNDXfuzl/1uCoCTEcLPQOrv89dUpImE42HBDKlFU+q/r+nkKLbzxDBvlbatnd2bXCu4O0jeB1GVQ1HUL1bp4tMGpCC5f7lry+wCqHuTnu7EhpE8e49Z6RIz0xlMK4Y+m7eZFQZ9pH4fhsaIdU6uk4Bk3n6GU62/0Q4f6dPUbeNXuO7KcvHsJnXZNpUFrLF9Wvm3OoDjliMYXWaSfgAjV7sRyzDJl/UkhJl/OzarIU7nI+vafNpwcwq5fUeawM9vhgPj1AjyyyIHIF491QKy7XxcYT/0GFBpXbcICXxIKScUtLQMsG2wV3YTeLjoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pOwNUqz7Be02YdReBOPt+jqf1SeRNxzWEInrJDiydbY=;
+ b=fkyAiyJrXLMadJfhU8jqJvsN7Lpyd2AO3TqJYt7J9A/xc0EB+DozKcrPtbfv/8vAUAkRAEstklK6hXDK/mPJaFoCGoOHGqUxmbKRQx1MxDXPzM/EixOjjlqh7l+Vs19zMbNOYqAGD+l5crRdOV2tEiVeR4ahiHMPV0GenvgfUEEsKlFYj8KMQ69CCA9uy/pdyax4hTPzvJ6dnuWQ3O/Q26s6JsOXMo99ai0RUW46RhSzzhM9NVWHUru2IxICtxaPY+WTd7DXB71IoaHZT7uhoMYpil+yuy1C2M90Pu8HCbFrZXPyA+1RqakbpsWa3M72LPB+08rHWfYR0wgajpZ3Xw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ0PR11MB5645.namprd11.prod.outlook.com (2603:10b6:a03:3b9::19)
+ by IA3PR11MB8967.namprd11.prod.outlook.com (2603:10b6:208:574::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
+ 2026 15:52:26 +0000
+Received: from SJ0PR11MB5645.namprd11.prod.outlook.com
+ ([fe80::fb19:f933:8bb3:b42e]) by SJ0PR11MB5645.namprd11.prod.outlook.com
+ ([fe80::fb19:f933:8bb3:b42e%4]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
+ 15:52:26 +0000
+Date: Tue, 30 Jun 2026 08:52:25 -0700
+From: Peter Fang <peter.fang@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Xu Yilun <yilun.xu@linux.intel.com>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH v2 16/17] KVM: TDX: Add in-kernel Quote generation
+Message-ID: <20260630155225.GH1743876@pedri>
+References: <20260618081355.3253581-1-yilun.xu@linux.intel.com>
+ <20260618081355.3253581-17-yilun.xu@linux.intel.com>
+ <20260618090310.43E9B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260618090310.43E9B1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR13CA0097.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c5::12) To SJ0PR11MB5645.namprd11.prod.outlook.com
+ (2603:10b6:a03:3b9::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akO9iHJmKN7MzTjM@LeoBrasDK>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB5645:EE_|IA3PR11MB8967:EE_
+X-MS-Office365-Filtering-Correlation-Id: 27b3c3e2-5559-4cf0-d0f6-08ded6bf9504
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|22082099003|18002099003|56012099006|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info: x+X/+Rn+gInNQFfAeSxFD/YsbYgY8x2XcrKADEYB7pR6MedRRsohIHPiRqWk6reUzNUlahPq7sHj2n6X4s07LsswzNPyb+LPehbPxqMq54NvowfJzfKoF2JEGb0xNTbYz2swoml1PFTfOFTnj/w0rhBsOCg59ajtZzM7Fh+Tls9+5KB6bXJFAtefxyT/PNYWR/IxQURJWJ8f44LD7TYofmOjLTysf5iYoXYpADy5xSR0qd5qU+FIYlGrZ2K+exeBIMDG3wrjFCYGuNDVMZ1uJ71LibTGIloLaGtX8jQCmwkl0Lj35TmNQjl/20rOPN1dKjJFSAe/MWw0l5GVieC1jrSktnaCfwWsM5sgxf07RJd9mai6Pa+hQIL0F6HbU7C0zywBc31Icav1dHfiBenI9yDi5oRo1tSnHfHiO4/5AzAEnzxYkkX+tsif8j+Qifw8AVZwdyvZSt0KeVu4KdE0l1lgssucmTKXL06hB/QMTdyhiwQVpKiGsf5dBUamcmJh0SWbqCxeNxNNCZIbxfpNNtCFK6Kz9E1bnrkvpR1NUv/Spn0LzVDVlAapfYHlwjoN50qTVlJgec/Gsa1BQTzUExg9yTAU83gmd3UT43Z+DdM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR11MB5645.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(22082099003)(18002099003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OU5lN1BQM3lkQTJYVDF3SHF4dVI3T0d2Mis2OUJhaHYzSG1Tclk0QSs2THIy?=
+ =?utf-8?B?V2M4YXIyeTQzaDUyUTI1TThwcDFwa2VLL1RvY25DbStITjFQU3JqS3p5Z1Jx?=
+ =?utf-8?B?TGhDN2FKK2VOUUNPRlg0cXhXVGE3d2M0aDFHRmR5NGhpMGRudnBNMlhtbTQ5?=
+ =?utf-8?B?VThYUHBxeDFTc2hSTGJvdEl1YmNhbjFPdnlxc2sxN09YUmpUWVplaFZ0aFZG?=
+ =?utf-8?B?cEVEOC9zUjlxTkxRaTArNzR1eHFYOVh5My9TZ24waHllaXZMcXhhRUZVM0lO?=
+ =?utf-8?B?d05sSHB2Z1I5dkVXZU10cmphMi9tVlBmTTY2SXBVMWdHNHVMNGwvd1Q4ODJ4?=
+ =?utf-8?B?R3ZCTXF1QVowNm9NWUYveHE5RkpxVkNIWHd4WUZNVk9WYVhDWjZiV29vN3RK?=
+ =?utf-8?B?NFBPREV0a1BlUEJiUGpUR2tWWDZFQ25ZUXNlR2NsbFgwR2JBVmcyZmpwR1p0?=
+ =?utf-8?B?M3VXN0U5UXhFV2JLa2dMUFBzUjNXVkVKcGdtZkR4N0pORXZJNHhBUnVFck8v?=
+ =?utf-8?B?eGp3ZEtoWWVuem56VGVCQXM2NWpXN1gyRDNEOXUzZkRoUklibXFHK3oyVkNJ?=
+ =?utf-8?B?SjNydTE3TFM0Y3BCRitpYTB3cmN5aWYzR0drODd3ajNhTmlDclhpYlhrdUE3?=
+ =?utf-8?B?elR3VGIyRTc1T3A4MU5GcjJ4UGY2cldEKzZrN2hxbnJGSG9OWEF6Y2EwV09T?=
+ =?utf-8?B?YkZMNzgwVmNmbkZVMFp1TzduRW8rS0hCWGN1TkN3WjJDSDlCTzkrY3hFS2xj?=
+ =?utf-8?B?OCs0cjBuWVRFT0VlRWFVeGlvQ3RtdlVQWnhRd1lFVnJLSjRqeUdyQVRxdTdn?=
+ =?utf-8?B?aG1EN3dqeWdnaUxrTnBQUG50NXkwaU94Umt2MW9tTG9OelZxdHVrNktiWE15?=
+ =?utf-8?B?blBGNGxoOFR3RjRkV1dlUEhYa3U4QzhERXNNTGgrRG1ZWEJFKy9yQnAvMTZt?=
+ =?utf-8?B?MmJzeEtpUmlPTnZCZkpqVmhEVGdrMGVCNXRNaHdoeDBDNGdCYWd4Q3BjNkxL?=
+ =?utf-8?B?V1hnQkh0TTZlT1N6NWR0eEtnVWlpMTFucnNZZXE3a0RZaHhMMXdvVjNkSUht?=
+ =?utf-8?B?VXpKN0JJTk4wL0oxbmZLcjYyak90U0RSeHEwdXZOYkFJejVQUTVram95UzJW?=
+ =?utf-8?B?ckdvSUNtd01LNFVHOGRLWUg5aFRlZHVDWXZzTzlNa2lrZHdXRHA4cUFiU083?=
+ =?utf-8?B?SUtCaElucG1LZFJRQTRHMUdibFdNZlMvR1hPUmM4Qm5Eak44ak8valRpVUlv?=
+ =?utf-8?B?QTRtcEE0RGhUaXNrOG4xL2VxeDJ6andYd0pPYURENktGdEtkd1JmaFdHNDJE?=
+ =?utf-8?B?bUZ5TDdhYU5nMUJlV2ROZWhPMlEvNXZsMFVyRWJKN0MvZTErREg4U2UvbzMy?=
+ =?utf-8?B?R0lGaGxOMVM4Qm9HcVZXcnQ4NFEwWFZabGFiNncyalNvOEFnRmhtWXU0VXZy?=
+ =?utf-8?B?dU5nTU5wT2tFNkRKQ2VPNjRVZVZ3L3B4YWxiamtmbGtSZ0dGeXhhMlFXYXBj?=
+ =?utf-8?B?MW9VbVEyaDNQcTVTODV1L0p4OXlQL3p6WWZBdTRJMzZINnNtSnVkM1NubWJK?=
+ =?utf-8?B?d3lLdllnaGZnbjlhWGp4SGM3RVUwTFA3UEtIR2ZZV2ZyclIyWTJXcW12WXpx?=
+ =?utf-8?B?blRhVnBuYXNWcDRIa2lkVy9ZY0pwdHQ0UUhtQW5tNy9TUXNCWXUvN082bWVC?=
+ =?utf-8?B?NXdBOCsyMlArcytRM3pwNGs1WEJ1cHRWMHR2MWVaaWpOV0kzdkZKR2xGMllQ?=
+ =?utf-8?B?ZWRrRUErcmlQTG8vUmVvVkFOL3JJc1hTVzY0RDlvaW1ETGlKRVoweWF1c09B?=
+ =?utf-8?B?SCtXWGtxSHo2MTczRU10N09LMlZHdDV2U3VsZkprcHF3TkRkdkVCUDA0eE42?=
+ =?utf-8?B?Ym5aSmtSUDhaNWw0SzJ4dEhwRFRvMkJ0Ukh4WEFIakxBUk51aTNJdUFIMlV3?=
+ =?utf-8?B?SmJCRDdoQXFWaldKRWdSZldsV0FEZUxkVTB4Ymd4V2Z3Nmh6SytlRVdiMVRB?=
+ =?utf-8?B?bnJVN3FrejVsZzNuY3lFT2RPbCtDUWt0Si8zOFJNeFJ6SElBOWlUc0JyOVEw?=
+ =?utf-8?B?UzBpdTViSW0zdFV5d05CNFB0ams5ckFmK3lKWEpSRTd1cEFWVWl2VDhRNmR1?=
+ =?utf-8?B?VDZhaHdCUXVUUHN5b3hPTVg5UzdaUnFGVnRGOWxNeXRrdHpKNldXNStLVmlr?=
+ =?utf-8?B?OTRubXBrSTVXeVpBN3d4ZnVWQXpOdFhpQVR2VnhpRGN6U3cvOHNzVks1WVlu?=
+ =?utf-8?B?TS9mU2FVU3l1UlBGWExENkhrUmo3QzBia2JUOVpWeHQ0ZWZMVGxnQTNNeDQ5?=
+ =?utf-8?B?VmZ6ZGRuQXd6U25wcURJR3MvVXB3bzR1eWFQLzJWZVRLaUNGTU1Vdz09?=
+X-Exchange-RoutingPolicyChecked: CnVQKG4kNt/nOaypg7dPnbHVgHwRij8EHEWicr3sYcAvtBj5cLH46Z1r8A5UjlzAYN1a6mKOIkhB0VJAiEwSDgbtzvBXCHrOMrLfQpk37o0ulE+lgBmd9h9cpQOIGwc8vKcm/dtRYyf0SssDDeIBjv9TJN0Vo/+gzqxt1pir92gdAkt2wWLBUyeFZvidmdxnqdmKyfjoNS0xaEIGklphwjORcGtPfGz6q1B6UkW7PiSoEed8WXciMfUg8ZHlv1kbCbzZ/ldabh6XGvLACP6AlmC1aV32uyrNSz6d7KfSwa2ecTBRfel9IzEVSwsbTjl2ZUzYuVjw5mUdQxibUBQdxQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27b3c3e2-5559-4cf0-d0f6-08ded6bf9504
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB5645.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 15:52:26.1967
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5RCuWo4W6/w5TRWkEgZfa7Jwz0g1VB5OKtIVUyVs1WClaCVa2KI0DNgZ/gizVjHNRyfZrfEXKOLBdZf5zNOnow==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR11MB8967
+X-OriginatorOrg: intel.com
 
-On Tue, Jun 30, 2026 at 01:58:48PM +0100, Leonardo Bras wrote:
-> On Mon, Jun 29, 2026 at 10:06:38AM -0700, Oliver Upton wrote:
-> > > But this raises a topic I would like to understand:
-> > > - Do we actually need this to be a block_size to assure correctness? or is 
-> > >   it just about efficiency?
-> > 
-> > What value is there in having a chunk size larger than the largest
-> > possible block mapping? The whole UAPI is deliberately tied up with page
-> > table geometry.
+On Thu, Jun 18, 2026 at 09:03:09AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] KVM incorrectly returns a hypercall error (TDVMCALL_STATUS_INVALID_OPERAND) when in-kernel quote generation gracefully fails.
+> - [High] KVM fails to write the required buffer size back to the guest when the provided GetQuote buffer is too small.
+> --
 > 
-> Not larger, possibly smallerv My concern was the difference in pages to 
-> split between 4k, 16k and 64k.
-
-Ok, well in any case the upper bound is going to be the largest possible
-block mapping for a given page granule.
-
-> > 
-> > Overall, I'm not buying the argument for changing the behavior of
-> > KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE. There are very good reasons for
-> > *not* eagerly splitting the entire address space, especially if you know
-> > the working set of the VM is small.
-> > 
-> > You can still use HDBSS without eagerly splitting, so long as block
-> > mappings are {DBM, S2AP_W} = {0, 0} and leaf mappings (which have
-> > a writable PFN) are {1, 0}.
-> > 
+> > +	/* Caller owns the requested quote */
+> > +	void *quote_data __free(kvfree) =
+> > +		tdx_quote_generate(td, req->data, req->in_len, &req->out_len);
+> > +
+> > +	if (!quote_data)
+> > +		return TDX_QUOTE_STATUS_UNAVAILABLE;
+> > +
+> > +	if ((size_t)req->out_len + TDX_QUOTE_REQ_HDR_SIZE > total_len)
+> > +		return TDX_QUOTE_STATUS_ERROR;
 > 
-> Block mappings being read-only, and leaf mappings being writable-clean, 
-> then? Could you please ellaborate on why does not it need eager-split?
-
-Read-only translations will continue to generate permission faults
-whereas writable-clean descriptors can be updated by hardware. You get
-the opportunity to split a block mapping lazily while preserving
-hardware dirty tracking for page mappings.
-
-> As a review, what I recall from the strategy for hw dirty-logging was:
-> - If we have HDBSS, add DBM for all writable pages {1, 1}
-> - On dirty-logging start, make them writable-clean {1, 0}
->   - Can be done using HACDBS
->   - Enable HDBSS & HAFDBS
+> [Severity: High]
+> If the guest-provided buffer is too small, does this early return skip
+> writing the required size back to the guest?
 > 
-> We don't have a fault for making pages dirty anymore, as this is done 
-> by HAFDBS and recorded by HDBSS, so splitting does not happen on demand 
-> anymore. So if we want to split pages, for better tracking granularity, or 
-> anything, we have to eager-split them.
+> When tdx_quote_generate() fails due to an insufficient buffer, it populates
+> req->out_len with the required size. By returning TDX_QUOTE_STATUS_ERROR
+> immediately here, it seems we bypass the logic that writes req->out_len back
+> to the guest.
+> 
+> Will this break a guest's ability to dynamically probe the required quote size
+> and retry if its initial allocation is too small?
 
-What I'm saying is the presumption that eager page splitting is always a
-net-win is wrong. Nor is eager page splitting a hard requirement for
-using HDBSS since you can set up the stage-2 in such a way that only
-page granularity mappings are dirtied by hardware.
+Returning TDX_QUOTE_STATUS_ERROR immediately should be ok. The guest is
+expected to get the required size from a TD metadata field, not from the
+returned out_len here.
 
-You could, in theory, have a workload that is read-heavy for a majority
-of the VM's address space and writes to only a subset of that memory.
-Eagerly splitting pages would likely regress the workload from a higher
-rate of TLB refills / more TLB walk steps.
+> 
+> > +
+> > +	if (!write_quote_to_guest(vcpu, quote_data, req->out_len, req_gpa))
+> > +		return TDX_QUOTE_STATUS_ERROR;
+> > +
+> > +	return TDX_QUOTE_STATUS_SUCCESS;
+> > +}
+> 
+> [ ... ]
+> 
+> > +	qerr = get_quote_kernel(vcpu, first_page, (gpa_t)gpa, size);
+> > +
+> > +	if (write_quote_status_to_guest(vcpu, qerr, (gpa_t)gpa) &&
+> > +	    qerr == TDX_QUOTE_STATUS_SUCCESS)
+> > +		err = TDVMCALL_STATUS_SUCCESS;
+> 
+> [Severity: High]
+> Should the hypercall return SUCCESS even if the quote generation itself
+> failed gracefully?
+> 
+> If get_quote_kernel() encounters a quote service error (like
+> TDX_QUOTE_STATUS_UNAVAILABLE), this condition prevents err from being updated
+> to TDVMCALL_STATUS_SUCCESS. As a result, the hypercall returns the
+> initialized value TDVMCALL_STATUS_INVALID_OPERAND in R10.
+> 
+> Since the hypercall arguments were structurally valid and we successfully
+> wrote the error status into the shared memory buffer, shouldn't the hypercall
+> return SUCCESS to let the guest parse the actual quote status?
 
-Lazily splitting would have the effect of leaving block mappings in
-place for most of the VM. This is exactly why the VMM is in the driver
-seat for deciding whether to lazily or eagerly split the stage-2.
+Good point. The hypercall should return TDVMCALL_STATUS_SUCCESS on
+TDX_QUOTE_STATUS_UNAVAILABLE. I'll fix this in the next revision.
 
-The approach I think we may need is:
-
- - Use a software bit in the PTE to stash whether or not a PFN is
-   'software-writable' when constructing the stage-2. By this I mean
-   we've already faulted it in for write from the primary MMU.
-
- - At the time of write protection, reap the hardware-writable state
-   from all PTEs but preserve the software-writable bit.
-
- - Whenever splitting a block mapping, set the DBM bit in the page-level
-   PTEs if the block was software-writable and HDBSS is present.
-
-That way you'd have sufficient metadata in the PTE to safely set DBM. We
-could even make use of that metadata for write faults on non-HDBSS
-hardware to avoid the overheads of user_mem_abort() (e.g. VMA lookup)
-and treat it more like access flag updates.
-
-The last point still needs some thought.
-
-Thanks,
-Oliver
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260618081355.3253581-1-yilun.xu@linux.intel.com?part=16
+> 
