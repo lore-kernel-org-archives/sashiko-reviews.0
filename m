@@ -1,145 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013026.outbound.protection.outlook.com [40.93.196.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC053BC680;
-	Tue, 30 Jun 2026 18:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782844984; cv=none; b=bHRBHAONQDkhufXnnas0IUfdqQy8F0mI4P+VkCOLL8z0299GRdwT/LKo2hi7HQElRoXAanXk/i54kFUaUBPinG2C36HHeW77JwnijLf2jYiLOGjz87s1lecLzIX524N1kpaca2Eu9ZOmCaS/9tPlEq/o6SDfOa/ww9w8QYUBSXk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782844984; c=relaxed/simple;
-	bh=KCpPnllPAwe9Z27cf/4FimUMcyNxdIrK1MgP/ku1r34=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bFpUSuIUFPPidwaSqzPyCwrNa97HYzJBAqFtqE/fXynVW3/eT3XQFrxi4oyyco7vza7sSrDDW8PujDutS9kEC9/5mjYZJZOrOekyQSzF1pwfW5vppBes4eoFeESyVPOuV/rX7WprF6cVqFjR5k6NKmWKWbJel+J/M+70sALKHBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQtWrNY6; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54A0352C3F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 20:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.26
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782849713; cv=fail; b=VPuaPGODFHI/QiSxOa8V4VxQzY2ysmTPAu7E9+hRG2q6BvPdobaZtmmYBWfiQb6vlC1fcJfMszZ8pWRJEAF1GDcyzbYMk6b7WX/celZFlsotrk6lRSqEtD3FHrIlEnVF0IbpXSB4UUrLjDF3/meZFZ3FtZEZFeWWqMOpRwShxAo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782849713; c=relaxed/simple;
+	bh=C7wwxnPHPcs8BDdkRL5I4Tgr+/18y/ZqqZt3qa5eKIg=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=mrwZlaT5wOiRbwIkU31qh//4W3WUVEmi8t0znH9jejQs6FXEGrBWJ4INO+zVW5BCcRw8Nf1mAlj0fRURtVdCdlh68TszcEqMVKq20Ogu7chGPXIA8NWDLSLbidRjqjx791St1yWlV8QRjEL4b/UDdO2wOEkuTN4jr13tq2jZUdI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NwPvw2yE; arc=fail smtp.client-ip=40.93.196.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQtWrNY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6874A1F000E9;
-	Tue, 30 Jun 2026 18:43:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782844982;
-	bh=oQ+QKmGqWrf4GF4IimLK8GVC3TpRZgBWH53NHUwQR9E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=NQtWrNY6deyk6hU0I6nlk4xSdhwxHXR6kR9B4J1sHsU6FnRp2n6GEO/jH3bNsx4xQ
-	 Hl+pa43WV1nCLHUEpRdsJwFV5obDUWIqJbkI+UVSscYCYT2Z9vjt8zaCw9JAon8U9J
-	 wiqkI67jof5FRKXkHetzhSr//hCaDgM14Tn601cxT7MlY+liS/bC6vYVX57Ltxm5B5
-	 d7R1n0y5BJUJ87vGwq73g5/UwgcMIDIPDUF5fS9bYKAZ3LdkulFhDu8tIxMOnefWid
-	 kOtkPEWL+FE8GMUnU9bja8mUEfopDaar4Y4+cTeWsG2ycAXC/eWU8LP65eOWp9jsBg
-	 rLKJc+WuAT/Lg==
-Date: Tue, 30 Jun 2026 11:43:01 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: Leonardo Bras <leo.bras@arm.com>
-Cc: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev, kvm@vger.kernel.org,
-	Wei-Lin Chang <weilin.chang@arm.com>
-Subject: Re: [PATCH v2 02/13] KVM: arm64: Enable eager hugepage splitting if
- HDBSS is available
-Message-ID: <akQONWoRRZXu1-56@kernel.org>
-References: <20260629111820.1873540-1-leo.bras@arm.com>
- <20260629111820.1873540-3-leo.bras@arm.com>
- <20260629113645.BE6801F000E9@smtp.kernel.org>
- <akKFlzAdB43lRpi1@LeoBrasDK>
- <akKmHqRaZEUjN3zY@kernel.org>
- <akO9iHJmKN7MzTjM@LeoBrasDK>
- <akPkVASjWWYQpkx1@kernel.org>
- <akP4ZDjZIu2_CfVF@LeoBrasDK>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NwPvw2yE"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ciO9YM8GhldVA/UDjeh63PjSU0sJQtDV074Ejzkf+s6jXdzE19nO7d0/6jajnB+jNt6EyG08p+PdS0E82Zb0CHF1Tz0lcb4u5jlOJU3tEUfSn6ytnwZzd6TaNMGXsCTipo++oqgIarhmuLAjKUadwfG1belnFuugA0DiacJIoNXisqQVrOlUxszI4xBueJuUC6n8XH9jXB7F1LoIFHr8l0babzAdI9DBcImrZuo7h8HJtRO9axdFhbut51YwyHhxW2gGpfvKW8qT7f3wV5gBN8y+9SiOdVx7a7+BwMwyaicD+OaqVX+Nq2S2wwXZMTz7k6rwLp1DxeL6TA2WksrPJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=C7wwxnPHPcs8BDdkRL5I4Tgr+/18y/ZqqZt3qa5eKIg=;
+ b=yQe6IbKZz0qsiyb8M/zqLapblMYhNCkZ4PIdDgj2II8NVgZPlEoaTfoSBK4XBFp//OHellIUBYNtZLz4T3EZc5ofSZN35YjxY21s1AlR8HpqJSMTlWgS4mqLVSEkCbYctiCY41qVcOEvrWpzBy6ZHh91q0u9g/M31iJlMfdyS/nUjeuBiBWcuYwIFnCxsUFjmuN0AFfIG2yldGT+r5+tIa5FcgVgPN+E1IiqasNWU0hscb+VOzRD1ucTqc1K3xNix86uYTPZpnFui1W41sR5IVbAtcGyhP1cIq2XDgFqo9hlHeOXPAkY/3kd0UqlrSLfh0QNqB5Dj+TjgyK782WmxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=C7wwxnPHPcs8BDdkRL5I4Tgr+/18y/ZqqZt3qa5eKIg=;
+ b=NwPvw2yE8/HVWlNSRCchSoRqKhJ1P9Eg0NN15bFEPjId91wKnRdpvW6N4DVZnhVsrnstYXXfE6r1n5fd2a2zEB8yH8p3pPscSZRP9ypM2KfrgNMRJdi5BqUp7b/h+5PNhFEvOt0d4ggZM2Bdc1L0CS1IEhGCt0UeMuip0IPykCPVzjcKY/gePID5bxDOT3MwgHGCOrfJpojai5vMbN+OB7o1ijilqnnWJtoBIeq2SjajtiH/8L0KvZDAyPScdybIXtGt/95Clpl97H6wgrioPC2mWJUc1bmV3jhlTCa5Mf1aHcPlPQ6NXCxW0IRcku8zbdG3O3AyVvVwrQT5g20AMw==
+Received: from CY8PR12MB8412.namprd12.prod.outlook.com (2603:10b6:930:6f::11)
+ by SJ5PPF01781787B.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::986) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
+ 2026 20:01:45 +0000
+Received: from CY8PR12MB8412.namprd12.prod.outlook.com
+ ([fe80::76e6:4d65:7ed1:6970]) by CY8PR12MB8412.namprd12.prod.outlook.com
+ ([fe80::76e6:4d65:7ed1:6970%5]) with mapi id 15.21.0181.008; Tue, 30 Jun 2026
+ 20:01:45 +0000
+From: Timur Tabi <ttabi@nvidia.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "ojeda@kernel.org" <ojeda@kernel.org>, Alexandre Courbot
+	<acourbot@nvidia.com>, "dakr@kernel.org" <dakr@kernel.org>
+Subject: Re: [PATCH v2 3/7] gpu: nova-core: transition booter_load to TLV
+ images
+Thread-Topic: [PATCH v2 3/7] gpu: nova-core: transition booter_load to TLV
+ images
+Thread-Index: AQHdCMlyQfszGbWpRkCAhwVOXwSvEbZXg6OAgAABVYA=
+Date: Tue, 30 Jun 2026 20:01:45 +0000
+Message-ID: <ccebbd6c2f73b0708f44d4a9327c130bd282b7f5.camel@nvidia.com>
+References: <20260630194749.1209490-1-ttabi@nvidia.com>
+	 <20260630194749.1209490-4-ttabi@nvidia.com>
+	 <20260630195658.026D91F000E9@smtp.kernel.org>
+In-Reply-To: <20260630195658.026D91F000E9@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.56.2-9 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CY8PR12MB8412:EE_|SJ5PPF01781787B:EE_
+x-ms-office365-filtering-correlation-id: 76a1bdeb-f6ce-4cee-30b4-08ded6e269a4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|4143699003|18002099003|22082099003|11063799006|56012099006|38070700021;
+x-microsoft-antispam-message-info:
+ xVT5Sx3LSjZW4+oCzbRhlil7UWcFPzvHHGnnqpiTjS6xzVWFBO510iC8Ly1Yi12e+HLQwDZnYk9vHgE8whdzz15Gfh8qdmEIzeFMq2NAQ3v+hvSJaSapPWNKsQDzAJJqLQd/L4DDgqmqNMGbLE9wCsy1n7wjpAWewH5oH+HArY7KHGB4kEmu3x+ahf5dZfbGsyimh2C7WcSd0VtK2K9kBuFLT30xYCQU7B+lMphaI7oOcjiofFXqu7eOLCcEWt/DdMYPIXSYDrXM/U4bsg44AOSsbT8IoP/52i1cHEGKbTOI/rJXe9muoHE22/xOxRHEuGG4rF979q7RnI268oyrCeaOZOzcsJluGsQ/JZjKiL7f4T3roZVvWn9woCB/Cf4Qbey84Oq5nNTQ7y6cVuKClwU149eKmJ59AEb7dzCI3YkSLgRZUJvM5mBFH5oz6YQmuePmrBL39HOMfvK6ox6XAvIYW/Ap94y0LcvcuVMrbZvUREsEbHU32yRARpziVCNEUz5C0rwOLQeV2GbE/nJFkJ4PEKNvHDfUq+XEq0Z+EB6Sh+PH1TIPEkaArGChMZv3eINNL/xazHvEJrRMKMM6J1N4K5Q3BzI+qIExGL375eAqg9J9gJlWZF2Ww2Iflsx80N0M908aGVWj6ZK9UfqnEGQq7nvi+Q6cZDxEs8xhhI3c3CEgPJifPVUcox2zQSvsHTWA1wdUHRNmk97I7wFrNOJcRJhlLVvURaUBQcg6iJ8=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY8PR12MB8412.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(4143699003)(18002099003)(22082099003)(11063799006)(56012099006)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?MzJBVWZsWC8zUUpacE9iNkF3L0tYMFo5VWRSUlFNMXVLY3hyR21YVDJ2VjFT?=
+ =?utf-8?B?SkFFQmJUYnFjNVNKcm9CbU9BOWk0ck9sRituUVZPUlJHdkljdG9lRTE3RjA1?=
+ =?utf-8?B?Y1AyYzR2TkRzN0d2bndUN0Q2b2JkOFpyRkh4Z0FaM3BMMjIybXVEcmcyTGps?=
+ =?utf-8?B?UzE5eU9qczdITjZwbTNzS3pSVmVNNWNSNjZiMkhid3gyU24wOFBkVDBJWitu?=
+ =?utf-8?B?aFB0WnkrNHErSGREOFdaZ1NBUlF3ZzJjUzQ3YzlEYmJieTRCT2hMVndPY3Jj?=
+ =?utf-8?B?N1BtVXE4TUgvbHk3Uyt0WHc2dlg4eWhiS2oxUXpZalJUWkM2MFNsQjNBVm84?=
+ =?utf-8?B?UzNnUXZGZ0tQZXhzc3dabDFlTEVydTVTVUluWmR5N2trcFVnVjNRc01pOGlT?=
+ =?utf-8?B?NjhvMElxZCtVOGV0NFVOZE9VcXJvTWthZXl3YjRLL2h2aUVndDg2NTFlcWNT?=
+ =?utf-8?B?OXd5a2pIbVdvRXJxdUN3dVRmK0xPTmgvS1hiSzRaZC96TlZselBIMXgxN3Vi?=
+ =?utf-8?B?QkNySjhVR09HbVhRU2NBb1QzVjNXREVWamdRRkEwZWtJZFRTUU8zV05HNFpK?=
+ =?utf-8?B?eG5hV2F2c0RheUJXV01rTjV6VTdocFdFZFFGYzdHQkFKWjcrUm1mTE9EbXNx?=
+ =?utf-8?B?TTkyQmQ1Si9hbnhoTGNzN0ZDK2ZSVWl0K2lmcnN6b3g1T29lRlAyOEpMR3A2?=
+ =?utf-8?B?NFhQZjBIN3g5eWN2d0pxTG9mVHhYMWlaRlZYWDdHNDUxdkFVMGFjUXQ4VnpM?=
+ =?utf-8?B?QUdzbFRDMG9GS2tJTmJwbWx2ajJ6QU1sN21kNjR5SHAzOGMvc2kxVVVRVHo2?=
+ =?utf-8?B?RWN6NXM4WWNxRkcvNjB3N2NvMnVmUFdoVjNDcElHYXIydGJGcVJ1M21wWkVw?=
+ =?utf-8?B?c2pYazdoOEJ5a1Nyb0NvdWxJbTY3OEwzeEZCOEhhVkRsQTc2QTVmcHVWWjhN?=
+ =?utf-8?B?dVFJY0U3eXRXVmxmTXNaeldUQ3MrY2hNd2djS200STM5SHEvWXdkQi9ZWlZH?=
+ =?utf-8?B?cldML2phLzdSRDBaQW9xZ0ZzRmRDZHpnTmxYZ0l5cWhmem90RVhBNlBqMzcr?=
+ =?utf-8?B?cnZBTFpjbitSTTlWeEJnUHN0VURWSGhkL1MzOHAvaUFleWduN1d6a2dUTEFR?=
+ =?utf-8?B?a0tad0tBSnlkUWw5VUw4cHV6WXVrOEQ4Y1lxaFV2UmliczdxVXVqRlNWdDRD?=
+ =?utf-8?B?Tm5kRzlxR2ZLemltV2xYLzlIRm1tTFp0Y2IxVThwT2xBQ3VPMFZMOXNTc1FR?=
+ =?utf-8?B?ZW5iUnFQY1F1dGdHenUxTENjZWcwQzNxVHpIbFhwK2ZXb0NRMG9QYm0rSTVV?=
+ =?utf-8?B?ci9mQ2ZicmZwaHd0YWUySUM0aHo4cVpvdHIwc1EycEkwMDlIcGIrMnFNSDNR?=
+ =?utf-8?B?aXdsL3g1bWxXd3VCRkoyYm9BbkFVWlNoeGoxdU5nZ3JLNE9UdUJjbjJ1UWdG?=
+ =?utf-8?B?RGdPUG9IWlNKOW8yZ2ZJenhBcnFld0YwZlZ5MG1jbHB5dEhLOEV4Q2FpN0hm?=
+ =?utf-8?B?SEVBSGQ2NVluU1puVGEvM3grM1NPcmdESDJ2dTdKMHEwclU3dmJoUEdDYk1Y?=
+ =?utf-8?B?czUyWWh1ZnRVeVY5RXU3T3NUQS9CajVyTFVidkFPK2lKNUljTTQyeEtLcjl3?=
+ =?utf-8?B?MFJEdlFZd2RKRmMvOG9LN01kUTJtM2RJTzh0MGZwa01ZZzQ1djZBa2x2NmR1?=
+ =?utf-8?B?NGJWNmx1QXhXdytJSStLd0c2djhBKzdtdFlEQlVZOUttQlVlT2RKQzBZdUdu?=
+ =?utf-8?B?ekwxVEZ0VkZEUnY5MVhRUEV6Rjcvb1pDSjU1ZGM2U2NadUVsUmg2bVdtcUxz?=
+ =?utf-8?B?Nnd1SGpMVWwxMUJsNHB5MDFSbm1Pc29XQ01LTmNzdC9tZzJQS2pqbHJKNERs?=
+ =?utf-8?B?L3REbHRVTXEvZkwySWlNVStzcDZaaC9jRFd6SXVoTmtPUTlYY3poY240SG1y?=
+ =?utf-8?B?OHlZUTZrbXdkTW1wN0JrV01EaFIzWlJKaGw1dWNSWWxmME1PaVZHMm5JUGtw?=
+ =?utf-8?B?OG1COHRDUEs0N0toMUNDbmZlV2FtOXNmTEgyemdtZitOODZ0UTFyWktiNEVX?=
+ =?utf-8?B?ODNzZ3RVOWdwOUs3TlFIWEZBU09DTStRV3k3UWlrM0NOVXFKeDgwODdIaFd1?=
+ =?utf-8?B?VEFJd2lNRFBEbU9waUlUN1RSd2ViWVBLS1RyQWcwWVRoMElrRVl4K3U1aEJE?=
+ =?utf-8?B?dHE1U01qK25jQW9kdFFZSEc2dkErUnFKR2ZKakRweXNkY2s4L0taZHpCZGJi?=
+ =?utf-8?B?aDNwYlhjTkRYOHZHcWxoVCtQVE0wR3o5QXBmR0M3VFhqTDRVa0c5dCttWWJW?=
+ =?utf-8?B?ajBWd0I2cVFzODMxY1FQRlJ0c3BaUDc0eEtjSWxjUVFZTkgxZE9HZz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5B0DFC6C6B52114DA006DDC3231031B2@namprd12.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akP4ZDjZIu2_CfVF@LeoBrasDK>
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB8412.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76a1bdeb-f6ce-4cee-30b4-08ded6e269a4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jun 2026 20:01:45.6198
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1+8oF9xaxcnGQIyCysDOPb5gXsoCyxJr7r1PkuuLEloYzmaopau74UdljYAcs6BlwwGjfuJxnt3dVXMEcx8NzQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF01781787B
 
-On Tue, Jun 30, 2026 at 06:09:56PM +0100, Leonardo Bras wrote:
-> On Tue, Jun 30, 2026 at 08:44:20AM -0700, Oliver Upton wrote:
-> > On Tue, Jun 30, 2026 at 01:58:48PM +0100, Leonardo Bras wrote:
-> > > On Mon, Jun 29, 2026 at 10:06:38AM -0700, Oliver Upton wrote:
-> > > > > But this raises a topic I would like to understand:
-> > > > > - Do we actually need this to be a block_size to assure correctness? or is 
-> > > > >   it just about efficiency?
-> > > > 
-> > > > What value is there in having a chunk size larger than the largest
-> > > > possible block mapping? The whole UAPI is deliberately tied up with page
-> > > > table geometry.
-> > > 
-> > > Not larger, possibly smallerv My concern was the difference in pages to 
-> > > split between 4k, 16k and 64k.
-> > 
-> > Ok, well in any case the upper bound is going to be the largest possible
-> > block mapping for a given page granule.
-> >
-> 
-> Sure, we can do this.
-
-I'm describing the UAPI behavior of what we already have. Please do not
-change anything and continue to leave userspace in charge of eager
-splitting / chunk size.
-
-> > > > 
-> > > > Overall, I'm not buying the argument for changing the behavior of
-> > > > KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE. There are very good reasons for
-> > > > *not* eagerly splitting the entire address space, especially if you know
-> > > > the working set of the VM is small.
-> > > > 
-> > > > You can still use HDBSS without eagerly splitting, so long as block
-> > > > mappings are {DBM, S2AP_W} = {0, 0} and leaf mappings (which have
-> > > > a writable PFN) are {1, 0}.
-> > > > 
-> > > 
-> > > Block mappings being read-only, and leaf mappings being writable-clean, 
-> > > then? Could you please ellaborate on why does not it need eager-split?
-> > 
-> > Read-only translations will continue to generate permission faults
-> > whereas writable-clean descriptors can be updated by hardware. You get
-> > the opportunity to split a block mapping lazily while preserving
-> > hardware dirty tracking for page mappings.
-> > 
-> 
-> So you suggest we only enable DBM bit after we split the block, that will 
-> happen only after a block is dirtied for the first time after dirty-log 
-> starts? 
-
-If the VMM wants to do lazy splitting, yes. Otherwise this would happen
-as part of eager page splitting for block mappings that are known to be
-writable.
-
-> > The approach I think we may need is:
-> > 
-> >  - Use a software bit in the PTE to stash whether or not a PFN is
-> >    'software-writable' when constructing the stage-2. By this I mean
-> >    we've already faulted it in for write from the primary MMU.
-> > 
-> >  - At the time of write protection, reap the hardware-writable state
-> >    from all PTEs but preserve the software-writable bit.
-> > 
-> >  - Whenever splitting a block mapping, set the DBM bit in the page-level
-> >    PTEs if the block was software-writable and HDBSS is present.
-> > 
-> > That way you'd have sufficient metadata in the PTE to safely set DBM.
-> 
-> I remember that, for some reason I can't recall, it would not be great to 
-> set DBM during dirty-log start, and instead we should have it since VM 
-> creation. Maybe it had to do with part of the pagetable using the old 
-> encoding (no DBM), and the other part using the new one.
-> 
-> IIRC, only blocks that are backed by writable memory (S1) were supposed to 
-> receive the DBM bit. We could use that info for deciding what to split, 
-> then.
-
-That's why I'm saying to use a software bit. We can't leave DBM=1 on
-block mappings and set VTCR_EL2.HD=1 for obvious reasons.
-
-> Another option would be to split when we are collecting a dirty-entry from 
-> HDBSS, but for live migration that would mean we have to transfer the whole 
-> block (possibly a large LEVEL1 block), because we have no idea which part 
-> of it got dirty.
-
-We need to do dirty tracking at page granularity. The only scenario
-where we have writable block mappings while dirty logging is enabled on
-a memslot is if the VMM enabled KVM_DIRTY_LOG_INITIALLY_SET.
-
-Thanks,
-Oliver
+T24gVHVlLCAyMDI2LTA2LTMwIGF0IDE5OjU2ICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
+IHdyb3RlOg0KPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9ub3ZhLWNvcmUvZmlybXdhcmUv
+Ym9vdGVyLnJzIGIvZHJpdmVycy9ncHUvbm92YS1jb3JlL2Zpcm13YXJlL2Jvb3Rlci5ycw0KPiA+
+IGluZGV4IGFjYjdmNGQ4YTUzMjcuLjk4Y2U1ODUzN2VkNTkgMTAwNjQ0DQo+ID4gLS0tIGEvZHJp
+dmVycy9ncHUvbm92YS1jb3JlL2Zpcm13YXJlL2Jvb3Rlci5ycw0KPiA+ICsrKyBiL2RyaXZlcnMv
+Z3B1L25vdmEtY29yZS9maXJtd2FyZS9ib290ZXIucnMNCj4gWyAuLi4gXQ0KPiA+IEBAIC0yOTEs
+ODUgKzg1LDkxIEBAIHB1YihjcmF0ZSkgZm4gbmV3KA0KPiBbIC4uLiBdDQo+ID4gK8KgwqDCoMKg
+wqDCoMKgIGxldCBudW1fc2lncyA9IHRsdi5nZXRfdTMyKGIiTlNJRyIpPzsNCj4gPiArwqDCoMKg
+wqDCoMKgwqAgbGV0IHNpZ19ieXRlcyA9IHRsdi5nZXRfYnl0ZXMoYiJTSUdOIik/Ow0KPiA+ICsN
+Cj4gPiArwqDCoMKgwqDCoMKgwqAgLy8gQm9vdGVyIGlzIGFsd2F5cyBzaWduZWQNCj4gPiArwqDC
+oMKgwqDCoMKgwqAgaWYgISgxLi49MTUpLmNvbnRhaW5zKCZudW1fc2lncykgfHwgc2lnX2J5dGVz
+LmxlbigpICUgbnVtX3NpZ3MgYXMgdXNpemUgIT0gMCB7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hd
+DQo+IElmIGEgbWFsZm9ybWVkIGZpcm13YXJlIGZpbGUgcHJvdmlkZXMgYSB6ZXJvLWxlbmd0aCBT
+SUdOIFRMViBibG9jaywNCj4gc2lnX2J5dGVzLmxlbigpIHdpbGwgYmUgMC4gU2luY2UgMCAlIG51
+bV9zaWdzIGlzIDAsIHRoaXMgdmFsaWRhdGlvbg0KPiBjaGVjayBpcyBieXBhc3NlZC4NCg0KbnVt
+X3NpZ3MgY2Fubm90IGJlIHplcm8gYmVjYXVzZSBvZiBgISgxLi49MTUpLmNvbnRhaW5zKCZudW1f
+c2lncylgDQoNCj4gDQo+IFNob3VsZCB0aGVyZSBiZSBhbiBleHBsaWNpdCBjaGVjayB0aGF0IHNp
+Z19ieXRlcyBpcyBub3QgZW1wdHkgdG8gZW5zdXJlDQo+IG1hbGZvcm1lZCBpbWFnZXMgYXJlIHBy
+b3Blcmx5IHJlamVjdGVkPw0KDQpNYXliZS4NCg==
