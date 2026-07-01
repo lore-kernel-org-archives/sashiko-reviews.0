@@ -1,118 +1,132 @@
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B73838F259
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 20:43:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E0E2C11CA
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 20:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782938587; cv=none; b=n+LmBYzZVj/tFfuT4QU1cJw1lVVnmNzP2EOX2fW/CHS6drplEZGqPvK7lhm10jhonGPEYiK/I3beZ4/STZsXpwQkCAqTiaJ9qm/XVwNEP6GUoKo72h1rQVN+n4ERhbjJ4XhYms9bBB+ZDi8k8BC/Qshx4cklsybq95geZOiTU/M=
+	t=1782939299; cv=none; b=fN0lo4L3ls8UHSu3kj7lqzT7hug7Opv4tCEQPKTsu106quSmBiiWw3BuZIdT+VlkuxU1oTpiHjhn+OkhAUmfg1iq2YmkjjWR/PDPciz8C6Dp9Q8baeEej4blrsSV1pkTUqT3M1ypxQaIhYRAhBG1NgUMvxX4mUGfwHEBebmFDiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782938587; c=relaxed/simple;
-	bh=MJHAY/0lOZtESReKmEZbrT/tBa8Uv8X4qGxYXF2Xvm4=;
+	s=arc-20240116; t=1782939299; c=relaxed/simple;
+	bh=vrG7DV3XMjvehaBvAHY3d6fzypEbpc6iWjoNWIjk38c=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=L+GO8RJCbOxoljm8Mp++2NAxqd0VHBBj05PGG5tz5vR1Ptglm6WPR57AnrDwHRmeSzggs7AlmQaO1+6E7w4ygCqoEoLX3yIA7OK/YqQfUjX3hfRkjEk6/+94ptuLGau+OnLlJBbDXqL5rb8h+EtxtBINhDltaAF2aqGC/DrW1Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NGKu93oA; arc=none smtp.client-ip=209.85.214.201
+	 To:Cc:Content-Type; b=WFqxcYApFLvp6jH+XqKPM2NbQsbui1G+aif+0p7qSPIYF9PL+hkrS6kwXdyEfAbxaAe1WLIZRMw+mHCZp/kj7CjH9MBH07q+gfcCuQKWtp+rMpDvEQvS6UDbs2J4osegD15U1/+7B1cuD9IrSxg/ZJtTOFWYHwZe1mmmscFjPSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=a8YbOkLL; arc=none smtp.client-ip=209.85.210.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NGKu93oA"
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2c6bbd0afffso22665095ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 13:43:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a8YbOkLL"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-8478947e047so1009429b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 13:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782938586; x=1783543386; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1782939297; x=1783544097; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ul4KfkOuOrRVfcOqe8UUYQTjm8np2xMi7aWFEy9eSTw=;
-        b=NGKu93oAzdZi9f8aD++xRjdGX6gk36Y9T0IwUOthYMV+3FBkqKTTVr49gliBI8LyMB
-         Pxo1lvZPovreh6prLsTI6VU3PtZt65dO6Yck/kRVE83cg5r9Uh2NHm7Xbk/ngyqT8+Te
-         43rgyQ6yH1WzppE0tzAya6YE36K1kb9XHFmvZnTfGw0bJ+qVtKDxG2IaU9qH8WdYyj+H
-         ZZ2Sp+c7Dx/XhMiotFN4nFSdgQ9P9W/m8zaoFhJ2wdDDbXKcIaLuldN2DPHHWRZuL+29
-         /FnoykCilhvFoDLM5A4gEbQ1G/xOMXcPDl3Lcdc6SZspEDmlZN/5eDfAmO0jJ4F7q/vx
-         D5uA==
+        bh=Z0jRX7NnLp+Ssuusck8PUjzqP7NAa84Kcqnt+k1PSlo=;
+        b=a8YbOkLLHtawtjiifuH8XYpbir24Rbf80V6htwGA00uu9g/zwXpEktjInF7ujK69M8
+         zO0XYoseZs2/xrvPTFSFGsjNLTCyMmKYljOK+GSq3oQt89QAmfNgUVd90o0S7CTwBmWp
+         jMMVVkQbJfcfxeJhUariTMoVvElCNG2rf6sPl4pX1GFCT6FX5PHfOXd5WUKVyeMtO2pG
+         JA7MkJBJ4bSaBNoqJQkgFLIJGL1Wy0WDW4plv9W9jtB55vnPEJn/cHa1FVpUhknpjfqr
+         jnhK1MfrURp2hgFtabaZZwyyfFl167MW17d2nM9zHfyhOqheg9xyojJIKwvnLFmFSpZp
+         TioA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782938586; x=1783543386;
+        d=1e100.net; s=20251104; t=1782939297; x=1783544097;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ul4KfkOuOrRVfcOqe8UUYQTjm8np2xMi7aWFEy9eSTw=;
-        b=fyUbeGXFDm2tzc1ikhcohUdcLEqriTcDKeKQ8Q9CB45bdIuKVNxBTDwaZw7H1CjoWO
-         hRqbZtJHgWVEhwNzE1PgOdgwKdsZNdGmB8KlYq+1AhDzqXxo306bg3sq6gScrd/aB6Pb
-         7/OtqsNjW4QyunpnWXtv/nGkshsmuqzsZ+CZOmqfHJ9CqNHiQDBrMxBjSfXUNpBpJkdG
-         X8FqaQyWH7/+jHIpw9hmx2fgRzOE2JzxErZHuIXFZNwPqE8Z3NQh8uINbIKntiuvf8R8
-         CCLjWpZ0KBOG9q2Hi98Rd86ShAENEnHpMr9P64l273geXEx8rjGTOQmx2doGmKfiW0K4
-         wBtQ==
-X-Gm-Message-State: AOJu0YxXrcFBYQUZgODBBdBBEpET6rD201730LO2J4Tj0Yg/dZ6i0Fr4
-	dsJs7xulZL9dWPa/WVEUMkQWB78Dkj+v9HKfdLmsasGwh+2tHxQSZNwZtLps+L9CoBD+sGC38V9
-	+GIhBDmCWgUMWKcxJcOvfaJIBmRu0+DaW9ERLuemzne18vfh0nclkeoQTvRxrzPI9rG0lTxVqvs
-	/IMjlRQ/DZlrrRZDzDTrZng8jSVMQH5qsVM9gAYw1QGZnFS8iR
-X-Received: from plbla16.prod.google.com ([2002:a17:902:fa10:b0:2bd:4b8c:fd31])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:e785:b0:2c9:c16f:eda6
- with SMTP id d9443c01a7336-2ca7e8a899dmr38410135ad.39.1782938585487; Wed, 01
- Jul 2026 13:43:05 -0700 (PDT)
-Date: Wed, 1 Jul 2026 13:43:04 -0700
-In-Reply-To: <20260701200318.B83061F000E9@smtp.kernel.org>
+        bh=Z0jRX7NnLp+Ssuusck8PUjzqP7NAa84Kcqnt+k1PSlo=;
+        b=GFzvWEHPfP7BjO056NC0jzrJe0i1UyhmHpqlmcMz8ULotG/enGzYysoYQdejKhCO8f
+         u/R3/76hemOsQIxEuuVYKoT/u1YrEfYFLrIUC9u3CDmNBY4ItZ3vjCRcuaTlUBRkq1HD
+         8fk+hBqWOP+wouDC8S+6mA4XJVeobENv5KWmF9CbUoTYwFLylfe8mIyLJfHQE1eNfEk9
+         IzGR5l5uQGuVnZfTbcaWTZJzpYT64cvLXY/HOWT9Aq6mTVtCLnP9I4sgx9upa7S53HjF
+         EFUhrSgZhCnjPJVnocaUA+PU0OtK+4XhhDq+AuzYS06XTqZxITTiIA6qOU+YH+5DVyVh
+         ciTg==
+X-Gm-Message-State: AOJu0YyNM0a6m1352WFf27pz6Q/aTVnCIHD/QC+zL7Dp31ZSabFNIwLQ
+	DAqOdSaEq8BTxalcjkigzDNnuIzBisedIosTb4zHic8X6bbfcTssmpvYoGxZs31pcbhRw5WR1HM
+	Ym5hPOA==
+X-Received: from pfwp10.prod.google.com ([2002:a05:6a00:26ca:b0:847:a740:48f4])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:27ac:b0:842:2ae0:968d
+ with SMTP id d2e1a72fcca58-847c098651fmr2693616b3a.32.1782939296527; Wed, 01
+ Jul 2026 13:54:56 -0700 (PDT)
+Date: Wed, 1 Jul 2026 13:54:55 -0700
+In-Reply-To: <CAEvNRgHt1F28iDegRxtYDfy95iQysLkFW=7YPruwky_stf5TLA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260701193212.749551-1-seanjc@google.com> <20260701193212.749551-30-seanjc@google.com>
- <20260701200318.B83061F000E9@smtp.kernel.org>
-Message-ID: <akV72B0ORjG1rOch@google.com>
-Subject: Re: [PATCH v5 29/51] x86/kvm: Don't disable kvmclock on BSP in syscore_suspend()
+References: <20260630213711.479692-1-seanjc@google.com> <20260630213711.479692-3-seanjc@google.com>
+ <20260630214952.98C851F000E9@smtp.kernel.org> <CAEvNRgHt1F28iDegRxtYDfy95iQysLkFW=7YPruwky_stf5TLA@mail.gmail.com>
+Message-ID: <akV-ny84UPMpsnez@google.com>
+Subject: Re: [PATCH v2 2/2] KVM: TDX: Return EINVAL, not EOPNOTSUPP, for NULL
+ INIT_MEM_REGION source
 From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, linux-hyperv@vger.kernel.org
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
-On Wed, Jul 01, 2026, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does this change inadvertently leave the BSP's kvmclock enabled when
-> powering off the machine for ACPI S4 hibernation?
+On Wed, Jul 01, 2026, Ackerley Tng wrote:
+> sashiko-bot@kernel.org writes:
 > 
-> Looking at the final S4 power-off path in hibernation_platform_enter() in
-> kernel/power/hibernate.c, it calls syscore_suspend() but does not call
-> save_processor_state(). Because this patch removes the unconditional BSP
-> kvmclock_disable() from syscore_suspend() and relies on
-> kvm_save_sched_clock_state() (which only fires during image creation),
-> kvmclock appears to remain fully enabled during the S4 power-off.
-
-No?
-
-  hibernate()
-  |
-  -> hibernation_snapshot()
-  |  |
-  |  -> create_image()
-  |     |
-  |     -> save_processor_state()
-  |
-  -> power_down()
-     |
-     -> hibernation_platform_enter()
-
-I'm not familiar with the /dev/snapshot interface, but I gotta imagine userspace
-needs to do SNAPSHOT_CREATE_IMAGE before SNAPSHOT_POWER_OFF if it actually wants
-to restore state after S4.
-
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but is there a use-after-free
-> risk with the stack-allocated waitqueue head in the async page fault
-> handling in arch/x86/kernel/kvm.c?
-
-And I thought I had a problem with scope creep during review...
-
-> When a guest task waits for an async page fault in
-> kvm_async_pf_task_wait_schedule(), it waits on a stack-allocated struct
-> kvm_task_sleep_node. Concurrently, when a waker CPU executes
-> apf_task_wake_one(), it unhashes the node via hlist_del_init().
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >
+> > Pre-existing issues:
+> > - [High] The `region.nr_pages << PAGE_SHIFT` calculation can overflow a 64-bit integer, bypassing GPA boundary validation and leading to a host denial of service.
+> > --
+> >
+> > commit a54da29c3e4be3226e4ebf9df2f4182c350df998
+> > Author: Sean Christopherson <seanjc@google.com>
+> >
+> > KVM: TDX: Return EINVAL, not EOPNOTSUPP, for NULL INIT_MEM_REGION source
+> >
+> > Return EINVAL instead of EOPNOTSUPP if userspace attempts to pass a NULL
+> > pointer for the source page of INIT_MEM_REGION, so that KVM's ABI is
+> > consistent between TDX and SNP.
+> >
+> >> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+> >> index ffe9d0db58c59..b0ec054732b90 100644
+> >> --- a/arch/x86/kvm/vmx/tdx.c
+> >> +++ b/arch/x86/kvm/vmx/tdx.c
+> >
+> > [ ... ]
+> >
+> >> @@ -3247,8 +3244,8 @@ static int tdx_vcpu_init_mem_region(struct kvm_vcpu *vcpu, struct kvm_tdx_cmd *c
+> >>  	if (copy_from_user(&region, u64_to_user_ptr(cmd->data), sizeof(region)))
+> >>  		return -EFAULT;
+> >>
+> >> -	if (!PAGE_ALIGNED(region.source_addr) || !PAGE_ALIGNED(region.gpa) ||
+> >> -	    !region.nr_pages ||
+> >> +	if (!PAGE_ALIGNED(region.source_addr) || !region.source_addr ||
 > 
-> The waiter checks hlist_unhashed() locklessly. If it observes the unhashed
-> state before the waker is finished, the waiter can break its loop, return,
-> and destroy the stack frame. The waker might then dereference the
-> deallocated waitqueue head to call swake_up_one(), potentially corrupting
-> stack memory.
+> Since we're changing this, how about separating/grouping conditions so
+> that adding validation is clearly different from alignment changes?
+> Perhaps like
 > 
-> Can this sequence occur during concurrent page fault completions?
+>     if (!region.source_addr)
+> 	return -EINVAL;
+> 
+>     if (!PAGE_ALIGNED(region.source_addr) || !PAGE_ALIGNED(region.gpa))
+> 	return -EINVAL;
 
-No idea, definitely something to sort out at a different time.
+I'd rather not do that as part of this patch.  I'm not opposed to refactoring
+this code, but I don't want to make the diff harder to read by throwing in
+non-trivial changes.
+
+> And this one might need more code if we're fixing the issue Sashiko
+> pointed out.
+> 
+>     if (overflow)
+> 	return -EINVAL;
+> 
+> >> +	    !PAGE_ALIGNED(region.gpa) || !region.nr_pages ||
+> 
+> Looking at this again, why should region.nr_pages == 0 be -EINVAL? Why
+> not do an early exit and return 0?
+
+Because nr_pages == 0 is nonsensical.  And as a general rule, don't return success
+for uAPI unless it's necessary, because it's much, much harder to extend
+functionality if a path can succeed than if a path is guaranteed to fail.
+
+E.g. very hypothetically, if we want to repurpose '0' to mean "delete this page"
+or something, then returning -EINVAL now provides a more viable route to supporting
+such an operation.
