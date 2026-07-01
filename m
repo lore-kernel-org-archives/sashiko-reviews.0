@@ -1,79 +1,79 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA5D480DFB
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 12:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6A2480DCB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 12:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782907873; cv=none; b=cGl8Oqp50c92Pc7emL/dtTZfbTqIJcXPARHtquWoSUAY3ZTMPXqrN+h3Z+jKHkPcReSBGvmtY5w0lt/dtLY4PX/spwUDUvsdfycUD7YXv5iz07iC7dBHmC6xDdFudU9Xl+58saqrZiNCKkVxsCKQt6UTkNCpTTlgqbLbzprOCCU=
+	t=1782907881; cv=none; b=L7vvTCe8PQq69TF70WDsVEr9hChf970w6DgUDvVu71v64rl/vgm2ey7pIYDoEFM6hgI8ZTBJJ84+vjgeOD1dxiz7t+2Df/83N5EFgeIDxTy74P0oLhP2YnBhjPwjore0wq6AAra/VwJxlMYYHChO9qflggbfPxDMtg+pjgzV8m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782907873; c=relaxed/simple;
-	bh=K1LGop+UhzGoae5Jx9RW0anytihQx+vzPw7ALJtVU5Y=;
+	s=arc-20240116; t=1782907881; c=relaxed/simple;
+	bh=+VEq3APeoK/I8pao/vvUqnbopvMZ+5Vs7K+WIHOWLHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0jVT9GWTfkTbwS+eRiUsgZbGbT4EZUBLSAkmR3q7GRoF4RTq7ZypRZ5acORaa6J+jWb9Peks2wAHlvntFlNRnjen8+OuIfQdx5Nu308W9BmLrq8YSVxnymm/CQp4PV3L8JQq3uF9CKPdLoX3knue9UDnuifsovpmqKLuJJPpsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Md19TPP3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=k04bK3Td; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Md19TPP3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=k04bK3Td; arc=none smtp.client-ip=195.135.223.131
+	 MIME-Version; b=pHal/YdmrkjhTksSfeZx9Fq+CswiJe7GtUBM3QTw3AFak3TdzKZy52uyF3EhDwLK4cIoo1VvVUwBkTPd6bXNxEoRNmHjqf7DllJu1/cJkaDe34uTx77UhuX+QNwpxjs/LSI6p4P05C48/CeYzIFsnj2cM7E1NXubRa5y70Mh4fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oxtWj4aj; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ABEkaHSS; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oxtWj4aj; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ABEkaHSS; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Md19TPP3";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="k04bK3Td";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Md19TPP3";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="k04bK3Td"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oxtWj4aj";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ABEkaHSS";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oxtWj4aj";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ABEkaHSS"
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 248C776013;
+	by smtp-out2.suse.de (Postfix) with ESMTPS id A7AD47601C;
 	Wed,  1 Jul 2026 12:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
 	t=1782907862; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8eUeZcwjNbf8rJAMAoW6B/bSmTtWrp+UCqx+uQF/fH8=;
-	b=Md19TPP3+C2qWMS7DcCJOhUFTyrrqp5ywBsXEJil1oz8b+MMIrHk36JRzNviRsLxHeLHlj
-	C8xLG70i3mcVJpO6VyVG9EDpLWCef/liKVfV08EtAtABsX+FM5spOoH39DZV5y72vLsBC2
-	J/+m2TU43AFezDgsF2t08rPw+SKTZ1g=
+	bh=O6AyUyrxH7l3Y4feKVBxdHZqTM9MAU2pGTylgoARibM=;
+	b=oxtWj4ajjB5iwYI+5yOSCtp/MWFyKkrPLPU9a6ii7PuA65dQP1RygG89OfoTw5432liAVE
+	bzb0PtZi3FHL5VS3fcSJLg5IDO0xqSngdKz5apDXyFpLVBe5tv1eXZ5OXbo7yJEXqtOQ2Q
+	Sy2l4hROfjN6HNJPDnw9Oili0NiyurI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
 	s=susede2_ed25519; t=1782907862;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8eUeZcwjNbf8rJAMAoW6B/bSmTtWrp+UCqx+uQF/fH8=;
-	b=k04bK3TdeI2RQ/gU26h0UW0D5vn9W/vjaL/uI2GW/vjfi3XZDkO02E56mD1BatCdG90XGi
-	6DQ8/CHGYeA5IpBQ==
+	bh=O6AyUyrxH7l3Y4feKVBxdHZqTM9MAU2pGTylgoARibM=;
+	b=ABEkaHSS437pA/YAXa7pCg1uRygIRc/xqTCy2x0DKjBQaw7nHCa48CnO8RZic7yI+s6d6a
+	Mb8keP3sH+viWiAw==
 Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Md19TPP3;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=k04bK3Td
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=oxtWj4aj;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ABEkaHSS
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
 	t=1782907862; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8eUeZcwjNbf8rJAMAoW6B/bSmTtWrp+UCqx+uQF/fH8=;
-	b=Md19TPP3+C2qWMS7DcCJOhUFTyrrqp5ywBsXEJil1oz8b+MMIrHk36JRzNviRsLxHeLHlj
-	C8xLG70i3mcVJpO6VyVG9EDpLWCef/liKVfV08EtAtABsX+FM5spOoH39DZV5y72vLsBC2
-	J/+m2TU43AFezDgsF2t08rPw+SKTZ1g=
+	bh=O6AyUyrxH7l3Y4feKVBxdHZqTM9MAU2pGTylgoARibM=;
+	b=oxtWj4ajjB5iwYI+5yOSCtp/MWFyKkrPLPU9a6ii7PuA65dQP1RygG89OfoTw5432liAVE
+	bzb0PtZi3FHL5VS3fcSJLg5IDO0xqSngdKz5apDXyFpLVBe5tv1eXZ5OXbo7yJEXqtOQ2Q
+	Sy2l4hROfjN6HNJPDnw9Oili0NiyurI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
 	s=susede2_ed25519; t=1782907862;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8eUeZcwjNbf8rJAMAoW6B/bSmTtWrp+UCqx+uQF/fH8=;
-	b=k04bK3TdeI2RQ/gU26h0UW0D5vn9W/vjaL/uI2GW/vjfi3XZDkO02E56mD1BatCdG90XGi
-	6DQ8/CHGYeA5IpBQ==
+	bh=O6AyUyrxH7l3Y4feKVBxdHZqTM9MAU2pGTylgoARibM=;
+	b=ABEkaHSS437pA/YAXa7pCg1uRygIRc/xqTCy2x0DKjBQaw7nHCa48CnO8RZic7yI+s6d6a
+	Mb8keP3sH+viWiAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A1402779AC;
-	Wed,  1 Jul 2026 12:11:01 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D0EC779AA;
+	Wed,  1 Jul 2026 12:11:02 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id MCEkJtUDRWozOQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Wed, 01 Jul 2026 12:11:01 +0000
+	id CDRMCdYDRWozOQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 01 Jul 2026 12:11:02 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: treding@nvidia.com,
 	javierm@redhat.com,
@@ -96,9 +96,9 @@ To: treding@nvidia.com,
 Cc: dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v4 1/3] drm/of: Implement drm_of_get_panel_orientation()
-Date: Wed,  1 Jul 2026 14:03:18 +0200
-Message-ID: <20260701121055.192475-2-tzimmermann@suse.de>
+Subject: [PATCH v4 2/3] drm/sysfb: simpledrm: Read panel orientation from DT node
+Date: Wed,  1 Jul 2026 14:03:19 +0200
+Message-ID: <20260701121055.192475-3-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701121055.192475-1-tzimmermann@suse.de>
 References: <20260701121055.192475-1-tzimmermann@suse.de>
@@ -110,7 +110,7 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 248C776013
+X-Rspamd-Queue-Id: A7AD47601C
 X-Spam-Flag: NO
 X-Spam-Score: -3.01
 X-Spam-Level: 
@@ -128,8 +128,8 @@ X-Spamd-Result: default: False [-3.01 / 50.00];
 	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	RCPT_COUNT_TWELVE(0.00)[21];
 	FREEMAIL_TO(0.00)[nvidia.com,redhat.com,linaro.org,gmail.com,chromium.org,xff.cz,reznichenko.net,kernel.org,amarulasolutions.com,edgeble.ai,ideasonboard.com,sigxcpu.org,puri.sm,linux.intel.com,ffwll.ch];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
 	ARC_NA(0.00)[];
 	RCVD_TLS_ALL(0.00)[];
 	DKIM_TRACE(0.00)[suse.de:+];
@@ -137,7 +137,7 @@ X-Spamd-Result: default: False [-3.01 / 50.00];
 	FROM_EQ_ENVFROM(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,nvidia.com:email];
 	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
 	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
 	R_RATELIMIT(0.00)[to_ip_from(RL579wqeubg1zrmib5eo1wpfcd)];
@@ -145,162 +145,64 @@ X-Spamd-Result: default: False [-3.01 / 50.00];
 	FREEMAIL_ENVRCPT(0.00)[gmail.com]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-Implement drm_of_get_panel_orientation() to retrieve a panel's
-rotation property as enum drm_panel_orientation. The code has
-been taken from of_drm_get_panel_orientation(), so convert that
-helper over. Callers of the old helper can be converted as well.
+A device-tree panel node can specify the panel's rotation in steps
+of 90 degrees. Set the DRM connector orientation accordingly. Use
+UNKNOWN for the orientation if the field is missing or invalid.
+
+v3:
+- read the orientation with drm_of_get_panel_orientation() (Thierry)
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
 Reviewed-by: Maxime Ripard <mripard@kernel.org>
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 ---
- drivers/gpu/drm/drm_of.c    | 44 +++++++++++++++++++++++++++++++++++++
- drivers/gpu/drm/drm_panel.c | 26 ++--------------------
- include/drm/drm_of.h        | 11 ++++++++++
- 3 files changed, 57 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/sysfb/simpledrm.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
-index d03ada82eac9..96eef327bf7e 100644
---- a/drivers/gpu/drm/drm_of.c
-+++ b/drivers/gpu/drm/drm_of.c
-@@ -7,6 +7,7 @@
- #include <linux/of_graph.h>
- 
- #include <drm/drm_bridge.h>
-+#include <drm/drm_connector.h>
- #include <drm/drm_crtc.h>
- #include <drm/drm_device.h>
- #include <drm/drm_encoder.h>
-@@ -220,6 +221,49 @@ int drm_of_encoder_active_endpoint(struct device_node *node,
- }
- EXPORT_SYMBOL_GPL(drm_of_encoder_active_endpoint);
- 
-+/**
-+ * drm_of_get_panel_orientation - look up the orientation of the panel through
-+ * the "rotation" binding from a device tree node
-+ * @np: device tree node of the panel
-+ * @orientation: orientation enum to be filled in
-+ *
-+ * Looks up the rotation of a panel in the device tree. The orientation of the
-+ * panel is expressed as a property name "rotation" in the device tree. The
-+ * rotation in the device tree is counter clockwise.
-+ *
-+ * Return: 0 when a valid rotation value (0, 90, 180, or 270) is read or the
-+ * rotation property doesn't exist. Return a negative error code on failure.
-+ */
-+int drm_of_get_panel_orientation(const struct device_node *np,
-+				 enum drm_panel_orientation *orientation)
-+{
-+	int rotation, ret;
-+
-+	ret = of_property_read_u32(np, "rotation", &rotation);
-+	if (ret == -EINVAL) {
-+		/* Don't return an error if there's no rotation property. */
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
-+		return 0;
-+	}
-+
-+	if (ret < 0)
-+		return ret;
-+
-+	if (rotation == 0)
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_NORMAL;
-+	else if (rotation == 90)
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
-+	else if (rotation == 180)
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_BOTTOM_UP;
-+	else if (rotation == 270)
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
-+	else
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(drm_of_get_panel_orientation);
-+
- /**
-  * drm_of_find_panel_or_bridge - return connected panel or bridge device
-  * @np: device tree node containing encoder output ports
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index 2c5649e433df..eddd13a34c03 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
+diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
+index 9e0711e0095a..21ddf4502ecc 100644
+--- a/drivers/gpu/drm/sysfb/simpledrm.c
++++ b/drivers/gpu/drm/sysfb/simpledrm.c
 @@ -28,6 +28,7 @@
- #include <linux/of.h>
- 
- #include <drm/drm_crtc.h>
+ #include <drm/drm_managed.h>
+ #include <drm/drm_modeset_helper.h>
+ #include <drm/drm_modeset_helper_vtables.h>
 +#include <drm/drm_of.h>
- #include <drm/drm_panel.h>
  #include <drm/drm_print.h>
+ #include <drm/drm_probe_helper.h>
  
-@@ -508,30 +509,7 @@ EXPORT_SYMBOL(of_drm_find_panel);
- int of_drm_get_panel_orientation(const struct device_node *np,
- 				 enum drm_panel_orientation *orientation)
- {
--	int rotation, ret;
--
--	ret = of_property_read_u32(np, "rotation", &rotation);
--	if (ret == -EINVAL) {
--		/* Don't return an error if there's no rotation property. */
--		*orientation = DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
--		return 0;
--	}
--
--	if (ret < 0)
--		return ret;
--
--	if (rotation == 0)
--		*orientation = DRM_MODE_PANEL_ORIENTATION_NORMAL;
--	else if (rotation == 90)
--		*orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
--	else if (rotation == 180)
--		*orientation = DRM_MODE_PANEL_ORIENTATION_BOTTOM_UP;
--	else if (rotation == 270)
--		*orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
--	else
--		return -EINVAL;
--
--	return 0;
-+	return drm_of_get_panel_orientation(np, orientation);
- }
- EXPORT_SYMBOL(of_drm_get_panel_orientation);
- #endif
-diff --git a/include/drm/drm_of.h b/include/drm/drm_of.h
-index 7bcc0ccfe0f4..ebebed14c611 100644
---- a/include/drm/drm_of.h
-+++ b/include/drm/drm_of.h
-@@ -20,6 +20,8 @@ struct device_node;
- struct mipi_dsi_device_info;
- struct mipi_dsi_host;
+@@ -623,6 +624,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 	int width, height, stride;
+ 	u16 width_mm = 0, height_mm = 0;
+ 	struct device_node *panel_node;
++	enum drm_panel_orientation orientation = DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
+ 	const struct drm_format_info *format;
+ 	u64 size;
+ 	struct resource *res, *mem = NULL;
+@@ -698,6 +700,12 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 			ret = simplefb_get_panel_height_mm_of(dev, panel_node);
+ 			if (ret > 0)
+ 				height_mm = ret;
++			/*
++			 * Ignore errors from parsing the panel orientation. With
++			 * the orientation initialized to UNKNOWN, the connector
++			 * helpers will do the right thing.
++			 */
++			drm_of_get_panel_orientation(panel_node, &orientation);
+ 			of_node_put(panel_node);
+ 		}
+ 	} else {
+@@ -861,8 +869,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 	drm_connector_helper_add(connector, &simpledrm_connector_helper_funcs);
+-	drm_connector_set_panel_orientation_with_quirk(connector,
+-						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
++	drm_connector_set_panel_orientation_with_quirk(connector, orientation,
+ 						       width, height);
  
-+enum drm_panel_orientation;
-+
- /**
-  * enum drm_lvds_dual_link_pixels - Pixel order of an LVDS dual-link connection
-  * @DRM_LVDS_DUAL_LINK_EVEN_ODD_PIXELS: Even pixels are expected to be generated
-@@ -47,6 +49,8 @@ int drm_of_component_probe(struct device *dev,
- int drm_of_encoder_active_endpoint(struct device_node *node,
- 				   struct drm_encoder *encoder,
- 				   struct of_endpoint *endpoint);
-+int drm_of_get_panel_orientation(const struct device_node *np,
-+				 enum drm_panel_orientation *orientation);
- int drm_of_find_panel_or_bridge(const struct device_node *np,
- 				int port, int endpoint,
- 				struct drm_panel **panel,
-@@ -101,6 +105,13 @@ static inline int drm_of_encoder_active_endpoint(struct device_node *node,
- {
- 	return -EINVAL;
- }
-+
-+static inline int drm_of_get_panel_orientation(const struct device_node *np,
-+					       enum drm_panel_orientation *orientation)
-+{
-+	return -EINVAL;
-+}
-+
- static inline int drm_of_find_panel_or_bridge(const struct device_node *np,
- 					      int port, int endpoint,
- 					      struct drm_panel **panel,
+ 	ret = drm_connector_attach_encoder(connector, encoder);
 -- 
 2.54.0
 
