@@ -1,30 +1,62 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012050.outbound.protection.outlook.com [40.93.195.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4CA3EFFB3
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 08:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782896173; cv=none; b=Q1P6jeoZQ5SCJ+7mSKDVfpQdumu+WKv+XW1ov+Q5oVhF8qkEHD1R8M6wnUua47AJdniddaWEUihvyT2BIn5g9QCvyP/a/aS+pDzn0PXyvBykBFQk33P2fyfMilffTwsnn/4fYtitQJlpPv7Pbhlg7O09WmdF+DsgNbzk7ROKEK4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782896173; c=relaxed/simple;
-	bh=g124yqZ5EFLnNnJlPt2Gcywq38EklCpg/ihjICns+qE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b8DfW9SY42qOtz2qT8Nwjpwji5a5tzaZJ8OUUg6qF0MKBNdKkclN30EH+W8zSsAnSPbuQOMrL65Gz8F03n5rfPYJseEzP2qfz5ZRteGGlL6Duc7Lfie4vmHx5jFlCD35+4Ffx3YLi38EDMc+oMNXBSevMU4uX40T6rHwCdkCFbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gqv3j05P5zYQtfZ
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 16:55:13 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 3B75840B57
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 16:56:07 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDnqf0m1kRqYNLbAQ--.50329S2;
-	Wed, 01 Jul 2026 16:56:07 +0800 (CST)
-Message-ID: <9b181384-028e-4597-8dae-4416b43c940c@huaweicloud.com>
-Date: Wed, 1 Jul 2026 16:56:06 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BBD19CC14
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 09:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782897974; cv=fail; b=l/STyYjyPcIGo5RZMHLVJM7CJt/co8wERzvPmQrsGDWuScrzg8JLJdVofQbGrYPTHwGUp+R4TmEJd9GuUYngFjEzRC9ggWWuQLrPoT3CSWWlRJKa/oqt67XgoTb+L4INR2riB1rdr/Byw+f5PODX/PMrlKEiuG0fakVGzj2zuzs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782897974; c=relaxed/simple;
+	bh=1222LZD0IbxJQAP4t7Kr8gToCAclbvbIlGVr0kTpexE=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dO8vyYst4YfKETm2nlZf1YBAoc8rLzU1g5hzvtsiv0/y5dlaxsiOb1BLu2gVpoJWWGs32iG/M0DufBQaoG6BSZFcb0EE8PKSb9aVBEcX8yrWujwV9j2hSm0L+ElVw7HRx8OMEMY2vC1iTXGG6803kA316LVRPMLQMJn1a9KfBIo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=OKOyEipe; arc=fail smtp.client-ip=40.93.195.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="OKOyEipe"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uJoe2+i73vO5wCdu8H/LmfNb41NTc0bFbgJmU8nu+TsPa4m3X4S9biLr1LtSuf1LBWaSAHgHOQOu3bO8Nx0H0SNWH0Qql2uRPyMRFPhOpUreq+tu6M5bJ0NUxg4un6A8B+gqjkK8vKAlE27Gzx2eusc5xW8h7JB9v/rjm5VD7oyTI6laq4zE0vBHc4IP55AOTnmCZnh2JjRMk/QQMkaRAT/mB594G9vM6B1Cz0N3naxmSXYbngjSFe1vWOHWmNB29paxRwazrEP6Y7g7BJyVBexwf87WQvOkomBQXn6gMdYcMX/SswbSiAGHCnpn2GQVYgjt6pWCzc5WlKXgypmjBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NQL9Q2ZnWVtgmlE11y3D9FXignpvloN3i6Npt5y8GuU=;
+ b=YzBW2MkYhO7m4/c+xP6JfadLkpqL2IjvB8Ggm0L/gjC2znPNBuxYMTG9rDDZTA+O/46Y1CVybJUwFHV8jurqUkF9tb/1bQ8umj+F8HAHlEF8HbsItusXYvYMYnBtOf1vI5ZIDQGtlxg9we3kEwqHZjrmri+7njQkVsazWSCvQASuNclnFgnCdrqnJr3rZswMZbEY1UKiNy7xs6pmazCxDf+tRzLL5XsZChdqNDLhNYHUJhtbmpIONcIZrwocr/Ej6nEwpofcyrjn9UqLAK70P5pThsRBvhND/QMDwoHJsiWFA5xAZjvzA6Mg126wTn4Wdobc1aJHcvSmGWiNsuev0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NQL9Q2ZnWVtgmlE11y3D9FXignpvloN3i6Npt5y8GuU=;
+ b=OKOyEipeFgwSjNOjBez07t1hXNmkumlr4kRhlzIFaO5cAhb6oZk9zg5uYIvQLL7c6ej3cxW/bSR8f5H6YN0OD/JDyS2s5wK5e9uB6iHvlQ/psXawo/hri6y+X7GTYGa2sn9Q+0E/NE98moN0QyliRqsH+t1bw79zP63YRGT+laU=
+Received: from BN9PR03CA0873.namprd03.prod.outlook.com (2603:10b6:408:13c::8)
+ by CY8PR12MB7171.namprd12.prod.outlook.com (2603:10b6:930:5c::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 1 Jul 2026
+ 09:26:07 +0000
+Received: from BN3PEPF0000B072.namprd04.prod.outlook.com
+ (2603:10b6:408:13c:cafe::5d) by BN9PR03CA0873.outlook.office365.com
+ (2603:10b6:408:13c::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.8 via Frontend Transport; Wed, 1
+ Jul 2026 09:26:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN3PEPF0000B072.mail.protection.outlook.com (10.167.243.117) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Wed, 1 Jul 2026 09:26:06 +0000
+Received: from [10.252.216.131] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 1 Jul
+ 2026 04:26:04 -0500
+Message-ID: <07317a28-cde6-4ded-86b5-8251062fb2d4@amd.com>
+Date: Wed, 1 Jul 2026 14:55:57 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,135 +64,168 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/21] perf annotate-arm64: Support 'mrs' instruction
- to track 'current' pointer
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260701035355.752944-1-wutengda@huaweicloud.com>
- <20260701035355.752944-22-wutengda@huaweicloud.com>
- <20260701041636.7FEDC1F000E9@smtp.kernel.org>
+CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
+Subject: Re: [RFC PATCH 5/5] iommu/amd: Provide kernel command line option to
+ enable GAPPI
 Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260701041636.7FEDC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgDnqf0m1kRqYNLbAQ--.50329S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurykJrW3Wr4UuFy7AryDtrb_yoWrJFWrpa
-	4vka90kF48JF40gwnxXrW8ZrySg397W3W5Kr9093Z2yFZa9rn7GFn7tw42kw4rJr1rCw17
-	Zr4Dtr43Gw1kZFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVWxJr0_GcJvcSsGvfC2
-	KfnxnUUI43ZEXa7IU8oGQDUUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+To: <sashiko-reviews@lists.linux.dev>
+References: <20260626105906.14577-1-sarunkod@amd.com>
+ <20260626105906.14577-6-sarunkod@amd.com>
+ <20260626112537.22F0A1F000E9@smtp.kernel.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20260626112537.22F0A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B072:EE_|CY8PR12MB7171:EE_
+X-MS-Office365-Filtering-Correlation-Id: 27b40f56-edf8-421a-4f67-08ded752c771
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|1800799024|376014|23010399003|36860700016|22082099003|18002099003|13003099007|4143699003|11063799006|56012099006|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	PTFwCHIALjzOau2I4xhudW/oEtF6RzADzEhIVdP+HwLOxSHQamu9y7jZa6YA2bJw1O1mJYWbykzGiIH7Vdqhn7Nfvfn4elbgmC0gGMXmw1aQpHEXmeDbi8vvb/fEcBmbcaiFpjj1d3GT0S3CEyp3On75uXiqq9iQ8m5TdjFGgJ6YrO1I5OfCTGlJd2ti6R+3E0sANE2/xGJeRiXiVOV5Zn2HuLtK6KAGj+lAo0Br9NH4mIP8kJu3pEyWZ6k+BCXWbzk41EwmGaSWlMmGcF4vqFyz3rAAPLeiSElFYXfVF6HACMD18OWdYuUQ2EOEBhHTxRFIcYJOtwMCHgekpeqsj49SVd7AoJjDdc+kIKoZxv9bRWj5y5/kIEuoTTD9Dl7jk5Ud0La/URTfzKdEp+pBVzZoikFWOlciWOHzU0JBOBBAnLKhTcuEJmOr790Y1kW9/AHY810r3VoMJiZTM2M6vybDunPiFTFeY+BORz6PVBTa6Jo7qrf4gfHLzII9kzDfrYqPn2v1UQVI8aeYdpD7n8c0SOnj4WtzNFHZ5k9L/LxxBBA88lCm6bSJG631JkIwE24P1hmkRFHyL6df8ErF/x50qBecfQAXm502zqaHbQrV7QricJZUrGSJvHR92wM6UJ4pwJz37BkxxjmmF/NzeA==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(23010399003)(36860700016)(22082099003)(18002099003)(13003099007)(4143699003)(11063799006)(56012099006)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	HDzRNactijzHo+mWChMmIV27OIy5r4xKJDve7RkR9cmjapwTe6sH/VJ2qD47ibQAALsaBPd0P+DJWmBHUc2CuAqymsrT4w7ospJjlM/OGlXI0gfC7xI87mmHRt3paZ76R+OhNMZKAlun8hJ4zn8Ry8nEMc4pnKQ22jVfeqKYbj0RqeyUpxmc+0VW0wXcVNd7Ta+6QL43cTD1b5YkdMILtcN5QTEMSI7/SsBMhTyiLa2zMrD3Le/uIT6sdqiRkm1oJxnUxhTV3KzTLDX7HZ9Ih6efkw5MXxyfDUWRZuBXsq/9Ms714XkHMUCGYteuNo5o7gqXxRj5fSH6dzPoJrLLJ7lkmyvwkJ393i4dThoRps7AXZ/rxUO+ebcDe3uijnTG3Eg74wVJLpeHK6S+duo7EkxGniAphgpJtWpd0pTC/3W2DOiayG44qNhURx0ZWrRN
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 09:26:06.6154
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27b40f56-edf8-421a-4f67-08ded752c771
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B072.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7171
 
 
 
-On 2026/7/1 12:16, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Memory leak of the dynamically allocated `type_name` string obtained from `strbuf_detach()`.
-> - [Medium] Cross-DSO contamination and potential type confusion due to globally caching a DWARF offset (`task_struct_dieoff`).
+On 6/26/2026 4:55 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>
+> New issues:
+> - [High] The global variable `amd_iommu_gappi` is not cleared to `false` when `enable_iommus_vapic()` returns early.
+> - [High] The `CONTROL_GAPPI_EN` feature is enabled but never disabled during IOMMU teardown or kexec initialization, leaking hardware state.
+> - [High] The GA log interrupt handler unconditionally re-enables `CONTROL_GALOG_EN` upon an overflow event, even when GAPPI is used and GA log memory is uninitialized.
+>
+> Pre-existing issues:
+> - [High] `iommu_init_ga_log()` unconditionally allocates memory with `GFP_KERNEL` and reallocates pointers during suspend/resume cycles, causing a memory leak and a sleep-in-atomic bug.
+> - [High] `enable_iommus_vapic()` returns immediately on error without rolling back previously initialized IOMMUs, leading to an inconsistent initialization state.
 > --
-> 
-> commit 0f7d6f3c161448b3cb967b47ee3887be3d974dc1
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support 'mrs' instruction to track 'current' pointer
-> 
-> This commit adds support for parsing the 'mrs' instruction on arm64 in
-> 'perf annotate' to track the 'current' task pointer. It dynamically queries
-> the DWARF debug information for the 'get_current()' inline function's
-> return type to find 'struct task_struct', caching the DWARF offset for
-> subsequent lookups.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index ec6fd59d51a27..89e3997f6721b 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> [ ... ]
->> @@ -787,6 +789,81 @@ static void update_adrp_insn_state(struct type_state *state,
->>  		     insn_offset, tsr->addr, dreg);
->>  }
->>  
->> +static Dwarf_Off task_struct_dieoff;
->> +
->> +static void update_mrs_insn_state(struct type_state *state,
->> +				  struct data_loc_info *dloc, Dwarf_Die *cu_die,
->> +				  struct disasm_line *dl,
->> +				  struct annotated_op_loc *dst)
->> +{
-> [ ... ]
->> +	/* Handle case difference: LLVM (SP_EL0) vs objdump (sp_el0) */
->> +	if (!dso__kernel(map__dso(dloc->ms->map)) ||
->> +	    strcasecmp(dl->ops.source.raw, "sp_el0")) {
->> +		invalidate_reg_state(tsr);
->> +		return;
->> +	}
->> +
->> +	ip = dloc->ms->sym->start + dl->al.offset;
->> +	pc = map__rip_2objdump(dloc->ms->map, ip);
->> +
->> +	if (!task_struct_dieoff ||
->> +	    !dwarf_offdie(dloc->di->dbg, task_struct_dieoff, &type_die)) {
-> 
-> [Severity: Medium]
-> Since DWARF offsets are local to their .debug_info section, if perf annotate
-> processes a symbol in a different kernel module (where dso__kernel() is still
-> true), couldn't this global task_struct_dieoff be applied to the module's
-> Dwarf * handle?
-> 
-> Would this result in type confusion or returning an arbitrary, unrelated DIE
-> across different DSOs?
-> 
->> +		struct strbuf sb;
->> +		char *type_name;
->> +		/*
->> +		 * Find the inline function 'get_current()' Dwarf_Die
->> +		 * and obtain its return value data type, which should
->> +		 * be 'struct task_struct*'.
->> +		 */
->> +		if (!die_find_inlinefunc(cu_die, pc, &func_die) ||
->> +			!dwarf_attr_integrate(&func_die, DW_AT_type, &attr) ||
->> +			!dwarf_formref_die(&attr, &type_die)) {
->> +			invalidate_reg_state(tsr);
->> +			return;
->> +		}
->> +
->> +		strbuf_init(&sb, 32);
->> +		die_get_typename_from_type(&type_die, &sb);
->> +		type_name = strbuf_detach(&sb, NULL);
->> +
->> +		if (!type_name || strcmp(type_name, "struct task_struct*")) {
->> +			invalidate_reg_state(tsr);
->> +			return;
->> +		}
-> 
-> [Severity: Medium]
-> Does this code leak the type_name string?
-> 
-> strbuf_detach() allocates and transfers ownership of the string to type_name,
-> but it appears to never be freed on either the success path or the error path
-> returning here.
-> 
+>
+> commit a43ef908c557e1883a80f54d875c75488a6d0f52
+> Author: Sairaj Kodilkar <sarunkod@amd.com>
+>
+> iommu/amd: Provide kernel command line option to enable GAPPI
+>
+> This commit introduces the amd_iommu=gappi command line parameter to enable
+> the GAPPI extended feature when supported by the IOMMU hardware.
+>
+>> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+>> --- a/drivers/iommu/amd/init.c
+>> +++ b/drivers/iommu/amd/init.c
+>> @@ -3038,11 +3038,20 @@ static void enable_iommus_vapic(void)
+>>                return;
+>>        }
+>>
+> [Severity: High]
+> If enable_iommus_vapic() returns early before this point because
+> FEATURE_GAM_VAPIC is missing or SNP is active, the newly added
+> amd_iommu_gappi flag is never cleared.
+>
+> Could this cause issues later in amd_iommu_update_ga() when KVM expects
+> GAPPI behavior but Virtual APIC mode is logically disabled, triggering
+> warnings and failing interrupt delivery?
 
-Agreed. Will fix it in next version.
+No, this will not happen. If enable_iommus_vapic() returns early, AMD IOMMU
+will not set IRQ_POSTING_CAP capability. kvm_x86_vendor_init() checks this
+capability before enabling interrupt posting. Hence all vfio device
+interrupts will take eventfd path, in case enable_iommus_vapic() returns
+early.
 
+>
+> [Severity: High]
+> When recovering from a previous kernel in the kexec path earlier in this
+> function, the cleanup loop clears CONTROL_GALOG_EN and CONTROL_GAINT_EN.
+>
+> Since this patch introduces CONTROL_GAPPI_EN, does the cleanup loop also
+> need to call iommu_feature_disable(iommu, CONTROL_GAPPI_EN) to prevent
+> hardware state corruption if the previous kernel left GAPPI active? A
+> similar omission appears to exist in iommu_disable().
+
+Yes, this is a valid concern. Will include this in the next version.
+
+>> +     if (amd_iommu_gappi &&
+>> +         !(check_feature(FEATURE_GAPPI) &&
+>> +           AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))) {
+>> +             pr_warn("GAPPI is not supported.\n");
+>> +             amd_iommu_gappi = false;
+>> +     }
 >> +
->> +		/*
->> +		 * Cache the 'struct task_struct*' die offset globally.
->> +		 * This allows us to resolve stack canary accesses even
->> +		 * in CUs that lack a full task_struct definition (e.g.,
->> +		 * compiler-generated entry/exit code).
->> +		 */
->> +		task_struct_dieoff = dwarf_dieoffset(&type_die);
->> +	}
-> 
+>>        /* Enabling GAM and SNPAVIC support */
+>>        for_each_iommu(iommu) {
+>> -             if (iommu_init_ga_log(iommu) ||
+>> -                 iommu_ga_log_enable(iommu))
+>> -                     return;
+>> +             if (amd_iommu_gappi)
+>> +                     iommu_feature_enable(iommu, CONTROL_GAPPI_EN);
+>> +             else if (iommu_init_ga_log(iommu) ||
+>> +                      iommu_ga_log_enable(iommu))
+>> +                      return;
+> [Severity: High]
+> When amd_iommu_gappi is true, iommu_init_ga_log() is intentionally bypassed,
+> meaning the GA log memory is never allocated.
+>
+> If a spurious GA log overflow interrupt fires, amd_iommu_int_thread_galog()
+> processes it by calling amd_iommu_restart_ga_log(), which blindly re-enables
+> CONTROL_GALOG_EN.
+>
+> Will the hardware then attempt to write log entries to an uninitialized
+> physical address, potentially causing kernel memory corruption or fatal
+> IOMMU target aborts?
+
+It is not possible to have the spurious GALOG overflow interrupt without
+enabling the GALOG in an "ideal" scenario. But to protect the kernel against
+buggy hardware, I'll add necessary checks inside amd_iommu_restart_ga_log.
+> [Severity: High]
+> This isn't a bug introduced by this patch, but returning immediately on
+> failure here leaves the system in an inconsistent state.
+>
+> If a subsequent IOMMU fails initialization, the loop aborts without rolling
+> back the features (like CONTROL_GAM_EN or CONTROL_SNPAVIC_EN) enabled on
+> previously processed IOMMUs. Could this result in partially initialized
+> interrupt routing?
+
+You're right that the abort path can leave MMIO state inconsistent across
+IOMMUs. For this series that is acceptable: we never set IRQ_POSTING_CAP,
+so interrupt routing is unaffected. Proper cleanup belongs in a separate
+series. I will keep this hunk as-is.
+
+> [Severity: High]
+> This isn't a bug introduced by this patch, but calling iommu_init_ga_log()
+> here unconditionally allocates memory with GFP_KERNEL.
+>
+> During system resume, amd_iommu_syscore_ops.resume calls
+> enable_iommus_vapic() with hardware interrupts disabled. Does calling a
+> GFP_KERNEL allocator in this atomic context cause a sleep-in-atomic bug,
+> and does unconditionally overwriting iommu->ga_log leak the previously
+> allocated memory on every resume cycle?
+
+Yes, This is a known issue in IOMMU driver, which leaks the previously
+allocated memory for ga_log. Cleanup for this one also belongs to a
+separate series. I will keep this hunk as is.
+
+Thanks
+Sairaj
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260626105906.14577-1-sarunkod@amd.com?part=5
 
