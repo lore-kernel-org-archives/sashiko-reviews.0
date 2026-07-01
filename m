@@ -1,168 +1,142 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2659D3EF0D3
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 08:48:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC91D3A4505
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 08:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782895722; cv=none; b=FsZAV0aHkDzEyEI98TgBLsZUWBy0vpHWqjPlUxhF8dHXtL4vkMwrQigq61uWreLJQej2gH3+bcB8eqQy9ATBtHFSpGzDf+DkBi6IisotX4a+lkFT81Gb4Uc7a32VTLeg+Ay222BBhrN/rVp1zuQzH9yJWJCMIr7wW93BOZhFNPk=
+	t=1782895747; cv=none; b=M+hjJOW+nc4VTyAA1G4+N4f+LiIeelfR/Fwx8/wDA79fUQrmUFnlMZ6kb9WQmtr32dJrPRr9/RQSo86j9N59HJMXBiD8heXrjniyZJqfaxpPvrGHuGqc+FRVHa10lTY8Kw4+lkC6Zh/Pm5/tpUEvD4XeAxqu+PV42LZ5iXC6/LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782895722; c=relaxed/simple;
-	bh=AJZkLvOfxW0de6r+CyQc5qTyXDoiqp2t4JSLGDtsAk8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mxTE8SyEvGzqiidb/V1cx268Y6iRYj6cy4t/z4uUcyev0GOq5xtGiicNKfPKMK9KXyh6u9+6cMAEbNc6W5Jv9MhZ8v27FSPw3EN5rXRiitH51oArtcsWkFSzJ+hO5oTUhgYISe+LmI5zD8dzgtzHjry4SqvdMsk3Hw7YtXJuptc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IMhPr3Lu; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IMhPr3Lu"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-476d8e647e9so337563f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 01:48:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782895719; x=1783500519; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iIY4E2Qv/c4b0j+COVpWSOrsvci+vruq4kKRU7Wts6g=;
-        b=IMhPr3LunO5E3LbAzUvscOgdDiI768nmQ7BlRBHyh0mj/GNEc8cxCngJ2ndzEmSiUA
-         XpL+l4c3ZOE2NYokeBSoeeKPh07/ErY2mrXY5XZE1QxCLrKsTf9dQnsEbFnMDTiGcGzR
-         paCtZN+dkFYkijtMeaUtUa8SQU0ZlyMZz3rPyzA6+PlJK7/bYs3NYkyT4tO+idkd7hrK
-         iF+gIrPuPOdf+OCBr3/M96agXldYyBCloAzM7guHxV7xOyPSuscAuoVAyyOWkDClfdTC
-         u0g1soBAhG7G/aerDx6HtnLF6ar7FHvaP1Pfgch/T4K+ue+k/9NfbQiZ+rjSYM18inAT
-         69Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782895719; x=1783500519;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iIY4E2Qv/c4b0j+COVpWSOrsvci+vruq4kKRU7Wts6g=;
-        b=DharBJwu3B6V7/024voZNieOnN6KJsoAaBKGGaKTfsiiJDuvVTh24rPNgh/UCa4mck
-         ShjxQ/0fb4lflHihmqo0Z+Qdw7SRFZ8paZZbeCJuyftk1qSMB5Bq/hMTSNshAxLI6tDu
-         zubvRn6ZqOLF8ORen3Yplz1kplf5DhmMvcGo6ATjfU4lMjm0Db/DLtCi9AmDwy4I8/Dt
-         QWPMkcPFz/UTV7As9UjgSboSBTxkPu4rHeptreTY8YX4+C7i3VTtxLkwCMNswc1C2EWN
-         S9WdGXjNPkn5lpOQJlV5UB6UZV9k7WN3Sd9NW+gCwc8nITYuuO2wdq3qUcNna8qwW612
-         5i5g==
-X-Gm-Message-State: AOJu0Yx5FT8IpR1LwW0NX2OJeNfyEzz51rK5GxOGFpVAPXCtiOraTYyq
-	SbjWblNQWfXeCvomDT/unYeClnnGFErd6CSWU48b/UPvh+3Slxww+u/6
-X-Gm-Gg: AfdE7ckgLsjNgbfnBM1VU+I9ZPid5aG3IbgteMIsW7aTS0qy/pX794061Nb58RleFln
-	mvKEUhGWvFQFTtgDxodshrHWn+6WcjSsD/OE7a7vQ91D+QuYUxc9NZ9pM1EylTFN4bJx7q+1RIO
-	gqI/6GwE5iPSgfS5Kmo8XbO+ZRWTNG1Q/ym+TWRMBSQJRtgAWvgIlrvH6lDaBajC7yaXv3Sg/3X
-	5drj0FpsUzFV9CgncCJJajOobAnHKFyDU2uCzmBI1x9oSJv6Q27HOHpom66j22F/lEkvk8znC1Y
-	ycal44Nwal+BkiMq8HBfc/WB69n8K52M3gD5t/Dgq0u+P6R6LrXQFgdstdWkwRZC5JG+Hg2Eztb
-	b/rrKWS9JsQ0NpNCFWokzH26E76vSgkIzU8Y2rDtSKTle92xxVnb7QV+9p+LDEcGmkOqmJ9lXNA
-	eW5+aOEr74Lr8IIdUjo1lxDKjp6hy9Ke6g03HFBOxf3kjx7JsFyFSNd5lvMfboaiCpoouh8Ff6U
-	NjuZuOkJ6nBRGUpi9Gig9xDE0h0iKWR
-X-Received: by 2002:a05:600c:4f4a:b0:493:a84a:ec5a with SMTP id 5b1f17b1804b1-493c2b26b38mr13891255e9.12.1782895719252;
-        Wed, 01 Jul 2026 01:48:39 -0700 (PDT)
-Received: from Lord-Beerus.station (net-93-144-65-248.cust.dsl.teletu.it. [93.144.65.248])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-475671d0403sm15802622f8f.29.2026.07.01.01.48.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 01:48:38 -0700 (PDT)
-Date: Wed, 1 Jul 2026 10:48:36 +0200
-From: Stefano Radaelli <stefano.radaelli21@gmail.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev,
-	Frank.Li@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v5 2/3] arm64: dts: freescale: Add support for Variscite
- DART-MX8M-PLUS
-Message-ID: <akTUZLKogURvYIPx@Lord-Beerus.station>
-References: <85af11e85dbb7cf5097d7c0ee567272ff6e87ec5.1780998600.git.stefano.r@variscite.com>
- <20260609100729.C9FF21F00893@smtp.kernel.org>
- <akKh5XbMS_JjGpPF@lizhi-Precision-Tower-5810>
+	s=arc-20240116; t=1782895747; c=relaxed/simple;
+	bh=9xrOQPuzVe/1usloYaiGTzp0w+9/6wDHdg3F1miHeWQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pf2iqs605f9Y11RABVjmxnjCmmileye162FPuna23snBhQfWZ/Z4zmVY0bNvYW78PBUaxkCj4TL8ruytk9/lPmxy9ghVVKCp/q3UGD59Dkb+gllVeB2daN+8ECANxcxXroJxDIoyNMSXBSkS0c3T0CbtNFxzXopCujxl2zMFKWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gqtwL6dLszKHLtH
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 16:48:50 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 5406D40561
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 16:49:00 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgAXh_R71ERqfvfZAQ--.26018S2;
+	Wed, 01 Jul 2026 16:49:00 +0800 (CST)
+Message-ID: <87063437-8200-4672-aed7-9ac50344bb9c@huaweicloud.com>
+Date: Wed, 1 Jul 2026 16:48:59 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akKh5XbMS_JjGpPF@lizhi-Precision-Tower-5810>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 19/21] perf annotate-arm64: Support 'adrp' instruction
+ to track global variables
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260701035355.752944-1-wutengda@huaweicloud.com>
+ <20260701035355.752944-20-wutengda@huaweicloud.com>
+ <20260701041517.585EF1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260701041517.585EF1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgAXh_R71ERqfvfZAQ--.26018S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDXF1xZF1kZFW7tr4rAFb_yoW5Wrykpr
+	yDAay5Gr4UJr4vgFsIqr4rXa4Sgw4fX3WUCr90qFs7KF9FkrnakF92krW3uFWrJr93Cw1U
+	Zw4qvrZ8Zw40ka7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVWxJr0_GcJvcSsGvfC2
+	KfnxnUUI43ZEXa7IU8oGQDUUUUU==
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-Hi Frank,
 
-On Mon, Jun 29, 2026 at 12:48:37PM -0400, Frank Li wrote:
-> >
-> > > +/* BT module */
-> > > +&uart4 {
-> > > +	pinctrl-names = "default";
-> > > +	pinctrl-0 = <&pinctrl_uart4>, <&pinctrl_bt>;
-> > > +	assigned-clocks = <&clk IMX8MP_CLK_UART4>;
-> > > +	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
-> > > +	uart-has-rtscts;
-> > > +	status = "okay";
-> > > +
-> > > +	bluetooth_iw61x: bluetooth {
-> > > +		compatible = "nxp,88w8987-bt";
-> > > +	};
-> >
-> > [Severity: Medium]
-> > The pinctrl_bt group configures GPIO2_IO06 and GPIO2_IO09 as GPIOs and attaches
-> > them to uart4, but this bluetooth_iw61x node does not map these pins to any
-> > properties like device-wakeup-gpios or reset-gpios.
+
+On 2026/7/1 12:15, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Stale `type` field in register state causes `TSR_KIND_GLOBAL_ADDR` to be corrupted across stack spills.
+> --
 > 
-> Please check it, look like make sense
-
-This is intentional,
-these pins are not meant to be controlled by the Bluetooth kernel
-driver. They only need to be muxed as GPIOs in the device tree so they
-are not configured with different alternate function, since they are
-handled by our userspace initialization script following the power-on
-rules.
-
-This is also consistent with the existing Variscite DTS files, where
-these BT/WBE control pins are only muxed and not mapped to Bluetooth
-driver properties.
-
-Best Regards,
-Stefano
-
+> commit ddfb698eef878cf476210d72e082d8b79c811ecd
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> >
-> > Will the kernel driver fail to toggle these pins, leaving the chip in an
-> > uncontrolled state? Is it relying on bootloader defaults or userspace sysfs
-> > toggling for these pins?
-> >
-> > > +};
-> >
-> > [ ... ]
-> >
-> > > +	pinctrl_eqos: eqosgrp {
-> > > +		fsl,pins = <
-> > > +			MX8MP_IOMUXC_ENET_MDC__ENET_QOS_MDC				0x2
-> > > +			MX8MP_IOMUXC_ENET_MDIO__ENET_QOS_MDIO				0x2
-> > > +			MX8MP_IOMUXC_ENET_RD0__ENET_QOS_RGMII_RD0			0x90
-> > > +			MX8MP_IOMUXC_ENET_RD1__ENET_QOS_RGMII_RD1			0x90
-> > > +			MX8MP_IOMUXC_ENET_RD2__ENET_QOS_RGMII_RD2			0x90
-> > > +			MX8MP_IOMUXC_ENET_RD3__ENET_QOS_RGMII_RD3			0x90
-> > > +			MX8MP_IOMUXC_ENET_RXC__CCM_ENET_QOS_CLOCK_GENERATE_RX_CLK	0x90
-> > > +			MX8MP_IOMUXC_ENET_RX_CTL__ENET_QOS_RGMII_RX_CTL			0x90
-> > > +			MX8MP_IOMUXC_ENET_TD0__ENET_QOS_RGMII_TD0			0x16
-> > > +			MX8MP_IOMUXC_ENET_TD1__ENET_QOS_RGMII_TD1			0x16
-> > > +			MX8MP_IOMUXC_ENET_TD2__ENET_QOS_RGMII_TD2			0x16
-> > > +			MX8MP_IOMUXC_ENET_TD3__ENET_QOS_RGMII_TD3			0x16
-> > > +			MX8MP_IOMUXC_ENET_TX_CTL__ENET_QOS_RGMII_TX_CTL			0x16
-> > > +			MX8MP_IOMUXC_ENET_TXC__CCM_ENET_QOS_CLOCK_GENERATE_TX_CLK	0x16
-> > > +			MX8MP_IOMUXC_SD2_WP__GPIO2_IO20					0x10
-> >
-> > [Severity: Medium]
-> > The pinctrl_eqos node configures MX8MP_IOMUXC_SD2_WP__GPIO2_IO20 as a GPIO, but
-> > there is no corresponding regulator or driver property that requests this GPIO.
-> >
-> > Could this unnecessarily block GPIO2_IO20 and cause a pin conflict for any
-> > carrier board that attempts to use it (for example, for usdhc2 write protect)?
-> > Was this possibly a copy-paste error from imx8mp-var-som.dtsi?
+> perf annotate-arm64: Support 'adrp' instruction to track global variables
 > 
-> Look like make sense, are you really use GPIO2_IO20 for eqos?
+> This patch extends update_insn_state() for arm64 to track global variable
+> types calculated via page-relative addressing. It introduces
+> TSR_KIND_GLOBAL_ADDR to represent the partial page-aligned target address
+> produced by adrp instructions. The address is later combined with the offset
+> from a subsequent add or ldr instruction to resolve the variable's type.
 > 
-> Frank
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index 1fed188117192..6f96e75d313dd 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> [ ... ]
+>> @@ -656,8 +700,37 @@ static void update_add_insn_state(struct type_state *state,
+>>  	}
+>>  }
+>>  
+>> +static void update_adrp_insn_state(struct type_state *state,
+>> +				   struct disasm_line *dl,
+>> +				   struct annotated_op_loc *dst)
+>> +{
+>> +	struct type_state_reg *tsr;
+>> +	u32 insn_offset = dl->al.offset;
+>> +	int dreg = dst->reg1;
+>> +
+>> +	if (!has_reg_type(state, dreg))
+>> +		return;
+>> +
+>> +	tsr = &state->regs[dreg];
+>> +	tsr->copied_from = -1;
+>> +
+>> +	if (!dl->ops.source.addr) {
+>> +		invalidate_reg_state(tsr);
+>> +		return;
+>> +	}
+>> +
+>> +	tsr->kind = TSR_KIND_GLOBAL_ADDR;
+>> +	/* Partial page-relative address, finalized in next 'add/ldr' */
+>> +	tsr->addr = dl->ops.source.addr;
+>> +	tsr->offset = 0;
+>> +	tsr->ok = true;
 > 
-> >
-> > > +			MX8MP_IOMUXC_SD1_STROBE__GPIO2_IO11				0x150
-> > > +		>;
+> [Severity: Medium]
+> Does this leave tsr->type containing a stale Dwarf_Die?
+> 
+> If the register previously held a structure or union type, the type field
+> isn't cleared here when switching to TSR_KIND_GLOBAL_ADDR.
+> 
+> If this register is later spilled to the stack, set_stack_state() will
+> evaluate the stale type_die. Since the type_die tag is DW_TAG_structure_type,
+> it will erroneously set stack->compound = true.
+> 
+> When the register is loaded back via ldr, update_load_insn_state() will then
+> branch into the compound type handling (die_get_member_type()) instead of
+> restoring the TSR_KIND_GLOBAL_ADDR state. 
+> 
+> Could this destroy the tracking state and cause perf annotate to fail resolving
+> the global variable's type?
+> 
 
-Thank you,
-I will remove this GPIO.
+Agreed. Need to clear the type explicitly.
 
-Best regards,
-Stefano
+>> +
+>> +	pr_debug_dtp("adrp [%x] global addr=%#"PRIx64" -> reg%d\n",
+>> +		     insn_offset, tsr->addr, dreg);
+>> +}
+> 
+
