@@ -1,116 +1,194 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393EC48164E;
-	Wed,  1 Jul 2026 13:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782912044; cv=none; b=M1DAewxNngrIs/uzVyyBzH6GXDugJIaKDtxkxzNkk3eCvo/SCC200kfLG2yd50E/9DeNXhlsMIqxz+hOSIbI7v+a9DWKk1uQKbniqwoA5tLq/xjsLhckUNX0TgxyvTC0+VLw5kcmc4T7cmN0aFFTfNbqnLQgSAPtfZwjd0EJuQc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782912044; c=relaxed/simple;
-	bh=m2LIx4R1X2hLiqYmwb++9ThKvrr0kdGUY1HxbApHQ0k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h67iu+kqMWX37WImbW+gMWKkLzKwoRa6lad3RDyz3kCHPkp+L92lmYzVEaNk6FvIhccVMM4lM8/FOr2tiAhr9zDdGcuhlmRqGGoO4m/cj+9potu1beo3l+fB0XCnPdcThLN0j7JL/48dDsyw6/wGUdQXxwi/EYTVokePa40iOME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=IJgKC27W; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E02024A047
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 13:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782913593; cv=pass; b=D3qynUJlQpdACguIr9ymp1HOuqpl0Rkh6gECRwMoCZB7WCgR4PJxwef6Vu1nnO6VV65T2PYRDLFLn/P+/rCQ7TjeviCS15LnOqenqKYeEu5BaHJnRUKMz1GK8vK12ciiLewfCKWPLb/vtxNo7o4zu2LYt1Ho2z24DmxMPffGvGQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782913593; c=relaxed/simple;
+	bh=Ygpn0hK1smQWcR0LYsrbFcRF2NaJlsQXSFnetNp/AFI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vCJahH0gIIOrJ/uDQm0bgU4CnYyUfcJASwEIXiX6K/OuZnB+zr84sc0TNGwVcz19DFWbuKiQlUGFwwHROIbIXEDTV+D8j3ObVKpzV56QVPjOh1PYY/9yKWbsvkaR46ObqBYFrqoZClr1PCKuo6D+pYOwOe5H/TKf3x6KEpnrpvk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=j+lFp//4; arc=pass smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="IJgKC27W"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=m2LIx4R1X2hLiqYmwb++9ThKvrr0kdGUY1HxbApHQ0k=; b=IJgKC27Wsu6hIFvyPCDUua5c5w
-	0o/xFvPv6xMfZ7TROEv4KTd5uxfVET4dNr5ufzvHicf3oP8QHhgqkRQzXUw+SyfYE5cpmPJUrk8XB
-	W61dXDIvEipQTlA7rjui2X4Q4kjWQKepxbuNJi7KZVqU/DKqICy5iDj5XJlWEEnUEWfJ2fdSJp/CJ
-	ypJv/Tp9QhXr2h++LHIG9cpObsy/Eitv0GHNmMK1KdkQsQt26Y0o7rIwxRQWvXwg2L/fbyt8xCdzr
-	fUEnCCYAhVZTG1/MV8Ev8Luwup8b9wvzRBTeeaf+VUUK1j+iPfVJGTGyYRQq+G41bNylS5Of7f9md
-	wQ+laOEA==;
-Received: from sslproxy08.your-server.de ([78.47.166.52])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1weurp-000BUP-2C;
-	Wed, 01 Jul 2026 15:20:41 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1weurp-000MVX-1D;
-	Wed, 01 Jul 2026 15:20:41 +0200
-Message-ID: <b8f111f3-6895-4f60-a7bf-dcc0f6505367@iogearbox.net>
-Date: Wed, 1 Jul 2026 15:20:41 +0200
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="j+lFp//4"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-495c49f8eccso514622b6e.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 06:46:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782913589; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NZJvqwmFvu5S7/6kd3Og5PNmfhAUFt1KzQAsl1ZigYae6TmUoXVAACvoB0FUxZuBsd
+         ZSsLRtcF6+cefYKuePWo7nt5xElD0Nyi/IVuFad/2PFyQuvR4NSN6yx58kBDBVVy/XxL
+         0Pa2a0R5KIvD12QCIXBrcFAE03QkhpZ2nQhIjO+1hTkRLq/QLM6eS0SyDpnPrgFS0q+t
+         0zd9/n/NBo/cqkh5SIOJuP8GMDJTk7l5ZuETxnzKXVhu0cFny2hAGzDt2DxtQTcEtnMV
+         g104NbNOgcrfV3IBzzM0piM6MWZkeLlAWILso41tZJf9OSL60WwSPw9XxUQTs3HgI8hf
+         bZOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=6n0sBFaOXUEf6Jh9qw+qogE2tc0XtPoPSK5HD/x03Dg=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=RFAWsRjuQxlYe5Gn+WVsgQg9rKk5Dt4BNgFjnxdancfiJnjQp+84cCbQ6mjACA1U/0
+         JVHwRMxiOcCW+yLyLJdVUIeiT1Fd7/2PNn1lBkTp3iTfPyzVCXtHZbFJbHq44XZcGU/I
+         gGY87NGUjXcxQwESzY6mtr0UrAtdmW6FY9FHeI8fTtnzMMAHhggtGRp22ggodpNR50Ye
+         YzxNgqnVo2IWCqLhtgpDk9x9+ZakAbrJFFm8i7cIKogB/5RFGr6J6CnU5oI72/gnC0dz
+         g+Cs27ajWec/mi8KVoxswJ1t5t1ujJZx/vILgMeFnjWjkS7ErW6Khy3LpgKKfDhk6Y5I
+         auzw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1782913589; x=1783518389; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6n0sBFaOXUEf6Jh9qw+qogE2tc0XtPoPSK5HD/x03Dg=;
+        b=j+lFp//49atX8lhBaif5fNdywOcDeG/e6XNJVALZtfqKq1ZHN23a/kHMqgjUfEj0Zf
+         1ZrzdcWPpGdbMMq71LHJvFZX2TLlnl+YlHer/cjQCVJrK9xgTGl7lNWySsRobuiOwZEf
+         +88bLOTzrbh9Xy6rX+2N/NTiUK+O/EpbCxLxS+GKhyMN8Z2X6rNmT1EBZeUFFDAhcPkH
+         Y3j8yVTxD4QnSEO8BuJzq4TAFkcc82F7JMMFVxPSNvVsvq1CIhz9zzgyshH11Q54JZ9a
+         aoCJgY4MXFDcqpLDMDeTjSWlH3PMlNhZmnOMaX9Fvqieo5nA66q9/VWHTGntYo+i1ycG
+         Qkig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782913589; x=1783518389;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6n0sBFaOXUEf6Jh9qw+qogE2tc0XtPoPSK5HD/x03Dg=;
+        b=i5YbLdt8EyDaE6Qcper8fy6OrJ/rUw3AFosIbtCWasnXud9wEaDaCCbBEoZKv9ynar
+         kSv4hAGDUAtr4oncGuXOGsh5TW3CzleE3GrPMh90fkaYnxseGq4dWk/LgWmc/K7/vHUz
+         mUOK7aktlho+ZOtxkckjuKfT6I++WgeZZiIFRbIpP0bRN2HwGok5LxmcxaxnO0PBRd6v
+         OHaC0NLmrqYc6+llByKC56VgtreyXAED7Hx10sKvUZsbWRDm7sA0dhDUKF4coPWaATIf
+         2IJFP1J09L5flbHtJ5ZfYNFDRZZLqLAkCisoxbTDmGMAzT9GHLn9sUaT3cYTxH7ZwMOJ
+         uKEQ==
+X-Gm-Message-State: AOJu0YxgMq5BC7VFc0YCzttNoBNhblivYzquE69FvIYaZ2RfP9VkbE4y
+	o8zz4IXedMaWBpUBhYF1J1V1RKDUuXIsqRgaPlr7tHdPGAzxWFZl5tkg7l3z/OLJg/ckGGXltQz
+	7a8drwCxSGNa3UgrtFb8Ico13avbAf2cR7YAyLD6qc/madsIQ8/snI2urIQ==
+X-Gm-Gg: AfdE7clrJQfLcbuvtzV7CO15iyewn4qo+buIE69yGg4d70xaTFtqQG6JTeXV9a7CQCQ
+	1gWe2DJ3Plqs2UlCWsR6UuxvthdG4LIkUKLdG2q5a13zJvVM4unmZejRdHuTDcT75qpjs2yHIM3
+	bCXoYTqz1bGMLjiZNtBu+hDB3APKSi0sa74U7Wwn4svvHX1CNgsel1eON3CFKcWZIcEHErXgTGm
+	/5HxMzfRpwHCRfTMLB4Jd3o3FR5xZv7NFrKqV5aAnGKrQMaOCe+aVJ2kXR2ozguZL01xLzHHBmb
+	kTVyfTEy5Q==
+X-Received: by 2002:a05:6808:190c:b0:48c:4c00:596a with SMTP id
+ 5614622812f47-4962d70ee64mr384835b6e.5.1782913589182; Wed, 01 Jul 2026
+ 06:46:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net 3/3] selftests/bpf: Add test for redirect from qdisc
- qevent block
+References: <20260701122948.57584-1-cuiyunhui@bytedance.com>
+ <20260701122948.57584-3-cuiyunhui@bytedance.com> <20260701124631.32E671F000E9@smtp.kernel.org>
+In-Reply-To: <20260701124631.32E671F000E9@smtp.kernel.org>
+From: yunhui cui <cuiyunhui@bytedance.com>
+Date: Wed, 1 Jul 2026 21:46:17 +0800
+X-Gm-Features: AVVi8CdQEJSpt-0JWy6AZwBd7PbD8qH7GvKvOCKZEUE_xOA1QCretpoH4h0GtzQ
+Message-ID: <CAEEQ3w=OUGQg+-eXEWpY7-74Q9MN0Yd7aPXMwoa=Q6XF1K=P4Q@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v6 2/3] riscv: introduce percpu.h into include/asm
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-References: <20260630123331.186840-1-daniel@iogearbox.net>
- <20260630123331.186840-4-daniel@iogearbox.net>
- <20260701123339.522481F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260701123339.522481F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28047/Tue Jun 30 23:29:24 2026)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/1/26 2:33 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The test is flaky due to a race condition with asynchronous ARP resolution.
+Hi sashiko,
 
-This is a false-positive; the only way counter == 0 is if ARP never resolves across all
-sends which is extremely unlikely. If it ever becomes an issue, we can add a static entry.
+On Wed, Jul 1, 2026 at 8:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] Inconsistent naming and semantics for 8/16-bit vs 32/64-bit 'andn=
+ot' percpu operations.
+> --
+>
+> commit 8c96e5a266e5953bcbbc15476c253fbdd307508b
+> Author: Yunhui Cui <cuiyunhui@bytedance.com>
+>
+> riscv: introduce percpu.h into include/asm
+>
+> Add RISC-V specific this_cpu helpers so common percpu operations can use
+> short architecture sequences instead of the generic implementation.
+> Native-width operations use AMOs, while 8/16-bit operations use Zabha whe=
+n
+> available and a local 32-bit LR/SC fallback otherwise.
+>
+> > diff --git a/arch/riscv/include/asm/percpu.h b/arch/riscv/include/asm/p=
+ercpu.h
+> > new file mode 100644
+> > index 0000000000000..34483253e946f
+> > --- /dev/null
+> > +++ b/arch/riscv/include/asm/percpu.h
+>
+> [ ... ]
+>
+> > +#ifdef CONFIG_64BIT
+> > +#define PERCPU_OP(name, amo_insn)                                    \
+> > +     __PERCPU_AMO_OP_CASE(.w, name, 32, amo_insn)                    \
+> > +     __PERCPU_AMO_OP_CASE(.d, name, 64, amo_insn)
+> > +#else
+> > +#define PERCPU_OP(name, amo_insn)                                    \
+> > +     __PERCPU_AMO_OP_CASE(.w, name, 32, amo_insn)
+> > +#endif
+> > +
+> > +PERCPU_OP(add, add)
+> > +PERCPU_OP(andnot, and)
+>
+> [Severity: Low]
+> This isn't a bug, but is the naming here intentional? This defines
+> __percpu_andnot_amo_case_32 and __percpu_andnot_amo_case_64, but since it
+> passes the 'and' instruction and operates on the value directly, it perfo=
+rms
+> a standard bitwise and rather than an and-not.
+>
+> > +PERCPU_OP(or, or)
+>
+> [ ... ]
+>
+> > +#define PERCPU_OP_8_16(op_name, op, expr, final_op)                  \
+> > +     PERCPU_8_16_OP(op_name, op, 8, .b, u8, expr, final_op);         \
+> > +     PERCPU_8_16_OP(op_name, op, 16, .h, u16, expr, final_op)
+> > +
+> > +PERCPU_OP_8_16(add, add, val, add)
+> > +PERCPU_OP_8_16(andnot, and, ~(val), and)
+>
+> [Severity: Low]
+> Conversely, for 8-bit and 16-bit operations, the andnot operation actuall=
+y
+> performs an and-not by passing ~(val).
+>
+> > +PERCPU_OP_8_16(or, or, val, or)
+>
+> [ ... ]
+>
+> > +#define this_cpu_and_1(pcp, val)     _pcp_protect(__percpu_andnot_amo_=
+case_8, pcp, ~(val))
+> > +#define this_cpu_and_2(pcp, val)     _pcp_protect(__percpu_andnot_amo_=
+case_16, pcp, ~(val))
+> > +#define this_cpu_and_4(pcp, val)     _pcp_protect(__percpu_andnot_amo_=
+case_32, pcp, val)
+> > +
+> > +#ifdef CONFIG_64BIT
+> > +#define this_cpu_and_8(pcp, val)     _pcp_protect(__percpu_andnot_amo_=
+case_64, pcp, val)
+> > +#endif
+>
+> [Severity: Low]
+> Because of the semantic difference between the underlying helpers, the 1 =
+and 2
+> byte wrappers pass ~(val) while the 4 and 8 byte wrappers pass val.
+>
+> Would it be clearer to harmonize the semantics across all sizes so the
+> wrappers do not have to compensate?
 
-> - [Low] Semantically incorrect use of the tcx-specific constant `TCX_REDIRECT` in a legacy `cls_bpf` program.
-Intentional since this is defined via vmlinux header and they're both the same return value.
+I will fix this in v7 by making all this_cpu_and_*() helpers
+consistently adopt plain AND semantics.
+
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260701122948.57=
+584-1-cuiyunhui@bytedance.com?part=3D2
+
+Thanks,
+Yunhui
