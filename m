@@ -1,180 +1,201 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013047.outbound.protection.outlook.com [52.101.72.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B8C360ED2;
-	Wed,  1 Jul 2026 15:03:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782918181; cv=fail; b=k7/f+HmSohfYk+Z+7XaZlLDJR4r2mNJtyniSVNAsxZwvjbSKtZU658fAeuhQuBp4PbYofWqsDAjw6wTZfYKi95LcOKpM9pBANk7vffrMrmqhnSLQca3Vhvwc1RAaLhsIYKomkUi2Xc2xDBo/qmR63pi2MXMn4dsm+SCQIRDBi3o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782918181; c=relaxed/simple;
-	bh=x1MfN1eEhFPIGeSQ2DYnPhBcer4Opw5ryDnipwO8kb4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=S/lFSmqJH2nCIRghqRJoZvsRPqcvg2G2SEHYtrXb3LonDAvfUs7hg2VDIcYA8smhq6FwK0miEVS7cahithIRM+YlR6VsAqWb+xKBu+GRMfngA3KfRh14/RUSPkmuc70DRVPQqO00/YUnCP04fQrVrTwuAb2dTSz40hIQ4ARAc+I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=h1fKRAgM reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C733F20EB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 15:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782918730; cv=none; b=iMGSg0vluxUndsDUs6ZAQLRZqjUWNo5FPO0Vi79oqe3D3EpU+jWizWOQ/3k+TahzSBRGiru3U/Tj6P8EzfWQfeBZ9GshHJQ1Gq5IXbhsg8+Y2mVHCiM0lWbzWjL4OV5SE8woUHsLubMXRRWW6KGCP5cWcIQfFkQLLNWmkbvEhNU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782918730; c=relaxed/simple;
+	bh=ZR0IKXI2qZ58agG8y3P8IN22gkFhvB+F4b3wIPmGSgE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mK634w0ie3CBxIFU49DntojIEWoJl+gQzxIJuZAxdS8I6KRdHEdm4J/01jk1cNWGlOj3YX8gNZI61L2aJZIj3JQNyQ3aWcpD9sJeGzT7R1nPBMV4U6c/9gNKYOjGjocvGQDg21IxSIpfhGBIRZIyl8OaKEh+/FUUMVvAegGja2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=BMuyIvya; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=kZIEh43U; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=HFFzaV0s; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8dHuZEdB; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="h1fKRAgM"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=guYOyXTy4VTTjCcex4L6YyyWqpqNjCLudp1I8cxBUqPS7dQ/s8LCkhF0avcHcQnii3aymzg1drsYxWco/Nm4Zp6I/D48ZFab6BCbKDZyc3nwPSDmSWcNc2KYPrVdiGGfd7yk6Xi+7UZaf7p6t3n5SxGZkZqPcBBziJA/NtU834M6a505Cw3ZXpBvQwNcbKPwiMlOJpP4WO59iAcKTbz1hcmBgeEfkwAz+8Y5xXiywQTpNDYqcuFjJ14HRgMxeOUHI4AL1JlW3VKkID4WnssOkVOKx6fhB0pUbGPBPz9nkC/nHfvtHuZi0xG9v6eh0UINjK/FXRFG1A0wx513dxeByQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gzgHgoTx6NJ5dqJLjzlZ09JXRL5pIi2CPlG0SRSqfGQ=;
- b=CvROs7+gNAQw5HUKmPQep5C7MhquyiZ+LC9yq7hYURI7TM9uYkcWXukZ3pALYQWLVkOIJxB6Gu4ZmpGcLElXfDYCSwpwMyLDLQyk6GSscaRy3AF+XS8StdNdA9a+GPaNI2l3iROrryOPHjObmCHJR40m02aK02p1XgANejp8awytDplLzla5rhJfL0cvZRpnf038XPpGwBR4d67U7928Ub8lFGtWY9yOKAl7tFI258TQYNy82n7DOcUiZmMI7rGtnElUz3ui723dEFX8zBmRWEbbb+DTrsHZQDEzToZcTeIFTLbLuwEzFP7s8TYSNbWe1vx1T8fiPKvR/Tm/FbRUzg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gzgHgoTx6NJ5dqJLjzlZ09JXRL5pIi2CPlG0SRSqfGQ=;
- b=h1fKRAgMwQJmgNhf1tUZTf9fkNmkngCnZJgcCxknxRDGjF32E40XuB+rZy+GP8jflSlBLB68BXsv2uyBtuxAr1OuhBcdED10TQhMPFLUEzUBtHXENnrtFS4P3zOzoUBoi2mi/jZ5cenbh3zPtUoU+hpQCelij9FBtSI3j81wPsSAEe33ZOzHBLs/fXR92IOJWQh0vfG10rkzCxmL5vvNHepqPlfHriSebJjLNReeay5gxf5t/vFCCau5pH+aVwcc90QNAlM+V8dUccde9467chfUwcNNHEXBwCfzU5nFchpb9/c1gQcyKGP0vDZ0O0Y/I1DJQI75oBMqx85DF++RVA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV1PR04MB10847.eurprd04.prod.outlook.com (2603:10a6:150:20a::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 1 Jul 2026
- 15:02:53 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Wed, 1 Jul 2026
- 15:02:53 +0000
-Date: Wed, 1 Jul 2026 10:02:43 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Alexander Stein <alexander.stein@ew.tq-group.com>
-Cc: sashiko-reviews@lists.linux.dev, Frank.Li@kernel.org, robh@kernel.org,
-	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com,
-	imx@lists.linux.dev, conor+dt@kernel.org
-Subject: Re: [PATCH v6 1/1] arm64: dts: add tqma9596la-mba95xxca
-Message-ID: <akUsE6A6lX0mgM5g@SMW015318>
-References: <20260701082611.3126036-1-alexander.stein@ew.tq-group.com>
- <20260701084522.5A5301F000E9@smtp.kernel.org>
- <15795907.O9o76ZdvQC@steina-w>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <15795907.O9o76ZdvQC@steina-w>
-X-ClientProxiedBy: SA1P222CA0160.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:3c3::6) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BMuyIvya";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="kZIEh43U";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="HFFzaV0s";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8dHuZEdB"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id ACF7B73CA1;
+	Wed,  1 Jul 2026 15:12:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782918722; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Ujg+vtUnBUkcn7uviv9/aDnhHZF7ivi24qrblUlDVCs=;
+	b=BMuyIvyao2NbmLgd4tfQiqcJtrbtmGiG0rCMfOqnKfj9rNv/pz0AVItygpsHmuPe1vOlHm
+	uLOepuZOVfM3NIt2Cce1gp8xechL1bXxrIgQcrwonrqm8Z3MU5JI/FhbCGQjK9BwwTZHVn
+	NjPHE/uLKq7Waveal2a6Zcyhb1OTqIU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782918722;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Ujg+vtUnBUkcn7uviv9/aDnhHZF7ivi24qrblUlDVCs=;
+	b=kZIEh43UUM4nmbhu0ppeIuhXlRUMThF0/1TT/ukQ+7j4rDYV3laxxaF3SPP+E3Kp/r5bC9
+	g6hJ6phiDohRaxBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782918721; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Ujg+vtUnBUkcn7uviv9/aDnhHZF7ivi24qrblUlDVCs=;
+	b=HFFzaV0sQ46F8/nlD6dwWvbcPqlKK8OTYhQXQws6AWhoZuyEqkSLWhVc+keZjPQdCxX55Q
+	Yr47S/vJVrnPHdZKPEQ33+6mHGYtxVeNtwgP15R96+z7ddj4g/jbe6fQy/ZnXU/LVAyNDH
+	y+RI4a1W4t+6pFPpj+Bf09XNmI23eGs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782918721;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Ujg+vtUnBUkcn7uviv9/aDnhHZF7ivi24qrblUlDVCs=;
+	b=8dHuZEdBfQXyHszo8KRIm77kEVFYe7NFAdAdGqIBTK1LCOjeBxmYO075wkZM3JQSgcquiP
+	tZd48CDAOOBTXhAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 96BAF779AA;
+	Wed,  1 Jul 2026 15:12:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id cm9gI0EuRWoKcAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 01 Jul 2026 15:12:01 +0000
+Message-ID: <9044e7b8-7cec-400c-a1fd-a12f2198ff05@suse.de>
+Date: Wed, 1 Jul 2026 17:12:01 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV1PR04MB10847:EE_
-X-MS-Office365-Filtering-Correlation-Id: e738a682-8379-44ad-9439-08ded781d36b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|1800799024|19092799006|376014|18002099003|22082099003|11063799006|56012099006|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	h8YYwRK50eFtU/xr9UV2ZXTjAjLbc61yXVo1QTtBcPvxqGjIVp91FpJiZzrDSnBrYF5fosQdissZY14ARJIS4g/qAyN238TsMAHf/ks1HbVh95cq20k1UOLcOvXrbQEEYhZkQdt+pc+FwkmIDAF3NUTEm1Zg2cXmpTw4VBaDeW57G681uoQUF2S0xmQL2Td9NLClvitH+ZM85eTGdmMrX/NolS19Da43pY3NAMsn0xT8N5txVRBRypXHeMGgwUc/AZEY7fG2apthLg8UzH20BP6mjXWjwXAF0T7mMNUZz8KLBkqS3c29YOgzAn5jwT0txNcPCfAjXfI55HxTenaqt8FvWaZpD8k95BfkYZ1/B5DYvccppdB8X+aDKe2Ix0UGKes1nIV1/4jlmaRSi3HbU3922ldYK+pNbQJ2znVbQmtXqi5dp+Ye8a3fCpv9QPxKVjCdWGL1nsu1TU/q/WwE2o5up6xpWiVoveiPFgEd2ytA8MHHRfgWfR/q6c4nt9VkKRXj3A/Xq0YRvoZmks8ZHcglJxyvDqgxtVMQym3nd3w2ptcTBMewdvt5FBOLZabhIOzdxJVYebjwsk15LgQ0+P84E666uPhYHBX2T/B2UrM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(19092799006)(376014)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?zQJ6vlgkdz739MzSH9azL0KF19+EHOZI3AhcqEZu5MV3gE4GCRCwEZUV2M?=
- =?iso-8859-1?Q?5MjiItAErYXd/h2J9gr76RDHdz9a2I7CjSTzUkSz/stANQRCcVCsRTUzjl?=
- =?iso-8859-1?Q?eoCmJcqe2ftwJKuaLwycfcBi+N5QatjIM+TNVTq65R2efoQffJ9y6VI94M?=
- =?iso-8859-1?Q?Og2TYZOvlXp7qSDNnh/qGSQL+7WYdF0cEnXL62yW5TIk82BwHTtHc8CkXC?=
- =?iso-8859-1?Q?UpXmZBvwNFJOrrC0VIL+jpcG1ErtmktaZB0nHqwfjLYzMq0oJ7Z6r/Mk20?=
- =?iso-8859-1?Q?dcDWWlGW6pfhCNCUPVWz3r4iUzBMQSZIberVMBBm8/NYEqesjbsNsps8Sv?=
- =?iso-8859-1?Q?U54GCF7+DJ8wiGpFA4zz8ba2BbIkQtZS4o2KG/hkcZut7ItlN5DIJ2jPd9?=
- =?iso-8859-1?Q?apYeEMQnxOQcAaNZiGsqhx2KRjxihgdm+zVd3pvoz9cj4edmk+aYbBM13D?=
- =?iso-8859-1?Q?cNGAUKlz+SUQAOUHlTStWb6joQUTAiykjdsvNpvbVqoLMOU4t7/m+2Ej1X?=
- =?iso-8859-1?Q?nquGOxjcB3QqcQ+Xvcl8X5zy7u00x+gVLDWYcVnXY5rCbd+pD+mrPaKhnL?=
- =?iso-8859-1?Q?zzpYii4K0kFJh8jDDq2M1nW654CtUwKjCoeWMpYvsaEZMcbU9+/E9T7far?=
- =?iso-8859-1?Q?k+8zHK2X4nqUWfm8nIGkMF3VHT9LLkIWYAx8MxicyFyvxiXGwoFTUVVo/c?=
- =?iso-8859-1?Q?d993rDItKfVFo2C99l4ICtW2jjLVP6Kh7My2CmxDK3LsHOQyy1UB23Kfr8?=
- =?iso-8859-1?Q?N4Vvx+phxyK21CMz/eBpR0C3K4vRyDZDxtLV2DXYushSlxxxWJFPqkHdJ8?=
- =?iso-8859-1?Q?sKIVP4mbG19OnHQ9EBqm4ppB9QkcGnKMEeHCc/0WVgpm6OWC4iWEVQZa3T?=
- =?iso-8859-1?Q?RXO4PQukoUcQxq9XPpSwld/xZQYspkkgcxAMj0PLoXY9ZrL6XkrTvXloYp?=
- =?iso-8859-1?Q?/PTS3R/W1AulnJz3NjndKn/DldEhXLQUcvb1kvdJ2T5iROrzno89EdX1wH?=
- =?iso-8859-1?Q?6nqq4R3T0PBMe50o/1ZWxS3NvRplPHqsSMLkFmqBBCeHTba2Wz0iV9uhre?=
- =?iso-8859-1?Q?Vt3Ow3tK2i3RjmFOMUPUhIM19/870QJkDjPF2tQy0XTZvQIqTdQ5R/i1MU?=
- =?iso-8859-1?Q?G9F123/NGbdwtiypaz5RPcW+sGvKevxEtZ8HnbXZpenATMCsb/gWbAVdBY?=
- =?iso-8859-1?Q?7Fey6ylfVGK6uYKgwrqSEt+foPMhjW6HhMw6A0JioKdEbOgO8WFx9R2x3w?=
- =?iso-8859-1?Q?+g5EsqzBQwzmxM1R/ekJkcyAXgGLK9PS3oAPxfLxHMXaX6NVCGZvNr3sFU?=
- =?iso-8859-1?Q?FXZa0KTuv9y3hEizCYc+IpcfSqt4MqQqQ9EsQL8zpzXsJC+e6VGJpiyFxO?=
- =?iso-8859-1?Q?GQYiMdG8Xxpi6H0/gH5jVgxrDLNNhtWwxubHZ0dW/BkKrs9DqS5wMtsp98?=
- =?iso-8859-1?Q?Id5MLlV76qSGHl9i7KIhwWh1N58car9Q2QgFJwB5Rp2qGqsQKt7QWw14gn?=
- =?iso-8859-1?Q?Mjvj/wvKctTLnWcjqX4o91R27HnLg+HCFHCwPwb9bklnazEkCW9SEC52Zo?=
- =?iso-8859-1?Q?LWrJIKYtv0JjLWgGJlS3oPJqyAZF8598148iC5qxKPzscmPXDaJASbTh1+?=
- =?iso-8859-1?Q?E5Rr5j4ikIF2ZunnzI1G0f1tzdIaG8SiOc/xbJZN3ZB7xrx24xq97kKlww?=
- =?iso-8859-1?Q?SrcbXBH7Zxtb0Rbq3XUTdrwIy5waBNDxes5WXRsBIG0WoxfRF0QZ6x/0Ax?=
- =?iso-8859-1?Q?2HdPq2zmnR6dGE7P/vG5vg4lhms+zdxKJ95ZRrET1+CfVQ8Q5unxH7Kn6E?=
- =?iso-8859-1?Q?QxC3pBmkL8ifjCZRZ/q8+g1ru8sqL1ExrUeh7oUZgzOkPg6hfkV/?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e738a682-8379-44ad-9439-08ded781d36b
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 15:02:53.3940
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CIRlc2R2qfYSCw/xdrjnAR5A813H1UxgY2T3OsJSHiYMKNiiLbGkPgBRLuUJuPwUQbbpmkpXjPyKjfdei/XO0sFBKlvUIjArk6FOyasZfYFJRlUtUfDWW+PwPcBB13D2
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10847
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/i915/display: Handle struct
+ drm_plane_state.ignore_damage_clips
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260701130929.234695-1-tzimmermann@suse.de>
+ <20260701132359.BE4101F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260701132359.BE4101F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCPT_COUNT_TWO(0.00)[2];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_TWO(0.00)[2];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid]
+X-Spam-Level: 
+X-Spam-Score: -4.30
 
-On Wed, Jul 01, 2026 at 10:50:11AM +0200, Alexander Stein wrote:
-> Hi,
->
-> here some comments about the findings.
->
-> Am Mittwoch, 1. Juli 2026, 10:45:22 CEST schrieb sashiko-bot@kernel.org:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [High] Hardware components (PWM fan and 10G SFP) remain permanently unpowered due to disabled regulators
-> > - [Low] Dead code: Unreferenced `pinctrl_ethphy0` node
-> > --
-> >
-> > commit f54617810555494fd6b435aa3ac070a14b264e01
-> > Author: Markus Niebel <Markus.Niebel@ew.tq-group.com>
-> >
-> > arm64: dts: add tqma9596la-mba95xxca
-> >
-> > This adds support for TQMa95xxLA modules, designed to be soldered
-> > on a carrier board. MBa95xxCA is a carrier reference board / starter kit
-> > design. Enable the external accessible PCIe controllers as host, add
-> > clocking and reset GPIO.
-> >
-> > > diff --git a/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
-> > > new file mode 100644
-> > > index 0000000000000..e90f37bbdcd80
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
-> >
-...
-> >
-> > > +	pinctrl_ethphy0: ethphy0grp {
-> > > +		fsl,pins = <IMX95_PAD_PDM_BIT_STREAM0__AONMIX_TOP_GPIO1_IO_BIT9		0x1100>;
-> > > +	};
-> >
-> > [Severity: Low]
-> > Is this pinctrl group missing a reference?
-> >
-> > It defines pin configuration for the ethphy0 IRQ pin, but doesn't seem to be
-> > referenced by the ethphy0 node (e.g., via pinctrl-0) or any other node.
->
-> This pad is connected to gpio1 which is under control of the system manager,
-> so Cortex-A55 (Linux) has no access to it.
 
-If not one refer it, it will never be set to GPIO at all.
 
-Frank
+Am 01.07.26 um 15:23 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] drm_atomic_helper_check_plane_damage() is placed too late in the atomic check pipeline and conditionally bypassed, breaking the damage clipping contract during modesets.
 
->
-> Best regards
-> Alexander
+This is intentionally. We need check_plane_damage only for the call to 
+damage iterators that comes next.
+
 > --
-> TQ-Systems GmbH | Mühlstraße 2, Gut Delling | 82229 Seefeld, Germany
-> Amtsgericht München, HRB 105018
-> Geschäftsführer: Detlef Schneider, Rüdiger Stahl, Stefan Schneider
-> http://www.tq-group.com/
+>
+> commit 5c79bcf5010895b431b3c2135c7b80a5163d8e9f
+> Author: Thomas Zimmermann <tzimmermann@suse.de>
+>
+> drm/i915/display: Handle struct drm_plane_state.ignore_damage_clips
+>
+> This commit introduces a call to drm_atomic_helper_check_plane_damage() in
+> intel_psr2_sel_fetch_update() to selectively ignore damage clipping in certain
+> framebuffer changes.
+>
+>> diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+>> index 92af21d823a37..5a155f60110fb 100644
+>> --- a/drivers/gpu/drm/i915/display/intel_psr.c
+>> +++ b/drivers/gpu/drm/i915/display/intel_psr.c
+> [ ... ]
+>> @@ -2949,6 +2949,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+>>   		src = drm_plane_state_src(&new_plane_state->uapi);
+>>   		drm_rect_fp_to_int(&src, &src);
+>>   
+>> +		/* Prepare plane-damage state before using it */
+>> +		drm_atomic_helper_check_plane_damage(&state->base, &new_plane_state->uapi);
+>> +
+>>   		if (!drm_atomic_helper_damage_merged(&old_plane_state->uapi,
+> [Severity: High]
+> Is this call to drm_atomic_helper_check_plane_damage() placed too late in the
+> atomic check pipeline?
+>
+> By placing it here in intel_psr2_sel_fetch_update() (which runs during the CRTC
+> check phase), intel_plane_atomic_check() has already run and called
+> intel_plane_copy_uapi_plane_damage(). That means new_plane_state->damage was
+> already calculated using the unsanitized fb_damage_clips before this check
+> could clear them during a full modeset.
+>
+> Additionally, this loop selectively skips planes on non-PSR2 CRTCs or planes
+> with changed visibility (e.g. via the continue statements earlier in the loop).
+> Doesn't this mean the damage state is left unsanitized for those skipped
+> planes, potentially causing visual corruption when restricted clip rectangles
+> are used instead of updating the full plane?
+>
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 NÃ¼rnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG NÃ¼rnberg)
 
 
