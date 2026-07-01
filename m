@@ -1,209 +1,170 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D934B436367
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 11:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782906920; cv=pass; b=t7DclCNLLHrJZMWaXTNgK+o29XrQ2ZgsbgzpXFzdISxnVnczdROeN5Urcrmsln54F+ZaLJWfaBDO9WHNPf5Qr8nOLE9zoyAmD+tLSY728GiMtN2eoJCoOTwUhmxHzJo2MHhiqdYumZU1XHjlVfYtPo7pCFcSiMlRuPqibevQfLE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782906920; c=relaxed/simple;
-	bh=dYoJPC7hXSm9fVbKu4PhTwv3WPvl9gDbfz5qduX7Q4Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eu6BXEkqQnIK/8SEo5yK4UM12kvzdxo2CTw8F8O3ttc3Zkgzw2DSrt1lhoTOY3huRnm41CD9+4Fo8Iy3SsUk2sk1gLowEt3OQOUxC1DjfWn2BDAVHj0Gn3YK+8Lk2c0DXo8kr9pXjNOiDs2BT0jGjAQWwdIbQ31wxXfsR+tj0rc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=ZlTezL61; arc=pass smtp.client-ip=209.85.167.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2879480DFF
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 12:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782907504; cv=none; b=JebIC84kLJ6SVIi4NXKB35NCtGUtc/xeKX5HnSW3AcSTxVDYG9zhDi7sCdnpRASVsgxbxyTu1mbQbpsntJLVBQPM8GdxtUA0FybTOPOTxDFm69iuhUOimhaAOCGkqXNjh1CxLFyLvlrqG+EKKXzTgdUmXVShAHun9ZtvttWnrfU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782907504; c=relaxed/simple;
+	bh=0A2ZYfJTsilpM08NAVtRvkoZtT4pmMvnrvxQuPDEeHw=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=cRPx0iULoO3fwqrgtzEfL0OppSetKW0/Yd1H1L/O8lfEvPpjDgvPSYpBOqQeXWDpJY5/bDdbFiCAeE4v+tIo64VXO2ubUJEljuyh78j61f4uoVUw7ST/8SO2ZfQOHNpBUUck+gU6OYjDeeYAzmcDvYy+m0S5HNxVHE82aygyHDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jloWBhyK; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="ZlTezL61"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-4955cd5da3dso220029b6e.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 04:55:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782906917; cv=none;
-        d=google.com; s=arc-20260327;
-        b=gtFwFMEpMElfhr3m4qTrtv5M9+15X0fkiXB3kADfxPJc4HekooBrjrsSzH5DUwqucB
-         FmyvXrDznXHvHMfW2UmlmvTJA5ugUqt48stweLrLuMbh2SGwf+LJGKipOA43RaPZd0GD
-         lRfnfSIbX2NuJQHMvSEyT2ZfUnHTtCnaFXPiLLtS+HjK06iDzJkczmo8STyu6x65IyLy
-         AWVFKJ/YU2fsSDYTBFsYZT3lilMlwyVrEDG1QNtD+pzjGcECJqlDj+8j6rhzm86oF2hD
-         khGBnOgEIiYvFKp2FuEaAPQG2llP46rvEKchiNcWRZqiifh5CB+yy5CWNbv1mg8oCwcQ
-         cwVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=MAYeDwymAC7X4x23ohH+NiWECqUXh62wg52gYJBSoYo=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=az/3ZN1IwQ0et+pHQIJP7s1P6y1Ry7h3ZqMJLPpZyDc5dUOXLOG2x32XDtUAZXWuuU
-         68diFO9LpaxMXZW94rCDYqlyWeq+r8xRGOCJoXOaFkwVX9QttQ9EWnn7MJIMBQp3zSLM
-         cT50mPoPjQGYUaJr9O1zoLkRtP44KeDHnW6Oba9RAnzPMeydu+aZxptzQ9ZY7299IJVv
-         ob1rn7cQ+3+92Biv2kSVSfdnx4pIj6AiYHvKZ1QKIbOaAML7oUMjCtWiTLV68J5U6VXU
-         4Io5mduZvrzZO9vWchQk7LfhCtTHOgDcTK1SlfcFpBuYKkDUz9nCIsdrbhkAVgqqOfH7
-         j5Cg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1782906917; x=1783511717; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MAYeDwymAC7X4x23ohH+NiWECqUXh62wg52gYJBSoYo=;
-        b=ZlTezL61hG9gCwPKnbqy7KhLm+vRh26uzrWn6/4Pn3ynGerFaAJjRd1SRYTvfXselt
-         uHcwsqwe7c551uo8zOXvsVn9LmyF2CaySf7SVn9emHEYMz5UJb2C0NA3z0soVVA3XUWv
-         aJoHc14K95pdiIJDI6BCV6H7Oqn9D5L3D6RPDyUu3t9e5exHxjjE9LKfHM7qMVu0K3d9
-         KyxwBNpZrV8T5yKr87PQqCfqp57ySboKhYwdFrLB1PKT0CbhxYolbdZE4QS0wzo9DqGd
-         T4DeGUTh+ybHp+Cs3EdoaavHcXHkTukApMsQ/+xRu85Vs3sSIC+u7OVshFHBjqFC2zaW
-         IiOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782906917; x=1783511717;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MAYeDwymAC7X4x23ohH+NiWECqUXh62wg52gYJBSoYo=;
-        b=sOLielEP2gqDLfV8P01BreIFmW2CrIgVkSeLj7ugkLFfzNpKlpSJ8iXm0hTLTsvsFL
-         IOXZ7oRZ02ZgQIUXBqk55V5bOQ1fYNDsAiRBehRX7qdvrIJzoW/r2W91TJyZfQQnju79
-         gpxmBzYU2QjdxzHNzra1qtonXUDHAxlxqY39pstRtGTOoukQliKa3zsD42lepk+7dLVW
-         GeoF6v++SkYyYXz05//RCxnXb686BDzNCPG5lA32NiAkRg5GktyaJQ6Ne1ZHbdJP3D4S
-         LiMAm27/EkapSAaWXw02An26wgTR4ZIBO2EELf9pDnadlq8j5BmdYIL7lEaJXD/ThqLK
-         iG4A==
-X-Gm-Message-State: AOJu0YwIHl1l8EKDIe7t1Y6WpSnsH/GIVP1hZVzwIr2krGUQgdp2jOdG
-	xrhWHRbS9DzTrETau+xHnfmxBQ6XJMuZvqTgEfbwMHBIvpmPwQOKdQcGmo+roBYINXQw5JX+CV6
-	+xd/sX9TOlDY7kSZjMNkaE+NwkRN+nnQ2beoLGb4dikFtU8XUuPnSWo9YOQ==
-X-Gm-Gg: AfdE7cnk81kzJuruOy8FktEvFxyAxTmp7xL6ywBXhgfT2tJChkn59In5ZYIwOb24PCQ
-	7lSLfwmTTOZ0jVR3aap98+3Phz7QLkuanPee3Fdrs1ayxAuVAs+Q1NrsmwVE8EMZ1uWKm+NGLMd
-	UxXlG5PRBMgijO4b1QIgfZ4pRKmiaV9NjqD53fg+7o0srpS36mEY3tmpMSC/y4ijJN5v+czgTyx
-	0Pxl0RmyohF3UBj8RZpYNVdyZYLKXey4rmBpN9u2iqQiQvBsKLmNHyYPSJ+q73nfRAxuB5Tjs0+
-	8dvDF8ONfg==
-X-Received: by 2002:a05:6808:1390:b0:489:6c24:9d26 with SMTP id
- 5614622812f47-4960efea9c7mr617068b6e.27.1782906916701; Wed, 01 Jul 2026
- 04:55:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jloWBhyK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782907503; x=1814443503;
+  h=mime-version:content-transfer-encoding:in-reply-to:
+   references:subject:from:cc:to:date:message-id;
+  bh=0A2ZYfJTsilpM08NAVtRvkoZtT4pmMvnrvxQuPDEeHw=;
+  b=jloWBhyK4kdgLgREXl8zCcOOVXBNG8TsH7kRkh+BLX5ANE7KreYdLqc+
+   kzuY0wAtIvi1x7qIijFjSuBBZJLAOv8HAJDG+tOjDK3P9qk+0IvsSbUYe
+   elTQGkpRxvHyymU/tIOcm43GM3F37vzfDUhX8feaW8eqr90oBIMPytAYu
+   hVb436DQSel8LaF9gJTfNGQ8E3MZwGDabSy1HlAQRLRZBJ2zcV66/FKmG
+   vqwaNrA3z+SO/DTEv+zdMgIAElnCcpv+q6qMX64MGxf79+yoiW0qFm0Oi
+   sjVg1+qVjyjY4kYLQcolencTXC9G3knQ2aFYUDlMO5tCeCABTkm3zjONm
+   g==;
+X-CSE-ConnectionGUID: RjGn8gapQ+CwlFkH4CRR3w==
+X-CSE-MsgGUID: KIS+x+1DRBimqj5VuDgRJA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11833"; a="71162264"
+X-IronPort-AV: E=Sophos;i="6.25,141,1779174000"; 
+   d="scan'208";a="71162264"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 05:05:02 -0700
+X-CSE-ConnectionGUID: mHTeX9ywTXqHZKtbhsUZmg==
+X-CSE-MsgGUID: w3oIyxoZTiSpHz1jdKbbPQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,141,1779174000"; 
+   d="scan'208";a="248086073"
+Received: from abityuts-desk.ger.corp.intel.com (HELO localhost) ([10.245.244.25])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 05:05:00 -0700
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1782877663.git.cuiyunhui@bytedance.com> <d6afed2c271de42efe2a3580ea30c7601cae9c0c.1782877663.git.cuiyunhui@bytedance.com>
- <20260701043814.0FEB81F000E9@smtp.kernel.org>
-In-Reply-To: <20260701043814.0FEB81F000E9@smtp.kernel.org>
-From: yunhui cui <cuiyunhui@bytedance.com>
-Date: Wed, 1 Jul 2026 19:55:04 +0800
-X-Gm-Features: AVVi8CfLLTuKZzTE6HiqHPSHlVJOiUgvKHk-2H8WqqXcAJ8qtR4JfhzgBPojFdw
-Message-ID: <CAEEQ3wkwP+y6eFTO+KL3SbZq=S6e0AZZB5GuAFO+4AmyoCfJRQ@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v5 2/3] riscv: introduce percpu.h into include/asm
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260630225349.984AB1F000E9@smtp.kernel.org>
+References: <20260630223946.2107382-1-jia.yao@intel.com> <20260630225349.984AB1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v9] drm/i915/dg2: Add per-context control for Wa_22013059131
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@intel.com, Matt Roper <matthew.d.roper@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>
+To: Jia Yao <jia.yao@intel.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
+Date: Wed, 01 Jul 2026 15:04:57 +0300
+Message-ID: <178290749714.224587.15234445443946207851@jlahtine-mobl>
+User-Agent: alot/0.13.dev2+g40c57d620
 
-Hi sashiko,
+(+ intel-gfx, Matt and Tvrtko)
 
-On Wed, Jul 1, 2026 at 12:38=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+Quoting sashiko-bot@kernel.org (2026-07-01 01:53:49)
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Missing `<asm/cmpxchg.h>` silently drops NMI-safe ZACAS optimiza=
-tion and causes arbitrary compile errors.
+> - [High] Dynamically modifying the globally shared MCR register LSC_CHICK=
+EN_BIT_0 per-context causes a race condition when contexts execute concurre=
+ntly on different engines, leading to L3 cache state corruption and GPU han=
+gs.
 > --
->
-> commit 81a0db6d3f915424f8959abac9007e01a81b105c
-> Author: Yunhui Cui <cuiyunhui@bytedance.com>
->
-> riscv: introduce percpu.h into include/asm
->
-> This commit adds RISC-V specific this_cpu helpers for percpu operations.
-> It uses AMOs for native-width operations, and Zabha or local 32-bit LR/SC
-> fallbacks for 8/16-bit operations.
->
-> > diff --git a/arch/riscv/include/asm/percpu.h b/arch/riscv/include/asm/p=
-ercpu.h
-> > new file mode 100644
-> > index 0000000000000..46f1901d3bb88
-> > --- /dev/null
-> > +++ b/arch/riscv/include/asm/percpu.h
->
+>=20
+> commit aa5554c571fd6ea50b4b1d107d0ba27eeae18a7c
+> Author: Jia Yao <jia.yao@intel.com>
+>=20
+> drm/i915/dg2: Add per-context control for Wa_22013059131
+>=20
+> This commit introduces a per-context opt-out for Wa_22013059131 on DG2-G11
+> platforms, allowing userspace to manage LSC_CHICKEN_BIT_0 bit 15 itself.
+> It applies this workaround conditionally during indirect context batchbuf=
+fer
+> execution rather than globally at engine init.
+>=20
+> Link: https://github.com/intel/compute-runtime/pull/919
+>=20
+> > diff --git a/drivers/gpu/drm/i915/gt/intel_lrc.c b/drivers/gpu/drm/i915=
+/gt/intel_lrc.c
+> > index 147d22907960b..a35601e6f1e90 100644
+> > --- a/drivers/gpu/drm/i915/gt/intel_lrc.c
+> > +++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
+>=20
 > [ ... ]
->
-> > +#define this_cpu_xchg_1(pcp, val)    _pcp_protect_return(xchg_relaxed,=
- pcp, val)
-> > +#define this_cpu_xchg_2(pcp, val)    _pcp_protect_return(xchg_relaxed,=
- pcp, val)
-> > +#define this_cpu_xchg_4(pcp, val)    _pcp_protect_return(xchg_relaxed,=
- pcp, val)
+>=20
+> > @@ -1348,6 +1348,37 @@ gen12_invalidate_state_cache(u32 *cs)
+> >       return cs;
+> >  }
+> > =20
+> > +static u32 *
+> > +dg2_g11_emit_wa_22013059131(const struct intel_context *ce, u32 *cs)
+> > +{
+> > +     /*
+> > +      * While re-writing LSC_CHICKEN_BIT_0 for Wa_22013059131, the
+> > +      * other bits of the register will also get overwritten.  The
+> > +      * hardware default for all other bits is 0, but any workarounds
+> > +      * that adjust the other bits in the lower dword of the register
+> > +      * also need to be re-applied here.  At the moment that's just
+> > +      * Wa_22014226127, which is always set for DG2-G11 platforms.
+> > +      */
+> > +     u32 val =3D DISABLE_D8_D16_COASLESCE;
 > > +
-> > +#ifdef CONFIG_64BIT
-> > +#define this_cpu_xchg_8(pcp, val)    _pcp_protect_return(xchg_relaxed,=
- pcp, val)
-> > +#endif
+> > +     /*
+> > +      * Wa_22013059131: only set FORCE_1_SUB_MESSAGE_PER_FRAGMENT for
+> > +      * userspace contexts that have not opted out.  Kernel-internal
+> > +      * contexts (gem_context =3D=3D NULL) never run shader workloads =
+that
+> > +      * require this workaround, so skip them unconditionally.
+> > +      */
+> > +     if (rcu_access_pointer(ce->gem_context) &&
+> > +         !test_bit(CONTEXT_WA_22013059131, &ce->flags)) {
+> > +             val |=3D FORCE_1_SUB_MESSAGE_PER_FRAGMENT;
+> > +     }
 > > +
-> > +#define this_cpu_cmpxchg_1(pcp, o, n)        _pcp_protect_return(cmpxc=
-hg_relaxed, pcp, o, n)
-> > +#define this_cpu_cmpxchg_2(pcp, o, n)        _pcp_protect_return(cmpxc=
-hg_relaxed, pcp, o, n)
-> > +#define this_cpu_cmpxchg_4(pcp, o, n)        _pcp_protect_return(cmpxc=
-hg_relaxed, pcp, o, n)
->
+>=20
 > [Severity: High]
-> Does this missing <asm/cmpxchg.h> include lead to build failures?
->
-> Since these macros rely on cmpxchg_relaxed, if callers expand them withou=
-t
-> manually including the atomic headers, it looks like cmpxchg_relaxed will
-> be undefined.
->
-> > +
-> > +#ifdef CONFIG_64BIT
-> > +#define this_cpu_cmpxchg_8(pcp, o, n)        _pcp_protect_return(cmpxc=
-hg_relaxed, pcp, o, n)
-> > +
-> > +#define this_cpu_cmpxchg64(pcp, o, n)        this_cpu_cmpxchg_8(pcp, o=
-, n)
-> > +#endif
-> > +
-> > +#ifdef system_has_cmpxchg128
->
-> [Severity: High]
-> Will this macro evaluate to false and silently drop the NMI-safe ZACAS
-> optimization?
->
-> Because <asm/cmpxchg.h> is not included, if a file includes <asm/percpu.h=
->
-> first (for example via <linux/spinlock.h> and <linux/irqflags.h>),
-> system_has_cmpxchg128 is not defined here.
->
-> Does this cause the kernel to silently fall back to
-> this_cpu_generic_cmpxchg?
->
-> Since the generic fallback only disables interrupts and does not block NM=
-Is,
-> could this introduce a data corruption race condition if a percpu variabl=
-e
-> is updated concurrently from both NMI and normal contexts?
+> Does dynamically modifying LSC_CHICKEN_BIT_0 per-context cause a race con=
+dition
+> when contexts execute concurrently on different engines?
+>=20
+> LSC_CHICKEN_BIT_0 is a globally shared MCR register affecting the L3 cach=
+e,
+> which is shared across all render and compute engines on DG2. Modifying i=
+t via
+> MI_LOAD_REGISTER_IMM broadcasts the change to all L3 banks.
+>=20
+> If Context A (which requires the workaround) runs on RCS0, and Context B =
+(which
+> opts out) switches in on CCS0, CCS0's context switch executes this indire=
+ct
+> batchbuffer and clears bit 15 globally. This could dynamically alter the =
+state
+> for Context A on RCS0, potentially disabling the workaround and causing a=
+ GPU
+> hang.
 
-I will add <asm/cmpxchg.h> to asm/percpu.h to make cmpxchg helpers and
-system_has_cmpxchg128 available directly within this header.
+The fact that we expect compute and Mesa to align across their own
+contexts sharing single address space today is one thing, but I think
+we should be enforcing that. Currently nothing preventing RCS and CCS
+sharing one address space from fighting over the variable.
 
->
-> > +#define this_cpu_cmpxchg128(pcp, o, n)                                =
-       \
-> > +({                                                                   \
-> > +     u128 ret__;                                                     \
-> > +     typeof(pcp) *ptr__;                                             \
-> > +                                                                     \
-> > +     preempt_disable_notrace();                                      \
-> > +     ptr__ =3D raw_cpu_ptr(&(pcp));                                   =
- \
-> > +     if (system_has_cmpxchg128())                                    \
-> > +             ret__ =3D cmpxchg128_local(ptr__, (o), (n));             =
- \
-> > +     else                                                            \
-> > +             ret__ =3D this_cpu_generic_cmpxchg(pcp, (o), (n));       =
- \
-> > +     preempt_enable_notrace();                                       \
-> > +     ret__;                                                          \
-> > +})
-> > +#endif
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1782877663.=
-git.cuiyunhui@bytedance.com?part=3D2
+This makes me doubt if modelling this as a per-context variable was
+the right choice.
 
-Thanks,
-Yunhui
+Maybe we should instead be making it DRM client wide property and
+inheriting it to all contexts?
+
+Regards, Joonas
+
+>=20
+> > +     *cs++ =3D MI_LOAD_REGISTER_IMM(1);
+> > +     *cs++ =3D i915_mmio_reg_offset(LSC_CHICKEN_BIT_0);
+> > +     *cs++ =3D val;
+> > +
+> > +     return cs;
+> > +}
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630223946.21=
+07382-1-jia.yao@intel.com?part=3D1
