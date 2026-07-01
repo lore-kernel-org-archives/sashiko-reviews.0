@@ -1,130 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8583B14C1
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 06:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095B932AAC5
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 07:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889116; cv=none; b=rk7naBh2wUAnqkzc9alAkJcqpLPYZ+dT+cxOxlHNs1onzjRBNl1YUICJSPuk0/8aJahtNz3XrE9O2Gb0j0wteqbbQMOGxSfUSx27NjDD1eQLW5USh7ZldOFG0OTXQDoKl8Inr0ArsszpDRmWtIAv8QvtQpy9P0DP9VkA16KhfqQ=
+	t=1782889427; cv=none; b=IeXYcm00cfj2oPPRFyjJDzNX+YGmSi+6D0N7wZKsOt6e3OW14DjP6UOwoCBywXiEU5ubc6se5Q/O1lMCOjVhhShuk3tTv1L8gn/Nu21E/UWGUkk2lRHETN+ip8A5Fx9He09Oc4i039O8yb5cMWkqoLU9L0Eh5iUup8PWvjlVpVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889116; c=relaxed/simple;
-	bh=OSxKuQU9blydA7z3UyaLJUM5clMCvPHnvraDhCaYhg8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uIVfyYve4kvspgV+v0kVkVF4zPAqiU/GA66+CcjDyS8Nl1RxXN23q3/tQFUFtwUn0QjtWN7J7+R7uqKDqIXKN75EKFt5hxwUn6fDBn6FeSx9ffvGKR+nNy6efgcEI6A40Qu/7gdeb3NfJCf3oiUxo+SMpuMWXu7ZPkIKiR1xhjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WC2CJmTq; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WC2CJmTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A3C1F00A3A
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 06:58:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782889115;
-	bh=woSofrP5WTJbErYpMgun4CWCtNv+L3OjsKwS/qCrAS0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=WC2CJmTqiW60GWZm82Pfl5EhulZ1B124/09pLVqbu4huSV0+P/xHmeaSyj+OGNFdV
-	 YmU2VfK6uGj3YlY6BGxjR94lJE3kaO2nXRK2tjHCmNA7zee2WbuUmztQ3iw6UNK2No
-	 Pggt8XFZij1gZ41NaCQvfr+2wPewUea05R/Xd/CR5FAgTZbFBhd7y1hxsoZpUgSiWi
-	 lRQrbblJfAiSEMQi4LrxocQQgaCWZQRA8oX7WuTrvNz8hCgzm0kzuB8hRyXedSiME4
-	 A8svViPdymLkkQ1g5jR2QNoRqNaZedrWc2o9/qIMAj03E/A0rJARrqUoJ0GjNsb2yI
-	 zwxIXlOC8x8Cg==
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c125bce2294so39275966b.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 23:58:35 -0700 (PDT)
-X-Gm-Message-State: AOJu0YzzZi+FJqhxwLZz57wqsjOJ0qHiqupwpMdufgmZpWBWYpernizg
-	iHn1qePMgXZ5++x3GfxcD9hTulKCESLWPz+ablbrnTeQXBHRq+y9YQURUn2Mia481vMZQxl1VXc
-	yUYMXdy/29RxBrb7KRPeb5EpOzamFBsY=
-X-Received: by 2002:a17:907:a893:b0:c12:a588:4113 with SMTP id
- a640c23a62f3a-c12a9dcba49mr11041366b.29.1782889114308; Tue, 30 Jun 2026
- 23:58:34 -0700 (PDT)
+	s=arc-20240116; t=1782889427; c=relaxed/simple;
+	bh=Th5KTdau7VLuHn2llC/qGKznEk8TdDw/UlVxSUSlgvM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UZM4c6VAArkOd6YPC0FzaU55C1IUcj9Pki6wu7LXOw4dJCD5YaEzRb+iZ/mzJbEKVfXiyzSyzU4F112B+m/2M3k6rGz4zba0dSw9WAVlPaV+XFLr+HZnoI2Vwz+DZtIrP/m48meZwQ0tMQKwRiPZ3NqDjCwkxFloLMMEV2pe0fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gqrZr0BGdzKHLxy
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 15:03:32 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 4CCF24056E
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 15:03:41 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgCHuyXNu0RqJzfNAQ--.55984S2;
+	Wed, 01 Jul 2026 15:03:41 +0800 (CST)
+Message-ID: <5ce1e9d8-9958-47c8-80b6-776cfcd29d81@huaweicloud.com>
+Date: Wed, 1 Jul 2026 15:03:40 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260630234716.3039031-1-yosry@kernel.org> <20260630234716.3039031-6-yosry@kernel.org>
- <20260630235208.0FEBD1F000E9@smtp.kernel.org> <CAO9r8zOBQxSNO==og6b1kX6WLYVimHrTs9owy8UrttpSs2pyaA@mail.gmail.com>
-In-Reply-To: <CAO9r8zOBQxSNO==og6b1kX6WLYVimHrTs9owy8UrttpSs2pyaA@mail.gmail.com>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Tue, 30 Jun 2026 23:58:23 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zNgnMoa5+X-hbDo1BK7XEu+euYO2vyoVV15VOJmK2S7gw@mail.gmail.com>
-X-Gm-Features: AVVi8CffLr779ASl52FHnJzzlZu1bJO4GPxQGhIC1GoPXj1pHanKGMtZPx4Jmwc
-Message-ID: <CAO9r8zNgnMoa5+X-hbDo1BK7XEu+euYO2vyoVV15VOJmK2S7gw@mail.gmail.com>
-Subject: Re: [PATCH 5/7] KVM: x86: Reverse the polarity of efer_reserved_bits
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/21] perf annotate-arm64: Handle load and store
+ instructions
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-perf-users@vger.kernel.org
+References: <20260701035355.752944-1-wutengda@huaweicloud.com>
+ <20260701035355.752944-6-wutengda@huaweicloud.com>
+ <20260701040736.886DD1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260701040736.886DD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_Ch0CgCHuyXNu0RqJzfNAQ--.55984S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZr4rJFyrCrWfKFyDZFb_yoW5uFyxpa
+	yvya45JF1Utr4Ig3Z3Ar4fWF9agw47Aa45C348tasakrnY9F4rGF97KrW7CFWrGry5u3yU
+	Zr4qvr15AF1kCFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UWHqcUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On Tue, Jun 30, 2026 at 4:54=E2=80=AFPM Yosry Ahmed <yosry@kernel.org> wrot=
-e:
->
-> On Tue, Jun 30, 2026 at 4:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [High] Incorrect bitwise logic in EFER validation rejects valid zero =
-values (breaking guest boot) and allows guests to set reserved bits (trigge=
-ring VMENTRY failures).
-> > --
-> >
-> > commit 4bd740e43933efd5aaca18b2bd83e1696dbbd7dd
-> > Author: Yosry Ahmed <yosry@kernel.org>
-> >
-> > KVM: x86: Reverse the polarity of efer_reserved_bits
-> >
-> > This commit reverses the polarity of the EFER validation variable, rena=
-ming
-> > efer_reserved_bits to efer_supported_bits to align with other fields in
-> > kvm_caps. The stated intent is that no functional change is introduced.
-> >
-> > > diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
-> > > index 17d4c813a9e8a..b9a16a27f6c23 100644
-> > > --- a/arch/x86/kvm/msrs.c
-> > > +++ b/arch/x86/kvm/msrs.c
-> >
-> > [ ... ]
-> >
-> > > @@ -606,7 +606,7 @@ static bool __kvm_valid_efer(struct kvm_vcpu *vcp=
-u, u64 efer)
-> > >  }
-> > >  bool kvm_valid_efer(struct kvm_vcpu *vcpu, u64 efer)
-> > >  {
-> > > -     if (efer & efer_reserved_bits)
-> > > +     if (!(efer & efer_supported_bits))
-> >
-> > [Severity: High]
-> > Does this bitwise logic inadvertently reject valid zero values and allo=
-w
-> > guests to set reserved bits?
-> >
-> > If a guest writes 0 to the EFER MSR, (efer & efer_supported_bits) evalu=
-ates
-> > to 0, and the negation makes this condition true, improperly rejecting =
-it.
-> >
-> > Additionally, if a guest writes an EFER value containing both a support=
-ed
-> > bit and a reserved bit, the condition evaluates to false, allowing the
-> > reserved bit to be set.
-> >
-> > Should this check instead be (efer & ~efer_supported_bits)?
->
-> Yes, I completely screwed this up :)
->
-> The tests don't fail because we only have tests for SREGS setting EFER
-> (added in this series), and __kvm_valid_efer() still properly catches
-> invalid bits for this path (because KVM caps =3D=3D guest caps).
 
-For the record, I was curious why my hacky AI-generated reproducer
-didn't fail with this bug.
 
-Turns out it was trying to write efer=3DEFER.SVME, which means that:
-(a) If nested=3D1, (efer & efer_supported_bits) would be 1, and
-set_efer() would succeed as expected.
-(b) If nested=3D0, (efer & efer_supported_bits) would be 0, and
-set_efer() would (accidentally) fail as expected.
+On 2026/7/1 12:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] arm64_ldst__parse fails to parse PC-relative load instructions, breaking operand extraction for literal pool loads.
+> - [Medium] Failure to strip inline comments before parsing operands allows comments to corrupt `multi_regs` evaluation.
+> --
+> 
+> commit 9939a67ebc615cf049eb33c68f83aa3646abb3f0
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate-arm64: Handle load and store instructions
+> 
+> This commit adds ldst_ops to parse data types and offsets for ARM64 memory
+> access instructions using regex prefix matching.
+> 
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index a1667237114a6..451500def8c12 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> [ ... ]
+>> @@ -141,6 +142,104 @@ static const struct ins_ops arm64_mov_ops = {
+> [ ... ]
+>> +static int arm64_ldst__parse(const struct arch *arch,
+>> +			     struct ins_operands *ops,
+>> +			     struct map_symbol *ms __maybe_unused,
+>> +			     struct disasm_line *dl)
+>> +{
+>> +	char *s, *left, *right;
+>> +
+>> +	right = s = strchr(ops->raw, arch->objdump.memory_ref_char);
+>> +	if (!s)
+>> +		return -1;
+> 
+> [Severity: Medium]
+> Will this fail to parse PC-relative load instructions?
+> 
+> When processing a PC-relative load instruction (e.g., ldr x0, 4005c0 <sym>),
+> the 'ld' prefix matches the new ldst_insn regex in arch__new_arm64() and
+> routes it to arm64_ldst__parse().
+> 
+> Since PC-relative loads lack a bracket ('['), strchr() will return NULL,
+> causing the function to immediately return -1. Does this leave operands
+> unpopulated and break annotation features like data type tracking for
+> literal pool loads?
+> 
 
-I updated the reproducer to read the value of EFER first, then write
-efer=3D(old_efer | EFER.SVME). With nested=3D0, setting EFER.SVME would
-(unexpectedly) succeed with the incorrect check above, because (efer &
-efer_supported_bits) is non-zero. Fixing the check to be (efer &
-~efer_supported_bits) makes the reproducer pass as expected.
+Agreed. I overlooked this type of PC-relative load:
+  ldr     x0, ffff800080f40c68 <__kvm_nvhe_$d>
+
+>> +
+>> +	while (s > ops->raw && *s != ',')
+>> +		--s;
+>> +
+>> +	if (s == ops->raw)
+>> +		return -1;
+>> +
+>> +	*s = '\0';
+>> +	left = strdup(ops->raw);
+>> +
+>> +	*s = ',';
+>> +	if (!left)
+>> +		return -1;
+>> +
+>> +	right = strdup(right);
+>> +	if (!right) {
+>> +		zfree(&left);
+>> +		return -1;
+>> +	}
+>> +
+>> +	if (arm64__insn_is_source_first(dl)) {
+>> +		ops->source.raw = left;
+>> +		ops->source.mem_ref = false;
+>> +
+>> +		ops->target.raw = right;
+>> +		ops->target.mem_ref = true;
+>> +		ops->target.multi_regs = arm64__check_multi_regs(arch, ops->target.raw);
+> 
+> [Severity: Medium]
+> Does this code incorrectly include inline comments when evaluating multi_regs?
+> 
+> The string duplicated into 'right' includes trailing comments from the raw
+> operand string because they are not stripped prior to parsing.
+> 
+> If objdump outputs an inline comment containing a comma and a string
+> resembling a register name (for example: // read, x2), could
+> arm64__check_multi_regs() wrongly flag the operand as having multiple
+> registers and corrupt data type profiling?
+> 
+
+Agreed.
+
+>> +	} else {
+>> +		ops->source.raw = right;
+>> +		ops->source.mem_ref = true;
+>> +		ops->source.multi_regs = arm64__check_multi_regs(arch, ops->source.raw);
+>> +
+>> +		ops->target.raw = left;
+>> +		ops->target.mem_ref = false;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+> 
+
