@@ -1,264 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44971AA1D5
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 07:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184623BCD34
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 07:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782891209; cv=none; b=LKXzNTyyabyL54rImz6qXJBk5P4bCG5oITZACxdlu7vjSqiCrvu97lwYOaffEwv09RtFiTyxOh2NA5azkV3R3SsDmEnXXypqBziytVG3AM9+kUQ1mH6oJF9PBuFQxSA0KrBdPnCNpsJOpMTUO/Q2USd+Aq9jz/eaE3k0CeS+2NQ=
+	t=1782891393; cv=none; b=aMnkw91iNMkRFSWroN1rwGcisoHb3sw6XLWgDC7EcJUqDUlRzGys0ZNks8tEtHcK/08qGwHOEwnZAsqFYATpKlfzAB/oROXlSKJjgP80ePVJ0ngQ4nqP1arW/zrO8xuqVReSszBpm95eq4Ge01/OXJuXfQE0XkMkclgK2TnGsm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782891209; c=relaxed/simple;
-	bh=36KFKDR5smlN9WzHIJUs660phq+A+FWGUYzD7ypdZo0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GLgsJlZ/JuC5eN6Wu84FWa2xWxogZjwQjyy0qe9tCcIWS7IKp9VMkM9aikwn9UmEGMjqfo1IYzWOeIE8fSRTNyqa1cLS2mGDsZK1KJLMfzCR3GtwqocmMFv6dLsDC7EvnLF7Vb2lgnebolTipTYRbtgHIUEYqaPTaegCdMoBmBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K9lDy22p; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K9lDy22p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689D01F000E9;
-	Wed,  1 Jul 2026 07:33:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782891207;
-	bh=SRR0gv+SEigc9fSD1/MJ9M+6k2r0/X3a6W834bV7DyE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=K9lDy22p/wua3UvNs35nRAi54+4RdEuRPM7HKXKR2H1KsO84GRQNbAYpkDCbq4RPD
-	 CCbRnrQTZrQYh4HftkqMuzyyScPAbeQAG0eLeJe+Xxm8ZAc0aYNplsPJGgVHJneDkL
-	 NUQZVv6NJH2swHXsLIOyHpt3m8IG8LQ1GudE/z37Ob4AKrNK6LPHNA/Y5vxj55OgrX
-	 jXzhuO9xU6ZtQgvs6ntlTOU98yIs02burjrs4su1sv9ZtL3XDvBRQodInGHvOapfq4
-	 O5ZXvhDuukUP+RlmnRfOUzBjDfUGigK4krddOrr8db6A6XiBnmxn78rNVhQIV6n09C
-	 JD1T+OS4xFtmA==
-Date: Wed, 1 Jul 2026 13:03:23 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v8 03/14] firmware: qcom: Add a PAS TEE service
-Message-ID: <akTCw4GsP-e_bwns@sumit-xelite>
-References: <20260626133440.692849-1-sumit.garg@kernel.org>
- <20260626133440.692849-4-sumit.garg@kernel.org>
- <20260627134229.2B72D1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1782891393; c=relaxed/simple;
+	bh=PTuL6SZbklp1Gz60Jqay5+TjAIAerHb7yK/or20TelU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J4lY6iZ+d1p7ww0M158NJQWe3gJrQF4nDaVb2hY+7taZPsRKoM1CU6HnADGjWpGEixgMC5FnDR5aErV8CuhpKeqghknSE39pSYVW8bhwktiK4E5sgkouLy39eECRRK06rlWAr2N+3eBAm4zaz+xUg7FzlpgDP/jL8U5ihYRNucc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gqsHn1pVMzYQtl0
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 15:35:33 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id 627DE4056E
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 15:36:27 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP1 (Coremail) with UTF8SMTPA id cCh0CgB3mYZ7w0RqACLSAQ--.34240S2;
+	Wed, 01 Jul 2026 15:36:27 +0800 (CST)
+Message-ID: <9bd14d31-8792-4b20-a82f-454ea22ab815@huaweicloud.com>
+Date: Wed, 1 Jul 2026 15:36:27 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260627134229.2B72D1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/21] perf annotate-arm64: Implement
+ extract_op_location() callback
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260701035355.752944-1-wutengda@huaweicloud.com>
+ <20260701035355.752944-10-wutengda@huaweicloud.com>
+ <20260701041002.EBBC31F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260701041002.EBBC31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:cCh0CgB3mYZ7w0RqACLSAQ--.34240S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDCw4ftFyUXrWUArWDArb_yoW5Xw1fpr
+	4j93y3Kry7tr45trnxXws7Gw1akwn3GF1agrWay3W3CFnIvFnagFs2kFn0gayrJrnxC3yj
+	vr4jqrWUXwn8CaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UWHqcUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On Sat, Jun 27, 2026 at 01:42:28PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] Heap buffer overflow in `qcom_pas_tee_get_rsc_table` when copying the input resource table.
-> - [High] Out-of-bounds read and info leak in `qcom_pas_tee_get_rsc_table` when duplicating the returned resource table.
-> - [High] The first TEE invocation fails to pass the input resource table data to the TA, resulting in an invalid parameter error.
-> - [High] Unsynchronized mutation of the global operations structure and unconditional unregistration during remove.
-> - [Medium] The `output_rt_size` pointer is left uninitialized if the TEE returns a size of 0.
-> - [Medium] The driver incorrectly treats the expected `TEEC_ERROR_SHORT_BUFFER` response as a fatal error.
 
-I have responded in v6 as well, Shashiko is not able to get understand
-the TEE ABI with the TA here. Please go and look into the OP-TEE
-code-base here:
-https://github.com/OP-TEE/optee_os/blob/master/core/pta/qcom/pas/pta_qcom_pas.c
 
--Sumit
-
-> 
-> Pre-existing issues:
-> - [High] Missing protection for `ops_ptr` reads causes a TOCTOU NULL pointer dereference.
+On 2026/7/1 12:10, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Post-index memory references with register offsets are incorrectly classified as SIGNED_OFFSET.
 > --
 > 
-> commit f2659330f38d92cd91647244dc269a73194079c0
-> Author: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> commit 1b03950d2edd24d57bf3a7ad6271aea1980c92e3
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> firmware: qcom: Add a PAS TEE service
+> perf annotate-arm64: Implement extract_op_location() callback
 > 
-> This patch adds support for a Peripheral Authentication Service (PAS)
-> driver based on the TEE bus, using OP-TEE as the backend implementation.
+> Implement the extract_op_location() callback for the arm64 architecture
+> to handle its specific assembly syntax and addressing modes, enabling data
+> type profiling for this architecture.
 > 
-> > diff --git a/drivers/firmware/qcom/qcom_pas_tee.c b/drivers/firmware/qcom/qcom_pas_tee.c
-> > new file mode 100644
-> > index 0000000000000..a2ba3af05a502
-> > --- /dev/null
-> > +++ b/drivers/firmware/qcom/qcom_pas_tee.c
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index 451500def8c12..77b6f4841c849 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
 > [ ... ]
-> > +static void *qcom_pas_tee_get_rsc_table(struct device *dev,
-> > +					struct qcom_pas_context *ctx,
-> > +					void *input_rt, size_t input_rt_size,
-> > +					size_t *output_rt_size)
-> > +{
-> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
-> > +	struct tee_ioctl_invoke_arg inv_arg = {
-> > +		.func = TA_QCOM_PAS_GET_RESOURCE_TABLE,
-> > +		.session = data->session_id,
-> > +		.num_params = TEE_NUM_PARAMS
-> > +	};
-> > +	struct tee_param param[4] = {
-> > +		[0] = {
-> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT,
-> > +			.u.value.a = ctx->pas_id,
-> > +		},
-> > +		[1] = {
-> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT,
-> > +			.u.memref.size = input_rt_size,
-> > +		}
-> > +	};
-> 
-> [Severity: High]
-> Does this first tee_client_invoke_func() invocation pass an invalid memory
-> reference to the TA?
-> 
-> In qcom_pas_tee_get_rsc_table(), param[1] is initialized with
-> u.memref.size = input_rt_size, but u.memref.shm is left uninitialized (NULL).
-> If the firmware has an embedded input resource table (input_rt_size > 0), will
-> the TEE subsystem reject this call with an invalid parameter error before the
-> TA is even invoked?
-> 
-> > +	void *rt_buf = NULL;
-> > +	int ret;
-> > +
-> > +	ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
-> > +	if (ret < 0 || inv_arg.ret != 0) {
+>> +static int extract_op_location_arm64(const struct arch *arch,
+>> +				     struct disasm_line *dl __maybe_unused,
+>> +				     const char *op_str, int op_idx __maybe_unused,
+>> +				     struct annotated_op_loc *op_loc)
+>> +{
+>> +	const char *s = op_str;
+>> +	char *p = NULL;
+>> +
+>> +	if (op_str == NULL)
+>> +		return 0;
+> [ ... ]
+>> +	/*
+>> +	 * Handle memory references (e.g., [x0, #8]), identify
+>> +	 * arm64 specific addressing modes
+>> +	 */
+>> +	if (*s == arch->objdump.memory_ref_char) {
+>> +		op_loc->mem_ref = true;
+>> +
+>> +		p = strchr(s, ']');
+>> +		if (p == NULL)
+>> +			return -1;
+>> +
+>> +		/* Pre-index: [base, #imm]! */
+>> +		if (p[1] == '!')
+>> +			op_loc->addr_mode = PERF_ADDR_MODE_PRE_INDEX;
+>> +		/* Post-index: [base], #imm */
+>> +		else if (p[1] == ',' && strchr(p + 1, arch->objdump.imm_char))
+>> +			op_loc->addr_mode = PERF_ADDR_MODE_POST_INDEX;
 > 
 > [Severity: Medium]
-> Will this error check abort the loading process if the TA follows the standard
-> GlobalPlatform TEE Client API specification?
+> Does this incorrectly restrict post-index addressing classification to only
+> immediate offsets?
 > 
-> When queried for a buffer size, a standard TA is expected to return
-> TEEC_ERROR_SHORT_BUFFER (a non-zero error code) since the initial buffer is
-> NULL or too small. Since this check treats any non-zero inv_arg.ret as a
-> failure, does this prevent the code from proceeding to the second pass to
-> allocate the correctly sized buffer?
+> In ARM64, a comma immediately following the closing bracket (p[1] == ',') is
+> sufficient to identify a post-index addressing mode, regardless of whether
+> the offset is an immediate or a register (for example, Advanced SIMD
+> instructions like ld1 {v0.16b}, [x2], x5).
 > 
-> > +		dev_err(dev, "PAS get RT failed, pas_id: %d, ret: %d, err: 0x%x\n",
-> > +			ctx->pas_id, ret, inv_arg.ret);
-> > +		return ret ? ERR_PTR(ret) : ERR_PTR(-EINVAL);
-> > +	}
-> > +
-> > +	if (param[1].u.memref.size) {
+> If the condition fails for register offsets, it appears it will incorrectly
+> fall through to PERF_ADDR_MODE_SIGNED_OFFSET. Could this cause the base
+> register write-back to be silently ignored in adjust_reg_index_state(),
+> leading to stale and corrupted type state tracking for the base register?
 > 
-> [Severity: Medium]
-> Is it possible for output_rt_size to remain uninitialized here?
+
+I'd prefer to keep it as-is. SIMD instructions are not supported yet,
+and the current restriction is safer. We can revisit if needed.
+
+>> +		/* Signed offset: [base{, #imm}] */
+>> +		else
+>> +			op_loc->addr_mode = PERF_ADDR_MODE_SIGNED_OFFSET;
+>> +
+>> +		s++;
+>> +	}
 > 
-> If the TA legitimately returns param[1].u.memref.size as 0 during the first
-> invocation (indicating no resources), this block is skipped and the function
-> returns NULL. Since output_rt_size is never assigned a value, callers like
-> those in qcom_q6v5_pas.c might read garbage stack data for the table size.
-> 
-> > +		struct tee_shm *rt_shm __free(shm_free) =
-> > +			tee_shm_alloc_kernel_buf(data->ctx,
-> > +						 param[1].u.memref.size);
-> > +		void *rt_shm_va;
-> > +
-> > +		if (IS_ERR_OR_NULL(rt_shm)) {
-> > +			dev_err(dev, "rt_shm allocation failed\n");
-> > +			rt_shm = NULL;
-> > +			return ERR_PTR(-ENOMEM);
-> > +		}
-> > +
-> > +		rt_shm_va = tee_shm_get_va(rt_shm, 0);
-> > +		if (IS_ERR(rt_shm_va)) {
-> > +			dev_err(dev, "rt_shm get VA failed\n");
-> > +			return ERR_CAST(rt_shm_va);
-> > +		}
-> > +		memcpy(rt_shm_va, input_rt, input_rt_size);
-> 
-> [Severity: Critical]
-> Can this memcpy overflow the allocated rt_shm buffer?
-> 
-> The rt_shm buffer is allocated using the size requested by the TA from the
-> first invocation (param[1].u.memref.size). However, this memcpy
-> unconditionally copies input_rt_size bytes. If the TA returns a size smaller
-> than input_rt_size, wouldn't this write past the bounds of the allocated
-> kernel heap buffer?
-> 
-> > +
-> > +		param[1].u.memref.shm = rt_shm;
-> > +		ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
-> > +		if (ret < 0 || inv_arg.ret != 0) {
-> > +			dev_err(dev, "PAS get RT failed, pas_id: %d, ret: %d, err: 0x%x\n",
-> > +				ctx->pas_id, ret, inv_arg.ret);
-> > +			return ret ? ERR_PTR(ret) : ERR_PTR(-EINVAL);
-> > +		}
-> > +
-> > +		if (param[1].u.memref.size) {
-> > +			*output_rt_size = param[1].u.memref.size;
-> > +			rt_buf = kmemdup(rt_shm_va, *output_rt_size, GFP_KERNEL);
-> 
-> [Severity: High]
-> Could this kmemdup read out of bounds of the initially allocated rt_shm
-> buffer?
-> 
-> During the second tee_client_invoke_func() call, the TA can update
-> param[1].u.memref.size to a value larger than the initially allocated rt_shm
-> capacity. If output_rt_size is updated to this larger value, kmemdup will read
-> past the end of the rt_shm_va buffer, potentially leaking adjacent sensitive
-> kernel heap data to the caller.
-> 
-> > +			if (!rt_buf)
-> > +				return ERR_PTR(-ENOMEM);
-> > +		}
-> > +	}
-> > +
-> > +	return rt_buf;
-> > +}
-> [ ... ]
-> > +static int qcom_pas_tee_probe(struct tee_client_device *pas_dev)
-> > +{
-> [ ... ]
-> > +	data->session_id = sess_arg.session;
-> > +	dev_set_drvdata(dev, data);
-> > +	qcom_pas_ops_tee.dev = dev;
-> > +	qcom_pas_ops_register(&qcom_pas_ops_tee);
-> 
-> [Severity: High]
-> Is it safe to mutate the static qcom_pas_ops_tee.dev singleton without
-> synchronization?
-> 
-> If qcom_pas_ops_register() is called when another backend (like SCM) is
-> already registered, it fails silently but the probe still succeeds.
-> Could this lead to conflicting states if multiple backends probe concurrently?
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a TOCTOU race
-> condition when reading ops_ptr in qcom_pas.c?
-> 
-> In functions like qcom_pas_init_image(), ops_ptr is checked for NULL and
-> subsequently dereferenced:
-> 
-> if (!ops_ptr)
->     return -ENODEV;
-> 
-> return ops_ptr->init_image(ops_ptr->dev, pas_id, metadata, size, ctx);
-> 
-> Since ops_ptr is not protected by RCU, a lock, or READ_ONCE(), a concurrent
-> call to qcom_pas_ops_unregister() (e.g., via module unload) can set ops_ptr to
-> NULL between the check and the dereference, causing a NULL pointer
-> dereference.
-> 
-> > +
-> > +	return ret;
-> > +}
-> > +
-> > +static void qcom_pas_tee_remove(struct tee_client_device *pas_dev)
-> > +{
-> > +	struct device *dev = &pas_dev->dev;
-> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
-> > +
-> > +	qcom_pas_ops_unregister();
-> 
-> [Severity: High]
-> Does this unconditional unregister break the SCM backend?
-> 
-> If the TEE module is unloaded, qcom_pas_tee_remove() forcefully clears the
-> global ops_ptr. If the SCM backend was the active registered backend instead
-> of TEE, wouldn't this destroy the active SCM registration and break PAS
-> functionality globally?
-> 
-> > +	tee_client_close_session(data->ctx, data->session_id);
-> > +	tee_client_close_context(data->ctx);
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260626133440.692849-1-sumit.garg@kernel.org?part=3
+
