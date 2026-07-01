@@ -1,132 +1,81 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E0E2C11CA
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 20:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18623947B5;
+	Wed,  1 Jul 2026 21:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782939299; cv=none; b=fN0lo4L3ls8UHSu3kj7lqzT7hug7Opv4tCEQPKTsu106quSmBiiWw3BuZIdT+VlkuxU1oTpiHjhn+OkhAUmfg1iq2YmkjjWR/PDPciz8C6Dp9Q8baeEej4blrsSV1pkTUqT3M1ypxQaIhYRAhBG1NgUMvxX4mUGfwHEBebmFDiY=
+	t=1782943020; cv=none; b=gPvOHN2AnYBe9IZ6+RcoX3APslRTsyGBStVirYvqBT0H4kMvufdh29s+/IJ94ADRePR/jXiI9CjpQlVmV8Bdy2orNZnnxGpaqCLPb7s2t6q0wkgiZG5layR1wWu9PXkIN1WGJHbqkkW+HB2+8sbub2ftSFpkwv1be+YUCpc5Q9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782939299; c=relaxed/simple;
-	bh=vrG7DV3XMjvehaBvAHY3d6fzypEbpc6iWjoNWIjk38c=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=WFqxcYApFLvp6jH+XqKPM2NbQsbui1G+aif+0p7qSPIYF9PL+hkrS6kwXdyEfAbxaAe1WLIZRMw+mHCZp/kj7CjH9MBH07q+gfcCuQKWtp+rMpDvEQvS6UDbs2J4osegD15U1/+7B1cuD9IrSxg/ZJtTOFWYHwZe1mmmscFjPSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=a8YbOkLL; arc=none smtp.client-ip=209.85.210.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1782943020; c=relaxed/simple;
+	bh=U600I6DqHK9LPPovilPkIBqTAYGKJ5ILULcJdmoushI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=TPRZwmsLn4m2lmqk7EBtrPRAYfXVyTYs7csGbfGzygKr5m5+Eu2rFdFAc5oRsZ/A5Z+Nlchg/BHW2IcEBtv8Se9wEDmDK542YqE6cxNydsP30zY2IrBGQNTt2xVnyBbH+yi5w91lNIwJpGGjIx3uQ5pwexWePotRPI4NRVcUrnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRR64a/v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a8YbOkLL"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-8478947e047so1009429b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 13:54:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782939297; x=1783544097; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z0jRX7NnLp+Ssuusck8PUjzqP7NAa84Kcqnt+k1PSlo=;
-        b=a8YbOkLLHtawtjiifuH8XYpbir24Rbf80V6htwGA00uu9g/zwXpEktjInF7ujK69M8
-         zO0XYoseZs2/xrvPTFSFGsjNLTCyMmKYljOK+GSq3oQt89QAmfNgUVd90o0S7CTwBmWp
-         jMMVVkQbJfcfxeJhUariTMoVvElCNG2rf6sPl4pX1GFCT6FX5PHfOXd5WUKVyeMtO2pG
-         JA7MkJBJ4bSaBNoqJQkgFLIJGL1Wy0WDW4plv9W9jtB55vnPEJn/cHa1FVpUhknpjfqr
-         jnhK1MfrURp2hgFtabaZZwyyfFl167MW17d2nM9zHfyhOqheg9xyojJIKwvnLFmFSpZp
-         TioA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782939297; x=1783544097;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z0jRX7NnLp+Ssuusck8PUjzqP7NAa84Kcqnt+k1PSlo=;
-        b=GFzvWEHPfP7BjO056NC0jzrJe0i1UyhmHpqlmcMz8ULotG/enGzYysoYQdejKhCO8f
-         u/R3/76hemOsQIxEuuVYKoT/u1YrEfYFLrIUC9u3CDmNBY4ItZ3vjCRcuaTlUBRkq1HD
-         8fk+hBqWOP+wouDC8S+6mA4XJVeobENv5KWmF9CbUoTYwFLylfe8mIyLJfHQE1eNfEk9
-         IzGR5l5uQGuVnZfTbcaWTZJzpYT64cvLXY/HOWT9Aq6mTVtCLnP9I4sgx9upa7S53HjF
-         EFUhrSgZhCnjPJVnocaUA+PU0OtK+4XhhDq+AuzYS06XTqZxITTiIA6qOU+YH+5DVyVh
-         ciTg==
-X-Gm-Message-State: AOJu0YyNM0a6m1352WFf27pz6Q/aTVnCIHD/QC+zL7Dp31ZSabFNIwLQ
-	DAqOdSaEq8BTxalcjkigzDNnuIzBisedIosTb4zHic8X6bbfcTssmpvYoGxZs31pcbhRw5WR1HM
-	Ym5hPOA==
-X-Received: from pfwp10.prod.google.com ([2002:a05:6a00:26ca:b0:847:a740:48f4])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:27ac:b0:842:2ae0:968d
- with SMTP id d2e1a72fcca58-847c098651fmr2693616b3a.32.1782939296527; Wed, 01
- Jul 2026 13:54:56 -0700 (PDT)
-Date: Wed, 1 Jul 2026 13:54:55 -0700
-In-Reply-To: <CAEvNRgHt1F28iDegRxtYDfy95iQysLkFW=7YPruwky_stf5TLA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eRR64a/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703D31F000E9;
+	Wed,  1 Jul 2026 21:56:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782943019;
+	bh=IhGXy+Ms2YYNC0tetJkuEMYEiMTdY0VELLJSVJHAr0U=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=eRR64a/vdrdtcfRbY7AmNNHIQUa7CvuIpeX2L4GNTMl0DUn2wy9KcBP5QjUZz4zFR
+	 /KeERXUXGoqLh12Wq+ULPLP4da0vSBJ/5eiKQjMz1gRm/H+QfY6W5duZpfPNodg8hC
+	 4RbrOOGOaHkl+scb0REmDl4ZygxtuCmqWHYeDoC3mQ0El2crNiq4kR/PN4xY+1e4cp
+	 ixTzcjZWSCgdC9sfZLXipgXZdIuyOG/wsOpl72QwnT3M2skEU6B/wXn5A9jcCwhYOv
+	 pTr8WSinTaSzfxzJvgMgyQQ36lqn1ppG05u4Eka+rEFRNMliyqvIGYvoG0f5cIf5Q5
+	 5VqITcephjlsQ==
+Date: Wed, 01 Jul 2026 11:56:58 -1000
+Message-ID: <deb61f8eec648b17a7c2062ce60d7b2c@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH v3 sched_ext/for-7.3 4/4] sched_ext: Split sub-scheduler
+ implementation into sub.c
+In-Reply-To: <20260701205513.6A9C41F000E9@smtp.kernel.org>
+References: <20260701203438.2837392-1-tj@kernel.org>
+ <20260701203438.2837392-5-tj@kernel.org>
+ <20260701205513.6A9C41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260630213711.479692-1-seanjc@google.com> <20260630213711.479692-3-seanjc@google.com>
- <20260630214952.98C851F000E9@smtp.kernel.org> <CAEvNRgHt1F28iDegRxtYDfy95iQysLkFW=7YPruwky_stf5TLA@mail.gmail.com>
-Message-ID: <akV-ny84UPMpsnez@google.com>
-Subject: Re: [PATCH v2 2/2] KVM: TDX: Return EINVAL, not EOPNOTSUPP, for NULL
- INIT_MEM_REGION source
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
 
-On Wed, Jul 01, 2026, Ackerley Tng wrote:
-> sashiko-bot@kernel.org writes:
-> 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] The `region.nr_pages << PAGE_SHIFT` calculation can overflow a 64-bit integer, bypassing GPA boundary validation and leading to a host denial of service.
-> > --
-> >
-> > commit a54da29c3e4be3226e4ebf9df2f4182c350df998
-> > Author: Sean Christopherson <seanjc@google.com>
-> >
-> > KVM: TDX: Return EINVAL, not EOPNOTSUPP, for NULL INIT_MEM_REGION source
-> >
-> > Return EINVAL instead of EOPNOTSUPP if userspace attempts to pass a NULL
-> > pointer for the source page of INIT_MEM_REGION, so that KVM's ABI is
-> > consistent between TDX and SNP.
-> >
-> >> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-> >> index ffe9d0db58c59..b0ec054732b90 100644
-> >> --- a/arch/x86/kvm/vmx/tdx.c
-> >> +++ b/arch/x86/kvm/vmx/tdx.c
-> >
-> > [ ... ]
-> >
-> >> @@ -3247,8 +3244,8 @@ static int tdx_vcpu_init_mem_region(struct kvm_vcpu *vcpu, struct kvm_tdx_cmd *c
-> >>  	if (copy_from_user(&region, u64_to_user_ptr(cmd->data), sizeof(region)))
-> >>  		return -EFAULT;
-> >>
-> >> -	if (!PAGE_ALIGNED(region.source_addr) || !PAGE_ALIGNED(region.gpa) ||
-> >> -	    !region.nr_pages ||
-> >> +	if (!PAGE_ALIGNED(region.source_addr) || !region.source_addr ||
-> 
-> Since we're changing this, how about separating/grouping conditions so
-> that adding validation is clearly different from alignment changes?
-> Perhaps like
-> 
->     if (!region.source_addr)
-> 	return -EINVAL;
-> 
->     if (!PAGE_ALIGNED(region.source_addr) || !PAGE_ALIGNED(region.gpa))
-> 	return -EINVAL;
+Hello.
 
-I'd rather not do that as part of this patch.  I'm not opposed to refactoring
-this code, but I don't want to make the diff harder to read by throwing in
-non-trivial changes.
+> The sub-scheduler is removed from the scx_sched_hash via scx_unlink_sched()
+> after the RCU grace period completes. Because it remains in the hash during
+> and after the grace period, couldn't a concurrent BPF program on the parent
+> scheduler call scx_bpf_sub_dispatch() and find the sub-scheduler?
 
-> And this one might need more code if we're fixing the issue Sashiko
-> pointed out.
-> 
->     if (overflow)
-> 	return -EINVAL;
-> 
-> >> +	    !PAGE_ALIGNED(region.gpa) || !region.nr_pages ||
-> 
-> Looking at this again, why should region.nr_pages == 0 be -EINVAL? Why
-> not do an early exit and return 0?
+It can, but that's fine. The expedited synchronize is there to drain
+in-flight ops after all tasks have been moved off, not to make the sched
+unreachable. The sched is freed through another RCU grace period after
+unlinking and scx_bpf_sub_dispatch() runs under RCU read lock, so the
+racing lookup can't see the sched freed under it. Such a dispatch is also
+inert as the child is already bypassed and has no tasks left.
 
-Because nr_pages == 0 is nonsensical.  And as a general rule, don't return success
-for uAPI unless it's necessary, because it's much, much harder to extend
-functionality if a path can succeed than if a path is guaranteed to fail.
+> If a BPF program attaches a sub-scheduler to a newly created cgroup that
+> hasn't completed its ONLINE phase yet, cgrp->scx_sched might be NULL. The
+> code dereferences it immediately.
 
-E.g. very hypothetically, if we want to repurpose '0' to mean "delete this page"
-or something, then returning -EINVAL now provides a more viable route to supporting
-such an operation.
+The cgroup can only come from cgroup_get_from_id() which fails on kernfs
+nodes which haven't been activated, and cgroup_mkdir() activates the node
+after CGROUP_LIFETIME_ONLINE has fired and ->scx_sched has been inherited
+from the parent. The inherited pointer is non-NULL whenever the attach can
+get this far. The root enable path sets ->scx_sched on all live cgroups
+before __scx_enabled is turned on, under the same scx_enable_mutex that
+scx_sub_enable_workfn() holds across the scx_enabled() check. The
+CSS_ONLINE check afterwards guards against destruction, not incomplete
+onlining.
+
+> This is a pre-existing issue, but do we need to call scx_error() in these
+> failure paths?
+
+Will be dealt with separately.
+
+Thanks.
+
+-- 
+tejun
