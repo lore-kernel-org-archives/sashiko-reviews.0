@@ -1,108 +1,210 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0C2374A00
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 04:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4A33A48E6
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 06:44:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782880281; cv=none; b=aucYshiNG2+jAS1spQeZrvRas7ZdhGBj+cARfgATF02jsL710zMtBckghZYPjLEzUm4zwgxElrf9G9vExhW4/gnA8dKkBUfwyegpqFsOtD5pct/zmM5g4NLd4LtD07hI9lBenS4Yu9wLkv29FN+aVE5mmuslcLLhBPFXD28PrTQ=
+	t=1782888262; cv=none; b=h6uP5b6Qe2xtKf4v+69Yb/P/AW5NwAqWvYKqvvmEy9eBSmyuuojg3iQ2WDyi2TcFkVSBP2YZFm4wo7M8AOJj7EyTMRbVHH2V4qjquC2RSnYw1dS1DF3wfsCr2mitoN0x/5iaHr3CvaZQa1Zjv6iboPbWAxLXNDaYAX1UZW8R7vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782880281; c=relaxed/simple;
-	bh=AWKY4cc9CqfC8Hk+fcXwx0sO+5n7MEB7rG8uG7Wszik=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MCPQwFAhSr6shtY8ZPhKnlSPrVnGlBqvU4/+gCMQBbCiB52j6eCzHQ2dmrcZtbb5B8UwJ1qhURP1wkzCU3D3K1uTkRF6cPr1203OpdQK3/rnKJgpeTxelYzaAgzayS4GYBoqzeYYEYohbcyZugbzFDK9tgXwHe388VyQD2DtFUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Xl7Y/yUa; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Xl7Y/yUa"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-37fcae0ecb3so93517a91.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 21:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1782880278; x=1783485078; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fBDjdsdXK93fPolwyRglgWnhTKiV7F2AKwYz1juHAG4=;
-        b=Xl7Y/yUanbNX5wo3/nYEveQeiz9JRVVMy6PB+8cSghDY0m1JXC2h/at1KdsUsyUoE7
-         a7mzn6Q+fMAmNwHofv8FU1vGwcY3kPOrd17ETei7JHwhgPKQ948Q/uT5MbuOUU/t9wO/
-         xwjk2tM8cWlSeQkiuMzDwFXgSMUbFfbZhHYLk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782880278; x=1783485078;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fBDjdsdXK93fPolwyRglgWnhTKiV7F2AKwYz1juHAG4=;
-        b=bKyuvuAAOu1GKc4DomGnQG8uxuyhHKSmvtVwHtAl8UXlI1gv0rjV3NjQtkP09uRV7c
-         THnSkMv4pd+38mdockHAOhKEAInFWHyPW+BCzC/xjL+hFhKXrq6W+mzyfpOg3No71TaY
-         nRU2HHu+pc2mxsNYR50+mRxttZf/67CzD1/Wb8t/TqM0zyflMtHjMPDMuOPxd1z+LcGT
-         ktX+4XkZQ17JyMPbaij0uL6EKmRSIXmMN9hEjOtac2W1mQEWnrk046OyKQDwnRiOVq1r
-         gB5mMtATdDUcFUPtVORIgZNliWHGJcvIRLmR8U92zdVkY9L1tdiybKf6Oz/YG0giZioq
-         vtWQ==
-X-Gm-Message-State: AOJu0Yz0Bvz9FIfC6noEQpLraKleChVUGgzp34782uwIlDs2r3HZ1Uyy
-	4S8FS2tAtyMZfAVPZeEMv3+gONiwgv3FCeICkl6b1/ndQN4/e7Q08HjhYmuRtUNF5LuW2peiJNV
-	HF+i7ow==
-X-Gm-Gg: AfdE7cnSXXXFz1LO1pKBcKSNxwQyxGtfqK9B1iuS8/KzDgn6pQQRkyoCIDOTvFUAb2o
-	W0y/G3ZKIjNnhyuKeSEfjLNOfnyb7iVEr6NZ/HZSAPdNBTQK08DqyCliuNq1ik7SdF72Js4Nmm5
-	QYOiQqtdBYv7cVBgwP7Jali7eKPR+cNCqs6RjqtqBAg5y9IDd3LbUulW3PmXimlKWX/u1cgBn2a
-	A0j6EmiPt0Vw710RaiJ6nlwANgAT9fREhPW06FbgaPNTc5F02sj8V0Pzf5GfAbMpphsBwOnppkM
-	D8IsTTykAVXsiDjmyEwUJZUJyLfSdpSdDSr7Rc/xLs+XH5DM+Wh/nRC6YUoLmk/+Fwx3I21l3g3
-	taRUttgK7VWypZ4PQsd0gcGSvCIpfNXT9/+2p2o7L5iC6g2sUpx38pmzzDiyuEcJEJ/WlCitN9E
-	otlMW9L/gNgvTppae+/nt6twngdQhYfvqrh1j+9jN2cwjswu0jKF6c
-X-Received: by 2002:a17:90b:4c07:b0:380:7d9f:81f1 with SMTP id 98e67ed59e1d1-380aa098483mr158214a91.3.1782880277528;
-        Tue, 30 Jun 2026 21:31:17 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2031:6:1379:da2f:9be6:bff2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38097ba48d0sm360301a91.1.2026.06.30.21.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 21:31:17 -0700 (PDT)
-Date: Wed, 1 Jul 2026 13:31:12 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH] usb: storage: uas: limit consecutive device resets
- in error handling
-Message-ID: <akSXFydSPAQGi-4b@google.com>
-References: <20260701040335.810297-1-senozhatsky@chromium.org>
- <20260701041700.EB7971F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1782888262; c=relaxed/simple;
+	bh=mnYe3YF/szMzCEPzBBxKzftwDOy0RSOkaHQyfDf5sLg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IN+Aen/dwgbLJfvW8aZHiND8V+EGINZhgeEp7a9svBkjfzqgZkIgmdRYzWOWoo+H+mJmnR9ucBC9LoKdPuI63FyoDY6k2vQehbx6VPnfegM7VR+/rM2/ieOo6CFi/0EDdjppd7bAdbrjs+N+wiDtTXjmGaverk0qN15u0dnkJNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gqr7X54WFzYQtL7
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 14:43:20 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id C18834056B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 14:44:14 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgA3pfI9t0RqRo3PAQ--.22156S2;
+	Wed, 01 Jul 2026 14:44:14 +0800 (CST)
+Message-ID: <70364d4d-e891-45e5-84ed-addf7dcd97d7@huaweicloud.com>
+Date: Wed, 1 Jul 2026 14:44:13 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260701041700.EB7971F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/21] perf capstone: Fix arm64 jump/adrp disassembly
+ mismatch with objdump
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260701035355.752944-1-wutengda@huaweicloud.com>
+ <20260701035355.752944-3-wutengda@huaweicloud.com>
+ <20260701040748.64F631F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <20260701040748.64F631F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgA3pfI9t0RqRo3PAQ--.22156S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxtF17ZrW8Gr1UWF43Gw1rJFb_yoW7Gw1UpF
+	ykAay5GrW8JF1xJ34kZwn7Xrnagws5GF15u3s5KrZYkFn8CF1SkrWSyayYkas7Jws5Jw40
+	vF4qyw15Cwn8tFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On (26/07/01 04:17), sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Prematurely clearing `devinfo->resetting` and dropping the lock before calling `uas_zap_pending()` creates a race window with `uas_do_work()`, leading to a kernel warning and Use-After-Free.
-> - [Medium] Time-of-Check to Time-of-Use (TOCTOU) race when reading the `uas_reset_limit` module parameter.
 
-[..]
 
-> > +	spin_lock_irqsave(&devinfo->lock, flags);
-> > +	if (uas_reset_limit > 0 && devinfo->reset_cnt >= uas_reset_limit) {
+On 2026/7/1 12:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Symbol resolution fails for relocated kernels (KASLR) and user-space shared libraries due to mismatched address spaces.
+> - [Low] Build failure due to undeclared `machine` variable and undefined `machine__normalized_is()` function in `capstone_init()`.
+> - [Low] Missing `<stdlib.h>` inclusion causes musl libc build failure.
+> - [Low] Usage of `ARM64_GRP_BRANCH_RELATIVE` causes build failures with Capstone versions prior to 5.0.
+> --
 > 
-> [Severity: Medium]
-> Can a concurrent sysfs write cause a Time-of-Check to Time-of-Use race here?
+> commit 1f9744f04e456b1209677658edb7f30a5b26e56d
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> The module parameter uas_reset_limit has 0644 permissions. It is read twice
-> in this condition without a READ_ONCE() wrapper. If it is modified from a
-> positive value to zero or negative strictly between the two evaluations, the
-> first check (uas_reset_limit > 0) could pass, while the second check could
-> evaluate against the new zero or negative value, prematurely failing the reset
-> and offlining the device.
-
-Sounds reasonable.
-
+> perf capstone: Fix arm64 jump/adrp disassembly mismatch with objdump
 > 
-> > +		devinfo->resetting = 0;
-> > +		spin_unlock_irqrestore(&devinfo->lock, flags);
-> > +		uas_zap_pending(devinfo, DID_NO_CONNECT);
+> The patch implements extended formatting for arm64 jump and adrp instructions
+> during symbol__disassemble_capstone() to match objdump's expected output style.
+> It adds instruction detail resolution in capstone_init() and formats the
+> output with correct symbol and offset mappings.
+> 
+>> diff --git a/tools/perf/util/capstone.c b/tools/perf/util/capstone.c
+>> index 9bba78ee0c5a2..a9c0a1d2eb036 100644
+>> --- a/tools/perf/util/capstone.c
+>> +++ b/tools/perf/util/capstone.c
+> 
+> [ ... ]
+> 
+>> @@ -218,6 +218,12 @@ static int capstone_init(uint16_t e_machine, csh *cs_handle, bool is64, bool is_
+>>  		 * on x86 by investigating instruction details.
+>>  		 */
+>>  		perf_cs_option(*cs_handle, CS_OPT_DETAIL, CS_OPT_ON);
+>> +	} else if (machine__normalized_is(machine, "arm64")) {
+> 
+> [Severity: Low]
+> Does this code cause a build failure? The variable machine is not declared
+> in capstone_init(), and the function machine__normalized_is() does not appear
+> to be defined in the codebase.
+> 
+
+Agreed. This is due to commit 12c4737f55f2 ("perf capstone: Determine architecture from
+e_machine"), which changed the capstone interface. I haven't rebased this part yet.
+The base-commit already fails to build with capstone, so I didn't notice this one.
+
+>> +		/*
+>> +		 * Same as x86: arm64 needs instruction details to resolve
+>> +		 * symbolic addresses
+>> +		 */
+>> +		perf_cs_option(*cs_handle, CS_OPT_DETAIL, CS_OPT_ON);
+>>  	}
+>>  
+>>  	return 0;
+> 
+> [ ... ]
+> 
+>> +static bool is_pc_relative_insn(struct cs_insn *insn)
+>> +{
+>> +	int i;
+>> +
+>> +	if (insn->id == ARM64_INS_ADR || insn->id == ARM64_INS_ADRP)
+>> +		return true;
+>> +
+>> +	if (insn->detail == NULL)
+>> +		return false;
+>> +
+>> +	for (i = 0; i < insn->detail->groups_count; i++) {
+>> +		if (insn->detail->groups[i] == ARM64_GRP_JUMP ||
+>> +		    insn->detail->groups[i] == ARM64_GRP_CALL ||
+>> +		    insn->detail->groups[i] == ARM64_GRP_BRANCH_RELATIVE)
+> 
+> [Severity: Low]
+> Will this break compilation against Capstone versions prior to 5.0?
+> ARM64_GRP_BRANCH_RELATIVE was introduced in Capstone 5.0. Since the perf
+> tool's build feature detection doesn't mandate a specific Capstone version,
+> relying on this enum might cause build failures on older setups.
+> 
+
+This enum was added in Capstone 5.0 over two years ago. I think we can
+safely assume most systems are on a newer version now. I'll leave it as-is.
+
+>> +			return true;
+>> +	}
+>> +
+>> +	return false;
+>> +}
+>> +
+>> +static void format_capstone_insn_arm64(struct cs_insn *insn, char *buf,
+>> +				       size_t len, struct annotate_args *args,
+>> +				       u64 addr)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	if (is_pc_relative_insn(insn)) {
+>> +		/* Extract last immediate value as address */
+>> +		last_imm = strrchr(buf, '#');
+>> +		if (!last_imm)
+>> +			return;
+>> +
+>> +		orig_addr = strtoull(last_imm + 1, &endptr, 16);
+> 
+> [Severity: Low]
+> Can this cause a build failure on musl libc? The POSIX standard function
+> strtoull() is used here, but stdlib.h is not explicitly included in the
+> file. Relying on implicit inclusions often works on glibc but breaks on
+> musl libc.
+> 
+
+I'd say we can ignore this. strtoull() is used all over the perf codebase
+and gets included indirectly. I don't think this is a real issue.
+
+>> +		if (endptr == last_imm + 1)
+>> +			return;
+>> +
+>> +		/* Relocate map that contains the address */
+>> +		if (dso__kernel(map__dso(map))) {
+>> +			found_map = maps__find(map__kmaps(map), orig_addr);
+>> +			if (found_map == NULL)
+>> +				return;
+>> +			map = found_map;
+>> +		}
+>> +
+>> +		/* Convert it to map-relative address for search */
+>> +		addr = map__map_ip(map, orig_addr);
 > 
 > [Severity: High]
-> Does clearing devinfo->resetting and dropping the lock before calling
-> uas_zap_pending() introduce a race condition with uas_do_work()?
+> Does this code fail to resolve symbols for relocated kernels (KASLR) or
+> user-space shared libraries (PIE)?
+> 
+> The extracted orig_addr is in the objdump address space. However,
+> maps__find() and map__map_ip() expect absolute memory addresses. By omitting
+> the translation step via map__objdump_2mem(map, orig_addr) (which the x86
+> implementation handles correctly), KASLR relocated kernels will fail in
+> maps__find(), and user-space shared libraries will underflow in
+> map__map_ip().
+> 
 
-Yes, this looks wrong.  Let me take a look.
+Agreed. I missed map__objdump_2mem() here.
+
+>> +
+>> +		sym = map__find_symbol(map, addr);
+>> +		if (sym == NULL) {
+>> +			map__put(found_map);
+>> +			return;
+>> +		}
+> 
+
