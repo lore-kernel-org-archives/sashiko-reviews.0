@@ -1,100 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881703C4563;
-	Wed,  1 Jul 2026 19:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782934009; cv=none; b=CwgdXkzVDDCC6BI39nr3b+qfMgKszw8yzfhdTREMrEojZ/gEUz7NZVAofXx9mESWBILugV9BTx+8rczG5dAsFWei4L3H7Us5h9pApet1O6Ma/b+1kE6ZVz71saFZ7Ts+64MhbhKKsz38Dl+LEkV8wFTq/pzpp1HTvSLmvSuWgsQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782934009; c=relaxed/simple;
-	bh=6uakvJRmc82Va6e8ldGVVNfFirUyb7zP51//8OnT6tg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VmqjYBVnAjzk1NBXDABbU+99bXPFJoGKQV0cRoBm60gNdxRo58b6aKcdswq8NlCuzaXSJOReCNk9NHNbq0EeZ82smax5KIXAbipUMfwvcCSK0nihCgXB1Wu/VHrybV7nJp1ss0nVRVMtmPJorPsvJZrWaHCyl0knEUjaJ1Nds04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fBOL+9jl; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347A7386C20
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 19:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782934310; cv=pass; b=bnoRRZuXbgWcbnW75fky84UYx2RezONcKZAM8dPse5oV3skVlK7osheWihkLrqr0wJEp8/FrW9MOPmtbMZZ/CFzhXsoEKatOrCzizJHLhIyq8cindfIGqCZiakF84JC2S7Lh91dEIRhyPeE0ZixtB6AbAyK8p/TaWn/eMcylz9w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782934310; c=relaxed/simple;
+	bh=FYbU7ZZR1ardUu7/hnOPvsNdJaF1pTEctjOPw9zaRlE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j4mQ1ZolqfA/6YbLwM8yvfIKjrGLW6ayaLC1mL1KRwsRPJEsgFuIKIe7YJnIPgcG3ntJh+CLGmj0Im+ZpS/dgor97Zwl+Fxrgrtv3FI7uePcII77b8VcMAxPvpmo5UTtQN6W9+JK2tY7xLj3E/QgTKNawFUtlTsqS37dliqVvR0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IJJM3kFn; arc=pass smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fBOL+9jl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BB21F000E9;
-	Wed,  1 Jul 2026 19:26:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782934006;
-	bh=bF7v1g8PVzqVTIYcNBK3G6NqnoGk2CT9dJgouE1GCNY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fBOL+9jlqtS1C67UM/lSsBlp4ZpRYM+UiHqdIGVOUtSjd7lqkt2K1GTiM+i48KL7O
-	 W4DnSHP/9Jc211kvO02Bj97rJOEJUdVc1Nn/u4pix1Yhi1+kgbVUacVPjSA6cg0YjS
-	 8ko0tcx5PUTsuyP1B1ADiO8MQkRROCbYjIIAB/LskgtvUShgkuno4qeC/9mnGyAJ04
-	 6fByJtnEC/cCmjrWB52B3CJE9eGGTWXlRk75oiIn5JEMiuJfEKBDGQWsEFW3TG5i6p
-	 tUfI5iGGM1COcngFJDQoLx5JeAF5ihIF5rD49l4OL4ib4Twrft9Q5Svg5MvwRwpoq+
-	 GEE0PKzgEv8bw==
-Date: Wed, 1 Jul 2026 12:26:45 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf build: Fix compiler errors with old capstone
-Message-ID: <akVp9YZ-15b1xUwu@google.com>
-References: <20260701182824.347941-1-namhyung@kernel.org>
- <20260701183830.65EA21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IJJM3kFn"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c9cb97e178so12042045ad.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 12:31:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782934309; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UWodp9cebMLci2RoDQwnrEQhG/1MB0L1LBblMp6TdrTwcaFsQVEm7vxxGrm7+p6+Hb
+         z4c4ahWX6WYVzLeH0DM6EYar27aF8raC8pMaU7J+qwi+BqETq7mYbi0OGSEKJNyon2cr
+         3BvLN8up7uR8Gu6gEYXH2+E63hl1jwWBAy4isJMf9O90IMNs/kqmtQBYxToXCoyowPY6
+         dXz+/hL5IJs6qiz0dWra+qXwhveX1rtlgQGgAkojT9MkpZ/XBDGqANPPEo+NBtXHWCoE
+         vtFS31TcxfzNac1WKQo5zb5s4I3y51Wb4SOirmw8ep63adxTGgRLHUGRDJnBDYxuFK2S
+         ZWcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=MvSRxvWpZkkrTTRKKZ2eLhjlabjyjLbSMGPDu7w5z/k=;
+        fh=YEWhegES1HoC1CaJeJoBadsdXWSH9ZJKvcZmE2GZrBw=;
+        b=KWDh7URCv5JGnfEYV8eJPUwqn5XYkrUO/sxozug1Jm6159qYceyxdIbdlvj+nyNAkM
+         e4BpprSaQtSBmvqOysU1FKJU017u3aBAS8EYj8bQnVNz6RHajKFY08c8pLWabMGM7cHD
+         2QKYaK8bDttWL/kuuyDW6YMskY7qZYPGo1vHxDHJ6pNfhjajCYQiNDhauMdHyC+EhVBw
+         /15UGRtbKLMY3jVNlOEn5KypAn6xccv/0f4TEo9nXAi04G2UYAcdU0coA+YOE2/CHvhq
+         hMYugxp0I767nGLyUgG80+WUgesCnRmUTTj3khpQMzIHwwMQnx2JEpvfMZvKPEWvm90/
+         YM2A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782934309; x=1783539109; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MvSRxvWpZkkrTTRKKZ2eLhjlabjyjLbSMGPDu7w5z/k=;
+        b=IJJM3kFn+T6QwqIdrhwpBj1mw38hp1V2RBVg9Pf5CU45TwbqNJarmm9+SB9v4WSSQ9
+         sTKyoKCRZYa1BJmRWUlVn8lPrZsqYwMPTNtXoV2DU3kImC3Qr2A2RlJP3CafllTKDeE4
+         ycVRiDI/THJLH1WCYjUEcNSS2hdRDIuAJbLlWn+vEPoa5yf2LJoC9lZt7A/JeD1YWOF3
+         0SwtnPfVphqnZPm7Y+nKOAtfZGmeqk1PwJDj6pKTfg8A8qK0xQMyAxByuJV9Lf77ITkr
+         Ma8biJZh74vPx6ZLoKZSKDqakTE1GjAjod6JkUZ+Yd3cPQIe0l9hkJqKJvOcr/MVScb/
+         JYUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782934309; x=1783539109;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=MvSRxvWpZkkrTTRKKZ2eLhjlabjyjLbSMGPDu7w5z/k=;
+        b=J21V/J77wvATisbBoV9frHxYeeRRwb30T2VuNsYetg8ETCfxkKxGCqZJUOwcsrbYGn
+         B+GJ8VZSypSbrZMJ9w5YlC5iF8TeUSXyuBps563RwkDamfFRSqCTXjXrvD3lf1KxRz1t
+         vYA/BR1HBNUutesRaL57ahbdYC71O9IuNtr6tTRLrxBH5qNlIOCjQY9TByPYjSkl/MWx
+         yE+9htfRVnisz9bYW56gLWh2+N1pDBKoK8WPSy+QMeyD48eSNXb+5bABhnRBvpTBL3p6
+         utS6TOYzNHpgSjrvfAYN9VUhZcxh/90cb3EDngHQO4on7//IKPF/mPjL5GydHzkT1IiN
+         PZ2A==
+X-Gm-Message-State: AOJu0YzJVkRlZGadAT5QlFQ7de5BbwqTrIlS5OOzTpurcD0uZxHH5L6o
+	3iUZQNBs3vjQali/Ryd84Vbnc/IHziIXm3auOqI82HFAh8r5P7XHowToGH9f4sgxiCzPbd6Bt5o
+	qBYzfpoeoyVWTVsa+hMliwRiO/8XLPU8=
+X-Gm-Gg: AfdE7cnkT9eSSvH+P/VHlJMr1RjnFUBnef+h6tN0U1zN2dFKzeesy3elqpft0NHPlvj
+	A2YQ857a3IKpjtlgTc5m2bi8icvpQescShZ3vgPE8+NoNGFUBzrf/KjpmxdBk9Z/LvkAPnkVfd2
+	vmpK5DsPLBwoYqZOWNXBemfoeF7GVX73Bd5P3nq2V5PFgTcJOwCtspDf+PjAxjRampcUGR2r/tj
+	iYeUzyrIvMPDDmlJrUCvFz8uzH3wwlfEkr/geHDLwvQOcdFtG0M50vr4uRzIZWLNU9oQetui5Is
+	28vFeer9TV/cjkjhFL1yDS4Wcoc9Ehlbhd8yKAecKixDSD3ZpIb92A==
+X-Received: by 2002:a17:903:1acb:b0:2c9:c54a:7915 with SMTP id
+ d9443c01a7336-2ca91140306mr23456615ad.14.1782934308564; Wed, 01 Jul 2026
+ 12:31:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260701183830.65EA21F000E9@smtp.kernel.org>
+References: <20260629152406.52582-1-leon.hwang@linux.dev> <20260629152406.52582-5-leon.hwang@linux.dev>
+ <20260629154055.6DD941F00A3A@smtp.kernel.org> <96cbecfc-bae6-46ff-90a7-5f4703e1c44c@linux.dev>
+In-Reply-To: <96cbecfc-bae6-46ff-90a7-5f4703e1c44c@linux.dev>
+From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Date: Wed, 1 Jul 2026 12:31:35 -0700
+X-Gm-Features: AVVi8CfISks_LG4JQSiNXyaFUKM0gRwVJ8fB6cCXJJRurC35m-YEQt8rS7IGXGU
+Message-ID: <CAEf4BzbBpDQOG-xUArBzZa_qZ08q=QViH-bbFmqwLNesGvJLUA@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v8 4/9] libbpf: Add support for global percpu data
+To: Leon Hwang <leon.hwang@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 01, 2026 at 06:38:29PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Defining CS_ARCH_RISCV as CS_ARCH_MAX causes incorrect architecture selection when dynamically loading newer Capstone versions.
-> --
-> 
-> commit c55db50010b415e5aa95bfca7819cc985aa51d2f
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf build: Fix compiler errors with old capstone
-> 
-> This commit fixes a build error on systems with Capstone versions older than
-> 5 by defining missing RISC-V architecture and mode constants. It uses the
-> major version macro to conditionally define these symbols.
-> 
-> > diff --git a/tools/perf/util/capstone.c b/tools/perf/util/capstone.c
-> > index 5ad537fea4360..dd7cd97d0a380 100644
-> > --- a/tools/perf/util/capstone.c
-> > +++ b/tools/perf/util/capstone.c
-> > @@ -24,6 +24,13 @@
-> >  #include "symbol.h"
-> >  #include "thread.h"
-> >  
-> > +#if CS_VERSION_MAJOR < 5
-> > +#define CS_ARCH_RISCV    CS_ARCH_MAX
-> 
-> [Severity: High]
-> Does mapping CS_ARCH_RISCV to CS_ARCH_MAX cause ABI compatibility issues?
-> 
-> If perf is compiled against Capstone headers < 5, it will use the integer
-> value of CS_ARCH_MAX for CS_ARCH_RISCV. If the resulting binary is later run
-> on a system where libcapstone.so has been upgraded to version 5+, passing
-> this hardcoded value to cs_open() might silently initialize a completely
-> different architecture that was appended to the enum in V5 (such as WASM or
-> BPF).
-> 
-> Could this result in cs_open() succeeding but silently producing garbage
-> disassembly for RISC-V targets?
+On Mon, Jun 29, 2026 at 10:55=E2=80=AFPM Leon Hwang <leon.hwang@linux.dev> =
+wrote:
+>
+> On 29/6/26 23:40, sashiko-bot@kernel.org wrote:
+> [...]
+> >> @@ -1983,7 +1989,7 @@ bpf_object__init_internal_map(struct bpf_object =
+*obj, enum libbpf_map_type type,
+> >>      }
+> >>
+> >>      def =3D &map->def;
+> >> -    def->type =3D BPF_MAP_TYPE_ARRAY;
+> >> +    def->type =3D is_percpu ? BPF_MAP_TYPE_PERCPU_ARRAY : BPF_MAP_TYP=
+E_ARRAY;
+> >>      def->key_size =3D sizeof(int);
+> >>      def->value_size =3D data_sz;
+> >
+> > [Severity: High]
+> > This is a pre-existing issue, but could this integer truncation lead to=
+ a
+> > buffer overflow?
+> >
+> > If a user supplies a crafted ELF file with a section (like .data, .roda=
+ta,
+> > or .percpu) larger than 4GB, the 64-bit data_sz is implicitly truncated=
+ when
+> > assigned to the 32-bit def->value_size.
+> >
+> > This results in a smaller mmap allocation based on the truncated value.=
+ Later
+> > in bpf_object__init_internal_map(), memcpy uses the original 64-bit dat=
+a_sz:
+> >
+> >       if (data)
+> >               memcpy(map->mmaped, data, data_sz);
+> >
+> > Can this overflow the allocated buffer when parsing unverified BPF obje=
+cts?
+> >
+>
+> Sounds reasonable.
+>
+> The data_sz value comes from the ELF file and therefore cannot be
+> trusted, as the section size can be malformed.
+>
+> For example, readelf -a shows the following for a normal ELF:
+>
+>   [ 3] .data             PROGBITS         0000000000000000  00000040
+>        0000000000000004  0000000000000000  WA       0     0     4
+>
+> The section size can be modified to:
+>
+>   [ 3] .data             PROGBITS         0000000000000000  00000040
+>        0000000100000001  0000000000000000  WA       0     0     4
+>
+> In this case, data_sz would be truncated to 1.
+>
+> However, in practice, there won't be larger than 4GB section in bpf ELF
+> file. And, it is meaningless to hack libbpf to corrupt user space memory.
+>
+> Of course, will post a separate patch for further discussion.
 
-Ok, I'll use the actual number from v5 then.
+No, don't. All this hardening of libbpf is nonsensical. libbpf is not
+meant to protect against corrupted ELF. If you don't trust the source
+of ELF, you should definitely not attempt to open BPF object and load
+it into kernel to run with root-like capabilities.
 
-Thanks,
-Namhyung
-
-> 
-> > +#define CS_MODE_RISCV32  1
-> > +#define CS_MODE_RISCV64  2
-> > +#define CS_MODE_RISCVC   4
-> > +#endif
-> 
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260701182824.347941-1-namhyung@kernel.org?part=1
+>
+> Thanks,
+> Leon
+>
+>
