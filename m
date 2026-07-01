@@ -1,148 +1,111 @@
-Received: from out162-62-57-210.mail.qq.com (out162-62-57-210.mail.qq.com [162.62.57.210])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079101D0DEE
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 00:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250D613959D
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 00:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782865646; cv=none; b=aKOalHFJ/FG5hjXzb1ozcoMn9HAPlkNqPuTOGakWe7GY675Zl6bqk5v3TLZ7p7t5y4fBpz0GM26a9jHIEVSe4P+uH4d9MropcOYw+vI04UvG4FsbkhPNcMIyi3PHAKIS3mTnR0t8Rq8rTktrNh7wJZ2Nt9yWQkMNe1Ek/IFnDnI=
+	t=1782866966; cv=none; b=Tk+nKMWccqaz4AEgoNrnajEjEUl+Qw1bm+c556MQIgikNNreFi24X8Km3iT/Ad3kgu+/59Oz1fTl14YmINpeojrKz6CvET+z1FrwKICUpA/v8J8d4nIIPVyZOqg83+zENb9T7wfIGwV//TJ6bmnCFb/YkIHO5Y5MH0eXAyzR7I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782865646; c=relaxed/simple;
-	bh=S4fVn2PeBTpmHB2q1rf3L5C81QuZVwdv7TrWYyFvhyc=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=QUKuNf0jmE0ikukfL2+u7wrRRxBsw2/4ABq2H9v55fC734g8TJw54qvuS13+x4/tgFS1wL19pHDHrF04GVRqhCHAn9j4ibznWeWKax4IxLHaM+IbBTQs2Ojd7od2nr1ZPp6yz7qc8Q+3qBZ//pvOvRz7NI7VzeUxZFrDWm5KE3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=UMcR43zn; arc=none smtp.client-ip=162.62.57.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1782866966; c=relaxed/simple;
+	bh=lWVZ7Tul/itbRkqJV4EpvVyTf8+7BsWi8hDgaNWdOyU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qffCy7UK1ZGNLsFjKCzig5ASKNZ36aG9gHpaYsSkITE6EdZVdjEQ3KyY8dTm4eskQ8B6URPR5y1e4eu2LzBscLxisHgILhFv3Xd4cmY+P2APDPgy2SBK87Dt8zDyYox+o5bCx61OhbAQ2OWqIQVMCJO94OXUCPEOfbwiS536a9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=DA9tEczx; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="UMcR43zn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1782865638; bh=sFMeXxSTl/HrBHMeIcDbvJwqmfOLH3BmpE8opUaJj0I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMcR43znXXu3RPo/j71pvZQq0qmUgLTzuD8VRj3Jyv1Y9Quqb/nvLD3L3Qti9PBDj
-	 t1OwFvn50pUcGQsR6A0yF3fT2d35mkITA0NKfqG1dBiCh8+YmRRbGOZ37cKWrWaCiF
-	 6j6YyHoe1Z8eQjlGlmBlehu9FaJQ7bHfTyzHnwM0=
-Received: from lxu-ped-host.. ([111.198.231.89])
-	by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
-	id 6CE36C53; Wed, 01 Jul 2026 08:27:14 +0800
-X-QQ-mid: xmsmtpt1782865634t8hxpv7lu
-Message-ID: <tencent_70F825FB8D959232DDCB5DDC991ACFB40D07@qq.com>
-X-QQ-XMAILINFO: MllZffuBkEb5/1+xTilerq8/Xml2eD6MFSIKpHgZi0fF+y71pkML46d8QSmuak
-	 18MtSy9T/h4qt1wwhhOuyH49cqIQET4FqJbAnn/kiwqjPkPELTwkm+FntXIXwr71w6cqjGWnZr3T
-	 TjUhdxlRZxYUhmxAXwX6ePc7aKxE9Rit0AP59GX2tgjIZqeyJENuord4ShiJsOioNdyBbUMIsUOS
-	 3KNMDkatSqD67INoir6Iu6hpdcqG5GnQwr2/uYvygEtHooV4poenlGE1EhQar4Uiz0iLR1Dl3m1I
-	 netdaPR/QFGLZ1o4uT3i6Y9GZI/oar99r2Sc//mieQxF3Mjh9knNWO8+B5/ixbATKD7D0SoZaOoD
-	 +FUU0RYXkIoG1iPS7oxM/KXx+7m2AxjbJi/BkUdqpWroe7zbnvU7XjQP/gSTurW5AQhtx1DEY5BW
-	 0EI8Vxei6B1CRMmyKFjSHhmyrPhbMDO6ZhRIyaQWunZ04G+2NBfF+AN5+Tp9+GoIWbJml3wxbv4+
-	 RbKQTQo49mq9x61AiYpvNOu9UDTvK0tzRXENGspl5ogYKc6og58jhsE2uK0Fx8bS1vtMqpXMKYoL
-	 bNtlYZP1wv0P3c2zK1vy3o1sGjEukMczGismy7qkBI9PFwLYceIG/MXkKQnT0QeWrFZGuC15cueA
-	 TdjuRd88ItPXIrlsig7RV32Dj69VYA1ubK0wMxdzwvOX1MwF8QlT89UXVaHZLurL/d3Ck8QJvHWl
-	 4wWktgzuEwpmOABOI5bYSA4fAaUVCnw6KGkCDYNXYUgSHf7LyHsZBDWvZ1bLF0N2VEDoJ9Sc3lov
-	 fb3lE4NFULvmjoS2ajbMzL8hvnJ5NrvQMlvz3FNH3xOiegmzgqOeNzBjiLxUumYB4gla+Jl5JDNz
-	 KKnwdaq/09pwwNR3qgVC2Up2KqITlJRV8h8wSOrizunIWNMjChYHRyPH+xkZZeeYrFhfXl36x5u8
-	 ZxpGq5uuPI0n2SkJGlv8u/HCbbnyqb+JmX/JvYazeflmbUF/d0o2OVK8N1+kxQMxVEESvD4DXApL
-	 NSFhRDQmiPF34ZTBvMQ1agdVi8JIs=
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-From: Edward Adam Davis <eadavis@qq.com>
-To: sashiko-bot@kernel.org
-Cc: eadavis@qq.com,
-	jiayuan.chen@linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	andrii@kernel.org,
-	ast@kernel.org,
-	bpf@vger.kernel.org,
-	daniel@iogearbox.net,
-	eddyz87@gmail.com,
-	emil@etsalapatis.com,
-	jolsa@kernel.org,
-	linux-kernel@vger.kernel.org,
-	martin.lau@linux.dev,
-	memxor@gmail.com,
-	netdev@vger.kernel.org,
-	song@kernel.org,
-	syzkaller-bugs@googlegroups.com,
-	yonghong.song@linux.dev
-Subject: [PATCH v5] bpf: Fix smp_processor_id() call trace for preemptible kernels
-Date: Wed,  1 Jul 2026 08:27:14 +0800
-X-OQ-MSGID: <20260701002713.969502-2-eadavis@qq.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260630132226.C44601F000E9@smtp.kernel.org>
-References: <20260630132226.C44601F000E9@smtp.kernel.org>
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="DA9tEczx"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 5EC4640E0140;
+	Wed,  1 Jul 2026 00:49:23 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id y6TGv14w66I5; Wed,  1 Jul 2026 00:49:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1782866953; bh=SyThy7tS7xMbhdArT/LoJGc0WPj3c7HgQ0ERzvqr1u0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DA9tEczx//ACvseSssAsLo5xdkpuCVtE+oVqM8E5otyjluxK65w8X1aJ+4BpGPAfo
+	 aKWTEPuB0/zgADeXo/t6nDXNAuBxBq4zXb2VDl0BJoqHKZzIhk26g4Ssf6/9XHJ2DG
+	 eYLVQBP6iSHqzc+8uSdgoOmhQ7/yhcN3D2GX4MRZWdIcl29hVwwoVkYP86e8weHU6P
+	 YA1FptQ+z2XSAu9vdO4X4wr1U0nRg0kBKsVv078+BxpWWzxLUvXDZIe0Rpr+oFjtkp
+	 xVuZ64ugLMq140NjqwL3hcdLa+5pJSoW72m4DZBa+yhP+lK/0bzggYRcGLFNo6mKua
+	 ifeA1TP6bVtqiHbEuaF+PpTnRw9RQRGoDMBy822AStoGYsFvmcf0kDYofhMNYdle9r
+	 BOaG/TM/Se288sTJh7k3PrxKOJNR8DWyS9590vsG6VHULiqSCSggmHUoMPmaXUqvTO
+	 d4BgmNYXt5ioZPCnFdg7RmrdbLNeEPiWKqsoCZyRk2C3oM/7mJfr4yEgI11sRvcyag
+	 Yh3S1vO23oGvGTQpm0tTjCvK0uxXBeKjaZzsWbuZ6pavT6RqIgsRH7EbrDPUOBQXyC
+	 VJg6wkTKwV+0BOZpGV5T7g5YIQ1s5ctzyr996308SF0U1m/Mf7/cJhgytsg9xuN4Cn
+	 kTA3eG5QYmMUPej/kKc/i7jc=
+Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::1a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id CA69E40E00BA;
+	Wed,  1 Jul 2026 00:49:07 +0000 (UTC)
+Date: Tue, 30 Jun 2026 17:49:04 -0700
+From: Borislav Petkov <bp@alien8.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Eric Biggers <ebiggers@kernel.org>, linux-raid@vger.kernel.org,
+	yukuai@fygo.io, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/8] x86/fpu: Check for missing AVX and AVX-512 xstate
+ bits
+Message-ID: <20260701004904.GBakRkAEzs5lGvERSZ@fat_crate.local>
+References: <20260626043731.319287-1-ebiggers@kernel.org>
+ <20260626043731.319287-2-ebiggers@kernel.org>
+ <20260626050038.2AD661F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260626050038.2AD661F000E9@smtp.kernel.org>
 
-bpf_mem_cache_free_rcu() maybe called in preemptible context, this
-will trigger the below warning message:
+On Fri, Jun 26, 2026 at 05:00:37AM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Critical]
+> This is a pre-existing issue, but Memory Protection Keys (PKU) isolation
+> can be bypassed because we don't verify X86_FEATURE_PKU against the
+> presence of XFEATURE_PKRU in xstate here.
+> 
+> If a hypervisor reports X86_FEATURE_PKU in CPUID but masks out the
+> XFEATURE_PKRU xstate component, the kernel's setup_pku() enables CR4.PKE
+> and forces X86_FEATURE_OSPKE.  Because X86_FEATURE_OSPKE is artificially
+> forced, the feature is not cleared.
+> 
+> CR4.PKE=1 permits userspace to use WRPKRU, but because XCR0.PKRU=0,
+> xsaves/xrstors silently ignore the PKRU register during task context
+> switches, leading to state leakage across tasks.
+> 
+> Should we also validate PKU against missing xstate components in this
+> function to prevent isolation bypass?
 
-BUG: using smp_processor_id() in preemptible [00000000] code: syz.0.17/5820
-caller is bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
-Call Trace:
- check_preemption_disabled+0xd3/0xe0 lib/smp_processor_id.c:47
- bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
- rhtab_delete_elem+0x185a/0x1b30 kernel/bpf/hashtab.c:2969
- __rhtab_map_lookup_and_delete_batch+0x935/0xcb0 kernel/bpf/hashtab.c:3349
- bpf_map_do_batch+0x445/0x630 kernel/bpf/syscall.c:-1
- __sys_bpf+0x906/0xd90 kernel/bpf/syscall.c:-1
+I *think* Sashiko means here our preexisting fpu__init_system_xstate() here
+but I'm not sure...
 
-this_cpu_ptr() requires the caller to prevent task migration.
-These helpers currently do not enforce that requirement and may
-be invoked from preemptible contexts, leading to accesses to another
-CPU's per-CPU cache after migration. Use get_cpu_ptr()/put_cpu_ptr()
-to pin the task while accessing the per-CPU allocator state.
+> [Severity: High]
+> Does this logic get bypassed if XSAVE or FPU support is missing?
+> 
+> Earlier in fpu__init_system_xstate(), there are early returns if
+> X86_FEATURE_FPU or X86_FEATURE_XSAVE are missing:
+> 
+> 	if (!boot_cpu_has(X86_FEATURE_XSAVE)) {
+> 		pr_info("x86/fpu: x87 FPU will use %s\n",
+> 			boot_cpu_has(X86_FEATURE_FXSR) ? "FXSAVE" : "FSAVE");
+> 		return;
+> 	}
+> 
+> If a hypervisor natively enumerates AVX=1 but XSAVE=0 (such as QEMU
+> with -cpu host,-xsave), check_cpufeature_deps() only warns about unmet
 
-Fixes: 5af6807bdb10 ("bpf: Introduce bpf_mem_free_rcu() similar to kfree_rcu().")
-Fixes: 7c8199e24fa0 ("bpf: Introduce any context BPF specific memory allocator.")
-Reported-by: syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fd7e415d891073b83e1f
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
----
-v1 -> v2: using guard against preemption
-v2 -> v3: replace get/put_cpu() to bpf_disable/enable_instrumentation()
-v3 -> v4: disable preempt to make this_cpu_ptr() work
-v4 -> v5: in mem free disable preemption
+Yah, we don't care. We won't support non-sensical guest configs.
 
- kernel/bpf/memalloc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
-index e9662db7198f..2118fe725ed4 100644
---- a/kernel/bpf/memalloc.c
-+++ b/kernel/bpf/memalloc.c
-@@ -911,7 +911,8 @@ void notrace bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr)
- 	if (WARN_ON_ONCE(idx < 0))
- 		return;
- 
--	unit_free(this_cpu_ptr(ma->caches)->cache + idx, ptr);
-+	unit_free(get_cpu_ptr(ma->caches)->cache + idx, ptr);
-+	put_cpu_ptr(ma->caches);
- }
- 
- void notrace bpf_mem_free_rcu(struct bpf_mem_alloc *ma, void *ptr)
-@@ -927,7 +928,8 @@ void notrace bpf_mem_free_rcu(struct bpf_mem_alloc *ma, void *ptr)
- 	if (WARN_ON_ONCE(idx < 0))
- 		return;
- 
--	unit_free_rcu(this_cpu_ptr(ma->caches)->cache + idx, ptr);
-+	unit_free_rcu(get_cpu_ptr(ma->caches)->cache + idx, ptr);
-+	put_cpu_ptr(ma->caches);
- }
- 
- void notrace *bpf_mem_cache_alloc(struct bpf_mem_alloc *ma)
-@@ -951,7 +953,8 @@ void notrace bpf_mem_cache_free_rcu(struct bpf_mem_alloc *ma, void *ptr)
- 	if (!ptr)
- 		return;
- 
--	unit_free_rcu(this_cpu_ptr(ma->cache), ptr);
-+	unit_free_rcu(get_cpu_ptr(ma->cache), ptr);
-+	put_cpu_ptr(ma->cache);
- }
- 
- /* Directly does a kfree() without putting 'ptr' back to the free_llist
 -- 
-2.43.0
+Regards/Gruss,
+    Boris.
 
+https://people.kernel.org/tglx/notes-about-netiquette
