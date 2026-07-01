@@ -1,111 +1,191 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from n169-113.mail.139.com (n169-113.mail.139.com [120.232.169.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250D613959D
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 00:49:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC2C191F91
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 01:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.113
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782866966; cv=none; b=Tk+nKMWccqaz4AEgoNrnajEjEUl+Qw1bm+c556MQIgikNNreFi24X8Km3iT/Ad3kgu+/59Oz1fTl14YmINpeojrKz6CvET+z1FrwKICUpA/v8J8d4nIIPVyZOqg83+zENb9T7wfIGwV//TJ6bmnCFb/YkIHO5Y5MH0eXAyzR7I0=
+	t=1782870358; cv=none; b=sBJW90UpSweX2sc7MR4LP2kjQBszISeMUI6/XI5TO6xrcuJI3bLV33GlImN9De26DUprW3oQSsTSL9denPRIArxCmgdS10alNtfmWxA88PAuVzYY88iujQYTDrtSZVkH7vdv5aCGFlYqDBHYbUXC+E8UiGVyxh5ssu7blj87m9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782866966; c=relaxed/simple;
-	bh=lWVZ7Tul/itbRkqJV4EpvVyTf8+7BsWi8hDgaNWdOyU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qffCy7UK1ZGNLsFjKCzig5ASKNZ36aG9gHpaYsSkITE6EdZVdjEQ3KyY8dTm4eskQ8B6URPR5y1e4eu2LzBscLxisHgILhFv3Xd4cmY+P2APDPgy2SBK87Dt8zDyYox+o5bCx61OhbAQ2OWqIQVMCJO94OXUCPEOfbwiS536a9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=DA9tEczx; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1782870358; c=relaxed/simple;
+	bh=YBoelisRv4Ha2V+lTcG5kmWAzu93vLSGIcftiqpW9z0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=um7RA9ioBk08oirC1plcO/QpfnVS+MV9TGvZCzBoQzu/MPrAj0ygk1LobDnrRBRT+pB587jXLk5xTEGbRgq3ylRRgUKsPfNRqhEKyA3XrJMubQ7d0YCmmttq6FqNr8bWeFT8K5Qe/5o9HCzTw7jh5KXdughPxCDepybhzehSnEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=OkEdim73; arc=none smtp.client-ip=120.232.169.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="DA9tEczx"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 5EC4640E0140;
-	Wed,  1 Jul 2026 00:49:23 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id y6TGv14w66I5; Wed,  1 Jul 2026 00:49:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1782866953; bh=SyThy7tS7xMbhdArT/LoJGc0WPj3c7HgQ0ERzvqr1u0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DA9tEczx//ACvseSssAsLo5xdkpuCVtE+oVqM8E5otyjluxK65w8X1aJ+4BpGPAfo
-	 aKWTEPuB0/zgADeXo/t6nDXNAuBxBq4zXb2VDl0BJoqHKZzIhk26g4Ssf6/9XHJ2DG
-	 eYLVQBP6iSHqzc+8uSdgoOmhQ7/yhcN3D2GX4MRZWdIcl29hVwwoVkYP86e8weHU6P
-	 YA1FptQ+z2XSAu9vdO4X4wr1U0nRg0kBKsVv078+BxpWWzxLUvXDZIe0Rpr+oFjtkp
-	 xVuZ64ugLMq140NjqwL3hcdLa+5pJSoW72m4DZBa+yhP+lK/0bzggYRcGLFNo6mKua
-	 ifeA1TP6bVtqiHbEuaF+PpTnRw9RQRGoDMBy822AStoGYsFvmcf0kDYofhMNYdle9r
-	 BOaG/TM/Se288sTJh7k3PrxKOJNR8DWyS9590vsG6VHULiqSCSggmHUoMPmaXUqvTO
-	 d4BgmNYXt5ioZPCnFdg7RmrdbLNeEPiWKqsoCZyRk2C3oM/7mJfr4yEgI11sRvcyag
-	 Yh3S1vO23oGvGTQpm0tTjCvK0uxXBeKjaZzsWbuZ6pavT6RqIgsRH7EbrDPUOBQXyC
-	 VJg6wkTKwV+0BOZpGV5T7g5YIQ1s5ctzyr996308SF0U1m/Mf7/cJhgytsg9xuN4Cn
-	 kTA3eG5QYmMUPej/kKc/i7jc=
-Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::1a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id CA69E40E00BA;
-	Wed,  1 Jul 2026 00:49:07 +0000 (UTC)
-Date: Tue, 30 Jun 2026 17:49:04 -0700
-From: Borislav Petkov <bp@alien8.de>
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="OkEdim73"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=OkEdim73gipXr02xQpiakZCFh4LjJwk6doPC4VZHil8eP/5wGaq/0y+nt2JTdUKjJ4/rrINkyiHRD
+	 Zfg11cQhGqBCyFtNX8S3c3RekxAjFIddrAU6lHi0H0r5ylstck/NE+TSf5ctx/pwIEziWCPEwqPzFv
+	 3TS9wqK/cMiQ5AS0=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from [IPv6:240e:404:b730:7fdc:9e83:47b8:5acf:73d0] (unknown[240E:404:B730:7FDC:9E83:47B8:5ACF:73D0])
+	by rmsmtp-lg-appmail-36-12050 (RichMail) with SMTP id 2f126a44714f608-01618;
+	Wed, 01 Jul 2026 09:45:54 +0800 (CST)
+X-RM-TRANSID:2f126a44714f608-01618
+Message-ID: <792c4a4e145a7aaa289b6d3bc8bb8c6996591152.camel@139.com>
+Subject: Re: [PATCH] drm/amd/display:Check
+ dp_128b_132b_supported_link_rates.raw before link_rate setting
+From: Jackie Dong <xy-jackie@139.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Eric Biggers <ebiggers@kernel.org>, linux-raid@vger.kernel.org,
-	yukuai@fygo.io, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/8] x86/fpu: Check for missing AVX and AVX-512 xstate
- bits
-Message-ID: <20260701004904.GBakRkAEzs5lGvERSZ@fat_crate.local>
-References: <20260626043731.319287-1-ebiggers@kernel.org>
- <20260626043731.319287-2-ebiggers@kernel.org>
- <20260626050038.2AD661F000E9@smtp.kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Date: Wed, 01 Jul 2026 09:45:50 +0800
+In-Reply-To: <20260630151147.CB9631F000E9@smtp.kernel.org>
+References: <20260630145955.13994-1-xy-jackie@139.com>
+	 <20260630151147.CB9631F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260626050038.2AD661F000E9@smtp.kernel.org>
 
-On Fri, Jun 26, 2026 at 05:00:37AM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Critical]
-> This is a pre-existing issue, but Memory Protection Keys (PKU) isolation
-> can be bypassed because we don't verify X86_FEATURE_PKU against the
-> presence of XFEATURE_PKRU in xstate here.
-> 
-> If a hypervisor reports X86_FEATURE_PKU in CPUID but masks out the
-> XFEATURE_PKRU xstate component, the kernel's setup_pku() enables CR4.PKE
-> and forces X86_FEATURE_OSPKE.  Because X86_FEATURE_OSPKE is artificially
-> forced, the feature is not cleared.
-> 
-> CR4.PKE=1 permits userspace to use WRPKRU, but because XCR0.PKRU=0,
-> xsaves/xrstors silently ignore the PKRU register during task context
-> switches, leading to state leakage across tasks.
-> 
-> Should we also validate PKU against missing xstate components in this
-> function to prevent isolation bypass?
-
-I *think* Sashiko means here our preexisting fpu__init_system_xstate() here
-but I'm not sure...
-
+On Tue, 2026-06-30 at 15:11 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [High] Checking `dp_128b_132b_supported_link_rates.raw` before it
+> is read from the DPCD register completely disables DP 2.0 UHBR
+> support.
+> --
+>=20
+> commit 11d06153280ec5dae6682a402606818b4f84b79d
+> Author: Jackie Dong <xy-jackie@139.com>
+>=20
+> drm/amd/display:Check dp_128b_132b_supported_link_rates.raw before
+> link_rate setting
+>=20
+> This patch modifies the DP 128b/132b capability check to also verify
+> that
+> dp_128b_132b_supported_link_rates.raw is non-zero before attempting
+> to read
+> and parse the specific UHBR link rates.
+>=20
+> > diff --git
+> > a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.
+> > c
+> > b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.
+> > c
+> > ---
+> > a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.
+> > c
+> > +++
+> > b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.
+> > c
+> > @@ -2079,7 +2079,8 @@ static bool retrieve_link_cap(struct dc_link
+> > *link)
+> > =C2=A0	if (!dpcd_read_sink_ext_caps(link))
+> > =C2=A0		link->dpcd_sink_ext_caps.raw =3D 0;
+> > =C2=A0
+> > -	if (link-
+> > >dpcd_caps.channel_coding_cap.bits.DP_128b_132b_SUPPORTED) {
+> > +	if (link-
+> > >dpcd_caps.channel_coding_cap.bits.DP_128b_132b_SUPPORTED &&
+> > +			link-
+> > >dpcd_caps.dp_128b_132b_supported_link_rates.raw) {
+>=20
 > [Severity: High]
-> Does this logic get bypassed if XSAVE or FPU support is missing?
-> 
-> Earlier in fpu__init_system_xstate(), there are early returns if
-> X86_FEATURE_FPU or X86_FEATURE_XSAVE are missing:
-> 
-> 	if (!boot_cpu_has(X86_FEATURE_XSAVE)) {
-> 		pr_info("x86/fpu: x87 FPU will use %s\n",
-> 			boot_cpu_has(X86_FEATURE_FXSR) ? "FXSAVE" : "FSAVE");
-> 		return;
-> 	}
-> 
-> If a hypervisor natively enumerates AVX=1 but XSAVE=0 (such as QEMU
-> with -cpu host,-xsave), check_cpufeature_deps() only warns about unmet
+> Will this change completely disable DP 2.0 UHBR support?=20
+>=20
+> In retrieve_link_cap() in
+> drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c,
+> dp_128b_132b_supported_link_rates.raw is now checked before it is
+> actually=20
+> read from the DPCD register. Since the dc_link struct is zero-
+> initialized and
+> the read hasn't occurred yet, won't this raw value always evaluate to
+> 0 upon
+> connection of any DP 2.0 monitor?=20
+>=20
+> This would cause the if condition to always fail, bypassing the
+> actual read
+> block below and permanently preventing UHBR feature detection.
+>=20
+Hi Sashiko,
+ I have verified it as below. To add
+dp_128b_132b_supported_link_rates.raw  as a new judgment doesn's impact
+the value of dp_128b_132b_supported_link_rates.raw. If the monitor can
+support UHBR and it can be into feature detection and assigned the
+right UHBR rate.
 
-Yah, we don't care. We won't support non-sensical guest configs.
+root@yoga-Yoga-Pro-7-15ASH11:/media/yoga/Data/git/linux-502d801f0ab03-
+20260622# grep -B23 "Invalid RX 128b_132b_supported_link_rates"
+drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+=20
+	//if (link-
+>dpcd_caps.channel_coding_cap.bits.DP_128b_132b_SUPPORTED) {
+	link->dpcd_caps.dp_128b_132b_supported_link_rates.raw =3D 0x10;
+	pr_info("Jackie %x is SUPPORTED, %x: RX
+128b_132b_supported_link_rates.raw\n", link-
+>dpcd_caps.channel_coding_cap.bits.DP_128b_132b_SUPPORTED, link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.raw) ;
+	//pr_info("Jackie  %x: RX
+128b_132b_supported_link_rates.raw\n", link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.raw) ;
+	//pr_info("Jackie RX 128b_132b_supported_link_rates.raw\n") ;
+	if ( (link-
+>dpcd_caps.channel_coding_cap.bits.DP_128b_132b_SUPPORTED) && (link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.raw) ) {
+		DC_LOG_DP2("128b/132b encoding is supported at link
+%d", link->link_index);
+=20
+		/* Read 128b/132b suppoerted link rates */
+		core_link_read_dpcd(link,
+				DP_128B132B_SUPPORTED_LINK_RATES,
+&link->dpcd_caps.dp_128b_132b_supported_link_rates.raw,
+				sizeof(link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.raw));
+		if (link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.bits.UHBR20) {
+			pr_info("Jackie RX
+128b_132b_supported_link_rates is UHBR20\n") ;
+			link->reported_link_cap.link_rate =3D
+LINK_RATE_UHBR20;
+		} else if (link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.bits.UHBR13_5)
+			link->reported_link_cap.link_rate =3D
+LINK_RATE_UHBR13_5;
+		else if (link-
+>dpcd_caps.dp_128b_132b_supported_link_rates.bits.UHBR10)
+			link->reported_link_cap.link_rate =3D
+LINK_RATE_UHBR10;
+		else
+			//link->reported_link_cap.link_rate =3D
+LINK_RATE_UHBR10;//Jackie Add
+			dm_error("%s: Invalid RX
+128b_132b_supported_link_rates\n", __func__);
+root@yoga-Yoga-Pro-7-15ASH11:/media/yoga/Data/git/linux-502d801f0ab03-
+20260622# dmesg |grep -i "fail\|error\|Jackie"
+[    0.025954] KHO: Failed to reserve lowmem scratch buffer
+[    0.025956] KHO: Failed to reserve scratch area, disabling kexec
+handover
+[    1.731523] RAS: Correctable Errors collector initialized.
+[    7.629667] Jackie 1 is SUPPORTED, 10: RX
+128b_132b_supported_link_rates.raw
+[    7.630067] [drm:retrieve_link_cap [amdgpu]] *ERROR*
+retrieve_link_cap: Invalid RX 128b_132b_supported_link_rates
 
--- 
-Regards/Gruss,
-    Boris.
+Above is my verified source code and test result, FYR.
 
-https://people.kernel.org/tglx/notes-about-netiquette
+Thanks for your comments.
+
+> > =C2=A0		DC_LOG_DP2("128b/132b encoding is supported at
+> > link %d", link->link_index);
+> > =C2=A0
+> > =C2=A0		/* Read 128b/132b suppoerted link rates */
+> > =C2=A0		core_link_read_dpcd(link,
+> > =C2=A0				DP_128B132B_SUPPORTED_LINK_RATES,
+> > =C2=A0				&link-
+> > >dpcd_caps.dp_128b_132b_supported_link_rates.raw,
+>=20
+
+
