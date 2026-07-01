@@ -1,115 +1,126 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B937181334
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 23:19:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C17347FC4;
+	Wed,  1 Jul 2026 23:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782947979; cv=none; b=Fo0qWm3loMHiYST7lT1O6RqKUMgoiz01hRspDBXG6iCx871mDNH9KUDW+D8CUYTHbmbBII86/ro3C1wMllnRA9De3JEu9PK8wG4O0KgZUiiJww8IW4pG6Wks+pQH428rocOxhLM5ZVKROi3rz9LO8b4tYVADB8+XV23BMH8gwMU=
+	t=1782950182; cv=none; b=Z0EgD5D+loIHI7T+h7YSp56j5tDmy/ewLrf7spi8P7Vu3vjCDPY0IAy9EVTe5a234LAEqwvPCRge5uMsp2FKOWN0jGsk17GyGLIVabllo5IRGfzgHcb7T3bVhMamZXwU1nxJwqsAybh0eDEro9PngvzkK9RNKSzB2l5YFNDmOKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782947979; c=relaxed/simple;
-	bh=vFvtRWv5my/QgJtajCZwEuxYnBRXqR/yvXpSmmWe7rE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gF64O4mdXj3BYcC0uBhWfL+HNk42IUVcnGpHZhCvqjoOjQE5AJMQ+BD+N3v1i9MFt3/q+Q1E0JwK7Q3gt9ROXfjvJqLqGdZzjns9H3R+Yv3HtYNpG+v82+b5kKw1MYiyXga7oK1TOlNefNE5YWI+zrBN+8erZHk9jLUlrkkX7jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=sFUrCgMI; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
+	s=arc-20240116; t=1782950182; c=relaxed/simple;
+	bh=WevDxpmpafwpa1bxcBI4ZvMQYuDiVUfIuN+wjsReXsE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NCq3BoSzUPMJF7nEwBm8k3Y0tsMHCeWwD6WVQVGOy6Rm9EHr4RC4FeMPQv0kTahzcWuwetIy6zIIMsyZVNo6Yj7UcNG6PDYVikLnR2eFoKUx+dFGM/WRZMQV/rkdCcUWI0PamNJuIFce1FiL3rA2qR29F18H8dIo+yO3y2us74s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=khOS1UBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="sFUrCgMI"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <mhal@rbox.co>)
-	id 1wf4DG-007ibX-Vd; Thu, 02 Jul 2026 01:19:26 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
-	s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=tdf4Tw78oKpNgiUXp94P6P/075IJ7mm7cDw4lBuKJOs=; b=sFUrCgMIgraW+CTJV002msaBFk
-	zKLogTqeIKnIeT7Z/O2uACzSbkTZPHxstoo32uaOu+UoDwgwErAnj2jCFZfpbO8poDjEzOP7pjUyL
-	JK4xtLHFqvmBHXZnyuGBzTEvs11V0lVQuxpso+I7PJgkExievFXerDYqx75gcBV7Bz8EBJxslbZbg
-	LDGMGjeI5zpq4Zl2O8prJHGKylwOmRApKyuETQ5BOXbaX+fPkTKclsG3GDPNGIDNKcvRCWiEs7Fll
-	rDW/z+Zu1iDngwrVL2MPpHZFGDIzT7YNCNriwsuZk5NoRG1LewZeEvt7VUBIqDkDZH5jFbmlUzQbe
-	w5Q48//g==;
-Received: from [10.9.9.74] (helo=submission03.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <mhal@rbox.co>)
-	id 1wf4DB-0004Z3-Fh; Thu, 02 Jul 2026 01:19:21 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.95)
-	id 1wf4Cz-004HAF-1c;
-	Thu, 02 Jul 2026 01:19:09 +0200
-Message-ID: <b7870e24-cd90-466c-8496-9c9d8b5945e0@rbox.co>
-Date: Thu, 2 Jul 2026 01:19:08 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="khOS1UBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612A21F000E9;
+	Wed,  1 Jul 2026 23:56:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782950181;
+	bh=iganZLzbkHu3MIFKmTwqm8/b9ca1be2Zt4iNREPVULE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=khOS1UBPTCB//T2kq74VVUCZNdLs3I+LcMYLq6yCLScJ2eq4vcIPtGAdoloaaIrgR
+	 unDVItFHP8pv3/7wj/WTd6odiihQr9psCGPdaMhjslLmMHnHoMmTKozALnJkFe1eMl
+	 1WeGCjSOio3dXGb0/jqjR1mwbWqBgD31IceA43C05djDKdu4hPAyt09+cIgbeur1pI
+	 aUb9A2n456tIwJChTc+bhDFctsB0RTnO8jxUKuAHcTdKVivmMzc6jcrMzx7N85Ger8
+	 +e/6OlUV6AmQgNHmww2vNEDUUNnEFMtTt0ZBSwQPyoT9t0U/NdZH7o3czJ/20dcZzD
+	 VXhoDz+NUbbCQ==
+Date: Thu, 2 Jul 2026 01:56:18 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-ide@vger.kernel.org, dlemoal@kernel.org,
+	Shaun Tancheff <shaun@tancheff.com>
+Subject: Re: [PATCH 2/2] ata: libata-scsi: scale DSM TRIM payload by MAX
+ PAGES PER DSM COMMAND
+Message-ID: <akWpIuetYHwwOEqC@ryzen>
+References: <20260701224638.1835123-4-cassel@kernel.org>
+ <20260701224638.1835123-6-cassel@kernel.org>
+ <20260701225804.0DFA01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v2 1/4] bpf, sockmap: Reject unhashed UDP sockets on
- sockmap update
-To: John Fastabend <john.fastabend@gmail.com>,
- Jakub Sitnicki <jakub@cloudflare.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-References: <20260626-sockmap-lookup-udp-leak-v2-0-7e7e201c951a@rbox.co>
- <20260626-sockmap-lookup-udp-leak-v2-1-7e7e201c951a@rbox.co>
- <20260626205814.BAC3C1F000E9@smtp.kernel.org>
- <e08be4f5-0bd9-4228-843d-86ed20594bac@rbox.co>
- <87v7b137cx.fsf@cloudflare.com>
- <26ecbce0-48ad-4b53-a0b7-34b59870e010@rbox.co>
- <87echn2fhd.fsf@cloudflare.com> <akWbSP5aMxLYSmM8@john-p8>
-Content-Language: pl-PL, en-GB
-From: Michal Luczaj <mhal@rbox.co>
-In-Reply-To: <akWbSP5aMxLYSmM8@john-p8>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260701225804.0DFA01F000E9@smtp.kernel.org>
 
-On 7/2/26 00:58, John Fastabend wrote:
-> On Wed, Jul 01, 2026 at 12:04:14PM +0200, Jakub Sitnicki wrote:
->> On Mon, Jun 29, 2026 at 11:40 PM +02, Michal Luczaj wrote:
->>> On 6/29/26 13:37, Jakub Sitnicki wrote:
->>>> On Sun, Jun 28, 2026 at 11:59 PM +02, Michal Luczaj wrote:
->>>>> On 6/26/26 22:58, sashiko-bot@kernel.org wrote:
->>>>>> [Severity: High]
->>>>>> Could a memory ordering regression here allow unbound UDP sockets to still
->>>>>> bypass this check?
->>>>>>
->>>>>> In udp_v4_get_port(), the flag and hash are set:
->>>>>>
->>>>>> net/ipv4/udp.c:udp_v4_get_port() {
->>>>>>     ...
->>>>>>     sock_set_flag(sk, SOCK_RCU_FREE);
->>>>>>     sk_add_node_rcu(sk, &hslot->head);
->>>>>>     ...
->>>>>> }
->>>>>>
->>>>>> Because these stores lack a memory barrier between them, could sk_hashed(sk)
->>>>>> return true on another CPU while SOCK_RCU_FREE is not yet visible, allowing
->>>>>> the leak to still trigger?
->>>>>
->>>>> I'd like to verify it on a weakly-ordered CPU; please give me a day or two.
->>>>
->>>> False positive, IMO.
->>>> Both ->get_port and sock_map_sk_state_allowed run with sk_lock held.
->>>
->>> What about an update coming from iter/task_file? You get an unlocked socket
->>> via bpf_sock_from_file(ctx->file). And sock_map_update_elem()'s
->>> bh_lock_sock(sk) doesn't care if socket is owned.
->>
->> You're right. No exclusive access to socket there.
->>
->> I think we should block map updates from all iterators but iter/sockmap,
->> where we know the socket is already in the correct state.
->>
->> This is in the spirit of the API lockdown that is in progress [1]
+On Wed, Jul 01, 2026 at 10:58:03PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] ATA DATA SET MANAGEMENT (TRIM) commands will fail on 4Kn devices that do not report a maximum DSM page limit, because the code defaults to sending up to 8 pages instead of the specification-mandated safe minimum of 1.
+> - [Medium] 32-bit integer overflow in the DSM TRIM maximum blocks calculation artificially clamps the block layer discard limit, causing performance regressions.
+> --
 > 
-> +1 lock this down to just iter/sockmap allowing these updates from
-> arbitrary context is too hard to reason about.
+> commit a387741dfad7fa23a80a62ebd7e1d57854a6d80e
+> Author: Niklas Cassel <cassel@kernel.org>
+> 
+> ata: libata-scsi: scale DSM TRIM payload by MAX PAGES PER DSM COMMAND
+> 
+> This commit updates the DSM TRIM command translation to scale the payload
+> size based on the MAX PAGES PER DSM COMMAND reported by the device. It
+> sizes the TRIM descriptor as a whole number of 512-byte pages, capped
+> by both the device limit and the logical sector size.
+> 
+> > diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+> > --- a/drivers/ata/libata-scsi.c
+> > +++ b/drivers/ata/libata-scsi.c
+> > @@ -2198,6 +2198,36 @@ static unsigned int ata_scsiop_inq_89(struct ata_device *dev,
+> 
+> [ ... ]
+> 
+> > +static unsigned int ata_dsm_trim_pages(struct ata_device *dev)
+> > +{
+> > +	unsigned int sector_size = ata_id_logical_sector_size(dev->id);
+> > +	unsigned int max_pages = ata_id_dsm_max_pages(dev->id);
+> > +	unsigned int pages = sector_size / ATA_SECT_SIZE;
+> > +
+> > +	if (max_pages)
+> > +		pages = min(pages, max_pages);
+> > +
+> > +	return pages;
+> > +}
+> 
+> [Severity: High]
+> For 4Kn devices that report 0 for the maximum DSM limit (word 105), this
+> defaults to sending up to 8 pages (4096 / 512). Does this exceed the ATA
+> specification's guaranteed safe minimum of 1 page, potentially causing the
+> device to reject the command with an I/O error?
 
-All right, I think this also addresses Sashiko's concern. I'll do it in a
-separate series.
+Well, from the spec:
+"A value of 0000_0000h indicates that the maximum number of 512-byte blocks of LBA
+Range Entries is not specified."
 
-thanks,
-Michal
+So will it be safe to send more than one 512-byte block?
 
+We could cap it to one 512-byte block for devices that report a zero in
+the MAX PAGES PER DSM COMMAND field, that is probably the safest, as we
+have no idea to know the actual limit if the device does not report it.
+
+(Note that the previous commit that claimed to add support for 4Kn
+devices completely ignored the MAX PAGES PER DSM COMMAND field.)
+
+
+> 
+> > @@ -2237,7 +2267,8 @@ static unsigned int ata_scsiop_inq_b0(struct ata_device *dev,
+> >  	 * with the unmap bit set.
+> >  	 */
+> >  	if (ata_id_has_trim(dev->id)) {
+> > -		u64 max_blocks = 65535 * ATA_MAX_TRIM_RNUM;
+> > +		unsigned int max_pages = ata_dsm_trim_pages(dev);
+> > +		u64 max_blocks = U16_MAX * max_pages * ATA_MAX_TRIM_RNUM;
+> 
+> [Severity: Medium]
+> When calculating max_blocks in ata_scsiop_inq_b0(), the multiplication involves
+> a 32-bit unsigned int (U16_MAX * max_pages * 64). If max_pages is greater
+> than 1024, can this expression overflow a 32-bit integer before being
+> zero-extended and assigned to the 64-bit max_blocks? This might artificially
+> truncate the block layer discard limit for devices supporting large TRIMs.
+
+Sure, can cast one of them to u64 to make sure that 64-bit arithmetic will be
+used.
+
+
+Kind regards,
+Niklas
