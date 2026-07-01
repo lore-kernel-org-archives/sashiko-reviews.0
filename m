@@ -1,116 +1,154 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71D3A1681
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 12:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B32481254
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 13:05:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782910754; cv=none; b=MFaYmKaHW7I+uM2s3UiDSFoJPxrkQEno4mhlvM5F86b1VP/o+9A0/ljCuqSWb0eqgm+OGPU6U0iznOTtZQnTEZh199Jxxv1IL2KMUxW4B22M07UIV07+ZIYpQv+URF82XleavOhJDiJNguP6tqP8PlbCVaXp89eR/6OsTkcA0L8=
+	t=1782911146; cv=none; b=SXlwpTgJwqQiirg5DHl8QRZZ4K585QUFkQ0NWTsulcu5msIQPLYZf47rcR4fn+MfEsYaXwno/4FxI8Ju5VnyGJRJVCsaaYpW+crwGPKC3qt6fModFHOqsBbD4ETql5ln9OHpoOO4pmKA/SXHlbUiOpL7dbFv0HDe8CgecuEypc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782910754; c=relaxed/simple;
-	bh=HhFYgwfn9YoJCL6/aKNCuWD6pVyw/IJsAnQESrIwRnw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rNC84W+gjRVjkOfiZ3leS4l5/n0yPPbKeOsf0OQloM7TELpW0Z55x4an3yjt6odvSCdUaGtVGnVr+kMpPdneeIkCEyQ1l9TtoZm0mYO+pG85wqKIfM9r9Vl+sq5cTbP9sVLGTJMYRWgdksELQmDvZ8cEP2slGJdZkPgaW4jjX5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZQ3/grps; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1782911146; c=relaxed/simple;
+	bh=2TFsYZO4NySggQT0nmGGX5Zrgtoi302hD0gNKtxiFAg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FcUDj9eVmFFsy1/lhOna0xQzR4dHVG83/3zbXdg7CopCPBrNmIOd17HLJGlFh3wKjId6HM01oCZqE/yHpZwQfQz56EqejKX2dvaCbj8Fjswc8hX4X2wJ8n4T2wo8N0A25Gu0u0X/1IDA3CT2HUz5sNBwcXHhVureUsQfD6hOrO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=JJ+tc6u1; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZQ3/grps"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1782910751;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ur8MN4EUxYcSiX5fbETtL9qCHrgMOm/kmA+W0CQuFpI=;
-	b=ZQ3/grpsECYQexc3hXQcNoJAlD2FBoMa53j96SY8oSGTASYj4KntK9ulTEGe1crR8yBpa0
-	3xgua7hg60XAICths+pVsGcyOZTNs8dMB3WA3qjBjVe9xpXizbR1i2bYfvNZzXMya296pQ
-	l28xSxO/3nSxom+RViF4J0S9hyG1f0Q=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-4CXPZNprObKBROYeLZ_P_g-1; Wed, 01 Jul 2026 08:59:10 -0400
-X-MC-Unique: 4CXPZNprObKBROYeLZ_P_g-1
-X-Mimecast-MFC-AGG-ID: 4CXPZNprObKBROYeLZ_P_g_1782910749
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-470cb859d96so429747f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 05:59:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782910749; x=1783515549;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ur8MN4EUxYcSiX5fbETtL9qCHrgMOm/kmA+W0CQuFpI=;
-        b=Lt0XzpuJwZ+JIFWau6z8L0MuLkhpRffk3hYMFkngABmd0lh0Axrrn4bq05hxoKwZRA
-         ZK6vwXHG/v3Uau1moyuM6IkcULOY14wP/KOyfDDNXm+J89Q208oK829dZDYd1w7fy9JK
-         B6Zj9xYNRvFHU03lreVjzAYsZdAByk93q4fZCnjzZgbsrBwqW9Rcr1M8JPL2KXrDL+AB
-         NRUJBWJX9CbgH7CW+nMJIaz9Ba1KLgQCOC6+kgokSLTjXIDD16l57VeoAj7prbM6zwY4
-         YYQk8xtyS7s0NHRdc9kt4mXalkIwQ5ftiocp43zJb9C7O0yZT/V1s9iHsXJQi/rfQVvL
-         RV6Q==
-X-Forwarded-Encrypted: i=1; AHgh+RpkZsmf5b3B6QXpbHzqhEbaZxtv0l2IkEQqbbGEgmgNicFU/1X+Zu/QRQbSYRvRxvvOtgSGGYuWsiRf0eOBxDw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxU4+s5tEa40PXzMwUFjv/EwfO65qxK35m1qMNXk/ZZVdpORNvL
-	VggQCb7neJW+EY6xaJRaoqWdKtd4IvIwrU4uwIY23RhaHchdQ1exv0xyladzBm/xtxh42Fc0OQD
-	w0B7wrPKcA32cCdU5YMdCjtxyHJQ7LnuFVl3OYagv+0DKGdlJ0ZTCYB2OEJR2NXPzvbxrRg==
-X-Gm-Gg: AfdE7ckHu1huxzZqI3s+rmaji8OcWO1CrrPTKtiD7yqLvVkgQ1HbKHviKbN5KlpTCRR
-	UzkxY3l3gA+CaVKYyVwxHXLElanl7KQXU+lYh5Q4P01MdrNGihetHNe43WFxK0wD1l65n0XQz4g
-	EUFJF2W3h0Y87B8wec72vYhlr+HsZpyJHEEDuS2As70hSJyqttMCUPKBJa3Aa9sHgdVe6bQ6AVh
-	N6LuVvQj9HkpeYvqHC8vJpol82kFLv1aTg5dtzKo8/lq4QHbBJyqaO83DHPIN0cyjE9NmNXGJB3
-	VOCVyKpX5pdKNrw+1bL96teG/1C5hcbo+0/++VitQ0xXbQd8zETKuid5dMDZlkliEUTLG5rgos7
-	Q74bxBLeaBkPVrswXWwd6u/guMyJ2sSC+8d54RuY1y8kJWCtc9L14/qnnd0ht2riwzj/yYw==
-X-Received: by 2002:a05:6000:460e:b0:45e:eaed:afd2 with SMTP id ffacd0b85a97d-477b075db6fmr722962f8f.0.1782910748713;
-        Wed, 01 Jul 2026 05:59:08 -0700 (PDT)
-X-Received: by 2002:a05:6000:460e:b0:45e:eaed:afd2 with SMTP id ffacd0b85a97d-477b075db6fmr722908f8f.0.1782910748219;
-        Wed, 01 Jul 2026 05:59:08 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4756636cde2sm17027364f8f.20.2026.07.01.05.59.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 05:59:07 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>, treding@nvidia.com,
- neil.armstrong@linaro.org, jesszhan0024@gmail.com, dianders@chromium.org,
- megi@xff.cz, igor@reznichenko.net, mwalle@kernel.org,
- dario.binacchi@amarulasolutions.com, jagan@edgeble.ai,
- laurent.pinchart@ideasonboard.com, lujianhua000@gmail.com,
- agx@sigxcpu.org, kernel@puri.sm, mripard@kernel.org,
- maarten.lankhorst@linux.intel.com, airlied@gmail.com, simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v4 3/3] drm/panel: Use drm_of_get_panel_orientation()
-In-Reply-To: <20260701121055.192475-4-tzimmermann@suse.de>
-References: <20260701121055.192475-1-tzimmermann@suse.de>
- <20260701121055.192475-4-tzimmermann@suse.de>
-Date: Wed, 01 Jul 2026 14:59:06 +0200
-Message-ID: <878q7udfxh.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="JJ+tc6u1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1782911143;
+	bh=2TFsYZO4NySggQT0nmGGX5Zrgtoi302hD0gNKtxiFAg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=JJ+tc6u11BKVPiwEWEuktqapukuGl57AoCrzsbNrc5x11ylUWDBwbT1xqkuWLxr5z
+	 apc8zzb+9cMdrxr2LYEy55AZ9341QjIMu72qrsRiUGlmZM8VeseHlNm9asv2GiPyMl
+	 FSmoLiT8+JXdgqpwYozAFzKUHMv/CHfEXwmakUHBDqkPaqBmoHXSCcUL7xT8M+ENeJ
+	 DwS7OskuMhi02YSACSKsrRq1WbQHntX4MC7B12FbOS/5Yl0/gBFRCr8jl/kRfH148o
+	 CnIZjr5Hq68kvNu3ovtzoGXbGzRCElDkFlR6QfsHP8j/x6iJM+CcJ2QKwc7RWMqLhz
+	 OyjM2UgG9fH+Q==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 9BDDA17E0114;
+	Wed,  1 Jul 2026 15:05:42 +0200 (CEST)
+Message-ID: <92153ec5-f848-4a83-b470-c29ac974c7b9@collabora.com>
+Date: Wed, 1 Jul 2026 15:05:42 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: rwkDvl3BwYNPN-y9CcUjuoJ68PIPOKKAgdl4fLYJweA_1782910749
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/12] phy: phy-mtk-dp: Rename regs to regmap in struct
+ mtk_dp_phy
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+ dri-devel@lists.freedesktop.org, conor+dt@kernel.org, robh@kernel.org,
+ olteanv@gmail.com, devicetree@vger.kernel.org, vkoul@kernel.org
+References: <20260701122008.19509-1-angelogioacchino.delregno@collabora.com>
+ <20260701122008.19509-3-angelogioacchino.delregno@collabora.com>
+ <20260701122658.307E21F000E9@smtp.kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260701122658.307E21F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thomas Zimmermann <tzimmermann@suse.de> writes:
+On 7/1/26 14:26, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Missing NULL check for `dev->platform_data` before dereferencing.
+> - [High] Missing `remove` callback to clean up PHY lookup leads to a memory leak and use-after-free.
+> --
+> 
+> commit a1a96e429cf3345472aae1b06f6ffe5b31edee81
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> 
+> phy: phy-mtk-dp: Rename regs to regmap in struct mtk_dp_phy
+> 
+> In preparation to perform further cleanups and to extend the driver to
+> support more SoCs, rename the regs member to regmap to improve readability,
+> as this is a common name across many kernel drivers for a struct regmap.
+> 
+>> diff --git a/drivers/phy/mediatek/phy-mtk-dp.c b/drivers/phy/mediatek/phy-mtk-dp.c
+>> index d7024a1443358..bf7b3a95e72d2 100644
+>> --- a/drivers/phy/mediatek/phy-mtk-dp.c
+>> +++ b/drivers/phy/mediatek/phy-mtk-dp.c
+> [ ... ]
+>> @@ -176,7 +176,7 @@ static int mtk_dp_phy_probe(struct platform_device *pdev)
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is it possible for dev->platform_data to be
+> NULL here?
+> 
+> Earlier in mtk_dp_phy_probe(), dev->platform_data is dereferenced directly
+> without a check:
+> 
+> drivers/phy/mediatek/phy-mtk-dp.c:mtk_dp_phy_probe() {
+> 	...
+> 	struct regmap *regs;
+> 
+> 	regs = *(struct regmap **)dev->platform_data;
+> 	if (!regs)
+> 	...
+> }
+> 
+> If the driver is manually bound via sysfs (or otherwise instantiated without
+> platform data), dev->platform_data will be NULL.
+> 
+> Should the code validate that dev->platform_data is not NULL before
+> dereferencing it to avoid a kernel panic?
+> 
 
-> From: Thierry Reding <treding@nvidia.com>
->
-> The old of_drm_get_panel_orientation() function was replaced by the
-> drm_of_get_panel_orientation() in the core DRM OF helpers. Replace all
-> uses of the old helper and remove it.
->
-> Changes in v4:
-> - also convert anbernic, chipone and ili9488 panels
-> Changes in v2:
-> - include drm_of.h in all drivers to make sure the new symbol is defined
->
-> Signed-off-by: Thierry Reding <treding@nvidia.com>
-> ---
+No, that's not crashing it, because there's a NULL check anyway just after that.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this driver leak the
+> phy_lookup struct and leave a dangling pointer if it gets unbound?
+> 
+> In mtk_dp_phy_probe(), when !dev->of_node is true, a lookup entry is
+> registered:
+> 
+> drivers/phy/mediatek/phy-mtk-dp.c:mtk_dp_phy_probe() {
+> 	...
+> 	if (!dev->of_node)
+> 		phy_create_lookup(phy, "dp", dev_name(dev));
+> 
+> 	return 0;
+> }
+> 
+> However, mtk_dp_phy_driver does not have a .remove callback to call
+> phy_remove_lookup():
+> 
+> drivers/phy/mediatek/phy-mtk-dp.c:
+> static struct platform_driver mtk_dp_phy_driver = {
+> 	.probe = mtk_dp_phy_probe,
+> 	.driver = {
+> 		.name = "mediatek-dp-phy",
+> 	},
+> };
+> 
+> If the driver is unbound, the phy_lookup struct is leaked and remains linked
+> in the global phys list. Since the phy struct gets freed by the
+> device-managed subsystem, subsequent device probes iterating the PHY lookup
+> list would trigger a use-after-free.
+> 
+> Could a .remove callback be added to unregister the lookup and prevent this?
+> 
 
--- 
-Best regards,
+That's right, but I didn't create this issue. I can fix that in a later commit
+just for that, even though this code path is dead when using new style devicetree.
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+>>   	if (!dp_phy)
+>>   		return -ENOMEM;
+>>   
+>> -	dp_phy->regs = regs;
+>> +	dp_phy->regmap = regs;
+>>   	phy = devm_phy_create(dev, NULL, &mtk_dp_phy_dev_ops);
+>>   	if (IS_ERR(phy))
+>>   		return dev_err_probe(dev, PTR_ERR(phy),
+> 
