@@ -1,72 +1,72 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2651247F2E6
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 11:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8876D480331
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 11:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782905475; cv=none; b=ojOvnHXoEhOL4cus9GL+1jG4xxhM3B+VsiMrjFCW5y4ljQvU2qNkE9RvqC7ZUFZ4cVOrJSfh/Ary9jz6rHlfCugm7GzdgWh/9te6W6w2e4k8g0c1WwInxAFaVxyi3M2RJtwDL0hmWcIfxDJIOEOhTuWbdag2ZVgjnlgfqFk7g5s=
+	t=1782905485; cv=none; b=ll8MJCNxyv526IbBv6aXefEIcjALF7w0eF3S2cUURqrtQEsGXTIecKMpIwEVMbDVE50fZu/8o7GfGwkqhJizr9AIhya2m0IpOGtxLiF4ydbQyF0hM6m6HAd/xafseNTrDxIpC+r4gWh1DvC/uBUWav2ITWvMzLk/klG2VDYyeDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782905475; c=relaxed/simple;
-	bh=DhSFmLeEgdGWi+ae04/gRPAnaho/FIceghLEfYJsDT0=;
+	s=arc-20240116; t=1782905485; c=relaxed/simple;
+	bh=Dve0VmCjU9mPpD1Ya9SMCVr9374pIBOKQAR5OsMMYds=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tAWLayt6qq/wamPcc/6jWoPaQpQZ+hrZVkPp7mYSlCXIWjgLi0zqurAhhVS7jNHsdjS23IYmq3npxasipER1PQSz6+3SYbHzAG20u97g+ThwF/MK/NFjndFHl8Fm2OfvdyKoFoR0UfWxe5QrQfasTuGRCy9z0C5xAX5UnIKz9x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F9RkGJQ3; arc=none smtp.client-ip=209.85.221.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mr29n+5HC1O51ps0Hl6ucncyvjq89HffyYYl3UJvBt9YVcQzRF9gwnt4KnJkFZqGYzvrDCWwkb6LBEsVC1BKtP1yD70mwdS4LB7FFrSN6EgwhISg/b0LEaYlE3QZQjlGVP6KbxCIXcX86ijGaC1vsRyzh+3O/P1/xRbMuEFYWMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WhdSvoRf; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F9RkGJQ3"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-47488efcf30so314566f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 04:31:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WhdSvoRf"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-493bb510ce4so3962065e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 04:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782905472; x=1783510272; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782905483; x=1783510283; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vShrZYDj30pK3AOFiKf2PUVnjLWAcQPFaE6HtzGHisg=;
-        b=F9RkGJQ3b6iih4/2d9ZNb6gkkzn8xWClOUrK/ZCrDNSS94BrFLPUReQ4IJy7Cc4eSX
-         m53Ck8NsdOuCZKXTy309fVIBIL/ucqE1d+3WohrAvSkPK42eN/Q9Fthgwhx8Hvs++9kV
-         LScz0GgxH4/Q6S1pQ9lr0zT8iXu/oEbNSs1XhW5ae28D2gwLTb/SJHyKL6prvTF0QhUX
-         5wWmx1S+PVDo45NBhnFSDWCIqkZQiKl4Zk3SGxqn8YCgS1udxBEu5VLpv8F7iq9D8jNS
-         hFkrxspXuK2nHvMON6Om1/f1riL0bxnlcLwvcGw1NYNZUGlSTlG+UKfYkmd86aJFEHJF
-         1E5w==
+        bh=Fj8eAuKcVgK2A4fvhFbSFS2GpOpIsHgk7CadgUGfyUI=;
+        b=WhdSvoRfhC6VIAD/b3QQpVd/xZVSyGvmefDpbqwI1hhb+chtQDlKV/3UxjE+gobx4G
+         w5Djx+++wMhNvQaP3kW9odH10DW48hfYOFQ8bX0yVoyPJW4GHWY/wWL66kD5sau4HyIs
+         L/s4ux5/4ZhGWspfmQDIdXkVuJKF8lWfgdAMxu3toix/lGgmGBIFDRAtBwcAhH40Y9D9
+         nsxd4IyLWdKT5fD2Om4FCw1EoFi+/Pqn8H85kJSfdvWQ/Pdlf61mWZKJLKGfhxwkrnYm
+         Q9gv4u/DizbRPC548nsPuJ4sLtM/s9kyDHGg1xtRQPJHFxNoj9vJb5oIPnHNkKdNsHRu
+         lK7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782905472; x=1783510272;
+        d=1e100.net; s=20251104; t=1782905483; x=1783510283;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vShrZYDj30pK3AOFiKf2PUVnjLWAcQPFaE6HtzGHisg=;
-        b=EstUQi8uxPmKgCkD9Vl8i++8aQTZntHfN1h7N2udKe+iT0uYhohp2S8gtS2Buft4qe
-         KOqxhApWTT2MZlAVC3laxJwU4t1fSmmZctjuqr0WtnDGWiLZ9tf0uuS1o2BeUw+EwNF2
-         v68KUwWNFrZQxoZ8QfzxW/fFNJLFBu6CEhe3yMqkMLtfk05+uACRZy8hTbB5bYbMdf4H
-         ExdzAR9OO91BJzrNX+OnzseD3nG/JSmGRI2bCHX9c8d+/mwBRvtF/B03MuKOlGdFFBjQ
-         zg7PwnqrjKbp5ZAAjxpzNuEZavK7AbN4rjgR2ykvdvayQK8F9z9OtExnxGq/tOsOFn6N
-         1/Kg==
-X-Gm-Message-State: AOJu0Yx6rNgermwM0+arTlBIXqq10L8+T+ajq0RXClSXP3YMLgnQbHZB
-	mGDdV0uflQnThfWW79wCbuLLZM0R0HOY8Air34kD+Gw/Q1NkyB912PEPqSqG0A==
-X-Gm-Gg: AfdE7cl7bd++EIc/vXkDNlK9vVtXNr/lHBw+g2OXYkGdRilCCs+kU0+AR+FGfV3vbVZ
-	5F2AvMi5oMmUCMXZ+4tDRyf4LuYhW21tCML39/s33UqsP0s25OminZ8oQPUyEcYdy/xaqN7d0AF
-	7+IA/enJvgOj3W4sI6isweXOjS2QVKEYZ9jei3D95qgaqqIicS0e+F1/XBBMaoBL/GuFk9kB+hf
-	KHc/bsnPHF1frgA65JEZRpgDCRkb9JL/WmUSGzl5A6AiiyX8EMdvJ/exBHzP/R0ojDraiKC9s8i
-	49NzJMXHSOsdKOtxvQC5i6anVUVWKcpo+s2/zlO7D9avEB+nc/Z9f1HW4O5ghm3HvYf7hReQEID
-	JTALRcz8fJGZ0QJDT4SA5+ZFDnxBIuZrbg1ylcUS2fuhOsqQLc945ThQk4VlOxLBkPz/f4M0o7A
-	f+d7V9i9qQqTj8Z0NJfyHLHCy9kwtmx5+9RoE=
-X-Received: by 2002:a05:6000:2311:b0:460:3233:beed with SMTP id ffacd0b85a97d-4775a6d1f9fmr1984131f8f.41.1782905472203;
-        Wed, 01 Jul 2026 04:31:12 -0700 (PDT)
+        bh=Fj8eAuKcVgK2A4fvhFbSFS2GpOpIsHgk7CadgUGfyUI=;
+        b=jlRHfLz2IPUEhzpDzm7gGAt1TPLEdEge2CV/ZqLvXqsQNygg9vFdeah0vc7+iJZPVB
+         eHyGUO0NKRPaY3MyPAUOg8y/zrAdJpbIcbxwrk843tBjzFlfxOV7PRiWsaBjIE5b4hnk
+         HSw/Kkz64hK2ZxWwvojt2GmyhiSKcBDmEGbqisbFQD6ObuxdGWAqimef0MJSiOSnK93f
+         BK99VKJ1wUrJmGdg7xxH83Y5cOnQ/yGb7WYWg9QPwd+5Kr438yVqaVchnM99OOjbqYR0
+         foyFRiUtyVEdk1V9evGI1veKhiEkom668OBnDGC5Q9yw/tXE9MyvDf1Esbf/7ew1SDpZ
+         /X5Q==
+X-Gm-Message-State: AOJu0YyR9DFMZxP+IRDdRAZsFBDl1q0jEUYLPHXZMQDr/Hhttuqyb3xf
+	6wRiz3qUPbkluLT0pXY1jWql1TIhpN1x97uRKzelxav5Ov9OMlY0Ktwc/XUU2w==
+X-Gm-Gg: AfdE7ckzFe8UzF9ebu4SH4U5khjCWky8DdhzxMPVygZ+Hr9m95GkEpxh9UmGNcVRwZE
+	rvfSe3SU73fcB0K4ixbuM1oiouVdMviB2i9JDeiNRclmvpPP2mtRNyrQXUSDNhmzIKiDn/0shU9
+	RbNnYNSJ45eImNjIvjWPpvOdxFgH3b5U2jja3sALcaEs88R1BWjCMmAP1dC3Sxw8ax8zBmAiTG7
+	8TvC9G9i5Xn0KdOw0DuJJk61ylYMyzHzBtc/wVh/6f9tgG9yXsDW92f7djSsVii365RqWKkK6cV
+	kRpU7sGGm2cHwP2X1ffezv+o2h+jp5y09cb8a1cBFapsZq7T4irLnKSvEnczQoUQFxT5ExsAe+a
+	VWg9+hnrBBCdkSYOQ8wg8AViuEcVs6k1WU88vFO5ji04DZjkmIre+Yt1gcC4edAaU8TLMSZfmcY
+	MhxMwSlXu5NQDDFzb0Jyrf+gUp
+X-Received: by 2002:a05:600d:6447:20b0:493:c194:4e7a with SMTP id 5b1f17b1804b1-493c2b382e8mr16151225e9.3.1782905482666;
+        Wed, 01 Jul 2026 04:31:22 -0700 (PDT)
 Received: from krava (37-188-177-177.red.o2.cz. [37.188.177.177])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47563d195a7sm16164248f8f.7.2026.07.01.04.31.10
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-475671d0403sm17059649f8f.29.2026.07.01.04.31.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 04:31:11 -0700 (PDT)
+        Wed, 01 Jul 2026 04:31:22 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Wed, 1 Jul 2026 13:31:08 +0200
+Date: Wed, 1 Jul 2026 13:31:18 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv4 bpf-next 3/3] bpftool: Add tracing_multi link info
- output
-Message-ID: <akT6fHCSdJGFXmcK@krava>
+Subject: Re: [PATCHv4 bpf-next 2/3] selftests/bpf: Add tracing_multi link
+ info tests
+Message-ID: <akT6hnLyJpFd-QLV@krava>
 References: <20260629212208.895962-1-jolsa@kernel.org>
- <20260629212208.895962-4-jolsa@kernel.org>
- <20260629213330.0ACD41F000E9@smtp.kernel.org>
+ <20260629212208.895962-3-jolsa@kernel.org>
+ <20260629213407.11FB61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -75,143 +75,35 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260629213330.0ACD41F000E9@smtp.kernel.org>
+In-Reply-To: <20260629213407.11FB61F000E9@smtp.kernel.org>
 
-On Mon, Jun 29, 2026 at 09:33:29PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] bpftool uses a non-existent `tracing_multi` union member in `struct bpf_link_info`.
-> - [Medium] The kernel-side `bpf_tracing_multi_link_lops` is missing the `.fill_link_info` callback.
-> - [Low] Memory allocated for `ids`, `addrs`, and `cookies` is leaked on the error path of the `bpf_link_get_info_by_fd` syscall.
-> --
-> 
-> commit 3c4bad76286f49adf87a7b01dc7042ac6368c5ce
-> Author: Jiri Olsa <jolsa@kernel.org>
-> 
-> bpftool: Add tracing_multi link info output
-> 
-> Adding bpftool support to show tracing_multi link details. The new output will
-> display attach types, counts, BTF IDs, addresses, cookies, and functions.
-> 
-> > diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
-> > index bdcd717b0348f..088d1d206065f 100644
-> > --- a/tools/bpf/bpftool/link.c
-> > +++ b/tools/bpf/bpftool/link.c
-> 
-> [ ... ]
-> 
-> > @@ -403,6 +422,52 @@ show_uprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
-> >  	jsonw_end_array(json_wtr);
-> >  }
-> >  
-> > +static void
-> > +show_tracing_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
+On Mon, Jun 29, 2026 at 09:34:06PM +0000, sashiko-bot@kernel.org wrote:
+
+SNIP
+
+> > +static void verify_tracing_multi_invalid_user_buffer(int fd, const struct tmulti_target *targets)
 > > +{
-> > +	bool is_ibt_enabled = is_x86_ibt_enabled(), show_symbol;
-> > +	__u64 *addrs, *cookies;
-> > +	__u32 i, *ids;
-> > +
-> > +	if (!dd.sym_count)
-> > +		kernel_syms_load(&dd);
-> > +	show_symbol = !!dd.sym_count;
-> > +
-> > +	show_link_attach_type_json(info->tracing_multi.attach_type, wtr);
+> > +	__u32 ids[TRACING_MULTI_CNT] = {};
+> > +	struct bpf_link_info info;
+> > +	__u32 len = sizeof(info);
+> > +	int err, i;
+> [ ... ]
+> > +	/* Invalid addrs pointer -> EFAULT */
+> > +	memset(&info, 0, sizeof(info));
+> > +	info.tracing_multi.addrs = 0x1;
+> > +	info.tracing_multi.count = TRACING_MULTI_CNT;
+> > +	err = bpf_link_get_info_by_fd(fd, &info, &len);
+> > +	ASSERT_EQ(err, -EFAULT, "tracing_multi.bad_addrs");
 > 
 > [Severity: Medium]
-> Does `struct bpf_link_info` in `include/uapi/linux/bpf.h` include a
-> `tracing_multi` member?
+> Will this test actually return -EFAULT?
 > 
-> It looks like the `tracing_multi` struct is missing from `struct bpf_link_info`
-> in the UAPI, which causes a compile error here when trying to access
-> `info->tracing_multi.attach_type`.
-> 
-> Additionally, the kernel-side implementation in `kernel/trace/bpf_trace.c`
-> appears to be missing the `.fill_link_info` callback in
-> `bpf_tracing_multi_link_lops`.
-> 
-> Without it, will the kernel silently return unpopulated link details when
-> queried via `bpf_obj_get_info_by_fd()`?
-> 
-> [ ... ]
-> 
-> > @@ -1114,6 +1226,26 @@ static int do_show_link(int fd)
-> >  			goto again;
-> >  		}
-> >  	}
-> > +	if (info.type == BPF_LINK_TYPE_TRACING_MULTI && !info.tracing_multi.ids) {
-> > +		count = info.tracing_multi.count;
-> > +		if (count) {
-> > +			ids = calloc(count, sizeof(__u32));
-> > +			addrs = calloc(count, sizeof(__u64));
-> > +			cookies = calloc(count, sizeof(__u64));
-> > +			if (!ids || !addrs || !cookies) {
-> > +				p_err("mem alloc failed");
-> > +				close(fd);
-> > +				free(cookies);
-> > +				free(addrs);
-> > +				free(ids);
-> > +				return -ENOMEM;
-> > +			}
-> > +			info.tracing_multi.ids = ptr_to_u64(ids);
-> > +			info.tracing_multi.addrs = ptr_to_u64(addrs);
-> > +			info.tracing_multi.cookies = ptr_to_u64(cookies);
-> > +			goto again;
-> 
-> [Severity: Low]
-> Do we leak the memory allocated for `ids`, `addrs`, and `cookies` if the
-> subsequent `bpf_link_get_info_by_fd()` syscall fails?
-> 
-> When jumping to `again:`, if `bpf_link_get_info_by_fd()` returns an error, the
-> function returns early without freeing these arrays:
-> 
-> tools/bpf/bpftool/link.c:do_show_link() {
->     ...
->     again:
-> 	err = bpf_link_get_info_by_fd(fd, &info, &len);
-> 	if (err) {
-> 		p_err("can't get link info: %s",
-> 		      strerror(errno));
-> 		close(fd);
-> 		return err;
-> 	}
->     ...
-> }
-> 
-> Should the error path free these arrays before returning?
+> By zeroing out the info struct before these checks, the mandatory ids
+> pointer is left as NULL while count is non-zero. If the kernel validation
+> logic eagerly rejects the missing ids array with -EINVAL before reaching
+> the -EFAULT paths, won't this assertion fail?
 
-right, that's pre-existing issue, I think we could do something like
-below.. will send a separate fix
+there's no such eager reject in bpf_tracing_multi_link_fill_link_info,
+the test passes
 
 jirka
-
-
----
-diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
-index 088d1d206065..3f5b3b12a404 100644
---- a/tools/bpf/bpftool/link.c
-+++ b/tools/bpf/bpftool/link.c
-@@ -1156,8 +1156,7 @@ static int do_show_link(int fd)
- 	if (err) {
- 		p_err("can't get link info: %s",
- 		      strerror(errno));
--		close(fd);
--		return err;
-+		goto out;
- 	}
- 	if (info.type == BPF_LINK_TYPE_RAW_TRACEPOINT &&
- 	    !info.raw_tracepoint.tp_name) {
-@@ -1281,13 +1280,14 @@ static int do_show_link(int fd)
- 	else
- 		show_link_close_plain(fd, &info);
- 
-+out:
- 	free(ref_ctr_offsets);
- 	free(cookies);
- 	free(offsets);
- 	free(addrs);
- 	free(ids);
- 	close(fd);
--	return 0;
-+	return err;
- }
- 
- static int do_show(int argc, char **argv)
