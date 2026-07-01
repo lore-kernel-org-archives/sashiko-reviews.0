@@ -1,131 +1,130 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B1E3B42C7
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 06:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8583B14C1
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 06:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889063; cv=none; b=W8eRg5XhY6ox5nXXqFhbtGpRJKAP+jMlv5RHUM09k6X/wqYnBypysMaFJtP60naofqfJnkzFnUIvzhxYhBwFguRWuZ4yxvX/bCRl/LfSu4xM1lvlN4JYm07Gzd0e8pVAFQiG/ObTMO55DmPYi2yY4AmpUpvOv0A6JHodWnv+h6A=
+	t=1782889116; cv=none; b=rk7naBh2wUAnqkzc9alAkJcqpLPYZ+dT+cxOxlHNs1onzjRBNl1YUICJSPuk0/8aJahtNz3XrE9O2Gb0j0wteqbbQMOGxSfUSx27NjDD1eQLW5USh7ZldOFG0OTXQDoKl8Inr0ArsszpDRmWtIAv8QvtQpy9P0DP9VkA16KhfqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889063; c=relaxed/simple;
-	bh=QrzfUk9xgvcP+uM09kyibkhjt06rXvGK74nHVDv0wc4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZnwubxmaldITCItqi2IF8zI0ixc0LiOdjcosIvPkBWEa1cl0EsQO7T1KYzvcoctUfkcLFnRZORrJOc219oO0mII91Zs3l50PoM3Lz73Z5OkMJH4F2a/CfqtD7T5eKt2Y/cbhV4i7yWu0l1qLkO1Xh9Mppk9xI8y2M+2oW8P7Abw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gqrRq2dQvzKHLwx
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 14:57:27 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 9F6934056B
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 14:57:36 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgCnFvRfukRqZqnQAQ--.63175S2;
-	Wed, 01 Jul 2026 14:57:36 +0800 (CST)
-Message-ID: <11bb365f-3e31-4d91-8be1-162dae1936a5@huaweicloud.com>
-Date: Wed, 1 Jul 2026 14:57:35 +0800
+	s=arc-20240116; t=1782889116; c=relaxed/simple;
+	bh=OSxKuQU9blydA7z3UyaLJUM5clMCvPHnvraDhCaYhg8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uIVfyYve4kvspgV+v0kVkVF4zPAqiU/GA66+CcjDyS8Nl1RxXN23q3/tQFUFtwUn0QjtWN7J7+R7uqKDqIXKN75EKFt5hxwUn6fDBn6FeSx9ffvGKR+nNy6efgcEI6A40Qu/7gdeb3NfJCf3oiUxo+SMpuMWXu7ZPkIKiR1xhjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WC2CJmTq; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WC2CJmTq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A3C1F00A3A
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 06:58:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782889115;
+	bh=woSofrP5WTJbErYpMgun4CWCtNv+L3OjsKwS/qCrAS0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=WC2CJmTqiW60GWZm82Pfl5EhulZ1B124/09pLVqbu4huSV0+P/xHmeaSyj+OGNFdV
+	 YmU2VfK6uGj3YlY6BGxjR94lJE3kaO2nXRK2tjHCmNA7zee2WbuUmztQ3iw6UNK2No
+	 Pggt8XFZij1gZ41NaCQvfr+2wPewUea05R/Xd/CR5FAgTZbFBhd7y1hxsoZpUgSiWi
+	 lRQrbblJfAiSEMQi4LrxocQQgaCWZQRA8oX7WuTrvNz8hCgzm0kzuB8hRyXedSiME4
+	 A8svViPdymLkkQ1g5jR2QNoRqNaZedrWc2o9/qIMAj03E/A0rJARrqUoJ0GjNsb2yI
+	 zwxIXlOC8x8Cg==
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c125bce2294so39275966b.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 23:58:35 -0700 (PDT)
+X-Gm-Message-State: AOJu0YzzZi+FJqhxwLZz57wqsjOJ0qHiqupwpMdufgmZpWBWYpernizg
+	iHn1qePMgXZ5++x3GfxcD9hTulKCESLWPz+ablbrnTeQXBHRq+y9YQURUn2Mia481vMZQxl1VXc
+	yUYMXdy/29RxBrb7KRPeb5EpOzamFBsY=
+X-Received: by 2002:a17:907:a893:b0:c12:a588:4113 with SMTP id
+ a640c23a62f3a-c12a9dcba49mr11041366b.29.1782889114308; Tue, 30 Jun 2026
+ 23:58:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/21] perf annotate-arm64: Generalize arm64_mov__parse
- to support more instructions
+References: <20260630234716.3039031-1-yosry@kernel.org> <20260630234716.3039031-6-yosry@kernel.org>
+ <20260630235208.0FEBD1F000E9@smtp.kernel.org> <CAO9r8zOBQxSNO==og6b1kX6WLYVimHrTs9owy8UrttpSs2pyaA@mail.gmail.com>
+In-Reply-To: <CAO9r8zOBQxSNO==og6b1kX6WLYVimHrTs9owy8UrttpSs2pyaA@mail.gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Tue, 30 Jun 2026 23:58:23 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zNgnMoa5+X-hbDo1BK7XEu+euYO2vyoVV15VOJmK2S7gw@mail.gmail.com>
+X-Gm-Features: AVVi8CffLr779ASl52FHnJzzlZu1bJO4GPxQGhIC1GoPXj1pHanKGMtZPx4Jmwc
+Message-ID: <CAO9r8zNgnMoa5+X-hbDo1BK7XEu+euYO2vyoVV15VOJmK2S7gw@mail.gmail.com>
+Subject: Re: [PATCH 5/7] KVM: x86: Reverse the polarity of efer_reserved_bits
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260701035355.752944-1-wutengda@huaweicloud.com>
- <20260701035355.752944-5-wutengda@huaweicloud.com>
- <20260701040308.197B11F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260701040308.197B11F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgCnFvRfukRqZqnQAQ--.63175S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5WF48GFyDJF43GrWDXFb_yoW8KF4xpa
-	yv93y5KF4IgrWkKw4fAr43ZFWfWw4fWayfur1rJwn29anFvF18tF97KF42ka15Grs7C3yU
-	AanYyry5ZrykCaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1QVy3UUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jun 30, 2026 at 4:54=E2=80=AFPM Yosry Ahmed <yosry@kernel.org> wrot=
+e:
+>
+> On Tue, Jun 30, 2026 at 4:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [High] Incorrect bitwise logic in EFER validation rejects valid zero =
+values (breaking guest boot) and allows guests to set reserved bits (trigge=
+ring VMENTRY failures).
+> > --
+> >
+> > commit 4bd740e43933efd5aaca18b2bd83e1696dbbd7dd
+> > Author: Yosry Ahmed <yosry@kernel.org>
+> >
+> > KVM: x86: Reverse the polarity of efer_reserved_bits
+> >
+> > This commit reverses the polarity of the EFER validation variable, rena=
+ming
+> > efer_reserved_bits to efer_supported_bits to align with other fields in
+> > kvm_caps. The stated intent is that no functional change is introduced.
+> >
+> > > diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
+> > > index 17d4c813a9e8a..b9a16a27f6c23 100644
+> > > --- a/arch/x86/kvm/msrs.c
+> > > +++ b/arch/x86/kvm/msrs.c
+> >
+> > [ ... ]
+> >
+> > > @@ -606,7 +606,7 @@ static bool __kvm_valid_efer(struct kvm_vcpu *vcp=
+u, u64 efer)
+> > >  }
+> > >  bool kvm_valid_efer(struct kvm_vcpu *vcpu, u64 efer)
+> > >  {
+> > > -     if (efer & efer_reserved_bits)
+> > > +     if (!(efer & efer_supported_bits))
+> >
+> > [Severity: High]
+> > Does this bitwise logic inadvertently reject valid zero values and allo=
+w
+> > guests to set reserved bits?
+> >
+> > If a guest writes 0 to the EFER MSR, (efer & efer_supported_bits) evalu=
+ates
+> > to 0, and the negation makes this condition true, improperly rejecting =
+it.
+> >
+> > Additionally, if a guest writes an EFER value containing both a support=
+ed
+> > bit and a reserved bit, the condition evaluates to false, allowing the
+> > reserved bit to be set.
+> >
+> > Should this check instead be (efer & ~efer_supported_bits)?
+>
+> Yes, I completely screwed this up :)
+>
+> The tests don't fail because we only have tests for SREGS setting EFER
+> (added in this series), and __kvm_valid_efer() still properly catches
+> invalid bits for this path (because KVM caps =3D=3D guest caps).
 
+For the record, I was curious why my hacky AI-generated reproducer
+didn't fail with this bug.
 
-On 2026/7/1 12:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The parsing logic permanently corrupts the raw instruction string buffer (`ops->raw`) when restoring the `<` character after extracting a source symbol name.
-> --
-> 
-> commit 13742d589ccf5a86dcfd0991f541a8f1d46f7e0f
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Generalize arm64_mov__parse to support more instructions
-> 
-> This commit generalizes arm64_mov__parse() to parse source and target operands
-> for a wider variety of arm64 instructions. It utilizes arm64__check_multi_regs()
-> to identify multiple registers while attempting to preserve parsing behavior for
-> instructions containing the addr <symbol> suffix.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 33080fdca125f..a1667237114a6 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> 
-> [ ... ]
-> 
->> @@ -14,59 +16,129 @@
->>  static int arm64_mov__parse(const struct arch *arch,
->>  			    struct ins_operands *ops,
->>  			    struct map_symbol *ms __maybe_unused,
->>  			    struct disasm_line *dl __maybe_unused)
->>  {
-> 
-> [ ... ]
-> 
->> +	/* Parse a symbol followed by an address, if present */
->>  	s = strchr(endptr, '<');
->>  	if (s == NULL)
->> -		goto out_free_target;
->> -	endptr = strchr(s + 1, '>');
->> +		return 0;
->> +	endptr = strrchr(s + 1, '>');
->>  	if (endptr == NULL)
->> -		goto out_free_target;
->> +		return 0;
->>  
->>  	*endptr = '\0';
->>  	*s = ' ';
->> -	ops->target.name = strdup(s);
->> +	s = skip_spaces(++s);
->> +	ops->source.name = strdup(s);
->>  	*s = '<';
->>  	*endptr = '>';
-> 
-> [Severity: Medium]
-> Does this code overwrite the first character of the symbol name?
-> 
-> Because s is advanced by skip_spaces(++s), s now points to the first character
-> of the symbol name. When *s = '<' is executed immediately after, it appears to
-> corrupt the ops->raw instruction string buffer instead of restoring the '<'
-> character at its original position. 
-> 
-> This could result in a visual glitch in the fallback raw instruction view
-> where the first character of the symbol name is overwritten (for example,
-> 0x1000 <sym> becomes 0x1000  <ym>).
-> 
+Turns out it was trying to write efer=3DEFER.SVME, which means that:
+(a) If nested=3D1, (efer & efer_supported_bits) would be 1, and
+set_efer() would succeed as expected.
+(b) If nested=3D0, (efer & efer_supported_bits) would be 0, and
+set_efer() would (accidentally) fail as expected.
 
-Agreed.
-
+I updated the reproducer to read the value of EFER first, then write
+efer=3D(old_efer | EFER.SVME). With nested=3D0, setting EFER.SVME would
+(unexpectedly) succeed with the incorrect check above, because (efer &
+efer_supported_bits) is non-zero. Fixing the check to be (efer &
+~efer_supported_bits) makes the reproducer pass as expected.
