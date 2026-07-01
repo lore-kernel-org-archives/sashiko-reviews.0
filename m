@@ -1,174 +1,208 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej2-f0.google.com (mail-ej2-f0.google.com [74.125.228.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913A8376497
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 16:47:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782924453; cv=none; b=i774LoATgnmyIX+UnnnhNMEwKQeUy2nMynyW16EV+wuZ6lsUmyFPFCwGblmLsMTUmCHt+GHDTviEyPEtQ7S8TzkLCAaA/FXT43IO1T49vIByq89x9lVRc5lSrLbDJHbI6RAoiHn5J4fKxPBkLIBpqicXmBaR6ouVKZ9k05fEAcQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782924453; c=relaxed/simple;
-	bh=Eg0d6mEjYoCwZN6wDgOQtSayaI45/eybca/GwSK9Bt8=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=P3Ad/ryTlohMuVQgxa//hDeO23/Xx1wzhAxsEHrOk5FRXeO0YudaRAln7Ek2K6edyXqsDW07Rc97w/6IdYEVnK3jJFrw1s/1f1amB4Og5TZub6nUD8Lc49OOTgmDis9AO4rXl4ZggI+RktlarSSeEeAtM34kQk2cZfBaPGmk6Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KmmQUEdE; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF61381AED
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 17:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.128
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782927500; cv=pass; b=bzAaadtvTFhsHQCL2K3Su95dApJ/fAfqYr0PZgRyAzZ9Cf0lEYMi+G3LVWjjvEaI3rwZ5NvsjfBFZXXHppYJCgQJFN7wvyMUJKc3BGhanHXt76mMtm34w0un5duP0YcCI0WsXr7umSmsmqAuxj9XqefT9s/v6x4GZbOmCxZ9wUs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782927500; c=relaxed/simple;
+	bh=RaqQM8sVfRXFrgVuicFiQ+T4/q8FUzfsNzlzFRbxu1I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fuVXldvRAmv2bJOsqJNL5Fh1hzvt/ECmnwryJf3zcGl1Xg92P+uePo+M3acmTNB8q5cPlLi3XrWJVE57XSEdTDRAyTmkiOc/0bUKLEDq6ArPsmhcmkV3qze/T1cIE1s5PM0Udd53lMTj2nbWlJnAQNtf8zbjTKidKvpE72AGEQY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EoeohCks; arc=pass smtp.client-ip=74.125.228.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KmmQUEdE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1782924452; x=1814460452;
-  h=mime-version:content-transfer-encoding:in-reply-to:
-   references:subject:from:cc:to:date:message-id;
-  bh=Eg0d6mEjYoCwZN6wDgOQtSayaI45/eybca/GwSK9Bt8=;
-  b=KmmQUEdE9px0wheCiLR5Vwf/bL5Le3Iwbb/rQsbKxRYnDn0J67NgCAbL
-   kvZJLmUbFRuiZrP3iSBQjPJ3mhmzbeV47Us5HpaNoN1m94sAkO8d8Eb2m
-   Ru/SZTWWEhD9ccyHMwf9McWk9SjqGwgeyz/jXD4mbuK5yUzf2X8goytSA
-   3qf0qE5Zf5ILPzAyTxelSsCpVHErIngsr8JvcrPLqbLL/HyjGRX8tg7kF
-   raY2rrJWbR48puTh2W+onTruhkdpkQatsVAtQzv87N5ZsWDKlyrfcP+OS
-   EeYVagFM7FAVqIf8v1lHerv2u2T0vmQUb3kI/e6zI4mDVRv7dQl/gOqwT
-   g==;
-X-CSE-ConnectionGUID: 8pRGy2AhRDuDWP7CaZzoLw==
-X-CSE-MsgGUID: 1ygQJf5qQRS/weGmLKOz3g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11834"; a="83697598"
-X-IronPort-AV: E=Sophos;i="6.25,142,1779174000"; 
-   d="scan'208";a="83697598"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 09:47:31 -0700
-X-CSE-ConnectionGUID: dLk0VwoqRQqbIjwu9ugsNA==
-X-CSE-MsgGUID: IYy8J8tES9iqzBx+/CmOAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,142,1779174000"; 
-   d="scan'208";a="250899661"
-Received: from abityuts-desk.ger.corp.intel.com (HELO localhost) ([10.245.244.25])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 09:47:29 -0700
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoeohCks"
+Received: by mail-ej2-f0.google.com with SMTP id a640c23a62f3a-c1261e02553so10564066b.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 10:38:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782927497; cv=none;
+        d=google.com; s=arc-20260327;
+        b=l/u7dpGtAaZ7kOMdUTvJdrdjXQthHknm/pwgpCihjY2ZeHxTajs12gQxVpzQJnMUpQ
+         FaPa4s6YG6sLIXZiStb0S3lmZHRXJGvrFAT+sOX59KiH1ZIU/Ioq4oLGyNd6sUgR1jCT
+         hltL7+VB4x/qGEeA6wSzmVvGCVAqOniCbgjT8gsxkGedaWjdkRqcEhrhmh8L6Dq+xuH6
+         3rAz0Vec+COnB81jB71s0cCzKlsoXJyw9PSJFEhsw4Jn9HrSc60iGuTnv87nMVn8Wmcf
+         eqRNfeqrgfCZF7B1eE4xYEDbXgE89B7zNIyCovC2omR7fPQLUYgSw+6F6Tuxe5Gptrql
+         CjjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=rYXi9m66KNbs9Qfb5jrT4uIyu4GUnnRMQ9zeXoOeZJI=;
+        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
+        b=pltDquevj8/a9gzG6VDc3J+dy7m94k8s43Hqi67tU2ml5YqYk/I4f/cWBTDa7tZyOW
+         BzHZYRr1nPR6uxCgUZoHxzX9v0U9n5KCDLAjcF+jKedr9vGj64Yl1WAu6fdmtjZ7cg2G
+         9k+Npx2KF79DLUsBkSPgGAffu/xTks0proTWtKkn4Y5xEiQVzHAWAoLbE1mT3oAdgSPp
+         qEGAVvCk/7K4GSn11yqmW4h+IymY4T9qdTOk2QQaaTBn9x57VKE8I44P2mt2WhZn1/rH
+         FCGVDiD2uqL1S7KnmpVLODXVF2RUfF8wSrOoagg+uu4oMhqldOFpm7H+HwfogO5vANNC
+         cdLQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782927497; x=1783532297; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rYXi9m66KNbs9Qfb5jrT4uIyu4GUnnRMQ9zeXoOeZJI=;
+        b=EoeohCksXaIbNRy+M9ajfM7n5UClma32O1QYHMXvtT+MeB2mhwjV3zV/TjwyTQ3md8
+         koMRxDiNnKjOs2BZ2DrUIe0BZ3c79/7ujAqcPXHD5Kj1Kyvk2iu++Bq6+gqnWYy5UswY
+         JaWD8eqbU8aDG5uaUOy3FPrdByP3K9mqEtare9hMA1R3IFezbhuG4UlTQKbKpDeqBUKe
+         mB5tApwwmL2YKnRmIS16pL9Hef0JqZEH9x2AFDkLPmRWcrHIoJXmOrKTjLX/k+BmwzfO
+         SMK35Fj+45wNj4Y7C9CV1cOQVw9P/4ZYYJQeMB0dekbQtQWzFCPHsdv3APC4HsiYw9mU
+         MyOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782927497; x=1783532297;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rYXi9m66KNbs9Qfb5jrT4uIyu4GUnnRMQ9zeXoOeZJI=;
+        b=A/p6iuJEIh4aXWZM25B5/CSv9u92jAojsqanEyAN3j1JUBfi1S6VjxhQW5p3WlwT2W
+         7suEKMHbRCb5qZK7U2MaxZBSnNy3mUBGl2RE7Q0mFcK3R6fG8m+j1QDNtZXLdlmkSrCb
+         wrwGnliVEPLjk52A+uAkmNO29nisUaWjasXLD2pUGlF8hP4iYaOyJMir18XiRsomiiNl
+         QzTHfXR12oHsd7lt53rZhlb85hTdyOAkzc3eaWPmk61pRv/bQ6EwGpjjz9nETeg64BMI
+         apq3Im5KrxaBLppW99Qhu/WBa8M2Ell/ZiBwA1r9P8pWRDj8YOjd4tkk+D526LG6CU8B
+         kK8w==
+X-Gm-Message-State: AOJu0Yx6RJR7cP2u1aLc3G/Mzg3YTu7TVrWFgEVTL3wg6Uj6nGyP151N
+	c3qxjXRaAnLjUWw7S+QxGrFBJHNvfBxLeH2DZOtWQvzFcLBXj3yb50JN/Nmp5Ml3bE3cVku70/f
+	KZVs3MeeUOgsPc1XBJ4ceaGpzc3SdEnUD+YHgOK76SXk2
+X-Gm-Gg: AfdE7cmMKuRXmyjPSVy/hQmX/n8eQc+EqPcO+Dei03oLFbMXPpnhZQ46Qvu3qmXGL/L
+	iSxaLdrD6a5MD+o2FNpCDYTxYzqUUTddQCDMCHSYjEiJmwmt7xtmy+XyaFspPZgcveNSU7jAqCm
+	bqsXumbdXJ34psKIfoGRDKqrE951F6wYWWAqhBoSdSTFJgqgakEgT1j9L24hGjjxMnZlBLmxGOz
+	b4+S5LeR7QQTWqlLdRthOU4aYDkjutr0yMtYe7xIZ5l4HlHz6JilUenYHSIpVZxcnjt+SXYT5k=
+X-Received: by 2002:a17:907:3f97:b0:c12:1eb:892e with SMTP id
+ a640c23a62f3a-c12a79b77acmr146967566b.6.1782927496879; Wed, 01 Jul 2026
+ 10:38:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <178290749714.224587.15234445443946207851@jlahtine-mobl>
-References: <20260630223946.2107382-1-jia.yao@intel.com> <20260630225349.984AB1F000E9@smtp.kernel.org> <178290749714.224587.15234445443946207851@jlahtine-mobl>
-Subject: Re: [PATCH v9] drm/i915/dg2: Add per-context control for Wa_22013059131
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, Matt Roper <matthew.d.roper@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>
-To: Jia Yao <jia.yao@intel.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
-Date: Wed, 01 Jul 2026 19:47:21 +0300
-Message-ID: <178292444166.273574.16738251742448073960@jlahtine-mobl>
-User-Agent: alot/0.13.dev2+g40c57d620
+References: <20260701164543.3967388-3-coiaprant@gmail.com> <20260701164543.3967388-9-coiaprant@gmail.com>
+ <20260701165958.BC7CB1F000E9@smtp.kernel.org>
+In-Reply-To: <20260701165958.BC7CB1F000E9@smtp.kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
+Date: Thu, 2 Jul 2026 01:38:07 +0800
+X-Gm-Features: AVVi8CeL00GpCHEQIZu5-z1-920rDCQqSuFCtbUcdM8yj0kiyDqMC7ciYSSV00M
+Message-ID: <CALj3r0h-8cSDNcYW03yy=eUJUcLq-Lbq=85juNE=mYApPQBGwA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] arm64: dts: rockchip: Add devicetree for the
+ Graperain G3568 v2
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-(+ intel-gfx for real this time)
+Thanks for the review.
 
-Quoting Joonas Lahtinen (2026-07-01 15:04:57)
-> (+ intel-gfx, Matt and Tvrtko)
->=20
-> Quoting sashiko-bot@kernel.org (2026-07-01 01:53:49)
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [High] Dynamically modifying the globally shared MCR register LSC_CHI=
-CKEN_BIT_0 per-context causes a race condition when contexts execute concur=
-rently on different engines, leading to L3 cache state corruption and GPU h=
-angs.
-> > --
-> >=20
-> > commit aa5554c571fd6ea50b4b1d107d0ba27eeae18a7c
-> > Author: Jia Yao <jia.yao@intel.com>
-> >=20
-> > drm/i915/dg2: Add per-context control for Wa_22013059131
-> >=20
-> > This commit introduces a per-context opt-out for Wa_22013059131 on DG2-=
-G11
-> > platforms, allowing userspace to manage LSC_CHICKEN_BIT_0 bit 15 itself.
-> > It applies this workaround conditionally during indirect context batchb=
-uffer
-> > execution rather than globally at engine init.
-> >=20
-> > Link: https://github.com/intel/compute-runtime/pull/919
-> >=20
-> > > diff --git a/drivers/gpu/drm/i915/gt/intel_lrc.c b/drivers/gpu/drm/i9=
-15/gt/intel_lrc.c
-> > > index 147d22907960b..a35601e6f1e90 100644
-> > > --- a/drivers/gpu/drm/i915/gt/intel_lrc.c
-> > > +++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
-> >=20
-> > [ ... ]
-> >=20
-> > > @@ -1348,6 +1348,37 @@ gen12_invalidate_state_cache(u32 *cs)
-> > >       return cs;
-> > >  }
-> > > =20
-> > > +static u32 *
-> > > +dg2_g11_emit_wa_22013059131(const struct intel_context *ce, u32 *cs)
-> > > +{
-> > > +     /*
-> > > +      * While re-writing LSC_CHICKEN_BIT_0 for Wa_22013059131, the
-> > > +      * other bits of the register will also get overwritten.  The
-> > > +      * hardware default for all other bits is 0, but any workarounds
-> > > +      * that adjust the other bits in the lower dword of the register
-> > > +      * also need to be re-applied here.  At the moment that's just
-> > > +      * Wa_22014226127, which is always set for DG2-G11 platforms.
-> > > +      */
-> > > +     u32 val =3D DISABLE_D8_D16_COASLESCE;
-> > > +
-> > > +     /*
-> > > +      * Wa_22013059131: only set FORCE_1_SUB_MESSAGE_PER_FRAGMENT for
-> > > +      * userspace contexts that have not opted out.  Kernel-internal
-> > > +      * contexts (gem_context =3D=3D NULL) never run shader workload=
-s that
-> > > +      * require this workaround, so skip them unconditionally.
-> > > +      */
-> > > +     if (rcu_access_pointer(ce->gem_context) &&
-> > > +         !test_bit(CONTEXT_WA_22013059131, &ce->flags)) {
-> > > +             val |=3D FORCE_1_SUB_MESSAGE_PER_FRAGMENT;
-> > > +     }
-> > > +
-> >=20
-> > [Severity: High]
-> > Does dynamically modifying LSC_CHICKEN_BIT_0 per-context cause a race c=
-ondition
-> > when contexts execute concurrently on different engines?
-> >=20
-> > LSC_CHICKEN_BIT_0 is a globally shared MCR register affecting the L3 ca=
-che,
-> > which is shared across all render and compute engines on DG2. Modifying=
- it via
-> > MI_LOAD_REGISTER_IMM broadcasts the change to all L3 banks.
-> >=20
-> > If Context A (which requires the workaround) runs on RCS0, and Context =
-B (which
-> > opts out) switches in on CCS0, CCS0's context switch executes this indi=
-rect
-> > batchbuffer and clears bit 15 globally. This could dynamically alter th=
-e state
-> > for Context A on RCS0, potentially disabling the workaround and causing=
- a GPU
-> > hang.
->=20
-> The fact that we expect compute and Mesa to align across their own
-> contexts sharing single address space today is one thing, but I think
-> we should be enforcing that. Currently nothing preventing RCS and CCS
-> sharing one address space from fighting over the variable.
->=20
-> This makes me doubt if modelling this as a per-context variable was
-> the right choice.
->=20
-> Maybe we should instead be making it DRM client wide property and
-> inheriting it to all contexts?
->=20
-> Regards, Joonas
->=20
-> >=20
-> > > +     *cs++ =3D MI_LOAD_REGISTER_IMM(1);
-> > > +     *cs++ =3D i915_mmio_reg_offset(LSC_CHICKEN_BIT_0);
-> > > +     *cs++ =3D val;
-> > > +
-> > > +     return cs;
-> > > +}
-> >=20
-> > --=20
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630223946.=
-2107382-1-jia.yao@intel.com?part=3D1
+> > +     adc-keys {
+> > +             compatible = "adc-keys";
+> > +             io-channels = <&saradc 0>;
+> > +             io-channel-names = "buttons";
+> > +             keyup-threshold-microvolt = <1800000>;
+> > +             poll-interval = <100>;
+> > +
+> > +             button-esc {
+> > +                     label = "esc";
+> > +                     linux,code = <KEY_ESC>;
+> > +                     press-threshold-microvolt = <1250000>;
+> > +             };
+> > +
+> > +             button-menu {
+> > +                     label = "menu";
+> > +                     linux,code = <KEY_MENU>;
+> > +                     press-threshold-microvolt = <1600000>;
+> > +             };
+>
+> [Severity: Medium]
+> Will this configuration correctly identify the MENU button? The commit message
+> notes the hardware voltage for MENU is 1400000 microvolts.
+>
+> Because the adc-keys driver matches based on the smallest absolute difference,
+> a 1400000 microvolt reading is closer to the ESC threshold
+> (1400000 - 1250000 = 150000) than the MENU threshold
+> (1600000 - 1400000 = 200000).
+>
+> Could this cause pressing the MENU button to register as an ESC key press
+> instead?
+The ADC keys have been verified with evtest on actual hardware and
+they work perfectly fine.
+Keep it.
+
+> [ ... ]
+>
+> > +/* used for AP6356S Bluetooth Sound */
+> > +&i2s3_2ch {
+> > +     status = "okay";
+> > +};
+>
+> [Severity: Medium]
+> Does this node require pinctrl and a simple-audio-card binding to function?
+> It appears the I2S interface is enabled, but without routing the signals to
+> the external AP6356S chip pins and linking the I2S CPU DAI to the Bluetooth
+> codec DAI, ALSA might not register the sound card.
+
+Yes, it requires rk3568-codec-digital for Bluetooth audio support.
+Since it's currently unavailable in the mainline, I will disable the
+i2s3_2ch node in v4 to avoid an incomplete configuration.
+
+> [ ... ]
+>
+> > +&pinctrl {
+> > +     bluetooth {
+> > +             bt_reg_on_h_gpio3_a0: bt-reg-on-h-gpio4-b2 {
+> > +                     rockchip,pins = <3 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
+> > +             };
+> > +
+> > +             bt_wake_host_h_gpio3_a1: bt-wake-host-h-gpio4-b4 {
+> > +                     rockchip,pins = <3 RK_PA1 RK_FUNC_GPIO &pcfg_pull_down>;
+> > +             };
+> > +
+> > +             host_wake_bt_h_gpio3_a2: host-wake-bt-h-gpio4-b5 {
+> > +                     rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
+> > +             };
+> > +     };
+>
+> [Severity: Low]
+> This isn't a functional bug, but do the node names here have a copy-paste
+> error? They indicate gpio4-b2, gpio4-b4, and gpio4-b5, but the contents
+> configure pins on GPIO bank 3 (RK_PA0, RK_PA1, RK_PA2).
+
+Good catch, this is indeed a copy-paste error. I will fix the pinctrl
+node names to match the actual GPIO bank 3 pins in v4.
+
+> [ ... ]
+>
+> > +/* used for AP6356S WiFi */
+> > +&sdmmc2 {
+> > +     bus-width = <4>;
+> > +     cap-sd-highspeed;
+> > +     cap-sdio-irq;
+> > +     keep-power-in-suspend;
+> > +     mmc-pwrseq = <&sdio_pwrseq>;
+> > +     non-removable;
+> > +     pinctrl-names = "default";
+> > +     pinctrl-0 = <&sdmmc2m0_bus4 &sdmmc2m0_cmd &sdmmc2m0_clk>;
+> > +     sd-uhs-sdr104;
+> > +     vmmc-supply = <&vcc3v3_sys>;
+> > +     vqmmc-supply = <&vcc_1v8>;
+> > +     status = "okay";
+> > +
+> > +     wifi@1 {
+> > +             compatible = "brcm,bcm4356-fmac";
+> > +             reg = <1>;
+> > +     };
+> > +};
+>
+> [Severity: Medium]
+> Is the generic fallback compatible string missing here? The brcmfmac driver
+> explicitly checks for brcm,bcm4329-fmac during OF probing. Without this
+> fallback, the driver's OF parser aborts and properties like a
+> bootloader-injected local-mac-address might be ignored.
+
+Understood. I will add the generic "brcm,bcm4329-fmac" fallback string
+to the Wi-Fi node in v4.
+
+I'll wait a moment for further feedback from human maintainers before
+submitting v4.
+
+Best,
+Coia
