@@ -1,125 +1,155 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5CC47ECD6;
-	Wed,  1 Jul 2026 13:07:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABEA42DFF5
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 13:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782911279; cv=none; b=e5QCFy5JWEErV18NotSpmTRTu3n/raN8HYJfHIHBjavQy0yRZNF23YakYc0zDbOp4TGkuInw6ZWygFvrvNHyd9VRlAvqe1OBJCe04PG/qx7lVcEuBASVpqUKcJz9bJ7vEekjZtmQ489r8q917Y7kpp05cMFLfr/3EBxmkdNGAmc=
+	t=1782911378; cv=none; b=m5cRlplJgyXZuwxzbEohZJ8XFwBhbgzvJZI+j5MRXooJRhqubtmeZB3nfbDKZsqWGh95lMLJpK73pm5rYL8vBKOxAP6Rjlxwd+Aaiopeg1h5rcdARmDpajx+wsIYgMgKxyVBoPYxyt2B/gT0O4AgvI716sBZ2ak/Szx9ZBv1t4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782911279; c=relaxed/simple;
-	bh=mQY6Rzk2JqICgnRjpxgzzLGkzVehY5hG5R7+3HYbdr0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hk09GjcnljkcpqBDvjZkVyyMbzOhvhtdJgAa5NNN2/0IbC3dxrJ4Yk0V8a5/OUj0Ii7X2ZwdV/itlXfbbAIj5DabhP1Xx15roA9/IUJoj/nlRwn0VR4U/KGDQz5wzR6kyr6JK38GpQbJfFt6Ey+lpgCby8pQeed7kpJmICo866g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Lvt+HmiE; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1782911378; c=relaxed/simple;
+	bh=+bYZRMtAJFWq8dFwENhdD1MZiJ2XphSHO3THlatJSZA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g1klJ8Wgm6UBCmx48AhAfZWSsk+gC6gANxyq+qIHd4MFRys+8ZD59lSImSYlkOy5VPSDx7cDhwpPkGMf9+zpebj5HBubKp5sR58XFspvobFiBqa8owwbBLM+jiJS99D1bP90tkF3biW6ETNOBoy2NGG2MZvqOsO63Pdj0TFxAeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JIYPd0Nr; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QR3r83Z2; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JIYPd0Nr; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QR3r83Z2; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Lvt+HmiE"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=TazX6/y/k55cHEoYr7mNLzmFUt+Z5t2Iabjnva0HgQQ=; b=Lvt+HmiElY+Gm+yExo9S0+Srsm
-	a2AEjJPV2Vn16vgNjp3WD8JzQnJHnbYK5sh8+IByYk8hFkru47L/yTwiQ0BZUUY2+QClQGLZsR1uC
-	ZY2zWdrXH+5TZnJ+cCheUYaVjvPJesN1Dc8wRvkCQC92Jcrng9VfK0M+Dd7/dECnobdEyFp7q7Mci
-	b56ppQ5Pp7hQXt4pyKZbH+4RmlfhjRDcJSV2yu14aS8iAcZfNVRu8/4rDYiOH9GarEUy22eqAvFVn
-	DBVHQSI2wCMNeLApHOmNl9xvypWww29PDz7WesZ7ZvmxUHvC0RlTbfRf8EyVh4oY+JJWmzlSE5hI4
-	9MbuA/FA==;
-Received: from sslproxy01.your-server.de ([78.46.139.224])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1weufS-0008n5-1U;
-	Wed, 01 Jul 2026 15:07:54 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy01.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1weufS-000FUV-12;
-	Wed, 01 Jul 2026 15:07:54 +0200
-Message-ID: <aa94504b-55ff-4053-aca4-8144833e155f@iogearbox.net>
-Date: Wed, 1 Jul 2026 15:07:53 +0200
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JIYPd0Nr";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QR3r83Z2";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JIYPd0Nr";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QR3r83Z2"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 859C373BE5;
+	Wed,  1 Jul 2026 13:09:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782911375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=Wt51QxejWjuu6bJtZgDESWH3vxx2i2i9ZOd+J9IuiwY=;
+	b=JIYPd0NrDESaEC0NmfQ+rZ5XyecpBvPWMDTxc6jV6/+1pUSOzxREXC2J1e55hXlxiyZc5r
+	sfPKKWwvoyQiUBcavtmdAQ0aws6VuR0NjZKGm2/vVRh0GMx+rA8y9jnycbb+0bNQDMPKb9
+	TYiEVN9LntdlVhuL6qz2vCWaQCLZYO0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782911375;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=Wt51QxejWjuu6bJtZgDESWH3vxx2i2i9ZOd+J9IuiwY=;
+	b=QR3r83Z2uF0BF+d9qP9zrIfvuNV4aYpVVBpNOWgFn+sQkkZf1pmkdFEnJj+B5VwcIkRsno
+	KWrVa8WKhZyZOCBg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782911375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=Wt51QxejWjuu6bJtZgDESWH3vxx2i2i9ZOd+J9IuiwY=;
+	b=JIYPd0NrDESaEC0NmfQ+rZ5XyecpBvPWMDTxc6jV6/+1pUSOzxREXC2J1e55hXlxiyZc5r
+	sfPKKWwvoyQiUBcavtmdAQ0aws6VuR0NjZKGm2/vVRh0GMx+rA8y9jnycbb+0bNQDMPKb9
+	TYiEVN9LntdlVhuL6qz2vCWaQCLZYO0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782911375;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=Wt51QxejWjuu6bJtZgDESWH3vxx2i2i9ZOd+J9IuiwY=;
+	b=QR3r83Z2uF0BF+d9qP9zrIfvuNV4aYpVVBpNOWgFn+sQkkZf1pmkdFEnJj+B5VwcIkRsno
+	KWrVa8WKhZyZOCBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3A22F779AA;
+	Wed,  1 Jul 2026 13:09:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id HduLDI8RRWrucwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 01 Jul 2026 13:09:35 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: jani.nikula@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	joonas.lahtinen@linux.intel.com,
+	tursulin@ursulin.net,
+	airlied@gmail.com,
+	simona@ffwll.ch
+Cc: intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH] drm/i915/display: Handle struct drm_plane_state.ignore_damage_clips
+Date: Wed,  1 Jul 2026 15:07:23 +0200
+Message-ID: <20260701130929.234695-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net 2/3] net/sched: Handle TC_ACT_REDIRECT from qdisc
- filter chains
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260630123331.186840-1-daniel@iogearbox.net>
- <20260630123331.186840-3-daniel@iogearbox.net>
- <20260701123340.D29A71F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260701123340.D29A71F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28047/Tue Jun 30 23:29:24 2026)
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-0.990];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FREEMAIL_TO(0.00)[linux.intel.com,intel.com,ursulin.net,gmail.com,ffwll.ch];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Level: 
+X-Spam-Score: -2.80
 
-On 7/1/26 2:33 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Missing handling of TC_ACT_CONSUMED in qdisc filter chains leads to Use-After-Free.
-> --
-> 
-> commit 84137b5068cebac45a2a901c08e1d2f5e6d71111
-> Author: Jamal Hadi Salim <jhs@mojatatu.com>
-> 
-> net/sched: Handle TC_ACT_REDIRECT from qdisc filter chains
-> 
-> When a TC filter attached to a qdisc filter chain returns TC_ACT_REDIRECT,
-> the redirect was silently lost and the packet fell through to the switch.
-> This patch adds a tcf_classify_qdisc wrapper to convert TC_ACT_REDIRECT to
-> TC_ACT_SHOT, preventing the packet from silently continuing.
-Looks like this needs a follow-up as its likely not just a simple ||
-addition to handle this case in tc.
+Git commit 35ed38d58257 ("drm: Allow drivers to indicate the damage
+helpers to ignore damage clips") introduced ignore_damage_clips to
+selectively ignore damage clipping in certain framebuffer changes. The
+mode-setting pipeline can disabled damage clippings for an atomic commit
+by setting ignore_damage_clips in struct drm_plane_state. The atomic
+commit will then do a full display update.
+
+Although the i915 driver does not modify the flag, DRM's damage iterator
+will soon rely on it. Calling drm_atomic_helper_check_plane_damage() right
+before drm_atomic_helper_damage_merged() guarantees that it has the correct
+state. The i915 driver does not do this elsewhere so far.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+---
+Taken with minor updates to the commit description from the series at
+
+  https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
+---
+ drivers/gpu/drm/i915/display/intel_psr.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 92af21d823a3..5a155f60110f 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2949,6 +2949,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		src = drm_plane_state_src(&new_plane_state->uapi);
+ 		drm_rect_fp_to_int(&src, &src);
+ 
++		/* Prepare plane-damage state before using it */
++		drm_atomic_helper_check_plane_damage(&state->base, &new_plane_state->uapi);
++
+ 		if (!drm_atomic_helper_damage_merged(&old_plane_state->uapi,
+ 						     &new_plane_state->uapi, &damaged_area))
+ 			continue;
+-- 
+2.54.0
+
