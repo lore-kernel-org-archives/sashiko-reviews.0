@@ -1,261 +1,170 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013064.outbound.protection.outlook.com [40.107.201.64])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013018.outbound.protection.outlook.com [40.107.162.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75883A48D5
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 08:18:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C712C3D9030;
+	Wed,  1 Jul 2026 08:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782893920; cv=fail; b=j+3LkOzaUEPMEgtMfltw24XuHYqd7+pksVe78U//VmMPfkLNyct4UKSDfEW0E3CMWp/RWIKjq2LwRFYJssCGd8OWobZU72DEXRoQrzi3ca2vOtt0Rm3NoXPF3mI+vPDDSjslFybPW1De5UdHMoHMVZWSaN2qNMuaeCvoZ/OTAFs=
+	t=1782894029; cv=fail; b=GvpM73LZmD9nSnC8IAt9C0Ep5DXkScbZ5lo3Fwx8cUa4hHqbEGH1xKJn+OveWXFC9LjwzPQys4TA/V6P389EWKfC6A1KhTfdAYuseuUiXQAnMwiDa2Z7dswvhzP598h3/hV5XEG8FQ1XVI9gMlYQ3/1D4VK07mMKgrCY2kaRVSA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782893920; c=relaxed/simple;
-	bh=bl3RTdZuOjL6GcfYOOL0du1/IuI6jLILGje/gGnOkCU=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Og/IXeVc2YG1U5LK4TZsN7ebxqRZEvguc/8dZ0r/3r2NdYKTgDyDmnYq9wgryPnyQUsqKXYzuVLoOOrc9PktW3kUz6oxVHNQBf4OtkjE6Rjvborgj8PAbqoGKZdMHfdkOHCxF6UtgQK8V5bvTPayHudXo5dEAnFpwsm86sHViqo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=s/orCNns; arc=fail smtp.client-ip=40.107.201.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1782894029; c=relaxed/simple;
+	bh=dUmTRMwP4WhHPCdC/s25R+3Fj2L6j44uVdDTnnzmOGY=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=sx4pIOcEbXGV7DExUZ6+Eg7YAkCd4nQ6tLhp47TTH3Owlph6KsD+A5zc21H24Xfat4hhbj6kRUxqvLR8uTJBqjN59S5XkpZZDcGUjd2JD3zPr6zuj3ngT59reRm4n18nDgIUR1czN/GPVTzOpJQsTtIX1XGPJlb2m/ohk+wJ7EQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=iPYMPyZM; arc=fail smtp.client-ip=40.107.162.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="s/orCNns"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="iPYMPyZM"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vI8YsUgcYGZBurXDQwZuWlDU4nn/JHVjSuq2efvP5S4zyc7eCmn4GiMaub2ruzCrD0hT/J/giqmywK3mfw2fjoTMtnJcTsLm7wLXc7Tgc4yqZUiDr0mmuMCZni7KW9cC1u3JsLvcekjdAcQYRlxjEJaMCOWtFeQTZ4SrAQUG+7iULBNGkWYFNrbGJN1GhXvLIvGj2HGAJK6r0yifA9fVcP2O+8vEpvVv6gyjjQ+RIXgdIslEPrwrLq9Pr0A0hBIGbnEwW4QL8SKVbw+c4G4j8Lx3PJ6n9fTzIEwq6c7hSk5DRUEguiEKNgvCZToYptLPjp8f+0rBG0L01PoMmLSwzg==
+ b=eQHZaJBJLu6CB0AJgNsHGN9MKvJOAHPMjcSJz+mMbewpLLu3TUZeWCgIwbnwTfpkamt28ibKi1BfEARtVWCkiU5kK9OcLmYD1Lms59fS9+WsHchQb1/aMnvx3uXz2IgRkzarIByCgEl5BEFxq8uzRD+k811zYBIJRvsS2JLgrQiLzlWMSolKgn8Bl5OQ2ouq+VXFv99roH90pKRLUTqnuiLlmX6YReV061jN1D3HGOvSAoFwBZrIj7iMuzApIsjHPcLZQr3YTYr2DuB2vESEZrhibMIOQhxepAh2dXsFAJVI53ldAP5vtHsZTJNEBuMpy33MbA61ps5CnY/Pq6qmRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DFzsrBYLUeGAIqR7AwssOHEmVVgW+/RVfRtC+e/WUjE=;
- b=A5hievFKJh5QHFysgduZXOl29wJrJKQqcTJzsNgo8LHwPc5VsNEwwklmvup4esVuolGGMLPyDCwOrXORp7AqJzhXV+kUtFeFIBWMqwX4cncvdB/PwaIFnqRb/B8SDgYpjF2D7bG06ryKYhJCJS2n0B6GsAoPe6NtDvcsD4x1aW5y1kpjsWsbUOthmumbRv2QgvzkuYUnCFGNRsiWxJpjqSxopRxf2aTmt2uDllJoG1y4+AAMNv+wMi0Ek6sQQkNrXtqgeRQyWHk0I4b8EvTT5ShdUt/J/aGLGVr1bTkxDAQwxKWRYeKXqhOCkOtHW9pd2Iu7GBF4EYs0V6pm4QSIwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ bh=dUmTRMwP4WhHPCdC/s25R+3Fj2L6j44uVdDTnnzmOGY=;
+ b=fpVQ8+CvQ82wO9OZJRbgN/6qYf9onRsKi/vejeip8wKVpHbIUgmuT34XfBv1APB41AL+B/mLBiiSAp6ZuCCCThThHfKFOqWsizZokQAnRyRQfyGAL/3SzhxHBwK8m9Ny1+60ac8A8SCYdoCZh7edOCiJDezzFRempdGmVBeYEka73JOftz2Dj731s21PGdMLDtBguB5CuIkRHRLvwK2VYAIoLtk2e17zW5sYneCnmBF8z+E94V3tIqpr/KoumIRJVL5t7tq36mq94BAa0XOxXl/hUgxLMWK5y+WnZwcBax7XieQsVYTc9Yt28CdypWQrE19i6q3rQPgeHyZ/+NmgFQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DFzsrBYLUeGAIqR7AwssOHEmVVgW+/RVfRtC+e/WUjE=;
- b=s/orCNnsXuvyss+oPwa79/1OcUFzz13zOpZXIbg+aviz/aK3xdTx8TMbzNnc2qXZBImTVvFRcfgo6PkTYT7xfVmK3xWTBm1AEd2j/VVXjL8uEQEN98H5UrtmNlWQYKscG2OAXh6gwXTELhV1/4+d1MeJ60SpDvRSeCH8Au6NI8c=
-Received: from SN7P222CA0020.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:124::10)
- by LV3PR12MB9096.namprd12.prod.outlook.com (2603:10b6:408:198::22) with
+ bh=dUmTRMwP4WhHPCdC/s25R+3Fj2L6j44uVdDTnnzmOGY=;
+ b=iPYMPyZMHwRosgAMzqTaUPxb3pZlnNJddD+IxHWe4ugN574D2HU6n+dZx7m4Eogn4r1UsSPk9D+HT6ZohuTqK4bnqAuTfJW28C5BE54AE+2/uyWNFLpamRKJpaxWzcm+nuLsTFk9DUjvpDDe0Z8G3XzTfZmzGW6xKm+ZvYg6hR87sVefnnmv6g+TZX1wEk/9cR2MMgA69l5Xq2jL8so7LnUlHN6JL8FFjLabCVeIThQzDmTi8pMQpy3r0h5G6Mk1u4Q0ylCCVEbZp+q3r3XJGIzdSTDq+hG8aRdHr4Q74sGckdHm0dTLdf/5ooqWwRXb5CEaQckODDQeQVX8KOYdcA==
+Received: from DU2PR04MB8629.eurprd04.prod.outlook.com (2603:10a6:10:2dc::6)
+ by AM9PR04MB8666.eurprd04.prod.outlook.com (2603:10a6:20b:43d::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Wed, 1 Jul 2026
- 08:18:32 +0000
-Received: from SN1PEPF000252A1.namprd05.prod.outlook.com
- (2603:10b6:806:124:cafe::63) by SN7P222CA0020.outlook.office365.com
- (2603:10b6:806:124::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.8 via Frontend Transport; Wed, 1
- Jul 2026 08:18:32 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SN1PEPF000252A1.mail.protection.outlook.com (10.167.242.8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Wed, 1 Jul 2026 08:18:32 +0000
-Received: from [10.252.216.131] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 1 Jul
- 2026 03:18:29 -0500
-Message-ID: <0472d252-e8d6-4e97-b737-76be6936a92f@amd.com>
-Date: Wed, 1 Jul 2026 13:48:26 +0530
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 1 Jul 2026
+ 08:20:23 +0000
+Received: from DU2PR04MB8629.eurprd04.prod.outlook.com
+ ([fe80::9d04:7526:a901:fe47]) by DU2PR04MB8629.eurprd04.prod.outlook.com
+ ([fe80::9d04:7526:a901:fe47%6]) with mapi id 15.21.0181.008; Wed, 1 Jul 2026
+ 08:20:23 +0000
+From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, "Wei
+ Fang (OSS)" <wei.fang@oss.nxp.com>
+CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>
+Subject: RE: [PATCH net-next 02/14] net: enetc: extract common helpers for MAC
+ hash filter configuration
+Thread-Topic: [PATCH net-next 02/14] net: enetc: extract common helpers for
+ MAC hash filter configuration
+Thread-Index: AQHdCGTic+2CUL6FZ0GiRjWoGlV6H7ZYS/+AgAAIHxA=
+Date: Wed, 1 Jul 2026 08:20:22 +0000
+Message-ID:
+ <DU2PR04MB862959C2A694DD118A99BDFA88F62@DU2PR04MB8629.eurprd04.prod.outlook.com>
+References: <20260630072036.382761-1-wei.fang@oss.nxp.com>
+ <20260630072036.382761-3-wei.fang@oss.nxp.com>
+ <20260701075116.0321D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260701075116.0321D1F000E9@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU2PR04MB8629:EE_|AM9PR04MB8666:EE_
+x-ms-office365-filtering-correlation-id: 45218127-9f62-48e5-1196-08ded74998de
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|19092799006|22082099003|18002099003|38070700021|4143699003|11063799006|56012099006|6133799003;
+x-microsoft-antispam-message-info:
+ 5/cySBhWZo40unJ34YXVEOIvx9nYQIAVhRkJYL8fb7mVO7LsimSrKGoJIQCBGniUNWn00lwNyPPzwoMVTBfvZj+DIXqO4yBiEGxBIAUcyiVT9sgtt6vvv4cW6NVgvIeUq/JfovGLXQf96nxnzkqz2ObfVSNiKiCQnaOvuLPj/J1hNM0E7jKBY9b/c2hg5l39zlNUj++dnDqzX3TG18OaS5YAkL3+JGvpjeeZ8Mv+RUC3CVMNB/GdmXJ0OOrA7B2Jqq6RFOzEDdHFZ164ZMp+v5WA9atL2k9/pf95dJcsZSOaZdGNeoynHjzI+h86v5OxzliAUYuqg6sgsCTDqweCVThYY22TFs8Is0wkqJ43C7i4vNWG+4l2nHmu2mAf/AuJF/UrQNHFEWElJxWF/35R6y5CkNkDgrQyD7ctbDelyuMTem4UUsRIfdMZS1sMo8Y1lPb8+0qMUb6dsmHK54fCSe+363BFdjkmGZeY4w5wTXLsO0Y8deodXu6i91E0JMdIUBtWRoi2YU/2k0JOXLoxc/5LrFyVtMx6tO7LGFFgCAP4MO+f08BOBUI6N9Lu5gYCiGTi8NaSxTlVSH8xilINYuEwQjEuH38x7Uh1+jrzl7mgClUFbdDMzFMWRAp9So6cf/JrG7IokZytC5xpXP95LNfDXinM9GjzVjQB8x6m/yU0J55v2JGgljTP1iYwDGTC4PymOfkOtZaxvGLCiTBhMgosOjpc+lxVbFPNySsXQVc=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8629.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(19092799006)(22082099003)(18002099003)(38070700021)(4143699003)(11063799006)(56012099006)(6133799003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?WklXNkxnb2VpMEhxRTJOclBiQ2pXdzRLWlBoN2VldnFmc3FZcFlzaE5yMHJv?=
+ =?utf-8?B?S2tDNGVaRUdhUWM3SCt6NjltckVUR3RBZEJ4QWVXTm1mczhDK0d1N01WMVVq?=
+ =?utf-8?B?bXdXRnRqdnc0TnlKbTV1ci9BdHQxaUtsZ1NMM0ttb3FzdjgyMVlOdXQzYUI1?=
+ =?utf-8?B?Z1NLWFFQV0dGZ1IySGRwQzJib0ZBTUdWMkRTcFdSUTdONVd4aWQvOFBnL1pn?=
+ =?utf-8?B?eWZYRzQ5OWtiaVBIcE5PQmxRMnNySFdlMW91cXgxc3BrVERoSkY4SmFiaUlk?=
+ =?utf-8?B?VG9TRWFnMVdCTEVtdnExWE03V0o4bHJTVlo3RTFyUTZDbXdmTUtqanpUWWtW?=
+ =?utf-8?B?T0lzcUF6QW5weW5qNDJuTThQWEZJZS8zOHpnSTN2T09oRHNBWmc5bXpwaUdv?=
+ =?utf-8?B?UDZ0RWFnVHNqdnI5cGt6T3I4eGx5N3NES1huVC94bnZRZXAyZURaZEY2eWk5?=
+ =?utf-8?B?dDdZdFNSTmpTT21SK0N0bjdGSjdaeDB0dUNldXZMOENSOUxhVSt1Nkh5b25I?=
+ =?utf-8?B?cGZ2aENEaUlEMjBLajRZREFCbExSQ2t4cTgvTmtWM2llbG0yWVdIU05wY2tP?=
+ =?utf-8?B?dFRWK2FpMmxRejlQdERJUHZEYmJuNmdPUnM3NlRmcTBFU0dxakJMWFRmMitV?=
+ =?utf-8?B?Ni9JL2Z2NUhUbjZOS01xdzFzQWtwbXRCRFpFWTk3Q0tOWTFhQVo4Y0VQejAv?=
+ =?utf-8?B?cFY3VTVQZ2crM0ZsbWpka3VTbW5rRWFiZTVRc1JmN0FDdjdZQjBUdkVCUlkw?=
+ =?utf-8?B?TXBiWXBwTGJidkhhRjJEYUJGLy9CS0VIb0ZwUE9XL1hiRFFySFZKS0cyckIy?=
+ =?utf-8?B?ek1lS2R4bm15MldRT0R4NGMycENzWFN4TFI2MWJxdXpRaFRQQXZvdmRDT1Zo?=
+ =?utf-8?B?cWc0Z2t5UjNEU3JYdnJRVk93b3NXK2l1QTN6Nk9ZdWFvUHNVWFNKelpGSkcv?=
+ =?utf-8?B?MHJDRHluVWtVN0hZZ3RJa3BXQ2hpdXJycWJkQUJsU0g5YWNPSms4UkYxNVdL?=
+ =?utf-8?B?R2QvdTkwQ0RTY2VnaEpEUnBQeXpNRkJ1UllnNTkzdVpxL0U2anQ3WlFzVmsr?=
+ =?utf-8?B?cmFzZ3QvZzN0cnNndi9yWWFsOERTbDNEcm9zcUVlOGl4T2kzMndwQ2hJSlBU?=
+ =?utf-8?B?bnIyVWFIbHdMTWs3MEdNN3U1ZVZWdnJ1L25XWXhUWGx1TVIxUVljNnUxdWxo?=
+ =?utf-8?B?K0w1aFYyQzF0czl6MlNvalM5dmlFOGh4Y1B4cW5EWElNOGxDVXRkemh6RElZ?=
+ =?utf-8?B?VzBVWTVWMHV5US9wRk5uSndDQURNMGlaRnBNdXFsRTUxLzllOGRoN3RYQlZw?=
+ =?utf-8?B?enA5d2V4bjE5aDB2OERKckNZZk1aVk5DeTZmcnJkUnZROVUxT0d1dG1aMmxy?=
+ =?utf-8?B?eTRoc24yQWVTYkRDYXJSNEFDUTlyVEFsUEVKQlBmdFIzcy9OZEM4eWt2SDg0?=
+ =?utf-8?B?SFhZazdlbFRlNS9tNmpQM01RdkJPWnFsS0dpUk5iWGxSdm1yaW1NOTROVFdq?=
+ =?utf-8?B?ZGZNd2ltamZOY0p3SW1PMExUeHFDVHdDL3lLTWNRMkpBRDdPNmtKWUd3TVIx?=
+ =?utf-8?B?Zk5iN2JzdEhPR3ZmaEFrTTRwSHFyYXYzUUYzU1ZpZ2hWOThUWldIdWFnK2Nv?=
+ =?utf-8?B?bUVvUXM4YkVyZ2pQQ2EreE5KR1lTT0xSSi9nM2p2Z3d4WjIvUE12K0tQd21Y?=
+ =?utf-8?B?a1Z4SDNVSmxxNTFyZ1RJbC9tajRlNjE4N3VYNzJVNEdFVlNBSDYyWDFJOHo2?=
+ =?utf-8?B?eFBjZjA2aXBLN0hDVk9yK011VUp4WDliZURXaWtRckxvQU5rQ3ozNDdPSEgx?=
+ =?utf-8?B?L0xKQzArWHNNZXpqTUlLcERBSlc2WjhDTy9oME1PL2NiUEJQOFFkT1Vydm90?=
+ =?utf-8?B?VWFDYmtzVU1EajNTNXVmTEQxUDhJVTBQZnBmdnNleFhGa05qU3BuR3BnVUdO?=
+ =?utf-8?B?STRiOUZUaG5XeEFSTlNaaXNpOTh0SnpYck82VE1TOUJJZng2aDhWbVFUTC9u?=
+ =?utf-8?B?ZmlRMVZ6MDI3VmxRMXJXYk92VXBrT3NKNXdad0lKeWtpQXBqbVdyN05IYUVK?=
+ =?utf-8?B?TG5ITk1ndXpXWHFvYmQ2YUFYT0VDSTNuekxnT1NrTVN4aFdTTU5XcE5IeWlX?=
+ =?utf-8?B?ZThIZjdqdHg4R3Y5Q285TlEwRnZTSW5xMnRuZWNDVHNaelFCZ2g5a25kNmFF?=
+ =?utf-8?B?TUZjQlZZUnVMOSszLzBJemh2SmlkQXFRQkd5ZG41TDdiUEZpYXBGSkQ5cG4x?=
+ =?utf-8?B?dHhqYUFVMlc5Q0JHSDRyTkhtUE9WOHlVVjNSQ0Q4SktuRW1CNVFZcHBJb1Nu?=
+ =?utf-8?Q?n3r15tY9cYeDbGzKjH?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
-Subject: Re: [RFC PATCH 4/5] kvm/svm: Update the per-CPU wakeup-list during
- vCPU load and unload
-Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>
-References: <20260626105906.14577-1-sarunkod@amd.com>
- <20260626105906.14577-5-sarunkod@amd.com>
- <20260626112519.6A59C1F000E9@smtp.kernel.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260626112519.6A59C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF000252A1:EE_|LV3PR12MB9096:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9e7b29eb-298b-4cba-74f8-08ded74956c4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|82310400026|1800799024|376014|36860700016|22082099003|18002099003|13003099007|11063799006|4143699003|56012099006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	HkZ8B+hsVtnIIp1ALVR9YL0z3EWYRCxX/9iizWRaeYh4u7/XMT5b08n0yrNFI/Phbn+BXZM1uIEOuE1wdG8Um4OxxC8FvYDbQM8G0533WHEcUMdJqPTKcWkF8Z/yfs9YV7nMIHfaSpmeuHv2fEKjx56jJNYAavlDC9Yla2Ew0QC2NZjGFYhImujx5409O6BiK6PmXuzqA1lpFNq4YqW5TpOVfrfGHzqAAxekT6eMQXUY+QgOAFcB8CScCq/shJ/mmrg2Vysrr7DcohzS2CEUVx1OejNvbQTctralC1XQbyXOCS6+NKe9XkH7BD9ydwe9AbfXCjr7ftVd1jJqhLvvDUdBaLUGZWHba4tMYbBzhNB6UGs0VAqWzFha55Du6I4vdNbzoyhALyscDfAy3yiL5a4S0z/Sw7bpcMfykRkIFzn195KlyapXfPMU/8oeR8aosMBD/ZYddCBQXkRHlyMrBWOz5VgtQyJyN94rLGCLmlt/BWeOHIStmYXX9GtBjso0ZQNg+ttxcuUWKTnhtKeTuYxdFq8zMyOytzFcSCbYcf8Y46t53YRgaRGuyiFKJsDxAl97u9atF7RJ0zex4lQgWLBErky4kI5C0PQchyWOHQhlUAvwtyk9/nAFjPRnCuT4gRvuJ1HXE2HDp5s0pf//sQ==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(1800799024)(376014)(36860700016)(22082099003)(18002099003)(13003099007)(11063799006)(4143699003)(56012099006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	p1843Lwrgug+xVH7pdWRyvh1zK3kxyuTYkcNPOaj7jTSE6+2rfWDh+/sXRn+qiTQo1OJMPTeCCpPY1lcMqKJuZfTciOGTEAa+6zU1+zAzgXcF5Vk6ex/tll/700kUQrO0HpozRDY+zShHkzOC1pfY/gVJDpLV7P7o2QQXXqV80kBIKWgPkf8boHQeyyNoVpHE8Mqm1D8PiKp1oM72mta/VychS3us3DZ+qPvlr6g8y9nCaRcm+yfQ4xu/uKlV9lsj1gyYipMoiFuoSb9cf66qplHuHXLBUodsTwZnkYEBMMTMv1mJT3tLwm8LPqYm8WpZSDrY0chiRQXZem0uzozp17Q9LWtCVoUFkL+XRvbZRp/4G16qURS3hVm4n2UWl+XR53EL/BSz9tjKufNKkzCDRIxIHGv3l8Fcp2w4hcZxpPl9XtKIwM8mEDzoJlxiU+p
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 08:18:32.0828
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8629.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 45218127-9f62-48e5-1196-08ded74998de
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jul 2026 08:20:23.0259
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e7b29eb-298b-4cba-74f8-08ded74956c4
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF000252A1.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9096
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EfUI8S60zgAx5q51+q+4JukEiU8mZi21IGRsFkfSed8K9qTU88YigNV37ngK0rBp37iaw9iKZjB+FWFRClA07g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8666
 
-
-
-On 6/26/2026 4:55 PM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] `avic_remove_vcpu_from_gappi_wakeup_list` and `avic_add_vcpu_to_gappi_wakeup_list` acquire a raw spinlock without disabling interrupts, leading to a hard deadlock with the GAPPI IPI hardirq handler.
-> - [High] Uninitialized `svm->gappi_cpu` (-1) is unconditionally passed to `kvm_cpu_get_apicid()` and `avic_add_vcpu_to_gappi_wakeup_list()`, causing an out-of-bounds array read and a userspace-triggerable `WARN_ON`.
-> - [High] The GAPPI wakeup handler is registered with the core kernel but never unregistered, leading to a dangling pointer if the KVM module is unloaded.
-> - [Medium] The per-CPU GAPPI wakeup lists lack CPU hotplug support, resulting in permanently lost device interrupts and hanging vCPUs if a CPU is offlined.
-> --
->
-> commit 3af48ba2bd8326c04b2aa47ac47a9f53e0cd61a3
-> Author: Sairaj Kodilkar <sarunkod@amd.com>
->
-> kvm/svm: Update the per-CPU wakeup-list during vCPU load and unload
->
-> When a vCPU is unloaded from a physical CPU enqueue it on that CPU's
-> GAPPI wakeup list. Remove the vCPU from the wakeup list when it is loaded
-> on to a CPU again.
->
->> diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
->> index e7a4c0e90e7a7..d238f65a8172b 100644
->> --- a/arch/x86/kvm/svm/avic.c
->> +++ b/arch/x86/kvm/svm/avic.c
->> @@ -889,6 +892,44 @@ int avic_init_vcpu(struct vcpu_svm *svm)
->>        return ret;
->>   }
->>
->> +static void avic_add_vcpu_to_gappi_wakeup_list(struct vcpu_svm *svm, int cpu)
->> +{
->> +     struct list_head *wakeup_list;
->> +     raw_spinlock_t *spinlock;
->> +
->> +     if (WARN_ON(cpu < 0))
->> +             return;
->> +
->> +     wakeup_list = &per_cpu(gappi_vcpu_wakeup_list, cpu);
->> +     spinlock = &per_cpu(gappi_vcpu_wakeup_list_lock, cpu);
->> +     raw_spin_lock(spinlock);
->> +     if (list_empty(&svm->gappi_vcpu_wakeup_list))
->> +             list_add_tail(&svm->gappi_vcpu_wakeup_list, wakeup_list);
->> +     raw_spin_unlock(spinlock);
->> +}
->> +
->> +static void avic_remove_vcpu_from_gappi_wakeup_list(struct vcpu_svm *svm, int cpu)
->> +{
->> +     raw_spinlock_t *spinlock;
->> +
->> +     if (WARN_ON(cpu < 0))
->> +             return;
->> +
->> +     spinlock = &per_cpu(gappi_vcpu_wakeup_list_lock, cpu);
->> +     raw_spin_lock(spinlock);
->> +     if (!list_empty(&svm->gappi_vcpu_wakeup_list))
->> +             list_del_init(&svm->gappi_vcpu_wakeup_list);
->> +     raw_spin_unlock(spinlock);
->> +}
-> [Severity: High]
-> Can this cause a hard deadlock with the GAPPI IPI hardirq handler?
->
-> When a user process destroys a VM, avic_destroy_vcpu() is called from
-> svm_vcpu_free() in normal thread context with interrupts enabled. If the
-> POSTED_INTR_WAKEUP_VECTOR IPI fires on the same CPU while this thread holds
-> the gappi_vcpu_wakeup_list_lock non-recursive raw spinlock, the interrupt
-> handler will spin forever attempting to acquire it.
->
-> Should these functions use raw_spin_lock_irqsave() to disable interrupts
-> during lock acquisition?
-Yes, you are right, it is quite possible to receive an GAPPI interrupt 
-during avic_destroy_vcpu(), hence we need to disable the interrupts 
-before holding the lock during avic_destroy_vcpu() path Note that other 
-paths that call avic_remove_vcpu_from_gappi_wakeup_listare safe since 
-hold the irqfd lock with interrupts disabled.
-> [ ... ]
->
->> @@ -958,16 +1005,18 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
->>                } else {
->>                        posted_intr = !!(entry & AVIC_PHYSICAL_ID_ENTRY_GA_LOG_INTR);
->>                        pi_data.flags = posted_intr << AMD_IOMMU_FLAG_POSTED_INTR_SHIFT;
->> -                     /* GAPPI is disabled at this point (amd_iommu_gappi is
->> -                      * enabled in the following patches) hence keep the
->> -                      * apicid as 0.
->> -                      */
->> -                     pi_data.apicid = 0;
->> +                     if (amd_iommu_gappi) {
->> +                             pi_data.apicid = kvm_cpu_get_apicid(svm->gappi_cpu);
->> +                             if (list_empty(&svm->ir_list)) {
->> +                                     avic_add_vcpu_to_gappi_wakeup_list(svm, svm->gappi_cpu);
->> +                                     is_vcpu_waiting = true;
->> +                             }
->> +                     }
->>                }
-> [Severity: High]
-> Is it possible for svm->gappi_cpu to still be -1 here?
->
-> If userspace creates a VM but inhibits AVIC (for example, via an invalid
-> APIC ID), avic_vcpu_load() bails out early leaving svm->gappi_cpu as -1.
-> If userspace later assigns a device interrupt via KVM_IRQFD,
-> avic_pi_update_irte() will pass -1 to kvm_cpu_get_apicid().
->
-> This triggers a negative index array read yielding a garbage APIC ID, and
-> also hits the WARN_ON(cpu < 0) inside avic_add_vcpu_to_gappi_wakeup_list().
->
-> [ ... ]
-
-No, its not possible for svm->gappi_cpu to be -1. The avic_pi_update_irte
-is called to assign the affinity of the interrupt to the given vCPU.
-Which is only possible when all the vCPUs are online and are loaded at
-least once (avic_vcpu_load() --> 
-avic_remove_vcpu_from_gappi_wakeup_list()), ensuring gappi_cpu is not -1.
->> @@ -1353,6 +1436,7 @@ bool __init avic_hardware_setup(void)
->>                enable_ipiv = false;
->>
->>        amd_iommu_register_ga_log_notifier(&avic_ga_log_notifier);
->> +     kvm_set_posted_intr_wakeup_handler(&avic_gappi_wakeup_handler);
->>
->>        return true;
->>   }
-> [Severity: Medium]
-> Does the per-CPU GAPPI wakeup list need CPU hotplug coordination?
->
-> If a physical CPU is taken offline while a VM is running, any blocked
-> vCPUs queued on that offlined CPU's gappi_vcpu_wakeup_list might permanently
-> miss their GAPPI wakeups. Without a hotplug state notifier to migrate these
-> vCPUs, will they hang indefinitely?
-
-The concern is valid. However this behaviour currently matches the existing
-intel VT-d model, which also lacks CPU hotplug migration. The failure 
-requires
-hotunplug of the physical CPU, which is uncommon in production environment.
-
-As of now, we don't support hotunplug of physical CPU with the GAPPI.
-
->
->
-> [Severity: High]
-> Is there a missing module unload teardown for the wakeup handler?
->
-> This registers avic_gappi_wakeup_handler with the core kernel, but it
-> doesn't seem to be unregistered (via kvm_set_posted_intr_wakeup_handler(NULL))
-> during module teardown in avic_hardware_unsetup(). If the kvm-amd module
-> is unloaded, could a subsequent POSTED_INTR_WAKEUP_VECTOR jump to unmapped
-> memory and cause a kernel panic?
-
-Yes, module unload should unregister the kvm callback. Will include this
-in the next version of the patch series.
-
-Thanks
-Sairaj
-
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260626105906.14577-1-sarunkod@amd.com?part=4
-
+PiA+IEBAIC0xNDcsMTEgKzEyMCwxNSBAQCBzdGF0aWMgdm9pZCBlbmV0Y19zeW5jX21hY19maWx0
+ZXJzKHN0cnVjdCBlbmV0Y19wZg0KPiAqcGYpDQo+ID4gIAkJCQkgZXJyKTsNCj4gPiAgCQl9DQo+
+ID4NCj4gPiArCQliaXRtYXBfdG9fYXJyNjQoJmhhc2gsIGYtPm1hY19oYXNoX3RhYmxlLA0KPiA+
+ICsJCQkJRU5FVENfTUFERFJfSEFTSF9UQkxfU1opOw0KPiA+ICAJCS8qIGhhc2ggdGFibGUgZmls
+dGVyLCBjbGVhciBFTSBmaWx0ZXIgZm9yIFVDIGVudHJpZXMgKi8NCj4gPiAtCQlpZiAoaSA9PSBV
+QykNCj4gPiArCQlpZiAoaSA9PSBVQykgew0KPiA+ICAJCQllbmV0Y19jbGVhcl9tYWNfZmx0X2Vu
+dHJ5KHNpLCBwb3MpOw0KPiA+IC0NCj4gPiAtCQllbmV0Y19zZXRfbWFjX2h0X2ZsdChzaSwgMCwg
+aSwgKmYtPm1hY19oYXNoX3RhYmxlKTsNCj4gPiArCQkJZW5ldGNfc2V0X3NpX3VjX2hhc2hfZmls
+dGVyKHNpLCAwLCBoYXNoKTsNCj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gVGhpcyBpcyBhIHBy
+ZS1leGlzdGluZyBpc3N1ZSwgYnV0IEkgbm90aWNlZCB0aGlzIHBhdGNoIGNvcnJlY3RseSB1c2Vz
+DQo+IGJpdG1hcF90b19hcnI2NCgpIHRvIGhhbmRsZSAzMi1iaXQgYXJjaGl0ZWN0dXJlcyB3aGVu
+IHBhc3NpbmcgdGhlIDY0LWJpdCBNQUMNCj4gaGFzaCB0YWJsZSB0byBlbmV0Y19zZXRfc2lfdWNf
+aGFzaF9maWx0ZXIoKS4NCj4gDQo+IERvZXMgdGhlIHNhbWUgMzItYml0IHRydW5jYXRpb24gaXNz
+dWUgaGFwcGVuIHdpdGggdGhlIFZMQU4gaGFzaCBmaWx0ZXINCj4gY29uZmlndXJhdGlvbj8gTG9v
+a2luZyBhdCBlbmV0Y192bGFuX3J4X2FkZF92aWQoKSBhbmQgZW5ldGNfdmxhbl9yeF9kZWxfdmlk
+KCkNCj4gaW4gZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX3BmX2Nv
+bW1vbi5jLCBpdCBhcHBlYXJzIHRoZXkNCj4gcGFzcyB0aGUgYml0bWFwIGRpcmVjdGx5Og0KPiAN
+Cj4gZW5ldGNfc2V0X3NpX3ZsYW5faHRfZmlsdGVyKHBmLT5zaSwgMCwgKnBmLT52bGFuX2h0X2Zp
+bHRlcik7DQo+IA0KPiBTaW5jZSBwZi0+dmxhbl9odF9maWx0ZXIgaXMgYWxzbyBkZWZpbmVkIGFz
+IGEgREVDTEFSRV9CSVRNQVAgb2Ygc2l6ZSA2NCwNCj4gd291bGRuJ3QgZGVyZWZlcmVuY2luZyBp
+dCBhcyAqcGYtPnZsYW5faHRfZmlsdGVyIGV2YWx1YXRlIHRvIGEgMzItYml0DQo+IHVuc2lnbmVk
+IGxvbmcgb24gMzItYml0IGFyY2hpdGVjdHVyZXM/DQo+IA0KPiBJZiBzbywgdGhpcyB3b3VsZCB6
+ZXJvLWV4dGVuZCB0aGUgdmFsdWUgd2hlbiBwYXNzZWQgdG8gdGhlIHU2NCBoYXNoIHBhcmFtZXRl
+ciwNCj4gY2xlYXJpbmcgdGhlIHVwcGVyIDMyIGJpdHMgb2YgdGhlIGhhcmR3YXJlIFZMQU4gaGFz
+aCBmaWx0ZXIgcmVnaXN0ZXIgYW5kDQo+IGJyZWFraW5nIFZMQU4gZmlsdGVyaW5nIGZvciBhbnkg
+VklEIHRoYXQgaGFzaGVzIHRvIGJpdHMgMzItNjMuDQo+IA0KPiBTaG91bGQgYSBzaW1pbGFyIGJp
+dG1hcF90b19hcnI2NCgpIGZpeCBiZSBhcHBsaWVkIGZvciB0aGUgVkxBTiBoYXNoIGZpbHRlcj8N
+Cj4gDQoNCkVORVRDIGlzIHVzZWQgb24gQVJNNjQsIHNvIHVuc2lnbmVkIGxvbmcgaXMgYWx3YXlz
+IDY0LWJpdC4gVGhlcmUgYXJlIG5vDQppc3N1ZXMgaW4gYWN0dWFsIHVzZS4gV2UgaGF2ZSB0aGUg
+cGxhbiB0byB1c2UgYml0bWFwX3RvX2FycjY0KCkgZm9yIHRoZQ0KVkxBTiBoYXNoIGZpbHRlciBp
+biBzdWJzZXF1ZW50IHBhdGNoZXMuDQoNCg==
