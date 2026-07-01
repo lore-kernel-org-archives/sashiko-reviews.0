@@ -1,106 +1,154 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3101426EC0
-	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 11:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AE543E491
+	for <sashiko-reviews@lists.linux.dev>; Wed,  1 Jul 2026 11:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782903791; cv=none; b=BYIudZ+Z0WuwRKgvnblCWj7dUdHXJnF/+ERqcfVnTsRQPnb/zx6QOoVefm7b8PYlTRnUJpxYy++qb7ZWlW67J2XdE2kn9JMfVrMZd+O8yF34w3w2jtJmHrwmILXvYzfEAo+LkXI7jDWuQoNGsQQK7cBtbIgT2FumdtxWYMmZdIk=
+	t=1782904637; cv=none; b=dDoj8G8+gGyUMsZrRel9WJ4Dd7uH+ix4CNH5eSeMa8FL5GKXv0gmIAeLtiBVlZgp+jo76o/uolgzb0ugMgXoMhYmuq+zamLgF8vfO+MjHkZeSJyhVaoBJGA8+PUrd1bYR4JQOOmEvT6wDAy3TWAx+5zESzD8U5Vz2EeeCsbDIa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782903791; c=relaxed/simple;
-	bh=CW1sBGcXapxAElV48j+/oQiG1BhCRHnqzbDsyoNg1wo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TPDPlP9qCIDDgf9XkNbP8ix4uPs2djLgkhXLJe72yEHaAKU6uQc18Ec2UbfTBQeujgOWcIIVMwPiYgLeH189YWWLOZzZ4aOA1mfpcgqHxiaMIa9TLdty3nPKlmoyhzyE59d4IoL+EdR/Xc9eThQ5I4klNVCzbvroUxV9nrzxY6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=gFxGPz6u; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1782904637; c=relaxed/simple;
+	bh=x1xPAWVqmFFpSPA+VakWzfc+aEye5SR14V9oZ2uueRw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U+kPJrV5ucd8egFmiCqGcDojzyy6l7XS1lJXzg2UWbgU3+kmKTFaaV+cg4nBeu/TSM4sRbhj9HadiqVLNeL+O9PjoUztzcWW7wXqHZ4Zikll+SebuzTke5AFcq2OZvVw+d+L75HSXLp5Q1Unj8CNMVTwVv9DWBD3Cu5T7HCLrcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bbqk7s0d; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="gFxGPz6u"
-Received: from ideasonboard.com (mob-109-113-102-68.net.vodafone.it [109.113.102.68])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id EAACA1E48;
-	Wed,  1 Jul 2026 13:02:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1782903741;
-	bh=CW1sBGcXapxAElV48j+/oQiG1BhCRHnqzbDsyoNg1wo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gFxGPz6uV9LduFogwd4ZDrdTq3mYGuN0KYUTjR7PZJROdU3ooyo9l0tOR1uyZ3/Ke
-	 kvhQhHBgpwbNqRnTL9d8cKqa5BPI6NBrkK0yJIi3OxzB0m7dVlWLH7WvB5FLgDsD4Y
-	 nX9+RSsH5zCpP4JrRN/WdNL5rIObLngrDkyhu5qE=
-Date: Wed, 1 Jul 2026 13:03:01 +0200
-From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: David Carlier <devnexen@gmail.com>, linux-media@vger.kernel.org
-Subject: Re: [PATCH] media: mali-c55: fix dropped last AEC histogram zone
- weight
-Message-ID: <akTwVMepaJ8HgEgj@zed>
-References: <20260602185305.30759-1-devnexen@gmail.com>
- <20260602190943.1B01E1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bbqk7s0d"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782904634; x=1814440634;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=x1xPAWVqmFFpSPA+VakWzfc+aEye5SR14V9oZ2uueRw=;
+  b=bbqk7s0d8Pg9Pl8TklJIA7fnXp8ERBI5gQMtZdEFDW1vXEKPTR9/VkZf
+   Y06ZjiVJ36DEyM5MRwZdoqkINH10gytr9oCrqwyDGXANstYjPLm8Bgqnk
+   LrusVLKhkjnDFtq5wg8Nk9f8gCHMxtVb+giYkVy3US2O9G16KYt8ifhZ5
+   8ZAx9AoK+bvIPOKY/FQ7yqR1UBpraB0p/eDiM0VLz3Bj+Kx2O4XGrUsGA
+   OqvJnYlwzHYhl81QFSvoagfmE36wu07ZH2VvKFqg+fto9M9M/WYmHquE/
+   9CZe75JHWl0Xu8oAwDct5O/nOBLR04z0/Aho2+jg+nfHJapf2X1HfTzkW
+   Q==;
+X-CSE-ConnectionGUID: 8AfjvbynSvKZhGKNJnFZbg==
+X-CSE-MsgGUID: SyHA3Pc7SOyAsIR2Cyx1vQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11833"; a="87315782"
+X-IronPort-AV: E=Sophos;i="6.25,141,1779174000"; 
+   d="scan'208";a="87315782"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 04:17:14 -0700
+X-CSE-ConnectionGUID: vOBjFhP5QZCQJfdQOLC84A==
+X-CSE-MsgGUID: h1p8aTixQAajmMnrAJe8+Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,141,1779174000"; 
+   d="scan'208";a="248076056"
+Received: from unknown (HELO [10.239.158.49]) ([10.239.158.49])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 04:17:12 -0700
+Message-ID: <affe09f7-31bd-4d86-906c-9c6f92eb903a@intel.com>
+Date: Wed, 1 Jul 2026 19:17:08 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260602190943.1B01E1F00893@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 24/46] KVM: guest_memfd: Make in-place conversion the
+ default
+To: Ackerley Tng <ackerleytng@google.com>, sashiko-reviews@lists.linux.dev,
+ Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
+Cc: kvm@vger.kernel.org
+References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
+ <20260618-gmem-inplace-conversion-v8-24-9d2959357853@google.com>
+ <20260619005856.09DD81F000E9@smtp.kernel.org>
+ <CAEvNRgE6iKBhMYM64rgvuVEOvAFyNoryzpjTtSQRf5TcrLTepA@mail.gmail.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <CAEvNRgE6iKBhMYM64rgvuVEOvAFyNoryzpjTtSQRf5TcrLTepA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi David
+On 6/25/2026 7:47 AM, Ackerley Tng wrote:
+> sashiko-bot@kernel.org writes:
+> 
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] Unprivileged userspace can trigger a WARN_ON_ONCE if the host administrator misconfigures a module parameter.
+>> --
+>>
+>> commit bf8cb04a544d7b8235d73034e0febf195ab335c3
+>> Author: Ackerley Tng <ackerleytng@google.com>
+>>
+>> KVM: guest_memfd: Make in-place conversion the default
+>>
+>> This commit makes in-place conversion the default when the architecture
+>> supports private memory. It introduces a module parameter to override the
+>> default and adds a warning in the CoCo VM memory population path if in-place
+>> conversion is disabled without enabling per-VM memory attributes.
+>>
+>>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+>>> index 86c9f5b0863cb..5cb73543c03c8 100644
+>>> --- a/virt/kvm/guest_memfd.c
+>>> +++ b/virt/kvm/guest_memfd.c
+>>> @@ -1193,10 +1193,15 @@ static bool kvm_gmem_range_is_private(struct file *file, pgoff_t index,
+>>>   {
+>>>   	struct maple_tree *mt = &GMEM_I(file_inode(file))->attributes;
+>>>
+>>> +#ifdef CONFIG_KVM_VM_MEMORY_ATTRIBUTES
+>>>   	if (!gmem_in_place_conversion)
+>>>   		return kvm_range_has_vm_memory_attributes(kvm, gfn, gfn + nr_pages,
+>>>   							  KVM_MEMORY_ATTRIBUTE_PRIVATE,
+>>>   							  KVM_MEMORY_ATTRIBUTE_PRIVATE);
+>>> +#else
+>>> +	if (WARN_ON_ONCE(!gmem_in_place_conversion))
+>>> +		return false;
+>>> +#endif
+>>
+>> [Severity: Medium]
+>> Could this WARN_ON_ONCE() be triggered by unprivileged userspace if the
+>> administrator misconfigures the module parameter?
+>>
+>> If the system administrator sets kvm.gmem_in_place_conversion=0 on a kernel
+>> compiled without CONFIG_KVM_VM_MEMORY_ATTRIBUTES, it appears this warning can
+>> be reached from an unprivileged ioctl path calling kvm_gmem_populate().
+>>
+>> Since an unprivileged user creating a CoCo VM can intentionally trigger this
+>> warning, could this act as a host-side denial of service on systems configured
+>> with panic_on_warn=1?
+>>
+>> Would it be better to convert this to a pr_warn_once()
+> 
+> Sean, what do you think of using pr_warn_once()?
 
-On Tue, Jun 02, 2026 at 07:09:42PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [Medium] Endianness bug places the last AEC histogram zone weight in the wrong hardware register byte on big-endian architectures.
->
-> Pre-existing issues:
-> - [High] Casting the unaligned `zone_weights` byte array to `u32 *` causes undefined behavior and alignment faults.
-> --
->
-> commit 731a31e43f59014f133f6c66b9d8861ce15cfc76
-> Author: David Carlier <devnexen@gmail.com>
->
-> media: mali-c55: fix dropped last AEC histogram zone weight
->
-> The 15x15 AEC histogram metering grid has 225 per-zone weights, packed
-> by userspace as a u8 array. The driver writes the first 56 registers
-> (zones 0 through 223) in a loop, then handles the final register on its
-> own to keep static analysers from flagging the array access.
->
-> > diff --git a/drivers/media/platform/arm/mali-c55/mali-c55-params.c b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-> > index de0e9d898db7b..33e2232ec8f5b 100644
-> > --- a/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-> > +++ b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-> > @@ -212,6 +212,7 @@ mali_c55_params_aexp_hist_weights(struct mali_c55 *mali_c55,
->
-> [ ... ]
->
-> >  	for (unsigned int i = 0; i < 56; i++) {
-> >  		val = ((u32 *)params->zone_weights)[i]
-> >  			    & MALI_C55_AEXP_HIST_ZONE_WEIGHT_MASK;
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but could this cast in
-> mali_c55_params_aexp_hist_weights() in
-> drivers/media/platform/arm/mali-c55/mali-c55-params.c trigger an alignment
-> fault on strict architectures?
->
-> The zone_weights array is located at offset 10 within struct
-> mali_c55_params_aexp_weights. Because the configuration block resides at a
-> 4-byte aligned offset within the V4L2 buffer, the zone_weights array starts
-> at an address that is only 2-byte aligned.
->
-> Casting this unaligned pointer to a 32-bit pointer and dereferencing it
-> inside the loop triggers undefined behavior in C. On strict architectures
-> like ARM with SCTLR.A enabled, or when auto-vectorized by the compiler,
-> this can trigger kernel alignment faults.
+How about don't expose the module param when 
+CONFIG_KVM_VM_MEMORY_ATTRIBUTES=n? something like:
 
-This comment from the bot, even if not severe as it think it is,
-actually identifies a possible issue.
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -103,7 +103,9 @@ module_param(allow_unsafe_mappings, bool, 0444);
 
-As far as I can read unaligned access to device memory doesn't cause a
-fault on ARMv8 but it is not guaranteed to be atomic and will be
-realized by multiple loads (I'm sure it's more complicated than this ...)
+  #ifdef kvm_arch_has_private_mem
+  bool __ro_after_init gmem_in_place_conversion = 
+!IS_ENABLED(CONFIG_KVM_VM_MEMORY_ATTRIBUTES);
++#ifdef CONFIG_KVM_VM_MEMORY_ATTRIBUTES
+  module_param(gmem_in_place_conversion, bool, 0444);
++#endif
+  EXPORT_SYMBOL_FOR_KVM_INTERNAL(gmem_in_place_conversion);
+  #endif
 
-Would you be interested in addressing the above comment and send a
-patch to access params->zone_weights as a u8 * ?
+
+>> or perhaps validate the
+>> module parameter at initialization time?
+> 
+> I thought about this too, but didn't want to move it to initialization
+> time because this (populate) is probably the first time the kernel
+> knows for sure something is used weirdly.
+> 
+> Like, perhaps the admin did compile without
+> CONFIG_KVM_VM_MEMORY_ATTRIBUTES and also set gmem_in_place_conversion=0
+> but wants to use the host only for non-CoCo VMs and hence doesn't need a
+> warning, idk.
+> 
+>>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com?part=24
+> 
+
