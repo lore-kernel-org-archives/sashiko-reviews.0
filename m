@@ -1,143 +1,167 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EA138E8D8;
-	Thu,  2 Jul 2026 07:00:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D2038B135;
+	Thu,  2 Jul 2026 07:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782975621; cv=none; b=SRkRoli4RMtD2TBJf9goMCRSQLeFY3EN+aam/OiwZK29sDjBNANHyV3qq2L4loJrNjJoGN2yc7PaUQbUP9/azztWGTqXOb5DVUKNxcyw6CKA8G+6lVEtbsG1hXmlAf2I7QX1NdI644qF+BtVNV1MBBX95Gr6wuqXMLlrOLTTRq8=
+	t=1782977140; cv=none; b=cTI/v9Hf5oV6vr42YWKS/GzlAlbTVV5Iv79s7PARZwOK+dg52rlDeMshA1/TTwL9tLP+PnONdzQWnHE/QbRIvPHiR6zIQTBSOpIXvUrycGEkBCv8//7wG+mGeTRO98izcSrLBChkKL7rq7+6Q4o4abh2PNdl1zCzIry7rMxVUpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782975621; c=relaxed/simple;
-	bh=H0Q8gI21oGdzfUcOFvcxeAjKdH1I6nFAUlNmk/tpM3A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R/rbFE2XH+oJeNQDZc3EacOz5pe15YW11EYeDqOFy4AYzqK39gtddRdwHJ7Ru5LHaBwgyPyPk5ZjXOaCOrlEwsR31jQCzp4YQf0eLWyhce77RM3q39GmiL1xv4OAAQ52Yf28wWnRSKig9hK3acVuMQJxNowani8JzAvmKVS5p50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oH/H+1jI; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782977140; c=relaxed/simple;
+	bh=0iiVKVZWDyomns5F+CK/MTgpBarFr0OL/0hjPk+/6E8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ykpneu5nDPqpJAL6nguzzEuYEFh4dUX+0xXsXSdVQpz/zruvOYoDBgvrodkqw0FZNCsG4IB0G2cKkMxw3bSejh/w6T+nJ2gAz5ObozFKuOXy06ScP/8dvKy4lioBM+vR3DPQI8DOeGjCDa9XtdBN8Ti4CbPcwD9yyAIWVqs3uJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NT9EfwBM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oH/H+1jI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940381F000E9;
-	Thu,  2 Jul 2026 07:00:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782975620;
-	bh=cpCiJPZNrQ4osQRHla7T/Pi15rCP7atqnvJKmzSanak=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=oH/H+1jIY2EuHRQEfloOyzzqOO4JbppOdWTtS0eBvBbj0Aizmrs+BnocZzsSEA2Pu
-	 NOG5cmg6FGn5BQTSdPm7bFV8hrWHo2cqpKN/twGIY54jN+vhCzFuXrKsc6G3BJmabE
-	 kpWX77ppWyz7A8nEUWyPkRLqjr7+oDOHa0DghgtOe+aFBz1OUW8koiXZQ+nfF8S+Kk
-	 7BEYy/hnQtPt3TppqD5WPPQI1IvWQ4ycEdrdixwqWui4Yn2/qC6gEeqh3flEWilh6v
-	 t55MnRAoIG43rZLFt4ioTSLBbr07vYP3AkCNnQg4CrS5h06Xh5Asb1Agmd5+jDwvEV
-	 nmaDbyCrD8Dgg==
-Message-ID: <3acde700-be7c-4ca0-b646-1dc5f6976cad@kernel.org>
-Date: Thu, 2 Jul 2026 16:00:18 +0900
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NT9EfwBM"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6621KF8p3009445;
+	Thu, 2 Jul 2026 07:25:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=1KgI9KYgIHfDrgS6mLJj5Qx+
+	J6n7/Xh9H91frP5TMXk=; b=NT9EfwBMIFsTkhUcTaoTrZaIh7Te9Kr00UpBhGkB
+	OoSXklIbMbqYIgheYl4WfGLijZQBXkiSeW+mN0AqAoL2AnHS9iI0PRIyQjI02k0D
+	DAmmS5RWg8hl9jtva6IGV6hcFNhOpdg/01jLQ7reOaxZ9vK3fLeCfoQwbZ4uhfAQ
+	2r+2KZWWjj4KTTRIusvSVGprEFDstrOpVzReS1TtOT5dzNpL3LnPakFithPv+cQN
+	nM5kdypDKwb59ckLVBZ/Z22M1zHlvWxsxyLQRJX2UzgRkVedQfaxy/3t8CeMCRHA
+	Mm//NrPgXdeHfApDn3j8e/ur8fa1bIM9oWQ2rCMt6rByKA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f579rts50-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 07:25:35 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 6627PWkl003794;
+	Thu, 2 Jul 2026 07:25:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4f27kknuc1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 07:25:32 +0000 (GMT)
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 6627PWNw003786;
+	Thu, 2 Jul 2026 07:25:32 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 6627PWeS003785
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 07:25:32 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id 6B7D5B2B; Thu,  2 Jul 2026 12:55:31 +0530 (+0530)
+Date: Thu, 2 Jul 2026 12:55:31 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Fix pm4125 vbus regulator
+ compatible and constraints
+Message-ID: <20260702072531.bs2242bgfcvpuyh7@hu-kotarake-hyd.qualcomm.com>
+References: <20260701-add_pm4125-vbus-reg-v2-0-6bac2bac7131@oss.qualcomm.com>
+ <20260701-add_pm4125-vbus-reg-v2-3-6bac2bac7131@oss.qualcomm.com>
+ <20260701103457.73E251F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] ata: libata-scsi: support reporting options 2 in
- REPORT SUPPORTED OPERATION CODES
-To: sashiko-reviews@lists.linux.dev
-Cc: cassel@kernel.org, linux-ide@vger.kernel.org
-References: <20260702063412.1892584-1-dlemoal@kernel.org>
- <20260702063412.1892584-5-dlemoal@kernel.org>
- <20260702065227.EA8671F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260702065227.EA8671F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260701103457.73E251F00A3A@smtp.kernel.org>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA3NCBTYWx0ZWRfXwjL/P5oXaSNW
+ TqTisV2CRtR0au+E9aj8OxPn4zMGAKL1O/JSn+rg6fdTgA70KSdAMPXVV4OvkAOwTq9Qgvf3e+m
+ hH6vgcctYekBLwFd1k9eXYTzk0wPG1ANI11zqQ5FMB8f0prsvB9jCQBXPogqGmENzPG989zTQpp
+ K4sGjXZraDLeXAbVDGWZmxHCu5XUmt25yx66t+55yvUJFrra/87PtEfy66UyfC8PbuW1lBl1dgm
+ 5co7Q8nzFe0Bb+6Ugu8Y+7qNczZSNg/fUeBgJ8Fu7wiFS2jBcBpiHcBJMdYq4UEQXKhmWO3jE24
+ PWtzOYo1B9ccrl7w5Mk+TOBzl/2cjUamJgcMHDftBbiFP2ZWzd6mIDhzFkXUoXtVoNqYUzTbg5A
+ ALcyKs2V/Z5XqoYsOfHlV4MxdpqVAVxf83nD1/NTia6ntU8NNJbquyhbgY4Mv3fZAVaLrw/uYqU
+ u6zFVJUvl2kVddB6YAQ==
+X-Authority-Analysis: v=2.4 cv=X8pi7mTe c=1 sm=1 tr=0 ts=6a46126f cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=LV1d6kUfYfGFZ_KTQQsA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: lu_KQoT83fvN7rQTuekGCn3jfE-n4rFK
+X-Proofpoint-ORIG-GUID: lu_KQoT83fvN7rQTuekGCn3jfE-n4rFK
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA3NCBTYWx0ZWRfX6o5Ii8rnHl2h
+ xhLaJnPu+cnRxFsjbYsPK/MWJ6TWkz8o+j4vWIwRJc9we/9cdSMxa9dzfwf0S3NvGiE1+NoNfrp
+ GFHPDK/xoYaFbkyZIzOAEVVAEJpA8IQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020074
 
-On 7/2/26 15:52, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Reporting options 1 and 2 incorrectly terminate with CHECK CONDITION (INVALID FIELD IN CDB) for valid queries, violating SCSI protocol.
-> - [Medium] Reporting option 3 incorrectly evaluates the REQUESTED SERVICE ACTION field for commands that do not use service actions.
+On Wed, Jul 01, 2026 at 10:34:56AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The `PM4125_VBOOST_CFG` macro is defined twice in the driver with different values, causing the voltage selector address to be shadowed by the OTG configuration address. This leads to register corruption when applying the new device tree constraints.
 > --
 > 
-> commit 8b0fcbdec2fbb5690930a99f6f8a7faf9e8bd511
-> Author: Damien Le Moal <dlemoal@kernel.org>
+> commit ee5aeefd579f49a0fd9de6178216fb53f958a898
+> Author: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
 > 
-> ata: libata-scsi: support reporting options 2 in REPORT SUPPORTED OPERATION CODES
+> arm64: dts: qcom: Fix pm4125 vbus regulator compatible and constraints
 >     
-> Add support for the reporting options value 2 of the in REPORT SUPPORTED
-> OPERATION CODES command in ata_scsi_report_supported_opcodes(). With this
-> reporting option, the specified opcode to check must have a service
-> action. Use ata_scsi_supported_cmd_has_sa() to check for this and fill the
-> command reply buffer using the one command format based on the command
-> support.
+> Remove pm8150b fallback compatible from pm4125_vbus and fix regulator
+> constraints in qrb2210 DTS files to use microvolt instead of
+> microamp.
 > 
->> diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
->> index 86ac41a7d81ab..e75ed573e234b 100644
->> --- a/drivers/ata/libata-scsi.c
->> +++ b/drivers/ata/libata-scsi.c
->> @@ -3737,6 +3737,13 @@ static unsigned int ata_scsi_report_supported_opcodes(struct ata_device *dev,
->>  			return 0;
->>  		}
->>  		break;
->> +	case 2:
->> +		/* One command format, must have sa. */
->> +		if (!ata_scsi_supported_cmd_use_sa(cdb[3])) {
->> +			ata_scsi_set_invalid_field(dev, cmd, 3, 0xff);
->> +			return 0;
->> +		}
+> > diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+> > --- a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+> [ ... ]
+> > @@ -235,8 +235,8 @@ &mdss_dsi0_phy {
+> >  };
+> >  
+> >  &pm4125_vbus {
+> > -	regulator-min-microamp = <500000>;
+> > -	regulator-max-microamp = <500000>;
+> > +	regulator-min-microvolt = <4250000>;
+> > +	regulator-max-microvolt = <5000000>;
 > 
-> [Severity: Medium]
-> Does this validation check incorrectly abort execution with a SCSI error for
-> option 2 commands that are unknown?
+> [Severity: High]
+> This is a pre-existing issue, but does adding these voltage constraints now
+> trigger a hardware register corruption in the regulator driver?
 > 
-> According to SPC-5, option 2 queries for unsupported commands (and similarly,
-> option 1 queries for commands with service actions) must return SUPPORT=001b.
-> Instead, this implementation erroneously aborts the command by calling
-> ata_scsi_set_invalid_field(), preventing the code from falling through and
-> correctly populating the response buffer.
-
-Sashiko, please reread the SPC specifications. It says:
-
-If the REQUESTED OPERATION CODE field specifies an operation code for
-which the device server does not implement service actions a, then the
-device server shall terminate the command with CHECK CONDITION
-status, with the sense key set to ILLEGAL REQUEST, and the additional
-sense code set to INVALID FIELD IN CDB.
-
-Which is exactly what we are testing here.
-
+> Looking at the driver in drivers/regulator/qcom_usb_vbus-regulator.c,
+> PM4125_VBOOST_CFG is defined twice with different values:
 > 
->> +		fallthrough;
->>  	case 3:
->>  		/* One command format */
->>  		sa = get_unaligned_be16(&cdb[4]);
+> drivers/regulator/qcom_usb_vbus-regulator.c:
+>     #define PM4125_VBOOST_CFG		0x52
+>     #define PM4125_VBOOST_CFG_MASK		GENMASK(1, 0)
+>     #define PM4125_VBOOST_CFG		0x56
 > 
-> [Severity: Medium]
-> If an initiator issues REPORT SUPPORTED OPERATION CODES with option 3 for a
-> standard command that lacks service actions, while providing non-zero data in
-> the requested service action field, wouldn't this unconditional extraction of
-> sa cause a regression?
+> Because of this shadowing, the pm4125_data struct initializes both .otg_cfg
+> and .vsel_reg to 0x56:
+>
+> drivers/regulator/qcom_usb_vbus-regulator.c:
+>     .otg_cfg = PM4125_VBOOST_CFG,
+>     .otg_en_src_cfg = PM4125_OTG_EN_SRC_CFG,
+>     .vsel_reg = PM4125_VBOOST_CFG,
+> 
+> With the new regulator-min-microvolt constraints added by this device tree
+> change, the regulator core will now call .set_voltage_sel on this regulator.
+> 
+> Will this cause the driver to incorrectly write the voltage selector mask
+> to the OTG config register at 0x56 instead of the intended voltage selector
+> register at 0x52, thereby overwriting OTG configuration bits?
+> 
+Yes, you're correct, I will fix in the next patch by splitting the defines:
 
-No. Service action is not ignored with reporting options 3.
+#define PM4125_VBOOST_OTG       0x50
+#define PM4125_VBOOST_SEL       0x52
+#define PM4125_VBOOST_CFG_MASK  GENMASK(1, 0)
+#define PM4125_VBOOST_CFG       0x56
 
-> SPC-5 dictates that if the requested opcode does not have service actions, the
-> requested service action field must be ignored. By unconditionally extracting
-> sa here, it will fail to match in ata_scsi_get_supported_cmd() since
-> non-service-action commands expect sa == 0, improperly yielding SUPPORT=001b
-> for a valid, supported command.
+And updating pm4125_data to use PM4125_VBOOST_SEL for .vsel_reg so
+.set_voltage_sel writes to the correct register.
 
-No. SPC says:
-
-a) the operation code specified by the REQUESTED OPERATION CODE
-field specifies an operation code for which the device server does
-not implement service actions, the REQUESTED SERVICE ACTION field
-is set to 00h, and the command is supported; or
-...
-then the command support data shall indicate that the command is
-supported (i.e., the SUPPORT field (see table 262) is set to 011b or 101b).
-Otherwise, the command support data shall indicate that the command is
-not supported (i.e., the SUPPORT field is set to 001b).
-
-Set for commands that do not support service actions, the command must have
-service action set to 0.
-
-
--- 
-Damien Le Moal
-Western Digital Research
+regards
+Rakesh Kota
