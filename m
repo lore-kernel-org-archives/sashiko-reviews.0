@@ -1,64 +1,150 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72B08C1F;
-	Thu,  2 Jul 2026 02:30:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F4F30EF80
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 02:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.223
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782959459; cv=none; b=QQPgAK5Iyos0PkpOKmpD2OHMz3KUGZkc5SnETaVjRDghq0dif2Ep/oHqEH6Rv+noO3gudKuvXOglvFLJ70pmkIfvp/Aj89KzeewodiBr044JSucGZ/mJN5MJGXkMqz0QA80nEsz9db90mAZ6gnQsH6iUfWP5sInJQHAFmW8egag=
+	t=1782961167; cv=none; b=X6NRHIKwBJLfN1qoKQ8H/cdcSR/brcGDm8WUgYoC8gmHDE49YQXjga45qlIUtgj+nETQhLyFx/KVfNzkKAaGkwtK5HLkibTUlsZDVIaPvhFOReTDreMzre1ucaPEg0nj5vf1t5msCU1IZB+4d5SCq+FFIfjFMCPPP0XpsCTvxnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782959459; c=relaxed/simple;
-	bh=ndW/zcCiho46k+Tr1GgNHaAqabWpf1/jbZOklm+VzSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b+A/O2Ptjs2h8e3ijxuGWcdjUEIG+5DU7Nn+cMVMK31OYtMLR5h0yTwmLpcSygtGpSK2ucS4jrWn1ykWADFyc928hz9H1KFWHkm2q9OQnfb5JQ7s8LzA+bh1I3IRwkD1Efvr2qsK5/f3zlsY1tSZDhpogbDjTtVo2aEnL4uxcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HSVVos9Z; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782961167; c=relaxed/simple;
+	bh=DebgqhEZkgj58ldLUI9wjiRFF5lhNDqWhIKmbG05g9Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qzbOhiFcddIbsQUD1Vuge8Pr9piXa5vXbO1sNfCWPChgx/lKJTLlRqqFpmTUgvukcGWu2qsM72+EuXbzTi7oNeiNaNYSUWdnOJXzyhnVXPFzSffQ2iXTZ5o28oavh1qo8Aru47XPL2R32ByjlpdJlys+O1Uk6gZuieWNymwdg5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=h-partners.com; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=TXCA26dX; arc=none smtp.client-ip=113.46.200.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HSVVos9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE04F1F000E9;
-	Thu,  2 Jul 2026 02:30:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782959458;
-	bh=zM2YK1IZQLcYH2u+DadITFaarNNr/CUp+KbrmKvbkVI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=HSVVos9ZzfxoWF+OkJfEOE2pRPniWWNnjkxSANUqGKXcFh96h5CMtdmXR+kspbWJ/
-	 yFrX5SrHkQX1i0R41r+ENbkSQfnmhTy2VzEpDz8IRfagSxbwgqd/o46PweMnvi0K8F
-	 JXP/vglWlsO5EvIYgI73xYXZvkWi1FEISVMJJE5UQMR2SicwgB8mNphS1M6gWS3V05
-	 +Ig+6aDtybk41/iTybhpaMoWuOqHrlT6DCt+OUwRyxm4WPChMDddk+QBBm14/WmkoC
-	 2fd5OuiZlzdX30lg3XVHERhtk7BFdsBz0Ai6ludAGjmOuTi6QxIUS73YaMYebnzAvw
-	 u57mOq+qCH2Dg==
-Message-ID: <16780c1b-418a-4555-b4bd-d442cedd620e@kernel.org>
-Date: Thu, 2 Jul 2026 11:30:56 +0900
+	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="TXCA26dX"
+dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=JwkcEgQbKhJFQ80C4M37yQGc4WQLmieDThvYuzb8Or0=;
+	b=TXCA26dXGlA9EBDxFByG8Y0EI22xMO+KUdeL2N+oT6VhNa/MaxdMPbOe7Dv4aNlyAiZACMSpu
+	/bEvhz81BujNAmTRiE20sdLn8P17LDbF0N5CYGgPy5s9r4ajW1nGsFTG51eDVZ7ai7sDZb6/o1n
+	VuSmPRpARE+VWuEGWxlkRhY=
+Received: from mail.maildlp.com (unknown [172.19.163.214])
+	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4grLvz67XKzmV7h;
+	Thu,  2 Jul 2026 10:50:07 +0800 (CST)
+Received: from kwepemj100018.china.huawei.com (unknown [7.202.194.12])
+	by mail.maildlp.com (Postfix) with ESMTPS id 2E46B40580;
+	Thu,  2 Jul 2026 10:59:18 +0800 (CST)
+Received: from [10.67.120.108] (10.67.120.108) by
+ kwepemj100018.china.huawei.com (7.202.194.12) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.36; Thu, 2 Jul 2026 10:59:17 +0800
+Message-ID: <a2ec2355-9e09-1a64-b36e-42501a604bbc@huawei.com>
+Date: Thu, 2 Jul 2026 10:59:17 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ata: libata-scsi: limit simulated SCSI command copy to
- response length
-To: sashiko-reviews@lists.linux.dev, Karuna Ramkumar <rkaruna@google.com>
-Cc: cassel@kernel.org, linux-ide@vger.kernel.org
-References: <20260702020142.3399851-1-rkaruna@google.com>
- <20260702021411.B01331F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260702021411.B01331F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH] scsi: libsas: fix HA resume deadlock and hisi_sas
+ disk-wake race
+Content-Language: en-CA
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-scsi@vger.kernel.org>
+References: <20260630065157.421203-1-yangxingui@huawei.com>
+ <20260630071935.A15C61F00A3A@smtp.kernel.org>
+From: yangxingui <yangxingui@huawei.com>
+In-Reply-To: <20260630071935.A15C61F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepemh500001.china.huawei.com (7.202.181.130) To
+ kwepemj100018.china.huawei.com (7.202.194.12)
 
-On 7/2/26 11:14, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+
+
+On 2026/6/30 15:19, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] The `flush_workqueue(hisi_hba->wq)` placement is ineffective, failing to prevent the autosuspend race for newly discovered PHYs.
 > 
 > Pre-existing issues:
-> - [Critical] The defensive bounds check `WARN_ON(len > ATA_SCSI_RBUF_SIZE)` is ineffective because it evaluates after the `actor` callback has already performed an out-of-bounds write.
+> - [High] PHY down events are silently dropped during resume because `HISI_SAS_RESETTING_BIT` remains set, permanently leaving libsas state out of sync.
 
-Karuna,
+I've sent v2 which removes the flush_workqueue() entirely, as it is 
+unnecessary.
 
-Sashiko has a good point here. Let's work on fixing this with an incremental patch.
+> commit ce8bc2a47295d4675bf4efa43c713662a8cd5696
+> Author: Xingui Yang <yangxingui@huawei.com>
+> 
+> scsi: libsas: fix HA resume deadlock and hisi_sas disk-wake race
+> 
+> This patch resolves a deadlock during HA resume by moving the
+> PHYE_RESUME_TIMEOUT notification to after sas_drain_work(). It restores
+> the draining sas_resume_ha() behavior in hisi_sas and introduces a
+> flush_workqueue() to prevent an autosuspend race.
+> 
+>> diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+>> index 213d5b5dea94f..901f508e8be77 100644
+>> --- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+>> +++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+>> @@ -5262,14 +5262,8 @@ static int _resume_v3_hw(struct device *device)
+>>   	}
+>>   	phys_init_v3_hw(hisi_hba);
+>>   
+>> -	/*
+>> -	 * If a directly-attached disk is removed during suspend, a deadlock
+>> -	 * may occur, as the PHYE_RESUME_TIMEOUT processing will require the
+>> -	 * hisi_hba->device to be active, which can only happen when resume
+>> -	 * completes. So don't wait for the HA event workqueue to drain upon
+>> -	 * resume.
+>> -	 */
+>> -	sas_resume_ha_no_sync(sha);
+>> +	sas_resume_ha(sha);
+>> +	flush_workqueue(hisi_hba->wq);
+> 
+> [Severity: High]
+> Does this flush_workqueue() placement miss newly queued discovery events?
+> 
+> sas_resume_ha() drains the libsas event_q and disco_q. By flushing hisi_hba->wq
+> after this drain, any hisi_sas_phyup_pm_work items on hisi_hba->wq will queue
+> PORTE_BYTES_DMAED events to event_q that bypass the drain.
+> 
+> Since hisi_sas_phyup_pm_work then calls pm_runtime_put_sync(), its PM reference
+> is dropped. When _resume_v3_hw() returns, the system PM reference is also
+> dropped, allowing the controller to autosuspend while the missed discovery
+> works execute asynchronously and attempt to send IO to a suspended controller.
+> 
+> Should the flush be placed before sas_resume_ha() so the generated events are
+> caught and synchronously processed by sas_drain_work()?
 
+Given that the flush is a no-op in the normal case and the PM reference
+counting already protects against the race in the late-arrival case, v2
+removes the flush_workqueue() entirely and removes the corresponding
+justification from the commit message.
 
--- 
-Damien Le Moal
-Western Digital Research
+> 
+>>   	clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but are PHY down events silently dropped during
+> resume because HISI_SAS_RESETTING_BIT remains set?
+> 
+> In _resume_v3_hw(), HISI_SAS_RESETTING_BIT is kept active across the
+> sas_resume_ha() call. If a PHY loses its link during this time, the hardware
+> interrupt handler drops the event:
+> 
+> drivers/scsi/hisi_sas/hisi_sas_main.c:hisi_sas_phy_down() {
+> 		if (test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags) ||
+> 		    phy->in_reset) {
+> 			dev_info(dev, "ignore flutter phy%d down\n", phy_no);
+> 			return;
+> 		}
+> }
+> 
+> When HISI_SAS_RESETTING_BIT is finally cleared here, it does not call
+> hisi_sas_rescan_topology() to recover dropped events. Could this permanently
+> leave libsas state out of sync if a PHY disconnects during the resume wait?
+
+this is a pre-existing issue. This patch does not
+introduce or worsen it: it restores the pre-fbefe22811c3140 behavior
+where sas_resume_ha() (the draining variant) is used, so the
+HISI_SAS_RESETTING_BIT window is the same as it was before that commit.
+This issue should be addressed in a separate patch.
