@@ -1,64 +1,73 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013020.outbound.protection.outlook.com [40.93.201.20])
+Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8A63914E4
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 07:31:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F9E396B68
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 07:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.178.238
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782977491; cv=fail; b=kTDkg+HCVECVVPzRPktynl33ik4xya9tS/OeH67FLcKG1VqIhAL7O8Hhxr2a6uw806IssiOD/GMfXc3mT+vBicSyXP74L4YzsDvG+AECG76mk9wpL83ngEltqX/K1LuH+K8G6uUAW1MPmWFLj3Rs+f37gkQsUPb21vmJZFq2l/s=
+	t=1782978110; cv=fail; b=GQ0eMZ7Zv1KFSDcAB8Ux3TsIj8QnHOrCVn1fZPV4qfzoPopQTz4LSli+musNeB00QxIaBMPQgDor97zzYuVO1MnwiSlVPL8sfoGIrawYdvzYxaBe5eC72cnNraRWOBKC6BD+VbLTH4cNtU9oP6S2hVFDY6qnbj7Ztus1XnqoBac=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782977491; c=relaxed/simple;
-	bh=s9eSXT6Y9caLp7gdQQ9ClVSVpov8bn1rDUoWRJkAqs4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=sr0pAv5cyUU1WVPr2EuLJXNqnFffmtnb4gD0n+Y2uVB3DZyAWXLzbrkx1/+9Z0QyG/ptwXfcL9SceDmYiZfCC8Alpus3m/VaNBYmZY43tZIvirj9h5t6RctLDelHrFv+xPTlBJH7G51T3yMopJky8IKaMzP6KZG6CcRXE2WIXcc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LsH1mhns reason="signature verification failed"; arc=fail smtp.client-ip=40.93.201.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1782978110; c=relaxed/simple;
+	bh=LSS2ZaZcS8vH9A0eslrBJXnCKu1XuKhjoptGfQZuJpg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=mH3e7jc/RwvxxyZr273JUKZ5T7q/QOv/yVOtiiObP8cFb0DO28Hoe68foPGaUm7k9fgwpfWonQk7h3t3kUPyB/8+088XvatgayS9ljHbG2IJboCjY5yO42QWI1axLiOiNOrT0pZSdYQa1jFSkM/LBGmO8xCsnLVFtD/OMMW7cqw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b=gzTegtbA; arc=fail smtp.client-ip=205.220.178.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LsH1mhns"
+	dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b="gzTegtbA"
+Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6625WC0T1097531;
+	Thu, 2 Jul 2026 07:41:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
+	 h=cc:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	PPS06212021; bh=99b7weVmSH7NI4XE1U20nLW26v+XQ8BIm1OCZmdicaI=; b=
+	gzTegtbAohDLGMqjH38MKFO5vxH+3EiLNCABrrQ6ywJ3HuNy9qyHOFpA3NuwqkZy
+	wKehTShawBUCyE5kzKzmbIDvYpzvyqFlemgRiC04BfKTRY8az388ZRt9K1onzN+J
+	Amra9muWEDVpHBD/hR3NvcQlbaVQJ2Z4mQXSF27J09hiIEFGNYv8GJB1huPbmHRb
+	lxC/eqrgqs0GNhPJhGzbHQ4VBaGS79xdp1QU0WMqOdIX7OcXEQhQZ6ttnrUN9OIp
+	R0MkjVeLYclOh+V5vSczyAdlC7v2l42Zddt4fu8EAX3matrLQmsKfZ8O/JeqJ5at
+	JSjGWsG+dO/wqtVHo49OHA==
+Received: from bn8pr05cu002.outbound.protection.outlook.com (mail-eastus2azon11011067.outbound.protection.outlook.com [52.101.57.67])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4f23r0f4md-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 07:41:42 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Pf4BUHJdP9psjTQasCRsdnJT67PmpxmXOn0eCKaURIgn1Yct1A/35Ln5nBq9a4keAhRLARjvZY23jbfKRFy5704b/6hpt3CmEfzgm3aa4Uj2bLYtbFEwZB/4KnydacNCcAhvYyNmVnyweTmV1yPw1I0Hfad+6sPH9xKjSNGN6hDJF/zEVZQHQ7IMTJPCCCfA7mopZUWu6fdfCC+thPz4a9lByj6re8RzwcQVLqHDUNNUK2LlKIPIuKd+EfzEo/uWnnfaYL25sREYTVSS7Nlkr1I79TJHTQ58T+U5A63GPjBnIvg90oZ8/Q3OJL0sgGSG4B24N7R4FTChAjPXWZdUPQ==
+ b=nDcLNthb5/JlEwjx+Rk3NaiIslrHb1+yxel7YAF5XUxcUBDeTzz8xgSKc2CZaWH1V7k5k1fNz0SGNmdGFPnGhEyyavIHNFzLJghPM3xFtBkzhKFe6jxZ6aYRxvmc/NEPLHCGtNEfz+L67qR17LOyIsqqy5xnNnQDw1DWoteLeo/+fEAMTl88cLup0qrGRtRN2O5BwsOdXploh1YizGiPNzxBQbtRZVw0WzgoNwo+odbasIE1+7+4H4e+jtBCZQRHNjsNcLrxa6IojRiaxm0cB4YpoRa1zGrujQ3WkMDiIiLOvnNwKnI+M/OCdFubhOAOEb5VRmWzpD7rnt/B0dTrRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uDASgzq2jUIlNyFdvcbrtROXrfvUOGAT9mzxJxH8O8Y=;
- b=iOJzrodnnytAWQasFjn1vCjulAih350CFoDwGyHjdHcxVVafNdom/Gk+69RyZy7olSiEbYJv6qfGxBnOi9N3jhJgAp7udHS1qLzs5hGbuePm3GdrR70qfI9i4zhwtrFVDQSFFjY097qL2HTTUNfPeJP3F3+JO6yI43/rKci7KOUoVF9T/qhalExfU18Wokhrnym9x5IhcVfQayGorev2bVAZRJzwdkGqLboOdj+bYJHTXTePmWw8KH6VmQQaTfzAcCqutHIEyKdkYa3jhgUNudwU+3/A+RU7J6d9Z0gPtuNsUnbfCwblOf5ZAwCcIG195FX0f1wlMp//RJpv2MmLxQ==
+ bh=99b7weVmSH7NI4XE1U20nLW26v+XQ8BIm1OCZmdicaI=;
+ b=LW5habxbbl66FSk6awqNReGYsPB8AUnQtiyVyJEhAaA0gtee562rIc7KIE0lp2nDqFO5olNtuoij7IcoPPjC+N+m79O0XLIp+5JqSuJLvzVS9FwwVubVy+/z0hmk9oFLuLuZyfmzMphEgJQyZpjq4iqvc+jiGIQDaTctYoY41LB8IlS042p9XWe672zZH/AyCYD1grvAy1VSXKVsrRGHa4HAe8UOykFoFbSZ6R+/SGuOwZ2c4ow83Mx9ouh0JZSw6mA7/T/FZsi4PEo4Yd1qXlPDalEJfAMZqBbttTxjzw6R2QhBan0DgrFbu6V5UOWiGFqxdR5JY5Dz0NaOF759UQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uDASgzq2jUIlNyFdvcbrtROXrfvUOGAT9mzxJxH8O8Y=;
- b=LsH1mhnsgtYAS4XqhRwRiVomQw1ochQ9aH/GQv99KCIKTVquajo4zDcpI+A5pmGjOUNqZ4KHLWmo0JSkZPRAKELbjbnF/IYsJOl5qiHFFYdpfP0ib4vkkDo5q3NHHq1Vk4TRxzkCcPC2RQbChsYRcnyEq0MgI4I4gBKgcF2v513pe0HRCAeiM3Rw3rfukHcxKSDXiIfkZTtEIb5SiQBG2iTB8jW/wDqEAG6NOFXdeo7tJgF1y4g6k0oYAh/FyJUmN4+DUxxu50BQI+nNhBD1kx4eE5GdeCi3fD4eUCQQZ3J7uDCFgyXsnZkMK/5XzQDYMFwl4GZyZ8P2xy+yvQVQMA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
- by SA3PR12MB9226.namprd12.prod.outlook.com (2603:10b6:806:396::20) with
+ smtp.mailfrom=windriver.com; dmarc=pass action=none
+ header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
+Received: from CH0PR11MB5332.namprd11.prod.outlook.com (2603:10b6:610:bf::17)
+ by BL1PR11MB5955.namprd11.prod.outlook.com (2603:10b6:208:386::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Thu, 2 Jul 2026
- 07:31:24 +0000
-Received: from BL0PR12MB2370.namprd12.prod.outlook.com
- ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
- ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0181.008; Thu, 2 Jul 2026
- 07:31:24 +0000
-Date: Thu, 2 Jul 2026 15:31:18 +0800
-From: Richard Cheng <icheng@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] tools/testing/cxl: Enable zero sized decoders
- under hb0
-Message-ID: <akYTPc5texS6oUo9@MWDK4CY14F>
-References: <20260625092857.41139-1-icheng@nvidia.com>
- <20260625092857.41139-3-icheng@nvidia.com>
- <20260625094602.8DB0E1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260625094602.8DB0E1F00A3A@smtp.kernel.org>
-X-ClientProxiedBy: TP0P295CA0016.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:5::20) To BL0PR12MB2370.namprd12.prod.outlook.com
- (2603:10b6:207:47::27)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Thu, 2 Jul 2026
+ 07:41:38 +0000
+Received: from CH0PR11MB5332.namprd11.prod.outlook.com
+ ([fe80::8f86:8d08:45bf:ec13]) by CH0PR11MB5332.namprd11.prod.outlook.com
+ ([fe80::8f86:8d08:45bf:ec13%6]) with mapi id 15.21.0181.008; Thu, 2 Jul 2026
+ 07:41:38 +0000
+Message-ID: <b0ad6ac3-2c97-4b8c-8dfe-365cff9b0645@windriver.com>
+Date: Thu, 2 Jul 2026 15:41:31 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ext4: prevent inline data creation on extent-based inodes
+To: sashiko-reviews@lists.linux.dev, Jan Kara <jack@suse.cz>
+Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
+References: <20260702010906.3213788-1-yun.zhou@windriver.com>
+ <20260702013848.129961F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Zhou, Yun" <yun.zhou@windriver.com>
+In-Reply-To: <20260702013848.129961F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SE2P216CA0102.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:2c4::17) To CH0PR11MB5332.namprd11.prod.outlook.com
+ (2603:10b6:610:bf::17)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -66,144 +75,140 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SA3PR12MB9226:EE_
-X-MS-Office365-Filtering-Correlation-Id: c6e0a662-0e21-4cef-26b8-08ded80beb03
+X-MS-TrafficTypeDiagnostic: CH0PR11MB5332:EE_|BL1PR11MB5955:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3cfdde6-9548-4387-2d14-08ded80d5998
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|18002099003|56012099006|11063799006|5023799004|4143699003|6133799003|22082099003;
+	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|18002099003|22082099003|56012099006|4143699003|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	WoyWpTuXFWfZ+oO2JfNwU+CD1+sxke+qRI7GVIkZfXhT9ISnFTI/isX3iowY6SzgAuHP7ALdkFe4gMOAxUuL1uEJ03cj590FcZuVLdp7Kp8WUA1qImdBxI98Wk0ZOhcs/bXUsOfnXHgF0MW6Myw5i3e8r5ZJfs1saxBPFOnkjSxiDHRa5eOSZjUM+Pw7OGKbn7N9/plIEHeYSQkCKfFt2KErObMpKN8dOC+dsxyIYQSatRaudsggvpNGRiwYt/ao+08FmkHyf2OKTcG4t2e4V6mweFwsmao9E2Pd3hHsWVUyPk/uGgi3Lha49Inju+lcMGbV0r33P0wb09CCUZbL5KqeMmwkle4rkKKp8aRPq8arOmuhl6L+moE/hd/hndE/9eQkl6B6VPZtZ3bWw7U5H1Dv9TMpF9UDZajVL3zcZ7GmNhCm1l87QLn8aCciXEKwv1z3cwYOTLBJQFCO8LZ7iOUl0jJKbz8tDsL0Mwj4AkHMv00i9nwIMSOG/p4yLIOjxZ/XY2IWT8QkQRA+hjJdTye284H29mhlG8+IJmny6qytKeTedMJse1uQ/qwNRGxjcc5LnK7XU7Q0TfbQDtEuWfxK7ROjFddB6HnUC31OuIe2IDrGmLVgdJAtIP+eOs44nmpmURzsudc+0EngfVKv81/rHNPMLuDMASpUxNfdGyU=
+	73JAISpA+H0VXYG/whyTp+j3NPWFwfWJCFTT6t4dyb5I16eXSVbkyuLKLQqGv2kRuJcuWHQxzJain2O2oyLraFCTls3iziyzxtzVTb0uzbyJQ9c2YMm8996H5VbFh0wD9VDRb0qd+jhFwP6y/s+6uzArPtIm6sq/QjjeoVOuwKRvkOWnVjUbhYGWjjeN9JSu+LpiAv9e2Pxbj+ap2wFx6XPOUCI2zcJFOIO/yubuvS/qmCHlrvngRQ0C5f9k1w7qp7aA3rbjzI0NoLHrzE1WBJzcyGLSP0bDbMHjTtBqdNkeOAw5GLuS0GPTdmploTzTJmGMVabZxKloUJ0qfS3Z4dNt4haeGL4dhRuuCQTexhTufaX9Wd0DzU4XkUSIDcP2Igvtz844JOMEdSggeE/F55r8DnXRhCe/w6LEtdhIyk4qjmnpAWTW+SzaOS4Sq4KJoFTfqeA3JFwTVmWsNOc2EVNJETfJd930YGmRktfWSgSx36Or8JFwRC7NyjLPDuoHB5YyzKpThU177B1CUCAOVmQiMNTJwRVhLSopTzhKKa7u9rJmJUzOhmW4i3+0rC1cARWMkrdrH1PYzGnHi3hvmqtZaldG7tsbFiHruY4VAp+A/NeEAs15UmP3z7S004YnyzV66mNGN77n3NLp9lCT4POPDoZOgYvmPUp7eyLjj4o=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(18002099003)(56012099006)(11063799006)(5023799004)(4143699003)(6133799003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR11MB5332.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?Vl/HpmWXTpUzHRqRQD00O07k+jexrANv1La8g31Lc8gz23mpi2Z5B+3Br9?=
- =?iso-8859-1?Q?rXZpMeUQZw0BW4WIaipABfF440riXOPJZmaCcY581lIFQ7vBx5cyeGXzju?=
- =?iso-8859-1?Q?dMhe3A0TUHF7B4erKIGVm1Kacd7dC5VFehNK6NWaVtrE/Vd452yDh5Q9wx?=
- =?iso-8859-1?Q?tJk7OWQGvpFrCvxRy/jRIEIWFNIg1gBueZDJk8zBL2Y1fDWmMoLS2iYKYW?=
- =?iso-8859-1?Q?xqvEWd+WbPBoePSoasWKdEFq4nZECEraCRvGZZBg5Vgs59TeI0fEyjsmhR?=
- =?iso-8859-1?Q?RIC6bQ/IDYXiU0JfXYvKOVRy654CG8JA19U4I/Ba1Jmche2bhIeN/K8SHi?=
- =?iso-8859-1?Q?VP+mObQoXDRt36qPpkranJ+6Q6+65pfmmQycbISmbxK4TXTpGPTMuY8C+/?=
- =?iso-8859-1?Q?90JzfpPva21ez5b96qe8lsWEIfwyQKYUlbpUiKsxAoTT0xDIvwv8LkkWEY?=
- =?iso-8859-1?Q?uwqhnxfjkPN38o6ddOBAOLe7oRwTX65vpDw0Sq7fzqFrQmN5vK75APY+bG?=
- =?iso-8859-1?Q?22yCY06DFlqpUpHi4ixPi/jqtTrUl/IxYi2vhEyaXF9ju5wwBs78X2HQ07?=
- =?iso-8859-1?Q?LIoatGdGB06gZmRdFXjEl3ZpWQNxybu5XAT2bpBJOkKzz8rAqvQHGYMQTB?=
- =?iso-8859-1?Q?vfg17h3wZEBk3wFaqtdiG1XRWUsfPEvwq2Tnsbt/oP0T074qqSOs0SPh39?=
- =?iso-8859-1?Q?Nz8AIPD5ZLVquJ1uYUtbE5W6GFnZW34XZU6gtl4E1hCR5hY/A5GxJf14+i?=
- =?iso-8859-1?Q?h1mwqDCZHrlcWpq/QU4nR7iSxF8x1SbXS1qZjfB11K4+plYsw9AWq7WcAZ?=
- =?iso-8859-1?Q?hQGyXeQrw3ogFNlCgTdx9gdJrvUMc6+Z1l2onVR6XAG10PXt0UWvFlCixo?=
- =?iso-8859-1?Q?QOiusGtQSHhlVEgrThdBZNeLviLXKHbfYMqNwUuPPEug7z74SBGY5hVBxj?=
- =?iso-8859-1?Q?lW84BUaXN+n1tdgpcc46yYIBXU6Qrt/9rLFPTGnEDBMNxhCw8KQWosNIj9?=
- =?iso-8859-1?Q?zUWvesy91sz4oLyCfceBuA3LpdBQg4wW/PzhRSbbcUNrCGVnf/tjI2WHQJ?=
- =?iso-8859-1?Q?7yVCwsX5nOX0pDxToDWKn6GtQ8SFK7MuvxJyG2vPy2vRzaIGTVNBgiJsNc?=
- =?iso-8859-1?Q?4QWWBqs3xIDtGhZqffdzluJFNhrs3uNv+nU6LUdSCTXgFC/KlKbiJxMORQ?=
- =?iso-8859-1?Q?MCzPuxiYfCgjde9OMejQkdGOGNbgXS4CDB1v2SCmksIiC2JUbKoLRYxSgH?=
- =?iso-8859-1?Q?zLsGRyNNHjf6/AM+fQVQJmOJ64qsf07oPe+lCnYjiWaCQBz0s8vyPcMrY7?=
- =?iso-8859-1?Q?Ou/p4CPUkhRLx2xFBo9XPADNkhGHw9P0852ibuF17T9uKfB8JwP7NFUNUT?=
- =?iso-8859-1?Q?TCQLz7qXw8Ww56XgfQDd6Omj445ozHnT3w00GUamBTkKm+T86iS+rtiUC9?=
- =?iso-8859-1?Q?v5MtEBc8pYX9ldS8jQniMWfm5XirnxLEP9qU8k6P4sYrThLM6OPtCaFpu8?=
- =?iso-8859-1?Q?Oh3O7HSD215wbZ8oIZHOocGswydTKevgjhQbQ3P3pn2TJcksBW0nAp8s7f?=
- =?iso-8859-1?Q?LHUvQoH807Lu4AM1m87JflRQzXpBQTDxDQpVK1e+/217+u3+m5Ks9VW9LC?=
- =?iso-8859-1?Q?jt6EXo/2SuR6jeazSpmoiaDZNQxD3llhlPcprQopSKi++Kh0BYbrnL4UiK?=
- =?iso-8859-1?Q?rd80H63GocAgASh6CWFNZvnUv7xwFVXGIy30TCGL4qe9SCV2WJu2w75/+B?=
- =?iso-8859-1?Q?6dI9K5ByYR1ZyWTOU0lJBt1QjHYKLseL/bfNv888kxyGfW?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6e0a662-0e21-4cef-26b8-08ded80beb03
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+	=?utf-8?B?dE1UTGZTQTNzMjhNK1ZTL0dNMm5IVFhGWmVlMnovRFpkMGFmS0t4YTJjcE1z?=
+ =?utf-8?B?QWdjdnh6czh1c1FWeURGMmExUElYYUxZV1hqYnVWYW90M0lZRWp0Wm4ybnNx?=
+ =?utf-8?B?dmN1dE9INzQvTFNyQkw0bk5FQ2o3SWpPVGsvQ0dNM1FTWEhrelRDdkhVaU02?=
+ =?utf-8?B?MTZoL2xwT29aNjlYck5TYkJaOG1LRW54WERVOEdpTUNHS2lRcWlyeFJkd1Zt?=
+ =?utf-8?B?aldIMnVsUTZIZ0tIcUJLSkt2Tlp1c3o4YjYzdW1VWVNNQTI1Tlcra3R2UWN0?=
+ =?utf-8?B?dFVOU0tVODJ3WTJVV3RUWk94L1Z4T1RyMkhPQnJJQjE1R2dpbkFFQmFEQU9r?=
+ =?utf-8?B?VWEwZTU1Y2dlQmx3dXJmUnJZYTJFaDhYK1ZncU1kK2lPSGFZYytURStJekdU?=
+ =?utf-8?B?cHZMcDk3Q20wZXV1V0RsYUw5TDBtSEJ6T3NEdjcxRnVkc2JrQUJmRk9RQ0x2?=
+ =?utf-8?B?UU12WU13Y2kvZkpydHVUbjYrZE1UbkhIdDA2NFl5VTQyN3kvYzh5dnFaeDE3?=
+ =?utf-8?B?VTRsSVg4SENUWnN4RytUTFBpOW1NbG9Cd2t3bmpiVThteEU5eDBranovdGh0?=
+ =?utf-8?B?OUpIcWM4UnpwZFdhVnk3Si9OaXNsUXNtSHptYytodEJBdU1OeE9kc0VsOGVx?=
+ =?utf-8?B?RVJ5UkZKRXJlVzRRZ3FUd1o4U3VjZHBXa21oRFFUWFE5dmNGY1d2K3gzVXgy?=
+ =?utf-8?B?NlNwT1BneVdtQkRlOFJPU0tadEtqM3RtSWtVejhOTm1QNVFSY2U3UXFqMkYr?=
+ =?utf-8?B?Wi9QT2VmUHJRR2VzaVhPMVZYejV4RXNOU055aVRiVEFtc3B6K1FSeEozRnJJ?=
+ =?utf-8?B?UTIxZzBnVGd4SW95eEwrVTZoU0VRb3o0MjJVYzZtc0xUYnVXTWN4UnZLTE5y?=
+ =?utf-8?B?WXhCcEw5aFFLUjV4ZFNVK3hJNyt5cDBvbU5mMTdPQXNZRGV5ZSsrMzBzcjhI?=
+ =?utf-8?B?T3lTN2diZm1OOWZZY3BOR09xMjQyWnIycWRnckVScVJ3UlppSWZyK1RKUE41?=
+ =?utf-8?B?VmVKVG1HNmNhNmZUcE5PTFBIUzhYaFpDZlZVZ3JtZGsvQ1VLeU8yVWZ6WW5F?=
+ =?utf-8?B?UElZY3ZQaTJsSi9HQVFackp5NlhEYWh6QnhZZWNVN2poMjF0MjJIUlZTSVJ2?=
+ =?utf-8?B?azVFYnlmVXRtSllqazdlcmVCVWdPWGNTblVxV0RlTVU2bzA2NTNWa3FwWXZC?=
+ =?utf-8?B?NnNZRTJ1WHF3UjFyNWQ4UnFSL05vS1ZXUzEySWRHZUhDV0NHSUY3YVVldEpG?=
+ =?utf-8?B?R0REdGVVTzVDeVUrdG1nNTkvZ1ZsYjMwUWhrRHFMbnZjeDYxUU14SkxvdGZj?=
+ =?utf-8?B?b2NYc3d1OFVqMEJuc0NOY3VobXhGdk0rcVV1dGZxclZyMjI1Z0ZyQk5lUXF3?=
+ =?utf-8?B?bDVUeGtqVUVseU13TzZteS9iV0FtT1JaUGlHZHlPeVQ3TytPa3FqVVBrY0N4?=
+ =?utf-8?B?d0pYOTZpSEZ5Nk4vR2hPNFd2OEJhT1l6RGNNbitseCtkTm9Ddy8wZFlpTW9U?=
+ =?utf-8?B?UXhKa1QzdzFTY3kydTVQTmRtMHFQbUh6TWpHK3BpL1lsRjdvaW9nUm1SNWc1?=
+ =?utf-8?B?U1ZzK1kyOU53eFc3RSt6OGN0bmlFb2c4SzB2Njd2eE1vWUNIbmRVbzRrcjhB?=
+ =?utf-8?B?UXY0Zi9pOGw2bjIvNlArNUJIeTdteFVlOWxOWVE3SDNuc3B5RFBtS2RDbUJt?=
+ =?utf-8?B?RGlGbnJseittNTNCYTZSU3krczU0bERxL0FiNzkrbmF2QXR4d2M0UkRUUzMr?=
+ =?utf-8?B?Sm91V3VTaFV4M1NjWVpSSUlveXo5OWUzbGducmxtZWlHSkFvYThLWGhzdm1F?=
+ =?utf-8?B?WlZVWENodFBnZU9md1puOFlEOVNDWkcrTE9MWHNKd2JVVmh3SExNbkwxL0NW?=
+ =?utf-8?B?SGp1U3NXaS9HNjdiWCtVNkFNai9ZeHhuNm9wQkpId2VJQ2FwRmc1L0YrWUpX?=
+ =?utf-8?B?Z2s4ZzJraVpiaWw0RzREVnh6WGEvTWxPY3BqNERGMSs2RjFpTzA4bjVLSUxn?=
+ =?utf-8?B?WFh4TXN2MDdpVTRJM3p3ZTBXRnAzTU5ZYVVzQjhCVlBLczFXU09jakJseUw2?=
+ =?utf-8?B?WE1PRit5NmthZDFwZGlNeklLNm5rRFJyRlhPbWU1dVZoZ01HL1VNL2ZTRHlm?=
+ =?utf-8?B?UlZYWGdYalJTKzlxNG1KRmhIK29HQTJ2YlJZSnMxTi96MUoxbUdnR0JFYkd6?=
+ =?utf-8?B?dEdoY1RrWlpPanpOK2N4YUpzU1IxNzRxTDF6WTRyTit2Vi9XZmp2eThBeTIy?=
+ =?utf-8?B?ZVJtcUZ2QSszS1N0ZEljeFQrREF5bnNERTZZM2R6NnBvWTM2NitYaW41bHFl?=
+ =?utf-8?B?M1hNMkd2SjFNeWpwMHZwNWREdEM0UGRVTU9WSnNETWZTMGdoVEpvZz09?=
+X-Exchange-RoutingPolicyChecked:
+	K4dP//BlyjWXqchEgDoKHsB+7powJjVIKTJ53C1rS/WCXEnE/5+F+P6n44BBdTAqk8fc08wDbADspck9ZsGWPNsiQHGu4EtxaIZXQydkbrqqriXhauyuws2b9Tz+Lg4kHjToIRUk2BrFNswAO0wTlXK8/uVsmJmoANdY7ZtPKrlphtqf5NSCaXDVcoOmyZTYzo7T06ZznuMkkl9w31o2jyJOxDvHKFUM5z2ckM4ZTd5XiuyANuQeH8kCvq9B2SguLrxibjHOp0FXMo0YcNBaomIz/H7oZehxaoo3aXZKb92v8yeWa4PA1KrvCEJ88nKbyzSHJ050n4RqybgK6thHwA==
+X-OriginatorOrg: windriver.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3cfdde6-9548-4387-2d14-08ded80d5998
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR11MB5332.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 07:31:24.0105
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 07:41:38.3888
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: X+UL65OvuiVBJx9aYERJCvoxv5ehzlKYID9yTYmW2H3awZ3gy8Ywq+UNA29NIadKYeWg50HKKIgvoMWdNdw86Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9226
+X-MS-Exchange-CrossTenant-UserPrincipalName: OvHFgMCxsQSmcPL647GGGtArfZKej5QAaOoltr1lmlR1iRAfktvtgr1WDJ2gt+HKz2p6FTZKH99aXQ96gVemLA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR11MB5955
+X-Authority-Analysis: v=2.4 cv=DNC/JSNb c=1 sm=1 tr=0 ts=6a461636 cx=c_pps
+ a=mt+QW+PagoHSMqpqf5GGBw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=bi6dqmuHe4P4UrxVR6um:22 a=klDOsUkWDRETUCZYPvoE:22
+ a=VwQbUJbxAAAA:8 a=05CdqBOup3ntw2Flk0cA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: PFD5husPIqGunLKX4hFlDkQYiyBQp3r5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA3OCBTYWx0ZWRfX5h+lAyM3b3Px
+ zsmXvqSFtWcU7ACK/SrEBUctmAw/WfU42E6+y4EeKhRA8qhhWzjMaTXc7wiiOBJW0ML6Tj1O6Mh
+ DGz5FgbtFT1FrjuvwOpvx9D46OhoiHniphAvGYErY2Hz2ne+FDmIFWsnsxIQw8M6BUXtit4z3Sm
+ dv9Mg2GA4M8yKb3sRzL7uyX6RSx9G+rBiS7zrQ7dbhXGi5HpDBA2f3cYyH+fO3LICGHsan500MM
+ zYBbYMLw5O8pAjfRUd+uVpmFPXb/AmpR5FSXTrUg5WHNeMvyUHAR843kNvOXVN1VN0qvPUAxb9I
+ LoML0s1pW7msiOFQ3vsb5K4ijgijz/CBGsl0wIsY0x6V7zquRs1SlkrD9ttXlGDk7dIhCoQnlHp
+ TXinCOIrizvbCHs7OhzixgSm5VVS0+cEMMtR2Jv7ZgZ2Rk9p3i5oXhpsqnwbyWQifxSheHIoFGN
+ MLZ+D4BWBCcmTWoYC4g==
+X-Proofpoint-GUID: PFD5husPIqGunLKX4hFlDkQYiyBQp3r5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA3OCBTYWx0ZWRfX2kgZp+QLhwrn
+ BRmZnErRH5uZSzJzDMFeDYoS6jDedubNqRrDPkXP/jDyfHrGZV1nsmHiLZkAJl6ZokwWCMOKU52
+ dAOL8xNnmEQn2g2vcZAhP/x7FHVtUSLbriFWCf9fnJua/ALYGnze
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020078
 
-On Thu, Jun 25, 2026 at 09:46:01AM +0800, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incorrect HPA base for zero-sized mock decoders causes them to overlap the start of decoder[0].
+
+
+On 7/2/26 09:38, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] The patch completely breaks the inline data feature for all new files and directories on extents-enabled filesystems.
+> 
+> Pre-existing issues:
+> - [High] The patch fails to resolve the data corruption race condition on filesystems where the `extents` feature is disabled, leaving indirect-mapped files vulnerable.
 > --
 > 
-> commit e4836660bfdfee0da74cc6f18fe1e3c9826c4c04
-> Author: Richard Cheng <icheng@nvidia.com>
+>> diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+>> index 0eff4a0c6a6c3..2fcafbdb7b15c 100644
+>> --- a/fs/ext4/inline.c
+>> +++ b/fs/ext4/inline.c
+>> @@ -418,6 +418,13 @@ static int ext4_prepare_inline_data(handle_t *handle, struct inode *inode,
+>>                return -ENOSPC;
+>>
+>>        ext4_write_lock_xattr(inode, &no_expand);
+>> +
+>> +     /* Once converted to extents, never go back to inline data. */
+>> +     if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)) {
 > 
-> tools/testing/cxl: Enable zero sized decoders under hb0
+> [Severity: High]
+> Does this completely disable inline data for all newly created files and
+> directories on extents-enabled filesystems?
 > 
-> This commit introduces a mock_zero_size_decoders module parameter to cxl_test.
-> It is intended to exercise zero-size DPA reservations by mocking committed,
-> empty decoders above the auto-region under host-bridge0.
+> Looking at __ext4_new_inode(), it appears newly created inodes inherently
+> have the EXT4_INODE_EXTENTS flag set:
 > 
-> > diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-> > index 418669927fb00..117691b3c62f5 100644
-> > --- a/tools/testing/cxl/test/cxl.c
-> > +++ b/tools/testing/cxl/test/cxl.c
-> [ ... ]
-> > @@ -1145,6 +1178,20 @@ static bool mock_init_hdm_decoder(struct cxl_decoder *cxld)
-> >  	base = window->base_hpa;
-> >  	if (extended_linear_cache)
-> >  		base += mock_auto_region_size;
-> > +
-> > +	/*
-> > +	 * With mock_zero_size_decoders, decoders 1 and 2 of the special
-> > +	 * endpoints mock committed, locked, empty decoders above the
-> > +	 * decoder[0] auto-region (CXL r4.0 8.2.4.20.12). commit_end then
-> > +	 * points at a zero-size decoder, exercising the zero-size
-> > +	 * reservation and poison-by-endpoint code paths.
-> > +	 */
-> > +	if (cxld->id == 1 || cxld->id == 2) {
-> > +		size_zero_mock_decoder_ep(cxld, base);
+> fs/ext4/ialloc.c:__ext4_new_inode() {
+>      ...
+>      ext4_set_inode_flag(inode, EXT4_INODE_EXTENTS);
+>      ...
+> }
 > 
-> [Severity: Medium]
-> Since the comment indicates these decoders are mocked above the decoder[0]
-> auto-region, should base + mock_auto_region_size be passed here instead
-> of base?
+> If ext4_prepare_inline_data() is called during a write or directory creation
+> for a new inode, wouldn't this new check evaluate to true and unconditionally
+> abort the inline data creation by returning -ENOSPC?
 > 
-> Passing base appears to set the zero-sized decoder's HPA to the start of the
-> region, causing it to overlap with decoder[0].
-> 
-> > +		port->commit_end = cxld->id;
-> > +		WARN_ON_ONCE(!cxld_registry_new(cxld));
-> > +		return false;
-> > +	}
-> [ ... ]
-> > @@ -1214,6 +1263,26 @@ static bool mock_init_hdm_decoder(struct cxl_decoder *cxld)
-> >  
-> >  		cxld_registry_update(cxld);
-> >  		put_device(dev);
-> > +
-> > +		if (!mock_zero_size_decoders)
-> > +			continue;
-> > +
-> > +		/*
-> > +		 * Mirror the endpoint: commit the next two switch decoders
-> > +		 * as zero-size + locked so the empty-decoder layout extends
-> > +		 * end-to-end through the switch and host bridge.
-> > +		 */
-> > +		for (id = 1; id <= 2; id++) {
-> > +			dev = device_find_child(&iter->dev, &id,
-> > +						match_decoder_by_index);
-> > +			if (WARN_ON(!dev))
-> > +				continue;
-> > +			cxld = to_cxl_decoder(dev);
-> > +			size_zero_mock_decoder_sw(cxld, base, i);
-> 
-> [Severity: Medium]
-> Similarly, does this incorrectly place the switch zero-sized mock decoders
-> at the start of decoder[0]'s HPA range instead of above it?
-> 
-> > +			iter->commit_end = id;
-> > +			cxld_registry_update(cxld);
-> > +			put_device(dev);
-> > +		}
-> >  	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260625092857.41139-1-icheng@nvidia.com?part=2
+My apologies, my analysis was incorrect, and I am currently working on a 
+new fix.
 
-
-This doesn't stand neither, [base, base-1] is an empty range, it decodes nothing and can't
-overlap decoder[0]. Region assembly never sees it, endpoint empty decoder are skipped via cxled_empty(), and
-the switch matching predicates compare range ends, which an empty range can never satisfy.
-
---Richard
+Please ignore this version.
