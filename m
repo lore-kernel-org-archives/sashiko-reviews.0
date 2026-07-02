@@ -1,113 +1,111 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B300330D400;
-	Thu,  2 Jul 2026 15:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFFA34107D;
+	Thu,  2 Jul 2026 17:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783007678; cv=none; b=nesDT/kL3XM2cCGwHD+clItqZld7AbYvLPg+JO52xPiEJBlR/DluVulrdKbMFvGxMtQMeXDNV9HZ4fcULpRHKihjb82eP8xa3JnnTLO0+U8urdTfrUWlsD6KMNvdQ0x79wTlRGdqie7qotsZadFAa+NoriMxo+pYuIuLypJPQhE=
+	t=1783013982; cv=none; b=LX94h/gbZcf/SB6SoVBDslV71wQwCHxw8QHHF8k94zHd+5XieUWGYUBSkuvdCw251W9LTFjccUhweNsfjEoDiVPD3D/9LZdWloMeECN3MrtlKH1QFpJZ50ibq4HHMTB5uG9hNeK0gYthwrM6W88I6VQMP2txJ5irQvYbvajas0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783007678; c=relaxed/simple;
-	bh=Z9atuBXi3diijkDGrH8UesJi6P9BLTi/2FYBJfOEUJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m4YC92cDyZvJwjfeRt0B4gpj9/Rc/xOVz6m6THYyiKHOLO/5OsNcKS+D4M1ZFqQ/Isz+iRCWhnTZBAhFHndsHiUl0JYZChRx/jhezqrHOuxVgdop2msDEv/9QtJxlZUlWl5Hhh7aPoi2NT3aAeacNk03HWnASpPDQCHzfrwkgpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=aCE0poD4; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1783013982; c=relaxed/simple;
+	bh=6N4Bg2b+t+GrNSxoSFhr4+LgUE7IVDBhDXPK5KLLMH8=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KoNY8a9omM3lIbjFXMNRR17rytNKcmgdm1cpMR/RA3roSsBeP8dvus13hT68hFOeulLUWTtOsKCdSgTKbiOdSAezwb4hRGUZY0agVAUm2g4UWGGc+wvbB9skKEIu1nJ0U48Gnr/VGFzVCL9g2hPwh34fnF82shbdGdzZKHymNNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCbLnA/q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="aCE0poD4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=Vdk1fzruZh2RQnFJWG+wIYqWk2odryOoKcaH6cvOYA0=; b=aCE0poD4SvBgY8oSrMJwkbmNgP
-	t2ul+KfTYydeIuzqMBpK26EwsK+5WcuRA7GSspPrpesODf68uBdBFnMXTMOZHkTuQaNfZlLuO4Zgp
-	a2iT0A2//tFaCQnTYXC0xkm+N/rkCtGdSvnRGKYWHakWE+Q3EIVXHyr5ENaA8T5wuCtfTbg2cEJ71
-	Ui2k/68Zdy9CLvMgi1z+fusNjdTBmlhd/O7TfgM5Nz7favp9NCriqiEY1HdTfVjuZeqneFTtq9DFj
-	6iXeb1QzkyA55QwqsVGHOJaLR0Mon2Ompr6QchzC4XZs/HnAGGNvC3jHtZ/94yZNtUHpgqGuN1WLN
-	ayaOKjuw==;
-Received: from sslproxy05.your-server.de ([78.46.172.2])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wfJkH-000Flp-0x;
-	Thu, 02 Jul 2026 17:54:33 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wfJkH-000BzT-2i;
-	Thu, 02 Jul 2026 17:54:33 +0200
-Message-ID: <e4969d67-7423-4a42-b2e1-bbb6b71ae10f@iogearbox.net>
-Date: Thu, 2 Jul 2026 17:54:32 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCbLnA/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533AD1F000E9;
+	Thu,  2 Jul 2026 17:39:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783013981;
+	bh=7p6mwMxIeKEOLzjG5YeSK0tG82ZYp+L69Hc1Bm6FBFA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=GCbLnA/q1ritVqINJF+YEyPX/TKqQiACrIRjJfvGcVhIkKeOpqAS29vL946EByl/h
+	 I3+ie2VO8aYWJVJT5pzDVGjV3BxlkLJCawDszzQSL4xxWc5WGhXZ8JwLmwxy8lCJ/0
+	 PvkLdjy/atAXNb6BlLXBIPqe6yC0yv9g1SZGtBAYgsrsuVVDjKGJK/nGVAxuUMMcVo
+	 AO6FQyTsOTON8JTKhu14Xzq+Z0S3kX6cTykPiwUbFGY3+3heZLPLvPrNvn+xsYRX+j
+	 jOszkEUIrg6unrWXHDa+eQ74VkvGTCmaNfnVurO7ynwJyHcPcIb4ZsyK2477gpJQ07
+	 pOW3nK1+TAadQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wfLNz-00000000rEr-0DmQ;
+	Thu, 02 Jul 2026 17:39:39 +0000
+Date: Thu, 02 Jul 2026 18:41:27 +0100
+Message-ID: <8733y18f20.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev,
+	kvm@vger.kernel.org,
+	"Oliver Upton" <oupton@kernel.org>
+Subject: Re: [PATCH 01/28] arm64: sysreg: Emit RESx/UNKN values for Mapping definitions
+In-Reply-To: <20260702161927.B3C9F1F000E9@smtp.kernel.org>
+References: <20260702160248.1377250-1-maz@kernel.org>
+	<20260702160248.1377250-2-maz@kernel.org>
+	<20260702161927.B3C9F1F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 4/6] bpftool: Cover loader metadata with the
- program signature
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260702143605.252797-1-daniel@iogearbox.net>
- <20260702143605.252797-5-daniel@iogearbox.net>
- <20260702144800.E96AC1F00A3D@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260702144800.E96AC1F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28048/Thu Jul  2 08:25:04 2026)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On 7/2/26 4:48 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Thu, 02 Jul 2026 17:19:27 +0100,
+sashiko-bot@kernel.org wrote:
 > 
-> Pre-existing issues:
-> - [Medium] The return value of EVP_Digest() is ignored, meaning that if the digest computation fails, uninitialized stack memory is embedded as the excl_prog_hash in the generated C skeleton.
-Makes sense, I'll add a fix to address this pre-existing one, too.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Invalid `_RESx` macros generated for `Mapping` aliases when the target uses `Fields`.
+> --
+> 
+> commit ba830a7cd4d5bdb5ba927754ed4d1c4e3a0b4f1c
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> arm64: sysreg: Emit RESx/UNKN values for Mapping definitions
+> 
+> The sysreg script uses the Mapping qualifier to indicate an encoding is a
+> mapping to a particular register, but macro generation for RESx classes was
+> previously skipped. This patch relaxes that rule to emit RESx and UNKN
+> values for Mapping qualifiers.
+> 
+> > diff --git a/arch/arm64/tools/gen-sysreg.awk b/arch/arm64/tools/gen-sysreg.awk
+> > index 86860ab672dc7..d7f7ceb768fe5 100755
+> > --- a/arch/arm64/tools/gen-sysreg.awk
+> > +++ b/arch/arm64/tools/gen-sysreg.awk
+> 
+> [ ... ]
+> 
+> > @@ -239,9 +239,15 @@ $1 == "EndSysreg" && block_current() == "Sysreg" {
+> >  	print ""
+> >  
+> >  	next_bit = -1
+> > -	res0 = null
+> > -	res1 = null
+> > -	unkn = null
+> > +	if ($1 == "Mapping") {
+> > +		res0 = $2 "_RES0"
+> > +		res1 = $2 "_RES1"
+> > +		unkn = $2 "_UNKN"
+> 
+> [Severity: Low]
+> Does this logic generate invalid macros if the target register uses the
+> "Fields" directive?
+
+Interesting point. This indeed breaks for a Mapping->Fields
+indirection.
+
+We don't have anything of this shape just yet, but it shouldn't hurt
+to generate the RESx/UNKN symbols for those as well.
+
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
