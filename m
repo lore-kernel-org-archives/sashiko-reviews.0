@@ -1,181 +1,162 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9A833B6EF
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 05:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782970863; cv=pass; b=PrnAp1V1/pGAfSg0F23pRJVyjpUujZQ4NNfmDwclRd9vGsPaNbbhmLNejSeQvKBVH8SZqvs8pQueQ/fLSS8073eWNfHzZ/0bEw6Cl7OPlxSAy/TWv9mr78ZNilIeUoSVgekuZCl+T/rzE4eAtcvW1H3vE1zElGlP/GazT8uj1g8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782970863; c=relaxed/simple;
-	bh=IQ/c8WVDoxQrhZvKSrnPQbv4b/9COlcR710Od8nu4tM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UErVa1l9geHJtyswjk4aJGXxrSkgU6vn8oQ9OUqH2hZRvzX2FTwT+m9QIiNvvSJlV0sXlxVv3SSlOwnkGcvfPIoqGvHEixsWOu0MQ0Qi+hN2Foikh5T+S44wOdoeep9UbXQcro5UKl8L4LxKfLhW2mMOyfEUEMSI9L6Sv5VsWmQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GANuTgz9; arc=pass smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4F2723FC41
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 05:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782971213; cv=none; b=VViR3tsZxaLMvz2obDipfqjQYZi039SbGIVLome/OGZ8BpSKxGJuuN7Gbt//kdGIpxwtq8YTzcpteGjd2nJ/LtI0rwTtkVk/K0yIY6k6OcqI96E/w7FUJU77mYr21hsmMc2ytQvW6eKaC7AdtiD1zxY4IZllRj9KOLAW6Aj9Iu0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782971213; c=relaxed/simple;
+	bh=2/UPohXtF/RlpLf0bukLvCQ2jrR0nDgq2a/0z8yUTk8=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=iKiKkUxjzmlbbpeEgEJYup5mTXpg3boxxQlAn6rHmWo9P+Ib4Ta8g8cvwZ0jyhd49NuZVvE3AHOTYxX/R/n8FrIFtfJ9UOFwo4SCtk/unElg9rX0ve4Ag98IVL6ufQewWE1KDl0iGG9EvevrvjDFMTzCy+R2lJZUBzj+5YKK26w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=NAVGcx6T; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GANuTgz9"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8475eca3a66so1504182b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 01 Jul 2026 22:41:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782970860; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sz1mtMsgjK0XJqSNpjWUjX9qvBcNK1XTKRPxeiAh/u9JMCsYxTZ/loYjgY1uo9dubH
-         2cgV6dnQVFnMb17vVrZ5/NoIOegkiDjXpBQ8PSIgt1ejgL0sh9iSZTfv33HOoFJ2rqd/
-         l+7o4nrBqdqKxVBBx2nm4Qds21GfqI81iyVf1+MPlH50QFkj19l4QqFj1Tzo7EwjthVL
-         esXbQM1Yz768GK2rGt+fD1w0mBdwcBs6gKX6HNK2CjOGDjngSj8BJnXF4VkVfqvxjmvO
-         /S5VIzwDNvIExoZpuT3iKtXBhWHIKbTW7U+MB8YwX2LtWnuWq3+4xdenb4YCT7k2eRPu
-         gk8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=z5UfvAgJ8YjTczByfeidWqKA0EosDZTFgQFu0/uNWSo=;
-        fh=i3bn+DTScpHnvfp4ETAU/Ft7080SsHijEpVezBQCSYY=;
-        b=XrF2LA+D3yTSUW6SaOcGXc2n8sZIzNDW5tPWlxutIEA+0JVezyZnnvQmbmCimJf2Wl
-         etDLdPVxPt8X5cZjT+0Z94hz7rVKeM3nTqqYIq3UcuWCpIQ7zx0FBcNjD7qNIBue02Lu
-         +RSRFO3skx3VpToDeiFyxMiVrcOzNxwwYMpOveQl8fjzn6koyy+yu+0KmAt+7v7grrhJ
-         ewrSpVGiZpFRtNWwLdHeFmxCCrhSMlEtQm1tEyBBxZef+V6gUkAYV62zzBKlGWnKWRIK
-         K9T2KsPKDfQjK541gSJRZBHDq4uqLEp1+TEpi0Rh4c6EXoaiOGBH0OQnzzyYJb44JXgF
-         gB5w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="NAVGcx6T"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782970860; x=1783575660; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z5UfvAgJ8YjTczByfeidWqKA0EosDZTFgQFu0/uNWSo=;
-        b=GANuTgz94oAL4+4CETkOj1KTh10lJzTOOK8sX8EqDpIbnoiw5BPwIXlZoj4IPSATIS
-         EAWq9VBJov94N5lCmGGb/gdVtXbrKuKTpxoJllPOPQPUhTH8FYmETzMt7Kyo9uObT0Me
-         ws7sW3L0nIvu6BL0qtwl/HUghITjB4VKcrL5f9/FdscfSQqOu1iedrv7JfbUfXTMdlnl
-         hyGuHrRKqXD3TLjGESXQunAdTkPoL7wfO/Ue82MTklJwEO79bTk69zuTB5VPZzsiCOUH
-         xFzJPJsOFYwF0VMfcRrizoHrszzHLykY+NRDQnwnhkKGXxJ5X5I3TqRxOjSDeGFdwJOr
-         4rJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782970860; x=1783575660;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=z5UfvAgJ8YjTczByfeidWqKA0EosDZTFgQFu0/uNWSo=;
-        b=I/UaBrX+fs+Qmr1bZG0PTMD/U9Der4ZSXJmCKgMTPJ4xMrFHYeHMmDFSLye+wXuir6
-         mj3STJBN+qP/LjX+gFypdBKfyslirpxAiGILpM2zAnDl1a5vNqrPUXyWdThAf6W8M4hF
-         xEVKmALnTkMIh0r9z7lqF/hzUtcCwEVoCnVZJbmPfCpDHwVYsN8yAHo5tZDduKWastWl
-         8BeW1YGzlCXrZhlrhM2jzGIBxgro8rRDBrzwQg7OIndgJQlcbnOY5mM1HdxlrKqQ0p6p
-         YvgEXCJ5yFiRzX7XK7Gc5V8cGLL8auCR/hww3ulNvX1U+E0oWirQbjol3qI2SILxhNfR
-         9oFA==
-X-Forwarded-Encrypted: i=1; AFNElJ956eYkRmbDgxXCDg4NoGkxMzv3P/VZ3jjTVVa6iaVHfbQSWNat+vRySvrPQ8pJIjM2V7ypy5qcubn6ITjK3II=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxI51RaupIh2XLJLLj5GMDy4QD/W4zwX6uSr+CTkPqBYlJAYRuq
-	05dTrPd5GtN3Q3vDy2QruM7E3Jezk0bZRLUondy3U/wD/ItrW/5op/VfqyBuPxlsYE05oszomaq
-	7oNK0ApBvBXUljOOc2kS8KUiLl+JPvbY=
-X-Gm-Gg: AfdE7ckRNwx/5TLJUpNBwfRrl69EQFYJyD5b8ByN7mUaqRqt0+IPBGtLp/uKWrqtZUs
-	n4yY2aXG+slLA0CMLrO5J+n+ODhPUPdpJPOUy++YV0xYXNTErp7htJcas1XSUQCglxC/UY7+zQT
-	ycNWAjrVs/kP8NHnP3AHvSs7+KnQ4ZCKFsIKDOp38LCdIttEyKgBIJ20mTIDi/1YkS9+MoXVfYa
-	/Jap1/GTO9dh6h0nj7s3ZBFnBI94j+QohsO6oTEYiFPuuD+FsQKFdRlvNjKXMhjJcEaxUcNPqEn
-	YmACdhf8ImjbOjhKyja+EsHEjDmEkVV4Aeog8GtTDneASF6waSbViP0NB26dcHMJuaL+O3Wz0u9
-	uWnipjG3V8u43CQ==
-X-Received: by 2002:a05:6a20:9f93:b0:3b3:fdb0:2295 with SMTP id
- adf61e73a8af0-3bff3ffaea9mr4293388637.6.1782970860276; Wed, 01 Jul 2026
- 22:41:00 -0700 (PDT)
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=Dp5I5nX/cyO1ESS5RZKGaCiXFk+SLn9TG
+	BatcMDF9pk=; b=NAVGcx6TritpuUrFAgClgboDDIZXyo/d+voPXFgu5GYqxTco0
+	SSr2R00dUj83+AH/bz8kL0b+n3lpx1MVlRMdbUZXNUgV8a4S6xTbstbLSIZvmQmt
+	7k+TsgFzcy86oo8gIvI3uUmGdgkZPqFi9SJpFp8K8j/duIkGM3lHnIUSg0=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwA3cUJl+0VqvZYOAA--.14864S2;
+	Thu, 02 Jul 2026 13:47:17 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAEf4Bzb+OOrdGyxbzjh=7MUEbA5FC05E6_iwCjDXcnSO-HZ=ig@mail.gmail.com>
- <tencent_30FB52DFC6440984EEF0EEC70C90A7DAC606@qq.com>
-In-Reply-To: <tencent_30FB52DFC6440984EEF0EEC70C90A7DAC606@qq.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Wed, 1 Jul 2026 22:40:48 -0700
-X-Gm-Features: AVVi8Cd_Aydgpi6ybanaT5W1RYtoYBPVPSh1YD5O91Uma0-voa1CtKjxUtg_WYg
-Message-ID: <CAADnVQKvNewGNAoiF8thaqaWuZCFxzeXU3QHg8jP8Dmqag6_JQ@mail.gmail.com>
-Subject: Re: [PATCH v5] bpf: Fix smp_processor_id() call trace for preemptible kernels
-To: Edward Adam Davis <eadavis@qq.com>
-Cc: Andrii Nakryiko <andrii.nakryiko@gmail.com>, Andrii Nakryiko <andrii@kernel.org>, 
-	Alexei Starovoitov <ast@kernel.org>, bpf <bpf@vger.kernel.org>, 
-	Daniel Borkmann <daniel@iogearbox.net>, Eduard <eddyz87@gmail.com>, 
-	Emil Tsalapatis <emil@etsalapatis.com>, Jiayuan Chen <jiayuan.chen@linux.dev>, 
-	Jiri Olsa <jolsa@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-	Martin KaFai Lau <martin.lau@linux.dev>, Kumar Kartikeya Dwivedi <memxor@gmail.com>, 
-	Network Development <netdev@vger.kernel.org>, sashiko <sashiko-bot@kernel.org>, 
-	sashiko-reviews@lists.linux.dev, Song Liu <song@kernel.org>, 
-	syzkaller-bugs <syzkaller-bugs@googlegroups.com>, Yonghong Song <yonghong.song@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 2/2] PCI: ultrarisc: get and enable DP1000 PCIe clocks
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>, 
+ conor+dt@kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+ robh@kernel.org
+In-Reply-To: <20260629060959.7A2201F000E9@smtp.kernel.org>
+References: <20260629-ultrarisc-pci-clk-v1-0-5ea3308fdab3@ultrarisc.com>
+ <20260629-ultrarisc-pci-clk-v1-2-5ea3308fdab3@ultrarisc.com>
+ <20260629060959.7A2201F000E9@smtp.kernel.org>
+Date: Thu, 02 Jul 2026 13:46:44 +0800
+Message-Id: <178297120412.1082377.7888497236569602999.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782971204; l=3301;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=2/UPohXtF/RlpLf0bukLvCQ2jrR0nDgq2a/0z8yUTk8=;
+ b=24+o748ePAtDV33ZqcsxnzBTFNcqLDe9gfflAqw+Q1qYllBaPvj5XfWuSvBY7+F8VKN8wwVyT
+ GF6AzGTC26FAdfWeD/MZovdSq9fTuWqksAgkKR7ni9Lp1YSSt7LYqDX
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwA3cUJl+0VqvZYOAA--.14864S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDJr43Zr1rJFWkJry5Jwb_yoW5Zw4fp3
+	yUGayFkF1DJrWY9rsav3WrZ3WjvrnIkrZ8AFZrKr12gw1a9r97Gr15W34agF92kr1qkw1q
+	kF4UKa4UAw1jyFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUv0b7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l
+	c2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
+	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWU
+	twCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
+	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
+	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU5
+	kxhtUUUUU==
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAQEWpF4E0ABwAAsF
 
-On Wed, Jul 1, 2026 at 9:35=E2=80=AFPM Edward Adam Davis <eadavis@qq.com> w=
-rote:
+On 2026-06-29 06:09 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] If dw_pcie_resume_noirq() fails, the driver disables the clocks, which will cause a bus fault and kernel crash on the next system suspend when the DWC core attempts to read the DBI registers.
+> --
+> 
+> commit 7bdde7bd97edc4ae25c337b51b52e18bb46e6424
+> Author: Jia Wang <wangjia@ultrarisc.com>
+> 
+> PCI: ultrarisc: get and enable DP1000 PCIe clocks
+> 
+> This commit adds the required core, dbi, and aux clocks for the DP1000 PCIe
+> controller and enables them before initializing the DesignWare host. It also
+> manages the clocks across system suspend and resume.
+> 
+> > diff --git a/drivers/pci/controller/dwc/pcie-ultrarisc.c b/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > index 6ee661ceff67a..74010a86244e7 100644
+> > --- a/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > +++ b/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> [ ... ]
+> > @@ -135,16 +174,37 @@ static int ultrarisc_pcie_probe(struct platform_device *pdev)
+> [ ... ]
+> >  static int ultrarisc_pcie_suspend_noirq(struct device *dev)
+> >  {
+> > -	struct dw_pcie *pci = dev_get_drvdata(dev);
+> > +	struct ultrarisc_pcie *ultra = dev_get_drvdata(dev);
+> > +	struct dw_pcie *pci = &ultra->pci;
+> > +	int ret;
+> > +
+> > +	ret = dw_pcie_suspend_noirq(pci);
+> > +	if (ret)
+> > +		return ret;
+> >  
+> > -	return dw_pcie_suspend_noirq(pci);
+> > +	if (pci->suspended)
+> > +		clk_bulk_disable_unprepare(ARRAY_SIZE(ultra->clks), ultra->clks);
+> > +
+> > +	return 0;
+> >  }
+> >  
+> >  static int ultrarisc_pcie_resume_noirq(struct device *dev)
+> >  {
+> > -	struct dw_pcie *pci = dev_get_drvdata(dev);
+> > +	struct ultrarisc_pcie *ultra = dev_get_drvdata(dev);
+> > +	struct dw_pcie *pci = &ultra->pci;
+> > +	int ret;
+> > +
+> > +	if (pci->suspended) {
+> > +		ret = clk_bulk_prepare_enable(ARRAY_SIZE(ultra->clks), ultra->clks);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> > +
+> > +	ret = dw_pcie_resume_noirq(pci);
+> > +	if (ret && pci->suspended)
+> > +		clk_bulk_disable_unprepare(ARRAY_SIZE(ultra->clks), ultra->clks);
+> 
+> [Severity: High]
+> Will this cause a kernel crash on the next system suspend if
+> dw_pcie_resume_noirq() fails?
+> 
+> If dw_pcie_resume_noirq() fails (for example, due to a link training
+> timeout), it returns an error but leaves pci->suspended as true. This error
+> path then disables the clocks.
+> 
+> However, the PM core continues and marks the device as resumed. On the next
+> system suspend, ultrarisc_pcie_suspend_noirq() will unconditionally call
+> dw_pcie_suspend_noirq().
+> 
+> Since dw_pcie_suspend_noirq() accesses DBI registers by calling
+> dw_pcie_link_up(), and the clocks were left disabled, does this read
+> trigger a synchronous external abort and crash the kernel?
 >
-> On Wed, 1 Jul 2026 12:57:52 -0700, Andrii Nakryiko wrote:
-> > > bpf_mem_cache_free_rcu() maybe called in preemptible context, this
-> > > will trigger the below warning message:
-> > >
-> > > BUG: using smp_processor_id() in preemptible [00000000] code: syz.0.1=
-7/5820
-> > > caller is bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
-> > > Call Trace:
-> > >  check_preemption_disabled+0xd3/0xe0 lib/smp_processor_id.c:47
-> > >  bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
-> > >  rhtab_delete_elem+0x185a/0x1b30 kernel/bpf/hashtab.c:2969
-> > >  __rhtab_map_lookup_and_delete_batch+0x935/0xcb0 kernel/bpf/hashtab.c=
-:3349
-> > >  bpf_map_do_batch+0x445/0x630 kernel/bpf/syscall.c:-1
-> > >  __sys_bpf+0x906/0xd90 kernel/bpf/syscall.c:-1
-> > >
-> > > this_cpu_ptr() requires the caller to prevent task migration.
-> > > These helpers currently do not enforce that requirement and may
-> > > be invoked from preemptible contexts, leading to accesses to another
-> > > CPU's per-CPU cache after migration. Use get_cpu_ptr()/put_cpu_ptr()
-> > > to pin the task while accessing the per-CPU allocator state.
-> > >
-> > > Fixes: 5af6807bdb10 ("bpf: Introduce bpf_mem_free_rcu() similar to kf=
-ree_rcu().")
-> > > Fixes: 7c8199e24fa0 ("bpf: Introduce any context BPF specific memory =
-allocator.")
-> > > Reported-by: syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com
-> > > Closes: https://syzkaller.appspot.com/bug?extid=3Dfd7e415d891073b83e1=
-f
-> > > Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-> > > ---
-> >
-> > from what I can see, bpf_mem_free() is called through bpf kfuncs only,
-> > and all BPF programs run with migration disabled. So this seems like a
-> > false positive. For per-cpu checking, it should probably check that
-> > either preemption is disabled or migration is disabled. tl;dr, there
-> > doesn't seem to be any
-> Today, I researched the call sites of bpf_mem_free() in detail; it is
-> called directly by bpf kfuns only.
->
-> Different BPF program types execute in distinct kernel contexts: for
-> instance, XDP and TC typically run in non-sleepable networking contexts,
-> whereas `raw_tp`, `tracing`, `LSM`, `syscall` and especially sleepable
-> BPF programs may run in contexts where preemption and migration are
-> enabled. Consequently, any shared BPF code (such as a helper or kfunc)
-> that accesses per-CPU data must not rely on the caller having disabled
-> migration; instead, it must internally ensure that CPU migration does
-> not occur during the access.
->
-> Taking into account the CI reviewer's feedback [1] and my further
-> investigation into BPF programs as described above, the adjustments
-> related to bpf_mem_free() should be retained.
->
-> [1]
-> https://lore.kernel.org/all/20260630094823.897BD1F00A3D@smtp.kernel.org
-> >
-> > pw-bot: cr
-> >
-> > > v1 -> v2: using guard against preemption
-> > > v2 -> v3: replace get/put_cpu() to bpf_disable/enable_instrumentation=
-()
-> > > v3 -> v4: disable preempt to make this_cpu_ptr() work
-> > > v4 -> v5: in mem free disable preemption
-> > >
-> >
-> > maybe throttle your patch resubmission spree a bit?..
-> My earlier actions were driven by a desire to keep pace with the CI
-> reviewer's response speed.
-> Moving forward, I will slow down the cadence of new patch submissions,
-> as you suggested.
 
-Don't bother. You don't sound like a human.
-Bots are not welcomed here.
+Yes, good catch. If dw_pcie_resume_noirq() fails, pci->suspended remains
+set, so disabling the clocks here can indeed cause problems on a subsequent
+suspend.
+
+I'll fix this in v2 by keeping the clocks enabled on the resume failure
+path.
+
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260629-ultrarisc-pci-clk-v1-0-5ea3308fdab3@ultrarisc.com?part=2
+> 
+
+Best regards,
+Jia Wang
+
+
+
