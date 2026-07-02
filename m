@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121253C0A04;
-	Thu,  2 Jul 2026 10:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D1D451044;
+	Thu,  2 Jul 2026 11:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782989535; cv=none; b=sthzx3ZE2r0kRif5ivHA5Tv6qQKlOV/VREP0srw+fXaXAaPO6mtyZFzXrnxoVwcjbZckpn44RqER0sNAUNTwhNApJgZsD7LSsSs6APmFHT6gFNX7r7JlSSOG6Yy+VpTWAvFE0IuoZp+bpkaNrZycPh40UwcKkQa4qDQVIiDiF2s=
+	t=1782992479; cv=none; b=IMldEVHHRXhL/h6CSL3DBhbtGE1zXcLANu6UNfV79Q0nYurqCjfwfaJdkm7+KekZB1/fzF/pPvBYFqkkyuWrlUgB7BQqXAhGWwZVzTKV/1gFyD7lBUZr+32JuQULNPDxhF0UGpJWVlmGusuWTeBYjkqWT1QdRxWtVJb0agIaNy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782989535; c=relaxed/simple;
-	bh=ShcVgI1Os/oDemJHF2nrjmRcOCyi8GjpBx9sQPj47A0=;
+	s=arc-20240116; t=1782992479; c=relaxed/simple;
+	bh=NaljxfbwKveQgZl04GNEtaf7mZ8dXc5VmLIJwAzSZXA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IS3h/kmaS7TJogf8TGRX/VA6NTx6k12wmriq2ulkSdDS4Ga4pK7ympULkHCGnsnK9eEeUL1khVb9zYC4N3yo9eCoRsfZJ2Z4RjoJBM/pCzEvioZZGxUHePGLrxOBxz7bKyHgXLl6SG+6oqPXoTwZHrWK5GeniK4M0vEOLxNrIUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G2GejuUC; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=l/G4kLGgcv7gwbf19Z1OkV8WnAHjoOKvWq0wd4BPAsIHPjHkSOv+dxPK3G1fbkt5GU2a0iW3XclVAeB58Riq2xsPX8FNjNe+hpjZln5lQI/eFjXVZUXTiMcAvB5CNzu/bnMkYXL1veTgxLp8bdIVIJ+3w5cHqDjN8Fktz2bIMNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UeG2w74j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G2GejuUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB661F000E9;
-	Thu,  2 Jul 2026 10:52:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UeG2w74j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA45A1F000E9;
+	Thu,  2 Jul 2026 11:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782989533;
-	bh=LEWfYVVlcSywUi5oBH/+a3pGIKZoJBxUKL2OZtwm6gU=;
+	s=k20260515; t=1782992477;
+	bh=gk08zULYzIqIZrpS2MTJq9V+P2zVX7Y2PpKzYZOpiYM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=G2GejuUC9koEkTdmgoDSOaUAmZboK2VLeDMk6cdRa2zq/mXSZ8DPVBEUaoZGz9+e3
-	 Db14LoYDmphE3INB57Xi8HPcMaHCCoMf+Q9rYytqNgBjyYYNwwDOsZJnoUBC6ca1JT
-	 S7UWEJ0W3Ji6ONlTc4KIk6gqloZJaIxg3hNP6dqEYrXNh47MJ7mMoAkcTzpJk/jZDD
-	 anrgaK0pY8TofERVKSwLp8MctDDaF9qKbsSbfqrSEl6cPuAT9q60+ewlRL4Uxxim7i
-	 kDrADM6LerMMDg6TsbEZXVWnicGJCp7H27J4U+RFTGNnW1G7N4ZyuSQa/OfbxZbesj
-	 u9wgRO7WB42LQ==
-Date: Thu, 2 Jul 2026 12:52:10 +0200
+	b=UeG2w74jqmAV+xqkVNGx2PrK2mBtkHn972ObiZa0H7qQWEA+PCMfN5eSP0//FB2yA
+	 psNsRSFotJJ/me5/5whwPZiADlLVe2AJCxnMjIAV0+lB93jZyCPWMUsu+rmW3c6sS2
+	 K0gcjvTgn19UkLu8hDjubHvYhSFv/WnyuJEeq0/bIfaVTCrOF8+y+H6ra9ua5QeBBk
+	 3sbo6sPG7Um3ULyH/RCNbrrMnCE+Uk2TOEzTRAgfiQO5y9K0nGSRfwoAyXOuMvph59
+	 WWu0Vvc9dygdeqGHZ+APdh3gHtYmVgTvVmp/qd+qJ8P/w9lwwB08Qx04SK1q3qwRwC
+	 LRSALo/0Ld+dw==
+Date: Thu, 2 Jul 2026 13:41:14 +0200
 From: Niklas Cassel <cassel@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: dlemoal@kernel.org, linux-ide@vger.kernel.org,
-	Shaun Tancheff <shaun@tancheff.com>
-Subject: Re: [PATCH v2 2/2] ata: libata-scsi: scale DSM TRIM payload by MAX
- PAGES PER DSM COMMAND
-Message-ID: <akZC2lsthFlhyR41@ryzen>
-References: <20260702100410.2039383-4-cassel@kernel.org>
- <20260702100410.2039383-6-cassel@kernel.org>
- <20260702102012.1FD1F1F00A3A@smtp.kernel.org>
+To: Damien Le Moal <dlemoal@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-ide@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] ata: libata-scsi: support reporting options 2 in
+ REPORT SUPPORTED OPERATION CODES
+Message-ID: <akZOWmrdZF8LrfEA@ryzen>
+References: <20260702063412.1892584-1-dlemoal@kernel.org>
+ <20260702063412.1892584-5-dlemoal@kernel.org>
+ <20260702065227.EA8671F000E9@smtp.kernel.org>
+ <3acde700-be7c-4ca0-b646-1dc5f6976cad@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,97 +45,32 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260702102012.1FD1F1F00A3A@smtp.kernel.org>
+In-Reply-To: <3acde700-be7c-4ca0-b646-1dc5f6976cad@kernel.org>
 
-On Thu, Jul 02, 2026 at 10:20:11AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] ata_dsm_trim_pages() does not enforce a minimum value for logical sector sizes, causing max_pages to evaluate to 0 for non-compliant devices. This permanently disables TRIM for devices that previously worked.
-> --
+On Thu, Jul 02, 2026 at 04:00:18PM +0900, Damien Le Moal wrote:
+> > According to SPC-5, option 2 queries for unsupported commands (and similarly,
+> > option 1 queries for commands with service actions) must return SUPPORT=001b.
+> > Instead, this implementation erroneously aborts the command by calling
+> > ata_scsi_set_invalid_field(), preventing the code from falling through and
+> > correctly populating the response buffer.
 > 
-> commit cdc4dda768e65a6957c51f439c9f87c5c94b90d7
-> Author: Niklas Cassel <cassel@kernel.org>
+> Sashiko, please reread the SPC specifications. It says:
 > 
-> ata: libata-scsi: scale DSM TRIM payload by MAX PAGES PER DSM COMMAND
+> If the REQUESTED OPERATION CODE field specifies an operation code for
+> which the device server does not implement service actions a, then the
+> device server shall terminate the command with CHECK CONDITION
+> status, with the sense key set to ILLEGAL REQUEST, and the additional
+> sense code set to INVALID FIELD IN CDB.
 > 
-> This commit modifies DSM TRIM to emit a payload sized up to the maximum 
-> number of pages the device can accept, instead of just a single 512-byte 
-> page. It also builds the descriptor directly into the WRITE SAME data-out 
-> buffer via an atomic sg_miter mapping.
-> 
-> Reviewed-by: Hannes Reinecke <hare@kernel.org>
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> 
-> > diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-> > index 429b03a080717..82342351b1c99 100644
-> > --- a/drivers/ata/libata-scsi.c
-> > +++ b/drivers/ata/libata-scsi.c
-> 
-> [ ... ]
-> 
-> > @@ -2198,6 +2198,39 @@ static unsigned int ata_scsiop_inq_89(struct ata_device *dev,
-> > +static unsigned int ata_dsm_trim_pages(struct ata_device *dev)
-> > +{
-> > +	unsigned int sector_size = ata_id_logical_sector_size(dev->id);
-> > +	unsigned int max_pages = ata_id_dsm_max_pages(dev->id);
-> > +	unsigned int pages = sector_size / ATA_SECT_SIZE;
-> > +
-> > +	/* If the device does not specify a limit, assume only a single page. */
-> > +	if (!max_pages)
-> > +		max_pages = 1;
-> > +
-> > +	pages = min(pages, max_pages);
-> > +
-> > +	return pages;
-> > +}
-> 
-> [Severity: Medium]
-> What happens here if a buggy device reports an invalid logical sector size 
-> less than 512 (e.g., 0)?
-> 
-> If sector_size is 0, pages will evaluate to 0. Since min(pages, max_pages)
-> is used, ata_dsm_trim_pages() will return 0.
+> Which is exactly what we are testing here.
 
-Well, if a device reports an invalid logical sector size, non-functional
-TRIM is probably the least of the problems :D :D
+This is a bit funny :D
 
-Anyway, we could replace the min() with a min_not_zero() to silence this
-warning.
+It would be nice if Sashiko actually listened (like a real AI agent),
+re-read the spec, and updated posted an updated review comment :)
 
-
-> 
-> While the SCSI disk layer typically corrects invalid 0-byte sector sizes 
-> dynamically to keep the device functional, this raw uncorrected IDENTIFY 
-> data calculation bypasses that correction.
-> 
-> [ ... ]
-> 
-> > @@ -3523,7 +3568,7 @@ static unsigned int ata_scsi_write_same_xlat(struct ata_queued_cmd *qc)
-> >  		goto invalid_fld;
-> >  	}
-> >  	/* If the request is too large the cmd is invalid */
-> > -	if (n_block > 0xffff * trmax) {
-> > +	if (n_block > max_pages * ATA_MAX_TRIM_RNUM * (u64)U16_MAX) {
-> >  		fp = 2;
-> >  		goto invalid_fld;
-> >  	}
-> 
-> [Severity: Medium]
-> Does this unintentionally break TRIM operations for non-compliant devices?
-> 
-> If ata_dsm_trim_pages() returns 0 as discussed above, max_pages is 0 here.
-> Because the Linux block layer prevents 0-length discard bios, n_block will
-> strictly be > 0. 
-> 
-> This makes the condition n_block > 0 unconditionally true for any valid 
-> TRIM request. The request will safely be rejected via goto invalid_fld, but
-> this permanently fails TRIM operations for a device that might have previously
-> worked.
-
-Well, as mentioned above, this can only happen for broken devices that does
-not report a valid logical sector size.
-
-Anyway, modifying ata_dsm_trim_pages() to use min_not_zero() should ensure
-that the concern raised in this review comment can no longer happen.
+Perhaps try to include the SPC spec excerpt in the commit message for V3,
+and see if that helps Sashiko parse the spec correctly ? :)
 
 
 Kind regards,
