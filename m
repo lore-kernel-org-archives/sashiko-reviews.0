@@ -1,135 +1,177 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7911E433E74
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 20:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3042571A0;
+	Thu,  2 Jul 2026 21:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783025096; cv=none; b=SGdE8UXuaqRHp0H4pdtI/9vAsyFWaLo6zrcS4jg8ddK39sq5GhEB8+EGXwxIiwMld8+oNbgkOQ6Bm0/4N4TQEDCt9L7cZd2B5CTEiWOf6dmsG8dPbcN5fv0TroWYZ0UZx4RGOPwc1i7+W97O/hOvOIWehJHn0LIEwrwRX4tFbmk=
+	t=1783026178; cv=none; b=PPj5yS8HNofLrmPN6xNfkCYKpOh8uIs5hVwxJ4rRXazZs6sg4gtWYjA34/8QthJy3paHKPqjxX/fzzK8xyK+rHzXIf6bm8a0+n39Z9rJTnCfgg3PlqGs3i53KC2DAAxO1T+9ZsfUELO3jwetUQ8rO+G+/ijPUrFJ7Ct9KmXJouw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783025096; c=relaxed/simple;
-	bh=3VwnXAIaEe+4zXeBKEU043hXqkMQY2332S0XEhCwyac=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AkaU6gPND/Vnw8CBlk2rUbXXJL3w0RGALYPzGLIoiwZZFqOW/Q0rez5LSJ9MAIjlYXAJGXexK5gjqnvIuC4GzLYh6hbF+LL5ok95a1GALMJUyW/ScXYsFMPfLw8FEGl7KDXwMkz9eIdERbSdW/15vEtaDLslmyNA72dpi/KIvWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=Fsrrcjv3; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1783026178; c=relaxed/simple;
+	bh=oRoobASajO99MaP1F2kZ5hI2McBFNYeAI9TMQVWz778=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jd3ZzrzM6IgPB1M6rTngS3tI7TaHY8x/0pASZ1FQKUccpMmvXKIb+7FqffG1MLn+UtLMX5RKYFk+V8ktyp4s5ATbF0+Gzvy8CAG6IdQ2IqmisbrtbGUKbU78kDWj+gElf/VLGzcLqpkwTOtsDbFXG8Wkma4fiMOgfoY3QvYoR9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDRpBlz9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="Fsrrcjv3"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-470174001a0so1598919f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 13:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783025093; x=1783629893; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aYSEb1fRPNK7jUZ0mBNdZrE9oqYSNcb+vjaKrLF66Eo=;
-        b=Fsrrcjv3yyk/zDfDRTU5DzaMDmJ+koltwETeFs2PMqkY1elmMz2yZ6xY9XoF79GnW3
-         23IrP8MMTA20PdS2oFUI7QCQSAX5SAXgNusrzyU8kkOpJ9TdOkHNlUDvOGdwh8Cj4Z5C
-         tuO5JIGVXCXt0sKEdmIZxFa90QIl7lMtUPlv4hWQwe75USBR6fB1AaV8/4Fbm5QORLkp
-         NcmbSqdCiYHODOL6Cm4yI8pohoMYXFbj28gETbswugxrDYmb05uH7d0YU9A36KeR7L0c
-         FmMzfXHSid75x7rXX9R3IL/QR1/zUivJYynw4Ix4EQXyCRvc6gqHxfh3aabbSLUX5djY
-         4w4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783025093; x=1783629893;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aYSEb1fRPNK7jUZ0mBNdZrE9oqYSNcb+vjaKrLF66Eo=;
-        b=fyXnVFj0WGcTTrky5O6a9jY7lMcA/xcTtfahzZ3hCKCu3OcRdQiaTLlx6at2N1mhl9
-         8dO1s5iY8Q2tmTCMYItS4SsTl/hh9/bBoK1XGIkm6F92KsL1Sy3N1UJ0ql6DnW9mdvYM
-         XAHuK16NWf8e9TH01nqiZbNEWSobada/dNyNIKnfuIBBeC7lIobP9bVI1KWsxFaEP8h3
-         Q9IFPQjba5gmlYZMLMf9CKmNXs6FfQyiyWSID2hRkRhmh8ufyJ9BwgdbAJ/55U41cyp1
-         XI+s5KMjMJ2cxtrp1wwOCO1SEhZgbErLX27PSLbaMC3TOcEVsldEpdig0d5/o2sHFN6x
-         jW7w==
-X-Gm-Message-State: AOJu0YzbEpPyMYeeb0N0cXLNaSrFus2reyOnAa//wUwUquV4axDWgKiA
-	l+nlgso7tSbgRE78zw2piRTRZJLLhEWEaD+PtgjpNSKjHe0furSICCFA4hq1Ib4fSkRPuq22gpD
-	n9sf1
-X-Gm-Gg: AfdE7cnNTAl2WDbFPjeYlvki0uJxpP+vreTjecQzNKRffmDqAnCzKJx6848boAQLXcY
-	8kOQWHYya1loikDB+LRimVoIeelNzr81GhNShH31S7uWq68GpbzDap6dUYTPz5e3Cn866e/1YUL
-	Vf534HYh3YFQ4s4MzzK5HicKV2lGRzbY59JFtwuU25303b1E7OjIt7ipM/yWKpi0P26bH6HI9Qu
-	LNxRatarBHuJ7rlORCrC1r8kXUuRW17h/Z5qKOGNR7Vq2iE6sDsXE5d42nfskv7DJiaRvjKVpWd
-	eQlibEZmCDA/5ES6c3KEaAMSY8NKFzN252/MBI3mk9rndMQAybYKECyDeqUr2DPjvtx8OoEPoAW
-	DimZ7t/yJTPMjTyfYcvgg0HGmXzsmglohFdHxlDsG7+zqUtPzrqgSybjkkhoGElBAoH861CUEMX
-	PJdz5S/ftcA1b+7Q0=
-X-Received: by 2002:a5d:5588:0:b0:473:1ccc:15bf with SMTP id ffacd0b85a97d-477b5488071mr8406342f8f.42.1783025092703;
-        Thu, 02 Jul 2026 13:44:52 -0700 (PDT)
-Received: from [192.168.3.100] ([151.41.178.17])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477dd94c829sm11660249f8f.24.2026.07.02.13.44.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jul 2026 13:44:52 -0700 (PDT)
-Message-ID: <787586e0-f11a-48ec-8a07-8e56043b7da8@baylibre.com>
-Date: Thu, 2 Jul 2026 22:44:51 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDRpBlz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7985E1F000E9;
+	Thu,  2 Jul 2026 21:02:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783026176;
+	bh=S5P/GL2wpYH6WTHGlfcwNG/3r8kbd7VYOP/LEq11yIA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=IDRpBlz9hdFz+BiW11MKcOAQT91a8+5OO3K/evQvsCSf1w5tNXeYeSrVOANZOxybx
+	 RdTCX/EyD3hpBJfm7IoQc+Im51boWUZu7H9Lg/UFS/KFs342DAkdK0fkvu/FFjK1xh
+	 zLyIYNsOoBwhjnm00OZJE9aq/BI03w1t10Xa3MfGRxoou6BDLDqLd/Rkr1YCUomOZ3
+	 Fbhn8eLv2lPZ4Hrb4LdMXcofRjHS1uTnqmNbBM6+IHmcuK4z2kiJisPbr+5QFCz//D
+	 BoC4EC5fqO/YDwSvsLPcNhN2lINj5WbToWR+vW1darGaKFJUI5pmU+w8JRnVyB+DL6
+	 NOuuEKvqj0WHQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wfOYg-00000000ukk-2tSs;
+	Thu, 02 Jul 2026 21:02:54 +0000
+Date: Thu, 02 Jul 2026 22:04:43 +0100
+Message-ID: <87mrw96r2s.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org,
+	kvmarm@lists.linux.dev,
+	"Oliver Upton" <oupton@kernel.org>
+Subject: Re: [PATCH 25/28] KVM: arm64: Engage NV3 TLBI trap elision
+In-Reply-To: <20260702164514.C41EF1F00A3D@smtp.kernel.org>
+References: <20260702160248.1377250-1-maz@kernel.org>
+	<20260702160248.1377250-26-maz@kernel.org>
+	<20260702164514.C41EF1F00A3D@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ASoC: meson: aiu-formatter: remove pipeline reset
- from prepare
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
-References: <20260702-fix-24-bit-i2s-playback-v1-0-bcd3a43fe32a@baylibre.com>
- <20260702-fix-24-bit-i2s-playback-v1-2-bcd3a43fe32a@baylibre.com>
- <20260702111422.42BA01F000E9@smtp.kernel.org>
-From: Valerio Setti <vsetti@baylibre.com>
-In-Reply-To: <20260702111422.42BA01F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-
-
-On 7/2/26 1:14 PM, sashiko-bot@kernel.org wrote:
-
->> diff --git a/sound/soc/meson/aiu-formatter-i2s.c b/sound/soc/meson/aiu-formatter-i2s.c
->> index b4604734fe88d..cb554c2e7ce4a 100644
->> --- a/sound/soc/meson/aiu-formatter-i2s.c
->> +++ b/sound/soc/meson/aiu-formatter-i2s.c
-> [ ... ]
->> @@ -55,11 +54,11 @@ static int aiu_formatter_i2s_prepare(struct regmap *map,
->>   {
->>   	/* Always operate in split (classic interleaved) mode */
->>   	unsigned int desc = 0;
->> -	unsigned int tmp;
->>   
->> -	/* Reset required to update the pipeline */
->> -	regmap_write(map, AIU_RST_SOFT, AIU_RST_SOFT_I2S_FAST);
->> -	regmap_read(map, AIU_I2S_SYNC, &tmp);
->> +	/*
->> +	 * Pipeline reset is already implemented in aiu_fifo_i2s_trigger() at
->> +	 * trigger time.
->> +	 */
+On Thu, 02 Jul 2026 17:45:14 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] Enabling FEAT_NV3 TLBI elision (NVnTTLB) breaks KVM's nested S2 MMU caching, leaving stale L2 guest S1 TLB entries across cached physical VMIDs.
+> - [High] TLBI trap elision for NV1 guests is nested inside a check requiring the guest to use VHE, rendering the optimization dead code.
+> - [Medium] NV3 TLBI trap elision is incomplete because HCRX_EL2_NVnTTLBOS is omitted from the TLBI elision mask.
+> 
+> Pre-existing issues:
+> - [High] vcpu_set_hcrx() statically evaluates the guest's dynamic HCR_EL2.E2H state at boot, permanently disabling HCRX_EL2_NVTGE even if the guest later enables VHE.
+> --
+> 
+> commit e34c9c8b4a16d0026abc090c888c49e7f1c66d8a
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> KVM: arm64: Engage NV3 TLBI trap elision
+> 
+> This commit enables FEAT_NV3 TLBI trap elision for guests that are not
+> NV2-aware. It relaxes TLBI traps to only TGE=0 using HCRX_EL2 bits.
+> 
+> > diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
+> > index b32870a5e1236..d6f432b1558f5 100644
+> > --- a/arch/arm64/include/asm/kvm_emulate.h
+> > +++ b/arch/arm64/include/asm/kvm_emulate.h
+> > @@ -715,6 +715,15 @@ static inline void vcpu_set_hcrx(struct kvm_vcpu *vcpu)
+> >  		if (cpus_have_final_cap(ARM64_HAS_NV3) &&
+> >  		    vcpu_has_nv(vcpu) && vcpu_el2_e2h_is_set(vcpu)) {
 > 
 > [Severity: High]
-> Does removing this reset break dynamic DAPM routing (DPCM)?
+> This isn't a bug introduced by this patch, but because vcpu_set_hcrx is
+> called once during kvm_calculate_traps at the first VCPU run, the guest
+> has not yet executed and its virtual HCR_EL2.E2H is 0. 
 > 
-> When a backend is dynamically connected to an already-running frontend via
-> DPCM, the frontend's trigger() callback is not invoked again.
-> 
-> For example, if the I2S FIFO frontend is started (e.g., routed to the SPDIF
-> backend) and then the I2S backend is dynamically connected while the stream is
-> running, the "I2S Formatter" DAPM widget powers up and calls
-> aiu_formatter_i2s_prepare().
-> 
-> Without the reset pulse here, will the hardware fail to latch new
-> configurations (like AIU_I2S_SOURCE_DESC), potentially resulting in corrupted
-> or no audio output from the I2S backend?
-> 
+> Since vcpu_el2_e2h_is_set checks the dynamic HCR_EL2 register, does this
+> evaluate to false and permanently disable HCRX_EL2_NVTGE even if the guest
+> later sets HCR_EL2.E2H at runtime?
 
-I'm not sure about this. The reason I removed the pipeline reset was 
-that having it happening after the one on the FIFO side caused the 
-stream at 24-bits to be corrupted.
-In the scenario described by Sashiko we would have had the pipeline 
-reset again after the one from the FIFO (which is continuouly running). 
-Moreover I think that this would have happened also before my series 
-that was recently merged, i.e. c7852d2dcf66
-("ASoC: meson: aiu: align I2S design to the AXG one"), so I have some 
-doubt that this could have worked seamlessly also before recent changes.
+No. E2H is never configurable in KVM. You should know it by now.
+
+> 
+> [Severity: High]
+> Does checking vcpu_el2_e2h_is_set here prevent the NV1 TLBI elision
+> optimization from ever being reached?
+>
+> Since an NV1 guest does not have VHE enabled (E2H=0), this outer condition
+> will evaluate to false, meaning the inner !kvm_has_nv2(vcpu->kvm) block
+> added below will be skipped.
+
+And that's on purpose.
+
+FEAT_NV3 doesn't apply to E2H==0. Because frankly, it is about as
+useful as a concrete parachute.
+
+> 
+> >  			vcpu->arch.hcrx_el2 |= HCRX_EL2_NVTGE;
+> > +
+> > +			/*
+> > +			 * If the guest is NV2-capable, then we need to see
+> > +			 * all the TLBIs, as configured in HCR_EL2.
+> > +			 * Otherwise, relax the TLBI traps to only TGE=0.
+> > +			 */
+> > +			if (!kvm_has_nv2(vcpu->kvm))
+> > +				vcpu->arch.hcrx_el2 |= (HCRX_EL2_NVnTTLB  |
+> > +							HCRX_EL2_NVnTTLBIS);
+> 
+> [Severity: Medium]
+> Does this mask omit the Outer Shareable S1 TLBI elision bit
+> (HCRX_EL2_NVnTTLBOS)?
+
+It does.
+
+> 
+> Without it, will Outer Shareable S1 TLBI instructions continue to
+> trap to KVM, missing out on the intended performance optimization?
+>
+
+Yeah. Not that it matters, but might as well be consistent. But that
+can't be unconditional (we rely on trapping all OS TLBIs if OS TLBIs
+are not advertised to the guest.
+
+> [Severity: Critical]
+> Does enabling hardware TLBI elision here break KVM's nested S2 MMU
+> caching?
+> 
+> KVM caches multiple S2 MMU contexts (with distinct physical VMIDs) for
+> the same virtual VMID, and defers physical VMID switches until guest entry.
+>
+
+Not really, but hey, I'm getting tired of explaining stuff to a
+machine that won't even read my emails.
+
+> If a guest hypervisor writes to VTTBR_EL2 and executes an S1 TLBI natively,
+> hardware will only invalidate the currently active physical VMID.
+>
+
+This depends on the value of NVHCR_EL2.TGE.
+
+> Could this cause the hardware to invalidate the wrong context (the
+> hypervisor's own S1 TLB instead of the L2 guest's) and miss other cached
+> physical VMIDs sharing the virtual VMID, potentially leading to stale
+> TLB entries?
+
+If NVHCR_EL2.TGE == 1, then this will only invalidate L1's own TLBs,
+as per the architecture (TGE controls whether TLBI S1E1* affects the
+host or the guest). If L1 does the wrong thing, that's its problem,
+not the host's, and this is no different from what already happens in
+KVM or on bare metal.
+
+So no, that doesn't cause anything wrong.
+
+	M.
 
 -- 
-Valerio
-
+Jazz isn't dead. It just smells funny.
