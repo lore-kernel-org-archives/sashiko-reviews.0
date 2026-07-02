@@ -1,214 +1,125 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f2.google.com (mail-ed2-f2.google.com [74.125.228.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DFF38F927
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 19:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DD63A7826
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 19:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.66
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783020987; cv=pass; b=nqcDs27dlh+NEerX1abzKThmZ/oHqFjn44VRnBmdy0Tv2uQZ6d9ux2L7NXmcXotNe+zwFVT4fu2GDcGJ+nYOX7hLYUchKIyCusn2vurxFwSHhBRgBC1yj4rgQU6OZIPcnLDpdqy+hy1mm7wN/v2x03tIj+QisWVv8OIEH2CLobY=
+	t=1783022211; cv=pass; b=jCsAndsXvyDMrup5+1jvyFIQUq5PLIv+iOFtPqXTRwwf5GmU3vIxTQAfEErNfKjTV99yIyvqeHR3BMEn3kJr11FYwXYWFHhBRMPBKgemX0zobJxzPjT5h+j99dnol1KPTlHSD99+s8T/QyhSJqncjR/vD4I2N/jIh37DIIfjLK4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783020987; c=relaxed/simple;
-	bh=Uwhrdzx50Wk44NLUV75Z/9UevtQltDOdCEloLZVjKY8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=JzOZbP2DqaO2vBA+QVmkRVw0x24+7pofWsmzLbovAlD5xrmrT+SkpAKWuHHwUl2Y6VGhwu+CI0hvU4vxUkUUvrFTC9wgkG5gRUVaPk3mraUPSH4aatNwQRaopQLai3FbwHKbjyeyF3WqUjQk8fcwDaU+t7Xhl1AbeL6+EdkdWjI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=nfraprado@collabora.com header.b=OeTq6wo4; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1783022211; c=relaxed/simple;
+	bh=78XKiTTX6No/T/hR8Omcb5xp2aN7XcpwRGVep5gRzTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F2jB6DqkUBzRKIA9whbzjDu5U2jNImFwtu5QqpXA8/DGYcDrcvf4pFFKK26tYt6jEQlMWPcI+Ie9n9j60051J1oyjFHmoVAT2w3Iu6lZ5kQ6eF6ckXvKn5ej9n+3d3uFBxV8t6kZZ/24CErhFln3vBwtve97WItKNVz6e79EFwk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZ30wqH2; arc=pass smtp.client-ip=74.125.228.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=nfraprado@collabora.com header.b="OeTq6wo4"
-ARC-Seal: i=1; a=rsa-sha256; t=1783020983; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=WduAoKg0XCZIQtLCHJ/8I/fF9TLWvGt5HzfunbE8cjSOpQ0UrfgUs57tl0uuvbclO5T7BCBTXoOJgolnPbfIaV79D8B/jeCLtXwalBMpGncw2KCyEeWYHQccoPOs084B7n+5nl99d3Y3uUsKP89+8DYMkJBFn6Gk5s4d3H3wNhA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1783020983; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=EtcCMiRuQMnXNZb0ge3XacN5GVBtCdKVPL5Vh14xflA=; 
-	b=Y2VTYwJp7X+Uz0jGNgDz6BqAzs24j458JCX/lHTUXkrJqFg7tfgc4ghSoyPsCrrvzncI6C+NChmmVhL4nnoR11DGfRagDY1pj259FnS8RXh+xTARALjbPYgaC1lxy172PsaVRcQarqqxi6TCkDQElEhw4FHkLHYrOzgVLeeTmGg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=nfraprado@collabora.com;
-	dmarc=pass header.from=<nfraprado@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1783020982;
-	s=zohomail; d=collabora.com; i=nfraprado@collabora.com;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
-	bh=EtcCMiRuQMnXNZb0ge3XacN5GVBtCdKVPL5Vh14xflA=;
-	b=OeTq6wo46Y1QCUSae86rHlA7hqedz805B+ZKs7HcyT8IjAlt4U+WQ8iXhuwujaR0
-	lnjPyNkHWyrBdkqwxIA8ytg9XRpPLMWR2nFQ+3IadGOxRcus4zAsGWIdE+mQX+2mwY3
-	lMjvUGFqz47NuI3OMCyOEGoDUkbWmGwFO64WNNmY=
-Received: by mx.zohomail.com with SMTPS id 1783020981505231.81005490114353;
-	Thu, 2 Jul 2026 12:36:21 -0700 (PDT)
-Message-ID: <7fb9a6661cdab79183fda44330a3e94697d5aa9d.camel@collabora.com>
-Subject: Re: [PATCH] drm/amd/display: Always notify the HDA driver on
- connector disconnect
-From: =?ISO-8859-1?Q?N=EDcolas?= "F. R. A. Prado" <nfraprado@collabora.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Date: Thu, 02 Jul 2026 16:36:18 -0300
-In-Reply-To: <20260626144456.53EA61F000E9@smtp.kernel.org>
-References: 
-	<20260626-amdgpu-dm-always-eld-notify-on-disconnect-v1-1-40ce473cd724@collabora.com>
-	 <20260626144456.53EA61F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-9 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZ30wqH2"
+Received: by mail-ed2-f2.google.com with SMTP id 4fb4d7f45d1cf-69867726cd3so534606a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 12:56:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783022206; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gj3Uh3nhrKzeQKtUHZTC5Q/INYB+cVsWGxoiwJLWrkfq/AoY/uG80EzwrVH9cZIAXH
+         LmZA+4VsmDrk9AMpklcXadsxLalKtKqbySpw8YOR0u0fiFx8B0M75ugd7qU8Yq+s/AXN
+         Bvd+Fio4oCWNtxzIVW0NNztYbEgGo59RefxZvTvX4ffDFMMZkdEpnm60upI3qCdq/Tly
+         Nlp2dxJKCQryujpC3XnEAU52LuaF6Qlq5H+o9jvLYKdAOvczAtDUIfD+5Y6AOVgsa8me
+         Q+IF2rJUFnmbpMc+RcxQUhmGbSAGFB01Ad2SYGMC0YDOldObHAOiNxPt92yNFwQVp9gp
+         gJow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=+R43ySXquKh2cdUqDoV82BuWFAxJ2P/AxP58siYwe/c=;
+        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
+        b=QWvvM8dqGIAyQMdQCbdWR2Peux48xbWTWZX0oGQnL9qDRCaMKvpRPf7xuKao7BjL4I
+         QQksV61BlyNnooDSj1LJiq3534eXedGFMroPrMLhStqGnZ3O9xPLBmBPI4O1N8e4y1nP
+         au6UgNztGQcCv9iEKWKTsWz75IBw3FzHxSRGqJhHMC4p2oWMXUWv3yt/ANA0sAjutLPl
+         ESJqQTepvrviibJNfbPYtfFnEVJK3LYzTZ++HQ4aTcnjnPTOgAkg7OqzmHfSq7858X7o
+         6/lQ93g4ejRbQIM4m1j+dfLxkFOmpLOaquloRvxzUuDRDdx4m+CyZRGWxgRYKuk6R4iV
+         ZDZA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783022206; x=1783627006; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+R43ySXquKh2cdUqDoV82BuWFAxJ2P/AxP58siYwe/c=;
+        b=aZ30wqH2XuAzwoV4RF1xzFwHhtYF/dGLsSIvq5nKwCxMBkEo9sJ5+lbIQwRKvUiPbg
+         D/TAS+ye3KU63tWnRb3VUzWY/5KjYCq4YmjORgzrBuWOYdASibsu0VM0/Ttb6EXEZwXr
+         8usYqsARlFyZdWxLCMi3Gug9Ipk+SQcE5YiSkxVZdclJkCeiNyqIKcDwFwxf09wUEqDF
+         QcJgZzGX3jMIdvEDssxL09e/0bPHiN6HXwsWl7yeZXAbEj/2PyLJMeBd5ALEwoRqunDv
+         MIbSVQK2gnjJo11box6HHTrQW4vaoiuDx1Q+Y9eSNpQR64dwAsM7iXcDbrXyZwyDwqvo
+         zc7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783022206; x=1783627006;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+R43ySXquKh2cdUqDoV82BuWFAxJ2P/AxP58siYwe/c=;
+        b=T7Cl38goiYHvA+CcUmgAAtzvM4TeJ8u5w4Cgc1aez1QjdraYGIzvrBXuvoVnvVtMKJ
+         B+BoEP0Ht+mrgXymFpD1bgi/LHfbUcITqgJTHAGndyD4WoXUOICgi408w1ZZRBP11z4L
+         8ZZCWy4ZjBOde/7BZJVW7BKSBqW4gkmdeGdF/9wy1Qh27qbbsHGWsPg1fro5e4njawEK
+         4m49zk47ABW+lW92TXL3aNQvsrz8Qour9dLl9P9Tymdq3worQFBaVRXc4enwMvuMIosj
+         JBRHz2q+GzEEGZyZzVcPCRi6qQ5KoP3IMsC8XNFHWkhl++e/dE9/iUuBUvOFdFAMFUzr
+         4AeA==
+X-Gm-Message-State: AOJu0YxqXoThqcW7JJ0bccItjUlPd328syWVyt8UGiMj8Mmu6e5QM/za
+	4nvTHrfhGLgujcXcKrdXsLXonArT3Ry4ajJt32FNVsfizzqXHRCIOsF5E+RRcgbc6b9TmMV87he
+	FvyhGPnaxRNabOcrmxgb3Oi0B2SSMY34/3jFTsfedpkXo
+X-Gm-Gg: AfdE7cn0WqAE2+nrbReK0g/dqbU6HnB8bUEYko8texxTtA9HZZLP42Uueek9IBdGPqk
+	Wve+4NZFcz42gITOaniiJ3v4RjUAaV80AGJSFLUnKFB/BW33OrzxfBMcDUde/NkNcS6iYdlQCNu
+	RFo5IoTu56NORwL06uiF7/9r9R9uXdMOPX2rtzl5Fp9LU4XrApS0/eKT4uCGtUyd1gQFsqa3z2o
+	LuD0JmwRolEXootx4aHC+aLyjpxs9Xm3r3wkscs29ZmkxsGjjBYQ/aLH1NuK5Ak5GAFooju
+X-Received: by 2002:a17:906:7312:b0:c12:a425:cbca with SMTP id
+ a640c23a62f3a-c12ae74dfb1mr317838366b.54.1783022206297; Thu, 02 Jul 2026
+ 12:56:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ZohoMailClient: External
+References: <20260702193538.2195973-1-coiaprant@gmail.com> <20260702193538.2195973-4-coiaprant@gmail.com>
+ <20260702194430.91DB81F000E9@smtp.kernel.org>
+In-Reply-To: <20260702194430.91DB81F000E9@smtp.kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
+Date: Fri, 3 Jul 2026 03:56:35 +0800
+X-Gm-Features: AVVi8CdiP4pJCcVRB6E2EMlXWI1JezCP9aABddnM42SkyjD3EjNWOO9ItXcLxbE
+Message-ID: <CALj3r0jJm+VXBi22g9ebqA219=V1vUHvsfT6NgNmOhcLaJnt3w@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] arm64: dts: rockchip: Add devicetree for the
+ Graperain G3568 v2
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 2026-06-26 at 14:44 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issue(s) to consider:
->=20
-> New issues:
-> - [High] Audio state is permanently broken upon reconnect if a full
-> modeset does not occur.
-> - [Low] Spurious ELD notifications with an invalid pin (-1) during
-> normal CRTC disable sequence.
->=20
-> Pre-existing issues:
-> - [Critical] Data race between ELD notification and audio component
-> unbind leads to Use-After-Free.
-> --
->=20
-> commit 0c399aeba0fb63f7bdb4374bcb0fb67d5cd679bb
-> Author: N=C3=ADcolas F. R. A. Prado <nfraprado@collabora.com>
->=20
-> drm/amd/display: Always notify the HDA driver on connector disconnect
->=20
-> This patch modifies the display detect logic to call
-> amdgpu_dm_audio_eld_notify() when a sink is disconnected. This
-> ensures the
-> HDA driver is notified even if no subsequent atomic commit occurs.
->=20
-> > diff --git
-> > a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
-> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
-> > index 13c9a9d145baa..c9da19335eacf 100644
-> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
-> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
-> > @@ -168,7 +168,7 @@ void amdgpu_dm_audio_fini(struct amdgpu_device
-> > *adev)
-> > =C2=A0}
-> > =C2=A0EXPORT_IF_KUNIT(amdgpu_dm_audio_fini);
-> > =C2=A0
-> > -STATIC_IFN_KUNIT void amdgpu_dm_audio_eld_notify(struct
-> > amdgpu_device *adev, int pin)
-> > +void amdgpu_dm_audio_eld_notify(struct amdgpu_device *adev, int
-> > pin)
-> > =C2=A0{
-> > =C2=A0	struct drm_audio_component *acomp =3D adev-
-> > >dm.audio_component;
-> > =C2=A0
->=20
-> [Severity: Critical]
-> This is a pre-existing issue, but can this lead to a use-after-free
-> if the
-> HDA module is unloaded concurrently?
->=20
-> Looking at amdgpu_dm_audio_eld_notify(), the acomp pointer and its
-> audio_ops
-> are checked and dereferenced without holding any locks:
->=20
-> =C2=A0=C2=A0=C2=A0 if (acomp && acomp->audio_ops && acomp->audio_ops-
-> >pin_eld_notify) {
->=20
-> Concurrently, if the HDA module is unloaded,
-> amdgpu_dm_audio_component_unbind() clears these component fields. If
-> the
-> notify function is preempted after its check, could it dereference
-> the
-> freed audio_ops?
-
-As mentioned this is unrelated to this patch.
-
->=20
+> > +     wifi-irq {
+> > +             wifi_host_wake_irq: wifi-host-wake-irq {
+> > +                     rockchip,pins = <3 RK_PD4 RK_FUNC_GPIO &pcfg_pull_down>;
+> > +             };
+> > +     };
+> > +};
+>
 > [ ... ]
->=20
-> > diff --git
-> > a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-> > index 300ee26f26ff0..9286f86a20cd7 100644
-> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
->=20
-> [ ... ]
->=20
-> > @@ -601,6 +603,13 @@ void amdgpu_dm_update_connector_after_detect(
-> > =C2=A0		/* Set CP to DESIRED if it was ENABLED, so we can
-> > re-enable it again on hotplug */
-> > =C2=A0		if (connector->state->content_protection =3D=3D
-> > DRM_MODE_CONTENT_PROTECTION_ENABLED)
-> > =C2=A0			connector->state->content_protection =3D
-> > DRM_MODE_CONTENT_PROTECTION_DESIRED;
-> > +
-> > +		mutex_lock(&adev->dm.audio_lock);
-> > +		inst =3D aconnector->audio_inst;
-> > +		aconnector->audio_inst =3D -1;
-> > +		mutex_unlock(&adev->dm.audio_lock);
-> > +		if (inst !=3D -1)
-> > +			amdgpu_dm_audio_eld_notify(adev, inst);
->=20
+>
+> > +     wifi@1 {
+> > +             compatible = "brcm,bcm4356-fmac", "brcm,bcm4329-fmac";
+> > +             reg = <1>;
+> > +             interrupt-parent = <&gpio3>;
+> > +             interrupts = <RK_PD4 IRQ_TYPE_LEVEL_LOW>;
+>
 > [Severity: High]
-> Does wiping aconnector->audio_inst to -1 on disconnect permanently
-> break
-> audio upon reconnect if a full modeset does not occur?
->=20
-> If a display is reconnected and userspace triggers an atomic commit
-> that does
-> not require a full modeset (like a fastset), amdgpu_dm_commit_audio()
-> skips
-> the connector because drm_atomic_crtc_needs_modeset() is false.
->=20
-> In that scenario, does audio_inst remain -1, preventing the HDA
-> driver from
-> ever being notified of the new ELD?
+> Will this combination of an active-low level-triggered interrupt and a
+> pull-down resistor cause an interrupt storm?
+>
+> If the WiFi module enters a sleep state and leaves the pin floating, the
+> pull-down configured in wifi_host_wake_irq will drive the pin low. Because
+> the interrupt is configured as IRQ_TYPE_LEVEL_LOW, won't the kernel
+> continuously fire the interrupt handler?
+>
+> > +             interrupt-names = "host-wake";
+> > +             pinctrl-names = "default";
+> > +             pinctrl-0 = <&wifi_host_wake_irq>;
+> > +     };
+> > +};
 
-I couldn't find a real use case scenario where this might happen. I
-tested turning the display off/on and disconnecting/reconnecting the
-HDMI cable on multiple compositors (kwin, mutter, sway, weston,
-gamescope) and in all cases a full modeset atomic commit was applied.
-The only exception was when disabling the use of the display in the
-compositor, but then the audio driver disables the audio devices
-anyway, so this wouldn't be an issue.
-
->=20
-> [Severity: Low]
-> Also, does setting audio_inst to -1 here cause spurious ELD
-> notifications
-> with an invalid pin during a normal CRTC disable sequence?
->=20
-> If a display is disconnected, audio_inst becomes -1. Later, when a
-> modeset
-> disables the CRTC, amdgpu_dm_commit_audio() reads the -1 and
-> unconditionally
-> calls amdgpu_dm_audio_eld_notify() with the invalid pin:
->=20
-> amdgpu_dm_commit_audio() {
-> =C2=A0=C2=A0=C2=A0 ...
-> =C2=A0=C2=A0=C2=A0 inst =3D aconnector->audio_inst;
-> =C2=A0=C2=A0=C2=A0 aconnector->audio_inst =3D -1;
-> =C2=A0=C2=A0=C2=A0 mutex_unlock(&adev->dm.audio_lock);
->=20
-> =C2=A0=C2=A0=C2=A0 amdgpu_dm_audio_eld_notify(adev, inst);
-> }
->=20
-> Does this violate the cross-subsystem API by logging a bogus debug
-> message
-> and passing an invalid index to the HDA driver?
-
-Upon testing it looks like calling amdgpu_dm_audio_eld_notify() with -1
-already happens today. Browsing through the code looks like this is
-mostly handled as a no-op, except for nvhdmi_port2pin() and
-atihdmi_port2pin() which should probably be patched to handle that
-case. I can send a separate patch for that.
-
-Thanks,
-N=C3=ADcolas
-
->=20
-> > =C2=A0	}
-> > =C2=A0
-> > =C2=A0	update_subconnector_property(aconnector);
+It should be IRQ_TYPE_LEVEL_HIGH, wrong value in OEM SDK.
