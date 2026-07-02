@@ -1,121 +1,214 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780E73A59B1;
-	Thu,  2 Jul 2026 18:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783016845; cv=none; b=r5Igt+mxa84YmM+u56H5NVJAxJ0xFbTSV4MLpcMem/LsrnL4LmOfYY97BqeVmTlM0BCrmC2ZZvy5VLE1+Qx9X6TSCVovOkrUpigoGhE4kBBZlfS/Qj2mdGzuuBRW/QH6d1nTh/6jA5h7g9IGw3E5aupacYHXDqCQo97gad4McBE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783016845; c=relaxed/simple;
-	bh=tUNl1L/Tvt9Lw9z28XQPOJw4gf0w7g1efNRYWEiEUQA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EtD8C3WijYewMlfvceTkXiYKhTzgj2TgqQRqa96SBSIug8F6F20Xcjvsj5np8oFUOnJb3iIOG8fj/+clOCrRuTki5HTXK6/lsK1z0ndBg2/3rLm4hgdA9NzzrxJ43WVxzl6iL90TB1JjOWw5eqsYNvsBExVPpllr/Gv7ZmLpBW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sz8K5BhT; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DFF38F927
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 19:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783020987; cv=pass; b=nqcDs27dlh+NEerX1abzKThmZ/oHqFjn44VRnBmdy0Tv2uQZ6d9ux2L7NXmcXotNe+zwFVT4fu2GDcGJ+nYOX7hLYUchKIyCusn2vurxFwSHhBRgBC1yj4rgQU6OZIPcnLDpdqy+hy1mm7wN/v2x03tIj+QisWVv8OIEH2CLobY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783020987; c=relaxed/simple;
+	bh=Uwhrdzx50Wk44NLUV75Z/9UevtQltDOdCEloLZVjKY8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=JzOZbP2DqaO2vBA+QVmkRVw0x24+7pofWsmzLbovAlD5xrmrT+SkpAKWuHHwUl2Y6VGhwu+CI0hvU4vxUkUUvrFTC9wgkG5gRUVaPk3mraUPSH4aatNwQRaopQLai3FbwHKbjyeyF3WqUjQk8fcwDaU+t7Xhl1AbeL6+EdkdWjI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=nfraprado@collabora.com header.b=OeTq6wo4; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sz8K5BhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58B11F000E9;
-	Thu,  2 Jul 2026 18:27:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783016843;
-	bh=NymyTv3BRAYOKJnkWhgABGHjBidtkeFYqde854oTNgc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Sz8K5BhTbLLtJq2fXhiyYckyCZaFTciidyNQNfFpdazOQwzeftdfEPyZi+0uUxOnh
-	 gBW7F/XHIoAt/Op5pYmYYz0abrwxRrOhYeJmZTy5vpKVHmvR+qarwjGMg4X0URZ+vo
-	 DaxVkXN3e7w7uwFMZGF2Thj/Qt0MVCBRwJ4EA26wVfmBACaDkERbzeINlnh4wXx1HG
-	 a4/8xf2kmC5T3bQvMCWJDrRGWwvj5gHtmRq8TDHLpkeHK9cfl300oa8j/GSg8wQzXC
-	 joPwmY7Mmcf3WZsfcG+FC3Z2j7uA6yJgiCJ8/Tgr1jimT0EH090oFOURhIweNQHCv2
-	 M5G2ASLCmFmlw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wfM8A-00000000sFg-0YRL;
-	Thu, 02 Jul 2026 18:27:22 +0000
-Date: Thu, 02 Jul 2026 19:29:10 +0100
-Message-ID: <87se616ya1.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=nfraprado@collabora.com header.b="OeTq6wo4"
+ARC-Seal: i=1; a=rsa-sha256; t=1783020983; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=WduAoKg0XCZIQtLCHJ/8I/fF9TLWvGt5HzfunbE8cjSOpQ0UrfgUs57tl0uuvbclO5T7BCBTXoOJgolnPbfIaV79D8B/jeCLtXwalBMpGncw2KCyEeWYHQccoPOs084B7n+5nl99d3Y3uUsKP89+8DYMkJBFn6Gk5s4d3H3wNhA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1783020983; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=EtcCMiRuQMnXNZb0ge3XacN5GVBtCdKVPL5Vh14xflA=; 
+	b=Y2VTYwJp7X+Uz0jGNgDz6BqAzs24j458JCX/lHTUXkrJqFg7tfgc4ghSoyPsCrrvzncI6C+NChmmVhL4nnoR11DGfRagDY1pj259FnS8RXh+xTARALjbPYgaC1lxy172PsaVRcQarqqxi6TCkDQElEhw4FHkLHYrOzgVLeeTmGg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=nfraprado@collabora.com;
+	dmarc=pass header.from=<nfraprado@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1783020982;
+	s=zohomail; d=collabora.com; i=nfraprado@collabora.com;
+	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
+	bh=EtcCMiRuQMnXNZb0ge3XacN5GVBtCdKVPL5Vh14xflA=;
+	b=OeTq6wo46Y1QCUSae86rHlA7hqedz805B+ZKs7HcyT8IjAlt4U+WQ8iXhuwujaR0
+	lnjPyNkHWyrBdkqwxIA8ytg9XRpPLMWR2nFQ+3IadGOxRcus4zAsGWIdE+mQX+2mwY3
+	lMjvUGFqz47NuI3OMCyOEGoDUkbWmGwFO64WNNmY=
+Received: by mx.zohomail.com with SMTPS id 1783020981505231.81005490114353;
+	Thu, 2 Jul 2026 12:36:21 -0700 (PDT)
+Message-ID: <7fb9a6661cdab79183fda44330a3e94697d5aa9d.camel@collabora.com>
+Subject: Re: [PATCH] drm/amd/display: Always notify the HDA driver on
+ connector disconnect
+From: =?ISO-8859-1?Q?N=EDcolas?= "F. R. A. Prado" <nfraprado@collabora.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org,
-	kvmarm@lists.linux.dev,
-	"Oliver Upton" <oupton@kernel.org>
-Subject: Re: [PATCH 03/28] KVM: arm64: Merge guest's HCRX_EL2 using NV_HCRX_GUEST_EXCLUDE
-In-Reply-To: <20260702163411.C2F861F00A3E@smtp.kernel.org>
-References: <20260702160248.1377250-1-maz@kernel.org>
-	<20260702160248.1377250-4-maz@kernel.org>
-	<20260702163411.C2F861F00A3E@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+Cc: dri-devel@lists.freedesktop.org
+Date: Thu, 02 Jul 2026 16:36:18 -0300
+In-Reply-To: <20260626144456.53EA61F000E9@smtp.kernel.org>
+References: 
+	<20260626-amdgpu-dm-always-eld-notify-on-disconnect-v1-1-40ce473cd724@collabora.com>
+	 <20260626144456.53EA61F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, kvmarm@lists.linux.dev, oupton@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+X-ZohoMailClient: External
 
-On Thu, 02 Jul 2026 17:34:11 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Missing RES0 Sanitization / Unsafe Register Merge for HCRX_EL2
+On Fri, 2026-06-26 at 14:44 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issue(s) to consider:
+>=20
+> New issues:
+> - [High] Audio state is permanently broken upon reconnect if a full
+> modeset does not occur.
+> - [Low] Spurious ELD notifications with an invalid pin (-1) during
+> normal CRTC disable sequence.
+>=20
+> Pre-existing issues:
+> - [Critical] Data race between ELD notification and audio component
+> unbind leads to Use-After-Free.
 > --
-> 
-> commit a8dae7a323ff7e33355d5cb4c144294087a9bbfa
-> Author: Marc Zyngier <maz@kernel.org>
-> KVM: arm64: Merge guest's HCRX_EL2 using NV_HCRX_GUEST_EXCLUDE
-> 
-> This commit changes how the guest-provided HCRX_EL2 value is merged with
-> the host's value. It replaces positive masking with an exclusion list
-> of bits that the guest is not allowed to override.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-> > index 4bf624a49591d..8e5f492f39086 100644
-> > --- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-> > +++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-> 
+>=20
+> commit 0c399aeba0fb63f7bdb4374bcb0fb67d5cd679bb
+> Author: N=C3=ADcolas F. R. A. Prado <nfraprado@collabora.com>
+>=20
+> drm/amd/display: Always notify the HDA driver on connector disconnect
+>=20
+> This patch modifies the display detect logic to call
+> amdgpu_dm_audio_eld_notify() when a sink is disconnected. This
+> ensures the
+> HDA driver is notified even if no subsequent atomic commit occurs.
+>=20
+> > diff --git
+> > a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
+> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
+> > index 13c9a9d145baa..c9da19335eacf 100644
+> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
+> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_audio.c
+> > @@ -168,7 +168,7 @@ void amdgpu_dm_audio_fini(struct amdgpu_device
+> > *adev)
+> > =C2=A0}
+> > =C2=A0EXPORT_IF_KUNIT(amdgpu_dm_audio_fini);
+> > =C2=A0
+> > -STATIC_IFN_KUNIT void amdgpu_dm_audio_eld_notify(struct
+> > amdgpu_device *adev, int pin)
+> > +void amdgpu_dm_audio_eld_notify(struct amdgpu_device *adev, int
+> > pin)
+> > =C2=A0{
+> > =C2=A0	struct drm_audio_component *acomp =3D adev-
+> > >dm.audio_component;
+> > =C2=A0
+>=20
+> [Severity: Critical]
+> This is a pre-existing issue, but can this lead to a use-after-free
+> if the
+> HDA module is unloaded concurrently?
+>=20
+> Looking at amdgpu_dm_audio_eld_notify(), the acomp pointer and its
+> audio_ops
+> are checked and dereferenced without holding any locks:
+>=20
+> =C2=A0=C2=A0=C2=A0 if (acomp && acomp->audio_ops && acomp->audio_ops-
+> >pin_eld_notify) {
+>=20
+> Concurrently, if the HDA module is unloaded,
+> amdgpu_dm_audio_component_unbind() clears these component fields. If
+> the
+> notify function is preempted after its check, could it dereference
+> the
+> freed audio_ops?
+
+As mentioned this is unrelated to this patch.
+
+>=20
 > [ ... ]
-> 
-> > @@ -350,8 +368,8 @@ static inline void __activate_traps_common(struct kvm_vcpu *vcpu)
-> >  		u64 hcrx = vcpu->arch.hcrx_el2;
-> >  		if (is_nested_ctxt(vcpu)) {
-> >  			u64 val = __vcpu_sys_reg(vcpu, HCRX_EL2);
-> > -			hcrx |= val & __HCRX_EL2_MASK;
-> > -			hcrx &= ~(~val & __HCRX_EL2_nMASK);
-> > +			hcrx |= (val & ~NV_HCRX_GUEST_EXCLUDE);
-> > +			hcrx &= ~(~val & ~NV_HCRX_GUEST_EXCLUDE);
-> 
+>=20
+> > diff --git
+> > a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+> > index 300ee26f26ff0..9286f86a20cd7 100644
+> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+>=20
+> [ ... ]
+>=20
+> > @@ -601,6 +603,13 @@ void amdgpu_dm_update_connector_after_detect(
+> > =C2=A0		/* Set CP to DESIRED if it was ENABLED, so we can
+> > re-enable it again on hotplug */
+> > =C2=A0		if (connector->state->content_protection =3D=3D
+> > DRM_MODE_CONTENT_PROTECTION_ENABLED)
+> > =C2=A0			connector->state->content_protection =3D
+> > DRM_MODE_CONTENT_PROTECTION_DESIRED;
+> > +
+> > +		mutex_lock(&adev->dm.audio_lock);
+> > +		inst =3D aconnector->audio_inst;
+> > +		aconnector->audio_inst =3D -1;
+> > +		mutex_unlock(&adev->dm.audio_lock);
+> > +		if (inst !=3D -1)
+> > +			amdgpu_dm_audio_eld_notify(adev, inst);
+>=20
 > [Severity: High]
-> Does this allow an untrusted L1 guest to write garbage to the
-> architecturally RES0 bits of the physical HCRX_EL2 register?
+> Does wiping aconnector->audio_inst to -1 on disconnect permanently
+> break
+> audio upon reconnect if a full modeset does not occur?
+>=20
+> If a display is reconnected and userspace triggers an atomic commit
+> that does
+> not require a full modeset (like a fastset), amdgpu_dm_commit_audio()
+> skips
+> the connector because drm_atomic_crtc_needs_modeset() is false.
+>=20
+> In that scenario, does audio_inst remain -1, preventing the HDA
+> driver from
+> ever being notified of the new ELD?
 
-A guest is by definition untrusted. Reading a VNCR-backed system
-register implies sanitisation to enforce RESx bits.
+I couldn't find a real use case scenario where this might happen. I
+tested turning the display off/on and disconnecting/reconnecting the
+HDMI cable on multiple compositors (kwin, mutter, sway, weston,
+gamescope) and in all cases a full modeset atomic commit was applied.
+The only exception was when disabling the use of the display in the
+compositor, but then the audio driver disables the audio devices
+anyway, so this wouldn't be an issue.
 
->
-> By switching from a positive mask to a negative exclusion mask, any bits
-> not explicitly excluded are now merged into the host value.
-> 
-> If the guest modifies its VNCR page at the VNCR_HCRX_EL2 offset and sets
-> RES0 bits, these bits would be passed through. Since hcrx_feat_map lacks
-> FORCE_RES0(HCRX_EL2_RES0), KVM's register mask application in
-> kvm_vcpu_apply_reg_masks() will fail to clear them before they reach this
-> merge point in __activate_traps_common().
+>=20
+> [Severity: Low]
+> Also, does setting audio_inst to -1 here cause spurious ELD
+> notifications
+> with an invalid pin during a normal CRTC disable sequence?
+>=20
+> If a display is disconnected, audio_inst becomes -1. Later, when a
+> modeset
+> disables the CRTC, amdgpu_dm_commit_audio() reads the -1 and
+> unconditionally
+> calls amdgpu_dm_audio_eld_notify() with the invalid pin:
+>=20
+> amdgpu_dm_commit_audio() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =C2=A0=C2=A0=C2=A0 inst =3D aconnector->audio_inst;
+> =C2=A0=C2=A0=C2=A0 aconnector->audio_inst =3D -1;
+> =C2=A0=C2=A0=C2=A0 mutex_unlock(&adev->dm.audio_lock);
+>=20
+> =C2=A0=C2=A0=C2=A0 amdgpu_dm_audio_eld_notify(adev, inst);
+> }
+>=20
+> Does this violate the cross-subsystem API by logging a bogus debug
+> message
+> and passing an invalid index to the HDA driver?
 
-No, the RES0 bits are implicitly handled. FORCE_RESx() is exclusively
-sugar coating here. Case in point:
+Upon testing it looks like calling amdgpu_dm_audio_eld_notify() with -1
+already happens today. Browsing through the code looks like this is
+mostly handled as a no-op, except for nvhdmi_port2pin() and
+atihdmi_port2pin() which should probably be patched to handle that
+case. I can send a separate patch for that.
 
-root@say-please:/home/maz# grep HCRX /sys/kernel/debug/kvm/976-14/resx
-        SYS_HCRX_EL2:	RES0:0000000005ffcfe7	RES1:0000000000000000
+Thanks,
+N=C3=ADcolas
 
-Go away.
-
-	M.
-
--- 
-Jazz isn't dead. It just smells funny.
+>=20
+> > =C2=A0	}
+> > =C2=A0
+> > =C2=A0	update_subconnector_property(aconnector);
