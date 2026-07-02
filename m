@@ -1,186 +1,231 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010070.outbound.protection.outlook.com [52.101.84.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF6D48BD5F
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 12:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782997149; cv=none; b=H0IoiwIKfzrg9z7wKMD4GSqPk3ujXBaEWKuojN4JsAl9q+OeHj3+YUXKCFkURzczbDqQpknO+57K73fVwT+4eZBgXYsxVI8P0WCOn1Eh5uNhU+gCA21AwTyTxMLVg6FiHOvel5awT0L2UZAWhEjdZ3h6//BvOQBxz0tH6TssyZo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782997149; c=relaxed/simple;
-	bh=LIGjXBZuRHkVpvUJmypQdCVF+ROfFstWqZ+VH8w+9P4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bny3T54fh7VvfBqgTPZ/EhBsSiXnjdx/u392D/dMt1areoejfuqSlZVA9Mj+ZJLeVnYm7f0n1p/XPXZ6Etx/2Luur5vEi6Md+wDsa4JndFhFLTCimL5EW5PABKfgO2ByhYiW1NbDTQE0Sgxx2KjAZUyfATQIIifnbof6qsZoVEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HZqFBJoK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Uqp/IBvS; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CE04A2E0D;
+	Thu,  2 Jul 2026 13:17:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782998276; cv=fail; b=HlNot2gfXPYbqP0Zi91/pJL6cUeX9Wa13MzZKKeSb505fvJ5g/6bGUQ0jf7W7YxFwV84hwLXxdbYT+jPBU51e6dHw6lZk9rUjVl5W0d3dpUawP8jkTsGyvoT7IRgoQa6N5jbce+oITQWEGeUxW2jttgCr9qR19ZWwGDFa4YKyko=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782998276; c=relaxed/simple;
+	bh=7b8Z819NP1OeHfFubmz6dC3+LzmMIHlyyW/oKpIzsfk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WIt7pUFf+USNq2Yu66uyw6XGaHgi6A5iKNKT34nvLZzqKs6UJyGl1548VjETFwE6s0EPHtDxkjJqDe1M5n8e93soZuVlANxtBMpgX/qxER/iQ0KmzMTHpCPIciYB6B4Tkh1j3rB73b8tOYNsOeAvAMJ4Ujm56MttMVHe0KJqNJM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=p0avNSop reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HZqFBJoK";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Uqp/IBvS"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 662CjpGk382618
-	for <sashiko-reviews@lists.linux.dev>; Thu, 2 Jul 2026 12:59:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=XWvfanexks3bEkJvHtrjoEDO
-	23i1+dyqL/VN09pDErU=; b=HZqFBJoKGGJMtyz3q+QSb4V2Ww3AgyQXw0ky3FjO
-	NQrs9zoJpwcZqoDbADV5SbuMkvKyI/vqwJR+bV7fdM/10NdjN109XOzqf3IhmsUl
-	PJ9oodZDKMXuhdeiMD2XyRUesbakLBKNZbwCwgJHQFQoA0GYlZgceoZn2oVVQ3vE
-	mglCp83JLEzOnQuKZ6jwg5WzTwFpIKF8zkbrVhmUjaGOdVUDoCSjmqLEYFr95qnC
-	iQ4fEcXB+MexKsD+qJjHj5TgHl5Yy5uof6KAy9EyQgGpkRIocXWnxCtHDBSuSTYl
-	+EXrUPGXUj0BwMeQMkt1rlGtoiKp3OjMKzRv57OQEGOWRg==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5n940u31-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 12:59:04 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-963d7c11611so527148241.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 05:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782997144; x=1783601944; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XWvfanexks3bEkJvHtrjoEDO23i1+dyqL/VN09pDErU=;
-        b=Uqp/IBvSXHeRA8e+T0oCa0vJRW+Hp8xRATgPozzoO8JdVDDJQXO6yzZEhlRpqJrJ+i
-         krG5NS/hjeeETlwtuTpS0OOTbejU2X3t5+s52UlA8KE0WV4zFQusxoyz/bcG7TadoVxS
-         sT/zZ8iWBiHv1aCKq+71nEF7RkP8WC8zAUNWZofRRtJp9Y09tDC9u1MshWSOfWxhBm0W
-         E/dD9n3YYaNuMDCsAS9nGLNaZCd9p8rH89NEcgUWliHdAtYIqsPOtmZKkqCW7C/ADwUQ
-         lt8FKVgxKUaCcgQZNXJUOHM24AA8oz39s0I1rEl4h4gfvfCYbZel4WvNmkIkQYKXdFI6
-         aZhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782997144; x=1783601944;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XWvfanexks3bEkJvHtrjoEDO23i1+dyqL/VN09pDErU=;
-        b=SSbBQT/sy9n+6TPpDlQ+e9gjZWXDE+rrZ/vHaOMIBdho97f1Vpxce5CMM8lF2s9paa
-         qVZCxPvQDCf1iKiCpsREETVLOksz5AfKyNfDmt2ujdtLRt2s2yWY0j03W5FrjiSoktVc
-         Itftn+WU84EYQXYLQTwGbYrrNCqe1hiyb96KnTDu9qPcJpigwoF4g7go2djfWE9uzABj
-         bz+aa799/Je/qEce0VPRysUEYtYyUHyEXgXT4M06kRWuk7g0M/lCkwSWZ2UShrNQDsC5
-         qXaEiA8iiXsjCPM0FGtYflCrJe+SR+qa+gr3mejx6dvjU6qSEayXIZHfAA2Ohs/IBBLg
-         /ABQ==
-X-Gm-Message-State: AOJu0YyWUFjfuKb1tE5BHHcQ9AbmhOIivK0OFZ7Ycsry4YU4UAdZaSRX
-	0m3yWI0Gie2SoW4/Ghnn/Q9Q6eYz4qNKzmNuzlyo/7bTcOgy9FK+CBYYAlVkd4C1fY7RNn9ThC/
-	XheRZZ2H+oY0rQZzRBRwMXoextZ/Vl2w2Bak5UunnbihSAPzSO7CrK2J3er40zBN4rQ9rm5A=
-X-Gm-Gg: AfdE7cmM1KZ+y5bSPBLSJ9Ync/wyVMS5ceEnyWIL2Uhi+R6S+qvVWpLHPBlmkbvLGiZ
-	CqUjlWzuOcttX0Ld8x9Mt+/O7HN5RQThDCBF8FqLNMHvJmlFxBlpRj61S6CWhkIR1sQaVfcZ9cM
-	4mqdXQMBnIPHbPxi2dCWVLJeBMh3p5Yt3SVvJrkgM6XLOy9pnoUEXId8jGXDkjStRXnH2iZlyJu
-	7Jh3zfPrRpM6S7JxqK4ahAFm5UshSDkp8SRnXNZNbVVLMdZCXy1549Mxja79rH5KbyNwOG7pshq
-	66g+f8OgE+Uj9+MCtmEh5MsB4YNPwjYtWnowA8BGfWf63Voa+OTsp5SzswFF2mAWgkFmJqR/zyP
-	fUW9mYV1U9GTrWEjFArO7JgDEb+q5BmTdld8dZULUXTMjwSreZd2631mDPhOMISGYwEryIbdEOc
-	K/5iq0YBpZSQaliwgi4DqrYXGe
-X-Received: by 2002:a05:6102:33d9:b0:739:4fa1:50af with SMTP id ada2fe7eead31-73da7254acemr1784324137.2.1782997143641;
-        Thu, 02 Jul 2026 05:59:03 -0700 (PDT)
-X-Received: by 2002:a05:6102:33d9:b0:739:4fa1:50af with SMTP id ada2fe7eead31-73da7254acemr1784317137.2.1782997143195;
-        Thu, 02 Jul 2026 05:59:03 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aec89d526csm656180e87.43.2026.07.02.05.59.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 05:59:02 -0700 (PDT)
-Date: Thu, 2 Jul 2026 15:59:00 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org,
-        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-Subject: Re: [PATCH v2 2/3] regulator: qcom_usb_vbus: add support for
- qcom,pm4125-vbus-reg
-Message-ID: <tdzwu6vvj6md2akfq27xrz6alzxdmo3zfgvwg2m4b4e2opwkww@yriwb7gkbchd>
-References: <20260701-add_pm4125-vbus-reg-v2-0-6bac2bac7131@oss.qualcomm.com>
- <20260701-add_pm4125-vbus-reg-v2-2-6bac2bac7131@oss.qualcomm.com>
- <20260701103435.D6DEA1F000E9@smtp.kernel.org>
- <20260702075442.tc4kbudjbfg75oom@hu-kotarake-hyd.qualcomm.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="p0avNSop"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dvRGxd9sOe8SnRYi6TH4T8QDxJROC+zRAi0VdQ5SCxD06pKNYsxar9D+L0BbPmeMcd74VOv8XdOy5n1EFjScsL4GGoTgYydQ1fkzN0lzct08I8S2NrNJ1gt/wMvm2D1/ozqrGw800kjNUI9qJWO0skaMkjRbVGnNBvLF6DAUFvRzeUBLrNZUTZvwqvluTmlNwaL42Vllnq3HwoHe/Wu1IpIqUFfkfLiTuEhrtWWG2otw44OGB6mOmwZCsQlGFZAFooJL0GQbCDepukgtV7VD6QwbEZakdXzKIo9Eo9Lit3inZwkjbygZ77f0S/JlerFCGrdVDFv0noIUFpbSA0Vefg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Gf/QZ42mphyq6nhvCY+g6MS2VTZzacaocS0g9E6qk2M=;
+ b=HiXegweKrDBtGY7wMSmOpsZdC1+EV3PePX28UfZo0DokEhkE3Nl/it23GCcbqVOxOjJ/4Whq2qD+yCT94yOoJB5ehgFQL6eJOY9ub3IXjR7xTjmA1jWDzzXzhRMhbyYOkaA0MLNNO3JUFfykYhkv1c/2y1mZu2MNzBtKFSV5h5xzULFYEz12aRjKPrK/jgybX/5laMWLo3XUW6WspUcu0r/z6uqyc1nS3p0DVdb7sGqbqlxLo8nWqP5xpbYv2VM+Dhr5ZrfM0nGCuRPJ6ls532AOPq5MKewAEdswIQEbU2QibFbvpT1OOjdi4sFA/FM4EoinWSCDr5ql9SZDjhbavg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Gf/QZ42mphyq6nhvCY+g6MS2VTZzacaocS0g9E6qk2M=;
+ b=p0avNSopqDIj/U0b2EtqZ1oJv9YylHVrCDtyMBrIyhjsMGOqhEjQjMHjZINHMbdX+js/z/4KVAiGTJ4PZ4PILDsdlAdunwjb5vpHBbJPOILxw7D01FQcZ5g5u11AOE8AzNdgGvVFhzHT/bnpvs0c5g8Bwl9I3YwmcA49x2lv1bs8l9OL3D4TXBh33QJXCpZ9J2V7ux7ea8Vt5pZ5rMCsKM/4Pj4dVDsZ42CgssI0y1LBvo3wZaWZKvq1sfL3Uqk6srI1/VSMNaCA4ZO2jKYRRvqvZNCOxlYv53kaS+OxQ/WEY68kqnX0qW2HViVENT1DA1VVvLYasY4mp698n5g/Mw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DU4PR04MB10816.eurprd04.prod.outlook.com (2603:10a6:10:582::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Thu, 2 Jul
+ 2026 13:17:50 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Thu, 2 Jul 2026
+ 13:17:49 +0000
+Date: Thu, 2 Jul 2026 08:17:38 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
+	Frank.Li@kernel.org, imx@lists.linux.dev, vkoul@kernel.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] dmaengine: fsl-edma: Support dynamic
+ scatter/gather chaining
+Message-ID: <akZk8kHhf01J6lxC@SMW015318>
+References: <20260702-fsl-edma-dyn-sg-v5-0-16787185be49@bootlin.com>
+ <20260702-fsl-edma-dyn-sg-v5-2-16787185be49@bootlin.com>
+ <20260702124553.3E52F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260702124553.3E52F1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8P222CA0023.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:2d7::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260702075442.tc4kbudjbfg75oom@hu-kotarake-hyd.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEzNiBTYWx0ZWRfX8maxxDJ478ze
- Ef6Q3tbLN7a4VBGqENzIJ+c5cjuR9oP1pKc26/lTsTwrXuTHnIadrJAsgHy2MZFcOGI87r4f4Xq
- rC4XI31jVUElNA0yiqPifxl+W2Qw7SXuM3mmaaqQL+AXDGc1x8OMEsANYDHhpkGHXUMmDU+KK/u
- jOgyLGkW/1Mlhp4HTkQRIQo2n8iNeKW8GjmDXvaLUbekWPRc9RQFFE2O+3m0mMiQdXDmiTXY9L0
- jM7Wne4KN7GTB+bCbyfS6YztSCltxDVtPhoQxW76tQRzO9M8uRu5ij9nJ5UUjC02bELGP6VRvAy
- S89Ku1oyfAEwLUizM1cAJLh54Y9Rb6sEspHjOXHCiHE9+iCJeRDSbk1iq4Hr2OR4NZix9Bj8+rr
- tk9WSaX/v2j6KfIta77Q/s59gYScKipVVoF3w3SgbaMPWz3tixMoO8Rd6Su8whFE8nDHfqWwOcU
- hoZoFRcIu/obFQGMluQ==
-X-Authority-Analysis: v=2.4 cv=Lv+iDHdc c=1 sm=1 tr=0 ts=6a466098 cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=lmjr-25jFlC-zAT2i-UA:9 a=CjuIK1q_8ugA:10
- a=o1xkdb1NAhiiM49bd1HK:22
-X-Proofpoint-ORIG-GUID: kYMoNWrWoZqwYKENVfYHdvqpW7EI61sn
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEzNiBTYWx0ZWRfX0xEP+zyCpLs9
- ePCQPhRbw/etgE7V/9j9PcuMkCJPbwWMQLMBmusxblxXDAwk6CZBb5w2hl8N32JfyiVWTfvhiqn
- WQWVywQz7Eo4r3Zf0vPXRqRGcnuI+LE=
-X-Proofpoint-GUID: kYMoNWrWoZqwYKENVfYHdvqpW7EI61sn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 clxscore=1015
- bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020136
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DU4PR04MB10816:EE_
+X-MS-Office365-Filtering-Correlation-Id: 74a60415-ca93-4291-4e00-08ded83c504d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|376014|23010399003|1800799024|366016|18002099003|56012099006|11063799006|4143699003|6133799003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	jfkeXMVswI/6F8QPrujIc4SpmU9cFxCB7PIg99fIhJkupGY8LFF0wm0XdAYl9FMtge7JUfE2BgK/cvsz1fHtIDsk0UFT6sZYk22LUkP5EDDXI+t3nts4NperEYA0HkGLlIEtxpdmmboHE8GCIumtXGq5M8tcue/jIB/cp6ibJPq5krE7GwkxqJuF8Ei79UDEE/zskGz2AiEp/+zwiLkcKOR1XieXXBqSQn3y8NJyJJ8hHTposOgsDVtXXVzkhm7TNu3NvNzXcHqq/vOdMkShOcWmG5EmswdZ/w8WjnutJOApXiaVHB3tX9ByjBEhtdLQHLZwQQQEbtdbL6FxSefDhXRvcUT9A/xaY6Q6zkXo1w8VMVwusQyQ9LmkoDBFQbtYkHQIk19nY3UtiLo60tMJCiJ7njVnxAH3CdaW/gVUMh0UmJDIDVRRZT5awrUo8IIBcphZyeO/MYSd7MtPxoye5M34/DJijX+UeqliTiCPpu5WtCVCXM06rbNkoFmDsOrrhxRHevnP/+nWjfITlCeKNPlQLIm9ce9iyapX8O3cEHyxiWK3k4mOeC4mXyB+hj2aA5fsi3jm2i/Kh71GtD/lt/Ot6Wim/Jfk/kBtq/iZHYA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(1800799024)(366016)(18002099003)(56012099006)(11063799006)(4143699003)(6133799003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?o9kit9CnL4kwk6/pib4HSvaOU9uAUPZYhIQfK7w8gH47ufrdxoeZlcWGA+?=
+ =?iso-8859-1?Q?TiECTyNW9xbp8WJh42Ub6hSU5nzPNhA2dfDYfomHVzIjRJeAQdz/1NiQ+o?=
+ =?iso-8859-1?Q?+Wsxk7yT2lEGYrIE2XIRI3JrfbeyiVgDyGoYtkYPvSZxAtRcvStdOftlrw?=
+ =?iso-8859-1?Q?DPVFIvP9q2qJPJF5ifHI2PvG3i7WKT2fpV/H5UnXKSg1P0rQQ+qQkL6e3b?=
+ =?iso-8859-1?Q?RqdXnF1tkJRIhsdbQad9+PT2YxEmWpghib5dXjcx7/QsufFWJqlbw7YCGU?=
+ =?iso-8859-1?Q?rQuTjf+T60lw85N6ARUeAeUyIxIDIzIlWZSYYsCnPOGKXNave+Q4qz4pmi?=
+ =?iso-8859-1?Q?wQoVRfGrG8UvkXCQrBFMLepOpUfIbI0GDVcJoEtVs5DkRfH3MZ2SwY8RCS?=
+ =?iso-8859-1?Q?dgxhI4CVvF//dEqTZw1Wc8smQ1jqGdMP3t0kFWhPE9YL2UugobjSPTyVxj?=
+ =?iso-8859-1?Q?L7uxdx508K7mhBYoHomt1aOsnW9niGEJPpmLO795Y7rGoMn87jjKhlEf12?=
+ =?iso-8859-1?Q?aAqqm/N4IxxjrG1oncGUcfkySP8uQNhLsZgpFxxpC7yhvC2uoUzCMh3DuC?=
+ =?iso-8859-1?Q?PeNe0RyM8zOtFtm5HpWkBz3WKWPVj+18kDBiqSoKeD3slfeIQKiMmlQd3v?=
+ =?iso-8859-1?Q?Pz2eQnQwdusuagfuYfYZNj/kO9Gc1KnDnWbFuwYR+LsI494KhzuShV7DOt?=
+ =?iso-8859-1?Q?yEttK1JypoGePjJraK0mUwILWHVpoklIIibhOzFWie+JOX3EIbAO8udpvM?=
+ =?iso-8859-1?Q?IogN18gnliTNvGz7qA2w/zEi1mn/0xGy4EDmrESWCAlMd9CnMs83hU+JIB?=
+ =?iso-8859-1?Q?gTIwcnW1RE5nYdyH/nT5qAo3Z+OJCmfxx+Q0lAG5n/tArhoAd7NXIBh9tk?=
+ =?iso-8859-1?Q?uPo3tBBYEDy4DP2oVoWrhzLYP7aHNBQ6+Y9ZbOw7+4X5hkvwespqQDo5Dg?=
+ =?iso-8859-1?Q?0KVZNjURTtKVb5JoFMaKv02Jx786lYXfcbWly+uhKWkW3/iXy8MpSGP4uz?=
+ =?iso-8859-1?Q?EAtXUhY5cILjdFfdoxnqlhNGiivD6FD3qE0AJJIKYpYJXLdOWaXkCrr03h?=
+ =?iso-8859-1?Q?WtY3n62POAa1Qyzq//QK1vl0idNMbz7RLHO4KBaEN6+UfOOta88LTKEUx4?=
+ =?iso-8859-1?Q?2AA1qhvaXjA2+8bFDc+jVj6Q6Ah8G5Zeiwn5S63+FqxKFvJE3PxQ44V9La?=
+ =?iso-8859-1?Q?xBdS8ykXnO6EQN2nuIJku4Vvpz1uGRgSlxZ+5q2ijX98Qa5usD0AB+o8gP?=
+ =?iso-8859-1?Q?bqXMkesYLjqQWslXvgqaQlzdDfg9WzlyMPuOaNWHWfn/WlSIr6Ty7pQi6u?=
+ =?iso-8859-1?Q?RcAIfcmVWZ/dCr5TrvTMlDqO9wnTOV9Qb4QfMYDytTqTUUY1+bPfrO1QX+?=
+ =?iso-8859-1?Q?5XhxLIWrvNi0YQjmhHJp7BDBY1xKeex/90qu6fGVzecAfHUEddN2i/YqvA?=
+ =?iso-8859-1?Q?xsIDbJpEfK148lGFhMvhxPP66OdzeQZxNAyBdP+2AHHXOAOcBJoI6cr3nP?=
+ =?iso-8859-1?Q?k8p2VaaPVz0v7m6EdqH0b8qBjjgvWW3x3YfhRZnN0BQ8RiCFR50xD1wcyR?=
+ =?iso-8859-1?Q?L3vFEpWWxDotWL/DnJGP7vv09oFRnAqLuHapSKySf9LEZpEta4HOEJNO1/?=
+ =?iso-8859-1?Q?j0hv6BXC5qtxzAZg15rgXQ7fLFQiLvhEZTgnId6abQj1LHNVKk8dg3LzWP?=
+ =?iso-8859-1?Q?OLe/E/mbrkZNrG8QVl0fulNXQXmTheTazcv2HYL5Uc9AGGGrhO71tQHeUT?=
+ =?iso-8859-1?Q?ACyMhuqhcQvjunwXCQfdkWwKEiojaGItZFfx52eSlG+orWAE0Y8Z6Efcla?=
+ =?iso-8859-1?Q?iZ2QXh8HXJi4naWPfNw03lH3bCazym04cEVTc7qYKJ2peiHYVHkf?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74a60415-ca93-4291-4e00-08ded83c504d
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 13:17:49.5406
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: p06fv3teZs064Z014edNgqJ6LtNkpH3IHrdzgAIOMjwArWrglmDOi+sW4AenMEHTKZMCWNPJP8gq56FrwkaJ1MiRwLZqjU/JjK4STgGt06VfaUlndoxjJX1YCKTsV6AR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB10816
 
-On Thu, Jul 02, 2026 at 01:24:42PM +0530, Rakesh Kota wrote:
-> On Wed, Jul 01, 2026 at 10:34:35AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] The macro `PM4125_VBOOST_CFG` is defined twice with conflicting values (`0x52` and `0x56`), causing the voltage selector to write to the wrong register and corrupt the OTG configuration.
-> > --
-> > 
-> > commit 3778477cc88a05791ed34dc272e50cbdb4893643
-> > Author: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-> > 
-> > regulator: qcom_usb_vbus: add support for qcom,pm4125-vbus-reg
-> > 
-> > The PM4125 PMIC uses a different register layout for USB VBUS control
-> > compared to PM8150B. On PM4125, CMD_OTG is at offset 0x50, OTG_CFG is
-> > at 0x56, and offset 0x52 is a 2-bit VBOOST voltage selector rather than
-> > a current-limit selector. Introduce per-compatible regulator descriptor
-> > data to accommodate these differences.
-> > 
-> > > diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
-> > > index cd94ed67621fe..40e7e5589d5b4 100644
-> > > --- a/drivers/regulator/qcom_usb_vbus-regulator.c
-> > > +++ b/drivers/regulator/qcom_usb_vbus-regulator.c
-> > > @@ -20,10 +20,35 @@
-> > >  #define OTG_CFG				0x53
-> > >  #define OTG_EN_SRC_CFG			BIT(1)
-> > >  
-> > > +#define PM4125_VBOOST_EN		0x50
-> > > +#define PM4125_VBOOST_CFG		0x52
-> > > +#define PM4125_VBOOST_CFG_MASK		GENMASK(1, 0)
-> > > +#define PM4125_VBOOST_CFG		0x56
-> > 
-> > [Severity: High]
-> > Will this redefine PM4125_VBOOST_CFG to 0x56 and silently override the
-> > intended 0x52 offset?
-> > 
-> > When pm4125_data.vsel_reg is assigned PM4125_VBOOST_CFG, it appears the
-> > regulator core will write to 0x56 instead of the 0x52 VBOOST selector
-> > register.
-> > 
-> > Should the 0x56 definition be named PM4125_OTG_CFG instead?
-> >
-> Yes, you're correct, I will fix in the next patch by splitting the
-> defines:
-> 
-> #define PM4125_VBOOST_OTG_CFG   0x50
-> #define PM4125_VBOOST_SEL       0x52
-> #define PM4125_VBOOST_CFG_MASK  GENMASK(1, 0)
-> #define PM4125_VBOOST_CFG       0x56
+On Thu, Jul 02, 2026 at 12:45:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Double-execution of DMA descriptors due to state machine desync when interrupts coalesce.
+> - [Critical] Channel deadlock due to dynamic descriptor linking bypassing `issue_pending()`.
+> --
+>
+> commit a67c20eb8f20e15fe2cadb092322588069fe328e
+> Author: Benoît Monin <benoit.monin@bootlin.com>
+>
+> dmaengine: fsl-edma: Support dynamic scatter/gather chaining
+>
+> Implement dynamic linking of scatter/gather transfers to enable
+> chaining multiple DMA descriptors without stopping the channel.
+> This avoids waiting for the channel to go idle if there is another
+> transaction already issued.
+>
+> > diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+> > --- a/drivers/dma/fsl-edma-common.c
+> > +++ b/drivers/dma/fsl-edma-common.c
+> > @@ -58,7 +58,10 @@ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
+> >  		list_del(&fsl_chan->edesc->vdesc.node);
+> >  		vchan_cookie_complete(&fsl_chan->edesc->vdesc);
+> >  		fsl_chan->edesc = NULL;
+> > -		fsl_chan->status = DMA_COMPLETE;
+> > +		if (!(fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_SPLIT_REG) ||
+> > +		    (edma_readl_chreg(fsl_chan, ch_csr) & EDMA_V3_CH_CSR_DONE)) {
+> > +			fsl_chan->status = DMA_COMPLETE;
+> > +		}
+>
+> [Severity: Critical]
+> Does checking the channel-global DONE flag here cause chained descriptors
+> to execute twice if interrupts coalesce?
+>
+> For example, if descriptors A and B are chained and the hardware finishes
+> both before the interrupt handler runs, won't the handler complete A,
+> see DONE is set, and mark the channel DMA_COMPLETE?
+>
+> If that happens, wouldn't fsl_edma_xfer_desc() then fetch B from the
+> issued list and restart the hardware, executing B a second time?
 
-With the defines being fixed:
+This is problem, need go though issue list and compared current hardware
+working pos. then move all finished item to compelete queue
 
+A
+B
+C  <- hardware working this
+D
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Need move A and B to complete queue. Because eDMA have not write back
+status to descript and no compelete queue, it needs some efforts to find
+dma is working on which item in issue list
 
+>
+> [ ... ]
+>
+> > @@ -673,6 +676,68 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
+> > +static dma_cookie_t fsl_edma_tx_submit(struct dma_async_tx_descriptor *tx)
+> > +{
+> > +	struct virt_dma_desc *vd = container_of(tx, struct virt_dma_desc, tx);
+> > +	struct fsl_edma_chan *fsl_chan = to_fsl_edma_chan(tx->chan);
+> > +	struct fsl_edma_desc *fsl_desc = to_fsl_edma_desc(vd);
+> > +	struct virt_dma_chan *vc = to_virt_chan(tx->chan);
+> > +	dma_cookie_t cookie;
+> > +
+> > +	guard(spinlock_irqsave)(&fsl_chan->vchan.lock);
+> > +
+> > +	fsl_edma_link_sg(fsl_chan, fsl_desc);
+> > +	cookie = dma_cookie_assign(tx);
+> > +	list_move_tail(&vd->node, &vc->desc_submitted);
+> > +
+> > +	return cookie;
+> > +}
+>
+> [Severity: Critical]
+> Can this cause a channel deadlock by executing unissued descriptors?
+>
+> Since hardware linking happens in fsl_edma_tx_submit() rather than waiting
+> for the issue_pending() callback, if the hardware completes the newly linked
+> descriptor before the client calls issue_pending(), won't the interrupt
+> handler fire but find edesc is NULL?
 
+Yes, you can't link hardware queue in tx_submit
 
--- 
-With best wishes
-Dmitry
+you can create hardware queue list,  N1->N2->N3.
+
+at issue_pending() function, assume issue queue I1->I2->I3
+
+link submit queue header N3 to issue queue tail I1.
+
+Frank
+
+>
+> In fsl_edma_tx_chan_handler():
+>
+>     if (!fsl_chan->edesc) {
+>         /* terminate_all called before */
+>         spin_unlock(&fsl_chan->vchan.lock);
+>         return;
+>     }
+>
+> Wouldn't this drop the completion and leave the channel stuck when
+> issue_pending() is eventually called, since the channel status is still left
+> as DMA_IN_PROGRESS?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260702-fsl-edma-dyn-sg-v5-0-16787185be49@bootlin.com?part=2
