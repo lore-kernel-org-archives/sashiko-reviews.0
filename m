@@ -1,162 +1,118 @@
-Received: from ultrarisc.com (unknown [218.76.62.146])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4F2723FC41
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 05:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8843538422A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 06:23:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782971213; cv=none; b=VViR3tsZxaLMvz2obDipfqjQYZi039SbGIVLome/OGZ8BpSKxGJuuN7Gbt//kdGIpxwtq8YTzcpteGjd2nJ/LtI0rwTtkVk/K0yIY6k6OcqI96E/w7FUJU77mYr21hsmMc2ytQvW6eKaC7AdtiD1zxY4IZllRj9KOLAW6Aj9Iu0=
+	t=1782973425; cv=none; b=pVOANPWRmAPrLQT5W5G2M/55+ZplIJpxDBqQWGM5ZqtxKvAzsDbExKuUX8l47DFCV4YldAIl5oUMy4up8RoRWdGnK0i5YobrCV0KstPyQBVFHFdGHwmBZDEDQHN/qkFeJlPTdgTfR4LKUZrQFvgMBJEDoH5jwHQuHKe48miKX5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782971213; c=relaxed/simple;
-	bh=2/UPohXtF/RlpLf0bukLvCQ2jrR0nDgq2a/0z8yUTk8=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=iKiKkUxjzmlbbpeEgEJYup5mTXpg3boxxQlAn6rHmWo9P+Ib4Ta8g8cvwZ0jyhd49NuZVvE3AHOTYxX/R/n8FrIFtfJ9UOFwo4SCtk/unElg9rX0ve4Ag98IVL6ufQewWE1KDl0iGG9EvevrvjDFMTzCy+R2lJZUBzj+5YKK26w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=NAVGcx6T; arc=none smtp.client-ip=218.76.62.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+	s=arc-20240116; t=1782973425; c=relaxed/simple;
+	bh=AkWldYk6Yo8xJRbGmZRz3dlsYoYsoawN+0pDW5TrbYk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mT23zp0s0893CxbwKrBo8/LOgcVcugLzdIa5+UhP6k2p91sYEEwT8BT3t161483/LOhHYTs/WvtTeLvYNT/tNqZ8LRdDFgm0rfBgvAkWzROVLEdk7CHC6uTEF+KIFVg57X5X+Q0nvcWoo3jw9xOjWckAy0y/9IrR0NJMBCS79kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=n7Uc/T+Y; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="NAVGcx6T"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	References:Date:Message-Id; bh=Dp5I5nX/cyO1ESS5RZKGaCiXFk+SLn9TG
-	BatcMDF9pk=; b=NAVGcx6TritpuUrFAgClgboDDIZXyo/d+voPXFgu5GYqxTco0
-	SSr2R00dUj83+AH/bz8kL0b+n3lpx1MVlRMdbUZXNUgV8a4S6xTbstbLSIZvmQmt
-	7k+TsgFzcy86oo8gIvI3uUmGdgkZPqFi9SJpFp8K8j/duIkGM3lHnIUSg0=
-Received: from [127.0.0.1] (unknown [192.168.100.1])
-	by localhost.localdomain (Coremail) with SMTP id AQAAfwA3cUJl+0VqvZYOAA--.14864S2;
-	Thu, 02 Jul 2026 13:47:17 +0800 (CST)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="n7Uc/T+Y"
+Message-ID: <6ac505f6-818d-4abb-bdca-6b96f1ce30f2@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782973421;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Igqs9OSLyw+8Ulfrs4et+zHMEYP27SGxn/Lxph0feD0=;
+	b=n7Uc/T+YQ5OvgRxEs/gTfoFc0ziRzeX0N47aQNY5oYd7lL7VFaJ+dxe64hO041kzvCdu02
+	vxCpoLKemhRnFxhs3VuwJThYPLPAy1scQpse2Sk6Y43uEwrDqjvYp5tMPwQD1fZncnvb44
+	JdNMroJYzBF3EIDzrHRjpR8atB+4tcQ=
+Date: Thu, 2 Jul 2026 14:23:36 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Subject: Re: [PATCH bpf-next v8 4/9] libbpf: Add support for global percpu
+ data
+Content-Language: en-US
+To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+References: <20260629152406.52582-1-leon.hwang@linux.dev>
+ <20260629152406.52582-5-leon.hwang@linux.dev>
+ <20260629154055.6DD941F00A3A@smtp.kernel.org>
+ <96cbecfc-bae6-46ff-90a7-5f4703e1c44c@linux.dev>
+ <CAEf4BzbBpDQOG-xUArBzZa_qZ08q=QViH-bbFmqwLNesGvJLUA@mail.gmail.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <CAEf4BzbBpDQOG-xUArBzZa_qZ08q=QViH-bbFmqwLNesGvJLUA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 2/2] PCI: ultrarisc: get and enable DP1000 PCIe clocks
-From: Jia Wang <wangjia@ultrarisc.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>, 
- conor+dt@kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
- robh@kernel.org
-In-Reply-To: <20260629060959.7A2201F000E9@smtp.kernel.org>
-References: <20260629-ultrarisc-pci-clk-v1-0-5ea3308fdab3@ultrarisc.com>
- <20260629-ultrarisc-pci-clk-v1-2-5ea3308fdab3@ultrarisc.com>
- <20260629060959.7A2201F000E9@smtp.kernel.org>
-Date: Thu, 02 Jul 2026 13:46:44 +0800
-Message-Id: <178297120412.1082377.7888497236569602999.b4-reply@b4>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782971204; l=3301;
- i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
- bh=2/UPohXtF/RlpLf0bukLvCQ2jrR0nDgq2a/0z8yUTk8=;
- b=24+o748ePAtDV33ZqcsxnzBTFNcqLDe9gfflAqw+Q1qYllBaPvj5XfWuSvBY7+F8VKN8wwVyT
- GF6AzGTC26FAdfWeD/MZovdSq9fTuWqksAgkKR7ni9Lp1YSSt7LYqDX
-X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
- pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
-X-CM-TRANSID:AQAAfwA3cUJl+0VqvZYOAA--.14864S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDJr43Zr1rJFWkJry5Jwb_yoW5Zw4fp3
-	yUGayFkF1DJrWY9rsav3WrZ3WjvrnIkrZ8AFZrKr12gw1a9r97Gr15W34agF92kr1qkw1q
-	kF4UKa4UAw1jyFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUv0b7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8Jw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l
-	c2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
-	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWU
-	twCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
-	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
-	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU5
-	kxhtUUUUU==
-X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAQEWpF4E0ABwAAsF
+X-Migadu-Flow: FLOW_OUT
 
-On 2026-06-29 06:09 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] If dw_pcie_resume_noirq() fails, the driver disables the clocks, which will cause a bus fault and kernel crash on the next system suspend when the DWC core attempts to read the DBI registers.
-> --
+On 2/7/26 03:31, Andrii Nakryiko wrote:
+> On Mon, Jun 29, 2026 at 10:55 PM Leon Hwang <leon.hwang@linux.dev> wrote:
+>>
+>> On 29/6/26 23:40, sashiko-bot@kernel.org wrote:
+>> [...]
+>>>> @@ -1983,7 +1989,7 @@ bpf_object__init_internal_map(struct bpf_object *obj, enum libbpf_map_type type,
+>>>>      }
+>>>>
+>>>>      def = &map->def;
+>>>> -    def->type = BPF_MAP_TYPE_ARRAY;
+>>>> +    def->type = is_percpu ? BPF_MAP_TYPE_PERCPU_ARRAY : BPF_MAP_TYPE_ARRAY;
+>>>>      def->key_size = sizeof(int);
+>>>>      def->value_size = data_sz;
+>>>
+>>> [Severity: High]
+>>> This is a pre-existing issue, but could this integer truncation lead to a
+>>> buffer overflow?
+>>>
+>>> If a user supplies a crafted ELF file with a section (like .data, .rodata,
+>>> or .percpu) larger than 4GB, the 64-bit data_sz is implicitly truncated when
+>>> assigned to the 32-bit def->value_size.
+>>>
+>>> This results in a smaller mmap allocation based on the truncated value. Later
+>>> in bpf_object__init_internal_map(), memcpy uses the original 64-bit data_sz:
+>>>
+>>>       if (data)
+>>>               memcpy(map->mmaped, data, data_sz);
+>>>
+>>> Can this overflow the allocated buffer when parsing unverified BPF objects?
+>>>
+>>
+>> Sounds reasonable.
+>>
+>> The data_sz value comes from the ELF file and therefore cannot be
+>> trusted, as the section size can be malformed.
+>>
+>> For example, readelf -a shows the following for a normal ELF:
+>>
+>>   [ 3] .data             PROGBITS         0000000000000000  00000040
+>>        0000000000000004  0000000000000000  WA       0     0     4
+>>
+>> The section size can be modified to:
+>>
+>>   [ 3] .data             PROGBITS         0000000000000000  00000040
+>>        0000000100000001  0000000000000000  WA       0     0     4
+>>
+>> In this case, data_sz would be truncated to 1.
+>>
+>> However, in practice, there won't be larger than 4GB section in bpf ELF
+>> file. And, it is meaningless to hack libbpf to corrupt user space memory.
+>>
+>> Of course, will post a separate patch for further discussion.
 > 
-> commit 7bdde7bd97edc4ae25c337b51b52e18bb46e6424
-> Author: Jia Wang <wangjia@ultrarisc.com>
+> No, don't. All this hardening of libbpf is nonsensical. libbpf is not
+> meant to protect against corrupted ELF. If you don't trust the source
+> of ELF, you should definitely not attempt to open BPF object and load
+> it into kernel to run with root-like capabilities.
 > 
-> PCI: ultrarisc: get and enable DP1000 PCIe clocks
-> 
-> This commit adds the required core, dbi, and aux clocks for the DP1000 PCIe
-> controller and enables them before initializing the DesignWare host. It also
-> manages the clocks across system suspend and resume.
-> 
-> > diff --git a/drivers/pci/controller/dwc/pcie-ultrarisc.c b/drivers/pci/controller/dwc/pcie-ultrarisc.c
-> > index 6ee661ceff67a..74010a86244e7 100644
-> > --- a/drivers/pci/controller/dwc/pcie-ultrarisc.c
-> > +++ b/drivers/pci/controller/dwc/pcie-ultrarisc.c
-> [ ... ]
-> > @@ -135,16 +174,37 @@ static int ultrarisc_pcie_probe(struct platform_device *pdev)
-> [ ... ]
-> >  static int ultrarisc_pcie_suspend_noirq(struct device *dev)
-> >  {
-> > -	struct dw_pcie *pci = dev_get_drvdata(dev);
-> > +	struct ultrarisc_pcie *ultra = dev_get_drvdata(dev);
-> > +	struct dw_pcie *pci = &ultra->pci;
-> > +	int ret;
-> > +
-> > +	ret = dw_pcie_suspend_noirq(pci);
-> > +	if (ret)
-> > +		return ret;
-> >  
-> > -	return dw_pcie_suspend_noirq(pci);
-> > +	if (pci->suspended)
-> > +		clk_bulk_disable_unprepare(ARRAY_SIZE(ultra->clks), ultra->clks);
-> > +
-> > +	return 0;
-> >  }
-> >  
-> >  static int ultrarisc_pcie_resume_noirq(struct device *dev)
-> >  {
-> > -	struct dw_pcie *pci = dev_get_drvdata(dev);
-> > +	struct ultrarisc_pcie *ultra = dev_get_drvdata(dev);
-> > +	struct dw_pcie *pci = &ultra->pci;
-> > +	int ret;
-> > +
-> > +	if (pci->suspended) {
-> > +		ret = clk_bulk_prepare_enable(ARRAY_SIZE(ultra->clks), ultra->clks);
-> > +		if (ret)
-> > +			return ret;
-> > +	}
-> > +
-> > +	ret = dw_pcie_resume_noirq(pci);
-> > +	if (ret && pci->suspended)
-> > +		clk_bulk_disable_unprepare(ARRAY_SIZE(ultra->clks), ultra->clks);
-> 
-> [Severity: High]
-> Will this cause a kernel crash on the next system suspend if
-> dw_pcie_resume_noirq() fails?
-> 
-> If dw_pcie_resume_noirq() fails (for example, due to a link training
-> timeout), it returns an error but leaves pci->suspended as true. This error
-> path then disables the clocks.
-> 
-> However, the PM core continues and marks the device as resumed. On the next
-> system suspend, ultrarisc_pcie_suspend_noirq() will unconditionally call
-> dw_pcie_suspend_noirq().
-> 
-> Since dw_pcie_suspend_noirq() accesses DBI registers by calling
-> dw_pcie_link_up(), and the clocks were left disabled, does this read
-> trigger a synchronous external abort and crash the kernel?
->
+Got it.
 
-Yes, good catch. If dw_pcie_resume_noirq() fails, pci->suspended remains
-set, so disabling the clocks here can indeed cause problems on a subsequent
-suspend.
+I didn't post the separate patch.
 
-I'll fix this in v2 by keeping the clocks enabled on the resume failure
-path.
-
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260629-ultrarisc-pci-clk-v1-0-5ea3308fdab3@ultrarisc.com?part=2
-> 
-
-Best regards,
-Jia Wang
-
-
+Thanks,
+Leon
 
