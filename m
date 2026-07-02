@@ -1,144 +1,472 @@
-Received: from out162-62-57-49.mail.qq.com (out162-62-57-49.mail.qq.com [162.62.57.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC1B231A3B
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 04:35:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.49
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC9B630FF27
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 04:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782966908; cv=none; b=PJDIGpMDIlI/ax5Y2/yzYRLeA7pMbKquNSDT+4boz+AHYnkqcGQv6yHdMK8bApGFA0s6xRVoTnA7iXEjI2FRJAoS81lFYNpb/tjT0iFV8uZKxHPBH9Tj5mcQ0vUEzOgsU1FgmIe4PamhWFNTXnBkerbrhaYDQ/WZMvM1VhwU1o4=
+	t=1782967328; cv=none; b=Qlwa2YaUgxCyKVvSUyz/SGehhfd+854b6vghS7vLH1fXEpmRx2TmZkxpXrXA3BkJRolyQJQ5VpiG/726bpnzlSWJGiVHz+Qy11LUwvBuu3Y5RZPVsaOyN+27IKKYEiyd8zAFccxSmCRRw4SBwfMp/SZ5TwWY7lBx16xKeZw5ebo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782966908; c=relaxed/simple;
-	bh=3u6EvztuLUlA+ejRxZatA6N+wbu2IiMs7KXilJNbVk4=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=r6S68hrJjSAu8afsCr79SHZ8HypG++Kx2GOEvID+vViJPyHBDDRcbLFR0b5jcm9AdfdEFZaU+hoLxKGUn/9mhlNpAzGcuL1RXTOFRdPgtXRS6s6W8/r3kdwt68cXngqcIZdkXrQ98GZ9je+B2KYv3QHdHOfuM3NjOSCiz3zZCXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=r/PzeJEb; arc=none smtp.client-ip=162.62.57.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="r/PzeJEb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1782966894; bh=t1GNANpFuzLE/PYGoogesdPNStNh8vPbm2FDGBZNhLk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r/PzeJEbRkxUDEkqnJ660hHMqI7SYRjhgFpRl6gS+6hrhyp4vVF3e2NSA9lLfyO2u
-	 euT1nQF4bKCVJq2uV0LUp1bcK4IVIQaKAFTY1LrLx5+n4p+xfpxfwSYlCKslT+LcRh
-	 Y9N0RqvQttB2Hpo3R3c3gmTHIOD/arc/VL32caOM=
-Received: from lxu-ped-host.. ([111.198.231.89])
-	by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
-	id 8B10EACB; Thu, 02 Jul 2026 12:34:49 +0800
-X-QQ-mid: xmsmtpt1782966889tpm5fdqw5
-Message-ID: <tencent_30FB52DFC6440984EEF0EEC70C90A7DAC606@qq.com>
-X-QQ-XMAILINFO: NAuAIaytDrXppw3uhnqACGI+GTfyRfCrUZI81C+oro9C457KCvnVIieR7bgYrO
-	 l46J0Yh1z6Y+FMKPn1PaHc9JNECPabpNNua0y7gzYBBTKgaw/5IEQ+UuW/SkTHmdcI+o8XkghSVA
-	 7qlRxQPchEH/z2zhmDwJSjzgqp6neHrDSy0Bq/Wz4hLaNnPk2Tex7ReBlRMeSVOpZugc4FjV0j1n
-	 9MzE/qZQROb4wCLZ2zOKF2vBAAfTjt1k6x05Yi4sIjESNqvzNYq1tgqaf6YyVysxP6AxdmJiXBDI
-	 2te7+BEgIDcNQMGdRq7xKVr/cTwQYppJZsUfNxm9irzAKvrNex7R+eWqvvjspczhJsX089HwW7xM
-	 iDeeOF1BIa4xVCJ7QaM3435QGCIDGB539ttTKOpCOxMbaGxSwKQq5M/TP6YylfyR1+9+gXv0Ke3W
-	 X6CwuS2p1ljngDK8MyVMqnYhW2Dok357WIBGfDySpgNfDutYKINhOESF40cv364CFl5TvExNqzcO
-	 DFY2xrnCuENUVu5gONmsSpTBVke63FFiS+buyl8Ba4dG56x9qx53wVsYtcQgkGlNLL8rD0m4IuJE
-	 C+JpCfAzgY6CuyNRx8BURm46FfSNNNA4v1+rQ68IlEGavh+BVYFRnTz2Jg3qM6N7pLyFE2Y82qYk
-	 MkI3lHgQxsHNWUuCvoIqrKrVLUpYkYQRKnWjdp9caegTvn5XANVdG2z4XsVNJ/Eu1sgEhlYzcTvE
-	 dVon1LaJ5SP49xQYzDGX05jotyTLUEtoRzlINz/JK2JaBuvjegBjRg6hTYY2mELly6SQR+lneIab
-	 t+d8Zw368u1mnqw2rjjCRCFj1Uij8zCOCRsOUjbqhupxVfDmYx4kWWtCWPJSBV2VI930DDG3slZa
-	 lHggq1fam3x9v5P9bR1czk2G026GoUmBYydKWv3A9JY2mokZqMMV7zMZ/PufAfY9A3AI0exqJubD
-	 s/dtOAkg3LlQXYLVuyjSixbvNJj+um6jzXbwKZ2rZvr3fsZpgsAdP/7XtUCKr00wbWmjfZyL+2PH
-	 35iRCWsXfXT60trK5wBXoUVLi5mu31Juq+RZ60cA==
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-From: Edward Adam Davis <eadavis@qq.com>
-To: andrii.nakryiko@gmail.com
-Cc: andrii@kernel.org,
-	ast@kernel.org,
-	bpf@vger.kernel.org,
-	daniel@iogearbox.net,
-	eadavis@qq.com,
-	eddyz87@gmail.com,
-	emil@etsalapatis.com,
-	jiayuan.chen@linux.dev,
-	jolsa@kernel.org,
-	linux-kernel@vger.kernel.org,
-	martin.lau@linux.dev,
-	memxor@gmail.com,
-	netdev@vger.kernel.org,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	song@kernel.org,
-	syzkaller-bugs@googlegroups.com,
-	yonghong.song@linux.dev
-Subject: Re: [PATCH v5] bpf: Fix smp_processor_id() call trace for preemptible kernels
-Date: Thu,  2 Jul 2026 12:34:50 +0800
-X-OQ-MSGID: <20260702043449.1021846-2-eadavis@qq.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <CAEf4Bzb+OOrdGyxbzjh=7MUEbA5FC05E6_iwCjDXcnSO-HZ=ig@mail.gmail.com>
-References: <CAEf4Bzb+OOrdGyxbzjh=7MUEbA5FC05E6_iwCjDXcnSO-HZ=ig@mail.gmail.com>
+	s=arc-20240116; t=1782967328; c=relaxed/simple;
+	bh=YdmdVyxlY/SkwPdnuclaBCq9hvusQAU69XixNydsWtY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MJZLZ4Nwpc51Li2pRm1MdGZI3fPyXqDOncGCHQ+87g/WihTPsQRzjM4xTUFfigG7gYVRkjWVuH9DZ56+Tthcl1fyF1NCtC81rQIuawAJn4vjIz9jk6OKJ5RRLenaN5MkMVV2WAws+CzC4x+PjkbqbFpLyOoiqtOsmf+kUUHcPIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.155])
+	by gateway (Coremail) with SMTP id _____8Axd_AW7EVqrMUAAA--.4410S3;
+	Thu, 02 Jul 2026 12:41:58 +0800 (CST)
+Received: from [10.161.0.102] (unknown [223.64.68.155])
+	by front1 (Coremail) with SMTP id qMiowJDxxsAS7EVqWJS7AA--.1570S2;
+	Thu, 02 Jul 2026 12:41:57 +0800 (CST)
+Message-ID: <4510421b-ca73-4db7-b5bd-14e7f4ecb970@loongson.cn>
+Date: Thu, 2 Jul 2026 12:41:53 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] can: Add Loongson CAN-FD controller driver
+To: sashiko-reviews@lists.linux.dev
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
+ Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol
+ <mailhol@kernel.org>, Oliver Hartkopp <socketcan@hartkopp.net>,
+ Huacai Chen <chenhuacai@loongson.cn>, zhoubb.aaron@gmail.com
+References: <cover.1782787997.git.zhoubinbin@loongson.cn>
+ <b80d271f63f6318a4060220e8107785bd147f1bd.1782787997.git.zhoubinbin@loongson.cn>
+ <20260630031622.14F981F000E9@smtp.kernel.org>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+In-Reply-To: <20260630031622.14F981F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qMiowJDxxsAS7EVqWJS7AA--.1570S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQEQCGpErGUdRQAAsn
+X-Coremail-Antispam: 1Uk129KBj9fXoW3ZF45Ww13AF47Gr4kKFyxXrc_yoW8WrW3Zo
+	WfWwsavw4rKr15J34Dta4fJFy3X3Z5ur13ZrZxtr1DJF9IqF1j9r45uw4fJrWrAFWYgFn5
+	Was5GayrCan7tF4fl-sFpf9Il3svdjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf
+	9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+	UjIYCTnIWjp_UUU5R7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+	8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+	Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+	v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+	67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64
+	vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+	jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2I
+	x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+	8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+	0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALUUUUU=
 
-On Wed, 1 Jul 2026 12:57:52 -0700, Andrii Nakryiko wrote:
-> > bpf_mem_cache_free_rcu() maybe called in preemptible context, this
-> > will trigger the below warning message:
-> >
-> > BUG: using smp_processor_id() in preemptible [00000000] code: syz.0.17/5820
-> > caller is bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
-> > Call Trace:
-> >  check_preemption_disabled+0xd3/0xe0 lib/smp_processor_id.c:47
-> >  bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
-> >  rhtab_delete_elem+0x185a/0x1b30 kernel/bpf/hashtab.c:2969
-> >  __rhtab_map_lookup_and_delete_batch+0x935/0xcb0 kernel/bpf/hashtab.c:3349
-> >  bpf_map_do_batch+0x445/0x630 kernel/bpf/syscall.c:-1
-> >  __sys_bpf+0x906/0xd90 kernel/bpf/syscall.c:-1
-> >
-> > this_cpu_ptr() requires the caller to prevent task migration.
-> > These helpers currently do not enforce that requirement and may
-> > be invoked from preemptible contexts, leading to accesses to another
-> > CPU's per-CPU cache after migration. Use get_cpu_ptr()/put_cpu_ptr()
-> > to pin the task while accessing the per-CPU allocator state.
-> >
-> > Fixes: 5af6807bdb10 ("bpf: Introduce bpf_mem_free_rcu() similar to kfree_rcu().")
-> > Fixes: 7c8199e24fa0 ("bpf: Introduce any context BPF specific memory allocator.")
-> > Reported-by: syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com
-> > Closes: https://syzkaller.appspot.com/bug?extid=fd7e415d891073b83e1f
-> > Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-> > ---
-> 
-> from what I can see, bpf_mem_free() is called through bpf kfuncs only,
-> and all BPF programs run with migration disabled. So this seems like a
-> false positive. For per-cpu checking, it should probably check that
-> either preemption is disabled or migration is disabled. tl;dr, there
-> doesn't seem to be any
-Today, I researched the call sites of bpf_mem_free() in detail; it is
-called directly by bpf kfuns only. 
+Hi Vincent:
 
-Different BPF program types execute in distinct kernel contexts: for
-instance, XDP and TC typically run in non-sleepable networking contexts,
-whereas `raw_tp`, `tracing`, `LSM`, `syscall` and especially sleepable
-BPF programs may run in contexts where preemption and migration are
-enabled. Consequently, any shared BPF code (such as a helper or kfunc)
-that accesses per-CPU data must not rely on the caller having disabled
-migration; instead, it must internally ensure that CPU migration does
-not occur during the access.
+I've checked these issues and tried to provide solutions. Please check 
+to see if they are correct.
 
-Taking into account the CI reviewer's feedback [1] and my further
-investigation into BPF programs as described above, the adjustments
-related to bpf_mem_free() should be retained.
+On 2026/6/30 11:16, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 18 potential issue(s) to consider:
+> - [High] Missing `skb` check in `CAN_STATE_ERROR_ACTIVE` case leads to a NULL pointer dereference.
+> - [High] SKB allocation failure or invalid frame in RX path permanently stalls NAPI and corrupts RX FIFO.
+> - [High] NAPI poll list corruption due to calling `napi_complete_done` while returning `quota`.
+> - [High] Missing `napi_disable()` on error paths in `loongson_canfd_open()` leads to a kernel panic on subsequent open attempts.
+> - [High] Race condition in `loongson_canfd_start_xmit` causes unexpected packet drops due to un-reaped TX buffers.
+> - [High] Missing bounds check on the hardware-provided word count `REG_FRAME_META1_RWCNT` causes heap buffer overflow.
+> - [High] Unchecked return value of `device_property_read_u32` leaves `clk_rate` uninitialized.
+> - [High] Premature hardware restart on Bus-Off when auto-restart is configured.
+> - [High] Bitwise NOT on a 16-bit variable unintentionally unmasks all interrupts due to integer promotion.
+> - [High] Overwriting of `isr` variable causes lost error interrupts and permanent interrupt masking.
+> - [High] Using `regmap_update_bits` on command-style SET/CLR registers causes conflicting hardware commands.
+> - [High] Calling `kfree_skb()` with hardware interrupts disabled.
+> - [High] Potential infinite loop in TX interrupt handler due to repeated status reads of posted writes.
+> - [Medium] The driver advertises 'hardware timestamping' in commit message but does not implement it.
+> - [Medium] `ndev->stats.rx_errors` is modified concurrently from both hardirq and NAPI softirq contexts without locking.
+> - [Medium] Incorrect check for RTR frames causes invalid RX byte statistics.
+> - [Medium] Missing `cf->len8_dlc` assignment for Classic CAN frames.
+> - [Low] Syntax error due to variable declarations immediately following a switch case label.
+> --
+> 
+> commit e0d474f047900e47a73eaa207fc07dd8c35084bf
+> Author: Binbin Zhou <zhoubinbin@loongson.cn>
+> Subject: can: Add Loongson CAN-FD controller driver
+> 
+> This commit adds support for the CAN-FD controller integrated into
+> Loongson-2K series SoCs. It implements NAPI for the RX path, TX buffer
+> management, bus error reporting, and various timing configurations.
+> 
+> [Severity: Medium]
+> The commit message states the driver supports hardware timestamping, but is
+> this functionality actually implemented? Looking at the driver code, it sets
+> ethtool_op_get_ts_info but does not seem to extract the timestamp field from
+> the hardware or write to skb_hwtstamps in the receive path.
 
-[1]
-https://lore.kernel.org/all/20260630094823.897BD1F00A3D@smtp.kernel.org
+Hardware timestamps are not supported at this time; I will rewrite the 
+commit.
 > 
-> pw-bot: cr
+>> diff --git a/drivers/net/can/loongson_canfd.c b/drivers/net/can/loongson_canfd.c
+>> new file mode 100644
+>> index 0000000000000..1c7381129c2b6
+>> --- /dev/null
+>> +++ b/drivers/net/can/loongson_canfd.c
+> [ ... ]
+>> @@ -891,37 +891,24 @@ static int loongson_canfd_chip_start(struct net_device *ndev)
+> [ ... ]
+>> +	/* Configure interrupts */
+>> +	int_ena = REG_INT_STAT_RBNEI | REG_INT_STAT_TXBHCI |
+>> +		  REG_INT_STAT_EWLI | REG_INT_STAT_FCSI;
+>> +
+>> +	/* Bus error reporting */
+>> +	if (priv->can.ctrlmode & CAN_CTRLMODE_BERR_REPORTING)
+>> +		int_ena |= REG_INT_STAT_ALI | REG_INT_STAT_BEI;
+>> +
+>> +	/* It's after reset, so there is no need to clear anything */
+>> +	regmap_write(priv->regmap, LOONGSON_CANFD_INT_MASK, ~int_ena);
 > 
-> > v1 -> v2: using guard against preemption
-> > v2 -> v3: replace get/put_cpu() to bpf_disable/enable_instrumentation()
-> > v3 -> v4: disable preempt to make this_cpu_ptr() work
-> > v4 -> v5: in mem free disable preemption
-> >
+> [Severity: High]
+> Will this bitwise NOT operation unmask all interrupts on the controller?
+> Because int_ena is a 16-bit unsigned integer, the bitwise NOT causes integer
+> promotion to a 32-bit signed int, filling the upper 16 bits with 1s. Since
+> the upper bits of this register clear the mask, does this unintentionally
+> enable every possible interrupt?
+
+Use FIELD_GET(REG_INT_MASK_SET, ~int_ena) instsed.
 > 
-> maybe throttle your patch resubmission spree a bit?..
-My earlier actions were driven by a desire to keep pace with the CI
-reviewer's response speed.
-Moving forward, I will slow down the cadence of new patch submissions,
-as you suggested.
+>> +	regmap_write(priv->regmap, LOONGSON_CANFD_INT_ENA, int_ena);
+> [ ... ]
+>> @@ -1048,46 +1048,22 @@ static netdev_tx_t loongson_canfd_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+> [ ... ]
+>> +	for_each_clear_bit(i, &tx_brp, LOONGSON_CANFD_TXBUF_NUM) {
+>> +		u32 transmission_complete_mask = 0x3 << (i * 2);
+>> +
+>> +		if (!(tx_bs & transmission_complete_mask)) {
+>> +			buf_id = i;
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	if (!loongson_canfd_insert_frame(priv, cf, buf_id, can_is_canfd_skb(skb))) {
+>> +		netdev_err(ndev, "TXNF set but cannot insert frame into TXTB! HW Bug?");
+>> +		kfree_skb(skb);
+> 
+> [Severity: High]
+> Could a race condition here cause silent packet drops? The hardware clears
+> tx_brp immediately on completion, but tx_bs is cleared later in the ISR.
+> If all inactive buffers are awaiting a reap, the loop finishes without
+> finding a buffer, leaving buf_id at 0. This would cause the insert check to
+> fail, dropping the packet while incorrectly returning NETDEV_TX_OK.
+> 
+> [Severity: High]
+> Is it safe to call kfree_skb here? The tx_lock is held with
+> spinlock_irqsave which disables local interrupts. Calling kfree_skb with
+> hard interrupts disabled can lead to kernel warnings and potential deadlocks.
+> Should this use dev_kfree_skb_any instead?
+> 
+>> +		ndev->stats.tx_dropped++;
+>> +		return NETDEV_TX_OK;
+>> +	}
+> [ ... ]
+>> @@ -1105,37 +1105,25 @@ static void loongson_canfd_read_rx_frame(struct loongson_canfd_priv *priv, struct canfd_frame *cf,
+> [ ... ]
+>> +	/* Data Length Code */
+>> +	len = FIELD_GET(REG_FRAME_META1_DLC, meta1);
+>> +	if (len > 8) {
+>> +		if (meta1 & REG_FRAME_META1_FDF)
+>> +			len = wc << 2;
+>> +		else
+>> +			len = 8;
+>> +	}
+>> +
+>> +	cf->len = len;
+> 
+> [Severity: Medium]
+> Does this properly support the CAN_CTRLMODE_CC_LEN8_DLC feature? For Classic
+> CAN frames with a DLC greater than 8, the length is appropriately capped to
+> 8, but the original DLC is not saved to cf->len8_dlc. This might break
+> userspace protocols that rely on the original DLC data.
+
+Yes, I should use the relevant standard APIs, as follows:
+
+         /* Data Length Code */
+         dlc = FIELD_GET(REG_FRAME_META1_DLC, meta1);
+         if (is_can_fd)
+                 cfd->len = can_fd_dlc2len(dlc);
+         else
+                 can_frame_set_cc_len(ccf, dlc, priv->can.ctrlmode);
+
+
+> 
+>> +	if (unlikely(len > wc * LOONGSON_CANFD_DW_BYTE))
+>> +		len = wc * LOONGSON_CANFD_DW_BYTE;
+>> +
+>> +	/* Data */
+>> +	for (i = 0; i < len; i += LOONGSON_CANFD_DW_BYTE)
+>> +		regmap_read(priv->regmap, LOONGSON_CANFD_RX_DATA, (u32 *)(cf->data + i));
+> 
+> [Severity: High]
+> Can a malformed hardware word count cause a heap buffer overflow? The len
+> variable is checked against the hardware-provided word count, but not against
+> CANFD_MAX_DLEN. If the hardware yields an invalid read word count, the length
+> could exceed the 64-byte payload limit, causing out of bounds memory writes
+> to the skb data.
+
+I think using the method described above to obtain `cf->len` should 
+resolve this issue.
+> 
+> [ ... ]
+>> @@ -1164,28 +1164,22 @@ static int loongson_canfd_rx(struct net_device *ndev)
+> [ ... ]
+>> +	/* Flexible Data-rate Format */
+>> +	if (meta1 & REG_FRAME_META1_FDF)
+>> +		skb = alloc_canfd_skb(ndev, &cf);
+>> +	else
+>> +		skb = alloc_can_skb(ndev, (struct can_frame **)&cf);
+>> +	if (unlikely(!skb))
+>> +		return 0;
+> 
+> [Severity: High]
+> If the skb allocation fails, does returning 0 early permanently stall the
+> NAPI loop? Since the rest of the data payload is not read from the hardware
+> FIFO, the RX stream might desynchronize. Also, returning 0 here causes the
+> caller to exit its loop without completing NAPI, potentially leaving it
+> permanently in a scheduled state.
+> 
+>> +
+>> +	loongson_canfd_read_rx_frame(priv, cf, meta0, meta1);
+>> +
+>> +	if (cf->can_id != CAN_RTR_FLAG)
+>> +		stats->rx_bytes += cf->len;
+> 
+> [Severity: Medium]
+> Is this RTR check accurate? The can_id field contains both the CAN ID and
+> the flags, so a direct inequality comparison to CAN_RTR_FLAG might evaluate
+> true for almost all RTR frames, erroneously inflating the RX byte statistics
+> for frames with no actual payload.
+
+Emm, it should be:
+
+if (!(cf->can_id & CAN_RTR_FLAG))
+> 
+> [ ... ]
+>> @@ -1203,32 +1203,26 @@ static enum can_state loongson_canfd_read_fault_state(struct net_device *ndev)
+> [ ... ]
+>> +	switch (FIELD_GET(REG_FSTAT_MASK, fstat)) {
+>> +	case REG_FSTAT_ERA:
+>> +		u32 ewl, erl, rec_tec, max_tec;
+> 
+> [Severity: Low]
+> Will this compile on strict C11 compilers? The C11 standard does not allow
+> variable declarations immediately following a switch case label.
+> 
+> [ ... ]
+>> @@ -1278,82 +1278,28 @@ static void loongson_canfd_err_interrupt(struct net_device *ndev, u32 isr)
+> [ ... ]
+>> +	if ((isr & REG_INT_STAT_FCSI) || (isr & REG_INT_STAT_EWLI)) {
+>> +		netdev_info(ndev, "state changes from %s to %s\n",
+>> +			    can_get_state_str(priv->can.state), can_get_state_str(state));
+>> +
+>> +		if (priv->can.state == state)
+>> +			netdev_warn(ndev, "cur and pre state is the same!(miss intr?)\n");
+>> +
+>> +		isr = REG_INT_STAT_FCSI | REG_INT_STAT_EWLI;
+> 
+> [Severity: High]
+> Does overwriting the isr variable here permanently disable other interrupts?
+> If arbitration lost or bus error flags are pending, this assignment destroys
+> them. Later in the function, isr is shifted to unmask interrupts, meaning the
+> erased flags will never be unmasked again.
+> 
+>> +		priv->can.state = state;
+>> +		switch (state) {
+>> +		case CAN_STATE_BUS_OFF:
+>> +			priv->can.can_stats.bus_off++;
+>> +			if (priv->can.restart_ms)
+>> +				regmap_write(priv->regmap, LOONGSON_CANFD_CMD,
+>> +					     REG_CMD_ERCRST);
+> 
+> [Severity: High]
+> Does this prematurely restart the hardware upon a bus-off event? Instantly
+> writing the error reset command clears the hardware error state and rejoins
+> the bus immediately, ignoring the restart delay contract enforced by the core
+> can_bus_off timer.
+
+The meaning of `REG_CMD_ERCRST` is as follows:
+Used to clear the error count while waiting for the controller to rejoin 
+the bus after entering `BUS_OFF`.
+A `1` can be written to this register at any time before or after 
+entering `BUS_OFF`; it takes effect once and then becomes invalid.
+
+This command is used only to reset the count and does not affect the reboot.
+> 
+> [ ... ]
+>> +		case CAN_STATE_ERROR_ACTIVE:
+>> +			cf->can_id |= CAN_ERR_CNT;
+>> +			cf->data[1] = CAN_ERR_CRTL_ACTIVE;
+>> +			cf->data[6] = bec.txerr;
+> 
+> [Severity: High]
+> Could this lead to a null pointer dereference? The alloc_can_err_skb call
+> earlier in the function can fail and leave cf uninitialized. While the other
+> switch cases check if skb is valid before modifying cf data, this case does
+> not, which would crash if memory pressure prevents allocation.
+
+Add skb check, as follows:
+
+if (skb) {
+	cf->can_id |= CAN_ERR_CNT;
+	cf->data[1] = CAN_ERR_CRTL_ACTIVE;
+	cf->data[6] = bec.txerr;
+	cf->data[7] = bec.rxerr;
+}
+
+> 
+> [ ... ]
+>> +	/* Check for Bus Error interrupt */
+>> +	if (isr & REG_INT_STAT_BEI) {
+>> +		isr = REG_INT_STAT_BEI;
+>> +		netdev_err(ndev, "Bus Error interrupt\n");
+>> +		priv->can.can_stats.bus_error++;
+>> +		stats->rx_errors++;
+> 
+> [Severity: Medium]
+> Is it safe to increment stats->rx_errors without locking here? This counter
+> is modified from hardirq context here and concurrently from softirq context
+> in the NAPI poll routine, which could cause lost increments due to data races
+> on 32-bit systems.
+> 
+> [ ... ]
+>> @@ -1391,37 +1391,25 @@ static int loongson_canfd_rx_napi(struct napi_struct *napi, int quota)
+> [ ... ]
+>> +	/* Check for RX FIFO Overflow */
+>> +	regmap_read(priv->regmap, LOONGSON_CANFD_STAT, &sts);
+>> +	if (sts & REG_STAT_DOR) {
+>> +		struct net_device_stats *stats = &ndev->stats;
+>> +		struct can_frame *cf;
+>> +		struct sk_buff *skb;
+>> +
+>> +		netdev_info(ndev, "Loongson canfd RX overflow\n");
+>> +		stats->rx_over_errors++;
+>> +		stats->rx_errors++;
+> 
+> [Severity: Medium]
+> As noted above, stats->rx_errors is updated concurrently in both softirq and
+> hardirq contexts without locking.
+> 
+> [ ... ]
+>> +	if (rxbuf_is_empty && ret != 0) {
+>> +		if (napi_complete_done(napi, work_done)) {
+> 
+> [Severity: High]
+> Should this check if work_done is less than quota? If exactly quota frames
+> are processed and the hardware buffer becomes empty, this logic calls
+> napi_complete_done and then returns quota to the networking core. Returning
+> the full quota instructs the core to reschedule the instance, but the state
+> has already been manipulated, which can corrupt the NAPI poll list.
+> 
+> [ ... ]
+>> @@ -1425,33 +1425,18 @@ static void loongson_canfd_tx_interrupt(struct net_device *ndev)
+> [ ... ]
+>> +	while ((buf_id = loongson_canfd_get_txbuf_id(priv, &sts)) < LOONGSON_CANFD_TXBUF_NUM) {
+>> +		switch (sts) {
+>> +		case TX_BS_VALID:
+>> +			stats->tx_bytes += can_get_echo_skb(ndev, buf_id, NULL);
+>> +			stats->tx_packets++;
+>> +			break;
+> 
+> [Severity: High]
+> Could this result in an inescapable infinite loop? When the driver writes a
+> clear command to the posted MMIO register at the end of the loop, it
+> immediately reads the status register back in the while condition. Because
+> the hardware takes cycles to clear the bit, the old status is read, causing
+> the driver to repeatedly process the same buffer and spin in the ISR.
+> 
+>> +		case TX_BS_FAIL:
+>> +			u32 cnt;
+> 
+> [Severity: Low]
+> Similar to the fault state read function, this violates C11 syntax by
+> declaring a variable immediately following a switch case label.
+> 
+> [ ... ]
+>> @@ -1584,20 +1584,14 @@ static void loongson_canfd_chip_stop(struct net_device *ndev)
+>>   {
+>>   	struct loongson_canfd_priv *priv = netdev_priv(ndev);
+>>   
+>>   	/* Disable interrupts and disable CAN */
+>>   	regmap_update_bits(priv->regmap, LOONGSON_CANFD_INT_ENA, REG_INT_ENA_CLR, REG_INT_ENA_CLR);
+>>   	regmap_update_bits(priv->regmap, LOONGSON_CANFD_INT_MASK,
+>>   			   REG_INT_MASK_SET, REG_INT_MASK_SET);
+> 
+> [Severity: High]
+> Are these regmap_update_bits calls safe for W1S/W1C command registers? This
+> function reads the current 1s from the lower half of INT_ENA and writes them
+> back along with the clear mask in the upper half, which commands the hardware
+> to simultaneously set and clear the exact same interrupts.
+
+Use `regmap_write()` directly, as follows:
+
+static void loongson_canfd_disable_interrupts(struct loongson_canfd_priv 
+*priv)
+{
+         regmap_write(priv->regmap, LOONGSON_CANFD_INT_ENA, 
+FIELD_MAX(REG_INT_ENA_CLR) << 16);
+         regmap_write(priv->regmap, LOONGSON_CANFD_INT_MASK, 
+FIELD_MAX(REG_INT_MASK_SET));
+}
+
+> 
+> [ ... ]
+>> @@ -1604,45 +1604,22 @@ static int loongson_canfd_open(struct net_device *ndev)
+> [ ... ]
+>> +err_chip_start:
+>> +	free_irq(ndev->irq, ndev);
+>> +err_irq:
+>> +	close_candev(ndev);
+>> +	return ret;
+>> +}
+> 
+> [Severity: High]
+> Are we missing a napi_disable call on these error paths? If the driver fails
+> to open, the candev is closed but NAPI is left enabled. A subsequent attempt
+> to bring the interface up will call napi_enable on an already enabled
+> instance, triggering a BUG_ON in the core.
+
+Update as follows:
+
+exit_free_irq:
+         free_irq(ndev->irq, ndev);
+exit_napi_disable:
+         napi_disable(&priv->napi);
+         close_candev(ndev);
+         return ret;
+
+> 
+> [ ... ]
+>> @@ -1690,46 +1690,24 @@ static int loongson_canfd_probe(struct platform_device *pdev)
+> [ ... ]
+>> +	regmap = devm_regmap_init_mmio(dev, base, &loongson_cangfd_regmap);
+>> +	if (IS_ERR(regmap))
+>> +		return PTR_ERR(regmap);
+>> +
+>> +	device_property_read_u32(dev, "clock-frequency", &clk_rate);
+>> +
+>> +	irq = platform_get_irq(pdev, 0);
+> 
+> [Severity: High]
+> Should the return value of device_property_read_u32 be checked? If the
+> property is missing, clk_rate retains uninitialized stack garbage which is
+> then assigned to priv->can.clock.freq, leading to unpredictable hardware
+> timing.
+> 
+
+Update as follows:
+
+ret = device_property_read_u32(dev, "clock-frequency", &clk_rate);
+         if (ret)
+                 return dev_err_probe(dev, ret, "Missing clock-frequency 
+property\n");
+
+
+-- 
+Thanks.
+Binbin
 
