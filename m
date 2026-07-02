@@ -1,118 +1,109 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8843538422A
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 06:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F9F3603E9;
+	Thu,  2 Jul 2026 06:43:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782973425; cv=none; b=pVOANPWRmAPrLQT5W5G2M/55+ZplIJpxDBqQWGM5ZqtxKvAzsDbExKuUX8l47DFCV4YldAIl5oUMy4up8RoRWdGnK0i5YobrCV0KstPyQBVFHFdGHwmBZDEDQHN/qkFeJlPTdgTfR4LKUZrQFvgMBJEDoH5jwHQuHKe48miKX5w=
+	t=1782974636; cv=none; b=JtDsBtpjfPxedQjFLg5QEr9Af9wnFGRTEv++kizt68947zFiqOCSAeY2UVcofTIVC26wcdWoZulmOc1FlWGw7LdmVHTiq8qBOqSoumrzXDmwTZ/RRrsRmy9iZP3+/tNVc7vxV6+I39JBLbgBQwayPzcSnz/gyqNn9KQDUmmKcoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782973425; c=relaxed/simple;
-	bh=AkWldYk6Yo8xJRbGmZRz3dlsYoYsoawN+0pDW5TrbYk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mT23zp0s0893CxbwKrBo8/LOgcVcugLzdIa5+UhP6k2p91sYEEwT8BT3t161483/LOhHYTs/WvtTeLvYNT/tNqZ8LRdDFgm0rfBgvAkWzROVLEdk7CHC6uTEF+KIFVg57X5X+Q0nvcWoo3jw9xOjWckAy0y/9IrR0NJMBCS79kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=n7Uc/T+Y; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1782974636; c=relaxed/simple;
+	bh=jbiXXWO91xpknoBcNaoYdvobQE3/ap5+IbERO9xDGwo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H8DJScBQW3aiUjZC+rduZYPB0OICr+iFMBSK9l7StuSosCFV6z0YPXvtuB8Oo4ympF45GOQij0ydG+lK70H9Jx3s/Ag/w59SbxwRNttFqCkIdSOSDf4zo2bx0pcy879lP7+a902OBWpDIugmySMEkrTj4lMpieh879pnDjL+mBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+C2RKSk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="n7Uc/T+Y"
-Message-ID: <6ac505f6-818d-4abb-bdca-6b96f1ce30f2@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782973421;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Igqs9OSLyw+8Ulfrs4et+zHMEYP27SGxn/Lxph0feD0=;
-	b=n7Uc/T+YQ5OvgRxEs/gTfoFc0ziRzeX0N47aQNY5oYd7lL7VFaJ+dxe64hO041kzvCdu02
-	vxCpoLKemhRnFxhs3VuwJThYPLPAy1scQpse2Sk6Y43uEwrDqjvYp5tMPwQD1fZncnvb44
-	JdNMroJYzBF3EIDzrHRjpR8atB+4tcQ=
-Date: Thu, 2 Jul 2026 14:23:36 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+C2RKSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB4D1F000E9;
+	Thu,  2 Jul 2026 06:43:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782974634;
+	bh=xHod700iCZs8t7uaptZVm2V+mjlTB8ZYBkAisHNG+QI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=J+C2RKSk6UTrBSyykc/g2zq6TEAI2I/gPCOoKhCZpAdt2OfVN9WVlKmTZeQ6DDMpk
+	 mls0+eXYZ48i7Ph8MLGmXCJDz2FkpR7HdCq/Go46Xtg4YsoGg+97gs+dn0U5M2Ye+I
+	 EC69g1xpT7ROS9hFiO2zH9csZUThU/tm7+PrdVvzKkJe4rIeoDCY4jd6VvkDlHfyFA
+	 0dcuX4kpqOyDzrgYi6PqtmIZybbyc6O/Y33dqGLNzJbMgUpyb+iyPzToJI6PWWsDui
+	 019IJEr4ykJdq2A3nMFyx7X5nsntcCHX60Gyd5zoFrUYQ1yFb6g62argS/ZtlesCoz
+	 5GkxmUdyETZZA==
+Date: Thu, 2 Jul 2026 06:43:52 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+	linux-scsi@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/3] scsi: ufs: spacemit: dt-bindings: Add UFS controller
+ for K3 SoC
+Message-ID: <20260702064352-GKA35811@kernel.org>
+References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
+ <20260702-08-k3-ufs-support-v1-1-1a64a3ab128f@kernel.org>
+ <20260702023817.AC27A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v8 4/9] libbpf: Add support for global percpu
- data
-Content-Language: en-US
-To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-References: <20260629152406.52582-1-leon.hwang@linux.dev>
- <20260629152406.52582-5-leon.hwang@linux.dev>
- <20260629154055.6DD941F00A3A@smtp.kernel.org>
- <96cbecfc-bae6-46ff-90a7-5f4703e1c44c@linux.dev>
- <CAEf4BzbBpDQOG-xUArBzZa_qZ08q=QViH-bbFmqwLNesGvJLUA@mail.gmail.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <CAEf4BzbBpDQOG-xUArBzZa_qZ08q=QViH-bbFmqwLNesGvJLUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260702023817.AC27A1F000E9@smtp.kernel.org>
 
-On 2/7/26 03:31, Andrii Nakryiko wrote:
-> On Mon, Jun 29, 2026 at 10:55 PM Leon Hwang <leon.hwang@linux.dev> wrote:
->>
->> On 29/6/26 23:40, sashiko-bot@kernel.org wrote:
->> [...]
->>>> @@ -1983,7 +1989,7 @@ bpf_object__init_internal_map(struct bpf_object *obj, enum libbpf_map_type type,
->>>>      }
->>>>
->>>>      def = &map->def;
->>>> -    def->type = BPF_MAP_TYPE_ARRAY;
->>>> +    def->type = is_percpu ? BPF_MAP_TYPE_PERCPU_ARRAY : BPF_MAP_TYPE_ARRAY;
->>>>      def->key_size = sizeof(int);
->>>>      def->value_size = data_sz;
->>>
->>> [Severity: High]
->>> This is a pre-existing issue, but could this integer truncation lead to a
->>> buffer overflow?
->>>
->>> If a user supplies a crafted ELF file with a section (like .data, .rodata,
->>> or .percpu) larger than 4GB, the 64-bit data_sz is implicitly truncated when
->>> assigned to the 32-bit def->value_size.
->>>
->>> This results in a smaller mmap allocation based on the truncated value. Later
->>> in bpf_object__init_internal_map(), memcpy uses the original 64-bit data_sz:
->>>
->>>       if (data)
->>>               memcpy(map->mmaped, data, data_sz);
->>>
->>> Can this overflow the allocated buffer when parsing unverified BPF objects?
->>>
->>
->> Sounds reasonable.
->>
->> The data_sz value comes from the ELF file and therefore cannot be
->> trusted, as the section size can be malformed.
->>
->> For example, readelf -a shows the following for a normal ELF:
->>
->>   [ 3] .data             PROGBITS         0000000000000000  00000040
->>        0000000000000004  0000000000000000  WA       0     0     4
->>
->> The section size can be modified to:
->>
->>   [ 3] .data             PROGBITS         0000000000000000  00000040
->>        0000000100000001  0000000000000000  WA       0     0     4
->>
->> In this case, data_sz would be truncated to 1.
->>
->> However, in practice, there won't be larger than 4GB section in bpf ELF
->> file. And, it is meaningless to hack libbpf to corrupt user space memory.
->>
->> Of course, will post a separate patch for further discussion.
+hi sashiko,
+
+On 02:38 Thu 02 Jul     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] The example device tree node is missing the required `interrupts` property, causing schema validation (`dt_binding_check`) to fail.
+> - [Low] The `freq-table-hz` property in the example uses an invalid flat array syntax for a matrix property and relies on a deprecated binding.
+> --
 > 
-> No, don't. All this hardening of libbpf is nonsensical. libbpf is not
-> meant to protect against corrupted ELF. If you don't trust the source
-> of ELF, you should definitely not attempt to open BPF object and load
-> it into kernel to run with root-like capabilities.
+> commit 1206e23c10bdd35379971f48c29e246d5b43200d
+> Author: Yixun Lan <dlan@kernel.org>
 > 
-Got it.
+> scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
+> 
+> Document the compatible for UFS (Universal Flash Storage) Host Controller
+> which found in SpacemiT K3 SoC chip. This adds the YAML schema defining 
+> features like MIPI UniPro v1.61 and M-PHY v3.0 compliance.
+> 
+> > diff --git a/Documentation/devicetree/bindings/ufs/spacemit,k3-ufshc.yaml b/Documentation/devicetree/bindings/ufs/spacemit,k3-ufshc.yaml
+> > new file mode 100644
+> > index 0000000000000..e6cb6fb2496c8
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/ufs/spacemit,k3-ufshc.yaml
+> 
+> [ ... ]
+> 
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/clock/spacemit,k3-clocks.h>
+> > +    #include <dt-bindings/reset/spacemit,k3-resets.h>
+> > +    ufs@c0e00000 {
+> > +        compatible = "spacemit,k3-ufshc";
+> > +        reg = <0xc0e00000 0x40000>;
+> 
+> [Severity: Low]
+> Does this example node miss the interrupts property? The included
+> ufs-common.yaml schema requires an interrupts property, which might cause
+> make dt_binding_check to fail validation here.
+> 
+right, I got this warning during dts checking, but messed up in final commit,
+I will fix it in next version
 
-I didn't post the separate patch.
+> > +        clocks = <&syscon_apmu CLK_APMU_UFS_ACLK>,
+> > +        <&syscon_apmu CLK_APMU_UFS_REFCLK>;
+> > +        clock-names = "aclk", "ref_clk";
+> > +        resets = <&syscon_apmu RESET_APMU_UFS_ACLK>;
+> > +        freq-table-hz = <491520000 491520000 19200000 19200000>;
+> 
+> [Severity: Low]
+> Is this the correct formatting for freq-table-hz? This property expects a
+> multi-dimensional array, so writing it as a flat array (rather than
+> <A B>, <C D>) will likely cause dt-schema validation to fail.
+> 
+right, should be multi-dimensional array
 
-Thanks,
-Leon
+> Also, does this introduce a deprecated property to a new binding?
+> 
+seems prefer to use operating-points-v2 as new way, I will check it..
 
+-- 
+Yixun Lan (dlan)
