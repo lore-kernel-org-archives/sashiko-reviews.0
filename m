@@ -1,167 +1,178 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012062.outbound.protection.outlook.com [52.101.48.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D2038B135;
-	Thu,  2 Jul 2026 07:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782977140; cv=none; b=cTI/v9Hf5oV6vr42YWKS/GzlAlbTVV5Iv79s7PARZwOK+dg52rlDeMshA1/TTwL9tLP+PnONdzQWnHE/QbRIvPHiR6zIQTBSOpIXvUrycGEkBCv8//7wG+mGeTRO98izcSrLBChkKL7rq7+6Q4o4abh2PNdl1zCzIry7rMxVUpU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782977140; c=relaxed/simple;
-	bh=0iiVKVZWDyomns5F+CK/MTgpBarFr0OL/0hjPk+/6E8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ykpneu5nDPqpJAL6nguzzEuYEFh4dUX+0xXsXSdVQpz/zruvOYoDBgvrodkqw0FZNCsG4IB0G2cKkMxw3bSejh/w6T+nJ2gAz5ObozFKuOXy06ScP/8dvKy4lioBM+vR3DPQI8DOeGjCDa9XtdBN8Ti4CbPcwD9yyAIWVqs3uJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NT9EfwBM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A18396B76
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 07:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782977337; cv=fail; b=OvsHjEnDGiYUJyXf9O98cvNvj+3HxABXZISNb7skHJaVJtUwjXFd57e3tj0bHB6aQs3HVM+taMf+OFPXSSJm7obknYnidKMnJH0YWsHq39rHlyJ90mVMvcPMFejxU4hKCIzhBPOwAvdeeZ3GzB0mspkqNuuaLarHTAt5NlRQ1uo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782977337; c=relaxed/simple;
+	bh=Bfxf6bBQlUt/oQ4JmOuZaFBqOXjjXlZSS2D8KZ3mRQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=K4ordqVkgP7TGt0SQNaDpuV4h8GyHQOrkY6bm+kOOvqjtir6ZgOEBpT7ViUc/UL+2JHOK8CYfAa6LCxHCoE5Nd+Xd9+vXdQC+2csBunYIvpRfbr/xERtOLqDZeHM1MRWHVvFKO8TKyy0jA+p9NkXuPo+Aph1OAGi1uBUJhU0Amo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=WE/Ix3Xl reason="signature verification failed"; arc=fail smtp.client-ip=52.101.48.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NT9EfwBM"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6621KF8p3009445;
-	Thu, 2 Jul 2026 07:25:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=1KgI9KYgIHfDrgS6mLJj5Qx+
-	J6n7/Xh9H91frP5TMXk=; b=NT9EfwBMIFsTkhUcTaoTrZaIh7Te9Kr00UpBhGkB
-	OoSXklIbMbqYIgheYl4WfGLijZQBXkiSeW+mN0AqAoL2AnHS9iI0PRIyQjI02k0D
-	DAmmS5RWg8hl9jtva6IGV6hcFNhOpdg/01jLQ7reOaxZ9vK3fLeCfoQwbZ4uhfAQ
-	2r+2KZWWjj4KTTRIusvSVGprEFDstrOpVzReS1TtOT5dzNpL3LnPakFithPv+cQN
-	nM5kdypDKwb59ckLVBZ/Z22M1zHlvWxsxyLQRJX2UzgRkVedQfaxy/3t8CeMCRHA
-	Mm//NrPgXdeHfApDn3j8e/ur8fa1bIM9oWQ2rCMt6rByKA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f579rts50-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jul 2026 07:25:35 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 6627PWkl003794;
-	Thu, 2 Jul 2026 07:25:32 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4f27kknuc1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jul 2026 07:25:32 +0000 (GMT)
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 6627PWNw003786;
-	Thu, 2 Jul 2026 07:25:32 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 6627PWeS003785
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jul 2026 07:25:32 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id 6B7D5B2B; Thu,  2 Jul 2026 12:55:31 +0530 (+0530)
-Date: Thu, 2 Jul 2026 12:55:31 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="WE/Ix3Xl"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J5Iggs2z2CV4vs8TH0EmIZDlY2uk1kVs2ThMuDrhFnef4o2nVtvpQUu7JxaaFfGemHilMUOBiO8/1geTL3RyNA/zxun+IRX4twl0+/NQ3QnMonZhCXm5tbIpgOmT2ZrvngdcDJrUEYH4Xbkbfh6pAFDEBnBY7BqRDxhAjvHWXyD144WH6yUvasYcvFFxeIOToEcBt6DZqVQlM+nFFABK6rY/mag60ONo9kwnMhN3BbJkBxDCNXDQar20NhxTVUqfNReEhMzC6ZLredZRsXn9cd5WJzlKNFjQ+sNYKeM5Icb/Nv5RkjnbJCoqIh2Tp6bmAb5BlOljJJ+t+7nOVRBTnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vLVOP90tdQElANuiSRaMNcYUsbZyKShTCQRbW9eg1r0=;
+ b=S0/DTF2qCl4QnkBJPTHRZT4d092umpYtActmM24V6g47tGoqsyeb/qLG40ALqmt8Jwdjc5IbOiqM0XJ7kYuJEylMT0EUFqYVnQs2KhII29tzWHfzqqs44h+/2JPdXwvNgwfa8q1g20LKfxFQY7HtbvPdMkZjdye+HcoY/zcxHiSIljvCqoECGzvqMN+lVBE72OJum8TXKtV1n3xoNA+bN5X3xaYyWY1kUTxFF9pSz5/JSDjmYPQsOK1Bf4Qi8RktDfmETik4VUfuYw6ZISNXJRA/uO9N60NOHN/MjssOiZe8IlnYjwHswn4iUSubme6DNliAXAs2DuwkZZR2XbR5rQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vLVOP90tdQElANuiSRaMNcYUsbZyKShTCQRbW9eg1r0=;
+ b=WE/Ix3Xl8VGrhMzJxgXgrvkmsKw2L5WwauZ/l561ZD1BIeTH1CVWXPqAVlZOOvQZeU6qiDxAasOIowNO8aT/cjWGtSyHG7tfTEOAJuL6CzVquxPr4ql1HeGylKpXNZuArBbtL34CZaTkqcMi1jvbANzNV49KEfx2tx2276oHR/N6uYdZ6nZ29WewrBZEwYGuGUEMGkGAVeG/qWDToww8P8obeaSQLonTL64Nvcbz9JEk7lxz4485u3K56s3LRgwxMGA2eNALHolBxPwSOtxRUk+VtjWP6pQRYK6YkPiHmycfyTWxnHmgYrsQr/fOaphNNur1pTQ9mvKBhlOGG/HrmQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by SA3PR12MB9226.namprd12.prod.outlook.com (2603:10b6:806:396::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Thu, 2 Jul 2026
+ 07:28:52 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0181.008; Thu, 2 Jul 2026
+ 07:28:52 +0000
+Date: Thu, 2 Jul 2026 15:28:47 +0800
+From: Richard Cheng <icheng@nvidia.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
-        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Fix pm4125 vbus regulator
- compatible and constraints
-Message-ID: <20260702072531.bs2242bgfcvpuyh7@hu-kotarake-hyd.qualcomm.com>
-References: <20260701-add_pm4125-vbus-reg-v2-0-6bac2bac7131@oss.qualcomm.com>
- <20260701-add_pm4125-vbus-reg-v2-3-6bac2bac7131@oss.qualcomm.com>
- <20260701103457.73E251F00A3A@smtp.kernel.org>
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v6 1/2] cxl/hdm: Allow zero sized HDM decoders
+Message-ID: <akYSpn_EyYTys6Fh@MWDK4CY14F>
+References: <20260625092857.41139-1-icheng@nvidia.com>
+ <20260625092857.41139-2-icheng@nvidia.com>
+ <20260625094718.8D3FD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260625094718.8D3FD1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: TPYP295CA0016.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:a::8)
+ To BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260701103457.73E251F00A3A@smtp.kernel.org>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA3NCBTYWx0ZWRfXwjL/P5oXaSNW
- TqTisV2CRtR0au+E9aj8OxPn4zMGAKL1O/JSn+rg6fdTgA70KSdAMPXVV4OvkAOwTq9Qgvf3e+m
- hH6vgcctYekBLwFd1k9eXYTzk0wPG1ANI11zqQ5FMB8f0prsvB9jCQBXPogqGmENzPG989zTQpp
- K4sGjXZraDLeXAbVDGWZmxHCu5XUmt25yx66t+55yvUJFrra/87PtEfy66UyfC8PbuW1lBl1dgm
- 5co7Q8nzFe0Bb+6Ugu8Y+7qNczZSNg/fUeBgJ8Fu7wiFS2jBcBpiHcBJMdYq4UEQXKhmWO3jE24
- PWtzOYo1B9ccrl7w5Mk+TOBzl/2cjUamJgcMHDftBbiFP2ZWzd6mIDhzFkXUoXtVoNqYUzTbg5A
- ALcyKs2V/Z5XqoYsOfHlV4MxdpqVAVxf83nD1/NTia6ntU8NNJbquyhbgY4Mv3fZAVaLrw/uYqU
- u6zFVJUvl2kVddB6YAQ==
-X-Authority-Analysis: v=2.4 cv=X8pi7mTe c=1 sm=1 tr=0 ts=6a46126f cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=LV1d6kUfYfGFZ_KTQQsA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: lu_KQoT83fvN7rQTuekGCn3jfE-n4rFK
-X-Proofpoint-ORIG-GUID: lu_KQoT83fvN7rQTuekGCn3jfE-n4rFK
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA3NCBTYWx0ZWRfX6o5Ii8rnHl2h
- xhLaJnPu+cnRxFsjbYsPK/MWJ6TWkz8o+j4vWIwRJc9we/9cdSMxa9dzfwf0S3NvGiE1+NoNfrp
- GFHPDK/xoYaFbkyZIzOAEVVAEJpA8IQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020074
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SA3PR12MB9226:EE_
+X-MS-Office365-Filtering-Correlation-Id: a285436e-17c7-417e-607b-08ded80b90da
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|18002099003|56012099006|11063799006|4143699003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	Cpa/7JgHAU7bOxL9vhMEJIYd/y4QSY07dHgxFhQfxtykqg5L7g3ilUV3v9twJqz5UKwsk2xXqGdUbc6TFx6O17h+j2JPn9SvSWDEoQaopNKiV3i8rgcIY4kdpIx/Fbjj722Qh+7gXR9j9GXZCe8OxKeG3/EEnmFlxJ/QpCN0IkAS4o+uoI39tczE+SIUUeArlT6LoAxZY67VeTm0Fn0u35FV7qKtuLhDidOZj1jxwh2uv/ZVeKuQZ/7t0vDjcXPr9U48fC1aEFhhH8Eyk1B0FM1Ies4wUrrav7ftwPZhXTKt5pp0VJbG+RSFQPw/4od3Qyw8VU2XMWHUNmZA3Wv1ynbsPMbGzS0TNEYXDFj5KW2oWhLAi9h3x6i+jPbc7LFw1NZmnxpBumWH0MrKDn+FabkqDim8tTbTTHGfs1h+Gh3ioG4FH/6+Z5ZRvMjhEEVOsIZBpwEaXuhkOSZx2krSRlLmwtK8cYIMP2mVkRSdGvK4L8Z9cc6t7qfR7SElmCErF6EW16C6ojEDdu0do2HutO0AeIugL5MmOdDAZnXWyFiO0VFetRZ10AXvz7UONXiTTQ9VuCoeTldkbd9QqV6Uuy5ZWqs44wOy9t2lyFcDKWBWl+a4j1COiO6Xw+uGVTdik1hcnpIXAiouiukigNgNljFcEI9dE6jA7BtFFNREd0g=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(18002099003)(56012099006)(11063799006)(4143699003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?tTSRfwxJLZv7/hxZeEoOphSliK+GmqXV3ngz+QBmpGP1quncBb7+2uXYjN?=
+ =?iso-8859-1?Q?E2U50RSEICzlmHLnSw4VS5NL7fvQi/pFBwF5EpYhCm8TVgp/lX/whZnjzJ?=
+ =?iso-8859-1?Q?56IAUYsCA5upHiuNeUG8bml/yWp78jGmCFTfWQUDCqcOcvVYTao3HDzXIe?=
+ =?iso-8859-1?Q?M9owew9wd9ASi175i2ttIntWuDCQRDhnUgX1VF1UwA/fCDD4YpqUsioaAe?=
+ =?iso-8859-1?Q?yJobDvufdW/2VbOX1NYK8zKaLdynyzdLeo3n//9NpT/QqYe9BP4frt7U7m?=
+ =?iso-8859-1?Q?SBkCD17IbaK0+Nrs1SOJAvITSGJ+LEDBG0WNZZu+7AIkeL8Ey5Uq4gZCP5?=
+ =?iso-8859-1?Q?eEqVkNVXTXAeaG5BGV1a1ln1qEtQ+fr4hramqjUpn6cw4/++1cvcJ19lBT?=
+ =?iso-8859-1?Q?ZYqybhYYsPlUDW94hLUOeIwltKRop6Ul0ChO4ANxe74OLOxx6IOm2p8Oqj?=
+ =?iso-8859-1?Q?fhy2vb/RMCmLEb6zKuB6ZurZFQ2uf8LaSBX1mt3aaLAq2+d4YjHcEBLnXR?=
+ =?iso-8859-1?Q?grIOtFZBGTsXjwpQwA6cZPPqhlOfGfMM9kTmzCzlohl/0olU3Au7iGnBLv?=
+ =?iso-8859-1?Q?WW/rrb7qSAdzsGGDIFV91pXYMyKnHYVqNkt92s6Tk8WDn43L97Qq9UeKAu?=
+ =?iso-8859-1?Q?6NrHhtBDPe2ZH0uNv3A/7Szm3Z9MRVIGttR15mbN1ALPa9wZp8no1WHYHF?=
+ =?iso-8859-1?Q?5y+70mNGJOxdxnwHGGs7hSIkD85xm7BFZDCwWnHdWekSA7X7lwrw6wO1tv?=
+ =?iso-8859-1?Q?Z0/RdkfADsQlQl/itqDLfPFXXAv2w2fiqMqBOlZHiA60Eum/YOJuFrIo/y?=
+ =?iso-8859-1?Q?XDDm6P5vFLc/ssnoUICTG2ZsvbGqUnGJ3b3G4YZrBZeJWAhtL17Ik7RAhT?=
+ =?iso-8859-1?Q?q8sJ1qiTkM0fsm/12A6j78Kcpv9RkIztUtLU2RdlP2jaqkwkehJR+2MXF0?=
+ =?iso-8859-1?Q?2vRRhOKa350yHczm7UtHqusuviWFtnljPuE6S85ZWm12QuWHo+eelR+mYD?=
+ =?iso-8859-1?Q?N9bntcqm9THgQZelkROf4X6FdaGD7IR9U1eVDYvjitr3t4j64SW+/eSTdk?=
+ =?iso-8859-1?Q?4JQOcngCdgTaqb73wrLtYUMJ9vyUIR+UD0XdgsR3IueA2Ok1CmqOfpMUyp?=
+ =?iso-8859-1?Q?fKoBMOj8xyD340G54nEWcMXRS0XJZ1GOV4dHTkBUNCs4g1wJmqEUMnlYIC?=
+ =?iso-8859-1?Q?xuSJXpKuRFdOgwdS1FV/WRajiKGpUklxt6NoqR0kjpmGXg7lBCSgQWCqKS?=
+ =?iso-8859-1?Q?jyv1B09xc47lRS6DNaZWMdg/eY9nu/9qFsS/1N+l+/94Rg8rzjA6fLAw/V?=
+ =?iso-8859-1?Q?iHpKEhwy92I6cskD3TCPDdkGfG6iQmgL79dzG2I3lK1J10dI4X4Frs2PbC?=
+ =?iso-8859-1?Q?/QGKtpzr4iTkMIhAPSp0cDzSGJK2FfWSUenHSdUIVQm1O46kLqtLomfGW6?=
+ =?iso-8859-1?Q?eRJQueSSuWIP6LJrjtN67sL6Y+YHSBaarVc7CLuHZLT/SUQvzJ7imhdSl2?=
+ =?iso-8859-1?Q?6Mh/vMxGPMEp6PeHlzRgVabbT2ognP4RbMSJMrQemvWC2OGaIWl7opPD99?=
+ =?iso-8859-1?Q?wzBueqq1kYUg6uHBud4SCcENdW/5Q1p68LD+CacjSyFuNZKkleJFE8puD5?=
+ =?iso-8859-1?Q?6hsiVnrwHUO+KP9ykInU+g91MzU6GDXYYsy8aKgxvu63c4VMff/9336dmi?=
+ =?iso-8859-1?Q?lrTvNE6Hccr6zGntJnqXCzn5G1IUk1GQN0FLbOQsdrlaMHGwzWon641WQ6?=
+ =?iso-8859-1?Q?gFCvkPCSQRQy5vIKN7j5RynkpC8AgNe44kR0Ym8jdF0r4D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a285436e-17c7-417e-607b-08ded80b90da
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 07:28:52.3770
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0tXEWPYOkP2tnKg9wm0/tDNND78DJP04V7FCrTSgMPdDEnL4TVSbEq2Rlk+o9fSdn/qw+Cpb9K0yv3acijGPdQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9226
 
-On Wed, Jul 01, 2026 at 10:34:56AM +0000, sashiko-bot@kernel.org wrote:
+On Thu, Jun 25, 2026 at 09:47:18AM +0800, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The `PM4125_VBOOST_CFG` macro is defined twice in the driver with different values, causing the voltage selector address to be shadowed by the OTG configuration address. This leads to register corruption when applying the new device tree constraints.
+> - [High] cxl_dpa_free() returns early for zero-sized decoders, permanently stranding their DPA reservation and breaking LIFO decoder teardown.
 > --
 > 
-> commit ee5aeefd579f49a0fd9de6178216fb53f958a898
-> Author: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> commit 0afce63a5399c17fcedf2e4f736d16ed9b2f7179
+> Author: Richard Cheng <icheng@nvidia.com>
 > 
-> arm64: dts: qcom: Fix pm4125 vbus regulator compatible and constraints
->     
-> Remove pm8150b fallback compatible from pm4125_vbus and fix regulator
-> constraints in qrb2210 DTS files to use microvolt instead of
-> microamp.
+> cxl/hdm: Allow zero sized HDM decoders
 > 
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> > --- a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+> This commit allows empty (zero-sized) HDM decoders to be treated as first
+> class instead of being rejected. It backs them with a kmalloc'd resource
+> since the resource tree cannot represent an empty range, while keeping the
+> skip and hdm_end accounting intact.
+> 
+> > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> > index 0c80b76a5f9b4..ccbab2e21f060 100644
+> > --- a/drivers/cxl/core/hdm.c
+> > +++ b/drivers/cxl/core/hdm.c
 > [ ... ]
-> > @@ -235,8 +235,8 @@ &mdss_dsi0_phy {
-> >  };
+> > @@ -545,7 +569,7 @@ int cxl_dpa_free(struct cxl_endpoint_decoder *cxled)
+> >  	struct device *dev = &cxled->cxld.dev;
 > >  
-> >  &pm4125_vbus {
-> > -	regulator-min-microamp = <500000>;
-> > -	regulator-max-microamp = <500000>;
-> > +	regulator-min-microvolt = <4250000>;
-> > +	regulator-max-microvolt = <5000000>;
+> >  	guard(rwsem_write)(&cxl_rwsem.dpa);
+> > -	if (!cxled->dpa_res)
+> > +	if (cxled_empty(cxled))
+> >  		return 0;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does adding these voltage constraints now
-> trigger a hardware register corruption in the regulator driver?
+> Does this early return permanently strand the DPA reservation and break LIFO
+> decoder teardown for zero-sized decoders?
 > 
-> Looking at the driver in drivers/regulator/qcom_usb_vbus-regulator.c,
-> PM4125_VBOOST_CFG is defined twice with different values:
+> By returning early for zero-sized decoders here, the cleanup logic inside
+> devm_cxl_dpa_release() is bypassed. This means the kmalloc'd 0-size
+> resource and any associated skip range aren't freed, and port->hdm_end is
+> not decremented.
 > 
-> drivers/regulator/qcom_usb_vbus-regulator.c:
->     #define PM4125_VBOOST_CFG		0x52
->     #define PM4125_VBOOST_CFG_MASK		GENMASK(1, 0)
->     #define PM4125_VBOOST_CFG		0x56
+> Consequently, any attempt to resize a zero-sized decoder would fail with
+> -EBUSY because the reservation isn't actually freed. Attempting to free any
+> lower-indexed decoder would also fail with -EBUSY due to the port->hdm_end
+> ID mismatch.
 > 
-> Because of this shadowing, the pm4125_data struct initializes both .otg_cfg
-> and .vsel_reg to 0x56:
->
-> drivers/regulator/qcom_usb_vbus-regulator.c:
->     .otg_cfg = PM4125_VBOOST_CFG,
->     .otg_en_src_cfg = PM4125_OTG_EN_SRC_CFG,
->     .vsel_reg = PM4125_VBOOST_CFG,
+> >  	if (cxled->cxld.region) {
+> >  		dev_dbg(dev, "decoder assigned to: %s\n",
+> >  			dev_name(&cxled->cxld.region->dev));
 > 
-> With the new regulator-min-microvolt constraints added by this device tree
-> change, the regulator core will now call .set_voltage_sel on this regulator.
-> 
-> Will this cause the driver to incorrectly write the voltage selector mask
-> to the OTG config register at 0x56 instead of the intended voltage selector
-> register at 0x52, thereby overwriting OTG configuration bits?
-> 
-Yes, you're correct, I will fix in the next patch by splitting the defines:
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625092857.41139-1-icheng@nvidia.com?part=1
 
-#define PM4125_VBOOST_OTG       0x50
-#define PM4125_VBOOST_SEL       0x52
-#define PM4125_VBOOST_CFG_MASK  GENMASK(1, 0)
-#define PM4125_VBOOST_CFG       0x56
+I don't think this stands,
+devm teardown still runs __cxl_dpa_release(), which kfrees the zero-size resource, releases the skip,
+and decrements hdm_end. The early return only skips the sysfs free patch, and a committed empty decoder
+is not userspace-manageable, resize already fails on the F_ENABLE check, and F_ENABLE is never cleared
+since an empty decoder joins no region. Dan cover this on v5, I think it's ok for now.
 
-And updating pm4125_data to use PM4125_VBOOST_SEL for .vsel_reg so
-.set_voltage_sel writes to the correct register.
+Anyone has thoughts on this ?
 
-regards
-Rakesh Kota
+--Richard
