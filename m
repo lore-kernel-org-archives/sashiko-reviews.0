@@ -1,140 +1,137 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazolkn19011031.outbound.protection.outlook.com [52.103.33.31])
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC83935836E
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 22:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.31
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783030196; cv=fail; b=pDtkVRazMGadkgBIsDl3ZrzP97FO+BJFC1f4L/p6effyduIFStGfFPfNT4z7GhfF4A9QrP9MBr2b1t/AY3OgxOAo5bqGL8SHKJIYu9fJb0lLC4XB0531phppXgclgk8VtfW2PBc817BYIp5LBYKcGKhtHV+aRPh6pml96Ob8I6A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783030196; c=relaxed/simple;
-	bh=p2lp8GDXYYtHj10O9yWKRB+i5tOq2QmoqCXHb71h/qE=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 Content-Type:MIME-Version; b=t/JPEbucp/GTEmZimuF5LQVTbdAix8s0Z5bNuwQEzTx/4jbRk1tqMUtSOHe2+Ae+fKj+R5J/eQJLz4SyAGob8f+ypq1/5bHHVRKBprbgpo8EjkNXGDHRF95Eb8W5Hz1e6ZShElrHcp4YL8iPDck+cOdGIvWMj1xrTz5hQ1AIb48=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=b6q4KGu5; arc=fail smtp.client-ip=52.103.33.31
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="b6q4KGu5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eFOO/zdTmChpqznvpMKsIcGBwKCdd1Fmgj1kxu9SbX1DLlvTtjiEmCtOYZfDHBB3vZHjh0gAp2XRB5mw+gpLUZqJghzn3XfkVDPSiR9PnZUPqbcBzMhsXmA2+CaUTSavAXpYL3b5p77EB1MTWvBanY5Gcg57rfvm6bQN4ChNcCZUwAiglXBqbvOLn31IMLJorHnuBwPY2mw6McMSmav5hxm3XHlq85JSQmjScdIB46c4oxMWcTVZ7kcyZ2aV/HYYsY8Q/mDMuORfSGmRYrVsUW485voEk1a108sKxdzoGt8pb3iH7IAhaAeqXtPWnJy+KUt/WNQBcrhLEjRiNgmigA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p2lp8GDXYYtHj10O9yWKRB+i5tOq2QmoqCXHb71h/qE=;
- b=pq06YRIidQO051BgQFbeWHfflH+0SscaNqL2u0w+x8no/1E+VVS25ZUUgY3fncGfUguBQdstcHld09y3I3gDWYLEjKS2oqCjtbiBaFE6Vq9GE01Qe7zwatHRL2DDIjYHticRRKqg/qjCdZAjljyeOX2ccEJ0fOG6Jd0rY1eng4BplZQKK9LxvmFTqX4gJ70pPxmTUUfJIpt0apXv735YdPVxH5vTYILJIg0+ZpixmgKhiOgBBZwIUAwAknEiAPOZ52hXmFafBPw7qVnedcQLdyElpZ+RwJJHxOC16M3fwetNaTD6XCkzgOfNFOg6LOQZINZarhPzdsATxds/fISMTA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=p2lp8GDXYYtHj10O9yWKRB+i5tOq2QmoqCXHb71h/qE=;
- b=b6q4KGu5A55101t/+lPxF9IOgtxA2sjzOfsxD/6Z5GNdKbUMCCpE5jDHNKzm/yc/1Tz6azxiMrPn14ps1u+FsF2soW7OX8VngyL1749dPOcxBQDOgfTGJqbV6lXXNBe8n7mI/z3hs0UxhbuV8/13OlORPtlSvaRg/emiefWxhV7wlWyrst4FbGFgB4F9nHgRfxnooUEpMdT0d3hzDI/txauAG7TSu7p2GL7EqiYu4MMcw4HZ/4TZQbRWtyeUyQyZaiPXVWXQnJ7A5ecbkqYxKEZCoru6J9CjVOAXMnsrIlTL1itYeJ3K4keSP3JCTA/LUyQOnknv5+riGSPAEaE7oQ==
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
- by DB4PR08MB7936.eurprd08.prod.outlook.com (2603:10a6:10:378::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Thu, 2 Jul 2026
- 22:09:52 +0000
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0181.009; Thu, 2 Jul 2026
- 22:09:52 +0000
-Date: Thu, 2 Jul 2026 23:09:44 +0100 (BST)
-From: Manuel Fombuena <fombuena@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611BF3C4563
+	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 23:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783033917; cv=none; b=oFS4MHoYDFAtqdsXKjx4Yts6VS+qr/y33o0m+YvULlJKfqHJMQBCgp3eS1EkvRv1yDGOgN4n3DIRmM3u6G2rRrINVKyQWoywLb0OtXGMsi6An0nb07D4Z4mOAVy7cwRaFUaHPYmxqIu12WS2n2Al5MqohNe7WY6Ub33U3ZDNKts=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783033917; c=relaxed/simple;
+	bh=wUdP+CNy1ketiNH4C1ATkD4qoY0ELdNQyFMUu54Uo0A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=REZJz8kFXF2RqhfMWB6G18EGgxA5jllA5RgaQdJuKxOJNT80ww7EITgCjBteOjIMOKw3JYjFrztb04e6mO5c7T0zueuRe7clI24k5mSyv8DEyBqi7qQqKbSwcrxRU46hNa9mEeluTkxcAL7tZUumDQ+ExLp4zP6lQgJo5+X0koQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 34352202596;
+	Fri, 03 Jul 2026 01:11:53 +0200 (CEST)
+Received: from pty.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::c5])
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mfe@pengutronix.de>)
+	id 1wfQZV-005ogT-0Q;
+	Fri, 03 Jul 2026 01:11:53 +0200
+Received: from mfe by pty.whiteo.stw.pengutronix.de with local (Exim 4.98.2)
+	(envelope-from <mfe@pengutronix.de>)
+	id 1wfQZV-0000000DX7d-08rt;
+	Fri, 03 Jul 2026 01:11:53 +0200
+Date: Fri, 3 Jul 2026 01:11:53 +0200
+From: Marco Felsch <m.felsch@pengutronix.de>
 To: sashiko-reviews@lists.linux.dev
-cc: linux-leds@vger.kernel.org, lee@kernel.org
-Subject: Re: [PATCH v6 4/9] leds: st1202: set all pattern PWM slots to full
- after clearing pattern
-In-Reply-To: <20260702175516.A03D21F00A3A@smtp.kernel.org>
-Message-ID:
- <GV1PR08MB8497980BBEAD073B4043535FC5F52@GV1PR08MB8497.eurprd08.prod.outlook.com>
-References: <GV1PR08MB84972A16ED557BFB96D63F57C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com> <GV1PR08MB849765352C4031BD2D800207C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com> <20260702175516.A03D21F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=US-ASCII
-X-ClientProxiedBy: LO4P123CA0377.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:18e::22) To GV1PR08MB8497.eurprd08.prod.outlook.com
- (2603:10a6:150:81::22)
-X-Microsoft-Original-Message-ID:
- <0e66ef67-d356-53c2-6e47-bb315981ac46@outlook.com>
+Cc: dmitry.torokhov@gmail.com, devicetree@vger.kernel.org, 
+	linux-input@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Subject: Re: [PATCH v7 1/4] firmware_loader: expand firmware error codes with
+ up-to-date error
+Message-ID: <nwxv6xkeey324ftvgj6g6eq43rz7zautmjro4fi2tmd2vh35f6@fahpuuvaqhg6>
+References: <20260703-v6-10-topic-touchscreen-axiom-v7-0-0d2a550a7ee8@pengutronix.de>
+ <20260703-v6-10-topic-touchscreen-axiom-v7-1-0d2a550a7ee8@pengutronix.de>
+ <20260702224537.0823C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|DB4PR08MB7936:EE_
-X-MS-Office365-Filtering-Correlation-Id: da1bc707-e801-4e87-3e24-08ded886a3af
-X-MS-Exchange-SLBlob-MailProps:
-	gMiuAN0LASL4Z831lB8tpzpdpKMUIXWlCXUJfRmHBkDCuRBSF7kwpXfXZZdfLaO0AGymeGAFmXD2V4UrlvwC3xvOCqutneLnFyg8T8arfv8XKamicJjEE14pL4ntRZwkvp5+ro/cSiOZAU3ntCQRw4QMfP/Wt25h5D38zk1BOub/RrQmx+5dCduHg14FEYNXYwwytxaA2HUps1sZGvJV11qlj6n5+6oeOwRFZJ2pazjS6ZsMwzWL+I75DswEpF1hdFZ6EuXhv+Dkvc27JsIR1T8hdS04RShGKHNtdkMMrnWr4vJOQgC4YNNWo6Q5oNDWHORjFos3LniJn7EL2PqpNh/XRsKNxdvGBoJMHLyTV7fFyesKDeKcWIsyCm3JVTZJgtF1VHoe4JbQF1AUVhZ19akvHTXLtwSGbrhiSWjt39GDgiheRov6nOf9WfryIs7Hc8mB5tPzuwLu5ZZnlA/WjmhAhIWa0Nol1D8q0uveoXewsHrunqaec1EmYDaIRmDOyH/mK9yjXzYfstjqCFMHlgPhMi7eQUt3qkb++aCCTp6160WDeLo7VQ0jSWiJkQcIACCLxcZ2c88H2uVr/7R3aj1yOSR/Pl2j7lihX9KDgXUkuExwNbTMrBIaD4BtW2jxxHWyltgUcDrY2QWWa4TBWsKX9e7A1PNGBBO47G94al4mDl9kvqzbQqRAJeOUJU251l4N3LUZUFKAQ2SJMCuNhw==
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|37011999003|8060799015|6090799003|24021099003|19110799012|15080799012|5072599009|25010399006|23021999003|40105399003|3412199025|440099028;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Ez6UGLKs3I3c67ykqK1XwocpOhIKcMdosEhQ58gcouE4GwlU8mXVbtkxI5hw?=
- =?us-ascii?Q?JuP2E8LniaGaud/LEczI9ujP4TKbZwC7xLZaMP+ldySfNoC2dh16yvI0rbBb?=
- =?us-ascii?Q?/L/CTUmX3Nlv3/JVd3lfLJ4qNZQ4F3z/G7ilQ7+FIL70BmH0gVMzAop12pMx?=
- =?us-ascii?Q?MI1RCCWLxdw8BMdbWCUXrLOO51lq4OzhgkbZCqTwoV4khToaY0Z6hLFMe+nR?=
- =?us-ascii?Q?Hi7f2W2voXVpK+CiI1GusxNCblqjbGvxuGN9N/1XRMSNEj/z5HWiJN0i4fCn?=
- =?us-ascii?Q?M+ILZhXT4moxQ8ikE50yOFkhRzGziNe+vjsHgmHkEssENeXrJxNLYfeOSuzK?=
- =?us-ascii?Q?wMuTWQiK+LZal/MGhEiESZUxyFBNlKPA600BvgLiYP6eFgUzU82KipW2OVQo?=
- =?us-ascii?Q?Mliqk1yBbEp5zfuFJ6lyQ/YvACBFsXWC8SOW6zpMC7JnsucrvW29LuM2YBWY?=
- =?us-ascii?Q?HE/qFqgkMxfwPceqAydSvFTDS9G0g1ypZrk7oM3libDNbfMVFHHvlG7Bl/sI?=
- =?us-ascii?Q?rqsMU5lR+tYVfk+q4yqimmihAgDr4zmc8w8xLpabDpd/w3b41+MkxPHipVdh?=
- =?us-ascii?Q?Jb2o4VWa3f4In5kWOAolLJ+L1/88Vjsxz4UZN1AcYuhdHnI9159aKmN0/rbE?=
- =?us-ascii?Q?Em1RJvUhNC9aFCP1DTxguuMzs81V1XIoDADRqJjqgLQ59BtBmimWDH6MTEr6?=
- =?us-ascii?Q?U4KJMbKkhtI8qTAg9MJhRXQ4FqrheD9awJZ4MisiCHAj2/BypUDAVstvaUte?=
- =?us-ascii?Q?fpgx/HMxuo+WQYMR8b2bZdvKA1eWNqSCUFMi/oBIJMfnqUx80l0DhZNIMKSj?=
- =?us-ascii?Q?xbOpQb/MRmohV78GTtQL2Op3bCmYKIY9g3NfuLXf5M2NlMal8DK+8G42zvTh?=
- =?us-ascii?Q?g+1sR8ku4Je9jgjPL8dH05T0ghq74y9pG2pQoHepBt5LKndVJzv/tSswq4s0?=
- =?us-ascii?Q?TosZFg5T70eaQG+u7ldOI1OzPGrbvGLGOQCY352z8tOMlj6eHV6RbfFJCbbN?=
- =?us-ascii?Q?7AOq?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xYNadb2sgcF2mHgr9IVrgMOkJeQ22Wp5enw0+Ce1qbn2610/O5JRPp/PZQkX?=
- =?us-ascii?Q?hyWfd74cPiiRualc/1hAbadPkfenzNUvqNDUeJgefiz02+N24+n/gC5HFRwW?=
- =?us-ascii?Q?syDX2L7w+LLRL6APEYKLOlyJr/jDkSPrCpcJnkMm7C8uMicuodnyKvKE2qLV?=
- =?us-ascii?Q?K9Jbfz62i5dIxC5cnms6Atr4i7VUjHfDL2cv9bJjpsjEpHGe+NcynxBS/7Nz?=
- =?us-ascii?Q?FSdWQfHTK+2wdy1TnyH2w6DfPSC9maUBPJQB/vyyV+Hs48uyfyRCy2k8Klqp?=
- =?us-ascii?Q?ZDi18LdwPFkkNgkzGLBJeC04vHeNGsXJ9Pm1xBy3MOEkwiQmk7VNgVdKmDuy?=
- =?us-ascii?Q?6Y5AkBt71dTgbiYsnCjHv/7AyeV/f3bpM02OcTJZKlu+Q3BvbRkIgJskQ4q0?=
- =?us-ascii?Q?9J/YpZk/pSzSk8XzTv+VC/ps4AKGKYMmmxyu2MsvmJT8fVC/fmtl7GpVMG7E?=
- =?us-ascii?Q?y3BXSIj5ATaWXI1Yuekk8MKMt+eEOsF+3iOxbNT5qKOf0H07qtIK7BpAwIQ3?=
- =?us-ascii?Q?vRJMRASJLpw7XwxfADi8ZXnrr/oUPwSiV9v33BImhw/lx595qbBLMpUdVVw6?=
- =?us-ascii?Q?FQMk4Cpr5VNuBt0pfL7Rn/OFQf4MkhBp4OZvr9VfteK1vfjcc+nM3AeRPgGH?=
- =?us-ascii?Q?r4AlEZvSDflJGZXrv4c9IGWC8DtgRWn5MH6j8TMwBvIjVTbsSxh2Kh4z4lfb?=
- =?us-ascii?Q?sbxLQOlFH39DMi25crt/hI2tOu/lT+Fek6q5brSnXWuddt9my71N05GX2wAa?=
- =?us-ascii?Q?JpvjQrcHOUNY6NbBIwc3IRG+06cqgDlXwYw+50xU+m4+YYz7imrKUM/vJQ6N?=
- =?us-ascii?Q?i9qfeiaBwY3i2I3sUcWHNmOrbCs4HntUxrMzULRKbNIX5mAOSZFZ5ych9iY9?=
- =?us-ascii?Q?PyGL1sOSawCRox8zT5HOLkJAahMM4DQuNRwSKvI7S1Cs331dO09xXYTDfuZ5?=
- =?us-ascii?Q?39EbBIJcHVTlz1Mpg7oGb/7TWVDfTE5OleW9rXhDuuYbEZsncQwwB4++cJk2?=
- =?us-ascii?Q?vQOEzA4v5FoRlGAX0Ttz/upXsEB9bvCUMbFFuNGcca0KEFGQwDr/5gE6SWqy?=
- =?us-ascii?Q?6Ee9hvBxDHYaLehUedfIkXv5Gsd6TI7T8Wq8hkqtwGWhsWevJyOD7gouJXs0?=
- =?us-ascii?Q?bJS0qSyCSQG18yjzafJ6FULMQBHtOL3B6ctwQkHPRR/f603wBvi+ANJxIRcx?=
- =?us-ascii?Q?9uK2vWe9s4m8hAK+1Te5q6NP7Tus07wggIykXwDXEwb6HJS/pOj7qtfd9Dnv?=
- =?us-ascii?Q?vOGbQOwUKGv9jiJvtGyejaZWPI7r9Lf+s+Oy0Ts+9Zvy5cfykfyTHFby9Bvl?=
- =?us-ascii?Q?5ix4Tbc8nNkdhDwHE3y4Bhk1EFTsHSHC6+yiBSjK/1QFYxglmviGQ8FWKqkM?=
- =?us-ascii?Q?+Bj+6YkhckJrvI9xSPXWnEPdIfC83XEtTrkj4J7HU83BpPxYlIjpTE+keLKQ?=
- =?us-ascii?Q?Gcad+SslneWVscark1QL1MYFt4Ha+r3W?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: da1bc707-e801-4e87-3e24-08ded886a3af
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 22:09:52.0145
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB4PR08MB7936
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260702224537.0823C1F000E9@smtp.kernel.org>
 
-On Thu, 2 Jul 2026, sashiko-bot@kernel.org wrote:
+On 26-07-02, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The selftest script for firmware uploads does not inject and test the new 'firmware-duplicate' error.
+> - [Low] Missing ABI documentation for the newly added sysfs error string 'firmware-duplicate'.
+> --
+> 
+> commit b451d666b20500e69051bac63ead44572b79d708
+> Author: Marco Felsch <m.felsch@pengutronix.de>
+> 
+> firmware_loader: expand firmware error codes with up-to-date error
+> 
+> This commit adds FW_UPLOAD_ERR_DUPLICATE to allow drivers to inform the
+> firmware_loader that an update is not required. It also updates the
+> test_firmware module to support injecting this new error state.
+> 
+> > diff --git a/drivers/base/firmware_loader/sysfs_upload.c b/drivers/base/firmware_loader/sysfs_upload.c
+> > index efc33294212fd..82c4b1fedf4cd 100644
+> > --- a/drivers/base/firmware_loader/sysfs_upload.c
+> > +++ b/drivers/base/firmware_loader/sysfs_upload.c
+> > @@ -28,6 +28,7 @@ static const char * const fw_upload_err_str[] = {
+> >  	[FW_UPLOAD_ERR_RW_ERROR]     = "read-write-error",
+> >  	[FW_UPLOAD_ERR_WEAROUT]	     = "flash-wearout",
+> >  	[FW_UPLOAD_ERR_FW_INVALID]   = "firmware-invalid",
+> > +	[FW_UPLOAD_ERR_DUPLICATE]    = "firmware-duplicate",
+> 
+> [Severity: Low]
+> Since a new error string "firmware-duplicate" is exposed to userspace,
+> should this also be documented in
+> Documentation/ABI/testing/sysfs-class-firmware?
 
-> New issues:
-> - [Medium] The commit message hallucinates details about the baseline code behavior, falsely claiming it previously restored Pattern0 to full duty cycle.
+I checked the firmware-invalid which is also not documented. I could add
+2nd patch to fix this if this is urgent.
 
-Indeed, the commit message described the previous behavior
-from v5 and earlier iterations of this series as the baseline. Fixed
-in v7.
+> 
+> It looks like the new string is missing from the allowed error values
+> documented for the sysfs interface.
+> 
+> >  };
+> >  
+> >  static const char *fw_upload_progress(struct device *dev,
+> 
+> [ ... ]
+> 
+> > diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+> > index 7459bba65444d..a822d9641eb4c 100644
+> > --- a/lib/test_firmware.c
+> > +++ b/lib/test_firmware.c
+> > @@ -1134,6 +1134,7 @@ static const char * const fw_upload_err_str[] = {
+> >  	[FW_UPLOAD_ERR_RW_ERROR]     = "read-write-error",
+> >  	[FW_UPLOAD_ERR_WEAROUT]	     = "flash-wearout",
+> >  	[FW_UPLOAD_ERR_FW_INVALID]   = "firmware-invalid",
+> > +	[FW_UPLOAD_ERR_DUPLICATE]    = "firmware-duplicate",
+> 
+> [Severity: Medium]
+> Does the test script also need to be updated to exercise this new code path?
+> 
+> While this properly adds injection support to the test module, the hardcoded
+> errors list in tools/testing/selftests/firmware/fw_upload.sh does not appear
+> to include "firmware-duplicate", meaning the kselftest won't actually
+> inject or test this new error type.
 
---
-Manuel Fombuena
+I'm not sure how much sense it is to have a test reporting this error.
+
+Regards,
+  Marco
+
+
+
+> 
+> >  };
+> >  
+> >  static void upload_err_inject_error(struct test_firmware_upload *tst,
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260703-v6-10-topic-touchscreen-axiom-v7-0-0d2a550a7ee8@pengutronix.de?part=1
+> 
+
+-- 
+#gernperDu 
+#CallMeByMyFirstName
+
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | https://www.pengutronix.de/ |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-9    |
