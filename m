@@ -1,125 +1,167 @@
-Received: from mail-ed2-f2.google.com (mail-ed2-f2.google.com [74.125.228.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DD63A7826
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 19:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783022211; cv=pass; b=jCsAndsXvyDMrup5+1jvyFIQUq5PLIv+iOFtPqXTRwwf5GmU3vIxTQAfEErNfKjTV99yIyvqeHR3BMEn3kJr11FYwXYWFHhBRMPBKgemX0zobJxzPjT5h+j99dnol1KPTlHSD99+s8T/QyhSJqncjR/vD4I2N/jIh37DIIfjLK4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783022211; c=relaxed/simple;
-	bh=78XKiTTX6No/T/hR8Omcb5xp2aN7XcpwRGVep5gRzTM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F2jB6DqkUBzRKIA9whbzjDu5U2jNImFwtu5QqpXA8/DGYcDrcvf4pFFKK26tYt6jEQlMWPcI+Ie9n9j60051J1oyjFHmoVAT2w3Iu6lZ5kQ6eF6ckXvKn5ej9n+3d3uFBxV8t6kZZ/24CErhFln3vBwtve97WItKNVz6e79EFwk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZ30wqH2; arc=pass smtp.client-ip=74.125.228.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DE13D9524;
+	Thu,  2 Jul 2026 19:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783022377; cv=none; b=rWLR9+23nOaULMXoevIXjqB06h62s2kapb6FuWPEqByreWoSbm1LS74hojnnEoMotVq7NlPp4in/AkoHDqVmt6xDNezfckGZYcSQiUcEX6KGWYtxIt7j2mWZczB+9m0o2QW25RAqFd95ksTE512lbvWDUXAuOFujbM6qOHPgNTs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783022377; c=relaxed/simple;
+	bh=PQcuAUV0siySJRetknBRAzzc65l0mdrRHJJ/wa1PZKw=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=C/1Cu65TANaKQjS/OC8G3DBC1EWjlnUV9STgMfSNPsl9MbLXbRORBF37bVVQ9Of0+CHeXzeJkSHuRKROdbDSTkzV3YcQ7lt4J44N3g0C7A8oG0kV+kZXYNOwHNJ0P+Fp/PLhLXF7M+ev2eLmksAZQotZgu+a1U/7xEgy17E8DTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0CPMjyo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZ30wqH2"
-Received: by mail-ed2-f2.google.com with SMTP id 4fb4d7f45d1cf-69867726cd3so534606a12.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 12:56:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783022206; cv=none;
-        d=google.com; s=arc-20260327;
-        b=gj3Uh3nhrKzeQKtUHZTC5Q/INYB+cVsWGxoiwJLWrkfq/AoY/uG80EzwrVH9cZIAXH
-         LmZA+4VsmDrk9AMpklcXadsxLalKtKqbySpw8YOR0u0fiFx8B0M75ugd7qU8Yq+s/AXN
-         Bvd+Fio4oCWNtxzIVW0NNztYbEgGo59RefxZvTvX4ffDFMMZkdEpnm60upI3qCdq/Tly
-         Nlp2dxJKCQryujpC3XnEAU52LuaF6Qlq5H+o9jvLYKdAOvczAtDUIfD+5Y6AOVgsa8me
-         Q+IF2rJUFnmbpMc+RcxQUhmGbSAGFB01Ad2SYGMC0YDOldObHAOiNxPt92yNFwQVp9gp
-         gJow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=+R43ySXquKh2cdUqDoV82BuWFAxJ2P/AxP58siYwe/c=;
-        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
-        b=QWvvM8dqGIAyQMdQCbdWR2Peux48xbWTWZX0oGQnL9qDRCaMKvpRPf7xuKao7BjL4I
-         QQksV61BlyNnooDSj1LJiq3534eXedGFMroPrMLhStqGnZ3O9xPLBmBPI4O1N8e4y1nP
-         au6UgNztGQcCv9iEKWKTsWz75IBw3FzHxSRGqJhHMC4p2oWMXUWv3yt/ANA0sAjutLPl
-         ESJqQTepvrviibJNfbPYtfFnEVJK3LYzTZ++HQ4aTcnjnPTOgAkg7OqzmHfSq7858X7o
-         6/lQ93g4ejRbQIM4m1j+dfLxkFOmpLOaquloRvxzUuDRDdx4m+CyZRGWxgRYKuk6R4iV
-         ZDZA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783022206; x=1783627006; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+R43ySXquKh2cdUqDoV82BuWFAxJ2P/AxP58siYwe/c=;
-        b=aZ30wqH2XuAzwoV4RF1xzFwHhtYF/dGLsSIvq5nKwCxMBkEo9sJ5+lbIQwRKvUiPbg
-         D/TAS+ye3KU63tWnRb3VUzWY/5KjYCq4YmjORgzrBuWOYdASibsu0VM0/Ttb6EXEZwXr
-         8usYqsARlFyZdWxLCMi3Gug9Ipk+SQcE5YiSkxVZdclJkCeiNyqIKcDwFwxf09wUEqDF
-         QcJgZzGX3jMIdvEDssxL09e/0bPHiN6HXwsWl7yeZXAbEj/2PyLJMeBd5ALEwoRqunDv
-         MIbSVQK2gnjJo11box6HHTrQW4vaoiuDx1Q+Y9eSNpQR64dwAsM7iXcDbrXyZwyDwqvo
-         zc7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783022206; x=1783627006;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=+R43ySXquKh2cdUqDoV82BuWFAxJ2P/AxP58siYwe/c=;
-        b=T7Cl38goiYHvA+CcUmgAAtzvM4TeJ8u5w4Cgc1aez1QjdraYGIzvrBXuvoVnvVtMKJ
-         B+BoEP0Ht+mrgXymFpD1bgi/LHfbUcITqgJTHAGndyD4WoXUOICgi408w1ZZRBP11z4L
-         8ZZCWy4ZjBOde/7BZJVW7BKSBqW4gkmdeGdF/9wy1Qh27qbbsHGWsPg1fro5e4njawEK
-         4m49zk47ABW+lW92TXL3aNQvsrz8Qour9dLl9P9Tymdq3worQFBaVRXc4enwMvuMIosj
-         JBRHz2q+GzEEGZyZzVcPCRi6qQ5KoP3IMsC8XNFHWkhl++e/dE9/iUuBUvOFdFAMFUzr
-         4AeA==
-X-Gm-Message-State: AOJu0YxqXoThqcW7JJ0bccItjUlPd328syWVyt8UGiMj8Mmu6e5QM/za
-	4nvTHrfhGLgujcXcKrdXsLXonArT3Ry4ajJt32FNVsfizzqXHRCIOsF5E+RRcgbc6b9TmMV87he
-	FvyhGPnaxRNabOcrmxgb3Oi0B2SSMY34/3jFTsfedpkXo
-X-Gm-Gg: AfdE7cn0WqAE2+nrbReK0g/dqbU6HnB8bUEYko8texxTtA9HZZLP42Uueek9IBdGPqk
-	Wve+4NZFcz42gITOaniiJ3v4RjUAaV80AGJSFLUnKFB/BW33OrzxfBMcDUde/NkNcS6iYdlQCNu
-	RFo5IoTu56NORwL06uiF7/9r9R9uXdMOPX2rtzl5Fp9LU4XrApS0/eKT4uCGtUyd1gQFsqa3z2o
-	LuD0JmwRolEXootx4aHC+aLyjpxs9Xm3r3wkscs29ZmkxsGjjBYQ/aLH1NuK5Ak5GAFooju
-X-Received: by 2002:a17:906:7312:b0:c12:a425:cbca with SMTP id
- a640c23a62f3a-c12ae74dfb1mr317838366b.54.1783022206297; Thu, 02 Jul 2026
- 12:56:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0CPMjyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248771F000E9;
+	Thu,  2 Jul 2026 19:59:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783022375;
+	bh=2H84jcPhig+PVKKxSH9Gzi9Rut0c6k2u8jyizPMaWwM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=L0CPMjyo+YOTKfofr/4WZONO4h6qCCNT+2EkNSIr4Aa6djNQSTC6WUIZ/7EhCT3c2
+	 NGBLlLOC+LEZbavA5whqsbw13+TiKYN4SCKOJCAD+2lHwQ2cbvy3cH4uUxdLCRYDup
+	 R8HUtJg7a5fXXOi46Nu5++9QKkx+/sCsob9tW4NdOZyzQTfB2hT34fG1tNuF4sXtXz
+	 Ck5nPCg2TfgpuGct4Bqg9bEWbZrGjG9z5ftRlFs1PSvBz+OKNY/FCmQ7GIW7j5hvPd
+	 LYlKy6fJvOGM6REjtLsSX3Fvz671DKuIGbbfgrorKbHJPatWz6/lqfjHg4fGgsChRi
+	 HkOyLIx1qMNdA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wfNZM-00000000tw2-3Ywm;
+	Thu, 02 Jul 2026 19:59:32 +0000
+Date: Thu, 02 Jul 2026 21:01:21 +0100
+Message-ID: <87qzll6u0e.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev,
+	"Oliver Upton" <oupton@kernel.org>,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH 27/28] KVM: arm64: Expose FEAT_NV3 to guests
+In-Reply-To: <20260702163903.852691F00A3E@smtp.kernel.org>
+References: <20260702160248.1377250-1-maz@kernel.org>
+	<20260702160248.1377250-28-maz@kernel.org>
+	<20260702163903.852691F00A3E@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260702193538.2195973-1-coiaprant@gmail.com> <20260702193538.2195973-4-coiaprant@gmail.com>
- <20260702194430.91DB81F000E9@smtp.kernel.org>
-In-Reply-To: <20260702194430.91DB81F000E9@smtp.kernel.org>
-From: Coia Prant <coiaprant@gmail.com>
-Date: Fri, 3 Jul 2026 03:56:35 +0800
-X-Gm-Features: AVVi8CdiP4pJCcVRB6E2EMlXWI1JezCP9aABddnM42SkyjD3EjNWOO9ItXcLxbE
-Message-ID: <CALj3r0jJm+VXBi22g9ebqA219=V1vUHvsfT6NgNmOhcLaJnt3w@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] arm64: dts: rockchip: Add devicetree for the
- Graperain G3568 v2
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-> > +     wifi-irq {
-> > +             wifi_host_wake_irq: wifi-host-wake-irq {
-> > +                     rockchip,pins = <3 RK_PD4 RK_FUNC_GPIO &pcfg_pull_down>;
-> > +             };
-> > +     };
-> > +};
->
-> [ ... ]
->
-> > +     wifi@1 {
-> > +             compatible = "brcm,bcm4356-fmac", "brcm,bcm4329-fmac";
-> > +             reg = <1>;
-> > +             interrupt-parent = <&gpio3>;
-> > +             interrupts = <RK_PD4 IRQ_TYPE_LEVEL_LOW>;
->
-> [Severity: High]
-> Will this combination of an active-low level-triggered interrupt and a
-> pull-down resistor cause an interrupt storm?
->
-> If the WiFi module enters a sleep state and leaves the pin floating, the
-> pull-down configured in wifi_host_wake_irq will drive the pin low. Because
-> the interrupt is configured as IRQ_TYPE_LEVEL_LOW, won't the kernel
-> continuously fire the interrupt handler?
->
-> > +             interrupt-names = "host-wake";
-> > +             pinctrl-names = "default";
-> > +             pinctrl-0 = <&wifi_host_wake_irq>;
-> > +     };
-> > +};
+On Thu, 02 Jul 2026 17:39:02 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] A maliciously or incorrectly configured vCPU can trigger a host NULL pointer dereference by requesting an ID register configuration where NV_frac = 0, causing KVM to skip VNCR TLB allocation while still trapping VNCR accesses.
+> --
+> 
+> commit ca23c995d48d1c5c8370918930aa81e2eeb147ab
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> KVM: arm64: Expose FEAT_NV3 to guests
+> 
+> Further enable FEAT_NV3 by making it visible to NV guests.
+> 
+> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+> > index c9bf04944f9cb..64c8fb82fadf6 100644
+> > --- a/arch/arm64/kvm/nested.c
+> > +++ b/arch/arm64/kvm/nested.c
+> > @@ -1728,7 +1728,7 @@ u64 limit_nv_id_reg(struct kvm *kvm, u32 reg, u64 val)
+> >  		 * You get EITHER
+> >  		 *
+> >  		 * - FEAT_VHE without FEAT_E2H0
+> > -		 * - FEAT_NV limited to FEAT_NV2(p1)
+> > +		 * - FEAT_NV limited to FEAT_NV2(p1)/NV3
+> >  		 * - HCR_EL2.NV1 being RES0
+> >  		 *
+> >  		 * OR
+> > @@ -1740,7 +1740,9 @@ u64 limit_nv_id_reg(struct kvm *kvm, u32 reg, u64 val)
+> >  		if (test_bit(KVM_ARM_VCPU_HAS_EL2_E2H0, kvm->arch.vcpu_features)) {
+> >  			val = 0;
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but could this cause a host NULL pointer
+> dereference?
+> 
+> If userspace configures a vCPU with KVM_ARM_VCPU_HAS_EL2_E2H0, this branch
+> forces the entire ID_AA64MMFR4_EL1 register to 0. This includes the NV_frac
+> field. Alternatively, userspace could explicitly set ID_AA64MMFR4_EL1.NV_frac
+> to 0 via KVM's ID register UAPI.
+> 
+> When KVM initializes the nested vCPU, it calls kvm_vcpu_allocate_vncr_tlb()
+> which checks NV_frac:
+> 
+> arch/arm64/kvm/nested.c:kvm_vcpu_allocate_vncr_tlb() {
+>         if (!kvm_has_feat(vcpu->kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
+>                 return 0;
+>         ...
+> }
+> 
+> Because NV_frac is 0, the check evaluates to false and the function silently
+> returns success without allocating vcpu->arch.vncr_tlb.
+> 
+> Since vcpu_has_nv() only checks for KVM_ARM_VCPU_HAS_EL2, the vCPU is allowed
+> to run. If the guest then accesses a VNCR-trapped register or sets HCR_EL2.NV,
 
-It should be IRQ_TYPE_LEVEL_HIGH, wrong value in OEM SDK.
+Beeeeeeeep!!!! It looked so good until then...
+
+"VNCR-trapped register" means nothing, as the whole point of VNCR is
+to *not* trap, but to write to memory instead. So OK, the page isn't
+there, and a write to a register targeting VNCR_EL2 could generate a
+fault.
+
+But if ID_AA64MMFR4_EL1.NV_frac==0, then HCR_EL2.NV is RES0:
+
+	NEEDS_FEAT(HCR_EL2_AT		| /* Ignore the original FEAT_NV */
+		   HCR_EL2_NV2		|
+		   HCR_EL2_NV,
+		   feat_nv2),
+
+and feat_nv2 reads:
+
+static bool feat_nv2(struct kvm *kvm)
+{
+	return ((kvm_has_feat(kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY) &&
+		 kvm_has_feat_enum(kvm, ID_AA64MMFR2_EL1, NV, NI)) ||
+		kvm_has_feat(kvm, ID_AA64MMFR2_EL1, NV, NV2));
+}
+
+which will return false in the proposed case, making HCR_EL2.NV firmly
+RES0. Yes, there's a reason why I spent so much time on this crap.
+
+Since HCR_EL2.NV is RES0, we never ERET to an L2 running at EL2, and
+therefore there is never a case where we fault on a guest provided
+VNCR page.
+
+> the host exit handler calls kvm_translate_vncr() or kvm_map_l1_vncr(). Both
+> functions unconditionally dereference the unallocated vncr_tlb:
+> 
+> arch/arm64/kvm/nested.c:kvm_translate_vncr() {
+>         struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
+>         ...
+>         vt->valid = false;
+>         ...
+> }
+> 
+> Will this lead to a kernel panic when unprivileged userspace configures a
+> vCPU this way?
+
+Don't think so.
+
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
