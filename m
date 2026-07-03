@@ -1,125 +1,297 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1AB1DE4E0
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 02:15:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 257AB2494F0
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 02:57:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783044941; cv=none; b=r7w6qTB7fWNN1wtMFYISvl9LLE1AlZsrHB1oG806eXuNHrESjCpLAm4wpV3DroDO3VFKURGrnhZqQ44Rb8s3h4lNzKyY5hhvlxvY/cc0hKcxQCt4IW2id7mgcxgYGkc+Ic1Pgm5oIXwYPJAdKVTZCQboaDQuDx7A7jhMgaEKo/Q=
+	t=1783047476; cv=none; b=YlBb9UEaXnaVOj4D2lyhKQBl5l5KqQlqK4oHsJiFrdgoUxb8MfV4Y7QzXZCPDkBxYby+d33DHOJpSzsl7ULJGewGDLxT6YGhCGYaAIX9iLW6G80VJdTB52gnV1LD8Y39/hhaGHV3xoh+yyxQO3WMKy00AeAdZdKC5gKB4BIn3aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783044941; c=relaxed/simple;
-	bh=zLCfidKiv765v34Kp/uv5ZV0BUgBLbdJH30F/8vv2L4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BEzUw+NisA81+FHZjj2MCwENrHee9f4rw44cuPLyIT1QwcxRtQlbxeGj9sFS4jJ7Usb33TgnWu4YZv+CVvCvUnDLb8EKyQffKvHzkvM+tXmX+PSTX6EuzzFkwU6ypi7sblR0JfeCg1U1LpnUz9QCawTNACNKyijlpC92fdocpG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PNYlmo/n; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PNYlmo/n"
-Message-ID: <e6ec128e-1acf-4dc7-8884-e4d7ed14d25b@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783044936;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=W1LIO1geOHjGag3em8urAK6X+DgR3tKG3cCGCJiSPhQ=;
-	b=PNYlmo/nyrMMuYK99CpjpomAfc/gV1JIPBNrF6ti2sqRB1fJbY5Z5YyzQ9qZXOeUKHFvvB
-	ZWeVSPIh2/+ofFyRnrOHiY4Lv8Y6zyvO5jfxjmpO2MA1oytaaP6iCOV2CIXeaLhRK2VfvY
-	uvaypwJWPnepbsUCp40yPYJGnROGrtI=
-Date: Fri, 3 Jul 2026 10:15:27 +0800
+	s=arc-20240116; t=1783047476; c=relaxed/simple;
+	bh=P0TTY1mzLS4ah7V8bJ2lKkeQgztQnUdzRQ9jaXIFhdI=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=EZDIcXm+5SVSFDtGQzzRbI5DE8n0vKT1060SeIRIi28LFLZYa0GRJ9y1xa3zYrIgMwEJuV8V9FXWYyfhZ31T/TmKm47q3AuY5kTkMBS/Z8Ow7ZKUqesQxufLpVeZ94q7+VHZfybEDj9kBXb0RaWpXm0PUidX7O9q/FWNwG65uAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [113.200.148.30])
+	by gateway (Coremail) with SMTP id _____8BxRvAuJUdqLi4BAA--.6581S3;
+	Fri, 03 Jul 2026 10:57:50 +0800 (CST)
+Received: from [10.130.40.83] (unknown [113.200.148.30])
+	by front1 (Coremail) with SMTP id qMiowJBx68EsJUdq31y9AA--.28879S3;
+	Fri, 03 Jul 2026 10:57:49 +0800 (CST)
+Subject: Re: [PATCH bpf-next v7 1/2] bpf: Introduce jit_required flag and
+ refactor kfunc path
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
+ KaFai Wan <kafai.wan@linux.dev>
+References: <20260702143656.28845-1-yangtiezhu@loongson.cn>
+ <20260702143656.28845-2-yangtiezhu@loongson.cn>
+ <20260702145855.07C6B1F000E9@smtp.kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <7cce1695-eaa2-816b-2877-9cb2f117aa27@loongson.cn>
+Date: Fri, 3 Jul 2026 10:57:48 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf] bpf: reject mini-sockets in bpf_sock_destroy()
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260702224519.800135-1-xmei5@asu.edu>
- <20260702230504.0E65E1F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260702230504.0E65E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <20260702145855.07C6B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJBx68EsJUdq31y9AA--.28879S3
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Gr1UAF4kCFWfGr1fGF47KFX_yoW3AFyDpF
+	n8J34qkr40qw4F93srAF4xA343Kw4DW3y7KFWkGrySkF4jqFykXw1UK3y3Za9xKrWjga1x
+	Zw4IvFWjgw18uagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+	wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+	UUU==
 
-
-On 7/3/26 7:05 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] The patch causes a functional regression by completely disabling bpf_sock_destroy() for TCP mini-sockets (TIME_WAIT and NEW_SYN_RECV).
->
-> Pre-existing issues:
-> - [High] The helpers bpf_tcp_check_syncookie and bpf_tcp_gen_syncookie suffer from the same type confusion and out-of-bounds read as bpf_sock_destroy, but remain unfixed.
+On 2026/7/2 下午10:58, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The `bpf_fixup_call_args()` function and `bpf_prog_has_kfunc_call()` macro were not updated to use the new `jit_required` flag, leading to inconsistent interpreter fallback behavior for pruned kfuncs.
 > --
->
-> commit cf46da8728e7f1fca4584ccdb089c82b7fd3061f
-> Author: Xiang Mei (Microsoft) <xmei5@asu.edu>
->
-> bpf: reject mini-sockets in bpf_sock_destroy()
->
-> The patch tries to fix a KASAN slab-out-of-bounds read in
-> bpf_sock_destroy() by checking sk_fullsock(sk) before accessing
-> sk->sk_protocol. It casts sock_common to sock and early exits if it is
-> a mini-socket.
->
-> Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
-> Reported-by: AutonomousCodeSecurity@microsoft.com
-> Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
->
->> diff --git a/net/core/filter.c b/net/core/filter.c
->> index b446aa8be5c37..3e70c8ab5aab1 100644
->> --- a/net/core/filter.c
->> +++ b/net/core/filter.c
->> @@ -12665,6 +12665,9 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
->>   {
->>   	struct sock *sk = (struct sock *)sock;
+> 
+> commit 5a3f8861c2b6916fe194f97a407cb7265f545fd0
+> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
+> 
+> bpf: Introduce jit_required flag and refactor kfunc path
+> 
+> Introduce a 'jit_required' bitfield flag at the end of the
+> flags group in struct bpf_prog. This bit tracks whether a
+> program strictly requires the JIT compiler.
+> 
+>> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+>> index 649cce41e13f3..5fcd19ccb41a9 100644
+>> --- a/kernel/bpf/core.c
+>> +++ b/kernel/bpf/core.c
+>> @@ -2619,8 +2619,7 @@ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct
+>>   	if (fp->bpf_func)
+>>   		goto finalize;
 >>   
->> +	if (!sk_fullsock(sk))
->> +		return -EOPNOTSUPP;
->          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> [Severity: High]
-> Does this unconditionally reject mini-sockets?
->
-> The commit message states that mini-sockets have no diag_destroy() handler,
-> but as documented in the original commit 4ddbcb886268, request sockets are
-> explicitly supported because their protocol diag_destroy handler
-> (tcp_abort) correctly handles TCP_TIME_WAIT and TCP_NEW_SYN_RECV states.
->
-> If we unconditionally reject non-full sockets, wouldn't this break BPF
-> programs that rely on bpf_sock_destroy() to forcefully terminate pending
-> connections or TIME_WAIT sockets?
-
-It's true. Please also include a selftest to reproduce the issue and, 
-another one to cover the non-full socket.
-
-
->
-> [Severity: High]
-> This is a pre-existing issue, but does this same type confusion exist
-> in bpf_tcp_check_syncookie() and bpf_tcp_gen_syncookie()?
->
-> Both of those helpers take ARG_PTR_TO_BTF_ID_SOCK_COMMON and cast it to
-> a full struct sock *. They then immediately dereference sk->sk_protocol
-> without an sk_fullsock() check:
->
-> net/core/filter.c:bpf_tcp_check_syncookie() {
+>> -	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) ||
+>> -	    bpf_prog_has_kfunc_call(fp))
+>> +	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) || fp->jit_required)
+>>   		jit_needed = true;
+>>   
+>>   	if (!bpf_prog_select_interpreter(fp))
+> 
+> [Severity: Medium]
+> Since bpf_prog_has_kfunc_call() was replaced here with fp->jit_required,
+> should bpf_fixup_call_args() in kernel/bpf/fixups.c also be updated to use
+> the new flag?
+> 
+> Currently, bpf_fixup_call_args() still calls bpf_prog_has_kfunc_call(). If
+> a program has a pruned kfunc (allocating kfunc_tab but leaving
+> jit_required=0) and JIT falls back to the interpreter, wouldn't
+> bpf_fixup_call_args() incorrectly reject the program with -EINVAL?
+> 
+> kernel/bpf/fixups.c:bpf_fixup_call_args() {
 >      ...
-> 	if (sk->sk_protocol != IPPROTO_TCP || sk->sk_state != TCP_LISTEN)
+> 	bool has_kfunc_call = bpf_prog_has_kfunc_call(prog);
+>      ...
+> 	if (has_kfunc_call) {
+> 		verbose(env, "calling kernel functions are not allowed in non-JITed programs\n");
 > 		return -EINVAL;
+> 	}
 >      ...
 > }
->
-> If an XDP or TC BPF program passes a tw_sock or req_sock from
-> bpf_skc_lookup_tcp(), won't this result in the same KASAN
-> slab-out-of-bounds read since sk_protocol resides outside the bounds
-> of struct sock_common?
->
->> +
->>   	/* The locking semantics that allow for synchronous execution of the
->>   	 * destroy handlers are only supported for TCP and UDP.
->>   	 * Supporting protocols will need to acquire sock lock in the BPF context
+> 
+> Should bpf_prog_has_kfunc_call() in kernel/bpf/verifier.c be updated to
+> check prog->jit_required, or removed entirely in favor of checking the flag
+> directly?
+
+I think it is wrong to remove bpf_prog_has_kfunc_call() entirely,
+because using prog->jit_required directly in bpf_fixup_call_args()
+would cause false positives.
+
+I tested the following changes:
+
+```
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 4e2b059d71f3..3a2fc194e2bb 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -3171,7 +3171,6 @@ const struct bpf_func_proto 
+*bpf_base_func_proto(enum bpf_func_id func_id,
+                                                  const struct bpf_prog 
+*prog);
+  void bpf_task_storage_free(struct task_struct *task);
+  void bpf_cgrp_storage_free(struct cgroup *cgroup);
+-bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog);
+  const struct btf_func_model *
+  bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
+                          const struct bpf_insn *insn);
+@@ -3510,11 +3509,6 @@ static inline void bpf_task_storage_free(struct 
+task_struct *task)
+  {
+  }
+
+-static inline bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
+-{
+-       return false;
+-}
+-
+  static inline const struct btf_func_model *
+  bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
+                          const struct bpf_insn *insn)
+diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+index 94e0457a0aa3..7fb92b5fa415 100644
+--- a/kernel/bpf/fixups.c
++++ b/kernel/bpf/fixups.c
+@@ -1378,7 +1378,6 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
+  #ifndef CONFIG_BPF_JIT_ALWAYS_ON
+         struct bpf_prog *prog = env->prog;
+         struct bpf_insn *insn = prog->insnsi;
+-       bool has_kfunc_call = bpf_prog_has_kfunc_call(prog);
+         int depth;
+  #endif
+         int i, err = 0;
+@@ -1404,7 +1403,7 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
+                         return err;
+         }
+  #ifndef CONFIG_BPF_JIT_ALWAYS_ON
+-       if (has_kfunc_call) {
++       if (prog->jit_required) {
+                 verbose(env, "calling kernel functions are not allowed 
+in non-JITed programs\n");
+                 return -EINVAL;
+         }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index f496b45b9da4..3dbed3047254 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2770,11 +2770,6 @@ int bpf_add_kfunc_call(struct bpf_verifier_env 
+*env, u32 func_id, u16 offset)
+         return 0;
+  }
+
+-bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
+-{
+-       return !!prog->aux->kfunc_tab;
+-}
+-
+  static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
+  {
+         struct bpf_subprog_info *subprog = env->subprog_info;
+```
+
+Here is the local test log:
+
+```
+fedora@linux:~$ cat test_panic.c
+   #include <linux/bpf.h>
+   #include <bpf/bpf_helpers.h>
+
+   SEC("kprobe/sys_getpid")
+   int test_panic(void *ctx)
+   {
+   	struct task_struct *task;
+
+   	task = (struct task_struct *)bpf_get_current_task();
+   	if (task)
+   		bpf_printk("Task address: %p\n", task);
+
+   	return 0;
+   }
+
+   char LICENSE[] SEC("license") = "GPL";
+fedora@linux:~$ clang -target bpf -O2 -g -c test_panic.c -o test_panic.o
+fedora@linux:~$ sudo sysctl -w net.core.bpf_jit_enable=0
+[sudo] password for fedora:
+net.core.bpf_jit_enable = 0
+fedora@linux:~$ sudo bpftool prog load test_panic.o 
+/sys/fs/bpf/test_panic autoattach
+libbpf: prog 'test_panic': BPF program load failed: Invalid argument
+libbpf: prog 'test_panic': -- BEGIN PROG LOAD LOG --
+calling kernel functions are not allowed in non-JITed programs
+processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 1 
+peak_states 1 mark_read 0
+-- END PROG LOAD LOG --
+libbpf: prog 'test_panic': failed to load: -22
+libbpf: failed to load object 'test_panic.o'
+Error: failed to load object file
+```
+
+This change incorrectly rejects programs that only contain normal
+inlined helper calls with -EINVAL.
+
+Instead, I think bpf_prog_has_kfunc_call() should be updated to check
+prog->jit_required, like so:
+
+```
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index f496b45b9da4..1f5824c1c691 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2772,7 +2772,7 @@ int bpf_add_kfunc_call(struct bpf_verifier_env 
+*env, u32 func_id, u16 offset)
+
+  bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
+  {
+-       return !!prog->aux->kfunc_tab;
++       return prog->jit_required && !!prog->aux->kfunc_tab;
+  }
+
+  static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
+```
+
+Here is the local test log:
+
+```
+fedora@linux:~$ cat test_panic.c
+   #include <linux/bpf.h>
+   #include <bpf/bpf_helpers.h>
+
+   SEC("kprobe/sys_getpid")
+   int test_panic(void *ctx)
+   {
+   	struct task_struct *task;
+
+   	task = (struct task_struct *)bpf_get_current_task();
+   	if (task)
+   		bpf_printk("Task address: %p\n", task);
+
+   	return 0;
+   }
+
+   char LICENSE[] SEC("license") = "GPL";
+fedora@linux:~$ clang -target bpf -O2 -g -c test_panic.c -o test_panic.o
+fedora@linux:~$ sudo sysctl -w net.core.bpf_jit_enable=0
+[sudo] password for fedora:
+net.core.bpf_jit_enable = 0
+fedora@linux:~$ sudo bpftool prog load test_panic.o 
+/sys/fs/bpf/test_panic autoattach
+libbpf: prog 'test_panic': BPF program load failed: unknown error (-524)
+libbpf: prog 'test_panic': -- BEGIN PROG LOAD LOG --
+processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 1 
+peak_states 1 mark_read 0
+-- END PROG LOAD LOG --
+libbpf: prog 'test_panic': failed to load: -524
+libbpf: failed to load object 'test_panic.o'
+Error: failed to load object file
+```
+
+This ensures that pruned kfuncs (allocating kfunc_tab but leaving
+jit_required=0) safely return false, at the same time, this check
+perfectly isolates normal inlined helper paths.
+
+Let me wait for more review comments and will send v8 next week.
+
+Thanks,
+Tiezhu
+
