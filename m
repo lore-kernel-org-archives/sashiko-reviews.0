@@ -1,151 +1,173 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DB7370AE2;
-	Fri,  3 Jul 2026 06:15:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783059351; cv=none; b=qMxF07l2zVBpO8C5BCO4On3XtXOQlF+T7wTETDXUQVXmVi6MRvJ/ZaCIGBvADKyaxyykV8+gzZO2+dPjvTUVnlVMQ347YsX0Tvqrk7ebDzc+QhYhl1MNq2DGsOuqJDP2iJzMLNM8zgQDAVD+eEHIiwSK3w1j+N51qu0BLS8T+SE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783059351; c=relaxed/simple;
-	bh=TjCHp6F4IyeY4OyauWrhrVLxVHGBiSDZIcoKVGiJEbA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XP2v4+6mbWkBJbX2nchRSStjNPl7CH5KJfLN1nJ8Oqld6edZRsA8IwoNgAiUJkqVNIDYJV4EUGzMDh8INsTy7WmzShT2lHcNZIPDSuHhA4hcXWtR4onf75wyltCJSK8pK+/DmDeh/48AE2fIQjNN58MlzvHIjydBm1/Q5UgA13U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HF4C/kT6; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE7F37F734
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 06:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783059956; cv=pass; b=M+oFxgdGVWL3jt6ZXBYZzuuwij8qrxALaZacU+ip4+65OLiuST5H/6PDqLMPfV8XoxSdlmHaZklQTa3OhqCz8AnQ6th2sQKdShnEkBBNz1wHnoGtZHWkIvDXIMuy4HCjB7pFYgacy5xeTBHsCNFZKgxBKLpxRUSbyQSZ1Xpw4v8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783059956; c=relaxed/simple;
+	bh=gu23m3G9I8LRrXwsMirKiBM83umbvVFeycfI4F8fQoU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ORWHGPW8NEDaW/4lSLBLxWqRnxwLPkZummROJTRy4erJPYitLZEYrgzs0myYItI9/4y/3j6TA1j43X1M9aOpUHOoVxvcsI9j9mNS8eZOgaZUe0Z2Qx4lchsfOplVLrdpAxwifh9J3mywIBodkg2I3eRyvTnFQ9dFJ9M0wnMELt0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VZRhzvax; arc=pass smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HF4C/kT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4CF1F000E9;
-	Fri,  3 Jul 2026 06:15:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783059350;
-	bh=F3A0uI4K8b9/FYpxGygmIqL6McpQ6kjySDRiNPjdp6g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=HF4C/kT69dHsEtqrUVnkeEIjeJKUKYTotlMk+uAFJoqUaYamJdWKIXK3jvkWQ7SvD
-	 W51Yo9IZt9iOYAMI0BLbm5xv3K3A99stH9y6Ca3G2Zooa1qNIjhQ4U1MSPawqiMEVv
-	 Vb9fzPhCVtg4x8GqBS6JfC+OdPZYzL1LnMdKziozyUxkJiziAasvthNcnmanRfYG5B
-	 SA71RVUBR0WI5bG9Iyf1hbYAWlE4D6FRbO96cGuKYxj8nJrt1/PTw5ZL65eJda/HVy
-	 q5zjZBeB60U8cYZNO/egBaqdPrjFAiskXWEKdjJ9awp5XS76hSTgn/RvzT/H2DaNqh
-	 Zo3vYXwbO9v6A==
-Message-ID: <088a4644-0c5a-46b4-9491-61b941c22f41@kernel.org>
-Date: Fri, 3 Jul 2026 15:15:48 +0900
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VZRhzvax"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c9c80265bd7so160783a12.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 23:25:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783059954; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UEbM44WrQla4bVWoKuF7FLIK8iOSNCYDQq3KyjEH0mI+e8OiuMEbKfXXN74phmC5rU
+         UIs22AIg9rZVXlnCs37A+3ftHhAcH88A+/+rjPm58fLZi3u/LDtNdyh0oA18gmJRBnon
+         LyO6Ln4i5tYSUiUD4ek1AX4nbcmn5XRpm6eTpkBJ/l51MiGOOCVUDK2+2g5alMB6u/T4
+         xrYCmrMOini4z/znbjDvmqEFZzIu5BX4rm/YskfJK9PaIrn/dR0HKJhEAQoOjgM9PpKm
+         Iyx6rveaxqfjLkb54FDdSu1hEybU1jfL9ugAlsTX+DwmbNtPu8EQk7c2KDOqEwMkq6ET
+         2x3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BSF6P/7OY1gFGFz/Cqzg8XWTkIoYPCEYs2S/9aAkdwU=;
+        fh=gMAxDzqzrGDiVSmAWJrGWF56V0zu6j5JIOWUFzjaNig=;
+        b=KzLOVookOuCPgCktI5w9F0TizhoewiqBSrvO8vzAjSrnY+UTiwbgLUYvZDqPCeZaPT
+         8733YRWER3Au+V1e9TVfZi9pQ8C2eyU25CmPwTH80DKqX7rrLr1CshWh4UqVX1VVQNAo
+         2+n4XN4gBZO1HeoTu3DUvNw/VUaP9IAbkeNsCNpla5Mae0bHX74y3CvT92GfPjkHAEfC
+         EgdPiAadSF7RXegZSxYq8vmyFSmVkQ05K9XZx3eg8n1/qT71oiqH4viIJcX+1Of/dReS
+         iUzV+1kAA2HKJ6f1idZCwjP10NdSv6nGapa2UpSGsli3LidyVwczL+Y37ljxR8zFLVoU
+         hQ/w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783059954; x=1783664754; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BSF6P/7OY1gFGFz/Cqzg8XWTkIoYPCEYs2S/9aAkdwU=;
+        b=VZRhzvaxfLmjf/Ql7kRCrNUx41v1pgPI+NYlm90VWxTNIMy2OSSSMv85rBnLjm6NyI
+         c7dk09P9UnC4mnpVzqDhOMA38NBWIvcEXjQz92s63YT1WmyYSoWO8Rdbm6pdOLs2s58O
+         mglZ97+9xV9Xe87yGvHy3j5HKkOQ9+/ZfKmHuEWnMOKMvrzSTfQudkmDPzl8gmtqYsjg
+         +dI0n+NEu3QPfdpJz14CprAZxf4vXq7GnS0IlynLHpaPblrPCmDR9rChgFwmJxv81Lnk
+         xVM3WLsDWu53X55sIjyDdeUtHzFm5hrgE/1uhmSb9AEeyTDCfvN8RUTNjsxi6vuDNDj8
+         Hkyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783059954; x=1783664754;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BSF6P/7OY1gFGFz/Cqzg8XWTkIoYPCEYs2S/9aAkdwU=;
+        b=Q9Kk/Bku96M4EoMtnAiZ7XF89duWeXCgLyMLS8dH8HLUAGPiHEAgGtZism5iLoA0KZ
+         QD8NFDyKUckHc8htC1jR7OehFPgi8ES18wLowJPtFsrm2s3ViP1ByY0UcHnswThC4Nt2
+         Efw/1R1GxSlJLhMPuZ8RB1J+Mq+U0Fmye30ZaQcNFDAkYmVjqOr1f1Cb9fqK5rKgQ1qa
+         hllzCZ+GdNqKEvRRoyOkbx/jWUNOYqJ3lf/0Qwq0NM+Q9BRvZoxfmnnqjBwMaN2lDWoh
+         PAfajMRE1PDU71URSylkK5pVAh0hvlJhR7Ck/DeSB1C8IRSX7N/IOOd7WvMUUW9wx6tC
+         3f6Q==
+X-Gm-Message-State: AOJu0YyQJCk5yoGPezBHqEmDhx/Y1oOSRAFKSJfzta9vJpCG7eXouhL3
+	6Y2qPpFqmQB3tI2qcVqQqVaZNhyhbfs7biKQnxdjgaOMbDeHsln+fgMYid8agry3salvGIoCxhT
+	09cSH++3if2J9gwyLX5mY0pPlPP3hlQXpcaPKtB34
+X-Gm-Gg: AfdE7clLlCp/ebfD0X8LC50bqJbTB1X4APY2i2qhy1hIGH+mkqRWKodDkkrnA/F4CQk
+	DytjMMr6KaXCRJHOihlnmdTAcy9qwGbnOvs88/8pDdgCfAiF4luW3sWWv+dYdO86LCxjMQjmrZr
+	f1Jh73WUMnRtlQrW3q94GEIwJP4/koQNP3yj/V/61XLQX5Z5RbSNBD+VTx8n4sMN36lGglYOt33
+	fUkbDJ9voGHyGEK8hnVSVe2PINz/lvWbKGO2scxxFA6HhFxhRmhpwecaUcX25o3nawMo1eIy3p9
+	QmDwkY94igd9af74Bw5Rsr2gFaS8IMkTncabRYZyD975Hs+d8fZbF/1sFi15dU81ykrNzooZvyB
+	cQZQ6JeNc/vbh+DvniG2ahQhQZobKImKbyNtoKwaI
+X-Received: by 2002:a05:6a21:400d:b0:3b7:d8d5:2326 with SMTP id
+ adf61e73a8af0-3bfed0e290fmr10485150637.1.1783059953937; Thu, 02 Jul 2026
+ 23:25:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] ata: libata: rename ata_dev_is_zac()
-To: sashiko-reviews@lists.linux.dev
-Cc: cassel@kernel.org, linux-ide@vger.kernel.org
-References: <20260703040532.2152614-1-dlemoal@kernel.org>
- <20260703040532.2152614-2-dlemoal@kernel.org>
- <20260703045945.BA9F11F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260703045945.BA9F11F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <cover.1782922354.git.namcao@linutronix.de> <e663a83195f3d9f6d7ad4907c37ae3e45c151062.1782922354.git.namcao@linutronix.de>
+ <20260702163608.0207A1F00A3A@smtp.kernel.org> <87mrw8sjo3.fsf@yellow.woof>
+In-Reply-To: <87mrw8sjo3.fsf@yellow.woof>
+From: Kuniyuki Iwashima <kuniyu@google.com>
+Date: Thu, 2 Jul 2026 23:25:42 -0700
+X-Gm-Features: AVVi8CffnuaY4KiLN4AyhU_3QHylM_R_UciFhQADgsvWNfXQqFEwJUoE2kfoIl0
+Message-ID: <CAAVpQUB+LDxRrF66=NKwLAdLN8kt+Hssm_KBc2oc_q6FTJF0VA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] af_unix: Do not wait for garbage collector in sendmsg()
+To: Nam Cao <namcao@linutronix.de>
+Cc: sashiko-reviews@lists.linux.dev, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Simon Horman <horms@kernel.org>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-rt-devel@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/3/26 13:59, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch introduces an undocumented functional change (implicit bug fix) for Device Managed zoned drives, while the commit message falsely claims the refactor merely replaces identical open-coded tests.
-> --
-> 
-> commit c24879d1eda5cc422a0b0da776fb6aef5fe25e22
-> Author: Damien Le Moal <dlemoal@kernel.org>
-> 
-> ata: libata: rename ata_dev_is_zac()
-> 
-> The helper function ata_dev_is_zac() checks if a device is a ZAC class
-> device (host managed zoned disk) or if it is a host aware zoned disk, that
-> is, a regular ATA disk that supports the zoned capabilities. So the name
-> of this helper function is confusing as it hints at the first case only.
-> 
-> Rename this helper function to ata_dev_is_zoned() to avoid confusions and
-> better reflect the two cases tested. Use this helper in
-> ata_scsiop_inq_std(), ata_scsiop_read_cap() and
-> ata_scsi_report_supported_opcodes() instead of having the same tests open
-> coded.
-> 
-> While at it, to stay consistent with this renaming, also rename
-> ata_dev_config_zac() to ata_dev_config_zoned().
-> 
->> diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
->> index d54ec1631e9a6..a86721b5df7f6 100644
->> --- a/drivers/ata/libata-scsi.c
->> +++ b/drivers/ata/libata-scsi.c
->> @@ -2020,7 +2020,7 @@ static unsigned int ata_scsiop_inq_std(struct ata_device *dev,
->>  	if (rbuf[32] == 0 || rbuf[32] == ' ')
->>  		memcpy(&rbuf[32], "n/a ", 4);
->>  
->> -	if (ata_id_zoned_cap(dev->id) || dev->class == ATA_DEV_ZAC)
->> +	if (ata_dev_is_zoned(dev))
-> 
-> [Severity: Medium]
-> Does this introduce an undocumented functional change for Device Managed
-> zoned drives?
-> 
-> The commit message states this is a replacement of "the same tests open coded",
-> but the old condition would evaluate to true for Device Managed drives,
-> since ata_id_zoned_cap() returns 0x02 for them.
-> 
-> The new ata_dev_is_zoned() helper checks ata_id_zoned_cap(dev->id) == 0x01,
-> which evaluates to false for Device Managed drives.
-> 
-> This appears to alter SCSI emulation for these drives, as they will no longer
-> report ZBC version compatibility here.
-> 
-> Could the commit message be updated to mention this functional bug fix?
-> 
->>  		memcpy(rbuf + 58, versions_zbc, sizeof(versions_zbc));
->>  	else
->>  		memcpy(rbuf + 58, versions, sizeof(versions));
+On Thu, Jul 2, 2026 at 10:53=E2=80=AFPM Nam Cao <namcao@linutronix.de> wrot=
+e:
+>
+> sashiko-bot@kernel.org writes:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [High] Garbage collector is no longer scheduled when creating new inf=
+light FDs, leading to permanent cycle accumulation and -ETOOMANYREFS failur=
+es in isolated environments.
+> > --
+> >
+> > commit 506189bd29f8ad56f5d9e51f3e0216203ebad5ec
+> > Author: Nam Cao <namcao@linutronix.de>
+> >
+> > af_unix: Do not wait for garbage collector in sendmsg()
+> >
+> > This patch removes the garbage collector scheduling and waiting from th=
+e
+> > sendmsg() path for AF_UNIX sockets. It aims to prevent priority inversi=
+on
+> > by relying on RLIMIT_NOFILE limits and asynchronous garbage collection.
+> >
+> >> diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+> >> index 0783555e25266..f180c59b3da9d 100644
+> >> --- a/net/unix/garbage.c
+> >> +++ b/net/unix/garbage.c
+> >> @@ -300,8 +300,6 @@ int unix_prepare_fpl(struct scm_fp_list *fpl)
+> >>      if (!fpl->edges)
+> >>              goto err;
+> >>
+> >> -    unix_schedule_gc(fpl->user);
+> >> -
+> >
+> > [Severity: High]
+> > Does this removal prevent the garbage collector from running when a pro=
+cess
+> > creates isolated socket cycles?
+> >
+> > If a process continuously creates socket cycles (e.g., passing FDs to e=
+ach
+> > other) and closes its local FDs, the sockets reference each other in th=
+eir
+> > receive queues, so their file reference counts will not reach zero.
+> >
+> > Because the refcounts do not drop to zero, unix_release_sock() is never
+> > triggered. By removing unix_schedule_gc() from unix_prepare_fpl() here,
+> > unix_release_sock() is left as the only trigger for garbage collection.
+> >
+> > This could allow the inflight count to accumulate indefinitely until it
+> > hits RLIMIT_NOFILE, causing subsequent sendmsg() calls to fail with
+> > -ETOOMANYREFS and permanently leaking the network namespace unless an
+> > unrelated AF_UNIX socket is closed system-wide.
+>
+> Sashiko found a valid issue here.
 
-Correct. But I think that we should never had reported that. In any case, with
-host aware also now deprecated, we now definitely do *not* want to report that a
-drive managed disk is compatible zbc, as we treat such drives no different than
-regular disks.
+This is same with my point, and
 
-> 
-> [ ... ]
-> 
->> @@ -2848,7 +2848,7 @@ static unsigned int ata_scsiop_read_cap(struct ata_device *dev,
->>  	rbuf[10] = sector_size >> (8 * 1);
->>  	rbuf[11] = sector_size;
->>  
->> -	if (ata_id_zoned_cap(dev->id) || dev->class == ATA_DEV_ZAC)
->> +	if (ata_dev_is_zoned(dev))
->>  		rbuf[12] = (1 << 4); /* RC_BASIS */
-> 
-> [Severity: Medium]
-> Similarly, does this silently fix Device Managed drives incorrectly
-> reporting the RC_BASIS bit in READ CAPACITY 16?
+> But this is a pre-existing issue. It
+> is not introduced in this patch.
 
-The old code was buggy ! we do not want to set rc basis for drive managed devices.
+your patch makes it much easier to abuse.
+UNIX_INFLIGHT_SANE_USER is usually much smaller than
+RLIMIT_NOFILE.
 
-> 
->>  	rbuf[13] = log2_per_phys;
->>  	rbuf[14] = (lowest_aligned >> 8) & 0x3f;
-> 
-> [ ... ]
-> 
->> @@ -3656,8 +3656,7 @@ static unsigned int ata_scsi_report_supported_opcodes(struct ata_device *dev,
->>  		break;
->>  	case ZBC_IN:
->>  	case ZBC_OUT:
->> -		if (ata_id_zoned_cap(dev->id) ||
->> -		    dev->class == ATA_DEV_ZAC)
->> +		if (ata_dev_is_zoned(dev))
->>  			supported = 3;
-> 
-> [Severity: Medium]
-> Does this also correctly prevent ZBC_IN and ZBC_OUT from being reported as
-> supported for Device Managed drives?
+unix_schedule_gc() in sendmsg() is to self-regulate malicious users,
+otherwise GC relies on unrelated AF_UNIX socket's close() and could
+be triggered too late since GC is system-wide.
 
-Yes it does and that is fine.
+Previously every sendmsg() had to wait for GC, and now it's only when
+there is a circular reference AND user has too many inflight sockets.
 
--- 
-Damien Le Moal
-Western Digital Research
+Please fix the root cause; the former condition on your system.
+--
+pw-bot: cr
