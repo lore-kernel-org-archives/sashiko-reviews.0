@@ -1,135 +1,182 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F52433E90
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 07:34:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB27D35F5ED
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 07:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783064053; cv=none; b=J6AMP1m/aGVLNbu2180/CnBLFeBshWEFd9/Rewif6rwHfBrBEBPVQDPtCfvjQs4nzHFW4zUW4jY0Cge3EDcOtRsalKtyo4GX2OVO9LZngeJtCJ3vhHttK5Ww3/dZW7d/eWDz2eNkmfjzzyf8Wv00due6hMgs7mhe46bMZgvHWlw=
+	t=1783064360; cv=none; b=WaFQ/2efpGIOaKigr2pInXLfdE3k0DBob8hFS6jzReyPIGegnq1VzbhLh1k0NvF41ZoeUl6+1tSaW8Vp0FpKJL8UPEfZ/kWwiFiERdRme5Ata454M8cbqkcl3nOZrkBRvaJqjBHcQWyUdfk3HhyHuoBZyNKhuGJzcD/1f/2dsMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783064053; c=relaxed/simple;
-	bh=Oz1nvhFoEr73wyE+dWpdHpS57rKQxBbUy+2SCV9yzGQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R3pmCPFjnR0p5mS7DOXSsI2ce/1Ug0a6csKqQYQ7S5be/Ufm1LJzLHzAsaG3mMtbTEksXSaeVlzfqp0nhB+AMKmv54Ewnf4HUxbli2eMVLZC8M0t2igx4AtBIOeCqIwHiQrogvNRurHi9OIgBwGenCgifTphv5yEkHi59JA0SAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=HlUjaMZe; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1783064360; c=relaxed/simple;
+	bh=I2IHKwKaiSFySvragJ8MrSWWBZJqduGkGIIiaxdqnxQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=PMsO7zvY7BpMY4EMehmllT0B6YsMvj9ivJZNhpq8uAmV88itWEWfToxm2z/KUTVFyrDbxYbOxUs7bg+8LUpDmDHVXJkwkV0z2MAiATpI3mSTI8iIXlhxNPEgR2e0Tl1NjcVKKPTQ3qJ53jG/qlKb9mztR7Mj28N9HhTQhp1g8hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QAlc9wmR; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="HlUjaMZe"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-474e7ba9fd6so124289f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 03 Jul 2026 00:34:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QAlc9wmR"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-476a130c138so274285f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 03 Jul 2026 00:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783064049; x=1783668849; darn=lists.linux.dev;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YAsfvSrBGIqzpFkuFJjjn9IXNafmZWfPTPwqXB9KX7k=;
-        b=HlUjaMZehooGYyU2C5Uv9xrNm2AxbIlHTN7WiM0KIQc+rdtdF4iC5DepXSnOCWYlXn
-         o4FYTskxSyclLbp3naaqOxNlsdMwT30C9/j3e3JCBbY7qtXV+iPKFKrTlwWzuBee/oF1
-         dJNqcYFIuiHQn2CZK0Aw3DvQDq1bT7Arj+xinuzhc3XKtgolWmt6yFBx+XsAIIoWIa3R
-         diuwbcxyPt5kcTvLm6dxZz57hNI88br04ZyKK3Yq+70QnoDU/5ObKdylPBRsyB4GlUX6
-         x65h2xLeOsnbRGlF84s937+YbDtDfXMlobD0XDCO3dbOuFNTNelyz7weN49F01W9TfR/
-         m6Ww==
+        d=linaro.org; s=google; t=1783064357; x=1783669157; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5HQ4m4li8i0Yt4qUsB4ghqhwVC3QDvJYWSIBsCGk0lM=;
+        b=QAlc9wmRz1qCliHQZEp9Cn3FHIPf7Ck5qwvRUXEOYqvMRm6ApAB7IMv3cr+mQ0kZ16
+         cmvIEbamoLMWyW5TcfGbqoi8urrOZoscJShhO5hULO48ZKc8zRK9qUEsO1l6pp69JnvL
+         Kg9SIyEUiGqT/Nv/8OBLW8TNX5nQ261h1tO7NDzBKJdr6gM+zLfmG0AidX4wIFYwccTv
+         yNPkhRNbIHBiBeBpj/VBHNMEUDdHlbcnPDA78f1Wj6zWvw9BKFRDSHF7jkYnGO+awIu2
+         hlkvVl2bVd38NSDG5veYK/QLpWzIGDIzE+Ji7SgSnwozhA5Na4YCclFTBU85SCDldxdO
+         TIOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783064049; x=1783668849;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YAsfvSrBGIqzpFkuFJjjn9IXNafmZWfPTPwqXB9KX7k=;
-        b=Ek1ePttuoQo0AKiE8JgnQeC/8+pyzfjNqsDGEdYVZGZr/4dKPm7LGjFHUadHDyLTZx
-         M0HExVGknM2TRtp1KE4YF99NfXyqw1j+ZKDkb+Ui6Fe9fUX28f46aa7segARX/pYP/hS
-         TGruhra7mQqs0DoV8OuB449YGO1x4ca19Cb7LyIOw0ViDM2nwFl2PqZnqqzl/tL1eaPP
-         a7C0sQ2u0TsUvrB5+M4cQEEhHDe+JSLytM+ffTbFo6vUl40h2p9aiaaXjBCsXKIKWnRa
-         yN/M1q9xXyC8Yu33jBJ5d1OhcPK8KgII2KxgynCQ6xb4N4gHGB8MbH/yxoNoiybNpxB1
-         2HVQ==
-X-Gm-Message-State: AOJu0YyzFAFXwB7ciOS7HsHpMUZi1eIxMs31rsXnoIHPyIqrixrCwRyi
-	BU7cSJLoFXtcsqQC+sM9OrmC7OekNd+lRLmm/o/THSwmGynsOTaxxsYXoI9glZ9tWL8=
-X-Gm-Gg: AfdE7cmrM1wboQYbpvKha3i5vjtbUOe6YhmRFqvygykkoNmxwJk25tEOkYnt0EC0iSo
-	ZY30LNvZWOxMBdpqxN4jM5eStnUHL7S4UEaOzWPpCwNV5xRK9qjEI9SiPOD1Iek+RK9DJPOypHB
-	yeRg9e4aDA/EtnT5V+dB7oxgJ4H6uPrWiRRUT+ns2NT66UnWmeq9pVpkdatKLCy0I/LaAHthmys
-	Hc8rukIxESA2kL5bS7DW+YxmKOO4OZHF/2RtJRwphMO2X7NSiKt3qRAAZO+MTUhnUuOudG14LWV
-	nzPbWbOFsag4ixDvdyttbQl/AyM8hE8HlL2G+dP5V0Yh/caWGYIaTYT2AphvgzdBfpHb37HaJia
-	qv7ZU+/uALsCZG849HcOUJRGcw8cXrBZel4GoZUV2f+V7swxnXrJML36xSfMfr6i0k9Hq8kVQsG
-	QoklwnsuGvf70ZjX4EzzeFXQ==
-X-Received: by 2002:a05:6000:2dc9:b0:475:f0f0:9eef with SMTP id ffacd0b85a97d-4775b176b60mr14465264f8f.52.1783064049008;
-        Fri, 03 Jul 2026 00:34:09 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:fb6a:cb8b:b7f7:bb42])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-477ddf0fb15sm13999054f8f.29.2026.07.03.00.34.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jul 2026 00:34:08 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Valerio Setti <vsetti@baylibre.com>
-Cc: sashiko-reviews@lists.linux.dev,  neil.armstrong@linaro.org,
-  linux-amlogic@lists.infradead.org
-Subject: Re: [PATCH 1/2] ASoC: meson: gx-formatter: prepare on attach
-In-Reply-To: <b1a0a7de-c5b1-4325-8159-d5a0bad1668e@baylibre.com> (Valerio
-	Setti's message of "Thu, 2 Jul 2026 22:34:52 +0200")
-References: <20260702-fix-24-bit-i2s-playback-v1-0-bcd3a43fe32a@baylibre.com>
-	<20260702-fix-24-bit-i2s-playback-v1-1-bcd3a43fe32a@baylibre.com>
-	<20260702111021.2CCDC1F00A3A@smtp.kernel.org>
-	<b1a0a7de-c5b1-4325-8159-d5a0bad1668e@baylibre.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 03 Jul 2026 09:34:06 +0200
-Message-ID: <1jo6goil1t.fsf@starbuckisacylon.baylibre.com>
+        d=1e100.net; s=20251104; t=1783064357; x=1783669157;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5HQ4m4li8i0Yt4qUsB4ghqhwVC3QDvJYWSIBsCGk0lM=;
+        b=GPdW0soPQEfmI9+NqGAgDQEWbdkny4nM7S9CguUyF4PTgYQMVhvJQ5CXIiVRPq9/cG
+         Dy0Oje4hzOqjHImkan3nWtUQxCGTqbwYnDL2WYkGZufKuUHStxxfUGRQroqFeR37RBO2
+         migBdNVnrBn7ks7P5plZQuMIjk9vSisKlN7POLiivjq6iUh+UTgTkHpCwpffJVnV45JT
+         lvC4C1cuLT7EhXcLsnmiwyv9ceJjLSmQOFZ4hntLFuLGCsz9Fb70MWEQKKdClKvq7o+0
+         3Rre5mXAD8WTRgNLNwvkAHFbro63y9FTByzZ2G1DUuW0wusDqq3oUBKILLefuaX6mw9+
+         VNvQ==
+X-Gm-Message-State: AOJu0Yxehlnrt3manBeKJJX380Jk8dPn6KQqVgRUG8byEZhFpbYlnvKU
+	6bwRgyV8xbTGfO839VQrE0x21zjiFryFtPdZQa8L6dqgjYtU9uJ87N1hWNEITuEHMwnrUcfGTAs
+	cxPHM
+X-Gm-Gg: AfdE7cl1ydgnU47Qz7Wizfk3L6F5eWmN/dTYk5H46vQNef5Csyfmefpb/4G9rVhXNWQ
+	QlltIx0wGJ2B7DGZyLD4qJ8GzR1cvoXLahLANgtkvdKX2c+1Su8WVTrwWKJ0cJ/eyqMke1/AOB/
+	oQuEbPtDLxMYGkqpLOMk+pTglTtOLU8fPAHbyClpYrot4+N8Bb4jxXaCpr7yrFFeSeAsbWGdgBv
+	8H7sX3OBg7xLKslUO12JJAzIIEWC1Wa3392twt+CfTuKZ6XbNn9cVQRhMIAlagBBlIy/C5ZiQGX
+	sSDQQDMp2DgGab1GrHpJEfBIUo9ra9CkXBtkSJAHzukYcFLWOfYUAb1oebmsR4AOL5bmY/RR6rE
+	l5rjmzdTiFWxmHH47dEvKpOoKG8uPbzXnMuBjGoiPWGs+aFo1cff3ZoCVz7L9kDWoEpaMpPqFPa
+	nUlL80SdwE47SjZiuIFvAD64KyxV3ZqOfkVcsetoLz+V096e+ddRzt/RyDKkX7RdNTwtTj
+X-Received: by 2002:a5d:4e48:0:b0:46d:8169:bb39 with SMTP id ffacd0b85a97d-477b52968cemr8198754f8f.37.1783064357093;
+        Fri, 03 Jul 2026 00:39:17 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:e9e1:7bf9:472f:c4d8? ([2a01:e0a:106d:1080:e9e1:7bf9:472f:c4d8])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477db3dbb79sm15346261f8f.2.2026.07.03.00.39.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jul 2026 00:39:16 -0700 (PDT)
+Message-ID: <95cb51ee-3261-4595-ac75-6f1e0e4dc7ea@linaro.org>
+Date: Fri, 3 Jul 2026 09:39:16 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sm8650: fix soundwire ports
+ properties
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260615-topic-sm8650-upstream-cpu-props-v3-3-eeb6e9fa7581@linaro.org>
+ <20260615170553.4953E1F000E9@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260615170553.4953E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On jeu. 02 juil. 2026 at 22:34, Valerio Setti <vsetti@baylibre.com> wrote:
+On 6/15/26 19:05, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Prepending an element to the `qcom,ports-*` arrays for `swr2` shifts the configuration indices, corrupting the SoundWire Master Port configurations for the TX codec.
+> --
+> 
+> commit a1c9b1d54073d838cfb9e5474d5c6e26f81803b9
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> arm64: dts: qcom: sm8650: fix soundwire ports properties
+> 
+> This commit updates the soundwire port counts and properties to match the
+> actual hardware configuration, addressing deprecation warnings for din/out
+> ports.
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> index 090a4739ebc1d..b1293fdb1481c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> 
+> [ ... ]
+> 
+>> @@ -4831,17 +4831,17 @@ swr2: soundwire@6d30000 {
+>>   			pinctrl-names = "default";
+>>   
+>>   			qcom,din-ports = <4>;
+>> -			qcom,dout-ports = <0>;
+>> -
+>> -			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x01 0x03 0x03>;
+>> -			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x01 0x01>;
+>> -			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00 0x00>;
+>> -			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff>;
+>> -			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff>;
+>> -			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+>> -			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+>> -			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+>> -			qcom,ports-lane-control =	/bits/ 8 <0x01 0x02 0x00 0x00>;
+>> +			qcom,dout-ports = <1>;
+>> +
+>> +			qcom,ports-sinterval-low =	/bits/ 8 <0x00 0x01 0x01 0x03 0x03>;
+> 
+> [Severity: High]
+> Does prepending an element to the qcom,ports-* arrays in swr2 shift the
+> absolute index mapping expected by the TX codec's qcom,tx-port-mapping?
+> 
+> The soundwire driver maps these array elements sequentially to pconfig[1]
+> through pconfig[nports]. Slave devices, such as the WCD9395 TX codec, rely
+> on absolute Master Port indices defined in their board-level tx-port-mapping
+> properties to directly index pconfig and program fixed hardware registers.
+> 
+> By prepending a new element to account for dout-ports = 1, it appears all
+> subsequent configurations are shifted. As a result, pconfig[2] might now
+> receive data from array index 0 instead of index 1 (for example, lane_control
+> would change from 0x02 to 0x01).
+> 
+> Will this misconfigure the active TX SoundWire ports and break capture audio
+> functionality on SM8650 boards?
 
-> On 7/2/26 1:10 PM, sashiko-bot@kernel.org wrote:
->>> diff --git a/sound/soc/meson/gx-formatter.c b/sound/soc/meson/gx-formatter.c
->>> index 311e63affb239..c7333f624b155 100644
->>> --- a/sound/soc/meson/gx-formatter.c
->>> +++ b/sound/soc/meson/gx-formatter.c
->> [ ... ]
->> 
->>> -static int gx_formatter_enable(struct gx_formatter *formatter)
->>> +static int gx_formatter_prepare(struct gx_formatter *formatter)
->>>   {
->>>   	int ret;
->>>   -	/* Do nothing if the formatter is already enabled */
->>> -	if (formatter->enabled)
->>> +	if (formatter->prepared)
->>>   		return 0;
->> [Severity: High]
->> Will this prevent hardware reconfiguration for back-to-back playbacks?
->> Because the ALSA core utilizes pmdown_time (delayed power down), the DAPM
->> widget remains in the powered-on state for a short time after playback
->> stops.
->> If a new stream with different parameters (e.g., changing from 16-bit to
->> 24-bit) starts rapidly before the power-down occurs, dapm_power_widgets()
->> will not detect a power state change and will not emit a new
->> SND_SOC_DAPM_PRE_PMU event.
->> Since the widget wasn't powered down, gx_formatter_detach() hasn't
->> cleared
->> formatter->prepared. This check will return early and skip updating the
->> hardware for the new sample format, causing the new stream to play through
->> incorrectly configured hardware.
->> 
->
-> Uh, this seems right, but with a caveat. When I tested this series I
-> launched 'speaker-test' with 16-bits and 24-bits in sequence and it worked
-> perfectly.
-> To generate the problem described here I had to create a custom binary that
-> played the two sine tones, one at 16-bits and the one at 24-bits, without
-> closing the PCM in the middle (as the 'speaker-test' case was doing
-> instead). This way I was able to recreate the problem. I don't know how
-> common it is for an application to switch sample width "on the fly", but
-> it's worth fixing it.
+No
 
-You'd have to go through through .hw_params at least. I would expect it
-go through .shutdown()/.startup() too but I'm not sure about this.
+> 
+>> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x00 0x01 0x01>;
+>> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00 0x00 0x00>;
+>> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff>;
+>> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff>;
+>> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff>;
+>> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff>;
+>> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff>;
+>> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0x01 0x02 0x00 0x00>;
+>>   
+>>   			#address-cells = <2>;
+>>   			#size-cells = <0>;
+> 
 
->
-> For the records, I just tried removing this commit and both test scenarios
-> work just fine so I'm inclined in sending a v2 with this commit
-> dropped.
-
-+1
-
--- 
-Jerome
