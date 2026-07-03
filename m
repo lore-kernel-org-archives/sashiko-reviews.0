@@ -1,40 +1,81 @@
-Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910EB23815B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 01:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.222
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A6C1A6816
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 01:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783042971; cv=none; b=dNzkK9F6eb/2NYb4XWe/igBFbp7X0NRYNn+WMKyqQX6yTOkWk4bTfBxiQ6V3orhK4nzN6kdwUODoBKWI3itTlpAwLdZlAYh8BbJPCQx3Z+XmkGNb1i+1rJDj4AdTbS9ZUk2zsMftNX+Hvr8jBdIW74evTtSm8VfSNFE5FSPu+/8=
+	t=1783043394; cv=none; b=p0SD+SkyXpkH36R7aqFJrLO546+N3U6M1M5uM6SPJx+2zbUS3qPbzrcXXGi1T23Np/0xxHd/nhnJIrZD4GatYJpvyTgfaebDLm+GQelIZ1SufnhAnjWZPAMIZYZHenlre3GaQwFnsXPuky5+rlnZF8l4rluBb9hzRz9nBvBa9DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783042971; c=relaxed/simple;
-	bh=KFzTXcqUXhm7FX4qZ7OpxIir07gpdzE5BGWUXD4PVGo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HOFUWPzntaqTqpNLtAQs/8nECsoRW0E1+GE4g/LZy579oDzGJCWbAzAqi0isByaHOe4EfuYH8lm87C3bNkPvR7/sz45SERj7ScKNa8628lbI6oOgcQtY3R29jPdXHV0h0gGTbUJN6JPt/4R3QOm6CKKMNKUoIiyXUg+0v6xM1Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=3wQ6Pdr+; arc=none smtp.client-ip=113.46.200.222
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1783043394; c=relaxed/simple;
+	bh=RE+T9HoQIYW8PnX3RcVEgcqDNIvIKR1tDFci2EvzQuE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RMv30Dbha4StD+tjOPZH297PfqHqOMwGTrTIh5AyMdR8lCn83OItXBPyaH1WJXRAvPk4G/+9KkY+nHiP04c5kAZ+yXUOf/319DvtwlgDr473iKdx2bfqhxdvvOvyYpUMtLdyg2iPFCcrV9LV9gTN0Kew0cU1tR/r6dLX6ndybB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=UFIPvQjz; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=IoErIr/o; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=UFIPvQjz; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=IoErIr/o; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="3wQ6Pdr+"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=QK/BOn7ZMeKzE8Yh8XNcA3mmassY6oW2knmONYjHwn0=;
-	b=3wQ6Pdr+0xczd2qydHl8uNGOV9Dvns5jwhj/WiFSoayhYEC1m61olsn9S8OSCjBp7zU7QgxM+
-	Kt/RmeO32cDg3uCCq9K+aJxLw3nyOLtWM+5L+7hY2iOhCId5N8daocl4SDoWxaD7dPo2RcGxD74
-	4Pru6+r8YkG6mf0rC1ZOJOs=
-Received: from mail.maildlp.com (unknown [172.19.162.92])
-	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4grx8z1HsvzLltS;
-	Fri,  3 Jul 2026 09:33:23 +0800 (CST)
-Received: from kwepemo500009.china.huawei.com (unknown [7.202.194.199])
-	by mail.maildlp.com (Postfix) with ESMTPS id E04604058D;
-	Fri,  3 Jul 2026 09:42:33 +0800 (CST)
-Received: from [10.67.121.161] (10.67.121.161) by
- kwepemo500009.china.huawei.com (7.202.194.199) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Fri, 3 Jul 2026 09:42:33 +0800
-Message-ID: <50bf37a0-bdc2-45fb-ad9a-7190c96a5971@huawei.com>
-Date: Fri, 3 Jul 2026 09:42:32 +0800
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="UFIPvQjz";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="IoErIr/o";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="UFIPvQjz";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="IoErIr/o"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 995F17463C;
+	Fri,  3 Jul 2026 01:49:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783043390; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8BUpttSYCshsKzovsvxRl3O8rpu+osik0JDB5cOl/Ts=;
+	b=UFIPvQjz02a07wYcGMxKdK5QS/oo+tY4n2zQYQ0y391gfeZ1aKg/teBGKCRDwgDZBEuq51
+	ebW6N0e0hczw7etE6CMo6aYnJxUhEc3RTpjP8NpklvPeWdYpAyDsu1US7iGrC6dGeKYUqy
+	I/MLJ77yfNA4NqP2AW+Tc1yhabEQKuI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783043390;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8BUpttSYCshsKzovsvxRl3O8rpu+osik0JDB5cOl/Ts=;
+	b=IoErIr/o38uowhO7C20+QR22hfLrvunVnUCzCylu4LOt5O4QJr9kwHaGFsKvtauqIUQmZb
+	+QgboIOE6j1/u2BA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UFIPvQjz;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="IoErIr/o"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783043390; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8BUpttSYCshsKzovsvxRl3O8rpu+osik0JDB5cOl/Ts=;
+	b=UFIPvQjz02a07wYcGMxKdK5QS/oo+tY4n2zQYQ0y391gfeZ1aKg/teBGKCRDwgDZBEuq51
+	ebW6N0e0hczw7etE6CMo6aYnJxUhEc3RTpjP8NpklvPeWdYpAyDsu1US7iGrC6dGeKYUqy
+	I/MLJ77yfNA4NqP2AW+Tc1yhabEQKuI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783043390;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8BUpttSYCshsKzovsvxRl3O8rpu+osik0JDB5cOl/Ts=;
+	b=IoErIr/o38uowhO7C20+QR22hfLrvunVnUCzCylu4LOt5O4QJr9kwHaGFsKvtauqIUQmZb
+	+QgboIOE6j1/u2BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D1D4779AA;
+	Fri,  3 Jul 2026 01:49:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id S1ViDz4VR2pMQQAAD6G6ig
+	(envelope-from <clopez@suse.de>); Fri, 03 Jul 2026 01:49:50 +0000
+Message-ID: <bd6897ba-0dab-4093-87bc-128d2e786310@suse.de>
+Date: Fri, 3 Jul 2026 03:49:49 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,204 +83,155 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 16/18] vfio/pci: Implement TPH_ST feature for batch ST
- table programming
-To: <sashiko-reviews@lists.linux.dev>, Alex Williamson <alex@shazbot.org>,
-	Bjorn Helgaas <helgaas@kernel.org>
-CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <20260702124224.57168-1-fengchengwen@huawei.com>
- <20260702124224.57168-17-fengchengwen@huawei.com>
- <20260702130413.7D1781F000E9@smtp.kernel.org>
+Subject: Re: [PATCH] KVM: arm64: vgic: Fix race between LPI release and
+ re-registration
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+ Oliver Upton <oupton@kernel.org>
+References: <20260702233514.2581921-1-clopez@suse.de>
+ <20260702235224.EB21C1F000E9@smtp.kernel.org>
+From: =?UTF-8?Q?Carlos_L=C3=B3pez?= <clopez@suse.de>
 Content-Language: en-US
-From: fengchengwen <fengchengwen@huawei.com>
-In-Reply-To: <20260702130413.7D1781F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- kwepemo500009.china.huawei.com (7.202.194.199)
+In-Reply-To: <20260702235224.EB21C1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 995F17463C
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-On 7/2/2026 9:04 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] TPH policy bypass due to flawed bitwise validation of uAPI flags.
-
-Read bug, will fix in v20
-
-> - [High] Error codes during batch programming are overwritten, converting failures into silent successes.
-
-False positive because the ioctl return 0 means no entry was programed
-
-> - [High] The ioctl bypasses the TPH policy restrictions for IV_ST, allowing userspace to program CPU ST tags when forbidden.
-
-False positive because TPH_ST could also allowed when tph_policy=IV_ST
-(allowd src: NONE/DMABUF/CPU)
-
-> - [High] Programming MSI-X TPH entries without ensuring PCI Memory Space Enable (MSE) is active can cause fatal Machine Check Exceptions (MCE).
-
-Two possible options to resolve this I think:
-1. Add explicit MSE read/validation inside vfio_pci_core_feature_tph_st() before
-   each pcie_tph_set_st_entry() call, returning -EIO when memory space is disabled.
-2. Move the MSE guard into the shared pcie_tph_set_st_entry() helper in pci/tph.c,
-   so all callers automatically inherit the safety check without duplicate logic.
-
-Could reviewers advise which approach is preferred here, or confirm whether this
-MSE validation is required at all for the TPH batch programming path?
-
-> - [Medium] Missing strict rejection of undefined/reserved bits in uAPI flags.
-> - [Medium] Missing dma_resv_lock in vfio_pci_dma_buf_get_tph_by_fd() leads to unprotected access to dmabuf state.
-
-The above two are both pre-commits' bug, will fix in v20
-
-Thanks
-
+On 7/3/26 1:52 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] The patch introduces a Use-After-Free (UAF) and ABA vulnerability by allowing `vgic_add_lpi()` to free an LPI via `kfree_rcu()` while a concurrent `vgic_put_irq()` could still be processing the same LPI's release without RCU protection.
+> 
+> Pre-existing issues:
+> - [High] `vgic_add_lpi()` can spuriously fail with `-ENOMEM` when racing with an LPI release due to a lost XArray node reservation.
 > --
 > 
-> commit 7b7176f5f74da5cf5059e3ca3ebda10567316f68
-> Author: Chengwen Feng <fengchengwen@huawei.com>
-> Subject: vfio/pci: Implement TPH_ST feature for batch ST table programming
+> commit 3cbf900c0e9154b2814ac964d591008312ad60be
+> Author: Carlos López <clopez@suse.de>
 > 
-> This commit adds vfio_pci_core_feature_tph_st() for batch programming
-> of TPH ST table entries. It introduces helpers for calculating ST table
-> size and resolving tags. The ioctl iterates over user-provided handles
-> to look up and write tags while holding the memory lock and keeping the
-> device in D0.
+> KVM: arm64: vgic: Fix race between LPI release and re-registration
 > 
->> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
->> index ed6bbffa8b26a..7251e251824a8 100644
->> --- a/drivers/vfio/pci/vfio_pci_core.c
->> +++ b/drivers/vfio/pci/vfio_pci_core.c
->> @@ -1713,6 +1713,123 @@ static int vfio_pci_core_feature_tph_resolve(struct vfio_pci_core_device *vdev,
->>  	return copy_to_user(arg, &resolve, sizeof(resolve)) ? -EFAULT : 0;
->>  }
+> Fix a potential race between decrementing an LPI's reference count and
+> evicting that structure from the LPI xarray.
+> 
+>> diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+>> --- a/arch/arm64/kvm/vgic/vgic-its.c
+>> +++ b/arch/arm64/kvm/vgic/vgic-its.c
+>> @@ -116,7 +116,15 @@ static struct vgic_irq *vgic_add_lpi(struct kvm *kvm, u32 intid,
+>>  		kfree(irq);
+>>  		irq = oldirq;
+>>  	} else {
+>> -		ret = xa_err(__xa_store(&dist->lpi_xa, intid, irq, 0));
+>> +		/*
+>> +		 * The entry is either empty or contains an IRQ whose refcount is 0
+>> +		 * but has not yet been freed by vgic_release_lpi_locked(). Evict the
+>> +		 * IRQ and free it, if there is one.
+>> +		 */
+>> +		oldirq = __xa_store(&dist->lpi_xa, intid, irq, 0);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can this __xa_store() fail with -ENOMEM
+> when racing with an LPI release?
+> 
+> Looking earlier in vgic_add_lpi(), xa_reserve_irq() allocates an XArray
+> node, but the lock is released immediately after. If a concurrent
+> vgic_release_lpi_locked() replaces the entry with NULL (or erases it before
+> this patch), the underlying XArray node might be freed.
+> 
+> When this thread resumes and calls __xa_store() here with gfp=0, could it
+> fail due to the missing node and cause the guest ITS command to be dropped?
+> 
+>> +		ret = xa_err(oldirq);
+>> +		if (!ret && oldirq)
+>> +			kfree_rcu(oldirq, rcu);
+>>  	}
 >>  
+>>  	xa_unlock_irqrestore(&dist->lpi_xa, flags);
+> 
 > [ ... ]
->> +static int tph_get_st_tag(struct pci_dev *pdev, u32 src_bits, u32 src_hndl,
->> +			  bool extended, u16 *tag)
->> +{
->> +	int ret = 0;
->> +	u8 ph;
+> 
+>> diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
+>> --- a/arch/arm64/kvm/vgic/vgic.c
+>> +++ b/arch/arm64/kvm/vgic/vgic.c
+>> @@ -131,9 +131,19 @@ struct vgic_irq *vgic_get_vcpu_irq(struct kvm_vcpu *vcpu, u32 intid)
+>>  
+>>  static void vgic_release_lpi_locked(struct vgic_dist *dist, struct vgic_irq *irq)
+>>  {
+>> +	struct vgic_irq *old;
+>>  
+>>  	lockdep_assert_held(&dist->lpi_xa.xa_lock);
+>> -	__xa_erase(&dist->lpi_xa, irq->intid);
+>> -	kfree_rcu(irq, rcu);
 >> +
->> +	if (src_bits & VFIO_DEVICE_TPH_SRC_NONE)
->> +		*tag = 0;
->> +	else if (src_bits & VFIO_DEVICE_TPH_SRC_DMABUF)
->> +		ret = vfio_pci_dma_buf_get_tph_by_fd(src_hndl, extended,
->> +						     tag, &ph);
+>> +	/*
+>> +	 * Free the IRQ if it is still present in the xarray, as its entry could have
+>> +	 * been overwritten after the refcount was dropped, but before the xarray lock
+>> +	 * was acquired. If the cmpxchg fails, vgic_add_lpi() grabbed the lock first
+>> +	 * and freed the old IRQ along the way.
+>> +	 */
+>> +	old = __xa_cmpxchg(&dist->lpi_xa, irq->intid, irq, NULL, 0);
 > 
-> [Severity: Medium]
-> Does this path safely access the dmabuf state?
+> [Severity: Critical]
+> Does this introduce a use-after-free and ABA issue if the RCU grace period
+> completes before this thread acquires the xarray lock?
 > 
-> Looking at the callee:
-> vfio_pci_dma_buf_get_tph_by_fd()
->    vfio_pci_dma_buf_get_pci_tph(dmabuf, ...)
+> When vgic_put_irq() drops the refcount to 0, the thread does not hold an RCU
+> read lock while waiting to acquire the xarray lock. A concurrent
+> vgic_add_lpi() could replace the old LPI and call kfree_rcu(oldirq, rcu).
 > 
-> It appears the dmabuf is accessed without acquiring its reservation
-> lock (dmabuf->resv). Could this lead to data races when accessing
-> the TPH metadata if it changes concurrently?
-> 
->> +	else if (src_bits & VFIO_DEVICE_TPH_SRC_CPU_VOLATILE)
-> [ ... ]
->> +static int vfio_pci_core_feature_tph_st(struct vfio_pci_core_device *vdev,
->> +				u32 flags,
->> +				struct vfio_device_feature_tph_st __user *arg,
->> +				size_t argsz)
->> +{
->> +	u32 permit_flags = VFIO_DEVICE_TPH_SRC_MASK | VFIO_DEVICE_TPH_EXTENDED;
->> +	struct vfio_device_feature_tph_st tph_st = {0};
->> +	struct pci_dev *pdev = vdev->pdev;
->> +	u32 src_bits, st_size;
->> +	bool stop_on_zero_st;
->> +	u32 *src_hndl = NULL;
->> +	void __user *uptr;
->> +	bool extended;
->> +	int ret, i;
->> +	u16 tag;
->> +
->> +	if (!vdev->tph_permit || vdev->tph_policy == VFIO_PCI_TPH_POLICY_NO_ST)
->> +		return -EOPNOTSUPP;
->> +
->> +	ret = vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_SET,
->> +				 sizeof(tph_st));
->> +	if (ret <= 0)
->> +		return ret;
->> +
->> +	if (copy_from_user(&tph_st, arg, sizeof(tph_st)))
->> +		return -EFAULT;
->> +
->> +	src_bits = tph_st.flags & VFIO_DEVICE_TPH_SRC_MASK;
->> +	if (vdev->tph_policy != VFIO_PCI_TPH_POLICY_LITERAL)
->> +		permit_flags &= ~VFIO_DEVICE_TPH_SRC_LITERAL;
-> 
-> [Severity: High]
-> Is this missing a restriction for the VFIO_PCI_TPH_POLICY_IV_ST
-> policy?
-> 
-> In vfio_pci_core_feature_tph_resolve(), the IV_ST policy strictly
-> limits allowed sources to VFIO_DEVICE_TPH_SRC_DMABUF. However, here
-> permit_flags is initialized to VFIO_DEVICE_TPH_SRC_MASK and only
-> LITERAL is explicitly removed. Could this allow userspace to program
-> CPU ST tags when the device policy forbids it?
-> 
->> +	if (!(tph_st.flags & permit_flags) || !is_power_of_2(src_bits))
->> +		return -EINVAL;
-> 
-> [Severity: High]
-> Can this bitwise validation be bypassed if a user sets a forbidden
-> source flag along with a permitted flag?
-> 
-> If VFIO_DEVICE_TPH_EXTENDED is included in permit_flags and
-> provided in tph_st.flags, the bitwise AND evaluates to non-zero,
-> satisfying the first condition. If only one forbidden source bit is
-> set, is_power_of_2() also passes, completely bypassing the policy
-> restrictions.
-> 
-> (Note: This same validation pattern appears to be present in
-> vfio_pci_core_feature_tph_resolve() as well).
-> 
-> [Severity: Medium]
-> Does this logic ignore undefined or reserved bits in tph_st.flags
-> instead of strictly rejecting them?
-> 
-> If userspace passes uninitialized garbage in the upper bits, the kernel
-> won't return -EINVAL, potentially breaking forward compatibility for
-> future extensions.
-> 
->> +	extended = !!(tph_st.flags & VFIO_DEVICE_TPH_EXTENDED);
-> [ ... ]
->> +	for (i = 0; i < tph_st.count; i++) {
->> +		ret = tph_get_st_tag(pdev, src_bits, src_hndl ? src_hndl[i] : 0,
->> +				     extended, &tag);
->> +		if (ret || (stop_on_zero_st && tag == 0))
->> +			break;
->> +		ret = pcie_tph_set_st_entry(pdev, tph_st.start + i, tag);
-> 
-> [Severity: High]
-> Is it safe to program MSI-X TPH entries without ensuring the PCI
-> Memory Space Enable (MSE) bit is active?
-> 
-> While this function ensures the device is in the D0 power state,
-> userspace can dynamically disable PCI_COMMAND_MEMORY. Since
-> pcie_tph_set_st_entry() performs direct MMIO writes to the BAR,
-> could executing this unconditionally on a disabled BAR result in an
-> Unsupported Request (UR) and a fatal Machine Check Exception (MCE)?
-> 
->> +		if (ret)
->> +			break;
->> +	}
->> +	ret = i;
-> 
-> [Severity: High]
-> Does this unconditional assignment destroy the error code if the
-> loop breaks early?
-> 
-> If tph_get_st_tag() or pcie_tph_set_st_entry() fails on the very
-> first iteration, ret will hold a negative error code (like
-> -EINVAL). When the loop breaks, ret = i; overwrites it with 0,
-> causing the ioctl to silently return success to userspace.
-> 
->> +
->> +out:
->> +	up_write(&vdev->memory_lock);
->> +	kfree(src_hndl);
->> +	return ret;
->> +}
+> Because the releasing thread isn't in an RCU critical section, the grace
+> period can elapse. The memory backing this irq can then be freed and
+> reallocated to a new LPI with the same intid.
+
+kzalloc_obj() is called before kfree_rcu() in the winning CPU (running
+vgic_add_lpi()), so the allocator cannot return back the same pointer
+for the ABA issue to happen. This would need another DISCARD + MAPTI
+cycle in parallel it to happen, which I guess is not impossible.
+
+> When this thread eventually resumes and calls __xa_cmpxchg(), wouldn't it
+> dereference the freed irq pointer to read irq->intid, and then incorrectly
+> match the reallocated LPI, causing a double-free?
+
+Ugh, yes. On the vgic_put_irq() path the reference count needs to be
+decremented under the xarray lock, that way there is no window where the
+irq is in the xarray with refcount=0, so vgic_add_lpi() cannot free it
+while we still hold the pointer to it.
+
+For the deferred path I think it's okay though. Once
+vgic_release_deleted_lpis() grabs the xarray lock, if the entry was
+evicted by vgic_add_lpi() we will simply not find it via xa_for_each().
+
+>> +	if (old == irq)
+>> +		kfree_rcu(irq, rcu);
+>>  }
 > 
 
