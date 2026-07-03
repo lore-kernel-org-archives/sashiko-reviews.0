@@ -1,113 +1,141 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60F231829;
-	Fri,  3 Jul 2026 05:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D6035677C
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 06:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783058035; cv=none; b=kr8Tm730CCFonMmRjsNckKm5qwJpNkcrrQhFTIbl63AtVtdVUI0FvjbM3f5EKQDaT5R0HvSPUyMx6dUQuc+HoR8YAMvvFSEyo5wUl4e+bIo5hyO2elGbbjTWl9lCEa4brUGsguG/wDlI2VTCiyDIvvot/ssjkk1bJDFyUnXzbCE=
+	t=1783058686; cv=none; b=s6ZoA9VygctzSX22hhKHeIcA2HZ8IEJ24UELtYH4PJX1Slz8gJImDEw/PkxBZs9UsMHS2oswwnhVMA5uRCX+sL43G/+p+xqM1JvuwT4zS/IYQVJOYZ47MY8tNYDT7lxIZ+Uyannt96fYDf7TnrY8F7TzTTWvkhwUyzyDJhnRla0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783058035; c=relaxed/simple;
-	bh=gA+ohpEGOnnmWlMVdE7Hf5DmX580TNPRdJTBWNA/H40=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IjLwLeSfm9ZChPphURZjqltJU/6jQgA+8gk08CgQpcR8HHF0NklNpnWkwkbU7mqlDdWdpe2NsoGQLya9Czxw0d9Yj1PM1zknGi9L1BUJGwtYJ5B6KrX+STY/Y940Jc7P0GfKtjopea+vjH23v8ATEOnNRle78vRWeaphbaXSBvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KrI4skxM; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=cju51aBC; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1783058686; c=relaxed/simple;
+	bh=hI18hC0UwSAypcvL9VyuFkm6qpjqA75tmCly55HM5Mk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LZ4pM1cHgXvAVXw4cqfE5T/twAfTklppNCb0HAu4sjMxe4Wa2MQAgOg4ie3Hih1NXsyb6zVaHXVMtd290OSzCKg28KFpiU1sRB0LOHISsdboBU2cs5r/GCIZ2x8HSUQ4cf2OvQocxGAPP6NJsEc8K0JyFIYYS5IqwuKC56M/dQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=X7RQ76WV; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KrI4skxM";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="cju51aBC"
-From: Nam Cao <namcao@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1783058030;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="X7RQ76WV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1783058683;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=CrTTbM/MoRg1HsY6OQkPKeGxlPQ5We1d3Cm/DFl3UGM=;
-	b=KrI4skxMxTZ5bBQqRl8ooZsbyFfkzyx7GwK4QDUq7wxU9LPWxbf3QqcJh/fJaVWvFJNG36
-	8QPreHG1abi4++wQDCwc5OziccH0dk7yUV9ignlzvhBTXJxpfTIzo19hYQf+NHOyjTF215
-	oOcF1hu0dIS0aGcxB2khIfmJdmOnxbcpNtAneRFkpo5ukuOhYsh8e1weaFctzKUJVGzfkk
-	hYIxecB6/ZomxyM5vsmEc8tUl2WzD9KXPcVVL0GjVLcY8hefi8DXrHc2w3SNSjaKt+A9+V
-	1kDo9vb9/jyX1+r6Zrc9WLWmhGgnaWCdQw3UciWjw1r1sG7No7/ygt8QRL5lYw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1783058030;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CrTTbM/MoRg1HsY6OQkPKeGxlPQ5We1d3Cm/DFl3UGM=;
-	b=cju51aBCxPfqAvl1nBObWLPvCTEz4j8Y+yLjPRSoWoMDK5ZmsRGe4LVSylX8WL+CX3P1jY
-	vOF4P9uJLTo5jeBA==
-To: sashiko-reviews@lists.linux.dev, Kuniyuki Iwashima <kuniyu@google.com>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
- <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-rt-devel@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] af_unix: Do not wait for garbage collector in
- sendmsg()
-In-Reply-To: <20260702163608.0207A1F00A3A@smtp.kernel.org>
-References: <cover.1782922354.git.namcao@linutronix.de>
- <e663a83195f3d9f6d7ad4907c37ae3e45c151062.1782922354.git.namcao@linutronix.de>
- <20260702163608.0207A1F00A3A@smtp.kernel.org>
-Date: Fri, 03 Jul 2026 07:53:48 +0200
-Message-ID: <87mrw8sjo3.fsf@yellow.woof>
+	bh=foimsWHRKb0iIpREmdZ9R+ChVT/sfsRhZkHKfNjCwTo=;
+	b=X7RQ76WVxommw7fOzvZstaaQKYBAxt+ypSsbRXanTn3KIks1x9HQhrjhkl/cJdz4LpxGqZ
+	JTPysjyZT9i6uZm4DhyaRPF7IeYqZ/dPx3HAZZOESTQlG+U+wgr0RQLV/WN+gYaqqR3vvX
+	bD/uoP5nly9L5wcVzrqnbe+8w2rcbGA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-eBTFNwcoObK15MtIBm7H0w-1; Fri,
+ 03 Jul 2026 02:04:40 -0400
+X-MC-Unique: eBTFNwcoObK15MtIBm7H0w-1
+X-Mimecast-MFC-AGG-ID: eBTFNwcoObK15MtIBm7H0w_1783058679
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 72336193E8B5;
+	Fri,  3 Jul 2026 06:04:39 +0000 (UTC)
+Received: from [10.2.16.58] (unknown [10.2.16.58])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 1832D30030D1;
+	Fri,  3 Jul 2026 06:04:37 +0000 (UTC)
+Message-ID: <f897e15b-6738-400a-b5e2-229408b31222@redhat.com>
+Date: Fri, 3 Jul 2026 02:04:36 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-next v10 10/11] cgroup/cpuset: Support multiple
+ destination cpusets for cpuset_*attach()
+To: sashiko-reviews@lists.linux.dev
+Cc: mkoutny@suse.com, hannes@cmpxchg.org, tj@kernel.org
+References: <20260702214757.579012-1-longman@redhat.com>
+ <20260702214757.579012-11-longman@redhat.com>
+ <20260702220322.9F9DF1F000E9@smtp.kernel.org>
+From: Waiman Long <longman@redhat.com>
+In-Reply-To: <20260702220322.9F9DF1F000E9@smtp.kernel.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: zLC1I3idvLASA5aiDwH9oI3VGmXx6fsqpFIRtdJbr4E_1783058679
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-sashiko-bot@kernel.org writes:
+
+On 7/2/26 6:03 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Garbage collector is no longer scheduled when creating new inflight FDs, leading to permanent cycle accumulation and -ETOOMANYREFS failures in isolated environments.
+> - [High] Migrating a multithreaded process with threads in different cgroups fails with a warning and `-EINVAL` if some threads change their cpuset and others do not.
 > --
 >
-> commit 506189bd29f8ad56f5d9e51f3e0216203ebad5ec
-> Author: Nam Cao <namcao@linutronix.de>
+> commit b5923423c1aaea18954e18ecdfabb8c2bad4298c
+> Author: Waiman Long <longman@redhat.com>
 >
-> af_unix: Do not wait for garbage collector in sendmsg()
+> cgroup/cpuset: Support multiple destination cpusets for cpuset_*attach()
 >
-> This patch removes the garbage collector scheduling and waiting from the
-> sendmsg() path for AF_UNIX sockets. It aims to prevent priority inversion
-> by relying on RLIMIT_NOFILE limits and asynchronous garbage collection.
+> This commit adds support for migrating tasks to multiple destination cpusets.
+> It introduces a new list to track destination cpusets and integrates the reset
+> logic into clear_attach_data(). It also adds a warning and fails the attach
+> operation if a cpuset is used as both a source and destination.
 >
->> diff --git a/net/unix/garbage.c b/net/unix/garbage.c
->> index 0783555e25266..f180c59b3da9d 100644
->> --- a/net/unix/garbage.c
->> +++ b/net/unix/garbage.c
->> @@ -300,8 +300,6 @@ int unix_prepare_fpl(struct scm_fp_list *fpl)
->>  	if (!fpl->edges)
->>  		goto err;
->>  
->> -	unix_schedule_gc(fpl->user);
->> -
->
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> index 38d48b66a32cf..8716b2e339606 100644
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
+> [ ... ]
+>> @@ -3044,8 +3046,23 @@ static int cpuset_can_attach_check(struct cpuset *cs, struct cpuset *oldcs,
+>>   	if (!oldcs)
+>>   		return 0;
+>>   
+>> -	if (!llist_on_list(&oldcs->attach_node))
+>> +	/*
+>> +	 * The same cpuset cannot be both a source and a destination.
+>> +	 * The current code does not support that, print a warning and
+>> +	 * fail the attach if so.
+>> +	 */
+>> +	if (WARN_ON_ONCE((!oldcs->attach_source &&
+>> +			  llist_on_list(&oldcs->attach_node)) ||
+>> +			  cs->attach_source))
+>> +		return -EINVAL;
 > [Severity: High]
-> Does this removal prevent the garbage collector from running when a process
-> creates isolated socket cycles?
+> Does this WARN_ON_ONCE trigger incorrectly during multithreaded process migrations?
 >
-> If a process continuously creates socket cycles (e.g., passing FDs to each
-> other) and closes its local FDs, the sockets reference each other in their
-> receive queues, so their file reference counts will not reach zero.
+> When a multithreaded process is migrated, some threads may already be in the
+> target cgroup (where oldcs == cs) while other threads are moved from a different
+> cgroup. For the threads that do not move, cpuset_can_attach_check() will process
+> them as a source and set cs->attach_source = true.
+
+I had done some tests on the latest kernel using a multi-threaded 
+process with threads distributed in different cpusets that threads 
+already in the destination cpuset will not show up in the task iteration 
+process. So the situation that (cs == oldcs) should not happen. The 
+WARN_ON_ONCE() is put there to ensure that if any future changes that 
+accidentally breaks the rule will cause this warning to appear.
+
+Cheers,
+Longman
+
 >
-> Because the refcounts do not drop to zero, unix_release_sock() is never
-> triggered. By removing unix_schedule_gc() from unix_prepare_fpl() here,
-> unix_release_sock() is left as the only trigger for garbage collection.
+> When the iteration in cpuset_can_attach() reaches a thread that does change
+> its cpuset, it calls cpuset_can_attach_check() again for the same destination
+> cpuset:
 >
-> This could allow the inflight count to accumulate indefinitely until it
-> hits RLIMIT_NOFILE, causing subsequent sendmsg() calls to fail with
-> -ETOOMANYREFS and permanently leaking the network namespace unless an
-> unrelated AF_UNIX socket is closed system-wide.
+> 	cgroup_taskset_for_each(task, css, tset) {
+> 		...
+> 		if ((new_oldcs != oldcs) || (new_cs != cs)) {
+> 			...
+> 			ret = cpuset_can_attach_check(cs, oldcs, &setsched_check);
+>
+> Since cs->attach_source was previously set to true, this check will fail,
+> triggering the warning and returning -EINVAL.
+>
+> This prevents migrating multithreaded processes across cgroups under these
+> conditions and could potentially panic systems configured with panic_on_warn.
+>
 
-Sashiko found a valid issue here. But this is a pre-existing issue. It
-is not introduced in this patch.
-
-unix_schedule_gc() does not actually schedule the garbage collector
-unless user's inflight unix socket count exceeds UNIX_INFLIGHT_SANE_USER
-(2024). So user can already accumulate up to 2023 inflight socket counts
-without the garbage collector running until unix_release_sock() is called.
-
-Nam
