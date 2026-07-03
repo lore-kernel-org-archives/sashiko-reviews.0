@@ -1,137 +1,131 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611BF3C4563
-	for <sashiko-reviews@lists.linux.dev>; Thu,  2 Jul 2026 23:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904761A6807
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 00:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783033917; cv=none; b=oFS4MHoYDFAtqdsXKjx4Yts6VS+qr/y33o0m+YvULlJKfqHJMQBCgp3eS1EkvRv1yDGOgN4n3DIRmM3u6G2rRrINVKyQWoywLb0OtXGMsi6An0nb07D4Z4mOAVy7cwRaFUaHPYmxqIu12WS2n2Al5MqohNe7WY6Ub33U3ZDNKts=
+	t=1783038980; cv=none; b=N7LnNsEbI4Y5XNId9Zh6G7/vlOrEWz4tzzCtb8nXVHfpHV5Mtvgn14tf8Jtvp30U0nIGiSsDW3FS+aBhx+bRchxQ5zbTeNHrP6CCGIfFinAYWq/s6gxKCFw3NLkFDgFINLf2XAKzHPw377ftrMXtpOh+UOpVjHTNWH2I1IpPF2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783033917; c=relaxed/simple;
-	bh=wUdP+CNy1ketiNH4C1ATkD4qoY0ELdNQyFMUu54Uo0A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=REZJz8kFXF2RqhfMWB6G18EGgxA5jllA5RgaQdJuKxOJNT80ww7EITgCjBteOjIMOKw3JYjFrztb04e6mO5c7T0zueuRe7clI24k5mSyv8DEyBqi7qQqKbSwcrxRU46hNa9mEeluTkxcAL7tZUumDQ+ExLp4zP6lQgJo5+X0koQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 34352202596;
-	Fri, 03 Jul 2026 01:11:53 +0200 (CEST)
-Received: from pty.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::c5])
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mfe@pengutronix.de>)
-	id 1wfQZV-005ogT-0Q;
-	Fri, 03 Jul 2026 01:11:53 +0200
-Received: from mfe by pty.whiteo.stw.pengutronix.de with local (Exim 4.98.2)
-	(envelope-from <mfe@pengutronix.de>)
-	id 1wfQZV-0000000DX7d-08rt;
-	Fri, 03 Jul 2026 01:11:53 +0200
-Date: Fri, 3 Jul 2026 01:11:53 +0200
-From: Marco Felsch <m.felsch@pengutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: dmitry.torokhov@gmail.com, devicetree@vger.kernel.org, 
-	linux-input@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH v7 1/4] firmware_loader: expand firmware error codes with
- up-to-date error
-Message-ID: <nwxv6xkeey324ftvgj6g6eq43rz7zautmjro4fi2tmd2vh35f6@fahpuuvaqhg6>
-References: <20260703-v6-10-topic-touchscreen-axiom-v7-0-0d2a550a7ee8@pengutronix.de>
- <20260703-v6-10-topic-touchscreen-axiom-v7-1-0d2a550a7ee8@pengutronix.de>
- <20260702224537.0823C1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1783038980; c=relaxed/simple;
+	bh=HQOl5f+3BFXxdbqHvPxam/utoMEvo8BUmmSaeT0HYNc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=RN2Ea8AwRe64rC2dxEprcQnOdzIzwvPcWxS9sOXNfZlGYQdCdOTcr6FKuZf3STOYwC8BJfHUSuf7LiyJ/oGaLjSvKlpPB5ANCFcBx82231NpILGjKGyD0cbnWBLNbVGket1k3QrtXhq1k9bWP9ohBkuutfd0eskqNGYPz+5iYOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=w3GpvQQ5; arc=none smtp.client-ip=113.46.200.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="w3GpvQQ5"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=ks18hZZIQFp1HIdQaDajUBkbfQZ3RKQTkJwHEed0hmg=;
+	b=w3GpvQQ5ZdlgY/RW5aI8QLtdzoZMKkMbRA5STbEjActyvnoewk4v4RI0I2hDbX6oCNrKV/s+n
+	/R/w2/jHYUGL69wALiROuh5o4F1iIXDXvMu5uuMgb6lqnP/XhnssdQ2L6s7e2doMx3znU8p6X5j
+	/tA9ZTFcTTyRQzAVcWJy96w=
+Received: from mail.maildlp.com (unknown [172.19.162.144])
+	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4grvhz3bLTz12LFj;
+	Fri,  3 Jul 2026 08:27:31 +0800 (CST)
+Received: from kwepemo500009.china.huawei.com (unknown [7.202.194.199])
+	by mail.maildlp.com (Postfix) with ESMTPS id B567D40572;
+	Fri,  3 Jul 2026 08:36:13 +0800 (CST)
+Received: from [10.67.121.161] (10.67.121.161) by
+ kwepemo500009.china.huawei.com (7.202.194.199) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.36; Fri, 3 Jul 2026 08:36:13 +0800
+Message-ID: <3c7bf42e-9ff7-4bf2-a0d1-71e93c3cfdd1@huawei.com>
+Date: Fri, 3 Jul 2026 08:36:12 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260702224537.0823C1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v19 09/18] vfio/pci: Hide TPH capability when TPH is
+ unsupported
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
+References: <20260702124224.57168-1-fengchengwen@huawei.com>
+ <20260702124224.57168-10-fengchengwen@huawei.com>
+ <20260702130039.87A7B1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: fengchengwen <fengchengwen@huawei.com>
+In-Reply-To: <20260702130039.87A7B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
+ kwepemo500009.china.huawei.com (7.202.194.199)
 
-On 26-07-02, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The selftest script for firmware uploads does not inject and test the new 'firmware-duplicate' error.
-> - [Low] Missing ABI documentation for the newly added sysfs error string 'firmware-duplicate'.
+On 7/2/2026 9:00 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Hiding the TPH capability by returning a length of 0 unintentionally grants the guest raw read/write access to the physical TPH registers.
+
+After checking the full vfio_ecap_init logic, this is a false positive risk
+report.
+
+When vfio_ext_cap_len() returns 0 for unsupported TPH ecap, the !len branch
+takes over:
+1. It allocates minimal PCI_CAP_SIZEOF length and marks hidden=true;
+2. memset(map + epos, PCI_EXT_CAP_ID_TPH, len) populates pci_config_map,
+   so these offsets are never marked PCI_CAP_ID_INVALID;
+3. Accesses to TPH range hit the dedicated TPH ecap permission table
+   with vfio_tph_config_write handler which discards all writes,
+   never falling back to unassigned_perms raw physical write.
+
+The hidden flag erases the capability ID in virtual config space so guests
+cannot enumerate TPH, while full permission isolation is retained for all
+config offsets of this ecap. No raw hardware bypass vulnerability exists
+with current implementation.
+
+Thanks
+
 > --
 > 
-> commit b451d666b20500e69051bac63ead44572b79d708
-> Author: Marco Felsch <m.felsch@pengutronix.de>
+> commit 1d6f16c85a6a295f7dee447fc8d7ac56c232977a
+> Author: Chengwen Feng <fengchengwen@huawei.com>
 > 
-> firmware_loader: expand firmware error codes with up-to-date error
+> vfio/pci: Hide TPH capability when TPH is unsupported
 > 
-> This commit adds FW_UPLOAD_ERR_DUPLICATE to allow drivers to inform the
-> firmware_loader that an update is not required. It also updates the
-> test_firmware module to support injecting this new error state.
+> Check the device negotiated TPH support status before parsing the TPH
+> extended capability. Return zero length to hide the capability from
+> userspace if TPH is disabled during topology negotiation.
 > 
-> > diff --git a/drivers/base/firmware_loader/sysfs_upload.c b/drivers/base/firmware_loader/sysfs_upload.c
-> > index efc33294212fd..82c4b1fedf4cd 100644
-> > --- a/drivers/base/firmware_loader/sysfs_upload.c
-> > +++ b/drivers/base/firmware_loader/sysfs_upload.c
-> > @@ -28,6 +28,7 @@ static const char * const fw_upload_err_str[] = {
-> >  	[FW_UPLOAD_ERR_RW_ERROR]     = "read-write-error",
-> >  	[FW_UPLOAD_ERR_WEAROUT]	     = "flash-wearout",
-> >  	[FW_UPLOAD_ERR_FW_INVALID]   = "firmware-invalid",
-> > +	[FW_UPLOAD_ERR_DUPLICATE]    = "firmware-duplicate",
-> 
-> [Severity: Low]
-> Since a new error string "firmware-duplicate" is exposed to userspace,
-> should this also be documented in
-> Documentation/ABI/testing/sysfs-class-firmware?
-
-I checked the firmware-invalid which is also not documented. I could add
-2nd patch to fix this if this is urgent.
-
-> 
-> It looks like the new string is missing from the allowed error values
-> documented for the sysfs interface.
-> 
-> >  };
-> >  
-> >  static const char *fw_upload_progress(struct device *dev,
-> 
+>> diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+>> index a10ed733f0e3a..5c6ab172df6c0 100644
+>> --- a/drivers/vfio/pci/vfio_pci_config.c
+>> +++ b/drivers/vfio/pci/vfio_pci_config.c
 > [ ... ]
+>> @@ -1450,6 +1451,8 @@ static int vfio_ext_cap_len(struct vfio_pci_core_device *vdev, u16 ecap, u16 epo
+>>  		byte &= PCI_DPA_CAP_SUBSTATE_MASK;
+>>  		return PCI_DPA_BASE_SIZEOF + byte + 1;
+>>  	case PCI_EXT_CAP_ID_TPH:
+>> +		if (!pcie_tph_supported(pdev, false))
+>> +			return 0;
 > 
-> > diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-> > index 7459bba65444d..a822d9641eb4c 100644
-> > --- a/lib/test_firmware.c
-> > +++ b/lib/test_firmware.c
-> > @@ -1134,6 +1134,7 @@ static const char * const fw_upload_err_str[] = {
-> >  	[FW_UPLOAD_ERR_RW_ERROR]     = "read-write-error",
-> >  	[FW_UPLOAD_ERR_WEAROUT]	     = "flash-wearout",
-> >  	[FW_UPLOAD_ERR_FW_INVALID]   = "firmware-invalid",
-> > +	[FW_UPLOAD_ERR_DUPLICATE]    = "firmware-duplicate",
+> [Severity: High]
+> Does hiding the capability by returning 0 here inadvertently grant the guest
+> raw read/write access to the physical TPH registers?
 > 
-> [Severity: Medium]
-> Does the test script also need to be updated to exercise this new code path?
+> When a length of 0 is returned in vfio_ext_cap_len(), the VFIO capability
+> parsing loop skips mapping the capability. This leaves the physical offsets
+> marked as PCI_CAP_ID_INVALID in vdev->pci_config_map.
 > 
-> While this properly adds injection support to the test module, the hardcoded
-> errors list in tools/testing/selftests/firmware/fw_upload.sh does not appear
-> to include "firmware-duplicate", meaning the kselftest won't actually
-> inject or test this new error type.
-
-I'm not sure how much sense it is to have a test reporting this error.
-
-Regards,
-  Marco
-
-
-
+> Guest accesses to unmapped offsets fall back to unassigned_perms:
 > 
-> >  };
-> >  
-> >  static void upload_err_inject_error(struct test_firmware_upload *tst,
+> static struct perm_bits unassigned_perms = {
+> 	.readfn = vfio_raw_config_read,
+> 	.writefn = vfio_raw_config_write
+> };
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260703-v6-10-topic-touchscreen-axiom-v7-0-0d2a550a7ee8@pengutronix.de?part=1
+> This allows a guest to perform raw writes directly to the physical device
+> using vfio_raw_config_write(), bypassing VFIO isolation.
+> 
+> Could a malicious guest use this raw access to manually enable TPH and
+> configure Steering Tags to steer DMA to arbitrary CPU caches?
+> 
+>>  		ret = pci_read_config_dword(pdev, epos + PCI_TPH_CAP, &dword);
+>>  		if (ret)
+>>  			return pcibios_err_to_errno(ret);
 > 
 
--- 
-#gernperDu 
-#CallMeByMyFirstName
-
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | https://www.pengutronix.de/ |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-9    |
