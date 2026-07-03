@@ -1,132 +1,162 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013063.outbound.protection.outlook.com [40.93.201.63])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE74348C42
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 08:26:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783067173; cv=none; b=azNC2swsnJ/g5Ww67kTT0b3+PAGEb0w8Sf1JDcOg+Z55ahtd7iI+3DbBdJdnIYRzRZiTkM0LCu4c5WIO64DS2QnlqFOZoMOOSUX2qARbl+yta9Smxnu0BUpPkWEDacR+C4+0uJE5cIWWAC7rN9AV3CYxINFcAW9O/exVEADuCCU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783067173; c=relaxed/simple;
-	bh=XKI2pAfG7OX1O/DXM04l/YZndOsoqOzA948p9sxcHoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P7fH1gi8QGylGbhKStyjidwKUg/MDTopqD5ExhTkIUyFV9iitLeiByOgZZ4Bdqzdd6h/ekL6ORBHdNl4n/GBJwBVedlQMzkjoMnVvqJjrATTEV3uuTkwR8p8N8jMYf7P7Q2WnMDzdkPe+AAJVGqzigvSaM1lDnJ9uDzmG4CAlng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=HK240GIP; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655301A6816
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 09:09:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783069765; cv=fail; b=RQV5tIUH3hyu62K4MvT2nnxroC5ovIVq47reMumB1DUTuvJ3L98m3dGjbUrEt8I7pvqMF0CuIHdWeytcNpVVAcIp0veIbMHj/nCvz1NrUufENRucTQnYsVABxnnsOmNpnUwnzUlgmuW+k69ANOdxyL0PhzGeLDjGkXyKTkKk304=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783069765; c=relaxed/simple;
+	bh=KUpn94OhrkeLrPLpSF0ijpxWajXpR9OGECK78PRr+YQ=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ozzum3aNaP7pEHN7bGE9CxQYAB5bi4NAPCo8rVgMRJQ9w1zosO3yjnQwGRjRrlRl++3FWT2201D0dJ1ucrt2tWcJ2LM9pwlEoQwdriJrELDhql4kP+ZSo9Edj6AodhHXs6Xmt4UZXHqddIs1b8dOhRBx4bt16LHpm7CxN2OeBis=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dEPt/RPt; arc=fail smtp.client-ip=40.93.201.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="HK240GIP"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493b61b52b6so1684715e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 03 Jul 2026 01:26:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1783067170; x=1783671970; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yi3rhvEIY7HPb2+WXJBWNBz8xP5NaPUV+FO6A/JpBpc=;
-        b=HK240GIP/EdmTfjzSRP4A7S/2UOltMzpvQV6U2i44KSLj5ZDE35hVv37D337kShPqy
-         IBHhbJe5mRd6VqxmWF30BtzJZDl4g5hp4MQws0tccXVSIOMPFUTV2ZV3gIycMmawNckz
-         lOV4hd9Z0/1RHsfY9vG70lFmvJe0mw0PnYtypjcuTrS7sMagQQnmlVKSX4QzBj1QkLHA
-         jFkr8FC2HRGBK+S0cB0Io4i6fji6Fh0GPyhVTfH4zHY0FF7QHB0BBMNGZ1XEhQG/vn2O
-         VZpKgVLkXjBX1eZsU2gtBcfMeuvXqAjyhHh0wWKDzuuVmcxpD4nyXgikylXNbmq8U3gi
-         5mPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783067170; x=1783671970;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=yi3rhvEIY7HPb2+WXJBWNBz8xP5NaPUV+FO6A/JpBpc=;
-        b=Loz0G0tdwdTvyXYXbghbYPJpfPgUH7ZYfwlY0f53eeUqbRVmijpiSj2v4oajpXK9hc
-         zPYzpmZEBwdHMbInQ+d1l4K0JwIVAvVwtK12Kvun53wAIY+yTJw28Nn0jHvudGtjqGXx
-         1OGQu2w34EUh4o7guaqmwkMlpjtHd3W58i3r49g1gZwvz0KaaaF3MURJ3L0MOlBlKE2z
-         zR0xlOrpHqeW91otXmqsa2v3syCUg4pV0dM6Ww97EIC26yfIL1lF7vlZce17bYsE9JU2
-         EtgzZAzM2zEATUiKOB6s7Jgg8XrIxylBIATw7T4zI0Y1O0jctPDHIL5rAno63j44xmCO
-         pvOQ==
-X-Gm-Message-State: AOJu0YwExd2g0SmlCAE45Qk2fXMmEdrQ+3jHoCm9qWKzwtUt7wpPREPB
-	6vY186zI+Awltjw+Y3MHagCooKWuFvopAQLXs7/37LKb9bhU6QLe9wbX4ffVIazhDceDtijzLIU
-	tC2zwCg4=
-X-Gm-Gg: AfdE7ckEEsCbg+shRUKSf20r2fbaYct/RkU0X3yG4hPG7iM25XtFBjJ5sM+6jz42liE
-	Flvrz6QJVIIe5nbRLVaAJNLgQuO+UNvtnJNyntj/MF5npFxSH61WQysmYLnlWkOVU70jSXQemb2
-	kMizsnq9DUcl4zOIBhS6eyHMcD8SZ0P+q/kp2sgbTYSJ9aUqEXLln7zbNAI5hJpnBiKF9Kh/IFN
-	2G3+aofzJ6Yo36+B9bi8y2LkYWSXqHVOjEMmH6f98MpMfaTOtsSZFlLZD2mKU+FBMaN5M1RxP7u
-	sBym6bDU/t8ceUbMla+4aseYUqnePz4Au4ycRlDWMROlT/6UAATIxGj1QbZQ4U7OzAJSCmG67Q4
-	g/hFsObIQ/FjbGuHAOFJIt8QUStpvPDD/QVxud/P5ZcJ8bPNJ/XaHnHu2UNYT4fIYYAVCOjgPGN
-	L09pWfycDVDq6ygJY=
-X-Received: by 2002:a05:600c:8718:b0:493:c845:bc20 with SMTP id 5b1f17b1804b1-493c845bc60mr60654815e9.4.1783067170178;
-        Fri, 03 Jul 2026 01:26:10 -0700 (PDT)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493cce12c40sm50659555e9.13.2026.07.03.01.26.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jul 2026 01:26:09 -0700 (PDT)
-Date: Fri, 3 Jul 2026 10:26:07 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>,
-	live-patching@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, Miroslav Benes <mbenes@suse.cz>,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas.weissschuh@linutronix.de>,
-	shuah@kernel.org, Zelin Deng <zelin.deng@linux.alibaba.com>,
-	linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH] kbuild: unset sub_make_done before calling kselftest
- build system
-Message-ID: <akdyH7rRV1WHtBJ3@pathway.suse.cz>
-References: <20260703-makefile-unset-submake-done-v1-1-6899248f3d6a@linutronix.de>
- <20260703061449.246801F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dEPt/RPt"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cZVNPM7HZO54B0Z03IewH9h/w1b7NP9MupMX21MdDYWb/F3lY92uNdwf3dq4JFs1Z5FshsbtpvMKK0dCUFIwi4nBVbVH8RRW5J/3tbKLnpC+ncm4WvBOlNfH8M8lBfSFHXECybWYFx9iiuAdqHZtgqQ8XdgQpZll7/zOoa6BS94uULr+aB+jBeISPSk+ER6BY96HMA/XuQa7yGSLFXXGSmSQ8kUbm6AZo4hAm2O/15n+BFoKQ7AbHp3sUrx/+YOEwtcF+qiVHJqSn7hve9hL295DWSTiO/VvfwknGoJ0gHflejDNSen8uMYy7kc3LpRCYTYeU+GH5vUk3V51izKOnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8Exft41be9H3fTpkjBZf1GxTMCejqeC8UyAjMIlOUC0=;
+ b=w5/NuPM82PvUH+vlwSA4nmgQyFQdbBlaKsnH6vZn1bnpQcSZEFGA7FP5qKLbJdaA8ItAl7OQi8vZnPqdQY2X6qL3l0F9jyTFatMs0di/64tSaziRXyYhjAhbT2qny4AneOpstbw0YZtzE7iuPkTfBDcjKfn1MENVGlAqtedgvPNAm0NTs2n4WTV/YXA8Tlm0tYwWIaxGssBjuYarB+CLBxu2veeQL4PJeoaKaXI7DtIwzX19Typdyll6ln/E0S3CNEpfYTFxYtMgnJ+pXeWbsiER6R23lbLy1bdwSfCXacKdZ06djCjskN4ohnk275tm3TfQw46hBRFYnfuXMr4MTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=oss.nxp.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8Exft41be9H3fTpkjBZf1GxTMCejqeC8UyAjMIlOUC0=;
+ b=dEPt/RPtixmBB6QhsxYM11iIhL6jgM0HM28tbO5zOrqWJTgny3ByxJHOMwKKr2omuDMbYryElspt19sKfu5D1R+YeSD56ABoiYQRKR8bfrtqdBxh3k90VX7Adlx3IjxhbbzNbuSiWY/g7fI7vobFN1rvLO8u0+Eqaqqpqh2fqKhm0s25BgAebD8dTNi5cfIGijM+3CyP8iKirHIM+8btQwE9fmWg6TRCYRrXRVjYip1H5AKR+VYsg9an3y1cPcjlU806OPNWAedtRjrMg3Z+UjQT4wUGdrLkbBNMTZUWi10wEkS8EYjcbwHq1KLKMBW/JE0dwCHna2XUYcamZNKuYw==
+Received: from CH0PR03CA0010.namprd03.prod.outlook.com (2603:10b6:610:b0::15)
+ by DS0PR12MB6605.namprd12.prod.outlook.com (2603:10b6:8:d3::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Fri, 3 Jul 2026
+ 09:09:16 +0000
+Received: from CH2PEPF00000140.namprd02.prod.outlook.com
+ (2603:10b6:610:b0:cafe::6b) by CH0PR03CA0010.outlook.office365.com
+ (2603:10b6:610:b0::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.9 via Frontend Transport; Fri, 3
+ Jul 2026 09:09:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH2PEPF00000140.mail.protection.outlook.com (10.167.244.72) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 3 Jul 2026 09:09:15 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 3 Jul
+ 2026 02:09:00 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 3 Jul
+ 2026 02:08:59 -0700
+Received: from build-akhilrajeev-noble-20260602.internal (10.127.8.11) by
+ mail.nvidia.com (10.129.68.7) with Microsoft SMTP Server id 15.2.2562.20 via
+ Frontend Transport; Fri, 3 Jul 2026 02:08:56 -0700
+From: Akhil R <akhilrajeev@nvidia.com>
+To: <frank.li@oss.nxp.com>
+CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>, <conor+dt@kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-hwmon@vger.kernel.org>,
+	<linux-i3c@lists.infradead.org>, <robh@kernel.org>,
+	<sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH v5 04/12] i3c: master: Add support for devices using SETAASA
+Date: Fri, 3 Jul 2026 09:08:55 +0000
+Message-ID: <20260703090855.1519255-1-akhilrajeev@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <aj0iG5xplWPWc6m_@SMW015318>
+References: <aj0iG5xplWPWc6m_@SMW015318>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260703061449.246801F000E9@smtp.kernel.org>
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000140:EE_|DS0PR12MB6605:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3a89b163-bfe8-46fc-4e87-08ded8e2c1c2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|82310400026|376014|1800799024|36860700016|6133799003|11063799006|56012099006|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	0OBafjpWb/8ADt2IZ+YaDBmLzAM4nqNQHfYKQ5YDcvpNiqW768/d30WPj0h+9SZfz/5gve9l9ix0F2GJPlYwVlnl8RZAZbfUmAQfAbZh9mmOGz9Hc1w3q4JOELvo7CBfqw5CWJBsYrY5aJ7KBL42UbsEsvpCcKKTnFYLgKoLZgidQ8ENUDPJkEsmVIPqv8d2wctT2zt4J5wWCZW1dt9Ysk3DU94QIJwCbVlEj9fslVCGDzPzd4IfVJrV7QEUXcxpSyBLmR508xfZx0+KUwfQkdQjyNj3xYRDH+C12fhShpu4UJFYjsu4UBM4IDlQvecKcEGc57oFTW7TXFaHKfMXoISsq9wAsYkXmLQoILbohrSAUlrK8zrNmdHnxIMThLly37sjblwtX28hWwBKAqrcI/cyvTsEQ7uMe5Qrvf8wqgoGXHC8eFjm3oqapSsS0DzB8hknTJgRw9sWiKpGc1a/jhzHTFnbW0dtBTeYt2Fj1vH2esedlG/1nQmMYRTDs/BRMmd9C6h/wvoOXIoIzYsD5iDLjU1/FFJtWJQ1sEc1cX2G6/2U+rywHrqq1D8KZAUNB3oQxjdL9dwL1cs4mxWKa0Wu7RI2wyPheCxCLcUtBuhU4ranaYu4KBr1INWhD/phlmpyMcZoBQFfQ7ETJqd3vuSr4FBos9QQXkF0SQVbmDmEu5Sj/+bPElHTg9Bcbn9CGba4Uu6QWyWGwSxIoWWdxQ==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(376014)(1800799024)(36860700016)(6133799003)(11063799006)(56012099006)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	pV6QeB8jYIlSxAQhp8aHz0JEANKV8T71eg0kKiA6DW4X+FM5SUO+PskUoRV+8/q99AocWTQ/m12HY3/wj+vTFx9X8WpPnkW6pSZsa2VDYF1n6DLJuDWnfnhYc4w7Q0s5poxF6M2eOvmLQZVlgwtleZxvGSOGBO7CfQF0MN4NhZayBUEai7xRPXpIsj5mzj5dI+bXBUiO+Uph9YCwilzOtUvwdjgchD4JD2eSfTLw9YvEmcDKqHwqm6E4qMeyKJLZoNFOXcuAcK+nyL4zJbVqcoWHom5+gN1WozkzeCVquhbnmatuyQXbw1hjnH77QC5KfxGpTqB1ZUn8RQTd58vV8ubO5ECs4X/h98dKRGCf3hF0AgYkSik5rotqaW+jeFYmAoH4Cph5g28LCs1Qp26g8O8ObwZigigGQR5MNYKmH4X1WV29e0mtkFYFDk7HzSKg
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 09:09:15.6461
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a89b163-bfe8-46fc-4e87-08ded8e2c1c2
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF00000140.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6605
 
-On Fri 2026-07-03 06:14:48, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete fix and inconsistent state: The patch correctly unsets `sub_make_done` for the `kselftest` targets to allow Kbuild command-line reevaluation when building external kernel modules. However, it fails to apply the same logic to the `tools/` and `tools/%` targets, introducing a discrepancy between build entry points.
-> --
+On Thu, 25 Jun 2026 07:42:03 -0500 Frank Li wrote:
+> On Thu, Jun 25, 2026 at 09:38:15AM +0000, Akhil R wrote:
+>> On Wed, 24 Jun 2026 13:57:46 -0400, Frank Li wrote:
+>> ...
+>> ...
+>> >> [Severity: High]
+>> >> Is it possible that sending the SETAASA broadcast before direct SETDASA
+>> >> assignments breaks initialization for devices that natively support SETAASA
+>> >> but are configured for SETDASA?
+>> >>
+>> >> According to the I3C specification, any device on the bus natively supporting
+>> >> SETAASA will respond to this broadcast by adopting its static address as its
+>> >> dynamic address.
+>> >>
+>> >> After this broadcast, the driver iterates through devices and attempts to
+>> >> assign custom dynamic addresses via direct SETDASA commands:
+>> >>
+>> >> drivers/i3c/master.c:i3c_master_early_i3c_dev_add() {
+>> >>     ...
+>> >> 	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
+>> >> 					i3cdev->boardinfo->init_dyn_addr);
+>> >>     ...
+>> >> }
+>> >>
+>> >> Since the target device already adopted its dynamic address during the
+>> >> SETAASA broadcast, it is no longer in the unassigned state and will NACK
+>> >> the subsequent SETDASA command.
+>> >
+>> > Look like correct, but I am not sure if target will NACK SETDASA. Or should
+>> > use SETNEWDA for SETAASA method.
+>>
+>> Yes, this looks valid for mixed device buses. I can move
+>> i3c_master_setaasa_locked() after the SETDASA handling and before
+>> i3c_master_do_daa() in the same function, so SETDASA-assigned devices will
+>> ignore the later SETAASA broadcast. Does that sound good to you?
 > 
-> commit 06c418388d65deb3d8494a6e8e7071c0e709186b
-> Author: Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de>
-> 
-> kbuild: unset sub_make_done before calling kselftest build system
-> 
-> This commit unsets sub_make_done before invoking the kselftest build system to
-> ensure Kbuild reevaluates command-line flags when building test modules. It
-> mirrors a previous fix done for scripts/install.sh.
-> 
-> > diff --git a/Makefile b/Makefile
-> > index b9c5792c79e01..f717a4dc96d6a 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1591,10 +1591,10 @@ tools/%: FORCE
-> >  
-> >  PHONY += kselftest
-> >  kselftest: headers
-> > -	$(Q)$(MAKE) -C $(srctree)/tools/testing/selftests run_tests
-> > +	$(Q)unset sub_make_done; $(MAKE) -C $(srctree)/tools/testing/selftests run_tests
-> 
-> [Severity: Medium]
-> Will make tools/selftests still fail after this change?
-> 
-> The tools/ and tools/% targets in Makefile delegate to the tools build
-> system, which can also trigger external kernel module builds (like bpf_testmod).
-> 
-> Because sub_make_done is not unset for these targets, invoking commands like
-> make tools/selftests or make tools/all will skip Kbuild's M= argument parsing.
-> 
-> Should sub_make_done also be unset in the tools/ and tools/% targets to maintain
-> consistency across the build entry points?
+> yes, try it to follow spec.
 
-This might make sense. I see that the tools: and tools/%: targets are
-defined right above the kselftest*: ones. And they are even advertised
-in "make help" or "make tools/help".
+I just noticed that the specification says: if both bits 0 and 1 are set,
+meaning both SETDASA and SETAASA are supported, the I3C Bus Controller should
+use SETDASA first.
 
-Well it probably should be done in a separate patch. It would be better
-for bisecting potential regressions. Thomas, Zelin, what do you think, please?
+So moving i3c_master_setaasa_locked() after SETDASA handling follows the spec.
+
+I will wait a few more days before sending v6, to see if there are any other
+concerns.
 
 Best Regards,
-Petr
+Akhil
