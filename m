@@ -1,162 +1,123 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013063.outbound.protection.outlook.com [40.93.201.63])
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655301A6816
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 09:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.63
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783069765; cv=fail; b=RQV5tIUH3hyu62K4MvT2nnxroC5ovIVq47reMumB1DUTuvJ3L98m3dGjbUrEt8I7pvqMF0CuIHdWeytcNpVVAcIp0veIbMHj/nCvz1NrUufENRucTQnYsVABxnnsOmNpnUwnzUlgmuW+k69ANOdxyL0PhzGeLDjGkXyKTkKk304=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783069765; c=relaxed/simple;
-	bh=KUpn94OhrkeLrPLpSF0ijpxWajXpR9OGECK78PRr+YQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ozzum3aNaP7pEHN7bGE9CxQYAB5bi4NAPCo8rVgMRJQ9w1zosO3yjnQwGRjRrlRl++3FWT2201D0dJ1ucrt2tWcJ2LM9pwlEoQwdriJrELDhql4kP+ZSo9Edj6AodhHXs6Xmt4UZXHqddIs1b8dOhRBx4bt16LHpm7CxN2OeBis=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dEPt/RPt; arc=fail smtp.client-ip=40.93.201.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DDE3AFB14
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 09:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783070197; cv=none; b=nlh/KLPCsHm9jbOH3qPQEsV/eTPCFwcQTRIrJigeBLmm3cecvHe7tVh/IbEXxjnBDVc6QXPmBm6Ntu28WPAqLqpCB6aVIARo/bDN8jnkukEl/1VvpBtdRo42b7icE8jRx/B3eUszHsofgv1XP4JqYmd6BLpQtmbAwKDqlGCuT30=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783070197; c=relaxed/simple;
+	bh=cjladEAkzRrN7pPP1OOOc5gAK72fK5gVtCQNyKikpqA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=VFtM66vzUj5V0rOnLoq9dfoeFGCfM+h1wvNRB6Y1sU3ljNx2bicINu2iBgRQZ93J2Md0wLop7WWyztbIwr8RFMVBmn+huR0fX+JxrCIY+yb1It5aYFGcR7ZrATTIaRsbCv1p6IOCbZRhMJXF8X5XjNcHXcjmkTERiBV2INYUWIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sp3T9V8o; arc=none smtp.client-ip=91.218.175.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dEPt/RPt"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cZVNPM7HZO54B0Z03IewH9h/w1b7NP9MupMX21MdDYWb/F3lY92uNdwf3dq4JFs1Z5FshsbtpvMKK0dCUFIwi4nBVbVH8RRW5J/3tbKLnpC+ncm4WvBOlNfH8M8lBfSFHXECybWYFx9iiuAdqHZtgqQ8XdgQpZll7/zOoa6BS94uULr+aB+jBeISPSk+ER6BY96HMA/XuQa7yGSLFXXGSmSQ8kUbm6AZo4hAm2O/15n+BFoKQ7AbHp3sUrx/+YOEwtcF+qiVHJqSn7hve9hL295DWSTiO/VvfwknGoJ0gHflejDNSen8uMYy7kc3LpRCYTYeU+GH5vUk3V51izKOnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8Exft41be9H3fTpkjBZf1GxTMCejqeC8UyAjMIlOUC0=;
- b=w5/NuPM82PvUH+vlwSA4nmgQyFQdbBlaKsnH6vZn1bnpQcSZEFGA7FP5qKLbJdaA8ItAl7OQi8vZnPqdQY2X6qL3l0F9jyTFatMs0di/64tSaziRXyYhjAhbT2qny4AneOpstbw0YZtzE7iuPkTfBDcjKfn1MENVGlAqtedgvPNAm0NTs2n4WTV/YXA8Tlm0tYwWIaxGssBjuYarB+CLBxu2veeQL4PJeoaKaXI7DtIwzX19Typdyll6ln/E0S3CNEpfYTFxYtMgnJ+pXeWbsiER6R23lbLy1bdwSfCXacKdZ06djCjskN4ohnk275tm3TfQw46hBRFYnfuXMr4MTQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=oss.nxp.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8Exft41be9H3fTpkjBZf1GxTMCejqeC8UyAjMIlOUC0=;
- b=dEPt/RPtixmBB6QhsxYM11iIhL6jgM0HM28tbO5zOrqWJTgny3ByxJHOMwKKr2omuDMbYryElspt19sKfu5D1R+YeSD56ABoiYQRKR8bfrtqdBxh3k90VX7Adlx3IjxhbbzNbuSiWY/g7fI7vobFN1rvLO8u0+Eqaqqpqh2fqKhm0s25BgAebD8dTNi5cfIGijM+3CyP8iKirHIM+8btQwE9fmWg6TRCYRrXRVjYip1H5AKR+VYsg9an3y1cPcjlU806OPNWAedtRjrMg3Z+UjQT4wUGdrLkbBNMTZUWi10wEkS8EYjcbwHq1KLKMBW/JE0dwCHna2XUYcamZNKuYw==
-Received: from CH0PR03CA0010.namprd03.prod.outlook.com (2603:10b6:610:b0::15)
- by DS0PR12MB6605.namprd12.prod.outlook.com (2603:10b6:8:d3::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Fri, 3 Jul 2026
- 09:09:16 +0000
-Received: from CH2PEPF00000140.namprd02.prod.outlook.com
- (2603:10b6:610:b0:cafe::6b) by CH0PR03CA0010.outlook.office365.com
- (2603:10b6:610:b0::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.9 via Frontend Transport; Fri, 3
- Jul 2026 09:09:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CH2PEPF00000140.mail.protection.outlook.com (10.167.244.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Fri, 3 Jul 2026 09:09:15 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 3 Jul
- 2026 02:09:00 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 3 Jul
- 2026 02:08:59 -0700
-Received: from build-akhilrajeev-noble-20260602.internal (10.127.8.11) by
- mail.nvidia.com (10.129.68.7) with Microsoft SMTP Server id 15.2.2562.20 via
- Frontend Transport; Fri, 3 Jul 2026 02:08:56 -0700
-From: Akhil R <akhilrajeev@nvidia.com>
-To: <frank.li@oss.nxp.com>
-CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>, <conor+dt@kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-hwmon@vger.kernel.org>,
-	<linux-i3c@lists.infradead.org>, <robh@kernel.org>,
-	<sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH v5 04/12] i3c: master: Add support for devices using SETAASA
-Date: Fri, 3 Jul 2026 09:08:55 +0000
-Message-ID: <20260703090855.1519255-1-akhilrajeev@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <aj0iG5xplWPWc6m_@SMW015318>
-References: <aj0iG5xplWPWc6m_@SMW015318>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sp3T9V8o"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000140:EE_|DS0PR12MB6605:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3a89b163-bfe8-46fc-4e87-08ded8e2c1c2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|82310400026|376014|1800799024|36860700016|6133799003|11063799006|56012099006|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	0OBafjpWb/8ADt2IZ+YaDBmLzAM4nqNQHfYKQ5YDcvpNiqW768/d30WPj0h+9SZfz/5gve9l9ix0F2GJPlYwVlnl8RZAZbfUmAQfAbZh9mmOGz9Hc1w3q4JOELvo7CBfqw5CWJBsYrY5aJ7KBL42UbsEsvpCcKKTnFYLgKoLZgidQ8ENUDPJkEsmVIPqv8d2wctT2zt4J5wWCZW1dt9Ysk3DU94QIJwCbVlEj9fslVCGDzPzd4IfVJrV7QEUXcxpSyBLmR508xfZx0+KUwfQkdQjyNj3xYRDH+C12fhShpu4UJFYjsu4UBM4IDlQvecKcEGc57oFTW7TXFaHKfMXoISsq9wAsYkXmLQoILbohrSAUlrK8zrNmdHnxIMThLly37sjblwtX28hWwBKAqrcI/cyvTsEQ7uMe5Qrvf8wqgoGXHC8eFjm3oqapSsS0DzB8hknTJgRw9sWiKpGc1a/jhzHTFnbW0dtBTeYt2Fj1vH2esedlG/1nQmMYRTDs/BRMmd9C6h/wvoOXIoIzYsD5iDLjU1/FFJtWJQ1sEc1cX2G6/2U+rywHrqq1D8KZAUNB3oQxjdL9dwL1cs4mxWKa0Wu7RI2wyPheCxCLcUtBuhU4ranaYu4KBr1INWhD/phlmpyMcZoBQFfQ7ETJqd3vuSr4FBos9QQXkF0SQVbmDmEu5Sj/+bPElHTg9Bcbn9CGba4Uu6QWyWGwSxIoWWdxQ==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(376014)(1800799024)(36860700016)(6133799003)(11063799006)(56012099006)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	pV6QeB8jYIlSxAQhp8aHz0JEANKV8T71eg0kKiA6DW4X+FM5SUO+PskUoRV+8/q99AocWTQ/m12HY3/wj+vTFx9X8WpPnkW6pSZsa2VDYF1n6DLJuDWnfnhYc4w7Q0s5poxF6M2eOvmLQZVlgwtleZxvGSOGBO7CfQF0MN4NhZayBUEai7xRPXpIsj5mzj5dI+bXBUiO+Uph9YCwilzOtUvwdjgchD4JD2eSfTLw9YvEmcDKqHwqm6E4qMeyKJLZoNFOXcuAcK+nyL4zJbVqcoWHom5+gN1WozkzeCVquhbnmatuyQXbw1hjnH77QC5KfxGpTqB1ZUn8RQTd58vV8ubO5ECs4X/h98dKRGCf3hF0AgYkSik5rotqaW+jeFYmAoH4Cph5g28LCs1Qp26g8O8ObwZigigGQR5MNYKmH4X1WV29e0mtkFYFDk7HzSKg
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 09:09:15.6461
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3a89b163-bfe8-46fc-4e87-08ded8e2c1c2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH2PEPF00000140.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6605
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783070193;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cjladEAkzRrN7pPP1OOOc5gAK72fK5gVtCQNyKikpqA=;
+	b=sp3T9V8oqmc6/s7YfVT//BEqowOUEdep9bgFwcs6b4/GAbxsn2VBGgedZ7wFf+x7gnzzB/
+	r7IFsDz3dN8sscgB95Bw9wiVD8LF57o5AHBmdFgaPV6yTqwWup5XBH4kTIRBIabpDYTMZ3
+	LhOaz6tkpkcG7ndRrzsWtm22WZlP9UA=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 03 Jul 2026 09:16:11 +0000
+Message-Id: <DJOTMGFAPDBF.261U5OD4NPU74@linux.dev>
+Subject: Re: [PATCH v4 18/18] mm: factor out can_spin_trylock()
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Brendan Jackman" <brendan.jackman@linux.dev>
+To: <sashiko-reviews@lists.linux.dev>, "Brendan Jackman"
+ <jackmanb@google.com>
+Cc: <linux-kernel@vger.kernel.org>, <linux-rt-devel@lists.linux.dev>
+References: <20260702-alloc-trylock-v4-0-0af8ff387e80@google.com>
+ <20260702-alloc-trylock-v4-18-0af8ff387e80@google.com>
+ <20260702122822.562721F00A3A@smtp.kernel.org>
+In-Reply-To: <20260702122822.562721F00A3A@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, 25 Jun 2026 07:42:03 -0500 Frank Li wrote:
-> On Thu, Jun 25, 2026 at 09:38:15AM +0000, Akhil R wrote:
->> On Wed, 24 Jun 2026 13:57:46 -0400, Frank Li wrote:
->> ...
->> ...
->> >> [Severity: High]
->> >> Is it possible that sending the SETAASA broadcast before direct SETDASA
->> >> assignments breaks initialization for devices that natively support SETAASA
->> >> but are configured for SETDASA?
->> >>
->> >> According to the I3C specification, any device on the bus natively supporting
->> >> SETAASA will respond to this broadcast by adopting its static address as its
->> >> dynamic address.
->> >>
->> >> After this broadcast, the driver iterates through devices and attempts to
->> >> assign custom dynamic addresses via direct SETDASA commands:
->> >>
->> >> drivers/i3c/master.c:i3c_master_early_i3c_dev_add() {
->> >>     ...
->> >> 	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
->> >> 					i3cdev->boardinfo->init_dyn_addr);
->> >>     ...
->> >> }
->> >>
->> >> Since the target device already adopted its dynamic address during the
->> >> SETAASA broadcast, it is no longer in the unassigned state and will NACK
->> >> the subsequent SETDASA command.
->> >
->> > Look like correct, but I am not sure if target will NACK SETDASA. Or should
->> > use SETNEWDA for SETAASA method.
->>
->> Yes, this looks valid for mixed device buses. I can move
->> i3c_master_setaasa_locked() after the SETDASA handling and before
->> i3c_master_do_daa() in the same function, so SETDASA-assigned devices will
->> ignore the later SETAASA broadcast. Does that sound good to you?
-> 
-> yes, try it to follow spec.
+On Thu Jul 2, 2026 at 12:28 PM UTC, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The refactoring to deduplicate spin_trylock safety checks into c=
+an_spin_trylock() missed __free_frozen_pages(), leaving a pre-existing UP N=
+MI corruption bug unpatched.
+> --
+>
+> Note: The format of this report has been altered to provide a free-form
+> summary of the findings due to recitation restrictions.
+>
+> commit a99a7a468132ab177e1233c7e2f5644523ace0a7
+> Author: Brendan Jackman <jackmanb@google.com>
+> Subject: mm: factor out can_spin_trylock()
+>
+> This commit introduces can_spin_trylock() to deduplicate checks for wheth=
+er=20
+> the current context is safe for spin_trylock(). It updates=20
+> alloc_nolock_allowed() in mm/page_alloc.c and __kmalloc_nolock_noprof() i=
+n=20
+> mm/slub.c to use this newly factored helper.
+>
+> Link: https://lore.kernel.org/all/397859cb-b127-4cc6-9c71-044afc99bf0c@ke=
+rnel.org/
+>
+> [Severity: High]
+>
+> This isn't a bug introduced by this patch, but the deduplication refactor=
+ing=20
+> appears to have missed an open-coded check in __free_frozen_pages() in=20
+> mm/page_alloc.c.=20
+>
+> Could this open-coded check also be updated to use the new=20
+> can_spin_trylock() helper to resolve a pre-existing UP NMI safety issue?
+>
+> When __free_frozen_pages() handles FPI_TRYLOCK, it explicitly checks for
+> CONFIG_PREEMPT_RT and NMI/hardirq context. On UP systems where CONFIG_SMP=
+=20
+> is disabled, spin_trylock() and its variants are defined to unconditional=
+ly=20
+> succeed because there is no actual lock state tracked.
+>
+> If a caller invokes free_pages_nolock() from an NMI context on a UP syste=
+m,=20
+> the current RT-specific check fails. The execution then falls back to=20
+> free_one_page(), where spin_trylock_irqsave() falsely succeeds even if th=
+e=20
+> NMI interrupted another task that was actively modifying the free list un=
+der=20
+> the zone lock.=20
+>
+> This allows concurrent modification of the free list, which can lead to=
+=20
+> corruption and kernel panics.
+>
+> Updating the check in __free_frozen_pages() to use !can_spin_trylock()=20
+> would catch the UP NMI case and safely route the allocation to the lockle=
+ss=20
+> add_page_to_zone_llist() path instead.
 
-I just noticed that the specification says: if both bits 0 and 1 are set,
-meaning both SETDASA and SETAASA are supported, the I3C Bus Controller should
-use SETDASA first.
+I think Sashiko is right? Based on the unfixed kprobe bugs described in
+[0] should we just disable nolock on UP? If that has a user, who knows
+what they are up to, but I would wager that we'd prefer to break their=20
+probabilistic tracing than corrupt their freelists.
 
-So moving i3c_master_setaasa_locked() after SETDASA handling follows the spec.
+Not a strongly held opinion though I can also send a patch to "fix it"
+if people prefer; I'll keep functional changes separate from this series
+though.
 
-I will wait a few more days before sending v6, to see if there are any other
-concerns.
-
-Best Regards,
-Akhil
+[0]: https://lore.kernel.org/all/20260427-nolock-api-fix-v2-0-a6b83a92d9a4@=
+kernel.org/
