@@ -1,34 +1,34 @@
 Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 257AB2494F0
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 02:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D11133987E
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 04:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783047476; cv=none; b=YlBb9UEaXnaVOj4D2lyhKQBl5l5KqQlqK4oHsJiFrdgoUxb8MfV4Y7QzXZCPDkBxYby+d33DHOJpSzsl7ULJGewGDLxT6YGhCGYaAIX9iLW6G80VJdTB52gnV1LD8Y39/hhaGHV3xoh+yyxQO3WMKy00AeAdZdKC5gKB4BIn3aQ=
+	t=1783052069; cv=none; b=KZjO37+t/MpB+5F0ND7P3T2r01sKh6C7B0t5m3DcpXAG8YG5NpkxArKlCwu1INAC2GrUZrLLlX6tJdROGLI4Y+cziDpIboPsP4NZyffPaErf8tuqdA/UZ059cu3N14vNQ2pM22PfqSsAEKhd5CM5oybWjBHvU4MXcRem+ZWro9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783047476; c=relaxed/simple;
-	bh=P0TTY1mzLS4ah7V8bJ2lKkeQgztQnUdzRQ9jaXIFhdI=;
+	s=arc-20240116; t=1783052069; c=relaxed/simple;
+	bh=hNF+BYFw5WurQLv1dEpQiKqkpQlRM3UA8yxeoelt8e0=;
 	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=EZDIcXm+5SVSFDtGQzzRbI5DE8n0vKT1060SeIRIi28LFLZYa0GRJ9y1xa3zYrIgMwEJuV8V9FXWYyfhZ31T/TmKm47q3AuY5kTkMBS/Z8Ow7ZKUqesQxufLpVeZ94q7+VHZfybEDj9kBXb0RaWpXm0PUidX7O9q/FWNwG65uAA=
+	 In-Reply-To:Content-Type; b=d3QxhAyAyOEwZEbiP5UwZQocqllIukkqv/okIlnJuzwc0l+1SQnwxEhnHKCpqsWCL+DNzsOCRcus5hT3gFV21/Y96Em5CPqI3TPsqWzVuLk9zfwn1uv98Kpq4zScyEMX4L2T/pH2xHrTFUtBWn0896jmJlH/E3K3O4RvarwxiYE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
 Received: from loongson.cn (unknown [113.200.148.30])
-	by gateway (Coremail) with SMTP id _____8BxRvAuJUdqLi4BAA--.6581S3;
-	Fri, 03 Jul 2026 10:57:50 +0800 (CST)
+	by gateway (Coremail) with SMTP id _____8Cx7+sUN0dqEzMBAA--.5852S3;
+	Fri, 03 Jul 2026 12:14:12 +0800 (CST)
 Received: from [10.130.40.83] (unknown [113.200.148.30])
-	by front1 (Coremail) with SMTP id qMiowJBx68EsJUdq31y9AA--.28879S3;
-	Fri, 03 Jul 2026 10:57:49 +0800 (CST)
-Subject: Re: [PATCH bpf-next v7 1/2] bpf: Introduce jit_required flag and
- refactor kfunc path
+	by front1 (Coremail) with SMTP id qMiowJCxWeAQN0dqVHO9AA--.31828S3;
+	Fri, 03 Jul 2026 12:14:09 +0800 (CST)
+Subject: Re: [PATCH bpf-next v7 2/2] bpf: Reject programs with inlined helpers
+ if JIT is unavailable
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
  KaFai Wan <kafai.wan@linux.dev>
 References: <20260702143656.28845-1-yangtiezhu@loongson.cn>
- <20260702143656.28845-2-yangtiezhu@loongson.cn>
- <20260702145855.07C6B1F000E9@smtp.kernel.org>
+ <20260702143656.28845-3-yangtiezhu@loongson.cn>
+ <20260702145726.0B96B1F000E9@smtp.kernel.org>
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <7cce1695-eaa2-816b-2877-9cb2f117aa27@loongson.cn>
-Date: Fri, 3 Jul 2026 10:57:48 +0800
+Message-ID: <1f9a6291-d221-36da-1989-5f8db7d6fb20@loongson.cn>
+Date: Fri, 3 Jul 2026 12:14:08 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 Precedence: bulk
@@ -37,260 +37,76 @@ List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260702145855.07C6B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260702145726.0B96B1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJBx68EsJUdq31y9AA--.28879S3
+X-CM-TRANSID:qMiowJCxWeAQN0dqVHO9AA--.31828S3
 X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Gr1UAF4kCFWfGr1fGF47KFX_yoW3AFyDpF
-	n8J34qkr40qw4F93srAF4xA343Kw4DW3y7KFWkGrySkF4jqFykXw1UK3y3Za9xKrWjga1x
-	Zw4IvFWjgw18uagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7KFW5GF18Jr15Ww1xJF1DJwc_yoW8ZFyUpF
+	4fKayYk3yDXwn7Ka47t3y7Z3Wjqw48Gr47GFnYgr1Ik3Wakr97XFyfKr47uFn5Gr4v9F1I
+	vr4Igryvk3WDGFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
 	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
 	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
-	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
-	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
-	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
-	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
-	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
-	wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
-	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
-	UUU==
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+	AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+	rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+	67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+	0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24So
+	DUUUU
 
-On 2026/7/2 下午10:58, sashiko-bot@kernel.org wrote:
+On 2026/7/2 下午10:57, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The `bpf_fixup_call_args()` function and `bpf_prog_has_kfunc_call()` macro were not updated to use the new `jit_required` flag, leading to inconsistent interpreter fallback behavior for pruned kfuncs.
+> - [High] The patch prevents loading BPF programs that use JIT-inlined helpers (e.g., `bpf_get_smp_processor_id`) when the BPF JIT is explicitly disabled at load time (`net.core.bpf_jit_enable=0`).
 > --
 > 
-> commit 5a3f8861c2b6916fe194f97a407cb7265f545fd0
+> commit 01713d8606e656f4dadefe493f371f4c861d842b
 > Author: Tiezhu Yang <yangtiezhu@loongson.cn>
 > 
-> bpf: Introduce jit_required flag and refactor kfunc path
+> bpf: Reject programs with inlined helpers if JIT is unavailable
 > 
-> Introduce a 'jit_required' bitfield flag at the end of the
-> flags group in struct bpf_prog. This bit tracks whether a
-> program strictly requires the JIT compiler.
+> This patch sets the jit_required flag to 1 when a BPF program uses helpers
+> that are expected to be inlined by the JIT compiler. This prevents a kernel
+> panic in the BPF interpreter by rejecting the program with -ENOTSUPP if
+> JIT compilation is unavailable at runtime.
 > 
->> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
->> index 649cce41e13f3..5fcd19ccb41a9 100644
->> --- a/kernel/bpf/core.c
->> +++ b/kernel/bpf/core.c
->> @@ -2619,8 +2619,7 @@ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct
->>   	if (fp->bpf_func)
->>   		goto finalize;
+>> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+>> index 12a8a4eb757f1..94e0457a0aa33 100644
+>> --- a/kernel/bpf/fixups.c
+>> +++ b/kernel/bpf/fixups.c
+>> @@ -1841,8 +1841,10 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
+>>   		}
 >>   
->> -	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) ||
->> -	    bpf_prog_has_kfunc_call(fp))
->> +	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) || fp->jit_required)
->>   		jit_needed = true;
->>   
->>   	if (!bpf_prog_select_interpreter(fp))
+>>   		/* Skip inlining the helper call if the JIT does it. */
+>> -		if (bpf_jit_inlines_helper_call(insn->imm))
+>> +		if (bpf_jit_inlines_helper_call(insn->imm)) {
+>> +			prog->jit_required = 1;
+>>   			goto next_insn;
+>> +		}
 > 
-> [Severity: Medium]
-> Since bpf_prog_has_kfunc_call() was replaced here with fp->jit_required,
-> should bpf_fixup_call_args() in kernel/bpf/fixups.c also be updated to use
-> the new flag?
-> 
-> Currently, bpf_fixup_call_args() still calls bpf_prog_has_kfunc_call(). If
-> a program has a pruned kfunc (allocating kfunc_tab but leaving
-> jit_required=0) and JIT falls back to the interpreter, wouldn't
-> bpf_fixup_call_args() incorrectly reject the program with -EINVAL?
-> 
-> kernel/bpf/fixups.c:bpf_fixup_call_args() {
->      ...
-> 	bool has_kfunc_call = bpf_prog_has_kfunc_call(prog);
->      ...
-> 	if (has_kfunc_call) {
-> 		verbose(env, "calling kernel functions are not allowed in non-JITed programs\n");
-> 		return -EINVAL;
-> 	}
->      ...
-> }
-> 
-> Should bpf_prog_has_kfunc_call() in kernel/bpf/verifier.c be updated to
-> check prog->jit_required, or removed entirely in favor of checking the flag
-> directly?
+> [Severity: High]
+> While this correctly prevents the interpreter panic, does this unconditionally
+> reject valid BPF programs when the JIT is explicitly disabled at load time
+> (e.g., net.core.bpf_jit_enable=0)?
 
-I think it is wrong to remove bpf_prog_has_kfunc_call() entirely,
-because using prog->jit_required directly in bpf_fixup_call_args()
-would cause false positives.
+Yes.
 
-I tested the following changes:
+> If this block checked prog->jit_requested before skipping the fixup and
+> setting jit_required, wouldn't the verifier properly patch the instruction
+> when JIT is disabled, allowing the program to execute successfully in the
+> interpreter?
 
-```
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 4e2b059d71f3..3a2fc194e2bb 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -3171,7 +3171,6 @@ const struct bpf_func_proto 
-*bpf_base_func_proto(enum bpf_func_id func_id,
-                                                  const struct bpf_prog 
-*prog);
-  void bpf_task_storage_free(struct task_struct *task);
-  void bpf_cgrp_storage_free(struct cgroup *cgroup);
--bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog);
-  const struct btf_func_model *
-  bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
-                          const struct bpf_insn *insn);
-@@ -3510,11 +3509,6 @@ static inline void bpf_task_storage_free(struct 
-task_struct *task)
-  {
-  }
+No, this was already explored in earlier version (v4), but it was
+explicitly rejected by the BPF maintainer.
 
--static inline bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
--{
--       return false;
--}
--
-  static inline const struct btf_func_model *
-  bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
-                          const struct bpf_insn *insn)
-diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
-index 94e0457a0aa3..7fb92b5fa415 100644
---- a/kernel/bpf/fixups.c
-+++ b/kernel/bpf/fixups.c
-@@ -1378,7 +1378,6 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
-  #ifndef CONFIG_BPF_JIT_ALWAYS_ON
-         struct bpf_prog *prog = env->prog;
-         struct bpf_insn *insn = prog->insnsi;
--       bool has_kfunc_call = bpf_prog_has_kfunc_call(prog);
-         int depth;
-  #endif
-         int i, err = 0;
-@@ -1404,7 +1403,7 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
-                         return err;
-         }
-  #ifndef CONFIG_BPF_JIT_ALWAYS_ON
--       if (has_kfunc_call) {
-+       if (prog->jit_required) {
-                 verbose(env, "calling kernel functions are not allowed 
-in non-JITed programs\n");
-                 return -EINVAL;
-         }
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f496b45b9da4..3dbed3047254 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2770,11 +2770,6 @@ int bpf_add_kfunc_call(struct bpf_verifier_env 
-*env, u32 func_id, u16 offset)
-         return 0;
-  }
-
--bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
--{
--       return !!prog->aux->kfunc_tab;
--}
--
-  static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
-  {
-         struct bpf_subprog_info *subprog = env->subprog_info;
-```
-
-Here is the local test log:
-
-```
-fedora@linux:~$ cat test_panic.c
-   #include <linux/bpf.h>
-   #include <bpf/bpf_helpers.h>
-
-   SEC("kprobe/sys_getpid")
-   int test_panic(void *ctx)
-   {
-   	struct task_struct *task;
-
-   	task = (struct task_struct *)bpf_get_current_task();
-   	if (task)
-   		bpf_printk("Task address: %p\n", task);
-
-   	return 0;
-   }
-
-   char LICENSE[] SEC("license") = "GPL";
-fedora@linux:~$ clang -target bpf -O2 -g -c test_panic.c -o test_panic.o
-fedora@linux:~$ sudo sysctl -w net.core.bpf_jit_enable=0
-[sudo] password for fedora:
-net.core.bpf_jit_enable = 0
-fedora@linux:~$ sudo bpftool prog load test_panic.o 
-/sys/fs/bpf/test_panic autoattach
-libbpf: prog 'test_panic': BPF program load failed: Invalid argument
-libbpf: prog 'test_panic': -- BEGIN PROG LOAD LOG --
-calling kernel functions are not allowed in non-JITed programs
-processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 1 
-peak_states 1 mark_read 0
--- END PROG LOAD LOG --
-libbpf: prog 'test_panic': failed to load: -22
-libbpf: failed to load object 'test_panic.o'
-Error: failed to load object file
-```
-
-This change incorrectly rejects programs that only contain normal
-inlined helper calls with -EINVAL.
-
-Instead, I think bpf_prog_has_kfunc_call() should be updated to check
-prog->jit_required, like so:
-
-```
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f496b45b9da4..1f5824c1c691 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2772,7 +2772,7 @@ int bpf_add_kfunc_call(struct bpf_verifier_env 
-*env, u32 func_id, u16 offset)
-
-  bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
-  {
--       return !!prog->aux->kfunc_tab;
-+       return prog->jit_required && !!prog->aux->kfunc_tab;
-  }
-
-  static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
-```
-
-Here is the local test log:
-
-```
-fedora@linux:~$ cat test_panic.c
-   #include <linux/bpf.h>
-   #include <bpf/bpf_helpers.h>
-
-   SEC("kprobe/sys_getpid")
-   int test_panic(void *ctx)
-   {
-   	struct task_struct *task;
-
-   	task = (struct task_struct *)bpf_get_current_task();
-   	if (task)
-   		bpf_printk("Task address: %p\n", task);
-
-   	return 0;
-   }
-
-   char LICENSE[] SEC("license") = "GPL";
-fedora@linux:~$ clang -target bpf -O2 -g -c test_panic.c -o test_panic.o
-fedora@linux:~$ sudo sysctl -w net.core.bpf_jit_enable=0
-[sudo] password for fedora:
-net.core.bpf_jit_enable = 0
-fedora@linux:~$ sudo bpftool prog load test_panic.o 
-/sys/fs/bpf/test_panic autoattach
-libbpf: prog 'test_panic': BPF program load failed: unknown error (-524)
-libbpf: prog 'test_panic': -- BEGIN PROG LOAD LOG --
-processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 1 
-peak_states 1 mark_read 0
--- END PROG LOAD LOG --
-libbpf: prog 'test_panic': failed to load: -524
-libbpf: failed to load object 'test_panic.o'
-Error: failed to load object file
-```
-
-This ensures that pruned kfuncs (allocating kfunc_tab but leaving
-jit_required=0) safely return false, at the same time, this check
-perfectly isolates normal inlined helper paths.
-
-Let me wait for more review comments and will send v8 next week.
+If JIT is unavailable, rejecting the program load with -ENOTSUPP is
+the intended design.
 
 Thanks,
 Tiezhu
