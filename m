@@ -1,144 +1,243 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazolkn19013084.outbound.protection.outlook.com [52.103.51.84])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AF233B951
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 11:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.51.84
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783076435; cv=fail; b=MlYKhRQWV5C6DU30NwlM4G+M5R+F2BsLbohZ9NDUmUrACGNYY7XjvibHyIn7Y+jpHNHLYx0X1+GPW7zAvfHS6yggqS256Ia36fBMuRdW2YDLlOfGQjJh+uNE302A7U4SoFtTGTkdRXfDl5Dv3KCsdyGwhYEf+uC0XFDulApGNC0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783076435; c=relaxed/simple;
-	bh=oMk0vavhlMo98MfD47cc/dLsV7GHJm+hV8K7hckd75U=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 Content-Type:MIME-Version; b=Rm1m4zZiSZA4MRazc9E1Ni3KUY21a02aut4kqU+IsRSqk1n7OZpNgyYuOwGgc6Tfbky0PvyYThYccM33j08i21Ve+10ciI82S62YaMRbCeE65s99njAxQYnih3yl7ecH/v+MiYGaRo3E5+OBAWOfPXXGSAuCg2JMEeW6QZMLJjM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=QO0glkfM; arc=fail smtp.client-ip=52.103.51.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C55396D2E;
+	Fri,  3 Jul 2026 11:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783076459; cv=none; b=pe2hlpeDondR9SbFdt0vWZ2Mz+surfOvWq1AVs21mchHhedzGGuxkWBM8MAl29JqjWHJZLHQ2NzZYpToSvXZbHQh/r3Asnp5tqsSiyc7HoXL4qAcFilUTGDUSOMLDy8czMXbvb7/CLDbbCCmXA2CK6I6hw80NZwjKhFr/hEVDBo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783076459; c=relaxed/simple;
+	bh=KF4PYzd4QpVqQctLB1X3TIU1Beyh4krzNY6wZfbMYTk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=a9qRqB21t4JPJtmcwCpmo28WygMGkW+iG73p3jYwZeZUB8EKL0BY77cHx4Q7+u5XzjyawbBsdyBGH56Aov3Iz1UC0M3xpGHhxTWsUPzol27C8Fi+1wmhsCB+QSuBU4mCVeiB9wqglso6UnFKDDNGerybS5HOt9AMDXr0ssUidPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=pKDTG8AI; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="QO0glkfM"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VYuupt3WiSQDv1G6dCutOVJan3ZyiEkQz+FsEe40RkKt70D0PwzQe0xMWhGrm0STHHyQjOpjnUiCF6Jx/udBxxo29oqVs1hLHEfCWRfxpt4dmrMU+neTkCrrSkIjK23UP7aJUPkqMZZvTWfQam3Xz+TrHuveNHGRANmydYL4KKQRC+iBM7k1PQBbRW1LayYsrLHchnuAube17LGJrC/RLJvvWp15pcBbV8HOvhHEjVdTgoXi+qBdj/ONQOL9rBVeOXuxIAamr0KsMg7NctZQ20OW4wxgQ4o4eKrNdTU8IxJoTwvx7xlqfLc/imrj6m2vPFaIkMUFQ6tifeYVsJRbIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oMk0vavhlMo98MfD47cc/dLsV7GHJm+hV8K7hckd75U=;
- b=Us3N24+Oz9prGqOEIPAWA9SZA/xpTmSfJxHNHs6TdLx0V6uK+xfcUgGX528zRlI1t9Nbsq8p0z9wm8aeqRGKguXRuOoF+sViubqW6lrfnaG0f/9T4xi3MszlTZYJ+JuYCJZhfU6Bn7XA3e6i7D2hqpCzMaKPtzK2WgCpZp3FjKEHhAsuduZ030TZJ33dVPr2IodzhDfv0UbmwIcyG1pJmQLa4yYvWE8YkFYqfoL1iXHTiC51CV9l+IECFVUM9HkLf6Xs2WNcBNPm03/ONF46xzGIN9BI6unDKgEzSHG6YQC79aikwqs5cJlKYmBxvqmYXsMrlMiyF5KCDtPfCRORrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oMk0vavhlMo98MfD47cc/dLsV7GHJm+hV8K7hckd75U=;
- b=QO0glkfMLVvbo5xMZGhi6c+9g4tNiYL3fZKDLCO9J2nFKjduqxcroqlmBezER9V6LHk05DqHg3FxXs8el9juvn+sItJ4vayTPZhy5eDhwDE+NyVhCfUrQLm6h59nyEa74PhXeXcj4ZTil98Zc9saroJ16SPwlL3rXL/VuVAzFct3YuU5ZsOmBQhamaXd2axHk965TyftOnsi/YdBoaFEDAeaB7kxPie52uV+W+nVwnpiZ0bP84GN7qVKl5QDwjgv7EwFT6IjGt58LXz0juA+YOZFLoyQcsoiXQqx3oQnmS+8SZlaIZVGhiOH4/ir/TZp9xcN7MfYuseBriYrNEQL8A==
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
- by AS8PR08MB9838.eurprd08.prod.outlook.com (2603:10a6:20b:615::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Fri, 3 Jul
- 2026 11:00:28 +0000
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
- 11:00:28 +0000
-Date: Fri, 3 Jul 2026 12:00:21 +0100 (BST)
-From: Manuel Fombuena <fombuena@outlook.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="pKDTG8AI"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 23B251A0E0B;
+	Fri,  3 Jul 2026 11:00:55 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id DF22860300;
+	Fri,  3 Jul 2026 11:00:54 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 31629104C9573;
+	Fri,  3 Jul 2026 13:00:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783076454; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references:autocrypt;
+	bh=tYlcpJ6f3u67IWkL7tEFKVx4Px8m/+qr9gJGkqxbauE=;
+	b=pKDTG8AIgN9e3RHvh1fQhOPC0ZiZVZOKR1WcO6TBaWOCxwGHHUBmXmgmjdMlmYyGesOnhy
+	cAzjH2QYqEyWi586aY8E7+EgHZ0XHyDb2ZUzjyuoRYFBFGBvznrIvLt5MtBg3tI8tvs4tJ
+	fb2rMzIEAQ8hNX/ZJILsxmSTUXIkA0JgTEczu7QK4ARJ6HiJDKJWtLHe+rtdE0nbnZXF5z
+	alPLRz97m8DQoc/HoM9Q0ZQ5nsPivMrk50gmF8XPmLHf6zF9WW98+gP+uje2vPIJdnZZmX
+	eFz+b88y+EMy07uqEAwKu7yz6gaR5ZeCzOTdgUO4Ca9P56j8sweHcuL/a2o60w==
+Message-ID: <abfc86c41c19c73e9e41dc9654935a0fc89bc5e2.camel@bootlin.com>
+Subject: Re: [PATCH v6 4/5] gpio: aaeon: Add GPIO driver for SRG-IMX8P MCU
+From: Thomas Perrot <thomas.perrot@bootlin.com>
 To: sashiko-reviews@lists.linux.dev
-cc: lee@kernel.org, linux-leds@vger.kernel.org
-Subject: Re: [PATCH v7 7/9] leds: st1202: disable channel when brightness is
- set to zero
-In-Reply-To: <20260702224741.EC7C41F000E9@smtp.kernel.org>
-Message-ID:
- <GV1PR08MB849714ADAF4EB55C6E63A77FC5F42@GV1PR08MB8497.eurprd08.prod.outlook.com>
-References: <GV1PR08MB8497C0B898789BB73ACE6EE3C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com> <GV1PR08MB8497F11B30FE7D74CAA25135C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com> <20260702224741.EC7C41F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=US-ASCII
-X-ClientProxiedBy: LO4P265CA0073.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2bd::6) To GV1PR08MB8497.eurprd08.prod.outlook.com
- (2603:10a6:150:81::22)
-X-Microsoft-Original-Message-ID:
- <1bc0dc3c-90cb-f3d2-6180-8233b60215a5@outlook.com>
+Cc: thomas.perrot@bootlin.com, Frank.Li@kernel.org,
+ devicetree@vger.kernel.org, 	linux-watchdog@vger.kernel.org,
+ conor+dt@kernel.org, robh@kernel.org, 	imx@lists.linux.dev
+Date: Fri, 03 Jul 2026 13:00:51 +0200
+In-Reply-To: <20260630131017.60D8C1F000E9@smtp.kernel.org>
+References: <20260630-dev-b4-aaeon-mcu-driver-v6-0-d66b5fcbd2f0@bootlin.com>
+	 <20260630-dev-b4-aaeon-mcu-driver-v6-4-d66b5fcbd2f0@bootlin.com>
+	 <20260630131017.60D8C1F000E9@smtp.kernel.org>
+Autocrypt: addr=thomas.perrot@bootlin.com; prefer-encrypt=mutual;
+ keydata=mQGNBF+/ZOUBDAC2DghCjZvmgYcve02OG7dGZ7Iy58uEwne3LB7w7nRwdAxKw7ZaiVqwY
+ O+yNGVi+GVx7oA6Wn4pv46z+QDRLQiq6OseuXhkSGCg7U/yBCUq12B/GRGO1Qt2Qi1mJJT1s+1qZ5
+ Gxv6Nypz9qKVn94GM2bR1hXBga0t87vBpebThOHmX5d/0dqIcVxRCM7onNb0dDyRoVgLS5rBhQzrL
+ CMrJaCy39xZUy0J1SOlH4Mgk6EhJIPYY4wlzikGX6urg+Tc9EjGd78ry0e0p5U5qgjFR5QGJDy1Gn
+ U3CfwbT9sowdCASDbQDUoltlv2iWJCLa0xl97KVchCa0pr7HKbFA3J5SLKqFYUBCkFL+5WudYlz2n
+ XxiUgyviMQxyK+ij66kEi6/2zFDAecd43pHV7790ptqZBC3Jc67Emj7Vo3ShX6RXPPxxbeCTOF2uk
+ I45aJ9XcVFH/MFE96NjXj8uahnIsiTPyuCUoJu8tj7TSQyue874qJqVQvqlFyt2aZYJZ8ruq8AEQE
+ AAbQpVGhvbWFzIFBlcnJvdCA8dGhvbWFzLnBlcnJvdEBib290bGluLmNvbT6JAc4EEwEIADgCGwMF
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQSHQHfGpqMKIwOoEiGfwAsFcf4K7QUCX79mdwAKCRCfw
+ AsFcf4K7fhbC/wP0kSl6id2E/K3+UdXk6CLMVRbCFLCREzQs5WFpQ6l/I0WGOamhrOgegdszheiVF
+ orlUP8d37XSpFAqydhKGaN78V5Dps0Wmwm4lIlS4MtQXJtSLUHXDJLIZLW0pw8tiPLKsd1o/yDkXE
+ dnpsjJTRG6SdDSHnyOB2/gh4p+yTaLytFdARk/r4/P26+L+FiH0fFl+RnBt19LPklfKgeDc7GwIif
+ ja+nIWpp3W23DAUuI6xduEut25Q89yu7Ci8CliLfAiLy9bIGjBQWU2Y+1/j/7KuPj6VbBsZWLTZY0
+ hUmpJSTnWAqc9SMsNxo7NSQuddgviz5e2tqucaRqxP02FGzNa8U4NAKdWaXrlHG5Dglj9XH0DK+SH
+ +c96qqFewYD8VPQ6XAGxQcXbrtJmiMor1R2DfziispLRvJcfYs8xqabbCtoS3ouXB9XRi8hn7A2kh
+ ME1ryS+Oh63JshXHnw6bmjCpVd/p+fGLIGU6A47pJOpviKR4jEO84pl2ejtDZ3Tc=
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-sykvhHvoBFGpNBeq5KNz"
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|AS8PR08MB9838:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b9621d9-c450-49b4-68ac-08ded8f24abd
-X-MS-Exchange-SLBlob-MailProps:
-	WaIXnCbdHrO+2YmbT5jW+WUSUt4IT5vRaYQyYvC7i6Frr+s60071C6r9AkEVRMjm1t+gz8IumzaPHIi2bwCR3kjLHFwUjA9dmclKMswjrwa5kKr52Hi1XFylNLteexPalJ4V+JIFb1YTzru/EMBC4izbVM944kHfOxcY5agMwQdDzNw+7SzLF+LGmhwaJ5D8L9cp7Gy9v8W+F4Vr3EpX6oLcD2Wi2lLZlxHXPHhwvb+VuRmTCwaS8/bTEXWwhRqI/PcJaDTzKal3278lNLQ3ISfPiR9AvzmjsuWMHyWxJyeVbV9DuP5muj8MhtjtmRdROjEB0PHDA8n6D1GjfCuaLtYxuVJlt2lGk7bfltLJuxH73a3mfUaM/IaG6Xq05MEUeuw+Mw30dpYQf3BvyafCxK9C0gTNtUd9FB6PjtG3f7rCJMfXJ2uJ+BL1DAoKrGTeK+LfnhkfJp1qkbBAD8csaAmaNGFm3n3hpsth2IGW3Xqe+LGjtUeIKfAp8ksfdbOXF7Bf1LwjfRgsoI0MOSR1odJxeyf1Lm8nWZknKkoafziOnjouGa9kwhwwJHtX0JAwpGNAwc2vXxI0FoQgm3LFf0sptTdkrCOdVvcHi6NlJK75yoWMavj026viPKPMItefDOm3rSaO3CtVBH1ZwbXJmF/i64VqpEalk9hJyThwZSakVQvfSp/ZtHRbDjste7ZwQ2wFjyAU8YGrEZxrkqwByTTKDJBDo1RCH+bZ3INZl4PpoKjIMAmEZrHwle28xg8W9GYj+4lRJAc=
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|23021999003|25010399006|2604032031799003|37011999003|15080799012|8060799015|19110799012|6090799003|24021099003|51005399006|12091999003|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?43kxzpyDZiKxrSqNDJ38fmFwybqm3kiGVa8e9sSG79SrNlVkc5KU60m0DOL+?=
- =?us-ascii?Q?VN39byvx0y0cSD/vS+0/KZCNJNidzG0ewPHFBn8Y/e58lU+qfK16GtxZ4B3T?=
- =?us-ascii?Q?dXjvW38G+e2xo0yOjxAlcGnfrpfI5Kh4fwf73REuVi2+oVWAh2dNKl1GEXfJ?=
- =?us-ascii?Q?WRlCBYWZsXCSiQgZ06Gi7W4fhxNfB8puWe+dLW8msyKgEI//FYwJV8iyK0m5?=
- =?us-ascii?Q?tOPYwyvftbvMZI6YtQA+yENfEH3820kGE1h+yrojH9B9Cf5WIrkyuStJ7XEO?=
- =?us-ascii?Q?ETDHk44uXBr1jvDqoep8ZxO6TpkmZ4D8y10sjP4OpidfSsl6ornhNC3JIlTc?=
- =?us-ascii?Q?n3GujzMQkBkGvdlX88mhuXBKnaUgI8NcOo+6E6Gg1WbTTQb9GNoMhiNKWmQX?=
- =?us-ascii?Q?V/8koDo921Q3XE94bybRtJApQ4unNTwHNa9st4HqKZkVDzgGUBxwYK0yOSEP?=
- =?us-ascii?Q?VqZcespCndS5/dTu6VYeHQLuwPpF8KVZhe9hXdn9+4CBmPjgKZw5lM31fe1z?=
- =?us-ascii?Q?T5101PVdwpXfw8amu2D14dHM5gwrkl28h3H8z1bEWPmubjNWPr0kTO7LmALP?=
- =?us-ascii?Q?/rbl4gFNhEykWC+5Zw2mAcjZeeYrldTDC3X6I0pnga8aSW7g/7xsYf/OWB+V?=
- =?us-ascii?Q?tbX/XNvh72t7GhT4QcZB0V5jgB159+51F6Kr/vD83/bOi7M7IJBzXelEwLfF?=
- =?us-ascii?Q?Sxzw9FYBTMuUBkWPlK+N32X+xUUpHrJFYvJ6m1AOc3RSTRGAqdoctUKjRefC?=
- =?us-ascii?Q?9HHlyOmpyASeLyCumYznFZnh0bRAYikuPJY1VxAAM8vXWs9/pP3HmoSC55V8?=
- =?us-ascii?Q?RTz2m16NsZcGcGrOiR7l8Yj15eNemblpgFU/klMvTexNpJBUx8Q8p/0IZIfb?=
- =?us-ascii?Q?2WQsCicCUqfHP6nwDSZRsVaciBXjw2Suk5eKFk5dReFZ/MlhEoe3FUCDvMas?=
- =?us-ascii?Q?aIVh8y8vjwuqLFcwoZGRzHcNEa/eBIthK1C0mZdPu/MkCOktimP57Nu4RH1Q?=
- =?us-ascii?Q?YgnsryH7Gm2zsm7fMoRPa7c+5Krh58OBuy3k982cQ7Qh3Yj8dyff0wVfW6Zv?=
- =?us-ascii?Q?JzZxOInCQvSaYIbzwO2xTtsW9zzdwQ=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?cqLMOfF34jZ0smARgLYBLPijc1XFJzbHYcP+8B8O0vfUgcJ5iAts97Dbvy2i?=
- =?us-ascii?Q?yN8LCVaHcftRKp3VNxZFjDD2k7MAkO89ABoIUeTXviIJFC6Y9Jv2I7Z48ymT?=
- =?us-ascii?Q?hgtAHQxWLjs/cvD1u52LpQpimWF39WiqnQLc0g3YekqbMPgu9J60H2D9H1AE?=
- =?us-ascii?Q?l7/CvCAyykJKTxH9vymdv5GDbdGvGmfKVaV0Pbj2drQwWNuVKsvJl63JeHSH?=
- =?us-ascii?Q?pMRpEbjCT/MwAGqGKsS5VwG3vV6bBboNPWshSAip6MQSwOA2LTxJuYI58jus?=
- =?us-ascii?Q?ghilgfbVKtg7TD4j1ZxFfxyDBTSVhfxYGRELDuuJkVhYZIanzwhPUPQ7Mvid?=
- =?us-ascii?Q?RLQgBnaBUZpNuCtiw1/Qe945lrI+kxB76NmUNXCyhlCcVR7AKAi2O5QUlID3?=
- =?us-ascii?Q?DnWFTLyPXPqIXNhHl3AMy/K5ZNh5bOt6BZaom3LHxG0nf2z3oWJIcKpl6/k3?=
- =?us-ascii?Q?s3YuULmHvgvjPkKeuad6F/YzLAqYpRHUSH7Md/xs2hHL9bz2z5PMERu+PMBX?=
- =?us-ascii?Q?vkTZxeOA+pxU6JWzCzYOom4pLSY5+B7kzsVV3Xgl90neqIz8TbF8OCtsNdR2?=
- =?us-ascii?Q?myvv44lH5buTZ/fbhFcAGG2qkVarBJ7wFsxtRgsGr0cPb+Dg6Ii+jttKP1aA?=
- =?us-ascii?Q?tZSf74b51tu/YhzWkA5tThtgbRdTAG5e8jmY/YPIYQ8C2XIIutJh2E1oP9Mx?=
- =?us-ascii?Q?M/gm/3QkMECMghMpsbWJVttZaVhs0bc+dhxg0/pEu1OC8qWhyW0HlPtcQJkf?=
- =?us-ascii?Q?551zn0HuhawJ+5W5szoatbuLWi/jYXdoiAbDXRZQeD6PjjRxuCS96NN6Mj8i?=
- =?us-ascii?Q?nVYYTLsAfTcPgXlpsCwtP0Uc93wS3jXwdJFFFMdnBnTCCMRuRIRi31Qxm4te?=
- =?us-ascii?Q?8cm32HpJNa6WSucbt/B4IUORPyUi8KatP5TiSu28aoo7kHmWo/akiW1lXFjA?=
- =?us-ascii?Q?ZgK7OJS0V/71y2PdnpK3xbu/SwLSiofh7zzan0v2Ndu4unEiCmSl2/6Af6ZI?=
- =?us-ascii?Q?eAtqhi7bLzrXOO3ITG60MIpcfgn/7llB2mNgn/lV1u2PgUUtbGrsgBVIp7Og?=
- =?us-ascii?Q?BjG4lR1Zpgn9tAQdxFIDU7JGyxMoPzpLYm0jLKpL7EZxN86ushCnZPNG+vOc?=
- =?us-ascii?Q?owI//qORG75Gv47i/UeN6njzNbBLTMTWwQZA5Iizgj4ZGo/XCaQT65zshQbU?=
- =?us-ascii?Q?8IdJWZd54cq66V6807Zqm1JTIQxmAITkZeC7qzcn8phnfD1qDS1XCfVRyG9g?=
- =?us-ascii?Q?/2eXOmNRhLtWFU2jUVYsDoV1v/cxHWPoa+fkUjIAhpeIQ7HACe9iMq+mdNQt?=
- =?us-ascii?Q?bhGzx2PIw21bLPM3qqaEmPrik1EI0p1I28s3wWxmT9byckx0XFGDfLUZHqm5?=
- =?us-ascii?Q?2EgkEay520sgYjzoKASbpcqEudpUSRyv5rc696Xcbypim3YEIck/OFXvFlCK?=
- =?us-ascii?Q?5BzVE4qgFNzG9D8MaHp3eBnyzuphXIBd?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b9621d9-c450-49b4-68ac-08ded8f24abd
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 11:00:28.5097
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB9838
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Thu, 2 Jul 2026, sashiko-bot@kernel.org wrote:
 
-> Pre-existing issues:
-> - [High] The driver assigns the sleeping `st1202_brightness_set` function to the non-blocking `brightness_set` callback, causing 'scheduling while atomic' panics.
-> - [High] The `st1202_led_set` function assigned to `brightness_set_blocking` fails to write the actual requested brightness value to the hardware.
-> - [High] Saving `fwnode_handle` from a child node without taking a reference inside a scoped iterator leads to a use-after-free.
-> - [Medium] The `brightness_get` callback silently drops I2C hardware errors, resulting in incorrect brightness state reporting.
-> - [Medium] Global hardware duration registers are corrupted by per-LED pattern changes.
+--=-sykvhHvoBFGpNBeq5KNz
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-All issues raised are pre-existing and outside the scope of this patch.
-They will be addressed in a follow-up submission.
+Hello Sashiko,
 
---
-Manuel Fombuena
+On Tue, 2026-06-30 at 13:10 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issue(s) to consider:
+> - [High] Unconditional resetting of all hardware pins in the `probe`
+> function breaks bootloader hand-off and destroys firmware
+> configuration.
+> - [Medium] Ignoring critical hardware errors during probe
+> initialization leads to inconsistent software state.
+> --
+>=20
+> commit 73ee6d66b506331ac77e36c415e83febae316cf0
+> Author: Thomas Perrot (Schneider Electric)
+> <thomas.perrot@bootlin.com>
+>=20
+> gpio: aaeon: Add GPIO driver for SRG-IMX8P MCU
+>=20
+> This commit adds a GPIO driver for the Aaeon SRG-IMX8P embedded
+> controller.
+> It supports 7 GPO pins and 12 GPIO pins, providing access to pins
+> handled
+> by the microcontroller. During probe, all pins are reset to a known
+> state.
+>=20
+> > diff --git a/drivers/gpio/gpio-aaeon-mcu.c b/drivers/gpio/gpio-
+> > aaeon-mcu.c
+> > new file mode 100644
+> > index 0000000000000..a9e048c865f5c
+> > --- /dev/null
+> > +++ b/drivers/gpio/gpio-aaeon-mcu.c
+>=20
+> [ ... ]
+>=20
+> > +static void aaeon_mcu_gpio_reset(struct aaeon_mcu_gpio *data,
+> > struct device *dev)
+> > +{
+> > +	unsigned int i;
+> > +	int ret;
+> > +
+> > +	/* Reset all GPOs */
+> > +	for (i =3D 0; i < MAX_GPOS; i++) {
+> > +		ret =3D aaeon_mcu_gpo_set_cmd(data, i, 0);
+> > +		if (ret < 0)
+> > +			dev_warn(dev, "Failed to reset GPO %u
+> > state: %d\n", i, ret);
+> > +		clear_bit(i, data->dir_in);
+>=20
+> [Severity: Medium]
+> Is it safe to update the internal software state tracking when the
+> hardware
+> command fails?
+
+aaeon_mcu_gpio_reset() is a best-effort initialization: the MCU does
+not reset GPIO state on soft reboot, so the driver attempts to bring
+both hardware and software into a known state at probe time.
+
+If an I2C error occurs, the true hardware state is unknown and
+unrecoverable without a power cycle. Keeping the software bitmaps at
+the desired post-reset state (GPOs as outputs, GPIOs as inputs) is
+safer than preserving stale values from the previous boot, which could
+cause get_direction() to return wrong results for subsequent callers.=C2=A0
+Any ongoing I2C fault will surface as errors in the regular GPIO ops.
+
+>=20
+> If aaeon_mcu_gpo_set_cmd() returns an error because the underlying
+> bus is
+> temporarily inaccessible, clear_bit() is still executed. This could
+> result
+> in the GPIO controller registering with a mismatched view of the
+> hardware.
+>=20
+> > +	}
+> > +
+> > +	/* Reset all GPIOs */
+> > +	for (i =3D MAX_GPOS; i < MAX_GPOS + MAX_GPIOS; i++) {
+> > +		ret =3D aaeon_mcu_gpio_config_input_cmd(data, i);
+> > +		if (ret < 0)
+> > +			dev_warn(dev, "Failed to reset GPIO %u
+> > state: %d\n", i, ret);
+> > +		set_bit(i, data->dir_in);
+>=20
+> [Severity: Medium]
+> Similarly, does this code lead to an inconsistent state by blindly
+> updating
+> data->dir_in even if aaeon_mcu_gpio_config_input_cmd() fails?
+>=20
+
+Please refer to my other answers.
+
+> > +	}
+> > +}
+> > +
+> > +static int aaeon_mcu_gpio_probe(struct platform_device *pdev)
+> > +{
+>=20
+> [ ... ]
+>=20
+> > +	/*
+> > +	 * Reset all GPIO states to a known configuration. The MCU
+> > does not
+> > +	 * reset GPIO state on soft reboot, only on power cycle
+> > (hard reboot).
+> > +	 * Without this reset, GPIOs would retain their previous
+> > state across
+> > +	 * reboots, which could lead to unexpected behavior.
+> > +	 */
+> > +	aaeon_mcu_gpio_reset(data, &pdev->dev);
+>=20
+> [Severity: High]
+> Could forcing all output pins to low and resetting GPIO
+> configurations to
+> inputs unconditionally during probe disrupt the state established by
+> the
+> bootloader?
+>=20
+
+There is currently no bootloader support for the SRG-IMX8P MCU, so no
+bootloader-established GPIO state exists to preserve. The reset at
+probe time ensures a known quiescent state on every boot, which is
+necessary because the MCU retains GPIO state across soft reboots
+(kexec, reboot) but not across power cycles. Without it, GPIO state
+would be non-deterministic depending on the boot path.
+
+Kind regards,
+Thomas
+
+> Overriding the hardware state on every boot could inadvertently cut
+> power to
+> critical system components like regulators, eMMC, or displays that
+> were left
+> on by the bootloader or previous kernel execution.
+>=20
+> > +
+> > +	return devm_gpiochip_add_data(&pdev->dev, &data->gc,
+> > data);
+> > +}
+
+--=20
+Thomas Perrot, Bootlin
+Embedded Linux and kernel engineering
+https://bootlin.com
+
+--=-sykvhHvoBFGpNBeq5KNz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmpHlmMACgkQn8ALBXH+
+Cu3segv/WPTTakAXGaVG+gZhTD71CddcNfzJqf1VYZSLWZ4flJ+bzuOCAl6zUg2J
+EWZCFtxXT8xON/DKoz8o2MywoJoPk/FiLLDTCsL1tmiWRmi/dnFc8NC/tW6gSmAB
+WDhU+tjykBMG7e7QXd+nc2KU+1+JyIvb02lPy4aydVHTU6QGhy+8sXlD5SFUR84q
+bIHv7RqFNhqlQzc5VdUknY0RkPcP2sKBjFs5sNM3Ma5H69E+IeU5y+b5iCgU3nDl
+RHQZffajxi7of0pyPO1V3Hr+P+Xlot/hIjpCrhSWpYOJGvEV79ia3u4YXUomxfAA
+/9QfIQH0D+1yI+2GQmkjxUBcDuWSfGCpNYRGQ33QZ5JtyvIUVaGnsQGdr4d+zRkY
+k0jkkp1IwM4scE4stLjg35FI8OBZfMikP6nNDc6yiJG8ENy7QH4f6pqb0sj1VvCN
+Pv0K8Vg+co2toV/gMkJdCC47KZe+7nJ0g90NRxaTELOXl7Itx2Z/TwBubDToWNfN
+ldb9ecGd
+=wpFY
+-----END PGP SIGNATURE-----
+
+--=-sykvhHvoBFGpNBeq5KNz--
