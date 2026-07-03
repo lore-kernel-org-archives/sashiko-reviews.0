@@ -1,177 +1,132 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CCD36D500
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 07:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE74348C42
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 08:26:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783064842; cv=none; b=s/9G5xfhlhJXtffZ207MTsbVst7rsLTnchS+vCDJYialsXZvn8J5eObTA0txqTX+Bin6cWkg7HcQpyMJfnzE+cja9VrTgKpDzu3pBJpKwTJzApOO2LdYEB0ff5lRJ0Emal2Kc5uMZab3MNegmEr1jFaXG1Etmwr90FM2wyq8oYU=
+	t=1783067173; cv=none; b=azNC2swsnJ/g5Ww67kTT0b3+PAGEb0w8Sf1JDcOg+Z55ahtd7iI+3DbBdJdnIYRzRZiTkM0LCu4c5WIO64DS2QnlqFOZoMOOSUX2qARbl+yta9Smxnu0BUpPkWEDacR+C4+0uJE5cIWWAC7rN9AV3CYxINFcAW9O/exVEADuCCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783064842; c=relaxed/simple;
-	bh=7IVWCHfP5MwVTCA3fIsaCAaolAt/KSw/x8IVH8+NdoQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=mwBuTY3SN8OOsP33FgksvLV42zHpJYLFKsCYVZ4yW1YsfDr0+4Cnb5mh4qnbexSmFdbVqvMEzJlyqlflVvb3HEV51nGIxdF7wmZQKiTJVRP3N2aBv39u+8MRj14f9oWr4v2lNOdpht3+kfSUvb6YISpvJX4bnhCN0urgKnkMV0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LEEvvqY/; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1783067173; c=relaxed/simple;
+	bh=XKI2pAfG7OX1O/DXM04l/YZndOsoqOzA948p9sxcHoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P7fH1gi8QGylGbhKStyjidwKUg/MDTopqD5ExhTkIUyFV9iitLeiByOgZZ4Bdqzdd6h/ekL6ORBHdNl4n/GBJwBVedlQMzkjoMnVvqJjrATTEV3uuTkwR8p8N8jMYf7P7Q2WnMDzdkPe+AAJVGqzigvSaM1lDnJ9uDzmG4CAlng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=HK240GIP; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LEEvvqY/"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-479b7aada85so279536f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 03 Jul 2026 00:47:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="HK240GIP"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493b61b52b6so1684715e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 03 Jul 2026 01:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783064839; x=1783669639; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0p62SZWRaW03RXCqUmh0+MOM6FMNGTWsoP+vgWvFmoQ=;
-        b=LEEvvqY/NET7kJBCO30xsMWDNu9DghbIdHTecktaYueivqspKlf1HDu2Ve7mxCgJA5
-         rokyxtKgK0UyiVmqQK8dw+4gZrrvJ2e4J9D844B4A/fiKW3yduB5jKCgfvlzp+pAM0Al
-         1gZerqYO2rZex2xKUkyrDtDvigw0Z3dd8Ym3c6J5OB+mecsU/5KGQHmxFkrQ8iG5kDik
-         XZ6IiMFsr9iQv8PvI8nRpU1E1ZH/SfUqz8+5oGfDN4kLVR8wjRb7b/9261IdVJ7CN/V/
-         i1MpwZV/M5ZF4+lTRMn1xqI9xfcidgtmroBX1jTFU8shYB99A5RlU8V9hdGiZdaAsUJ5
-         05rw==
+        d=suse.com; s=google; t=1783067170; x=1783671970; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=yi3rhvEIY7HPb2+WXJBWNBz8xP5NaPUV+FO6A/JpBpc=;
+        b=HK240GIP/EdmTfjzSRP4A7S/2UOltMzpvQV6U2i44KSLj5ZDE35hVv37D337kShPqy
+         IBHhbJe5mRd6VqxmWF30BtzJZDl4g5hp4MQws0tccXVSIOMPFUTV2ZV3gIycMmawNckz
+         lOV4hd9Z0/1RHsfY9vG70lFmvJe0mw0PnYtypjcuTrS7sMagQQnmlVKSX4QzBj1QkLHA
+         jFkr8FC2HRGBK+S0cB0Io4i6fji6Fh0GPyhVTfH4zHY0FF7QHB0BBMNGZ1XEhQG/vn2O
+         VZpKgVLkXjBX1eZsU2gtBcfMeuvXqAjyhHh0wWKDzuuVmcxpD4nyXgikylXNbmq8U3gi
+         5mPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783064839; x=1783669639;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0p62SZWRaW03RXCqUmh0+MOM6FMNGTWsoP+vgWvFmoQ=;
-        b=rEiusDCn+7iC3ee+AOesws9YfrfAY0NHiv9oUbTcvbWDQHHIPUcNyHaQNAlHw8tRgW
-         0eA2RuNpnw4p8RzI+5+l9xWaKlwpq7yZE8NpiD9tm2mFsYnEYo+ud3gUvnSAmsd0LbVU
-         7YXaLyB/eAOjaGP/7S5HRDgz/L5zDCiBhUMRn90jpKfGEP4lciyfeUBOaPudN4QNjnM7
-         XDZGEoQVNhL4HHJkUpWA7MRAzlBdkqN++057mi/nrCXF87cUjdyRHRAUdCndGlSY7BAJ
-         V+T1IlzZbKnQX0gms5kTi2LfECATu5z4uNyRiVPdFxEVV6FC4pLXTd4/S8NQ6el/DXDY
-         MM1A==
-X-Gm-Message-State: AOJu0YzH6smN5912AT1R8T/V2MTYGPIx/BDJhFXhiU6nn9xCRO5DTYS8
-	AySnRVkU2ZfHdxOjPTCSW6bMITvu26l6S7VDFs8xRy0IOLL3xoL9f3dnqoAtl7woBw9trDwRAlU
-	QEMmH
-X-Gm-Gg: AfdE7cmOMfh/ze731PS9RJtaHJozabuOEOI17JpiYOIVe6UHWK1dNkpSlTtK6OGv+1C
-	CSo9gm+uS3DXNEMv2xiHdapUztAcky5JFtrH4MZDsv/LGSVapSzl7P6rnFcl9xFbGEb+g+CYkms
-	YRCfUiCd9uUl457HImovZfMJnZgZbxDSMq/lzcwo8rBXGg5HYeEclrPVwca3DQAAYZIl3xYuOkX
-	zkOP7W3WcZ7ib2QTeRgx6R8wJk7BBAclMpdkFPPlztaZ3Ezwq6JJZaztxEefw/owEjJY2IXUw5w
-	hXDWe6QY467oVDqdDq6TJFloNRucBDqdnsMJFNo10MOExoTCENAM1RiLGOEPxrAIDnTgHmwE/Mg
-	UQjjKxddgAmjHq6Gg2V4JHBtNtDn+rUCMuIWYZV2Atx4IEALkkeUrbHSNVxGEgFqXgwcIyxKcbj
-	9Qe7eDFzURs3BdQPZgDJz2003KvX8S5Q1qChj+FYXwCcBfkMoNBjXs5bAXybebEt1Qkn5Y
-X-Received: by 2002:adf:ed42:0:b0:477:80fa:f44d with SMTP id ffacd0b85a97d-477b5677843mr9598440f8f.40.1783064839203;
-        Fri, 03 Jul 2026 00:47:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:e9e1:7bf9:472f:c4d8? ([2a01:e0a:106d:1080:e9e1:7bf9:472f:c4d8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477db3dbc75sm16621817f8f.5.2026.07.03.00.47.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jul 2026 00:47:18 -0700 (PDT)
-Message-ID: <446be9c1-b9a6-485a-b21b-ec812c163e8a@linaro.org>
-Date: Fri, 3 Jul 2026 09:47:18 +0200
+        d=1e100.net; s=20251104; t=1783067170; x=1783671970;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=yi3rhvEIY7HPb2+WXJBWNBz8xP5NaPUV+FO6A/JpBpc=;
+        b=Loz0G0tdwdTvyXYXbghbYPJpfPgUH7ZYfwlY0f53eeUqbRVmijpiSj2v4oajpXK9hc
+         zPYzpmZEBwdHMbInQ+d1l4K0JwIVAvVwtK12Kvun53wAIY+yTJw28Nn0jHvudGtjqGXx
+         1OGQu2w34EUh4o7guaqmwkMlpjtHd3W58i3r49g1gZwvz0KaaaF3MURJ3L0MOlBlKE2z
+         zR0xlOrpHqeW91otXmqsa2v3syCUg4pV0dM6Ww97EIC26yfIL1lF7vlZce17bYsE9JU2
+         EtgzZAzM2zEATUiKOB6s7Jgg8XrIxylBIATw7T4zI0Y1O0jctPDHIL5rAno63j44xmCO
+         pvOQ==
+X-Gm-Message-State: AOJu0YwExd2g0SmlCAE45Qk2fXMmEdrQ+3jHoCm9qWKzwtUt7wpPREPB
+	6vY186zI+Awltjw+Y3MHagCooKWuFvopAQLXs7/37LKb9bhU6QLe9wbX4ffVIazhDceDtijzLIU
+	tC2zwCg4=
+X-Gm-Gg: AfdE7ckEEsCbg+shRUKSf20r2fbaYct/RkU0X3yG4hPG7iM25XtFBjJ5sM+6jz42liE
+	Flvrz6QJVIIe5nbRLVaAJNLgQuO+UNvtnJNyntj/MF5npFxSH61WQysmYLnlWkOVU70jSXQemb2
+	kMizsnq9DUcl4zOIBhS6eyHMcD8SZ0P+q/kp2sgbTYSJ9aUqEXLln7zbNAI5hJpnBiKF9Kh/IFN
+	2G3+aofzJ6Yo36+B9bi8y2LkYWSXqHVOjEMmH6f98MpMfaTOtsSZFlLZD2mKU+FBMaN5M1RxP7u
+	sBym6bDU/t8ceUbMla+4aseYUqnePz4Au4ycRlDWMROlT/6UAATIxGj1QbZQ4U7OzAJSCmG67Q4
+	g/hFsObIQ/FjbGuHAOFJIt8QUStpvPDD/QVxud/P5ZcJ8bPNJ/XaHnHu2UNYT4fIYYAVCOjgPGN
+	L09pWfycDVDq6ygJY=
+X-Received: by 2002:a05:600c:8718:b0:493:c845:bc20 with SMTP id 5b1f17b1804b1-493c845bc60mr60654815e9.4.1783067170178;
+        Fri, 03 Jul 2026 01:26:10 -0700 (PDT)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493cce12c40sm50659555e9.13.2026.07.03.01.26.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jul 2026 01:26:09 -0700 (PDT)
+Date: Fri, 3 Jul 2026 10:26:07 +0200
+From: Petr Mladek <pmladek@suse.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>,
+	live-patching@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, Miroslav Benes <mbenes@suse.cz>,
+	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas.weissschuh@linutronix.de>,
+	shuah@kernel.org, Zelin Deng <zelin.deng@linux.alibaba.com>,
+	linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH] kbuild: unset sub_make_done before calling kselftest
+ build system
+Message-ID: <akdyH7rRV1WHtBJ3@pathway.suse.cz>
+References: <20260703-makefile-unset-submake-done-v1-1-6899248f3d6a@linutronix.de>
+ <20260703061449.246801F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8650: add CPU cache size
- properties
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-References: <20260615-topic-sm8650-upstream-cpu-props-v3-2-eeb6e9fa7581@linaro.org>
- <20260615165606.ABC8B1F000E9@smtp.kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260615165606.ABC8B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260703061449.246801F000E9@smtp.kernel.org>
 
-On 6/15/26 18:56, sashiko-bot@kernel.org wrote:
+On Fri 2026-07-03 06:14:48, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The L1 data cache size for the Cortex-A520 cores (cpu0 and cpu1) is incorrectly set to 64KB (`<65536>`) instead of 32KB (`<32768>`).
+> - [Medium] Incomplete fix and inconsistent state: The patch correctly unsets `sub_make_done` for the `kselftest` targets to allow Kbuild command-line reevaluation when building external kernel modules. However, it fails to apply the same logic to the `tools/` and `tools/%` targets, introducing a discrepancy between build entry points.
 > --
 > 
-> commit e69e8fc4f3866077641d02b02b7f11554b632507
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
+> commit 06c418388d65deb3d8494a6e8e7071c0e709186b
+> Author: Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de>
 > 
-> arm64: dts: qcom: sm8650: add CPU cache size properties
+> kbuild: unset sub_make_done before calling kselftest build system
 > 
-> This commit adds L1, L2, and L3 cache size and line size properties to the
-> CPU and cache nodes in the sm8650 device tree. It splits the unified L1
-> cache properties into instruction and data cache sizes based on clidr_el1.
+> This commit unsets sub_make_done before invoking the kselftest build system to
+> ensure Kbuild reevaluates command-line flags when building test modules. It
+> mirrors a previous fix done for scripts/install.sh.
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index e8e43ddc3032a..090a4739ebc1d 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -75,6 +75,11 @@ cpu0: cpu@0 {
->>   			compatible = "arm,cortex-a520";
->>   			reg = <0 0>;
->>   
->> +			i-cache-size = <65536>;
->> +			i-cache-line-size = <64>;
->> +			d-cache-size = <65536>;
-> 
-> [Severity: Medium]
-> Is the d-cache-size for the Cortex-A520 correct here?
-> 
-> According to the ARM Cortex-A520 Technical Reference Manual, the L1 data cache
-> is strictly fixed at 32KB (<32768>), even though the instruction cache can be
-> configured to 32KB or 64KB.
-> 
-> This misrepresentation of the hardware topology could potentially lead to
-> suboptimal scheduling decisions or misguide userspace optimization algorithms.
-
-Just looked into https://developer.arm.com/documentation/102517/0004/L1-data-memory-system, and no it clearly states:
-
-L1 data cache	32KB or 64KB
-
-This is AI slop
-
-Neil
-
-> 
->> +			d-cache-line-size = <64>;
->> +
->>   			clocks = <&cpufreq_hw 0>;
-> 
-> [ ... ]
-> 
->> @@ -117,6 +126,11 @@ cpu1: cpu@100 {
->>   			compatible = "arm,cortex-a520";
->>   			reg = <0 0x100>;
->>   
->> +			i-cache-size = <65536>;
->> +			i-cache-line-size = <64>;
->> +			d-cache-size = <65536>;
+> > diff --git a/Makefile b/Makefile
+> > index b9c5792c79e01..f717a4dc96d6a 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1591,10 +1591,10 @@ tools/%: FORCE
+> >  
+> >  PHONY += kselftest
+> >  kselftest: headers
+> > -	$(Q)$(MAKE) -C $(srctree)/tools/testing/selftests run_tests
+> > +	$(Q)unset sub_make_done; $(MAKE) -C $(srctree)/tools/testing/selftests run_tests
 > 
 > [Severity: Medium]
-> Does this node also need to be updated to <32768> for the 32KB fixed L1 data
-> cache on the Cortex-A520, similar to cpu0?
+> Will make tools/selftests still fail after this change?
 > 
->> +			d-cache-line-size = <64>;
->> +
->>   			clocks = <&cpufreq_hw 0>;
+> The tools/ and tools/% targets in Makefile delegate to the tools build
+> system, which can also trigger external kernel module builds (like bpf_testmod).
 > 
+> Because sub_make_done is not unset for these targets, invoking commands like
+> make tools/selftests or make tools/all will skip Kbuild's M= argument parsing.
+> 
+> Should sub_make_done also be unset in the tools/ and tools/% targets to maintain
+> consistency across the build entry points?
 
+This might make sense. I see that the tools: and tools/%: targets are
+defined right above the kselftest*: ones. And they are even advertised
+in "make help" or "make tools/help".
+
+Well it probably should be done in a separate patch. It would be better
+for bisecting potential regressions. Thomas, Zelin, what do you think, please?
+
+Best Regards,
+Petr
