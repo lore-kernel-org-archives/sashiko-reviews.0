@@ -1,243 +1,137 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010019.outbound.protection.outlook.com [52.103.33.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C55396D2E;
-	Fri,  3 Jul 2026 11:00:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783076459; cv=none; b=pe2hlpeDondR9SbFdt0vWZ2Mz+surfOvWq1AVs21mchHhedzGGuxkWBM8MAl29JqjWHJZLHQ2NzZYpToSvXZbHQh/r3Asnp5tqsSiyc7HoXL4qAcFilUTGDUSOMLDy8czMXbvb7/CLDbbCCmXA2CK6I6hw80NZwjKhFr/hEVDBo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783076459; c=relaxed/simple;
-	bh=KF4PYzd4QpVqQctLB1X3TIU1Beyh4krzNY6wZfbMYTk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=a9qRqB21t4JPJtmcwCpmo28WygMGkW+iG73p3jYwZeZUB8EKL0BY77cHx4Q7+u5XzjyawbBsdyBGH56Aov3Iz1UC0M3xpGHhxTWsUPzol27C8Fi+1wmhsCB+QSuBU4mCVeiB9wqglso6UnFKDDNGerybS5HOt9AMDXr0ssUidPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=pKDTG8AI; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B52D38D3FE
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 11:01:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783076483; cv=fail; b=KJeLy8396Roxz8EYXuFzZVgRiXf3SNAkXn03GcO4o5G8cbWcHcZscL4/6ty2U3hkGrOx0VSLCz2DU73GNwr3LidveZ1g/hA7rhhUUvRmga5wgS80vi0IRLIZb6fc1UA+Mezk6AOQK5xFnqM237+ZWdxhjIaDx7iBmfFXEDHly8Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783076483; c=relaxed/simple;
+	bh=1yTTT58Ml5wxvCu8+4WdNFRi/MstgxoNezZ31GlZlZU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 Content-Type:MIME-Version; b=C7HWD09fkI5H3COs3fTgkavqrZ5ZHJ+2fN+tN3H/0C9wJBLhVqzh80SjRuohelmnW20M5a9jf2Lql6AxkCpdseQg7sY3ZKPmDvXDKIv4vWftrCOHYJs1tMP3PdjGFhiA9PoIMPoohF57cwzS8FvtlXHP88pHjCJXxfcAAobcGcw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=EZ5/FYJA; arc=fail smtp.client-ip=52.103.33.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="pKDTG8AI"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 23B251A0E0B;
-	Fri,  3 Jul 2026 11:00:55 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id DF22860300;
-	Fri,  3 Jul 2026 11:00:54 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 31629104C9573;
-	Fri,  3 Jul 2026 13:00:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783076454; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references:autocrypt;
-	bh=tYlcpJ6f3u67IWkL7tEFKVx4Px8m/+qr9gJGkqxbauE=;
-	b=pKDTG8AIgN9e3RHvh1fQhOPC0ZiZVZOKR1WcO6TBaWOCxwGHHUBmXmgmjdMlmYyGesOnhy
-	cAzjH2QYqEyWi586aY8E7+EgHZ0XHyDb2ZUzjyuoRYFBFGBvznrIvLt5MtBg3tI8tvs4tJ
-	fb2rMzIEAQ8hNX/ZJILsxmSTUXIkA0JgTEczu7QK4ARJ6HiJDKJWtLHe+rtdE0nbnZXF5z
-	alPLRz97m8DQoc/HoM9Q0ZQ5nsPivMrk50gmF8XPmLHf6zF9WW98+gP+uje2vPIJdnZZmX
-	eFz+b88y+EMy07uqEAwKu7yz6gaR5ZeCzOTdgUO4Ca9P56j8sweHcuL/a2o60w==
-Message-ID: <abfc86c41c19c73e9e41dc9654935a0fc89bc5e2.camel@bootlin.com>
-Subject: Re: [PATCH v6 4/5] gpio: aaeon: Add GPIO driver for SRG-IMX8P MCU
-From: Thomas Perrot <thomas.perrot@bootlin.com>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="EZ5/FYJA"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u8YQyur2ae093tG539HW2g0C5bpKeaGUz9AXCivPemlg2CAEyKI0EJW0YvoGWzndyQBGeIORkbEquOiWEj9yursooJWPAc2CaHCl+tmdrJBWFrja4qClWr3a98l2C+kSlIYloqT/hUkBoawD4uA+UnAyz0n+fDVmMxE4Zpuqdntgh96U6iPK2d+dHgKtapgYdxvbaAA991hpLpTjoOVwij+3kpKTREfocHCmXsGBAUN7YW7/Om6M/KUjM8HjIu1p8ACtzromg0tMzKxEZHAIri8/RLPriA7exNprbO8EexNOJQpMEy1S8ArpFuJ+0BXnx6BKdNadV/u0SKA15sUoag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1yTTT58Ml5wxvCu8+4WdNFRi/MstgxoNezZ31GlZlZU=;
+ b=xeO+2kDzbHpQEXWwBSFQQdzb6tb+GnkndeaE/K9qIe+VWaEniEFz9/pKkO6Bh96Nb25zAIAGlgvWQ3g0iK5yGJC5/rLwYpIg+DDGzGp78XY36Y2gd9YZgtT+9doTYqitCSF4LZbGJ0BCVmkzREC5SGMLp4OcWRErDMIgF65Vrg212IFrtE9+QT5gdg0z/oVr+sFGDo+piuMuGsdsgX0PUpMfjXPsJqMvoZkelvEnpEUgjwxvWxu+4HK3fOr1Tz70SfMwFN+Zw0h8hSQoCL2mohyNOddk4a6n83Ld0Cb8oXAo16KzT1iGu/M4cFZE5Jpo2CA9lYOz7EzHswr7tGexLg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1yTTT58Ml5wxvCu8+4WdNFRi/MstgxoNezZ31GlZlZU=;
+ b=EZ5/FYJAc3jLzCLfWUSgluImY54P8tLShClFFYPVY9XcPlO12JrjcJq76sLtmgfke5VQmimHtXoWvGrs3O6iN2Qjwk2RCamYtPS/oh/fr0whwpExlCH69BV80BV7lI/ENQTCg1Ei2HoLJVQdbrlPDy0w2wKjvgQ0eWHpKeBHq7mG25qBU43pJtM1RJZnEvI9sOFwEfEHmQMgoBtw8jnyTPuitFreDGkuNEiK3mBvxnoEHJxnQ5x+M4laUIw1Lui6C9c1VJ451FSgLfmsXwu40AGDhFHa6FZcVTAyzEabdtsQbesQFGGmtZhTeBizQjy7LXZ1w4lPs0i7SA5+l3zZwQ==
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
+ by VE1PR08MB5630.eurprd08.prod.outlook.com (2603:10a6:800:1ae::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Fri, 3 Jul
+ 2026 11:01:17 +0000
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
+ 11:01:17 +0000
+Date: Fri, 3 Jul 2026 12:01:10 +0100 (BST)
+From: Manuel Fombuena <fombuena@outlook.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: thomas.perrot@bootlin.com, Frank.Li@kernel.org,
- devicetree@vger.kernel.org, 	linux-watchdog@vger.kernel.org,
- conor+dt@kernel.org, robh@kernel.org, 	imx@lists.linux.dev
-Date: Fri, 03 Jul 2026 13:00:51 +0200
-In-Reply-To: <20260630131017.60D8C1F000E9@smtp.kernel.org>
-References: <20260630-dev-b4-aaeon-mcu-driver-v6-0-d66b5fcbd2f0@bootlin.com>
-	 <20260630-dev-b4-aaeon-mcu-driver-v6-4-d66b5fcbd2f0@bootlin.com>
-	 <20260630131017.60D8C1F000E9@smtp.kernel.org>
-Autocrypt: addr=thomas.perrot@bootlin.com; prefer-encrypt=mutual;
- keydata=mQGNBF+/ZOUBDAC2DghCjZvmgYcve02OG7dGZ7Iy58uEwne3LB7w7nRwdAxKw7ZaiVqwY
- O+yNGVi+GVx7oA6Wn4pv46z+QDRLQiq6OseuXhkSGCg7U/yBCUq12B/GRGO1Qt2Qi1mJJT1s+1qZ5
- Gxv6Nypz9qKVn94GM2bR1hXBga0t87vBpebThOHmX5d/0dqIcVxRCM7onNb0dDyRoVgLS5rBhQzrL
- CMrJaCy39xZUy0J1SOlH4Mgk6EhJIPYY4wlzikGX6urg+Tc9EjGd78ry0e0p5U5qgjFR5QGJDy1Gn
- U3CfwbT9sowdCASDbQDUoltlv2iWJCLa0xl97KVchCa0pr7HKbFA3J5SLKqFYUBCkFL+5WudYlz2n
- XxiUgyviMQxyK+ij66kEi6/2zFDAecd43pHV7790ptqZBC3Jc67Emj7Vo3ShX6RXPPxxbeCTOF2uk
- I45aJ9XcVFH/MFE96NjXj8uahnIsiTPyuCUoJu8tj7TSQyue874qJqVQvqlFyt2aZYJZ8ruq8AEQE
- AAbQpVGhvbWFzIFBlcnJvdCA8dGhvbWFzLnBlcnJvdEBib290bGluLmNvbT6JAc4EEwEIADgCGwMF
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQSHQHfGpqMKIwOoEiGfwAsFcf4K7QUCX79mdwAKCRCfw
- AsFcf4K7fhbC/wP0kSl6id2E/K3+UdXk6CLMVRbCFLCREzQs5WFpQ6l/I0WGOamhrOgegdszheiVF
- orlUP8d37XSpFAqydhKGaN78V5Dps0Wmwm4lIlS4MtQXJtSLUHXDJLIZLW0pw8tiPLKsd1o/yDkXE
- dnpsjJTRG6SdDSHnyOB2/gh4p+yTaLytFdARk/r4/P26+L+FiH0fFl+RnBt19LPklfKgeDc7GwIif
- ja+nIWpp3W23DAUuI6xduEut25Q89yu7Ci8CliLfAiLy9bIGjBQWU2Y+1/j/7KuPj6VbBsZWLTZY0
- hUmpJSTnWAqc9SMsNxo7NSQuddgviz5e2tqucaRqxP02FGzNa8U4NAKdWaXrlHG5Dglj9XH0DK+SH
- +c96qqFewYD8VPQ6XAGxQcXbrtJmiMor1R2DfziispLRvJcfYs8xqabbCtoS3ouXB9XRi8hn7A2kh
- ME1ryS+Oh63JshXHnw6bmjCpVd/p+fGLIGU6A47pJOpviKR4jEO84pl2ejtDZ3Tc=
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-sykvhHvoBFGpNBeq5KNz"
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+cc: linux-leds@vger.kernel.org, lee@kernel.org
+Subject: Re: [PATCH v7 8/9] leds: st1202: validate LED reg property against
+ channel count
+In-Reply-To: <20260702224923.A83671F000E9@smtp.kernel.org>
+Message-ID:
+ <GV1PR08MB8497166A2C8177358D2A3503C5F42@GV1PR08MB8497.eurprd08.prod.outlook.com>
+References: <GV1PR08MB8497C0B898789BB73ACE6EE3C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com> <GV1PR08MB849718B43321DB7E5A05D17BC5F52@GV1PR08MB8497.eurprd08.prod.outlook.com> <20260702224923.A83671F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+X-ClientProxiedBy: LO4P123CA0472.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1a8::9) To GV1PR08MB8497.eurprd08.prod.outlook.com
+ (2603:10a6:150:81::22)
+X-Microsoft-Original-Message-ID:
+ <4272eda3-f26f-d7a8-72ec-4d8ccf84862b@outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Last-TLS-Session-Version: TLSv1.3
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|VE1PR08MB5630:EE_
+X-MS-Office365-Filtering-Correlation-Id: ff53ad92-1f0d-4b72-4535-08ded8f26823
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|51005399006|6090799003|24021099003|19110799012|8060799015|37011999003|15080799012|2604032031799003|25010399006|23021999003|5072599009|40105399003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?nUF/lE1hTye1yYonysc5oc8o8C8u/10ohmSKJJtbirc5S7iPSOrHyGbKN6Vm?=
+ =?us-ascii?Q?MDrWGnvfqiSywZtzquNlB4PRd177Gapq1jgwGD7LE2JtuqLI0tF2sRTVwOvg?=
+ =?us-ascii?Q?AlSeRnsmT78BjE1jeJjMnOiUlM/5Or206VoqClUv7+EoRpVVWg9YE+p7nCM0?=
+ =?us-ascii?Q?FF7hiL+HQkSTm6xO2seM8hK2nw26Ge3P1CVm7anjLP4uQ+ShW8FLtgx7ZqwX?=
+ =?us-ascii?Q?Tu/8UIr7F5nAAFF14bc3TdocgCoIU6VInDtAvvORUvkbFIz003CjfMHfk/c8?=
+ =?us-ascii?Q?Inj54Sq4Mad0S5FUOsFBb0OUK1nn7TkYIr8RNmASido7Dvu22z1U3Fqa6ffp?=
+ =?us-ascii?Q?VSdsEmZIf+pMmN0B0Ccrh9f8kZRqD9kjZbmzCZZgtvCoHZoSpAzZQll6QK4C?=
+ =?us-ascii?Q?h9rYDTX318XB/ukq9+LgxIjtZhnIno1bx2cDjjqyvTR6eHKrxXOJQAXKpLYt?=
+ =?us-ascii?Q?x2bfICHYfn68ffjMVfVtLvZC0QXiWK2BkMisSn3QrTs24elGyPZnUHTcLLlb?=
+ =?us-ascii?Q?0qCsRckYNkUEiBrqiIH+H0Q78JJIUbTOhKCTlnuJllDhF5R4AT1r4YZcgtdc?=
+ =?us-ascii?Q?Bo2JGIR+XNdRFZO/ZnMeR8YixMmei5JQQrl9zeAbQu1u7g+4EhtsTszuRsHS?=
+ =?us-ascii?Q?AV4kSgiihUou7BVo8DGdlGEMWQo8ha0YiXLiUsA3e3sEk7ihmIActKq9SzuS?=
+ =?us-ascii?Q?SSCWATiIUQ+J0ib8g2hfieUOkQWWpeaJBR11tapTEum+DI8YA/imod8VSpYh?=
+ =?us-ascii?Q?DwYOxeNtbiTBqY3qRxnSVcBcaLEoe3uVD0T8XBC6wRY5TcawEgDW2z0qNAr6?=
+ =?us-ascii?Q?LShTWnMIZZBMz4A8oOCJfTrrb570xfFNi+Mem9XbHSzcsEv51R/ITdeakbvn?=
+ =?us-ascii?Q?MwZSGtGhlwbAGHjTirICBZnqVxjjoi7D3hwRqAhH+E/I5ncply1dqVh/c5Uq?=
+ =?us-ascii?Q?SGjEqYPf7IaE37R5h6uOr67YdY2US817UOsVE0XIKuy3p+T59OmeHI3HdtKH?=
+ =?us-ascii?Q?4FnERs1ab16F0KrH0E9NksRxwyVqfNXNQ0FHvgUxuMSZk6U=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?/u6rxIe9tOgHGtCG6I0coF3M7TCXBOpJrCGLVfOEKT++/03UAQRySG7h80xg?=
+ =?us-ascii?Q?Ywa8uef0hMeWTKQVc39mIFicazbFO+LgirmGH7ReNv61Orh7sByp3ovsZjW1?=
+ =?us-ascii?Q?Og5/8qJrUq1iQJmyufIGNoM1StoZ1u6pomUkGDruZljyzxpNGtpHN8wafqYI?=
+ =?us-ascii?Q?NTwxyOzTVxKp8XNoazESymCKFgtJHDfgRTjc+b0WfEoCTS4++dSrmF/hY19/?=
+ =?us-ascii?Q?CLgRENolQl/lSp9usqy3Cuz5lMVoYBaQT9jGbKRd9x1Tx0lbPgWX7w5fn3lV?=
+ =?us-ascii?Q?ebjRO4h1VXZ5NkWja0/28Zs+CyZz2tECE/OHDOc6ugJAE8KfFMRVGiUcTrBF?=
+ =?us-ascii?Q?Mkm9+EhkllzjEKNSlpTFv2T/NzsdvaH85rPZL3eoslXta2bcGzt8g3nFSWYs?=
+ =?us-ascii?Q?YQBHSS+AH4hUc6RFLndk2ZwD5wSyk3hRzfH+OiyjxeKQJ0aOfJi+8Zrm7ij4?=
+ =?us-ascii?Q?OPFnCfCRhb+CjXfyhrNEgsNZtu2NB4nVjvDkUaF7Wo40rpk8fgf25BnB8LHv?=
+ =?us-ascii?Q?HFwi+sOQZlcobyjcdqWWtfBzOnpTfDdw2L46tziHbKrDcpDMF//dRtNKN7za?=
+ =?us-ascii?Q?xrFKgpE5PTOY3QheyxhXGftndvdZLoIlcqtiHFo2h2m1uUF2yf+ZULrF6cBc?=
+ =?us-ascii?Q?O522J4mxm6/8XFr3yUSneVzg5mycyUqh7VGJhFvppQ7voto6uUJU4q62qrEp?=
+ =?us-ascii?Q?WXryv+jld2E9LeF9/vog7PIcsBKjF0NndhpmAjyWlCuVzcurUm+0MW9awlUF?=
+ =?us-ascii?Q?N8V1EjRrMFvYe+YuUhQSKEwMZ8Y3ItvswIhDHen5WazooP/vjxOrwIlawPxW?=
+ =?us-ascii?Q?RF6bpV9CmJ1Xp0ukOb0CXZQpUF2EIc68jq0QtrbKHIR71V76XrSeIkJPyLN5?=
+ =?us-ascii?Q?f+s+SUWZviwNSKD/OBVd0mTKsgxpfahElPW1FDx9aXjHzblP/+qWSkC1QcdQ?=
+ =?us-ascii?Q?Cump3PGcUXT1AFdgPJJ3ddUniucyjtBklNBZm3zNn7qYKZxHKNPPRI8OB+Kw?=
+ =?us-ascii?Q?5jVHnBxcs/H5yO1OEM4u0EiD7OaEdt3oKBKG6Wejjf29B/pTUzS8rj+jVTuO?=
+ =?us-ascii?Q?mJRx5NnEpmj5/r72b1iGXUShgqGU2PyLoDKsS71c414S5Iz9VTbPqVFd4Z0J?=
+ =?us-ascii?Q?67EO+P02xzVvjsLztuM+kj1gXtQbRkT+mcIqygqhr1t6fZGJpPIe7EriXjlK?=
+ =?us-ascii?Q?T2ta+II+gAlE21YBGpsDyPv6N9A45zisMxuCgMnKP7O9sxSm01f2BnWQRiXw?=
+ =?us-ascii?Q?r5ukD4ajKEmqgVmVro60c1Zu+Bie4xcx8ejwBdEHXQS3bCUyWpGz4Iajpteb?=
+ =?us-ascii?Q?qgiPbREGQXdo43Zoqb/uN4Ml4pSDgvZ6zbK4l3VGqko8rWRHaGmp6yYPnVuC?=
+ =?us-ascii?Q?NrbQ2mp4ZAFOGwSWSP7YYHgcvx8usy7QB/6cmKgyoBsXspm1/oiU7dtlw+aB?=
+ =?us-ascii?Q?fv1rxqayFJw6S2ho9ie68pqKA/gOhzZz?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff53ad92-1f0d-4b72-4535-08ded8f26823
+X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 11:01:17.7949
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR08MB5630
 
+On Thu, 2 Jul 2026, sashiko-bot@kernel.org wrote:
 
---=-sykvhHvoBFGpNBeq5KNz
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Pre-existing issues:
+> - [High] The driver assigns a sleepable function to the LED subsystem's non-blocking `brightness_set` callback, leading to "scheduling while atomic" kernel panics.
 
-Hello Sashiko,
+All issues raised are pre-existing and outside the scope of this patch.
+They will be addressed in a follow-up submission.
 
-On Tue, 2026-06-30 at 13:10 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issue(s) to consider:
-> - [High] Unconditional resetting of all hardware pins in the `probe`
-> function breaks bootloader hand-off and destroys firmware
-> configuration.
-> - [Medium] Ignoring critical hardware errors during probe
-> initialization leads to inconsistent software state.
-> --
->=20
-> commit 73ee6d66b506331ac77e36c415e83febae316cf0
-> Author: Thomas Perrot (Schneider Electric)
-> <thomas.perrot@bootlin.com>
->=20
-> gpio: aaeon: Add GPIO driver for SRG-IMX8P MCU
->=20
-> This commit adds a GPIO driver for the Aaeon SRG-IMX8P embedded
-> controller.
-> It supports 7 GPO pins and 12 GPIO pins, providing access to pins
-> handled
-> by the microcontroller. During probe, all pins are reset to a known
-> state.
->=20
-> > diff --git a/drivers/gpio/gpio-aaeon-mcu.c b/drivers/gpio/gpio-
-> > aaeon-mcu.c
-> > new file mode 100644
-> > index 0000000000000..a9e048c865f5c
-> > --- /dev/null
-> > +++ b/drivers/gpio/gpio-aaeon-mcu.c
->=20
-> [ ... ]
->=20
-> > +static void aaeon_mcu_gpio_reset(struct aaeon_mcu_gpio *data,
-> > struct device *dev)
-> > +{
-> > +	unsigned int i;
-> > +	int ret;
-> > +
-> > +	/* Reset all GPOs */
-> > +	for (i =3D 0; i < MAX_GPOS; i++) {
-> > +		ret =3D aaeon_mcu_gpo_set_cmd(data, i, 0);
-> > +		if (ret < 0)
-> > +			dev_warn(dev, "Failed to reset GPO %u
-> > state: %d\n", i, ret);
-> > +		clear_bit(i, data->dir_in);
->=20
-> [Severity: Medium]
-> Is it safe to update the internal software state tracking when the
-> hardware
-> command fails?
-
-aaeon_mcu_gpio_reset() is a best-effort initialization: the MCU does
-not reset GPIO state on soft reboot, so the driver attempts to bring
-both hardware and software into a known state at probe time.
-
-If an I2C error occurs, the true hardware state is unknown and
-unrecoverable without a power cycle. Keeping the software bitmaps at
-the desired post-reset state (GPOs as outputs, GPIOs as inputs) is
-safer than preserving stale values from the previous boot, which could
-cause get_direction() to return wrong results for subsequent callers.=C2=A0
-Any ongoing I2C fault will surface as errors in the regular GPIO ops.
-
->=20
-> If aaeon_mcu_gpo_set_cmd() returns an error because the underlying
-> bus is
-> temporarily inaccessible, clear_bit() is still executed. This could
-> result
-> in the GPIO controller registering with a mismatched view of the
-> hardware.
->=20
-> > +	}
-> > +
-> > +	/* Reset all GPIOs */
-> > +	for (i =3D MAX_GPOS; i < MAX_GPOS + MAX_GPIOS; i++) {
-> > +		ret =3D aaeon_mcu_gpio_config_input_cmd(data, i);
-> > +		if (ret < 0)
-> > +			dev_warn(dev, "Failed to reset GPIO %u
-> > state: %d\n", i, ret);
-> > +		set_bit(i, data->dir_in);
->=20
-> [Severity: Medium]
-> Similarly, does this code lead to an inconsistent state by blindly
-> updating
-> data->dir_in even if aaeon_mcu_gpio_config_input_cmd() fails?
->=20
-
-Please refer to my other answers.
-
-> > +	}
-> > +}
-> > +
-> > +static int aaeon_mcu_gpio_probe(struct platform_device *pdev)
-> > +{
->=20
-> [ ... ]
->=20
-> > +	/*
-> > +	 * Reset all GPIO states to a known configuration. The MCU
-> > does not
-> > +	 * reset GPIO state on soft reboot, only on power cycle
-> > (hard reboot).
-> > +	 * Without this reset, GPIOs would retain their previous
-> > state across
-> > +	 * reboots, which could lead to unexpected behavior.
-> > +	 */
-> > +	aaeon_mcu_gpio_reset(data, &pdev->dev);
->=20
-> [Severity: High]
-> Could forcing all output pins to low and resetting GPIO
-> configurations to
-> inputs unconditionally during probe disrupt the state established by
-> the
-> bootloader?
->=20
-
-There is currently no bootloader support for the SRG-IMX8P MCU, so no
-bootloader-established GPIO state exists to preserve. The reset at
-probe time ensures a known quiescent state on every boot, which is
-necessary because the MCU retains GPIO state across soft reboots
-(kexec, reboot) but not across power cycles. Without it, GPIO state
-would be non-deterministic depending on the boot path.
-
-Kind regards,
-Thomas
-
-> Overriding the hardware state on every boot could inadvertently cut
-> power to
-> critical system components like regulators, eMMC, or displays that
-> were left
-> on by the bootloader or previous kernel execution.
->=20
-> > +
-> > +	return devm_gpiochip_add_data(&pdev->dev, &data->gc,
-> > data);
-> > +}
-
---=20
-Thomas Perrot, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
-
---=-sykvhHvoBFGpNBeq5KNz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmpHlmMACgkQn8ALBXH+
-Cu3segv/WPTTakAXGaVG+gZhTD71CddcNfzJqf1VYZSLWZ4flJ+bzuOCAl6zUg2J
-EWZCFtxXT8xON/DKoz8o2MywoJoPk/FiLLDTCsL1tmiWRmi/dnFc8NC/tW6gSmAB
-WDhU+tjykBMG7e7QXd+nc2KU+1+JyIvb02lPy4aydVHTU6QGhy+8sXlD5SFUR84q
-bIHv7RqFNhqlQzc5VdUknY0RkPcP2sKBjFs5sNM3Ma5H69E+IeU5y+b5iCgU3nDl
-RHQZffajxi7of0pyPO1V3Hr+P+Xlot/hIjpCrhSWpYOJGvEV79ia3u4YXUomxfAA
-/9QfIQH0D+1yI+2GQmkjxUBcDuWSfGCpNYRGQ33QZ5JtyvIUVaGnsQGdr4d+zRkY
-k0jkkp1IwM4scE4stLjg35FI8OBZfMikP6nNDc6yiJG8ENy7QH4f6pqb0sj1VvCN
-Pv0K8Vg+co2toV/gMkJdCC47KZe+7nJ0g90NRxaTELOXl7Itx2Z/TwBubDToWNfN
-ldb9ecGd
-=wpFY
------END PGP SIGNATURE-----
-
---=-sykvhHvoBFGpNBeq5KNz--
+--
+Manuel Fombuena
