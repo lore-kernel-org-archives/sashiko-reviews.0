@@ -1,49 +1,33 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D6035677C
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 06:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DB7370AE2;
+	Fri,  3 Jul 2026 06:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783058686; cv=none; b=s6ZoA9VygctzSX22hhKHeIcA2HZ8IEJ24UELtYH4PJX1Slz8gJImDEw/PkxBZs9UsMHS2oswwnhVMA5uRCX+sL43G/+p+xqM1JvuwT4zS/IYQVJOYZ47MY8tNYDT7lxIZ+Uyannt96fYDf7TnrY8F7TzTTWvkhwUyzyDJhnRla0=
+	t=1783059351; cv=none; b=qMxF07l2zVBpO8C5BCO4On3XtXOQlF+T7wTETDXUQVXmVi6MRvJ/ZaCIGBvADKyaxyykV8+gzZO2+dPjvTUVnlVMQ347YsX0Tvqrk7ebDzc+QhYhl1MNq2DGsOuqJDP2iJzMLNM8zgQDAVD+eEHIiwSK3w1j+N51qu0BLS8T+SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783058686; c=relaxed/simple;
-	bh=hI18hC0UwSAypcvL9VyuFkm6qpjqA75tmCly55HM5Mk=;
+	s=arc-20240116; t=1783059351; c=relaxed/simple;
+	bh=TjCHp6F4IyeY4OyauWrhrVLxVHGBiSDZIcoKVGiJEbA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LZ4pM1cHgXvAVXw4cqfE5T/twAfTklppNCb0HAu4sjMxe4Wa2MQAgOg4ie3Hih1NXsyb6zVaHXVMtd290OSzCKg28KFpiU1sRB0LOHISsdboBU2cs5r/GCIZ2x8HSUQ4cf2OvQocxGAPP6NJsEc8K0JyFIYYS5IqwuKC56M/dQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=X7RQ76WV; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 In-Reply-To:Content-Type; b=XP2v4+6mbWkBJbX2nchRSStjNPl7CH5KJfLN1nJ8Oqld6edZRsA8IwoNgAiUJkqVNIDYJV4EUGzMDh8INsTy7WmzShT2lHcNZIPDSuHhA4hcXWtR4onf75wyltCJSK8pK+/DmDeh/48AE2fIQjNN58MlzvHIjydBm1/Q5UgA13U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HF4C/kT6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="X7RQ76WV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1783058683;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=foimsWHRKb0iIpREmdZ9R+ChVT/sfsRhZkHKfNjCwTo=;
-	b=X7RQ76WVxommw7fOzvZstaaQKYBAxt+ypSsbRXanTn3KIks1x9HQhrjhkl/cJdz4LpxGqZ
-	JTPysjyZT9i6uZm4DhyaRPF7IeYqZ/dPx3HAZZOESTQlG+U+wgr0RQLV/WN+gYaqqR3vvX
-	bD/uoP5nly9L5wcVzrqnbe+8w2rcbGA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-eBTFNwcoObK15MtIBm7H0w-1; Fri,
- 03 Jul 2026 02:04:40 -0400
-X-MC-Unique: eBTFNwcoObK15MtIBm7H0w-1
-X-Mimecast-MFC-AGG-ID: eBTFNwcoObK15MtIBm7H0w_1783058679
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 72336193E8B5;
-	Fri,  3 Jul 2026 06:04:39 +0000 (UTC)
-Received: from [10.2.16.58] (unknown [10.2.16.58])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 1832D30030D1;
-	Fri,  3 Jul 2026 06:04:37 +0000 (UTC)
-Message-ID: <f897e15b-6738-400a-b5e2-229408b31222@redhat.com>
-Date: Fri, 3 Jul 2026 02:04:36 -0400
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HF4C/kT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4CF1F000E9;
+	Fri,  3 Jul 2026 06:15:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783059350;
+	bh=F3A0uI4K8b9/FYpxGygmIqL6McpQ6kjySDRiNPjdp6g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=HF4C/kT69dHsEtqrUVnkeEIjeJKUKYTotlMk+uAFJoqUaYamJdWKIXK3jvkWQ7SvD
+	 W51Yo9IZt9iOYAMI0BLbm5xv3K3A99stH9y6Ca3G2Zooa1qNIjhQ4U1MSPawqiMEVv
+	 Vb9fzPhCVtg4x8GqBS6JfC+OdPZYzL1LnMdKziozyUxkJiziAasvthNcnmanRfYG5B
+	 SA71RVUBR0WI5bG9Iyf1hbYAWlE4D6FRbO96cGuKYxj8nJrt1/PTw5ZL65eJda/HVy
+	 q5zjZBeB60U8cYZNO/egBaqdPrjFAiskXWEKdjJ9awp5XS76hSTgn/RvzT/H2DaNqh
+	 Zo3vYXwbO9v6A==
+Message-ID: <088a4644-0c5a-46b4-9491-61b941c22f41@kernel.org>
+Date: Fri, 3 Jul 2026 15:15:48 +0900
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -51,91 +35,117 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-next v10 10/11] cgroup/cpuset: Support multiple
- destination cpusets for cpuset_*attach()
+Subject: Re: [PATCH v3 1/5] ata: libata: rename ata_dev_is_zac()
 To: sashiko-reviews@lists.linux.dev
-Cc: mkoutny@suse.com, hannes@cmpxchg.org, tj@kernel.org
-References: <20260702214757.579012-1-longman@redhat.com>
- <20260702214757.579012-11-longman@redhat.com>
- <20260702220322.9F9DF1F000E9@smtp.kernel.org>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <20260702220322.9F9DF1F000E9@smtp.kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: zLC1I3idvLASA5aiDwH9oI3VGmXx6fsqpFIRtdJbr4E_1783058679
-X-Mimecast-Originator: redhat.com
+Cc: cassel@kernel.org, linux-ide@vger.kernel.org
+References: <20260703040532.2152614-1-dlemoal@kernel.org>
+ <20260703040532.2152614-2-dlemoal@kernel.org>
+ <20260703045945.BA9F11F000E9@smtp.kernel.org>
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20260703045945.BA9F11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-On 7/2/26 6:03 PM, sashiko-bot@kernel.org wrote:
+On 7/3/26 13:59, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Migrating a multithreaded process with threads in different cgroups fails with a warning and `-EINVAL` if some threads change their cpuset and others do not.
+> - [Medium] The patch introduces an undocumented functional change (implicit bug fix) for Device Managed zoned drives, while the commit message falsely claims the refactor merely replaces identical open-coded tests.
 > --
->
-> commit b5923423c1aaea18954e18ecdfabb8c2bad4298c
-> Author: Waiman Long <longman@redhat.com>
->
-> cgroup/cpuset: Support multiple destination cpusets for cpuset_*attach()
->
-> This commit adds support for migrating tasks to multiple destination cpusets.
-> It introduces a new list to track destination cpusets and integrates the reset
-> logic into clear_attach_data(). It also adds a warning and fails the attach
-> operation if a cpuset is used as both a source and destination.
->
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index 38d48b66a32cf..8716b2e339606 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
+> 
+> commit c24879d1eda5cc422a0b0da776fb6aef5fe25e22
+> Author: Damien Le Moal <dlemoal@kernel.org>
+> 
+> ata: libata: rename ata_dev_is_zac()
+> 
+> The helper function ata_dev_is_zac() checks if a device is a ZAC class
+> device (host managed zoned disk) or if it is a host aware zoned disk, that
+> is, a regular ATA disk that supports the zoned capabilities. So the name
+> of this helper function is confusing as it hints at the first case only.
+> 
+> Rename this helper function to ata_dev_is_zoned() to avoid confusions and
+> better reflect the two cases tested. Use this helper in
+> ata_scsiop_inq_std(), ata_scsiop_read_cap() and
+> ata_scsi_report_supported_opcodes() instead of having the same tests open
+> coded.
+> 
+> While at it, to stay consistent with this renaming, also rename
+> ata_dev_config_zac() to ata_dev_config_zoned().
+> 
+>> diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+>> index d54ec1631e9a6..a86721b5df7f6 100644
+>> --- a/drivers/ata/libata-scsi.c
+>> +++ b/drivers/ata/libata-scsi.c
+>> @@ -2020,7 +2020,7 @@ static unsigned int ata_scsiop_inq_std(struct ata_device *dev,
+>>  	if (rbuf[32] == 0 || rbuf[32] == ' ')
+>>  		memcpy(&rbuf[32], "n/a ", 4);
+>>  
+>> -	if (ata_id_zoned_cap(dev->id) || dev->class == ATA_DEV_ZAC)
+>> +	if (ata_dev_is_zoned(dev))
+> 
+> [Severity: Medium]
+> Does this introduce an undocumented functional change for Device Managed
+> zoned drives?
+> 
+> The commit message states this is a replacement of "the same tests open coded",
+> but the old condition would evaluate to true for Device Managed drives,
+> since ata_id_zoned_cap() returns 0x02 for them.
+> 
+> The new ata_dev_is_zoned() helper checks ata_id_zoned_cap(dev->id) == 0x01,
+> which evaluates to false for Device Managed drives.
+> 
+> This appears to alter SCSI emulation for these drives, as they will no longer
+> report ZBC version compatibility here.
+> 
+> Could the commit message be updated to mention this functional bug fix?
+> 
+>>  		memcpy(rbuf + 58, versions_zbc, sizeof(versions_zbc));
+>>  	else
+>>  		memcpy(rbuf + 58, versions, sizeof(versions));
+
+Correct. But I think that we should never had reported that. In any case, with
+host aware also now deprecated, we now definitely do *not* want to report that a
+drive managed disk is compatible zbc, as we treat such drives no different than
+regular disks.
+
+> 
 > [ ... ]
->> @@ -3044,8 +3046,23 @@ static int cpuset_can_attach_check(struct cpuset *cs, struct cpuset *oldcs,
->>   	if (!oldcs)
->>   		return 0;
->>   
->> -	if (!llist_on_list(&oldcs->attach_node))
->> +	/*
->> +	 * The same cpuset cannot be both a source and a destination.
->> +	 * The current code does not support that, print a warning and
->> +	 * fail the attach if so.
->> +	 */
->> +	if (WARN_ON_ONCE((!oldcs->attach_source &&
->> +			  llist_on_list(&oldcs->attach_node)) ||
->> +			  cs->attach_source))
->> +		return -EINVAL;
-> [Severity: High]
-> Does this WARN_ON_ONCE trigger incorrectly during multithreaded process migrations?
->
-> When a multithreaded process is migrated, some threads may already be in the
-> target cgroup (where oldcs == cs) while other threads are moved from a different
-> cgroup. For the threads that do not move, cpuset_can_attach_check() will process
-> them as a source and set cs->attach_source = true.
+> 
+>> @@ -2848,7 +2848,7 @@ static unsigned int ata_scsiop_read_cap(struct ata_device *dev,
+>>  	rbuf[10] = sector_size >> (8 * 1);
+>>  	rbuf[11] = sector_size;
+>>  
+>> -	if (ata_id_zoned_cap(dev->id) || dev->class == ATA_DEV_ZAC)
+>> +	if (ata_dev_is_zoned(dev))
+>>  		rbuf[12] = (1 << 4); /* RC_BASIS */
+> 
+> [Severity: Medium]
+> Similarly, does this silently fix Device Managed drives incorrectly
+> reporting the RC_BASIS bit in READ CAPACITY 16?
 
-I had done some tests on the latest kernel using a multi-threaded 
-process with threads distributed in different cpusets that threads 
-already in the destination cpuset will not show up in the task iteration 
-process. So the situation that (cs == oldcs) should not happen. The 
-WARN_ON_ONCE() is put there to ensure that if any future changes that 
-accidentally breaks the rule will cause this warning to appear.
+The old code was buggy ! we do not want to set rc basis for drive managed devices.
 
-Cheers,
-Longman
+> 
+>>  	rbuf[13] = log2_per_phys;
+>>  	rbuf[14] = (lowest_aligned >> 8) & 0x3f;
+> 
+> [ ... ]
+> 
+>> @@ -3656,8 +3656,7 @@ static unsigned int ata_scsi_report_supported_opcodes(struct ata_device *dev,
+>>  		break;
+>>  	case ZBC_IN:
+>>  	case ZBC_OUT:
+>> -		if (ata_id_zoned_cap(dev->id) ||
+>> -		    dev->class == ATA_DEV_ZAC)
+>> +		if (ata_dev_is_zoned(dev))
+>>  			supported = 3;
+> 
+> [Severity: Medium]
+> Does this also correctly prevent ZBC_IN and ZBC_OUT from being reported as
+> supported for Device Managed drives?
 
->
-> When the iteration in cpuset_can_attach() reaches a thread that does change
-> its cpuset, it calls cpuset_can_attach_check() again for the same destination
-> cpuset:
->
-> 	cgroup_taskset_for_each(task, css, tset) {
-> 		...
-> 		if ((new_oldcs != oldcs) || (new_cs != cs)) {
-> 			...
-> 			ret = cpuset_can_attach_check(cs, oldcs, &setsched_check);
->
-> Since cs->attach_source was previously set to true, this check will fail,
-> triggering the warning and returning -EINVAL.
->
-> This prevents migrating multithreaded processes across cgroups under these
-> conditions and could potentially panic systems configured with panic_on_warn.
->
+Yes it does and that is fine.
 
+-- 
+Damien Le Moal
+Western Digital Research
