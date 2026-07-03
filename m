@@ -1,132 +1,182 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59C0326D4A;
-	Fri,  3 Jul 2026 19:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783106781; cv=none; b=AHjr0BDWNBye67DH2ATBqpgf2c3azw+f8R/IAbX3uUfIJeFhbhGZFvv4qjgiUCLlVt1blBgEnLM5gPs4HaDfcE+hiNrql6eXBMp2dvi+SsxGO0Fqn0SSlhnzShIL8PRD/n0Oike5ud6ka1vYvpjjRbGMG2SE1sv0/OTaUOqGevA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783106781; c=relaxed/simple;
-	bh=0BE8UCtgwMe/W+YJ6rS13MNVFlvxNIXuS76bDmle718=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X/3Ha7Idmcj9f4qDBy6OllDVeEpoiaK79YMib55rdwht+Od3QPsFJ1e7KJFbTqc9XuAvnrPKON/tyxjQJiiv0V2Z48eji+vAcRwP7NkMUdWdBaNhFZr3JpsWcI4EmV9Sz+DpjX86pZEtJHwa9NscSoherAIU1nzHEZg33Li9h/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AQTEPXna; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C161F94F
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 22:18:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783117094; cv=pass; b=nPOsLGNhAGJucwovLOadpFma6uCZemuqPmZPtHuzUFp2So9q6UlP+9E23ubbtwJ4rAdBIx/ZJyme3Geb2iN00juN6bNMPsFSDtIDxoJOjQV3e9yTiKmQrRZSc7PD6enC+MUEsklmJeBqAC2o+D3xYJXFwipfB/p5gRAQZ3Z0MFQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783117094; c=relaxed/simple;
+	bh=mjwuQ3N0OVI+o56jIG+twM3faktMneyLA7TDmjbcSuo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pyqecrEu9jA8d/zG1qkr+2doohPzixv7gsDU4nnnkk2r143By4a2slCbfoPY85NvozGqhhnnrgsC9MxST67P7BAU5+BqWyJxVE1cN/Wq3pSMYH1anTcnRbQ6LzIfAYpwaZ/XEn2BGJW3YhmDl88AHM3qQyA6E6JZvdy2iX6KBkw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MYCIu/ho; arc=pass smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AQTEPXna"
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id E07A11F000E9;
-	Fri,  3 Jul 2026 19:26:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783106779;
-	bh=MEgpkqGul0n6ffAp2eA2uUfdXTni9ivgOvrmkoB0774=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AQTEPXnax0WBd1xsUAveab8iG+vtPMYpFX8zmO40Rt+Eh38kWF+iM3TGCv9rVW5hN
-	 W+R7mecoj/QWY8ypw+ibw+L/o1cxtznbJdEgitRYnoCn9VCM4JXSlWR/vQa3dXAGFK
-	 aQcmsPK66yoN84CXp3utWyyJTp/FYjmuhY69NKsSNrRYr54HaCW6TOzCwtICvA8Fmb
-	 4RZ4GA16+s9cI94AbcWGOQmjWMVnzK14Vi5jn17LJNhEk5PBeA49WX+eremqe31hAy
-	 /75CFvbzp3AwPbpmwbq179OPwY2zPECsaPO5fbZcJNOqsZ/UNZmv4tFgNh2pEgzyTN
-	 IBlSPp6awGu5Q==
-Date: Fri, 3 Jul 2026 21:24:29 +0200
-From: Nicolas Schier <nsc@kernel.org>
-To: Petr Mladek <pmladek@suse.com>
-Cc: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas.weissschuh@linutronix.de>,
-	sashiko-reviews@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	live-patching@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, Miroslav Benes <mbenes@suse.cz>,
-	shuah@kernel.org, Zelin Deng <zelin.deng@linux.alibaba.com>,
-	linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH] kbuild: unset sub_make_done before calling kselftest
- build system
-Message-ID: <akgMbd9fFOZYXUoC@levanger>
-Mail-Followup-To: Petr Mladek <pmladek@suse.com>,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas.weissschuh@linutronix.de>,
-	sashiko-reviews@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	live-patching@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, Miroslav Benes <mbenes@suse.cz>,
-	shuah@kernel.org, Zelin Deng <zelin.deng@linux.alibaba.com>,
-	linux-kbuild@vger.kernel.org
-References: <20260703-makefile-unset-submake-done-v1-1-6899248f3d6a@linutronix.de>
- <20260703061449.246801F000E9@smtp.kernel.org>
- <akdyH7rRV1WHtBJ3@pathway.suse.cz>
- <20260703113019-678f1eb6-a061-435e-91a4-c0d76794b2cf@linutronix.de>
- <akeJto1TC2CSs4Yw@pathway.suse.cz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MYCIu/ho"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-698bf053053so1363354a12.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 03 Jul 2026 15:18:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783117091; cv=none;
+        d=google.com; s=arc-20260327;
+        b=do5UkNsHMuKAsAL7aFHCeSgCQTtvtue0OqLLPTbGtb7P1liYdAiN60ghqNSXi4gEf6
+         Rf6NPFP9qUWu79J3oVFECvYnSCLcB9e4ytcqlFHy8fTlP8eELgGfcaJ61S0B3b+8Z1wl
+         9T0pnuOUBhtM1Dk44cA2prWdDCGBsp8CDP3YsquXdJDQRX70PYIIN5IDp8Z0N3O7Ezqh
+         sf6W3x5sUo4LcIIlcShqyUN4iZBDvV5dkSnP5SJl3lxmu9KhbUuIc+V2ZN5N8GmYPsxG
+         kCiiX3ZphfMHK4XPF9E9tnx4CCpcr9W44HFt9nJyW4Foki5dW+RhWNFf/tVphmbe44PQ
+         kPuw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=+xHnip0cuaNSCAQMubL1LiIso9IuG6Ch3oOSD+V/3cA=;
+        fh=53qvJawqK0TJTsq+MaD47KBMEtgXQmC582XHmZ7TrbI=;
+        b=MBp4ymN1lhpGQ2kpY4kaGq/tNednzRIGMxOrXy5E9pEO2gt7Zd2nPYn4Witg2ZQ6Tf
+         pZwDDXfOlEs4SjeCjtgLZl0T22FVdoCLtxfleI/c0NMylAmWNcnmgQYfP9JL6gtt5NjR
+         6iw2nFY7ww9n9Hnb2w9vFl0BtlNdmRhXVoA+LgLoCODnkwKG1L5DpVn9/xSTYT8mKgNo
+         L8jQN81u/ywqgsagvamtkvJJ5m2vDKkTIsDAtiqOEzCHUUk2rxnzlHORJ4Xd2eH7Ita0
+         3JhnKCktVOwc3dZdb7Q8bDFLz7k6d5j8tKHoADjBIid90MaL0ckY26y5d10jPQP5zh+a
+         BtfA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783117091; x=1783721891; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=+xHnip0cuaNSCAQMubL1LiIso9IuG6Ch3oOSD+V/3cA=;
+        b=MYCIu/hoRAyCX2vHxjVV9M/LT/RMcaE3N/fNc2QlHVl0O4qdHM9sKGAaYL/wL2uN6+
+         3J//VD7FmkDrN+Kuy8U5lNfGmgUuMGHT+43umNtR6PtYrCkZsomwEdQvfykWhpPZ8FPP
+         WuKpzWIJ9QZIp8eMcv/SXDgNYsyVDW1SWpSpAI5ABqj5wlhRx707lf/GZjbwC+KwdH07
+         8TgnYygrf0aa9tB8k7jtI/gX7/D4SzKmPYqx1XCy3dz7rLhO9pEoA+ohOiLUpREWgRi2
+         pfm4pJWlAWpuq4sQOeL41FroVZB5+oJRH0JTG3hxK4BIBYVqvMCfKDrDVuxJOvSGK2JM
+         PlZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783117091; x=1783721891;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+xHnip0cuaNSCAQMubL1LiIso9IuG6Ch3oOSD+V/3cA=;
+        b=JOjIf7M1PDzniM1APV9DWZGhA5/HBer8PqgxO3iQB+dJksuIP/GuEUgEg2H++m4kIg
+         7b9zCaXloXlBW/ywFjShXIJzZE06DuveGnM34N1uo0qx/cI67YuSCvO54488hMZ1lqa8
+         g7A0HFwGFdXjO9wrhKACSSJsnUaX8t0tSWfU/HKjw9ZkLVQS4uplzGt4SkZfcHn/hf7h
+         +hFdQq4yMtQfBr2nBCeMKTQP/zxqa0lrcc8tuYDHpuDX6kVGxn+gyYH+X2kcIxvghC4e
+         5SeUzFgcQQ8kh7YH6GgzyBRPNEFHwB5ymIMclW7bQ+e0SX9dS9RR+cuAa7iM2NF3RebA
+         3pow==
+X-Gm-Message-State: AOJu0Yx/JzWFbLB3JEAqLoUYkkPt+t/pWoy1NXhcDBSFDuXjmkb5yZzU
+	HNGnOBnRZ4QFwx9FqEIy9u7hU28mhbBaQktnhs9ZR5yTAU94+e89CG/gVuIO2TaOJjiva+c8fUX
+	JQci4j/L/lGiZLWQgKLjmKWrgJijfFOOfeuYd
+X-Gm-Gg: AfdE7cm93P0DYf0e1kV78UVKeT/xflrRdwt6kJwyIl0zbMfmxUnvKZ3usykzWoWE9HS
+	sXsJWjjVEXKs1fTvsoVZ3wKRROyOD76XiFvj8VutxkIN5QmL2vouG1VmXG1IEpT3HfBwf5AmklW
+	pEz9bQysIk2EUnY6Gu6k3u1ClUvURRb+4X/80Rd2CBG7Z75VO88k6HWy6vhviAqO5cL52ae7/6z
+	8dV+5pfIfK3gujEIJNGPhy0bpQzmLM7IZ2yjO9bkpuzK/ofQOvKA+VIOnqnDnsyVYyebAueEKMZ
+	c22gsMzehZwPcOK8yZc5ne9PJG4RMaV/dWJzjf1EXzSaNP9AWt6AF/xQBVZRU1DrLXflPW6CyS7
+	5tAhUB7pVgdTC8cG0kK8aIiEIOB0=
+X-Received: by 2002:a05:6402:4014:b0:697:e8d9:6bcd with SMTP id
+ 4fb4d7f45d1cf-69a1a3ad585mr390450a12.28.1783117091262; Fri, 03 Jul 2026
+ 15:18:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <akeJto1TC2CSs4Yw@pathway.suse.cz>
+References: <20260628231156.1254012-1-rosenp@gmail.com> <20260628232714.BD9581F000E9@smtp.kernel.org>
+In-Reply-To: <20260628232714.BD9581F000E9@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 3 Jul 2026 15:17:59 -0700
+X-Gm-Features: AVVi8CevX4VTz70uK7iuU8f26JnXOHvs7xu2YZvdFO5ofn9wxQlXZIu9UGROBOA
+Message-ID: <CAKxU2N-3zVUM6A-fQnYWud4O7M55Ghc-wnTCG+8DD6_nh2827g@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: BCM5301X: drop extra AXI bus ranges that break PCIe
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 03, 2026 at 12:06:46PM +0200, Petr Mladek wrote:
-> On Fri 2026-07-03 11:32:30, Thomas Weiﬂschuh wrote:
-> > On Fri, Jul 03, 2026 at 10:26:07AM +0200, Petr Mladek wrote:
-> > > On Fri 2026-07-03 06:14:48, sashiko-bot@kernel.org wrote:
-> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > > - [Medium] Incomplete fix and inconsistent state: The patch correctly unsets `sub_make_done` for the `kselftest` targets to allow Kbuild command-line reevaluation when building external kernel modules. However, it fails to apply the same logic to the `tools/` and `tools/%` targets, introducing a discrepancy between build entry points.
-> > > > --
-> > > > 
-> > > > commit 06c418388d65deb3d8494a6e8e7071c0e709186b
-> > > > Author: Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de>
-> > > > 
-> > > > kbuild: unset sub_make_done before calling kselftest build system
-> > > > 
-> > > > This commit unsets sub_make_done before invoking the kselftest build system to
-> > > > ensure Kbuild reevaluates command-line flags when building test modules. It
-> > > > mirrors a previous fix done for scripts/install.sh.
-> > > > 
-> > > > > diff --git a/Makefile b/Makefile
-> > > > > index b9c5792c79e01..f717a4dc96d6a 100644
-> > > > > --- a/Makefile
-> > > > > +++ b/Makefile
-> > > > > @@ -1591,10 +1591,10 @@ tools/%: FORCE
-> > > > >  
-> > > > >  PHONY += kselftest
-> > > > >  kselftest: headers
-> > > > > -	$(Q)$(MAKE) -C $(srctree)/tools/testing/selftests run_tests
-> > > > > +	$(Q)unset sub_make_done; $(MAKE) -C $(srctree)/tools/testing/selftests run_tests
-> > > > 
-> > > > [Severity: Medium]
-> > > > Will make tools/selftests still fail after this change?
-> > > > 
-> > > > The tools/ and tools/% targets in Makefile delegate to the tools build
-> > > > system, which can also trigger external kernel module builds (like bpf_testmod).
-> > > > 
-> > > > Because sub_make_done is not unset for these targets, invoking commands like
-> > > > make tools/selftests or make tools/all will skip Kbuild's M= argument parsing.
-> > > > 
-> > > > Should sub_make_done also be unset in the tools/ and tools/% targets to maintain
-> > > > consistency across the build entry points?
-> > > 
-> > > This might make sense. I see that the tools: and tools/%: targets are
-> > > defined right above the kselftest*: ones. And they are even advertised
-> > > in "make help" or "make tools/help".
-> > 
-> > I am not sure how the tools/ targets can reach back into kbuild.
-> > The example with bpf_testmod above is bogus, as tools/* is only for
-> > top-level tools directories. Subdirectories in tools/testing/selftests/
-> > don't seem to be reachable.
-> 
-> I see.
-> 
-> > > Well it probably should be done in a separate patch. It would be better
-> > > for bisecting potential regressions. Thomas, Zelin, what do you think, please?
-> > 
-> > If we do it for consistency it should be its own patch, agreed.
-> 
-> I would keep it as is until anyone reports a real problem.
+On Sun, Jun 28, 2026 at 4:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Removing the PCI memory ranges from the parent `axi@18000000` bu=
+s breaks outbound PCIe memory mapping because the child `pcie` nodes can no=
+ longer translate their addresses to CPU physical addresses.
+> --
+>
+> commit 4f061464281d4964ce46dab60d36a09328f14862
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> ARM: dts: BCM5301X: drop extra AXI bus ranges that break PCIe
+>
+> This commit removes extra AXI bus ranges that overlap with DRAM on
+> BCM5301X/BCM470X SoCs. The intention is to restore the original
+> single-entry mapping and fix PCIe routing issues.
+>
+> > diff --git a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi b/arch/arm/boot/dts=
+/broadcom/bcm-ns.dtsi
+> > index 392a257136696..a1062245e5a01 100644
+> > --- a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+> > +++ b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+> > @@ -95,10 +95,7 @@ L2: cache-controller@22000 {
+> >       axi@18000000 {
+> >               compatible =3D "brcm,bus-axi";
+> >               reg =3D <0x18000000 0x1000>;
+> > -             ranges =3D <0x00000000 0x18000000 0x00100000>,
+> > -                      <0x08000000 0x08000000 0x08000000>,
+> > -                      <0x20000000 0x20000000 0x08000000>,
+> > -                      <0x28000000 0x28000000 0x08000000>;
+> > +             ranges =3D <0x00000000 0x18000000 0x00100000>;
+>
+> [Severity: High]
+> Does removing these PCI memory ranges from the parent axi@18000000 bus br=
+eak
+> outbound PCIe memory mapping?
+>
+> During system boot, when the PCI core calls
+> devm_of_pci_get_host_bridge_resources() to parse the pcie child node's ra=
+nges
+> property, it translates the PCI memory addresses to CPU physical addresse=
+s using
+> of_translate_address().
+>
+> Since the pcie nodes are children of the axi@18000000 bus, the translatio=
+n
+> must pass through the parent's ranges property. Without the mappings for
+> 0x08000000, 0x20000000, and 0x28000000, the translation fails.
+>
+> This would cause the PCI core to drop these memory windows, resulting in
+> pci_assign_unassigned_root_bus_resources() failing to allocate memory BAR=
+s,
+> and endpoint drivers failing at pci_enable_device_mem().
+Different AI says:
 
-Ack.
-
-Thomas, thanks for fix!
-
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-
-
--- 
-Nicolas
+The review's analysis is wrong because it assumes PCI MMIO windows at
+these addresses must translate successfully to be usable. Here's why
+the commit actually fixes things:
+The problem was that the translation succeeded.
+On BCM5301X, 0x08000000, 0x20000000, and 0x28000000 are DRAM
+addresses, not PCIe MMIO space. The old AXI bus ranges created 1:1
+mappings for these addresses, so of_translate_address() returned them
+as-is. The PCI core registered valid-looking resources pointing at
+DRAM =E2=80=94 MMIO accesses went to memory instead of the PCI bus, corrupt=
+ing
+data.
+With need_ob_cfg =3D false (no brcm,pcie-ob in bcm-ns.dtsi),
+iproc_pcie_map_ranges() is never called. The bootloader has already
+configured the PCIe controller's outbound windows correctly. By
+removing the extra AXI bus ranges, of_translate_address() fails, those
+bogus resources are skipped (the OF_BAD_ADDR check at
+drivers/pci/of.c:377), and the kernel stops registering DRAM addresses
+as PCI MMIO windows. The hardware continues working with its
+pre-configured outbound windows.
+So the review's objection at https://lore.kernel.org/all/... is
+incorrect =E2=80=94 the translation was producing wrong resources, and the =
+fix
+is to stop producing them.
+>
+> >               #address-cells =3D <1>;
+> >               #size-cells =3D <1>;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260628231156.12=
+54012-1-rosenp@gmail.com?part=3D1
