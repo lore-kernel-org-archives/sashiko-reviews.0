@@ -1,21 +1,21 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DDE3AFB14
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 09:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BBD3B2FD8
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 09:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783070197; cv=none; b=nlh/KLPCsHm9jbOH3qPQEsV/eTPCFwcQTRIrJigeBLmm3cecvHe7tVh/IbEXxjnBDVc6QXPmBm6Ntu28WPAqLqpCB6aVIARo/bDN8jnkukEl/1VvpBtdRo42b7icE8jRx/B3eUszHsofgv1XP4JqYmd6BLpQtmbAwKDqlGCuT30=
+	t=1783070790; cv=none; b=UmlwUm5ksddLX0xmkjk056z2xToTXiBBo8vhxH98ShbshiadxT1fn/kEYaB3DsjvuIYVLrVHk62qFDGVW7w1HC4F1olJ12bIbCglHUZzMokgKODoI2qVk/5E765hNqQXO1ilPRw6v9w3CRKekqAI1fUbdwEzIWulPnfL1/Q1+aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783070197; c=relaxed/simple;
-	bh=cjladEAkzRrN7pPP1OOOc5gAK72fK5gVtCQNyKikpqA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=VFtM66vzUj5V0rOnLoq9dfoeFGCfM+h1wvNRB6Y1sU3ljNx2bicINu2iBgRQZ93J2Md0wLop7WWyztbIwr8RFMVBmn+huR0fX+JxrCIY+yb1It5aYFGcR7ZrATTIaRsbCv1p6IOCbZRhMJXF8X5XjNcHXcjmkTERiBV2INYUWIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sp3T9V8o; arc=none smtp.client-ip=91.218.175.182
+	s=arc-20240116; t=1783070790; c=relaxed/simple;
+	bh=SiBbJzbVpINUuvEV2ZZbm9PvYX/w11qTrMJLfeetB+E=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=XsP0f3UO07A2EzZkzbODD7hMcgylCGlzcIgar998THZUfSW4GaqulX/FHY6AmkIUgaaV14nckxWkge3a0llHdza8UFWKjPlXNXpBtoXBSg8rNCc3Ovt2DCgbDM+0PO7sypuAi1k60OF9GeHiadOfVWIlKfd+wPbnfPLKZa/uY3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=r3nDtytD; arc=none smtp.client-ip=95.215.58.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sp3T9V8o"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="r3nDtytD"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -23,101 +23,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783070193;
+	t=1783070776;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cjladEAkzRrN7pPP1OOOc5gAK72fK5gVtCQNyKikpqA=;
-	b=sp3T9V8oqmc6/s7YfVT//BEqowOUEdep9bgFwcs6b4/GAbxsn2VBGgedZ7wFf+x7gnzzB/
-	r7IFsDz3dN8sscgB95Bw9wiVD8LF57o5AHBmdFgaPV6yTqwWup5XBH4kTIRBIabpDYTMZ3
-	LhOaz6tkpkcG7ndRrzsWtm22WZlP9UA=
+	bh=2xCCG+fiv8yWbu6fWkXiLLVYWLMzK+xu+oxDBafmZhw=;
+	b=r3nDtytDg7caAIH6z/JHU9AnIIjvlFjm5/RDsHneREnq2EzYKrPRxpAVSlFJ14m/TpcKcL
+	9PkvQKm0yv3t/DwumglY3KOUnHMfRxfrJ3nucHp/ekoesMHslBC9NE5b8+yIoo66ZwYXHh
+	mDkL7aoW4pbcqVD9VYiAiKo7W/1lGzQ=
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 03 Jul 2026 09:16:11 +0000
-Message-Id: <DJOTMGFAPDBF.261U5OD4NPU74@linux.dev>
-Subject: Re: [PATCH v4 18/18] mm: factor out can_spin_trylock()
+Date: Fri, 03 Jul 2026 09:25:56 +0000
+Message-Id: <DJOTTXFDIIN3.3JGPUL349UM63@linux.dev>
+Cc: <linux-rt-devel@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 07/18] mm: move some stuff to mm/page_alloc.h
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: "Brendan Jackman" <brendan.jackman@linux.dev>
 To: <sashiko-reviews@lists.linux.dev>, "Brendan Jackman"
  <jackmanb@google.com>
-Cc: <linux-kernel@vger.kernel.org>, <linux-rt-devel@lists.linux.dev>
 References: <20260702-alloc-trylock-v4-0-0af8ff387e80@google.com>
- <20260702-alloc-trylock-v4-18-0af8ff387e80@google.com>
- <20260702122822.562721F00A3A@smtp.kernel.org>
-In-Reply-To: <20260702122822.562721F00A3A@smtp.kernel.org>
+ <20260702-alloc-trylock-v4-7-0af8ff387e80@google.com>
+ <20260702102828.3C8651F000E9@smtp.kernel.org>
+In-Reply-To: <20260702102828.3C8651F000E9@smtp.kernel.org>
 X-Migadu-Flow: FLOW_OUT
 
-On Thu Jul 2, 2026 at 12:28 PM UTC, sashiko-bot wrote:
+On Thu Jul 2, 2026 at 10:28 AM UTC, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [High] The refactoring to deduplicate spin_trylock safety checks into c=
-an_spin_trylock() missed __free_frozen_pages(), leaving a pre-existing UP N=
-MI corruption bug unpatched.
+> - [Low] Duplicate declaration of `drain_local_pages()` in `mm/page_alloc.=
+h` contradicts the commit message.
 > --
 >
-> Note: The format of this report has been altered to provide a free-form
-> summary of the findings due to recitation restrictions.
->
-> commit a99a7a468132ab177e1233c7e2f5644523ace0a7
+> commit 54f4dc2300a55c6c9cef3e3916ba57e09ad07e39
 > Author: Brendan Jackman <jackmanb@google.com>
-> Subject: mm: factor out can_spin_trylock()
 >
-> This commit introduces can_spin_trylock() to deduplicate checks for wheth=
-er=20
-> the current context is safe for spin_trylock(). It updates=20
-> alloc_nolock_allowed() in mm/page_alloc.c and __kmalloc_nolock_noprof() i=
-n=20
-> mm/slub.c to use this newly factored helper.
+> mm: move some stuff to mm/page_alloc.h
 >
-> Link: https://lore.kernel.org/all/397859cb-b127-4cc6-9c71-044afc99bf0c@ke=
-rnel.org/
+> This commit shrinks the scope of several internal functions by moving the=
+ir
+> declarations from the public include/linux/gfp.h header to the internal
+> mm/page_alloc.h header.
 >
-> [Severity: High]
+>> diff --git a/mm/page_alloc.h b/mm/page_alloc.h
+>> index a4f4b325381ad..6bb50bae3ba27 100644
+>> --- a/mm/page_alloc.h
+>> +++ b/mm/page_alloc.h
 >
-> This isn't a bug introduced by this patch, but the deduplication refactor=
-ing=20
-> appears to have missed an open-coded check in __free_frozen_pages() in=20
-> mm/page_alloc.c.=20
+> [ ... ]
 >
-> Could this open-coded check also be updated to use the new=20
-> can_spin_trylock() helper to resolve a pre-existing UP NMI safety issue?
+>> @@ -266,6 +266,34 @@ static inline bool free_area_empty(struct free_area=
+ *area, int migratetype)
+>>  	return list_empty(&area->free_list[migratetype]);
+>>  }
+>> =20
+>> +/* Convert GFP flags to their corresponding migrate type */
+>> +#define GFP_MOVABLE_MASK (__GFP_RECLAIMABLE|__GFP_MOVABLE)
 >
-> When __free_frozen_pages() handles FPI_TRYLOCK, it explicitly checks for
-> CONFIG_PREEMPT_RT and NMI/hardirq context. On UP systems where CONFIG_SMP=
-=20
-> is disabled, spin_trylock() and its variants are defined to unconditional=
-ly=20
-> succeed because there is no actual lock state tracked.
+> [ ... ]
 >
-> If a caller invokes free_pages_nolock() from an NMI context on a UP syste=
-m,=20
-> the current RT-specific check fails. The execution then falls back to=20
-> free_one_page(), where spin_trylock_irqsave() falsely succeeds even if th=
-e=20
-> NMI interrupted another task that was actively modifying the free list un=
-der=20
-> the zone lock.=20
+>> +bool decay_pcp_high(struct zone *zone, struct per_cpu_pages *pcp);
+>> +void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp);
+>> +void drain_all_pages(struct zone *zone);
+>> +void drain_local_pages(struct zone *zone);
 >
-> This allows concurrent modification of the free list, which can lead to=
-=20
-> corruption and kernel panics.
->
-> Updating the check in __free_frozen_pages() to use !can_spin_trylock()=20
-> would catch the UP NMI case and safely route the allocation to the lockle=
-ss=20
-> add_page_to_zone_llist() path instead.
+> [Severity: Low]
+> The commit message notes that drain_local_pages() is still used externall=
+y
+> and needs to stay behind in include/linux/gfp.h. Since it was successfull=
+y
+> left in the public header, is this declaration in mm/page_alloc.h an
+> accidental duplicate?
 
-I think Sashiko is right? Based on the unfixed kprobe bugs described in
-[0] should we just disable nolock on UP? If that has a user, who knows
-what they are up to, but I would wager that we'd prefer to break their=20
-probabilistic tracing than corrupt their freelists.
-
-Not a strongly held opinion though I can also send a patch to "fix it"
-if people prefer; I'll keep functional changes separate from this series
-though.
-
-[0]: https://lore.kernel.org/all/20260427-nolock-api-fix-v2-0-a6b83a92d9a4@=
-kernel.org/
+Ugh, yep. My local Sashiko run found this but apparently I failed to
+actually fix it...? Doing thigs is so hard.
