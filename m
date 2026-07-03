@@ -1,347 +1,250 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1169282F05
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 13:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783086704; cv=none; b=oqwz2Aryntz1O8y+MBENRumnWoguv1IsmZ2rD0NhG5s88sryjgq21V0zRl2T9i33XNDbzQTPIL2IkttlS1iPDwjV7htR3R7XicwjCYlMdEDdV4z4ZrQg7Xcghnn8YhGS/vhCBtRtLq0XhplnhvhxM458cC+jbG4lFZRR4HZiEMM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783086704; c=relaxed/simple;
-	bh=Fya/r2i9Q1HCXdJ+hbuDimOhJPBx0X6DKHGMg0lMhFc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=t3VPmVNn8MbDHjsJupWenUwmew7RA2KtqwkpPj45N51AVj5o5VN/haNhgB9ZoPXukHT/0fPmRFZOmeK0ASsh4teVNgAQpOCp2GGH3nbKb9i7zoGYJ7ubSPu6FlGmUWqypY8E/zyW07Q3HooE56LAaLmUQN9qYZhLCUI8C7a1yjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ssBSZmQD; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775635E94F;
+	Fri,  3 Jul 2026 14:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783087619; cv=fail; b=DiMjCQl8Bh7Cx0ZA4C6Xgh+YglsRkxdRHifIaHKedOp50hjrgsWJ4pzdWRo4xvbCZqjfPTABkfkjzuRZe46LmemvJFyi86aBGvNO+jWpjQTt9AS9N8whnZsW1cuy2lWq1c0kDXFSuIO9l0FbZDCI5eNU21DVJ+2blk/fr3ET1nU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783087619; c=relaxed/simple;
+	bh=M56dq9copa56HhJZiKt1S2UAM5lO81wiFNg/s1dvITg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=seK2CAgn7/zNzWA6uRGz10btJUtJKrEppeLkETHRVHdegteVeZ4ShobbsxLkvXNB2DX5In3k8ZARlhXIoPflhLs1BvaF+zIUGuvISsvhanw+8+Ri9lGvM1YeH5DrGQ4CVyel2ASqYBw2qm/1duts8ZuOmZcQThskeHvnK7Il8lA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=iNb8ntn0; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=itcA87GR; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ssBSZmQD"
-Message-ID: <4a0ac2692d2a76ab0479c2bf20dbf26a17636d67.camel@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783086698;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=auCIWg3o17nnR2QLCs22R/XUDmzBkX9qbvWaBSNT648=;
-	b=ssBSZmQDdBdrfuieBmqYoH387xvy4NeoiJpVuwii2c6lYLFgMNbvUDK+ws1NaAJBLlYkIN
-	3iS4OXublRXUYqV1+IX2PRJZVwih5F5TAO/jRULJT2YMLR6vnWkaMHGB1oBfo2eBM+v2r6
-	qKrvpZ/oD6rDRFupCDarV4AJC5SYTA0=
-Subject: Re: [PATCH bpf-next v7 1/2] bpf: Introduce jit_required flag and
- refactor kfunc path
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: KaFai Wan <kafai.wan@linux.dev>
-To: Tiezhu Yang <yangtiezhu@loongson.cn>, sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>
-Date: Fri, 03 Jul 2026 21:51:29 +0800
-In-Reply-To: <7cce1695-eaa2-816b-2877-9cb2f117aa27@loongson.cn>
-References: <20260702143656.28845-1-yangtiezhu@loongson.cn>
-	 <20260702143656.28845-2-yangtiezhu@loongson.cn>
-	 <20260702145855.07C6B1F000E9@smtp.kernel.org>
-	 <7cce1695-eaa2-816b-2877-9cb2f117aa27@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="iNb8ntn0";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="itcA87GR"
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6638tgHF3329488;
+	Fri, 3 Jul 2026 14:06:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=eZavkjO8hVyd7x/Lb0cacrtyIMLke3HcxDMqD28Um1k=; b=
+	iNb8ntn0vUNRPTyjGSN2Eeo+T/sEJ6BlJNOHiaqejJzOZssxE1PJeOC5k85MmLsW
+	TI0isyvBIc1RYijej/5u5+D6SeHCPKFcL956HlrV4UggzW6TwsO99OXlaZPEIVAe
+	J8q+X6P4F+Zy8ogPs1Yn9feCIX9HYf2sFijdAhOObYUgvL4QO9Eutcyz966Y51ii
+	cusvQcqSDnF6B+0A3PIKNGzA2rs4CfRTAfS+oSwxBT3kVcFtyL4aKvcEEdn6XTUA
+	ImWgHgHMawuxZhL6G+1NuHKXKb2S+UY+9/rO4AYlBMqEMQgzGoNzt9/VtOcNE8bG
+	z0aCU2cRArW/rNYdHCyDmg==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4f26mkaw6p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 03 Jul 2026 14:06:56 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 663DrKIa000391;
+	Fri, 3 Jul 2026 14:06:56 GMT
+Received: from byapr05cu005.outbound.protection.outlook.com (mail-westusazon11010063.outbound.protection.outlook.com [52.101.85.63])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4f24yje8wx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 03 Jul 2026 14:06:56 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KXvsalH0gaUbbixu76XIpSNsuQh2StQg1zia1iKe5+4czM6z0gSF9FVviQVBsMbzM8FFW83ksWRDIQ05Vhs8xzKaHgYD0/tdN28frTCY7yQye2gdXZd+Z6AasLX9ESkW658EpBICYFDEW1XeffN/XDsgAW4u15C75mfAEVhbHDhcztIyl0aF6sL59pQASkzMOxcYs4exVTSGGOLJawdUCxTMElluc3j6upoJCG3ixgJaYn9YhqDqPKtxEQRVJ/8xSEZMOzOxslTZpPl5cgxb8LhtrMZ2L4u7JyvBDDHQlN0VsgjbXclZmjXjzVvBwx0uuT3piMJ1Q67Ufn5iA6Ldhg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eZavkjO8hVyd7x/Lb0cacrtyIMLke3HcxDMqD28Um1k=;
+ b=ihyW5fhQCLdgde20yrOOp9a7RK0smCGfA/bsvW84qC3vFo7+TQyWheAzEVD1H3/VibISyyXh/OJHmMcMbvUNP9J6j62hVYMaExmYS9C5UfMm4bMhOkvkF/zqI/ZaofIG9wLuqbia4Qy1dEm8hyauN0VQ/zo4Bw3pJWzeStMqRMxpYBipWu4XbcPCpcve3MNPyT947W8f20lARlE639iP2WlGW2frKoXgIH2gWM8dU5kdjlgPMOH7gCjxLIscom5shoXQQSRfb66PUwXKzNEbiSb5n8ELCH0hJ5DgT70Y59bzlIUklKitTExvFQidBB2j42jPdhS6wizqZHh1F/rnGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eZavkjO8hVyd7x/Lb0cacrtyIMLke3HcxDMqD28Um1k=;
+ b=itcA87GRQtnyazhwOoV7BElAliDwQzxnVTsHdL8c+ifFI+s0XmNRWS5COQ+lFLHz8Dep2E7zcXRcLrEHbiGa3GlTnjPJhU6lO73Imtm61M4AtKr6P72jyuQOlBi6o4e3YJNQnFu5KCLYkCph7+zD7hpqq9OG7lk/WHx/JGyRTyY=
+Received: from DM4PR10MB6229.namprd10.prod.outlook.com (2603:10b6:8:8c::12) by
+ CH0PR10MB7484.namprd10.prod.outlook.com (2603:10b6:610:182::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Fri, 3 Jul
+ 2026 14:06:51 +0000
+Received: from DM4PR10MB6229.namprd10.prod.outlook.com
+ ([fe80::867:63e7:13fa:fa7d]) by DM4PR10MB6229.namprd10.prod.outlook.com
+ ([fe80::867:63e7:13fa:fa7d%6]) with mapi id 15.21.0181.008; Fri, 3 Jul 2026
+ 14:06:49 +0000
+Message-ID: <a53510b2-76c8-4a25-94ff-55d424913218@oracle.com>
+Date: Fri, 3 Jul 2026 15:06:46 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/13] libmultipath: Add initial framework
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+References: <20260703102918.3723667-1-john.g.garry@oracle.com>
+ <20260703102918.3723667-2-john.g.garry@oracle.com>
+ <20260703104311.C18771F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: John Garry <john.g.garry@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <20260703104311.C18771F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0585.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:276::19) To DM4PR10MB6229.namprd10.prod.outlook.com
+ (2603:10b6:8:8c::12)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Migadu-Flow: FLOW_OUT
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR10MB6229:EE_|CH0PR10MB7484:EE_
+X-MS-Office365-Filtering-Correlation-Id: de28e504-2a71-4229-4f14-08ded90c5333
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|18002099003|22082099003|5023799004|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	f+InSblgloKWbPO5kVyOCiDGBJ495jk6AiXriuqUgB1vspEEs1ha5Akrg3OJWaY4hpOjDxhRQV+qsNJw8bdbPpCC2ptpCih8UTeFn1qU2VLKJ2Cr0ngIxaXgq/GC/jVXYHiQBACBJ0UrBrRBlgb6CFhs7FKziIffI4ByWb9mm5LnXOSbPX3iG7a10q2fe2z2ac3mJqd948xyHChwl83rv0PPbDc74aSaGaGQN+oFNw2QuFXq/e27RtqYNMaT8EokLDHeX6BFuxCtN1HF7cMo/sqNbabTMAzo4ZRIPW+Km9VEwsX/UM003NPZq1bpwFXcrz4HV/qC0KqTd1OdqldNKETZv2Er3MO4UDKNG7iSrp7WvgvlDCd8p90f9SyRJ2tcYl3NWA3uS8f6eS0EkzBmWBt7JjJsnRk7E4Ol48LQUMJf74KOBzVgyyFhh95GfLfvivwiKhefwY22Cza/e5Ah2fMIKoJ300uu3q815WkVRSnYz30+1TxZ9zJl13AajVldyXrGWtuw5V5n8sKGDW9WS5DEHekbMgWTAjwf1kwgxjIhLQO2N/dIG7Hc050uIY6n24M3UUH52ZFjLiLTWs1O+KrYVpqFeqUUMuHyN262xyOgiKtOAV4p7yL0ziDUkDPSHVwDcrOXT2Lfqnj6ZBErcEnDhny7bJoWjNvwUkaRyX8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB6229.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(18002099003)(22082099003)(5023799004)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?UXd3VEhIYkZuK0JaZnNVdUhpZjc4M3RkR2gyUHd3aTgvbEQ2bTRaQkY0Mmh1?=
+ =?utf-8?B?RFYxUjJqNTN2NTFXWFVDUlRXTFRaelR3NDhpZWJiaVRWZmUwcXliNDhmVFla?=
+ =?utf-8?B?OHI3bU9GNTlpZkRzZkFQMWtyZ2tsZmtpajAyTmFFaUZjNVRHSTVkN3hXZEdM?=
+ =?utf-8?B?WW1ZNTRZelZVeFBtREhlRlFITWNJU1RZQmhMNTFYWXVSOUJib1djVFhDQkxs?=
+ =?utf-8?B?Qy8yQy9iUnRSYVB5cGNrNW9hSW1GZGNIQ2R6TUxUNjljb0pHblZGSmY3UjJn?=
+ =?utf-8?B?NHFSaW92YXlScEQwVjFjTkx3TkZCQk5TamoyR0N1UmZOYms3NlNpajFMUzdz?=
+ =?utf-8?B?U0tOYUFsVWNqM3pnb0U5bnRWb1ZGY3hyU0sxVXZuUk9uQnNPUU4xZmdKTVly?=
+ =?utf-8?B?ZEVqY1RvUWRTWUtMbUVIVlpIY3dpQVQ5R3liNk9rTXhQSElReUJBaG1sS21Z?=
+ =?utf-8?B?WlE1NWkxL1lFUWptZ2c3UVBYUVdQTXR2SUppVkRpMXQ0ZUtaQ2JwTVZMMEx4?=
+ =?utf-8?B?OEVvMDBNMmxra2lXRWVBNVRUN3k1VG13Z3pwRllLai9odjhvYUk1YTd6YjRH?=
+ =?utf-8?B?MjVNc0dZSDcxc1pocnhaNUlmK1dZOHE1RHV2MnJnVndLa1JLR0hiWStqZHln?=
+ =?utf-8?B?ME1aeStBYzlQeFJuazFzTGxML1BHVlh0N2hHT0UvQ0ltcld0bzltck9vY0hM?=
+ =?utf-8?B?UDlFcWJwLzQ4Q1Qzdi9KajNMMEZWQm41L21EQlU1eG1vL2xOS0gxY2dpQm5l?=
+ =?utf-8?B?NCt6bDIzT3V3djhtc0llMUkrV1duM0dMWk9CRWpqNVFDcEVFREsrR0NSWnF5?=
+ =?utf-8?B?K01jSmtBcFV3ei9UY2Z1dklFQy9nN2ZvMjVCcVBVK3lONzBoL3NHalp1c0pa?=
+ =?utf-8?B?RlVRNE9namFtVEVPU2tJTTBmTEpyYnRyVFIwOWZJWklveEdteXRUUUNzYXMv?=
+ =?utf-8?B?QUZjVFhac21xa2FvK0lpbk5UYloyVUpLSnB6UWhVemplU2tIcy9ac3hReGRF?=
+ =?utf-8?B?YmdZUloxazhkeVdxUjBYSG5oVkYyZEJTK2xUTTM5NFdoUWtRQml6QUkxZVhB?=
+ =?utf-8?B?RlNwaWpQTHNveldtbE5ZdjZYaEJBcUkvQXRVWm5BSWhyVDA1OFEwU2xmT0dv?=
+ =?utf-8?B?Q1dLcjlPR015amlJMUxhTlljVk84andEN2JoVHBpc29YRkdlMlBYMWxCVURr?=
+ =?utf-8?B?czJGNUxIdjRrY1RGcDUvK1FxbkRVWGVHaktvTUxyMWdFNDJtb29hUTBCSS95?=
+ =?utf-8?B?bzhPYmVpaFpRZjl1eGtqbnQ3bDBoSG5pRzVLaTJkNW9aa0kzM0lsSnJpRDdw?=
+ =?utf-8?B?WnhTMzJBQ3NIa0FUREFoU3VEYTVFdkpBNWJQSTFqK2FudmNsd2t0cmR6bitV?=
+ =?utf-8?B?dFdINzliQ05TbmI2VkQ5UUFjN2tHZnR2VjhqQ0FuNGM3NU5ReTRFZHdRY01k?=
+ =?utf-8?B?cWx2NFFuZmdHR3RaOVlOTlJQYkFrd2JWejlDVDBUTmpWQ0RzbU1FVVZWKzBJ?=
+ =?utf-8?B?K2xkemhwbGxETGh5WnZveXRHdzE1cnJnbTlZa0grSXduL1g3c1pFVEs3VmRF?=
+ =?utf-8?B?ZjczR2JiMlIxZGtzbDVSYUdjMUFCZGJ1cTBnd01qeEJQV1pLNTBjUXI3VDNN?=
+ =?utf-8?B?S3V4NVlsWTE0Wk5rLzJ4RUl0YjVsVlZVSkRyL2xubWEwVEg3OGpCcTN0VFJm?=
+ =?utf-8?B?YXQ0Ung4dWNZQkVCd2paUFU4eUNjZFE2dFpWSmhMTHdMendVR1dPdWdhWmE4?=
+ =?utf-8?B?RGFOd2V3ZFNGK1lLc0hTWlpSanVCS3RQeCsyQ2QyUG1wdWx4RUhreFRPNGZz?=
+ =?utf-8?B?ektzYVhvYUNabWRYTXJ5d0dyZkF0WFZOamptSkIzMFAzYklBUEZiM3Ewa1Ny?=
+ =?utf-8?B?M05KTUQrME56YkUydnNYcitPdngyZGR1ZWVLVVJBVFRFRDlWMjBBQjZDL2Ru?=
+ =?utf-8?B?YllPZWVPaHErcW1LNjRtS0VjcE0yNlNobURORUI2MnRpYXBGeStPdmg1dnJM?=
+ =?utf-8?B?T1djMFRHL0hoSXRza2RzUXpyQXBFVnJuZnJuaHVNdkxIZ2MwTUg0UFluWkFt?=
+ =?utf-8?B?aDJmSU12NWFUeUJKM2hDaW5Fc2ZESXlLaGU1MXlkeTRqd3hzSStoWnhXK1Qw?=
+ =?utf-8?B?NWh5MWZ0RU1la3c2QUc2VmJLMHpQQWhLQUJkVDBDckVteFBtYUhHMzFwQUto?=
+ =?utf-8?B?ZGg3dDIyd0RIdkxUWEZXZjhTQTRqU3FuMGRlR2lrODgwQ2RaSWRFVmw2dlNv?=
+ =?utf-8?B?MWJMQ003cVFHeEl4eGROd0k2TFUrNEtxeEJEajdrTzlqWFA4NytVMDQrRVVp?=
+ =?utf-8?B?aVNNK3dsTWVvb1FmdHI2Sm10eWJFVi9HMnd0WFpzN3JPTDVEMG83SXRvMlR1?=
+ =?utf-8?Q?np5dfDnD5kj1/LX4=3D?=
+X-Exchange-RoutingPolicyChecked:
+	BRPgJ/CiYvCxaay5PlvDvxxCgUCE/5nNPAKF/aGIzvrEVeO5kuUQbSup65yYh46kASFKnRTkxvNuxbdvgRVdH/RhfdPxe1G5phrjZE6zMSPD1Se/WJsbppUQM7RUE+vs9vE1dAztHLULNmEe/HOhUAHyTUWqBNi+E4E4aeoqyjxbhwJ+Wa+4Z8Eyi7C70KWbpxhiy6WuHjGMTyJq4wc4SESRGX2VBLOEV1tFWJYYlCVo94IpAbS1lyrCrgfl1ISFp7+PTPNDFnw06REMpgWJ81MpG2kBEZlt3uJHYlFEjGnJWVasPSLAL3ZBdgY6wWnTUi5pck/v6nRGu9RoEr4CMA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	JdeGEMp1eQN38JC4WajjTNdEZbSCA2izdUkX3z/dgQksS1nlCWYrQblO96B/sdLB//0aio/PdMZ2cWkdurfXm1XDVv7wRDrg01elXR3usbRs80UI7axX9MdF6u0WmDTP5ZxCF56pNSZsjzKcwdj5bcgKWVI4WFNPj+2L/RhYtnFOLJ3VxgdbvPsKYLoAYbrYCr180Hhn1nciqh7UiEse8nAptY5G5FrbMpywCc7UCBNIE55/qJGz3AUhMaMJ9oFcHs5/hZWFFQjHNB8fU/gYBSrcvAmP3JF18AwPpnFGZh2Xm5N9qoayMjyixtb39lWw3qsRgbof6hHX2Xo3HcnFQNSfvRjkQndsJDrr3CH1PiFrdbEo8LvqKsqlp1uQlnvS/H0TBj3s83ZRf0go2BDusDburUEp9SwAP7nc+O69Z7YNOZyJFlNwfteUYxtk5656fXX1xoC+1SBQuNzRrmfNVNneh/H23MdhHyk7kJrzZLJkIDVQXMflZHu3OvCGPK6baJyWrDBwgh4hmKUArL1oOoRpU5vGgWmmEn1iEDjhiux7E0eTOhjQvaPxroJm19Mij6d9Ltb+FHqx1JgjxTXz7aOqH9XqGxPsOSlr4cqn2oA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de28e504-2a71-4229-4f14-08ded90c5333
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB6229.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 14:06:49.4644
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VqF4NRC9bwp0gWCeiJeJSy5zsT6aP+BA8S13YPrI7cgImbBzp/gC5ZsTFfKkPstLA0XfZed9A1EecenzydUO0Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB7484
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0 adultscore=0 phishscore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606160000 definitions=main-2607030137
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzOSBTYWx0ZWRfX+RenW2ihGlOO
+ iaq2nLQ/8e/HXWM4qPonOG5vLp8IYJkUfS1ovrW2NuSiNT4ju38bFOMxNxOQFO0bsYXFNqc2CAg
+ 906TE7PJPq19NxSixksOB8CfcUJkB8HzokufkU1KrC+/pqBKwcRO
+X-Proofpoint-GUID: HSVdZANtsJHY5Xe6UYMaq_53kNGMa4dD
+X-Authority-Analysis: v=2.4 cv=OKwXGyaB c=1 sm=1 tr=0 ts=6a47c200 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=x0eKOSpe3m1H3M0S9YoZ:22 a=VwQbUJbxAAAA:8
+ a=yPCof4ZbAAAA:8 a=ZGUEyuQP7zSta-00FxsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: HSVdZANtsJHY5Xe6UYMaq_53kNGMa4dD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzOSBTYWx0ZWRfX/g7T6J3HZ39i
+ yBtaVlq24L7Xavou/DDWlQD8RkEA55CHm06jpbo6J1ZN/IxMOIRCBsYIXf9xEYxrGXmfBiyZcLd
+ jsOBRECE/Ws5neyk8JB1bpWEjgesogLeYLfRz0+5DYaRwvKtNZBpfpjlVYAqklcyR+JnLhz5w2c
+ 6yRY2m9gHq0uZWHga54fDROeqLaPjCnDJNT/twijqIjjfFPHxudbGQeU8EtaqVT2vrCwYHWhrhY
+ GO8fRQBcmtxngxyO01Cny9NwhBH9EZrNiSbZBFj9yCab+9wBKHtkPzouRla3VjFiUeGkptZR2KF
+ BtLvoL7B7gv75Grb9BEA7/XXR9S/+qyr9H16UhJQX/8/vVAx+VeC+msZmsF09ibkvLtkWHO3RED
+ 8j/jKoeZNYs7ejjfoUMQ35Hm33XGqGouvWFYtZtvOHzui4UH7wS3YbSnhGJuuubnIxyD8exs+fq
+ Gl7uhNxZdkQhVoZHpcg==
 
-On Fri, 2026-07-03 at 10:57 +0800, Tiezhu Yang wrote:
-> On 2026/7/2 =E4=B8=8B=E5=8D=8810:58, sashiko-bot@kernel.org=C2=A0wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] The `bpf_fixup_call_args()` function and `bpf_prog_has_kfunc=
-_call()` macro were not
-> > updated to use the new `jit_required` flag, leading to inconsistent int=
-erpreter fallback
-> > behavior for pruned kfuncs.
-> > --
-> >=20
-> > commit 5a3f8861c2b6916fe194f97a407cb7265f545fd0
-> > Author: Tiezhu Yang <yangtiezhu@loongson.cn>
-> >=20
-> > bpf: Introduce jit_required flag and refactor kfunc path
-> >=20
-> > Introduce a 'jit_required' bitfield flag at the end of the
-> > flags group in struct bpf_prog. This bit tracks whether a
-> > program strictly requires the JIT compiler.
-> >=20
-> > > diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-> > > index 649cce41e13f3..5fcd19ccb41a9 100644
-> > > --- a/kernel/bpf/core.c
-> > > +++ b/kernel/bpf/core.c
-> > > @@ -2619,8 +2619,7 @@ struct bpf_prog *__bpf_prog_select_runtime(stru=
-ct bpf_verifier_env *env,
-> > > struct
-> > > =C2=A0=C2=A0	if (fp->bpf_func)
-> > > =C2=A0=C2=A0		goto finalize;
-> > > =C2=A0=20
-> > > -	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) ||
-> > > -	=C2=A0=C2=A0=C2=A0 bpf_prog_has_kfunc_call(fp))
-> > > +	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) || fp->jit_required)
-> > > =C2=A0=C2=A0		jit_needed =3D true;
-> > > =C2=A0=20
-> > > =C2=A0=C2=A0	if (!bpf_prog_select_interpreter(fp))
-> >=20
-> > [Severity: Medium]
-> > Since bpf_prog_has_kfunc_call() was replaced here with fp->jit_required=
-,
-> > should bpf_fixup_call_args() in kernel/bpf/fixups.c also be updated to =
-use
-> > the new flag?
-> >=20
-> > Currently, bpf_fixup_call_args() still calls bpf_prog_has_kfunc_call().=
- If
-> > a program has a pruned kfunc (allocating kfunc_tab but leaving
-> > jit_required=3D0) and JIT falls back to the interpreter, wouldn't
-> > bpf_fixup_call_args() incorrectly reject the program with -EINVAL?
-> >=20
-> > kernel/bpf/fixups.c:bpf_fixup_call_args() {
-> > =C2=A0=C2=A0=C2=A0=C2=A0 ...
-> > 	bool has_kfunc_call =3D bpf_prog_has_kfunc_call(prog);
-> > =C2=A0=C2=A0=C2=A0=C2=A0 ...
-> > 	if (has_kfunc_call) {
-> > 		verbose(env, "calling kernel functions are not allowed in non-JITed
-> > programs\n");
-> > 		return -EINVAL;
-> > 	}
-> > =C2=A0=C2=A0=C2=A0=C2=A0 ...
-> > }
-> >=20
-> > Should bpf_prog_has_kfunc_call() in kernel/bpf/verifier.c be updated to
-> > check prog->jit_required, or removed entirely in favor of checking the =
-flag
-> > directly?
->=20
-> I think it is wrong to remove bpf_prog_has_kfunc_call() entirely,
+On 03/07/2026 11:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] A race condition between mpath_put_head() and mpath_head_uninit() leads to a use-after-free vulnerability when accessing mpath_head for cleanup.
+> --
+> 
+> commit 594f063adb51503b6e7af6741526b8d738fee5ba
+> Author: John Garry <john.g.garry@oracle.com>
+> 
+> libmultipath: Add initial framework
+> 
+> This commit adds the initial framework for libmultipath to support path
+> management, path selection, and failover handling for multipath-capable
+> block drivers. It introduces the mpath_head structure to manage available
+> paths and the multipath gendisk.
+> 
+>> diff --git a/lib/multipath.c b/lib/multipath.c
+>> new file mode 100644
+>> index 0000000000000..009d4bb875c6f
+>> --- /dev/null
+>> +++ b/lib/multipath.c
+> 
+> [ ... ]
+> 
+>> +void mpath_put_head(struct mpath_head *mpath_head)
+>> +{
+>> +	refcount_t *refcount = &mpath_head->refcount;
+>> +
+>> +	if (refcount_dec_and_test(refcount)) {
+> 
+> [Severity: High]
+> Could this introduce a use-after-free regression on the mpath_head structure?
+> 
+> If a teardown thread calls mpath_head_uninit() concurrently, it blocks in
+> wait_var_event() waiting for the refcount to drop to 0.
+> 
+> Once refcount_dec_and_test() drops the refcount to 0 here, the condition
+> !refcount_read(refcount) in mpath_head_uninit() can evaluate to true
+> immediately. The uninit thread could then wake up, return, and free mpath_head
+> before this thread completes mpath_head_cleanup() and wake_up_var().
 
-I think it is ok to remove bpf_prog_has_kfunc_call() but with some changes.=
- see below.
+I will address this.
 
-> because using prog->jit_required directly in bpf_fixup_call_args()
-> would cause false positives.
->=20
-> I tested the following changes:
->=20
-> ```
-> diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-> index 4e2b059d71f3..3a2fc194e2bb 100644
-> --- a/include/linux/bpf.h
-> +++ b/include/linux/bpf.h
-> @@ -3171,7 +3171,6 @@ const struct bpf_func_proto=20
-> *bpf_base_func_proto(enum bpf_func_id func_id,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 co=
-nst struct bpf_prog=20
-> *prog);
-> =C2=A0 void bpf_task_storage_free(struct task_struct *task);
-> =C2=A0 void bpf_cgrp_storage_free(struct cgroup *cgroup);
-> -bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog);
-> =C2=A0 const struct btf_func_model *
-> =C2=A0 bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 const struct bpf_insn *insn);
-> @@ -3510,11 +3509,6 @@ static inline void bpf_task_storage_free(struct=
-=20
-> task_struct *task)
-> =C2=A0 {
-> =C2=A0 }
->=20
-> -static inline bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
-> -{
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> -}
-> -
-> =C2=A0 static inline const struct btf_func_model *
-> =C2=A0 bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 const struct bpf_insn *insn)
-> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
-> index 94e0457a0aa3..7fb92b5fa415 100644
-> --- a/kernel/bpf/fixups.c
-> +++ b/kernel/bpf/fixups.c
-> @@ -1378,7 +1378,6 @@ int bpf_fixup_call_args(struct bpf_verifier_env *en=
-v)
-> =C2=A0 #ifndef CONFIG_BPF_JIT_ALWAYS_ON
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct bpf_prog *prog =
-=3D env->prog;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct bpf_insn *insn =
-=3D prog->insnsi;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool has_kfunc_call =3D bpf_prog_ha=
-s_kfunc_call(prog);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int depth;
-> =C2=A0 #endif
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int i, err =3D 0;
-> @@ -1404,7 +1403,7 @@ int bpf_fixup_call_args(struct bpf_verifier_env *en=
-v)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 re=
-turn err;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0 #ifndef CONFIG_BPF_JIT_ALWAYS_ON
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (has_kfunc_call) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (prog->jit_required) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 verbose(env, "calling kernel functions are not all=
-owed=20
-> in non-JITed programs\n");
+> 
+>> +		mpath_head_cleanup(mpath_head);
+>> +		wake_up_var(refcount);
+>> +	}
+>> +}
+>> +EXPORT_SYMBOL_GPL(mpath_put_head);
+>> +
+>> +void mpath_head_uninit(struct mpath_head *mpath_head)
+>> +{
+>> +	refcount_t *refcount = &mpath_head->refcount;
+>> +
+>> +	if (refcount_dec_and_test(refcount)) {
+>> +		mpath_head_cleanup(mpath_head);
+>> +	} else {
+>> +		wait_var_event(refcount, !refcount_read(refcount));
+>> +	}
+>> +}
+>> +EXPORT_SYMBOL_GPL(mpath_head_uninit);
+> 
 
-we can change the log for general purpose. patch #2 and future case will hi=
-t this too.
-
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 return -EINVAL;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> index f496b45b9da4..3dbed3047254 100644
-> --- a/kernel/bpf/verifier.c
-> +++ b/kernel/bpf/verifier.c
-> @@ -2770,11 +2770,6 @@ int bpf_add_kfunc_call(struct bpf_verifier_env=20
-> *env, u32 func_id, u16 offset)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
-> =C2=A0 }
->=20
-> -bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
-> -{
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return !!prog->aux->kfunc_tab;
-> -}
-> -
-> =C2=A0 static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
-> =C2=A0 {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct bpf_subprog_info =
-*subprog =3D env->subprog_info;
-> ```
->=20
-> Here is the local test log:
->=20
-> ```
-> fedora@linux:~$ cat test_panic.c
-> =C2=A0=C2=A0 #include <linux/bpf.h>
-> =C2=A0=C2=A0 #include <bpf/bpf_helpers.h>
->=20
-> =C2=A0=C2=A0 SEC("kprobe/sys_getpid")
-> =C2=A0=C2=A0 int test_panic(void *ctx)
-> =C2=A0=C2=A0 {
-> =C2=A0=C2=A0=C2=A0	struct task_struct *task;
->=20
-> =C2=A0=C2=A0=C2=A0	task =3D (struct task_struct *)bpf_get_current_task();
-> =C2=A0=C2=A0=C2=A0	if (task)
-> =C2=A0=C2=A0=C2=A0		bpf_printk("Task address: %p\n", task);
->=20
-> =C2=A0=C2=A0=C2=A0	return 0;
-> =C2=A0=C2=A0 }
->=20
-> =C2=A0=C2=A0 char LICENSE[] SEC("license") =3D "GPL";
-> fedora@linux:~$ clang -target bpf -O2 -g -c test_panic.c -o test_panic.o
-> fedora@linux:~$ sudo sysctl -w net.core.bpf_jit_enable=3D0
-> [sudo] password for fedora:
-> net.core.bpf_jit_enable =3D 0
-> fedora@linux:~$ sudo bpftool prog load test_panic.o=20
-> /sys/fs/bpf/test_panic autoattach
-> libbpf: prog 'test_panic': BPF program load failed: Invalid argument
-> libbpf: prog 'test_panic': -- BEGIN PROG LOAD LOG --
-> calling kernel functions are not allowed in non-JITed programs
-> processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 1=
-=20
-> peak_states 1 mark_read 0
-> -- END PROG LOAD LOG --
-> libbpf: prog 'test_panic': failed to load: -22
-> libbpf: failed to load object 'test_panic.o'
-> Error: failed to load object file
-> ```
->=20
-> This change incorrectly rejects programs that only contain normal
-> inlined helper calls with -EINVAL.
-
-Was it tested after compiling together with patch #2? seems patch #2 works.
-
->=20
-> Instead, I think bpf_prog_has_kfunc_call() should be updated to check
-> prog->jit_required, like so:
->=20
-> ```
-> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> index f496b45b9da4..1f5824c1c691 100644
-> --- a/kernel/bpf/verifier.c
-> +++ b/kernel/bpf/verifier.c
-> @@ -2772,7 +2772,7 @@ int bpf_add_kfunc_call(struct bpf_verifier_env=20
-> *env, u32 func_id, u16 offset)
->=20
-> =C2=A0 bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
-> =C2=A0 {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return !!prog->aux->kfunc_tab;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return prog->jit_required && !!prog=
-->aux->kfunc_tab;
-
-bpf_get_current_task() is a helper, not kfunc. test_panic has no kfunc, pro=
-g->aux->kfunc_tab
-is=C2=A0null.=C2=A0so we get -ENOTSUPP(-524)
-
-> =C2=A0 }
->=20
-> =C2=A0 static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
-> ```
->=20
-> Here is the local test log:
->=20
-> ```
-> fedora@linux:~$ cat test_panic.c
-> =C2=A0=C2=A0 #include <linux/bpf.h>
-> =C2=A0=C2=A0 #include <bpf/bpf_helpers.h>
->=20
-> =C2=A0=C2=A0 SEC("kprobe/sys_getpid")
-> =C2=A0=C2=A0 int test_panic(void *ctx)
-> =C2=A0=C2=A0 {
-> =C2=A0=C2=A0=C2=A0	struct task_struct *task;
->=20
-> =C2=A0=C2=A0=C2=A0	task =3D (struct task_struct *)bpf_get_current_task();
-> =C2=A0=C2=A0=C2=A0	if (task)
-> =C2=A0=C2=A0=C2=A0		bpf_printk("Task address: %p\n", task);
->=20
-> =C2=A0=C2=A0=C2=A0	return 0;
-> =C2=A0=C2=A0 }
->=20
-> =C2=A0=C2=A0 char LICENSE[] SEC("license") =3D "GPL";
-> fedora@linux:~$ clang -target bpf -O2 -g -c test_panic.c -o test_panic.o
-> fedora@linux:~$ sudo sysctl -w net.core.bpf_jit_enable=3D0
-> [sudo] password for fedora:
-> net.core.bpf_jit_enable =3D 0
-> fedora@linux:~$ sudo bpftool prog load test_panic.o=20
-> /sys/fs/bpf/test_panic autoattach
-> libbpf: prog 'test_panic': BPF program load failed: unknown error (-524)
-> libbpf: prog 'test_panic': -- BEGIN PROG LOAD LOG --
-> processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 1=
-=20
-> peak_states 1 mark_read 0
-> -- END PROG LOAD LOG --
-> libbpf: prog 'test_panic': failed to load: -524
-> libbpf: failed to load object 'test_panic.o'
-> Error: failed to load object file
-> ```
->=20
-> This ensures that pruned kfuncs (allocating kfunc_tab but leaving
-> jit_required=3D0)=C2=A0safely return false,=C2=A0at the same time, this c=
-heck
-> perfectly isolates normal inlined helper paths.
-
-pruned kfuncs well handled in patch [1], see details in check_kfunc_call() =
-and fixup_kfunc_call().
-
-[1] https://lore.kernel.org/bpf/20211002011757.311265-3-memxor@gmail.com/
->=20
-> Let me wait for more review comments and will send v8 next week.
->=20
-> Thanks,
-> Tiezhu
->=20
-
---=20
-Thanks,
-KaFai
