@@ -1,87 +1,125 @@
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4AFD1F91F6
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 01:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.161.220
+Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1AB1DE4E0
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 02:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783043449; cv=none; b=hzddX5ScLderVfPMtRzce4evullpXshW0vyeV47tldV1kBl6RH5hnJgMVCt/buTZ/BBRuR1jpQGcQBeGZKwPMHUH4gmHokerEW8VvWB8k9lBVuDL8qQzXsgV7hSqAL4E7hmaunnMmUs+ODr4SMSv8q8Imxwp45BEB4GyjeV5M94=
+	t=1783044941; cv=none; b=r7w6qTB7fWNN1wtMFYISvl9LLE1AlZsrHB1oG806eXuNHrESjCpLAm4wpV3DroDO3VFKURGrnhZqQ44Rb8s3h4lNzKyY5hhvlxvY/cc0hKcxQCt4IW2id7mgcxgYGkc+Ic1Pgm5oIXwYPJAdKVTZCQboaDQuDx7A7jhMgaEKo/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783043449; c=relaxed/simple;
-	bh=lmAqZhL8QCdehwLCHoufegfJomn7yDKioG8ZT5KJbIQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=JDiu2r8INnLSMOieNlMogqjyxtX32W7RctpHG8vN/+RZ5RrWZLm/Fn5kyjJGpiv+ScVDDhNZIozXs8Pe87X93yeOme2J1ToasLvSWDPvVW2mwVV4r99gn7C4FR02AsCwG9C2g+s/0umnaoY+KZexr2Rv4Dn3r7FuZTrmIZ83OCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=162.243.161.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
- ajax-webmail-app1 (Coremail) ; Fri, 3 Jul 2026 09:50:36 +0800 (GMT+08:00)
-Date: Fri, 3 Jul 2026 09:50:36 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
-To: "Andrew Lunn" <andrew@lunn.ch>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
-	devicetree@vger.kernel.org, "Min Lin" <linmin@eswincomputing.com>
-Subject: Re: Re: Re: [PATCH net-next v9 6/6] riscv: dts: eswin:
- eic7700-hifive-premier-p550: enable Ethernet controller
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <58532b95-bb74-4d87-acae-e67b41dd7d57@lunn.ch>
-References: <20260630063123.1118-1-lizhi2@eswincomputing.com>
- <20260630063445.1226-1-lizhi2@eswincomputing.com>
- <20260701063512.9ED051F000E9@smtp.kernel.org>
- <5de09a24.a11e.19f2207d7d2.Coremail.lizhi2@eswincomputing.com>
- <58532b95-bb74-4d87-acae-e67b41dd7d57@lunn.ch>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1783044941; c=relaxed/simple;
+	bh=zLCfidKiv765v34Kp/uv5ZV0BUgBLbdJH30F/8vv2L4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BEzUw+NisA81+FHZjj2MCwENrHee9f4rw44cuPLyIT1QwcxRtQlbxeGj9sFS4jJ7Usb33TgnWu4YZv+CVvCvUnDLb8EKyQffKvHzkvM+tXmX+PSTX6EuzzFkwU6ypi7sblR0JfeCg1U1LpnUz9QCawTNACNKyijlpC92fdocpG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PNYlmo/n; arc=none smtp.client-ip=95.215.58.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PNYlmo/n"
+Message-ID: <e6ec128e-1acf-4dc7-8884-e4d7ed14d25b@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783044936;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W1LIO1geOHjGag3em8urAK6X+DgR3tKG3cCGCJiSPhQ=;
+	b=PNYlmo/nyrMMuYK99CpjpomAfc/gV1JIPBNrF6ti2sqRB1fJbY5Z5YyzQ9qZXOeUKHFvvB
+	ZWeVSPIh2/+ofFyRnrOHiY4Lv8Y6zyvO5jfxjmpO2MA1oytaaP6iCOV2CIXeaLhRK2VfvY
+	uvaypwJWPnepbsUCp40yPYJGnROGrtI=
+Date: Fri, 3 Jul 2026 10:15:27 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <f21ffca.a15e.19f25abaea6.Coremail.lizhi2@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID:TAJkCgBnCXNtFUdqIDIxAA--.11249W
-X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAQERDGpGkqQZhAABsb
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Subject: Re: [PATCH bpf] bpf: reject mini-sockets in bpf_sock_destroy()
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260702224519.800135-1-xmei5@asu.edu>
+ <20260702230504.0E65E1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260702230504.0E65E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiQW5kcmV3IEx1bm4iIDxh
-bmRyZXdAbHVubi5jaD4KPiBTZW5kIHRpbWU6VGh1cnNkYXksIDAyLzA3LzIwMjYgMjE6MjI6MzQK
-PiBUbzog5p2O5b+XIDxsaXpoaTJAZXN3aW5jb21wdXRpbmcuY29tPgo+IENjOiBzYXNoaWtvLXJl
-dmlld3NAbGlzdHMubGludXguZGV2LCBjb25vcitkdEBrZXJuZWwub3JnLCByb2JoQGtlcm5lbC5v
-cmcsIGRldmljZXRyZWVAdmdlci5rZXJuZWwub3JnLCAiTWluIExpbiIgPGxpbm1pbkBlc3dpbmNv
-bXB1dGluZy5jb20+Cj4gU3ViamVjdDogUmU6IFJlOiBbUEFUQ0ggbmV0LW5leHQgdjkgNi82XSBy
-aXNjdjogZHRzOiBlc3dpbjogZWljNzcwMC1oaWZpdmUtcHJlbWllci1wNTUwOiBlbmFibGUgRXRo
-ZXJuZXQgY29udHJvbGxlcgo+IAo+ID4gSGkgQW5kcmV3LAo+ID4gCj4gPiBPbmUgcXVlc3Rpb24g
-YmVmb3JlIEkgcHJlcGFyZSB0aGUgbmV4dCByZXZpc2lvbi4KPiA+IAo+ID4gQXMgZGlzY3Vzc2Vk
-IHByZXZpb3VzbHksIHRoZSBEVFMgcGF0Y2ggd2FzIGluY2x1ZGVkIG9ubHkgdG8gcHJvdmlkZSB0
-aGUgb3ZlcmFsbAo+ID4gRXRoZXJuZXQgZGVzaWduIGNvbnRleHQgZHVyaW5nIHRoZSByZXZpZXcg
-b2YgdGhlIGJpbmRpbmcgYW5kIGRyaXZlciBwYXRjaGVzOgo+ID4gCj4gPiBodHRwczovL2xvcmUu
-a2VybmVsLm9yZy9sa21sLzY0YmY2YjQwLWI5NDctNGZmYS04ZDQ4LTRkNjM0MTkzMTMyN0BsdW5u
-LmNoLwo+ID4gCj4gPiBGb3IgdGhlIG5leHQgcmV2aXNpb24sIHdvdWxkIGl0IGJlIGFjY2VwdGFi
-bGUgdG8gZHJvcCB0aGUgRFRTIHBhdGNoIGZyb20gdGhpcwo+ID4gc2VyaWVzIGFuZCBwb3N0IG9u
-bHkgdGhlIGJpbmRpbmcgYW5kIGRyaXZlciBwYXRjaGVzPyBUaGUgY29tcGxldGUgRFRTCj4gPiBl
-bmFibGVtZW50IGlzIHBsYW5uZWQgdG8gYmUgc3VibWl0dGVkIGxhdGVyIGFzIGEgc2VwYXJhdGUg
-c2VyaWVzIGFmdGVyIHRoZQo+ID4gYmluZGluZyBhbmQgZHJpdmVyIGhhdmUgYmVlbiBtZXJnZWQu
-Cj4gCj4gV2hhdCBub3JtYWxseSBoYXBwZW5zIGlzIHRoYXQgSSBnaXZlIGFuIEFja2VkLWJ5OiBv
-ciBhIFJldmlld2VkLWJ5Ogo+IGZvciB0aGUgRFQgcGF0Y2gsIGFuZCB5b3Ugc3VibWl0IGl0IGZv
-ciBtZXJnaW5nIHZpYSB0aGUgRFQgTWFpbnRhaW5lci4KPiBFdmVyeXRoaW5nIHRoZW4gbWVldHMg
-dXAgaW4gbGludXgtbmV4dC4KPiAKPiBXaHkgZG8geW91IG5lZWQgdG8gZG8gdGhpcyBsYXRlcj8g
-V2h5IG5vdCBub3c/Cj4gCgpUaGVyZSBpcyBhbiBhbm90aGVyIHNlcGVyYXRlIERUIHBhdGNoIHNl
-cmllcwpbaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsLzIwMjYwNjE1MTIyMDE2LjExMTAyMDYt
-MS1waW5rZXNoLnZhZ2hlbGFAZWluZm9jaGlwcy5jb20vXQp3aGljaCBpcyB1bmRlciByZXZpZXcu
-Ckl0IGFsc28gaW50cm9kdWNlcyBEVCBub2RlcyBmb3IgcmVzZXQsIGNsb2NrLCBwaW5jdHJsLCBI
-U1AgcG93ZXIgZG9tYWluLgoKVGhlcmVmb3JlLCBvdXIgcGxhbm5lZCBzdGVwcyBhcmUgYXMgZm9s
-bG93czoKMS4gSW4gdGhlIG5leHQgbmV0LW5leHQgdjEw4oCLIHBhdGNoIHNlcmllcywgZHJvcCB0
-aGUgRFRTIHBhdGNoZXMsIGFuZCBzdWJtaXQgb25seQogICB0aGUgYmluZGluZ3MgYW5kIGRyaXZl
-ci4KMi4gV2FpdCBmb3IgUGlua2VzaOKAmXMgRFQgcGF0Y2ggc2VyaWVz4oCLIHRvIGJlIG1lcmdl
-ZC4KMy4gT25jZSB0aGUgSFNQQ1JHIHBhdGNoIHNlcmllc+KAiwogICBbaHR0cHM6Ly9sb3JlLmtl
-cm5lbC5vcmcvYWxsLzIwMjYwNjA1MDYwNzMwLjE2MDUtMS1kb25neHV5YW5nQGVzd2luY29tcHV0
-aW5nLmNvbS9dCiAgIGlzIG1lcmdlZCwgc3VibWl0IGEgbmV3IERUIHBhdGNoIHNlcmllc+KAiyB0
-byBleHRlbmQgRVNXSU4gRUlDNzcwMCBTb0Mgc3VwcG9ydOKAiwogICBmb3IgYWxsIEhTUCBtb2R1
-bGVz4oCUaW5jbHVkaW5nIFVTQiwgZU1NQywgU0QsIGFuZCBFdGhlcm5ldCwgc2luY2UgdGhleSBh
-cmUgYWxsCiAgIHVuZGVyIHRoZSBIU1AgYnVzIG5vZGUgZXZlbnRob3VnaCBldGhlcm5ldCBkb2Vz
-ZSBub3QgZGVwZW5kIG9uIEhTUENSRyBwYXRjaC4K
+
+On 7/3/26 7:05 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [High] The patch causes a functional regression by completely disabling bpf_sock_destroy() for TCP mini-sockets (TIME_WAIT and NEW_SYN_RECV).
+>
+> Pre-existing issues:
+> - [High] The helpers bpf_tcp_check_syncookie and bpf_tcp_gen_syncookie suffer from the same type confusion and out-of-bounds read as bpf_sock_destroy, but remain unfixed.
+> --
+>
+> commit cf46da8728e7f1fca4584ccdb089c82b7fd3061f
+> Author: Xiang Mei (Microsoft) <xmei5@asu.edu>
+>
+> bpf: reject mini-sockets in bpf_sock_destroy()
+>
+> The patch tries to fix a KASAN slab-out-of-bounds read in
+> bpf_sock_destroy() by checking sk_fullsock(sk) before accessing
+> sk->sk_protocol. It casts sock_common to sock and early exits if it is
+> a mini-socket.
+>
+> Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
+> Reported-by: AutonomousCodeSecurity@microsoft.com
+> Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+>
+>> diff --git a/net/core/filter.c b/net/core/filter.c
+>> index b446aa8be5c37..3e70c8ab5aab1 100644
+>> --- a/net/core/filter.c
+>> +++ b/net/core/filter.c
+>> @@ -12665,6 +12665,9 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
+>>   {
+>>   	struct sock *sk = (struct sock *)sock;
+>>   
+>> +	if (!sk_fullsock(sk))
+>> +		return -EOPNOTSUPP;
+>          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> [Severity: High]
+> Does this unconditionally reject mini-sockets?
+>
+> The commit message states that mini-sockets have no diag_destroy() handler,
+> but as documented in the original commit 4ddbcb886268, request sockets are
+> explicitly supported because their protocol diag_destroy handler
+> (tcp_abort) correctly handles TCP_TIME_WAIT and TCP_NEW_SYN_RECV states.
+>
+> If we unconditionally reject non-full sockets, wouldn't this break BPF
+> programs that rely on bpf_sock_destroy() to forcefully terminate pending
+> connections or TIME_WAIT sockets?
+
+It's true. Please also include a selftest to reproduce the issue and, 
+another one to cover the non-full socket.
+
+
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this same type confusion exist
+> in bpf_tcp_check_syncookie() and bpf_tcp_gen_syncookie()?
+>
+> Both of those helpers take ARG_PTR_TO_BTF_ID_SOCK_COMMON and cast it to
+> a full struct sock *. They then immediately dereference sk->sk_protocol
+> without an sk_fullsock() check:
+>
+> net/core/filter.c:bpf_tcp_check_syncookie() {
+>      ...
+> 	if (sk->sk_protocol != IPPROTO_TCP || sk->sk_state != TCP_LISTEN)
+> 		return -EINVAL;
+>      ...
+> }
+>
+> If an XDP or TC BPF program passes a tw_sock or req_sock from
+> bpf_skc_lookup_tcp(), won't this result in the same KASAN
+> slab-out-of-bounds read since sk_protocol resides outside the bounds
+> of struct sock_common?
+>
+>> +
+>>   	/* The locking semantics that allow for synchronous execution of the
+>>   	 * destroy handlers are only supported for TCP and UDP.
+>>   	 * Supporting protocols will need to acquire sock lock in the BPF context
