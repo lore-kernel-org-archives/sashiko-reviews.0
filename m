@@ -1,113 +1,172 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D11133987E
-	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 04:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783052069; cv=none; b=KZjO37+t/MpB+5F0ND7P3T2r01sKh6C7B0t5m3DcpXAG8YG5NpkxArKlCwu1INAC2GrUZrLLlX6tJdROGLI4Y+cziDpIboPsP4NZyffPaErf8tuqdA/UZ059cu3N14vNQ2pM22PfqSsAEKhd5CM5oybWjBHvU4MXcRem+ZWro9g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783052069; c=relaxed/simple;
-	bh=hNF+BYFw5WurQLv1dEpQiKqkpQlRM3UA8yxeoelt8e0=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=d3QxhAyAyOEwZEbiP5UwZQocqllIukkqv/okIlnJuzwc0l+1SQnwxEhnHKCpqsWCL+DNzsOCRcus5hT3gFV21/Y96Em5CPqI3TPsqWzVuLk9zfwn1uv98Kpq4zScyEMX4L2T/pH2xHrTFUtBWn0896jmJlH/E3K3O4RvarwxiYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [113.200.148.30])
-	by gateway (Coremail) with SMTP id _____8Cx7+sUN0dqEzMBAA--.5852S3;
-	Fri, 03 Jul 2026 12:14:12 +0800 (CST)
-Received: from [10.130.40.83] (unknown [113.200.148.30])
-	by front1 (Coremail) with SMTP id qMiowJCxWeAQN0dqVHO9AA--.31828S3;
-	Fri, 03 Jul 2026 12:14:09 +0800 (CST)
-Subject: Re: [PATCH bpf-next v7 2/2] bpf: Reject programs with inlined helpers
- if JIT is unavailable
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
- KaFai Wan <kafai.wan@linux.dev>
-References: <20260702143656.28845-1-yangtiezhu@loongson.cn>
- <20260702143656.28845-3-yangtiezhu@loongson.cn>
- <20260702145726.0B96B1F000E9@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <1f9a6291-d221-36da-1989-5f8db7d6fb20@loongson.cn>
-Date: Fri, 3 Jul 2026 12:14:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BBB30E85B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  3 Jul 2026 04:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783054287; cv=pass; b=YoRr5H1VIe++Q8bCM4gjJFKqcR+Hd04k06ZPIQtsHzOX5IFFW6STpYIBTcFqvCiREks9j5pwtp2R7wpSUY52SAKRav20mxVxVetJX4tjIUwNLOp6Y2XtvYvrLXjeTSBTvm3hJGD5ao8LsQ+TGKuSgF/t6ZujlTBQrFmSI4DfLrU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783054287; c=relaxed/simple;
+	bh=+PEDwmKMlxXv4cweX/Pw7SUlOHYM8lpcxQN7R6f0nGQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rSD9PXigQ/zVEassgM9MpfHM7m/2Giuea68BjoyBzONPXaSBsbZs9otQBEhv23KGytDKTXDR5AQZaDvhiLSD4qSVi/Y3gKzyThsKCcp0yEH8Nd1d/QVErZsvJOH+UqrQiTCgXlPqWMQR6v9JuA5NmQBrgouQrR+iYbo++rkNKS0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qZc/QA/q; arc=pass smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZc/QA/q"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-698439b6e8aso328194a12.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 02 Jul 2026 21:51:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783054277; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qCjTvRrO+q3qltQI6kef7/LlFdcgwadwwei9/DEy9wZDL1gMJOfswLib1vonyvqvKb
+         00sR47VIbQ8YgXoi0gp8MROdTVU3qXhtMlxa3CyoCZR9OW/pPjxuSVZfa9Wh/1zxzvCz
+         jpGDdiQWooFBzRG3uz1SfCby+70ATvIky/SxO0oxwvxwf0oOIQB79egJcscHPBApBjTU
+         kShqfD2VOcTDE0eszzZI8w8u+RGP7Y0qOCQ/YKMGx6zN0e2fj7N1hptIYo3MXLEuDKU1
+         jPzuX/whOMKbNhJm/VkWMntiT2AjIA+1h/PlFRVJZVF+yAPOfQbfC4ZjPqyPCJW+Ss/E
+         bQ0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nidLjH/61ALNYi2oe6hdob5c95PJ2ElWhYmQsQsebqE=;
+        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
+        b=TQVYfPt02P/HmqJ5WM+sDFyuyQX7Z8F2L4mK+4XQ2MIKPUAwRhU239w8BQ7RBijL0T
+         UXeL1JnwENO5LQn+g7hOgdWcaTqU3P9a1yIrX9NPyjbywIF49FwPoz73X8JNNNbcz/f4
+         V6yqyvVPEXfRNWGC79ICNqlgKirVo4ogN3vctkEUCkiTz/oVZsxLLCcdjbKzdrNe4W4K
+         hYTy+PLKsP53+JwuNTUO+o3hR+hc4nPhSb/Z3Nid0K85AyrhIUNTnPRuYgPzf2cA1KHk
+         +rxhWuA7K1/4TwSxLHCvbKvta9l0gvjbDAS5u12cpuhh6Wb/rf/Nm7G3F/Z23GrNimJB
+         G5Ug==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783054277; x=1783659077; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nidLjH/61ALNYi2oe6hdob5c95PJ2ElWhYmQsQsebqE=;
+        b=qZc/QA/qpYbfuaguJmdUTnj9W7gTAC/KmvaMOpF1/1raWpmcDNCWk7DHyWVNq30qen
+         dTB4vkjGfMIVF0Rz/ub//N3iSt734jqa600xsDzWNWz3Gj7oRAiEAkSeZPexPX1vE1bH
+         hLnFyXEoA3AaBfVbBwzPou+bnm/ku7VmaOa18yCVGNPAIXa1z+cgxe6Dem+evJXwiNnh
+         OrF2NTk0nVUL+x/xA0um6pMYqD2WuwaFbA5O2s4kgX6EHmKTS94+NGlHIfc+RKpGbrnf
+         mAuzrGbfrmFMiqJVddHM3ESoueuUEJSOSG7gJTLar/WKkWHfQMHQmgluNj1t9Qr0NAZD
+         XS1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783054277; x=1783659077;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nidLjH/61ALNYi2oe6hdob5c95PJ2ElWhYmQsQsebqE=;
+        b=DHpRFkZEkrd5ZHJM74A/z5SPsXy8LIeolAS54YvOomgAwVt2J3Zz6brqwcoDhJjpSs
+         DopzpipHLE1bOEYEQEv4KukjV5NEfhq2dYHQtTXEoNns1QSzeum3p8k3FInd5MpEA0GF
+         ZgU0hVPDcmp7BaDnVdvRpbYX8I7woxAGg1iIruuYGFA4soHDEICoCF6JJ2dbD23VLwH8
+         ukZX/tlH9CtVTFB5cclGNiLemc4yP4Qi63yqB0ZlI3TgwF00zlYvC5+wHlm1udznTYGK
+         JeorZVsUk6FlPHWQlKAgzbs6wATlzHXR2tdPBovz1zQEPgTh+jiUX2BjzyVfMlGocWXk
+         uehg==
+X-Gm-Message-State: AOJu0YyhG8nBVHz6lKpltlCORFyHSV4Qmz+r0C7JclwntpneBVk6c9D2
+	T8bjzxe+hqDGKeyJKXU1l8tcA10PfBKaKtYAkW9pM3PKKv3PWYROT4GLzyHA10oJR/zVTDbmAuY
+	juSHnW534QmWJxRDQxZAzNP/r8w7NCLqodrsb
+X-Gm-Gg: AfdE7cnSCX+s9YNC+ju3GEB457dDYH+3I6B5uOCvC+b+EKcDN4HahgJorrlclu4TKcq
+	itHeh6B2xfAEqCojYBp0hHCPY8sP/wI2q2HEd+j8Fg3JKuc8MfFPzlbEmzsKGEcm5Np7TSS2dKf
+	RLUwf8LfsKuUu76abWSB/CwQgGBIbx2JukjiLULem80EXMdIxlTDo/vwlpdF0GvjRhLRD06g+kQ
+	sqS944POsL8+Sah6u31zRSZ8tKBK9URpmwToz/bHlBHwFS0NPl9xKX5n+9ykOFJS+hM+A==
+X-Received: by 2002:a05:6402:428f:b0:698:5f35:a8f1 with SMTP id
+ 4fb4d7f45d1cf-6989f2de5a2mr4060884a12.6.1783054276736; Thu, 02 Jul 2026
+ 21:51:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260702145726.0B96B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJCxWeAQN0dqVHO9AA--.31828S3
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7KFW5GF18Jr15Ww1xJF1DJwc_yoW8ZFyUpF
-	4fKayYk3yDXwn7Ka47t3y7Z3Wjqw48Gr47GFnYgr1Ik3Wakr97XFyfKr47uFn5Gr4v9F1I
-	vr4Igryvk3WDGFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
-	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
-	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
-	AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
-	rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
-	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
-	67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
-	0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24So
-	DUUUU
+References: <20260703041329.2797584-1-ekffu200098@gmail.com>
+ <20260703041329.2797584-4-ekffu200098@gmail.com> <20260703042714.DB91A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260703042714.DB91A1F000E9@smtp.kernel.org>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+Date: Fri, 3 Jul 2026 13:51:03 +0900
+X-Gm-Features: AVVi8Cd2bVlUnwsKTntq8s3Zx4NQPFH6pVrTlzDTRfN2lT2h5pCleS3fAtXrZvo
+Message-ID: <CABFDxMHVt1v6pzj9x_Hys571o=YAi1wprjJS8Nz7Ko-wQ=A98Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/9] of/numa: remove redundant numa_nodes_parsed node_set()
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026/7/2 下午10:57, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch prevents loading BPF programs that use JIT-inlined helpers (e.g., `bpf_get_smp_processor_id`) when the BPF JIT is explicitly disabled at load time (`net.core.bpf_jit_enable=0`).
+On Fri, Jul 3, 2026 at 1:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The function's final return status is order-dependent, improperl=
+y shadowing earlier successes if the last evaluated memory node lacks a 'nu=
+ma-node-id' property.
 > --
-> 
-> commit 01713d8606e656f4dadefe493f371f4c861d842b
-> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
-> 
-> bpf: Reject programs with inlined helpers if JIT is unavailable
-> 
-> This patch sets the jit_required flag to 1 when a BPF program uses helpers
-> that are expected to be inlined by the JIT compiler. This prevents a kernel
-> panic in the BPF interpreter by rejecting the program with -ENOTSUPP if
-> JIT compilation is unavailable at runtime.
-> 
->> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
->> index 12a8a4eb757f1..94e0457a0aa33 100644
->> --- a/kernel/bpf/fixups.c
->> +++ b/kernel/bpf/fixups.c
->> @@ -1841,8 +1841,10 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
->>   		}
->>   
->>   		/* Skip inlining the helper call if the JIT does it. */
->> -		if (bpf_jit_inlines_helper_call(insn->imm))
->> +		if (bpf_jit_inlines_helper_call(insn->imm)) {
->> +			prog->jit_required = 1;
->>   			goto next_insn;
->> +		}
-> 
+>
+> commit a42c5d6d6a0d76bbe5386c6e6e6307393d31c628
+> Author: Sang-Heon Jeon <ekffu200098@gmail.com>
+>
+> of/numa: remove redundant numa_nodes_parsed node_set()
+>
+> This commit simplifies of_numa_parse_memory_nodes() by removing a redunda=
+nt
+> node_set() call. The operation is now handled internally by
+> numa_add_memblk().
+>
+> > diff --git a/drivers/of/of_numa.c b/drivers/of/of_numa.c
+> > index cd2dc8e825c92..230d5f628c1b4 100644
+> > --- a/drivers/of/of_numa.c
+> > +++ b/drivers/of/of_numa.c
+> > @@ -59,11 +59,8 @@ static int __init of_numa_parse_memory_nodes(void)
+> >                       r =3D -EINVAL;
+> >               }
+> >
+> > -             for (i =3D 0; !r && !of_address_to_resource(np, i, &rsrc)=
+; i++) {
+> > +             for (i =3D 0; !r && !of_address_to_resource(np, i, &rsrc)=
+; i++)
+> >                       r =3D numa_add_memblk(nid, rsrc.start, rsrc.end +=
+ 1);
+> > -                     if (!r)
+> > -                             node_set(nid, numa_nodes_parsed);
+> > -             }
+>
 > [Severity: High]
-> While this correctly prevents the interpreter panic, does this unconditionally
-> reject valid BPF programs when the JIT is explicitly disabled at load time
-> (e.g., net.core.bpf_jit_enable=0)?
+> This is a pre-existing issue, but does this function accidentally return =
+an
+> error if the last memory node evaluated lacks a NUMA node ID?
+>
+> Looking at of_numa_parse_memory_nodes(), if the device tree contains mult=
+iple
+> memory nodes and the final iterated node does not have a "numa-node-id"
+> property, the loop handles it like this:
+>
+>     for_each_node_by_type(np, "memory") {
+>         r =3D of_property_read_u32(np, "numa-node-id", &nid);
+>         if (r =3D=3D -EINVAL)
+>             continue;
+>         ...
+>
+> This clobbers the r variable with -EINVAL and continues to the end of the
+> loop. If this is the last iteration, the loop terminates and the function
+> returns -EINVAL, discarding prior successful parses.
+>
+> Could this lead to NUMA initialization failing entirely on valid system
+> configurations and falling back to a single node?
+>
+> >
+> >               if (!i || r) {
+> >                       of_node_put(np);
 
-Yes.
+Already being discussed in a separate patch, See [1].
 
-> If this block checked prog->jit_requested before skipping the fixup and
-> setting jit_required, wouldn't the verifier properly patch the instruction
-> when JIT is disabled, allowing the program to execute successfully in the
-> interpreter?
+[1] https://lore.kernel.org/all/20260621143919.4176646-1-ekffu200098@gmail.=
+com/
 
-No, this was already explored in earlier version (v4), but it was
-explicitly rejected by the BPF maintainer.
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260703041329.27=
+97584-1-ekffu200098@gmail.com?part=3D3
 
-If JIT is unavailable, rejecting the program load with -ENOTSUPP is
-the intended design.
-
-Thanks,
-Tiezhu
-
+Best Regards,
+Sang-Heon Jeon
