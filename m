@@ -1,33 +1,33 @@
 Received: from mail.cyberchaos.dev (mail.cyberchaos.dev [195.39.247.168])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295563254BB
-	for <sashiko-reviews@lists.linux.dev>; Sun,  5 Jul 2026 13:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EAA37AA74
+	for <sashiko-reviews@lists.linux.dev>; Sun,  5 Jul 2026 13:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.39.247.168
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783258342; cv=none; b=mFQpvdmMROSZc8/uS7o9FJHvDlO+hyXS0ey7+ebRNCunyARIIbOaCbqzL6C6zq8fobAJZH/nFGQJMDZo+2UaHKDRmQITC6c5vXQeFjrjtBQmea0Bylq36BQc6xVi/N9X9FO7hR89DvvrH4dR9ZtpgqtN1GKSVGfw2+AmNVfreME=
+	t=1783258592; cv=none; b=ek97hFw8xee+JPVQhzMvutqw+o3SpG1uOXoMJeUHwXnEaBB0gQfozpBYx0IE9fLjVWgTlXJPSkZue8gtGU+xBqK9LZKe6C4BlQOeJMtWVzCiWiWsQ7JXrw9S7s6hpn9Vumd8s6w2LOvTKsqqc2yQzn+JK7IN4HX+1JbCBgXOdYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783258342; c=relaxed/simple;
-	bh=seHVJUyqa9aSBvOyTdNEHCDYxu/mToEdAFd2tfd09AA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=tAxGfHDLb9SnAOyaehFKGwN27L4fFyInmF9BVcYBLTtqoUh5slVfwC4ZLdjs5/uDPp8c2AsgjHDu7FROcDevwxfdZyTg3EfkPE2/GHJroVvg37K9FdPyaothu/3d22nWBksVwP3DNbu2k4bKtHgicV2IV4S3+7ci4QdFdm/9qtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyberchaos.dev; spf=pass smtp.mailfrom=cyberchaos.dev; dkim=pass (1024-bit key) header.d=cyberchaos.dev header.i=@cyberchaos.dev header.b=vSeMcuv8; arc=none smtp.client-ip=195.39.247.168
+	s=arc-20240116; t=1783258592; c=relaxed/simple;
+	bh=BmnSn+qzIiGLN2r2xvxgAs0h7J3ibxtj0+VEynPdkn0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CZMioaj+ld5ojQlqjlRWZAOii9pyJZdAXnxuqgrSyhN7A1/fipQAGmE3DGBH0A37IF9hg8/hqHAXcUHSaAIIWbNdU8nYvEJ0Ayd8uXcrIONUqDzFfE31F0TYTxJgy8KOxuRXzvy8AM3PPJIg0jOUr1IIoYHCwfrTBqgAw1HflDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyberchaos.dev; spf=pass smtp.mailfrom=cyberchaos.dev; dkim=pass (1024-bit key) header.d=cyberchaos.dev header.i=@cyberchaos.dev header.b=N1nQ+mrX; arc=none smtp.client-ip=195.39.247.168
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyberchaos.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cyberchaos.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cyberchaos.dev header.i=@cyberchaos.dev header.b="vSeMcuv8"
-Message-ID: <5f65074b-760f-4d09-9d7a-34202d5917ab@cyberchaos.dev>
+	dkim=pass (1024-bit key) header.d=cyberchaos.dev header.i=@cyberchaos.dev header.b="N1nQ+mrX"
+Message-ID: <4fd62657-ed86-46f4-9072-c9f2176cef33@cyberchaos.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyberchaos.dev;
-	s=mail; t=1783258339;
+	s=mail; t=1783258588;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=xTmlDRgNraQsD+AV2gpWxhAPRQr9N8rs/H7TaWydj3k=;
-	b=vSeMcuv8NouWtEUbJQDVT1TWLX+omooB31vvsAGBQay0fJ2pvC5iSle2FzPOLpmf7GMgRG
-	rq0FR6u34oaenxJP24QQQet2Mbk79vFOq8vGasoSw+a+wvVKxNY+HWq4wapTBfmKYfOcAL
-	Vj83qscNXYwUOTyiMKYaU4oC8nz0Noo=
-Date: Sun, 5 Jul 2026 15:32:18 +0200
+	bh=3V6zrYdlVqLq5+r0Kxpgn+SmXEsMABrtz3NxgxsAstw=;
+	b=N1nQ+mrX6AtVCkUv0oD3JrvFtYh5pqLcX41aCxDLx8jVla7vZqiRI5RCh11mlz2yD1En+f
+	xej1nMAU4BqNgK6hBibyH8uXmZAbtQ3LveGlem1jsEnLr72GiVJ6HdisKRmWD9CJEcZG5H
+	hFPh9spgqpY/ubKBO1U2MnBOCwZxkOk=
+Date: Sun, 5 Jul 2026 15:36:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -36,7 +36,9 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Subject: Re: [PATCH 02/10] dt-bindings: interrupt-controller: apple,aic2: Add
  apple,t8132 compatible
-To: sashiko-reviews@lists.linux.dev
+To: sashiko-reviews@lists.linux.dev, Yureka Lilian <yureka@cyberchaos.dev>
+Cc: robh@kernel.org, linux-watchdog@vger.kernel.org,
+ devicetree@vger.kernel.org, conor+dt@kernel.org
 References: <20260705-apple-m4-initial-devicetrees-v1-0-e5655ee56523@cyberchaos.dev>
  <20260705-apple-m4-initial-devicetrees-v1-2-e5655ee56523@cyberchaos.dev>
  <20260705132421.233081F000E9@smtp.kernel.org>
@@ -45,6 +47,7 @@ From: Yureka Lilian <yureka@cyberchaos.dev>
 In-Reply-To: <20260705132421.233081F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+
 
 On 7/5/26 15:24, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
@@ -71,6 +74,11 @@ On 7/5/26 15:24, sashiko-bot@kernel.org wrote:
 > [Severity: Low]
 > Does this new compatible string also need to be added to the allOf conditional
 > block further down in the schema?
+
+No, this is correct, as t8132 is merely another alias always to be used 
+in combination with the existing apple,t8122-aic3 base compatible which 
+is already in the list.
+
 >
 > Looking at the conditional block that enforces the constraints later in this
 > file:
@@ -87,9 +95,6 @@ On 7/5/26 15:24, sashiko-bot@kernel.org wrote:
 >      then:
 >
 > It appears "apple,t8132-aic3" is omitted from this enum list.
-No, this is correct, as t8132 is merely another alias always to be used 
-in combination with the existing apple,t8122-aic3 base compatible which 
-is already in the list.
 >
 > If a device tree node is written with compatible = "apple,t8132-aic3" and omits
 > the fallback string, the top-level schema will flag the missing fallback, but
