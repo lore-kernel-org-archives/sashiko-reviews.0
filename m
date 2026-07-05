@@ -1,72 +1,73 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68A16BB5B
-	for <sashiko-reviews@lists.linux.dev>; Sun,  5 Jul 2026 01:53:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F0165192
+	for <sashiko-reviews@lists.linux.dev>; Sun,  5 Jul 2026 01:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783216395; cv=none; b=stKiIeSCPwmnr7TvxddtpQAZ1vilq+owS5MzM0V2FlfJ+3PCdyQr95JxJ5dFRkUvmfBdRXw0N2VNCgYzZF4A79hvAbKwwap4uFFCSuffGT+Oi4J/GodDelIIxChYoSUAeJRu783jcoWCiOhgKLWjuSxg6PiDvzhXHK9JucFnmGg=
+	t=1783216779; cv=none; b=qG50M0AcEkvwNy0zKhkg6YNkQxhgBGSyfcH974Fwea8iEXf1MySOLk8yeqnz69tin5CPgVbJQIE6hUSrBJsHRkV92W40X9VdqovWgNxGtXe8hWLPE563WdXfiOe/u5qT7kbCLdqkkBAxkFbbXLjbUkvLUm8yYNvdJS0Hd6uiQ5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783216395; c=relaxed/simple;
-	bh=2HWg0oST1IiXTqUM6qiNbG9g7AItoDJP2s+ptaWWz10=;
+	s=arc-20240116; t=1783216779; c=relaxed/simple;
+	bh=RyPz/W4S+LCDerhVSe7fYyGIUfWMUnQTAZdvf9wpZ2Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PoxsgaTIr6V5ObLBQzNuAtez6f/7rPtpAQ3l8BgsWo8VA9molc/DDbGZl6kobtybr48pfFkfNbC8AxRjpGRaGm4D00tjdHLabHDHJALIhuQoJEQTHuAms/vxK75hKrRdr7JqUTHVwaQB89wTJh+HTgZV7XKqWOO/tzg430nX7e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mSgNCEqw; arc=none smtp.client-ip=209.85.210.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jp/N+AibEPLEwQDxYHN+3Y9Ar2vIoQM7ZVUkwC7tblWUwJF9cyp2TRxgI1Bfokj4TuO6DCAWTeP2xBJS22yF42MlOWqCpuwUTJfTghE6ZpAVR44ouTpajEZqtxuVy/O6a2qvWSiIl7TfkSs1Uq1kUnDdawxcB/If1nR+sXaTZKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TcHHNZYe; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mSgNCEqw"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-847a483e344so1412076b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 04 Jul 2026 18:53:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TcHHNZYe"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38511175ad3so145375a91.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 04 Jul 2026 18:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783216394; x=1783821194; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1783216777; x=1783821577; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=mmBarBS2P3KqburN5n4cfJE0l/iJod9d0iroSCl5SmE=;
-        b=mSgNCEqwOm4UsEkdcjc9kk5AvWYnExXKZYpjSY41669u6mDYKNH4kbs2oEOgS5CW2J
-         VBJFZ1Ow4TApHgI4U7BpDG4uiCbhPsIFuwN1DTGCSGHZ9F8AjEXGVIRtW2cclhyRjrkm
-         lLjra4sW95qfMtnARxF/0GKjEFQHN9dVfhEmUMdlRgx8QYjmwCpo8s0et1QwfgR5iqEK
-         vql+YNeE2MU3ScPMSlycMbIF3zClgcjt1Q80zuec3+lguJ3MEv+23dYYT6TYMiDUHBhH
-         b6+X1f4ftBjdyZe244IEQsb1gEJXVSetS4/qZ+wGB+5g1c1uxRQDnFzkr/cQOiZGl8Ul
-         9E5Q==
+        bh=Acu2tx9xjRD3YeEyFpnpJ7uZlmuH+RrGw+/Yhe826DM=;
+        b=TcHHNZYevAKhTgCUfhlaJ39e/73rjCbk2KcTFiXgSrYusNKgI+KR/gHpZ/8Q44RvIC
+         Kq+wifL1rHK62Ym/KaCXa1aFwRaz06TTa5LEI4CgadtwEed6PwDKDJnkF2TVcyEmaZlo
+         1vh7uTJvxw/wYLskVM8zU/vPxpZ2PfLlAb4A8Oe/oDYYQfc9YGbTwO+C+IClGJEoCONY
+         +PPm2VSBrjUJQJJ6tvi3fmXsgr/K8RBjcL8QFPZN8ObNxDr3kEU/L0GOJqj50wrUMO1P
+         3lu0E0fp9vBNGYndEtKKTdyO39WMPALQfm/sc1maGNthTIKUIh5XQtInQFX+lob1mCtO
+         QIxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783216394; x=1783821194;
+        d=1e100.net; s=20251104; t=1783216777; x=1783821577;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mmBarBS2P3KqburN5n4cfJE0l/iJod9d0iroSCl5SmE=;
-        b=Iptete7hBF9e38ZUhB9mKVBJ+HJtt7HaNoKZcN/RdJ2NXfLKVn937xQmairi9L9e8q
-         bDZOguzoVEu1uo/jcf81c2H9L5L7QirSR3crUTPmO76QDgudlKA7ZBQWvT2ZXpqBFvbJ
-         8kN4qMbduJt6XnITVueDpSRagWKQgosWONkvDlakxaTk3tIRtv3UDPEMRe4NjtfCEpMH
-         ta6Aj7Zfv0FfloRWJAz5kVRUWZ/UCpokI+KdvD+WKHJJPxYtSvIyAjtSqrwCdhv/ov18
-         TYU1hRjDKm2r6uUApjz48d/J0AZtdaqZrD8ZT3JNs3e1oUgcgaLY6qf+2bzkddKTLGdf
-         lSMg==
-X-Gm-Message-State: AOJu0YwwHjM8EWWEN+7WDCgzHvAsoPVtHrDynassFGmgqQ5DKyDXi9MK
-	bVmg+Jd2LWPI8aMl4hfrYR6eKQwM5SFsQo7RDt+RToiuJo/4QKVgAZXTZAOGS8pY
-X-Gm-Gg: AfdE7cmbWPnz2/cfvhhmsOcyCJwTfkl+S0qxAE9wZ0ZIp/dSjgyRuJgbMf1IjEClVJn
-	xTejwclOQEE4q8VfzRR2KHgTMmwUTS9E9nh/HgGuI4Ylp4ekvjqUm/emZlMZLy+a8BBUyLCXTAn
-	8jWhgAXDQvt5ujuchX8gYKt5SLNm5dY1CsIUrY1i+tR1o70NXU5iKrPPvCfJqMs75AhaeOlnoxA
-	DOeIOAbZx96ed1fQ0qBSj32+TkMyCbESdIHEoLylAgnBc3HKNu17VOYp/UV2R7zoZgiWJF0zAef
-	iNsxJ7z2uaqpm2vNeNCxACUxxOhMCX9/ClIzQbQ6Sv/LI/MIKwD+ytPozdS/oPTFzXWffJOWSKA
-	wDw88SbK5OPnfRHsvZtn9YLCEagkukR9kBHToBybRq2UZVpFvJ4th/QScXHy9IxEV
-X-Received: by 2002:a05:6a00:94c6:b0:847:9223:9726 with SMTP id d2e1a72fcca58-847e186de64mr8695417b3a.18.1783216393864;
-        Sat, 04 Jul 2026 18:53:13 -0700 (PDT)
+        bh=Acu2tx9xjRD3YeEyFpnpJ7uZlmuH+RrGw+/Yhe826DM=;
+        b=lFhlfWgbEob17N3IMc4plv1mhOl32r8wPML/eDnyyXe5zktuZWs8D11QBib3ITmG4i
+         JtZXqW1NbzRmcmxel5pQ3vi3pBDv1ef2WJC8ZpyWvmTB2l2HRveS7c0FNsSMyeQL2Nu4
+         Wht5301jNPaX8l4WHCXaxh0uvfdfkCkR95OIQVH7R+Weomq+4QyQ5W3mMfAiWvzcf5SG
+         exuRl9zK9B+h4quXOw7rf4q9z1YisEx8clCKweOY6KRIdNE6D00Mx4MuLd4dWKai3UEz
+         1fR29P2o4bo/jlK/HoYUkSuNXuQfk0Oc/wzsQXwddatbfLqIrctXh6ZXvrc7CR61ru+k
+         MzYg==
+X-Gm-Message-State: AOJu0YyGi8tmaNsOjbi3S8u52a/Ttki3jbmvjRHYEzLq5Wd7pWoQKJzj
+	CmIYM8rtZVzCBG5guAQu7m+lNX4pmN9DIbMP/GuVpE4vPi8sRcwtxzgQUEVD631a
+X-Gm-Gg: AfdE7ckLbUkJkatEGqdC3by9Rju/Cmnb3GwmyawMOMCafkUrzPa6i8E543UYQdOxXS3
+	9+kJLBT0ekBMlBrzcYpV8uNmikL9EVoZp/WxjfUtYR9H/90td8/JakZ063RoN0vZOck8mW/1LnY
+	Xx4xm3dZyweYWk5j1CixRYZCgsITlPzwRDWwqaZnrPG6UF/PZibY90Ihf9mUji+Jw6oY3jnoYgg
+	xGg4NZik5ICtzwHxPZybZgKnAjL6j76z0LLANzYgYNXsicfrPTcBb/myOLaqvMMdRiLB2++v6nO
+	ItfopmafM2luJwvFyfjHy9+AXiroXEGRMo6WIop4CJ30PgLYHVUk/27RVX4W3aMHrgLrcvpJQ9D
+	a7a8AYp4psUMjD4ESC9hykLfg0cSm12Ctxo/1bYvolXYjKszrEFXb//N0B0Yn9OYF
+X-Received: by 2002:a17:90b:1f8a:b0:381:41e9:32aa with SMTP id 98e67ed59e1d1-382812808d5mr4797300a91.15.1783216777198;
+        Sat, 04 Jul 2026 18:59:37 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6bb2753sm1790716b3a.23.2026.07.04.18.53.12
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3809c8c0915sm3074901a91.0.2026.07.04.18.59.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Jul 2026 18:53:13 -0700 (PDT)
-Date: Sun, 5 Jul 2026 09:52:40 +0800
+        Sat, 04 Jul 2026 18:59:36 -0700 (PDT)
+Date: Sun, 5 Jul 2026 09:59:03 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
 To: sashiko-reviews@lists.linux.dev, Inochi Amaoto <inochiama@gmail.com>
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v3 6/6] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-Message-ID: <akm4VHY-BRikbF2v@inochi.infowork>
-References: <20260703020003.485436-1-inochiama@gmail.com>
- <20260703020003.485436-7-inochiama@gmail.com>
- <20260703022058.1FD001F000E9@smtp.kernel.org>
+Cc: linux-phy@lists.infradead.org, vkoul@kernel.org, 
+	neil.armstrong@linaro.org, olteanv@gmail.com, robh@kernel.org, conor+dt@kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] phy: spacemit: Add USB3/PCIe comb PHY driver for
+ Spacemit K3
+Message-ID: <akm5-xLZgFPLKeE4@inochi.infowork>
+References: <20260703021024.495433-1-inochiama@gmail.com>
+ <20260703021024.495433-3-inochiama@gmail.com>
+ <20260703021929.15FDE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -76,140 +77,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260703022058.1FD001F000E9@smtp.kernel.org>
+In-Reply-To: <20260703021929.15FDE1F000E9@smtp.kernel.org>
 
-On Fri, Jul 03, 2026 at 02:20:57AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Unclocked MMIO access during probe triggers a synchronous bus abort.
-> - [High] Incorrect `.deinit` callback for K3 prevents PERST# assertion on teardown.
-> - [High] AXI cache coherency initialization is bypassed when MSIs are disabled.
-> - [Medium] Misleading comment and potential missing initialization for Root Complex mode.
+On Fri, Jul 03, 2026 at 02:19:28AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Hardware register clobbering due to missing read-modify-write operations in PHY initialization.
 > --
 > 
-> commit 93fac4ee5b6c6ef1d779cae9b2ff5efed7a8fb39
+> commit c71cb5c4ebfcb4fc5aff5c18a7769949e15dae55
 > Author: Inochi Amaoto <inochiama@gmail.com>
 > 
-> PCI: spacemit-k1: Add Spacemit K3 PCIe host controller support
+> phy: spacemit: Add USB3/PCIe comb PHY driver for Spacemit K3
 > 
-> The PCIe controller on Spacemit K3 is almost a standard Synopsys
-> DesignWare PCIe IP with extra link and reset control. Unlike
-> the PCIe controller on K1, this controller supports external MSI
-> interrupt controller and can use multiple PHYs at the same time.
+> Adds a USB3/PCIe comb PHY driver for Spacemit K3. The comb PHY requires
+> configuring a syscon device for the correct mux configuration and needs
+> calibration before usage.
 > 
-> Add driver to support PCIe controller on Spacemit K3 PCIe.
+> > diff --git a/drivers/phy/spacemit/phy-k3-common.c b/drivers/phy/spacemit/phy-k3-common.c
+> > new file mode 100644
+> > index 0000000000000..0b289e63db999
+> > --- /dev/null
+> > +++ b/drivers/phy/spacemit/phy-k3-common.c
 > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > index 31aac056b68ed..680acc93f5395 100644
-> > --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
 > [ ... ]
-> > @@ -340,6 +354,109 @@ static int k1_pcie_parse_port(struct k1_pcie *k1)
-> >  	return ret;
-> >  }
-> >  
-> > +static int k3_pcie_init(struct dw_pcie_rp *pp)
-> > +{
-> [ ... ]
-> > +	/*
-> > +	 * Put the controller in root complex mode, and indicate that
-> > +	 * Vaux (3.3v) is present.
-> > +	 */
-> > +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
-> > +			PCIE_PERSTN_OUT | PCIE_PERSTN_OE);
 > 
-> [Severity: Medium]
-> Will this omit initializing the controller into root complex mode?
-> 
-
-Yes
-
-> Unlike k1_pcie_init(), this code block only drives the PERST# reset pins and
-> seems to skip setting DEVICE_TYPE_RC.
-> 
-
+> > +	/* Power down 100MHz refclk buffer */
+> > +	val = readl(base + PHY_PU_CK_REG);
+> > +	val = u32_replace_bits(val, 0, PHY_PU_REFCLK_100);
+> > +	writel(val, base + PHY_PU_CK_REG);
 > > +
-> > +	val = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> [ ... ]
-> > +static int k3_pcie_msi_host_init(struct dw_pcie_rp *pp)
-> > +{
-> > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > +	u32 val;
-> > +
-> > +	dw_pcie_dbi_ro_wr_en(pci);
-> > +
-> > +	val = dw_pcie_readl_dbi(pci, COHERENCY_CONTROL_3_OFF);
-> > +	val = u32_replace_bits(val, K3_CACHE_MSTR_AWCACHE_BEHAVIOR,
-> > +			       K3_CACHE_MSTR_AWCACHE_MODE);
-> > +	dw_pcie_writel_dbi(pci, COHERENCY_CONTROL_3_OFF, val);
-> > +
-> > +	dw_pcie_dbi_ro_wr_dis(pci);
-> > +
-> > +	return 0;
-> > +}
+> > +	/* Program PLL REG1 configure the SSC */
+> > +	val = FIELD_PREP(PHY_PLL_SSC_MODE, PHY_PLL_SSC_MODE_DOWN_SPREAD1) |
+> > +	      FIELD_PREP(PHY_PLL_SSC_DEP_SEL, PHY_PLL_SSC_5000PPM) |
+> > +	      FIELD_PREP(PHY_PLL_FREF_SEL, PHY_PLL_FREF_24M);
+> > +	writel(val, base + PHY_PLL_REG1);
 > 
 > [Severity: High]
-> Does this code miss initializing AXI cache coherency when MSIs are disabled?
+> Does this completely overwrite PHY_PLL_REG1 and zero out unspecified bits?
 > 
 
-No
+No, All the field are filled, so no data is lost.
 
-> Since k3_pcie_msi_host_init() is only called if pci_msi_enabled() is true,
-> booting with pci=nomsi would skip this callback, silently skipping general
-> cache coherency initialization for the controller.
+> Unlike the PCIe initialization path which uses a read-modify-write for this
+> register, this direct writel() in k3_usb3phy_init_single() clobbers the
+> entire register. Could this cause important default settings or calibration
+> values to be lost?
 > 
-
-The PCIe controller is broken as it does not support INTx in this driver.
-
+> [ ... ]
+> 
+> > +	for (i = 0; i < lg->data->lanes; i++) {
+> > +		void __iomem *lane_base = lg->base + lg->data->offsets[i];
 > > +
-> > +static const struct dw_pcie_host_ops k3_pcie_host_ops = {
-> > +	.init		= k3_pcie_init,
-> > +	.deinit		= k1_pcie_deinit,
+> > +		val = readl(lane_base + PCIE_RX_REG1);
+> > +		val = u32_replace_bits(val, 0, 0x3);
+> > +		writel(val, lane_base + PCIE_RX_REG1);
+> > +	}
+> > +
+> > +	val = readl(phy_base + PHY_PLL_REG2);
+> > +	val |= BIT(20);
+> > +	writel(val, phy_base + PHY_PLL_REG2);
+> > +
+> > +	/* The write is needed as clock requires renegotiation */
+> > +	val = FIELD_PREP(PCIE_RX_REFCLK_MODE, PCIE_RX_REFCLK_MODE_DRIVER) |
+> > +	      PCIE_RX_SEL_TRI_CODE |
+> > +	      FIELD_PREP(PCIE_RX_LEGACY, PCIE_RX_LEGACY_DEFAULT);
+> > +	writel(val, phy_base + PCIE_RX_REG1);
 > 
 > [Severity: High]
-> Can reusing k1_pcie_deinit() prevent PERST# assertion on teardown?
-> 
-> During initialization, k3_pcie_init() bypasses the K1 mechanism by setting
-> PCIE_IGNORE_PERSTN in PCIE_CONTROL_LOGIC. Since k1_pcie_deinit() attempts to
-> toggle PCIE_RC_PERST, won't the K3 hardware ignore it?
+> Does this clobber the entire PCIE_RX_REG1 register for lane 0?
 > 
 
-The K3 has handled this properly. You should treat the K3 and K1
- totally differently.
+This also serves as the whole clock. If the phy has two lanes, they share some
+data and the data is store at lane 0.
 
-> > +	.msi_init	= k3_pcie_msi_host_init,
-> > +};
-> > +
-> > +static const struct dw_pcie_ops k3_pcie_ops = {
-> > +	.link_up	= k1_pcie_link_up,
-> > +	.start_link	= k1_pcie_start_link,
-> > +	.stop_link	= k1_pcie_stop_link,
-> > +};
-> > +
-> > +static void k3_pcie_clear_irq_status(struct k1_pcie *k1,
-> > +				     u32 *status0, u32 *status1, u32 *status2)
-> > +{
-> > +	*status0 = readl_relaxed(k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
-> > +	*status1 = readl_relaxed(k1->link + INTR_STATUS);
-> > +	*status2 = readl_relaxed(k1->link + K3_ADDR_INTR_STATUS1);
+> The preceding loop performs a read-modify-write on PCIE_RX_REG1 for all lanes,
+> but this direct writel() on phy_base (which points to lane 0) invalidates
+> that previous work and zeroes out any bits not explicitly set here.
 > 
-> [Severity: High]
-> Could this read unclocked MMIO memory and trigger a synchronous bus abort?
+> Should this also use a read-modify-write operation to preserve the register
+> state?
 > 
 
-No, it is possible to access.
+No, it is not needed, as all the field are filled or it should be zero.
 
-> In k1_pcie_probe(), data->parse_port() is called before dw_pcie_host_init():
-> 
-> k1_pcie_probe() {
->     ...
->     ret = data->parse_port(k1);
->     ...
->     ret = dw_pcie_host_init(&k1->pci.pp);
-> }
-> 
-> This means k3_pcie_parse_port() and k3_pcie_clear_irq_status() are executed
-> before the required hardware clocks are enabled, accessing hardware registers
-> while their backing clocks are gated.
-> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260703020003.485436-1-inochiama@gmail.com?part=6
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260703021024.495433-1-inochiama@gmail.com?part=2
