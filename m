@@ -1,193 +1,236 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022103.outbound.protection.outlook.com [52.101.126.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FE43812D0
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 05:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783316414; cv=none; b=sdkrXqkVJvUiTbir0MR8+xmAG6dxOL0O7AHshZLDtyKbe88jIO1aeEbKqI1A7sRQS140Mi6cCiIb2eTMXtxnxuhpFy2CixiWq4rVBm/RrARWAb54rZ2xCabyYbGPYmmthFQjzcl3LVUsobjYZ6vrv7LdRRBy1dgEmsH9rLTyjsM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783316414; c=relaxed/simple;
-	bh=AUEvGkaIUq/4Q9g6Qi5pGcg8Pc4FJ9GriKF3JrG5gPE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=il6cS7fhBo7jFKPEuo1ov8Kk+N13l62UfTcALexR6k1b7FCVFyydij8XI+haajCCY9VQM5B7lYaqupLJdu4ELJDegH3kgLk6NX2xzE475S/eEOQZY49lVTGJgjIA1iundWiLWlffkYspCbfUMqtL1mCMci13vBZGIPzT25L1er8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jrife.io; spf=none smtp.mailfrom=jrife.io; dkim=pass (2048-bit key) header.d=jrife-io.20251104.gappssmtp.com header.i=@jrife-io.20251104.gappssmtp.com header.b=aTC+QQtW; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jrife.io
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=jrife.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB0A388885
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 07:05:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.103
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783321565; cv=fail; b=RD6R0AwL/PIsV4YZFM/DFOE2T0HaQXsEcxSyPlTn3ESEABjdB/vCM5GwxBnKOaX8wVM3moWmBLAAvbR1zGv8mDuCy1XPd3p/hO4mZoZJ2vYYmxDCLObmjNRVpBF9Sn0VFAPO2GocPBltXGOTFbyRPajFovqJQ/vUNxVz7S+vGHc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783321565; c=relaxed/simple;
+	bh=cbGjEqGA8fZ4wgbU86Qcui2jx7Sb1qHEFpTqjc2+sAc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=ioT35cGtgnjEp+KxGq2N2Z73bDusV2GFwpDQiOl1WJaV5y57M9eUO8fdkm8ZUw7i9SDqpHKrey5qRQzXSGygTzFYKOi2j+idFTfR8yhf07m2WoyJTGp5X5/tNkM990s5LdAoIIvr+WzzIhzB8Y3cDMbHRzC1JfDJeUwv88DEf+w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=yukHelHK; arc=fail smtp.client-ip=52.101.126.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jrife-io.20251104.gappssmtp.com header.i=@jrife-io.20251104.gappssmtp.com header.b="aTC+QQtW"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-845e5504f54so90611b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 05 Jul 2026 22:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jrife-io.20251104.gappssmtp.com; s=20251104; t=1783316413; x=1783921213; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=uUThmnqdVfyKqyuDois6AcDzN8X+2YoeRVYUtD3WE8A=;
-        b=aTC+QQtW4tVgbx+LYp99YoJqn835AlG+ENIijY+tfL+3jJ5PVM09LBbcE73uTMP8Cs
-         wTAD0wxTumlQ4kLpDy0hf++DOMtdBSESIQuAhc7ZWhTPmZrqMcjGzmw9raXCa1bP9GBA
-         JYEGazHth2Z3TMjpRDQFvh/llvccHHa8SbSLYy1K0fa6VgEKe5YH0vt6UQaYgpIKoyT6
-         CFy2a1cYegqfTq9Cc075NPbgVAjLKjtoal26SgeEO66etvwaRRCRFPXN1PySXIk0vGN9
-         JIJ0IGoM6yW+WAPzUNEAjyy7ZjQNvWyj/GdHmGpEUhySEUT5h+T07GEZ28CrT2i+5Lxh
-         X+jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783316413; x=1783921213;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uUThmnqdVfyKqyuDois6AcDzN8X+2YoeRVYUtD3WE8A=;
-        b=ooLm33rqqRvqzbYd0YC0IMPkU1Fya5mpDxrHljBdWBkQXZ+Wn9y83yMna49h7wtHvm
-         MTJfzxxPxSQDVVw5x36HJLmXUocXsfZxEevBN13m2qTSEqsKKAquDQWXmO9F9PRnd2yw
-         iOJBPrzgFFt/lNRHcBCst8IcHknPBUnrGAIHVdvX5kO1VlDcTRI0uzVozcDQMBCCR2EX
-         DM38mNecAr6R0gwDlgYFIk6njrDXRtz2QR8wds1qRzyFflmDpGgbES0utyfQqNI5Re01
-         JzCjdIF3X96V/lJI2qo0mPYri6WKQORS5YLt0fO+3Hzgootc1yF8oCQf/tKyOrHCrEC+
-         ClFA==
-X-Gm-Message-State: AOJu0Yz7ePvrMEbNQ6QMDBF84XxjGOc8J6YuQm0F22hXGdB6s23/Aq4/
-	IzgaDvQmoJMFeAy9+VlKmhUI01QqqpZQbI8h5hsMeBtfy6AqkudbXoEnjfoNHPULs4Q=
-X-Gm-Gg: AfdE7clrezKzd+bJLkAyFFThh7W5uJAynxtxNztZ9nLO/DTRgdjKl9hM1bBmNYGrS+m
-	TnZQ3sPgTMcGILcBPjOe8XRpyAr3eKuRaLfaIzmqoN39EaORrLzKiJgWVIR4nY8wcUpvwvFR280
-	5FL9Ya0aJ2+s9jKaMDJyD+2fIK+p7ZteFtO4UOVjXj/ImQVMeHyDvS62evsOb5kai7ePveZ1h5l
-	WDVkhsxXEd4HliGVQohz7jZRwnUhFDP/3UQKQQAZ8vax2eFhbECCM0Yppcyks5mXzgu36Tu2jFK
-	Aw1fvkg3LyULEVcPpZh3qK95DZ6Ffyckkz5tHCC0qelJZIkIohi8ocwFgSjF/2NINVX8cSY7p12
-	AKgDQoGpdFaQjM7OmmjfvBcDrk/QZgKUnaSQd3mIbzVP8moOGHYYqrMcp9rHf6zhTqT0/7aIzgd
-	YR1sZRgAH6
-X-Received: by 2002:a05:6a21:7703:b0:3bf:6ac8:8d20 with SMTP id adf61e73a8af0-3c03c3c42f7mr5222535637.1.1783316412798;
-        Sun, 05 Jul 2026 22:40:12 -0700 (PDT)
-Received: from t14 ([2001:5a8:47ec:d700:27b5:472c:6298:1925])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c9e8f6bd050sm5500447a12.14.2026.07.05.22.40.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 22:40:12 -0700 (PDT)
-Date: Sun, 5 Jul 2026 22:40:10 -0700
-From: Jordan Rife <jordan@jrife.io>
-To: Jiayuan Chen <jiayuan.chen@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH bpf] bpf: reject mini-sockets in bpf_sock_destroy()
-Message-ID: <po6jpmx5q72uvblx23atsbwvxhoszpmrlkjd6txljljufnjeqj@v3yov32574sm>
-References: <20260702224519.800135-1-xmei5@asu.edu>
- <20260702230504.0E65E1F000E9@smtp.kernel.org>
- <e6ec128e-1acf-4dc7-8884-e4d7ed14d25b@linux.dev>
+	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="yukHelHK"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Bc2p8ltyDSkc1Ez1npT7I21IBzu00K1lf7mNFHXlBPTy56WUgfwn+ktTTj491Dt1GyPBrs1ivbQkfejWFRuSSpiQaNzlKLABdjFQUyv5se5iXeaomUOPoGZAyiGzuGI8KOfMNeCZE+Y6gXkdrongwvwgHQOSJVfYBpugprwiGL2IbuN5XQY/VRWr/KuUhNyiszkF+g/L4he7RUqW9tDfPv6ARPXZop7A+fPudkyVwnTFzD+OLIEJQqpA1lgo56c8QWidArNPXD8s7iPmndMaTue42OsLWjKDLE/4GT1Ja6yFD8Dv1RBlRA8ZwkuY1Vxh/KqkKrCjun8UjNV4upOX4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5FABaG6hS05jrItrgGnaNXCAC7ghSeK8Qg49T89BlTM=;
+ b=PwogVv6jnn9BRJotrYroMudab8NyUnEyu8IHtHJxB+rzWITVAn2Qgq5HVkYf62t2gJ9gkvEyoszu2QhXewrVPrsGaYhyofwP8ZOp4M1WYSwltftJcIlOjfpgSCea7YXq8GY6oP+cdQ3nAgXHOp8ZBUZLZVLVdYbpi+yQlhi/ZS6sl0Er7xjkRbLNNf1EboG0iFAYKFt68ZLawWKW34D5R2iVCI/WDxi6ixXWSy17Jx8u+UuupiJs+CrtchRwu+2+0ofObcWJuMyueyn3h0jjN81fKME6Q8PnBFbNmZrvi4wOi/VvVeV4amTqs1O41/yA/NpAbx609o7eomp4fOTrkg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
+ dkim=pass header.d=amlogic.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5FABaG6hS05jrItrgGnaNXCAC7ghSeK8Qg49T89BlTM=;
+ b=yukHelHKt1prENq+k9NnrqU9thb5sXPAbqqL6LHsEodc7SGBqB2WNGv3JsqShphmUW1S81OGYHJ4FyhdRfybTh7PLyAAia9+1X1p5v1xKS8w3lQufdWXjNcd00D+gB9R9W24/nZ7nXT3XgFitEy8nFKZIZ/6cuk7JpCyF3fV7xTxicx2OUI5nzZTCt3dLdYrGX+dixfkhzfWeZNgJyVGdoPC65A/6nKoy/d7dlXIPiVFSgCy6FNRrVKnAfORMuVHnuyuyE5jpZ/BiBnAcPYme1zhpEXunxDoI1hcBxuwU8jyg0hfILR290IXVVc7mCVpRGwHb4qeE1t/NSTIVOWPIA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amlogic.com;
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
+ by PUZPR03MB7061.apcprd03.prod.outlook.com (2603:1096:301:114::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Mon, 6 Jul 2026
+ 07:05:49 +0000
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506%5]) with mapi id 15.21.0181.009; Mon, 6 Jul 2026
+ 07:05:49 +0000
+Message-ID: <a28dbf0c-4692-4baf-9958-56bd4d78e669@amlogic.com>
+Date: Mon, 6 Jul 2026 15:05:47 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: amlogic: clk-measure: Mark the clock measure table
+ as __initconst
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-amlogic@lists.infradead.org, neil.armstrong@linaro.org
+References: <20260706-clkmsr_optimization-v1-1-70f5aae6e60b@amlogic.com>
+ <20260706054342.C738F1F000E9@smtp.kernel.org>
+From: Jian Hu <jian.hu@amlogic.com>
+In-Reply-To: <20260706054342.C738F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI2P153CA0003.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:4:140::20) To KL1PR03MB7149.apcprd03.prod.outlook.com
+ (2603:1096:820:ca::7)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e6ec128e-1acf-4dc7-8884-e4d7ed14d25b@linux.dev>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|PUZPR03MB7061:EE_
+X-MS-Office365-Filtering-Correlation-Id: 37c297e8-b408-43a2-3004-08dedb2d022d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|18002099003|56012099006|11063799006|4143699003|6133799003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	+qmPXL95zMq2JQ0xqjL3uzVPbdhr9NXzhRf7jUWiE2k0fUCDCP66zvNaApuxaz6+pDuA/qV8Oyv1HhzmFzBk29XysoY0NFPxFEEo9AcSz+Zxl8T1Y2pgwRNNBkk2FOFKltBNVAaZtPljUwU8uAuhLCdouHiY2Ep4Cr92YG1SINJkZ9MiP0Gdd54O8hrQRN/TuPrnr2phKzz0H+/67M/Ab1k9HcnXdvC4E0XqdhrUxDmrbA0S9wDqLkkp8oq2OwV4n6p8mqu4JUnY9Q4OtZHHbQLxw747SZHLCWcEVMN9rbuyzBjHQ6MfWqPUp357Vbe171JW1iDO7E+X4iV/NvKr0fdgSsBOjdxCbvzQiOhtdXSYCrUQRWhcnN85inQLSuMIXM47+eHOSjNVC5XJjaBng9nc15KGB0PT9R3WmiRtmYpx5TQGM+FSmMkxb2MAHA22eLQn2p2WJUBXl/uXLof0SXkovMKPKFfQx58agbshfvTg/BQSdiEK+MtUz7SVwyoD18PimY4WxaYoIaKljoGkUq9XqPcKxW/k0JDmcOd6YmYoIc1oHcwnLkmCl4KcU1/iBn/FzLUhHPgyDDaivsWID6rAWAgXi+bPt8NwY/S0xn0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(18002099003)(56012099006)(11063799006)(4143699003)(6133799003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?eW02cTBKczhoSnJJMy85akE5ekdnYTlac1kzVU40M2VKbEFUei9WTlJDWFJN?=
+ =?utf-8?B?Q2FWTm5ndkIvTG5RUWw0T2d6NDUrK0RNMkp1OStrc01kb1AvQUhDR2FTU01l?=
+ =?utf-8?B?eE5OQmowUU9VT0cwUlZaeVRQUzFnZ0FHVWdTWFZnc2ZHMGlLSisrNTAwUzFj?=
+ =?utf-8?B?WWFYNGlSYXpqTVluM2EzYmFvMmtFRzdGZmF2TzhDZnZFTktJejlyQ0M3VDE0?=
+ =?utf-8?B?VXorKytsMW9rVXRFWm5Fa3lycFFrOEdIUGM4TGJJZDlLc3crUlgzMXVmTElv?=
+ =?utf-8?B?b3BkSGRianI2eXNXM1hFanJnTnFVRlBwRHgra3hFVkVoSWVsaURhK3l4MXcw?=
+ =?utf-8?B?dEVIcWZFSllSYlV0ZkhLSUhvNlR2VU5RY2tadWx0b1UrUzZzRU14dGJRT2dx?=
+ =?utf-8?B?NStzSWQrRXRYbDByRmNTT2lac1gzVmJQNEZmRFpOQTNVajdnRjhQSTNWdmVj?=
+ =?utf-8?B?VE5nNUZ3cWNUVk15ZmYvUjVSYVFvcURHTmNnSDNGWWIwTjV1OWtuOWxiYmZQ?=
+ =?utf-8?B?YVk3Yy91MlArTXVuTUdZWmcwUGhaR2h4TDZ0cXhoR1VPbnFNNmNOMFJGQUNa?=
+ =?utf-8?B?cktnY1ZGdXlNeVJZbkR6QkJ2ZjFIVkZyY2VaYXNsVmdNcFFkRFZjVCtYNy9k?=
+ =?utf-8?B?M0J6L2xjRVpoUjlPaVlNb3dRT2E4SW90Zy9ERFJaSXIzTGg3U2pwNzF1bnl4?=
+ =?utf-8?B?N0tDVTNqc05sMjJrT3c0VWU5RmFXbTdtK0g3bXJSR3phOHMzdWNDRUU4ZCtp?=
+ =?utf-8?B?OE5tVEkzVi8vVXBYUVdzZDlzM245cVJDSERhMFJXbG1RV3NVQlAvamdpVTVP?=
+ =?utf-8?B?MXkvTmRBK1VYRVBNWndLekFCd2hqbDJCSXN3OVV3OU9mamdmRVVHclplb3pX?=
+ =?utf-8?B?V1djQ0JqSm5QanM1N3YzcGtjcmVJTFRiMkIvU1kzdU9HL2pSQllhMHRGNG9h?=
+ =?utf-8?B?MjJyUHBrL2t1cXR4VUw2dklLQzd0SFVxNGZodWo1VWdDZDQyN0loaGFVWGdU?=
+ =?utf-8?B?MHRQUU9HYnpibzRHQ1BycG1KakZaUWxsZDFWeUViZVp3THN3VW4zb2RlL1Z6?=
+ =?utf-8?B?SFF4aXpKdk4wZlR3VXoxenZNTzdPdWJDS1dDOXlFbmltN1NCZW1YUUlIcUZi?=
+ =?utf-8?B?dUZWelFPVTVLVTFmakQ5QldNUS8yemNOTEEzczVFSkQ5ZXMrQ0hMTWZkSzg2?=
+ =?utf-8?B?QlFZT3RQWmMyRml2TDd5NGJydm1kZm9ZQnMxbW9TVHhpcGJWQ3piYkhoMWty?=
+ =?utf-8?B?clpmcEx6YkhwZ20xTzJTeS9kakpqdlEvcDV0Vms5TElheXRjbVdBWEl6RTVS?=
+ =?utf-8?B?bGFGSzNlTGhjMVRqaUtZYjdVVS92eTVkdXlqUWgxZW56ZTAvZGxhalVoa3g3?=
+ =?utf-8?B?MUZaSDJpV0M2N01QcGhMc2pBYStqekxiTkVpWEdCRFVGbUZseXB5bWdBQ09B?=
+ =?utf-8?B?cGttMHpHU0t6emx6b1BOUzRTK05PVmZEU0EvOWRzQ3Q1dnFuU2dxZmpjRjM3?=
+ =?utf-8?B?SVpqWkdMRzUyYTJGUlZyRWdteVVLUUZkRGdDcldWYldLNlEvQmdtSlpHN3F4?=
+ =?utf-8?B?dHJmVk5LTlArdlptbU1tN251TGdzQ3Q2ZWl2YlJLSnkrL0trNDkvbDd4c1Nn?=
+ =?utf-8?B?QmJ2UXdtdFhUdlpsT2xTckw0bHU4SDdTY0pwREJKbi8vOXFhc2JlNUx2aGEz?=
+ =?utf-8?B?Ukp3SHkzcVU5REVkdG9Ed0FiaG1IUE1hZXFZOTBXUzRWcjAwa0xMMHFLK1BC?=
+ =?utf-8?B?OGMwelNOUkk1NU9QbVRNYjUzWXV6WnVaeFRiRGJVS0UrUDdobEpVOE9rMW0v?=
+ =?utf-8?B?aFVzamdlQ2FjQlVTR2dydUdURkxtV2xlU0EybHNmeU8zNU1ZaWxJMHdkQ3Rp?=
+ =?utf-8?B?Ymo0U0hNTGVUbGtRbllwVGRvQ3diSURzNHF4cXpITCs2alVybk9ycmZxQXZP?=
+ =?utf-8?B?YVpMb3QvQTZyL2YwTEp1V0NZY0w2cDF4c3RmdzhUY2VoVHZGMllFMTFwbEE3?=
+ =?utf-8?B?b1JXcURkUmdsYmxLNElsZ2ZjSHc0MjMvcjdkNmFPSzhtNjg0OUNQQWJuZWVF?=
+ =?utf-8?B?c3doY3p4SjZ5c09yR3NITzJPeXRac0FhWUswRmZPUlN3MlQ3MHdDRnZaRnJK?=
+ =?utf-8?B?THFvelVYZk5KQ3MrQThTQ2FSb0toQWFIcXVrV1duUWNYQVBzSmVTdlhaVVJq?=
+ =?utf-8?B?QlEwaEtyQzZmV2RYeTlXTzVFRUVKeUVLaHdaSFI1VWFqMVlpOTZwU3F0amRJ?=
+ =?utf-8?B?ZWVtRXRuUEc5MDArcjJTbkdrVnhCVFVzMU5zY1JOUGdmMTkrTVptWFFNaEgz?=
+ =?utf-8?B?Vkh0cFhSNHg0ajNIQkcrdjZKMS9wLzZHOEdlUGhhUlVqT1FZWGExdz09?=
+X-OriginatorOrg: amlogic.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 37c297e8-b408-43a2-3004-08dedb2d022d
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 07:05:49.1214
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vDwuDLjZOGm1+fOItaE53ZPEoIgedo2JsvGUkGpqR776tsHHZDtqMpyXqIEXS2R9tkLexGYxEbQak5IG6qkWDQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR03MB7061
 
-On Fri, Jul 03, 2026 at 10:15:27AM +0800, Jiayuan Chen wrote:
-> 
-> On 7/3/26 7:05 AM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > 
-> > New issues:
-> > - [High] The patch causes a functional regression by completely disabling bpf_sock_destroy() for TCP mini-sockets (TIME_WAIT and NEW_SYN_RECV).
-> > 
-> > Pre-existing issues:
-> > - [High] The helpers bpf_tcp_check_syncookie and bpf_tcp_gen_syncookie suffer from the same type confusion and out-of-bounds read as bpf_sock_destroy, but remain unfixed.
-> > --
-> > 
-> > commit cf46da8728e7f1fca4584ccdb089c82b7fd3061f
-> > Author: Xiang Mei (Microsoft) <xmei5@asu.edu>
-> > 
-> > bpf: reject mini-sockets in bpf_sock_destroy()
-> > 
-> > The patch tries to fix a KASAN slab-out-of-bounds read in
-> > bpf_sock_destroy() by checking sk_fullsock(sk) before accessing
-> > sk->sk_protocol. It casts sock_common to sock and early exits if it is
-> > a mini-socket.
-> > 
-> > Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
-> > Reported-by: AutonomousCodeSecurity@microsoft.com
-> > Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-> > 
-> > > diff --git a/net/core/filter.c b/net/core/filter.c
-> > > index b446aa8be5c37..3e70c8ab5aab1 100644
-> > > --- a/net/core/filter.c
-> > > +++ b/net/core/filter.c
-> > > @@ -12665,6 +12665,9 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
-> > >   {
-> > >   	struct sock *sk = (struct sock *)sock;
-> > > +	if (!sk_fullsock(sk))
-> > > +		return -EOPNOTSUPP;
-> >          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > [Severity: High]
-> > Does this unconditionally reject mini-sockets?
-> > 
-> > The commit message states that mini-sockets have no diag_destroy() handler,
-> > but as documented in the original commit 4ddbcb886268, request sockets are
-> > explicitly supported because their protocol diag_destroy handler
-> > (tcp_abort) correctly handles TCP_TIME_WAIT and TCP_NEW_SYN_RECV states.
-> > 
-> > If we unconditionally reject non-full sockets, wouldn't this break BPF
-> > programs that rely on bpf_sock_destroy() to forcefully terminate pending
-> > connections or TIME_WAIT sockets?
-> 
-> It's true. Please also include a selftest to reproduce the issue and,
-> another one to cover the non-full socket.
+Hi Neil,
 
-+1 to the selftests.
 
-I'd just extend tools/testing/selftests/bpf/prog_tests/sock_destroy.c
+On 7/6/2026 1:43 PM, sashiko-bot@kernel.org wrote:
+> [ EXTERNAL EMAIL ]
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> New issues:
+> - [High] Marking `clk_msr_*` arrays as `__initconst` introduces a section mismatch and a use-after-free vulnerability.
+>
+> Pre-existing issues:
+> - [High] The driver lacks a `.remove` callback to clean up debugfs files, leading to a use-after-free when the device is unbound.
+> - [Medium] `clk_msr_summary_show` blindly assumes that the first entry (index 0) in the clock measure table is populated, which will cause a null pointer dereference if a table lacks an entry for ID 0.
+> --
+>
+> commit a817a04ade20a00516808ca084a60df1513d5b20
+> Author: Jian Hu <jian.hu@amlogic.com>
+> soc: amlogic: clk-measure: Mark the clock measure table as __initconst
+>
+> The clock measure table is only used during initialization, and the
+> table data is copied to the msr_table field of struct meson_msr_data.
+> Mark it as __initconst so it can be freed after kernel initialization.
+>
+>> diff --git a/drivers/soc/amlogic/meson-clk-measure.c b/drivers/soc/amlogic/meson-clk-measure.c
+>> index 8c4f3cc8c8abf..e1cf67fad83cb 100644
+>> --- a/drivers/soc/amlogic/meson-clk-measure.c
+>> +++ b/drivers/soc/amlogic/meson-clk-measure.c
+>> @@ -55,7 +55,7 @@ struct meson_msr {
+>>   #define CLK_MSR_ID(__id, __name) \
+>>        [__id] = {.id = __id, .name = __name,}
+>>
+>> -static const struct meson_msr_id clk_msr_m8[] = {
+>> +static const struct meson_msr_id clk_msr_m8[] __initconst = {
+> [Severity: High]
+> Does marking this array as __initconst cause a use-after-free and a section
+> mismatch?
+>
+> Because this driver is a regular platform_driver, it can be probed after boot
+> due to deferred probing or manual sysfs bind. If probed after initialization,
+> the memcpy() in meson_msr_probe() will read from freed init memory:
 
-Considering the original intent was to support request sockets and time
-wait sockets and tcp_abort already supports both, perhaps something like
-this would be better.
 
-__bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
- {
-+       int (*diag_destroy)(struct sock *sk, int err);
-        struct sock *sk = (struct sock *)sock;
- 
-        /* The locking semantics that allow for synchronous execution of the
-@@ -12672,11 +12674,16 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
-         * Supporting protocols will need to acquire sock lock in the BPF context
-         * prior to invoking this kfunc.
-         */
--       if (!sk->sk_prot->diag_destroy || (sk->sk_protocol != IPPROTO_TCP &&
--                                          sk->sk_protocol != IPPROTO_UDP))
-+       if (!sk_fullsock(sk))
-+               diag_destroy = tcp_abort;
-+       else if(sk->sk_prot->diag_destroy &&
-+               (sk->sk_protocol == IPPROTO_TCP ||
-+                sk->sk_protocol == IPPROTO_UDP))
-+               diag_destroy = sk->sk_prot->diag_destroy;
-+       else
-                return -EOPNOTSUPP;
- 
--       return sk->sk_prot->diag_destroy(sk, ECONNABORTED);
-+       return diag_destroy(sk, ECONNABORTED);
- }
+Please ignore this patch.
 
-(Note: I haven't tested this)
+After taking another look, I realized that marking the data with 
+__initconst is not correct,
+since it is still referenced after the init section is discarded.
 
-> 
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does this same type confusion exist
-> > in bpf_tcp_check_syncookie() and bpf_tcp_gen_syncookie()?
-> > 
-> > Both of those helpers take ARG_PTR_TO_BTF_ID_SOCK_COMMON and cast it to
-> > a full struct sock *. They then immediately dereference sk->sk_protocol
-> > without an sk_fullsock() check:
-> > 
-> > net/core/filter.c:bpf_tcp_check_syncookie() {
-> >      ...
-> > 	if (sk->sk_protocol != IPPROTO_TCP || sk->sk_state != TCP_LISTEN)
-> > 		return -EINVAL;
-> >      ...
-> > }
-> > 
-> > If an XDP or TC BPF program passes a tw_sock or req_sock from
-> > bpf_skc_lookup_tcp(), won't this result in the same KASAN
-> > slab-out-of-bounds read since sk_protocol resides outside the bounds
-> > of struct sock_common?
-> > 
-> > > +
-> > >   	/* The locking semantics that allow for synchronous execution of the
-> > >   	 * destroy handlers are only supported for TCP and UDP.
-> > >   	 * Supporting protocols will need to acquire sock lock in the BPF context
-
-Jordan
+>
+>          memcpy(priv->data.msr_table, match_data->msr_table,
+>                 match_data->msr_count * sizeof(struct meson_msr_id));
+>
+> Additionally, this array is referenced by clk_msr_m8_data:
+>
+> static const struct meson_msr_data clk_msr_m8_data = {
+>          .msr_table = (void *)clk_msr_m8,
+> ...
+>
+> Since clk_msr_m8_data resides in .rodata, wouldn't pointing it to __initconst
+> memory cause a linker section mismatch warning?
+>
+> [ ... ]
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this driver lack a .remove callback to
+> clean up debugfs files, leading to a use-after-free on device unbind?
+>
+> In meson_msr_probe(), debugfs files are created and associated with memory
+> allocated via devm_kcalloc():
+>
+>          root = debugfs_create_dir("meson-clk-msr", NULL);
+>          clks = debugfs_create_dir("clks", root);
+>
+>          debugfs_create_file("measure_summary", 0444, root,
+>                              priv->data.msr_table, &clk_msr_summary_fops);
+>
+> The driver lacks a .remove callback and does not use
+> devm_add_action_or_reset() to clean up the debugfs directory:
+>
+> static struct platform_driver meson_msr_driver = {
+>          .probe  = meson_msr_probe,
+>          .driver = {
+> ...
+>
+> If the device is unbound via sysfs, devres will automatically free
+> priv->data.msr_table. Any subsequent read from the persistent debugfs files
+> will dereference the freed memory. Should a cleanup mechanism be added?
+>
+> [Severity: Medium]
+> This is a pre-existing issue, but does clk_msr_summary_show() blindly assume
+> the first entry in the clock measure table is populated?
+>
+> Looking at clk_msr_summary_show():
+>
+>          struct meson_msr_id *msr_table = s->private;
+>          unsigned int msr_count = msr_table->priv->data.msr_count;
+>
+> This immediately dereferences msr_table->priv. In meson_msr_probe(), the priv
+> pointer is only assigned if the clock ID is defined (i.e., name is non-NULL).
+> If a future SoC table were to omit an entry for ID 0, msr_table[0].priv would
+> be NULL, causing a kernel panic here. Could this be made more robust against
+> empty first entries?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260706-clkmsr_optimization-v1-1-70f5aae6e60b@amlogic.com?part=1
