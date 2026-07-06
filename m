@@ -1,346 +1,272 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B0A385D77;
-	Mon,  6 Jul 2026 14:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2A430D401
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 14:48:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783349155; cv=fail; b=lw3KPg1g9qC1n/vVWvw/xnitgybDKB3svX41QNkmXD9Qyxgm8J70ASdfE+ksDZR/r2UW0pJn0WKZd8sPQL15JY43wCNBwChHl8yRJl55oiqBnXy7VVj+ZXRTOsyikunnUbp0nVc/rUnPyna+Icy5oG45OGq830ofJmZAxGjRVTs=
+	t=1783349283; cv=pass; b=KejnPCygYuXyJokZ5nuW8T0PsUouPf4mA/fsarLqRemEydOdSyET8hk34LvHDldBm+dGea3G4eIAt0ekEJubWafm6uF9sz1g92m3Pa7eidN6O853WBPQIhgEcatX6rJodG2T1t7DxqnupYQuDBQDiMT2BUl+VP0kdSkS8K1RbBA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783349155; c=relaxed/simple;
-	bh=4+xkvOplBcQV2tMuYSNkYhu0y/cIZLTom593Xw+ETKw=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gxOVICqhu32Zqro+oQqjlygXV04PtUxnHeI6VmmJlqczdsEV5dhdvbNaB5OzQ4Mdbl+BUvH5UwIYPcjpMqT4DNKpdMeEt3eg5MU519LkGtRKXAicDYqsbJOnKvS5aeNteYRNDU/DkuQp3dkTit0D7DR1qE/ODkDvJwtzuvacv6U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=Cc7Eih+R; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=wIpNGzX3; arc=fail smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	s=arc-20240116; t=1783349283; c=relaxed/simple;
+	bh=z1WMhYROfcnlWkez5XhXfycvYHmg/c2mKR5LYrEvaX0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ko0KKbKLlQHs9x6miYVvuirr5+e9G5rMOO9TFEQKVRJVbFd0Y9kZFmVtTNrxkDUarVK5q1V7cdcMWTlGU5joKqcwhMwyEnd9UzpIL60vaTO8ZL0w2iWmFLulEfNsJgfhV8WAvhol+xhaM2G9yL7dwpQRKq1rrdpXoslgkD03ejI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxP6CD2j; arc=pass smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="Cc7Eih+R";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="wIpNGzX3"
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666ETUrl1025669;
-	Mon, 6 Jul 2026 14:45:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=2lSkdLn7SDiblffBU2L8hsenZ3tVQx0x19sRxn8vqvs=; b=
-	Cc7Eih+R+9iBviOUKxB4UrEFo/6lVKkzuPdanmEtOLDZYlB4Q7F6vOyMDbJpQj2F
-	8moLZKqaHjBTXskdSEjnBVO0uA3KIF8j5v89XJSU3oNFvUq41NZ7XT2FA3BNCzPW
-	38pghgR7FEjVHKuYDn39/BV1RKo4StHlbGlgkRHva6QH09nHquyWoPiL23IZEcvL
-	wnk8Pj+hpmiuDa294HtDgD1S3FOOyaHGd58i6IBX/eaKYeUu2sXoNaqU54hfu9bJ
-	ywRA1XbjAxTrl3lUp55IwWUMGkw6G6PwP5Cc2BfR4ixlJnf5nZ/WITXwSOPDkLjB
-	/seLYmqdqcuaShKwN/+QgQ==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4f6rkbbw5j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 06 Jul 2026 14:45:52 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 666EhLEG029290;
-	Mon, 6 Jul 2026 14:45:51 GMT
-Received: from sj2pr03cu001.outbound.protection.outlook.com (mail-westusazon11012066.outbound.protection.outlook.com [52.101.43.66])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4f6rmcexte-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 06 Jul 2026 14:45:51 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mi8+Jr1Ri2k3ZVAwiGE7IEzmAHCqKibsCxYMYRVsWMWy4TLRuY6ecl2ygZ2gL2reJI18ZPxmukG0ea9wC+fmDeBDbt9zR9wa8sgPb+ZYaLHyPfbsoQ0/ze81AA9eIvAg0ktIa3GuvFQAQyfqhTdD6BNRAG3pebl99VDLKhQdFR7gFXnZAUcGKleBMD7jKZM7hURjKAiZ0ekh++Eqr4luhgRMROiGDZG9tkep+5UssmYCqBM1s/+3f6X6wTe34msDIJdbq7pkaMnAkEJj2oUHDGrIqCHoqEfaxQoFBhuOQ6YIzglWrpmgaqYdHLWVldhusUmtT75NxvvIm2hOCU0Wgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2lSkdLn7SDiblffBU2L8hsenZ3tVQx0x19sRxn8vqvs=;
- b=F47FFXQ47tRuMV5d5zRMr9ubIF0NTdjQghGjnKHGI1HeoqrZfAn3pygHXRFrssBebnEhTrquzlu9RjJtBtd1ITqDO+KbVAASiNUxhkoEpoIpDBHdFoYP8t3OGf6XpgDx+AVOdkb4DVL/9Prl/GSUHpSYkLJd+cRtgJGx8P0jGTiDRPTyDp3ONxBqT3K6add4fCkSHG1B04hMGJrKkdO28tcz518GfVpaBzjqmecqHYiTsOoIJMWUdkBeUCn0FWdLw+sqJuboe2yoUQhICaN7YBX3YdK9ayyxSOtGnnvm16jThmkz+2KrIEwIHm+VuudMkUsq2MIIWYf71roQ8LEvNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxP6CD2j"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-664c6304683so2889814d50.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 07:48:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783349281; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dXHsbNddCQPEQUiJ1IVu0/UEfZyMg1tSLkfh7UxpwBBoO8rBcHx+PdYTyDQx9A0lRl
+         fcNBQFBRE1bi1MG6/l7c4CZnf+67BvQr8twtI0HcKMZCXyvmp4+UqFdh1FMruqpRNNQ/
+         Oal/EAQIiclJ4Zmlt+4EstJNWR73r0SCUbK2ulYnmHw9P3O2sncm9U0K29sdpZ6Pz2Y8
+         NnhbYxZIQL/m4N+gxyDMDUJ2atVwEf0CSIdJZbxgmNASviNIbOOLVx2w9gYPb4gKAEcm
+         ld/mPnHUh/Xh7h1vQBrlSNpzdNvzwql04d8W4v8cuFvuQ3Cp6MlVlLPB0rBt0xmELdnZ
+         PC5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=p5nnj/UGt/6jwYg2fLgCm/eVqC9qp6a8hp/dGZkv014=;
+        fh=weZoGF8xMOu5NmEVSewSYOp+V7Y8Zz14LaoQfGzRhX0=;
+        b=rGZA3atQkn+YVHqMjDq5msfXeXw2GqlpTt6P5v55WH0q79qsHE8DJRQZ8JR8pMpC4O
+         jz1fAQYQpF96osi7Z+8zb6lG8M672juiQy2kqisdeL5gD4hxp7h2iA9fN9i9/XIMMSiQ
+         Lt0Fcm5C9YK4SkNBQJgjBoVGesxRx9ROWHHk5KOgEHKJbdT0HcevvnCwC3+vMlFesXQi
+         MIHv3rPNW402ZKlTnQ0rXP4L+eAe0YtOHB4rRQL6HVMNFROrc0xSE86Sh3E5jXG12f9A
+         pvT44koZWEZsVAXFb9DJdsZQ76vQoeCHxpEBTd/ehF7G44QTQ36+TGYgBRdmznHSkUTZ
+         0Euw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2lSkdLn7SDiblffBU2L8hsenZ3tVQx0x19sRxn8vqvs=;
- b=wIpNGzX3mlkEnYTv74chuwkoM+v3tBb8JPbVdgS9lkXNDdPZrhhdq7cLEoOTXmMy1xu2SrxJbLxfyR0trmiaOlHznlXi7a52cOvaxF6/0oMT/LujZ1LbFN+2NjwmtAvJZvxXYnz7K3Kr3MSWmxuldJa2oHxOCgT/sLO2+dLJtKM=
-Received: from DM4PR10MB6229.namprd10.prod.outlook.com (2603:10b6:8:8c::12) by
- DS0PR10MB6869.namprd10.prod.outlook.com (2603:10b6:8:136::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.10; Mon, 6 Jul 2026 14:45:44 +0000
-Received: from DM4PR10MB6229.namprd10.prod.outlook.com
- ([fe80::867:63e7:13fa:fa7d]) by DM4PR10MB6229.namprd10.prod.outlook.com
- ([fe80::867:63e7:13fa:fa7d%6]) with mapi id 15.21.0181.008; Mon, 6 Jul 2026
- 14:45:44 +0000
-Message-ID: <ca4c76c1-214d-4d92-b8ed-e1eab3af7e23@oracle.com>
-Date: Mon, 6 Jul 2026 15:45:41 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/17] scsi-multipath: introduce scsi_device head
- structure
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-References: <20260703103402.3725011-1-john.g.garry@oracle.com>
- <20260703103402.3725011-3-john.g.garry@oracle.com>
- <20260703104921.2095C1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.g.garry@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <20260703104921.2095C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P302CA0006.GBRP302.PROD.OUTLOOK.COM
- (2603:10a6:600:2c2::12) To DM4PR10MB6229.namprd10.prod.outlook.com
- (2603:10b6:8:8c::12)
+        d=gmail.com; s=20251104; t=1783349281; x=1783954081; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=p5nnj/UGt/6jwYg2fLgCm/eVqC9qp6a8hp/dGZkv014=;
+        b=YxP6CD2jl+MbuQhkYw/iYBK3KENuwf3LfzS6irdBdxgM6yT7GYJDq0x5rzTAdPSM5L
+         F296uMVa18/6uAyWPjnG3EpBKzhyjfOCb2jz8PEB9Mo3fmdhck/xoYAJ5aVGo8gaZCRk
+         7BQjAaNj1JeVswfWtaNFHecj4lrQLVaAdDLQMbz9g9Fr4K6+hfsyG1GlTYfoaDnu0zId
+         P/vZymMCVN17ltelWxtKNptOt2IFgW1PZHFgFYPvsoTWmAkl1PcF5LGcjwgWKi6DZZUG
+         hEoIdbuO8bhHAE1NsFbQiNQCr0XwmfiuQ1k/8j7/jiZ8z0i0XPSIwMErZP/JhBMorAaA
+         c4lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783349281; x=1783954081;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=p5nnj/UGt/6jwYg2fLgCm/eVqC9qp6a8hp/dGZkv014=;
+        b=rU6b/csxVY2WPCfzsmRhCqpW882XM3IyISwkeBd5spnV1G4EdNfGBM65U34f2dpeCb
+         6PlNnKyomYL9YFfZ6vmk3vTV3FIdork4/i71rzWBCrJxZDMXTb0Fru53AXsPU3BKe6J1
+         CU4PrKtuvQnxd9xItHuiWxDtRa+HhUiovY3aXp7rSwLHuyIc/L1rTn8vaT7xpJsSuqFV
+         dMG/uzuljUCTyt+FtzJhFuQCjohZ1MXnfYthbOf45WHLP42sfc47TRCwu2n62HqxSkjb
+         FEMqyPbK15hfSqIDzJ7V+tarMGFToUk4oG+O3V1X4NtGUNhF+S4snQG60FPtJtowrTL8
+         l5GQ==
+X-Gm-Message-State: AOJu0YzmNTgG1MxYZrIqYGsb83zMRH7arW0XQql+qEROqu2BRvQNWZNJ
+	6ysuOPLg/4e5SJHZZMZdA4jHi3gMdynoMUFPtp+gFTduyxWcpXJcbYz9DLtNGAFng+Tk7qN47Xe
+	p2Oi9MIjgilsGFQXpwTq1CRm+hZJ8c+baPA==
+X-Gm-Gg: AfdE7cnj7O/bfHokFouZkOJ9Al2E+38O5lx9h5ohXEaBToMp+HVarjj18yK8YFINdk4
+	5yb3bYHgKAyChH7pRYPlgefQBmkkHqRTdxEH5+9MfTjjrOfS25G6WxHXPTA/uLnLl5lUIC7FtqK
+	+WE5yxyZzmW2zPTPylMHoWGRmLWUgaI0RETZxT3zKrHMwSoPVgeaQ0He9xhu3D3YtEVvoN3vyRg
+	1FsWccIMmr3ak1aLsRM+Bcm6vSxNEAsyD5lYWYl9qRivqsk1aQ/jxMzXExJBL8WuNTbZyZ8Eg==
+X-Received: by 2002:a05:690e:14cc:b0:664:d162:6b79 with SMTP id
+ 956f58d0204a3-6677fd1eed7mr679747d50.77.1783349276001; Mon, 06 Jul 2026
+ 07:47:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR10MB6229:EE_|DS0PR10MB6869:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad74b6da-cc03-4446-b065-08dedb6d41e1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|4143699003|18002099003|5023799004|6133799003|56012099006|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	zv1HcMzcSZlpOSkMOFQSFL/taNKsgx/D53hoiszZLU03XQz7KBGplXayvwne6xmTCIGs7VkBAvlLWoiKeFE4tpzfYn0Sf2POspgGxA2+/HXHQSV0I1hLxxnqRuNEWv39a4oUm4XZI+/IT644JQIgZIhdsquT4ZBdiunblOz5/pnP2iLAczpZa5ygfh1OstJNvc5hnvojELQUTDAcC+cvb2Hn3kz4/rZwOrdWmagItHrreIkmcotPKJ/9brQR4PQD3I8qROG/w+IChkwYi0IonvMvCwdg0Cn7D9SiFvhoxNlmEfykVm0IvmDksTYiXMWGsdCbNsp992XOdzPSAK1+vqKgo5Kyhy/GVIELmdkowXZfWHW1YZy/4/TMYyhAl1f5Komz1ASpSbIEA0RWOxpMIDQL0QLiWVUz6eupFMeD8aXs7QvGZMLz1iyZbc1L4FRIcg5gu22YrZMS2F247kuNlh59prlRcgUcVgUWnhNaizet3CICVcnpgj5qmwHTqmjdoOpDGVmkDBQyiY9+VNUitjlNGfvqhVxS4p6UQTbIU+Jl+lj2EkBe8D5iNvZ9H6pGOj89ycT3tJ7LmwA+Cp32sDBXFs3ejptn98sZYiwkj5RksXNRpXYQUtGHEEi48J/lzrxN46ddKYobe7WBgJzHN9aFnbnZUnQ9fuo3kByIXrg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB6229.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(4143699003)(18002099003)(5023799004)(6133799003)(56012099006)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?YTNJYTQ0aVArNUorM3NXcm9jOC9iQ3VOUVRmeG0yVldicVUxeUZVcHFBQmsv?=
- =?utf-8?B?S0dBeUMrVEQ0THh0alFNa3hmSlh0R1FUOCtEWEl2Z0dMTWhJWlFhdTdlRWRP?=
- =?utf-8?B?UnRLbDQzS1RjUW8wblExeHdmK3A0bHlCVkRCTnp1Q0ppK0ozV2hXMWxZdmlI?=
- =?utf-8?B?WVBsRHA3dmIzZm1ZV0V4RVZNanZLeFQyQVZ4S080S21yZ1RtbW5YYWlMTTlG?=
- =?utf-8?B?THJnQ09QK01KZHI0bDhRVzNsQnRYazI0LzFkTVM2Nmpoa0wzTlBWYTVjcEZo?=
- =?utf-8?B?WE0xc2lZakV5b1dadDZzQVV3dlNmUXo0L0wzMWMzczdodTZFMG11Q1hWdzVQ?=
- =?utf-8?B?YzVaeFVudU9MdklSMGpVc21TcVUreUdOZEZXU0JnQ3NMUm5jVUFTK0FRaWsw?=
- =?utf-8?B?SkdYUXdmTmJzUmpSa0g3dXpISDROVm1YRmxFK3lQTXhiN1lZTmo1VmFyQ2Ft?=
- =?utf-8?B?enh1REpYVEJEQStBT1hjU0NMTXQvV2hlMlZZYjZLUHR1aU5nL0dYYUNZeU5V?=
- =?utf-8?B?MHlucGRaRWFhZ2E5WnYvQW1rdGhwY21LdmwycTNDWkRCTEtUMzZjRkNVWGRo?=
- =?utf-8?B?d2hMUlR6dU1KKzNwRUZGbXdWN2Jtd2ljZXVoR2lZd3N1VkpDYlRFSlFZaDU5?=
- =?utf-8?B?aU5QRFE3WW9wQzBaRy9LNzlRdjE1YzZvekQ4ajVqL3lpM08xQmZ1a3dNM3pj?=
- =?utf-8?B?K1ZDc3pIZUJRY04rMWE0UFFiUlpvSmhRb2hWNnJwUll4QkJDYzN6QlZoWW5S?=
- =?utf-8?B?ZkhyaVdrTEhiTUZMWWRUSllDUEhQcXJZKzlucE14V2NEWVhFSk1sblFvYTNS?=
- =?utf-8?B?V28yR1JWQlIvOUxVQk5TS0YyWDE3NEhxNGNSTUhOSUVrNGFJMkUweEsrQUxh?=
- =?utf-8?B?S3MrdFBkdFZHQkZsQUZFUzJmaUxDdThTVkhRNWFyNEhQRDNpQkJMZlpVSmZQ?=
- =?utf-8?B?ZHBkR1Y5NnhPalZXaDBtd0N6SEEwbStXMXdyV09CMjJ5dUhXZWd0ZXMxVVJR?=
- =?utf-8?B?YktKQnlHZ095cDdsMFMvUVRhUngxSEVOamJLcldFWk12SDNPNU9oWFIwNWRI?=
- =?utf-8?B?MnN1SVNhR2gxejNteks1SE5UUGk1Zkd2U3BxVklMVnEzUWlzUkUwT2Z0UkZE?=
- =?utf-8?B?VzVHWkJYZHVZK2I4RzlVQTM3eEp5MWNFQS9yOUxreTA5L0VZNU1iSHRML1RI?=
- =?utf-8?B?eGMycFd1cGZsdWVpekRyMGtFK3VDZXhyMDdsVzIxMjMrQnRQMnVoaXViWTA1?=
- =?utf-8?B?dEpJc1RTVkYwN2ZyWVh3K1NBcktNUFJvNk5LRGVFNDBVZ2Q0Wk9XMi93V0V4?=
- =?utf-8?B?S01KMTd4Ulpmb0N5OVlyMy9GR2ltQzFpZnREMmxQb3JMczBHckpycnphKzFI?=
- =?utf-8?B?dEZEczArbDRvenVyamJLaGdNbGllVmRjTHRtWVF5SVREWTVSdkxZT3NtVitJ?=
- =?utf-8?B?NVcyb2V2aXl0QTdEdi92YnhxTk4zY2tzU1I5b3V5V0pScSsyb1Q0dTFSNkVY?=
- =?utf-8?B?Y2tMcGxTM2M1RjZNM05UTjlPQVJ2NDR2VHRZYmFVK2Y3N1IyUEd1T29qM1BC?=
- =?utf-8?B?MWU2VmVuYWs1K1E0SmNDRGxSbzhvT3ZnSU1DVER1bGRlNHBKSmQyVXlBSmpk?=
- =?utf-8?B?eVZJT0Nac1VWVEIvV3ppakNBRDhNR1JydmN0OFRJbWNjTHcrTU0vYlRQTDJJ?=
- =?utf-8?B?c0NGWVBlM2VjaTR3MlQwK3hTUzBsRThreDZ4T1hpSDUyMXE4eENlZVk4MzJ1?=
- =?utf-8?B?WGYxNHM3aUJyT2g1RFZWdFR1TVMweE1yYW1TQ1pJNThWaExWWDhJOEhwRXpk?=
- =?utf-8?B?WjVGdGJIUXM1UG1DUlVjZDcxSzVvYStIRXdzTTA5RUQ1eXFZdmFjUDFuTXlh?=
- =?utf-8?B?QkY4VWt5Y040cG5kUmt1RjdwekpyVDNVc3hwOGo1c1lOaWRYNFJrZjFSc0wx?=
- =?utf-8?B?Z2NjbFcvaVUvekY0MWNNdCtmRGdZbENHS3F0Tm1yNUpWZ0tRTkRqb2VIanFz?=
- =?utf-8?B?TG5sVS8vc2RZN1Y2QU5hUmNIUzQzeEJlTFZmcDVpdHhLRjZHSExIMUltU1JP?=
- =?utf-8?B?ZzlUYVJuZmY5WjRWZEVBUFRsd0FRd3J6NlNKeEVLMzdJN1E1TEp6NUlCVVVT?=
- =?utf-8?B?VXJxMVRVRkd3M3c1bHVyaldzQ1hybFoyK05HSFdkaG5DU2hiandzTTZCYTFK?=
- =?utf-8?B?Q0RWYmxadWdwVmtqY20vYjdmR0p0ZlFaTnBYcEZQbHJVc0RubmFsSkFPZHJz?=
- =?utf-8?B?UmxISGt6TFAxWldaaHMyOWZpUDN5RW00eHBQdmRIQXZGOHNaYmlOcTNhbmM3?=
- =?utf-8?B?V253NElFQUoyY2IxcUd3U0RMSnhZdEh5VkMrSEhpQ0ljcS9aTW02ck1JZjgy?=
- =?utf-8?Q?7JlUOW47OteBuKko=3D?=
-X-Exchange-RoutingPolicyChecked:
-	lFojqnQspiSaMK3OtkY8/VV3dqseDAmvbyPIcPXD0tnFvocJWFUtNyoZKst9YmY1HfXnbsgVUpJWCrjymtSmR5RySgjbn3mKkZSioENR2GmuHgJec9laqfix+uJnvGAtz0gLcZhqNagpkss1mmrvA5oOZkmgtUIMFVtuSVE0VMUPPixPw+6vnX28hcGkCClp2+hjJMYd50Ht3qHzAFw+31i7fDLWDVJwG9tQDBSXg3smXBqqcf5vQjeW5/7t1aFeb3PKAQm6T/JQzVZ9y0xlkD/etVcDTmciXMGyU6XDk1F1GlWPMUy4S9t1zbJvd0NKrMvwEIhle/7KnT6AY29WtA==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	1LF1Prv4SHM1K+LrHhO022UWfBab+zO0kUZlr9at4WZi/ERU82l0pStVDbkiQN62gdqgm/Zb7hlnhnEzvU3t8pISGnI9ykAMbIYy73GpoBB+pBH42yTuc5zrL6iUcurqz3wZ9oqZ/aBfpTHd09wVGNS40oL+SIUbELW4YoNbUDkcGtOzZ9uRiaq2xbI2HNF4hNikmxChkG+jLEb/9uQt4dR9ULzvyO+5bpzK+c6DOMNKhIvq4G4Bdnc6nrVct31Ax/Qk2r0KUVRkc1FaXoUmCfO/bN+rXk9YanF1+v7TFXKF9IDzSTjtRiekrfeq1RGRe0OAiycOBuGbPXd3qlo1cqmuY/Y6fphP2U0uNAjTdfRLD9rKf/i2dN2rin1cjBOops/c8sDrkRWEldvKFXLdwv3Ge8wTg4zKjfzZQFRry/Wa/G07bkDpHIVlOOm6zFYRRV/c09tDCxGLZMwad07GUOlwxvQTNauyI4ko0Bflbg2Uhaf1JxyT3in0eJL0My1Oa1TMeIL3/zQ6apY81NMKXeslUTLymup3plPsWDqwj65CBszB9M6yY75G3H+Mtqlmgcb30glCyRGrS1D5N2fQ+dhjlsfz7hwDFsfRRCG9Nu0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad74b6da-cc03-4446-b065-08dedb6d41e1
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB6229.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 14:45:43.9123
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NsBzIRWB6VorGqzi9EOcq7IJZuxwVuZr9tYwIOTO07WSC/pqbo+JnzXTpFkBVUnAQjuQSAPamsK88EzkvqyaOw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6869
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_01,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2607060150
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE1MCBTYWx0ZWRfX37oOXBrEMn/0
- uDm9BNL9Yc9FdT+BmPYlJTtZKeIhTBijt/25Hi4GbDYngBSmXAzO4X56pY3PwKyOO5FcmG1KApx
- wCbVK9hcGvabIObpI3B3NJ2yjqaNkkTAeSgGVrTsQ+UwrP8KbEtI
-X-Authority-Analysis: v=2.4 cv=QP1YgALL c=1 sm=1 tr=0 ts=6a4bbfa0 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=x4eqshVgHu-cdnggieHk:22 a=VwQbUJbxAAAA:8
- a=yPCof4ZbAAAA:8 a=jZSE-i3kBAPpBc2cmZwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 38sI8R2Y_O5OdiymyxZAna9VYAhu3w1t
-X-Proofpoint-ORIG-GUID: 38sI8R2Y_O5OdiymyxZAna9VYAhu3w1t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE1MCBTYWx0ZWRfX4rRa7uMDCskJ
- B97T4ijSQWyIjyxnmcwKcwmsoKEqsqlCFF2JWEl3XcqscLhKIP/pHH1LVpBW7+1aiFpJGoUf19I
- MNwVYAgWUAxmHh7CvMq8C1R4QzqvHm4zlO5VWFYtRieK0oCUbUbOnAty0cmmzzjmoDOknw3Z1Mi
- X1IvSJBB3taeYD1uddOgHoDA3d2gCg+u7FyWwqAxeQAcg9X9K/AjqEtlnpxOW52wtdwItvCXvJ+
- wys1DU7e7U5+slX2wxBX0xbO06jFyEJiJfp/PLBVBFkO3fjK8vMfGutsIm4fNPZBSSfmIQ79VBq
- FyZwj2bijW7OGWkkX8vngNEk3CvvAwRbkjTWbsnZY1P92unfvpwoj2ONXXxLXT0nsgReXuoTJC6
- +9809iYWgAB7Q36d51HTyJLEYJr12I6Kp/+F5SHzf2jeUBGkjZIR4seQDnqn5s+Td8qw9L/uPS7
- dBQs9LVK2dUO7mjCJuA==
+References: <20260705140100.1543486-1-tmaimon77@gmail.com> <20260705140100.1543486-4-tmaimon77@gmail.com>
+ <20260705141048.75C5D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260705141048.75C5D1F000E9@smtp.kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 6 Jul 2026 17:47:45 +0300
+X-Gm-Features: AVVi8CdXTk1bIQEOW3h9KTSW1KJWWjzHAZ_jfS41xGm8rGDEHzBzwdiWBU9odgY
+Message-ID: <CAP6Zq1i_n7OSPJDBxKfcJnDutFC2B1jmGdFJ0M_F+rv7SOGNrw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] watchdog: npcm: add bootstatus support
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	linux-watchdog@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 03/07/2026 11:49, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Self-deadlock in scsi_mpath_find_head() due to kref_put() triggering release while holding scsi_mpath_heads_lock.
-> - [High] Double-free and use-after-free of scsi_mpath_head in the error path of scsi_mpath_alloc_head().
-> - [High] NULL pointer dereference and invalid device_unregister() execution when tearing down a failed device_add() in scsi_mpath_dev_alloc().
+Hi,
+
+On Sun, 5 Jul 2026 at 17:10, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [High] Non-atomic read-modify-write on shared syscon registers corrupts=
+ concurrent updates or incorrectly clears W1C bits.
+Not needed, only the WD using this register.
+> - [High] The driver hijacks standardized watchdog bootstatus flags to rep=
+ort unrelated SoC reset reasons.
+Approved by the maintainer.
+> - [Low] The driver hardcodes physical MMIO base addresses to identify dri=
+ver instances.
+>
+> Pre-existing issues:
+> - [High] The driver leaks a clock enable reference on every timeout chang=
+e and fails to clean up on probe errors.
 > --
-> 
-> commit d7eb5e4fb506178f4a58d8aa264acf8230ebb5fa
-> Author: John Garry <john.g.garry@oracle.com>
-> 
-> scsi-multipath: introduce scsi_device head structure
-> 
-> This patch introduces a scsi_mpath_head structure to manage multipathing
-> for a scsi_device. It maintains a list of scsi_mpath_head structures
-> to look up matching multipathed devices by their unique ID. A new sysfs
-> device class is also added to manage the scsi_mpath_head device members.
-> 
->> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> index ff37cfdf2f9d1..65ee3da5cc7fc 100644
->> --- a/drivers/scsi/scsi_multipath.c
->> +++ b/drivers/scsi/scsi_multipath.c
+>
+> commit 3d82c9ef067a4770a83258e13cbb0ed566d4998b
+> Author: Tomer Maimon <tmaimon77@gmail.com>
+>
+> watchdog: npcm: add bootstatus support
+>
+> The NPCM750 uses RESSR and the NPCM845 uses INTCR2 to latch reset indicat=
+ions.
+> Read those bits during probe and map them into watchdog bootstatus flags.=
+ For
+> NPCM845, cache the sampled INTCR2 state in SCRPAD10 after the reset statu=
+s
+> bits are cleared.
+>
+> > diff --git a/drivers/watchdog/npcm_wdt.c b/drivers/watchdog/npcm_wdt.c
+> > index e62ea054bc618..82ff3956dcf21 100644
+> > --- a/drivers/watchdog/npcm_wdt.c
+> > +++ b/drivers/watchdog/npcm_wdt.c
+>
 > [ ... ]
->> @@ -88,6 +146,71 @@ static int scsi_multipath_sdev_init(struct scsi_device *sdev)
-> [ ... ]
->> +static struct scsi_mpath_head *scsi_mpath_alloc_head(void)
->> +{
-> [ ... ]
->> +	ret = dev_set_name(&scsi_mpath_head->dev, "scsi_mpath_device%d",
->> +				scsi_mpath_head->index);
->> +	if (ret) {
->> +		put_device(&scsi_mpath_head->dev);
->> +		goto out_free_ida;
->> +	}
->> +
->> +	return scsi_mpath_head;
->> +
->> +out_free_ida:
->> +	ida_free(&scsi_multipath_dev_ida, scsi_mpath_head->index);
->> +out_put_head:
->> +	mpath_put_head(&scsi_mpath_head->mpath_head);
->> +out_free:
->> +	kfree(scsi_mpath_head);
->> +	return NULL;
->> +}
-> 
+>
+> > +static const struct npcm_wdt_rst_map npcm750_rst_map[] =3D {
+> > +     { 0xf000801c, NPCM_WD0RST },
+> > +     { 0xf000901c, NPCM_WD1RST },
+> > +     { 0xf000a01c, NPCM_WD2RST },
+> > +};
+>
+> [Severity: Low]
+> Does this code hardcode physical MMIO base addresses to identify driver
+> instances?
+It is hardcoded.
+>
+> Matching the resource start address against hardcoded values in
+> npcm_get_reset_status() can be brittle if the memory map changes in futur=
+e
+> SoC revisions or alternative device tree mappings. Is there a way to use
+> device tree aliases or instance IDs to identify the hardware block instea=
+d?
+>
+> > +
+> > +static const struct npcm_wdt_status_map npcm750_status_map[] =3D {
+> > +     { NPCM_PORST, WDIOF_OVERHEAT },
+> > +     { NPCM_CORST, WDIOF_FANFAULT },
+> > +     { NPCM_SWR1RST, WDIOF_EXTERN1 },
+> > +     { NPCM_SWR2RST, WDIOF_EXTERN2 },
+> > +     { NPCM_SWR3RST, WDIOF_POWERUNDER },
+> > +     { NPCM_SWR4RST, WDIOF_POWEROVER },
+> > +};
+>
 > [Severity: High]
-> Will this cause a double-free on the error path?
-> 
-> If dev_set_name() fails, put_device() is called which triggers the
-> scsi_mpath_head_release() callback, freeing the IDA and the structure itself.
-> 
-> The code then falls through to the out_free_ida label which calls ida_free()
-> and kfree() a second time on the already freed pointer.
-
-I will fix it
-
-> 
->> +
->> +static struct scsi_mpath_head *scsi_mpath_find_head(
->> +			struct scsi_mpath_device *scsi_mpath_dev)
->> +{
+> Does this mapping hijack standardized watchdog bootstatus flags to report
+> unrelated SoC reset reasons?
+>
+> Translating NPCM SoC-specific reset reasons into standard UAPI flags migh=
+t
+> cause issues in userspace. For example, WDIOF_OVERHEAT and WDIOF_FANFAULT
+> are strictly defined in the UAPI to indicate thermal overheating and fan
+> failures.
+>
+> Could system monitoring tools misinterpret a normal cold boot (NPCM_CORST=
+)
+> as a severe hardware failure and trigger unintended alerts or shutdowns?
+>
 > [ ... ]
->> +	list_for_each_entry(scsi_mpath_head, &scsi_mpath_heads_list, entry) {
->> +		ret = scsi_mpath_get_head(scsi_mpath_head);
->> +		if (ret)
->> +			continue;
->> +		if (strncmp(scsi_mpath_head->vpd_id,
->> +			scsi_mpath_dev->device_id_str,
->> +			SCSI_MPATH_DEVICE_ID_LEN) == 0) {
->> +
->> +			return scsi_mpath_head;
->> +		}
->> +		scsi_mpath_put_head(scsi_mpath_head);
->> +	}
->> +
->> +	return NULL;
->> +}
+>
+> > +static void npcm_get_reset_status(struct npcm_wdt *wdt, struct device =
+*dev,
+> > +                               const struct npcm_wdt_data *data,
+> > +                               resource_size_t start)
+> > +{
+>
 > [ ... ]
->> @@ -116,13 +240,58 @@ int scsi_mpath_dev_alloc(struct scsi_device *sdev)
-> [ ... ]
->> +	mutex_lock(&scsi_mpath_heads_lock);
->> +	scsi_mpath_head = scsi_mpath_find_head(sdev->scsi_mpath_dev);
->> +	if (scsi_mpath_head)
->> +		goto found;
->> +	scsi_mpath_head = scsi_mpath_alloc_head();
->> +	if (!scsi_mpath_head) {
->> +		sdev_printk(KERN_NOTICE, sdev, "could not allocate multipath head, device multipathing disabled\n");
->> +		mutex_unlock(&scsi_mpath_heads_lock);
->> +		goto out_uninit;
->> +	}
->> +
->> +	strscpy(scsi_mpath_head->vpd_id, sdev->scsi_mpath_dev->device_id_str,
->> +			SCSI_MPATH_DEVICE_ID_LEN);
->> +
->> +	ret = device_add(&scsi_mpath_head->dev);
->> +	if (ret) {
->> +		mutex_unlock(&scsi_mpath_heads_lock);
->> +		goto out_put_head;
->> +	}
->> +
->> +	list_add_tail(&scsi_mpath_head->entry, &scsi_mpath_heads_list);
->> +found:
->> +	mutex_unlock(&scsi_mpath_heads_lock);
-> [ ... ]
->> +out_put_head:
->> +	scsi_mpath_put_head(scsi_mpath_head);
->>   out_uninit:
->>   	scsi_multipath_sdev_uninit(sdev);
->>   	return ret;
->>   }
-> [ ... ]
->> +static void scsi_mpath_free_head(struct kref *ref)
->> +{
->> +	struct scsi_mpath_head *scsi_mpath_head =
->> +		container_of(ref, struct scsi_mpath_head, ref);
->> +
-> [ ... ]
->> +	mutex_lock(&scsi_mpath_heads_lock);
->> +	list_del_init(&scsi_mpath_head->entry);
->> +	mutex_unlock(&scsi_mpath_heads_lock);
->> +
->> +	device_unregister(&scsi_mpath_head->dev);
->> +}
-> 
+>
+> > +     if (of_device_is_compatible(dev->of_node, "nuvoton,npcm845-wdt"))=
+ {
+> > +             ret =3D regmap_read(gcr_regmap, NPCM_INTCR2_OFFSET, &rstv=
+al);
+> > +             if (ret) {
+> > +                     dev_warn(dev, "Failed to read INTCR2 reset status=
+: %d\n",
+> > +                              ret);
+> > +                     return;
+> > +             }
+> > +
+> > +             if (rstval & NPCM_RST) {
+> > +                     ret =3D regmap_write(gcr_regmap, NPCM_INTCR2_OFFS=
+ET,
+> > +                                        rstval & ~NPCM_RST);
+>
 > [Severity: High]
-> Could this lead to an AB-BA self-deadlock?
-> 
-> The scsi_mpath_dev_alloc() function acquires scsi_mpath_heads_lock before
-> calling scsi_mpath_find_head(). During iteration, scsi_mpath_find_head()
-> takes a temporary reference to each head.
-> 
-> If a concurrent thread drops its reference to a head just as we process it,
-> our scsi_mpath_put_head() call might drop the refcount to 0.
-> 
-> This would trigger scsi_mpath_free_head(), which unconditionally tries to
-> acquire scsi_mpath_heads_lock. Since the non-recursive mutex is already held
-> by the current thread in scsi_mpath_dev_alloc(), it appears this would freeze
-> the thread.
-
-I will check it
-
-> 
+> Can this non-atomic read-modify-write sequence on the shared syscon
+> register corrupt concurrent updates?
+>
+> If INTCR2 (and RESSR below) are standard read-write registers, this
+> sequence could silently overwrite modifications made by other drivers
+> sharing the syscon.
+>
+> Alternatively, if these are Write-1-to-Clear (W1C) registers, writing
+> rstval & ~NPCM_RST will write 1s to all other active status bits,
+> inadvertently clearing them, while writing 0 to the watchdog bits,
+> failing to clear the intended reset flags.
+>
+> Would it be safer to use regmap_update_bits() for atomic updates, or if
+> W1C, write only the target bits without a read-modify-write?
+>
+> [ ... ]
+>
+> > @@ -220,6 +430,8 @@ static int npcm_wdt_probe(struct platform_device *p=
+dev)
+> >       /* Ensure timeout is able to be represented by the hardware */
+> >       npcm_wdt_set_timeout(&wdt->wdd, wdt->wdd.timeout);
+> >
+> > +     npcm_get_reset_status(wdt, dev, data, start);
+> > +
+> >       if (npcm_is_running(&wdt->wdd)) {
+> >               /* Restart with the default or device-tree specified time=
+out */
+> >               npcm_wdt_start(&wdt->wdd);
+> >               set_bit(WDOG_HW_RUNNING, &wdt->wdd.status);
+> >       }
+> >
+> >       ret =3D devm_request_irq(dev, irq, npcm_wdt_interrupt, 0, "watchd=
+og",
+> >                              wdt);
+> >       if (ret)
+> >               return ret;
+>
 > [Severity: High]
-> Is there a risk of a NULL pointer dereference and invalid device unregistration
-> here if device_add() fails?
-> 
-> If device_add() fails in scsi_mpath_dev_alloc(), we jump to out_put_head and
-> call scsi_mpath_put_head(). This drops the refcount to 0 and triggers this
-> cleanup function.
-> 
-> However, the scsi_mpath_head was just allocated with kzalloc and never added
-> to the list, so entry.next and entry.prev are NULL. Calling list_del_init()
-> would dereference these NULL pointers.
-> 
-> Furthermore, calling device_unregister() will invoke device_del() on a device
-> that failed device_add(), which violates the driver core API.
-> 
-I will check it.
+> This is a pre-existing issue, but does this code leak a clock enable
+> reference?
+>
+> In npcm_wdt_probe(), if the hardware is running, npcm_wdt_start() is call=
+ed:
+>
+> npcm_wdt_start()
+>     clk_prepare_enable(wdt->clk);
+>
+> If subsequent probe steps fail (e.g., devm_request_irq() returns an error=
+),
+> probe returns without unwinding the clock enable.
+>
+> Additionally, npcm_wdt_set_timeout() calls npcm_wdt_start() when the watc=
+hdog
+> is active. Since there is no matching disable on timeout change, every
+> WDIOC_SETTIMEOUT ioctl increments the clock's refcount. This prevents
+> the clock from ever being disabled when the watchdog is stopped, leading
+> to a resource leak.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260705140100.15=
+43486-1-tmaimon77@gmail.com?part=3D3
+
+Thanks,
+
+Tomer
