@@ -1,220 +1,257 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010019.outbound.protection.outlook.com [52.101.201.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF09423798
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 18:18:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0396139B48D
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 18:59:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783361920; cv=pass; b=i5CdM8priEwe/yue2CUfxdWE2lD7fQO5XRhocMm3BYyDqT1AWlfMjMtsQLEa7LhLmMXS6wGIlopS5AGrKYMP+A6XlC0crieWNBLS/asOXPF+EOBrOLim0PgJK5lAxYkdJ+mF5UREe8abwlGfZ9wOYbJnjKlihhmBdG4BL4MHs0M=
+	t=1783364395; cv=fail; b=ub4/ekK4VCzNcH5awW7S0pzLpPSZoHTqOJxaKRDjI03ocuBQoTuHy1VUvscPT9CqwHZGt22Hpr3mkuWSt/xzrtXW0dlLLChmMY5pmlj6pqx3eac1hn6SuezwH2cdRQVeeiZcQ5wWw08+ZuJ8fA5Ozuww9Uv1SqifNkq92qu2KF8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783361920; c=relaxed/simple;
-	bh=i3n/pZjO11b8FZrngtzK4vjoUhf/PA1KucrD+egnHyg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GE044ly6zJG1y7W1zpCnAaD6lIQGLy8ZEw+kEjXe3l8f4EG6zrMvDfFzsB3VwIPwc8pATwulG2hBy25j3B6WcHQRMTkYQLmdd2RoZk7GarmYjNN9a/vAUZm10s7oudCXvxgjPEbHtmhK2w7PBGg/5EjGD95/KoPYszsg2d6IU/A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o99rbZEl; arc=pass smtp.client-ip=74.125.224.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783364395; c=relaxed/simple;
+	bh=IS6+xc8TrE3P1vMmiaGyIAE0A/xNAbOOvp1lzuRIT3M=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=PwSiu+1rk/X2ZCTnS35jr6GXMICAGuyWGsfi6IIbCkzRdxQK3aX/d+MB07I8Lij+KzeDontREeYQXj/PFdluoxCYtAp9bzZwRV1GIOHQ7g8kEztIPnJUX+hzasqWBf17C3B10E3pRdsw6vFc3noOGAr/4O3MQ84wEPssGCZkK6M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=gKmVEvPS; arc=fail smtp.client-ip=52.101.201.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o99rbZEl"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-664bb15d05dso4644446d50.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 11:18:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783361918; cv=none;
-        d=google.com; s=arc-20260327;
-        b=i4/SIt10IC830eYSmErLzVxL5DhP/sPhi/4ERT1w69VUrUGQkLtRyGHSiGkWe2fXpp
-         yiSWCeLg23f+7tNkmMt5VuDlay4c5FlF/YMqQfKpuv5ixT5knW4siRrlNv1oU0MV9goS
-         +i+J7fo7T2zfpl0zC9ZFBs4LdpKuz0HIShRfyzD9nNuf2o7+xGuyu7uNKlpx33ja1nJN
-         sP/AoDhMAiXDXKSdYvNrc5CQEZyXPwgtPuRG7xVDQm+S8bBAKgOfJtAQjvrcFlt28N2V
-         g3EM5KUozQsBPp0S0tmI/DyOTcJnKVgg27rY5sgmqcEmCbLBL+j/HBSZSDgr0COlOgcH
-         3Jbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gbuqyH3I898LEQWDxhl/FzpS6xH0Rf6DtxQG5lLXLNk=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=iWHFs1BNCJlVRIraW/Z/Key+TNDMYCzpmS65/9Swv/qmw9vheifrtbRWA7/q0mRHlY
-         LQ11sIggOsZZfVLmyMTEA3b6QoIBbjicww90lzxZWxcBjV7j0gAmNJGuGS44aSkKX0mI
-         +snQMaJRnlPeueKXW1USgFKxjOPEfyXopCdbgG0wIQMO34hAQk/khGmiJ6uYwQ0No2Bl
-         Db9IBuOdF9m7O+zVrz8fqBmdPQedfwBVvRtDDZq0VLD3KD6OgkxRL5Tbk51hv26cIHYs
-         LprFPutrx86eWqeSE9dGZwLMXjGyjSoLIQxQQP5hvpxYsge8G1ECZ//R585ypq7OllaA
-         GjmA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783361918; x=1783966718; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gbuqyH3I898LEQWDxhl/FzpS6xH0Rf6DtxQG5lLXLNk=;
-        b=o99rbZElfq/E+HNyKSTeVdyb/FpSc5vAdBdZH163bClQC6oO9BZnz6nYewVSQUnlIk
-         40hC/omG2nRtPtqE8PdM3yrWo7noukrtoehjQcq2iXh9ZVe3AHPgEDRCJu4HKgII/7A4
-         jnvr9WXNpC4aEoqjax/XfP1tItWEYozDq21OZwggkYJg5h3Ruk0uizDdgJPJEWfnQB48
-         ecqIfZY/rbYCVl+tIr+7h1CSnhR+He3GMcHuPynuzxYaQsfvIeAUPkTNEVkmbX3zm+kF
-         i0+aH3bLx26GqOuSfoiKk/rsr7kF/hAdu9BU9tp9PJ/1N/Hosna3IejDHQAot5gX+nov
-         +Otg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783361918; x=1783966718;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gbuqyH3I898LEQWDxhl/FzpS6xH0Rf6DtxQG5lLXLNk=;
-        b=B+Cbek75igOl1gxu3K71HOCaVyG6M4FnrloDmHmwo3hmgKiu/i0Caqbxf2vGltr+NA
-         268Xqvg9miDa/2rEdXvW3ULoTsPdK6U3a+iRhlfEPaoUzXyjCUSsONfKLtyzIFVW2P00
-         5aQVh5RNd+aY7APl77o+GgLHfS+ZoBjKbFjsPQNRTMmvvYS1tIGE0jYekSdL+Nl3gRXi
-         MogVVEyVzWxqKdFQFdxWsusF3OzNgvRuZjPutnKd/kczdjhgJDgdXvUIt8t+wEG2X2QH
-         T8kvTMl6Jgo3D0fPhf9XIzmYuuJLoKO3CUdSZOqqtOX5Kephjr94WKhG5EqOCXm6NSeb
-         BPnA==
-X-Gm-Message-State: AOJu0YwZgBfFr4dviKRjMYDEg852Hk+gTF0juyVzGqBwihunB8X9qgod
-	K/AmXXekVAXAzEjJBweC+XBar2JMGJjpMSdm2Lb5KkMar5J/FDDrbBpR+GoCcchp5cxuv3Y/WsM
-	3cyPPuQH9F41aUP64T4BBAvYvXPhj09mfyQ==
-X-Gm-Gg: AfdE7cnxI3i9lESyG6o7RUkH/mGUUfSPmhKUjgnGMVvcIHJaqXvbjJzCHfps5+67f7f
-	0l+vOFmxK87u0UOKdBhPp4f5NhtOzU1ybFIeP6Hya50rU+5qBOYXvDd3zxZeCxIgy2vYQ5F3bZj
-	3FJvXx4X8U57x4sFsPWNeE7lkNNaHFiprrIeb9s3Lh9hTQ/SWaP0Lon20rKK/wZEuVWXsB12BIs
-	PYKyQCjLfnPyNkGTekr+1oYFRFfxy3YXzo70d05WGDLpquB8iJlfku4GsTSWXMKLRxsrNsv
-X-Received: by 2002:a53:d34e:0:b0:664:f064:f66b with SMTP id
- 956f58d0204a3-6677fb7cdfbmr1163754d50.26.1783361918169; Mon, 06 Jul 2026
- 11:18:38 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="gKmVEvPS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GEltd0HxFtsb8Rh8gOdDjwEa2WcZ2GECq80RmB0aQ+UiWNbsctCfMji2uTh7fCdJKPA849U7cBCEu30WSYlGE0tkL+7+X1+sFBzdZ/6+UT3b2IQswmrrHXt+rgFmSsD2GGAr7WZZt0J8xDb4NLYkoa9bnFmZ6ea80Q97bgAEVYvWSuQ10tBXRkM5AN+FzA8Qz42140HTw9ldravRQbV3IMFZXOcgDvxZHDJ53gr6H0I9Y3L0nORCLUjlhEqFb7JUrnVMRZy5v8NSjkDznSggxDmnPzp2dVOXGwAMxyE9+FAUzuZeC8TWP8zDZNq7OTtGh50x29fZ3LK0FxQXb2W9WQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dr9gtarAeAIR4xRQa+Ka4S8yWapVP2Uct4iWDXGJ52E=;
+ b=N2/2b2XpnX4nTig4pk5Bfhkjlri1jtuxGdLzIXYbk+XpIDGeU7b9GvKnEhL0gXZaplVKrYPi6OwqO83QySWO4+o2dS/dsD3RhTIBHMFS2f+uOla0f9GmNqDAjM9o7DR6+p0h0r7LV5i3MLFa2q8W+BDh0ITtStxxgG990KbIHns54SXVx/X8WO+OsdfJ6QQjJLN2cHfaEd60CoD5RdCQtjxD37hf9j5lEZLorwbHMNr7yneoZ43NVVETj0FA7JGho3IRwHbdHeX2/uMz5CaTQrutXMVr4IWCuDAFBbQxbx9rXQZ9JRkNIl/85WilN1pKHN8uv/dTGHPgutLejl98wQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dr9gtarAeAIR4xRQa+Ka4S8yWapVP2Uct4iWDXGJ52E=;
+ b=gKmVEvPST7Q9ulinEo4cZX1qbzQNp4EYfR9Pn6N737iFu4CFTjzqOzk8zQ5cKtK1L4QMbSDhGhAoEm1ciLBX6U4zzjgEzHw9xNk7pj/N/0lAvZhbRKjBtItJaeZPOrpCswhnjoCLglsZaqFg9zkMZ1zAat/QWHswVjovvu7PJN0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com (2603:10b6:208:3b8::21)
+ by CY8PR12MB8194.namprd12.prod.outlook.com (2603:10b6:930:76::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Mon, 6 Jul
+ 2026 18:59:50 +0000
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad]) by BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad%7]) with mapi id 15.21.0181.012; Mon, 6 Jul 2026
+ 18:59:50 +0000
+Message-ID: <28e2e7c6-8ca5-415a-b5ca-6e872a32ac9f@amd.com>
+Date: Mon, 6 Jul 2026 13:59:48 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 4/6] x86/sev: Add support to perform RMP optimizations
+ asynchronously
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <cover.1782841284.git.ashish.kalra@amd.com>
+ <ada64cdc976b98a70687b3a347bca0c25c89eb09.1782841284.git.ashish.kalra@amd.com>
+ <20260630182808.6860E1F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: "Kalra, Ashish" <ashish.kalra@amd.com>
+Autocrypt: addr=ashish.kalra@amd.com; keydata=
+ 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
+In-Reply-To: <20260630182808.6860E1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CH0P220CA0008.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:610:ef::6) To BL3PR12MB9049.namprd12.prod.outlook.com
+ (2603:10b6:208:3b8::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260706171918.317102-1-ameryhung@gmail.com> <20260706171918.317102-16-ameryhung@gmail.com>
- <20260706174721.14CE21F000E9@smtp.kernel.org>
-In-Reply-To: <20260706174721.14CE21F000E9@smtp.kernel.org>
-From: Amery Hung <ameryhung@gmail.com>
-Date: Mon, 6 Jul 2026 11:18:26 -0700
-X-Gm-Features: AVVi8CfeDjKaihLzFTjCW1uH4GWTKlKUD96ZQGIhYLxEV0t3QQ8NK0F3dtWBtwY
-Message-ID: <CAMB2axNUmeYi9nvRQPhLn-CEJACr4CfOXTHWzTW=HWst58MqBw@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v3 15/15] selftests/bpf: Add test for bpf_tcp_ops
- header option hooks
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|CY8PR12MB8194:EE_
+X-MS-Office365-Filtering-Correlation-Id: 86b09364-dc2b-4416-22c9-08dedb90c150
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|22082099003|18002099003|11063799006|5023799004|4143699003|56012099006|3023799007|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	gdENZBx8DAV2pCA73MjnEwKDflcwp7SVbQGyCiJg33eLKyHdwZ2/0dsSmn0eZ3jOLfOGgM9C4RT3Mi9advtIOg5GCK6upCAoxcr40+HADO5M0vi04xtSB9Kjk5kl/W+KLj4GcSUoF87DIzoA9/DNvllUSvwd4ee2m1Vpnc5e4mwfv/q1UjpZajjD04/VjsqzfK9iMCzSoyONsi1dZpFSJNWVP3WvRCxoQb/d2t9KDnvnoVJNg7hRagTU+Ix27Tr4pEhtqdHAgF5Kp0pMJOk1yV+i43DFqr+F80z/G4tYzSt6mLqRVsoZJk0N9gAZNZc1kn4GocTu0tUxMbryF6YOABGKpNkegSZfsYw+PaP02lOmgIUTTsqlSjP6xBw4WVupQvi4uLUuj077lVB1TpSWCpGCtubkHYcDEgRWtC0fv20Zhau7TnY3mY7PBqZkCIsMYmz2l7jb1CQSu2aKdAt8V+kfSlAMHLil9Hr4r3mzfOhUsLP4xMPebXgg1R+VDmd4TbD4VRA+0y+K8qFOjhA65r/L+U3op6dTRwt5LXgSZzShY7fud7B0carQ1JzsVlsBHJFT5pZ6FACy/Tzt4tfgAGF1/FJ2S88Yexs2Jpiv9SR6ISA0GDGBkQSU6UlS6n90iM8975kzg6gOJQCIIJqgnairHcEvEa5jW5kjtnMjfuk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(22082099003)(18002099003)(11063799006)(5023799004)(4143699003)(56012099006)(3023799007)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?K0g5L2JiTyt5bHdsc3RIRFJkbkhnLzRiKy9za05WMi9iTEZZSFhUYkgvRi8y?=
+ =?utf-8?B?UHZVZXliZkhDZ3BXeW8xRXVJSW5SUEwwcWtvRldSWWRudHp1d0VBNUp4ZVpV?=
+ =?utf-8?B?U1VtL3hNQjdpOUhvRFp2Q1dwd3RFMHpsczNaV09qRWZGYlgvTGM0VUJZWXJF?=
+ =?utf-8?B?SzJaTCtrRkhVNXRNSzJhS1JmYVdWZWc5Q0Y1VzNRWUpvZVZFaFUwSEVMcGRS?=
+ =?utf-8?B?NW9ESm5TT0tIZXo1MUJyOHJBRGl5blc3Y0tRTzNXS2xtU3ZPeWM3L1Y2STJk?=
+ =?utf-8?B?dTZaU0tvRVR6cnVvWG1CK1dSY3JEWXdiUVN1bTlNOTJkMHFCUllDUjJqUyt1?=
+ =?utf-8?B?WVh5MFpHdmxnemxyZnE3cWNjcGlJUXBmWTB4aFJITjJOazhNTVVra0hoVGJk?=
+ =?utf-8?B?V3lxVmNHVG5kUHZGMndwcHcvSHhXM1JDRXRuYThzNDZoajFXQzAydy9wR0My?=
+ =?utf-8?B?a3gxVVJDbkh1MzV2V3lBclpabExLbkhhUFVoL0tEWU1FWEYybDQ2Nkl2WEhB?=
+ =?utf-8?B?YXdSNWZDcUxrOGRRN3I1TStFSWhZM0xRMEh0Zy84dHJNNE92SkJsZmcxQnJu?=
+ =?utf-8?B?SmNvU25IdlBIbVdibmpJVTZUNkRBb2k0NlhPTEI0RnRqNUxlOU1tdnNGWlNa?=
+ =?utf-8?B?bFFiL2R5amxHWGgzMWRnYTdGTEw3alFjVkwvdU1XUFFXMFozTURVWFJFWEdS?=
+ =?utf-8?B?a2pOY3IzTlZGQjRvdVhPWC84Nlh0b3NLTXRMMmt1NjBJS3dtTFVuSUpiMklX?=
+ =?utf-8?B?OGljYVBUbEJYOXZUTjkyNHdKVlN5ZmpaM2FDRXlyMFRrbWlDMmVFOTZvRWdm?=
+ =?utf-8?B?QXIwRytwaG9RMDlkQ2Nzbm1MTEwxOC9GaGh6WVRKeHlRbUtST2Ixd0gxQWhl?=
+ =?utf-8?B?WmtFZER6TFhiTm1kN1pnb2puNU85OVZTSGNCdXcrTXVxbTY2ZFhwbTlqcDNP?=
+ =?utf-8?B?WmpFdHVWdzhBN3ZMYU9Nd0dxT2drVHdyUEFKclZJNTMwcDRxWlhBN29DTmpm?=
+ =?utf-8?B?TCt4WGs3QnFTVDl0aEtMazA5U0R0T0U3SmpHNGtoR3FhM0FYTE5tRTc3ZTdp?=
+ =?utf-8?B?MytzdDFxaFVJN2dSOTdwRnR5d1ppQW1XbUNmVytSaEYydXlqQVFFYVJxMHZx?=
+ =?utf-8?B?TGRsbkthSkorQVAxZ012UTFUWTBwV0kzUTFBQzR5L0N3STFBMTVsblRUbEhF?=
+ =?utf-8?B?S0p5cXRTQ3ZOQ1dwOE9NbDMzV2hobnhVbncxRWwvOEhMa1lnNUVGaEpoM1Nw?=
+ =?utf-8?B?UFVhSlB4NFRtdEcvdGVvcXpTOHhPWlRZR3M4TzR0NURMOWU3dVRXOG4vTE9Q?=
+ =?utf-8?B?eDNmSyswSlFXS2RvK2o0Y0cwYms0QVRCSi9uTDFuZmh4SW15enA1QnJYdFpr?=
+ =?utf-8?B?VVNsVS9VRU5OVDNhbW56eTJiOEFiRUk1enVTMkErVUtiaDdqUTNwOWY4WnBD?=
+ =?utf-8?B?VTBhYktlUW9ZUVhFU0JxVW54bTJDWFY2WFA4Tmh5amloWTZ2MVh1YXRPbHQ5?=
+ =?utf-8?B?cDRjcCtMU3EwaEp2M21GQXVPUmF5dUtSWkRBSmJySWFFaHp4UHdqRXlUb0li?=
+ =?utf-8?B?ZUJnUnBMMlN5bkZVV2tiU05Nc0FjdkdRa0JocnlUN1o0aVQ4YmNDS3hKd2o5?=
+ =?utf-8?B?K3N4TjArblhBZ0hIWHB6OE5VeE5qNmNUcDMvaTE1OTNQbmNRZlYxdUkwV0Ni?=
+ =?utf-8?B?dzVGT0w5MmNKL0tsSWVYSGFWM2ZhZXJhRkxPUFNDUUtVODVZM0dtOTMzb0NB?=
+ =?utf-8?B?dWxmZ24zbkNuK0lUYlc5Vkx0bHBFYUxob3RoaklFN0k3MFBLa0h1V3NwbHJE?=
+ =?utf-8?B?UU51WUtWOGZ5S0Nhb3RzU1VKdzNza2NXRDZ1a0hFOS9VU2FVa0xGMVV6YWNZ?=
+ =?utf-8?B?bnVPRmVRc3J5ME9zcDVyaENTNnhtODZOSlQvRVdZZmErQ3hMYkhydXFqU1I4?=
+ =?utf-8?B?NzdZa0Q0Y2tJeGMwdWV2Q0U3WXBGOU1lQi9KTVNLNS8vL242VzE5ZVNTL0d5?=
+ =?utf-8?B?TEIyRWJHaDZWRnJUT2pwSEI0UTMyRW04dmE2MVV0UUkvSVY2ZFRKd1JQUUxU?=
+ =?utf-8?B?QzdEZlZ1dGlZSWEvZllReFlEZ2lBQkpuWEpKTUlvWHpqaEEveTAvcTRwaGRE?=
+ =?utf-8?B?eG0rTFF0QllQVEFzNEVPMngyMm9RRWEzUEZNOHdKMlV5YTJqNFo1RFdqd3Fy?=
+ =?utf-8?B?Z285WW9GZFFlTytXdDRpYXNEdDNsUjlBclhuWWlRQzRGa0MzakRJY0JRbnBj?=
+ =?utf-8?B?SWFObHNuc1BaS1FNSjcra2UvdWZzNnE0cHFNZGMxY0p6ZkZGK2xwSkF3ZG1h?=
+ =?utf-8?Q?OLhUuNqaRea3iLIB0n?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 86b09364-dc2b-4416-22c9-08dedb90c150
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB9049.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 18:59:50.0345
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aqcXWZJ1ITGSjTg9Ps+SHio+NoaxeoL8fSVaby0xncVhNuuTXkkojsbKKLMA27iweohlwRa/icxE3NeydluWwg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8194
 
-On Mon, Jul 6, 2026 at 10:47=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Multi-line comments in the new BPF selftest program do not follow=
- the mandatory BPF subsystem comment style.
+
+
+On 6/30/2026 1:28 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Re-initializing SNP after a partial shutdown bypasses the RMPOPT optimization pass, leaving the new RMP table unoptimized.
 > --
->
-> commit 0974a803b9e5fed2b4e8c0c5360735a19cae9901
-> Author: Amery Hung <ameryhung@gmail.com>
->
-> selftests/bpf: Add test for bpf_tcp_ops header option hooks
->
-> This commit adds a test for the bpf_tcp_ops header option hooks. It uses =
-a
-> struct_ops program to reserve, store, and load an experimental TCP header
-> option to ensure the parse_hdr, hdr_opt_len, and write_hdr_opt callbacks
-> work together correctly.
->
-> > diff --git a/tools/testing/selftests/bpf/progs/bpf_tcp_ops_hdr.c b/tool=
-s/testing/selftests/bpf/progs/bpf_tcp_ops_hdr.c
-> > new file mode 100644
-> > index 0000000000000..46618a604d965
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/progs/bpf_tcp_ops_hdr.c
->
+> 
+> commit 2d85f8f029da9849b60d0154807adccc997f6502
+> Author: Ashish Kalra <ashish.kalra@amd.com>
+> 
+> x86/sev: Add support to perform RMP optimizations asynchronously
+> 
+> This patch introduces support for the RMPOPT instruction to minimize performance
+> overhead by skipping RMP checks on 1GB memory ranges known not to contain
+> SEV-SNP guest memory. It adds a dedicated workqueue to perform these
+> optimizations asynchronously.
+> 
+>> diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+>> index 04a58ac4339cb..40b06e959ee87 100644
+>> --- a/arch/x86/virt/svm/sev.c
+>> +++ b/arch/x86/virt/svm/sev.c
+> 
 > [ ... ]
->
-> > +SEC("struct_ops")
-> > +void BPF_PROG(test_hdr_opt_len, struct sock *sk, struct sk_buff *skb,
-> > +           struct request_sock *req, struct sk_buff *syn_skb,
-> > +           enum tcp_synack_type synack_type, unsigned int *remaining)
-> > +{
-> > +     hdr_opt_len_cnt++;
-> > +
-> > +     /* Reserve TEST_OPT_LEN bytes; the helper decrements *remaining. =
-Stacks
-> > +      * with other progs in the cgroup hierarchy.
-> > +      */
->
-> [Severity: Low]
-> This isn't a bug, but does this follow the BPF subsystem comment style?
->
-> Multi-line comments under BPF-related paths should have the opening /* on
-> its own line.
+> 
+>> @@ -625,14 +743,42 @@ void snp_setup_rmpopt(void)
+>>  	if (!cpu_feature_enabled(X86_FEATURE_RMPOPT) || !rmpopt_capable)
+>>  		return;
+>>  
+>> +	guard(mutex)(&rmpopt_wq_mutex);
+>> +
+>> +	/*
+>> +	 * Guard against re-initialization.  When SNP_SHUTDOWN_EX is issued
+>> +	 * with x86_snp_shutdown=0, snp_shutdown() is not called and
+>> +	 * rmpopt_cleanup() is skipped, but snp_initialized is still cleared.
+>> +	 * A subsequent __sev_snp_init_locked() would call snp_setup_rmpopt()
+>> +	 * again, leaking the existing workqueue, delayed work, and cpumask
+>> +	 * state.
+>> +	 */
+>> +	if (rmpopt_wq)
+>> +		return;
+> 
+> [Severity: Medium]
+> Will this early return prevent the initial RMPOPT optimization pass if SNP is
+> re-initialized after a partial shutdown?
+> 
+> If a partial shutdown occurs where rmpopt_cleanup() is skipped, rmpopt_wq
+> remains allocated. When snp_setup_rmpopt() is called again during
+> re-initialization, returning early here skips the queue_delayed_work()
+> call at the end of the function.
+> 
+> Does this mean the system will run without RMP optimizations on the newly
+> initialized RMP table, incurring RMP check overhead until a later event
+> triggers a rescan?
+> 
 
-[...]
+Good point — the early return skips the initial optimization pass on re-init. It's performance-only (RMP protection is unaffected) and self-heals on the
+next SNP guest teardown via snp_rmpopt_all_physmem(), which re-optimizes.
+  
+In practice this path doesn't arise on RMPOPT-capable platforms. RMPOPT is supported only on newer platforms, which use the x86_snp_shutdown shutdown
+path, that calls snp_shutdown() -> rmpopt_cleanup(), which destroys and NULLs rmpopt_wq, so a subsequent re-init re-allocates and re-queues the initial
+pass as usual. The partial-shutdown case this guard covers (x86_snp_shutdown=0, rmpopt_cleanup() skipped) is legacy-firmware-only and effectively
+doesn't occur where RMPOPT is available. So I'll leave this as-is, the guard just prevents a resource leak in that unlikely legacy re-init, and
+correctness (and, on RMPOPT platforms, the initial pass) is unaffected.
 
->
-> > +     bpf_reserve_hdr_opt(ctx, TEST_OPT_LEN, 0);
-> > +}
-> > +
-> > +SEC("struct_ops")
-> > +void BPF_PROG(test_write_hdr_opt, struct sock *sk, struct sk_buff *skb=
-,
-> > +           struct request_sock *req, struct sk_buff *syn_skb,
-> > +           enum tcp_synack_type synack_type, __u32 opt_off)
-> > +{
-> > +     __u8 opt[TEST_OPT_LEN] =3D {
-> > +             TEST_OPT_KIND, TEST_OPT_LEN, TEST_OPT_D0, TEST_OPT_D1,
-> > +     };
-> > +
-> > +     /* bpf_store_hdr_opt() takes the program ctx (the kernel reads th=
-e
-> > +      * outgoing skb from it); it appends after any options already wr=
-itten
-> > +      * in the reserved window, rejects duplicates, and confines the w=
-rite to
-> > +      * the header option scratch. Stacks across progs in the cgroup h=
-ierarchy.
-> > +      */
->
-> [Severity: Low]
-> This is a similar style issue. Should the opening /* be placed on its own=
- line
-> to match the required multi-line comment format?
+Thanks,
+Ashish
 
-[...]
-
->
-> > +     if (bpf_store_hdr_opt(ctx, opt, sizeof(opt), 0))
-> > +             return;
-> > +
-> > +     write_cnt++;
-> > +}
-> > +
-> > +SEC("struct_ops")
-> > +void BPF_PROG(test_parse_hdr, struct sock *sk, struct sk_buff *skb)
-> > +{
-> > +     __u8 opt[TEST_OPT_LEN] =3D {
-> > +             TEST_OPT_KIND, TEST_OPT_LEN, TEST_OPT_D0, TEST_OPT_D1,
-> > +     };
-> > +
-> > +     parse_cnt++;
-> > +
-> > +     /* Look up the experimental option written by test_write_hdr_opt(=
-) in
-> > +      * the incoming skb. For an experimental kind the search matches =
-on the
-> > +      * 2-byte magic in opt[2..3]; on a match the found option is copi=
-ed back
-> > +      * into opt[].
-> > +      */
->
-> [Severity: Low]
-> Here is another multi-line comment that starts on the same line as the op=
-ening
-> /*. Could this be reformatted to align with the modern BPF comment guidel=
-ines?
->
-
-I will fix the comment style.
-
-> > +     if (bpf_load_hdr_opt(ctx, opt, sizeof(opt), 0) < 0)
-> > +             return;
-> > +
-> > +     found_d0 =3D opt[2];
-> > +     found_d1 =3D opt[3];
-> > +     found_cnt++;
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706171918.31=
-7102-1-ameryhung@gmail.com?part=3D15
+> [ ... ]
+> 
+>> +	/* Limit memory scanning to 2TB of RAM */
+>> +	if ((rmpopt_pa_end - rmpopt_pa_start) > SZ_2T) {
+>> +		pr_info("RMPOPT coverage limited to 2TB; memory above 0x%llx not optimized\n",
+>> +			rmpopt_pa_start + SZ_2T);
+>> +		rmpopt_pa_end = rmpopt_pa_start + SZ_2T;
+>> +	}
+>> +
+>> +	/*
+>> +	 * Once all per-CPU RMPOPT tables have been configured, enable RMPOPT
+>> +	 * optimizations on all physical memory.
+>> +	 */
+>> +	queue_delayed_work(rmpopt_wq, &rmpopt_delayed_work, 0);
+>>  }
+> 
