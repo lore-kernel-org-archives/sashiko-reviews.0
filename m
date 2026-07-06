@@ -1,67 +1,46 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54C1379C32
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 14:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C89385D64;
+	Mon,  6 Jul 2026 14:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783347748; cv=none; b=V0m6Gh+Zo60uQ67H6Z1zbJoGM4s8YUuAo94mNkeLuTVqi0CpBwJ9cMArFQkV7p2WAPFS59PaXq20ADcfVndiSqjEPZFH5OJBul8EFD9goCqh50+ybrcSQsOeCnsQ5djil/n24ML0P0tkk+Wz+ApUedX+hv8f0w77jTuNKBtDA7U=
+	t=1783348247; cv=none; b=CiqovvDX5ugfGBr53KePUHLmFIqjfsomIjTg3bzfAZHDkQaG8AmzGVE93IRRHvuxQjijlTrlheoOw4H7LogXXVxxHM8CSlAaOqpGtMfY4n8lE9Xm1QCAspBDiKunjOWu7Etel4RHj0yK7u5F7jl9Q6kIxtVPUmANEttS00wuSx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783347748; c=relaxed/simple;
-	bh=dBcyo/Ea2iO/kyaMJT/Slzf7vNnXLdpTCgpHjHFJVMc=;
+	s=arc-20240116; t=1783348247; c=relaxed/simple;
+	bh=CrrshD/db0jkXDvoHPDl6vrw5Kyv7VKGSdnXPbhMsXU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jGc3FIssj7HRUmCNhOCdW1yyHaReV78wf49PombiB7r9sBGO+90Rw2oG71yPppwylez9cgVhovQpUqPiBkfgXqYm1QlfkgWkCIV/vsYRRo7n5Ajh72WeW62/sXjOKjjvMcPezMReNcoTOfapbJ9+2n3LfSIvKVE6gyko0lXiFiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8L82Wfd; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=CaARnq2fCHSpCsheUE43BeDbGtyQIsv+bIZYU717x07/zmDtCrNHq0Us5ThsUgGFQpRKIjjYwLLHYZM/B+XL5wHjpSjSFj/puMOCsZuFJFSqb5igi+BlUO49VTa8H1qMRFSeeEXZ+Pk7LQzalBY0IvrCEUjIXzhKaQBzLqTuxiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=FYQIvEd4; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8L82Wfd"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8471013fac2so3391862b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 07:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783347746; x=1783952546; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZXGEs1d6EOxB/V9vSLSfBaXMrDvlbcBfxjTzvgbP01o=;
-        b=Y8L82Wfdg5h6jrzgLqZ1IXlfCfg6pUGkBJkhHG6W+VsG/bIiC5XTuVh7NEWn3Uz65g
-         hOQtOSMyAWDAqBRTT6G9RBlAFjGyKkRa11IQFnih1DiMEP4mRbAuSZywufAHmvH47GYx
-         WT5ydgjXB1h6za45yaOvgt41EW4bDpUU4sInDKnQe8rQxSYXP9ZAKl41GTT+1Uw5A8Qk
-         35CDqxifL45+P9lvltfFMWfp7Uki7d1sUsc0DKSlpgWPN8v6SoEv8fuK/wWWSCYpqDWC
-         TxruIcSW9Z4654nxgGFy9MDUFeeJiTjyQulHV0fgTS9YeCWriZvchMBHv3GHpN+2Glbg
-         tahg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783347746; x=1783952546;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZXGEs1d6EOxB/V9vSLSfBaXMrDvlbcBfxjTzvgbP01o=;
-        b=lGhMX9KIA4EV8F6/U9dCppR72qsgkuiQXM0+50sjE+AGwaogeSw+aRfWH9AyQQALEN
-         IP3rWLQj8wk6PVE2pb6HlPAiV/TfFGXywRGhM08hbNKY+Ho3uXr2+3k1Lvl/VJG7T48G
-         l1JWfrC+Ili8O7nBXhUqxKgewIok8/6cVAAJEhpbfqqGqHSIsVIu21yX/rObio7IBZVa
-         MSNVXazqGNFWl7oxyJgTmsS8ucenlJ6mNgcXiOf2eS/uPQxbvzbzzbHvvSGv4TI3o8D1
-         Hif3M+okRmABDQbcXjAXuzqhseXHb3BFEo+i5lB3cOh4VYYCtRNmvmNRlNF91lnioi6s
-         D3lg==
-X-Forwarded-Encrypted: i=1; AHgh+RpM9YiBai4HPuSOtwd6IuMhbGmd0v5O6VjG4nIbClvr3aJaUadq/SvMbD5LQmJV/nrXWwq62Tog/uJkZqjfJJc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyiLD5xPWjq/omTctptuUP7XKxfe3lac34/7kDCHiQhq8LY5YBt
-	MX6b6VWg1dnfrlpAmireAYYN41Es7+dK+dhUVAAz2K2lbgosOiwPfk5o9XX6HA==
-X-Gm-Gg: AfdE7cmY5n3u7sfuIVLV4Ajyqf+IV2hwXeZE6rMRr1f5XN78RmM/RoYrFVyXYoq1X2J
-	EB9Porw3LO7947hfowZ+NfKulP6uCMg7TpSUEoVFz81+W/yQaDYwERKmrRx6rQJhUFQmPahAZ8P
-	kW8q9yErM8eQBJvxo8AY4krnuDOUn+JqRfe/w/0CvGQGMnOl+fTD2+dT3G+YSIUsgdBNI8poGlT
-	Yn20IafnLrcjTCqmavG5QQocNj75w0rHB0gxV/7yBzqIGlJP0U88jJm/D6BoIOA2FHFRSLUJPBl
-	tUQpPL/Hs++L3TX4Ow3FkNb4+GfHL6Lyee0Xml9FYYouNRIUHdX4zmMlJkSc929RzTFrcEDq9Li
-	oXEYrcMsNPkroCBFotZkUVju2NtKVCE5uhzmlevh9l5Hi+MYvbrCTg1iw32P95hliVspvw/Iw0x
-	qHV8otifzCdh8qjn74EP5vzQQ4de4UF7xxHV880YB6lTxc5x+ogr78QZ8RY+Xxjg==
-X-Received: by 2002:a05:6a20:2589:b0:3bf:b3d5:ce2d with SMTP id adf61e73a8af0-3c08ed5080dmr917423637.7.1783347745821;
-        Mon, 06 Jul 2026 07:22:25 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c9e8f5c2836sm6073707a12.13.2026.07.06.07.22.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 07:22:25 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f598a05b-5d91-484d-a637-e092950a6f47@roeck-us.net>
-Date: Mon, 6 Jul 2026 07:22:24 -0700
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="FYQIvEd4"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=CrrshD/db0jkXDvoHPDl6vrw5Kyv7VKGSdnXPbhMsXU=; b=FYQIvEd4hnIkWv4Zp5P1O5zuFl
+	RdIwgbs/FgFKNyAe9f7J80J9oMcfZDBPCnbRXxv/k4udl8LRa82b9p8plsxkcSfQZBR3hvaPA+Vhy
+	WVXpjatIMRwadj3y4WqdKGkPpo1z5GrSA7KLjHz4SwQYKAqqdXvCwJGKv6usR4PzwpHldfMg83x1P
+	CZFSkktuqjoUx+i1d3zeLP3/euJlc54tUn1LlTYO4fAMdy3SkRujk0Yhe0qhFqnWALv7OyqOL6aXK
+	6C4I95un6tbiAF3SMQn9yj/njT8IEPHjUF8JHTzsg9+39RxhBu8ykF9Qn/PzVBW6EisBcK+Np2RWx
+	NKDbggGw==;
+Received: from sslproxy08.your-server.de ([78.47.166.52])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wgkLN-000Ika-0b;
+	Mon, 06 Jul 2026 16:30:45 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wgkLM-0002fw-2q;
+	Mon, 06 Jul 2026 16:30:44 +0200
+Message-ID: <8d262195-5317-4f9a-8974-db4039fc86d5@iogearbox.net>
+Date: Mon, 6 Jul 2026 16:30:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,143 +48,65 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for
- running chip on boot
-To: Paul Louvel <paul.louvel@bootlin.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org
-References: <20260706-w83627hf_wdt-nct6126d-v3-0-fa5ad8d486bc@bootlin.com>
- <20260706-w83627hf_wdt-nct6126d-v3-2-fa5ad8d486bc@bootlin.com>
- <20260706104010.A345B1F000E9@smtp.kernel.org>
- <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
+Subject: Re: [PATCH bpf-next v4 7/9] selftests/bpf: Adjust bpf_map layout in
+ verifier_map_ptr
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260706135644.326006-1-daniel@iogearbox.net>
+ <20260706135644.326006-8-daniel@iogearbox.net>
+ <20260706142740.1777F1F00A3A@smtp.kernel.org>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260706142740.1777F1F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28052/Mon Jul  6 08:24:35 2026)
 
-On 7/6/26 04:15, Paul Louvel wrote:
-> On Mon Jul 6, 2026 at 12:40 PM CEST, sashiko-bot wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] Removing the manual hardware timeout refresh while still unconditionally switching the hardware timer base from minutes to seconds drastically truncates the remaining timeout if the BIOS originally configured it in minutes, risking unexpected system reboots.
->> --
->>
->> commit 0014048ec369e2a09098aa033aeb725449e2fd67
->> Author: Paul Louvel <paul.louvel@bootlin.com>
->>
->> watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for running chip on boot
->>
->> This patch updates the w83627hf watchdog driver to rely on the watchdog
->> core's WDOG_HW_RUNNING flag to keep a running watchdog alive during boot.
->> It replaces the previous behavior of manually issuing a single keepalive
->> during initialization.
->>
->>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wdt.c
->>> --- a/drivers/watchdog/w83627hf_wdt.c
->>> +++ b/drivers/watchdog/w83627hf_wdt.c
->> [ ... ]
->>> @@ -241,9 +241,8 @@ static int w83627hf_init(struct watchdog_device *wdog, enum chips chip)
->>>   			pr_warn("Stopping previously enabled watchdog until userland kicks in\n");
->>>   			superio_outb(cr_wdt_timeout, 0);
->>>   		} else {
->>> -			pr_info("Watchdog already running. Resetting timeout to %d sec\n",
->>> -				wdog->timeout);
->>> -			superio_outb(cr_wdt_timeout, wdog->timeout);
->>> +			pr_info("Watchdog already running.\n");
->>> +			set_bit(WDOG_HW_RUNNING, &wdog->status);
->>>   		}
->>>   	}
->>>   
->>
->> [Severity: High]
->> Does removing this explicit timeout reset create a risk of unexpected reboots?
->>
->> If the BIOS originally configured the watchdog with a timeout in minutes
->> (for example, a timeout of 5 minutes), the hardware counter cr_wdt_timeout
->> will hold the value 5.
-> 
-> First of all, the driver does not support minute mode for now.
-
-The above feedback doesn't claim otherwise. The BIOS may still have configured
-the timeout to 5 minutes.
-
-> 
->>
->> Because this patch removes the explicit write of wdog->timeout (which is
->> typically 60) to cr_wdt_timeout, the counter retains the raw value 5.
->> Just after this block in w83627hf_init(), the driver unconditionally
->> switches the timebase to seconds:
->>
->> w83627hf_init() {
->>      ...
->>      /* set second mode & disable keyboard turning off watchdog */
->>      t = superio_inb(cr_wdt_control) & ~0x0C;
->>      superio_outb(cr_wdt_control, t);
->>      ...
->> }
->>
->> This immediately shrinks the remaining timeout from 5 minutes to 5 seconds.
-> 
-> True, but in those 5 seconds, the watchdog core will kick the watchdog
-> immediately. by calling start(), and thus refreshing the watchdog to 60 seconds.
-
-... unless below.
-
-> 
->>
->> If the watchdog core's kworker is delayed, or if the system is configured
->> not to ping the watchdog before user space takes over, could this unusually
->> short timeout cause the system to reboot unexpectedly during early boot?
-> 
-> Yes, but expected. If WATCHDOG is enabled, then WATCHDOG_HANDLE_BOOT_ENABLED is
-> enabled by default unless explicitly disabled when configuring the kernel.
-> 
-
-It is still an unexpected and undocumented change in behavior. Previously
-in that situation the watchdog timeout would happen much later and give
-user space time to start the watchdog daemon. This is no longer the case.
-
-Guenter
-
+On 7/6/26 4:27 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] The removal of the `excl` field from `struct bpf_map` breaks backwards compatibility for existing, previously compiled userspace signed BPF loaders (light skeletons).
+This is expected since the loader needs to be regenerated in any case as
+mentioned in patch 3.
