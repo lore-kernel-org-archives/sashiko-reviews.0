@@ -1,237 +1,243 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA49B3BD22E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 16:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F83B3BBFD7
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 16:12:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783354318; cv=none; b=e/MAluKSNJfbF4MCm/d2meJmWIEC9wfb+57g13BXCkL50OUZvpHcybHBdajANlLoyoQV19csCHA69ZAlnBYIp06DGlqeDJiUWaC9aB+0X9cTpz3R8oH4qR5upWp+q/vGWxOH6ZVnb+OHWoV//wq9aRxZwld3KtUuMlgERanG7W4=
+	t=1783354373; cv=none; b=AtEWBWjWyfkBc2TeNRa2mOYP2Or2e3IMq7i0i2GdJHWuZ1OI8XO3h0a7fuAn7OqwvT+orcYocTPzkDVTxAG1/BAOJFOLyMXkJPnRoWJEINEkfemDgwMEzJsTf0wtg8HhYNOHdDrQVu2WUr+rp+J4sLWqWh9QImvPVO5uhspPnms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783354318; c=relaxed/simple;
-	bh=ODm1JlKjjV1Rfdlzubm/+kPpDVjn2IfzQi+Cj+tn+sk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RyGY6qiV+V6/4Aq487gusRYdJO6ufsOKQFoKqHM8VgxEVWqOW/t2BTs/fN9oowI1ZdRDV1RDXEqslQhclWYtDlYA3bxDQjxB1q6xX/7gElEZoSWw6WxyMwpsvIf/pd2K8A929iytYlBt7QtC2IAyCqkg/dbqPliAsz02z7ufJE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwYxE9ZM; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1783354373; c=relaxed/simple;
+	bh=Npeg3cmxoXu2sGr1sxIasdlkRmLOZKvQWfzGozOJjwI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AAatS6c6c6TjwCKrA1QZ51FSK1zUbQeV5taKSeBB8apAisdnEulGgZUhAqDSrdoDxiK1tIjhJ5ZUs6+3nkQwRf8ae7L2tIQZGhpDe4vqrPEd+a1f1AgLpjrvSvdI2Xvf/UP5nFKgwLvQYWacon1/HfHu+rsZ5Rp3jeq6yXAy7Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbNN3vPL; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwYxE9ZM"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-47122683cf3so2088956f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 09:11:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbNN3vPL"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38511175ad3so1300323a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 09:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783354314; x=1783959114; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pTCA1dS/7nwR/DMXGXhTJ+UNx1CjomsCt2mPEMxYtNc=;
-        b=DwYxE9ZMTPRAB6OXRbyPjbIPP3AwRYLYjxAtEDbNPu6gcALyFK8QG+UK+ZgPNU8G8u
-         NhYiCofT/q1ijRSx2fPoRL8xuv4bqtzslcikdHVq2e36Cl3IPxJ1UPzgsNuti8z2huZL
-         qDkpjTtkcSo6ikeZNTrGxb2StlqvnKDSo91LaD2RJUomTPHKDEcdU2C9B0tj/n1Lu02F
-         RxbdwX/RAHkLfMYquMCZZNzj6pM3ENVy8gS9dNRJq7BBbYw2oLMwFPoypXiCr1Ca0a79
-         5DAMmUB4RsfMbE73xcMy+mbkm2FCJDzNqYF7Ccfng9HQ2f8AzkvllVBN3RiSVDkrLBqJ
-         5ReQ==
+        d=gmail.com; s=20251104; t=1783354372; x=1783959172; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nc6xuVu7x5xIlwRDKJdB2OMK+PJct33UwNlXEKxeZwI=;
+        b=XbNN3vPLCTpvtXtGRVl4cYcDed2CRbxfFZj+OFyoSgCZw82qdO6qCANWR6vIUwYOxi
+         yqniNfvj77Nx54h2QnlM/zoXs0+kgNoF7RaDdUZ7cJEYnlAyeimdy5u0yNBQFvndt8IY
+         /LtnsKuk10NQ8icMhabFs1PziqkWbq1RlSg4QSeNV3l5KaRE5UkkXekqaPBIsyi1mBEf
+         pnTHoQPHw0FFvI8WFEzihNRh9ItQRpMTiMez9wqRsI5liZbQLL8mwC4nWq6tHF/bxBmO
+         jiaHLZspjUzWHe9qAHvhkQhycAvfCvivB60pHEtnRKaOuwUnr5XexgaKeLgzf0eTLGlW
+         7dyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783354314; x=1783959114;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pTCA1dS/7nwR/DMXGXhTJ+UNx1CjomsCt2mPEMxYtNc=;
-        b=HZe0XVmsIY9rG4qi5omMUJsryoBsZNvan29KbEsyLFk/4D8uTTUDdNHnQn+BT8z7Ys
-         t9Fwp4s0MgNvbMDS2Z30IKa2GwtrI1ICiIHFYbtZM+PLZjj3105PNGL/SlJ81ZypdjFi
-         2Nm/ToRZ04N4jjtjF8EGhpPJDGsRBdlwR4sFNl6l4n8J/Urqc/UQSTo6i1WH7QL3+cWo
-         jr67SGfnF84GZeGwKyihVOMo5QJsBe4AXi+CgHI0gNiSbYxgEUQCxFnvYw9Up0w97jNT
-         Xfmy3CE3t8rFHmwcQj+fThzQ6KA1WL406rUOVWdDPDetU2MP4HYwog4msATHvRoPnXWh
-         q0mA==
-X-Gm-Message-State: AOJu0Yz2THYcpViJYbJmvpJEHCgLudA3AbPyEBnQzRzfEBi1qPqF/n8W
-	YUw++jtu2NFlZFicfwybi0oJg8xUSejB75FiR54dr8z5jc5OvN+eCvbiFXv9918QGsMiUA==
-X-Gm-Gg: AfdE7ckfRSBFVtNjMVBA6zWCTMQarKT+O3Zz0BGjiO9iordqYc4n1lxH+3HIARQjhRY
-	IgMOSsDCM7bG55q/qjVnxwYIdbd9rYtjUQI+KPhj3ctB9j2SI+wLXKN/TxzkEqzm+d6F8Vs8UwD
-	z/v3mukqLpfVJkNYgVnxjjvtvwLtHek7HgXct4l1MNLUAK1pHORKVrtPhtiNzD+vy1KdvpYWmP6
-	QMVeHs+pB51e8sI22Oqmp7iF2g02wxNQQCyIKY3xRg7GydlbloZOuy5VCQfwAZaKNS9D4uzfv0u
-	i3kPC3T0oCe0zyZFrzNfCTwB+npDcUw6Oiat/MErgL3VIL1NU+MXACzY85KAcq5ks93bkiNZ7Wf
-	2PBtovGcnFD/+cLuY4txS5rVLlyncTzGvyCEPNz1X1lWOUSQMOs48kbfOBiv1U1zsHL3+M1K8wt
-	u9LE5tEBCgBejp20Q5TzheqlQpcGtrqLrC3NyejuEmQxdH
-X-Received: by 2002:a05:6000:1448:b0:478:77c1:787c with SMTP id ffacd0b85a97d-47de66bcf43mr1189772f8f.56.1783354314076;
-        Mon, 06 Jul 2026 09:11:54 -0700 (PDT)
-Received: from gmail.com (deskosmtp.auranext.com. [195.134.167.217])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9de1e6ccsm26422569f8f.5.2026.07.06.09.11.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 09:11:53 -0700 (PDT)
-Date: Mon, 6 Jul 2026 18:11:50 +0200
-From: Mahe Tardy <mahe.tardy@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next 3/6] selftests/bpf: Add ksock kfunc test
-Message-ID: <akvTxp38m3bqvJTA@gmail.com>
-References: <20260706093525.13030-1-mahe.tardy@gmail.com>
- <20260706093525.13030-4-mahe.tardy@gmail.com>
- <20260706101040.DEDBB1F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1783354372; x=1783959172;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Nc6xuVu7x5xIlwRDKJdB2OMK+PJct33UwNlXEKxeZwI=;
+        b=m+VjrBgIH4vtwhbZ43W81qdOgS+QmTmDYII6rdX42RvCJwl69jkDU+nE16RJJycgzz
+         eVOv1S5sWaq3gFHXiXyU2b5j+MRH2yUVKUhLoPslDuUhrRNa00e2fjf50cvC5bxsrjpq
+         bpSkYfKo1AOcLkxMp83SHOohZXJ6sPcpojFhPe9eN7laMXr/ZwzHemRbpD1Fkk7sqR9p
+         D+mnYlp+BaMw2etPFGZYJ6vNCaQRakLUKKih/rEAYoMK7zCpHqRgf5+fkzwyPo8HoUUd
+         KNuKhKssOeBNZW6XjIMIkzfqLsuGRxDBKer+RjlbH9pCSSD/iJKYD8K/sMuxFTPmXQE7
+         xaJg==
+X-Forwarded-Encrypted: i=1; AHgh+Rr81lpui8AG57+sviCxjNxdyqGpISKo0Nc9a2SmGm5w0huF8msXMUEWIB2hnAFJPzKj53ViKZ+SWrtfsaU+ijI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzYX2Zoio8Vj408v3RwxIC9dzjUxANlLrWnHHruxcwkZZ2dp0vC
+	hDc7TSX61qX+5VcLw5mXcvdHeekICdDjqX1LyMU2KbGsEDTLJqIqvq+Q
+X-Gm-Gg: AfdE7ckPtYNRik9L3hI43ASEvlmDUw8dMgy0LK8cNJbA5aUnC2dFm7S4/oTDewa8qfN
+	RkAjNteqh5ay7VxkwwfZ5QOw2CMp9w2vp7w8bFbyYc4DwuwWbbTodfANR9AZoZR4iRCBtxfxApg
+	xq164ardgQZeRP58ElaHOM4BpWzRX96IeZqxnwU8rfwtwwsQgP7VG1gQFPpWDFmdYMntcjmZ3+F
+	DEjHLb7/lqBCtYXQd+NB4LYoYWTgJKHw78TiCkFb9TnW8ylTFTdM8VLYDH2S1gPioCJ51BULu2O
+	fJ/zxq/ko7/Sb6aNcU93d+W2MuPtX2y3LQHE3JcjTckJIm0omKf7JvoWtag0GR0nH8WW68AZTWy
+	ic9LK/pYAwgzO+sejjyPUzjXB+98bOrclWn2CUs2W0WGRJdDsLY+1lu5vH2wpNBzzwSZV3dsF7J
+	DEmuP7MiMagb2EPZkT3ffPiU2JI8VZaBljf9u542z9oU8NG0taADO7x4nVGmEbLw==
+X-Received: by 2002:a05:6300:2203:b0:3b4:61f:1fec with SMTP id adf61e73a8af0-3c08ed6fb6amr1472180637.2.1783354371258;
+        Mon, 06 Jul 2026 09:12:51 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c9e921d28d9sm6239956a12.24.2026.07.06.09.12.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jul 2026 09:12:50 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <5e441e3a-27ce-4f46-abf4-fd6246727cb6@roeck-us.net>
+Date: Mon, 6 Jul 2026 09:12:49 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260706101040.DEDBB1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for
+ running chip on boot
+To: Paul Louvel <paul.louvel@bootlin.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+References: <20260706-w83627hf_wdt-nct6126d-v3-0-fa5ad8d486bc@bootlin.com>
+ <20260706-w83627hf_wdt-nct6126d-v3-2-fa5ad8d486bc@bootlin.com>
+ <20260706104010.A345B1F000E9@smtp.kernel.org>
+ <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
+ <f598a05b-5d91-484d-a637-e092950a6f47@roeck-us.net>
+ <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 06, 2026 at 10:10:40AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Dead code and flawed insert logic in `ksock_ctx_insert()` due to unconditional map element overwriting.
-> - [Low] Unnecessary manual validation of BPF program FDs after successful skeleton load.
-> --
+On 7/6/26 08:44, Paul Louvel wrote:
+> On Mon Jul 6, 2026 at 4:22 PM CEST, Guenter Roeck wrote:
+>> On 7/6/26 04:15, Paul Louvel wrote:
+>>> On Mon Jul 6, 2026 at 12:40 PM CEST, sashiko-bot wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>> - [High] Removing the manual hardware timeout refresh while still unconditionally switching the hardware timer base from minutes to seconds drastically truncates the remaining timeout if the BIOS originally configured it in minutes, risking unexpected system reboots.
+>>>> --
+>>>>
+>>>> commit 0014048ec369e2a09098aa033aeb725449e2fd67
+>>>> Author: Paul Louvel <paul.louvel@bootlin.com>
+>>>>
+>>>> watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for running chip on boot
+>>>>
+>>>> This patch updates the w83627hf watchdog driver to rely on the watchdog
+>>>> core's WDOG_HW_RUNNING flag to keep a running watchdog alive during boot.
+>>>> It replaces the previous behavior of manually issuing a single keepalive
+>>>> during initialization.
+>>>>
+>>>>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wdt.c
+>>>>> --- a/drivers/watchdog/w83627hf_wdt.c
+>>>>> +++ b/drivers/watchdog/w83627hf_wdt.c
+>>>> [ ... ]
+>>>>> @@ -241,9 +241,8 @@ static int w83627hf_init(struct watchdog_device *wdog, enum chips chip)
+>>>>>    			pr_warn("Stopping previously enabled watchdog until userland kicks in\n");
+>>>>>    			superio_outb(cr_wdt_timeout, 0);
+>>>>>    		} else {
+>>>>> -			pr_info("Watchdog already running. Resetting timeout to %d sec\n",
+>>>>> -				wdog->timeout);
+>>>>> -			superio_outb(cr_wdt_timeout, wdog->timeout);
+>>>>> +			pr_info("Watchdog already running.\n");
+>>>>> +			set_bit(WDOG_HW_RUNNING, &wdog->status);
+>>>>>    		}
+>>>>>    	}
+>>>>>    
+>>>>
+>>>> [Severity: High]
+>>>> Does removing this explicit timeout reset create a risk of unexpected reboots?
+>>>>
+>>>> If the BIOS originally configured the watchdog with a timeout in minutes
+>>>> (for example, a timeout of 5 minutes), the hardware counter cr_wdt_timeout
+>>>> will hold the value 5.
+>>>
+>>> First of all, the driver does not support minute mode for now.
+>>
+>> The above feedback doesn't claim otherwise. The BIOS may still have configured
+>> the timeout to 5 minutes.
+>>
+>>>
+>>>>
+>>>> Because this patch removes the explicit write of wdog->timeout (which is
+>>>> typically 60) to cr_wdt_timeout, the counter retains the raw value 5.
+>>>> Just after this block in w83627hf_init(), the driver unconditionally
+>>>> switches the timebase to seconds:
+>>>>
+>>>> w83627hf_init() {
+>>>>       ...
+>>>>       /* set second mode & disable keyboard turning off watchdog */
+>>>>       t = superio_inb(cr_wdt_control) & ~0x0C;
+>>>>       superio_outb(cr_wdt_control, t);
+>>>>       ...
+>>>> }
+>>>>
+>>>> This immediately shrinks the remaining timeout from 5 minutes to 5 seconds.
+>>>
+>>> True, but in those 5 seconds, the watchdog core will kick the watchdog
+>>> immediately. by calling start(), and thus refreshing the watchdog to 60 seconds.
+>>
+>> ... unless below.
+>>
+>>>
+>>>>
+>>>> If the watchdog core's kworker is delayed, or if the system is configured
 > 
-> commit 559d17f26b2fc7936f58b27cbc4a4f83dacd3a73
-> Author: Mahe Tardy <mahe.tardy@gmail.com>
 > 
-> selftests/bpf: Add ksock kfunc test
->     
-> Add a selftest that exercises the ksock kfuncs end-to-end. One sycall
-> bpf setup program creates a ksock context and connect the socket.
-> Another syscall bpf program lookup the context and send test data.
 > 
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/ksock.c b/tools/testing/selftests/bpf/prog_tests/ksock.c
-> > new file mode 100644
-> > index 0000000000000..085ddb59067e8
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/prog_tests/ksock.c
+>>>> not to ping the watchdog before user space takes over, could this unusually
+>>>> short timeout cause the system to reboot unexpectedly during early boot?
+>>>
+>>> Yes, but expected. If WATCHDOG is enabled, then WATCHDOG_HANDLE_BOOT_ENABLED is
+>>> enabled by default unless explicitly disabled when configuring the kernel.
+>>>
+>>
+>> It is still an unexpected and undocumented change in behavior. Previously
+>> in that situation the watchdog timeout would happen much later and give
+>> user space time to start the watchdog daemon. This is no longer the case.
 > 
-> [ ... ]
-> 
-> > +static bool ksock_setup_ctx(struct ksock_basic *skel)
-> > +{
-> > +	LIBBPF_OPTS(bpf_test_run_opts, opts);
-> > +	int err, pfd;
-> > +
-> > +	skel->bss->ipv4_remote = inet_addr(LOOPBACK_IP);
-> > +	skel->bss->remote_port = RECV_PORT;
-> > +
-> > +	pfd = bpf_program__fd(skel->progs.ksock_setup);
-> > +	if (!ASSERT_OK_FD(pfd, "ksock_setup fd"))
-> > +		return false;
-> 
-> [Severity: Low]
-> This isn't a bug, but is it necessary to manually validate the program
-> file descriptor here?
-> 
-> According to the BPF subsystem selftest guidelines, after a successful
-> skeleton load, skeleton-generated program and map FDs are guaranteed to be
-> valid. Since this is called after a successful skeleton load, the
-> ASSERT_OK_FD check might be redundant.
+> Do you mean that, in the case WATCHDOG_HANDLE_BOOT_ENABLED is disabled, the
+> driver now doesn't refresh the watchdog, this is unexpected ? I was relying on
+> the fact that this entry is enabled by default.
 
-Sure, can be removed.
+It can be disabled with a configuration option, and with a module parameter.
 
+> In this case, should the driver refresh the watchdog itself, and set the
+> WDOG_HW_RUNNING bit (for the added feature that it does it repeatedly) ?
+> Or document the fact that the driver will not refresh the watchdog if
+> WATCHDOG_HANDLE_BOOT_ENABLED is disabled ?
 > 
-> > +
-> > +	err = bpf_prog_test_run_opts(pfd, &opts);
-> > +	if (!ASSERT_OK(err, "ksock_setup run"))
-> > +		return false;
-> 
-> [ ... ]
-> 
-> > +void test_ksock_basic(void)
-> > +{
-> > +	LIBBPF_OPTS(bpf_test_run_opts, opts);
-> > +	struct ksock_test_env env;
-> > +	struct ksock_basic *skel;
-> > +	int err, pfd;
-> > +
-> > +	skel = ksock_basic__open();
-> > +	if (!ASSERT_OK_PTR(skel, "skel open"))
-> > +		return;
-> > +
-> > +	err = ksock_basic__load(skel);
-> > +	if (!ASSERT_OK(err, "skel load")) {
-> > +		ksock_basic__destroy(skel);
-> > +		return;
-> > +	}
-> > +
-> > +	if (!ksock_test_env_setup(&env, NS_TEST))
-> > +		goto fail;
-> > +
-> > +	/* Step 1: Run the setup SYSCALL prog to create ksock */
-> > +	if (!ksock_setup_ctx(skel))
-> > +		goto fail;
-> > +
-> > +	/* Step 2: Run the send SYSCALL prog */
-> > +	pfd = bpf_program__fd(skel->progs.ksock_send);
-> > +	if (!ASSERT_OK_FD(pfd, "ksock_send fd"))
-> > +		goto fail;
-> 
-> [Severity: Low]
-> This isn't a bug, but similarly to the check in ksock_setup_ctx, is this
-> ASSERT_OK_FD necessary since the skeleton is already successfully loaded?
 
-Dito.
+The difference is that the timeout used to be 60 seconds, or whatever the
+default driver timeout is set to. If the BIOS enables the hardware timeout
+and sets it to <n> minutes, your patch changes that to <n> seconds. That
+is unexpected.
 
-> 
-> > +
-> > +	err = bpf_prog_test_run_opts(pfd, &opts);
-> > +	if (!ASSERT_OK(err, "ksock_send run"))
-> > +		goto fail;
-> 
-> [ ... ]
-> 
-> > diff --git a/tools/testing/selftests/bpf/progs/ksock_common.h b/tools/testing/selftests/bpf/progs/ksock_common.h
-> > new file mode 100644
-> > index 0000000000000..87d92372d28dc
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/progs/ksock_common.h
-> 
-> [ ... ]
-> 
-> > +static inline int ksock_ctx_insert(struct bpf_ksock *ctx)
-> > +{
-> > +	struct __ksock_ctx_value local, *v;
-> > +	struct bpf_ksock *old;
-> > +	u32 key = 0;
-> > +	int err;
-> > +
-> > +	local.ctx = NULL;
-> > +	err = bpf_map_update_elem(&__ksock_ctx_map, &key, &local, 0);
-> 
-> [Severity: Medium]
-> Will this unconditional bpf_map_update_elem call defeat the intended
-> collision detection logic below?
-> 
-> Because __ksock_ctx_map is a BPF_MAP_TYPE_ARRAY map, calling
-> bpf_map_update_elem with a zero-initialized value (local.ctx = NULL)
-> will clear the existing entry and implicitly free any pre-existing kptr.
-> 
-> Consequently, the subsequent bpf_kptr_xchg will always see a NULL pointer,
-> making the if (old) check dead code and causing the function to silently
-> overwrite existing entries instead of returning -EEXIST.
-> 
-> Could the logic be adjusted to perform the lookup and exchange without
-> overwriting the element first?
+I see no reason to drop "superio_outb(cr_wdt_timeout, wdog->timeout);"
+in your patch. Keeping it would retain existing behavior. Changing that
+is unacceptable unless you provide a really good reason for it that I
+currently can not see.
 
-So this is not erasing the content since local.ctx is a kptr, so the
-feedback is kinda wrong, it will be ignored by the map_update part. It
-was copied from crypto_common.h but is kinda doing nothing so could be
-simplified to only lookup & kptr_xchg.
+Thanks,
+Guenter
 
-> 
-> > +	if (err) {
-> > +		bpf_ksock_release(ctx);
-> > +		return err;
-> > +	}
-> > +
-> > +	v = bpf_map_lookup_elem(&__ksock_ctx_map, &key);
-> > +	if (!v) {
-> > +		bpf_ksock_release(ctx);
-> > +		return -ENOENT;
-> > +	}
-> > +
-> > +	old = bpf_kptr_xchg(&v->ctx, ctx);
-> > +	if (old) {
-> > +		bpf_ksock_release(old);
-> > +		return -EEXIST;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260706093525.13030-1-mahe.tardy@gmail.com?part=3
+
+	
