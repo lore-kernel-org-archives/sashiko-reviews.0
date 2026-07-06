@@ -1,125 +1,131 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E118B41F7F1
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 11:48:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5555A41DEE2
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 11:48:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783338506; cv=none; b=bHAsHdeokYZFGqsFg6VeRFEAhGy1+mlXu5QpryksTS80uSI9b3UU7Acz6z5LUT7Sp2ISj34pI734Jd67OD1HnhsR649i8WxEj7GYymCKt4ezRBxg1w73vQhLnRitsSmZ2E9uzHw3yCu4Yk+jVAs5wOV5EYg+XLT0LpP3w6d3tQ4=
+	t=1783338529; cv=none; b=fxTMqNnDDqcADBYeg2qxXLB6K/PA5klnhk1TQ1l7Xerzw7EcWvEa0rNt9qwLc3SyPkPLaDHS6oRoGCvkATXKGqo3Zsic6EO8TsP6YOlaWmHM1sNFnizdFCnfn23K+qF6lNAsFEObuLKF3B1jul5McfhMN0jUdiXD7Xd87q0SCu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783338506; c=relaxed/simple;
-	bh=n/lG3qzg0MPPy1aGOf10o7DExKighZO5qmL6KdofjgY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=UHecBbBU4Pp9L9ZwSzRyxRzXKHP3B/F9hlPf5Wn0hF/ql4qm+uCBPl8l4BtN/ThCab7QQf9EvM7O9HBKpMdJHgeHOI/amZ1blVOl7feLbpsLhZoBRznpm2CoUskWVrbiIvIcijcLBbHHQH0xw2p7qsryKax1lXDofhfl+VTriQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=CvkU0Ulc; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1783338529; c=relaxed/simple;
+	bh=fe0Rz8nHynEhV/ZZ3U6JZCje8MBT7WJE6lk7gAhdFl8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Nif+G5ieduHDgsI7cnRutxM4NgyZttQDQ2sEZFamH6bZ0cwAp99AOY5kFyvNjuTzUIJBFeflZgJlKOZQNTJJvgufG9kVTE7uVt7yXRTMOxlNwpHRwvNOdZHZ4c1rWPNnuR4DcyWK+YpIveOi7eOxPwLTZ/CX6EkBxXg7AKhhQDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=j2jF2DhK; arc=none smtp.client-ip=91.218.175.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="CvkU0Ulc"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 5367B4E40CB2;
-	Mon,  6 Jul 2026 11:48:22 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 136D5601A2;
-	Mon,  6 Jul 2026 11:48:22 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id F27C611BB8527;
-	Mon,  6 Jul 2026 13:48:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783338501; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=PyCq2ncTUHEtBIYDeTqodjqwkDtnovJSYWEYcy5UAyA=;
-	b=CvkU0Ulc8o+E7GgCG8VC9u2KQ276jy1ufYo/2w/nTu0yR085z40CBPYOFbZV4rQ8wnB1XO
-	N7ylgEwvV3Kw41sf8P7Akrxbi8jnhpGOdVKhPv4tTyJGk+pJuU3/N3PbZ922jeP33r6x3w
-	n1UGUp16JMcepAM8n6yWpwbMWF8vhBBvYkHRcTQLujAscXAE3iRciXnCcnjMJQSXz9Q6fu
-	D6ZfkGu7CZ8Ajgg55gt0tgAbeB3Hj4IjnpXGeihTW4QW16sRnv5xxOv1E+7arpWJP+lAQV
-	5iEXK1xtKxFEoFcXtlMcuinlMshs0y8piku028197gT9XxiQPtQYK5P3+OM7aw==
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="j2jF2DhK"
+X-Gm-Message-State: AOJu0YzXL2vj1ABzXowKCADatuKfkZEGdcnhAUmK+DbBvFbdfYrIIE/t
+	jIZxVPyM4crcXlaBvnYWQYpEegcxic1UVAP0Mo0VF4Gym3MfPhIKsmWObu1gww/4X8A5ASV6P5/
+	JloRLMM4V0QKuuxGTHMS0PrSu+vWFxqM2uFICdvIS
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783338525;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=olPZygbLOizmTmPPUlNgqgJKSwcw8Tk5/Z/jDgCDUwQ=;
+	b=j2jF2DhKhazC8gJkJmxCECwVrenwpRbqN4gTy/+q8DQVPoclOKFWPIh/NA2cZdMss5T0X4
+	lktG7TABKoXDiF6yIMNCddz8YK+sOPaig1AdoTda+jZiIAmHteAszE7vDZK3BGDbg1LD6e
+	OYDg6lCMaiUy1eYODlas7KZ746vEiEg=
+X-Received: by 2002:a05:622a:b:b0:51c:ca9:3d17 with SMTP id
+ d75a77b69052e-51c4c0c00demr17821591cf.12.1783338522321; Mon, 06 Jul 2026
+ 04:48:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260706095927.560795-1-fuad.tabba@linux.dev> <20260706095927.560795-3-fuad.tabba@linux.dev>
+ <20260706102503.63AD01F000E9@smtp.kernel.org>
+In-Reply-To: <20260706102503.63AD01F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Mon, 6 Jul 2026 12:48:04 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTxaG6_CWU0OQkmsiaDKJjdaCVokwh42msKbJoHhK2n2Vg@mail.gmail.com>
+X-Gm-Features: AVVi8Cfj4xOt_3SERBm8sssTrFAt_HqnKSgE08h1ZpdRK28j9UUStRw5TIp64n4
+Message-ID: <CA+EHjTxaG6_CWU0OQkmsiaDKJjdaCVokwh42msKbJoHhK2n2Vg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/8] KVM: arm64: Make vcpu_{read,write}_sys_reg
+ available to HYP code
+To: sashiko-reviews@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 06 Jul 2026 13:48:20 +0200
-Message-Id: <DJRGQL29OXDY.30JR30BSDIRY8@bootlin.com>
-From: "Paul Louvel" <paul.louvel@bootlin.com>
-To: <sashiko-reviews@lists.linux.dev>, "Paul Louvel"
- <paul.louvel@bootlin.com>
-Cc: <robh@kernel.org>, <devicetree@vger.kernel.org>, <conor+dt@kernel.org>
-Subject: Re: [PATCH 02/12] dt-bindings: soc: fsl: qe: Set #interrupt-cells
- to 2 to support interrupt type encoding
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260703-qe-pic-gpios-v1-0-6c3e706e27dc@bootlin.com>
- <20260703-qe-pic-gpios-v1-2-6c3e706e27dc@bootlin.com>
- <20260703134002.C5DF51F000E9@smtp.kernel.org>
-In-Reply-To: <20260703134002.C5DF51F000E9@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+X-Migadu-Flow: FLOW_OUT
 
-On Fri Jul 3, 2026 at 3:40 PM CEST, sashiko-bot wrote:
+On Mon, 6 Jul 2026 at 11:25, <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] Schema unconditionally changes `#interrupt-cells` from 1 to 2,=
- breaking backward compatibility with existing single-cell device trees.
+>
+> Pre-existing issues:
+> - [High] `kvm_vcpu_read_sys_reg()` and `kvm_vcpu_write_sys_reg()` are fun=
+damentally unsafe for nVHE EL2 emulation (e.g., during `fixup_guest_exit`),=
+ despite the commit claiming they are "valid in any context".
+
+    https://lore.kernel.org/all/20260612102347.914994-1-tabba@google.com/
+
+/fuad
+
 > --
 >
-> commit ea9fdfe75d38976a589a83706c16b469e2657dbe
-> Author: Paul Louvel <paul.louvel@bootlin.com>
+> commit 61ee8756572b776a9170ae13bb7ede91ed5afb18
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
 >
-> dt-bindings: soc: fsl: qe: Set #interrupt-cells to 2 to support interrupt=
- type encoding
+> KVM: arm64: Make vcpu_{read,write}_sys_reg available to HYP code
 >
-> This commit updates the #interrupt-cells property constraint in the FSL Q=
-E
-> ports interrupt controller binding to support interrupt type encoding. It
-> changes the required value from 1 to 2.
+> This commit moves the wrappers for vcpu_read_sys_reg and vcpu_write_sys_r=
+eg
+> from exception.c to kvm_emulate.h as kvm_vcpu_read_sys_reg and
+> kvm_vcpu_write_sys_reg. This makes them available to all hyp code so that
+> emulation logic can be shared at EL2.
 >
->> diff --git a/Documentation/devicetree/bindings/interrupt-controller/fsl,=
-qe-ports-ic.yaml b/Documentation/devicetree/bindings/interrupt-controller/f=
-sl,qe-ports-ic.yaml
->> index 2b8e7b9c6d7a4..2b7c6b4f03892 100644
->> --- a/Documentation/devicetree/bindings/interrupt-controller/fsl,qe-port=
-s-ic.yaml
->> +++ b/Documentation/devicetree/bindings/interrupt-controller/fsl,qe-port=
-s-ic.yaml
->> @@ -23,7 +23,7 @@ properties:
->>      const: 0
->> =20
->>    '#interrupt-cells':
->> -    const: 1
->> +    const: 2
+> > diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/=
+asm/kvm_emulate.h
+> > index 5bf3d7e1d92c7..80b30fead3d16 100644
+> > --- a/arch/arm64/include/asm/kvm_emulate.h
+> > +++ b/arch/arm64/include/asm/kvm_emulate.h
+> > @@ -506,6 +506,22 @@ static inline unsigned long kvm_vcpu_get_mpidr_aff=
+(struct kvm_vcpu *vcpu)
+> >       return __vcpu_sys_reg(vcpu, MPIDR_EL1) & MPIDR_HWID_BITMASK;
+> >  }
+> >
+> > +static inline u64 kvm_vcpu_read_sys_reg(const struct kvm_vcpu *vcpu, i=
+nt reg)
+> > +{
+> > +     if (has_vhe())
+> > +             return vcpu_read_sys_reg(vcpu, reg);
+> > +
+> > +     return __vcpu_sys_reg(vcpu, reg);
+> > +}
 >
-> [Severity: Medium]
-> Does this unconditional change to const: 2 break backward compatibility w=
-ith
-> existing device trees?
-
-Yes, unfortunatly.
-An '#interrupt-cells' value of 1 was a mistake in the first place, because =
-the
-interrupt controller supports multiple interrupt types.
-
+> [Severity: High]
+> This is a pre-existing issue, but are these accessors actually safe for n=
+VHE
+> EL2 emulation? The commit message claims they are valid in any context, b=
+ut
+> during early exit handling (like fixup_guest_exit), the live guest state =
+is
+> still in hardware registers.
 >
-> Device tree bindings are generally considered ABI. By removing const: 1,
-> schema validation (dtbs_check) will fail for any existing device tree blo=
-bs
-> that use #interrupt-cells =3D <1>.
+> Because has_vhe() evaluates to false in nVHE EL2, kvm_vcpu_read_sys_reg()=
+ falls
+> back to reading the memory context via __vcpu_sys_reg(). This means it re=
+ads
+> stale state until __sysreg_save_state_nvhe() runs.
 >
-> Should this be updated to allow both values (e.g., enum: [1, 2]) to safel=
+> For example, when an exception is injected into a protected guest via
+> inject_sync64(), enter_exception64() uses this helper to read SCTLR_EL1 a=
+nd
+> computes the new PSTATE from it. This reads a stale SCTLR_EL1, potentiall=
 y
-> expand the cell counts while maintaining compatibility with older device
-> trees?
-
-Should this advice be taken into account ?
-
-Thanks,
-Paul.
-
-
-
-
---=20
-Paul Louvel, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
+> corrupting the injected PSTATE.SPAN and PSTATE.SSBS bits.
+>
+> Could exposing these as generic helpers lead to more traps where EL2 code
+> accidentally reads stale memory-backed sysregs before they are synced?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706095927.56=
+0795-1-fuad.tabba@linux.dev?part=3D2
