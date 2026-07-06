@@ -1,191 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9693DDB17
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 13:09:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BDF374A08
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 13:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783343384; cv=none; b=dO4iEDxXuAgJQ8HPWgk3JVN+0+zLLFFgqcGJUvi9+6Ff7RQ2GtNzEwdIUSSoI1Js16lQ+/1kzsj33vydioKtiIBVuFYZIgnDyQUEqOVKA93IyS7BVVHyWKF6KjdJ3ccLADLyu+Cp41yIdrIwKrkVNtyhOMTysHl2cDWF3kKzB4g=
+	t=1783344952; cv=none; b=odqSy+C2/N+0M6FnExmIC8GAFcmhFCwx4V4C+vz9RB26U+xqK9336S0DueXmlG/O8+Zuu5wOoUHtfxYInXwZgKZ89+OmSGagYOvDoNwLeGuF8sbK1VxnODDfpVWfu5n61pA7pn2AXexTXXc8QhmMvEf6fVfgzGll2kO0GDbmBUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783343384; c=relaxed/simple;
-	bh=m6vNbfcTFMDJTCUe+imERKqcuZmnxBqvDavG7Tef+eM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Wx8RuDTKConfpGAaNQlCLbqq+UKkG5LgfnVer3XYDvbbrbJIXIigTyrWm3gTrrB4Zbo/fwUc01jKgKsfgihp/t0mTUXBTcTkZ1677SAUR17ePWCsUg4FwsEn6+GlMELwekIdyLSPRvQVK/LmVv6H/p2SvxSfPC0znZu2zILc78Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HuUNI0AC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783344952; c=relaxed/simple;
+	bh=eG2g92HpxADpaewQr6kuNzXlZQd2Ti0PWMpSl/JUR74=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hkGBjOft8TgayMfRmrl2evVVIytQtkghWB6mMbTMBFJoN8wsQktAiGNcv9/YQ5atKZFHIQ5Sr0kE03N5rx9W8+P3IM4YNWJEjsLslcmH3KrSHrIhRjz77m/HIUltgjkUBm2AROgRenkSaDBTAEWwnxbTYAUy1YnKremPy82bAjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=cpneA1zT; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HuUNI0AC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AA21F00A3E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 13:09:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783343382;
-	bh=oSBhOhh94uibX703mDFvpSfIFzkXKtVz7iv2dM/6XNU=;
-	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc;
-	b=HuUNI0ACGV0hFdp9b5p71SvVJUhi5QvaIx0aoDsqt/lkBppKO9pgYOLNy3gW8+WNs
-	 7exgxFXSCKSbUgguasUelySxa2qGviIb7b0d6Se5Ck92Ved/AX1cNgdeJ3TlX7Z51+
-	 mruAPAcmjCBDIbXoYu8jIoFndCZGcRj1ri0bZxA66TOv7uW0TfzBkQP7eRfOlJ+Nfq
-	 kN7zALCWQ5r0yAghI0h1kzDs+lb3P1mTUOkUUy9Iwv1ZHp0ZPyGefUjO5rgAU55PWO
-	 uN3/fLRLse/ehFcKC64EpLPraydk78cci4cPSJGnUyrxpMFRnuOoabnz8YeQirDdmM
-	 CvnmyEUWqJAhQ==
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5aebfa21c62so3559404e87.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 06:09:42 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rp+FLKuAnMu7B4F9PZOARW050Ny/8Ms4HB72oOw33v4a/4AzJCizy38z88OsTfQVhpzsLAgelTN5lVl8v/OiOM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwiLsz4kT8+ObaOTUFsZ7yKKTWXmHsraHA8TjBETYJbOCRP1yBX
-	YRVVCLfYmicwzvMzjqA6iqUzwfoypbR5FFo/F9hvDoBoMlL+T1CIHOEUvlKrFCAp1ZUYsB5R/Sa
-	m2E5vA++6Ylla6nzkQEVshY/n3eGuFXc=
-X-Received: by 2002:a05:6512:61a:b0:5ae:9b04:dbb0 with SMTP id
- 2adb3069b0e04-5b007bbcfffmr78794e87.0.1783343381196; Mon, 06 Jul 2026
- 06:09:41 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="cpneA1zT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1783344950;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=N3Anvk5g2W6Ax5Xx12MjDPwqLCiF744jyWfZgTib1bI=;
+	b=cpneA1zTjgKmqlKwXIspHqmJje6nUwXMarxD7FIaImxeWHu0yHMhBax6MG+4mwMORzXdzf
+	w3HEOVCENQJC0EQrZ9mcXn3V6YNp4Rhe2hN5KvSvWlBrPLBuz0x0eMHUCK/GhgGgmb+hlW
+	r5wEAf1sRNpvF6Bbscy7jwT5lZ6nNqM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-619-BctAehJfMPW3sFSrgTEJPg-1; Mon, 06 Jul 2026 09:35:44 -0400
+X-MC-Unique: BctAehJfMPW3sFSrgTEJPg-1
+X-Mimecast-MFC-AGG-ID: BctAehJfMPW3sFSrgTEJPg_1783344943
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-493c55d5ce5so13597855e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 06:35:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783344943; x=1783949743;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=N3Anvk5g2W6Ax5Xx12MjDPwqLCiF744jyWfZgTib1bI=;
+        b=IRd0/D+utPIvHEsbLeRlDCxBJT+T8NpmeaptGpJwekSp/4qr/XpIkUOzWfDq5Yr/rd
+         AX3eRbKp3GIEJaN9YEsfFkXFrNZSqULV5UgurisrLsz4BsNvMHV4AWb6PkW5GzjRmM3m
+         32bpTGQs1gVQgVfz6e/IegGP7zI8o2evs3t76SCWkh9YW8AX3dluZHEX0dWu22kH2nm4
+         LLUPJPchP6V6+R7ghxSdOSKvpZF+NQHnspGE+M0Yps9ohxSBFRJ9uhqloQewew+lntmc
+         I+AumaoVuApvcq+MhDhjIIM5gS8CEgMryexqA8q2vIerQqdCaf4Dlv+WBQKWq7e7tg1+
+         KqWw==
+X-Gm-Message-State: AOJu0YzZiuHs6xUp9l045di8/lDbfSGfFtoarkJMZ2MzK0yXQ0t0Tb9g
+	xxJeqpG2/gLNp9s4bNWTKI9ugS3JNgZEG1pCLc2HUm5i55LBmgwE+wSm0bfNC5IUnDvP68Iqtn9
+	3uE4hFa8rSrXobFCbAQaJ5Gk64gtrr03FvkDa951Db+de+nWRaRWd4dNxK27dE/xUf/A/VQ==
+X-Gm-Gg: AfdE7cl8bTfDMByNJ8THeU0RA6wt8vuIpf1lcPSWXuE4rLlJAXOsHJB8t0S1urYz8Qd
+	OxOVbKJZM67VrXcfc77pVQht2XVxu4THx/i2x/AxFjKmqVcuboLnnkioSUQmMI96m4qMozWOYJb
+	O4f8xYKfam6JWAtX6Bt6wnJ8sVNbO0SKj2LlWH3tiKK0xn/+Lk++jNaFswKGyUY7AT1QtUquVdX
+	1BwliPnj8s0rW7io/opk1TfMZVr+htF4BOaUDfDq0/SIu+/3+w43WVluyOs+0zv4F+/7+jUNfuU
+	JUvHq8ZMqXnAv4CBm1T7Sffej6YLWWRBBCWnJCEgh9XihDwdsCy4QLtTDUlfFvB7Y/fOP1kUf78
+	cjDllJaqToVN1vO5cBoiaLXr4d+PWWAL2s9//qc+5DA3cM7jq+kA+sP9DnBKf2H6tlGESCfJsmu
+	k090BFgeV0g69V
+X-Received: by 2002:a05:600c:4f87:b0:490:be14:bfda with SMTP id 5b1f17b1804b1-493df17fcb9mr3435235e9.6.1783344943162;
+        Mon, 06 Jul 2026 06:35:43 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f87:b0:490:be14:bfda with SMTP id 5b1f17b1804b1-493df17fcb9mr3434775e9.6.1783344942712;
+        Mon, 06 Jul 2026 06:35:42 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:5521:6b10:58fd:68f:7756:389d? ([2a0d:3344:5521:6b10:58fd:68f:7756:389d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493cce11497sm308056635e9.12.2026.07.06.06.35.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jul 2026 06:35:42 -0700 (PDT)
+Message-ID: <41d0e6d6-f1fc-425e-a122-b0433a925a3d@redhat.com>
+Date: Mon, 6 Jul 2026 15:35:40 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260706-a733-rtc-v4-0-f330728db3d3@baylibre.com>
- <20260706-a733-rtc-v4-6-f330728db3d3@baylibre.com> <20260706100635.E5DC61F000E9@smtp.kernel.org>
- <1jv7asguqu.fsf@starbuckisacylon.baylibre.com>
-In-Reply-To: <1jv7asguqu.fsf@starbuckisacylon.baylibre.com>
-Reply-To: wens@kernel.org
-From: Chen-Yu Tsai <wens@kernel.org>
-Date: Mon, 6 Jul 2026 21:09:29 +0800
-X-Gmail-Original-Message-ID: <CAGb2v67zgADhe+PG4UJke0r-1eQrXKhZ9PbqWfY9JNZ8cBxMeA@mail.gmail.com>
-X-Gm-Features: AVVi8CfXtsQWXmbgCdreOulPhQzwv9AjubtuzL3ZucIy6oiHmmXq6hOpzzZI_Bk
-Message-ID: <CAGb2v67zgADhe+PG4UJke0r-1eQrXKhZ9PbqWfY9JNZ8cBxMeA@mail.gmail.com>
-Subject: Re: [PATCH v4 6/9] clk: sunxi-ng: div: add read-only operation support
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, 
-	conor+dt@kernel.org, robh@kernel.org, linux-rtc@vger.kernel.org, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, devicetree@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v9 6/6] riscv: dts: eswin:
+ eic7700-hifive-premier-p550: enable Ethernet controller
+To: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>,
+ Andrew Lunn <andrew@lunn.ch>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org, Min Lin <linmin@eswincomputing.com>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>
+References: <20260630063123.1118-1-lizhi2@eswincomputing.com>
+ <20260630063445.1226-1-lizhi2@eswincomputing.com>
+ <20260701063512.9ED051F000E9@smtp.kernel.org>
+ <5de09a24.a11e.19f2207d7d2.Coremail.lizhi2@eswincomputing.com>
+ <58532b95-bb74-4d87-acae-e67b41dd7d57@lunn.ch>
+ <f21ffca.a15e.19f25abaea6.Coremail.lizhi2@eswincomputing.com>
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <f21ffca.a15e.19f25abaea6.Coremail.lizhi2@eswincomputing.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: yE-cE8MkwwgGHoYStixfC44Ltbh4L63cwBSoQgwoQrc_1783344943
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 6, 2026 at 8:36=E2=80=AFPM Jerome Brunet <jbrunet@baylibre.com>=
- wrote:
->
-> On lun. 06 juil. 2026 at 10:06, sashiko-bot@kernel.org wrote:
->
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] Inconsistent rate calculation between `determine_rate` and `=
-recalc_rate` due to division order.
-> > --
-> >
-> > commit 39f872462c04ad724c3624b152234160de56a47e
-> > Author: Jerome Brunet <jbrunet@baylibre.com>
-> >
-> > clk: sunxi-ng: div: add read-only operation support
-> >
-> > Add support for sunxi-ng read-only dividers. This will be
-> > useful to the a733 oscillator detection logic.
-> >
-> >> diff --git a/drivers/clk/sunxi-ng/ccu_div.c b/drivers/clk/sunxi-ng/ccu=
-_div.c
-> >> index 62d680ccb524b..d1c8c7baa12dc 100644
-> >> --- a/drivers/clk/sunxi-ng/ccu_div.c
-> >> +++ b/drivers/clk/sunxi-ng/ccu_div.c
-> > [ ... ]
-> >> @@ -84,6 +84,36 @@ static int ccu_div_determine_rate(struct clk_hw *hw=
-,
-> >>                                           req, ccu_div_determine_rate_=
-helper, cd);
-> >>  }
-> >>
-> >> +static int ccu_rodiv_determine_rate(struct clk_hw *hw,
-> >> +                                struct clk_rate_request *req)
-> >> +{
-> >> +    struct ccu_div *cd =3D hw_to_ccu_div(hw);
-> >> +    unsigned long val;
-> >> +    u32 reg;
-> >> +    int ret;
-> >> +
-> >> +    reg =3D readl(cd->common.base + cd->common.reg);
-> >> +    val =3D reg >> cd->div.shift;
-> >> +    val &=3D (1 << cd->div.width) - 1;
-> >> +
-> >> +    req->rate =3D ccu_mux_helper_unapply_prediv(&cd->common, &cd->mux=
-, -1,
-> >> +                                              req->rate);
-> >> +
-> >> +    if (cd->common.features & CCU_FEATURE_FIXED_POSTDIV)
-> >> +            req->rate *=3D cd->fixed_post_div;
-> >> +
-> >> +    ret =3D divider_ro_determine_rate(hw, req, cd->div.table,
-> >> +                                    cd->div.width, cd->div.flags, val=
-);
-> >> +
-> >> +    if (cd->common.features & CCU_FEATURE_FIXED_POSTDIV)
-> >> +            req->rate /=3D cd->fixed_post_div;
-> >> +
-> >> +    req->rate =3D ccu_mux_helper_apply_prediv(&cd->common, &cd->mux, =
--1,
-> >> +                                            req->rate);
-> >
-> > [Severity: Medium]
-> > Will this division order cause inconsistent rate calculations compared =
-to
-> > ccu_div_recalc_rate()?
-> >
-> > The divider_ro_determine_rate() helper applies DIV_ROUND_UP() to the un=
-adjusted
-> > parent rate, and then this function divides that result by fixed_post_d=
-iv and
-> > prediv.
-> >
-> > However, ccu_div_recalc_rate() applies prediv to the parent rate first,=
- then
-> > calculates the divider rate, and finally divides by fixed_post_div.
-> >
-> > Since the Common Clock Framework requires determine_rate and recalc_rat=
-e to be
-> > mathematically consistent, could this discrepancy cause rate mismatches=
- or
-> > warnings for clocks using a pre-divider or fixed post-divider?
->
-> I think the RO side is correct and RW one is not.
->
-> The RO part correctly walk back the tree by un-applying the predivider
-> so, whatever CCF does with the parent rate value will be correct.
->
-> The RW part query the parent rate then applies the prediv. This
-> will be thrown away when/if clk_divider_bestdiv() calls
-> clk_hw_round_rate() on the parent. If that happens, the subsequent
-> un-apply of the prediv would make the matter even worse. So (if I
-> understand all this correctly) this case does not happen yet, otherwise
-> we would have noticed, and it can be fixed separately.
+On 7/3/26 3:50 AM, 李志 wrote:
+>> -----Original Messages-----
+>> From: "Andrew Lunn" <andrew@lunn.ch>
+>> Send time:Thursday, 02/07/2026 21:22:34
+>> To: 李志 <lizhi2@eswincomputing.com>
+>> Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, "Min Lin" <linmin@eswincomputing.com>
+>> Subject: Re: Re: [PATCH net-next v9 6/6] riscv: dts: eswin: eic7700-hifive-premier-p550: enable Ethernet controller
+>>
+>>> Hi Andrew,
+>>>
+>>> One question before I prepare the next revision.
+>>>
+>>> As discussed previously, the DTS patch was included only to provide the overall
+>>> Ethernet design context during the review of the binding and driver patches:
+>>>
+>>> https://lore.kernel.org/lkml/64bf6b40-b947-4ffa-8d48-4d6341931327@lunn.ch/
+>>>
+>>> For the next revision, would it be acceptable to drop the DTS patch from this
+>>> series and post only the binding and driver patches? The complete DTS
+>>> enablement is planned to be submitted later as a separate series after the
+>>> binding and driver have been merged.
+>>
+>> What normally happens is that I give an Acked-by: or a Reviewed-by:
+>> for the DT patch, and you submit it for merging via the DT Maintainer.
+>> Everything then meets up in linux-next.
+>>
+>> Why do you need to do this later? Why not now?
+>>
+> 
+> There is an another seperate DT patch series
+> [https://lore.kernel.org/all/20260615122016.1110206-1-pinkesh.vaghela@einfochips.com/]
+> which is under review.
+> It also introduces DT nodes for reset, clock, pinctrl, HSP power domain.
+> 
+> Therefore, our planned steps are as follows:
+> 1. In the next net-next v10​ patch series, drop the DTS patches, and submit only
+>    the bindings and driver.
+> 2. Wait for Pinkesh’s DT patch series​ to be merged.
+> 3. Once the HSPCRG patch series​
+>    [https://lore.kernel.org/all/20260605060730.1605-1-dongxuyang@eswincomputing.com/]
+>    is merged, submit a new DT patch series​ to extend ESWIN EIC7700 SoC support​
+>    for all HSP modules—including USB, eMMC, SD, and Ethernet, since they are all
+>    under the HSP bus node eventhough ethernet doese not depend on HSPCRG patch.
 
-Looking at the history, ccu_div_determine_rate_helper() used to be
-ccu_div_round_rate(), so it wouldn't have tried all the parents. Looks
-like I missed this when looking at the conversion patches back in
-January.
+In v10 please include some actual description of the series, beyond the
+changelog.
 
-The fix is easy though: just reimplement divider_round_rate_parent().
-Somehow we did this already for the multiplier but not the divider.
+Thanks,
 
-BTW, would it make sense to implement ccu_rodiv_determine_rate() using
-ccu_mux_helper_determine_rate() as well? That would make both RW and RW
-consistent, but it would mean another rewrite for you ...
+Paolo
 
-> Side Note: I've not followed the sunxi history behind all those
-> prediv/postdiv but I find them a bit confusing. It seems like inserting
-> some fixed factor clocks in the clock trees would accomplish the same
-> thing while simplifying mux/divider quite a lot by droping these quirks ?
-
-I think the whole idea was that we didn't want all those extra intermediate
-clocks. If you look at drivers/clk/sunxi/ you can see that we came from a
-one device node per clock design, which was messy and bloated. The second
-try ended up being the "one clock per useful hardware clock unit" design
-you see now..
-
-And we somehow tied the list of clks to the exported list of clks,
-which probably made it worse for adding intermediates.
-
-> Side Note #2: I feel that while sashiko is pointing out valid things but =
-we
-> are slowly getting off topic and down the rabbit hole with it ...
-
-Yeah. That's the downside of Sashiko.
-
-
-Thanks
-ChenYu
