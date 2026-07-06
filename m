@@ -1,147 +1,168 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C31548C3EE
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 09:15:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783329340; cv=none; b=ZoHWjAKU+thtuuaj0xd3jsUiwgc/riEi/r0JPD4t7ix7tdZf1RAnAQOJTvn9DjhGY9FfpU8RTArEGC5hRkD5ZZfkTtKnJ4uaT6YkQScs1uzSQu8pO2kpqsZosYuDZeAEh0h6DXrap2ldJpQJzegOanMnbapiglfnqLFWeq2Ts7w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783329340; c=relaxed/simple;
-	bh=9/X14tQGf3zNA7Ckz8fvg3U+4q83y3x0pkyRCiBj9xw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XpmRlmyU2WRUNABNAw5A8fpJQMadp46i5Lgpnec4KakDla7oqCZNZqetJwCYNu8Sq/9ibMgsjtwQp368bvu6H6UIIUfom1tpU1RfeVTI3rxhj4EJQdcctCUsAgL8jJbWKrRRigabeLD5OzdIs2D4+esB8JZsdeni92gy/+fnIos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nwIBNPxn; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E663A0B38
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 09:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783331115; cv=pass; b=J/MCbToajnwMeci8sWRHKgozT/4pRR3ZkRfSer4Ao9l2CgrLhUOaJzS9iSHhXVrZ/RmYBVe+F9oyyxPAgpna9icJgX9AEnQYpkgP8i+6fwc6VoxsJHkJCq8BduafWwf9M+9hfoGM5UH1ksRtzZcYe57kN6vMcbf+5dOIreMUs/4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783331115; c=relaxed/simple;
+	bh=1y/VyBqChORatgg7mbBlbrll73whp3RgKHcndf4sJ4Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NoD/daxb+sxN3QGWYGy2dwQR+EggneNQICq8wzbEFECJW8rLgVGGYIR/5bGSsUBwHaHvWUgw7O3DI9JLhMqZjWmp0hRZxIfnNtMsXslgi3y3uXEgAtvrZEOo4UEaQhpf0phx/KzEAEY1eT7Gp16/FOjuD9N2GmYOc7f3Am5h6YU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=szK0gWw4; arc=pass smtp.client-ip=74.125.224.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nwIBNPxn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783329334; x=1814865334;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9/X14tQGf3zNA7Ckz8fvg3U+4q83y3x0pkyRCiBj9xw=;
-  b=nwIBNPxnhl/g/z2oxbNLxwj+n5emxHfwO2adFU+lTPma5hvbu5oakRt/
-   6bfWVtcrcL8mrrclyd4Nwba48tTNQiGJrvnAZF1wGskHP/jkIWD8j1av/
-   2ZqSM1B/JcyMJ2dRVMCLukL3be3/iM8N+mlFFV7TMmKk0SVloTM3tgofC
-   q+IWLhl/f3wtI9rdHngfu0LeMreAVb+VzbA7hucWaYLXTTgBPxSR51Yog
-   Ch/xqOb1u4XiN3lSX1R+UTgCanmsDZUa51MfnRpJBR+cXb5f+MYrI5S1V
-   6Qi+LYJFuX5LxGMx+69zuQMajxQxbNE6B0Tcz7rZkhGdPc1Vvy/5FX4fL
-   A==;
-X-CSE-ConnectionGUID: CntIQLVnSyeBl3xf11TZCg==
-X-CSE-MsgGUID: 0ADKfX0hTGWHUYw4Ip3zIQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="109502008"
-X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
-   d="scan'208";a="109502008"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 02:15:29 -0700
-X-CSE-ConnectionGUID: gAocSpFoQRCCoheSYcQuZA==
-X-CSE-MsgGUID: oOwqtLBCSJ2ZqGdh+8JoXw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
-   d="scan'208";a="253776175"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 02:15:29 -0700
-Message-ID: <242e2ce9-6f77-46ee-b2b4-fa356c1854ec@linux.intel.com>
-Date: Mon, 6 Jul 2026 17:15:26 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="szK0gWw4"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-666275a685eso3819430d50.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 02:45:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783331110; cv=none;
+        d=google.com; s=arc-20260327;
+        b=jYAJNBU1Cwsa7MENHvBZV7H8NaYcgs+bqdXLEplI/xgzmVIJVbfoX8HUizHhalaFS5
+         UboqjSnAyHKF/OtvksoJx9xk5fu5TFiWngp9RIj2pIXNOuUSFc5U6cspBcARjAfeMJSf
+         FxPU1fmQ6qWVxcDnIhkDBzcISphQrlHAVOUA3NUUXkJbwmefS98Co+0YZY27D6nmd9Q2
+         06Ldgr9D05HhQ2qXKLaUisMvYFuEveziLpfweopSA6TfT4+b5FMEhYYJ13DNRUOUlcDH
+         XS/KZfiLEJ5XYH9XQSfx2MCHSo1WxBpiKAlegX5EuRT/T7UoOt4gxxOexB74woZaMtUk
+         n43g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1H5aWjkuNw5NurkeFzN9mtbKO2yqm1ouDy30sVuvqjg=;
+        fh=l4STnmXMbZ7+SgLMaMr2biBIFpXPSwAQ6S5KWSNWQnA=;
+        b=WoXXk4uHnMKQJ5OxP2/5JqW+3mX1QtCgvrOiQ0MjlXCjmayd94F8Cw6MuklOOeKAKO
+         by51JRcMNpAOc6sBq+xJGwHaXaQSam8syxYOGgilbsTfmq7XhLvqnwdftx6aBZMvTO8a
+         nQ5xmB+oSXbiBmnPSIsRmziShQc/ojHaAP8m21AuGYigRJDKB1p67LQ+Ll4NHEgugZq2
+         mPx4II2URsce8E1jMyJxJ1k05tRZV+RMiqZk7oo5i3eCm/jGHO99/GhJKhtqVmNPzEqx
+         wpgUE2is3/SQkaZgvpQuYEP0tNbI/2yaQt/6FQqaaEqweeFUmH0CSYWTzlmv3oVkfZs4
+         bdOA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783331110; x=1783935910; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1H5aWjkuNw5NurkeFzN9mtbKO2yqm1ouDy30sVuvqjg=;
+        b=szK0gWw47yy6jWOrUlyomoczLgFlcmvyi9rHgsVQh/qO5szqeEQiSZ0ptTBIqEzkaH
+         ekbnvEhRutzxaTirpQsMfJ2SC+fJMIkavPqIT23nUIE+kLNRvSsFRewUS+wQGbzBNevz
+         YYCkc5qH1s1TM/2o+MaRifxZ9ZAGE15Zd9JEE+VmLrapCQDJCaZGJvLzO6mjptACbVLf
+         xCQFyZB9go8uqBM99wS1ylFl0rcZ/3gcNxMFhfFd1IWeF8cwYkJBfA5kUoxoVOkrFW+d
+         xSG5CLsg0/mG7IISrSYM88RE9r20jluaYt6fjMPiI0yn0FS4sAOUfE4FPbneVvmzh8FD
+         mEOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783331110; x=1783935910;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1H5aWjkuNw5NurkeFzN9mtbKO2yqm1ouDy30sVuvqjg=;
+        b=n/ZLFyzZLy+IfrpOAm0c4p30JM+UxhUaneRKgwnDOlZEmwH0FHaseOZ0oYaKUgRU+H
+         TCJw6rjwf6yKt7g+BFvfSLGIB8dyusbs9adoLFW0JWRaCpErvW0N9lioykavJehL2IfY
+         pJSIAT6cQjiRTvQH0aNjO2VUVmBd0UF2xHTcbE7EbsF8YngzwSZfKZ2t6066QEpObnhi
+         nfQQzkS1Wf45dGtfpnO5ri2BT4v0ZwHtu3JJXhFoLInw7g+RbbLMwMJzKFykJenIdqaV
+         0w88xq+2rRd2gav78p/Y3TKGYhc2caA4I0CcLtuxZILdIWlxMCsDaYq4wXwdMcQ/3y7P
+         AhXA==
+X-Gm-Message-State: AOJu0YxZNbdt4EZsTVD4weJ0zH4YkwTYhym6M/TTBA3v6rjeSY0MBjzQ
+	EC0Of1HdKY40Hvg5/gHk5gBcfQxieAsVqq6rkm04Rgs5ZzyXW5V6aHE0HmNDi+V+rk2Jt3uIPG1
+	tLRwpq4Xoqlt8JJaAHEIwmdKw9FpDklItvg==
+X-Gm-Gg: AfdE7clfijnLFmLlyENTQ8hMCxN60XbySj1JLvVaG6gVuq2oUpL2wll4cigOFv7yUUv
+	rqk0pZKfgaKgBt15wy5pobsHoM2WS7ijl3sE8OC6KvdytW5HpPK81rK6O8F3lP8CqL3bmkggH8q
+	oUX8/kN7JvHpmKMhnOb3rQDDJHt0DfEUmRuLYBl0iXD7Rwy+Xiyiu/UW6vkLQf2VsrjyzOzvv0g
+	szsrvk2ItE8ByAblRabXW/ahGb9xNiwc5CeblDeFd0g/vYoDx03Y8u71bfGiPvVmnX8x/V72g==
+X-Received: by 2002:a05:690e:1408:b0:664:e8ac:21cd with SMTP id
+ 956f58d0204a3-66652e50610mr9454023d50.25.1783331109980; Mon, 06 Jul 2026
+ 02:45:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v9 08/24] x86/fpu: Add update_fpu_state_and_flag() helper
+References: <20260705140100.1543486-1-tmaimon77@gmail.com> <20260705140100.1543486-3-tmaimon77@gmail.com>
+ <20260705140617.A71F11F000E9@smtp.kernel.org>
+In-Reply-To: <20260705140617.A71F11F000E9@smtp.kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 6 Jul 2026 12:44:58 +0300
+X-Gm-Features: AVVi8CeAp4CE3AWU4FV6AWJHL_1TkqiIDqOBExjjPuk3wMGkf3cx2S3XYhDqvP4
+Message-ID: <CAP6Zq1jT-bfHvw65EsDKdqMCLVK1Yw3dd0NaxpOCw3zx+hVMTA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] docs: watchdog: npcm: Add reset status description
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260706015439.3040804-1-dapeng1.mi@linux.intel.com>
- <20260706015439.3040804-9-dapeng1.mi@linux.intel.com>
- <20260706022254.214481F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260706022254.214481F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: robh@kernel.org, devicetree@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
 
-On 7/6/2026 10:22 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Guest FPU state leaks to host perf samples because the NMI handler incorrectly bypasses the `__task_fpstate` check when `TIF_NEED_FPU_LOAD` is 0.
+On Sun, 5 Jul 2026 at 17:06, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The watchdog driver abuses standard Watchdog UAPI constants to r=
+eport non-watchdog platform reset causes, violating the userspace ABI contr=
+act.
 > --
 >
-> commit a7b6e478b8260eaf627518f9d19e511212779fab
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> commit 72fd6c8b87d96376853f3dcd5ef1597495cf9817
+> Author: Tomer Maimon <tmaimon77@gmail.com>
 >
-> x86/fpu: Add update_fpu_state_and_flag() helper
+> docs: watchdog: npcm: Add reset status description
 >
-> This commit introduces the update_fpu_state_and_flag() helper to save user
-> FPU state and set TIF_NEED_FPU_LOAD. It also adds memory barriers in the
-> host/guest FPU state switch path to ensure fpu->__task_fpstate is observed
-> correctly when non-NULL.
+> Add documentation describing how the NPCM watchdog driver reports reset
+> causes through bootstatus on NPCM750 and NPCM845 systems.
 >
-> Link: https://lore.kernel.org/all/20251204154721.GB2619703@noisy.programming.kicks-ass.net/
+> > diff --git a/Documentation/watchdog/npcm_wdt.rst b/Documentation/watchd=
+og/npcm_wdt.rst
+> > new file mode 100644
+> > index 0000000000000..cdc45ade9e0d9
+> > --- /dev/null
+> > +++ b/Documentation/watchdog/npcm_wdt.rst
 >
->> diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
->> index 584fb9913be42..fb78e0ecd5fa8 100644
->> --- a/arch/x86/kernel/fpu/core.c
->> +++ b/arch/x86/kernel/fpu/core.c
 > [ ... ]
->> @@ -383,13 +396,15 @@ int fpu_swap_kvm_fpstate(struct fpu_guest *guest_fpu, bool enter_guest)
->>  
->>  	/* Swap fpstate */
->>  	if (enter_guest) {
->> -		fpu->__task_fpstate = cur_fps;
->> +		WRITE_ONCE(fpu->__task_fpstate, cur_fps);
->> +		barrier();
->>  		fpu->fpstate = guest_fps;
->>  		guest_fps->in_use = true;
->>  	} else {
->>  		guest_fps->in_use = false;
->>  		fpu->fpstate = fpu->__task_fpstate;
->> -		fpu->__task_fpstate = NULL;
->> +		barrier();
->> +		WRITE_ONCE(fpu->__task_fpstate, NULL);
+>
+> > +.. list-table:: Reset-cause mapping
+> > +   :header-rows: 1
+> > +
+> > +   * - Platform
+> > +     - Reset indication
+> > +     - Bootstatus flag
+> > +     - Reported meaning
+> > +   * - NPCM750 and NPCM845
+> > +     - ``PORST``
+> > +     - ``WDIOF_OVERHEAT``
+> > +     - power-on reset
+> > +   * - NPCM750 and NPCM845
+> > +     - ``CORST``
+> > +     - ``WDIOF_FANFAULT``
+> > +     - core reset
+>
 > [Severity: High]
-> Can guest FPU state leak into host perf samples during this window?
+> Is it correct to map generic Watchdog UAPI thermal and fan failure flags =
+to
+> standard platform reset indications?
 >
-> The commit message mentions that subsequent patches will use this guarantee
-> in NMI context by checking TIF_NEED_FPU_LOAD before retrieving user FPU
-> state from the saved task FPU state.
+Yes, it is something that was already discussed with the WD
+maintainer; This is why it is mentioned in the rst document
+> The generic Watchdog API defines strict semantics for its status flags.
+> For instance, WDIOF_OVERHEAT means a reset due to CPU overheat, and
+> WDIOF_FANFAULT means a fan failed. By mapping standard SoC reset causes l=
+ike
+> Power-On Reset (PORST) to WDIOF_OVERHEAT and Core Reset (CORST) to
+> WDIOF_FANFAULT, might this break the userspace ABI contract?
 >
-> However, during KVM guest execution and within the VM-exit path here,
-> TIF_NEED_FPU_LOAD is 0 because it was cleared on guest entry and is not set
-> by KVM.
+> During a normal cold boot, reading the SoC latch would unconditionally ex=
+pose
+> this to userspace via the WDIOC_GETBOOTSTATUS ioctl or sysfs. Standard
+> userspace monitoring daemons (like systemd or wdctl) reading bootstatus
+> might erroneously conclude the system suffered a thermal event or fan fai=
+lure,
+> potentially triggering unintended emergency actions or false alarms.
 >
-> If an NMI hits here before restore_fpregs_from_fpstate() restores the host
-> state, would the NMI handler bypass the fpu->__task_fpstate check because
-> TIF_NEED_FPU_LOAD is 0?
->
-> arch/x86/events/core.c:x86_pmu_update_user_xregs() {
-> 	...
-> 	if (user_mask && test_thread_flag(TIF_NEED_FPU_LOAD)) {
-> 		perf_regs = container_of(data->regs_user.regs,
-> 				 struct x86_perf_regs, regs);
-> 		fpu = x86_task_fpu(current);
-> 		/*
-> 		 * If __task_fpstate is set, it holds the right pointer,
-> 		 * otherwise fpstate will.
-> 		 */
-> 		fps = READ_ONCE(fpu->__task_fpstate);
-> 	...
-> }
->
-> If this memory check is skipped, wouldn't the NMI handler fall back to
-> reading directly from the hardware registers, which still contain the guest
-> FPU state at this point in fpu_swap_kvm_fpstate()?
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260705140100.15=
+43486-1-tmaimon77@gmail.com?part=3D2
 
-Yes, this is intended. Currently host perf has been granted the right to
-sample the guest except exclude_guest attribute is set.
+Thanks,
 
-Thanks.
-
-
->
->>  	}
->>  
->>  	cur_fps = fpu->fpstate;
+Tomer
