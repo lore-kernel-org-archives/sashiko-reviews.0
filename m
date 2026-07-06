@@ -1,176 +1,179 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8F63FE35F
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 12:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E5342E8FC
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 12:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783341412; cv=none; b=RbiV6oPgQwmyPhVKdimwXqy4bqd/yPKTEvQ0kX8UK+ZCJCEUEjc9a/IfxtibucCkGq2e/OW0u8nxKxW/H6hK/mEUyLYxPkRJDVt5GXFpOddhRx0NNj+mx4PEowt6grMtRFNUKoeIh4RWtzK7r2sXKCRfMq7NVSKCTlad8W6m1rU=
+	t=1783341877; cv=none; b=tjlEZ4dXEmOmRY+2vQ8RL9PmOYgOK2ElQazERHp/PrvV/5cPZie/Vb3TsMdgpSKk3eepu+nQJ0ur+P7m4jgcOp/wXw4F6buFq8vcPTg55F+Pow3y92YMrTEmfP11DS0GAiKMgSIMI/mhXbMb4A/H5IzIbXIe3Wnj13sLRmWLLBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783341412; c=relaxed/simple;
-	bh=rra+HC6UW8ngg1M+w7ntsNH71CV+8l9s2Aq1rHgxNRs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pUx6s3ym2yIeAKPe/lF7p2EST7WprYLRum+UMk3NZaZwRqRXTjD9cF4WqwB51p1DPI8mFmW5gE/AUwk5VieDUIChAqS9R5BnoZVt6LtTlLQin4dbmwDyAEkV48qey6EJHFSND7+gJUXt+jmUqc0jR4OxJ4f8DcsjqEH+KEOz4Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=GZAqEqqt; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1783341877; c=relaxed/simple;
+	bh=A6J3qZ1+JzJgiX28rP9twI3tGY+ys//pbkUnyVWTm5s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RJvbwwU4el4WUZ+jh6yVTJZ3J0GzXJWFWgE/VDatyV4My5Pgsp59/lZr90rXXvJmUpxFvGvg+zy9XXZrqe9QpiGlCnL4hm/oEA5nwSoAH46YHZmPt8+2ad+xIbLO16r5ygIhOZTJxe9w1bj10+kwsa5FsZXYO8ec1mbflSYOV0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=aRBLG77y; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="GZAqEqqt"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-493b61b52b6so20478245e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 05:36:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783341404; x=1783946204; darn=lists.linux.dev;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=3nillUBzOVKmupjRSjEGs6YGga/o/TlBfybdbWa9Q6w=;
-        b=GZAqEqqtTRbNcXc4hMsTBcGHSVoaBAHe04MzeJ2Pzs4/XkTUwMC+oXU4SmU1h+W+sp
-         YnT2TihDz01Wr4QUy5YvQ8cUfzByhltMHoF9YreWYsbj8BVzUs7aYOw44zefUU5MjISG
-         xAaHWQnF6dzEXappOoBpvKjbhX3QME1gfjYaTuTSf6PljRYmAfFwiLIytQGWVR8RFyUX
-         CNXQDjm6uyVuUUfTTZHB5mqVz5siQKlFLf6nubBUv6YwA5t2FiscLCKdFjztjkLwlpDK
-         yJR8HCyo2bVjE/Dwm2PLlo8I3hhgwjCY9QpFHLGoug1ugoAMTdcQeD8vWCUsmGGziE0f
-         SfkQ==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="aRBLG77y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1783341872;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rSNzVEuRNXjbACmsP0kXVdabmw9oRqyKD7jVej0sPKA=;
+	b=aRBLG77yphMs69lu94k4pleNv1TGkuRFU8crHdCus+4BXGHqNRRiNRracye0pwRHjRWmwP
+	dMkWpWp4tKV4Lu2yyHQ8A+qzkFyyXQ5gjl/GVkK0TPAV9jpQYO5x3dBd/KUWI9Dr+Gj6gl
+	foyItOKS+dtcqPNmuFDjVVaNubOyvVQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-349-PBfz5OAFMiGZVIYzqByojw-1; Mon, 06 Jul 2026 08:44:31 -0400
+X-MC-Unique: PBfz5OAFMiGZVIYzqByojw-1
+X-Mimecast-MFC-AGG-ID: PBfz5OAFMiGZVIYzqByojw_1783341870
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-493bfc3b84aso13496795e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 05:44:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783341404; x=1783946204;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=3nillUBzOVKmupjRSjEGs6YGga/o/TlBfybdbWa9Q6w=;
-        b=T33oTRv6+/ICUc2X7zopky8y6ewmGbjZoxyRWL+hvLGhpfZJUVTSdYGjT6iPLnDJnF
-         wljUEitx+Yz6rPpnLCn5WuYe0V10nwXGTjJigL0K+z6+PP1H62YhvR0jMCcnzjQraLk4
-         KKk8Iy4Xrt3BoIG2ff0jY/H89bJtVNz2wWdHe/25zKWEiqaeYG56tvdRJr/mJzVriWB0
-         tPYU6zzBDWxBpyR7hha42aBsHv5648sYxC8JnZaUguwuWrhMIzxOcUC6dHbxbP4tYQBC
-         o/Rgs8PmifRxypvQijV8PF9aokI5TWrMFbVVpXCFWfwGTPxvz/LCv19pn71mD/8DRXGO
-         C4Lw==
-X-Gm-Message-State: AOJu0Yycw1PQs3FDZjI3Utkc8p04p2du+m88KJhTZSyg7FU3MjW2YtmR
-	0bPsRodxLlPIzfaV6bZG0+SUJ/mWqE8c8cb1j/30cwVTvtVwkuAYtCFaVojmfkSAt7g=
-X-Gm-Gg: AfdE7cmMLyvz7ElNuza1Vx8yPj//bErtwf40ukMdk3GWoR6FBNE9gOeV+hpHioyfCgt
-	MH6bbaBJoJXlyPnXXTGQXH3XjyBM7rqr5nQl6NC8SuJRfJfKeenFjkEeJh2MweZUxHbFziA+9CF
-	oixuGyt6naWWzCQcpwd+THMm6ngB+R2mypaQWGIT3OA+ONUA2oqt8C1NIlEw7i/5fnBEekR86EM
-	MBL9lFn+cuKHVWP4ITAShFnGq4Q7NdgkaWDQodgyBkL8kHRvOqPEfY+ioUqqSY6s5ALSUHqdmnu
-	lj4UH2f+oRnTf5EUMWwcNUN5Apj2yLWzQ/cQ+/wC8fi6AgKCzll8q3D3QatITJNgOMVxJi1mDQV
-	XzYZtoQawBv5wO/1ZOAm5gnweWIYsc73Wxq3vzyNNPjDWwfzdvLkuTOU1+YJwld4dOc2ugBbuHk
-	5bhH8xTZ24kjM=
-X-Received: by 2002:a05:600c:828e:b0:493:b6d5:72df with SMTP id 5b1f17b1804b1-493df090d47mr3392275e9.35.1783341404120;
-        Mon, 06 Jul 2026 05:36:44 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:1495:8c97:96f4:dff8])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-493c637bc21sm660820945e9.7.2026.07.06.05.36.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 05:36:43 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  conor+dt@kernel.org,  robh@kernel.org,
-  linux-rtc@vger.kernel.org,  "Alexandre Belloni"
- <alexandre.belloni@bootlin.com>,  devicetree@vger.kernel.org,
-  linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH v4 6/9] clk: sunxi-ng: div: add read-only operation support
-In-Reply-To: <20260706100635.E5DC61F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 06 Jul 2026 10:06:35
-	+0000")
-References: <20260706-a733-rtc-v4-0-f330728db3d3@baylibre.com>
-	<20260706-a733-rtc-v4-6-f330728db3d3@baylibre.com>
-	<20260706100635.E5DC61F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 06 Jul 2026 14:36:41 +0200
-Message-ID: <1jv7asguqu.fsf@starbuckisacylon.baylibre.com>
+        d=1e100.net; s=20251104; t=1783341870; x=1783946670;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rSNzVEuRNXjbACmsP0kXVdabmw9oRqyKD7jVej0sPKA=;
+        b=gHRL5i71oFg5kMouDWehlcIL9uWlHEwtgPYqu8jbVUe5YS95my3/RQJpAPhaSrqyOl
+         VZC4LqD+J4IYKBzc+6j8GfOoxAE7iZDQlSciGhu8MKarUtOQRZfIX6Ov2s6qK9mIDddr
+         0e6C7N45X7f94W6q8+uHtMlwRSeZIbXz8VpxLlCYbBDi4nnbeDL3nYOc9XQwnFg5pmpl
+         IBG04BmIfaYg46nbanffW94dVsO9sH/IBEtqnjgsOorzsAV4F72iMmq6+95byzbCY8Gf
+         SkFRWAX0KHRJO8Yc6KzM7ElidvHgjiQBG83yHmXz3kXPLQfMQNaauPf8Fy2YIqsTHxjX
+         LQdw==
+X-Gm-Message-State: AOJu0YxRwqOGvkl2xFNnyXjy8JJ0HLAXKdMfy3EgwkLV4n82DZyX1HIC
+	48HngHCjoncQmwf+TQfbbUb/it3NzJyoT0mpOXEKEy1Qn2lF2xmT37ofNJQ6XvyxFpy6BPb0o0x
+	sUekp51woW9fIpRltZcJCh4ZAWbOtL1QkS9aBml+ihkW1ZXKYWXXOa3FXDeQoeDM5ONtkZyie/t
+	VueG4p8QQJpVJKqVzcuhwix4pcTi560M3rPaPtHlSEuLwR/31mg4UU
+X-Gm-Gg: AfdE7ckpIRj8vlt19ust0SShq7NDp4z0MHzXRutkpS0uq9h7Gmlo/o6MY0QvgeYGo78
+	Tx6OXM3empsR5VmFzPguNIJwFAtdjauCiVKcHPqWyR/MFZoBumt5G1iMY+Uw9tqSMp+yi4VCN54
+	UALj1n7G3oxxISSRNHa+18p1f9wKwPLPDHtQAT4jUHcJlMIK8/X1EKCx+VPFo6zwZcN5at+m9qs
+	0mu6zhz+2vguMnjfZW8PJRULJZN1sDhY0yFU1GognE1scLxv0vdW1IP0Q8OyaiXhuir7LvByQkn
+	9sMMhQpdZYuHV8J83zYObJOz+35XPUtEbHd5oZ/m64NYG4KNkW3d4ZTLV0I/53LAfMS8s48bJag
+	TwVVoYqtKj1UhG9Qs+61CVC9Qu0LFxJCbvcWsEXfcHSBHMA==
+X-Received: by 2002:a05:600c:5297:b0:493:d1e0:a4f1 with SMTP id 5b1f17b1804b1-493deffbf21mr4834445e9.0.1783341869902;
+        Mon, 06 Jul 2026 05:44:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:5297:b0:493:d1e0:a4f1 with SMTP id 5b1f17b1804b1-493deffbf21mr4834055e9.0.1783341869459;
+        Mon, 06 Jul 2026 05:44:29 -0700 (PDT)
+Received: from [192.168.0.135] (185-219-167-205-static.vivo.cz. [185.219.167.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493ccdb62d3sm303300755e9.8.2026.07.06.05.44.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jul 2026 05:44:28 -0700 (PDT)
+Message-ID: <c0a3c830-0b28-47a9-96ee-c0a0f34490eb@redhat.com>
+Date: Mon, 6 Jul 2026 14:44:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] perf trace: Refactor augmented_raw_syscalls using
+ bpf_for
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, linux-perf-users@vger.kernel.org
+References: <cover.1783339165.git.vmalik@redhat.com>
+ <fdf56026e442e44b2374119c21babde4910f3b6e.1783339165.git.vmalik@redhat.com>
+ <20260706121432.8F39A1F00A3A@smtp.kernel.org>
+From: Viktor Malik <vmalik@redhat.com>
+In-Reply-To: <20260706121432.8F39A1F00A3A@smtp.kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: eXK_MymvrI2OTjE2JeOxxiIW2w20vREjzR67nqcOjo4_1783341870
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On lun. 06 juil. 2026 at 10:06, sashiko-bot@kernel.org wrote:
-
+On 7/6/26 14:14, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Inconsistent rate calculation between `determine_rate` and `recalc_rate` due to division order.
+> - [Medium] The fallback standard `for` loop will fail to load with `-E2BIG` on older kernels when compiled with Clang 15-18, breaking backward compatibility.
 > --
->
-> commit 39f872462c04ad724c3624b152234160de56a47e
-> Author: Jerome Brunet <jbrunet@baylibre.com>
->
-> clk: sunxi-ng: div: add read-only operation support
->
-> Add support for sunxi-ng read-only dividers. This will be
-> useful to the a733 oscillator detection logic.
->
->> diff --git a/drivers/clk/sunxi-ng/ccu_div.c b/drivers/clk/sunxi-ng/ccu_div.c
->> index 62d680ccb524b..d1c8c7baa12dc 100644
->> --- a/drivers/clk/sunxi-ng/ccu_div.c
->> +++ b/drivers/clk/sunxi-ng/ccu_div.c
+> 
+> commit be9035b8b528902be67522e81fa232a2f597b164
+> Author: Viktor Malik <vmalik@redhat.com>
+> 
+> perf trace: Refactor augmented_raw_syscalls using bpf_for
+> 
+> The commit replaces the standard `for` loop in `augment_sys_enter()` with
+> `bpf_for` to fix BPF verifier `-E2BIG` errors on newer Clang versions. It
+> drops artificial verifier workarounds in `augment_arg()` that were previously
+> added to fix these errors. A fallback standard `for` loop is kept for backward
+> compatibility with older kernels lacking `bpf_for`.
+> 
+>> diff --git a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+>> index bc036a348079d..215516df5d2a3 100644
+>> --- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+>> +++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+>> @@ -440,10 +442,11 @@ static inline int augment_arg(struct syscall_enter_args *args, int i,
+>>   */
+>>  static inline int augment_arg(struct syscall_enter_args *args, int i,
+>>  			      unsigned int *beauty_map,
+>> -			      struct augmented_arg *payload_offset)
+>> +			      struct beauty_payload_enter *payload, u64 offset)
+>>  {
+>> -	int index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
+>> -	s64 aug_size, size;
+>> +	int index, size, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
+>> +	struct augmented_arg *payload_offset;
+>> +	s64 aug_size;
+> 
 > [ ... ]
->> @@ -84,6 +84,36 @@ static int ccu_div_determine_rate(struct clk_hw *hw,
->>  					     req, ccu_div_determine_rate_helper, cd);
->>  }
+> 
+>> -	} else if ((int)size < 0 && size >= -6) { /* buffer */
+>> +	} else if (size < 0 && size >= -6) { /* buffer */
+> 
+> [ ... ]
+> 
+>> @@ -522,14 +529,30 @@ static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
+>> 	/* copy the sys_enter header, which has the syscall_nr */
+>> 	__builtin_memcpy(&payload->args, args, sizeof(struct syscall_enter_args));
 >>  
->> +static int ccu_rodiv_determine_rate(struct clk_hw *hw,
->> +				    struct clk_rate_request *req)
->> +{
->> +	struct ccu_div *cd = hw_to_ccu_div(hw);
->> +	unsigned long val;
->> +	u32 reg;
->> +	int ret;
->> +
->> +	reg = readl(cd->common.base + cd->common.reg);
->> +	val = reg >> cd->div.shift;
->> +	val &= (1 << cd->div.width) - 1;
->> +
->> +	req->rate = ccu_mux_helper_unapply_prediv(&cd->common, &cd->mux, -1,
->> +						  req->rate);
->> +
->> +	if (cd->common.features & CCU_FEATURE_FIXED_POSTDIV)
->> +		req->rate *= cd->fixed_post_div;
->> +
->> +	ret = divider_ro_determine_rate(hw, req, cd->div.table,
->> +					cd->div.width, cd->div.flags, val);
->> +
->> +	if (cd->common.features & CCU_FEATURE_FIXED_POSTDIV)
->> +		req->rate /= cd->fixed_post_div;
->> +
->> +	req->rate = ccu_mux_helper_apply_prediv(&cd->common, &cd->mux, -1,
->> +						req->rate);
->
+>> -	for (int i = 0; i < 6; i++) {
+>> -		written = augment_arg(args, i, beauty_map, (struct augmented_arg *)payload_offset);
+>> -		if (written < 0)
+>> -			return 1;
+>> -		if (written > 0) {
+>> -			output += written;
+>> -			payload_offset += written;
+>> -			do_output = true;
+>> +	if (bpf_ksym_exists(bpf_iter_num_new)) {
+>> +		bpf_for(i, 0, 6) {
+> 
+> [ ... ]
+> 
+>> +	} else {
+>> +		for (i = 0; i < 6; i++) {
+>> +			written = augment_arg(args, i, beauty_map, payload, output);
+> 
 > [Severity: Medium]
-> Will this division order cause inconsistent rate calculations compared to
-> ccu_div_recalc_rate()?
->
-> The divider_ro_determine_rate() helper applies DIV_ROUND_UP() to the unadjusted
-> parent rate, and then this function divides that result by fixed_post_div and
-> prediv.
->
-> However, ccu_div_recalc_rate() applies prediv to the parent rate first, then
-> calculates the divider rate, and finally divides by fixed_post_div.
->
-> Since the Common Clock Framework requires determine_rate and recalc_rate to be
-> mathematically consistent, could this discrepancy cause rate mismatches or
-> warnings for clocks using a pre-divider or fixed post-divider?
+> Will this fallback standard `for` loop fail to load with `-E2BIG` on older
+> kernels when compiled with Clang 15-18?
+> 
+> Since the `(int)size < 0` cast and `s64 size` verifier workarounds were removed
+> from `augment_arg()`, it appears the unrolled loop in this fallback path will
+> once again fail the BPF verifier checks when evaluated on kernels older than
+> 6.4 (where `bpf_ksym_exists(bpf_iter_num_new)` is false). Could this break
+> backward compatibility for `perf trace` on those older kernels?
 
-I think the RO side is correct and RW one is not.
+Oh, right, I guess we need that combination to remain backwards
+compatible, too. I'll keep the hack in place, then.
 
-The RO part correctly walk back the tree by un-applying the predivider
-so, whatever CCF does with the parent rate value will be correct.
+Viktor
 
-The RW part query the parent rate then applies the prediv. This
-will be thrown away when/if clk_divider_bestdiv() calls
-clk_hw_round_rate() on the parent. If that happens, the subsequent
-un-apply of the prediv would make the matter even worse. So (if I
-understand all this correctly) this case does not happen yet, otherwise
-we would have noticed, and it can be fixed separately.
+> 
+>> +			if (written < 0)
+>> +				return 1;
+>> +			if (written > 0) {
+>> +				output += written;
+>> +				do_output = true;
+>> +			}
+>>  		}
+>>  	}
+> 
 
-Side Note: I've not followed the sunxi history behind all those
-prediv/postdiv but I find them a bit confusing. It seems like inserting
-some fixed factor clocks in the clock trees would accomplish the same
-thing while simplifying mux/divider quite a lot by droping these quirks ?
-
-Side Note #2: I feel that while sashiko is pointing out valid things but we
-are slowly getting off topic and down the rabbit hole with it ...
-
->
->> +
->> +	return ret;
->> +}
->> +
-
--- 
-Jerome
