@@ -1,67 +1,86 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F83B3BBFD7
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 16:12:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E33D43149C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 16:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783354373; cv=none; b=AtEWBWjWyfkBc2TeNRa2mOYP2Or2e3IMq7i0i2GdJHWuZ1OI8XO3h0a7fuAn7OqwvT+orcYocTPzkDVTxAG1/BAOJFOLyMXkJPnRoWJEINEkfemDgwMEzJsTf0wtg8HhYNOHdDrQVu2WUr+rp+J4sLWqWh9QImvPVO5uhspPnms=
+	t=1783354842; cv=none; b=HEGKmrxtyE/WV/YJgh8SwPBcBns/t4a5MNfoFLMuo3zPvjrwvqWl/KQFQhQdAwH+EPmu2bmzXV4YK7BoBECLWol0J6LD6944IkHT4yE8gWFYk2UbdrUuv701V3ew1d0RcLYMd5VR/b/k5AEGUdzHMC1CwrRjHzHVFxase5OJvOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783354373; c=relaxed/simple;
-	bh=Npeg3cmxoXu2sGr1sxIasdlkRmLOZKvQWfzGozOJjwI=;
+	s=arc-20240116; t=1783354842; c=relaxed/simple;
+	bh=88wkV55+op7wraW1zb8kD42JmYHg90yDvFPVirI2ITM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AAatS6c6c6TjwCKrA1QZ51FSK1zUbQeV5taKSeBB8apAisdnEulGgZUhAqDSrdoDxiK1tIjhJ5ZUs6+3nkQwRf8ae7L2tIQZGhpDe4vqrPEd+a1f1AgLpjrvSvdI2Xvf/UP5nFKgwLvQYWacon1/HfHu+rsZ5Rp3jeq6yXAy7Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbNN3vPL; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=INxW4csXf3umNMd1QnSMPo5e9ef6tznH2Iz7K2KlqnTri9U+DUjFhzthTvs+ZPyWDBzd+IkTEra0r83gOQkKnX1DDPMW8VbUDomtgVWyZbbXHPiCfOWsXxgVtN3+6WVw/ymDBoH0lGE/JrwAFDMwrv5gPtFITdBqthW1rcs/skE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jAvr+EqL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LQ0axLxI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbNN3vPL"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38511175ad3so1300323a91.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 09:12:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jAvr+EqL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LQ0axLxI"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666FF1Cl980532
+	for <sashiko-reviews@lists.linux.dev>; Mon, 6 Jul 2026 16:20:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vj+tPjVgO4QFZGX8NX7hUas7HHKu8vOipIIcHrTeLHs=; b=jAvr+EqLq/MzzQlC
+	pR3NpeLkDx2v1idnZHHZb0G2jqjoRZIkXxFfM3I6Eoi3zBeJLr90Aj98c2gLqmzt
+	nqeUacUcDNx/INkPNqyA36hPD7K0wea5BmOaJogJCAIHXoM3O/8fFenFjvb4O3Oh
+	sXE7JM1REmHKk7m3VJNvC3adROAwTlLCUUNmU+5nDGI6puesa9ZI3Iq0rEfD+GyW
+	VDGHBeL9sYD5BZb5KoptrU5To8MXTEFjSJaAc+zZefHEdEgvo9XRizliKcfhbxOU
+	sF28ezYUuM3faJPhS5ixKCEMnsvz2Zp81l3BNvKWI5BVbmjQiK5xiJchLChE52dt
+	YAPSjQ==
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com [209.85.221.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f89kgswu5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 16:20:40 +0000 (GMT)
+Received: by mail-vk1-f200.google.com with SMTP id 71dfb90a1353d-5be0693d194so1304869e0c.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 09:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783354372; x=1783959172; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nc6xuVu7x5xIlwRDKJdB2OMK+PJct33UwNlXEKxeZwI=;
-        b=XbNN3vPLCTpvtXtGRVl4cYcDed2CRbxfFZj+OFyoSgCZw82qdO6qCANWR6vIUwYOxi
-         yqniNfvj77Nx54h2QnlM/zoXs0+kgNoF7RaDdUZ7cJEYnlAyeimdy5u0yNBQFvndt8IY
-         /LtnsKuk10NQ8icMhabFs1PziqkWbq1RlSg4QSeNV3l5KaRE5UkkXekqaPBIsyi1mBEf
-         pnTHoQPHw0FFvI8WFEzihNRh9ItQRpMTiMez9wqRsI5liZbQLL8mwC4nWq6tHF/bxBmO
-         jiaHLZspjUzWHe9qAHvhkQhycAvfCvivB60pHEtnRKaOuwUnr5XexgaKeLgzf0eTLGlW
-         7dyw==
+        d=oss.qualcomm.com; s=google; t=1783354839; x=1783959639; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=vj+tPjVgO4QFZGX8NX7hUas7HHKu8vOipIIcHrTeLHs=;
+        b=LQ0axLxI47ZxBkADdJISBkeq0yPTrTbp3ST58zCYVGT6qgYywG6/0rvD1UNkSLcJrn
+         hWEcbfKnC5V2GGHX36nugZuY0XnxOPzNryACsIKTOCwcdDrrE6j/aMlNfK1oNrkwaRSW
+         gWSbQHNxH2PD0Fo7Yi7VQE74OHkieINYe+/IORgAZ1WDZqsbUNid+XNj4fCPhN2b0rpD
+         929RNEVQoPpnGku6UOnbW9JyDIZK5299q04o0Kw3l9Wbj6LKy3SPKSxm6BOGqI9LlMAx
+         UKkEGsvic8jYceM9K9z3SwXqJ0hRjTIL+Ih+KiMxMP907395zOySjT0V504xwVBG40h9
+         cDAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783354372; x=1783959172;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nc6xuVu7x5xIlwRDKJdB2OMK+PJct33UwNlXEKxeZwI=;
-        b=m+VjrBgIH4vtwhbZ43W81qdOgS+QmTmDYII6rdX42RvCJwl69jkDU+nE16RJJycgzz
-         eVOv1S5sWaq3gFHXiXyU2b5j+MRH2yUVKUhLoPslDuUhrRNa00e2fjf50cvC5bxsrjpq
-         bpSkYfKo1AOcLkxMp83SHOohZXJ6sPcpojFhPe9eN7laMXr/ZwzHemRbpD1Fkk7sqR9p
-         D+mnYlp+BaMw2etPFGZYJ6vNCaQRakLUKKih/rEAYoMK7zCpHqRgf5+fkzwyPo8HoUUd
-         KNuKhKssOeBNZW6XjIMIkzfqLsuGRxDBKer+RjlbH9pCSSD/iJKYD8K/sMuxFTPmXQE7
-         xaJg==
-X-Forwarded-Encrypted: i=1; AHgh+Rr81lpui8AG57+sviCxjNxdyqGpISKo0Nc9a2SmGm5w0huF8msXMUEWIB2hnAFJPzKj53ViKZ+SWrtfsaU+ijI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzYX2Zoio8Vj408v3RwxIC9dzjUxANlLrWnHHruxcwkZZ2dp0vC
-	hDc7TSX61qX+5VcLw5mXcvdHeekICdDjqX1LyMU2KbGsEDTLJqIqvq+Q
-X-Gm-Gg: AfdE7ckPtYNRik9L3hI43ASEvlmDUw8dMgy0LK8cNJbA5aUnC2dFm7S4/oTDewa8qfN
-	RkAjNteqh5ay7VxkwwfZ5QOw2CMp9w2vp7w8bFbyYc4DwuwWbbTodfANR9AZoZR4iRCBtxfxApg
-	xq164ardgQZeRP58ElaHOM4BpWzRX96IeZqxnwU8rfwtwwsQgP7VG1gQFPpWDFmdYMntcjmZ3+F
-	DEjHLb7/lqBCtYXQd+NB4LYoYWTgJKHw78TiCkFb9TnW8ylTFTdM8VLYDH2S1gPioCJ51BULu2O
-	fJ/zxq/ko7/Sb6aNcU93d+W2MuPtX2y3LQHE3JcjTckJIm0omKf7JvoWtag0GR0nH8WW68AZTWy
-	ic9LK/pYAwgzO+sejjyPUzjXB+98bOrclWn2CUs2W0WGRJdDsLY+1lu5vH2wpNBzzwSZV3dsF7J
-	DEmuP7MiMagb2EPZkT3ffPiU2JI8VZaBljf9u542z9oU8NG0taADO7x4nVGmEbLw==
-X-Received: by 2002:a05:6300:2203:b0:3b4:61f:1fec with SMTP id adf61e73a8af0-3c08ed6fb6amr1472180637.2.1783354371258;
-        Mon, 06 Jul 2026 09:12:51 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c9e921d28d9sm6239956a12.24.2026.07.06.09.12.50
+        d=1e100.net; s=20251104; t=1783354839; x=1783959639;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=vj+tPjVgO4QFZGX8NX7hUas7HHKu8vOipIIcHrTeLHs=;
+        b=XfzrngiE4/wagCTBff4KiP8q39GCtlOjV8G4cn7ONaO/ozziqobU5tmyJTZKsMUnzb
+         f8vhBwVw6WwIaVNxGU+RmMTkYiWtY8nGVQpRyw0Fsh8E4EQ4rxTd/77Onx9CUmIZpiX2
+         FgaY53lCb6Hhbxtn3gxWrd2xUcyaaJ12Fd4cvJhpGfgWG14PW79uYUIE1c2xiVtjnFTy
+         xoCz3+r/Oeqi2z3nUWzXt6/f3WkAybN9L9sLImf5wikVAgxZORiyka4z64jO4Tgpvr7e
+         jltaHVQoU6OMsfts/l/zBbm9qq6kNiusPEhZ2WOyuuJewH911WaYbqcyzBdGXhnO241o
+         qa+Q==
+X-Gm-Message-State: AOJu0YyZd2yeRAe6Mgp8Qx58kN/xoLJWCCQJweJ6OsK8jRxK/HE1PUB7
+	3CHqj2ESCT0TGZtFp0UDx8PuMnsi/BMrJV5q0RQP2yap/lhEHd30rQAy5UBk2nPaNCYGS5YaRlU
+	8k/eFiqxnInBCfoV/B1tkQRzmLjXOeL8V3Ie9M167ck0/Hk1I0sRizZHpJC8UO2Eac+HUkmY5vu
+	nvE/M=
+X-Gm-Gg: AfdE7cm6SKdt/DqpzzXuyjtLwg6twHT/aWUuOAgvUQmFCVy50g4VEtVzdWwreyWIuDg
+	Y5kDEfOKs9BT/+qhIiEAGQkuZWcgV/JQOgQlEZDVxmEgh/KHJx5aV//txPBkXTVjRDeyGQ9+cck
+	73aeMPeX0k7pgPms8WP5J/StBmjBM84dimJw8QMKzTlyBDk95VPWaugluNLun6I+56v0Bl73c31
+	B5ka2NCxOx2NwNVzXFiO9odwUTg5DU2ZhqoxcMG6pL/dXOGojh9rEJiu1JNp9IatDD9PCFLUBAs
+	VFqd1lY2vUwYAxivl/cOEaaGp6jyWAzFM9QUQQOsxt6ITkHzTydrEMz9KF28cFiZNjk75W2vzAF
+	nVsfkNPJWVOgEi6R6vBurOMpQooflzEfXUOGK15fi
+X-Received: by 2002:a05:6122:1d48:b0:59c:b1f7:4df3 with SMTP id 71dfb90a1353d-5be908e9636mr775206e0c.12.1783354839568;
+        Mon, 06 Jul 2026 09:20:39 -0700 (PDT)
+X-Received: by 2002:a05:6122:1d48:b0:59c:b1f7:4df3 with SMTP id 71dfb90a1353d-5be908e9636mr775199e0c.12.1783354839155;
+        Mon, 06 Jul 2026 09:20:39 -0700 (PDT)
+Received: from [192.168.1.110] ([178.197.223.174])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9e4d8410sm26100765f8f.15.2026.07.06.09.20.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 09:12:50 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <5e441e3a-27ce-4f46-abf4-fd6246727cb6@roeck-us.net>
-Date: Mon, 6 Jul 2026 09:12:49 -0700
+        Mon, 06 Jul 2026 09:20:37 -0700 (PDT)
+Message-ID: <e8ea458e-1955-4086-ab1b-9599caf7368c@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 18:20:36 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,175 +88,54 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for
- running chip on boot
-To: Paul Louvel <paul.louvel@bootlin.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org
-References: <20260706-w83627hf_wdt-nct6126d-v3-0-fa5ad8d486bc@bootlin.com>
- <20260706-w83627hf_wdt-nct6126d-v3-2-fa5ad8d486bc@bootlin.com>
- <20260706104010.A345B1F000E9@smtp.kernel.org>
- <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
- <f598a05b-5d91-484d-a637-e092950a6f47@roeck-us.net>
- <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
+Subject: Re: [PATCH v3 6/6] dtc: dt-check-style: Handle properly DTC-style
+ includes
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260706-dts-style-checker-v3-0-03ffacff9226@oss.qualcomm.com>
+ <20260706-dts-style-checker-v3-6-03ffacff9226@oss.qualcomm.com>
+ <20260706161325.B76211F000E9@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260706161325.B76211F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: ZZkvpsBH1xYzkyYYWUAeqG_5Oc8BmHni
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE2NiBTYWx0ZWRfX63CohXyk52K/
+ MGcRPRpXwItHlxZ6jDz7QPDOv7VTt3kTmpPFbax2m34Ww6INqAivG7QAKFTXQ8xgnBVXAUHj6nV
+ K7KPcTZIX9qEaqioEhoDGiUMFGGpsn8lh7XlhbkzYAcr8emxz4f2OyQXqARGlHfvYewDgzkXmrY
+ KEkqlFbt7D1sbc33+6XfeSnHtwusu7tdLpGYLcQ1CvvMRPYk++0ulrdMaOjun0ghF+aX/PKFCge
+ zzaDinJ9m2cFQTdYYWM48ylWc5waUqaVTxjvL7WgYTEPMy6G5Ma0MzYgmTmnl2VtOmco1E34ICp
+ B0jD5AozQp56vuuJK1BW24vP9q5j7ZGefuDMAEtO9Op7r5NtuoZ7uZ5eQAgU6ur5An25nryl8xC
+ NCGIoENQhUMTH1dZyw0aZ1ZbR+Es8LuIqBt+TWGmkpuUhXwLHTjQl+xJvzikRQLAexOL+5aLVIV
+ rkCPazZDwOoqZqyoiBg==
+X-Proofpoint-ORIG-GUID: ZZkvpsBH1xYzkyYYWUAeqG_5Oc8BmHni
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE2NiBTYWx0ZWRfX24Ta1a3cNhxy
+ 7VZGLi/aKodAGx3oI+/T2jIpx3i2Ua8MClcG7IpEL5iuox5DDZlKZsNzbBm/3aa8+S3YOv5VAIe
+ WTGRBXmvOgFOPWQ5PBdaf4jL8dFFMsA=
+X-Authority-Analysis: v=2.4 cv=c6Sbhx9l c=1 sm=1 tr=0 ts=6a4bd5d8 cx=c_pps
+ a=wuOIiItHwq1biOnFUQQHKA==:117 a=N6niishs+lR9UBL1FN3Qrw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=thh0EKpwSj0m2F0jE7sA:9 a=QEXdDO2ut3YA:10
+ a=XD7yVLdPMpWraOa8Un9W:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607060166
 
-On 7/6/26 08:44, Paul Louvel wrote:
-> On Mon Jul 6, 2026 at 4:22 PM CEST, Guenter Roeck wrote:
->> On 7/6/26 04:15, Paul Louvel wrote:
->>> On Mon Jul 6, 2026 at 12:40 PM CEST, sashiko-bot wrote:
->>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>>> - [High] Removing the manual hardware timeout refresh while still unconditionally switching the hardware timer base from minutes to seconds drastically truncates the remaining timeout if the BIOS originally configured it in minutes, risking unexpected system reboots.
->>>> --
->>>>
->>>> commit 0014048ec369e2a09098aa033aeb725449e2fd67
->>>> Author: Paul Louvel <paul.louvel@bootlin.com>
->>>>
->>>> watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for running chip on boot
->>>>
->>>> This patch updates the w83627hf watchdog driver to rely on the watchdog
->>>> core's WDOG_HW_RUNNING flag to keep a running watchdog alive during boot.
->>>> It replaces the previous behavior of manually issuing a single keepalive
->>>> during initialization.
->>>>
->>>>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wdt.c
->>>>> --- a/drivers/watchdog/w83627hf_wdt.c
->>>>> +++ b/drivers/watchdog/w83627hf_wdt.c
->>>> [ ... ]
->>>>> @@ -241,9 +241,8 @@ static int w83627hf_init(struct watchdog_device *wdog, enum chips chip)
->>>>>    			pr_warn("Stopping previously enabled watchdog until userland kicks in\n");
->>>>>    			superio_outb(cr_wdt_timeout, 0);
->>>>>    		} else {
->>>>> -			pr_info("Watchdog already running. Resetting timeout to %d sec\n",
->>>>> -				wdog->timeout);
->>>>> -			superio_outb(cr_wdt_timeout, wdog->timeout);
->>>>> +			pr_info("Watchdog already running.\n");
->>>>> +			set_bit(WDOG_HW_RUNNING, &wdog->status);
->>>>>    		}
->>>>>    	}
->>>>>    
->>>>
->>>> [Severity: High]
->>>> Does removing this explicit timeout reset create a risk of unexpected reboots?
->>>>
->>>> If the BIOS originally configured the watchdog with a timeout in minutes
->>>> (for example, a timeout of 5 minutes), the hardware counter cr_wdt_timeout
->>>> will hold the value 5.
->>>
->>> First of all, the driver does not support minute mode for now.
->>
->> The above feedback doesn't claim otherwise. The BIOS may still have configured
->> the timeout to 5 minutes.
->>
->>>
->>>>
->>>> Because this patch removes the explicit write of wdog->timeout (which is
->>>> typically 60) to cr_wdt_timeout, the counter retains the raw value 5.
->>>> Just after this block in w83627hf_init(), the driver unconditionally
->>>> switches the timebase to seconds:
->>>>
->>>> w83627hf_init() {
->>>>       ...
->>>>       /* set second mode & disable keyboard turning off watchdog */
->>>>       t = superio_inb(cr_wdt_control) & ~0x0C;
->>>>       superio_outb(cr_wdt_control, t);
->>>>       ...
->>>> }
->>>>
->>>> This immediately shrinks the remaining timeout from 5 minutes to 5 seconds.
->>>
->>> True, but in those 5 seconds, the watchdog core will kick the watchdog
->>> immediately. by calling start(), and thus refreshing the watchdog to 60 seconds.
->>
->> ... unless below.
->>
->>>
->>>>
->>>> If the watchdog core's kworker is delayed, or if the system is configured
-> 
-> 
-> 
->>>> not to ping the watchdog before user space takes over, could this unusually
->>>> short timeout cause the system to reboot unexpectedly during early boot?
->>>
->>> Yes, but expected. If WATCHDOG is enabled, then WATCHDOG_HANDLE_BOOT_ENABLED is
->>> enabled by default unless explicitly disabled when configuring the kernel.
->>>
->>
->> It is still an unexpected and undocumented change in behavior. Previously
->> in that situation the watchdog timeout would happen much later and give
->> user space time to start the watchdog daemon. This is no longer the case.
-> 
-> Do you mean that, in the case WATCHDOG_HANDLE_BOOT_ENABLED is disabled, the
-> driver now doesn't refresh the watchdog, this is unexpected ? I was relying on
-> the fact that this entry is enabled by default.
-
-It can be disabled with a configuration option, and with a module parameter.
-
-> In this case, should the driver refresh the watchdog itself, and set the
-> WDOG_HW_RUNNING bit (for the added feature that it does it repeatedly) ?
-> Or document the fact that the driver will not refresh the watchdog if
-> WATCHDOG_HANDLE_BOOT_ENABLED is disabled ?
+On 06/07/2026 18:13, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The regular expression `re_dtc_directive` fails to match `/include/` directives that omit trailing whitespace before the quoted filename, leaving the original false-positive indent warnings unfixed for such cases.
+> --
 > 
 
-The difference is that the timeout used to be 60 seconds, or whatever the
-default driver timeout is set to. If the BIOS enables the hardware timeout
-and sets it to <n> minutes, your patch changes that to <n> seconds. That
-is unexpected.
+Ack
 
-I see no reason to drop "superio_outb(cr_wdt_timeout, wdog->timeout);"
-in your patch. Keeping it would retain existing behavior. Changing that
-is unacceptable unless you provide a really good reason for it that I
-currently can not see.
-
-Thanks,
-Guenter
-
-
-	
+Best regards,
+Krzysztof
