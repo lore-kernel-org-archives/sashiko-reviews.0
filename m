@@ -1,56 +1,55 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013066.outbound.protection.outlook.com [40.93.196.66])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012019.outbound.protection.outlook.com [40.93.195.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264463D7D67
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 19:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EBF3DB323
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 20:11:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783365940; cv=fail; b=bGQvwQUBppObzVgtGgQwvRLiiTDgm92QzGCfwO5+J5B/9qku5fN3IjaAMRz9isgCS/yr1EW9KKK48bLni6BFQDrn2PIuxUcWIS9uM8o7yv9Juo7K2PFC7ugIsU3z5YUcAWVRPXS+h94U4A/up/FbtCykOiN7GMVmbYpy57xDnLk=
+	t=1783368692; cv=fail; b=D3SFGKkbgbTXPkrCjuItZKL5xWoiVG5vOffUuY1Yw/obRWi/fAlYEF5TaBY8iOk58+5AnEyqt2X/MjEQj/YJ6FqIqjJovWmDReiGI9KVG02XePtnDhWhYvzpiyDULiMyFJKL+oW6Wqpysptagbmc3fGlfs/q5eTgf3ZsCwWNxOw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783365940; c=relaxed/simple;
-	bh=ZxJ8ytFcw2JfjBsymbkxwVW06jYGi4jfFkCIYJimKFk=;
+	s=arc-20240116; t=1783368692; c=relaxed/simple;
+	bh=RWq5KoSE5XvnWKhL7S3LyUjYd0x5jGrMvZluiax4+n8=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Qh0R65WC6mOyLJihI0eNF+ajSgR0wXLKgWKx+inYmXx62HOkjfW9QISDeg1G4RyopIQ3LeXGjp+duv6Js30R8m9jyjhwJXjugTCTib6wot3xnxKBDy3EY/bbcYL9r/8XI0co/IdmuJzYaxx0oRAii4oyLVgJ62qY2xYrpsWDZsU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=I+KAIg99; arc=fail smtp.client-ip=40.93.196.66
+	 Content-Type:MIME-Version; b=JAXq5huHEPSvAuoUPylPNFfk4hJIlwd7JAAN9XzNtJ5TcbmBcZIFZ9n6O+9gI6eQbjogdcMvZ/czjuY3kkAPQvs8+zIL0+/pZCu0hLFVzSmIsgoMnG7nC4gTImU8piQ5qaKTfwly9Wi67JF7eQjuUKJ8k1WTPWNtgIF5cUfeOqA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=MWysoe1H; arc=fail smtp.client-ip=40.93.195.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="I+KAIg99"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="MWysoe1H"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nhVnTrKSK/TtZxNFsthrY/cCZ2u6pRVCMjAQA01h2unbfFVbyMogaYixOZyhu6/y3RGY9h14ArQzE+5N2f6+fV82LGhhqaXuqcmzPOoYTdQJ31BLG0mQJZ27txIK9PVBNa3npDzv+73kmE+fPD8glprZqAu/FLWbJ0qQv9u/ADuE+IyEWpSg42ion3qW/CimiGWHBku/8lv5PpOzFle1bP0a0sMfTMDpiKhfT/aB9g70EMPyPENfLTsvKAufxeVcAFy5QaesXArl2F40nyAG3Jk8A1D71+un187WBHzh3focpgVYtkqID7esYnK8WJuaP3duEEcSj4DRxwLSnmjg9Q==
+ b=lCBhmnCMv9pbK4uUeN3p7LbSTcWITAZ3MzlWLorrfHO/45Dj6de9KHLX3lYZkCBgT9otDS0RdznN15YSAPRZXplk7GBztYvbSra1rP8xbefe4PvPpDMNUTNK8UerW1o6pYjWCDW5bTk/1Hxvco0rPdYMROjcZhkPq/9E16p/X/viDMAEy0S9yM9NoHyGhQiojcin9BaZADA9UJttW4dBpusi2AvJ7HQ1XMputYA2YCIy2atZMWpxyD9U8zYAz8MkC330ZuewgDuVlMQ9y5cQ4E9bwmTe1rP+5V6kPZBEt00Xv41lq0Y1D0HFYRi+7/ld+si2DEdg4KkT0KBSY6fdhQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PuIIyPj46lsdj1aiI/USeFYlTbX/9yBHg18jZV7vhhk=;
- b=lh/Pb05GVhjQunIZQA1Fz4snYDsV0Ny2p3bHHgcP3GXHxEYv8XyXJ3j4rlN+s9hOgpg6r5sApBJFCQnttpxNaCr9kw6tYCSmNqHHJ2kIRMQif44NtvAv6jYbC+KCXg5R+3Usr+Y9rUNtCnK+CQBNLsNsP2P9MgAMZasb/p+XHI9told1wvdotCR7Ziutu72NMytGf5VDuiSqB32Puc28vY68DXQ6vOo6aWRglgTKN0IPB1dxyHwipVXJfuTgS3EaYMQ9qDR1Bo/J/70wRWTZSK9ULm/y9gD02atfAk39J9HezHu0hK7dvZ/m9mdL2y8qbxGXaskGEFFuQWmNkuKfsA==
+ bh=vrYNUlY6hsoHLkGdTeVLf0Bc6ntWI+vgxXnP7OKqZlk=;
+ b=dGuFgEXl1bYZ5GmL8j++Y0WqjjfcKBSpx8XdJ15QMg2Oh3ZxC1w8fqgyArvrEC+eWBl5XkjEEIABdRn04Dn1JeBuJ5JnmahNkayaWn5Q5nOBx+x5rv+uGGrKRkLOFnzxjpdZwuZlzi/fT0hadkOASx/b74haimN1I2x2sk8OiUPgMRi3/yr9Kf8oh5mrzBMx1FbZqydt0VAw0ctuMwLUsLWA1j9ERP8mNtLUvRFJRQT6lVuyKscjiDNMt3FrkcO1oCCFj0VaTpQZhA/wzOgL0DXZ0z1HZAhVjv4GX3SAMydbv0iC4nzltX5vBUTtNKx2Htu427nSS20w4c72mtoq0A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PuIIyPj46lsdj1aiI/USeFYlTbX/9yBHg18jZV7vhhk=;
- b=I+KAIg995HqNxTYFmiTzBWts0SIIb+rlp/2tSuXAQg1f8DaWiLeSpt2wrrQhjameBsJF4YmkHfioMpM6T2nZPkGKtuMhyYcfmMUwf7RzL4RSvhTQuCevFVPTinf0dHL3eiof9TG0sN1pMRhLfhOMFpIQ9izf7H4GlNX/Qww7rZk=
+ bh=vrYNUlY6hsoHLkGdTeVLf0Bc6ntWI+vgxXnP7OKqZlk=;
+ b=MWysoe1HRYBASFKmqsbsya7o61qbNeFZxPpjRUr+O5ce1sA96lHn/W47uuzqteJC54ekwG4GO8S/F1deDz0+jO1IaJE7Oxi52Zr0hRv1DBxKMoC0VaAItgpskcynfFdJqeujbajz/McumUhzPo+mcc7CXH1o1OLnflrYmlTnXDI=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from BL3PR12MB9049.namprd12.prod.outlook.com (2603:10b6:208:3b8::21)
- by PH7PR12MB8106.namprd12.prod.outlook.com (2603:10b6:510:2ba::9) with
+ by DM6PR12MB4353.namprd12.prod.outlook.com (2603:10b6:5:2a6::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Mon, 6 Jul
- 2026 19:25:34 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.13; Mon, 6 Jul
+ 2026 20:11:27 +0000
 Received: from BL3PR12MB9049.namprd12.prod.outlook.com
  ([fe80::ae6a:9bdd:af5b:e9ad]) by BL3PR12MB9049.namprd12.prod.outlook.com
  ([fe80::ae6a:9bdd:af5b:e9ad%7]) with mapi id 15.21.0181.012; Mon, 6 Jul 2026
- 19:25:33 +0000
-Message-ID: <87850ace-589b-4f71-b33e-a099c86a5217@amd.com>
-Date: Mon, 6 Jul 2026 14:25:31 -0500
+ 20:11:27 +0000
+Message-ID: <151e544a-63dc-414f-8418-e6912d196a9e@amd.com>
+Date: Mon, 6 Jul 2026 15:11:25 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 6/6] KVM: SEV: Perform RMP optimizations on SNP guest
- shutdown
+Subject: Re: [PATCH v10 3/6] x86/sev: Disable CPU hotplug while SNP is active
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 References: <cover.1782841284.git.ashish.kalra@amd.com>
- <3a5df8dec32da5c31998bcfa775ca92c80cbc1eb.1782841284.git.ashish.kalra@amd.com>
- <20260630182421.8C1481F000E9@smtp.kernel.org>
+ <205a5259f9fd353dc0ca6b00565c8175a96768c7.1782841284.git.ashish.kalra@amd.com>
+ <20260630183231.393071F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Kalra, Ashish" <ashish.kalra@amd.com>
 Autocrypt: addr=ashish.kalra@amd.com; keydata=
@@ -96,11 +95,11 @@ Autocrypt: addr=ashish.kalra@amd.com; keydata=
  f3Brs3CLkBfijS0zCw9rWqlZJGSst5xwV8UdfppsPWkU9lAUR8UZFsO+g1xCxtBc0nucygzh
  O+mvU01WFeZGTnW7INdP+eDIvj4XYmVSjwCSNvDphJkPccAn2KFcPxYh8PJAqCDw++nfNDrc
  BXA1uh2XzCnnzbc62A+AjwXB89wvlctBLptKlnKBVtrsKEFIoLugtmfIsa4=
-In-Reply-To: <20260630182421.8C1481F000E9@smtp.kernel.org>
+In-Reply-To: <20260630183231.393071F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH0PR03CA0050.namprd03.prod.outlook.com
- (2603:10b6:610:b3::25) To BL3PR12MB9049.namprd12.prod.outlook.com
+X-ClientProxiedBy: CH5P220CA0022.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:610:1ef::28) To BL3PR12MB9049.namprd12.prod.outlook.com
  (2603:10b6:208:3b8::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -109,141 +108,124 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|PH7PR12MB8106:EE_
-X-MS-Office365-Filtering-Correlation-Id: 573fc9e5-426d-467e-defe-08dedb945940
+X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|DM6PR12MB4353:EE_
+X-MS-Office365-Filtering-Correlation-Id: edc34bbf-c9bc-489b-8273-08dedb9ac2b4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|18002099003|5023799004|56012099006|4143699003|6133799003|22082099003|11063799006;
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|11063799006|4143699003|22082099003|18002099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	5bqIAhhRhVSiuS1h00VLVe2ucyNqvJVsUZlaCvxcwQypINuHIovaJolIQwrWxhpS9rov+oNPpnKr/8PviaLQJqzTL3+og/K/gBbZG9MLqO6rpghlB198lsWbaWPiBztnYw2ZFGFeD6bjBTZQGkKoKeZG8eG6aDA92HsFAzm3b6nGlt6V/UgPGdV/RianEltUfxns+UbG0ydmbH2WCfXSa0MN4swH22KUQX6o74DmNnmdZiPtLUdoJt/H/bL+8YrAVqCjUCtLxQ7vLGqNYwo7/o+9x9P2Lu5b0dEToeSmNGLiuzrn0IEbRV6EX00qwfgA6YwJ4dy/Xpv8hKAnC4UnCtTU7jVsmbPAUqiwHcIcAi9FOhladpOsMWfGrImDHDth7sB+S4wITlojzKgtkrDSDnwNch2yap6t0KD9C4d0GurDxVUyDuPtEAZJdAsd8AiQM4TXZ95RksuJT7XchnP7ilLmfm+u4mhetpyjWAtNyRsEdFScuhjepmlpSYdX2wE+avRKfFuCn5dk4vaZjvumlMOARSyaotcTucPt6ZAbkNxIWuPUhuv0I78MjC9w8bAevb/9bMP3l5Y5iqoAnVe3dgXR1vYuw0TQ1eq4qaPuF8OetttgyTYBomlTG+ZMatfTLlaDgM7W2UyekVtDh/dz+Bf/8eMURw0r8eo0BdGmpi0=
+	LpUKSSylV7mZ94QDJ31LWeOYlOfe0sOsbQg07znLetPRfe5ZTc/pqeVZQL3PTfNnc7v2ClgS6hJgyzq+Q0hkNNXKRXQdB4kvnlvxRyYGlBid22gYWJBcZMaAJuw0Oj1knDEQ+lz8yoCeogqDWBnkCTA1ztIgTIiqa52uX0eWF5GRLzKmYgrNbOY7C9qy6gV11gBAqG6zJjIYhGYFsQeVKaYepYbN5KZEc+hMmCovTpZTk0LWZeIehpjQ0zfmVY5UleLjidllZkG3SsWyUWm8EOyQ3vzNcBKZWEXM+ylMKpL2GG6nvsjG59AwZ69ldhIzF+j/YmNI4wSrlkVWDic7KX9YpSY3+dQITbDw2y686hvJXwSlL8nSm0dxb7d+0mwKq+uvu3PXSrOq7Mcfu/yFsIduSgfvZVwFAtBz5L2uqn2h6ZMLVYDk0c3S3DjgIW6d/7IjqDKMrHU/lGlmHNuCpYI2m7sWuKZMWxGl+qfu21cvEPioPrvYJgqWBPhhcwjW8iEZBNw3tyHPtRPKPzn9kaUuOfWFsHF9DT2AdmVDZUnSDDf+L5PntcwlJVUf5j7sdN9F2cYGzk75PyDZHVsZDf8DLwfA+/RzEeP5XZFAuLCEqlOxjV/WFKYfKUKJIgMkl5xYYLca0aiKcluEI6mg2rh+ClFRptKqgOHWeC6LJiQ=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(18002099003)(5023799004)(56012099006)(4143699003)(6133799003)(22082099003)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(11063799006)(4143699003)(22082099003)(18002099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?K29TTnF0ZVhuN3VRWVVkNitOTTkxdDQ3c3V3MzYxd0xNMGtCc2R3dm1VL0pK?=
- =?utf-8?B?anowVU4rRSs2TlYyR3Y1OFBVa0xidTVmb1praC9QaWpsZ1M0RCt2NHpCQ3Er?=
- =?utf-8?B?dzFMZ3djUjhua3lOOFIvaUt5Mk1DckRJa1FWVll2bVpqUzN6anlqR0oraFNU?=
- =?utf-8?B?Tms0Zi9OajNNS2toZzErZDhIckFIclAydE51dzBxeGxsanZBN1kySTVuNUly?=
- =?utf-8?B?OG02SW92cE84VHdYbkoyN2QxSU9ycit3UmdmcE5RdDJMcGpvQVpLL1hCb2Nq?=
- =?utf-8?B?bGpWeGx4MmpBdk1HR09jV0VmdVlGRDRseS9UTCs0akQ1MGp4ZXRLSEEwbU0y?=
- =?utf-8?B?WDI4bHNwRUJkVVA5N0pmMmErS0pNM3ZCdHVZSG42UnBMNG9CMk1Ucm9xS1FO?=
- =?utf-8?B?Tm90SmNzNWpXT2dZUVczeXA4Y0FxUUF4TGQzbkVLVzlmRFpPeTNlN05tREgy?=
- =?utf-8?B?S2FjTGNFR3YyQk1zV1FYU2NOaWQ2UFVPUnlLYW0xeUI2SUZJeG1pOFhMTkpZ?=
- =?utf-8?B?VUlVcWpWUGJWalNDUzJaRnRTSVFRZXVUY3YrcnhNWTFwS3hQaGVjNkxIdzEx?=
- =?utf-8?B?RHgwcUYyeWZtQ0FHVnNZSDFDVnZWTjZvYzBZVDVFcVZJOWRwcndNS0hWZk02?=
- =?utf-8?B?M1hCYmpVQzdtaHZLMmVHQjhvdjlKaS9RSGtDclV2R0VCZCt5ZkNWQkFqZTBC?=
- =?utf-8?B?R21MSzFUZWFXWEdSMmZXSE5TQ0N0bUNBU05JZWdqeXpSZEdaTFdoZGRoQXdZ?=
- =?utf-8?B?a1I2dHQ1NTFLYWQ1bkxOODNYdEZvN2w3bzdYSkhKN2ZRUW1iSXhhZkpHcW9o?=
- =?utf-8?B?ZXRRZnhHMGRPTGhyQUNFTGpsRjNMeHJad0NSamN5Wlk3Yis0cFVZd1d1V1V3?=
- =?utf-8?B?VmduSitoNUJjMG9NWkhVQXVCamxRRzc2bTJQajN3SWh2blpjd2Q1L0xsWmEx?=
- =?utf-8?B?ekdGL1FzUitkOEJuNVJYUXhYS3ZSNUF1YmxiOTlUdXlERUsyd1hkOE1kckRH?=
- =?utf-8?B?NTZYSmtGdW1sTi80RTJkOHVkZ1Q5TE9nS0c5NjlCR0dSYXBTMmx1RytQVGNG?=
- =?utf-8?B?RkIwdHJsVnp2RVFERTh6OVlHdzdnRW9TMEFJNlhLSExLejlnaGJZb01LUW9Y?=
- =?utf-8?B?NXBCTzNaZDRyVExYZFZPNkZUOE83Vlpmd0I5WCsrMno1UjJCT1cxSUpYcXhW?=
- =?utf-8?B?KytPM1ZDTUhWWWptYzl1WTFGL0NWYWM5bmtHYVlpalJpYUJ3cDl2dVlYYURF?=
- =?utf-8?B?Sit3NEdwOFFKSGVMWUFrcnduQ2J1ZHNCbzhhQm5JbkhZdHVxcWUwTTVPaDRR?=
- =?utf-8?B?TnQ2b08za2RORW5aRmcxczdjWW8rMkZYWG8vNEdCY3dZNmhXYVhINlhXblJs?=
- =?utf-8?B?cFpCNTBmaTY0NFVock1wQXZqZzc5UlF2Y3VXYmN4NXd3OU1hN0tYOHJLbFJ5?=
- =?utf-8?B?MmNnbm9hNjJzZTJZU2FMZTdqMUNyRDBDZmtqTnFZQmxzTW5vVXBuTldCa0JO?=
- =?utf-8?B?VWh1dWlKSmdzL2pURjJQK3BaZnBVTXJ3QlpoYzZNeGtzQ3BCMnYwWWFGeUFN?=
- =?utf-8?B?dmpOOHA3YnQ4bGlyZWlMdzdCSnJLV1orQ3J1RE9aYnZnL1k2TFE5QTNKTVpR?=
- =?utf-8?B?a0ZKTklNa0ZYVUFVVzNnOXBETnZyblpFZDJTYkp5SjhIeUV5TXVaQVpGMzlJ?=
- =?utf-8?B?N01jMGkvQnUxaWgrMVVIQTBxMHlyNTVRNm8vdEg4cFZYd0hDcE1rRFpXL1ZU?=
- =?utf-8?B?dzdqdDhwblVjWnBxeDBQNld0V2ZBR1JWQVZKQ2NDSlB5QitnaDlQZ0IrV2VF?=
- =?utf-8?B?UUxtUVFmL3FoY1FlMDBkNDZqUUNPY3RHelhNN2NtK3JPYkZkcjV1YkFwL3pL?=
- =?utf-8?B?bDR2TndlTGJqUFJCTHNScmJZNlFpVVoyQkNaVnJoQkxhYkNmZU9HY3laYUJH?=
- =?utf-8?B?aFdDM2dlbDdlYlpLREd3UzMrTkpNVVY4YURhL2VTTTJKWXk5b09LbGswYXE1?=
- =?utf-8?B?eDV4c0VwdXNDR0kwWXJjZC9ua1J5VjhNOWNUM2swRXNLeTNFU0ZCQjVBTjZu?=
- =?utf-8?B?cnYxeENEOXpKNzMrdGpTV1REQ1hDcnZuVndsaC9XSE5tUS9sdEcrYjd6Y3RM?=
- =?utf-8?B?cGhDVWQxODNXK2F5bjJ1Y3hVYlN2V3ZhYjg5MGdEeXhQbU5mSUpNKzBPRWdI?=
- =?utf-8?B?RWhOOCthZnVHbE1vazJHZ2k1bnFhaEJHbWRTc21hY0FoQmx2ditVUVZDeFhB?=
- =?utf-8?B?cW43ajcxckZMR2RjdGFGQlIyYlVOOVplRnNoU2RmbVB5ZHNnNjRPbHdvL0hy?=
- =?utf-8?Q?K2dAMBQADAI3XyQ9YQ?=
+	=?utf-8?B?Mk52NGVlKzFwU2VUYUhpZlRHTVZtNmFsR0FHUG5mUlRyWkpFZUkzRUNLaDM0?=
+ =?utf-8?B?NldRdFVVdi94clB5OUJNUmd0R1pFWGFnY2JkUFY4cjcvQ0dlOVprUk5MZm5L?=
+ =?utf-8?B?TzlPckFvYkJGNlM2c2ZTYm56ZlBCVTNyczhlMGsxblZFbmlCN0h1NDhZQmxC?=
+ =?utf-8?B?ellRcCtQZnE1RC93U3lqNjV4Zmt1RjFRWm5kUmZwUVlkTlQvRzJlc3hYVjQ4?=
+ =?utf-8?B?UEtGT2cvRmlkc3hyclhpaFVtczlUV0FUWWZPbXN5bDVTNW5iZGVzVGJpVmVB?=
+ =?utf-8?B?SFhOQ1F2ZXRNMWFoN2t1MkRXOGZGam5iWFBYKzdhc2h4NGF2ampEdmtqSUo2?=
+ =?utf-8?B?Ujd2YVhOTy8xTGd4NVVjQi9hRFJoWlJhZHRoQkJjbFVId3AvUFJQL05Lc040?=
+ =?utf-8?B?SFV6TjFPbTJzTVkzS29UKzVTRE52TlJ0S0xYaWxOTkZLbFFQVVVNMzdPbWZs?=
+ =?utf-8?B?V3daenExblExL3liU3RjV0RWMW9kV2laM3VlYkcrd0FVT05XTE5aaGtuRHcz?=
+ =?utf-8?B?RnpHK2lYOXltM1V3ZkRmSEN5YlpPU0tPbVBrWVFTZmdkaDBkMkVNYlZudkt0?=
+ =?utf-8?B?SFdieXoyYXV2ckM0UmFMMS9QQ1Vuc0dEd3FFZmdwR1FocXd4ZHpvdDV4eVl2?=
+ =?utf-8?B?NWpmWTlZUzRXdUIyYmdPWGhoczlobEVySzU4OXJHN2V6TTZtTUQxOUVpRE0x?=
+ =?utf-8?B?dGVMclE3VHZkMTBZQTNsRjYwSWtSSXRIL1hDYTBSeVJIemlBaVI2Wkx1Y2VJ?=
+ =?utf-8?B?QzhNbGZhL0NJT0wxSHNwMXFkQ0hkbTJPanBNdktpQk9CV01pdnNLblE1Um0z?=
+ =?utf-8?B?MjRqUTVWT3N4c1N2Y3NXZ0Jvc0p5UytRc2lXR0E1MVlvYlFZYXM1U2NlSFho?=
+ =?utf-8?B?NEU0Y01qcE9ZNFdGR3lFcUFvTXRwOEdNWCsyOGtKUFVRWE5Lejk1MHBEdDdH?=
+ =?utf-8?B?ekF3cDFLeDdvMUhSUDc2TVdJZnNLUDdnRlZnQSsxdnQxN29DOHZhS2cvQ29h?=
+ =?utf-8?B?QUg0YU5lVjV3eCthR25FVitSQncweXU2OWp3RWtFRzY4ZklhMjBoK3M0b1Z2?=
+ =?utf-8?B?L1Z2TnJCRzBldHNDMUEzR2xYcHZOTk4vZlRDdmt1SU1UWkZGZEFZWVI2K09M?=
+ =?utf-8?B?bWZpVEk4QmJKOU4vTUtHVy9tdDk3SnBwMUtxY01JamdESVJmUVF4Nk9KWnF1?=
+ =?utf-8?B?MU9iWlNXNW16RmYrU1RIYTJtdFZLRUEwd3FKNXRZcWVna0FVSU8yVjhVUURK?=
+ =?utf-8?B?dDlGeFF0aGpqR0Z5MzRCYUpGN0t0MTBoYzJtVkVkSmhza3JzZFFFU3pFOTd1?=
+ =?utf-8?B?dmRQRzNyVW5EZi9vbGUySktzd3dzQlhnQy8zVTdVb3pYUVJqS0pSMzd4VStk?=
+ =?utf-8?B?NmZJbm9iaVY1b0ZhQ2ZSUStDQ1c4bHVxRk5LRDd1K1VQR1ZPbytEeWN4V2xD?=
+ =?utf-8?B?MGV4Wk9wNExQN1BvKzNwZVV3N1RWRVZvcTQ1ZnE1QVZibDY0b1pxMll3YldR?=
+ =?utf-8?B?QTJBaVovL0toU0Fubzg1Zm5NeTA1UVd1MXBMbVp5SjRWWTBBSVV1RGpFWERW?=
+ =?utf-8?B?a0t4OXljZ3lNa05NZXI5THZtSzZaNEFucXg1RkgrNWhuZE5JU05jUGJpYmhw?=
+ =?utf-8?B?bDRwVHdySUl3Vk1tVGNFVTlNdjk0bTNEY1E4cXZjN2pPamFzaVNmbjJrTnIv?=
+ =?utf-8?B?bDVmSUF1T2dlSHE2NlF0VmZDVkh0eDhHa1lYdVgxQXYwVGZ6NlRCOE0vV2hT?=
+ =?utf-8?B?QW44VGdmcitZREk4UTJrRXE3Y05sbms0aHUvQ2J3UmpyVVM1NmhhTkFRN0Fw?=
+ =?utf-8?B?eTJ3bTBFRThVcHZDeXdFTHVwa0hhTVZhZEV6VlljQ3ZhcDJhdlJHNGJYU0VV?=
+ =?utf-8?B?cGU1ZVUvTFZyMWd6T1Y2SkJ3RW1YSTdCeFNPeEIwbEFhSlNZa1czNmR6dUcr?=
+ =?utf-8?B?RmlEc1I3eVVrclpxckYrdU1odllIUGVselRCQ2RWVk1oZVRPckV2Y29QTUtt?=
+ =?utf-8?B?RFN3cUZPQ1VFeGN1VTZZUVdzeUVITWM4MnBMUUlhWnBtQ3d4eng1ZHhIcFox?=
+ =?utf-8?B?R0dDaCtITzNjem5IYmtJcFpkamFNWUVlemZ3RWN6NnFXSTRVbEZuOFJDbWR4?=
+ =?utf-8?B?VUJIeU4xYllqK0daSWxZcSszTjFCQklpd0grS2x0VG5BM1ZydnE1dWQxaDFy?=
+ =?utf-8?B?VldZWG1VbGZ1OHpRdVQwTGdTMU1OaytPemtJSzlvRW92dWk5STZjRUJyT1I5?=
+ =?utf-8?B?MzFadktYV09ldmo5Q3ljbFVnZlRIZU01VXZSekRaQmFGUnJQVkY4NTR2aExX?=
+ =?utf-8?Q?dHi3/bsVPA3HJd/PnZ?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 573fc9e5-426d-467e-defe-08dedb945940
+X-MS-Exchange-CrossTenant-Network-Message-Id: edc34bbf-c9bc-489b-8273-08dedb9ac2b4
 X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB9049.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 19:25:33.4748
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 20:11:27.3456
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BXpi3rd2YiLK7arEOyHoM/eCdH1iZRvj1/afRDRN4GkFfEtXyJeIu+qGAk7cPkj2Wtq+dL+SsP+LwS1yA0na6Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8106
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4eTGo2o7bRwiJCKC4bsaCQDZKlNHu6IF+6vRGpxvtRvD6uH2GJWxxlR5wCObeTokF2+b4TLeC8HuAnLtaZWk0w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4353
 
 
 
-On 6/30/2026 1:24 PM, sashiko-bot@kernel.org wrote:
+
+On 6/30/2026 1:32 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Indefinite deferral of RMP optimizations via mod_delayed_work timer reset.
+> - [Critical] System suspend (PM transitions) bypasses `cpu_hotplug_disable()`, stripping `SnpEn` from secondary CPUs on resume.
 > --
 > 
-> commit 5a78324bed688cb2c4b58d363233a323513bd9b4
+> commit 29b8362e9ad72efa8892f6bb3124dbbcc29ee822
 > Author: Ashish Kalra <ashish.kalra@amd.com>
 > 
-> KVM: SEV: Perform RMP optimizations on SNP guest shutdown
+> x86/sev: Disable CPU hotplug while SNP is active
 > 
-> This commit performs RMP optimizations on memory freed by terminating SNP
-> guests. The scan is deferred so that a single optimization pass can batch
-> memory from multiple guests terminating in a short period of time.
+> This commit disables CPU hotplug in snp_prepare() before SNP is enabled and
+> re-enables it in snp_shutdown(). This aims to prevent CPUs from coming online
+> without the SnpEn bit set while SNP is active, as the firmware cannot track
+> OS CPU hotplug events.
 > 
->> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
->> index 4272293478766..c574849b15878 100644
->> --- a/arch/x86/kvm/svm/sev.c
->> +++ b/arch/x86/kvm/svm/sev.c
+>> diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+>> index dab6e1c290bca..04a58ac4339cb 100644
+>> --- a/arch/x86/virt/svm/sev.c
+>> +++ b/arch/x86/virt/svm/sev.c
+>> @@ -535,6 +535,15 @@ int snp_prepare(void)
+>>  
+>>  	clear_rmp();
+>>  
+>> +	/*
+>> +	 * Disable CPU hotplug before enabling SNP, so no CPU can come online
+>> +	 * without SnpEn while SNP is enabled; it is re-enabled in snp_shutdown()
+>> +	 * once SNP is disabled.  Must be before cpus_read_lock():
+>> +	 * cpu_hotplug_disable() takes cpu_add_remove_lock, which nests above
+>> +	 * cpu_hotplug_lock.
+>> +	 */
+>> +	cpu_hotplug_disable();
+> 
+> [Severity: Critical]
+> Does this actually prevent all CPUs from coming online without SnpEn?
+> 
+> Looking at system suspend (PM transitions), freeze_secondary_cpus() calls
+> _cpu_down() directly, which bypasses the cpu_hotplug_disabled check. Upon
+> resume, thaw_secondary_cpus() brings them back online via _cpu_up().
+> 
+> Since snp_enable() is called via a one-off on_each_cpu() in snp_prepare()
+> rather than being registered as a CPU hotplug callback, wouldn't secondary
+> CPUs resume with the SnpEn MSR bit cleared? 
+> 
+> This could allow a suspend/resume cycle to create an asymmetrical state where
+> hardware RMP checks are bypassed.
+> 
 > [ ... ]
->> @@ -2992,6 +2992,16 @@ void sev_vm_destroy(struct kvm *kvm)
->>  		 */
->>  		if (snp_decommission_context(kvm))
->>  			return;
->> +
->> +		/*
->> +		 * Perform RMP optimizations on memory freed by terminating
->> +		 * guests.  The scan is deferred, so it normally runs after
->> +		 * sev_gmem_invalidate() has converted this guest's pages back to
->> +		 * shared, and picks them up then.  A very large guest whose
->> +		 * conversion has not finished by then is picked up by a later
->> +		 * teardown's scan.
->> +		 */
->> +		snp_rmpopt_all_physmem();
-> 
-> [Severity: High]
-> Can an unprivileged user indefinitely defer the RMP optimizations by
-> repeatedly creating and destroying minimal SNP VMs?
-> 
-> Looking at snp_rmpopt_all_physmem(), it uses mod_delayed_work(), which
-> cancels any pending timer and pushes the execution timeout back on every
-> call.
-> 
-> If VMs are destroyed at a frequency higher than the timeout,
-> the background optimization task might be starved and never execute,
-> leading to degraded memory access performance.
-> 
-> Would using queue_delayed_work() instead prevent this starvation by
-> ensuring the timer is not pushed back if the work is already queued?
-> 
->>  	} else {
->>  		sev_unbind_asid(kvm, sev->handle);
->>  	}
 > 
 
-mod_delayed_work() is deliberate here. It runs the scan RMPOPT_WORK_TIMEOUT after the last teardown, which coalesces a burst into one scan and gives
-each guest's page conversion (sev_gmem_invalidate() -> shared) time to finish before the scan — so its freed pages actually get optimized.
-  
-The only difference from queue_delayed_work() is which state the work is in when a teardown happens:
-- Executing (a scan is running): the work isn't pending, so both calls arm a fresh timer and schedule a follow-up scan — no difference.
-- Pending (a scan is already scheduled but hasn't run yet): mod_delayed_work() restarts the timer on every teardown, so the scan always runs a full
-  RMPOPT_WORK_TIMEOUT after the most recent teardown — each teardown gets enough time for its pages to be freed before the scan looks at them.
-  queue_delayed_work() keeps the timer set by the first teardown and ignores later ones, so the scan can fire while a recent teardown's pages are still
-  being freed, those pages are missed, and since nothing reschedules, they stay unoptimized until some later teardown starts a new timer.
-  
-  - Example (10s timeout): VM-A ends at t=0 -> scan scheduled for t=10. VM-B ends at t=9. With mod, the scan moves to t=19, so VM-B's pages are freed in
-    time and get optimized. With queue, the scan still fires at t=10 — before VM-B's pages are freed — so VM-B is missed until the next teardown.
-
-    That's a regression in the common case.
-
-    So queue_delayed_work() might help a rare edge case but hurts the common one. So, keeping mod_delayed_work().
+You're right about the mechanism — cpu_hotplug_disable() doesn't cover the suspend freeze/thaw path, and snp_enable() has no resume hook. But an SNP
+host doesn't support suspend/resume: SNP is set up once at boot (SnpEn on all CPUs followed by SNP_INIT), and that state can't be rebuilt on resume
+without a full re-init. So this can't arise in practice, and it's pre-existing base-SNP behavior, not something this patch introduces.
 
 Thanks,
 Ashish
