@@ -1,86 +1,80 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF233E5A01
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 07:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF233DFC7B
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 07:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783322828; cv=none; b=QQ8hyB1AHsFMsMq3PObi3jXfhjp6J/mZvbOyuNu1JGkCMt0o0lzz4P1opAgODkYAUf4ZRLU36FXn3tWOENCg+174tzxHmdL6Ca6jfTrN4XbdmzhEk2DANYHf2Y7gsmNV5HxKxHjjdfxMppkqKfsmAipMFFOw0GNaaNoQ5sJewhU=
+	t=1783323813; cv=none; b=GbDHovQ68ZxUPspgvpQgq81sOB9I1Vn0m/OQUmURLIMu2/rrgcKSijylpOjv/lldrGCHXk/Vx2fZeqDywR7lxfhEsMpsElmO/C62XkEGod1TndGtPJXilkFNdpzpoazLlSW6TJv1RNtT+5MsKMkVxFOl66lDbNVZqeVR/9Fjwbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783322828; c=relaxed/simple;
-	bh=VGLv6qBT0VwmOrPenguMQEV8wXTrjXIc/6Va/Ksm0l8=;
+	s=arc-20240116; t=1783323813; c=relaxed/simple;
+	bh=O3zLruKzuhrBX/Lm3TcADZ4xWO3kBpDMA8fvapkLsbM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZH53/RxYfFBpDGGAuzQPul/DB5SRKy5+/lLJN00Z+tMkRzAe5mOTqooP4X4QRJ1IjCYmmsCev5bKnxHB+08Hm5QwwzXhkMFOz3UFQJz3ijYxq71QZooNnmmbcRRF1UFXUvSgUrVSVfyhOB56t4hJZxxFa5QL3LkipmcE1umgy+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BD7VG03Z; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CQktJuCM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=H8aLm1VKD0R3V3pxGXt47cdQlD4xvr+cvX25eYVit8fYNqg/L/SMzxLh19Bm2zOS7KHIqkRC8jgAesrePxlnQ9jI6KoYttdmbKgKTWEM+/je+caooCEgUxmIKmCoJIxqvuP98TZeWrVGjCPRq1FpoiWTWR73J9FYmBYBcQwf6kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zCgjAI6f; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2ZUu++hR; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zCgjAI6f; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2ZUu++hR; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BD7VG03Z";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CQktJuCM"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66641Uog3623853
-	for <sashiko-reviews@lists.linux.dev>; Mon, 6 Jul 2026 07:26:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VGLv6qBT0VwmOrPenguMQEV8wXTrjXIc/6Va/Ksm0l8=; b=BD7VG03Z3Gb/2bej
-	HnIKbVZXiOyTjbXtf+Pjc37AwitscG2b1e0NpsyXV9TRbBaYWwJqZe/mkH43WCyZ
-	DqDQoOZ2Rn+2uKnis9swKKwfr7wl1erj05y15cGUGrE3UqWmzcjqd4xL9l3dfMtV
-	HD8jEEVxHEX5ekm/UdjM8Dxfja4dXJdHcceHcAsRl2enWfrCCP54tQT4WPrxpydX
-	t8JowvdhFm05lKp5VhXChODrELKO2xam3k9O9r6BApMReFIG4f3guC2csquP/fDQ
-	mfNXfff29HQaYZ0StftSwLoeQWy5dNsKln5j/YMBeB7hi3i8cI22CQ+SHnCxj8dl
-	8xdY2g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6s4sw5jv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 07:26:54 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-92aea0d801dso247965585a.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 00:26:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783322814; x=1783927614; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=VGLv6qBT0VwmOrPenguMQEV8wXTrjXIc/6Va/Ksm0l8=;
-        b=CQktJuCMNeLDloT9VggoD1tT9IMRZ7oLJ8GtZD+8AcKGpWYbJ/bjizbaR/I84o//Pf
-         cPrAwdNkLryt/hhUFFQs6dniTE/wwYZ0nDUDvuNaRQAoTYwMEk1XboPz0XaJdj55vxsa
-         q36HLM8hOw0IRheHsrG1b/ZmF3JgQwGMYkeixhCUmDVUQb8iiYBtEWsHDkQwdmZfw53u
-         G1So//OLLbdfRXgf5Xn2mPFmJRINwVD/nxZrmZUSYFNLRv6xJSMVQ0xZk15xvCpZUGl5
-         QD+W5ojquAkjI5byqciuUNfZ3rofOvbPGKIevB0zCAdbpDFCA5GAImMr1ttqZNh01H/i
-         SzrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783322814; x=1783927614;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=VGLv6qBT0VwmOrPenguMQEV8wXTrjXIc/6Va/Ksm0l8=;
-        b=Ceu57flWva1xemu3wjdahVwrb3XKCa+gS2QqhiejujXcFYT3bQ3mLrrMzvIyl1doW2
-         F3tsW+NgZPRA+nHbkrnDd7DiDw0PxAoBUil+rBxZJml7ILH5sUHBDp0SyrNo09ElCQJQ
-         4r2vbE9dzov7i/ovY/dWeINN8bm9enu7Be2BkmxeDriTlSKcldIk2EINY5RzXODL/lLS
-         JIGBTvqJmPYnxBsJ9nvQPkBR6aiR08kMPzYB8xHdMVKEFRPntBn9Zrn0EV//JisGr317
-         3zajW17HPYD0oDoHAlqTovsmwBMCnqbAdVd5+boPHfumhguIhYfozaXlEDHTakI0494Y
-         ZqUQ==
-X-Gm-Message-State: AOJu0Yy+Uxslv3N35vv/ysZEc2ntPW4uNaoim6SCA/AjIPPFGBN1Uh2G
-	bX3TzMEpo62yQ9kn95Q8+DWecUbGLV28uWPgTv4RLDnsNfhzoOJBfpxC3k5xBd1pNSECjVgbIo6
-	U9OAyJP7jhOPko+mXN4mxan/VAhF+KUN/kdN5ysSZcdA71t8gVZ/OV7rO1Lq3Ff3JgaUUOqIqt5
-	cpiA4=
-X-Gm-Gg: AfdE7ckPbiJ2ErrEazyeInuwGk0GsYeSW5nAj7kInHP962mcemgCymysm6qqvQwOPOo
-	PW1pnvGX/++PnOMinsbibR42xtJmv3wWh/hvg8MhF4/7/i8Mdg1LEoyTJyjyblyfj8Ykb+6e/Ax
-	XitP/yK3TRshdjHV2irh/2u8GRsaR5ijBvQnCd5ejZnoK4pe+zropqngdY2D8Gn2dexOVJZANuI
-	PZxfigTkfW1wImaF/sAyDIuY0wQfYkP54RDrhGaBS1k7+1MO5r9zG16G5ZMLYvJJZt+2PIGLKsM
-	bUsZONh1FWHi9CfhN0zjzCWu4AAV3aLYRU9jJL38XfsLz1JM+jJr5nZHLsgY52MnfZwwfwr4JcX
-	L+laFs2x++AaolhvggxibSIQek/9K8N81WFJvr63I
-X-Received: by 2002:a05:620a:4096:b0:92e:94a7:16e8 with SMTP id af79cd13be357-92e9a3544admr1391190285a.15.1783322813796;
-        Mon, 06 Jul 2026 00:26:53 -0700 (PDT)
-X-Received: by 2002:a05:620a:4096:b0:92e:94a7:16e8 with SMTP id af79cd13be357-92e9a3544admr1391187485a.15.1783322813384;
-        Mon, 06 Jul 2026 00:26:53 -0700 (PDT)
-Received: from [192.168.1.110] ([178.197.223.174])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493ccdab3a8sm284626705e9.6.2026.07.06.00.26.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 00:26:52 -0700 (PDT)
-Message-ID: <f5d2ba3f-ccaa-4056-b4f1-bfbcc1408941@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 09:26:51 +0200
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zCgjAI6f";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2ZUu++hR";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zCgjAI6f";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2ZUu++hR"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id A4C5E759A7;
+	Mon,  6 Jul 2026 07:43:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783323796; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=08mM5gDTURucsGOhS+HdslmQIHzZiRSggy8aPce9TiE=;
+	b=zCgjAI6fpA6GmcgNxyuzJYM8KOKA/6QaBBf0JmY261B5Tn5KYNVPyCA9m2XC//t4TExRPd
+	WwN9iYO76FPsHxNDYYdEGiutBmdi+h+6KzT05S5arVhHpCnfkl8oY7xNIu1VP8NBiWIVKI
+	dtyUShE6tNfCq/tsZoAsCXCxaL3p0VA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783323796;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=08mM5gDTURucsGOhS+HdslmQIHzZiRSggy8aPce9TiE=;
+	b=2ZUu++hRze2+Op2oUeinD/MlR4/Evs+M08V2foYX6ZH6wVqaIjDE62Fggq6bEzBdYmCWd+
+	yeGo1nj+hgQsLRCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783323796; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=08mM5gDTURucsGOhS+HdslmQIHzZiRSggy8aPce9TiE=;
+	b=zCgjAI6fpA6GmcgNxyuzJYM8KOKA/6QaBBf0JmY261B5Tn5KYNVPyCA9m2XC//t4TExRPd
+	WwN9iYO76FPsHxNDYYdEGiutBmdi+h+6KzT05S5arVhHpCnfkl8oY7xNIu1VP8NBiWIVKI
+	dtyUShE6tNfCq/tsZoAsCXCxaL3p0VA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783323796;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=08mM5gDTURucsGOhS+HdslmQIHzZiRSggy8aPce9TiE=;
+	b=2ZUu++hRze2+Op2oUeinD/MlR4/Evs+M08V2foYX6ZH6wVqaIjDE62Fggq6bEzBdYmCWd+
+	yeGo1nj+hgQsLRCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7B6AC779AA;
+	Mon,  6 Jul 2026 07:43:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id OkawHJRcS2q9fwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 06 Jul 2026 07:43:16 +0000
+Message-ID: <17c3bd76-9c01-436c-932d-159e936ef1f1@suse.de>
+Date: Mon, 6 Jul 2026 09:43:16 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -88,56 +82,190 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dtc: dt-check-style: Allow space-aligning indentation in
- DTS
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260706071446.87669-2-krzysztof.kozlowski@oss.qualcomm.com>
- <20260706072129.965D31F000E9@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH 1/9] drm/arcpgu: replace struct drm_simple_display_pipe
+ with regular atomic helpers
+To: sashiko-reviews@lists.linux.dev, Ze Huang <ze.huang@oss.qualcomm.com>
+Cc: Frank.Li@kernel.org, dri-devel@lists.freedesktop.org, imx@lists.linux.dev
+References: <20260705-drm-simple-kms-removal-v1-0-b4e1ca053623@oss.qualcomm.com>
+ <20260705-drm-simple-kms-removal-v1-1-b4e1ca053623@oss.qualcomm.com>
+ <20260704184304.6567A1F000E9@smtp.kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260706072129.965D31F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA3MiBTYWx0ZWRfX60rfqDvVyCXG
- if9FwFKeOVYSIEUjGr/Pa7VRnXFkP5H/VZzDBiKe6IP/UdQjisEUst58rJd/wStwIf6WETmnWvR
- wfmE2qmnf+vTS4G7WPhF1Ca+aPkCr4A=
-X-Proofpoint-ORIG-GUID: zHsfdDxGGIo5lX1T0REz2MWfOhqb37n3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA3MiBTYWx0ZWRfX/+/sssMPIpsy
- +nRH4Ix0cS2vPzwiOd+xx49D8p1eTRf6X9cYI2OLnTGJ3V8XNGggkucHrS+9S1xGD7R8in8aK8P
- xHtPVumGX2p7O1MkkZUJNz/gSvnkdfdXKq/daCFVwJIc6b3Vm0Da0rr9PThFrznf28cUxioTOkH
- NlKSF0LwxBRxgDVwQGEMe8uN9UJTjlYd2wfvTg5BO0VDJDf49wFPzwZIHSZAlFY7mwdKrCsIe7i
- CfOZwjhG4dMw7hQ0nO6+x1d6+wQxpFgfjBUr1cBDFDhvAWISjLGkOzzCEo8ABjx3hmXTfmuRAbq
- eQuUZPPxS8zwhl+vLKv4ufIIMaG9CJ233Z5CkR0RAoD4BmMi45yAxhXVizb2SMAsQAEqlY7XYf8
- QNCSd1dAIvaNsWdce0lT0Ri6lfO5QVUci2Kv8E8W2iU4DPZ+ZPTpdGtLwxrsamlolz5hx7KW8XU
- PqjCDWxeYxrV4yLkzjg==
-X-Proofpoint-GUID: zHsfdDxGGIo5lX1T0REz2MWfOhqb37n3
-X-Authority-Analysis: v=2.4 cv=ZfQt8MVA c=1 sm=1 tr=0 ts=6a4b58be cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=N6niishs+lR9UBL1FN3Qrw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=v6m7V3VtAPdBGwaNRcMA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060072
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260704184304.6567A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.989];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,qualcomm.com:email,imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+X-Spam-Level: 
 
-On 06/07/2026 09:21, sashiko-bot@kernel.org wrote:
+
+
+Am 04.07.26 um 20:43 schrieb sashiko-bot@kernel.org:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] The relaxed indentation check in `check_mixed_indent_chars` permits the 'space before tab' anti-pattern.
+>
+> New issues:
+> - [High] NULL pointer dereference when enabling CRTC without a primary plane framebuffer.
 
-Not relevant.
-
-> - [Low] Docstring and rule registry description contradict the new code behavior.
-
-I'll update.
+False positive here. Calling drm_atomic_helper_check_primary_plane() 
+from the CRTC's atomic check makes it impossible to enable the CRTC 
+without a primary plane.
 
 
 
-Best regards,
-Krzysztof
+>
+> Pre-existing issues:
+> - [High] Unsafe direct access of global plane and CRTC state pointers in atomic commit callbacks.
+> --
+>
+> commit 6344532446cab68117e44660f110ef0c8aec15d7
+> Author: Ze Huang <ze.huang@oss.qualcomm.com>
+>
+> drm/arcpgu: replace struct drm_simple_display_pipe with regular atomic helpers
+>
+> This commit replaces drm_simple_display_pipe with regular atomic helpers.
+> It instantiates the plane, CRTC, and encoder directly, wiring them up with
+> standard atomic helpers to remove the dependency on the simple-KMS interface.
+>
+>> diff --git a/drivers/gpu/drm/tiny/arcpgu.c b/drivers/gpu/drm/tiny/arcpgu.c
+>> index c93d61ac0bb75..375cdb79e4e89 100644
+>> --- a/drivers/gpu/drm/tiny/arcpgu.c
+>> +++ b/drivers/gpu/drm/tiny/arcpgu.c
+> [ ... ]
+>> @@ -117,7 +117,7 @@ static const u32 arc_pgu_supported_formats[] = {
+>>   
+>>   static void arc_pgu_set_pxl_fmt(struct arcpgu_drm_private *arcpgu)
+>>   {
+>> -	const struct drm_framebuffer *fb = arcpgu->pipe.plane.state->fb;
+>> +	const struct drm_framebuffer *fb = arcpgu->plane.state->fb;
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does reading the global
+> plane->state pointer here instead of using the state passed via the
+> drm_atomic_commit parameter cause issues during non-blocking atomic commits?
+>
+> If multiple non-blocking commits are queued rapidly, the global pointers
+> advance to the newest state. When the first commit's commit_tail finally
+> executes, reading plane->state directly instead of extracting the specific
+> commit's state could cause the older commit to program the hardware using a
+> future commit's state.
+>
+> [Severity: High]
+> Can this dereference a NULL pointer if the CRTC is enabled without a primary
+> plane framebuffer?
+>
+> The transition from drm_simple_display_pipe to generic atomic helpers removed
+> the underlying protection that previously prevented the CRTC from enabling
+> without a valid framebuffer. If userspace performs an atomic commit that
+> enables the CRTC but sets the primary plane's framebuffer to 0 (NULL),
+> drm_atomic_helper_check_crtc_primary_plane verifies the plane is attached but
+> does not enforce plane_state->fb != NULL.
+>
+> This would allow the commit to proceed to arcpgu_crtc_helper_atomic_enable(),
+> which calls arc_pgu_mode_set(), and then arc_pgu_set_pxl_fmt(), blindly
+> dereferencing fb->format->format here.
+>
+>>   	uint32_t pixel_format = fb->format->format;
+>>   	u32 format = DRM_FORMAT_INVALID;
+>>   	int i;
+> [ ... ]
+>> @@ -155,7 +155,7 @@ static enum drm_mode_status arc_pgu_mode_valid(struct drm_simple_display_pipe *p
+>>   
+>>   static void arc_pgu_mode_set(struct arcpgu_drm_private *arcpgu)
+>>   {
+>> -	struct drm_display_mode *m = &arcpgu->pipe.crtc.state->adjusted_mode;
+>> +	struct drm_display_mode *m = &arcpgu->crtc.state->adjusted_mode;
+> [Severity: High]
+> This is a pre-existing issue, but could reading the global crtc->state pointer
+> directly cause hardware state corruption or frame tearing?
+>
+> Similar to the plane state issue above, if rapid non-blocking atomic commits
+> are generated, arc_pgu_mode_set() might read from the newest global state
+> rather than the specific commit's state object.
+>
+>>   	u32 val;
+>>   
+>>   	arc_pgu_write(arcpgu, ARCPGU_REG_FMT,
+> [ ... ]
+>> @@ -218,35 +218,106 @@ static void arc_pgu_disable(struct drm_simple_display_pipe *pipe)
+>>   			      ~ARCPGU_CTRL_ENABLE_MASK);
+>>   }
+>>   
+>> -static void arc_pgu_update(struct drm_simple_display_pipe *pipe,
+>> -			   struct drm_plane_state *state)
+>> +static void arcpgu_plane_helper_atomic_update(struct drm_plane *plane,
+>> +					      struct drm_atomic_commit *state)
+>>   {
+>>   	struct arcpgu_drm_private *arcpgu;
+>>   	struct drm_gem_dma_object *gem;
+>>   
+>> -	if (!pipe->plane.state->fb)
+>> +	if (!plane->state->fb)
+> [Severity: High]
+> This is a pre-existing issue, but does arcpgu_plane_helper_atomic_update()
+> safely handle non-blocking atomic commits when reading plane->state->fb
+> directly?
+>
+> Reading the global plane->state pointer instead of extracting the new plane
+> state from the drm_atomic_commit parameter could result in the same race
+> condition during asynchronous commit_tail execution.
+>
+>>   		return;
+>>   
+>> -	arcpgu = pipe_to_arcpgu_priv(pipe);
+>> -	gem = drm_fb_dma_get_gem_obj(pipe->plane.state->fb, 0);
+>> +	arcpgu = dev_to_arcpgu(plane->dev);
+>> +	gem = drm_fb_dma_get_gem_obj(plane->state->fb, 0);
+>>   	arc_pgu_write(arcpgu, ARCPGU_REG_BUF0_ADDR, gem->dma_addr);
+>>   }
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+
+
