@@ -1,30 +1,30 @@
 Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7BD3F54AC
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 07:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B1F3101D8
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 07:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783322349; cv=none; b=Bjzpvn1ZdjK4jhxSTSrPBHvnMKs/cvD0hrKE0TblQaaMjohcnK5MugABKtnMAazSN7IpMkUL4L0iTjiPihTxIZXIJFJMN/QWamz4P5M1zkjtzie6ITnx0awrMM6uge2D2oF69rCw8ODg0Q8S0nEXYnA51q0iom1Ua6+XBcVFLo8=
+	t=1783322579; cv=none; b=Hgrbc1wLMBcOyCjkEUFdKrNwOj5JVv4v2Oo9zGzD4WL8neNGcnxhZwzCpL3atZf6Ku0HwdTFMVfRdyEguFHIxGd1sjFA4Lkz3K8ULwLc5ZieiF23658zZKX/RcPxkVx9as6z1wDSEmXjXp8hAo5Ag4ZgOptLkVX5y8245b5hJ4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783322349; c=relaxed/simple;
-	bh=jw+AKUqvXa6peZUSX1ld2ajFCd6hBYDF8Cq0Z7vvk0E=;
+	s=arc-20240116; t=1783322579; c=relaxed/simple;
+	bh=793G8Fg70Xi/DClVrYVEIisgQu2USDkKfhP0N/gMUP0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o+RbkbFLdEiP/cP8YsAIF7GHR4V/aSIheSEYbjYIxx0WxViLJob1V+iJOw6YpWLELdsIcV02wYNYSSi9RL7Kqo7XRBaJPVsTlXZe+atJYzrN4hSUHo7E1JS3Iw5BRFzWKQjMM19EKGCSbRuRXinGi+pdRQ2LXATOf0EKLFjgumI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+	 In-Reply-To:Content-Type; b=A83e4qksn7wLIwsBcvJHkt79FjxffKPkOoASAKmchd/KrJqPCtKM2PSU2IiASfwz5I2lVHQ/4Szy9gDUOHQ7aJUAJg6rBlE4D6LyTfnOb0lJukIGCZ22no3VdUMnpJoR+OSEE3DPWJRRfiN3u+1hIqX6ZMOLXR19GsCA3Teuybk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
 Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gtwhJ0LJhzYQtkJ
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 15:18:56 +0800 (CST)
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gtwmj1537zYQtFR
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 15:22:45 +0800 (CST)
 Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 464124056B
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 15:18:57 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTP id 606164056B
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 15:22:46 +0800 (CST)
 Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBnl1jhVktql2jzAA--.45440S2;
-	Mon, 06 Jul 2026 15:18:57 +0800 (CST)
-Message-ID: <35a5578d-dc51-4fc7-9fa6-2429f2cd49da@huaweicloud.com>
-Date: Mon, 6 Jul 2026 15:18:56 +0800
+	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDH+FnGV0tq4bnzAA--.46886S2;
+	Mon, 06 Jul 2026 15:22:46 +0800 (CST)
+Message-ID: <b4b2a9ed-d9bd-4dfa-817d-37a7865107ce@huaweicloud.com>
+Date: Mon, 6 Jul 2026 15:22:46 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,22 +32,22 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v4 2/6] riscv, bpf: Remove redundant ctx->offset
- initialization
+Subject: Re: [PATCH bpf-next v4 4/6] riscv, bpf: Add RV_TAILCALL_OFFSET macro
+ to format tailcall offset
 Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260629140048.733346-1-pulehui@huaweicloud.com>
- <20260629140048.733346-3-pulehui@huaweicloud.com>
- <20260629140839.D2DE71F00A3A@smtp.kernel.org>
+ <20260629140048.733346-5-pulehui@huaweicloud.com>
+ <20260629141034.D5F6F1F000E9@smtp.kernel.org>
 From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260629140839.D2DE71F00A3A@smtp.kernel.org>
+In-Reply-To: <20260629141034.D5F6F1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgBnl1jhVktql2jzAA--.45440S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5Cw4UJF15Gr13Gw48WFg_yoW8tFyfpF
-	s3K3ZxC398XrsYgwnrJa48ZFWYyw4kC3W7CFs09ryUZF90grnFqF1Yyw45uF95ArWF9F1j
-	9rWjvwn3Ar1DCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:gCh0CgDH+FnGV0tq4bnzAA--.46886S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw1fXw4rKFy3Cr4UJwb_yoW5ArWrpF
+	s3Jwn3CFyqqr1rKryDCF4qqa1avrZ5WF9rWr15CryaywnF9FykG3Z0k3yqqa45ur4UKa10
+	qFyq93s3uas8AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
 	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
 	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7Cj
@@ -63,53 +63,72 @@ X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5Cw4UJF15Gr13Gw48WFg_yoW8tFyfpF
 X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
 
-On 2026/6/29 22:08, sashiko-bot@kernel.org wrote:
+On 2026/6/29 22:10, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Buffer Overflow / JIT Convergence Failure due to violated monotonic shrinking guarantee
+> 
+> Pre-existing issues:
+> - [Critical] The tail call offset macro `RV_TAILCALL_OFFSET` incorrectly double-counts the KCFI preamble when `CONFIG_CFI` is enabled, causing tail-called programs to skip their stack pointer adjustment and corrupt the caller's stack frame.
 > --
 > 
-> commit 1c7e15d4942628f7431314e8bb5d6ca1fb3134f1
+> commit 655037e3f7e62935bb76d41ae8cffb13d2a38d50
 > Author: Pu Lehui <pulehui@huawei.com>
 > 
-> riscv, bpf: Remove redundant ctx->offset initialization
+> riscv, bpf: Add RV_TAILCALL_OFFSET macro to format tailcall offset
 > 
-> This commit removes the loop initializing ctx->offset and prev_ninsns in
-> bpf_int_jit_compile, operating under the assumption that the implicit
-> zero-initialization is sufficient and the manual setup is redundant.
+> Add RV_TAILCALL_OFFSET macro to format tailcall offset, and correct the
+> relevant comments.
 > 
->> diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
->> --- a/arch/riscv/net/bpf_jit_core.c
->> +++ b/arch/riscv/net/bpf_jit_core.c
->> @@ -79,11 +79,6 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_verifier_env *env, struct bpf_pr
->>   	if (build_body(ctx, extra_pass, NULL))
->>   		goto out_offset;
->>   
->> -	for (i = 0; i < prog->len; i++) {
->> -		prev_ninsns += 32;
->> -		ctx->offset[i] = prev_ninsns;
->> -	}
->> -
+>> diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+>> index 69512d93ca4a7..c239696cca646 100644
+>> --- a/arch/riscv/net/bpf_jit_comp64.c
+>> +++ b/arch/riscv/net/bpf_jit_comp64.c
+>> @@ -21,6 +21,8 @@
+>>   #define RV_KCFI_NINSNS (IS_ENABLED(CONFIG_CFI) ? 1 : 0)
+>>   /* imm that allows emit_imm to emit max count insns */
+>>   #define RV_MAX_COUNT_IMM 0x7FFF7FF7FF7FF7FF
+>> +/* kcfi, fentry and TCC init insns will be skipped on tailcall */
+>> +#define RV_TAILCALL_OFFSET ((RV_KCFI_NINSNS + RV_FENTRY_NINSNS + 1) * 4)
 > 
 > [Severity: Critical]
-> Could removing this worst-case initialization loop cause a regression by
-> breaking the monotonic shrinking guarantee of the JIT convergence algorithm?
+> This is a pre-existing issue, but does RV_TAILCALL_OFFSET incorrectly
+> double-count the KCFI preamble when CONFIG_CFI is enabled?
 > 
-> When ctx->offset is simply zero-initialized, forward branches will initially
-> evaluate to a zero or negative distance in the first pass. This causes the
-> JIT to emit short branch instructions. As targets resolve to their actual
-> positive offsets in subsequent passes, these branch distances increase,
-> which forces the JIT to expand the branch instructions.
+> Since prog->bpf_func already skips the 4-byte KCFI hash (because it points
+> to ctx->ro_insns + cfi_get_offset()), it looks like including RV_KCFI_NINSNS
+> here overshoots the correct jump target by 4 bytes.
 > 
-> Can this lead to a situation where a branch expands while another shrinks
-> by the same amount, resulting in a net zero size change for that pass?
-> 
-> If the JIT falsely detects convergence because ctx->ninsns equals
-> prev_ninsns, it allocates a fixed-size executable buffer based on that
-> length. In the final emission pass, if internal offsets shift again and
-> cause a branch to expand unexpectedly, would this result in an out-of-bounds
-> write past the allocated buffer?
-> 
+> Does this skip the necessary stack pointer adjustment instruction, causing
+> tail-called programs to execute prologue register saves using the unadjusted
+> stack pointer of the caller and potentially corrupting the kernel stack?
 
-Right, ctx->offset use for branch and tailcall, and remove this init 
-would hit some corner case. Let's keep it.
+oops, my bad, kcfi insn will be skipped during prog->bpf_func setup, so 
+DO NOT need to skip this again when tailcall.
+
+Will revert that bad patch, thanks sashiko.
+
+> 
+> [ ... ]
+> 
+>> @@ -272,9 +274,7 @@ static void __build_epilogue(bool is_tail_call, struct rv_jit_context *ctx)
+>>   	if (!is_tail_call)
+>>   		emit_addiw(RV_REG_A0, RV_REG_A5, 0, ctx);
+>>   	emit_jalr(RV_REG_ZERO, is_tail_call ? RV_REG_T3 : RV_REG_RA,
+>> -		  /* kcfi, fentry and TCC init insns will be skipped on tailcall */
+>> -		  is_tail_call ? (RV_KCFI_NINSNS + RV_FENTRY_NINSNS + 1) * 4 : 0,
+>> -		  ctx);
+>> +		  is_tail_call ? RV_TAILCALL_OFFSET : 0, ctx);
+>>   }
+> 
+> [ ... ]
+> 
+>> @@ -394,7 +394,7 @@ static int emit_bpf_tail_call(int insn, struct rv_jit_context *ctx)
+>>   	off = ninsns_rvoff(tc_ninsn - (ctx->ninsns - start_insn));
+>>   	emit_branch(BPF_JEQ, RV_REG_T2, RV_REG_ZERO, off, ctx);
+>>   
+>> -	/* goto *(prog->bpf_func + 4); */
+>> +	/* goto *(prog->bpf_func + RV_TAILCALL_OFFSET); */
+>>   	off = offsetof(struct bpf_prog, bpf_func);
+>>   	if (is_12b_check(off, insn))
+>>   		return -1;
+> 
 
