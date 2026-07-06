@@ -1,106 +1,385 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832EC224234;
-	Mon,  6 Jul 2026 20:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E93E3D8E
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 20:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783369661; cv=none; b=jDuKHx1XIyPFxKmxSQjTMO+lLf9zkw7BAZfZ1P89ummaVEUTgWf1BjueLUSBU1MR4GGkBmPcStxwFzP37/0jLwnqL+UiEipuJft14j4SZFMeX96ual1F6eXzHS1UNzg9pEq1AwE5xVCRD7+eDBhXxKq5LYbgVel2UM8fc6eP+8o=
+	t=1783369819; cv=none; b=n5y1xgKa0siSgSPpsSa6qM8sfUfRFp0sMxgz7ERpg5PB+glgwEvAP8Ya8H9uHeQ2Q7E912FTz3YIorUaACbnUbSd4JpbKRa++HNVf+cx0l0XYGnOj7LD7YiOMDkiBrbQH2cWla2zqEoeEhC2EXG0Nn+f9hARME6IOfVtetBwXPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783369661; c=relaxed/simple;
-	bh=ruk4ghMtfGUg8LdOIeQzIRN0vCtLVvttxP+DbnBNFdw=;
+	s=arc-20240116; t=1783369819; c=relaxed/simple;
+	bh=PkGKVAUXBcrtS4vmy4F8Fp4420sU84x6gnlXH5iad/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B5UI4oc9l1fVxOB+skqf5f/NYrl8Re0gCYbvyRHVQb+CII2dl5eS2yUjiuzDaUeVnvCGi20UDnHxgqEHbcZE9nmbRLDm+TdFXfRwao+RRnxq2pT33+RqOwJceYwGjthB/kGQ/iOWptVFDgXuDcCVtAaT83eFtvIv4RzGjceHkS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fsIV6eu0; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=HLUpwrVU/1/BunrLfJwsF5d5z0m8hhMsOcrnNoBcDaKXhvKWZnXZkvo7hhCVnBWsfeIAE3N44FualV2La8I4rDDKuhpYmhlWyMJCY8eNCAM7CKbIn3x/H6w02JeQA8zLm8OzvMhuPFtncfyEn/w9sFpA3opr/5hfD2duaIWExHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vjbiVYCq; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fsIV6eu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DFC1F00A3A;
-	Mon,  6 Jul 2026 20:27:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783369660;
-	bh=RgSANOAi8PLyheoucZJxrl7ZZT282P/QUXx34yulS2U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fsIV6eu0avJBVcHutLu7OHtAIhwSmYUxFCVBbajdyfYnxlJZxV5kXtkDCXEizXDRT
-	 FBRpxc97O7K4hqEQQrcrHavAVrQmSqO+bvxGGSpNNZKM0x5JOw4hjI8E/9yWBagDa4
-	 5H6s44A1lg1ojbU5taz5gBOtsTzNEEAedEZ1bt2KIX6yWCE/S2VdEOJsyy5MFxQ/qO
-	 blv2bScm+67/W0TOqjVxPj4Q9FrR5doKs0wSj8WozUTXsatFYQVgmQDiip1ZgYYvtJ
-	 llEpZ7nZGMJ0SR1kXnq9YtuBdl6l9dkm/SIs/qKtweAPiG9MP+O1ik5LR6gP355cdL
-	 ELzbTCzLTbq0Q==
-Date: Mon, 6 Jul 2026 20:27:38 +0000
-From: Yosry Ahmed <yosry@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vjbiVYCq"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-847a52edeb2so2585719b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 13:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783369817; x=1783974617; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xntCCT1TCea4fhJTx32PiqxGr8BPBKrcALKzZ790Js0=;
+        b=vjbiVYCq/0dX0KX4JXETBXEYQUPTf4LlY/sgDo2Au+mpapyUsO1Th2hh8cpOF/E9zr
+         8Is2GktMd0ipWnDRqaVyx6daYr5XL0RKBB/6zUp38Zum/AcRSPszNO34/eEOLZb48CAI
+         9S0vq0pEuT8bMdJLZbCatGkTJEw5xDiOzsINIo3pf+OeBC+Fhv7yUC/lxoGX7sH+W9X0
+         fNSG4AfkycBOaDotGM9jA/ybh5pbI1AUV7g715E2GuhXWrWX19ZIfLxNob46qNWNDCca
+         P0ZAcPI0dUK8jEQxRnfa8tjhQ71nycL5VMGuck6NkZg1wUuzs6Q4D9L/zvkowPjS+Kqd
+         LonA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783369817; x=1783974617;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xntCCT1TCea4fhJTx32PiqxGr8BPBKrcALKzZ790Js0=;
+        b=Xg86vhA74FOu7THjPNgAVwCikxTShkvAIRXVQ8rcHKM6FiBWA07ZYZXxxtgZTxw4a2
+         L2ptJrzq3BCk+SHaUg6P3Qn0I6j6FZB9+j518JmFJD/o4VlbKhamnRwqVJxgDhHs5aMI
+         OfVNXaL21Go7tD9KG3b8zWfXmSTwl007ureJtcXNE33tBbLozjlz33tPvcHxgHD3wx8p
+         UAOsVvYCqM5ItwwA7kc9VAGMW3z7ywyINatGpISFtRLvJD94mxpgyfF+iifqNrdOs5tK
+         4bs8zHyi0ibHh24XvIJ2ltU5y6MaQ3bQLrFGc15sR5a+giRO99+o7emr7qqXElQxXfGx
+         wsxg==
+X-Gm-Message-State: AOJu0YzH1La1H6yPo31+sLypsHC6ttYRr70Mk8pbO7rmu1FCMeRK1IJa
+	813MZ8wrq1/r+jB6z/VHmrikfN7lDhRJ/XygYmMmEURFU6A6+EvTEBdtZ1RQKeEMnBbgBhBn3sI
+	Ly6lcVA==
+X-Gm-Gg: AfdE7ck/RTKkwZYNbdQAtGuEFXMxAQSHQtgtPA/xASUebt0KDCeu4DbKl0gGPfztur/
+	lvPEoLMOHOljv2ld00yYt8KTw2ky+JgA0OmaK91p+pPPZ9maJGXo3rBo0vtfzKCzBA3qTFafma8
+	/0Ap03CVYzAQ8zFQfji7bQPfmYDfvmUq51l1ZiQomMIfcSomDw8QTbRTQu0Ua4y6pOJWNl74p4B
+	cR+wonJg9Kz3QAwW8Ipc5lZv7To7EHgv75F1qNNSJ81mXR8WZordyreVllbc35Hr5FlJHv+Y0DG
+	2A/LiyHl3SBCIDXIR/9aNaEm0081ix3JmGotBP41vkxEu8WlAPCu0mplqde6eRWlpr3Kuwqw74E
+	cFqRmyWpoSIGCRQkw88vv5Dfp5CWuDbhNmx1yXlh/zh1ZrkT0PGPGkPMlnD1GBEvyFwbGZFNM9j
+	Rx+TWzQaaL8LjRq7RA6nqD6Z+MwGj4lr1Z5v5jlzU1SGfKSbkG/rE=
+X-Received: by 2002:a05:6a00:298a:b0:847:8449:2bb6 with SMTP id d2e1a72fcca58-84826c1dfa3mr2151292b3a.4.1783369816187;
+        Mon, 06 Jul 2026 13:30:16 -0700 (PDT)
+Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6d85c04sm4513063b3a.50.2026.07.06.13.30.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2026 13:30:15 -0700 (PDT)
+Date: Mon, 6 Jul 2026 20:30:11 +0000
+From: David Matlack <dmatlack@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v2 6/7] KVM: x86: Move supported EFER bits to kvm_caps
-Message-ID: <akwPqttHzRDzaqtb@google.com>
-References: <20260706195413.1966458-1-yosry@kernel.org>
- <20260706195413.1966458-7-yosry@kernel.org>
- <20260706200533.8A79C1F000E9@smtp.kernel.org>
+Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v2 01/10] selftests/vfio: igb: Add driver for IGB QEMU
+ device
+Message-ID: <akwQUzGJBJhzdAss@google.com>
+References: <20260526235417.2058313-2-jrhilke@google.com>
+ <20260527003237.8405E1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260706200533.8A79C1F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260527003237.8405E1F000E9@smtp.kernel.org>
 
-On Mon, Jul 06, 2026 at 08:05:33PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Leftover function declarations for `kvm_enable_efer_bits()` and `kvm_disable_efer_bits()` in `arch/x86/kvm/msrs.h` after their definitions were removed.
+On 2026-05-27 12:32 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 12 potential issue(s) to consider:
+> - [High] Silent failures during device initialization leave the driver in an invalid state.
+> - [High] PCI_COMMAND_MEMORY enablement is skipped if PCI_COMMAND_MASTER is already set.
+> - [High] Device reset is asynchronous but not awaited, and MSI-X is disabled before the device is quiesced.
+> - [High] `igb_memcpy_start` fails to increment `src` and `dst` pointers for multiple chunks.
+> - [Medium] Missing SRRCTL configuration causes incorrect Rx descriptor write-back offset on real hardware.
+> - [Medium] Missing Transmit FCS (Frame Check Sequence) insertion causes payload truncation.
+> - [Medium] Lockless polling of DMA memory without READ_ONCE() or a volatile cast.
+> - [Medium] Incorrect MDI Error bit offset in MDIC register definition.
+> - [Medium] Missing read/write memory barriers around DMA descriptor and doorbell accesses.
+> - [Medium] Missing endianness conversion macros when populating hardware descriptors.
+> - [Medium] Unsafe hardware reset logic uses a sleep instead of polling the reset completion bit.
+> - [Medium] Incorrect bit definition for IGB_GPIE_EIAME silently disables auto-masking functionality.
 > --
 > 
-> commit eef68f2b444ee82f826a87d9dc12393124877c19
-> Author: Yosry Ahmed <yosry@kernel.org>
+> commit f2aa2cf5b25f70be67a7ce0a012a1bdb1dba535c
+> Author: Josh Hilke <jrhilke@google.com>
 > 
-> KVM: x86: Move supported EFER bits to kvm_caps
+> selftests/vfio: igb: Add driver for IGB QEMU device
+>     
+> Add a VFIO selftest driver for the Intel Gigabit Ethernet controller
+> (IGB). IGB is fully virtualized in QEMU [1] which makes it easy to run
+> VFIO selftests without needing any specific hardware.
 > 
-> This commit moves the supported EFER bits into kvm_caps.supported_efer_bits 
-> to allow them to be recomputed during vendor initialization. It also removes 
-> the kvm_enable_efer_bits() and kvm_disable_efer_bits() helpers in favor of 
-> open-coding the updates directly to kvm_caps.
+> [1] https://www.qemu.org/docs/master/system/devices/igb.html
+> [2] https://github.com/arighi/virtme-ng
 > 
-> > diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
-> > index 10669c5418da3..66fa7140d65d9 100644
-> > --- a/arch/x86/kvm/msrs.c
-> > +++ b/arch/x86/kvm/msrs.c
+> > diff --git a/tools/testing/selftests/vfio/lib/drivers/igb/igb.c b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
+> > new file mode 100644
+> > index 0000000000000..064ca7c05da02
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
 > [ ... ]
-> > @@ -650,18 +647,6 @@ static int set_efer(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
-> >  	return 0;
-> >  }
-> >  
-> > -void kvm_enable_efer_bits(u64 mask)
-> > -{
-> > -	efer_supported_bits |= mask;
-> > -}
-> > -EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_enable_efer_bits);
-> > -
-> > -void kvm_disable_efer_bits(u64 mask)
-> > -{
-> > -	efer_supported_bits &= ~mask;
-> > -}
-> > -EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_disable_efer_bits);
-> > -
+> > +static void igb_init(struct vfio_pci_device *device)
+> > +{
+> [ ... ]
+> > +	/* Reset device and disable all interrupts */
+> > +	igb_write32(igb, IGB_CTRL, igb_read32(igb, IGB_CTRL) | IGB_CTRL_RST);
+> > +	usleep(20000);
 > 
-> [Severity: Low]
-> This isn't a bug, but did this commit leave dangling function declarations for
-> kvm_enable_efer_bits() and kvm_disable_efer_bits() in arch/x86/kvm/msrs.h?
+> [Severity: Medium]
+> Could this unsafe hardware reset logic cause issues by sleeping instead of
+> polling the reset completion bit? Accessing device registers while a reset is
+> propagating internally could trigger PCIe bus hangs.
+
+Please fix this. At minimum the sleep needs to be documented if that is
+relying on duration mandated by the hardware spec.
+
 > 
-> It appears the prototypes were not removed from the header file when these
-> implementations were deleted here.
+> > +	igb_write32(igb, IGB_IMC, 0xFFFFFFFF);
+> > +
+> > +	/* Signal that the driver is loaded */
+> > +	ctrl = igb_read32(igb, IGB_CTRL_EXT);
+> > +	ctrl |= IGB_CTRL_EXT_DRV_LOAD;
+> > +	ctrl &= ~IGB_CTRL_EXT_LINK_MODE_MASK;
+> > +	igb_write32(igb, IGB_CTRL_EXT, ctrl);
+> > +
+> > +	/* Enable PCI Bus Master. */
+> > +	cmd_reg = vfio_pci_config_readw(device, PCI_COMMAND);
+> > +	if (!(cmd_reg & PCI_COMMAND_MASTER)) {
+> > +		cmd_reg |= (PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY);
+> > +		vfio_pci_config_writew(device, PCI_COMMAND, cmd_reg);
+> > +	}
+> 
+> [Severity: High]
+> Does this logic inadvertently skip enabling PCI_COMMAND_MEMORY if
+> PCI_COMMAND_MASTER is already set? If the Bus Master bit is already enabled
+> by firmware or VFIO but Memory Space is disabled, the block is skipped, which
+> would leave Memory Space disabled and cause subsequent MMIO accesses to
+> trigger bus faults.
 
-Yeah, this needs to be folded in:
+Please fix this.
 
-diff --git a/arch/x86/kvm/msrs.h b/arch/x86/kvm/msrs.h
-index 89f10447cdddf..4cb9ca8bff979 100644
---- a/arch/x86/kvm/msrs.h
-+++ b/arch/x86/kvm/msrs.h
-@@ -58,8 +58,6 @@ int kvm_get_set_one_reg(struct kvm_vcpu *vcpu, unsigned int ioctl,
- int kvm_get_reg_list(struct kvm_vcpu *vcpu,
-                     struct kvm_reg_list __user *user_list);
+> 
+> > +
+> > +	/* Trigger autonegotiation. This enables IGB to transmit data. */
+> > +	if (igb_phy_setup_autoneg(igb))
+> > +		return;
+> 
+> [Severity: High]
+> Does this early return result in a silent failure during device initialization?
+> If it fails, crucial setup steps are skipped, leaving variables like
+> max_memcpy_size uninitialized. The test framework will proceed to use the
+> partially configured device, leading to undefined behavior or crashes.
+> Could it explicitly assert failure via VFIO_ASSERT() instead?
 
--void kvm_enable_efer_bits(u64);
--void kvm_disable_efer_bits(u64);
- bool kvm_valid_efer(struct kvm_vcpu *vcpu, u64 efer);
- int kvm_emulate_msr_read(struct kvm_vcpu *vcpu, u32 index, u64 *data);
- int kvm_emulate_msr_write(struct kvm_vcpu *vcpu, u32 index, u64 data);
+Please fix this. IMO igb_phy_setup_autoneg() should use VFIO_ASSERT()
+instead of returning an int.
+> 
+> > +
+> > +	/* Configure TX and RX descriptor rings */
+> > +	igb_write32(igb, IGB_TDBAL0, (u32)iova_tx);
+> > +	igb_write32(igb, IGB_TDBAH0, (u32)(iova_tx >> 32));
+> > +	igb_write32(igb, IGB_TDLEN0, RING_SIZE * sizeof(struct igb_tx_desc));
+> > +	igb_write32(igb, IGB_TDH0, 0);
+> > +	igb_write32(igb, IGB_TDT0, 0);
+> > +	igb_write32(igb, IGB_TXDCTL0, IGB_TXDCTL0_Q_EN);
+> > +
+> > +	igb_write32(igb, IGB_RDBAL0, (u32)iova_rx);
+> 
+> [Severity: Medium]
+> Is the SRRCTL configuration missing here? The driver expects the hardware to
+> use Advanced Receive Descriptors and polls for the DD bit at byte offset 8,
+> but fails to configure the SRRCTL register. Real hardware defaults to Legacy
+> Receive Descriptors (DD bit at offset 4), causing polling timeouts.
+> 
+> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
+> Use advanced TX and RX descriptors".
+> 
+> [ ... ]
+> > +static void igb_remove(struct vfio_pci_device *device)
+> > +{
+> > +	struct igb *igb = to_igb_state(device);
+> > +
+> > +	vfio_pci_msix_disable(device);
+> > +	igb_write32(igb, IGB_RCTL, 0);
+> > +	igb_write32(igb, IGB_TCTL, 0);
+> > +	igb_write32(igb, IGB_CTRL, igb_read32(igb, IGB_CTRL) | IGB_CTRL_RST);
+> > +}
+> 
+> [Severity: High]
+> Is it safe to disable MSI-X before the device is quiesced, and trigger an
+> asynchronous device reset without awaiting its completion?
+> 
+> Calling vfio_pci_msix_disable() before masking interrupts and triggering a
+> hardware reset risks rogue interrupts during teardown. Returning immediately
+> after setting IGB_CTRL_RST might create a race condition where the VFIO
+> framework destroys IOMMU mappings while the device is still resetting,
+> potentially leading to a DMA use-after-free.
+
+I don't think this is a bug. The device should not be sending interrupts
+after they are disabled in the device itself.
+
+> 
+> [ ... ]
+> > +static void igb_memcpy_start(struct vfio_pci_device *device, iova_t src,
+> > +			     iova_t dst, u64 size, u64 count)
+> > +{
+> > +	struct igb *igb = to_igb_state(device);
+> > +	struct igb_rx_desc *rx;
+> > +	struct igb_tx_desc *tx;
+> > +	u32 i;
+> > +
+> > +	igb_irq_disable(igb);
+> > +
+> > +	for (i = 0; i < count; i++) {
+> > +		tx = &igb->tx_ring[igb->tx_tail];
+> > +		rx = &igb->rx_ring[igb->rx_tail];
+> > +
+> > +		memset(tx, 0, sizeof(struct igb_tx_desc));
+> > +		memset(rx, 0, sizeof(struct igb_rx_desc));
+> > +
+> > +		rx->read.pkt_addr = dst;
+> > +		tx->read.buffer_addr = src;
+> > +		tx->read.cmd_type_len = (u32)size;
+> > +		tx->read.cmd_type_len |= (u32)(IGB_TXD_CMD_EOP) << IGB_TXD_CMD_SHIFT;
+> 
+> [Severity: High]
+> Does this loop fail to increment the src and dst pointers for multiple chunks?
+> When count > 1, the device repeatedly copies the first chunk of data to the
+> exact same destination address, leaving the remainder of the buffer uncopied
+> and causing data verification failures.
+
+This is not a bug, that's how memcpy_start() is defined to behave.
+
+> [Severity: Medium]
+> Are endianness conversion macros missing here? Populating 64-bit addresses
+> and 32-bit fields in hardware descriptors using native CPU byte order instead
+> of cpu_to_le32 and cpu_to_le64 will break on big-endian host architectures.
+
+Please fix this.
+
+> [Severity: Medium]
+> Should the Transmit FCS (Frame Check Sequence) insertion flag be present?
+> The driver sets IGB_RCTL_SECRC to strip Ethernet CRC on RX but omits the
+> IGB_TXD_CMD_IFCS flag on TX. On real hardware, no CRC is appended, causing
+> the RX MAC to strip the last 4 bytes of the actual payload.
+> 
+> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
+> Use advanced TX and RX descriptors".
+> 
+> > +
+> > +		/* Set to 0 to disable offloads and avoid needing a context descriptor */
+> > +		tx->read.olinfo_status = 0;
+> > +
+> > +		igb->tx_tail = (igb->tx_tail + 1) % RING_SIZE;
+> > +		igb->rx_tail = (igb->rx_tail + 1) % RING_SIZE;
+> > +	}
+> > +
+> > +	igb_write32(igb, IGB_RDT0, igb->rx_tail);
+> > +	igb_write32(igb, IGB_TDT0, igb->tx_tail);
+> 
+> [Severity: Medium]
+> Are write memory barriers needed here around the DMA descriptor and doorbell
+> accesses? Without a write memory barrier between populating RAM descriptors
+> and ringing the TX doorbell, the hardware might fetch stale descriptors.
+
+Can you look into this one? I would have assumed writel() would provide
+the proper barriers.
+
+> 
+> > +}
+> > +
+> > +static int igb_memcpy_wait(struct vfio_pci_device *device)
+> > +{
+> > +	struct igb *igb = to_igb_state(device);
+> > +	struct igb_rx_desc *rx;
+> > +	u32 prev_tail;
+> > +	int retries;
+> > +
+> > +	prev_tail = (igb->rx_tail + RING_SIZE - 1) % RING_SIZE;
+> > +	rx = &igb->rx_ring[prev_tail];
+> > +
+> > +	retries = 100;
+> > +	while (retries-- > 0) {
+> > +		if (rx->wb.status_error & 1)
+> 
+> [Severity: Medium]
+> Could this lockless polling of DMA memory without READ_ONCE() or a volatile
+> cast cause problems? The loop polls rx->wb.status_error, which allows the
+> compiler to theoretically cache the value in a register. While the external
+> usleep() call typically acts as an implicit compiler barrier, relying on it
+> is brittle and constitutes a data race.
+
+Please fix this one.
+
+> 
+> > +			break;
+> > +		usleep(10);
+> > +	}
+> > +
+> > +	igb_irq_clear(igb);
+> > +
+> > +	igb_irq_enable(igb);
+> > +
+> > +	if (rx->wb.status_error & 1)
+> 
+> [Severity: Medium]
+> Is a read memory barrier missing here after polling the DMA completion status?
+> Without it, there could be speculative CPU reads of the destination buffer.
+
+Maybe just avoid this issue entirely and read rx->wb.status_error into a
+variable so you can check it again after the loop.
+
+> 
+> > +		return 0;
+> > +
+> > +	return -ETIMEDOUT;
+
+nit: return error ? -ETIMEDOUT : 0;
+
+> > +}
+> [ ... ]
+> > diff --git a/tools/testing/selftests/vfio/lib/drivers/igb/registers.h b/tools/testing/selftests/vfio/lib/drivers/igb/registers.h
+> > new file mode 100644
+> > index 0000000000000..e2756be2e9c0c
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/vfio/lib/drivers/igb/registers.h
+> [ ... ]
+> > +#define IGB_MDIC_PHY_SHIFT 21 /* PHY Address Shift */
+> > +#define IGB_MDIC_REG_SHIFT 16 /* Register Address Shift */
+> > +#define IGB_MDIC_READY (1 << 28) /* MDI Data Ready */
+> > +#define IGB_MDIC_ERROR (1 << 29) /* MDI Error */
+> 
+> [Severity: Medium]
+> Is this MDI Error bit offset correct in the MDIC register definition?
+> The macro is defined as (1 << 29), but according to the datasheet, bit 29 is
+> the Interrupt Enable bit, while the actual MDI Error bit is bit 30.
+> 
+> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
+> Use offical IGB headers in selftest driver".
+
+Please fix this.
+
+> 
+> [ ... ]
+> > +#define IGB_CR_1000T_FD_CAPS 0x0200 /* Advertise 1000 Mbps Full Duplex */
+> > +
+> > +#define IGB_GPIE_EIAME 0x10 /* Extended Interrupt Auto Mask Enable */
+> 
+> [Severity: Medium]
+> Does this incorrect bit definition for IGB_GPIE_EIAME silently disable
+> auto-masking functionality? It is defined as 0x10, which corresponds to
+> Multiple_MSIX. The actual Extended Interrupt Auto Mask Enable bit is bit 30.
+> Writing 0x10 fails to enable auto-masking.
+> 
+> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
+> Program MSI-X interrupt routing".
+
+Lot of bugs that get fixed later in the series. I think you want to
+preserve Alex's author tag by keeping them separate, but let's not
+introduce any temporary bugs.
+
+Since we haven't merged anything yet, let's fix all the bugs in this
+patch directly, and use the follow up patches for any improvements.
+
+> 
+> > +#define IGB_IVAR_VALID 0x80 /* Valid bit for IVAR register */
+> > +
+> > +#define IGB_TXD_CMD_EOP 0x01 /* End of Packet */
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260526235417.2058313-1-jrhilke@google.com?part=1
+> 
