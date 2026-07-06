@@ -1,145 +1,116 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1443FBEA2
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 08:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7CF3EDAC1
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 08:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783326844; cv=none; b=e9cjQwG0mwLt1xtqwVrRXLzriHROyYahfuGNZu450n6guRukAGsIev242pnIhI/8iWf48v5ezur7O9HXWUrPzU9RiRlcGzr+Ji306bunGpQWdnLPL+OxIg7114HgDUEWKl93X6/REVWLvtDaX0VmN3LxWZ7UROOh87YVbFbgDXs=
+	t=1783327178; cv=none; b=tdmVQ1wb0OYNmw4E7n7pwDQ8Ed7O3WUHOp3jY7Gzy0hMFDc9FgsfIb19ewfiIg/7pM+8fVVKVXh8is10nl6y7U8OFdvTIqx6c8gkG+L+7CgPTCQaISnRCyHe3Qd9seuf+JAhrVmHtVqEdaXNU5VCtgzRv7BRmflK8HiNTvj4eW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783326844; c=relaxed/simple;
-	bh=qQ3liem5vpA5ZuIqtILAsKAqNrnkXCjL8lMe//qOLXw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZSHAAWP6gK4Av4DLRdILy6uwSC5MTpGQPyY7tfbje8gfEReRkQ+uJNnfmqkCYuskvQmMxqAeN9PKHWsGl4iVaQabj55UcdSphosKPHzNf1l4Kl3nMj5rELuQqLl2o5b6KLUnZOgwuoiFR8SmaL5NqWPCYZCMl3xobpTRKRy1a8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gsoFFzq4; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1783327178; c=relaxed/simple;
+	bh=D5whuOq+QlG8L8X1qHqgY8y2NRAujgBvpsz93xSPRaE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CDlkoDeQvWeNHiXZrCL7VjBtwH0vLHJ/J0oqfZZ84BiVg7XGaj5tCv2icUePLYXDxlu8ik7W7nCy4/4blIlCZPIsX4gcTnn2Liuf7NUvG2VSxL9TbjzI2eLSNlkOm8Rh5zn5cYiF5RJMQOwq4PoAdeVHoAAavqrlCbICgigTw5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I78LcsGj; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gsoFFzq4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783326830; x=1814862830;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=qQ3liem5vpA5ZuIqtILAsKAqNrnkXCjL8lMe//qOLXw=;
-  b=gsoFFzq4vYW066RfL7RdsKIr3EhnHzBkNHmXfxaYe7fbSMYwaSMrWwc5
-   LYmatgkgTraTJMlHLrXaCjXq7jzDJPkf5a1CYnGOWFmSbPBv3y/atxpbz
-   WHK1td2hppGrOeHzlQU+qK0JEesLPfROHQhxyFqoLPYC6ZYdEsWAQGCAu
-   mvTkF2b4yQBxMCCuSa3Zr7acVumIH8c5FQ0aPbDwAeEcQ/pgzlt4/BaR0
-   24A3oYFumBxCu9ZSMOqixGDYY217SLirzMpMuabGs52J6oX+ARivivuGf
-   s5a3B7BTGhZgl9ImarJUdfs+mIg2wxoveE6RQxVg7vioAuGVFAKwxWeUD
-   g==;
-X-CSE-ConnectionGUID: lq6K5rkURsexQYNlZ2uQVQ==
-X-CSE-MsgGUID: kTPZl27SSHmY3YbUBpVXuw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="83934179"
-X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
-   d="scan'208";a="83934179"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 01:33:45 -0700
-X-CSE-ConnectionGUID: ZlU4xJcdTdyJM5q4iNTzAg==
-X-CSE-MsgGUID: AHhAbgMjT0C+p/miva6WoQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
-   d="scan'208";a="255594779"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 01:33:44 -0700
-Message-ID: <afa403c1-2594-49ec-ad12-f1dd1409e29e@linux.intel.com>
-Date: Mon, 6 Jul 2026 16:33:41 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I78LcsGj"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-493bb510ce4so20316115e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 01:39:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783327169; x=1783931969; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MhgGnNuXnWH4hPrMvepsO/9ELPw89h4l69pd3BoNRLc=;
+        b=I78LcsGjrSNQGdPOwvZSyHFCxKGxg+knCda43Yo7VtLb49hLJFj+4k3hNWN6AQN+AR
+         cNw9JtvtVp4Xf4YXNacmFRS+7iToeg1UoFVPG/crT70XcmlRzEXaPfOh+i6XaS1tgRLo
+         hXFFxILF0Y5+lvuGpSRdRV4Yv6l/ecj/fDvVysSa6uzX0q66V3U4xw6/EbFcTlHqPbUM
+         HLhvmVgMm/iNIux1p2Jb0jI9evFGJ2CxfPw2x2h2C8DXQCT7ChAS9eomL3UfmgvAgtB3
+         1/YNn0WAsaPcii0i91sGfs3YA22srkxwdd8K8+THYLeIMPDRIW0+ckArkOe5LYIe7ZFW
+         mVug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783327169; x=1783931969;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=MhgGnNuXnWH4hPrMvepsO/9ELPw89h4l69pd3BoNRLc=;
+        b=HW53ioafhMkyKJkQvKfjO90SqnS20qUnBGRa4XqL+0URx950RKhMcEATiZB1I0fQeu
+         EsmDtFWjLdl9B4mnoUal882LFHW7o7KQZw3oN7kf/AmouJDO8ZH+ZqQDWwTBM28YKGYN
+         1ONvVePeM0sra+hFPH/2rlPjfRwRjcGhCuZbBTCqBz3ZYeVDLb4CqHnQbHUTe4PezyPd
+         b6nhBQ+ETKbMfzRptYIYdJkdhq5bBSGssnz/1/AXUdlP7ZOSfjy62HxFhY5mJ22F38Zj
+         XlRmbx2VdWd/r9TQHqwTM9WdaKF4Ag4jlibtTkuHJSDRRk8Sl6crKOp+/onhPlMiZVky
+         QwrA==
+X-Forwarded-Encrypted: i=1; AHgh+RrG1y+l39Ecp3W2wKjnuel6UixHou3BQyAQ7SI6CtLsyaMyAqgkiTkd1Z8nBd0OA3hcdHnQGfMYydAjE85J/TY=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw/DKMxCwOfravR7lozPNG9pojOSQQheSj9OU4G2+vMJRfHdWye
+	Xc+iB7PN3BmPJa/6a4+GdbHZBYloDOOO3ZUAtUAuB9zefT8A9qdcwomp
+X-Gm-Gg: AfdE7cnx4DxWvJq2LE3NlhQ/Ca9A/1sMFMu/CPOL8mmyCRy/iDzeHN52GD3swz96pvk
+	6FPlM6eRSPvijOzpx8/KSzhl9Jq2piGEIcL9g9KG+hgBjvenhZMMHNARPZdHMhcdo4A0jEOltkP
+	W1i9fv0Ao1wN4qN+T9Oo25V2mRP/CgD64Zk2w2olSeB/NGGycUnLIbw0DSIm773jJW8XhExBKAr
+	g1vBgvyHcKAmrimgIQ2+ydS18K9C+wYxjnf1z+22n1LJ5ggJRZBzCyAHYC7wy2hfK/UwNkpKH7S
+	8FESPZDNRhBg6jumJ3d6+tMeYcgaGc4dCwUGxgwlyyv8ukUrayBQWKpDTpjVNfzWyMLej3dm4y5
+	OcsqgZq+zSQX81dVzxai35+5YsXHHIHtZJq924YpUCt1BMLG+qPAxEU1CrSqKX/NbOBOIOsva8m
+	TbrL0ooBmm3SSYi71lBAIZjBFO6cI=
+X-Received: by 2002:a05:600c:8b67:b0:493:bc88:ddcf with SMTP id 5b1f17b1804b1-493d11f35f7mr101767645e9.23.1783327169115;
+        Mon, 06 Jul 2026 01:39:29 -0700 (PDT)
+Received: from anthony.local ([2a06:c701:49b2:4c00:12ff:e0ff:fea5:3d2e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c636e9e9sm338236185e9.2.2026.07.06.01.39.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2026 01:39:28 -0700 (PDT)
+From: Amit Barzilai <amit.barzilai22@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	robh@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	krzk+dt@kernel.org
+Subject: Re: [PATCH v3 1/3] dt-bindings: display: Add Solomon SSD1351 OLED controller
+Date: Mon,  6 Jul 2026 11:39:13 +0300
+Message-ID: <20260706083913.19172-1-amit.barzilai22@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260704081758.0BD4D1F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v9 02/24] perf/x86: Move hybrid PMU initialization before
- x86_pmu_starting_cpu()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260706015439.3040804-1-dapeng1.mi@linux.intel.com>
- <20260706015439.3040804-3-dapeng1.mi@linux.intel.com>
- <20260706021852.DE2ED1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260706021852.DE2ED1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+>>     Assisted-by: Claude:claude-opus-4-8
+>
+> [Severity: Low]
+> This isn't a bug, but this Git trailer does not follow the standard format
+> `Tag: Full Name <email@address.tld>`. Without an email address enclosed in
+> angle brackets, this will likely trigger checkpatch warnings.
 
-On 7/6/2026 10:18 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Preexisting out-of-bounds read in `check_hw_exists()` on hybrid platforms due to an invalid `container_of()` cast on the global static `pmu` struct via the `hybrid()` macro.
-> --
->
-> commit 8216e613cee4854e16daaa11279146d17bc7f313
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->
-> perf/x86: Move hybrid PMU initialization before x86_pmu_starting_cpu()
->
-> The current approach initializes hybrid PMU structures immediately before
-> registering them. This is risky as it can lead to key fields being
-> inadvertently overwritten. This patch mitigates this by moving the
-> default hybrid structure initialization before calling
-> x86_pmu_starting_cpu().
->
->> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
->> index 872d07a5fa80d..0888d3b0923e1 100644
->> --- a/arch/x86/events/core.c
->> +++ b/arch/x86/events/core.c
->> @@ -2195,8 +2195,20 @@ static int __init init_hw_perf_events(void)
->>  
->>  	pmu.attr_update = x86_pmu.attr_update;
->>  
->> -	if (!is_hybrid())
->> +	if (!is_hybrid()) {
->>  		x86_pmu_show_pmu_cap(NULL);
->> +	} else {
->> +		int i;
+This is a standard Assisted-by tag, see Documentation/process/coding-assistants.rst
+for basis.
+
+>> +allOf:
+>> +  - $ref: solomon,ssd-common.yaml#
 >> +
->> +		/*
->> +		 * Init default ops.
->> +		 * Must be called before registering x86_pmu_starting_cpu(),
->> +		 * otherwise some key PMU fields, e.g., capabilities
->> +		 * initialized in x86_pmu_starting_cpu(), would be overwritten.
->> +		 */
->> +		for (i = 0; i < x86_pmu.num_hybrid_pmus; i++)
->> +			x86_pmu.hybrid_pmu[i].pmu = pmu;
->> +	}
-> [Severity: High]
-> This is a pre-existing issue, but does passing the global pmu struct to
-> check_hw_exists() earlier in this function cause an out-of-bounds read on
-> hybrid platforms?
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - solomon,ssd1351
 >
-> In init_hw_perf_events(), check_hw_exists(&pmu, ...) is called after
-> perf_is_hybrid is enabled. Inside check_hw_exists(), it iterates over
-> fixed counters and calls fixed_counter_disabled():
->
-> arch/x86/events/perf_event.h:fixed_counter_disabled() {
->     ...
->     u64 intel_ctrl = hybrid(pmu, intel_ctrl);
->     ...
-> }
->
-> The hybrid() macro expands to a container_of() cast:
->
->     container_of(_pmu, struct x86_hybrid_pmu, pmu)->_field
->
-> Because the pmu passed in is the standalone global struct pmu (not embedded
-> within a struct x86_hybrid_pmu), this cast yields an invalid pointer.
->
-> Could this read garbage data past the end of the global pmu struct when
-> accessing intel_ctrl, potentially causing the BIOS hardware check to act on
-> garbage data or trigger a kernel panic if it crosses an unmapped page
-> boundary?
+> [Severity: Low]
+> Should there be default values defined for `solomon,width` and
+> `solomon,height` in this block? 
+> 
+> Since the common schema `solomon,ssd-common.yaml` indicates these defaults
+> are controller-dependent, omitting them here leaves the hardware's default
+> resolution undocumented in this schema.
 
-Yes, a real issue. It looks unnecessary to run fixed_counter_disabled()
-check since intel_ctrl always comes from the the bitwised-or between
-cntr_mask64 and fixed_cntr_mask64. Would drop fixed_counter_disabled() and
-all calling in a separate patch.
+These defaults were present in v1 and were dropped for v2 following
+Krzysztof's review: this binding has a single compatible, so the hardware
+default (128x128) is deducible from the compatible itself and does not
+need to be restated in the schema. The driver applies that default when
+the properties are absent, and the properties remain available through
+solomon,ssd-common.yaml for modules that wire a smaller panel.
 
-Thanks.
-
-
->
+Keeping them out, per that earlier feedback.
