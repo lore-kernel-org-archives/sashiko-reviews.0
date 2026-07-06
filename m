@@ -1,229 +1,193 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010058.outbound.protection.outlook.com [52.101.56.58])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A55433E86;
-	Mon,  6 Jul 2026 05:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.58
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783315722; cv=fail; b=F0K8f9uQz9e0iTezsccs1A/7O2Op+WocBw0PSeCjhXRuWSsVntPejn8JEPJgshbAWNK+pQWCiVKcOD2l45y7zwvMgC62ASwTYL6dj3CmzuzW1v8iw1zG+hJGJpGgS3h9HNEoq9Fv9OEWXqe8EG312a+U7xQrDkcZMbJtvRhODJk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783315722; c=relaxed/simple;
-	bh=t6BaFv/SfcWYhzBL6ZgMNjZDdL5unDOCO5DjRL1r3bo=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=WEZkEI4fVwdaYp/IAng6KeaNk7ljYOobZIlQPRohl3Fk3EV1WLKSacBpN7fNfE/Z5Wjvy0eOhbcziQXsp6wRoOFRbRLuMsXRJGwt27jLqc+CQl64hccRKetzvu9ceJqlktaq05OgjQdkK8/VxPNYDehAs5NgqrIcbLetEg6Hf3s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=G2OTluNt; arc=fail smtp.client-ip=52.101.56.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altera.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FE43812D0
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 05:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783316414; cv=none; b=sdkrXqkVJvUiTbir0MR8+xmAG6dxOL0O7AHshZLDtyKbe88jIO1aeEbKqI1A7sRQS140Mi6cCiIb2eTMXtxnxuhpFy2CixiWq4rVBm/RrARWAb54rZ2xCabyYbGPYmmthFQjzcl3LVUsobjYZ6vrv7LdRRBy1dgEmsH9rLTyjsM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783316414; c=relaxed/simple;
+	bh=AUEvGkaIUq/4Q9g6Qi5pGcg8Pc4FJ9GriKF3JrG5gPE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=il6cS7fhBo7jFKPEuo1ov8Kk+N13l62UfTcALexR6k1b7FCVFyydij8XI+haajCCY9VQM5B7lYaqupLJdu4ELJDegH3kgLk6NX2xzE475S/eEOQZY49lVTGJgjIA1iundWiLWlffkYspCbfUMqtL1mCMci13vBZGIPzT25L1er8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jrife.io; spf=none smtp.mailfrom=jrife.io; dkim=pass (2048-bit key) header.d=jrife-io.20251104.gappssmtp.com header.i=@jrife-io.20251104.gappssmtp.com header.b=aTC+QQtW; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jrife.io
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=jrife.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="G2OTluNt"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W43UAw6N6A0KnscX5ZTSJnktFOqQU2nUwtxNMZ5djelRaWVe0vZ0cUkiaHyQdxkPfJy+DYgdmpDTU3fPf7sWsH8eaELaDlMIlErl02/0ueeWgV7V6qxPG78kcxBTHdwaHAOZrD8/2kN2tnGh5FBiz4DnVi7LZAOrG2X6yNJ3C5Ryocy/sv/EtZCjURYAnjbHhe1fkb0S2u6nPfgz2djj86lz6NrbiAY5vYNa/yM2WRw9JU+yDCwxO3cauQP34mFQ7vALs6Rs7IydPpleezk/BpRmSdfqrPPiLqpJAW/9EqLI0iLoCvkCbCVt6ZAU2vIj+wS9AMRzW9+F6DBsPLB/iw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t6BaFv/SfcWYhzBL6ZgMNjZDdL5unDOCO5DjRL1r3bo=;
- b=IVW5nSDHBgMqXciIxLeoHseOsUCWuxLojOSq69uG1zqXAO5aMPSo+dURGHuy4YNaMkuatyU78CLcv3tqldO6BKlvvdaidRGvRj3gqyVFqwdw10Zc692RvUXGwG+nZcjzNm8gJmWcJZed7FZ29epGr1O1273Ex5pLBY17TxuzJtNH4+F3Um7fPjNO959zQGTMvluZuK5sMlhpphgs45eBaPmDH7veJLFOIqEfxWZuqd80/ZtCWDWXASwmArnWBGQlXdkp9luHPeGJTIqZzT7zJVvL+gAJpRVKGotAFiH9eqxUze/+2YxDtNB6VJat3BdGPm3QUZ9IHT4wrlWl0HHbPA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=altera.com; dmarc=pass action=none header.from=altera.com;
- dkim=pass header.d=altera.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=altera.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t6BaFv/SfcWYhzBL6ZgMNjZDdL5unDOCO5DjRL1r3bo=;
- b=G2OTluNt1vIJpPPKfR6fuFm/Fk5d0zimzzB2zO39b32LIYpidRcID/j40H7jjR+nIco/Hb4+zI20WZdWqCg34SFduzCzDrj36pX49Rec4pY2n4m5lZG53F5Z0viiIhTnOwHH2S6/vLMk2KYpPPHEAu24JkcTLEgcNXm4BvulmaD2kjoeOMiD7ZGLcN9xNA/zIQ6TBT5lN2vrDrnw9bU7GVffnMGhZJpS5fdV1zo2VKmHs5dtUEeuOP4O6b6x/5uyqoaKLiZG6MFN01wroDPZ6nsszILolDZiIfAfGtjcIosUDoj7GWVGtQnzmDO1jDpf6Z3/lWm4tLkFza5D075W+g==
-Received: from SJ0PR03MB5950.namprd03.prod.outlook.com (2603:10b6:a03:2d3::20)
- by PH7PR03MB7063.namprd03.prod.outlook.com (2603:10b6:510:2a4::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Mon, 6 Jul 2026
- 05:28:35 +0000
-Received: from SJ0PR03MB5950.namprd03.prod.outlook.com
- ([fe80::53a0:bf93:6b6b:de01]) by SJ0PR03MB5950.namprd03.prod.outlook.com
- ([fe80::53a0:bf93:6b6b:de01%5]) with mapi id 15.21.0181.012; Mon, 6 Jul 2026
- 05:28:35 +0000
-From: "NG, TZE YEE" <tze.yee.ng@altera.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, "linux-i3c@lists.infradead.org"
-	<linux-i3c@lists.infradead.org>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>
-Subject: Re: [PATCH v5 2/5] i3c: master: Report actual GET CCC payload length
- on success
-Thread-Topic: [PATCH v5 2/5] i3c: master: Report actual GET CCC payload length
- on success
-Thread-Index: AQHdCtnjg8AIccbcf0G/6FLPBjf6vbZbolUAgARYigA=
-Date: Mon, 6 Jul 2026 05:28:35 +0000
-Message-ID: <ff911d30-12c3-483c-8b39-549c881a0437@altera.com>
-References: <cover.1783074850.git.tze.yee.ng@altera.com>
- <b5899827bdcf3f3097ef4cf5dae221cc5305337c.1783074850.git.tze.yee.ng@altera.com>
- <20260703110639.748421F000E9@smtp.kernel.org>
-In-Reply-To: <20260703110639.748421F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=altera.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR03MB5950:EE_|PH7PR03MB7063:EE_
-x-ms-office365-filtering-correlation-id: 2eb36483-8467-4248-ba5d-08dedb1f6d25
-x-ms-exchange-atpmessageproperties: SA
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|38070700021|11063799006|22082099003|4143699003|56012099006|18002099003|6133799003|55112099003;
-x-microsoft-antispam-message-info:
- v4Y1vEa7tawn4h9li8Z5d3w5qGbzrnQZsEX8vV8DhwLozA0nzcvub8jVZuLW8HYHmbhrdm+Ii5Y6Q9nMlhTKWa8EQuPC7eeJNlV3W5IhB1WOXXWpY5Xe6w2Ti33ZBFGL/lyboQzJuEj8CyiDRNehlAnokM03eb+uMarouSe9as2IUMQr38/JAza1Rfic68W4MGMnFWNLvyT+t+o/UQjmnEicpTENq1FuR2TsuYbdtAdMJexjFY5MizVmf+WzfCwGnzAEAFJtU+6wpkkH9brOo/XfxvzyTitY9Zx8GdiNAi1ew+FcuxwwKL9+iGt3Ay7RKS04Oq/wdrVp7dXnJxBL5mf8SutF1RflOWcAuS0Wfc/EXfvTFcLZ/JYTJSvxu2q/9VqIC5oNh64Bm480Y8OfFTmCWS+eKZ8qSuAZwr6AwTmI5aSRDqyWM0IZ7YRqEBWLY74HOJ+atuBiPUqAJu8fCg2gT3WE7uk/If9nAzfo9SYzwr3VMvNq/httEVUWHipCXHt/9rUnGfQMD6wxqX51KQPgGc0vvE7MOAV9RcTN/nSAGj8QGTRnurVVBimU/hpcm2VrJUZZs6Oxgz4YcTuMXQmqE6fC7L13Q38yUR3Q1wxtMKj9W5QeN3Syb0Mytq0ICl4YigsrFDvv89DynoAHrM4SITQBxYO6lni57dDzRdJkwatygoiojh3NEf+YF+YWztbR41NOuWOffRNdtx6objEcgPLl06hffQVbg6SKNzE=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB5950.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(38070700021)(11063799006)(22082099003)(4143699003)(56012099006)(18002099003)(6133799003)(55112099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?NENGWlR5OFl0bWp5MUlkTGlCb0lNaVc3TnlZNzR0OStHRmRKYXJhaEZ1YUV1?=
- =?utf-8?B?c3NzaC9ibWxSRnJSMGRsVDFSUG4rT0VaOGUydkkwQ1RUSkZ5TW04VVZPK2pD?=
- =?utf-8?B?cjU0bXRWL0x0eUxzMVhFUXo5K2swTlY2ZnJacENibEJGamJHc3orTjBLK1VG?=
- =?utf-8?B?VG9tR2ZKL2dPdFFyN1RBakR6cHZLbCsrTkFlSVVEbmhJeWlJeFA1UmxaN0JY?=
- =?utf-8?B?eERHVmxIUjRXTUllVmZRb1M5L1dGcVJ2b2hrWDN3QmwwVldTZnNCdXNOZDg3?=
- =?utf-8?B?QmlNT1BMZ0tqVFNpb2I1YUNGckQ5czZ3dWx0Y0JOZ0IzUmZMUEQ0S3VMYTVU?=
- =?utf-8?B?NGFzbXBLRlBQRmx3SjJqSzE2eUtLNkZRNjFqRzVLZG00NXk1a3VYRW51c3F0?=
- =?utf-8?B?R0tLWkgxWHkwUHI2dmhlVUtUSU9SdmZCUU5mZyt2MjliWXdSRWxFQTBybWZi?=
- =?utf-8?B?Qmt3bkdOMXVrdG1nZWVHNEg5RDBPMFpHeHVDZTA0N1BsM3dRSU54aUVleG5J?=
- =?utf-8?B?WWJhTE1zRlR3UW15eHc3bUo3SHBIZWlLL3ozNXV1M0REdjlZM1ZkUVdLM0ZE?=
- =?utf-8?B?U2ZIUU01U3NQSDFFRHFzSTFIa2ZidFk0RlgvQkIvVEZoVFI2Q21MMEhLL3Az?=
- =?utf-8?B?N1VnUFZUNklpU2YxWHZlQ251UTNOUVRhd0JEWDVRYmJJc2p3WTZoUmZ4bUFs?=
- =?utf-8?B?SmpRdlY1U29WVGlJb2Rna1ZXN3U2cFRYWHdrQUlNUVhQdkNHN0FyYS9HSXZM?=
- =?utf-8?B?SFJ0U0dYWEZRZHRWSEtteE5LbzVrWXVxcnREdW50dzlRa1owSUt5Zmw0Q1FO?=
- =?utf-8?B?dHBqTEdZM0VCMHA5S09sZFlER3JpNGw1R1RUZ2FsdW1SallXSDYrNVMrcGVv?=
- =?utf-8?B?alRabkhPYnpFVHFBVWVhd2oybE50d3F3Z1ZmNFhFeXFveE56UVZMZGI0Nm1U?=
- =?utf-8?B?TzFsT0xLSmwwRGRMSUp0MkpHM2cvN3FaeW5tUkwyYmtwdUVXOEM4VnlhNkUw?=
- =?utf-8?B?TjE0TmRnanMyWUh4SzN0cy9NNDMzaFBvVkdYK09Hd3hMclk0K2RqZjZEaFo5?=
- =?utf-8?B?RWFsdCszY2hGUU9wZ2kxdkRuSWJCYjNKQzNuMVpKWm95UXBkbWRpYk9kcXA5?=
- =?utf-8?B?aTdhTmJNWXRlZDRaMWRWdE9kdGR6Z0g1QldEUUZqUTBhTndUandQQ0dZa0tu?=
- =?utf-8?B?WGlPMEZmZzZmNDdIdWRUbkJ5MlBud3FSWnh0cjR1cysrSVR2VWhYNVU2d1FL?=
- =?utf-8?B?Ty9tOVRpUHVOdlRuZGVYaTgvN1ZCc2E2YlN2WWxEdUt2dVprYW45K2RneGdu?=
- =?utf-8?B?TkFGVHM5OXM5NVBLSS9hMndSazY1UjJIMGE2dm41YXcrdDlFUWpHMnVRL1or?=
- =?utf-8?B?cDhNNkszREZBZUJBZmh1UnozR2Nmb1h6ZDdOVkduL1I0UVN4S081bWVBeXJu?=
- =?utf-8?B?OXlGTkRoMkcyMS9BV1pYb3NPZXFRSU16OW5nSlIrRFNSdjJ5M1orQkMyY2hj?=
- =?utf-8?B?c3pzSlV3WHBpRW9zQXBrVTRwSHdSOWoybFdtM2VuTzB2eHgxU3diRFNmRWVS?=
- =?utf-8?B?Tm9HRDVvTC9vdkxaeDdxZC9ON2tSbmpwVkVQVzA1aDBTY2pQZ2ZhcDJ6OVRq?=
- =?utf-8?B?MUNkcDBZVlppeU96NUEyWklYcUtmNEppbnB0clVKckc5RC8zeUttSTNSVi81?=
- =?utf-8?B?b25mcXdMV2N3N2tudVFJZ1lPQUhXZUU1SGZLZSthRmhOMWRBS01UVG5pWFNY?=
- =?utf-8?B?cDRzazcvQjZ4YmdtS3dWdE85TXNWelRibW5NYStkbVJ5YlgvWGQwQ3BVUEd0?=
- =?utf-8?B?bGRkTVpySjc0MzRHYlhMTWNhcGlxYTlDekFwRnpzcGt1Ny81M0c2STdPL0JX?=
- =?utf-8?B?L3lRWXRVelRvT1k0bEFSV2lxMWduTnZKZjVQQjRkL1YrNi9TSHBURWRqVmZN?=
- =?utf-8?B?RkErVzg5TTFDby91TEd2aSs2cm04RGY3dDVTc1EweFU1YjA2RVh6UDZaZ3FX?=
- =?utf-8?B?WlNMcytPVWVSOEdteEJqaHhLL1E2emVTSk1IaDM5bkJCWk9UTmJZRzJ6RE02?=
- =?utf-8?B?eXhxVjlSZ0EwZDhqcGllcFNSUktuejcrZE8wNTd6cERENnRMMXhLb2poU21z?=
- =?utf-8?B?UmtGVENMN2gvdktGR3BzOFptMW5YdzJpNUhmdTR6bURQOGtqUWNaNlBMTTYz?=
- =?utf-8?B?REduUFdlU09ORmdzOTV2MkpTSFpsY3FPVEFuNVRkWlNRbDg4NmNBUmx2cllu?=
- =?utf-8?B?TTFEVVlkdy9mSkV1QU44MHJGNjZnU2phYTdhMlNRUlVLMzhURi9KZ3ZKN3N3?=
- =?utf-8?B?ZDhwcEZGMjVrNFIxb0ZsQ3JNWlcyVEVhejdLMFZaRW53ZjAwOHdqQzZxUExD?=
- =?utf-8?Q?3vX/UZWAxBEXpAhQ=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <20DB87DBD8D13447A41B1D85891B3331@namprd03.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=jrife-io.20251104.gappssmtp.com header.i=@jrife-io.20251104.gappssmtp.com header.b="aTC+QQtW"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-845e5504f54so90611b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 05 Jul 2026 22:40:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jrife-io.20251104.gappssmtp.com; s=20251104; t=1783316413; x=1783921213; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=uUThmnqdVfyKqyuDois6AcDzN8X+2YoeRVYUtD3WE8A=;
+        b=aTC+QQtW4tVgbx+LYp99YoJqn835AlG+ENIijY+tfL+3jJ5PVM09LBbcE73uTMP8Cs
+         wTAD0wxTumlQ4kLpDy0hf++DOMtdBSESIQuAhc7ZWhTPmZrqMcjGzmw9raXCa1bP9GBA
+         JYEGazHth2Z3TMjpRDQFvh/llvccHHa8SbSLYy1K0fa6VgEKe5YH0vt6UQaYgpIKoyT6
+         CFy2a1cYegqfTq9Cc075NPbgVAjLKjtoal26SgeEO66etvwaRRCRFPXN1PySXIk0vGN9
+         JIJ0IGoM6yW+WAPzUNEAjyy7ZjQNvWyj/GdHmGpEUhySEUT5h+T07GEZ28CrT2i+5Lxh
+         X+jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783316413; x=1783921213;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uUThmnqdVfyKqyuDois6AcDzN8X+2YoeRVYUtD3WE8A=;
+        b=ooLm33rqqRvqzbYd0YC0IMPkU1Fya5mpDxrHljBdWBkQXZ+Wn9y83yMna49h7wtHvm
+         MTJfzxxPxSQDVVw5x36HJLmXUocXsfZxEevBN13m2qTSEqsKKAquDQWXmO9F9PRnd2yw
+         iOJBPrzgFFt/lNRHcBCst8IcHknPBUnrGAIHVdvX5kO1VlDcTRI0uzVozcDQMBCCR2EX
+         DM38mNecAr6R0gwDlgYFIk6njrDXRtz2QR8wds1qRzyFflmDpGgbES0utyfQqNI5Re01
+         JzCjdIF3X96V/lJI2qo0mPYri6WKQORS5YLt0fO+3Hzgootc1yF8oCQf/tKyOrHCrEC+
+         ClFA==
+X-Gm-Message-State: AOJu0Yz7ePvrMEbNQ6QMDBF84XxjGOc8J6YuQm0F22hXGdB6s23/Aq4/
+	IzgaDvQmoJMFeAy9+VlKmhUI01QqqpZQbI8h5hsMeBtfy6AqkudbXoEnjfoNHPULs4Q=
+X-Gm-Gg: AfdE7clrezKzd+bJLkAyFFThh7W5uJAynxtxNztZ9nLO/DTRgdjKl9hM1bBmNYGrS+m
+	TnZQ3sPgTMcGILcBPjOe8XRpyAr3eKuRaLfaIzmqoN39EaORrLzKiJgWVIR4nY8wcUpvwvFR280
+	5FL9Ya0aJ2+s9jKaMDJyD+2fIK+p7ZteFtO4UOVjXj/ImQVMeHyDvS62evsOb5kai7ePveZ1h5l
+	WDVkhsxXEd4HliGVQohz7jZRwnUhFDP/3UQKQQAZ8vax2eFhbECCM0Yppcyks5mXzgu36Tu2jFK
+	Aw1fvkg3LyULEVcPpZh3qK95DZ6Ffyckkz5tHCC0qelJZIkIohi8ocwFgSjF/2NINVX8cSY7p12
+	AKgDQoGpdFaQjM7OmmjfvBcDrk/QZgKUnaSQd3mIbzVP8moOGHYYqrMcp9rHf6zhTqT0/7aIzgd
+	YR1sZRgAH6
+X-Received: by 2002:a05:6a21:7703:b0:3bf:6ac8:8d20 with SMTP id adf61e73a8af0-3c03c3c42f7mr5222535637.1.1783316412798;
+        Sun, 05 Jul 2026 22:40:12 -0700 (PDT)
+Received: from t14 ([2001:5a8:47ec:d700:27b5:472c:6298:1925])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c9e8f6bd050sm5500447a12.14.2026.07.05.22.40.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jul 2026 22:40:12 -0700 (PDT)
+Date: Sun, 5 Jul 2026 22:40:10 -0700
+From: Jordan Rife <jordan@jrife.io>
+To: Jiayuan Chen <jiayuan.chen@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Subject: Re: [PATCH bpf] bpf: reject mini-sockets in bpf_sock_destroy()
+Message-ID: <po6jpmx5q72uvblx23atsbwvxhoszpmrlkjd6txljljufnjeqj@v3yov32574sm>
+References: <20260702224519.800135-1-xmei5@asu.edu>
+ <20260702230504.0E65E1F000E9@smtp.kernel.org>
+ <e6ec128e-1acf-4dc7-8884-e4d7ed14d25b@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: altera.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR03MB5950.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2eb36483-8467-4248-ba5d-08dedb1f6d25
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jul 2026 05:28:35.4264
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fbd72e03-d4a5-4110-adce-614d51f2077a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: STYigsiMdsgWxDFFDCR4Mg/lv5rC3PBqZ9qNCEORbS5oL2D+S0BO0ZGVCrrsvj9gHFS+3NrUqxIwb+d2vl9CVw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR03MB7063
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e6ec128e-1acf-4dc7-8884-e4d7ed14d25b@linux.dev>
 
-T24gMy83LzIwMjYgNzowNiBwbSwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gVGhh
-bmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMiBw
-b3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQo+IC0gW0hpZ2hdIEFESSBhbmQgQ2FkZW5j
-ZSBJM0MgbWFzdGVyIGRyaXZlcnMgc3Bvb2YgYWN0dWFsX2xlbiwgaGlkaW5nIHNob3J0IHJlYWRz
-IGFuZCBieXBhc3NpbmcgY29yZSB2YWxpZGF0aW9uLg0KPiAtIFtIaWdoXSBSZW5lc2FzIEkzQyBt
-YXN0ZXIgZHJpdmVyIGxlYXZlcyByeF9jb3VudCBhdCAwIGZvciBzbWFsbCB0cmFuc2ZlcnMsIGJy
-ZWFraW5nIGRldmljZSBlbnVtZXJhdGlvbi4NCj4gLS0NCj4gDQo+IGNvbW1pdCBiYzYzODM2MTM4
-ZGVlZDI2ZjJhMzMyYTBjNWUxOWY0YWMwODhkNGFiDQo+IEF1dGhvcjogQWRyaWFuIE5nIEhvIFlp
-biA8YWRyaWFuLmhvLnlpbi5uZ0BhbHRlcmEuY29tPg0KPiANCj4gaTNjOiBtYXN0ZXI6IFJlcG9y
-dCBhY3R1YWwgR0VUIENDQyBwYXlsb2FkIGxlbmd0aCBvbiBzdWNjZXNzDQo+ICAgICAgDQo+IFNl
-dCBkZXN0c1tdLnBheWxvYWQuYWN0dWFsX2xlbiBvbiBzdWNjZXNzZnVsIEdFVCBDQ0MgdHJhbnNm
-ZXJzIGluIEkzQw0KPiBtYXN0ZXIgZHJpdmVycyBzbyB0aGUgY29yZSBjYW4gZGlzdGluZ3Vpc2gg
-cmVxdWVzdGVkIGFuZCByZWNlaXZlZA0KPiBidWZmZXIgbGVuZ3Rocy4gU3dpdGNoIGNvcmUgR0VU
-IGhlbHBlcnMgdG8gdXNlIGFjdHVhbF9sZW4gaW5zdGVhZCBvZg0KPiBsZW4gd2hlbiBpbnRlcnBy
-ZXRpbmcgR0VUIENDQyByZXN1bHRzLg0KPiANCj4gWyAuLi4gXQ0KPiANCj4+IGRpZmYgLS1naXQg
-YS9kcml2ZXJzL2kzYy9tYXN0ZXIvYWRpLWkzYy1tYXN0ZXIuYyBiL2RyaXZlcnMvaTNjL21hc3Rl
-ci9hZGktaTNjLW1hc3Rlci5jDQo+PiBpbmRleCAwNDcwODFjOWYwNjQzLi42NDczNWI0ODg3MjYx
-IDEwMDY0NA0KPj4gLS0tIGEvZHJpdmVycy9pM2MvbWFzdGVyL2FkaS1pM2MtbWFzdGVyLmMNCj4+
-ICsrKyBiL2RyaXZlcnMvaTNjL21hc3Rlci9hZGktaTNjLW1hc3Rlci5jDQo+IFsgLi4uIF0NCj4+
-IEBAIC0zNjAsNiArMzYwLDggQEAgc3RhdGljIGludCBhZGlfaTNjX21hc3Rlcl9zZW5kX2NjY19j
-bWQoc3RydWN0IGkzY19tYXN0ZXJfY29udHJvbGxlciAqbSwNCj4+ICAgCQlhZGlfaTNjX21hc3Rl
-cl91bnF1ZXVlX3hmZXIobWFzdGVyLCB4ZmVyKTsNCj4+ICAgDQo+PiAgIAljbWQtPmVyciA9IGFk
-aV9pM2NfY21kX2dldF9lcnIoJnhmZXItPmNtZHNbMF0pOw0KPj4gKwlpZiAoIXhmZXItPnJldCAm
-JiBjbWQtPnJudykNCj4+ICsJCWNtZC0+ZGVzdHNbMF0ucGF5bG9hZC5hY3R1YWxfbGVuID0gY21k
-LT5kZXN0c1swXS5wYXlsb2FkLmxlbjsNCj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gRG9lcyB0
-aGlzIHVuY29uZGl0aW9uYWxseSBzZXQgYWN0dWFsX2xlbiB0byB0aGUgcmVxdWVzdGVkIGxlbmd0
-aCwgZGlzY2FyZGluZw0KPiB0aGUgdHJ1ZSBoYXJkd2FyZSB0cmFuc2ZlciBzaXplPw0KPiANCj4g
-QnkgYmxpbmRseSBjb3B5aW5nIHRoZSByZXF1ZXN0ZWQgbGVuZ3RoIGhlcmUsIGl0IHNlZW1zIHRo
-aXMgZGVmZWF0cyB0aGUgbmV3IEdFVA0KPiBDQ0MgdmFsaWRhdGlvbiBsb2dpYy4gSWYgYSBkZXZp
-Y2UgcmV0dXJucyAwIGJ5dGVzIG9yIGEgc2hvcnQgcmVhZCwgdGhlIGNvcmUNCj4gdmFsaWRhdGlv
-biBjb3VsZCBmYWxzZWx5IHBhc3MsIHBvdGVudGlhbGx5IGNhdXNpbmcgdGhlIGtlcm5lbCB0byBw
-YXJzZQ0KPiB1bmluaXRpYWxpemVkIG9yIHplcm8tcGFkZGVkIG1lbW9yeSBhcyB2YWxpZCBkZXZp
-Y2UgY2FwYWJpbGl0aWVzLg0KPiANCj4+ICAgDQo+PiAgIAlyZXR1cm4geGZlci0+cmV0Ow0KPj4g
-ICB9DQo+IFsgLi4uIF0NCj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2kzYy9tYXN0ZXIvaTNjLW1h
-c3Rlci1jZG5zLmMgYi9kcml2ZXJzL2kzYy9tYXN0ZXIvaTNjLW1hc3Rlci1jZG5zLmMNCj4+IGlu
-ZGV4IDZkMjIxNTk2ZWEzNTcuLjM2OTk4ZWU0MDczZDcgMTAwNjQ0DQo+PiAtLS0gYS9kcml2ZXJz
-L2kzYy9tYXN0ZXIvaTNjLW1hc3Rlci1jZG5zLmMNCj4+ICsrKyBiL2RyaXZlcnMvaTNjL21hc3Rl
-ci9pM2MtbWFzdGVyLWNkbnMuYw0KPiBbIC4uLiBdDQo+PiBAQCAtNzE0LDYgKzcxNCw4IEBAIHN0
-YXRpYyBpbnQgY2Ruc19pM2NfbWFzdGVyX3NlbmRfY2NjX2NtZChzdHJ1Y3QgaTNjX21hc3Rlcl9j
-b250cm9sbGVyICptLA0KPj4gICANCj4+ICAgCXJldCA9IHhmZXItPnJldDsNCj4+ICAgCWNtZC0+
-ZXJyID0gY2Ruc19pM2NfY21kX2dldF9lcnIoJnhmZXItPmNtZHNbMF0pOw0KPj4gKwlpZiAoIXJl
-dCAmJiBjbWQtPnJudykNCj4+ICsJCWNtZC0+ZGVzdHNbMF0ucGF5bG9hZC5hY3R1YWxfbGVuID0g
-Y21kLT5kZXN0c1swXS5wYXlsb2FkLmxlbjsNCj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gU2lt
-aWxhciB0byB0aGUgQURJIGRyaXZlciwgZG9lcyB0aGlzIGJ5cGFzcyB0aGUgY29yZSB2YWxpZGF0
-aW9uIGJ5DQo+IHVuY29uZGl0aW9uYWxseSBjb3B5aW5nIHRoZSByZXF1ZXN0ZWQgbGVuZ3RoPw0K
-PiANCj4gSWYgYSBzaG9ydCByZWFkIG9jY3VycywgdGhlIGRyaXZlciB3aWxsIGluY29ycmVjdGx5
-IHJlcG9ydCBhIGZ1bGwgcmVhZCBpbnN0ZWFkDQo+IG9mIHRoZSBhY3R1YWwgaGFyZHdhcmUgYnl0
-ZSBjb3VudC4NCj4gDQo+PiAgIAljZG5zX2kzY19tYXN0ZXJfZnJlZV94ZmVyKHhmZXIpOw0KPj4g
-ICANCj4+ICAgCXJldHVybiByZXQ7DQo+IFsgLi4uIF0NCj4+IGRpZmYgLS1naXQgYS9kcml2ZXJz
-L2kzYy9tYXN0ZXIvcmVuZXNhcy1pM2MuYyBiL2RyaXZlcnMvaTNjL21hc3Rlci9yZW5lc2FzLWkz
-Yy5jDQo+PiBpbmRleCBmMzljNDQ5OTIyY2EyLi5mZWM2MTQ3MDA4NDNmIDEwMDY0NA0KPj4gLS0t
-IGEvZHJpdmVycy9pM2MvbWFzdGVyL3JlbmVzYXMtaTNjLmMNCj4+ICsrKyBiL2RyaXZlcnMvaTNj
-L21hc3Rlci9yZW5lc2FzLWkzYy5jDQo+IFsgLi4uIF0NCj4+IEBAIC04MDUsNiArODA1LDggQEAg
-c3RhdGljIGludCByZW5lc2FzX2kzY19zZW5kX2NjY19jbWQoc3RydWN0IGkzY19tYXN0ZXJfY29u
-dHJvbGxlciAqbSwNCj4+ICAgCXJldCA9IHhmZXItPnJldDsNCj4+ICAgCWlmIChyZXQpDQo+PiAg
-IAkJY2NjLT5lcnIgPSBJM0NfRVJST1JfTTI7DQo+PiArCWVsc2UgaWYgKGNjYy0+cm53KQ0KPj4g
-KwkJY2NjLT5kZXN0c1swXS5wYXlsb2FkLmFjdHVhbF9sZW4gPSBjbWQtPnJ4X2NvdW50Ow0KPiAN
-Cj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBEb2VzIHRoaXMgbGVhdmUgYWN0dWFsX2xlbiBhdCAwIGZv
-ciBzbWFsbCB0cmFuc2ZlcnMsIGJyZWFraW5nIGRldmljZQ0KPiBlbnVtZXJhdGlvbj8NCj4gDQo+
-IEZvciBzbWFsbCBHRVQgQ0NDIHJlYWRzLCBpZiB0aGUgcmVhZCBidWZmZXIgZnVsbCBpbnRlcnJ1
-cHQgZG9lc24ndA0KPiB0cmlnZ2VyLCB0aGUgdHJhbnNmZXIgY29tcGxldGVzIGluIHJlbmVzYXNf
-aTNjX3Jlc3BfaXNyKCkgd2hlcmUgaXQgZHJhaW5zIHRoZQ0KPiByZW1haW5pbmcgYnl0ZXMgZnJv
-bSB0aGUgRklGTyBidXQgZG9lc24ndCBhY2N1bXVsYXRlIGJ5dGVzX3JlbWFpbmluZyBpbnRvDQo+
-IGNtZC0+cnhfY291bnQ6DQo+IA0KPiBkcml2ZXJzL2kzYy9tYXN0ZXIvcmVuZXNhcy1pM2MuYzpy
-ZW5lc2FzX2kzY19yZXNwX2lzcigpIHsNCj4gICAgICAuLi4NCj4gICAgICBieXRlc19yZW1haW5p
-bmcgPSBkYXRhX2xlbiAtIGNtZC0+cnhfY291bnQ7DQo+ICAgICAgaTNjX3JlYWRsX2ZpZm8oaTNj
-LT5yZWdzICsgTlREVEJQMCwgY21kLT5yeF9idWYsIGJ5dGVzX3JlbWFpbmluZyk7DQo+ICAgICAg
-Li4uDQo+IH0NCj4gDQo+IFNpbmNlIGNtZC0+cnhfY291bnQgcmVtYWlucyAwLCB3b24ndCB0aGlz
-IHByb3BhZ2F0ZSBhbiBhY3R1YWxfbGVuIG9mIDAgdG8gdGhlDQo+IGNvcmUsIGNhdXNpbmcgdGhl
-IGNvcmUgdmFsaWRhdGlvbiB0byByZWplY3QgdGhlIHRyYW5zZmVyIHdpdGggLUVJTz8NCj4gDQo+
-PiAgIA0KPj4gICAJcmV0dXJuIHJldDsNCj4+ICAgfQ0KPiANCg0KSGkgbWFpbnRhaW5lcnMsDQoN
-CkJvdGggcG9pbnRzIGZyb20gU2FzaGlrbyBsb29rIHZhbGlkLg0KMS4gW0hpZ2hdIEFESSBhbmQg
-Q2FkZW5jZSBJM0MgbWFzdGVyIGRyaXZlcnMgc3Bvb2YgYWN0dWFsX2xlbiwgaGlkaW5nIA0Kc2hv
-cnQgcmVhZHMgYW5kIGJ5cGFzc2luZyBjb3JlIHZhbGlkYXRpb24uDQoNCldlIGN1cnJlbnRseSBz
-ZXQgYWN0dWFsX2xlbiBmcm9tIHRoZSByZXF1ZXN0ZWQgcGF5bG9hZC5sZW4gcmF0aGVyIHRoYW4g
-DQp0aGUgaGFyZHdhcmUgYnl0ZSBjb3VudCAoUkVHX0NNRFJfRklGT19YRkVSX0JZVEVTIC8gQ01E
-Ul9YRkVSX0JZVEVTKSwgDQpldmVuIHRob3VnaCB0aGUgY29tcGxldGlvbiBwYXRoIGFscmVhZHkg
-cmVhZHMgdGhhdCB2YWx1ZSB0byBkcmFpbiB0aGUgUlggDQpGSUZPLiBXZSdsbCBmaXggdGhpcyBp
-biB2NiBieSByZWNvcmRpbmcgdGhlIEhXIHRyYW5zZmVyIHNpemUgYW5kIHVzaW5nIA0KaXQgZm9y
-IGFjdHVhbF9sZW4uDQoNCjIuIFtIaWdoXSBSZW5lc2FzIEkzQyBtYXN0ZXIgZHJpdmVyIGxlYXZl
-cyByeF9jb3VudCBhdCAwIGZvciBzbWFsbCANCnRyYW5zZmVycywgYnJlYWtpbmcgZGV2aWNlIGVu
-dW1lcmF0aW9uLg0KDQpGb3Igc21hbGwgR0VUIENDQ3MsIHJ4X2NvdW50IG1heSByZW1haW4gMCB3
-aGVuIHRoZSByZWFkLWJ1ZmZlci1mdWxsIElSUSANCmRvZXMgbm90IGZpcmUgYW5kIHJlc3BfaXNy
-IHNraXBzIHRoZSBGSUZPIGRyYWluIGJlY2F1c2UgUkRCTFYgaXMgdW5zZXQg4oCUIA0Kd2hpbGUg
-TlJTUFFQX0RBVEFfTEVOIGFscmVhZHkgcmVwb3J0cyB0aGUgcmVjZWl2ZWQgbGVuZ3RoIChFTlRE
-QUEgDQpoYW5kbGVzIHRoaXMgY29ycmVjdGx5KS4gSW4gdjYsIHdlJ2xsIGFsaWduIHRoZSBDT01N
-QU5EX1JFQUQgcGF0aCB3aXRoIA0KRU5UREFBIHNvIGFjdHVhbF9sZW4gcmVmbGVjdHMgZGF0YV9s
-ZW4gb24gc3VjY2Vzcy4NCg0KTGV0IG1lIGtub3cgaWYgeW91IGhhdmUgZGlmZmVyZW50IHRob3Vn
-aHRzLg0KDQpUaGFua3MsDQpUemUgWWVlDQoNCg==
+On Fri, Jul 03, 2026 at 10:15:27AM +0800, Jiayuan Chen wrote:
+> 
+> On 7/3/26 7:05 AM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > 
+> > New issues:
+> > - [High] The patch causes a functional regression by completely disabling bpf_sock_destroy() for TCP mini-sockets (TIME_WAIT and NEW_SYN_RECV).
+> > 
+> > Pre-existing issues:
+> > - [High] The helpers bpf_tcp_check_syncookie and bpf_tcp_gen_syncookie suffer from the same type confusion and out-of-bounds read as bpf_sock_destroy, but remain unfixed.
+> > --
+> > 
+> > commit cf46da8728e7f1fca4584ccdb089c82b7fd3061f
+> > Author: Xiang Mei (Microsoft) <xmei5@asu.edu>
+> > 
+> > bpf: reject mini-sockets in bpf_sock_destroy()
+> > 
+> > The patch tries to fix a KASAN slab-out-of-bounds read in
+> > bpf_sock_destroy() by checking sk_fullsock(sk) before accessing
+> > sk->sk_protocol. It casts sock_common to sock and early exits if it is
+> > a mini-socket.
+> > 
+> > Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
+> > Reported-by: AutonomousCodeSecurity@microsoft.com
+> > Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+> > 
+> > > diff --git a/net/core/filter.c b/net/core/filter.c
+> > > index b446aa8be5c37..3e70c8ab5aab1 100644
+> > > --- a/net/core/filter.c
+> > > +++ b/net/core/filter.c
+> > > @@ -12665,6 +12665,9 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
+> > >   {
+> > >   	struct sock *sk = (struct sock *)sock;
+> > > +	if (!sk_fullsock(sk))
+> > > +		return -EOPNOTSUPP;
+> >          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> > [Severity: High]
+> > Does this unconditionally reject mini-sockets?
+> > 
+> > The commit message states that mini-sockets have no diag_destroy() handler,
+> > but as documented in the original commit 4ddbcb886268, request sockets are
+> > explicitly supported because their protocol diag_destroy handler
+> > (tcp_abort) correctly handles TCP_TIME_WAIT and TCP_NEW_SYN_RECV states.
+> > 
+> > If we unconditionally reject non-full sockets, wouldn't this break BPF
+> > programs that rely on bpf_sock_destroy() to forcefully terminate pending
+> > connections or TIME_WAIT sockets?
+> 
+> It's true. Please also include a selftest to reproduce the issue and,
+> another one to cover the non-full socket.
+
++1 to the selftests.
+
+I'd just extend tools/testing/selftests/bpf/prog_tests/sock_destroy.c
+
+Considering the original intent was to support request sockets and time
+wait sockets and tcp_abort already supports both, perhaps something like
+this would be better.
+
+__bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
+ {
++       int (*diag_destroy)(struct sock *sk, int err);
+        struct sock *sk = (struct sock *)sock;
+ 
+        /* The locking semantics that allow for synchronous execution of the
+@@ -12672,11 +12674,16 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
+         * Supporting protocols will need to acquire sock lock in the BPF context
+         * prior to invoking this kfunc.
+         */
+-       if (!sk->sk_prot->diag_destroy || (sk->sk_protocol != IPPROTO_TCP &&
+-                                          sk->sk_protocol != IPPROTO_UDP))
++       if (!sk_fullsock(sk))
++               diag_destroy = tcp_abort;
++       else if(sk->sk_prot->diag_destroy &&
++               (sk->sk_protocol == IPPROTO_TCP ||
++                sk->sk_protocol == IPPROTO_UDP))
++               diag_destroy = sk->sk_prot->diag_destroy;
++       else
+                return -EOPNOTSUPP;
+ 
+-       return sk->sk_prot->diag_destroy(sk, ECONNABORTED);
++       return diag_destroy(sk, ECONNABORTED);
+ }
+
+(Note: I haven't tested this)
+
+> 
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but does this same type confusion exist
+> > in bpf_tcp_check_syncookie() and bpf_tcp_gen_syncookie()?
+> > 
+> > Both of those helpers take ARG_PTR_TO_BTF_ID_SOCK_COMMON and cast it to
+> > a full struct sock *. They then immediately dereference sk->sk_protocol
+> > without an sk_fullsock() check:
+> > 
+> > net/core/filter.c:bpf_tcp_check_syncookie() {
+> >      ...
+> > 	if (sk->sk_protocol != IPPROTO_TCP || sk->sk_state != TCP_LISTEN)
+> > 		return -EINVAL;
+> >      ...
+> > }
+> > 
+> > If an XDP or TC BPF program passes a tw_sock or req_sock from
+> > bpf_skc_lookup_tcp(), won't this result in the same KASAN
+> > slab-out-of-bounds read since sk_protocol resides outside the bounds
+> > of struct sock_common?
+> > 
+> > > +
+> > >   	/* The locking semantics that allow for synchronous execution of the
+> > >   	 * destroy handlers are only supported for TCP and UDP.
+> > >   	 * Supporting protocols will need to acquire sock lock in the BPF context
+
+Jordan
