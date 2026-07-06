@@ -1,116 +1,148 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7CF3EDAC1
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 08:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50D93F9A11
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 08:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783327178; cv=none; b=tdmVQ1wb0OYNmw4E7n7pwDQ8Ed7O3WUHOp3jY7Gzy0hMFDc9FgsfIb19ewfiIg/7pM+8fVVKVXh8is10nl6y7U8OFdvTIqx6c8gkG+L+7CgPTCQaISnRCyHe3Qd9seuf+JAhrVmHtVqEdaXNU5VCtgzRv7BRmflK8HiNTvj4eW4=
+	t=1783327413; cv=none; b=n3J7xl3gA9rhn1oesR90CrsO0yQ4vb5HhGLqm0Z58v5errr6HXne0lW8cOPWnxKq2SRpBSF/NgOCCbCoen72HSxHKQsX9dVl2ilet5coDf6QaYAnD6uZFbHUHPHt+lqTA7GFqmJKAomYsLQfj0ztgTDz1q55Sq8nsB7K96lqPBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783327178; c=relaxed/simple;
-	bh=D5whuOq+QlG8L8X1qHqgY8y2NRAujgBvpsz93xSPRaE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDlkoDeQvWeNHiXZrCL7VjBtwH0vLHJ/J0oqfZZ84BiVg7XGaj5tCv2icUePLYXDxlu8ik7W7nCy4/4blIlCZPIsX4gcTnn2Liuf7NUvG2VSxL9TbjzI2eLSNlkOm8Rh5zn5cYiF5RJMQOwq4PoAdeVHoAAavqrlCbICgigTw5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I78LcsGj; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783327413; c=relaxed/simple;
+	bh=TZlkPJX0n5KVotzkqQhqGMc9PslDrZM+LUo4K9eZYy0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gTDgS42ftuPj85MRHrIsu/NjxWIeXLNdUMG/Nlp/55zal/O1Hozv4ax5mPymY59KwkLaE240O0BG8E5pVOjikPI1vh7/92ZBO/18avpINHTlsoC8vkzSFfi8n+nxqv/oF85pqEk3AV3Uic4hlNlb5UlzWB/SjuHTieTUhVkTwcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=l+qif4Zs; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I78LcsGj"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-493bb510ce4so20316115e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 01:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783327169; x=1783931969; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MhgGnNuXnWH4hPrMvepsO/9ELPw89h4l69pd3BoNRLc=;
-        b=I78LcsGjrSNQGdPOwvZSyHFCxKGxg+knCda43Yo7VtLb49hLJFj+4k3hNWN6AQN+AR
-         cNw9JtvtVp4Xf4YXNacmFRS+7iToeg1UoFVPG/crT70XcmlRzEXaPfOh+i6XaS1tgRLo
-         hXFFxILF0Y5+lvuGpSRdRV4Yv6l/ecj/fDvVysSa6uzX0q66V3U4xw6/EbFcTlHqPbUM
-         HLhvmVgMm/iNIux1p2Jb0jI9evFGJ2CxfPw2x2h2C8DXQCT7ChAS9eomL3UfmgvAgtB3
-         1/YNn0WAsaPcii0i91sGfs3YA22srkxwdd8K8+THYLeIMPDRIW0+ckArkOe5LYIe7ZFW
-         mVug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783327169; x=1783931969;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MhgGnNuXnWH4hPrMvepsO/9ELPw89h4l69pd3BoNRLc=;
-        b=HW53ioafhMkyKJkQvKfjO90SqnS20qUnBGRa4XqL+0URx950RKhMcEATiZB1I0fQeu
-         EsmDtFWjLdl9B4mnoUal882LFHW7o7KQZw3oN7kf/AmouJDO8ZH+ZqQDWwTBM28YKGYN
-         1ONvVePeM0sra+hFPH/2rlPjfRwRjcGhCuZbBTCqBz3ZYeVDLb4CqHnQbHUTe4PezyPd
-         b6nhBQ+ETKbMfzRptYIYdJkdhq5bBSGssnz/1/AXUdlP7ZOSfjy62HxFhY5mJ22F38Zj
-         XlRmbx2VdWd/r9TQHqwTM9WdaKF4Ag4jlibtTkuHJSDRRk8Sl6crKOp+/onhPlMiZVky
-         QwrA==
-X-Forwarded-Encrypted: i=1; AHgh+RrG1y+l39Ecp3W2wKjnuel6UixHou3BQyAQ7SI6CtLsyaMyAqgkiTkd1Z8nBd0OA3hcdHnQGfMYydAjE85J/TY=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/DKMxCwOfravR7lozPNG9pojOSQQheSj9OU4G2+vMJRfHdWye
-	Xc+iB7PN3BmPJa/6a4+GdbHZBYloDOOO3ZUAtUAuB9zefT8A9qdcwomp
-X-Gm-Gg: AfdE7cnx4DxWvJq2LE3NlhQ/Ca9A/1sMFMu/CPOL8mmyCRy/iDzeHN52GD3swz96pvk
-	6FPlM6eRSPvijOzpx8/KSzhl9Jq2piGEIcL9g9KG+hgBjvenhZMMHNARPZdHMhcdo4A0jEOltkP
-	W1i9fv0Ao1wN4qN+T9Oo25V2mRP/CgD64Zk2w2olSeB/NGGycUnLIbw0DSIm773jJW8XhExBKAr
-	g1vBgvyHcKAmrimgIQ2+ydS18K9C+wYxjnf1z+22n1LJ5ggJRZBzCyAHYC7wy2hfK/UwNkpKH7S
-	8FESPZDNRhBg6jumJ3d6+tMeYcgaGc4dCwUGxgwlyyv8ukUrayBQWKpDTpjVNfzWyMLej3dm4y5
-	OcsqgZq+zSQX81dVzxai35+5YsXHHIHtZJq924YpUCt1BMLG+qPAxEU1CrSqKX/NbOBOIOsva8m
-	TbrL0ooBmm3SSYi71lBAIZjBFO6cI=
-X-Received: by 2002:a05:600c:8b67:b0:493:bc88:ddcf with SMTP id 5b1f17b1804b1-493d11f35f7mr101767645e9.23.1783327169115;
-        Mon, 06 Jul 2026 01:39:29 -0700 (PDT)
-Received: from anthony.local ([2a06:c701:49b2:4c00:12ff:e0ff:fea5:3d2e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c636e9e9sm338236185e9.2.2026.07.06.01.39.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 01:39:28 -0700 (PDT)
-From: Amit Barzilai <amit.barzilai22@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	robh@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	krzk+dt@kernel.org
-Subject: Re: [PATCH v3 1/3] dt-bindings: display: Add Solomon SSD1351 OLED controller
-Date: Mon,  6 Jul 2026 11:39:13 +0300
-Message-ID: <20260706083913.19172-1-amit.barzilai22@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260704081758.0BD4D1F000E9@smtp.kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l+qif4Zs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783327410; x=1814863410;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TZlkPJX0n5KVotzkqQhqGMc9PslDrZM+LUo4K9eZYy0=;
+  b=l+qif4ZsqX73BglWlZ2bR3LaRIOjDvlYU891ZRAT0uCGzY5ltLZ7Ikno
+   4VXp5sQ8U4krJrMIGkcSKwFALK9JPiyfhNBSlDf3ofYwbMQHDgHdJ3y5s
+   /AP7+0+l4LQfKJ/WSHWENKNS3222x2Q4/s+aVnjeXkDLlqyrvBsOuZM5D
+   4/uZbWpjiva9+i/KS8u14iqomKFe4OAl3aeQBhvZWMgFwEMvX2qhGMikw
+   214e0orPcsgKhvFE6Pvmwx83n14bMuNXPqWkJXhPwvKM4Xa+xzhrkM+5m
+   PwQudBg9VnVafi9vUGqYjKXFoRZtwecMNWm3ugMZKnq6mL+RbiWXRYR19
+   g==;
+X-CSE-ConnectionGUID: JCpUzMF8S9+UDVBg2wg45A==
+X-CSE-MsgGUID: 7G+UCwupTwWJYVCWKiP5OQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="83935173"
+X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
+   d="scan'208";a="83935173"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 01:43:25 -0700
+X-CSE-ConnectionGUID: NuuEANEGQ/mszdn/RFsBAA==
+X-CSE-MsgGUID: O/bl8s+iSICY+zYuHK94zg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
+   d="scan'208";a="255597858"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 01:43:24 -0700
+Message-ID: <37a32555-8271-4413-8f94-406e21bbf330@linux.intel.com>
+Date: Mon, 6 Jul 2026 16:43:22 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v9 06/24] perf/x86: Use x86_perf_regs in NMI handlers
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260706015439.3040804-1-dapeng1.mi@linux.intel.com>
+ <20260706015439.3040804-7-dapeng1.mi@linux.intel.com>
+ <20260706023135.63D411F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260706023135.63D411F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
->>     Assisted-by: Claude:claude-opus-4-8
+
+On 7/6/2026 10:31 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Concurrent use of `x86_pebs_regs` and `x86_user_regs` per-CPU variables between NMI and IRQ-disabled contexts corrupts PEBS samples.
+> --
 >
-> [Severity: Low]
-> This isn't a bug, but this Git trailer does not follow the standard format
-> `Tag: Full Name <email@address.tld>`. Without an email address enclosed in
-> angle brackets, this will likely trigger checkpatch warnings.
-
-This is a standard Assisted-by tag, see Documentation/process/coding-assistants.rst
-for basis.
-
->> +allOf:
->> +  - $ref: solomon,ssd-common.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - solomon,ssd1351
+> commit a90fb4d272f2182569ad5a2105f6b3f7c429263d
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> [Severity: Low]
-> Should there be default values defined for `solomon,width` and
-> `solomon,height` in this block? 
-> 
-> Since the common schema `solomon,ssd-common.yaml` indicates these defaults
-> are controller-dependent, omitting them here leaves the hardware's default
-> resolution undocumented in this schema.
+> perf/x86: Use x86_perf_regs in NMI handlers
+>
+> Support for sampling additional register state in NMI context requires an
+> x86-specific register container. This switches x86 NMI handlers to use
+> the x86_perf_regs structure.
+>
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index 0888d3b0923e1..d83ea02e24577 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+>> @@ -1788,9 +1788,11 @@ void perf_put_guest_lvtpc(void)
+>>  EXPORT_SYMBOL_FOR_KVM(perf_put_guest_lvtpc);
+>>  #endif /* CONFIG_PERF_GUEST_MEDIATED_PMU */
+>>  
+>> +static DEFINE_PER_CPU(struct x86_perf_regs, x86_intr_regs);
+>>  static int
+>>  perf_event_nmi_handler(unsigned int cmd, struct pt_regs *regs)
+>>  {
+>> +	struct x86_perf_regs *x86_regs = this_cpu_ptr(&x86_intr_regs);
+>>  	u64 start_clock;
+>>  	u64 finish_clock;
+>>  	int ret;
+>> @@ -1814,7 +1816,8 @@ perf_event_nmi_handler(unsigned int cmd, struct pt_regs *regs)
+>>  		return NMI_DONE;
+>>  
+>>  	start_clock = sched_clock();
+>> -	ret = static_call(x86_pmu_handle_irq)(regs);
+>> +	x86_regs->regs = *regs;
+>> +	ret = static_call(x86_pmu_handle_irq)(&x86_regs->regs);
+> [Severity: High]
+> Is this call path safe from NMI reentrancy when accessing the per-CPU
+> variables introduced earlier in this series?
+>
+> If intel_pmu_drain_pebs_buffer() is called from a non-NMI context (e.g.
+> intel_pmu_read_event() via the perf_event_read syscall) with local IRQs
+> disabled, NMIs can still fire.
+>
+> If a hardware PMI fires during the execution of __intel_pmu_pebs_events(),
+> the CPU will jump here to perf_event_nmi_handler().
+>
+> The NMI handler calls x86_pmu_handle_irq() -> handle_pmi_common(), which
+> also calls x86_pmu_drain_pebs(). Since the earlier patch in this series
+> "perf/x86/intel: Convert x86_perf_regs to per-cpu variables" replaced stack
+> allocations with shared per-CPU variables:
+>
+> arch/x86/events/intel/ds.c:__intel_pmu_pebs_events() {
+>     ...
+> 	struct x86_perf_regs *perf_regs = this_cpu_ptr(&x86_pebs_regs);
+> 	struct pt_regs *regs = &perf_regs->regs;
+>     ...
+> }
+>
+> And similarly for user regs:
+>
+> arch/x86/events/core.c:x86_pmu_get_regs_user() {
+>     ...
+> 	struct x86_perf_regs *x86_regs_user = this_cpu_ptr(&x86_user_regs);
+>     ...
+> }
+>
+> Will the NMI handler overwrite the same per-CPU structures the interrupted
+> non-NMI context was actively using, leading to corrupted PEBS samples when
+> the original context resumes?
 
-These defaults were present in v1 and were dropped for v2 following
-Krzysztof's review: this binding has a single compatible, so the hardware
-default (128x128) is deducible from the compatible itself and does not
-need to be restated in the schema. The driver applies that default when
-the properties are absent, and the properties remain available through
-solomon,ssd-common.yaml for modules that wire a smaller panel.
+That should never happen. When intel_pmu_drain_pebs_buffer() is called from
+non-NMI context, the whole PMU hardware has been disabled, so NMI can't be
+triggered and interrupt current running PEBS handler.
 
-Keeping them out, per that earlier feedback.
+Thanks.
+
+
+
+>
