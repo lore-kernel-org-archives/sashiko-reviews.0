@@ -1,385 +1,153 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MTA-07-3.privateemail.com (mta-07-3.privateemail.com [198.54.118.214])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E93E3D8E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 20:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679C03E1716
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 20:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.54.118.214
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783369819; cv=none; b=n5y1xgKa0siSgSPpsSa6qM8sfUfRFp0sMxgz7ERpg5PB+glgwEvAP8Ya8H9uHeQ2Q7E912FTz3YIorUaACbnUbSd4JpbKRa++HNVf+cx0l0XYGnOj7LD7YiOMDkiBrbQH2cWla2zqEoeEhC2EXG0Nn+f9hARME6IOfVtetBwXPU=
+	t=1783370176; cv=none; b=PPauat5flga6Wpjv7hA5f5yxlM4mIY1yIzMai0+/QGXXR4p6EpVeNS9DuSMuj5aACOz6QHZjvdiH5w/klKhKeu4+l++2gsfJPtwMIeYM3LQITwq2QnMTO4KZFORPdF3sN2PvhzEm8FDBV32O8NB65RPyHJhOJkfgjULt8AhhHO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783369819; c=relaxed/simple;
-	bh=PkGKVAUXBcrtS4vmy4F8Fp4420sU84x6gnlXH5iad/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HLUpwrVU/1/BunrLfJwsF5d5z0m8hhMsOcrnNoBcDaKXhvKWZnXZkvo7hhCVnBWsfeIAE3N44FualV2La8I4rDDKuhpYmhlWyMJCY8eNCAM7CKbIn3x/H6w02JeQA8zLm8OzvMhuPFtncfyEn/w9sFpA3opr/5hfD2duaIWExHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vjbiVYCq; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vjbiVYCq"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-847a52edeb2so2585719b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 13:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783369817; x=1783974617; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xntCCT1TCea4fhJTx32PiqxGr8BPBKrcALKzZ790Js0=;
-        b=vjbiVYCq/0dX0KX4JXETBXEYQUPTf4LlY/sgDo2Au+mpapyUsO1Th2hh8cpOF/E9zr
-         8Is2GktMd0ipWnDRqaVyx6daYr5XL0RKBB/6zUp38Zum/AcRSPszNO34/eEOLZb48CAI
-         9S0vq0pEuT8bMdJLZbCatGkTJEw5xDiOzsINIo3pf+OeBC+Fhv7yUC/lxoGX7sH+W9X0
-         fNSG4AfkycBOaDotGM9jA/ybh5pbI1AUV7g715E2GuhXWrWX19ZIfLxNob46qNWNDCca
-         P0ZAcPI0dUK8jEQxRnfa8tjhQ71nycL5VMGuck6NkZg1wUuzs6Q4D9L/zvkowPjS+Kqd
-         LonA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783369817; x=1783974617;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xntCCT1TCea4fhJTx32PiqxGr8BPBKrcALKzZ790Js0=;
-        b=Xg86vhA74FOu7THjPNgAVwCikxTShkvAIRXVQ8rcHKM6FiBWA07ZYZXxxtgZTxw4a2
-         L2ptJrzq3BCk+SHaUg6P3Qn0I6j6FZB9+j518JmFJD/o4VlbKhamnRwqVJxgDhHs5aMI
-         OfVNXaL21Go7tD9KG3b8zWfXmSTwl007ureJtcXNE33tBbLozjlz33tPvcHxgHD3wx8p
-         UAOsVvYCqM5ItwwA7kc9VAGMW3z7ywyINatGpISFtRLvJD94mxpgyfF+iifqNrdOs5tK
-         4bs8zHyi0ibHh24XvIJ2ltU5y6MaQ3bQLrFGc15sR5a+giRO99+o7emr7qqXElQxXfGx
-         wsxg==
-X-Gm-Message-State: AOJu0YzH1La1H6yPo31+sLypsHC6ttYRr70Mk8pbO7rmu1FCMeRK1IJa
-	813MZ8wrq1/r+jB6z/VHmrikfN7lDhRJ/XygYmMmEURFU6A6+EvTEBdtZ1RQKeEMnBbgBhBn3sI
-	Ly6lcVA==
-X-Gm-Gg: AfdE7ck/RTKkwZYNbdQAtGuEFXMxAQSHQtgtPA/xASUebt0KDCeu4DbKl0gGPfztur/
-	lvPEoLMOHOljv2ld00yYt8KTw2ky+JgA0OmaK91p+pPPZ9maJGXo3rBo0vtfzKCzBA3qTFafma8
-	/0Ap03CVYzAQ8zFQfji7bQPfmYDfvmUq51l1ZiQomMIfcSomDw8QTbRTQu0Ua4y6pOJWNl74p4B
-	cR+wonJg9Kz3QAwW8Ipc5lZv7To7EHgv75F1qNNSJ81mXR8WZordyreVllbc35Hr5FlJHv+Y0DG
-	2A/LiyHl3SBCIDXIR/9aNaEm0081ix3JmGotBP41vkxEu8WlAPCu0mplqde6eRWlpr3Kuwqw74E
-	cFqRmyWpoSIGCRQkw88vv5Dfp5CWuDbhNmx1yXlh/zh1ZrkT0PGPGkPMlnD1GBEvyFwbGZFNM9j
-	Rx+TWzQaaL8LjRq7RA6nqD6Z+MwGj4lr1Z5v5jlzU1SGfKSbkG/rE=
-X-Received: by 2002:a05:6a00:298a:b0:847:8449:2bb6 with SMTP id d2e1a72fcca58-84826c1dfa3mr2151292b3a.4.1783369816187;
-        Mon, 06 Jul 2026 13:30:16 -0700 (PDT)
-Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6d85c04sm4513063b3a.50.2026.07.06.13.30.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 13:30:15 -0700 (PDT)
-Date: Mon, 6 Jul 2026 20:30:11 +0000
-From: David Matlack <dmatlack@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH v2 01/10] selftests/vfio: igb: Add driver for IGB QEMU
- device
-Message-ID: <akwQUzGJBJhzdAss@google.com>
-References: <20260526235417.2058313-2-jrhilke@google.com>
- <20260527003237.8405E1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1783370176; c=relaxed/simple;
+	bh=obdDzqWsvjJ0QGHmXfkvb/nnVV+b3ijOn9OphdstDew=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sJRhbAZUkhOa0NLov95H/bbITsez9MrYyFjARFuIttBg+YmVfPO8o8HZGJU8AzfsCmefzQ3mzcpPqxF31E8TvGZgIu1uo5wZG6XgulHUdMwUuTWWCpBpsu1416p61rp3jmT0yAv6CDORjFVr55wpWnHc1gAEXCKo8hjkLWEsvsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=catcrafts.net; spf=pass smtp.mailfrom=catcrafts.net; arc=none smtp.client-ip=198.54.118.214
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=catcrafts.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=catcrafts.net
+Received: from mail.privateemail.com (unknown [87.215.145.39])
+	by mta-07.privateemail.com (Postfix) with ESMTPA id 4gvGMx073Nz3hhTH;
+	Mon,  6 Jul 2026 16:35:56 -0400 (EDT)
+From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
+To: Mark Brown <broonie@kernel.org>,
+	sashiko-reviews@lists.linux.dev
+Cc: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+	linux-sound@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] ASoC: codecs: wcd9378: add TX/capture codec driver
+Date: Mon,  6 Jul 2026 22:35:49 +0200
+Message-ID: <20260706203549.153519-1-jorijnvdgraaf@catcrafts.net>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260706193827.D90641F000E9@smtp.kernel.org>
+References: <20260706192229.144137-1-jorijnvdgraaf@catcrafts.net> <20260706192229.144137-4-jorijnvdgraaf@catcrafts.net> <20260706193827.D90641F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260527003237.8405E1F000E9@smtp.kernel.org>
 
-On 2026-05-27 12:32 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 12 potential issue(s) to consider:
-> - [High] Silent failures during device initialization leave the driver in an invalid state.
-> - [High] PCI_COMMAND_MEMORY enablement is skipped if PCI_COMMAND_MASTER is already set.
-> - [High] Device reset is asynchronous but not awaited, and MSI-X is disabled before the device is quiesced.
-> - [High] `igb_memcpy_start` fails to increment `src` and `dst` pointers for multiple chunks.
-> - [Medium] Missing SRRCTL configuration causes incorrect Rx descriptor write-back offset on real hardware.
-> - [Medium] Missing Transmit FCS (Frame Check Sequence) insertion causes payload truncation.
-> - [Medium] Lockless polling of DMA memory without READ_ONCE() or a volatile cast.
-> - [Medium] Incorrect MDI Error bit offset in MDIC register definition.
-> - [Medium] Missing read/write memory barriers around DMA descriptor and doorbell accesses.
-> - [Medium] Missing endianness conversion macros when populating hardware descriptors.
-> - [Medium] Unsafe hardware reset logic uses a sleep instead of polling the reset completion bit.
-> - [Medium] Incorrect bit definition for IGB_GPIE_EIAME silently disables auto-masking functionality.
-> --
-> 
-> commit f2aa2cf5b25f70be67a7ce0a012a1bdb1dba535c
-> Author: Josh Hilke <jrhilke@google.com>
-> 
-> selftests/vfio: igb: Add driver for IGB QEMU device
->     
-> Add a VFIO selftest driver for the Intel Gigabit Ethernet controller
-> (IGB). IGB is fully virtualized in QEMU [1] which makes it easy to run
-> VFIO selftests without needing any specific hardware.
-> 
-> [1] https://www.qemu.org/docs/master/system/devices/igb.html
-> [2] https://github.com/arighi/virtme-ng
-> 
-> > diff --git a/tools/testing/selftests/vfio/lib/drivers/igb/igb.c b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
-> > new file mode 100644
-> > index 0000000000000..064ca7c05da02
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
-> [ ... ]
-> > +static void igb_init(struct vfio_pci_device *device)
-> > +{
-> [ ... ]
-> > +	/* Reset device and disable all interrupts */
-> > +	igb_write32(igb, IGB_CTRL, igb_read32(igb, IGB_CTRL) | IGB_CTRL_RST);
-> > +	usleep(20000);
-> 
-> [Severity: Medium]
-> Could this unsafe hardware reset logic cause issues by sleeping instead of
-> polling the reset completion bit? Accessing device registers while a reset is
-> propagating internally could trigger PCIe bus hangs.
+On Mon, 06 Jul 2026 19:38:26 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 9 potential
+> issue(s) to consider:
 
-Please fix this. At minimum the sleep needs to be documented if that is
-relying on duration mandated by the hardware spec.
+Went through all nine findings; triage below. Two are real issues (the bus_config clock-scale
+inconsistency and the runtime-PM enable ordering) and three more are
+warts inherited from the wcd937x-family drivers; all five will be
+fixed in v2. Of the remaining four, the control-put race is real but
+family-wide, and three don't hold up against the hardware, the
+downstream reference or the family precedent. Details inline.
 
-> 
-> > +	igb_write32(igb, IGB_IMC, 0xFFFFFFFF);
-> > +
-> > +	/* Signal that the driver is loaded */
-> > +	ctrl = igb_read32(igb, IGB_CTRL_EXT);
-> > +	ctrl |= IGB_CTRL_EXT_DRV_LOAD;
-> > +	ctrl &= ~IGB_CTRL_EXT_LINK_MODE_MASK;
-> > +	igb_write32(igb, IGB_CTRL_EXT, ctrl);
-> > +
-> > +	/* Enable PCI Bus Master. */
-> > +	cmd_reg = vfio_pci_config_readw(device, PCI_COMMAND);
-> > +	if (!(cmd_reg & PCI_COMMAND_MASTER)) {
-> > +		cmd_reg |= (PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY);
-> > +		vfio_pci_config_writew(device, PCI_COMMAND, cmd_reg);
-> > +	}
-> 
-> [Severity: High]
-> Does this logic inadvertently skip enabling PCI_COMMAND_MEMORY if
-> PCI_COMMAND_MASTER is already set? If the Bus Master bit is already enabled
-> by firmware or VFIO but Memory Space is disabled, the block is skipped, which
-> would leave Memory Space disabled and cause subsequent MMIO accesses to
-> trigger bus faults.
+> - [High] Modifying a static global array during probe prevents
+>   multiple device instances from working correctly.
 
-Please fix this.
+Real, though inherited: wcd937x-sdw.c mutates its static ch_info
+array with the DT channel map the same way. It only breaks with two
+instances of the same codec on one board, which no current user has.
+v2 will use a devm-allocated copy.
 
-> 
-> > +
-> > +	/* Trigger autonegotiation. This enables IGB to transmit data. */
-> > +	if (igb_phy_setup_autoneg(igb))
-> > +		return;
-> 
-> [Severity: High]
-> Does this early return result in a silent failure during device initialization?
-> If it fails, crucial setup steps are skipped, leaving variables like
-> max_memcpy_size uninitialized. The test framework will proceed to use the
-> partially configured device, leading to undefined behavior or crashes.
-> Could it explicitly assert failure via VFIO_ASSERT() instead?
+> - [High] `pm_runtime_enable()` is called after
+>   `component_master_add_with_match()`, causing component probe to
+>   fail synchronously.
 
-Please fix this. IMO igb_phy_setup_autoneg() should use VFIO_ASSERT()
-instead of returning an int.
-> 
-> > +
-> > +	/* Configure TX and RX descriptor rings */
-> > +	igb_write32(igb, IGB_TDBAL0, (u32)iova_tx);
-> > +	igb_write32(igb, IGB_TDBAH0, (u32)(iova_tx >> 32));
-> > +	igb_write32(igb, IGB_TDLEN0, RING_SIZE * sizeof(struct igb_tx_desc));
-> > +	igb_write32(igb, IGB_TDH0, 0);
-> > +	igb_write32(igb, IGB_TDT0, 0);
-> > +	igb_write32(igb, IGB_TXDCTL0, IGB_TXDCTL0_Q_EN);
-> > +
-> > +	igb_write32(igb, IGB_RDBAL0, (u32)iova_rx);
-> 
-> [Severity: Medium]
-> Is the SRRCTL configuration missing here? The driver expects the hardware to
-> use Advanced Receive Descriptors and polls for the DD bit at byte offset 8,
-> but fails to configure the SRRCTL register. Real hardware defaults to Legacy
-> Receive Descriptors (DD bit at offset 4), causing polling timeouts.
-> 
-> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
-> Use advanced TX and RX descriptors".
-> 
-> [ ... ]
-> > +static void igb_remove(struct vfio_pci_device *device)
-> > +{
-> > +	struct igb *igb = to_igb_state(device);
-> > +
-> > +	vfio_pci_msix_disable(device);
-> > +	igb_write32(igb, IGB_RCTL, 0);
-> > +	igb_write32(igb, IGB_TCTL, 0);
-> > +	igb_write32(igb, IGB_CTRL, igb_read32(igb, IGB_CTRL) | IGB_CTRL_RST);
-> > +}
-> 
-> [Severity: High]
-> Is it safe to disable MSI-X before the device is quiesced, and trigger an
-> asynchronous device reset without awaiting its completion?
-> 
-> Calling vfio_pci_msix_disable() before masking interrupts and triggering a
-> hardware reset risks rogue interrupts during teardown. Returning immediately
-> after setting IGB_CTRL_RST might create a race condition where the VFIO
-> framework destroys IOMMU mappings while the device is still resetting,
-> potentially leading to a DMA use-after-free.
+Not unconditional - it needs the bind (and the card bind that
+snd_soc_register_component() can trigger) to run before the
+pm_runtime_enable() a few lines later, e.g. synchronously inside
+component_master_add_with_match(). That doesn't happen on the tested
+board, and wcd937x/938x/939x have the identical ordering today. The
+race is real though; v2 will enable runtime PM before registering
+the component master.
 
-I don't think this is a bug. The device should not be sending interrupts
-after they are disabled in the device itself.
+> - [High] Missing bounds check in `wcd9378_tx_mode_put()` allows
+>   out-of-bounds enum values to be written and retrieved.
 
-> 
-> [ ... ]
-> > +static void igb_memcpy_start(struct vfio_pci_device *device, iova_t src,
-> > +			     iova_t dst, u64 size, u64 count)
-> > +{
-> > +	struct igb *igb = to_igb_state(device);
-> > +	struct igb_rx_desc *rx;
-> > +	struct igb_tx_desc *tx;
-> > +	u32 i;
-> > +
-> > +	igb_irq_disable(igb);
-> > +
-> > +	for (i = 0; i < count; i++) {
-> > +		tx = &igb->tx_ring[igb->tx_tail];
-> > +		rx = &igb->rx_ring[igb->rx_tail];
-> > +
-> > +		memset(tx, 0, sizeof(struct igb_tx_desc));
-> > +		memset(rx, 0, sizeof(struct igb_rx_desc));
-> > +
-> > +		rx->read.pkt_addr = dst;
-> > +		tx->read.buffer_addr = src;
-> > +		tx->read.cmd_type_len = (u32)size;
-> > +		tx->read.cmd_type_len |= (u32)(IGB_TXD_CMD_EOP) << IGB_TXD_CMD_SHIFT;
-> 
-> [Severity: High]
-> Does this loop fail to increment the src and dst pointers for multiple chunks?
-> When count > 1, the device repeatedly copies the first chunk of data to the
-> exact same destination address, leaving the remainder of the buffer uncopied
-> and causing data verification failures.
+In-kernel the stored value is only ever mapped through
+wcd9378_get_mode_val(), whose default arm absorbs out-of-range
+values, and the same unvalidated put exists in wcd938x. But the
+get side does re-expose whatever was stored, and the check is two
+lines; v2 will reject items >= e->items.
 
-This is not a bug, that's how memcpy_start() is defined to behave.
+> - [High] Inconsistent SoundWire bus clock scaling calculation
+>   between `wcd9378_bus_config()` and `wcd9378_swr_clk_indicate()`.
 
-> [Severity: Medium]
-> Are endianness conversion macros missing here? Populating 64-bit addresses
-> and 32-bit fields in hardware descriptors using native CPU byte order instead
-> of cpu_to_le32 and cpu_to_le64 will break on big-endian host architectures.
+Good catch, but inverted. bus->params.curr_dr_freq carries the
+double-rate frequency: sdw_bus_master_add() sets it from max_dr_freq
+(2x clock), overriding the qcom controller's probe-time value, so
+wcd9378_swr_clk_indicate()'s /2 is the correct interpretation - on
+the Fairphone 6 that yields 19.2 MHz DR -> 9.6 MHz clock -> DIV2,
+matching the mode behaviour verified acoustically on hardware. It is
+wcd9378_bus_config()'s switch labels that wrongly treat curr_dr_freq
+as the clock (the core's own sdw_slave_get_scale_index() likewise
+halves curr_dr_freq to get the bus clock). The two agree at 19.2 MHz
+DR - the only value an upstream qcom bus presents today given the
+hardcoded 9.6 MHz max_clk_freq - and diverge on a 4.8 MHz-clock bus,
+so the bug is latent rather than user-visible. Still worth fixing;
+v2 will derive the scale in one shared helper.
 
-Please fix this.
+> - [High] Destroying `micb_lock` in the component unbind callback
+>   leads to a use-after-destroy upon component re-bind.
 
-> [Severity: Medium]
-> Should the Transmit FCS (Frame Check Sequence) insertion flag be present?
-> The driver sets IGB_RCTL_SECRC to strip Ethernet CRC on RX but omits the
-> IGB_TXD_CMD_IFCS flag on TX. On real hardware, no CRC is appended, causing
-> the RX MAC to strip the last 4 bytes of the actual payload.
-> 
-> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
-> Use advanced TX and RX descriptors".
-> 
-> > +
-> > +		/* Set to 0 to disable offloads and avoid needing a context descriptor */
-> > +		tx->read.olinfo_status = 0;
-> > +
-> > +		igb->tx_tail = (igb->tx_tail + 1) % RING_SIZE;
-> > +		igb->rx_tail = (igb->rx_tail + 1) % RING_SIZE;
-> > +	}
-> > +
-> > +	igb_write32(igb, IGB_RDT0, igb->rx_tail);
-> > +	igb_write32(igb, IGB_TDT0, igb->tx_tail);
-> 
-> [Severity: Medium]
-> Are write memory barriers needed here around the DMA descriptor and doorbell
-> accesses? Without a write memory barrier between populating RAM descriptors
-> and ringing the TX doorbell, the hardware might fetch stale descriptors.
+Real, inherited verbatim from wcd937x_unbind(). v2 will move the
+mutex_destroy() to driver remove.
 
-Can you look into this one? I would have assumed writel() would provide
-the proper barriers.
+> - [Medium] Off-by-one error when calculating the SoundWire channel
+>   count causes incorrect bandwidth allocation.
 
-> 
-> > +}
-> > +
-> > +static int igb_memcpy_wait(struct vfio_pci_device *device)
-> > +{
-> > +	struct igb *igb = to_igb_state(device);
-> > +	struct igb_rx_desc *rx;
-> > +	u32 prev_tail;
-> > +	int retries;
-> > +
-> > +	prev_tail = (igb->rx_tail + RING_SIZE - 1) % RING_SIZE;
-> > +	rx = &igb->rx_ring[prev_tail];
-> > +
-> > +	retries = 100;
-> > +	while (retries-- > 0) {
-> > +		if (rx->wb.status_error & 1)
-> 
-> [Severity: Medium]
-> Could this lockless polling of DMA memory without READ_ONCE() or a volatile
-> cast cause problems? The loop polls rx->wb.status_error, which allows the
-> compiler to theoretically cache the value in a register. While the external
-> usleep() call typically acts as an implicit compiler barrier, relying on it
-> is brittle and constitutes a data race.
+No functional effect on the qcom controller: the padded count does
+feed the core's bandwidth accounting, but qcom_swrm_compute_params()
+never consumes it, and the loop matches wcd938x_sdw_hw_params()
+unchanged. If that family convention wants cleaning up it should be
+a separate series.
 
-Please fix this one.
+> - [Medium] Missing High-Pass Filter (HPF) init pulse configuration
+>   for ADC2 when routed via SmartJACK.
 
-> 
-> > +			break;
-> > +		usleep(10);
-> > +	}
-> > +
-> > +	igb_irq_clear(igb);
-> > +
-> > +	igb_irq_enable(igb);
-> > +
-> > +	if (rx->wb.status_error & 1)
-> 
-> [Severity: Medium]
-> Is a read memory barrier missing here after polling the DMA completion status?
-> Without it, there could be speculative CPU reads of the destination buffer.
+Intentional and faithful to the hardware sequence: Qualcomm's
+downstream wcd9378 driver likewise powers up the SmartJACK PDE34 for
+AMIC2-routed ADC2 without an HPF init pulse - only the
+SmartMIC-routed branch pulses HPF2.
 
-Maybe just avoid this issue entirely and read rx->wb.status_error into a
-variable so you can check it again after the loop.
+> - [Medium] Concurrent ALSA control puts cause read-modify-write
+>   data races on shared driver channel maps.
 
-> 
-> > +		return 0;
-> > +
-> > +	return -ETIMEDOUT;
+Real in theory and shared with every wcd93xx driver (the same
+unlocked pattern exists since wcd938x); in practice the port
+switches are toggled by UCM at device open/close. Happy to add
+locking here and do the family-wide fix as a follow-up if the
+maintainers prefer.
 
-nit: return error ? -ETIMEDOUT : 0;
+> - [Medium] Using asynchronous `pm_runtime_put()` in
+>   `wcd9378_unbind()` causes a race condition where the TX SoundWire
+>   slave device may not be properly suspended before removal.
 
-> > +}
-> [ ... ]
-> > diff --git a/tools/testing/selftests/vfio/lib/drivers/igb/registers.h b/tools/testing/selftests/vfio/lib/drivers/igb/registers.h
-> > new file mode 100644
-> > index 0000000000000..e2756be2e9c0c
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/vfio/lib/drivers/igb/registers.h
-> [ ... ]
-> > +#define IGB_MDIC_PHY_SHIFT 21 /* PHY Address Shift */
-> > +#define IGB_MDIC_REG_SHIFT 16 /* Register Address Shift */
-> > +#define IGB_MDIC_READY (1 << 28) /* MDI Data Ready */
-> > +#define IGB_MDIC_ERROR (1 << 29) /* MDI Error */
-> 
-> [Severity: Medium]
-> Is this MDI Error bit offset correct in the MDIC register definition?
-> The macro is defined as (1 << 29), but according to the datasheet, bit 29 is
-> the Interrupt Enable bit, while the actual MDI Error bit is bit 30.
-> 
-> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
-> Use offical IGB headers in selftest driver".
+The put only drops the reference that keeps the bus out of
+clock-stop; whether the slave suspends immediately or via the queued
+idle request makes no functional difference during teardown, and the
+slave device with its driver outlives the codec component. A rebind
+re-takes the reference through pm_runtime_resume_and_get().
 
-Please fix this.
+I'll hold v2 until the human reviewers have had a pass so everything
+lands in one respin; the fixes above will be retested on the
+Fairphone 6 before sending.
 
-> 
-> [ ... ]
-> > +#define IGB_CR_1000T_FD_CAPS 0x0200 /* Advertise 1000 Mbps Full Duplex */
-> > +
-> > +#define IGB_GPIE_EIAME 0x10 /* Extended Interrupt Auto Mask Enable */
-> 
-> [Severity: Medium]
-> Does this incorrect bit definition for IGB_GPIE_EIAME silently disable
-> auto-masking functionality? It is defined as 0x10, which corresponds to
-> Multiple_MSIX. The actual Extended Interrupt Auto Mask Enable bit is bit 30.
-> Writing 0x10 fails to enable auto-masking.
-> 
-> I noticed this is fixed in a later commit in the series: "selftests/vfio: igb:
-> Program MSI-X interrupt routing".
-
-Lot of bugs that get fixed later in the series. I think you want to
-preserve Alex's author tag by keeping them separate, but let's not
-introduce any temporary bugs.
-
-Since we haven't merged anything yet, let's fix all the bugs in this
-patch directly, and use the follow up patches for any improvements.
-
-> 
-> > +#define IGB_IVAR_VALID 0x80 /* Valid bit for IVAR register */
-> > +
-> > +#define IGB_TXD_CMD_EOP 0x01 /* End of Packet */
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260526235417.2058313-1-jrhilke@google.com?part=1
-> 
+Thanks,
+Jorijn
