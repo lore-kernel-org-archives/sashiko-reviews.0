@@ -1,162 +1,109 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB7942E8F8
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 22:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783377845; cv=pass; b=C0xQoOV1mgxrQcZxmUMPf+KfdrkGsZ4lS/qqMlkIYnt7THyOJOS00m9iYQZ/WLw2MZDTkBYQFLWT17D36SS4qnK4i7N/gRqOXSREO82ObtrVx2VoMfWHd280tgSvnxaJ+8mjtoEVMWkzDzO5fu7lN7itIt9fMrfvPT1QYLFw+0M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783377845; c=relaxed/simple;
-	bh=e21olkonylKNoZ2+fFTuNNuCEW6VaSBhZ7Yyu3P4P3I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bEEy2ELGzjA7ZW6Gby7PXWApJwjN2ANjz8JtqJVo5SKRc8CP+r8cDyobCwV5763izTWej7G6qdTOUkn6u3mpfYzRYPtnM6WWRjCjKWbTZajy7nKiTvivT2de7sJ8oKXWArpdkooQ/UQn1OU98GLP2mB1tLc/+ofr/U1o5ttFEHw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NAw0QBVB; arc=pass smtp.client-ip=209.85.161.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F93E00AE
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 22:53:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783378421; cv=none; b=Iugt8df8lAsJStuaXlCF3ek8kMq4EbMHWX1nuIIdMlNDs7lyVclHNTraC2CDw0zaovMAnWoXGiOloosEm22oTEojfHkSRV9jB0u6IetRWFg7dBIiMAj3CWlUjku/2YlP6T3aKh5YG9ksCDcTK/MiKCRUsZccgJazGkgKCBql/b0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783378421; c=relaxed/simple;
+	bh=4f/25KfSGRQ8HsTNAZsrQsams+PsiwKOPzS4L2Z1IQA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UwFx23f2KmIMKvQJwKCPt0CeQEkLDwKI4F01jRqjybBrigzYO3n1RAYIiQqqNxRozHUhcgY1AveEDE5Pv3Rqc1XLN3GHBU7UEUPLrr8WOyeZVUOs+6ENfEX1VCaeEjD6OhbFNtADV/hc75nBW0uBo68RbN+bfJOEV26lUh2YCqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LfUwgmxj; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NAw0QBVB"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6a116bd18ebso1766883eaf.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 15:44:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783377843; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Xq2bkagkL3WF35czA69ikkqWZUw2mYICbBSrXcHRz1XcH4VGdi0GqDsC6RmgK5ROAO
-         F8Ro1ErRIU9wEp8Ycq9iiCeLBjfQI+O9osh2YBCXn6HXi5tevaX6XuAz2JJ563Hml3b0
-         /lWC5dPPDHazdqM5k3A1fDbOxhU5Y/1/EEhuuIyJ11AH0ETFVQ3c9ywWzCabmda6Y2zB
-         7nkMxzh4+9VTRM14QMbOO/cSyomhtuYT1++VKJiD/OTRTZyBSqZngtGiuTgC6bx0Vdu8
-         uEkPO4jONNDHG9a4EGbC0nGfoB5AXb8UcXclkNRKuj6tEN/IYBnRyqZMQ1y75jhIYZuz
-         ulMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=yx74mKYdJqkO2FUcIAj7kyzeQKoLU5qySEVSk2mMPWs=;
-        fh=BD+BcTxYT0SzRupK6ziCFpHK0dkdycIDvFW9bcqfue4=;
-        b=o2YzgC+xum3lOzM6Uw7k8/1lLEceqT63kxxTIyeSdWASBSaGhyRj9nZYu3XGbIcIxI
-         ObzRAoVcDiBEK0ymYxc8gEoBrN3BZNO79QpRjOWm9HRmIVypkBYpJKmrUXPUm2qPR+wd
-         SyACyTV8OEOaKSJbrii1SPLFkIUsuOgWmFsvi0QX9m3BGiiG6iF8OSMa86PHzGrXjRHP
-         bk+cDtI25Q4jSdzP2i6boXawoiaTRFUnKa7UchSjLIacIadEyztmaSZ/u1Waj5gxv63e
-         PPFAeon/LJVllVTUReH8DfsTOYSy/PD7TtXk0wLhe4KhU7twCNe9d/T6Gw73RTv2zAY5
-         PM0A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783377843; x=1783982643; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=yx74mKYdJqkO2FUcIAj7kyzeQKoLU5qySEVSk2mMPWs=;
-        b=NAw0QBVBprMjPoH1le3EuOQUxTPDtyDWYRPKhYS4egSoeeVHtDo6gZg1fe3I2i4K1x
-         HOmhoyy2kVuLGEYic2hoSHFob0pIDLK04HPaErEwDtQWfQPynS/nmpKddpYRTz+wXUng
-         sfJF+xAugMj2ptPP0K/Yt3xrLskCOhK7iilgnkPNjtE678OvsWsjkf9F6w6+jV6FbjeP
-         0h46j7nZYKJSvBfZoMNwAKJKnejFHRwH2abo4XsM4PXi94itx1SyQC+KdunlkgfWfU/x
-         /nIDcfu1UafxL+2haw+loxiuLBo0fc5bX1Hcq03yCETrEjk7nt+Ro9gkwwMYtwnvcKAX
-         tKjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783377843; x=1783982643;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yx74mKYdJqkO2FUcIAj7kyzeQKoLU5qySEVSk2mMPWs=;
-        b=iYOp6DYiIgXb9HMJtlBgAcDtn38pOI6RZdrsaS3yPqt2KYzuHinia15aX0dfeFpZTQ
-         +vfg9gTnn3P4ukUhYshMju3B8C32molcrvhCDF7sDNiMTMB6ugqtMjkQKZ1msYNvYgMS
-         97HO+LfTGZZ4oSXidskOKSCaeY8L/y5U0yYEmzKWtNtifuJrAOZKW3+vgwSNSg8u7TJD
-         VPMndLA4dhZROIcQQ7Tb69Rs+lyfdF49txMyjSq3L3NlwfOKTeKpGmI4TAZ5ymPHAQ9D
-         ouMJtMkPT/RUponhXS1NRgI71+VMgmbiF67J5zd+Fbqzt9L+RFH7C+kki1s/OPbE1iqK
-         Um4A==
-X-Gm-Message-State: AOJu0YydVIhT/AB3p7WLrcY6fqdL0XaYbY7pVreGoMtQyMT61IL0EIq6
-	a6uRqD5rOxWB1MVFJyySsGbRGSExlY+lWn9UTNYXDm6kVjhi7dx27fLnExmtRYo0zAmBH5Hd9dD
-	WRr4hSDLFt1oukTLmBVeuN069s1fTM8zTY5xx5DkTPXGNmc9+l0r+jSPz60Q=
-X-Gm-Gg: AfdE7ckowdlJ74b7EbmvjZEYdsQZKm089zo+aPbytNc96dT90g4rrb/KHlGmU9LacrF
-	Irrde9rjuPZn43e7Y3qfHQ+6Y+eqbsEl4Tor9fFQR7P6r6hQoQ0vVUAg4J22UqsQa4wFGPYH2Lz
-	jrGGWIFpfDCwAaZRvP2bK66LQQr7ZpFEGC5Bey90Le0vojSQMcHnAD7A8OLqkzJrlmQDplcTbLS
-	EzFdCfOIgMdBNna9c7B1aF4+SD3BOGVTpxMZGzfsr9EiH4cYWbN55jjZsLXeaxVOni9hE6hDhc1
-	O+LqdF3Ycw37JwgKXS3f4F8HkPk4gSE=
-X-Received: by 2002:a05:6820:1392:b0:6a1:8223:466b with SMTP id
- 006d021491bc7-6a355504c46mr1874256eaf.28.1783377842141; Mon, 06 Jul 2026
- 15:44:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LfUwgmxj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783378419; x=1814914419;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4f/25KfSGRQ8HsTNAZsrQsams+PsiwKOPzS4L2Z1IQA=;
+  b=LfUwgmxjpOTDXokS0hrwflU2/X0iJ5owV4i2Hp1Q8DlVuZ9sbkJCxuqi
+   0A/2Ykz5rRhmzqoN63UTbeOaIVFRQHk+LChCLHcm4wy2ARMqj+BSEWzP0
+   kMAeCTaPSlW0bQ7TleVi0YmcjHNXjcPfKMKyCKS5A3Ivgkfrmk2KlY+R/
+   aBu2aVX+5HlgYdVuytJFpC2m+S55aF0nL48lpNDzUxSDx4dtkdEW5M5eP
+   opxnk7KnD8fWqavA8W4++Z33uX+NLFu5bNwZJOSmpQFi+pFVwEpd087H/
+   oYFvfx6O0b1SD/aG8s7cgpYvlPGo7aGUGOdmTBsYuxj2Mc/t4i5m06Nij
+   Q==;
+X-CSE-ConnectionGUID: w7NIguUGSOS8hEX4/CFTuw==
+X-CSE-MsgGUID: RIE7SevESDqoADWE3plbxw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11839"; a="94666079"
+X-IronPort-AV: E=Sophos;i="6.25,151,1779174000"; 
+   d="scan'208";a="94666079"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 15:53:38 -0700
+X-CSE-ConnectionGUID: 9s1x32AxRZegBhi1OBHjAw==
+X-CSE-MsgGUID: YZFCUa9/QKyXjjFvpZrO5g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,151,1779174000"; 
+   d="scan'208";a="253926033"
+Received: from guptapa-desk.jf.intel.com (HELO desk) ([10.165.239.46])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 15:53:39 -0700
+Date: Mon, 6 Jul 2026 15:53:32 -0700
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev, namhyung@kernel.org
+Cc: kvm@vger.kernel.org, bpf@vger.kernel.org
+Subject: Re: [PATCH v12 09/12] x86/vmscape: Use static_call() for predictor
+ flush
+Message-ID: <txanowcrp74ihpevuxwmzt3ivydu3yalvq7cv6vrwofvkhp7cg@4kuyjvo5b4ow>
+References: <20260622-vmscape-bhb-v12-0-76cbda0ae3e5@linux.intel.com>
+ <20260622-vmscape-bhb-v12-9-76cbda0ae3e5@linux.intel.com>
+ <20260623174715.48B501F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260701022827.785674-2-rdbabiera@google.com> <20260701024002.DB4E71F000E9@smtp.kernel.org>
-In-Reply-To: <20260701024002.DB4E71F000E9@smtp.kernel.org>
-From: RD Babiera <rdbabiera@google.com>
-Date: Mon, 6 Jul 2026 15:43:51 -0700
-X-Gm-Features: AVVi8CfUsgnGHZq-c3BxQdwCm9qIfw2Qtbp7kwS_ksYMx_hhFjYJQvUN7HwDsVc
-Message-ID: <CALzBnUHDyYe8gJbKGNG_XYS6Fv016JdtbpfGX-4DHwd-7vY_+w@mail.gmail.com>
-Subject: Re: [PATCH v3] phy: Add USB3 PHY support to Google Tensor SoC USB PHY driver
-To: sashiko-reviews@lists.linux.dev, 
-	Badhri Jagan Sridharan <badhri@google.com>
-Cc: vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com, 
-	linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260623174715.48B501F000E9@smtp.kernel.org>
 
-On Tue, Jun 30, 2026 at 7:40=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> > +static int google_usb3_phy_exit(struct phy *_phy)
-> > +{
-> > +     struct google_usb_phy_instance *inst =3D phy_get_drvdata(_phy);
-> > +     struct google_usb_phy *gphy =3D inst->parent;
-> > +
-> > +     dev_dbg(gphy->dev, "exiting usb3 phy\n");
-> > +
-> > +     guard(mutex)(&gphy->phy_mutex);
-> > +
-> > +     set_pmgt_ref_clk_req_n(gphy, false);
-> > +     reset_control_bulk_assert(inst->num_rsts, inst->rsts);
-> > +     clk_bulk_disable_unprepare(inst->num_clks, inst->clks);
->
-> [Severity: High]
-> Is the manual teardown sequence here in the correct order?
->
-> In google_usb3_phy_init(), resources are acquired in this order:
-> 1) set_pmgt_ref_clk_req_n(true)
-> 2) clock enable
-> 3) reset deassert
->
-> The __free blocks in the init function correctly establish the error clea=
-nup
-> sequence in reverse order (LIFO). However, here the upstream reference cl=
-ock
-> request is disabled before placing the hardware block into reset and
-> disabling clocks.
->
-> Could disabling the clock request before asserting reset freeze the IP in=
- an
-> invalid state and prevent subsequent wakeups?
+On Tue, Jun 23, 2026 at 05:47:14PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] The patch introduces unconditional memory reads on the highly sensitive kernel-to-user exit and KVM VM-enter fast paths, penalizing all systems where the VMSCAPE mitigation is disabled.
+> - [Low] The removal of `X86_FEATURE_IBPB_EXIT_TO_USER` from the kernel CPU features header was not mirrored to the corresponding tools header, causing code drift.
+> - [Low] Usage of `static_call_cond()` without including `<linux/static_call.h>` makes the header non-self-contained.
+> --
+> 
+> commit 6813e9ba3f5da52dd0859a742860cd03837d50a7
+> Author: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+> 
+> x86/vmscape: Use static_call() for predictor flush
+> 
+> This patch replaces the flag-based mitigation selector for VMSCAPE with a
+> static_call() to the mitigating function. This avoids adding more feature
+> flags and multiple checks, freeing the X86_FEATURE_IBPB_EXIT_TO_USER flag.
+> 
+> > diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
+> > index 1d506e5d6f46a..09f956b72637c 100644
+> > --- a/arch/x86/include/asm/cpufeatures.h
+> > +++ b/arch/x86/include/asm/cpufeatures.h
+> > @@ -504,7 +504,7 @@
+> >  #define X86_FEATURE_TSA_SQ_NO		(21*32+11) /* AMD CPU not vulnerable to TSA-SQ */
+> >  #define X86_FEATURE_TSA_L1_NO		(21*32+12) /* AMD CPU not vulnerable to TSA-L1 */
+> >  #define X86_FEATURE_CLEAR_CPU_BUF_VM	(21*32+13) /* Clear CPU buffers using VERW before VMRUN */
+> > -#define X86_FEATURE_IBPB_EXIT_TO_USER	(21*32+14) /* Use IBPB on exit-to-userspace, see VMSCAPE bug */
+> > +/* Free */
+> 
+> [Severity: Low]
+> Does this removal also need to be synced to the tools copy in
+> tools/arch/x86/include/asm/cpufeatures.h? Leaving them out of sync typically
+> triggers a 'Kernel ABI header differs' build warning when compiling tools
+> like perf.
 
-I've verified both orderings of set_pmgt_ref_clk_req_n in phy_exit, will
-change to be consistent with phy_init ordering though.
+This was explained previously here:
 
-> > +
-> > +     return program_tca_locked(gphy);
->
-> [Severity: High]
-> Should this check if the Type-C port is actually connected before calling
-> program_tca_locked()?
->
-> If the port is disconnected (gphy->orientation =3D=3D TYPEC_ORIENTATION_N=
-ONE),
-> program_tca_locked() falls through its else branch, configuring the regis=
-ters
-> for TYPEC_ORIENTATION_NORMAL and setting TCA_TCPC_VALID.
->
-> Since the Type-C switch callback google_usb_set_orientation() correctly s=
-kips
-> TCA programming if the orientation is NONE, should a similar check be pre=
-sent
-> here to prevent enabling the SuperSpeed data path for a phantom connectio=
-n?
+https://lore.kernel.org/all/20260324195144.c6gaxewnyojsev2q@desk/
 
-Will guard behind gphy->orientation in next version. If the port is
-disconnected the
-PHY will be treated as being in normal orientation, but given USB mode is b=
-eing
-programmed here and not NC, it's more correct to only program USB when
-a port partner is actually connected.
+Namhyung, I hope this is still relevant:
 
-Best,
-RD
+  So its important not to touch the copies in tools/ when doing changes in
+  the original kernel headers, that will be done later, when
+  check-headers.sh inform about the change to the perf tools hackers.
+
+  https://github.com/torvalds/linux/blob/master/tools/include/uapi/README#L39
