@@ -1,168 +1,172 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E663A0B38
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 09:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783331115; cv=pass; b=J/MCbToajnwMeci8sWRHKgozT/4pRR3ZkRfSer4Ao9l2CgrLhUOaJzS9iSHhXVrZ/RmYBVe+F9oyyxPAgpna9icJgX9AEnQYpkgP8i+6fwc6VoxsJHkJCq8BduafWwf9M+9hfoGM5UH1ksRtzZcYe57kN6vMcbf+5dOIreMUs/4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783331115; c=relaxed/simple;
-	bh=1y/VyBqChORatgg7mbBlbrll73whp3RgKHcndf4sJ4Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NoD/daxb+sxN3QGWYGy2dwQR+EggneNQICq8wzbEFECJW8rLgVGGYIR/5bGSsUBwHaHvWUgw7O3DI9JLhMqZjWmp0hRZxIfnNtMsXslgi3y3uXEgAtvrZEOo4UEaQhpf0phx/KzEAEY1eT7Gp16/FOjuD9N2GmYOc7f3Am5h6YU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=szK0gWw4; arc=pass smtp.client-ip=74.125.224.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFB14534B4
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 09:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783331274; cv=none; b=JWl80SjtNtMstrBS5M5b4w3KhTP+GcmF1qIyLe+Q9noKWLsXlrPs6PYRwn3+8UereHyURzGcbRItVyd/GS9eAIMlt9zFeohB3v5ySM9NYjPwHqzVlK/HocfTF49b4vO8U2T1hU4OVNz3uiySBlIFdM/wPE6cvyzH5ixdHffzHps=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783331274; c=relaxed/simple;
+	bh=bgD63rvCB5kFj/zqdVMBMZtCmBmObqGS5rmNCOfcf8g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZCZG0nPn/IhSEwacBPSarR7Agi6ex4oeNaY2bvGtVdHrlXBoien+EGVNK2PDl8Jz3Y+V5VUkDBZBt0z5Q9HaHsBl4GJDfIe5iPiaiLUjlCpTrKWAYWwZI9mTNhkUyCX2nCDYKwzjiEQTqCie4B60y8sK6tlyi07QyjeDr1PBuNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=klM1jkhy; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="szK0gWw4"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-666275a685eso3819430d50.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 02:45:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783331110; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jYAJNBU1Cwsa7MENHvBZV7H8NaYcgs+bqdXLEplI/xgzmVIJVbfoX8HUizHhalaFS5
-         UboqjSnAyHKF/OtvksoJx9xk5fu5TFiWngp9RIj2pIXNOuUSFc5U6cspBcARjAfeMJSf
-         FxPU1fmQ6qWVxcDnIhkDBzcISphQrlHAVOUA3NUUXkJbwmefS98Co+0YZY27D6nmd9Q2
-         06Ldgr9D05HhQ2qXKLaUisMvYFuEveziLpfweopSA6TfT4+b5FMEhYYJ13DNRUOUlcDH
-         XS/KZfiLEJ5XYH9XQSfx2MCHSo1WxBpiKAlegX5EuRT/T7UoOt4gxxOexB74woZaMtUk
-         n43g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1H5aWjkuNw5NurkeFzN9mtbKO2yqm1ouDy30sVuvqjg=;
-        fh=l4STnmXMbZ7+SgLMaMr2biBIFpXPSwAQ6S5KWSNWQnA=;
-        b=WoXXk4uHnMKQJ5OxP2/5JqW+3mX1QtCgvrOiQ0MjlXCjmayd94F8Cw6MuklOOeKAKO
-         by51JRcMNpAOc6sBq+xJGwHaXaQSam8syxYOGgilbsTfmq7XhLvqnwdftx6aBZMvTO8a
-         nQ5xmB+oSXbiBmnPSIsRmziShQc/ojHaAP8m21AuGYigRJDKB1p67LQ+Ll4NHEgugZq2
-         mPx4II2URsce8E1jMyJxJ1k05tRZV+RMiqZk7oo5i3eCm/jGHO99/GhJKhtqVmNPzEqx
-         wpgUE2is3/SQkaZgvpQuYEP0tNbI/2yaQt/6FQqaaEqweeFUmH0CSYWTzlmv3oVkfZs4
-         bdOA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783331110; x=1783935910; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1H5aWjkuNw5NurkeFzN9mtbKO2yqm1ouDy30sVuvqjg=;
-        b=szK0gWw47yy6jWOrUlyomoczLgFlcmvyi9rHgsVQh/qO5szqeEQiSZ0ptTBIqEzkaH
-         ekbnvEhRutzxaTirpQsMfJ2SC+fJMIkavPqIT23nUIE+kLNRvSsFRewUS+wQGbzBNevz
-         YYCkc5qH1s1TM/2o+MaRifxZ9ZAGE15Zd9JEE+VmLrapCQDJCaZGJvLzO6mjptACbVLf
-         xCQFyZB9go8uqBM99wS1ylFl0rcZ/3gcNxMFhfFd1IWeF8cwYkJBfA5kUoxoVOkrFW+d
-         xSG5CLsg0/mG7IISrSYM88RE9r20jluaYt6fjMPiI0yn0FS4sAOUfE4FPbneVvmzh8FD
-         mEOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783331110; x=1783935910;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1H5aWjkuNw5NurkeFzN9mtbKO2yqm1ouDy30sVuvqjg=;
-        b=n/ZLFyzZLy+IfrpOAm0c4p30JM+UxhUaneRKgwnDOlZEmwH0FHaseOZ0oYaKUgRU+H
-         TCJw6rjwf6yKt7g+BFvfSLGIB8dyusbs9adoLFW0JWRaCpErvW0N9lioykavJehL2IfY
-         pJSIAT6cQjiRTvQH0aNjO2VUVmBd0UF2xHTcbE7EbsF8YngzwSZfKZ2t6066QEpObnhi
-         nfQQzkS1Wf45dGtfpnO5ri2BT4v0ZwHtu3JJXhFoLInw7g+RbbLMwMJzKFykJenIdqaV
-         0w88xq+2rRd2gav78p/Y3TKGYhc2caA4I0CcLtuxZILdIWlxMCsDaYq4wXwdMcQ/3y7P
-         AhXA==
-X-Gm-Message-State: AOJu0YxZNbdt4EZsTVD4weJ0zH4YkwTYhym6M/TTBA3v6rjeSY0MBjzQ
-	EC0Of1HdKY40Hvg5/gHk5gBcfQxieAsVqq6rkm04Rgs5ZzyXW5V6aHE0HmNDi+V+rk2Jt3uIPG1
-	tLRwpq4Xoqlt8JJaAHEIwmdKw9FpDklItvg==
-X-Gm-Gg: AfdE7clfijnLFmLlyENTQ8hMCxN60XbySj1JLvVaG6gVuq2oUpL2wll4cigOFv7yUUv
-	rqk0pZKfgaKgBt15wy5pobsHoM2WS7ijl3sE8OC6KvdytW5HpPK81rK6O8F3lP8CqL3bmkggH8q
-	oUX8/kN7JvHpmKMhnOb3rQDDJHt0DfEUmRuLYBl0iXD7Rwy+Xiyiu/UW6vkLQf2VsrjyzOzvv0g
-	szsrvk2ItE8ByAblRabXW/ahGb9xNiwc5CeblDeFd0g/vYoDx03Y8u71bfGiPvVmnX8x/V72g==
-X-Received: by 2002:a05:690e:1408:b0:664:e8ac:21cd with SMTP id
- 956f58d0204a3-66652e50610mr9454023d50.25.1783331109980; Mon, 06 Jul 2026
- 02:45:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="klM1jkhy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783331269; x=1814867269;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bgD63rvCB5kFj/zqdVMBMZtCmBmObqGS5rmNCOfcf8g=;
+  b=klM1jkhyf0pyO1obtaDAlPgUizhYg+6DVI2BLPBxe3gfJTTz47WiPeDJ
+   8eXJtEdwMfa/608Knp6OGfkYydhxYhS9QiIe0hC+fMaXXuA1j/IMLbIK2
+   BhxKBzrhHMlhsubPQGtMi4EaxVbFmBWTWUdiIX/zembLL31nenXQ1mbpb
+   jZOMhxLvqe2wmU8cGIsFnpYUib0F2Uav34785HpoH88qDAKXsvB9FuQ/X
+   4Nwe9iSLxNWmCUjWj2uM7+j9+mBLk8cdrAsa3bEctMgnadhClgXVKb0uJ
+   PnCo0x5QU8T4tCsvX2bPfoL1IPMzTStw7tH/gGl1YmRQtXM8i2QdtZmww
+   Q==;
+X-CSE-ConnectionGUID: ozfRrt+GQQKNjjH1NCCMkA==
+X-CSE-MsgGUID: y7Kqt6BkTbK4kHeOy4T0tg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="95471589"
+X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
+   d="scan'208";a="95471589"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 02:47:47 -0700
+X-CSE-ConnectionGUID: 1DPSgk6vRM6d+SPjxqZIPA==
+X-CSE-MsgGUID: mFcII6onSo6N+BDM9NG7Tg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
+   d="scan'208";a="247280570"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 02:47:46 -0700
+Message-ID: <89f316ca-936b-4938-9421-2f96cfdc4837@linux.intel.com>
+Date: Mon, 6 Jul 2026 17:47:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260705140100.1543486-1-tmaimon77@gmail.com> <20260705140100.1543486-3-tmaimon77@gmail.com>
- <20260705140617.A71F11F000E9@smtp.kernel.org>
-In-Reply-To: <20260705140617.A71F11F000E9@smtp.kernel.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Mon, 6 Jul 2026 12:44:58 +0300
-X-Gm-Features: AVVi8CeAp4CE3AWU4FV6AWJHL_1TkqiIDqOBExjjPuk3wMGkf3cx2S3XYhDqvP4
-Message-ID: <CAP6Zq1jT-bfHvw65EsDKdqMCLVK1Yw3dd0NaxpOCw3zx+hVMTA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] docs: watchdog: npcm: Add reset status description
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v9 11/24] perf/x86: Enable XMM register sampling for
+ non-PEBS events
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, 
-	linux-watchdog@vger.kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-perf-users@vger.kernel.org
+References: <20260706015439.3040804-1-dapeng1.mi@linux.intel.com>
+ <20260706015439.3040804-12-dapeng1.mi@linux.intel.com>
+ <20260706023418.CD74F1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260706023418.CD74F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi,
 
-On Sun, 5 Jul 2026 at 17:06, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The watchdog driver abuses standard Watchdog UAPI constants to r=
-eport non-watchdog platform reset causes, violating the userspace ABI contr=
-act.
+On 7/6/2026 10:34 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] reserve_ext_regs_buffers() fails to propagate memory allocation errors and improperly uses WARN_ON_ONCE, leading to a silent feature failure and possible kernel panics under memory pressure.
 > --
 >
-> commit 72fd6c8b87d96376853f3dcd5ef1597495cf9817
-> Author: Tomer Maimon <tmaimon77@gmail.com>
+> commit 8262cdbae2d650c85cf4924888ecf8b4f85b98de
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> docs: watchdog: npcm: Add reset status description
+> perf/x86: Enable XMM register sampling for non-PEBS events
 >
-> Add documentation describing how the NPCM watchdog driver reports reset
-> causes through bootstatus on NPCM750 and NPCM845 systems.
+> This commit extends XMM register sampling to non-PEBS events using the xsaves
+> instruction. It allocates a per-CPU ext_regs_buf to store SIMD and other
+> registers. For PEBS events, data is retrieved directly from PEBS records.
 >
-> > diff --git a/Documentation/watchdog/npcm_wdt.rst b/Documentation/watchd=
-og/npcm_wdt.rst
-> > new file mode 100644
-> > index 0000000000000..cdc45ade9e0d9
-> > --- /dev/null
-> > +++ b/Documentation/watchdog/npcm_wdt.rst
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index d83ea02e24577..3e52610510cdc 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+> [ ... ]
+>> @@ -410,6 +410,56 @@ set_ext_hw_attr(struct hw_perf_event *hwc, struct perf_event *event)
+>> +static void reserve_ext_regs_buffers(void)
+>> +{
+>> +	bool compacted = cpu_feature_enabled(X86_FEATURE_XCOMPACTED);
+>> +	unsigned int size;
+>> +	int cpu;
+>> +
+>> +	if (!x86_pmu.ext_regs_mask)
+>> +		return;
+>> +
+>> +	/* +64 bytes for the 64 bytes alignment request of xsave area. */
+>> +	size = xstate_calculate_size(x86_pmu.ext_regs_mask, compacted) + 64;
+>> +
+>> +	for_each_possible_cpu(cpu) {
+>> +		per_cpu(ext_regs_buf, cpu) = kzalloc_node(size, GFP_KERNEL,
+>> +							  cpu_to_node(cpu));
+>> +		if (WARN_ON_ONCE(!per_cpu(ext_regs_buf, cpu)))
+>> +			goto err;
+>> +	}
+>> +
+>> +	return;
+>> +
+>> +err:
+>> +	release_ext_regs_buffers();
+>> +}
+> [ ... ]
+>>  int x86_reserve_hardware(void)
+>>  {
+>>  	int err = 0;
+>>  
+>>  	if (!atomic_inc_not_zero(&pmc_refcount)) {
+>>  		mutex_lock(&pmc_reserve_mutex);
+>>  		if (atomic_read(&pmc_refcount) == 0) {
+>>  			if (!reserve_pmc_hardware()) {
+>>  				err = -EBUSY;
+>>  			} else {
+>>  				reserve_ds_buffers();
+>>  				reserve_lbr_buffers();
+>> +				reserve_ext_regs_buffers();
+>>  			}
+>>  		}
+>>  		if (!err)
+> [Severity: High]
+> Does this code swallow the memory allocation failure?
+>
+> Since reserve_ext_regs_buffers() returns void, x86_reserve_hardware() 
+> appears unaware if kzalloc_node() fails under memory pressure. The hardware 
+> reservation will succeed anyway, and the perf event creation is permitted
+> even though the backing buffers do not exist.
 >
 > [ ... ]
->
-> > +.. list-table:: Reset-cause mapping
-> > +   :header-rows: 1
-> > +
-> > +   * - Platform
-> > +     - Reset indication
-> > +     - Bootstatus flag
-> > +     - Reported meaning
-> > +   * - NPCM750 and NPCM845
-> > +     - ``PORST``
-> > +     - ``WDIOF_OVERHEAT``
-> > +     - power-on reset
-> > +   * - NPCM750 and NPCM845
-> > +     - ``CORST``
-> > +     - ``WDIOF_FANFAULT``
-> > +     - core reset
->
+>> +static void x86_pmu_sample_xregs(struct perf_event *event,
+>> +				 struct perf_sample_data *data,
+>> +				 u64 ignore_mask)
+>> +{
+>> +	struct xregs_state *xsave = get_ext_regs_buf(smp_processor_id());
+>> +	u64 sample_type = event->attr.sample_type;
+>> +	struct x86_perf_regs *perf_regs;
+>> +	u64 intr_mask = 0;
+>> +	u64 mask = 0;
+>> +
+>> +	if (WARN_ON_ONCE(!xsave) || !in_nmi())
+>> +		return;
 > [Severity: High]
-> Is it correct to map generic Watchdog UAPI thermal and fan failure flags =
-to
-> standard platform reset indications?
+> Can this path be reached with a NULL xsave buffer during a PMI if the earlier
+> allocation failed?
 >
-Yes, it is something that was already discussed with the WD
-maintainer; This is why it is mentioned in the rst document
-> The generic Watchdog API defines strict semantics for its status flags.
-> For instance, WDIOF_OVERHEAT means a reset due to CPU overheat, and
-> WDIOF_FANFAULT means a fan failed. By mapping standard SoC reset causes l=
-ike
-> Power-On Reset (PORST) to WDIOF_OVERHEAT and Core Reset (CORST) to
-> WDIOF_FANFAULT, might this break the userspace ABI contract?
+> If an unprivileged user creates an event requesting extended registers during
+> memory pressure, and the allocation in reserve_ext_regs_buffers() fails,
+> the event is successfully created. When the PMI hits, this WARN_ON_ONCE in
+> NMI context will trigger.
 >
-> During a normal cold boot, reading the SoC latch would unconditionally ex=
-pose
-> this to userspace via the WDIOC_GETBOOTSTATUS ioctl or sysfs. Standard
-> userspace monitoring daemons (like systemd or wdctl) reading bootstatus
-> might erroneously conclude the system suffered a thermal event or fan fai=
-lure,
-> potentially triggering unintended emergency actions or false alarms.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260705140100.15=
-43486-1-tmaimon77@gmail.com?part=3D2
+> This could panic the system if panic_on_warn is set, or otherwise silently
+> drop the requested register data. Should reserve_ext_regs_buffers() return
+> an error code so x86_reserve_hardware() can fail the event creation instead?
 
-Thanks,
+IMO, it's good enough to use WARN_ON_ONCE() to warn the allocation error.
+Propagating the allocation error would need to add much complicated
+fallback code since there are lots of allocations, it seems unworthy to
+make the code be so complicated.
 
-Tomer
+Thanks.
+
+
+>
