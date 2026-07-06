@@ -1,273 +1,112 @@
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1543B41DEE2
-	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 12:00:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4FB42377A
+	for <sashiko-reviews@lists.linux.dev>; Mon,  6 Jul 2026 12:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783339219; cv=none; b=tRgkrWIPVnSdcCwqzbwpn9fbc5wSG9FiH2Kd3zhdBzYmORSTPH/F+ZzGCdue8PTD1zd/tU9GnWpy249rfTZwulMYTtMEHnRvDJL6ld9253cVsZle5kAUOt3FqoXHG1lJaLgoBEqAAlnZyccw5sj8O4EdByoLEbhetKDRr4xMxrE=
+	t=1783339395; cv=none; b=JpVDhyhIZrAnPtsBtiyKAxbuqmSKRl1yV5bFudkCHy1lZx/KH7sTgWIg6KwOb0pvRQG/SIuBIF2SXfPJ/RL165GHleAdA1BlfgX2UT71PvmmE2s+S9MZc8g2Xmhkx6gir51he4iUnxIzPD8YWk97qdmkNvaxDKzCj8G/3iiijoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783339219; c=relaxed/simple;
-	bh=U6kB1ASAxdVMsg3tw9qEyKCm14JuyVwKMIb9hQ/96wg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JYiO3qV3G8A8pCGRjq1Hk4vYJaGdGekxy77Yo/WM/RAtza+onD5mfiP6Plh7kr8Y9fdhujvZ7YU7XKFoxG2xp8pNbV6s7nTvQDz0Yl3y8x267slK4m5hffhiZANpNF0b5T+C1nYwdTYBVjlnm1zXaInR+TjFUp7AYcsyrf2kOXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Vr1Mdo1w; arc=none smtp.client-ip=91.218.175.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1783339395; c=relaxed/simple;
+	bh=DvNWVcoUOMJllcw4xaG67Je66RGWuchYXSkBafMIYQY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NlrJ102bsv0aU9myRn386rXm6viiUbnmTvgs7JGppLOBTSd1Q9rtuYUu/sd8chNKoVKyoRUHA5RkMnyWBqDkpqvstXOkGz7eXMd3I3k099PkIbvof7rCoYNVSGeaoaIRLKqVFhGgRo43CZ+wt2hDYOJORr/CmwdYlJTx+NQoxLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=GCuj59RL; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Vr1Mdo1w"
-X-Gm-Message-State: AOJu0YxraE+cxBkSpHwpENzul7GjLqdXvRpsK5b9OhCJ1sbwlEMtJT1W
-	SDGjgrqOSrKIQujTj6w8j7n1WLadVxUBfdqZoBDLyKbnSbnlM+0f+aj22IYvOybqgTf3gm4x5FI
-	uAQzKCdXzMTlV8WCZ+qlgbO16h1Bmny6W6ZGx4NgE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783339215;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=76HxWMmhkdI9JrbpQAb+ExNibxcc5C01zdg+a34h5Hc=;
-	b=Vr1Mdo1wzYdp5JatkYdYw5b2JUKc+wHiig70qqQRbELGMzUiY0g+g+vMr5Y+IOV02CuHqm
-	3btVTZV9fSlEUI8xdTKwodT3nUqc8+XIaPxSzJg3pYpkMVHe9yH7SjCJQ+CNATHXDOg+Ux
-	C3gwVaWyBGXsOVVotaAT0MTq3h3ezi8=
-X-Received: by 2002:a05:622a:c01:b0:51b:ff0a:2048 with SMTP id
- d75a77b69052e-51c4bf83afcmr16783941cf.3.1783339205460; Mon, 06 Jul 2026
- 05:00:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="GCuj59RL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1783339375; x=1783598575;
+	bh=82x8bAf2wNBQ5QOhiP8e0is47IQ1BDz7G4Bf4Ik32/I=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=GCuj59RLs2Zs6JshFntV3StWw074ejLXvSjBIa/99p1F66DtVa8fJD4bfp6nuRl8g
+	 k6U9qxxoKzrDGHX8YvCb+lwoifLueU2A7MbJOO6fkSUfDhPNo/frQ6Gco5IbF2Kbqb
+	 gKD56ktrYTDtW8lPFGbg4rl6bF4+zNpxnJMATmTh39BJvV1nskOJNQ9GdN8FahpjiO
+	 v6yW+e2kpk2yAr8Fl5DUMrkUSUOQLFbTNxfB7NN9RK90sHkwPNLP7ywiYueO1DNLNj
+	 Snk9+Gs60NNp7wL3tM6iVtv0kc4WGZcA9D3AFpMGqnCjiSM5U04qUrR9Y7LjAvCvzm
+	 7we82K/ZiHAiQ==
+Date: Mon, 06 Jul 2026 12:02:53 +0000
+To: sashiko-reviews@lists.linux.dev
+From: cristian_ci <cristian_ci@protonmail.com>
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v6 1/4] arm64: dts: qcom: msm8953-flipkart-rimob: Enable display and GPU
+Message-ID: <u25a39zbC36mvz8rp3abyH03bkExXAuUFYxKU8flfoGV3XFttpebG4sRvv3e00ObVPBhEtegUvYr0d09FnnWl9BXOfizKGlng9X2Vpalq14=@protonmail.com>
+In-Reply-To: <20260701205956.EDE121F000E9@smtp.kernel.org>
+References: <20260701-rimob-new-features-v6-0-be7d5d1e007f@protonmail.com> <20260701-rimob-new-features-v6-1-be7d5d1e007f@protonmail.com> <20260701205956.EDE121F000E9@smtp.kernel.org>
+Feedback-ID: 27475468:user:proton
+X-Pm-Message-ID: f63ffe97537f68d51dad4f445117b2d6fa51b51e
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260706095927.560795-1-fuad.tabba@linux.dev> <20260706095927.560795-9-fuad.tabba@linux.dev>
- <20260706103651.3D1A41F000E9@smtp.kernel.org>
-In-Reply-To: <20260706103651.3D1A41F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 6 Jul 2026 12:59:28 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTz9Qdznk=cPMYLWHkHag_7cc53=ZkYdBfQ7tXb9myqHcQ@mail.gmail.com>
-X-Gm-Features: AVVi8CepLtV5kGFJPMfqEIjpyJZJF_Wy1QszVyxax0Tq6BeSIYL3S-Vl10FyPxg
-Message-ID: <CA+EHjTz9Qdznk=cPMYLWHkHag_7cc53=ZkYdBfQ7tXb9myqHcQ@mail.gmail.com>
-Subject: Re: [PATCH v4 8/8] KVM: arm64: Implement lazy vCPU state sync for
- non-protected guests
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
 
-On Mon, 6 Jul 2026 at 11:36, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+On Wednesday, July 1st, 2026 at 22:59, sashiko-bot@kernel.org <sashiko-bot@=
+kernel.org> wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-
-https://lore.kernel.org/all/CA+EHjTyEikgroi9a9vhtv-pixBj_21RC=3D4d4EnsfxFk1=
-0WCnwA@mail.gmail.com/
-https://lore.kernel.org/all/CA+EHjTx_sf1n2cakTCt=3D=3Dtp5y9L2ZS0qGMA9KGUCQr=
-wd=3DaXz_A@mail.gmail.com/
-
-> New issues:
-> - [High] The commit silently removes the synchronization of hcr_el2 from =
-the hyp vCPU back to the host vCPU on guest exit, breaking host-injected ru=
-ntime signals like virtual SErrors.
-
-VSE is synced back selectively.
-
-> - [High] Host-side modifications to a non-protected guest's system regist=
-ers via asynchronous KVM requests (e.g. KVM_REQ_PMU) are silently discarded=
- because the dirty flag is cleared on IRQ exits.
-
-Injection flags and HCR_VSE are flushed unconditionally, not gated by
-DIRTY. The one real case (SError ESR) was found and fixed.
-
-> Pre-existing issues:
-> - [Critical] pKVM completely fails to isolate the register state of prote=
-cted guests by unconditionally copying the full execution context between t=
-he untrusted host and the hypervisor on every world switch.
-
-Pre-existing upstream placeholder; per-field marshalling is added by
-the follow-up series.
-
-Cheers,
-/fuad
-
-
+> - [Low] The panel's compatible property is missing the mandatory generic =
+fallback string.
 > --
->
-> commit 417bef11bf8b55291221bae4776c5695349c903d
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Implement lazy vCPU state sync for non-protected guests
->
-> pKVM copies a non-protected guest's register context between the host
-> and the hypervisor on every world switch, even when the host never
-> inspects it. Defer the copy: on entry, flush the host context into the
-> hyp vCPU only when the host marked it dirty (PKVM_HOST_STATE_DIRTY); on
-> exit, leave it in the hyp vCPU and copy it back only when the host needs
-> it, via a __pkvm_vcpu_sync_state hypercall or at vcpu put.
->
-> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
-c
-> > index 54aedf93c78b6..29108e5c0206e 100644
-> > --- a/arch/arm64/kvm/handle_exit.c
-> > +++ b/arch/arm64/kvm/handle_exit.c
->
+>=20
+> commit 14ab3e4951175e1cf33309cf294f421f36606cd0
+> Author: Cristian Cozzolino <cristian_ci@protonmail.com>
+>=20
+> arm64: dts: qcom: msm8953-flipkart-rimob: Enable display and GPU
+>=20
+> This commit adds the description for the display panel found on the phone=
+.
+> It also enables the GPU and sets the zap shader firmware path.
+>=20
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch=
+/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
+> > index ef4faf7631327..5a9d71d1e4664 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
+> > +++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
 > [ ... ]
->
-> > @@ -486,9 +486,32 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
-on_index)
-> >       }
-> >  }
+> > @@ -87,11 +94,70 @@ &hsusb_phy {
+> >  =09status =3D "okay";
+> >  };
 > >
-> > +static void handle_exit_pkvm_state(struct kvm_vcpu *vcpu, int exceptio=
-n_index)
-> > +{
-> > +     int exception_code =3D ARM_EXCEPTION_CODE(exception_index);
-> > +
-> > +     if (!is_protected_kvm_enabled() || kvm_vm_is_protected(vcpu->kvm)=
-)
-> > +             return;
-> > +
-> > +     /*
-> > +      * Sync the context back when the host will read (trap) or write
-> > +      * (SError) it. Preempt-off here, so the loaded hyp vCPU is stabl=
-e.
-> > +      */
-> > +     if (exception_code =3D=3D ARM_EXCEPTION_TRAP ||
-> > +         exception_code =3D=3D ARM_EXCEPTION_EL1_SERROR ||
-> > +         ARM_SERROR_PENDING(exception_index)) {
-> > +             kvm_call_hyp_nvhe(__pkvm_vcpu_sync_state);
-> > +             vcpu_set_flag(vcpu, PKVM_HOST_STATE_DIRTY);
-> > +     } else {
-> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
->
-> [Severity: High]
-> Does clearing the dirty flag on other exits (like IRQ) blind the lazy syn=
-c to
-> subsequent host-side state modifications?
->
-> If a non-protected guest exits due to a physical IRQ, the PKVM_HOST_STATE=
-_DIRTY
-> flag is cleared here. If the host IRQ handler then updates guest state (e=
-.g. via
-> PMU overflow) and queues an asynchronous KVM request, the next time the g=
-uest is
-> entered, flush_hyp_vcpu() will skip flush_hyp_vcpu_state() because the di=
-rty
-> flag is clear.
->
-> Will this result in the guest running with stale state, discarding the ho=
-st's
-> modifications?
->
-> > +     }
-> > +}
-> > +
-> >  /* For exit types that need handling before we can be preempted */
-> >  void handle_exit_early(struct kvm_vcpu *vcpu, int exception_index)
-> >  {
-> > +     handle_exit_pkvm_state(vcpu, exception_index);
-> > +
-> >       if (ARM_SERROR_PENDING(exception_index)) {
-> >               if (this_cpu_has_cap(ARM64_HAS_RAS_EXTN)) {
-> >                       u64 disr =3D kvm_vcpu_get_disr(vcpu);
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index 2db56146ec493..4a8445b636e60 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
->
 > [ ... ]
->
-> > @@ -172,7 +214,17 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *h=
-yp_vcpu)
-> >       fpsimd_sve_flush();
-> >       flush_debug_state(hyp_vcpu);
-> >
-> > -     hyp_vcpu->vcpu.arch.ctxt        =3D host_vcpu->arch.ctxt;
-> > +     /*
-> > +      * If we deal with a non-protected guest and the state is potenti=
-ally
-> > +      * dirty (from a host perspective), copy the state back into the =
-hyp
-> > +      * vcpu.
-> > +      */
-> > +     if (!pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
-> > +             if (vcpu_get_flag(host_vcpu, PKVM_HOST_STATE_DIRTY))
-> > +                     flush_hyp_vcpu_state(hyp_vcpu);
-> > +     } else {
-> > +             hyp_vcpu->vcpu.arch.ctxt =3D host_vcpu->arch.ctxt;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but pKVM seems to completely fail to isolat=
-e the
-> register state of protected guests by unconditionally copying the untrust=
-ed host
-> context into the protected hyp vCPU context here on every world switch.
->
-> Can this allow the host kernel, which is treated as an adversary against =
-guest
-> confidentiality and integrity, to arbitrarily inject state into the prote=
-cted VM?
->
-> > +     }
-> >
-> >       /* __hyp_running_vcpu must be NULL in a guest context. */
-> >       hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu =3D NULL;
-> > @@ -203,9 +255,13 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
-p_vcpu)
-> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
-> >       sync_debug_state(hyp_vcpu);
-> >
-> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
-> > -
-> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
-> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
-> > +             host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but similar to the copy on entry, unconditi=
-onally
-> copying the protected hyp vCPU context back to the untrusted host context=
- here
-> leaks the guest's execution context.
->
-> Does this break the core pKVM confidentiality guarantees by allowing the =
-host
-> to read all guest registers?
->
-> > +     } else {
-> > +             /* Keep PC (tracepoint) and PSTATE (vcpu_mode_is_bad_32bi=
-t) current. */
-> > +             host_vcpu->arch.ctxt.regs.pc =3D hyp_vcpu->vcpu.arch.ctxt=
-.regs.pc;
-> > +             host_vcpu->arch.ctxt.regs.pstate =3D hyp_vcpu->vcpu.arch.=
-ctxt.regs.pstate;
-> > +     }
->
-> [Severity: High]
-> Does removing the synchronization of hcr_el2 from the hyp vCPU back to th=
-e host
-> vCPU break host-injected runtime signals like virtual SErrors?
->
-> When a virtual SError is injected via HCR_VSE, the guest hardware clears =
-the
-> bit upon delivery. Previously, this cleared state was synced back to the =
-host
-> here in sync_hyp_vcpu().
->
-> Since the sync is now removed, won't the host's hcr_el2 retain the stale =
-HCR_VSE
-> bit forever? On every subsequent guest entry, flush_hyp_vcpu() will OR th=
-is
-> stale bit back into the hyp vCPU's hcr_el2, which seems like it would cau=
-se an
-> infinite loop of spurious virtual SError injections into the guest.
->
-> >
-> >       host_vcpu->arch.fault           =3D hyp_vcpu->vcpu.arch.fault;
-> >
->
+> > +&mdss_dsi0 {
+> > +=09vdda-supply =3D <&pm8953_s3>;
+> > +=09vddio-supply =3D <&pm8953_l6>;
+> > +
+> > +=09status =3D "okay";
+> > +
+> > +=09panel: panel@0 {
+> > +=09=09compatible =3D "flipkart,rimob-panel-nt35532-cs";
+>=20
+> [Severity: Low]
+> Is the generic fallback string missing from this compatible property?
+>=20
+> The DT schema for this panel (novatek,nt35532.yaml) strictly requires two=
+ items
+> for the compatible property: the device-specific string and the generic f=
+allback
+> "novatek,nt35532". Providing only the device-specific string violates the
+> binding and will trigger a dtbs_check warning.
+>=20
+> > +=09=09reg =3D <0>;
+> > +
+> > +=09=09backlight =3D <&pmi8950_wled>;
+> > +=09=09reset-gpios =3D <&tlmm 61 GPIO_ACTIVE_LOW>;
+> > +=09=09avdd-supply =3D <&lab>;
+> > +=09=09avee-supply =3D <&ibb>;
+> > +=09=09vci-supply =3D <&pm8953_l17>;
+> > +=09=09vddi-supply =3D <&pm8953_l6>;
+>=20
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706095927.56=
-0795-1-fuad.tabba@linux.dev?part=3D8
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260701-rimob-ne=
+w-features-v6-0-be7d5d1e007f@protonmail.com?part=3D1
+
+Please, look at: https://lore.kernel.org/all/s6kyh5wyamcxyd7xsbu5wrrpndpdb5=
+xhxapmxze2qgblng5eiq@hl36nzg2lldg/
