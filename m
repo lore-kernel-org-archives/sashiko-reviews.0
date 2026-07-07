@@ -1,121 +1,153 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E256030100E
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 11:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F2E3FD123
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783425561; cv=none; b=G4ioji18vrA/jQtyurw4+I1X7zSatGh+95fZ09GPhfgRZgo1oB/NFlDDgdz/7QC+60QGwGldOCQI7lsfu2R3ZxlkFcOhlto39gvUL9TPBEH7GKkx2qXAztLKLD3VwfksMzmQIlbHGkHDQWB1Xk4K4LCSgG8Nhzjizf5FY8T+wIw=
+	t=1783426066; cv=none; b=sUGZKh+bNslQxluIS6V9vbiC1SMOxfeaX0qF7fjkfHo1IhieRfPjCLmz0MLu/FOps6KJeIo6W2AKoHrZS6z7QZtjYRQJswF+jmrxfevUwthddonNevEg02DSNy9xPc9qpf68h1tR2sgoGZtlHlE7cAiivI6B+dQua5KKdWHEP1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783425561; c=relaxed/simple;
-	bh=PWdlmJ96Ws5+1lzRRG0wq0bRcbZIhLEF68z4ZD7AisM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bgC56PDuA19FdULzxmzwQ8XJZpS8tCcWWgAH7wO0pDoaVb80xG1uZjNbj0+qfqcq/U+HBQ/GGZwiqFuFzX1W/dAIlcwa+awqxCtuq1qR1JQViy0P1qFX2TdxbaBxkvJTRQECAFBZNJ6roOjhXnSr3uL35M644CV20csRQlc0X8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=lgfEtItu; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1783426066; c=relaxed/simple;
+	bh=MgMwoRGobMzZna+biS4T5/1ah5HZaqV8KM78a2A6F1A=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
+	 References:In-Reply-To; b=RoqkygHfTMK6gHqKIqNUbKE/xJJfu81oweLY1gS/FkdbtutyVQ5RU+479ti64n7E06K3g3loOda/AHbyGhx7zLt3zf4InBrOcp/XPurkpWMO4vepM+zGvzYSCSr9tbJO4CBPR1rjD3L4QXYKj17qLyvq4ihbdcSA401d3Hiue/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=sJgpysSH; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="lgfEtItu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783425558;
-	bh=PWdlmJ96Ws5+1lzRRG0wq0bRcbZIhLEF68z4ZD7AisM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lgfEtItuGXkiITBfLUUWoaJ66xkeEm9pNME5fiBfkbWGDEhJE0CajEupwPPCsv2YQ
-	 IhFWDoSOPAYC/CT/qZShP2YgCdHayehceuN2hXHwylAK+kwWpjA3iLzEHVdkBU9kcU
-	 Ood7Iy0Ot2vJAOtBzWgvOn/XZXgZJWkXGQ77V0BVrwOVWzJh3uDbTex+MrB/QZJ/UG
-	 nsRUmW6GsTxEPGOrurqTmrjEdFucU6eEn82Q2ZgDZfH9AXrgbdmhCshdm+3DGT4Nmc
-	 k1oN4r1xpL8g3O5uUKtcA7ONz6MiT1fC6RbXHJgzrBUTtzFyNjkd9ZJmbS9PA1hdMs
-	 Q0s4cuPj5n0ow==
-Received: from [100.64.1.21] (unknown [100.64.1.21])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id D2A0617E0713;
-	Tue, 07 Jul 2026 13:59:17 +0200 (CEST)
-Message-ID: <f1877e27-cc72-44ce-9ddc-bf3d89932655@collabora.com>
-Date: Tue, 7 Jul 2026 13:59:17 +0200
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="sJgpysSH"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id B7004C8F1EB
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:07:54 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 1621B601A3;
+	Tue,  7 Jul 2026 12:07:41 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 504DA11BC21CF;
+	Tue,  7 Jul 2026 14:07:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783426060; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=7XDi/cFy3vm3OzxXUB0o9J7TB8GaimLJvUhzpuJIqqs=;
+	b=sJgpysSHN9jEnkQ8zXXSqDkLUGP3ycRja4ntwRMqxB/htxrFxVdrFlxlHhVdBAy3KWHLGv
+	X4xH4UQO4GahfYoZEh3PxPzcZlV/LngHxbs2Mb6Yx482wrC8YvExceKSChuJxnKeCHIYHg
+	QQFQHsmr9Trz0pAhZlbaK7XKBLTGehSBPpiDCyyEJXQOjXXE909HKlYLhfDCFYkyQlE+m7
+	zSokrQITeEkIZ8ms+5LLoXRJKFoGMNWu9ox2AFZkda6pIPr24H2Pe30Zl22y50ZLCoY+3C
+	U8H2aRNKJlZT2kscSVooB/+A4YLlseEgnaUxHsFL3en4qtvg1V/tonAcqq/21Q==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 05/12] spmi: Implement spmi_subdevice_alloc_and_add()
- and devm variant
-To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, vkoul@kernel.org, olteanv@gmail.com,
- linux-phy@lists.infradead.org
-References: <20260707111829.180158-1-angelogioacchino.delregno@collabora.com>
- <20260707111829.180158-6-angelogioacchino.delregno@collabora.com>
- <20260707113101.6CEB81F000E9@smtp.kernel.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20260707113101.6CEB81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 Jul 2026 14:07:39 +0200
+Message-Id: <DJSBRX3VVLCU.13U4DZX2R4FRJ@bootlin.com>
+Subject: Re: [PATCH bpf-next v3 03/10] bpf: add BPF_JIT_KASAN for KASAN
+ instrumentation of JITed programs
+Cc: <bpf@vger.kernel.org>
+From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260701-kasan-v3-0-bd09bb942d86@bootlin.com>
+ <20260701-kasan-v3-3-bd09bb942d86@bootlin.com>
+ <20260701101211.AAD851F00A3D@smtp.kernel.org>
+In-Reply-To: <20260701101211.AAD851F00A3D@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 7/7/26 13:31, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Combining device allocation and addition into a single `alloc_and_add` function breaks device model configuration semantics for `spmi_bus_type` devices.
+On Wed Jul 1, 2026 at 12:12 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] BPF_JIT_KASAN needlessly restricts its availability by uncondi=
+tionally requiring VMAP_STACK.
 > --
-> 
-> --- Patch [5]: [PATCH v12 05/12] spmi: Implement spmi_subdevice_alloc_and_add() and devm variant ---
-> commit 07c884decc8feb83970dc7a2fe54a4fbf80be610
-> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> 
-> spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
-> 
-> This patch adds new functions to manage sub-devices of an SPMI device,
-> including spmi_subdevice_alloc_and_add() and spmi_subdevice_remove().
-> These are intended to support complex PMICs that feature multiple
-> sub-devices addressable via SPMI register ranges.
-> 
->> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
->> index 4050f3614dab8..e218c81405458 100644
->> --- a/drivers/spmi/spmi.c
->> +++ b/drivers/spmi/spmi.c
-> 
+>
+> commit 23714982e1ca6e827ba19b9f4c74b703b4ad2090
+> Author: Alexis Lothor=C3=A9 (eBPF Foundation) <alexis.lothore@bootlin.com=
+>
+>
+> bpf: add BPF_JIT_KASAN for KASAN instrumentation of JITed programs
+>
+> This commit introduces CONFIG_BPF_JIT_KASAN to enable generic KASAN memor=
+y
+> access checks for JIT-compiled BPF programs. The JIT compiler emits shado=
+w
+> memory checks before memory accesses to detect bugs like use-after-free o=
+r
+> out-of-bounds at runtime. The feature is gated behind HAVE_EBPF_JIT_KASAN=
+.
+>
+>> As KASAN instrumentation for eBPF program will depend on the info that
+>> can be accessed during each instruction verification, there may be
+>> instructions that will be instrumented even if they don't really need to
+>> (eg: global subprograms that access caller stack memory passed as
+>> argument). To make sure that those additional checks do not trigger any
+>> crash, make sure that VMAP_STACK is enabled so that programs stack has
+>> shadow memory allocated.
+>
+> [Severity: Medium]
+> Does generic KASAN already map shadow memory for the entire linear mappin=
+g?
+> If VMAP_STACK is disabled, the kernel stack resides in the linear mapping=
+,
+> which should already have shadow memory allocated. Could this justificati=
+on
+> be slightly misunderstanding the default generic KASAN shadow memory cove=
+rage?
+>
+>> diff --git a/kernel/bpf/Kconfig b/kernel/bpf/Kconfig
+>> --- a/kernel/bpf/Kconfig
+>> +++ b/kernel/bpf/Kconfig
+>
 > [ ... ]
-> 
->> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
->> +{
->> +	struct spmi_subdevice *sub_sdev;
->> +	struct spmi_device *sdev;
->> +	int ret;
-> 
-> [ ... ]
-> 
->> +	device_initialize(&sdev->dev);
->> +	sdev->dev.parent = &sparent->dev;
->> +	sdev->dev.bus = &spmi_bus_type;
->> +	sdev->dev.type = &spmi_subdev_type;
->> +
->> +	ret = dev_set_name(&sdev->dev, "%u-%02x.%u.auto",
->> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
->> +	if (ret)
->> +		goto err_put_dev;
->> +
->> +	ret = device_add(&sdev->dev);
-> 
-> [Severity: High]
-> Does combining allocation and registration into a single function prevent
-> callers from properly configuring device properties?
-> 
-> Since device_add() is called immediately here, the driver core executes bus
-> matching and broadcasts the KOBJ_ADD uevent before the caller receives the
-> device pointer. This leaves no window to set properties like of_node or
-> fwnode.
+>
+>> @@ -101,4 +105,9 @@ config BPF_LSM
+>> =20
+>>  	  If you are unsure how to answer this question, answer N.
+>> =20
+>> +config BPF_JIT_KASAN
+>> +	bool
+>> +	depends on HAVE_EBPF_JIT_KASAN
+>> +	default y if BPF_JIT && KASAN_GENERIC && KASAN_VMALLOC && VMAP_STACK
+>
+> [Severity: Medium]
+> Is it necessary to unconditionally require VMAP_STACK for BPF_JIT_KASAN?
+>
+> Following up on the commit message note, since generic KASAN covers the
+> linear mapping where non-VMAP stacks reside, this condition might needles=
+sly
+> disable a useful security and debugging feature on kernel configurations
+> where VMAP_STACK happens to be turned off.
 
-It's done for simplicity of API usage, and no properties need to be set during
-registration of the SPMI subdevice.
+This indeed looks over-constraining. To clarify my original intent (and
+make sure that I am not overthinking it):
 
-> 
-> Will this cause the uevent to be sent without a MODALIAS, breaking userspace
-> module autoloading and automatic driver probing for these subdevices?
-> 
+- the current series does its best to skip instrumentation for memory
+  accesses that target the BPF program stack
+- there are some cases where it is hard or not even possible to guess if
+  the memory access is on stack or not (eg: the verifier fixups that
+  generate memory-accessing instructions).
+- there are two strategies for those "unknown" accesses: either skip
+  KASAN for those, with the risk of missing illegitimate accesses
+  because instrumentation has been skipped, or systematically inserting
+  KASAN checks, at the risk of slightly over-instrumenting accesses
+  (some of those will access stack). The latter is chosen by the current
+  implementation
+- if CONFIG_VMAP_STACK is selected (and !private_stack) but
+  CONFIG_KASAN_VMALLOC is not, those few over-instrumented sites may
+  trigger crashes because there's no shadow memory for those
 
-No, and I'm not changing any more single bit of this series, because this series
-now is completely fine.
+I am now realizing that this situation can't happen for BPF JIT, as
+VMAP_STACK depends on :
+
+  !KASAN || KASAN_HW_TAGS || KASAN_VMALLOC
+=20
+So I'll just drop the dependency on VMAP_STACK
+
+Alexis
+
+--=20
+Alexis Lothor=C3=A9, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
