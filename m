@@ -1,113 +1,123 @@
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D52334753B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 21:25:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7B330FF1D
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 21:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783459538; cv=none; b=HALqBLxP+7LfN1CtPL7Y7af+6ea3Ju7otWzFUaw01jeK8gmaWY40jmT3Jj8Z2jcxT9Mnuld5TGWjub3a7xBFAlJaYIY3gz9bN1bJl9PXYU/KUTeAXu0c0Y7KSL4M+QrwjqCqmea8xnHGCH+NM2sltAm0qwTplW22YVX8UHpR8Jk=
+	t=1783459737; cv=none; b=UdJx5g4ruw8MkHH8Kdg5u0QcUVSIhmEODAz0c6+2veJpgcZTcW1qU4/kURQ/eLvXvNLi8PWRs12l8TdXdXPnciA5vzK0pRtB5iGJv2Rn1twb8bxxUXZZ6ywsvpTTH8mUPny+78sIqvQaskA4F0RwmJJWAd0WOEP3SIl0SxjcSS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783459538; c=relaxed/simple;
-	bh=pOdXM2oymvr/smId1Omver3teKkaw9mprd4E/4+VOz0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=irslMH+289KeJSuYVLiHdXXd3D+m3LX9WJPzkefvVX4PTv/8nEzcGvEs4u0ze51+opc7rxe6kuz0dUl9G/5Z/bDikmbAIq8pzYyiNTSLR/fLjDIZIRDkTzSINV2KFXzfgo8+Hyr7I2GlYzGqvYqzNCSpK+kEs5r18mwZASg8HBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=u+cNSfqq; arc=none smtp.client-ip=209.85.214.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1783459737; c=relaxed/simple;
+	bh=PwFBE40ERj3S6NiWQaeCHb/x9hw5l+nzBG2YLBSfVcM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E1AWU464euimZi9qlh63UijcT1nBOGhYveUosyGGmQ79/fvIKvvL0uZI9/mAHCD3jGxi+gol9tWINhKZT6EBPSOcrYWgjLo8sEM366vYvj17IPBnfmrod+sbo8h6i8imD9BG6rJqpUW8uKmg1tIFGuhKGK3RTz9oL+Yr+O9uRi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GHQmSwpn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="u+cNSfqq"
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2caf4173b1cso776045ad.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 14:25:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783459537; x=1784064337; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZUVoSE8UgGc/A9+Kf+89pNsJjY/CmRXkhT+zbp2ozz0=;
-        b=u+cNSfqqf3SPeixRrHLvanIoPnGnsDzCVU7rmoXy8TNaBX0yOkyNzOo5rvkQZvrojr
-         MAiYzFL1Rhrm4ZKT49BLC04aw6pIkjgNKWiBVqDoon8xwBwOAt+KZfuKouXOvMk7KBmL
-         LK4TS+u1fkfnjq1IwMPwuHmyD+pflkjg8d1zCPpljw/rrjpCjJzdM5zxgY8fRaXbvZ13
-         bn0IwhZaqLu+GPwHeeOGuVfv2bsyCRdQnbuqH0NLcOY+Tt9p9omNNGa9nFLQh6rEGSbU
-         tuqXI2MmPw+hrMGZTe5SjtWmmjZEbUbA7fmYKB1MkbO1KF1OexUKS7vmwS1klQ3BY8Mb
-         Z2Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783459537; x=1784064337;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ZUVoSE8UgGc/A9+Kf+89pNsJjY/CmRXkhT+zbp2ozz0=;
-        b=huH+iNU662Gv3Dc4CzTbYh7RYI79ATndR8eMp8hJwZyCzX1hn1KWHUVb7elwu0kIUr
-         e4cFP+2KzPd60W7uq2680W5SI5sGT4ke4Q8ci7pKrihT9aKNKQaC1H4njsZlVaw5caQc
-         h4Bn+dM/mgvKPAgJb7T7bbnGxwGaqeWAIMFzn480SkYiP6vX6Ve1lEiXBOoprVbL6aLR
-         XRl1p712y4Uh1UH1x2VlxuesY7YGM2qJjyru4qxT9jyQ4u+f1SuIAOz2Bd+J/8R8iP+C
-         kIAs9X6gttYeoarG64tZaxsba6zRCGdu19tK5vPld/1RNmPPy21DRwY0r2OHD/kx510x
-         gHcg==
-X-Gm-Message-State: AOJu0YzW5soHvYBtiS7EgTX0bQkj5tKOFFrjxj4IXp4BZhNjbx455TPB
-	Ln26CxOLyYRtpHHQV2gVcMouZsrQfMOGY3LBAOXsB+cR6wnmg8QB2D15ANd1hIj2puf/f5vtZdu
-	7diW+I/sgwiEVEqBTfVvk4XECFDq/yfoxBv9kt8rG8NDDGCBduDZdPfdw3liIpr20pcbSYK8oaI
-	QkPZb78jvKy44VqoUBhZjrvuMN9BJSDYZOhJqGUHMbKxpThmKK
-X-Received: from plpn4.prod.google.com ([2002:a17:902:9684:b0:2cc:8aff:d1e5])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:248c:b0:2ca:11af:5ee9
- with SMTP id d9443c01a7336-2ccbf0515c7mr46279875ad.25.1783459536408; Tue, 07
- Jul 2026 14:25:36 -0700 (PDT)
-Date: Tue, 7 Jul 2026 14:25:35 -0700
-In-Reply-To: <20260625212001.3B6561F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GHQmSwpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE7E1F00A3A
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 21:28:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783459736;
+	bh=k/Nwq7pIMFlergJC4OqMITakfXBO0aZdgHs3udUHgGQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=GHQmSwpnpuLM4dTKGeCDV28cuPvbLOJit5HD/ywmzLSZHDWdU73ySiN1xZ3dlSVGy
+	 vJO9tCccSkno2mQwCO8uKBkGfc863FiAjyfs9LJ9yU/DCXeaoRIEdYH5aDydBF/bgc
+	 iyy3NkOoXBrwAEnWH4pkMKJnDAh3e9mN6typRYlqxDJ8P32KQBBi/Cs4SOFNrG07RW
+	 s2R9qXr6IAF+8JQlOi891MRenWwjqtELpxxYF57DzeGzUG4H9bE1nKts6tDVIkzkc2
+	 7v4ZY4YTB8ZVaTEwozanExfWcDWQ7BUd9hvzmVDRFbyYkZw3aZzKOrieyj43LJoWOk
+	 zRzoDpsa+CDNw==
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c126b8118afso611552466b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 14:28:56 -0700 (PDT)
+X-Gm-Message-State: AOJu0YzebXisX5nBHrUwbODoARGk7ALIOWyQr7MsOCGS2nsrfYkm3sCV
+	2LjuOgpSnF4MiSTrvNDJXBDba9t/dvaxpeG7KlwgUWqWp7v9+c0TBuSzd0nXNdKx0w/Muq7K+yc
+	HyTs3H++/D8jZ0yF2ZR7qLBAJWpiQvzo=
+X-Received: by 2002:a17:907:5cb:b0:c12:9b98:209e with SMTP id
+ a640c23a62f3a-c15a685954dmr392976566b.23.1783459735056; Tue, 07 Jul 2026
+ 14:28:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <86078441-92eb-4461-b823-7d3539ac5859@mail.kernel.org> <20260625212001.3B6561F000E9@smtp.kernel.org>
-Message-ID: <ak1uzySYz-i1EImO@google.com>
-Subject: Re: [PATCH v2] KVM: x86: Exempt in-kernel PIC from "disappearing"
- interrupt warning
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+References: <20260616004155.1435766-10-yosry@kernel.org> <20260616010850.12DE41F00A3E@smtp.kernel.org>
+ <CAO9r8zO5cFy-OHLZr3Lkt7-_b0dVz6n_JQAsXuQG1yejXKJUEA@mail.gmail.com>
+In-Reply-To: <CAO9r8zO5cFy-OHLZr3Lkt7-_b0dVz6n_JQAsXuQG1yejXKJUEA@mail.gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Tue, 7 Jul 2026 14:28:43 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zOmAHc19aT+yWUwVu-Hg9vxtBa4cuHDF+LQ29KQ8mvR=Q@mail.gmail.com>
+X-Gm-Features: AVVi8Cdb-zdv1mxiA-lxte3c_j972rG7bsuKxqDiUTeMKYxVuDeZtETKlnv5NvU
+Message-ID: <CAO9r8zOmAHc19aT+yWUwVu-Hg9vxtBa4cuHDF+LQ29KQ8mvR=Q@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 09/25] KVM: SVM: Use a static ASID per vCPU
 To: sashiko-reviews@lists.linux.dev
-Cc: syzbot <syzbot@kernel.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 25, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> [ ... ]
-> > @@ -10857,7 +10857,9 @@ static int kvm_check_and_inject_events(struct kvm_vcpu *vcpu,
-> >  		if (r) {
-> >  			int irq = kvm_cpu_get_interrupt(vcpu);
-> >  
-> > -			if (!WARN_ON_ONCE(irq == -1)) {
-> > +			WARN_ON_ONCE(irq == -1 && !pic_in_kernel(vcpu->kvm));
-> 
-> [Severity: Medium]
-> Does this inadvertently suppress the warning for APIC bugs in the default
-> full-irqchip mode?
-> 
-> Since pic_in_kernel() evaluates to true when the in-kernel PIC is present,
-> checking !pic_in_kernel() disables the warning entirely for all interrupt
-> sources in that configuration. This appears to contradict the commit message
-> intent of preserving the warning for other sources like the APIC.
-> 
-> [Severity: High]
-> This is a pre-existing issue, but can a malicious guest still trigger this
-> warning when KVM is configured with a split irqchip and Xen emulation is
-> enabled?
+On Tue, Jun 16, 2026 at 10:58=E2=80=AFAM Yosry Ahmed <yosry@kernel.org> wro=
+te:
+>
+> On Mon, Jun 15, 2026 at 6:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [High] KVM fails to load on systems where all guest ASIDs are assigne=
+d to SEV (`nr_asids =3D=3D max_sev_asid + 1`), breaking SEV-only environmen=
+ts.
+> > --
+> >
+> > commit 6e1ef9a91f738606e7d8f9e36c1659d383c52061
+> > Author: Yosry Ahmed <yosry@kernel.org>
+> >
+> > KVM: SVM: Use a static ASID per vCPU
+> >
+> > This patch switches KVM SVM from dynamic ASID allocation to a static
+> > per-vCPU ASID to avoid full TLB flushes and simplify the code. It intro=
+duces
+> > a fallback ASID logic and relies on TLB tag tracking for the pool of
+> > available ASIDs.
+> >
+> > > diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+> > > index 5d4c45d788b54..fae5cb7102010 100644
+> > > --- a/arch/x86/kvm/svm/svm.c
+> > > +++ b/arch/x86/kvm/svm/svm.c
+> >
+> > [ ... ]
+> >
+> > > @@ -5751,6 +5744,17 @@ static __init int svm_hardware_setup(void)
+> > >
+> > >       kvm_caps.inapplicable_quirks &=3D ~KVM_X86_QUIRK_CD_NW_CLEARED;
+> > >
+> > > +     /* Consumes max_sev_asid initialized by sev_hardware_setup() */
+> > > +     min_asid =3D max_sev_asid + 1;
+> > > +     nr_asids =3D cpuid_ebx(SVM_CPUID_FUNC);
+> > > +     r =3D kvm_init_tlb_tags(min_asid, nr_asids - min_asid);
+> >
+> > [Severity: High]
+> > Will this cause KVM to fail loading on systems where the BIOS configure=
+s all
+> > available guest ASIDs for SEV?
+> >
+> > If max_sev_asid equals nr_asids - 1 (a common configuration for cloud
+> > servers dedicated to Confidential VMs), then min_asid will equal nr_asi=
+ds.
+> > This makes nr_asids - min_asid evaluate to 0.
+> >
+> > When kvm_init_tlb_tags() is called with a count of 0, it returns -EINVA=
+L,
+> > which causes svm_hardware_setup() to fail and prevents the KVM module f=
+rom
+> > loading entirely. Prior to this patch, KVM would successfully load in t=
+his
+> > configuration and allow SEV guests to run normally.
+>
+> Is this a realistic scenario?
+>
+> I can make it such that kvm_init_tlb_tags() doesn't fail with 0 ASIDs,
+> and that failures to allocate the fallback_asid are also allowed. This
+> will allow configuring all the ASIDs for SEV, and then allocate_asid()
+> will fail vCPU creation for any non-ASID VMs. But I am not sure if we
+> need to actually handle this.
 
-Argh, yes.  
-
-> If a guest concurrently toggles its evtchn_upcall_pending flag in memory
-> while the host executes the event injection loop, it seems this path is
-> directly reachable. 
-
-Even more coarsely, userspace could disable Xen event stuff entirely via
-KVM_XEN_HVM_CONFIG.  The easiest fix would be to condition the WARN on
-!IS_ENABLED(CONFIG_KVM_XEN).  We could track if the VM has ever used Xen
-emulation, but I don't think that's worth doing given that many deployments can
-and should disable Xen emulation.
-
-The other annoying issue is that vmx_check_nested_events() has the same flaw.
-And I definitely don't want to toss that WARN either, because it recently found
-a real bug that actually matters.
-
-I'll send a v2 in the near-ish future to weed out CONFIG_KVM_XEN, and fix the
-nVMX case as well, hopefully without having to duplicate too much code.
+I will do this for the next version, it shouldn't add significant complexit=
+y.
