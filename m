@@ -1,182 +1,122 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026DD42252A
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2075B313E2B
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783432684; cv=none; b=CKbpuFvCQYokLjciIamU7KVnJKZCiVcuriW++WBiob5DPOpfz7BkIwcpz714VLMwZvW2EQkyAqeAJKbWMJBvqnfUmTL0xGiLCVwssngS10SryAwnGG70ymkzlvmPS1Ct9OvgP5nhs3yq0F3ZmkbmqYjWZ9zxC7RIkwADyieVXrc=
+	t=1783433056; cv=none; b=muxxOv3UzmwIeKzpNQxAkeq6YukE036lED7J5LK2mGyWbmquJe0jtjLgoWHW0/xM46QLFjQUJkWAGMVILKLTpJxvXBlkcpMSdROay355ySC2ZpAEEC/ebx4WWpGlquBJSCgvX2L1etsVvtbV2m4cZeWrFq61Tut2fVRIarRYLyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783432684; c=relaxed/simple;
-	bh=tmeRXeJNfg2VeObxWKXrULMSOLvSZELw4ccb2cY65fM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXt06KkC+OAcEL1O8Vqem0xsapzp9UMCnQfvBNEmSoKbaoIOIxjHFTA1yZ3hFLf/V/LrpBaqICTGRKWsBaEZwwUM0g07KHib4nZ0vxajBYdd7zUboBuXX6VzOv2cKDbb4d4lVteP7QQuvxioYszcGzoUzBnqOM0zVnKk0tEWvzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zrv2jo0Y; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=nA3CUPqh; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zrv2jo0Y; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=nA3CUPqh; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1783433056; c=relaxed/simple;
+	bh=IJJeqWWOz8cYTacN6NYsMTZL3vplCvTu/9nq4A9sIOk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=pxG7o2XvFQ0NVzRO+yMZTvXS26o5XitR9TSEC7ZLWesvui81osLPdk5xifP6Md6FuYIdTIwyTCL61tL1EBHMmyiwh9Zp0hoLGzXGUzkS0j6SBpe4Aq95GnJ9Ma6zHiu8v6foGFZBNcns+LTIKupgcAXuc11hMBCj+e3DCUQrq6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OcG+rEPI; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zrv2jo0Y";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="nA3CUPqh";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zrv2jo0Y";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="nA3CUPqh"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 2DC9D75CC4;
-	Tue,  7 Jul 2026 13:57:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783432655; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gezhe42hCPuf8EJ5YT9wfwNAIh+Y34zKtMBp5FToaFc=;
-	b=zrv2jo0Y9kQ8hic3l6dlQwiACP+CSHn3K9S8zHi0UAHt2qeH+2JfmKogqKEQB7lwPGQg9b
-	NNufZTCUl5VV5EPL9+6+x3EpEkIOrFtxUYccLmTsyvyBxkumHzfBdNGoAGnP1h1siaF8RY
-	2uDGAu+ycwXVH6J+3jcmhS/p4YDtsIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783432655;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gezhe42hCPuf8EJ5YT9wfwNAIh+Y34zKtMBp5FToaFc=;
-	b=nA3CUPqhNNZV29K9KCZwdEMICNzKf14++DVHz3lQM1in+eCBjFVcXK0dtBAOWTcAmlDoGB
-	TzyOEyioQpKHp/Bw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zrv2jo0Y;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=nA3CUPqh
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783432655; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gezhe42hCPuf8EJ5YT9wfwNAIh+Y34zKtMBp5FToaFc=;
-	b=zrv2jo0Y9kQ8hic3l6dlQwiACP+CSHn3K9S8zHi0UAHt2qeH+2JfmKogqKEQB7lwPGQg9b
-	NNufZTCUl5VV5EPL9+6+x3EpEkIOrFtxUYccLmTsyvyBxkumHzfBdNGoAGnP1h1siaF8RY
-	2uDGAu+ycwXVH6J+3jcmhS/p4YDtsIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783432655;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gezhe42hCPuf8EJ5YT9wfwNAIh+Y34zKtMBp5FToaFc=;
-	b=nA3CUPqhNNZV29K9KCZwdEMICNzKf14++DVHz3lQM1in+eCBjFVcXK0dtBAOWTcAmlDoGB
-	TzyOEyioQpKHp/Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 40AA1779AF;
-	Tue,  7 Jul 2026 13:57:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id AISQDs4FTWoFSgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 07 Jul 2026 13:57:34 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: lukas@wunner.de,
-	jfalempe@redhat.com,
-	alexander.deucher@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	jani.nikula@linux.intel.com,
-	joonas.lahtinen@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	tursulin@ursulin.net,
-	lyude@redhat.com,
-	dakr@kernel.org,
-	deller@gmx.de
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 09/10] drm/radeon: Implement struct vga_switcheroo_client_ops.pre_switch
-Date: Tue,  7 Jul 2026 15:38:16 +0200
-Message-ID: <20260707135724.247562-10-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260707135724.247562-1-tzimmermann@suse.de>
-References: <20260707135724.247562-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OcG+rEPI"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2cacf17c7e0so52819115ad.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 07:04:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783433054; x=1784037854; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TaRRPm7rRenJCz4WhvXhn/Su3WW8BYkGJwkilHjufHw=;
+        b=OcG+rEPIEKNOxV6T4zNlNvUKP7UQbPfY9SAWMPqXqZriGd/xv9b2ikARm68W77OVoD
+         bAA8rry95BUKzEEDqPOJbg9rHxv64hFNsHkfNOdN3qT1qybY88v6mpYjo66mKuXBBnyw
+         Bf9OR1oEvyefmKMUf7+QXRJOkHEjpw0Qklbk6X2gM8k5SmZshi3iJW2AknHDvDtT8p66
+         Oy0WQFeH0bQj1bQNWS6ipCydrD0OIxZFCc09mLp7B39+U+T2e5+C9udfZTydmeguCCOn
+         BDmPss/DkrWEChfUuvHzb09zPmNCb25GbuOmyOKd7sOuOPKQLMd4bNYm1mMVhACV6mcc
+         6w3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783433054; x=1784037854;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TaRRPm7rRenJCz4WhvXhn/Su3WW8BYkGJwkilHjufHw=;
+        b=A5KX/1GtF/zaYHL5ya+O/3wf+s7dMPuQWILZo2jaQcOimViBIbeXqRawzPbMPabTA4
+         GAG/tkTog9BQ+eRL3qsUhtoM8PKCY8yo7LkT0AOVzik6y/3D6ucdIA/7NKJyDKQp8HQ8
+         apaI0UiRpxZeoQegiYLoSElxuX1gA+lebTMxIPyfsaBKG/deLEZeca6SIyS+c9abfwgL
+         YrIMpj0JB/HT56if1XNDp65NLSsPzuJNzkVwW+Zrb8fDQE1dMUVfIcvUv+kwDQccpN1G
+         CeNIn2vgK1VWEALVPKmvbfIrEgFE/JBgi0Cpm3W7fTcaUAXRksrgdQ2HIpVivI+Fwn4j
+         OgXw==
+X-Gm-Message-State: AOJu0YxlC1DYKa/e+ssN0PxgyUMH3gfli9Hfu9XI0zqLCpuNnKzVbVko
+	gmMU2Mh8NYxLZVSKtGMzMoMv7RMNm5NJfzUu6WSzDUEHbM3goE78iYccT7sy9bwQZtNgwZlw04o
+	j2V9L+1QA2h+RuP2IeyTjjWJxuz5OL5I6SIBoWGPPxyFMbs1NlPOEcNT24S98LhKrHkKiRKfeHg
+	MAv2VwPa5drmA1KG/0r9JpyvjTRp8Z10gUK/i7mzsiKfXpIMPL
+X-Received: from plrf2.prod.google.com ([2002:a17:902:ab82:b0:2ca:bb5b:3c6b])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ec85:b0:2c6:a012:6241
+ with SMTP id d9443c01a7336-2ccbe3f7d69mr56668875ad.6.1783433054149; Tue, 07
+ Jul 2026 07:04:14 -0700 (PDT)
+Date: Tue, 7 Jul 2026 07:04:13 -0700
+In-Reply-To: <20260706164913.3A7A91F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 2DC9D75CC4
-X-Spam-Flag: NO
-X-Spam-Score: -3.01
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-0.998];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	ARC_NA(0.00)[];
-	FREEMAIL_TO(0.00)[wunner.de,redhat.com,amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,intel.com,ursulin.net,gmx.de];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_TRACE(0.00)[0:+];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
-	FROM_EQ_ENVFROM(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLgosu6qu4h11rje89ht7rjgg5)];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Mime-Version: 1.0
+References: <20260706163649.155548-1-hisamshar@gmail.com> <20260706164913.3A7A91F000E9@smtp.kernel.org>
+Message-ID: <ak0HXd8HMyKDCU1U@google.com>
+Subject: Re: [PATCH] KVM: selftests: Use KVM's task pinning APIs in steal_time
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Hisam Mehboob <hisamshar@gmail.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-Call drm_client_dev_acquire_outputs() from vga_switcheroo's pre_switch
-callback. Pushes fbcon updates from vga_switcheroo into DRM's fbdev
-emulation.
+On Mon, Jul 06, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Race condition causing intermittent test failure (ESRCH) due to late thread pinning
+> --
+> 
+> commit 27b6bbfae99d5564cda41cbc7b8c36c7b9a4ed64
+> Author: Sean Christopherson <seanjc@google.com>
+> 
+> KVM: selftests: Use KVM's task pinning APIs in steal_time
+> 
+> This commit updates the steal_time test to use KVM's task pinning APIs
+> (pin_self_to_cpu and pin_task_to_cpu) to pin the vCPU and stealer threads
+> to pCPU0. This removes the use of pthread_attr_setaffinity_np, allowing
+> the test to build against non-glibc C libraries.
+> 
+> Link: https://lore.kernel.org/all/aLIroyJSWQ26wnY4@google.com/
+> 
+> > diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
+> > index 76fcdd1fd3cb4..19a97d6a36076 100644
+> > --- a/tools/testing/selftests/kvm/steal_time.c
+> > +++ b/tools/testing/selftests/kvm/steal_time.c
+> [ ... ]
+> > @@ -558,7 +552,9 @@ int main(int ac, char **av)
+> >  
+> >  		/* Steal time from the VCPU. The steal time thread has the same CPU affinity as the VCPUs. */
+> >  		run_delay = get_run_delay();
+> > -		pthread_create(&thread, &attr, do_steal_time, NULL);
+> > +		pthread_create(&thread, NULL, do_steal_time, NULL);
+> > +		pin_task_to_cpu(thread, 0);
+> 
+> [Severity: Medium]
+> Could this introduce a race condition that causes intermittent test failures?
+> 
+> Since pthread_create is called before pinning, there is a small window
+> where the child thread (do_steal_time) could execute and complete its very
+> brief 200us run before the parent thread executes pin_task_to_cpu.
+> 
+> If the child thread exits before pin_task_to_cpu attempts to set its
+> affinity, it will return ESRCH and trigger the TEST_ASSERT inside
+> pin_task_to_cpu, abruptly aborting the test.
+> 
+> Is the explicit pin_task_to_cpu call necessary here?
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/radeon/radeon_device.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Nope, which means we can simply drop the problematic pthread_attr_setaffinity_np(),
+though I think it makes sense to add a sanity check that the worker did indeed
+inherit the affinity, if only to document what's happening.
 
-diff --git a/drivers/gpu/drm/radeon/radeon_device.c b/drivers/gpu/drm/radeon/radeon_device.c
-index 705c012fcf9e..8697a9eb5d13 100644
---- a/drivers/gpu/drm/radeon/radeon_device.c
-+++ b/drivers/gpu/drm/radeon/radeon_device.c
-@@ -1258,10 +1258,18 @@ static bool radeon_switcheroo_can_switch(struct pci_dev *pdev)
- 	return atomic_read(&dev->open_count) == 0;
- }
- 
-+static void radeon_switcheroo_pre_switch(struct pci_dev *pdev)
-+{
-+	struct drm_device *dev = pci_get_drvdata(pdev);
-+
-+	drm_client_dev_acquire_outputs(dev);
-+}
-+
- static const struct vga_switcheroo_client_ops radeon_switcheroo_ops = {
- 	.set_gpu_state = radeon_switcheroo_set_state,
- 	.reprobe = NULL,
- 	.can_switch = radeon_switcheroo_can_switch,
-+	.pre_switch = radeon_switcheroo_pre_switch,
- };
- 
- /**
--- 
-2.54.0
+I'll send a v2.
 
+Thanks for posting this Hisam!
+
+> Since the main thread already called pin_self_to_cpu(0) earlier, the new
+> thread created by pthread_create should automatically inherit the parent's
+> CPU affinity mask.
