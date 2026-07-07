@@ -1,132 +1,101 @@
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24483EFFBA
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 15:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4946B4314A6
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 16:03:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783437622; cv=none; b=Gu1apuFygAWzFHQJ7lQ1JI357PHdfwIVIfl8yIgrU9nlbbYW6AmRNRo/6XOHOQmAPNGxzG/LQLzzPjYCWXixSo3QO2hd35ysmM9MEaOHpCcwyvZYs0Ffm32tygZ6KyxRth0I5OedbzogLFhB087wYdHXZIOvDJpWB1ou83lLH9M=
+	t=1783440200; cv=none; b=fApVg7im1K3CG3EC0aSo/4+PoX+xckyetNEaMzE98fH8JQ63ExhFpOHOzbaTuUq1hnCKVp4WZZ9HWpol6KBvHa8U4TQF2UMDJb3Bsv2JtLtAqMMEFuZNXK51nWYnJhVWJci9vwF8BS1GJ8uisi7OpKyMkwpTX8Mn0oHyUMstTAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783437622; c=relaxed/simple;
-	bh=5tuWkatnVNIK5Ry5kMSoOp5IKnPnmOr+sggrp950vT0=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K/uAXILibI9x2N8usQ1YTgS93guV/kvJippdbELGzPk9ERaUBdx8ApVmqHpS4+NXodBxApcH6+dn3RLXk5bzjkt1Xdb2BFHmvyfq+4RPSO6ahlQUT4BUAhcj4P0A878h7KRSvpt/Lzwr37DAT1g5BhlcG1BLgpgY77tObUxb9fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf14.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay01.hostedemail.com (Postfix) with ESMTP id 46E861C385A;
-	Tue,  7 Jul 2026 15:20:10 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf14.hostedemail.com (Postfix) with ESMTPA id 55EDE33;
-	Tue,  7 Jul 2026 15:20:08 +0000 (UTC)
-Date: Tue, 7 Jul 2026 11:20:11 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Chen Jun <chenjun102@huawei.com>
-Cc: <mhiramat@kernel.org>, <mathieu.desnoyers@efficios.com>,
- <linux-kernel@vger.kernel.org>, <linux-trace-kernel@vger.kernel.org>,
- "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>,
- "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH] tracing: Add "within" filter for call-stack-based event
- filtering
-Message-ID: <20260707112011.7ca6f721@gandalf.local.home>
-In-Reply-To: <20260608145556.94931-1-chenjun102@huawei.com>
-References: <20260608145556.94931-1-chenjun102@huawei.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1783440200; c=relaxed/simple;
+	bh=MRwZ9no6SnLvgcrAWxdx1p+YVT0L0Ns9i5czUpMcAKY=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=bW91RcNK7Pj5LrTKTfFEJi+KSEK8DeedNHuQWsPCf2OjI+b8lvYOPCIn87J/w+iiCEvgoQjzcJQhHjCWXGz0C7tIp/nSC4kPEjYU1uKh7CNKOjfxmGizzlm7L1AIv86fFImSCus/b3JZ0ExFBohDsu+JjAmuUFTj0kdew3uDXGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OhAuo6IO; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OhAuo6IO"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2c9e9cb6a44so37499715ad.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 09:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783440199; x=1784044999; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pL69ZVdKR5D25APZYCYruCm0FglFMWTjtZf4734SenU=;
+        b=OhAuo6IO4CgTUxhvwhlQshILnabynFUyO7UfOD5aED4ZA+ERjvuJXlEQ8lWIdGeimt
+         x/P0lbjcNCsYa20UskrkmrICyRK2xiHVkcTipYyZPS/Sfi6xxeMv2IQT79nAEpcEYR75
+         VusUTnY3aelOPnZAYk4u9lYc8dfwX2fwwvIFsO0AounlgA5IIEB/me1qv93sKDA5teOY
+         OraaoFSO/S/eNIUpbVjg6UKiwSc5SkkCaJx1Ofztt1FbFQUBXDslaXj+WGA2+U5NPzYc
+         sA7YW5htyrcKEwBtGfGVWcpgGG1zt0j9CQUBf5OxTFoXABRxL9Oq9OJbepfp/wWmszy0
+         J0zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783440199; x=1784044999;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pL69ZVdKR5D25APZYCYruCm0FglFMWTjtZf4734SenU=;
+        b=NZggXEv3QNjoFnOaXUkuH6mlqZ2nfC13sf1/6vLnmbdBj6+xaODbuUkG4xlS6//qS9
+         z1TPiXJTD/7MaI8f1nqheU4z8JWTKa0lodZRVOVt3HqwKOqmBYwor/9o+dp9BmCLpmEY
+         RHHPmkFZFtObEjhpWiyZhm/YDPbu9mRKwWCbdN4czQOSqdIOU8MGFVW5iOL5Agq/7Emu
+         uc5AtVnN92iVACG8DNz+qJ6AqxLTSHowy/Q5g0mOIi4r591jXm3h7Dh8/9aVNRuzSBoc
+         Of04XNupVyf+TkMihBCQOpriN7WC/0PMZwQRZ0zPWLKjHtAIOe/N6xUXWuV60hYn7o5p
+         hd1Q==
+X-Gm-Message-State: AOJu0YxUvljOoy9V68yLUS3x9T+D5qKKPrF43Sxct7UCWjMiscrFHNFB
+	Z38g8fmQVF4aGxSsqgov9fRQtcdMuBfemdzGDGQVbL93UqQafsIfktWPbyx/+JB2/NJmDliZTRN
+	LALzVFgLhhLVIn7WLjfHGODFBIpXPz7Xs+X3t+mINTEWj4NVlhMOHCFcvfXInhGR+A4TXr9r01s
+	yQud7/Wo1byPC6vm4xbwY65NO89bUmA2O33twp8RLQNqeqAiBW
+X-Received: from plpk2.prod.google.com ([2002:a17:903:3da2:b0:2ca:c401:c941])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:3d0f:b0:2c9:b48c:fdde
+ with SMTP id d9443c01a7336-2ccbf057775mr60146615ad.26.1783440198329; Tue, 07
+ Jul 2026 09:03:18 -0700 (PDT)
+Date: Tue, 7 Jul 2026 09:03:17 -0700
+In-Reply-To: <20260707152105.8FE671F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: hspj7xkyc7wh4ha5dqx9y7cg53bumzat
-X-Rspamd-Server: rspamout04
-X-Rspamd-Queue-Id: 55EDE33
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+CLvAh4fPhurGx+w7BMuJCAiIL5GIyV7g=
-X-HE-Tag: 1783437608-906688
-X-HE-Meta: U2FsdGVkX1+7rBmUntmm2xb7msXy/BaG7JLSO8l+87LPRiBM66T0N/QWdtUMyF0n286VGUwZYJv6wdTLK+8q1MMTa5RJEztHxRlRdtQB2UxKh/uUGSGsaTcJwy9D/gBkQzDXE+2RY1ge4GOrr5rn7NFEOFbIuOaqZ3M5uegqhS625CZqtvIiamcZVXScucgjJLasJ21iBTAoNFpPVbm8I8ihJ7cdHxwHH2rAWwtgnPRL3dv1v3jqZJPLweojT8TewoJaA+9rb3wehJDtUdZopXexO27t2vzhlFOzBxNFki3I3xtKhVSa3z3Wdfz4vqzDRpzDPodqLLXgcf/7ZQsP1142Vkc+Tzf3+Mkg/E/k2ojNsemZIRWiSPB+FMcJ6XLG/22dxhaAarX90EsjC1GQsFGXfFMF0pqXvGE7tx4C1jvVfe/hfFJ7Yg==
+Mime-Version: 1.0
+References: <20260707150706.1198541-1-seanjc@google.com> <20260707150706.1198541-2-seanjc@google.com>
+ <20260707152105.8FE671F000E9@smtp.kernel.org>
+Message-ID: <ak0jRanrFxDC8F0P@google.com>
+Subject: Re: [PATCH v2 1/2] KVM: selftests: Drop superfluous use of pthread_attr_setaffinity_np()
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-From: https://sashiko.dev/#/patchset/20260608145556.94931-1-chenjun102%40huawei.com
-
-> commit dfbe6e67884d4ff73b44c46b51995f1945758a89
-> Author: Chen Jun <chenjun102@huawei.com>
-> tracing: Add "within" filter for call-stack-based event filtering
-> This commit introduces a "within" filter predicate for trace events, allowing
-> users to filter events based on whether a specific function appears in the
-> current call stack. It uses kallsyms_lookup_name() to resolve the function to
-> an address range during setup, and stack_trace_save() to capture the stack at
-> runtime to evaluate the filter condition.
->
-> > diff --git a/kernel/trace/trace_events_filter.c b/kernel/trace/trace_events_filter.c
-> > index 609325f579427..34e1a7f0b3cd0 100644
-> > --- a/kernel/trace/trace_events_filter.c
-> > +++ b/kernel/trace/trace_events_filter.c
+On Tue, Jul 07, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
+> > index 76fcdd1fd3cb4..a244bf9f701f7 100644
+> > --- a/tools/testing/selftests/kvm/steal_time.c
+> > +++ b/tools/testing/selftests/kvm/steal_time.c
+> 
 > [ ... ]
-> > @@ -1009,6 +1010,22 @@ static int filter_pred_function(struct filter_pred *pred, void *event)
-> >  	return pred->op == OP_EQ ? ret : !ret;
-> >  }
+> 
+> > @@ -558,7 +555,11 @@ int main(int ac, char **av)
 > >  
-> > +/* Filter predicate for within. */
-> > +static int filter_pred_within(struct filter_pred *pred, void *event)
-> > +{
-> > +#ifdef CONFIG_STACKTRACE
-> > +	unsigned long entries[16];
-> > +	unsigned int nr_entries;
-> > +	int i;
-> > +
-> > +	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 0);
->
-> Is an array size of 16 entries sufficient here?  Since the skipnr parameter is
-> 0, several of these frames will be consumed by internal tracing and filter
-> evaluation functions (such as filter_pred_within() and
-> trace_event_buffer_commit()).
->
-> This leaves very few slots for the actual call chain, meaning higher-level
-> functions like "vfs_read" will likely be truncated from the stack trace.
-> Could this cause the filter condition to evaluate to false incorrectly,
-> missing the events we are trying to capture?
->
+> >  		/* Steal time from the VCPU. The steal time thread has the same CPU affinity as the VCPUs. */
+> >  		run_delay = get_run_delay();
+> > -		pthread_create(&thread, &attr, do_steal_time, NULL);
+> > +		pthread_create(&thread, NULL, do_steal_time, NULL);
+> > +		pthread_getaffinity_np(thread, sizeof(cpuset), &cpuset);
+> 
+> [Severity: Medium]
+> Can this assertion spuriously pass if pthread_getaffinity_np() fails?
 
-This is a current limitation that may be dealt with in the future.
+Yes, but that "flaw" is "fixed" in the next patch.  All in quotes because IMO
+neither scenario is truly problematic.
 
-> > +	for (i = 0; i < nr_entries; i++)
-> > +		if (pred->val <= entries[i] && entries[i] < pred->val2)
-> > +			return !pred->not;
-> > +#endif
-> > +	return pred->not;
-> > +}
->
-> [ ... ]
-> > @@ -2002,10 +2021,28 @@ static int parse_pred(const char *str, void *data,
-> >  
-> >  		} else if (field->filter_type == FILTER_DYN_STRING) {
-> >  			pred->fn_num = FILTER_PRED_FN_STRLOC;
-> > -		} else if (field->filter_type == FILTER_RDYN_STRING)
-> > +		} else if (field->filter_type == FILTER_RDYN_STRING) {
-> >  			pred->fn_num = FILTER_PRED_FN_STRRELLOC;
-> > -		else {
-> > +		} else if (field->filter_type == FILTER_WITHIN) {
-> > +			unsigned long func;
-> > +
-> > +			if (op == OP_GLOB)
-> > +				goto err_free;
->
-> Does this goto need a preceding call to parse_error()?  Other error paths in
-> this function initialize the error state before jumping to err_free.
-> Without it, users might see an unhelpful generic error message instead of a
-> syntax error indicating that the glob operator isn't supported here.
+> Because cpuset is not cleared before calling pthread_getaffinity_np() in
+> main(), and the return value isn't checked, cpuset will retain its previous
+> value if the call fails. This could happen if the child thread completes
+> its execution before pthread_getaffinity_np() is called.
 
-This is a legitimate issue.
+No, because the underlying kernel task is alive until pthread_join().
 
-Chen, can you send a v2 and add a proper error message here?
-
-Thanks,
-
--- Steve
-
-
-> > +
-> > +			pred->fn_num = FILTER_PRED_FN_WITHIN;
-> > +			func = kallsyms_lookup_name(pred->regex->pattern);
+> Since cpuset was already populated with CPU 0 earlier in main(), the
+> TEST_ASSERT would read the stale data and pass even if the thread did not
+> inherit the affinity.
