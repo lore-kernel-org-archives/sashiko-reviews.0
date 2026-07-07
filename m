@@ -1,275 +1,167 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51D6141C303;
-	Tue,  7 Jul 2026 13:38:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451072FB969
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783431539; cv=none; b=ZmFeDKhNCfgK2tMTNs6iAs14vljzSdXMoflyjtTalij53TjyMGg9vx1/cDbK0n1OfDFGqC8SNyVaXWKLIcTdGBWwCVqesp+Qbr9M7gm7u7ptDASF7vIJ4xq0z7tF2Wb2GWLQ1H9aV8mxjUeiKxzWfE3djjfJBNcKO5k2LmMlpE8=
+	t=1783431895; cv=none; b=io7NbKRAo2jZnnBaKPlDDmmiCiCkq/JERqKs6IffkCZzvWtFL/TAFUygc4OxxnVBq45HC1Okb9MD9npEXd2s/oOVt3p0y6xw/HJWV3rvzOvuUhhyyEd+/kxlPXnHRnQw1KFitmeQdwGufvynP/do5EsLJGSW00v7s5vOeNhDF8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783431539; c=relaxed/simple;
-	bh=v8I1swk9IKNKBonfJ0Xz3BFIVbstSWSgSYc+zYB2HZs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=AS+NOkJdfZ3Tfagh8XAwlskd1RGr3PQRT30bYGgprWcmBEYXIs6Zz/kfjI7Ccs6yEi2fDW9z/ZYyyZh05v7/7DnHziQMtdlNoc2LhAywJ+5g4Axd21zXbaOLEJFZIkwCAMwzM3UVxiHw3qPmsaGw/1U2klm/lRqPZ7Qogne8Nn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=VzGMAFQh; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1783431895; c=relaxed/simple;
+	bh=oTiKwW6pCc4LynyVt+qdpFUE2EDKuult/l7+T/efMbs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:Cc:From:
+	 References:In-Reply-To; b=lYst3Yx/VNvfgjMiQ3BPYQW5awI/H59yD6hZBHKBsWOwr+OoQKw4XyPIXLJwPSQ33hMsJMNuVr0hea46dt5EI9VwzD39B26nb4elRQtU0lKnG+ypQsBzhXQhjIoAidaT3p1+oYmkTdYXUXPK+ZLTv2JLvrcFI4q/j4s02QLRfbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GdHz5GMK; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="VzGMAFQh"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 54D251A2D;
-	Tue,  7 Jul 2026 06:38:52 -0700 (PDT)
-Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A43AD3F85F;
-	Tue,  7 Jul 2026 06:38:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1783431536; bh=v8I1swk9IKNKBonfJ0Xz3BFIVbstSWSgSYc+zYB2HZs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VzGMAFQhvjaBdc/55BtB3Frnu5suw7tdL9NlfpoTa07juHtECBqCGaJupeYdkrYfQ
-	 cvYq+pGn3jxTI1n+0K1DyC6+gaRUfpmexVB1JEW9hHHMKawxWVv4TuJymA7KJjJ7Sp
-	 0AyMEK0LtYtoxFiLcmNzmUwcLXoKp86FSNKKI5qM=
-From: Leonardo Bras <leo.bras@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Leonardo Bras <leo.bras@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org
-Subject: Re: [PATCH v2 12/13] KVM: arm64: Add hardware-accelerated dirty-ring cleaning routine
-Date: Tue,  7 Jul 2026 14:38:50 +0100
-Message-ID: <ak0Bam9uj25cCtKm@LeoBrasDK>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <akKq2fvsUWPxuCHU@LeoBrasDK>
-References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-13-leo.bras@arm.com> <20260629114921.2E78C1F000E9@smtp.kernel.org> <akKq2fvsUWPxuCHU@LeoBrasDK>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GdHz5GMK"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 9B3221A0EB2
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:44:51 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 70CA660333;
+	Tue,  7 Jul 2026 13:44:51 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7CF5311BC24C6;
+	Tue,  7 Jul 2026 15:44:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783431890; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=VRo3P7DD6QD27F8dM4vTbI4FMsYN5ProobK7FQGLKiQ=;
+	b=GdHz5GMKhtEd4hLCi5bnUcKCnqPAPmmcLPkuDhATdB297NRgGm59bWzCK8VokIpM+AKQ/T
+	x76+h5Mgc/ehiRjNwuiLqHDuZim3RB94SfaxMc5KPCnbZNb/sDRbe5gon5aiWme5gQgMI5
+	m+Y+lMvIfJEw5Aa3Yg7SNpRv3ZNCPy6uBUKecoMIzCMIon0WLkrM3OKgqKmIAyP8BkgrtY
+	WBUBb+Rq52mIGG90+Hy+GJaw19GeKEpeQRaUwnbayKIXPcQAVt7ZF7cwPs2eLoZryIinDB
+	XX4cLNtRUA4ZgStBMgtCMlKMJwEz1FQNbdvNKYp69TLstT5+Hbx39QnDH3S7FA==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 Jul 2026 15:44:49 +0200
+Message-Id: <DJSDUBPVUJJ7.1A26I1W2L6RLH@bootlin.com>
+To: <sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH bpf-next v3 04/10] bpf, x86: add helper to emit kasan
+ checks in x86 JITed programs
+Cc: <bpf@vger.kernel.org>
+From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260701-kasan-v3-0-bd09bb942d86@bootlin.com>
+ <20260701-kasan-v3-4-bd09bb942d86@bootlin.com>
+ <20260701101645.D14D21F000E9@smtp.kernel.org>
+In-Reply-To: <20260701101645.D14D21F000E9@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, Jun 29, 2026 at 06:26:49PM +0100, Leonardo Bras wrote:
-> On Mon, Jun 29, 2026 at 11:49:20AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> > 
-> > New issues:
-> > - [Critical] Unvalidated userspace memory accesses in dirty ring clearing lead to host DoS and memory corruption.
-> > - [High] Missing TLB invalidation and DSB in dirty ring hardware path.
-> > - [High] Hardware buffer allocation lacks strict physical alignment guarantees.
-> > 
-> > Pre-existing issues:
-> > - [High] Missing architecturally required context synchronization (ISB) after control register writes.
-> > - [High] Unsafe wfi() polling loop causes lost wakeups and CPU lockups.
-> > - [Medium] Hardware dirty log clearing erroneously falls back to software due to incorrect return value processing.
-> > --
-> > 
-> > commit 9f463875fd0f7eddcaa7053b557d7a2cc21e83c1
-> > Author: Leonardo Bras <leo.bras@arm.com>
-> > 
-> > KVM: arm64: Add hardware-accelerated dirty-ring cleaning routine
-> > 
-> > This commit implements an arm64 version of kvm_arch_dirty_ring_clear using
-> > FEAT_HACDBS. It translates dirty-ring entries into HDBSS entries and uses
-> > the hardware mechanism to mark writable-dirty pages as clean. Invalid
-> > entries are then cleared, falling back to software cleaning on error.
-> > 
-> > > diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
-> > > --- a/arch/arm64/kvm/dirty_bit.c
-> > > +++ b/arch/arm64/kvm/dirty_bit.c
-> > [ ... ]
-> > > static int dirty_bit_clear(struct kvm *kvm, u64 *hw_entries, int size)
-> > > {
-> > > 	u64 hcr_el2;
-> > > 	int ret;
-> > > 
-> > > 	preempt_disable();
-> > > 
-> > > 	hcr_el2 = read_sysreg(HCR_EL2);
-> > > 	write_sysreg(hcr_el2 | HCR_EL2_VM, HCR_EL2);
-> > > 	__load_stage2(&kvm->arch.mmu);
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does this missing ISB after control register
-> > writes expose the pipeline to undefined architectural states?
-> > 
-> > Writing to HCR_EL2 requires an immediate context synchronization event.
-> > Executing __load_stage2 immediately after without an isb means it might
-> > operate under a stale configuration.
-> 
-> See prev patches
-> 
-> 
-> > 
-> > > 
-> > > 	hacdbs_start(hw_entries, size);
-> > > 
-> > > 	do {
-> > > 		wfi();
-> > > 	} while (this_cpu_read(hacdbs_pcp.status) == HACDBS_RUNNING);
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but can this unprotected wfi wait loop cause
-> > a lost wakeup and an indefinite CPU stall?
-> > 
-> > Because local interrupts are not masked around this check and wait, a timely
-> > interrupt could satisfy the condition prematurely before wfi executes.
-> > 
-> 
-> iden
-> 
-> > [ ... ]
-> > > 	if (idx != 0) {
-> > > 		ret = dirty_bit_clear(kvm, hw_entries, idx);
-> > > 		*flush = *flush || ret > 0;
-> > > 	}
-> > > out_err:
-> > > 	if (unlikely(ret != idx)) {
-> > 
-> > [Severity: Medium]
-> > This is a pre-existing issue, but does this logic incorrectly evaluate a
-> > successful batch outcome as an error?
-> > 
-> > If the loop finishes exactly on a batch boundary, idx is reset to 0, but ret
-> > holds the success count of the previous batch. This causes the mismatch check
-> > to evaluate to true, forcing a -EAGAIN return and triggering an unnecessary
-> > software fallback.
-> > 
-> 
-> iden
-> 
-> > [ ... ]
-> > > @@ -256,6 +256,72 @@ int __kvm_arch_dirty_log_clear(struct kvm *kvm,
-> > >  	return ret;
-> > >  }
-> > >  
-> > > +int __kvm_arch_dirty_ring_clear(struct kvm *kvm, struct kvm_dirty_ring *ring,
-> > > +				int *nr_entries_reset)
-> > > +{
-> > > +	u64 *hw_entries;
-> > > +	u64 slot_offset = 0;
-> > > +	u64 ttwl;
-> > > +	int i, ret;
-> > > +	u32 slot = -1;
-> > > +
-> > > +	if (signal_pending(current))
-> > > +		return -EINTR;
-> > > +
-> > > +	ttwl = HDBSS_ENTRY_TTWL(KVM_PGTABLE_LAST_LEVEL);
-> > > +
-> > > +	hw_entries = kmalloc(max(ring->size * sizeof(u64), PAGE_SIZE), GFP_KERNEL);
-> > 
-> > [Severity: High]
-> > Does this kmalloc call lack the strict physical alignment guarantees required
-> > by the hardware accelerator?
-> > 
-> > Since kmalloc does not guarantee natural physical alignment for large buffers,
-> > is it possible for physical address truncation to occur? This could cause the
-> > hardware accelerator to parse unaligned memory and corrupt arbitrary page DBM
-> > bits.
-> 
-> I recall it had size-alignmen guarantees. Largest buffer size should be 
-> 64k x 8B, so it should be ok.
-
-Dirty-ring size is required to be a power of 2, and sizeof(u64) is also a 
-power of 2. Kmalloc guarantees alignment for power of 2 allocations.
-
-> 
-> 
-> > 
-> > > +	if (!hw_entries)
-> > > +		return -ENOMEM;
-> > > +
-> > > +	for (i = 0; i < ring->size; i++) {
-> > > +		struct kvm_dirty_gfn *entry;
-> > > +		gfn_t gfn;
-> > > +
-> > > +		entry = &ring->dirty_gfns[(ring->reset_index + i) &
-> > > +					  (ring->size - 1)];
-> > > +
-> > > +		if (!kvm_dirty_gfn_harvested(entry))
-> > > +			break;
-> > > +
-> > > +		if (entry->slot != slot) {
-> > > +			struct kvm_memory_slot *memslot;
-> > > +
-> > > +			memslot = kvm_dirty_ring_get_memslot(kvm, entry->slot);
-> > > +			slot = entry->slot;
-> > > +			slot_offset = memslot->base_gfn;
-> > 
-> > [Severity: Critical]
-> > Can an invalid, user-provided entry->slot lead to a NULL pointer dereference
-> > here?
-> > 
-> > The memslot pointer is dereferenced directly to read base_gfn without a NULL
-> > check.
-> > 
-> > > +		}
-> > > +
-> > > +		gfn = slot_offset + entry->offset;
-> > 
-> 
-> Correct. I have to verify the return value of get_memslot before using it.
-> Will do in v3
-> 
-> > [Severity: Critical]
-> > Is entry->offset validated against the memslot bounds?
-> > 
-> > Using an unvalidated user-provided offset here allows arbitrary Stage-2 GPA
-> > computation. This could enable Stage-2 memory corruption or privilege
-> > escalation.
-> 
-> Correct. Will verify the offset against memslot size before this.
-> Will be done in v3.
+On Wed Jul 1, 2026 at 12:16 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Critical] emit_kasan_check() fails to save BPF_REG_AX (R10), leading t=
+o memory corruption when combined with constant blinding.
+> --
 >
+> commit 4c7e1a72bec793ca4ed19fd754408dd627715a3c
+> Author: Alexis Lothor=C3=A9 (eBPF Foundation) <alexis.lothore@bootlin.com=
+>
+>
+> bpf, x86: add helper to emit kasan checks in x86 JITed programs
+>
+> This patch adds emit_kasan_check() to emit KASAN shadow memory checks bef=
+ore
+> memory accesses in x86 JIT-compiled BPF programs. The helper saves tempor=
+ary
+> registers before calling the KASAN functions, but deliberately omits r10 =
+and
+> r11 to reduce overhead.
+>
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index 054e043ffcd22..68c5f9f94e5e2 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
+>
+> [ ... ]
+>
+>> @@ -1110,6 +1121,90 @@ static void maybe_emit_1mod(u8 **pprog, u32 reg, =
+bool is64)
+>>  	*pprog =3D prog;
+>>  }
+>> =20
+>> +static int emit_kasan_check(struct bpf_verifier_env *env, u8 **pprog,
+>> +			    u32 addr_reg, struct bpf_insn *insn, u8 *ip,
+>> +			    bool is_write, bool accesses_stack_only)
+>> +{
+>
+> [ ... ]
+>
+>> +	/* Save r8 */
+>> +	EMIT2(0x41, 0x50);
+>> +	/* Save r9 */
+>> +	EMIT2(0x41, 0x51);
+>> +
+>
+> [Severity: Critical]
+> Can this lead to data corruption when BPF constant blinding is enabled?
+>
+> The commit message notes that r10 and r11 are skipped here to reduce
+> overhead. However, when constant blinding is enabled, bpf_jit_blind_insn(=
+)
+> in kernel/bpf/core.c translates BPF_ST_MEM into a sequence that uses
+> BPF_REG_AX (which maps to x86's r10) as the source register:
+>
+> kernel/bpf/core.c:bpf_jit_blind_insn() {
+>         ...
+>         case BPF_ST | BPF_MEM | BPF_DW:
+>                 *to++ =3D BPF_ALU64_IMM(BPF_MOV, BPF_REG_AX, imm_rnd ^ fr=
+om->imm);
+>                 *to++ =3D BPF_ALU64_IMM(BPF_XOR, BPF_REG_AX, imm_rnd);
+>                 *to++ =3D BPF_STX_MEM(from->code, from->dst_reg, BPF_REG_=
+AX,
+>                                     from->off);
+>         ...
+> }
+>
+> When do_jit() processes this BPF_STX_MEM, it first calls emit_kasan_check=
+(),
+> which invokes the C function __asan_storeX. Since __asan_storeX is a stan=
+dard
+> C function, it is permitted by the System V AMD64 ABI to clobber caller-s=
+aved
+> registers like r10.
+>
+> Upon returning from the KASAN check, r10 might contain garbage. Then do_j=
+it()
+> calls emit_stx() which will use this clobbered r10 as the data to be writ=
+ten,
+> potentially writing corrupted data to memory.
+>
+> Should BPF_REG_AX (r10) be explicitly saved and restored here to prevent =
+this?
+>
+>> +	/* mov rdi, addr_reg */
+>> +	EMIT_mov(BPF_REG_1, addr_reg);
+>> +
 
-Reviewed this. Not quite correct, actually.
-If for any reason the calculated gfn is bigger than current slot size, 
-HACDBS will either:
-1- clean that (unrelated) page's dirty bit, if it already have DBM=1 or 
-2- fail because the hw page table walk returned that the entry is invalid, 
-   falling back to sw cleaning, which should be safe. 
+Sashiko keeps on raising concerns on r10/r11 being possibly clobbered by
+_asan functions. It has been suggested in the RFC to drop those
+registers, and I have already given a few elements here ([1]) and
+proposed to keep those skipped anyway. No one raised complaints about
+this so far, so unless it changes, I'll keep those registers skipped.
 
-2 is safe, as long as sw cleaning still safe.
-As userspace could just request to clean the dirty-bit for _any_ page, 1 
-does not seem to unsafe as well. 
+Alexis
 
-I don't actually see privilege escalation as a possibility here.
+[1] https://lore.kernel.org/all/DJ5HDX2K5CTF.YRZ9TDI6QCII@bootlin.com/
 
-(let me know if I am missing something.
 
- 
-> > 
-> > > +
-> > > +		hw_entries[i] = (gfn_to_gpa(gfn) & HDBSS_ENTRY_IPA) |
-> > > +				ttwl | HDBSS_ENTRY_VALID;
-> > > +	}
-> > > +
-> > > +	ret = dirty_bit_clear(kvm, hw_entries, i);
-> > 
-> > [Severity: High]
-> > Does this path miss an architecturally required TLB invalidation and DSB?
-> > 
-> > dirty_bit_clear relies on the caller to handle the TLBI (as noted in its
-> > internal comments for the log clearing path), but this ring clearing routine
-> > appears to jump directly to invalidating the entries and returning.
-> 
-> There is a dsb() and then a TLBI before returning to guest.
-> 
+>
+> [ ... ]
 
-kvm_flush_remote_tlbs() is called after the last kvm_dirty_ring_reset()
-and is able to do the requested dsb and tlbi.
 
-> > 
-> > This could leave stale writable TLB entries in the guest.
-> > 
-> > > +
-> > > +	/* Set as invalid all successfully cleaned entries */
-> > > +	for (int j = 0; j < ret; j++) {
-> > [ ... ]
-> > 
-> > -- 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260629111820.1873540-1-leo.bras@arm.com?part=12
-> 
-> Thanks!
-> Leo
+
+
+--=20
+Alexis Lothor=C3=A9, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
