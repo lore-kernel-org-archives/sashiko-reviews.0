@@ -1,142 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C40A175A7F;
-	Tue,  7 Jul 2026 00:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE04118FDDE;
+	Tue,  7 Jul 2026 01:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783385133; cv=none; b=XYC7GnC3ogaiM94EpvNhA7GtuHQ0CunBEOtWXnz+rRwK/JiNmXb4QaZxjen8/wYxvmRzO1jS9+1CCiuK6oiSGpiUUuMuYstFWlWsahCW0cYA0bTDOF6o4m/vUs40a5V0+tL2AhyxDuhZvr6lpIr9cTPcy0y9q4GrZN8TkA2dc4k=
+	t=1783386606; cv=none; b=pmTRGeMNQixMFNCue2sOynj5F9lPoT/GAqGXBHZyqpVj9+lUmQ+1jrO6I/ou4gfxnN+zUDaQ4L9wr/3SIj4gpynlkywiNFWoDne8K2tlXaI7lMsVGtClA707YfwFNq0lN1oz6RGDM0vH3IWX+UF+eOBZyO9j2aEyFTBlTi1YoH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783385133; c=relaxed/simple;
-	bh=yyb/81niolsmOWWtWPuTd4lpMEIsk0B0UCqwq04KSug=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bgX4afnc8gCONTZvez7UiVUT8xGe8ul5AK47/pRohvtJjThRyDEgMmoVbTjB5QMHzjZssSy5btT5SOGg3tTz+CvL8Ugu6Q7PGokE9BI4Jk55gb5Fp6Uc6cySc/ZffRCzSD8rx0Ys91E3Qoqp+BUu7ZeYhspLSBR8i4Onq7w0qKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lPyatc3X; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783386606; c=relaxed/simple;
+	bh=SHwHPZA6/XwgSDAWSEBWC4qF7jqDBNDSqAZONQQ7hL0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RGxbZIA45X+1QLMUjxftA2oI37Yo3DRE4zDN4K9KobqDYI4Ex5Ed+Ce9/5Lp1ejHkgDqJdKLbvTA44cPjDHkBNkVjHkV7WhP/z02CIf37I8UN4494pmZJBju0JA/qWzhfDpNK2Stj8cT6aAPYCm6Yj1/4RGPb+7ZtZPPiyPhatQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJVlX9M9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lPyatc3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9DF1F000E9;
-	Tue,  7 Jul 2026 00:45:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJVlX9M9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59C91F000E9;
+	Tue,  7 Jul 2026 01:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783385131;
-	bh=v8+K3znB3MAe4tgPmMUKy+aJKRXY6ZUDTmKIVv/zF2I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lPyatc3XbY4QpTKASirQKvVOei2XGodtwEsqv7qNKOJNtVz4LUwphPMGJeGuyE8a9
-	 1WMJRRODm0LOePEKcMFQ4TYjCd+b4MBVl4susQP8tyANodhrBYQA68r+PAZAf8uaU7
-	 PxuT05LmVE/RdcpkGivLyJAaLKQhE92gJE5FLimVoNUjZ3bP1EmeTc88T9qDR3wm3A
-	 Uad3qcdB/Oyds14r/oQJp0pIOp0zjzdrzXGtWbQtHULZe56ugdZslBYXhF3JMQ1bZo
-	 yXvaPVlDrvZZrXfnLK9BlNnSYXLAKUPj9TEUZO/9GSg5RbM2IiKYysS+a69dpmsIS6
-	 vHjROyR/dxZDQ==
-Date: Mon, 6 Jul 2026 17:45:30 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 5/8] riscv_cbqri: resctrl: Add cache allocation via
- capacity block mask
-Message-ID: <akxMKn6HVbCfvAPE@x1>
-References: <20260706-dfustini-atl-sc-cbqri-dt-v4-0-e75c20201d64@kernel.org>
- <20260706-dfustini-atl-sc-cbqri-dt-v4-5-e75c20201d64@kernel.org>
- <20260706232031.D95C21F000E9@smtp.kernel.org>
+	s=k20260515; t=1783386605;
+	bh=Ufs0QMwjMC245Jwe41XmuQJGJHxSCoZG7qTSaaOsHJw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=eJVlX9M9taBC+C06AuSCkoSWpVT5ZTBtPj/Q925f+A4IFpVpRwUkFhM9OAzb63+gK
+	 7df49bI6RhFNBohDwpNfm21jU748W7U/MyEHxJhMPDVw3QvH6zdAjJl9XnziNMYewj
+	 Hv7OUOGazBbegApdw8LjhXWTAzpGmFoubsslaFiHnZShjlmdk8rm5XDi/R4W3K4PSw
+	 4htkKvlR3WHD8ojTpfu1PRYgQcObau2sjVCTfKCiWbh4IURRNSMLfReWNUFyTo3SBd
+	 bmUS1h1bQBTdD26fErSq1yL4fdxi6M6UBPMa8WuU/mH+hs8gVIdVVbDfmIb7wILrm7
+	 KTDFxQ6e+vJOA==
+Message-ID: <49cb57c1-d7d6-4f30-b628-72c083981da6@kernel.org>
+Date: Tue, 7 Jul 2026 10:10:02 +0900
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260706232031.D95C21F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] ata: libata-scsi: limit simulated SCSI command copy to
+ response length
+To: Karuna Ramkumar <rkaruna@google.com>
+Cc: sashiko-reviews@lists.linux.dev, cassel@kernel.org,
+ linux-ide@vger.kernel.org, Igor Pylypiv <ipylypiv@google.com>,
+ TJ Adams <tadamsjr@google.com>
+References: <20260702020142.3399851-1-rkaruna@google.com>
+ <20260702021411.B01331F000E9@smtp.kernel.org>
+ <16780c1b-418a-4555-b4bd-d442cedd620e@kernel.org>
+ <CAD50Xqp_LBvRqhn0q93s3aVxtfFWGhf42jBePKsUonfE6V=WNw@mail.gmail.com>
+Content-Language: en-US
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <CAD50Xqp_LBvRqhn0q93s3aVxtfFWGhf42jBePKsUonfE6V=WNw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 06, 2026 at 11:20:31PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] CBQRI controllers registered after system boot are not validated for mismatched capabilities when attached to resctrl domains.
-> - [Medium] Missing ARCH_HAS_CPU_RESCTRL selection in RISC-V Kconfig prevents RESCTRL_FS from being enabled.
-> --
-> 
-> --- Patch [5]: [PATCH v4 5/8] riscv_cbqri: resctrl: Add cache allocation via capacity block mask ---
-> commit bf65a655f2aedc980d538dde50ae87b2b9ea72e4
-> Author: Drew Fustini <fustini@kernel.org>
-> 
-> riscv_cbqri: resctrl: Add cache allocation via capacity block mask
-> 
-> Wire CBQRI capacity controllers into resctrl as RDT_RESOURCE_L2 and
-> RDT_RESOURCE_L3 schemata. Domains are created lazily in the cpuhp online
-> callback so cpu_mask reflects only currently online CPUs.
-> 
-> > diff --git a/drivers/resctrl/Kconfig b/drivers/resctrl/Kconfig
-> > index 92b9c82cf9f39..f8566c003d495 100644
-> > --- a/drivers/resctrl/Kconfig
-> > +++ b/drivers/resctrl/Kconfig
-> > @@ -42,3 +42,7 @@ menuconfig RISCV_CBQRI
-> >  if RISCV_CBQRI
-> >  
-> >  endif
-> > +
-> > +config RISCV_CBQRI_RESCTRL_FS
-> > +	bool
-> > +	default y if RISCV_CBQRI && RESCTRL_FS
-> 
-> [Severity: Medium]
-> Will this feature ever be enabled? Since the RISC-V architecture Kconfig does
-> not currently select ARCH_HAS_CPU_RESCTRL, it appears RESCTRL_FS can never be
-> satisfied, making this newly added support unreachable.
+On 7/7/26 08:10, Karuna Ramkumar wrote:
+> Before I start working on this, I would love to hear your feedback on:
+> 1. Whether you think this API update (passing `rbuf_len` down to all
+> actors and helper functions) is the right approach, or if you prefer
+> simpler, and more localized checks elsewhere.
 
-RISCV_CBQRI selects ARCH_HAS_CPU_RESCTRL in drivers/resctrl/Kconfig, so
-RESCTRL_FS becomes selectable once CBQRI is enabled. The select is in
-the CBQRI menuconfig rather than arch/riscv/Kconfig.
+I do not think it is necessary at all because rbuf is statically declared:
 
-> > diff --git a/drivers/resctrl/cbqri_resctrl.c b/drivers/resctrl/cbqri_resctrl.c
-> > new file mode 100644
-> > index 0000000000000..cb12a868561b9
-> > --- /dev/null
-> > +++ b/drivers/resctrl/cbqri_resctrl.c
-> 
-> [ ... ]
-> 
-> > +static int cbqri_attach_cpu_to_cap_ctrl(struct cbqri_controller *ctrl,
-> > +					unsigned int cpu)
-> > +{
-> > +	struct cbqri_resctrl_res *hw_res;
-> > +	struct rdt_ctrl_domain *domain;
-> > +	struct rdt_resource *res;
-> > +	int dom_id;
-> > +	int rid;
-> > +
-> > +	rid = cbqri_cache_level_to_rid(ctrl->cache.cache_level);
-> > +	if (rid < 0)
-> > +		return 0;
-> > +	hw_res = &cbqri_resctrl_resources[rid];
-> > +
-> > +	if (!hw_res->ctrl)
-> > +		return 0;
-> > +
-> > +	res = &hw_res->resctrl_res;
-> > +	dom_id = ctrl->cache.cache_id;
-> > +
-> > +	domain = cbqri_find_ctrl_domain(&res->ctrl_domains, dom_id);
-> > +	if (domain) {
-> > +		cpumask_set_cpu(cpu, &domain->hdr.cpu_mask);
-> > +		return 0;
-> > +	}
-> > +
-> > +	domain = cbqri_create_ctrl_domain(ctrl, res, cpu, dom_id);
-> 
-> [Severity: High]
-> Can a mismatched controller be attached here if it is probed after system boot?
-> 
-> While cbqri_resctrl_pick_caches() verifies that all controllers agree on
-> capabilities like rcid_count and ncblks during boot, this function seems to
-> unconditionally create a new control domain for late-attached controllers
-> without similar validation against the baseline hw_res->ctrl capabilities.
-> 
-> If a deferred probe or late module load brings up a controller with fewer
-> capabilities (such as a smaller capacity block mask or fewer RCIDs), could
-> the resctrl core's use of the baseline capabilities lead to out-of-bounds
-> hardware writes when programming this new controller?
+static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
 
-That is not possible. This driver is always built-in when enabled and
-the probe never returns deferred. The resctrl setup that calls
-cbqri_resctrl_pick_caches() runs later at late_initcall(), so every
-controller is already on cbqri_controllers by the time pick_caches()
-validates the set.
+So the buffer address and maximum size is known to all functions using it.
 
-Drew
+> 2. What would be the best way to test all these simulated command
+> paths to ensure the fix is verified appropriately?
+
+Most functions for emulated commands generate only a very small amount of data,
+far below ATA_SCSI_RBUF_SIZE. So I would suggest that we simply add checks to
+the functions which may potentially exceed that. Off the top of my head, I do
+not know if we have any, but we should just check.
+
+Note that ideally, we should have each function allocate their own local buffer
+to handle the translation. But this is right now a little hard to do because
+these translation/emulation functions are called with the port locked, so we
+would have a memory allocation for a potentially large-ish buffer under a spin
+lock, which means no reclaim/no wait allocation, and thus potential for failure
+which we do not have right now. A proper/ideal fix would need to drop
+ata_scsi_rbuf, have some helpers for managing the internal buffer and redesign
+the submission path to not have the port locked until the translation is
+actually generated. That is all more work and more changes.
+
+So as a first step, let's check the emulation function if any of them can exceed
+ATA_SCSI_RBUF_SIZE in size, fail them with internal target failure.
+
+-- 
+Damien Le Moal
+Western Digital Research
