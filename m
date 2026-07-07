@@ -1,212 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA9F3DC4B8;
-	Tue,  7 Jul 2026 10:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CF73E44F6;
+	Tue,  7 Jul 2026 10:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783419377; cv=none; b=Y8K/9cqTHd623hBcz7ia810t5PrGnVbReJtqY5tst9LtLtfTwAwQ0qOJADRaUreC7Nwm3FLGiBMfLaGyITtuaInOqZJp1inBVoTYTqnSGc4wJ/+PiyvniDLC9mNFVrlnTHMx7Dle5S3XqqD3AzhlLvFE1ucMsECDM0O2FTdi62g=
+	t=1783420094; cv=none; b=lG86YO8wDjphixPUrVUZ5HAkEuKN+5DirKhY8AFTstTU7STYGnhqxJCdldajz4b973bVRrHVjPTC6imOvJJJX8dP5pIo5uxSiSvCWB6lSI6QXZRzL2X/EHFRr1vapUi4mo/YFzaIsydh3euyn6/bkWwzCPFdhnq7RMoM7N1d0pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783419377; c=relaxed/simple;
-	bh=f13Ejo2HpmngCUElqPrXkCgsGZFEiaMuFHjD8KR23c8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JH0W/8PwdHG04hH2lb9j7ab2mXhlRUGlzeod7N07u0szcYnfFC+oLPQhJ+7G+2cSfO9gapfhRcc4gUJ1bpYZgFibh502gjEL72iERIkQyx7GgDRyWilu6Aoc6WjrEXyf9YT6xySLnO/84mYO80v24SMkQIXCrWz4UzhsyiMfeP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BtKvypKC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1783420094; c=relaxed/simple;
+	bh=lVg44Af1qRFRKeJ8/VQGOmUd8KVNp4WLYt9KebgBoM8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DqJlOKmt/SGM9hpFMqR/jd3UE8e9t1+K/hTknigPjipgU78Bc+evWgz6R6KnUCd4Q/pZ+EEc/X6kLBipRZXrqvu0JHzkJgkQprbeUwhz3gPw24G0/ez6GNP+EGR/WpXZzGkDfTks0pd/wOePyz7wtMU9uFdxL7Ibcywt5aO2juI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e6E7uGvl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BtKvypKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 40EE7C2BCFA;
-	Tue,  7 Jul 2026 10:16:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783419377;
-	bh=f13Ejo2HpmngCUElqPrXkCgsGZFEiaMuFHjD8KR23c8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=BtKvypKCNzS2rgXgbri+lBoH6Yn8VPfQC021F6HnbLQouz+eTmO0n5/qdV580smHB
-	 dcPFePj2TEjo7jFp501z0EG33Q39wPDbb74pkEn2H4lytnCu+GoTD0Z+s3Tc4nqndb
-	 UsR09O4yhOhNppUGSOd+VNPTaCtQzwiHv7+gwqNKWqZCxuuo+2HXNEGAFj+OVOOg5f
-	 4TQJsrGdk5ad4jDyAiF6pWfixv4wMHjsVsEWDuv7MVCuTz80N1wX6QanQYHZpbKX9q
-	 1+T1/i+3Igqoy4OUpz4A8rV47QPRJ1bd9dv7S2REgJ7zw3MWZk3BF7fMfqVNm0bV8t
-	 oJft+qahuMc4w==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3081BC43458;
-	Tue,  7 Jul 2026 10:16:17 +0000 (UTC)
-From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
-Date: Tue, 07 Jul 2026 12:16:12 +0200
-Subject: [PATCH v3 5/7] can: bcm: add missing rcu list annotations and
- operations
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e6E7uGvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288C01F000E9;
+	Tue,  7 Jul 2026 10:28:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783420089;
+	bh=j1aLtMBfaDu1F/NGu5OUF/uTqiElGSc+jY39CO4JD68=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=e6E7uGvlPV3+N6s9fv0Q9bkGF4FBoI3HBh05tG1syp67QY4noURRqhUcwqZ7LSyRM
+	 UxaHZGu10v7E+aqoo7C3QjqezsiQmeiG9rvYpMXXRswli3I4lEYYmB2Yq4667A4r9s
+	 oltBZM0msiaVtA2H8Lxn0NhRdCd2hQlME5h1cY9MUE7PSKSpbL91Uy3W96A5v/0+Vq
+	 VvubN4c2pt9NSi3Ll1gDQHfubEMSC/MHNHMhxJfZGrPI8VfcKxcF0nsZ8iUZAXCPd1
+	 bXIJPaRRFQaMnZc3EOjCbNxeXx6AJ1EZBaGDtMuoJ91IC4rN+kP5+iHthvN7kHlu6Q
+	 koECGPqnAmbGg==
+Date: Tue, 7 Jul 2026 10:28:07 +0000
+From: Tzung-Bi Shih <tzungbi@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+Subject: Re: [PATCH] watchdog: pretimeout: Add "dump" pretimeout governor
+Message-ID: <akzUtxGzCslsJL1l@google.com>
+References: <20260707073117.2962676-1-tzungbi@kernel.org>
+ <20260707080225.4C52D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-bcm_fixes-v3-5-84600ca6d889@hartkopp.net>
-References: <20260707-bcm_fixes-v3-0-84600ca6d889@hartkopp.net>
-In-Reply-To: <20260707-bcm_fixes-v3-0-84600ca6d889@hartkopp.net>
-To: linux-can@vger.kernel.org
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, sashiko-reviews@lists.linux.dev
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783419375; l=5015;
- i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
- bh=A3+Y4P45Mq7cMAZyvDU1a3v5Z/Xbi9yQ15jBf66uJpo=;
- b=YG+EGVPmpJux6JjElz3s7D8D1TihjBwKgqUexOzqpM502tDYftLBEh6OAWUgLuPNymsnbRDKW
- kcxoJDvEbh8CYe6IGPN83gNbQyCvn+nbXIdpJok9pN+6iMLQOr0gt38
-X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
- pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
-X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
- auth_id=620
-X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
-Reply-To: socketcan@hartkopp.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260707080225.4C52D1F000E9@smtp.kernel.org>
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+On Tue, Jul 07, 2026 at 08:02:24AM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
+> > index 08cb8612d41fe..7b291ea8b0f01 100644
+> > --- a/drivers/watchdog/Kconfig
+> > +++ b/drivers/watchdog/Kconfig
+> 
+> [ ... ]
+> 
+> > @@ -93,10 +93,19 @@ config WATCHDOG_PRETIMEOUT_GOV_SEL
+> >  
+> >  if WATCHDOG_PRETIMEOUT_GOV
+> >  
+> > +config WATCHDOG_PRETIMEOUT_GOV_DUMP
+> > +	tristate "Dump watchdog pretimeout governor"
+> 
+> [Severity: Low]
+> Will this fail to build if compiled as a module?
+> 
+> When CONFIG_WATCHDOG_PRETIMEOUT_GOV_DUMP=m, trigger_all_cpu_backtrace() can
+> rely on unexported architecture-specific functions (such as
+> arch_trigger_cpumask_backtrace() on x86, ARM, and ARM64), which causes a
+> modpost build failure.
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+Use a bool instead in v2 [1].
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+[1] https://lore.kernel.org/all/20260707102105.3600275-1-tzungbi@kernel.org
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+> > diff --git a/drivers/watchdog/pretimeout_dump.c b/drivers/watchdog/pretimeout_dump.c
+> > new file mode 100644
+> > index 0000000000000..c5d3dac2606c4
+> > --- /dev/null
+> > +++ b/drivers/watchdog/pretimeout_dump.c
+> 
+> [ ... ]
+> 
+> > +static void __exit watchdog_gov_dump_unregister(void)
+> > +{
+> > +	watchdog_unregister_governor(&watchdog_gov_dump);
+> > +}
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does unregistering the default watchdog
+> pretimeout governor leave dangling pointers?
+> 
+> If this module is set as the default governor and then unloaded,
+> watchdog_unregister_governor() attempts to reset the active governors:
+> 
+>     list_for_each_entry(p, &pretimeout_list, entry)
+>         if (p->wdd->gov == gov)
+>             p->wdd->gov = default_gov;
+> 
+> If the unregistered governor is the default governor, default_gov equals
+> gov. This leaves p->wdd->gov pointing to the unloaded module's struct.
+> 
+> Could this lead to a use-after-free upon the next pretimeout event or sysfs
+> read?
 
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
----
- net/can/bcm.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+Proposed a fix in [2].
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 0378e31ea10e..f21d48d99aab 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -263,11 +263,11 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- 
- 		seq_printf(m, "%s%ld%%\n",
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
- 
- 		if (op->flags & CAN_FD_FRAME)
-@@ -993,10 +993,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			int ifindex, struct sock *sk)
- {
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
- 	/* we need a real device to send frames */
- 	if (!ifindex)
-@@ -1134,12 +1135,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 		/* currently unused in tx_ops */
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
- 	if (op->flags & SETTIMER) {
- 		/* set timer values */
-@@ -1157,10 +1157,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_cancel(&op->timer);
- 		/* spec: send CAN frame when starting timer */
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op, NULL);
- 
- 	if (op->flags & STARTTIMER)
- 		bcm_tx_start_timer(op);
-@@ -1341,13 +1345,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
- 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1415,14 +1416,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
- 					      REGMASK(op->can_id),
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
- }
- 
-@@ -1752,12 +1755,14 @@ static int bcm_release(struct socket *sock)
- 	/* remove procfs entry */
- 	if (net->can.bcmproc_dir && bo->bcm_proc_read)
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
- 		 * Don't care if we're bound or not (due to netdev problems)
- 		 * can_rx_unregister() is always a save thing to do here.
-@@ -1784,12 +1789,14 @@ static int bcm_release(struct socket *sock)
- 
- 	}
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
- 		WRITE_ONCE(bo->bound, 0);
- 		bo->ifindex = 0;
-
--- 
-2.53.0
-
-
+[2] https://lore.kernel.org/all/20260707101803.3598173-1-tzungbi@kernel.org
