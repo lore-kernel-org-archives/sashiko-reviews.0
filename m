@@ -1,134 +1,239 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B8F3AE706
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 09:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2D938E8BE
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 09:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783417061; cv=none; b=ePoK4bJ1bff+fnvydnmZOBkAMDDBNsokBIR2Jkb48kziMM4AeC1iZ7um6191n87xvEL8+a066e2fXYCoIIv1pGaRR+0qCv/cqQkr/iZzTmt53bamdFj3TB70nr+algn18TmgulWP59QEQ6CX34mMUWSjZ5yqdHyslk3McpBwLR4=
+	t=1783418353; cv=none; b=O6gYisYeFGMDTvmAHL5HIMVDhQ1XfX0g0SS+yvoAzvdIb74ruzoscwFCqYhWzcNSsa1gUgCuBIid6C625+H6OOPpNYcc+JKH4cYQL5zKgrJNVeKVeTG97GTPSryw0usJ2PaV8Al2tyRW7p2dZe2rb+qXLiWDbr59nDUr5oBoD2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783417061; c=relaxed/simple;
-	bh=i4gbiS27P6MD/HkHGyel6TnxVEq2sL0vStcGbbl56II=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PkrJI6Iy9M+zJYZYs0bVc0+gkbEvlB+lLruhVqXjV8ZDj4Iy1jW/8aLHLxeO8Eqg+qVOOiyobYMLaHRjEJxEMQEG1wt37zs0+wzA3gdCF5xcSzJBtSovnGQhdn5Uxrh3rjmoQz71Nb6YyWgUxoVvIGuXozauPWXsfYJTRDa6/co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=LbnCvPIz; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ANiw+yYe; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1783418353; c=relaxed/simple;
+	bh=nQWFq7rH1aVwuZIqn10ouaFoCWt1uuSJ+C/eKMmqlQA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q6J+IuFBFVqb21pOEoo1eHrlR5RsbJtPJ0NTMdbzmJz/Ti/0sI99Xkqi8O7qq/smn0wS8o+5ipFrVV+uYKroI+wpvyfHSCkflS1L3Sjxj9ZJ9wKatR6tnzXceFkdHS8A5mQmPiFTzAS7qhoDDBQPMY3SCo11ApIseTmH++/seAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jnk5TeWh; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="LbnCvPIz";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ANiw+yYe"
-Date: Tue, 7 Jul 2026 11:37:36 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1783417057;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GmmNoUeEgt3B62U5jcjFe/ceBGguxPGkq26EFGBVKXI=;
-	b=LbnCvPIzgb2iSS2ly6sVurMDKPDRwwNd8W2M7gsan9IbfVe2nrYBRLBIS4kM84Ox6g7Akn
-	znnyRx2QZ7SSmpxOc+qheX/0Bo/m3894aPxoB9azaYnLWCywwKb0KCOk0QnORbTuOxXYyi
-	HXDxMfeMgwF9rs+TyW4KA96SbGllSpLA0gsBmCifgxN1pUrLfDCiCikfTsixw2JdSjBHlr
-	G5c1Pm4Q9fuKH5mx1beyre8wnv1u0O6mZQQxSeSz26exanvOFSokaStj6ZV19zycKcRRfB
-	9Pd6ZQx8Gx+eV088Kp4L1lPnLUPVP1w0/U/TGXDlkv3HoYQp12Lm/Wy+gs43JQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1783417057;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GmmNoUeEgt3B62U5jcjFe/ceBGguxPGkq26EFGBVKXI=;
-	b=ANiw+yYelHs0ndmGh6SHMGfMkZkqjWcqGZ89Y6IIvLJDgLCWBp9UgWgBvYNsXkrlvRQXaz
-	QkKf/zP3k1Y+5ACg==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
-	Vincent Mailhol <mailhol@kernel.org>
-Subject: Re: [PATCH net-next] net: Convert %pK back to %p
-Message-ID: <20260707093736.88o1Y93D@linutronix.de>
-References: <20260706073824.xixrLxoD@linutronix.de>
- <20260707074654.325F01F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jnk5TeWh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783418353; x=1814954353;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=nQWFq7rH1aVwuZIqn10ouaFoCWt1uuSJ+C/eKMmqlQA=;
+  b=jnk5TeWhbIpwF9YZYF5S3dsc/JByVZGmw8ajxW4zys0twzGmrjyBqA/V
+   sS8cVRzTlTXpd9rEEZPEYw5IZQtFFOgBQ9Pu5XRdEa51uq7LpEc3J+Q5K
+   IvM/oH2DiLvhJ7ElmjpeEO5+51jClFQ7XB5sfvohataBxeaznaDnacCvb
+   LGCbOz4fw5/N4E20G2RGanC9TBwqU20J9yUJwqf0kVC87Lh8vvLHTZijZ
+   FXxAZF70mUeFWV+BzhYYQKkw5wia+zgXde9Q4sRsOkv30bR/JMH1gJmjG
+   miOhRuQ2vAZhuvvoCbb7O/LyZITAGMOQCoNrXz2J/smqR7moRU7A/Hhpr
+   A==;
+X-CSE-ConnectionGUID: 6iisY7xbTm2H33p1eSo+qQ==
+X-CSE-MsgGUID: NR9EF5z5RyaeU4hl8sDQLA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11839"; a="83833749"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
+   d="scan'208";a="83833749"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 02:59:12 -0700
+X-CSE-ConnectionGUID: uReAeWIdQ66+0MB1gC3Oww==
+X-CSE-MsgGUID: acuDIdmrTKacQIVxv0Qolw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
+   d="scan'208";a="258860816"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 02:59:10 -0700
+Message-ID: <4ec47e8a-83e5-4884-a863-94f4352c9e70@linux.intel.com>
+Date: Tue, 7 Jul 2026 17:59:08 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260707074654.325F01F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v9 12/24] perf/x86: Enable XMM register sampling for
+ REGS_USER case
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260706015439.3040804-1-dapeng1.mi@linux.intel.com>
+ <20260706015439.3040804-13-dapeng1.mi@linux.intel.com>
+ <20260706023550.939A71F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260706023550.939A71F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 2026-07-07 07:46:53 [+0000], sashiko-bot@kernel.org wrote:
-> > @@ -2806,7 +2806,7 @@ static void get_tcp4_sock(struct sock *sk, struct seq_file *f, int i)
-> >  				      READ_ONCE(tp->copied_seq), 0);
-> >  
-> >  	seq_printf(f, "%4d: %08X:%04X %08X:%04X %02X %08X:%08X %02X:%08lX "
-> > -			"%08X %5u %8d %llu %d %pK %lu %lu %u %u %d",
-> > +			"%08X %5u %8d %llu %d %p %lu %lu %u %u %d",
-> 
-> [Severity: Critical]
-> Does replacing %pK with %p in get_tcp4_sock() break the userspace tracing
-> ABI and bypass the kernel.kptr_restrict sysctl?
-> 
-> Under kptr_restrict=1 (the default on most distributions), %pK returns the
-> raw kernel pointer to users with the syslog capability. By reverting to %p,
-> a hashed pointer is unconditionally returned instead. 
 
-Debian and Arch have kptr_restrict=0 by default as far as I can tell. A
-hashed pointer is still useful for tracing it is just not the actual
-address which can be used in reading the content from memory.
-
-> While the commit message notes that hash_pointers can be disabled at boot,
-> does this break the runtime configurability provided by the
-> kernel.kptr_restrict sysctl? 
-
-It is not documented which pointers are controlled by which knob. So
-this unites this.
-
-> Will existing tracing tools that correlate /proc sockets with kernel memory
-> receive hashes and fail instead of raw pointers?
-
-It still can correlate pointers.
-
-> > diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-> > index f7a9d55eee8a1..6a8174977c87a 100644
-> > --- a/net/unix/af_unix.c
-> > +++ b/net/unix/af_unix.c
-> 
+On 7/6/2026 10:35 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] For PEBS events, a delayed PMI NMI hitting in kernel mode causes REGS_INTR to overwrite REGS_USER's XMM registers with the current hardware FPU state, leaking kernel FPU data.
+> - [High] PERF_SAMPLE_REGS_USER incorrectly samples Guest XMM registers paired with Host GPRs when a PMI hits during KVM guest execution, leaking guest state to the host.
+> --
+>
+> commit 74494b0320a832fddee80ea2906067a8bc2b32e0
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>
+> perf/x86: Enable XMM register sampling for REGS_USER case
+>
+> This commit introduces support for XMM register sampling in the REGS_USER
+> case. It adds a per-CPU x86_user_regs to store REGS_USER-specific XMM
+> registers and a helper x86_pmu_update_user_xregs() to retrieve them either
+> from cached task FPU state or hardware registers.
+>
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index 3e52610510cdc..0d42c51761f9d 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
 > [ ... ]
-> 
-> > @@ -3554,7 +3554,7 @@ static int unix_seq_show(struct seq_file *seq, void *v)
-> >  		struct unix_sock *u = unix_sk(s);
-> >  		unix_state_lock(s);
-> >  
-> > -		seq_printf(seq, "%pK: %08X %08X %08X %04X %02X %5llu",
-> > +		seq_printf(seq, "%p: %08X %08X %08X %04X %02X %5llu",
-> 
-> [Severity: Critical]
-> Does this also expose unix socket structures directly as hashed pointers in
-> unix_seq_show(), bypassing sysctl restrictions?
-
-hashed pointers do not reveal actual pointers.
-
-> Similar to the tcp change above, will tracing tools no longer be able to
-> resolve these pointers when kptr_restrict=1 is set?
-
-I don't think tracing tool need to resolve pointers. They just care if
-they are the same.
-
+>
+>> @@ -1812,33 +1806,165 @@ static void x86_pmu_update_regs_intr(struct perf_event *event,
 > [ ... ]
-> 
-> [Severity: Medium]
-> Does this commit leave the networking subsystem in an inconsistent state by
-> missing net/bluetooth/af_bluetooth.c?
-> 
-> Looking at bt_seq_show() in net/bluetooth/af_bluetooth.c, it still uses %pK:
-> 
->     seq_printf(f, "%pK %-6d %-6u %-6u %-6u %-6llu %-6llu",
-> 
-> Is this the only remaining use of %pK in the net/ subsystem that was missed
-> by the refactoring? This appears to leave bluetooth procfs files respecting
-> kptr_restrict while the other protocols do not.
+>
+>> +static inline u64 x86_pmu_update_user_xregs(struct perf_sample_data *data,
+>> +					    struct pt_regs *regs,
+>> +					    u64 mask, u64 ignore_mask)
+>> +{
+>> +	struct x86_perf_regs *perf_regs;
+>> +	struct xregs_state *xsave;
+>> +	unsigned int guest_state;
+>> +	struct fpu *fpu;
+>> +	struct fpstate *fps;
+>> +	u64 user_mask = mask;
+>> +
+>> +	if (data->regs_user.abi == PERF_SAMPLE_REGS_ABI_NONE)
+>> +		return 0;
+>> +
+>> +	/*
+>> +	 * If PEBS hits kernel space, need to re-sample extended
+>> +	 * registers for user space.
+>> +	 */
+>> +	if (user_mode(regs))
+>> +		user_mask &= ~ignore_mask;
+>> +
+>> +	if (user_mask && test_thread_flag(TIF_NEED_FPU_LOAD)) {
+> [Severity: High]
+> Can this incorrectly sample Guest XMM registers paired with Host GPRs when
+> a PMI hits during KVM guest execution?
+>
+> Since TIF_NEED_FPU_LOAD is cleared when KVM actively runs a guest, this
+> condition evaluates to false, bypassing the fpu->__task_fpstate memory
+> load.
+>
+> If the guest is running in user mode, perf_guest_state() & PERF_GUEST_USER
+> will be true, causing this function to return user_mask. Consequently,
+> xsaves_nmi() will sample the live hardware FPU containing the guest's
+> registers instead of QEMU's.
 
-This is staged for the BT tree.
+Hmm, it's true. Since currently guest fpu are lazily swapped, as long as
+PMI hits the guest, the FPU hardware would always contain the guest FPU
+states. It looks we need to do below change and ensure the FPU state of
+user space can be always retrieved when PMI hits guest.
 
-Sebastian
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 323be08778d6..b78d4f261b76 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -1978,7 +1978,8 @@ static inline u64 x86_pmu_update_user_xregs(struct
+perf_sample_data *data,
+        if (user_mode(regs))
+                user_mask &= ~ignore_mask;
+
+-       if (user_mask && test_thread_flag(TIF_NEED_FPU_LOAD)) {
++       if (user_mask &&
++           (test_thread_flag(TIF_NEED_FPU_LOAD) || perf_guest_state())) {
+                perf_regs = container_of(data->regs_user.regs,
+                                 struct x86_perf_regs, regs);
+                fpu = x86_task_fpu(current);
+@@ -1995,15 +1996,6 @@ static inline u64 x86_pmu_update_user_xregs(struct
+perf_sample_data *data,
+                return 0;
+        }
+
+-       guest_state = perf_guest_state();
+-       /*
+-        * Skip SIMD register sampling if a PMI hits while guest kernel
+-        * state is still active.
+-        */
+-       if (user_mask && (guest_state & PERF_GUEST_ACTIVE) &&
+-           !(guest_state & PERF_GUEST_USER))
+-               return 0;
+-
+
+
+>
+>> +		perf_regs = container_of(data->regs_user.regs,
+>> +				 struct x86_perf_regs, regs);
+>> +		fpu = x86_task_fpu(current);
+>> +		/*
+>> +		 * If __task_fpstate is set, it holds the right pointer,
+>> +		 * otherwise fpstate will.
+>> +		 */
+>> +		fps = READ_ONCE(fpu->__task_fpstate);
+> [ ... ]
+>
+>>  static void x86_pmu_sample_xregs(struct perf_event *event,
+>>  				 struct perf_sample_data *data,
+>> +				 struct pt_regs *regs,
+>>  				 u64 ignore_mask)
+>>  {
+> [ ... ]
+>
+>> +	if (user_mask) {
+>> +		perf_regs = container_of(data->regs_user.regs,
+>> +					 struct x86_perf_regs, regs);
+>> +		update_perf_regs(perf_regs, xsave, user_mask);
+>> +	}
+>> +
+>>  	if (intr_mask) {
+>>  		perf_regs = container_of(data->regs_intr.regs,
+>>  					 struct x86_perf_regs, regs);
+>> -		xsave->header.xfeatures = 0;
+>> -		xsaves_nmi(xsave, mask);
+>>  		update_perf_regs(perf_regs, xsave, intr_mask);
+> [Severity: High]
+> For PEBS events, if a delayed PMI NMI hits in kernel mode, can REGS_INTR
+> overwrite REGS_USER's XMM registers and leak kernel FPU data?
+>
+> If a PEBS event requests both PERF_SAMPLE_REGS_USER and
+> PERF_SAMPLE_REGS_INTR, and a PEBS record is generated in user space but
+> the PMI is delivered while the CPU is in kernel mode (after the kernel has
+> set TIF_NEED_FPU_LOAD):
+>
+> x86_pmu_update_regs_user() sets:
+>     data->regs_user.regs = regs;
+>     
+> x86_pmu_update_regs_intr() sets:
+>     data->regs_intr.regs = regs;
+>     
+> Both now share the same x86_perf_regs container. In x86_pmu_sample_xregs(),
+> the container is first updated with the user's FPU state, but then it is
+> unconditionally overwritten with the kernel's live FPU state from
+> xsaves_nmi() here because intr_mask is non-zero.
+
+Yeah, the risk is always possible. To mitigate the risk, we may need to use
+an independent x86_perf_regs at any time, like this,
+
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 323be08778d6..9f8f436e6518 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -1912,10 +1912,7 @@ static void x86_pmu_update_regs_user(struct
+perf_event *event,
+        struct perf_event_attr *attr = &event->attr;
+        struct x86_perf_regs *perf_regs;
+
+-       if (user_mode(regs)) {
+-               data->regs_user.abi = perf_reg_abi(current);
+-               data->regs_user.regs = regs;
+-       } else if (is_user_task(current)) {
++       if (user_mode(regs)) || is_user_task(current)) {
+                /*
+                 * It cannot guarantee that the kernel will never
+                 * touch the registers outside of the pt_regs,
+
+
+>
+>>  	}
+>>  }
