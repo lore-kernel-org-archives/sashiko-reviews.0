@@ -1,50 +1,87 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2D938E8BE
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 09:59:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26BB3DD504
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 10:15:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783418353; cv=none; b=O6gYisYeFGMDTvmAHL5HIMVDhQ1XfX0g0SS+yvoAzvdIb74ruzoscwFCqYhWzcNSsa1gUgCuBIid6C625+H6OOPpNYcc+JKH4cYQL5zKgrJNVeKVeTG97GTPSryw0usJ2PaV8Al2tyRW7p2dZe2rb+qXLiWDbr59nDUr5oBoD2U=
+	t=1783419335; cv=none; b=M/k1YHa0dDLvA6inqlt1KDI1DQitedl8TcuyanSFn/oTm5Ga275U7FA1Ed+BzbXxBcsE4qPkMUnUqYee8FfEe0OzxRnI0prXbCjabVMCQ8rwAVO6h7/CPOgMLV1zuFyW9rBOQJtLEgPq/gzODS1YONlbd7czN4va8qcSa/IdCGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783418353; c=relaxed/simple;
-	bh=nQWFq7rH1aVwuZIqn10ouaFoCWt1uuSJ+C/eKMmqlQA=;
+	s=arc-20240116; t=1783419335; c=relaxed/simple;
+	bh=1tk/upgsaJYwS65PF3VTqYUqof/+pSIPwJVVIVSs9aU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q6J+IuFBFVqb21pOEoo1eHrlR5RsbJtPJ0NTMdbzmJz/Ti/0sI99Xkqi8O7qq/smn0wS8o+5ipFrVV+uYKroI+wpvyfHSCkflS1L3Sjxj9ZJ9wKatR6tnzXceFkdHS8A5mQmPiFTzAS7qhoDDBQPMY3SCo11ApIseTmH++/seAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jnk5TeWh; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	 In-Reply-To:Content-Type; b=s+eiKiAT2pqV/Gq1keSfkQYB/AzSahLfwty8at50jcJBIlyCPN1QhLxNNCvvl0XXmAuxgCvuVpu+Lc1YmOkmv8SosewnLvb8G8o3u6kFLTW0nt1y1wEXJscVAxUrYUCJecFfuNVq5gyRzntdt01cVRdTIX79Z4vq9wdzdagjli8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MQuNfbbv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jPKxNJEe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jnk5TeWh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783418353; x=1814954353;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=nQWFq7rH1aVwuZIqn10ouaFoCWt1uuSJ+C/eKMmqlQA=;
-  b=jnk5TeWhbIpwF9YZYF5S3dsc/JByVZGmw8ajxW4zys0twzGmrjyBqA/V
-   sS8cVRzTlTXpd9rEEZPEYw5IZQtFFOgBQ9Pu5XRdEa51uq7LpEc3J+Q5K
-   IvM/oH2DiLvhJ7ElmjpeEO5+51jClFQ7XB5sfvohataBxeaznaDnacCvb
-   LGCbOz4fw5/N4E20G2RGanC9TBwqU20J9yUJwqf0kVC87Lh8vvLHTZijZ
-   FXxAZF70mUeFWV+BzhYYQKkw5wia+zgXde9Q4sRsOkv30bR/JMH1gJmjG
-   miOhRuQ2vAZhuvvoCbb7O/LyZITAGMOQCoNrXz2J/smqR7moRU7A/Hhpr
-   A==;
-X-CSE-ConnectionGUID: 6iisY7xbTm2H33p1eSo+qQ==
-X-CSE-MsgGUID: NR9EF5z5RyaeU4hl8sDQLA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11839"; a="83833749"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
-   d="scan'208";a="83833749"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 02:59:12 -0700
-X-CSE-ConnectionGUID: uReAeWIdQ66+0MB1gC3Oww==
-X-CSE-MsgGUID: acuDIdmrTKacQIVxv0Qolw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
-   d="scan'208";a="258860816"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 02:59:10 -0700
-Message-ID: <4ec47e8a-83e5-4884-a863-94f4352c9e70@linux.intel.com>
-Date: Tue, 7 Jul 2026 17:59:08 +0800
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MQuNfbbv";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jPKxNJEe"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678DlAA3138661
+	for <sashiko-reviews@lists.linux.dev>; Tue, 7 Jul 2026 10:15:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	utLvZziuSambl+y9XEr31wpRmXka6gzmw01V+qISh20=; b=MQuNfbbvH78fheWc
+	eqljI8a4vB5wRUoAfBkJ1MW+71SZX0C9TWThBR2UkHx3m7cWPSxK/rrrJkQwT+vq
+	D33ZSciUg1ZN9T8A4oEU6+FCKUaChCS3Kk9AkCU+pBiy7AGWhou4K5U2kdrd1+XU
+	w7ctxcqyOcHbwWGc8h8ghU2e6tjagG2cr+DpfuxpZJNhtatL5wSHu3JYBVmSSwmt
+	Xj/N+7rnJ+McgBbw/SIKMtut+VPIT6SsyC/sRAde2C7feVrtxvixrg/1alLaPREG
+	cqz6m3FUl27vYgrgsjVUUCppkLnsxmDKimoXNq99XefYOd8gdqnggxLCTpPRr7Wx
+	XvOQTA==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8t159eky-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 10:15:32 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8478e9c4bd2so4498295b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 03:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783419331; x=1784024131; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=utLvZziuSambl+y9XEr31wpRmXka6gzmw01V+qISh20=;
+        b=jPKxNJEe+ttuz9gtWxV82ZvuNZgTy4CEAXqa+PMt/dk9bNUqP5X9tijyNU2mBhQoPr
+         1kA8Hq3wp5iioKaCwMg5El5xj/p72RCtZfK3M2ZMPWaLAXZa6I7aOMcRdoswH/w/QHIH
+         OLf4/ag/kJiPWXSFVJQtuqrme06A7QTPndOiw4WD7ItY2XSqseaioscxnRsphAR7Lq3z
+         mr4MxUDn9vya5PXtY1wTWeF+tC6r37pywExfNf4nU0UI0CsTE8QHcjqzFtPyNqubz7Sr
+         XBo55o+F1D8un/Qm6wSunPcjqNlIK6cyMTViK3T0o1YANyXbFcPvpuJY/jEu5j6SDME8
+         8bRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783419331; x=1784024131;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=utLvZziuSambl+y9XEr31wpRmXka6gzmw01V+qISh20=;
+        b=mA1OPLd8mcGIo1mNYnheEnmGyH/ZXnRUHTBihq+o0j5ouheNR8nSDJqxELqFeQbfkv
+         QQ+LCrAuU0L1n2/6ojdb7P87Drt+RiqFu9VJc0c9w/xiVquT1GxgbycFVfve9ZvubRHi
+         AH7BNajFEgvqgM42/SCmsFf3mTED7290sw7TBXFgItiaCa2GfVyDmy156YmrAKJsClw0
+         DealLMFpafnLszGIUIP3jOajclL1DbKroi1XbNlqzrVV9ttWt6J6BOzyvM9e753BuBfk
+         TSnxKQQfRXt06Ihgd03EKCO7zFL/oV33lGImtXV8t/LZQDfoajDYJzNwgnVcA070dfsU
+         jtiA==
+X-Gm-Message-State: AOJu0Yyl+RnLgZpzJNP9MwoRj42C4WzoSQcpXGOoVaSpTvhCCVT1jjqu
+	tgdOyPMQR65GygEPyPhOpEf+a/Un/wwJUtXnc0aJwxGCsUuirKhXgcJK0ysM7vwfV9+tG0TiA4J
+	NEXjNVBkyis+UtkBZVLxnYprzul29gKZ05LWS/H8KU2oJUXBPSJ7r+LwHIzAkbQWmiiIOkU5vf1
+	+4lyI=
+X-Gm-Gg: AfdE7cmWAdR1TeTq991HP7OI6cuHuzOGj2z8fgqIkg2TIoAxHYjA4a0je3lRXRYCSH+
+	ofWv8xTa7+/pGYg2l8VzoVKOLe+8U25v0tNqN2s68DqmG9XDWD6L2A1Edm7xwJ2TTnNv3Z7ocEE
+	nhdRqgavWAsZTL5/Z3na1neI42+MIZU7fvhjzRYO629m6TzLSoTrNDUy3lUVBI7tcn1XC747APd
+	hTcwQIVwxYGe5q8qczVnsMNW2LIi4QXP91/FLUVOtceGparf1Bl+wEfnNvl+TS8Y6GjHZ0vRFzv
+	zLinMgvDaFy0XatJNoqsLcvsWJf55+4rQQH4kvHauf+pUoK7hE8OAPll91zSha72yKMQCQmKt8u
+	9E6Ny5E+WmbLbWxYFlO/1/AUuOyaVinN0AT9tFJUE1EoK
+X-Received: by 2002:a05:6a00:6f42:b0:848:2c2e:c79e with SMTP id d2e1a72fcca58-8482c2ec98emr2384928b3a.12.1783419330973;
+        Tue, 07 Jul 2026 03:15:30 -0700 (PDT)
+X-Received: by 2002:a05:6a00:6f42:b0:848:2c2e:c79e with SMTP id d2e1a72fcca58-8482c2ec98emr2384900b3a.12.1783419330317;
+        Tue, 07 Jul 2026 03:15:30 -0700 (PDT)
+Received: from [10.92.162.241] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6d76e0esm5100983b3a.41.2026.07.07.03.15.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2026 03:15:29 -0700 (PDT)
+Message-ID: <517839de-767a-4f35-a130-ad008eda2886@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 15:45:27 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,188 +89,221 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v9 12/24] perf/x86: Enable XMM register sampling for
- REGS_USER case
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Defer IRQ trigger type to
+ device tree
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260706015439.3040804-1-dapeng1.mi@linux.intel.com>
- <20260706015439.3040804-13-dapeng1.mi@linux.intel.com>
- <20260706023550.939A71F000E9@smtp.kernel.org>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+References: <20260611-qcom-bam-dma-irq-trigger-v1-1-21c216e00b2a@oss.qualcomm.com>
+ <20260611062838.CE8D01F00893@smtp.kernel.org>
 Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260706023550.939A71F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+In-Reply-To: <20260611062838.CE8D01F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: BUhERdevIAWLZmy2fpSYA5A9p4yBh_Yw
+X-Authority-Analysis: v=2.4 cv=HstG3UTS c=1 sm=1 tr=0 ts=6a4cd1c4 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=j-lP-nYXe62oYfzXaHYA:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: BUhERdevIAWLZmy2fpSYA5A9p4yBh_Yw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA5OSBTYWx0ZWRfX2DUMIfSC/chB
+ kVB1vFb54hV7WtwIq85Mwv+tRXCsN7eGmqHt5nxVgjFQCUqdZ5GCvS1G9L6Inovj3egfozXi9rd
+ BJIDbxeGXtGK4pb+POZqrbusrnFfYSg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA5OSBTYWx0ZWRfX5ksOSVoim6wW
+ OTsN5XMSONLv5l5CgZypasasuzfQ5+/qnLj8VjQA6nciIpTTbhNwWwLN/GQGLZNBYBg15NOoouF
+ k2/YnIJ+rPOTW7E0dVyM/W3daJsz5XTdDSbbVL4ss1bQBAKAYryHOvvDfZZTa7OM3/b1+cYnhLW
+ lEsk+9oQXSu9D2gUe5lUWgFS9f5oPvmfivo1n4i7ZlGyDoaCkUgiVbNapTj0eOpgkVbmbRWrBO+
+ 0H56zCWG0EcTD7nmp25/qumUwrMF7DT0gRe9+E4Hkedq+CXWOFB8TsWl4zlSnDpymNHPBCk6nEz
+ TeWNXgm9QFITpbF6K6e2zhy6EzGTljyltIsS+2ranQoyShUKyBwvQbddQtRnOYWwVL3ejRk/oCV
+ Mwl+KUI+OUGEOSsfmt2QRh4cFQRYOJdJbiex03uF8x3VhEVvmJHqD69xwHx0u3UBJ48gKsVbq9F
+ IUvbj6uKcIPwCZJJeKg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070099
 
 
-On 7/6/2026 10:35 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] For PEBS events, a delayed PMI NMI hitting in kernel mode causes REGS_INTR to overwrite REGS_USER's XMM registers with the current hardware FPU state, leaking kernel FPU data.
-> - [High] PERF_SAMPLE_REGS_USER incorrectly samples Guest XMM registers paired with Host GPRs when a PMI hits during KVM guest execution, leaking guest state to the host.
+On 11-06-2026 11:58 am, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+>
+> New issues:
+> - [High] Allowing edge-triggered interrupts without a polling loop in the handler introduces a race condition that permanently deadlocks the DMA controller.
+>
+> Pre-existing issues:
+> - [High] bam_dma_remove accesses hardware registers after forcing PM runtime suspend, leading to unclocked register accesses and system crash.
+> - [High] The probe error path cleans up tasklets and disables clocks before freeing the interrupt, leading to a use-after-free and unclocked access race condition.
+> - [High] The interrupt is requested before PM runtime is fully enabled, causing a permanent interrupt storm if an interrupt fires during probe.
+> - [High] Failure paths after `pm_runtime_get_sync()` return without decrementing the PM usage counter, causing an unbalanced usage count and leaking DMA resources.
+> - [High] The interrupt handler unconditionally returns IRQ_HANDLED even for spurious interrupts, defeating the kernel's spurious interrupt detection.
 > --
 >
-> commit 74494b0320a832fddee80ea2906067a8bc2b32e0
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> commit ee883954f4570a653a82ea860b70acc6baa4eada
+> Author: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+> Date:   Thu Jun 11 06:17:11 2026 +0000
 >
-> perf/x86: Enable XMM register sampling for REGS_USER case
+> dmaengine: qcom: bam_dma: Defer IRQ trigger type to device tree
 >
-> This commit introduces support for XMM register sampling in the REGS_USER
-> case. It adds a per-CPU x86_user_regs to store REGS_USER-specific XMM
-> registers and a helper x86_pmu_update_user_xregs() to retrieve them either
-> from cached task FPU state or hardware registers.
+> This commit changes the hardcoded IRQF_TRIGGER_HIGH flag to
+> IRQF_TRIGGER_NONE when registering the BAM interrupt. This delegates the
+> trigger type configuration to the device tree, resolving missed DMA
+> completions on platforms that use edge-triggered interrupts.
 >
->> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
->> index 3e52610510cdc..0d42c51761f9d 100644
->> --- a/arch/x86/events/core.c
->> +++ b/arch/x86/events/core.c
-> [ ... ]
->
->> @@ -1812,33 +1806,165 @@ static void x86_pmu_update_regs_intr(struct perf_event *event,
-> [ ... ]
->
->> +static inline u64 x86_pmu_update_user_xregs(struct perf_sample_data *data,
->> +					    struct pt_regs *regs,
->> +					    u64 mask, u64 ignore_mask)
->> +{
->> +	struct x86_perf_regs *perf_regs;
->> +	struct xregs_state *xsave;
->> +	unsigned int guest_state;
->> +	struct fpu *fpu;
->> +	struct fpstate *fps;
->> +	u64 user_mask = mask;
->> +
->> +	if (data->regs_user.abi == PERF_SAMPLE_REGS_ABI_NONE)
->> +		return 0;
->> +
->> +	/*
->> +	 * If PEBS hits kernel space, need to re-sample extended
->> +	 * registers for user space.
->> +	 */
->> +	if (user_mode(regs))
->> +		user_mask &= ~ignore_mask;
->> +
->> +	if (user_mask && test_thread_flag(TIF_NEED_FPU_LOAD)) {
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index 19116295f8325..6c3e2ca8a572f 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -1303,7 +1303,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>   		bam_channel_init(bdev, &bdev->channels[i], i);
+>>   
+>>   	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+>> -			IRQF_TRIGGER_HIGH, "bam_dma", bdev);
+>> +			IRQF_TRIGGER_NONE, "bam_dma", bdev);
 > [Severity: High]
-> Can this incorrectly sample Guest XMM registers paired with Host GPRs when
-> a PMI hits during KVM guest execution?
+> This delegates the trigger type to the device tree and allows edge-triggered
+> interrupts.
 >
-> Since TIF_NEED_FPU_LOAD is cleared when KVM actively runs a guest, this
-> condition evaluates to false, bypassing the fpu->__task_fpstate memory
-> load.
+> Does this regression introduce a potential deadlock if the hardware asserts
+> a new completion before the previous interrupt is cleared?
 >
-> If the guest is running in user mode, perf_guest_state() & PERF_GUEST_USER
-> will be true, causing this function to return user_mask. Consequently,
-> xsaves_nmi() will sample the live hardware FPU containing the guest's
-> registers instead of QEMU's.
+> If bam_dma_irq() only reads the BAM status registers once per invocation,
+> and a new completion arrives after the status register is read, the
+> overall interrupt line might remain asserted.
+>
+> Because there is no new edge, the interrupt controller would never fire
+> again.
+>
+> Should we add a loop to drain all pending events until the status register
+> reads zero?
 
-Hmm, it's true. Since currently guest fpu are lazily swapped, as long as
-PMI hits the guest, the FPU hardware would always contain the guest FPU
-states. It looks we need to do below change and ensure the FPU state of
-user space can be always retrieved when PMI hits guest.
+The patch does not force edge-triggered interrupts; it changes
+IRQF_TRIGGER_HIGH to IRQF_TRIGGER_NONE so that the trigger type is taken
+from the device tree and stops the driver from silently overriding that
+configuration.
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 323be08778d6..b78d4f261b76 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1978,7 +1978,8 @@ static inline u64 x86_pmu_update_user_xregs(struct
-perf_sample_data *data,
-        if (user_mode(regs))
-                user_mask &= ~ignore_mask;
-
--       if (user_mask && test_thread_flag(TIF_NEED_FPU_LOAD)) {
-+       if (user_mask &&
-+           (test_thread_flag(TIF_NEED_FPU_LOAD) || perf_guest_state())) {
-                perf_regs = container_of(data->regs_user.regs,
-                                 struct x86_perf_regs, regs);
-                fpu = x86_task_fpu(current);
-@@ -1995,15 +1996,6 @@ static inline u64 x86_pmu_update_user_xregs(struct
-perf_sample_data *data,
-                return 0;
-        }
-
--       guest_state = perf_guest_state();
--       /*
--        * Skip SIMD register sampling if a PMI hits while guest kernel
--        * state is still active.
--        */
--       if (user_mask && (guest_state & PERF_GUEST_ACTIVE) &&
--           !(guest_state & PERF_GUEST_USER))
--               return 0;
--
-
+The edge-triggered race condition is out of scope of this change.
 
 >
->> +		perf_regs = container_of(data->regs_user.regs,
->> +				 struct x86_perf_regs, regs);
->> +		fpu = x86_task_fpu(current);
->> +		/*
->> +		 * If __task_fpstate is set, it holds the right pointer,
->> +		 * otherwise fpstate will.
->> +		 */
->> +		fps = READ_ONCE(fpu->__task_fpstate);
-> [ ... ]
->
->>  static void x86_pmu_sample_xregs(struct perf_event *event,
->>  				 struct perf_sample_data *data,
->> +				 struct pt_regs *regs,
->>  				 u64 ignore_mask)
->>  {
-> [ ... ]
->
->> +	if (user_mask) {
->> +		perf_regs = container_of(data->regs_user.regs,
->> +					 struct x86_perf_regs, regs);
->> +		update_perf_regs(perf_regs, xsave, user_mask);
->> +	}
->> +
->>  	if (intr_mask) {
->>  		perf_regs = container_of(data->regs_intr.regs,
->>  					 struct x86_perf_regs, regs);
->> -		xsave->header.xfeatures = 0;
->> -		xsaves_nmi(xsave, mask);
->>  		update_perf_regs(perf_regs, xsave, intr_mask);
 > [Severity: High]
-> For PEBS events, if a delayed PMI NMI hits in kernel mode, can REGS_INTR
-> overwrite REGS_USER's XMM registers and leak kernel FPU data?
+> This is a pre-existing issue, but requesting the IRQ here before
+> pm_runtime_enable() and pm_runtime_set_active() completes might cause an
+> interrupt storm.
 >
-> If a PEBS event requests both PERF_SAMPLE_REGS_USER and
-> PERF_SAMPLE_REGS_INTR, and a PEBS record is generated in user space but
-> the PMI is delivered while the CPU is in kernel mode (after the kernel has
-> set TIF_NEED_FPU_LOAD):
+> If an early interrupt fires while the device's PM runtime status is still
+> suspended:
 >
-> x86_pmu_update_regs_user() sets:
->     data->regs_user.regs = regs;
->     
-> x86_pmu_update_regs_intr() sets:
->     data->regs_intr.regs = regs;
->     
-> Both now share the same x86_perf_regs container. In x86_pmu_sample_xregs(),
-> the container is first updated with the user's FPU state, but then it is
-> unconditionally overwritten with the kernel's live FPU state from
-> xsaves_nmi() here because intr_mask is non-zero.
-
-Yeah, the risk is always possible. To mitigate the risk, we may need to use
-an independent x86_perf_regs at any time, like this,
-
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 323be08778d6..9f8f436e6518 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1912,10 +1912,7 @@ static void x86_pmu_update_regs_user(struct
-perf_event *event,
-        struct perf_event_attr *attr = &event->attr;
-        struct x86_perf_regs *perf_regs;
-
--       if (user_mode(regs)) {
--               data->regs_user.abi = perf_reg_abi(current);
--               data->regs_user.regs = regs;
--       } else if (is_user_task(current)) {
-+       if (user_mode(regs)) || is_user_task(current)) {
-                /*
-                 * It cannot guarantee that the kernel will never
-                 * touch the registers outside of the pt_regs,
-
-
+> drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
+>      ...
+>      ret = pm_runtime_get_sync(bdev->dev);
+>      if (ret < 0)
+>          return IRQ_NONE;
+>      ...
+> }
 >
->>  	}
->>  }
+> Will pm_runtime_get_sync() fail and return IRQ_NONE without clearing the
+> hardware interrupt, keeping the interrupt line asserted permanently?
+
+All flagged issues are pre-existing and not introduced or worsened by this
+patch. Bundling their fixes here would obscure the purpose of both changes
+and complicate bisection.
+
+>>   	if (ret)
+>>   		goto err_bam_channel_exit;
+> [Severity: High]
+> This is a pre-existing issue, but does this error path create a
+> use-after-free and unclocked access race condition?
+>
+> If a failure occurs later in probe, the error path manually kills tasklets
+> and disables the clock:
+>
+> drivers/dma/qcom/bam_dma.c:bam_dma_probe() {
+>      ...
+> err_bam_channel_exit:
+>      for (i = 0; i < bdev->num_channels; i++)
+>          tasklet_kill(&bdev->channels[i].vc.task);
+> err_tasklet_kill:
+>      tasklet_kill(&bdev->task);
+> err_disable_clk:
+>      clk_disable_unprepare(bdev->bamclk);
+>
+>      return ret;
+> }
+>
+> Since devm_request_irq() was used, the interrupt remains active until devres
+> cleanup.
+>
+> If an interrupt fires in this window, will bam_dma_irq() access unclocked
+> BAM registers and schedule a killed tasklet?
+>
+> [ ... ]
+>
+> [Severity: High]
+> This is a pre-existing issue, but does bam_dma_remove() access hardware
+> registers after they have been unclocked?
+>
+> During driver unbinding, pm_runtime_force_suspend() disables the BAM clock.
+>
+> Immediately after, the code writes to the registers:
+>
+> drivers/dma/qcom/bam_dma.c:bam_dma_remove() {
+>      ...
+>      pm_runtime_force_suspend(&pdev->dev);
+>
+>      of_dma_controller_free(pdev->dev.of_node);
+>      dma_async_device_unregister(&bdev->common);
+>
+>      /* mask all interrupts for this execution environment */
+>      writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
+>      ...
+> }
+>
+> Will accessing these unclocked peripheral registers generate an asynchronous
+> bus fault and crash the system?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does bam_free_chan() leak the PM usage
+> counter and DMA resources on failure?
+>
+> When pm_runtime_get_sync() returns an error, it still increments the PM
+> usage counter.
+>
+> The failure path returns immediately:
+>
+> drivers/dma/qcom/bam_dma.c:bam_free_chan() {
+>      ...
+>      ret = pm_runtime_get_sync(bdev->dev);
+>      if (ret < 0)
+>          return;
+>
+>      vchan_free_chan_resources(to_virt_chan(chan));
+>      ...
+> }
+>
+> Does returning here without calling pm_runtime_put_noidle() permanently
+> prevent the device from suspending, and skip freeing the channel resources
+> leading to a memory leak?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does bam_dma_irq() incorrectly return
+> IRQ_HANDLED for spurious interrupts?
+>
+> If no channel interrupts are found and the global BAM interrupt is not set,
+> the handler falls through:
+>
+> drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
+>      ...
+>      pm_runtime_mark_last_busy(bdev->dev);
+>      pm_runtime_put_autosuspend(bdev->dev);
+>
+>      return IRQ_HANDLED;
+> }
+>
+> Does this unconditionally return IRQ_HANDLED even for spurious interrupts,
+> defeating the kernel's spurious interrupt detection and potentially causing
+> an infinite interrupt loop?
+>
