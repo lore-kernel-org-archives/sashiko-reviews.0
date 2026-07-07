@@ -1,97 +1,127 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B2D30DECD
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 01:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C89D27A462
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 02:49:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783388521; cv=none; b=GyTs4WQ+ZSNcYaQmmW2tlXPw3Z6uLZZ/pBtS2cUpdbYULQEGgdu2rlDgfQZXURCivmsyi2nuNQohpR50czUrRKb4Lz84KfC8InTTi/5VbIJwQkL1mDUzXXPJqFoY2XCkYl6XyuCP8Vo7NqnZKNV8/92eDlzzBxojQ2K6nPxcLbA=
+	t=1783392572; cv=none; b=Ue2MiSSGWzN3BE9Ef617N57lbCR88GFnWZVhwE6lkVA2cBpgj0jFI9mKX73EKSVOFgZdcRarPSNHUi4WcAI0qkDX8mkgn64lfh9rGfRf9b14HKOI6I/ezuTfLlSeEKymrrZIDNUOsBQ/FsKQX/Ht5D6TUZNomHQnXycDybde6+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783388521; c=relaxed/simple;
-	bh=FxSEXtq2OoVITHSnzD5ij/K70XiUpTHdNjgIOzqv/PQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=r5xdAvkhoBtK7sEfeoBeVUu9+i+QF+vTQu76Ew9I6h+JDRhejFyPoi2tXZg6ZZpgxrZEgYaMHq9Ps4tOvdz+HIffrt+8xVazdJQ4nLRp9pPG+/8hjnyizqJgy4pTlH2QBSt+BUXxlXtUQ/9sYUiykXM1V7iI4IlJ8JjgyD6VK/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UzBc2cVv; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783392572; c=relaxed/simple;
+	bh=UHOO4VmU4maezaXvt3QgjY+ylPttNFy7aCiDkY1w8Rg=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=aUhgMSnrJk6NO9PnQ01CaI8X+Vo81yhQfNzDGU/ifzJRyU7jZW7hNoUIJp0oJU+KS84ba44/zekNruvUFCrz515ZcVL4X396OKC8ms+nIuDmJ/dfH+YG2HtP8LHXSwy9KimLvlSf7/ZOMwMKIjfFxm2UMeAA8b5v+sP3/hjOIA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=Iq8f9O5a; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UzBc2cVv"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-809b19a7f25so49147617b3.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 18:42:00 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="Iq8f9O5a"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783388519; x=1783993319; darn=lists.linux.dev;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FxSEXtq2OoVITHSnzD5ij/K70XiUpTHdNjgIOzqv/PQ=;
-        b=UzBc2cVvChMX6nhY3CKRnp0/LH5iISjNyI84RhYm/nhGtsxlDYoO7PlkNq1O9CqUsk
-         5FJjgflnPT1m29BQaA8JZOHqmbwlddW9QK9dbHZycQ/8DA1JmfWwnUXCpk+AhpvmDwFR
-         NoZ4zCaOIhsJPkE+TBzNpyU7ME5yrKjnteK/7GZ0oHTeG3Z3cmozBs7cs9pNQ7OdYece
-         tBNNMcQYzDIz4SgZANCa3PKIOWVbN1cwYxX5MYpe+8ZWTwFLJ0BxAiyN3dLKYW/v/uHG
-         IAr+eZJRUH6tb6UA0QcxUriwFNzO37+PbrKA66j1FfWvweQvbweaHOltVoRnxCB025xZ
-         cTNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783388519; x=1783993319;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FxSEXtq2OoVITHSnzD5ij/K70XiUpTHdNjgIOzqv/PQ=;
-        b=S0elUcGULSd+M1dW79iJXtA1wr9kribYZHVz3OCkbTUXXIT/tLhXfbzpcoZgjjb1XK
-         7mo3za0CKFI9F5cC9zKpwQIENOSlGnGGg/V+8mx0VgB5yX3ygjov0iXB+Htgw2xriHRT
-         HZgRseGo8IpJBjLJ9FtEhB1q7j5vo9eNlg4YzQDdGL+rFGytSWHREnLrTUjTuDoNoTx9
-         VnViUwl5n2RT5Rfn5SWS+t9S0uH0yLcuS58A4t6edsfZQzc/9p95/TICBOtHZNRloDoC
-         GRtAtasF6UkTVVO5K6PBphBbYjPZGycFidQeZbpbYx7B3tLroF9rJMgbNM/au4wDp8K4
-         fnew==
-X-Gm-Message-State: AOJu0Yy4p+9/KObVGCrVlSQN3heLI76jOyQCYPxXPKMr6PL6Yik04Nbg
-	WABk+iIyQqAzyiADZEiIRaxhFwB0kXDnY0EXIhGYZxjc0SaLtV9r91nDrmw0/1vD
-X-Gm-Gg: AfdE7cktuhiaJXyso84HAVEb6lxdvFGMQcatREnwemEMHc6we6SYrxinZ+K2pGVTfs1
-	o8OikzGi+lbVe2c9Sj7HpT+c9A95rr/NWgvaomZZhGJh0YOKexGpnAh0zcqfdiuAH7xNi0OKk8U
-	ZPioFf4yIGodmDhmRMS0fIilcompfuvqYI4eD8aT8/WsjK8+d/0h9r9LqJ2b2otgScZTYZlCZmE
-	Mni12iXTGc9TBKUCEXY1UEY0PsXXt2ZdHCzWwAtCZblbn5aHmNQWjnSZVnu4gnJWIENJAK1TTr8
-	C9CyMYvaPXVkJFU8zMX6wxYQ4nMQz5g9o2jYyOKLqcVzayd926+BIqMPOTWShdzjuWTUeuqnDwq
-	jz3wn+upomcLtVhkaCvF8a+qhc9lqKVlxqXvld5rdpIIFAYKMBKgPPQpuLKDm0HUQQ40DLnYyrT
-	wkl9wGXaUbnQfOoBbtzRJS+IHSv1MrRHxEIPs/3OBbFzDXZldQHeYwmHgHkt3jexl8HNVMbrb0y
-	u+irpZodfW8mVq7+PJLQ1tcp+jmL6yJheRRwnvb
-X-Received: by 2002:a05:690c:6011:b0:814:3d9f:c0a4 with SMTP id 00721157ae682-81be2d83024mr25576387b3.55.1783388519217;
-        Mon, 06 Jul 2026 18:41:59 -0700 (PDT)
-Received: from localhost ([2601:7c0:c37e:2360:d412:6d5d:4bc3:48b2])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8144af512e7sm64629477b3.24.2026.07.06.18.41.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 18:41:58 -0700 (PDT)
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=QpQP5EQPpoyHFGTz2GHAm9OaHV/iBw1BU
+	XaxtSiyGVI=; b=Iq8f9O5amhtIaRoWlDoV+tChVOHxYTYX9GjFP9eibtdy3kKA9
+	ZO2W5WRRLSCEK2XEXpBTfhZ4Jdj0Rd3Zhj7hFbvyyKKv8XthdNmoU4n8NisI5IvM
+	as8oAcTy+RfDSdjde3tM+fp5yN//ejXwp5I0tN4fWcgfRmNhTMXyLHBQTI=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwAnYUIRaUxqoTIPAA--.15065S2;
+	Tue, 07 Jul 2026 10:48:49 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 06 Jul 2026 20:41:38 -0500
-Message-Id: <DJRYGM1TBAY8.39KCXCXTQC5Z7@gmail.com>
-Subject: Re: [PATCH] ASoC: meson: aiu: Fix resource leak
-From: "Ethan Tidmore" <ethantidmore06@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Ethan Tidmore"
- <ethantidmore06@gmail.com>
-Cc: <neil.armstrong@linaro.org>, <linux-amlogic@lists.infradead.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260707012424.1661733-1-ethantidmore06@gmail.com>
- <20260707013437.27DA61F000E9@smtp.kernel.org>
-In-Reply-To: <20260707013437.27DA61F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 3/3] PCI: ultrarisc: allow DP1000 driver to build as
+ module
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang <wangjia@ultrarisc.com>, linux-pci@vger.kernel.org, 
+ conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20260706100746.1673F1F000E9@smtp.kernel.org>
+References: <20260706-ultrarisc-pci-clk-v2-0-2f3fb6fba66b@ultrarisc.com>
+ <20260706-ultrarisc-pci-clk-v2-3-2f3fb6fba66b@ultrarisc.com>
+ <20260706100746.1673F1F000E9@smtp.kernel.org>
+Date: Tue, 07 Jul 2026 10:48:17 +0800
+Message-Id: <178339249750.3836076.2659050467958951262.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783392497; l=2203;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=UHOO4VmU4maezaXvt3QgjY+ylPttNFy7aCiDkY1w8Rg=;
+ b=zcFin1mdsqef59d+Uhmbzwy73GBKruIPmloMLC1gJ5bU/GjBIbVTRluw170KjbWrfYtfWFcOV
+ Z+uEY4md1WcCB8ZnpkWxnjIVLp4m5CE+9T8fYlyy99hodgh/8hHAXmD
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwAnYUIRaUxqoTIPAA--.15065S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFW8Xr4kWF18uFWDAr1rtFb_yoW8tF18pF
+	45GayUAF1kJr45Xanrtw4UuFyjqan3JrWFgFnrKw1avrn09r1UurykK34Yy3ZrAr18Xr12
+	k3yqkw1DCa1jvw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvI14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+	6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+	AVWUtwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
+	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
+	6r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
+	IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
+	67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf
+	9x0JUSNtxUUUUU=
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAAEWpLJk4AIgADs4
 
-On Mon Jul 6, 2026 at 8:34 PM CDT, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The patch modifies the error path to purportedly free the `aiu=
--formatter` resource by jumping to the `err` label, referencing commit 83b8=
-3024cdbfd. However, the `aiu-formatter` allocation and cleanup code (specif=
-ically `gx_formatter_create` and `gx_formatter_free`) does not exist in the=
- codebase at this revision. The patch is a "ghost fix" attempting to resolv=
-e a resource leak for a feature that is missing in this tree.
+On 2026-07-06 10:07 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Missing `.remove` callback leaves the PCI root bus registered, causing a use-after-free on module unload.
 > --
+> 
+> commit 14ef8e08324f6393567996c3e1dc0b2cadbcfc0a
+> Author: Jia Wang <wangjia@ultrarisc.com>
+> 
+> PCI: ultrarisc: allow DP1000 driver to build as module
+> 
+> This commit changes the driver registration from builtin_platform_driver()
+> to module_platform_driver(). This allows the driver to be built and
+> dynamically loaded or unloaded as a kernel module.
+> 
+> > diff --git a/drivers/pci/controller/dwc/pcie-ultrarisc.c b/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > --- a/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > +++ b/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > @@ -225,7 +225,7 @@ static struct platform_driver ultrarisc_pcie_driver = {
+> >  	},
+> >  	.probe = ultrarisc_pcie_probe,
+> >  };
+> > -builtin_platform_driver(ultrarisc_pcie_driver);
+> > +module_platform_driver(ultrarisc_pcie_driver);
+> 
+> [Severity: High]
+> By switching to module_platform_driver(), this driver can now be unloaded
+> dynamically. However, since ultrarisc_pcie_driver lacks a .remove callback,
+> will unloading the module leave the active PCI root bus, IRQ domains, and
+> child devices registered?
+> 
+> If devres automatically frees the struct ultrarisc_pcie memory and unmaps
+> MMIO registers on module unload while the PCI subsystem still retains
+> pointers to them, could this result in a use-after-free and kernel panic
+> during subsequent PCI config space accesses?
+>
 
-This bug exists in linux-next. The AI is using the mainline.
+Thanks for pointing this out.
 
---
-Thanks,
-ET
-https://github.com/sponsors/ethantidmore
+The driver does support `CONFIG_PCIE_ULTRARISC=m`, so it should provide a
+proper teardown path for module unload. I'll add a `.remove()` callback in
+the next version to clean up the PCI host resources accordingly.
+ 
+> >  
+> >  MODULE_DESCRIPTION("UltraRISC DP1000 DWC PCIe host controller");
+> >  MODULE_LICENSE("GPL");
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260706-ultrarisc-pci-clk-v2-0-2f3fb6fba66b@ultrarisc.com?part=3
+> 
+
+Best regards,
+Jia Wang
+
+
