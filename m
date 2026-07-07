@@ -1,90 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE04118FDDE;
-	Tue,  7 Jul 2026 01:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from zg8tmja5ljk3lje4mi4ymjia.icoremail.net (zg8tmja5ljk3lje4mi4ymjia.icoremail.net [209.97.182.222])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 017142F8E87
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 01:39:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.97.182.222
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783386606; cv=none; b=pmTRGeMNQixMFNCue2sOynj5F9lPoT/GAqGXBHZyqpVj9+lUmQ+1jrO6I/ou4gfxnN+zUDaQ4L9wr/3SIj4gpynlkywiNFWoDne8K2tlXaI7lMsVGtClA707YfwFNq0lN1oz6RGDM0vH3IWX+UF+eOBZyO9j2aEyFTBlTi1YoH8=
+	t=1783388393; cv=none; b=l0Tnj149IJgbT4TypxIyFKL60nhmP09zV7WkesMTNPQlkb2heY0b7zTnpJ1FEUCqLapdeR6gHBhRmDTskmoAdmLu7jQnDlbtq55cQ2s+xnUB8YEpo3NisgjornNJ2Vd9GT9T2rIHZkIKY7KDFDKjn0TFAvBxbuxGk0C/Ed2IGlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783386606; c=relaxed/simple;
-	bh=SHwHPZA6/XwgSDAWSEBWC4qF7jqDBNDSqAZONQQ7hL0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RGxbZIA45X+1QLMUjxftA2oI37Yo3DRE4zDN4K9KobqDYI4Ex5Ed+Ce9/5Lp1ejHkgDqJdKLbvTA44cPjDHkBNkVjHkV7WhP/z02CIf37I8UN4494pmZJBju0JA/qWzhfDpNK2Stj8cT6aAPYCm6Yj1/4RGPb+7ZtZPPiyPhatQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJVlX9M9; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJVlX9M9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59C91F000E9;
-	Tue,  7 Jul 2026 01:10:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783386605;
-	bh=Ufs0QMwjMC245Jwe41XmuQJGJHxSCoZG7qTSaaOsHJw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=eJVlX9M9taBC+C06AuSCkoSWpVT5ZTBtPj/Q925f+A4IFpVpRwUkFhM9OAzb63+gK
-	 7df49bI6RhFNBohDwpNfm21jU748W7U/MyEHxJhMPDVw3QvH6zdAjJl9XnziNMYewj
-	 Hv7OUOGazBbegApdw8LjhXWTAzpGmFoubsslaFiHnZShjlmdk8rm5XDi/R4W3K4PSw
-	 4htkKvlR3WHD8ojTpfu1PRYgQcObau2sjVCTfKCiWbh4IURRNSMLfReWNUFyTo3SBd
-	 bmUS1h1bQBTdD26fErSq1yL4fdxi6M6UBPMa8WuU/mH+hs8gVIdVVbDfmIb7wILrm7
-	 KTDFxQ6e+vJOA==
-Message-ID: <49cb57c1-d7d6-4f30-b628-72c083981da6@kernel.org>
-Date: Tue, 7 Jul 2026 10:10:02 +0900
+	s=arc-20240116; t=1783388393; c=relaxed/simple;
+	bh=U8mnG7gmyZdzLW4X8k/b7yhoGAJufakGSaO8vIHHVKk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=U/BcgJjrHPVrjuoHssR4WAOakfIMjzj4whw43eYxyktqQzOL+1fOY37swqbOad3NUmLG0JpZVz9Nwl9bzDOAcCyxs8LxqgiYyeUv/FLyTvPfkmnjK1oqvNIFbHyt7T1ofVmkm846g9IPEWt7BZlavjYwARIU7FpEcJBurZnoNEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=209.97.182.222
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
+ ajax-webmail-app1 (Coremail) ; Tue, 7 Jul 2026 09:39:41 +0800 (GMT+08:00)
+Date: Tue, 7 Jul 2026 09:39:41 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
+To: "Paolo Abeni" <pabeni@redhat.com>
+Cc: "Andrew Lunn" <andrew@lunn.ch>, sashiko-reviews@lists.linux.dev,
+	conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+	"Min Lin" <linmin@eswincomputing.com>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>
+Subject: Re: Re: [PATCH net-next v9 6/6] riscv: dts: eswin:
+ eic7700-hifive-premier-p550: enable Ethernet controller
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <41d0e6d6-f1fc-425e-a122-b0433a925a3d@redhat.com>
+References: <20260630063123.1118-1-lizhi2@eswincomputing.com>
+ <20260630063445.1226-1-lizhi2@eswincomputing.com>
+ <20260701063512.9ED051F000E9@smtp.kernel.org>
+ <5de09a24.a11e.19f2207d7d2.Coremail.lizhi2@eswincomputing.com>
+ <58532b95-bb74-4d87-acae-e67b41dd7d57@lunn.ch>
+ <f21ffca.a15e.19f25abaea6.Coremail.lizhi2@eswincomputing.com>
+ <41d0e6d6-f1fc-425e-a122-b0433a925a3d@redhat.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ata: libata-scsi: limit simulated SCSI command copy to
- response length
-To: Karuna Ramkumar <rkaruna@google.com>
-Cc: sashiko-reviews@lists.linux.dev, cassel@kernel.org,
- linux-ide@vger.kernel.org, Igor Pylypiv <ipylypiv@google.com>,
- TJ Adams <tadamsjr@google.com>
-References: <20260702020142.3399851-1-rkaruna@google.com>
- <20260702021411.B01331F000E9@smtp.kernel.org>
- <16780c1b-418a-4555-b4bd-d442cedd620e@kernel.org>
- <CAD50Xqp_LBvRqhn0q93s3aVxtfFWGhf42jBePKsUonfE6V=WNw@mail.gmail.com>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <CAD50Xqp_LBvRqhn0q93s3aVxtfFWGhf42jBePKsUonfE6V=WNw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Message-ID: <5d02cc6b.a380.19f3a3b21b7.Coremail.lizhi2@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TAJkCgDHW3DeWExqqv0xAA--.9550W
+X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAQEADGpKhyUuEAADsz
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On 7/7/26 08:10, Karuna Ramkumar wrote:
-> Before I start working on this, I would love to hear your feedback on:
-> 1. Whether you think this API update (passing `rbuf_len` down to all
-> actors and helper functions) is the right approach, or if you prefer
-> simpler, and more localized checks elsewhere.
-
-I do not think it is necessary at all because rbuf is statically declared:
-
-static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
-
-So the buffer address and maximum size is known to all functions using it.
-
-> 2. What would be the best way to test all these simulated command
-> paths to ensure the fix is verified appropriately?
-
-Most functions for emulated commands generate only a very small amount of data,
-far below ATA_SCSI_RBUF_SIZE. So I would suggest that we simply add checks to
-the functions which may potentially exceed that. Off the top of my head, I do
-not know if we have any, but we should just check.
-
-Note that ideally, we should have each function allocate their own local buffer
-to handle the translation. But this is right now a little hard to do because
-these translation/emulation functions are called with the port locked, so we
-would have a memory allocation for a potentially large-ish buffer under a spin
-lock, which means no reclaim/no wait allocation, and thus potential for failure
-which we do not have right now. A proper/ideal fix would need to drop
-ata_scsi_rbuf, have some helpers for managing the internal buffer and redesign
-the submission path to not have the port locked until the translation is
-actually generated. That is all more work and more changes.
-
-So as a first step, let's check the emulation function if any of them can exceed
-ATA_SCSI_RBUF_SIZE in size, fail them with internal target failure.
-
--- 
-Damien Le Moal
-Western Digital Research
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiUGFvbG8gQWJlbmkiIDxw
+YWJlbmlAcmVkaGF0LmNvbT4KPiBTZW5kIHRpbWU6TW9uZGF5LCAwNi8wNy8yMDI2IDIxOjM1OjQw
+Cj4gVG86IOadjuW/lyA8bGl6aGkyQGVzd2luY29tcHV0aW5nLmNvbT4sICJBbmRyZXcgTHVubiIg
+PGFuZHJld0BsdW5uLmNoPgo+IENjOiBzYXNoaWtvLXJldmlld3NAbGlzdHMubGludXguZGV2LCBj
+b25vcitkdEBrZXJuZWwub3JnLCByb2JoQGtlcm5lbC5vcmcsIGRldmljZXRyZWVAdmdlci5rZXJu
+ZWwub3JnLCAiTWluIExpbiIgPGxpbm1pbkBlc3dpbmNvbXB1dGluZy5jb20+LCAibmV0ZGV2QHZn
+ZXIua2VybmVsLm9yZyIgPG5ldGRldkB2Z2VyLmtlcm5lbC5vcmc+Cj4gU3ViamVjdDogUmU6IFtQ
+QVRDSCBuZXQtbmV4dCB2OSA2LzZdIHJpc2N2OiBkdHM6IGVzd2luOiBlaWM3NzAwLWhpZml2ZS1w
+cmVtaWVyLXA1NTA6IGVuYWJsZSBFdGhlcm5ldCBjb250cm9sbGVyCj4gCj4gT24gNy8zLzI2IDM6
+NTAgQU0sIOadjuW/lyB3cm90ZToKPiA+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiA+
+PiBGcm9tOiAiQW5kcmV3IEx1bm4iIDxhbmRyZXdAbHVubi5jaD4KPiA+PiBTZW5kIHRpbWU6VGh1
+cnNkYXksIDAyLzA3LzIwMjYgMjE6MjI6MzQKPiA+PiBUbzog5p2O5b+XIDxsaXpoaTJAZXN3aW5j
+b21wdXRpbmcuY29tPgo+ID4+IENjOiBzYXNoaWtvLXJldmlld3NAbGlzdHMubGludXguZGV2LCBj
+b25vcitkdEBrZXJuZWwub3JnLCByb2JoQGtlcm5lbC5vcmcsIGRldmljZXRyZWVAdmdlci5rZXJu
+ZWwub3JnLCAiTWluIExpbiIgPGxpbm1pbkBlc3dpbmNvbXB1dGluZy5jb20+Cj4gPj4gU3ViamVj
+dDogUmU6IFJlOiBbUEFUQ0ggbmV0LW5leHQgdjkgNi82XSByaXNjdjogZHRzOiBlc3dpbjogZWlj
+NzcwMC1oaWZpdmUtcHJlbWllci1wNTUwOiBlbmFibGUgRXRoZXJuZXQgY29udHJvbGxlcgo+ID4+
+Cj4gPj4+IEhpIEFuZHJldywKPiA+Pj4KPiA+Pj4gT25lIHF1ZXN0aW9uIGJlZm9yZSBJIHByZXBh
+cmUgdGhlIG5leHQgcmV2aXNpb24uCj4gPj4+Cj4gPj4+IEFzIGRpc2N1c3NlZCBwcmV2aW91c2x5
+LCB0aGUgRFRTIHBhdGNoIHdhcyBpbmNsdWRlZCBvbmx5IHRvIHByb3ZpZGUgdGhlIG92ZXJhbGwK
+PiA+Pj4gRXRoZXJuZXQgZGVzaWduIGNvbnRleHQgZHVyaW5nIHRoZSByZXZpZXcgb2YgdGhlIGJp
+bmRpbmcgYW5kIGRyaXZlciBwYXRjaGVzOgo+ID4+Pgo+ID4+PiBodHRwczovL2xvcmUua2VybmVs
+Lm9yZy9sa21sLzY0YmY2YjQwLWI5NDctNGZmYS04ZDQ4LTRkNjM0MTkzMTMyN0BsdW5uLmNoLwo+
+ID4+Pgo+ID4+PiBGb3IgdGhlIG5leHQgcmV2aXNpb24sIHdvdWxkIGl0IGJlIGFjY2VwdGFibGUg
+dG8gZHJvcCB0aGUgRFRTIHBhdGNoIGZyb20gdGhpcwo+ID4+PiBzZXJpZXMgYW5kIHBvc3Qgb25s
+eSB0aGUgYmluZGluZyBhbmQgZHJpdmVyIHBhdGNoZXM/IFRoZSBjb21wbGV0ZSBEVFMKPiA+Pj4g
+ZW5hYmxlbWVudCBpcyBwbGFubmVkIHRvIGJlIHN1Ym1pdHRlZCBsYXRlciBhcyBhIHNlcGFyYXRl
+IHNlcmllcyBhZnRlciB0aGUKPiA+Pj4gYmluZGluZyBhbmQgZHJpdmVyIGhhdmUgYmVlbiBtZXJn
+ZWQuCj4gPj4KPiA+PiBXaGF0IG5vcm1hbGx5IGhhcHBlbnMgaXMgdGhhdCBJIGdpdmUgYW4gQWNr
+ZWQtYnk6IG9yIGEgUmV2aWV3ZWQtYnk6Cj4gPj4gZm9yIHRoZSBEVCBwYXRjaCwgYW5kIHlvdSBz
+dWJtaXQgaXQgZm9yIG1lcmdpbmcgdmlhIHRoZSBEVCBNYWludGFpbmVyLgo+ID4+IEV2ZXJ5dGhp
+bmcgdGhlbiBtZWV0cyB1cCBpbiBsaW51eC1uZXh0Lgo+ID4+Cj4gPj4gV2h5IGRvIHlvdSBuZWVk
+IHRvIGRvIHRoaXMgbGF0ZXI/IFdoeSBub3Qgbm93Pwo+ID4+Cj4gPiAKPiA+IFRoZXJlIGlzIGFu
+IGFub3RoZXIgc2VwZXJhdGUgRFQgcGF0Y2ggc2VyaWVzCj4gPiBbaHR0cHM6Ly9sb3JlLmtlcm5l
+bC5vcmcvYWxsLzIwMjYwNjE1MTIyMDE2LjExMTAyMDYtMS1waW5rZXNoLnZhZ2hlbGFAZWluZm9j
+aGlwcy5jb20vXQo+ID4gd2hpY2ggaXMgdW5kZXIgcmV2aWV3Lgo+ID4gSXQgYWxzbyBpbnRyb2R1
+Y2VzIERUIG5vZGVzIGZvciByZXNldCwgY2xvY2ssIHBpbmN0cmwsIEhTUCBwb3dlciBkb21haW4u
+Cj4gPiAKPiA+IFRoZXJlZm9yZSwgb3VyIHBsYW5uZWQgc3RlcHMgYXJlIGFzIGZvbGxvd3M6Cj4g
+PiAxLiBJbiB0aGUgbmV4dCBuZXQtbmV4dCB2MTDigIsgcGF0Y2ggc2VyaWVzLCBkcm9wIHRoZSBE
+VFMgcGF0Y2hlcywgYW5kIHN1Ym1pdCBvbmx5Cj4gPiAgICB0aGUgYmluZGluZ3MgYW5kIGRyaXZl
+ci4KPiA+IDIuIFdhaXQgZm9yIFBpbmtlc2jigJlzIERUIHBhdGNoIHNlcmllc+KAiyB0byBiZSBt
+ZXJnZWQuCj4gPiAzLiBPbmNlIHRoZSBIU1BDUkcgcGF0Y2ggc2VyaWVz4oCLCj4gPiAgICBbaHR0
+cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsLzIwMjYwNjA1MDYwNzMwLjE2MDUtMS1kb25neHV5YW5n
+QGVzd2luY29tcHV0aW5nLmNvbS9dCj4gPiAgICBpcyBtZXJnZWQsIHN1Ym1pdCBhIG5ldyBEVCBw
+YXRjaCBzZXJpZXPigIsgdG8gZXh0ZW5kIEVTV0lOIEVJQzc3MDAgU29DIHN1cHBvcnTigIsKPiA+
+ICAgIGZvciBhbGwgSFNQIG1vZHVsZXPigJRpbmNsdWRpbmcgVVNCLCBlTU1DLCBTRCwgYW5kIEV0
+aGVybmV0LCBzaW5jZSB0aGV5IGFyZSBhbGwKPiA+ICAgIHVuZGVyIHRoZSBIU1AgYnVzIG5vZGUg
+ZXZlbnRob3VnaCBldGhlcm5ldCBkb2VzZSBub3QgZGVwZW5kIG9uIEhTUENSRyBwYXRjaC4KPiAK
+PiBJbiB2MTAgcGxlYXNlIGluY2x1ZGUgc29tZSBhY3R1YWwgZGVzY3JpcHRpb24gb2YgdGhlIHNl
+cmllcywgYmV5b25kIHRoZQo+IGNoYW5nZWxvZy4KPiAKCk9LLCB0aGFua3MuCgpGb3IgdjEwLCB3
+ZSdsbCBkcm9wIHRoZSBEVFMgcGF0Y2hlcyAocGF0Y2hlcyA1IGFuZCA2IGluIHY5KSBmcm9tIHRo
+aXMKc2VyaWVzIGFuZCB1cGRhdGUgdGhlIGNvdmVyIGxldHRlciB0byBpbmNsdWRlIGEgcHJvcGVy
+IGRlc2NyaXB0aW9uIG9mCnRoZSBzZXJpZXMuCg==
