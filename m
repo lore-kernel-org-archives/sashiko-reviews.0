@@ -1,86 +1,72 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3DF37F011
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783426135; cv=none; b=QJBwuz6JLki8H0NhiSGOKp0Qgt9ilK6rgSTPnR5/8e+tEKPmxV/TN6Lljak1oOmr5iyndWtMXP589ti/bsvNPKbyOJVOwpwzVGO2iltjZqdKaLw6axxZw/VdWU5Yb6EmhB2thEme3WPHADpay27cZ2w9i7Gsvma4WGJlSj1trVw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783426135; c=relaxed/simple;
-	bh=FE4Q4J59n//A4uFc3yN4qYGca9bvrf4i7h16gvytKXg=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7746372618
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.164
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783427057; cv=pass; b=DhcwECd3uGbg+ejByx6fnRhL00d28frQfi9wODYJxxAw1zVs92AdSAsxfTRB3QlHfPYHM8N1vU+OlE+UnFeebzVhBeQ1xr6zvDt7gL8M474krdEiEnuzTi/DurZCAWuCe7rqvDLqzBr3EnX3wpBzNeDV5odL/2twVWHHF/XGOSw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783427057; c=relaxed/simple;
+	bh=uW3L9D1LjITsjuGOS0+yoTYtaO4LQhiM71qcWZaD9WQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DS6xy099Zmfu2Camw/k5zhpOpxsRA5rlqbZY5wlHAiVYI99sKXhhdDgEw5ajz9HX9gYyiHgHJblC6W2c5s4bgSzfyR2/1YZSU9V75qWjnWq31mCUqDdLw8134WSDM/1XBbuUuczqYLC/R/B6NWcU7qlc2JhEyIz0KVCp5/Fd8oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mK5onVF6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YTEsDBHv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=KRD6gTIJgScmEs0erG1EBpPcaoJ6/MiCOkUYHVzaQjLGePxgzxk6qYRTel+U8ZYXcFnGZH90Uy5911fbeYmjCWpDyJcZBDXhltaKHrabmcHKCHtN4AgNZTFNLDN1EyPwgvVQQ4eNU0RMTXK1yuiH5EY7YvVOfbi8Rzd/bvbP2XA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=kZ1pYNtA; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=FbmrGRnw; arc=pass smtp.client-ip=81.169.146.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mK5onVF6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="YTEsDBHv"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678EPXg3204014
-	for <sashiko-reviews@lists.linux.dev>; Tue, 7 Jul 2026 12:08:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+22W3zxkIQEX0DVYt9xjZ+Fp+yJcU7xn5AILKh1DvgQ=; b=mK5onVF6LMrDIT0f
-	460oV7k/TtZ/UeTVRCkuW830fKv2OHsxoj/qUvjGeIgf+fcH6oEhDHz+H7LGVoU0
-	IjsFJGzI9ph3D4D3EcMxb6NLm263QmRxVS6GDd97BxaQygZO/BRNCnfocs+37Pqj
-	oxGYges4Zaq7GbRNmo2ijPf1Bsc2s7dWbyGwz8fWDy8aSdgsV1HDqqqKPBfyw4Hv
-	LD1g90JB+Y139LW7+qgduEMbv5835t7H1kQrfgAzjGa6g3xhGAkWh1S27UU/9Bcc
-	Mcd2Jx992+0nrE9si98KEMHnFAvqxQNsm1KPU1/Q9QxFIv1M4MhLLwGhXFsIeFPD
-	Ca+RdQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9a9b8y-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 12:08:52 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c85a298cd62so3757356a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 05:08:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783426132; x=1784030932; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+22W3zxkIQEX0DVYt9xjZ+Fp+yJcU7xn5AILKh1DvgQ=;
-        b=YTEsDBHvwbhgPzB1ozLnd5fhC9g9Q6z61XuRR80iMpsnEdVq47pzPe8vpPziDbT+fR
-         WM3V8yY65qong7+sFUag7hK8z1mMUm3gRnMw3SgyTWJUftkIDvg/prctJvb0SnQjrwgc
-         8efulwKyez97iIPwoHFi16VHCxW8vvR7qB34zM/u2pi9huHTARMpOmvri8hQCRz5xRwV
-         4mRi+Z4bH48LpDqRLUITm1N8kMB+MBYzo+rMUC0xHvW4beIahgF1OH77e36Hymz6LYIp
-         kWHA43vmQZLmgKjud4uq+9HjQDpzC5jBePOaIC0Sw77TQvi/M3qy1QwLAQxM8g3D+Mg1
-         wSOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783426132; x=1784030932;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+22W3zxkIQEX0DVYt9xjZ+Fp+yJcU7xn5AILKh1DvgQ=;
-        b=SKF+/xntBtqMgT0Z5kVEXK5vbve/d6hejOr93zYON8sPVsR5XsDiDb07IuTvjrXSMw
-         MyaK9H+DDR0AiiqArj+rTabcR582xT+BER7TGbh4KlJ/gQHMbvG4gkJSpZvLn3BLb3ST
-         u/zo8OZKnizHdZdY2z8fozsi5Wl2r2sMLUmfYTMP/u9n1YV6IVSD7ZhDCHH92DTqQ6fR
-         2kgRIvDXJj8rJXU1+6uJB9HTARejDvGalLtER/a6D8K4C3SOlGIsVvR+wOPbS4tUvSAv
-         bj+3jYzVyngF8RfiYJH4xw0kUAGmrOm5kcKVBYyrVVTYZue0a32m3fatlWZy5iPPPHVD
-         shTw==
-X-Gm-Message-State: AOJu0YzFiGpVZx2JT+7thEaI8y1QfSLFeimBG/ayrfWEJY56E9uZsi1p
-	gzEjrkRMoGHZrgh19POHtCVrs8mvgCRiUiTGGuefo+4rltrldQFs2s3ZAV/X14jPpdLS4HB5wlx
-	8lK0cqSh4x2Hdq6/lxbdd0dsPy+OR0Yl5G6y9oTNo9jLBXJ9IR3hs42OAQKvD8W7HzrpNENXgjZ
-	4DG3g=
-X-Gm-Gg: AfdE7cl+G//ly2+9s22O9CWJNjD3BwKwRJFoJ9cZjVWFJju3Ohevs50snvJkdDsF25L
-	5ghq5ARdH0n+7wKm+z3+biQ95awz5r3XVe2pwZCsDz/Qxjzg7SIo4oyvPZ3QotcYVAm65Olahus
-	CG6caaTG3yPKLtDyWw9P7DS+dSi/Jefnony04bw4DQ78CXWua/hSTMzr174CRKnFOkltEOJ4kFC
-	GHZRREmNbqQm+tCSrCuWlHzYX1adnEox0854ugp5byLHfZzKW+b+Aybt4+puwTz8oRTgQKOsKeU
-	2yquivQEePcvyGDOLb5SnB8nNYcbijOZRFVG7jn0ENgMPrhIP7wNgdSGRXy5gkD8zych9MxA+wQ
-	AyH0KN2/LEmoCidFnMpqg7E+S+88zttxVLVS9jUuZDkEn
-X-Received: by 2002:a05:6a20:d74c:b0:3bf:ab76:63d with SMTP id adf61e73a8af0-3c08ec8256emr6016564637.11.1783426131630;
-        Tue, 07 Jul 2026 05:08:51 -0700 (PDT)
-X-Received: by 2002:a05:6a20:d74c:b0:3bf:ab76:63d with SMTP id adf61e73a8af0-3c08ec8256emr6016526637.11.1783426130986;
-        Tue, 07 Jul 2026 05:08:50 -0700 (PDT)
-Received: from [10.92.203.183] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca5b3a2bf6bsm885732a12.27.2026.07.07.05.08.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jul 2026 05:08:50 -0700 (PDT)
-Message-ID: <6b526e3f-6cb9-4628-8569-f39088b38246@oss.qualcomm.com>
-Date: Tue, 7 Jul 2026 17:38:47 +0530
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="kZ1pYNtA";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="FbmrGRnw"
+ARC-Seal: i=1; a=rsa-sha256; t=1783427029; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=P9lio/RFBCaeREOBdGVox4VATevIS8tzkLt/KUdY49nQgAqyDL2FyvohDxcTuBaJPW
+    HZ+CNE8IOHdsYXfFCwGpTBISKBzr3POssWLvUUUZTI0qFAmtxkFL4yqpleJF7D6iZFzp
+    Tnf2MfLxbR/frjdp9IpJiLyKO566v/5QCHp6Vmgcq3O8L5dJnQd26hWUycW50zlj5QTa
+    FrpEnoSdCVjD7piIl5aACZKb+Dzd4Z9Ok5fMWLT+OLMLUUJ85DsUDl3WNckbtTxJn4iM
+    I/Gjz0zDg8lWmiDHj6tq2U0mx/21J7ryIX8d3rW6qaPbkrLZtQKXOx9HVkEydmEFNv3+
+    z/Wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1783427029;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=8b0tkocE/IM9WIjFd3EHZ5WIFmbn4qTdDJaLiGlXZ/M=;
+    b=d/QFSlpmTMl+PZpJHp2yASkKtuSFSoKKr37pFVB+NIHPvn5t9FILxsjsVFhfDewBuO
+    SSy0JYxNEjGGM4xSfXdntNYxGeFxqiLKM+MjB99wytVgoi17H9iEE5FZ1Af1nT1Gt26p
+    HrsWQC672fg3wt2UZSOGOgVuI235YRgREISJKDEYY8M9ZtLbqVKZXMRIsos/ci41fKgp
+    MIxsEdlPVW5nI82w+ZoN8ofCKIm45cbnBlBSPELJXV4vxWfPTW2FTE40PwBmczG3mZPw
+    nrB/q3yDfxRAcmn6ZtyGA/bV5tjTWdNCRq4UmEQIjAPsVcTDqTqeLat/enmqc96gy2uU
+    /35w==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1783427029;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=8b0tkocE/IM9WIjFd3EHZ5WIFmbn4qTdDJaLiGlXZ/M=;
+    b=kZ1pYNtAz+RH2LHg46WLkcx4wu9Xg6mclSyf8rhIbEB7QSVK/BjkimcEkHnKUKGpGE
+    H8mLZ9hLIIvsqcU7ZqLq0gg59ths09r0b1ZGJUIRBYJ5xFsftUkuPOmjHVNmup/eb0GO
+    F1z1br9IAVJYuh4LeUn7kKwV2NEkphqUByWt1QcvRT75wMCbAEhgkrPmCSsjkeA0CN23
+    9GpksY+Iouo0isr86UqzGREa6fcfHnpvidZ3h79tb35mX1/X59ikvFicX9w6k2d7FGPM
+    ZMQe+qfEndupcYdEYUlEz5oTWYAQi+TLqGJUgyRgpPOtdc9z9bXpLVSSVD2eIERu6WlE
+    pPJg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1783427029;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=8b0tkocE/IM9WIjFd3EHZ5WIFmbn4qTdDJaLiGlXZ/M=;
+    b=FbmrGRnwCyObukvqwvtwFwQ+3LI4IrTnKmWX1A1CSKWi7bBMSHjngEBAac022nCuzC
+    v5o7Zh9ISqZ+ZINbS/Cw==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
+Received: from [192.168.20.154]
+    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
+    with ESMTPSA id Ka9fdb267CNmTQU
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 7 Jul 2026 14:23:48 +0200 (CEST)
+Message-ID: <cf9d0adf-62c8-4bfa-8cfd-304d22c05e7d@hartkopp.net>
+Date: Tue, 7 Jul 2026 14:23:48 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -88,212 +74,128 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12] PCI: Add support for PCIe WAKE# interrupt
-To: sashiko-reviews@lists.linux.dev, Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-pci@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
-        conor+dt@kernel.org
-References: <20260707-wakeirq_support-v12-1-b4453f5bcc97@oss.qualcomm.com>
- <20260707114648.60A091F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v3 4/7] can: bcm: fix CAN frame rx/tx statistics
+To: sashiko-reviews@lists.linux.dev
+Cc: Vincent Mailhol <mailhol@kernel.org>, linux-can@vger.kernel.org,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ Marc Kleine-Budde <mkl@pengutronix.de>
+References: <20260707-bcm_fixes-v3-0-84600ca6d889@hartkopp.net>
+ <20260707-bcm_fixes-v3-4-84600ca6d889@hartkopp.net>
+ <20260707103714.9A6AB1F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20260707114648.60A091F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260707103714.9A6AB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: MA7MjGDqbOAhj5AnSOtzVqqAekcoasZe
-X-Proofpoint-ORIG-GUID: MA7MjGDqbOAhj5AnSOtzVqqAekcoasZe
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDExNyBTYWx0ZWRfX//ElCBNedS8i
- q8ipSwGFJNkeM8v7sX9LIffb9mnz9Km3eRrMgEWQwxznr/hVW3WvRDlBLiuK0jDxkffawDNiveS
- kdBpc+53DhsKSgLzGCaRDCyksdZpHqI=
-X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4cec54 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NEAV23lmAAAA:8 a=qWxXvflXNDPLj3OyKCUA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDExNyBTYWx0ZWRfXzGEQPHPAzN8R
- zt6OVgFHL64kA25s9PqJhsxo5R5ZWBvz1tVxXOo0igs2ld9TVcOiqAtqM0wxgEzJgx2Dc964a7P
- MsD+1gEAEo/Z1LSKUaEXp9zATLH6n9yANoXkY+BRO16MUzoSQmeQxKXyLg5a9SSOU20MfxIuY0S
- Zw5lNYALCYQr+iWaTS6uc+T6fX5TlOdfk2Wxdx3AmiR9ig6nKMHoQOP6mxDJVlfGX3fbs8QUS7Z
- RtFVATU93D51aZIYkteaSbZjFMS28d3oCvigb3MHwn8eJbWkoDkvKnXWD7v+psNovs3cCf1O3WS
- GJ2Nega/vuLi4ShuFj5jwdqsgNQ54LDZ4JIBTcrKOeg91aAr0vWTxzPV8JwHOeuoqoKBf15k5be
- TZNEFBb9VLOXkj1XTgIWc3VKh5W+9NKletxbMtqXO3Glchr0b/lJJ2w/uf16qILq9MhpzSDktgz
- AYYYeQ4ZFjLDv+tBOEw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070117
 
-On 7/7/2026 5:16 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Exclusive allocation of a shared WAKE# GPIO breaks wakeup capability for remaining devices if the first device is hot-removed.
-> - [High] The IRQ trigger type is configured after requesting the wake IRQ, causing the request to fail on irqchips requiring a trigger type.
-> - [High] Incorrect resource lifecycle check in `pci_remove_of_wake_gpio()` causes GPIO and IRQ leaks if the OF node is detached.
-> - [Medium] Unconditional system wakeup enablement bypasses standard PCI PM policy.
-> - [Medium] Unchecked return value of `device_init_wakeup()` can leave the device in a half-configured state.
+
+
+On 07.07.26 12:37, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] A Time-Of-Check to Time-Of-Use (TOCTOU) race during statistics reset can permanently break the invariant `frames_filtered <= frames_abs`.
+
+Fixed in V4
+> 
+> Pre-existing issues:
+> - [High] Missing RCU publish/subscribe barriers for lockless list operations, risking uninitialized memory reads in procfs.
+
+
+Fixed in patch 5:
+https://lore.kernel.org/linux-can/20260707-bcm_fixes-v3-5-84600ca6d889@hartkopp.net/
+
 > --
->
-> --- Patch [1]: [PATCH v12] PCI: Add support for PCIe WAKE# interrupt ---
-> commit 788f29e12a6c04e2d11d2db4e00c40903e8d0022
-> Author: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> Subject: PCI: Add support for PCIe WAKE# interrupt
->
-> This commit adds support for the PCIe WAKE# mechanism in the PCI core.
-> It searches for a WAKE# GPIO described in the device tree for the endpoint
-> or bridge, registers a dedicated wake IRQ, and handles waking the device
-> from low power states to an active state.
->
-> Link: https://lore.kernel.org/all/20250515090517.3506772-1-krishna.chundru@oss.qualcomm.com/
-> Link: https://github.com/devicetree-org/dt-schema/pull/170
->
->> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
->> index 8b18c4ba845cf..5df6b11cdf9f9 100644
->> --- a/drivers/pci/of.c
->> +++ b/drivers/pci/of.c
+> 
+> --- Patch [4]: [PATCH v3 4/7] can: bcm: fix CAN frame rx/tx statistics ---
+> commit faeade145d2ba64627aca2f6af5f2b0b8ad0d933
+> Author: Oliver Hartkopp <socketcan@hartkopp.net>
+> 
+> can: bcm: fix CAN frame rx/tx statistics
+> 
+> KCSAN detected a data race within the bcm_rx_handler() when two CAN frames
+> have been simultaneously received and processed in a single rx op by two
+> different CPUs. Use atomic operations with (signed) long data types to
+> access the statistics in the hot path.
+> 
+>> diff --git a/net/can/bcm.c b/net/can/bcm.c
+>> index fd548c6eaa913..0378e31ea10ed 100644
+>> --- a/net/can/bcm.c
+>> +++ b/net/can/bcm.c
 > [ ... ]
->
->> @@ -586,6 +588,82 @@ int of_irq_parse_and_map_pci(const struct pci_dev *dev, u8 slot, u8 pin)
->>  	return irq_create_of_mapping(&oirq);
->>  }
->>  EXPORT_SYMBOL_GPL(of_irq_parse_and_map_pci);
->> +
->> +static void pci_configure_wake_irq(struct pci_dev *pdev, struct gpio_desc *wake)
+>> @@ -280,7 +283,8 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+>>   			seq_printf(m, "t2=%lld ",
+>>   				   (long long)ktime_to_us(op->kt_ival2));
+>>   
+>> -		seq_printf(m, "# sent %ld\n", op->frames_abs);
+>> +		seq_printf(m, "# sent %ld\n",
+>> +			   atomic_long_read(&op->frames_abs));
+>>   	}
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this function safely traverse
+> the lockless tx_ops list?
+> 
+> bcm_proc_show() traverses bo->tx_ops via list_for_each_entry() instead of
+> list_for_each_entry_rcu(), which lacks the necessary subscribe barriers.
+> 
+> Additionally, neither bcm_tx_setup() nor bcm_rx_setup() use list_add_rcu()
+> when inserting into these lists:
+> 
+> bcm_tx_setup()
+>      list_add(&op->list, &bo->tx_ops);
+> 
+> bcm_rx_setup()
+>      list_add(&op->list, &bo->rx_ops);
+> 
+> Could reading /proc/net/can/bcm/<inode> while another thread concurrently
+> sets up a BCM message on the same socket result in traversing uninitialized
+> memory due to missing RCU publish/subscribe barriers?
+> 
+>>   	seq_putc(m, '\n');
+>>   
+>> @@ -290,6 +294,15 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+>>   }
+>>   #endif /* CONFIG_PROC_FS */
+>>   
+>> +static void bcm_update_stats(struct bcm_op *op)
 >> +{
->> +	int ret, wake_irq, irq_type;
->> +
->> +	wake_irq = gpiod_to_irq(wake);
->> +	if (wake_irq < 0) {
->> +		pci_err(pdev, "Failed to get wake irq: %d\n", wake_irq);
->> +		return;
+>> +	/* prevent statistics overflow */
+>> +	if (atomic_long_inc_return(&op->frames_abs) > LONG_MAX / 100) {
+>> +		atomic_long_set(&op->frames_filtered, 0);
+>> +		atomic_long_set(&op->frames_abs, 0);
 >> +	}
+>> +}
+> 
+> [Severity: Medium]
+> Could this non-atomic reset allow other threads to interleave their
+> increments and permanently break the statistic invariant?
+> 
+> If Thread A hits the LONG_MAX / 100 threshold and begins resetting the stats:
+> 
+> Thread A
+> bcm_update_stats()
+>      atomic_long_set(&op->frames_filtered, 0);
+>      atomic_long_set(&op->frames_abs, 0);
+> 
+> And Thread B is concurrently processing bcm_rx_changed():
+> 
+> Thread B
+> bcm_rx_changed()
+>      if (atomic_long_read(&op->frames_abs))
+>          atomic_long_inc(&op->frames_filtered);
+> 
+> If Thread B reads a non-zero frames_abs, then Thread A resets both to 0,
+> and finally Thread B increments frames_filtered, wouldn't frames_filtered
+> become 1 while frames_abs is 0?
+> 
+> This would leave frames_filtered greater than frames_abs, causing the procfs
+> output to display negative reduction percentages.
+> 
 >> +
+>>   /*
+>>    * bcm_can_tx - send the (next) CAN frame to the appropriate CAN interface
+>>    *              of the given bcm tx op
 > [ ... ]
->
->> +	ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, wake_irq);
->> +	if (ret < 0) {
->> +		pci_err(pdev, "Failed to set WAKE# IRQ: %d\n", ret);
->> +		return;
->> +	}
->> +
->> +	irq_type = gpiod_is_active_low(wake) ? IRQ_TYPE_LEVEL_LOW :
->> +						IRQ_TYPE_LEVEL_HIGH;
->> +	ret = irq_set_irq_type(wake_irq, irq_type);
-> [Severity: High]
-> Does this attempt to configure the IRQ trigger type too late?
->
-> If the irqchip requires a valid trigger type during IRQ allocation,
-> calling dev_pm_set_dedicated_wake_irq() before irq_set_irq_type() will fail.
-> This is because dev_pm_set_dedicated_wake_irq() calls request_threaded_irq()
-> without IRQF_TRIGGER_MASK flags, resulting in an -EINVAL return.
->
-> Should the trigger type be configured before requesting the wake IRQ?
-This is not valid for device tree case. This code will be executed for device tree
-models only.
->> +	if (ret < 0) {
->> +		dev_pm_clear_wake_irq(&pdev->dev);
->> +		pci_err(pdev, "Failed to set irq_type: %d\n", ret);
->> +		return;
->> +	}
->> +
->> +	device_init_wakeup(&pdev->dev, true);
-> [Severity: Medium]
-> Does unconditionally enabling system wakeup here bypass standard PCI power
-> management policy?
->
-> Standard PCI policy, as seen in pci_pm_init(), makes devices wakeup-capable
-> but leaves the enablement decision to user-space. Setting this to true
-> unconditionally might lead to unexpected battery drain or spurious wakeups.
-
-if the client driver wants to enable wakeup IRQ, and if the WAKE# is described for
-root port only, then we can't ask client driver to enable root port device wake up
-capability and in suspend noirq we are not allowed to enable wakeirq, so we
-are enabling here.
-
-> [Severity: Medium]
-> What happens if device_init_wakeup() fails?
->
-> If it returns an error such as -ENOMEM when allocating the wakeup source,
-> dev->power.should_wakeup remains false. This leaves the device with a
-> dedicated wake IRQ requested but system wakeup disabled.
->
-> The PM core will then never enable the wake IRQ via
-> dev_pm_enable_wake_irq_check() during system suspend.
->
-> Should this check the return value and unroll the wake IRQ registration on
-> failure?
->> +}
->> +
->> +void pci_configure_of_wake_gpio(struct pci_dev *dev)
->> +{
->> +	struct device_node *dn = pci_device_to_OF_node(dev);
->> +	struct gpio_desc *gpio;
->> +
->> +	if (!dn && !dev->wake)
->> +		return;
->> +	/*
->> +	 * fwnode_gpiod_get() may fail with -EBUSY (e.g. shared WAKE#), but the
->> +	 * actual WAKE# trigger from the device would still work and the host
->> +	 * controller driver will enable power to the topology.
->> +	 *
->> +	 * -EPROBE_DEFER cannot be propagated here since pci_device_add() has no
->> +	 *  retry mechanism.
->> +	 */
->> +	gpio = fwnode_gpiod_get(of_fwnode_handle(dn), "wake", GPIOD_IN, NULL);
-> [Severity: High]
-> How does this exclusive GPIO acquisition handle hot-removal of shared wake
-> lines?
->
-> If multiple PCI devices share a WAKE# GPIO in the device tree,
-> fwnode_gpiod_get() grants exclusive access to the first probed device.
-> Subsequent devices receive -EBUSY and skip wake IRQ setup.
->
-> If the first device is later hot-removed or unbound,
-> pci_remove_of_wake_gpio() frees the GPIO and deregisters the wake IRQ.
->
-> This leaves the remaining active devices with no wake IRQ registered and
-> no way to acquire it, breaking their ability to wake the system.
->
-> Can this be handled to avoid permanent loss of wakeup capability for the
-> remaining devices?
-In this scenarios, ideally bridge also share same WAKE# gpio, so if the bridge is
-removed below device will also get removed and bridge is one which gets
-discovered first and bridge will get the gpio first.
->> +		dev->wake = gpio;
->> +		pci_configure_wake_irq(dev, gpio);
->> +	}
->> +}
->> +
->> +void pci_remove_of_wake_gpio(struct pci_dev *dev)
->> +{
->> +	struct device_node *dn = pci_device_to_OF_node(dev);
->> +
->> +	if (!dn)
->> +		return;
-> [Severity: High]
-> Does checking the OF node pointer here cause resource leaks if the node
-> is detached?
->
-> During device teardown, pci_stop_dev() executes before pci_destroy_dev().
-> If the device's OF node was dynamically created (common in PCI hotplug with
-> device tree overlays), pci_stop_dev() calls of_pci_remove_node(), which
-> clears dev->dev.of_node.
->
-> When pci_destroy_dev() later calls pci_remove_of_wake_gpio(), this early
-> return will bypass the gpiod_put() and dev_pm_clear_wake_irq() calls because
-> the OF node was already cleared.
->
-> Should this check for the presence of the resource itself via
-> if (!dev->wake) instead of the OF node pointer?
-Will the dynamically created of nodes will include the wake gpios & perst gpios ?
-
-- Krishna Chaitanya.
->> +
->> +	device_init_wakeup(&dev->dev, false);
->> +	dev_pm_clear_wake_irq(&dev->dev);
->> +	gpiod_put(dev->wake);
->> +	dev->wake = NULL;
->> +}
+> 
 
