@@ -1,266 +1,160 @@
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5191B231827
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 07:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FBC32AABC
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 08:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783410442; cv=none; b=KvxKHncKFrptQaPYiX6iZeywHY+zpuDd+zraFDuU7PHpa+HvrRs+OQ4pDypFVvur2Ew/lhAJeobmAIGKwD3kxyLDiU4WkS5qMcYoNl7J4eyjGvIyUyvhtjCouwZFZ3TTfVCOAtnAafw1F2dQ9rKGiQ5NFE9xhqiG0ms1j30HeQg=
+	t=1783413675; cv=none; b=FmtLMzJK9/2EBI+JNaLfM5y/wbuBvvzHNfg83dYgHR+A5XJyEQXPrsjhnj8z1hcROKrMY7nYNDTr8GszUNuFlITvniNdM5gV0bPNN+XzR2LWB9fIG/fvwgzg2eeNQXWaE3r7xg7W6Q2ZmhpxMkQYDYvLEoic9ukw+/w6irBtW2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783410442; c=relaxed/simple;
-	bh=8BAw/gwUV4DPqTc1XlhdDBC6YMrGTmgu0NFo7yRcK+k=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=mn+wye3WYnkM6p3nPmKLyCGCh8l50iwFSp+PMO418f+0cMv8tBvUphyv0Suawl/fFW2aw8703dSHkHaHWgxL21xGqyxhVsSBNxUSSWPIk6zsDCCso2KO1pE38I1wSQG1USZO14eyicLyLLYajFJEwyX3JDIH8L1PpIUXbC8XiuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Lxj6CTdE; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1783413675; c=relaxed/simple;
+	bh=nxdlAM8SSdlHFFHuZI2VlKm6oVz2NUgcbsHniHjemQU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u9NhNcO8vGUdZdr7L8QglD2p9r+4Zo1IdBU6inT36ZFylI/tLrWU0+fSPdXYz/+pbfTw4Q4bU58+Par7yLkxkfMHYC3jX0FvlzSl+p2MwOeoMdV+E64jy6pYw9i2wzdPnApX6vRhHvI37Tf3OyMRf7S6QEOdqA7NnEWeAZEI2AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fWN242TG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iGBG6zm+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Lxj6CTdE"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 02E47C8F1E9
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 07:47:27 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 86587601A3;
-	Tue,  7 Jul 2026 07:47:13 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5189011BC0E18;
-	Tue,  7 Jul 2026 09:47:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783410433; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=RkkUyRvFUdSKgRxtxaFUaPgXRl4J0MzoQoofSpJyXgs=;
-	b=Lxj6CTdEufZvjWVUr44XlOh7YyMNvpouWAR34YiJhQjBNE7cEC6rsjXr0dwBDPEO4p75T5
-	hhRIqGwTlfG0gfYbWCeAUK2z49ugIk3Ey9KHGFF8Y7QA3p9x5kmk9uHddq3FlZh2MoZ73g
-	p8MKgxYU1+B+u9wXXwmk9UcZm5bQkfixQ4gdaDIspLX6Vw3yYBUUYXMs4fwsbLc1iMfbqD
-	41xf/9rte4fp0tEMkvnPQJxZsoM9mLuJSkvhT0Qei1FeGkbxbHfnyEStCyYF8p1GZjymVX
-	X/E89GjCSWKtmeY9Gt8bosr8HR+a+yIEMOY0ZoCYjK4vZM62FGmeFifvtbtYYw==
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fWN242TG";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iGBG6zm+"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678DnHR3205863
+	for <sashiko-reviews@lists.linux.dev>; Tue, 7 Jul 2026 08:41:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RNN0OhIdAL9mAqDWFKwov/DHAFlnKx2nEt/u+oSQymM=; b=fWN242TGxQ0YJDEH
+	iftdiHghH09l+4QucOwQcf82GNLSuXhIRT+d/RoQ59Kt3TpYLlRjL1Roumx86ejE
+	tZ49LJ1ISsOfcd0/XnQA0GfA3K+LNM3HQEZc5glpPmGUP6YDv7XkAy6CHRxc7BuC
+	k/3oYQjb8RHqMp4U+SORy6/XEMDN87LS7zkX0vNgB0CtOZN/KPANlrRA4aGoGYju
+	qstTAeczzXSuvrY3/kaS8v16gh/Ghl4ZSx5vv2sp6hXl7Jybkg5P/5BjTJQ4C6m7
+	AWtB+ekk75R+nt/TS63ZaNQTJuqls2z7htuPt0L09vavRXPqF9CYUrKEsbuGqgUT
+	4si7YA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8fdw3dyj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 08:41:12 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cc73f47bdcso53559795ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 01:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783413672; x=1784018472; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RNN0OhIdAL9mAqDWFKwov/DHAFlnKx2nEt/u+oSQymM=;
+        b=iGBG6zm+hiSVUPdrym9dGHxOx4g3uvFix/R73Qt5rxjC7bMCrITwFAfwdoyvEt/+7+
+         jShRlwnmDHsyZqkzLfokik7v4iMZtmDpnNmS0nTtJDdQNtYuEAXTjrGgYmJBWljHu9q4
+         Vvqk5AM0lcxTdmbHswtkJpu+9lcQZkjFWy9VH44hAVnfnLgfJtn2Ywz/s0st+l1aJeim
+         nr2/vn1c8jKw09vrLIk7WEiTYS6MI/Y5h7uZO8HggY9nvJY55vXfKs/vL/qKUzzi31fv
+         Ql/1BN4vE2v8yTnWW9AiOstcM+masnGuvWCuiFlVeR/AxvlgE/SX1uP5zs5kOC/kgYmH
+         OhWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783413672; x=1784018472;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RNN0OhIdAL9mAqDWFKwov/DHAFlnKx2nEt/u+oSQymM=;
+        b=pNUXbqIqVnloka8dZZHYzj3N/opxm7ji2tyllBj5kt4xIVbiWz4alKdTQCmvtNFpP9
+         ubE1cBFo55d5agb/1MSTQy49pyG0C4hZdQRV9LCTBpX8vJnaz55KBAnoJ8yYEk7KVIeK
+         Za91U1AKxu5+VvOtZq4LOIHPwNqjqGBA1bFrYlFQHIVsZePrZQeUK1sWhvDYnUikiDMe
+         BrCkmu4MGs70+7Ie+QslXUJF1gziLaJICB86pYykqHfRsPZ+YbTU7RRqQ28jHDkfLzKq
+         CY/qukweSACmHwUrleXaob5aRiuCsjSociBJnHxsLxgjHDHvu92NnzcAA08OLzM3dVax
+         lUYw==
+X-Gm-Message-State: AOJu0YzBHDiZjUuFXegEiEDZ8vyzjz3bEXDjGH88VUcTMoTEJUIHgjbK
+	7uC4BUYrcU9NL4WwjrYVcQXKYfU47sqbxIQNr1a9QLntoxHV32WyygjBYss7t046sX6jPZLJjyc
+	nVw/64J0v7rLkIT8V5DOjL+Vvtlud+fbIDxtJbCQQfsGsRdeatASN/+emmZHzbkk0KHiMFDJu4i
+	W4ek8=
+X-Gm-Gg: AfdE7cmIggzbmIXAOAvD1Z7UE/NWjEgCgNxlhdWdSBCNgC8EhiQM/Kx7wrMW9HcaHQ8
+	wHgPr3pUQU9X/5m1n5A2fyDu9TaRM8s319+nRyqZco++s6yQZgjEsdFf6z2UaGbNjp9pyo5p/6W
+	yLUNQtsEOWliDvOsWkAMb2CuQHsAhQ36iw8+ToPxbADjlDyP8igkjyTRICzxw8UYWBxrzrvYX+3
+	33faGnm1uszHOO6l25va29YKldAbZQ85fbWLQpdwbIx8+7Ua9EYp1u/7BS2dzQm7YCyCS66ETAt
+	tOnyhAbey/yFlXr/jM9pYgkwC0w2he8rrEDYk7fI691zEkGZczTD8uEMncJJ4jKMhgBhGAsZv54
+	3wvbiWNh8y0p+JYLOSjsvDAFQW1zUEDytwdDKoqbKv8s=
+X-Received: by 2002:a17:903:120f:b0:2c9:e9db:8167 with SMTP id d9443c01a7336-2ccbe3feb88mr40585795ad.7.1783413672274;
+        Tue, 07 Jul 2026 01:41:12 -0700 (PDT)
+X-Received: by 2002:a17:903:120f:b0:2c9:e9db:8167 with SMTP id d9443c01a7336-2ccbe3feb88mr40585475ad.7.1783413671714;
+        Tue, 07 Jul 2026 01:41:11 -0700 (PDT)
+Received: from [10.217.222.146] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9c100adsm7731085ad.32.2026.07.07.01.41.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2026 01:41:11 -0700 (PDT)
+Message-ID: <6af98083-a102-4614-a853-76d27d209118@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 14:11:08 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 1/2] arm64: dts: qcom: kodiak: enable inline crypto
+ engine for SDHC
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260707-ice_emmc_support-v9-0-701c86f3c25b@oss.qualcomm.com>
+ <20260707-ice_emmc_support-v9-1-701c86f3c25b@oss.qualcomm.com>
+ <20260707075554.BB8E41F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+In-Reply-To: <20260707075554.BB8E41F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 Jul 2026 09:47:11 +0200
-Message-Id: <DJS68HQS83G4.38Z406G5WD8NQ@bootlin.com>
-Cc: <linux-watchdog@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for
- running chip on boot
-From: "Paul Louvel" <paul.louvel@bootlin.com>
-To: "Guenter Roeck" <linux@roeck-us.net>, "Paul Louvel"
- <paul.louvel@bootlin.com>, <sashiko-reviews@lists.linux.dev>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260706-w83627hf_wdt-nct6126d-v3-0-fa5ad8d486bc@bootlin.com>
- <20260706-w83627hf_wdt-nct6126d-v3-2-fa5ad8d486bc@bootlin.com>
- <20260706104010.A345B1F000E9@smtp.kernel.org>
- <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
- <f598a05b-5d91-484d-a637-e092950a6f47@roeck-us.net>
- <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
- <5e441e3a-27ce-4f46-abf4-fd6246727cb6@roeck-us.net>
- <DJRTDK0H5R1Q.32FU59ADLZD6E@bootlin.com>
- <a20d8c37-0d46-489b-aa8c-af927a2c552c@roeck-us.net>
-In-Reply-To: <a20d8c37-0d46-489b-aa8c-af927a2c552c@roeck-us.net>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA4MyBTYWx0ZWRfX8qLzMmcz1uU2
+ XMya74wEpVLHZ6mF6ulbn0Q6LJwj7jYRoatnKNnZQzOwkkUxAIuN6Bn1rEmTiobJoWhTyg2e3tB
+ jiCC2oo/AM2DwNkUz0FRxpjisZloFUM=
+X-Proofpoint-ORIG-GUID: 1DxUR5fBkQMwTsXNKxr6QXCrn-tRfLpz
+X-Authority-Analysis: v=2.4 cv=EtziaycA c=1 sm=1 tr=0 ts=6a4cbba8 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=mTcq0AEEaod-KTxo8kgA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA4MyBTYWx0ZWRfX4pDTA6giVdI8
+ YdXH4mWNfTOnpqAPtyPgpzJxWNuXFAtW6kxonYmK255Qw4pJJvVFt7DxIxpufnIKt0dW6G7tzKt
+ Y9e3rijsUb6/XxcSZODRFtLJppN11gBHBaO5RHnCoH5HPWP2rT7vuEhzzCyzu3puusH//pt2dIP
+ K1SiSmp5xRibqozmBhfBhZfL85K2SlPQ+yByvVvifovbzXCcealz4+mDlPcPcgj1Q70lvLz/5g2
+ FgvReHboizMvrxf6OvPKCsyNyytkDhQ+kc73jK4hlUtIV6qP+lNojakdQek3WWoEhq80hs9ac/Q
+ r/c1WorBQnBscJeisoJAqauOVKVkcqFf1bpki/jruUUkvW/KT7nyFCX49eH/jHfUy41VanvhALs
+ rpWmaWGFP9D17PqtNNHOkBT9zeAhq8BpHFig99o3uqpoPsTMs3udqO2yzPTP2nPbcgYK7xs8aEn
+ 8JGq6+Dhi4zMLQW2ywQ==
+X-Proofpoint-GUID: 1DxUR5fBkQMwTsXNKxr6QXCrn-tRfLpz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070083
 
-On Mon Jul 6, 2026 at 11:48 PM CEST, Guenter Roeck wrote:
-> On 7/6/26 14:42, Paul Louvel wrote:
->> On Mon Jul 6, 2026 at 6:12 PM CEST, Guenter Roeck wrote:
->>> On 7/6/26 08:44, Paul Louvel wrote:
->>>> On Mon Jul 6, 2026 at 4:22 PM CEST, Guenter Roeck wrote:
->>>>> On 7/6/26 04:15, Paul Louvel wrote:
->>>>>> On Mon Jul 6, 2026 at 12:40 PM CEST, sashiko-bot wrote:
->>>>>>> Thank you for your contribution! Sashiko AI review found 1 potentia=
-l issue(s) to consider:
->>>>>>> - [High] Removing the manual hardware timeout refresh while still u=
-nconditionally switching the hardware timer base from minutes to seconds dr=
-astically truncates the remaining timeout if the BIOS originally configured=
- it in minutes, risking unexpected system reboots.
->>>>>>> --
->>>>>>>
->>>>>>> commit 0014048ec369e2a09098aa033aeb725449e2fd67
->>>>>>> Author: Paul Louvel <paul.louvel@bootlin.com>
->>>>>>>
->>>>>>> watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for running chip on boo=
-t
->>>>>>>
->>>>>>> This patch updates the w83627hf watchdog driver to rely on the watc=
-hdog
->>>>>>> core's WDOG_HW_RUNNING flag to keep a running watchdog alive during=
- boot.
->>>>>>> It replaces the previous behavior of manually issuing a single keep=
-alive
->>>>>>> during initialization.
->>>>>>>
->>>>>>>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w8=
-3627hf_wdt.c
->>>>>>>> --- a/drivers/watchdog/w83627hf_wdt.c
->>>>>>>> +++ b/drivers/watchdog/w83627hf_wdt.c
->>>>>>> [ ... ]
->>>>>>>> @@ -241,9 +241,8 @@ static int w83627hf_init(struct watchdog_devic=
-e *wdog, enum chips chip)
->>>>>>>>     			pr_warn("Stopping previously enabled watchdog until userlan=
-d kicks in\n");
->>>>>>>>     			superio_outb(cr_wdt_timeout, 0);
->>>>>>>>     		} else {
->>>>>>>> -			pr_info("Watchdog already running. Resetting timeout to %d sec=
-\n",
->>>>>>>> -				wdog->timeout);
->>>>>>>> -			superio_outb(cr_wdt_timeout, wdog->timeout);
->>>>>>>> +			pr_info("Watchdog already running.\n");
->>>>>>>> +			set_bit(WDOG_HW_RUNNING, &wdog->status);
->>>>>>>>     		}
->>>>>>>>     	}
->>>>>>>>    =20
->>>>>>>
->>>>>>> [Severity: High]
->>>>>>> Does removing this explicit timeout reset create a risk of unexpect=
-ed reboots?
->>>>>>>
->>>>>>> If the BIOS originally configured the watchdog with a timeout in mi=
-nutes
->>>>>>> (for example, a timeout of 5 minutes), the hardware counter cr_wdt_=
-timeout
->>>>>>> will hold the value 5.
->>>>>>
->>>>>> First of all, the driver does not support minute mode for now.
->>>>>
->>>>> The above feedback doesn't claim otherwise. The BIOS may still have c=
-onfigured
->>>>> the timeout to 5 minutes.
->>>>>
->>>>>>
->>>>>>>
->>>>>>> Because this patch removes the explicit write of wdog->timeout (whi=
-ch is
->>>>>>> typically 60) to cr_wdt_timeout, the counter retains the raw value =
-5.
->>>>>>> Just after this block in w83627hf_init(), the driver unconditionall=
-y
->>>>>>> switches the timebase to seconds:
->>>>>>>
->>>>>>> w83627hf_init() {
->>>>>>>        ...
->>>>>>>        /* set second mode & disable keyboard turning off watchdog *=
-/
->>>>>>>        t =3D superio_inb(cr_wdt_control) & ~0x0C;
->>>>>>>        superio_outb(cr_wdt_control, t);
->>>>>>>        ...
->>>>>>> }
->>>>>>>
->>>>>>> This immediately shrinks the remaining timeout from 5 minutes to 5 =
-seconds.
->>>>>>
->>>>>> True, but in those 5 seconds, the watchdog core will kick the watchd=
-og
->>>>>> immediately. by calling start(), and thus refreshing the watchdog to=
- 60 seconds.
->>>>>
->>>>> ... unless below.
->>>>>
->>>>>>
->>>>>>>
->>>>>>> If the watchdog core's kworker is delayed, or if the system is conf=
-igured
->>>>
->>>>
->>>>
->>>>>>> not to ping the watchdog before user space takes over, could this u=
-nusually
->>>>>>> short timeout cause the system to reboot unexpectedly during early =
-boot?
->>>>>>
->>>>>> Yes, but expected. If WATCHDOG is enabled, then WATCHDOG_HANDLE_BOOT=
-_ENABLED is
->>>>>> enabled by default unless explicitly disabled when configuring the k=
-ernel.
->>>>>>
->>>>>
->>>>> It is still an unexpected and undocumented change in behavior. Previo=
-usly
->>>>> in that situation the watchdog timeout would happen much later and gi=
-ve
->>>>> user space time to start the watchdog daemon. This is no longer the c=
-ase.
->>>>
->>>> Do you mean that, in the case WATCHDOG_HANDLE_BOOT_ENABLED is disabled=
-, the
->>>> driver now doesn't refresh the watchdog, this is unexpected ? I was re=
-lying on
->>>> the fact that this entry is enabled by default.
->>>
->>> It can be disabled with a configuration option, and with a module param=
-eter.
->>>
->>>> In this case, should the driver refresh the watchdog itself, and set t=
-he
->>>> WDOG_HW_RUNNING bit (for the added feature that it does it repeatedly)=
- ?
->>>> Or document the fact that the driver will not refresh the watchdog if
->>>> WATCHDOG_HANDLE_BOOT_ENABLED is disabled ?
->>>>
->>>
->>> The difference is that the timeout used to be 60 seconds, or whatever t=
-he
->>> default driver timeout is set to. If the BIOS enables the hardware time=
-out
->>> and sets it to <n> minutes, your patch changes that to <n> seconds. Tha=
-t
->>> is unexpected.
->>=20
->> The default driver timeout is set to 60 seconds. I do not understand you=
-r point.
->> If the BIOS enables the hardware timeout and sets it to <n> minutes, wit=
-hout my
->> patch, the driver would still refresh the watchdog to <n> seconds (60 ac=
-tually),
->> with "superio_outb(cr_wdt_timeout, wdog->timeout);". It forces second mo=
-de in
->> the control register anyway, and the driver has no way to know the previ=
-ously
->> set timeout.
->> The only difference I see is that it does it immediately and does not re=
-ly on
->> the core to do it. It also do it only code.
->> Maybe I do not see something here.
->>=20
->
-> Please provide the data path showing how the watchdog core sets the timeo=
-ut
-> to 60 seconds if WATCHDOG_HANDLE_BOOT_ENABLED is not enabled.
+>> diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+>> index 90e50c245c0cb..3692be65cc21b 100644
+>> --- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> [ ... ]
+>> @@ -1050,6 +1050,8 @@ sdhc_1: mmc@7c4000 {
+>>  			qcom,dll-config = <0x0007642c>;
+>>  			qcom,ddr-config = <0x80040868>;
+>>  
+>> +			qcom,ice = <&sdhc_ice>;
+> 
+> [Severity: Low]
+> Does this new property trigger a dtbs_check validation error?
+> 
+> The Documentation/devicetree/bindings/mmc/qcom,sdhci-msm.yaml schema uses
+> unevaluatedProperties: false. Because the qcom,ice property is not
+> currently documented in that schema, adding it to the SDHC controller node
+> here causes make dtbs_check to report a validation failure.
+> 
+> Should the binding schema be updated to include qcom,ice alongside this
+> device tree change?
 
-If WATCHDOG_HANDLE_BOOT_ENABLED is not enabled, then I understand the issue=
-.
-Would an additional check at compile time be sufficient ?
+As mentioned in cover letter too, dt-bindings with qcom,ice property is
+accepted hence, sent v9 without bindings change.
+Validated dtbs_check locally, taking dt-bindings as base kodiak/monaco
+DT didn't give any error.
 
-diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wd=
-t.c
-index 27ef1cce3a14..c6d470be62a8 100644
---- a/drivers/watchdog/w83627hf_wdt.c
-+++ b/drivers/watchdog/w83627hf_wdt.c
-@@ -242,7 +242,11 @@ static int w83627hf_init(struct watchdog_device *wdog,=
- enum chips chip)
-                        superio_outb(cr_wdt_timeout, 0);
-                } else {
-                        pr_info("Watchdog already running.\n");
-+#ifdef CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED
-                        set_bit(WDOG_HW_RUNNING, &wdog->status);
-+#else
-+                       superio_outb(cr_wdt_timeout, wdog->timeout);
-+#endif
-                }
-        }
-
->
-> Thanks,
-> Guenter
->
-
-Thanks,
-Paul.
-
-
---=20
-Paul Louvel, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+-- 
+Regards
+Kuldeep
 
