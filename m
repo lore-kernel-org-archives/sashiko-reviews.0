@@ -1,212 +1,266 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569003DDB18;
-	Tue,  7 Jul 2026 07:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5191B231827
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 07:47:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783409252; cv=none; b=PLB5Zky5ndy8dIttEzTpmC7YEP5bjMpbDk24kcHgrQMgTZmddA4ILI2nnOYAcWjoi1o3PczbbGhs9JFt7iFOG0K9iyw7ERF4FQjto8bJdYr02YzBxdkf67RELqcfFnQVR2EntMR15gw+zMDwDU0hIEeclbJhLnJRZ6GSJiTUCAc=
+	t=1783410442; cv=none; b=KvxKHncKFrptQaPYiX6iZeywHY+zpuDd+zraFDuU7PHpa+HvrRs+OQ4pDypFVvur2Ew/lhAJeobmAIGKwD3kxyLDiU4WkS5qMcYoNl7J4eyjGvIyUyvhtjCouwZFZ3TTfVCOAtnAafw1F2dQ9rKGiQ5NFE9xhqiG0ms1j30HeQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783409252; c=relaxed/simple;
-	bh=KHG0WNn/un/uOqbLkp02olMr8T9eK6p7l+F4LFV6KGE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K+cDdKXBlOiDQ1dSOeNzCOPdZZrvCcKv6LpKd6jNv+trLdVEMp0BaYcDtcmxCYhYWs/grtSsRAw7sNTS/NGx7nAmQq/8UQygKuSh4Ce9kJ9caSu4gMVTjZQ5/rpAndwXJ+RGn+/lO/EPds3yHjAo71HPV6cp+iOFejgVLJsIEZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fCytDG+W; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1783410442; c=relaxed/simple;
+	bh=8BAw/gwUV4DPqTc1XlhdDBC6YMrGTmgu0NFo7yRcK+k=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=mn+wye3WYnkM6p3nPmKLyCGCh8l50iwFSp+PMO418f+0cMv8tBvUphyv0Suawl/fFW2aw8703dSHkHaHWgxL21xGqyxhVsSBNxUSSWPIk6zsDCCso2KO1pE38I1wSQG1USZO14eyicLyLLYajFJEwyX3JDIH8L1PpIUXbC8XiuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Lxj6CTdE; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fCytDG+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3D48EC2BCFA;
-	Tue,  7 Jul 2026 07:27:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783409249;
-	bh=KHG0WNn/un/uOqbLkp02olMr8T9eK6p7l+F4LFV6KGE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=fCytDG+W5ESK7Vjam8L9G81RGhlDsxzWLwDCvXeT7RsBRLpgVTUB/a25r33bvQRXc
-	 DXrKq+F5C0yIr9ciBbd2Y9Gibd+E/ikAcnFrMtA+/yF7RT8+Kpe9X62RLum27qO3Ez
-	 a9aTTdeAf4CxdQ/763A81HWy7oh0c7U6N84mPiSr1swfSmn8IbbzEmzXPgjLibtbYT
-	 OEN74mSjAbsv7UVZ0MdBn09mNnDl793ofD++iDagFMenbvslVeXggS3hImJlhEXW2d
-	 y8d0bhFgENzZ1lFuAgKddCK+oHOStouw3Onzz2KTgjL1VEGAki6s8hw2H3zagD5/X4
-	 4Htzl9knoF+LQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D10DC44500;
-	Tue,  7 Jul 2026 07:27:29 +0000 (UTC)
-From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
-Date: Tue, 07 Jul 2026 09:27:15 +0200
-Subject: [PATCH v2 5/6] can: bcm: add missing rcu list annotations and
- operations
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Lxj6CTdE"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 02E47C8F1E9
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 07:47:27 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 86587601A3;
+	Tue,  7 Jul 2026 07:47:13 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5189011BC0E18;
+	Tue,  7 Jul 2026 09:47:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783410433; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=RkkUyRvFUdSKgRxtxaFUaPgXRl4J0MzoQoofSpJyXgs=;
+	b=Lxj6CTdEufZvjWVUr44XlOh7YyMNvpouWAR34YiJhQjBNE7cEC6rsjXr0dwBDPEO4p75T5
+	hhRIqGwTlfG0gfYbWCeAUK2z49ugIk3Ey9KHGFF8Y7QA3p9x5kmk9uHddq3FlZh2MoZ73g
+	p8MKgxYU1+B+u9wXXwmk9UcZm5bQkfixQ4gdaDIspLX6Vw3yYBUUYXMs4fwsbLc1iMfbqD
+	41xf/9rte4fp0tEMkvnPQJxZsoM9mLuJSkvhT0Qei1FeGkbxbHfnyEStCyYF8p1GZjymVX
+	X/E89GjCSWKtmeY9Gt8bosr8HR+a+yIEMOY0ZoCYjK4vZM62FGmeFifvtbtYYw==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-bcm_fixes-v2-5-96620c534b75@hartkopp.net>
-References: <20260707-bcm_fixes-v2-0-96620c534b75@hartkopp.net>
-In-Reply-To: <20260707-bcm_fixes-v2-0-96620c534b75@hartkopp.net>
-To: linux-can@vger.kernel.org
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, sashiko-reviews@lists.linux.dev
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783409247; l=5015;
- i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
- bh=vesg++73vBPnWwMKUzYRzoVV8jE4EWFoOnex7DCZe0c=;
- b=FM/RNiFvTSBfrO3TfYn+7dnDhhrLbuNyq/id8Eu1/5IeyW7g6tEIljk3cKaWKkz8J6sQxKMfj
- oW0SyiHS90GCRiEpw21Q1E3+pflQ/ifMCFZsx3YoKQRWp9yWMeLVTuC
-X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
- pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
-X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
- auth_id=620
-X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
-Reply-To: socketcan@hartkopp.net
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 Jul 2026 09:47:11 +0200
+Message-Id: <DJS68HQS83G4.38Z406G5WD8NQ@bootlin.com>
+Cc: <linux-watchdog@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for
+ running chip on boot
+From: "Paul Louvel" <paul.louvel@bootlin.com>
+To: "Guenter Roeck" <linux@roeck-us.net>, "Paul Louvel"
+ <paul.louvel@bootlin.com>, <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260706-w83627hf_wdt-nct6126d-v3-0-fa5ad8d486bc@bootlin.com>
+ <20260706-w83627hf_wdt-nct6126d-v3-2-fa5ad8d486bc@bootlin.com>
+ <20260706104010.A345B1F000E9@smtp.kernel.org>
+ <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
+ <f598a05b-5d91-484d-a637-e092950a6f47@roeck-us.net>
+ <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
+ <5e441e3a-27ce-4f46-abf4-fd6246727cb6@roeck-us.net>
+ <DJRTDK0H5R1Q.32FU59ADLZD6E@bootlin.com>
+ <a20d8c37-0d46-489b-aa8c-af927a2c552c@roeck-us.net>
+In-Reply-To: <a20d8c37-0d46-489b-aa8c-af927a2c552c@roeck-us.net>
+X-Last-TLS-Session-Version: TLSv1.3
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+On Mon Jul 6, 2026 at 11:48 PM CEST, Guenter Roeck wrote:
+> On 7/6/26 14:42, Paul Louvel wrote:
+>> On Mon Jul 6, 2026 at 6:12 PM CEST, Guenter Roeck wrote:
+>>> On 7/6/26 08:44, Paul Louvel wrote:
+>>>> On Mon Jul 6, 2026 at 4:22 PM CEST, Guenter Roeck wrote:
+>>>>> On 7/6/26 04:15, Paul Louvel wrote:
+>>>>>> On Mon Jul 6, 2026 at 12:40 PM CEST, sashiko-bot wrote:
+>>>>>>> Thank you for your contribution! Sashiko AI review found 1 potentia=
+l issue(s) to consider:
+>>>>>>> - [High] Removing the manual hardware timeout refresh while still u=
+nconditionally switching the hardware timer base from minutes to seconds dr=
+astically truncates the remaining timeout if the BIOS originally configured=
+ it in minutes, risking unexpected system reboots.
+>>>>>>> --
+>>>>>>>
+>>>>>>> commit 0014048ec369e2a09098aa033aeb725449e2fd67
+>>>>>>> Author: Paul Louvel <paul.louvel@bootlin.com>
+>>>>>>>
+>>>>>>> watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for running chip on boo=
+t
+>>>>>>>
+>>>>>>> This patch updates the w83627hf watchdog driver to rely on the watc=
+hdog
+>>>>>>> core's WDOG_HW_RUNNING flag to keep a running watchdog alive during=
+ boot.
+>>>>>>> It replaces the previous behavior of manually issuing a single keep=
+alive
+>>>>>>> during initialization.
+>>>>>>>
+>>>>>>>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w8=
+3627hf_wdt.c
+>>>>>>>> --- a/drivers/watchdog/w83627hf_wdt.c
+>>>>>>>> +++ b/drivers/watchdog/w83627hf_wdt.c
+>>>>>>> [ ... ]
+>>>>>>>> @@ -241,9 +241,8 @@ static int w83627hf_init(struct watchdog_devic=
+e *wdog, enum chips chip)
+>>>>>>>>     			pr_warn("Stopping previously enabled watchdog until userlan=
+d kicks in\n");
+>>>>>>>>     			superio_outb(cr_wdt_timeout, 0);
+>>>>>>>>     		} else {
+>>>>>>>> -			pr_info("Watchdog already running. Resetting timeout to %d sec=
+\n",
+>>>>>>>> -				wdog->timeout);
+>>>>>>>> -			superio_outb(cr_wdt_timeout, wdog->timeout);
+>>>>>>>> +			pr_info("Watchdog already running.\n");
+>>>>>>>> +			set_bit(WDOG_HW_RUNNING, &wdog->status);
+>>>>>>>>     		}
+>>>>>>>>     	}
+>>>>>>>>    =20
+>>>>>>>
+>>>>>>> [Severity: High]
+>>>>>>> Does removing this explicit timeout reset create a risk of unexpect=
+ed reboots?
+>>>>>>>
+>>>>>>> If the BIOS originally configured the watchdog with a timeout in mi=
+nutes
+>>>>>>> (for example, a timeout of 5 minutes), the hardware counter cr_wdt_=
+timeout
+>>>>>>> will hold the value 5.
+>>>>>>
+>>>>>> First of all, the driver does not support minute mode for now.
+>>>>>
+>>>>> The above feedback doesn't claim otherwise. The BIOS may still have c=
+onfigured
+>>>>> the timeout to 5 minutes.
+>>>>>
+>>>>>>
+>>>>>>>
+>>>>>>> Because this patch removes the explicit write of wdog->timeout (whi=
+ch is
+>>>>>>> typically 60) to cr_wdt_timeout, the counter retains the raw value =
+5.
+>>>>>>> Just after this block in w83627hf_init(), the driver unconditionall=
+y
+>>>>>>> switches the timebase to seconds:
+>>>>>>>
+>>>>>>> w83627hf_init() {
+>>>>>>>        ...
+>>>>>>>        /* set second mode & disable keyboard turning off watchdog *=
+/
+>>>>>>>        t =3D superio_inb(cr_wdt_control) & ~0x0C;
+>>>>>>>        superio_outb(cr_wdt_control, t);
+>>>>>>>        ...
+>>>>>>> }
+>>>>>>>
+>>>>>>> This immediately shrinks the remaining timeout from 5 minutes to 5 =
+seconds.
+>>>>>>
+>>>>>> True, but in those 5 seconds, the watchdog core will kick the watchd=
+og
+>>>>>> immediately. by calling start(), and thus refreshing the watchdog to=
+ 60 seconds.
+>>>>>
+>>>>> ... unless below.
+>>>>>
+>>>>>>
+>>>>>>>
+>>>>>>> If the watchdog core's kworker is delayed, or if the system is conf=
+igured
+>>>>
+>>>>
+>>>>
+>>>>>>> not to ping the watchdog before user space takes over, could this u=
+nusually
+>>>>>>> short timeout cause the system to reboot unexpectedly during early =
+boot?
+>>>>>>
+>>>>>> Yes, but expected. If WATCHDOG is enabled, then WATCHDOG_HANDLE_BOOT=
+_ENABLED is
+>>>>>> enabled by default unless explicitly disabled when configuring the k=
+ernel.
+>>>>>>
+>>>>>
+>>>>> It is still an unexpected and undocumented change in behavior. Previo=
+usly
+>>>>> in that situation the watchdog timeout would happen much later and gi=
+ve
+>>>>> user space time to start the watchdog daemon. This is no longer the c=
+ase.
+>>>>
+>>>> Do you mean that, in the case WATCHDOG_HANDLE_BOOT_ENABLED is disabled=
+, the
+>>>> driver now doesn't refresh the watchdog, this is unexpected ? I was re=
+lying on
+>>>> the fact that this entry is enabled by default.
+>>>
+>>> It can be disabled with a configuration option, and with a module param=
+eter.
+>>>
+>>>> In this case, should the driver refresh the watchdog itself, and set t=
+he
+>>>> WDOG_HW_RUNNING bit (for the added feature that it does it repeatedly)=
+ ?
+>>>> Or document the fact that the driver will not refresh the watchdog if
+>>>> WATCHDOG_HANDLE_BOOT_ENABLED is disabled ?
+>>>>
+>>>
+>>> The difference is that the timeout used to be 60 seconds, or whatever t=
+he
+>>> default driver timeout is set to. If the BIOS enables the hardware time=
+out
+>>> and sets it to <n> minutes, your patch changes that to <n> seconds. Tha=
+t
+>>> is unexpected.
+>>=20
+>> The default driver timeout is set to 60 seconds. I do not understand you=
+r point.
+>> If the BIOS enables the hardware timeout and sets it to <n> minutes, wit=
+hout my
+>> patch, the driver would still refresh the watchdog to <n> seconds (60 ac=
+tually),
+>> with "superio_outb(cr_wdt_timeout, wdog->timeout);". It forces second mo=
+de in
+>> the control register anyway, and the driver has no way to know the previ=
+ously
+>> set timeout.
+>> The only difference I see is that it does it immediately and does not re=
+ly on
+>> the core to do it. It also do it only code.
+>> Maybe I do not see something here.
+>>=20
+>
+> Please provide the data path showing how the watchdog core sets the timeo=
+ut
+> to 60 seconds if WATCHDOG_HANDLE_BOOT_ENABLED is not enabled.
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+If WATCHDOG_HANDLE_BOOT_ENABLED is not enabled, then I understand the issue=
+.
+Would an additional check at compile time be sufficient ?
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wd=
+t.c
+index 27ef1cce3a14..c6d470be62a8 100644
+--- a/drivers/watchdog/w83627hf_wdt.c
++++ b/drivers/watchdog/w83627hf_wdt.c
+@@ -242,7 +242,11 @@ static int w83627hf_init(struct watchdog_device *wdog,=
+ enum chips chip)
+                        superio_outb(cr_wdt_timeout, 0);
+                } else {
+                        pr_info("Watchdog already running.\n");
++#ifdef CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED
+                        set_bit(WDOG_HW_RUNNING, &wdog->status);
++#else
++                       superio_outb(cr_wdt_timeout, wdog->timeout);
++#endif
+                }
+        }
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+>
+> Thanks,
+> Guenter
+>
 
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
----
- net/can/bcm.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+Thanks,
+Paul.
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 20b1bdc87414..3609178a1367 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -263,11 +263,11 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- 
- 		seq_printf(m, "%s%ld%%\n",
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
- 
- 		if (op->flags & CAN_FD_FRAME)
-@@ -990,10 +990,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			int ifindex, struct sock *sk)
- {
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
- 	/* we need a real device to send frames */
- 	if (!ifindex)
-@@ -1131,12 +1132,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 		/* currently unused in tx_ops */
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
- 	if (op->flags & SETTIMER) {
- 		/* set timer values */
-@@ -1154,10 +1154,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_cancel(&op->timer);
- 		/* spec: send CAN frame when starting timer */
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op, NULL);
- 
- 	if (op->flags & STARTTIMER)
- 		bcm_tx_start_timer(op);
-@@ -1338,13 +1342,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
- 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1412,14 +1413,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
- 					      REGMASK(op->can_id),
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
- }
- 
-@@ -1749,12 +1752,14 @@ static int bcm_release(struct socket *sock)
- 	/* remove procfs entry */
- 	if (net->can.bcmproc_dir && bo->bcm_proc_read)
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
- 		 * Don't care if we're bound or not (due to netdev problems)
- 		 * can_rx_unregister() is always a save thing to do here.
-@@ -1781,12 +1786,14 @@ static int bcm_release(struct socket *sock)
- 
- 	}
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
- 		WRITE_ONCE(bo->bound, 0);
- 		bo->ifindex = 0;
 
--- 
-2.53.0
-
+--=20
+Paul Louvel, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
