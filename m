@@ -1,160 +1,228 @@
-Received: from out30-132.freemail.mail.aliyun.com (out30-132.freemail.mail.aliyun.com [115.124.30.132])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B9A2472A2
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 03:32:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969FB286415
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 04:54:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783395174; cv=none; b=jW9ODI4KuDFcrPg226Wfw9+48n7FkRbqmpR2y74kuObr5RVbGr190KgBjcvbaGCiLHw6w7dOIidCMTesDqLAxj9Q0eD7XFDZfjJfE6FzPCi7XeXQ5bODkT3Y68eX6V24eMRUjHgHsuYQj6NvcTlE5NzezjGB5vG4A4fKZtqjUPs=
+	t=1783400079; cv=none; b=KS7+PtzNNiWbs8Vp/9gbQgXvRQLEu4kAj2653Oex/Aqfs2BGAKZ4puNCsCdU7tX6cSDrqHb3VA73JgWXMxysJiyGL2CjjVaP5J5c3ZD3cS5ZcMt3h90KuAmyMuTjtznXZN4OV9DfH8SX8pUuT+EdGbmbYtQmmnvQ6Mvr1IqI6Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783395174; c=relaxed/simple;
-	bh=MVO3liupPwj/Vlzs8En1OpPpt2fclexaglrXgfrHrFU=;
+	s=arc-20240116; t=1783400079; c=relaxed/simple;
+	bh=kb60zbfA89OyEA3MIB/FOsifXnD30hWKiiEVbRbkXjU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f5NS37Kr/gUlh5HAC5c6FwzO4lLChCHpdu6cYo3+pO1uas2r1aLfxitSNGhlx+bcEpLq+8ej+RLv1YdgKd/Wo9EqUSJs4kJYHd2Sle8REE87rHOMM16O43Vea0bx8pGRZukwvgTHsbW6g72y0gt/CFjKZPP5B41swrXswqmbjFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=r+ftn+GW; arc=none smtp.client-ip=115.124.30.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=F/twS12HJViwb2H45XQw6mxoisMLVpxZxQJT6+WWq1QHLgLzNNnLWt+bfl8m1dCkG7THYMWtAdrDyOgrLqG/J9rdA+H3TnyBw7gKZ3RT4kZRsdAH3dHoaV5JfVII3siolF5COalTHcZwjCwmlzFzrNuKdXlQFubwcbfdkioJGM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TEjpWobY; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="r+ftn+GW"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1783395169; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	bh=UL4ybNwsHd88nyr81UjZx7Ri3ifdNe2oAPkU7R2Fbg8=;
-	b=r+ftn+GWsJNtLEl25KIhm0hyr+PvDVncFMfBLZCnc5H0KYrFe7YtlLsitfx35rW2Rmok6PX1z0oR3T0khK2zjRTpKhb503IFBvO0vpBzj9eAvubCPL3czbWoct8lUrdEaeh7V9kJG9JLwcBLx7KdwHD7k6Pf72RYSdPA/cieq6A=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R161e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037033178;MF=dust.li@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0X6bLLSS_1783395167;
-Received: from localhost(mailfrom:dust.li@linux.alibaba.com fp:SMTPD_---0X6bLLSS_1783395167 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Tue, 07 Jul 2026 11:32:48 +0800
-Date: Tue, 7 Jul 2026 11:32:47 +0800
-From: Dust Li <dust.li@linux.alibaba.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: Re: [PATCH net] net/smc: ignore peer-supplied rmbe_idx and dmbe_idx
-Message-ID: <akxzX5lh6fRQZmaF@linux.alibaba.com>
-Reply-To: dust.li@linux.alibaba.com
-References: <20260702171137.1099051-2-dust.li@linux.alibaba.com>
- <20260703171239.625D21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TEjpWobY"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8453427d3f4so3487635b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 06 Jul 2026 21:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783400077; x=1784004877; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ibd+yXAbv6+zm2PGw2sGUeLwGtlFhz0ZTLec7wv+mwQ=;
+        b=TEjpWobYryMKztOTqkmKrLaLGoHSTwtzilghqUpZCFYSU+mRT46QZ1TK7bhPDzV7xX
+         GLoDFNxH1jFR8fs7YJQ/t0Wpx1fMvtyp3TsUJ1XhqcEsp7PwkEqilZWNEi0MdF3yZj1o
+         nx8gFJB5+r6KB7s4hPxmIB6i6CyUobNCNW8gt2eANjY0mxwfJBN6gCGO0kf0KPUYFfYB
+         5rf2EpUPJvnG0ScGKhjv5l+woaRlc7AMv1e5sEwwDqZ/onvBXJwUIACXMDqDpYaZHLHa
+         fheAoAee3yRfGDB3WUCAb4VMM0fj09wwWr1rp9/UavW9d6YO0D42yGokmrkxf5WCMNi4
+         P3/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783400077; x=1784004877;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ibd+yXAbv6+zm2PGw2sGUeLwGtlFhz0ZTLec7wv+mwQ=;
+        b=IJ+ZZqNnFVynnVucuAfM29X+QxaUACd/lXot8WBH3Zutvv4xVyhKo4wFzb5O2idGec
+         OvW7+wAQM+8dUhPDpSlqN9teOat228z8t0oiamqL6RJpp5CN51U8IRFEaacC0BjKgR95
+         z5uxeLTCJHhiSVWnkhsQix8/zRHPCeZeKV2wGn7YzHdBuhNmOenF79QdhtSxR0lsfll8
+         yIARFayQiWapVolJL1VO0ZMklKYkXEtCyZ2XNpfCRfbSJworqa5VqftKk3eE2CS0SEWi
+         4nnmudkmaVYgWUDr/BEgfxOwbLq7AvRR5cL5Iz/NGwgaZiwIUdPyFChKUJPBndsGEIlf
+         dn1w==
+X-Gm-Message-State: AOJu0YyVHT98L7nBNqi+LM52VPjY0M5npx9zf7DpydNqWSS1JF0UZlyV
+	7W9DBeJlFyniTtJ4QUXK3MjsSCy3vn0O95PHLk+D1d6RsGUIlfL9NpgC
+X-Gm-Gg: AfdE7cmdndoKfoY0v0WB9HQUjAVWJ+feGIk2lwl1mmSP+2cb+B/hMpolvMyssr/bbKJ
+	e8Sr1yx6H66wTk1nhmo1fDqSGE7M00+Ji5AiWHJPhybRNtr5fVlmjCTswSjgc26wpHZlGsgHIjt
+	knIY+v5eCSA9ztPHuUhmZWLqyAnnY29nKJIWH4po/kJIHpNZfpEPqeBb1bIzqK2UW+UFqEfwnde
+	fZPnB8iJf9cKHP7K5cU8sAMhv7vosDfMjlYEzzisFEpNXX6R4QHBL3b4/8B5mLyqZU6/vswEliF
+	ibQfE7jBsLJkMJz2pNorrr3nuxxZhY8X39/3FZQJtjh/iVw1dzOIg9bO6E6Kj2XOmogHeYU9ysS
+	9DxPcDhjpd74+Jm1bB9Xu4f+YJZKRH1hK7eZsdyzyAGawaisyOxwHZ0Y+713mmsS6/Ddg/fu6Ar
+	4R0dGF0jvM4qd1e5muuF2FoP8KuHUSlPrT5FOmHl4KA7wQptbaH6qy4g==
+X-Received: by 2002:a05:6a20:7347:b0:3bf:b1f4:747b with SMTP id adf61e73a8af0-3c08ed0f571mr4685540637.12.1783400076823;
+        Mon, 06 Jul 2026 21:54:36 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:d89b:1fdd:a8f2:dbeb])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b6593c9a1sm4161788c88.2.2026.07.06.21.54.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2026 21:54:35 -0700 (PDT)
+Date: Mon, 6 Jul 2026 21:54:32 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Arnd Bergmann <arnd@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-input@vger.kernel.org, 
+	Hans de Goede <hansg@kernel.org>, Jin Yao <yao.jin@linux.intel.com>
+Subject: Re: [PATCH 02/10] [v3] input: gpio-keys: make legacy gpiolib optional
+Message-ID: <akyF3Log1X8_FGIB@google.com>
+References: <20260520183815.2510387-3-arnd@kernel.org>
+ <20260530004519.1C8E81F00893@smtp.kernel.org>
+ <dfe153e1-a3d1-4dca-a59b-59899082c4e9@app.fastmail.com>
+ <ah-1z9LhVG0wtfBw@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260703171239.625D21F000E9@smtp.kernel.org>
+In-Reply-To: <ah-1z9LhVG0wtfBw@google.com>
 
-On 2026-07-03 17:12:38, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
->New issues:
->- [High] Hardcoding `peer_rmbe_idx` and `tx_off` violates the SMC protocol and breaks interoperability by ignoring the peer-supplied buffer index.
->
->Pre-existing issues:
->- [Critical] Missing bounds check in `dibs_lo_move_data` allows an arbitrary out-of-bounds write in the kernel.
->--
->
->commit 60af5c80d503d1904779918ca5eeba8800e8bbe9
->Author: Dust Li <dust.li@linux.alibaba.com>
->
->net/smc: ignore peer-supplied rmbe_idx and dmbe_idx
->
->This commit modifies the smc connection setup to ignore the peer-supplied
->rmbe and dmbe indices from the clc accept/confirm messages. It hardcodes
->the peer_rmbe_idx to 1 for smc-r and 0 for smc-d, and unconditionally sets
->tx_off to 0, assuming the peer allocates exactly one buffer.
->
->> diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
->> --- a/net/smc/af_smc.c
->> +++ b/net/smc/af_smc.c
->> @@ -729,11 +729,15 @@ static void smcr_conn_save_peer_info(struct smc_sock *smc,
->>  {
->>  	int bufsize = smc_uncompress_bufsize(clc->r0.rmbe_size);
->>  
->> -	smc->conn.peer_rmbe_idx = clc->r0.rmbe_idx;
->> +	/* Linux uses exactly one RMBE per RMB (always index 1); ignore the
->> +	 * peer-supplied rmbe_idx to prevent a malicious peer from setting an
->> +	 * out-of-bounds tx_off.
->> +	 */
->> +	smc->conn.peer_rmbe_idx = 1;
->>  	smc->conn.local_tx_ctrl.token = ntohl(clc->r0.rmbe_alert_token);
->>  	smc->conn.peer_rmbe_size = bufsize;
->>  	atomic_set(&smc->conn.peer_rmbe_space, smc->conn.peer_rmbe_size);
->> -	smc->conn.tx_off = bufsize * (smc->conn.peer_rmbe_idx - 1);
->> +	smc->conn.tx_off = 0;
->
->[Severity: High]
->Does hardcoding the peer_rmbe_idx and tx_off violate the smc protocol and
->break interoperability with standard-compliant peers?
+On Tue, Jun 02, 2026 at 10:10:28PM -0700, Dmitry Torokhov wrote:
+> On Mon, Jun 01, 2026 at 08:32:31PM +0200, Arnd Bergmann wrote:
+> > 
+> > Hans, Dmitry, do you already have plans to deal with the
+> > soc_button_array driver to move it away from legacy GPIOs?
+> > 
+> > So far I can see four possible ways we can deal with it,
+> > but none that I actually like:
+> > 
+> > a) delay the problem, apply my original oneline change
+> >    to 'select GPIOLIB_LEGACY' and fix it later, so we
+> >    can make GPIOLIB_LEGACY default-disabled in 7.3.
+> > 
+> > b) add a gpiod member to struct gpio_keys_button and skip
+> >    the intermediate gpio number here. Clean it up later.
+> > 
+> > c) always pass the gpio as an interrupt, as the driver
+> >    already does for some machines
+> > 
+> > d) add dynamic device properties that duplicate the
+> >    information from ACPI/DMI, so the driver can
+> >    stop using platform data
+> > 
+> > e) disconnect gpio_keys_button from gpio-keys.c and
+> >    register the buttons to the input subsystem
+> >    directly from soc_button_device_create().
+> 
+> I tried doing e) and while it is possible I ended up re-implementing
+> most of gpio_keys.c which is not great. We still need both GPIO and
+> IRQ-only modes, and handling debouncing, both software and hardware, and
+> so on. So I would like to see if d) is possible. The problem is that we
+> need to reconstruct GPIO reference from existing gpio_desc. If Bart will
+> be OK with something like below then I think the conversion should be
+> achievable.
 
-Thanks for the reporting !
+It turns out Bart was not on the CC list so I was waiting for response
+in vain...
 
-You are right, althrough we only support 1 RMBE/DMBE per RMB/DMB, but this
-breaks SMC protocol.
+Bart, will you be OK with something like below?
 
->
->If a remote peer multiplexes multiple connections into a single registered
->memory buffer and assigns an index greater than 1, ignoring this index could
->cause the Linux client to write its rdma payloads to the wrong remote offset.
->
->Could this corrupt the memory of other connections on the remote peer?
->
->>  }
->>  
->>  static void smcd_conn_save_peer_info(struct smc_sock *smc,
->> @@ -741,12 +745,16 @@ static void smcd_conn_save_peer_info(struct smc_sock *smc,
->>  {
->>  	int bufsize = smc_uncompress_bufsize(clc->d0.dmbe_size);
->>  
->> -	smc->conn.peer_rmbe_idx = clc->d0.dmbe_idx;
->> +	/* Linux uses exactly one DMBE per DMB (always index 0); ignore the
->> +	 * peer-supplied dmbe_idx to prevent a malicious peer from deriving an
->> +	 * out-of-bounds tx_off that causes an OOB write.
->> +	 */
->> +	smc->conn.peer_rmbe_idx = 0;
->>  	smc->conn.peer_token = ntohll(clc->d0.token);
->>  	/* msg header takes up space in the buffer */
->>  	smc->conn.peer_rmbe_size = bufsize - sizeof(struct smcd_cdc_msg);
->>  	atomic_set(&smc->conn.peer_rmbe_space, smc->conn.peer_rmbe_size);
->> -	smc->conn.tx_off = bufsize * smc->conn.peer_rmbe_idx;
->> +	smc->conn.tx_off = 0;
->
->[Severity: High]
->Similarly for smc-d, does discarding the peer-supplied dmbe_idx cause ism
->writes to target the wrong remote offset if the remote peer uses an index
->other than 0?
->
->[Severity: Critical]
->This isn't a bug introduced by this patch, but there appears to be a missing
->bounds check in the smc loopback driver:
->
->drivers/dibs/dibs_loopback.c:dibs_lo_move_data() {
->    ...
->    memcpy((char *)rmb_node->cpu_addr + offset, data, size);
->    ...
->}
->
->If a malicious local process acting as an smc loopback peer allocates a
->small dmb buffer but sends a forged clc accept message over the tcp socket
->with a deceptively large dmbe_size, could this trigger an out-of-bounds
->write?
->
->The local smc client would compute a massive peer_rmbe_size and pass a large
->size and offset to smcd->ops->move_data() when transmitting data. Without
->verifying that the requested offset + size fits within the actually
->allocated rmb_node->len, it seems this might overwrite kernel memory.
+> 
+> gpiolib: Introduce gpiod_get_software_node_reference()
+> 
+> From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> 
+> To support converting drivers (such as soc_button_array) to use static
+> device properties/software nodes, we need a way to reconstruct a GPIO
+> reference from an existing gpio_desc.
+> 
+> Introduce gpiod_get_software_node_reference() which populates a
+> struct software_node_ref_args with the GPIO device's fwnode, the pin
+> offset, and the appropriate active-low flag.
+> 
+> Assisted-by: Gemini:gemini-3.1-pro
+> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> ---
+>  drivers/gpio/gpiolib.c        |   35 +++++++++++++++++++++++++++++++++++
+>  include/linux/gpio/consumer.h |   12 ++++++++++++
+>  2 files changed, 47 insertions(+)
+> 
+> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> index 1e6dce430dca..63cef0fb02b5 100644
+> --- a/drivers/gpio/gpiolib.c
+> +++ b/drivers/gpio/gpiolib.c
+> @@ -247,6 +247,41 @@ int gpiod_hwgpio(const struct gpio_desc *desc)
+>  }
+>  EXPORT_SYMBOL_GPL(gpiod_hwgpio);
+>  
+> +/**
+> + * gpiod_get_software_node_reference() - Reconstruct a software node reference
+> + *                                       from a GPIO descriptor
+> + * @desc: GPIO descriptor
+> + * @args: Pointer to software node reference arguments structure to populate
+> + *
+> + * This function can be used to construct a software node reference from
+> + * an existing GPIO descriptor. This is useful when a driver wants to pass
+> + * a software node to a secondary device, but needs to reconstruct a GPIO
+> + * reference dynamically.
+> + *
+> + * Returns:
+> + * 0 on success, or a negative error code on failure.
+> + */
+> +int gpiod_get_software_node_reference(const struct gpio_desc *desc,
+> +				      struct software_node_ref_args *args)
+> +{
+> +	struct gpio_device *gdev;
+> +
+> +	if (IS_ERR_OR_NULL(desc) || !args)
+> +		return -EINVAL;
+> +
+> +	gdev = desc->gdev;
+> +
+> +	memset(args, 0, sizeof(*args));
+> +	args->fwnode = dev_fwnode(&gdev->dev);
+> +	args->nargs = 2;
+> +	args->args[0] = gpiod_hwgpio(desc);
+> +	if (test_bit(GPIOD_FLAG_ACTIVE_LOW, &desc->flags))
+> +		args->args[1] = GPIO_ACTIVE_LOW;
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(gpiod_get_software_node_reference);
+> +
+>  /**
+>   * gpiod_to_chip - Return the GPIO chip to which a GPIO descriptor belongs
+>   * @desc:	descriptor to return the chip of
+> diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
+> index 3efb5cb1e1d1..c95b715a1d15 100644
+> --- a/include/linux/gpio/consumer.h
+> +++ b/include/linux/gpio/consumer.h
+> @@ -11,6 +11,7 @@
+>  struct acpi_device;
+>  struct device;
+>  struct fwnode_handle;
+> +struct software_node_ref_args;
+>  
+>  struct gpio_array;
+>  struct gpio_desc;
+> @@ -177,6 +178,9 @@ int desc_to_gpio(const struct gpio_desc *desc);
+>  
+>  int gpiod_hwgpio(const struct gpio_desc *desc);
+>  
+> +int gpiod_get_software_node_reference(const struct gpio_desc *desc,
+> +				      struct software_node_ref_args *args);
+> +
+>  struct gpio_desc *fwnode_gpiod_get_index(struct fwnode_handle *fwnode,
+>  					 const char *con_id, int index,
+>  					 enum gpiod_flags flags,
+> @@ -545,6 +549,14 @@ static inline int desc_to_gpio(const struct gpio_desc *desc)
+>  	return -EINVAL;
+>  }
+>  
+> +static inline
+> +int gpiod_get_software_node_reference(const struct gpio_desc *desc,
+> +				      struct software_node_ref_args *args)
+> +{
+> +	WARN_ON(desc);
+> +	return -EINVAL;
+> +}
+> +
+>  static inline
+>  struct gpio_desc *fwnode_gpiod_get_index(struct fwnode_handle *fwnode,
+>  					 const char *con_id, int index,
+> 
+> Thanks.
+> 
 
-
-This is the root cause, I will just send a patch fixing this.
-
-Best regards,
-Dust
-
->
->>  }
->
->-- 
->Sashiko AI review · https://sashiko.dev/#/patchset/20260702171137.1099051-2-dust.li@linux.alibaba.com?part=1
+-- 
+Dmitry
