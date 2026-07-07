@@ -1,79 +1,79 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D684B421EF6
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CFF422543
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783432671; cv=none; b=mrT1/fcij39qAGnbxXK4gZ7UW3p5cw5QF6GjxBEt5MhPM8p/++uJZZI2VRTi70t+7HIzu+w6WXqxC7ujrHCt1KhogTNuJhDw1za3GZ2rzDnNc0/oAcTingEdiY39HuwmMoYKyamShsxcfhgetzGzNXKCTa0utS0nsmnHOuGwv+A=
+	t=1783432678; cv=none; b=NEFg5MvLWcIoO1BRobmrqXCG2A6Gng1+jIfjEhYavYxxjFh7csO3fu8yyS+k7wesWIDbEAIK0xraJYWhm4nXXDenMgrYyva1dhSU/tsg7FgVC7g7tpbj83QoXTuLkaTnPPXnWEacWtWpbI9Rs778G0mFpYlix86yR2bU4mtzw0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783432671; c=relaxed/simple;
-	bh=4o3rrW4JYGMSeC8UQrBv1HUCPRnSnzB9UXWkIM/bROw=;
+	s=arc-20240116; t=1783432678; c=relaxed/simple;
+	bh=cAnPndlKRmrkHklzZlkxgUbFq4ng22pQCwcXdgh6Gn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdrPQe4ZyCEMpx/KMl7XXi1tK0hrQ7JJzDe2oGCxXEPr7Lq95zcawL2w5wro/4TB/5ea+qV/U1XAhOjBSupIOFYzAq5MDsXWuzuGXphZbTcm9Gzv6jFjJ4m8Pfwk65R9Xj0QzaWCpSaVPvhPwooO57+HRDZ4UJ7ylqg4Kpg4QfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=QXWo++7E; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zfNjRPsu; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=QXWo++7E; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zfNjRPsu; arc=none smtp.client-ip=195.135.223.131
+	 MIME-Version; b=jD/Yv7YkTw0+FcTwPGydJxkoijNSYaIx0B23vZT6UIaYi+GF2QmDl5mFLFhIBSJ3BBmks6yazHEjy/bfZ8lMPakOczGCHEZFdyIL6HDXwU9D3sVOi28vvFmUTGJ8kr/Hnl+qpsshgXGcw2q+On1wGWSnhaJUeSW9oMMw5yBfkUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Fp6TOcEV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Ra/c0w+J; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Fp6TOcEV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Ra/c0w+J; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="QXWo++7E";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zfNjRPsu";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="QXWo++7E";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zfNjRPsu"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Fp6TOcEV";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Ra/c0w+J";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Fp6TOcEV";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Ra/c0w+J"
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 23AF575A79;
-	Tue,  7 Jul 2026 13:57:33 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 39D8975AC0;
+	Tue,  7 Jul 2026 13:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783432653; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1783432654; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0xQQfcy1AxYzo0sLqCtimoHIHPKdZLVde37zM51Tqbo=;
-	b=QXWo++7EGqJhHM58pEAQP7BPnXUP60akFg1q5NHJVBi3PldICQ/u3zceLSwTpDiaVwQegl
-	4gjc+gQXTpIhfat3kSiFTiLZEn1V7GDy7k5po4EWvGYdUpOIYMIt6MS7VBAJGCtqdDuW0V
-	I4KgD0x2XD1VDD24pEUZj8W/RnF9K4I=
+	bh=6LKRwhmWaV0qI5SvETrloPdhxDBGTJmwhJOMh3VUQis=;
+	b=Fp6TOcEVRg7SMxj1zvAikNzv/cJYNK79UHT2AlcEtmxDPq002L64xXfT9NDcLPxbcUYN8k
+	woepsaMfl7Dz/GDbWF5bdN2IPDet8QDokLIXDgXnW1z/NIsTFuiiLuck6LKmKjGRIIAyQb
+	gK58JQc7u+qRF0pzwqGI5y4bmPhnkko=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783432653;
+	s=susede2_ed25519; t=1783432654;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0xQQfcy1AxYzo0sLqCtimoHIHPKdZLVde37zM51Tqbo=;
-	b=zfNjRPsu6ghn2y/IjMF54N2PU/lSm+Ot4cAkXYf3OXqAZxAqzkDas+Ul/pIVacWlNj5mqq
-	/PCJiYJKg3ngNpBg==
+	bh=6LKRwhmWaV0qI5SvETrloPdhxDBGTJmwhJOMh3VUQis=;
+	b=Ra/c0w+JthON9AJKa+72S1lhDciwOhh2Ox0R/UEE+nzGiNgs0P37l3nmMZT7EhXl78OaKJ
+	tTZdyPE5JM4q7lBA==
 Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=QXWo++7E;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=zfNjRPsu
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Fp6TOcEV;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Ra/c0w+J"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783432653; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1783432654; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0xQQfcy1AxYzo0sLqCtimoHIHPKdZLVde37zM51Tqbo=;
-	b=QXWo++7EGqJhHM58pEAQP7BPnXUP60akFg1q5NHJVBi3PldICQ/u3zceLSwTpDiaVwQegl
-	4gjc+gQXTpIhfat3kSiFTiLZEn1V7GDy7k5po4EWvGYdUpOIYMIt6MS7VBAJGCtqdDuW0V
-	I4KgD0x2XD1VDD24pEUZj8W/RnF9K4I=
+	bh=6LKRwhmWaV0qI5SvETrloPdhxDBGTJmwhJOMh3VUQis=;
+	b=Fp6TOcEVRg7SMxj1zvAikNzv/cJYNK79UHT2AlcEtmxDPq002L64xXfT9NDcLPxbcUYN8k
+	woepsaMfl7Dz/GDbWF5bdN2IPDet8QDokLIXDgXnW1z/NIsTFuiiLuck6LKmKjGRIIAyQb
+	gK58JQc7u+qRF0pzwqGI5y4bmPhnkko=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783432653;
+	s=susede2_ed25519; t=1783432654;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0xQQfcy1AxYzo0sLqCtimoHIHPKdZLVde37zM51Tqbo=;
-	b=zfNjRPsu6ghn2y/IjMF54N2PU/lSm+Ot4cAkXYf3OXqAZxAqzkDas+Ul/pIVacWlNj5mqq
-	/PCJiYJKg3ngNpBg==
+	bh=6LKRwhmWaV0qI5SvETrloPdhxDBGTJmwhJOMh3VUQis=;
+	b=Ra/c0w+JthON9AJKa+72S1lhDciwOhh2Ox0R/UEE+nzGiNgs0P37l3nmMZT7EhXl78OaKJ
+	tTZdyPE5JM4q7lBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 90C0B779AE;
-	Tue,  7 Jul 2026 13:57:32 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AF19A779AE;
+	Tue,  7 Jul 2026 13:57:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id IPH+IcwFTWoFSgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 07 Jul 2026 13:57:32 +0000
+	id 4G6gKc0FTWoFSgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 07 Jul 2026 13:57:33 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: lukas@wunner.de,
 	jfalempe@redhat.com,
@@ -97,9 +97,9 @@ Cc: dri-devel@lists.freedesktop.org,
 	linux-fbdev@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 06/10] drm/i915: Implement vga_switcheroo_client_ops.pre_switch
-Date: Tue,  7 Jul 2026 15:38:13 +0200
-Message-ID: <20260707135724.247562-7-tzimmermann@suse.de>
+Subject: [PATCH 08/10] drm/nouveau: Implement vga_switcheroo_client_ops.post_switch
+Date: Tue,  7 Jul 2026 15:38:15 +0200
+Message-ID: <20260707135724.247562-9-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260707135724.247562-1-tzimmermann@suse.de>
 References: <20260707135724.247562-1-tzimmermann@suse.de>
@@ -111,7 +111,7 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 23AF575A79
+X-Rspamd-Queue-Id: 39D8975AC0
 X-Spam-Flag: NO
 X-Spam-Score: -3.01
 X-Spam-Level: 
@@ -136,7 +136,7 @@ X-Spamd-Result: default: False [-3.01 / 50.00];
 	FROM_HAS_DN(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
 	FROM_EQ_ENVFROM(0.00)[];
 	R_RATELIMIT(0.00)[to_ip_from(RLgosu6qu4h11rje89ht7rjgg5)];
 	RCVD_TLS_ALL(0.00)[];
@@ -145,47 +145,63 @@ X-Spamd-Result: default: False [-3.01 / 50.00];
 	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-Call drm_client_dev_acquire_outputs() from vga_switcheroo's pre_switch
-callback. Pushes fbcon updates from vga_switcheroo into DRM's fbdev
-emulation.
+An output's attached display might have changed while a DRM client's
+device did not have the output switched to it.
+
+The nouveau_switcheroo_reprobe() callback sends a hotplug notice to
+DRM's internal clients, wo that they can reconfigure their display
+output if necessary.
+
+As post_switch callback replaces reprobe in vga_switcheroo, update
+nouveau accordingly. No functional changes.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/gpu/drm/i915/i915_switcheroo.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_vga.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_switcheroo.c b/drivers/gpu/drm/i915/i915_switcheroo.c
-index 7e0791024282..6b306ece0556 100644
---- a/drivers/gpu/drm/i915/i915_switcheroo.c
-+++ b/drivers/gpu/drm/i915/i915_switcheroo.c
-@@ -5,6 +5,7 @@
- 
- #include <linux/vga_switcheroo.h>
- 
-+#include <drm/drm_client_event.h>
- #include <drm/drm_print.h>
- 
- #include "display/intel_display_device.h"
-@@ -58,10 +59,19 @@ static bool i915_switcheroo_can_switch(struct pci_dev *pdev)
- 		atomic_read(&i915->drm.open_count) == 0;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_vga.c b/drivers/gpu/drm/nouveau/nouveau_vga.c
+index 2d2d08be8fbe..29a801124e56 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_vga.c
++++ b/drivers/gpu/drm/nouveau/nouveau_vga.c
+@@ -54,15 +54,6 @@ nouveau_switcheroo_set_state(struct pci_dev *pdev,
+ 	}
  }
  
-+static void i915_switcheroo_pre_switch(struct pci_dev *pdev)
+-static void
+-nouveau_switcheroo_reprobe(struct pci_dev *pdev)
+-{
+-	struct nouveau_drm *drm = pci_get_drvdata(pdev);
+-	struct drm_device *dev = drm->dev;
+-
+-	drm_client_dev_hotplug(dev);
+-}
+-
+ static bool
+ nouveau_switcheroo_can_switch(struct pci_dev *pdev)
+ {
+@@ -84,12 +75,20 @@ nouveau_switcheroo_pre_switch(struct pci_dev *pdev)
+ 	drm_client_dev_acquire_outputs(drm->dev);
+ }
+ 
++static void
++nouveau_switcheroo_post_switch(struct pci_dev *pdev)
 +{
-+	struct drm_i915_private *i915 = pdev_to_i915(pdev);
++	struct nouveau_drm *drm = pci_get_drvdata(pdev);
 +
-+	if (i915 && intel_display_device_present(i915->display))
-+		drm_client_dev_acquire_outputs(&i915->drm);
++	drm_client_dev_hotplug(drm->dev);
 +}
 +
- static const struct vga_switcheroo_client_ops i915_switcheroo_ops = {
- 	.set_gpu_state = i915_switcheroo_set_state,
- 	.reprobe = NULL,
- 	.can_switch = i915_switcheroo_can_switch,
-+	.pre_switch = i915_switcheroo_pre_switch,
+ static const struct vga_switcheroo_client_ops
+ nouveau_switcheroo_ops = {
+ 	.set_gpu_state = nouveau_switcheroo_set_state,
+-	.reprobe = nouveau_switcheroo_reprobe,
+ 	.can_switch = nouveau_switcheroo_can_switch,
+ 	.pre_switch = nouveau_switcheroo_pre_switch,
++	.post_switch = nouveau_switcheroo_post_switch,
  };
  
- int i915_switcheroo_register(struct drm_i915_private *i915)
+ void
 -- 
 2.54.0
 
