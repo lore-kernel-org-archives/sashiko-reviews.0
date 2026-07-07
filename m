@@ -1,122 +1,146 @@
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2075B313E2B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:04:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEF5343883
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:13:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783433056; cv=none; b=muxxOv3UzmwIeKzpNQxAkeq6YukE036lED7J5LK2mGyWbmquJe0jtjLgoWHW0/xM46QLFjQUJkWAGMVILKLTpJxvXBlkcpMSdROay355ySC2ZpAEEC/ebx4WWpGlquBJSCgvX2L1etsVvtbV2m4cZeWrFq61Tut2fVRIarRYLyE=
+	t=1783433611; cv=none; b=oBG9m+qklXSUVKKu5ZWQKfQJBGXtl9m7L6szqI5M4kpTiIvP7SpCq1eFAsN82j/1kq8hZSrMMnFODSYHV9vrXBI1zJhe447XGx74cbEbCw7s7oFw8v2hAbCp9udLBnzG3YlrhX7ew6+gL1T/HPZq0GAxCse10hLoN4xTCsPRY1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783433056; c=relaxed/simple;
-	bh=IJJeqWWOz8cYTacN6NYsMTZL3vplCvTu/9nq4A9sIOk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=pxG7o2XvFQ0NVzRO+yMZTvXS26o5XitR9TSEC7ZLWesvui81osLPdk5xifP6Md6FuYIdTIwyTCL61tL1EBHMmyiwh9Zp0hoLGzXGUzkS0j6SBpe4Aq95GnJ9Ma6zHiu8v6foGFZBNcns+LTIKupgcAXuc11hMBCj+e3DCUQrq6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OcG+rEPI; arc=none smtp.client-ip=209.85.214.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1783433611; c=relaxed/simple;
+	bh=dPS9ZgYAMd5YuvueUQdL8LOB8ojuGH4+mjUR3LwKanw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
+	 References:In-Reply-To; b=XHG3I1wqz2lg61S2ATVRk2gu0x96F/Kwv0IlDMGLipDfQHuADyZvmzeYwkE9fwta8TdTxQlK8AQakUt/j/eFtmfAR27BAmI4083xdEVMCi11MVunHLBagVehhlh0IphiMg41fD+CgAK4nnJT2Y4PdPDcx6R+ZZDbzNxAgU9zAiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=AwDasGWX; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OcG+rEPI"
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2cacf17c7e0so52819115ad.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 07:04:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783433054; x=1784037854; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TaRRPm7rRenJCz4WhvXhn/Su3WW8BYkGJwkilHjufHw=;
-        b=OcG+rEPIEKNOxV6T4zNlNvUKP7UQbPfY9SAWMPqXqZriGd/xv9b2ikARm68W77OVoD
-         bAA8rry95BUKzEEDqPOJbg9rHxv64hFNsHkfNOdN3qT1qybY88v6mpYjo66mKuXBBnyw
-         Bf9OR1oEvyefmKMUf7+QXRJOkHEjpw0Qklbk6X2gM8k5SmZshi3iJW2AknHDvDtT8p66
-         Oy0WQFeH0bQj1bQNWS6ipCydrD0OIxZFCc09mLp7B39+U+T2e5+C9udfZTydmeguCCOn
-         BDmPss/DkrWEChfUuvHzb09zPmNCb25GbuOmyOKd7sOuOPKQLMd4bNYm1mMVhACV6mcc
-         6w3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783433054; x=1784037854;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=TaRRPm7rRenJCz4WhvXhn/Su3WW8BYkGJwkilHjufHw=;
-        b=A5KX/1GtF/zaYHL5ya+O/3wf+s7dMPuQWILZo2jaQcOimViBIbeXqRawzPbMPabTA4
-         GAG/tkTog9BQ+eRL3qsUhtoM8PKCY8yo7LkT0AOVzik6y/3D6ucdIA/7NKJyDKQp8HQ8
-         apaI0UiRpxZeoQegiYLoSElxuX1gA+lebTMxIPyfsaBKG/deLEZeca6SIyS+c9abfwgL
-         YrIMpj0JB/HT56if1XNDp65NLSsPzuJNzkVwW+Zrb8fDQE1dMUVfIcvUv+kwDQccpN1G
-         CeNIn2vgK1VWEALVPKmvbfIrEgFE/JBgi0Cpm3W7fTcaUAXRksrgdQ2HIpVivI+Fwn4j
-         OgXw==
-X-Gm-Message-State: AOJu0YxlC1DYKa/e+ssN0PxgyUMH3gfli9Hfu9XI0zqLCpuNnKzVbVko
-	gmMU2Mh8NYxLZVSKtGMzMoMv7RMNm5NJfzUu6WSzDUEHbM3goE78iYccT7sy9bwQZtNgwZlw04o
-	j2V9L+1QA2h+RuP2IeyTjjWJxuz5OL5I6SIBoWGPPxyFMbs1NlPOEcNT24S98LhKrHkKiRKfeHg
-	MAv2VwPa5drmA1KG/0r9JpyvjTRp8Z10gUK/i7mzsiKfXpIMPL
-X-Received: from plrf2.prod.google.com ([2002:a17:902:ab82:b0:2ca:bb5b:3c6b])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ec85:b0:2c6:a012:6241
- with SMTP id d9443c01a7336-2ccbe3f7d69mr56668875ad.6.1783433054149; Tue, 07
- Jul 2026 07:04:14 -0700 (PDT)
-Date: Tue, 7 Jul 2026 07:04:13 -0700
-In-Reply-To: <20260706164913.3A7A91F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="AwDasGWX"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 3ACBF4E40CAF
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:13:26 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 0751A60333;
+	Tue,  7 Jul 2026 14:13:26 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3429E11BC257C;
+	Tue,  7 Jul 2026 16:13:24 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783433605; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=qZ9TwXJd/yr9cPHSyFoGhLXSwzdQUPQHdgEe9o4i6cs=;
+	b=AwDasGWXtyZMovAhoiDZB3tUgzmjdxIgrIYVZmAhCGW/8iZIsYRuE1h8gOV4ZcZReMxkdF
+	TlU92vUxGNeVBqxdA0XSAy+ZrfhGNZ5NmHOaVmP2a5JCm/L9oGbDw5tzjCq6KHdZjfcElV
+	xP71B+Ld4d+u3PzQiOjwzNJFvJ354Ix2GN7kPTwbZ4Cp3YtVyDsnofgN4fZB+sHHjpRgtQ
+	bur4gNdH8p1dmfpaJBMy0PA3hKB3X9XU5rr+p5isTdYDPE5OH1Be4THOiSS638s3vrMzUa
+	CY/0x+nwN1Z+pSOit2eZfoJV7SiOdo1Bky4yzFS1eEWQqt8pLosM4H6R2Dd2bg==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260706163649.155548-1-hisamshar@gmail.com> <20260706164913.3A7A91F000E9@smtp.kernel.org>
-Message-ID: <ak0HXd8HMyKDCU1U@google.com>
-Subject: Re: [PATCH] KVM: selftests: Use KVM's task pinning APIs in steal_time
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Hisam Mehboob <hisamshar@gmail.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 Jul 2026 16:13:24 +0200
+Message-Id: <DJSEG7DCNE1G.G2EYFS9AQENJ@bootlin.com>
+Subject: Re: [PATCH bpf-next v3 10/10] selftests/bpf: add tests to validate
+ KASAN on JIT programs
+Cc: <bpf@vger.kernel.org>
+From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260701-kasan-v3-0-bd09bb942d86@bootlin.com>
+ <20260701-kasan-v3-10-bd09bb942d86@bootlin.com>
+ <20260701103414.03E1C1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260701103414.03E1C1F00A3A@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, Jul 06, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Race condition causing intermittent test failure (ESRCH) due to late thread pinning
+On Wed Jul 1, 2026 at 12:34 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] Uninitialized stack memory is passed to the kernel via bpf_pro=
+g_test_run_opts, causing potential information leaks and triggering MSAN wa=
+rnings.
+> - [Medium] The KASAN report parser is susceptible to spurious failures du=
+e to kernel log interleaving.
 > --
-> 
-> commit 27b6bbfae99d5564cda41cbc7b8c36c7b9a4ed64
-> Author: Sean Christopherson <seanjc@google.com>
-> 
-> KVM: selftests: Use KVM's task pinning APIs in steal_time
-> 
-> This commit updates the steal_time test to use KVM's task pinning APIs
-> (pin_self_to_cpu and pin_task_to_cpu) to pin the vCPU and stealer threads
-> to pCPU0. This removes the use of pthread_attr_setaffinity_np, allowing
-> the test to build against non-glibc C libraries.
-> 
-> Link: https://lore.kernel.org/all/aLIroyJSWQ26wnY4@google.com/
-> 
-> > diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
-> > index 76fcdd1fd3cb4..19a97d6a36076 100644
-> > --- a/tools/testing/selftests/kvm/steal_time.c
-> > +++ b/tools/testing/selftests/kvm/steal_time.c
+>
+> commit e974c567c6b3da1ae6e1c27c442840d9bd396091
+> Author: Alexis Lothor=C3=A9 (eBPF Foundation) <alexis.lothore@bootlin.com=
+>
+>
+> selftests/bpf: add tests to validate KASAN on JIT programs
+>
+> This patch adds a basic KASAN test runner that loads and test-runs BPF pr=
+ograms
+> designed to trigger memory management bugs. The test captures kernel logs=
+ and
+> ensures the expected KASAN splat is emitted by searching for the correspo=
+nding
+> first lines in the report.
+>
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/kasan.c b/tools/test=
+ing/selftests/bpf/prog_tests/kasan.c
+>> new file mode 100644
+>> index 0000000000000..ff070c39eaac1
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/prog_tests/kasan.c
+>
 > [ ... ]
-> > @@ -558,7 +552,9 @@ int main(int ac, char **av)
-> >  
-> >  		/* Steal time from the VCPU. The steal time thread has the same CPU affinity as the VCPUs. */
-> >  		run_delay = get_run_delay();
-> > -		pthread_create(&thread, &attr, do_steal_time, NULL);
-> > +		pthread_create(&thread, NULL, do_steal_time, NULL);
-> > +		pin_task_to_cpu(thread, 0);
-> 
+>
+>> +static int check_kasan_report_in_kernel_logs(char *buf, struct test_ctx=
+ *ctx,
+>> +					     bool is_write, int size)
+>> +{
+>> +	char *access_desc_start, *access_desc_end, *tmp;
+>
+> [ ... ]
+>
+>> +	/* Find next line */
+>> +	access_desc_start =3D strchr(kasan_report_start, '\n');
+>> +	if (!access_desc_start)
+>> +		return 1;
+>> +	access_desc_start++;
+>> +
+>> +	access_desc_end =3D strchr(access_desc_start, '\n');
+>> +	if (!access_desc_end)
+>> +		return 1;
+>> +
+>> +	nsize =3D snprintf(access_log, READ_CHUNK_SIZE, KASAN_PATTERN_REPORT,
+>> +			 is_write ? "Write" : "Read", size);
+>> +
+>> +	tmp =3D memmem(access_desc_start, access_desc_end - access_desc_start,
+>> +		     access_log, nsize);
+>
 > [Severity: Medium]
-> Could this introduce a race condition that causes intermittent test failures?
-> 
-> Since pthread_create is called before pinning, there is a small window
-> where the child thread (do_steal_time) could execute and complete its very
-> brief 200us run before the parent thread executes pin_task_to_cpu.
-> 
-> If the child thread exits before pin_task_to_cpu attempts to set its
-> affinity, it will return ESRCH and trigger the TEST_ASSERT inside
-> pin_task_to_cpu, abruptly aborting the test.
-> 
-> Is the explicit pin_task_to_cpu call necessary here?
+> Could this fail if other kernel components interleave log messages betwee=
+n the
+> KASAN header and the access description?
+>
+> The parser assumes the exact next newline-delimited block contains the ac=
+cess
+> description. However, the report_lock used by KASAN internally only seria=
+lizes
+> KASAN reports with each other, not with general printk output from other =
+CPUs
+> or contexts. If another component prints a message precisely between the =
+KASAN
+> header and the access description, the search bounds might be restricted =
+to an
+> unrelated interleaved log line, causing memmem() to fail and making the t=
+est
+> flaky.
 
-Nope, which means we can simply drop the problematic pthread_attr_setaffinity_np(),
-though I think it makes sense to add a sanity check that the worker did indeed
-inherit the affinity, if only to document what's happening.
+Indeed. I'll update this to search _in the rest of the logs_ rather than
+_on the very next line_, assuming that each subtest generates at most a sin=
+gle
+report.
 
-I'll send a v2.
+Alexis
 
-Thanks for posting this Hisam!
 
-> Since the main thread already called pin_self_to_cpu(0) earlier, the new
-> thread created by pthread_create should automatically inherit the parent's
-> CPU affinity mask.
+--=20
+Alexis Lothor=C3=A9, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
