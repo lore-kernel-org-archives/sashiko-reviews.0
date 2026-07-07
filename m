@@ -1,40 +1,40 @@
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677ED433BD0
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 16:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C5337DAA9
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 16:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441368; cv=none; b=sAkQV0JXhDDX49IBZlq39m4XC2bcazQkyw5NoYlive2tNfzgm+U8avyL++0dsUsnWAdYTH/Btnn6xTq5G3qPSWXGHXuIu1PXquL7J/lBsVVl1dxc5qSd66H4J7Fgv8rEhPARzy6DYNJu31tt3rENyUx7dwp3LaXcggH/pH6hXus=
+	t=1783441787; cv=none; b=GWdrZkPn7ClJmy1qy7jIAvfQmvTwl6aMJJm8Tw8v9nb+DMda6fzXz3UBDxihEqrOYTkUdcNYSlFI9vH6MJLxi/PGHDkLgn/VhqM1TPQ2KaGr/QKLyP5CC9yt1ibtkwm7lqSsBKda/QkZ3+flS0dEPnLPoYCUZrS/rgU888WXrVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783441368; c=relaxed/simple;
-	bh=5NAv1WC3hjw+KYQn9YTd9mOElGthU5SS9uZDqi57Alg=;
+	s=arc-20240116; t=1783441787; c=relaxed/simple;
+	bh=lXR+uBa4T4h7kmIlSIy3J99lNAJBI1qMHaeA+DIy39w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LXAglV6ktEyTFvqiawPKNuq43kAaNd1bDeZtQ1ut2qhQFNyHwHZwJdPezJp7AurspHc1XZE+Cs38OV6R4wtlnU4emqgdqIKjvF9ws7zTTZHpWc4UAGymjhLnGi72mRgaum5zlMJvyc3w5oB6KoCURV82jv4oB1yApfsyeIPoExo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=JP+xEzTs; arc=none smtp.client-ip=148.251.105.195
+	 In-Reply-To:Content-Type; b=qmpWYdKUBUkiUjqpJHYHdYmzkZcvJRAAuNGLLGkm2eZPJOHdl9DyNUkufJl2vebxU3qwmO13Rso3vjVKI5YEKNm/e6tnrLEDGv07GBNr/1ZbQdsCfLqtHDc1U+OiFvt/V+0Jp+MO5lwWIwRD1cnU6V7HFea2MoIvcWySUFDavAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=FBEG/H7x; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="JP+xEzTs"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="FBEG/H7x"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783441365;
-	bh=5NAv1WC3hjw+KYQn9YTd9mOElGthU5SS9uZDqi57Alg=;
+	s=mail; t=1783441784;
+	bh=lXR+uBa4T4h7kmIlSIy3J99lNAJBI1qMHaeA+DIy39w=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JP+xEzTsJMVppPChuN02TNKnQ3zOolRq6TsDLipoI64uLbvrsUf+L+hOzS5lYJaR2
-	 al4TTdoCujiGINgjZ8/bg8bSz/2mKemuBIZy+I1zw9KxNkaNwICTKtPr1WvjDYnXef
-	 G0RPDHLQsGyZzZ9L7pCfUj34JlJpQc6CeImglQU5KpD+RpFC7gxt13R876bcAZ+kJY
-	 dQRIYJTYEy0lHlWJ6vW9+eUYNZblM4HlD54kuqm/xhH2yfmhHHYPR7lX/4EQqbuo5q
-	 Z2LZikSK53GIlGdaOxrDz8Z7X8iGoAJJ85mHSYwQXCE3O+DPiMknrB7Q7ybFqJL5At
-	 Fks9vazK1VYDw==
+	b=FBEG/H7xKexOsLwIjoQOfeRxw90mu2YHRS/9ypDKddgLwkjtajT0lpEL5qPgKLTUH
+	 iKc+Y2XwV3QXywOZh07i+etD03MMFz4u3NQNyEVV3GHKBGTs+E40TNtrlrTfVPILrB
+	 5RWNblRndxxFShkO6rCFSLq4qKdzbpDvmAj+F8y0ZTHQgiXlhXu+edI6QUsqeXkTBO
+	 C3UgLGpbxl5vli09fnnBFQRMRYwCa61j8+0Ms4nc12rlBHx0hsj+vR+k0LLv1SCST5
+	 PlBmWEarUMlED+IpyHXU0vyS+VItokWlEkVURq3KJXFsEv/AHK8xjBbmKKZUyAW8JD
+	 PNQdaPBtbheHQ==
 Received: from [100.64.1.21] (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 8885E17E05E8;
-	Tue, 07 Jul 2026 18:22:45 +0200 (CEST)
-Message-ID: <d7fc4676-6aaf-4012-9a74-8861426cea2a@collabora.com>
-Date: Tue, 7 Jul 2026 18:22:45 +0200
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 2C64E17E013E;
+	Tue, 07 Jul 2026 18:29:44 +0200 (CEST)
+Message-ID: <48e80ac6-193f-4d57-99a3-21794648f1fa@collabora.com>
+Date: Tue, 7 Jul 2026 18:29:43 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,147 +42,118 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] pmdomain: mediatek: Add support for Direct CTL
- simple power sequence
+Subject: Re: [PATCH v2 4/4] pmdomain: mediatek: Add support for MT8196 HFRP
+ DirectCTL domains
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
 References: <20260707155535.199383-1-angelogioacchino.delregno@collabora.com>
- <20260707155535.199383-4-angelogioacchino.delregno@collabora.com>
- <20260707160843.EBCF81F000E9@smtp.kernel.org>
+ <20260707155535.199383-5-angelogioacchino.delregno@collabora.com>
+ <20260707162058.C21991F00AC4@smtp.kernel.org>
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-In-Reply-To: <20260707160843.EBCF81F000E9@smtp.kernel.org>
+In-Reply-To: <20260707162058.C21991F00AC4@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/7/26 18:08, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+On 7/7/26 18:20, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > New issues:
-> - [Low] Ignoring the return value of `clk_bulk_prepare_enable` in the error recovery path of `scpsys_power_off` violates its `__must_check` attribute.
+> - [Medium] Resource leak on error cleanup due to dummy `sta_mask` in simple power sequence domains causing `scpsys_domain_is_on()` to incorrectly return false.
 > 
 > Pre-existing issues:
-> - [High] If `scpsys_bus_protect_enable()` fails in `scpsys_power_off()`, it returns early without re-enabling `subsys_clks`, bypassing the newly added clock recovery block and breaking the clock refcount.
-> - [High] Error paths in `scpsys_power_off()` leave the hardware in a corrupted state (SRAM disabled, bus protection active, and buck isolated) because they fail to revert these states before returning an error.
-> - [High] Error paths in `scpsys_power_on()` disable clocks and regulators without reverting the power-on hardware sequence, leaving the domain hardware partially ON while genpd considers it OFF.
+> - [High] Kernel panic during probe error cleanup due to unconditional dereference of `pd->data` for `HW_VOTER` domains in `scpsys_domain_is_on()`.
 > --
 > 
-> --- Patch [3]: [PATCH v2 3/4] pmdomain: mediatek: Add support for Direct CTL simple power sequence ---
-> commit a25fe6d3db6b42f564ecc5977f0a00e29a0cfd96
+> --- Patch [4]: [PATCH v2 4/4] pmdomain: mediatek: Add support for MT8196 HFRP DirectCTL domains ---
+> commit 6f2aa6326ce2b3105bc55383da9b0e0d8b25e2d6
 > Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > 
-> pmdomain: mediatek: Add support for Direct CTL simple power sequence
+> pmdomain: mediatek: Add support for MT8196 HFRP DirectCTL domains
 > 
-> This commit adds a simplified power sequence for certain new MediaTek SoCs
-> (like MT8196 and MT6991). The new sequence avoids using RTFF hardware and
-> certain control bits, handling power domain enablement automatically after
-> exiting reset.
+> Add support for the power domains provided by the HFRPSYS Power Controller of
+> the MT8196 SoC. Those control power to the eDP and DP Transmitter IPs.
+> 
+>> diff --git a/drivers/pmdomain/mediatek/mt8196-pm-domains.h b/drivers/pmdomain/mediatek/mt8196-pm-domains.h
+>> index 2e4b287206596..d704c9fa93374 100644
+>> --- a/drivers/pmdomain/mediatek/mt8196-pm-domains.h
+>> +++ b/drivers/pmdomain/mediatek/mt8196-pm-domains.h
+>> @@ -602,6 +602,27 @@ static const struct scpsys_hwv_domain_data hfrpsys_hwv_domain_data_mt8196[] = {
+>>   	},
+>>   };
+>>   
+>> +static const struct scpsys_domain_data hfrpsys_domain_data_mt8196[] = {
+>> +	[MT8196_POWER_DOMAIN_EDPTX] = {
+>> +		.name = "edp-tx",
+>> +		.sta_mask = MT8196_PWR_ACK,
+> 
+> [Severity: Medium]
+> Can this lead to a resource leak during error cleanup?
+> 
+> The MT8196_POWER_DOMAIN_EDPTX and DPTX domains use simple power sequence,
+> bypassing standard PWR_ACK polling. To pass validation during initialization,
+> they are assigned MT8196_PWR_ACK as a sta_mask.
+> 
+> If this bit is a dummy and not automatically driven high by hardware for these
+> specific domains (since it is never polled during power_on),
+> scpsys_domain_is_on() will perpetually read 0 and return false.
+
+Why Sashiko assumes that this is a dummy is bogus. Why should it ever be a dummy
+and why would I add it if it was useless?!
+
+> 
+> If a failure triggers probe error cleanup, scpsys_remove_one_domain() would
+> skip scpsys_power_off() for these domains because it incorrectly believes they
+> are already off. Does this leave the domain permanently powered on in a
+> corrupted state and leak prepared clocks and regulators?
+> 
+>> +		.sta2nd_mask = MT8196_PWR_ACK_2ND,
+>> +		.ctl_offs = 0x74,
+>> +		.pwr_sta_offs = 0x74,
+>> +		.pwr_sta2nd_offs = 0x74,
+>> +		.caps = MTK_SCPD_SIMPLE_PWRSEQ,
+>> +	},
+> 
+> [ ... ]
 > 
 >> diff --git a/drivers/pmdomain/mediatek/mtk-pm-domains.c b/drivers/pmdomain/mediatek/mtk-pm-domains.c
->> index db543d4b1813c..feba436279c54 100644
+>> index feba436279c54..55e7478804236 100644
 >> --- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
 >> +++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
-> [ ... ]
->> @@ -682,7 +733,8 @@ static int scpsys_power_on(struct generic_pm_domain *genpd)
->>   err_enable_bus_protect:
->>   	scpsys_bus_protect_enable(pd, 0);
->>   err_disable_sram:
->> -	scpsys_sram_disable(pd);
->> +	if (!MTK_SCPD_CAPS(pd, MTK_SCPD_SIMPLE_PWRSEQ))
->> +		scpsys_sram_disable(pd);
->>   err_disable_subsys_clks:
->>   	if (!MTK_SCPD_CAPS(pd, MTK_SCPD_STRICT_BUS_PROTECTION))
->>   		clk_bulk_disable_unprepare(pd->num_subsys_clks,
+>> @@ -1258,6 +1258,10 @@ static const struct of_device_id scpsys_of_match[] = {
+>>   		.compatible = "mediatek,mt8196-power-controller",
+>>   		.data = &mt8196_scpsys_data,
+>>   	},
+>> +	{
+>> +		.compatible = "mediatek,mt8196-hfrp-power-controller",
+>> +		.data = &mt8196_hfrpsys_data,
+>> +	},
 > 
 > [Severity: High]
-> This is a pre-existing issue, but if a step fails during scpsys_power_on()
-> after the initial MTCMOS power-on sequence, the function jumps to these
-> error labels. It disables the clocks and regulators, but does this leave
-> the domain's MTCMOS physically ON since it doesn't call a corresponding
-> power-off sequence to revert it? Could this hardware inconsistency cause
-> issues while the framework considers the domain OFF?
+> This isn't a bug introduced by this patch, but could this lead to a kernel
+> panic during probe error cleanup?
 > 
->> @@ -698,16 +750,17 @@ static int scpsys_power_off(struct generic_pm_domain *genpd)
->>   {
->>   	struct scpsys_domain *pd = container_of(genpd, struct scpsys_domain, genpd);
->>   	struct scpsys *scpsys = pd->scpsys;
->> -	bool tmp;
->>   	int ret;
->>   
->>   	ret = scpsys_bus_protect_enable(pd, 0);
->>   	if (ret < 0)
->>   		return ret;
->>   
->> -	ret = scpsys_sram_disable(pd);
->> -	if (ret < 0)
->> -		return ret;
->> +	if (!MTK_SCPD_CAPS(pd, MTK_SCPD_SIMPLE_PWRSEQ)) {
->> +		ret = scpsys_sram_disable(pd);
->> +		if (ret < 0)
->> +			return ret;
->> +	}
+> If a hardware voter domain is probed successfully, it is added to the probed
+> list. If a subsequently probed domain fails, scpsys_domain_cleanup()
+> initiates rollback, calling scpsys_remove_one_domain() on the hardware
+> voter domain.
 > 
-> [Severity: High]
-> This is a pre-existing issue, but if scpsys_sram_disable() or
-> scpsys_bus_protect_enable() fail here and return early, the framework will
-> still treat the domain as ON. Does this early return leave the hardware
-> physically isolated, potentially causing active consumer devices to hit an
-> active bus protector or unpowered SRAM?
+> scpsys_remove_one_domain() unconditionally calls scpsys_domain_is_on(), which
+> attempts to read pd->data->sta_mask:
+> 
+> scpsys_remove_one_domain()
+>      scpsys_domain_is_on()
+>          u32 mask = pd->data->sta_mask;
+> 
+> For hardware voter domains, pd->data is explicitly set to NULL, which appears
+> to result in a guaranteed NULL pointer dereference. Could this bring the
+> system down during boot on unsupported or failing hardware configurations?
 > 
 
-The problem here is that if sram_disable() fails, sram_enable() is guaranteed to
-also fail, there's nothing that can really be done to fix the disablement failure
-if any happens.
+I'll send a Fixes patch for that.
 
-I have never encountered a single failure here during disablement, but should it
-happen, the only way to go here is to pray and hope that the next power_on() will
-fix things up.
-
-Can't do anything about it.
-
-> [ ... ]
->> @@ -720,15 +773,17 @@ static int scpsys_power_off(struct generic_pm_domain *genpd)
->>   		return ret;
->>   
->>   	if (MTK_SCPD_CAPS(pd, MTK_SCPD_MODEM_PWRSEQ))
->> -		scpsys_modem_pwrseq_off(pd);
->> +		ret = scpsys_modem_pwrseq_off(pd);
->> +	else if (MTK_SCPD_CAPS(pd, MTK_SCPD_SIMPLE_PWRSEQ))
->> +		ret = scpsys_simple_pwrseq_off(pd);
->>   	else
->> -		scpsys_ctl_pwrseq_off(pd);
->> +		ret = scpsys_ctl_pwrseq_off(pd);
->>   
->> -	/* wait until PWR_ACK = 0 */
->> -	ret = readx_poll_timeout(scpsys_domain_is_on, pd, tmp, !tmp, MTK_POLL_DELAY_US,
->> -				 MTK_POLL_TIMEOUT);
->> -	if (ret < 0)
->> +	if (ret < 0) {
->> +		/* Re-enable clocks so that next power off doesn't break the refcount */
->> +		clk_bulk_prepare_enable(pd->num_subsys_clks, pd->subsys_clks);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but if scpsys_bus_protect_enable() fails
-> earlier in scpsys_power_off() when called with BUS_PROT_IGNORE_SUBCLK, it
-> returns early. Does that early return completely bypass this newly added
-> clock recovery block, leaving the subsystem clocks disabled while the
-> domain is logically considered ON?
-> 
-
-No that shouldn't happen, but to really resolve that we'd need a dual-stage probe
-and/or enablement mechanism, like regulators. Can't do anything about that now,
-but a talk for plumbers may be coming........
-
-> [Severity: Low]
-> Does this error recovery block ignore the return value of
-> clk_bulk_prepare_enable()? Since the function is declared with
-> __must_check in the clk API, could this cause a -Wunused-result compiler
-> warning and break builds using -Werror?
-> 
-
-Nah. It's fine.
-
->>   		return ret;
->> +	}
+>>   	{
+>>   		.compatible = "mediatek,mt8196-hwv-hfrp-power-controller",
+>>   		.data = &mt8196_hfrpsys_hwv_data,
 > 
 
