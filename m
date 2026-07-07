@@ -1,146 +1,129 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEF5343883
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:13:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911E931282F
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783433611; cv=none; b=oBG9m+qklXSUVKKu5ZWQKfQJBGXtl9m7L6szqI5M4kpTiIvP7SpCq1eFAsN82j/1kq8hZSrMMnFODSYHV9vrXBI1zJhe447XGx74cbEbCw7s7oFw8v2hAbCp9udLBnzG3YlrhX7ew6+gL1T/HPZq0GAxCse10hLoN4xTCsPRY1s=
+	t=1783433685; cv=none; b=aZTyX0ZQTdI3na4yt0IUbWB/FC3izeu9Jwx/vvJ/HUSlOXw6RRl357yvYfM75232HDwnXSKEeZPF7Nm0AVzlO6MvlVNmRPVzDFs44a6b0iDLuXPqcFbUVM+vE1F8+QsedUii6ttyQitkx1SlJbwSL9a71JNVpYzfOpXympAKdPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783433611; c=relaxed/simple;
-	bh=dPS9ZgYAMd5YuvueUQdL8LOB8ojuGH4+mjUR3LwKanw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=XHG3I1wqz2lg61S2ATVRk2gu0x96F/Kwv0IlDMGLipDfQHuADyZvmzeYwkE9fwta8TdTxQlK8AQakUt/j/eFtmfAR27BAmI4083xdEVMCi11MVunHLBagVehhlh0IphiMg41fD+CgAK4nnJT2Y4PdPDcx6R+ZZDbzNxAgU9zAiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=AwDasGWX; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1783433685; c=relaxed/simple;
+	bh=Oir2L8r8JENMjsaS6XGSf9ZOzknW7/JZBsW+OujDV0o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WIrjmeiXffpCghTyCp+cyBrY/SNuW4pneE/6wL/vyZTk1KLi2G9/nArjd3qqSuJF8nOYkd8Ft5Cpbx2z2UnFdFJ/AdNMe8nYhhvd82ODL5cRBGbGkurL6DKPSiL3Ky8vf1Cts2i3f9o7rZSWVW8ymi4u2YXVbNwsmvUymgPIjw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=is6ar83m; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="AwDasGWX"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 3ACBF4E40CAF
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 14:13:26 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 0751A60333;
-	Tue,  7 Jul 2026 14:13:26 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3429E11BC257C;
-	Tue,  7 Jul 2026 16:13:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783433605; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=qZ9TwXJd/yr9cPHSyFoGhLXSwzdQUPQHdgEe9o4i6cs=;
-	b=AwDasGWXtyZMovAhoiDZB3tUgzmjdxIgrIYVZmAhCGW/8iZIsYRuE1h8gOV4ZcZReMxkdF
-	TlU92vUxGNeVBqxdA0XSAy+ZrfhGNZ5NmHOaVmP2a5JCm/L9oGbDw5tzjCq6KHdZjfcElV
-	xP71B+Ld4d+u3PzQiOjwzNJFvJ354Ix2GN7kPTwbZ4Cp3YtVyDsnofgN4fZB+sHHjpRgtQ
-	bur4gNdH8p1dmfpaJBMy0PA3hKB3X9XU5rr+p5isTdYDPE5OH1Be4THOiSS638s3vrMzUa
-	CY/0x+nwN1Z+pSOit2eZfoJV7SiOdo1Bky4yzFS1eEWQqt8pLosM4H6R2Dd2bg==
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="is6ar83m"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1783433681;
+	bh=Oir2L8r8JENMjsaS6XGSf9ZOzknW7/JZBsW+OujDV0o=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=is6ar83mWEsiCXiD8wZSgKlomceF4f4VAPU6+Cs1rHP6ePF5Y2Iek9P1ZrIKDlRFw
+	 CYT3/wwBLl2G/mS+AdGbozZT6J3B/o2COoncwFJVIMj3uS+2HpxDSE2ccp0XncqoWW
+	 7r6qcbnkZbKyw50mOU7yJo/0mmVC0kRJq/142//VM7YsThaLJ5tVQAZTj7hrxTc0wX
+	 pCCbHLsrL2SeiFQIRXJKgWzEFHOk99pJ8zS7gCeeAG6OWkknMbC7XBQzIGVIELmftr
+	 bpvflslf4R4BvfswqSzx84BeH8geoZGPYXrptZn4C3XiMSiUKpsuogIiHWVqfBhC+e
+	 5MMU+gKHuxOJg==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 86B0317E05E8;
+	Tue, 07 Jul 2026 16:14:41 +0200 (CEST)
+Message-ID: <568124de-9ed6-469a-8521-99c11cd6c495@collabora.com>
+Date: Tue, 7 Jul 2026 16:14:41 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 Jul 2026 16:13:24 +0200
-Message-Id: <DJSEG7DCNE1G.G2EYFS9AQENJ@bootlin.com>
-Subject: Re: [PATCH bpf-next v3 10/10] selftests/bpf: add tests to validate
- KASAN on JIT programs
-Cc: <bpf@vger.kernel.org>
-From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-To: <sashiko-reviews@lists.linux.dev>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260701-kasan-v3-0-bd09bb942d86@bootlin.com>
- <20260701-kasan-v3-10-bd09bb942d86@bootlin.com>
- <20260701103414.03E1C1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260701103414.03E1C1F00A3A@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] phy: mediatek: phy-mtk-hdmi-mt8195: Fix PLL calc
+ divisor overflow
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, olteanv@gmail.com, vkoul@kernel.org,
+ linux-phy@lists.infradead.org, neil.armstrong@linaro.org
+References: <20260701121936.19407-1-angelogioacchino.delregno@collabora.com>
+ <20260701121936.19407-2-angelogioacchino.delregno@collabora.com>
+ <20260701123106.1B5801F00A3E@smtp.kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260701123106.1B5801F00A3E@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed Jul 1, 2026 at 12:34 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Medium] Uninitialized stack memory is passed to the kernel via bpf_pro=
-g_test_run_opts, causing potential information leaks and triggering MSAN wa=
-rnings.
-> - [Medium] The KASAN report parser is susceptible to spurious failures du=
-e to kernel log interleaving.
+On 7/1/26 14:31, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Calculations using `14835 * MEGA`, `5 * GIGA`, and `12 * GIGA` silently overflow 32-bit `unsigned long` types on 32-bit architectures, completely breaking clock tiering and boundary checks.
 > --
->
-> commit e974c567c6b3da1ae6e1c27c442840d9bd396091
-> Author: Alexis Lothor=C3=A9 (eBPF Foundation) <alexis.lothore@bootlin.com=
->
->
-> selftests/bpf: add tests to validate KASAN on JIT programs
->
-> This patch adds a basic KASAN test runner that loads and test-runs BPF pr=
-ograms
-> designed to trigger memory management bugs. The test captures kernel logs=
- and
-> ensures the expected KASAN splat is emitted by searching for the correspo=
-nding
-> first lines in the report.
->
->> diff --git a/tools/testing/selftests/bpf/prog_tests/kasan.c b/tools/test=
-ing/selftests/bpf/prog_tests/kasan.c
->> new file mode 100644
->> index 0000000000000..ff070c39eaac1
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/kasan.c
->
-> [ ... ]
->
->> +static int check_kasan_report_in_kernel_logs(char *buf, struct test_ctx=
- *ctx,
->> +					     bool is_write, int size)
->> +{
->> +	char *access_desc_start, *access_desc_end, *tmp;
->
-> [ ... ]
->
->> +	/* Find next line */
->> +	access_desc_start =3D strchr(kasan_report_start, '\n');
->> +	if (!access_desc_start)
->> +		return 1;
->> +	access_desc_start++;
->> +
->> +	access_desc_end =3D strchr(access_desc_start, '\n');
->> +	if (!access_desc_end)
->> +		return 1;
->> +
->> +	nsize =3D snprintf(access_log, READ_CHUNK_SIZE, KASAN_PATTERN_REPORT,
->> +			 is_write ? "Write" : "Read", size);
->> +
->> +	tmp =3D memmem(access_desc_start, access_desc_end - access_desc_start,
->> +		     access_log, nsize);
->
-> [Severity: Medium]
-> Could this fail if other kernel components interleave log messages betwee=
-n the
-> KASAN header and the access description?
->
-> The parser assumes the exact next newline-delimited block contains the ac=
-cess
-> description. However, the report_lock used by KASAN internally only seria=
-lizes
-> KASAN reports with each other, not with general printk output from other =
-CPUs
-> or contexts. If another component prints a message precisely between the =
-KASAN
-> header and the access description, the search bounds might be restricted =
-to an
-> unrelated interleaved log line, causing memmem() to fail and making the t=
-est
-> flaky.
+> 
+> commit 8179a32cf1dac8f1d080e57bbce79246661b50eb
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> 
+> phy: mediatek: phy-mtk-hdmi-mt8195: Fix PLL calc divisor overflow
+> 
+> This commit fixes an issue where calculating a PLL rate for high display
+> resolutions results in a pixel clock exceeding 32 bits, but the digital
+> clock divider calculation uses div_u64(), which expects a 32-bit divisor.
+> It resolves this by using div64_u64() instead to prevent overflow.
+> 
+>> diff --git a/drivers/phy/mediatek/phy-mtk-hdmi-mt8195.c b/drivers/phy/mediatek/phy-mtk-hdmi-mt8195.c
+>> index 1426a2db984d5..e6ee8e0800222 100644
+>> --- a/drivers/phy/mediatek/phy-mtk-hdmi-mt8195.c
+>> +++ b/drivers/phy/mediatek/phy-mtk-hdmi-mt8195.c
+>> @@ -290,7 +290,7 @@ static int mtk_hdmi_pll_calc(struct mtk_hdmi_phy *hdmi_phy, struct clk_hw *hw,
+> 
+> [Severity: High]
+> This is a pre-existing issue, but do the constants in this function silently
+> overflow on 32-bit architectures?
+> 
 
-Indeed. I'll update this to search _in the rest of the logs_ rather than
-_on the very next line_, assuming that each subtest generates at most a sin=
-gle
-report.
+There is no 32-bit architecture compatible with this driver. This will run only
+on AArch64, and it's very unlikely to see a 32-bits kernel running on MT8195.
 
-Alexis
+This can be eventually fixed with a later series, but shall not block the proposed
+fixes from being picked, both because it's unlikely to happen, and because those
+are pre-existing issues.
+
+Besides, the series *is* actually fixing some other overflow issues and was already
+tested good.
 
 
---=20
-Alexis Lothor=C3=A9, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+
+> Earlier in mtk_hdmi_pll_calc(), there are tier threshold calculations like:
+> 
+>      else if ((tmds_clk * 100) >= 14835 * MEGA && (tmds_clk * 10) < 2967 * MEGA)
+> 
+> and later boundary checks:
+> 
+>      if (ns_hdmipll_ck >= 5 * GIGA &&
+>          ns_hdmipll_ck <= 12 * GIGA)
+> 
+> If MEGA and GIGA evaluate as 32-bit types on 32-bit systems, a multiplication
+> like 14835 * MEGA evaluates to 14,835,000,000, which wraps around modulo 2^32
+> to 1,950,098,112 before being promoted to u64 for the comparison against
+> tmds_clk * 100.
+> 
+> Similarly, 5 * GIGA and 12 * GIGA would overflow, potentially rendering the
+> valid PLL clock range mathematically unreachable and forcing the function to
+> always return -EINVAL on 32-bit builds.
+> 
+> Should these constants be explicitly typed or cast to u64 to ensure the
+> comparisons work correctly on 32-bit kernels?
+> 
+>>   	posdiv2 = 1;
+>>   
+>>   	/* Digital clk divider, max /32 */
+>> -	digital_div = div_u64(ns_hdmipll_ck, posdiv1 * posdiv2 * pixel_clk);
+>> +	digital_div = div64_u64(ns_hdmipll_ck, posdiv1 * posdiv2 * pixel_clk);
+>>   	if (!(digital_div <= 32 && digital_div >= 1))
+>>   		return -EINVAL;
+>>
+> 
 
