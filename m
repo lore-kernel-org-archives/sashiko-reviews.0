@@ -1,227 +1,281 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4946141B361
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:31:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF30A417377
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783431084; cv=none; b=eAYWvc640j8mU6x9IOhKc/7TerOakIVQJgTIqwUDSCI/+n3R5+nGStbCw8NZYg/KPNmPT67zV8q+4yqMZWpcAzulCvVlQfYEG6AY3Z8Zmz656JIUU5n8m8cibyNnt2Llbs5G9Vs2LQCzFSETLyk6TfdnSCqIZqp/uAWyu8n/03U=
+	t=1783431213; cv=none; b=QFXqJ3aez+c9POeonAQFCQG2rnm/31HIrgqj58RHhWZ6pzbRIXrUoU9o6mVJhH9kNu10skGXKVz7YwT5jhGCdup7SOjNLcr2IdDAFmCIBSt3cNzjxPjWKGA2NfI803ts8DE0YBxSJ1D1f7WjXHfqbQdhEqLJpoyz8eQUuWKRMDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783431084; c=relaxed/simple;
-	bh=M+ZrPoiW6rlYRXjSW1gpoBUCFx+W1q0N97Q00cc4x1g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=li/A6wd4CZSlk8/HsK2/wreVvXMLlFOYAoqin0Eb1m6pp+CZCKIxqbZj5khF7Roe4ZnDnFX1CWjE2qzFJZIlNVwBD9MZw0WTm5Lr4Dv7oOzqzNwakSe9IOA25keBlH3nN++jhL0vpwxrmW7PJd9TWIBFFV4nk+M7Dw9k7IX+NZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WN8s/Amn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jpdGBOY2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1783431213; c=relaxed/simple;
+	bh=GQfMYbnOxpcRY5c1TiAWzcpJrT65pDKSeYJfx3nHNFQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=J7tJU17yt7TFJsMmJgsUIdNFYWTmTNB6dHVuge/m3WdGbLgZkRp4dBJLBL+kQsSx0IQiHi3rMTzCOrGnhR/SO86WpVUXX4v+ClIE9sJUNTMV+Y4mG1TBxKLCFwMZN/vb6z2rG8GplDTNPewlk4ZhLT4oQ7gK0G1YaaKP5wVmW6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=XbupLp5W; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WN8s/Amn";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jpdGBOY2"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 667C9LXw3740874
-	for <sashiko-reviews@lists.linux.dev>; Tue, 7 Jul 2026 13:31:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N4AYMjNCcKL/iIFYSfunYwZHGVVPbQuKrOjygxjVtYs=; b=WN8s/Amn7HSYv6ix
-	XxXG+U988E4Ibnqsw48cD4m7wz1B66Q73LbW4efotby8SmN32dTXy41j+rr8GKem
-	fo3rLRpdOEyKSosgHiNro6mlo6VpGKHOqNeUAW5rcqNk5LoDh85h3bBbm/hSm3W6
-	f8gkV+ULrvCiMQAPIvbjlFQ2pz03SC1Cl31yfJOUUS8UTmwQGASQo7e1ht5fSjQ/
-	UNYIwXlgcsPPD5LyE02iGEMnx0YfBuyVDjxw+wyYZET0xQufGTQ9YaAYog3vwwb4
-	4T7ISC/MpkCiXhdqncQ21NTLVpQSRUJpywZF2aK+ppGGn4NInW8C44latQGFxZRC
-	79Vq9Q==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9a9ny6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 13:31:22 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8423f1fe39eso8465695b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 06:31:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783431081; x=1784035881; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=N4AYMjNCcKL/iIFYSfunYwZHGVVPbQuKrOjygxjVtYs=;
-        b=jpdGBOY2RuRuk4z6bTsFtcW0Wo7jCvdWZ/aak7+4PJ0EbmGVrybtXMYtS6M/TUavtK
-         WB2WLkniBprp/Uv2Dyj3I0oKoTrP8SIOeXYHRKZeHVgCcSe+PBJ7zGa0jozdVEI0UIpa
-         NZZYwbGcPNDrJoPhfRxqK2TKxx2fQ+1WuEW6OVZPIS7TN1JaOb6GT2RktB0VXdGFWOh0
-         dKlUpHuPfuB5v0NXIbzfyHsruZFyp1CXwDsbhmTnHKMZEPlfhB/pRu3w4f0BIEN9JJ+9
-         VOar4gLC91T9t1OfDsLZijoKHomfJ6Zd1hxLiRmWA30BHagunckKZNh6mlhvEtwzvvL6
-         sCbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783431081; x=1784035881;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=N4AYMjNCcKL/iIFYSfunYwZHGVVPbQuKrOjygxjVtYs=;
-        b=lPY55XP6GicJm4roisC66T5zj02n0OqC45FlthXHriBj7YviTQ9U5Hkw/FLcfcyoxX
-         aqZO+5lSKxiAEI7IzlnDprvkUjLoLFUpmd0dskS5oNdyRXuHYuNF6+B1fOydUhZEAIGM
-         /MHiiAPUldJQ6B0dP6qcl1JnwP6l5T6Y/aMZ53clpIhMW4aWIWsh3+GmyKS5EAi0HsSZ
-         2B9jUGUIqwVlyTM8ia/GHGtaNuX5BGe0M6UPKdQ/xKMXJ/xLaBPJOtsiZfXT4fgHAmti
-         mH7pnRaZGUz+dp6oMqvU4oY2A3Wm/lo6V9hLL19RsZyFASM78Ek0hodJBFhk82boMPjU
-         8H7Q==
-X-Gm-Message-State: AOJu0Yzwpij91chz3izYu5oNKpgTFS7H5NJVSio3R89HNsnYtfbE743l
-	G3b7uaNWMpUsHjIohdhk30gzcSJ3uBcEZE1BetZGAn+G9EZ5TIA1TcrNfaWHwM+9HIxoFeNdCCk
-	RCfeL0EKGF+byTa9C7EjxZf307FS1id4vilHy2ZwgJfvJpdtmzwpdbJ8B6CpwqeaXjGwqsKw/Gc
-	dPZwM=
-X-Gm-Gg: AfdE7cmYqRAN5/Puw9Da+mnQ5MJrfptU8yW99E37C53rMVBdSwh1qJIRqWylun9wGuD
-	ZT7H4l5buJbdpEJf12G6anXENCG2mX/d5TR46iCTphop9OcwpNKkrxypZOq8IC0s+DTK6J5sldo
-	3oc9IvxPKDH5ZvTfmupyBA4KNDxSzURqEWI0g2B6FgJe2+k2q1WpRlBfTXBKgPu+MsoU5JXPDlW
-	Ql+2i3JON25fl8j/hEUr0hD0Q5kQSzWS0eQAbDpZc1D1DX40uWLoNRqZFLmJgKGAu8JPC9pMURl
-	9/cCBAthVaY5Nabu5YeZh6pQVjCzd5Cr0F6Yi5PLC4vTDhPFHA+EvUl84BuQK3HngZrYNMCpZP5
-	QCJgB01AE8I6gaEzu8wPgtrCAzWixIGVRy8lMFQN08EU=
-X-Received: by 2002:a05:6a00:2301:b0:845:c6c3:5e75 with SMTP id d2e1a72fcca58-84826e13ba3mr5007837b3a.42.1783431081232;
-        Tue, 07 Jul 2026 06:31:21 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2301:b0:845:c6c3:5e75 with SMTP id d2e1a72fcca58-84826e13ba3mr5007745b3a.42.1783431080083;
-        Tue, 07 Jul 2026 06:31:20 -0700 (PDT)
-Received: from [10.217.217.28] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6b96c0fsm5451255b3a.20.2026.07.07.06.31.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jul 2026 06:31:19 -0700 (PDT)
-Message-ID: <6e343fb1-5192-4a5d-b6d2-635f9adcfe9e@oss.qualcomm.com>
-Date: Tue, 7 Jul 2026 19:01:16 +0530
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="XbupLp5W"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 7C6D8C8F1F4
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 13:33:42 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E82FB60333;
+	Tue,  7 Jul 2026 13:33:28 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 704A311BC11B0;
+	Tue,  7 Jul 2026 15:33:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783431208; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=eWe6D8M+Qv8n+twshu2746DOFdO/y2gPgEVI4Cbo08w=;
+	b=XbupLp5Wsb/CiS3X3UV8DhvKfRSRrvxCp8GCf6Vf1/31wuhu3Qv1RZd2HzLpex/fM3LJV/
+	Sk0AsrnPsZtRrRpEkPfFt5DjrDJ2Nx5IisVOiHtV2rJvq1aQnAxChGsnLrqbW3QaZeEcBi
+	ciBpMd71ar+AdPNb7yIytYxm2uYP8PA3LSQ9xLP8thxx0q+Ek+iw0KZUWdjB9BfI5C90fr
+	2GiTDAB/d/itHy4aHyVqXT42VfX+KqM97C/Wbq9/VeYzUxKtzTKVxNbExcTXGZMyfPhhzX
+	gmzjew27X/jSxsK0bD4XiSZr8s/KlA8BcZAA64rKKzWkSrIbQ2C3q5K06e6EIA==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: hamoa-pmics: Add ADC support
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260614-adc5_gen3_dt-v2-4-32ec576c5865@oss.qualcomm.com>
- <20260614081743.5E1141F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-In-Reply-To: <20260614081743.5E1141F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: SmN0MGIHj95_Pi24RGU3atCaD7rlFPm9
-X-Proofpoint-ORIG-GUID: SmN0MGIHj95_Pi24RGU3atCaD7rlFPm9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEzMiBTYWx0ZWRfX+r87LIwSPOHS
- 9jXIJ7+F3zYVtNf6YrJdU3bXLFg6UcLZ6sH42TvMQ+kI6eaT0bi6gdazBKFpZ6083W+HsPV9kNl
- dMYvfx3edE0b+FWapmmoxwZeDPqxLMw=
-X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4cffaa cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=wJasU89hPeDluGEzl60A:9 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEzMiBTYWx0ZWRfX75XCFrbSMoWP
- YwAeH926M+DzOsQrDmpOvd6c/v6r7ef+rsHstxPk7l8n1zV/meAgh86RyY0ZBWG3rIXRAcbgn0V
- D8fV95Cx9C1wiCpCQxE/BrxmMqIMc+ODWKvFKGvJR+J+h7pg1L4lzcxlNTdXkiHVlob+SXGr+So
- Z45IPxxeDFOlU1AOOiElHi9nlgCysoMBezks5z5YPoGHlBZMkQw4A3hrCnp0/9LP2d2riivevoR
- h0fWWlx0zX/Irxw2HoI2poiAFuCBmpEUueNcqZEyKpMDefs7AfRRtQDL2pXK4va2P1Bjduacr+0
- mrbi06M1JpBLqLD3jaqv6/GhULovfLa6sAeEPPMFUzp4PLL5kObYzWVpQGUGIdiDIRnOTimdP8V
- BciwWgXegPRsymrKVPQv6Ms0OxA3nj5s1ZOhGmpzN05I6zfM6Abrjb9HG+3Yt/uL23sDyGWiDfv
- tAZrJfdo/Fo4kyD0o4g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070132
+Date: Tue, 07 Jul 2026 15:33:26 +0200
+Message-Id: <DJSDLLOEH1OE.1VSQGGM2GN768@bootlin.com>
+Cc: <linux-watchdog@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for
+ running chip on boot
+From: "Paul Louvel" <paul.louvel@bootlin.com>
+To: "Guenter Roeck" <linux@roeck-us.net>, "Paul Louvel"
+ <paul.louvel@bootlin.com>, <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260706-w83627hf_wdt-nct6126d-v3-0-fa5ad8d486bc@bootlin.com>
+ <20260706-w83627hf_wdt-nct6126d-v3-2-fa5ad8d486bc@bootlin.com>
+ <20260706104010.A345B1F000E9@smtp.kernel.org>
+ <DJRG1B5OZRQF.3TGMTYKZF4XL8@bootlin.com>
+ <f598a05b-5d91-484d-a637-e092950a6f47@roeck-us.net>
+ <DJRLRNRML483.3ZTW07FZBRFW@bootlin.com>
+ <5e441e3a-27ce-4f46-abf4-fd6246727cb6@roeck-us.net>
+ <DJRTDK0H5R1Q.32FU59ADLZD6E@bootlin.com>
+ <a20d8c37-0d46-489b-aa8c-af927a2c552c@roeck-us.net>
+ <DJS68HQS83G4.38Z406G5WD8NQ@bootlin.com>
+ <815d52b8-324f-4fa5-9470-d60f79546366@roeck-us.net>
+In-Reply-To: <815d52b8-324f-4fa5-9470-d60f79546366@roeck-us.net>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 6/14/2026 1:47 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing Thermal Sensor Provider for VADC causing thermal zones to indefinitely defer
-> - [Low] Devicetree Naming Violation: Underscore in node name
-> --
-> 
-> commit 7b5021a0220835eeee60f0b85faf679ed9b09977
-> Author: Ayyagari Ushasreevalli <aushasre@qti.qualcomm.com>
-> 
-> arm64: dts: qcom: hamoa-pmics: Add ADC support
-> 
-> This commit adds the ADC node and defines channels for die temperature,
-> VPH power, and system thermistors for PMK8550, PM8550VE*, and PMC8380*
-> PMICs. It also defines several thermal zones corresponding to the off-PMIC
-> system thermistors.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi b/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
->> index 6a31a0adf8be4..2e746ede850f8 100644
->> --- a/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-> [ ... ]
->> @@ -189,6 +191,90 @@ trip1 {
->>  				};
->>  			};
->>  		};
->> +
->> +		sys-0-thermal {
->> +			polling-delay-passive = <0>;
->> +			thermal-sensors = <&pmk8550_vadc ADC5_GEN3_AMUX1_GPIO_100K_PU(1)>;
-> [ ... ]
->> @@ -277,6 +363,142 @@ pmk8550_pwm: pwm {
->>  
->>  			status = "disabled";
->>  		};
->> +
->> +		pmk8550_vadc: adc@9000 {
->> +			compatible = "qcom,spmi-adc5-gen3";
->> +			reg = <0x9000>, <0x9100>;
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +			interrupts = <0x0 0x90 0x1 IRQ_TYPE_EDGE_RISING>,
->> +				     <0x0 0x91 0x1 IRQ_TYPE_EDGE_RISING>;
->> +			#thermal-sensor-cells = <1>;
-> 
-> [Severity: Medium]
-> Does the driver for pmk8550_vadc (qcom-spmi-adc5-gen3.c) actually register a
-> thermal zone provider?
-> 
-> It looks like the driver currently registers IIO channels but delegates
-> thermal monitor capabilities to an auxiliary device named adc5_tm_gen3,
-> which currently has no driver in the kernel to bind to it.
-> 
-> Without a driver registering the thermal zones via
-> devm_thermal_of_zone_register(), will the generic thermal framework
-> indefinitely defer probing for these thermal zones, leaving the system
-> thermistor monitoring uninitialized?
+On Tue Jul 7, 2026 at 3:28 PM CEST, Guenter Roeck wrote:
+> On 7/7/26 00:47, Paul Louvel wrote:
+>> On Mon Jul 6, 2026 at 11:48 PM CEST, Guenter Roeck wrote:
+>>> On 7/6/26 14:42, Paul Louvel wrote:
+>>>> On Mon Jul 6, 2026 at 6:12 PM CEST, Guenter Roeck wrote:
+>>>>> On 7/6/26 08:44, Paul Louvel wrote:
+>>>>>> On Mon Jul 6, 2026 at 4:22 PM CEST, Guenter Roeck wrote:
+>>>>>>> On 7/6/26 04:15, Paul Louvel wrote:
+>>>>>>>> On Mon Jul 6, 2026 at 12:40 PM CEST, sashiko-bot wrote:
+>>>>>>>>> Thank you for your contribution! Sashiko AI review found 1 potent=
+ial issue(s) to consider:
+>>>>>>>>> - [High] Removing the manual hardware timeout refresh while still=
+ unconditionally switching the hardware timer base from minutes to seconds =
+drastically truncates the remaining timeout if the BIOS originally configur=
+ed it in minutes, risking unexpected system reboots.
+>>>>>>>>> --
+>>>>>>>>>
+>>>>>>>>> commit 0014048ec369e2a09098aa033aeb725449e2fd67
+>>>>>>>>> Author: Paul Louvel <paul.louvel@bootlin.com>
+>>>>>>>>>
+>>>>>>>>> watchdog: w83627hf_wdt: Use WDOG_HW_RUNNING for running chip on b=
+oot
+>>>>>>>>>
+>>>>>>>>> This patch updates the w83627hf watchdog driver to rely on the wa=
+tchdog
+>>>>>>>>> core's WDOG_HW_RUNNING flag to keep a running watchdog alive duri=
+ng boot.
+>>>>>>>>> It replaces the previous behavior of manually issuing a single ke=
+epalive
+>>>>>>>>> during initialization.
+>>>>>>>>>
+>>>>>>>>>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/=
+w83627hf_wdt.c
+>>>>>>>>>> --- a/drivers/watchdog/w83627hf_wdt.c
+>>>>>>>>>> +++ b/drivers/watchdog/w83627hf_wdt.c
+>>>>>>>>> [ ... ]
+>>>>>>>>>> @@ -241,9 +241,8 @@ static int w83627hf_init(struct watchdog_dev=
+ice *wdog, enum chips chip)
+>>>>>>>>>>      			pr_warn("Stopping previously enabled watchdog until user=
+land kicks in\n");
+>>>>>>>>>>      			superio_outb(cr_wdt_timeout, 0);
+>>>>>>>>>>      		} else {
+>>>>>>>>>> -			pr_info("Watchdog already running. Resetting timeout to %d s=
+ec\n",
+>>>>>>>>>> -				wdog->timeout);
+>>>>>>>>>> -			superio_outb(cr_wdt_timeout, wdog->timeout);
+>>>>>>>>>> +			pr_info("Watchdog already running.\n");
+>>>>>>>>>> +			set_bit(WDOG_HW_RUNNING, &wdog->status);
+>>>>>>>>>>      		}
+>>>>>>>>>>      	}
+>>>>>>>>>>     =20
+>>>>>>>>>
+>>>>>>>>> [Severity: High]
+>>>>>>>>> Does removing this explicit timeout reset create a risk of unexpe=
+cted reboots?
+>>>>>>>>>
+>>>>>>>>> If the BIOS originally configured the watchdog with a timeout in =
+minutes
+>>>>>>>>> (for example, a timeout of 5 minutes), the hardware counter cr_wd=
+t_timeout
+>>>>>>>>> will hold the value 5.
+>>>>>>>>
+>>>>>>>> First of all, the driver does not support minute mode for now.
+>>>>>>>
+>>>>>>> The above feedback doesn't claim otherwise. The BIOS may still have=
+ configured
+>>>>>>> the timeout to 5 minutes.
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> Because this patch removes the explicit write of wdog->timeout (w=
+hich is
+>>>>>>>>> typically 60) to cr_wdt_timeout, the counter retains the raw valu=
+e 5.
+>>>>>>>>> Just after this block in w83627hf_init(), the driver unconditiona=
+lly
+>>>>>>>>> switches the timebase to seconds:
+>>>>>>>>>
+>>>>>>>>> w83627hf_init() {
+>>>>>>>>>         ...
+>>>>>>>>>         /* set second mode & disable keyboard turning off watchdo=
+g */
+>>>>>>>>>         t =3D superio_inb(cr_wdt_control) & ~0x0C;
+>>>>>>>>>         superio_outb(cr_wdt_control, t);
+>>>>>>>>>         ...
+>>>>>>>>> }
+>>>>>>>>>
+>>>>>>>>> This immediately shrinks the remaining timeout from 5 minutes to =
+5 seconds.
+>>>>>>>>
+>>>>>>>> True, but in those 5 seconds, the watchdog core will kick the watc=
+hdog
+>>>>>>>> immediately. by calling start(), and thus refreshing the watchdog =
+to 60 seconds.
+>>>>>>>
+>>>>>>> ... unless below.
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> If the watchdog core's kworker is delayed, or if the system is co=
+nfigured
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>>>>> not to ping the watchdog before user space takes over, could this=
+ unusually
+>>>>>>>>> short timeout cause the system to reboot unexpectedly during earl=
+y boot?
+>>>>>>>>
+>>>>>>>> Yes, but expected. If WATCHDOG is enabled, then WATCHDOG_HANDLE_BO=
+OT_ENABLED is
+>>>>>>>> enabled by default unless explicitly disabled when configuring the=
+ kernel.
+>>>>>>>>
+>>>>>>>
+>>>>>>> It is still an unexpected and undocumented change in behavior. Prev=
+iously
+>>>>>>> in that situation the watchdog timeout would happen much later and =
+give
+>>>>>>> user space time to start the watchdog daemon. This is no longer the=
+ case.
+>>>>>>
+>>>>>> Do you mean that, in the case WATCHDOG_HANDLE_BOOT_ENABLED is disabl=
+ed, the
+>>>>>> driver now doesn't refresh the watchdog, this is unexpected ? I was =
+relying on
+>>>>>> the fact that this entry is enabled by default.
+>>>>>
+>>>>> It can be disabled with a configuration option, and with a module par=
+ameter.
+>>>>>
+>>>>>> In this case, should the driver refresh the watchdog itself, and set=
+ the
+>>>>>> WDOG_HW_RUNNING bit (for the added feature that it does it repeatedl=
+y) ?
+>>>>>> Or document the fact that the driver will not refresh the watchdog i=
+f
+>>>>>> WATCHDOG_HANDLE_BOOT_ENABLED is disabled ?
+>>>>>>
+>>>>>
+>>>>> The difference is that the timeout used to be 60 seconds, or whatever=
+ the
+>>>>> default driver timeout is set to. If the BIOS enables the hardware ti=
+meout
+>>>>> and sets it to <n> minutes, your patch changes that to <n> seconds. T=
+hat
+>>>>> is unexpected.
+>>>>
+>>>> The default driver timeout is set to 60 seconds. I do not understand y=
+our point.
+>>>> If the BIOS enables the hardware timeout and sets it to <n> minutes, w=
+ithout my
+>>>> patch, the driver would still refresh the watchdog to <n> seconds (60 =
+actually),
+>>>> with "superio_outb(cr_wdt_timeout, wdog->timeout);". It forces second =
+mode in
+>>>> the control register anyway, and the driver has no way to know the pre=
+viously
+>>>> set timeout.
+>>>> The only difference I see is that it does it immediately and does not =
+rely on
+>>>> the core to do it. It also do it only code.
+>>>> Maybe I do not see something here.
+>>>>
+>>>
+>>> Please provide the data path showing how the watchdog core sets the tim=
+eout
+>>> to 60 seconds if WATCHDOG_HANDLE_BOOT_ENABLED is not enabled.
+>>=20
+>> If WATCHDOG_HANDLE_BOOT_ENABLED is not enabled, then I understand the is=
+sue.
+>> Would an additional check at compile time be sufficient ?
+>>=20
+>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf=
+_wdt.c
+>> index 27ef1cce3a14..c6d470be62a8 100644
+>> --- a/drivers/watchdog/w83627hf_wdt.c
+>> +++ b/drivers/watchdog/w83627hf_wdt.c
+>> @@ -242,7 +242,11 @@ static int w83627hf_init(struct watchdog_device *wd=
+og, enum chips chip)
+>>                          superio_outb(cr_wdt_timeout, 0);
+>>                  } else {
+>>                          pr_info("Watchdog already running.\n");
+>> +#ifdef CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED
+>>                          set_bit(WDOG_HW_RUNNING, &wdog->status);
+>> +#else
+>> +                       superio_outb(cr_wdt_timeout, wdog->timeout);
+>> +#endif
+>>                  }
+>>          }
+>>=20
+> No, because "handle boot enabled" can be disabled with a module parameter=
+.
 
-It is true that the auxiliary driver is not yet present in the code, so
-the thermistor monitoring functionality would not work yet. The main
-ADC driver functionality should still work.
+Ok.
 
-I have this patch series for adding the auxiliary driver:
-https://lore.kernel.org/all/20260705-gen3_adc_tm-v3-0-ac62f387dbce@oss.qualcomm.com/.
-I can make this DT series dependent on that one when pushing the next version.
+>
+> Why do you insist to dropping superio_outb() instead of just keeping it ?
 
+I am not. I wanted to ask you if it was a possible solution, which is not.
+I will keep it for v4.
 
-> 
-> [ ... ]
->> @@ -301,6 +525,18 @@ pm8550_gpios: gpio@8800 {
->>  			#gpio-cells = <2>;
->>  			interrupt-controller;
->>  			#interrupt-cells = <2>;
->> +
->> +			sys_therm_0_gpio3: sys-therm_0-gpio3-state {
-> 
-> [Severity: Low]
-> This isn't a bug, but does this node name violate devicetree conventions?
-> 
-> Devicetree specifications strongly discourage underscores in node names,
-> recommending hyphens instead. While the node label (sys_therm_0_gpio3)
-> can use underscores, should the node name be sys-therm-0-gpio3-state?
-
-I'll update the names to use hyphens instead of underscores.
+>
+> Guenter
 
 Thanks,
-Jishnu
+Paul.
 
-> 
-> The sibling node sys-therm-1-gpio4-state correctly uses hyphens. Leaving
-> the underscore might trigger a node_name_chars warning in dtc when compiled
-> with W=1.
-> 
->> +				pins = "gpio3";
->> +				function = PMIC_GPIO_FUNC_NORMAL;
->> +				bias-high-impedance;
->> +			};
-> 
+
+
+--=20
+Paul Louvel, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
