@@ -1,212 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010069.outbound.protection.outlook.com [52.101.69.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DF743C7B2;
-	Tue,  7 Jul 2026 18:00:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783447249; cv=none; b=RanqmAxvym5nKy7Qtr9TmLBJ2UcMf6G/C0sXbTzhmx6jRE0A7oTHlquoYh9c2Ds+UtMAZJoISmcCZgGBo3vPB/pe/5xFLWLDh3x91GRFQiczpv6yQJBWBZ991gkMoRLMimvgsAFGt0GYOUH2Wbk3+aR3a7hfltF55DzxTRFrh8c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783447249; c=relaxed/simple;
-	bh=ycBO1r5ck2A+x1WN2wpltuPl1P//H+iRDYz9uHDgSPg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VhzQh2Hxg+KVZzifOVi5SKWqbiB1UytjvOZT80bkOUe+RHLFZxvKNGMubWIoOZhpyr2Hll0V4yMIleMxJjWM32rUwF51ZcfyJJGRqehFhYpOMDSSJJgZvX6MvqZbrr+srCPtg7BewazfSNWEoSs1895VyHpNSa9Yi/SoSL1eXBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOwI4pg2; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2501B3EB0FF;
+	Tue,  7 Jul 2026 18:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783449563; cv=fail; b=Qr9uoPYa+L9toGPUM9NzSZlOiXU0vg2pbecDOenYSqPSWtf57XGnYD5Qp30sGqn/w02FoCE3XiXrur0suPDQX/K5lHA8nFleZNgQNrQ9rlyb6BclxQrWeApit5/W/MBrDXcUfn3tOC3KqbQAM4v0iIiIrQvcybekZM84q1G8oN0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783449563; c=relaxed/simple;
+	bh=WkGCbB9gz/q3glUQa2H5s0ZM/i80uyDUEjNS27d5Cfg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=No/Ts5J49he5g2yb5TWr1pXBxSJ6YhLNAywFQfpooFTqObJGGMWL+GDBJu/d6DsSd1RuR799K4/aSwHbFRWldusKPwog5qHQAB9Xjoy3bDRKnqCxYSsE1AXKVTLv0eGZgj7DtTrCuxE60ccQ74EERI0La701k1X2f22TfUJzkAA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=dnaB9DPN reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOwI4pg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 99BF3C2BCFF;
-	Tue,  7 Jul 2026 18:00:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783447248;
-	bh=ycBO1r5ck2A+x1WN2wpltuPl1P//H+iRDYz9uHDgSPg=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=jOwI4pg2Y+wFrCmu5QOUz6qeb/GEraUq6WCjf9+TfIon+7TyfsQaMgtVzKdaBLRrT
-	 x+Wq6nXN9LGAHQs1t0x+/FJYrssm6rX7f8RVKl4ClvodYCGkrRTNQXsnrJ06UVScyQ
-	 8fw13xaiH3oSYzaTUnb/PVBoqAo0xOgFAUfYYRpphpmAKjZ64L+8cEPRbO7U7jnHEe
-	 FZbUA+Q+ZLElxNZA9pSEA61vnOVPpm0L3liheyIquitlN+XkbkGvAymNKFOygK068K
-	 zz3FIw1xf8Lh54zTNU8IkpucbwKVUJLih8wJF1wm+0P1DON3z4Tq69lmsRcx9sYNgW
-	 ZKoOXozLuVg1Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89486C43458;
-	Tue,  7 Jul 2026 18:00:48 +0000 (UTC)
-From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
-Date: Tue, 07 Jul 2026 20:00:41 +0200
-Subject: [PATCH v5 5/8] can: bcm: add missing rcu list annotations and
- operations
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="dnaB9DPN"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PX05SF4R1OFP2ApswCoF8yLQiixSgnk22TCy3Be8oGRz3ORFEOwsTBJP4Sl3Zr4m3EWcStiU4dC4b5BLEp60QjmldH/+elzHVjUbu7yhHP0CWZwQKLv+mE6/oUM/M+lJywgN6pQLTVv54YG4ba5PYwnUZGBQcizFRjxsiTIYd3yJ5j0tfBWrsf7KFqR7lUxSVZpjpp82SxNwZuIQCpRNf1g4fA0OrcNGXytXTxKueFR6QaIQhpJ0SkvwMLrzu79F7u2zNHrrNK/yb4ITzXLfY0soUetqT+DaKG/8sRMLunpf9xR5yLkaeeD8IksB0FpUlojXpENMTdqBlkwczQgQ3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MZ8ETfVP2AEBwUBxry7WQO4H2pLTi5cw7+q8So0bGVQ=;
+ b=MZK04IbeJoaM5MgOPTS06c7Pp70vnqf2m4r9FMmplRVNw1aPUpIo8P376d/F8mxl4eLDVAvjYxqsI1xstiXy8arcXDYxkJmX9bkzBDxM6lvXDFMGSOVTPa/Qf/uolOXuHg/xzf5wF4gNAAyl/zcreqOXo1WM+GKVehkUfh5HPbwNOIQX4lXWfZBpzAnYKm9x60HoIcAmSJTc1sIU0mpWJB/DX+UHT5zcqwQgHNh+PhyYehxlQHEd21/NzYTwVHWudZd9clKPeio+yNLZfP+fY5lEJHl9A4q5OtjtslgdKSrjnQS4QXd09zUOrMYK4V02halziHNfVsH82K1xmassKA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MZ8ETfVP2AEBwUBxry7WQO4H2pLTi5cw7+q8So0bGVQ=;
+ b=dnaB9DPN4nJrULzFuohCyUHxHA8BeGO4MzVjT5n01EC8hR648hD52FQdZKQEgAjED7g5SZz6roCbj+OMJdi/jziQJIzNVAdmOi1gPKTyP/1MzEoAnAmu1JHAp6hb0wnj4sKm4TKpxWhgkJCs4ywMQsTMC0/4elCbpLIaXpEI8wlx+32ueuppt95A9OwEkb1ZOwcCTrXZGAlNrQYqi6U+fUYJ5WLyaES8NwzPvalOZlTdCHyM1N4uNaFQyAn78CcxJXXLmDbJjTwUqJGhcgS2pUZR5zPHsIgr/oLqJ3koEqd6FvWvhMPQG5mn11ufbBgHX5zCKfmX/9exn2BKOOngwg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB8309.eurprd04.prod.outlook.com (2603:10a6:20b:3fe::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.13; Tue, 7 Jul
+ 2026 18:39:18 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Tue, 7 Jul 2026
+ 18:39:17 +0000
+Date: Tue, 7 Jul 2026 13:39:09 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>, Frank.Li@kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	imx@lists.linux.dev
+Subject: Re: [PATCH 1/2] dt-bindings: arm: add MBa93xxCA as mainboard for
+ TQMa91xxCA and TQMa91xxLA SOM
+Message-ID: <ak1HzWkelgKjYiut@SMW015318>
+References: <20260707091424.1702245-1-alexander.stein@ew.tq-group.com>
+ <20260707091424.1702245-2-alexander.stein@ew.tq-group.com>
+ <20260707092008.B7E771F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260707092008.B7E771F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8P221CA0044.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:346::22) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-bcm_fixes-v5-5-c3c74f8d8ff7@hartkopp.net>
-References: <20260707-bcm_fixes-v5-0-c3c74f8d8ff7@hartkopp.net>
-In-Reply-To: <20260707-bcm_fixes-v5-0-c3c74f8d8ff7@hartkopp.net>
-To: linux-can@vger.kernel.org
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, sashiko-reviews@lists.linux.dev
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783447246; l=5017;
- i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
- bh=+7viSVkHaYLUtpL3B12ohX+d0K4aqI5r+wgllgDbJA0=;
- b=5Pp+V5f0lJY/8BCl+v4aV8VDGHdBwK4jAk6kvaROnst+MC6qN5IRkG3gBowMcD/RrdSAPO+tv
- WR7ZwICLPM1Bk9cAgVsvXhF7EvzZAM3NTtLRft3INR28TtExADxnnrY
-X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
- pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
-X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
- auth_id=620
-X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
-Reply-To: socketcan@hartkopp.net
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8309:EE_
+X-MS-Office365-Filtering-Correlation-Id: 205a6ac1-e401-40f6-4a19-08dedc570d2a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|19092799006|376014|1800799024|23010399003|22082099003|56012099006|4143699003|18002099003|11063799006|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	kgZydP2JJPbgSys78RR22LnIvo8wDgh6jI3FmA8zAIhRycvl2o4ltDSLPTFS79Lexe0RJAzzj2yZ4+0f3Wa+ws4pchBPMR6C++NILwPJ+PMW8CWXNn3O4ktXeROOjqNsLi6lFgR32a/bf9yudviHU7f6I0GluiNdOlHAtEJFKIDGixZZ+W4l5Mue43g8owpR34b2iuSqqY4YlfKRuCnzFZgGbx+RHRAW2tVfUrvw5i+kEXw9RLP8lqBWU061vsqkccfZ5HJsBLYkvYrf3hPejndIa5pBlxxu1lYrjBSekqyE+0Kk4+aE75EAY97Mack+ePVoWNE2/y2wy/2nDV/GFZdYuueZlQUSK9Pc6zw0N19AQkj1jIHSg6g70GRx1y9iakXKWw1T9/3qtOmwSjF+n1eGs5B0wptMcQXiCyHVjSzFkj8l3LVeDIQlpCINUp8zih8QcmwuoiH14g07N+ZBce9gPe52bDhTA0NYPOJao/YUiukw0FiS//aVgh6xtkmEO7oN6UB1UrTM8S37gDJEQEH9hfNiFI9CJ7ZELq8sSx3Sol0IuUpvZWF20yQe0zmTfbAxZfU4uXHx+wkMm3SlYTCVypAa0cMdoHm/iDIR5Og=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(376014)(1800799024)(23010399003)(22082099003)(56012099006)(4143699003)(18002099003)(11063799006)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?myOBlybO1T28R1azfOBPMy4QC0kDo3htSzyyNdFs0P/AI3duHiVHj/CTxJ?=
+ =?iso-8859-1?Q?1+52FefFnrwkncVj/a3/DIxJzXn9UGzA6NuK/MqnCIdLe8popCIEgD3z9W?=
+ =?iso-8859-1?Q?7oaQsEkMb1lIhtgOhiTNlLLT2BCqVZk/S1JMzMqzRHSTbu1OwNkqI8rPJ2?=
+ =?iso-8859-1?Q?xcPo/zy2kFAm0TSwQd8lPw3l7c31xHBbZuvJacWRnyZMB8V1ow5Ru/hteq?=
+ =?iso-8859-1?Q?2Zxv2XoA0aIru94q89p4O95bZoi0re9eSJZJeUsCqpLXI3316XfW72aham?=
+ =?iso-8859-1?Q?fucFySQhB10MMXv1a7uH+mWr44q/ppxTTJGpOmtzY3/d0M2EzaXGYy3idy?=
+ =?iso-8859-1?Q?cbDQZ74L9BcOGWw7ZcnoNiUP4Y+X+bLsB9lDcVH20JSbTN5l+LPtMN8EED?=
+ =?iso-8859-1?Q?yRqxYiP4G+7syHgjhKFO1Ep8UEFomJJI58EVob4XGz+J9OT/M9RZdeAZCg?=
+ =?iso-8859-1?Q?OLejRJI0TqXXjvSU36iBbzauEyZ8BkQW4+h//g5uHVvkAXFoDuIUMztInt?=
+ =?iso-8859-1?Q?CLkbm76rbAZ9G3sBFI+uL7VLIxliaHjGdXu+sdAKEDa8GJo/eFSZPgEVrE?=
+ =?iso-8859-1?Q?3yfyHCxa/Jeo0omkavq+wzN0+L0dSAQwvyiz+otnVdhiAfzb34i5uzYcC9?=
+ =?iso-8859-1?Q?IFD64SV5W1Nw0OdJrrQssHcJ3IT4xLJze4hBtXOmEH/BIFGnjX/eEhMefm?=
+ =?iso-8859-1?Q?43k5rGM6XX2lw9ONGAiTMlCrtlO/24PD6hD7g3YhVO9dUkdca2mQQwy9U8?=
+ =?iso-8859-1?Q?BP5soGefRpb9BohLRtZStEUTcm+xowGUMt+oOs30TeqsOmlIGEqlnbwwc0?=
+ =?iso-8859-1?Q?uidUXzhpBwEWYbTzSonA3xJMFmarFxgwrdkDeLmmnKiaupYVyVHY5rKhAe?=
+ =?iso-8859-1?Q?mzurV0neV1nBi/sqzBDbI6buGFV4CeF0VigSbrMzJgWjrl8Zv9hfPDQy4n?=
+ =?iso-8859-1?Q?ZTmooC4Lfsu0WvoTmdcWlJ6cmXuZFmPrBEc6FUu5fqdvrR6Kw+2//kgtts?=
+ =?iso-8859-1?Q?0/pFK6jusqyIxrXktg7qD4IHPh6HT7BkfPghunRojHvKBWvPjHYh+M+wtl?=
+ =?iso-8859-1?Q?J2aNtQeSbXHhE+acxIHbSfjc1fv+AsiGIzY0pyeFhiF59Jol7lY6fbCrbd?=
+ =?iso-8859-1?Q?qC+JuwJPFXL7GCETZshBAXUNjuO/RwMp2YxHx0JMoRlragqjrmByAMenVN?=
+ =?iso-8859-1?Q?f5efvAKXkeSBTpXP/SKTJCTHfO0FxCOqtT4UyqwTsMUic3aRuPKG351rQg?=
+ =?iso-8859-1?Q?ILWVJe+5oNH0fcP2EWsldi86+jUO7/W8qKGNwzLUMpHSelkIhrbp5nk5IF?=
+ =?iso-8859-1?Q?UvYl6OwCXMSIFkoLMhDsCn7aFrTlsrxQ18lU9e6k5iQIxbizeNptydfxNu?=
+ =?iso-8859-1?Q?H3DddnJK25pGpI6GqENlyLoQqj82JhtrNRA/okSfrpt0mRtlo20TGkeNjJ?=
+ =?iso-8859-1?Q?jVNkRv8suBl9fZrOH792Vatz0rL4N5n2XJ/4tAIiq/kcchWdJAHGNEIiwb?=
+ =?iso-8859-1?Q?0SBUDJkb/Ir28tIa49yUonpFqjQrGBYbM3DwVO35EWg9opTE22HCGHQA1Z?=
+ =?iso-8859-1?Q?XwOKJDhUZDa2NsZV82o+XOXEGfLlnX9aEQm8DHpuoj1mjiHB34DJGnh0Tv?=
+ =?iso-8859-1?Q?h8v576NjQd0F5B3KVtIGEgVpti3sNO3e0tF38b809tYsv7TFMAHXDAIoZI?=
+ =?iso-8859-1?Q?pBDjJBWzblaMEwpzcRRjsdYK/EQStvzkDU7kJjV8v2U9LGsRBdOVnZBeB+?=
+ =?iso-8859-1?Q?Hja+ivqiJ3QAZ57eEtBOFw09x9FhokzB/FfzojSvii/9jX+oo/lmFxk+FN?=
+ =?iso-8859-1?Q?MP27UzhBneB2HtIY9E686hvinDFQADJVd/bXn/06c9PkSwLQdPO9?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 205a6ac1-e401-40f6-4a19-08dedc570d2a
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 18:39:17.7812
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LeMvWbbb1Ne2kfHGlTJXxZCZyB4waKWzX8ULT8bK0yDLrGkq7RRbjvdkTzyY33mDrWE6hcGABTASi2D3Nc0HsNnyM9Vkh4b5zVgmHU8Ex0oH35/+uLNZsMSEAmUPkjPX
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8309
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+On Tue, Jul 07, 2026 at 09:20:07AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The patch introduces duplicated and repetitive text in the dt-binding description block and contains a factual typo in the commit message.
+> --
+>
+> --- Patch [1]: [PATCH 1/2] dt-bindings: arm: add MBa93xxCA as mainboard for TQMa91xxCA and TQMa91xxLA SOM ---
+> commit 3332dfa95ce8d051969053f3ea74bbf075143869
+> Author: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+>
+> dt-bindings: arm: add MBa93xxCA as mainboard for TQMa91xxCA and TQMa91xxLA SOM
+>
+> This commit documents the MBa93xxCA starterkit mainboard for the TQMa91xxCA
+> and TQMa91xxLA System-on-Modules. It adds the corresponding compatible string
+> and updates the board descriptions in the fsl.yaml binding.
+>
+> > TQMa93xxLA and TQMa93xxCA are two series of feature compatible SOM
+> > using NXP i.MX91 SOC in 11x11 mm package.
+>
+> [Severity: Low]
+> This isn't a bug, but there appears to be a typo in the SOM series names here.
+> Should TQMa93xxLA and TQMa93xxCA be TQMa91xxLA and TQMa91xxCA since they use
+> the i.MX91 SOC?
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+Look likes correct, please double check it.
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+Frank
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
----
- net/can/bcm.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 0b53dbb64dd1..5ca684cd0819 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -263,11 +263,11 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- 
- 		seq_printf(m, "%s%ld%%\n",
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
- 
- 		if (op->flags & CAN_FD_FRAME)
-@@ -1000,10 +1000,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			int ifindex, struct sock *sk)
- {
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
- 	/* we need a real device to send frames */
- 	if (!ifindex)
-@@ -1141,12 +1142,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 		/* currently unused in tx_ops */
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
- 	if (op->flags & SETTIMER) {
- 		/* set timer values */
-@@ -1164,10 +1164,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_cancel(&op->timer);
- 		/* spec: send CAN frame when starting timer */
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op, NULL);
- 
- 	if (op->flags & STARTTIMER)
- 		bcm_tx_start_timer(op);
-@@ -1348,13 +1352,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
- 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1422,14 +1423,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
- 					      REGMASK(op->can_id),
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
- }
- 
-@@ -1759,12 +1762,14 @@ static int bcm_release(struct socket *sock)
- 	/* remove procfs entry */
- 	if (net->can.bcmproc_dir && bo->bcm_proc_read)
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
- 		 * Don't care if we're bound or not (due to netdev problems)
- 		 * can_rx_unregister() is always a save thing to do here.
-@@ -1791,12 +1796,14 @@ static int bcm_release(struct socket *sock)
- 
- 	}
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
- 		WRITE_ONCE(bo->bound, 0);
- 		bo->ifindex = 0;
-
--- 
-2.53.0
-
-
+>
+> > diff --git a/Documentation/devicetree/bindings/arm/fsl.yaml b/Documentation/devicetree/bindings/arm/fsl.yaml
+> > index 86876311ec59a..84c4311cf7c30 100644
+> > --- a/Documentation/devicetree/bindings/arm/fsl.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/fsl.yaml
+> [ ... ]
+> >            soldered on an adapter board or for the connector variant
+> >            MBa91xxLA mainboard is a single board computer using the solderable
+> >            SOM variant
+> > +          MBa91xxCA mainboard can be used as starterkit for the SOM soldered
+> > +          on an adapter board or for the connector variant to demonstrate parallel
+> > +          display and majority of interfaces while MBa93xxCA starterkit mainboard
+> > +          is focused on communication interfaces without display support.
+> >          items:
+>
+> [Severity: Low]
+> This isn't a bug, but it looks like the new description block duplicates the
+> existing phrasing for the MBa91xxCA board instead of replacing it.
+>
+> The context above this addition already contains fragments like soldered on an
+> adapter board or for the connector variant which seem to originate from the
+> older description of the MBa91xxCA board.
+>
+> Could the previous, redundant sentences describing the MBa91xxCA mainboard be
+> removed to avoid duplication in the final schema text?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260707091424.1702245-1-alexander.stein@ew.tq-group.com?part=1
