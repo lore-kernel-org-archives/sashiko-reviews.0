@@ -1,153 +1,299 @@
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F2E3FD123
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:07:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3DF37F011
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783426066; cv=none; b=sUGZKh+bNslQxluIS6V9vbiC1SMOxfeaX0qF7fjkfHo1IhieRfPjCLmz0MLu/FOps6KJeIo6W2AKoHrZS6z7QZtjYRQJswF+jmrxfevUwthddonNevEg02DSNy9xPc9qpf68h1tR2sgoGZtlHlE7cAiivI6B+dQua5KKdWHEP1M=
+	t=1783426135; cv=none; b=QJBwuz6JLki8H0NhiSGOKp0Qgt9ilK6rgSTPnR5/8e+tEKPmxV/TN6Lljak1oOmr5iyndWtMXP589ti/bsvNPKbyOJVOwpwzVGO2iltjZqdKaLw6axxZw/VdWU5Yb6EmhB2thEme3WPHADpay27cZ2w9i7Gsvma4WGJlSj1trVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783426066; c=relaxed/simple;
-	bh=MgMwoRGobMzZna+biS4T5/1ah5HZaqV8KM78a2A6F1A=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=RoqkygHfTMK6gHqKIqNUbKE/xJJfu81oweLY1gS/FkdbtutyVQ5RU+479ti64n7E06K3g3loOda/AHbyGhx7zLt3zf4InBrOcp/XPurkpWMO4vepM+zGvzYSCSr9tbJO4CBPR1rjD3L4QXYKj17qLyvq4ihbdcSA401d3Hiue/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=sJgpysSH; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1783426135; c=relaxed/simple;
+	bh=FE4Q4J59n//A4uFc3yN4qYGca9bvrf4i7h16gvytKXg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DS6xy099Zmfu2Camw/k5zhpOpxsRA5rlqbZY5wlHAiVYI99sKXhhdDgEw5ajz9HX9gYyiHgHJblC6W2c5s4bgSzfyR2/1YZSU9V75qWjnWq31mCUqDdLw8134WSDM/1XBbuUuczqYLC/R/B6NWcU7qlc2JhEyIz0KVCp5/Fd8oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mK5onVF6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YTEsDBHv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="sJgpysSH"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id B7004C8F1EB
-	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 12:07:54 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 1621B601A3;
-	Tue,  7 Jul 2026 12:07:41 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 504DA11BC21CF;
-	Tue,  7 Jul 2026 14:07:39 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783426060; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=7XDi/cFy3vm3OzxXUB0o9J7TB8GaimLJvUhzpuJIqqs=;
-	b=sJgpysSHN9jEnkQ8zXXSqDkLUGP3ycRja4ntwRMqxB/htxrFxVdrFlxlHhVdBAy3KWHLGv
-	X4xH4UQO4GahfYoZEh3PxPzcZlV/LngHxbs2Mb6Yx482wrC8YvExceKSChuJxnKeCHIYHg
-	QQFQHsmr9Trz0pAhZlbaK7XKBLTGehSBPpiDCyyEJXQOjXXE909HKlYLhfDCFYkyQlE+m7
-	zSokrQITeEkIZ8ms+5LLoXRJKFoGMNWu9ox2AFZkda6pIPr24H2Pe30Zl22y50ZLCoY+3C
-	U8H2aRNKJlZT2kscSVooB/+A4YLlseEgnaUxHsFL3en4qtvg1V/tonAcqq/21Q==
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mK5onVF6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="YTEsDBHv"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678EPXg3204014
+	for <sashiko-reviews@lists.linux.dev>; Tue, 7 Jul 2026 12:08:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+22W3zxkIQEX0DVYt9xjZ+Fp+yJcU7xn5AILKh1DvgQ=; b=mK5onVF6LMrDIT0f
+	460oV7k/TtZ/UeTVRCkuW830fKv2OHsxoj/qUvjGeIgf+fcH6oEhDHz+H7LGVoU0
+	IjsFJGzI9ph3D4D3EcMxb6NLm263QmRxVS6GDd97BxaQygZO/BRNCnfocs+37Pqj
+	oxGYges4Zaq7GbRNmo2ijPf1Bsc2s7dWbyGwz8fWDy8aSdgsV1HDqqqKPBfyw4Hv
+	LD1g90JB+Y139LW7+qgduEMbv5835t7H1kQrfgAzjGa6g3xhGAkWh1S27UU/9Bcc
+	Mcd2Jx992+0nrE9si98KEMHnFAvqxQNsm1KPU1/Q9QxFIv1M4MhLLwGhXFsIeFPD
+	Ca+RdQ==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9a9b8y-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 12:08:52 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c85a298cd62so3757356a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 05:08:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783426132; x=1784030932; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+22W3zxkIQEX0DVYt9xjZ+Fp+yJcU7xn5AILKh1DvgQ=;
+        b=YTEsDBHvwbhgPzB1ozLnd5fhC9g9Q6z61XuRR80iMpsnEdVq47pzPe8vpPziDbT+fR
+         WM3V8yY65qong7+sFUag7hK8z1mMUm3gRnMw3SgyTWJUftkIDvg/prctJvb0SnQjrwgc
+         8efulwKyez97iIPwoHFi16VHCxW8vvR7qB34zM/u2pi9huHTARMpOmvri8hQCRz5xRwV
+         4mRi+Z4bH48LpDqRLUITm1N8kMB+MBYzo+rMUC0xHvW4beIahgF1OH77e36Hymz6LYIp
+         kWHA43vmQZLmgKjud4uq+9HjQDpzC5jBePOaIC0Sw77TQvi/M3qy1QwLAQxM8g3D+Mg1
+         wSOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783426132; x=1784030932;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+22W3zxkIQEX0DVYt9xjZ+Fp+yJcU7xn5AILKh1DvgQ=;
+        b=SKF+/xntBtqMgT0Z5kVEXK5vbve/d6hejOr93zYON8sPVsR5XsDiDb07IuTvjrXSMw
+         MyaK9H+DDR0AiiqArj+rTabcR582xT+BER7TGbh4KlJ/gQHMbvG4gkJSpZvLn3BLb3ST
+         u/zo8OZKnizHdZdY2z8fozsi5Wl2r2sMLUmfYTMP/u9n1YV6IVSD7ZhDCHH92DTqQ6fR
+         2kgRIvDXJj8rJXU1+6uJB9HTARejDvGalLtER/a6D8K4C3SOlGIsVvR+wOPbS4tUvSAv
+         bj+3jYzVyngF8RfiYJH4xw0kUAGmrOm5kcKVBYyrVVTYZue0a32m3fatlWZy5iPPPHVD
+         shTw==
+X-Gm-Message-State: AOJu0YzFiGpVZx2JT+7thEaI8y1QfSLFeimBG/ayrfWEJY56E9uZsi1p
+	gzEjrkRMoGHZrgh19POHtCVrs8mvgCRiUiTGGuefo+4rltrldQFs2s3ZAV/X14jPpdLS4HB5wlx
+	8lK0cqSh4x2Hdq6/lxbdd0dsPy+OR0Yl5G6y9oTNo9jLBXJ9IR3hs42OAQKvD8W7HzrpNENXgjZ
+	4DG3g=
+X-Gm-Gg: AfdE7cl+G//ly2+9s22O9CWJNjD3BwKwRJFoJ9cZjVWFJju3Ohevs50snvJkdDsF25L
+	5ghq5ARdH0n+7wKm+z3+biQ95awz5r3XVe2pwZCsDz/Qxjzg7SIo4oyvPZ3QotcYVAm65Olahus
+	CG6caaTG3yPKLtDyWw9P7DS+dSi/Jefnony04bw4DQ78CXWua/hSTMzr174CRKnFOkltEOJ4kFC
+	GHZRREmNbqQm+tCSrCuWlHzYX1adnEox0854ugp5byLHfZzKW+b+Aybt4+puwTz8oRTgQKOsKeU
+	2yquivQEePcvyGDOLb5SnB8nNYcbijOZRFVG7jn0ENgMPrhIP7wNgdSGRXy5gkD8zych9MxA+wQ
+	AyH0KN2/LEmoCidFnMpqg7E+S+88zttxVLVS9jUuZDkEn
+X-Received: by 2002:a05:6a20:d74c:b0:3bf:ab76:63d with SMTP id adf61e73a8af0-3c08ec8256emr6016564637.11.1783426131630;
+        Tue, 07 Jul 2026 05:08:51 -0700 (PDT)
+X-Received: by 2002:a05:6a20:d74c:b0:3bf:ab76:63d with SMTP id adf61e73a8af0-3c08ec8256emr6016526637.11.1783426130986;
+        Tue, 07 Jul 2026 05:08:50 -0700 (PDT)
+Received: from [10.92.203.183] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca5b3a2bf6bsm885732a12.27.2026.07.07.05.08.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2026 05:08:50 -0700 (PDT)
+Message-ID: <6b526e3f-6cb9-4628-8569-f39088b38246@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 17:38:47 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12] PCI: Add support for PCIe WAKE# interrupt
+To: sashiko-reviews@lists.linux.dev, Bjorn Helgaas <bhelgaas@google.com>
+Cc: linux-pci@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+        conor+dt@kernel.org
+References: <20260707-wakeirq_support-v12-1-b4453f5bcc97@oss.qualcomm.com>
+ <20260707114648.60A091F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20260707114648.60A091F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 Jul 2026 14:07:39 +0200
-Message-Id: <DJSBRX3VVLCU.13U4DZX2R4FRJ@bootlin.com>
-Subject: Re: [PATCH bpf-next v3 03/10] bpf: add BPF_JIT_KASAN for KASAN
- instrumentation of JITed programs
-Cc: <bpf@vger.kernel.org>
-From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-To: <sashiko-reviews@lists.linux.dev>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260701-kasan-v3-0-bd09bb942d86@bootlin.com>
- <20260701-kasan-v3-3-bd09bb942d86@bootlin.com>
- <20260701101211.AAD851F00A3D@smtp.kernel.org>
-In-Reply-To: <20260701101211.AAD851F00A3D@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: MA7MjGDqbOAhj5AnSOtzVqqAekcoasZe
+X-Proofpoint-ORIG-GUID: MA7MjGDqbOAhj5AnSOtzVqqAekcoasZe
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDExNyBTYWx0ZWRfX//ElCBNedS8i
+ q8ipSwGFJNkeM8v7sX9LIffb9mnz9Km3eRrMgEWQwxznr/hVW3WvRDlBLiuK0jDxkffawDNiveS
+ kdBpc+53DhsKSgLzGCaRDCyksdZpHqI=
+X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4cec54 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NEAV23lmAAAA:8 a=qWxXvflXNDPLj3OyKCUA:9
+ a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDExNyBTYWx0ZWRfXzGEQPHPAzN8R
+ zt6OVgFHL64kA25s9PqJhsxo5R5ZWBvz1tVxXOo0igs2ld9TVcOiqAtqM0wxgEzJgx2Dc964a7P
+ MsD+1gEAEo/Z1LSKUaEXp9zATLH6n9yANoXkY+BRO16MUzoSQmeQxKXyLg5a9SSOU20MfxIuY0S
+ Zw5lNYALCYQr+iWaTS6uc+T6fX5TlOdfk2Wxdx3AmiR9ig6nKMHoQOP6mxDJVlfGX3fbs8QUS7Z
+ RtFVATU93D51aZIYkteaSbZjFMS28d3oCvigb3MHwn8eJbWkoDkvKnXWD7v+psNovs3cCf1O3WS
+ GJ2Nega/vuLi4ShuFj5jwdqsgNQ54LDZ4JIBTcrKOeg91aAr0vWTxzPV8JwHOeuoqoKBf15k5be
+ TZNEFBb9VLOXkj1XTgIWc3VKh5W+9NKletxbMtqXO3Glchr0b/lJJ2w/uf16qILq9MhpzSDktgz
+ AYYYeQ4ZFjLDv+tBOEw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070117
 
-On Wed Jul 1, 2026 at 12:12 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] BPF_JIT_KASAN needlessly restricts its availability by uncondi=
-tionally requiring VMAP_STACK.
+On 7/7/2026 5:16 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Exclusive allocation of a shared WAKE# GPIO breaks wakeup capability for remaining devices if the first device is hot-removed.
+> - [High] The IRQ trigger type is configured after requesting the wake IRQ, causing the request to fail on irqchips requiring a trigger type.
+> - [High] Incorrect resource lifecycle check in `pci_remove_of_wake_gpio()` causes GPIO and IRQ leaks if the OF node is detached.
+> - [Medium] Unconditional system wakeup enablement bypasses standard PCI PM policy.
+> - [Medium] Unchecked return value of `device_init_wakeup()` can leave the device in a half-configured state.
 > --
 >
-> commit 23714982e1ca6e827ba19b9f4c74b703b4ad2090
-> Author: Alexis Lothor=C3=A9 (eBPF Foundation) <alexis.lothore@bootlin.com=
+> --- Patch [1]: [PATCH v12] PCI: Add support for PCIe WAKE# interrupt ---
+> commit 788f29e12a6c04e2d11d2db4e00c40903e8d0022
+> Author: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Subject: PCI: Add support for PCIe WAKE# interrupt
 >
+> This commit adds support for the PCIe WAKE# mechanism in the PCI core.
+> It searches for a WAKE# GPIO described in the device tree for the endpoint
+> or bridge, registers a dedicated wake IRQ, and handles waking the device
+> from low power states to an active state.
 >
-> bpf: add BPF_JIT_KASAN for KASAN instrumentation of JITed programs
+> Link: https://lore.kernel.org/all/20250515090517.3506772-1-krishna.chundru@oss.qualcomm.com/
+> Link: https://github.com/devicetree-org/dt-schema/pull/170
 >
-> This commit introduces CONFIG_BPF_JIT_KASAN to enable generic KASAN memor=
-y
-> access checks for JIT-compiled BPF programs. The JIT compiler emits shado=
-w
-> memory checks before memory accesses to detect bugs like use-after-free o=
-r
-> out-of-bounds at runtime. The feature is gated behind HAVE_EBPF_JIT_KASAN=
-.
->
->> As KASAN instrumentation for eBPF program will depend on the info that
->> can be accessed during each instruction verification, there may be
->> instructions that will be instrumented even if they don't really need to
->> (eg: global subprograms that access caller stack memory passed as
->> argument). To make sure that those additional checks do not trigger any
->> crash, make sure that VMAP_STACK is enabled so that programs stack has
->> shadow memory allocated.
->
-> [Severity: Medium]
-> Does generic KASAN already map shadow memory for the entire linear mappin=
-g?
-> If VMAP_STACK is disabled, the kernel stack resides in the linear mapping=
-,
-> which should already have shadow memory allocated. Could this justificati=
-on
-> be slightly misunderstanding the default generic KASAN shadow memory cove=
-rage?
->
->> diff --git a/kernel/bpf/Kconfig b/kernel/bpf/Kconfig
->> --- a/kernel/bpf/Kconfig
->> +++ b/kernel/bpf/Kconfig
->
+>> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+>> index 8b18c4ba845cf..5df6b11cdf9f9 100644
+>> --- a/drivers/pci/of.c
+>> +++ b/drivers/pci/of.c
 > [ ... ]
 >
->> @@ -101,4 +105,9 @@ config BPF_LSM
->> =20
->>  	  If you are unsure how to answer this question, answer N.
->> =20
->> +config BPF_JIT_KASAN
->> +	bool
->> +	depends on HAVE_EBPF_JIT_KASAN
->> +	default y if BPF_JIT && KASAN_GENERIC && KASAN_VMALLOC && VMAP_STACK
+>> @@ -586,6 +588,82 @@ int of_irq_parse_and_map_pci(const struct pci_dev *dev, u8 slot, u8 pin)
+>>  	return irq_create_of_mapping(&oirq);
+>>  }
+>>  EXPORT_SYMBOL_GPL(of_irq_parse_and_map_pci);
+>> +
+>> +static void pci_configure_wake_irq(struct pci_dev *pdev, struct gpio_desc *wake)
+>> +{
+>> +	int ret, wake_irq, irq_type;
+>> +
+>> +	wake_irq = gpiod_to_irq(wake);
+>> +	if (wake_irq < 0) {
+>> +		pci_err(pdev, "Failed to get wake irq: %d\n", wake_irq);
+>> +		return;
+>> +	}
+>> +
+> [ ... ]
 >
+>> +	ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, wake_irq);
+>> +	if (ret < 0) {
+>> +		pci_err(pdev, "Failed to set WAKE# IRQ: %d\n", ret);
+>> +		return;
+>> +	}
+>> +
+>> +	irq_type = gpiod_is_active_low(wake) ? IRQ_TYPE_LEVEL_LOW :
+>> +						IRQ_TYPE_LEVEL_HIGH;
+>> +	ret = irq_set_irq_type(wake_irq, irq_type);
+> [Severity: High]
+> Does this attempt to configure the IRQ trigger type too late?
+>
+> If the irqchip requires a valid trigger type during IRQ allocation,
+> calling dev_pm_set_dedicated_wake_irq() before irq_set_irq_type() will fail.
+> This is because dev_pm_set_dedicated_wake_irq() calls request_threaded_irq()
+> without IRQF_TRIGGER_MASK flags, resulting in an -EINVAL return.
+>
+> Should the trigger type be configured before requesting the wake IRQ?
+This is not valid for device tree case. This code will be executed for device tree
+models only.
+>> +	if (ret < 0) {
+>> +		dev_pm_clear_wake_irq(&pdev->dev);
+>> +		pci_err(pdev, "Failed to set irq_type: %d\n", ret);
+>> +		return;
+>> +	}
+>> +
+>> +	device_init_wakeup(&pdev->dev, true);
 > [Severity: Medium]
-> Is it necessary to unconditionally require VMAP_STACK for BPF_JIT_KASAN?
+> Does unconditionally enabling system wakeup here bypass standard PCI power
+> management policy?
 >
-> Following up on the commit message note, since generic KASAN covers the
-> linear mapping where non-VMAP stacks reside, this condition might needles=
-sly
-> disable a useful security and debugging feature on kernel configurations
-> where VMAP_STACK happens to be turned off.
+> Standard PCI policy, as seen in pci_pm_init(), makes devices wakeup-capable
+> but leaves the enablement decision to user-space. Setting this to true
+> unconditionally might lead to unexpected battery drain or spurious wakeups.
 
-This indeed looks over-constraining. To clarify my original intent (and
-make sure that I am not overthinking it):
+if the client driver wants to enable wakeup IRQ, and if the WAKE# is described for
+root port only, then we can't ask client driver to enable root port device wake up
+capability and in suspend noirq we are not allowed to enable wakeirq, so we
+are enabling here.
 
-- the current series does its best to skip instrumentation for memory
-  accesses that target the BPF program stack
-- there are some cases where it is hard or not even possible to guess if
-  the memory access is on stack or not (eg: the verifier fixups that
-  generate memory-accessing instructions).
-- there are two strategies for those "unknown" accesses: either skip
-  KASAN for those, with the risk of missing illegitimate accesses
-  because instrumentation has been skipped, or systematically inserting
-  KASAN checks, at the risk of slightly over-instrumenting accesses
-  (some of those will access stack). The latter is chosen by the current
-  implementation
-- if CONFIG_VMAP_STACK is selected (and !private_stack) but
-  CONFIG_KASAN_VMALLOC is not, those few over-instrumented sites may
-  trigger crashes because there's no shadow memory for those
+> [Severity: Medium]
+> What happens if device_init_wakeup() fails?
+>
+> If it returns an error such as -ENOMEM when allocating the wakeup source,
+> dev->power.should_wakeup remains false. This leaves the device with a
+> dedicated wake IRQ requested but system wakeup disabled.
+>
+> The PM core will then never enable the wake IRQ via
+> dev_pm_enable_wake_irq_check() during system suspend.
+>
+> Should this check the return value and unroll the wake IRQ registration on
+> failure?
+>> +}
+>> +
+>> +void pci_configure_of_wake_gpio(struct pci_dev *dev)
+>> +{
+>> +	struct device_node *dn = pci_device_to_OF_node(dev);
+>> +	struct gpio_desc *gpio;
+>> +
+>> +	if (!dn && !dev->wake)
+>> +		return;
+>> +	/*
+>> +	 * fwnode_gpiod_get() may fail with -EBUSY (e.g. shared WAKE#), but the
+>> +	 * actual WAKE# trigger from the device would still work and the host
+>> +	 * controller driver will enable power to the topology.
+>> +	 *
+>> +	 * -EPROBE_DEFER cannot be propagated here since pci_device_add() has no
+>> +	 *  retry mechanism.
+>> +	 */
+>> +	gpio = fwnode_gpiod_get(of_fwnode_handle(dn), "wake", GPIOD_IN, NULL);
+> [Severity: High]
+> How does this exclusive GPIO acquisition handle hot-removal of shared wake
+> lines?
+>
+> If multiple PCI devices share a WAKE# GPIO in the device tree,
+> fwnode_gpiod_get() grants exclusive access to the first probed device.
+> Subsequent devices receive -EBUSY and skip wake IRQ setup.
+>
+> If the first device is later hot-removed or unbound,
+> pci_remove_of_wake_gpio() frees the GPIO and deregisters the wake IRQ.
+>
+> This leaves the remaining active devices with no wake IRQ registered and
+> no way to acquire it, breaking their ability to wake the system.
+>
+> Can this be handled to avoid permanent loss of wakeup capability for the
+> remaining devices?
+In this scenarios, ideally bridge also share same WAKE# gpio, so if the bridge is
+removed below device will also get removed and bridge is one which gets
+discovered first and bridge will get the gpio first.
+>> +		dev->wake = gpio;
+>> +		pci_configure_wake_irq(dev, gpio);
+>> +	}
+>> +}
+>> +
+>> +void pci_remove_of_wake_gpio(struct pci_dev *dev)
+>> +{
+>> +	struct device_node *dn = pci_device_to_OF_node(dev);
+>> +
+>> +	if (!dn)
+>> +		return;
+> [Severity: High]
+> Does checking the OF node pointer here cause resource leaks if the node
+> is detached?
+>
+> During device teardown, pci_stop_dev() executes before pci_destroy_dev().
+> If the device's OF node was dynamically created (common in PCI hotplug with
+> device tree overlays), pci_stop_dev() calls of_pci_remove_node(), which
+> clears dev->dev.of_node.
+>
+> When pci_destroy_dev() later calls pci_remove_of_wake_gpio(), this early
+> return will bypass the gpiod_put() and dev_pm_clear_wake_irq() calls because
+> the OF node was already cleared.
+>
+> Should this check for the presence of the resource itself via
+> if (!dev->wake) instead of the OF node pointer?
+Will the dynamically created of nodes will include the wake gpios & perst gpios ?
 
-I am now realizing that this situation can't happen for BPF JIT, as
-VMAP_STACK depends on :
-
-  !KASAN || KASAN_HW_TAGS || KASAN_VMALLOC
-=20
-So I'll just drop the dependency on VMAP_STACK
-
-Alexis
-
---=20
-Alexis Lothor=C3=A9, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+- Krishna Chaitanya.
+>> +
+>> +	device_init_wakeup(&dev->dev, false);
+>> +	dev_pm_clear_wake_irq(&dev->dev);
+>> +	gpiod_put(dev->wake);
+>> +	dev->wake = NULL;
+>> +}
 
