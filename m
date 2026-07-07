@@ -1,138 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A563DDAFA;
-	Tue,  7 Jul 2026 16:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCF03E9C2B
+	for <sashiko-reviews@lists.linux.dev>; Tue,  7 Jul 2026 16:15:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783440927; cv=none; b=jMR9OhCJ/12mpVseWrX6u3GUNhSMiXPjM6HT7uYuMWGnd0T0JT7D7KG5SfVXYg846G7b9rslgtOeTGN3bPWAy3YKw9zYVimeoEIJhAXr6VPgyXwkk9XeiOxZtj2EsFucy8Rrw0yDTr8yH0sGtMBPOawbcX+0iLkGwm6mX3WdwUM=
+	t=1783440935; cv=none; b=penU7WAN3Me64TGHBdtp82hCnf5uK5ldEErJKIItdAVllf6W0y5RRtDraA1UTLS/RQu1u+AzXqSOq/lcq7ir1RokIH5bFfpg8EfSrrBg54PJ2LMjIkKJ+J7KhZejagBsFN80L0SssB5PgGBUmNmVOFrncI2kCw6RWZqpW+Swqjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783440927; c=relaxed/simple;
-	bh=Pc06K2SlUk5TraOO1/tPbU4hMOOHHM4Jhv+0aavFKpU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rydYRO0/u7wYlVc9T3B8GUsg6c12MHUmKMbVp7y37VuHoVcD4vEY3snimGaj/aU8On5/FJ3PdRdBp+2mnoyBJoo4TgMBMF+7BRXGJnECpxfz//agBtsP2PiEbLVCRlMCqYCsPIyz2zm3WmzoA9ng6vsiK9lfxQP4+cQUqChQXT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mxeLlqQg; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783440935; c=relaxed/simple;
+	bh=cmM43HRzZFn1Vf8OPcewPhgRLaHIb9gz7ULaRVt9WFg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=MGzqU5JgCt1Vy9zyaYrfVDC0xYE5VwWOTKV7ojKTYN1d+HCArViNZofdwkdipn7Cz68Y1Q8XWJ4goux5A+9xcboH3H6Y0Qp0BgiWT1WfeCpOOY55Vd6Fvshm2yGKLkMEldAum1/PGYVJlpwECs+YguNGClryciBYgalMo/vREYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UuEyg7kO; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mxeLlqQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B0D1F000E9;
-	Tue,  7 Jul 2026 16:15:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783440926;
-	bh=F88R+S6rc7ozRNA3csjjQyY6uBLsx6oJBsOm6HnxlVI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mxeLlqQgkUFmpcfOoqyQSFbZyVtpHEFjAMv8Nm8L+DzAf7ALh5doUFKHJjjVay6BR
-	 M4/Jt4bLqGyK+6fpOiy2DIayCTAmloBFpa0p2CJccTOPcY0exHeKYeNyQaMrXG93M4
-	 3P30RhjZGXrcE3ajE+HtEbsAczQqCu6cxVx/S41tKdZN67m5eAN8PoKhB5S59Wa9GR
-	 e426MmpdRW13uxgfp88ucE/UOH3j71g0Jn3UqdZuEYCtdH1s7PgFlA1V4NVrXxlP25
-	 TD89gMVwe9Sg1OfNWvggUjVryIZ1pSKp/i7XlsUBIxNZ+b2Pc8PR3xuBF4MeabSCzu
-	 pU076qe6GVx7A==
-Date: Tue, 7 Jul 2026 17:15:22 +0100
-From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Claudiu Beznea <claudiu.beznea+renesas@tuxon.dev>,
-	Marc Kleine-Budde <mkl@pengutronix.de>, robh@kernel.org,
-	conor+dt@kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
-	Vincent Mailhol <mailhol@kernel.org>, linux-can@vger.kernel.org,
-	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: Re: [PATCH 2/8] dt-bindings: can: renesas,rcar-canfd: Document
- RZ/G3S SoC
-Message-ID: <20260707-hypnotist-portly-46b580fb922f@spud>
-References: <20260707102418.1646159-1-claudiu.beznea+renesas@tuxon.dev>
- <20260707102418.1646159-3-claudiu.beznea+renesas@tuxon.dev>
- <20260707103040.021DE1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UuEyg7kO"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-8423f1fe39eso8782750b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 09:15:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783440933; x=1784045733; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+yO5+0blD3DvIOx7PJW/Fsb9R24TIuMrYx2xzHN/rqA=;
+        b=UuEyg7kOtCADj3Ci53NOEc4K4H8v3qZRjtuAtJNawoGJwpE3/dneiSyPqtUiC+VamA
+         +/PE6v+GvYIoB24+bdU27O6p0j1kSk8WE+Lf9eGWnwNjeTYxUwBLL7sn4ZAAKY7ZktJB
+         u2+nxsB1KFmfpEWdxdKPLAqks3+OxyD8lCRayljM5FMyhmmEZ7/hXBTvUnU20X0SQFv5
+         hNU6ETA1waJtesERyp8iROf+LY0HrHFXp30nt8s3zPZ9N6n77U81W/1EFeSs6+eliHjX
+         E2CN16N8uCfg8pfI0V1RncBeZGsTXmvCTF1yZvhZ+bzDTZXXZ6fGfkzKOps1PyStCYAh
+         i81w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783440933; x=1784045733;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+yO5+0blD3DvIOx7PJW/Fsb9R24TIuMrYx2xzHN/rqA=;
+        b=XLGSwH74BtsT3OSbRvYczLhRzDMbw0hhuPH6j8rn5fmR1ZKRfKfZUhDK62Bu+UW8u0
+         58dM/Dk6lXzZgjzYFc4iTn8Dd2E7HgsscMS+f9iKiqGfjYtCVWZmaDaDWYEknGAAY83a
+         gqaPzM3otihv3NNWiWklkMkok8CSma6Puu8T+kS1Tlrs8zX7MLHyje+Cvv/K17VbO//J
+         e/I8jDt61FnI8W0BKy5ux7kho4Ev1+QPsRuYHprCk7kfM3LFmEOszeeQAcndAkoiKNWf
+         vxwV+y4fRQHpJogZmUL08s7W2jknCRF8yxZ3CkGxDxVchOkXG8rbDVKS/eVH9tSFByEZ
+         QE4g==
+X-Gm-Message-State: AOJu0Yzg6Yu7H/qXT5GQKSOAeme5QrpgXlVogbg2I/FQppAck1YUxEj6
+	2xxOd3GaNGYkgfWHwYg5QycuDOmkHIyboQNapb4mOsK3udq1Kdxpf6KVX50SFWGsrDivoeums18
+	9Ej14zrurzNB2fHd0HoCbzlEDEpOhhXz3dSyY4nnr2pXnd/YqUewkqxgJ7UxpBfYEcyeud9yjeY
+	agBS+fZh4nP8+nBR/liwiAB2nhf902SrVHRjoLKzbCr2y1gv1z
+X-Received: from pfus20.prod.google.com ([2002:a05:6a00:8d4:b0:848:2ec8:662f])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:13aa:b0:845:4d71:8d15
+ with SMTP id d2e1a72fcca58-84826db0b79mr5739899b3a.37.1783440933112; Tue, 07
+ Jul 2026 09:15:33 -0700 (PDT)
+Date: Tue, 7 Jul 2026 09:15:32 -0700
+In-Reply-To: <20260707152943.290581F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eeSkgMZVqTITsw8c"
-Content-Disposition: inline
-In-Reply-To: <20260707103040.021DE1F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260707150706.1198541-1-seanjc@google.com> <20260707150706.1198541-3-seanjc@google.com>
+ <20260707152943.290581F000E9@smtp.kernel.org>
+Message-ID: <ak0mJLxaz2TBwM0p@google.com>
+Subject: Re: [PATCH v2 2/2] KVM: selftests: Randomize pCPU in steal time test
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
---eeSkgMZVqTITsw8c
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jul 07, 2026 at 10:30:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The schema fails to forbid the `renesas,no-can-fd` and `renesa=
-s,fd-only` properties for the RZ/G3S (`renesas,r9a08g045-canfd`) SoC, allow=
-ing unsupported hardware configurations to pass schema validation.
-> --
->=20
-> --- Patch [2]: [PATCH 2/8] dt-bindings: can: renesas,rcar-canfd: Document=
- RZ/G3S SoC ---
-> commit fc07d92ff1acfa102fb8f08fa8b6ff1a0537c592
-> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
->=20
-> dt-bindings: can: renesas,rcar-canfd: Document RZ/G3S SoC
->=20
-> This commit documents the CAN FD controller found on the Renesas RZ/G3S S=
-oC.
-> It updates the bindings since the RZ/G3S provides only two channels, supp=
-orts
-> only CAN FD operation, and does not require assigned-clocks properties.
->=20
-> > diff --git a/Documentation/devicetree/bindings/net/can/renesas,rcar-can=
-fd.yaml b/Documentation/devicetree/bindings/net/can/renesas,rcar-canfd.yaml
-> > index b9d9dd7a79676..f8b4d3dd54afc 100644
-> > --- a/Documentation/devicetree/bindings/net/can/renesas,rcar-canfd.yaml
-> > +++ b/Documentation/devicetree/bindings/net/can/renesas,rcar-canfd.yaml
->=20
+On Tue, Jul 07, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
+> > --- a/tools/testing/selftests/kvm/steal_time.c
+> > +++ b/tools/testing/selftests/kvm/steal_time.c
 > [ ... ]
->=20
-> > @@ -350,6 +352,17 @@ allOf:
-> >        properties:
-> >          reset-names: false
-> > =20
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          not:
-> > +            contains:
-> > +              const: renesas,r9a08g045-canfd
-> > +    then:
-> > +      required:
-> > +        - assigned-clocks
-> > +        - assigned-clock-rates
-> > +
->=20
+> > @@ -514,14 +514,12 @@ int main(int ac, char **av)
+> >  	long stolen_time;
+> >  	long run_delay;
+> >  	bool verbose;
+> > -	int i;
+> > +	int i, cpu;
+> >  
+> >  	verbose = ac > 1 && (!strncmp(av[1], "-v", 3) || !strncmp(av[1], "--verbose", 10));
+> >  
+> >  	/* Set CPU affinity so we can force preemption of the VCPU */
+> > -	CPU_ZERO(&cpuset);
+> > -	CPU_SET(0, &cpuset);
+> > -	pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+> > +	cpu = pin_self_to_any_cpu();
+> >  
+> >  	/* Create a VM and an identity mapped memslot for the steal time structure */
+> >  	vm = vm_create_with_vcpus(NR_VCPUS, guest_code, vcpus);
+> [ ... ]
+> > @@ -557,7 +555,7 @@ int main(int ac, char **av)
+> >  		run_delay = get_run_delay();
+> >  		pthread_create(&thread, NULL, do_steal_time, NULL);
+> >  		pthread_getaffinity_np(thread, sizeof(cpuset), &cpuset);
+> > -		TEST_ASSERT(CPU_COUNT(&cpuset) == 1 && CPU_ISSET(0, &cpuset),
+> > +		TEST_ASSERT(CPU_COUNT(&cpuset) == 1 && CPU_ISSET(cpu, &cpuset),
+> 
 > [Severity: Medium]
-> Since the commit message states that the RZ/G3S supports only CAN FD oper=
-ation,
-> should the schema also explicitly forbid the renesas,no-can-fd and
-> renesas,fd-only properties for the renesas,r9a08g045-canfd compatible?
->=20
-> Without an if-then block restricting these properties to false, the schema
-> will incorrectly validate device trees that specify these unsupported mod=
-es.
+> Is there a race condition here if the worker thread exits before the parent
+> reads its affinity?
+> 
+> When pthread_create() spawns the worker thread, the child runs for a short
+> duration and exits. If the parent thread is preempted right after creation,
+> the child might finish its work and exit before pthread_getaffinity_np()
+> executes in the parent.
+> 
+> If the kernel task is already gone, pthread_getaffinity_np() will fail with
 
-This looks like a reasonable request.
-pw-bot: changes-requested
+No, because the kernel task is kept alive until pthread_join().  As per the
+pthread_create() manpage[*]:
 
->=20
-> >  unevaluatedProperties: false
-> > =20
-> >  examples:
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260707102418.16461=
-59-1-claudiu.beznea+renesas@tuxon.dev?part=3D2
+  Only when a terminated joinable thread has been joined are the last of its
+  resources released back to the system.
 
---eeSkgMZVqTITsw8c
-Content-Type: application/pgp-signature; name=signature.asc
+And by empirical testing, that includes the kernel task.
 
------BEGIN PGP SIGNATURE-----
+[*] https://man7.org/linux/man-pages/man3/pthread_create.3.html
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCak0mGQAKCRB4tDGHoIJi
-0smlAP9UYunv9LVF33FRMLSiU4bEBUtL6EvRW2JTroFv3tLtCAEA6h+w8g1PiuZU
-ghWJyI2ucpzNdWcEz6s7IlGuVON7SQU=
-=119l
------END PGP SIGNATURE-----
+> ESRCH. Because the explicit initialization of cpuset was removed earlier in
+> main(), cpuset remains completely uninitialized.
+> 
+> Could this cause CPU_COUNT() and CPU_ISSET() to evaluate garbage stack memory
+> and trigger sporadic TEST_ASSERT failures? Should the return value of
+> pthread_getaffinity_np() be checked, or should cpuset be initialized before
+> the call?
 
---eeSkgMZVqTITsw8c--
+The return value should be checked, but I'd rather handle that in a separate
+cleanup by adding a wrapper in kvm_syscalls.h.
