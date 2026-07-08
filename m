@@ -1,163 +1,101 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8ED0390229
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 23:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783553418; cv=pass; b=QcZav9/Ij5TAjC+AYADc7fn2bEzK2SwJo+pEh8z/xK+OCQoEB3RTtGpsoDPI/eV6+qtyNV2HvvWAEssX9nyq/IhatFB0zoy6ZTfN9aWnDdmMIdwxLKVLek5JhYC8IQULhk++aya8mkpKMkQ1o4CA6NFdPhYTRVUrck0TsXLiC+0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783553418; c=relaxed/simple;
-	bh=/fyP3KcmqC/8VrwPQbtBc7Uu9SQEKGfTToR5vjTVS3s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OKT/2c96pHMFGiZ5OUiwFsLRsIPyH+OVFC7AZMMlIRwyw4fMk3/4FaDqVJReOfxqadJ98khthguv27+fFeGwONHL05OGc4327ZELNBXycRjdNyo1gqy4jTwRGPBvt+ayYjyoHJ9oAMKkUQYQBOmjMm6W957CXtnpqvNzjlXxHVw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OdksKb9B; arc=pass smtp.client-ip=209.85.161.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8464C38B12F;
+	Wed,  8 Jul 2026 23:41:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783554066; cv=none; b=d7h4kWVFS5I9U7oqgdqNcAErP4mTz9Y7pzui6KKdqRFHnrIopIjg5ACZu/bVBb/gZrlvOB13QqUYXr5XJfL+CmBcTWq11JrB1vVHv8O0hDYlQsMjWm3uB8GIcA3GDCVlF+PQjDqsrpnsGc0abRPUlMrGIxwdrWZklf5y/2IrFX0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783554066; c=relaxed/simple;
+	bh=MqgnQR2IhngHT0tSVjp0X8uJaVghyFuxobtWUdkIOHQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vl+lF3RhkQVlFPJbTFtuEKb1lA1jSVMhhlgK1ilIJ5d07iv4I7QegDdAQjfzh1oozyllxPbuHhnQd82qeoMJTZbS518AROdD2OQmEndxElHPvNDGZ3stcYV59Gaa1sk+qE+GP3yHUFpTxAcsBMgOv2xtorV0qFZ6qbhREeJFAcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aXr1Ww1W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OdksKb9B"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-6a364f76a46so708960eaf.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 16:30:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783553416; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GhMx+MPaNN+U8MpgxXQvelmVC20FHfV3saAZU2GYU77DXfefIuzpEE8b58VKQ13xnq
-         k/MAznQcdpDmbnuIC1JBzPPBDFdJhYa49/pkQM1eYSkd8w0XO3jJDCU0s3KLLT0XiHBT
-         kj/tC2/lNJTbn+RvwCw8orcjHj980jI+JkIJPS5gQ35ssNCS6WUtUZVlyhuKxiD8bXQT
-         sJO1iISEFj5KmD0seOMNspG7EMJaU7jNlIMBceCPqmHkgNe6idoNbGyUtCRTqPzUvYDp
-         oL+1lXBczgOhY1ZAdc+NUm1MvWoN11qtC523XAO+gvAfWBaQUi5yWqtx9KRT/sm/qPSf
-         odug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3Phac2raMjwWjIRCVv5WDyx21Xab89Vi8U4ckasYYSM=;
-        fh=UUB3vW30XnC3liZtTp+vFjsgsVaYGxoFj5Zsq4JK1W8=;
-        b=ioTkrianCBAL6uCVBSVZqrsWZh56UU+rpjxw5jV4jiizs+X8NwyrCWNQsbCxLP7y6o
-         E0hiKa3uQOIUwTrN2Q2HNDizXTKrvukod6wrwelbz/F/hsj+N7rPwZmKDWvutTFSmI2g
-         FXJHU0G4yWpDH/Z96OOeSBDRJeaSx69ZmbMJui5o+FLFuaisjEKd2ZkMBUeoEJzfjpJz
-         Mpu8olDFnzzmZ3obYWaXGzutRyRfWc/UYLIbJVqiVNLeRUV5eOT0hmnylQuVVheUbztW
-         IrdRgkHhJ7uHSsjmOK7327bxiFobXftFD1cObV2U1r/U9rt/mLUQYszdK7eBkT20IDBb
-         WSGw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783553416; x=1784158216; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3Phac2raMjwWjIRCVv5WDyx21Xab89Vi8U4ckasYYSM=;
-        b=OdksKb9BiWVI8bSDkPF71wIOMAyIndn9i3rY/LB7l8LEQ+AHcb9jwZoJ89EeNQer+y
-         /f7D1nT7sbO01ByuZhbpdjg0kEJXORrjYtBzdQzJiuWl07Nr2yxTYvnOG1OMHpwFLVJW
-         awkSu3hrF/BgdB7OslYf7XhqVwi0zVsDYQzZYuFX0kvUfnUvAlSYi5gV9u19/M3xmtpl
-         FWww7SqQBoPx2yuG8fPkI/Z8pzO5P5cy1QN2eBFQoVTqNdeBVW8KtKwiYAHhRNPJ5Jc7
-         otp1t9KzoI7Om/KuYkaLV/fO1OnsBuUtY6lUhjBdnRIO4g3j1fH6NZLE46rwqsb9OREd
-         h7zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783553416; x=1784158216;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3Phac2raMjwWjIRCVv5WDyx21Xab89Vi8U4ckasYYSM=;
-        b=sUdm13g5LXUBHqN+ctSXYnhepva6RVmQE1l2IOWXBxVLesspu0AVVSx+DXjA0xOMHu
-         VPL7VcV4HO8nurkWFxHib03x4Ani66G+LjGBJXzu90Wb01sQNUYW7a6wqfrtb/7iEezU
-         zg63CHMjuAu/THNaea68R95rgpfiRasPk3Phpw3YTRqFdMtQmy2Nrb5fkPhI81W2sBKh
-         FblOWntgeAVUYd66qeX7sMTh10GQ7GBnhnxUVCifYbCDwuVTOI3PI7qL50JjR095IB3o
-         MAy4bBh3tMwikgAk7sXvST2U+SLx5/tgJA7oYFqLEOEI2uRrrGdTfzANdZp39LF7oaf8
-         MQ1g==
-X-Gm-Message-State: AOJu0Yw58QKUkfUdf3W41qOQFqKlb0x5wR9vJ4ijCIQdTyZlNrwLmfC0
-	KAlC+kTVQdZrwqwLjnJDFbXeBvyG98OtwNbyC/8bBJjjw47LM4iqDdNjc1ZgRS623h5CMlKR0mB
-	0e/g7AgIDYcCGlX3Tfqz5cfWr77Gq6avvBuSrF3DrwPGDqu7fqTlmNJXSzSg=
-X-Gm-Gg: AfdE7ckQJXGHcPwtBSY6cugrKI7XRVh2dvI6RSdbJLQ1zFiqBieZvnuYb0idQiwfoXa
-	DsWFTAHKKyosdJX1E5ZlJCtVo4NuJHD5CcxTJvCB3rmu8INc8/FuJmwSqI9dv88wbCFrdIVvKEi
-	Qiokg9arCaDpIWg9NWSW6M8xfpmHSsQ8ofSWASbaodAZtqCONW13YbMug+eZzjCM1s3HRaG9U+1
-	vaQtz/AzexlNGMgms6/YQR8XEdxNnIMk4B4ba30h+LR+Xd1VXiLq1fwORq0lHwl1foSyUBzvGBT
-	IOp32Z9LfmBDUZoWyud0+W7KDNuP3qUOg3HpSA==
-X-Received: by 2002:a05:6820:2085:b0:6a3:1f3d:853f with SMTP id
- 006d021491bc7-6a36da346b8mr3187577eaf.7.1783553415229; Wed, 08 Jul 2026
- 16:30:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aXr1Ww1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10ADF1F000E9;
+	Wed,  8 Jul 2026 23:41:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783554065;
+	bh=lrlgyio4LLb/bAWF+O2R0MU6fah4CsfXynnnc8OZ4uE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=aXr1Ww1WaQDbSpVRc8BociBWboqWjijuIT2mNWqsfkqh0iK47jtyLS27ACKVCmCf7
+	 lUHhzN+ijGjM0f2mquLI5jFzYVyXc5ICAd1xRmBz84naTpPiAcHBpCZhZtQjbP03xD
+	 0wWJ8nYTTDqm3FUfWSeBApFivqTCgSuHKWz7FDJLXXyiWLowGOywu5BjK7CBNJAk+2
+	 jPOpOq2NhBh5XvxNtwxMnrDeMMprLzvrjIuAE0+b6NB1eRIJUtZlMSd4zcYgj95LYS
+	 lbzzbZqUNeDF3iqkUia8MlA/3KxNageF43BqxtY5mpsfY3cK2e7xOqRael/iwl8zmY
+	 E/+7nKlKxEgNg==
+Date: Wed, 8 Jul 2026 16:41:02 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v1] perf tests: Restore -p flag to lock contention test
+Message-ID: <ak7gDlPRhIL3MviB@google.com>
+References: <20260708175311.858850-1-irogers@google.com>
+ <20260708175948.567701F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260706231633.700676-2-rdbabiera@google.com> <20260706232735.9DAE51F000E9@smtp.kernel.org>
-In-Reply-To: <20260706232735.9DAE51F000E9@smtp.kernel.org>
-From: RD Babiera <rdbabiera@google.com>
-Date: Wed, 8 Jul 2026 16:30:02 -0700
-X-Gm-Features: AVVi8CcSrwCh5LbwO7WnfvTZrSFNdC4Sgt5jKz_3inEavnBPl5_6Ab3E641i0pQ
-Message-ID: <CALzBnUHg9W0kAwN6kvv5888WAK+i3J5B9PBqqRYA6q5+tjm9KQ@mail.gmail.com>
-Subject: Re: [PATCH v4] phy: Add USB3 PHY support to Google Tensor SoC USB PHY driver
-To: sashiko-reviews@lists.linux.dev
-Cc: olteanv@gmail.com, linux-phy@lists.infradead.org, vkoul@kernel.org, 
-	neil.armstrong@linaro.org, Badhri Jagan Sridharan <badhri@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260708175948.567701F000E9@smtp.kernel.org>
 
-On Mon, Jul 6, 2026 at 4:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> [Severity: High]
-> This is a pre-existing issue, but does this function have a race conditio=
-n
-> with power management that could cause a bus fault?
->
-> google_usb_set_orientation() checks pm_runtime_suspended(gphy->dev) witho=
-ut
-> holding a PM runtime reference. If the USB core releases its PM reference
-> immediately after this check, the device could suspend and power off the =
-PHY.
->
-> The function would then acquire the lock and call set_vbus_valid() and
-> program_tca_locked() on unclocked and unpowered MMIO registers, resulting
-> in a synchronous external abort.
->
-> Would it be safer to use pm_runtime_get_sync() to ensure the hardware
-> remains active during these accesses?
+On Wed, Jul 08, 2026 at 05:59:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Adding the `-p` (pipe) flag to the global workload unconditionally disables the stack filter tests.
+> --
+> 
+> --- Patch [1]: [PATCH v1] perf tests: Restore -p flag to lock contention test ---
+> commit b4bb7054950dea7123c601308622ddcd596c94cf
+> Author: Ian Rogers <irogers@google.com>
+> 
+> perf tests: Restore -p flag to lock contention test
+> 
+> This commit restores the -p flag to the perf bench sched messaging workload
+> used by the lock contention test. By defaulting to pipes instead of
+> socketpairs, it ensures architectures like s390 generate sufficient lock
+> events for the BPF trace filtering logic to pass.
+> 
+> > diff --git a/tools/perf/tests/shell/lock_contention.sh b/tools/perf/tests/shell/lock_contention.sh
+> > index ba598370be738..5df9a0cd48a34 100755
+> > --- a/tools/perf/tests/shell/lock_contention.sh
+> > +++ b/tools/perf/tests/shell/lock_contention.sh
+> > @@ -11,7 +11,8 @@ errout=$(mktemp /tmp/__perf_test.errout.XXXXX)
+> >  
+> >  # Workload to generate lock contention.
+> >  # Using 1 group (-g 1) keeps runtime low while generating sufficient lock events.
+> > -msg_workload="perf bench sched messaging -g 1"
+> > +# We include -p (pipes) because socketpairs don't generate enough lock events on s390.
+> > +msg_workload="perf bench sched messaging -g 1 -p"
+> 
+> [Severity: Medium]
+> Will adding the -p flag cause test_stack_filter() and 
+> test_aggr_task_stack_filter() to unconditionally skip?
+> 
+> These tests explicitly verify filtering behavior by searching for unix_stream 
+> locks in tools/perf/tests/shell/lock_contention.sh:
+> 
+> test_stack_filter()
+> {
+> 	echo "Testing perf lock contention --callstack-filter (w/ unix_stream)"
+> 	perf lock contention -i ${perfdata} -v -q 2> ${result}
+> 	if [ "$(grep -c unix_stream "${result}")" = "0" ]; then
+> 		echo "[Skip] Could not find 'unix_stream'"
+> 		return
+> 	fi
+> 
+> Since pipes use pipe locks instead of AF_UNIX stream socket locks 
+> (unix_stream), the shared perfdata profile will no longer contain these locks. 
+> 
+> Does this mean we lose test suite coverage for the --callstack-filter option 
+> across all architectures because the grep will always return 0?
 
-I'll add a get_noresume call prior to checking runtime_suspended,
-and then adding a put_autosuspend at the end of the set_orientation
-call. If the suspended check fails, we can put_noidle here. This would
-cover not programming vbus_valid when unnecessary, and addressing
-any race condition if the runtime count drops to zero during the locked
-section.
+I think it's a valid concern but it didn't come from this change.
+Maybe we need to check different symbols like "pipe_".
 
-> [Severity: High]
-> Can this lead to redundant TCA programming and a 2.5-second timeout?
->
-> Looking at google_usb_set_orientation(), gphy->orientation is updated bef=
-ore
-> the mutex is acquired:
->
-> google_usb_set_orientation() {
->         gphy->orientation =3D orientation;
->
->         if (pm_runtime_suspended(gphy->dev))
->                 return 0;
->
->         guard(mutex)(&gphy->phy_mutex);
->         ...
->
-> If a Type-C plug event (Thread A) sets gphy->orientation but is preempted
-> before taking the lock, and the USB core concurrently calls
-> google_usb3_phy_power_on() (Thread B), Thread B will see the new
-> orientation, program the TCA, and release the lock.
->
-> When Thread A resumes, it will acquire the mutex, see COMBO_PHY_TCA_READY=
-,
-> and call program_tca_locked() a second time with the identical configurat=
-ion.
-> Since writing the same configuration to the TCA hardware doesn't trigger =
-a
-> new XA_ACT_EVT interrupt, wait_tca_xa_ack() will stall for its full timeo=
-ut.
->
-> Should the orientation update be moved inside the lock?
-
-It should be moved inside the lock, but because if the orientation is
-set to none, there can be a race condition where power_on passes the
-orientation check and then proceeds to program the TCA when the orientation
-is none. Setting the valid bit on the TCA_TCPC register starts a new XA_ACT=
-_EVT
-interrupt, so the stall here isn't possible.
-
-Best,
-RD
+Thanks,
+Namhyung
