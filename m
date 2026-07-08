@@ -1,132 +1,163 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC43E39AD49
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 23:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8ED0390229
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 23:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783552238; cv=pass; b=cBS1L7xJrwz3mNu5Xnbq5dVcxoQuXFbLfDg0hTzZGOIiZQ/S5Wg9nu4Y07CHsWiNIkVpDNw4r/tu9glbqkUsCjMpaf+Z3Q4KaRG7pmQOZnLGw/4WFWZWmgy5GsZup8N3zRQM2hkzhVZPfLP5kjeD9Czb0cb6ZK19rtmm8IV/dqU=
+	t=1783553418; cv=pass; b=QcZav9/Ij5TAjC+AYADc7fn2bEzK2SwJo+pEh8z/xK+OCQoEB3RTtGpsoDPI/eV6+qtyNV2HvvWAEssX9nyq/IhatFB0zoy6ZTfN9aWnDdmMIdwxLKVLek5JhYC8IQULhk++aya8mkpKMkQ1o4CA6NFdPhYTRVUrck0TsXLiC+0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783552238; c=relaxed/simple;
-	bh=fuSekuBjKILqAPLvqOFzDcr92zIdJEnUZcXyUswaVxU=;
+	s=arc-20240116; t=1783553418; c=relaxed/simple;
+	bh=/fyP3KcmqC/8VrwPQbtBc7Uu9SQEKGfTToR5vjTVS3s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NAtgqZANu0XHoBLUeAQpUYJCyoqd2bZmb5j1Ptcmet2gB10ROwdCiqiUKKxfu8rdoVD9//1UnoQXWlpqNA9IVrp76gJHoNZ9ezDPHrSeehS9it39pQ3jy2yzSASFY7pgtqn+kH0X8wSi3pBFnGvSypqVrZn71Yoq25zKpJeYXvg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RkNYI3Ji; arc=pass smtp.client-ip=209.85.167.49
+	 To:Cc:Content-Type; b=OKT/2c96pHMFGiZ5OUiwFsLRsIPyH+OVFC7AZMMlIRwyw4fMk3/4FaDqVJReOfxqadJ98khthguv27+fFeGwONHL05OGc4327ZELNBXycRjdNyo1gqy4jTwRGPBvt+ayYjyoHJ9oAMKkUQYQBOmjMm6W957CXtnpqvNzjlXxHVw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OdksKb9B; arc=pass smtp.client-ip=209.85.161.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RkNYI3Ji"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5b0077d7053so1660e87.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 16:10:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783552235; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OdksKb9B"
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-6a364f76a46so708960eaf.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 16:30:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783553416; cv=none;
         d=google.com; s=arc-20260327;
-        b=kXSO7I6b1v5lqUCmqlHS1g9EsBhQBKEkgjG5aEX59uCYa+LYKrmpuBkEmH0bA3WqRn
-         5rDuJykpEPgZCYYbRVxKE1ul5zuI+xaG7c7KXRhoSFfU7fcwpfOo6SwXlK8yPhLOeDnu
-         bpruAj/v/mbVP++5mEX/xgFotEAQGU/R3MflQszjt/CTWB/+89XueI/AJGcRlfceeBmA
-         +DhKYbdN3om0x8KGawS6UkpVkdU2kvH/FqhSKvSaYWl7KzOHJcQ1W+osvSwH6dMHnlsO
-         S+W85aN1EBp3sFWislT1lNQK+mXppXlwegn9GUcN4WD7jLN7KdU2iLsCwmjlV9Z/LEoS
-         mdaw==
+        b=GhMx+MPaNN+U8MpgxXQvelmVC20FHfV3saAZU2GYU77DXfefIuzpEE8b58VKQ13xnq
+         k/MAznQcdpDmbnuIC1JBzPPBDFdJhYa49/pkQM1eYSkd8w0XO3jJDCU0s3KLLT0XiHBT
+         kj/tC2/lNJTbn+RvwCw8orcjHj980jI+JkIJPS5gQ35ssNCS6WUtUZVlyhuKxiD8bXQT
+         sJO1iISEFj5KmD0seOMNspG7EMJaU7jNlIMBceCPqmHkgNe6idoNbGyUtCRTqPzUvYDp
+         oL+1lXBczgOhY1ZAdc+NUm1MvWoN11qtC523XAO+gvAfWBaQUi5yWqtx9KRT/sm/qPSf
+         odug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=W3OmbKP/PUEUuyDu0vTsEzSc6oVHraO2SRuCrscetMM=;
-        fh=ibSBef82XuJlXSL2k986w2vOvUTF6FKb9iCGCo4Ew2s=;
-        b=eQm0qfzNWx6Yhii1T/CxmU0cFyC8+IMqaxdARXrbmTcXxI0p3dXSJqu9HLcf4TW5Wk
-         9cVpiJKU5Ql02yxsP5Kw8MYXOv6enSNrxqw0QjwwlQomKrhMWKjolHb/DR1QnhRNvsh+
-         b4lYaS7zTkyiwuc463AZXLKzDwR5uOMUUutg/hPpEf3c5XtzVLyMgJcn2EN3vKKG1Sx/
-         M0Wz43SsZDlUlFWAiATyKNtOJOSNu8tMMG96aNWpFcXmnkct0vNL77FAhSVV68tXHxo2
-         wsyVz2VGBS/Mspts1sNLTfLt6NeeWC0Ygpq570KBbmveLzHc+0dZIpB0EV/3hv9+UChS
-         UQxw==;
+        bh=3Phac2raMjwWjIRCVv5WDyx21Xab89Vi8U4ckasYYSM=;
+        fh=UUB3vW30XnC3liZtTp+vFjsgsVaYGxoFj5Zsq4JK1W8=;
+        b=ioTkrianCBAL6uCVBSVZqrsWZh56UU+rpjxw5jV4jiizs+X8NwyrCWNQsbCxLP7y6o
+         E0hiKa3uQOIUwTrN2Q2HNDizXTKrvukod6wrwelbz/F/hsj+N7rPwZmKDWvutTFSmI2g
+         FXJHU0G4yWpDH/Z96OOeSBDRJeaSx69ZmbMJui5o+FLFuaisjEKd2ZkMBUeoEJzfjpJz
+         Mpu8olDFnzzmZ3obYWaXGzutRyRfWc/UYLIbJVqiVNLeRUV5eOT0hmnylQuVVheUbztW
+         IrdRgkHhJ7uHSsjmOK7327bxiFobXftFD1cObV2U1r/U9rt/mLUQYszdK7eBkT20IDBb
+         WSGw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783552235; x=1784157035; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1783553416; x=1784158216; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=W3OmbKP/PUEUuyDu0vTsEzSc6oVHraO2SRuCrscetMM=;
-        b=RkNYI3JiIYzOlKdnRFBQK9ZNqP7Er50H/FuDV0kHqEB9/S9IWYLzZ2DrDaoSzDnVYc
-         d/t1bwzfKl6ArZkJDjycu5JhLZTUG0HE3HMggENz+anYofC3WNphhVdHHNzhhp2G+MAY
-         gRi3gahEFa0p0Ky+D0UNRWYAYFPOcIq8mH1724fdQADC8M8dki1QKRtE3Ot2zO3CiH4G
-         QToYtfFWosyH9Q6aj0J0Yah/MMEZEBDxFbIbcyaUnV3g5GlMbtwqqZQ8kLZh/k1ntwCi
-         yan3+MFlzet1bJ84cmf5Frv3sYA3ZgzCVVQ998NGp3Y3d7ilgNkgOtm9qFhaeS2lPZoZ
-         3qLA==
+        bh=3Phac2raMjwWjIRCVv5WDyx21Xab89Vi8U4ckasYYSM=;
+        b=OdksKb9BiWVI8bSDkPF71wIOMAyIndn9i3rY/LB7l8LEQ+AHcb9jwZoJ89EeNQer+y
+         /f7D1nT7sbO01ByuZhbpdjg0kEJXORrjYtBzdQzJiuWl07Nr2yxTYvnOG1OMHpwFLVJW
+         awkSu3hrF/BgdB7OslYf7XhqVwi0zVsDYQzZYuFX0kvUfnUvAlSYi5gV9u19/M3xmtpl
+         FWww7SqQBoPx2yuG8fPkI/Z8pzO5P5cy1QN2eBFQoVTqNdeBVW8KtKwiYAHhRNPJ5Jc7
+         otp1t9KzoI7Om/KuYkaLV/fO1OnsBuUtY6lUhjBdnRIO4g3j1fH6NZLE46rwqsb9OREd
+         h7zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783552235; x=1784157035;
+        d=1e100.net; s=20251104; t=1783553416; x=1784158216;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=W3OmbKP/PUEUuyDu0vTsEzSc6oVHraO2SRuCrscetMM=;
-        b=ltS4yLVii6bq8at1ckbWpBrog0GsfISWsFaRhnHbWCdrXrpewq7Y4kHyp5KA+Ao7ZP
-         j4ProjuqBWKqDhGs2RIz37jFYC/TiyKoMbJF2tNWGUDkUous1PJlvtpv3MzjVG21s91D
-         CF+gZGbf+ZFekmX9p8ZLSUre7rRgYxZJzQburcNumCFUjJEqXipFTOi0FEIinJ1C4oIX
-         7xDAu29MYyD260e6i1MPA5qcnSf7/3SLI9+2pCk/SEFKvoaShnrk5PQt/l1kLl9O+SXu
-         kgJ7Xp65/lBp+50CYRwMzgLkCgMyj7Q1SY4Qjof1mX9tU8mRAb94hE9esDD+J3Nbb2OQ
-         wpQA==
-X-Gm-Message-State: AOJu0Yx5r7yS3LAC3olbpe+MpD3pzILrgRPDSRrYeECTRvbEVoMokcKd
-	OaLkNerrVGGv/cXhi/b+KSm2X5kU2imsagIPLgPWnCGRH1IOV636FVF09iSlz+zQcR/2OdIZ3/A
-	VuH7lCHJ/5S5PMDTFkfRJrVkFYYnbCyFE06i18wyo8A4sbHyLB4Eb/+EwAQ==
-X-Gm-Gg: AfdE7cmd9WWyJ0gymTOuVOhLzjJ6jbSxw5ybdpyu0YjhAkfzHGfn9c20bINU40hDPgd
-	p+IHD4JCNJNXDpNbI5A8fTQj9ZJYjZHsKFtvCnSMr0ANXTQbvjbf0uhLDfBp5ePKO3ZoexBtrF2
-	uV7XCC8xq8x9jNo2T1pn62Y1YVTEDQXzMsb8UdI6Ocf1UViWR8jnqGFpr6S5WayHCLU9j6ueCVA
-	94eSaxI2x9k/4f1r0BhT7FkH1WgjMgfKAfdYuwP/MJ97kcCGVRU3CFzouj93aWq4aJW
-X-Received: by 2002:a05:6512:3d19:b0:5ae:aff3:3eab with SMTP id
- 2adb3069b0e04-5b017608423mr8374e87.3.1783552234580; Wed, 08 Jul 2026 16:10:34
- -0700 (PDT)
+        bh=3Phac2raMjwWjIRCVv5WDyx21Xab89Vi8U4ckasYYSM=;
+        b=sUdm13g5LXUBHqN+ctSXYnhepva6RVmQE1l2IOWXBxVLesspu0AVVSx+DXjA0xOMHu
+         VPL7VcV4HO8nurkWFxHib03x4Ani66G+LjGBJXzu90Wb01sQNUYW7a6wqfrtb/7iEezU
+         zg63CHMjuAu/THNaea68R95rgpfiRasPk3Phpw3YTRqFdMtQmy2Nrb5fkPhI81W2sBKh
+         FblOWntgeAVUYd66qeX7sMTh10GQ7GBnhnxUVCifYbCDwuVTOI3PI7qL50JjR095IB3o
+         MAy4bBh3tMwikgAk7sXvST2U+SLx5/tgJA7oYFqLEOEI2uRrrGdTfzANdZp39LF7oaf8
+         MQ1g==
+X-Gm-Message-State: AOJu0Yw58QKUkfUdf3W41qOQFqKlb0x5wR9vJ4ijCIQdTyZlNrwLmfC0
+	KAlC+kTVQdZrwqwLjnJDFbXeBvyG98OtwNbyC/8bBJjjw47LM4iqDdNjc1ZgRS623h5CMlKR0mB
+	0e/g7AgIDYcCGlX3Tfqz5cfWr77Gq6avvBuSrF3DrwPGDqu7fqTlmNJXSzSg=
+X-Gm-Gg: AfdE7ckQJXGHcPwtBSY6cugrKI7XRVh2dvI6RSdbJLQ1zFiqBieZvnuYb0idQiwfoXa
+	DsWFTAHKKyosdJX1E5ZlJCtVo4NuJHD5CcxTJvCB3rmu8INc8/FuJmwSqI9dv88wbCFrdIVvKEi
+	Qiokg9arCaDpIWg9NWSW6M8xfpmHSsQ8ofSWASbaodAZtqCONW13YbMug+eZzjCM1s3HRaG9U+1
+	vaQtz/AzexlNGMgms6/YQR8XEdxNnIMk4B4ba30h+LR+Xd1VXiLq1fwORq0lHwl1foSyUBzvGBT
+	IOp32Z9LfmBDUZoWyud0+W7KDNuP3qUOg3HpSA==
+X-Received: by 2002:a05:6820:2085:b0:6a3:1f3d:853f with SMTP id
+ 006d021491bc7-6a36da346b8mr3187577eaf.7.1783553415229; Wed, 08 Jul 2026
+ 16:30:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260526235417.2058313-2-jrhilke@google.com> <20260527003237.8405E1F000E9@smtp.kernel.org>
- <akwQUzGJBJhzdAss@google.com>
-In-Reply-To: <akwQUzGJBJhzdAss@google.com>
-From: Josh Hilke <jrhilke@google.com>
-Date: Wed, 8 Jul 2026 16:10:23 -0700
-X-Gm-Features: AVVi8Cf9fXyp5a3YiVF1dHvg0qfhetVGYcDZvQHgpDZJCeXn7xt0skskI5yc_RE
-Message-ID: <CAAdrzjtQBwXZn=sx4gbUxfX5cCoirfv_tvGVPOopLQYqixTpBw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/10] selftests/vfio: igb: Add driver for IGB QEMU device
-To: David Matlack <dmatlack@google.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20260706231633.700676-2-rdbabiera@google.com> <20260706232735.9DAE51F000E9@smtp.kernel.org>
+In-Reply-To: <20260706232735.9DAE51F000E9@smtp.kernel.org>
+From: RD Babiera <rdbabiera@google.com>
+Date: Wed, 8 Jul 2026 16:30:02 -0700
+X-Gm-Features: AVVi8CcSrwCh5LbwO7WnfvTZrSFNdC4Sgt5jKz_3inEavnBPl5_6Ab3E641i0pQ
+Message-ID: <CALzBnUHg9W0kAwN6kvv5888WAK+i3J5B9PBqqRYA6q5+tjm9KQ@mail.gmail.com>
+Subject: Re: [PATCH v4] phy: Add USB3 PHY support to Google Tensor SoC USB PHY driver
+To: sashiko-reviews@lists.linux.dev
+Cc: olteanv@gmail.com, linux-phy@lists.infradead.org, vkoul@kernel.org, 
+	neil.armstrong@linaro.org, Badhri Jagan Sridharan <badhri@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 6, 2026 at 1:30=E2=80=AFPM David Matlack <dmatlack@google.com> =
-wrote:
+On Mon, Jul 6, 2026 at 4:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> [Severity: High]
+> This is a pre-existing issue, but does this function have a race conditio=
+n
+> with power management that could cause a bus fault?
 >
-> On 2026-05-27 12:32 AM, sashiko-bot@kernel.org wrote:
-> > > +
-> > > +           /* Set to 0 to disable offloads and avoid needing a conte=
-xt descriptor */
-> > > +           tx->read.olinfo_status =3D 0;
-> > > +
-> > > +           igb->tx_tail =3D (igb->tx_tail + 1) % RING_SIZE;
-> > > +           igb->rx_tail =3D (igb->rx_tail + 1) % RING_SIZE;
-> > > +   }
-> > > +
-> > > +   igb_write32(igb, IGB_RDT0, igb->rx_tail);
-> > > +   igb_write32(igb, IGB_TDT0, igb->tx_tail);
-> >
-> > [Severity: Medium]
-> > Are write memory barriers needed here around the DMA descriptor and doo=
-rbell
-> > accesses? Without a write memory barrier between populating RAM descrip=
-tors
-> > and ringing the TX doorbell, the hardware might fetch stale descriptors=
-.
+> google_usb_set_orientation() checks pm_runtime_suspended(gphy->dev) witho=
+ut
+> holding a PM runtime reference. If the USB core releases its PM reference
+> immediately after this check, the device could suspend and power off the =
+PHY.
 >
-> Can you look into this one? I would have assumed writel() would provide
-> the proper barriers.
+> The function would then acquire the lock and call set_vbus_valid() and
+> program_tca_locked() on unclocked and unpowered MMIO registers, resulting
+> in a synchronous external abort.
+>
+> Would it be safer to use pm_runtime_get_sync() to ensure the hardware
+> remains active during these accesses?
 
-You're correct. For x86_64, writel() includes a memory barrier. Here's
-the definition from tools/arch/x86/include/asm/io.h.
+I'll add a get_noresume call prior to checking runtime_suspended,
+and then adding a put_autosuspend at the end of the set_orientation
+call. If the suspended check fails, we can put_noidle here. This would
+cover not programming vbus_valid when unnecessary, and addressing
+any race condition if the runtime count drops to zero during the locked
+section.
 
-build_mmio_write(writel, "l", unsigned int, "r", :"memory")
+> [Severity: High]
+> Can this lead to redundant TCA programming and a 2.5-second timeout?
+>
+> Looking at google_usb_set_orientation(), gphy->orientation is updated bef=
+ore
+> the mutex is acquired:
+>
+> google_usb_set_orientation() {
+>         gphy->orientation =3D orientation;
+>
+>         if (pm_runtime_suspended(gphy->dev))
+>                 return 0;
+>
+>         guard(mutex)(&gphy->phy_mutex);
+>         ...
+>
+> If a Type-C plug event (Thread A) sets gphy->orientation but is preempted
+> before taking the lock, and the USB core concurrently calls
+> google_usb3_phy_power_on() (Thread B), Thread B will see the new
+> orientation, program the TCA, and release the lock.
+>
+> When Thread A resumes, it will acquire the mutex, see COMBO_PHY_TCA_READY=
+,
+> and call program_tca_locked() a second time with the identical configurat=
+ion.
+> Since writing the same configuration to the TCA hardware doesn't trigger =
+a
+> new XA_ACT_EVT interrupt, wait_tca_xa_ack() will stall for its full timeo=
+ut.
+>
+> Should the orientation update be moved inside the lock?
 
-That memory barrier should guarantee that all the descriptor writes
-from the loop are visible prior to ringing the doorbell.
+It should be moved inside the lock, but because if the orientation is
+set to none, there can be a race condition where power_on passes the
+orientation check and then proceeds to program the TCA when the orientation
+is none. Setting the valid bit on the TCA_TCPC register starts a new XA_ACT=
+_EVT
+interrupt, so the stall here isn't possible.
 
-Thanks,
-Josh Hilke
+Best,
+RD
