@@ -1,46 +1,46 @@
 Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBF13FD156;
-	Wed,  8 Jul 2026 08:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD10400E0D;
+	Wed,  8 Jul 2026 08:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783498566; cv=none; b=MYhgbdFxWi3taxfczaqJU89UD3+sPFkwVOX4pKLgbUeSr83I5oWSmJaqSAZso4zRoGeAFgvaRjAeo6qvHOkFhG+5rrlFwCUNOiJxpZUHq8v9wbEVXTp4juwgodhfYB2u9i1nsH3ICawzDBO8s9aquDdPXy8aKkXxA/Vt5yT5QaY=
+	t=1783498830; cv=none; b=bvpxlIaDOnXhFL+xWuxiy0mP16G+ITPC5CpuGrVSvGVNiBT1gTOEUjhpylShgs5yptIa7gVMZnUGPXPrmy16wOgnnuf8Lg0c0Nc7HsFYUH48HBzNSpt7tJ3B3zKztMg+2rrwvTE37vX/1zVc4p7SMPrksD48/fz0raQ0fsgvMOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783498566; c=relaxed/simple;
-	bh=KhFfxdlb1rPGQio91346NUOHHR9gipSTSLSn9Y/OUmc=;
+	s=arc-20240116; t=1783498830; c=relaxed/simple;
+	bh=qdxQjAQOlaYLMuExFubP0CTJxy2mGPWojiXM3UaSDPA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RnMKGFnPSVDyeyXQ0q9wiU1sos1Sv0mVXkleIitS6NQqE5r5DHmK+M3I7nS9NHL98fExWE+D/Ma5Ct+5TCnawkTJ36VNIdMPdd9l3vHp6gLb3tuvg23tFAnBeU5X6i2SAYhhKsAASk6w1gWz9EXjmyw5B3lbt/wGFZrQEgy8has=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Ng+XfT92; arc=none smtp.client-ip=213.133.104.62
+	 In-Reply-To:Content-Type; b=W10FtLNiVrm1zc0IgXf/uTVAlBk6s5kW55SztiIzxh+DgLFDA0RvYDzcLn1pH5Hpt/L4n52KEhFpms1T0uogXfIMEyL+lzv4KbAKJRKkoUCQ9v2XI1gspPzSW/OMRWYm/CRMTVHRPL8OStYd+KyPK5YeS5Cx4t7Bpw9ZkLOC7vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=andT+7Jt; arc=none smtp.client-ip=213.133.104.62
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Ng+XfT92"
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="andT+7Jt"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
 	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
 	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=KhFfxdlb1rPGQio91346NUOHHR9gipSTSLSn9Y/OUmc=; b=Ng+XfT92a0sEeT6zxsNnGKpLFU
-	WhhU4cjMIKSnfou9w2UUrfAmOtVwTFsdONqqKqOrdYyWLVUo5i2h1rstTJyawwSss3FwYcczLs+5y
-	BVRbfBkpruDraYAPDJ9SEwfST/qRs9KFcZbYZ+j44uDjxp6VIePd/2TKJu9+IeRCsYbsd6qOI4XCn
-	QnDTtb3miGOtPLCDmjbG2tj59plCDAx7MSxDYYDR7Mf3VlXuS6MK5VsVDmHGEJPS0JieAorDrrxwq
-	k4PRRxRRPoLQJ0Rz8zw40kyxwjP7Srgv4TdipPOPmwsYZ9pFnCgsE9x+vDhkNLa/i5edlwEzGR9YT
-	gTUVKrMA==;
+	bh=qdxQjAQOlaYLMuExFubP0CTJxy2mGPWojiXM3UaSDPA=; b=andT+7JtQjNQhCR4SMQ9AUo0/o
+	19obyB8Fp8sgRXJtJFCbs3Jd7Xc0DQrwO2tUGVRzDP6bfdpoLKU/11NR90Mgkp2SWsshUJEX5Db8S
+	l/zj01sr/k1KMq/1Y+ibP9gV7H2lQ4W/MCV+7gG4tnia+pSivIQiW84lOnBKRKBaN5fZvZatwEIF1
+	T2GBTY9ADtj/i8/3RiH9u9V4ZCx8CU/pNJwBy16V6cjmwlTOXoOSyoUQAJ/mrPWCZ5ySkdl0IGQ6s
+	57fTSXavWlraBJ5VZapuuF30mIg+14KObOfGlhPbOe626WMTIIVy4XeLHd4sQhmlZQ/szGna/t8md
+	xQvN+ESQ==;
 Received: from sslproxy04.your-server.de ([78.46.152.42])
 	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96.2)
 	(envelope-from <daniel@iogearbox.net>)
-	id 1whNRr-000JW5-19;
-	Wed, 08 Jul 2026 10:16:03 +0200
+	id 1whNW6-000KgA-19;
+	Wed, 08 Jul 2026 10:20:26 +0200
 Received: from localhost ([127.0.0.1])
 	by sslproxy04.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <daniel@iogearbox.net>)
-	id 1whNRr-0003ub-1C;
-	Wed, 08 Jul 2026 10:16:03 +0200
-Message-ID: <d523d378-7128-4bf5-b8da-6110b9691180@iogearbox.net>
-Date: Wed, 8 Jul 2026 10:16:02 +0200
+	id 1whNW6-000Ieb-18;
+	Wed, 08 Jul 2026 10:20:26 +0200
+Message-ID: <e22fa9f3-0fe6-4176-bdae-40206a1eabc2@iogearbox.net>
+Date: Wed, 8 Jul 2026 10:20:25 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -48,13 +48,13 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v6 6/8] selftests/bpf: Adjust bpf_map layout in
- verifier_map_ptr
+Subject: Re: [PATCH bpf-next v6 3/8] libbpf: Drop in-loader metadata check for
+ load-time verification
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260708075343.358712-1-daniel@iogearbox.net>
- <20260708075343.358712-7-daniel@iogearbox.net>
- <20260708081434.BCAFA1F000E9@smtp.kernel.org>
+ <20260708075343.358712-4-daniel@iogearbox.net>
+ <20260708081531.37FDE1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Daniel Borkmann <daniel@iogearbox.net>
 Autocrypt: addr=daniel@iogearbox.net; keydata=
@@ -100,12 +100,14 @@ Autocrypt: addr=daniel@iogearbox.net; keydata=
  rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
  DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
  owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
-In-Reply-To: <20260708081434.BCAFA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260708081531.37FDE1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Virus-Scanned: Clear (ClamAV 1.4.3/28054/Wed Jul  8 08:24:53 2026)
 
-On 7/8/26 10:14 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Stale test logic in `signed_loader.c` causes selftest suite failure due to removed in-loader metadata checks.
-Same comment as last time, this is done in patch 7/8.
+On 7/8/26 10:15 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] bpftool does not include the map contents when generating the PKCS#7 signature, which causes the kernel to always reject signed loaders.
+> - [High] The `run_gen_loader` function in the selftest does not set `attr.fd_array_cnt`, causing the verifier to reject the loader program with `-EACCES`.
+Both invalid as these are addressed in the patches of this series, just split
+among libbpf, bpftool, selftest.
