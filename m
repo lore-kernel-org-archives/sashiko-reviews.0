@@ -1,30 +1,88 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E900405C25
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 08:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D8C409138
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 09:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783500707; cv=none; b=Lbfg+OTpYH0ZljJZLk/AMkVZWtnTB9PH0oHe5BiBDEX3z8rPkS1EoxjTMm2couUd/iITl00zDqq654ZPauiyS++eTIwJbZNcyn3ruFqnpJ2v/ZPcuFpDWSN6eVexvqcxpMEE5OiocuHD3p1VylobCSgxn9t9NHMwzCgaiJMFX9s=
+	t=1783502451; cv=none; b=LG6VEYotYq/yppyOgid1MACIC0196kU/YxFOXILLkRhOG6Ve/vDU4dRpdew1Jen8LhcMO8REZE+dFxSc42JtReWdgQNLCzyjQjmUYeGM/4+dlzH6G6a2uEJErF3/FJLqnhRt1VkZ1YrHJLdUYd3aarEdMR7hIXLihxkvybS0kk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783500707; c=relaxed/simple;
-	bh=2LS7c1Vpofa3/DJoUoi103g5/qVOJZs+JVuCnr7mhFI=;
+	s=arc-20240116; t=1783502451; c=relaxed/simple;
+	bh=Qe/rQGLvb8bcAyOxTvi6MXdbAotsqfoswULLVdrBmAE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pCYvm9eUgEvT6qk+WXl4konNnoY2i2paBNWOnQeCAFenU9UNYgy3qVw8+RVYiVwK/PHQ0xYF39t+1be31+T4v5yBBHWErMpdSdEmN0SorYtH9WBcud3i6t8hZq6IKTY7MjEdc9juLnFFYPa1coDWR97RUr9ATpWDckTa2ikpwak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gwBf070dTzKHMKw
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 16:51:20 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id AAFD74069B
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 16:51:41 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgDHrCidD05q_m3rAQ--.50979S2;
-	Wed, 08 Jul 2026 16:51:41 +0800 (CST)
-Message-ID: <7218a234-df3b-40d9-aea3-1e1c69a2bc1f@huaweicloud.com>
-Date: Wed, 8 Jul 2026 16:51:41 +0800
+	 In-Reply-To:Content-Type; b=uCP6jhFwPQrXvZcTlivHk0Qq5j8zW2qBG3elDCIssFa3wR7gvjQbyD+LaOyYN3a97vP6XbyyfAFFe+Uopb8e+Q4AdhzzEtRZoBG16GCY5vuslDMjQuY/QkyJdLKbAsnrR5y8Tz1bFEKtBAw8vkTXh7JSfNMKONnqgZ4QK/KtbKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DrCqDosB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XOHrNk+v; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DrCqDosB";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XOHrNk+v"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66889Ba92219742
+	for <sashiko-reviews@lists.linux.dev>; Wed, 8 Jul 2026 09:20:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7ODd6nTq05LunQoKoekRARiXEci4TIjKD6sRgNesJow=; b=DrCqDosBnt1tj9GV
+	/issVSE2yY5P108JA7+ddx/AUImgmA1J0Zi0ofAf9aCdFvmcYXvCUZ/NyAJKftF5
+	HsLkUf7ZPqy3OKKnUBf7Uqg4w0lvJ6BVrBqfwYlYTbzBsC6SINr25ObRm/WR1sDG
+	RQIZYxVnEF13PXyikWSKIO6fW1az8D3DP5G4Dp/mw8RIxeAORGTa4+NTl/SnLAi9
+	z+vGvdcrSdKfMELkk3i2KzR5tP51s5FGMNgODDmoriT10u/yAtGpSFRi8YXHjHTe
+	2eqJcl2Far2rArSjrUgY+cyj6xizTEUtN/13Qla2OWsoL25uVPTIceMbTwhvSprV
+	dynRaA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9g7hgxxc-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 09:20:49 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ccb6f6a3f4so8110295ad.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 02:20:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783502449; x=1784107249; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7ODd6nTq05LunQoKoekRARiXEci4TIjKD6sRgNesJow=;
+        b=XOHrNk+vsCtK/LjIBelDqs1AKArbATD4wiWMkz7D/z4dfx7cpGYh/5UkLgru6T5a9G
+         kLkrLFRt7aJWzYP9IxU0xQcqvggDspl+WRLyPVzQr9qqIQw+nbgHTI21nOAz60RC7XGP
+         MtfgqicTOs8hYubFXzSwvkUcco1Kl7nS2cWjaj+UwmA3S8W+aeHqtpz2VBPF/WZ35Bzy
+         rnNuFEkdFc90qlfhuuCHDwphqDwuafFZaqKIoOPg8O0HQwR1iZrouyAeugzf2/maDThl
+         DbT3BGDvzlA6/0GcIWXEimMFHeZOlmhFhgdeLUMo9ppju17u/Ciqgaq5Ao9EuAPgX/px
+         gJJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783502449; x=1784107249;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=7ODd6nTq05LunQoKoekRARiXEci4TIjKD6sRgNesJow=;
+        b=PEVYtJp6gu68AolduqiINZonDERYSx3fF1k1FQEVeK2ZQq4baO+8UPNOvAYqhXOro6
+         0Dfe8/BDfVdXQM6FDbETpryDn1vUmsDqjR4EOkfENXPE3rl25Joe+vxLvh2W5GUBuHJ8
+         LTVKSmnyE5eIfs794rdMoJx2H28zxOT7O4JoP3XNFtkOvtQk05DQ4rYP/9roO/plBDHz
+         otC3FgcFdakptpQ9kbFicPp4vkK9ECU7gKaDE/r1bBCK5epJBBe8qPQKj5W0kaINowUd
+         3O3VYur6fTSUiHiiBd0hHi7+Im3UUMlCMazbKa111Zd84YaV1e1LlaTlMVnpIDRTknjg
+         FDFg==
+X-Gm-Message-State: AOJu0Yx9GiSPD1l5CSMDyeP6KA4cO/guEAMyFsryptel36SD7QH1I02a
+	R9A21BzokMimaSNKeJlx/WPPEHWl8kKgeihqO3P5Rz2GXaEJADQN7vQqzOJcE30atH7nOJWNY8c
+	zLSgYf7x96aUnVhTzBNsUvRzyJvyjqOXh6Tq8cVUp11WH1iXOgmKsWqTX+667jagqh3cOp9AB1A
+	6PJps=
+X-Gm-Gg: AfdE7cm8AUir/e9SHBglfNvcfC5GY/6frR3M7MewsYyQLsC3jtwOlQldFzWDABIEfu8
+	1PENgpaneLxrE5dEEvr8e9KDhhHtM0w8hMYONkA14oZWwkrFsYKS4l4wR1lUl7jonPh0HMJ5ZNe
+	ykDkje4vI73w7mB1JuvkyZDG6cRH6h9kmdpsUqswS+rjiinHTI0iWLDJuIHDmiI9Z5o3QInEa3h
+	ulkQ2G3s702j+qYbKWIfHdAie/ZqvneiWC8TkHkX8aZcT9t2xym+v7OS3rrL9SsHCCZORLQguZD
+	RLic1g/j4n6uP5pCqdhj0LIo+BYD8FRfz+BY4kfeFgZUWVQ1Ei9VULeJ2TCW1514idN2vkuV34H
+	iCP4QNOI/BNSI4Ctwarc7k39KGah3GylxosM/wITcXQsSysv+hHuppm7m+QzohNgx8yvdJc+E04
+	QmBRXY7BbHLIHUzjhWjbPqrXo=
+X-Received: by 2002:a17:902:d2ce:b0:2c6:8d95:fd7e with SMTP id d9443c01a7336-2ccca8c82a9mr60853575ad.6.1783502448544;
+        Wed, 08 Jul 2026 02:20:48 -0700 (PDT)
+X-Received: by 2002:a17:902:d2ce:b0:2c6:8d95:fd7e with SMTP id d9443c01a7336-2ccca8c82a9mr60853265ad.6.1783502448001;
+        Wed, 08 Jul 2026 02:20:48 -0700 (PDT)
+Received: from [10.79.194.163] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bf8e9csm24995015ad.24.2026.07.08.02.20.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jul 2026 02:20:47 -0700 (PDT)
+Message-ID: <b4bd0d99-0537-4a3f-ba5d-7e9fc30f0996@oss.qualcomm.com>
+Date: Wed, 8 Jul 2026 14:50:44 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,151 +90,205 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v6 2/7] riscv, bpf: Fix memory leak in
- bpf_jit_free
-Content-Language: en-US
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: purwa-iot-evk: Add Embedded
+ controller node
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260708064436.2971933-1-pulehui@huaweicloud.com>
- <20260708064436.2971933-3-pulehui@huaweicloud.com>
- <20260708065406.66B4A1F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260708065406.66B4A1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgDHrCidD05q_m3rAQ--.50979S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurWUWw4rWFyDGw43AryDtrb_yoWrZw4xpF
-	98uw1ak3yqgwn3KFs7KF18uFy7Jw48W3W2kFyUurWjg3Z8WryvgF1Sk3yrWa98Ar4UJw45
-	XF4kGFy3Ca4kJ3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1wL05UUUUU==
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260703-ec_support_for_purwa_evk-v2-0-c59aac5c6aac@oss.qualcomm.com>
+ <20260703-ec_support_for_purwa_evk-v2-2-c59aac5c6aac@oss.qualcomm.com>
+ <20260703100722.1FFF41F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+In-Reply-To: <20260703100722.1FFF41F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA4OCBTYWx0ZWRfX2ZCjcLeOrp6P
+ qwI2PV3gPhkGfkK2QyUyLHifAeLDJaUN0lplxae/cNv32dybdHaOBA2rd1o2DJpw5dwsFq5BaZ+
+ NNKnChvhwlV89jAO1gFAv+KT2GG4TjnRYFpbNfXLD4R235/JsuUATXi3tJG/UuFp2mHtG6BYxZV
+ dJtOp1W2rFyQdMeob/ADZ2G+ekZ6m/v51gT4xgR3sTboVQsxDb4kfB0ANYpmpZLgLt5o3+stYIU
+ 57ojY5xQ+hGl3EY2MRNPLO6qN9yYzh6CR/MvUlr45Y3A+OykJoB1ieoR1zX/ZiRpztvXO4o4iXg
+ c2GRQLxM5CgMbL8gdIB7cSafr9EVcmOyIEFQc1pjpZETsHt+WcCeK/AtSzk/uefl22L0xWwHJm1
+ WIppI94IIBNWjRoUNeBcgnuYJFA36qtP81V8xlD7HTpgvgQsKHFNLgRlir/sJpDo1ug04BYbE/t
+ Cpqp5tgSlbv49/WSiFg==
+X-Proofpoint-GUID: 1i5gFkJ21M3GU6u2PItSfI2C_JSWUUvI
+X-Authority-Analysis: v=2.4 cv=TMp1jVla c=1 sm=1 tr=0 ts=6a4e1671 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=6qqzTE0EYeF0Xcc8wggA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDA4OCBTYWx0ZWRfX25U9/kx5C/RT
+ NIevu9J8afeuf1MLPryJpzik5K5m5gnAW/6GykV2HkrCcKyvxJ2H77VudXLvgsFE30ohfMzqq7W
+ 87uaWntqTi8TC5LTvYHT58zgA1dBOkw=
+X-Proofpoint-ORIG-GUID: 1i5gFkJ21M3GU6u2PItSfI2C_JSWUUvI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-08_01,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0 spamscore=0
+ clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607080088
 
 
-On 2026/7/8 14:54, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+
+On 7/3/2026 3:37 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Configuring the EC interrupt as IRQ_TYPE_EDGE_FALLING causes a stuck IRQ line and lost events.
 > 
 > Pre-existing issues:
-> - [Critical] bpf_jit_free() ignores the error return value of bpf_jit_binary_pack_finalize(), leading to a Use-After-Free, Double-Free, and potential JIT memory charge limit corruption.
-> - [High] The identical memory leak fixed in RISC-V remains present in ARM64 and LoongArch BPF JIT implementations.
-> - [High] Memory charge limit (modmem) is permanently leaked when bpf_jit_binary_pack_finalize() fails in bpf_int_jit_compile().
+> - [High] The driver registers all cooling devices with cdev_id = 0, breaking multi-fan thermal device tree bindings.
+> - [High] Probe function fails to disable EC SCI events on error paths, leading to corrupted EC state and unhandled interrupts.
+> - [High] qcom_ec_read() ignores partial I2C block reads, causing callers to use uninitialized stack memory as hardware state.
 > --
-
-These are all pre-existing issues unrelated to the mixing of tail calls 
-and bpf2bpf; they will be analyzed and fixed in a new patch series, as 
-addressing them here would make this patchset be more large.
-
 > 
-> --- Patch [2]: [PATCH bpf-next v6 2/7] riscv, bpf: Fix memory leak in bpf_jit_free ---
-> commit 9c17e0351f5dcd9f2cb6815fc5c5e2c47b738ba2
-> Author: Pu Lehui <pulehui@huawei.com>
+> commit 30f797509dd26f2c0981b525ba3d62d1173ae857
+> Author: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
 > 
-> riscv, bpf: Fix memory leak in bpf_jit_free
+> arm64: dts: qcom: purwa-iot-evk: Add Embedded controller node
 > 
-> This commit fixes a memory leak in the RISC-V BPF JIT compiler. When a
-> subprogram fails to compile, it cleans up earlier subprograms but previously
-> failed to free the jit_data->ctx.offset array.
+> This commit adds the embedded controller node for Purwa IOT EVK boards.
+> It configures fan control, temperature sensors, access to EC internal state
+> changes, and suspend notifications to the EC.
 > 
->> diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
->> --- a/arch/riscv/net/bpf_jit_core.c
->> +++ b/arch/riscv/net/bpf_jit_core.c
->> @@ -234,6 +234,7 @@ void bpf_jit_free(struct bpf_prog *prog)
->>   		 */
->>   		if (jit_data) {
->>   			bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does ignoring the return value of
-> bpf_jit_binary_pack_finalize() here cause a use-after-free and double-free?
-> 
-> If bpf_jit_binary_pack_finalize() fails (for example, due to a text copy
-> failure), it frees the ro_header memory chunk and returns an error:
-> 
-> kernel/bpf/core.c:bpf_jit_binary_pack_finalize() {
->      ...
->      if (IS_ERR(ptr)) {
->          bpf_prog_pack_free(ro_header, ro_header->size);
->          return PTR_ERR(ptr);
->      }
->      ...
-> }
-> 
-> Since bpf_jit_free() ignores this failure, it extracts the now-freed
-> ro_header via bpf_jit_binary_pack_hdr() below, and unconditionally passes
-> it to bpf_jit_binary_pack_free(). Inside that function, the freed ro_header
-> is dereferenced to read its size, leading to a use-after-free, double-free,
-> and uncharging the modmem with garbage data.
-> 
-> Can this be triggered by an unprivileged BPF program load?
+>> diff --git a/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts b/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts
+>> index ad503beec1d3d..491ea7769cd71 100644
+>> --- a/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts
+>> @@ -837,6 +837,16 @@ eusb6_repeater: redriver@4f {
+> [ ... ]
+>> +
+>> +	embedded-controller@76 {
+>> +		compatible = "qcom,purwa-iot-evk-ec", "qcom,hamoa-crd-ec";
+>> +		reg = <0x76>;
+>> +
+>> +		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
 > 
 > [Severity: High]
-> This is also a pre-existing issue, but does bpf_jit_binary_pack_finalize()
-> fail to uncharge the modmem limit when it returns an error?
+> Does configuring the EC interrupt as IRQ_TYPE_EDGE_FALLING cause a stuck
+> IRQ line and lost events?
 > 
-> As shown above, bpf_jit_binary_pack_finalize() frees ro_header on failure
-> but does not call bpf_jit_uncharge_modmem(). In other callers like
-> bpf_int_jit_compile(), the error handler detects the failure, clears the
-> header pointers, and skips calling bpf_jit_binary_pack_free() completely:
+> The EC asserts an interrupt while multiple events are pending, but the driver's
+> interrupt handler reads exactly one event and returns without looping. 
 > 
-> arch/riscv/net/bpf_jit_core.c:bpf_int_jit_compile() {
->      ...
->      if (WARN_ON(bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header))) {
->          /* ro_header has been freed */
->          jit_data->ro_header = NULL;
->          jit_data->header = NULL;
->          goto out_free_hdr;
->      }
->      ...
-> }
+> Because the trigger is configured as edge-falling, the persistent low state
+> of the line does not trigger another interrupt, causing the line to stall
+> permanently.  Should this use level-triggered interrupts instead?
+>
+
+I checked the EC firmware, events are delivered as a short active-low
+pulse per event on the interrupt GPIO — the line is idle-high and pulsed
+low once for each queued event. So IRQ_TYPE_EDGE_FALLING is correct,
+each event generates its own falling edge, and the handler is re-entered
+per event with no loss. There's no persistent-low state to stall on, and
+level-low would actually be wrong here since the pulse is very brief. No
+change needed.
+
+>> +
+>> +		pinctrl-0 = <&ec_int_n_default>;
+>> +		pinctrl-names = "default";
+>> +	};
+>>  };
 > 
-> Since out_free_hdr skips bpf_jit_binary_pack_free() when header is NULL,
-> the modmem uncharge is permanently bypassed. Does this leak the
-> bpf_jit_limit capacity?
 > 
->> +			kfree(jit_data->ctx.offset);
+> While reviewing this patch, I also noticed a few pre-existing issues in
+> drivers/platform/arm64/qcom-hamoa-ec.c that handles this device tree node:
+> 
+> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_probe()
+> [ ... ]
+>> 	ret = qcom_ec_sci_evt_control(dev, true);
+>> 	if (ret < 0)
+>> 		return dev_err_probe(dev, ret, "Failed to enable SCI events\n");
+>>
+>> 	ret = qcom_ec_thermal_capabilities(dev);
+>> 	if (ret < 0)
+>> 		return dev_err_probe(dev, ret, "Failed to read thermal capabilities\n");
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but do arm64 and loongarch have
-> the exact same memory leak that is being fixed here for riscv?
+> This is a pre-existing issue, but does the probe function fail to disable
+> EC SCI events on error paths?
 > 
-> Looking at bpf_jit_free() in arch/arm64/net/bpf_jit_comp.c:
+> If qcom_ec_thermal_capabilities() or the subsequent memory allocation fails,
+> probe returns an error. The previously enabled SCI events are never disabled
+> because no devm action was registered and remove() is not called.
 > 
-> arch/arm64/net/bpf_jit_comp.c:bpf_jit_free() {
->      ...
->      if (jit_data) {
->          bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
->          kfree(jit_data);
->      }
->      ...
-> }
+> The EC is left actively generating events, but the OS interrupt handler is
+> freed by devres. The EC will assert the IRQ line, which goes unhandled,
+> potentially stalling the EC and causing battery drain.
+>
+
+I'll review this and fix it in a separate series.
 > 
-> And similarly in arch/loongarch/net/bpf_jit.c:
+> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_probe()
+> [ ... ]
+>> 	for (i = 0; i < ec->thermal_cap.fan_cnt; i++) {
+>> 		struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
+>> 		char name[EC_FAN_NAME_SIZE];
+>>
+>> 		scnprintf(name, sizeof(name), "qcom_ec_fan_%u", i);
+>> 		ec_cdev->fan_id = i + 1;
+>> 		ec_cdev->parent_dev = dev;
+>>
+>> 		ec_cdev->cdev = devm_thermal_of_cooling_device_register(dev, 0, NULL, ec_cdev,
+>> 									&qcom_ec_thermal_ops);
 > 
-> arch/loongarch/net/bpf_jit.c:bpf_jit_free() {
->      ...
->      if (jit_data) {
->          bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
->          kfree(jit_data);
->      }
->      ...
-> }
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does hardcoding the cdev_id 
+> to 0 break multi-fan thermal device tree bindings?
 > 
-> Neither architecture frees the jit_data->ctx.offset array before freeing
-> jit_data. Should a similar fix be applied to those architectures?
+> By looping over fan_cnt and passing 0 for every fan instance rather than
+> the iteration index, the OF thermal core cannot distinguish between multiple
+> cooling devices under the same node.  
 > 
->>   			kfree(jit_data);
->>   		}
->>   		hdr = bpf_jit_binary_pack_hdr(prog);
->>   		bpf_jit_binary_pack_free(hdr, NULL);
+> This breaks thermal zone mappings and can cause undefined behavior when
+> binding thermal states.
+>
+
+addressed by switching to
+devm_thermal_of_child_cooling_device_register() in latest tree, which
+binds each fan to its own child DT node rather than disambiguating by
+cdev_id, so multiple fans are individually addressable.
+
 > 
+> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_read()
+> [ ... ]
+>> static int qcom_ec_read(struct qcom_ec *ec, u8 cmd, u8 resp_len, u8 *resp)
+>> {
+>> 	int ret;
+>>
+>> 	ret = i2c_smbus_read_i2c_block_data(ec->client, cmd, resp_len, resp);
+>> 	if (ret < 0)
+>> 		return ret;
+>> 	else if (ret == 0 || ret == 0xff)
+>> 		return -EOPNOTSUPP;
+>>
+>> 	if (resp[0] >= resp_len)
+>> 		return -EINVAL;
+>>
+>> 	return 0;
+>> }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does qcom_ec_read() ignore
+> partial I2C block reads?
+> 
+> i2c_smbus_read_i2c_block_data() returns the number of bytes read. If a short
+> read occurs, this returns success (0) because it only checks if ret < 0,
+> ret == 0, or ret == 0xff. It does not verify if ret matches the expected
+> resp_len.
+> 
+> Callers are then exposed to using uninitialized stack memory as hardware
+> state for firmware version data, fan counts, or thermistor masks. This can
+> lead to out-of-bounds memory allocations if a bogus fan count is read.
+>
+
+I'll review this and fix it in a separate series. it's a pre-existing
+driver issue and doesn't block this DTS patch from merging.
+
+-- 
+Best Regards,
+Anvesh
 
