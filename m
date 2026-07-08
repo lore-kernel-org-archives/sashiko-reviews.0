@@ -1,151 +1,178 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80C0FBE1
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 02:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783479588; cv=none; b=NNSJfBlqUeREoxviyIQs4w77/RQP+fr4KF0onpowHz7begFxs1ErwtuL8KMRDB5Q6MtsshEDxZUN1gbg0/fiEsm6il5wrZ8UB6kRNFXk4kf0iL70eJFOzqThkKcty9c8fU8aRlCmS/UZR5FgIOaEmP4pGowh7uXJJWKY/9femuk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783479588; c=relaxed/simple;
-	bh=7a2ywGSxYzudq4PgBFRVGJkch0Z2aaMfXQmTFH/uv6w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hcabV4gWb9naYmpVD7k8OhFagXUw/LW5KRRRs8G++M+7kcrXzpH6W8RqQed5u3u657hQmM6LGGbooRoCTMgvTVo+ZS/Hxw7DrkfrGhs9v92qLILp1s6pghNCJz5RrVLEX8MGJKrxhWJ8kHmEdBAmwU+guYRAh+Zdy3zJku+b+zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gw2PL4QxrzYQtHt
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 10:39:50 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id E8C9B4056D
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 10:39:54 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgCXy1xzuE1qZQrOAQ--.42776S2;
-	Wed, 08 Jul 2026 10:39:54 +0800 (CST)
-Message-ID: <5c5d53e7-83dc-4795-ac89-3984db1d14e9@huaweicloud.com>
-Date: Wed, 8 Jul 2026 10:39:47 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F27E315D40
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 03:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783480353; cv=pass; b=YSmEldnpv+TlSpcka9ATYt9Bd567CG/WhONL2wzmtInesUEAWpNSnYJv2q+JMLyHTiO553xHZXofagmb73d/GsORactagCQVd5RLDuXAGv16PBG5bRutKS7PMmdTw8sRBf2ordw6bpbEWifA/aV1NlDFJVDRTC2t0a43pBj4Upo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783480353; c=relaxed/simple;
+	bh=ILN8IqWlVii5tDTgoYcy1DZfpKUeUqRq4ICO9cvv4Sk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RGGJR/qO7eSjlrTXxz0HUwNssj24JuAkKqFz0gHPhEj2NNLHFSsi5IvoCRzh7MR15H6iSP8/3QLpG2zImOm8BYSmp/F7IigTjuIu+fJFIeoR5WwnEh5J2s9ecH7YeFxCh+E3EroOaXYFljF7RUyLRAnm7LyGq1LC+0kCErunY40=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sJTKj1CF; arc=pass smtp.client-ip=74.125.224.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sJTKj1CF"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-6679d88abdcso267245d50.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 07 Jul 2026 20:12:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783480350; cv=none;
+        d=google.com; s=arc-20260327;
+        b=RLV/Eae2DapmdUjzkVI/zskmqXVZC0ySnienDeyPDsMNDR6R68AYY28qDaD6hx5aTS
+         adPFEEr2/1hZ6MwH/RG3EBuUsesry81GcfIMAtOrVfpooTibOHv2BF0vTztXRkCXU/tl
+         h+d1aGxh7bayUMkJokrE0s4jP68agCLH8Jkjpygq8ak5yuuqtBBfFhbVEsPAmpsrqYGz
+         rf08p3peiyNsLWqFDAIrxLpUZ6f1PAIrHHc0f3B6YXN/MpXZoOfSwdi5oRLE0hwdOf9V
+         h8/cBj6iQZrngqof9UYNLzIOC7I2ZclOXTbqoJ/JI7k3H2066MrynQyhyb5OYIZJcuYx
+         9mcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=oknk3tQlPfde8xc17K9qMsBqym5928PvQ8Kp/qRXs20=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=hygLblEuzS8F1WiyvGLYTUOP5dTrJTz0GzRbXWXtfaK9NNPSBiBFw3s44fjGq+eUTc
+         wcAdHdtSPr3rjErCgV+gn9Dn53lMO9Fg5ORCVdq1YgvK/u3mEfZ7JGmmICSjG0RiRvXv
+         X9h5kA5YBuSu/gEY+REPpydAaWZBRqKUonQ+zLp59YCi1RzVbQPlPvWb0vhzZm992fnN
+         cfGLNj4QFt2L2J+yJ1UQtT86C2+lObNMBY1VWQ/BE3h9ja/oaNWRo7Z4Wylkb27pd1GR
+         H+t8tYANNcSd8vD6IrgZi/zihMZ/AimoscqRovjGYl2337+lDHW6ywSx/D5+0u4di+7K
+         A9tQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783480350; x=1784085150; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=oknk3tQlPfde8xc17K9qMsBqym5928PvQ8Kp/qRXs20=;
+        b=sJTKj1CFVuCRE7/RxtfLpycmJNDsDDuzlSGlU3vr/g9zrKUygVnyaIdVTsRUralZm3
+         t4hInupK0JIth5161wA9WkBU+cUcSXsosNK2CQo8J1eAuHAnEP33taEVwHS3iv17ETpm
+         TBbS10xiqSlGdhf13cN2MRO7c4k4MK5ppWWPs1erybyDTYEE7P3NOZUEKtIpEWyN1xNG
+         PLG/9ftf1LxRSNBLIGI0fJQXWc9uhXp8rYgxUU5+a2c0O7Cyhg4zfc8LgIhZ2qxG4/Vo
+         Xl1Tqn3p1FGJpl+9kKAbhvGZsM+vzIjt9Bzadi9de1OuIyfECNj7X/mB/y2ngGc9A5xV
+         lM6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783480350; x=1784085150;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oknk3tQlPfde8xc17K9qMsBqym5928PvQ8Kp/qRXs20=;
+        b=gheZENfz+QcPlX2DI3SWN+TIgAkz//IUsUlrEagrANT1+GVSmvqkvaDaFYBDSnxcsV
+         jlRJCK9OGqBnBXJOdaWltQlCFHAHNKNM/ZLbh+ZxCKpPJFuhQqlXlVDNEk67wHNMFUn+
+         SCc+fqSsmbt6TGo9tpZ+kkRRZOfDtLVHxyVm8Px6vEvRkTUDTeoDYyz7iEk1HiSPMDDN
+         1P57eAVjHuhsXEC6uhdsRvawGwsFZZkf4fGj3F8cxtyD/mybQvd8pXyoYvzs98wdtdL6
+         rBwCnBBTZilyuCvtjWhxE9NJ9KYM4VpgHB6MMuNYj3al5zpo7mmS82LAStYBuVUhsEeh
+         VCdg==
+X-Gm-Message-State: AOJu0YyAH7/bjgfL5iyb520uJ+k9ES8YUmQwyy2aNYvLM8EsV4jPpGON
+	Nv29oL1YphYdJSlEMbolvxrsAnzpOcsANwY09RlAGJuz1IWP/bXkm6Ami7nqGHur6U3PERq/Flf
+	AkLUtFSlSoYW+CK28EtJJpMnIWg6kaJ3NoPvmQSg=
+X-Gm-Gg: AfdE7cm+zeo7S5L5aDlE8Q5dke0uvIGZAkhUoPym6JRKxTsK7j/6n77ylBd7Qjv5k8f
+	mE0rIbbiGZCt1wWec1WVaOONcRocsetTlv3EcQVJbUfWjZpKFwrhoR1dsY7qeMf7ea3EPWtbEKH
+	Ku6hxdPkGUrc4q4TMOQ8v1Jdq3QnpQpGunAtjPCZ+7paOpAN6VcFpAxecZdkDYYSdLC+rdtz3yH
+	WZBqmTB4jJxD+fFjdi+ftomJyfm0OQpQzJvLtIBXvGwXtTqKnjb+amcvj8UMQ79mKLANdHeiGc=
+X-Received: by 2002:a05:690e:419a:b0:667:9d88:97d9 with SMTP id
+ 956f58d0204a3-6679f2b8499mr482158d50.92.1783480350407; Tue, 07 Jul 2026
+ 20:12:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v5 5/6] riscv, bpf: Mixing bpf2bpf and tailcalls
+References: <20260708025807.702010-1-lgs201920130244@gmail.com> <20260708031033.9A4841F000E9@smtp.kernel.org>
+In-Reply-To: <20260708031033.9A4841F000E9@smtp.kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
+Date: Wed, 8 Jul 2026 11:12:18 +0800
+X-Gm-Features: AVVi8CfMvikuhwz5NNgv52z_PV_C2pN5QQQp8tt_xNQqx5A8YCzihoOQ41MZ4sw
+Message-ID: <CANUHTR9R23PRS0peRy5H=p9=HVi=CBoL+X8MDVe_C6EcG24Byw@mail.gmail.com>
+Subject: Re: [PATCH] libbpf: Limit bitfield dump reads to checked bytes
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-References: <20260707142219.2871758-1-pulehui@huaweicloud.com>
- <20260707142219.2871758-6-pulehui@huaweicloud.com>
- <20260707144908.AB3151F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260707144908.AB3151F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgCXy1xzuE1qZQrOAQ--.42776S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDGF18Jw47JFyDuF13XFb_yoW5KrW7pa
-	4xCayfCrWvqFn5KanrXa1xXw1akr4kuFnrWr1rGw4Sya1q9rWkW3WfKw4ruF98Ar1rJw48
-	Xr4qvF1Sv3WDArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVj
-	vjDU0xZFpf9x07UE-erUUUUU=
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi all,
 
-On 2026/7/7 22:49, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Extension programs (BPF_PROG_TYPE_EXT) targeting subprograms incorrectly reset the Tail Call Counter (TCC), bypassing the tail call limit and allowing infinite loops.
+Sorry, this email was sent by mistake. Please ignore it.
+
+On Wed, 8 Jul 2026 at 11:10, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The patch introduces data corruption and undefined behavior wh=
+en reading unaligned enums on Little Endian architectures by shifting a 64-=
+bit integer by 64 bits.
 > --
-> 
-> --- Patch [5]: [PATCH bpf-next v5 5/6] riscv, bpf: Mixing bpf2bpf and tailcalls ---
-> commit f7082c3640c8a167ff897d3870ee0dd71fc2faab
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> riscv, bpf: Mixing bpf2bpf and tailcalls
-> 
-> This commit implements mixed bpf2bpf and tailcalls for the RV64 JIT.
-> It changes how the Tail Call Counter (TCC) is passed and preserved,
-> storing it in a non-callee saved register and explicitly saving/restoring
-> it around bpf2bpf calls and tail calls.
-> 
->> diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
->> index 7c6304e0b846a..823262ca47ebf 100644
->> --- a/arch/riscv/net/bpf_jit_comp64.c
->> +++ b/arch/riscv/net/bpf_jit_comp64.c
+>
+> --- Patch [1]: [PATCH] libbpf: Limit bitfield dump reads to checked bytes=
+ ---
+> commit 128a41a5de9f0bf022f4b652bb58245609c3162a
+> Author: Guangshuo Li <lgs201920130244@gmail.com>
+> libbpf: Limit bitfield dump reads to checked bytes
+>
+> This commit updates btf_dump_get_bitfield_value() to limit the bitfield
+> value-building loops to the same checked byte range instead of the full
+> backing type size. It aims to prevent reading past the checked range for
+> narrow bitfields.
+>
+> > diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
+> > --- a/tools/lib/bpf/btf_dump.c
+> > +++ b/tools/lib/bpf/btf_dump.c
+>
 > [ ... ]
->> @@ -1836,10 +1829,18 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
->>   			}
->>   		}
->>   
->> +		/* restore TCC to RV_REG_TCC before bpf2bpf call */
->> +		if (aux->tail_call_reachable && insn->src_reg == BPF_PSEUDO_CALL)
->> +			emit_ld(RV_REG_TCC, ctx->tcc_offset, RV_REG_SP, ctx);
->> +
->>   		ret = emit_call(addr, fixed_addr, ctx);
->>   		if (ret)
->>   			return ret;
->>   
->> +		/* store updated TCC back to stack after bpf2bpf call */
->> +		if (aux->tail_call_reachable && insn->src_reg == BPF_PSEUDO_CALL)
->> +			emit_sd(RV_REG_SP, ctx->tcc_offset, RV_REG_TCC, ctx);
->> +
-> 
-> [Severity: High]
-> If the bpf2bpf call jumps to a BPF_PROG_TYPE_EXT program that incorrectly
-> reset RV_REG_TCC, will the caller now save that clobbered value to its own
-> stack?
-> 
-> If the TCC is continuously reset to 33 in this manner, could this bypass the
-> tail call limit and allow an infinite loop resulting in a CPU soft lockup?
-> 
->>   		if (insn->src_reg != BPF_PSEUDO_CALL)
->>   			emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
->>   		break;
-> [ ... ]
->> @@ -2038,11 +2038,10 @@ void bpf_jit_build_prologue(struct rv_jit_context *ctx, bool is_subprog)
->>   	for (i = 0; i < RV_FENTRY_NINSNS; i++)
->>   		emit(rv_nop(), ctx);
->>   
->> -	/* First instruction is always setting the tail-call-counter
->> -	 * (TCC) register. This instruction is skipped for tail calls.
->> -	 * Force using a 4-byte (non-compressed) instruction.
->> -	 */
->> -	emit(rv_addi(RV_REG_TCC, RV_REG_ZERO, MAX_TAIL_CALL_CNT), ctx);
->> +	if (!is_subprog)
->> +		emit(rv_addi(RV_REG_TCC, RV_REG_ZERO, MAX_TAIL_CALL_CNT), ctx);
->> +
-> 
-> [Severity: High]
-> Does this logic handle BPF_PROG_TYPE_EXT (freplace) programs correctly?
-> 
-> When an extension program is loaded independently and attached to a global
-> subprogram of another BPF program, is_subprog will be false because it is the
-> main program of its own object.
-> 
-> Won't this cause the EXT program to unconditionally emit this instruction,
-> clobbering the inherited TCC passed in RV_REG_TCC from the caller?
-> 
->> +	/* tailcall starts here, emit insn before it must be fixed */
->>   
->>   	emit_addi(RV_REG_SP, RV_REG_SP, -stack_adjust, ctx);
->>
-> 
+>
+> > @@ -1784,13 +1788,13 @@ static int btf_dump_get_bitfield_value(struct b=
+tf_dump *d,
+> >        * stored in num, then we left/right shift num to eliminate irrel=
+evant bits.
+> >        */
+> >  #if __BYTE_ORDER__ =3D=3D __ORDER_LITTLE_ENDIAN__
+> > -     for (i =3D t->size - 1; i >=3D 0; i--)
+> > +     for (i =3D nr_bytes - 1; i >=3D 0; i--)
+> >               num =3D num * 256 + bytes[i];
+> > -     nr_copy_bits =3D bit_sz + bits_offset;
+> > +     nr_copy_bits =3D bit_sz ? bit_sz + bits_offset : nr_bytes * 8;
+> >  #elif __BYTE_ORDER__ =3D=3D __ORDER_BIG_ENDIAN__
+> > -     for (i =3D 0; i < t->size; i++)
+> > +     for (i =3D 0; i < nr_bytes; i++)
+> >               num =3D num * 256 + bytes[i];
+> > -     nr_copy_bits =3D t->size * 8 - bits_offset;
+> > +     nr_copy_bits =3D nr_bytes * 8 - bits_offset;
+> >  #else
+> >  # error "Unrecognized __BYTE_ORDER__"
+> >  #endif
+>
+> [Severity: Medium]
+> Does this change introduce data corruption for unaligned enums on Little
+> Endian architectures?
+>
+> When bit_sz is 0 (for unaligned enums), nr_copy_bits now becomes
+> nr_bytes * 8 (e.g., 32 for a 4-byte enum).
+>
+> The code immediately following this block in btf_dump_get_bitfield_value(=
+)
+> calculates:
+>
+>         left_shift_bits =3D 64 - nr_copy_bits;
+>         right_shift_bits =3D 64 - bit_sz;
+>
+> This results in left_shift_bits =3D 32, and right_shift_bits =3D 64.
+> The final shift evaluates to:
+>
+>         *value =3D (num << 32) >> 64;
+>
+> Shifting a 64-bit integer by 64 bits is undefined behavior. On architectu=
+res
+> like x86 and ARM64, the shift amount is masked (modulo 64), meaning >> 64
+> executes as >> 0.
+>
+> This results in (num << 32) >> 0, returning a corrupted value instead
+> of the expected unaligned enum value.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708025807.70=
+2010-1-lgs201920130244@gmail.com?part=3D1
 
-This two issue have been prevent in core framework by the patch [0], and 
-the following testcase will cover these situation.
-
-tailcalls/tailcall_freplace
-tailcalls/tailcall_bpf2bpf_freplace
-
-[0] https://lore.kernel.org/all/20241015150207.70264-1-leon.hwang@linux.dev/
-
+Best,
+Guangshuo
