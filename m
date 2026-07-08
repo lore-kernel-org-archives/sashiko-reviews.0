@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBECC3AB288
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 02:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18383311C1B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 02:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783477345; cv=none; b=KVLWSymy57QTIU8w1k4VZm0lIkTM5//FbuwTv+bwiqxjLuNO94O3S7y0fMTmyZVzER6HKz2pTl60LiRJmBax3Nxgb/gucvc4KqAFBoQBSQE/qE5UG7vW08xMXa9WlDQ+GA1rekXDgPLmqaDWORaCFYKOZ9/ES1q1BzXj44HA5wI=
+	t=1783477813; cv=none; b=oTv/CmiPusFYdCSBNObvn/2UTAM4NP9zSGGR9mmffrH/idEFG4H4g1kzuzBxcOVjqnq/PXmntzDbEsnFtnFfCw/VEPOHI+9lEiQ7rCU7wegeAQm+XNkF7ilnVnsTB14Csz9D0jSBQ1HQ8a+0BSi7rddI1sfWERDMWdBd1ik7ISE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783477345; c=relaxed/simple;
-	bh=JzNmHyykV6TjBvTix2mItOeIg0tDxGKMSfE4lfXS6AU=;
+	s=arc-20240116; t=1783477813; c=relaxed/simple;
+	bh=7Qw+uUL36LO2eE4xRdqMv9qoCyI6GLJ/5veOFprZnfQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tnqgw1svov67wSZCpohlVLHrBowQUQj+oH5hSSEx5Ql10BDmVhdYFJHaHbPVOO87z8MkxOYyXqHKTdoZfLoVBr993Z2SmGI8ABdVUNnEdbxqKX098XoKicfoO4C+ZVCvwysnONa9HXPah7b/RtJfpqxrjLVHGkcyaC2OSNZKkzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LF9+af+I; arc=none smtp.client-ip=192.198.163.8
+	 In-Reply-To:Content-Type; b=krrELNuf4eS79TStd4rRfXKiNhfnY/avGSL0HSMpQiwdtD2M6NRXXsu8zkVSnBAYIztCD1YbMNcqwFgJoBDtLG379Q5HNthFCAMo2jPkStQTUqfbQHfmZWMsogSTRiLJ8oTITQaYQWscbIO8kxbBQiDFd5HRVws6D+fYtIxt1ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RuOdqLjf; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LF9+af+I"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RuOdqLjf"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783477343; x=1815013343;
+  t=1783477812; x=1815013812;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=JzNmHyykV6TjBvTix2mItOeIg0tDxGKMSfE4lfXS6AU=;
-  b=LF9+af+IhZ35uiI2Cyub/3r34ZpskjVNLR0iHQ1nDhze9LM3Xoz1umBn
-   HzxYt+O7N4Kfz2nEHPyLnCk9pcodZhjA5bSoA8J8010/WWauJ1su20aAf
-   IfJIyytp9f4rFTz0KU4zBllpnleQURI8iOfF693hpeW9jkHYFl4sj8j98
-   Zl0Jb7s9T7yhYAijNA+8bHNyw1xqBEShYJw6OAyTJwUOU/QPlNLIvOo/Z
-   KWga2v7hPkRGfjl6HS5zK2ejfvICV/bGP18RgpZjHcYMZZCv3OHMQlBHD
-   cN1yM8hBo+XzZLayRfFMLmTvywF7sqnyxC5smXblpQ7q4ZBD7gtMgIPz5
+  bh=7Qw+uUL36LO2eE4xRdqMv9qoCyI6GLJ/5veOFprZnfQ=;
+  b=RuOdqLjfNsTStHejlOFwn+Uj+FxR8nD1GcMxK1fXY/Gm1JKrBCzxX/vz
+   7yfsCNhCj+jiKfkkxnj9OOm0ek5pLIBShyTcJa4jfye8J9FYaLwZhvmoF
+   wp4dJviQRltniZnYK0u3/Qlbcfo1ptVu8AVrToTX8sf/ztf0HuZWGFPHU
+   LCFrhNwFWZKkOCR9FnC+gh8ybKwSxPw2nm2vv+fCVJuL2Py3tGa4NBg0J
+   MPl91WVNO4cjDMIiwv+eMRYaElkWM9QqG9mPzeA85jVelEmhmMDqJSvUy
+   Qx6FBp1jX2q3asU80mbKQfX/7snCCulv/VF6x9OyuTVVaoLcl+cOCCs6D
    Q==;
-X-CSE-ConnectionGUID: SiN+kma3R8C5bVXHhvmYZA==
-X-CSE-MsgGUID: gzxIs/egR4KiqydR68q6wA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="101683065"
+X-CSE-ConnectionGUID: /WOOEokzRD+rddi8Q+4tRg==
+X-CSE-MsgGUID: IrHxjpJuQTaOY7ukcb66hg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="94739918"
 X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
-   d="scan'208";a="101683065"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 19:22:22 -0700
-X-CSE-ConnectionGUID: imAF2AGWRFWB8FO8xutOYw==
-X-CSE-MsgGUID: 3i72aESJT/KWqkS1E2BNWg==
+   d="scan'208";a="94739918"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 19:30:11 -0700
+X-CSE-ConnectionGUID: 392Nq0gvSFiBbL5/LfW+Rw==
+X-CSE-MsgGUID: WO0VtwR+QimpldWV6nsJgA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
-   d="scan'208";a="258036585"
+   d="scan'208";a="259066655"
 Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.232.65]) ([10.124.232.65])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 19:22:21 -0700
-Message-ID: <da90e694-8592-446c-851f-48babaa9ba85@linux.intel.com>
-Date: Wed, 8 Jul 2026 10:21:58 +0800
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 19:30:10 -0700
+Message-ID: <a9ad6d88-f693-48f2-84b5-8c76eabd0a75@linux.intel.com>
+Date: Wed, 8 Jul 2026 10:30:07 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,68 +52,76 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v9 07/10] perf regs: Enable dumping of SIMD registers
+Subject: Re: [Patch v9 09/10] perf tests: Add x86 eGPRs/SSP registers sampling
+ test
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
 References: <20260706023444.3067660-1-dapeng1.mi@linux.intel.com>
- <20260706023444.3067660-8-dapeng1.mi@linux.intel.com>
- <20260706025559.8384B1F000E9@smtp.kernel.org>
+ <20260706023444.3067660-10-dapeng1.mi@linux.intel.com>
+ <20260706030025.4A6731F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260706025559.8384B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260706030025.4A6731F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
-On 7/6/2026 10:55 AM, sashiko-bot@kernel.org wrote:
+On 7/6/2026 11:00 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] SIMD register decoding logic dynamically probes the host kernel, breaking cross-platform and offline analysis of perf.data files.
+> - [Medium] The validation function `validate_gp_reg_sampling` executes a single hardcoded `perf record` pipeline instead of using the standard `perf_record_with_retry` helper, leading to test flakiness and untraceable failures.
 > --
 >
-> commit 2e9a4421bef9edf42fbc7bb3efd49ba82ff3a75d
+> commit 5bc6b87aa83194eef4aff3394561f1bdb19039e4
 > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> perf regs: Enable dumping of SIMD registers
+> perf tests: Add x86 eGPRs/SSP registers sampling test
 >
-> Support dumping of SIMD registers with the new PERF_SAMPLE_REGS_ABI_SIMD
-> ABI.
+> Validate that eGPRs (extended general purpose registers) and SSP
+> (shadow stack pointer) registers can be sampled correctly on x86
+> platforms with hardware support.
 >
-> Currently, the XMM, YMM, ZMM, OPMASK, eGPRs, and SSP registers on x86
-> platforms are supported with the PERF_SAMPLE_REGS_ABI_SIMD ABI.
->
->> diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
->> index 23f694c3f0c98..5768682dc95fc 100644
->> --- a/tools/perf/builtin-script.c
->> +++ b/tools/perf/builtin-script.c
+>> diff --git a/tools/perf/tests/shell/record.sh b/tools/perf/tests/shell/record.sh
+>> index dd90fef2088b1..48c722e563e27 100755
+>> --- a/tools/perf/tests/shell/record.sh
+>> +++ b/tools/perf/tests/shell/record.sh
 > [ ... ]
->> @@ -719,23 +719,96 @@ static int perf_session__check_output_opt(struct perf_session *session)
-> [ ... ]
->> +	for (reg_c = 0; reg_c < 64; reg_c++) {
->> +		if (!regs->nr_vectors)
->> +			break;
->> +		if (intr) {
->> +			perf_intr_simd_reg_class_bitmap_qwords(e_machine, reg_c,
->> +							       &qwords, /*pred=*/false);
->> +		} else {
->> +			perf_user_simd_reg_class_bitmap_qwords(e_machine, reg_c,
->> +							       &qwords, /*pred=*/false);
->> +		}
+>
+>> @@ -131,6 +131,131 @@ check_system_wide() {
+>> +validate_gp_reg_sampling() {
+>> +  local regs_opt="$1"
+>> +  local regs_value="$2"
+>> +  local script_field="$3"
+>> +  local sample_output
+>> +  shift 3
+>> +
+>> +  if ! sample_output=$(perf record -o - "${regs_opt}=${regs_value}" \
+>> +    -e br_inst_retired.near_call -c 1000 --per-thread ${testprog} 2> /dev/null \
+>> +    | perf script -F ip,sym,"${script_field}" -i - 2> /dev/null)
 > [Severity: Medium]
-> Could this break offline and cross-platform analysis of perf.data files?
+> Could this hardcoded perf record pipeline lead to test flakiness on slower
+> environments?
 >
-> The perf_intr_simd_reg_class_bitmap_qwords() function dynamically probes the
-> host kernel via sys_perf_event_open() to determine the SIMD register lengths.
+> By not using the standard perf_record_with_retry helper, a single execution
+> might fail to generate the 1000 near calls required to trigger a hardware
+> sample.
 >
-> If a user analyzes a perf.data file on a different machine lacking support for
-> that specific SIMD ABI (such as a non-x86 architecture or an older kernel),
-> would the probe fail and return a length of 0, causing the register names to
-> be printed as "unknown"?
->
-> This same pattern appears in tools/perf/util/scripting-engines/trace-event-python.c
-> and tools/perf/util/session.c.
+> Additionally, does suppressing stderr with 2> /dev/null permanently hide
+> error details from the CI pipelines by bypassing the PERF_RECORD_LOGS
+> collection mechanism?
 
-It's expected. Currently SIMD register sampling doesn't support cross-arch
-parsing.
+This comment seems a false positive. There is no perf_record_with_retry
+helper in kernel code base.
 
 
 >
+>> +  then
+>> +    return 1
+>> +  fi
+>> +
+>> +  if ! has_required_regs "${sample_output}" "$@"
+>> +  then
+>> +    return 1
+>> +  fi
+>> +
+>> +  return 0
+>> +}
