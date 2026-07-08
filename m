@@ -1,213 +1,208 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695A53E7BAF
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 20:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33779375ACF
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 21:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.165
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783543734; cv=pass; b=UPFR8ngTkfQCQJdfwdjokQWXKJRhMsBdPkYn1qLpEcEGEyhqj8Vr8c9H1YXQSZZL7xOdr+FUgacoBYbdqdidnubQMlN2FeWz/HovwbkjbtrEf55fxkf0oWZxFZdLp8KxRkGE9iuWPedaH+PDvAw1Fe7ubIPAYzD/ZcQ7uGBOMDk=
+	t=1783544899; cv=pass; b=AIDEIGixbbLDc0wHyQUwLc6kxHDbbfKNJ540rqGjqUmmKUSfbpvoZMGlsrTeGp+H4vJh9YJPeDMAxz/hO8kofpm/ZJNTB/Wd+616xycJyqHdxQ1PugXhrytGBFELHNY+kDxkTQd62L5c/IAIv7MGJwMxg3ACdAloBWWfGmdrpm8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783543734; c=relaxed/simple;
-	bh=9BJdBJoh6bO5JgM9sko/x+9Pye2uwMOLk+dxbigAcs4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K0WCj4EESTW2DeavHSl30Dx24CDeSjC02ZhqbuOqTMz4jxOiNrggWfLtZugDn5yj3xqLXyjLQgug73PTQR+oCAQzT+un5RVnDjMDdAKNS6JOJmsspUV18dyqjl/zbsSX2beyGpbel2ChKrab60XaTzgxLwWmPq2CZOwQFAFmagM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TgRnFZps; arc=pass smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783544899; c=relaxed/simple;
+	bh=mfRvpmoRjmOqO2XAQtiTJ9HsE3sKwWh+ng70GK0Vy1Q=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=e6xieJ1o1QLsUP6clr1Ck3aq7+u8g46k+q0/h1OjNeBo6zW2YgdapxNDxV0It08FP7ROEqBqMkbcNmwgZ5s/nXPh0nXZbDfsGutE2xsSxX4uL4nBi8S2hTHobGhA3A+7C2HkcF1vxcN0mQngELwMl4WfGW+TNr2Ss/x/HfkSmwU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de; spf=none smtp.mailfrom=iokpp.de; dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=k5P+pXL9; dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=svVUJpKd; arc=pass smtp.client-ip=81.169.146.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=iokpp.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TgRnFZps"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-664b05d408bso1046408d50.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 13:48:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783543732; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Q7W7DEAYH8sSyN/XIw0X+i5LjVXyxKqA3XgOsEQdkAJaIEE3SinGiMCTVafwas+SbW
-         dPWtz3cAz0uI+BvHlpiyZsEWKHqZpm7tSA0hafvhnyMEa3iuckZttlvA5MZ9vg6tVsqO
-         209vW+EchGIbUiJ+rlTb3FfHijcHCOVvmlbB5OdvRNJEao8GNjYIXcozdLMvIoZSjym5
-         xyTt5LUzT7WQ6oSt3NSO0OKIDxPbjlTNhVVfAqmRpfIT5OU7XTACO1VigcM4zzbGf8EV
-         cy0VP8CG/ONp1gsdC5o6Lrjsob6hHYfJlAh3JSbaIlJNlQUqVs9N1eCjJIB0kebAWzrf
-         Z4Qg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0Su5iC7GyWFqasMSbo6foK0Ud8wXMN0xjdKWMhHqwlc=;
-        fh=5cs6b6d7Xpq2ANmcE1sW6J73OLOoOdfaXy4E0BsYxz0=;
-        b=Em2hWcx0QBkhjPuQmYMjg6rONadFyZ5x/tq5ftBrxmAHwv7378UmszuiBePR5j528c
-         Y72N0NRXdjHzXFlRHVAFbyDd689EF3/9lTJli62iXpbM9uBbi8TMvdL7Mze8Nj+nBICw
-         jx/3afZmIm29YKRbFS9LfMRkczOuwXihUBFq6C0mjOqoLizDiQPpICkTwtAwMRVJ3CQO
-         zEJfzhfRmlwyOM088KvX1yJv6817Bz1SmAJRMl8jizwurZVyhPh0C1IR8tAgIVvyCbN8
-         qxfGrz2zpAyC3jp86UgIsWR8fHjdgd/fCmKqmfZP47jhgAZPCrdNpjvShJGl/H6xpdPC
-         rZng==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783543732; x=1784148532; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0Su5iC7GyWFqasMSbo6foK0Ud8wXMN0xjdKWMhHqwlc=;
-        b=TgRnFZps7I1E+g6U7IEiT31F+sHEPkCD5BDApjBFsdVKsLxH9JpOJVbLNfmxIeh1pt
-         fkKLR3ScdwBVzjPChaiSyuTglomi5KSPy5q8b7uk+5kpqX/RgXVpk9iRPBBxXrD25bQC
-         OGNuRdOEba3c2fu5Ap43VE1D8swaQzpQACZN5O5d3NlRrgPWeU69wIsOMwb0zStvqJjb
-         jynaK437ylO8AC+znDiN/lOio4cy1rzWrXj5PDTs23JXLVprHLd3Wtb/WxJB/ZHWp+rP
-         2Hfoq6toiubhSs9qvWZF8r4HOO8El9NT0PzUazkyfp9XQWirKrQyTxJJqPfhDtQpjM5T
-         Vptg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783543732; x=1784148532;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0Su5iC7GyWFqasMSbo6foK0Ud8wXMN0xjdKWMhHqwlc=;
-        b=oLknkD0uayjqnY/ftQm21EMqDtsAMtGrfbIGVkmiRx0M+PVC6Yz86B0fhIs1HYCs5e
-         /cGHGR7IvJ9+6Dl8GGYYurVkJY3QdqwxjTi+VpdLl1/WWaW/LPsDrgj/5/PSzuvEJqiW
-         DPli74KeN3pHS4vgglgaOw8BCyqfAgyS/Ch6kYjsbOxd0SIw/ZC72Aos5dr5p8G0scm/
-         jAboe/+JWum/HFMK1k1qT5BIOePEabGpXSyShO9g8ATBRbe2U5VC7f2GKNsl32qf9XAC
-         kY4BG7voMaRCm2SZvysJ8W+3I3xGEjyQSfGGTXVVgpO9vzPZFQZCtRk8YR2ONIn7WFr6
-         OChQ==
-X-Gm-Message-State: AOJu0Yw6mmbc7uQmH2+9FH0A4pgYgr+6SpAlGlDXT/pwQK1Kj4po6mgD
-	GuMsTMYp3GY6WjCGqBC+tBI8p5MFd4wbKOa1hzWT0m37LDi+V7Ki3CGU7kbpQrlFVT4goYdZQJw
-	hgd6bV0L/WWfReyIH6S8I1grAkY2T7ESNX34z
-X-Gm-Gg: AfdE7cmWW6MwRNvwaj7mZlIum3St62MdbEeRPUsFLIlQ1DJOGHTdQIc8qGf1o1vxu+P
-	8kHJvjfXWFaTkn2K0sAQg8ANuPGmN45Nu7uAvHdsdHrCnvrUncCvp7y0NPLCWpemKncfZ0y1JTj
-	gkjF9IqJDM87QssPiUhciSJvRTm4Acr4VJr0iiAZGsv223NegKhkKyrdOVnYq+H0Lou1xVkX1gK
-	WxKBHuFWke0qOxnZgnRXVexG9u80ahq/j4e2xlDelEmZVVRGPFRz45FC5h569eIpvM8iT6D3xB/
-	p/WY
-X-Received: by 2002:a05:690e:1348:b0:667:b08e:2a2 with SMTP id
- 956f58d0204a3-667b08e0ae6mr1729856d50.27.1783543732085; Wed, 08 Jul 2026
- 13:48:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="k5P+pXL9";
+	dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="svVUJpKd"
+ARC-Seal: i=1; a=rsa-sha256; t=1783544879; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=i85Y1VZg2L3WCc9Joex7EyN1LG2E0MSTACPhca3CslqI0zyjiOp3DhXSvhDa+bJjoV
+    8mM2yT1fEc6SBT82eGM2iyUtwX75iDQRuxptkGFigRFbFepHDmMU422yGdxoQhlameqX
+    UI15wvdPX1cvhHNvI5CNrVTwl/J9Q481lWMXDzYy1t58CjT7pOkMu5hQOS+dudlyHL2D
+    AjE6rH99t2tHWn0/N1c1zts96Stxaq8glE4m9b6k/92hnLW/D8fxN8qWBEaqsgesw5wg
+    d9q0DT9LdngpPQB1urtB+1juaaHDoQISsxDapjKPSoOLetbkq7qbovPwyv8WmlFKrpXF
+    JI3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1783544879;
+    s=strato-dkim-0002; d=strato.com;
+    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=SNjOYmb8RwdECZkm3ULnF51VU7P0EUEvdZQ2LqkBe2M=;
+    b=Hkh0QXIKX4Df3nEAO6lFqbPXb5rb3eoj4t+8OpCPrgv9dnbcxGuStZ/bh2vtDuAhrC
+    mWFC/4C+4aFENG1mc2KZKepAMSF0iKW+JCcinxDI7diby8crLjJAN+BOJJq0xOPg2Vom
+    Q049PtCJZVwU7gKoEX/2hJvvfIRDDDWo02as7dPztE/COwN3FakdVMZTUTvvKNKx9dla
+    HshX3q9ecJqIB07GyFGJJiFJyF6rwfQpRcBk9rTh5ORvIcFFnEvOa1fkRbH3zh5Av580
+    eX8xjnqMaWRuFQoaJnIsAegq8C/mAJ2ys73lAZl9Kux8wI6fQuXoPLS2uYeA8J6mtVrS
+    Z3Kw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1783544879;
+    s=strato-dkim-0002; d=iokpp.de;
+    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=SNjOYmb8RwdECZkm3ULnF51VU7P0EUEvdZQ2LqkBe2M=;
+    b=k5P+pXL93tTQxekExa/4jWx8343cPHEECJ5JHe9MVhbdduOW5Sn/lafi+lKdpEqfmr
+    JZJfcEsh8PR2puMwTYmejuKaBT4lLaYqONgbBw+cF1+ixFOHi4uCNCE7/nJcKmFkT4uC
+    EGiCRtpGcKqDOcqVAN6+dNPxUPRhzvxr3lUWeMJJ3wTQA7p5yRXHfQ+16PNgWw81up+b
+    sYGOrE0JC0A0419gTbhsDMRe6XXkjzUFiq6FSSnjt+A7WvvXVbx6gM8bnot9eGQFopJ5
+    QlJp13fkClQZEq4NSHavRA7DqLWRKiDx39MrIodrF1ebxk+RllkvCg5I7v/s5humdRD3
+    vZiQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1783544879;
+    s=strato-dkim-0003; d=iokpp.de;
+    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=SNjOYmb8RwdECZkm3ULnF51VU7P0EUEvdZQ2LqkBe2M=;
+    b=svVUJpKdOvt4yu9aVXBw81rnk1NGK/UQ51pOCc2AOzisZoXexcpwl81nFCRpH4fP2A
+    tClcoLIOsPjKyXCU03Dg==
+X-RZG-AUTH: ":LmkFe0i9dN8c2t4QQyGBB/NDXvjDB6pBSe9tgBDSDt0V0zNriHg+YfT0rGWUpI6wfUjZWOuvfZPDhjfo3o0tv9XjkArh/V4="
+Received: from p200300c587147773f0f0e3c76ec87fb3.dip0.t-ipconnect.de
+    by smtp.strato.de (RZmta 55.5.6 AUTH)
+    with ESMTPSA id z4d388268L7xxOD
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Wed, 8 Jul 2026 23:07:59 +0200 (CEST)
+Message-ID: <dbc236f9e107bc640d643602102313129be84edb.camel@iokpp.de>
+Subject: Re: [PATCH] scsi: ufs: core: cancel RTC work in active-active
+ suspend
+From: Bean Huo <beanhuo@iokpp.de>
+To: sashiko-reviews@lists.linux.dev, Guangshuo Li <lgs201920130244@gmail.com>
+Cc: linux-scsi@vger.kernel.org
+Date: Wed, 08 Jul 2026 23:07:58 +0200
+In-Reply-To: <20260708130335.068681F000E9@smtp.kernel.org>
+References: <20260708124934.764281-1-lgs201920130244@gmail.com>
+	 <20260708130335.068681F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260707-dd-maint-2-v6-0-381f3edb0045@gmail.com>
- <20260707-dd-maint-2-v6-19-381f3edb0045@gmail.com> <20260708023725.52B9E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260708023725.52B9E1F000E9@smtp.kernel.org>
-From: jim.cromie@gmail.com
-Date: Wed, 8 Jul 2026 14:48:24 -0600
-X-Gm-Features: AVVi8Cef1o43P0BcIrbKibkv5LgOWcV8WhWKRwgZJ3xzNcwlJwrD7Ugwb6QN5b0
-Message-ID: <CAJfuBxx+5i4z77hC5BEDkyegE0FWjGRfBfWM6M_nkk94btfO0w@mail.gmail.com>
-Subject: Re: [PATCH v6 19/24] dyndbg: pin class param storage to u32
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-modules@vger.kernel.org, dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 7, 2026 at 8:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+On Wed, 2026-07-08 at 13:03 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Support for classmaps with more than 32 classes is broken, cau=
-sing undefined behavior on 32-bit architectures and silent truncation on 64=
--bit architectures.
+e(s)
+> to consider:
+> - [Medium] The patch cancels ufs_rtc_update_work during the active-active
+> suspend path but fails to re-schedule it when the device resumes, causing
+> periodic RTC updates to permanently stop.
 > --
->
-> --- Patch [19]: [PATCH v6 19/24] dyndbg: pin class param storage to u32 -=
---
-> commit df6ebc9b56fab43581ec7860d30aab6f33272ee2
-> Author: Jim Cromie <jim.cromie@gmail.com>
->
-> dyndbg: pin class param storage to u32
->
-> This commit changes the storage of dyndbg class parameters from unsigned =
-long
-> to u32 for consistency across architectures. It also shrinks __drm_debug =
-back
-> to u32.
->
-> > diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-> > index d99c69b9ad12f..af05f4ae3b55e 100644
-> > --- a/lib/dynamic_debug.c
-> > +++ b/lib/dynamic_debug.c
-> [ ... ]
-> > @@ -643,24 +643,27 @@ static int ddebug_apply_class_bitmap(const struct=
- ddebug_class_param *dcp,
-> >       int bi, ct;
-> >
-> >       if (*new_bits !=3D old_bits)
-> > -             v2pr_info("apply bitmap: 0x%lx to: 0x%lx for %s\n", *new_=
-bits,
-> > +             v2pr_info("apply bitmap: 0x%x to: 0x%x for %s\n", *new_bi=
-ts,
-> >                         old_bits, query_modname ?: "'*'");
-> >
-> >       for (bi =3D 0; bi < map->length; bi++) {
-> > -             if (test_bit(bi, new_bits) =3D=3D test_bit(bi, &old_bits)=
-)
-> > +             bool new_b =3D !!(*new_bits & BIT(bi));
-> > +             bool old_b =3D !!(old_bits & BIT(bi));
->
+>=20
+> --- Patch [1]: [PATCH] scsi: ufs: core: cancel RTC work in active-active
+> suspend ---
+> commit d6ec0bf16c0b8402d3955ca2fc9c1ec563b33c79
+> Author: Guangshuo Li <lgs201920130244@gmail.com>
+>=20
+> scsi: ufs: core: cancel RTC work in active-active suspend
+> =C2=A0=C2=A0=C2=A0=20
+> This commit modifies the active-active suspend path in __ufshcd_wl_suspen=
+d()
+> to cancel the ufs_rtc_update_work before jumping to vops_suspend. This
+> prevents the RTC work from accessing the controller while the hardware st=
+ate
+> is changing.
+>=20
+> > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> > index d3044a3089b53..9d5571a7aec23 100644
+> > --- a/drivers/ufs/core/ufshcd.c
+> > +++ b/drivers/ufs/core/ufshcd.c
+> > @@ -10269,6 +10269,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *=
+hba,
+> > enum ufs_pm_op pm_op)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+req_link_state =3D=3D UIC_LINK_ACTIVE_STATE) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0ufshcd_disable_auto_bkops(hba);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0flush_work(&hba->eeh_work);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+>=20
 > [Severity: Medium]
-> Since classmaps can theoretically contain up to 63 classes (as mentioned =
-in
-> the commit message), is there a risk of an out-of-bounds shift on 32-bit
-> architectures?
->
-
-A macro in a later patch (not in this series) limits a classmap to 32 class=
-es,
-which is a practical limit for usability of classmap params.
-As a case in point, drm.debug has only ~10 DRM_UT_* values.
-
-64 is a per-module class-id space, allowing modules to have several classma=
-ps.
-a classmap's base/offset lets it map its 0..31 range into upper class-ids,
-which is how a module can have multiple, non-overlapping mappings.
-
-
-#define __DYNAMIC_DEBUG_CLASSMAP_CHECK(_clnames, _base, _mapty)         \
-        static_assert(((_base) >=3D 0 && (_base) < _DPRINTK_CLASS_DFLT),  \
-                      "_base must be in 0..62");                        \
-        static_assert(__DDEBUG_ARRAY_SIZE(_clnames) > 0,
-                 \
-                      "classnames array size must be > 0");             \
-        static_assert(__DDEBUG_ARRAY_SIZE(_clnames) <=3D 32,
-         \
-                      "classnames array size must be <=3D 32");           \
-        static_assert((__DDEBUG_ARRAY_SIZE(_clnames) + (_base)) <
-_DPRINTK_CLASS_DFLT, \
-                      "_base + classnames.length must be <=3D 62");       \
-        static_assert(((_mapty) >=3D DD_CLASS_TYPE_DISJOINT_BITS) &&      \
-                      ((_mapty) <=3D DD_CLASS_TYPE_LEVEL_NUM),            \
-                      "unknown class_map_type")
-
-So while its currently possible to define a problematic classmap,
-that will not be possible soon.
+> If the work is cancelled here during active-active suspend, will it be sa=
+fely
+> rescheduled on resume?
+>=20
+> Looking at __ufshcd_wl_resume(), the rescheduling of ufs_rtc_update_work
+> appears to be gated by a check for whether the device is not active:
+>=20
+> drivers/ufs/core/ufshcd.c:__ufshcd_wl_resume() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =C2=A0=C2=A0=C2=A0 if (!ufshcd_is_ufs_dev_active(hba)) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D ufshcd_set_dev_pwr_mod=
+e(hba, UFS_ACTIVE_PWR_MODE);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ret)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto s=
+et_old_link_state;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ufshcd_set_timestamp_attr(hba)=
+;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 schedule_delayed_work(&hba->uf=
+s_rtc_update_work,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
+> =C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> Since the active-active suspend path leaves the device in UFS_ACTIVE_PWR_=
+MODE,
+> it looks like ufshcd_is_ufs_dev_active(hba) will evaluate to true. Does t=
+his
+> cause the periodic RTC work to be permanently stopped after the first=20
+> active-active suspend cycle?
 
 
-> BIT(bi) expands to 1UL << bi, so if map->length is greater than 32, this
-> shift would exceed the capacity of an unsigned long on 32-bit systems.
->
-> On 64-bit systems, *new_bits is now a u32. When it is combined with BIT(b=
-i)
-> using a bitwise AND, the u32 is zero-extended. Will this cause new_b and
-> old_b to always evaluate to 0 for classes >=3D 32, silently ignoring the
-> requested state?
->
-> [ ... ]
-> > @@ -704,24 +707,24 @@ static int param_set_dyndbg_module_classes(const =
-char *instr,
-> [ ... ]
-> >       case DD_CLASS_TYPE_LEVEL_NUM:
-> >               /* input is bitpos, of highest verbosity to be enabled */
-> >               if (inrep > map->length) {
-> > -                     pr_warn("%s: level:%ld exceeds max:%d, clamping\n=
-",
-> > +                     pr_warn("%s: level:%u exceeds max:%d, clamping\n"=
+good catch, about this change:
+
+
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 376a314189e4..06f253b08b65 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -10339,6 +10339,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba,=
+ enum
+ufs_pm_op pm_op)
+                        req_link_state =3D=3D UIC_LINK_ACTIVE_STATE) {
+                ufshcd_disable_auto_bkops(hba);
+                flush_work(&hba->eeh_work);
++               cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+                goto vops_suspend;
+        }
+=20
+@@ -10548,10 +10549,11 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba=
 ,
-> >                               KP_NAME(kp), inrep, map->length);
-> >                       inrep =3D map->length;
-> >               }
-> >               old_bits =3D CLASSMAP_BITMASK(*dcp->lvl);
-> >               new_bits =3D CLASSMAP_BITMASK(inrep);
->
-> [Severity: Medium]
-> Will this silently prevent enablement of classes >=3D 32?
->
-> CLASSMAP_BITMASK was changed to limit the generated mask to 32 bits, but
-> map->length is not restricted to 32.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707-dd-maint=
--2-v6-0-381f3edb0045@gmail.com?part=3D19
+enum ufs_pm_op pm_op)
+                if (ret)
+                        goto set_old_link_state;
+                ufshcd_set_timestamp_attr(hba);
+-               schedule_delayed_work(&hba->ufs_rtc_update_work,
+-                                   =20
+msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
+        }
+=20
++       schedule_delayed_work(&hba->ufs_rtc_update_work,
++                             msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS))=
+;
++
+        if (ufshcd_keep_autobkops_enabled_except_suspend(hba))
+                ufshcd_enable_auto_bkops(hba);
+        else
+
+
+
+
+>=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0goto vops_suspend;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
+> >=20
+>=20
+
