@@ -1,80 +1,80 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA823BF677
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 07:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2263E7BC7
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 07:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783496501; cv=none; b=T50jLHP4mvIMYGz5sEXDmL0dRWK15IdTVfon6JdGhhsArAJzz452fMYr1yO41SrgQmx9hSoBLouJvTxrNyqDHfaXGTd/FjDlB9f4yA61Wa6qcH4muZgoWv/30BEfe0RXeFHtjWEfNmtzg89SXqvI5O+hIH1g9kpwdXArD4jSO9I=
+	t=1783496657; cv=none; b=OUZXR5VPdflzpOcT/GJDuRJo8jvb2uBw8wMsGlb/qZSPnTEOBawIUrmtRkNcU/nGD/MbN84jC27mFz1F6JiPee/cD7mVdQaMKhLE1e+z8UMPK9fv72SSbt8aUsFZ1iuB2cbPoSXqGDq5wCu0UCeUPBMgN27iWtu91KgeYhqLzBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783496501; c=relaxed/simple;
-	bh=FHktLjOOE0cNSD/KJNQ7DBoihEn55qTMa32G4ibmweU=;
+	s=arc-20240116; t=1783496657; c=relaxed/simple;
+	bh=WRLX+DN59GKtSdJf5fl+ldSzviZXi/Pb2pXTNSNPFh4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=caR29OfwpAX2/tpg5/rd+ePxFPtOTPDjuBXn0RZ82LQ+YAGN/vj8rIzOD/LcS69NokBO+u0llRaqHg0lg2/zXySn7bv885J/iSOlPl66ClmdEmTX5Y1LZmQnpPaPy4caFVnxeTpu/DylfBGluci7vEJG6LV/lf5zu+NRcdXicXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oOe6OcwF; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=6HkEwgII; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qCiZ9wer; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=DT00Fsrk; arc=none smtp.client-ip=195.135.223.130
+	 In-Reply-To:Content-Type; b=faeW0u1m4W/NbT41xBfrel8uCpMRCLMUBxOvM5EIDpg+CMCQ1kcC9EA1YFd1eZC9TPEgVSDmRdqF8UhBsZH4C0HRrfnhkxfBLDIWfUvD4+FZfup3RVo6GZTNL52qSaJs4Ts/suCAmlSwLi/wVKrbOSqf1yLEo4Ldw5irRoEyvPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=VnOQi4+Y; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=GNy5CWjg; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0OStZuAy; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=7L1HU5eX; arc=none smtp.client-ip=195.135.223.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oOe6OcwF";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="6HkEwgII";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qCiZ9wer";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="DT00Fsrk"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="VnOQi4+Y";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="GNy5CWjg";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0OStZuAy";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="7L1HU5eX"
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id B572D75F09;
-	Wed,  8 Jul 2026 07:41:25 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 964EA75E0B;
+	Wed,  8 Jul 2026 07:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783496486; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1783496647; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AbwgLESvPk2zg6RArzPfKLLg1LGNQAO1iwubJX1cfcw=;
-	b=oOe6OcwFB2eKI3FBvOTw7EbUunzopvNtMNPuAc54/J65LmNusICbbhdjR8YtWqGwTJsvgx
-	OLIqTRRN/8TULthPZpj6/4DD7OXp2BPHuIsO6YHfFXP87ATuhC/AEhtv6nAtaiSXofyOUo
-	rmpWKcoBYs2lEMhqfPeGCBNDBCJ4pzM=
+	bh=vPhD+rqbNVJoHrDQCnx15lWVbrmjJwFhc2rgv/fnCc0=;
+	b=VnOQi4+YqAgVpHJB/xTVj2HnKLpylPkd933Q91rpKTssUTvsGE0jCsZskVjFE4cjSjFYd9
+	vEbauW1wh67L61zRbOgU+CcbuvKens1VjNpNWT904aY8newTiUHNQb8psM92CizoEZ8oMv
+	MnwepH0d6uzMyBKXuy1dGpJye43xKf8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783496486;
+	s=susede2_ed25519; t=1783496647;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AbwgLESvPk2zg6RArzPfKLLg1LGNQAO1iwubJX1cfcw=;
-	b=6HkEwgIITv6+QWhiIaBD0bgLmnqltJjRHgfkVAa525ouAp1PbKOSpA/rC4yMhfKSBGm/Fc
-	QuO98PaW87UZPiDA==
+	bh=vPhD+rqbNVJoHrDQCnx15lWVbrmjJwFhc2rgv/fnCc0=;
+	b=GNy5CWjgswbq6A+0oyoqz5q7LMuoIMPG/n+dfxFA62r9Fz3I77ejV2N8/fMUAPoTIuPB+D
+	iTw7fImb/GOBfaAQ==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783496485; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1783496646; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AbwgLESvPk2zg6RArzPfKLLg1LGNQAO1iwubJX1cfcw=;
-	b=qCiZ9werPUkdlUux9tvDzmFtxIUn3A9LDkt37NmkOA5AC+udNwVVW3T4snSRhS4TKbhWSk
-	HxU8+y57/ckfxUorJPc0odjyKEZX8j4lZqquMxJjbVaxUmpUqwB8M9K4rctvZyvXcfQ0Ls
-	YRG32ZSL47ltJHlkU+DLkrUyZCxxlxo=
+	bh=vPhD+rqbNVJoHrDQCnx15lWVbrmjJwFhc2rgv/fnCc0=;
+	b=0OStZuAyBxx9lSljfFtPNrXjVcQtAFtN/1gzefOK/fS5DeTsb9FdLEQUT1FqMbcT4xfYrz
+	+HafxsWwHEKcbpBWivsjUGDDH8VgV1BGrXffI7kAeTKpxgp60N/U+Rjq33NWG96MEhR+Qs
+	GlMVR1veLMgDGEPeNU68TtBvZrESVP4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783496485;
+	s=susede2_ed25519; t=1783496646;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=AbwgLESvPk2zg6RArzPfKLLg1LGNQAO1iwubJX1cfcw=;
-	b=DT00FsrklVwmwiJeSIiwUsmcVs+Oq4NLh1SF9dz0iAOHqxTk0AUF7R0QPMRLyMZy6OaSem
-	oDj+yzEwvDB60PBQ==
+	bh=vPhD+rqbNVJoHrDQCnx15lWVbrmjJwFhc2rgv/fnCc0=;
+	b=7L1HU5eXmvTyjXgqpNV5r34hPVk46FA+rF8hv7uiIxKoAXa+HIxtCVtbd/CtQG1sKOb03r
+	aLlyFEc4cPHTmeAQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9F6A8779AE;
-	Wed,  8 Jul 2026 07:41:25 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4720E779AE;
+	Wed,  8 Jul 2026 07:44:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id +ta3JSX/TWrjPwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Wed, 08 Jul 2026 07:41:25 +0000
-Message-ID: <eec61015-46cc-4ae8-8b82-106a98306741@suse.de>
-Date: Wed, 8 Jul 2026 09:41:25 +0200
+	id Gw+mD8b/TWqcQgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 08 Jul 2026 07:44:06 +0000
+Message-ID: <13f94040-6f6d-4a8e-9581-be769a0e3abb@suse.de>
+Date: Wed, 8 Jul 2026 09:44:05 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,13 +82,15 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] drm/nouveau: Implement
- vga_switcheroo_client_ops.pre_switch
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260707135724.247562-1-tzimmermann@suse.de>
- <20260707135724.247562-8-tzimmermann@suse.de>
- <20260707141844.866F91F00A3D@smtp.kernel.org>
+Subject: Re: [PATCH] drm/i915/display: Handle struct
+ drm_plane_state.ignore_damage_clips
+To: jani.nikula@linux.intel.com, rodrigo.vivi@intel.com,
+ joonas.lahtinen@linux.intel.com, tursulin@ursulin.net, airlied@gmail.com,
+ simona@ffwll.ch
+Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
+ Javier Martinez Canillas <javierm@redhat.com>
+References: <20260701130929.234695-1-tzimmermann@suse.de>
 Content-Language: en-US
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Autocrypt: addr=tzimmermann@suse.de; keydata=
@@ -115,121 +117,73 @@ Autocrypt: addr=tzimmermann@suse.de; keydata=
  SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
  Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
  4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260707141844.866F91F00A3D@smtp.kernel.org>
+In-Reply-To: <20260701130929.234695-1-tzimmermann@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Flag: NO
+X-Spam-Score: -4.30
 X-Spamd-Result: default: False [-4.30 / 50.00];
 	BAYES_HAM(-3.00)[100.00%];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.993];
+	NEURAL_HAM_SHORT(-0.20)[-0.998];
 	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_TWO(0.00)[2];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
+	FREEMAIL_TO(0.00)[linux.intel.com,intel.com,ursulin.net,gmail.com,ffwll.ch];
+	ARC_NA(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_TWO(0.00)[2];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,suse.com:url]
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,suse.com:url]
 X-Spam-Level: 
-X-Spam-Score: -4.30
 
+gentle reminder to review this patch
 
-
-Am 07.07.26 um 16:18 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+Am 01.07.26 um 15:07 schrieb Thomas Zimmermann:
+> Git commit 35ed38d58257 ("drm: Allow drivers to indicate the damage
+> helpers to ignore damage clips") introduced ignore_damage_clips to
+> selectively ignore damage clipping in certain framebuffer changes. The
+> mode-setting pipeline can disabled damage clippings for an atomic commit
+> by setting ignore_damage_clips in struct drm_plane_state. The atomic
+> commit will then do a full display update.
 >
-> New issues:
-> - [High] New AB-BA deadlock introduced between vgasr_mutex and clientlist_mutex.
+> Although the i915 driver does not modify the flag, DRM's damage iterator
+> will soon rely on it. Calling drm_atomic_helper_check_plane_damage() right
+> before drm_atomic_helper_damage_merged() guarantees that it has the correct
+> state. The i915 driver does not do this elsewhere so far.
 >
-> Pre-existing issues:
-> - [High] Preexisting AB-BA deadlock between vgasr_mutex and console_lock.
-> --
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+> ---
+> Taken with minor updates to the commit description from the series at
 >
-> --- Patch [7]: [PATCH 07/10] drm/nouveau: Implement vga_switcheroo_client_ops.pre_switch ---
-> commit a0ca13a7165f71c977582a84acf58b2f2681a805
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
+>    https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
+> ---
+>   drivers/gpu/drm/i915/display/intel_psr.c | 3 +++
+>   1 file changed, 3 insertions(+)
 >
-> drm/nouveau: Implement vga_switcheroo_client_ops.pre_switch
->
-> This patch implements the vga_switcheroo_client_ops.pre_switch callback in
-> the nouveau driver. It calls drm_client_dev_acquire_outputs() from the
-> pre_switch callback to push fbcon updates from vga_switcheroo into DRM's
-> fbdev emulation.
->
->> diff --git a/drivers/gpu/drm/nouveau/nouveau_vga.c b/drivers/gpu/drm/nouveau/nouveau_vga.c
->> index a6c375a241542..2d2d08be8fbe2 100644
->> --- a/drivers/gpu/drm/nouveau/nouveau_vga.c
->> +++ b/drivers/gpu/drm/nouveau/nouveau_vga.c
->> @@ -76,11 +76,20 @@ nouveau_switcheroo_can_switch(struct pci_dev *pdev)
->>   	return atomic_read(&drm->dev->open_count) == 0;
->>   }
->>   
->> +static void
->> +nouveau_switcheroo_pre_switch(struct pci_dev *pdev)
->> +{
->> +	struct nouveau_drm *drm = pci_get_drvdata(pdev);
->> +
->> +	drm_client_dev_acquire_outputs(drm->dev);
->          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->
-> [Severity: High]
-> Does this introduce an AB-BA deadlock between vgasr_mutex and
-> clientlist_mutex?
->
-> When drm_client_dev_hotplug() is called, it acquires dev->clientlist_mutex
-> and eventually calls register_framebuffer(). This takes the console_lock()
-> and then calls vga_switcheroo_client_fb_set(), taking vgasr_mutex. This
-> establishes the lock order:
-> clientlist_mutex -> console_lock -> vgasr_mutex
->
-> However, vga_switcheroo_debugfs_write() acquires vgasr_mutex and calls
-> vga_switchto_stage2(), which invokes this new pre_switch callback.
-> Calling drm_client_dev_acquire_outputs() here attempts to acquire
-> dev->clientlist_mutex, establishing the reverse lock order:
-> vgasr_mutex -> clientlist_mutex
-
-Patch 10 removes calls to vga_switcheroo_client_fb_set() entirely. I 
-could try to reorganize the series to avoid the vulnerable intermediate 
-states.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but does this path also trigger a deadlock
-> between vgasr_mutex and console_lock?
->
-> When register_framebuffer() is called (e.g., during driver probe or
-> hotplug), it calls fbcon_fb_registered(), which acquires console_lock()
-> and then calls vga_switcheroo_client_fb_set(), taking vgasr_mutex.
->
-> Conversely, vga_switcheroo_debugfs_write() acquires vgasr_mutex and calls
-> vga_switchto_stage2(). This invokes pre_switch(), which leads to
-> drm_client_dev_acquire_outputs() and then fb_switch_outputs(), attempting
-> to acquire console_lock(). This creates an exact inversion:
-> vgasr_mutex -> console_lock
-
-This would also be resolved by the early removal of 
-vga_switcheroo_client_fb_set().
-
->
->> +}
->> +
->>   static const struct vga_switcheroo_client_ops
->>   nouveau_switcheroo_ops = {
->>   	.set_gpu_state = nouveau_switcheroo_set_state,
->>   	.reprobe = nouveau_switcheroo_reprobe,
->>   	.can_switch = nouveau_switcheroo_can_switch,
->> +	.pre_switch = nouveau_switcheroo_pre_switch,
->>   };
->>   
->>   void
+> diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+> index 92af21d823a3..5a155f60110f 100644
+> --- a/drivers/gpu/drm/i915/display/intel_psr.c
+> +++ b/drivers/gpu/drm/i915/display/intel_psr.c
+> @@ -2949,6 +2949,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+>   		src = drm_plane_state_src(&new_plane_state->uapi);
+>   		drm_rect_fp_to_int(&src, &src);
+>   
+> +		/* Prepare plane-damage state before using it */
+> +		drm_atomic_helper_check_plane_damage(&state->base, &new_plane_state->uapi);
+> +
+>   		if (!drm_atomic_helper_damage_merged(&old_plane_state->uapi,
+>   						     &new_plane_state->uapi, &damaged_area))
+>   			continue;
 
 -- 
 --
