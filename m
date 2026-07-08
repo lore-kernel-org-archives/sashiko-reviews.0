@@ -1,199 +1,159 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011013.outbound.protection.outlook.com [40.93.194.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071CA2C2360
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 17:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783531202; cv=fail; b=lmmmwWiyfl6143rXsnp27ZyG4ZGazGf1uEpTVnUUD3Bsz8YwO/8meaJ788M8oeyqidLlS8NdoEmvZgY7crx6XvG7ZbyeAoLzrpKVWwnXtVmlU40aSkbrvBQR6bK/aRaBqEM713lg1hHEVhqeCp0EhRkh2qLcx8LPLWMR1GIrdW0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783531202; c=relaxed/simple;
-	bh=WjnUzTDEk9VEhcPwqr3Cn4hYL2PUoc4xXmTH/x69zDg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=lQqdSxRSaJqjvdSNMDvciviy1yNQ8QFMKARW2eQf2T+wUukb5ntPubrFwEx4sGW9VC5Z1IhsccRmPRVC/U1yQ7rZnUl/pnmVYMnRwj8Kucza82vRz0XCc85O0k1cmJVYQP7BzJ5Zv8yquO3+CAGPjpjfpZAtG2z8ytHWR+8f39o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=t84wdbvH; arc=fail smtp.client-ip=40.93.194.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF6E2459EA;
+	Wed,  8 Jul 2026 17:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783531625; cv=none; b=N8uu/dJEJ8pPmCbe9mcT73nbacp9nEzYpwOEDV8DVxsLNFp9sC+Mu2AfKMOsQkdPAIjO+ttuFngbpDPgOqlPQDNvvFDQ3WSBsssSQXuc+J8Tp84r/aOjnl2RXpl/E0dhFnRMFdUDfSvA52c8M52RuHMuWb9JtC+alRQY3RSZkxQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783531625; c=relaxed/simple;
+	bh=emJK7s3uH0kc9GlzsWmRPhn814QD8Pe744LrTxCXzNc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=tMi8Y1l1n3yUniWjnW0pNkFldeS3ZbfeNWOzbdHd5c0OiLz4LgGnUWi4+Fn0Klichv9f6h2tlubPnN+tlGNQEtseTMHFSOsbdIrfKxVBMzi8nxgxiO5hE/VxScQovHRc8BWklqEAYUuk4uuDluHf/RnlBiJyzUWkuiyoslUmgV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DluASXUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="t84wdbvH"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fEybInjBit2Pa6A6N+iL8yuTanYohzOgRbWlqZrD/E/R7UW9lorhK7DwW+REG/dl5BMCj+8xF1GLsK4lOIcbV5XvMLO8wDcqQjCaJGM7Y+pdsPxjw7vGDu3OTCM/DgU15dm1y5gKCV209l6xoHfuGJJgbvgU8rexankvfuE4VegslI3aG4jO60e1+wpxySpGE+nGPnztvN8iZnJXoX9byfeSpcG1w2yBJJ37ayxYf96dSraHeu/K7/Y1QeAR8cmCqiN2+WpdBAOZMfYwbyE0HFb51r4gtregSf3g+jntfnEwJbLdSieHEF1h/gPErugLaHr7LrTUswuSeyd4ddv09w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lFerGGWe6D5cClE+MleDboNW4kZqUCjOubEmsZnMQO4=;
- b=uQSQ6rYhDjA6yBQmbc8Sl94VLpkIPR6WwC/XMNMLJfbmUhEQoZ+j+ZeAXjZdRR7biKwoZkn26StvvBbRf3IrhtSmf+TNMhv19eu+uPuTdvirSUVsjdSc1pxblM1P5GrGtMP10qRu/7R2ayjHlnJLz9IZRHUnQcIT4OBBrgJCwtPmzKs3W29QaW0ZIedx1UyIVGFb5RTNLuxQil0DI4B7JfCfZ85fanBZ1TvQTphbPieaZoFOB+uj6Madnmuc7soC2gH8Wzc+FL1UKLP80FrhrlbOAVN+1jeCrn/HjHub6XEEhM8Adapb5S+WcLf2jdvV8yGgS+o9IvqomA0jACiLww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lFerGGWe6D5cClE+MleDboNW4kZqUCjOubEmsZnMQO4=;
- b=t84wdbvHclPUnxPrEGxEgD4xt88KDUeg7io+PyRzONxCTk8cC520YSo9QTjNodoAkj4ECtA2VAwwYeI6XYTEWxPQc0KzhPj96gaWorSDamjwowCWg/DJegqrjQG1ITklzd1OrVoyyDnvEhadyLHNhMfmBZnvd32wNSIywtQDIv4=
-Received: from BY3PR04CA0025.namprd04.prod.outlook.com (2603:10b6:a03:217::30)
- by BN7PPFD3499E3E3.namprd12.prod.outlook.com (2603:10b6:40f:fc02::6e3) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.13; Wed, 8 Jul
- 2026 17:19:54 +0000
-Received: from SJ5PEPF000001EB.namprd05.prod.outlook.com
- (2603:10b6:a03:217:cafe::3c) by BY3PR04CA0025.outlook.office365.com
- (2603:10b6:a03:217::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.202.10 via Frontend Transport; Wed, 8
- Jul 2026 17:19:54 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- SJ5PEPF000001EB.mail.protection.outlook.com (10.167.242.199) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Wed, 8 Jul 2026 17:19:54 +0000
-Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 8 Jul
- 2026 12:19:53 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
- (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 8 Jul
- 2026 12:19:53 -0500
-Received: from [172.31.188.211] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Wed, 8 Jul 2026 12:19:52 -0500
-Message-ID: <5feb5ceb-bf6c-4628-80d6-6db7ce6234ce@amd.com>
-Date: Wed, 8 Jul 2026 22:49:46 +0530
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DluASXUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 017E4C2BCB9;
+	Wed,  8 Jul 2026 17:27:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1783531625;
+	bh=emJK7s3uH0kc9GlzsWmRPhn814QD8Pe744LrTxCXzNc=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=DluASXUZ4/nhj0iBg+gSIxMYt20RwrA/u72/XF8laEPAbpiAUkjm5z+4IBx4Jck41
+	 RLAOye4Q+RqckPpplXuD02aNgzIxHbZLur9GHut2VU2XX1tBPr4oIwxGpVGXIYERRi
+	 rSzXdwwW7sv4WOcBouXAnhy/TdTK5fJrcWjPCOCzEowgBHifj0qHj6PynMR9dfm0sp
+	 oiZe3YAXJhO0r+DOWSv1DDko9TkqFepn2fG9ySphKffOthROFmKZjg8PGOQ9Kj6sqD
+	 Z0W/lcCDMUZCEKJQ+ImgdEBmp5harav37skBJr+2YFnsxOgt8V2CgNv6ldC/c/c7Jc
+	 jFkiYWxHtJv4w==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D34D1C43458;
+	Wed,  8 Jul 2026 17:27:04 +0000 (UTC)
+From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
+Subject: [PATCH v8 00/10] can: bcm: collected fixes - final3 :-/
+Date: Wed, 08 Jul 2026 19:26:57 +0200
+Message-Id: <20260708-bcm_fixes-v8-0-8c2f5f3bc212@hartkopp.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Shivansh Dhiman <shivansh.dhiman@amd.com>
-Subject: Re: [RESEND PATCH v2] KVM: SVM: Add Bus Lock Detect support
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
-References: <20260629081018.60618-1-shivansh.dhiman@amd.com>
- <20260629083158.C175D1F000E9@smtp.kernel.org>
-Content-Language: en-US
-In-Reply-To: <20260629083158.C175D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EB:EE_|BN7PPFD3499E3E3:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2ba0dfd2-1280-48c6-9034-08dedd15207a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|1800799024|376014|23010399003|82310400026|13003099007|5023799004|18002099003|11063799006|4143699003|22082099003|6133799003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	J/JlsdCJtgTExCXT1Tss4t4/LLRmctz6oITcByI9EiIG7YI2ooXRsDAsSTvNvI/z7emuYPN5765h3JbOTHZhggx2TaoekQbgQ3SgUJ8H2MnDBBujL9lEM9J5nL1lwgi0uStfnlTTu5X102W7yssWzQ6wmM/4M2z8AEV4GMDi7ZSdq2d9JWVRTwrJq3WTnjCjvuGZ7K7NXF9w6/YXOr7heoinrEdlFvDegJlNKNBuPyL2mSjlzQsIFwfoq0Kp7Vo/hcmztFyQQmysZxwa8dHHDoxTvyt1J8nPxJmup/+O25OrOE6YwTY3bIGLqAiGGyjES+sah3LuG0ox3y+emzpJTKsHwCqszRJ0i48a51XFuyZP+Pj88vepRYkL9sao8JpaauIDnCbP7oqHkYWtsW76dwdkynYj3bEv1pWuCD9OHQC/b4EmgQFo3Ijhf3/pT/x5Ddry0Zkuu+sy3SdAFoD3uezobRnKt7R4EnQAW5dvIc8iUusyRUvw9eUZ/X6qtGYFbZlDjaSOeHO47wgTju73UpLsjt8PCUHxM7gG2DwWqaSToVKHpw6GXQGduS7eemzm5BLfjqOZRH+jUOvVO1pYxZ8uf4iVGX4Cz9A9OxSU6yjU+3sDEYlsO1s/uzE0sLLZJre8qC70mlXWXFDOG009bg==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(376014)(23010399003)(82310400026)(13003099007)(5023799004)(18002099003)(11063799006)(4143699003)(22082099003)(6133799003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	cFaRm2kGEOs4B7IPXjkw8589/1350kkcyyCzVpHNdBS349Qisj5tquzVcGZdRRI1zlsEvnHQ7EZGXB7RWfdzGy/iWBrFQ1n8C/mgzTR6rst0AsAS0x/1pNBPtrJoDwKQAhA9Ev7QvJ+cCnEqqaexH1OWD2TKwHZ1JIFK6KeozfkAJ6+WE7qtHXClm8ih1Eyaj+jk/VSaIuWO6HEfcC8LUQpHt2IPTMFXF91QWu05oz6mRQrxvXumoyfXCaBVTxoc8pQkCsYsFefUAczEwTT3KdY/Q4WFd349vQ7nm68WlSASAn+/Umtc1Bg2O9tDGv4ehpw7fhqKssy+2PYeokIgcibLLHSSnJVvT31A3TIIMXuQ7Uqb8GZdJOLOT2qG0twgeYYJao0YZnlF9XHQBCn2mrh87DL1HzGm5UBYjDmZXiBIkKFydcq105tKen2ghR8Y
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2026 17:19:54.0857
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2ba0dfd2-1280-48c6-9034-08dedd15207a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001EB.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPFD3499E3E3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGKITmoC/3XPy07FIBAG4Fc5YS1mCpShrnwPY8xAwaKxbUptN
+ Cd9d+G4sDF0OZn/m8uVJb9En9jD5coWv8UUpzEX5u7C3EDjq+exzzUTIDToRnDrPl5C/PKJGxW
+ sIuokOcFyfl78rZHjT8+/dfq0b96tZUBJDDGt0/J9W7Y1JVebuzUcuCMRCNB7hPA40LK+T/N8P
+ /qVldGb+MMIeMQi405rAa6VymJbwfIUy4yN0gCOdG9MV8HqFKuMiQxaY7teytrZ7Sluy8/SoQq
+ mNyFgBesjNkesy9mADZCwTnamgvEUY9mM+VltpRJe/cP7vv8A4nYpTiUCAAA=
+X-Change-ID: 20260612-bcm_fixes-84fb4aa93ac2
+To: linux-can@vger.kernel.org
+Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
+ Marc Kleine-Budde <mkl@pengutronix.de>, Lee Jones <lee@kernel.org>, 
+ Feng Xue <feng.xue@outlook.com>, Ginger <ginger.jzllee@gmail.com>, 
+ syzbot+75e5e4ae00c3b4bb544e@syzkaller.appspotmail.com, 
+ sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783531623; l=3945;
+ i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
+ bh=emJK7s3uH0kc9GlzsWmRPhn814QD8Pe744LrTxCXzNc=;
+ b=YyouBw/RiSUDrke+wwDWSmNhnGSVQFmIgxjpJ79pD/B0HKRhqbfuxusL+nb6WAWfJZ3Emhnu3
+ Ja8xl1K2dygAtibRW1eRdHZq7HTZjq9P0LP42IBxYxCg28PYsZBAzgv
+X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
+ pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
+X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
+ auth_id=620
+X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
+Reply-To: socketcan@hartkopp.net
 
+Hi Marc,
 
+as there were different patches flying arround to fix CAN_BCM issues and
+AI assisted stuff pop's up again and again, I've created this collection
+to be applied.
 
-On 29-06-26 14:01, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Nested DR6 fixed bits are manually calculated incorrectly, breaking architectural invariants for Bus Lock Detect.
-> - [Medium] L1 guests can bypass CPUID limits and enable Bus Lock Detect for L2 nested guests via the nested VMCB, even if X86_FEATURE_BUS_LOCK_DETECT is disabled for L1.
-> --
-> 
-> commit 859bd7557c537342acbc2ffe091acc01a0a180b9
-> Author: Ravi Bangoria <ravi.bangoria@amd.com>
-> 
-> KVM: SVM: Add Bus Lock Detect support
-> 
-> Add Bus Lock Detect support in AMD SVM. Bus Lock Detect is enabled through
-> MSR_IA32_DEBUGCTLMSR and MSR_IA32_DEBUGCTLMSR is virtualized only if LBR
-> Virtualization is enabled. Add this dependency in the SVM.
-> 
->> diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
->> index c1485c3e691c4..4fdc58d38afe0 100644
->> --- a/arch/x86/kvm/svm/nested.c
->> +++ b/arch/x86/kvm/svm/nested.c
->> @@ -808,7 +808,8 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm)
->>
->>       if (unlikely(new_vmcb12 || vmcb12_is_dirty(control, VMCB_DR))) {
->>               vmcb02->save.dr7 = svm->nested.save.dr7 | DR7_FIXED_1;
->> -             svm->vcpu.arch.dr6  = svm->nested.save.dr6 | DR6_ACTIVE_LOW;
->> +             /* DR6_RTM is a reserved bit on AMD and as such must be set to 1 */
->> +             svm->vcpu.arch.dr6  = svm->nested.save.dr6 | DR6_FIXED_1 | DR6_RTM;
-> 
-> [Severity: Medium]
-> Will this assignment cause an L2 guest to incorrectly observe DR6 bit 11 as 0
-> if the guest lacks the BUS_LOCK_DETECT feature?
-> 
-> By bypassing kvm_dr6_fixed(vcpu) and hardcoding DR6_FIXED_1 | DR6_RTM, it
-> appears KVM fails to force bit 11 (DR6_BUS_LOCK) to 1. If an untrusted
-> L1 guest without X86_FEATURE_BUS_LOCK_DETECT runs an L2 guest and writes 0
-> to bit 11 of vmcb12->save.dr6, won't the L2 guest read DR6 and incorrectly
-> see bit 11 as 0 instead of 1?
-> 
+The patch series fixes ALL issues reported by ALL kind of AI bots involved
+and the fixes were assisted by claude code and later rephrased and shortened
+by myself.
 
-Good catch! The DR6 should be sanitized depending on whether Bus Lock Detect
-feature is available or not. I'm thinking of using kvm_dr6_fixed(vcpu) for this.
+Inserted a new patch 9 that addresses a late sashiko-bot report fixing some
+stale rx/tx ops behaviour after device removal.
 
->>               vmcb_mark_dirty(vmcb02, VMCB_DR);
->>       }
-> 
-> [ ... ]
-> 
->> diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
->> index 716be21fba335..c65dc3acb5d1d 100644
->> --- a/arch/x86/kvm/svm/svm.h
->> +++ b/arch/x86/kvm/svm/svm.h
->> @@ -783,7 +783,7 @@ BUILD_SVM_MSR_BITMAP_HELPERS(bool, test, test)
->>  BUILD_SVM_MSR_BITMAP_HELPERS(void, clear, __clear)
->>  BUILD_SVM_MSR_BITMAP_HELPERS(void, set, __set)
->>
->> -#define DEBUGCTL_RESERVED_BITS (~DEBUGCTLMSR_LBR)
->> +#define DEBUGCTL_RESERVED_BITS (~(DEBUGCTLMSR_LBR | DEBUGCTLMSR_BUS_LOCK_DETECT))
-> 
-> [Severity: Medium]
-> Could this redefinition allow an L1 guest to bypass CPUID limits and enable
-> Bus Lock Detect for L2 nested guests, even if X86_FEATURE_BUS_LOCK_DETECT
-> is disabled for L1?
-> 
-> Looking at nested_vmcb02_prepare_save() in arch/x86/kvm/svm/nested.c, it
-> copies the nested guest's dbgctl MSR value directly into the hardware VMCB
-> using this mask:
-> 
->         svm_copy_lbrs(&vmcb02->save, save);
->         vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
-> 
-> Since this mask now allows the bus lock bit unconditionally without validating
-> against the L1 guest's CPUID limits, could an untrusted L1 guest with
-> X86_FEATURE_LBRV write DEBUGCTLMSR_BUS_LOCK_DETECT to vmcb12->save.dbgctl
-> and successfully enable the feature in L2?
-> 
+Btw. I added a bug when reworking the patch that sashiko-bot found.
 
-Better to sanitize the debugctl too, and allow enabling Bus Lock Detect only
-if it is available.
+So the potential new AI reports on this patch set report problems that are
+solved later in the series. This can not be resolved.
 
->>
->>  /* svm.c */
->>  extern bool dump_invalid_vmcb;
-> 
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260629081018.60618-1-shivansh.dhiman@amd.com?part=1
+Best regards,
+Oliver
+
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+---
+Changes in v8:
+- patch 9: fixed two issues reported by sashiko-bot:
+  https://lore.kernel.org/linux-can/20260708154039.347ED1F000E9@smtp.kernel.org/
+- Link to v7: https://patch.msgid.link/20260708-bcm_fixes-v7-0-c78896b342e4@hartkopp.net
+
+Changes in v7:
+- patch 9: new: fix stale rx/tx ops after device removal reported by
+  sashiko-bot: https://lore.kernel.org/linux-can/20260708094536.DDF821F00A3A@smtp.kernel.org/
+- patch 10: formerly patch 9 as new patch 8 & 9 belong together 
+- Link to v6: https://patch.msgid.link/20260708-bcm_fixes-v6-0-80710a2bc398@hartkopp.net
+
+Changes in v6:
+- patch 1: added Tested-by: tags
+- patch 3: changed commit message and comment regarding a wrong claim
+  about synchronous delivery from dev_queue_xmit() as remarked by
+  https://netdev-ai.bots.linux.dev/ai-review.html?id=6105ebab-87ef-43db-a085-7c190b9f119f
+- patch 4: rebased patch 3 comment
+- patch 9: new: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
+  reported by sashiko-bot: https://lore.kernel.org/linux-can/20260707145135.5BC831F00A3A@smtp.kernel.org/
+- Link to v5: https://patch.msgid.link/20260707-bcm_fixes-v5-0-c3c74f8d8ff7@hartkopp.net
+
+Changes in v5:
+- patch 6: changed comment for bcm_op::bcm_tx_lock (mkl)
+- patch 8: new: add missing device refcount for CAN filter removal
+- Link to v4: https://patch.msgid.link/20260707-bcm_fixes-v4-0-aa87b8b9d33f@hartkopp.net
+
+Changes in v4:
+- incorporated more sashiko-bot concerns from v3
+- patch 3: omit hrtimer_forward with zero interval
+- patch 4: put bcm_update_stats() under bcm_rx_update_lock
+- Link to v3: https://patch.msgid.link/20260707-bcm_fixes-v3-0-84600ca6d889@hartkopp.net
+
+Changes in v3:
+- incorporated more sashiko-bot concerns from v2
+- patch 3: make snapshot of currframe
+- patch 6: add error patch for memcpy_from_msg()
+- patch 7: new RTR-reply validation in bcm_rx_setup() from bcm_tx_setup() 
+- Link to v2: https://patch.msgid.link/20260707-bcm_fixes-v2-0-96620c534b75@hartkopp.net
+
+Changes in v2:
+- incorporated all sashiko-bot concerns from v1
+- Link to v1: https://patch.msgid.link/20260612-bcm_fixes-v1-0-ca2fa07ee70f@hartkopp.net
+
+---
+Lee Jones (1):
+      can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+
+Oliver Hartkopp (9):
+      can: bcm: fix lockless bound/ifindex race and silent RX_SETUP failure
+      can: bcm: add locking when updating filter and timer values
+      can: bcm: fix CAN frame rx/tx statistics
+      can: bcm: add missing rcu list annotations and operations
+      can: bcm: extend bcm_tx_lock usage for data and timer updates
+      can: bcm: validate frame length in bcm_rx_setup() for RTR replies
+      can: bcm: add missing device refcount for CAN filter removal
+      can: bcm: fix stale rx/tx ops after device removal
+      can: bcm: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
+
+ net/can/bcm.c | 527 +++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 391 insertions(+), 136 deletions(-)
+---
+base-commit: 0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53
+change-id: 20260612-bcm_fixes-84fb4aa93ac2
+
+Best regards,
+--  
+Oliver Hartkopp <socketcan@hartkopp.net>
+
 
