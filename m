@@ -1,112 +1,155 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CF11F130B
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 09:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783503970; cv=pass; b=HFzOHejWe8BY2EkmWdAjksgtUZv/yZA4Tx+6Jb+9oDLS6cJ5TtRts5S6fUSPYZxfp0+ku9PjJc7KWdWkCUf2vO0SycVxOdmyxc2lJOU/TEMbAI45EM4aGVlJ7oeXHKuUl7cnHDHd8d3TqLg8I6VbirDzhcTCDNvk8qLH+/WGa8k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783503970; c=relaxed/simple;
-	bh=UtR//zQiUlV4dZx/AK4ynLekM3lwGq+j2YQbvXNl5g4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CK6mkXNyZE0V2HFRO9l/PWKDrFq/6NFiDToX87LbMps6ow7PMUhaS9i2jm9NvFZ9fheIdB5T8Nj9OSOcGfjVb+u3UnSInW/xC1Hy+Voc02cX9V7jJHiYNRR91HTubm7udqx6coqvqAUADg+noZ9OqFFJEkYp+vmn00lpDTAGqCI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=hjO/ETES; arc=pass smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70094311954;
+	Wed,  8 Jul 2026 10:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783505396; cv=none; b=hteZyjhK9Lqkiyl0456sm+Axc+JFJwbEefyfo631+plNvrdF93xBvTINCYxlGyg1WUA02fCRIwoYZw92qfMx7+ECLKTymXnWlUojtRNikVf+xOGOwRZf1Jv5VBbyFd4uuHJ/J3OLnQ2hMa+dGqVVxpGsDwG34BZW9BRlhzj2Y/s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783505396; c=relaxed/simple;
+	bh=VCqMrWVpzLN4ULobgBXDmz9gzPZylXlc6bKaX0qbsB8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CcyzvycbgZcc2MIwlcIn8jv/FvTbyLMZJFYxV8tJOhRtIxUcLFUs/KAuyVevztb6KvILxPfU2YVhzI8xCZaWFMJT0wrW2EVnYKNpuo/rpEqmImk4Wwl6sCZ1jfpq+Zr79AQS6YOpd52yDvm9UaQ676Q79wwbrrSmtb3G0QOZD18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLWCjEWG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="hjO/ETES"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7eb63dbd229so311499a34.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 02:46:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783503966; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qfwFTRIC76rYneT8vklT2XBAqOIrRDfdLOY8XaXB9KB8mTpTqZbqajz6AZaSuTMPLp
-         TQppmqMPsewHteB1f0Ycy08nWhshkWfEVbUZY8mdkSXG7gUpQdpMbQRc6qKgkVT63yBz
-         V1zBRUfYEDqktgGdpRrF9b+sMl3D/haix40CSi7xMzxuQPYKxwpx4uWOd2sNXURsHMtH
-         hqC+12DLKPEaJuHtbQRlu5gmzU5TmMoz4x7dI54jxNtNYaWIxBIFqXbSxrXAnpRty4kk
-         +wr138mRXuLSUMJoCuCGJ/QGyy2eeFqpTioiWzd4sPvRCoPNw2ct451+7g4iO9iBkzIV
-         sLkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=UtR//zQiUlV4dZx/AK4ynLekM3lwGq+j2YQbvXNl5g4=;
-        fh=BekaVLBSS0Zi8d6+26hyk9mcrYewb1hL2NkgWFLUsc0=;
-        b=XZCK4pq7Xk1Tw7OL4iBFfpFxFZ9EhX4aRhbE7xOXewkGPDu+nUXdakNZ4aS0k3KxPj
-         fZbX9liBmqqRCkeeU2CuwG+wsTHLW+Xr0BKIzw8an9CdA5aUUN0xwkty3Zd3L+L6JGQm
-         sbIW/wGu2behQLcb5WDB+943JvsbPsE34EBl/zNluGTGBevaaMiLhydm3vN2wpb9S34h
-         s4hXtk+Wsd0lOb9GkRfU74Wn2kldGOnQq/5TU0taf123/u2aZ+TD3lIed0ARiisvKFSu
-         ZaAWMqMaAWP6zUCdHC3pyKpH5hDrJWtbmxMC4ei4gilEeUjv2qoLoh0Lc6HEwXpLuciV
-         K7Kg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783503966; x=1784108766; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=UtR//zQiUlV4dZx/AK4ynLekM3lwGq+j2YQbvXNl5g4=;
-        b=hjO/ETESfy0llHn79Dwx3+C13hasoboxUrGCs2xBQ58o4aIfow832aJgCzdhg7Dpyt
-         64beaAJc+6KRh5DrQMfQBk2UrconGKRTPGb4y8VAy7Z3ioWimKV/211nD1zP5+E6hFlh
-         PpPbU9r+V5eC0s6dZVPxMz9omWmop9JmNZDJeWl2CxHng7J4CKoskdaZ+J5qfqQu29ck
-         ghIiHzCG4D1DXGq7VWvHjNMHqU6L9UoLWjJuHEzy0yZU7d4/bjp28PSb/89gMIVap7a5
-         1nkJd7ux3BceVuYdv74tSgYXo9oQu4XwfjMyQeDhUxI4ORAryzcqQDhugDtcc+jvhDCe
-         BYVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783503966; x=1784108766;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UtR//zQiUlV4dZx/AK4ynLekM3lwGq+j2YQbvXNl5g4=;
-        b=EkORop+ZmUuMX73UJ749q2eiG//mzmmvKTYOlCG4Gbe2NGeTBckBlxeOEGvmIfA8wK
-         LQIJQI+Pw7fFEk4zFJkuC7Cw1pODr2nreaLv2JHBsERlt/gwjGx4s1WKsTmbF0acXq3t
-         3qjnkCTmXgZvmDJfOJGYwzMmRppG6gguOpXrxCvq3jDxEETi1bxgVB3BMdE/sHNdtCkV
-         BVVhql1lBmf2D959etUoB9ahRSmRRv2KW+LTkPGUsiZ0Ur59WAKlvax+jfi7+UJJQ2i6
-         7HeJ82TFwIY8d+/Y17mXATzesaekdvu2+6WqbxGzg7EtoYB78BBp3xy9VnupQTxgJR4Y
-         D8oA==
-X-Gm-Message-State: AOJu0YzUd/e+7CUckU3vhxgo0GS/c/yC1IIm/OItAf37nx31FE/6QtlH
-	2dPHYDNlNFDz2h0xJGOY6IgsYz/fH/EkjqlYzzJ2FDcSXUzQYnfToHnzx07SqQUuSW7RpKOaiib
-	lYxc5v3iQsPf5rUcGnh7DNicVtYNWTF9nwSZpOevxKSgv+ElrR7dMcSzydQ==
-X-Gm-Gg: AfdE7cl5oNZ0ozgbxWLz4ddApgjNtr5CIcWScn1m68jFQKgeGD7Q55yuvxjWTRbML77
-	8/W0DQQp9Ko8PTPXTqKLNyo+7bwz6qEGV2xm1aQsJ2PtspKtO4J5ZvDsLQNa6R7QH/ipbI9YnAk
-	RVBSbrHjv5ZFlCI6e3bXSJ1tgGQdjyXPmTm2f5pM/FKmwGBE1krGHl8wt/a+OaFsgIeLeBYudU9
-	aed7GqeAMyIuzDE9fvYMi0OJ27OeGgie9FeahUPSHhoHl1i7GU+HSZLP9WYbU+EKA3xss9K
-X-Received: by 2002:a05:6830:6585:b0:7d7:fd71:f2d4 with SMTP id
- 46e09a7af769-7ebced3469dmr1159039a34.3.1783503966285; Wed, 08 Jul 2026
- 02:46:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLWCjEWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905831F000E9;
+	Wed,  8 Jul 2026 10:09:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783505395;
+	bh=FrBA4BqnhQIcvIXhknUCkrcHupCw+C7sk4gSFCE1r2A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=FLWCjEWGURFhZPd7vfPb/33+F8wtxlPZJl2tqPCjYXb9dM1KJUafwJKEvGTDuRYTA
+	 to4U96JyzrGkkBO9j8fYBx8c7wMkF/7txzg27kCwcGP4FHG1sP301WbpVBvojzHNLh
+	 f9u+yIwCirr9vBGC6ax0qpy8Qjs0MSTYNGT892PtMql3+0fhSdIXFAKFOQM2rUtVp8
+	 BZNvErUD5Rq5Tarn7lNu/N504TmyjQ9VDLL60pxDR6bhCqx+AgYrWGOZtV4x42CnUk
+	 Fdpe5WUEDLPOm5JhxkjgQ3M/tNV/uQZXvVgu/hA7cuIzxNrv+e8JguXzM8NE2Z3yPW
+	 WGcAeJy1u4wZA==
+Message-ID: <bf103637-67ee-4821-ac77-60d8cb997027@kernel.org>
+Date: Wed, 8 Jul 2026 12:09:52 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260706114731.57353-1-ccaione@baylibre.com> <20260706115959.2119B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260706115959.2119B1F000E9@smtp.kernel.org>
-From: Carlo Caione <ccaione@baylibre.com>
-Date: Wed, 8 Jul 2026 11:45:54 +0200
-X-Gm-Features: AVVi8Cfh_EaTJXwa64517rQoRlvBJxx-iFga0XbQN4X6x5I9LAbdYeR2RVfh9j0
-Message-ID: <CADh8LsfpTXB1jHtRaOTySyVvcjOL08MRfMP8OCZzZiZ=o29y6A@mail.gmail.com>
-Subject: Re: [PATCH v2] of/address: Fix NULL bus dereference in of_pci_range_parser_one()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: aspeed: Switch to irq_domain_create_linear()
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
-	saravanak@kernel.org, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-pci@vger.kernel.org
+References: <20260708095814.385480-1-jirislaby@kernel.org>
+ <20260708100454.00A621F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260708100454.00A621F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 6, 2026 at 1:59=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Missing upper bound validation for `#size-cells` (`ns`) allows `=
-np` to overflow to a negative value, bypassing range bounds checks and caus=
-ing an infinite out-of-bounds read loop.
+On 08. 07. 26, 12:04, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The commit message claims to use `of_fwnode_handle()`, but the code actually uses `dev_fwnode()`.
+> --
+> 
+> --- Patch [1]: [PATCH] PCI: aspeed: Switch to irq_domain_create_linear() ---
+> commit aee46b37ad2da511a238368770cbd10115b36171
+> Author: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+> 
+> PCI: aspeed: Switch to irq_domain_create_linear()
+> 
+> This commit updates the driver to use the modern irq_domain_create_linear()
+> function instead of the obsolete irq_domain_add_linear(). It adjusts the
+> first parameter to pass a fwnode_handle rather than a device_node.
+> 
+>> irq_domain_add_linear() is going away as being obsolete now. Switch to
+>> the preferred irq_domain_create_linear(). That differs in the first
+>> parameter: It takes more generic struct fwnode_handle instead of struct
+>> device_node. Therefore, of_fwnode_handle() is added around the
+>> parameter.
+>>
+>> Note some of the users can likely use dev->fwnode directly instead of
+>> indirect of_fwnode_handle(dev->of_node). But dev->fwnode is not
+>> guaranteed to be set for all, so this has to be investigated on case to
+>> case basis (by people who can actually test with the HW).
+> 
+>> diff --git a/drivers/pci/controller/pcie-aspeed.c b/drivers/pci/controller/pcie-aspeed.c
+>> index 9aa9e14c61484..74b03a55643fa 100644
+>> --- a/drivers/pci/controller/pcie-aspeed.c
+>> +++ b/drivers/pci/controller/pcie-aspeed.c
+>> @@ -725,10 +725,10 @@ static int aspeed_pcie_init_irq_domain(struct aspeed_pcie *pcie)
+>>   {
+>>   	int ret;
+>>   
+>> -	pcie->intx_domain = irq_domain_add_linear(pcie->dev->of_node,
+>> -						  PCI_NUM_INTX,
+>> -						  &aspeed_intx_domain_ops,
+>> -						  pcie);
+>> +	pcie->intx_domain = irq_domain_create_linear(dev_fwnode(pcie->dev),
+>> +						     PCI_NUM_INTX,
+>> +						     &aspeed_intx_domain_ops,
+>> +						     pcie);
+> 
+> [Severity: Medium]
+> Does this code change contradict the commit message?
+> 
+> The commit message explicitly mentions adding of_fwnode_handle() around the
+> parameter and warns against using dev->fwnode directly since it is not
+> guaranteed to be set.
 
-Since this is a pre-existing issue I'm not going to fix it in this
-patch. It will be considered for a follow up but for now this is
-out-of-scope.
+Sashiko is right, I used a template for more patches...
 
---
-Carlo Caione
+> The patch uses dev_fwnode(pcie->dev) here, which fetches dev->fwnode, rather
+> than using of_fwnode_handle(pcie->dev->of_node) as described. Should the
+> implementation be updated to use of_fwnode_handle(), or does the commit
+> message need to be revised to match this dev_fwnode() approach?
+
+In this very case, dev_fwnode(pcie->dev) is used in 
+aspeed_pcie_msi_init(), called few lines below, so this is all right. 
+The commit log is obsolete in this case though. Do you want me to resubmit?
+
+thanks,
+-- 
+js
+suse labs
