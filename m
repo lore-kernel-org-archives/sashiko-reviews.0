@@ -1,111 +1,110 @@
-Received: from out203-205-221-209.mail.qq.com (out203-205-221-209.mail.qq.com [203.205.221.209])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363F3361DBC
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 19:08:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.209
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783537688; cv=none; b=NGngtwG1pSRJwdHwNj5W75n9EeHUVO9+rhX/7L36QI37BDBE/ERund8LhD+p5csqUbJCR4jFM4H4dUSCpEv3Sq6VyfLb7oJpOfdK47uveGxvl3E2Q1OUaNAGgMxlJvL9u8IUzpWMlNC0OaS/E/oq2fp3CgwNjfF7lZeuprGmTgs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783537688; c=relaxed/simple;
-	bh=O+SHbqxHYQC8VxshMXjN6PL9jbF/R0Dv0W4W10nvn8o=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=KVJgDYd9Oi7fqVA2uli0dFrnoJwARfvA6HMr1SAMV/YVcE8Z7VDlh7jU3Ja8ISQn8JfJr93W8qRmxpyd3uZlsTX4S8XIxb5PGtIY+LMoYdI/hzThgegADfe1/Y93OLAH+iE11FBVOrAqUpLKZLBlGPwjd+0l/4Ri76PtLNy559U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=d4wt5CdV; arc=none smtp.client-ip=203.205.221.209
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8ED3CAE73
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 19:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783538954; cv=pass; b=cJovhSPucG2gEc5iF/FdiqoAaQyjbIkCv+zbhF5E3Ag4NRu2/acgBff6umKULY/n+cFQRYPOgsnWyf7446Vp/p/KNCkxSU14ZcZXAH6m1HO9P4EYW5aPlHtLGgh6aUV4uPML/UyibiKdY2ps8z07aDmSBD74sx1aFykyRmT0v/I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783538954; c=relaxed/simple;
+	bh=esUPZMaeDhSEKuB3vyh8QdBpdwB8JbRv1S8jpJLODZU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U8tHLPuh3EBRmYs3QH8sHsIL1HLBW+UrETtZDS5mm3n7kNI40IrR5Xh1r5S9StdrzpbXoidq4X3zNiOzpco+2N05mhLr+fX+8uYeBS1lgrgiC75KUJrFIMFnyLKbKurFOyyoQUG3gR8i7NU/hznLLXnsFqYC2OiHlkb6ZR5z9QY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=itG8PKOA; arc=pass smtp.client-ip=74.125.224.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="d4wt5CdV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1783537675; bh=5XLPie9r6+yl64m5zncEatY5NJEwwH77uQPfsZNs3Fw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4wt5CdVkB44ToycHZEdnnfTjKkgcFmJbmkammreJJP4svH/xwS1eHE00TYk/DdFu
-	 N/PT2t3mAGoYkxOeKKViG7UOs9nU3mhvDQsdlBvZXZt6T2uAmMnX95vkznhykC/Xdw
-	 4oTeWFESMKhfupDJkK9qqxKBCghcKrMb9tsp262U=
-Received: from ubuntu.. ([218.196.207.7])
-	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
-	id 1F509A15; Thu, 09 Jul 2026 03:07:53 +0800
-X-QQ-mid: xmsmtpt1783537673tspacyl5w
-Message-ID: <tencent_A06E37104031E554163C3B8AAA9E8A214308@qq.com>
-X-QQ-XMAILINFO: OFpInORavztRE6iKFGesoihR/eqA1XKS4Or1KQCb0cYrlqTBBOkHw1FiaU0rZ3
-	 4TDFgQ/8W78bnuVh5L8A5rb1nTAzW1J8LfmMUPRrCLQQmk3x3xpfX6KG+p3/BHxJceWTMr40jmh3
-	 TL0NUogZGs+uLWWVcr26M5tERxFlwdZAQTaowXdpYHGyjVtHIY0Vrubiwzp5h3aNlmtH6KrsM4v0
-	 ghxRiV1d+NHNwsxVZZcLR/EfHnt95nbh8kJCUxyy/hPepKjN2QOe1fKPXLLi95VStox2lnRd5J7+
-	 J5puqmh9ljvr4YYUX9LKN8FbNgtILPXISs72gSzHWWbId2Eg+3PaGA8C+9aQ+wSonRSqpfispbbk
-	 8bW8V0JEHiPpS1o14bpmvk0AswaYSdV6FHj+WxljQvdaTRZFeaQP2nW4PBRxkOwI3kZvVVVbbzh8
-	 JdgN7nUPOy8+an3JDHOxQ0TLKO2PwFBihsIriBV/mLk1ArTVzwVbxdW7jznIxZSibad++x/cT/mA
-	 6Z+LI6KJjvgysbj/yF6JjUA1Hg77mUhHJMrfvcAuAH6zbpdZGzkX20CApLQn2H/J346/jtptrYMI
-	 ac2I5Uv5OahIC/RTX6FqkcbwNYtn4k9R62yYXCYHp6Wx2Ei6PlyV1kAj5H1g1h3HQkwtsv+tSlOp
-	 8FhN+Gqt0qHJHzSb5shMjcYBHzsaZdj+sESmrZ9cLXAD4aPE1i5n0WrwwTD0JbBf2LOnxJZY47uE
-	 X/WK4Uj9+uTYt1sAPah9lSgwdxAEnA1ZoSuihjYg6CeQESudlTuWHRoUEEw2BQiKxhuIbdM9qqsx
-	 itANoKVwk5N3Ngdp3F5vkrOjcGoep4UkVLnnY/671uTUyNCa/8j75OrXHn6yfkUHuZPPtcORyvQb
-	 2TN9zo5TMff/WLGtdYhIkgfu9R364y1iMYQFp5u0w6k2tQ7lu4ux90DW5d1ji5ZPeSj0AJi7SSAY
-	 UQy717bTLD7puFCFCWwvunJQWJKg740SXsNq593cSxjUnf+dGaiMwVeqa3eDkB4avRsFJPwfvtsO
-	 0iuzJ8jHaRbTKjlqfK8Drj+LR2mhbAjcJFCCFgJw==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-From: Guanghui Yang <3497809730@qq.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: tytso@mit.edu,
-	Guanghui Yang <3497809730@qq.com>
-Subject: Re: [PATCH] ext4: clear error before retrying inode xattr space fallback
-Date: Wed,  8 Jul 2026 19:07:52 +0000
-X-OQ-MSGID: <20260708190752.1038939-1-3497809730@qq.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260708131836.EBB751F000E9@smtp.kernel.org>
-References: <tencent_192F8A699EFD21126E02101131C9546F3C08@qq.com> <20260708131836.EBB751F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="itG8PKOA"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-66628618509so185508d50.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 12:29:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783538952; cv=none;
+        d=google.com; s=arc-20260327;
+        b=JSkJCYOu2D7w2IWBeACTmfQ84W6jurgYOiDbXtF9HOcpLCH5GTKWUd7TPQ6OS56AW8
+         A/6SZiY2DuYbLSf1G0YpEwT8p4is4bsTt2jiCmLMQJF/4Xs304ZRuT782PmRkuOXzuFO
+         SH6T66IGitNxgs+jRcpjEjyQOqD1bDp8ZbETzkfmA/MrSFSqlYOONv+5HaTbjDQRFQzW
+         VehFFHcevtQMugdx/b/HavEpCW6ovJ3Ote7cN2LqvrCNhl7s5hhDrIedhC2WOQoAYcW1
+         eMGAztQrn+C+YDgY8WdtkJoKXbjwZ3ZVjATLyyBz99stuR0beS0N5DGi1L3GZI9FPTr/
+         iLWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=esUPZMaeDhSEKuB3vyh8QdBpdwB8JbRv1S8jpJLODZU=;
+        fh=5cs6b6d7Xpq2ANmcE1sW6J73OLOoOdfaXy4E0BsYxz0=;
+        b=Ihzy4QP2zFj5brSb+Gt9lomDljGe9zBU63OFyKRj98UskVe5GC8erIBembZg7mklA2
+         8/bIjDdKqPVYgATBK7IouB0tP5h0pD3qAkqn+5Ylnrfte9MXfMBwU58bRRCeLTga16Sc
+         q57yZhbDcV8gSGg2ML7KpqC1KRUQg8MWc0MjGve4NOQ34Xl2k1XfSjgn42hv9RSpMWZw
+         YOyfnALQq9EZF0vFoyzRsLMHBRNI4n8xer0Wyp7O84SpK2q0f1OX2iCEit5uJn2tos8S
+         HM67IaNKkiFtRy7RiSi3YBxoPxqYpXqfXvM4rEW2RROqkDJ1hMpUawBFAosMzpRYGLUI
+         zGgQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783538952; x=1784143752; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=esUPZMaeDhSEKuB3vyh8QdBpdwB8JbRv1S8jpJLODZU=;
+        b=itG8PKOAKIn/0//ZIZx1gsRCz0rPScDPzbZnYOrXPoECfPSYDqV1+r9ENGnyhWEA4l
+         DqyZr+hE1qS9Gx7pNWs/mpSJYTXxcuUAp1brmqcWV4VNQliisrAEoImA4WQ5Fbb+sX+7
+         3LAgIcIu1UzGoF3RjTxLu3DOV33K8yrv/d1PacQCOdadzx2ymbc5jthJCcx4U7IBWMA4
+         1hhxZkyVhp32HZUQlfUzg5nbUvLb4WPRXG3M7sgaa4faUZ1Zb1jSX5j2GEHjI9uvVYMS
+         vLm5bQ083eBULm+qXkdUdwchYGftIzAlh/j0EldX0yBILon4EeWjyQ2y07OLAm2vReXx
+         XmOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783538952; x=1784143752;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=esUPZMaeDhSEKuB3vyh8QdBpdwB8JbRv1S8jpJLODZU=;
+        b=OyqzuSfLl+Or4srMXLdR9DJw22PthaFn1OGwaX6oUFWbomjTRqc4w5T9t4qKQ0DyaC
+         tVgbLDxuBphJXVHeSKax+WRZf4Do8qG1OxHxVYq5ebm5enr0uhvVxlqEyYl4F4d6f8Py
+         HdGb33cFLDPEVH+AknKmFuVUYVTp/G07luJUsBhWclDpGTJGblC4kNKNdrQ5TGSrWSRU
+         RkyRLIzpSmqRL2OjsNBRU1uOq+hmD33He/AeMCKpHOz5qp+K8Yr3hssuAzCpTgmy41Pw
+         3QpVv30P3ynHv9J19LmOM17c7vMRlpC36QyvP8ADC+In9BAS6upCULUvTC0+i6p/NDKZ
+         VEIA==
+X-Gm-Message-State: AOJu0YyPn3io/x8ZebF1NHGOI3FkSe4WOnwZOVclWkvZvIWuVCeQxNhH
+	GbP5cT4tD99sSTyl1KfXRjlEJzNBg/IETx2ersSvz+k6mVOwrB1iP6Jt7CYJPteotMwM+LdMisN
+	BFEGdIcMsAU3ZoQ1GmcvgQfEv3WLFCGls5w==
+X-Gm-Gg: AfdE7cmtJIncvEDhFN/sDpvA/jj6SrpYEGPKxHL9twZ+zEod9Vu5Y/BsBs69SwexAbb
+	uOkHOHuQUkP2CWhWaA6cdu/K5gIB4OoqZI8EkC0ltIxfURwo9Lt8qsE1rCNGodYPq48Djv0u/Q1
+	O1qABVLwou1LCQ+Ox0RJDWC/45wRDe4GjmofDiRCmTjxX9IVWJRtl1CS0rtOyLETH3G4iqeVcSE
+	MSrLKlNsC/ba0mmNBirgVWgeafyF0YYW37qLX10YNvcIWjZOUJzuF1ucfJtkllg6ToQbA==
+X-Received: by 2002:a05:690e:4803:b0:667:648a:d05d with SMTP id
+ 956f58d0204a3-6679f0b6cb9mr2240010d50.39.1783538951867; Wed, 08 Jul 2026
+ 12:29:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260707-dd-maint-2-v6-0-381f3edb0045@gmail.com>
+ <20260707-dd-maint-2-v6-15-381f3edb0045@gmail.com> <20260708022913.E3D9A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260708022913.E3D9A1F000E9@smtp.kernel.org>
+From: jim.cromie@gmail.com
+Date: Wed, 8 Jul 2026 13:28:46 -0600
+X-Gm-Features: AVVi8CcGWf-yvZRaz7uKpbWe3R_UDgHW5F3UfrE6h9rIgLwMf_mAYfqNisNfPwY
+Message-ID: <CAJfuBxykm2wyG+UOvYqjO_uJBuo52ArGApHn2nmgRu4i+WwccA@mail.gmail.com>
+Subject: Re: [PATCH v6 15/24] dyndbg: refactor param_set_dyndbg_classes and below
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-modules@vger.kernel.org, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Hello,
 
-Thanks for the review.
+The concern regarding old_bits in param_set_dyndbg_module_classes()
+appears to be a false positive based on a misunderstanding of the
+initialization order.
 
-I think the "dead code" comment is based on the older v6.8 code path.
-In v6.8, the retry label re-ran xattr_check_inode() and overwrote
-error before the free-space check.  In current mainline, that assignment
-is no longer present on this path.
-
-In current mainline ext4_expand_extra_isize_ea(), after
-ext4_xattr_make_inode_space() returns -ENOSPC, the fallback sets
-new_extra_isize to s_min_extra_isize and jumps back to retry.  If the
-retry then finds enough ibody free space, it can jump directly to the
-shift label.  Without clearing error before the retry, the stale
--ENOSPC from ext4_xattr_make_inode_space() is still returned even though
-i_extra_isize has just been updated.
-
-So the added assignment is intended to clear only that stale error before
-the fallback retry:
-
-	error = 0;
-	goto retry;
-
-The partial fallback to s_min_extra_isize is pre-existing behavior.  This
-patch does not introduce that semantic; it only makes the
-ext4_xattr_make_inode_space() -ENOSPC fallback consistent with the
-existing fallback path above it, which can also retry with
-s_min_extra_isize and return success.
-
-For the data-loss concern, ext4_xattr_move_to_block() calls
-ext4_xattr_block_set() before removing the ibody xattr.  The ibody entry
-is removed only after ext4_xattr_block_set() succeeds:
-
-	error = ext4_xattr_block_set(handle, inode, &i, bs);
-	if (error)
-		goto out;
-
-	/* Remove the chosen entry from the inode */
-	i.value = NULL;
-	i.value_len = 0;
-	error = ext4_xattr_ibody_set(handle, inode, &i, is);
-
-So if ext4_xattr_block_set() fails, this function returns before removing
-the ibody xattr.
+This is a sysfs parameter callback. By the time it is invoked, the
+module has already been probed and ddebug_sync_classbits has updated
+the module's pr-debugs to match the current parameter value.
+Therefore, the global state (dcp->bits) correctly reflects the
+module's state at the time of the callback. Using dcp->bits as
+old_bits ensures we only toggle bits that have actually changed; using
+0 as a baseline would result in redundant queries for settings already
+synchronized during the probe sequence.
 
 Thanks,
-Guanghui
-
+Jim
