@@ -1,157 +1,213 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD6C3C278A
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 19:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A7A3E5EC0
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 20:11:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783539049; cv=pass; b=h6XSGP1CcJnHF1FQfC+Jhybqn7DB0DdyqXaJzvs8wB/fJ+3Bu5tnqesDXjnv1Ksc5/KYGAlDhWyp5KYf9QAiHBOxkTUpEjR3CtqIOEgfz+OfU6Bf/x8elAcVNUGRy0ff80HaXP/TqA0YRG/hRlQ6uC0d4Cb+ALirtbgOPL+g1bo=
+	t=1783541511; cv=fail; b=naLJ4ac1cJ1f7+dMMsbqi8VUDnUMKnqsl6DJZmcTlkWx2xVHlrWZr3kZRnX2ktYDp8u//NX5kIASgrdUkmzZ2MNBqICyLIHaQhT6HIYSklO+Foq2ZvKy/rKwc7raQE3jlDqEEFmSrwxL2+WY/1elwxadyKZ7DDR7btFz9+HhLKM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783539049; c=relaxed/simple;
-	bh=kguXhAZ9G2VENgBFpRIgWFRZh2YAaMFsHNYSBlo8zTI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hb3gTeoSNAACLMmHdL9xn7vonwmKkdQ6ZjEaZ/0/p0xffnImT6YcZBCfuGIxSVIVqzZkhrK8nA9kojUP8w/GfhiSb+7aPGyfG4J8ycxx/Qhgv2EIn1/Tsg8DtnR4qqKWfWRUkQEGmqwWxRlT38u8lHTRcwebvVBfmQLqV9OH/PU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+RHcawm; arc=pass smtp.client-ip=74.125.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783541511; c=relaxed/simple;
+	bh=zm4slQZA9a4PWROhmVthNxWl2LQq+afWtZlXCEOdF0A=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=g6Fhne2XjGve+UZKyAk2NFm5ikU3pCwxMRib8YsGlJ9IoL1qGPbs6/PLSMkoYJgN5XOPxWiFakKY9Qw06P/bIKwn3EQaW70HbFF5CgOp5ohZSm7IZX0Q/kLGIVCNZOebpqVSIQLmQrUoL+IDxool4CrB4iVn4lDMoQFCpyDkXto=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OtiF01q6; arc=fail smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+RHcawm"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-664b3831a20so183519d50.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 12:30:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783539045; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZW8aX9j57ntCT3ZyAqyXxnIMT0iyzIyHAjL9EhQn99zZRFi7t9PKoXnLU9EbMvFCnT
-         vc3fMkxaAlkKujEwSh0dmw4TYTAb6vvxm24CwU6IW0CJTOrUeKN59/BKTHgffKrpHC+c
-         lXXpy9MA42PaC945gQEqrkG1qKm2sU0m2uIzsgOoEAIrOlgzlcaMDlmGiilMbcxlpXYj
-         rz0i3luqnJP4F976Xu9l8/z6U2JGTZU/6SQzeTm8b8o+7t/G6AquetlVU4yu+K74QidD
-         MIl3vyIXuUMFdqpOtDG6czNfMR+pxYicDLNUCLMo44BBuhsAUkr2hUjIwBJf0YJqLFPw
-         SWeA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gK/BZ0CSIGck6yi9THWfQV8deFFMWvYWLYGtOVRdINE=;
-        fh=kAGRFKDN7aRGd6VO33HQbsOy3CoTfL4nr4GTMsDqfhg=;
-        b=e+TT27GATQNtpxDkGX44Y9nojjk/8OcpxfzRBbr6l8U1cGYBz/4clTJ5VNrEsjdvGD
-         O7u7XLweS6MGCokN2pv7wrgJCWeryoe2NeAtRP8y3ghhSBd9nv48ldyGK5QmGULF7VPC
-         nxHRpbDKdqJ3MGrPtOKpiM1j3ikOKBtMiK0WDNIpju+FGHg/jLx4eW47NtfMKEclLpKL
-         Shoqxt26adQ0G47agaiaal16BeR6ffwPXLT6iC64QKkFHjuChF8tbyQkAAByyyF91bF8
-         ys/pzIUMJj2d+g15Al2l7UUiW0/5TNNF6Dcf8oWEHWQPOuSzMZSnJ1cAaR9H2aSsQXup
-         H9Ug==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783539045; x=1784143845; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gK/BZ0CSIGck6yi9THWfQV8deFFMWvYWLYGtOVRdINE=;
-        b=A+RHcawmjMZH7oP3wKraGTMzwVDsi1QVCHBR3zRG1yoPHEAXqMTg4jI+HurFp3ZiGq
-         /mx9Br6pxHwvcGAGdYB2f1yVZv2OUy7O35T+CeDQl6RduduJQYe0FLr9v66xJ0BvbW7D
-         /4mNyaW/2k79y6j7eUQdhDjXDfl3aG022pJzxPuwQPfjt80qtbq/cUe1oU3Hb0J48nXK
-         JKjH89tms+kVejBfjvjKU/8Z8lPkHnzu584MN7Zc4rKiH1iUoMMST22gJA3C5oSixJ98
-         HxmIZXYMD6ddN6dED1DzsQyJrnxmw1Ny/ZU+JDVKB3tOPfOL4jbUwupYgFysmqzFRvZ9
-         8CoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783539045; x=1784143845;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gK/BZ0CSIGck6yi9THWfQV8deFFMWvYWLYGtOVRdINE=;
-        b=DxTlWtHW8O6AS80wlXNzgI5Pcu2WWA+dN+cGTFVFL6nR1dbIH3rAG/iHXiflEEgULF
-         KTnj+7sVHujAT4+LloTSeQ1GnP/aZrdhqM8y2kBOyOLA2M2rT7g7s1CXZ9xSaQEhgZQp
-         EvRzl8+onGZTCkD+/+xZ7JpK5PWV0cQ7IUcIwqT9WGKJ9soU2cmqY0h6XaIXF+KwJCT5
-         aH+uxNVuShBhZc3PbhdWCqZTxf+m+CdPeQZQtfTJU3sSXSrt6oy1KnUYRxJ9UYTJYZUQ
-         6bKNKfkbiWCJdtgKmlqTJ8ixhbndZVaFwcTX45J2wBwBhotIEMLVpArhEJ4/K+ynn4ni
-         UG2w==
-X-Gm-Message-State: AOJu0Yzfo52u8YuePN4FoXTdJEnxS9oMoKIfhGXtIEqSD61Aj3kWkmec
-	a6YYCW8ekIplUNiw4DO2Js8pTdzUPr4nsTbMtUHT04yGNGQMhDgO/TAnakXAUgLVX/WhpyUaxvd
-	/ZXZDeq8MPeH8lD9UqVsT/eBVfeie7PZav+Xf
-X-Gm-Gg: AfdE7cmXg1LykI+u+pb4p66wc2iLe13Nhk1Bh6xMmos6BJI6XyYajux1ZAHTlAIBEc1
-	SaGgJX3dsqf2v8/v2mQYEWl8Mth5kztW886ej4w4AGjg9Oat39HIs/9cjuCAxbIL8qQPmHKVGLH
-	V2hV8kdp/LOiMCk4CMQKIu6IRexmjj5UWgpAZrHkDRV0okGtxW/tNGwq3mV8dMsfnyynYthhSQi
-	Ib8CMluhV5joEGzMgl6t5Uc25zbT15XoyN7lDXf93qIru50Ntls0ha6YzpkwAUAbrFWwA==
-X-Received: by 2002:a53:ac8b:0:b0:660:54e4:5db5 with SMTP id
- 956f58d0204a3-6679f1d5e06mr2904765d50.56.1783539045228; Wed, 08 Jul 2026
- 12:30:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OtiF01q6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783541508; x=1815077508;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=zm4slQZA9a4PWROhmVthNxWl2LQq+afWtZlXCEOdF0A=;
+  b=OtiF01q6ThGb+wTKWwMVGP/Y1CgxJajxHx8KlZLBry/hApC5eaCYVE+w
+   nXdgTSuRFtGJVbSaIgJ+NtC/dQ+layjbY0JxImsxnjiRI5AtdE2ZVUH4A
+   C9xsxorz/z8ehIw59eImUa1mTpYJbiaRDNrdBWgAi3wlNJwmeNKWKuN/r
+   aHi3OCxhFlKgn0dcSk7B3NKL1J61CnvDxhju2eG2XXU/UYbBphsOS+bV1
+   DdHznOqmKY+ndEkS24QI80sJ8oy/IORxnwpe2KMNDOqFA/s7Y2wtteYvl
+   hyPfDk9I0E3wWB7aI4GcFQpF5NjTSfSbtfdJlOMZQhEhH+z2pFGEwkfJl
+   Q==;
+X-CSE-ConnectionGUID: z269XOYYTEK3IhZt/XZHmQ==
+X-CSE-MsgGUID: Yy3Jsqw8Qh+3oSUCku9SGg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="87900082"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
+   d="scan'208";a="87900082"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2026 13:11:13 -0700
+X-CSE-ConnectionGUID: qeE8sJ6VQOSaN8dKUZ3HIg==
+X-CSE-MsgGUID: l9bvt7fpQKqDQru1SB6z5w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
+   d="scan'208";a="277608208"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2026 13:11:11 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Wed, 8 Jul 2026 13:11:10 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43 via Frontend Transport; Wed, 8 Jul 2026 13:11:10 -0700
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.1) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Wed, 8 Jul 2026 13:11:10 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NP4w+UFLU/gdcKrA7hYC5Xnh/f+DKMeh7duoilj5Z2rFaqjSiwe5pG3wlOhSp4m6WWUpJMDdr3zQZdwAiKjuUx0PHGeW307qpG6z0bB9PEfgZwylDSF6329JTJChhMMRKo8FYrB8c++ZJY2OukxzPGkYHZ8FGu010C5D/bpj+9KEuzOOCwK5L4Wcu3LC7c5XeimkAOWcqxnZ6/zH/iTwkQVny4ui8lBSqDl1gJAKTArL8K4b7anAfZgP7+1VPr5QSJE0QwbeQHoImJsBNEPpgR9j8e0E3FlyUNUQ1DA5l4eOQWC+rb3eugxlOzCojWOVEuqhW3ivGh8DxT/CSaYFzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bg7shXJorBluHx7UL3Sty7PhAcSQ2fF+JyptWBbDoAA=;
+ b=fGTsIe+18Y+luaM/doTqZNdtqhKuBPQzDrWBGWqWogoZy8f9q4NvChFMFTLIpABpa83UopUB0cOAJftn6Uft7R18hBu2bTmR2OQtDjM9yT/0CVwbTXChXlAwWSkbnSNslaV1J8dfiYtyu8cHrtW2lnFIxQVPiPl0d5LLgnRxJCc0HGcVC6wcwDzSsNSkuqv+CnnM9ipQWpv17shGTlgoGtgzs/nmyRduZYuCHljpDbzoQ4YS4hHZVQc9tDQGWKs5zclzSL1fo/Pm8RoSvgnOkcDQhZUfxr0U3AU6SzvIBIXDCLB634YDO1hlRDh5Ffej9zxR2VA02jpTSkiyGc6ysw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB5073.namprd11.prod.outlook.com (2603:10b6:303:92::23)
+ by PH8PR11MB9805.namprd11.prod.outlook.com (2603:10b6:510:3c2::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 8 Jul 2026
+ 20:11:08 +0000
+Received: from CO1PR11MB5073.namprd11.prod.outlook.com
+ ([fe80::a153:939c:df8c:f4fe]) by CO1PR11MB5073.namprd11.prod.outlook.com
+ ([fe80::a153:939c:df8c:f4fe%4]) with mapi id 15.21.0181.014; Wed, 8 Jul 2026
+ 20:11:08 +0000
+Date: Wed, 8 Jul 2026 16:11:02 -0400
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>, Ville
+ =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@intel.com>
+CC: <jani.nikula@linux.intel.com>, <joonas.lahtinen@linux.intel.com>,
+	<tursulin@ursulin.net>, <airlied@gmail.com>, <simona@ffwll.ch>,
+	<intel-gfx@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>,
+	<dri-devel@lists.freedesktop.org>, <sashiko-reviews@lists.linux.dev>, "Javier
+ Martinez Canillas" <javierm@redhat.com>
+Subject: Re: [PATCH] drm/i915/display: Handle struct
+ drm_plane_state.ignore_damage_clips
+Message-ID: <ak6u1iPEIDulYTnv@intel.com>
+References: <20260701130929.234695-1-tzimmermann@suse.de>
+ <13f94040-6f6d-4a8e-9581-be769a0e3abb@suse.de>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <13f94040-6f6d-4a8e-9581-be769a0e3abb@suse.de>
+X-ClientProxiedBy: SJ0P220CA0027.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:41b::18) To CO1PR11MB5073.namprd11.prod.outlook.com
+ (2603:10b6:303:92::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260707-dd-maint-2-v6-0-381f3edb0045@gmail.com>
- <20260707-dd-maint-2-v6-10-381f3edb0045@gmail.com> <20260708022424.AC02F1F000E9@smtp.kernel.org>
-In-Reply-To: <20260708022424.AC02F1F000E9@smtp.kernel.org>
-From: jim.cromie@gmail.com
-Date: Wed, 8 Jul 2026 13:30:18 -0600
-X-Gm-Features: AVVi8Cds7DLaQyUd_VIEnr4Erq4jsgRR4iB7pa01JTKxLMrPiWW5nBrfdkHRCNo
-Message-ID: <CAJfuBxxi8k25iU-6VKTTMQmMrFCmjhUq8oV5upkvj=yXdJi-zQ@mail.gmail.com>
-Subject: Re: [PATCH v6 10/24] dyndbg: drop NUM_TYPE_ARGS
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, linux-modules@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB5073:EE_|PH8PR11MB9805:EE_
+X-MS-Office365-Filtering-Correlation-Id: 39abf4b6-433a-4098-0b61-08dedd2d0c40
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|7416014|366016|1800799024|376014|18002099003|22082099003|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: bO4gno2fwoA6jUFVLmoUOjdzGUOPIpQMqKY6FIiYItjNMqGfSfJ/gNj8wSRij+X5FTdS/ruBPFtnBgj14hppur3si3dn8/eyTk940xbd4FMBtmpXINvjNJmg9p9thhtfFw8Le2co1jhwoX+ERZ0rDDsFlkB8NJO5GTVABHHcvqjQ7jRyySl4Bm8Ju/ZdLkUDObBWsRejf23tiDIU0GAYoKwCmTCzqJ+Ji3dsJvxDS0k3n0dq3CX+/N6rNRUBVdotHO/NSlzpiiqceZYgmedHwkJsNY3vE+fQbRK+r+lctjxOgh1YeMc1W9rJ7IqQMQWUJCq1s4Bk6xaF0Vb79DU4zL4T3JduDckl7FFDXdV+2tdNgVPwTTVK9OkgqIgwA7iDeOaY3Jgkml362coeFU/1cet/zrU56dsR4faG4jOrzAtp0Vr1MBqq9ez+/lLDA+GELMKO+gw/2xweb3P29z6E1zweubjeTV4xs0Nc3PEK7/I75oOL5pG/69TAQtjfVuww40GRVU4SlxDyjlQmF+3i99jv032I2Kp8Vp4KZQuyJcLBwjx/qjJP6hPwBR17Uj1o4aPgwX9raO8hSj/Qm8sGzO66ygrtPQChMHQRKHg4XGA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5073.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(366016)(1800799024)(376014)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?v/fX5qTBZ1b1RCPILBJI4JhQasMsfxkxAyAgSYCbBIU7A1XR9Kab2oL8Ou?=
+ =?iso-8859-1?Q?UkGyy72UJi5sJax9okjNyjdyygyZyqd4URAxrVXwyEPUXDSFZT0cbWH6a4?=
+ =?iso-8859-1?Q?BIPg4myeDW9Mo5wC9oblrflVwCVgH1f+CEMxQLTDwI2TlamLKzIVmL67l6?=
+ =?iso-8859-1?Q?Q12RLWitK+fcIPN+DRB/shcKy2fvLa+2n+R3KsNS/Y9GSbPk+GAfqV3Ta5?=
+ =?iso-8859-1?Q?DyQ5VTpekZxgYpzP8qJJwiPNU3jjkjh6Z3fPJ7ecuNBNvARpC8iEncdAcn?=
+ =?iso-8859-1?Q?9bLung+tn9WQGGq1LDlhznd4yaEyY+vDxD2fx3lbd3vNWwlh6nIcqm2ryP?=
+ =?iso-8859-1?Q?kzI4YLVvl1FrrnSf52uAjQjmLEBgozQ6ZEBt0PeNKEgyQIKTcSR7jon+H+?=
+ =?iso-8859-1?Q?86pXdUEq3Lous9eDChKZ73jD54YyNib1gsiumB/84dHGiFijXMLJHVaNbn?=
+ =?iso-8859-1?Q?p0WDHWf83kFSLWo8tTpc+lQ4NmrCLA0hQNFKAUH4DI8As++/tRPt6VilFf?=
+ =?iso-8859-1?Q?XavK6EZNGYuf28ZsawtYIIxYyh5guo0YurgwGUZAfL7ORClUYvWYfdpGwU?=
+ =?iso-8859-1?Q?t+BuNYqqyxanrbkQ6ZCgGOrAVRddGBAqu4o64hLa8JSSQAg0u5v9IIgqUn?=
+ =?iso-8859-1?Q?f3/w0adrKDof/rTe2Kh4+kdcCKDoaUahD4zg9/C1CBAs0zBpbbyYdYdLGh?=
+ =?iso-8859-1?Q?RspjyvY3rxQKjnFFS6Y242x/NQTjVxqCKkwo70vT0tUjvq88h8ykMeo4ce?=
+ =?iso-8859-1?Q?1ql3E6Qq3Ect53MO0tIFZZmvLC6ZFKTXPoCc1DPaX11Aw1Oo9pWsArfy0H?=
+ =?iso-8859-1?Q?pSvTSAfs5K+zZrvPply67imsQubtCynwR+Z4a+F9HhBelZFsW0sPSkF3mX?=
+ =?iso-8859-1?Q?PvDqF8YuVfuQtgpL6otwp5LJHMFo0yh6isW/R+tckNMoDaP5VTZX1on5bI?=
+ =?iso-8859-1?Q?A6UXiT+/Beo67/XXHCCJd0vCsISvIjugvcYGsdGJoQ6onnCxi0CYN3Bpmd?=
+ =?iso-8859-1?Q?aJ11qAggj7puzpX5sSz2p2iIOfyjvknDjnNODqelnYYyAmjqwCoenZVJ02?=
+ =?iso-8859-1?Q?6Bk6XBYharu/I1wQnatx9hyoGxjYtl3o1Jq41rRwHRMeh0Nni4W+2UBZ32?=
+ =?iso-8859-1?Q?3P6dOpVGrC3gYM6u5PHe8vZEXhgjGaEybJjsqW9fDLAOwDK+8Bhxc1FDVY?=
+ =?iso-8859-1?Q?AXtnHmTkUlZTRcY29T3UEClj9QK68YNL7a0YStP2Yl4hmQK0EIvao9/x+Z?=
+ =?iso-8859-1?Q?XNPGs7ahrxEM+CJv8WcleZE69QHHbyB0JEpsl9F31Cf063MU0BkB0EoUm2?=
+ =?iso-8859-1?Q?b8lNoPmk6wNCVw/Ji8VqNjUu9dGRaFJ3MBbciR2skuwgG3xbCMl3b/It8k?=
+ =?iso-8859-1?Q?2dJjFZ2UdeviWNrHlCksSvo8jaNNzCp/eaXl4JMUaoSN55qZphGs2PSQJg?=
+ =?iso-8859-1?Q?oEV/LNzijXk2APtzznFkZCtmCHKnIxvclfGcY9b+NIHyhhdx3hhc7ws5G0?=
+ =?iso-8859-1?Q?jcahqgoUr+ZismRxU2TRa8CMkWKVU50zbKNWRCDezYHBpvmxa74oi0e54a?=
+ =?iso-8859-1?Q?Zibnioujhgv6cDvIe5RtZHaQXANvIHZChJnLBWcIuvz8TChgdOo3hfcNbT?=
+ =?iso-8859-1?Q?7hAkVvx1BTUufKSB3zgJ3WCAIeXGHwY/dhyUGFoXFMMOgnz34bjPsq2FPo?=
+ =?iso-8859-1?Q?3Jdss2YKNhIYXcK8tanRMBAtHKiVe89boD5n7iq6jHubxPhh071/4QQpev?=
+ =?iso-8859-1?Q?175U5ANSVyfB7hZGnOSKKBKDT8QI/rsC3eTk5sNQ3GnXTKGeSfVdONNuzC?=
+ =?iso-8859-1?Q?di89qi+mRA=3D=3D?=
+X-Exchange-RoutingPolicyChecked: qycvl27hlaiAwqkXySX72S4Ln4/nVlOZU9tAl2E0x5pPii6Zk9VVxYfPMK/AGe+IXW1knN7sC3d/WDXw718AI+W8RCb7Rk7xh5ZwvTOD2EEbFcgvMekfnVs6SyqgoFl+QapcqiEmYqMAMwUOiVqO27rU8MqLBRyvw1LdLHF1//CJvAgAcA6gMAQW/VOJZi/x1JAJBhCAfAC5rwYSjjDTOdkYyA9U7XAJYF1ROISGX3g6C8YSXTIeqe0j3Ad85jnE2QkMJp1Jxy6Mi+inET5LxMeSiqTFGW0E7f78epc9ps/+HafiZK2g8a0HMDhp4X7MUEJ7ZJl1lWy0+DKXYBda3g==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 39abf4b6-433a-4098-0b61-08dedd2d0c40
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5073.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2026 20:11:08.3757
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: p2fNvZOZx+LLFp26NZyPrRd871FPUYHmvygNm+RzT+f10z1wY+pGPfWtDr7hQnds5lk39uD6UQrVF/UuhOc+5Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB9805
+X-OriginatorOrg: intel.com
 
-On Tue, Jul 7, 2026 at 8:24=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] The newly defined macro __DDEBUG_ARRAY_SIZE is unused because the=
- array size calculation is manually open-coded.
-> --
->
-> --- Patch [10]: [PATCH v6 10/24] dyndbg: drop NUM_TYPE_ARGS ---
-> commit 0ca0f4a344ab62c4d4df9c27a60daf65fecad136
-> Author: Jim Cromie <jim.cromie@gmail.com>
->
-> dyndbg: drop NUM_TYPE_ARGS
->
-> This commit removes the NUM_TYPE_ARGS macro and replaces it with an array
-> size calculation. The commit message mentions adding a new local macro na=
-med
-> __DDEBUG_ARRAY_SIZE to handle this without causing include conflicts.
->
-> > diff --git a/include/linux/dynamic_debug.h b/include/linux/dynamic_debu=
-g.h
-> > index 9607121c3072e..9ae1accb9bf63 100644
-> > --- a/include/linux/dynamic_debug.h
-> > +++ b/include/linux/dynamic_debug.h
-> > @@ -8,6 +8,8 @@
-> >
-> >  #include <linux/build_bug.h>
-> >
-> > +#define __DDEBUG_ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+On Wed, Jul 08, 2026 at 09:44:05AM +0200, Thomas Zimmermann wrote:
+> gentle reminder to review this patch
+
+Ville, could you please take a look on this?
+
+Thomas, have you seen shashiko for this?
+https://sashiko.dev/#/patchset/20260701130929.234695-1-tzimmermann%40suse.de
+
+> 
+> Am 01.07.26 um 15:07 schrieb Thomas Zimmermann:
+> > Git commit 35ed38d58257 ("drm: Allow drivers to indicate the damage
+> > helpers to ignore damage clips") introduced ignore_damage_clips to
+> > selectively ignore damage clipping in certain framebuffer changes. The
+> > mode-setting pipeline can disabled damage clippings for an atomic commit
+> > by setting ignore_damage_clips in struct drm_plane_state. The atomic
+> > commit will then do a full display update.
+> > 
+> > Although the i915 driver does not modify the flag, DRM's damage iterator
+> > will soon rely on it. Calling drm_atomic_helper_check_plane_damage() right
+> > before drm_atomic_helper_damage_merged() guarantees that it has the correct
+> > state. The i915 driver does not do this elsewhere so far.
+> > 
+> > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> > Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+> > ---
+> > Taken with minor updates to the commit description from the series at
+> > 
+> >    https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
+> > ---
+> >   drivers/gpu/drm/i915/display/intel_psr.c | 3 +++
+> >   1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+> > index 92af21d823a3..5a155f60110f 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_psr.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_psr.c
+> > @@ -2949,6 +2949,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+> >   		src = drm_plane_state_src(&new_plane_state->uapi);
+> >   		drm_rect_fp_to_int(&src, &src);
+> > +		/* Prepare plane-damage state before using it */
+> > +		drm_atomic_helper_check_plane_damage(&state->base, &new_plane_state->uapi);
 > > +
->
-> [ ... ]
->
-> > @@ -122,11 +124,9 @@ struct ddebug_class_param {
-> >               .mod_name =3D KBUILD_MODNAME,                            =
- \
-> >               .base =3D _base,                                         =
- \
-> >               .map_type =3D _maptype,                                  =
- \
-> > -             .length =3D NUM_TYPE_ARGS(char*, __VA_ARGS__),           =
- \
-> > +             .length =3D (sizeof(_var##_classnames) / sizeof(_var##_cl=
-assnames[0])), \
->
-> [Severity: Low]
-> This isn't a bug, but should this line use the new __DDEBUG_ARRAY_SIZE ma=
-cro
-> introduced above? The calculation appears to be manually open-coded here,
-> leaving the newly defined macro unused.
->
-
-Ack. Fixed locally. Will resend shortly.
-
-
-> >               .class_names =3D _var##_classnames,                      =
- \
-> >       }
->
+> >   		if (!drm_atomic_helper_damage_merged(&old_plane_state->uapi,
+> >   						     &new_plane_state->uapi, &damaged_area))
+> >   			continue;
+> 
+> -- 
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707-dd-maint=
--2-v6-0-381f3edb0045@gmail.com?part=3D10
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+> GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+> 
+> 
