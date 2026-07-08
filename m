@@ -1,56 +1,56 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013051.outbound.protection.outlook.com [40.93.196.51])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013055.outbound.protection.outlook.com [40.93.196.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C7437702A
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 11:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95179436BD0
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 11:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783511352; cv=fail; b=KfGbrawXl6pMVY8juW5NecW4fKrK0EKOKRWnJmbOZOU4wUfHEzmXNa4v6Eui/JOXQX+I51B1Dd+gfkTAwj0OfmZYUYJGa0ymMGYQkDZO5pZHpBt3JCEs+sdrU4XBZ/Qd/ulF25NXD1fT1LME7WmsHXopqSzaULjBnD4uSz5yJKg=
+	t=1783511527; cv=fail; b=nr5tMsSWYzVh8T1uKY6S4ats0ZA8lDn+dLX2CBuvXY3Ux222KQDlusJ2+jZQnThFmXB/yF6CYgyYPF0pYmulQihlrstYYRNQduV9ol1eIdyxwWG2ihFpZIbGROj/5XoSoWcbxt0GhsRt4qn4K5rtZAd0NYSQH0ADNeIVPbRQ7Mg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783511352; c=relaxed/simple;
-	bh=okNco3PiWGyqtcCLmO2/LVD3delPj/m4Z7ksFC2uDnQ=;
+	s=arc-20240116; t=1783511527; c=relaxed/simple;
+	bh=GY2+GXQ0BQ6aS3mChGt2abL4BdyQMN/Z9ENBwQr9KQ8=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=CdkJrs604PcexRqCQucXfPqDo7K1M0z+E0JHobuPy+ZO2Qi30+Y3ZaGlTRgGAwMEIvEGQc8OuJousfSB28FpyZsx2RPiPEMdX5YgIfv0lahIJtYiqttB/naMcE8i2SJI2DCy35/qe/MYzrNtYQ8G4GqY8LCxxrSqgKMYlyc4/Bg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=rmF7tqhK; arc=fail smtp.client-ip=40.93.196.51
+	 Content-Type:MIME-Version; b=XZYv5/nLKsTRTld9UjWVfjmku0P1/i0YKt/4h1UvAiOp7tLMVSSUHlnLvv95agAwasYKbz768BmV3k8iegNCxteQbaOJQSaP/s7wCf8w3EP72kHcwI13oi3y+0zYfuzSipo/xGzN8/Vg0JotAr8OsnrzqIGJwIaeXus4GCRfeNk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=u9x8PQjT; arc=fail smtp.client-ip=40.93.196.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="rmF7tqhK"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="u9x8PQjT"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wNfEQMuYLs5pijmLzAkteGveL8ucEtxOW68yTZIwTsOhWFv88PGA95Jft44H9cpLQKTQNFLk6d+OP32G7uqqRf9SMZpde1HvGZryJsSvRdLmTRlcWqbASH8KY10tzxgZFUIn4pTrdwV55gBxUflm3I79Ygluxoa1pe4e4f2ZtHnYhzlc3SEWlZmXdycRJq8vrn7QBEhRAf+8IGtVrvOk72gk8D5jhn+jIZxOiYpw3bjfbRaDZnn2Cmj1rWjrsQX6Byw9MkWB0g+JDZlvImBxh1CHMi7L978O1mFOwcDvUX+yeeMdSPODgsOpv5bUkpixu4qZAWZWLsbGbWge78U3Qw==
+ b=bFYynRYUbxkKcrgAPO6yBRDFsbNWEJnHDZrDTk8etUhfWYcxkBHmDvhWf6hq2D6zamlgZshWIsENKMgIS4/9HR0/N3O3kEPtjCNcmH4cJaQkHS7N76NvJL5LHvfVWvgKhjbdJ0M2r/GFMll85TE2OloJo2b4MnDjvTi3RnaW1V5zTDOFc1tRzaRMWtxRDz05FIOpPHdXoySI0kPmV3tyMBs+yNr+2xiX1LLvGbjW8r0SaEnDSjdDixojV522TvpMSJJULBkyo4sbbqvwgUQyMOCzBoJh+za9h5VAndjhK4ptaNumbfPbSA31WUDw5Qul+GF+n5akAkeb2OIJtvk1pg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jMsbUcEZlKxqh1wIioI/yC/vTRLYyUlVVsu/wQvhtSs=;
- b=s4Gx2tGv48YASNRVc3qGKvKt9VSFWgy+MIMpRXgE2vLQp61lDPh7olOO6e8q1BVq4hoRNa5I/65wsyyKs4PXPcwMjiR75dgetMSNw8EnMttyTe44YwV53uuTaRB85l3peiKkbtpJX93ZGDDbuoCYGwikprbYG8CpSbfwspJn5zNXz6c39/vay0AO+ytNyarHIkMFGyvkf9JZWAxIjVJrA10BO/0+kaOCXw3m1NC5Fdq2plMFVs1S7Jylz9OZKBi1N4IDz0t/aRZ0Q+V5uECvwaAe0XpEcnkt0odsPWcXAB9Pvfmq49yV6HQeRnUkPJLc/dGwf3rPjACjtOOZU4sMwA==
+ bh=Tf5to98w9ktnpJe4o+TnWHxRWo9tzL2yrgFdOaGukuU=;
+ b=P4zlvnsBEHuHVgzR4ezLd6qQrC0vO9pHyR096FNJwuP5vCTSpBuTCEPciTw/1wsuYejOtc+eviTHg0IUMWIZWMZ+s9RZ7z7Kn+Ff1Vua7/kEoVmYMKSnL661bMlFA3SEEpfPvzSJ4GM0niABf0s/BapGxboBJedS/u8rp5wys2eyZQ9S68CmM4pS3v6tl2I580cLR2CofcFk0RC4XpnTCJ0NH0y0VLwzIgPITEiPrYzT9Sj5Vx66B9HkORU3EtmJcX1Xu9ZjnHEHu7AGxB5sB5OYgqwrxUF5b7ElUlcj7u1gNjoAH/OOlCkUulTQ9bVlWmakWLFKt3OhUMfmxWzGTg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jMsbUcEZlKxqh1wIioI/yC/vTRLYyUlVVsu/wQvhtSs=;
- b=rmF7tqhKgK3/1F60/O3e4d1cawrrrMeVysXfnBELBeluxPLjnmgKjV8BxZjy+8NksqVEvCN+zFDess6nhttVKbxq6Wy6teR7O+LVvK8+FSnMZJF89sruFxTDFUFKcUxjuQuQi7+TMHDpA9bujtk5udJDfS8VNalWMs6O2sAW9Mk=
+ bh=Tf5to98w9ktnpJe4o+TnWHxRWo9tzL2yrgFdOaGukuU=;
+ b=u9x8PQjTpOwI4cQ/odim2PtIMLsJxd1Yx/uoKjQmgci2OLPkXb6c+BsS8aPQBL/NoefJbBZZtjVFqGply/Kryh4OrynmZAerEi5ihW9OaQRWsWGEZiAmceMmP0Msiq7pD9a1KA0xrIhpyyHp5WBRiW2C70ORRPJY5svbT869ALA=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from LV5PR12MB9779.namprd12.prod.outlook.com (2603:10b6:408:301::14)
  by PH7PR12MB5928.namprd12.prod.outlook.com (2603:10b6:510:1db::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Wed, 8 Jul
- 2026 11:49:07 +0000
+ 2026 11:52:00 +0000
 Received: from LV5PR12MB9779.namprd12.prod.outlook.com
  ([fe80::8ac8:e862:8ae9:9287]) by LV5PR12MB9779.namprd12.prod.outlook.com
  ([fe80::8ac8:e862:8ae9:9287%3]) with mapi id 15.21.0181.009; Wed, 8 Jul 2026
- 11:49:07 +0000
-Message-ID: <9201b249-e6e2-43f1-b4db-f10f874b74b0@amd.com>
-Date: Wed, 8 Jul 2026 13:49:03 +0200
+ 11:52:00 +0000
+Message-ID: <5f492b86-319c-4fa8-8d0a-c729f21d643f@amd.com>
+Date: Wed, 8 Jul 2026 13:51:56 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] dt-bindings: clock: Move xlnx,zynqmp-clk to its
- own schema
+Subject: Re: [PATCH v4 5/5] arm64: versal-net: Switch Versal NET to firmware
+ clock interface
 To: sashiko-reviews@lists.linux.dev
 Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
 References: <cover.1783495122.git.michal.simek@amd.com>
- <f6fc3f65475888cd5726e3f2795a110e9f7a79c3.1783495122.git.michal.simek@amd.com>
- <20260708073722.F029C1F000E9@smtp.kernel.org>
+ <c1e9d7f1dd555ff96bfda6afa727205a8a3e53c0.1783495122.git.michal.simek@amd.com>
+ <20260708074202.74D461F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Michal Simek <michal.simek@amd.com>
 Autocrypt: addr=michal.simek@amd.com; keydata=
@@ -97,11 +97,11 @@ Autocrypt: addr=michal.simek@amd.com; keydata=
  otYa9+7v0j0WOBTJaj16LFxdSRq/jZ1y/EIHs3Ysd85mUWXOB8xZ6h+WEMzqAvOt02oWJVbr
  ZLqxG/3ScDXZEUJ6EDJVoLAK50zMk87ece2+4GWGOKfFsiDfh7fnEMXQcykxuowBYUD0tMd2
  mpwx1d8=
-In-Reply-To: <20260708073722.F029C1F000E9@smtp.kernel.org>
+In-Reply-To: <20260708074202.74D461F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BY1P220CA0045.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:59e::14) To LV5PR12MB9779.namprd12.prod.outlook.com
+X-ClientProxiedBy: BY3PR03CA0021.namprd03.prod.outlook.com
+ (2603:10b6:a03:39a::26) To LV5PR12MB9779.namprd12.prod.outlook.com
  (2603:10b6:408:301::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -111,147 +111,168 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV5PR12MB9779:EE_|PH7PR12MB5928:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1ed9a75c-ac6a-4a02-46c7-08dedce6eaea
+X-MS-Office365-Filtering-Correlation-Id: 24246ee1-7dac-494b-e99a-08dedce751c2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|4143699003|56012099006|3023799007|11063799006|18002099003|22082099003|6133799003;
+	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|5023799004|3023799007|11063799006|4143699003|56012099006|6133799003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	MeslTDNFN8kn+o/PxpcUiOz5+X14rAKVmxiWx5XWQODePcXeLnCFvwyKdcZ2oD8rMgZJVbf2RGSS3i095iyTjq/+o6MJUE0iqnQGErEQe6pNDMM91kf6msLIrZAtuA5XZsgnKcpRkrT3eKfOqE+97jM+Di2+IgAyRybri9XJaW5e+5NR2bqrD3xvpv9dlX3UmWwUuHwoDE86QwsIHatNhehsxstBART6TWkYf/Mwn971l4ANkNZN3IAxYuTDadneGBmXqf3MYobMllDHmJ8EvMGAiSERTMlvXnlF+jj47zsHkHwEIPB9emRarUvqTv9dWlFxtEYQafSw2glTlPLlAJOI3XBE5V7Z4zUmQEiSkMlPUtRoUB5gnTnwFotKnmYsmAO3ewEcpnPyx8rV+U+cUwKRKc4FWVDeIgdYewPNIq2cifx3t+GH9UOajuHCXh2vOfAGH0NkddH7MGU8rrOJfSKa0ajX1uunuivgwZGPCZCfz+iR2NxLmF5nv24mgncgKIfB7nOG1N04LOxeErf0Usv6xPqn4LEeUuu5VABKgX33qBuxdrFFxClCePa1xtjq7QCj/Mvtx3vVcixHl8BZGvHf2kvu2YvGTWhMh4tlxZvLb/RELrWeHq4kAmrDXwIhpvzTiK1CP29XEqf8DH3MWo7dAdzztSjbVXICWwMw8UM=
+	p+Xa57RqxzqHAy1Bt/5bFeLTJ2oPi6JZGPUVE65NKTC/Rdyw7HBZA4KUaKuo0t3Hn3GHuO/IYnSz4R+6g5BRAOf6AyE32YM3VPvEYbU5Z0rOIVWj5q/JiDmFzeA27UC2IXa73NVsaVeKZFM+W5RfeMOCtyuv2gMGPx9e0Cpi9ecEIh50ZOAUnN4r2HB+07e26dyVPU8C8FvYY9JPQCGzHjwjeCEcMMAmPItZZOBsmYNF5ojHGk4EZT8+5fLfKZAFq3V0AlvqY8gTkWhCe4a15B2ibT1nZfM1C3L/7TezhuclqdL76AjuhYQ7Fn67nC6n1pOSJKwq5/YaMNIU1TgR91m0RsoK2TiujhNKzyFOH+XPd6x3VijLFkkCBBLbNeKtWjRinDSljqP0hTJwa929VoOcMgPmlAr43N+1sV77kuWfK6vWNVkG7Rj/gDk1SHosMBvfs4JoLodWtgwUKOcaj4YnY5JOyZmJzc9SBKvEfkXuGrayJBWQJ7GnsrjwokdWb/OXnlrSHa1mj7QztzwJgica7OlsD8xLtvj9CBljrbQd1+FL/xdFc/3+Fv4dt8kIO0fmcv7Nu+2eiSCCGDVQCPh/md0DMQLQrAf0ZgR0y5hDOpeY1PuSqaxXQpUZ3sbmTpFMucUAXHPQ03rhQ5YcyIdoe2mLBuiK0Y+zFx8pPaQ=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV5PR12MB9779.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(4143699003)(56012099006)(3023799007)(11063799006)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV5PR12MB9779.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(5023799004)(3023799007)(11063799006)(4143699003)(56012099006)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZzNKd3RTMERCZVRsd05tY1BZSEd0eWJ4dTdoVWptTmV3a3JnV2NXTEkwZnA2?=
- =?utf-8?B?Z1BSN2gzZjJrZHBib3IwbkxuWjV1b0NoT2Z1STNsRUlBRnhrVlNVY24wOW1T?=
- =?utf-8?B?TEh3Z0wrQlpjVkdmK3B0WG9BZWRFTEhDeENvMmMwZzNwN1ozZzhneFFTbW9l?=
- =?utf-8?B?cURVVzhsU3dIQzF6T0dmME9WNFdzeXBjZ1dnajAxR0ZxRzh3YzZyWm1EVlpQ?=
- =?utf-8?B?U2s1aDIwWVRoZDhJdEdWK0R1YnowYnFJbDBmWnFQRnRNWkdGQ3FBRlJScldq?=
- =?utf-8?B?MW1EWnZ2SHVLOE1sTmN5V1M1R25pMG5rQzB6MXRvOXhQWUFROGVrVkhwY0FW?=
- =?utf-8?B?cnd5WUZwaFlxeVhYZ2llMDBGMGk5alE0elp3Q280MldUSVBtUG4wNHZRcTNL?=
- =?utf-8?B?Tjk3ZTYyZlE4SC9sV1Y4QTlkc2FxMHFOUnFhRnQxZmJIYldTdmQ0R3VySnk2?=
- =?utf-8?B?bFpYTVFFMU8rR3NPR3hFM1dCVU1UbDJOTXZCTksrWWFiYUV1N2JNNTNGVFF4?=
- =?utf-8?B?RmR3TFN2Rmx1Wk9MOVpzdFNjOTdHYng1dXB5cUdWN2hRR2hXbzc2NzBlOVAw?=
- =?utf-8?B?VVhrU1FDU3F1U0NtZ0x3OVZOYTRqMU56cFd2S0VUSkNLZE5jbmdRSmc2OEMz?=
- =?utf-8?B?VDB0ZENkUmdnazZObXlCa0s1Y2lEZkpDWlpFVFc3dGFWTFdpU3NyMDFCOTVl?=
- =?utf-8?B?Y2xaMkwwRnN1YjYrYlRtVkhiQlVQeGNybjVjcmM0a0ZOdnlGVWhZMUNnQW5s?=
- =?utf-8?B?bGRYUWlnMWk1biszM3ZsU3VOOUx4SW5wZHcxSTByazBKRXArLy9qT3A5eXJ4?=
- =?utf-8?B?S0p2bVY5YzhTNlVnZUdxc1NsUlpUd0ZpcGV0elkwUUMrWVhWV0JDZHlTWi9r?=
- =?utf-8?B?djFhWnN4TTVtQkM2V3BIZ0UyYitDVXRlUk5hOWMrV0Z3MEtvVFZBcGg4UFRh?=
- =?utf-8?B?MmFNYk9OOGF6SXRBU0ZHWjF0RjRoSEo1VDljVmpTS2o3Z1dnMTF4dWRoWVBY?=
- =?utf-8?B?Y1pWdkVTRkVTMVZNNnN2NTJrZ2dVR2U2ZUh0ZGI5OFc4VEQ0bkRVTVJUcFRv?=
- =?utf-8?B?clYvUUU1OUFBOTZhcXFhN1BTd0pETDd4cUxHVS9wcWJwNHVBR1o5eGlkK0w2?=
- =?utf-8?B?anZEK1c3VTZqZWVzY1M2L1lFNjZSVlRld0M5aElHZzlZdVdIQUE4Y3o5ekRN?=
- =?utf-8?B?RmRFMmNPUVBVMzNiZ0wxeVZOYmxpWTRNSTM3VjVvNlBYM00zN20xd2FpT1Uz?=
- =?utf-8?B?eHFzdnk3bEhLZkRBVHhjekVMT2pBcFVUTXpSRFFIcDVuRDFGNk9hMVZjSWJh?=
- =?utf-8?B?T2UzQ3RmbXAxaUJQL1k4VEQ5WUZTc1ZLQVR1VEc5aTErb2EwdTZweTZNOURp?=
- =?utf-8?B?ZTk0MHgveUlVUm5qTGw3NGlqNVFrTzFCUG9iTTRmUDRZeEZ5SUNYbTNzTk5X?=
- =?utf-8?B?M0RWMngwS3M1ZE5NSExkTlpWNXBHSWtlNFlLQ2poY1NBUXB3K1BHM2oyUGQz?=
- =?utf-8?B?MkFzRlZEOFFHNVgxL3ErWWpmZlFHR0RoUzVieFIvMW5SOWYwUkhheVZnallv?=
- =?utf-8?B?M2YvUFR5MnloWHBjWno3UzgzY0FUQ1JTbHV5Zk54Q0RtdlhMb3ZtZTBrZ09T?=
- =?utf-8?B?UitQU3NpekY0RmRZWitmeGpCSDV3RTlFbEFXSkUwNXRnd3plcTMwRG9SNkpE?=
- =?utf-8?B?UG42dk01dE1odklST1VIbzIzTnRzalR5aytaRlFUZGIraVY3TXcwZkxrdWMw?=
- =?utf-8?B?TnpPMzl2SU9aNUN1Y2piT3BVZGgzd2FHVVgreFZqM2NHWk1qczRDVVRSSTJX?=
- =?utf-8?B?cWNoT1diOXRJanExZzREZjRqQUVGQ0UyeGdhMGZrZ2lNMENNK1gyWkRINUUx?=
- =?utf-8?B?T2YxclRNV1FXaHVmcU9Yd21Id3ZEZ0FoOUNzekNKa21jcHZoR2I4cTIrdTBF?=
- =?utf-8?B?YTBiaVh1NnFQNUNUVlJMc01iVndTSGF6SnlacW9pL0tYL1pkRnBOTXB1SS9t?=
- =?utf-8?B?KzdNT29VWlZTSlVGbHErNExvTG1rbW1tek5PbGtSN2gwMnNpaFNHdHl5NHZW?=
- =?utf-8?B?aWl2cWRES2FSR2xEVEE0eVRMR0U0M0N5c3k1NUNRbVVvcUp6NDg1S2pPOG95?=
- =?utf-8?B?ditsRXF1c29LcXhEaDRTcnhJL3pxSjFnMFE0RXAvN0RSd2tPSEhKVWF6Ujhq?=
- =?utf-8?B?WStnQ0pNMHEvZ29Tc1paaXN1ODdSamZLYWtva3pmeTFzeWJCdUhaeDB0dE9M?=
- =?utf-8?B?ZWx3VHY5VERWWHRQSkdhdVRpSHBWcVZZcG9LTFVQMFdIZzl5OTRpOXRXdWQv?=
- =?utf-8?B?c3lPcHJsakNsN0ZjVC9VSEZiS0dCY3pKWDZTbEgwRzZTemZXbm8rdz09?=
+	=?utf-8?B?ZzIrOUpaM0owd1kyaWh5NEhUbVVOUlVNL09iaXM2NlpJa2JjS21ESVFtdERi?=
+ =?utf-8?B?YzE1L0hOTndYWTBBL2hRSFJWM0Z1UkN5SmhrWmRJZTlZQmpyVWljVnlUZFl4?=
+ =?utf-8?B?TE9Ma2ttckVpbzhtNEtBdjI0WGxxZHFiWGFESS9tckdYTHVuWFpraHhxeGJC?=
+ =?utf-8?B?TlMrbjVad20rZnd5cmdjL2hmRjR6SmNITWk2T3BLVHE2SzNXOG9uTE8wTVJr?=
+ =?utf-8?B?aWN5MEN2QUhVOU9TcmJlTlpuQVFleXpVbC9PNzFFeUdhUld4SEFtenVXeXJ1?=
+ =?utf-8?B?amJqZGZTSlZWcjZTbUVvNGVlb3N1Y3BZYkRDbjRQTXFkQUR3V2RXa0oxbDM5?=
+ =?utf-8?B?bjBUcGJJZHZ1N1B1SlNJQlIrNlVmYWxkSnpSTFVjbEdJNVIvYUZZekVZdmtt?=
+ =?utf-8?B?aG9Cc20vTjVSTmduQW9aOTcrcDMvK3dldVVVdWVmNlF3Sm9vWGtTMzNTMVNT?=
+ =?utf-8?B?c1lBc1BxUlpvc3VSSm9JZXpDMmpHelB3Sno5UUVYRDQvSWdGS0dIZGZkTkFF?=
+ =?utf-8?B?eGhRTDMzU2dkRUs3eWRONUdTenFCbFVDYXlqWXNiQlZDU3YwZzViSU11TDZT?=
+ =?utf-8?B?aThHN21aWVBRdHQ4YTB4RVdrZzd5QW5ZS1lFUXJsTDgrVTdwd09kbEFzWjRx?=
+ =?utf-8?B?OXRKS1lNbkJxTGpLL21GOG0vM1h3dEdMQ3N2ZS9WakRHckY4Zjc2Y29WeUJB?=
+ =?utf-8?B?cHQ3dklRdDRIY0VnSzVVbDdVTVdTWVM1UWJLSGFDYmdwcU4xc2xsdnFLdkhI?=
+ =?utf-8?B?TU9DVXpkYUQ2VUVzczZoRzBNOGI0a1RFYXNMc21pajczZklvcC9TV0d5UXFh?=
+ =?utf-8?B?dnViZE8vUlYxMUhkY1NZNCtnbmNoK1VVYlc5MldwOTlmWkcrblRmbjl1ZTlw?=
+ =?utf-8?B?Nzk4SEtaTXEwSWttVFAwdHY2anhHNFd6TEhKT2c0TkJWSDEyc3V1V2h3YW1G?=
+ =?utf-8?B?MWdVZ3RMUXZyMzJBMk1yTTVuOUhYWjA2Z2IxckpJc2M2RkpsU1kvcmtsMjVh?=
+ =?utf-8?B?NTVhODM3c0thcjJKVU1qV2pGandLUmYyc2JQVUh1TWpFaEEzSlhPSis4UG8x?=
+ =?utf-8?B?SytWaGNXa3JNbmdxNUdSNmljVHFOM1RpWmxNM3IzeXFnVGVId1pXQnlUdlVC?=
+ =?utf-8?B?UmRjZVp2NEdyczJhUlNMWC83NjBNWlZnK3phLzl6Rzh3VUVsczk3UWl2bUFr?=
+ =?utf-8?B?UzJ4Nm5iWDhIUnl4eDNIKzVzUngvSXFtUUI1VzZUNndJUXlPU1BKZURodzJG?=
+ =?utf-8?B?ajJsUGxXSHBKQWs3OVIzWWwxUFB6Um5SanFWSTNnWU9PTWM0b3FVd0VSeDh6?=
+ =?utf-8?B?NGNHMytJbkNGZm9XelJsbTFkS21VVWVnanMyeDJQSVI4NE9zekRWakg5VTdl?=
+ =?utf-8?B?alFQVVRNOUR1N0E4R3N4MzRhbkR0TUtPdTZDV1gxcmZkbHpkWWowQVZEa0RO?=
+ =?utf-8?B?VFVpRlk1d0lCWFVBcUtLT1FYOHBIb2s0ODIyNkFMVW1BdmdRVEpTYXZSUy9u?=
+ =?utf-8?B?VG4xZHhhUXJJd2NrTS96Nnl4Y214WnYyYk5VbmJKVC9ZNm9HQXBCYkJBNHRG?=
+ =?utf-8?B?Rmova1BESTl0Zzc5V2wweXhRaG1hb2RvUGJjenFGS3pzWS9CTER3V05KNXQ2?=
+ =?utf-8?B?cmVSc2JvckVGL3hLcVJaeHQwLzZQaDNkdVAySlgyeU1TUExHUTM5a255Q1ZJ?=
+ =?utf-8?B?eTdnM290ajlDdVlHbzVIZUZpd1VhQS9vU29nMkZsK3FRY3RleHVQVXFZM2Vt?=
+ =?utf-8?B?dUpGZVQyQ1pmMWJ4ay9JSEtpTFFrUzBYS01TdVZsQnh0UnRoUWl3OTVnallh?=
+ =?utf-8?B?c3hENE5GMnB6NjhZVitYV0w4L2VCaTZrcmJSMGZ0elMrOXNBRXlkUXM2OWQr?=
+ =?utf-8?B?LzR6YzQwWE5HSHBqa0VoWGpURUxVZUZRUVdqL1Q3L0VjVUJhK001NzFlaGVU?=
+ =?utf-8?B?d2VhODNTTTZ0Q2lqNkcxWnJ5eFVCcTlqZHJqQzcrd0h1aGJSOEMzNmsxRVNQ?=
+ =?utf-8?B?WmFheG9uTDV3SWlidjc0SjN1TVlnMGN6MkF6QUhGNnJNWlJNRGxVQzhrYTZn?=
+ =?utf-8?B?d3pWTXh2V05TcDhxMDJmcXlBVDlWNE4rcWV1aTF4eUNoVzNwS2hDMTRjYmVW?=
+ =?utf-8?B?QnlCRGN6d21wMWJPNnRTY25HYW9sQWxQcjRxMWhCeE9WdHgwbWxwa0tSd21l?=
+ =?utf-8?B?Tk5Nalg1UEtsNndOZGxSbzBoZ2Y5TWhyN1dxUTZ2TlZmYWhEZ1JSRnA4NktX?=
+ =?utf-8?B?LzZRV2w1OVJZd3NmcHZZc1ZvMmRSVk5jREZkRklTcE1YRjNFcTRiUTBkV01S?=
+ =?utf-8?B?TW9yOEh5cWlHRXRPMktZUjIxK3RPOU8ycFVjU05FdFR1S25WcDUyUT09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ed9a75c-ac6a-4a02-46c7-08dedce6eaea
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24246ee1-7dac-494b-e99a-08dedce751c2
 X-MS-Exchange-CrossTenant-AuthSource: LV5PR12MB9779.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2026 11:49:07.6212
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2026 11:52:00.1939
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yv96B/UhkjBOi0qlVpCBb1O3NPZaCGlKkqOonVUFTgPBTfLYfn0tctLZ5Lkclqb3
+X-MS-Exchange-CrossTenant-UserPrincipalName: uZLuWzvk252omIjDpxUT188zQLG78+V7M8XnInHFPblPmLVxImxm3fBraga6TOkb
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5928
 
 
 
-On 7/8/26 09:37, sashiko-bot@kernel.org wrote:
+On 7/8/26 09:42, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The regex pattern for `mio_clk` in `clock-names` contains a logic error that fails to correctly constrain the index to 00-77.
-> - [Low] The example in `xlnx,versal-clk.yaml` fails schema validation because it wraps a `versal-clk` clock controller in a `zynqmp-firmware` node.
+> - [Medium] Device tree binding headers are incorrectly placed in arch/arm64/boot/dts/xilinx/ and duplicate existing bindings.
+> - [Medium] Use of #undef directives in device tree binding headers to remove inherited definitions.
 > --
 > 
-> --- Patch [3]: [PATCH v4 3/5] dt-bindings: clock: Move xlnx,zynqmp-clk to its own schema ---
-> commit 718990212b2e54a25ccb16a23d741b1b1a896e2d
+> --- Patch [5]: [PATCH v4 5/5] arm64: versal-net: Switch Versal NET to firmware clock interface ---
+> commit 768ce0b0d6c0eff83d929d6530cf30c0e1e4baaa
 > Author: Michal Simek <michal.simek@amd.com>
 > 
-> dt-bindings: clock: Move xlnx,zynqmp-clk to its own schema
+> arm64: versal-net: Switch Versal NET to firmware clock interface
 > 
-> The ZynqMP clock controller binding shares only #clock-cells with the
-> Versal bindings. Move it to a dedicated xlnx,zynqmp-clk.yaml schema.
-> Also remove "(Optional clock)" from clock description because it is visible
-> from schema itself.
+> Switch Versal NET from using fixed clocks to the firmware-based clock
+> interface. Add DT macro headers for Versal NET and base Versal clocks,
+> power domains, and mandatory resets required by the clock dtsi.
 > 
->> diff --git a/Documentation/devicetree/bindings/clock/xlnx,versal-clk.yaml b/Documentation/devicetree/bindings/clock/xlnx,versal-clk.yaml
->> index b1623c2ab0f69..12d060c39bfc4 100644
->> --- a/Documentation/devicetree/bindings/clock/xlnx,versal-clk.yaml
->> +++ b/Documentation/devicetree/bindings/clock/xlnx,versal-clk.yaml
-> [ ... ]
->>   examples:
->>     - |
->>       firmware {
->>         zynqmp_firmware: zynqmp-firmware {
->>           compatible = "xlnx,zynqmp-firmware";
->>           method = "smc";
->>           versal_clk: clock-controller {
->>             #clock-cells = <1>;
->>             compatible = "xlnx,versal-clk";
-> 
-> [Severity: Low]
-> Will this example now fail make dt_binding_check validation?
-> 
-> Because xlnx,zynqmp-firmware.yaml is modified in this patch to add an allOf
-> rule requiring the clock-controller child of zynqmp-firmware to use
-> compatible = "xlnx,zynqmp-clk", this xlnx,versal-clk node inside a
-> zynqmp-firmware example seems like it will trigger a schema validation error.
-> 
-
-that fix is in 4/5. I will move it to 3/5.
-
->>             clocks = <&pss_ref_clk>, <&video_clk>, <&pss_alt_ref_clk>;
->>             clock-names = "pss_ref_clk", "video_clk", "pss_alt_ref_clk";
->>           };
->>         };
->>       };
-> [ ... ]
->> diff --git a/Documentation/devicetree/bindings/clock/xlnx,zynqmp-clk.yaml b/Documentation/devicetree/bindings/clock/xlnx,zynqmp-clk.yaml
+>> diff --git a/arch/arm64/boot/dts/xilinx/xlnx-versal-clk.h b/arch/arm64/boot/dts/xilinx/xlnx-versal-clk.h
 >> new file mode 100644
->> index 0000000000000..c64550471581c
+>> index 0000000000000..d0c4abf78f307
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/xlnx,zynqmp-clk.yaml
-> [ ... ]
->> +  clock-names:
->> +    minItems: 5
->> +    items:
->> +      - const: pss_ref_clk
->> +      - const: video_clk
->> +      - const: pss_alt_ref_clk
->> +      - const: aux_ref_clk
->> +      - const: gt_crx_ref_clk
->> +      - pattern: "^mio_clk([0-6][0-9]|7[0-7])+.*$"
+>> +++ b/arch/arm64/boot/dts/xilinx/xlnx-versal-clk.h
+>> @@ -0,0 +1,123 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Copyright (C) 2019 - 2022, Xilinx, Inc.
+>> + * Copyright (C) 2022 - 2026, Advanced Micro Devices, Inc.
+>> + */
+>> +
+>> +#ifndef _XLNX_VERSAL_CLK_H
+>> +#define _XLNX_VERSAL_CLK_H
+>> +
+>> +#define PMC_PLL					1
 > 
 > [Severity: Medium]
-> Does this pattern correctly constrain the clock index to 00-77?
+> Should these device tree binding headers be placed in include/dt-bindings/
+> instead of arch/arm64/boot/dts/xilinx/?
 > 
-> By combining the + quantifier with .*, this regex allows strings like
-> "mio_clk100" to validate, since the "10" matches the capturing group and the
-> remaining "0" matches ".*". Could this be corrected to avoid permitting out of
-> bounds values?
+> Placing them in the architecture directory bypasses the convention of having
+> binding definitions act as a shared contract between the device tree and
+> kernel drivers. This applies to xlnx-versal-clk.h, xlnx-versal-power.h,
+> and others introduced here.
 
-That's correct but that's just fix in 2/5 where +.* was there before too.
-It means yes it is possible that user will pass mio_clk100 and it won't be 
-noticed. But I don't have any reference that anybody is really using it and
-I don't want to break them.
+These are just holding constants and current file sin dt-bindings should be 
+deprecated as is done by
+
+
+commit f0ceedd52a69a8bf63778b1fe9e1c10e02ecd3fd
+     dt-bindings: xilinx: Deprecate header with firmware constants
+
+
+> 
+> [ ... ]
+> 
+>> diff --git a/arch/arm64/boot/dts/xilinx/xlnx-versal-net-clk.h b/arch/arm64/boot/dts/xilinx/xlnx-versal-net-clk.h
+>> new file mode 100644
+>> index 0000000000000..4a6add03c173e
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/xilinx/xlnx-versal-net-clk.h
+> [ ... ]
+>> +/* Remove Versal specific node IDs */
+>> +#undef APU_PLL
+>> +#undef RPU_PLL
+>> +#undef CPM_PLL
+> 
+> [Severity: Medium]
+> Will these undef directives work correctly with the device tree schema tools?
+> 
+> Since schema validation tools typically use simple regex-based parsers rather
+> than a full C preprocessor, they generally ignore undef statements. Could this
+> cause the validation schemas to incorrectly accept the removed IDs?
+
+validation is not affected.
+
+> 
+> [ ... ]
+> 
+>> diff --git a/arch/arm64/boot/dts/xilinx/xlnx-versal-resets.h b/arch/arm64/boot/dts/xilinx/xlnx-versal-resets.h
+>> new file mode 100644
+>> index 0000000000000..fe00f4a0ba65b
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/xilinx/xlnx-versal-resets.h
+>> @@ -0,0 +1,106 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Copyright (C) 2020 - 2022, Xilinx, Inc.
+>> + * Copyright (C) 2022 - 2026, Advanced Micro Devices, Inc.
+>> + */
+>> +
+>> +#ifndef _XLNX_VERSAL_RESETS_H
+>> +#define _XLNX_VERSAL_RESETS_H
+>> +
+>> +#define VERSAL_RST_PMC_POR			(0xc30c001U)
+> 
+> [Severity: Medium]
+> Does this new file unnecessarily duplicate the already existing reset IDs
+> binding in include/dt-bindings/reset/xlnx-versal-resets.h?
+
+as above.
 
 Thanks,
 Michal
