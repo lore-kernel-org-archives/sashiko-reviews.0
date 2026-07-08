@@ -1,118 +1,167 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013039.outbound.protection.outlook.com [52.101.72.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB6338B148
-	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 10:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783505452; cv=none; b=rGYw6zBA/s6pmBVmZSLrMHuPweBiYKiEOOu2RURw9VpYADehya1knPxY+fo8JIhMyrA9f+yxZyxGOYTM54pO+UPdoUxPMClskoTFNaErqntWedu+iuJA5i3VoUcKD/lhvoXefE+c1GHyRUREWjksQrNZEk2wZpfrORo126cPilA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783505452; c=relaxed/simple;
-	bh=ecF2cTn5AYhAAM68s9B/PAUIJM5SNBc7WXxDZmZ73mo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MBjuJMq30fgvHJPySkdKfHDGOznUKK98PfEC6bup2QgHul8MHluDz7YeR57vQ84UuqXR4E8bbKDqYNVy7HK1yP2tEGiJiEj/ulNMVnisWx98UZh7j25Wys9Q2pAEGrh8+tQ4EJt+IICJPI5PkiYCAS427kB7IIuiwmgzeZLMS20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=KB/waLCe; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993D03F4DE7
+	for <sashiko-reviews@lists.linux.dev>; Wed,  8 Jul 2026 10:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.39
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783508230; cv=fail; b=QheOCP/2Wduw/mGJ+HdCfZenqo5moFnWCm6WscSBUubUtqyi/myz8BGgmZzuy/SQeGuyLWTg3A2186S2qLp5P5QERZ0Hl0XMmymrCm/omaaMld3MfSKZZsCV3wYs3xd7Y0VARLJkJSlrgGJbEqNUp9/e2u4mSlaSderwHCNncjw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783508230; c=relaxed/simple;
+	bh=vJCAQgjjihtxypARHHq7GievtqoJ+ko7HAz1LgelI1g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=YMKwGL+GczQjSGKf4vE4EPK3gyL30j9WNjFaIhvsiArv0OFIEuTtP6crTNNZG7AtDYXG7hwOmRz5Bgq49KkMp8ocbB4KIv25eSLykRZkO1ayhYG2JHj5NjXjhCg00W9L2BeJ+AXcL1HJy+5yse7nFwG06HcBvjMeMM6fnfbCnEY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mt.com; spf=fail smtp.mailfrom=mt.com; dkim=pass (2048-bit key) header.d=mt.com header.i=@mt.com header.b=hAIuIWT9; arc=fail smtp.client-ip=52.101.72.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=mt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="KB/waLCe"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490cf322ed0so2748885e9.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 08 Jul 2026 03:10:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1783505449; x=1784110249; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JNhfZKXmPDIRApTD3u3cceCo1e7KoMWEMGSpd5WD324=;
-        b=KB/waLCeCrJmU8wAebFD+q4h9U94rMHgvLIeNiZIV6hcFxOcpiX+9eMwdnJ5YMupC5
-         zgggsoxYnAgk5u4QdPgbFAPtA8RVTNe/5XqyiAK9cSYRe3+ZNylGIX8ZOsROHvkon0SI
-         DlVKigj0OoeG7nEuQfkgLubk/ZCoy0zQuBI36rKBk9PbMK3Euk6w2WSUKE4wJ3IhvZ67
-         7kIFtxQ0SST9bRYXLDgHi7cu91mE3df/bklM+kkrqGrtc5/FyM6rYQfBkQ+DGP99vFp4
-         b/ndrkA+AwdWXm4a+CcVRtl1qhBklsq484M3sTP11OqYVVP6AsproqiOITIRc6R1bXGI
-         PYMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783505449; x=1784110249;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JNhfZKXmPDIRApTD3u3cceCo1e7KoMWEMGSpd5WD324=;
-        b=WfUZfw2/uDsZq0LUQzpv6khtkBrc5MxznH9sM5avTGKSfxqyrsiw8b2KlXO2VWObqc
-         GieYBfH+8k1x7G86nrsYwUMPZRAhEUcF6t9B2xhjAu80yiM5Btl22mmSlCvGEuwaXZHf
-         v0A5L1kWZeFJil76cz8ryWjSu1vMB4e7jS1HQH8IAS0bUZYZSfUPrBE8Al0iDl/+SHOZ
-         bOQbV+BLsGXs49F0ArZ3hlhWzjJsT13LsFd3eZ1iew4pQ7MbP9xDoYYPbojpcPimw+u2
-         vOn5+b/4vcQ8RyE3+Yl+jfknmeWNuHDyUD1mnYHsLjh7jRETCGKvCzQUHuNPRZjPlpHa
-         xObg==
-X-Gm-Message-State: AOJu0Yz1KY97Exy0i4UJn3QNsPB5VjPeonqiHHI3hxB1OcyQWtETansl
-	XUbiZ6/bjxtw9a5VClJf9bwZzRtePwG+LDojP0f0LG3ky0o/lwCiMtLno0B2nikLTWinoa1iry7
-	ZKFiNV9c=
-X-Gm-Gg: AfdE7clSxeD1UO3JB+qqlAhGIAAawrc/Q/SCLkO9P7bY3HElcs0erHK4a81kTHp5Cz0
-	Ut8ru8zcCC4Ig41YW10k3gEjPft9U+6/Pe56Q2ywGDDRSgvY8lB1oMpd1Yk087WC37o5H8b26Dm
-	6GlzEcc6hsvsFayxc32ONWZnK2F492HZZHVg3NEft1sCCGeuZoQTjbaruT+uIka1KAo8DzVX+Rx
-	HsDyQfv9hb/myGblxhpSnX4TYXNVfRioUtFlDIWkNC9Md0q7DqTTfS1Dk6vRCokvvWFNYwWQuXI
-	nmseFCLdVxMJQ5Mc2wLM0JOkqlv5qn2NH0LzlI6onTLzjuw5hbQ187Hlt1cFU7NUdzCzrz6WmFD
-	ux2huSzN134cTaWwBhnoUSsnFHKWvRVWjOOM9viPjGp99JHv13K/2qmInOf+2KIoqt2D8evctK3
-	/j1i0GPZ+N1paBbxet1Gvp5wMucqdmSU+GIg==
-X-Received: by 2002:a05:600c:4f91:b0:490:be14:bfda with SMTP id 5b1f17b1804b1-493e6859a48mr17703585e9.6.1783505448853;
-        Wed, 08 Jul 2026 03:10:48 -0700 (PDT)
-Received: from [192.168.42.79] (nat2.prg.suse.com. [195.250.132.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493e0fbb410sm130766595e9.12.2026.07.08.03.10.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2026 03:10:48 -0700 (PDT)
-Message-ID: <883098de-dc3c-4c72-abf4-75b67c0c3351@suse.com>
-Date: Wed, 8 Jul 2026 12:10:47 +0200
+	dkim=pass (2048-bit key) header.d=mt.com header.i=@mt.com header.b="hAIuIWT9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RzJQnuKutMvNfw3+ANjEeU+kKd1XXWVigJt2JcB4LSBwgy6fAzAQNPY3p/CgGWo1MQxD8IT3qcTSi9iuRDHj/KB8T78DEtS7c8rxEtp4pGForeO/mP5e4QhJYmHhujvhvHTFRuNvfUMaRi6mKXzjFdaJSKJGDCWcKi13cDzNPZtdUh1I0JG/EDbB3jPequ06tTRcERwUMwQjeHABB8RavHsvqm+3JqJusnBcvQTTpPx2E/AMXBqpTrQ6zL+lxOJ8R6kTt/flTDr0UNQ/u3oiQzL277pSvlrWF5MAkxTZ9e1tKbdH5cKZRTQH2P3z/oFgaa/cC9YgXYYJRwCDIL8kEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=g8chOk6hWGGKDra0zgAKlWr72IBn866d9gmr/jHsXvI=;
+ b=QK48LRcCt94qk6Mpab+6zKcH6jxiy5Q2MV5ZQHQNoPqxnttNTxhq4jwYCRRgTUUuRWpEp9HdYzjWLSESYPTxAXpd8IQibvTgPMAS9niMZl1a/N4jKFgfuXkrcGdbFNtusB0EAu9h6R7IYfiqZRKnaD78TSSc9tgjyqlRa80wkV5w5SDLINYjeAFoxBuEmjghOTSc1bCaC9aHusK7MCpwc+0FUNyh2qLnFOlj+1Vi0MfcrjTUvlVNf55UlONEmdKH3143K2UyZgLabm0ZIXPgKBOKniIx7uCdhdS2M+9VTFReDNPePE40sexhLYXx+rEOITcYD0YUc20ENO+0IktfGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=mt.com; dmarc=pass action=none header.from=mt.com; dkim=pass
+ header.d=mt.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mt.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=g8chOk6hWGGKDra0zgAKlWr72IBn866d9gmr/jHsXvI=;
+ b=hAIuIWT9Zy4ise4HV8GagCOMznet8kizyKtgv5asKt6tEt7OsRPj7ESKu9aeRd33d9ohhS/g+Cjpv+hHZ8XmC6sdALU0/+c2EMC9rTdptBW05H3hMVZ0gRWMKt+baPFrRl8+TkU1srf2OVBqyGheErk/3aswYM+e7A/ClmKmUnwIu+sqe4lpbKLVjTm0eYv2cDJCvnQnvS5+K5KVZsUKgzwgLJx4YLJF1S1oL3SXu2AKBlYXPTnwlFLrxJBRtRcsaqOE7gkR6DnceHPeSWdGOM73pcrZG7a+0UxnBs9/LKYA52865bONHelw+mlK9V+uBdOEI4zeTfc/quMxtA2WXQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=mt.com;
+Received: from DB9PR03MB7180.eurprd03.prod.outlook.com (2603:10a6:10:22d::13)
+ by AM0PR03MB6131.eurprd03.prod.outlook.com (2603:10a6:20b:15b::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.14; Wed, 8 Jul
+ 2026 10:57:01 +0000
+Received: from DB9PR03MB7180.eurprd03.prod.outlook.com
+ ([fe80::6fd2:12a9:4423:8ddc]) by DB9PR03MB7180.eurprd03.prod.outlook.com
+ ([fe80::6fd2:12a9:4423:8ddc%6]) with mapi id 15.21.0181.012; Wed, 8 Jul 2026
+ 10:57:01 +0000
+Date: Wed, 8 Jul 2026 12:56:51 +0200
+From: Wojciech Dubowik <wojciech.dubowik@mt.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] dt-bindings: display: sn65dsi83: Add reverse lanes
+ property
+Message-ID: <ak4s828nftsdeKx2@mt.com>
+References: <20260707070244.230546-1-wojciech.dubowik@mt.com>
+ <20260707070244.230546-2-wojciech.dubowik@mt.com>
+ <20260707074500.CAF1B1F000E9@smtp.kernel.org>
+ <20260707-aching-clutch-a71a6492cde2@spud>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260707-aching-clutch-a71a6492cde2@spud>
+X-ClientProxiedBy: ZR2P278CA0044.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:47::6) To DB9PR03MB7180.eurprd03.prod.outlook.com
+ (2603:10a6:10:22d::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] tpm_crb_ffa: Include linux/slab.h for kzalloc_obj()
- and kfree()
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
- linux-modules@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
- linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>
-References: <20260707153819.4172541-1-petr.pavlu@suse.com>
- <20260707153819.4172541-4-petr.pavlu@suse.com>
- <20260707154337.CE2901F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <20260707154337.CE2901F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB9PR03MB7180:EE_|AM0PR03MB6131:EE_
+X-MS-Office365-Filtering-Correlation-Id: 65dc3463-8908-47ae-d05d-08dedcdfa391
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|19092799006|52116014|23010399003|376014|366016|22082099003|18002099003|56012099006|4143699003|6133799003|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	gnrOkLoj57yJCdRuS+K79YPs3GpT2ktlYT0bvdBI7SPPgVd+SL7HbXJHF565FltW6dzoPmlZQX66K3NhDrJNy8b4HFRQyafXipHqWrRUDLbqmGt1y5LtYXrdotgRyXYAROTUxFauijEIVQv7aF2PgyHBIykvWZA0fT9X9U89g69KCTQj5y2t2CNnRYXKTgMsZNpJdXAP0XOYPH9AXCOhrzbdslHZ1FFeAsBsaSJFUBs6GSu9sELUe61/lWZFZurHFPgcYPTUmkCWlrouI/CPqWevDUnEpilTYHdZuzDNbH9qMwBhk4zpXU27PwUd+5mnnUnFiCmgnU5R/LTxqCSz5nxiy+kYrUXwNGMHELsko8gCGe+Q5UPmqYQ66hNAG6UKBB6RT8HaXlXgJdQG0vh9SH45jhh3jV4Rml2Ck/cJSujv7vJaBnISBRF/i9YM6uUAlth7TFrW6mJu89nR5Du4Z6KdidcD73zAWpz06KMsBwlhiasGvLIu1SD+OoRvQY0uNFnCSxLrMybxRzE3e43lTEru8yww4wS740GDX4S/MPAEWeDsjvidFCp73PZjZxtxEgYjW2qjyH5KUQDqenOY2wtKLYW2oHuuMbtkv2um0LYOu1JIKcCq9jsjEJdeX7jg4PmmeS2eu5c/e4Lxvc7lQYTbMY6P8UeFYO6erYKVYippVq/zm7ovUNFgMSBRmwSge0jSi9q6W+zG7wPUWhpYxg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR03MB7180.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(52116014)(23010399003)(376014)(366016)(22082099003)(18002099003)(56012099006)(4143699003)(6133799003)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?sOivttG/nCLEgwhE6lnraPd5TDlOS4ifLd8AvnZ6aWpwrxQKhY5ex0Ufiwyr?=
+ =?us-ascii?Q?2YG0wje/zaBw9rOeW5s5GCqiKsdQzZpty7XR2CYDT+RYHc1h7QIGIfaC3LYF?=
+ =?us-ascii?Q?41DkTYiF6SzrOtnmVm0BbyJoEoarMJnwPzVoyTJmNHJwNl45koXmlS83WbNg?=
+ =?us-ascii?Q?A3V9UgZTLqhdUpGrShPOJS+OMvT+rb+5jT1JWNnWZOe3t1iXSwKMs5ghYh/3?=
+ =?us-ascii?Q?JABIpNQ1znBFmXMkKbxdlRmg1/sNbjdTbPdnFzrapuDV6hbdVfy9zz3MSEDN?=
+ =?us-ascii?Q?qc8Pi+Sor0Nn2xyjY523ukZhf8CzkxbBPFjGCwb9WWZprCx9koKYuzaPn6sf?=
+ =?us-ascii?Q?xu4sjh1nNgz1kRq3/basENDrng4FF+592TMZlBIno+bbqOl1vv+l6QnSTumB?=
+ =?us-ascii?Q?ha+6PY0fExlcrxzFPZfsERko7felpZxxbT1AXyrTo04VgCbbrZW5T2o71j1o?=
+ =?us-ascii?Q?yAqzKrKr/6ozwyzN8EaxYUyegf+IcyCcBORwUklmNQ1PAnabsJitE2qkeAhg?=
+ =?us-ascii?Q?RdR7JG+c8oaaAZj0gNutAgKM4YfMe8pGdQq0x1SadDtJZF/kW00nqu55Yp/J?=
+ =?us-ascii?Q?apVwNQjA8ppaCQtTnwMJXOtYX9KtnFdKMcuYRdw9IHAT5q24Ic93U4uZ1FRz?=
+ =?us-ascii?Q?O6snb0dT43UygfDqbmuflzRS366dBRmm3Hn6hnc3hlyr2P23Up2cQcP2tZAa?=
+ =?us-ascii?Q?blN0JOPyNkpG0D6ikrk07kypWzu7TP90sp0D+Gf2g58N2l2rZ0RmajWwkQ6o?=
+ =?us-ascii?Q?5eonie6NK6U3VhBj0a8OK/DHxICNzlVrnzxggSRWN1Bf+gcE/R/ptbPxn2hD?=
+ =?us-ascii?Q?sJyfJv7VnDOvG0TE3lEIBh/pJyel3ry5d3/9MsYHf6N4CD/xuxfbFzF1ltst?=
+ =?us-ascii?Q?pA48Xqw66pFjnRw/ydrrR8w/TJu52banJQQgId8F28CvRPGUJKro/dcJGR0I?=
+ =?us-ascii?Q?fzb44RdspKHybx0bpBsPasD15L1JC33GUa8Ymb3n3AG0wGcu62pwq3MtFxLO?=
+ =?us-ascii?Q?tk/J0eeZSsILe6aEz3B3CIuotTGOtfdF2rZ28FpvypRfqMgT5tT+6RQ5aHip?=
+ =?us-ascii?Q?iwNwZYm5IAhNztudZ+Q6bcFHQhu/Mgs7pbPjAVG6TU2en6vKpoC589N8EwU4?=
+ =?us-ascii?Q?0dJV3xvflMXpGFRin8kuMKLRoBPG4w8d5ZfBch2TwGp6JwABaLD0D8TC3qa0?=
+ =?us-ascii?Q?oOZ53go1BbCn7ZKnIeSryKq+MX0sp00FchXuKtFKSB8NKHM24i5f1bWwPhsT?=
+ =?us-ascii?Q?ZIIfKBcqFsPtBf4WOe4+TtoF6njcDFg5BUCD7EsZoSR15evWjW+C7jNEFSgd?=
+ =?us-ascii?Q?pdXbt+U5eLPJ0GOJVC8xzd7bU7bnsbzTKYSuT8lk1YKWoxRueFzr1iOKpMVq?=
+ =?us-ascii?Q?WMBo/0nP0+o3jI7KlOIfHgIvvP463sngFReYTKtxVCtiD2ByiJgbZqy2ly1s?=
+ =?us-ascii?Q?yXWpk1lG8Sx+3SYNSfx2UKayL6hxKSFTe7XvR7UMJySGIodK8P8sHvdU6jq0?=
+ =?us-ascii?Q?w2Rz9dByeLKkOZaogWvBZlE4oHjTQSP/a0TuZkByn/VjyD0lFwbsZFyXo7fW?=
+ =?us-ascii?Q?lhzGmu42YXSI+0BknYbROrooPBB04TbEsoWPUSVOonbleH4chjgi/0FHKWer?=
+ =?us-ascii?Q?FFSPMkHnr3b2gq+i548wVwGUfRSZsuHJaD1oZFfLqCItRaYYXMqa7e15HxmF?=
+ =?us-ascii?Q?p0ubmn06yqnMusBT9PYoEEvdZuH1pAANdrxvaQhZZFu1Vua2FG2gBK3sj09q?=
+ =?us-ascii?Q?QmaeNsUhvg=3D=3D?=
+X-OriginatorOrg: mt.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 65dc3463-8908-47ae-d05d-08dedcdfa391
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR03MB7180.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2026 10:57:01.5251
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: fb4c0aee-6cd2-482f-a1a5-717e7c02496b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OFfJpUZtQNcDYni/24lLUd83uCFbqnRlrFikaigoFCADa6Xl4ExwLGfYuaKDJVg6OHL14kttXENxnrr4anijrQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR03MB6131
 
-On 7/7/26 5:43 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The commit message incorrectly claims that the file uses `kzalloc_obj()` instead of `kzalloc()`.
-> --
-> 
-> --- Patch [3]: [PATCH 3/4] tpm_crb_ffa: Include linux/slab.h for kzalloc_obj() and kfree() ---
-> commit a56e4cf89267d12126bd70f7981a05c846959016
-> Author: Petr Pavlu <petr.pavlu@suse.com>
-> 
-> tpm_crb_ffa: Include linux/slab.h for kzalloc_obj() and kfree()
-> 
-> This commit adds the missing linux/slab.h inclusion to tpm_crb_ffa.c.
-> It removes the reliance on indirect inclusion through linux/module.h.
-> This prepares for the eventual removal of linux/elf.h from linux/module.h.
-> 
->> tpm_crb_ffa: Include linux/slab.h for kzalloc_obj() and kfree()
-> 
-> [Severity: Low]
-> This isn't a bug, but there appears to be a typo in the commit subject.
-> Did you mean kzalloc() instead of kzalloc_obj()? Looking at
-> tpm_crb_ffa_probe() in the driver, it correctly calls kzalloc().
-> 
->> The drivers/char/tpm/tpm_crb_ffa.c file uses kzalloc_obj() and kfree(),
-> 
-> [Severity: Low]
-> This isn't a bug, but the same typo is also present here in the commit
-> description.
-> 
+On Tue, Jul 07, 2026 at 05:21:19PM +0100, Conor Dooley wrote:
+Hi Conor,
 
-I don't see a typo here. The code uses the kzalloc_obj() macro:
+> On Tue, Jul 07, 2026 at 07:45:00AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Low] The patch introduces a custom vendor-specific boolean property `ti,lvds-reverse-lanes` to indicate LVDS lane reversal. This is a device tree anti-pattern because the referenced standard `video-interfaces.yaml` already provides the `data-lanes` property for this exact purpose (e.g., `data-lanes = <4 3 2 1>;`).
+> > --
+> > 
+> > --- Patch [1]: [PATCH 1/2] dt-bindings: display: sn65dsi83: Add reverse lanes property ---
+> > commit c30eea01a74188461b7e527f71d282d68b885ec2
+> > Author: Wojciech Dubowik <Wojciech.Dubowik@mt.com>
+> > 
+> > dt-bindings: display: sn65dsi83: Add reverse lanes property
+> > 
+> > This patch adds a boolean property to reverse the LVDS data lanes order for
+> > endpoints.
+> > 
+> > > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
+> > > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
+> > > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
+> > [ ... ]
+> > > @@ -115,6 +115,10 @@ $defs:
+> > >              enum: [100, 200]
+> > >              default: 200
+> > >  
+> > > +          ti,lvds-reverse-lanes:
+> > > +            description: Reverse the order of LVDS lanes.
+> > > +            type: boolean
+> > 
+> > [Severity: Low]
+> > Is it necessary to introduce a custom vendor-specific boolean property
+> > for this?
+> > 
+> > Since video-interfaces.yaml already provides the standard data-lanes property
+> > which can be used to describe the exact lane routing, does this hardware
+> > require a distinct property instead of using the standard data-lanes
+> > approach with data-lanes = <4 3 2 1>?
+> 
+> I don't know much about display devices, but this seems like a
+> reasonable thing to me. Why would it not work?
 
-https://github.com/torvalds/linux/blob/v7.2-rc2/drivers/char/tpm/tpm_crb_ffa.c#L339
+It makes perfectly sense. I am working on it already and will send soon V2.
+
+
