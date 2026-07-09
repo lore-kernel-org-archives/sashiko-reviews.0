@@ -1,194 +1,142 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010052.outbound.protection.outlook.com [40.93.198.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5394218AA
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 16:28:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783614509; cv=fail; b=GEi8xRyWXrj+hcU3gnOxEIL601JXSAI7sPhFiuRoyxddXKjbWJpCs+PTYDvXOUr/7lm1ct496/B/jwL7l2Q+ak3mrAmJpPQ12p79AKMZVKiYGD0jU0zGC/aAIYrL6qQ4xN6HHkXVM5fgUMF1Z9r2Kodlo4sXHrUzVSlhGtT9MKE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783614509; c=relaxed/simple;
-	bh=HpGBP4dhjPLFtIzumuCaG8xy7bzargHiRvf7y155NeE=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=S+S5NW+VQ2cSExIOhfLq3EL3T7/m1pYLyzwUV5bvmBtTlwm2YqPHx+INaBvnnnOHZxnlWxJxy+cNGDRlZuCFAzpIqiaRMeAc9j7Pj7lPBDGrv4LXGiro+kSgRgaz9LGPZhVQ1L6jgTUtMpdf0Q4LHAJ/qZO/snjNZsQAN3Ah8As=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=5l9LqgI7; arc=fail smtp.client-ip=40.93.198.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC86347DD
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 17:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783616512; cv=none; b=urqA3Yi375Kin2Goc46qzYkfLdqPCgqxWdAdKy9yUc7wKyVhimiS8gaGb6J35qOVCWIMjPRH0xHEf2CLM9BlHS/vFGfJZZ9GwxX25pYWVBYUqx0bmyxDsx1Z+zMbD5aQKUBN7OsT19hA+2jnOLP1/tK+S/rOaVK0OBQ0GJJJq9Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783616512; c=relaxed/simple;
+	bh=6Zs062YLjdIDYSIt85dGwPx7Wguj2rJtI2noO3I3+3E=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=fEqZ1m3PEpJOwxH62zi7E6W1/oq7ltA8jQbfd4Wor4zWgNj2W+ndKkXFecIdL9+F1RvGFdYmBV+xeZAAVmBnushhMmSUgKVa/DmA1oJ1Ci3ZuHBumIYHAg+BiqUCOowaTDg/wiNocaG24U6B3LoYoBhCkBG7yUxoiI/SNB2juns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rkvJ1Cuk; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="5l9LqgI7"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=D8G9/eMZfcyRQB7pFm9hyB/THTyV1RVQmvro7pBeSmqeu2FVRKl1q79QxPK6lLP+hJv9YYJH+eEa4wC8OIPVHJjCH35domIglubwxnH+mxUzKsMJs7kv4ueuBggcEEdZPds1OLWVe/sDVhfTN6lQFdbfvg6pTEmyei81amTdqrowMUCliO8LO5Spxygp+dloArP9tH1NfpyhS16AyF20JY3AzT89GsMKVIN8S5lQukTA2x2cpVpfQ2G0qYVDwTL8asynOcF08y+XVqWB7S5m9JQXx8G/QPlNy4p1KhXptm4JvPRkN/jI+GOlU+ap7cTRZ481JCFKGqRweVBbbb0QTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iMqAXhNaCDcvF1RkmUDESX2CkwH1OgneyOrVtJPOip4=;
- b=ehFDN/Jeep7mLxi+ynMe5chIeRwlexfvwYyPdB1LCRxO3qE8ijBat/Gj/56sN0RpbcmTO35ra+qy+gqs8HeLANMRPxHmh5Z0nOv0leJOHZ9zGKE8zG5ce6ofw5Jk/VZS8d3OEmWqePFYOnSMD1R6Uzc/pPjD2Cp76jwMwZNVOK70vhVxcaE+yxGglyjmb/S9o9GyMtXdkzOGb/eo8/cPwMn+E6ILIYuuphRRFM8RfzZbmRjLI9qSFynnp/GcIevxmDb+ZHmgFRgKEizfwQ+PKQWoj04EMcSWmflUoXyikD3fb+jPu1UAOzcIDQNPpM0NJW+vwqaqHh0qIUmapibG1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iMqAXhNaCDcvF1RkmUDESX2CkwH1OgneyOrVtJPOip4=;
- b=5l9LqgI79Vbld0qOOq/bCvxy85T2MqArlwLhG90yv97DignUg6i+Dc44cVb6ip1V9ifNSnPCSaoFtXs03yjkBXQf2RHUJOBj2TweWTMX0rAjhaq2BBKWMa6/5EmLGmE38n9qqdRVEgINHUoQ9++jKappiCa5cnBOoUZEcEgL+2E=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SN7PR12MB8147.namprd12.prod.outlook.com (2603:10b6:806:32e::5)
- by CH3PR12MB7595.namprd12.prod.outlook.com (2603:10b6:610:14c::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.16; Thu, 9 Jul
- 2026 16:28:24 +0000
-Received: from SN7PR12MB8147.namprd12.prod.outlook.com
- ([fe80::3923:c1a4:778b:56f2]) by SN7PR12MB8147.namprd12.prod.outlook.com
- ([fe80::3923:c1a4:778b:56f2%5]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 16:28:23 +0000
-Message-ID: <4d4d27ac-a39f-4c5a-9880-d64bf72b60c8@amd.com>
-Date: Thu, 9 Jul 2026 21:58:16 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/4] dmaengine: xilinx_dma: Extend metadata handling
- for AXI DMA and MCDMA
-To: sashiko-reviews@lists.linux.dev, Srinivas Neeli <srinivas.neeli@amd.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-References: <20260708100652.603074-1-srinivas.neeli@amd.com>
- <20260708100652.603074-5-srinivas.neeli@amd.com>
- <20260709101124.AB3561F00A3E@smtp.kernel.org>
-Content-Language: en-US
-From: "Neeli, Srinivas" <srneeli@amd.com>
-In-Reply-To: <20260709101124.AB3561F00A3E@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5PR01CA0046.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1d6::15) To SN7PR12MB8147.namprd12.prod.outlook.com
- (2603:10b6:806:32e::5)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rkvJ1Cuk"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-380a638fb5bso115534a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 10:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783616511; x=1784221311; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=r3gjAP/3eCSQHeg69MkcqiPZ51yScaerja/WG4n8SwM=;
+        b=rkvJ1CuksU1pLeFazlhVyL7sgfG2/zpfI9sMF4S4h0hcBHo6CWyCh8skJ2XXHMQR1y
+         4xegT0l4JOPHrwuXxC0229aYdmY8VR8jjW0imoFjRpvb9YMvpPTaCbtjmw7Tkp1QYgMs
+         +yoCcpsH1zASN4VvzWG7hzSID+FqwfAj3aAkLpNU0jQNOuCmRW26HtZ1vEq0V+vs4uew
+         ehrfuwJ1iXYDAJdp1aBw3CPv2xgdYgyWFHnmr/pWJFmBHsemYfBzEsAZWEld2vuHTtbB
+         fM+2PQSRZjfuaKU/TLyMorXG3WnN/d13N1s7DMpN5k7HeGhOPCBh9X2SwKaf09p199vV
+         L+Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783616511; x=1784221311;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=r3gjAP/3eCSQHeg69MkcqiPZ51yScaerja/WG4n8SwM=;
+        b=etG+OyMJEtRQs7ExaOg9EoPNeYBEZNurm1vfqju+06NZdxKknW/M/X4Sc+a8xTxL82
+         Xf/RhAwRPusRVeJTD8F27yxrIElu7tMzhKmH+4R9f5GHDWvXQTXZrbbw/zsl7wMcd/Vp
+         qKavA+2xB2a7YYRAxKUUlvMc9nnC65pRM2l/EwaiVa5AMfKpTeSm38FrbDy8r6XvvR7K
+         YzOFzgvCXueXyBIf0cRictgdwtPJJa91IpxNjt0pws/UQUCfYgd1G4aKJCFiklQdBh5J
+         VT4btNjjn6r2BCiyLRvX6er/zBS/fG7btXOFxxr/r9ErSUU21gYeA0D6asXeKGEhGP9a
+         /E0Q==
+X-Gm-Message-State: AOJu0Yx2T0WBupQRGzWDkQ9zfy4PRiuEVIArawrcsBUa5keFp6P21DOC
+	1GPIES1jXPdkv/nqBNjc5vQuh8MdyDAip3x+/B60xGiQ3JwLzq62D31uANonDK7o/+XWpS14VEk
+	6qdXZAs2cne5uJWo3Nb9H/21Y6BPZx+KR381sg2z9KyNM5Tly8xPgRia6I4k+hrWUfI7+RCLENs
+	b7VQ6xBRrg4geMbTs+yPrIiLD06TWqMrINHKTU0s/Tnt2sgCT4
+X-Received: from pjbqo5.prod.google.com ([2002:a17:90b:3dc5:b0:381:ef4:4373])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4a49:b0:387:e0db:bc2b
+ with SMTP id 98e67ed59e1d1-389426933cdmr7799692a91.43.1783616510499; Thu, 09
+ Jul 2026 10:01:50 -0700 (PDT)
+Date: Thu, 9 Jul 2026 10:01:49 -0700
+In-Reply-To: <20260709055321.EED4B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR12MB8147:EE_|CH3PR12MB7595:EE_
-X-MS-Office365-Filtering-Correlation-Id: ebf8a504-1915-423f-ee0d-08deddd71849
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|6133799003|22082099003|18002099003|56012099006|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	fB9lu521VksBU1/Ii+xW9pfcYzLuaS1s1OKIbltxrcNbIvDkQqF+NO1eX35DOOrVfXo0PR+y077pNtZTMC9IodO6QOePOxI6bI0ZAE5zRsw1revS9zVJnyViMkk6iVIqveX3wR62PA5jOcI1RlRVJHFM+BG+Sofc8fBecxnodyqbh59ZgJDlVh/mcnB+gJZb/HNkszYYYK7snpafpkIVCz+Kl5hUtKATPiDpZQbinsxNOXfYaT/kSwoQTSWzWWerur44v00cb9CFOVVqZS40ByjU4BFwBOOUFgfAJot94y6vtaJ+oIAHXXN55T1qRoeK3TUMfrwVL71UmI8SXzlFFvApDw5Py2kOt5HFGoHTLJ0QnFY+DfzsBL/PJBUhxUtctDne1K2rOrC6vu49cNka42DM+nPKkuRTTCJe5T+ru+0Jr9cva2G8h63DPnlAWDMBLIqpFITARVDmamWyLu4PheguWFWr7/w+bxV2YeZeCau9qrOtkK+SyG8sBjrgcrGmNg0kctWD6XLR1Q5K8SmRJvLmw3bnm3LHqYTemzeX3sOw8IJvjHiUEn6fxZCYsxmqDw8zHOJXG5yeQducwn+L5YsjjRgDxurmYym8mKYPZVvDLhQBlvtKZIWKaiT23YzGwAeZKFhb+jAAMFIb2vpOff9pG4/xdBEpCMmqwvEQZQc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR12MB8147.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cW9Vb0lER0FONWFpYWUzRGZ6aWNuWEhRNWlMQ1hYYmZlYVBpV0Y3WUVEaHE5?=
- =?utf-8?B?bVlVa29rK3BYbjE5QVlqSGlXTjlQb0ltOGtzTVFGajBhNDVSakZRVWpVdUxB?=
- =?utf-8?B?Y2dSckt6c2F1Z2hITy9oVWpZZnlua3g4MVQwUnUvOEI0akZCb3gwQ1lSV1BR?=
- =?utf-8?B?QmhJazdpcS9YT0dxNjhzWHhmQjRKekRGT1pGaDRYUVRtTGQxb09IWVJQZkJQ?=
- =?utf-8?B?N3lrRHJBdEFZQU9OajUxK0F6RGZyamI2eUtMQ3VOZ1F2OE5pd1VWaTVLSmRm?=
- =?utf-8?B?a2R0YlVsWEZBYlBWN0ZpbUJ3dXJGbjhsYldIc0ZjdU1hRGduYUtYTEpYaHpm?=
- =?utf-8?B?dXhPMDJXWkdob2F4ZnVrekdNdUJyNGdwRktIaW9ubXJrb2pHM0k4dzI5TDBz?=
- =?utf-8?B?RUtoSzdIVm5ROHN2emcvR3BMbWtLZE55WGZyV01YQTRDRzd0M1JYUnVrWmo5?=
- =?utf-8?B?dGY2TVEwcHZidXFxZkJnRFJxWkRjM3g4YmNMQWdMb29scWRXVE1MYW1ONU1D?=
- =?utf-8?B?ajlIUlY1R0pKUGlLWkk0OUFnN1oyU1pLbWpOUXo3MUNJaTNkbGJlYkRxUStX?=
- =?utf-8?B?cC9xeUl4ZzN3V0NHL2s4YUVFNUtGK05NeFFMTldEVzFqSUZxUmREYUU5a0V5?=
- =?utf-8?B?S2hYZFgxblQxYVduV2daQ2xjdVk2YjBYUmQ5aDdtS1FuWGxpTnU5Y29HcURy?=
- =?utf-8?B?S1RoeTJsMUFQOFhmV2N6Y2kycDV6QjlhWFpZMGhleHJQYVdTNEdqUW82eFIw?=
- =?utf-8?B?dWx3UjV1b2xQbW9mSm05MDZzZ3hTTkJlSjdhQmE5MUxvRi9ZK2FEM3IrNDR5?=
- =?utf-8?B?S0JJUnFLeEZCUGdVSjc1Z1JzQ2ZhYURsYmxHMEUycCtnSFRLU3JHMnZUU1RR?=
- =?utf-8?B?UVRzbVRPSktNSUhQZGQ3V29GMnNMODQ0Q0JIcUp1Vytic3JWbVZQOHBUbjBw?=
- =?utf-8?B?TGFydzZHVVdjdlhjejRZTjZrTmZQVXdYbzZTWHdpSmdEVWpYSXFpazlRNXhs?=
- =?utf-8?B?dU5SdWRnY2ZmemQyampBU09XSXRxNmo5U1drS3I0MDNlNE0xWUh6OTNkZitE?=
- =?utf-8?B?cVVpTHZ1SUc5MVJ2a3VoT3cxN2p4cHlOdGl4QWRBbEdUaCtJdzNMaGFMakNo?=
- =?utf-8?B?Y2VXSThpeFdrc2dlL1l2N2ZUYStUMDBWWFE3Qk5DVVd5eGlER1JIajFVNUdP?=
- =?utf-8?B?OTVHZjBRYTFVL1oxVDl4YzZwOHhQcVE5NGdpOVBPV2IrWkdubjFUMk40aDMv?=
- =?utf-8?B?ZmRjT0hKeHduTFd3TU5XSzdUVG50VTBHclU3MEZhV3gvUXoyQ1IxaU1SVDQ1?=
- =?utf-8?B?K0E4L1dnVC9ndHh1N3F3VmZ3TGRlbjR4TVUrRklNVy8xNWdaaTBiZVFVOWlM?=
- =?utf-8?B?OEw0M0RyK1JFa3JLVGRqRE1aKzUreXI4RnBUQ2RDYmo5c0tianQ5OFJKY0U0?=
- =?utf-8?B?eEk1NTZzb244N1FDTlNiLzFTOCtLVmx6Z0h2N1hvSkVTeFVXVndJUGRTTTl6?=
- =?utf-8?B?ZjJlNWdmQWcvcGIxMmZXL1hwQUVKbWErcmZoU3RwbUp6L1VyTHJCRVRpVExV?=
- =?utf-8?B?d1ZUQTh1aHlzUHV3TlI3WnpISVpVSjdzNmhkV201Nm8zMEZ1MGVrUHA0Yld1?=
- =?utf-8?B?amNzUEM0bjBKZ21JUzVSUnp1b1lzdUk0VElrbld2VEFlZ3d0UjhTbEQxb1gx?=
- =?utf-8?B?NTE3SGxISklqYnh2S2tpOXY0WUR5akdZd1pmWlBoNDhLSU1QaGdFMDJ6NDJX?=
- =?utf-8?B?czlHbmRIeHI0MVY1c3A3ZTAzVXA3VmhMRHNIZGJydWtkREY0V1ZvTkFRem5W?=
- =?utf-8?B?S2VkalJDKzhmWlBHZnBKZ0gxMVc0aUkzVUcyS1ZDRlc2Rm1MMEZqVVVJVCtB?=
- =?utf-8?B?ODZQM3kvb3FPRnRiTFExTjI3V1VhK2RocFMzQ2dyYWEzbGROODNZd2VvUHFR?=
- =?utf-8?B?Q3pWZEs1SFBEc3dyZDNuR2tta1pPTXJld0ZXYmhGS3ZGdmlkc3RNZUhIVENG?=
- =?utf-8?B?eUladjMxL0paS01hM1N2MVR6SWZQczFvaXJ1SDk4dk4vdk9CbVJwT0p3Z2pD?=
- =?utf-8?B?alI1WUgvbkZnQ2F2b3RtZEZ0TnpjZzQ2WWltM0NSSmJYRXdXMHZzdnRLaHM3?=
- =?utf-8?B?SlRXNUpadzJtS2d0ZmV4RU5kekJxUS9iR2dPQ20vK2dQNlo5VDJwNkd6N3dI?=
- =?utf-8?B?M1N6K09jMUhuSUFzWWpsNDlWaFUzaUcydHZuUGsrSmhOanlwNzVkUXcweUgx?=
- =?utf-8?B?S0pTRnc2VzZyTzZlRjg5L002eUVQUHBDM1pUQ0NheUZBaVpqZUg3TUFGbWU2?=
- =?utf-8?Q?XG7wIHagxLzZJg5uDp?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ebf8a504-1915-423f-ee0d-08deddd71849
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB8147.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 16:28:23.5821
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Sh0Aufzl9GeUHpZERGM4DmwKDv8BL6FqAkufk5E2Y8Z4y65ChtaIYkmD2p77zBT1
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7595
+Mime-Version: 1.0
+References: <20260709053949.211165-1-SaiMadhu.KoyyalaHariVenkata@amd.com> <20260709055321.EED4B1F000E9@smtp.kernel.org>
+Message-ID: <ak_T_YM7Oc0Ne--m@google.com>
+Subject: Re: [PATCH] KVM: x86: Preserve KVM_EXIT_DEBUG on emulated HLT with single-step
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: suryasaimadhu <SaiMadhu.KoyyalaHariVenkata@amd.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-Hi,
-
-On 7/9/2026 3:41 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Modifying `chan->free_seg_list` without holding `chan->lock` causes linked list corruption.
-> --
->
-> --- Patch [4]: [PATCH V3 4/4] dmaengine: xilinx_dma: Extend metadata handling for AXI DMA and MCDMA ---
-> commit 7c1e9fcfa16f54b84c1fd0328dc790510cde97be
-> Author: Suraj Gupta <suraj.gupta2@amd.com>
->
-> dmaengine: xilinx_dma: Extend metadata handling for AXI DMA and MCDMA
->      
-> This commit extends metadata handling for AXI DMA and MCDMA to expose
-> status and sideband information. The metadata pointer now starts at the
-> descriptor status word instead of the APP fields, and probe logic is
-> updated to attach metadata_ops when an AXI Stream interface is present.
->
->> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
->> index 9b8b6f1acd4ea..03c45369086b8 100644
->> --- a/drivers/dma/xilinx/xilinx_dma.c
->> +++ b/drivers/dma/xilinx/xilinx_dma.c
-> [ ... ]
->
->> @@ -2623,6 +2653,9 @@ xilinx_mcdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
->>   		segment->hw.control |= XILINX_MCDMA_BD_EOP;
->>   	}
->>   
->> +	if (chan->xdev->has_axistream_connected)
->> +		desc->async_tx.metadata_ops = &xilinx_dma_metadata_ops;
->> +
->>   	return &desc->async_tx;
->>   
->>   error:
->>   	xilinx_dma_free_tx_descriptor(chan, desc);
+On Thu, Jul 09, 2026, sashiko-bot@kernel.org wrote:
+> KVM: x86: Preserve KVM_EXIT_DEBUG on emulated HLT with single-step
+>     
+> kvm_emulate_halt() calls kvm_skip_emulated_instruction() before
+> kvm_emulate_halt_noskip(). When single-step debugging is active,
+> the skip path can trigger a debug exception and set exit_reason to
+> KVM_EXIT_DEBUG, but halt emulation then overwrites it with
+> KVM_EXIT_HLT on the userspace LAPIC path. Return immediately when
+> a debug exit is already pending so userspace debuggers receive the
+> correct event.
+> 
+> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > index ff8812f3a1293..473a03f58e263 100644
+> > --- a/arch/x86/kvm/x86.c
+> > +++ b/arch/x86/kvm/x86.c
+> > @@ -11701,10 +11701,16 @@ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_emulate_halt_noskip);
+> >  int kvm_emulate_halt(struct kvm_vcpu *vcpu)
+> >  {
+> >  	int ret = kvm_skip_emulated_instruction(vcpu);
+> > +
+> >  	/*
+> > -	 * TODO: we might be squashing a GUESTDBG_SINGLESTEP-triggered
+> > -	 * KVM_EXIT_DEBUG here.
+> > +	 * If kvm_skip_emulated_instruction() triggered a singlestep
+> > +	 * debug exception, return to userspace immediately so the
+> > +	 * debugger can process the event. Do not let halt emulation
+> > +	 * overwrite the KVM_EXIT_DEBUG exit reason.
+> >  	 */
+> > +	if (vcpu->run->exit_reason == KVM_EXIT_DEBUG)
+> > +		return ret;
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this error path corrupt
-> the channel's free segment list?
->
-> When xilinx_mcdma_prep_slave_sg() encounters an error, it calls
-> xilinx_dma_free_tx_descriptor() without holding chan->lock. This eventually
-> cascades to xilinx_mcdma_free_tx_segment() and xilinx_dma_free_tx_segment(),
-> which add the segment back to chan->free_seg_list:
->
-> xilinx_mcdma_free_tx_segment()
->      list_add_tail(&segment->node, &chan->free_seg_list);
->
-> If another CPU core concurrently calls xilinx_aximcdma_alloc_tx_segment(),
-> which acquires chan->lock to remove items from this same list, could this
-> unprotected modification lead to linked list corruption?
->
-> This unprotected error path also appears to be present in
-> xilinx_dma_tx_submit() when chan->cyclic is true.
-The locking issue with free_seg_list modification is a valid 
-pre-existing concern, not introduced by this patch.
+> This isn't a bug introduced by this patch, but does restricting this early
+> return exclusively to KVM_EXIT_DEBUG overwrite other critical exit reasons?
+> 
+> If kvm_skip_emulated_instruction() fails (e.g., executing HLT inside an
+> SGX enclave), it queues KVM_EXIT_INTERNAL_ERROR and returns 0.
+> 
+> Because this check only handles KVM_EXIT_DEBUG, emulation failures fall
+> through to kvm_emulate_halt_noskip(), which then overwrites the exit reason
+> with KVM_EXIT_HLT for the userspace LAPIC path.
+> 
+> > +
+> >  	return kvm_emulate_halt_noskip(vcpu) && ret;
+> >  }
+> >  EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_emulate_halt);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but it looks like the same issue is present in
+> kvm_emulate_ap_reset_hold().
+> 
+> arch/x86/kvm/x86.c:kvm_emulate_ap_reset_hold() {
+> 	...
+> 	int ret = kvm_skip_emulated_instruction(vcpu);
+> 
+> 	return __kvm_emulate_halt(vcpu, KVM_MP_STATE_AP_RESET_HOLD,
+> 				  KVM_EXIT_AP_RESET_HOLD) && ret;
+> }
+> 
+> Because && evaluates left-to-right, __kvm_emulate_halt() executes
+> unconditionally and overwrites the exit reason with KVM_EXIT_AP_RESET_HOLD,
+> even if kvm_skip_emulated_instruction() already returned 0 to exit to
+> userspace with a debug exception or emulation failure.
+> 
+> Does kvm_emulate_ap_reset_hold() need a similar fix?
 
-   I'll address this in a separate patch series along with the other 
-pre-existing issues identified in this review.
+I think we should simply delete the TODO.  Architecturally, the HLT side effects
+effectively have priority over the single-step #DB because the such #DBs are in
+the "Traps on the Previous Instruction" class of exceptions, i.e. by definition,
+the previous instruction has to have retired to take the single-step #DB.
 
-   Thanks,
-   Neeli Srinivas
+And in practice, running without an in-kernel local APIC is all but deprecated
+these days, so I don't see any value in going out of our way to split hairs over
+which userspace exit is the "best" in this case.
