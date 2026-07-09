@@ -1,109 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AD53FC5AB;
-	Thu,  9 Jul 2026 09:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9833F9A1B;
+	Thu,  9 Jul 2026 09:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783588441; cv=none; b=opKhCttaxO2r80ona9ebn23KJoeDlG06w3aKOgoorJkCBDwPp50X7TOjZX4wLbQP7ExPHYjgviVi3bkVQUl4bA4QwmPkndTZiVqMn8d89x5JY/oBOkszbjB7b7+eQmA+uMxV/42/aS4Bn/iCCVuxLiivDTAydxZFJgXXr72bFjU=
+	t=1783588452; cv=none; b=N/u8xMhrKH3nwI+wIaFC6IskswpEb8RO1ncxG5LaQDBTxz6QWBVN12hUZE5TdjwR3wM1Lt1mt7bIflTevngepWgywH1tFoqrAGhKeK+LKHCp5eR+3J9oMzHxFSDdF8fvcvaO5TPjmgvcS7VdWXKZT8zGGkpKdSX+Ertblg7joHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783588441; c=relaxed/simple;
-	bh=vNq1wsNr9lQ+0z71LFnZmGLimBKqoami+YGUG2/Pf/k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gLlfQqQaGNo2pz81BlJ/tMA8rySvp6K9w/aRNsH1xC8qXuikywXv8B2wvhhw2GPI2UBiaPaKyZXemgmbMCQsOVnhrHWn0QXU5ShG8C0g5U/UNJYVLDKNC1u6/uhMJTO0l4at/nWkr/KeMfDm1x2HLGG3If8l/PrBaokrUJ+3zr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8kQEEP5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783588452; c=relaxed/simple;
+	bh=Qrjsa6kNlgtqbcszSbWTM/A2+j5SwnmvBesi2KThD6M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hFeTdUBl49vcIa7gdCoDm2X0YWiGhcsTTgc0tkM36xz6pzFVm2OFuV6F1EUBu/bT5IzlA/PeuYJRHgqd/oL9cLrbNOX3nuxA5OZ4g+Z9KIXAaSTFZMgMFdyhh3k6d+rIOB8abIFlBtSyuvh+T4QZGQVKrGcszJzJ0s3M1kqBxM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTybV0xP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8kQEEP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166C81F000E9;
-	Thu,  9 Jul 2026 09:13:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTybV0xP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3279B1F000E9;
+	Thu,  9 Jul 2026 09:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783588439;
-	bh=wcRYlrRxH5YTdS8aip1E3DXRidbYYtKSRXKi/B8atXs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=X8kQEEP5w+mHTJCHtBYYWDS9V+GB8VAecU2869vo304qxrxVdhaTE1fBwlo6f7wq1
-	 AHenbAs/IPNmvkQZtvFu/sKHmD+3ji53eVAYqF3mUbWFRKhBYVlBelR3veJLbfgUGq
-	 fiEXVaWzNfojEPWmISTkAleZ1q1jUmJ7LOhUuAoyNoCkrnpOt4VXW2e20z6OdbSUvE
-	 PfVbkq92u9UwDjCt2WehwY5Bg5fTT7v/0VWSaqtf/XIOy3NdbLWSyes3l5dULajbDc
-	 7nidPKU1jmtZoHy6bP9OaLvhcg4dCZ4N8QmZNklvxNm/Tz9lEg8u9sbdeWDJDGWyAi
-	 UJcM8xOXAiBSw==
-Date: Thu, 9 Jul 2026 10:13:56 +0100
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Mert Seftali <mertsftl@gmail.com>, linux-leds@vger.kernel.org
-Subject: Re: [PATCH v2] leds: pwm: Annotate leds[] with __counted_by()
-Message-ID: <20260709091356.GA2045740@google.com>
-References: <20260702155452.67594-1-mertseftali@web.de>
- <20260702160459.9BC4E1F00A3A@smtp.kernel.org>
+	s=k20260515; t=1783588450;
+	bh=oacrnyBrpn2K0Y0NRU9kj42nB0krZasHrT3apgcYHzQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=WTybV0xPYemqWJLocPgwRv1n2vVlWP64G4ERSiMpVBxCvISv8trKSvfeXj4UeqjH2
+	 eEl2QR5wHoURSrIq6GQZRCZZ3WT+hakTpPRj9ZTa9BO4C/Ge+1ggD4md58CC5xAQA9
+	 dAxXkagHW/OMVtpHyVnEhwsYZDzjD8UtJNSRQsq5fg0mKD4TMk86pfvxMr/9bnKZQG
+	 y7nwFfDzl/INI/KMtTu2rE+Pwb1aeFF6N3xCx/U9NKtVpLsNXNeKOUYYEmD6BUiqsr
+	 t1sea7mq4pZ/t5bIacLwpeeq096EP9aOShJC85Gh/uaryDUwzDFF+le2YHRCRXlb7v
+	 fOiwg9do66Keg==
+Message-ID: <dcc4f558-7b6e-4193-a943-036255fc202f@kernel.org>
+Date: Thu, 9 Jul 2026 18:14:08 +0900
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260702160459.9BC4E1F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] ata: libata-scsi: terminate deferred commands on
+ time out
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-ide@vger.kernel.org, linux-scsi@vger.kernel.org, cassel@kernel.org
+References: <20260709083934.1116862-1-dlemoal@kernel.org>
+ <20260709083934.1116862-2-dlemoal@kernel.org>
+ <20260709090006.F317F1F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20260709090006.F317F1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, 02 Jul 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The addition of the `__counted_by(num_leds)` annotation causes an unconditional out-of-bounds trap during probe.
-
-Can you provide comment or remediation please?
-
-> --
-> 
-> commit f2069ade09481403f091ed2758ef698b0c75c2cc
-> Author: Mert Seftali <mertsftl@gmail.com>
-> 
-> leds: pwm: Annotate leds[] with __counted_by()
-> 
-> This commit adds the __counted_by(num_leds) attribute to the flexible array
-> member leds[] in struct led_pwm_priv for bounds checking. It also updates
-> led_pwm_add() to accept the led_pwm_data element directly, leaving num_leds
-> to be incremented in the caller.
-> 
-> > diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
-> > index 6c1f2f50ff854..dabdf04235826 100644
-> > --- a/drivers/leds/leds-pwm.c
-> > +++ b/drivers/leds/leds-pwm.c
-> > @@ -36,7 +36,7 @@ struct led_pwm_data {
-> >  
-> >  struct led_pwm_priv {
-> >  	int num_leds;
-> > -	struct led_pwm_data leds[];
-> > +	struct led_pwm_data leds[] __counted_by(num_leds);
-> >  };
-> 
-> [ ... ]
-> 
-> > @@ -193,9 +191,10 @@ static int led_pwm_create_fwnode(struct device *dev, struct led_pwm_priv *priv)
-> >  
-> >  		led.default_state = led_init_default_state_get(fwnode);
-> >  
-> > -		ret = led_pwm_add(dev, priv, &led, fwnode);
-> > +		ret = led_pwm_add(dev, &priv->leds[priv->num_leds], &led, fwnode);
-> 
+On 7/9/26 18:00, sashiko-bot@kernel.org wrote:
 > [Severity: High]
-> Does evaluating &priv->leds[priv->num_leds] before incrementing num_leds
-> trigger an out-of-bounds trap under UBSAN_BOUNDS or FORTIFY_SOURCE?
+> Does calling ata_scsi_qc_done() here prematurely complete the timed-out
+> deferred command and free the libata qc?
+
+Yes it does. But unless it is the deferred QC that suffered the timeout, the
+scsi command will be requeued and retried.
+
+> When a deferred command times out, ata_scsi_eh_timed_out() calls this function
+> which sets the host byte to DID_TIME_OUT and calls ata_scsi_qc_done().
+> ata_scsi_qc_done() then frees the qc and invokes the qc->scsidone callback.
 > 
-> Because leds is now annotated with __counted_by(num_leds), the compiler
-> expects the valid indices to be less than num_leds. When this loop starts
-> in led_pwm_create_fwnode(), priv->num_leds is initially 0. Taking the address
-> of index 0 when the count is 0 will fail the bounds check and trigger a
-> splat during driver probe.
+> Later, when the SCSI completion softirq routes the DID_TIME_OUT command to the
+> EH queue and the EH thread runs ata_scsi_cmd_error_handler():
 > 
-> >  		if (ret)
-> >  			return ret;
-> > +		priv->num_leds++;
-> >  	}
-> >  
-> >  	return 0;
+> drivers/ata/libata-eh.c:ata_scsi_cmd_error_handler() {
+>     ...
+>     set_host_byte(scmd, DID_OK);
+>     ata_qc_for_each_raw(ap, qc, i) {
+>         if (qc->scsicmd != scmd)
+>             continue;
+>         if ((qc->flags & ATA_QCFLAG_ACTIVE) ||
+>             qc == qc->dev->link->deferred_qc)
+>             break;
+>     }
+>     ...
+> }
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260702155452.67594-1-mertseftali@web.de?part=1
+> Because the qc was already freed, the ATA_QCFLAG_ACTIVE flag is cleared
+> and deferred_qc is NULL. The loop will fail to find the active command.
+> 
+> It seems this causes the handler to fall into the 'raced completion' branch:
+> 
+> drivers/ata/libata-eh.c:ata_scsi_cmd_error_handler() {
+>     ...
+>     } else {
+>         /* Normal completion occurred after
+>          * SCSI timeout but before this point.
+>          * Successfully complete it.
+>          */
+>         scmd->retries = scmd->allowed;
+>         scsi_eh_finish_cmd(scmd, &ap->eh_done_q);
+>     }
+>     ...
+> }
+
+And after this, scsi_eh_flush_done_q() will retry the command.
+Tested and I do not see failure of the deferred QC :)
+
 
 -- 
-Lee Jones
+Damien Le Moal
+Western Digital Research
