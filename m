@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C334DB546;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646D54DB548;
 	Thu,  9 Jul 2026 17:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783619782; cv=none; b=Rv+ZbG7oG5txTl6b9ULH1uALrMnWzFQWc7eV9Ns709riCkpXC0b0MZqWOz6sCfBse6TctsmDA9Ne5iaWAssyBDpwtnSB9rtzp/CL2DVpp5+25gP9euWcI92D+bPYL7tXimz8PFuirRRvZ17XMLPWYez7j7tqRLrgbZ+/JkD2xYk=
+	t=1783619782; cv=none; b=ceS5RodkVmYKR2QpWdqYjVrHKdPwUi/cQ9RxSu+Z+of5fcb1M+H7am+eLuKIO8WrZ+dp/NBHGwJZ8l5zbWnsrHcC6dJTLdfIToGYKh6LjTieljBAGLzHTxdS/gLxkq4aT2FzhokvLm0vWcILEGU7NFHxhdzAhrBTYa2ifhfm39o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783619782; c=relaxed/simple;
-	bh=kl3vvQPiZDjzK0Q0O6iPwom5W0RMujPoZ1WuhDARO9w=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LC9ASXSSQFOU1mNDqKXJQBHl/qAVGFtAllBASgotbmlpVXyiB9BBJUMm2XTux+mF1L338BsFiciLpubhAkpymMEjQYZOFh6rxD1qhDHtk4ewtKQdcvJQF4Pir8CzGFHNEI3VVFdObfOSsAZbLr+hkIEdtzmGhNMXaWQBTs9B9Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NR0R8j5i; arc=none smtp.client-ip=10.30.226.201
+	bh=4h5mJm6hzXmHp3RMShR5nDRhQzyUTAhBQ/DhB6jv82c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=sWd4yUlLuutZF4K2j80M36pnlxl/0fXpGvWORe1hLKAKvhsVgy5EzajhSFzGKn+YthQ0Lwb6yvY4ZreIa50CGDfQOkrgVMYr1fIUTH1i5Ug+VVVn7BMU9T7Q41feXBzRk9upSaHSQc1X52o1ti/VVzlRQR6pGAsDN7yJafV1xZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gwzgLH1I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NR0R8j5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CC76DC2BCB7;
-	Thu,  9 Jul 2026 17:56:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gwzgLH1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0542AC2BCF6;
+	Thu,  9 Jul 2026 17:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783619781;
-	bh=kl3vvQPiZDjzK0Q0O6iPwom5W0RMujPoZ1WuhDARO9w=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=NR0R8j5iupONBnYU3ZA0xUBXdSpZ/HwwjlLVxkL3vta2ysa7zl2jpNqqenZtJN2Hh
-	 Wbtum3RDVbP0gyFlSnab+DZ8XrLMukaIwgjvIRgx9NSDzBOEHOzTyiXapCrtMpgI3/
-	 UJEtF8vZ1/BSwEJaLJnxovY/bOOUgoewGirsTws+Ny69fVjzUE49r+FI7vIsJ6+qwA
-	 Mv7rB3jwMtClF+zSv2Ym5CBKzOcwOhWtaGdYsan+m4ACf9XBNoacs8FKj2CGItgZxB
-	 ob1DT5ZeyYorIzRBu9CT3YNg+x4dKjARSQD4FZGwLDtm2lWwqfE3o9iZJ1CkBJCh9a
-	 xDDY/RsLyf7jA==
+	s=k20201202; t=1783619782;
+	bh=4h5mJm6hzXmHp3RMShR5nDRhQzyUTAhBQ/DhB6jv82c=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=gwzgLH1IFLlF6mNbP4zJjJqh1slkn/D0epWYtRAQpTXJKBJv8FW6JgLmB2IGZaK8V
+	 4lE5rRmufGYo/aUp6mmn6IfS0DcZO8354wxGoMk8SdZUMWkKQSEM0h0u8kBFtxnfZB
+	 h0VdqMt3IPvI32clAQJqZlvjnztN4mbkAy9hpdknEYm/nVY8AGrhSjmjNrWiBbqkvB
+	 j4XSlQhiskA9YpvjeuCoirZlxDPN/jfb/Gbcx/tD0mhYDnSIF3fAcdhUH6l8lYnsBv
+	 OR6b9dfKMC2VrK4uZC2Ae0jgw4uQW7GukIcAUNjzS7ibAn/MRkDNJNTB1v/MYnfzIr
+	 Vl2UcU5y0c5OQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA598C44501;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8BFAC44509;
 	Thu,  9 Jul 2026 17:56:21 +0000 (UTC)
 From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
-Subject: [PATCH v11 00/11] can: bcm: collected fixes - final6 \o/
-Date: Thu, 09 Jul 2026 19:56:14 +0200
-Message-Id: <20260709-bcm_fixes-v11-0-067ba11bec5c@hartkopp.net>
+Date: Thu, 09 Jul 2026 19:56:19 +0200
+Subject: [PATCH v11 05/11] can: bcm: add missing rcu list annotations and
+ operations
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -40,25 +41,18 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAL7gT2oC/3XPS07EMAwG4KuMsqYor8YOK+6BEEpchxZEZ9SWC
- jTq3UmGBRVKl07+z4+rmHkaeBYPp6uYeB3m4TzmQqm7k6A+jK/cDF1+EFpqJ53STaSPlzR88dy
- gTdGG4E0gLXL+MvHtI8efnn/r+TO+MS2lQUn0w7ycp+/btFWVXK3vqhrZUNApSGAGmR77MC3v5
- 8vlfuRFlNar/sMgYY91xt45Lak1NkJbweYQm4zROikpuA7RV7A9xDbjEBAiRt8ZU1u7PcRtudk
- Q2IQdpgQV7PYY99iVtSUoGXQk47GC4RBDmQz5WBeN1WwrGA8xlsmkU5tMJK10Bfs99nvsM3bMM
- QISpVjDSh5qJTNvIaVkkI0l/se3bfsBLoTa/N8CAAA=
-X-Change-ID: 20260612-bcm_fixes-84fb4aa93ac2
+Message-Id: <20260709-bcm_fixes-v11-5-067ba11bec5c@hartkopp.net>
+References: <20260709-bcm_fixes-v11-0-067ba11bec5c@hartkopp.net>
+In-Reply-To: <20260709-bcm_fixes-v11-0-067ba11bec5c@hartkopp.net>
 To: linux-can@vger.kernel.org
 Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, Lee Jones <lee@kernel.org>, 
- Feng Xue <feng.xue@outlook.com>, Ginger <ginger.jzllee@gmail.com>, 
- syzbot+75e5e4ae00c3b4bb544e@syzkaller.appspotmail.com, 
- sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+ Marc Kleine-Budde <mkl@pengutronix.de>, sashiko-reviews@lists.linux.dev
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783619780; l=5029;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783619780; l=5017;
  i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
- bh=kl3vvQPiZDjzK0Q0O6iPwom5W0RMujPoZ1WuhDARO9w=;
- b=xIsKhDadqswYpT+V4g0U76DAeSrXcTN+1qMMBA49ZdAprHbwma8m1DrsBPhd9Hd1liOvrnYBt
- x5cAmxYiyfaBLNcGm6mN3TBW8smJE7RDnY49ThEbXZrNn6fRd3yOQRW
+ bh=BJJNQrapkqOpAXJaDkWSoW6xFx0Y1A2VpasMRfEZLk4=;
+ b=iyrhmqnKQ4wTCmII3D3+Inkofm+gEsioLFo7C4MqCq8je2nLiI50Mg+ktm9yE1HjPH0gYcS66
+ kQAUKy7gHtkBXlOl3Bcg6FgZS8TkMacJ6+fe3cQ66u2VC/AQohhDN75
 X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
  pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
 X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
@@ -66,111 +60,153 @@ X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
 X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
 Reply-To: socketcan@hartkopp.net
 
-Hi Marc,
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-as there were different patches flying arround to fix CAN_BCM issues and
-AI assisted stuff pop's up again and again, I've created this collection
-to be applied.
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-Fixed pre-existing issues reported by sashiko-bot for patch 10:
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
 
-- [High] Spurious RX_TIMEOUT notification and state corruption due to a race between concurrent bcm_rx_handler execution and op->timer expiration.
-- [High] Throttled multiplex frames share a single metadata store, leading to incorrect interface index (rx_ifindex) and timestamps being sent to userspace.
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
 
-A new patch 11 has been added which handles throttling and timeout monitoring
-for rx_ops in ANYDEV mode (ifindex == 0) by selecting the first interface where
-a filtered CAN frame arrived on.
-  
-Best regards,
-Oliver
-
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 ---
-Changes in v11:
-- patch 11: new: track a single source interface for ANYDEV timeout/throttle ops
-  reported by sashiko-bot
-  https://lore.kernel.org/linux-can/20260709105031.1A39C1F000E9@smtp.kernel.org/
-- patch 2: added Fixes: tag (mkl)
-- Link to v10: https://patch.msgid.link/20260709-bcm_fixes-v10-0-57fff38e34ce@hartkopp.net
+ net/can/bcm.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-Changes in v10:
-- patch 4: fixed new issue reported by sashiko-bot
-  https://lore.kernel.org/linux-can/20260709083119.015901F00A3D@smtp.kernel.org/
-- Link to v9: https://patch.msgid.link/20260709-bcm_fixes-v9-0-6eebb78ccfb2@hartkopp.net
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 38c3f690c1cd..940cd9df1cca 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -263,11 +263,11 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+ 
+ 		seq_printf(m, "%s%ld%%\n",
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
+ 
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+ 
+ 		if (op->flags & CAN_FD_FRAME)
+@@ -1007,10 +1007,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 			int ifindex, struct sock *sk)
+ {
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+ 	/* we need a real device to send frames */
+ 	if (!ifindex)
+@@ -1148,12 +1149,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 
+ 		/* currently unused in tx_ops */
+ 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+ 	if (op->flags & SETTIMER) {
+ 		/* set timer values */
+@@ -1171,10 +1171,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		hrtimer_cancel(&op->timer);
+ 		/* spec: send CAN frame when starting timer */
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op, NULL);
+ 
+ 	if (op->flags & STARTTIMER)
+ 		bcm_tx_start_timer(op);
+@@ -1355,13 +1359,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1429,14 +1430,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
+ 					      REGMASK(op->can_id),
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+ }
+ 
+@@ -1766,12 +1769,14 @@ static int bcm_release(struct socket *sock)
+ 	/* remove procfs entry */
+ 	if (net->can.bcmproc_dir && bo->bcm_proc_read)
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+ 		 * Don't care if we're bound or not (due to netdev problems)
+ 		 * can_rx_unregister() is always a save thing to do here.
+@@ -1798,12 +1803,14 @@ static int bcm_release(struct socket *sock)
+ 
+ 	}
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
+ 		WRITE_ONCE(bo->bound, 0);
+ 		bo->ifindex = 0;
 
-Changes in v9:
-- patch 4: fixed two issues reported by sashiko-bot and mkl
-  https://lore.kernel.org/linux-can/20260708173935.10D021F000E9@smtp.kernel.org/
-  https://lore.kernel.org/linux-can/20260708-beige-tarsier-of-mastery-b73d0d-mkl@pengutronix.de/
-- Link to v8: https://patch.msgid.link/20260708-bcm_fixes-v8-0-8c2f5f3bc212@hartkopp.net
-
-Changes in v8:
-- patch 9: fixed two issues reported by sashiko-bot:
-  https://lore.kernel.org/linux-can/20260708154039.347ED1F000E9@smtp.kernel.org/
-- Link to v7: https://patch.msgid.link/20260708-bcm_fixes-v7-0-c78896b342e4@hartkopp.net
-
-Changes in v7:
-- patch 9: new: fix stale rx/tx ops after device removal reported by
-  sashiko-bot: https://lore.kernel.org/linux-can/20260708094536.DDF821F00A3A@smtp.kernel.org/
-- patch 10: formerly patch 9 as new patch 8 & 9 belong together 
-- Link to v6: https://patch.msgid.link/20260708-bcm_fixes-v6-0-80710a2bc398@hartkopp.net
-
-Changes in v6:
-- patch 1: added Tested-by: tags
-- patch 3: changed commit message and comment regarding a wrong claim
-  about synchronous delivery from dev_queue_xmit() as remarked by
-  https://netdev-ai.bots.linux.dev/ai-review.html?id=6105ebab-87ef-43db-a085-7c190b9f119f
-- patch 4: rebased patch 3 comment
-- patch 9: new: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
-  reported by sashiko-bot: https://lore.kernel.org/linux-can/20260707145135.5BC831F00A3A@smtp.kernel.org/
-- Link to v5: https://patch.msgid.link/20260707-bcm_fixes-v5-0-c3c74f8d8ff7@hartkopp.net
-
-Changes in v5:
-- patch 6: changed comment for bcm_op::bcm_tx_lock (mkl)
-- patch 8: new: add missing device refcount for CAN filter removal
-- Link to v4: https://patch.msgid.link/20260707-bcm_fixes-v4-0-aa87b8b9d33f@hartkopp.net
-
-Changes in v4:
-- incorporated more sashiko-bot concerns from v3
-- patch 3: omit hrtimer_forward with zero interval
-- patch 4: put bcm_update_stats() under bcm_rx_update_lock
-- Link to v3: https://patch.msgid.link/20260707-bcm_fixes-v3-0-84600ca6d889@hartkopp.net
-
-Changes in v3:
-- incorporated more sashiko-bot concerns from v2
-- patch 3: make snapshot of currframe
-- patch 6: add error patch for memcpy_from_msg()
-- patch 7: new RTR-reply validation in bcm_rx_setup() from bcm_tx_setup() 
-- Link to v2: https://patch.msgid.link/20260707-bcm_fixes-v2-0-96620c534b75@hartkopp.net
-
-Changes in v2:
-- incorporated all sashiko-bot concerns from v1
-- Link to v1: https://patch.msgid.link/20260612-bcm_fixes-v1-0-ca2fa07ee70f@hartkopp.net
-
----
-Lee Jones (1):
-      can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
-
-Oliver Hartkopp (10):
-      can: bcm: fix lockless bound/ifindex race and silent RX_SETUP failure
-      can: bcm: add locking when updating filter and timer values
-      can: bcm: fix CAN frame rx/tx statistics
-      can: bcm: add missing rcu list annotations and operations
-      can: bcm: extend bcm_tx_lock usage for data and timer updates
-      can: bcm: validate frame length in bcm_rx_setup() for RTR replies
-      can: bcm: add missing device refcount for CAN filter removal
-      can: bcm: fix stale rx/tx ops after device removal
-      can: bcm: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
-      can: bcm: track a single source interface for ANYDEV timeout/throttle ops
-
- net/can/bcm.c | 573 ++++++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 436 insertions(+), 137 deletions(-)
----
-base-commit: 0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53
-change-id: 20260612-bcm_fixes-84fb4aa93ac2
-
-Best regards,
---  
-Oliver Hartkopp <socketcan@hartkopp.net>
+-- 
+2.53.0
 
 
