@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839CA3D0BFB;
-	Thu,  9 Jul 2026 06:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72953D7A18;
+	Thu,  9 Jul 2026 06:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783578679; cv=none; b=K9sdHOLe/OBg8c2SebCh1jRZQTVS753HtmD97hcOJDGQB/e9PqPWiJk2q6lWHMdSEohB+ZhUoHaU/FOZx+yOBwjoX+GYzGCPU7aU1rIJ/Zi0Z0yp7K1UrGQWbbPLlovIhGh0FZM6sVJBYvZBYZhFm2bslbO2gf/g+3SXdFG8LAM=
+	t=1783579655; cv=none; b=hz0xFqq6YQz3sVkjAKh1EleyZwU5ihE3qfRa85RdCyRS6vAUE23h7U028shCs9r8W2cNUoULOwcK0KFzDDttczRbA/bj09Db3KgoUGVyTraUr1yt+zo1leN6vNiKdF5NGsoI0FeJCnlhPuQe9aaAvVO1X6EedZFBYw9ou+56LuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783578679; c=relaxed/simple;
-	bh=lLkL0NxPUHqBmph0qy84Ge/mM4CGIqnRoPdohQhSn4M=;
+	s=arc-20240116; t=1783579655; c=relaxed/simple;
+	bh=MdU/wNVVBYqXc42Pab5uoBjN2kX6B6qAfeErF943Jbw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lJVnTHW3CaujcvsvbTUjLfheUQA6unxxJgFQicrZ4u3CLRMyOG5h0iJ4HMSExmzJbxqvGOQeYzKo9NfiDOe8KV1kDXlcs/5cvAqTlnltlCBbGEf0lk9FqUMimSHEarzA2VPlD4ZFaOOmXAjRsnouZ1lJrlPv0fFfI22pKdzcncg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fL6A9Rbz; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=RwcuANpBi8qr8gs4v9j1nW2WWWta44g7RogYLV6LtzTr/fBnLoZASXTEj+5UkArcCect0qmrZA8ZrxMx+A8AJ/wjDMUJIiGhXRYTGV+xIO+3Y9Xt2sxSjwJNSNOLgchDLF0nX1vEJjz/Q07m9SDeYr5MuUxWsAW7tDuF6qHoiPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RCRNvTHO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fL6A9Rbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E13C1F000E9;
-	Thu,  9 Jul 2026 06:31:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RCRNvTHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A731F000E9;
+	Thu,  9 Jul 2026 06:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783578678;
-	bh=KVJwuhlHvCDuJa9PR+rRLEyjKK5uhjQqGp5xXlj+GkU=;
+	s=k20260515; t=1783579653;
+	bh=VAS7h2YmHQEjz4IwBx3vm3tL7iezOxoJk/jcErcJPr0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fL6A9Rbzu3JEZwyXs34vfUKAlZmFQJXUZzmQyAN1bvih6rgLhP2GdEEYQDuvb5Yrk
-	 CwCGB9jq/hUqQjsavNftVviCVNEcoMD42EjOKyb/rZn9zsDlyWe6de6ExZ7tM8uic7
-	 w+VO8pb6ij39dnMjuoeAjHDsCtdVdY/8+O9n5Tl9WVEUSJ3w3L0AeLyESLIGB+wRcz
-	 1FlBJU/egGh+65IcDm+NiR6bIkYamGGJscijz+DIamqwJ1W18u2UUJi9Ig1jB7gYYm
-	 ftG7OJCDplcf4SUNfgfoqfmvSByo0HKpVhhAV94L+vsjAxg6R9GlcbsIdKUzVEw8zm
-	 p0T/SlprOhPIw==
-Date: Wed, 8 Jul 2026 23:31:16 -0700
+	b=RCRNvTHOYYSSwrV6GgGqMP6SMW4XeWAKZGNT/BaL7Ri6+dN8P2QVxwmh0MpyG8xKT
+	 iPNWlbGekeiDCCOCoDN+Cn/y+x+GT6b4ozsh+pxbAIhUIuaKujG4qKTTXn1CGmVJmW
+	 GOFzbz4yGcYyT9HGPm7ffwwk2CCNeGt/WkGe7eW7mOLhEoHljptHVIaKvuPMyA/ElN
+	 n/hAvLSzLtEU2htsEWw1rPFjeopfXzXO6DWjRbjrk+kL9o43AXw58L1VlPv0K5QIKB
+	 5Ockemxbzi1LCjb6sKZyf3lsucZB0Dx4SVy2UbuVsIVo5xKB75HtSNJTcAruzCx+Kp
+	 bj56HgWLjT06A==
+Date: Wed, 8 Jul 2026 23:47:31 -0700
 From: Namhyung Kim <namhyung@kernel.org>
-To: Tengda Wu <wutengda@huaweicloud.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v3 08/21] perf annotate: Introduce extract_op_location
- callback for arch-specific parsing
-Message-ID: <ak9ANIuZLqWvAJWa@z2>
+To: sashiko-reviews@lists.linux.dev
+Cc: Tengda Wu <wutengda@huaweicloud.com>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v3 10/21] perf annotate: Deduplicate overlapping ARM SPE
+ events for data type profiling
+Message-ID: <ak9EAwRizNby2Tvu@z2>
 References: <20260701035355.752944-1-wutengda@huaweicloud.com>
- <20260701035355.752944-9-wutengda@huaweicloud.com>
- <20260701040647.A23771F00A3A@smtp.kernel.org>
- <2da387b1-ff15-4d7a-9cfe-062a9aa55368@huaweicloud.com>
+ <20260701035355.752944-11-wutengda@huaweicloud.com>
+ <20260701040606.2C96B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,120 +44,98 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2da387b1-ff15-4d7a-9cfe-062a9aa55368@huaweicloud.com>
+In-Reply-To: <20260701040606.2C96B1F000E9@smtp.kernel.org>
 
-On Wed, Jul 01, 2026 at 03:29:57PM +0800, Tengda Wu wrote:
+On Wed, Jul 01, 2026 at 04:06:05AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Invalid union access causes severe type punning, false positive event dropping, and logic failure.
+> - [Medium] Unprotected dereference of potentially NULL `evsel->name` causing a segmentation fault.
+> --
 > 
+> commit 21f6f127e80c94aececac4065deebfce02da27b3
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> On 2026/7/1 12:06, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [Medium] Refactoring changes the error propagation behavior for memory operands with unrecognized registers, causing valid instructions to be incorrectly marked as bad.
-> > - [Low] Missing explicit inclusion of `<stdlib.h>` for the POSIX libc function `strtol()`, breaking musl compatibility.
-> > --
-> > 
-> > commit a79e03a1004b442317df26b7478d0a1daed1e563
-> > Author: Tengda Wu <wutengda@huaweicloud.com>
-> > 
-> > perf annotate: Introduce extract_op_location callback for arch-specific parsing
-> > 
-> > This patch refactors operand parsing by moving it from the central
-> > annotate_get_insn_location() into architecture-specific callbacks. By
-> > introducing extract_op_location callbacks for PowerPC and x86, it aims to
-> > simplify the core logic and improve maintainability without making functional
-> > changes.
-> > 
-> >> diff --git a/tools/perf/util/annotate-arch/annotate-x86.c b/tools/perf/util/annotate-arch/annotate-x86.c
-> >> index 7e61365363938..6a4b4bdcd7a7c 100644
-> >> --- a/tools/perf/util/annotate-arch/annotate-x86.c
-> >> +++ b/tools/perf/util/annotate-arch/annotate-x86.c
-> >> @@ -2,6 +2,7 @@
-> >>  #include <string.h>
-> >>  #include <linux/compiler.h>
-> >>  #include <linux/zalloc.h>
-> >> +#include <linux/ctype.h>
-> >>  #include <assert.h>
-> >>  #include <inttypes.h>
-> >>  #include "../annotate-data.h"
-> > 
-> > [Severity: Low]
-> > Does this file need an explicit include of <stdlib.h> for musl libc
-> > compatibility?
-> > 
-> > It appears strtol() is used later in extract_op_location_x86() without
-> > the required <stdlib.h> header being directly included here, which might
-> > lead to implicit function declaration errors on musl-based systems.
-> > 
+> perf annotate: Deduplicate overlapping ARM SPE events for data type profiling
 > 
-> Agreed.
+> When data type profiling is enabled on ARM SPE, multiple overlapping
+> events are synthesized for a single sampled instruction. This patch
+> implements automatic deduplication in process_sample_event() by retaining
+> only the "instructions" event when data type annotation is enabled and no
+> explicit itrace options are configured.
 > 
-> > [ ... ]
-> > 
-> >> @@ -809,6 +810,86 @@ static void update_insn_state_x86(struct type_state *state,
-> >>  }
-> >>  #endif
-> >>  
-> >> +/*
-> >> + * Get register number and access offset from the given instruction.
-> >> + * It assumes AT&T x86 asm format like OFFSET(REG).  Maybe it needs
-> >> + * to revisit the format when it handles different architecture.
-> >> + * Fills @reg and @offset when return 0.
-> >> + */
-> >> +static int extract_reg_offset(const struct arch *arch, const char *str,
-> >> +			      struct annotated_op_loc *op_loc)
-> >> +{
-> > 
-> > [ ... ]
-> > 
-> >> +static int extract_op_location_x86(const struct arch *arch,
-> >> +				   struct disasm_line *dl __maybe_unused,
-> >> +				   const char *op_str, int op_idx __maybe_unused,
-> >> +				   struct annotated_op_loc *op_loc)
-> >> +{
-> >> +	const char *s = op_str;
-> >> +	char *p = NULL;
-> >> +
-> >> +	if (op_str == NULL)
-> >> +		return 0;
-> >> +
-> >> +	if (strchr(op_str, arch->objdump.memory_ref_char)) {
-> >> +		op_loc->mem_ref = true;
-> >> +		return extract_reg_offset(arch, op_str, op_loc);
-> > 
-> > [Severity: Medium]
-> > Does returning the result of extract_reg_offset() here alter the error
-> > propagation behavior?
-> > 
-> > In the previous annotate_get_insn_location() logic, the return value of
-> > extract_reg_offset() was safely ignored:
-> > 
-> >         } else if (strchr(insn_str, arch->objdump.memory_ref_char)) {
-> >                 op_loc->mem_ref = true;
-> >                 op_loc->multi_regs = multi_regs;
-> >                 extract_reg_offset(arch, insn_str, op_loc);
-> >         } else {
-> > 
-> > By returning it here, extract_op_location_x86() might return -1 if the
-> > register is unrecognized. This regression is now propagated back to the
-> > caller in annotate_get_insn_location():
-> > 
-> >         if (arch->extract_op_location) {
-> >                 ret = arch->extract_op_location(arch, dl, insn_str, i, op_loc);
-> >                 if (ret)
-> >                         return ret;
-> >         }
-> > 
-> > Could this cause valid instructions to be completely skipped and
-> > incorrectly marked as bad?
-> > 
+> > diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+> > index 69cb72b2082a6..46b2bd3fb2013 100644
+> > --- a/tools/perf/builtin-annotate.c
+> > +++ b/tools/perf/builtin-annotate.c
+> > @@ -283,9 +283,22 @@ static int process_sample_event(const struct perf_tool *tool,
+> >  				struct machine *machine)
+> >  {
+> >  	struct perf_annotate *ann = container_of(tool, struct perf_annotate, tool);
+> > +	struct evsel *evsel = sample->evsel;
+> >  	struct addr_location al;
+> >  	int ret = 0;
+> >  
+> > +	/*
+> > +	 * ARM SPE synthesizes multiple overlapping events (e.g., l1d-miss,
+> > +	 * tlb-access) for a single sampled instruction. When data type is
+> > +	 * enabled, counting all of these overlapping events would inflate
+> > +	 * the profile and distort the data type statistics. To avoid this,
+> > +	 * deduplicate by retaining only the comprehensive "instructions" event.
+> > +	 */
+> > +	if (ann->data_type && !ann->session->itrace_synth_opts->set &&
+> > +	    event->auxtrace_info.type == PERF_AUXTRACE_ARM_SPE &&
 > 
-> I don't think this is a problem. If we don't return an error here,
-> extract_reg_offset() would continue with an uninitialized or invalid
-> offset, which would then cause update_insn_state() to make incorrect
-> judgments. Returning -1 and marking it as bad is actually safer than
-> silently propagating wrong information.
+> [Severity: Medium]
+> Since event is a union of all perf events, does checking
+> event->auxtrace_info.type on a PERF_RECORD_SAMPLE event read the sample data
+> payload as if it were an auxtrace type?
+> 
+> If a normal event's first 32-bit payload (like PID 4 when PERF_SAMPLE_TID
+> is the first element) equals 4 (PERF_AUXTRACE_ARM_SPE), could this falsely
+> match and silently drop the event?
 
-I agree.  I'm not sure if there's actual case it fails there, but I
-prefer not to process when it failed.
+Right, you should not access event->auxtrace in process_sample_event().
+You need to find other way to detect if it's processing an ARM SPE
+synthesized sample.
+
+> 
+> > +	    strcmp(evsel->name, "instructions") != 0)
+> 
+> [Severity: Medium]
+> Could evsel->name be NULL here if the event is unnamed or if we are
+> processing a perf.data file missing the HEADER_EVENT_DESC feature?
+> 
+> Passing NULL to strcmp() would cause a segmentation fault. Would it be safer
+> to use the evsel__name(evsel) wrapper instead?
+
+Agreed.
+
+> 
+> > +		return 0;
+> > +
+> >  	addr_location__init(&al);
+> 
+> [ ... ]
+> 
+> > diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
+> > index 552f063f126e6..e027e3b200bfb 100644
+> > --- a/tools/perf/util/arm-spe.c
+> > +++ b/tools/perf/util/arm-spe.c
+> > @@ -403,6 +403,7 @@ static void arm_spe_prep_sample(struct arm_spe *spe,
+> >  	event->sample.header.type = PERF_RECORD_SAMPLE;
+> >  	event->sample.header.misc = sample->cpumode;
+> >  	event->sample.header.size = sizeof(struct perf_event_header);
+> > +	event->auxtrace_info.type = PERF_AUXTRACE_ARM_SPE;
+> 
+> [Severity: Medium]
+> Writing to auxtrace_info.type modifies offset 8 of the event union, which
+> aliases the sample payload.
+> 
+> If trace injection is used, does perf_event__synthesize_sample() subsequently
+> overwrite this offset with the actual sample payload (such as sample->id),
+> erasing this magic value and breaking the deduplication entirely?
+
+Right, please don't do this.
 
 Thanks,
 Namhyung
