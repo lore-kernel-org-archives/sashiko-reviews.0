@@ -1,205 +1,197 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5217141C313
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 11:58:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783598284; cv=pass; b=d1W3f9u/TtEzNU+Q0kDqZvakhhrtljWu3G6BlNQhRUDL1E366WE1gfrufFquxBK42kIJNq/rinXiBJoKiCgi/W7hm4lsopmHrGyrMSsb+b2xzUEh4SYFxPHcsAJMHYpqRgOt8PGPAV649O9v7biIrlMAbCN2q4SFImzpLeDBsQA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783598284; c=relaxed/simple;
-	bh=Zms1S65LsMRFGo2WadrcJ4wjEPu5Dm9PLijmLJn1DUY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fwK8JW1Uncadc9WeSZt+ySyqoruR6nu3cs5FZ8HsA2XXPhzXl6/tDHMndBCqMYgwZvUbps1VFgYUsTTSqKyzwDU2aNFZGUryVswwKLJFEL0xDfAKj4xVLd/j7KGh+5T2PVyzOMdAFDMn1Fi0iOZ7YPCHOTsGdxUxc1Nsl5WU6n0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sartura.hr; spf=pass smtp.mailfrom=sartura.hr; dkim=pass (2048-bit key) header.d=sartura.hr header.i=@sartura.hr header.b=Q94lQuN1; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sartura.hr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sartura.hr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9A3282F22
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 12:05:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783598720; cv=none; b=sr4EBlKwLtQEf1fQzUf7hVVSFaI0oeU/s+LkK/ydQME5tXr3OC7esdwQYWkUy52f+fJmt+LVy0C5zrKEqu5E/y46wp66iWpgGtUL/+NjHE9O9KiN7O1mL1uoVRtMRPVcRvDo1kwfuf4Uw7F/EM/vfNrC+4jAi9a13qS1kuZP4Oo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783598720; c=relaxed/simple;
+	bh=1yberYinq6zyUgvSxbhajG7UeHKw44InEUPFxLdWH90=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ajPm9svPWXhelPAssUszNoogNaDi9Z1zIqB2V4Xol4x8Ezr+c2u/pdUdIEOQWsKpw52fZaDYyrFdr2o6p1hg4E7Uw0KTXdlHnJErfeInFexO/vCDHr3wzoyjrO4CXjUZz5dMPTQReOYpwoKOpHeyxMd9zVhPZSFMnm1SJy+vDBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=bw4QuRx4; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sartura.hr header.i=@sartura.hr header.b="Q94lQuN1"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c15e2937e9dso95965166b.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 04:58:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783598279; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Hk58mujwKNXt9jd/FnoGySBmEMUT/Halb5FbLY7VwRbIBN5vqYUe37v5vSKGV36g/E
-         Bun30q1rYgDHfT4bVr7RStlt+9s/VHmSTOFRzAyiWazzhTSzymntOO9KFZ3rZek2VFgD
-         rEZqLe7jmBg+71pM9Yah2z+8qDn7mkEo3eYl3lWnLoydJqJIvQrTSYYXGi9siqfys2Jh
-         b8Y7alpHE0z36TfJw8hvxoWJbFzIQfqR5rLmaeC7QsWbtYhopDjNL1Sv7NPxKiRe1jtB
-         gwpOXJf0z8XKQjTYRVzsmLMwpe5tTdje7vEI5aiB6TtgqEi35HMwKy6XboatYJ7VHZNY
-         vPdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=6Lc5fIJ5fx5B/pbye1r+zNH46BLjKugiwBq078pJoIY=;
-        fh=53qvJawqK0TJTsq+MaD47KBMEtgXQmC582XHmZ7TrbI=;
-        b=aoW4Wliu9NJruI55bZuqkn3ADGx09HxKjTPFDOKAg5kEcm3b+B4HVrhFuMgVkBXmgP
-         kLWdUel9hw6QaAnE93K66eH3yYvekMs3wamOoMequRlZuChwPOluYO1pgnDKGEwryZTv
-         LAvU2Sn3fApjCcwRKGKASX3UtSk98Txd1v5ogCVCgaEseurkM86A2yjRsvQYBM32luu8
-         Aa1WDjkjHDVGwvYqAQZcOQ+eKbzgLC5y3EqGgWdbV3xNOD4i1O/Zh6oFjBtWXjA60+3z
-         xQiXDXpKiOY77JDZ5y5WOv1vHb+YLi6I04GtNUcfbdFlPEyqFjHRtjyCeGnX32eZEl0x
-         06xg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura.hr; s=sartura; t=1783598279; x=1784203079; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=6Lc5fIJ5fx5B/pbye1r+zNH46BLjKugiwBq078pJoIY=;
-        b=Q94lQuN1tE+QNsDT58nkZeZx8p6YTd/7TA4MXCskH5MktXbmoL1l2RSU4/x+wxxOI5
-         /8iIl29058pzoTB+W1wLpdmiPZ1bBBqLvEtk8w0X20ZKCbbqzv1YMDk5akkJxibchntS
-         77qTPxnGBHVgPctxiUHHYj8FL4qrwTmgpf2NWuUsA8GenqG4wtHPydqhc8YRiMadyRau
-         8aKXiNO51rVEKHnTTqFopOrO3oqXOT3vw8eQHpy2Wx4qN8+Dlxldf0YtxNCw6UAFhQtr
-         GnCUR67+Z34WrT+F7/PP4JcKxMXLD18gjhqAJVPP3wmMit6L0i5fu+s0C8jJoppBu1cN
-         U8JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783598279; x=1784203079;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6Lc5fIJ5fx5B/pbye1r+zNH46BLjKugiwBq078pJoIY=;
-        b=nnrMSDClAZMlhE1rYla72qzx57CTSMrLu0dgKtvKrxTrc7UlMWGFaQ/IIOhUW+XPQt
-         5rCFM3aZTMRGT4PI0z+7r/SQEWskgLMbUSqO9Rs9V0+lCIAj1EBm5omXTkXhdGiSm7dl
-         nv9R5ZA+/uvicYaz3Ii8kwWsKuaYTQwVtMeGM1ZA0IIr36PZzYp1OfcBuQdKitA8oHSB
-         19qNBKRyHLe36HhEjbzX4qM3BJaoPUYMbfYnM14V49Oj2MlUle+PJm8BvOPQtj8jXDUN
-         /aq3fyoW7qX5G/Pl5ZDZr1gsbcTArD8mPTEHweXgkTa5HU24VmmhaKgp6x5H0+afPL9a
-         Fxbg==
-X-Gm-Message-State: AOJu0YyJWRmO1ECLEryrXWlXvoHLyiaCKR2lFs3GfUkBw2B9Dp8xIfmK
-	4ol2m936sLm4ayy9K/BbhLPrskCqVdHYsH1OFhOhdZPCkx04aTPkJSRLM+Xagsgc/4AzI7MCl44
-	6TSzi3lVtDxjeyKEoBV77PaVUQBNLkcRuLkWr8+rJbd55P+iMcxbR
-X-Gm-Gg: AfdE7cl+MyP4+VnDG0ZT7xyesYBLFiX+bXIuO2J15/2KVkO+2G+D0xh7E+sDnhhlFqn
-	YIgXFR9Qm1/MxZhB8KAC0indXfwGxztOcDX974ugB00eh55MDExZ1dQ7ZA1f2boTIRA/g7PkNnr
-	uc6CZzRA632C2QASLNCK9YTc9C10glfTjMsJqFAY7Hq73dlCO/KXidyPRiAIPQza3KDEb85P9m5
-	IzLIqmoZMr5NwM25ULgOwMfNAjOiiScZ7Kieb89Zcpv9uHZMXk44NiExUpjlp9eLx/KRblKcxEQ
-	UINkevcvByOVp3biAO5Kg+NsytPmR//eK7e3lB7+QdpBGpBD5m8=
-X-Received: by 2002:a17:906:8d8d:b0:c15:cd54:e026 with SMTP id
- a640c23a62f3a-c15ce144f5cmr335284266b.31.1783598278968; Thu, 09 Jul 2026
- 04:57:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="bw4QuRx4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1783598717;
+	bh=1yberYinq6zyUgvSxbhajG7UeHKw44InEUPFxLdWH90=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bw4QuRx4pKMiH1tit3u16NFSSAVpeNjCAa3/qrSfjL/Sxz9ll4M3j3nXwgHByoBGY
+	 1XIiVJAC0XRCfEoQc7Oj3Iy5I8b8ytPeVkwGL8bItk91vhtcZ/0KGsoSLgOaPWkMe0
+	 2Im0cIGstpERf/YkyTB9vaRXNTbrexcqpZrYZwzLjE+3S7P9eB731onkRBBm3Y3eUo
+	 BaB99g0IieBh2zDKvH4l6gC2aoiy83ZzmPGXy97ArauStPuix5JAAQWavgXm/leQC8
+	 XJUBh00WVx7onHt1zU22Si51ymvx1d4mePteuOdduZwyOWgCjoQJEOFwP0aaP2eBOM
+	 kBk8TrxUNMG/A==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 95AF117E05D3;
+	Thu, 09 Jul 2026 14:05:17 +0200 (CEST)
+Message-ID: <7989f202-05d4-4c76-afe1-830ad0b44337@collabora.com>
+Date: Thu, 9 Jul 2026 14:05:17 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260709112006.390742-1-robert.marko@sartura.hr>
- <20260709112006.390742-6-robert.marko@sartura.hr> <20260709115011.D920B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260709115011.D920B1F000E9@smtp.kernel.org>
-From: Robert Marko <robert.marko@sartura.hr>
-Date: Thu, 9 Jul 2026 13:57:46 +0200
-X-Gm-Features: AUfX_myDvdrO3OyQghqyuoWYPe5PO0-J0F84lshRH-WnbjqKgWEOiROjSluu8z4
-Message-ID: <CA+HBbNF2t4GKEJCDRHh5wMxRTK4hXugPcoX0P-Utt1N34E6j4A@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] arm64: dts: microchip: lan969x: add QSPI nodes
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 10/12] drm/mediatek: mtk_dp: Add support for HotPlug
+ Detection in DP AUX
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: conor+dt@kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260709113148.49090-1-angelogioacchino.delregno@collabora.com>
+ <20260709113148.49090-11-angelogioacchino.delregno@collabora.com>
+ <20260709120033.123891F000E9@smtp.kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260709120033.123891F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 9, 2026 at 1:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The `qspi2` node is missing `dmas` and `dma-names` properties =
-(unlike `qspi0`), which degrades performance to PIO mode and causes the atm=
-el-quadspi driver to log a spurious error during probe.
+On 7/9/26 14:00, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Unhandled interrupt storm due to unconditional unmasking of AUX HPD interrupts on older SoCs.
+
+Older SoCs can't trigger this path at all, as these have *non* functional AUX HPD
+hence the AUX specific hpd interrupt can never be triggered.
+
+> - [High] Unsafe read-modify-write on the interrupt clear register `MTK_DP_AUX_TX_P0_INT_CLR` causes lost interrupts.
+
+No. That's the exact reason why MediaTek has a SETCLR strategy for many registers.
+Interrupts can't be lost this way, and whatever I wrote there is indeed safe.
+
+> - [Medium] Missing `legacy_regoff` addition when polling the AUX HPD status register `MTK_DP_AUX_P0_364C`.
+
+It's missing on purpose. Old SoCs can't reach that code path.
+
 > --
->
-> --- Patch [5]: [PATCH v2 5/5] arm64: dts: microchip: lan969x: add QSPI no=
-des ---
-> commit 297e92dccc7e525621a995eb1402956ad591b3bf
-> Author: Robert Marko <robert.marko@sartura.hr>
->
-> arm64: dts: microchip: lan969x: add QSPI nodes
->
-> This commit adds device tree nodes for both QSPI controllers on the Micro=
-chip
-> LAN969x SoC. It configures base addresses, interrupts, and clocks for the
-> controllers.
->
-> > diff --git a/arch/arm64/boot/dts/microchip/lan9691.dtsi b/arch/arm64/bo=
-ot/dts/microchip/lan9691.dtsi
-> > index ed997d87dd09f..a8541c6a098d1 100644
-> > --- a/arch/arm64/boot/dts/microchip/lan9691.dtsi
-> > +++ b/arch/arm64/boot/dts/microchip/lan9691.dtsi
->
+> 
+> --- Patch [10]: [PATCH v4 10/12] drm/mediatek: mtk_dp: Add support for HotPlug Detection in DP AUX ---
+> commit d87425adb9b3f30b1f231894a984a344e048ae99
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> 
+> drm/mediatek: mtk_dp: Add support for HotPlug Detection in DP AUX
+> 
+> This patch adds support for hotplug detection via DP AUX in MediaTek DP IP,
+> avoiding the need to power up the entire eDP/DP IP. It introduces a new
+> flag to select the HPD strategy.
+> 
+>> diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+>> index ea970a9bfe936..772ba311a34a7 100644
+>> --- a/drivers/gpu/drm/mediatek/mtk_dp.c
+>> +++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+>> @@ -1047,7 +1048,30 @@ static u32 mtk_dp_swirq_get_clear(struct mtk_dp *mtk_dp)
+>>   	return irq_status;
+>>   }
+>>   
+>> -static u32 mtk_dp_hwirq_get_clear(struct mtk_dp *mtk_dp)
+>> +static u32 mtk_dp_aux_hwirq_get_clear(struct mtk_dp *mtk_dp)
+>> +{
+>> +	u32 irq_status = mtk_dp_read(mtk_dp, MTK_DP_AUX_TX_P0_INT_STA);
+>> +	u32 ret = 0;
+>> +
+>> +	if (irq_status) {
+>> +		mtk_dp_update_bits(mtk_dp, MTK_DP_AUX_TX_P0_INT_CLR,
+>> +				   irq_status, irq_status);
+> 
+> [Severity: High]
+> Can this read-modify-write operation drop newly arrived interrupts?
+> 
+> mtk_dp_update_bits() uses regmap_update_bits() which performs a
+> read-modify-write. By using irq_status as the mask, if the clear register
+> reads back with new interrupt bits set (that arrived after the INT_STA read),
+> the read-modify-write will preserve those new bits and write them back as 1s,
+> unintentionally clearing them before they are handled.
+> 
+> Should a full mask (like DP_TX_AUX_INT_MASK) be used here instead to ensure
+> non-target bits are zeroed out?
+> 
+>> +		mtk_dp_update_bits(mtk_dp, MTK_DP_AUX_TX_P0_INT_CLR,
+>> +				   0, irq_status);
+>> +	}
+>> +
+> 
 > [ ... ]
->
-> > @@ -396,6 +396,39 @@ clks: clock-controller@e00c00b4 {
-> >                       clock-names =3D "cpu", "ddr", "sys";
-> >               };
-> >
-> > +             qspi0: spi@e0804000 {
-> > +                     compatible =3D "microchip,lan9691-qspi";
->
+> 
+>> @@ -1062,8 +1086,28 @@ static u32 mtk_dp_hwirq_get_clear(struct mtk_dp *mtk_dp)
+>>   	return irq_status;
+>>   }
+>>   
+>> +static inline u32 mtk_dp_hwirq_get_clear(struct mtk_dp *mtk_dp)
+>> +{
+>> +	if (mtk_dp->data->aux_hpd_supported)
+>> +		return mtk_dp_aux_hwirq_get_clear(mtk_dp);
+>> +
+>> +	return mtk_dp_trans_hwirq_get_clear(mtk_dp);
+>> +}
+>> +
+>>   static void mtk_dp_hwirq_enable(struct mtk_dp *mtk_dp, bool enable)
+>>   {
+>> +	u32 mask, val;
+>> +
+>> +	/* On SoCs with working AUX HPD, the transmitter HPD register is ignored by HW */
+>> +	if (enable) {
+>> +		mask = HPD_CONNECT_EVENT | HPD_INTERRUPT_EVENT | HPD_DISCONNECT_EVENT;
+>> +		val = 0;
+>> +	} else {
+>> +		mask = DP_TX_AUX_INT_MASK;
+>> +		val = DP_TX_AUX_INT_MASK;
+>> +	}
+>> +	mtk_dp_update_bits(mtk_dp, MTK_DP_TX_AUX_INT_MASKING, val, mask);
+>> +
+> 
+> [Severity: High]
+> Does this code risk causing an unhandled interrupt storm on older SoCs?
+> 
+> Since MTK_DP_TX_AUX_INT_MASKING is updated unconditionally, the AUX HPD
+> interrupts are unmasked even if aux_hpd_supported is false.
+> 
+> If an older SoC triggers an AUX HPD interrupt, mtk_dp_hwirq_get_clear()
+> will branch to mtk_dp_trans_hwirq_get_clear() and ignore the AUX interrupt,
+> causing it to remain asserted and repeatedly trigger.
+> 
+> Should this unmasking be guarded by the aux_hpd_supported flag?
+> 
+>>   	mtk_dp_update_bits(mtk_dp, MTK_DP_TRANS_P0_3418,
+>>   			   enable ? 0 :
+>>   			   IRQ_MASK_DP_TRANS_P0_DISC_IRQ |
+> 
 > [ ... ]
->
-> > +                     dmas =3D <&dma AT91_XDMAC_DT_PERID(1)>,
-> > +                            <&dma AT91_XDMAC_DT_PERID(0)>;
-> > +                     dma-names =3D "tx", "rx";
-> > +                     #address-cells =3D <1>;
-> > +                     #size-cells =3D <0>;
-> > +                     status =3D "disabled";
-> > +             };
-> > +
-> > +             qspi2: spi@e0834000 {
-> > +                     compatible =3D "microchip,lan9691-qspi";
-> > +                     reg =3D <0xe0834000 0x00000100>,
-> > +                           <0x30000000 0x04000000>;
-> > +                     reg-names =3D "qspi_base", "qspi_mmap";
-> > +                     interrupts =3D <GIC_SPI 66 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     clocks =3D <&fabric_clk>, <&clks GCK_ID_QSPI2>;
-> > +                     clock-names =3D "pclk", "gclk";
-> > +                     assigned-clocks =3D <&clks GCK_ID_QSPI2>;
-> > +                     assigned-clock-rates =3D <100000000>;
-> > +                     #address-cells =3D <1>;
-> > +                     #size-cells =3D <0>;
-> > +                     status =3D "disabled";
-> > +             };
->
+> 
+>> @@ -2113,10 +2191,15 @@ static int mtk_dp_wait_hpd_asserted(struct drm_dp_aux *mtk_aux, unsigned long wa
+>>   	u32 val;
+>>   	int ret;
+>>   
+>> -	ret = regmap_read_poll_timeout(mtk_dp->regs,
+>> -				       MTK_DP_TRANS_P0_3414 + mtk_dp->legacy_regoff,
+>> -				       val, !!(val & HPD_DB_DP_TRANS_P0_MASK),
+>> -				       wait_us / 100, wait_us);
+>> +	if (mtk_dp->data->aux_hpd_supported)
+>> +		ret = regmap_read_poll_timeout(mtk_dp->regs, MTK_DP_AUX_P0_364C,
+>> +					       val, !!(val & HPD_STATUS_DP_AUX_TX_P0_MASK),
+>> +					       wait_us / 100, wait_us);
+> 
 > [Severity: Medium]
-> Is it intentional that qspi2 is missing the dmas and dma-names properties=
-?
->
-> During probe, the atmel-quadspi driver unconditionally checks for dma sin=
-ce
-> aq->caps->has_dma is true for LAN969x compatible strings, and then calls
-> atmel_qspi_dma_init().
->
-> Without the dmas property present here, devm_dma_request_chan() returns
-> -ENODEV. The driver handles this with dev_err_probe(), which emits a
-> kernel error log ('error -ENODEV: RX DMA channel is not available') becau=
-se
-> it is not -EPROBE_DEFER.
->
-> The controller will then fall back to pio mode, degrading performance.
->
-> If the hardware supports dma for qspi2, should these properties be added?
-> If it does not, should the driver be updated to avoid unconditionally set=
-ting
-> has_dma to true for all instances?
-
-The datasheet is quite conflicting for QSPI2, as it sometimes
-references QSPI0 and QSPI2,
-but then sometimes references QPSI0 and QSPI1.
-
-DMA lists channels 17 and 18 for QSPI2, but it also lists 15 and 16
-for QSPI1, which does not exist.
-So, I will drop QSPI2 node in v3 until its clear which DMA channels are cor=
-rect.
-
-Regards,
-Robert
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709112006.39=
-0742-1-robert.marko@sartura.hr?part=3D5
-
-
-
---=20
-Robert Marko
-Staff Embedded Linux Engineer
-Sartura d.d.
-Lendavska ulica 16a
-10000 Zagreb, Croatia
-Email: robert.marko@sartura.hr
-Web: www.sartura.hr
+> Is the register address missing the legacy_regoff addition here?
+> 
+> Unlike mtk_dp_read() which automatically adds mtk_dp->legacy_regoff,
+> regmap_read_poll_timeout() operates directly on the regmap.
+> 
+> If a platform with aux_hpd_supported also uses a non-zero legacy_regoff, this
+> will poll the wrong physical register address. The fallback path for older
+> SoCs correctly applies the offset manually.
+> 
+>> +	else
+>> +		ret = regmap_read_poll_timeout(mtk_dp->regs,
+>> +					       MTK_DP_TRANS_P0_3414 + mtk_dp->legacy_regoff,
+>> +					       val, !!(val & HPD_DB_DP_TRANS_P0_MASK),
+>> +					       wait_us / 100, wait_us);
+> 
