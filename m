@@ -1,175 +1,120 @@
-Received: from mailgw1.hygon.cn (unknown [101.204.27.37])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB13530BF6D
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 02:09:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.204.27.37
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5A5638AC83
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 03:33:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783562987; cv=none; b=lmKq21ACx5BgtXSUopAfrR8EceV++pJSvbMZ8bHlG+Qn8WLZj1/SDsHqV0DOCG0G/SocY5Xbo1vJVk96K2GpG+Lt1UG2FjjN8W9JiNJwNnW2GzExoCYIolvWnO5b1Ewt2bUwvxsD8AD7oDQgcrcf+FVBTJAMUwwULBpl732Y8tk=
+	t=1783567992; cv=none; b=OM1NHpwmZUx+8Fecf9KovVE3A3z7dWNxGnQqgxSiPiJyevFDkL3v6/kMsBaIrG1ztImH0EyyyNvG/ZV5FGAZEkXs5oweHmKpW4PkwKKVCFIM6GZtKawInrCUY7/O9g75lAbLZNX+R0H8sumpCO2KYtDMQwcLzJSgpd5gQXx6N4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783562987; c=relaxed/simple;
-	bh=ByyfsO+oybVxGImcwOwMAd2J+crIhdjtXGqoawgXPR8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=B+zwR3arkfou8IXwaM+iPFh0hjfOcTQF91tXWUZOQcLH4EqWpM5tGALN5NJmv7llGQLDX8jfmpJS/oGJgjt0BiuYeGZoZP3o6iKqDWkCZVN8OUIUeeTsQZlCcKwzuAuw/KEljbyxkzgL1dUxuTRuVFNJpJ4pmGNa7dZp8e0Lv7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hygon.cn; spf=pass smtp.mailfrom=hygon.cn; arc=none smtp.client-ip=101.204.27.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hygon.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hygon.cn
-Received: from maildlp2.hygon.cn (unknown [127.0.0.1])
-	by mailgw1.hygon.cn (Postfix) with ESMTP id 4gwdgn0XKCz27RGB;
-	Thu,  9 Jul 2026 10:09:25 +0800 (CST)
-Received: from maildlp2.hygon.cn (unknown [172.23.18.61])
-	by mailgw1.hygon.cn (Postfix) with ESMTP id 4gwdgk21wwz27RGB;
-	Thu,  9 Jul 2026 10:09:22 +0800 (CST)
-Received: from cncheex04.Hygon.cn (unknown [172.23.18.114])
-	by maildlp2.hygon.cn (Postfix) with ESMTPS id 7E6B9301C0DA;
-	Thu,  9 Jul 2026 10:07:08 +0800 (CST)
-Received: from [172.25.61.61] (172.25.61.61) by cncheex04.Hygon.cn
- (172.23.18.114) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Thu, 9 Jul
- 2026 10:09:23 +0800
-Message-ID: <ac3eca97-1a29-4d5c-9cfa-19cbc4dcb9e9@hygon.cn>
-Date: Thu, 9 Jul 2026 10:09:22 +0800
+	s=arc-20240116; t=1783567992; c=relaxed/simple;
+	bh=q9V5s5y1iSQ74XrB5P54HxA0czOtEoTctnz/+G4QLNE=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=szsBsPexuNegEPPV4wB8j2+ICQrqr1F3phUgxRcFCJ7JssHT0Y576i6Ojzu5IQLuDMJT6JhItJQSaczyr/LnNo0IPYcPPpna7HpX2CFCxuODxWqd9un/uzdAO3guQ5eor1Ng6NY83XwyFNqB5tKYBeNu9fFYM4xNF4KHrKzbjlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [113.200.148.30])
+	by gateway (Coremail) with SMTP id _____8AxBOpqFk9qcLUBAA--.2125S3;
+	Thu, 09 Jul 2026 11:32:59 +0800 (CST)
+Received: from [10.130.40.83] (unknown [113.200.148.30])
+	by front1 (Coremail) with SMTP id qMiowJCxPsdgFk9qRWsGAA--.11757S2;
+	Thu, 09 Jul 2026 11:32:49 +0800 (CST)
+Subject: Re: [PATCH bpf-next v9 2/2] bpf: Reject programs with inlined helpers
+ if JIT is not available
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260708101806.18885-1-yangtiezhu@loongson.cn>
+ <20260708101806.18885-3-yangtiezhu@loongson.cn>
+ <20260708104324.BE58C1F000E9@smtp.kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <03339dc1-f23e-e4a0-2f9c-a97f8fe51897@loongson.cn>
+Date: Thu, 9 Jul 2026 11:32:48 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] perf/x86/amd/uncore: Add Hygon uncore PMU support
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-perf-users@vger.kernel.org>
-References: <20260708131315.13766-1-liuqi@hygon.cn>
- <20260708131315.13766-2-liuqi@hygon.cn>
- <20260708132741.9DF131F000E9@smtp.kernel.org>
+In-Reply-To: <20260708104324.BE58C1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Qi Liu <liuqi@hygon.cn>
-In-Reply-To: <20260708132741.9DF131F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: cncheex06.Hygon.cn (172.23.18.116) To cncheex04.Hygon.cn
- (172.23.18.114)
+X-CM-TRANSID:qMiowJCxPsdgFk9qRWsGAA--.11757S2
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXF4ftr47Kr48JF47Cry8WFX_yoW5GrWfpF
+	sxKw4ak34DXF92kasrt3y8Ww1Ygw48G3W7Gr1rGry0k3WavFn3XF1fKw17u3W5Cr4vy3WI
+	vr4I9ryvk3WDGFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+	wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+	UUU==
 
-Hi,
-
-On 7/8/2026 9:27 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Module initialization error path fails to unregister PMUs and leaks per-CPU arrays, leading to a Use-After-Free.
-> - [Medium] The CPU online callback aborts PMU initialization on the first failure, leaving remaining independent PMUs uninitialized.
-> - [Medium] The patch removes L3 cache uncore PMU support for Hygon processors without providing a replacement.
-> - [Medium] The `update_interval` module parameter lacks bounds checking, allowing a value of 0 to cause a CPU-locking interrupt storm.
+On 2026/7/8 下午6:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The patch unconditionally sets `prog->jit_required = 1` and skips instruction patching for helpers that can be JIT-inlined, which unnecessarily breaks the execution of these BPF helpers under the BPF interpreter when JIT is globally disabled.
 > --
 > 
-> --- Patch [1]: [PATCH v3 1/2] perf/x86/amd/uncore: Add Hygon uncore PMU support ---
-> commit 451a8d6c91c9ade8b2dbc942f864d5c36dc872c9
-> Author: Qi Liu <liuqi@hygon.cn>
-> Subject: perf/x86/amd/uncore: Add Hygon uncore PMU support
+> --- Patch [2]: [PATCH bpf-next v9 2/2] bpf: Reject programs with inlined helpers if JIT is not available ---
+> commit 28807bd656d66a091e77d8589e0c48bef3c4c778
+> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
 > 
-> This commit adds a new uncore PMU driver specifically for Hygon Family 18h
-> processors, supporting Data Fabric and IO Die counters. It also removes the
-> Hygon-specific checks from the AMD uncore driver to keep the vendor
-> implementations separate.
+> bpf: Reject programs with inlined helpers if JIT is not available
 > 
->> diff --git a/arch/x86/events/amd/hygon_uncore.c b/arch/x86/events/amd/hygon_uncore.c
->> new file mode 100644
->> --- /dev/null
->> +++ b/arch/x86/events/amd/hygon_uncore.c
->> @@ -0,0 +1,863 @@
+> This commit modifies bpf_do_misc_fixups() to set prog->jit_required = 1
+> when bpf_jit_inlines_helper_call() returns true. This is intended to prevent
+> a kernel panic when JIT compilation fails or is disabled and the interpreter
+> tries to execute an unpatched helper call with a raw ID.
 > 
-> [ ... ]
-> 
->> +/* Interval for hrtimer, defaults to 60000 milliseconds */
->> +static unsigned int update_interval = 60 * MSEC_PER_SEC;
->> +module_param(update_interval, uint, 0444);
-> 
-> [Severity: Medium]
-> Could setting this to 0 cause an interrupt storm? If a privileged user loads
-> the module with update_interval=0, hrtimer_duration becomes 0. When this is
-> passed to hrtimer_forward_now(), it is clamped to the minimum resolution,
-> causing the high-resolution timer to fire continuously in a loop. Should
-> there be a minimum bounds check here to prevent a CPU lockup?
-will fix this.>
-> [ ... ]
-> 
->> +static int hygon_uncore_cpu_online(unsigned int cpu)
->> +{
->> +	struct hygon_uncore *uncore;
->> +	int i;
->> +
->> +	for (i = 0; i < HYGON_UNCORE_TYPE_MAX; i++) {
->> +		uncore = &uncores[i];
->> +		if (uncore->init(uncore, cpu))
->> +			break;
-> 
-> [Severity: Medium]
-> Should this be a continue instead of a break? If the first PMU type (e.g.,
-> hygon_df) fails to initialize, this break aborts the loop, which prevents
-> any subsequent independent PMUs (like hygon_df_iod) from initializing on
-> this CPU. The same patch corrects this exact logic flaw in
-> amd_uncore_cpu_online(), but it seems to have been reintroduced here.
-> 
-will fix this.>> +	}
->> +
->> +	return 0;
->> +}
-> 
-> [ ... ]
-> 
->> +fail_start:
->> +	cpuhp_remove_state(CPUHP_AP_PERF_X86_HYGON_UNCORE_STARTING);
->> +fail_prep:
->> +	cpuhp_remove_state(CPUHP_PERF_X86_HYGON_UNCORE_PREP);
->> +fail:
->> +	hygon_uncore_info_cleanup();
->> +	return ret;
->> +}
+>> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+>> index 02246df2f6c36..d3be972714b22 100644
+>> --- a/kernel/bpf/fixups.c
+>> +++ b/kernel/bpf/fixups.c
+>> @@ -1840,8 +1840,10 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
+>>   		}
+>>   
+>>   		/* Skip inlining the helper call if the JIT does it. */
+>> -		if (bpf_jit_inlines_helper_call(insn->imm))
+>> +		if (bpf_jit_inlines_helper_call(insn->imm)) {
+>> +			prog->jit_required = 1;
+>>   			goto next_insn;
+>> +		}
 > 
 > [Severity: High]
-> Does this error path leak the registered PMUs? If cpuhp_setup_state()
-> fails for the ONLINE state, we remove the previous hotplug states but it
-> looks like hygon_uncore_pmu_cleanup() is never called.
+> Does this unnecessarily reject valid programs when JIT is globally disabled?
 > 
-> Any PMUs successfully registered during the initial CPU online callbacks
-> would remain registered, and their per-CPU arrays would not be freed. When
-> the module unloads, could this lead to a use-after-free if the perf
-> subsystem tries to access the freed module memory?
+> If JIT is disabled (net.core.bpf_jit_enable=0), prog->jit_requested will be
+> false. By unconditionally skipping the instruction patching and setting
+> prog->jit_required = 1, valid BPF programs using standard helpers (like
+> bpf_get_smp_processor_id) will be rejected on architectures supporting this
+> JIT inlining.
 > 
-hygon_uncore_cpu_online() always returns 0, so cpuhp_setup_state() for the 
-ONLINE state will never fail due to a callback error. The only failure mode is 
-that the state slot itself cannot be registered — in which case the startup 
-callbacks were never invoked and no PMUs were ever registered.
+> If this code instead checked whether JIT was actually requested:
+> 
+>      if (prog->jit_requested && bpf_jit_inlines_helper_call(insn->imm)) {
+>          prog->jit_required = 1;
+>          goto next_insn;
+>      }
+> 
+> Would this allow the code to fall through and rewrite the offset when JIT is
+> disabled? This would correctly resolve the helper's C function address,
+> safely allowing the BPF interpreter to execute these standard helpers without
+> crashing, while still preventing the runtime panic if dynamic JIT compilation
+> fails.
 
-> [ ... ]
-> 
->> diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
->> index dbc00b6dd69ee..3f8e40abba736 100644
->> --- a/arch/x86/events/amd/uncore.c
->> +++ b/arch/x86/events/amd/uncore.c
-> 
-> [ ... ]
-> 
->> @@ -1120,8 +1116,7 @@ static int __init amd_uncore_init(void)
->>   	int ret = -ENODEV;
->>   	int i;
->>   
->> -	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
->> -	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
->> +	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
->>   		return -ENODEV;
-> 
-> [Severity: Medium]
-> Does this intentionally drop L3 cache uncore support for Hygon? By
-> removing Hygon support here in amd_uncore.c, the previous L3 cache
-> counters are no longer available. Looking at the new hygon_uncore.c, it
-> only implements the Data Fabric and IO Die PMUs, meaning L3 PMU support
-> appears to be lost completely.
-> 
-
-Yes, this is intentional. L3 and UMC PMU support for Hygon will be added in 
-follow-up series. This series focuses specifically on Data Fabric uncore PMU 
-support as the initial step.
+If JIT is not available, rejecting the loading of programs
+with inlined helpers is the intended design.
 
 Thanks,
-Qi>>   	if (!boot_cpu_has(X86_FEATURE_TOPOEXT))
->>   		return -ENODEV;
-> 
-
+Tiezhu
 
