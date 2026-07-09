@@ -1,203 +1,208 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3244F2AEF5
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 22:59:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637959; cv=none; b=tNGdVrj4tNJq1mmMMu8FeMx2gNm4lKPsDzYBMSMfYQ23khLH7tPRKJmcTrD8kx7zAcUNOpNROYFMRlTGSE2NKXlb83fJDztOEg9UbR25Bg99DvSmbAYbjnAlNjLlj2B4GnTNaR5QOvB1LFWQB94Wah0dRLwMy42v/pm77cGBIVI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637959; c=relaxed/simple;
-	bh=63TwnTVP6l2jIkd9Wi3upGC5v0gLJqyNzNqWN6WuTEU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fZhRCXx88mSq03P/le3C2tse/QHPONPj3ASOc37UFswMh/DCWd+WOuJkJ2Wo3CaLyb8190bY6UbPKAPDDwzEqX1NrTYBXcunWktiP5J5jvUwo7gB2+Xgf8qh6UaKPb0CY0SvOE7y5yqAAoWexH6gT28JiD10UmaVnmg6yRFxbmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=dGbFZ4lF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AC0xBbVM; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C843629E116
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 23:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783640209; cv=pass; b=Y7Fv09HuZGEqyF6Er+hRtDSyaPD0k5CRFTQX7grBwX5sS7RDzV/R43sfeqPOfMVApPX5j+lkCPonGinmhIw9UCfjiCV9bdZF/4AFpr4x0fs8ZcOFDVQp3RIdRUpv98x103bLu+AsSnRenIkPVcaxRSRpnxEtYG9uXZU+iRdIuus=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783640209; c=relaxed/simple;
+	bh=hqF49w0o9Y3pxIUlyHXKNxY20CM50UR0Kra4XyEh7q0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CfmdJCxl915guklFil95RdfqEW+taQxYWpokJFQrvTJ7PsXt85d8o9mHPUlsKOe3lXKOUmi0w549Sz99hjP83J7LkgGCIgXC30fbVOBweMMN9jp5zijm5n/Mt9F1HdS/aeLtUQfthpAUhpKKwy/dqcFw+lIMXUZDbhbfVWP6ZWU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TbfANkDE; arc=pass smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="dGbFZ4lF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AC0xBbVM"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80ACCEC0189;
-	Thu,  9 Jul 2026 18:59:15 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 09 Jul 2026 18:59:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1783637955;
-	 x=1783724355; bh=FZCDsNIXPKrzfAxORBm5mfTxW9Xy1PMDTusoVd6BlCE=; b=
-	dGbFZ4lFHL6pXl+v24U9VCXpbnQEijTRqZqOFQeWmb9n4XAL2h+eXBgZ1aVFg0Af
-	uMEmlWKInHQwZcCv60I6QzR1LwhuUZY7hEqN5ed8RPPAyyB++ikw/PdQz0TONSG+
-	erjC8tgGwNw6eByEX15ColyJXqDQhRSdNYv+G6XKwUcNMWWrrtzPMZzs/t08Vydf
-	Idig3PvzxDX+p7ZluJU2NLS6H0evHRIHUYePsrTE/57gU8DnY2AQ1smOaX9EZcGb
-	Xpa3FFMWgjBjqs7SDgEyaDBUlvuUubUOtD6NS6/P//14mugLTkzZxjfB6bTnY50d
-	i2tFGamJNnoKRaIid0lVlw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783637955; x=
-	1783724355; bh=FZCDsNIXPKrzfAxORBm5mfTxW9Xy1PMDTusoVd6BlCE=; b=A
-	C0xBbVMef4sdaRZ2QU9bosA066vHCogbLAXQordra4njWNWPdES8A1ffcDJQ+CvN
-	m51G/DLIrdIbG3u93vTmkljU88RXH16dftjNQl/UffdOLqTloHawPTpHWRD7NlNc
-	nvUamTThJkxpAtNzeTY5ArVDKcHXpaa43atXmQ6BdTuj9vHdbeG2DdWsv43T50/R
-	UwFFKbL/Q4nBvhGipKv0J22l0kk2Vt2n2cMOmy/tnP6pFSsbPBkZGbcUYmFBPjX1
-	C6ALQZmHsT6CQ8Y2X2Wpq3Lf82tdnt5B272CNdZr8LYrh5WKKWzoxTfwZMturc2Q
-	10NNoIy2Cisvgctt5aCBA==
-X-ME-Sender: <xms:wydQavJi0dHLLkyVaR9ACiQFnQeT1qwUraeN-7t9OcACsIxtjaDjRw>
-    <xme:wydQakq3xQ1-NSFJO5f78C_s04LoH7Qi1jnBDBlkeGW-1si6JMeuyuvYHzRGti17m
-    TNGLzzyfnRkXZ30n7EEcjWGaMnqkq0YiJa3T2FxS403Rt2Q7ngsIw>
-X-ME-Received: <xmr:wydQanxDKdly5ELjXILMBqkei_ajlBPA6-wdU21qIOuYwUXOeNa8C24gtt4>
-X-ME-Proxy-Cause: dmFkZTGaFekSOOIdJUZP0c6+OVVyumAoamaV7n5ICD3plcDVzbFPMMbZLcQDN9JyPN+EoC
-    dHBY/B0S+d6fPxiMovnnozConHaWks7rxyCjvm/vHZQOZwMOoNrWo2zgbISYSSQTk/TudC
-    KJSz6Z0DmJ+0NjLAMcvjRBy6IEbHBaTiLrPdGXgHPGQiGl47prL56MYH0mEQzoPVtmebCy
-    qs4cHiJehHLrzCdN1/EPHAUYDtIwXcyqNYf2l9CgghD6mpA4UQOUuik7Ondzyus+sLnBdL
-    n3gZ2EGxvw6gGRmNsXlEYTeQ41/dvFcoVcPyTZ9QWuGelbnwqKb9IrhilZQtEvrgF4egsz
-    bo0mYsPZ+ZAyrgiPqdwKl3zp6hb6Srsa4tpDSCBETm9WWNNkT4cAEaP3DRNXVBm/HzFWvh
-    xJqXxVFr/lYA83InIRaqAOYG0qFzeSE7cJo2d+cfAcwl6LxeKSUfiNXZzBTjSRzgfFFzBY
-    t31RQ145Di/fYnbXWJ7TTfjqRdBG0ahz7g81m+GWdIa9ixltLYjj3Ymv5tJUs6Hj+BzHYZ
-    aL3v7BnczSev1ly+eGEPaQf/VgHJltkp0aFy6dHJuJmXyVagRuxd+R+S1PqL376dMzKpOR
-    fEU21qcKqYtE5BC4v5w5GmBJszdj73o1a/9xCNR5upkTTFDeJ2ZSeOXq1mVg
-X-ME-Proxy: <xmx:wydQaoN9f0v-BkBbVfo2by0HcBQtsNKy_YhRRcV4x4BqNnagaOVMqA>
-    <xmx:wydQas5qCVVD7jUAEcbgBYj6HsRSjZxkUqX16d_fYoBe84DYJsuIaQ>
-    <xmx:wydQahnPULyZejDL-bIX2RTVakd2Kt9U0bAmFu5VbuWVKtL5pwL48A>
-    <xmx:wydQalT-R6rfd7qCbxZXVvkug_1Z8wJZ9ADYc5VpF_KxoeS8qaYRfQ>
-    <xmx:wydQahVNHTmbTvyUjQkLMxmLPMMaN1MzWjAnMWX_9Cjz3H4RzfT1XwCd>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 18:59:14 -0400 (EDT)
-Date: Thu, 9 Jul 2026 16:59:13 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Josh Hilke" <jrhilke@google.com>,
- kvm@vger.kernel.org, alex@shazbot.org
-Subject: Re: [PATCH v3 6/9] vfio: selftests: igb: Disable PCIe completion
- timeout retries
-Message-ID: <20260709165913.422fd951@shazbot.org>
-In-Reply-To: <20260708233123.F2EEC1F000E9@smtp.kernel.org>
-References: <20260708-igb_v3_b4-v3-0-1272650ca614@google.com>
-	<20260708-igb_v3_b4-v3-6-1272650ca614@google.com>
-	<20260708233123.F2EEC1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbfANkDE"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6679d88abdcso483250d50.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 16:36:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783640207; cv=none;
+        d=google.com; s=arc-20260327;
+        b=D0kr3UrnsL90mL1hMomTyfE/MItU/RVJ6z5kewfNq6nTH5s7KKVsK3/cNVs6UoVrP9
+         VJVqq1XbWL5bPosnjpdic/To2p+PftaCDMbqKl90IhLee29mrTVKZjwP9gwow7A29mLe
+         U2jqlC+4OyFvY/bl7bVAm3QWlCIXVlRU59UkErSBPy0w23fT8lkK5RSBBk2TMEepJzPX
+         0CpNQ4nV85jzc3XTS04/yS86RtMiXrZAXJWmm/xMAL/9Sy1UHJ0DJdo0n73oQwDONOHv
+         LYcPd5s+XAQiPAam5ktjWHwFN9lVhgSfMHHESOl2WZ+N/VeK0TOjIfxxecFFMeh8V1hB
+         0bMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=c2JEFYM+Nd275OKVdEeBkO+9cqRAM0g5bLueXNaKqV8=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=M6H7jQi7loV+J0lnHjtFUolFK5FcDfZSGFUk8FLzMWTxrIv8CfRuQ8mCTvO45sfG/5
+         to/DZEvWqydiPWqf6636uiKih41m72ilaAOVRw2bfXetgh/ZxDBAknmebPsox6Eu0k+w
+         bOX+lVA2pnLrUdMesIb/zTjT7ANwHsuxM2o5Np7zgoWtVXLhT5K9PNXj8xGFXJseIIIa
+         w4Rjqx8IEE0qi0dosK0u+5nuQOivgaPr+TlOvPfOWGac4kzHEZ/KTG2i8tNn4uP7Z8R8
+         gcJuW6RfKWHb3ft94O4KFUBeWVI/xpH1REEo1WqzH61eYnehrBosbT5RhqAbQykes18P
+         Vezg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783640207; x=1784245007; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=c2JEFYM+Nd275OKVdEeBkO+9cqRAM0g5bLueXNaKqV8=;
+        b=TbfANkDEQhIl12oKhYs9c9XbiefjCfvfa24g4MKDsQSdJOn/bpmmxppt+LpRys0Qav
+         dBtlQi4per1Mb1/JLx3JN9uus8l7twPydrmlWPCIXMuEJqBQrzEhvFc04nTjnrH9gi6Y
+         6TWPFaLBE7c5/TqfwyhN2VSJAA5QgEBpzAThjDbPZl17rdkJ+HWaFhp4UtxzCe46vmXl
+         FgN9BiHwlP0zDRj+frAE7j1NadCbR4Yhq/gcT+gGDM7Rp/hCP4Vu5aAgo1cVTmAEIplE
+         dwwaYapYrj0s2HGrB+mfl7m0vo5Z7SR0aD7ZUywHI/vI3QGxTEw85FgsKkKXq7GpFmZq
+         XNig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783640207; x=1784245007;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=c2JEFYM+Nd275OKVdEeBkO+9cqRAM0g5bLueXNaKqV8=;
+        b=EOvTalueB3LUFUPNMQ13ym1aTmVqYl9pd5FoIcj6/HkJm83Fac6172P0meZ0PVc2af
+         /HPXykLE8ioa5KKpfc+adGuZBJROSk7bOmPjENMCgN8bWj7o/suEB25H7qKq5MLebacx
+         q1X1X62RxksSQbaZNOpfhx4/XO1kZCMNQGSlWy9Nb4mvIDogk+tyQCHa8lDNQquFO3F8
+         PaHHnZf++mQtHT0pXGpoToXMZhVhOL5+hR6GfP90qd7WUdVAU4cnABBF7slSToyFsY9q
+         L1PTu5Em3kJ81moX4ypAnqISPsfB357O8+MSyA8VCdWhpOphIgOsFB0vTn+532Ayet8X
+         Go8w==
+X-Gm-Message-State: AOJu0Yw5HfP6IuObS/CyPTF3E82nxCFo/4p30t7nWZiHkwsDTFQFasuF
+	Ap4dVQM5lpoOvHn8mAeodaPueVA31+mMzflGOtBgNQXxO+fxiQeRb4B9m5CfrCWsmfxWf1FKgwV
+	LH6rdagx1V2FxbZpy9RfpKcB9Y32klLLqgy5M
+X-Gm-Gg: AfdE7ckc4xIeOqQTC9LaEgsrbr8NXWq5PDe/ce965PbezJZKlQu3Y0dIeSDB63iC1Zs
+	xnqXyIUEZclFt0pXlOA1wgvRC7XBUg5f4hKDjqRK+Wbs6f3fRbG5LSZaJa+4JrYhL/aSIdSr3z6
+	Ndq0aQffdtFKzN+uy70uHqGE3RvnAwvzEhFV8f+joeXqsHhNTNWQj0hHbSC39yQZ8bmwicredaK
+	81Vlvoh257vKWEKYviZ4WNYmCT2a2Xo5B8c54OnOCKHtChHF3jMBEPvlfL+ADTt/Q9yH9WP
+X-Received: by 2002:a53:a490:0:b0:667:546a:e624 with SMTP id
+ 956f58d0204a3-6679f26cdb7mr4983143d50.79.1783640206745; Thu, 09 Jul 2026
+ 16:36:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20260709230242.2003459-1-ameryhung@gmail.com> <20260709230242.2003459-3-ameryhung@gmail.com>
+ <20260709231732.AAA701F000E9@smtp.kernel.org>
+In-Reply-To: <20260709231732.AAA701F000E9@smtp.kernel.org>
+From: Amery Hung <ameryhung@gmail.com>
+Date: Thu, 9 Jul 2026 16:36:34 -0700
+X-Gm-Features: AVVi8Cfaiv0Nb5dLVXosUOmMYLoDtUBrkn6voSCtmKAgDMCTdizmGJG6UmULS34
+Message-ID: <CAMB2axPf0=YPMD4br-zd+-tjLRAQa890PRJAKStSwZyAAef-PA@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v1 2/4] bpf: Factor out raw_mode-related fields
+ in bpf_call_arg_meta
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 08 Jul 2026 23:31:23 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing SW/FW synchronization semaphore when accessing PHY registers via MDIO.
-> - [Medium] Missing DMA read memory barrier (dma_rmb) after descriptor completion polling.
+On Thu, Jul 9, 2026 at 4:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The patch drops the detection of `MEM_UNINIT` raw memory argumen=
+ts for `ARG_PTR_TO_MAP_VALUE`, which incorrectly breaks valid BPF programs =
+that pass uninitialized stack buffers to helpers like `bpf_map_pop_elem` an=
+d `bpf_map_peek_elem`.
 > --
-> 
-> --- Patch [6]: [PATCH v3 6/9] vfio: selftests: igb: Disable PCIe completion timeout retries ---
-> commit b47012b45a463be841715f383fb27408df2c020e
-> Author: Alex Williamson <alex.williamson@nvidia.com>
-> 
-> vfio: selftests: igb: Disable PCIe completion timeout retries
-> 
-> The mix_and_match test intentionally submits TX descriptors with an
-> unmapped source IOVA so that the DMA read fails.  By default the 82576
-> re-sends the request after a PCIe completion timeout (datasheet section
-> 8.6.1, GCR.Completion_Timeout_Resend, bit 16, initial value 1b).  On
-> real hardware this turns a single fault into a stream of retried reads,
-> keeping PCIe AER and IOMMU error handling busy and interfering with
-> reset recovery.
->     
-> Clear GCR.Completion_Timeout_Resend during device initialization so a
-> failed read fails once and stays failed.
-> 
-> > diff --git a/tools/testing/selftests/vfio/lib/drivers/igb/igb.c b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
-> > index 1848be6cd46c9..a7a30660b23ed 100644
-> > --- a/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
-> > +++ b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
-> > @@ -219,6 +219,18 @@ static void igb_init(struct vfio_pci_device *device)
-> >  		vfio_pci_config_writew(device, PCI_COMMAND, cmd_reg);
-> >  	}
-> >  
-> > +	/*
-> > +	 * Disable DMA re-send on PCIe completion timeout (82576 datasheet
-> > +	 * section 8.6.1, GCR.Completion_Timeout_Resend, bit 16).  The
-> > +	 * mix_and_match test intentionally submits descriptors targeting
-> > +	 * unmapped IOVAs; with the default (set) value, the device keeps
-> > +	 * retrying the failed read indefinitely, which keeps PCIe AER and
-> > +	 * IOMMU error handling busy and interferes with reset recovery.
-> > +	 */
-> > +	ctrl = igb_read32(igb, E1000_GCR);
-> > +	ctrl &= ~E1000_GCR_CMPL_TMOUT_RESEND;
-> > +	igb_write32(igb, E1000_GCR, ctrl);
-> > +
-> >  	/* Configure PHY internal loopback for testing. */
-> >  	igb_setup_loopback(igb);  
-> 
-> [Severity: Medium]
-> Does writing directly to the MDIC register on real 82576 hardware risk
-> colliding with the firmware or BMC management engine?
-> 
-> When running tests on physical devices, accessing PHY registers without
-> acquiring the E1000_SW_FW_SYNC semaphore can cause corrupted MDIO
-> transactions or hardware hangs.  For example, in igb_write_phy():
-> 
-> 	mdic = (((u32)data) |
-> 		(offset << E1000_MDIC_REG_SHIFT) |
-> 		(1 << E1000_MDIC_PHY_SHIFT) |
-> 		E1000_MDIC_OP_WRITE);
-> 
-> 	igb_write32(igb, E1000_MDIC, mdic);
+>
+> --- Patch [2]: [PATCH bpf-next v1 2/4] bpf: Factor out raw_mode-related f=
+ields in bpf_call_arg_meta ---
+> commit bbac2673fbeb11bb9179553dc669702134b2c290
+> Author: Amery Hung <ameryhung@gmail.com>
+>
+>     bpf: Factor out raw_mode-related fields in bpf_call_arg_meta
+>
+>     To prepare for unifying the helper and kfunc call_arg_meta, group the
+>     scattered MEM_UNINIT ("raw") memory argument fields (raw_mode, regno =
+and
+>     access_size) into a new struct arg_raw_mem_desc.
+>
+> >     Also drop the bogus raw_mode assignment in the ARG_PTR_TO_MAP_VALUE=
+ case:
+> >     arg_type_is_raw_mem() only matches ARG_PTR_TO_MEM | MEM_UNINIT, and=
+ a map
+> >     value pointer is handled by check_map_access(), never reaching
+> >     check_stack_range_initialized(), so tagging it raw mode had no effe=
+ct.
+>
+> [Severity: High]
+> Is this assumption accurate? If a BPF program calls a helper like
+> bpf_map_pop_elem() and passes a stack buffer (PTR_TO_STACK) as the map
+> value buffer, wouldn't check_helper_mem_access() call
+> check_stack_range_initialized() to validate the stack access?
 
-Technically yes, but it's non-trivial and we assume an isolated
-environment.  I test on a plugin dual-port NIC, potentially an
-integrated NIC with manageability on the platform might encounter
-something like this, but it's a narrow window that's probably
-acceptable for a selftest driver.  We could add the following above
-igb_write_phy() to note the deferral:
+I was wrong. This patch will cause a regression. raw_mode should not
+be dropped for ARG_PTR_TO_MAP_VALUE.
 
-+/*
-+ * Write a PHY register over MDIO.
-+ *
-+ * A production driver would hold the SW/FW semaphore (SWSM.SWESMBI + the
-+ * SW_FW_SYNC PHY bit) across the MDIO transaction to serialize against the
-+ * device's management firmware.  The selftest owns the assigned function
-+ * exclusively on a dedicated test device with no active manageability
-+ * contending for the PHY, so the sync is omitted; it should be added here
-+ * if this ever needs to run on a manageability-enabled NIC.
-+ */
-
-> [Severity: Medium]
-> Can the CPU speculatively read the destination DMA buffer before the hardware
-> descriptor writeback is architecturally complete?
-> 
-> In igb_memcpy_wait(), the code polls the status bit via READ_ONCE() but
-> returns without issuing a dma_rmb():
-> 
-> 		status = le32_to_cpu(READ_ONCE(rx->wb.status_error));
-> 		if (status & 1)
-> 			break;
-> 		usleep(1000);
-> 	}
-> 
-> 	igb_irq_clear(igb);
-> 
-> On weakly-ordered architectures like ARM64, the test runner's subsequent
-> memcmp() reads on the DMA destination buffer could be speculatively
-> reordered before the loop's status poll finishes, resulting in stale
-> data reads and sporadic test failures.
-
-igb_memcpy_wait() is implemented in patch 1, and could indeed make use
-of an rmb().  This function changes through the series, created in 1,
-touched in 5 and 9.  Before we get here we could include
-<asm/barrier.h> and call rmb() just before return 0;
-
-Re-tested all the suggested code changes, reorder in igb_hw_init() and
-rmb() in igb_memcpy_wait() against physical 82576 NIC, 35/35 pass.
-Thanks,
-
-Alex
+>
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index 7dd961ede88df..e2a3ed67d2eb5 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
+> > @@ -6690,6 +6688,8 @@ static int check_stack_range_initialized(
+> >        * but BTF based global subprog validation isn't accurate enough.
+> >        */
+> >       bool allow_poison =3D access_size < 0 || clobber;
+> > +     /* The call will initialize the memory; uninitialized stack allow=
+ed */
+> > +     bool raw_mode =3D meta && meta->arg_raw_mem.regno =3D=3D reg_from=
+_argno(argno);
+> >
+> >       access_size =3D abs(access_size);
+>
+> [Severity: High]
+> Because arg_type_is_raw_mem() only checks ARG_PTR_TO_MEM, arg_raw_mem.reg=
+no
+> will not be set for ARG_PTR_TO_MAP_VALUE arguments.
+>
+> Consequently, raw_mode will evaluate to false here. Does this cause the
+> verifier to fail to bypass the uninitialized read checks, rejecting valid
+> unprivileged programs with an 'invalid read from stack' error?
+>
+> [ ... ]
+>
+> > @@ -8403,7 +8401,6 @@ static int check_func_arg(struct bpf_verifier_env=
+ *env, u32 arg,
+> >                       verifier_bug(env, "invalid map_ptr to access map-=
+>value");
+> >                       return -EFAULT;
+> >               }
+> > -             meta->raw_mode =3D arg_type & MEM_UNINIT;
+> >               err =3D check_helper_mem_access(env, reg, argno_from_reg(=
+regno), meta->map.ptr->value_size,
+> >                                             arg_type & MEM_WRITE ? BPF_=
+WRITE : BPF_READ,
+> >                                             false, meta);
+>
+> [Severity: High]
+> Without this MEM_UNINIT assignment for ARG_PTR_TO_MAP_VALUE, does the
+> verifier incorrectly reject valid programs passing uninitialized stack
+> memory?
+>
+> [ ... ]
+>
+> > @@ -10303,8 +10292,9 @@ static int check_helper_call(struct bpf_verifie=
+r_env *env, struct bpf_insn *insn
+> >       /* Mark slots with STACK_MISC in case of raw mode, stack offset
+> >        * is inferred from register state.
+> >        */
+> > -     for (i =3D 0; i < meta.access_size; i++) {
+> > -             err =3D check_mem_access(env, insn_idx, regs + meta.regno=
+, argno_from_reg(meta.regno), i, BPF_B,
+> > +     for (i =3D 0; i < meta.arg_raw_mem.size; i++) {
+> > +             err =3D check_mem_access(env, insn_idx, regs + meta.arg_r=
+aw_mem.regno,
+> > +                                    argno_from_reg(meta.arg_raw_mem.re=
+gno), i, BPF_B,
+> >                                      BPF_WRITE, -1, false, false);
+>
+> [Severity: High]
+> Since meta.arg_raw_mem.size remains 0 for ARG_PTR_TO_MAP_VALUE, does this
+> cause check_helper_call() to skip this post-processing loop entirely?
+>
+> Skipping this could miss crucial state scrubbing when a privileged progra=
+m
+> uses special slots like STACK_DYNPTR as a map value buffer.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709230242.20=
+03459-1-ameryhung@gmail.com?part=3D2
