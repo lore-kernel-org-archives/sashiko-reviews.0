@@ -1,140 +1,233 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011015.outbound.protection.outlook.com [52.101.62.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2E336E497
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 15:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783612049; cv=none; b=taGVKGAxezGSvMjz7+wYpd17pFDtCJy3fpRhq6dxNx3zyk7a6hisQY8F+aFzbJwRgRr7qB8AEG2SwuGw+uo4TDzOGd276oxf8RZ0nCBL16Pe4Ec8KdHd8HlC8Hy7qKxfYcIezZ1W147CkVDkDNolPDJZJiG3TgPQvYguyeNiyAg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783612049; c=relaxed/simple;
-	bh=EA7L7caIXI2XAV/oDH4j4Pgo/dJQkGiWu8U2J5PGXRM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h3xjz2rVLlXWPLCCgID8wmmHrCVJZwpxEMzB9kqML0cpqr7EcpaMw/TMEmMT+/nVYBOEtOLK+Ssw2itHIEizXPA6DO2chVzfE0s6PQ+Hft1X+xSnsvMho2CY+ZI+nVAlgLCtE2KJpoYxVl9AuiJRC4F2zrj74alDQzvPy9GhbFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=kEh7G2k0; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA571426EA0
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 15:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783612109; cv=fail; b=R6GfYn3/QQiEt4TuRzYIoPu08gP72lVxNdrUT/36RaOC/GkK5V0C4KOlq0QI1v9wZkgcjcUHT8Yao7PizYb7Mds8GHVu9Y+C9k81zQdHuIYH3LhQ7M7eoRq0DPIxtZPhWJ3gn/obcYoNQbiIDapd/PjqyMSJecZlFBfUOwHBcS4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783612109; c=relaxed/simple;
+	bh=wLPqgJhnlq/mwOs1POiITqiI1gdh+0gizBTiyUF3bFc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=mGBq7NlhTo5usnzR16wlFzud+g9PkGanepklofgeBZLGpWw6UsVNTa7vrX/qt/hZu4AEMzrZzODlOXaCp5A7ZXQSHF7eUSTBcYvh9mIQtHytE+N/CJmNM5GwDocWZ3WBDXMv1NpF37PAboF3IJ01h9msG4ARffPhb41G17cUNSs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kRPQM05N; arc=fail smtp.client-ip=52.101.62.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="kEh7G2k0"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493ec555a26so6284525e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 08:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783612046; x=1784216846; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=EA7L7caIXI2XAV/oDH4j4Pgo/dJQkGiWu8U2J5PGXRM=;
-        b=kEh7G2k0zx6BuxgNgvQ2mU3a0QJUAioyXKclgmAbO7TgtzNbQQ9NCXStIuccTYvJzn
-         utKWiHY6HmNjBJxjz9lLHXi2NVENibRm/CvJlMk3id+EM+PUo6eVC6pCST4vivFJ4xRq
-         Tmp3cBEZroBPzOeq4oeTT2xb2mttAC0+834pTdlKYZc5UpUqyMLVxTCpB7ABomg+Ial5
-         csBg/Z3bPAQ8GOl7k5WDHAQzchZMI4B8UBi09c4bpnrEkJtYW6Azq/tc6GADAggE7oD9
-         ET0yGeFcQinDdykvAywpEFFv7MjvVjenFOAZ8/zt6DHcrwJUKQYHIy+p/A2HWg4ACdxV
-         graQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783612046; x=1784216846;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EA7L7caIXI2XAV/oDH4j4Pgo/dJQkGiWu8U2J5PGXRM=;
-        b=Ya6Ptztx7cTm7jNVwEd1obCqvK3cAUyJFjlgPEmQfgPug61S0iwj22JoxQarIMHFOm
-         WUjRhweLCBDil2c+/Th1b4jNAN578KBWLlmY/BdBIjvfVQqJ7om9/j42Bnhy8XGSKd9M
-         JgxC6heDtGRJuZmBB3KcGG+CLv6P8k65Mh9bGEwMvX5khpQadIBmE3lKHWpkkctTGdH0
-         sEHudUuWilJ3bAG3+FyYXKy/S3rZqm1jiRRVh56SQvUjVqe0LCuhpWk8eMi3uAeRkH8I
-         alFspkpTRhmP+T8EAxLbvzKQa/Gk/9A1gKIrd9IlsvC8PEejkoyccDsopTN0y5zlXgjo
-         3hMQ==
-X-Gm-Message-State: AOJu0YwFF6OSxXAL6z8QXrvcxbEyk+PWjs1U0sZDLjXWR5ZcXhlYyY9X
-	irUkjKL7rC5Nn1jGOjiYNPfoVQnOkdMQZ06QxMztjaof9MSQn3lEET//VXXaW0zwXuH1Q39Wk3H
-	SXLE/
-X-Gm-Gg: AfdE7cmLs34fcQxfHW1iJn97B+s1Qejhdi5n1iZUsHsp4MiY9x4+jPZGy8fZ4HtKXjt
-	kEIxUjUnb4M0O5tsWz4pKil4J64mKz2gfXQr/gc1tFLv8I5ruMK6gNjwpejNf6A3OlqaEiMO9mR
-	8taUjiHlqz797nk9d+rEiqi6yLRzpffp6zIs4EMzqLTzw/foHQw/c9Z42IuF3UvzjerTBobEiUY
-	m8YRGq5Lpl5RRVMJ3bp4hqWdHC96ib/NacJ3aVDQpNyp0s577iO/t65/n6LneSpBaqWjcvQG/cg
-	SGLEowrJvMDqZxz6e8FYfrSNeuG4DvlOz0OMTOLO2UrqFWUgAN43dRWcTx634/Q/JH7HuhZ9czO
-	Hj46+YXXH4x59MXih5WdTJQT8VnbcvlZMGpZQigulmRAssPBrACtjffOjbT4wL6jwaEmrpsjazv
-	Mgy/RPyM1pjsKbpcCU0k0KNFEXG1HcrR52CazGR25seqD7HJPMNK1ZJ5T4fcuwTCSHOJCGb5V1S
-	VS/
-X-Received: by 2002:a05:600c:3e88:b0:493:efcd:b809 with SMTP id 5b1f17b1804b1-493efcdb895mr16436325e9.6.1783612046460;
-        Thu, 09 Jul 2026 08:47:26 -0700 (PDT)
-Received: from localhost (p200300f65f47db043de98c19b374aa68.dip0.t-ipconnect.de. [2003:f6:5f47:db04:3de9:8c19:b374:aa68])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-493eb6ccaf1sm124528725e9.2.2026.07.09.08.47.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 08:47:25 -0700 (PDT)
-Date: Thu, 9 Jul 2026 17:47:23 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: mfd@lists.linux.dev, lee@kernel.org
-Subject: Re: [PATCH v2 15/23] mfd: Use PCI_DEVICE* macros to initialize
- pci_device_id arrays
-Message-ID: <ak_CNIdQ1QvF5TKM@monoceros>
-References: <cover.1783507945.git.u.kleine-koenig@baylibre.com>
- <afa9a60627dcc211c8d975c6a90708d421ead8e5.1783507945.git.u.kleine-koenig@baylibre.com>
- <20260708112723.080911F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kRPQM05N"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wRLNBrIFIdz1GNKtKNfchaybVwOHq7Q/Vkwl6MhYtgWivi3iZgKKht2mJNeEMPvmmqn8Gya2YTm5TaFMf+3YDO/oM2PV0oDt9gTy391OzV9ypZBY/R2NyJAzgzjnUPxXtrN9c9yZ+OqSi0o2+i7S6GERD2U1LgFhsiVI0PmnMUSvX627IM9y7esA3kwqx30vW/w91CKP+ZFqzBPBjFak4SqH946RxQf62oSA2XA9eGOVofMmdgl6g1CNPBuwVXUJ4WU0ErZCxitF8V4qVfGXI2JAIp5REltgB2RlzVTCf0wgiqBeeZRNTeDrJv0ySN6s+Vhpp+1hyxuMv5AcIwcS9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sQoOIOApnGn5U2mXs82psmOS/oyOJQyD5nm5+MaQ2OM=;
+ b=WmB68PHmV2Ie7kbZ04Vo4c8HKowBpyIxNBXhvhDfWssvC31sWL8RtWWWhNQHmtn82rBNkV/nBOQBKH4lIbIil3og3Rkuf6a6LGLTOcs4JX3cU5zeXhh5p+izA6vVba5/AsSQp6FkA2NHdBM1hrrgcc0vPrT27EUdSI/uSj7IMIGUoNi1efxMpJDAgXMpkklzeYibQ4NQRHKhv9kwsQq36egAlFVcAjdE8JM7hj7wbYJ50NxjRSRpOuHa7e5PJFbhOpRAwslwn5mn+nesKdNPZCmf6r+PFAgsDBq2CraoDA2tI/pis5gp9zN5ccgHC2OL0c2bYLiizJrOp6gg6ZC+kg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sQoOIOApnGn5U2mXs82psmOS/oyOJQyD5nm5+MaQ2OM=;
+ b=kRPQM05NiJ9xck64/X94pr7ifSFyYciZmqsPM6uDLvqavuTWfjocUGMdhMh2t6/C6lC62oaMSvDi031QG+Cl2UP5RlFORmAp6rEQg18JNQ+PLFDFrELLZuU9YIk/KwyjddwYPuqkv7VEgSXyBBTquxoK/0weKxJlG2CZc8/QaNI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SN7PR12MB8147.namprd12.prod.outlook.com (2603:10b6:806:32e::5)
+ by CH3PR12MB7593.namprd12.prod.outlook.com (2603:10b6:610:141::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.17; Thu, 9 Jul
+ 2026 15:48:13 +0000
+Received: from SN7PR12MB8147.namprd12.prod.outlook.com
+ ([fe80::3923:c1a4:778b:56f2]) by SN7PR12MB8147.namprd12.prod.outlook.com
+ ([fe80::3923:c1a4:778b:56f2%5]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
+ 15:48:13 +0000
+Message-ID: <354c4e2c-bf6f-4f32-9f30-a5ca2463cdca@amd.com>
+Date: Thu, 9 Jul 2026 21:18:07 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 2/4] dmaengine: xilinx_dma: Move descriptors to done
+ list based on completion bit
+To: sashiko-reviews@lists.linux.dev, Srinivas Neeli <srinivas.neeli@amd.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+References: <20260708100652.603074-1-srinivas.neeli@amd.com>
+ <20260708100652.603074-3-srinivas.neeli@amd.com>
+ <20260709101123.F2F9E1F00A3D@smtp.kernel.org>
+Content-Language: en-US
+From: "Neeli, Srinivas" <srneeli@amd.com>
+In-Reply-To: <20260709101123.F2F9E1F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5PR01CA0033.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:178::10) To SN7PR12MB8147.namprd12.prod.outlook.com
+ (2603:10b6:806:32e::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2nh437hk5opgvhwa"
-Content-Disposition: inline
-In-Reply-To: <20260708112723.080911F000E9@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB8147:EE_|CH3PR12MB7593:EE_
+X-MS-Office365-Filtering-Correlation-Id: f6d03a47-08a2-4878-7a2c-08deddd17bff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|22082099003|18002099003|5023799004|11063799006|4143699003|56012099006|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	cqc1VG/EoayhARYbL/5XPo5DvZ1oAsCL+tUyNtcsnzrHyKH7K/T7wa4dfk0wYtbZA0l8iCfebV4hQJctcnUu3UqyH7F1507BCA/vyZjl8PMSmmdWwuvVIrUXvkdCuiZbE6gy2OefaJq7MIIHrDpHWmmvhLMbXo8gKT3ckkPPgaWP6mIk+rUgiYsm0ixntBHcXX6lEMyFaV0IOHqN9RNHAkhEVT8Qb1DR49jtOmq8LgewdN7Vf/Ol00VmlWOOwKX7HskDcGICkxck6f1G/78CHoI0IwcLP6zsBqScLAT7IOQwXNsrAoUGViJ/vSFZJR0Ug5Cjvk/x4bN2vQwkUUkhiJZAoQjv5MqAB7xgzb59CNiyljR1Jb2NopRJvUli8OivAlFDHM4C1e3DZxH8lNtKuO8kC/w6WyEs6tahN0cRyxLTVGLjlouzCMPQEGrUxCejTD3uLkdlPh19iUCgicXR6wr6KP1jvMa3uDcvu4Qqry+EZPxZct8fgNsigX8Tvk7wCrnxZTxgFAmgnOoPDLjcC4l+716oTZoArHhoRU2kkCCsmMGQzNBwNs03BSo1GR0hFcR46rOOJFKQuPWYNnGY1Qrf26XEQ9n8H9CafpgMoOrQc7RoJvfDRY/NCJO3EwNw4x/jevop2rXSN6v1aMciYHyRFygoobw8//4nUsc2krU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR12MB8147.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(5023799004)(11063799006)(4143699003)(56012099006)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?eUpIMHd5U0tmKzRrRE84L2hQSjdCbG1OTEZLU3U4V3dleEtxWExabkhudUM5?=
+ =?utf-8?B?dDZXYUR5Z0NoMHFNLzhDMThMU3I5Slg4RUtob3llTXRWVXlRNTJjMFh4dTFu?=
+ =?utf-8?B?SFN5MFBpTjNiUnI1M3ZDQXlLU2pKOGFmZk5MUXVFRkZ5U3czV3I5MUtoT3Nq?=
+ =?utf-8?B?dVFkbS9va1UvVVZZcXFWbnkwWWxzaGtLN1NDOWp0UWU5TVhUS3A4M1paaTVF?=
+ =?utf-8?B?NG5TdTFwWkZCb1VmbElqZW03WE5UUVhwRjlvamF1UHBEWUt2Q2pBei9XcFlh?=
+ =?utf-8?B?WVowYm5DNS9HeW1LUGR2aXdNS1o0L3daelRmcE9uMjJWWHBpZlFOQ1h3K3V2?=
+ =?utf-8?B?ZldGcGJUdWZ4aFdjL20reHVxWVp4ZnFKRFkwOFl2WUcxMDZySjY5dlNIT2t0?=
+ =?utf-8?B?ZVM4K3FvalZCUXdWa2VFK2ZZYVBFOUNSN3hPSGhOM1pLODNxYTBGWjRPN3Bu?=
+ =?utf-8?B?UGhpdGR3dzJnaXN6RmJLYy9VMm1JY0Q2VVYrSXNtaXB3b2lEUTRrMTRlS2hO?=
+ =?utf-8?B?QmUxSTVqQlJiY1Z0VjVJZlc4UWFaZXpidzdVcWFZUkVxRmk0QUZ5bEd1TG95?=
+ =?utf-8?B?RVJzNm9IRVVXVlZGbU1MUE9pUW1CdEYzSTVCcFQxN0kvRDRvWU5NTHg0Yk1C?=
+ =?utf-8?B?UGIvdURDZHZkdmE2bWlFdG80SS8vQnJIUEFEZVR2YUo1dnFnM1pXcTV5Z2t0?=
+ =?utf-8?B?TFArejF0cFR6bmlxYWpwMGRzRU5QdDNCUE5CaWNFUXFMajlVYUl1YUwrM2lC?=
+ =?utf-8?B?WW1iM05LNlFWR3ZRcFVoMXZ1RXM4UG9WWW15UXJhTngvMEJaM0hicFFrUFV5?=
+ =?utf-8?B?aHhPQm1taG45WVFSWTlLOTVMZDVGblNJUkRJS1hrWUVBQTJHUm8zOEtkY1cx?=
+ =?utf-8?B?SHBqcm9JZy9qUlJjRkhMMjFPd1VNdTNkY1BUTFF0TDkwbmFFVGlkekRBV2xy?=
+ =?utf-8?B?Wm1naTBFY2ZnVVJvdkRLUzNBcklKL3gxZFF5eTJTbXY0UmUyeUp3aGpOZkVr?=
+ =?utf-8?B?dkNlVG5IM1Y2OE1UUEhnMHozTUh2Tmg4NHpvb3hHUHh2Y2loaDkwS2xhendB?=
+ =?utf-8?B?VzN0SFM5ZmtFSGNpWXlTMFVGb0piRHFrZFZ0OVFCWEUrbHl5TldwbndENXRB?=
+ =?utf-8?B?eExjd1hoemFtMXdUeThaTkpxd2oxeWFZcjJFRjBUVnlnZUdaQ2dZNmxDbnl1?=
+ =?utf-8?B?dDE3UUUwNWZhSTJwVkpQQTcwSVNoTzFWRFpWZzNWaDB2RHhIdlNVd05aVjJC?=
+ =?utf-8?B?VWora0VGbTZaQ2x3MWp3dlFsQzh5VTdpTVZpYkY5RmVRdEx4dzlEM3BRMi9N?=
+ =?utf-8?B?bVdqaTZPK1M1dmFTRE1ZNkt0MzFBM2tnclVPbXVyUHc1MVAxNklEQzBNY29t?=
+ =?utf-8?B?NDJadHdDQytxMjNvZ2ZHQWlXUFFreDdtSll5RDFLWkQwK2lRaGE2SXo2NFo1?=
+ =?utf-8?B?My9hYzR2MXR6QUtvK00xdFl3UTgvR2J4MjVMc3AxY1NWNVZsQWhMcFRjK214?=
+ =?utf-8?B?SWFvSmlka25TVEpxUEJtZWNaTUluSktMWGNDREo0c1FodHhwSTFrSlNDZXJC?=
+ =?utf-8?B?NTVWVXE3SGwxWkk2VG0wc0FkbFIyMzRuV1lIUTUrakU5cjBleWhaWEZyRVhH?=
+ =?utf-8?B?aUpPR09VVUZ5cDg5Z3JqSFlhZ05ad2poQks5ZnNSaWRrbExOcUJKNlhMYWli?=
+ =?utf-8?B?bWt1MVAwK1RqckRzK2FBd1JuQ2x5V2U0K3ZpQTJEckcrTlpaRGFPWGpoczB1?=
+ =?utf-8?B?ZEdPMmcxV3llckVwNmlZODVPamlBcW5IRVpaOEpROHZsS2FKQkJ0SUxYMU11?=
+ =?utf-8?B?Q3p0cCtPaGt0bmZKMk8yMW9SSGxXNFhVZEhsZ1hRN21LaGJncUVKU3h4MVp6?=
+ =?utf-8?B?bTgvRU1IaVdWWjZZV1RhaDUwYU9wRFBHeVI5NE1KWlhNSG1ET0o1R1R1WG55?=
+ =?utf-8?B?N3NsM0lWOHR3R2RkT2dSZktpeUVqY0FVTDBqMXUzWGJpSW4veDNYUVRLd3F3?=
+ =?utf-8?B?MjFTeVFYS05YWTBjY1VYOTRFZkdEblZENGlMSE1pV2dhSTlKeUcwVkVCdEta?=
+ =?utf-8?B?bDMxOGlMenVFUkZiY3ZSSEVXV0pMNVozc2l5dEtOeU1PMGE3S25rbHlDSXNu?=
+ =?utf-8?B?dHNEYVovS2pMVFFqazZ2V3kyNS9iUGVwbGlzZklBVkErbjh3QUZ5bFVvUE9E?=
+ =?utf-8?B?dDRJRGJ0N2JVUm05YVVXVGQvaGRlTjNVeFQ0TmJxbWJYUHIxY0xsNEJsNU5V?=
+ =?utf-8?B?bG5wakpjcElVVDcxN1BhV1VZMDcwbkNXR09NTVNxMWFHNm9LSjZlSnIvb0NT?=
+ =?utf-8?Q?seISAy9l8jN5AvgmF/?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6d03a47-08a2-4878-7a2c-08deddd17bff
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB8147.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 15:48:13.5144
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xm1DcgyOpgGkLCQWaULoeoZb9ueQRskYb9KwDjpl5LMMzH51PrRZoqQSv25B210/
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7593
 
+hi,
 
---2nh437hk5opgvhwa
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 15/23] mfd: Use PCI_DEVICE* macros to initialize
- pci_device_id arrays
-MIME-Version: 1.0
-
-On Wed, Jul 08, 2026 at 11:27:22AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Non-standard commit message prefix omitting the driver name.
+On 7/9/2026 3:41 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Software state mismatch leading to hardware corruption and channel hang in AXI MCDMA.
+> - [Medium] Missing read memory barrier (`dma_rmb()`) after checking the DMA completion flag in coherent memory.
 > --
->=20
-> --- Patch [15]: [PATCH v2 15/23] mfd: Use PCI_DEVICE* macros to initializ=
-e pci_device_id arrays ---
-> commit 01daeb728dc1ab5baf28174c28473f068ecb03ae
-> Author: Uwe Kleine-K=F6nig (The Capable Hub) <u.kleine-koenig@baylibre.co=
-m>
->=20
-> mfd: Use PCI_DEVICE* macros to initialize pci_device_id arrays
->=20
-> pci_device_id entries are usually initialized using these PCI_DEVICE*
-> macros. Adapt to this more usual style.
->=20
-> > mfd: Use PCI_DEVICE* macros to initialize pci_device_id arrays
->=20
-> [Severity: Low]
-> This isn't a bug, but does this commit message subject violate the MFD
-> subsystem guidelines? The guidelines require the prefix to follow the for=
-mat
-> "mfd: <Driver>: <Capitalized description>". The driver name appears to be
-> missing from the subject line.
+>
+> --- Patch [2]: [PATCH V3 2/4] dmaengine: xilinx_dma: Move descriptors to done list based on completion bit ---
+> commit d59255ad1a6d4a4beb643022da1f9820716a0752
+> Author: Srinivas Neeli <srinivas.neeli@amd.com>
+>
+> dmaengine: xilinx_dma: Move descriptors to done list based on completion bit
+>
+> In AXI MCDMA scatter-gather mode, xilinx_dma_complete_descriptor() previously
+> moved all active descriptors to the done list unconditionally. This commit adds
+> a check for the descriptor completion bit before moving entries, handling
+> scenarios where interrupt coalescing causes interrupts before all queued
+> descriptors are processed.
+>
+>> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+>> index 965fb69a2a3ad..9b8b6f1acd4ea 100644
+>> --- a/drivers/dma/xilinx/xilinx_dma.c
+>> +++ b/drivers/dma/xilinx/xilinx_dma.c
+>> @@ -1773,6 +1773,17 @@ static void xilinx_dma_complete_descriptor(struct xilinx_dma_chan *chan)
+>>   					      struct xilinx_axidma_tx_segment, node);
+>>   			if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
+>>   				break;
+>> +		} else if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
+>> +			struct xilinx_aximcdma_tx_segment *seg;
+>> +			u32 status;
+>> +
+>> +			seg = list_last_entry(&desc->segments,
+>> +					      struct xilinx_aximcdma_tx_segment,
+>> +					      node);
+>> +			status = (chan->direction == DMA_DEV_TO_MEM) ?
+>> +				seg->hw.s2mm_status : seg->hw.mm2s_status;
+>> +			if (!(status & XILINX_DMA_BD_COMP_MASK))
+> [Severity: Medium]
+> Is a read memory barrier needed after checking this completion status?
+>
+> The CPU polls the s2mm_status or mm2s_status field in coherent memory to
+> check the completion bit. Without a dma_rmb() here, could weakly ordered
+> architectures speculatively execute subsequent descriptor reads out of
+> order?
+>
+> This might result in stale reads of the descriptor fields later on
+> (for instance, during residue calculation) before the hardware has
+> actually confirmed completion.
 
-The patch adapts two drivers. I guess mentioning both in the shortlog
-isn't the right thing to do?
+The MCDMA descriptors are allocated using dma_alloc_coherent(), which 
+provides cache-coherent memory between CPU and device.
 
-Best regards
-Uwe
+On coherent DMA memory, the CPU sees device writes without requiring 
+explicit barriers, so dma_rmb() is not needed here.
 
---2nh437hk5opgvhwa
-Content-Type: application/pgp-signature; name="signature.asc"
+>> +				break;
+> [Severity: High]
+> Does breaking out early here create a state mismatch with the IRQ handler?
+>
+> If this check breaks out leaving descriptors in the active list, the
+> channel is technically still running. However, looking at the call chain,
+> xilinx_mcdma_irq_handler() immediately forces the channel idle and
+> starts a new transfer:
+>
+> xilinx_mcdma_irq_handler() {
+>      ...
+>      xilinx_dma_complete_descriptor(chan);
+>      chan->idle = true;
+>      chan->start_transfer(chan);
+>      ...
+> }
+>
+> This appears to bypass the idle safety check in
+> xilinx_mcdma_start_transfer() and overwrite the CDESC hardware register
+> while the DMA engine is actively processing the remaining active list.
+> Could this software-splice new descriptors without establishing hardware
+> links, leading to a permanent channel hang?
+I believe this analysis was run against an older version of the driver. 
+The list_empty() guard was added in a recent patch series:
+https://lore.kernel.org/all/20260626092656.1563871-1-suraj.gupta2@amd.com/
 
------BEGIN PGP SIGNATURE-----
+   The current code in xilinx_mcdma_irq_handler() has this protection:
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpPwocACgkQj4D7WH0S
-/k6+Zgf/e2P3Jm49aEWhJ3uv95ltjPYkZ+KJNBdK6Y9AVMqXklrF9ZwuMcVKFl+t
-A+QvKKSQZFV28xhELbE2W45eFDeCNRN9fwqyPzjIXRTWsLHODclxYFlrczsj3vkh
-5eIEZmmyiMxKk6scUpYFYQEODV/H79yEOuSKo0P1rRDCkHONCn2N+WmHVJvjhGUY
-Y3tENhB1MP/n5Nw6HfLRg/BfLqQxz9zcl3reovvJha1dX1a27SDpb8citLmu4uIA
-1fYLArHPSeBMAHZpZocMncfVRQsYc4Q38IynIggoQDggAcvJ2toNV5hhyRRR9zPr
-vNeMHyvlQpg4VNes4oXJjgTwjmWTMA==
-=3WMp
------END PGP SIGNATURE-----
+   xilinx_dma_complete_descriptor(chan);
+   if (list_empty(&chan->active_list)) {
+       chan->idle = true;
+       chan->start_transfer(chan);
+   }
+When the completion check breaks early (leaving incomplete descriptors 
+in active_list), the list won't be empty, so neither chan->idle = true 
+nor start_transfer() will execute. The hardware state remains consistent.
 
---2nh437hk5opgvhwa--
+Thanks
+Neeli Srinivas
+
+>
+>> +		}
+>>   		if (chan->has_sg && chan->xdev->dma_config->dmatype !=
+>>   		    XDMA_TYPE_VDMA)
+> [ ... ]
+>
