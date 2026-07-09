@@ -1,81 +1,40 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3419C3BB69E
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 10:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F213F23AF
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 10:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783593519; cv=none; b=nOgSnkNLfXh7Z2rJoNRGZjAarHlX5WzqsymhdM4XINAFEFqrmSOEeIyiKWm51xktPoOhMmKEbwYuNdFLPenXLqLTAL2rUzbP8oB7N4gkC22daVJJrIYXHoTXyVs5SPRziMCj3UaVzMeiJ7E0Fn14xeD1wb9n3gcUiE8MKuVQfvA=
+	t=1783593740; cv=none; b=liw5HKndbwGMz5E37tvD5BSaxuAM/OSu00Z0zidZ3mXTva1Cq17EIhORO1FtTVkB9B2YvdGBMSnEyxsUxD8iNcTNwiCDVerdxYVShWCXK/AYpL7kCccBSZ1upTRTfcgdygYm/YS3GugRM823EW1f12WeQYTncVqw7WeZpGEZrkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783593519; c=relaxed/simple;
-	bh=Qwtf4ccwYTwQOQzfK/oVmuZJKfefMr/I8LVYVxuMJAw=;
+	s=arc-20240116; t=1783593740; c=relaxed/simple;
+	bh=2gPZ9ppRdv8niKJmnenk/VipJKBnL2UlhO35HK9NxfA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EKAE3lnueOxQxABsbpzC83gqi3/CIW9sDOeNNDDCD44De+uRQqK2oZtECCCfJbQltMD9zQtgsqCnQiD+aQBax4BCr4MnvyyVipYCRITg05ugb9sk7kW3qJ0b1CTq0jwl4iZa/Y7M/AdggZG1K5bxWUz/cTeikaBVavwAt8YfrmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qYMB4Rg/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=I0+b0een; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qYMB4Rg/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=I0+b0een; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	 In-Reply-To:Content-Type; b=Vfukw3yILC3Xm09JwVHXZJkc8o1Q+mMWRBYar0e8PSbYuDTgoxegov/U4SAGPXnu3Cqkf2Mo0fV7AmtUHdMxGpueQ7jQ7xRtKcfkpH2zqmBMQDDQgYFfccqK/97PDTaEzwv853IciMUnbBO1V5kYIyTgbJmKLoWp9HqUxZ2PSEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ZmBQCweC; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qYMB4Rg/";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="I0+b0een";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qYMB4Rg/";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="I0+b0een"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ZmBQCweC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1783593737;
+	bh=2gPZ9ppRdv8niKJmnenk/VipJKBnL2UlhO35HK9NxfA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ZmBQCweCCis06ffuLrZsNtCZUDxnBnoCDs+8rqG9fJ2vKM3FIlB+FomFqdRDwoNVL
+	 7g3XQ8siAekFKrIBzHsyEghRrpmJUXj0MJOJqYrjWEjyfkC8VvZOSZTDLoIJezVMzo
+	 qTbQ+92WWFOLovcEXFO6nBUMu5q9rM9iC7MkaufV6Hr2KxtKEnNfpetuRWHTpSrLwT
+	 5EP93iUJkrTHJzia+gKaRq9BzEWbEhOF3GbABoVouCGHTKY3yztxc0cosZ1Z3gGjHW
+	 3b7zYF2Z+eBi6ED2tkPL6/RieELiq1bsXt49VQ/yAamOBAC73zsq9hPEPMio7vz+ty
+	 j4t6qqG8eyXyQ==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 84B9475DE2;
-	Thu,  9 Jul 2026 10:38:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783593514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
-	b=qYMB4Rg/E/PGQh8R7sJE21IYhsHhKCMd+WRMPu9r4D5Ud7iQNdAVCDFXQpQRSmSJhAvLxq
-	mUZj4055sud8qZTUSx7Tujm9nZ5DIJimtwog7Sa4H6eq9yJt5gpr0AflcO2PeCMedqcbQ4
-	+wyz7LfXrBOoUGlHaKyG3Plh5vn77cw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783593514;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
-	b=I0+b0eenEVSuA3Vw6T8MnCoCIsofGZhD0yjpq/oKa+tPHEqEAoBMUUY5YCC8DmorPiq/rA
-	on2lhCZOaRzlBGDQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="qYMB4Rg/";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=I0+b0een
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783593514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
-	b=qYMB4Rg/E/PGQh8R7sJE21IYhsHhKCMd+WRMPu9r4D5Ud7iQNdAVCDFXQpQRSmSJhAvLxq
-	mUZj4055sud8qZTUSx7Tujm9nZ5DIJimtwog7Sa4H6eq9yJt5gpr0AflcO2PeCMedqcbQ4
-	+wyz7LfXrBOoUGlHaKyG3Plh5vn77cw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783593514;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
-	b=I0+b0eenEVSuA3Vw6T8MnCoCIsofGZhD0yjpq/oKa+tPHEqEAoBMUUY5YCC8DmorPiq/rA
-	on2lhCZOaRzlBGDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 65FC7779AA;
-	Thu,  9 Jul 2026 10:38:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id woyfFip6T2pSBwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jul 2026 10:38:34 +0000
-Message-ID: <5408cc9a-fca1-4af4-a915-f55290bfa02c@suse.de>
-Date: Thu, 9 Jul 2026 12:38:33 +0200
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id C47C817E0564;
+	Thu, 09 Jul 2026 12:42:16 +0200 (CEST)
+Message-ID: <771c3867-2d42-43a3-beb0-7cb535cbd208@collabora.com>
+Date: Thu, 9 Jul 2026 12:42:16 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,148 +42,183 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] drm: Implement struct
- vga_switcheroo_client_ops.pre_switch
+Subject: Re: [PATCH v3 4/5] pmdomain: mediatek: Add support for Direct CTL
+ simple power sequence
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260709092215.168172-1-tzimmermann@suse.de>
- <20260709092215.168172-6-tzimmermann@suse.de>
- <20260709093629.4FF0E1F000E9@smtp.kernel.org>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260709084635.24912-1-angelogioacchino.delregno@collabora.com>
+ <20260709084635.24912-5-angelogioacchino.delregno@collabora.com>
+ <20260709085843.6C09E1F000E9@smtp.kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260709093629.4FF0E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260709085843.6C09E1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 84B9475DE2
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_TLS_ALL(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	ARC_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url];
-	RCPT_COUNT_TWO(0.00)[2];
-	MIME_TRACE(0.00)[0:+];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Content-Transfer-Encoding: 7bit
 
+On 7/9/26 10:58, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Incomplete error recovery in `scpsys_power_off_internal` leaves hardware paralyzed and causes clock refcount underflows.
+> - [High] Unbalanced lifecycle operations in `scpsys_power_on` fail to revert hardware state on error.
 
+Unfortunately there's no way of fixing those two briefly; the hardware may randomly
+lockup if changes are reverted at that point.
 
-Am 09.07.26 um 11:36 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] `vga_switcheroo_client_fb_set()` and the `fb_info` field in `struct vga_switcheroo_client` are orphaned and remain as dead code.
+I'm not even sure if there's any way at all of fixing this, but research will
+be done a bit later. Not relevant for this series.
 
-Patch 7 cleans them up.
+> - [Medium] Malformed device trees lacking access controllers guarantee a NULL pointer dereference in `scpsys_bus_protect_get_regmap`.
+
+No, that's not true - only HFRPSYS HWV lack access controllers, and will use
+different ops, so that's not going to create any NULL pointer dereference.
 
 > --
->
-> --- Patch [5]: [PATCH v2 5/7] drm: Implement struct vga_switcheroo_client_ops.pre_switch ---
-> commit d5ba75db20f40c6dde86b90da7c25acad6f23b57
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
->
-> drm: Implement struct vga_switcheroo_client_ops.pre_switch
->
-> This commit implements the pre_switch callback for vga_switcheroo in amdgpu,
-> i915, nouveau, and radeon drivers. It pushes fbcon updates from vga_switcheroo
-> into DRM's fbdev emulation and removes calls to vga_switcheroo_client_fb_set()
-> from fbcon to prevent deadlocks.
->
->> diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
->> index 9f5c4c101581d..974c7dcf52514 100644
->> --- a/drivers/video/fbdev/core/fbcon.c
->> +++ b/drivers/video/fbdev/core/fbcon.c
+> 
+> --- Patch [4]: [PATCH v3 4/5] pmdomain: mediatek: Add support for Direct CTL simple power sequence ---
+> commit 0a6955778a8abcdf284811fe9a9089e2c1cff6d6
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> 
+> pmdomain: mediatek: Add support for Direct CTL simple power sequence
+> 
+> Some new SoCs like MT8196, MT6991, and others, have got one
+> additional power controller (usually in the HFRP Multimedia
+> block) which needs a simplified power on/off sequence while
+> using Direct Control strategy.
+> 
+> Domains using the "simple power sequence" are not backed by
+> the RTFF hardware, have no Bus Protection mechanism, lacks
+> the ISO, PWR_ON, PWR_ON_2ND bits, and therefore get enabled
+> automatically after getting out of reset.
+> 
+> This simple power sequence is then a subset of the full one
+> as only needs the enablement of the specific power domain's
+> clock input and reset (where, again, after getting out of
+> reset, the ISO and PWR_ON bits are automatically internally
+> getting flipped) to enable or disable (power on or off).
+> 
+> Moreover, the simple power sequence power domains guarantee
+> that they always get enabled/disabled after executing the
+> relevant power sequence (on/off) so, differently from the
+> others, there is also no need to poll for a PWR_ACK.
+> 
+>> diff --git a/drivers/pmdomain/mediatek/mtk-pm-domains.c b/drivers/pmdomain/mediatek/mtk-pm-domains.c
+>> index 8d49d9ee3cd29..632c5dcdcedaf 100644
+>> --- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
+>> +++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
 > [ ... ]
->> @@ -2987,10 +2983,6 @@ static int do_fb_registered(struct fb_info *info)
->>   		}
+>> @@ -688,7 +739,8 @@ static int scpsys_power_on(struct generic_pm_domain *genpd)
+>>   err_enable_bus_protect:
+>>   	scpsys_bus_protect_enable(pd, 0);
+>>   err_disable_sram:
+>> -	scpsys_sram_disable(pd);
+>> +	if (!MTK_SCPD_CAPS(pd, MTK_SCPD_SIMPLE_PWRSEQ))
+>> +		scpsys_sram_disable(pd);
+>>   err_disable_subsys_clks:
+>>   	if (!MTK_SCPD_CAPS(pd, MTK_SCPD_STRICT_BUS_PROTECTION))
+>>   		clk_bulk_disable_unprepare(pd->num_subsys_clks,
+>>   					   pd->subsys_clks);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this error path fail to revert
+> the hardware state if an error occurs?
+> 
+> If scpsys_bus_protect_disable() or clk_bulk_prepare_enable() fails after
+> *_pwrseq_on() has successfully executed, the error path jumps to err_pwr_ack.
+> 
+> This path disables the domain's regulator and clocks but fails to execute
+> *_pwrseq_off() or revert ext_buck_iso:
+> 
+> err_pwr_ack:
+> 	clk_bulk_disable_unprepare(pd->num_clks, pd->clks);
+> err_reg:
+> 	scpsys_regulator_disable(pd->supply);
+> 	return ret;
+> 
+> Could this sever the supply while leaving the domain's internal logic active,
+> resulting in hardware lockup and state machine desynchronization?
+> 
+> [ ... ]
+>> @@ -725,15 +778,21 @@ static int scpsys_power_off_internal(struct scpsys_domain *pd)
+>>   		return ret;
+>>   
+>>   	if (MTK_SCPD_CAPS(pd, MTK_SCPD_MODEM_PWRSEQ))
+>> -		scpsys_modem_pwrseq_off(pd);
+>> +		ret = scpsys_modem_pwrseq_off(pd);
+>> +	else if (MTK_SCPD_CAPS(pd, MTK_SCPD_SIMPLE_PWRSEQ))
+>> +		ret = scpsys_simple_pwrseq_off(pd);
+>>   	else
+>> -		scpsys_ctl_pwrseq_off(pd);
+>> +		ret = scpsys_ctl_pwrseq_off(pd);
+>> +
+>> +	if (ret < 0) {
+>> +		/* Re-enable clocks so that next power off doesn't break the refcount */
+>> +		int r = clk_bulk_prepare_enable(pd->num_subsys_clks, pd->subsys_clks);
+>> +
+>> +		if (r)
+>> +			dev_warn(scpsys->dev, "Could not re-enable clocks: %d\n", r);
+>>   
+>> -	/* wait until PWR_ACK = 0 */
+>> -	ret = readx_poll_timeout(scpsys_domain_is_on, pd, tmp, !tmp, MTK_POLL_DELAY_US,
+>> -				 MTK_POLL_TIMEOUT);
+>> -	if (ret < 0)
+>>   		return ret;
+>> +	}
+>>   
+>>   	clk_bulk_disable_unprepare(pd->num_clks, pd->clks);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the error recovery in
+> scpsys_power_off_internal() leave the hardware in a paralyzed state?
+> 
+> If pwrseq_off fails, this block restores subsys_clks but leaves the domain's
+> SRAM disabled, isolation applied, and bus protection disabled, while
+> returning an error to genpd.
+> 
+> Because an error is returned, genpd treats the domain as still ON, allowing
+> active consumers to interact with a paralyzed hardware domain.
+> 
+> Additionally, if scpsys_bus_protect_enable() fails earlier in this function:
+> 
+> 	ret = scpsys_bus_protect_enable(pd, BUS_PROT_IGNORE_SUBCLK);
+> 	if (ret < 0)
+> 		return ret;
+> 
+> It returns early and bypasses clock recovery entirely, causing a permanent
+> clock refcount underflow on the next failure.
+> 
+> Can we ensure consistent state on power off errors?
+> 
+> [ ... ]
+>> @@ -1109,6 +1168,12 @@ static int scpsys_get_bus_protection_legacy(struct device *dev, struct scpsys *s
+>>   		regmap[2] = NULL;
 >>   	}
 >>   
->> -	/* Set the fb info for vga_switcheroo clients. Does nothing otherwise. */
->> -	if (info->device && dev_is_pci(info->device))
->> -		vga_switcheroo_client_fb_set(to_pci_dev(info->device), info);
->> -
-> [Severity: Low]
-> With the removal of these calls from fbcon, are there any remaining users of
-> vga_switcheroo_client_fb_set()?
->
-> It looks like the exported function in drivers/gpu/vga/vga_switcheroo.c is
-> now completely unused:
->
-> void vga_switcheroo_client_fb_set(struct pci_dev *pdev,
-> 				 struct fb_info *info)
-> {
-> 	struct vga_switcheroo_client *client;
->
-> 	mutex_lock(&vgasr_mutex);
-> 	client = find_client_from_pci(&vgasr_priv.clients, pdev);
-> 	if (client)
-> 		client->fb_info = info;
-> 	mutex_unlock(&vgasr_mutex);
-> }
-> EXPORT_SYMBOL(vga_switcheroo_client_fb_set);
->
-> Because client->fb_info is never populated, does this also leave dead code
-> in vga_switchto_stage2() where it checks for the fallback?
->
-> #if defined(CONFIG_FB)
-> 	else if (new_client->fb_info)
-> 		fb_switch_outputs(new_client->fb_info);
-> #endif
->
-> Would it make sense to remove the orphaned vga_switcheroo_client_fb_set()
-> function, the fb_info field in struct vga_switcheroo_client, and the
-> unreachable fallback block to complete the cleanup?
->
->>   	return ret;
->>   }
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
-
+>> +	/* If no access controllers are needed, don't allocate and don't fail */
+>> +	if (num_regmaps == 0) {
+>> +		scpsys->bus_prot = NULL;
+>> +		return 0;
+>> +	}
+>> +
+>>   	scpsys->bus_prot = devm_kmalloc_array(dev, num_regmaps,
+>>   					      sizeof(*scpsys->bus_prot), GFP_KERNEL);
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but does this result in a NULL pointer
+> dereference if the device tree is malformed?
+> 
+> If an older SoC's device tree is missing required access controllers,
+> num_regmaps becomes 0. The probe function succeeds and explicitly sets
+> scpsys->bus_prot = NULL.
+> 
+> When the domain later attempts to power on, scpsys_bus_protect_enable() sees
+> that the hardcoded SoC domain data still requests bus protection and
+> unconditionally dereferences the NULL array in
+> scpsys_bus_protect_get_regmap():
+> 
+> 	unsigned short block_idx = scpsys->bus_prot_index[bpd->bus_prot_block];
+> 	return scpsys->bus_prot[block_idx];
+> 
+> Should we ensure scpsys->bus_prot is not dereferenced when NULL, or perhaps
+> fail the probe if required controllers are missing?
+> 
