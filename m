@@ -1,147 +1,93 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC3B285CB4
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 17:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAFF47B437;
+	Thu,  9 Jul 2026 17:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783617472; cv=none; b=lVzGdcQVrr36BDMlbrrU4xnRxfX4a42QfFxNX5MGPffWwj3qXGw/1cxOtYHZF0jdGkJF+OBqM9q3M+f+M/pTD6gq1qbqdw/dIWU1bzKlx/35hU5eSA3hnLtsdLFk5TChaScYMiD18cUoaVjGii1xlub+iKdP7CwyfrC58Pn6bnI=
+	t=1783618039; cv=none; b=r3PXqnWBKoT7g+w5G3ilNmWfHAOdXjCWstQfzo7LF87h1kGVsq9roJKaf14zOqXwy+f09aZJdgmrASHi0Uki7SWh4JN0AEFbM/+YW4bQ5/qFSjac+XWrpd8dYn4ec3TLmJCqy9wW6ctjYGdvIQlSeOiptY5i8CknA7tHpHTug5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783617472; c=relaxed/simple;
-	bh=HbgxIQVvGQge9wsEV+ID6C+lwO/aq1D+JIJTvYxaVvA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nt2zBHh4N++cDidLDhfoVHgUV+FrG5zKJX9tdukPuSwp+qqDwd686g88eeK4TZZIZuSNNtMtMP0Yfh4OhChQy282YYxe3ew67d1txYtOE0P00o3r4FcyLCILW6vtI7P3acOiYPuNwg8ytKmpUdVsY+xxNZLgjv6b6+jmRNjQ2Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=eB8MJsBA; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1783618039; c=relaxed/simple;
+	bh=Cw7l/h/+E1H47JnzluulIXdMZWt+8LfOWyOjCHXiDdE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Aq3mrZcQ6Aus7eTcDVLQC2dphc9CURR7/HA/qcCj7O/IW7N2nG9nny7X6Ru8/Ip5JrjLLbfkOGo1qYWgGucvLDl6I26vCwf5L6Nzrm/zd+02XIshItMrBHC4Hh1fIL+i5DkWdocAGvuKh7xs61SlGNXa8hQB3bnHU5KWG3EWaQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CC5E9Y04; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="eB8MJsBA"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 669GoFnX2880084;
-	Thu, 9 Jul 2026 17:17:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=bK4PTm
-	VSvQLtKnImQ9CPpDWo785JHDdO2dToUg/S0xg=; b=eB8MJsBAAN+Tcd1sVt3Ns2
-	i/mfYpTnl5e/gEMRFyqCOZoObZufeNkD4guCsdzRBOZwMaQiSOhj+ahDH0vAdK9f
-	p0vQe3Q9MaIMOd7m7G7YB/Ul04lJNFCoZJJi1QxiZLRBtw84rMQYP6/jKpY5nv0S
-	fuTHVkg/mM+VSIK4JgZ6LP/HuuYG12v6AgKgk1an7lCiGcCsL6mrjR/NCghZYG8P
-	3YjttFO0Z68TQ8Fu5No7hvtlyLxRb1/hypRIVqgBuyFzsTSJuKap4TKNXq55X3Kp
-	SYTt2hacghVx7n5TQljGpyv7SWMxuD3Y+ADqgafP8GKFVXBlTp6VOSg3qkRlzC1Q
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qknt9gf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jul 2026 17:17:50 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 669H4cUE009949;
-	Thu, 9 Jul 2026 17:17:49 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqgdxrn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jul 2026 17:17:49 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 669HHjvb38339016
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 9 Jul 2026 17:17:45 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 789442005A;
-	Thu,  9 Jul 2026 17:17:45 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2EEDA2004B;
-	Thu,  9 Jul 2026 17:17:45 +0000 (GMT)
-Received: from [9.111.160.7] (unknown [9.111.160.7])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Thu,  9 Jul 2026 17:17:45 +0000 (GMT)
-Message-ID: <b524ae17-9fe5-4270-bb8d-3e411ef683e5@linux.ibm.com>
-Date: Thu, 9 Jul 2026 19:17:44 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CC5E9Y04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ED11F000E9;
+	Thu,  9 Jul 2026 17:27:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783618034;
+	bh=2c2HymZHP04uwSR25xn0VyWvNZVIbSiueJUQlLHn4t8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=CC5E9Y04O9SK9K9r3s6eJZoFp29+a4vliseW1IYN+hDTYYmcsNJFCm9nEEp7NjdW3
+	 X5eglY47ln98M1LDwFCWfc6U9T2+WXgzJViS5RtYU9m318imt0RaaoriBftHcP4NaI
+	 E57f+Gyw0+PY9SZMkE6MSw29b3R9hzK66apUE7NnCOUKyWdkFDRdol2+LeL8M10OHw
+	 R9EQGVdULM54mPJGqomjA9lrXC6+GTmIcA5+oWDQYOpVycr50Z5aQgXTK4/UhP7P3V
+	 dbwzFSE4m+A9cumlh22xYPyGgcnbGskVNlaS6SxK+llQZNckJ3epMyXH60Fcd1viQk
+	 vHnAtxKZ7H2jg==
+Date: Thu, 9 Jul 2026 19:27:09 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Damien Le Moal <dlemoal@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-ide@vger.kernel.org,
+	linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v1 1/2] ata: libata-scsi: terminate deferred commands on
+ time out
+Message-ID: <ak_Z7Y1j7yoS_R-J@fedora>
+References: <20260709083934.1116862-1-dlemoal@kernel.org>
+ <20260709083934.1116862-2-dlemoal@kernel.org>
+ <20260709090006.F317F1F00A3A@smtp.kernel.org>
+ <dcc4f558-7b6e-4193-a943-036255fc202f@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] net/iucv: take a reference on the socket found in
- afiucv_hs_rcv()
-To: sashiko-reviews@lists.linux.dev, Bryam Vargas <hexlabsecurity@proton.me>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Hidayath Khan <hidayath@linux.ibm.com>
-References: <20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me>
- <20260707032441.B1FB31F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Alexandra Winter <wintera@linux.ibm.com>
-In-Reply-To: <20260707032441.B1FB31F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4fd7be cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=mpG3tCo3JFPGy_rZ:21 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
- a=VwQbUJbxAAAA:8 a=mJcjGnY3pr7I_6ufGOQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: VWMUhkT7r8-ws6wl3HKVO9WD32o1xS2R
-X-Proofpoint-ORIG-GUID: VWMUhkT7r8-ws6wl3HKVO9WD32o1xS2R
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE2NCBTYWx0ZWRfXyjszKf11lMKo
- eQWU3FVm5puUEDcLJa1i6VkwlbEQ3ve3cggSxOOk44KmzZtGEkiFwrchyn8nNvXhbOyys37M3F3
- ggrV23m9Vbqq5lw37FwKV70h7uNLYu4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE2NCBTYWx0ZWRfXwzBTYai0E8U7
- 9X36QJ39dw6A3Tz5ceD9wBd1Nj83dudkntDfZyTWBUSlGoGy7A2UYXPRqYadCD2r7sHlKWrSiEW
- S0NKyt4pOiH9SVahZ6W01FDmeaHnjj/Ud9uzBwKWhof+HJhpKx3K3HQPCVMXwKX3rad5mVcGwxh
- dbDSfqmnZDX3XoOv8gRKFoQVK7TqqvyNG0Z2uDi5izt0TJzE1DNiW0+TA6IPnSUnYi4czdi4QW8
- +Laanu62+/xWl1Co94AFxm0CJhhyCFZBEtwccwcbw0mOOC8iIEo6OWbtsEO67EfOQSIXBAO1Lzc
- X1ubXcAzCBMVhp5Oe6uuVB6a8/+V9j4rhVNukVwv/pNj2GGo7so8H9rgHRF5EimYghPY3WgAqFG
- Qz2AsbPx5jiNehJb0kEZOonYtJHmV2rEHc2/VYPFXnsOxH256voKqUMAKG71wnNbECV10Dql56C
- ddSMgGXkVOM8hKXJDRA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-09_03,2026-07-09_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 clxscore=1011 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090164
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dcc4f558-7b6e-4193-a943-036255fc202f@kernel.org>
 
-
-
-On 07.07.26 05:24, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> This is a pre-existing issue, but does modifying the socket state from a
-> softirq context corrupt the socket state machine?
+On Thu, Jul 09, 2026 at 06:14:08PM +0900, Damien Le Moal wrote:
+> > It seems this causes the handler to fall into the 'raced completion' branch:
+> > 
+> > drivers/ata/libata-eh.c:ata_scsi_cmd_error_handler() {
+> >     ...
+> >     } else {
+> >         /* Normal completion occurred after
+> >          * SCSI timeout but before this point.
+> >          * Successfully complete it.
+> >          */
+> >         scmd->retries = scmd->allowed;
+> >         scsi_eh_finish_cmd(scmd, &ap->eh_done_q);
+> >     }
+> >     ...
+> > }
 > 
-> Since this handler runs in softirq context when network packets arrive, it
-> acquires the socket spinlock and directly mutates sk->sk_state. 
-> 
-> If a user process is concurrently executing a system call and holds the socket
-> mutex via lock_sock(), does bypassing the backlog mechanism by failing to check
-> sock_owned_by_user() cause race conditions?
-> 
-> [ ... ]
-> 
->> @@ -2089,6 +2089,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
->>  			}
->>  		}
->>  	}
->> +	if (sk)
->> +		sock_hold(sk);
->>  	read_unlock(&iucv_sk_list.lock);
->>  	if (!iucv)
->>  		sk = NULL;
->> @@ -2138,6 +2140,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
->>  		kfree_skb(skb);
->>  	}
->>  
->> +	if (sk)
->> +		sock_put(sk);
->>  	return err;
->>  }
+> And after this, scsi_eh_flush_done_q() will retry the command.
+> Tested and I do not see failure of the deferred QC :)
+
+I don't see how scsi_eh_flush_done_q() will retry the command.
+
+Since ata_scsi_eh_timed_out() calls ata_scsi_qc_done(), which
+calls scsi_done(), which calls scsi_done_internal(cmd, false),
+which sets SCMD_STATE_COMPLETE, scsi_timeout() will never add
+the scmd to the list of failed scmds using scsi_eh_scmd_add().
+
+Thus, when ata_scsi_cmd_error_handler() loops though the list
+of failed scmds, the scmd in question will never have been added
+in the first place.
+
+Most likely the command is retried via:
+ata_scsi_qc_done() -> scsi_done() -> scsi_done_internal()
+
+softirq -> scsi_complete() -> scsi_decide_disposition()
+
+scsi_decide_disposition() returns ADD_TO_MLQUEUE for DID_REQUEUE,
+
+scsi_complete() calls scsi_queue_insert(cmd, SCSI_MLQUEUE_DEVICE_BUSY);
+when scsi_decide_disposition() returns ADD_DO_MLQUEUE.
 
 
-I think sashiko is right, this patch does not completely close the gap.
-See my commit message for
-f558120cd709 ("net/iucv: fix use after free in iucv_sock_close()")
-Iiuc the socket locking in AF_IUCV is incomplete in general.
-
-Bryam, would you like to try to update the socket locking in AF_IUCV altogether?
-Otherwise Hidayath or I can take that task.
+Kind regards,
+Niklas
