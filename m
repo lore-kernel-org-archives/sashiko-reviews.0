@@ -1,40 +1,40 @@
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7F0379C3C
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 10:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9516840BCBB
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 11:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783594333; cv=none; b=gO/rFy4yGIdMu3kPQpafMT/UnZNVO92VxFoO11rYTSsb3Mr8efi39lyR7SmemDWQYufoj8yfY01M5sYpFcDsg/V0o/mbrW+c+D8Ntz0u+PY7A/+uzboXuomU4BTnRnxMNaRy1gGSRpcq78O3cBGytVaQdjlCXtr9AyfSGedYfYw=
+	t=1783595461; cv=none; b=JythobTytZCCmUKTmcNBgxJWABtSmSsmdioSDkhaCOSw2AAYdpJCCIBxdVeBgcT4uijQ2k6qlaPbWBpc7GvYUzsidYU+Vm5jHqLHzZBRVhzM+lqRQfcE2J0E6VjuprUmzxU1goCXhzyS7ujgrSwuML2/5dAi6WMaHM3byPwyXJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783594333; c=relaxed/simple;
-	bh=r6FjVnEXwE0IGEmKbTI/hDFm3Nf0DQ8S1T/ck81JAEM=;
+	s=arc-20240116; t=1783595461; c=relaxed/simple;
+	bh=ApBrtV4Zk1vMOIRF4PFrz5yF0iT0J5bqhkZRZmYO4To=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jr6Ni8bi4L2qWEebsrOeNyJWrV0/SBSNWLnOwEQji+KlYjc78PMBCHkz/so3Hl3bEPpcpPrSrsffoT39N+fXvODjg1ea1GSzg1UaMDlpZzlA4bXw/x++gxBP+Khlv8+C0GDlkUomG157OttKtxRBFi80oFsaEqOoLiMNS5xwYcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=h2ekCjMH; arc=none smtp.client-ip=148.251.105.195
+	 In-Reply-To:Content-Type; b=lYTZHZHh/EZBxaPsgP8jfSlJ29Ts+ZHxNxhVj7IrmXtTkUqJgNrJHfLy5ezijAjLqKfxvkZ7Up5+Ho8jF9iBmTRp3sPY6rXrDC5gS7weEwfLmfsXdDUvZg9dw4bQDfCS9RWvCpaYr1gwcY9czb2Seeqj21s9iNRmOOFDp4h14o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=d9s/5a7C; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="h2ekCjMH"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="d9s/5a7C"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783594330;
-	bh=r6FjVnEXwE0IGEmKbTI/hDFm3Nf0DQ8S1T/ck81JAEM=;
+	s=mail; t=1783595458;
+	bh=ApBrtV4Zk1vMOIRF4PFrz5yF0iT0J5bqhkZRZmYO4To=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h2ekCjMHC5AgjXntNqWY2j4muZT4FhN2htvXPl6KTYk6Q165IBO2SsF+8avDrAiAB
-	 EhRlP3kE/rtBT7T08UutOjZ0+eh2EJnuWkxuPSf6UcdNixIRWTr09OY8W2ap4y4tWk
-	 HNkpSmpXODFp6wchiKv//DRKOxAVrC0A3ODgdVmC16tu1zKhfppxyTgOMl4ryDZnZ2
-	 TsGTpWr1QlZL4/hGoSMJXgad7fYUfUGaeFspvSFQrXXz/b+XLWJBZmBlhoDG/JTay+
-	 jjXJqxzewxs9WHRrPOrubkTnmrtNxLNtXNVZDm0KpyXDWOGKEdsEK4DYa2CvWjSCBh
-	 XsUdhdJHIYmjw==
+	b=d9s/5a7CzcXq78v/5VAqzjyVuLk3p9/cbXnMrh6GmsrfJhjTx7UGjiyd6QhazjVZa
+	 pp8AfMES9pZcjdtg+nzihx9FiBQiCkCB/zLumVzI6bzrbPPfINilcTDl/yPw0H2znn
+	 oFzAZGTz54XIJuxzJitevUnGzuj25mDuiyXiZklc4hTGilmnd00KECd/9WJCRFe3Rj
+	 Uj3kS7at8sHfPM3fKeyW9byUukBqfsrIrvv2/z7nA6BXDSAZYfJ2p56BkvCqViypxC
+	 +avucc3E5pH+BMLxm58aBvMD7yPyc83dbjmrZFMeJhRRYtnNwp2OEVHs7e2l0deYAl
+	 pcGIfIdNvoLxQ==
 Received: from [100.64.1.21] (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id E9ADA17E0886;
-	Thu, 09 Jul 2026 12:52:09 +0200 (CEST)
-Message-ID: <be903cb1-8184-4112-9672-ea262716e5b9@collabora.com>
-Date: Thu, 9 Jul 2026 12:52:09 +0200
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id B093417E0886;
+	Thu, 09 Jul 2026 13:10:57 +0200 (CEST)
+Message-ID: <d745a43c-cc24-454b-91f0-79c72862656d@collabora.com>
+Date: Thu, 9 Jul 2026 13:10:57 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,148 +42,104 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC
-To: Chen-Yu Tsai <wenst@chromium.org>, sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
- "moderated list:ARM/Mediatek SoC support"
- <linux-mediatek@lists.infradead.org>, Mark Brown <broonie@kernel.org>
-References: <20260709081928.612294-1-wenst@chromium.org>
- <20260709083024.330381F000E9@smtp.kernel.org>
- <CAGXv+5HO5eWaJ-AhH9JG=aZ9f_se8L8Ebz-NRHfKMsNXvGnQTg@mail.gmail.com>
+Subject: Re: [PATCH v3 03/11] drm/mediatek: mtk_dp: Fix hdmi codec and phy
+ driver unregistration
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, dri-devel@lists.freedesktop.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260709103431.46616-1-angelogioacchino.delregno@collabora.com>
+ <20260709103431.46616-4-angelogioacchino.delregno@collabora.com>
+ <20260709104650.BFBE51F000E9@smtp.kernel.org>
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-In-Reply-To: <CAGXv+5HO5eWaJ-AhH9JG=aZ9f_se8L8Ebz-NRHfKMsNXvGnQTg@mail.gmail.com>
+In-Reply-To: <20260709104650.BFBE51F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 7/9/26 11:27, Chen-Yu Tsai wrote:
-> On Thu, Jul 9, 2026 at 4:30 PM <sashiko-bot@kernel.org> wrote:
->>
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> - [High] The MT6319 PMIC fallback compatible triggers incorrect MT6315_PP mode ganging in the regulator driver, causing silent cross-talk between the CPU and EMI VDDQ regulators.
->> - [Low] Grammatical error in the comment explaining the firmware workaround.
->> --
->>
->> --- Patch [1]: [PATCH v2] arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC ---
->> commit 0ff94c6622559a57199ed1f2d1f4063c6c911df1
->> Author: Chen-Yu Tsai <wenst@chromium.org>
->>
->> arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC
->>
->> The Geralt design uses a MT6319 PMIC to power the big cores and LPDDR4X
->> DRAM.
->>
->>> diff --git a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
->>> index 8e423504ec052..af05315092f53 100644
->>> --- a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
->>> +++ b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
->> [ ... ]
->>> @@ -1225,6 +1235,70 @@ &spi2 {
->>>        status = "okay";
->>>   };
->>>
->>> +&spmi {
->>> +     pinctrl-names = "default";
->>> +     pinctrl-0 = <&spmi_pins>;
->>> +     #address-cells = <2>;
->>> +     #size-cells = <0>;
->>> +     status = "okay";
->>> +
->>> +     pmic@6 {
->>> +             compatible = "mediatek,mt6319-regulator", "mediatek,mt6315-regulator";
->>> +             reg = <0x6 SPMI_USID>;
->>
->> [Severity: High]
->> Does this fallback compatible trigger incorrect mode ganging?
->>
->> The mt6315-regulator driver maps USID 6 to the MT6315_PP variant, which
->> hardcodes mode ganging for vbuck1, vbuck2, and vbuck4. On the MT8188
->> Geralt's MT6319, vbuck4 is wired as an independent regulator for
->> pp0600_emi_vddq.
->>
->> If a mode change happens on vbuck1 (which is allowed by the
->> regulator-allowed-modes property), the driver will apply the ganged
->> mask and silently overwrite vbuck4's mode bits in the PMIC, potentially
->> forcing the RAM supply into an unexpected mode.
->>
->> Could this silent cross-talk between the CPU and EMI VDDQ regulators
->> lead to memory voltage instability?
+On 7/9/26 12:46, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> This discrepency is actually bigger than Sashiko mentions. The ganging
-> supported by the driver only applies to the PMICs in the Asuarada design:
+> New issues:
+> - [Critical] Double free / use-after-free of mtk_dp->phy_dev on devm_phy_get error path.
 > 
->    - SPMI ID 6 has 1+2 (GPU); 3 and 4 are unused
->    - SPMI ID 7 has 1+2+4 (big cores) and 3 (little cores)
+> Pre-existing issues:
+> - [High] Asynchronous pm_runtime_put() used immediately before pm_runtime_disable() leaves hardware in incorrect power state.
+> --
 > 
-> On the Cherry design we have:
+> --- Patch [3]: [PATCH v3 03/11] drm/mediatek: mtk_dp: Fix hdmi codec and phy driver unregistration ---
+> commit ee2a644d342bfbaa916286b22d4e54ddc62e5878
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > 
->    - SPMI ID 6 has 1+2 (GPU); 3 and 4 are unused
->    - SPMI ID 7 has 1+2+3+4 (big cores)
+> drm/mediatek: mtk_dp: Fix hdmi codec and phy driver unregistration
 > 
-> On the Corsola designs with beefier chips:
+> This commit adds devm actions to unregister the HDMI Codec and DisplayPort
+> PHY platform devices during probe. This prevents multiple instances of these
+> devices from being registered if the driver probe is deferred.
 > 
->    - SPMI ID 6 has 1+2 (big cores); 3 and 4 are unused
-> 
-> On the Geralt design (this one):
-> 
->    - SPMI ID 7 has 1+2 (big cores); 3 (DRAM); 4 (DRAM)
-> 
-> Any ideas on what to do about this mess?
+>> diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+>> index eefbc7e0f9c8d..fefd1fae44c90 100644
+>> --- a/drivers/gpu/drm/mediatek/mtk_dp.c
+>> +++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+> [ ... ]
+>> @@ -2701,6 +2718,11 @@ static int mtk_dp_register_phy(struct mtk_dp *mtk_dp)
+>>   		return dev_err_probe(dev, PTR_ERR(mtk_dp->phy_dev),
+>>   				     "Failed to create device mediatek-dp-phy\n");
+>>   
+>> +	ret = devm_add_action_or_reset(dev, mtk_dp_unregister_pdevs, mtk_dp->phy_dev);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret,
+>> +				     "Failed to add phy unregister devm action");
+>> +
+>>   	mtk_dp_get_calibration_data(mtk_dp);
+>>   
+>>   	mtk_dp->phy = devm_phy_get(&mtk_dp->phy_dev->dev, "dp");
+>>   	if (IS_ERR(mtk_dp->phy)) {
+>>   		platform_device_unregister(mtk_dp->phy_dev);
 
-wenst, I think that the only way to fix that properly is to add generic support
-for buck phases ganging in the regulator API... because AFAIK there's nothing
-right now.
-
- From what I remember from last time I looked, MediaTek PMICs wouldn't be the
-only ones, there's something else that also has ganged bucks, and again if I
-remember correctly, I remember seeing one platform data struct for each of the
-ganging combinations in that driver.
-
-So.. especially because MTK wouldn't be the first, I think the addition of some
-kind of generic properties (and callbacks) for this kind of configuration in
-the API would be both profitable and welcome.
-
-Mark, any considerations?
-
-Cheers,
-Angelo
+It's really too hot in July in Italy. Uff. :-)
 
 > 
-> Another thing is that I kind of wonder why the mode configuration register
-> setting isn't ganged in hardware like the enable and voltage settings.
+> [Severity: Critical]
+> Does this create a double-free on the error path?
 > 
+> Looking at mtk_dp_register_phy() in drivers/gpu/drm/mediatek/mtk_dp.c, if
+> devm_phy_get() fails (returning e.g. -EPROBE_DEFER), we manually call
+> platform_device_unregister() here.
 > 
-> Thanks
-> ChenYu
+> However, since we successfully added the devm action earlier in the function,
+> returning the error from probe will cause the devres unwind mechanism to
+> execute mtk_dp_unregister_pdevs().
 > 
->>> +             pvdd1-supply = <&pp4200_s5>;
->>> +             pvdd2-supply = <&pp4200_s5>;
->>> +             pvdd3-supply = <&pp4200_s5>;
->>> +             pvdd4-supply = <&pp4200_s5>;
->>> +
->>> +             regulators {
->>> +                     /*
->>> +                      * vbuck1 is the cpu-supply for CPU6 and CPU7.
->>> +                      *
->>> +                      * However, this device originally shipped with a broken
->>> +                      * firmware that causes register reads over SPMI fail.
->>> +                      * This is fixed in firmware version 15842.175.0, which
->>> +                      * is included in ChromeOS releases R150-16700.22.0 or
->>> +                      * R151-16721.0.0 and later.
->>> +                      *
->>> +                      * Assigning the cpu-supply properties for CPU6 and CPU7
->>> +                      * without the fix will likely cause CPU DVFS to stop
->>> +                      * working. Hence the assignment is left out to avoid a
->>> +                      * regression of the function. If the user is confident
->>> +                      * that their system has the fix, they can added the
->>
->> [Severity: Low]
->> This isn't a bug, but there is a typo in this comment. It should say
->> "they can add the property themselves".
->>
->>> +                      * property themselves.
->>> +                      */
->>
->> --
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260709081928.612294-1-wenst@chromium.org?part=1
+> Won't that call platform_device_unregister() a second time on the already-freed
+> mtk_dp->phy_dev pointer, resulting in memory corruption?
+> 
+> [ ... ]
+>> @@ -2870,9 +2892,6 @@ static void mtk_dp_remove(struct platform_device *pdev)
+>>   	struct mtk_dp *mtk_dp = platform_get_drvdata(pdev);
+>>   
+>>   	pm_runtime_put(&pdev->dev);
+>>   	pm_runtime_disable(&pdev->dev);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it safe to call
+> pm_runtime_put() immediately before pm_runtime_disable() here in
+> mtk_dp_remove()?
+> 
+> Since pm_runtime_put() queues an asynchronous suspend, calling
+> pm_runtime_disable() right after it cancels the pending suspend work.
+> 
+> Doesn't this leave the hardware in an active power state after the driver is
+> removed? Should this be changed to pm_runtime_put_sync() to ensure the suspend
+> completes before module unload?
+> 
+
+Nice. Yes.
+
+>>   	if (mtk_dp->data->bridge_type != DRM_MODE_CONNECTOR_eDP)
+>>   		timer_delete_sync(&mtk_dp->debounce_timer);
+>> -	platform_device_unregister(mtk_dp->phy_dev);
+>> -	if (mtk_dp->audio_pdev)
+>> -		platform_device_unregister(mtk_dp->audio_pdev);
+>>   }
+> 
 
