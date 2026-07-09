@@ -1,40 +1,40 @@
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22DF40D56D
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 10:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7F0379C3C
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 10:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783593988; cv=none; b=ZkTIq5fd2LBG9z75+szbkhRP9MFXzeZnOjeW9ofUomyRGLcUQSl7GKYgbXcDcldNrzRUHgXKU29G4d/0fxIhlaV4S+rlx964vwF6icXaWprYRono2YHEp0qVt/K5kSDlr4GOMnBAH4z1COhi94LS8hf2CmKp6wItcB+5Fzzd7kQ=
+	t=1783594333; cv=none; b=gO/rFy4yGIdMu3kPQpafMT/UnZNVO92VxFoO11rYTSsb3Mr8efi39lyR7SmemDWQYufoj8yfY01M5sYpFcDsg/V0o/mbrW+c+D8Ntz0u+PY7A/+uzboXuomU4BTnRnxMNaRy1gGSRpcq78O3cBGytVaQdjlCXtr9AyfSGedYfYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783593988; c=relaxed/simple;
-	bh=8idKvVN+cfS9P+M8/Oo0SXlgO6nAa98PuAMKfFCHyUA=;
+	s=arc-20240116; t=1783594333; c=relaxed/simple;
+	bh=r6FjVnEXwE0IGEmKbTI/hDFm3Nf0DQ8S1T/ck81JAEM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lBZV25iQ7A9XsK5Kx9vuRq1iMVvjsBgJI7qP/7xikLUkewnBDAGvhKeJHidswMwTAZkwyjrDgpP6KEi2NjxlFUeN7sw9DGTdZOA5WClssXKtoxJLWMrLepO+b4uPGSbWjUS/X5c8a8MqbwP4jXjThCGdipaZnBJPI3mGve6aHf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=PQgn+7X0; arc=none smtp.client-ip=148.251.105.195
+	 In-Reply-To:Content-Type; b=Jr6Ni8bi4L2qWEebsrOeNyJWrV0/SBSNWLnOwEQji+KlYjc78PMBCHkz/so3Hl3bEPpcpPrSrsffoT39N+fXvODjg1ea1GSzg1UaMDlpZzlA4bXw/x++gxBP+Khlv8+C0GDlkUomG157OttKtxRBFi80oFsaEqOoLiMNS5xwYcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=h2ekCjMH; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="PQgn+7X0"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="h2ekCjMH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783593982;
-	bh=8idKvVN+cfS9P+M8/Oo0SXlgO6nAa98PuAMKfFCHyUA=;
+	s=mail; t=1783594330;
+	bh=r6FjVnEXwE0IGEmKbTI/hDFm3Nf0DQ8S1T/ck81JAEM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PQgn+7X0EvOfECkABffase/CdqsHlnTopkvVFROpUwXBoy8PxsCcvIzfjcCqF09y9
-	 fwtaD3Aq9rwIpLJgtBEBTY9cKWbpowYrlnV2Y6LZEmf9QjUvf3pHe4qa0hhtE285tl
-	 oDzoDIhvI//4YqO9C9Tfl2Gd73kCjqRHqiLeXKY5OD31nDoSoa5fK1XoWxIoViUcaG
-	 MMW+dYJJ+K6JTKNooM6F/7/HeaLI/QhUbab20bJvxWNXY5Ak1zeSDrW2KI83Obvu/V
-	 2+WcGPD6kLq1fl6qoa9uCF0T81LSumjl5Fvg0jGADu++Q/GCCRkNG1Jo18EiY8J0Fd
-	 4C4wqyqWQUgCg==
+	b=h2ekCjMHC5AgjXntNqWY2j4muZT4FhN2htvXPl6KTYk6Q165IBO2SsF+8avDrAiAB
+	 EhRlP3kE/rtBT7T08UutOjZ0+eh2EJnuWkxuPSf6UcdNixIRWTr09OY8W2ap4y4tWk
+	 HNkpSmpXODFp6wchiKv//DRKOxAVrC0A3ODgdVmC16tu1zKhfppxyTgOMl4ryDZnZ2
+	 TsGTpWr1QlZL4/hGoSMJXgad7fYUfUGaeFspvSFQrXXz/b+XLWJBZmBlhoDG/JTay+
+	 jjXJqxzewxs9WHRrPOrubkTnmrtNxLNtXNVZDm0KpyXDWOGKEdsEK4DYa2CvWjSCBh
+	 XsUdhdJHIYmjw==
 Received: from [100.64.1.21] (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id F23B817E01AC;
-	Thu, 09 Jul 2026 12:46:21 +0200 (CEST)
-Message-ID: <28324cf7-0841-42f9-967a-f942ac537c44@collabora.com>
-Date: Thu, 9 Jul 2026 12:46:21 +0200
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id E9ADA17E0886;
+	Thu, 09 Jul 2026 12:52:09 +0200 (CEST)
+Message-ID: <be903cb1-8184-4112-9672-ea262716e5b9@collabora.com>
+Date: Thu, 9 Jul 2026 12:52:09 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,75 +42,148 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] arm64: dts: mediatek: mt8173: Add and use UART
- AP_DMA controller
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-References: <20260709090924.27056-1-angelogioacchino.delregno@collabora.com>
- <20260709090924.27056-3-angelogioacchino.delregno@collabora.com>
- <20260709091701.098811F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2] arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC
+To: Chen-Yu Tsai <wenst@chromium.org>, sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ "moderated list:ARM/Mediatek SoC support"
+ <linux-mediatek@lists.infradead.org>, Mark Brown <broonie@kernel.org>
+References: <20260709081928.612294-1-wenst@chromium.org>
+ <20260709083024.330381F000E9@smtp.kernel.org>
+ <CAGXv+5HO5eWaJ-AhH9JG=aZ9f_se8L8Ebz-NRHfKMsNXvGnQTg@mail.gmail.com>
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-In-Reply-To: <20260709091701.098811F000E9@smtp.kernel.org>
+In-Reply-To: <CAGXv+5HO5eWaJ-AhH9JG=aZ9f_se8L8Ebz-NRHfKMsNXvGnQTg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/9/26 11:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The AP_DMA controller specifies `dma-requests = <8>` but only provides 6 `reg` and 6 `interrupts` entries, which causes the APDMA driver to fail during probe. Additionally, the patch omits DMA assignments for `uart0` despite the commit message claiming to configure all four UART controllers.
+On 7/9/26 11:27, Chen-Yu Tsai wrote:
+> On Thu, Jul 9, 2026 at 4:30 PM <sashiko-bot@kernel.org> wrote:
+>>
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [High] The MT6319 PMIC fallback compatible triggers incorrect MT6315_PP mode ganging in the regulator driver, causing silent cross-talk between the CPU and EMI VDDQ regulators.
+>> - [Low] Grammatical error in the comment explaining the firmware workaround.
+>> --
+>>
+>> --- Patch [1]: [PATCH v2] arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC ---
+>> commit 0ff94c6622559a57199ed1f2d1f4063c6c911df1
+>> Author: Chen-Yu Tsai <wenst@chromium.org>
+>>
+>> arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC
+>>
+>> The Geralt design uses a MT6319 PMIC to power the big cores and LPDDR4X
+>> DRAM.
+>>
+>>> diff --git a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
+>>> index 8e423504ec052..af05315092f53 100644
+>>> --- a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
+>>> +++ b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
+>> [ ... ]
+>>> @@ -1225,6 +1235,70 @@ &spi2 {
+>>>        status = "okay";
+>>>   };
+>>>
+>>> +&spmi {
+>>> +     pinctrl-names = "default";
+>>> +     pinctrl-0 = <&spmi_pins>;
+>>> +     #address-cells = <2>;
+>>> +     #size-cells = <0>;
+>>> +     status = "okay";
+>>> +
+>>> +     pmic@6 {
+>>> +             compatible = "mediatek,mt6319-regulator", "mediatek,mt6315-regulator";
+>>> +             reg = <0x6 SPMI_USID>;
+>>
+>> [Severity: High]
+>> Does this fallback compatible trigger incorrect mode ganging?
+>>
+>> The mt6315-regulator driver maps USID 6 to the MT6315_PP variant, which
+>> hardcodes mode ganging for vbuck1, vbuck2, and vbuck4. On the MT8188
+>> Geralt's MT6319, vbuck4 is wired as an independent regulator for
+>> pp0600_emi_vddq.
+>>
+>> If a mode change happens on vbuck1 (which is allowed by the
+>> regulator-allowed-modes property), the driver will apply the ganged
+>> mask and silently overwrite vbuck4's mode bits in the PMIC, potentially
+>> forcing the RAM supply into an unexpected mode.
+>>
+>> Could this silent cross-talk between the CPU and EMI VDDQ regulators
+>> lead to memory voltage instability?
+> 
+> This discrepency is actually bigger than Sashiko mentions. The ganging
+> supported by the driver only applies to the PMICs in the Asuarada design:
+> 
+>    - SPMI ID 6 has 1+2 (GPU); 3 and 4 are unused
+>    - SPMI ID 7 has 1+2+4 (big cores) and 3 (little cores)
+> 
+> On the Cherry design we have:
+> 
+>    - SPMI ID 6 has 1+2 (GPU); 3 and 4 are unused
+>    - SPMI ID 7 has 1+2+3+4 (big cores)
+> 
+> On the Corsola designs with beefier chips:
+> 
+>    - SPMI ID 6 has 1+2 (big cores); 3 and 4 are unused
+> 
+> On the Geralt design (this one):
+> 
+>    - SPMI ID 7 has 1+2 (big cores); 3 (DRAM); 4 (DRAM)
+> 
+> Any ideas on what to do about this mess?
 
-Will fix later while applying.
+wenst, I think that the only way to fix that properly is to add generic support
+for buck phases ganging in the regulator API... because AFAIK there's nothing
+right now.
 
-> --
+ From what I remember from last time I looked, MediaTek PMICs wouldn't be the
+only ones, there's something else that also has ganged bucks, and again if I
+remember correctly, I remember seeing one platform data struct for each of the
+ganging combinations in that driver.
+
+So.. especially because MTK wouldn't be the first, I think the addition of some
+kind of generic properties (and callbacks) for this kind of configuration in
+the API would be both profitable and welcome.
+
+Mark, any considerations?
+
+Cheers,
+Angelo
+
 > 
-> --- Patch [2]: [PATCH v3 2/7] arm64: dts: mediatek: mt8173: Add and use UART AP_DMA controller ---
-> commit ac8a25e005302375b885a8325819560714cb8e2c
-> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Another thing is that I kind of wonder why the mode configuration register
+> setting isn't ganged in hardware like the enable and voltage settings.
 > 
-> arm64: dts: mediatek: mt8173: Add and use UART AP_DMA controller
 > 
-> This commit adds the UART AP_DMA controller to the mt8173 device tree.
-> It also assigns DMA channels to the UART controllers to increase TX/RX
-> efficiency.
+> Thanks
+> ChenYu
 > 
->>      In order to increase the efficiency of data TX/RX over the UART
->>      controllers, add the UART DMA controller and assign the right
->>      channels to each of the four UART controllers.
-> 
-> [Severity: High]
-> The commit message mentions assigning channels to each of the four UART
-> controllers, but only uart1, uart2, and uart3 are updated in the patch. Is
-> uart0 intentionally missing?
-> 
->> diff --git a/arch/arm64/boot/dts/mediatek/mt8173.dtsi b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
->> --- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
->> +++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-> [ ... ]
->> +		apdma: dma-controller@11000400 {
->> +			compatible = "mediatek,mt8173-uart-dma", "mediatek,mt6577-uart-dma";
->> +			reg = <0 0x11000400 0 0x80>, <0 0x11000480 0 0x80>,
->> +			      <0 0x11000500 0 0x80>, <0 0x11000580 0 0x80>,
->> +			      <0 0x11000600 0 0x80>, <0 0x11000680 0 0x80>;
->> +			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_LOW>,
->> +				     <GIC_SPI 98 IRQ_TYPE_LEVEL_LOW>,
->> +				     <GIC_SPI 99 IRQ_TYPE_LEVEL_LOW>,
->> +				     <GIC_SPI 100 IRQ_TYPE_LEVEL_LOW>,
->> +				     <GIC_SPI 101 IRQ_TYPE_LEVEL_LOW>,
->> +				     <GIC_SPI 102 IRQ_TYPE_LEVEL_LOW>;
->> +			clocks = <&pericfg CLK_PERI_AP_DMA>;
->> +			#dma-cells = <1>;
->> +			dma-requests = <8>;
-> 
-> [Severity: High]
-> Does this dma-requests count of 8 match the provided reg and interrupts
-> arrays?
-> 
-> The mtk-uart-apdma driver iterates dma-requests times during probe. With only
-> 6 resources defined in the reg and interrupts arrays,
-> devm_platform_ioremap_resource() will fail with -EINVAL when trying to map
-> the missing resources. This will cause the probe to abort, unconditionally
-> breaking DMA for all UARTs on this SoC.
-> 
-> Should dma-requests be 6 here since uart0 was omitted, or are there missing
-> reg and interrupts entries that should be added?
-> 
+>>> +             pvdd1-supply = <&pp4200_s5>;
+>>> +             pvdd2-supply = <&pp4200_s5>;
+>>> +             pvdd3-supply = <&pp4200_s5>;
+>>> +             pvdd4-supply = <&pp4200_s5>;
+>>> +
+>>> +             regulators {
+>>> +                     /*
+>>> +                      * vbuck1 is the cpu-supply for CPU6 and CPU7.
+>>> +                      *
+>>> +                      * However, this device originally shipped with a broken
+>>> +                      * firmware that causes register reads over SPMI fail.
+>>> +                      * This is fixed in firmware version 15842.175.0, which
+>>> +                      * is included in ChromeOS releases R150-16700.22.0 or
+>>> +                      * R151-16721.0.0 and later.
+>>> +                      *
+>>> +                      * Assigning the cpu-supply properties for CPU6 and CPU7
+>>> +                      * without the fix will likely cause CPU DVFS to stop
+>>> +                      * working. Hence the assignment is left out to avoid a
+>>> +                      * regression of the function. If the user is confident
+>>> +                      * that their system has the fix, they can added the
+>>
+>> [Severity: Low]
+>> This isn't a bug, but there is a typo in this comment. It should say
+>> "they can add the property themselves".
+>>
+>>> +                      * property themselves.
+>>> +                      */
+>>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260709081928.612294-1-wenst@chromium.org?part=1
+
