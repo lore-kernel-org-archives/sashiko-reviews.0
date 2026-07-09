@@ -1,148 +1,157 @@
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E16A4499B9
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 19:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3093C1095
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 19:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783626041; cv=none; b=ir9dY1HYXTCk0Y+szj8/rLv30SaV21oALBZ/Jq7gPLYprpz5k8L1Z2s5Jc4irT0hdm4S6TtiWrL2/L6Q1T5ukfX9KVB3UdV+rRzgKowxuTKS8iTogHWkWetEsoJGGJ0/bi682826nlkbcOEcuEkjBRDS1L632AtZVEd76CqgS5k=
+	t=1783626188; cv=none; b=h3+9JueuU4Efpjq1kIHmwIzOzRstp2qSt2dcl1W8YSBPGuKXqZYuuV+nYmU4/7Xv1Qnn/4Wi+y9H2bIvQIh93QUwyhSN9O4UX2IQ605i6VNtY6w1ly6kQc7y6WPs/GuNhfcGgYUxnKlEb4mr/hjYN2xej2ZhEvoYUYKDkeNVQgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783626041; c=relaxed/simple;
-	bh=0YDvwgLQEnkkpcG5jtU7pRdyrltyLiFcCJWfTSdh4Ds=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lNZiWQn1SZn5zpYkeQBBMUf70Tds3f867lzyybAppCx4RN/H6I6cW0jJ7/ot9D2raAtGJeXcZbPi33eEZnIrZygHLcKf0DOgS0LoN5cXciJOfe1GyKR4AXEVKZmXun5vIGJVrPXiheM/392J0reoDrkNLP9lUhmRMi62naskZos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Pqh66trC; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1783626188; c=relaxed/simple;
+	bh=7VJwtCwUGgq5uxfOngUog/NWK7GZ4D4WWIiBIZXSk+8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PCQq0E476dr1dxnDgukAS6w8uwvnn78dDHpZRlA8WujDKBz0VB+PVzlMvUoYdGwkTc2NAyGNqw9jhrhtHa5ACJ26UvowmxyWE+GbWIMhfRsQzyg+9dhbk4CodTv0RvO1Bq2V7Uh27qgVPpPHsS2Y75V+h39Sc4QC9vJ0lYK9rrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CpltDg8u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Pqh66trC"
-Message-ID: <b344f190-ac57-4185-b5e6-e9c9db6c6249@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783626036;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mS5cj0se9QcQQ34zS5YlgQmQWLzaB0xTLMO+WjoKy94=;
-	b=Pqh66trCfq17jreg/W3iOLx6H8A12GucCAMF3MdBqH8lbvsEao5xuJ7thDkx/GwAQ1Y9lL
-	p002UYsxFSbT628Oe22y06yIPVSBNjimQyOzRymd479hjb5dT5jw2oWML25+yo1aE22TOP
-	Wl6Yce/s00VHz3KNDiSNQBUnVGplIzY=
-Date: Thu, 9 Jul 2026 12:40:15 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CpltDg8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F4E1F000E9
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 19:43:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783626185;
+	bh=KGIck3rzIJcG9NVXz1czhOYpFV9gzH89xwk4VZVQF0E=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=CpltDg8ulj9ybGxum8xp3wBs2yzlcSmUhiCVj+Owp3TlOH0E3Phr5FHw7/EOzSHNu
+	 BlC9MSKEs1h9jtm81HDVG9tdvGRRfmEeRGtG4mYWgVeFg6q7W/0l+hNkJT2+0uWv8X
+	 xKn8IUs1mtG59bEnG5eggJvlgKGaq1Mln3XZvxUyGT7+ptkWf/nOuEUe3HaMoCvLAN
+	 3PUyc1kxZ9EmmOFxR6iqKPPZPyd9dMXo2sbUAfpplCbyrHYAvUhC0zDPakfSuKEBBw
+	 TKTb0vNbsobQaYCADa/dc/btWKMQ3wWoHG1KaKBk726vsk5IE4F+GOTxRM45ctXA++
+	 lrK8O4XL3/u+g==
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6983f20a8bfso307405a12.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 12:43:05 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyHA1Vrn0vuifBnQjsb054RZ7+fClrH1B9mZmMir39Zm12h6qsZ
+	eqwbn1qnuidTEG6/8ttjtFGnrm9+aHVHqbCWqJaNqzWNaeduzqIg/Os0et753VipsZtmpz1j9GW
+	5xB7DViEUwQuhqkoBxtYj8B1PPSptihw=
+X-Received: by 2002:a17:907:fd8b:b0:c12:63d6:d287 with SMTP id
+ a640c23a62f3a-c15ce11698bmr349598566b.42.1783626184784; Thu, 09 Jul 2026
+ 12:43:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next 08/12] bpf: Enable 16-byte aggregate return types
-Content-Language: en-GB
+References: <20260709082953.69434-1-shivansh.dhiman@amd.com>
+ <20260709082953.69434-3-shivansh.dhiman@amd.com> <20260709085012.C802D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260709085012.C802D1F000E9@smtp.kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Thu, 9 Jul 2026 12:42:53 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zOV+9M=REzRSLLE_ZqcyFP5xdaNHmKti1N-SE_Y=8=VpQ@mail.gmail.com>
+X-Gm-Features: AVVi8CfObkPo8pWWJdvOE7eiEWaAB1LuUINFbfTYSvm1WPl9Fu8ElUU-1DETd4c
+Message-ID: <CAO9r8zOV+9M=REzRSLLE_ZqcyFP5xdaNHmKti1N-SE_Y=8=VpQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] KVM: nSVM: Disable LBRV in nested control cache
+ when unsupported
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260708200939.2153664-1-yonghong.song@linux.dev>
- <20260708201020.2160131-1-yonghong.song@linux.dev>
- <20260708202836.0308F1F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260708202836.0308F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Cc: Shivansh Dhiman <shivansh.dhiman@amd.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 7/8/26 1:28 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Leaking uninitialized kernel memory via kfunc R2 return register for structs of 9-15 bytes.
+On Thu, Jul 9, 2026 at 1:50=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The `SVM_MISC2_ENABLE_V_VMLOAD_VMSAVE` bit is never cleared in `=
+vmcb02->control.misc_ctl2` once set, allowing L2 to bypass L1 intercepts or=
+ causing host log spam.
 > --
 >
-> --- Patch [8]: [PATCH bpf-next 08/12] bpf: Enable 16-byte aggregate return types ---
-> commit 5b4b6cb320ef1b1f82ac557b6f90945992d8a0c5
-> Author: Yonghong Song <yonghong.song@linux.dev>
-> Subject: bpf: Enable 16-byte aggregate return types
+> --- Patch [2]: [PATCH v3 2/5] KVM: nSVM: Disable LBRV in nested control c=
+ache when unsupported ---
+> commit 54bf374923da671433d0174e1a9df561ac634275
+> Author: Shivansh Dhiman <shivansh.dhiman@amd.com>
 >
-> This patch relaxes btf_distill_func_proto() and btf_validate_return_type()
-> to allow kfuncs to return by-value structs or unions up to 16 bytes.
-> This enables the <=16 byte aggregate return values end to end.
+> KVM: nSVM: Disable LBRV in nested control cache when unsupported
 >
->> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
->> index dff5c0d916412..bab82d1c8cb98 100644
->> --- a/kernel/bpf/btf.c
->> +++ b/kernel/bpf/btf.c
->> @@ -7572,7 +7572,12 @@ int btf_distill_func_proto(struct bpf_verifier_log *log,
->>   		return -EINVAL;
->>   	}
->>   	ret = __get_type_size(btf, func->type, &t);
->> -	if (ret < 0 || btf_type_is_struct(t)) {
->> +	/*
->> +	 * __get_type_size() already restricts a non-negative ret to void, a
->> +	 * pointer, an int, an enum or a struct/union, so only the size is checked
->> +	 * here.
->> +	 */
->> +	if (ret < 0 || ret > 16) {
+> Clear SVM_MISC2_ENABLE_V_LBR in __nested_copy_vmcb_control_to_cache() whe=
+n
+> the vCPU does not support LBR Virtualization. This lets the cached value =
+be
+> consumed directly instead of re-checking X86_FEATURE_LBRV on every access=
+.
+>
+> > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+> > index d3df6b22bfefe..84248e6665cfe 100644
+> > --- a/arch/x86/kvm/svm/nested.c
+> > +++ b/arch/x86/kvm/svm/nested.c
+> > @@ -534,6 +534,11 @@ void __nested_copy_vmcb_control_to_cache(struct kv=
+m_vcpu *vcpu,
+> >       if (!gmet_enabled || !guest_cpu_cap_has(vcpu, X86_FEATURE_GMET))
+> >               to->misc_ctl &=3D ~SVM_MISC_ENABLE_GMET;
+> >
+> > +     /* Always clear misc_ctl2 bits that the guest cannot use */
+> > +     to->misc_ctl2 =3D from->misc_ctl2;
+> > +     if (!lbrv || !guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV))
+> > +             to->misc_ctl2 &=3D ~SVM_MISC2_ENABLE_V_LBR;
+> > +
+> >       to->iopm_base_pa        =3D from->iopm_base_pa & PAGE_MASK;
+> >       to->msrpm_base_pa       =3D from->msrpm_base_pa & PAGE_MASK;
+> >       to->tsc_offset          =3D from->tsc_offset;
+>
+> While reviewing these updates to misc_ctl2, I noticed a related pre-exist=
+ing
+> behavior in nested_vmcb02_prepare_control():
+>
+> arch/x86/kvm/svm/nested.c:nested_vmcb02_prepare_control() {
+> ...
+>         if (!nested_vmcb_needs_vls_intercept(svm))
+>                 vmcb02->control.misc_ctl2 |=3D SVM_MISC2_ENABLE_V_VMLOAD_=
+VMSAVE;
+> ...
+> }
+>
 > [Severity: High]
-> Can this leak uninitialized kernel memory for structs between 9 and 15 bytes?
+> This is a pre-existing issue, but does this code leave the
+> SVM_MISC2_ENABLE_V_VMLOAD_VMSAVE bit set in vmcb02->control.misc_ctl2 onc=
+e it
+> has been enabled?
 >
-> The x86_64 ABI leaves the unused upper bytes of the %rdx register undefined
-> when returning a struct that is not a multiple of 8 bytes.
->
-> Looking at mark_kfunc_ret_reg_size() in kernel/bpf/verifier.c, if the struct
-> size is greater than 8:
->
-> 	if (size > 8) {
-> 		mark_btf_func_reg_size(env, BPF_REG_0, 8);
-> 		mark_reg_unknown(env, regs, BPF_REG_2);
-> 		regs[BPF_REG_2].subreg_def = DEF_NOT_SUBREG;
-> 	}
->
-> The verifier explicitly marks BPF_REG_2 as fully initialized, bypassing subreg
-> zero-extension.
->
-> And in the x86 JIT do_jit() in arch/x86/net/bpf_jit_comp.c, it moves the full
-> 64-bit register:
->
-> 				fm = bpf_jit_find_kfunc_model(bpf_prog, insn);
-> 				if (fm && fm->ret_size > 8)
-> 					emit_mov_reg(&prog, true, BPF_REG_2, BPF_REG_3);
->
-> Could a BPF program read the undefined bytes from R2, resulting in an
-> information leak?
+> If L1 enables virtual VMLOAD/VMSAVE for L2, KVM sets this bit via bitwise=
+ OR.
+> On a subsequent nested VMRUN where L1 disables the feature or disables ne=
+sted
+> paging, KVM correctly tries to set intercepts or clears NP_ENABLE. Howeve=
+r,
+> it appears to leave V_VMLOAD_VMSAVE set to 1 since there is no else branc=
+h
+> to clear it, and the vmcb02 page is reused across runs.
 
-We should be fine here. See llvm patch https://reviews.llvm.org/D131598
-which specifically tries to address this issue. The following is an example
-for R2:
-
-$ cat t.c
-struct foo { long a; short b; };
-struct foo bar(void);
-
-int tar(void) {
-   struct foo t = bar();
-   return t.a + t.b;
-}
-$ clang --target=bpf -O2 -S t.c
-$ cat t.s
-         .file   "t.c"
-         .text
-         .globl  tar                             # -- Begin function tar
-         .p2align        3
-         .type   tar,@function
-tar:                                    # @tar
-# %bb.0:
-         call bar
-         w2 <<= 16
-         w2 s>>= 16
-         w2 += w0
-         w0 = w2
-         exit
-.Lfunc_end0:
-         .size   tar, .Lfunc_end0-tar
-                                         # -- End function
-         .addrsig
-
-The caller will do proper narrowing immediately after call return.
+It would probably be better code hygiene to clean it, but I don't
+think it will actually cause problems.
 
 >
->>   		bpf_log(log,
->>   			"The function %s return type %s is unsupported.\n",
->>   			tname, btf_type_str(t));
+> Could this allow a malicious L2 guest to bypass L1's intercepts for VMLOA=
+D and
+> VMSAVE,
 
+No it shouldn't, because nested_vmcb02_recalc_intercepts() will
+correctly set the intercepts() if nested_vmcb_needs_vls_intercept()
+returns true, and the intercepts being set makes V_VMLOAD_VMSAVE a
+noop (see the comment in svm_recalc_instruction_intercepts()).
+
+> or cause an L1 guest to spam the host kernel log with SVM_EXIT_ERR by
+> toggling NP_ENABLE while V_VMLOAD_VMSAVE remains stuck at 1?
+
+No, IIUC having NP_ENABLED=3D0 also just makes V_VMLOAD_VMSAVE a noop,
+and a VMLOAD/VMSAVE will result in a proper VMLOAD/VMSAVE exit, not
+SVM_EXIT_ERR, from the APM:
+
+"""
+Support for virtualized VMSAVE and VMLOAD is indicated by CPUID
+Fn8000_000A_EDX[15]=3D1. When this feature is available, it must be
+explicitly enabled by setting bit 1 of VMCB offset 0B8h to 1. This
+enable bit is only recognized when the hypervisor is in 64 bit mode,
+nested paging is enabled and Secure Encrypted Virtualization is
+disabled, otherwise attempted execution of a VMLOAD or VMSAVE in the
+guest will result in a #VMEXIT with a VMSAVE/VMLOAD exit code.
+"""
