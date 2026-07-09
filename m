@@ -1,104 +1,195 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9833F9A1B;
-	Thu,  9 Jul 2026 09:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1C83FC5BE
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 09:22:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783588452; cv=none; b=N/u8xMhrKH3nwI+wIaFC6IskswpEb8RO1ncxG5LaQDBTxz6QWBVN12hUZE5TdjwR3wM1Lt1mt7bIflTevngepWgywH1tFoqrAGhKeK+LKHCp5eR+3J9oMzHxFSDdF8fvcvaO5TPjmgvcS7VdWXKZT8zGGkpKdSX+Ertblg7joHA=
+	t=1783588946; cv=none; b=jJK9nC8K8XGJPyFH2z2PakKfFyWZJnIXZNPQjZ8m4DGG7yjyKdKH6mQkvEDz961KFyUo8btZFry1jgwG++ECUJxgiFaTcibtMLhvOyeH3onjnSC0NN42kRcCEvzQnKa5AtgmKbjS9+ilJXkU4ulUWrv2OA32cQkxzRo7FLDtxIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783588452; c=relaxed/simple;
-	bh=Qrjsa6kNlgtqbcszSbWTM/A2+j5SwnmvBesi2KThD6M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hFeTdUBl49vcIa7gdCoDm2X0YWiGhcsTTgc0tkM36xz6pzFVm2OFuV6F1EUBu/bT5IzlA/PeuYJRHgqd/oL9cLrbNOX3nuxA5OZ4g+Z9KIXAaSTFZMgMFdyhh3k6d+rIOB8abIFlBtSyuvh+T4QZGQVKrGcszJzJ0s3M1kqBxM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTybV0xP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783588946; c=relaxed/simple;
+	bh=ZNnP4i9QVAAZHVAjMFLRuwvsil7JG6GztGbSnb3gAlE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hdCQRdikXMSIqxMi4Q4QgH1Y5wOonuDEqxGu4pUqNRnc8aoBvmZX8tpi/Bd+ToSGeticd1SJl+u35CNygO/KNrfdexh1kc9hOrbXHgZ+/CqDSgLy+sZM6OQFVTIBJQlwaIEnDcxZKFCPYNjJKl7ECDHliA4y8QCFxjypbSLH6NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0V9iBXXJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ooVLJmJ0; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=CtA5mnc/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=MLavP7Q8; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTybV0xP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3279B1F000E9;
-	Thu,  9 Jul 2026 09:14:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783588450;
-	bh=oacrnyBrpn2K0Y0NRU9kj42nB0krZasHrT3apgcYHzQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=WTybV0xPYemqWJLocPgwRv1n2vVlWP64G4ERSiMpVBxCvISv8trKSvfeXj4UeqjH2
-	 eEl2QR5wHoURSrIq6GQZRCZZ3WT+hakTpPRj9ZTa9BO4C/Ge+1ggD4md58CC5xAQA9
-	 dAxXkagHW/OMVtpHyVnEhwsYZDzjD8UtJNSRQsq5fg0mKD4TMk86pfvxMr/9bnKZQG
-	 y7nwFfDzl/INI/KMtTu2rE+Pwb1aeFF6N3xCx/U9NKtVpLsNXNeKOUYYEmD6BUiqsr
-	 t1sea7mq4pZ/t5bIacLwpeeq096EP9aOShJC85Gh/uaryDUwzDFF+le2YHRCRXlb7v
-	 fOiwg9do66Keg==
-Message-ID: <dcc4f558-7b6e-4193-a943-036255fc202f@kernel.org>
-Date: Thu, 9 Jul 2026 18:14:08 +0900
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0V9iBXXJ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ooVLJmJ0";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="CtA5mnc/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="MLavP7Q8"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 629A675D87;
+	Thu,  9 Jul 2026 09:22:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783588942; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=hfZMskM5sDDVFZ3OuxK0c2st+AvczEMqa0UUs0H1OVw=;
+	b=0V9iBXXJxARuBQk0rxVQW3nzcVZlMh+3OtqBVA9aepNnDcCgOhdpziWotECgtWzTVbIVNQ
+	+oAizS1oGQ1sBWmQwWbg43088nlYeKnxo/a/iduSfTwIuyO9juITICc33Ao0cNXaSIq/oX
+	+GFw8XAZvX95tSrhWkQmnuKEgk8KmSw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783588942;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=hfZMskM5sDDVFZ3OuxK0c2st+AvczEMqa0UUs0H1OVw=;
+	b=ooVLJmJ0OSHqj2o91uyRISk765GsIrKdWgfmbzM20MdQyjDec8cotP6UirzebVKt05HerM
+	tvUIyk+F90u3OGBQ==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="CtA5mnc/";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MLavP7Q8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783588941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=hfZMskM5sDDVFZ3OuxK0c2st+AvczEMqa0UUs0H1OVw=;
+	b=CtA5mnc/bcgop6qAG8QWVw5NETlRrPeLSyYXi/HeHLXdvHNm8tBMgIO+Jrv+Xdp3h4gO9Z
+	5Voybwp+7PZbRbLnx93lbZYScs20cbN9gbwT+7Ot67BajgSV7tg3iBKkGcGZYLdWC20Njg
+	Vv7484bWA9QyoXXZO928SXwV77F6x8c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783588941;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=hfZMskM5sDDVFZ3OuxK0c2st+AvczEMqa0UUs0H1OVw=;
+	b=MLavP7Q8wOIO/HAQvDa861exigfXJbSrHjqdtSxK8Zn3RxRJXyfK3h74BHmk8Jplq7oLF/
+	Pn2ruVs7e5ybF7CA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C9C8D779AA;
+	Thu,  9 Jul 2026 09:22:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Ht0JMExoT2q6OQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jul 2026 09:22:20 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: lukas@wunner.de,
+	jfalempe@redhat.com,
+	alexander.deucher@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	jani.nikula@linux.intel.com,
+	joonas.lahtinen@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	tursulin@ursulin.net,
+	lyude@redhat.com,
+	dakr@kernel.org,
+	deller@gmx.de
+Cc: dri-devel@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 0/7] vga_switcheroo, drm: Push fbcon handling into DRM clients
+Date: Thu,  9 Jul 2026 11:15:56 +0200
+Message-ID: <20260709092215.168172-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] ata: libata-scsi: terminate deferred commands on
- time out
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-ide@vger.kernel.org, linux-scsi@vger.kernel.org, cassel@kernel.org
-References: <20260709083934.1116862-1-dlemoal@kernel.org>
- <20260709083934.1116862-2-dlemoal@kernel.org>
- <20260709090006.F317F1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260709090006.F317F1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Rspamd-Action: no action
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FREEMAIL_TO(0.00)[wunner.de,redhat.com,amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,intel.com,ursulin.net,gmx.de];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim];
+	FROM_EQ_ENVFROM(0.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLgosu6qu4h11rje89ht7rjgg5)];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 629A675D87
+X-Spam-Score: -3.01
 
-On 7/9/26 18:00, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does calling ata_scsi_qc_done() here prematurely complete the timed-out
-> deferred command and free the libata qc?
+Vga_switcheroo currently invokes fb_switch_outputs() to inform fbcon
+about switching of the physical outputs among framebuffer devices. But
+new DRM clients to not use fbdev/fbcon and might require their own
+vga_switcheroo support. Let's strictly separate them from each other.
 
-Yes it does. But unless it is the deferred QC that suffered the timeout, the
-scsi command will be requeued and retried.
+Remove fbdev/fbcon from vga_switcheroo. Introduce a pre_switch callback
+for vga_switcheroo clients to do the fbcon update. Allows for removing
+all direct interactions between vga_switcheroo and fbdev/fbcon.
 
-> When a deferred command times out, ata_scsi_eh_timed_out() calls this function
-> which sets the host byte to DID_TIME_OUT and calls ata_scsi_qc_done().
-> ata_scsi_qc_done() then frees the qc and invokes the qc->scsidone callback.
-> 
-> Later, when the SCSI completion softirq routes the DID_TIME_OUT command to the
-> EH queue and the EH thread runs ata_scsi_cmd_error_handler():
-> 
-> drivers/ata/libata-eh.c:ata_scsi_cmd_error_handler() {
->     ...
->     set_host_byte(scmd, DID_OK);
->     ata_qc_for_each_raw(ap, qc, i) {
->         if (qc->scsicmd != scmd)
->             continue;
->         if ((qc->flags & ATA_QCFLAG_ACTIVE) ||
->             qc == qc->dev->link->deferred_qc)
->             break;
->     }
->     ...
-> }
-> 
-> Because the qc was already freed, the ATA_QCFLAG_ACTIVE flag is cleared
-> and deferred_qc is NULL. The loop will fail to find the active command.
-> 
-> It seems this causes the handler to fall into the 'raced completion' branch:
-> 
-> drivers/ata/libata-eh.c:ata_scsi_cmd_error_handler() {
->     ...
->     } else {
->         /* Normal completion occurred after
->          * SCSI timeout but before this point.
->          * Successfully complete it.
->          */
->         scmd->retries = scmd->allowed;
->         scsi_eh_finish_cmd(scmd, &ap->eh_done_q);
->     }
->     ...
-> }
+There are only four drivers that support vga_switcheroo: amdgpu,
+radeon, i915 and nouveau. Update each of them with the new callback.
+When vga_switcheroo now invokes pre_switch, each DRM driver forwards
+to aquire_outputs and lets the DRM clients handle the new outputs.
 
-And after this, scsi_eh_flush_done_q() will retry the command.
-Tested and I do not see failure of the deferred QC :)
+At the same time, push the fbcon update into DRM's client for fbdev
+emulation. Do this with the new DRM client callback acquire_outputs,
+so that other clients can have their own handling of vga_switcheroo.
+
+Also replace the existing reprobe hook with post_switch for symetry.
+For nouveau, this is merely a rename of the helper function. The other
+drivers dor not implement reprobe.
+
+Tested with radeon on a notebook with Radeon HD 4225 and HD 5430.
+
+v2:
+- implement all of pre_switch in a single commit to avoid possible
+  deadlock in intermediate state (Sashiko)
+- fix erroneous docs (Sashiko)
+
+Thomas Zimmermann (7):
+  drm/edid: Include <linux/fb.h>
+  drm/client: Add acquire_outputs callback; implement for fbdev
+    emulation
+  vga_switcheroo: Add pre_switch callback to client ops
+  vga_switcheroo: Add post_switch callback to client ops
+  drm: Implement struct vga_switcheroo_client_ops.pre_switch
+  drm: Implement vga_switcheroo_client_ops.post_switch
+  vga-switcheroo: Remove unused interfaces
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  9 ++++-
+ drivers/gpu/drm/clients/drm_fbdev_client.c | 23 ++++++++----
+ drivers/gpu/drm/drm_client_event.c         | 18 ++++++++++
+ drivers/gpu/drm/drm_edid.c                 |  1 +
+ drivers/gpu/drm/i915/i915_switcheroo.c     | 11 +++++-
+ drivers/gpu/drm/nouveau/nouveau_vga.c      | 28 +++++++++------
+ drivers/gpu/drm/radeon/radeon_device.c     |  9 ++++-
+ drivers/gpu/vga/vga_switcheroo.c           | 41 +++++-----------------
+ drivers/video/fbdev/core/fbcon.c           |  8 -----
+ include/drm/drm_client.h                   | 14 ++++++++
+ include/drm/drm_client_event.h             |  3 ++
+ include/linux/vga_switcheroo.h             | 29 ++++++++-------
+ 12 files changed, 121 insertions(+), 73 deletions(-)
 
 
+base-commit: 88c6be63ac7e9238c7791977d3f496ce6623afe4
 -- 
-Damien Le Moal
-Western Digital Research
+2.54.0
+
