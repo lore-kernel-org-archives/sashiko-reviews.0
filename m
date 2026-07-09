@@ -1,163 +1,239 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011051.outbound.protection.outlook.com [52.101.62.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C973E3D89;
-	Thu,  9 Jul 2026 07:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783582585; cv=none; b=oqYF4F5+Z6M+4hGXDyAH5gFId6w9hOMGnO1QnSOYJzelatfwYdtn72nCNzp5kx/dqoNlE5ZkndQFYRF9w3oJ/3AGPrvDrNibvCEWvGP/3ZoGj+y19hGqeQFauQeWId0V8/vWzCXzAcZT9HtuTwAojk4SebWudTbDRaitoU/KGJ8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783582585; c=relaxed/simple;
-	bh=UNxg9kiympo3qvn/tmDRZa/UEh/7A4xSn6rAkFrxkR4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OGRpk939+IEu3VBeRxmRkRRNgjTW/3QNRFhQpL1Ps6xgzh0zY8Z9dVr2baSkk1JQmJG81Ej4/keVX9MgyL8uYqmOEl60ou5PMy2dqh624h4G8eKlPEnbM7pevhu08TRe4CaFrV0gQwunGpkxVGtN9VvABbEGcAeNepRR4p8VG9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YYLa4EKZ; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09B43CCFD4
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 07:42:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783582965; cv=fail; b=m88m4Lm90VSNI3fJ/ScJWGJK2D2JPq88izAkTSf5KAxl657uz2Ggto7UqGuuCOneOVBRkDJQS1KmXFCg2uQlOwvs1vXLATq66WNycMrbZv3kZIb5Fbih8FSRg/Sr3g/kthKol7+niA6lKL0Orgo+I5Jk81EeSPiiflfZIAYuHNU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783582965; c=relaxed/simple;
+	bh=5M+nsD4YW+PIkADpmLowv5VSXgYrMqYmh6mqQ6sN9Uw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=RKz/cIzJMz1099zJ1BkL43p4hFg8s+1vlFtNRsHmEnCbffsuxAZe3XhYMCqTQWpLq5cHFDJc+vKlUv7arPk2ONXTGGJtVD7ZAtT3f801IdY93LkryAZJv/F8/2VNS7qZ7khj2k1zy9c76I8fd0kegajbxVpApKjXLzVu0pyL7UU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com; spf=pass smtp.mailfrom=einfochips.com; dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b=gBv8cyxg; arc=fail smtp.client-ip=52.101.62.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=einfochips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YYLa4EKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4211F000E9;
-	Thu,  9 Jul 2026 07:36:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783582580;
-	bh=N4rv3rv3aDuiM2X7qoF4jvMFoMubFY32zS0YnHJnaJg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YYLa4EKZifVsSY5FcAoE+f+AGMQ6abIoEvH1L1LRaCTCE2oe9CE/+tNT+gcCQFhTz
-	 Tn/SYuLgprSOwzLg5TRW685N9+ZePcTNSSw5l0IownLP8m8cFWQwUz7PL7j1vmyjK/
-	 Y8g0gH0oTpNQnxS2Gy4lzGopuiM3zkl+rINJoKlBLF8IVau80lYz06ab2gviMbIS6n
-	 ERDFuEohQZrj8S7qI2+hWMpOJqnn6FdOVrIEp83EJmyItQ/kpEJRBs0XunfORLUcdx
-	 DPpL9yqV2NZOyjVhKcqgWIolApX3RiuHts+VLVqw8YlMSf4u0M+Y6/GYQ7LmekGuFJ
-	 70K4zrff/B+Lg==
-Date: Thu, 9 Jul 2026 00:36:19 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: Tengda Wu <wutengda@huaweicloud.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v3 21/21] perf annotate-arm64: Support 'mrs' instruction
- to track 'current' pointer
-Message-ID: <ak9Pc1Gq_eSvsoek@z2>
-References: <20260701035355.752944-1-wutengda@huaweicloud.com>
- <20260701035355.752944-22-wutengda@huaweicloud.com>
- <20260701041636.7FEDC1F000E9@smtp.kernel.org>
- <9b181384-028e-4597-8dae-4416b43c940c@huaweicloud.com>
+	dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b="gBv8cyxg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PFt3qKQl+ML4yOrmhYdxNQBuPx2TKrpf1A9onbFbPplCbT7gYeksABsgIEuP42M4gVRT1ali7ql0ow6L3CPeQWdKpiI5ulAl/bH9JxuLzmA6FLip1GAMBsuDb2OWL5N/KLyX+4o8jKgzhaCfoN2JZk4o2eFqWBCS3v+xo4WPnjWHRF5q+/SSWLlaWn1ayn0kPdS2kTKrSqYZusVihp7fW3GBKeBrbc/bIsbhq5OvoNnCT97VNqA+JU4yzBy+qfcOWucvHyxIsrsdZHS7fj6h+dr0RNzH/JMS9bNwCftURSRxhWPireTZZ09JTeE3SieEQLl/MglMhNOFMTToe+ehLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kmRXxKxDUEf6VTwW026RtXgp/vvt7YBvUbiwL5gBZMo=;
+ b=Hp2nZAgRLu/erP5LAYnxujII/SBLbehi4oMlbu2E6aQzyiaERcfmV4FZJBvsmAmA5Ut8qX3vx/c6W2baXAd4bqSdFs3A5eY3xlw8F5BbmMwq1o5Qp3X97R/VKKghyp72crLj3n6BnUKMn592m7VO7b1c6CVIkMWJkJDaz8doIQJ47ENe24HmBO0LiZ+8c0vT5lySH7yAht8+tfvoA8TvAse2J+c6EFvpeJENKqdCwEMhMfCDxiJUkpeZwyt2udkV7g4fVjXOWbGYDo8dYkQc7OCDXHlHBt5YTsukvtjl4HSS+jtsL87Z6S5Jn7mBzRD9EKIDSLpP3RuUMEJ3dTQqJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=einfochips.com; dmarc=pass action=none
+ header.from=einfochips.com; dkim=pass header.d=einfochips.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=einfochips.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kmRXxKxDUEf6VTwW026RtXgp/vvt7YBvUbiwL5gBZMo=;
+ b=gBv8cyxgBDplgLp2Q0w6QEopiszKUZi5ltEiUat6qAFZMyFlwh8A6OzKhtWOuGmAdy2l7Ku4Knk+hze6X+SjnDZ/AAgHCnR/xbgBjORgvrcvvMt8I6lnfwX7HFcR2qYt3uJjtvP7beIOEndKLLznRJeQ2gaczNIHeailsEDl1Rc=
+Received: from SJ2PR04MB8896.namprd04.prod.outlook.com (2603:10b6:a03:53e::6)
+ by BL3PR04MB8059.namprd04.prod.outlook.com (2603:10b6:208:34a::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.16; Thu, 9 Jul
+ 2026 07:42:41 +0000
+Received: from SJ2PR04MB8896.namprd04.prod.outlook.com
+ ([fe80::8292:662a:4214:95e0]) by SJ2PR04MB8896.namprd04.prod.outlook.com
+ ([fe80::8292:662a:4214:95e0%4]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
+ 07:42:40 +0000
+From: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+To: Conor Dooley <conor@kernel.org>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: "conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v2 5/8] riscv: dts: eswin: add hsp bus node
+Thread-Topic: [PATCH v2 5/8] riscv: dts: eswin: add hsp bus node
+Thread-Index: AQHdD3aFE2SXu5qv50K+/OTCjwlyYQ==
+Date: Thu, 9 Jul 2026 07:42:40 +0000
+Message-ID:
+ <SJ2PR04MB8896974C22F1D261482818B283FE2@SJ2PR04MB8896.namprd04.prod.outlook.com>
+References: <20260706081055.1126275-1-pinkesh.vaghela@einfochips.com>
+ <20260706081055.1126275-6-pinkesh.vaghela@einfochips.com>
+ <20260706082335.4C4351F000E9@smtp.kernel.org>
+ <20260706-antiques-famine-8c4a765c4680@spud>
+In-Reply-To: <20260706-antiques-famine-8c4a765c4680@spud>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ActionId=dfe20256-e11f-4dcb-b829-c2063ad7ccc1;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ContentBits=0;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Enabled=true;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Method=Standard;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Name=879e395e-e3b5-421f-8616-70a10f9451af;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SetDate=2026-07-09T07:33:55Z;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SiteId=0beb0c35-9cbb-4feb-99e5-589e415c7944;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Tag=10,
+ 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=einfochips.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ2PR04MB8896:EE_|BL3PR04MB8059:EE_
+x-ms-office365-filtering-correlation-id: 751fa742-1d21-43f4-4f20-08dedd8da7d7
+x-ms-exchange-atpmessageproperties: SA
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|22082099003|18002099003|55112099003|38070700021|4143699003|11063799006|56012099006;
+x-microsoft-antispam-message-info:
+ lHWHW3dnLtLa0USLpWDNK9/3/ZSIHdm7ryNnyMsMYD46YPdJwttImK5evU1tJHvLdxA1EnhobWOyMfW0OAIR4NzH5B+IgmZq1SXE9MPZB7POEq4JYjPjycfXUO3+28C0WB3K4LfPdefbNm9DPeG+cvKcgChK0lI9uC0pYFk9fYtG9/MtUAqxRYfjUfLVKxpuOhlcpHh54ja6t2m6AiEv6JUm0VmGMbWQFQ2ekeCKNy3AeyBaJAJAujBFpbbagPOP3s7ve4bLjRzj/TQ1oTWWs68k8a9INIEiAPz/dcLddcwl6fsQyv2d0gXdELkjWTXiFbLZP2dMWoQh/66Mh6eWt6V2YbC2YNWwtjPhny2Gs1T/nfc2feJ6pP98Wp/CWmI9GFg0nA/qx+yH8SsideIzEOb0Ba7JGSWB22Mg35Lo0RhQithfI85RiRkEaKrkh0xTTUWM2nCT/p4Zsf1MMEKLmc6QYVBC9k9X787KFw8CWiGzRq0qp6UVjsTGREzBCVAYaYS0/Ph95WIUJ58u/QSPMIcsqDbufJRv4Q7UPufttgnI/QkRaucRxNzYRwu+g8wc8aWqzVeOpWe5/1fFL4sjjncICpXrIplFFK4VnL7isUdhS05AkYrdbtoeU7JF5p6fpheLaevJ+g/VcaJgDJfg4iOG6RD5MKpJZxcjNWnJeBY=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR04MB8896.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(22082099003)(18002099003)(55112099003)(38070700021)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?8MGTvb/KoFLJV8Ud2mDo6SUk9umqX4zSJcfOgGMOIlbk3BvDTEITYJi2aiCl?=
+ =?us-ascii?Q?m4kr8rh+g2T7PXjLoSgWwcVdr4Vov4l7koPNNMMClEaaJXhZUvNFXMw8rP/8?=
+ =?us-ascii?Q?tWaJhEXYm5DoiE9MyRwYlKDdEw92rmkei4UPXeKenimzw0OSHAHFseKVZFlq?=
+ =?us-ascii?Q?4oR8EQl7BBOkahSqqeO8z9gFzx6H9Z4l+dpPHMch63MfuKuqYb3Hn73J/jpO?=
+ =?us-ascii?Q?YWS7lDfMcQdzLDVSoFpiytb0uYS8PS66Pb9+k2X2et/l5pSoGNcu/KEmcddC?=
+ =?us-ascii?Q?v5EoaGvX+CffZ+lB+IkBc9itA9ICHDkf14sV8B8C+ubvc9nIfgC0FmD+aezh?=
+ =?us-ascii?Q?9VcIEQd60WxR+2B3iaMashimy6oOZqmrixkzLa6kz4cQ1SEsvWedKNYqd/+q?=
+ =?us-ascii?Q?j6bFWnvm3Sfamv+GHPw8VD4pj0K4MA1F5w/Uffg+m+z8qeW/kO3kuUOdnM5J?=
+ =?us-ascii?Q?X/+DbsdlP97R+y+07NWpeSoKN7BuxIHvsUE9PuwemT92rbV4ykNZE56HaFJt?=
+ =?us-ascii?Q?fE1MSnw2t8BxQtlkmAHOkwJXTnWS2g8rwVasTmmGrp3/xnfM8QrXOoBhWrvW?=
+ =?us-ascii?Q?3eqsm5NnQk1sSZiyOF3SpVdLwz1sU5OeRS+/jTMnsa51NUzqCX0o7+D6ZKv0?=
+ =?us-ascii?Q?bDotzUlrkN9eGJBydQODqth0eXbQY11rMPZrbTLM3GiwPi87FGUpIEhRC0wg?=
+ =?us-ascii?Q?HCGzuOQqqNWuMioiVO6m7b9lniRQ1mPsjdeVzGnQmIWj8KywE7pK/4WFQUsY?=
+ =?us-ascii?Q?3qjLgN67TyPGzhhdkLt3whV0qUHETEbfWCtHVMqX1Bbl6peOZYOYJeqLkP+7?=
+ =?us-ascii?Q?zIfdtkZZlh9uTwajDU1cy1NaXqeb3xEIhFBdChx/T7yLqjzXIsF3U/Kif5G5?=
+ =?us-ascii?Q?jlEDzI/EK64qGXKeFKYL333s9WH8sdn+bBxVrygsdHou6DITGDpa3HpmQ/9e?=
+ =?us-ascii?Q?luzseBTyuwUb3qN6pXASfFyoNapCcIfyZv6+7pE1lgd0X1l8C9tJZVN0mSY9?=
+ =?us-ascii?Q?/2Y2QRPRn7U0Kq/jD1NMgcFl8rxQ8KeIBAS3AFdIQZfbg8KT8mG729V1OUcq?=
+ =?us-ascii?Q?ty1aex0GXLu1EXVIuL2y4K9GDNJBIoJMZFBBAjGe2BSusBqkoPIrMHqLY7Jt?=
+ =?us-ascii?Q?60AdZB7nHCewaPrhccqVF1YOwP7bC1f00Y/kGuuxn62sgExDFFELr+fEyxDt?=
+ =?us-ascii?Q?WUhflbgpsSyTLsj54cnGL0++l4w1YP+OXGKZPnUomz5BN3dlYfdY8WleLxU+?=
+ =?us-ascii?Q?0BLMPKq+01dPrEnXay/1xZ+c9zumlijzqPImWYJSvwQTvJTwJvpbbDRL5hN/?=
+ =?us-ascii?Q?MMA5YG/3zQBQ/j03irz0GxIjBmT47eESAs+F0Pkgm38BmXcbkzPvR4zGz5ur?=
+ =?us-ascii?Q?23mMAi9ekR4uRRDtCjDvlqvcXXKThjGmyYVCYgLjZW20wr+69fJXCvAc4DnW?=
+ =?us-ascii?Q?415EHoh6ypkrPe5aYGU/D2k4dJxiLw7yasrnYEa7H0IC8wWboceLbDx9yn/H?=
+ =?us-ascii?Q?ZGn/eat1k1jeRbendRN4/zzSY0Oe7pQ3OrDyK5aQxAqM4U2FmFkpKVN7Di56?=
+ =?us-ascii?Q?qUcb+pK76UDYdxLPWVU9/gnSmizvHCHLQ0Unj5Ynkx23QEljy4Xuqwq+sUAB?=
+ =?us-ascii?Q?FGeTVVHbFN04hUKUwoQXtNFgNHrEmeE6+DzMw2WvfRQwAY7j0Q5FJjek03uI?=
+ =?us-ascii?Q?8h0FwaA1PUhizU+FBedxd4fGBVbIAygE6mX62lpCtOw60hUYOAwy5p6rt4Lc?=
+ =?us-ascii?Q?qUpgyZbQDg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9b181384-028e-4597-8dae-4416b43c940c@huaweicloud.com>
+X-OriginatorOrg: einfochips.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR04MB8896.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 751fa742-1d21-43f4-4f20-08dedd8da7d7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jul 2026 07:42:40.9083
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0beb0c35-9cbb-4feb-99e5-589e415c7944
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dX65nBNd+0BGNgrV4CIxr+C5deNurghNiiigbUHLc6X8lJ/eecvm9PV8DcPWQ62PNyacCi8GZF6SfRLea3ZQ/sN6laCPHrRW0P2waMF7shQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR04MB8059
 
-On Wed, Jul 01, 2026 at 04:56:06PM +0800, Tengda Wu wrote:
-> 
-> 
-> On 2026/7/1 12:16, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [Medium] Memory leak of the dynamically allocated `type_name` string obtained from `strbuf_detach()`.
-> > - [Medium] Cross-DSO contamination and potential type confusion due to globally caching a DWARF offset (`task_struct_dieoff`).
+Hi Conor,
+
+On Mon, Jul 6, 2026 at 10:36 PM +0530, Conor Dooley wrote:
+> On Mon, Jul 06, 2026 at 08:23:34AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential
+> issue(s) to consider:
+> > - [High] The `hsp_sp_csr` syscon node lacks a `clocks` property, causin=
+g
+> unclocked MMIO accesses that can crash the system.
+> > - [Low] Non-generic node name for syscon device.
 > > --
-> > 
-> > commit 0f7d6f3c161448b3cb967b47ee3887be3d974dc1
-> > Author: Tengda Wu <wutengda@huaweicloud.com>
-> > 
-> > perf annotate-arm64: Support 'mrs' instruction to track 'current' pointer
-> > 
-> > This commit adds support for parsing the 'mrs' instruction on arm64 in
-> > 'perf annotate' to track the 'current' task pointer. It dynamically queries
-> > the DWARF debug information for the 'get_current()' inline function's
-> > return type to find 'struct task_struct', caching the DWARF offset for
-> > subsequent lookups.
-> > 
-> >> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
-> >> index ec6fd59d51a27..89e3997f6721b 100644
-> >> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
-> >> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> >
+> > commit 2f5171ba39f634bc5960f8f8754a5b822bc8c76b
+> > Author: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+> >
+> > riscv: dts: eswin: add hsp bus node
+> >
+> > Add an HSP bus node to manage the HSP CFG clock used by HSP
+> > peripherals. This clock is required for accessing both the HSP CSR
+> > registers and the register spaces of HSP peripheral devices.
+> >
+> > > diff --git a/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > > b/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > > --- a/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > > +++ b/arch/riscv/boot/dts/eswin/eic7700.dtsi
 > > [ ... ]
-> >> @@ -787,6 +789,81 @@ static void update_adrp_insn_state(struct type_state *state,
-> >>  		     insn_offset, tsr->addr, dreg);
-> >>  }
-> >>  
-> >> +static Dwarf_Off task_struct_dieoff;
-> >> +
-> >> +static void update_mrs_insn_state(struct type_state *state,
-> >> +				  struct data_loc_info *dloc, Dwarf_Die *cu_die,
-> >> +				  struct disasm_line *dl,
-> >> +				  struct annotated_op_loc *dst)
-> >> +{
-> > [ ... ]
-> >> +	/* Handle case difference: LLVM (SP_EL0) vs objdump (sp_el0) */
-> >> +	if (!dso__kernel(map__dso(dloc->ms->map)) ||
-> >> +	    strcasecmp(dl->ops.source.raw, "sp_el0")) {
-> >> +		invalidate_reg_state(tsr);
-> >> +		return;
-> >> +	}
-> >> +
-> >> +	ip = dloc->ms->sym->start + dl->al.offset;
-> >> +	pc = map__rip_2objdump(dloc->ms->map, ip);
-> >> +
-> >> +	if (!task_struct_dieoff ||
-> >> +	    !dwarf_offdie(dloc->di->dbg, task_struct_dieoff, &type_die)) {
-> > 
-> > [Severity: Medium]
-> > Since DWARF offsets are local to their .debug_info section, if perf annotate
-> > processes a symbol in a different kernel module (where dso__kernel() is still
-> > true), couldn't this global task_struct_dieoff be applied to the module's
-> > Dwarf * handle?
-> > 
-> > Would this result in type confusion or returning an arbitrary, unrelated DIE
-> > across different DSOs?
+> > > @@ -252,6 +252,19 @@ plic: interrupt-controller@c000000 {
+> > >  			#interrupt-cells =3D <1>;
+> > >  		};
+> > >
+> > > +		hsp: bus@50400000 {
+> > > +			compatible =3D "simple-pm-bus";
+> > > +			ranges =3D <0x0 0x50400000 0x0 0x50400000 0x0
+> 0xa0000>;
+> > > +			clocks =3D <&clk EIC7700_CLK_GATE_HSP_CFG_CLK>;
+> > > +			#address-cells =3D <2>;
+> > > +			#size-cells =3D <2>;
+> > > +
+> > > +			hsp_sp_csr: hsp-sp-top-csr@50440000 {
+> >
+> > [Severity: Low]
+> > Does this node name violate standard Device Tree naming conventions?
+> >
+> > According to the Devicetree Specification, node names should be
+> > generic and reflect the function of the device rather than its precise
+> programming model.
+> >
+> > Should this be named syscon@50440000 instead of hsp-sp-top-
+> csr@50440000?
+>=20
+> It should.
 
-Right, you need to invalidate the cache when the current debug info is
-closed.
+We will change this node name to 'syscon' in next version.
 
-> > 
-> >> +		struct strbuf sb;
-> >> +		char *type_name;
-> >> +		/*
-> >> +		 * Find the inline function 'get_current()' Dwarf_Die
-> >> +		 * and obtain its return value data type, which should
-> >> +		 * be 'struct task_struct*'.
-> >> +		 */
-> >> +		if (!die_find_inlinefunc(cu_die, pc, &func_die) ||
+>=20
+> >
+> > > +				compatible =3D "eswin,eic7700-syscfg",
+> "syscon";
+> > > +				reg =3D <0x0 0x50440000 0x0 0x2000>;
+> > > +			};
+> >
+> > [Severity: High]
+> > Will accessing this syscon node cause a synchronous external abort?
+> >
+> > Since this syscon node is placed under a simple-pm-bus, and syscon
+> > nodes do not bind to standard platform drivers, no
+> > pm_runtime_get_sync() is ever called on behalf of the syscon.
+> >
+> > This means the parent bus remains runtime-suspended, leaving the
+> > EIC7700_CLK_GATE_HSP_CFG_CLK clock disabled.
+> >
+> > The syscon regmap implementation can manage its own clock explicitly
+> > during IO accesses via regmap_mmio_attach_clk(), but it requires the
+> > clocks property to be present in the syscon node itself.
+> >
+> > Because this is missing the clocks property, neither the bus nor the
+> > regmap will enable the clock prior to the MMIO access, which could
+> > crash the system if accessed via debugfs or a consumer driver.
+> >
+> > Should the clocks property be added directly to this node as well?
+>=20
+> The devicetree should represent the hardware, so if the clock belongs to =
+the
+> bus, not the syscon (and the size of the region suggests there's other st=
+uff
+> here) it should remain in the bus node.
+> If that causes problems for driver registration, then the code needs to b=
+e
+> changed to enable the parent's clock.
 
-Probably better to check the name of the function.
+This clock belongs to HSP bus because it is required to access both HSP CSR
+registers and register space of HSP peripheral devices.
+So, we plan to keep this as it is.
 
-Thanks,
-Namhyung
+Is this acceptable?
 
+Regards,
+Pinkesh
 
-> >> +			!dwarf_attr_integrate(&func_die, DW_AT_type, &attr) ||
-> >> +			!dwarf_formref_die(&attr, &type_die)) {
-> >> +			invalidate_reg_state(tsr);
-> >> +			return;
-> >> +		}
-> >> +
-> >> +		strbuf_init(&sb, 32);
-> >> +		die_get_typename_from_type(&type_die, &sb);
-> >> +		type_name = strbuf_detach(&sb, NULL);
-> >> +
-> >> +		if (!type_name || strcmp(type_name, "struct task_struct*")) {
-> >> +			invalidate_reg_state(tsr);
-> >> +			return;
-> >> +		}
-> > 
-> > [Severity: Medium]
-> > Does this code leak the type_name string?
-> > 
-> > strbuf_detach() allocates and transfers ownership of the string to type_name,
-> > but it appears to never be freed on either the success path or the error path
-> > returning here.
-> > 
-> 
-> Agreed. Will fix it in next version.
-> 
-> >> +
-> >> +		/*
-> >> +		 * Cache the 'struct task_struct*' die offset globally.
-> >> +		 * This allows us to resolve stack canary accesses even
-> >> +		 * in CUs that lack a full task_struct definition (e.g.,
-> >> +		 * compiler-generated entry/exit code).
-> >> +		 */
-> >> +		task_struct_dieoff = dwarf_dieoffset(&type_die);
-> >> +	}
-> > 
-> 
+>=20
+> >
+> > > +		};
+> > > +
+> >
+> > --
+> > Sashiko AI review *
+> > https://sashiko.dev/#/patchset/20260706081055.1126275-1-pinkesh.vaghel
+> > a@einfochips.com?part=3D5
