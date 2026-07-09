@@ -1,230 +1,117 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77813672AB
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 07:15:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9E0365A17;
+	Thu,  9 Jul 2026 07:17:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783581356; cv=none; b=I8ukDkem9efdPSOS4e/83SEHaTP3DUsrh9LG0aX6LNddkvOVKa+2R4pycLJcX79ANgIv6YqqIKVKXiNmCNvZZiNNKQuG98qIiZc63Yv9zhAjlDUSUN893dZ4b5fC4Vs1863whplPiiMx2kdZzCHEVHPoitokCgXu5hjS/CWyCkA=
+	t=1783581455; cv=none; b=jSm6PJ9Alwf5CDH3OrChLfT6TvaTqIMTtVYgaWRZz0A3o+uxVkTmPzZ5151AyUi3JF+w3mE1G2ukEIpIMQQwAl7fsthY6EvJFbEE1jKlT5TzQLxygFWkHsOK6nodqCBmdIN/MFjX/rhuN5Jna1CPsnVMOzGb2L3eUT0Y/XEj1Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783581356; c=relaxed/simple;
-	bh=0rBdIflkyf7Vm1pmPUZ6QhCdAg8KHOvG/RSJxXpokOg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LNP47iv0C2T/lQDxuxIH7Z9pxTOYUvrTi+Obb4QkOYYlZ4s05pSeoSs8QLkomosvr8F7eN2XOjwug/mWifdua7xdIg5K5QEWZCzltsWTIP6e4RKNDNP/+n2aRlx08RIKVtCPU/kV7r73enFJ5Ww5T0+4kRYRR9aaM2W4MddaI0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=a2g1EdJV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XWdeelDi; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=a2g1EdJV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XWdeelDi; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1783581455; c=relaxed/simple;
+	bh=Bqo0uoRSlE6EkmhNLxqF4nRijEAU3pLvxs6Uw2fk6/I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iVkhD/QrEWOQbVjtmwkj0FiY6izWRN9bwc6ZW35HMsfdeXxiSW11DcdZ6Z28GicHZIMC4WoEOkUoGEXka1m2yEfHUgvRsWxh2TAwxOwjN2R7TzTn+OHQeFNQZO9V5FRZs2dKBaECIxfG47iDPmYc6t0bbO36PdrurcfgcTIfqY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Auh5r01n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="a2g1EdJV";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XWdeelDi";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="a2g1EdJV";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XWdeelDi"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 5FC9575E4C;
-	Thu,  9 Jul 2026 07:15:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783581352; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7M+Q2F1BfaMrkhlUr/CAyrR/jgf6rIwMYG4WU5QjML8=;
-	b=a2g1EdJVVeYIMHFzrU1lJmf+cV/+QudRctQuuHuDoTkkZciM8INApFHMMrFdYO53qVPYG7
-	mgG+sjgldV6ydywKl6c54amp5oRyVs31Ci6AtjdFpvPiuoQIOwg2Bhr8EEwUpZGuN4a69o
-	jrgCSpjwef/3zrS4+zrPNmJ1GHIiKF8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783581352;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7M+Q2F1BfaMrkhlUr/CAyrR/jgf6rIwMYG4WU5QjML8=;
-	b=XWdeelDi2f+EEMFJk1IUMFrcmcrCA6uOUG7J9E4qU/v114arNI9kXe2ZyvneWUDchzVpkl
-	yuHB+D+eqo2q4CDA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783581352; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7M+Q2F1BfaMrkhlUr/CAyrR/jgf6rIwMYG4WU5QjML8=;
-	b=a2g1EdJVVeYIMHFzrU1lJmf+cV/+QudRctQuuHuDoTkkZciM8INApFHMMrFdYO53qVPYG7
-	mgG+sjgldV6ydywKl6c54amp5oRyVs31Ci6AtjdFpvPiuoQIOwg2Bhr8EEwUpZGuN4a69o
-	jrgCSpjwef/3zrS4+zrPNmJ1GHIiKF8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783581352;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7M+Q2F1BfaMrkhlUr/CAyrR/jgf6rIwMYG4WU5QjML8=;
-	b=XWdeelDi2f+EEMFJk1IUMFrcmcrCA6uOUG7J9E4qU/v114arNI9kXe2ZyvneWUDchzVpkl
-	yuHB+D+eqo2q4CDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0E5FB779AA;
-	Thu,  9 Jul 2026 07:15:52 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 2NOcAahKT2ooPQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jul 2026 07:15:52 +0000
-Message-ID: <ee0ea45c-8ed5-4fd0-953a-6c11cc2ad357@suse.de>
-Date: Thu, 9 Jul 2026 09:15:51 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Auh5r01n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D03F1F00A3A;
+	Thu,  9 Jul 2026 07:17:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783581454;
+	bh=GJiK3L3oRRiN3d8ICHLHs7dvqb9hVUGKtEiTpqWX+oo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Auh5r01n0MdeEFfxafkHCQPtn+P7ucr3BwW/T0NHblPbd7Cth398B8mu0bVRHloYV
+	 TgHfKm6SYdxVfRY+1PV+i3qso5+it98JN+CtKGL7SGPDpZ+53Ts53glyShk2ySj2Of
+	 LhafSMByjnx751n+bp1cOgY9Ds1lsNHyStacSCHc/dVxpWtGuxFvQWUdKAcXCXKCAQ
+	 +joM7F/ZLThUYUDg5EuQbMmKWt5WFEUNXxG2BJLCdsFklw7J5UQ5i6J4qdMGp9GAet
+	 3+BC3hmIRqprmzr2i8cz+x69Jd56EAYNT5ZeU0V56NDyiID2gq9bzeCM5mnQwkbllq
+	 s/rebnucJjPNQ==
+Date: Thu, 9 Jul 2026 00:17:33 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: Tengda Wu <wutengda@huaweicloud.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v3 17/21] perf annotate-arm64: Support 'mov' instruction
+ tracking
+Message-ID: <ak9LDT7NL2bWTkdv@z2>
+References: <20260701035355.752944-1-wutengda@huaweicloud.com>
+ <20260701035355.752944-18-wutengda@huaweicloud.com>
+ <20260701042109.565541F000E9@smtp.kernel.org>
+ <7cd2afbf-51a6-4c47-8212-87fba14876ce@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/i915/display: Handle struct
- drm_plane_state.ignore_damage_clips
-To: Rodrigo Vivi <rodrigo.vivi@intel.com>,
- =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@intel.com>
-Cc: jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
- tursulin@ursulin.net, airlied@gmail.com, simona@ffwll.ch,
- intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
- Javier Martinez Canillas <javierm@redhat.com>
-References: <20260701130929.234695-1-tzimmermann@suse.de>
- <13f94040-6f6d-4a8e-9581-be769a0e3abb@suse.de> <ak6u1iPEIDulYTnv@intel.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <ak6u1iPEIDulYTnv@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,ursulin.net,gmail.com,ffwll.ch,lists.freedesktop.org,lists.linux.dev,redhat.com];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.com:url,sashiko.dev:url]
-X-Spam-Level: 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7cd2afbf-51a6-4c47-8212-87fba14876ce@huaweicloud.com>
 
-Hi
+On Wed, Jul 01, 2026 at 04:46:02PM +0800, Tengda Wu wrote:
+> 
+> 
+> On 2026/7/1 12:21, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Type state corruption due to DWARF register overloading for the stack pointer (`sp`) and zero registers (`xzr`/`wzr`).
+> > --
+> > 
+> > commit 8b77f0fe5f1ec7e9d14eee63f44f48d6c55f7234
+> > Author: Tengda Wu <wutengda@huaweicloud.com>
+> > 
+> > perf annotate-arm64: Support 'mov' instruction tracking
+> > 
+> > This commit extends update_insn_state() for arm64 to track register-to-register
+> > and immediate-to-register 'mov' instructions. It propagates data type
+> > information or immediate values to the destination register to improve type
+> > inference.
+> > 
+> >> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+> >> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+> >> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+> > 
+> > [ ... ]
+> > 
+> >> +static void update_mov_insn_state(struct type_state *state,
+> >> +				  struct disasm_line *dl,
+> >> +				  struct annotated_op_loc *src,
+> >> +				  struct annotated_op_loc *dst)
+> >> +{
+> > 
+> > [ ... ]
+> > 
+> >> +	if (!has_reg_type(state, sreg) || !state->regs[sreg].ok) {
+> >> +		invalidate_reg_state(tsr);
+> >> +		return;
+> >> +	}
+> >> +
+> >> +	tsr->type = state->regs[sreg].type;
+> > 
+> > [Severity: Medium]
+> > Will this code corrupt the stack pointer's type state if the zero register
+> > (xzr or wzr) is used in a mov instruction?
+> > 
+> > Looking at tools/perf/util/dwarf-regs-arch/dwarf-regs-arm64.c, the function
+> > __get_dwarf_regnum_arm64() maps sp, wzr, and xzr all to DWARF register 31:
+> > 
+> >     if (!strcmp(name, "sp") || !strcmp(name, "wzr") || !strcmp(name, "xzr"))
+> >         return 31;
+> > 
+> > If a zero register is used as a destination (e.g., mov xzr, x0), does its
+> > tracked state overwrite the tracked state of the stack pointer?
+> > 
+> > Conversely, if a zero register is used as a source (e.g., mov x0, xzr),
+> > does the destination register incorrectly inherit the type of the stack
+> > pointer instead of being treated as a constant 0?
+> > 
+> 
+> I'll drop wzr/xzr register support to avoid this confusion.
+ 
+Yep, that'd be right.
 
-Am 08.07.26 um 22:11 schrieb Rodrigo Vivi:
-> On Wed, Jul 08, 2026 at 09:44:05AM +0200, Thomas Zimmermann wrote:
->> gentle reminder to review this patch
-> Ville, could you please take a look on this?
->
-> Thomas, have you seen shashiko for this?
-> https://sashiko.dev/#/patchset/20260701130929.234695-1-tzimmermann%40suse.de
+But I'm curious how we interpret 'mov x0, xzr' when x0 has a pointer
+type.  Maybe intention of the source code is to initialize the pointer
+to NULL, but this function may set it to const 0 and drop the type info.
 
-I've seen it and replied on dri-devel. The rational is that it is kind 
-of intentional.  I looked through i915's atomic_check to find a good 
-common spot for _check_plane_damage(), but neither place seemed to fit 
-well.  Hence as the call is only required for the damage iterator's 
-state,(*) I put it right before where the damage iterator is being 
-used.  But since you mentioned it, I'll take another look at the issue.
-
-
-Best regards
-Thomas
-
-(*) I later want to streamline damage handling as in 
-https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
-
-
->
->> Am 01.07.26 um 15:07 schrieb Thomas Zimmermann:
->>> Git commit 35ed38d58257 ("drm: Allow drivers to indicate the damage
->>> helpers to ignore damage clips") introduced ignore_damage_clips to
->>> selectively ignore damage clipping in certain framebuffer changes. The
->>> mode-setting pipeline can disabled damage clippings for an atomic commit
->>> by setting ignore_damage_clips in struct drm_plane_state. The atomic
->>> commit will then do a full display update.
->>>
->>> Although the i915 driver does not modify the flag, DRM's damage iterator
->>> will soon rely on it. Calling drm_atomic_helper_check_plane_damage() right
->>> before drm_atomic_helper_damage_merged() guarantees that it has the correct
->>> state. The i915 driver does not do this elsewhere so far.
->>>
->>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->>> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
->>> ---
->>> Taken with minor updates to the commit description from the series at
->>>
->>>     https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
->>> ---
->>>    drivers/gpu/drm/i915/display/intel_psr.c | 3 +++
->>>    1 file changed, 3 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
->>> index 92af21d823a3..5a155f60110f 100644
->>> --- a/drivers/gpu/drm/i915/display/intel_psr.c
->>> +++ b/drivers/gpu/drm/i915/display/intel_psr.c
->>> @@ -2949,6 +2949,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
->>>    		src = drm_plane_state_src(&new_plane_state->uapi);
->>>    		drm_rect_fp_to_int(&src, &src);
->>> +		/* Prepare plane-damage state before using it */
->>> +		drm_atomic_helper_check_plane_damage(&state->base, &new_plane_state->uapi);
->>> +
->>>    		if (!drm_atomic_helper_damage_merged(&old_plane_state->uapi,
->>>    						     &new_plane_state->uapi, &damaged_area))
->>>    			continue;
->> -- 
->> --
->> Thomas Zimmermann
->> Graphics Driver Developer
->> SUSE Software Solutions Germany GmbH
->> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
->> GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
->>
->>
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
+Thanks,
+Namhyung
 
