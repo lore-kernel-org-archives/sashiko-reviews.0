@@ -1,204 +1,205 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D615E39A7F5;
-	Thu,  9 Jul 2026 11:55:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783598126; cv=none; b=b2xQN5W7FPhRLuspO7xYoZ/cX2A+Ajd5REOzeGMQU7GCh1t8aMijSWl/FwmXxsiStSMNiOAdjzqpYniBjvMDIzL+hEhMk4enFm3+P3vg6B5x2uveHFch5aPsdzv6KMNm0J8ZsDbcm6HAuqRoOHup8Jw1kDoof6w/i8g7O0gD7+0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783598126; c=relaxed/simple;
-	bh=bCNossEeZ0inwxzXPkoSEYgfKI5nca1J7WOrQta5+ow=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qmYgl/M2g4wzJLWlo2ilgCSde0t7X11GBr/V4uVf5njHuNe4ZLwTTIeeySvE1t8S35DJfz/q40PPt+DcHEljJBnR/nDnndOjxJKY8pgH2yFGwphOG2ubUAp8DjfJrk5Ni+RiYRX4/yll3HJIj9Y9/05EoPonXTMRpULjYUs2HgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=eOxqtakS; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5217141C313
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 11:58:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783598284; cv=pass; b=d1W3f9u/TtEzNU+Q0kDqZvakhhrtljWu3G6BlNQhRUDL1E366WE1gfrufFquxBK42kIJNq/rinXiBJoKiCgi/W7hm4lsopmHrGyrMSsb+b2xzUEh4SYFxPHcsAJMHYpqRgOt8PGPAV649O9v7biIrlMAbCN2q4SFImzpLeDBsQA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783598284; c=relaxed/simple;
+	bh=Zms1S65LsMRFGo2WadrcJ4wjEPu5Dm9PLijmLJn1DUY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fwK8JW1Uncadc9WeSZt+ySyqoruR6nu3cs5FZ8HsA2XXPhzXl6/tDHMndBCqMYgwZvUbps1VFgYUsTTSqKyzwDU2aNFZGUryVswwKLJFEL0xDfAKj4xVLd/j7KGh+5T2PVyzOMdAFDMn1Fi0iOZ7YPCHOTsGdxUxc1Nsl5WU6n0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sartura.hr; spf=pass smtp.mailfrom=sartura.hr; dkim=pass (2048-bit key) header.d=sartura.hr header.i=@sartura.hr header.b=Q94lQuN1; arc=pass smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sartura.hr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sartura.hr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="eOxqtakS"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=ksXUMFlciHDceRDaryNPqxWMMDzzkTmWa9cZy3atTSY=; b=eOxqtakSjpjVlsnI84sOkEbrt8
-	ysi9ZE+0iuCdr4MMDCjqT2UIg/nfYeMB36YEhrMo0UM8r8ibMB/kCBA7Z6yEJpdk2Qyk+wpzx6TIc
-	FT+dPNwDge/8Ow1VcyrNNw4Impwj7CzVvxYBwclk8GShdNGFqe19ULRVqFEpGBegHXPpMQ3FVXgst
-	+swcVCRQqn9ZyIRDysIlQV9tL7cVo2RVrLt6hA6famqwhPIc2QQDeKizS7eHSomdBT4d+UMaRQ+vw
-	Pjc3Wn68mcLg3Oi8jRCDWuTjIbei14n11X/2UCDOAdlDjPTeR1b22qVjD+siX5TDVrazXCzzBu6jw
-	HEH9SmMA==;
-Received: from sslproxy05.your-server.de ([78.46.172.2])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1whnLe-00027s-2v;
-	Thu, 09 Jul 2026 13:55:23 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1whnLe-000FXS-0c;
-	Thu, 09 Jul 2026 13:55:22 +0200
-Message-ID: <b0ebaa8e-108d-451f-a7b2-26810f3d9b03@iogearbox.net>
-Date: Thu, 9 Jul 2026 13:55:22 +0200
+	dkim=pass (2048-bit key) header.d=sartura.hr header.i=@sartura.hr header.b="Q94lQuN1"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c15e2937e9dso95965166b.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 04:58:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783598279; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Hk58mujwKNXt9jd/FnoGySBmEMUT/Halb5FbLY7VwRbIBN5vqYUe37v5vSKGV36g/E
+         Bun30q1rYgDHfT4bVr7RStlt+9s/VHmSTOFRzAyiWazzhTSzymntOO9KFZ3rZek2VFgD
+         rEZqLe7jmBg+71pM9Yah2z+8qDn7mkEo3eYl3lWnLoydJqJIvQrTSYYXGi9siqfys2Jh
+         b8Y7alpHE0z36TfJw8hvxoWJbFzIQfqR5rLmaeC7QsWbtYhopDjNL1Sv7NPxKiRe1jtB
+         gwpOXJf0z8XKQjTYRVzsmLMwpe5tTdje7vEI5aiB6TtgqEi35HMwKy6XboatYJ7VHZNY
+         vPdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=6Lc5fIJ5fx5B/pbye1r+zNH46BLjKugiwBq078pJoIY=;
+        fh=53qvJawqK0TJTsq+MaD47KBMEtgXQmC582XHmZ7TrbI=;
+        b=aoW4Wliu9NJruI55bZuqkn3ADGx09HxKjTPFDOKAg5kEcm3b+B4HVrhFuMgVkBXmgP
+         kLWdUel9hw6QaAnE93K66eH3yYvekMs3wamOoMequRlZuChwPOluYO1pgnDKGEwryZTv
+         LAvU2Sn3fApjCcwRKGKASX3UtSk98Txd1v5ogCVCgaEseurkM86A2yjRsvQYBM32luu8
+         Aa1WDjkjHDVGwvYqAQZcOQ+eKbzgLC5y3EqGgWdbV3xNOD4i1O/Zh6oFjBtWXjA60+3z
+         xQiXDXpKiOY77JDZ5y5WOv1vHb+YLi6I04GtNUcfbdFlPEyqFjHRtjyCeGnX32eZEl0x
+         06xg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura.hr; s=sartura; t=1783598279; x=1784203079; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=6Lc5fIJ5fx5B/pbye1r+zNH46BLjKugiwBq078pJoIY=;
+        b=Q94lQuN1tE+QNsDT58nkZeZx8p6YTd/7TA4MXCskH5MktXbmoL1l2RSU4/x+wxxOI5
+         /8iIl29058pzoTB+W1wLpdmiPZ1bBBqLvEtk8w0X20ZKCbbqzv1YMDk5akkJxibchntS
+         77qTPxnGBHVgPctxiUHHYj8FL4qrwTmgpf2NWuUsA8GenqG4wtHPydqhc8YRiMadyRau
+         8aKXiNO51rVEKHnTTqFopOrO3oqXOT3vw8eQHpy2Wx4qN8+Dlxldf0YtxNCw6UAFhQtr
+         GnCUR67+Z34WrT+F7/PP4JcKxMXLD18gjhqAJVPP3wmMit6L0i5fu+s0C8jJoppBu1cN
+         U8JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783598279; x=1784203079;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6Lc5fIJ5fx5B/pbye1r+zNH46BLjKugiwBq078pJoIY=;
+        b=nnrMSDClAZMlhE1rYla72qzx57CTSMrLu0dgKtvKrxTrc7UlMWGFaQ/IIOhUW+XPQt
+         5rCFM3aZTMRGT4PI0z+7r/SQEWskgLMbUSqO9Rs9V0+lCIAj1EBm5omXTkXhdGiSm7dl
+         nv9R5ZA+/uvicYaz3Ii8kwWsKuaYTQwVtMeGM1ZA0IIr36PZzYp1OfcBuQdKitA8oHSB
+         19qNBKRyHLe36HhEjbzX4qM3BJaoPUYMbfYnM14V49Oj2MlUle+PJm8BvOPQtj8jXDUN
+         /aq3fyoW7qX5G/Pl5ZDZr1gsbcTArD8mPTEHweXgkTa5HU24VmmhaKgp6x5H0+afPL9a
+         Fxbg==
+X-Gm-Message-State: AOJu0YyJWRmO1ECLEryrXWlXvoHLyiaCKR2lFs3GfUkBw2B9Dp8xIfmK
+	4ol2m936sLm4ayy9K/BbhLPrskCqVdHYsH1OFhOhdZPCkx04aTPkJSRLM+Xagsgc/4AzI7MCl44
+	6TSzi3lVtDxjeyKEoBV77PaVUQBNLkcRuLkWr8+rJbd55P+iMcxbR
+X-Gm-Gg: AfdE7cl+MyP4+VnDG0ZT7xyesYBLFiX+bXIuO2J15/2KVkO+2G+D0xh7E+sDnhhlFqn
+	YIgXFR9Qm1/MxZhB8KAC0indXfwGxztOcDX974ugB00eh55MDExZ1dQ7ZA1f2boTIRA/g7PkNnr
+	uc6CZzRA632C2QASLNCK9YTc9C10glfTjMsJqFAY7Hq73dlCO/KXidyPRiAIPQza3KDEb85P9m5
+	IzLIqmoZMr5NwM25ULgOwMfNAjOiiScZ7Kieb89Zcpv9uHZMXk44NiExUpjlp9eLx/KRblKcxEQ
+	UINkevcvByOVp3biAO5Kg+NsytPmR//eK7e3lB7+QdpBGpBD5m8=
+X-Received: by 2002:a17:906:8d8d:b0:c15:cd54:e026 with SMTP id
+ a640c23a62f3a-c15ce144f5cmr335284266b.31.1783598278968; Thu, 09 Jul 2026
+ 04:57:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf] bpf: fix UAF in sock clone early bailouts
-To: sashiko-reviews@lists.linux.dev, Matt Bobrowski <mattbobrowski@google.com>
-Cc: bpf@vger.kernel.org, Kuniyuki Iwashima <kuniyu@google.com>
-References: <20260709025316.999913-1-mattbobrowski@google.com>
- <20260709032007.9E4D61F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- xsFNBGNAkI0BEADiPFmKwpD3+vG5nsOznvJgrxUPJhFE46hARXWYbCxLxpbf2nehmtgnYpAN
- 2HY+OJmdspBntWzGX8lnXF6eFUYLOoQpugoJHbehn9c0Dcictj8tc28MGMzxh4aK02H99KA8
- VaRBIDhmR7NJxLWAg9PgneTFzl2lRnycv8vSzj35L+W6XT7wDKoV4KtMr3Szu3g68OBbp1TV
- HbJH8qe2rl2QKOkysTFRXgpu/haWGs1BPpzKH/ua59+lVQt3ZupePpmzBEkevJK3iwR95TYF
- 06Ltpw9ArW/g3KF0kFUQkGXYXe/icyzHrH1Yxqar/hsJhYImqoGRSKs1VLA5WkRI6KebfpJ+
- RK7Jxrt02AxZkivjAdIifFvarPPu0ydxxDAmgCq5mYJ5I/+BY0DdCAaZezKQvKw+RUEvXmbL
- 94IfAwTFA1RAAuZw3Rz5SNVz7p4FzD54G4pWr3mUv7l6dV7W5DnnuohG1x6qCp+/3O619R26
- 1a7Zh2HlrcNZfUmUUcpaRPP7sPkBBLhJfqjUzc2oHRNpK/1mQ/+mD9CjVFNz9OAGD0xFzNUo
- yOFu/N8EQfYD9lwntxM0dl+QPjYsH81H6zw6ofq+jVKcEMI/JAgFMU0EnxrtQKH7WXxhO4hx
- 3DFM7Ui90hbExlFrXELyl/ahlll8gfrXY2cevtQsoJDvQLbv7QARAQABzSZEYW5pZWwgQm9y
- a21hbm4gPGRhbmllbEBpb2dlYXJib3gubmV0PsLBkQQTAQoAOxYhBCrUdtCTcZyapV2h+93z
- cY/jfzlXBQJjQJCNAhsDBQkHhM4ACAsJCAcNDAsKBRUKCQgLAh4BAheAAAoJEN3zcY/jfzlX
- dkUQAIFayRgjML1jnwKs7kvfbRxf11VI57EAG8a0IvxDlNKDcz74mH66HMyhMhPqCPBqphB5
- ZUjN4N5I7iMYB/oWUeohbuudH4+v6ebzzmgx/EO+jWksP3gBPmBeeaPv7xOvN/pPDSe/0Ywp
- dHpl3Np2dS6uVOMnyIsvmUGyclqWpJgPoVaXrVGgyuer5RpE/a3HJWlCBvFUnk19pwDMMZ8t
- 0fk9O47HmGh9Ts3O8pGibfdREcPYeGGqRKRbaXvcRO1g5n5x8cmTm0sQYr2xhB01RJqWrgcj
- ve1TxcBG/eVMmBJefgCCkSs1suriihfjjLmJDCp9XI/FpXGiVoDS54TTQiKQinqtzP0jv+TH
- 1Ku+6x7EjLoLH24ISGyHRmtXJrR/1Ou22t0qhCbtcT1gKmDbTj5TcqbnNMGWhRRTxgOCYvG0
- 0P2U6+wNj3HFZ7DePRNQ08bM38t8MUpQw4Z2SkM+jdqrPC4f/5S8JzodCu4x80YHfcYSt+Jj
- ipu1Ve5/ftGlrSECvy80ZTKinwxj6lC3tei1bkI8RgWZClRnr06pirlvimJ4R0IghnvifGQb
- M1HwVbht8oyUEkOtUR0i0DMjk3M2NoZ0A3tTWAlAH8Y3y2H8yzRrKOsIuiyKye9pWZQbCDu4
- ZDKELR2+8LUh+ja1RVLMvtFxfh07w9Ha46LmRhpCzsFNBGNAkI0BEADJh65bNBGNPLM7cFVS
- nYG8tqT+hIxtR4Z8HQEGseAbqNDjCpKA8wsxQIp0dpaLyvrx4TAb/vWIlLCxNu8Wv4W1JOST
- wI+PIUCbO/UFxRy3hTNlb3zzmeKpd0detH49bP/Ag6F7iHTwQQRwEOECKKaOH52tiJeNvvyJ
- pPKSKRhmUuFKMhyRVK57ryUDgowlG/SPgxK9/Jto1SHS1VfQYKhzMn4pWFu0ILEQ5x8a0RoX
- k9p9XkwmXRYcENhC1P3nW4q1xHHlCkiqvrjmWSbSVFYRHHkbeUbh6GYuCuhqLe6SEJtqJW2l
- EVhf5AOp7eguba23h82M8PC4cYFl5moLAaNcPHsdBaQZznZ6NndTtmUENPiQc2EHjHrrZI5l
- kRx9hvDcV3Xnk7ie0eAZDmDEbMLvI13AvjqoabONZxra5YcPqxV2Biv0OYp+OiqavBwmk48Z
- P63kTxLddd7qSWbAArBoOd0wxZGZ6mV8Ci/ob8tV4rLSR/UOUi+9QnkxnJor14OfYkJKxot5
- hWdJ3MYXjmcHjImBWplOyRiB81JbVf567MQlanforHd1r0ITzMHYONmRghrQvzlaMQrs0V0H
- 5/sIufaiDh7rLeZSimeVyoFvwvQPx5sXhjViaHa+zHZExP9jhS/WWfFE881fNK9qqV8pi+li
- 2uov8g5yD6hh+EPH6wARAQABwsF8BBgBCgAmFiEEKtR20JNxnJqlXaH73fNxj+N/OVcFAmNA
- kI0CGwwFCQeEzgAACgkQ3fNxj+N/OVfFMhAA2zXBUzMLWgTm6iHKAPfz3xEmjtwCF2Qv/TT3
- KqNUfU3/0VN2HjMABNZR+q3apm+jq76y0iWroTun8Lxo7g89/VDPLSCT0Nb7+VSuVR/nXfk8
- R+OoXQgXFRimYMqtP+LmyYM5V0VsuSsJTSnLbJTyCJVu8lvk3T9B0BywVmSFddumv3/pLZGn
- 17EoKEWg4lraXjPXnV/zaaLdV5c3Olmnj8vh+14HnU5Cnw/dLS8/e8DHozkhcEftOf+puCIl
- Awo8txxtLq3H7KtA0c9kbSDpS+z/oT2S+WtRfucI+WN9XhvKmHkDV6+zNSH1FrZbP9FbLtoE
- T8qBdyk//d0GrGnOrPA3Yyka8epd/bXA0js9EuNknyNsHwaFrW4jpGAaIl62iYgb0jCtmoK/
- rCsv2dqS6Hi8w0s23IGjz51cdhdHzkFwuc8/WxI1ewacNNtfGnorXMh6N0g7E/r21pPeMDFs
- rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
- DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
- owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
-In-Reply-To: <20260709032007.9E4D61F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28055/Thu Jul  9 08:25:20 2026)
+References: <20260709112006.390742-1-robert.marko@sartura.hr>
+ <20260709112006.390742-6-robert.marko@sartura.hr> <20260709115011.D920B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260709115011.D920B1F000E9@smtp.kernel.org>
+From: Robert Marko <robert.marko@sartura.hr>
+Date: Thu, 9 Jul 2026 13:57:46 +0200
+X-Gm-Features: AUfX_myDvdrO3OyQghqyuoWYPe5PO0-J0F84lshRH-WnbjqKgWEOiROjSluu8z4
+Message-ID: <CA+HBbNF2t4GKEJCDRHh5wMxRTK4hXugPcoX0P-Utt1N34E6j4A@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] arm64: dts: microchip: lan969x: add QSPI nodes
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Matt, hi Kuniyuki,
+On Thu, Jul 9, 2026 at 1:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The `qspi2` node is missing `dmas` and `dma-names` properties =
+(unlike `qspi0`), which degrades performance to PIO mode and causes the atm=
+el-quadspi driver to log a spurious error during probe.
+> --
+>
+> --- Patch [5]: [PATCH v2 5/5] arm64: dts: microchip: lan969x: add QSPI no=
+des ---
+> commit 297e92dccc7e525621a995eb1402956ad591b3bf
+> Author: Robert Marko <robert.marko@sartura.hr>
+>
+> arm64: dts: microchip: lan969x: add QSPI nodes
+>
+> This commit adds device tree nodes for both QSPI controllers on the Micro=
+chip
+> LAN969x SoC. It configures base addresses, interrupts, and clocks for the
+> controllers.
+>
+> > diff --git a/arch/arm64/boot/dts/microchip/lan9691.dtsi b/arch/arm64/bo=
+ot/dts/microchip/lan9691.dtsi
+> > index ed997d87dd09f..a8541c6a098d1 100644
+> > --- a/arch/arm64/boot/dts/microchip/lan9691.dtsi
+> > +++ b/arch/arm64/boot/dts/microchip/lan9691.dtsi
+>
+> [ ... ]
+>
+> > @@ -396,6 +396,39 @@ clks: clock-controller@e00c00b4 {
+> >                       clock-names =3D "cpu", "ddr", "sys";
+> >               };
+> >
+> > +             qspi0: spi@e0804000 {
+> > +                     compatible =3D "microchip,lan9691-qspi";
+>
+> [ ... ]
+>
+> > +                     dmas =3D <&dma AT91_XDMAC_DT_PERID(1)>,
+> > +                            <&dma AT91_XDMAC_DT_PERID(0)>;
+> > +                     dma-names =3D "tx", "rx";
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +                     status =3D "disabled";
+> > +             };
+> > +
+> > +             qspi2: spi@e0834000 {
+> > +                     compatible =3D "microchip,lan9691-qspi";
+> > +                     reg =3D <0xe0834000 0x00000100>,
+> > +                           <0x30000000 0x04000000>;
+> > +                     reg-names =3D "qspi_base", "qspi_mmap";
+> > +                     interrupts =3D <GIC_SPI 66 IRQ_TYPE_LEVEL_HIGH>;
+> > +                     clocks =3D <&fabric_clk>, <&clks GCK_ID_QSPI2>;
+> > +                     clock-names =3D "pclk", "gclk";
+> > +                     assigned-clocks =3D <&clks GCK_ID_QSPI2>;
+> > +                     assigned-clock-rates =3D <100000000>;
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +                     status =3D "disabled";
+> > +             };
+>
+> [Severity: Medium]
+> Is it intentional that qspi2 is missing the dmas and dma-names properties=
+?
+>
+> During probe, the atmel-quadspi driver unconditionally checks for dma sin=
+ce
+> aq->caps->has_dma is true for LAN969x compatible strings, and then calls
+> atmel_qspi_dma_init().
+>
+> Without the dmas property present here, devm_dma_request_chan() returns
+> -ENODEV. The driver handles this with dev_err_probe(), which emits a
+> kernel error log ('error -ENODEV: RX DMA channel is not available') becau=
+se
+> it is not -EPROBE_DEFER.
+>
+> The controller will then fall back to pio mode, degrading performance.
+>
+> If the hardware supports dma for qspi2, should these properties be added?
+> If it does not, should the driver be updated to avoid unconditionally set=
+ting
+> has_dma to true for all instances?
 
-On 7/9/26 5:20 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] BPF map corruption via shallow-copied sk_user_data and sk_reuseport_cb during sk_clone early bailouts.
-> - [High] Unbalanced decrement of global network timestamp static key during sk_clone early bailouts.
+The datasheet is quite conflicting for QSPI2, as it sometimes
+references QSPI0 and QSPI2,
+but then sometimes references QPSI0 and QSPI1.
 
-Do either one of you also have a chance to look into these?
+DMA lists channels 17 and 18 for QSPI2, but it also lists 15 and 16
+for QSPI1, which does not exist.
+So, I will drop QSPI2 node in v3 until its clear which DMA channels are cor=
+rect.
 
-Thanks a lot,
-Daniel
+Regards,
+Robert
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709112006.39=
+0742-1-robert.marko@sartura.hr?part=3D5
 
-> --- Patch [1]: [PATCH bpf] bpf: fix UAF in sock clone early bailouts ---
-> commit 81577dfc9f1b10000a3b1dfc19a5b577e986ec33
-> Author: Matt Bobrowski <mattbobrowski@google.com>
-> 
-> bpf: fix UAF in sock clone early bailouts
-> 
-> This commit fixes a use-after-free on parent socket's BPF local storage
-> caused by an early bailout in sk_clone() prior to clearing
-> newsk->sk_bpf_storage. By resetting newsk->sk_bpf_storage to NULL
-> immediately after sock_copy(), the deallocation path won't destroy the
-> parent socket's storage.
-> 
->> diff --git a/net/core/sock.c b/net/core/sock.c
->> index 8a59bfaa8096e..498a57f34f5b5 100644
->> --- a/net/core/sock.c
->> +++ b/net/core/sock.c
->> @@ -2492,6 +2492,9 @@ struct sock *sk_clone(const struct sock *sk, const gfp_t priority,
->>   	sock_copy(newsk, sk);
->>   
->>   	newsk->sk_prot_creator = prot;
->> +#ifdef CONFIG_BPF_SYSCALL
->> +	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
->> +#endif
-> 
-> [Severity: High]
-> This is a pre-existing issue, but I noticed there might be a similar issue
-> with sk_reuseport_cb and sk_user_data. Since sock_copy() does a shallow
-> copy, newsk initially points to the parent's sk_reuseport_cb and
-> sk_user_data.
-> 
-> If sk_clone() bails out early (e.g., sk_filter_charge() fails):
-> 
-> net/core/sock.c:sk_clone() {
->      ...
->      if (unlikely(!is_charged || xfrm_sk_clone_policy(newsk, sk))) {
->          ...
->          goto free;
->      }
-> 
->      RCU_INIT_POINTER(newsk->sk_reuseport_cb, NULL);
->      ...
-> }
-> 
-> The bailout happens before sk_reuseport_cb is cleared. When newsk is freed,
-> bpf_sk_reuseport_detach() can follow the copied sk_user_data to the parent's
-> BPF map slot and write NULL to it:
-> 
-> kernel/bpf/reuseport_array.c:bpf_sk_reuseport_detach() {
->      ...
->      RCU_INIT_POINTER(*socks, NULL);
->      ...
-> }
-> 
-> Does this corrupt the parent socket's BPF map during early bailouts?
-> 
-> 
-> [Severity: High]
-> This is also a pre-existing issue, but could the same early bailout pattern
-> cause an unbalanced decrement of the global network timestamp static key?
-> 
-> sock_copy() copies SK_FLAGS_TIMESTAMP into newsk->sk_flags. The global
-> timestamp counter is only incremented at the end of sk_clone():
-> 
-> net/core/sock.c:sk_clone() {
->      ...
->      if (sock_needs_netstamp(sk) && newsk->sk_flags & SK_FLAGS_TIMESTAMP)
->          net_enable_timestamp();
-> }
-> 
-> However, during destruction of the aborted clone, the global counter is
-> decremented unconditionally because the copied flag was set:
-> 
-> net/core/sock.c:__sk_destruct() {
->      ...
->      sock_disable_timestamp(sk, SK_FLAGS_TIMESTAMP);
->      ...
-> }
-> 
-> Could an early bailout skip the net_enable_timestamp() call but still
-> execute the sock_disable_timestamp() call on free, leading to an underflow?
-> 
->>   	/* SANITY */
->>   	if (likely(newsk->sk_net_refcnt)) {
-> 
 
+
+--=20
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura d.d.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
