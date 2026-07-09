@@ -1,212 +1,230 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEE4406298;
-	Thu,  9 Jul 2026 10:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3419C3BB69E
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 10:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783592665; cv=none; b=ErfTaTSidNJMvOTZvhvrAAD0/I1/oSOvkHBj9yFPwxVplAkg+0TPpLgI0JrrPuX3oHocuxkmBdyUjfOG6DclTS3AG46CuYvDSqYcsVphXxU3G0X+R8nK1m1CYu5x1Uv/88+1Nn/XSHI0vCaOBFQaR96GC3MuffQTyhz3Dp/Hvoo=
+	t=1783593519; cv=none; b=nOgSnkNLfXh7Z2rJoNRGZjAarHlX5WzqsymhdM4XINAFEFqrmSOEeIyiKWm51xktPoOhMmKEbwYuNdFLPenXLqLTAL2rUzbP8oB7N4gkC22daVJJrIYXHoTXyVs5SPRziMCj3UaVzMeiJ7E0Fn14xeD1wb9n3gcUiE8MKuVQfvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783592665; c=relaxed/simple;
-	bh=4h5mJm6hzXmHp3RMShR5nDRhQzyUTAhBQ/DhB6jv82c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y3a34v5YBL6vg+CtMWrYBiyB0Tf2/HqW8rf4LJH7F6Jm3pbsmmvucOry5Sd9VJtqNaKb/911N/wMxGoMqrlQmhFp88KW7Bb0Xw/vBGNurQRokSEJ3XEfHz6aXSPH7s6xGnRY8GCXNZBet+DqwfoweaAU3mf6QCXO6Og4ZwgWa/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z29wM9ql; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1783593519; c=relaxed/simple;
+	bh=Qwtf4ccwYTwQOQzfK/oVmuZJKfefMr/I8LVYVxuMJAw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EKAE3lnueOxQxABsbpzC83gqi3/CIW9sDOeNNDDCD44De+uRQqK2oZtECCCfJbQltMD9zQtgsqCnQiD+aQBax4BCr4MnvyyVipYCRITg05ugb9sk7kW3qJ0b1CTq0jwl4iZa/Y7M/AdggZG1K5bxWUz/cTeikaBVavwAt8YfrmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qYMB4Rg/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=I0+b0een; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qYMB4Rg/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=I0+b0een; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z29wM9ql"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 45769C2BCFD;
-	Thu,  9 Jul 2026 10:24:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783592665;
-	bh=4h5mJm6hzXmHp3RMShR5nDRhQzyUTAhBQ/DhB6jv82c=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Z29wM9qlAjFOTuvemhruLIDJLNcQxdv086TRTw6XEx8JcgRX1b2hjDjMo+ATbIlap
-	 wrMOWQeHydFx0rwPNj+KRq2PS1KDU9TUM/PLcFe2AQA5WgrV4hnAGYuL2lzZ5lkF5f
-	 KI+11kjDUkL+pbEsTLIaYpnm5OCnUPc/T9o/ducr0WyL+PV4lkuFDb9CPQFDNH9PR5
-	 x3NcmlsAjdtWxGwKk7RtHDC1DRFX6udXAsEF6NnjY0uVsx+wm4waxTF7TbeENxP3y/
-	 weEJ91qy69WK0OIbeurL50YxXcAVoEq4EncY9kXplro30jH8dxqe7pvVMyjNs1KIAU
-	 HGuo1JAJ4l6jg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 357CBC44501;
-	Thu,  9 Jul 2026 10:24:25 +0000 (UTC)
-From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
-Date: Thu, 09 Jul 2026 12:24:19 +0200
-Subject: [PATCH v10 05/10] can: bcm: add missing rcu list annotations and
- operations
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qYMB4Rg/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="I0+b0een";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qYMB4Rg/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="I0+b0een"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 84B9475DE2;
+	Thu,  9 Jul 2026 10:38:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783593514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
+	b=qYMB4Rg/E/PGQh8R7sJE21IYhsHhKCMd+WRMPu9r4D5Ud7iQNdAVCDFXQpQRSmSJhAvLxq
+	mUZj4055sud8qZTUSx7Tujm9nZ5DIJimtwog7Sa4H6eq9yJt5gpr0AflcO2PeCMedqcbQ4
+	+wyz7LfXrBOoUGlHaKyG3Plh5vn77cw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783593514;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
+	b=I0+b0eenEVSuA3Vw6T8MnCoCIsofGZhD0yjpq/oKa+tPHEqEAoBMUUY5YCC8DmorPiq/rA
+	on2lhCZOaRzlBGDQ==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="qYMB4Rg/";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=I0+b0een
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783593514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
+	b=qYMB4Rg/E/PGQh8R7sJE21IYhsHhKCMd+WRMPu9r4D5Ud7iQNdAVCDFXQpQRSmSJhAvLxq
+	mUZj4055sud8qZTUSx7Tujm9nZ5DIJimtwog7Sa4H6eq9yJt5gpr0AflcO2PeCMedqcbQ4
+	+wyz7LfXrBOoUGlHaKyG3Plh5vn77cw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783593514;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=L493yZbr3FFd10kdHky1d7DoWV2+T+AsELyPBhE49So=;
+	b=I0+b0eenEVSuA3Vw6T8MnCoCIsofGZhD0yjpq/oKa+tPHEqEAoBMUUY5YCC8DmorPiq/rA
+	on2lhCZOaRzlBGDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 65FC7779AA;
+	Thu,  9 Jul 2026 10:38:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id woyfFip6T2pSBwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jul 2026 10:38:34 +0000
+Message-ID: <5408cc9a-fca1-4af4-a915-f55290bfa02c@suse.de>
+Date: Thu, 9 Jul 2026 12:38:33 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-bcm_fixes-v10-5-57fff38e34ce@hartkopp.net>
-References: <20260709-bcm_fixes-v10-0-57fff38e34ce@hartkopp.net>
-In-Reply-To: <20260709-bcm_fixes-v10-0-57fff38e34ce@hartkopp.net>
-To: linux-can@vger.kernel.org
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, sashiko-reviews@lists.linux.dev
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783592663; l=5017;
- i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
- bh=BJJNQrapkqOpAXJaDkWSoW6xFx0Y1A2VpasMRfEZLk4=;
- b=ABMDcfwdOIeEHCMkJqVBDp0+aipSPV+yCJIW4P5X72YWGZb5hDMmsVIKHx+MvoKx8a8aw8XLE
- XX4Khm9gn7nB5D0J4fIEqnAPnAnz89R0Q1P5oZMG765oZzRl3YUMEZ8
-X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
- pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
-X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
- auth_id=620
-X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
-Reply-To: socketcan@hartkopp.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] drm: Implement struct
+ vga_switcheroo_client_ops.pre_switch
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260709092215.168172-1-tzimmermann@suse.de>
+ <20260709092215.168172-6-tzimmermann@suse.de>
+ <20260709093629.4FF0E1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260709093629.4FF0E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 84B9475DE2
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_TLS_ALL(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	ARC_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url];
+	RCPT_COUNT_TWO(0.00)[2];
+	MIME_TRACE(0.00)[0:+];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+Am 09.07.26 um 11:36 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] `vga_switcheroo_client_fb_set()` and the `fb_info` field in `struct vga_switcheroo_client` are orphaned and remain as dead code.
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+Patch 7 cleans them up.
 
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
----
- net/can/bcm.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 38c3f690c1cd..940cd9df1cca 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -263,11 +263,11 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- 
- 		seq_printf(m, "%s%ld%%\n",
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
- 
- 		if (op->flags & CAN_FD_FRAME)
-@@ -1007,10 +1007,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			int ifindex, struct sock *sk)
- {
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
- 	/* we need a real device to send frames */
- 	if (!ifindex)
-@@ -1148,12 +1149,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 		/* currently unused in tx_ops */
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
- 	if (op->flags & SETTIMER) {
- 		/* set timer values */
-@@ -1171,10 +1171,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_cancel(&op->timer);
- 		/* spec: send CAN frame when starting timer */
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op, NULL);
- 
- 	if (op->flags & STARTTIMER)
- 		bcm_tx_start_timer(op);
-@@ -1355,13 +1359,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
- 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1429,14 +1430,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
- 					      REGMASK(op->can_id),
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
- }
- 
-@@ -1766,12 +1769,14 @@ static int bcm_release(struct socket *sock)
- 	/* remove procfs entry */
- 	if (net->can.bcmproc_dir && bo->bcm_proc_read)
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
- 		 * Don't care if we're bound or not (due to netdev problems)
- 		 * can_rx_unregister() is always a save thing to do here.
-@@ -1798,12 +1803,14 @@ static int bcm_release(struct socket *sock)
- 
- 	}
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
- 		WRITE_ONCE(bo->bound, 0);
- 		bo->ifindex = 0;
+> --
+>
+> --- Patch [5]: [PATCH v2 5/7] drm: Implement struct vga_switcheroo_client_ops.pre_switch ---
+> commit d5ba75db20f40c6dde86b90da7c25acad6f23b57
+> Author: Thomas Zimmermann <tzimmermann@suse.de>
+>
+> drm: Implement struct vga_switcheroo_client_ops.pre_switch
+>
+> This commit implements the pre_switch callback for vga_switcheroo in amdgpu,
+> i915, nouveau, and radeon drivers. It pushes fbcon updates from vga_switcheroo
+> into DRM's fbdev emulation and removes calls to vga_switcheroo_client_fb_set()
+> from fbcon to prevent deadlocks.
+>
+>> diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+>> index 9f5c4c101581d..974c7dcf52514 100644
+>> --- a/drivers/video/fbdev/core/fbcon.c
+>> +++ b/drivers/video/fbdev/core/fbcon.c
+> [ ... ]
+>> @@ -2987,10 +2983,6 @@ static int do_fb_registered(struct fb_info *info)
+>>   		}
+>>   	}
+>>   
+>> -	/* Set the fb info for vga_switcheroo clients. Does nothing otherwise. */
+>> -	if (info->device && dev_is_pci(info->device))
+>> -		vga_switcheroo_client_fb_set(to_pci_dev(info->device), info);
+>> -
+> [Severity: Low]
+> With the removal of these calls from fbcon, are there any remaining users of
+> vga_switcheroo_client_fb_set()?
+>
+> It looks like the exported function in drivers/gpu/vga/vga_switcheroo.c is
+> now completely unused:
+>
+> void vga_switcheroo_client_fb_set(struct pci_dev *pdev,
+> 				 struct fb_info *info)
+> {
+> 	struct vga_switcheroo_client *client;
+>
+> 	mutex_lock(&vgasr_mutex);
+> 	client = find_client_from_pci(&vgasr_priv.clients, pdev);
+> 	if (client)
+> 		client->fb_info = info;
+> 	mutex_unlock(&vgasr_mutex);
+> }
+> EXPORT_SYMBOL(vga_switcheroo_client_fb_set);
+>
+> Because client->fb_info is never populated, does this also leave dead code
+> in vga_switchto_stage2() where it checks for the fallback?
+>
+> #if defined(CONFIG_FB)
+> 	else if (new_client->fb_info)
+> 		fb_switch_outputs(new_client->fb_info);
+> #endif
+>
+> Would it make sense to remove the orphaned vga_switcheroo_client_fb_set()
+> function, the fb_info field in struct vga_switcheroo_client, and the
+> unreachable fallback block to complete the cleanup?
+>
+>>   	return ret;
+>>   }
 
 -- 
-2.53.0
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
 
 
