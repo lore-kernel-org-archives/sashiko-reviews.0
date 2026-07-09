@@ -1,111 +1,165 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2E13CC7D8
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 06:30:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839CA3D0BFB;
+	Thu,  9 Jul 2026 06:31:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783578614; cv=none; b=rHRHBhXaiJo8DmCWmAKxZGBLHR7r36vuod5mhSHJChcUBlVjRCetFuOJ/r7haC1Un4xgPhbSqxOtW4cs2Hn1yaRQK9A2lFZspIG7G1T1X6G4LBsiGQ0GBhvks63QQ2bBIvxy7R+XjIyrSvPMMyB2c4Y7amu8P545TptGR2Fzx/E=
+	t=1783578679; cv=none; b=K9sdHOLe/OBg8c2SebCh1jRZQTVS753HtmD97hcOJDGQB/e9PqPWiJk2q6lWHMdSEohB+ZhUoHaU/FOZx+yOBwjoX+GYzGCPU7aU1rIJ/Zi0Z0yp7K1UrGQWbbPLlovIhGh0FZM6sVJBYvZBYZhFm2bslbO2gf/g+3SXdFG8LAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783578614; c=relaxed/simple;
-	bh=FmY1GURxHdlYEjzLC5TgEviPahh+J6k3G05i9GoPPcc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=t134su/xWsfq01r0e9wzPmtAA4MBZacb5n4cO0GuuZfiDx0P7Ahnn+88qS+KM9gmrJocYJlzPzI9lE9G1z9liMvQnLfmvh5dBKsuwsRGc+oHHCzpbptJNyUyeMMO/+uTgP4JuKQych8stFXIt/d9jmltCZbgG+Bxq0LSdITK+xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Hg6hQAJh; arc=none smtp.client-ip=117.135.210.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1783578679; c=relaxed/simple;
+	bh=lLkL0NxPUHqBmph0qy84Ge/mM4CGIqnRoPdohQhSn4M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lJVnTHW3CaujcvsvbTUjLfheUQA6unxxJgFQicrZ4u3CLRMyOG5h0iJ4HMSExmzJbxqvGOQeYzKo9NfiDOe8KV1kDXlcs/5cvAqTlnltlCBbGEf0lk9FqUMimSHEarzA2VPlD4ZFaOOmXAjRsnouZ1lJrlPv0fFfI22pKdzcncg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fL6A9Rbz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Hg6hQAJh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=FmY1GURxHdlYEjzLC5TgEviPahh+J6k3G05i9GoPPcc=; b=H
-	g6hQAJhezCC5MzHZ6dWbjk5OX356eOavB+vzoCyvQ1i3IE7B9pRyXOpX68eZbwwN
-	2U2mNjW04wq+A9JblrnRKJraMAE62nrL9VlZG/Vgf55sJRp7wSWdFI4x3Eu0tjjA
-	ZC5p0LTdXAQsRcJ4Is2H4XFcfp6S2b2Fi6iZtRDwQg=
-Received: from kensanya$163.com ( [116.128.244.171] ) by
- ajax-webmail-wmsvr-40-126 (Coremail) ; Thu, 9 Jul 2026 14:29:57 +0800 (CST)
-Date: Thu, 9 Jul 2026 14:29:57 +0800 (CST)
-From: kensanya  <kensanya@163.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Subject: Re:Re: [PATCH] target/stat: implement scsiPortBusyStatuses counter
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <20260708095722.A8E8C1F000E9@smtp.kernel.org>
-References: <20260708093433.838647-1-kensanya@163.com>
- <20260708095722.A8E8C1F000E9@smtp.kernel.org>
-X-NTES-SC: AL_Qu2TAfmct00i4SGdbOkcnkcTg+k8WMW1ufsg2Ydec8wEnB7m9hkNe3VsEnvs/+O1ASqpjzuPcSJl8eZwXoNhyzs8FfdDbdQRxgLY1ZO4Fw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fL6A9Rbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E13C1F000E9;
+	Thu,  9 Jul 2026 06:31:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783578678;
+	bh=KVJwuhlHvCDuJa9PR+rRLEyjKK5uhjQqGp5xXlj+GkU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fL6A9Rbzu3JEZwyXs34vfUKAlZmFQJXUZzmQyAN1bvih6rgLhP2GdEEYQDuvb5Yrk
+	 CwCGB9jq/hUqQjsavNftVviCVNEcoMD42EjOKyb/rZn9zsDlyWe6de6ExZ7tM8uic7
+	 w+VO8pb6ij39dnMjuoeAjHDsCtdVdY/8+O9n5Tl9WVEUSJ3w3L0AeLyESLIGB+wRcz
+	 1FlBJU/egGh+65IcDm+NiR6bIkYamGGJscijz+DIamqwJ1W18u2UUJi9Ig1jB7gYYm
+	 ftG7OJCDplcf4SUNfgfoqfmvSByo0HKpVhhAV94L+vsjAxg6R9GlcbsIdKUzVEw8zm
+	 p0T/SlprOhPIw==
+Date: Wed, 8 Jul 2026 23:31:16 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: Tengda Wu <wutengda@huaweicloud.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v3 08/21] perf annotate: Introduce extract_op_location
+ callback for arch-specific parsing
+Message-ID: <ak9ANIuZLqWvAJWa@z2>
+References: <20260701035355.752944-1-wutengda@huaweicloud.com>
+ <20260701035355.752944-9-wutengda@huaweicloud.com>
+ <20260701040647.A23771F00A3A@smtp.kernel.org>
+ <2da387b1-ff15-4d7a-9cfe-062a9aa55368@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <786c67ad.4bd4.19f4591972e.Coremail.kensanya@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:figvCgDnn13mP09qv5QaAA--.220W
-X-CM-SenderInfo: 5nhq2txq1dqiywtou0bp/xtbCwgZ3U2pPP+bixwAA35
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2da387b1-ff15-4d7a-9cfe-062a9aa55368@huaweicloud.com>
 
-CgoKCgoKCgoKCgoKCgoKCgpBdCAyMDI2LTA3LTA4IDE3OjU3OjIyLCBzYXNoaWtvLWJvdEBrZXJu
-ZWwub3JnIHdyb3RlOgo+VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBB
-SSByZXZpZXcgZm91bmQgMiBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6Cj4tIFtIaWdo
-XSBBY2Nlc3NpbmcgYGNtZGAgYWZ0ZXIgY2FsbGluZyBgcXVldWVfc3RhdHVzKClgIGNhbiBjYXVz
-ZSBhIFVzZS1BZnRlci1GcmVlLCBhcyB0aGUgY29tbWFuZCBtYXkgYmUgY29tcGxldGVkIGFuZCBm
-cmVlZCBhc3luY2hyb25vdXNseSBieSB0aGUgZmFicmljIGRyaXZlci4KPi0gW01lZGl1bV0gVGhl
-IGBzY3NpUG9ydEJ1c3lTdGF0dXNlc2AgaW1wbGVtZW50YXRpb24gb25seSB0cmFja3MgYFNBTV9T
-VEFUX0JVU1lgLCB2aW9sYXRpbmcgUkZDIDQ0NTUuCj4tLQo+Cj4tLS0gUGF0Y2ggWzFdOiBbUEFU
-Q0hdIHRhcmdldC9zdGF0OiBpbXBsZW1lbnQgc2NzaVBvcnRCdXN5U3RhdHVzZXMgY291bnRlciAt
-LS0KPmNvbW1pdCAwZTQ4MTkyYzdkMzQyYjIyODgxZWNiMGRlZTQ0NmFlMjg3ZTI0NjA3Cj5BdXRo
-b3I6IFRhblpoZW5nIDx0YW56aGVuZ0BreWxpbm9zLmNuPgo+Cj50YXJnZXQvc3RhdDogaW1wbGVt
-ZW50IHNjc2lQb3J0QnVzeVN0YXR1c2VzIGNvdW50ZXIKPiAgICAKPkltcGxlbWVudCBSRkMgNDQ1
-NSBzY3NpUG9ydEJ1c3lTdGF0dXNlcyAoQ29uZmlnRlMgYnVzeV9jb3VudCkgYnkgYWRkaW5nIGEK
-PnBlci1DUFUgYnVzeV9zdGF0dXNlcyBjb3VudGVyIHRvIHNjc2lfcG9ydF9zdGF0cywgaW5jcmVt
-ZW50aW5nIGl0IHdoZW4KPnRoZSB0YXJnZXQgc2VuZHMgU0FNX1NUQVRfQlVTWSwgYW5kIHN1bW1p
-bmcgYWxsIENQVXMgaW4gdGhlIHNob3cgaGFuZGxlci4KPgo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy90YXJnZXQvdGFyZ2V0X2NvcmVfc3RhdC5jIGIvZHJpdmVycy90YXJnZXQvdGFyZ2V0X2NvcmVf
-c3RhdC5jCj4+IC0tLSBhL2RyaXZlcnMvdGFyZ2V0L3RhcmdldF9jb3JlX3N0YXQuYwo+PiArKysg
-Yi9kcml2ZXJzL3RhcmdldC90YXJnZXRfY29yZV9zdGF0LmMKPlsgLi4uIF0KPj4gK3ZvaWQgdGFy
-Z2V0X3N0YXRfY291bnRfYnVzeV9zdGF0dXMoc3RydWN0IHNlX2NtZCAqY21kKQo+PiArewo+PiAr
-CXN0cnVjdCBzZV9sdW4gKmx1biA9IGNtZC0+c2VfbHVuOwo+PiArCj4+ICsJaWYgKGNtZC0+c2Vf
-Y21kX2ZsYWdzICYgU0NGX1NDU0lfVE1SX0NEQikKPj4gKwkJcmV0dXJuOwo+PiArCj4+ICsJaWYg
-KGNtZC0+c2NzaV9zdGF0dXMgPT0gU0FNX1NUQVRfQlVTWSAmJiBsdW4gJiYgbHVuLT5sdW5fc3Rh
-dHMpCj4+ICsJCXRoaXNfY3B1X2luYyhsdW4tPmx1bl9zdGF0cy0+YnVzeV9zdGF0dXNlcyk7Cj4K
-PltTZXZlcml0eTogTWVkaXVtXQo+RG9lcyB0aGlzIGNvZGUgZnVsbHkgaW1wbGVtZW50IHRoZSBS
-RkMgNDQ1NSBzY3NpUG9ydEJ1c3lTdGF0dXNlcyBjb3VudGVyPwo+Cj5SRkMgNDQ1NSBzdGF0ZXMg
-dGhhdCBzY3NpUG9ydEJ1c3lTdGF0dXNlcyBtdXN0IGluY3JlbWVudCBmb3IgQlVTWSwgVEFTSyBT
-RVQKPkZVTEwsIGFuZCBBQ0EgQUNUSVZFIHN0YXR1c2VzLiBCeSBjaGVja2luZyBvbmx5IGZvciBT
-QU1fU1RBVF9CVVNZLCBkb2VzIHRoaXMKPnVuZGVyY291bnQgcG9ydCBidXN5IHN0YXR1c2VzIGR1
-cmluZyBxdWV1ZSBmdWxsIGV2ZW50cyAobGlrZQo+U0FNX1NUQVRfVEFTS19TRVRfRlVMTCk/Cj4K
-VGhpcyBwYXRjaCBjdXJyZW50bHkgb25seSBzdXBwb3J0cyB0aGUgc3RhdGlzdGljcyBvZiBzY3Np
-UG9ydEJ1c3lTdGF0dXNlcy4KPj4gK30KPlsgLi4uIF0KPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-dGFyZ2V0L3RhcmdldF9jb3JlX3RyYW5zcG9ydC5jIGIvZHJpdmVycy90YXJnZXQvdGFyZ2V0X2Nv
-cmVfdHJhbnNwb3J0LmMKPj4gLS0tIGEvZHJpdmVycy90YXJnZXQvdGFyZ2V0X2NvcmVfdHJhbnNw
-b3J0LmMKPj4gKysrIGIvZHJpdmVycy90YXJnZXQvdGFyZ2V0X2NvcmVfdHJhbnNwb3J0LmMKPlsg
-Li4uIF0KPj4gK3N0YXRpYyBpbnQgdGFyZ2V0X3F1ZXVlX3N0YXR1cyhzdHJ1Y3Qgc2VfY21kICpj
-bWQpCj4+ICt7Cj4+ICsJaW50IHJldDsKPj4gKwo+PiArCXJldCA9IGNtZC0+c2VfdGZvLT5xdWV1
-ZV9zdGF0dXMoY21kKTsKPj4gKwlpZiAoIXJldCkKPj4gKwkJdGFyZ2V0X3N0YXRfY291bnRfYnVz
-eV9zdGF0dXMoY21kKTsKPgo+W1NldmVyaXR5OiBIaWdoXQo+Q2FuIHRoaXMgcmVzdWx0IGluIGEg
-dXNlLWFmdGVyLWZyZWUgb24gdGhlIGNtZCBwb2ludGVyPwo+Cj5JZiBhIGZhYnJpYyBkcml2ZXIg
-KHN1Y2ggYXMgaWJfc3JwdCkgY2FsbHMgdGFyZ2V0X3NlbmRfYnVzeShjbWQpIGR1cmluZyBhCj5m
-YWlsdXJlIHBhdGgsIHRhcmdldF9xdWV1ZV9zdGF0dXMoKSB3aWxsIGludm9rZSB0aGUgZmFicmlj
-IGRyaXZlcidzCj5xdWV1ZV9zdGF0dXMoKSBjYWxsYmFjay4gVGhlIGZhYnJpYyBkcml2ZXIgbWln
-aHQgdHJhbnNtaXQgdGhlIHJlc3BvbnNlIGFuZCBpdHMKPmFzeW5jaHJvbm91cyBjb21wbGV0aW9u
-IGhhbmRsZXIgY291bGQgZHJvcCB0aGUgZmluYWwgcmVmZXJlbmNlIHRvIHRoZSBjb21tYW5kLAo+
-ZnJlZWluZyBpdHMgbWVtb3J5Lgo+Cj5XaGVuIHF1ZXVlX3N0YXR1cygpIHJldHVybnMsIHRhcmdl
-dF9xdWV1ZV9zdGF0dXMoKSBjYWxscwo+dGFyZ2V0X3N0YXRfY291bnRfYnVzeV9zdGF0dXMoY21k
-KSB3aGljaCBhY2Nlc3NlcyBjbWQtPnNlX2x1biBhbmQKPmNtZC0+c2NzaV9zdGF0dXMuIElzIGl0
-IHNhZmUgdG8gZGVyZWZlcmVuY2UgY21kIGhlcmUgYWZ0ZXIgcmVsaW5xdWlzaGluZwo+b3duZXJz
-aGlwIHRvIHF1ZXVlX3N0YXR1cygpPwo+CkNvdW50IGFmdGVyIGEgc3VjY2Vzc2Z1bCBxdWV1ZV9z
-dGF0dXMoKSBiZWNhdXNlIFJGQyA0NDU1IGNvdW50cyBzdGF0dXNlcyBhY3R1YWxseSBzZW50IApi
-eSB0aGUgcG9ydC4gRmFicmljIG1heSBmYWlsIGFuZCByZXRyeSB2aWEgcXVldWVfZnVsbCwgYW5k
-IG1heSBldmVuIGNoYW5nZSB0aGUgU0NTSSAKc3RhdHVzIG9uIGZhaWx1cmUgKGUuZy4gdGNtX2Zj
-IEJVU1kgofogVEFTS19TRVRfRlVMTCkuIENvdW50aW5nIGJlZm9yZSBzZW5kIHdvdWxkCm92ZXIt
-Y291bnQgYW5kIGRvdWJsZS1jb3VudCBvbiByZXRyaWVzLgoKUmVnYXJkaW5nIHRoZSBVQUYgaXNz
-dWUsIEkgd2lsbCByZWxlYXNlIHRoZSBzZWNvbmQgcGF0Y2guCj4+ICsKPj4gKwlyZXR1cm4gcmV0
-Owo+PiArfQo+Cj4tLSAKPlNhc2hpa28gQUkgcmV2aWV3IKGkIGh0dHBzOi8vc2FzaGlrby5kZXYv
-Iy9wYXRjaHNldC8yMDI2MDcwODA5MzQzMy44Mzg2NDctMS1rZW5zYW55YUAxNjMuY29tP3BhcnQ9
-MQoKQmVzdCByZWdhcmQhClRhblpoZW5nCg==
+On Wed, Jul 01, 2026 at 03:29:57PM +0800, Tengda Wu wrote:
+> 
+> 
+> On 2026/7/1 12:06, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [Medium] Refactoring changes the error propagation behavior for memory operands with unrecognized registers, causing valid instructions to be incorrectly marked as bad.
+> > - [Low] Missing explicit inclusion of `<stdlib.h>` for the POSIX libc function `strtol()`, breaking musl compatibility.
+> > --
+> > 
+> > commit a79e03a1004b442317df26b7478d0a1daed1e563
+> > Author: Tengda Wu <wutengda@huaweicloud.com>
+> > 
+> > perf annotate: Introduce extract_op_location callback for arch-specific parsing
+> > 
+> > This patch refactors operand parsing by moving it from the central
+> > annotate_get_insn_location() into architecture-specific callbacks. By
+> > introducing extract_op_location callbacks for PowerPC and x86, it aims to
+> > simplify the core logic and improve maintainability without making functional
+> > changes.
+> > 
+> >> diff --git a/tools/perf/util/annotate-arch/annotate-x86.c b/tools/perf/util/annotate-arch/annotate-x86.c
+> >> index 7e61365363938..6a4b4bdcd7a7c 100644
+> >> --- a/tools/perf/util/annotate-arch/annotate-x86.c
+> >> +++ b/tools/perf/util/annotate-arch/annotate-x86.c
+> >> @@ -2,6 +2,7 @@
+> >>  #include <string.h>
+> >>  #include <linux/compiler.h>
+> >>  #include <linux/zalloc.h>
+> >> +#include <linux/ctype.h>
+> >>  #include <assert.h>
+> >>  #include <inttypes.h>
+> >>  #include "../annotate-data.h"
+> > 
+> > [Severity: Low]
+> > Does this file need an explicit include of <stdlib.h> for musl libc
+> > compatibility?
+> > 
+> > It appears strtol() is used later in extract_op_location_x86() without
+> > the required <stdlib.h> header being directly included here, which might
+> > lead to implicit function declaration errors on musl-based systems.
+> > 
+> 
+> Agreed.
+> 
+> > [ ... ]
+> > 
+> >> @@ -809,6 +810,86 @@ static void update_insn_state_x86(struct type_state *state,
+> >>  }
+> >>  #endif
+> >>  
+> >> +/*
+> >> + * Get register number and access offset from the given instruction.
+> >> + * It assumes AT&T x86 asm format like OFFSET(REG).  Maybe it needs
+> >> + * to revisit the format when it handles different architecture.
+> >> + * Fills @reg and @offset when return 0.
+> >> + */
+> >> +static int extract_reg_offset(const struct arch *arch, const char *str,
+> >> +			      struct annotated_op_loc *op_loc)
+> >> +{
+> > 
+> > [ ... ]
+> > 
+> >> +static int extract_op_location_x86(const struct arch *arch,
+> >> +				   struct disasm_line *dl __maybe_unused,
+> >> +				   const char *op_str, int op_idx __maybe_unused,
+> >> +				   struct annotated_op_loc *op_loc)
+> >> +{
+> >> +	const char *s = op_str;
+> >> +	char *p = NULL;
+> >> +
+> >> +	if (op_str == NULL)
+> >> +		return 0;
+> >> +
+> >> +	if (strchr(op_str, arch->objdump.memory_ref_char)) {
+> >> +		op_loc->mem_ref = true;
+> >> +		return extract_reg_offset(arch, op_str, op_loc);
+> > 
+> > [Severity: Medium]
+> > Does returning the result of extract_reg_offset() here alter the error
+> > propagation behavior?
+> > 
+> > In the previous annotate_get_insn_location() logic, the return value of
+> > extract_reg_offset() was safely ignored:
+> > 
+> >         } else if (strchr(insn_str, arch->objdump.memory_ref_char)) {
+> >                 op_loc->mem_ref = true;
+> >                 op_loc->multi_regs = multi_regs;
+> >                 extract_reg_offset(arch, insn_str, op_loc);
+> >         } else {
+> > 
+> > By returning it here, extract_op_location_x86() might return -1 if the
+> > register is unrecognized. This regression is now propagated back to the
+> > caller in annotate_get_insn_location():
+> > 
+> >         if (arch->extract_op_location) {
+> >                 ret = arch->extract_op_location(arch, dl, insn_str, i, op_loc);
+> >                 if (ret)
+> >                         return ret;
+> >         }
+> > 
+> > Could this cause valid instructions to be completely skipped and
+> > incorrectly marked as bad?
+> > 
+> 
+> I don't think this is a problem. If we don't return an error here,
+> extract_reg_offset() would continue with an uninitialized or invalid
+> offset, which would then cause update_insn_state() to make incorrect
+> judgments. Returning -1 and marking it as bad is actually safer than
+> silently propagating wrong information.
+
+I agree.  I'm not sure if there's actual case it fails there, but I
+prefer not to process when it failed.
+
+Thanks,
+Namhyung
+
