@@ -1,249 +1,221 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B486C3FFFAD
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 09:22:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783588972; cv=none; b=nzcz9iXWaHtpD+hjPIoRwjlJwKEPZMo1i3zkEZsA0av9F3eFEs2nXqXfSQbffESYgFWl1ZRpH8dkvFhwXjnMkcUQTEvcWyHad6T+zM8UT0FnHc+vEkvAD1j5uUvhFMmytPHClguu+Wx5815+nINqIKJPRJHNbQe3xIflPRvxHvA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783588972; c=relaxed/simple;
-	bh=zdyTBSi+ONeK+DImHbrhGmFxqPIDbSZPM6IfyOneEZQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jG7iG89NGS8YhYN1Q+XK+IOUvAK+ysCABMLS8XP/HEdPo0QytB0EVj53WVk6SftMhKSoZz0q5gc6URDs82dhqCe1W4YZ9OfnVoMwCXS6scQFwWJ6p7MNEcaMhrMTsbiBluj3UzASqAXnBympGHkyOBVvmkysqHgcHhS9BOJBqvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=bt1nM3Vk; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Ru+n/XaS; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=FtcF++5l; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vyEO1pTz; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE35403126
+	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 09:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783589285; cv=pass; b=KkKRzslvg/sSWlnTGZm54D6dWsr2rOOOkNskCUNvXDCcQ7UFe4vLzzoaMhhyIH+vteux2GKtKCLrXA4CJsYkcKjTWcBtQmxU86Uy12sVWklOMICBluFySe3SwEB7hfXjwzEF4VKbVtcAnv8wuMDG3CLooHdNGGpqA2Xdq0Nn44c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783589285; c=relaxed/simple;
+	bh=mekk8Qs9paOr/JOz+cCQQowV22V0kdNKPamGxe5W2bU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CC55xeVK2i9NWo1Elxz4bmyiiL2QNAQKaE4NFbY/v8tjoFvZgK08iMiDJisurF8SJAdOn0Q2DIFdydHNQCGnVozzjXbB/jfV05oOPc0zvkjs1b6uXw40dzK5/YTwlbSK5mBWDrfT6z1Oa0O0Usn5N5DpEKR4w/4NhEwlcJ2dIBQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GhQqvYtA; arc=pass smtp.client-ip=74.125.224.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="bt1nM3Vk";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Ru+n/XaS";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="FtcF++5l";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="vyEO1pTz"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E55E675DDF;
-	Thu,  9 Jul 2026 09:22:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783588945; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=574v5c5jCuBngsqR6pYmAMULmmJYIoTEWZhr2k4Q7TQ=;
-	b=bt1nM3VkmfDThiDAbaF4BJ6mO9hxtNq8gUobBwLZRD1OvV5yqwK7JPH/oVJ+Rrz9cyBes9
-	3qewIhNbeKN3Hr6wcydT9nNgrR6VFKivIYls3H8B2V8KZlvyGq8j1YUPtigGpZ8vo/Oc88
-	S3Gtsxawobb00piq/epRxEZ5X4+PI+s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783588945;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=574v5c5jCuBngsqR6pYmAMULmmJYIoTEWZhr2k4Q7TQ=;
-	b=Ru+n/XaSRnvME2VyrAxHuanA5vqeVXsr80d7F3thORp0G+zVqtJ17pvF1sZ16rTNSjBCNQ
-	08ZRJ1O3Up/0zZCA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FtcF++5l;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vyEO1pTz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783588944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=574v5c5jCuBngsqR6pYmAMULmmJYIoTEWZhr2k4Q7TQ=;
-	b=FtcF++5lmc5X4hvZIQn1X0sy54vGMJ1Nd+7QsOlilsTBw42j4SFUS50NSxg0PImGk/g/oQ
-	XkxV6ODdzZcThLN4Gs3ITdeByaklTdnzy9PNR77XOxbMFplYtmkh2Ld9Aj5SIMioSaaa0c
-	8jKpwejj9k7E74eOBjQ0/sUZzwpWRKg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783588944;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=574v5c5jCuBngsqR6pYmAMULmmJYIoTEWZhr2k4Q7TQ=;
-	b=vyEO1pTz2UFwzodW3Lvv89Nebi05DKbH326C6DtDpSQ4YSOhipdj7fNnHk5hyCwIZkZE6M
-	ItiTVx8Q9QzdYaCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5D579779AA;
-	Thu,  9 Jul 2026 09:22:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 0MdcFVBoT2q6OQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jul 2026 09:22:24 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: lukas@wunner.de,
-	jfalempe@redhat.com,
-	alexander.deucher@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	jani.nikula@linux.intel.com,
-	joonas.lahtinen@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	tursulin@ursulin.net,
-	lyude@redhat.com,
-	dakr@kernel.org,
-	deller@gmx.de
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 6/7] drm: Implement vga_switcheroo_client_ops.post_switch
-Date: Thu,  9 Jul 2026 11:16:02 +0200
-Message-ID: <20260709092215.168172-7-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260709092215.168172-1-tzimmermann@suse.de>
-References: <20260709092215.168172-1-tzimmermann@suse.de>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GhQqvYtA"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-664cb440f9eso736439d50.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 02:27:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783589271; cv=none;
+        d=google.com; s=arc-20260327;
+        b=pDBvO+afYVY6WXpjhOKwWzStxbPfNBoPcl4Ri/FZ1k07gGlefcm2ZK4u14AT8ANBfK
+         qxg16q8+K4QvlOZR921DNvnwpWF9t4u+sDXMwMYPF1IeMxLPTQry8QASrq/neB1Ha/DJ
+         w/VsFfRackOWrp5jBpqDN6GK6I7ub7THDh+z8UimMSyDZ7kc2cV6Jwct5ysO0XNApDrE
+         dFJkshaknzs3ALQk9N94m4/Jrh31HXTmXUeF8bZ1JCpOG1BqdC0G1Vdll2nIUC8UCVcZ
+         EgYf7dIIA6yolBMiB71K90nbXcPBKdODUzToPg0UC8yzIc/U1Hl7x8R79RwCySz9TPXg
+         Bwaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=74c3zDUYj1sq4/rZ6bxjy4uiRjT7W3hHmw8hfbbGZdU=;
+        fh=Dcsate2Q5+LeS9EBFWreJHWg2I7PTdSXNFgEHIV76Us=;
+        b=F4VYoudnVm6RYCdzSsy2gsAYkKe+xSONwUs8rodQ/xp/H23y5qxO/5iOIoj0cPTj48
+         bRnsB9kN//zdTsVTbf4THQuzSo4/mKP/7UEXhvDj8RWbLZc9XvwHW3SGk0Lmst4ZtbKv
+         dmCdR1pPITSIm8BRLIu57Ol4WVQfJjRqwKbrvIIVTwcTR+j3ncA1T9EGjVwKLqhjyteo
+         FVQQHMgTyyWXfsdjleETChYz7I+UM/jtW1AwtgaLxRhbYbvGLwRyqsU/iN9+XKr9UNkG
+         x4hpj6Z8GGQFsxPIxf0bxVoFoK9OZnR4rbbhxYx2y9EEFLNDD+90ktWa5x52Sp489yd9
+         5gUA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1783589271; x=1784194071; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=74c3zDUYj1sq4/rZ6bxjy4uiRjT7W3hHmw8hfbbGZdU=;
+        b=GhQqvYtAmyHsfAB+leSqUrLx1MQlkjGib2ZlIlqNRBiL6LJZPjpb7gJkqlvKrPJNhv
+         8BJ5+HcYx1ygfuDst0Xs5jXWKXEB7kmb/N3T5E6u0w/DwuwNBRyJ8Y9uns/hTzkGh9T3
+         aLC48MEk4Yzm+AY7hH7nb890w3jIw9QW3wMiI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783589271; x=1784194071;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=74c3zDUYj1sq4/rZ6bxjy4uiRjT7W3hHmw8hfbbGZdU=;
+        b=Zrasd1f3rtMRSDF0XZnSrzhagG3DxKE/fgGurDzG5giwipQlfVgphNw2c5QdcQMXMt
+         9ZA2upSP9f34K8s2SHqd74QRhwRLBhsrFkyU/6Pi5N2XhJb/7Uv55/7oJ4mvdaPnDq6O
+         ry1xIX+aV2gDKlqsEP3QlxMVRbUEf+Ti7szL4Pjbrk04FhcxDLTP3zsLhXNQOnzjcLp9
+         tif0PEhYy4VTSd6q4nWuw6JzZGqPNdy5CRZe6pR1fBsPoX034CtpLweDngYmlxXXs5iK
+         C84khj6YkPyYTqGOVHZj2SvvOGNlan+wCFkomYHOC8K6qqyM1YfBX87M7g8JLxeUyZY+
+         y4UA==
+X-Gm-Message-State: AOJu0Yzv9Q/uNMeXWqLgZn3AmZ8z2H7VlIyitND5SP0bLF5NaUGvW3iU
+	Z+HxSEkiDVWMiMHcYevYZilK0BA47RldDQaJ7celdpMBhyFBXFV+bV0xQunofAUE8UcYvsbPWAc
+	6z0xuOF+wlMHw2cilWNhdsEjW2tHit1R2XtvSx7ppN4sqGQTUNlHg4g==
+X-Gm-Gg: AfdE7cn2ZOsd5Nz2vb+ztzSrNTA93BXE3h4/uJDIsKiuSZAG2jpZ5Zx272kjdnK5dtX
+	iyjvSOVSa5MbPWui8U2/6LM1UJYV2kOQKXfTJm6xoDOwUBkDQu+/ih3h9AIVCMbsKk8sd1AiV9r
+	jQ7p681X2vCLcTnTE6IOkHCrgRNKbRHAObMwrdJeyxK1L/5lww4wYRnv/fC5xaC1X4whx6wc57V
+	qsQ0qWrDQ9bPYz/ponpmBQF7Oq8guRf1rF60I2UlvsPOPXI/F/L+B3BlHyPy6oqNfqmYg1WEnHB
+	IMaYoKngrs68TjQIdQXfZX+S/5E=
+X-Received: by 2002:a05:690e:134a:b0:667:b262:16bd with SMTP id
+ 956f58d0204a3-667b26234b2mr2825271d50.81.1783589271117; Thu, 09 Jul 2026
+ 02:27:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Rspamd-Action: no action
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FREEMAIL_TO(0.00)[wunner.de,redhat.com,amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,intel.com,ursulin.net,gmx.de];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
-	FROM_EQ_ENVFROM(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLgosu6qu4h11rje89ht7rjgg5)];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: E55E675DDF
-X-Spam-Score: -3.01
+References: <20260709081928.612294-1-wenst@chromium.org> <20260709083024.330381F000E9@smtp.kernel.org>
+In-Reply-To: <20260709083024.330381F000E9@smtp.kernel.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Thu, 9 Jul 2026 17:27:39 +0800
+X-Gm-Features: AUfX_mx_3xgToBgzkBmOX1DPVDvwVrzb4et6fk5WWd8Ysjgsr4mMAnsSLQdDprs
+Message-ID: <CAGXv+5HO5eWaJ-AhH9JG=aZ9f_se8L8Ebz-NRHfKMsNXvGnQTg@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC
+To: sashiko-reviews@lists.linux.dev, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, 
+	"moderated list:ARM/Mediatek SoC support" <linux-mediatek@lists.infradead.org>, Mark Brown <broonie@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-An output's attached display might have changed while a DRM client's
-device did not have the output switched to it.
+On Thu, Jul 9, 2026 at 4:30=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] The MT6319 PMIC fallback compatible triggers incorrect MT6315_PP=
+ mode ganging in the regulator driver, causing silent cross-talk between th=
+e CPU and EMI VDDQ regulators.
+> - [Low] Grammatical error in the comment explaining the firmware workarou=
+nd.
+> --
+>
+> --- Patch [1]: [PATCH v2] arm64: dts: mediatek: mt8188-geralt: Add MT6319=
+ PMIC ---
+> commit 0ff94c6622559a57199ed1f2d1f4063c6c911df1
+> Author: Chen-Yu Tsai <wenst@chromium.org>
+>
+> arm64: dts: mediatek: mt8188-geralt: Add MT6319 PMIC
+>
+> The Geralt design uses a MT6319 PMIC to power the big cores and LPDDR4X
+> DRAM.
+>
+> > diff --git a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi b/arch/arm=
+64/boot/dts/mediatek/mt8188-geralt.dtsi
+> > index 8e423504ec052..af05315092f53 100644
+> > --- a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
+> > +++ b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
+> [ ... ]
+> > @@ -1225,6 +1235,70 @@ &spi2 {
+> >       status =3D "okay";
+> >  };
+> >
+> > +&spmi {
+> > +     pinctrl-names =3D "default";
+> > +     pinctrl-0 =3D <&spmi_pins>;
+> > +     #address-cells =3D <2>;
+> > +     #size-cells =3D <0>;
+> > +     status =3D "okay";
+> > +
+> > +     pmic@6 {
+> > +             compatible =3D "mediatek,mt6319-regulator", "mediatek,mt6=
+315-regulator";
+> > +             reg =3D <0x6 SPMI_USID>;
+>
+> [Severity: High]
+> Does this fallback compatible trigger incorrect mode ganging?
+>
+> The mt6315-regulator driver maps USID 6 to the MT6315_PP variant, which
+> hardcodes mode ganging for vbuck1, vbuck2, and vbuck4. On the MT8188
+> Geralt's MT6319, vbuck4 is wired as an independent regulator for
+> pp0600_emi_vddq.
+>
+> If a mode change happens on vbuck1 (which is allowed by the
+> regulator-allowed-modes property), the driver will apply the ganged
+> mask and silently overwrite vbuck4's mode bits in the PMIC, potentially
+> forcing the RAM supply into an unexpected mode.
+>
+> Could this silent cross-talk between the CPU and EMI VDDQ regulators
+> lead to memory voltage instability?
 
-The nouveau_switcheroo_reprobe() callback sends a hotplug notice to
-DRM's internal clients, so that they can reconfigure their display
-output if necessary.
+This discrepency is actually bigger than Sashiko mentions. The ganging
+supported by the driver only applies to the PMICs in the Asuarada design:
 
-As post_switch callback replaces reprobe in vga_switcheroo, update
-nouveau accordingly. In the other drivers, remove the NULL-assignment
-to reprobe. No functional changes.
+  - SPMI ID 6 has 1+2 (GPU); 3 and 4 are unused
+  - SPMI ID 7 has 1+2+4 (big cores) and 3 (little cores)
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Lyude Paul <lyude@redhat.com> # nouveau
----
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  1 -
- drivers/gpu/drm/i915/i915_switcheroo.c     |  1 -
- drivers/gpu/drm/nouveau/nouveau_vga.c      | 19 +++++++++----------
- drivers/gpu/drm/radeon/radeon_device.c     |  1 -
- 4 files changed, 9 insertions(+), 13 deletions(-)
+On the Cherry design we have:
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 87a59a79a019..5bb1567d512d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1708,7 +1708,6 @@ static void amdgpu_switcheroo_pre_switch(struct pci_dev *pdev)
- 
- static const struct vga_switcheroo_client_ops amdgpu_switcheroo_ops = {
- 	.set_gpu_state = amdgpu_switcheroo_set_state,
--	.reprobe = NULL,
- 	.can_switch = amdgpu_switcheroo_can_switch,
- 	.pre_switch = amdgpu_switcheroo_pre_switch,
- };
-diff --git a/drivers/gpu/drm/i915/i915_switcheroo.c b/drivers/gpu/drm/i915/i915_switcheroo.c
-index 6b306ece0556..d97057722fde 100644
---- a/drivers/gpu/drm/i915/i915_switcheroo.c
-+++ b/drivers/gpu/drm/i915/i915_switcheroo.c
-@@ -69,7 +69,6 @@ static void i915_switcheroo_pre_switch(struct pci_dev *pdev)
- 
- static const struct vga_switcheroo_client_ops i915_switcheroo_ops = {
- 	.set_gpu_state = i915_switcheroo_set_state,
--	.reprobe = NULL,
- 	.can_switch = i915_switcheroo_can_switch,
- 	.pre_switch = i915_switcheroo_pre_switch,
- };
-diff --git a/drivers/gpu/drm/nouveau/nouveau_vga.c b/drivers/gpu/drm/nouveau/nouveau_vga.c
-index 2d2d08be8fbe..29a801124e56 100644
---- a/drivers/gpu/drm/nouveau/nouveau_vga.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_vga.c
-@@ -54,15 +54,6 @@ nouveau_switcheroo_set_state(struct pci_dev *pdev,
- 	}
- }
- 
--static void
--nouveau_switcheroo_reprobe(struct pci_dev *pdev)
--{
--	struct nouveau_drm *drm = pci_get_drvdata(pdev);
--	struct drm_device *dev = drm->dev;
--
--	drm_client_dev_hotplug(dev);
--}
--
- static bool
- nouveau_switcheroo_can_switch(struct pci_dev *pdev)
- {
-@@ -84,12 +75,20 @@ nouveau_switcheroo_pre_switch(struct pci_dev *pdev)
- 	drm_client_dev_acquire_outputs(drm->dev);
- }
- 
-+static void
-+nouveau_switcheroo_post_switch(struct pci_dev *pdev)
-+{
-+	struct nouveau_drm *drm = pci_get_drvdata(pdev);
-+
-+	drm_client_dev_hotplug(drm->dev);
-+}
-+
- static const struct vga_switcheroo_client_ops
- nouveau_switcheroo_ops = {
- 	.set_gpu_state = nouveau_switcheroo_set_state,
--	.reprobe = nouveau_switcheroo_reprobe,
- 	.can_switch = nouveau_switcheroo_can_switch,
- 	.pre_switch = nouveau_switcheroo_pre_switch,
-+	.post_switch = nouveau_switcheroo_post_switch,
- };
- 
- void
-diff --git a/drivers/gpu/drm/radeon/radeon_device.c b/drivers/gpu/drm/radeon/radeon_device.c
-index 8697a9eb5d13..9523240110a6 100644
---- a/drivers/gpu/drm/radeon/radeon_device.c
-+++ b/drivers/gpu/drm/radeon/radeon_device.c
-@@ -1267,7 +1267,6 @@ static void radeon_switcheroo_pre_switch(struct pci_dev *pdev)
- 
- static const struct vga_switcheroo_client_ops radeon_switcheroo_ops = {
- 	.set_gpu_state = radeon_switcheroo_set_state,
--	.reprobe = NULL,
- 	.can_switch = radeon_switcheroo_can_switch,
- 	.pre_switch = radeon_switcheroo_pre_switch,
- };
--- 
-2.54.0
+  - SPMI ID 6 has 1+2 (GPU); 3 and 4 are unused
+  - SPMI ID 7 has 1+2+3+4 (big cores)
 
+On the Corsola designs with beefier chips:
+
+  - SPMI ID 6 has 1+2 (big cores); 3 and 4 are unused
+
+On the Geralt design (this one):
+
+  - SPMI ID 7 has 1+2 (big cores); 3 (DRAM); 4 (DRAM)
+
+Any ideas on what to do about this mess?
+
+Another thing is that I kind of wonder why the mode configuration register
+setting isn't ganged in hardware like the enable and voltage settings.
+
+
+Thanks
+ChenYu
+
+> > +             pvdd1-supply =3D <&pp4200_s5>;
+> > +             pvdd2-supply =3D <&pp4200_s5>;
+> > +             pvdd3-supply =3D <&pp4200_s5>;
+> > +             pvdd4-supply =3D <&pp4200_s5>;
+> > +
+> > +             regulators {
+> > +                     /*
+> > +                      * vbuck1 is the cpu-supply for CPU6 and CPU7.
+> > +                      *
+> > +                      * However, this device originally shipped with a=
+ broken
+> > +                      * firmware that causes register reads over SPMI =
+fail.
+> > +                      * This is fixed in firmware version 15842.175.0,=
+ which
+> > +                      * is included in ChromeOS releases R150-16700.22=
+.0 or
+> > +                      * R151-16721.0.0 and later.
+> > +                      *
+> > +                      * Assigning the cpu-supply properties for CPU6 a=
+nd CPU7
+> > +                      * without the fix will likely cause CPU DVFS to =
+stop
+> > +                      * working. Hence the assignment is left out to a=
+void a
+> > +                      * regression of the function. If the user is con=
+fident
+> > +                      * that their system has the fix, they can added =
+the
+>
+> [Severity: Low]
+> This isn't a bug, but there is a typo in this comment. It should say
+> "they can add the property themselves".
+>
+> > +                      * property themselves.
+> > +                      */
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709081928.61=
+2294-1-wenst@chromium.org?part=3D1
