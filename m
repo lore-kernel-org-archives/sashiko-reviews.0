@@ -1,472 +1,162 @@
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022130.outbound.protection.outlook.com [52.101.126.130])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759B93D567E
-	for <sashiko-reviews@lists.linux.dev>; Thu,  9 Jul 2026 08:11:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.130
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783584681; cv=fail; b=m03D1GsfT75zPjr73xjJGaN7/B9tgREV6YWXfneLiUIYQDFFFha8VX/etPMf6tMPukuVQ6VU8obqZkGStPDoxy6hi1Ksa0LwK+zBBqAjLD0rOpz+LV4HNeXoUMsCc73yqGnqFShKfvqTe5Y35uet9V97XWKrwgGJXkG0zGl6mwg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783584681; c=relaxed/simple;
-	bh=AHHK9KjU3mro1YinRtydmXuP85LBlNs1AQzQ64tON2s=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gXYXRTdFy5qTUToufiKIQwz3veVbRzEWL1/9ixAcI+29OT1O3xwyOWIUQFk9cKGlHF5nPIcS3W9pNiV0F7tB9tQ3DzjO0LkUjg73ItaCNMS26y8hQhUhEsLrgBhemSsImmr5AcyJQjImHJqdgmjs6ub9DnvhSP9sB21m/yyQrxA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=gkBDvqbL; arc=fail smtp.client-ip=52.101.126.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027B9233944;
+	Thu,  9 Jul 2026 08:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783584969; cv=none; b=GBToN2g+Rut+qI6ktA+0ZK9rdtweiysfaAqOLjrc7yE3B3A/pRIAFkHarOkDP5MhsoJmTl9bM0U7wk8D26Pbh0p1J2Ia5TLd35kufRg/lwN1jZS609qw7SYi4az7XSvElJn9YGMYk3xYutQGmXttt2XCySh4OaUOBsmON01y67A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783584969; c=relaxed/simple;
+	bh=tBUThDu5CaTPWaHWJiu5cC0qeSJ7u/IUCg6a1W45sIU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iOtQbhfSW8V690fjpM77GK91SiQAwWbmxQRbXkmOfi9u5+FBvsgEsEm35zc5A+yNQSReBxfUF+Brt8vlTwqCQnrbHN/8N/bojmPkfeTscRDJ0lqmXmVhqXnoFl69VEy7nv5zLwb7LVZFSiqDojgU8pDnKzDP7ZiUNjhVkiZRuvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5YguEjb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="gkBDvqbL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rrHw7cHUaGB6PuOS16ztLB1BWjKQ+iV2L0+HPsGOSn576EeQttEpewKVvwwUWCc7x92dC1+kWZhsgXI9CrTtAj090Aj6J9ddCnbHBBP94D0Nw90Gldwxac06WqtGz/9+OG126HtZw7j/hNIROF+47dSsIDv1ihmnBAQUT99gzvPtXL0WC8pjuVitS6+9ugmSdWq4CZNDfKDXDNoSSk9nUUwIQMriHXEtVr+vl6HqVbkRc5/JKP3qeRzoH5ZnSIyg908GsKsu9hLjnvFzj/wPcEfuHjFp1rR6k9+QdHc/0l3Eb3yNCu/2KSKpznqDeY6dmQ33tRPeRGQCHAfKrJlNmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2ZiuNbipBeGMfEQj6fshtzRIKR9h78/N7JUx6VZj/bU=;
- b=bD17OsRr3Y986xywRXaDq1qL/2VkUYeiuPL8xe73wqBHt+3ikL/cftPc1LafpZuA2ipvZE9GmYo3+StCiP1ho7G/fj7ELvcCbvBdpEGQuQqu6PLce3PcmZeyiEF/qccyo4dhwNFEolkUWoUTn+XeWtJVEPOWnffDrc6rE66qV9ceYd1G8plPMI+CdL9MWu05jDZZ8tTM6gsiK2iDrAeIwzHLhOEfbJYcrtepSGc2FLDqtLLL4lm1+eIoxppowyUUIR6iHTnFvO1SebyJZo3Rc9kMe8bFmHzdfZ3k2gg4+UVmrHTYYeUhSeyFS4uQCKDsvoxvigXZjqN6KFnIR5PCGw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2ZiuNbipBeGMfEQj6fshtzRIKR9h78/N7JUx6VZj/bU=;
- b=gkBDvqbLZLDhgogb8PgyKyfFOWLVlDoKtSueuCHfFXfkr1I6aXfRfXqX0CCAf0K8ph0bLqmsyYU3B4jiGca6HImZPUfO+zVt0OWjS5pY8PkEimRrXqckDNT16/RT4mtvILmkYlaCGytQnXCZhEPu4UctMIOgHCmTeELoHgO7RAGy/IVyy2Y+WsDgC991XtXRljFacVIKAbqKdW+n4cQ9IzH6TZZNUymrHZgBjfgIc/CwH/4YkpoAfKueFJZ4Y9siLxnCOoBxismOA0b9R59s2glu2vu3GoIZw1D968CogPzAu9AsFuqzmYCrka3JB7O2lO5votb8g/SSvX5xv7+NPw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
- by TYSPR03MB7582.apcprd03.prod.outlook.com (2603:1096:400:413::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Thu, 9 Jul
- 2026 08:11:14 +0000
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4]) by TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4%3]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 08:11:14 +0000
-Message-ID: <312356d0-39e3-4160-b862-0277ba146f47@amlogic.com>
-Date: Thu, 9 Jul 2026 16:11:10 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/3] dmaengine: amlogic: Add general DMA driver for A9
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev,
- Xianwei Zhao via B4 Relay <devnull+xianwei.zhao.amlogic.com@kernel.org>
-Cc: dmaengine@vger.kernel.org, neil.armstrong@linaro.org,
- Frank.Li@kernel.org, vkoul@kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, robh@kernel.org,
- linux-amlogic@lists.infradead.org
-References: <20260626-amlogic-dma-v9-0-558d672c4a95@amlogic.com>
- <20260626-amlogic-dma-v9-2-558d672c4a95@amlogic.com>
- <20260626055325.ED2721F000E9@smtp.kernel.org>
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
-In-Reply-To: <20260626055325.ED2721F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TPYP295CA0036.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:7::8)
- To TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P5YguEjb"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AB22DC2BCB7;
+	Thu,  9 Jul 2026 08:16:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1783584968;
+	bh=tBUThDu5CaTPWaHWJiu5cC0qeSJ7u/IUCg6a1W45sIU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=P5YguEjb5peh5yFjGYdHm3Noa275oaLw4kj+4Z2AoBkli45VN5lWHXZpoplpyZ5JN
+	 tvfG9RGchUmSuPuObuTU1Hu6CqLDjggz6MnXI7ktaTWiCAPhCVe/+Edw0brSvKWwSs
+	 ZV3egLrJK8cpKxHxW5wSnG4fIAYgeBXHJyGD+1Afg/4c8udQ7hOId+MZaYkJbUgtDe
+	 Ghw70GiyBSIB+iViMOv+zoI1pqvORiNtAE9vHR8IpMcvcnHsVaTww9G/v7DxeXzmmx
+	 K0KPM6OIGCIATees+Q9cPV8LWsP4Z/gxw1p6ujPlSqiTnVrcmJeS+I2jLDCx1dFgI0
+	 u2A4qAbh//u/Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8575CC43458;
+	Thu,  9 Jul 2026 08:16:08 +0000 (UTC)
+From: Oliver Hartkopp via B4 Relay <devnull+socketcan.hartkopp.net@kernel.org>
+Subject: [PATCH v9 00/10] can: bcm: collected fixes - final4 :-O
+Date: Thu, 09 Jul 2026 10:16:02 +0200
+Message-Id: <20260709-bcm_fixes-v9-0-6eebb78ccfb2@hartkopp.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR03MB6896:EE_|TYSPR03MB7582:EE_
-X-MS-Office365-Filtering-Correlation-Id: f2b08437-9951-4ae1-54a9-08dedd91a529
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|7416014|4143699003|3023799007|18002099003|22082099003|56012099006|11063799006|5023799004|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	APkd8mWnkrjNHazQAB5qDsEchw0I36dQHpj0kmYK5cY24hANaTCqVcG/MXyJ6P+I8KBbz2aR9BviDDPZnutgsMab36hBlYQ2kl/Hr6xw6glwQEsa19PneEqUbZUCRmGiLzfOXRZ4y0irqZinC5PdS3xaxhNlwWt3MGSAfzAYC1wiaKxSB/vIxwwCktWFhYIU2U9bO/K0JTjAqajDQ8gitmk+T964dQwwMx4GsSz23z75UlU7p6FKY6Kp8z+Hu5Jb/+Ovuph0lOV+cnUlaHP5J90KuwZzxfcZE1ak3jsW2Gj9YTeOJ+GNAZsXevjWNMqW9Mn1oIguo2Ews6cXJfwdrqg2Df8ZutoMEm6ojDoG6XQkLDAJ8ajTcqMwaRybZ1niqjwjGsip1nS57D79VnOk6cMGGMrW4n39MIlwykqHFrwT4SpqfsNKD4nyZnQvxU5+ORib1qGBr2MRCXJx7QVEdwg+2zWKY/bj475QDFKpL+GdZq3yPCoWcQTSFQpAwQpdnKg6TEKQIqgnvRbMgKOfK51dYrVLsNBokQvvcEdXqU+hauSyDzu5JYXovHk4V09j2UYkcEkl1CxiISpIJzFqUBSn+QVYof/OllJldVPo0bo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB6896.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(7416014)(4143699003)(3023799007)(18002099003)(22082099003)(56012099006)(11063799006)(5023799004)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZmpLL1p5SnJ1T3dFcUsvblN3YTl6cnIzR3FhaEd2L1poM0pmLzRaYVFGSDZL?=
- =?utf-8?B?YWVNUEdRRHg1aUhmdVVWc3hqb3p0Y3Bqd3NJWjZRbEVNSHJFUWNGdE85UzEv?=
- =?utf-8?B?TzN6eXV3M3JLN1F0WFdISy9wcE1LdmNsSUhCazRrNFNpZmJYUU0zc1NEZzlH?=
- =?utf-8?B?RU83NElEMCthQnR4SlZ3TldxN1N3NjdnNlhpZEJuaVMwU0U0OG5uSng1TGx3?=
- =?utf-8?B?ZldGbzl3cWVBUHM2R0Y1b0lSeWljemRJdVdYTHF5QWV6bkZJRkJsQmgvSjND?=
- =?utf-8?B?QkpxelBGNW1adzhaRFQ2a0kvNzdESWc3U3Mza3JhZkhXYnRRdUxRNkQxRE1V?=
- =?utf-8?B?ZzNCS3pGZlJkWkZFTzdISkV6cmhDLzRnZkw3OU8wSlpmOHNFbE83VUg0Qzhq?=
- =?utf-8?B?V0M0dEhhTUZuMXVPOXorL3JBdGx6S3ExQTdVUVh2N3ZqZGp0VStDOXhEZDJu?=
- =?utf-8?B?T2RaNjZqNjcvNTZJMmd4eElqR0lSYUpqZTI2dWxYNUhCbHN4RDhBZGJVQ0xj?=
- =?utf-8?B?UmdKUUNudGZRZjBhb2tJM1VxS3FJT2lGRmM5Vi9QM29tVjEzNkNFODFTNUxx?=
- =?utf-8?B?b1plQnRXVExWUUV5RURSWTN2UkVaNEhNYWVZUWpONW4ycURCNElnZEkwWFp1?=
- =?utf-8?B?SytsSWk3RGd6R3NZQjd6RTFFaE5ZSzlXaHA0VGJMMTA5SzdOd0sxSFcxU2V5?=
- =?utf-8?B?MHNPZmhMdG5jOXdocndWQ0ZkZk5TS3NRMk94NldNbHoyN1NESlRQNXliNTh3?=
- =?utf-8?B?VzRwbjlRcVVXWTN4bHlpNHFSNkdReHIwdzYwTFU0dXBKQXFMaUgvVmk2N3dm?=
- =?utf-8?B?ZU1NR201MHpMcTZGeU1tNVpJTWlYeHl0VERiOUd3LzY4RFI2YVJuNVZMZUFx?=
- =?utf-8?B?YkUxZ241a2hkd1BCZXJYZFlVTU1xc2lXYnY5K3VPVW1obG5HZkppMDd5WHR0?=
- =?utf-8?B?Q2RaVVRZRzNKUk1rOEdycDFLMlNiQVZyMEhIWnhWOG4xa3Y3dlVmV05VaWVG?=
- =?utf-8?B?U1liRGlZU1NFeHdkY1Z1ZUZWZjBSU3JyTEdydUtMc3QvLzNZS2lGREdVdzhV?=
- =?utf-8?B?NURDdmNERGV2OFluNjlFa20vK0E4RWx2SkVZVHMvNExDWm1VbHZNWVlLdFhO?=
- =?utf-8?B?U3phVitIOHAyelB6T252YkJ0ZFYySHNpRTEzY2JVS3JkSllLRkVmR3Q5bGF5?=
- =?utf-8?B?dGRmdUo1SjdER1ZLRHBkd2F0Q3V0TnJOMzJ3UjB4U24vTUNlL0lwUTdsZUFE?=
- =?utf-8?B?S25XRHREWUNUUmcwRUFPVlNveXpTM2x0SkR4akNQTkIycUhWMC9sN0pqalY4?=
- =?utf-8?B?OUIrZ25vQkxJSmlvNDVwazV5S3Axb2JsM3hrT2lRWHlnSG1iK2lPcUIyNFhq?=
- =?utf-8?B?c29sb3JGWWpsVy9NUmRNWUF1SUxDSlVNTG15SlE2a0dCeURIMUhXUFo0VTc3?=
- =?utf-8?B?eXlCNFdPV1M3SC91UFVuY3ZDTy8wZUZDenlVbmhncnFCUWpqc1c2QW9iTm5M?=
- =?utf-8?B?M0hXK1ZvRHd1V2RJdHYrVHNYTVlTSFdIUk1JYjdMc0t6R2oyNFV6OU14OWJI?=
- =?utf-8?B?Si9pS0diWHN1VXdSMXAyVG1JeDdtNXNWallha2sxaDVTVkpSM28rdVc5bCtk?=
- =?utf-8?B?NXhlWU9nRkpNYnJURFdPcUN6Mk5JSG5NNjR1MUxueit1MENhc2YrMVV5OGZr?=
- =?utf-8?B?My9KQXI2ZXQ4UEV3MWFETmxDS2ZMeERnNWJ5SjBPYndRaGZKWHhJREhqazBu?=
- =?utf-8?B?bmtwK1I5N1R4MTVRWnpvSGo1amlJTTQ2cjh3Yjk0cUp1Y0J4OGNwLzA3aUFV?=
- =?utf-8?B?QTZET0VOK0Jwb04zd3U0NjlBOE01cTl3dzNMWis3Snl3ZzBKWERZLzFVVUdU?=
- =?utf-8?B?RTJodzlodWFPRDlRbGdCak5GZytwRVFnMGp6UEJzRTRaN1N4Zzg1MlhlcnRt?=
- =?utf-8?B?QVVEWWg1aUVSSUFHQ0FrbU1MUnJXVGR2cUxRVkQ3QUlwU2crSGlGUlVSNGs2?=
- =?utf-8?B?a1p1V0VLZGc5SUpRci9OUThQWDZuM0xNQ1BQU1c3SEh0TVhkNW9ETFIxQS9o?=
- =?utf-8?B?QjJIUG5CSlRhNUlWUWltVGN5WHFzMWIxQ2swQW5RSVhQMmZYSTZsS3FIVjFj?=
- =?utf-8?B?SnpORGdiNVVLc2NlYTgxbHBmVzFaS1VTM0ZyZEJ5aXVMOUdod3lTeVo0ZnFq?=
- =?utf-8?B?dGdyVVgrY05nQ1RNZGVndzdzWjhqRVk2Z0dkWks5SDVZVi8wOHlSM3pyR3Mz?=
- =?utf-8?B?dkhsTStUUzNoUjMwRGx1UDlGcnc1Skg3bkFyZ3pUL2JVSkNlckYzOVpUWHV4?=
- =?utf-8?B?d21XWlg1MC9pR2JnaDBmUnU4bnplZHZ0eE16bVFXWlpQcWM2aXByQT09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f2b08437-9951-4ae1-54a9-08dedd91a529
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 08:11:14.5553
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dVa1XXTuUD+Afi7pDu5xEW64+22BaqOJAdjdcAf+qLMrIx1k/3N7GO9vj9t9dAl6Rnoy+p6qqJKtWpOItCDgZb7H8qhPv2wlqHsF3jgxTKM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR03MB7582
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMJYT2oC/3XPy07FIBAG4Fc5YW0NHSgzuPI9jDFAwaKxbUptN
+ Cd9d+G4sDF0OZn/m8uVJb9En9jD5coWv8UUpzEX+u7C3GDGV9/EPtcMOCiuWmis+3gJ8cunhmS
+ w0hgtjAOW8/Pib40cf3r+rdOnffNuLQNKYohpnZbv27KtLbna3K1teOMMBMPRe+ThcTDL+j7N8
+ /3oV1ZGb/CHkeMRQ8ZaKeCuE9JiV8HiFIuMSSrOnVE9ka5geYplxsYQWrK6F6J2dneKu/KzcCg
+ D9RQCVrA6YjpiVc7m2HID1glNFYynGMtmzM8qKyR4WcF0iqlsdhC6IKyDFv7hfd9/AKZWX4hiA
+ gAA
+X-Change-ID: 20260612-bcm_fixes-84fb4aa93ac2
+To: linux-can@vger.kernel.org
+Cc: Oliver Hartkopp <socketcan@hartkopp.net>, 
+ Marc Kleine-Budde <mkl@pengutronix.de>, Lee Jones <lee@kernel.org>, 
+ Feng Xue <feng.xue@outlook.com>, Ginger <ginger.jzllee@gmail.com>, 
+ syzbot+75e5e4ae00c3b4bb544e@syzkaller.appspotmail.com, 
+ sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783584967; l=4137;
+ i=socketcan@hartkopp.net; s=20260128; h=from:subject:message-id;
+ bh=tBUThDu5CaTPWaHWJiu5cC0qeSJ7u/IUCg6a1W45sIU=;
+ b=P4RxTpSA1mv+sfwOBVUW9c8Bx037viPFQyAY8+k9hs2KooqFg67RFRNI1GcYLOrtsQbOjjsNy
+ m4+DLoCdZixBkc/lgD78qKmG4LfhJsjVtzmt+3PkNBYzC77OlIWxuaY
+X-Developer-Key: i=socketcan@hartkopp.net; a=ed25519;
+ pk=/gU/7/wBqak3kTsTeFbCCqUi9dnh+1i6ITEkfPj/BvU=
+X-Endpoint-Received: by B4 Relay for socketcan@hartkopp.net/20260128 with
+ auth_id=620
+X-Original-From: Oliver Hartkopp <socketcan@hartkopp.net>
+Reply-To: socketcan@hartkopp.net
+
+Hi Marc,
+
+as there were different patches flying arround to fix CAN_BCM issues and
+AI assisted stuff pop's up again and again, I've created this collection
+to be applied.
+
+Fixed the new issues in patch 4
+
+- [Medium] `bcm_update_stats()` can be executed concurrently from
+  different lock domains, contradicting the commit's claim of preventing
+  races during counter reset.
+- [Medium] TX operations incorrectly inherit the RX-specific statistics
+  cap, causing premature zeroing of the TX frame counter.
+  
+Best regards,
+Oliver
+
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+---
+Changes in v9:
+- patch 4: fixed two issues reported by sashiko-bot and mkl
+  https://lore.kernel.org/linux-can/20260708173935.10D021F000E9@smtp.kernel.org/
+  https://lore.kernel.org/linux-can/20260708-beige-tarsier-of-mastery-b73d0d-mkl@pengutronix.de/
+- Link to v8: https://patch.msgid.link/20260708-bcm_fixes-v8-0-8c2f5f3bc212@hartkopp.net
+
+Changes in v8:
+- patch 9: fixed two issues reported by sashiko-bot:
+  https://lore.kernel.org/linux-can/20260708154039.347ED1F000E9@smtp.kernel.org/
+- Link to v7: https://patch.msgid.link/20260708-bcm_fixes-v7-0-c78896b342e4@hartkopp.net
+
+Changes in v7:
+- patch 9: new: fix stale rx/tx ops after device removal reported by
+  sashiko-bot: https://lore.kernel.org/linux-can/20260708094536.DDF821F00A3A@smtp.kernel.org/
+- patch 10: formerly patch 9 as new patch 8 & 9 belong together 
+- Link to v6: https://patch.msgid.link/20260708-bcm_fixes-v6-0-80710a2bc398@hartkopp.net
+
+Changes in v6:
+- patch 1: added Tested-by: tags
+- patch 3: changed commit message and comment regarding a wrong claim
+  about synchronous delivery from dev_queue_xmit() as remarked by
+  https://netdev-ai.bots.linux.dev/ai-review.html?id=6105ebab-87ef-43db-a085-7c190b9f119f
+- patch 4: rebased patch 3 comment
+- patch 9: new: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
+  reported by sashiko-bot: https://lore.kernel.org/linux-can/20260707145135.5BC831F00A3A@smtp.kernel.org/
+- Link to v5: https://patch.msgid.link/20260707-bcm_fixes-v5-0-c3c74f8d8ff7@hartkopp.net
+
+Changes in v5:
+- patch 6: changed comment for bcm_op::bcm_tx_lock (mkl)
+- patch 8: new: add missing device refcount for CAN filter removal
+- Link to v4: https://patch.msgid.link/20260707-bcm_fixes-v4-0-aa87b8b9d33f@hartkopp.net
+
+Changes in v4:
+- incorporated more sashiko-bot concerns from v3
+- patch 3: omit hrtimer_forward with zero interval
+- patch 4: put bcm_update_stats() under bcm_rx_update_lock
+- Link to v3: https://patch.msgid.link/20260707-bcm_fixes-v3-0-84600ca6d889@hartkopp.net
+
+Changes in v3:
+- incorporated more sashiko-bot concerns from v2
+- patch 3: make snapshot of currframe
+- patch 6: add error patch for memcpy_from_msg()
+- patch 7: new RTR-reply validation in bcm_rx_setup() from bcm_tx_setup() 
+- Link to v2: https://patch.msgid.link/20260707-bcm_fixes-v2-0-96620c534b75@hartkopp.net
+
+Changes in v2:
+- incorporated all sashiko-bot concerns from v1
+- Link to v1: https://patch.msgid.link/20260612-bcm_fixes-v1-0-ca2fa07ee70f@hartkopp.net
+
+---
+Lee Jones (1):
+      can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+
+Oliver Hartkopp (9):
+      can: bcm: fix lockless bound/ifindex race and silent RX_SETUP failure
+      can: bcm: add locking when updating filter and timer values
+      can: bcm: fix CAN frame rx/tx statistics
+      can: bcm: add missing rcu list annotations and operations
+      can: bcm: extend bcm_tx_lock usage for data and timer updates
+      can: bcm: validate frame length in bcm_rx_setup() for RTR replies
+      can: bcm: add missing device refcount for CAN filter removal
+      can: bcm: fix stale rx/tx ops after device removal
+      can: bcm: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
+
+ net/can/bcm.c | 536 +++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 400 insertions(+), 136 deletions(-)
+---
+base-commit: 0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53
+change-id: 20260612-bcm_fixes-84fb4aa93ac2
+
+Best regards,
+--  
+Oliver Hartkopp <socketcan@hartkopp.net>
 
 
-
-On 2026/6/26 13:53, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
-> - [High] Use-After-Free during driver removal due to missing IRQ synchronization.
-> - [High] Sleeping in atomic context when freeing virtual DMA descriptors.
-> - [High] Out-of-bounds write in `aml_dma_prep_slave_sg` when processing zero-length scatterlist elements.
-> - [High] Broken pause/resume state machine logic leading to channel stall and state corruption.
-> - [Medium] `aml_dma_terminate_all()` fails to reset channel error state, causing permanent stall.
-> - [Medium] `aml_dma_tx_status()` improperly handles unissued descriptors, causing false errors and incorrect residues.
-> - [Medium] Mismatched DMA address registers used for 64-bit physical addresses.
-> --
-> 
-> commit 7102a7639af273fc6303ccde475117debb548165
-> Author: Xianwei Zhao<xianwei.zhao@amlogic.com>
-> 
-> dmaengine: amlogic: Add general DMA driver for A9
-> 
-> Amlogic A9 SoCs include a general-purpose DMA controller that can be used
-> by multiple peripherals, such as I2C PIO and I3C. Each peripheral group
-> is associated with a dedicated DMA channel in hardware.
-> 
->> diff --git a/drivers/dma/amlogic-dma.c b/drivers/dma/amlogic-dma.c
->> index 0000000000000..bce6932f3a12e
->> --- /dev/null
->> +++ b/drivers/dma/amlogic-dma.c
-> [ ... ]
-> 
->> +static void aml_dma_free_desc(struct virt_dma_desc *vd)
->> +{
->> +     struct aml_dma_desc *aml_desc = to_aml_dma_desc(vd);
->> +
->> +     dma_free_coherent(aml_desc->dma_device->dev,
->> +                       aml_desc->sg_link_size,
->> +                       aml_desc->sg_link,
->> +                       aml_desc->sg_link_phys);
-> [Severity: High]
-> Does this code sleep in atomic context?
-> 
-> When the virtual DMA descriptor is freed, vchan_dma_desc_free_list() calls
-> this callback from within vchan_complete(), which runs in tasklet
-> (softirq) context. Calling a sleepable function like dma_free_coherent()
-> from a tasklet can result in a scheduling while atomic panic.
-> 
-> Could this driver use dma_pool_alloc/free or kzalloc/kfree for descriptor
-> management instead?
-> 
-
-Use workqueue to release resources.
-
->> +     kfree(aml_desc);
->> +}
-> [ ... ]
-> 
->> +/* DMA transfer state  update how many data reside it */
->> +static enum dma_status aml_dma_tx_status(struct dma_chan *chan,
->> +                                      dma_cookie_t cookie,
->> +                                      struct dma_tx_state *txstate)
->> +{
->> +     struct aml_dma_chan *aml_chan = to_aml_dma_chan(chan);
->> +     struct aml_dma_dev *aml_dma = aml_chan->aml_dma;
->> +     struct aml_dma_desc *aml_desc = NULL;
->> +     struct virt_dma_desc *vd;
->> +     u32 residue = 0, done;
->> +     unsigned long flags;
->> +     enum dma_status ret;
->> +
->> +     ret = dma_cookie_status(chan, cookie, txstate);
->> +     if (ret == DMA_COMPLETE || !txstate)
->> +             return ret;
->> +
->> +     spin_lock_irqsave(&aml_chan->vchan.lock, flags);
->> +     vd = vchan_find_desc(&aml_chan->vchan, cookie);
->> +     if (vd) {
->> +             aml_desc = to_aml_dma_desc(vd);
->> +             residue = aml_desc->data_len;
->> +     } else if (aml_chan->cur_desc && aml_chan->cur_desc->vd.tx.cookie == cookie) {
->> +             aml_desc = aml_chan->cur_desc;
->> +             regmap_read(aml_dma->regmap, aml_chan->reg_offs + RCH_RD_LEN, &done);
->> +             residue = aml_desc->data_len - done;
->> +     } else {
->> +             dev_err(aml_dma->dma_device.dev, "cookie error\n");
-> [Severity: Medium]
-> Will this incorrectly handle unissued descriptors?
-> 
-> Looking at aml_dma_tx_status(), it attempts to locate a descriptor using
-> vchan_find_desc(), 
-> 
-> If a client queries the status of a descriptor that was submitted (residing
-> in desc_submitted) but not yet issued via issue_pending(), vchan_find_desc()
-> will return NULL.
-> 
-> This causes the driver to log a spurious "cookie error" and return a residue
-> of 0, which might incorrectly imply the pending transfer is complete.
-> 
-
-If it is not found desc, it indicates that the client's callback has 
-been invoked, and then he should not come to query status.
-
->> +     }
->> +     spin_unlock_irqrestore(&aml_chan->vchan.lock, flags);
-> [ ... ]
-> 
->> +static struct dma_async_tx_descriptor *aml_dma_prep_slave_sg
->> +             (struct dma_chan *chan, struct scatterlist *sgl,
->> +             unsigned int sg_len, enum dma_transfer_direction direction,
->> +             unsigned long flags, void *context)
->> +{
->> +     struct aml_dma_chan *aml_chan = to_aml_dma_chan(chan);
->> +     struct aml_dma_dev *aml_dma = aml_chan->aml_dma;
->> +     struct aml_dma_desc *aml_desc = NULL;
->> +     struct aml_dma_sg_link *sg_link = NULL;
->> +     struct scatterlist *sg = NULL;
->> +     u64 paddr;
->> +     u32 link_count, avail;
->> +     u32 i;
-> [ ... ]
-> 
->> +     sg_link = aml_desc->sg_link;
->> +     for_each_sg(sgl, sg, sg_len, i) {
->> +             avail = sg_dma_len(sg);
->> +             paddr = sg->dma_address;
->> +             while (avail > SG_MAX_LEN) {
->> +                     /* set dma address and len to sglink*/
->> +                     sg_link->addr_low = lower_32_bits(paddr);
->> +                     sg_link->addr_high = upper_32_bits(paddr);
->> +                     sg_link->ctl = FIELD_PREP(LINK_LEN, SG_MAX_LEN);
->> +                     paddr = paddr + SG_MAX_LEN;
->> +                     avail = avail - SG_MAX_LEN;
->> +                     sg_link++;
->> +             }
->> +             /* set dma address and len to sglink*/
->> +             sg_link->addr_low = lower_32_bits(paddr);
->> +             sg_link->addr_high = upper_32_bits(paddr);
->> +             sg_link->ctl = FIELD_PREP(LINK_LEN, avail);
->> +
->> +             aml_desc->data_len += sg_dma_len(sg);
->> +             sg_link++;
-> [Severity: High]
-> Can this write out of bounds for zero-length scatterlist elements?
-> 
-> Earlier in aml_dma_prep_slave_sg(), sg_nents_for_dma() calculates the
-> required number of link descriptors. For an SG element with length 0, it
-> computes DIV_ROUND_UP(0, SG_MAX_LEN), adding 0 to the link count.
-> 
-> However, this for_each_sg loop unconditionally consumes at least one link
-> slot per SG element, setting its properties and incrementing sg_link.
-> 
-> If a client provides an empty SG element, this mismatch might result in an
-> out-of-bounds write past the end of the dma_alloc_coherent array, leading
-> to memory corruption.
-
-Zero-length processing will be skipped in loop.
-
->> +     }
-> [ ... ]
-> 
->> +static int aml_dma_chan_pause(struct dma_chan *chan)
->> +{
->> +     struct aml_dma_chan *aml_chan = to_aml_dma_chan(chan);
->> +     struct aml_dma_dev *aml_dma = aml_chan->aml_dma;
->> +     unsigned long flags;
->> +
->> +     spin_lock_irqsave(&aml_chan->vchan.lock, flags);
->> +     regmap_set_bits(aml_dma->regmap, aml_chan->reg_offs + RCH_CFG, CFG_PAUSE);
->> +     aml_chan->pre_status = aml_chan->status;
->> +     aml_chan->status = DMA_PAUSED;
-> [Severity: High]
-> Is the pause and resume state tracking prone to corruption?
-> 
-> If aml_dma_chan_pause() is called twice, it overwrites pre_status with
-> DMA_PAUSED, which might brick the channel upon resume.
-> 
-> Also, if a client submits a new transaction while paused,
-> aml_dma_chan_resume() restores DMA_COMPLETE but doesn't call
-> aml_dma_start(), which could permanently stall the channel.
-> 
-
-NO, I don't think the driver will call pause multiple times.
-
->> +     spin_unlock_irqrestore(&aml_chan->vchan.lock, flags);
->> +
->> +     return 0;
->> +}
-> [ ... ]
-> 
->> +static int aml_dma_terminate_all(struct dma_chan *chan)
->> +{
->> +     struct aml_dma_chan *aml_chan = to_aml_dma_chan(chan);
->> +     struct aml_dma_dev *aml_dma = aml_chan->aml_dma;
->> +     int chan_id = aml_chan->chan_id;
->> +     struct virt_dma_desc *cur_vd;
->> +     unsigned long flags;
->> +     LIST_HEAD(head);
->> +
->> +     spin_lock_irqsave(&aml_chan->vchan.lock, flags);
-> [Severity: Medium]
-> Will the channel stall permanently if terminated after errors?
-> 
-> When a channel hits 6 hardware errors, aml_dma_start() halts the channel
-> and abandons pending processing. To recover, a client driver typically calls
-> dmaengine_terminate_all().
-> 
-> However, aml_dma_terminate_all() doesn't reset aml_chan->status to
-> DMA_COMPLETE or aml_chan->err_num to 0. Any subsequent transactions
-> submitted to this channel might hang forever because aml_dma_start() will
-> immediately return due to the persistent error state.
-> 
-
-Will add reset reset aml_chan->status to DMA_COMPLETE.
-
->> +     regmap_set_bits(aml_dma->regmap, aml_chan->reg_offs + RCH_CFG, CFG_PAUSE);
-> [ ... ]
-> 
->> +static void aml_dma_start(struct aml_dma_chan *aml_chan)
->> +{
->> +     struct virt_dma_desc *vd = vchan_next_desc(&aml_chan->vchan);
->> +     struct aml_dma_dev *aml_dma = aml_chan->aml_dma;
->> +     struct aml_dma_desc *aml_desc = NULL;
->> +     int chan_id = aml_chan->chan_id;
-> [ ... ]
-> 
->> +     if (aml_chan->direction == DMA_MEM_TO_DEV) {
->> +             regmap_write(aml_dma->regmap, aml_chan->reg_offs + RCH_ADDR,
->> +                          lower_32_bits(aml_desc->sg_link_phys));
->> +             regmap_write(aml_dma->regmap, aml_chan->reg_offs + RCH_ADDR_HIGH,
->> +                          upper_32_bits(aml_desc->sg_link_phys));
-> [Severity: Medium]
-> Are the correct DMA address registers being used for 64-bit addresses?
-> 
-> The hardware registers define RCH_ADDR (0xc), RCH_ADDR_LOW (0x20), and
-> RCH_ADDR_HIGH (0x24).
-> 
-> In aml_dma_start(), the lower 32 bits of the physical address are programmed
-> into the legacy 32-bit RCH_ADDR (0xc) rather than RCH_ADDR_LOW (0x20), while
-> writing the upper 32 bits to RCH_ADDR_HIGH (0x24).
-> 
-> If the hardware expects the lower bits of a 64-bit address at 0x20, this
-> might result in an invalid address and immediate DMA failures.
-> 
-
-These two registers are equivalent.
-
->> +             regmap_write(aml_dma->regmap, aml_chan->reg_offs + RCH_LEN, aml_desc->data_len);
-> [ ... ]
-> 
->> +static irqreturn_t aml_dma_interrupt_handler(int irq, void *dev_id)
->> +{
->> +     struct aml_dma_dev *aml_dma = dev_id;
->> +     struct aml_dma_chan *aml_chan;
->> +     struct aml_dma_desc *aml_desc;
->> +     u32 done, eoc_done, err, err_l, end;
->> +     u32 cpl_data;
->> +     int i = 0;
-> [ ... ]
-> 
->> +     while (done) {
->> +             i = ffs(done) - 1;
->> +             regmap_write(aml_dma->regmap, CLEAR_RCH, BIT(i));
->> +             done &= ~BIT(i);
->> +             aml_chan = aml_dma->aml_rch[i];
->> +             if (!aml_chan) {
->> +                     dev_err(aml_dma->dma_device.dev, "idx %d rch not initialized\n", i);
->> +                     continue;
->> +             }
->> +             spin_lock(&aml_chan->vchan.lock);
->> +             aml_chan->status = (err & BIT(i)) ? DMA_ERROR : DMA_COMPLETE;
-> [Severity: High]
-> Can an interrupt overwrite the paused state?
-> 
-> If an interrupt fires while the channel is paused, this handler unconditionally
-> overwrites status to DMA_COMPLETE and calls aml_dma_start(). Could this unpause
-> the hardware and break the pause semantics?
-> 
-
-When paused, DMA will not work and no interruption will occur. So this 
-situation will not occur.
-
->> +             aml_desc = aml_chan->cur_desc;
-> [ ... ]
-> 
->> +static int aml_dma_probe(struct platform_device *pdev)
->> +{
->> +     struct device_node *np = pdev->dev.of_node;
->> +     struct dma_device *dma_dev;
->> +     struct aml_dma_dev *aml_dma;
->> +     int ret, i, len;
->> +     u32 chan_nr;
-> [ ... ]
-> 
->> +     ret = devm_request_irq(&pdev->dev, aml_dma->irq, aml_dma_interrupt_handler,
->> +                            0, dev_name(&pdev->dev), aml_dma);
-> [Severity: High]
-> Can this cause a use-after-free during driver removal?
-> 
-> Since devm_request_irq() is used in aml_dma_probe(), the IRQ remains active
-> until after aml_dma_remove() completes.
-> 
-> In aml_dma_remove(), the driver loops and calls tasklet_kill(&aml_chan->vchan.task):
-> 
-
-NO, when module remove, mask all irq.
-
->> +static void aml_dma_remove(struct platform_device *pdev)
->> +{
->> +     struct aml_dma_dev *aml_dma = platform_get_drvdata(pdev);
->> +     struct aml_dma_chan *aml_chan = NULL;
->> +     int i;
->> +
->> +     of_dma_controller_free((&pdev->dev)->of_node);
->> +
->> +     regmap_write(aml_dma->regmap, RCH_INT_MASK, 0xffffffff);
->> +     regmap_write(aml_dma->regmap, WCH_INT_MASK, 0xffffffff);
->> +
->> +     for (i = 0; i < MAX_CHAN_ID; i++) {
->> +             aml_chan = aml_dma->aml_rch[i];
->> +             if (aml_chan)
->> +                     tasklet_kill(&aml_chan->vchan.task);
-> But an executing interrupt handler on another CPU can subsequently call
-> vchan_cookie_complete() and reschedule the tasklet.
-> 
-> Once remove() returns, devres unregisters the DMA engine, frees the IRQ, and
-> frees the driver struct via devm_kfree. The tasklet will then run and access
-> freed memory, causing a use-after-free panic.
-> 
-> Should the driver explicitly free or disable the IRQ using devm_free_irq()
-> before calling tasklet_kill()?
-
-Yes it had  mask all irq before call tasklet_kill.
-
-> 
->> +             aml_chan = aml_dma->aml_wch[i];
->> +             if (aml_chan)
->> +                     tasklet_kill(&aml_chan->vchan.task);
->> +     }
->> +}
-> --
-> Sashiko AI review ·https://sashiko.dev/#/patchset/20260626-amlogic-dma-v9-0-558d672c4a95@amlogic.com?part=2
