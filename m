@@ -1,290 +1,184 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011046.outbound.protection.outlook.com [40.107.130.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB873358C4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 21:05:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783717525; cv=none; b=m4+fXl8FwSud72o7TGHu2ehDjpdNlFcyQadLxIVAmsQXsXOsDaJCUisHVBVF/i0yIZZhBP6/wsO/j5qCf5t8DJbc4SQ88ncz4QCnTeywOs3XBSSYK/YkBsEvyz2+lRWrMCbBdoKGCsyPvMRX3n7dZXPD6/N+BqPqg/lyVLhHGrQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783717525; c=relaxed/simple;
-	bh=FTZWWjRhWDfYbUZdVlv5lAyKBGf81/olpriaG8gMRgA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=a+QtSGe2ymWw0883oeUyERsJy/+O5BhwVh5bPVVr8u8EeID/Gn7EozybkVoJr/7p60nTzI7SWdnoaI8GTFfGiWlTJnwJnRCR1fTh12nfjN8XSbvUwTw/TBGWEWYVu4W9NGt+2fRA6WKAQMF6oJQ8huqDB/PDTiPTYJYSJ/mmjdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20251104.gappssmtp.com header.i=@ndufresne-ca.20251104.gappssmtp.com header.b=Bn6f9cRT; arc=none smtp.client-ip=209.85.221.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00973B3BE5;
+	Fri, 10 Jul 2026 21:14:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783718043; cv=fail; b=Ozf1rnSRM7SrWvkN/gWqx6YW5vfN1FbaLRCNa7LXvf13nVtXHjeOE6byGJOYtS8tSw633S76bFZavLF7AvMtxFOm9yn9NGsq3LCwohqMK9o1mwztWtccUU9Z/ef5/kWj29aHc0hQWPnzs1Bskor+XT9jONuqW+ZRi0v7SOhciV0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783718043; c=relaxed/simple;
+	bh=CU2vgnJzKREOoh7lkKFhtErkn4zdQZE1cF3S6aWZ7Wc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=p76D2c4a7EyK8TGxj/4ynQK83vhj9JjzVVg5RX9lqYEnQIbfaN+kUxt/4FUhl/FHB0PqQ906/MfJ/Arw3UfInfU38M6DWgX/7rjTBOuBvQOSTQY6dD5jCqCEWGPKjbthAMf4w3JUqaq5HUPSjJggkL6uvRGk14iD2vhOMmyuSbg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=qG2K8lVa reason="signature verification failed"; arc=fail smtp.client-ip=40.107.130.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20251104.gappssmtp.com header.i=@ndufresne-ca.20251104.gappssmtp.com header.b="Bn6f9cRT"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5bfaa014978so438680e0c.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 14:05:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20251104.gappssmtp.com; s=20251104; t=1783717523; x=1784322323; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-type:autocrypt:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fzdRgw5D47A6vc4awRc8DLJJmN1O3Mb0gJhGI5I9fBI=;
-        b=Bn6f9cRTWz2lBj1LGdons3aVPDc6k/1PQ7e+uHOzzhZn3k0v6uOFFFrpr6UH/QNfM8
-         iJ+VDSaVx5kv/9n+lRR/6CTpkaW3nUy4xoubSxq2XCYRPIwK90nLkwF+lV2zMV9Z3yVc
-         FAHY925C+/qpgYNusCiX4T2tJ3YsfP6C3CvBl01Kd5aaqm4kUkYaJamvG5uzdyjDfPeB
-         E2/+PGQHLU1V4Hznf0Jb5QnP6fHF5jZ1Ge5sQYWX8qHQiJJxght1HaDRVSqYUJCGH6yP
-         U4JhCAy9iC/PJTptuJ3vK9IcvAfwrxrmTHiqFDyPKp3DnFNRN/ry0xJqICd5Hvdw8Y0C
-         QreQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783717523; x=1784322323;
-        h=mime-version:user-agent:content-type:autocrypt:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fzdRgw5D47A6vc4awRc8DLJJmN1O3Mb0gJhGI5I9fBI=;
-        b=PF4xKGwi+L9MDl+pbEStTNM9uPEYwGh/vg0QEy2J9qwLZafZ2XA9TicQm+EXt8kowK
-         bjSFsGS1V3UunJbsy+mSYucToqVM1kiU3rGvdmhTlksxGiSm4WzOwxeLZe8d08AXo/7B
-         XiNxz2G5S3DECRbqDXvYu8unEdO/DGnShjz2pEuT68V2Ua1M8x1x4osqa+VI+ZN6uh0K
-         eS4DENEN+ujLBWGs8KNZb/S4vHpL5p5Dd3rfhMV7zQuSM1tn85id4pS7Jk5kp8YRY86T
-         2rSVcSmg5pFlva0QmbhywEo18yReEVYd++JjGR2r/UGym8ALY3wsrv55wLveZl1eROpV
-         +12w==
-X-Gm-Message-State: AOJu0Ywbhq3vcx5bfYkKMoWNMrmHb6HmbW4xke82b1EQgBi1xjl7zg3a
-	REezNlwrLNO+5cmMUlyOwYD54r5G3R0DzIlJc4EFTtQ9cSbhtc9zyAFLDetzYTkq6fjbC0vWzQT
-	5D/0Bh+c=
-X-Gm-Gg: AfdE7cmm1f8E3CNEhzSNevjrn1qXMa/jc10byDVSQiPMwqsIZvS9kUQzRRnwnIZpK/R
-	d0tRzv2lP0uGMwJ8s4Y0ard/gK0AoG9zqhjzGTllv1cbmDmXbF8W9qEcHo/chaOYg56bA51/roY
-	wpKDbONNOUj/PwiQkI/+ZK7M4vP7LlGukibW8pOvA0ECK5JeiZPv1Zh050wROo2S2ks4XfmazHB
-	es58BXgqExRj3WGlhkE+VF/2jcLXlosY/ikMVVpEMWMTbUPWKbELwED/xeUp3g/7SwdFCHVmfp8
-	k5YFgGHe/ehw3bxUbKf/TJIFO4iXVIL+0GqyVBPzBHVZkWE0f7bpIz1McHOrRsDQs9mnvCNKTkl
-	GAjnLdnq+u+oYBWqczlriX+zkI99VYMnN1f0q2z3W/si5KEBj250cHIusycv8xQRgIiMUdnPZkf
-	TZEl5cl6jrD4Wipy8JAw==
-X-Received: by 2002:a05:6122:83f2:b0:5bf:bb2c:1325 with SMTP id 71dfb90a1353d-5bfbf2b3c14mr551931e0c.11.1783717522463;
-        Fri, 10 Jul 2026 14:05:22 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:15:e06b::c41? ([2606:6d00:15:e06b::c41])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5bf6f66bdfesm6547770e0c.6.2026.07.10.14.05.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 14:05:21 -0700 (PDT)
-Message-ID: <54627c5dcc9d0f8318163dfa63ddca9f3c3a0845.camel@ndufresne.ca>
-Subject: Re: [PATCH 12/17] media: rockchip: rga: move core initialization
- from bind to probe
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: sashiko-reviews@lists.linux.dev, Sven =?ISO-8859-1?Q?P=FCschel?=
-	 <s.pueschel@pengutronix.de>
-Cc: linux-media@vger.kernel.org
-Date: Fri, 10 Jul 2026 17:05:20 -0400
-In-Reply-To: <20260605222016.84C581F00893@smtp.kernel.org>
-References: <20260606-spu-rga3multicore-v1-12-3ec2b15675f7@pengutronix.de>
-	 <20260605222016.84C581F00893@smtp.kernel.org>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-1IFg3XQG4ab9EwEqwNVw"
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="qG2K8lVa"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YAgbbfU7bvIGsQ1wUnkmpmrK7Or8O4QYWPocv9jllrkJtznZHN1Z6MMkdbt5Mn1gWylt6SM2/vCU9oqHbi/WZ4oZx/r3B8LXZJkxG9iY9dAc4TFUEx3Xf1vngkI7IuD7ebQ/a6eA6+KQoFAyxLCStAQ92XqrNHUzlYsgqA9cpUYCtPxrlAqsa0DoDbI2GGikiTbpNfj3xGWcaIlmSld1VJj744NlRTB6xfMtulyI2r413ab0ajJ/sZF5fThLMvg/y6rLW1sWF+OCb+JaT1lbQ6SnaMvVog25VSu0pTer2zmVjE6sTaXIfoxSOM9aPlIIlEnyc6mUB/frteyMQ0wwoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fKpF3Qsv0LEMUHmnQ8w6AbGfaJsl3KLhraXtwuNrPW0=;
+ b=I6x9xOnYrcwVlTvEKAm/XPEygX5ylbtgB2shOS4CpQGPNASGPFEIKZNJYLE7rMJxnEmWcjNkGxLpArr3Xq9sAZisvg5gOatVw15i9OHiO28/spJwjiNYm0kLJvQ+du90Dzo5yk4bqnxQA68ATIakTE9JnuwscmwsAXNEZtH7NTV96B3gIOXV0zW2EWPenZc3pLXeRPsyIezJgQ/vdfq5u6RNWYA9gCwHCVn76U7PmkTiibBOwOL0vE80y94H1gXiTR5qL6jWD82QrY8BhQ1AMkDPLTtnmpREPoI75M/jBHu85hh338XN/fezrzryxG8QfGxSU6O5s3LwZn81yRgAoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fKpF3Qsv0LEMUHmnQ8w6AbGfaJsl3KLhraXtwuNrPW0=;
+ b=qG2K8lVasSqlc51jirWwELVTnix5wot+bxnIyI0FElc5wFUuxRKs9czrCQSvZBehNhQuowdK0GXrs4yvV+6Io5TItpfeq+DCzPOxtcFa2VgSmDmVuXohQYS/ycRDpd8wVZY5HucXsFiUPaI2CKKP5XbDBdPGU1f20g3G5BtFFaOom7ujy/kHAcu/bMZRVqtI4E09r/GqPyzWOlWtk/N0K2ThS0UllDnntOFW+iTicEMewe128a46jW6pEwzNwMvzJaO369zwFGLPBzuw+bZbtvuIybcgWEEemlW2T72Y5T+GPg4gyeTSpoOi4BLAfFRFW7L0gBdmOnOb4FxmhEzv2w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DB9PR04MB10066.eurprd04.prod.outlook.com (2603:10a6:10:4c1::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.17; Fri, 10 Jul
+ 2026 21:13:58 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Fri, 10 Jul 2026
+ 21:13:58 +0000
+Date: Fri, 10 Jul 2026 16:13:50 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Esben Haabendal <esben@geanix.com>, conor+dt@kernel.org,
+	Frank.Li@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+	imx@lists.linux.dev
+Subject: Re: [PATCH] arm64: dts: imx8mq: Add dcss node
+Message-ID: <alFgjl9oE2C64K62@SMW015318>
+References: <20260710-imx8mq-dcss-device-tree-node-v1-1-fc724dfd574e@geanix.com>
+ <20260710095211.6BE9D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260710095211.6BE9D1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8P221CA0057.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:349::12) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB10066:EE_
+X-MS-Office365-Filtering-Correlation-Id: f4d1a276-ea93-4e9a-ac88-08dedec82846
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|1800799024|366016|376014|23010399003|18002099003|4143699003|56012099006|11063799006|6133799003|3023799007|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	hl1rW6laY2WdnHJHRfmnX7P1AuaBZeNPnVtO5xcBH8GQ95r3Kasmfm/c1yxfOSr4deAYpmRRbpmqj8Yvcc6ckc6rMbsnNf4dua73RS12VAY5VPQMAcg8ilsWua87P/Df/ERFkB9v9gwgyGueEk5KUbvy5cMwaFmQTPImxZVMB5Fyf5jjfhATAlhwApf4i8x/hCOqUJb2HwMKmSmNTfNLpmsem4gtTiiMUg5WXFnDrv5+rVs3R3e6dwvNiP57xvFVNNDcvhGk30B0+ru8saybYnvNall6YSMtOBygGAUauURfi8SzfEPdqRrWeL4JXTtCki9WBwQSFu0ZEVdKYOQQrYr5EOcKvd7sulm7ctXm2q3GKWFC8NtVdzMbgD0RGkTMWJCk1GyG9oZcrnWWrruqhNGwioYn+R6jJqnvqKgpHBTEADsZOas0M/uqXfEYOEfan4JufdH/hZ8wuiVmaRi7xOsy2nyQ5au/9H7hHYQ01dqhVaMIlhfKRW+1IylvAcuWvuAvPkXHypfRnVlK5Qz0UdRV6f+y67B47oxIVnvbprsy4zZhzxVpZjhOe9JOolQ/lEO314rdvYulk5hiETVtTx1BcBE+MMTL9dmplZxSjUk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(376014)(23010399003)(18002099003)(4143699003)(56012099006)(11063799006)(6133799003)(3023799007)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?DJ8St8+iCzuZrmnw+W0u4xRpIbFYQx22QL0qEF1H8khYzjxsw3qphyMGux?=
+ =?iso-8859-1?Q?Qg+OTRF591UOAJnld5micwyHpPCNjMro99dO2SQ2HtayTxpim4l6ogd4fZ?=
+ =?iso-8859-1?Q?3s+lVzPDeA3xmWN4090yjk6H/Cg3ECizIZILUzaFFxuN7krPOrjMoqcdh6?=
+ =?iso-8859-1?Q?OnotfLQF6LSG463FP0sg90CjmP5LKDsm6ycHBfwbtwGY+4WQSX+gL9M3cl?=
+ =?iso-8859-1?Q?t5pPC6xrNeotOnGVyTDPVhsC93I4xCWLrb84swnuExDAmx8lem2M0/Vmu/?=
+ =?iso-8859-1?Q?rnV904p6D+qoOsc8CqkmpQC673SG3DMWsiHIzWGWSJXGpfuoW+vT4Yy1wU?=
+ =?iso-8859-1?Q?EEL4jLzxxL9GHfirH53v2MQ1JFFoTltf42TZ0BcXox46oFd87SB5i4Q927?=
+ =?iso-8859-1?Q?HIy1NKY2B6e58vk/rON3BwgyWIfrIKINK3hFYNsl1C1FKjp7g5HJd33uUU?=
+ =?iso-8859-1?Q?z9VODaO+qkV7CUvtDY4Gk6ma2gmmHlhtWdCzoZWkspfTmIz6Y/MydS4MUS?=
+ =?iso-8859-1?Q?Bwfdy1LjgB9T427mHQe9qhlwDdfGw+F1sR8bRDjIhR0hLXefEpKmWwZ8kJ?=
+ =?iso-8859-1?Q?55OKPCpUx58Rak7rNKNUrWUflpzmUhJdUjsCglU9XV2E+3EnhEajN1dNHB?=
+ =?iso-8859-1?Q?UyeKSVohX6enGzJM6P4yWyiG1W4Iy6GOhlnVT6KafeHQzvgYaVkF5ZZ8wN?=
+ =?iso-8859-1?Q?JNDf8Vx4DDsATIqvnxQXYo1/j+OxV2PLpRyUhcd138oDpIrV+iKnmSRiSn?=
+ =?iso-8859-1?Q?FhqCLZ3SZDX35VQ4YfNTstc5ssTYqSXfd7N5jv3mYxFLR2VfZgsw6MYkBP?=
+ =?iso-8859-1?Q?7sYUanRnimF90nS7a4UEajvycgy0bOJU2le/QoxWYLwxkhnLVNaJFr1D/6?=
+ =?iso-8859-1?Q?mBz4HpyjgCGXd+QmWmQaBdZwbRgXFOv16qL/1GmOyxnCUPSe9l/vjgQeH2?=
+ =?iso-8859-1?Q?EHICOws7Gb23OBlPA2hHv/v6AMkjKxg1bq2WfiFW/9c01saQ/qGTPQu3ka?=
+ =?iso-8859-1?Q?0+w3kIjIlqbPocaJQhfNAdMD/inTn+g3KKu+KT1HI1Q5nAL8/cE97UXR4V?=
+ =?iso-8859-1?Q?JLjYoknO0aFlJYfQbDuO2azisgrecWRNDe061diO3f1g4QUZ+Pn6uk0NUj?=
+ =?iso-8859-1?Q?jQqlE6VzTdx3t5Q1Cc/NTeGySOUVcqPa+d1z6FvBgc41eOzqpQ6MbYLCBe?=
+ =?iso-8859-1?Q?xHGsQrkI/OLNghJ1WSoG7cwzlfXNSTF2jWhU4+zujA1DG3qpl3cgGXNYHH?=
+ =?iso-8859-1?Q?aJ0v3DcADxWfIGjXNlZwoqs4r2O2mniHCc3XUcJH3we6T83xCEznd7nZb9?=
+ =?iso-8859-1?Q?E+MVW7bJ5nJpCsY63Qrk1V7CbWKVcLGPhfVehcWWmp64447KuM8xgwStCD?=
+ =?iso-8859-1?Q?fVACZcDIXR8AiMtC/NwGMcIfI0JcZ9YOIYEfqAaVNBjReqklW5gAPJHlVa?=
+ =?iso-8859-1?Q?lY8EhPxCoHoxtuL7Q0RYd/lYlFjmqV5DIZxq1R84aKIWBNq0V8ZxQD32Iv?=
+ =?iso-8859-1?Q?LFzCqnOPsauZR+H3RleBBnueux5eS6pFfNZfidWKpy2qEikAwVO3jIZCks?=
+ =?iso-8859-1?Q?msXdk/BkKj0JrvmxiiUur9wfUcMaUytRNf8GWA0vxyyWuWpo2LgKIWVN7r?=
+ =?iso-8859-1?Q?3H+6GPXr8N+Fd4dbSOeIgpzVv6nvOLDzhUTsnrtvJWTXNmRw/GqbZDiivb?=
+ =?iso-8859-1?Q?ue29FDAfznm4K6hSDkcpqEFgYk5tnm8Ur0gcmtYvaYcRGvvpkRRFEBphH9?=
+ =?iso-8859-1?Q?lRjS47hzdouNtwnh3YKeo0jDsyVkazUUpRKROFH9jl6f0W+z/9zqPaT+oa?=
+ =?iso-8859-1?Q?sb/dU31wKo8MnLxutlARUgQ1jssW8XtaBdcgV9dlby0mm9ml98dV?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4d1a276-ea93-4e9a-ac88-08dedec82846
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 21:13:58.5410
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Fc2v631tQxBGirDmtWidpXKjJYUiXWJdPQn2F+7U4Fqf5DY6VLE5heNKuCb9S/kWuDq0/XyZhnSmfs2QfzsPmf6um8KfkNBYA2MW+HV/itwLr/vRaQJee6joEfgnsNPv
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB10066
 
-
---=-1IFg3XQG4ab9EwEqwNVw
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-Le vendredi 05 juin 2026 =C3=A0 22:20 +0000, sashiko-bot@kernel.org a =C3=
-=A9crit=C2=A0:
-> Thank you for your contribution! Sashiko AI review found 6 potential issu=
-e(s) to consider:
->=20
-> New issues:
-> - [High] NULL pointer dereference in `rga_isr()` due to early shared IRQ =
-registration.
-
-Not really applicable to this type of HW.
-
-> - [Medium] Missing `pm_runtime_disable()` on `component_add()` error path=
-.
-
-relevant.
-
-Nicolas
-
->=20
-> Pre-existing issues:
-> - [High] Unprotected hardware access in shared interrupt handler.
-> - [High] Missing `synchronize_irq()` in runtime suspend for shared IRQs.
-> - [High] Use-After-Free when the master device is unbound.
-> - [High] Missing NULL check for `devm_kzalloc` allocation.
+On Fri, Jul 10, 2026 at 09:52:10AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The `dcss` device node is missing the `power-domains = <&pgc_disp>;` property, which will cause a bus hang when the driver accesses its registers.
+> - [Low] The `dcss` node is placed at the `soc` level, outside of the `aips4` bus node, causing an overlapping `reg` region and violating the hardware bus topology.
 > --
->=20
-> commit 8a3476b206ac8426da5cf08410222d4a74238c92
-> Author: Sven P=C3=BCschel <s.pueschel@pengutronix.de>
->=20
-> media: rockchip: rga: move core initialization from bind to probe
->=20
-> This commit moves the core initialization from the core binding function =
-to
-> the core probing function to better match the actual initialization seque=
-nce.
->=20
-> > diff --git a/drivers/media/platform/rockchip/rga/rga.c b/drivers/media/=
-platform/rockchip/rga/rga.c
-> > index 952377ae467f5..0413b8518dfc8 100644
-> > --- a/drivers/media/platform/rockchip/rga/rga.c
-> > +++ b/drivers/media/platform/rockchip/rga/rga.c
->=20
-> [ ... ]
->=20
-> > @@ -740,21 +740,49 @@ static int rga_parse_dt(struct rga_core *core)
-> > =C2=A0
-> > =C2=A0static int rga_core_probe(struct platform_device *pdev)
-> > =C2=A0{
-> > =C2=A0	struct rga_core *core;
-> > =C2=A0	const struct rga_hw *hw;
-> > =C2=A0	int ret =3D 0;
-> > =C2=A0	int irq;
-> > =C2=A0
-> > =C2=A0	if (!pdev->dev.of_node)
-> > =C2=A0		return -ENODEV;
-> > =C2=A0
-> > +	hw =3D of_device_get_match_data(&pdev->dev);
-> > +	if (!hw)
-> > +		return dev_err_probe(&pdev->dev, -ENODEV, "failed to get match data\=
-n");
-> > +
-> > =C2=A0	core =3D devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
-> > -	core->rga =3D rga;
-> > =C2=A0	core->dev =3D &pdev->dev;
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this devm_kzalloc()
-> allocation need a null pointer check?
->=20
-> If the allocation fails under memory pressure, the immediate assignment t=
-o
-> core->dev =3D &pdev->dev will cause a null pointer dereference.
->=20
-> [ ... ]
->=20
-> > @@ -775,7 +803,7 @@ static int rga_core_bind(struct device *dev, struct=
- device *master, void *data)
-> > =C2=A0	}
-> > =C2=A0
-> > =C2=A0	ret =3D devm_request_irq(core->dev, irq, rga_isr,
-> > -			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rga_has_internal_iommu(rga) ? =
-0 : IRQF_SHARED,
-> > +			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw->has_internal_iommu ? 0 : I=
-RQF_SHARED,
-> > =C2=A0			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dev_name(core->dev), core=
-);
->=20
-> [Severity: High]
-> Since devm_request_irq() is now called here in rga_core_probe(), could th=
-is
-> trigger an early null pointer dereference in rga_isr()?
->=20
-> When hw->has_internal_iommu is false, the interrupt is registered as
-> IRQF_SHARED. For shared interrupts, the handler can be invoked immediatel=
-y by
-> another device sharing the line. However, core->rga is not initialized un=
-til
-> rga_core_bind() runs later.
->=20
-> If the interrupt service routine fires early, it will evaluate
-> rga->hw->handle_irq(core) and unconditionally dereference the null core->=
-rga
-> pointer.
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does the shared interrupt handler safel=
-y
-> access hardware registers?
->=20
-> Because rga_isr() is registered as IRQF_SHARED, it can be invoked by anot=
-her
-> device while this device is runtime-suspended and unclocked. The handler
-> unconditionally calls rga->hw->handle_irq(core), which accesses registers=
-.
-> Reading powered-off registers typically causes a synchronous external abo=
-rt.
->=20
-> Should the interrupt service routine use pm_runtime_get_if_active() befor=
-e
-> accessing registers?
->=20
-> [Severity: High]
-> This is another pre-existing issue related to the shared interrupt, but i=
-s
-> there a missing synchronize_irq() in the runtime suspend path?
->=20
-> In rga_runtime_suspend(), clocks are disabled without synchronizing the
-> interrupt. If an interrupt fires on another CPU just before clocks are
-> disabled, the handler could actively read registers exactly when the hard=
-ware
-> is powered down.
->=20
-> [Severity: High]
-> This is a pre-existing issue, but could tying the shared interrupt to the
-> core device lifetime cause a use-after-free when the master device is
-> unbound?
->=20
-> The shared interrupt is requested via devm_request_irq(core->dev, ...). W=
-hen
-> the master device is unbound, its rga structure is freed. Since the core
-> device is not removed during unbind, the devm-managed interrupt is not fr=
-eed,
-> leaving the shared handler active.
->=20
-> A subsequent interrupt will execute rga_isr(), which dereferences the
-> freed core->rga pointer.
->=20
-> [ ... ]
->=20
-> > @@ -833,11 +825,20 @@ static int rga_core_probe(struct platform_device =
-*pdev)
-> > =C2=A0
-> > =C2=A0	ret =3D component_add(&pdev->dev, &rga_core_ops);
-> > =C2=A0	if (ret < 0) {
-> > =C2=A0		dev_err(&pdev->dev, "failed to register component: %d", ret);
-> > =C2=A0		return ret;
-> > =C2=A0	}
->=20
-> [Severity: Medium]
-> If component_add() fails, does this bypass the pm_runtime_disable() clean=
-up
-> at the err_put_clk label?
->=20
-> Returning directly instead of using a goto would leak the device's Runtim=
-e
-> PM usage counter.
->=20
-> > =C2=A0	return 0;
-> > +
-> > +err_put_clk:
-> > +	pm_runtime_disable(core->dev);
-> > +
-> > +	return ret;
-> > =C2=A0}
+>
+> --- Patch [1]: [PATCH] arm64: dts: imx8mq: Add dcss node ---
+> commit 014c87fe4bc51f0ac006bc4660c8f156f9a40538
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> arm64: dts: imx8mq: Add dcss node
+>
+> Add DCSS node for i.MX8MQ based on the example in the bindings documentation.
+>
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+> > index e60872aeeb49e..fb99bd3ad7c92 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+> > @@ -1611,6 +1611,27 @@ irqsteer: interrupt-controller@32e2d000 {
+> >  			};
+> >  		};
+> >
+> > +		dcss: display-controller@32e00000 {
+>
+> [Severity: Low]
+> The aips4 bus explicitly claims the 0x32c00000 - 0x33000000 address range:
+>
+> 		aips4: bus@32c00000 { /* AIPS4 */
+> 			compatible = "fsl,aips-bus", "simple-bus";
+> 			reg = <0x32c00000 0x400000>;
+> 			ranges = <0x32c00000 0x32c00000 0x400000>;
+>
+> Placing the dcss node at the soc level with address 0x32e00000 creates an
+> overlapping reg region and violates the hardware bus topology, which can
+> cause structural devicetree warnings about overlapping ranges.
+>
+> Should this node be placed as a child of the aips4 bus instead?
 
---=-1IFg3XQG4ab9EwEqwNVw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Make sense, please move it under aips4
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCalFekAAKCRDZQZRRKWBy
-9EJxAQCerJAHaLRN7FFNTY3YyPH0fqeo6LEF7j3+G+gOa6SqPAEAkqdjquJ6+79k
-yKGWesuohb6hpxdNV7L0h2dJMmp88gU=
-=YL8F
------END PGP SIGNATURE-----
-
---=-1IFg3XQG4ab9EwEqwNVw--
+Frank
+>
+> > +			compatible = "nxp,imx8mq-dcss";
+> > +			reg = <0x32e00000 0x2d000>, <0x32e2f000 0x1000>;
+> > +			interrupts = <6>, <8>, <9>;
+>
+> [Severity: High]
+> If power-domains = <&pgc_disp>; is omitted, the generic PM domain framework
+> won't track the dependency between this device and the DISP domain.
+>
+> If no other active devices claim pgc_disp, the PM core may disable the
+> domain during late_initcall.
+>
+> If a board enables this node and the driver subsequently tries to access the
+> memory-mapped registers of the unpowered peripheral, it will trigger a
+> synchronous external abort and panic the kernel.
+>
+> Is this node missing the power-domains property?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260710-imx8mq-dcss-device-tree-node-v1-1-fc724dfd574e@geanix.com?part=1
