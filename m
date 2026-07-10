@@ -1,160 +1,105 @@
-Received: from mail-wr2-f1.google.com (mail-wr2-f1.google.com [74.125.225.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283CC38330E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 19:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9264A33121F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 19:34:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783711133; cv=none; b=qr7NjdxP9Ma23Dzj4CR/X940waY4yewwOSChoBXXh1e75acZyTh9nod0DcWoOHrOHKNvlnxwJRNtKmMC26gV1pOniKGnZMxzVI20LzG0Q0Wfx/j1rkHABMRNIgUoTzonAvfMTChl69Y/Oxl4sb1KBjljNXJVk05ut9v8adqP8jc=
+	t=1783712081; cv=none; b=XEyiistHnC1KKExOr1WO9LbsoEHoAviCI8/HJXgiSDa6NFX3bwaVXzuPGg56p0/8u6FGOey4YJ+ep6JWUHcW/tYTqpNEcAz6G5E8+OwhtXNjo/BcvnznTljzN6/8jmltQz1UoBQ/gqi/tcOMCOgX0mDrx4avMQmfoyUTgMH2j78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783711133; c=relaxed/simple;
-	bh=tz5l1P2egXZ+99pX+TrYhBbm0hYsBmZPTPE5maYt1kM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=lqBFk/PQEA+zTqW/+Fp64tKiQJ34rM7JqXf3ZjnbAx4+li1Xs3+BuERJkFF6UV4RydrsVJKymnkpcFwBnqkRqBYZCWvUHPuWKx3e/5SuhV6Z+Pc2qMIx7q4XkZKbSZKH49zWpujB9AoikKIZ6Yai8ubfHGJk/RWprb4I7vkOtAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxVQuJSl; arc=none smtp.client-ip=74.125.225.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783712081; c=relaxed/simple;
+	bh=Y6+nf4pYiD66IQwC5MVJ3wtSCsQcpZkmSRvDQF+Qy34=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LC12syUL3ARMbJ/xkmHle2JWppO6gViZznNkh07K8HG8lcoQuiRMw47btPGEu3D3+sYC3kcRFWKTBSazPjeANiRTFMgacKHnj9a8jT1tBnm8MV9hZ761Rcz81FuLTn+rWHTasQV8wB3tP7XmLv1LzoVo3q7mvMSeptMdlX41P6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wU43qsrA; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxVQuJSl"
-Received: by mail-wr2-f1.google.com with SMTP id ffacd0b85a97d-473b8c0fd5aso400788f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 12:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783711129; x=1784315929; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Tp/39SgrHI5z29550UsltrkPPkRKtfmpmPjcf1jfZbw=;
-        b=JxVQuJSlLJiM25WzVQXWC8skd5V4+OJ/K/jdx+7hdsL9lcIy9xWC8cSlwSNLjLHXyY
-         yEs3/SGdIKzFO9VjcUKsrZO6tNyVDWkyZ1I0imN5/FHHA6IcMkY885tdKBALQaaOJDM4
-         9Yn1ph193Zjg6UmslGsLtZp5drVhZohxaZyp+qz14BPWBVYDunqtBPFrXtq8I4Y9/mcc
-         S81gzdhRTpJY7tmHoOGZ/88v9z0bHkfalECaDAwQNC/ZYeFuEasmWha8mqC3jX4lxZ90
-         IfSVqs+KerCaQGKxWmjrMyBpTgGI7M+3dc9o4iN1vkTLf8HJGnDryXQOK99KnquGbeB/
-         WWww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783711129; x=1784315929;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Tp/39SgrHI5z29550UsltrkPPkRKtfmpmPjcf1jfZbw=;
-        b=H3ICjUD4bOjn6m6va8VQn0XbVAPcHMCg8uEokVIgGlJ5PdQPtM1ehugJpCLNikuS5i
-         udHQM9W3SK4ZwQ9Ex9JFpCVZMGufHwnWKlm5/5Ea0/HT4/hgMPzMVckwBFNCOLrdd7p7
-         NoTMIJKQ7kqeb8uDcmFbJo1ryxgL70wNVLo97Oxud1HtvD0N798H4Cmp1u6Gc0v+g7Bo
-         jh1yZglD5qnrlQ0WZq/Y6tqecbQCxhyBc2ybOSo9briXGYvQAaJ5/jQloPmiFU6dwBby
-         h2ycqEBqW5zcxBOsZ3HKEw5z6zvqSgkqKTfxzeM+XvZw5etblMbkIHzAvlEy1yrxEYOg
-         YPfg==
-X-Gm-Message-State: AOJu0YxD9c50bFK1DsVzr5ZRKWDO/2kpgs08GDphPZcuQ1nPYbgQ/rBQ
-	yBRyE6QAjEw4e2LkKYMuVar/FHeZfcBdKNMmBV3XHxfxXkRVsP5mvj43uWLK/scZ
-X-Gm-Gg: AfdE7clAA1jTW+1/6jRGpy8DPvTvKSI1vomza/4u27dNhACBSAjY381oQNS4YOVBDc8
-	Gi0Q6RRErzzJ6p69RyNzpTXHuXSw6xN3xdw5kqNLEmPGDV7ZY/gap68CS1DI+X+QJ38vJBQp3Vw
-	feOXeuoQBcnY8Q2/McsfJV1O29J9PiFGA7AOJ4+nQe17ygUxKgoZ1oG7iP9CTla/RvS+jvX6Jpu
-	h8ZO12p9cjb5DGzTLDMhzmGGsg+loWjXcGdoniyUzuZ18v4lp2isrEsZwOaVhgAbBKAEgcC4z+h
-	WyRRtg4YVDt655/MIjftdVa+g14xKJ56TdXW+vWQZHB4f/9KRQQw8xI0Qc0l9g7VHe1XoHJnT3O
-	UTfpKhAh+dqGi+wxNTDIb7tSmqYtiDXM/pFDQF0ALlBhedhviVfrwAqAYpACo8m21aYSYqmn78K
-	85Y+2BwHEVeFQ2gufi35cXJ/VGmMZjpWyg5mOnDVYkogPvdKQiT5qXolh91hgVAkOHjjhOaJMgu
-	Mm9lsovy+DE6cQDcEPqgufZ4N9ZkgsQu+pq3Vi70cj/EJe6WfNibKA=
-X-Received: by 2002:a05:6000:2912:b0:454:a41f:d082 with SMTP id ffacd0b85a97d-47f2dcb3f2fmr79469f8f.3.1783711129397;
-        Fri, 10 Jul 2026 12:18:49 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9e4d8410sm63392320f8f.15.2026.07.10.12.18.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 12:18:49 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wU43qsrA"
+Message-ID: <96c07e3a-88f5-4929-aa53-0efb2c2bb0cd@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783712077;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NKPDYV6Qi1oG4WEUcHIvfux3VXMOK/Ne754E4CrT+nU=;
+	b=wU43qsrA7h3/ElGTL4bNCm5CjFt/YFmNgGzE7Ya1xn2PouyPgLaded6LeK5e5YZvOMls+O
+	G556clgmGS0bk7pNgi4QTxlPzR2jVc30E6xLsS3I3zGBTGx5yNCjgjGjeCGfJfBlnicJ7i
+	QuKjkwtDA/C4AXBYxZx+9T7TuJWWOAg=
+Date: Fri, 10 Jul 2026 12:34:21 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf v1 1/2] bpf: Fix tracing of kfuncs with implicit args
+To: Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+ sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260710005902.2234832-1-ihor.solodrai@linux.dev>
+ <20260710012112.577F31F000E9@smtp.kernel.org>
+ <ce047740-79fe-4fc5-a118-40252b169be8@linux.dev>
+ <DJV2D826YVRY.WSTQ4Z6CFX1I@gmail.com>
+ <7a5bb678-4fab-44c8-98b5-272124e08847@linux.dev>
+ <DJV2Q54OF8BU.1H6KXCS93P3N6@gmail.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <DJV2Q54OF8BU.1H6KXCS93P3N6@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 10 Jul 2026 21:18:48 +0200
-Message-Id: <DJV4TO9OH6AN.58C10SBPE8FF@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Nicholas Dudar"
- <main.kalliope@gmail.com>
-Cc: <bpf@vger.kernel.org>, <sched-ext@lists.linux.dev>
-Subject: Re: [PATCH bpf-next v3 1/2] bpf: Require a BPF cpumask for
- bpf_cpumask_populate()
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260709182800.2037938-1-main.kalliope@gmail.com>
- <20260709182800.2037938-2-main.kalliope@gmail.com>
- <20260709183918.E42371F000E9@smtp.kernel.org>
-In-Reply-To: <20260709183918.E42371F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu Jul 9, 2026 at 8:39 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] The BPF selftests and their headers were not updated to reflect t=
-he new `struct bpf_cpumask *` signature for `bpf_cpumask_populate()`.
-> --
->
-> --- Patch [1]: [PATCH bpf-next v3 1/2] bpf: Require a BPF cpumask for bpf=
-_cpumask_populate() ---
-> commit 79080c077263fb184f42fe92f3d8db1f3967a4b5
-> Author: Nicholas Dudar <main.kalliope@gmail.com>
->
-> bpf: Require a BPF cpumask for bpf_cpumask_populate()
->
-> This commit changes the first argument of bpf_cpumask_populate() to requi=
-re
-> a struct bpf_cpumask pointer instead of a struct cpumask pointer. This
-> ensures the function follows the same ownership rules as other mutating
-> cpumask kfuncs.
->
->> diff --git a/kernel/bpf/cpumask.c b/kernel/bpf/cpumask.c
->> index b8c805b4b06a0..1336a4efa7553 100644
->> --- a/kernel/bpf/cpumask.c
->> +++ b/kernel/bpf/cpumask.c
-> [ ... ]
->> @@ -467,7 +467,7 @@ __bpf_kfunc int bpf_cpumask_populate(struct cpumask =
-*cpumask, void *src, size_t
->>  		!IS_ALIGNED(source, sizeof(long)))
->>  		return -EINVAL;
+On 7/10/26 10:40 AM, Kumar Kartikeya Dwivedi wrote:
+> On Fri Jul 10, 2026 at 7:34 PM CEST, Ihor Solodrai wrote:
+>> On 7/10/26 10:23 AM, Kumar Kartikeya Dwivedi wrote:
+>>> [...]
+>>>
+>>> Also, why not do it for BPF_TRACE_ITER case as well? I just feel keeping it
+>>> consistent may outweigh figuring out whether it's necessary in that case or not,
+>>> etc.
 >>
->> -	bitmap_copy(cpumask_bits(cpumask), src, nr_cpu_ids);
->> +	bitmap_copy(cpumask_bits(&cpumask->cpumask), src, nr_cpu_ids);
 >>
->>  	return 0;
->>  }
->> diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/=
-include/scx/compat.bpf.h
->> index 87f15f2962348..3f74d522f7e79 100644
->> --- a/tools/sched_ext/include/scx/compat.bpf.h
->> +++ b/tools/sched_ext/include/scx/compat.bpf.h
->> @@ -84,7 +84,7 @@ bool scx_bpf_dispatch_vtime_from_dsq___old(struct bpf_=
-iter_scx_dsq *it__iter, st
->>   *
->>   * Compat macro will be dropped on v6.19 release.
->>   */
->> -int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz=
-) __ksym __weak;
->> +int bpf_cpumask_populate(struct bpf_cpumask *dst, void *src, size_t src=
-__sz) __ksym __weak;
->
-> [Severity: Low]
-> This isn't a bug, but should the BPF selftest headers also be updated to
-> reflect this new signature?
->
-> Looking at tools/testing/selftests/bpf/progs/cpumask_common.h, it appears=
- it
-> still declares the old signature for the kfunc:
->
-> int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t src__=
-sz) __ksym __weak;
->
-> Because of this, the tests in cpumask_success.c and cpumask_failure.c und=
-er
-> tools/testing/selftests/bpf/progs/ continue to use explicit C-level casts
-> from struct bpf_cpumask * to struct cpumask *. For example, in
-> test_populate_success():
->
-> ret =3D bpf_cpumask_populate((struct cpumask *)mask, bits, CPUMASK_TEST_M=
-ASKLEN);
->
-> While this doesn't cause runtime failures since the BPF verifier matches =
-the
-> runtime register BTF type instead of C-level casts, updating the selftest=
-s
-> would ensure complete consistency with the new kfunc signature.
+>> I mentioned this in the patch description:
+>>
+>>   The BPF_TRACE_ITER case distills a registered iterator's
+>>   prototype, and bpf_struct_ops_desc_init() distills the
+>>   function-pointer members of a struct_ops type. Neither is
+>>   a kfunc, and so can't have implicit arguments.
+>>
+> 
+> Yeah, I saw that, but abstracting that inside the function and not having to
+> think from the caller about those details would be better. That said, I don't
+> have any strong preference, it is obviously correct as it is.
 
-Once this lands, please send a follow up to address this.
+Let's keep the fix patch minimal. I think we can do a more thoughtful
+refactoring as a follow up for bpf-next. Hopefully I'll find time for
+this in not so distant future.
+
+Just sent a v2 with a module ref fix and a brief cover.
+
+> 
+>>
+>>>
+>>> Please supply a cover letter in the next version too since you're sending
+>>> multiple patches.
+>>
+>> I used the first patch's message as a cover letter, since it's
+>> just a fix + selftest pair.
+>>
+>> The series could be split further into refactoring changes, but I thought
+>> it'll be easier to backport if the fix is in a single self-contained patch.
+>>
+>> I think we want the fix to get into 7.2, and backport it to 7.1.
+>>
+>> If it's ok to carry separate refactoring patches there, then I'll split.
+>> Kartikeya, wdyt?
+>>
+> 
+> You can still keep the patches as is, but just add a cover letter, it will not
+> affect backporting. The cover letter is just to summarize the series and the fix
+> in the merge commit. Also, my understanding is that with the Fixes: tag, it
+> should automatically be picked up for stable kernels.
+
