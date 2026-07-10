@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131801FD4;
-	Fri, 10 Jul 2026 23:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF232417D1;
+	Fri, 10 Jul 2026 23:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783727405; cv=none; b=FUQCGBdWLswmV0HSgEp5mPi26d74j0YSNT9lHYFeZk+XJTxQkKeLS6KBM7/z9TM3NdpXPtUq9PBbljelNdP7+8iNDWoTK13/Z2MPRuxwRpD0F4Xc2iASgHCKeggaaHoIZADprL9Dj5paA9nyh3BOgloG+mUe8XOWnXJj5spZiB4=
+	t=1783727952; cv=none; b=rgTVw1RI/Zf8Sm/QYh6pbIZ2DenLAxdQe8shwn6qlKoPl5m1md6HYEHlJWZoafAujMKlHYoygnLqdqMAq5dgzwDUvz1Mv9XXzpDSGQbNoF3D8FjTFDu9bFRBzrWcZTel14Hz5RRL7k9z8wzZI1i+I45glBYsatZUO4iH6xLD4rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783727405; c=relaxed/simple;
-	bh=wAE3GScmnSx8cUptu82juBeE5budC0SK1jc634yvVw0=;
+	s=arc-20240116; t=1783727952; c=relaxed/simple;
+	bh=WHYYwucTe11dB45s1sZVCa8gttZiZkJRY1wP09y7f90=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X4KpfAO1WRp1IVxUadiwG0/Ie1GTyFKg64Gd1qG3pbTp4D9MIQXAvYtOiHQyscod4Jad/1YXz7R8Tm/ZrI84KNddDgdy0Hpc2e5t7rK8n4y1n20LlQ+u8FPQhHns1EqudoJtNx/rFcLnBBlPc4M4DgCSULqOIoCCpvTJfVpwcgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXrpns38; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=mNVhfqUKA9tC+0nP5/BsTOHarqPcOG9wfcvD0SluIhRJ8Vb1nbhAl58qFpI3jN9k4l1TKm4MNXYFamv439IAVipFcbwc3bMDiVB/w92d4rEc366VAz0MJ+jqOkRIad3oaOJlk2SRyK2PfkkaWCnDt70K7DcyGdFYOiw1iGN031g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pcm+9C2H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXrpns38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E281F000E9;
-	Fri, 10 Jul 2026 23:50:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pcm+9C2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DED1F000E9;
+	Fri, 10 Jul 2026 23:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783727403;
-	bh=FiStxUq/elhQK+Ad9q7/QAEpgfuPON9UpONFPyTC9fI=;
+	s=k20260515; t=1783727950;
+	bh=cvw17waFqhDuQD5ugBaIHJjyIhxrCUcXQ68EElDLgTg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cXrpns380eHX/ZnIrg95dUgdVjaYrrPAkblDFDJAmMkbrVJhJg8VCclQc+IXT1CXl
-	 h/g5iGX8CaeHbpBckblCQPUVmBoOt7ezw8r+0BeG5bq30JEOj6ENcPIVlIMfgdGk0L
-	 4uMK4jknr1LNv3Q1iphWQq8BliaTdObPC6TkpeOhKJlQpz1T4BasQOjjXstl2KzSO9
-	 otXQs7Cyoc5SrbIJdHrVCF1Kka3zTfhKOihafv9gXpiHzFlc4m650t/N274pfzVihS
-	 pj07NxifQGQFJ+ZV/tuFaPxBri6ETTqUZ60j+tbQxvdY3UL59uqqgrj5UtYQxMAmjw
-	 iQp6A04JNhNfQ==
-Date: Fri, 10 Jul 2026 16:50:02 -0700
+	b=Pcm+9C2HHrP+VOD8fHipCvwwb1q2+A2l2hKimALC/Ky0yyodztKMB1A9bdlzPgbZF
+	 /Y/bJZb0mNUN90DuFqyyV16BGyY+ooCTmHzSG5Myq3gXgOPfMRr93GVmkyyK6joHpy
+	 gqQAonSKgn/2JOFMDUBNcrUkclM85+76p0URjJQzrEptcBcy7zutnE7x24xLMKQPVp
+	 /Fe/qAw43mRX0xSz4b34tSPv2FSaQbhv5jHx2/39xX2+H6vjIhHhNtXELOVhMKx4UZ
+	 GXejZFsVws9Qw3V2d8twBasQIP0VPQD1hxQjhGTEZgc+m/QTVYlxQP8D6pdiyk8Dgt
+	 x2cIBPadSqUGg==
+Date: Fri, 10 Jul 2026 16:59:09 -0700
 From: Namhyung Kim <namhyung@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf stat: Do not open cgroups for BPF counters
-Message-ID: <alGFKjj1oorszo3V@google.com>
-References: <20260708200407.1240640-1-namhyung@kernel.org>
- <20260708201434.5C5831F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 4/4] perf test: Update test for --for-each-cgroup
+ option
+Message-ID: <alGHTR25xLliMEUJ@google.com>
+References: <20260710234143.1934263-1-namhyung@kernel.org>
+ <20260710234143.1934263-4-namhyung@kernel.org>
+ <20260710235200.CD3001F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,58 +44,66 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260708201434.5C5831F000E9@smtp.kernel.org>
+In-Reply-To: <20260710235200.CD3001F000E9@smtp.kernel.org>
 
-On Wed, Jul 08, 2026 at 08:14:33PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Fallback from BPF counter mode to standard cgroup mode leaves cgroup file descriptors uninitialized (-1), causing standard perf event opening to fail with -EBADF.
+On Fri, Jul 10, 2026 at 11:52:00PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The `check_evlist_expand()` test fails to exercise the bug it intends to verify because it specifies `-e cpu-clock`.
+> - [Medium] Bash pipeline semantics mask `perf stat` command failures, potentially causing false test passes.
 > --
 > 
-> --- Patch [1]: [PATCH] perf stat: Do not open cgroups for BPF counters ---
-> commit 510c63ce03b2362940d1f693b45d5faa86cf3bc1
+> --- Patch [4]: [PATCH v2 4/4] perf test: Update test for --for-each-cgroup option ---
+> commit b42b21fdf494fb61acde3f563ac29e9b49df9327
 > Author: Namhyung Kim <namhyung@kernel.org>
 > 
-> perf stat: Do not open cgroups for BPF counters
+> perf test: Update test for --for-each-cgroup option
 > 
-> This commit prevents opening and keeping file descriptors for cgroups
-> when using the --bpf-counters and --for-each-cgroup options. BPF mode
-> uses a set of shared events and compares cgroup-IDs, so it doesn't need
-> individual cgroup file descriptors.
+> This commit updates the stat_bpf_counters_cgrp.sh test to simply check the
+> number of output lines with and without the --for-each-cgroup option.
 > 
-> > diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-> > --- a/tools/perf/builtin-stat.c
-> > +++ b/tools/perf/builtin-stat.c
-> > @@ -2874,7 +2874,8 @@ int cmd_stat(int argc, const char **argv)
-> >  			goto out;
-> >  		}
+> > diff --git a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+> > index ff2e06c408bc6..17b17b112169c 100755
+> > --- a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+> > +++ b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+> [ ... ]
+> > @@ -58,9 +58,24 @@ check_system_wide_counted()
+> >  	fi
+> >  }
 > >  
-> > -		if (evlist__expand_cgroup(evsel_list, stat_config.cgroup_list, true) < 0) {
-> > +		if (evlist__expand_cgroup(evsel_list, stat_config.cgroup_list,
-> > +					  !target.use_bpf) < 0) {
+> > +# Missing flags in evlist__clone() resulted in different output.
+> > +# Just check the number of output lines for simple verification.
+> > +check_evlist_expand()
+> > +{
+> > +	normal_output=$(perf stat -a -e cpu-clock -x, true 2>&1 | wc -l)
+> > +	expand_output=$(perf stat -a -e cpu-clock -x, --bpf-counters --for-each-cgroup / true 2>&1 | wc -l)
 > 
 > [Severity: Medium]
-> Will this break the fallback path when we exceed BPERF_CGROUP__MAX_EVENTS?
+> Will this actually test the bug with evlist__clone() missing flags?
 > 
-> Later in cmd_stat(), we have a fallback that disables BPF counters if there
-> are too many events:
-> 
-> 	if (target.use_bpf && nr_cgroups &&
-> 	    (evsel_list->core.nr_entries / nr_cgroups) > BPERF_CGROUP__MAX_EVENTS) {
-> 		pr_warning("Disabling BPF counters due to more events...");
-> 		target.use_bpf = false;
-> 	}
-> 
-> If this fallback is triggered, target.use_bpf becomes false, but the cgroups
-> were already expanded with !target.use_bpf (which was false at the time),
-> leaving the cgroup file descriptors uninitialized (-1).
+> By specifying -e cpu-clock, the loading of default events is disabled,
+> meaning default_metricgroup and default_show_events are false. This prevents
+> the duplication bug from occurring during evsel__clone(), rendering the test
+> ineffective at catching the regression it was meant to verify.
 
-I think it's a false alarm.  The evlist__expand_cgroup() is only used if
-stat_config.cgroup_list is set and then it should not have nr_cgroups.
-There's a check for that right before the call to the function.
-
-So in that case, it cannot pass the if condition below and never set to
-target.use_bpf to false.
+Oops, that's right.  It should have this on top.
 
 Thanks,
 Namhyung
+
+
+diff --git a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+index 17b17b112169c8ba..febe3af0644157f3 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters_cgrp.sh
+@@ -62,8 +62,8 @@ check_system_wide_counted()
+ # Just check the number of output lines for simple verification.
+ check_evlist_expand()
+ {
+-       normal_output=$(perf stat -a -e cpu-clock -x, true 2>&1 | wc -l)
+-       expand_output=$(perf stat -a -e cpu-clock -x, --bpf-counters --for-each-cgroup / true 2>&1 | wc -l)
++       normal_output=$(perf stat -a -x, true 2>&1 | wc -l)
++       expand_output=$(perf stat -a -x, --bpf-counters --for-each-cgroup / true 2>&1 | wc -l)
+        if [ "${normal_output}" != "${expand_output}" ]; then
+                if [ "${verbose}" = "1" ]; then
+                        echo "Normal output has ${normal_output} lines, but it now has ${expand_output}"
 
