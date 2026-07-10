@@ -1,75 +1,110 @@
-Received: from 011.lax.mailroute.net (011.lax.mailroute.net [199.89.1.14])
+Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F773348C6E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 14:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382F634CDD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 15:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783694246; cv=none; b=VBaM1UQuya6qXOqBqnU5KT+32dWjAHqXzuExIO+VUuCRQ3nxlPU/faLjWWrEDOTj1gvoVbauoFFdl2BWuTUuaZY6ojN11VTzHG1NlVCa3UXiQNJ8/SCGqMMPo6639WTLAh2dmLFIKGMm/zqFkwXSgdQ5cuvhhgdHZ8C177Mp30o=
+	t=1783696543; cv=none; b=XTXp9ikNuDF2RxbLwyN+6/Ib5AsesGnFI511IwgyFB8y2sbde+R5/8WmrkEjmnUhOHkTNpt740B5SKgTgtmGTAEWv50fELVBOgLUdYsFkvYBsHRu8vHxkTDsP3TCtmi9kmazkgBrQcaBPX9IrIloLu2oAnUQJFvbXn8oo0IEkcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783694246; c=relaxed/simple;
-	bh=YdiRV9OZD2/cW1IigQUj9kZwi9NL4a+BOChZpzYEajA=;
+	s=arc-20240116; t=1783696543; c=relaxed/simple;
+	bh=1Rd4oIKqX9SKQQHvtsM8kGWsJqTTLH5ZyMXq7FyonDA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AqyNniyutQzGfkQfUf3jBn/+BECdfUpNsWG4VXrx53kONaN8eOFz/Q9srLH9b8j1aeACWErpN3IYJqvLUWoB85DzC9RMbqATiEV+dsb4B3TksWILlWBR4KCn2WwNMNxAbtQizgAUGbrMM1gvnk0iUf+1Ff2+VxXHlR6HEofRLuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=ctyfqVxb; arc=none smtp.client-ip=199.89.1.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+	 In-Reply-To:Content-Type; b=CaC/SXmPhhFM8YKiGzMXZwviftYG2R2ynAckV9lNcQVmK4L5GUAWwFzUPMathdh0NQzEdqa5mGySylgMqjzE3BAsmCsMN8teFnjTexGdxYGLF1+jOpz4K7IAhohongf66GisTzoZMb/aoWpsmcOiZBW1us/RRzCjwTLjg1pqLFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Wga810wc; arc=none smtp.client-ip=91.218.175.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="ctyfqVxb"
-Received: from localhost (localhost [127.0.0.1])
-	by 011.lax.mailroute.net (Postfix) with ESMTP id 4gxZDN5cPTz1XM2FS;
-	Fri, 10 Jul 2026 14:37:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1783694243; x=1786286244; bh=YdiRV9OZD2/cW1IigQUj9kZw
-	i9NL4a+BOChZpzYEajA=; b=ctyfqVxbzkLc1/vHypgsaGYtQIssqRw2M6ZRtkzC
-	0mYDFPJOsCQIOn1Ubu5CV5YdlPFwUwA8ofUhldjr+k0OV3eCtzbfpZL5f+jCxonf
-	yrJiow9kX/xGe9jmmELqBGkcOYG7D+Cpn/9cevstzdXawFS32jQFpX+8UKK//r0f
-	PDbiBCPdaD5QgNWZjE02L9Pk5nXlBueklIJrAt3Fjw1CNkzjFSn4RjlR4ja+tGcH
-	eNIHtIhJPDkRgwAHRi9MJ/Ub17XNt4CBGNCGZad7aVZ5oDT+5NxVb2CL9q+jISb7
-	QFTnUVgZ2GoydGHfFpRdXAxlgECuA3j9HONsH/X6dlJe5w==
-X-Virus-Scanned: by MailRoute
-Received: from 011.lax.mailroute.net ([127.0.0.1])
- by localhost (011.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id vY_jXKAvSEhZ; Fri, 10 Jul 2026 14:37:23 +0000 (UTC)
-Received: from [192.168.50.14] (c-73-231-117-72.hsd1.ca.comcast.net [73.231.117.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 011.lax.mailroute.net (Postfix) with ESMTPSA id 4gxZDK4pBsz1XM5kW;
-	Fri, 10 Jul 2026 14:37:21 +0000 (UTC)
-Message-ID: <512639c6-3f18-4577-bc4f-7aa8b7e1caf4@acm.org>
-Date: Fri, 10 Jul 2026 07:37:20 -0700
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Wga810wc"
+Message-ID: <49cc5acf-24d4-4e1a-86a0-d05e29a75d42@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783696531;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aF7FpZSUJmToTSbrChBipcg4Sj4NSH21xfjUv2dgBgk=;
+	b=Wga810wcfj/NgzEW21KmkjBt0Z820hc8+vICWet+GqpHsLO+oBHTdNYJvy3TtcqzQEfxnj
+	HhOp7aTi8Y4Y5GHQ1Jrzc5zdvypGyxhi8G+iLlvhOYxaz/muEpAN4D0btWI8Oad7ISk9/j
+	JDvX8w0yomy58BeoP5nXFl0K9lJB6ow=
+Date: Fri, 10 Jul 2026 23:14:55 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] scsi: scsi_debug: fix REPORT ZONES alloc_len underflow
- OOB write
-To: sashiko-reviews@lists.linux.dev, Ibrahim Hashimov <security@auditcode.ai>
-Cc: linux-scsi@vger.kernel.org
-References: <1357dbf9-e135-4ba3-896d-1472a208f82f@kernel.org>
- <20260710055755.53830-1-security@auditcode.ai>
- <20260710060543.621591F000E9@smtp.kernel.org>
+Subject: Re: [PATCH bpf-next 2/2] selftests/bpf: Test fentry link after
+ tracing_multi link
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260710144734.78203-1-leon.hwang@linux.dev>
+ <20260710144734.78203-3-leon.hwang@linux.dev>
+ <20260710150412.5E8981F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20260710060543.621591F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260710150412.5E8981F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On 7/9/26 11:05 PM, sashiko-bot@kernel.org wrote:
-> On 32-bit platforms, kzalloc() takes a 32-bit size_t, which silently
-> truncates 0x100000000 to 0. Calling kzalloc(0) returns ZERO_SIZE_PTR, which
-> bypasses the (!arr) NULL check.
+On 2026/7/10 23:04, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Test Flakiness due to Missing PID Filtering in BPF `fentry` Program
+> --
+> 
+> --- Patch [2]: [PATCH bpf-next 2/2] selftests/bpf: Test fentry link after tracing_multi link ---
+> commit 7dc95a7a3d3a0ca96e45e5ad2ebebe5157ae17ed
+> Author: Leon Hwang <leon.hwang@linux.dev>
+> 
+> selftests/bpf: Test fentry link after tracing_multi link
+> 
+> This commit adds a selftest to verify that an fentry link can be attached
+> safely after a tracing_multi link. It introduces a new fentry BPF program
+> and a corresponding user-space test case.
+> 
+>> diff --git a/tools/testing/selftests/bpf/progs/tracing_multi_intersect_attach.c b/tools/testing/selftests/bpf/progs/tracing_multi_intersect_attach.c
+>> index cd5be0bb6ffdd..5ebbe3b602a4f 100644
+>> --- a/tools/testing/selftests/bpf/progs/tracing_multi_intersect_attach.c
+>> +++ b/tools/testing/selftests/bpf/progs/tracing_multi_intersect_attach.c
+> 
+> [ ... ]
+> 
+>> @@ -11,6 +11,14 @@ __u64 test_result_fentry_1 = 0;
+>>  __u64 test_result_fentry_2 = 0;
+>>  __u64 test_result_fexit_1 = 0;
+>>  __u64 test_result_fexit_2 = 0;
+>> +__u64 test_result_fentry = 0;
+>> +
+>> +SEC("fentry/bpf_fentry_test1")
+>> +int BPF_PROG(fentry, int a)
+>> +{
+>> +	test_result_fentry += a == 1;
+> 
+> [Severity: Medium]
+> Can this cause test flakiness during parallel selftest runs?
+> 
+> Because bpf_fentry_test1 is a global kernel function widely used across
+> various BPF selftests, parallel test executions might trigger this program.
+> Since the counter is incremented blindly without filtering by the executing
+> process PID, could parallel executions increase test_result_fentry above 1
+> and cause the userland assertion ASSERT_EQ(skel->bss->test_result_fentry, 1)
+> to sporadically fail?
+> 
 
-Ibrahim, do you plan to address this finding?
+
+Correct.
+
+I should use tracing_multi_arg_check() here, which would filter the PID.
 
 Thanks,
+Leon
 
-Bart.
+>> +	return 0;
+>> +}
+>>  
+>>  SEC("fentry.multi")
+>>  int BPF_PROG(fentry_1)
+> 
+
