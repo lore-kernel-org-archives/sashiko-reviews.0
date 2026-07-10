@@ -1,313 +1,228 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013021.outbound.protection.outlook.com [52.101.83.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0E73DA5AB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 09:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783675586; cv=none; b=cIhQkXjrS3y0JBMDGxOUmXmS2ILhRMz3MQU8R5Sg63casIoqtGauP/4If/Gcs6wkHfkeVNIT2EB1K9mEtoJgUXvzfvSc1cDbYGJKhqe2T63fDHZPmACe9x7sJFWxogSs76XqRo0WTZawL2RORxenR05hLbS+3ZgBmAyD/Zx0GGE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783675586; c=relaxed/simple;
-	bh=ro7at2wPJWaIun0vksfWEe7ZPaKPkmfjqdM4pzs2jtQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hkWaisoLg4kLgT/LBtV9DODUCVJxePLUah5vKcAMrVkA+Fg9fiOJuTJVKFQp8VppXfGQmXGAX8rYMv7lvmOa0lbs9DSTvpUxYm3+DvPjit19i6mYELwtsOE11QGOYWD9atWXWC6ltFsDq/dxGybQC+brvj6G/yCGxjX7JGoVIeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=rO+SG5pG; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=88QofeIE; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=jkNDBcYi; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=DqUwkCaf; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B699C3F4DFE;
+	Fri, 10 Jul 2026 09:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783676200; cv=fail; b=k/KfYpMxKH6xoJYp6QqcKM1Zqww+lbNTP7f/Dau13iZO4d0VIoJLlNt7SjTKkOv6szrGnWojgBOPT2ACB89DtG5bpIDWk8bZPhTbvEwi6DYawp1EOSTquylkqGmLxgjshZ2sWP97+0r6T7s3xn0IL8NXCysTOD3zf4S1lRc25Jo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783676200; c=relaxed/simple;
+	bh=cgH7SZVNy7EuuW1je4WMVKXWZur88jfsB5NNPlFSBaM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=bsRNAxsBpUMXJNotlShk7g8rDJSjpi8v1ysohtDxGREY+TKZqTh2Sp6rGlYY1XzchWWHEa+3IlUQdmOgGYY5W6qOH8QkBW1qbxdbsQSi71z0N1603hvs59BoaFtPLv33te7XhAOV/LIEB4AwtAL8Tw46IUaxAJ+fMs20D034j+Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=nbix4Gdg; arc=fail smtp.client-ip=52.101.83.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="rO+SG5pG";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="88QofeIE";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="jkNDBcYi";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="DqUwkCaf"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4595A76696;
-	Fri, 10 Jul 2026 09:26:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783675581; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Mg2fjm3bd6+d/j1Randjtzs6phzw9YgU4HiJG9UWiNc=;
-	b=rO+SG5pGRPOUgyTh7JpZa0Q6JWW2r6KgNo+oIHK/7rdKle2sVr9cGMeJ4pi8ce4dULb3l4
-	Qm1jb6rVOgs7KCB0na7GZxpxQakxe7iQuOv2dpXvRe9tFmcpqFkcPMBefmJEj8l6P9R7jk
-	nTgEBeUxEOWDqF/I1SN6yH1YSp11FjU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783675581;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Mg2fjm3bd6+d/j1Randjtzs6phzw9YgU4HiJG9UWiNc=;
-	b=88QofeIE4O96b/odQnfneIDurGl08NewxEw/cZKDWw5xlqs6MWS5mHNzijm4dAqspSqtNH
-	KVcI8V64/JIFulAw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jkNDBcYi;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=DqUwkCaf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1783675580; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Mg2fjm3bd6+d/j1Randjtzs6phzw9YgU4HiJG9UWiNc=;
-	b=jkNDBcYiM5G42Tx/B17poudPNpe31O4rU7fSrZBVPNwk0gVNGV8SGmNvhVSpT/5mEsiOPk
-	atCqWqd1SooF0KS7wNk9vsTCIgBxflu6tK8WO8F1yAt5Wif/UW1LwmCwSpSWFzfv32v2cL
-	M6exLx+9ao5uH84LmaaHUW3hsaycnaE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1783675580;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Mg2fjm3bd6+d/j1Randjtzs6phzw9YgU4HiJG9UWiNc=;
-	b=DqUwkCafhizSHkYdKGlTatNz9x55D33XfZ7lB7AkIFZ6U4Dxg8ckEeLSlUovQuUk2yfzEi
-	2REHR1BNP7lBI2Dg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1E417779BD;
-	Fri, 10 Jul 2026 09:26:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id LFbSBby6UGpiGgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Fri, 10 Jul 2026 09:26:20 +0000
-Message-ID: <0397c50c-e9bd-40e5-a3df-2374f65b35c4@suse.de>
-Date: Fri, 10 Jul 2026 11:26:19 +0200
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="nbix4Gdg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c633a4cP4oPDTpya8OhBSfQJKxQTzqabPxC3mU4tp0P3nDcHpAKXlt999+JcBnnqlZgK6fwE3LX7Y9VL5AYr6S8Gbc4kLIM4LuOAv5oIDNzaOJ1IjUXvcCbeTSDczkXp194g5MjAvXS10H3L/Bj6ls/2fWdgexdxASPJSyBdi2N6nJ3HXCk/x7VSoXQ5MPKOpGMYemy8ktZFYDWd1MvL9olH3PEwMLJaEQLOWeG4T68dmhsyHUhZfdHAxhgQdBTsnjo2OO1Xzwymzi2RB7QXeTr7NWbUfSapUvDCMu5Z3ZxFV/n1/4lZzSt9gCljgd1JjJI7HJgGnDW4X2ePUUmJjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ed4FQzbr4K8JYdnm5mEQLDJ9MYPRFnt6TDhmb9OiYTE=;
+ b=dxszXYELZfqGix27VHVjvhm0bA30BeIezUvMIdFUGvpkb9ct43iMRbUYE4SvQSDyzKoiMxLG3ZX9OGZ2J5/SVhmvDmmBR4Xzur6YfEdS6dCLhXmbkIhZJC3+AiqYVEEmyW/TlCyUFYPxbm+vk3FJn5alGfpgVhQm47xr0MmlOFoed230VDACgWzJHVxjXhw35GJ4DK2F0CIC2ytlqR47MeP1DCyzr0ksi9Rywu/aeL2ehNfeXuMLXcHO1Bh0kQC05d6fcTmUU6pAr6yd5TTKhiwkZPvqfuJshWz5FhkOV9Akw3Pf8sIIXC5qpywr6r9o+roO82nYd4V8WZwxzuu7nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ed4FQzbr4K8JYdnm5mEQLDJ9MYPRFnt6TDhmb9OiYTE=;
+ b=nbix4GdgNWlKqvjZUzDD8aibxfa7RWGELZjqzUgwLtbfptAqSnBfyP/7h/mzS/UU7kIKSr+KNokdsn0BJ5Njp7Iv52kDUW7KKEGYKAkSdGS3tFsPNTLevwGzvGnXEAnz3YztRlgXNwYDcqjrr514dj5lmVvJMxrixPtrcTNfb9H1Z10JxAvH3kh2tRCWWMKH7YquExfp2inBjO0xLBAKQudfaZvvUynJ3d1eOPJUXheAF1uvcV3LrxSNT1PLtDR7FyXGH9vu0W9IF+xh4tomjgBR4a2vSgMcqbeJ3uxRPiLa5D6kGbEVLIDTud/88hP8MLpmry3sJuy2SofalxJ8NQ==
+Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
+ (2603:10a6:800:315::13) by PA2PR04MB10422.eurprd04.prod.outlook.com
+ (2603:10a6:102:417::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Fri, 10 Jul
+ 2026 09:36:31 +0000
+Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
+ ([fe80::feda:fd0e:147f:f994]) by VI0PR04MB12114.eurprd04.prod.outlook.com
+ ([fe80::feda:fd0e:147f:f994%6]) with mapi id 15.21.0181.014; Fri, 10 Jul 2026
+ 09:36:31 +0000
+From: Sherry Sun <sherry.sun@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"Sherry Sun (OSS)" <sherry.sun@oss.nxp.com>
+CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "linux-pci@vger.kernel.org"
+	<linux-pci@vger.kernel.org>, "robh@kernel.org" <robh@kernel.org>,
+	"Frank.Li@kernel.org" <Frank.Li@kernel.org>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>
+Subject: RE: [PATCH V5 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth device
+ support using pwrseq
+Thread-Topic: [PATCH V5 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth device
+ support using pwrseq
+Thread-Index: AQHdD4uoyHnYTS/QOki32mrTeXWU4LZlA9iAgAF78eA=
+Date: Fri, 10 Jul 2026 09:36:31 +0000
+Message-ID:
+ <VI0PR04MB1211416C8132C947807E26DFC92FD2@VI0PR04MB12114.eurprd04.prod.outlook.com>
+References: <20260709101555.3034853-1-sherry.sun@oss.nxp.com>
+ <20260709101555.3034853-4-sherry.sun@oss.nxp.com>
+ <20260709105535.793EF1F000E9@smtp.kernel.org>
+In-Reply-To: <20260709105535.793EF1F000E9@smtp.kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VI0PR04MB12114:EE_|PA2PR04MB10422:EE_
+x-ms-office365-filtering-correlation-id: c4a2bea4-5cdd-46bc-9472-08dede66b9a5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|19092799006|6133799003|38070700021|18002099003|22082099003|4133799003|11063799006|4143699003|56012099006;
+x-microsoft-antispam-message-info:
+ 9COiiV+FEB1Cmhz0FSf9nimYRsjmf3Dm1rNvrkzmfbt4QtLh+R7M+g15otwyiV3L9JDwJ0fhFOqu5Y0NBRilYBLIPLamdy/amJQI7vggUwH9Rsx7mO7qHaTmu2AL1zBWwtUo+I5NvJOGdRrTJsSXkI4Px+EUxghO0ZsO6N1s5jpYgi1tDMmx49zaWeUycWAgqsgNaJwhP8SWxxSVQWShUnmkD5fcL2iOb7fkg+WlKtr5Tlu+0/gWmtCMDihokXP6f8UanZpBHbEz98IlTkpQR27+tVdZFWODEf60M+DZaS8pXWuElfbaIk9mos/z7OzXaUs9bHJWmpC/hUQ8Evi0YtZ6SDAaHJm+MSx0Gxu9+5xYF+6L+yAnl1Oxhd59SXy4gvmQf7fE3uwRTKmhMlAagJXlJvwOS2Ybz84DBXfW+H/dd/1mMOJuSNxkHHCvCYmaNE0x62MY9hFgdgLz6JH5rrHdPHQlWbHiIXfhZSN7xtt56OU0q1TYMwZM23ZdrJUwD2hJLBZEB/WEa+OSTpz9GMYZp2yzbc7p9YuQqa/aUEJYb+wz6W5VCv4/xiP02/slM8RmBfVT577J5wL1krj3V1x9QXPTBh+AkU6QUdiBUE8I61ctDdnyKXng8GJwfcxbGc8p2nkRa0sMZAtZ00XevACQ9ud3ju6KXK5l2ufXK6c=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR04MB12114.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(19092799006)(6133799003)(38070700021)(18002099003)(22082099003)(4133799003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?C30OjIqGi2QoLrWX5lBCQOXAQkxSYUFxSHkwf8oGLOD1+WkbjqzcgB+YUOtl?=
+ =?us-ascii?Q?UYHSp8mEbaCy8n8U40apenVFkKBkC0G0VKjsK2m4/CW2MdgNOyJ1215DjvP7?=
+ =?us-ascii?Q?9J9UXdluGyUfRA6ncL107K3/3cii/EVZJMfqXx4C6B6BTcvJWWzzy5K5YlL3?=
+ =?us-ascii?Q?g+xBHPLNRXHHo+06kpmYndjdfUnZDhwubLWga5f9862+bGhDrP0/Zuo6wvO8?=
+ =?us-ascii?Q?8SXGByeXjP1ZOMxpuEoHg/eJUxD8vHcKgX3RzqI9+acq3lErf22am5/iDNjV?=
+ =?us-ascii?Q?cSs8+67qKe0I+4UcePHTw5tI4b7vmu1sLdCZxdMd5dfIG4VE5nqptcveGBkR?=
+ =?us-ascii?Q?ofrFNyvKXjVIjQtlmzrLyRrMOBEr1uek2BRDoTJ/t78cxGe5Af1CYR2DVVL5?=
+ =?us-ascii?Q?Rqh/V54q6/TL4j5iAAo8dMKFNFdwJd3b/iuGU0GqlacVcWpY8eNb2v6d59XU?=
+ =?us-ascii?Q?c3RqKpemiYp+eaHHqDNPkBXfrFSklSY59B6ztOAKtyxKbazSC9VNpa/5AUMr?=
+ =?us-ascii?Q?3vU8t9K2EzV3KkwBBrJjUkq1gi+kVTv70wwB7G7ENjBVK6PmUFdOaJIaUoVp?=
+ =?us-ascii?Q?Cgxuxqf9Lqv/CZhb8X5+OwggpYQHEYNjS59OpFW+BwUQD9sJv84EDQWEMvaE?=
+ =?us-ascii?Q?kqQqYfGckUUSVeTKhO5mfVYeEk9uIHAb3VUwU4lXJFPA4at9Fu3YJvK/lVWP?=
+ =?us-ascii?Q?BxFp99+MD1lrao9ERhryDfJGL7FIAg/tv9GWqz+sXwUwPuYrXFXPMozz8Jjv?=
+ =?us-ascii?Q?qJM4oD6RkTzXze8qtYByQ2ptvfM/VCDAiiRRjzKvpSoDzQKI8xtxtUwo6Res?=
+ =?us-ascii?Q?g0ms4U1IgmbooR+Kx2B5S9AeSV/Dg1zHCsqvNbsDwhCRw41Envp+11Xovbpb?=
+ =?us-ascii?Q?eGdfm8Bxa4J+QfotJG/kqxIvHWkDwyemzuCjItRXzLL7fqlkNuGWpMWW2s14?=
+ =?us-ascii?Q?I9/WPzclXncGOeG82Dh1wVkTBYetps/KNd71oSidM0eVzucmhmX+7LKCvUQg?=
+ =?us-ascii?Q?j+0ljffXI7L6YkUlAYzg6EcFVxZXEm9iqc1q4ItRc/XZt9d7aPZRCuoXaKFJ?=
+ =?us-ascii?Q?RH34unt7z8SCPmBAitMtf2XZKH9SEJEIcYOEYyMoZtJyuWaUnTjQEalj2Bkg?=
+ =?us-ascii?Q?C9qwNsgySDhNK1BcWhHdNrh6fSgFc8eoQBVZf5VZnaIGuF/degkVlj+Uzdzt?=
+ =?us-ascii?Q?scUDUoGo2MoXoWuD7JvRZciRZQPLG9iM6OLnr3Rc9GKhhCwDIDA2sxG60cTJ?=
+ =?us-ascii?Q?REt7oq01+X2+jyKcK40cGrQi3EwpSCe9+WqyJ2xKwla6EiXzGzNolyCFPRHY?=
+ =?us-ascii?Q?yM44G7l+Un2rqjyA4AkTAQZ7mA3NOdPzK89EVaM4Sm++OITUE0UnjxfITm5I?=
+ =?us-ascii?Q?etsE178xBS5CPjBt2gf8mS3/W3BknCoOjGo/EpISYp/7iyz6lVH5bSqXCBEe?=
+ =?us-ascii?Q?ibHkZ1CAZ4PQMfyjGSreBkpZbJiqXbzVcgBMnlyUAkS0p6dfAQoBE9wRk4KV?=
+ =?us-ascii?Q?NR/+fri5idkuZxMyRhL8X20w5gKrOAUyPCdA3E/uAQKlS2FnnWpGLvnavKHv?=
+ =?us-ascii?Q?jZub1m+TVSV3gq+OTWuWhxzaXJlpmLACWeP7q933Ka3HYWfgTwyn+Ah7V6dL?=
+ =?us-ascii?Q?nx8KcPB7MuqqkUxU0Mtopzea6p6b9i7iJ7iG6Z2ZfiyfOTYg2yY4VQSvQVnW?=
+ =?us-ascii?Q?K/1t0+sMegfhNa8obp161GxXR4eKYUASwGT6OUzsp9BjsxLh?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] drm/gm12u320: replace struct drm_simple_display_pipe
- with regular atomic helpers
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: sashiko-reviews@lists.linux.dev, Ze Huang <ze.huang@oss.qualcomm.com>
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev, dri-devel@lists.freedesktop.org
-References: <20260705-drm-simple-kms-removal-v1-0-b4e1ca053623@oss.qualcomm.com>
- <20260705-drm-simple-kms-removal-v1-6-b4e1ca053623@oss.qualcomm.com>
- <20260704184538.E20261F000E9@smtp.kernel.org>
- <2e5e0fb4-da13-4250-8395-d59ad5700cf5@suse.de>
-Content-Language: en-US
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <2e5e0fb4-da13-4250-8395-d59ad5700cf5@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 4595A76696
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	TO_DN_SOME(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,qualcomm.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR04MB12114.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c4a2bea4-5cdd-46bc-9472-08dede66b9a5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jul 2026 09:36:31.5839
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nUVcSueRSYMx3Lu1YQ4I8eztJRaSckroekIrWc9Xhv/Z7XWsuT0/ruvL2rBFt3HAzGSwnVIxyqFlei5Re7C9bQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA2PR04MB10422
 
+> Subject: Re: [PATCH V5 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth devic=
+e
+> support using pwrseq
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s)
+> to consider:
+> - [High] Calling `devm_pwrseq_get(&serdev->ctrl->dev)` in the child devic=
+e's
+> probe function binds the resource cleanup to the parent UART controller
+> device, causing a permanent resource and memory leak on probe failures or
+> driver unbind.
+> --
+>=20
+> --- Patch [3]: [PATCH V5 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth dev=
+ice
+> support using pwrseq --- commit
+> e33ed957970d3c81ac733b1991f81b42afce6a94
+> Author: Sherry Sun <sherry.sun@nxp.com>
+>=20
+> Bluetooth: btnxpuart: Add M.2 Bluetooth device support using pwrseq
+>=20
+> Power supply to the M.2 Bluetooth device attached to the host using M.2
+> connector is controlled using the 'uart' pwrseq device. So add support fo=
+r
+> getting the pwrseq device if the OF graph link is present.
+>=20
+> > diff --git a/drivers/bluetooth/btnxpuart.c
+> > b/drivers/bluetooth/btnxpuart.c index 0bb300eef157c..68f84c324113d
+> > 100644
+> > --- a/drivers/bluetooth/btnxpuart.c
+> > +++ b/drivers/bluetooth/btnxpuart.c
+>=20
+> [ ... ]
+>=20
+> > @@ -1872,11 +1875,26 @@ static int nxp_serdev_probe(struct
+> serdev_device *serdev)
+> >  		return err;
+> >  	}
+> >
+> > +	if (of_graph_is_present(dev_of_node(&serdev->ctrl->dev))) {
+> > +		struct pwrseq_desc *pwrseq;
+> > +
+> > +		pwrseq =3D devm_pwrseq_get(&serdev->ctrl->dev, "uart");
+>=20
+> [Severity: High]
+> The commit message notes that the devm cleanup is tied to the UART
+> controller device and adds explicit pwrseq_power_off() calls to compensat=
+e,
+> but does this approach leak memory and pwrseq references during
+> bind/unbind cycles?
+>=20
+> Because devm_pwrseq_get() is called with the parent device (&serdev->ctrl=
+-
+> >dev), each time nxp_serdev_probe() is executed, a new devres entry is
+> allocated and attached to the parent's lifecycle.
+>=20
+> If the probe fails later, or if the driver is unbound and re-bound, the c=
+hild
+> device's devres list is cleaned up, but the parent's devres list retains =
+the
+> accumulated allocations.
+>=20
+> While pwrseq_power_off() balances the power state in the error and remove
+> paths, the pwrseq descriptor itself is never released. Could this prevent=
+ the
+> power sequencer provider module from ever being unloaded due to the
+> leaked references?
 
+Yes, this is true issue, will fix in V6.
 
-Am 10.07.26 um 11:20 schrieb Thomas Zimmermann:
-> Hi
->
-> Am 04.07.26 um 20:45 schrieb sashiko-bot@kernel.org:
->> Thank you for your contribution! Sashiko AI review found 2 potential 
->> issue(s) to consider:
->>
->> New issues:
->> - [High] Race condition and potential NULL pointer dereference due to 
->> direct access to `plane->state` and missing visibility checks in 
->> atomic callbacks.
->>
->> Pre-existing issues:
->> - [High] Sleeping in atomic context within CRTC and plane atomic 
->> callbacks.
->> -- 
->>
->> commit a10b3d5781e3b7143f432c86643ef47e8ddc3a9a
->> Author: Ze Huang <ze.huang@oss.qualcomm.com>
->>
->> drm/gm12u320: replace struct drm_simple_display_pipe with regular 
->> atomic helpers
->>
->> Convert gm12u320 to direct primary plane, CRTC and encoder setup.
->> Keep shadow-plane helper state, framebuffer access helpers and
->> no-scaling plane-state check from simple-KMS path.
->>
->>> diff --git a/drivers/gpu/drm/tiny/gm12u320.c 
->>> b/drivers/gpu/drm/tiny/gm12u320.c
->>> index 4ad074337af07..b476793d0401e 100644
->>> --- a/drivers/gpu/drm/tiny/gm12u320.c
->>> +++ b/drivers/gpu/drm/tiny/gm12u320.c
->> [ ... ]
->>
->>> +static void gm12u320_crtc_helper_atomic_enable(struct drm_crtc *crtc,
->>> +                           struct drm_atomic_commit *commit)
->>>   {
->>>       struct drm_rect rect = { 0, 0, GM12U320_USER_WIDTH, 
->>> GM12U320_HEIGHT };
->>> -    struct gm12u320_device *gm12u320 = to_gm12u320(pipe->crtc.dev);
->>> +    struct gm12u320_device *gm12u320 = to_gm12u320(crtc->dev);
->>> +    struct drm_plane_state *plane_state = crtc->primary->state;
->> [Severity: High]
->> Will this cause a NULL pointer dereference if a subsequent commit 
->> disables
->> the plane?
->
-> Primary is for (old) non-atomic DRM drivers.
->
->>
->> Because non-blocking commits execute asynchronously, 
->> crtc->primary->state
->> reflects the state of the most recently queued commit, rather than the
->> commit currently executing. If a fast subsequent commit disables the 
->> plane,
->> plane_state->fb could be NULL.
->>
->> Should this use drm_atomic_get_new_plane_state(commit, crtc->primary) to
->> get the state tied to this specific commit?
->
-> No. Changes that require plane state should go into the plane's 
-> atomic_enable or atomic_update.
+Best Regards
+Sherry
 
-A shortcut is to use the plane instance from struct gm12u320_device 
-instead of primary. This is what simple-kms helpers do.
-
->
->>
->>>       struct drm_shadow_plane_state *shadow_plane_state = 
->>> to_drm_shadow_plane_state(plane_state);
->>>         gm12u320->fb_update.draw_status_timeout = FIRST_FRAME_TIMEOUT;
->>>       gm12u320_fb_mark_dirty(plane_state->fb, 
->>> &shadow_plane_state->data[0], &rect);
->>>   }
->>>   -static void gm12u320_pipe_disable(struct drm_simple_display_pipe 
->>> *pipe)
->>> +static void gm12u320_crtc_helper_atomic_disable(struct drm_crtc *crtc,
->>> +                        struct drm_atomic_commit *commit)
->>>   {
->>> -    struct gm12u320_device *gm12u320 = to_gm12u320(pipe->crtc.dev);
->>> +    struct gm12u320_device *gm12u320 = to_gm12u320(crtc->dev);
->>>         gm12u320_stop_fb_update(gm12u320);
->> [Severity: High]
->> This isn't a bug introduced by this patch, but does 
->> gm12u320_stop_fb_update()
->> sleep in atomic context?
->
-> This is a false positive.
->
-> Best regards
-> Thomas
->
->>
->> gm12u320_stop_fb_update() calls cancel_delayed_work_sync() and 
->> mutex_lock().
->> Since CRTC atomic disable callbacks can run in atomic context during
->> non-blocking commits, sleeping here is forbidden and could cause kernel
->> warnings or deadlocks.
->>
->>>   }
->>>   -static void gm12u320_pipe_update(struct drm_simple_display_pipe 
->>> *pipe,
->>> -                 struct drm_plane_state *old_state)
->>> +static void gm12u320_plane_helper_atomic_update(struct drm_plane 
->>> *plane,
->>> +                        struct drm_atomic_commit *commit)
->>>   {
->>> -    struct drm_plane_state *state = pipe->plane.state;
->>> +    struct drm_plane_state *old_state = 
->>> drm_atomic_get_old_plane_state(commit, plane);
->>> +    struct drm_plane_state *state = plane->state;
->> [Severity: High]
->> Could accessing plane->state directly here lead to a crash?
->>
->> Similar to the CRTC enable function, reading plane->state directly 
->> instead of
->> using drm_atomic_get_new_plane_state(commit, plane) accesses the future
->> state.
->>
->> If a subsequent commit disables the plane, state->fb will be NULL. In 
->> this
->> scenario, drm_atomic_helper_damage_merged() returns true for plane
->> disablements, leading to gm12u320_fb_mark_dirty() being called with a 
->> NULL
->> fb, which will oops when trying to dereference fb->dev.
->>
->> This wasn't possible before because the drm_simple_kms_helper explicitly
->> checked if (!plane->state->visible) before calling the update hook, but
->> that protection is dropped in this conversion.
->>
->>> +    struct drm_shadow_plane_state *shadow_plane_state = 
->>> to_drm_shadow_plane_state(state);
->>>       struct drm_rect rect;
->>>   -    if (drm_atomic_helper_damage_merged(old_state, state, &rect))
->>> +    if (drm_atomic_helper_damage_merged(old_state, state, &rect))
->>>           gm12u320_fb_mark_dirty(state->fb, 
->>> &shadow_plane_state->data[0], &rect);
->> [Severity: High]
->> This is a pre-existing issue, but does gm12u320_fb_mark_dirty() sleep in
->> atomic context?
->>
->> It calls mutex_lock(&gm12u320->fb_update.lock), which is unsafe to call
->> from a plane update callback during non-blocking commits, as these run
->> in atomic context.
->>
->>>   }
->
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
+>=20
+> > +		if (IS_ERR(pwrseq))
+> > +			return dev_err_probe(&serdev->dev,
+> PTR_ERR(pwrseq),
+> > +					     "failed to get pwrseq\n");
+> > +
+> > +		nxpdev->pwrseq =3D pwrseq;
+> > +		err =3D pwrseq_power_on(pwrseq);
+> > +		if (err)
+> > +			return err;
+> > +	}
+> > +
+>=20
+> --
+> Sashiko AI
+> review * https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
+F%2
+> Fsashiko.dev%2F%23%2Fpatchset%2F20260709101555.3034853-1-
+> sherry.sun%40oss.nxp.com%3Fpart%3D3&data=3D05%7C02%7Csherry.sun%40
+> nxp.com%7C48b334e953744676329608deddaaa9c6%7C686ea1d3bc2b4c6fa9
+> 2cd99c5c301635%7C0%7C0%7C639191922250049941%7CUnknown%7CTWFp
+> bGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4z
+> MiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DG5jMhoI6
+> dW0e5QpHqX%2FWNupCSiSPwAlkEa0Afo0tzpI%3D&reserved=3D0
 
