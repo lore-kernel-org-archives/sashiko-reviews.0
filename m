@@ -1,97 +1,99 @@
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2281519B4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 00:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A54C79DA
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 02:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.161.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783643603; cv=none; b=cJhdy40QdqKtbQPhKkyQixQceuLTpB+nnvCBFsW2oVj2Q94FNjxaLgWCUvaMIaK0v7W7UPVBmW/qC3AME1r0rztypj8dUHpbDgnjq1qSzROq3djZdi+V43Es4fyDseBw6VJ9R1DGKgwwdUSaqEt9m0rTHMJ5VGNIKi4TM51G3+M=
+	t=1783651635; cv=none; b=S5XZOsJmKn+5WwLnGIWlJDAuLHwW1vLGF2v8Ufmw+1Hr04zF+wWj0rbPYrVBA9pNMnz0rrLfJWv2K9SL4JDvjXpC1bgMjXbfvWW4SfjkA6nEd/Ozds9Gl9Kb0GT/nzQ3jcj4D/XLrqRFeC6miiA9N0ZeOe/ZmrcqrzMbEk4/pt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783643603; c=relaxed/simple;
-	bh=Gab9VpthtLiQjZ59zgBi+Xozzt86WLy1sK8mrxbHN0k=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Z+qhIiukt7xLn4ZvOnXG4JJtAtcADYkCbQrxPTRKEdRhXac4UUf+XvZcf2zXZk98tmug39iO441S94YXHMIKusw6y6FNvk7Pg45SQjPt2x5P1ks4ewkjhEnkTewr8DuLTaonC3ISbKN0BfOr7FoL/xUzHK18CT3xUFErNpSdGqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TQ5+dG4Y; arc=none smtp.client-ip=209.85.215.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TQ5+dG4Y"
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c88fc985a65so571835a12.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 09 Jul 2026 17:33:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783643602; x=1784248402; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=m4rIBGWgF/ElXP4CVjcXjLMpbYLhwv7WmQTJ1sHcZVs=;
-        b=TQ5+dG4YTnmaxpVER5KX8gcPWpP53lgQOfzCi6c7S/65atx38FB7feVavVRVwilcH1
-         TIrp35PUH/pJ3eCdEG+QUu9mAep0hTNMUKUIZwC6QfqrWvxlcmrT3AlKZfnGcPsFGZzT
-         uT7ubYKcnRUcx7XGY/8GgRQoczXqO7FPoZQ/0MvtAHbmAV85f3QG4gYv/Qt4MUsedAG8
-         ed96KteCaL9dkHZXXp55fBvFdHrPdftLLp5ll1fYVLoxEMu2WzU++2ukYms69ryiKUkK
-         3ACyKeQSg25UBz2IXh1Y9eQdlkYscumfDEQfOWEybWJp8kUXKt5rRhB3FWg+WcrbjGvM
-         D/xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783643602; x=1784248402;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=m4rIBGWgF/ElXP4CVjcXjLMpbYLhwv7WmQTJ1sHcZVs=;
-        b=pyRO4Qw45n7rCnW4AZw4Ka2qlvumY2GDwseNa+NvcWWANNjwRFZxcUvGD6WfnCw2wz
-         tkbbYzfzF41V2ZiO0q+jyeymt71L2fqhKcMRVBlKSIWek4rMzEe+7BLzcNiYbeRzZnER
-         JkXPbQY27trpXYIAaC2b59e4LzJQm8lnq63HWh+3GB/HR6CBlDSj7kI9Thpz6DnfHcSJ
-         6yTqb4ZjVaIhgLb3I9HqxgRxo7fINzgAB0gy04HZsBIM/mCzeY3yZfSL5B1PwlsByqCs
-         Y2GTC2voeeZ5BoIG/7fOinQBlW7IwraHrMCjvSnfyR4VxUSOYslnY45a1yCQwWYGrQfb
-         mJUQ==
-X-Gm-Message-State: AOJu0YzQ+T7hHnLZ7SSRw4bZ3OuFvoHp1EOo0EYZkoulTj7f9Pb4bNve
-	ZFfx/O53lb84tp7HKxxcpOQaXiTzbL2wI2ZjAOoMjpSPa7cFdiEhxZFN4yzVzb4ghj7xpJIt31K
-	vX/xVew==
-X-Received: from pgu17.prod.google.com ([2002:a63:1451:0:b0:c8e:650d:c415])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:700b:b0:3c0:9c19:65a5
- with SMTP id adf61e73a8af0-3c0bd3137b7mr12161307637.61.1783643601636; Thu, 09
- Jul 2026 17:33:21 -0700 (PDT)
-Date: Thu, 9 Jul 2026 17:33:21 -0700
-In-Reply-To: <CAEvNRgEyefHztOrhpzZ9cPjr_Rc1XkfXE7ak_WX2P_=t_JZJSg@mail.gmail.com>
+	s=arc-20240116; t=1783651635; c=relaxed/simple;
+	bh=uanaD7B3NUzHDv3dq2Wp3tkr5OnXVMbjagRrR4w2s5g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=VUesHGut9VGDcNPH3s23t/YFY7lX6ZAGyFoqek4loD2n0mUwz1z9GwaG2+wiUWIJ9Chuho30Bo0z5dCf4yP9zuGliwSgZrm58R+rEcg+whjY/ftgKwC1hyGv6MdPQpBlywwh9ovBluUML0z/ve1K5kIqnGIosiu7pnLZo001rps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=162.243.161.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
+ ajax-webmail-app1 (Coremail) ; Fri, 10 Jul 2026 10:46:57 +0800 (GMT+08:00)
+Date: Fri, 10 Jul 2026 10:46:57 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
+To: sashiko-reviews@lists.linux.dev, andrew@lunn.ch
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	"Min Lin" <linmin@eswincomputing.com>
+Subject: Re: Re: [PATCH net-next v10 1/4] dt-bindings: ethernet: eswin:
+ relax internal delay model to range-based constraints
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260708064323.73A661F00A3A@smtp.kernel.org>
+References: <20260707064033.1265-1-lizhi2@eswincomputing.com>
+ <20260707064131.1282-1-lizhi2@eswincomputing.com>
+ <20260708064323.73A661F00A3A@smtp.kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260709204948.1988414-1-seanjc@google.com> <20260709204948.1988414-18-seanjc@google.com>
- <20260709211523.8BE3F1F000E9@smtp.kernel.org> <CAEvNRgEyefHztOrhpzZ9cPjr_Rc1XkfXE7ak_WX2P_=t_JZJSg@mail.gmail.com>
-Message-ID: <alA90eb0_aKEZgph@google.com>
-Subject: Re: [PATCH v4 17/18] KVM: guest_memfd: Align the gfn as well as the
- pfn when "preparing" a folio
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Message-ID: <747f8c43.a62e.19f49ebca5e.Coremail.lizhi2@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TAJkCgDHW3AhXVBqS+oyAA--.9842W
+X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAgEEDGpPzZoJEQABsg
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On Thu, Jul 09, 2026, Ackerley Tng wrote:
-> sashiko-bot@kernel.org writes:
-> >> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> >> index cd7a795834cb6..4082cde3f3fca 100644
-> >> --- a/virt/kvm/guest_memfd.c
-> >> +++ b/virt/kvm/guest_memfd.c
-> >> @@ -87,8 +87,8 @@ static int kvm_gmem_prepare_folio(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >>  	 * checked when creating memslots.
-> >>  	 */
-> >>  	WARN_ON_ONCE(!IS_ALIGNED(slot->gmem.pgoff, nr_pages));
-> >> +	gfn = ALIGN_DOWN(gfn, nr_pages);
-> >>  	index = kvm_gmem_get_index(slot, gfn);
-> >> -	index = ALIGN_DOWN(index, nr_pages);
-> >
-> > [Severity: Medium]
-> > If a userspace caller creates a guest_memfd memslot with a base_gfn that is
-> > not aligned to the huge folio size, will computing the index from the aligned
-> > gfn result in a misaligned index?
-> >
-> > When passed to kvm_arch_gmem_prepare(), couldn't this cause the iteration
-> > to go past the end of the huge folio, resulting in an out-of-bounds host
-> > physical memory access?
-> >
-> 
-> This sounds like it would be a problem. We could perhaps leave this
-> until huge pages are supported?
-
-Yeah, for sure.
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJu
+ZWwub3JnCj4gU2VuZCB0aW1lOldlZG5lc2RheSwgMDgvMDcvMjAyNiAxNDo0MzoyMgo+IFRvOiBs
+aXpoaTJAZXN3aW5jb21wdXRpbmcuY29tCj4gQ2M6IGRldmljZXRyZWVAdmdlci5rZXJuZWwub3Jn
+LCByb2JoQGtlcm5lbC5vcmcsIGNvbm9yK2R0QGtlcm5lbC5vcmcKPiBTdWJqZWN0OiBSZTogW1BB
+VENIIG5ldC1uZXh0IHYxMCAxLzRdIGR0LWJpbmRpbmdzOiBldGhlcm5ldDogZXN3aW46IHJlbGF4
+IGludGVybmFsIGRlbGF5IG1vZGVsIHRvIHJhbmdlLWJhc2VkIGNvbnN0cmFpbnRzCj4gCj4gVGhh
+bmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMSBw
+b3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6Cj4gLSBbSGlnaF0gRFQgQmluZGluZyBhbmQg
+RHJpdmVyIG1pc21hdGNoOiByZWxheGVkIGRlbGF5IHByb3BlcnRpZXMgY2F1c2UgcHJvYmUgZmFp
+bHVyZS4KPiAtLQo+IAo+IC0tLSBQYXRjaCBbMV06IFtQQVRDSCBuZXQtbmV4dCB2MTAgMS80XSBk
+dC1iaW5kaW5nczogZXRoZXJuZXQ6IGVzd2luOiByZWxheCBpbnRlcm5hbCBkZWxheSBtb2RlbCB0
+byByYW5nZS1iYXNlZCBjb25zdHJhaW50cyAtLS0KPiBjb21taXQgM2RjZWFmOTMxOTE1YzI0ODg3
+ZTExZTAwYzBkODVjYjQ1Y2VmNGQzOQo+IEF1dGhvcjogWmhpIExpIDxsaXpoaTJAZXN3aW5jb21w
+dXRpbmcuY29tPgo+IAo+IGR0LWJpbmRpbmdzOiBldGhlcm5ldDogZXN3aW46IHJlbGF4IGludGVy
+bmFsIGRlbGF5IG1vZGVsIHRvIHJhbmdlLWJhc2VkIGNvbnN0cmFpbnRzCj4gCj4gVGhpcyBjb21t
+aXQgcmVsYXhlcyBpbnRlcm5hbCBkZWxheSBjb25zdHJhaW50cyBmb3IgdGhlIEVJQzc3MDAgRXRo
+ZXJuZXQKPiBiaW5kaW5nLCByZXBsYWNpbmcgZml4ZWQgZW51bWVyYXRpb25zIHdpdGggcmFuZ2Ut
+YmFzZWQgZGVmaW5pdGlvbnMuIEl0IGFsc28KPiBtYWtlcyB0aGUgcngtaW50ZXJuYWwtZGVsYXkt
+cHMgYW5kIHR4LWludGVybmFsLWRlbGF5LXBzIHByb3BlcnRpZXMgb3B0aW9uYWwuCj4gCj4gPiBk
+aWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL25ldC9lc3dpbixl
+aWM3NzAwLWV0aC55YW1sIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL25ldC9l
+c3dpbixlaWM3NzAwLWV0aC55YW1sCj4gPiBpbmRleCA2NTg4MmZmNzlkOGQ3Li40ZTAyZmVkYWU1
+YzY3IDEwMDY0NAo+ID4gLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL25l
+dC9lc3dpbixlaWM3NzAwLWV0aC55YW1sCj4gPiArKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRy
+ZWUvYmluZGluZ3MvbmV0L2Vzd2luLGVpYzc3MDAtZXRoLnlhbWwKPiBbIC4uLiBdCj4gPiBAQCAt
+MTA1LDggKzEwOSw2IEBAIHJlcXVpcmVkOgo+ID4gICAgLSBwaHktbW9kZQo+ID4gICAgLSByZXNl
+dHMKPiA+ICAgIC0gcmVzZXQtbmFtZXMKPiA+IC0gIC0gcngtaW50ZXJuYWwtZGVsYXktcHMKPiA+
+IC0gIC0gdHgtaW50ZXJuYWwtZGVsYXktcHMKPiAKPiBbU2V2ZXJpdHk6IEhpZ2hdCj4gV2l0aCB0
+aGlzIGNoYW5nZSwgdGhlIERUIHNjaGVtYSBtYWtlcyB0aGVzZSBwcm9wZXJ0aWVzIG9wdGlvbmFs
+LiBIb3dldmVyLCBkb2VzCj4gdGhlIGVpYzc3MDAtcW9zLWV0aCBkcml2ZXIgc3RpbGwgcmVxdWly
+ZSB0aGVtPwo+IAo+IExvb2tpbmcgYXQgZWljNzcwMF9kd21hY19wcm9iZSgpLCBpdCBhcHBlYXJz
+IHRvIHJldHVybiBhbiBlcnJvciBpZiB0aGVzZQo+IHByb3BlcnRpZXMgYXJlIG1pc3Npbmc6Cj4g
+Cj4gZHJpdmVycy9uZXQvZXRoZXJuZXQvc3RtaWNyby9zdG1tYWMvZHdtYWMtZWljNzcwMC5jOmVp
+Yzc3MDBfZHdtYWNfcHJvYmUoKSB7Cj4gICAgIC4uLgo+IAl9IGVsc2Ugewo+IAkJcmV0dXJuIGRl
+dl9lcnJfcHJvYmUoJnBkZXYtPmRldiwgLUVJTlZBTCwKPiAJCQkibWlzc2luZyByZXF1aXJlZCBw
+cm9wZXJ0eSByeC1pbnRlcm5hbC1kZWxheS1wc1xuIik7Cj4gCX0KPiAgICAgLi4uCj4gCX0gZWxz
+ZSB7Cj4gCQlyZXR1cm4gZGV2X2Vycl9wcm9iZSgmcGRldi0+ZGV2LCAtRUlOVkFMLAo+IAkJCSJt
+aXNzaW5nIHJlcXVpcmVkIHByb3BlcnR5IHR4LWludGVybmFsLWRlbGF5LXBzXG4iKTsKPiAJfQo+
+ICAgICAuLi4KPiB9Cj4gCj4gV2lsbCB0aGlzIGNhdXNlIHRoZSBwcm9iZSB0byBmYWlsIGlmIGEg
+ZGV2aWNlIHRyZWUgb21pdHMgdGhlc2UgcHJvcGVydGllcywKPiBhcyBwZXJtaXR0ZWQgYnkgdGhl
+IHVwZGF0ZWQgc2NoZW1hPwo+IAoKSGkgU2FzaGlrbywKClRoYW5rcyBmb3IgdGhlIHJldmlldy4K
+ClRoZXNlIGNvbW1lbnRzIGFyZSBhbGwgZmFsc2UgcG9zaXRpdmVzIGR1ZSB0byBwZXJmb3JtaW5n
+IHRoZSByZWdyZXNzaW9uCmFuYWx5c2lzIG9mIG9uZSBwYXRjaCBhdCBvbmNlIGJ5IEFJLgpUaGVz
+ZSBmb3VyIHBhdGNoZXMgYXJlIHNlcXVlbnRpYWwgbW9kaWZpY2F0aW9ucyBtYWRlIGZvciB0aGUg
+cHVycG9zZSBvZgpmYWNpbGl0YXRpbmcgcmV2aWV3LgoKUGxlYXNlIHBlcmZvcm0gZGVlcCByZWdy
+ZXNzaW9uIGFuYXlseXNpcyBvZiB0aGlzIHNlcmllcyBhZnRlciBhcHBseWluZyBhbGwgdGhlIHBh
+dGNoZXMuCgpBbmRyZXcsIGRvIHlvdSBoYXZlIGFueSBjb21tZW50cyBvbiB0aGlzIFYxMCBwYXRj
+aCBzZXJpZXM/CgpUaGFua3MsClpoaSBMaQoKPiA+ICAgIC0gZXN3aW4saHNwLXNwLWNzcgo+ID4g
+IAo+ID4gIHVuZXZhbHVhdGVkUHJvcGVydGllczogZmFsc2UKPiAKPiAtLSAKPiBTYXNoaWtvIEFJ
+IHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA3MDcwNjQwMzMu
+MTI2NS0xLWxpemhpMkBlc3dpbmNvbXB1dGluZy5jb20/cGFydD0xCg==
