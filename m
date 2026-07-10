@@ -1,117 +1,151 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AC1374E6D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 18:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE3733260F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 19:13:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783708524; cv=none; b=NzUMyfHOeuJnIL8Nf/kYTngnUlFUsY49uzvNd8LWqZoGmUp+eXoKfujVFI1qEWB6ohPqYlxjClXx2DeM3fWiJOtr6PaWMlD4BBmKRlucA0uQS3puF1u4vbK9lotXU6t1HXLMWxhi9mVdpYMyIPHITdvpLgH5JuH39vos3BgVCXA=
+	t=1783710840; cv=none; b=h+FkDEmER+AYE6IiL1aK14NFf9JO3ixH3rAwSmCiH1F+xKZG7+zlZBrPb2xLipPmsO3XcJwgsWbjcjCKdxz2ghNMTDG6HukWtuAUTTx2sxDGyftYa/ahOGwdm9Ux52q10K0+wj0lKF/Xhj/P0TigST/py8/XowWnrK9Xhhiem4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783708524; c=relaxed/simple;
-	bh=cVwSutYXyxu2kAs+M/fqvlMTLCP40ylY2LRCvNSraqE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=qISdHhgN1OpJlw+wWZajW+Yue7LQaTgQ1SE2iE1EE4kJEOnCZs3BAc+v/xR9CM5Yjt/Vbgvu0S0JJ3ZjZ5B6uC0nfGa3xkAywF8Lt801iEogLHg80Ptm5sBLIm8yqj00xlEizcNZpN6qO8FmUNY4n3Bkrgy2pcjRovQsjenDiK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YyC0nWyl; arc=none smtp.client-ip=209.85.210.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1783710840; c=relaxed/simple;
+	bh=yyhlkcnBQirrNapppuVvQgqJU++T2xKS4kSnGHKNJAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J0y2H8R9W8AhTxS3KP/gFRw3wb0FWI5Um2hnpainYIPkzGeoEzmzH65rrcqqSBxGI0Nd8nHQwePSwTESwjzx1/RCqZbgagmlwSyAwx2bCrnKf+Y1o+RHJ3rX7UubL3ckXdUoCwLndDFXtYIUErSKfOF+15Yh6+mNt6XOyc2N29M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=SqxDYHD0; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YyC0nWyl"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-84870e7f498so1489811b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 11:35:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783708522; x=1784313322; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wJss+Nyx//3KxfsXosZCusg05vSosR0BprDgk0IeJw4=;
-        b=YyC0nWylppSgsjoPJDW7Nqd84UpHb2JLUW+tLhcMrEfmZKz787PShuZHnCO1cFC725
-         yuV60u7WJtxLSHyOcru8ttvh1T/7Y5VoPSkBS++l4bvH/GZYv5jlfl+NFaiHF2uptkKS
-         d/umagwOV7scEDqMG//+raz6eF/0kp/q+2JN1fvqyHkYoDtcTvgisFvd4d2jWoiMmahH
-         j876gLzx73bboocZaZLOINAlmwvEfgjrQ4tJIqu6bpQD1i+nQAA/LZwYfGdIMNjKxTgx
-         fnaqTlzAoYGmXT46z0Bo/XtLt4s4tksFGqriM2CtDe0omOWDXWybGJFu3xC2DdDGBu3g
-         eEuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783708522; x=1784313322;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=wJss+Nyx//3KxfsXosZCusg05vSosR0BprDgk0IeJw4=;
-        b=MF3kApQLpViPn4ppzyenUgJBCAfncoszjQmb+1bN6/ryjn5k4Rho8hjcncdFX4WiXg
-         5+P/Kx2TGVjbUxF9F1Ac9FZkZzgx0RmALH7L3G+LhDsjX5f5NEyOLK6cyDhs6GeW2KAo
-         W1jHz1DhZ0d1/8WLRO8jV5xEX4sFWXP+P+p0PS1IMjCJk+Fk0bFaP4JS6DwR+gBQ8NEm
-         zcAhT7dEMSZEFMY9zD7oFAv49jJlRw5XVbNpXasS51j4d19NNKvLcZLgwwumCQ2LPvG0
-         zV2YZ6sFSyEtibqmOYDWtK/gptP3OGRV9ipahAfyYDxhEIrIwzBdAmcdm1mnzwetj4fY
-         TMPA==
-X-Gm-Message-State: AOJu0YzgfQfgTtS/zzHtEnxi9jd2FPLaNj/zK3t6irv/ogV+Ay1fr1QF
-	7qfq5pu5z/HoCQnqhspIPFFxAySp5SZEFwBSrjzKzTjMhZeaNYCGtP7J18PFKigc1nEfOf6UISj
-	2z2k6E45W7WOKTDLIav8YG5aX7ePJLDb9xKufh9JrQWUKt2hsAzdNvPrOWEB2DE5R64Og2Tg74V
-	bEcToOLthkrnVhd/aXQyzlo3ZHCUJuzr8yiYOP2hZgzXPpbWlE
-X-Received: from pfdb8.prod.google.com ([2002:a05:6a00:94e8:b0:847:878f:44fd])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:3cd4:b0:847:712d:19ac
- with SMTP id d2e1a72fcca58-84889637560mr217734b3a.8.1783708522009; Fri, 10
- Jul 2026 11:35:22 -0700 (PDT)
-Date: Fri, 10 Jul 2026 11:35:21 -0700
-In-Reply-To: <20260710135312.AD74F1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="SqxDYHD0"
+Message-ID: <69937e6e-7292-42f2-988b-19b227beb0d6@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783710835;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FlJFkPv3kNKg+GUuRWBr1UMWIqPNnYOMJMKqCieT5oE=;
+	b=SqxDYHD04WpxmXJVg5ZvjhgJHNR+mSrDADeJMCm19n3MYSX092aINiQHjw8ti07fEiiGeH
+	Z4S9vDuWSXqlLtThty8+DnXoUzIQGOo3b670EMw0OyXXms6eW7TS2x45KBlbkjxbpTVolE
+	yl8ssUb9CeKbbY39kL019SyslNelMOA=
+Date: Fri, 10 Jul 2026 12:13:37 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260710134055.16432-1-danielpaziyski@gmail.com> <20260710135312.AD74F1F000E9@smtp.kernel.org>
-Message-ID: <alE7aTGmUIWKJf9a@google.com>
-Subject: Re: [PATCH] KVM: x86: Fix null pointer dereference in trace_kvm_inj_exception
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf v2 3/3] selftests/bpf: Add tests for >8 byte return
+ value and 128-bit arguments
+Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
-Cc: Daniel Paziyski <danielpaziyski@gmail.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: bpf@vger.kernel.org
+References: <20260710182204.1085329-1-yonghong.song@linux.dev>
+ <20260710182219.1092246-1-yonghong.song@linux.dev>
+ <20260710183802.D34681F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260710183802.D34681F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, Jul 10, 2026, sashiko-bot@kernel.org wrote:
-> > An empty struct is being passed, which makes the
-> > kernel derefence a NULL pointer when the error code is 0. Remove this
-> > stray struct in the invocation of __print_symbolic.
-> 
+
+
+On 7/10/26 11:38 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The newly added `test_int128_args` selftest will predictably fail on `aarch64` due to an unhandled ABI alignment requirement in the ARM64 BPF trampoline.
+> --
+>
+> --- Patch [3]: [PATCH bpf v2 3/3] selftests/bpf: Add tests for >8 byte return value and 128-bit arguments ---
+> commit c4e66c7551048f829ca6d77d8b1b2e6467e4525e
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> selftests/bpf: Add tests for >8 byte return value and 128-bit arguments
+>
+> The BPF trampoline preserves only 8 bytes of the target's return value
+> (R0), so attaching an fexit/fmod_ret/fsession program to a function that
+> returns a >8 byte value is now rejected by the verifier. Add a bpf_testmod
+> function returning __int128 and an fexit program that targets it. The
+> program is expected to fail to load with the "with a >8 byte return value
+> is not supported for this attach type" message.
+>
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+>> index 6f8c0bfb04155..d32198ee02dff 100644
+>> --- a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+>> +++ b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+> [ ... ]
+>> @@ -112,6 +113,39 @@ static void test_struct_many_args(void)
+>>   	tracing_struct_many_args__destroy(skel);
+>>   }
+>>   
+>> +static void test_int128_args(void)
+>> +{
+>> +	/*
+>> +	 * __int128 arguments are passed in a register pair on x86_64 and
+>> +	 * arm64, which the trampoline packs into two context slots. Other
+>> +	 * architectures pass a __int128 differently (e.g. s390x passes larger
+>> +	 * arguments by reference), so only exercise this on x86_64 and arm64.
+>> +	 */
+>> +#if defined(__x86_64__) || defined(__aarch64__)
+>> +	struct tracing_struct_int128 *skel;
+>> +	int err;
+>> +
+>> +	skel = tracing_struct_int128__open_and_load();
+>> +	if (!ASSERT_OK_PTR(skel, "tracing_struct_int128__open_and_load"))
+>> +		return;
+>> +
+>> +	err = tracing_struct_int128__attach(skel);
+>> +	if (!ASSERT_OK(err, "tracing_struct_int128__attach"))
+>> +		goto destroy_skel;
+>> +
+>> +	ASSERT_OK(trigger_module_test_read(256), "trigger_read");
+>> +
+>> +	ASSERT_EQ(skel->bss->t_a, 1, "t:a");
+>> +	ASSERT_EQ(skel->bss->t_c, 3, "t:c");
+>          ^^^^
+>
 > [Severity: Medium]
-> Is this description of a null pointer dereference accurate?
-
-Yes, it is.  Sashiko apparently applied to an old base (pre-7.1).  As of commit
-754e38d2d1ae ("tracing: Use explicit array size instead of sentinel elements in
-symbol printing") (spoiler alert), trace_print_symbols_seq() is:
-
-	for (i = 0; i < symbol_array_size; i++) {
-
-		if (val != symbol_array[i].mask)
-			continue;
-
-		trace_seq_puts(p, symbol_array[i].name);
-		break;
-	}
-
-> Looking at how __print_symbolic expands, the empty struct { } safely
-> initializes the first element's name pointer to NULL. When
-> trace_print_symbols_seq() is called, it handles this gracefully:
-> 
-> kernel/trace/trace_output.c:trace_print_symbols_seq() {
->     ...
->     for (i = 0;  symbol_array[i].name; i++) {
->     ...
+> Will this test predictably fail on AArch64?
+>
+> The test calls bpf_testmod_test_int128_arg(1, 2, 3). According to the AAPCS64
+> calling convention, a 16-byte aligned argument (__int128) must be passed in an
+> even-odd register pair. Thus, the integer 'a' goes to w0, x1 is skipped for
+> alignment padding, the __int128 'b' goes to x2 and x3, and the long 'c' goes
+> to x4.
+>
+> However, the pre-existing logic in the ARM64 BPF trampoline fails to account
+> for this padding. It solely calculates register usage based on argument sizes:
+>
+> arch/arm64/net/bpf_jit_comp.c:calc_arg_aux() {
+> 	...
+> 	for (i = 0, nregs = 0; i < m->nr_args; i++) {
+> 		slots = (m->arg_size[i] + 7) / 8;
+> 		if (nregs + slots <= 8) /* passed through register ? */
+> 			nregs += slots;
+> 	...
 > }
-> 
-> Since the name field is NULL for the first element, the loop is bypassed
-> entirely and the function safely falls back to printing the error code as a
-> hex string without dereferencing a NULL pointer.
-> 
-> > diff --git a/arch/x86/kvm/trace.h b/arch/x86/kvm/trace.h
-> > --- a/arch/x86/kvm/trace.h
-> > +++ b/arch/x86/kvm/trace.h
-> > @@ -490,7 +490,7 @@ TRACE_EVENT(kvm_inj_exception,
-> >  	TP_printk("%s%s%s%s%s",
-> >  		  __print_symbolic(__entry->exception, kvm_trace_sym_exc),
-> >  		  !__entry->has_error ? "" : " (",
-> > -		  !__entry->has_error ? "" : __print_symbolic(__entry->error_code, { }),
-> > +		  !__entry->has_error ? "" : __print_symbolic(__entry->error_code),
-> 
-> [Severity: Low]
-> Will this change break the kernel build?
+>
+> Because it incorrectly assumes the arguments use exactly 4 contiguous
+> registers (x0 through x3), it only saves those.
+>
+> As a result, when the test's BPF program reads ctx[3] expecting 'c', it
+> actually reads x3 (the upper 64 bits of 'b', which is 0).
+>
+> Would it be better to fix the ARM64 trampoline padding handling first, or
+> exclude AArch64 from this test for now to prevent CI failures?
 
-No, beacuse again, Sashiko applied to an old base for some reason.
+Another arch difference between x86_64 and arm64. x84_64 allows __int128 at
+any position in an array. But arm64 allows __int128 must be even position.
+
+I will fix it.
+
+>
+>> +	ASSERT_EQ(skel->bss->t_ret, 6, "t ret");
+>> +
+>> +destroy_skel:
+>> +	tracing_struct_int128__destroy(skel);
+>> +#else
+>> +	test__skip();
+>> +#endif
+>> +}
+
