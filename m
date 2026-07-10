@@ -1,112 +1,184 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013064.outbound.protection.outlook.com [52.101.83.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FBD4499BF
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 08:53:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D852DCF74;
+	Fri, 10 Jul 2026 09:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.64
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783673609; cv=pass; b=e6GbdJbWeOyLYYHc1OFqczq5XuZg+1cOLl6dIhp4XjmynOgsk8iEY5BE6sVrkrHbYaLvNuRTKlfapJcuNcCCxPMZWXgaiU9jxmz3T4SAPczuEBtVd5Ls5Z8WRDXA33mUF1acaJBrXhkus3UTmcoS5MHEpGTGP7is7CGJF6Ju2Ls=
+	t=1783674660; cv=fail; b=b1wLT5ifG5k8/PKI9xAUrZRgMMIZA7rqc1yO0faPHWpbMYNhFJECaJIWcOif2J2jJsk9Y8h4ENYzfUMe2zWknfSJ5tgIB+euEFKL35tiFN4fiQv3Yi5wCtbAImTOmblz9/yXL5BlLtkN5BANYh/AkLgt80Kcn/2iLFXLc8v2q0U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783673609; c=relaxed/simple;
-	bh=rrokNO663AJnxfbZn2qeXq7kp5aHBWHkKGU/gi9NuAY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dhUoAVh9lXUj/JGt69qABds05y2U4da1jAiDiTh52OvzhsDSCyH45DHbUFQtoY4W6/OqxVbZsRYzdP3gdxzCWUNK7emT+h0yr3eWB8DgGa7tyhqhcFVmf+aRdaFQntX8YlF9vzsbcpIA0+hahfiImL6kPg5xKM+yaaztmMszIu0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qac9rQKx; arc=pass smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783674660; c=relaxed/simple;
+	bh=bEgyKP6DTrnmF5LttmNLNA9syVtNvEY1Bwho/6yVv8I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=G6DooJCLvkNCTC6W9IjYKyCNRFRdqG4NXd8W5ZM5CReXz/ln8YNYz/6/YpJUyz3R11zl2pQc+E7mWuvmRk5pYGwnmv/6dorBi9gJF0xTHVJaRODjOJTIiGBJBKRxbnuza5afEv40JYdighd0TRaueXk598QoY3HwpGkSIGdPAhQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=mt.com; spf=fail smtp.mailfrom=mt.com; dkim=fail (2048-bit key) header.d=mt.com header.i=@mt.com header.b=kSaE74XQ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=mt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=mt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qac9rQKx"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-81e6f2ee60bso20172547b3.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 01:53:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783673607; cv=none;
-        d=google.com; s=arc-20260327;
-        b=a8eHwT1UM4hVOA9QaPOC5H3+GaviRsGtqCnjGStEoMpal4wLLqOwCktEMOzYpaW3cn
-         Xsdlt8gpImrTJSZtOTdxjULl2iwlAJNilvv10w5wtNlp1d8m5zU3E7UTZHS7fnHy9ybL
-         P2BK2GGvD6xT+0EBAE4AONP5lG0b+51UzMfXnTGhE+jhIkVLhWzWifxZvGfe6Ao9mFeM
-         RTIV6WpAkEE7NGPZUuapX4v4bXpgsOWvah63sksxhIcJbTm7RJcFydSiBnLiAryzkk5z
-         hfEYHSiHcSAaqKVtg0Gmnng1HgG7mcuFIoZSSZc/p1IAY5dR8y7wqav6XJz9vqT6+ita
-         nP9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=rrokNO663AJnxfbZn2qeXq7kp5aHBWHkKGU/gi9NuAY=;
-        fh=WdZE3kgJeTebCBJ4NXeUoIjbXeb3faIbdq3aHEnJVzw=;
-        b=MeiY0u/9AlMj8R9YgtIdsNmSJJ7sk20YT/1ECKUx/uwi5q1lzqSscoDDElaQYN+Xvh
-         OywkUFjs7i8PP4ig62sWl/F2eomjYoHItfQDW4TVcseNWAFV+7s5eedI/p2Tc/wXJ1UC
-         kMC6y706/ikrXWbQZXMjDuHI84FX/mr8zUYRjPl4wmC6jnVj1ySGuqFKMIY4d47cluX9
-         sb9aoHlSxD4cFL16CGC0uNVlRmq9u087QFd5cjwtYNib30KtvjHdexa1sVnQ3vX+2Sfb
-         oiKrkDqNcf7IMuCC5Nyhpe+2L8Htd7OxhCbRvE3KRPnuMWcLBMkaO7bFLR4W9e2EPmn4
-         AtBw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783673607; x=1784278407; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rrokNO663AJnxfbZn2qeXq7kp5aHBWHkKGU/gi9NuAY=;
-        b=Qac9rQKxIgOmWtv3NA9gBATEHsaBuiu2LFGerh4mRIr3poVJLyQ3fRJHJUvkZFigkh
-         RUD8YX5X9SC5lUKAM5p5WViLJTpgdemrcyaIQve7uTx6LlX3zXpieu/5NvMm6Mm+LdMh
-         haOf2XndMVdeRiELytnrgcX9JnZxWuQMy8QPq9uH2cLalE2U8nktsjdYSulf6qYay9Vo
-         teoCcM8XhqQKJx6/xMclfYEmxRqSnjPeMjOdQIt33NhTugf5Fao/1XWlT0+Nk8PSecZK
-         IELdstqLl5N6QXMNQu3mzu+3rUsQmrLFhFIndzq6wVYo9Ggr8LXTylDhMCrn5XGAOPy1
-         iWIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783673607; x=1784278407;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rrokNO663AJnxfbZn2qeXq7kp5aHBWHkKGU/gi9NuAY=;
-        b=kgW3JPJk+Af2LbPEdm66Cu9P3x2jo9oGdIFf0b+upBCtjdjflBFQoU28/V6qCu8Uhj
-         /YOnsGXpAZq/TdR8+XavHTfMwGX/ndEebpdyg+HEI+aK0utImIKD6IBKrUnucuzr5Jeq
-         jrlEPW6DV6F4uoa4jaWEjIlqck+W0+8p1UlpoglUcH6i0eJsyro3VOHrQOIEh6omBj6v
-         NXpYFVDwctjWs+o6R6OsHVWmv6m1jvF4d9A4JrVQ8eAZceRcuTv2f9IFsFkR1JiLHB9O
-         etfzDO5xLHHhwEMJD5oTvOd8f1Y7EPn6QQCn7+5zGILRBw9IdFWY38c3P2kS/zG5o45f
-         xpVw==
-X-Gm-Message-State: AOJu0YyzCQyWCDnmffx7BI/3er+dkGe0enXpAd7G1yBvPXR6mZjVmRLE
-	nAcVwCSJZZSlfB86AQns9BAYGV0kFM0IzNoev6uZT3HDhD5oWSniUbEMRBXfi+AaeRSjcrjX9FX
-	3pkx1rvjG+dXfeRD4uRuxOi6KwOt75XG7qqhDbWc=
-X-Gm-Gg: AfdE7cmLVzKwG+v/IAmeDiChSaN16AQ/CS9OKNXxtmB9kLq9W3S+/rKDOktXkyqV5a3
-	mmJJHmXiGeR0jndENfD/XAreO83IG+qyGrkumspTZzu/1w+THKSgNdZAw/VnP+SDA1LuSUM2eAh
-	SLxgPhxeJ5FnP5xHqyCZxYj5mIqfHy9dWSFafQyIk9hRK0OXV45zhGjtzmSVJr74uSgYXsJPOB/
-	sk4GsGLAncId498xySJwQd85nv1MDJsn0DskQdMpJ96oPR/xGcaK2rRqCt2uiP9oXwkArSHdWGQ
-	DhM6/Ios30jYC+vcLKjEJo9l0dI=
-X-Received: by 2002:a05:690c:6603:b0:7de:8229:e86e with SMTP id
- 00721157ae682-81e7bc535bamr22632267b3.21.1783673606816; Fri, 10 Jul 2026
- 01:53:26 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mt.com header.i=@mt.com header.b="kSaE74XQ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Uelye/ZOoUxGMS2/vdHlgaUI4DY5OBQv7RQYYhN1qW6eaLI28RgTuoSqXBXJ48qxqsM4irw/OdlU360DTvUKXeImZU95btliWPs81PYJ0xeFdmOs7I//ufslYYShWZzkBKeYq45AdX4loMjOu9+l04BdsJLxbejbuM4lm35SOCnwj/XSY3/IYq/aWRKymxehLjwZ0mRw320s8XMx/u/i2U7tL+R2kLcwTvESTohj+KSnxGeC3oXbQEEhTaWDckzm5ZF4sDPnrzSPB3y+lONBLSDE+xleSvyMXkGXISEcoLbhnSko55+jaYjJ6NzYFj87Pa1eE9yo4RxRqPEsWzlsMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0rJEFGzVqgaWqPgX2NjIipVmq3FKY+pV8KgzuVemCxw=;
+ b=EJjiqeIKBdjuwQQd8UAjfSKG5doiZgMe3WQH/fQwssBl6J2ZjJ9uTo3FyH7itihwgeVxAYsyYL8udg8W4Ws4Xr2N4+xt5D3aojPy5pr6itbUrtxTEzulVu4tVrEdjyeUYYNAlJDayMPGDfVX0SyokVDqJHJCnY2W7CZjJNpQluNd9KUoerLPqI/gt3MjznL/7Uqop93c5IawwvrYa3keI+3XQ9kCoDrrukN+54eCga0Bl1k6y0sceFQpLODHuC0MRv7bk+Gq091jiL1d0Im/xIQ2rYMJQMfZQ7t/WsPPf3a5l9CfUlSpuSjaY+hSDS02h18mMpXQ7Gz3YJusst86kg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=mt.com; dmarc=pass action=none header.from=mt.com; dkim=pass
+ header.d=mt.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mt.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0rJEFGzVqgaWqPgX2NjIipVmq3FKY+pV8KgzuVemCxw=;
+ b=kSaE74XQVPv7+W0W16znJI33IwI4MkCcayY9rKQYrdexBDUihvr9ED1kKsqENh8aDBMU1JLhn76eiYKk+n1L3yTCsX/RtdemumtmzSjUiV6nr2H2+eVWYfJk+E4FZk3D2Km5YAuizeefVjrdsAThZp8+xOxwepLDIYuX8VSql5UG1MmLqWuU4eXtheSQph1UoRYMDoM4X7BqCsfmI6liIAfIDcBdzF2lJsFAay4+nwfsaQEr2ZYVoS7gNXf+D+UjR+LWk6dJh+RNrrOL/BZ/deTVC6A7HV1tu69EnMnALEiquMKYHUZBMmTUTSkB9uVebbENS8ki7DSMeDMCg7+hLg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=mt.com;
+Received: from DB9PR03MB7180.eurprd03.prod.outlook.com (2603:10a6:10:22d::13)
+ by GVXPR03MB11645.eurprd03.prod.outlook.com (2603:10a6:150:2c7::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.16; Fri, 10 Jul
+ 2026 09:10:55 +0000
+Received: from DB9PR03MB7180.eurprd03.prod.outlook.com
+ ([fe80::6fd2:12a9:4423:8ddc]) by DB9PR03MB7180.eurprd03.prod.outlook.com
+ ([fe80::6fd2:12a9:4423:8ddc%6]) with mapi id 15.21.0181.016; Fri, 10 Jul 2026
+ 09:10:55 +0000
+Date: Fri, 10 Jul 2026 11:10:46 +0200
+From: Wojciech Dubowik <wojciech.dubowik@mt.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, imx@lists.linux.dev,
+	devicetree@vger.kernel.org, Frank.Li@kernel.org, robh@kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v3 2/2] dt-bindings: display: sn65dsi83: Add output
+ data-lanes
+Message-ID: <alC3Fnzyy-C92sLA@mt.com>
+References: <20260710082630.394040-1-wojciech.dubowik@mt.com>
+ <20260710082630.394040-4-wojciech.dubowik@mt.com>
+ <20260710083425.B7EB11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260710083425.B7EB11F000E9@smtp.kernel.org>
+X-ClientProxiedBy: ZR0P278CA0021.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:1c::8) To DB9PR03MB7180.eurprd03.prod.outlook.com
+ (2603:10a6:10:22d::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260710070141.37214-1-mertsftl@gmail.com> <20260710071132.2AAB91F000E9@smtp.kernel.org>
-In-Reply-To: <20260710071132.2AAB91F000E9@smtp.kernel.org>
-From: Mert Seftali <mertsftl@gmail.com>
-Date: Fri, 10 Jul 2026 10:53:15 +0200
-X-Gm-Features: AVVi8Cfl_h5TZSnM2_kzmR_MbRt3H9iKsVECORQF8uRQGYJAwZpkIFrbi79ng6I
-Message-ID: <CAA3Noor8kEMPbjAOf8UWz4LQ=n9H80=1L42wseOGH-3HGa7-XA@mail.gmail.com>
-Subject: Re: [PATCH v3] leds: pwm: Annotate leds[] with __counted_by()
-To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, linux-leds@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB9PR03MB7180:EE_|GVXPR03MB11645:EE_
+X-MS-Office365-Filtering-Correlation-Id: a73874fd-30f4-4ebe-39f2-08dede6325ae
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|52116014|366016|376014|1800799024|23010399003|19092799006|6133799003|3023799007|18002099003|4143699003|22082099003|56012099006|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	n1vDgD5cFEhoqKpOqs0mKsXuIO3PKQVdslu0MLo+Q2PdRsMLUv2zBaHJBRaVvyOmPW8pHespYrkveV1M74g1f5VXIDFX+KrdIj67xnFjhdhAutKOHmbnkw2oLLvmvbajjlIxfLUc7nH2pUNOWOeNYyXdy04QR31PfuSuW9PLXvcbv0JXCVR19B/g4lJG63cMSSPGnWVmg4ltPUpbcw+8wLIx+JpadwLa9wEgQXRRJVJfIBPiKW7YzvdEt4FIUFHGE65eocNrlUo+te9H8VY6TlYT4fDJ9MVeaMPAYrAX9Aza4OdvQ8O+gV8n8HdP1Gayi6TGQXlfeGOK566dUE0vqS0VgcovDCfzvQ22yr5Yqyqm2RHTC/L+25udbYHiCuxx3qrJe/bvgqKaNl+s+zPUe1MERNOQJozL7qDtZPDH0zYcb01rZ1LyfEy/KIfXWRy6odNKQGolAft615Dxr/V1PUivjlhDpwPFBT2njNiG+BGF4n5jIBd4zba1fX/o4RI7XLPkmeScwrenoJhILVwGB6q9cvcWfq/dnfHM/6k8QvHKY8ygecRktKhVkcYsB3nSgPiC6CloLCh+e0coxH6teHc9odeumMj/+719YAUkMBXmqDJ217kjLzyv2S5VogT+TxIhN0LhjPvfAcS50dJOfKP3dEkCGeocfrlp3TLpyeQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR03MB7180.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(366016)(376014)(1800799024)(23010399003)(19092799006)(6133799003)(3023799007)(18002099003)(4143699003)(22082099003)(56012099006)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?7RNQ1gT/FA0aGklVXLGP9raHV1PQ1oaTHEBgGiWe220WLHjLEl80Qomgag?=
+ =?iso-8859-1?Q?9pr0EnJajt7TiTzeIWpiPWX9I2ZGp0VSMT0vR0RnMEs9AoGKf7sAWffttv?=
+ =?iso-8859-1?Q?PZqsLDD7K/v23vAd4+gO+KhIaW9a2V+mTIefL7yAeNB8WziXQBskwEf4ye?=
+ =?iso-8859-1?Q?fJKBlgjBII0S1vyH3qRvU/atZjzpNyQbWJEd4ElGpg5yhHBzdzuj1Dov6q?=
+ =?iso-8859-1?Q?cOrg4zQYn8K7A4VJJM1qcee/PhIrWSnl03vLWHC0xBi9jHZyEAzxIXvoIk?=
+ =?iso-8859-1?Q?FqEmzcct33GQuAQ7zJywqfVNAIiqxsr8oZZtjMszhrV/tiTHZv2JNf0h/5?=
+ =?iso-8859-1?Q?zk0uMDzwBOtLv9O293IZo2ERtpqWJ0yq2TcJb+vTDoZOdWvDQEMKqXUt7f?=
+ =?iso-8859-1?Q?GzTeQzimTgvsdANoFGVZ0X0Gn8+0clTzqe2Rh+S9Inj8M3Ggwi3xCnd81E?=
+ =?iso-8859-1?Q?OkJiVJXKoPgKc0qwG+5pcMMnGHB9DKJIZqBy3CsneshJxvg72cVZb285vM?=
+ =?iso-8859-1?Q?erARsEXloQU1sZQiIpvpHlv7W3M96ey80uNNQKi5C/aelMaPMWnXGnijKQ?=
+ =?iso-8859-1?Q?dx53P9r/3McvF2qICkiySOInaQ9cOFaFksMEc25cNgEgZ7iMmDKawe+9Cz?=
+ =?iso-8859-1?Q?49c5Jb2625Ov8pTZk48w97xiWQzu9IgtDpdkShtqA/+l2h2gjy5x6O5Lk7?=
+ =?iso-8859-1?Q?gK44QWCXPZoIaeldSCDceTPSXIfc9Iz6WF7mu0r//OpCMgl8zfT3FYfHOt?=
+ =?iso-8859-1?Q?/dwcgTYN0MewglEvQBGVxbX781ivdR0RZg3kF1QpNyDp6vEKI1Z9lGxIH3?=
+ =?iso-8859-1?Q?YFtAZYo4cbNRDKRsF0IHwJwSQ3juQpi/2UK1cCX39bhupJECCoBVDTIzFp?=
+ =?iso-8859-1?Q?uqcaog1FSHgvO8CiROHchsQFvchgpvwB77M9pSUV9mZ0wJ24s/iQZL94RO?=
+ =?iso-8859-1?Q?zsCEs+jcdC0IWTNZnvvTZEzeaYf5zwnpPzJ4ol7o1NDE8QOrQ8Cs1ikvIY?=
+ =?iso-8859-1?Q?PCkbQuPkqnPma7io2LRdMPB8JcyhZjaozoDIJg7dSaC9kjM9cKY4t/CEDO?=
+ =?iso-8859-1?Q?pfhAIEztt3f6hixYeGx5uxl9WqYrfD1Zj8tvyFsNM5EQA6zm+IEU3p9PQi?=
+ =?iso-8859-1?Q?ETVRwwL65LOUzo5is9obSp5RmGF4Eh1AYA5RONuZcBJAVDxzEx5j1ioAId?=
+ =?iso-8859-1?Q?fO9DbK1rL62HiHtadIGjgEltxOj5tsKEBDIo/93F+vkqipSU+r65i5H4VQ?=
+ =?iso-8859-1?Q?jQ23iOVun09w4EaGwsvQmDx4DBMl+deKze8s7VtdQSur9NwSKbq90Nf55i?=
+ =?iso-8859-1?Q?LjyX9QtOU31Cf/OfWwKMqDR2X4mmqufTvcflM7SgbkznQUL+0+P1lao+8J?=
+ =?iso-8859-1?Q?g9ISCypn4B+ygsHZSVfrTj3iSp8dm/sH/e5VjPyfmnL+ssZ53hkKK4Venv?=
+ =?iso-8859-1?Q?u0mNvO7lUGO32ls/jgxxQs9WahuxyMq9hqCJcreXW5KUwOrTr3CbaOLjFO?=
+ =?iso-8859-1?Q?3d66gcDSSmCC7lP1Kr0im4BMg0xa5bjflns60vUesMtbM1tfp7Tm8Yy0/M?=
+ =?iso-8859-1?Q?dygxgxH8ud1eaAHlj6mVTZ3vxU6zQXoA3ZFuarM5MC8oQg2wlXCeCZvhUN?=
+ =?iso-8859-1?Q?ZGdWgHN6chYeaH7Y2uJaUZXrHZU0Sqx0Bwj5m0UVlZfHZfCsnM1M2fVGsi?=
+ =?iso-8859-1?Q?Lqw7HY1HmmfskemTP2QP6eSMNpLLWeflqRxaVsfbjMXJfZOUOSR3TFKhWN?=
+ =?iso-8859-1?Q?IvkHufvKyNNO3S+x5WJGll8WPxOyzBuc5xAHIbF5OGR95QPrYhyaYwFSAq?=
+ =?iso-8859-1?Q?0eHrP9iBzA=3D=3D?=
+X-OriginatorOrg: mt.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a73874fd-30f4-4ebe-39f2-08dede6325ae
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR03MB7180.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 09:10:54.9776
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: fb4c0aee-6cd2-482f-a1a5-717e7c02496b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2PhCPKn5d3gUUFd8P9Q4yYcaFDSlq5RoV5urTU7bTBvRJJ7Yf5J8LA3eVOtWDktpedKbFZbquMHI2Ka5vybdbg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR03MB11645
 
-Hi Lee,
+On Fri, Jul 10, 2026 at 08:34:25AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Mismatch between device tree schema and driver implementation for the `data-lanes` property.
+> --
+> 
+> --- Patch [2]: [PATCH v3 2/2] dt-bindings: display: sn65dsi83: Add output data-lanes ---
+> commit 98aea58cd5128c6a4b72efd4a5f9ec088fd30dca
+> Author: Wojciech Dubowik <Wojciech.Dubowik@mt.com>
+> 
+> dt-bindings: display: sn65dsi83: Add output data-lanes
+> 
+> This commit adds an optional output LVDS data lanes property with two allowed
+> values. It supports the standard layout <1 2 3 4> and reversed layout <4 3 2 1>
+> for output channels.
+> 
+> > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
+> > index e69b6343a8ebb..4431f113bb9cd 100644
+> > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
+> > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
+> > @@ -86,10 +86,52 @@ properties:
+> >          description: Video port for LVDS Channel-A output (panel or bridge).
+> >          $ref: '#/$defs/lvds-port'
+> >  
+> > +        properties:
+> > +          data-lanes:
+> > +            $ref: /schemas/types.yaml#/definitions/uint32-array
+> 
+> [Severity: Medium]
+> Does this schema change place data-lanes at the correct level in the
+> device tree hierarchy?
+> 
+> The schema defines data-lanes as a direct property of the port node,
+> but standard OF graph rules and the driver implementation parse it from the
+> endpoint node:
 
-Sashiko is right and I tested it too now to confirm. Under UBSAN_BOUNDS
-&priv->leds[i] traps on an out-of-range index, but the led_data++ walk
-in v3 does not: decaying the array to a plain led_pwm_data * drops the
-__counted_by association, so num_leds is only enforced on subscript
-accesses and v3 has none.
+This is valid comment. While testing dt bindings I have put data-lanes property
+on the wrong level. It should in under endpoint and not in main node.
 
-Getting the check back means &priv->leds[i] subscripting. I can still
-pass that element into led_pwm_add() as you suggested, it just brings a
-loop index back. So it is a tradeoff: the cleaner pointer form, or the
-annotation actually enforced.
+I will fix it in v4
 
-Since the element-passing was your suggestion, which would you prefer:
-keep the pointer walk (annotation stays documentary), or respin with
-subscripting so num_leds is enforced? Happy to do either.
-
-Thanks,
-Mert
+> 
+> drivers/gpu/drm/bridge/ti-sn65dsi83.c:sn65dsi83_parse_lvds_endpoint() {
+>     ...
+>     ret_data = of_property_read_u32_array(endpoint, "data-lanes", data_lanes,
+>                     ARRAY_SIZE(data_lanes));
+>     ...
+> }
+> 
+> Because the driver reads from the endpoint node rather than the port node,
+> will it silently fail to find the configuration and fall back to the default
+> layout on affected hardware?
+> 
+> > +            description: |
+> > +              Array of physical LVDS data lane indexes
+> > +            oneOf:
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260710082630.394040-1-wojciech.dubowik@mt.com?part=2
