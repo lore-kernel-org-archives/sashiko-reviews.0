@@ -1,190 +1,111 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr2-f1.google.com (mail-wr2-f1.google.com [74.125.225.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F140A395AFC
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 20:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBF0386C0C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 20:34:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.65
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783714861; cv=pass; b=UMO/GtWTdQekUleBGffcDNGJRKhb8j62KeARJ7DqJ7Q/BKXlnXDVS/G6NqXV5eH00QBy9ZEAriiLFGFgtAHgw9g9rXLmTR7LxZdB0g1DVJmpcbGvmbUoS0OlbKHrl+6l2V90zAwQHs12qaJFvFPVcmNlllQNawDQFW3RtwXoc7Q=
+	t=1783715687; cv=pass; b=XydVRbGf5msioCUDoeLQZIpOyP4F8BL0LYKjahEtToX04JafF887rZAZ+6DMxplub1UhDRCH3foAlprlG7/0+bq8E+in23p1UXSDbyqDqLiQdAdxscCt4VXq2dpXB7rYaEXl2FZH7vAqYva9mFVWaF6+kTQgzX7IAh8UCe03NMU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783714861; c=relaxed/simple;
-	bh=HhZy4i9AMa5naIz0S+3IF++cavkTQiw1Sr1NjePdxUs=;
+	s=arc-20240116; t=1783715687; c=relaxed/simple;
+	bh=5Ef7X/Kg3mKH04Cd3UXn/P4r6Kfue0PWlaV33hXZ8w8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PNeWrNJfCQqipiwI5TS4MEfDrTa/AaU68WzZNbJKwiZIN5uBjY0cR+FhgRlKpKAZ9zIDygwGqMDDXyLNto135q7C/Wn0rDRTX9amd1dZpjxmv6482JBiysUQJ6fOeWw5LgZQmwgf2tShGY1cW+FghvjnlM+6SUojwsUW1DTGYjA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CnIUKg82; arc=pass smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=ji8ZAnS5Ka8KHRRsB2xIaNKpWoOe2DWiZqdbqy+vXfLlaQqLJcie4M0UOYz1DXyc0cxAnW4beFV0bH//FJkhjgMk8k1J9trrx1f4He+TNE5CoP/2llVLtCUvnEwoWpyh3me4i0tBZDixDlUQnwNC8IYQuzBZ/VbKn7jYdh6843g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KnDKNkTM; arc=pass smtp.client-ip=74.125.225.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CnIUKg82"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-493b8d99342so1785e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 13:20:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783714858; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KnDKNkTM"
+Received: by mail-wr2-f1.google.com with SMTP id ffacd0b85a97d-473913157edso222066f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 13:34:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783715685; cv=none;
         d=google.com; s=arc-20260327;
-        b=IenNa8AHwi6Lx2pZ0fdHAfH0tM71x96BCzziFTY6bHx5sOi81h+YIjmRXufay++F0d
-         uJAgs9hY6yeOLuFjmlrV3OfBKJPhjbpyjm3bzFrAFxRYNGsB390j6PmpAG+4xxt3u4lm
-         dhu9/CiUSg5DWrX0HUq2ZcOZmihHtGh2EhVkHyJLAOChk2qfngMLQMXtsP4WpTm0WgVW
-         d/DH9PDxiJUux17jCgVJMIZBQEiPg58ZJ3oGAiWcLrHxclU75O49NKxSfyQ2v2UnZqwY
-         Bw7/X3RTRUb8PMjgRY9i/MMmXOzYCFchKGG7OlqDadIKCvBl7OzijFRxkYa4rdz0vnMO
-         iL9Q==
+        b=goUlycCwSgPKl/Xc2PnAkwk+hNGTFzEkssd1tUepgvvB/po80cSGmbeJXCrQo1Jgey
+         9dL88jIk5dJfd6O6sU0jyXSJgnZFtdIBoqMUlGmOhSaVUwmHd33+z3v+GwWNTEYLbegG
+         hjvAM9jKnE7imsS3qh2hEUETAsRgpVpibpK4GyYxYkcxODI07zCWgqXrq+1M659VIdQC
+         4t3LEaHj/EYHl2AH+eVklK1AyEtGWiVNK4QGaVdLYHuItCL+nhkqfsSXH9b6iuRebBoq
+         GeJDMd/Qqq7+X+6VimRPQIKLda8qEQgOgyAnkM7TF2nHp4f8i43CuOZeYtIPLkTifMOI
+         SmYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=tkBhvVXb0hd5Otr/cjZP7Js0wsG7Wez2ww0OpDh742M=;
-        fh=DhgcVQpaufsfF7eBVoMb3sgMdDsUCiITglua3IGlA0Y=;
-        b=SB3Y1hs6wocVGjKNR03cTbmZjwWACVQZsMMVkajHVW5aO6Ps+ifEd0qXL+pAAe0ulZ
-         kr4XpHP1s7MyveIDJfQKC/qwLuQUFNQ8jX1eanv9iX3g6Ql+HtpQEoji6TjdMu3KmnA+
-         /GrF9wprFZgppJK6dk8QS3S16xOminYzAMws5IueDt7swSHa2MUvV5CAsBkTdy+e3eI8
-         X9G7BnRsFtg10T3Wb5jd7ZvB1WeJEAiLcsxNpKwRw09s4tWa4tmXUOi/G9VawB82zxrG
-         qB3RveGP4jUnQHWn4vTrx+n8FZkGU+UsAixyfjqtm9de7BdR0OgDu7TRZMbKlhEJ6ZrQ
-         Ddyw==;
+        bh=5Ef7X/Kg3mKH04Cd3UXn/P4r6Kfue0PWlaV33hXZ8w8=;
+        fh=0vIT3Pb4I4uTdslWT9yDbt6TROducgSQ5IFUrQDQYYA=;
+        b=eLD2PikvLAjmORnSxldFIs4Td4j3Bn9bh2kyo5I1JhdF2ez2C49WI7goiLLzHC0P4l
+         gHrvcIopsnqCgRsKt1ftgm+FgsGs78uPxG2wOx1ZmlWJhgfx4g1qadWOPQiIuEomWnlP
+         E/qNaUd9kbBn4pZoiyFi1oOkjjjJLxIieS/POu+3Ny6CfIO1DpH8WIrZv4k8agsakIQk
+         ugLJYrEqcXN3doDQN9uIdInOUAHy5+MRQ0RGMChG/NCHrv0Aaef1bbJIN2gfwNTNF8Xs
+         G8KeZB2UExeGE99E1m6bB5AJLvdMH/Eh6Flmoj6Qopuk84GBg3dpvEjwhZgpv2IrTS5P
+         yB2w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783714858; x=1784319658; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1783715685; x=1784320485; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=tkBhvVXb0hd5Otr/cjZP7Js0wsG7Wez2ww0OpDh742M=;
-        b=CnIUKg82/g5oQIbCGlODs1n1Tsm80HAzk53GwV5wtVO3TapgFk2f9KiuAHFmMb8pEp
-         Irdqh4e90MShEnQ2HT+3nE9fqiACTRDWuuqmSR2gx+OVO0gWgmxv1u973uXtPWSvymqk
-         6BbC/mxenwhOv0InFc9C2V5rKLqarEF2BtuRN/Mi6YiNhA/gXQacN0QCIKdR94XhAfu+
-         1VA3J/Wn1zCoGNgfSG38oAbPetV9Q61VDmRW/pVmLEQeTRebUypvwAeAUAbe3ZUfK5W5
-         StsV/nEQChvuK4muFLpmRqI5bE7pnWl83iyHoYu7f38bibK9s6e8c1iXFpxLpTKxlB6q
-         1Xuw==
+        bh=5Ef7X/Kg3mKH04Cd3UXn/P4r6Kfue0PWlaV33hXZ8w8=;
+        b=KnDKNkTMonCxhSKRNEA7u3XPdQH20yoK49tKYxH/Q+oABGW9Ai7ms7/xx6GNywHNCo
+         JWpQPmydyP3WGOnA+Ya1TEQ+UgMuDLp+HidAbBLiu3ay69H8ncabqOEP1DEuKUNN8RO1
+         OxW2qrWc3cAJ67t0uwugBuLAlInspqZLcgLzh5OHj5ZFi7NEoAjBk+bCm6JxLAtg/Vno
+         Q11/RxsURTkkGk41dyQmzHKh21e+t5kYdISmHSa3ST+bUSoDimfRJqQPYS4JAETiOuhG
+         xiOt6ehO5S9mjEHtNTeJ4MZTrWGIJS8i6wI+yta2GOiXccwPgP5vhUethvpKXf8xwRLk
+         m2aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783714858; x=1784319658;
+        d=1e100.net; s=20251104; t=1783715685; x=1784320485;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tkBhvVXb0hd5Otr/cjZP7Js0wsG7Wez2ww0OpDh742M=;
-        b=VBOlhlOY6Qkq/m2sgs4rurecYWaA5RF4Ce3Iq5m4xqdgstN0A7H3VDd+rs6vboeklu
-         XZDlClgpyZzoHdJoR44ZZOTGb4rNoEONVO5gR9vsiuK5jHOZppI5ILPJKsHlXPDIiZB/
-         dveN61egi87qsMcrm4suqIekAjRK3A91Sy6AWfQtzfzdWb1c/J29ub9dK0m2kEUHJGBS
-         Hi2Czg21uwvwehfSGwaqCymB3QUTFeibQwm30Dg0EZvki7qbDqYq0a4iPyKwU3aHT30x
-         7PjbSAaSIEN25EvFZClDoW+iYAu2dSDdBs9MgoZU6YiEstMqj50xQq3j8rZpiJ1xCd5w
-         vHYA==
-X-Forwarded-Encrypted: i=1; AHgh+RrGlB4XKjbVu3Lxiq9VIBsDflUizqlLCk2BIew+2qD7mxekLrFRfTB4c3HVPfcpW7MZOklu8XANsI1yn9um4Ig=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxaTMQR+lpf+vtBB5dJKJfczj7FDqRQBK2KQs4CKDHjyM402itK
-	Qyf63Xz5SBGe7XxzOY/rcL4twrAgbRJ0GKzlujv0Sz4OdrPRuDi+O3hVYMwjwfe9Ni/SCmu6V2p
-	eT/h2k5g+3QoqQhFUpT+GU864m2UNNXoCNDFse2Bc
-X-Gm-Gg: AfdE7clLCpUw6ChxpfGVi6HvxtKx1KG7OoxUSog3+mnLmzpiGvBIWT8kRtGlp8q2Y+O
-	GY+533sdLgXkPdUxIs9Eb4o9MYQRuKRpMbGhpfncmFqpTuUky4ZeflhkC7U7gfJFdZmpzZYPayU
-	e3/lhps+vT0BCY5gfYXMYK+se0dF918fYRHdVj1JeZO72/3g8tElIRU9mxa+oPPNSaEJHd+csmE
-	CyKJKiNMzKjvnOQehvKZzG3fhf8bp94Hv41Q4Z4OKtGCAC+Hvay/30f4loMkATnxmStFtGpcad4
-	GpJoqr5B2/GWGpCEJzAGitmMyLG1oDP+a0lu2nfh1jSpdHPfLHVvSDk46iui0fl8plU=
-X-Received: by 2002:a05:600c:acd:b0:493:aed4:8d03 with SMTP id
- 5b1f17b1804b1-493f8cc96d9mr46995e9.9.1783714857850; Fri, 10 Jul 2026 13:20:57
- -0700 (PDT)
+        bh=5Ef7X/Kg3mKH04Cd3UXn/P4r6Kfue0PWlaV33hXZ8w8=;
+        b=ErNWoo3SgOTKkMEhwCf225G0JQj5+WbRC/gJQJ8ER3RFp6IezhgSNl/9oAi79EwOsR
+         KrBOwfqPC0aRrOpsSe7A5a154vS4++AgptbZCBB9K+9ZaTkqn6aYcR6OHl6cJ1Fr1+4F
+         WaAXNtdTHfQFwVLUGRo2YvA0unRBJ6+/v5Fh0bkKg8bJunOAvcG/hzoWcpbm4f4pac/a
+         6AM28JQHWVvR0fccgUfjNxOEbzh5AFjDVKVvvAmemjxLuz+DrnlbIuAscepwnFSdPfNE
+         /winy7LA+GsTSnvJgbutjAA70l6xU9r5BCtAib6uZOl4njdpt3UYxXaK0JZhdmE2J6jN
+         2zrg==
+X-Gm-Message-State: AOJu0YyjYgFGn4STcEwuboHMzyrnEpSmdc1+TLrHE/7F9SAr/pxmkdgG
+	3xYdVv4AOpyETVoTMWZQQx/8Sjzyx7b+w1nN0rACIOJIvBMM0xR+sMjcq3+pzeeyZpMi/dVSzlP
+	n6MLTK1T4I6dtHXZmTwz0S4PsliH1nKI=
+X-Gm-Gg: AfdE7ckd6v30pfrN+getDbwKJhyGr+ttPw/zw3j73AIaGCsMXjLGfZf6oGdyiCxdUGv
+	/xTMz+BN8G581ZNEKgiN+CfkTi9unhSDh3F37xhRTv5wiHhsgzaJwpPlqF50gvGPQkHg7Nt67Dq
+	eKcqk1goiq5K1rlC1MMRlfBXYg7UG40727rT5tEDrSq+BSNai3DFIF2BlBDqlLCey1kDoVSK5R9
+	dFWRAXGn2OW/V3ChbyfvTC0rZfk/G1ZcnhaWHnIF+5yiTA9BZqWPpv9zuDtLhTCrjr/QCUSvTpI
+	VOxCd9HLwfE7gDJlhjAB7XIhKlshozDOyIxwgqGUiZyHVapAdCCYuf6ES1w+TbWciXd+eENNQ4o
+	TuAOGcM64InSfQALPp8fobQ3xUSFa5coJZlYgHlgX7FkmR9+E74eQdA4EX2M=
+X-Received: by 2002:a05:6000:1acf:b0:472:c426:2ce9 with SMTP id
+ ffacd0b85a97d-47f2dcac21amr295085f8f.12.1783715684524; Fri, 10 Jul 2026
+ 13:34:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260703080922.1838362-1-shoubaineng@gmail.com>
- <20260710105740.3080070-1-shoubaineng@gmail.com> <20260710110645.079DC1F000E9@smtp.kernel.org>
-In-Reply-To: <20260710110645.079DC1F000E9@smtp.kernel.org>
-From: "T.J. Mercier" <tjmercier@google.com>
-Date: Fri, 10 Jul 2026 13:20:45 -0700
-X-Gm-Features: AUfX_mypyPGgExDDJXAywI8JQ2oLCreBAwcnKgV8wHGRnZ462d4mBALgKCvqqyQ
-Message-ID: <CABdmKX2xt6diYwCs32E7HNL8ULepDfrDQ20iB+HVw5o-pCd0xg@mail.gmail.com>
-Subject: Re: [PATCH v2] dma-buf: dma-heap: don't publish fd before
- copy_to_user() succeeds
-To: gaoxiang17@xiaomi.com
-Cc: Baineng Shou <shoubaineng@gmail.com>, dri-devel@lists.freedesktop.org, 
-	sashiko-reviews@lists.linux.dev, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, 
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>, Brian Starkey <Brian.Starkey@arm.com>, 
-	John Stultz <jstultz@google.com>, "T . J . Mercier" <tjmercier@google.com>, 
-	Sandeep Patil <sspatil@android.com>, "Andrew F . Davis" <afd@ti.com>
+References: <20260709182800.2037938-1-main.kalliope@gmail.com>
+ <20260709182800.2037938-2-main.kalliope@gmail.com> <20260709183918.E42371F000E9@smtp.kernel.org>
+ <DJV4TO9OH6AN.58C10SBPE8FF@gmail.com> <CAJZwKki8MwOmij3JZK=KnnO0hEUuxWA-iY=GK-TtvtVRvOkjOA@mail.gmail.com>
+In-Reply-To: <CAJZwKki8MwOmij3JZK=KnnO0hEUuxWA-iY=GK-TtvtVRvOkjOA@mail.gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Date: Fri, 10 Jul 2026 22:34:08 +0200
+X-Gm-Features: AUfX_mz3R7qvDlP1KDXkHw9pd93r-GN_7i72AGy5AR_OgDccKGsl_2fsjDQ_Wak
+Message-ID: <CAP01T76KdhEsbZj8yZN-yg5ogx99Ud87qqrhOGXTrX1ALdAgyg@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v3 1/2] bpf: Require a BPF cpumask for bpf_cpumask_populate()
+To: Admin <main.kalliope@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org, 
+	sched-ext@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 10, 2026 at 4:06=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Fri, 10 Jul 2026 at 22:17, Admin <main.kalliope@gmail.com> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Bypassing the standard dma_buf_fd() API skips the emission of =
-the trace_dma_buf_fd tracepoint.
-> --
+> On Fri, Jul 10, 2026 at 3:18=E2=80=AFPM Kumar Kartikeya Dwivedi
+> <memxor@gmail.com> wrote:
+> > Once this lands, please send a follow up to address this.
 >
-> --- Patch [1]: [PATCH v2] dma-buf: dma-heap: don't publish fd before copy=
-_to_user() succeeds ---
-> commit 869904722955c74d0c6e8c974d3c64c6befabac6
-> Author: Baineng Shou <shoubaineng@gmail.com>
->
-> dma-buf: dma-heap: don't publish fd before copy_to_user() succeeds
->
-> This commit restructures DMA_HEAP_IOCTL_ALLOC to delay publishing the
-> file descriptor until after copy_to_user() succeeds. It open-codes the
-> fd allocation and installation steps instead of using dma_buf_fd() to
-> prevent an fd leak on copy_to_user() failure.
->
-> Link: https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7=
-f62@amd.com/
->
-> > diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
-> > index 3937dd41bb0f6..983dee947c851 100644
-> > --- a/drivers/dma-buf/dma-heap.c
-> > +++ b/drivers/dma-buf/dma-heap.c
-> [ ... ]
-> > @@ -175,15 +162,28 @@ static long dma_heap_ioctl(struct file *file, uns=
-igned int ucmd,
-> >
-> >       switch (kcmd) {
-> >       case DMA_HEAP_IOCTL_ALLOC:
-> > -             ret =3D dma_heap_ioctl_allocate(file, kdata);
-> > +             dmabuf =3D dma_heap_ioctl_allocate(file, kdata);
-> > +
-> > +             if (IS_ERR(dmabuf)) {
-> > +                     ret =3D PTR_ERR(dmabuf);
-> > +                     break;
-> > +             }
-> > +
-> > +             fd =3D ((struct dma_heap_allocation_data *)kdata)->fd;
-> > +             if (copy_to_user((void __user *)arg, kdata, out_size) !=
-=3D 0) {
-> > +                     put_unused_fd(fd);
-> > +                     dma_buf_put(dmabuf);
-> > +                     ret =3D -EFAULT;
-> > +             } else {
-> > +                     fd_install(fd, dmabuf->file);
->
-> [Severity: Medium]
-> By open-coding the fd reservation and installation here instead of using
-> dma_buf_fd(), does this skip the emission of the trace_dma_buf_fd tracepo=
-int?
->
-> If so, observability tools, BPF scripts, and perf tracing relying on
-> trace_dma_buf_fd to map dmabufs to file descriptors will silently miss al=
-l
-> allocations originating from the dma-heap subsystem.
+> Thanks. Patch 2/2 covers this, which updates the cpumask_common.h
+> declaration to take struct bpf_cpumask *, drops
+> the struct cpumask * casts from the existing populate tests, and adds
+> the borrowed-destination rejection test.
 
-Hi Xiang Gao,
-
-It looks like this change in its current form breaks the export
-tracing that you introduced. It looks fixable by adding a call to
-DMA_BUF_TRACE in after copy_to_user in dma_heap_ioctl. However I'm
-wondering if you're aware of the dmabuf iterator that traverses the
-dmabuf_list? I've backported it to 5.10, so it's available on all our
-kernels: https://r.android.com/q/Iaeda328f7693acc1506269c12cac5e7955e5c091
-Someone else from Xiaomi even helped with the 6.12 backport. So I
-guess I'm wondering if the dmabuf iterator would work for you instead
-of the tracepoints.
-
-Thanks,
-T.J.
-
-> > +             }
-> > +
-> >               break;
-> >       default:
-> >               ret =3D -ENOTTY;
-> >               goto err;
-> >       }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710105740.30=
-80070-1-shoubaineng@gmail.com?part=3D1
+Ah, my bad, makes sense. Let's just wait for others to ack it then.
