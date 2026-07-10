@@ -1,99 +1,125 @@
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A54C79DA
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 02:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.161.220
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B49EC38C2BF;
+	Fri, 10 Jul 2026 05:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783651635; cv=none; b=S5XZOsJmKn+5WwLnGIWlJDAuLHwW1vLGF2v8Ufmw+1Hr04zF+wWj0rbPYrVBA9pNMnz0rrLfJWv2K9SL4JDvjXpC1bgMjXbfvWW4SfjkA6nEd/Ozds9Gl9Kb0GT/nzQ3jcj4D/XLrqRFeC6miiA9N0ZeOe/ZmrcqrzMbEk4/pt8=
+	t=1783662964; cv=none; b=XIWkM5tWJtygqLk3WIXqKG0aWS6DFfZe1GzBjimr7Q9QRr9Csb8pO2Bjc2av5AGtK8fYvvn3+V0c1MFSCnk0Sgme8r43yP7QiK1MdynaykJ4VEjZUegvHuYvuE0l2WSWjVM9FZm3rsfRkEzPNVFsnIFu2qeM6cyWc9P62e2ZmWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783651635; c=relaxed/simple;
-	bh=uanaD7B3NUzHDv3dq2Wp3tkr5OnXVMbjagRrR4w2s5g=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=VUesHGut9VGDcNPH3s23t/YFY7lX6ZAGyFoqek4loD2n0mUwz1z9GwaG2+wiUWIJ9Chuho30Bo0z5dCf4yP9zuGliwSgZrm58R+rEcg+whjY/ftgKwC1hyGv6MdPQpBlywwh9ovBluUML0z/ve1K5kIqnGIosiu7pnLZo001rps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=162.243.161.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
- ajax-webmail-app1 (Coremail) ; Fri, 10 Jul 2026 10:46:57 +0800 (GMT+08:00)
-Date: Fri, 10 Jul 2026 10:46:57 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
-To: sashiko-reviews@lists.linux.dev, andrew@lunn.ch
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	"Min Lin" <linmin@eswincomputing.com>
-Subject: Re: Re: [PATCH net-next v10 1/4] dt-bindings: ethernet: eswin:
- relax internal delay model to range-based constraints
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <20260708064323.73A661F00A3A@smtp.kernel.org>
-References: <20260707064033.1265-1-lizhi2@eswincomputing.com>
- <20260707064131.1282-1-lizhi2@eswincomputing.com>
- <20260708064323.73A661F00A3A@smtp.kernel.org>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1783662964; c=relaxed/simple;
+	bh=KeZxwwFyGt63rC86rXCi4qDv4EmmsaULDXn9p3yNHlA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nOloKfv/h151RZtPxb7HrG2H4u3b9I8wszGvPip0/hwSrhTAVynJ/ebFAbXPDI7TyCUVaVmMuEPUnDb4/UAvDWXDQSl8nswmRDRv81fhFFJ2S7Ee1/Y8x6wT6iWHxoS7nQ/0foUJ3+AZcNftfWKzvTz4LNYsZynK+EoFYlNbxco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-c2dff70000001609-a0-6a508970bfb3
+Date: Fri, 10 Jul 2026 14:55:55 +0900
+From: Byungchul Park <byungchul@sk.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jeff Layton <jlayton@kernel.org>, ojeda@kernel.org, tytso@mit.edu,
+	Chuck Lever <cel@kernel.org>, Anna Schumaker <anna@kernel.org>,
+	linux-kernel@vger.kernel.org, cassel@kernel.org,
+	linux-rt-devel@lists.linux.dev, dri-devel@lists.freedesktop.org,
+	dlemoal@kernel.org, linux-ide@vger.kernel.org,
+	linux-modules@vger.kernel.org, kernel_team@skhynix.com
+Subject: Re: [PATCH v19 38/40] mm: percpu: increase PERCPU_DYNAMIC_SIZE_SHIFT
+ on DEPT and large PAGE_SIZE
+Message-ID: <20260710055555.GB37630@system.software.com>
+References: <20260706061928.66713-1-byungchul@sk.com>
+ <20260706061928.66713-39-byungchul@sk.com>
+ <20260707073357.1DE2D1F00A3F@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <747f8c43.a62e.19f49ebca5e.Coremail.lizhi2@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID:TAJkCgDHW3AhXVBqS+oyAA--.9842W
-X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAgEEDGpPzZoJEQABsg
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260707073357.1DE2D1F00A3F@smtp.kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupikeLIzCtJLcpLzFFi42LhesuzULewMyDLoJ/VonXnfxaLYxNWMFus
+	e3GEzeLBfnuLK1/fs1n8XLaK3eLYjkdMFpd3zWGzaJj9ndXi0uoLLBYr5y9ntGhYehuotecn
+	uwOvx6ZVnWwe97uPM3m82DyT0aPpzFFmj8+b5AJYo7hsUlJzMstSi/TtErgypv//wlZwUrzi
+	2583TA2MC4S7GDk5JARMJN6e+8rexcgBZj9YFAkSZhFQldi/qpsZxGYTUJe4ceMnmC0ioCwx
+	e8dZpi5GLg5mgRdMEs8/HwBLCAtkS+x+dI0dxOYVsJBY9vEYWJGQwCRGide77zBBJAQlTs58
+	wgJiMwvoSOzceocNZDGzgLTE8n8cEGF5ieats8FmcgpYSWxp+g/WKgq0+MC240wQNz9nk+h+
+	lgZhS0ocXHGDZQKj4CwkG2Yh2TALYcMsJBsWMLKsYhTKzCvLTczMMdHLqMzLrNBLzs/dxAiM
+	oWW1f6J3MH66EHyIUYCDUYmH16DeP0uINbGsuDL3EKMEB7OSCO8DGaAQb0piZVVqUX58UWlO
+	avEhRmkOFiVxXqNv5SlCAumJJanZqakFqUUwWSYOTqkGxo6QEJ8F2ZVM+83L5uxLZsp/w18U
+	aS+1a8qJaP5oZomjNasTbja8mten7nD+/l/+vY++SFjsM+7k7zhdynDhiaCICONdCw8dJrNF
+	zZ7X11/7xP/qK+umQhGhxRKnAgJ9jFeKMTos89zTveTDmbarC3+sSayOa13FY5phZqf4i+Pw
+	RrcA52cJSizFGYmGWsxFxYkAW4ACRJ0CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMLMWRmVeSWpSXmKPExsXC5WfdrFvQGZBlcOaCsUXrzv8sFscmrGC2
+	WPfiCJvFg/32Fle+vmez+LlsFbvF4bknWS2O7XjEZHF51xw2i4bZ31ktLq2+wGKxcv5yRouG
+	pbdZLVp7frI78HlsWtXJ5nG/+ziTx4vNMxk9ms4cZfZY/OIDk8fnTXIBbFFcNimpOZllqUX6
+	dglcGdP/f2ErOCle8e3PG6YGxgXCXYwcHBICJhIPFkV2MXJysAioSuxf1c0MYrMJqEvcuPET
+	zBYRUJaYveMsUxcjFwezwAsmieefD4AlhAWyJXY/usYOYvMKWEgs+3gMrEhIYBKjxOvdd5gg
+	EoISJ2c+YQGxmQV0JHZuvcMGsphZQFpi+T8OiLC8RPPW2WAzOQWsJLY0/QdrFQVafGDbcaYJ
+	jHyzkEyahWTSLIRJs5BMWsDIsopRJDOvLDcxM8dUrzg7ozIvs0IvOT93EyMwKpbV/pm4g/HL
+	ZfdDjAIcjEo8vAb1/llCrIllxZW5hxglOJiVRHgfyACFeFMSK6tSi/Lji0pzUosPMUpzsCiJ
+	83qFpyYICaQnlqRmp6YWpBbBZJk4OKUaGP0UwhvX1ZUEpFy6MPEt967sq1xS+xYJLY3M4Xzq
+	5dBf/Wxxu9KNoDQbpugKPeegm0tEWhRzN3LwTw/6fTfyU8v5KZt4/4r+/Zr1ZdLsJy9urWc2
+	2TXfRdyAX3t3/M1Ury+rb0mqH/Za0NJ9Os/Noi4z8jjj5naJdSav247sE79zP+mSkJj4bSWW
+	4oxEQy3mouJEAKzaWcKGAgAA
+X-CFilter-Loop: Reflected
 
-CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJu
-ZWwub3JnCj4gU2VuZCB0aW1lOldlZG5lc2RheSwgMDgvMDcvMjAyNiAxNDo0MzoyMgo+IFRvOiBs
-aXpoaTJAZXN3aW5jb21wdXRpbmcuY29tCj4gQ2M6IGRldmljZXRyZWVAdmdlci5rZXJuZWwub3Jn
-LCByb2JoQGtlcm5lbC5vcmcsIGNvbm9yK2R0QGtlcm5lbC5vcmcKPiBTdWJqZWN0OiBSZTogW1BB
-VENIIG5ldC1uZXh0IHYxMCAxLzRdIGR0LWJpbmRpbmdzOiBldGhlcm5ldDogZXN3aW46IHJlbGF4
-IGludGVybmFsIGRlbGF5IG1vZGVsIHRvIHJhbmdlLWJhc2VkIGNvbnN0cmFpbnRzCj4gCj4gVGhh
-bmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMSBw
-b3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6Cj4gLSBbSGlnaF0gRFQgQmluZGluZyBhbmQg
-RHJpdmVyIG1pc21hdGNoOiByZWxheGVkIGRlbGF5IHByb3BlcnRpZXMgY2F1c2UgcHJvYmUgZmFp
-bHVyZS4KPiAtLQo+IAo+IC0tLSBQYXRjaCBbMV06IFtQQVRDSCBuZXQtbmV4dCB2MTAgMS80XSBk
-dC1iaW5kaW5nczogZXRoZXJuZXQ6IGVzd2luOiByZWxheCBpbnRlcm5hbCBkZWxheSBtb2RlbCB0
-byByYW5nZS1iYXNlZCBjb25zdHJhaW50cyAtLS0KPiBjb21taXQgM2RjZWFmOTMxOTE1YzI0ODg3
-ZTExZTAwYzBkODVjYjQ1Y2VmNGQzOQo+IEF1dGhvcjogWmhpIExpIDxsaXpoaTJAZXN3aW5jb21w
-dXRpbmcuY29tPgo+IAo+IGR0LWJpbmRpbmdzOiBldGhlcm5ldDogZXN3aW46IHJlbGF4IGludGVy
-bmFsIGRlbGF5IG1vZGVsIHRvIHJhbmdlLWJhc2VkIGNvbnN0cmFpbnRzCj4gCj4gVGhpcyBjb21t
-aXQgcmVsYXhlcyBpbnRlcm5hbCBkZWxheSBjb25zdHJhaW50cyBmb3IgdGhlIEVJQzc3MDAgRXRo
-ZXJuZXQKPiBiaW5kaW5nLCByZXBsYWNpbmcgZml4ZWQgZW51bWVyYXRpb25zIHdpdGggcmFuZ2Ut
-YmFzZWQgZGVmaW5pdGlvbnMuIEl0IGFsc28KPiBtYWtlcyB0aGUgcngtaW50ZXJuYWwtZGVsYXkt
-cHMgYW5kIHR4LWludGVybmFsLWRlbGF5LXBzIHByb3BlcnRpZXMgb3B0aW9uYWwuCj4gCj4gPiBk
-aWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL25ldC9lc3dpbixl
-aWM3NzAwLWV0aC55YW1sIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL25ldC9l
-c3dpbixlaWM3NzAwLWV0aC55YW1sCj4gPiBpbmRleCA2NTg4MmZmNzlkOGQ3Li40ZTAyZmVkYWU1
-YzY3IDEwMDY0NAo+ID4gLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL25l
-dC9lc3dpbixlaWM3NzAwLWV0aC55YW1sCj4gPiArKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRy
-ZWUvYmluZGluZ3MvbmV0L2Vzd2luLGVpYzc3MDAtZXRoLnlhbWwKPiBbIC4uLiBdCj4gPiBAQCAt
-MTA1LDggKzEwOSw2IEBAIHJlcXVpcmVkOgo+ID4gICAgLSBwaHktbW9kZQo+ID4gICAgLSByZXNl
-dHMKPiA+ICAgIC0gcmVzZXQtbmFtZXMKPiA+IC0gIC0gcngtaW50ZXJuYWwtZGVsYXktcHMKPiA+
-IC0gIC0gdHgtaW50ZXJuYWwtZGVsYXktcHMKPiAKPiBbU2V2ZXJpdHk6IEhpZ2hdCj4gV2l0aCB0
-aGlzIGNoYW5nZSwgdGhlIERUIHNjaGVtYSBtYWtlcyB0aGVzZSBwcm9wZXJ0aWVzIG9wdGlvbmFs
-LiBIb3dldmVyLCBkb2VzCj4gdGhlIGVpYzc3MDAtcW9zLWV0aCBkcml2ZXIgc3RpbGwgcmVxdWly
-ZSB0aGVtPwo+IAo+IExvb2tpbmcgYXQgZWljNzcwMF9kd21hY19wcm9iZSgpLCBpdCBhcHBlYXJz
-IHRvIHJldHVybiBhbiBlcnJvciBpZiB0aGVzZQo+IHByb3BlcnRpZXMgYXJlIG1pc3Npbmc6Cj4g
-Cj4gZHJpdmVycy9uZXQvZXRoZXJuZXQvc3RtaWNyby9zdG1tYWMvZHdtYWMtZWljNzcwMC5jOmVp
-Yzc3MDBfZHdtYWNfcHJvYmUoKSB7Cj4gICAgIC4uLgo+IAl9IGVsc2Ugewo+IAkJcmV0dXJuIGRl
-dl9lcnJfcHJvYmUoJnBkZXYtPmRldiwgLUVJTlZBTCwKPiAJCQkibWlzc2luZyByZXF1aXJlZCBw
-cm9wZXJ0eSByeC1pbnRlcm5hbC1kZWxheS1wc1xuIik7Cj4gCX0KPiAgICAgLi4uCj4gCX0gZWxz
-ZSB7Cj4gCQlyZXR1cm4gZGV2X2Vycl9wcm9iZSgmcGRldi0+ZGV2LCAtRUlOVkFMLAo+IAkJCSJt
-aXNzaW5nIHJlcXVpcmVkIHByb3BlcnR5IHR4LWludGVybmFsLWRlbGF5LXBzXG4iKTsKPiAJfQo+
-ICAgICAuLi4KPiB9Cj4gCj4gV2lsbCB0aGlzIGNhdXNlIHRoZSBwcm9iZSB0byBmYWlsIGlmIGEg
-ZGV2aWNlIHRyZWUgb21pdHMgdGhlc2UgcHJvcGVydGllcywKPiBhcyBwZXJtaXR0ZWQgYnkgdGhl
-IHVwZGF0ZWQgc2NoZW1hPwo+IAoKSGkgU2FzaGlrbywKClRoYW5rcyBmb3IgdGhlIHJldmlldy4K
-ClRoZXNlIGNvbW1lbnRzIGFyZSBhbGwgZmFsc2UgcG9zaXRpdmVzIGR1ZSB0byBwZXJmb3JtaW5n
-IHRoZSByZWdyZXNzaW9uCmFuYWx5c2lzIG9mIG9uZSBwYXRjaCBhdCBvbmNlIGJ5IEFJLgpUaGVz
-ZSBmb3VyIHBhdGNoZXMgYXJlIHNlcXVlbnRpYWwgbW9kaWZpY2F0aW9ucyBtYWRlIGZvciB0aGUg
-cHVycG9zZSBvZgpmYWNpbGl0YXRpbmcgcmV2aWV3LgoKUGxlYXNlIHBlcmZvcm0gZGVlcCByZWdy
-ZXNzaW9uIGFuYXlseXNpcyBvZiB0aGlzIHNlcmllcyBhZnRlciBhcHBseWluZyBhbGwgdGhlIHBh
-dGNoZXMuCgpBbmRyZXcsIGRvIHlvdSBoYXZlIGFueSBjb21tZW50cyBvbiB0aGlzIFYxMCBwYXRj
-aCBzZXJpZXM/CgpUaGFua3MsClpoaSBMaQoKPiA+ICAgIC0gZXN3aW4saHNwLXNwLWNzcgo+ID4g
-IAo+ID4gIHVuZXZhbHVhdGVkUHJvcGVydGllczogZmFsc2UKPiAKPiAtLSAKPiBTYXNoaWtvIEFJ
-IHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA3MDcwNjQwMzMu
-MTI2NS0xLWxpemhpMkBlc3dpbmNvbXB1dGluZy5jb20/cGFydD0xCg==
+On Tue, Jul 07, 2026 at 07:33:56AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The patch addresses a compile-time BUILD_BUG_ON failure that no longer exists, referencing a deleted structure (`struct kmem_cache_cpu`) and function (`alloc_kmem_cache_cpus()`). Both have been removed from the upstream kernel. The only remaining BUILD_BUG_ON checking `PERCPU_DYNAMIC_EARLY_SIZE` in SLUB is in `alloc_kmem_cache_stats()`, which evaluates `sizeof(struct kmem_cache_stats)`. Because `struct kmem_cache_stats` consists solely of an integer array, its size is entirely unaffected by `CONFIG_DEPT` or `local_lock_t`. Thus, this patch needlessly increases the dynamically reserved per-CPU memory based on an obsolete and misleading justification.
+> --
+> 
+> commit 279fb8fb2919a407c18ab625ec67d2a3430b7b4d
+> Author: Byungchul Park <byungchul@sk.com>
+> 
+> mm: percpu: increase PERCPU_DYNAMIC_SIZE_SHIFT on DEPT and large PAGE_SIZE
+> 
+> This commit increases PERCPU_DYNAMIC_SIZE_SHIFT to 11 when both CONFIG_DEPT
+> and a PAGE_SIZE larger than 4KiB are enabled. It aims to prevent a build
+> failure related to the size of struct kmem_cache_cpu.
+> 
+> >     Yunseong reported a build failure due to the BUILD_BUG_ON() statement in
+> >     alloc_kmem_cache_cpus().  In the following test:
+> >
+> >       PERCPU_DYNAMIC_EARLY_SIZE < NR_KMALLOC_TYPES * KMALLOC_SHIFT_HIGH * sizeof(struct kmem_cache_cpu)
+> 
+> [Severity: Medium]
+> Are we referencing structures and functions that have been removed from the
+> upstream kernel?
+> 
+> Both alloc_kmem_cache_cpus() and struct kmem_cache_cpu no longer exist
+> upstream. The only remaining BUILD_BUG_ON() checking PERCPU_DYNAMIC_EARLY_SIZE
+> in SLUB is in alloc_kmem_cache_stats():
+> 
+> mm/slub.c:alloc_kmem_cache_stats() {
+>         BUILD_BUG_ON(PERCPU_DYNAMIC_EARLY_SIZE <
+>                         NR_KMALLOC_TYPES * KMALLOC_SHIFT_HIGH *
+>                         sizeof(struct kmem_cache_stats));
+> }
+> 
+> Since struct kmem_cache_stats consists solely of an integer array, its size
+> is entirely unaffected by CONFIG_DEPT or local_lock_t. Does this mean the
+> increase in dynamically reserved per-CPU memory is no longer needed?
+
+Agree.  It seems no longer needed.  I will fix it.
+
+	Byungchul
+
+> > diff --git a/include/linux/percpu.h b/include/linux/percpu.h
+> > index 85bf8dd9f0874..dd74321d4bbd0 100644
+> > --- a/include/linux/percpu.h
+> > +++ b/include/linux/percpu.h
+> > @@ -43,7 +43,11 @@
+> >  # define PERCPU_DYNAMIC_SIZE_SHIFT      12
+> >  #endif /* LOCKDEP and PAGE_SIZE > 4KiB */
+> >  #else
+> > +#if defined(CONFIG_DEPT) && !defined(CONFIG_PAGE_SIZE_4KB)
+> > +#define PERCPU_DYNAMIC_SIZE_SHIFT      11
+> > +#else
+> >  #define PERCPU_DYNAMIC_SIZE_SHIFT      10
+> > +#endif /* DEPT and PAGE_SIZE > 4KiB */
+> >  #endif
+> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260706061928.66713-1-byungchul@sk.com?part=38
