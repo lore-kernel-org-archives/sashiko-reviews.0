@@ -1,195 +1,216 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F88226738C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 22:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5DE42E8D3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 22:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.173
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783721267; cv=pass; b=DjW/lvUTyx8Ih2nHdTUnhiU6ecgDBgGsPwusVqNU75qDgB4ULPPBZ5jWYB+hSfpV9UzITzNuQPJ1OdqoQMOHV8kQGMXMjv06i8zD9MaNe7KbagNiilrkaU6xYcgN2ZZj9cH4BJAGErhruXSPTAJ3m0qlhq1x9GVaCd16smH9TZE=
+	t=1783722076; cv=pass; b=BVzjHRJO68XRlJTT28ff5xD0A5gy44Eryw5xwBu/72sxx5pDPqgr0TpS5jIxIDZ/Jt76rQQmj0YeSlLVODJWHjAJ3A3uzSxh60Kk5FEJf3wgwRUdtc6jQP6U04nGF11+97GNQjAcsKDJuV/lR7snbVjGe1CqsYam2c5knSTCdHI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783721267; c=relaxed/simple;
-	bh=Vff3kRK5AiWmdmzWNqNi86ldeIRObG3k21H9VsN8aes=;
+	s=arc-20240116; t=1783722076; c=relaxed/simple;
+	bh=AexQyWdtnOBNxCR14romYussjnXujihHW3o7Jk8KjV0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N+2bmv4YEmlxCcsX5K9gjzNbIcGV5yy8PsmiMCUrQTHeuLszpK0UH/IpwLSKybZYgpFNzlCRw+cUnf2milktjj1fCJBRXumtQJJvToHasXW1iYFGGGTLGk5snhssjMyco7UL30hm3TtUgnpdBiXqkzQcIc3V5RfayXVjSEvU0oM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hI/xB3nv; arc=pass smtp.client-ip=209.85.215.172
+	 To:Cc:Content-Type; b=ir6/PCl8/RwXS/iCj64pOU0LZred3egeRJPamfXnjRnbggFPIkKmVijnMACs+VplKsPQwMl4HSm9fnCSv3W9Np170lfa5NV8HJzX/scrym4ZsG1/t96HUucFASDdzITP8+gPuz1M7yfxQaprMEY4omBcXFgD5fJWBMQz1MzS9T4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=s9Q6S9Kt; arc=pass smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hI/xB3nv"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-ca00f126b7eso789383a12.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 15:07:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783721265; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s9Q6S9Kt"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ccf2360620so12931905ad.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 15:21:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783722075; cv=none;
         d=google.com; s=arc-20260327;
-        b=HnOmLpqKIzKuV1oWD1YD5ZQB96iTiRp0QUXTcXma8+e44Yja14kpa+YNGvl5DvDEFv
-         reBd1WDfY54zcZw4ItGn42rZJUwUvj8apVmcijFN85fSel5qzJPJUEcjBtjeEFUtvxw7
-         okRX6rBB6CPNPXwLFPpYfTNins+W25glqjfCM9ZyPEPtz0wMmJli2uilmlucHwib0TEO
-         lshdTZbP/SYR2zFbW14cWVoarjH7XuSOwQI4+idqqYSFvsf9HOok3sk3wOyVtdda6bG+
-         4hG35Ok5tW/Oww3Th2fg90kJT9xL9V/twNOC1C80pCvoJjcgxQbZL3PfwX5R0OFT5TDK
-         bA0w==
+        b=QqjaM0amZRNCRCX+p7O1zWzJBVvMqbvCfPmZSMWHB6EFy29z1S+ZQPFBvTdVvMEUbh
+         1zwCPdztDIrGXJ3b08pMhyQCLwBo56axjKdkUML9pvgANYSS0zzUa8QbvP1BG7H5TaQk
+         XHpH6S6bMYjtQ0ZrqG+j5AlGq9GirbTVRvo4dIEoO7Vl6z+7Rb7MBhg7TJxmpqFxWk29
+         hrD7xKq3IJnZsrZLgVR2Q4G2PWEhT+e85ujmRWldrb4BSFsMlmQ5m5L1aH+qiNlwKBhh
+         S7MWrFNulFfO38H/YCLhuiaUmviCwDR4YefHLloTGeXGBCbhQ20fzhG6SvL48D6xARkp
+         aHog==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=uCi4vdatGlMYBO57z4Q+nFs0o+7WfmBZSwOdUxt/AOM=;
+        bh=eJQ12QuZIJ5EMRjO8Od9KXNRvzbL6BoA/mx93EpDKlk=;
         fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
-        b=p1uSSr1i97gcPsSmiWh50mvNurcGkNVS8o+5zfOzEQBQdrNvEdGrSqlomG2m4q4vBe
-         HTfIlfKrCwIrSmy17q04PZ7BZYhfuqiWzyVY7Uh9O6LXAFcYz8XrgiWRvmPCVsQNNCvp
-         qQMaYEygWZ1z2JnJCtsFsz0EV8EBys3RLtygnmMG01ldDPhyxuS/vAc6gGSG7TKFl82X
-         n4geFIHO6CPrKa5iYh4ZbMLbCB/L+t+cFksmPCj5EdcolJXtqfKAuLHBERA3mOL35ICJ
-         s9ey2T/I6plC3OQnwMIIWspNjaMa5lesJjSocJCKSkZL17lyewVgp8aHdp5DGQWYbjfE
-         r10w==;
+        b=SRLEy4SCGZOCqzkBuOIkbGc97GaKd2tcdi4pZC2s9aRqoYOXOPJW7P40fspTM3g7nd
+         d7pP5yY+NClpLXNqQIuXyfrmgvEoc1ZSAh4ep/RrOcPA5tRCqGHTD7W2wcSa5P7qBGyQ
+         bAeepHqIzcDNFAfql0SQ1n5/lblr6+gPHb3drKMjCCpI/guMOCkia4tqiZCQoPnUlgcH
+         e7FLTlr3MkqXjn48AzEYXcu+YUe3jjDHMYLLCHtw1NGK6OAciKXevJ9lqKHpORTwXnbN
+         y5Ynhez0/KULyzHBj0lM/8+9LDMRQudPV5fs0NgAZmNoq1yk3O+puGbDKgKYfmJD6FIz
+         z7+g==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783721265; x=1784326065; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1783722075; x=1784326875; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=uCi4vdatGlMYBO57z4Q+nFs0o+7WfmBZSwOdUxt/AOM=;
-        b=hI/xB3nv2hpJ3OHiVpt345BcDt/T86/Mug9hNBcIBBAFvqmDLMoCKlEnwvQnWVcvn5
-         mJxld7VMHcoCgn0nsIK1y9em9JBVZHr7tlZu5MXPUHzZt5Vq0L4sO+RDuYcEQSw7VjtQ
-         WYcWLzumAJN3Nd1s43YoHmA4+4PQ1yDbViAuBreziWms/Bi0EFgWGE6oTw8tqPqe9F5z
-         cMqgSVVNiMP0SDG5BtXo7WrvdhmSZ1VYHwGk8QBjv/JibM+Ikd35rfs7WmzGN/RMrq53
-         rII82fAzD4sHckuFuzYi/uExGR2kQq0GDzyEqoGkztsp+Xc0s9bvsCUSkx/NQc3HzT5D
-         Xqiw==
+        bh=eJQ12QuZIJ5EMRjO8Od9KXNRvzbL6BoA/mx93EpDKlk=;
+        b=s9Q6S9KtijC2DmEjwJ5fzibTvbMFHrPVoheSWKo/O1cwHHdqw0HTUalINRxQxWATph
+         oWTj6nF1KCrj4hNEA3hu5POP8DrX4k/SUQqFd0Th4iTukGgmP+S67IfV6GmkglTivjY3
+         NcbgnGyoyx75CVrbq0UTOsjtARWU3W4NYiwssK1BtugTXjUFCRlOnaFxyeek+6h4H3+5
+         9PIEYAkmWtuMlv0+KfZ3svjoWZiyJ0aFcLaKpSxvWyL94OnUVE67tWZEQNd2oiZpVhpo
+         bxwdSgec358N618admVVjYWYLjZ5MuefKo49JG/Y5roif3QrFP1UtG0te6VcfjKKEwWt
+         bgqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783721265; x=1784326065;
+        d=1e100.net; s=20251104; t=1783722075; x=1784326875;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uCi4vdatGlMYBO57z4Q+nFs0o+7WfmBZSwOdUxt/AOM=;
-        b=gvV2tr835gqNLRbfLsltpyzzmLlz9jhmR71vuCDR/Kz9SivNwInJtY/m8gLjlsq122
-         wtXU0KXS6BsGq033DFBYbxaVCEedQj9rww3IOgfV8WLf1ZvarEDcq1KFmHZh28rFZ09s
-         5kl7sHDJuMrOpBtBBNXhoPm8BcHYejdRK5rDkMFoqYaEhEqnE9nlzk25U0KA+ok1Wlr8
-         caHwOYiY/6dPvfJucwI6QVqtgNE9slNJtEWCI7GFj1JX7ghAPH83WIoYDuno7SgTu3Ea
-         LGFDBckvJJAOPNXU6Brf/9akth7i3QzsBJzp+1b+IC2E+K0u8RrK4ceY1xrgrzEb+tQH
-         AgAw==
-X-Gm-Message-State: AOJu0YxJrMn69+YE4mc7582IQ+w57Y/46JwVVt7HNUcmflVsOdRe3oaq
-	c10LmPsW0xnqwhJIUWVUj+n+a6fQlTsobv26yroyoRJp6TzRhgo0l2f8dHuIAVp/K/QtvT6Qc9t
-	BV9cSqOy6dxg2t+1naefUL0FHznZ4Eiopk0hSpqITVNYF2ilm3rCPmXNYXJo=
-X-Gm-Gg: AfdE7cnbuCrVpS0kw8nCj51ei4DH+f99TMTGndTI1gDQkNXzO7BMESCkNSvCFagwfHk
-	h8mvBHyN+m+68L/p3A+vMXPBumHrKBftOGlQXVSUGppLVccTFtQsP+7oJqhGFivefx3v8NKhS7D
-	RksWFMw8uNMYcxCupi54FYqNDZqPFTtNwgb37ByYzmc5yhWRSbc+3X1JyRJOdRt+UozhR0tDKfV
-	iUhjxQiktJ/b/FUqNR9Y5tNeeay5na6ZyR30dx+QCJtyvZWgMyvWTJqNQeMXayArOcvH0Q2
-X-Received: by 2002:a05:6a21:3a97:b0:3bf:b68f:4685 with SMTP id
- adf61e73a8af0-3c110779989mr867436637.23.1783721265104; Fri, 10 Jul 2026
- 15:07:45 -0700 (PDT)
+        bh=eJQ12QuZIJ5EMRjO8Od9KXNRvzbL6BoA/mx93EpDKlk=;
+        b=XJPQYn5r4FBx3N/h8xef/OeLPkRlP92VDkaVhcU1gdPJVgic6X9jYN4MczqsiIRbny
+         ztiPEBrfEL7EUf+WWctSlwEUOAWycRc4DXYoKw6ZHiv6cZL8mYOmijAl16i6i7Dyyk3Q
+         ZbjibhQ1hp24ioGxTRNaVuQS0QbElAYSC6ImYY0lxFpVO08J9JBZQbGgGQBs9m4cy3Rm
+         9mE15IoUY8xJ7ai58uXscbJMzvToQ47kv0F547i0JcudsIzq3axe9HaEl7K1KCs5Fpjg
+         mz7Jf+x3hUMWe6sa0MBNr+LqzXoXqFwjS4HPeG47vpordF6ZimCCJ3VwjjaR2GxGKGbC
+         isOA==
+X-Gm-Message-State: AOJu0Yw+kRxGBfW5IqOGuCV/eSgbHKjFxbNAyFkUlxkRFudyS4+SzFtv
+	e7a6wVTt7quhGmM5Vdzof4qVJ4q83Pcd6XWX2IFnbN4n7oGdnPsf+OMaWox5T6X9uTEF0LsA1BK
+	QUYThMxwecrzAA826v5Ug0EorUiJrqh261Da0ZyzSVLP9VaHrLGpHLLX6
+X-Gm-Gg: AfdE7cmiiSXVwgx1Mg2jFOC2ndyNmQsmOs8RMOI/oFdASpq4AOzX//iEKl18tnn6+pX
+	XkquuuZaj+D/C6HynkxNcx22fRkGvE6W1hyEsXZaDT3MSRxiF8CgDEmn9guXffZQC46HrN7IxFH
+	LhvLbcYafvlr3q5N+GcsP5QGb9NXml95xKcbYWZvbv4oDDlNV5oI54X778MNZmfRFmslcXPp6W0
+	Wr7br5NAR42YVuh2jlQb0u2Nx9+3/4A9yA+mm8qSpcJkUBSXZwO/a+HFyHG87RR79oiem6e
+X-Received: by 2002:a05:6a20:431a:b0:3c0:b766:7500 with SMTP id
+ adf61e73a8af0-3c110bd8c49mr741431637.68.1783722074179; Fri, 10 Jul 2026
+ 15:21:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260710212616.1351130-1-dmatlack@google.com> <20260710212616.1351130-10-dmatlack@google.com>
- <20260710213733.B4A461F000E9@smtp.kernel.org>
-In-Reply-To: <20260710213733.B4A461F000E9@smtp.kernel.org>
+References: <20260710212616.1351130-1-dmatlack@google.com> <20260710212616.1351130-3-dmatlack@google.com>
+ <20260710213902.56C6C1F000E9@smtp.kernel.org>
+In-Reply-To: <20260710213902.56C6C1F000E9@smtp.kernel.org>
 From: David Matlack <dmatlack@google.com>
-Date: Fri, 10 Jul 2026 15:07:18 -0700
-X-Gm-Features: AVVi8CexiXT1H3iCKRj5ssh2jkXiPSEyAsC89XKny5WUNfb4_b7wLF2ahEoukU8
-Message-ID: <CALzav=c1+ZJDJ8=B1ZkBmB8cbx51ke_zFfDhPTjDfF5XhB_ZrA@mail.gmail.com>
-Subject: Re: [PATCH v7 09/12] PCI: liveupdate: Inherit ARI Forwarding Enable
- on preserved bridges
+Date: Fri, 10 Jul 2026 15:20:47 -0700
+X-Gm-Features: AVVi8CdWY4CLdCe1vaQDkifwOsvrPs1KJiTBtDjvCkcdYtirLyoV_GSd_ZjCv0E
+Message-ID: <CALzav=eTgbKt2dfYBd3FrLm_epGncLpOC7t=52u2xn-gSd1qLA@mail.gmail.com>
+Subject: Re: [PATCH v7 02/12] PCI: liveupdate: Track outgoing preserved PCI devices
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-pci@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 10, 2026 at 2:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Jul 10, 2026 at 2:39=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Data race on the `ari_enabled` bitfield of the bridge device.
+> - [High] Missing lock acquisition in FLB destruction callbacks allows con=
+current operations to trigger a Use-After-Free.
+> - [High] A dangling dev->liveupdate.outgoing pointer after an aborted Liv=
+e Update leads to a Use-After-Free if a subsequent Live Update is attempted=
+.
 > --
 >
-> --- Patch [9]: [PATCH v7 09/12] PCI: liveupdate: Inherit ARI Forwarding E=
-nable on preserved bridges ---
-> commit dba41feb80b848815c664a662c635fefb4ca7403
+> --- Patch [2]: [PATCH v7 02/12] PCI: liveupdate: Track outgoing preserved=
+ PCI devices ---
+> commit 9a74c06de23d913aa84d2cbcc2aa3409bb1d2eb3
 > Author: David Matlack <dmatlack@google.com>
 >
-> PCI: liveupdate: Inherit ARI Forwarding Enable on preserved bridges
+> PCI: liveupdate: Track outgoing preserved PCI devices
 >
-> This commit inherits the ARI Forwarding Enable on preserved bridges durin=
-g a
-> Live Update. It updates the pci_dev->ari_enabled flag so preserved device=
-s
-> can be identified with the expanded 8-bit function number.
+> This patch adds tracking for outgoing preserved PCI devices across Kexec
+> Handover (Live Update). It introduces APIs for drivers to notify the core
+> when devices are preserved or unpreserved, updating the PCI core's FLB da=
+ta.
 >
 > > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
-> > index a95bfe5eff770..74a11e520f0d3 100644
+> > index 899758883dd5d..03075ce06ac98 100644
 > > --- a/drivers/pci/liveupdate.c
 > > +++ b/drivers/pci/liveupdate.c
 >
 > [ ... ]
 >
-> > @@ -816,6 +820,20 @@ int pci_liveupdate_enable_acs(struct pci_dev *dev)
-> >       return 0;
-> >  }
-> >
-> > +int pci_liveupdate_configure_ari(struct pci_dev *dev)
+> > +static void pci_liveupdate_unpreserve_device(struct pci_flb_outgoing *=
+outgoing, struct pci_dev *dev)
 > > +{
-> > +     u16 val;
-> > +
-> > +     guard(rwsem_read)(&pci_liveupdate.rwsem);
-> > +
-> > +     if (!dev->liveupdate.incoming)
-> > +             return -EINVAL;
-> > +
-> > +     pcie_capability_read_word(dev, PCI_EXP_DEVCTL2, &val);
-> > +     dev->ari_enabled =3D !!(val & PCI_EXP_DEVCTL2_ARI);
+> > +     struct pci_dev_ser *dev_ser =3D dev->liveupdate.outgoing;
 >
-> [Severity: Medium]
-> Can this bitfield modification race with concurrent updates to other
-> bitfields in the same word?
+> [Severity: High]
+> If a previous Live Update was aborted without explicitly unpreserving all
+> devices, will dev->liveupdate.outgoing point to freed memory here?
 >
-> In pci_liveupdate_configure_ari(), dev->ari_enabled is updated. Since
-> bitfield modifications compile to read-modify-write operations on the
-> underlying word, concurrent updates to other flags in the same word (like
-> is_busmaster, is_managed, or msi_enabled) could be silently lost.
+> During an abort, pci_flb_unpreserve() executes:
 >
-> The pci_liveupdate.rwsem protects liveupdate structures but does not appe=
-ar
-> to provide mutual exclusion for the pci_dev bitfields.
+>     WARN_ON(outgoing->ser->nr_devices);
+>     kho_block_set_destroy(&outgoing->block_set);
+>
+> This destroys the block set backing the dev_ser allocations, but the
+> dev->liveupdate.outgoing pointers on the actual pci_dev structs are never
+> cleared.
+>
+> If a subsequent Live Update is started and pci_liveupdate_unpreserve() is
+> called on one of those devices, could we dereference that dangling dev_se=
+r
+> pointer and corrupt memory when clearing it below?
 
-pci_liveupdate_configure_ari() is called from pci_configure_ari()
-which also sets dev->ari_enabled=3D1 and is pre-existing code.
-
-If writing to dev->ari_enabled in this path is indeed unsafe then that
-is a pre-existing bug.
+This would only be possible if a driver violated its contract with the
+PCI core to call pci_liveupdate_unpreserve() when the device is
+unpreserved.
 
 >
-> > +     return 0;
+> > +
+> > +     if (!dev_ser) {
+> > +             pci_warn(dev, "Cannot unpreserve device that is not prese=
+rved\n");
+> > +             return;
+> > +     }
+> > +
+> > +     pci_info(dev, "Device will no longer be preserved across next Liv=
+e Update\n");
+> > +     outgoing->ser->nr_devices--;
+> > +     memset(dev_ser, 0, sizeof(*dev_ser));
+> > +     dev->liveupdate.outgoing =3D NULL;
 > > +}
 >
 > [ ... ]
 >
-> > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> > index 739ecaab2e76f..e0c133b66a359 100644
-> > --- a/drivers/pci/pci.c
-> > +++ b/drivers/pci/pci.c
->
-> [ ... ]
->
-> > @@ -3539,6 +3539,12 @@ void pci_configure_ari(struct pci_dev *dev)
-> >       if (!(cap & PCI_EXP_DEVCAP2_ARI))
-> >               return;
-> >
-> > +     if (!pci_liveupdate_configure_ari(bridge))
-> > +             return;
+> > +void pci_liveupdate_unpreserve(struct pci_dev *dev)
+> > +{
+> > +     struct pci_flb_outgoing *outgoing =3D NULL;
 > > +
-> > +     if (pcie_ari_disabled)
-> > +             return;
+> > +     guard(rwsem_write)(&pci_liveupdate.rwsem);
 > > +
-> >       if (pci_find_ext_capability(dev, PCI_EXT_CAP_ID_ARI)) {
-> >               pcie_capability_set_word(bridge, PCI_EXP_DEVCTL2,
-> >                                        PCI_EXP_DEVCTL2_ARI);
-> >               bridge->ari_enabled =3D 1;
+> > +     outgoing =3D pci_liveupdate_flb_get_outgoing();
 >
-> [Severity: Medium]
-> This isn't a bug introduced by this patch, but this preexisting fallback
-> path in pci_configure_ari() also modifies the bridge->ari_enabled bitfiel=
-d.
+> [Severity: High]
+> Does the destruction path in pci_flb_unpreserve() also need to acquire
+> pci_liveupdate.rwsem?
 >
-> Could this also be susceptible to the same read-modify-write data race
-> against other flags in the same word?
+> If a PCI device is hot-removed concurrently with a Live Update abort:
+>
+> Thread 1 (driver remove):
+> pci_liveupdate_unpreserve()
+>     guard(rwsem_write)(&pci_liveupdate.rwsem);
+>     outgoing =3D pci_liveupdate_flb_get_outgoing();
+>     ... begins modifying outgoing and dev_ser
+>
+> Thread 2 (Live Update core abort):
+> pci_flb_unpreserve()
+>     kho_block_set_destroy(&outgoing->block_set);
+>     kho_unpreserve_free(outgoing->ser);
+>     kfree(outgoing);
+>
+> If pci_flb_unpreserve() destroys the outgoing FLB without acquiring the
+> semaphore, could Thread 1 end up writing to freed memory?
 
-See above.
+No. Drivers must call pci_liveupdate_{,un}preserve() only from their
+file handler callbacks, which cannot race with FLB handler callbacks
+(enforced by LUO).
+
+>
+> > +     if (IS_ERR(outgoing)) {
+> > +             pci_warn(dev, "Cannot unpreserve device without outgoing =
+Live Update state\n");
+> > +             return;
+> > +     }
+> > +
+> > +     pci_liveupdate_unpreserve_device(outgoing, dev);
+> > +}
+> > +EXPORT_SYMBOL_GPL(pci_liveupdate_unpreserve);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710212616.13=
+51130-1-dmatlack@google.com?part=3D2
