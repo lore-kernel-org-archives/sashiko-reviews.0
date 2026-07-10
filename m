@@ -1,266 +1,182 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010045.outbound.protection.outlook.com [52.101.84.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B55E1E1024;
-	Fri, 10 Jul 2026 10:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783679720; cv=none; b=Dqr+O0kCyUrD+YC7mddSYvoMDX9q2DOG8YgWIriKvZLy9NmhojysCqnFThVxIvX3GFI09ZsApXAc1E7aHMCn93J47JwIy9oCBqOz/0UyX4tpbeUxrIsl7yKwwDkNFIvZmI5HnoJhjilqVGPi0OkafvzdGEbFsQN87eBHaALMzIk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783679720; c=relaxed/simple;
-	bh=JM9gsguRZuF7hHYbcTsUkGJORKLYuCaw5WcD1frushs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sJNIaL6hN65J/DfqZElZ7Qn40fvNzewOCAiga+Py2ELnVx5zvXESTVR1B7p3Df6Aa799BgpU4ckRYDoAKaqepmEVS2RMyscd4Yagajz2TuodPSZl7dOTQjsu7xzOLfcVV/1HMwB1h40NpLKz73TpqRaWpsgZkHqxgy22WaTRbGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EtNEkmFn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5837A409298;
+	Fri, 10 Jul 2026 10:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783680743; cv=fail; b=U+3poEcrP1brUeLal7ugjjb8g4M0IYL4MYSUdMHtDgkZKPxdCFp8A8bMlcxJgYR5xLm2qGXkU9y7Q5JSkPc8sMvtW56Rg8vRx/dFmaaKbeanqIA+HsuzIBX8bGBXjQXF7p08p/v+9jSVIFXdkb38KaW6p8RplJdWufKLqm15pzs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783680743; c=relaxed/simple;
+	bh=m4jpRPFpBziNu5AAcGf3K7pG8c0U1IW623K+lQESsno=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=bhgUjt3XWs7TenwbCdTWYJ702stkDAEQHW7IEbDb1uCj3eYnXIfcaf8vAf1TDIyRAZW7Hxdm9evReOwd+O3zh7bDUGrAaRlMWgYhDNWrdP275PYlmi6c4FQK9onZq1jq+vj8KCSWc6hBZ3D0CNK6KjIhewvVBtO23jEammsHNek=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=JG5eYmZZ; arc=fail smtp.client-ip=52.101.84.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EtNEkmFn"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66A7dW0p056474;
-	Fri, 10 Jul 2026 10:35:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0VNeZa+WwsYVEwc2VhixC0Sc25pyzjx75Px6WvTTqMQ=; b=EtNEkmFnteX1K/uR
-	J2kr27dUmdYkDlGiIPN5e8uOgGH0A1MUTcHXqPaxqTDVegHvkgDZ9tIsEcGNvI8x
-	k8sBcHY3tXJJ0bqkt5yZrDb8diMpJGKgvrPc52M5Y7jRAO2P++LvQDpNIVRrBKKB
-	dGmkB6jesxjiwdZsRkVZVLY+o0ybwFV0Wc7In5OQAH5aY0uW8HXNPFTgns5XQH3z
-	TWsVjgRqc+WakOtwH3hIFCXChUI6XhQikR18of2dRvitcXWT/s76pe5aWuaVWPlO
-	Nvb4ERLnP5SP1SN+fAhDKuDoCFoozz2bZGPWIWPY0QFm66295+b76ErWF3u2pwfG
-	WaZTyg==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fajwtam1t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jul 2026 10:35:13 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 66AAZ9in002800;
-	Fri, 10 Jul 2026 10:35:09 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4f6u8m28kj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jul 2026 10:35:09 +0000 (GMT)
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66AAUUSg028405;
-	Fri, 10 Jul 2026 10:35:09 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 66AAZ8oI002794
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jul 2026 10:35:09 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id 37491B06; Fri, 10 Jul 2026 16:05:08 +0530 (+0530)
-Date: Fri, 10 Jul 2026 16:05:08 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        sashiko-reviews@lists.linux.dev,
-        Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
-        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
-        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org,
-        Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
-Message-ID: <20260710103508.wszmnvdbyyufwk7n@hu-kotarake-hyd.qualcomm.com>
-References: <20260513142936.kauwa3czigfs7qs5@hu-kotarake-hyd.qualcomm.com>
- <0ac665bb-1a21-4077-aa9e-97162f7f4784@oss.qualcomm.com>
- <20260514103918.cs5m5kcxcrcgukvx@hu-kamalw-hyd.qualcomm.com>
- <obdxony34ckfbtsqj66siszw44sgieskcye5hg66ulkisctpwl@fyqczpze5tnw>
- <20260518114927.edxbzvklqatlntv2@hu-kamalw-hyd.qualcomm.com>
- <CAO9ioeVMieo8HtpRw+n4ZU9uV-_RQM061q5XfAA1Dtk2fnp4+g@mail.gmail.com>
- <bvankzuazswuigrm7hvyjqigzfaru5o43wi3zvyphgme2pgqwz@pyspqky3u6cn>
- <5idu4ljmcvcvzqsr5g73h2roxzs36l6xxc5ju6ovc5aitt3gx4@wmfqueyf2rj6>
- <20260630124220.4lja4zshpf66kwj3@hu-kotarake-hyd.qualcomm.com>
- <sfilvfwibse2vpi74vownkx32kz2dhkkvriphtti5jn2p32ffx@2q4p7nahzoxz>
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="JG5eYmZZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cbHnWZkbfoH+Yxm4vIyLr6dEBl7/2UQKtvYW13WFIIJ/IpTsik5nNq7fl2AZ2/TxrOPDUeKTW1jFOIL1V428zFqD3JO/f5O1mFEWAoOMRl+aernk7TvfYRQqwQA6emeCBEcj4WRGgXIQGoCPJT6cnfu96igk7N2Mz4cD9R36PpfY9gtBEAdV+9IhhJ42+NT50yPQ0U7/CpCLxA8661LLT0bpXCjYMPfIZiQknz07O1f1QaYzKaZEwfJur3K4OG82xYyWjskpMIKUY3UAyYh8C++UV2mIyWSPLnW93IEiPZfUTTLXwcoOGehqgkhPm6ddIidUp7D1Oql7+vvtekkUbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m4jpRPFpBziNu5AAcGf3K7pG8c0U1IW623K+lQESsno=;
+ b=iMcU3p8pa4VRduRlRmcyQaqnIrXyl+fEMxRi7JG2I9iunuyZZ2zoFtzYyRai5c8muBXRFjrMeSnx7Bl2UHNTVDtPKjAEmKwM9I6sNg+n+N1DpsAduWQ3mbbarkpFHLQJpuBJK40RS7FRc9gdGQXmCCcXg6AQ8q8FifR4T5HoyHHBAexMgZY9Ou6e5/7jLdqoXhgcPrDYeVNgVCn1FqWYsJq7bo1xn8rZoUw2TzV1WcZNWAtO11wR8dba1b/QLkVpk4loIjozW2+J5ihm5Mm3hWlruofU7eXXR8YDmJ7jFY4Iwt2NWGMW6ZBBkCfeBGXR+pvIs1iCnZCvXgCc06IBGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=m4jpRPFpBziNu5AAcGf3K7pG8c0U1IW623K+lQESsno=;
+ b=JG5eYmZZjzM6ndT4TaA5lJkq084LhK77+XhCVjUdM1+zBvR1rpO/n/CANBxoa5yoOVZyMNTyIx8S82pVzeQOF88lOIMD9PzzziY7ftHR77Act3AWRL75oM41xcS8hHR538f/ilUSYNfVnio9xuJMROxOl4iwJ9w1wmbeMwJinbacQJo+1J1UMvcoZfpS8E59LYOPBRYDQVXeGAL+m4AFDo9LyzfsXdksY+4wWvK1uQnGRhULaVMiZmOgX65kzK4+p+AQqooK96Fnah7ol2PyRSga0yqFxU7KETqips5gpaxmAeQoO+d3r0E9qmy9JFr1MYX3xoFJpMwZmx9Y1pIU9A==
+Received: from AS8PR04MB8676.eurprd04.prod.outlook.com (2603:10a6:20b:42b::10)
+ by DBBPR04MB7529.eurprd04.prod.outlook.com (2603:10a6:10:208::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.17; Fri, 10 Jul
+ 2026 10:52:15 +0000
+Received: from AS8PR04MB8676.eurprd04.prod.outlook.com
+ ([fe80::d57a:2d06:49d5:9861]) by AS8PR04MB8676.eurprd04.prod.outlook.com
+ ([fe80::d57a:2d06:49d5:9861%5]) with mapi id 15.21.0181.016; Fri, 10 Jul 2026
+ 10:52:15 +0000
+From: Bough Chen <haibo.chen@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"Bough Chen (OSS)" <haibo.chen@oss.nxp.com>
+CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "robh@kernel.org" <robh@kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>
+Subject: RE: [PATCH] arm64: dts: imx91-9x9-qsb: add CAN support overlay file
+Thread-Topic: [PATCH] arm64: dts: imx91-9x9-qsb: add CAN support overlay file
+Thread-Index: AQHdEFQfLtwBJ56DNUubf4ogabZlI7ZmiZ4AgAAJ0XA=
+Date: Fri, 10 Jul 2026 10:52:15 +0000
+Message-ID:
+ <AS8PR04MB86765A2F83A1492F57D0FFC790FD2@AS8PR04MB8676.eurprd04.prod.outlook.com>
+References: <20260710-dts-imx91-can1-v1-1-c78c9c378e8d@nxp.com>
+ <20260710101614.BA8A01F000E9@smtp.kernel.org>
+In-Reply-To: <20260710101614.BA8A01F000E9@smtp.kernel.org>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR04MB8676:EE_|DBBPR04MB7529:EE_
+x-ms-office365-filtering-correlation-id: b2d6e15f-a5d1-4612-fb9f-08dede714dd2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|376014|366016|19092799006|1800799024|38070700021|22082099003|18002099003|4133799003|56012099006|11063799006|4143699003;
+x-microsoft-antispam-message-info:
+ xW8rG9c/KbLgAfD/F5kBnXlPxNoQsba5suYaRhWIOEAdalzWqMDSM8LtBwZ1tAW8JcA8ppebdKEcdMfBX/IoVtUM9t9hOJpMLvm8+oehUq+IW8kFZAtTwd24+OjSBewZdz0f4VgfsIGzUfTJ50JSr7hlLC2kiPE3khzCLQwyW3QSDJBcneVrK5MeNKt/PYXkdeNmB2yRDl8c0pOWAANNeLhRj1TsbyNZCKcY/FDRTv3dR3scncShbREc1srMQ4hNFnXOlb9mB8arQ0oEJs0Dvv6MEWq7KuEvhfmvwfbxufqyVQExcXQ5WPp3xByXXB33/fttu6y/0LzDsoiHwXuAtYg+ClPuX01vhFP96VhkZT2T1jtr9l/LyAxw/HLlv8dMYNILugEsDVm+706n+/mpuFT5PvlpCEM3lkjS+DQ3Ln+8Q4OVGmACJUM/zP7et0ugiQv8UI78o4xbHgq6xHe0UR1ilbCXTwWNbxlg3xOOG54OjE6kdIvSuv74iMSxpFvCV0YP42kD+XEedyo6pd2C8nDTBLIy2WVGwVZCuAVg39ZEVEWlE+1T1K6QBBpW/LZU1b9ZAFsLsvwtFPO0Tn/ii9XWcoLO9VcnsnFNfICyyKWzlRh63KXp0JCBJSTBADDtBDWlCFXh2g7eKGOhDd2qDTvex6oRHdcERg6WJtIS3VE=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8676.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(19092799006)(1800799024)(38070700021)(22082099003)(18002099003)(4133799003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?gb2312?B?Y3FudStESnVqcGJtK0xrZGJncHZKZ004Nlc2SEVlUVdrdDJ2MDJWMlBxZy8y?=
+ =?gb2312?B?a3ZSOWw2cm5qbWcwbWxTTDVNWDBNTlpBeTVNNVJuYTVPTmFzSEx5RjV2Qng3?=
+ =?gb2312?B?Q0ZNNWlGSjMrdE4xWXpVdVdpWUVWbFNRVnJCZ1p3eVhlUXJKUFFiTy9UeENL?=
+ =?gb2312?B?NGkxNFYrcGszcnhlODd2VnJMeU1qeGw1ejQxT2pmdnZGUjZtb1RMNnA1SUJx?=
+ =?gb2312?B?bGg1VFoyMXJma0FGcFMvSVM0Q1VQTnBTVFY0RGNFNU80YjBlOXFmZlJNcXVr?=
+ =?gb2312?B?WDFkQU5ybXRZSzVJSGJXQ2JORGRmWHVFSzZhTTkzTUZ1WWFPcUNrUFBWY0s2?=
+ =?gb2312?B?aG9ZZnhMVUk1M29oQUJCdVQ5R1hBZThMNnpRUUhFbFJsbnRHSnEwbjIyMnJM?=
+ =?gb2312?B?UEljRVBKTkk0TE01anNqY0V2Tjh1V2FsWHViL3cxeHpCdGR0ZjQrQXRaQU1a?=
+ =?gb2312?B?VS9ybTQ2NG9MT1ovNmErekR6M3lMQnFINWRFZ2hEV001TVZJSFYyQndjZExX?=
+ =?gb2312?B?MDBOdENiMk10a0NFRTRhR1NwMW94TC9jNVFuZWFGd3BKYW9Wa0NicDhpWmJZ?=
+ =?gb2312?B?dmsvTC9KTHVONUtOS3FjVXQ0My9yZHRjdDJiMDUyQ0pHK2NtMkhhUFNTcmpG?=
+ =?gb2312?B?L0wxckRqcVR3NjJJQStMUVpURlhLLzBmUkIybFNiVjJRQkVSK2RDMHNBV256?=
+ =?gb2312?B?RWpSQlJZaGJYV3JkTENKdUF6NmF5TkVicG1YUkNDMDZEbkpmdGRrYlluenJ5?=
+ =?gb2312?B?ZUIvclFSdUgxbDdBbVRlZW5GbEJuTmtITVphMVZMdG9veG00Y2wyOW9taXY0?=
+ =?gb2312?B?V3M1amIwd3UzRFdkZ0l5dVVDNmMwNWpFT3pRZEt0VmZ2SGpZR2VsdElrZlVn?=
+ =?gb2312?B?TU9KK2FWVVJOYXhJeGVmN1U2ZUlUd2pBcEZFUzIrTnZ6dnhzYUQwVWk2eVhp?=
+ =?gb2312?B?ektMVlZINzU0eFc4QVdUTkxVNEhvbGZHNmFJNjJhdDZzSjZQaUhidGZoc2hI?=
+ =?gb2312?B?Q0k1cFlZanhDdGlqUDNvUFB6TkJRTEJGYU5vOCtqalc3a3JjeFAxSkJwU3FG?=
+ =?gb2312?B?WnhnVnJ5TEJuYXRvZkUxQjh3MVZqdkVWdWFEcHZsSnlKNm1LVkVtQUFvNHFX?=
+ =?gb2312?B?bURUWTdtNzJWdzhPa253S2gzUHdVT0JiUWRtc0xtRUR1TldiTHJuR25iTVYr?=
+ =?gb2312?B?d2FFby9yWnNCajdBSk5LU0ZraHJRMkZ1OFBzZi9EMDJhY1N4UVFONlk4TEND?=
+ =?gb2312?B?RTd6WXRhZFhTQWNOcG1zWFZrVHlYb1laM04rRU5MV1NiR3U2azNGR1hiOUVD?=
+ =?gb2312?B?SVUzUGhpMzJQYkFkY01Rc3VQSDJKYnlFUnpsOGM3bFNOaGtUWnRIcGZxVW00?=
+ =?gb2312?B?V05mc1UzMy9PSk96c0F2S2g0b0xxang1OExGUFBqQUZ4by9PUUlaVW9ZUldw?=
+ =?gb2312?B?eEN5YXpET0JDV2xDb21tS09ndkRnek1INW5CUTNrMFRodldCVmpLRWY4S3VJ?=
+ =?gb2312?B?VmRqSkg2UEhMTG1YZlpIUG8wVHgxTU55MkpKaTE4ZWFKZ2k1c2NmRlNNVkg2?=
+ =?gb2312?B?VjBqNC9sckpsUHdFMDk5Um9MUGNqVi94cld4Q2VmTDg2c2NJUmJsaEN6WFAy?=
+ =?gb2312?B?enFweHI3OEc1VjBJczZiNUFGeHUyU1M0emU1cWpLR2QvSGtldzdLbk9SV0w3?=
+ =?gb2312?B?TXk1ZWxsT0NmcjBPdlFiOCtNUUhZVlZ3OEJ1cW1PcEFKQm9rSU9mNXo5SFIr?=
+ =?gb2312?B?UGNnTHY1WTdSd1dkanhoWFVaSWxPM1N5V3BTR0JlVlFNMjc5c203NzV6Nitt?=
+ =?gb2312?B?Z3JybTEwaGJ5WU03OG9LWjhSSXk3QkZWdCtnaGs2akg4ay9iMFZMVm5YM0F6?=
+ =?gb2312?B?L0luejZjbXFyMTY0UCtLeXJFNk8yVHU1TjcvS1pFUXZubnhqdGhIS3l6bEdk?=
+ =?gb2312?B?bXJUNGJXeE9IOTlEaVR6RUYvUXpqYjJwb095QzJ6L25IbEtmaG9FR2w1S252?=
+ =?gb2312?B?RlQycys3YnA2c0gwb05WNVVMS1RZblhISnNtSFJCSW40TWhxSmc2aTNFd3FE?=
+ =?gb2312?B?ZDFhOW82OGdiSTF6VG51K2xOVjBOK3dPMy9yMnkyRkpMUzNNQ3hLbS9Mb2dx?=
+ =?gb2312?B?VEhPRUYwSjJ3S2dMTVVscC9MaURkZFFsKzVzRkZRcElOVnZ3VnczMTYyeVY1?=
+ =?gb2312?B?aEplVVNEVmJFTnNVUnV4U0tHZmpic2taL2l1YUpnaGpocE5GN00yVjc3Wm5J?=
+ =?gb2312?B?Y2NYTCtqS2lNaE5ZK3BTbGtzcWNVV3FlVzBCYnNGK1NJT0V4WVViMjVHemZq?=
+ =?gb2312?Q?PqD7NOvDPII5WKgQMS?=
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sfilvfwibse2vpi74vownkx32kz2dhkkvriphtti5jn2p32ffx@2q4p7nahzoxz>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Authority-Analysis: v=2.4 cv=XOYAjwhE c=1 sm=1 tr=0 ts=6a50cae1 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=slKp1ct8OLNxQBgdEJ8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: PE43KxIqXuHnRxZAMHd_vf0DGdBrnasU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDEwNCBTYWx0ZWRfX+Usn3AKk7KhV
- zvIZuJb8VWByQIuwinA9eh+uTCSHDyH4IzrkhLuB4NxxtjAsoVeOlmEVwvR68KgHezhw6QgSi40
- /IpnaWAs83aAzzb0hi4WEIfKwzL5Goo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDEwNCBTYWx0ZWRfX9zpmbOk2VULN
- hFsaeOo2wsNpTSsdjJOVbOl4cBC09cgGIKY8Joyg+vyH+CRnYIAaOL9aIAgJPcf3lgPKURuqgzp
- q+4ZjiBusGeQ0cIIbXo8hKJFrIoyYhIpSAjlKFZxs4Qrwo2hWbqxPIYpzem6R9zhefAcxn0KDpS
- XnpMpDU38EIJllWq4+UeWQCQyOcim2isCqFsyKZ1mp7kknlNnwNwC5ngOfHDQ8QUT+nLm43T4kf
- KJZAMOWKYSHK0jPJ6yEGwlFlus6gYIP8NtQFA//cAdgGKkZGfdX85cYJyAyga03+01p37eIZQ7x
- /0zW7u4SUkjrSrTOWmVNxAH+cZLdNhXbeFtkk37nmozjhiSnKv+jI+1tUEbg7H37S6wwvgt5ba/
- qmJTNQIhlufNMMqMfinuiQU8G8ETVx9egiE8xsJ1ezeEdRTCMglwxVF9nAi8mOd5JzQAgDGiqcE
- +FfxfApihIiGWUEkYeQ==
-X-Proofpoint-ORIG-GUID: PE43KxIqXuHnRxZAMHd_vf0DGdBrnasU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-10_02,2026-07-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 adultscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 clxscore=1015 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100104
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8676.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b2d6e15f-a5d1-4612-fb9f-08dede714dd2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jul 2026 10:52:15.1190
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vgWB1XUI0WV/dh6a1bzQNhfdAdJfguv3JFTRzocAOVoab2kWLMFC4ZZu2gaKVD2CzSY5HxxBlV2wHcBfyiXR5Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7529
 
-On Fri, Jul 03, 2026 at 06:28:27PM +0300, Dmitry Baryshkov wrote:
-> On Tue, Jun 30, 2026 at 06:12:20PM +0530, Rakesh Kota wrote:
-> > On Sun, Jun 28, 2026 at 03:33:23PM +0300, Dmitry Baryshkov wrote:
-> > > On Thu, Jun 25, 2026 at 09:11:19PM +0530, Kamal Wadhwa wrote:
-> > > > On Wed, Jun 17, 2026 at 03:48:14PM +0300, Dmitry Baryshkov wrote:
-> > > > > On Mon, 18 May 2026 at 14:49, Kamal Wadhwa
-> > > > > <kamal.wadhwa@oss.qualcomm.com> wrote:
-> > > > > >
-> > > > > > On Sun, May 17, 2026 at 08:18:15PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > On Thu, May 14, 2026 at 04:09:18PM +0530, Kamal Wadhwa wrote:
-> > > > > > > > On Wed, May 13, 2026 at 06:14:20PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > > On 13/05/2026 17:29, Rakesh Kota wrote:
-> > > > > > > > > > On Wed, May 13, 2026 at 03:01:47PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > > > > On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
-> > > > > > > > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > > > > > > > > > > - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
-> > > > > > > > > > > > - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
-> > > > > > > > > > > > --
-> > > > > > > > > > > > > +
-> > > > > > > > > > > > > +         pm4125_s2: s2 {
-> > > > > > > > > > > > > +                 regulator-min-microvolt = <1000000>;
-> > > > > > > > > > > > > +                 regulator-max-microvolt = <1200000>;
-> > > > > > > > > > > > > +         };
-> > > > > > > > > > > >
-> > > > > > > > > > > > Do these regulators need to explicitly define their input supply dependencies
-> > > > > > > > > > > > such as vdd_s2-supply?
-> > > > > > > > > > > >
-> > > > > > > > > > > > Without these properties, the regulator framework might be unaware that the
-> > > > > > > > > > > > PMIC regulators draw power from upstream supplies.
-> > > > > > > > > > > >
-> > > > > > > > > > > > If the kernel dynamically manages the upstream supply and its reference count
-> > > > > > > > > > > > drops to zero, could it be disabled, causing an unexpected power loss for
-> > > > > > > > > > > > downstream components?
-> > > > > > > > > > >
-> > > > > > > > > > > And this is a correct comment. Please provide missing supplies.
-> > > > > > > > > > >
-> > > > > > > > > > As per the Qualcomm system design, the parent-child supply relationship
-> > > > > > > > > > is managed by the RPM firmware, not the Linux regulator framework. The
-> > > > > > > > > > RPM ensures the parent supply is never disabled until all subsystem
-> > > > > > > > > > votes are cleared.
-> > > > > > > > >
-> > > > > > > > > How is this different from other, previous platforms?
-> > > > > > > >
-> > > > > > > > This is not different. In the previous platforms too this is taken care from the
-> > > > > > > > RPM/RPMH firmware side, the only case where we may need explicit vote to parent
-> > > > > > > > is for non-rpmh/rpm regulator rails (like i2c based regulator pm8008), which
-> > > > > > > > may have a RPM/RPMH regulator as a parent.
-> > > > > > > >
-> > > > > > > > Even on those previous targets the parent rail of all RPM/RPMH regulators are
-> > > > > > > > internally voted by RPM/RPMH FW at proper voltage with required headroom
-> > > > > > > > calculated based on the active child rails. This was done for all the
-> > > > > > > > subsystems (including APPS) regulators.
-> > > > > > > >
-> > > > > > > > So no explicit handling from the APPS is required for parent supply.
-> > > > > > >
-> > > > > > > You are explaining the driver behaviour. But the question is about the
-> > > > > > > hardware description. If there is no difference, please add necessary
-> > > > > > > supplies back.
-> > > > > >
-> > > > > > I understand your concern about descibing the parent-child relation in the
-> > > > > > devicetree, and given that we have been almost always followed this for all
-> > > > > > the previous targets, it will expected of us to add them.
-> > > > > 
-> > > > > Yes.
-> > > > > 
-> > > > > >
-> > > > > > However, we want to avoid the unnecessary access to the parent from APPS.
-> > > > > 
-> > > > > Why? What is the reason? Do we want to do the same for all the
-> > > > > platforms? Only for Shikra? Something else?
-> > > > > 
-> > > > > > At the moment, I do not see a way to avoid that, if we add the parent
-> > > > > > regulators.
-> > > > > 
-> > > > > That depend on the answer to the previous question. In the end, we can
-> > > > > make the driver ignore the parents by removing them from the regulator
-> > > > > desc.
-> > > > 
-> > > > Ok, this seems like a good suggestion, so you mean its ok if we define the
-> > > > regulator desc's supply column with NULL? And only keep that in the DT?
-> > > > 
-> > > > you mean like this?
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/regulator/qcom-rpmh-regulator.c?h=v7.1#n1453
-> > > > 
-> > > > (please let me know if i got that right. thanks)
-> > > 
-> > > Yes. Don't forget to explain in the commit message, why you are doing
-> > > so.
-> > 
-> > Currently, Agatti uses the same PMIC, so we cannot set the driver
-> > supply name reference to NULL. Since it's an older target,
-> > we'll need to run a regression before making any driver-level changes.
-> 
-> Sure, just do it please.
->
-Sure, I will test this on both Agatti and Shikra and post it as a new
-patch series, since the current changes have already been picked up.
-
-> > Additionally, the child-to-parent regulator ganging differs between
-> > Shikra and Agatti:
-> > 
-> >  - On Agatti, l3 regulator is ganged with vdd_l13_l14_l15_l16
-> >  - On Shikra, l3 is ganged with vdd_l2_l3
-> 
-> Well, somebody tried to be too smart when contributing Agatti. Now that
-> needs to be fixed. Be sure to keep backwards compatibility with the
-> existing DTs.
-> 
-> From the schematics that I see, the pins are:
-> 
-> - vin_l1
-> - vin_l2_l3
-> - vin_l5_l6_l7_l11_l12
-> - vin_l8_l9
-> - vin_l10
-> - vin_l13_l14
-> - vin_l15_l16
-> - vin_l17_l22
-> - vin_l18_l19
-> - vin_l4_l20_l21
-> - vin_xo_rf
-> 
-> Please correct the bindings and adjust the driver.
->
-Sure, I'll fix the Both DT and driver based on the schematic pin names,
-keeping backwards compatibility, and post it as a new patch series.
-
-> > Since vdd_l2_l3 is not present as a supply name in the driver, it will
-> > be skipped by the driver and would only serve as a representational
-> > reference in the DT.
-> > 
-> > We have two options to consider:
-> > 
-> > Option 1: Skip adding the child/parent relationship for Shikra for now,
-> > since the DT bindings are not enforcing it. (Ref:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml?h=v7.1)
-> > 
-> > Option 2: Go ahead and add the Shikra-specific ganging in DT now. Since
-> > the supply name (vdd_l2_l3) does not match what the driver expects
-> > (Agatti's mapping), it will be gracefully skipped by the driver — making
-> > it safe to add for documentation/representation purposes without any
-> > functional impact.
-> > 
-> > So,Please share your thoughts on above options ?
-> 
-> Option 3. The PMIC is not Shikra-specific. You've spotted an error.
-> Correct the way it is described an used while adding support for Shikra.
-> 
-Sure, I'll correct the driver and DT description for both Agatti and
-Shikra and post it as a new patch series.
-
-regards
-Rakesh kota
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJuZWwu
+b3JnIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPg0KPiBTZW50OiAyMDI2xOo31MIxMMjVIDE4OjE2
+DQo+IFRvOiBCb3VnaCBDaGVuIChPU1MpIDxoYWliby5jaGVuQG9zcy5ueHAuY29tPg0KPiBDYzog
+RnJhbmsuTGlAa2VybmVsLm9yZzsgZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5vcmc7IHJvYmhAa2Vy
+bmVsLm9yZzsNCj4gY29ub3IrZHRAa2VybmVsLm9yZzsgaW14QGxpc3RzLmxpbnV4LmRldg0KPiBT
+dWJqZWN0OiBSZTogW1BBVENIXSBhcm02NDogZHRzOiBpbXg5MS05eDktcXNiOiBhZGQgQ0FOIHN1
+cHBvcnQgb3ZlcmxheQ0KPiBmaWxlDQo+IA0KPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0
+aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKQ0KPiB0byBj
+b25zaWRlcjoNCj4gLSBbTG93XSBUaGUgZGV2aWNlIHRyZWUgb3ZlcmxheSByZWZlcmVuY2VzIGFu
+IHVuZGVmaW5lZCBwaGFuZGxlDQo+IGA8JmNhbl9mdW4+YCBhbmQgb21pdHMgdGhlIGBwaW5jdHJs
+LWdwaW9tdXhgIG5vZGUgZGVzY3JpYmVkIGluIHRoZSBjb21taXQNCj4gbWVzc2FnZSwgY2F1c2lu
+ZyBhIGJ1aWxkIGZhaWx1cmUuDQo+IC0tDQo+IA0KPiAtLS0gUGF0Y2ggWzFdOiBbUEFUQ0hdIGFy
+bTY0OiBkdHM6IGlteDkxLTl4OS1xc2I6IGFkZCBDQU4gc3VwcG9ydCBvdmVybGF5DQo+IGZpbGUg
+LS0tIGNvbW1pdCBiYTNhMTM3ODA5MzQ0NWMzNGRiZGQwMzRhODI5NmU3YWFlYmRkMGRhDQo+IEF1
+dGhvcjogSGFpYm8gQ2hlbiA8aGFpYm8uY2hlbkBueHAuY29tPg0KPiANCj4gYXJtNjQ6IGR0czog
+aW14OTEtOXg5LXFzYjogYWRkIENBTiBzdXBwb3J0IG92ZXJsYXkgZmlsZQ0KPiANCj4gVGhpcyBj
+b21taXQgYWRkcyBhIGRldmljZSB0cmVlIG92ZXJsYXkgdG8gZW5hYmxlIENBTjEgc3VwcG9ydCBv
+biB0aGUNCj4gaS5NWDkxIDl4OSBRU0IgYm9hcmQuIEl0IGNvbmZpZ3VyZXMgdGhlIFRKQTEwNTdH
+VC8zIFBIWSBhbmQgc2V0cyB1cCB0aGUNCj4gQ0FOMSBwaW5zLg0KPiANCj4gPiBkaWZmIC0tZ2l0
+IGEvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2NhbGUvaW14OTEtOXg5LXFzYi1jYW4xLmR0c28N
+Cj4gPiBiL2FyY2gvYXJtNjQvYm9vdC9kdHMvZnJlZXNjYWxlL2lteDkxLTl4OS1xc2ItY2FuMS5k
+dHNvDQo+ID4gbmV3IGZpbGUgbW9kZSAxMDA2NDQNCj4gPiBpbmRleCAwMDAwMDAwMDAwMDAwLi5i
+ODM0M2Q2NTNlNTExDQo+ID4gLS0tIC9kZXYvbnVsbA0KPiA+ICsrKyBiL2FyY2gvYXJtNjQvYm9v
+dC9kdHMvZnJlZXNjYWxlL2lteDkxLTl4OS1xc2ItY2FuMS5kdHNvDQo+IA0KPiBbIC4uLiBdDQo+
+IA0KPiA+ICsmZmxleGNhbjEgew0KPiA+ICsJcGh5cyA9IDwmZmxleGNhbl9waHk+Ow0KPiA+ICsJ
+cGluY3RybC1uYW1lcyA9ICJkZWZhdWx0IjsNCj4gPiArCXBpbmN0cmwtMCA9IDwmcGluY3RybF9m
+bGV4Y2FuMT4sIDwmY2FuX2Z1bj47DQo+IA0KPiBbU2V2ZXJpdHk6IExvd10NCj4gRG9lcyB0aGlz
+IG92ZXJsYXkgYnVpbGQgc3VjY2Vzc2Z1bGx5PyBUaGUgZGV2aWNlIHRyZWUgb3ZlcmxheSByZWZl
+cmVuY2VzIHRoZQ0KPiBjYW5fZnVuIHBoYW5kbGUsIGJ1dCBpdCBkb2VzIG5vdCBhcHBlYXIgdG8g
+YmUgZGVmaW5lZCBoZXJlIG9yIGluIHRoZSBiYXNlDQo+IGRldmljZSB0cmVlLg0KPiANCj4gVGhl
+IGNvbW1pdCBtZXNzYWdlIG1lbnRpb25zIGEgcGluY3RybC1ncGlvbXV4IG5vZGUgZm9yIGNhbl9m
+dW4sIGJ1dCBpdA0KPiBzZWVtcyB0byBiZSBtaXNzaW5nIGZyb20gdGhlIHBhdGNoLiBXaGVuIHRo
+ZSBNYWtlZmlsZSBhcHBsaWVzIHRoaXMgb3ZlcmxheSwNCj4gd2lsbCBmZHRvdmVybGF5IGZhaWwg
+ZHVlIHRvIHRoZSB1bnJlc29sdmVkIHJlZmVyZW5jZT8NCg0KVGhpcyBwYXRjaCBpcyBiYXNlZCBv
+biB0aGUgZm9sbG93aW5nIHBhdGNoIHNldDoNCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2lteC8y
+MDI2MDcxMDAyNDIwNC4zNDYyNDQ0LTEtY2hhbmNlbC5saXVAb3NzLm54cC5jb20vVC8jdA0KDQpS
+ZWdhcmRzDQpIYWlibyBDaGVuDQo+IA0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICt9Ow0K
+PiANCj4gLS0NCj4gU2FzaGlrbyBBSQ0KPiByZXZpZXcgoaQgaHR0cHM6Ly9ldXIwMS5zYWZlbGlu
+a3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGDQo+ICUyRnNhc2hpa28u
+ZGV2JTJGJTIzJTJGcGF0Y2hzZXQlMkYyMDI2MDcxMC1kdHMtaW14OTEtY2FuMS12MS0xLWM3OA0K
+PiBjOWMzNzhlOGQlNDBueHAuY29tJTNGcGFydCUzRDEmZGF0YT0wNSU3QzAyJTdDaGFpYm8uY2hl
+biU0MG54DQo+IHAuY29tJTdDMDBjMDlhMWRhYWIxNDdjMzA3NzYwOGRlZGU2YzVmZTQlN0M2ODZl
+YTFkM2JjMmI0YzZmYTkyDQo+IGNkOTljNWMzMDE2MzUlN0MwJTdDMCU3QzYzOTE5Mjc1NDIxMDgz
+MzkzNCU3Q1Vua25vd24lN0NUVw0KPiBGcGJHWnNiM2Q4ZXlKRmJYQjBlVTFoY0draU9uUnlkV1Vz
+SWxZaU9pSXdMakF1TURBd01DSXNJbEFpT2lKWGFXDQo+IDR6TWlJc0lrRk9Jam9pVFdGcGJDSXNJ
+bGRVSWpveWZRJTNEJTNEJTdDMCU3QyU3QyU3QyZzZGF0YT03NGRJNmw0DQo+IFhhSHNMZzlxd2Zq
+TzA1WDI4NG9xMyUyRmwxMUswZUtsaktQc2p3JTNEJnJlc2VydmVkPTANCg0K
