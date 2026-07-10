@@ -1,70 +1,117 @@
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43425378824
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 18:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AC1374E6D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 18:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783707252; cv=none; b=uyS4Jv/ib0TQ+MOfoU2+Iq7cu4Glf/5DQaOqlgXV2IRtRf8L8nPoIBS/z2Vwi9sMZ5yYuYbp1Ze4mBsg+UxqRcLGyAe9Eed2LpIiZ1YYbdopksK/YO3heA+k0sq99L77IMpvZ5+AVxLxLVhXGptA2EL3CTetsPWZxSk+aHMbUvw=
+	t=1783708524; cv=none; b=NzUMyfHOeuJnIL8Nf/kYTngnUlFUsY49uzvNd8LWqZoGmUp+eXoKfujVFI1qEWB6ohPqYlxjClXx2DeM3fWiJOtr6PaWMlD4BBmKRlucA0uQS3puF1u4vbK9lotXU6t1HXLMWxhi9mVdpYMyIPHITdvpLgH5JuH39vos3BgVCXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783707252; c=relaxed/simple;
-	bh=sxpF2fg/FvbgU2ARpmDEhtMfod94JwEIeF9/yZLDXVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZIfCnDiUMn/cV+hi7ZWC7xad+9b6rsxcBQpf28ixgz/7G38nOBKhRJyXf2TNS8qqkPwRxzc645eJhO//b6vTbWyUHKz2lsJrJrjD7mI4tuVvzIZRONmBOI/O4WN+raZEhO8tBqxbIGMKhBAystA1/mUxKmX3wKwIxRsxsjSwqnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf04.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay05.hostedemail.com (Postfix) with ESMTP id A4A4940536;
-	Fri, 10 Jul 2026 18:14:09 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf04.hostedemail.com (Postfix) with ESMTPA id C18FC2002D;
-	Fri, 10 Jul 2026 18:14:07 +0000 (UTC)
-Date: Fri, 10 Jul 2026 14:14:17 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Chen Jun <chenjun102@huawei.com>
-Cc: <mhiramat@kernel.org>, <mathieu.desnoyers@efficios.com>,
- <linux-kernel@vger.kernel.org>, <linux-trace-kernel@vger.kernel.org>,
- "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>,
- "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH] tracing: Add "within" filter for call-stack-based event
- filtering
-Message-ID: <20260710141417.1fff0e13@gandalf.local.home>
-In-Reply-To: <20260707112011.7ca6f721@gandalf.local.home>
-References: <20260608145556.94931-1-chenjun102@huawei.com>
-	<20260707112011.7ca6f721@gandalf.local.home>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1783708524; c=relaxed/simple;
+	bh=cVwSutYXyxu2kAs+M/fqvlMTLCP40ylY2LRCvNSraqE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=qISdHhgN1OpJlw+wWZajW+Yue7LQaTgQ1SE2iE1EE4kJEOnCZs3BAc+v/xR9CM5Yjt/Vbgvu0S0JJ3ZjZ5B6uC0nfGa3xkAywF8Lt801iEogLHg80Ptm5sBLIm8yqj00xlEizcNZpN6qO8FmUNY4n3Bkrgy2pcjRovQsjenDiK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YyC0nWyl; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YyC0nWyl"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-84870e7f498so1489811b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 11:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783708522; x=1784313322; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wJss+Nyx//3KxfsXosZCusg05vSosR0BprDgk0IeJw4=;
+        b=YyC0nWylppSgsjoPJDW7Nqd84UpHb2JLUW+tLhcMrEfmZKz787PShuZHnCO1cFC725
+         yuV60u7WJtxLSHyOcru8ttvh1T/7Y5VoPSkBS++l4bvH/GZYv5jlfl+NFaiHF2uptkKS
+         d/umagwOV7scEDqMG//+raz6eF/0kp/q+2JN1fvqyHkYoDtcTvgisFvd4d2jWoiMmahH
+         j876gLzx73bboocZaZLOINAlmwvEfgjrQ4tJIqu6bpQD1i+nQAA/LZwYfGdIMNjKxTgx
+         fnaqTlzAoYGmXT46z0Bo/XtLt4s4tksFGqriM2CtDe0omOWDXWybGJFu3xC2DdDGBu3g
+         eEuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783708522; x=1784313322;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=wJss+Nyx//3KxfsXosZCusg05vSosR0BprDgk0IeJw4=;
+        b=MF3kApQLpViPn4ppzyenUgJBCAfncoszjQmb+1bN6/ryjn5k4Rho8hjcncdFX4WiXg
+         5+P/Kx2TGVjbUxF9F1Ac9FZkZzgx0RmALH7L3G+LhDsjX5f5NEyOLK6cyDhs6GeW2KAo
+         W1jHz1DhZ0d1/8WLRO8jV5xEX4sFWXP+P+p0PS1IMjCJk+Fk0bFaP4JS6DwR+gBQ8NEm
+         zcAhT7dEMSZEFMY9zD7oFAv49jJlRw5XVbNpXasS51j4d19NNKvLcZLgwwumCQ2LPvG0
+         zV2YZ6sFSyEtibqmOYDWtK/gptP3OGRV9ipahAfyYDxhEIrIwzBdAmcdm1mnzwetj4fY
+         TMPA==
+X-Gm-Message-State: AOJu0YzgfQfgTtS/zzHtEnxi9jd2FPLaNj/zK3t6irv/ogV+Ay1fr1QF
+	7qfq5pu5z/HoCQnqhspIPFFxAySp5SZEFwBSrjzKzTjMhZeaNYCGtP7J18PFKigc1nEfOf6UISj
+	2z2k6E45W7WOKTDLIav8YG5aX7ePJLDb9xKufh9JrQWUKt2hsAzdNvPrOWEB2DE5R64Og2Tg74V
+	bEcToOLthkrnVhd/aXQyzlo3ZHCUJuzr8yiYOP2hZgzXPpbWlE
+X-Received: from pfdb8.prod.google.com ([2002:a05:6a00:94e8:b0:847:878f:44fd])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:3cd4:b0:847:712d:19ac
+ with SMTP id d2e1a72fcca58-84889637560mr217734b3a.8.1783708522009; Fri, 10
+ Jul 2026 11:35:22 -0700 (PDT)
+Date: Fri, 10 Jul 2026 11:35:21 -0700
+In-Reply-To: <20260710135312.AD74F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: C18FC2002D
-X-Stat-Signature: 9uut5a8gm7dh35q94zjjdq33eucestw4
-X-Rspamd-Server: rspamout03
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1/bktudCEEfh9C6AKqfyDyfcEUHhYImOk4=
-X-HE-Tag: 1783707247-981796
-X-HE-Meta: U2FsdGVkX1/Q+AGaZ54cqRN5XktvAvCRmSEMsgqLUWWOm1ibWDUQqMsr1E8tdriKxjEtKLp7vZq/z288XrxapbQE1RNUG/4vEhKnySIYy1Ja07NiRUdqmExSGHMt4ztKnwkZOmS+ykr+yr9xdd3AaWpNDtOcr6HrcIOdv9Xndrcs4B5glj7vgfLhFUbOUYYavYIAFB1nMnURUcQjwZakKTfSmMlt2/1lj5uxB86iRWz7qhDoVYM7AASVynQj4e3fkn1mvP21E6Ex/TARIgRtWE4CjhHXmKZ8cTw0IK5j2zXHL33E2oGp8glJajVGm4kAXDcX5BIZ9zUxmKWgMpBR8FDmXTCI+k/z/Wvd4+nC04C14isZZhXkiqHsFooig+M/
+Mime-Version: 1.0
+References: <20260710134055.16432-1-danielpaziyski@gmail.com> <20260710135312.AD74F1F000E9@smtp.kernel.org>
+Message-ID: <alE7aTGmUIWKJf9a@google.com>
+Subject: Re: [PATCH] KVM: x86: Fix null pointer dereference in trace_kvm_inj_exception
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Daniel Paziyski <danielpaziyski@gmail.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue, 7 Jul 2026 11:20:11 -0400
-Steven Rostedt <rostedt@goodmis.org> wrote:
-
-> > Does this goto need a preceding call to parse_error()?  Other error paths in
-> > this function initialize the error state before jumping to err_free.
-> > Without it, users might see an unhelpful generic error message instead of a
-> > syntax error indicating that the glob operator isn't supported here.  
+On Fri, Jul 10, 2026, sashiko-bot@kernel.org wrote:
+> > An empty struct is being passed, which makes the
+> > kernel derefence a NULL pointer when the error code is 0. Remove this
+> > stray struct in the invocation of __print_symbolic.
 > 
-> This is a legitimate issue.
+> [Severity: Medium]
+> Is this description of a null pointer dereference accurate?
+
+Yes, it is.  Sashiko apparently applied to an old base (pre-7.1).  As of commit
+754e38d2d1ae ("tracing: Use explicit array size instead of sentinel elements in
+symbol printing") (spoiler alert), trace_print_symbols_seq() is:
+
+	for (i = 0; i < symbol_array_size; i++) {
+
+		if (val != symbol_array[i].mask)
+			continue;
+
+		trace_seq_puts(p, symbol_array[i].name);
+		break;
+	}
+
+> Looking at how __print_symbolic expands, the empty struct { } safely
+> initializes the first element's name pointer to NULL. When
+> trace_print_symbols_seq() is called, it handles this gracefully:
 > 
-> Chen, can you send a v2 and add a proper error message here?
+> kernel/trace/trace_output.c:trace_print_symbols_seq() {
+>     ...
+>     for (i = 0;  symbol_array[i].name; i++) {
+>     ...
+> }
+> 
+> Since the name field is NULL for the first element, the loop is bypassed
+> entirely and the function safely falls back to printing the error code as a
+> hex string without dereferencing a NULL pointer.
+> 
+> > diff --git a/arch/x86/kvm/trace.h b/arch/x86/kvm/trace.h
+> > --- a/arch/x86/kvm/trace.h
+> > +++ b/arch/x86/kvm/trace.h
+> > @@ -490,7 +490,7 @@ TRACE_EVENT(kvm_inj_exception,
+> >  	TP_printk("%s%s%s%s%s",
+> >  		  __print_symbolic(__entry->exception, kvm_trace_sym_exc),
+> >  		  !__entry->has_error ? "" : " (",
+> > -		  !__entry->has_error ? "" : __print_symbolic(__entry->error_code, { }),
+> > +		  !__entry->has_error ? "" : __print_symbolic(__entry->error_code),
+> 
+> [Severity: Low]
+> Will this change break the kernel build?
 
-Hi Chen,
-
-Do you plan on sending a v2?
-
-Thanks,
-
--- Steve
+No, beacuse again, Sashiko applied to an old base for some reason.
