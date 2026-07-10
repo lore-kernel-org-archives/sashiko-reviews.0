@@ -1,184 +1,276 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013064.outbound.protection.outlook.com [52.101.83.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D852DCF74;
-	Fri, 10 Jul 2026 09:10:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.64
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783674660; cv=fail; b=b1wLT5ifG5k8/PKI9xAUrZRgMMIZA7rqc1yO0faPHWpbMYNhFJECaJIWcOif2J2jJsk9Y8h4ENYzfUMe2zWknfSJ5tgIB+euEFKL35tiFN4fiQv3Yi5wCtbAImTOmblz9/yXL5BlLtkN5BANYh/AkLgt80Kcn/2iLFXLc8v2q0U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783674660; c=relaxed/simple;
-	bh=bEgyKP6DTrnmF5LttmNLNA9syVtNvEY1Bwho/6yVv8I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=G6DooJCLvkNCTC6W9IjYKyCNRFRdqG4NXd8W5ZM5CReXz/ln8YNYz/6/YpJUyz3R11zl2pQc+E7mWuvmRk5pYGwnmv/6dorBi9gJF0xTHVJaRODjOJTIiGBJBKRxbnuza5afEv40JYdighd0TRaueXk598QoY3HwpGkSIGdPAhQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=mt.com; spf=fail smtp.mailfrom=mt.com; dkim=fail (2048-bit key) header.d=mt.com header.i=@mt.com header.b=kSaE74XQ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=mt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=mt.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31C53DA5DA
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 09:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783675218; cv=none; b=f971Py88PEl1nRr8bvUIB6PueJB4+x1l7+Kjeh/KBXvxFuua+iKnL3QqEjWQm/XaX1qpztKFL+62La0kl0Ichvq8x/UYmkkWK+UJmoFRVzCjQsiBCXfMvd161Y7hvvHPcIdiQVp1eFVqXJNVINs3B4Veu8feLnpElx8+N9VXSco=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783675218; c=relaxed/simple;
+	bh=RKUgJnJ2tZ1jfTmsMZ5hm7tGIGr7Ow27tvFm4K7cnzo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XCs+CJcxln5bKSNFf8PMpoeU8zYIDWO+jrD9RWF6AwO8s8HAk5q8yVxT/57Z5nYgzCFbjZ2+yS0d79qqJzMvJtwUo5Ft9c3RyOj66R/Ma3GRtzzE/s3VP1BDqDVR+lVq9teITGGsAw25RsMe7d3abWXsbcVltZylLGjzhMaQslw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hpEXybam; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=pe5OydWZ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=19N0abh1; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ZEsO4mlr; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mt.com header.i=@mt.com header.b="kSaE74XQ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Uelye/ZOoUxGMS2/vdHlgaUI4DY5OBQv7RQYYhN1qW6eaLI28RgTuoSqXBXJ48qxqsM4irw/OdlU360DTvUKXeImZU95btliWPs81PYJ0xeFdmOs7I//ufslYYShWZzkBKeYq45AdX4loMjOu9+l04BdsJLxbejbuM4lm35SOCnwj/XSY3/IYq/aWRKymxehLjwZ0mRw320s8XMx/u/i2U7tL+R2kLcwTvESTohj+KSnxGeC3oXbQEEhTaWDckzm5ZF4sDPnrzSPB3y+lONBLSDE+xleSvyMXkGXISEcoLbhnSko55+jaYjJ6NzYFj87Pa1eE9yo4RxRqPEsWzlsMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0rJEFGzVqgaWqPgX2NjIipVmq3FKY+pV8KgzuVemCxw=;
- b=EJjiqeIKBdjuwQQd8UAjfSKG5doiZgMe3WQH/fQwssBl6J2ZjJ9uTo3FyH7itihwgeVxAYsyYL8udg8W4Ws4Xr2N4+xt5D3aojPy5pr6itbUrtxTEzulVu4tVrEdjyeUYYNAlJDayMPGDfVX0SyokVDqJHJCnY2W7CZjJNpQluNd9KUoerLPqI/gt3MjznL/7Uqop93c5IawwvrYa3keI+3XQ9kCoDrrukN+54eCga0Bl1k6y0sceFQpLODHuC0MRv7bk+Gq091jiL1d0Im/xIQ2rYMJQMfZQ7t/WsPPf3a5l9CfUlSpuSjaY+hSDS02h18mMpXQ7Gz3YJusst86kg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mt.com; dmarc=pass action=none header.from=mt.com; dkim=pass
- header.d=mt.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mt.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0rJEFGzVqgaWqPgX2NjIipVmq3FKY+pV8KgzuVemCxw=;
- b=kSaE74XQVPv7+W0W16znJI33IwI4MkCcayY9rKQYrdexBDUihvr9ED1kKsqENh8aDBMU1JLhn76eiYKk+n1L3yTCsX/RtdemumtmzSjUiV6nr2H2+eVWYfJk+E4FZk3D2Km5YAuizeefVjrdsAThZp8+xOxwepLDIYuX8VSql5UG1MmLqWuU4eXtheSQph1UoRYMDoM4X7BqCsfmI6liIAfIDcBdzF2lJsFAay4+nwfsaQEr2ZYVoS7gNXf+D+UjR+LWk6dJh+RNrrOL/BZ/deTVC6A7HV1tu69EnMnALEiquMKYHUZBMmTUTSkB9uVebbENS8ki7DSMeDMCg7+hLg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=mt.com;
-Received: from DB9PR03MB7180.eurprd03.prod.outlook.com (2603:10a6:10:22d::13)
- by GVXPR03MB11645.eurprd03.prod.outlook.com (2603:10a6:150:2c7::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.16; Fri, 10 Jul
- 2026 09:10:55 +0000
-Received: from DB9PR03MB7180.eurprd03.prod.outlook.com
- ([fe80::6fd2:12a9:4423:8ddc]) by DB9PR03MB7180.eurprd03.prod.outlook.com
- ([fe80::6fd2:12a9:4423:8ddc%6]) with mapi id 15.21.0181.016; Fri, 10 Jul 2026
- 09:10:55 +0000
-Date: Fri, 10 Jul 2026 11:10:46 +0200
-From: Wojciech Dubowik <wojciech.dubowik@mt.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, imx@lists.linux.dev,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org, robh@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v3 2/2] dt-bindings: display: sn65dsi83: Add output
- data-lanes
-Message-ID: <alC3Fnzyy-C92sLA@mt.com>
-References: <20260710082630.394040-1-wojciech.dubowik@mt.com>
- <20260710082630.394040-4-wojciech.dubowik@mt.com>
- <20260710083425.B7EB11F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260710083425.B7EB11F000E9@smtp.kernel.org>
-X-ClientProxiedBy: ZR0P278CA0021.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:1c::8) To DB9PR03MB7180.eurprd03.prod.outlook.com
- (2603:10a6:10:22d::13)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hpEXybam";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="pe5OydWZ";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="19N0abh1";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ZEsO4mlr"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id CC5AD75812;
+	Fri, 10 Jul 2026 09:20:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783675215; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=KYQOZ2ZJlZLhMyn49dZB/YvdeR8VX1jrQuLVtd0Ybk4=;
+	b=hpEXybam+Zdf5qRCKPNh0nTQd9x/+NijKOBP1qoRcwZAq5dS3t0VFz0cq3AnCrR5ovkE+c
+	eQv+A4vX1HohNRaNFfKLkh/6hVjulzYmyYqlRYAWZKJNOgTzIo2MbRWmuy+pLybPpYi9wG
+	3Q/09g28UY+bYLfZ0PVNhq4VmoGMQD4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783675215;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=KYQOZ2ZJlZLhMyn49dZB/YvdeR8VX1jrQuLVtd0Ybk4=;
+	b=pe5OydWZccIE2eOGfwbU5jTGxfwNeX94geKmFMQGsNwtru7RV+vedeSy26Hlah3vmSA7wr
+	KAQb/BR4owTGF7Dw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1783675213; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=KYQOZ2ZJlZLhMyn49dZB/YvdeR8VX1jrQuLVtd0Ybk4=;
+	b=19N0abh1zbcHOKtpqfowYN+xZ8sIisOW+oEAcHpEEQredil0ZH0x7bqSOJuPjfAOtlHHsJ
+	s+pRLm5Pcrz6XG0raP3/disgqUTTHEN7FK93fIvioBuwh+i6dRmc9W2TU9ZqQ/8/Pap3mJ
+	t5CbSVUMRx+RwpLdh4MSxqEkJ4XIA+A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1783675213;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=KYQOZ2ZJlZLhMyn49dZB/YvdeR8VX1jrQuLVtd0Ybk4=;
+	b=ZEsO4mlrT2mxiAYoSKVHg5yHqS/UIhvbZhtcs0744Cq9qd4IIXomkcxKMfNtH/TDloHmar
+	0nNx1STgH3bDQGDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A5F42779BD;
+	Fri, 10 Jul 2026 09:20:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 2/pVJ025UGqPFAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 10 Jul 2026 09:20:13 +0000
+Message-ID: <2e5e0fb4-da13-4250-8395-d59ad5700cf5@suse.de>
+Date: Fri, 10 Jul 2026 11:20:13 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB9PR03MB7180:EE_|GVXPR03MB11645:EE_
-X-MS-Office365-Filtering-Correlation-Id: a73874fd-30f4-4ebe-39f2-08dede6325ae
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|52116014|366016|376014|1800799024|23010399003|19092799006|6133799003|3023799007|18002099003|4143699003|22082099003|56012099006|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	n1vDgD5cFEhoqKpOqs0mKsXuIO3PKQVdslu0MLo+Q2PdRsMLUv2zBaHJBRaVvyOmPW8pHespYrkveV1M74g1f5VXIDFX+KrdIj67xnFjhdhAutKOHmbnkw2oLLvmvbajjlIxfLUc7nH2pUNOWOeNYyXdy04QR31PfuSuW9PLXvcbv0JXCVR19B/g4lJG63cMSSPGnWVmg4ltPUpbcw+8wLIx+JpadwLa9wEgQXRRJVJfIBPiKW7YzvdEt4FIUFHGE65eocNrlUo+te9H8VY6TlYT4fDJ9MVeaMPAYrAX9Aza4OdvQ8O+gV8n8HdP1Gayi6TGQXlfeGOK566dUE0vqS0VgcovDCfzvQ22yr5Yqyqm2RHTC/L+25udbYHiCuxx3qrJe/bvgqKaNl+s+zPUe1MERNOQJozL7qDtZPDH0zYcb01rZ1LyfEy/KIfXWRy6odNKQGolAft615Dxr/V1PUivjlhDpwPFBT2njNiG+BGF4n5jIBd4zba1fX/o4RI7XLPkmeScwrenoJhILVwGB6q9cvcWfq/dnfHM/6k8QvHKY8ygecRktKhVkcYsB3nSgPiC6CloLCh+e0coxH6teHc9odeumMj/+719YAUkMBXmqDJ217kjLzyv2S5VogT+TxIhN0LhjPvfAcS50dJOfKP3dEkCGeocfrlp3TLpyeQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR03MB7180.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(366016)(376014)(1800799024)(23010399003)(19092799006)(6133799003)(3023799007)(18002099003)(4143699003)(22082099003)(56012099006)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?7RNQ1gT/FA0aGklVXLGP9raHV1PQ1oaTHEBgGiWe220WLHjLEl80Qomgag?=
- =?iso-8859-1?Q?9pr0EnJajt7TiTzeIWpiPWX9I2ZGp0VSMT0vR0RnMEs9AoGKf7sAWffttv?=
- =?iso-8859-1?Q?PZqsLDD7K/v23vAd4+gO+KhIaW9a2V+mTIefL7yAeNB8WziXQBskwEf4ye?=
- =?iso-8859-1?Q?fJKBlgjBII0S1vyH3qRvU/atZjzpNyQbWJEd4ElGpg5yhHBzdzuj1Dov6q?=
- =?iso-8859-1?Q?cOrg4zQYn8K7A4VJJM1qcee/PhIrWSnl03vLWHC0xBi9jHZyEAzxIXvoIk?=
- =?iso-8859-1?Q?FqEmzcct33GQuAQ7zJywqfVNAIiqxsr8oZZtjMszhrV/tiTHZv2JNf0h/5?=
- =?iso-8859-1?Q?zk0uMDzwBOtLv9O293IZo2ERtpqWJ0yq2TcJb+vTDoZOdWvDQEMKqXUt7f?=
- =?iso-8859-1?Q?GzTeQzimTgvsdANoFGVZ0X0Gn8+0clTzqe2Rh+S9Inj8M3Ggwi3xCnd81E?=
- =?iso-8859-1?Q?OkJiVJXKoPgKc0qwG+5pcMMnGHB9DKJIZqBy3CsneshJxvg72cVZb285vM?=
- =?iso-8859-1?Q?erARsEXloQU1sZQiIpvpHlv7W3M96ey80uNNQKi5C/aelMaPMWnXGnijKQ?=
- =?iso-8859-1?Q?dx53P9r/3McvF2qICkiySOInaQ9cOFaFksMEc25cNgEgZ7iMmDKawe+9Cz?=
- =?iso-8859-1?Q?49c5Jb2625Ov8pTZk48w97xiWQzu9IgtDpdkShtqA/+l2h2gjy5x6O5Lk7?=
- =?iso-8859-1?Q?gK44QWCXPZoIaeldSCDceTPSXIfc9Iz6WF7mu0r//OpCMgl8zfT3FYfHOt?=
- =?iso-8859-1?Q?/dwcgTYN0MewglEvQBGVxbX781ivdR0RZg3kF1QpNyDp6vEKI1Z9lGxIH3?=
- =?iso-8859-1?Q?YFtAZYo4cbNRDKRsF0IHwJwSQ3juQpi/2UK1cCX39bhupJECCoBVDTIzFp?=
- =?iso-8859-1?Q?uqcaog1FSHgvO8CiROHchsQFvchgpvwB77M9pSUV9mZ0wJ24s/iQZL94RO?=
- =?iso-8859-1?Q?zsCEs+jcdC0IWTNZnvvTZEzeaYf5zwnpPzJ4ol7o1NDE8QOrQ8Cs1ikvIY?=
- =?iso-8859-1?Q?PCkbQuPkqnPma7io2LRdMPB8JcyhZjaozoDIJg7dSaC9kjM9cKY4t/CEDO?=
- =?iso-8859-1?Q?pfhAIEztt3f6hixYeGx5uxl9WqYrfD1Zj8tvyFsNM5EQA6zm+IEU3p9PQi?=
- =?iso-8859-1?Q?ETVRwwL65LOUzo5is9obSp5RmGF4Eh1AYA5RONuZcBJAVDxzEx5j1ioAId?=
- =?iso-8859-1?Q?fO9DbK1rL62HiHtadIGjgEltxOj5tsKEBDIo/93F+vkqipSU+r65i5H4VQ?=
- =?iso-8859-1?Q?jQ23iOVun09w4EaGwsvQmDx4DBMl+deKze8s7VtdQSur9NwSKbq90Nf55i?=
- =?iso-8859-1?Q?LjyX9QtOU31Cf/OfWwKMqDR2X4mmqufTvcflM7SgbkznQUL+0+P1lao+8J?=
- =?iso-8859-1?Q?g9ISCypn4B+ygsHZSVfrTj3iSp8dm/sH/e5VjPyfmnL+ssZ53hkKK4Venv?=
- =?iso-8859-1?Q?u0mNvO7lUGO32ls/jgxxQs9WahuxyMq9hqCJcreXW5KUwOrTr3CbaOLjFO?=
- =?iso-8859-1?Q?3d66gcDSSmCC7lP1Kr0im4BMg0xa5bjflns60vUesMtbM1tfp7Tm8Yy0/M?=
- =?iso-8859-1?Q?dygxgxH8ud1eaAHlj6mVTZ3vxU6zQXoA3ZFuarM5MC8oQg2wlXCeCZvhUN?=
- =?iso-8859-1?Q?ZGdWgHN6chYeaH7Y2uJaUZXrHZU0Sqx0Bwj5m0UVlZfHZfCsnM1M2fVGsi?=
- =?iso-8859-1?Q?Lqw7HY1HmmfskemTP2QP6eSMNpLLWeflqRxaVsfbjMXJfZOUOSR3TFKhWN?=
- =?iso-8859-1?Q?IvkHufvKyNNO3S+x5WJGll8WPxOyzBuc5xAHIbF5OGR95QPrYhyaYwFSAq?=
- =?iso-8859-1?Q?0eHrP9iBzA=3D=3D?=
-X-OriginatorOrg: mt.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a73874fd-30f4-4ebe-39f2-08dede6325ae
-X-MS-Exchange-CrossTenant-AuthSource: DB9PR03MB7180.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 09:10:54.9776
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fb4c0aee-6cd2-482f-a1a5-717e7c02496b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2PhCPKn5d3gUUFd8P9Q4yYcaFDSlq5RoV5urTU7bTBvRJJ7Yf5J8LA3eVOtWDktpedKbFZbquMHI2Ka5vybdbg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR03MB11645
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/9] drm/gm12u320: replace struct drm_simple_display_pipe
+ with regular atomic helpers
+To: sashiko-reviews@lists.linux.dev, Ze Huang <ze.huang@oss.qualcomm.com>
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev, dri-devel@lists.freedesktop.org
+References: <20260705-drm-simple-kms-removal-v1-0-b4e1ca053623@oss.qualcomm.com>
+ <20260705-drm-simple-kms-removal-v1-6-b4e1ca053623@oss.qualcomm.com>
+ <20260704184538.E20261F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260704184538.E20261F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.991];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,suse.com:url,suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Level: 
+X-Spam-Score: -4.30
 
-On Fri, Jul 10, 2026 at 08:34:25AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Mismatch between device tree schema and driver implementation for the `data-lanes` property.
+Hi
+
+Am 04.07.26 um 20:45 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [High] Race condition and potential NULL pointer dereference due to direct access to `plane->state` and missing visibility checks in atomic callbacks.
+>
+> Pre-existing issues:
+> - [High] Sleeping in atomic context within CRTC and plane atomic callbacks.
 > --
-> 
-> --- Patch [2]: [PATCH v3 2/2] dt-bindings: display: sn65dsi83: Add output data-lanes ---
-> commit 98aea58cd5128c6a4b72efd4a5f9ec088fd30dca
-> Author: Wojciech Dubowik <Wojciech.Dubowik@mt.com>
-> 
-> dt-bindings: display: sn65dsi83: Add output data-lanes
-> 
-> This commit adds an optional output LVDS data lanes property with two allowed
-> values. It supports the standard layout <1 2 3 4> and reversed layout <4 3 2 1>
-> for output channels.
-> 
-> > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
-> > index e69b6343a8ebb..4431f113bb9cd 100644
-> > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
-> > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi83.yaml
-> > @@ -86,10 +86,52 @@ properties:
-> >          description: Video port for LVDS Channel-A output (panel or bridge).
-> >          $ref: '#/$defs/lvds-port'
-> >  
-> > +        properties:
-> > +          data-lanes:
-> > +            $ref: /schemas/types.yaml#/definitions/uint32-array
-> 
-> [Severity: Medium]
-> Does this schema change place data-lanes at the correct level in the
-> device tree hierarchy?
-> 
-> The schema defines data-lanes as a direct property of the port node,
-> but standard OF graph rules and the driver implementation parse it from the
-> endpoint node:
-
-This is valid comment. While testing dt bindings I have put data-lanes property
-on the wrong level. It should in under endpoint and not in main node.
-
-I will fix it in v4
-
-> 
-> drivers/gpu/drm/bridge/ti-sn65dsi83.c:sn65dsi83_parse_lvds_endpoint() {
->     ...
->     ret_data = of_property_read_u32_array(endpoint, "data-lanes", data_lanes,
->                     ARRAY_SIZE(data_lanes));
->     ...
-> }
-> 
-> Because the driver reads from the endpoint node rather than the port node,
-> will it silently fail to find the configuration and fall back to the default
-> layout on affected hardware?
-> 
-> > +            description: |
-> > +              Array of physical LVDS data lane indexes
-> > +            oneOf:
-> 
+>
+> commit a10b3d5781e3b7143f432c86643ef47e8ddc3a9a
+> Author: Ze Huang <ze.huang@oss.qualcomm.com>
+>
+> drm/gm12u320: replace struct drm_simple_display_pipe with regular atomic helpers
+>
+> Convert gm12u320 to direct primary plane, CRTC and encoder setup.
+> Keep shadow-plane helper state, framebuffer access helpers and
+> no-scaling plane-state check from simple-KMS path.
+>
+>> diff --git a/drivers/gpu/drm/tiny/gm12u320.c b/drivers/gpu/drm/tiny/gm12u320.c
+>> index 4ad074337af07..b476793d0401e 100644
+>> --- a/drivers/gpu/drm/tiny/gm12u320.c
+>> +++ b/drivers/gpu/drm/tiny/gm12u320.c
 > [ ... ]
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260710082630.394040-1-wojciech.dubowik@mt.com?part=2
+>
+>> +static void gm12u320_crtc_helper_atomic_enable(struct drm_crtc *crtc,
+>> +					       struct drm_atomic_commit *commit)
+>>   {
+>>   	struct drm_rect rect = { 0, 0, GM12U320_USER_WIDTH, GM12U320_HEIGHT };
+>> -	struct gm12u320_device *gm12u320 = to_gm12u320(pipe->crtc.dev);
+>> +	struct gm12u320_device *gm12u320 = to_gm12u320(crtc->dev);
+>> +	struct drm_plane_state *plane_state = crtc->primary->state;
+> [Severity: High]
+> Will this cause a NULL pointer dereference if a subsequent commit disables
+> the plane?
+
+Primary is for (old) non-atomic DRM drivers.
+
+>
+> Because non-blocking commits execute asynchronously, crtc->primary->state
+> reflects the state of the most recently queued commit, rather than the
+> commit currently executing. If a fast subsequent commit disables the plane,
+> plane_state->fb could be NULL.
+>
+> Should this use drm_atomic_get_new_plane_state(commit, crtc->primary) to
+> get the state tied to this specific commit?
+
+No. Changes that require plane state should go into the plane's 
+atomic_enable or atomic_update.
+
+>
+>>   	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
+>>   
+>>   	gm12u320->fb_update.draw_status_timeout = FIRST_FRAME_TIMEOUT;
+>>   	gm12u320_fb_mark_dirty(plane_state->fb, &shadow_plane_state->data[0], &rect);
+>>   }
+>>   
+>> -static void gm12u320_pipe_disable(struct drm_simple_display_pipe *pipe)
+>> +static void gm12u320_crtc_helper_atomic_disable(struct drm_crtc *crtc,
+>> +						struct drm_atomic_commit *commit)
+>>   {
+>> -	struct gm12u320_device *gm12u320 = to_gm12u320(pipe->crtc.dev);
+>> +	struct gm12u320_device *gm12u320 = to_gm12u320(crtc->dev);
+>>   
+>>   	gm12u320_stop_fb_update(gm12u320);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does gm12u320_stop_fb_update()
+> sleep in atomic context?
+
+This is a false positive.
+
+Best regards
+Thomas
+
+>
+> gm12u320_stop_fb_update() calls cancel_delayed_work_sync() and mutex_lock().
+> Since CRTC atomic disable callbacks can run in atomic context during
+> non-blocking commits, sleeping here is forbidden and could cause kernel
+> warnings or deadlocks.
+>
+>>   }
+>>   
+>> -static void gm12u320_pipe_update(struct drm_simple_display_pipe *pipe,
+>> -				 struct drm_plane_state *old_state)
+>> +static void gm12u320_plane_helper_atomic_update(struct drm_plane *plane,
+>> +						struct drm_atomic_commit *commit)
+>>   {
+>> -	struct drm_plane_state *state = pipe->plane.state;
+>> +	struct drm_plane_state *old_state = drm_atomic_get_old_plane_state(commit, plane);
+>> +	struct drm_plane_state *state = plane->state;
+> [Severity: High]
+> Could accessing plane->state directly here lead to a crash?
+>
+> Similar to the CRTC enable function, reading plane->state directly instead of
+> using drm_atomic_get_new_plane_state(commit, plane) accesses the future
+> state.
+>
+> If a subsequent commit disables the plane, state->fb will be NULL. In this
+> scenario, drm_atomic_helper_damage_merged() returns true for plane
+> disablements, leading to gm12u320_fb_mark_dirty() being called with a NULL
+> fb, which will oops when trying to dereference fb->dev.
+>
+> This wasn't possible before because the drm_simple_kms_helper explicitly
+> checked if (!plane->state->visible) before calling the update hook, but
+> that protection is dropped in this conversion.
+>
+>> +	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(state);
+>>   	struct drm_rect rect;
+>>   
+>> -	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
+>> +	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
+>>   		gm12u320_fb_mark_dirty(state->fb, &shadow_plane_state->data[0], &rect);
+> [Severity: High]
+> This is a pre-existing issue, but does gm12u320_fb_mark_dirty() sleep in
+> atomic context?
+>
+> It calls mutex_lock(&gm12u320->fb_update.lock), which is unsafe to call
+> from a plane update callback during non-blocking commits, as these run
+> in atomic context.
+>
+>>   }
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
+
