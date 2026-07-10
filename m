@@ -1,214 +1,121 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFEA7432BF9;
-	Fri, 10 Jul 2026 15:43:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040F0437126
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 15:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783698209; cv=none; b=H8xPqDKFZ/Hts6FYtp4bQ7j3wGqQTzYLSLihvb1aTaGIExjwKOgo6Mr6mJfa+Iluo8p0aXZJsERw3fSxqTktDhof/iY0EWbGGJmQq50UsBVXYW5O7fBo9YgaNvbHnjx/RaCJMHXkErFE7KbexoxMuB4zk0fZqHzY5m4eDcDswSU=
+	t=1783698344; cv=none; b=OdWWqczAcctRnH6fk/fWfFRy0ZvKLeauQ+enkrlO2bh8erFhKmZsPjaC7KbGILgo68HJcJKjor2IiWAUy6i/Q6CkimSzNEh0cknXu3weuQKQm0+M2bcXd/8p3eEzAORNwQkvkpT4FxVVs0vwOBDxzebeMNVMG5QLD0/EMfQt4Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783698209; c=relaxed/simple;
-	bh=JB/uziQBIArAyEqEXTG6g3vNnbcGWmUvTOuHDWIyEQk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=ole8b6P+86bhz1fFVAPI95v1aOhH7DZ+Qs1RVBKU932vclyUhDyovAHly4/GnOGXhp0CzbTRzMkh5/Xni69VhibRaFSGRpRdDCsHFqPdqNG36VV6ErpCKtGx8V8ogR5BcYtrMFweuoVjK6uq7EXNjvmLUxM719G6RElSJpqgI0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=NAAd3/hq; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1783698344; c=relaxed/simple;
+	bh=BhwVYfpFR79oYTShacDUr2hlzhTnFWDFl2R+6GXiWSU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Uc6ts3Xkvq96h8kBizx5lEiKKiqp9hnPn5LuVojHSlL5AUxOtJIFlFHKrMR/SeZJppWNNdHxAYd3Mys/Kt5kQlL41TBLtTsk+lnMLXZKit1JMg1kzxd2ghpX6Ahjwj6GFRSCMzIj6N7r2sHMUTqqT9HeHX7uCYE/gySwk2WDsoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=V590BP5E; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="NAAd3/hq"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D992716F2;
-	Fri, 10 Jul 2026 08:43:21 -0700 (PDT)
-Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0F3453F85F;
-	Fri, 10 Jul 2026 08:43:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1783698206; bh=JB/uziQBIArAyEqEXTG6g3vNnbcGWmUvTOuHDWIyEQk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAAd3/hq5VF7nkzRer+JVoklEyUQCipps4xDjbsyT8GogXVpG7D7dUGXQ9E/PzA8u
-	 6M8OP8IQO4DTNoJ20gUv6e2scz921JzCdrBzkhg9V6ll0Ckcvj50+jxfQiaBvl8q6F
-	 X5UJi3BOUQiFjETAGXQDB3lEala2d91vnDqDElD8=
-From: Leonardo Bras <leo.bras@arm.com>
-To: Oliver Upton <oupton@kernel.org>
-Cc: Leonardo Bras <leo.bras@arm.com>,
-	sashiko-reviews@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org,
-	Wei-Lin Chang <weilin.chang@arm.com>
-Subject: Re: [PATCH v2 02/13] KVM: arm64: Enable eager hugepage splitting if HDBSS is available
-Date: Fri, 10 Jul 2026 16:43:20 +0100
-Message-ID: <alETGFD2Ogx6N0HB@LeoBrasDK>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <aku05wJ9WQcpIh4n@LeoBrasDK>
-References: <20260629111820.1873540-3-leo.bras@arm.com> <20260629113645.BE6801F000E9@smtp.kernel.org> <akKFlzAdB43lRpi1@LeoBrasDK> <akKmHqRaZEUjN3zY@kernel.org> <akO9iHJmKN7MzTjM@LeoBrasDK> <akPkVASjWWYQpkx1@kernel.org> <akP4ZDjZIu2_CfVF@LeoBrasDK> <akQONWoRRZXu1-56@kernel.org> <akTv39bQdbxFbzhk@LeoBrasDK> <aku05wJ9WQcpIh4n@LeoBrasDK>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="V590BP5E"
+Message-ID: <6c9ed329-02a4-4de4-b6e9-3eacdfe11922@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783698339;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5MJAkNAixLcOAQy5WKBTS0fpHbyVG0CUx183CCa+0bk=;
+	b=V590BP5E2QpV20oswvuV7SRxE4Wc+z3MzTBiP5kcsmGVn2BWCByMQg7mDp8QYFBbcyPY/l
+	1J01HPfLwqHlox7zuW1PJBjST08EoQOdXwcVru7AU6Dp+tTATARSLThUWbOTgGtiTtS7xs
+	KqkGmBe0EyNPZzkU27Tt91ZgyiqQAHg=
+Date: Fri, 10 Jul 2026 08:45:36 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-
-On Mon, Jul 06, 2026 at 03:00:07PM +0100, Leonardo Bras wrote:
-> On Wed, Jul 01, 2026 at 11:45:52AM +0100, Leonardo Bras wrote:
-> > On Tue, Jun 30, 2026 at 11:43:01AM -0700, Oliver Upton wrote:
-> > > On Tue, Jun 30, 2026 at 06:09:56PM +0100, Leonardo Bras wrote:
-> > > > On Tue, Jun 30, 2026 at 08:44:20AM -0700, Oliver Upton wrote:
-> > > > > On Tue, Jun 30, 2026 at 01:58:48PM +0100, Leonardo Bras wrote:
-> > > > > > On Mon, Jun 29, 2026 at 10:06:38AM -0700, Oliver Upton wrote:
-> > > > > > > > But this raises a topic I would like to understand:
-> > > > > > > > - Do we actually need this to be a block_size to assure correctness? or is 
-> > > > > > > >   it just about efficiency?
-> > > > > > > 
-> > > > > > > What value is there in having a chunk size larger than the largest
-> > > > > > > possible block mapping? The whole UAPI is deliberately tied up with page
-> > > > > > > table geometry.
-> > > > > > 
-> > > > > > Not larger, possibly smallerv My concern was the difference in pages to 
-> > > > > > split between 4k, 16k and 64k.
-> > > > > 
-> > > > > Ok, well in any case the upper bound is going to be the largest possible
-> > > > > block mapping for a given page granule.
-> > > > >
-> > > > 
-> > > > Sure, we can do this.
-> > > 
-> > > I'm describing the UAPI behavior of what we already have. Please do not
-> > > change anything and continue to leave userspace in charge of eager
-> > > splitting / chunk size.
-> > > 
-> > > > > > > 
-> > > > > > > Overall, I'm not buying the argument for changing the behavior of
-> > > > > > > KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE. There are very good reasons for
-> > > > > > > *not* eagerly splitting the entire address space, especially if you know
-> > > > > > > the working set of the VM is small.
-> > > > > > > 
-> > > > > > > You can still use HDBSS without eagerly splitting, so long as block
-> > > > > > > mappings are {DBM, S2AP_W} = {0, 0} and leaf mappings (which have
-> > > > > > > a writable PFN) are {1, 0}.
-> > > > > > > 
-> > > > > > 
-> > > > > > Block mappings being read-only, and leaf mappings being writable-clean, 
-> > > > > > then? Could you please ellaborate on why does not it need eager-split?
-> > > > > 
-> > > > > Read-only translations will continue to generate permission faults
-> > > > > whereas writable-clean descriptors can be updated by hardware. You get
-> > > > > the opportunity to split a block mapping lazily while preserving
-> > > > > hardware dirty tracking for page mappings.
-> > > > > 
-> > > > 
-> > > > So you suggest we only enable DBM bit after we split the block, that will 
-> > > > happen only after a block is dirtied for the first time after dirty-log 
-> > > > starts? 
-> > > 
-> > > If the VMM wants to do lazy splitting, yes. Otherwise this would happen
-> > > as part of eager page splitting for block mappings that are known to be
-> > > writable.
-> > > 
-> > > > > The approach I think we may need is:
-> > > > > 
-> > > > >  - Use a software bit in the PTE to stash whether or not a PFN is
-> > > > >    'software-writable' when constructing the stage-2. By this I mean
-> > > > >    we've already faulted it in for write from the primary MMU.
-> > > > > 
-> > > > >  - At the time of write protection, reap the hardware-writable state
-> > > > >    from all PTEs but preserve the software-writable bit.
-> > > > > 
-> > > > >  - Whenever splitting a block mapping, set the DBM bit in the page-level
-> > > > >    PTEs if the block was software-writable and HDBSS is present.
-> > > > > 
-> > > > > That way you'd have sufficient metadata in the PTE to safely set DBM.
-> > > > 
-> > > > I remember that, for some reason I can't recall, it would not be great to 
-> > > > set DBM during dirty-log start, and instead we should have it since VM 
-> > > > creation. Maybe it had to do with part of the pagetable using the old 
-> > > > encoding (no DBM), and the other part using the new one.
-> > > > 
-> > > > IIRC, only blocks that are backed by writable memory (S1) were supposed to 
-> > > > receive the DBM bit. We could use that info for deciding what to split, 
-> > > > then.
-> > > 
-> > > That's why I'm saying to use a software bit. We can't leave DBM=1 on
-> > > block mappings and set VTCR_EL2.HD=1 for obvious reasons.
-> > >
-> > 
-> > I am failing to see the reason for above.
-
-Ok, I think I got what I was missing, please let me know if I got it right:
-- You said that we should still have lazy splitting with HDBSS-enabled 
-  system, and for that
-- We can't enable DBM=1 + VTCR_EL2.HD=1 at build S2 time
-
-But for that lazy split scenario in which we only enable DBM=1 at first 
-dirty of a block after dirty-track enable, we would have to change the 
-encoding of the S2 pagetables from old format (ro/rw bit) to new format 
-(DBM + clean/dirty bit) while the VM is running, which I remember to have 
-some issues related to it. 
-
-Well, let's consider we can handle that issues above, IIUC with your 
-suggestion dirty-tracking with HDBSS would be something like:
-
-If Lazy-splitting:
-  - Constructing S2 : No change
-  - Dirty-log enable
-    - Enable HAFDBS + HDBSS (VTCR_EL2.{HD,HDBSS}={1,1})
-  - On first dirtying each page:
-    - Split block, if needed, into page granularity
-      - (Set the Level3 entries as writable-clean? would make sense)
-    - Set the dirty page as writable-dirty (DBM=1 + dirty_bit=1)
-  - On guest_exit, write all HDBSS entries to dirty bitmap/ring
-  - On dirty-clean/get request, use sw routine
-    - (HACDBS needs DBM=1 to work)
-  - Once the page has DBM=1, tracking happens by HDBSS
-
-If eager-splitting:
-  - Constructing S2
-    - Set DBM on every writable block, put them in writable-clean
-    - Enable VTCR_EL2.HD=1 (HAFDBS will update dirty-state in HW)
-  - Dirty-log enable
-    - Set VTCR_EL2.HDBSS=1 (any new dirtying gets logged to HDBSS)
-    - Split all writable blocks (DBM=1)
-  - On guest_exit, write all HDBSS entries to dirty bitmap/ring
-  - On page dirtying
-    - Tracking happens by hardware
-  - On dirty-clean/get request: use HACDBS cleaning
-    - (All writable entries have DBM=1 so we should be fine)
+Subject: Re: [PATCH bpf 1/2] bpf: Reject >8 byte return values on
+ return-reading trampoline paths
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260710144404.2579671-1-yonghong.song@linux.dev>
+ <20260710145845.883411F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260710145845.883411F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
 
-Does it match what you suggested?
-If not, please help me understand what am I missing.
 
-Thank you for your guidance!
-Leo
+On 7/10/26 7:58 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The x86 BPF trampoline generation under-allocates stack space for 16-byte scalar arguments (e.g., __int128), leading to an out-of-bounds stack write that overwrites the saved RBP and return address.
+> --
+>
+> --- Patch [1]: [PATCH bpf 1/2] bpf: Reject >8 byte return values on return-reading trampoline paths ---
+> commit 8947b8106804bc7e7328c045366441fc0d165459
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Reject >8 byte return values on return-reading trampoline paths
+>
+> This patch rejects BPF trampoline attachments for types like fexit, fmod_ret,
+> and struct_ops if the target function has a return value larger than 8 bytes.
+> Previously, the trampoline accepted 16-byte return values (e.g., __int128) but
+> only saved and restored 8 bytes, which corrupted the return value seen by the
+> caller.
+>
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 6515d4d3c0032..26d281b77a6e7 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>
+>> @@ -19137,6 +19151,14 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
+>>   		if (ret < 0)
+>>   			return ret;
+>>   
+>> +		if (tgt_info->fmodel.ret_size > 8 &&
+>> +		    attach_uses_trampoline_retval(prog->expected_attach_type)) {
+> [Severity: High]
+> This is a pre-existing issue, but while this patch addresses >8 byte return
+> values, does the BPF trampoline also have a similar problem with >8 byte
+> arguments?
+>
+> In kernel/bpf/btf.c:btf_distill_func_proto(), 16-byte arguments like __int128
+> are accepted, but __get_type_fmodel_flags() does not set BTF_FMODEL_STRUCT_ARG
+> for them because they are BTF_KIND_INT, not structs.
+>
+> In arch/x86/net/bpf_jit_comp.c:__arch_prepare_bpf_trampoline(), the stack
+> size calculation relies on this flag:
+>
+> 		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG)
+> 			nr_regs += (m->arg_size[i] + 7) / 8 - 1;
+>
+> Because the flag isn't set for __int128, it is incorrectly counted as
+> 1 register, under-allocating the stack space by 8 bytes per 16-byte
+> scalar argument.
+>
+> Later during code generation, save_args() computes
+> arg_regs = (m->arg_size[i] + 7) / 8, which evaluates to 2. It performs
+> two 8-byte stack stores, which will underflow the allocated boundary and
+> overwrite the saved RBP and potentially the return address.
+>
+> Could this lead to out-of-bounds stack writes for fentry/fexit programs
+> attached to functions with 16-byte scalar arguments?
 
-> > 
-> > IIUC, one option would be to:
-> 
-> (everything -> every block that have DBM=1) 
-> 
-> > 
-> > What am I missing?
-> > (above case is considering manual protect = off, but the same idea goes 
-> > for the manual_protect_and_init_set, but cleaning is on-demand)
-> >  
-> 
-> IIUC, what we get from your software write bit suggestion is to 
-> avoid doing the splitting if we know the page will not be written to, which 
-> makes sense.
-> Using the DBM bit as suggested above should have the same effect.
-> 
-> > > > Another option would be to split when we are collecting a dirty-entry from 
-> > > > HDBSS, but for live migration that would mean we have to transfer the whole 
-> > > > block (possibly a large LEVEL1 block), because we have no idea which part 
-> > > > of it got dirty.
-> > > 
-> > > We need to do dirty tracking at page granularity. The only scenario
-> > > where we have writable block mappings while dirty logging is enabled on
-> > > a memslot is if the VMM enabled KVM_DIRTY_LOG_INITIALLY_SET.
-> > 
-> > Agree
-> > 
-> > Thanks!
-> > Leo
-> 
+Looks like this indeed an issue for x86.
+Since the __int128 issue exists for both return value and argument,
+I will send v2 to address both of them together.
+
+>
+>> +			bpf_log(log,
+>> +				"Attach to function %s with a >8 byte return value is not supported for this attach type\n",
+>> +				tname);
+>> +			return -EOPNOTSUPP;
+>> +		}
+
