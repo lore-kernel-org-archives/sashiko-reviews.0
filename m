@@ -1,103 +1,99 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04D3377566
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 23:43:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131801FD4;
+	Fri, 10 Jul 2026 23:50:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783727031; cv=none; b=VGu2LZPtjhM+jneB8jso9acaMYHwIjFYEImt8uugjeVRLvCGVGhD5tARQhIednX1ATlPms1K3UnmC+5IGA9LpQ8OMGHBoTC92mJM7Z/3RSl+ARNVpWdDHydEYy93qjm3uRnC7C/bXucAzDKyTEIuZ0Njll7pKDh5ErmU6qSVRGo=
+	t=1783727405; cv=none; b=FUQCGBdWLswmV0HSgEp5mPi26d74j0YSNT9lHYFeZk+XJTxQkKeLS6KBM7/z9TM3NdpXPtUq9PBbljelNdP7+8iNDWoTK13/Z2MPRuxwRpD0F4Xc2iASgHCKeggaaHoIZADprL9Dj5paA9nyh3BOgloG+mUe8XOWnXJj5spZiB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783727031; c=relaxed/simple;
-	bh=PK5r5CSk1B7XeUp5Kcu4wbVddW3ItH3De22ETA07fPU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Esbal1BCGTmdOdnycYk9faXC7DGNAdwlWL/qvZuTaG5KcRt0zlzXe/kJOuNBOJHYnkc7OmdDIOrVT6Elv6ofw6DuSdU+nSxUdXwotj9USqWuVAGRG+zRIGczKX5nBuMdaneg+zT51x/O4jxMZtpmvC9y6yIUf4v3MV3z2MuNwyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=avs7LDj9; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	s=arc-20240116; t=1783727405; c=relaxed/simple;
+	bh=wAE3GScmnSx8cUptu82juBeE5budC0SK1jc634yvVw0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X4KpfAO1WRp1IVxUadiwG0/Ie1GTyFKg64Gd1qG3pbTp4D9MIQXAvYtOiHQyscod4Jad/1YXz7R8Tm/ZrI84KNddDgdy0Hpc2e5t7rK8n4y1n20LlQ+u8FPQhHns1EqudoJtNx/rFcLnBBlPc4M4DgCSULqOIoCCpvTJfVpwcgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXrpns38; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="avs7LDj9"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-ca97d139d5fso1094600a12.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 16:43:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1783727029; x=1784331829; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=PK5r5CSk1B7XeUp5Kcu4wbVddW3ItH3De22ETA07fPU=;
-        b=avs7LDj9NiQXdBRUeSaSxAamIKy0afKmLNjPYYtDN7C9HgrhfuU+6FGLPlCyRwOzWW
-         MEUFPuBZo3gzMruNG0xTicRMwoHzu6UgUaZp7rCiE8eZt0nJvP1SZTb2VCu6v7o1ND0M
-         h+NErxLsK4WoNOKv369zNIVH6+0U1opAyTMJQwdO0OjXscsP/nRK++u5hxMO0pkVOQR2
-         MGFUmMQRQSSa8RB0EV+WKDgyerL6diG23mvpArgiaCXMK7vnqS5rrt7mcsu6PpYS2WeZ
-         4nLyiqXu2DUpJtfPLGge/YVKUFTiJsOaaCY86d1FyHqMejKIVFkryhRpUQLXw9VFMOYl
-         2yIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783727029; x=1784331829;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PK5r5CSk1B7XeUp5Kcu4wbVddW3ItH3De22ETA07fPU=;
-        b=dzRaJAxCYAumDeUggdNjQvAazRZJBD2pyi0Ek/MqWE2pGlFzdP3B5fI6oBcNB4hhaQ
-         1hA7fi/+BrXPHPYmrgUToMgRdKJZcsjW+YcvHt3vWq/7AcKD0wQr47ymdS+xGymMekpl
-         sAnvhQlAZAIiE0gfsVkPHwFzPh1f0APVszWh7SgjmYTp3pDcg4DZrUAsJXHMBi3YwWSI
-         g1DQ1qjBo2NCh4Wm/uw3W4czv9rJG3b6sJuZWmjiUkICPeNGWi0K3zTzMzoL60T+MAuJ
-         P835cDklBmMlxh7S2xss/C3cXnFweTN9VYjMXEx8FZxYGjiiTfGWPETcwIA2IqSWgN7/
-         O0lg==
-X-Gm-Message-State: AOJu0YzalLnxHu3Vv3x0ouxG/yT3mdSzfdpO/QVwoJfNn6V4iH4vPpk4
-	FFDJEvmo7PKK03OWWKs/GBqvg22I2MBQLsYHgU1axxZ3nbCqHXv1ibt1nFNqABAGLJZTKRm/3cd
-	0u6X0dA3c0Q==
-X-Gm-Gg: AfdE7clOV1vwLhmgtqVbRBzkTFgSLmS8zhyA9+xOHVx487I7Mb7ZCgDC8y/0HMGq8hW
-	xG8oxf6ms3HRCoEUstQTV/cW1uOBcjgvSYi7AlNbk99NNn0m1vwU+HCMo988O0nANpOoE6H7IM0
-	5x0UAKncr7g6Bd60dPuyvpxSerQe4Bhe1WAKNuirfPHoTxAbKPzNbETfx7yZLwgBcnSEget5oGD
-	BxMSeWpcfBUcqoVnKxhvBzJbqC4tIxArsm2osTPkRernJ+ZN064ltaHZ0JlePZaOMCE+3cpuCF1
-	+LaPu/FTtY8u/NaiRzHgIkgq6dmGnFccPDcXjAt/uVqGDzkivkXJnfjILdVKgXeS0hwmwyiy6+/
-	tvS6YsX+Wdu0kNVc70bjt7fV9ouCl6qapDqn5WrNDbYuqQvEsvhL0ytjdKsyrQ8FBaCKKWw==
-X-Received: by 2002:a05:6a20:d489:b0:3bf:6c08:fba4 with SMTP id adf61e73a8af0-3c110ba29f4mr1116014637.56.1783727029145;
-        Fri, 10 Jul 2026 16:43:49 -0700 (PDT)
-Received: from localhost ([2620:10d:c090:600::6185])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313b9ca880fsm4980155eec.23.2026.07.10.16.43.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 16:43:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXrpns38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E281F000E9;
+	Fri, 10 Jul 2026 23:50:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783727403;
+	bh=FiStxUq/elhQK+Ad9q7/QAEpgfuPON9UpONFPyTC9fI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=cXrpns380eHX/ZnIrg95dUgdVjaYrrPAkblDFDJAmMkbrVJhJg8VCclQc+IXT1CXl
+	 h/g5iGX8CaeHbpBckblCQPUVmBoOt7ezw8r+0BeG5bq30JEOj6ENcPIVlIMfgdGk0L
+	 4uMK4jknr1LNv3Q1iphWQq8BliaTdObPC6TkpeOhKJlQpz1T4BasQOjjXstl2KzSO9
+	 otXQs7Cyoc5SrbIJdHrVCF1Kka3zTfhKOihafv9gXpiHzFlc4m650t/N274pfzVihS
+	 pj07NxifQGQFJ+ZV/tuFaPxBri6ETTqUZ60j+tbQxvdY3UL59uqqgrj5UtYQxMAmjw
+	 iQp6A04JNhNfQ==
+Date: Fri, 10 Jul 2026 16:50:02 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH] perf stat: Do not open cgroups for BPF counters
+Message-ID: <alGFKjj1oorszo3V@google.com>
+References: <20260708200407.1240640-1-namhyung@kernel.org>
+ <20260708201434.5C5831F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 10 Jul 2026 19:43:47 -0400
-Message-Id: <DJVAGK2ZNM3C.HAVUMJES6MGY@etsalapatis.com>
-Cc: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>,
- <sched-ext@lists.linux.dev>
-Subject: Re: [PATCH bpf-next v3 1/2] bpf: Require a BPF cpumask for
- bpf_cpumask_populate()
-From: "Emil Tsalapatis" <emil@etsalapatis.com>
-To: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>, "Admin"
- <main.kalliope@gmail.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260709182800.2037938-1-main.kalliope@gmail.com>
- <20260709182800.2037938-2-main.kalliope@gmail.com>
- <20260709183918.E42371F000E9@smtp.kernel.org>
- <DJV4TO9OH6AN.58C10SBPE8FF@gmail.com>
- <CAJZwKki8MwOmij3JZK=KnnO0hEUuxWA-iY=GK-TtvtVRvOkjOA@mail.gmail.com>
- <CAP01T76KdhEsbZj8yZN-yg5ogx99Ud87qqrhOGXTrX1ALdAgyg@mail.gmail.com>
-In-Reply-To: <CAP01T76KdhEsbZj8yZN-yg5ogx99Ud87qqrhOGXTrX1ALdAgyg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260708201434.5C5831F000E9@smtp.kernel.org>
 
-On Fri Jul 10, 2026 at 4:34 PM EDT, Kumar Kartikeya Dwivedi wrote:
-> On Fri, 10 Jul 2026 at 22:17, Admin <main.kalliope@gmail.com> wrote:
->>
->> On Fri, Jul 10, 2026 at 3:18=E2=80=AFPM Kumar Kartikeya Dwivedi
->> <memxor@gmail.com> wrote:
->> > Once this lands, please send a follow up to address this.
->>
->> Thanks. Patch 2/2 covers this, which updates the cpumask_common.h
->> declaration to take struct bpf_cpumask *, drops
->> the struct cpumask * casts from the existing populate tests, and adds
->> the borrowed-destination rejection test.
->
-> Ah, my bad, makes sense. Let's just wait for others to ack it then.
+On Wed, Jul 08, 2026 at 08:14:33PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Fallback from BPF counter mode to standard cgroup mode leaves cgroup file descriptors uninitialized (-1), causing standard perf event opening to fail with -EBADF.
+> --
+> 
+> --- Patch [1]: [PATCH] perf stat: Do not open cgroups for BPF counters ---
+> commit 510c63ce03b2362940d1f693b45d5faa86cf3bc1
+> Author: Namhyung Kim <namhyung@kernel.org>
+> 
+> perf stat: Do not open cgroups for BPF counters
+> 
+> This commit prevents opening and keeping file descriptors for cgroups
+> when using the --bpf-counters and --for-each-cgroup options. BPF mode
+> uses a set of shared events and compares cgroup-IDs, so it doesn't need
+> individual cgroup file descriptors.
+> 
+> > diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+> > --- a/tools/perf/builtin-stat.c
+> > +++ b/tools/perf/builtin-stat.c
+> > @@ -2874,7 +2874,8 @@ int cmd_stat(int argc, const char **argv)
+> >  			goto out;
+> >  		}
+> >  
+> > -		if (evlist__expand_cgroup(evsel_list, stat_config.cgroup_list, true) < 0) {
+> > +		if (evlist__expand_cgroup(evsel_list, stat_config.cgroup_list,
+> > +					  !target.use_bpf) < 0) {
+> 
+> [Severity: Medium]
+> Will this break the fallback path when we exceed BPERF_CGROUP__MAX_EVENTS?
+> 
+> Later in cmd_stat(), we have a fallback that disables BPF counters if there
+> are too many events:
+> 
+> 	if (target.use_bpf && nr_cgroups &&
+> 	    (evsel_list->core.nr_entries / nr_cgroups) > BPERF_CGROUP__MAX_EVENTS) {
+> 		pr_warning("Disabling BPF counters due to more events...");
+> 		target.use_bpf = false;
+> 	}
+> 
+> If this fallback is triggered, target.use_bpf becomes false, but the cgroups
+> were already expanded with !target.use_bpf (which was false at the time),
+> leaving the cgroup file descriptors uninitialized (-1).
 
-Patchset looks good to me, and is consistent with the "mutation requires
-passing bpf_cpumask, reading requires plain cpumask" throughout the
-file.
+I think it's a false alarm.  The evlist__expand_cgroup() is only used if
+stat_config.cgroup_list is set and then it should not have nr_cgroups.
+There's a check for that right before the call to the function.
+
+So in that case, it cannot pass the if condition below and never set to
+target.use_bpf to false.
+
+Thanks,
+Namhyung
+
