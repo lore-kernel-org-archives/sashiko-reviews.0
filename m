@@ -1,182 +1,195 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602E13B4EB3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 21:53:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F88226738C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 22:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783720429; cv=pass; b=DUy5lbD7xXhrUdDvJV2qfuYUsE1ypGMrPnqA/gp8x9ycRgCVDcV2UG621MF1KNGHBAkUSlzW8epegtJ7qn/jTSOu0iP391Aed8c/j6fgQwISS7xvjHIEDYf/+WaNY3Tq7ry4l6nk5+159nY1Lhr4DfVGqnObJKtezs96pEgn6pI=
+	t=1783721267; cv=pass; b=DjW/lvUTyx8Ih2nHdTUnhiU6ecgDBgGsPwusVqNU75qDgB4ULPPBZ5jWYB+hSfpV9UzITzNuQPJ1OdqoQMOHV8kQGMXMjv06i8zD9MaNe7KbagNiilrkaU6xYcgN2ZZj9cH4BJAGErhruXSPTAJ3m0qlhq1x9GVaCd16smH9TZE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783720429; c=relaxed/simple;
-	bh=11MuPmJZKp7P6An3z5S/ki+AVc8RJ/2v3t7law0viKQ=;
+	s=arc-20240116; t=1783721267; c=relaxed/simple;
+	bh=Vff3kRK5AiWmdmzWNqNi86ldeIRObG3k21H9VsN8aes=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WjKJIFIXO3UOgifoAylQTygvrEvxdtbPhhs39rmCZmj/b3nw5ZP3TkCykib5b70rRY1WMJTLQpfeRPpBYrfA7SIrLiRBt1I9jcwGsF1b1E0sHLF20U8bvrpSeJEJ9B5k8fmlchGm3uZqdo0cOjJtX0Qds+CcFKo6H4mMMb96cKc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZeciEjy; arc=pass smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=N+2bmv4YEmlxCcsX5K9gjzNbIcGV5yy8PsmiMCUrQTHeuLszpK0UH/IpwLSKybZYgpFNzlCRw+cUnf2milktjj1fCJBRXumtQJJvToHasXW1iYFGGGTLGk5snhssjMyco7UL30hm3TtUgnpdBiXqkzQcIc3V5RfayXVjSEvU0oM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hI/xB3nv; arc=pass smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZeciEjy"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38759bcd877so1182526a91.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 14:53:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783720428; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hI/xB3nv"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-ca00f126b7eso789383a12.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 10 Jul 2026 15:07:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783721265; cv=none;
         d=google.com; s=arc-20260327;
-        b=G8+RLt6mr5fZpHcll9AcOS+/2TcRlXWnxrcrlOogXUSwKo+c9n94GXd+2eQU7lzjgL
-         Yc4ZpjxAasiF3QzV7rzKNmGgundnYfhK/zCnibceOPKuGvxz4Yk792o8bpDCXS9EHYHC
-         jB17V9yXeUHpjxUMb/SDTMKQdwAfZ1jzbTK+hKS8JECwnmjiXqUTIgKC4PdI3AeWXgWD
-         +znHdk4JilJT4/YIZsnEDJzB8KkeYnBzUP9yvqG3OuPnSA3hsw5knVvVyiJwUNGszI5i
-         0I+NUejlxrEDuvOYascYoj34JTK29N+7pZ2NNznXsre3hcd9b+EN69WK66JY1zv+SQf8
-         R55g==
+        b=HnOmLpqKIzKuV1oWD1YD5ZQB96iTiRp0QUXTcXma8+e44Yja14kpa+YNGvl5DvDEFv
+         reBd1WDfY54zcZw4ItGn42rZJUwUvj8apVmcijFN85fSel5qzJPJUEcjBtjeEFUtvxw7
+         okRX6rBB6CPNPXwLFPpYfTNins+W25glqjfCM9ZyPEPtz0wMmJli2uilmlucHwib0TEO
+         lshdTZbP/SYR2zFbW14cWVoarjH7XuSOwQI4+idqqYSFvsf9HOok3sk3wOyVtdda6bG+
+         4hG35Ok5tW/Oww3Th2fg90kJT9xL9V/twNOC1C80pCvoJjcgxQbZL3PfwX5R0OFT5TDK
+         bA0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=1lPM681/F0Zd9+Gz8WdUtiAkD19dEnXD5xoNuwGJ/pw=;
-        fh=+Ki+OwhlPfVBHxJyTVO+M74S/Fgkc3VVg9QQq+9jVik=;
-        b=Z2BIrboU0XbQI8j11y22XvwfOcM5WFSUL5HnrhLjza9kxgFZuHRaD0GxP5roFHYNbP
-         /VOarXgrNiESP1VQ5L3xBQJN8VT5BmIaqY40yHH1wYmqiP3y6WsQSCA/i2F2vgMknJAW
-         PzxqdcglRil+b6TZ/DoXIpkx4PakJff7zgEtHDghdqvaQmnSYzcJdsWBsJb0h+33rj6D
-         mbbJSNSV1WZtmH/VG750SkXLoYe/6qtJt/epkom5Y7k+cW5h4Qyoqv2S3ppU9ud63NRg
-         BXHBJ1twAkIRuTiMV9UvjXRvzEDTEbdOknp/ZMcFgvHLNMfWQh9jnA2uK9pt11uZjf/w
-         uz2g==;
+        bh=uCi4vdatGlMYBO57z4Q+nFs0o+7WfmBZSwOdUxt/AOM=;
+        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
+        b=p1uSSr1i97gcPsSmiWh50mvNurcGkNVS8o+5zfOzEQBQdrNvEdGrSqlomG2m4q4vBe
+         HTfIlfKrCwIrSmy17q04PZ7BZYhfuqiWzyVY7Uh9O6LXAFcYz8XrgiWRvmPCVsQNNCvp
+         qQMaYEygWZ1z2JnJCtsFsz0EV8EBys3RLtygnmMG01ldDPhyxuS/vAc6gGSG7TKFl82X
+         n4geFIHO6CPrKa5iYh4ZbMLbCB/L+t+cFksmPCj5EdcolJXtqfKAuLHBERA3mOL35ICJ
+         s9ey2T/I6plC3OQnwMIIWspNjaMa5lesJjSocJCKSkZL17lyewVgp8aHdp5DGQWYbjfE
+         r10w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783720428; x=1784325228; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1783721265; x=1784326065; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=1lPM681/F0Zd9+Gz8WdUtiAkD19dEnXD5xoNuwGJ/pw=;
-        b=dZeciEjynJl9I84JpgpSbvV40mKOyEo5VB8SyEySNBjtBUBCR4QVFU6fc0xJAcNvK6
-         FfqC9ohClJOZH8d1aCP//S3wvjl8xvpq21X22yCrV2J/2pkcgNw58Ha7xo7xx9wIbCux
-         4QeNSKkRHnU6mA2xuyZ6NmApKyLGHHXwQ+QoRYtz57t9N8TvR5qpjhYYjVTZ7ig+PwY2
-         bQ83kZsxECLhjXBgxzve/Sf5GtJ46gze6YYtSwlPrIa0ymtPENbJu4w0HJUIAUyuRCFj
-         agCLtuhcihsW1bFzthW+H/rjlzjOWlnoZKJwNDmCQwz1AK6h135wfTyyKyZBPkSYLVeX
-         QIRQ==
+        bh=uCi4vdatGlMYBO57z4Q+nFs0o+7WfmBZSwOdUxt/AOM=;
+        b=hI/xB3nv2hpJ3OHiVpt345BcDt/T86/Mug9hNBcIBBAFvqmDLMoCKlEnwvQnWVcvn5
+         mJxld7VMHcoCgn0nsIK1y9em9JBVZHr7tlZu5MXPUHzZt5Vq0L4sO+RDuYcEQSw7VjtQ
+         WYcWLzumAJN3Nd1s43YoHmA4+4PQ1yDbViAuBreziWms/Bi0EFgWGE6oTw8tqPqe9F5z
+         cMqgSVVNiMP0SDG5BtXo7WrvdhmSZ1VYHwGk8QBjv/JibM+Ikd35rfs7WmzGN/RMrq53
+         rII82fAzD4sHckuFuzYi/uExGR2kQq0GDzyEqoGkztsp+Xc0s9bvsCUSkx/NQc3HzT5D
+         Xqiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783720428; x=1784325228;
+        d=1e100.net; s=20251104; t=1783721265; x=1784326065;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1lPM681/F0Zd9+Gz8WdUtiAkD19dEnXD5xoNuwGJ/pw=;
-        b=tFthd+WpQrsO5Eq47dOGtwHH1jm+i7HYl5YXCvn96jkRi8G9xT0Xe812el3Qm5CIdu
-         nLU5+QgRlz9e9lShE+ayURtcs+WmiedeG4a9ASkFFPBJOELBZWbKqdtbvXd8qU28JPL9
-         z6x7exPwVO8QzBnC3rcmBcMowqE2F4K8wC0QGOk1+6wUzPb+eaJj2jVozp1H5d2ewP5O
-         JO34P7OF0H8wXdym/Vug7bXkttVelI1XDvfayX7GBQiCTM2rzLjJyaDPTmeg+pi1PKBi
-         pxeI0YNrDRuIHa/JfJCvAMUgell5YX01N9VX7YlMc/v7qOQTm7cv2bLHoEE2VZZKaT+j
-         ZVIQ==
-X-Gm-Message-State: AOJu0Yyw32HVwMUT1C/P9OHAxOFnpE24ap2b8+wnthCg0HGRcfy7i3mq
-	KW+WvDgfMPXBYajfOltRMPzHwH1acR5g0JDzsWHPl7Bm07/dvLPVcmvPWwdiur+/b3Vltv7Ci/5
-	indwanIxXt9g1SFthXZcudKTTktt9plBd8tZa
-X-Gm-Gg: AfdE7ckebk5bMwiBjUK77udI+oy0QZoF1dtNMXQeZI/kAjSgWD7wDEj3g2E15kkfx2J
-	L5EXL5q40sc6RvpqAYGlV8djCneRgHywguIuDLxLPma6B4soMcyu6dVgAb69r+IiklVyxAtCpnQ
-	E2/OfAnbKANv2ET14NBtAOnSeS1V3QQNPFXwXOx0/gzo2+vf3VgLd5u3TZGQjA6Mht3UlkjnoYF
-	9YfuTDliLQNca+Rn9SVmPas6jS8fXdqOMx+pqLjN4ti+u55jC5n0mSxUuQFCpE1JV7g8lIe9e2n
-	q4URjd5yV9wYYAuoIKFfeHLoW2FLq8Ip/MQ56CMKES7g6lWB2wzr3u15FqVltyQj
-X-Received: by 2002:a17:90b:4b01:b0:37f:9ce0:af32 with SMTP id
- 98e67ed59e1d1-38dc7b7bf56mr540855a91.29.1783720427703; Fri, 10 Jul 2026
- 14:53:47 -0700 (PDT)
+        bh=uCi4vdatGlMYBO57z4Q+nFs0o+7WfmBZSwOdUxt/AOM=;
+        b=gvV2tr835gqNLRbfLsltpyzzmLlz9jhmR71vuCDR/Kz9SivNwInJtY/m8gLjlsq122
+         wtXU0KXS6BsGq033DFBYbxaVCEedQj9rww3IOgfV8WLf1ZvarEDcq1KFmHZh28rFZ09s
+         5kl7sHDJuMrOpBtBBNXhoPm8BcHYejdRK5rDkMFoqYaEhEqnE9nlzk25U0KA+ok1Wlr8
+         caHwOYiY/6dPvfJucwI6QVqtgNE9slNJtEWCI7GFj1JX7ghAPH83WIoYDuno7SgTu3Ea
+         LGFDBckvJJAOPNXU6Brf/9akth7i3QzsBJzp+1b+IC2E+K0u8RrK4ceY1xrgrzEb+tQH
+         AgAw==
+X-Gm-Message-State: AOJu0YxJrMn69+YE4mc7582IQ+w57Y/46JwVVt7HNUcmflVsOdRe3oaq
+	c10LmPsW0xnqwhJIUWVUj+n+a6fQlTsobv26yroyoRJp6TzRhgo0l2f8dHuIAVp/K/QtvT6Qc9t
+	BV9cSqOy6dxg2t+1naefUL0FHznZ4Eiopk0hSpqITVNYF2ilm3rCPmXNYXJo=
+X-Gm-Gg: AfdE7cnbuCrVpS0kw8nCj51ei4DH+f99TMTGndTI1gDQkNXzO7BMESCkNSvCFagwfHk
+	h8mvBHyN+m+68L/p3A+vMXPBumHrKBftOGlQXVSUGppLVccTFtQsP+7oJqhGFivefx3v8NKhS7D
+	RksWFMw8uNMYcxCupi54FYqNDZqPFTtNwgb37ByYzmc5yhWRSbc+3X1JyRJOdRt+UozhR0tDKfV
+	iUhjxQiktJ/b/FUqNR9Y5tNeeay5na6ZyR30dx+QCJtyvZWgMyvWTJqNQeMXayArOcvH0Q2
+X-Received: by 2002:a05:6a21:3a97:b0:3bf:b68f:4685 with SMTP id
+ adf61e73a8af0-3c110779989mr867436637.23.1783721265104; Fri, 10 Jul 2026
+ 15:07:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <178345549172.94179.7948304165383170781@digiscrypt.com> <20260707203352.97EDE1F000E9@smtp.kernel.org>
-In-Reply-To: <20260707203352.97EDE1F000E9@smtp.kernel.org>
-From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Fri, 10 Jul 2026 14:53:34 -0700
-X-Gm-Features: AVVi8Cd52ZVu6AqJOCRcj6EDOi1eaBLzp91fUWkkr2lJrwGsornZjA1xUYv5e3c
-Message-ID: <CAEf4BzbBqysGiHFuEW0b+tg6uA-gv4s8gGCeF_QZ-L3nhDc8yA@mail.gmail.com>
-Subject: Re: [PATCH] libbpf: fix double-free of distilled base BTF on .BTF.ext
- parse error
+References: <20260710212616.1351130-1-dmatlack@google.com> <20260710212616.1351130-10-dmatlack@google.com>
+ <20260710213733.B4A461F000E9@smtp.kernel.org>
+In-Reply-To: <20260710213733.B4A461F000E9@smtp.kernel.org>
+From: David Matlack <dmatlack@google.com>
+Date: Fri, 10 Jul 2026 15:07:18 -0700
+X-Gm-Features: AVVi8CexiXT1H3iCKRj5ssh2jkXiPSEyAsC89XKny5WUNfb4_b7wLF2ahEoukU8
+Message-ID: <CALzav=c1+ZJDJ8=B1ZkBmB8cbx51ke_zFfDhPTjDfF5XhB_ZrA@mail.gmail.com>
+Subject: Re: [PATCH v7 09/12] PCI: liveupdate: Inherit ARI Forwarding Enable
+ on preserved bridges
 To: sashiko-reviews@lists.linux.dev
-Cc: Naveed Khan <naveed@digiscrypt.com>, bpf@vger.kernel.org
+Cc: linux-pci@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 7, 2026 at 1:38=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Jul 10, 2026 at 2:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [High] btf_parse_elf() incorrectly uses IS_ERR() to check the return va=
-lue of the public API btf_ext__new(), rendering the error path and the patc=
-hed double-free fix unreachable.
-> - [High] In `btf_parse_elf`, the out-parameter `btf_ext` is not initializ=
-ed to `NULL` at the beginning of the function. If the function fails early,=
- the error path reads the uninitialized pointer from the caller and passes =
-it to `btf_ext__free()`, causing a crash.
+> - [Medium] Data race on the `ari_enabled` bitfield of the bridge device.
 > --
 >
-> --- Patch [1]: [PATCH] libbpf: fix double-free of distilled base BTF on .=
-BTF.ext parse error ---
-> commit 343ec621fb0622b822c4fef99c23ee0947343232
-> Author: Naveed Khan <naveed@digiscrypt.com>
-> Subject: libbpf: fix double-free of distilled base BTF on .BTF.ext parse =
-error
+> --- Patch [9]: [PATCH v7 09/12] PCI: liveupdate: Inherit ARI Forwarding E=
+nable on preserved bridges ---
+> commit dba41feb80b848815c664a662c635fefb4ca7403
+> Author: David Matlack <dmatlack@google.com>
 >
-> This patch fixes a double-free in the error path of btf_parse_elf(). By
-> deferring the ownership transfer of the distilled base BTF until after
-> .BTF.ext is parsed successfully, it ensures the base BTF is freed exactly
-> once on failure.
+> PCI: liveupdate: Inherit ARI Forwarding Enable on preserved bridges
 >
-> > diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-> > index 823bce895178d..35695f33c6942 100644
-> > --- a/tools/lib/bpf/btf.c
-> > +++ b/tools/lib/bpf/btf.c
+> This commit inherits the ARI Forwarding Enable on preserved bridges durin=
+g a
+> Live Update. It updates the pci_dev->ari_enabled flag so preserved device=
+s
+> can be identified with the expanded 8-bit function number.
+>
+> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
+> > index a95bfe5eff770..74a11e520f0d3 100644
+> > --- a/drivers/pci/liveupdate.c
+> > +++ b/drivers/pci/liveupdate.c
+>
 > [ ... ]
-> > @@ -1530,6 +1527,9 @@ static struct btf *btf_parse_elf(const char *path=
-, struct btf *base_btf,
-> >       } else if (btf_ext) {
 >
-> [Severity: High]
-> This isn't a bug introduced by this patch, but immediately before this
-> else-if block, btf_ext__new() is called and checked using IS_ERR():
->
->         *btf_ext =3D btf_ext__new(secs.btf_ext_data->d_buf, secs.btf_ext_=
-data->d_size);
->         if (IS_ERR(*btf_ext)) {
->                 err =3D PTR_ERR(*btf_ext);
->                 goto done;
->         }
->
-> Since btf_ext__new() is a public libbpf API, doesn't it return NULL on
-> error rather than an ERR_PTR?
->
-> If IS_ERR(NULL) is false, the error path is never taken for malformed
-> .BTF.ext sections. Does this effectively make the double-free issue
-> that this patch fixes structurally unreachable?
-
-this is a bug in existing code, IS_ERR() shouldn't be used, I fixed
-this up while applying as well.
-
->
-> >               *btf_ext =3D NULL;
-> >       }
+> > @@ -816,6 +820,20 @@ int pci_liveupdate_enable_acs(struct pci_dev *dev)
+> >       return 0;
+> >  }
+> >
+> > +int pci_liveupdate_configure_ari(struct pci_dev *dev)
+> > +{
+> > +     u16 val;
 > > +
-> > +     if (dist_base_btf)
-> > +             btf->owns_base =3D true;
-> >  done:
-> >       if (elf)
-> >               elf_end(elf);
+> > +     guard(rwsem_read)(&pci_liveupdate.rwsem);
+> > +
+> > +     if (!dev->liveupdate.incoming)
+> > +             return -EINVAL;
+> > +
+> > +     pcie_capability_read_word(dev, PCI_EXP_DEVCTL2, &val);
+> > +     dev->ari_enabled =3D !!(val & PCI_EXP_DEVCTL2_ARI);
 >
-> [Severity: High]
-> This is a pre-existing issue, but I have a question about the cleanup
-> path below this done label:
+> [Severity: Medium]
+> Can this bitfield modification race with concurrent updates to other
+> bitfields in the same word?
 >
->         if (btf_ext)
->                 btf_ext__free(*btf_ext);
+> In pci_liveupdate_configure_ari(), dev->ari_enabled is updated. Since
+> bitfield modifications compile to read-modify-write operations on the
+> underlying word, concurrent updates to other flags in the same word (like
+> is_busmaster, is_managed, or msi_enabled) could be silently lost.
 >
-> If a caller provides an uninitialized pointer (e.g., struct btf_ext *ext;
-> btf__parse_elf(path, &ext);) and btf_parse_elf() fails early,
-> isn't the out-parameter *btf_ext left uninitialized?
+> The pci_liveupdate.rwsem protects liveupdate structures but does not appe=
+ar
+> to provide mutual exclusion for the pci_dev bitfields.
+
+pci_liveupdate_configure_ari() is called from pci_configure_ari()
+which also sets dev->ari_enabled=3D1 and is pre-existing code.
+
+If writing to dev->ari_enabled in this path is indeed unsafe then that
+is a pre-existing bug.
+
 >
-> Could this cause btf_ext__free() to read uninitialized memory from the
-> caller's stack and crash? Should *btf_ext be initialized to NULL at the
-> beginning of btf_parse_elf()?
+> > +     return 0;
+> > +}
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/178345549172.9417=
-9.7948304165383170781@digiscrypt.com?part=3D1
+> [ ... ]
 >
+> > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+> > index 739ecaab2e76f..e0c133b66a359 100644
+> > --- a/drivers/pci/pci.c
+> > +++ b/drivers/pci/pci.c
+>
+> [ ... ]
+>
+> > @@ -3539,6 +3539,12 @@ void pci_configure_ari(struct pci_dev *dev)
+> >       if (!(cap & PCI_EXP_DEVCAP2_ARI))
+> >               return;
+> >
+> > +     if (!pci_liveupdate_configure_ari(bridge))
+> > +             return;
+> > +
+> > +     if (pcie_ari_disabled)
+> > +             return;
+> > +
+> >       if (pci_find_ext_capability(dev, PCI_EXT_CAP_ID_ARI)) {
+> >               pcie_capability_set_word(bridge, PCI_EXP_DEVCTL2,
+> >                                        PCI_EXP_DEVCTL2_ARI);
+> >               bridge->ari_enabled =3D 1;
+>
+> [Severity: Medium]
+> This isn't a bug introduced by this patch, but this preexisting fallback
+> path in pci_configure_ari() also modifies the bridge->ari_enabled bitfiel=
+d.
+>
+> Could this also be susceptible to the same read-modify-write data race
+> against other flags in the same word?
+
+See above.
