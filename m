@@ -1,154 +1,168 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2AB37A84C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 07:39:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87022D3220;
+	Sat, 11 Jul 2026 07:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783755598; cv=none; b=enDYCfjExXc0RY7NDDhjDwmzGrd3rIENS5SMBGMAcqEk9aZnTkzLHtb3yDpwrt6IINxpguQXpEAJSbZ7faxUf8/WjoDaDy8mYb/qbprn3sJEzZpwJ2gwU6XR+Br7+QVGMPdPU22Six6+ag47lhSu0Pxztaa33JDiHrUvF2VZCLI=
+	t=1783756306; cv=none; b=IP1aMxjDLmHJyPIV7TlN/2SqMm6usNoKSeGI71b849scZVsG6BhBfwoApCnZCmOC+ycw0FEzlu8YPX36+PzEKsoqjKXcdYVz7q3086XVxnCuQD0TOKUFDjgwuC6gaOnAdpTD+hIrU488rMCbsdR+l0FvEO9HwZjF2ZdcofI3yAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783755598; c=relaxed/simple;
-	bh=2RUymcIbxvQDys706y4njEZ/V9NBQGo48VnBGQUoF3g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O5C/8nNqwHyOSuD8dPJpTBu5q2pFzcTTKZT5ZuVYV+9/6IqDF5G7xRG39JoQO7oU5Y4awRcgPpdhghewRg28MFh+ASe8c+Bu082zfauI4so6KLAUa3TuH5RFIDxPAwODN7OtnkxrPls8qJMu6zXY6wVrw37pjZZWF2nPLyhslDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gy0vV3NVYzKHLsX
-	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 15:39:18 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id EF46740561
-	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 15:39:43 +0800 (CST)
-Received: from [10.67.111.192] (unknown [10.67.111.192])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgBXPCg+81FquH5PAw--.6S2;
-	Sat, 11 Jul 2026 15:39:43 +0800 (CST)
-Message-ID: <f4010090-babc-4d25-ac80-e0abee9cfcbe@huaweicloud.com>
-Date: Sat, 11 Jul 2026 15:39:42 +0800
+	s=arc-20240116; t=1783756306; c=relaxed/simple;
+	bh=BUAdh/VUUfR1H9NPa37c6ZkWHxGMzYKhTZNKaNO4/Uo=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Q37Vr4O/6pJfuiK4NK+hzKAkJ/4w46KFtuIW73uhKlM/8yzaQsUtF5PFeFlLpOEOYYfLxDneb9X62THI9uWH+/LF3w4WLBPr/PAp9rMTTjiUr3iMZB2Q/YvD3krwVc1J7/Qd6bJ0VGjSJRvlhC1txUIbtny8YVbJTclUNyLAsDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWDOH2sx; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWDOH2sx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7F1F000E9;
+	Sat, 11 Jul 2026 07:51:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783756304;
+	bh=66mRFbHBJXAI0ZPdfAJZ59PJmJOQBOIfD1AUsnfwUM0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=nWDOH2sxqUgR4y9yWflDZo4NEe/zQnOkvhCcKQeYSKSd31/yXzzvUnUl9KaLvzTN/
+	 mymZFpUIn7NLK7E5q5E36Qk0Q1eUXJKaMMbWSMtx8ksVRzhF/NEaeDHuW5omqm8A/N
+	 4wQvjfGB9iV6eBEIL4cUEKR0h37lCAijjpTY9EOGcnc/axGFTj0q0pU61dPjVS6cnQ
+	 G8XKypJ+zq++B/Fgr322SwNqdkuMtnhWFZv8G+bKNkZdxURO0/IodnZziOruOP88MH
+	 lWSvbt7Z1h21znbV7sH8Kd952NMYXZ+GNYywuoTuqkfU+p/q7km+zPBtrO8H1p0YmC
+	 Ubl7VZI47Llxg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wiSUw-00000003xFJ-2LSF;
+	Sat, 11 Jul 2026 07:51:42 +0000
+Date: Sat, 11 Jul 2026 08:53:31 +0100
+Message-ID: <87ldbi55dw.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: "D Scott Phillips" <scott@os.amperecomputing.com>,
+	"Oliver Upton" <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH] arm64: errata: Mitigate AmpereOne erratum AC03_CPU_57 and AC04_CPU_29
+In-Reply-To: <20260710223718.2C85B1F000E9@smtp.kernel.org>
+References: <20260710222128.416581-1-scott@os.amperecomputing.com>
+	<20260710223718.2C85B1F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 2/2] bpf: Remove unnecessary dup/restore
- subprog_starts and prog clone
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <cover.1783775928.git.xukuohai@huaweicloud.com>
- <329e83120f0d88c2e5dc9d7bb2c0d38988959d32.1783775928.git.xukuohai@huaweicloud.com>
- <20260711054000.BC62D1F000E9@smtp.kernel.org>
-From: Xu Kuohai <xukuohai@huaweicloud.com>
-In-Reply-To: <20260711054000.BC62D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgBXPCg+81FquH5PAw--.6S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurykWFWfJF4fJw4DGF45KFg_yoW5CF18pF
-	95Jry8CF4qqa1xtw47XF48CFWkJr40qw12kr48Ww17Jw1UWF93WF1xKw4SvF9xZry0kw4I
-	vr4qv3sxWw1xuFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: 50xn30hkdlqx5xdzvxpfor3voofrz/
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, scott@os.amperecomputing.com, oupton@kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On 7/11/2026 1:40 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Use-After-Free of `env->prog` in `bpf_fixup_call_args()` due to cached pointer being freed by `bpf_jit_blind_constants()`.
+On Fri, 10 Jul 2026 23:37:17 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] The AmpereOne erratum workaround unconditionally skips deactivating physical interrupts for all nested VMs, causing a physical interrupt state leak.
+> 
+> Pre-existing issues:
+> - [Critical] The AmpereOne erratum workaround fails to mitigate a Guest-to-Host Denial of Service vector for non-nested (L1) guests.
+> - [High] Dropping `irq->irq_lock` between computing the LR snapshot and folding it creates a race condition that loses concurrent virtual interrupts.
 > --
 > 
-> --- Patch [2]: [PATCH bpf-next 2/2] bpf: Remove unnecessary dup/restore subprog_starts and prog clone ---
-> commit bd1c64739bd8085adba51ce9687069c667da314d
-> Author: Xu Kuohai <xukuohai@huawei.com>
+> --- Patch [1]: [PATCH] arm64: errata: Mitigate AmpereOne erratum AC03_CPU_57 and AC04_CPU_29 ---
+> commit d1d195cfc998f3f14be1b81eaa8484fcb7eb08f8
+> Author: D Scott Phillips <scott@os.amperecomputing.com>
 > 
-> bpf: Remove unnecessary dup/restore subprog_starts and prog clone
+> arm64: errata: Mitigate AmpereOne erratum AC03_CPU_57 and AC04_CPU_29
 > 
-> This commit removes unnecessary cloning of BPF programs and saving of
-> subprog states when JIT is required. It skips these steps because the
-> kernel will reject the program on JIT failure rather than falling back
-> to the interpreter.
+> This commit introduces a workaround for an AmpereOne CPU erratum where
+> deactivating a non-active physical interrupt that is the highest priority
+> pending interrupt hangs the CPU. The mitigation avoids physical deactivations
+> when KVM handles a nested VM context.
 > 
->> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
->> index 37f22eb418540..80c8beb45ea04 100644
->> --- a/kernel/bpf/fixups.c
->> +++ b/kernel/bpf/fixups.c
+> Link: https://lore.kernel.org/linux-arm-kernel/87ecjybz30.wl-maz@kernel.org/
+> Link: https://amperecomputing.com/products/developer-errata
 > 
 > [ ... ]
 > 
->> @@ -1273,35 +1275,33 @@ static int jit_subprogs(struct bpf_verifier_env *env)
->>   int bpf_jit_subprogs(struct bpf_verifier_env *env)
->>   {
->>   	int err, i;
->> -	bool blinded = false;
->>   	struct bpf_insn *insn;
->>   	struct bpf_prog *prog, *orig_prog;
->> -	u32 *orig_subprog_starts;
->> +	u32 *orig_subprog_starts = NULL;
->> +	bool cloned = false;
->>   
->>   	if (env->subprog_cnt <= 1)
->>   		return 0;
->>   
->>   	prog = orig_prog = env->prog;
->>   	if (bpf_prog_need_blind(prog)) {
->> -		orig_subprog_starts = bpf_dup_subprog_starts(env);
->> -		if (!orig_subprog_starts) {
->> -			err = -ENOMEM;
->> -			goto out_cleanup;
->> +		if (!prog->jit_required) {
->> +			orig_subprog_starts = bpf_dup_subprog_starts(env);
->> +			if (!orig_subprog_starts) {
->> +				err = -ENOMEM;
->> +				goto out_cleanup;
->> +			}
->>   		}
->> -		prog = bpf_jit_blind_constants(env, prog);
->> -		if (IS_ERR(prog)) {
->> -			err = -ENOMEM;
->> -			prog = orig_prog;
->> +		err = bpf_jit_blind_constants(env, &prog, !prog->jit_required, &cloned);
->> +		if (err)
->>   			goto out_restore;
+> > diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
+> > index 9e841e7afd4a7..8f1d10872360c 100644
+> > --- a/arch/arm64/kvm/vgic/vgic-v3.c
+> > +++ b/arch/arm64/kvm/vgic/vgic-v3.c
+> > @@ -275,7 +275,9 @@ void vgic_v3_deactivate(struct kvm_vcpu *vcpu, u64 val)
+> >  		lr = vgic_v3_compute_lr(vcpu, irq) & ~ICH_LR_ACTIVE_BIT;
+> >  	}
+> >  
+> > -	if (lr & ICH_LR_HW)
+> > +	if ((lr & ICH_LR_HW) &&
+> > +	    !(cpus_have_final_cap(ARM64_WORKAROUND_AMPERE_AC03_CPU_57) &&
+> > +	      vgic_state_is_nested(vcpu)))
 > 
 > [Severity: Critical]
-> Can this lead to a use-after-free if bpf_jit_blind_constants() reallocates
-> the program?
+> This is a pre-existing issue, but does the system remain vulnerable to the
+> erratum for L1 guests?
 > 
-> When prog->jit_required is true, we pass false for the clone_needed parameter.
-> This means bpf_jit_blind_constants() modifies the original program directly.
+> Because vgic_state_is_nested(vcpu) evaluates to false for an L1 guest, KVM
+> bypasses the workaround and still calls vgic_v3_deactivate_phys(). If an
+> unprivileged guest operating in GICv2 mode on a GICv3 host writes the INTID of
+
+There is no such thing with NV, as we only support GICv3 in guests.
+
+> a hardware-backed interrupt to the GICC_DIR MMIO register while it is inactive,
+> can this directly trigger the host CPU hang?
+>
+> [Severity: High]
+> Does unconditionally bypassing the physical deactivation for nested VMs cause
+> a physical interrupt state leak?
 > 
-> If a patch requires expansion, bpf_patch_insn_data() triggers
-> bpf_prog_realloc(), which allocates a new program structure and frees the
-> original one.
+> When an L2 guest legitimately deactivates an active hardware-backed
+> interrupt and it traps to KVM, vgic_v3_deactivate() is called. Since
+> vgic_state_is_nested(vcpu) evaluates to true, it successfully updates the
+> virtual state via vgic_v3_fold_lr() but unconditionally skips calling
+> vgic_v3_deactivate_phys().
 > 
-> If functions higher up in the call stack have cached the env->prog pointer
-> before JIT processing, won't they be left with a dangling pointer? For
-> example, in bpf_fixup_call_args():
+> Could this leave hardware-backed interrupts, such as the physical timer,
+> permanently active in the physical GIC distributor and block future timer
+> interrupts?
+
+Go read the spec and the effects of the HW bit. This is actively
+advocating for the reintroduction of the bug... :-/
+
 > 
-> kernel/bpf/fixups.c:bpf_fixup_call_args() {
->      struct bpf_prog *prog = env->prog;
->      struct bpf_insn *insn = prog->insnsi;
->      
->      ...
->      
->      if (prog->jit_required) {
->          verbose(env, "program requires BPF JIT compiler...\n");
->          ...
->      }
+> >  		vgic_v3_deactivate_phys(FIELD_GET(ICH_LR_PHYS_ID_MASK, lr));
+> >  
+> >  	vgic_v3_fold_lr(vcpu, lr);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does dropping irq->irq_lock
+> between computing the LR snapshot and folding it create a race condition that
+> loses concurrent virtual interrupts?
+> 
+> vgic_v3_deactivate() takes the lock, computes the snapshot, and then the
+> scoped_guard ends:
+> 
+> scoped_guard(raw_spinlock, &irq->irq_lock) {
+>     ...
+>     lr = vgic_v3_compute_lr(vcpu, irq) & ~ICH_LR_ACTIVE_BIT;
 > }
 > 
-> If an error occurs and triggers this fallback path, does it end up
-> dereferencing the freed prog pointer?
+> If a concurrent device injects an interrupt here via vgic_inject_irq() and
+> sets irq->pending_latch = true, won't the subsequent call to
+> vgic_v3_fold_lr(vcpu, lr) re-acquire the lock and evaluate the stale snapshot?
+> 
+> vgic_v3_fold_lr() would see !(val & ICH_LR_STATE) is true and execute:
+> 
+> if (irq->config == VGIC_CONFIG_LEVEL && !(val & ICH_LR_STATE))
+>     irq->pending_latch = false;
+> 
+> Could this wipe out the newly arrived interrupt and cause guest devices to
+> stall?
 
-Yes, the local prog variable should be refreshed.
+This one is a potential problem. I'll have a think...
 
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
