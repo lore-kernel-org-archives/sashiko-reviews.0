@@ -1,76 +1,154 @@
-Received: from mail-10628.protonmail.ch (mail-10628.protonmail.ch [79.135.106.28])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84118233933
-	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 04:11:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2AB37A84C
+	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 07:39:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783743105; cv=none; b=oHT/cd5AEKTdbFZ8d2kFZtXw/hjOXBoM9B1CV2bsjID41Wt0FMt8EytUdJEu0fyG6KQ7CKXK+h3UxIaYGNWTzndU0BsavhI/uQWBIZe+55R0AHZQeTmToO+GVoUsNWzP2qHQp4ALKCUiPhhX2xuhWYZNdskOpxVi7LG1nU63jdo=
+	t=1783755598; cv=none; b=enDYCfjExXc0RY7NDDhjDwmzGrd3rIENS5SMBGMAcqEk9aZnTkzLHtb3yDpwrt6IINxpguQXpEAJSbZ7faxUf8/WjoDaDy8mYb/qbprn3sJEzZpwJ2gwU6XR+Br7+QVGMPdPU22Six6+ag47lhSu0Pxztaa33JDiHrUvF2VZCLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783743105; c=relaxed/simple;
-	bh=ese1+4j40eJp2AwtraWN3oNSU28pNJeigM7TDFcCfdY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YSwgz8GzQ2WSRDELpkZ1s6TM0FjblZ1CJdESWvPEbioB9ffnsKwKj6/TDXjJKvOb+3filo8IftEq2nY1voXyQ6Ai+25LWsuxu0m1GwLD5v2+vbC1CssGN9DfZQ6OpvldxzgR0vQkOX+2OmeChqBFdW6D4ZdzDrJB4GTXMhk08AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=kJnnl+iS; arc=none smtp.client-ip=79.135.106.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="kJnnl+iS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1783743089; x=1784002289;
-	bh=ese1+4j40eJp2AwtraWN3oNSU28pNJeigM7TDFcCfdY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=kJnnl+iSeitkffzUrASUn0vPI9hvU/kGnRheg9wK/Er+4+M+cORBMdIBiZy2SnKwJ
-	 jJs4v/oz/HpPrS2tVf54bu98VNW4z2t/BulQfP2Fbq9TkzJVcME8g5fjKy5Qbs8HAt
-	 amt4JZOUW0MyfIS9p/N4o5klIWE2TY9V1Spvj+wc806MejHNN6N+/fmXovFURCi939
-	 fTfcHcmwWnzCY06X3m7GtDdmmhxK63ue6oxfNmPqjl/Lslmtw3SeMdN1L8X0NdaLEu
-	 mDtHyiIbCNd4zbW+DvKj50OQZQBbr8/jkJ7XFmewwNUs4/MG8sRGPobHB67wJidQC6
-	 thjK+D4pRz59Q==
-Date: Sat, 11 Jul 2026 04:11:24 +0000
-To: Alexandra Winter <wintera@linux.ibm.com>
-From: Bryam Vargas <hexlabsecurity@proton.me>
-Cc: sashiko-reviews@lists.linux.dev, Hidayath Khan <hidayath@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org
-Subject: Re: [PATCH net] net/iucv: take a reference on the socket found in afiucv_hs_rcv()
-Message-ID: <20260711041119.12764-1-hexlabsecurity@proton.me>
-In-Reply-To: <b524ae17-9fe5-4270-bb8d-3e411ef683e5@linux.ibm.com>
-References: <20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me> <20260707032441.B1FB31F00A3A@smtp.kernel.org> <b524ae17-9fe5-4270-bb8d-3e411ef683e5@linux.ibm.com>
-Feedback-ID: 199661219:user:proton
-X-Pm-Message-ID: c5f3cba50907f255572fb8e0a3c3396c31708b27
+	s=arc-20240116; t=1783755598; c=relaxed/simple;
+	bh=2RUymcIbxvQDys706y4njEZ/V9NBQGo48VnBGQUoF3g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O5C/8nNqwHyOSuD8dPJpTBu5q2pFzcTTKZT5ZuVYV+9/6IqDF5G7xRG39JoQO7oU5Y4awRcgPpdhghewRg28MFh+ASe8c+Bu082zfauI4so6KLAUa3TuH5RFIDxPAwODN7OtnkxrPls8qJMu6zXY6wVrw37pjZZWF2nPLyhslDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gy0vV3NVYzKHLsX
+	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 15:39:18 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id EF46740561
+	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 15:39:43 +0800 (CST)
+Received: from [10.67.111.192] (unknown [10.67.111.192])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgBXPCg+81FquH5PAw--.6S2;
+	Sat, 11 Jul 2026 15:39:43 +0800 (CST)
+Message-ID: <f4010090-babc-4d25-ac80-e0abee9cfcbe@huaweicloud.com>
+Date: Sat, 11 Jul 2026 15:39:42 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 2/2] bpf: Remove unnecessary dup/restore
+ subprog_starts and prog clone
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <cover.1783775928.git.xukuohai@huaweicloud.com>
+ <329e83120f0d88c2e5dc9d7bb2c0d38988959d32.1783775928.git.xukuohai@huaweicloud.com>
+ <20260711054000.BC62D1F000E9@smtp.kernel.org>
+From: Xu Kuohai <xukuohai@huaweicloud.com>
+In-Reply-To: <20260711054000.BC62D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgBXPCg+81FquH5PAw--.6S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurykWFWfJF4fJw4DGF45KFg_yoW5CF18pF
+	95Jry8CF4qqa1xtw47XF48CFWkJr40qw12kr48Ww17Jw1UWF93WF1xKw4SvF9xZry0kw4I
+	vr4qv3sxWw1xuFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: 50xn30hkdlqx5xdzvxpfor3voofrz/
 
-Alexandra,
+On 7/11/2026 1:40 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Use-After-Free of `env->prog` in `bpf_fixup_call_args()` due to cached pointer being freed by `bpf_jit_blind_constants()`.
+> --
+> 
+> --- Patch [2]: [PATCH bpf-next 2/2] bpf: Remove unnecessary dup/restore subprog_starts and prog clone ---
+> commit bd1c64739bd8085adba51ce9687069c667da314d
+> Author: Xu Kuohai <xukuohai@huawei.com>
+> 
+> bpf: Remove unnecessary dup/restore subprog_starts and prog clone
+> 
+> This commit removes unnecessary cloning of BPF programs and saving of
+> subprog states when JIT is required. It skips these steps because the
+> kernel will reject the program on JIT failure rather than falling back
+> to the interpreter.
+> 
+>> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+>> index 37f22eb418540..80c8beb45ea04 100644
+>> --- a/kernel/bpf/fixups.c
+>> +++ b/kernel/bpf/fixups.c
+> 
+> [ ... ]
+> 
+>> @@ -1273,35 +1275,33 @@ static int jit_subprogs(struct bpf_verifier_env *env)
+>>   int bpf_jit_subprogs(struct bpf_verifier_env *env)
+>>   {
+>>   	int err, i;
+>> -	bool blinded = false;
+>>   	struct bpf_insn *insn;
+>>   	struct bpf_prog *prog, *orig_prog;
+>> -	u32 *orig_subprog_starts;
+>> +	u32 *orig_subprog_starts = NULL;
+>> +	bool cloned = false;
+>>   
+>>   	if (env->subprog_cnt <= 1)
+>>   		return 0;
+>>   
+>>   	prog = orig_prog = env->prog;
+>>   	if (bpf_prog_need_blind(prog)) {
+>> -		orig_subprog_starts = bpf_dup_subprog_starts(env);
+>> -		if (!orig_subprog_starts) {
+>> -			err = -ENOMEM;
+>> -			goto out_cleanup;
+>> +		if (!prog->jit_required) {
+>> +			orig_subprog_starts = bpf_dup_subprog_starts(env);
+>> +			if (!orig_subprog_starts) {
+>> +				err = -ENOMEM;
+>> +				goto out_cleanup;
+>> +			}
+>>   		}
+>> -		prog = bpf_jit_blind_constants(env, prog);
+>> -		if (IS_ERR(prog)) {
+>> -			err = -ENOMEM;
+>> -			prog = orig_prog;
+>> +		err = bpf_jit_blind_constants(env, &prog, !prog->jit_required, &cloned);
+>> +		if (err)
+>>   			goto out_restore;
+> 
+> [Severity: Critical]
+> Can this lead to a use-after-free if bpf_jit_blind_constants() reallocates
+> the program?
+> 
+> When prog->jit_required is true, we pass false for the clone_needed parameter.
+> This means bpf_jit_blind_constants() modifies the original program directly.
+> 
+> If a patch requires expansion, bpf_patch_insn_data() triggers
+> bpf_prog_realloc(), which allocates a new program structure and frees the
+> original one.
+> 
+> If functions higher up in the call stack have cached the env->prog pointer
+> before JIT processing, won't they be left with a dangling pointer? For
+> example, in bpf_fixup_call_args():
+> 
+> kernel/bpf/fixups.c:bpf_fixup_call_args() {
+>      struct bpf_prog *prog = env->prog;
+>      struct bpf_insn *insn = prog->insnsi;
+>      
+>      ...
+>      
+>      if (prog->jit_required) {
+>          verbose(env, "program requires BPF JIT compiler...\n");
+>          ...
+>      }
+> }
+> 
+> If an error occurs and triggers this fallback path, does it end up
+> dereferencing the freed prog pointer?
 
-Agreed -- and thanks for the pointer to f558120cd709. The reference pin
-closes the lookup-without-hold free in afiucv_hs_rcv(), but sashiko is
-right that it doesn't touch the larger gap: the receive path changes
-sk_state from softirq without honoring sock_owned_by_user(), so it still
-races a process-context lock_sock(). Same class as the close-path UAF you
-fixed.
-
-I'll take a first pass. Plan is an RFC that routes the softirq state
-changes through the standard sock_owned_by_user()/backlog path instead of
-mutating the socket under bh_lock_sock() alone, so a held socket defers
-rather than races. af_iucv is s390-only and I don't have HiperSockets
-hardware -- I verify against a KASAN model of the receive path -- so I'd
-rely on you or Hidayath to validate each revision on real HW before it
-lands.
-
-I'm already in this code from a separate severed-path UAF fix [1]. If
-you'd rather keep the rework in-house on the s390 side, say so and I'll
-send my analysis and the model instead.
-
-[1] https://lore.kernel.org/all/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea=
-@proton.me/
-
-Thanks,
-Bryam
+Yes, the local prog variable should be refreshed.
 
