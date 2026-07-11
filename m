@@ -1,168 +1,76 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87022D3220;
-	Sat, 11 Jul 2026 07:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E1F36DA13
+	for <sashiko-reviews@lists.linux.dev>; Sat, 11 Jul 2026 10:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783756306; cv=none; b=IP1aMxjDLmHJyPIV7TlN/2SqMm6usNoKSeGI71b849scZVsG6BhBfwoApCnZCmOC+ycw0FEzlu8YPX36+PzEKsoqjKXcdYVz7q3086XVxnCuQD0TOKUFDjgwuC6gaOnAdpTD+hIrU488rMCbsdR+l0FvEO9HwZjF2ZdcofI3yAo=
+	t=1783765911; cv=none; b=ZRnsCy0qMeRpHIERFYgXLpZaPY++NSZ9FDm/Au1f9S+o3t3HZ5Tyxcv27Gzw9UpXadUdbi1Onl1MDISxKFLB6RJNzVZ8mMiP1DBgYz6IIouJtZ1IqVS6SW/aSG5mNU5HbPIiCCzbznas5/M8k8+ku03iR8hHXz7Z+qOeqZ0qVa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783756306; c=relaxed/simple;
-	bh=BUAdh/VUUfR1H9NPa37c6ZkWHxGMzYKhTZNKaNO4/Uo=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q37Vr4O/6pJfuiK4NK+hzKAkJ/4w46KFtuIW73uhKlM/8yzaQsUtF5PFeFlLpOEOYYfLxDneb9X62THI9uWH+/LF3w4WLBPr/PAp9rMTTjiUr3iMZB2Q/YvD3krwVc1J7/Qd6bJ0VGjSJRvlhC1txUIbtny8YVbJTclUNyLAsDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWDOH2sx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783765911; c=relaxed/simple;
+	bh=UcrPwjleYOJgTRCrEQFOiFPMRIAmirHboh5hjApdo34=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RTGfkART4GnXeU0LaxldZDZNQhEJjeTkP/edWX+Sh04RIb8I1AeEKfSfRYTfLUKPL2gVIik3gByOBur2DwdDyXo9lQX+BDWz2xLEn1HqLT76Bjk2Uvnd+RMEHvHXuIHYgOljROZLnDvi6Ic0QHUtJBMR3x01OpHvv81tbb7oK3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=j53sk1Z8; arc=none smtp.client-ip=57.129.93.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWDOH2sx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7F1F000E9;
-	Sat, 11 Jul 2026 07:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783756304;
-	bh=66mRFbHBJXAI0ZPdfAJZ59PJmJOQBOIfD1AUsnfwUM0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=nWDOH2sxqUgR4y9yWflDZo4NEe/zQnOkvhCcKQeYSKSd31/yXzzvUnUl9KaLvzTN/
-	 mymZFpUIn7NLK7E5q5E36Qk0Q1eUXJKaMMbWSMtx8ksVRzhF/NEaeDHuW5omqm8A/N
-	 4wQvjfGB9iV6eBEIL4cUEKR0h37lCAijjpTY9EOGcnc/axGFTj0q0pU61dPjVS6cnQ
-	 G8XKypJ+zq++B/Fgr322SwNqdkuMtnhWFZv8G+bKNkZdxURO0/IodnZziOruOP88MH
-	 lWSvbt7Z1h21znbV7sH8Kd952NMYXZ+GNYywuoTuqkfU+p/q7km+zPBtrO8H1p0YmC
-	 Ubl7VZI47Llxg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wiSUw-00000003xFJ-2LSF;
-	Sat, 11 Jul 2026 07:51:42 +0000
-Date: Sat, 11 Jul 2026 08:53:31 +0100
-Message-ID: <87ldbi55dw.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "D Scott Phillips" <scott@os.amperecomputing.com>,
-	"Oliver Upton" <oupton@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH] arm64: errata: Mitigate AmpereOne erratum AC03_CPU_57 and AC04_CPU_29
-In-Reply-To: <20260710223718.2C85B1F000E9@smtp.kernel.org>
-References: <20260710222128.416581-1-scott@os.amperecomputing.com>
-	<20260710223718.2C85B1F000E9@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="j53sk1Z8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail3; t=1783765898; x=1784025098;
+	bh=CAr/fKi5/LA7pN+4fry0IljwDp0zJrV9bzcJxHbBrak=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=j53sk1Z8BCBT0JaWNBmDkBmhVzVt2scS0S9lTygAWUmdjhHAnQumSoe8wGzqvvlyh
+	 3DK6hh3zAI5KLFaeVratreLsORFP9IDSO3nOD47C6N59f9LVhKDjzvq+HPSSl0vneE
+	 oaboup5OMxwtTOQqq0KRxsptDXYOvr92afH/eRHiSKWBmJgX7rIkQ/bv0Aw69Zf2rC
+	 tXQ43ycYnZqHNm1oxMLA9g2cxj6LGSCpwGRy1Cia4UJjQmnNgmfJ4v6MYgVoNVRM5O
+	 QzXhdr6OUb5ukqtYdmlL/lm2NJr0Wqk+URBd6Yo1ldJdSZnq5cLhZRrZ0YwKoH7nvf
+	 cBb+hZry7cmCw==
+X-Pm-Submission-Id: 4gy4kK6mcgz1DDLC
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <conor+dt@kernel.org>,
+  <Frank.Li@kernel.org>,  <devicetree@vger.kernel.org>,  <robh@kernel.org>,
+  <imx@lists.linux.dev>
+Subject: Re: [PATCH] arm64: dts: imx8mq: Add dcss node
+In-Reply-To: <20260710095211.6BE9D1F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Fri, 10 Jul 2026 09:52:10
+	+0000")
+References: <20260710-imx8mq-dcss-device-tree-node-v1-1-fc724dfd574e@geanix.com>
+	<eQdptVZkkupu8jyArfhLV_zAdXoQ3HJb0IsarA60euM68FAWXbTrtljsPnGROjwCVAirW-eB13e6B7vNsN5g-g==@protonmail.internalid>
+	<20260710095211.6BE9D1F000E9@smtp.kernel.org>
+Date: Sat, 11 Jul 2026 12:31:37 +0200
+Message-ID: <87o6gdes1i.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, scott@os.amperecomputing.com, oupton@kernel.org, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Fri, 10 Jul 2026 23:37:17 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] The AmpereOne erratum workaround unconditionally skips deactivating physical interrupts for all nested VMs, causing a physical interrupt state leak.
-> 
-> Pre-existing issues:
-> - [Critical] The AmpereOne erratum workaround fails to mitigate a Guest-to-Host Denial of Service vector for non-nested (L1) guests.
-> - [High] Dropping `irq->irq_lock` between computing the LR snapshot and folding it creates a race condition that loses concurrent virtual interrupts.
-> --
-> 
-> --- Patch [1]: [PATCH] arm64: errata: Mitigate AmpereOne erratum AC03_CPU_57 and AC04_CPU_29 ---
-> commit d1d195cfc998f3f14be1b81eaa8484fcb7eb08f8
-> Author: D Scott Phillips <scott@os.amperecomputing.com>
-> 
-> arm64: errata: Mitigate AmpereOne erratum AC03_CPU_57 and AC04_CPU_29
-> 
-> This commit introduces a workaround for an AmpereOne CPU erratum where
-> deactivating a non-active physical interrupt that is the highest priority
-> pending interrupt hangs the CPU. The mitigation avoids physical deactivations
-> when KVM handles a nested VM context.
-> 
-> Link: https://lore.kernel.org/linux-arm-kernel/87ecjybz30.wl-maz@kernel.org/
-> Link: https://amperecomputing.com/products/developer-errata
-> 
-> [ ... ]
-> 
-> > diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
-> > index 9e841e7afd4a7..8f1d10872360c 100644
-> > --- a/arch/arm64/kvm/vgic/vgic-v3.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-v3.c
-> > @@ -275,7 +275,9 @@ void vgic_v3_deactivate(struct kvm_vcpu *vcpu, u64 val)
-> >  		lr = vgic_v3_compute_lr(vcpu, irq) & ~ICH_LR_ACTIVE_BIT;
-> >  	}
-> >  
-> > -	if (lr & ICH_LR_HW)
-> > +	if ((lr & ICH_LR_HW) &&
-> > +	    !(cpus_have_final_cap(ARM64_WORKAROUND_AMPERE_AC03_CPU_57) &&
-> > +	      vgic_state_is_nested(vcpu)))
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does the system remain vulnerable to the
-> erratum for L1 guests?
-> 
-> Because vgic_state_is_nested(vcpu) evaluates to false for an L1 guest, KVM
-> bypasses the workaround and still calls vgic_v3_deactivate_phys(). If an
-> unprivileged guest operating in GICv2 mode on a GICv3 host writes the INTID of
+<sashiko-bot@kernel.org> writes:
 
-There is no such thing with NV, as we only support GICv3 in guests.
-
-> a hardware-backed interrupt to the GICC_DIR MMIO register while it is inactive,
-> can this directly trigger the host CPU hang?
+>> +			compatible = "nxp,imx8mq-dcss";
+>> +			reg = <0x32e00000 0x2d000>, <0x32e2f000 0x1000>;
+>> +			interrupts = <6>, <8>, <9>;
 >
 > [Severity: High]
-> Does unconditionally bypassing the physical deactivation for nested VMs cause
-> a physical interrupt state leak?
-> 
-> When an L2 guest legitimately deactivates an active hardware-backed
-> interrupt and it traps to KVM, vgic_v3_deactivate() is called. Since
-> vgic_state_is_nested(vcpu) evaluates to true, it successfully updates the
-> virtual state via vgic_v3_fold_lr() but unconditionally skips calling
-> vgic_v3_deactivate_phys().
-> 
-> Could this leave hardware-backed interrupts, such as the physical timer,
-> permanently active in the physical GIC distributor and block future timer
-> interrupts?
+> If power-domains = <&pgc_disp>; is omitted, the generic PM domain framework
+> won't track the dependency between this device and the DISP domain.
+>
+> If no other active devices claim pgc_disp, the PM core may disable the
+> domain during late_initcall.
+>
+> If a board enables this node and the driver subsequently tries to access the
+> memory-mapped registers of the unpowered peripheral, it will trigger a
+> synchronous external abort and panic the kernel.
+>
+> Is this node missing the power-domains property?
 
-Go read the spec and the effects of the HW bit. This is actively
-advocating for the reintroduction of the bug... :-/
+As the bindings for it does not include a power-domains property, I
+don't think it is missing.
 
-> 
-> >  		vgic_v3_deactivate_phys(FIELD_GET(ICH_LR_PHYS_ID_MASK, lr));
-> >  
-> >  	vgic_v3_fold_lr(vcpu, lr);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does dropping irq->irq_lock
-> between computing the LR snapshot and folding it create a race condition that
-> loses concurrent virtual interrupts?
-> 
-> vgic_v3_deactivate() takes the lock, computes the snapshot, and then the
-> scoped_guard ends:
-> 
-> scoped_guard(raw_spinlock, &irq->irq_lock) {
->     ...
->     lr = vgic_v3_compute_lr(vcpu, irq) & ~ICH_LR_ACTIVE_BIT;
-> }
-> 
-> If a concurrent device injects an interrupt here via vgic_inject_irq() and
-> sets irq->pending_latch = true, won't the subsequent call to
-> vgic_v3_fold_lr(vcpu, lr) re-acquire the lock and evaluate the stale snapshot?
-> 
-> vgic_v3_fold_lr() would see !(val & ICH_LR_STATE) is true and execute:
-> 
-> if (irq->config == VGIC_CONFIG_LEVEL && !(val & ICH_LR_STATE))
->     irq->pending_latch = false;
-> 
-> Could this wipe out the newly arrived interrupt and cause guest devices to
-> stall?
-
-This one is a potential problem. I'll have a think...
-
-	M.
-
--- 
-Jazz isn't dead. It just smells funny.
+/Esben
