@@ -1,219 +1,118 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F68352C35
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 10:17:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89210236A73
+	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 14:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783851426; cv=none; b=bJyuKjj6IB1t2lhmI3HqCBeETvk1uTyLu2N5ScL1UBZCSmvhJpQCqOiqkr6cMBDWgJAw1REoCDcV59JAI1VYkckptJxeX5ud5qaQUPKO3eLTHpOnie4w6IV25GhXIwhqzJaUZwSOTx6XcdcU3i/EFa7ANqPSMuhp6ncYdmOqu1A=
+	t=1783866996; cv=none; b=BlLK7Zm4Gp4rt2nAdNcvmnIQU1dz5vhrNUmJ3xP43TkSe9ed68lzwhzksonyh5EGJE6g3/1HHMlQPgQ6zwsZkKlCswuGreHnLgp6IC2o2hWjdEA3TevCko4+Ts9PqkYWNQqs22GjwlQUglpncko/cwx0BbVxVSvnJV/76cIk1SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783851426; c=relaxed/simple;
-	bh=8/nAhx0U9lPfJ/3UZCa7116qc8bk6+9oalXt7noDLe8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VFGppFRk5lj3nV2iP4EgQvKFpQ+y8kR0eCRiZ2gdBkdAu9ts2TCzbdibyVjG3Bxvylhf2bD3XuLZPH4Geu5mFfurhjO1QGdlGkC9gYhE5TTRDRJ+zrOaBv2eEbQnoKp/6Zz3Ic4fid0jSVFeavARpspH4/VUzIqWo84t7EFir9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TcdywV/v; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=b5EHzX8s; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1783866996; c=relaxed/simple;
+	bh=Kt51ZptCEHgauDzL4t2ee/BDflNHmlC/z1jrPcIQbhI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=FsidpiOcl7JIETwgjz5deQgXFWDJzfteGJk1oDvQ02N2rnjHJesJ7Jup9IwohxOcMkZkfbbOosQiHRnVA9vo5x6+740imzufrDhtyE8opOBb6l6wllthE3cuBSEhsDTfkQoyYjNI+YT8+52k7yJVxrR8hi4I07mF58RrVkOdGQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=pe6+p3qy; arc=none smtp.client-ip=220.197.31.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TcdywV/v";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="b5EHzX8s"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66C7u18p1956787
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 10:17:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=kTvxjps4eROawjZBgxnV201Y
-	dE2QzA2QQ1k2r2UcRA4=; b=TcdywV/vnEEIA006FwxTQ6S1QW+0Esa9QDL8jdxA
-	y2ypJsBk27z4Km/8mR1fUI8TWQAPIEt/04kdeg+x8D1b2+PPzxNGHq7rZ9wm2JtD
-	T5RrVyACmTP6PVmukRT4mgmJo7KFf737RO7GwYWhCJVyRjYXnc3aM6TW2Sg3Nlgu
-	zQHnI9b5krQqAoMXbiCI2FFo9XyWTjUGaYQd1znq46B802odlXPnkVV75D6WrYLh
-	XlfeDeBTWaQFuGwlTmeBKEMgGaAp+N+mWPQlhD9iptSzUSlImHP8gKejVC5t1n+T
-	z1xZMvpbfeihXI+1eyomiM0wsDZK5tf0ziGWLOZSzNXqkA==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbe912kuj-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 10:17:04 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-73850dfc198so764588137.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 03:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783851423; x=1784456223; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kTvxjps4eROawjZBgxnV201YdE2QzA2QQ1k2r2UcRA4=;
-        b=b5EHzX8saPREv5pt2gZu8030fbyqcYvI9wpoyjWql8EUMwovCwqoNoiuQiPVtFS8Ao
-         yBVw53wX49D6keorysgEFOM4hC6GeW12rBe90GjpWN+KZZ3D1jrrjK1Wks67KphhNIA/
-         Xo66I0s0mxUcMu3e8nh+QorLN+vMSPcA0JhrCSU6QrCK0ip3SjmumwrSUdjQDhr6jcs0
-         2Vo6sxmcRTZAWtENuiqggvfpvTE8l748/vB31iGd0WKrf6su4wrfr1QRgY34G6GJe/wX
-         MQ1+xBgH2/mb0JgrPCp6mxA4gR5tBP8slDihbrUWUlOjx8gXYIokRJZtWpITV+yyLvuq
-         pypg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783851423; x=1784456223;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kTvxjps4eROawjZBgxnV201YdE2QzA2QQ1k2r2UcRA4=;
-        b=UOp0ySFcvqma2MnVbPXqbejP4TXLAxQNFttTJ8vf7YIWNjxJSLZ07GpkR5b7ZuWvKB
-         HQSWxlVcQLLJp+lxBpDg0iovjuYdDbJa6IPlnA5z+kMUrsa1y+k4t3fQg5iJ3P2DHQMw
-         8Z2E/5+i9QzoYpMte7HIX9fB7vB3Uj7NbORWBCdjs2bTgAHN9ojbJPV08PyC9Bbnd8wm
-         BzwhrIvSRgPHLN3W2EA9U04D1f2t66rdv5KnKYWQER+w3agN5xW7fmqakb2oeBgMA8T+
-         J7tFy21/CqPk8fRjq04BmpxVeN1pWU74GS/7gD7BYdNYsyVDWKfbEfZ4268rgl/Hp76Z
-         eYzg==
-X-Gm-Message-State: AOJu0YytwWu91+g6r1jr8r5kppQ1JQ6TNB71vE7zn1PFrIeg90neDfJJ
-	53WInD34QtWK6sXAzjJknhGHc6eUTPtLyOrG7FbtnwLjnEVySDfxw1wfB16Ror0I+4vbOgRknn8
-	YGL2mJcRCRsHcMTaeVtQvYkIt24vv4RwYfxn3ytVbYvZuazZh/QlvF75+MCyLtQ5oMZfUJiOhpa
-	5B4YU=
-X-Gm-Gg: AfdE7cn4Qk32SqW8aAYl9ObwyYsq9YUP9zXJx9PwNcLG676Pou6M81L3uBAE4Ec5mkE
-	f9vtDy6HEE5GbwXpikQM5ziW0Mwhrov8+Rd7578fb6lUcI8RXZyqddgvEtJUvnkiyjNHhy2VIZN
-	mtR262+G7pmTTiDAkm5c7uCyAImIM06f36fL0E/5oleEHOBByls3DnjPHuWN2ThyJ+hzo8nMGui
-	CIDO1KzXqCgtbc0ODsl/lzaQEngT5u987AsKDgSSpw7RZh5kizdBrFxxNJtdZxhXpZ4LcEDwxxS
-	HniVdfK2yrDikoEN+vclK7GTdO8VdadxCcbob0XaIOYzeuH5MFowqtgXqnwyzQ4xxKY3Utk7ewr
-	WiX0gNYbFYHDkjHOpPjSPhNkBzrGqJXMXEyBQjw2V4bCNphSx/lq4iHBsteRo9EjiFMNYffeoQW
-	/P5O9QFmdw/VA1kuPxWsjL4Sfg
-X-Received: by 2002:a05:6122:218f:b0:5bd:faa8:74e1 with SMTP id 71dfb90a1353d-5bfbf4da3bcmr2919342e0c.13.1783851423195;
-        Sun, 12 Jul 2026 03:17:03 -0700 (PDT)
-X-Received: by 2002:a05:6122:218f:b0:5bd:faa8:74e1 with SMTP id 71dfb90a1353d-5bfbf4da3bcmr2919310e0c.13.1783851422514;
-        Sun, 12 Jul 2026 03:17:02 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39c84b97553sm22237151fa.33.2026.07.12.03.16.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2026 03:17:00 -0700 (PDT)
-Date: Sun, 12 Jul 2026 13:16:57 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev,
-        Kumar Anurag <kumar.singh@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Mark Brown <broonie@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-sound@vger.kernel.org
-Subject: Re: [PATCH v1] drm/msm/dp: return 0 from audio_prepare when cable is
- disconnected
-Message-ID: <5ixuxbgngzobl5c5fsyahdsouohwuykoat7s4hy6sczrye7vwf@rj7nmn7x3c56>
-References: <20260616151252.3599089-2-kumar.singh@oss.qualcomm.com>
- <20260616152536.D81FB1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="pe6+p3qy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=Kt51ZptCEHgauDzL4t2ee/BDflNHmlC/z1jrPcIQbhI=; b=p
+	e6+p3qyhPqvL5iwWmost+fcrREg0Ivcb5/Jxps8ygpKuMPiCFJRWQR2AwihBA3qL
+	RkozW75SvrP1fC8pOskcVML8yYdccwKR25b84NQ0WLqtHlF6Kyp04lhKRjAd9TLf
+	mgt2MDdUimEg+VIKRDwtyGFGo9+6pkGzmtPjXB+EU8=
+Received: from zhanggenjian$126.com ( [120.228.135.217] ) by
+ ajax-webmail-wmsvr-41-117 (Coremail) ; Sun, 12 Jul 2026 22:35:57 +0800
+ (CST)
+Date: Sun, 12 Jul 2026 22:35:57 +0800 (CST)
+From: "genjian zhang" <zhanggenjian@126.com>
+To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io, zhanggenjian@126.com
+Subject: Re: [PATCH] md/raid5: complete discard bios while reshape is active
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 126com
+In-Reply-To: <20260711162728.369B01F000E9@smtp.kernel.org>
+References: <20260711161326.962336-1-zhanggenjian@126.com>
+ <20260711162728.369B01F000E9@smtp.kernel.org>
+X-NTES-SC: AL_Qu2TAfSduUEu4SaYZukdm0sUguo4Wca4uf8v249Vc88OsiH13C8OfmVFH1zMzuCUFDKFgDudSCFA08N2foNycnt+saYB1WZ5cflr3GsDQw==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260616152536.D81FB1F000E9@smtp.kernel.org>
-X-Authority-Analysis: v=2.4 cv=TbymcxQh c=1 sm=1 tr=0 ts=6a5369a0 cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=8zdHjTvXFIs7SsKF2MMA:9 a=CjuIK1q_8ugA:10
- a=-aSRE8QhW-JAV6biHavz:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEyMDEwNiBTYWx0ZWRfX8jc6mMddmj2z
- oNIu6aT1jg0+3cir2o/5nQ5GhvWFOyG7bUeMol0AgU7gT/uPmfG31/pv47cj9wFu/7TKk2nUZqt
- 5/sthTJoya8/x6cyPGyGLRT6UtNyULo=
-X-Proofpoint-GUID: 6UkDzR7av-lS7xXAG3TFhyKhtHP_SmFE
-X-Proofpoint-ORIG-GUID: 6UkDzR7av-lS7xXAG3TFhyKhtHP_SmFE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEyMDEwNiBTYWx0ZWRfXzoBvi6rntKvW
- f8iswVrhyBFhCaYgwLusqMKcdZpZ83ej6z58JO6CJIwAV2SYi9dHhjsQDTGzw9Ft2C8u8Uq1Aly
- 7UlhPRlKVhqEbDwkbV20Qc8lwDwP+5z8gJYzl+Mu9d8NGMz63FEYVfh+/otm7j9kBNyrZxZG13a
- U4PTl1Jp5zmIu2imxZEmYQEWOzjhgI+ZSIABN1xoyX3f21MgEP0Day492sDxBWnuSmgxUl+offT
- ifU1T5x1Mm9Q9e6c/bW7nfLEU/Nn8rsAa0ldAFHcZQ/k7m/GmnRMMgJZFNH+BwPVn1GSY3Xa+ZZ
- r8UCdmjn9GzoFWpZyJstjVL1co+7XV5zskY6E8bwOKLQLCUlq3+eoJIvEIESnAguL210EnHRqnq
- oYhPrk7Lb2CyUyDCsLOxjKfxT5jgCGttpGPY5TlF0LSBZY+pPOAeD5iaMesMXiwK0C2fz7ZZqsO
- V+2p6T7KgrGAVJRTQTA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-12_03,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607120106
+Message-ID: <7e927147.1c17.19f56c19f29.Coremail.zhanggenjian@126.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:dSkvCgD3r0tNplNqePUbAA--.36959W
+X-CM-SenderInfo: x2kd0wxjhqyxldq6ij2wof0z/xtbBpg0sqmpTpk1P3AAA3s
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Tue, Jun 16, 2026 at 03:25:36PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Returning success (0) from `msm_dp_audio_prepare` when the display is disconnected causes silent audio failures upon hotplug and NoC errors due to unclocked DSP hardware access.
-> 
-> Pre-existing issues:
-> - [High] Race condition between `msm_dp_audio_prepare` and `msm_dp_display_disable` causes unclocked MMIO accesses.
-> --
-> 
-> commit bfb65364e66313dc1385a42e09172f44a1e1fbd1
-> Author: Kumar Anurag <kumar.singh@oss.qualcomm.com>
-> 
-> drm/msm/dp: return 0 from audio_prepare when cable is disconnected
-> 
-> PipeWire treats a non-zero return from prepare as fatal, marking the
-> DP audio device as a dummy sink when the cable is unplugged.
-> 
-> > The active_stream_cnt guard already prevents any unclocked hardware access,
-> > so return success instead of -EINVAL when the link is not active.
-> 
-> [Severity: High]
-> Is this commit message accurate for the upstream tree? There doesn't appear
-> to be an active_stream_cnt guard in the mainline driver. Without this guard,
-> will the DSP push data to powered-off, unclocked DP hardware and cause NoC
-> errors?
+QXQgMjAyNi0wNy0xMiAwMDoyNzoyNywgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToKPlRo
+YW5rIHlvdSBmb3IgeW91ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDIg
+cG90ZW50aWFsIGlzc3VlKHMpIHRvIGNvbnNpZGVyOgo+Cj5OZXcgaXNzdWVzOgo+LSBbSGlnaF0g
+Q29tcGxldGluZyBibG9ja2luZyBiaW9zIHdpdGggQkxLX1NUU19BR0FJTiB2aW9sYXRlcyBibG9j
+ayBsYXllciBzZW1hbnRpY3MgYW5kIGNhdXNlcyB1bmV4cGVjdGVkIGVycm9ycyBpbiBzeW5jaHJv
+bm91cyBwYXRocy4KPgo+UHJlLWV4aXN0aW5nIGlzc3VlczoKPi0gW0hpZ2hdIG1ha2VfZGlzY2Fy
+ZF9yZXF1ZXN0KCkgbGVha3MgdGhlIGJpbyBhbmQgY2F1c2VzIGFuIHVuaW50ZXJydXB0aWJsZSBo
+YW5nIGlmIFJFUV9OT1dBSVQgaXMgc2V0Lgo+LS0KPgo+LS0tIFBhdGNoIFsxXTogW1BBVENIXSBt
+ZC9yYWlkNTogY29tcGxldGUgZGlzY2FyZCBiaW9zIHdoaWxlIHJlc2hhcGUgaXMgYWN0aXZlIC0t
+LQo+Y29tbWl0IGYxMTdkNTU4YmExMzM2NGY4MjY0NWY4NjZkZWExNjIxMGNhZGNlNTEKPkF1dGhv
+cjogR2VuamlhbiBaaGFuZyA8emhhbmdnZW5qaWFuQGt5bGlub3MuY24+Cj4KPm1kL3JhaWQ1OiBj
+b21wbGV0ZSBkaXNjYXJkIGJpb3Mgd2hpbGUgcmVzaGFwZSBpcyBhY3RpdmUKPgo+VGhpcyBwYXRj
+aCBtb2RpZmllcyB0aGUgZGlzY2FyZCByZXF1ZXN0IGhhbmRsaW5nIHRvIGNvbXBsZXRlIGJpb3Mg
+d2l0aAo+QkxLX1NUU19BR0FJTiB3aGVuIGFuIG1kcmFpZCByZXNoYXBlIGlzIGluIHByb2dyZXNz
+LiBUaGlzIHByZXZlbnRzIGNhbGxlcnMKPmZyb20gaGFuZ2luZyBpbiB1bmludGVycnVwdGlibGUg
+c2xlZXAgd2FpdGluZyBmb3IgYSBjb21wbGV0aW9uIHRoYXQgbmV2ZXIKPmFycml2ZXMuCj4KPj4g
+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWQvcmFpZDUuYyBiL2RyaXZlcnMvbWQvcmFpZDUuYwo+PiAt
+LS0gYS9kcml2ZXJzL21kL3JhaWQ1LmMKPj4gKysrIGIvZHJpdmVycy9tZC9yYWlkNS5jCj4+IEBA
+IC01NzIyLDkgKzU3MjIsMTEgQEAgc3RhdGljIHZvaWQgbWFrZV9kaXNjYXJkX3JlcXVlc3Qoc3Ry
+dWN0IG1kZGV2ICptZGRldiwgc3RydWN0IGJpbyAqYmkpCj4+ICAJaWYgKFdBUk5fT05fT05DRShi
+aS0+Ymlfb3BmICYgUkVRX05PV0FJVCkpCj4+ICAJCXJldHVybjsKPgo+W1NldmVyaXR5OiBIaWdo
+XQo+VGhpcyBpc24ndCBhIGJ1ZyBpbnRyb2R1Y2VkIGJ5IHRoaXMgcGF0Y2gsIGJ1dCBkb2VzIHRo
+aXMgZWFybHkgcmV0dXJuIGxlYWsKPnRoZSBiaW8gYW5kIGNhdXNlIGFuIHVuaW50ZXJydXB0aWJs
+ZSBoYW5nIGlmIFJFUV9OT1dBSVQgaXMgc2V0Pwo+Cj5JZiBhIGNhbGxlciBzdWJtaXRzIGEgZGlz
+Y2FyZCBiaW8gd2l0aCBSRVFfTk9XQUlULCB0aGUgZHJpdmVyIGVuY291bnRlcnMgdGhpcwo+d2Fy
+bmluZyBhbmQgcmV0dXJucyBpbW1lZGlhdGVseSB3aXRob3V0IGNhbGxpbmcgYmlvX2VuZGlvKCku
+IEJlY2F1c2UgdGhlCj5jYWxsZXIgYXNzdW1lcyB0aGUgYmlvIHdhcyBzdWNjZXNzZnVsbHkgaGFu
+ZGxlZCwgY291bGQgdGhpcyBsZWFkIHRvIGEKPnJlc291cmNlIGxlYWsgYW5kIHRhc2sgaGFuZz8K
+CkFncmVlZCChqiB0aGUgZWFybHkgcmV0dXJuIHdpdGhvdXQgYmlvX2VuZGlvKCkgaXMgYSBwcmUt
+ZXhpc3RpbmcgaXNzdWUgaW4gdGhlIHNhbWUgZnVuY3Rpb24uIFRoaXMgcGF0Y2ggaW50ZW50aW9u
+YWxseSBmb2N1c2VzIG9uIHRoZSByZXNoYXBlIGNhc2UgdGhhdCB3ZSByZXByb2R1Y2VkLCB3aGVy
+ZSBibGtkaXNjYXJkIGhhbmdzIGluIGJpb19hd2FpdCgpIGV2ZW4gYWZ0ZXIgcmVzaGFwZSBoYXMg
+ZmluaXNoZWQuIEkgd2lsbCBmaXggdGhlIFJFUV9OT1dBSVQgcGF0aCBpbiB2MiB1c2luZyBiaW9f
+d291bGRibG9ja19lcnJvcigpLCBjb25zaXN0ZW50IHdpdGggcmFpZDVfbWFrZV9yZXF1ZXN0KCku
+Cgo+Cj4+ICAKPj4gLQlpZiAobWRkZXYtPnJlc2hhcGVfcG9zaXRpb24gIT0gTWF4U2VjdG9yKQo+
+PiArCWlmIChtZGRldi0+cmVzaGFwZV9wb3NpdGlvbiAhPSBNYXhTZWN0b3IpIHsKPj4gIAkJLyog
+U2tpcCBkaXNjYXJkIHdoaWxlIHJlc2hhcGUgaXMgaGFwcGVuaW5nICovCj4+ICsJCWJpb19lbmRp
+b19zdGF0dXMoYmksIEJMS19TVFNfQUdBSU4pOwo+Cj5bU2V2ZXJpdHk6IEhpZ2hdCj5Eb2VzIGNv
+bXBsZXRpbmcgYSBibG9ja2luZyBiaW8gd2l0aCBCTEtfU1RTX0FHQUlOIHZpb2xhdGUgYmxvY2sg
+bGF5ZXIKPnNlbWFudGljcz8KPgo+U2luY2UgdGhlIFJFUV9OT1dBSVQgYmlvcyBhcmUgZmlsdGVy
+ZWQgb3V0IGp1c3QgYWJvdmUgdGhpcyBjaGVjaywgdGhpcyBwYXRoCj5pcyBvbmx5IHJlYWNoZWQg
+Ynkgc3luY2hyb25vdXMsIGJsb2NraW5nIGRpc2NhcmQgYmlvcy4gQ29tcGxldGluZyB0aGVtIHdp
+dGgKPkJMS19TVFNfQUdBSU4gd2lsbCBwcm9wYWdhdGUgYW4gdW5leHBlY3RlZCAtRUFHQUlOIGVy
+cm9yIHRvIHN5bmNocm9ub3VzIElPCj5wYXRocyBhbmQgdXNlcnNwYWNlIGFwcGxpY2F0aW9ucy4K
+Pgo+QmxvY2sgQVBJcyB0eXBpY2FsbHkgaGFuZGxlIEJMS19TVFNfTk9UU1VQUCBncmFjZWZ1bGx5
+LCBidXQgcGFzc2luZyAtRUFHQUlOCj5iYWNrIHRocm91Z2ggc3luY2hyb25vdXMgcGF0aHMgbWln
+aHQgY2F1c2UgZmlsZXN5c3RlbSB0cmFuc2FjdGlvbiBhYm9ydHMgb3IKPnVzZXJzcGFjZSBmYWls
+dXJlcy4gU2hvdWxkIHRoaXMgcmV0dXJuIEJMS19TVFNfTk9UU1VQUCBpbnN0ZWFkPwo+CgpJIGRp
+ZCBub3QgZmluZCBhIHN0YXR1cyB0aGF0IGZpdHMgcGVyZmVjdGx5LgoKSW4gbXkgdmlldywgQkxL
+X1NUU19OT1RTVVBQIGRvZXMgbm90IGZpdCB3ZWxsIGhlcmUgZWl0aGVyOiBkaXNjYXJkIGlzIHN1
+cHBvcnRlZCBvbiB0aGUgYXJyYXksIGp1c3Qgbm90IHdoaWxlIHJlc2hhcGUgaXMgaW4gcHJvZ3Jl
+c3MuIEluIGFkZGl0aW9uLCBibGtfaW9jdGxfZGlzY2FyZCgpIHRyZWF0cyAtRU9QTk9UU1VQUCBh
+cyBzdWNjZXNzIChlcnIgPSAwKSwgc28gcmV0dXJuaW5nIEJMS19TVFNfTk9UU1VQUCB3b3VsZCBy
+ZXBvcnQgc3VjY2VzcyB0byB1c2Vyc3BhY2UgZXZlbiB0aG91Z2ggbm8gZGlzY2FyZCB3YXMgcGVy
+Zm9ybWVkLgoKQkxLX1NUU19ERVZfUkVTT1VSQ0UgKC1FQlVTWSkgbWF5IGFsc28gYmUgd29ydGgg
+Y29uc2lkZXJpbmcuCgpBbHRob3VnaCB0aGUgZGV0YWlscyBkaWZmZXIgZnJvbSByYWlkMTAsIEkg
+dXNlZCBCTEtfU1RTX0FHQUlOIGZvciB0aGUgc2FtZSBjYXNlICggZGlzY2FyZCBkdXJpbmcgcmVz
+aGFwZaOpLCBjb25zaXN0ZW50IHdpdGggcmFpZDEwX2hhbmRsZV9kaXNjYXJkKCkgcmV0dXJuaW5n
+IC1FQUdBSU4uIFRoZSBtYWluIGdvYWwgcmVtYWlucyBjb21wbGV0aW5nIHRoZSBiaW8gd2l0aCBh
+IHJldHJ5YWJsZSBlcnJvciBpbnN0ZWFkIG9mIGhhbmdpbmcgY2FsbGVycy4KCj4+ICAJCXJldHVy
+bjsKPj4gKwl9Cj4+ICAKPj4gIAlpZiAoIXJhaWQ1X2Rpc2NhcmRfbGltaXRzKG1kZGV2LCBiaSkp
+Cj4+ICAJCXJldHVybjsKPgo+LS0gCj5TYXNoaWtvIEFJIHJldmlldyChpCBodHRwczovL3Nhc2hp
+a28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA3MTExNjEzMjYuOTYyMzM2LTEtemhhbmdnZW5qaWFuQDEy
+Ni5jb20/cGFydD0xCgpTdWdnZXN0aW9ucyBhcmUgd2VsY29tZS4KClRoYW5rcywKR2Vuamlhbgo=
 
-$ git describe
-v7.2-rc2-4669-gb9810cd75b9f
-$ git grep active_stream_cnt
-$
-
-Which tree has this commit message been based on?
-
-> 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
-> > index 41018e82efa10..df222943ae57f 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_audio.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_audio.c
-> > @@ -284,10 +284,8 @@ int msm_dp_audio_prepare(struct drm_bridge *bridge,
-> >  	 * such cases check for connection status and bail out if not
-> >  	 * connected.
-> >  	 */
-> > -	if (!msm_dp_display->power_on) {
-> > -		rc = -EINVAL;
-> > +	if (!msm_dp_display->power_on)
-> >  		goto end;
-> 
-> [Severity: High]
-> Does returning 0 here trick the ALSA/ASoC framework into marking the stream
-> as successfully prepared?
-> 
-> If the stream is marked RUNNING, ALSA won't re-invoke prepare() when the
-> display is later connected. Could this regression result in silent playback
-> because the DP hardware is never actually configured?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this lockless check of power_on
-> race with msm_dp_display_disable()?
-> 
-> If msm_dp_display_disable() runs concurrently (e.g., from a hotplug interrupt)
-> immediately after this check but before audio_enabled is set to true, it will
-> skip waiting and disable the DP link and clocks.
-> 
-> When msm_dp_audio_prepare() resumes, it will call msm_dp_audio_setup_sdp() and
-> attempt MMIO operations on unclocked DP audio registers. Could this lead to a
-> synchronous external abort?
-
-I'd agree with Sashiko here. Do we guard against the unlocked access? Or
-how do we ensure that the stream will be prepared later?
-
-I think this needs to be fixed on the other side of the pipe. Do we need
-to define a special prepare error code, which means "working, but not
-available now" and make PulseAudio / PipeWire handle those errors
-specially? How is it solved for other platforms? I don't think that
-msm/dp is unique here.
-
-Mark, would you have any particular recommendations?
-
--- 
-With best wishes
-Dmitry
