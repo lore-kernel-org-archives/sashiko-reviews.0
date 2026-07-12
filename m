@@ -1,118 +1,103 @@
-Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89210236A73
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 14:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.7
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783866996; cv=none; b=BlLK7Zm4Gp4rt2nAdNcvmnIQU1dz5vhrNUmJ3xP43TkSe9ed68lzwhzksonyh5EGJE6g3/1HHMlQPgQ6zwsZkKlCswuGreHnLgp6IC2o2hWjdEA3TevCko4+Ts9PqkYWNQqs22GjwlQUglpncko/cwx0BbVxVSvnJV/76cIk1SQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783866996; c=relaxed/simple;
-	bh=Kt51ZptCEHgauDzL4t2ee/BDflNHmlC/z1jrPcIQbhI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=FsidpiOcl7JIETwgjz5deQgXFWDJzfteGJk1oDvQ02N2rnjHJesJ7Jup9IwohxOcMkZkfbbOosQiHRnVA9vo5x6+740imzufrDhtyE8opOBb6l6wllthE3cuBSEhsDTfkQoyYjNI+YT8+52k7yJVxrR8hi4I07mF58RrVkOdGQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=pe6+p3qy; arc=none smtp.client-ip=220.197.31.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC0D261B92
+	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 14:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783867389; cv=pass; b=B6QtKZxmIry+/Sya3D0ZHYCHZJ132wbeBUUPcseLAcGhhKCN6btK4uKwveEF1lcHSUIDZRNlm5e+GIwpaoHJ4LnEkpNf+mjhrTPaDAEPwr57xQDx0d9ZNYR+vvxS+HvpE8UE2x4rN4q65oZLygk6SSHxw0xbYlvQroDkFiGZGTk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783867389; c=relaxed/simple;
+	bh=pnZ2X0+MIRL60suOzIXNIohxyX26lpfnkqeN7KC7f5g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bWYnlDsYwNTUixFvb9okCh0xUOT81pMHjWXwi1fOIFuyHKHnF6MJk64/UBQ5cRQJwHaXyBWzDtzz3Do3jGFXd5so4JOZMtIMmMSuHEMEecIlLAViFB+3ImaEhKdfdanC9s2KRbHVJDL6GGAcL49vrHKZa7uIU+Cq4fGMETGaASc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CH27cLmk; arc=pass smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="pe6+p3qy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=Kt51ZptCEHgauDzL4t2ee/BDflNHmlC/z1jrPcIQbhI=; b=p
-	e6+p3qyhPqvL5iwWmost+fcrREg0Ivcb5/Jxps8ygpKuMPiCFJRWQR2AwihBA3qL
-	RkozW75SvrP1fC8pOskcVML8yYdccwKR25b84NQ0WLqtHlF6Kyp04lhKRjAd9TLf
-	mgt2MDdUimEg+VIKRDwtyGFGo9+6pkGzmtPjXB+EU8=
-Received: from zhanggenjian$126.com ( [120.228.135.217] ) by
- ajax-webmail-wmsvr-41-117 (Coremail) ; Sun, 12 Jul 2026 22:35:57 +0800
- (CST)
-Date: Sun, 12 Jul 2026 22:35:57 +0800 (CST)
-From: "genjian zhang" <zhanggenjian@126.com>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-Cc: linux-raid@vger.kernel.org, yukuai@fygo.io, zhanggenjian@126.com
-Subject: Re: [PATCH] md/raid5: complete discard bios while reshape is active
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 126com
-In-Reply-To: <20260711162728.369B01F000E9@smtp.kernel.org>
-References: <20260711161326.962336-1-zhanggenjian@126.com>
- <20260711162728.369B01F000E9@smtp.kernel.org>
-X-NTES-SC: AL_Qu2TAfSduUEu4SaYZukdm0sUguo4Wca4uf8v249Vc88OsiH13C8OfmVFH1zMzuCUFDKFgDudSCFA08N2foNycnt+saYB1WZ5cflr3GsDQw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CH27cLmk"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-ca80d708489so1367790a12.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:43:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783867388; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VtiRfP8J8HA6lvFw7bxJk9qGMdSTiwrhJKsw23WwkqScV0qVFC5O6xDX0iJgn58F8P
+         Ws/5Nfuo6qe/uWu65sy/bokspCZ+n0EDApzJiIqM57KC3Jms6m0gt9I/Y06WnkMtUqnn
+         FYin2bZPb7awrwgjeBwn9/qn4gJETd0ZCXm9dmPCXmEzOmbwqa0aYON6l4gogAKcCqk4
+         K8Uq5xINH+Z47BvRU3gwaAZZpIswJZ9RdL/QuFCB2Tym+rBuqiUECumPUwFGZnDh5yxw
+         F2rF/iZtspwDbtlQPFCvYwbkyWQylcSsp3neXU502YiVb6p2gFx20iXudkbtGtL1Af31
+         bQEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=pnZ2X0+MIRL60suOzIXNIohxyX26lpfnkqeN7KC7f5g=;
+        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
+        b=phN0q+v8g9OueVWI3qDyn6ig9X81Q/nVI8y5HtC8MVEsg/e0FDnxrWmNPmBRxvorHY
+         ZtxzO4pG1Gqod2Cv3svAb3BD3so0eH2pWrwjPDl69JyDvs4f9qVhzUzVBsNE99G+pEoE
+         lbRwjOWqKIJW7ZsA7preXVQ5F6aeFYnPhhvk1+d+A8vgmDIKc21RLbpBlSx+KJgt00I+
+         F2R+lCf/qVunpJkTSN8uOWrSBTEuj3OQCFwCRwV2du7QC29rKlh052sc6nb0mWKP4RxV
+         5CRPpqoO1S16rj0glC7/Nuets9WxMTnaiMonRf7E0p1NGr1bW2sPfYQnidq5zMEI8Iuj
+         uJWw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783867388; x=1784472188; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pnZ2X0+MIRL60suOzIXNIohxyX26lpfnkqeN7KC7f5g=;
+        b=CH27cLmkru9qKih7twvK125ap5zzB+7ahoQCvhr5fKxuQ+dZFyB0YHcxr+3TgUuM3r
+         XtpsyZBVn8BFImO+AxZJRaXTk72Pl4tNirqOfx3PuFL2soIW8MNL6w+994KeV2exf3dN
+         XHNY+tTauCseftYz4/EpvGt8NXsAuA5ibg42XDQ8TB3B9qrjTDBURhew26RqvE5mBrY+
+         H/zaTk2B3NWaM/WfxzeF8OJHM8sm0gF7HB3rhoDQ/5qKL8R0Cir3HoWfk/hDCKQISSYQ
+         c+HSBBPEGatLv39hT2ZxzFoQuM8f533FRoUSJI+kP1QrMJnhsku5KCxNywL3C08z8gKF
+         DhQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783867388; x=1784472188;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=pnZ2X0+MIRL60suOzIXNIohxyX26lpfnkqeN7KC7f5g=;
+        b=tGuyAp6SoNoZsiKdOxelpvpa8DVAtohaYUTiWDo8545O9N1Xmt76TTzEN/Cec2EwXe
+         PQh1K89o/jYslw2kdok0qHkykDZLrJCO3l/iBOLgZjR1Xf/uGMl67FwyXsY0iMWZ34Tn
+         YbZ+7ypCEFFih5aKuuIPgoUASGk1JsNbRTxeqBKDjoqvbGrV67U/Rqzl0Nfc9vyStWh7
+         MpUZ2vormn4ENzW8JA0tjW1NN0nzwFdV2EepdPs5YZAcmM/c2d55QUW20+LlxtfbDCdO
+         pK0McHw6aF/t3VGNnJ4ZrSnE+EzNuCD52EQIYcxJOrLd7H52URPHVF5QFN1XCIPFAAO7
+         YZeA==
+X-Gm-Message-State: AOJu0Yw4YQk+Truuxnld0IvoceqLE0ebiNNjUPODXPdC79Y3W6qfS3lR
+	Q5jb0bmUjWQY/BwuzJST2kdzZsaV6RogDvpqbE/sUmYZvqfzIO52YdAM8OFwXqCFdkNzgToZa2j
+	19pVDXceWu4AkCxmfE7GwXa7kV0T0sayeVjjB7gw=
+X-Gm-Gg: AfdE7cmEA2slQMGhG2poPU3yOBKCgYIu+K3uPe/9OeKn8jHRp7vbYFiHo1qE+3Nw5Yg
+	WkUrrEdzCnExFA6/eK/5XQXDlDn2tj89HqPH5CKcEJa84IbRwewmGbrIBj0qycsq8SRUMRkiKfg
+	Vj7WvQ2c+n8MyE+hOZHmH6kdL68jFj/Ty3G6TMztGqkoPK3/WCETktlVJyipbN/e5jQX7bRusad
+	WHfb/2OJ4WE49jCU/+v/d17nuVGFEAfnHKfElQEHLsqwtF23vBMAfuLGAN/+QOdRBcuaEWDXiY=
+X-Received: by 2002:a05:6a20:729a:b0:3bf:651d:fee0 with SMTP id
+ adf61e73a8af0-3c112d8b12cmr4997706637.19.1783867387615; Sun, 12 Jul 2026
+ 07:43:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <7e927147.1c17.19f56c19f29.Coremail.zhanggenjian@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:dSkvCgD3r0tNplNqePUbAA--.36959W
-X-CM-SenderInfo: x2kd0wxjhqyxldq6ij2wof0z/xtbBpg0sqmpTpk1P3AAA3s
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+References: <20260712130345.1256030-1-eugene.shalygin@gmail.com>
+ <20260712130345.1256030-2-eugene.shalygin@gmail.com> <20260712131222.5BF571F000E9@smtp.kernel.org>
+In-Reply-To: <20260712131222.5BF571F000E9@smtp.kernel.org>
+From: Eugene Shalygin <eugene.shalygin@gmail.com>
+Date: Sun, 12 Jul 2026 16:42:55 +0200
+X-Gm-Features: AVVi8Cf_Ao-qU_t5PrtBUUfuHhqV94KHSFwQKcbOKxNYK9guDpX7OAkXpCVIZWg
+Message-ID: <CAB95QASEHbCOs0rgGf3j90CFO_-BEEXAzfx3UVfaLQXi+tRAvg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] hwmon: (asus-ec-sensors) add missed handle for ENOMEM
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-QXQgMjAyNi0wNy0xMiAwMDoyNzoyNywgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToKPlRo
-YW5rIHlvdSBmb3IgeW91ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDIg
-cG90ZW50aWFsIGlzc3VlKHMpIHRvIGNvbnNpZGVyOgo+Cj5OZXcgaXNzdWVzOgo+LSBbSGlnaF0g
-Q29tcGxldGluZyBibG9ja2luZyBiaW9zIHdpdGggQkxLX1NUU19BR0FJTiB2aW9sYXRlcyBibG9j
-ayBsYXllciBzZW1hbnRpY3MgYW5kIGNhdXNlcyB1bmV4cGVjdGVkIGVycm9ycyBpbiBzeW5jaHJv
-bm91cyBwYXRocy4KPgo+UHJlLWV4aXN0aW5nIGlzc3VlczoKPi0gW0hpZ2hdIG1ha2VfZGlzY2Fy
-ZF9yZXF1ZXN0KCkgbGVha3MgdGhlIGJpbyBhbmQgY2F1c2VzIGFuIHVuaW50ZXJydXB0aWJsZSBo
-YW5nIGlmIFJFUV9OT1dBSVQgaXMgc2V0Lgo+LS0KPgo+LS0tIFBhdGNoIFsxXTogW1BBVENIXSBt
-ZC9yYWlkNTogY29tcGxldGUgZGlzY2FyZCBiaW9zIHdoaWxlIHJlc2hhcGUgaXMgYWN0aXZlIC0t
-LQo+Y29tbWl0IGYxMTdkNTU4YmExMzM2NGY4MjY0NWY4NjZkZWExNjIxMGNhZGNlNTEKPkF1dGhv
-cjogR2VuamlhbiBaaGFuZyA8emhhbmdnZW5qaWFuQGt5bGlub3MuY24+Cj4KPm1kL3JhaWQ1OiBj
-b21wbGV0ZSBkaXNjYXJkIGJpb3Mgd2hpbGUgcmVzaGFwZSBpcyBhY3RpdmUKPgo+VGhpcyBwYXRj
-aCBtb2RpZmllcyB0aGUgZGlzY2FyZCByZXF1ZXN0IGhhbmRsaW5nIHRvIGNvbXBsZXRlIGJpb3Mg
-d2l0aAo+QkxLX1NUU19BR0FJTiB3aGVuIGFuIG1kcmFpZCByZXNoYXBlIGlzIGluIHByb2dyZXNz
-LiBUaGlzIHByZXZlbnRzIGNhbGxlcnMKPmZyb20gaGFuZ2luZyBpbiB1bmludGVycnVwdGlibGUg
-c2xlZXAgd2FpdGluZyBmb3IgYSBjb21wbGV0aW9uIHRoYXQgbmV2ZXIKPmFycml2ZXMuCj4KPj4g
-ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWQvcmFpZDUuYyBiL2RyaXZlcnMvbWQvcmFpZDUuYwo+PiAt
-LS0gYS9kcml2ZXJzL21kL3JhaWQ1LmMKPj4gKysrIGIvZHJpdmVycy9tZC9yYWlkNS5jCj4+IEBA
-IC01NzIyLDkgKzU3MjIsMTEgQEAgc3RhdGljIHZvaWQgbWFrZV9kaXNjYXJkX3JlcXVlc3Qoc3Ry
-dWN0IG1kZGV2ICptZGRldiwgc3RydWN0IGJpbyAqYmkpCj4+ICAJaWYgKFdBUk5fT05fT05DRShi
-aS0+Ymlfb3BmICYgUkVRX05PV0FJVCkpCj4+ICAJCXJldHVybjsKPgo+W1NldmVyaXR5OiBIaWdo
-XQo+VGhpcyBpc24ndCBhIGJ1ZyBpbnRyb2R1Y2VkIGJ5IHRoaXMgcGF0Y2gsIGJ1dCBkb2VzIHRo
-aXMgZWFybHkgcmV0dXJuIGxlYWsKPnRoZSBiaW8gYW5kIGNhdXNlIGFuIHVuaW50ZXJydXB0aWJs
-ZSBoYW5nIGlmIFJFUV9OT1dBSVQgaXMgc2V0Pwo+Cj5JZiBhIGNhbGxlciBzdWJtaXRzIGEgZGlz
-Y2FyZCBiaW8gd2l0aCBSRVFfTk9XQUlULCB0aGUgZHJpdmVyIGVuY291bnRlcnMgdGhpcwo+d2Fy
-bmluZyBhbmQgcmV0dXJucyBpbW1lZGlhdGVseSB3aXRob3V0IGNhbGxpbmcgYmlvX2VuZGlvKCku
-IEJlY2F1c2UgdGhlCj5jYWxsZXIgYXNzdW1lcyB0aGUgYmlvIHdhcyBzdWNjZXNzZnVsbHkgaGFu
-ZGxlZCwgY291bGQgdGhpcyBsZWFkIHRvIGEKPnJlc291cmNlIGxlYWsgYW5kIHRhc2sgaGFuZz8K
-CkFncmVlZCChqiB0aGUgZWFybHkgcmV0dXJuIHdpdGhvdXQgYmlvX2VuZGlvKCkgaXMgYSBwcmUt
-ZXhpc3RpbmcgaXNzdWUgaW4gdGhlIHNhbWUgZnVuY3Rpb24uIFRoaXMgcGF0Y2ggaW50ZW50aW9u
-YWxseSBmb2N1c2VzIG9uIHRoZSByZXNoYXBlIGNhc2UgdGhhdCB3ZSByZXByb2R1Y2VkLCB3aGVy
-ZSBibGtkaXNjYXJkIGhhbmdzIGluIGJpb19hd2FpdCgpIGV2ZW4gYWZ0ZXIgcmVzaGFwZSBoYXMg
-ZmluaXNoZWQuIEkgd2lsbCBmaXggdGhlIFJFUV9OT1dBSVQgcGF0aCBpbiB2MiB1c2luZyBiaW9f
-d291bGRibG9ja19lcnJvcigpLCBjb25zaXN0ZW50IHdpdGggcmFpZDVfbWFrZV9yZXF1ZXN0KCku
-Cgo+Cj4+ICAKPj4gLQlpZiAobWRkZXYtPnJlc2hhcGVfcG9zaXRpb24gIT0gTWF4U2VjdG9yKQo+
-PiArCWlmIChtZGRldi0+cmVzaGFwZV9wb3NpdGlvbiAhPSBNYXhTZWN0b3IpIHsKPj4gIAkJLyog
-U2tpcCBkaXNjYXJkIHdoaWxlIHJlc2hhcGUgaXMgaGFwcGVuaW5nICovCj4+ICsJCWJpb19lbmRp
-b19zdGF0dXMoYmksIEJMS19TVFNfQUdBSU4pOwo+Cj5bU2V2ZXJpdHk6IEhpZ2hdCj5Eb2VzIGNv
-bXBsZXRpbmcgYSBibG9ja2luZyBiaW8gd2l0aCBCTEtfU1RTX0FHQUlOIHZpb2xhdGUgYmxvY2sg
-bGF5ZXIKPnNlbWFudGljcz8KPgo+U2luY2UgdGhlIFJFUV9OT1dBSVQgYmlvcyBhcmUgZmlsdGVy
-ZWQgb3V0IGp1c3QgYWJvdmUgdGhpcyBjaGVjaywgdGhpcyBwYXRoCj5pcyBvbmx5IHJlYWNoZWQg
-Ynkgc3luY2hyb25vdXMsIGJsb2NraW5nIGRpc2NhcmQgYmlvcy4gQ29tcGxldGluZyB0aGVtIHdp
-dGgKPkJMS19TVFNfQUdBSU4gd2lsbCBwcm9wYWdhdGUgYW4gdW5leHBlY3RlZCAtRUFHQUlOIGVy
-cm9yIHRvIHN5bmNocm9ub3VzIElPCj5wYXRocyBhbmQgdXNlcnNwYWNlIGFwcGxpY2F0aW9ucy4K
-Pgo+QmxvY2sgQVBJcyB0eXBpY2FsbHkgaGFuZGxlIEJMS19TVFNfTk9UU1VQUCBncmFjZWZ1bGx5
-LCBidXQgcGFzc2luZyAtRUFHQUlOCj5iYWNrIHRocm91Z2ggc3luY2hyb25vdXMgcGF0aHMgbWln
-aHQgY2F1c2UgZmlsZXN5c3RlbSB0cmFuc2FjdGlvbiBhYm9ydHMgb3IKPnVzZXJzcGFjZSBmYWls
-dXJlcy4gU2hvdWxkIHRoaXMgcmV0dXJuIEJMS19TVFNfTk9UU1VQUCBpbnN0ZWFkPwo+CgpJIGRp
-ZCBub3QgZmluZCBhIHN0YXR1cyB0aGF0IGZpdHMgcGVyZmVjdGx5LgoKSW4gbXkgdmlldywgQkxL
-X1NUU19OT1RTVVBQIGRvZXMgbm90IGZpdCB3ZWxsIGhlcmUgZWl0aGVyOiBkaXNjYXJkIGlzIHN1
-cHBvcnRlZCBvbiB0aGUgYXJyYXksIGp1c3Qgbm90IHdoaWxlIHJlc2hhcGUgaXMgaW4gcHJvZ3Jl
-c3MuIEluIGFkZGl0aW9uLCBibGtfaW9jdGxfZGlzY2FyZCgpIHRyZWF0cyAtRU9QTk9UU1VQUCBh
-cyBzdWNjZXNzIChlcnIgPSAwKSwgc28gcmV0dXJuaW5nIEJMS19TVFNfTk9UU1VQUCB3b3VsZCBy
-ZXBvcnQgc3VjY2VzcyB0byB1c2Vyc3BhY2UgZXZlbiB0aG91Z2ggbm8gZGlzY2FyZCB3YXMgcGVy
-Zm9ybWVkLgoKQkxLX1NUU19ERVZfUkVTT1VSQ0UgKC1FQlVTWSkgbWF5IGFsc28gYmUgd29ydGgg
-Y29uc2lkZXJpbmcuCgpBbHRob3VnaCB0aGUgZGV0YWlscyBkaWZmZXIgZnJvbSByYWlkMTAsIEkg
-dXNlZCBCTEtfU1RTX0FHQUlOIGZvciB0aGUgc2FtZSBjYXNlICggZGlzY2FyZCBkdXJpbmcgcmVz
-aGFwZaOpLCBjb25zaXN0ZW50IHdpdGggcmFpZDEwX2hhbmRsZV9kaXNjYXJkKCkgcmV0dXJuaW5n
-IC1FQUdBSU4uIFRoZSBtYWluIGdvYWwgcmVtYWlucyBjb21wbGV0aW5nIHRoZSBiaW8gd2l0aCBh
-IHJldHJ5YWJsZSBlcnJvciBpbnN0ZWFkIG9mIGhhbmdpbmcgY2FsbGVycy4KCj4+ICAJCXJldHVy
-bjsKPj4gKwl9Cj4+ICAKPj4gIAlpZiAoIXJhaWQ1X2Rpc2NhcmRfbGltaXRzKG1kZGV2LCBiaSkp
-Cj4+ICAJCXJldHVybjsKPgo+LS0gCj5TYXNoaWtvIEFJIHJldmlldyChpCBodHRwczovL3Nhc2hp
-a28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA3MTExNjEzMjYuOTYyMzM2LTEtemhhbmdnZW5qaWFuQDEy
-Ni5jb20/cGFydD0xCgpTdWdnZXN0aW9ucyBhcmUgd2VsY29tZS4KClRoYW5rcywKR2Vuamlhbgo=
+On Sun, 12 Jul 2026 at 15:12, <sashiko-bot@kernel.org> wrote:
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but I noticed a potential
+> issue in asus_ec_block_read() while reviewing this driver.
 
+It went full circle; the fix for that is submitted as "hwmon:
+(asus-ec-sensors) fix looping over banks while reading from EC".
+
+Eugene
