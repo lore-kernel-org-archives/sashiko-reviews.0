@@ -1,215 +1,189 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5C7372075
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783841904; cv=none; b=Ew+T8fzoAR2iPmMOrwnjxDBYHmmjiROFiCb/OImESD89rFYRG1yiMC7vqrhFaQme+AsFFXOi4u41D3reBoNd95yMSVrg5psWWMOswxaWLOcwFkacB/CZlqT65aMhe+OEO/FUeXglFdPT5y6cial5eA0Qb17TFE/SR59dV/duS8Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783841904; c=relaxed/simple;
-	bh=BV8ut0rEeRosEgV3ugjLJI/Faym51YUwOfk3wpRSB5k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dcMQPqdQIOypca+F3SdaSZB9tXxv0Z8F8znlFVm4QZe+Haep8M4TD3jQZPlLC27w3Be+UhCGIMdbfp3G9hi6wFbvgYi1pUNAbq2rTrTUFnbksOqnaF+vbMnPhJShT7k2x83SxqVHYCUFJ7tcCZI03TTWCphBKjR9lK+SI58s2ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AHakTebX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z/3mjRam; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18F439B943
+	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 08:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783846621; cv=pass; b=I18RIyTN8nwOeIvq5OFQi3vnNwWWufO2nycRBKKHLPff9fnFdZ6s6JOSrIAs7OR16pXpnHApX2bp0axaPF3U6vZPLIMukdNV5L3vcK5YGyPOsyQJ2E9lFYNHG7B/30xo1e8/RbVd555C/dGVr3cKkhxQedJpdTFrXOgSgI+3ge8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783846621; c=relaxed/simple;
+	bh=BTKdcA8TI1tNpMMoU4EnrgdDcYmwA5L5/bKy9npVeAs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ebeLgdHCWRz/vJLRVFazJm+/LJcIJKoVGWu9RBLMpmGOGKxogY4RDnznAcPdUKFATwHlLxa5Ibv4vZpvUZOlLC/7xIhcc/ByKxc0eqwobpTLdi9nNShuGSyYsDqsZrZNMOxDWg7DuFJQKcLKT9ldj8CRpWdTUIkEniKCa6Sg2zY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MDhmtcM/; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AHakTebX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z/3mjRam"
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66C7Sa5W2000366
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:38:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c/P/iZ/D5DHAxKN2T0dtA4DCwWYFUcs5vQTDdDjQhus=; b=AHakTebXl5pMJmYr
-	y1sSoySiY/oQ/aCfn9vIuOCO479L4ST7zwQYbW1ZrWtkQPdB57IXb4F6cSATQD7o
-	iosKZmuKWNnDKb19my9WiBHalKn5yFLwk2LFfkgUTnqVeG/THvLB+GYGK6TflI2R
-	bn9akRGU5cv/Bx/rIvI5b1G05ALkoQBxnf03DAhMBnUGl/ipxCN3RRkR6aHI98ml
-	f6kmudYVK+7aqx/9u9KOzF3i4WgtBzzE1643qjeIhvaLEJ5S6ETDI06hFhqldlgc
-	5SE4ym1hTV7ntyvLmdMKYqzhPjLArAEAXzlJ1hwJ7ZCYyBil0Q5dhutp//fyvimN
-	t7U6HA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbe8vabjv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:38:22 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c85798977dcso456558a12.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 00:38:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDhmtcM/"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7dbcb505578so22822917b3.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 01:56:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783846619; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QZd53qq6bWrvpw61pmjhfq/1BSvUMuWrocdtNlmAPi1tAbUhIqlj8X0hLektraczjY
+         ptQ/KoJXkJSXYV2QdCmWz11wmZTY6pPA3J+jXNlRQHg8Eln/zbmz1SdDN52p9iTAA1zU
+         d/1AJ9wqH3N4MJiHCiL21oZbJx8ULRFpiIJB64eXiMvAlzhmGBBDO8JCkIYheNQ0HCDF
+         hZnas2Q3oHt8msc66KbECUpf1tR1+Dw0joZjSz7Sw+pNaY1DxeNDwMyFhNxOCedtVC7u
+         /nPsfXZ0PsL9G6uAu7abdRbCMHabG0A3RsQX2wcev5Kz416pews0phGfIfLVf+O2thM+
+         ni2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=OA4NjvqjjVgjSbCq8wm4XUY+Mt0pcYQZIok5F3x1dto=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=Gtt4Zx+amNTKbDo7DRPF1ESigvIwhEH4biULegIoQNBERGhzK1dJnYJZH2ni+La1s6
+         Abh7tVQ8wu+iFV+Yj0zh+r8ldY3K4xRK9X0VQLjjIv5ATXk59ST6gCRMbSPuxnDwvSeA
+         K/RnierWuLgptgO0l9/USulO6FZ/9vv8GDQNSi8ByBsopC5MNmfY4qqxnsZdOywo/dB1
+         pLPZCOSCr+Qg0WFRVNNncGVIPvcesQWhIl1iaVS4DH7R+H0f00je7wWYPdew923WVoZQ
+         uQYELUOHFqxqY8TjFmPuTTpe7dUo8xDorE2BxQjIAduOD4xtjJYpuprMyPxMAUJEZQZ2
+         i7/Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783841902; x=1784446702; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=c/P/iZ/D5DHAxKN2T0dtA4DCwWYFUcs5vQTDdDjQhus=;
-        b=Z/3mjRamj4ixUi2uZ7fSjxASjm+1dlne2LoHzHA5edX7iWekE+Tk8iwaAfMuFO7ZIv
-         inhNu8oS+vcwPm1m0v1QYy2MQg5wo1vmFGrs/zNoGi9crIe/SmdmUNptRjrSQ8lcq/C5
-         /ACN1xDCExYrYnNU4iER9F2cTaVoQZ6cqKS3EJTMiJrvL+I0+LcFQhBw0d+1wOt2GCxg
-         8MaW2OexYqVOTrfZI8l/Bze4/gR7XNoIuTjn/EP/89r0iL1cYShRioWIBb+tl0z/qbl0
-         kwM+lUDQAu1n81bD+yC+unRDV2wbanl/Cg1QSU8VRn0tPiD0yqWsO35j630x3nDLuhGS
-         nZSw==
+        d=gmail.com; s=20251104; t=1783846619; x=1784451419; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=OA4NjvqjjVgjSbCq8wm4XUY+Mt0pcYQZIok5F3x1dto=;
+        b=MDhmtcM/EFKveWLW0De+xUUj44T0Je1+osLbiI9oNW6yvZ7cxmb51rNWrBm+RIhj5+
+         H5SrEBnVJw5I17YVVJflFAEYn/nImzmKgdVa+mCWSUFnQWlctYJ9FNMZU5CAE5WYpHub
+         6pXDORr40jsAm9XnMiHlV5+IPIxy62TAW3ylsQ+sTavnBLVPEqIB+vf5ueZYpSn9p7F4
+         w1JeUpu1dpkingkVxaZU3uCC79v3fEmxU0zuG5NuxKVhaclXKW6EvhzSmLud6Smhva7G
+         Y939JjOrnulK5PEY3jdvLidgmF5xBWQzWx2/OfDJ8QF1GWQbBOqeR4YDV10gbB2GoZgX
+         dHoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783841902; x=1784446702;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=c/P/iZ/D5DHAxKN2T0dtA4DCwWYFUcs5vQTDdDjQhus=;
-        b=FlZl7+chcj9ZfdzDEr3WJxdQoqj3PE5bCYHGDUP8TpiFMk3D6m2DvRqdmCBvBsonBb
-         hq78GFpXAHur7X9judCHFxBirmbB2xNq6j2tmSFZKqmBAIcfJMpYg8C3WQhFB9Fjs4gK
-         S5H7LvBvmlTMuW5bPnkOCP2lFJyAYEmC1oaMr2Rae+YJvXCV3ylNDe4h1CObtXyDmJYK
-         IQiOO2syqYfhAWwc7A9xCdC/6hrfDU4qnlRe8D/OeLXSytDAOrnTz1GqSTZ/iCMP0Gq2
-         L3ztyY5rr+P3KFc123WxOFaZhqJ1yL4EfC+v060/8YjO/DmkL5O0yBI81AKk0jkqdGMk
-         1JwA==
-X-Gm-Message-State: AOJu0YyeG/41S0hTJYq5mTvPaZK6g5aU49PKr4JCcNkyFOMXyHWNbK1v
-	kDep6cSP1pxipI4R4c2wvQLF3z8Ec98t37H3IyAdM5HYWxt7d0SuQ+mjknv1d6077okkZIse4rQ
-	UWayjNwCR9oVdJMenBu48cXGzjPy/a5tjBtV1yWzEYByfkTf4+qOpxfEGmniS3asAouTXQq3SEJ
-	y07+U=
-X-Gm-Gg: AfdE7ck6eq0NDCdcQFp0B+N7h+qtd4KalwSrW/lArQ23q3ogbgPNDXR+xOO26wdWKis
-	QHs/8C2Y4h136X80VhtALlCKP5SZ+id8ZCdDx4cdIjL7JV8owpL1Dsv2v5AliMyiDF6mrhojeZg
-	BhMNG+wCSAF9gzE3aVFDf6MmffQxVuda60VdPLY/f8bjFFibdZE7lxCDUbpmppMZUmCoJQ9asYy
-	Y0v1Gs43XshPTYrybnwZvfMsyxbk805tS3K5LPCV26APN3Ps4Qvg+V2F2xmedWSb0uYS1mL85go
-	Q1X3dC+5TJr7xe2MaRhRT25ybLpLPiRm49YCVsE1SQCroQ/djMS+0L4zf8gPrE+2rkgFPdn6YoY
-	JUTy8N0DHyNxYO98uDcpUeju7XUQII3h2DI5dmV3QEi9BgQ==
-X-Received: by 2002:a05:6a20:a124:b0:3c0:b62a:2b8c with SMTP id adf61e73a8af0-3c110a4f0b0mr5099882637.70.1783841901575;
-        Sun, 12 Jul 2026 00:38:21 -0700 (PDT)
-X-Received: by 2002:a05:6a20:a124:b0:3c0:b62a:2b8c with SMTP id adf61e73a8af0-3c110a4f0b0mr5099867637.70.1783841901133;
-        Sun, 12 Jul 2026 00:38:21 -0700 (PDT)
-Received: from [192.168.0.106] ([49.204.17.188])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313b0240570sm25040628eec.28.2026.07.12.00.38.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Jul 2026 00:38:20 -0700 (PDT)
-Message-ID: <6ce122cf-c985-484e-94df-776e12085948@oss.qualcomm.com>
-Date: Sun, 12 Jul 2026 13:08:17 +0530
+        d=1e100.net; s=20251104; t=1783846619; x=1784451419;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OA4NjvqjjVgjSbCq8wm4XUY+Mt0pcYQZIok5F3x1dto=;
+        b=BDa5b9SXk86ltmb2wB65AURNy7IZR8zYcXR5oZKmzdnBYl2pAvy1N/aFqs8FYcSBvS
+         eyLJLTpU/TWVWN7jV/O4gouHE9wugQt48+KgGhySOPQ9Iz0RZ5X1evIK4Lr1dQh+TCgo
+         mM8OnGS2/RcprtM8rhU6fhfnVR3LW9KfqqhqHFLSbkq8yxL73Jt/9egZs17W0gMVhBzF
+         wZ6iI3CMYt98uN+jxbMcOqxf6Q8bP7cJvTrRZP+z/xYoQK3SB1K4QZF+BwqK1Vqwtfr0
+         Cgr1Zv64zLvWDZMle4Ie06HqpVQ4i1TUZkNFaEfi7rkas7Mey29ruf6yEb/XyXoXR2z2
+         s6VA==
+X-Gm-Message-State: AOJu0YybRtMy2oNMLq/ijydSg0YzIokEboH2Ts5BZnlcf3Zs/eqxnlTk
+	JnEgbA0K537NJ2YGq/J8P1WU7loQt0SY0BtaGWTpUGRWfmwn0A9YzMozQyvaoHc8L8r6tXlPHtP
+	YSzY5hKLXdm0lhjUZQhP+Uc2Ccv24WRJPq8uK8HM=
+X-Gm-Gg: AfdE7cmI9t6rbEj7epkO1wuiMw3l1bbV0O5uBKJgw+wlILEmybY2f1AQbQCmfypR4TI
+	X+m0xwv8w7QXUMFouWmIBBN6X2rYLPn0X6NrlAlAVQ0QR+aOPx8uJDu4zJc+sWM8IzjU/kcBCi9
+	BypUuK+Cp8NkR9Ps/lFCcTiiO5+gfAuJa7RW4o1ku2CDRI9GN7JQlZQ1HUDTDOeVskUF8iVyVAI
+	9YNPV1QVSkLhuvubr1yY8N4Bm3JoExJej7c4v74KU41opBgRm7sesN2uyHThPSQY7eRt1PVIv4/
+	IwqccTBvptb/582VhZpXF9WIgHyB1g==
+X-Received: by 2002:a05:690c:6384:b0:7ff:23df:b1e1 with SMTP id
+ 00721157ae682-81e9017c3d7mr38670937b3.49.1783846618776; Sun, 12 Jul 2026
+ 01:56:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/4] pinctrl: qcom: hawi-lpass-lpi: add Hawi LPASS LPI
- TLMM
+References: <20260712062834.77872-1-laoar.shao@gmail.com> <20260712063739.F1E5B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260712063739.F1E5B1F000E9@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Sun, 12 Jul 2026 16:56:22 +0800
+X-Gm-Features: AUfX_my42dTgxKS8E-tpDtyxxBdo1crIuxutnlED0A-sTjlfKJVEKo2oP9ejFxw
+Message-ID: <CALOAHbAK2WqxnTWEL5+c8Q57i91mg8TMmHw1MPcK9duaBjgreQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rpm-pkg: Preserve .BTF section in kernel modules
+ during debuginfo stripping
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260708114924.1069239-1-prasad.kumpatla@oss.qualcomm.com>
- <20260708114924.1069239-5-prasad.kumpatla@oss.qualcomm.com>
- <20260708115754.E16EC1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-In-Reply-To: <20260708115754.E16EC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: Qud3LthubYbuHESOEoJLo639KmuWK1S1
-X-Proofpoint-GUID: Qud3LthubYbuHESOEoJLo639KmuWK1S1
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEyMDA3NyBTYWx0ZWRfXy+fkLbFxpvXf
- dWsjTdQ9RrmgrdCY5AsBju3otHgaFZHZ9M2s+m+EGSHC2GRJAUeu0Tm0epunCXOHVTJheNoYb8m
- yfQUIFJMsVBFrDazn1QE6ccENBhvpx4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEyMDA3NyBTYWx0ZWRfX4WplyyXDgFBD
- LjCL19rsYr4ZOqJxF8GwKryw/ntVX4DXoAXQEHN2ebFdLdRRNi7o5OY0xd+/twXyG+qCtq4eNSX
- QQ0+GYjjQlVKelclxvZmSHpSblT3Vob0ELhrqoecDF66sWz+W3HmdzB9se3bwy03hj8DLzGoB8d
- 0jduAWRO56OX15J/VPo8CY81dK8QRv0zu1Vzw3MFyimgm1F71n7/iP/JrqSgcghR52gTDFkKjCN
- 0/gvLxD1A/AaCRD6LK3luZnwa9osfZkKfBwHGorBQMPv3ewc03utIvoTiqpktGHOEkGYNtCzE3F
- +1Cw6kCBs6uPYEXEcxKGKRJHNenqVJRWX+RWLQGLM1RkMfPNd6HuKK1rzGG+KJ0NDylSUiasVvY
- OJbvelYanAkvF7sCOAmpL9Ww+hbIptFzTFKnNblERVj2A6xCpM846BkwLjrvN0gNl0QfJgOmpBn
- p5yd4uge87nVncRTlUw==
-X-Authority-Analysis: v=2.4 cv=WONPmHsR c=1 sm=1 tr=0 ts=6a53446e cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=/JTPBhwEQko7YaD0RKblyA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=sFkXs5fRGYWMjOD9uhEA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-12_03,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 phishscore=0
- clxscore=1015 malwarescore=0 bulkscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607120077
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 7/8/2026 5:27 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Sun, Jul 12, 2026 at 2:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Pre-existing issues:
-> - [High] Premature destruction of `pctrl->lock` mutex before pinctrl device unregistration creates a use-after-free window.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] Unconditionally passing `--keep-section .BTF` to `find-debuginfo.=
+sh` breaks RPM builds on older distributions.
 > --
 >
-> --- Patch [4]: [PATCH v1 4/4] pinctrl: qcom: hawi-lpass-lpi: add Hawi LPASS LPI TLMM ---
-> commit 38f7bb1223fcfb1f3a3b0698eedf3998e066c226
-> Author: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+> --- Patch [1]: [PATCH] kbuild: rpm-pkg: Preserve .BTF section in kernel m=
+odules during debuginfo stripping ---
+> commit cf88f1e030f88c3862874c09c0ef198fa1f1e9ca
+> Author: Yafang Shao <laoar.shao@gmail.com>
 >
-> pinctrl: qcom: hawi-lpass-lpi: add Hawi LPASS LPI TLMM
+> kbuild: rpm-pkg: Preserve .BTF section in kernel modules during debuginfo=
+ stripping
 >
-> This commit adds a new pin controller driver for the Low Power Audio
-> SubSystem (LPASS) Low Power Island (LPI) of the Qualcomm Hawi SoC. It
-> supports 23 GPIOs with various alternate functions and includes a custom
-> pingroup macro to handle test_bus mux slot offsets.
+> This commit modifies the kernel RPM spec file to pass the --keep-section =
+.BTF
+> flag to the find-debuginfo.sh script. This preserves the .BTF section dur=
+ing
+> debuginfo extraction, ensuring that BPF tools can successfully resolve ke=
+rnel
+> types at runtime for modules.
 >
->> diff --git a/drivers/pinctrl/qcom/pinctrl-hawi-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-hawi-lpass-lpi.c
->> new file mode 100644
->> index 0000000000000..7036bf4c66920
->> --- /dev/null
->> +++ b/drivers/pinctrl/qcom/pinctrl-hawi-lpass-lpi.c
+> > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+> > index c732415662ef2..abc73de019e0c 100644
+> > --- a/scripts/package/kernel.spec
+> > +++ b/scripts/package/kernel.spec
 > [ ... ]
->> +static struct platform_driver lpi_pinctrl_driver = {
->> +	.driver = {
->> +		.name = "qcom-hawi-lpass-lpi-pinctrl",
->> +		.of_match_table = lpi_pinctrl_of_match,
->> +		.pm = pm_ptr(&lpi_pinctrl_pm_ops),
->> +	},
->> +	.probe = lpi_pinctrl_probe,
->> +	.remove = lpi_pinctrl_remove,
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the core driver destroy
-> the mutex while the pinctrl device is still registered?
+> > @@ -67,7 +67,7 @@ This package provides debug information for the kerne=
+l image and modules from th
+> >  %undefine _unique_debug_srcs
+> >  %undefine _debugsource_packages
+> >  %undefine _debuginfo_subpackages
+> > -%global _find_debuginfo_opts -r
+> > +%global _find_debuginfo_opts -r --keep-section .BTF
 >
-> Looking at the core driver drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:
+> [Severity: Low]
+> Will unconditionally passing --keep-section .BTF break the build on older
+> distributions?
 >
-> drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:lpi_pinctrl_remove() {
-> 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
-> 	int i;
+> Older versions of the find-debuginfo.sh script (such as those shipped wit=
+h
+> RPM 4.14 on RHEL 8, CentOS 7, or Ubuntu 20.04) do not support the
+> --keep-section option.
 >
-> 	mutex_destroy(&pctrl->lock);
+> Because those legacy scripts parse arguments strictly, they will exit wit=
+h a
+> usage error when encountering an unrecognized flag, which completely brea=
+ks
+> the make rpm-pkg and make binrpm-pkg build targets on those systems.
 >
-> 	for (i = 0; i < pctrl->data->npins; i++)
-> 		pinctrl_generic_remove_group(pctrl->ctrl, i);
-> }
->
-> The core driver uses devm_pinctrl_register() to register the pinctrl device,
-> which ties its unregistration to the devres teardown phase that occurs after
-> lpi_pinctrl_remove() returns.
->
-> Could this create a window where the pinctrl device is still fully registered
-> and visible to the system, but its lock is destroyed? If an unprivileged
-> local user reads pinctrl debugfs while the device unbinds, could this
-> trigger a kernel panic or oops by operating on a destroyed mutex?
->
-> The same pattern also appears in the err_pinctrl path of lpi_pinctrl_probe():
->
-> drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:lpi_pinctrl_probe() {
->      ...
-> err_pinctrl:
-> 	mutex_destroy(&pctrl->lock);
->
-> 	return ret;
-> }
->
-> Here, the mutex is destroyed in the error path while the devm-registered
-> pinctrl device is still live globally until devres unregisters it.
+> Is there a way to verify feature support or utilize RPM conditionals befo=
+re
+> applying this flag to the host script?
 
-Thanks for the review.
+What about the following change?
 
-Yes this looks to be core LPI driver issue, Not related to Hawi pin ctrl.
+diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+index c732415662ef..2e16de54ed74 100644
+--- a/scripts/package/kernel.spec
++++ b/scripts/package/kernel.spec
+@@ -67,7 +67,7 @@ This package provides debug information for the
+kernel image and modules from th
+ %undefine _unique_debug_srcs
+ %undefine _debugsource_packages
+ %undefine _debuginfo_subpackages
+-%global _find_debuginfo_opts -r
++%global _find_debuginfo_opts -r%{?with_keep_section: --keep-section .BTF}
+ %global _missing_build_ids_terminate_build 1
+ %global _no_recompute_build_ids 1
+ %{debug_package}
+diff --git a/scripts/package/mkspec b/scripts/package/mkspec
+index c604f8c174e2..00acef348ba8 100755
+--- a/scripts/package/mkspec
++++ b/scripts/package/mkspec
+@@ -65,6 +65,11 @@ fi
+ echo "%define with_debuginfo_manual $with_debuginfo_manual"
+ echo "%define with_debuginfo_rpm $with_debuginfo_rpm"
 
-Need to address this issue as a separate patch.
++# Detect if find-debuginfo.sh supports --keep-section (RHEL 9+)
++if find-debuginfo.sh --help 2>&1 | grep -q keep-section; then
++       echo "%global with_keep_section 1"
++fi
++
+ cat<<EOF
+ %define ARCH ${ARCH}
+ %define KERNELRELEASE ${KERNELRELEASE}
 
-Thanks,
-Prasad
 
->
->> +};
->> +
->> +module_platform_driver(lpi_pinctrl_driver);
+--=20
+Regards
+Yafang
