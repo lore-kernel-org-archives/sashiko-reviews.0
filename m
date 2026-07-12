@@ -1,286 +1,198 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05EB17B425
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 02:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783822203; cv=fail; b=fIo75ohMKUWHtRUh3jSXSjjUet6eC8DYuIFfUswuDzj+M8fc5HUDbYT7/oV+jN5HNqUBKaE8Bv5uFbr1ivb6VZdzJTTHTL3WPaBglkvDI1YjTY9VXrEPZcuiHAGlaYk66TREgIiYFI6N0TM2NawXHmnfdgMlt3iVlwGq6Ez2AWg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783822203; c=relaxed/simple;
-	bh=jOaRO+gvtKxLFPRBjrTK6AsxWZlchn82pZN2wlqN50o=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=MEPM1xogHsF28W2qjhVNb9MAs/U6XM3GUyDTKaJLUlwXarBn2yqWHZ25ZN4CMLvGUaZNmz83kqNaiXMM/gflFDmwLT2LkEV+52s310Icv5tksNlAOtpx8aGzzDK+5QU45nxIXBhugV4230sBNA98ToZKGMDZ1pZxsW3ydO6NK/s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NWGPY9T0; arc=fail smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA9A370D55
+	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783841029; cv=none; b=jTUJ02/L2eZf37w5MUhkZcyqshJwc35I822+7i2rpGWH+ZqwKsITUAL3AFdA+xPVAsaWqEDV69pSil/SvpcwghU/dv/Q7t3YOuobYHixZi5w5yITTfLDqsjUASfnyJImELriR9YMjDOiEyFQx5GeRnlXCwkNI9Bl+fFh4M8tmEs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783841029; c=relaxed/simple;
+	bh=zzaSQvQ6qUTdo/1ge2G22s62C8xOROBZH0f069/U//k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jKH6RafrTvTR8SWIl27BEu+aqqHa+n5KwCKA1o1iaSWBLjWHZpq/ERqORYbbCMyA8rWxsNBbbosfzgqQz5Cu9vKLf1rbwE1K6sZjfzudct0P1vevj4sjLmh3XKMnUxPha8hLsU7djWNAdmM7irWeLQpminy12+FBXajeGQEWdUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f4piwR+8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jCaV4Gz4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NWGPY9T0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783822200; x=1815358200;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=jOaRO+gvtKxLFPRBjrTK6AsxWZlchn82pZN2wlqN50o=;
-  b=NWGPY9T0BScjxCXH6fZ2hMlEt6rO1wPURKQGG2NOrYVgJQWOwqHtEKZV
-   g7wtY7fNOnehEoRvRvi5C8cR5vChxDVxGT2ILIZ7/xZ82RXmO40Dxm7f8
-   ntcPUIBgzE1MH9O0atIq6Q3RH6pehFEpciyU/GT2upQGJv+Tpo2ap/uds
-   C+49c0oJYtDaN5CHfmjFCjT4Wg7lxMDksT175HbJHEPHDdbyW8dVOVigE
-   GmtqA2OO6eNKn1KiNo+OHIlGiHqovB4Ay6ynf88+8LJK0o0AJMbv8OSHI
-   LQdvLdUr39OFnkcyuyR5ymSwlrd5WqRAb88FEn8xl7Rphxefm9jwku6Sb
-   w==;
-X-CSE-ConnectionGUID: S3d4uazURgqgQCRajrDpNg==
-X-CSE-MsgGUID: ijmgkPH2TcSU4P79QBzZTQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="87019763"
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="87019763"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 19:09:59 -0700
-X-CSE-ConnectionGUID: j3wJGYGIQXKMUR4YW7JWpQ==
-X-CSE-MsgGUID: uZkskla3RRO3ydT0JyWBGQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="278468789"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 19:09:59 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Sat, 11 Jul 2026 19:09:58 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Sat, 11 Jul 2026 19:09:58 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.61) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Sat, 11 Jul 2026 19:09:58 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sLH5wY+VsdBItZoe4wwqVCZGEdeqP9LcoIwNjbwvvsEe+Iq9ZXImyBcOIFLiQNB1i6kIIqhhQ8acqGFLxX6AnX8ED1/YQBSUZHnd9u6UQpadM3DgKKISeCn5RwOCvOPNgDMn8GaibY8QA7g36Al4PUBwRiciVjVCPZjyVOSps+pRNLlWyjW5lvATbAEVGfHfhPsQBxzhTE08ZXL5/LvrJMmc0dsEDE2hwrInApEJ8xSF8E850W8KT4ksJ5ihwGYblLiMCC8QMV0iKu+SIMcFD+bO+diiQhUvFHhz4Qg1kXV4sFQyvKKJQUZK2Mnk7ILcnUEmzxPldeyj3tQRGF66Mg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9w6r1LDVaNsrnakBQ33bV62USHi7XvpP/fpO9Ph0Bkw=;
- b=SvRAgydlsDQJNjek20WD7lhUa8iVLAxO3GnNyBjkWZjRMqehjloj4+eXVfXeJmhKL/Kw5ysUNxuFmHJL6VtOv9KDT2DPEcEOxxvbHqjgMBx3uNAmGGWLC3Td4IZyuoAKU/CVWDWRuIYp4zPsiCQGWWKzli3skbDYUxAj/9I8buLs6f0IfcVUMI+UXlTH/zsm2NGTfjhsH5+JCeSBQUOr1/vWRsMotBBPeRS3t/vy5ilfqWa4UFjjEtMBQqtOTZkvjHA7iHjLLzM5S/7GyzASZtc50NuScs9oMvPD/WMWXjLJ1pYoGKeXLcWQNID/oid+bQG+HUZ1g8zs/pzmdicCsQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by DS4PPF382351574.namprd11.prod.outlook.com (2603:10b6:f:fc02::1d) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.19; Sun, 12 Jul
- 2026 02:09:51 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891%4]) with mapi id 15.21.0181.019; Sun, 12 Jul 2026
- 02:09:50 +0000
-Date: Sat, 11 Jul 2026 19:09:47 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] cxl/region: Allow passthrough decoders with >16K
- granularity
-Message-ID: <alL3a2UXB38XI7Nb@aschofie-mobl2.lan>
-References: <cover.1783795720.git.alison.schofield@intel.com>
- <9a798f6b445ca8f2b16743d3e16fa289efadd86a.1783795720.git.alison.schofield@intel.com>
- <20260711201508.082531F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260711201508.082531F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SJ0PR03CA0389.namprd03.prod.outlook.com
- (2603:10b6:a03:3a1::34) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f4piwR+8";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jCaV4Gz4"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66C3xKK41436337
+	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:23:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TS/dzdJ2RihXa75Xbm87Mn0assdfINSB12mbBx4lBiQ=; b=f4piwR+8wjzMOTAw
+	f/uEFmPsEAnDLmfweP2dYPyhSS1syT6N3JFijAcphDFztMe5UMGvXHvl9rRntdD/
+	Du37yAsl4/o9PrR7dcurrlkOwMcCLBUBMauOQj1GuYbxCj2e2yjkLXAAVFrqfkHk
+	q26AWAu3pBMLUH790VdC5wCvEF9ORqTwV2FiKLe9zJCOq5iKr9I+9g9gydhLlQ13
+	8SPTMMxAGHiql9ERI5MpnK1DnFhdS2AIXGI1qksxP7C/4Vmpbi40SiGwpzrbvMbf
+	SmiMEiTv8//SRr0W6GEaNuw12AiJfDUeSd84buPPzbxkzQqA/3hjkAQjjwLqk3ss
+	xEQkww==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbekcjau7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 07:23:47 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c889d1eebafso2629534a12.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 00:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783841026; x=1784445826; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TS/dzdJ2RihXa75Xbm87Mn0assdfINSB12mbBx4lBiQ=;
+        b=jCaV4Gz4UPy0kCUOQ/yyaC4LXGqGwNcaPNP8tvXKcb8unO8CzpPt3Z+0LD5C3B5Juy
+         Sn5vMZdKLjDPDF29xVq4v+WnlYZuo5GASpeRxhF/KkOhLbfeffxKmahdnvX1xzTOEolP
+         vzdHWJzijF8BKAoI+WMNzwJDcdSrinirKsA7cUg1+1xF1wONsMOBcX64EFBAREPOeuJo
+         DwXzVogT222IUKU1p1NVfSoki6v/OEV6SLD0W+7zLS9q3yRI79C/u1EtTmIiJHmPqMLv
+         xMofwkUO+ykyZwTN8C8P1yLpvOGjUUDUQ3vXxo5A1x1mX8MWXEev9mdh40R5MfxYFbJY
+         B15w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783841026; x=1784445826;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TS/dzdJ2RihXa75Xbm87Mn0assdfINSB12mbBx4lBiQ=;
+        b=tRjF6ZXM3pFZ1gd0XiiQKtCT/QFeYTi0pZgApuDY8MmGqoZFKtxfbbiQG7CpVbwcAj
+         FHhQ0xRef0NIb+zNVkkxHEbUqiT8lrDnUPV+D9hDnxtZsiGhCB/qaDe+CYG6/RNsMhjr
+         LY67nseOUJKxhfvtEjM2bBrS7Yq1CENek7NWHVUWmlXG5paK1vjBBd+Ytsjo+M8S+dVD
+         Jl2LXVBFvynUygBnwZDTA2Cyoa/YlHqkcMcOCU9p7FOhEIuWcnlmFWCtBhQD9toRZsqR
+         RcjbqczCIgoxcqJ/galMnzvlp6Ml4hW6ewitmQFX88Urw8KxoBW1r+h2nzb/3E+Eiq61
+         sUJg==
+X-Gm-Message-State: AOJu0YzUPSSGcZiR98uHLgbv5mnD6If5YY0Cy4PdunEcS4FBCmkTi8WR
+	yCuuxhykPs9uTR+DL0JrO3AypyE98NF0Y/BQcejpa4WIwFLWCCf6C8108HMf9nuf6SO4pIUBPkW
+	C39sGLdoOt7A4XnLBETRRiO/lvQRnCYOlLSXasGw5MTRhw81W5DyuQQ+DUcjvn6g91GQb2sHhDX
+	TONjw=
+X-Gm-Gg: AfdE7cmRSm/vzFYmHGCANKlXmJS0jdJmYa7KlzkD+M3FzSuYXLpyl1Kr1HoBuZmY16f
+	pGx/kW1QkDmy+SsFgnN9poZXFw8i+SQijONQd02wzErDz3XE+XFDlN1TZ9AXMx/yI4XgwyVvIOw
+	goynk1MaDfcKLiGJrXiWtj/XfTaE7WM/gFuvqZTL/wCuRCJxrwAUFwKlz9SPk74PQOXydxBxOhw
+	V4dnb9i4831WlLnXMy2hqqkIuzKSB66j86tu1Wyg8423c3o6EwpVTaq35MYlvcaubunVxjq4zoc
+	F7Y49FtDvT/MoJD6HSeY+07KJ3BVvyyn2amqJf8N9Kt3blFEo5z1sn+mfDHwpyVfjOpLx3v2X2u
+	naNp1Mg0/Uw9gwJpsSBKtdXkrmqLKZ1f40Z4RUI+Z+Esy8Q==
+X-Received: by 2002:a05:6a20:a124:b0:3b3:be05:2b73 with SMTP id adf61e73a8af0-3c11015a232mr5858409637.18.1783841026472;
+        Sun, 12 Jul 2026 00:23:46 -0700 (PDT)
+X-Received: by 2002:a05:6a20:a124:b0:3b3:be05:2b73 with SMTP id adf61e73a8af0-3c11015a232mr5858394637.18.1783841026070;
+        Sun, 12 Jul 2026 00:23:46 -0700 (PDT)
+Received: from [192.168.0.106] ([49.204.17.188])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b9a67c217sm1483652c88.8.2026.07.12.00.23.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Jul 2026 00:23:45 -0700 (PDT)
+Message-ID: <9d830e54-a9bc-4498-8799-2dd7e6d9aa00@oss.qualcomm.com>
+Date: Sun, 12 Jul 2026 12:53:41 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|DS4PPF382351574:EE_
-X-MS-Office365-Filtering-Correlation-Id: 111d07ba-100c-44bc-f07c-08dedfbaa7bf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|22082099003|18002099003|11063799006|56012099006|4143699003;
-X-Microsoft-Antispam-Message-Info: cpMJWynE0EPzzyJNkpqItSa11T/Dqs+Zb6bTWvxjFuTgBo6WlYKQlLZC6gYM9uqWBHg5jar/WpWB5tu8Ly8YUu2KQgsGf9cCrlI5CdguTXn1GqSejytIWY5SuTwSkB9d0pgx+A71WkJUH1JTX6LzWOC8TNu+fbFSt5SbpOitgXgNs0dY6fo+m3wI/zCwjuRrVMKxl7npXk1AoxGdbD+z8zsrtG7lDflLnyMBu9HYRSGoggvzhOVl3TEUb6+uYnszHQ+j/AbbxBoEs1e/6l7fgSVUv+9vLxh6cetB2ILVlqkjZSoRViUqJHSJQULa+yxKNI+cmGxe18ibUH4OGmDm5N15EBkobNBCRM1AO2vBFr/gSGon1LBVhO2u7uoE67GxKDKnhXmSYs6NJpgBPOGVAdWveZMTgG4WHETfYWJRw9PmTDuWt4nNozURyTe8xK0+sPFjjhMeM/TkD0/feHmJMAyYURwL86WTQBfesTZdMSJsnLLowAe9KO2Ps+blTY9PfzY72/nj7LVG24TF3itzyWBmPD8VBgWwSAO58xBS944BvA8SW3K7U1uqG8NGuXfSQs+KICa5vF+o7PT8aMsBPn3yWGQgLy9A3YdqbKWbJPU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?laTUDgPEBWLh6xAr3rbe33di9yT219R5jfg5U7ivRaDXytB5IbXqjGZKpv?=
- =?iso-8859-1?Q?Mqj2zjgz1NUBswiV7vN620kDPuOKWOlcqc0cOsxMpC95rFBOvsrdQbXkpk?=
- =?iso-8859-1?Q?5zHlIGbaialfuCRh40CZXW+BeIN8Z2SBYQkrrY1ledQ7cR82LHjuXgYPSK?=
- =?iso-8859-1?Q?Gj1N8pGIyMQkkRTVvBDBO16YSdnnOF1nZnDy/1y0fFFkR0ybCSiZuGSmtU?=
- =?iso-8859-1?Q?MEHKv0JuuF7yr6aa0sKgv/VgeAKAF/SUwkImGNwWRqc3aAatTAYDp7TQsM?=
- =?iso-8859-1?Q?ibKBe0vJtVnLH5bR7ap6q/u7mCkSQHt5e+XPS+ggIYMlprb0ahAC2gB0hF?=
- =?iso-8859-1?Q?4O5MLHt7V7llLqd2Rg6OTYNLs2h7IJmol3yeDukgRDP2Mn4q4HJIf3H00u?=
- =?iso-8859-1?Q?668+J6oEWeBKk/4TJSkfKtq3FWNppwtLSJVKNcVVH4LWJWNn1xjRuMRHep?=
- =?iso-8859-1?Q?IE0P9xFzWXHhNyn6QiVsmHbHhSQVv8ml7zBcIbwKCQ2H7EjPvTZMO9WYU5?=
- =?iso-8859-1?Q?A8d0JED3hcIzEuEgoC7TK/lIL5J8BhwNoq+IQ3Q1E/uy4ms1Mlrq8Uhnoq?=
- =?iso-8859-1?Q?9FZ79pab8iFibSi9TSTjadUuIhCr92tLO/n+0JoheZWYsh/abqNRKJ+6ap?=
- =?iso-8859-1?Q?OZuBOgnyXRJP/Ajma3NDPxqXEiq2+nTJAlZfD9AvobZEeDsdgpyXK0c4qS?=
- =?iso-8859-1?Q?EfHr5vEGQ1heLGtsNu0ZJyoNTvQp8oN2jEnSOCShCVKMHs/AQD5t8v4/qb?=
- =?iso-8859-1?Q?jrHafqWfG1QiewSC+iLcvzpvtV4y3vrgKk4tkR0sKNKjBcYk6ApDea2U8y?=
- =?iso-8859-1?Q?oN+Sau3bEbX/3g63j9u2XPiHvVa8gT0VLvLzg9f/9Ba+iKCTqgeiavvku1?=
- =?iso-8859-1?Q?2BiBX1dG8CLzIUtWEL2dAzjU3pfx7OjJFyXsV3233XHwvLXCC7KazR2pXi?=
- =?iso-8859-1?Q?+Ayhj1h4g8MTOTRAJizZKiDsWX6Qz3+FpQWuJPor5mB6FiJjQPTnkSI3sk?=
- =?iso-8859-1?Q?CWbwb6aaNnRRb0mSE+796AtG3bkZdEotUU7qqQL/yLirdo2GQR2vTJQXCJ?=
- =?iso-8859-1?Q?ErIJsfvf2Oi+UjXqE9HLZmoiGm+znJFrCnt4dhwd0LpGuRN9BOaVCaac4c?=
- =?iso-8859-1?Q?KZwxw9eMWGuafW9e+dKUKFi6tmoMrxL6P0ezJ1tLU4HUXfPaGTabnTexFa?=
- =?iso-8859-1?Q?M5PjpnyGjf1g4Bled52PQ/BBUMUNXAbq4N6Hk3/9mHOjpLNb1QObyPk3tl?=
- =?iso-8859-1?Q?4lyjMIwolMUjNjfeJedjmzbjVfTaTkOWwXgZyN7rnl0sDnn0KihAcG7Ezm?=
- =?iso-8859-1?Q?wFDBIi+hrJ+ASs4dz92iAYCtsgfo0ZHwrTuFn/BFq1XCUCP46ze9/FdUvF?=
- =?iso-8859-1?Q?kivGqPjPTQd0mhJKqLkG3jhY8ffky9iv5BJSfCae1mvrJk2ychY7nM1Ojw?=
- =?iso-8859-1?Q?qgudlVvqE5++57tuVvtI7GSP+jeLMqfB4A04t7MX0pVzwHTNzYgylQxaTX?=
- =?iso-8859-1?Q?l3K+pSnuf4MVKQxkqy815NxTqoWdxnUYDK/UecKPUIdd5HX7phFQlrWLKi?=
- =?iso-8859-1?Q?b388MxrCcFKG9X0BPT+GWrzC0Lit2uHweXoOL6i7OWdCVonw4l4PzfS7I8?=
- =?iso-8859-1?Q?t7VEwFugqYzfl9HTIGt+zJETJPERgfsOZhKYb/ZV+ykH9Arq0/1fBz867/?=
- =?iso-8859-1?Q?5yXJkkGE2K4PX+fGjGabQotvQxmn3UCrZm0Eltg+Y48u8d8F/Ms8lKqytk?=
- =?iso-8859-1?Q?coR0C7Nk/MdC4VHGkHk2S6FssxqouUwQ+BL9LfXutDe2MLMkr8qGJIDjoC?=
- =?iso-8859-1?Q?UIty/B17fBUyPDNC1W5Bcf+jpdQEpQ8=3D?=
-X-Exchange-RoutingPolicyChecked: MMW9emNAxtRD6VKLGShFJTSnw99VPOVsKqxdxUKOMDSVe9ID7zAsEhxF4EkGcgIRpB4oVfj5t6MPoh6YDCynYtdO/YSEB91lQztjJVH22B4k8rjgc+3gIuZTDFtbHQlg75pz5JMak/n3t4d38TlicyXCBdImGvIHwaQc0eOZRdjA+xa+DZ5f+az4d+iNUEZqyJGceBsRKUu6FMqPLxE8NDQlAIcAzJHe9PG5p1Q1HQZEw09LSVgzLbha3QsKEo8VrJC33ZVkwS6QWIIlHfgZ4bjS62gsaaOXi1K4frLXI+UQTaiklEnOcmSDaEmKM5cA/1sdn5NDSw5HPD61e5gkpA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 111d07ba-100c-44bc-f07c-08dedfbaa7bf
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jul 2026 02:09:50.7032
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Tg1jeF/xkbFhtNOsUhSASWPmkDqE6zhu8NqQ1IeIG87JLD4Wq73mtC03KTxJ98Jpi68Oewz1BGZ9P7K1VYbFlj6/dQUp+Yq+a6olc+Ykug0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF382351574
-X-OriginatorOrg: intel.com
-
-On Sat, Jul 11, 2026 at 08:15:07PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] During auto-discovery (CXL_REGION_F_AUTO), passthrough decoders fail to update their `interleave_granularity` software state to the computed value, causing downstream decoders to inherit incorrect granularity and fail validation upon reboot.
-
-Same NO as in v1[1]  and I don't see a way to graciously alert you to this
-in the code. Gratuitously updating the field is not the right thing to
-do.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/4] ASoC: dt-bindings: qcom: add LPASS LPR vote clock
+ ID
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260708114924.1069239-1-prasad.kumpatla@oss.qualcomm.com>
+ <20260708114924.1069239-2-prasad.kumpatla@oss.qualcomm.com>
+ <20260708120022.963171F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+In-Reply-To: <20260708120022.963171F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEyMDA3NCBTYWx0ZWRfX7u1X80PuPvSA
+ YJut2Sntj9UHssBghzk44vUtqRRJZzeSjo+q9tKsv6qYjHXqRU5pxw5PTQHY2NcQJATptSLrvM7
+ ha3Ci0cn+wI0hoKmDUBZ7mkMOYLDjxVwPGe00A/oZZl/lktcreZljljHLrgaiGdBSlzHuXCJ02S
+ EELNj1D/IBmVRKmoEYFZIQJD5WBzFCUDe5oygQCjmEfQhyCn7m7dd5PGhW2pWLuNIgtzMPdOIIz
+ 4BW37ZlEDkCm75W0lZC1GSvbXlCXr4/gGpD27vhTl0DgwrHIfndia5OgS9hk9KiFwGkW2aeeuwE
+ ZVhfCEfCIGyyOu/WiKhQdZ3TcOctxfd/8U0LNCcdi8MA1KtMHYAUO1h5ohg15pGmqFLJcNfy1G4
+ 2D74aWuuwW+zpHKHdKDQfXID5mry6wCc63qJ19ENa5G77dtd1arXfI4kU77XenFA+u3uJYdD33C
+ A7mGykkcc82GPjAyumw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEyMDA3NCBTYWx0ZWRfX73JCKBfjUV+M
+ ZIZI1SRO+3ifZahSlTzUuW3Rw/Fjn7IN3MK2iltP4xhQtoVFbm/2eP25ArtxgQTsTDCbpCM5VGo
+ Odh6mI2/nKk+B0pCvMgFwdLLvBcmKic=
+X-Proofpoint-GUID: go553LmhFZsuzr1Je71hjL3GD6_QGKCs
+X-Authority-Analysis: v=2.4 cv=XNsAjwhE c=1 sm=1 tr=0 ts=6a534103 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=/JTPBhwEQko7YaD0RKblyA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=6DnBdPXkYeQUWTBryLMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-ORIG-GUID: go553LmhFZsuzr1Je71hjL3GD6_QGKCs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-12_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 adultscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 spamscore=0 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607120074
 
 
-[1] https://lore.kernel.org/linux-cxl/alKP8OP4DNT2nJnu@aschofie-mobl2.lan/#r
-No. A downstream decoder can't inherit an unecodable value into a failing
-check. A >16K granularity only appears below a wide interleave, and
-everything below that inherits an equal-or-larger value that an interleaving
-decoder couldn't encode. So every descendant is necessarily passthrough and
-never validates granularity. There is no path where updating the F_AUTO
-value would prevent a failure because the failure cannot happen.
-
-
-
-> --
-> 
-> --- Patch [1]: [PATCH v2 1/2] cxl/region: Allow passthrough decoders with >16K granularity ---
-> commit 9e2526342188a97e338bfc63d454c253f1e2b3ef
-> Author: Alison Schofield <alison.schofield@intel.com>
-> 
-> cxl/region: Allow passthrough decoders with >16K granularity
-> 
-> This commit allows passthrough decoders beneath wide parent interleaves
-> to have a granularity exceeding 16K by programming a don't-care value
-> in hardware for non-interleaving decoders.
-> 
-> > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-> > index 0c80b76a5f9b4..d164662668c19 100644
-> > --- a/drivers/cxl/core/hdm.c
-> > +++ b/drivers/cxl/core/hdm.c
-> > @@ -691,9 +691,16 @@ static void cxld_set_interleave(struct cxl_decoder *cxld, u32 *ctrl)
-> >  	if (WARN_ONCE(ways_to_eiw(cxld->interleave_ways, &eiw),
-> >  		      "invalid interleave_ways: %d\n", cxld->interleave_ways))
-> >  		return;
-> > -	if (WARN_ONCE(granularity_to_eig(cxld->interleave_granularity, &eig),
-> > -		      "invalid interleave_granularity: %d\n",
-> > -		      cxld->interleave_granularity))
-> > +
-> > +	/*
-> > +	 * A non-interleaving decoder ignores the IG field. Encode a
-> > +	 * don't-care value instead of validating the stored granularity.
-> > +	 */
-> > +	if (cxld->interleave_ways == 1)
-> > +		eig = 0;
-> > +	else if (WARN_ONCE(granularity_to_eig(cxld->interleave_granularity, &eig),
-> > +			   "invalid interleave_granularity: %d\n",
-> > +			   cxld->interleave_granularity))
-> >  		return;
-> >  
-> >  	u32p_replace_bits(ctrl, eig, CXL_HDM_DECODER0_CTRL_IG_MASK);
-> 
-> [ ... ]
-> 
-> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> > index 1e211542b6b64..5a443551288c4 100644
-> > --- a/drivers/cxl/core/region.c
-> > +++ b/drivers/cxl/core/region.c
-> 
-> [ ... ]
-> 
-> > @@ -1549,20 +1557,21 @@ static int cxl_port_setup_targets(struct cxl_port *port,
-> >  	 * Interleave granularity is a multiple of @parent_port granularity.
-> >  	 * Multiplier is the parent port interleave ways.
-> >  	 */
-> > -	rc = granularity_to_eig(parent_ig * parent_iw, &eig);
-> > -	if (rc) {
-> > -		dev_dbg(&cxlr->dev,
-> > -			"%s: invalid granularity calculation (%d * %d)\n",
-> > -			dev_name(&parent_port->dev), parent_ig, parent_iw);
-> > -		return rc;
-> > -	}
-> > +	ig = parent_ig * parent_iw;
-> >  
-> > -	rc = eig_to_granularity(eig, &ig);
-> > -	if (rc) {
-> > -		dev_dbg(&cxlr->dev, "%s:%s: invalid interleave: %d\n",
-> > -			dev_name(port->uport_dev), dev_name(&port->dev),
-> > -			256 << eig);
-> > -		return rc;
-> > +	/*
-> > +	 * Keep the computed granularity for descendant setup. Only
-> > +	 * interleaving decoders require an encodable granularity.
-> > +	 */
-> > +	if (iw > 1) {
-> > +		rc = granularity_to_eig(ig, &eig);
-> > +		if (rc) {
-> > +			dev_dbg(&cxlr->dev,
-> > +				"%s: invalid granularity calculation (%d * %d)\n",
-> > +				dev_name(&parent_port->dev), parent_ig,
-> > +				parent_iw);
-> > +			return rc;
-> > +		}
-> >  	}
-> >  
-> >  	if (iw > 8 || iw > cxlsd->nr_targets) {
-> 
+On 7/8/2026 5:30 PM, sashiko-bot@kernel.org wrote:
+>> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+>> index 45850f2d43425..06ca2c287ab2f 100644
+>> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+>> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+>> @@ -236,8 +236,9 @@
+>>   #define LPASS_HW_AVTIMER_VOTE		101
+>>   #define LPASS_HW_MACRO_VOTE		102
+>>   #define LPASS_HW_DCODEC_VOTE		103
+>> +#define LPASS_HW_LPR_VOTE		104
 > [Severity: High]
-> Does this code break region auto-discovery on reboot for topologies
-> containing a passthrough decoder?
-> 
-> When cxld_set_interleave() configures a passthrough decoder, it now sets
-> eig = 0 (a don't-care value) in the hardware.
-> 
-> Upon reboot, reading this hardware state will initialize the decoder's
-> software interleave_granularity to a stale value.
-> 
-> During auto-discovery in cxl_port_setup_targets(), the CXL_REGION_F_AUTO
-> path skips validating the granularity for passthrough decoders (iw == 1),
-> but it appears to be missing an update to correct the software state:
-> 
-> 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
-> 		if (cxld->interleave_ways != iw ||
-> 		    (iw > 1 && cxld->interleave_granularity != ig) ||
-> 		    !spa_maps_hpa(p, &cxld->hpa_range) ||
-> 		    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
-> 			...
-> 			return -ENXIO;
-> 		}
-> 		/* missing update: cxld->interleave_granularity = ig; */
-> 	}
-> 
-> If cxld->interleave_granularity is not updated to the computed ig here, won't
-> any interleaving descendants read the stale parent_ig, compute a mismatched
-> expected granularity, and fail validation?
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/cover.1783795720.git.alison.schofield@intel.com?part=1
+> Is the corresponding driver implementation missing for this new clock ID?
+>
+> Looking at the clock provider in sound/soc/qcom/qdsp6/q6prm-clocks.c, the
+> q6prm_clks array doesn't appear to have an entry for LPASS_HW_LPR_VOTE,
+> which means the clock would never be registered when a client device attempts
+> to request it.
+>
+> [Severity: High]
+> Will the hardcoded limit in the driver reject lookups for this new ID?
+>
+> In sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c, Q6DSP_MAX_CLK_ID is hardcoded
+> to 104. When a client device requests the new clock ID 104, it looks like it
+> would be rejected here:
+>
+> sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c:q6dsp_of_clk_hw_get() {
+>      ...
+>      if (idx >= Q6DSP_MAX_CLK_ID || attr > LPASS_CLK_ATTRIBUTE_COUPLE_DIVISOR) {
+>          ...
+>          return ERR_PTR(-EINVAL);
+>      }
+>      ...
+> }
+>
+> Could this result in -EINVAL being returned instead of the expected clock?
+>
+> Also, if the clock is later added to the initialization array without updating
+> the Q6DSP_MAX_CLK_ID macro, is there a risk of an out-of-bounds write during
+> driver initialization since the array size remains 104?
+
+Thanks for the review.
+
+This is addressed in patch 2 of the series.
+
+Patch 1 only adds the new binding ID (LPASS_HW_LPR_VOTE = 104) and 
+updates Q6AFE_MAX_CLK_ID to 105.
+
+Patch 2 adds the corresponding driver support by:
+
+   - registering LPASS_HW_LPR_VOTE in q6prm_clks[]
+   - adding Q6PRM_HW_LPR_VOTE
+   - handling it through PARAM_ID_RSC_CPU_LPR
+   - replacing the hardcoded Q6DSP_MAX_CLK_ID with Q6AFE_MAX_CLK_ID
+
+So clock ID 104 will not be rejected, and there is no out-of-bounds 
+access because the array size is updated to cover IDs 0..104.
+
+Thanks,
+Prasad
+
+>>   
+>> -#define Q6AFE_MAX_CLK_ID			104
+>> +#define Q6AFE_MAX_CLK_ID			105
+>>   
+>>   #define LPASS_CLK_ATTRIBUTE_INVALID		0x0
+>>   #define LPASS_CLK_ATTRIBUTE_COUPLE_NO		0x1
