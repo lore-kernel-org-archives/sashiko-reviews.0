@@ -1,93 +1,167 @@
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazolkn19010006.outbound.protection.outlook.com [52.103.32.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD004499A4;
-	Mon, 13 Jul 2026 19:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783972240; cv=none; b=HQO+MwTbjl+2mgj+9yssw/VDNoQUZghGwWVb/eZ6vDkGz2UKvBzusLLqr6DbLSRAojaHtkB+5HqM9kJgvn6YySG5B9tf+SGYc0X1BIK5WQhWlJWQRd2REhyXWCNnLzLvQ1d1HDPJc5sv43up7xRX+1tKCnnD1DxtyNFmp7eSVLE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783972240; c=relaxed/simple;
-	bh=48jE9ijxzDFf+4uuAkqonJ4sT7rHFfQTRJVZ1iAP+Yw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CemEh7SPVLfwdlWML/4skxGJCHu0q1OgjdDsVlmtbkSSe+FOQPDn/LZLiqujzJM8YlNRKAFM8tvholSndNp6Ues5U/a7+d+usrHyxSgA4WZ531IH8eQlSFPpt8iUuod+oCnPHErDBFvFTTI1RaM3qQnGBGouNS7u/kbBZZAOwXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=AdNYafhw; arc=none smtp.client-ip=212.27.42.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2231283E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 19:51:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.6
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783972312; cv=fail; b=XRWP5PfnbW31jIgoJRsEm7sSEN3aCJpIcITOmv/PoJSeUAkkGk8Y93FKlDzA7RaGEbyc4gi+kxzFgSoo6HZzXJmBz2TNYRg+vwN2WMfgqtwTOk8TlHHFfff0kQiJcZyM6KYWc1PVkh3g3AbcVO7s1/T8QV7udeFZJZ/0GEZFzs8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783972312; c=relaxed/simple;
+	bh=8vVXV757Ihr3uf4lKKq5WCnRJz5NuHDFTg2CxmTmQ5Q=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 Content-Type:MIME-Version; b=mhmVmIHhtXkmy31EV9+7F/hLW0c/+3reVgFw/NnZiSiam8xJ77Z10ILvkwOr0vX+4jN3/+jdS/xoOxiISY5trx72B3n6dRLKcblhpd0NgZCTLqxQLTpiqMNC2jkGK4bZ/U0/KIl6Ra84feWP0qXPFDNkI4CUSMVX2vvW9/63Yjc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=cWbgQGux; arc=fail smtp.client-ip=52.103.32.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="AdNYafhw"
-Received: from l30177.home (unknown [IPv6:2a01:e0a:ac2:22b0:1c85:c04e:9ad4:c6d8])
-	(Authenticated sender: vjardin@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 8E1E319F54D;
-	Mon, 13 Jul 2026 21:50:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1783972236;
-	bh=48jE9ijxzDFf+4uuAkqonJ4sT7rHFfQTRJVZ1iAP+Yw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AdNYafhw5qkuM8vFEITkTRMvKF/jbqsoqHZBxUG9WqZN1MUPMykRou6+G6lzqC5Yz
-	 asMmWWrDCTg+FQx2n+yfaUoEud/Ls5/MLHj51lZZmPEIaj0VJs5d7mqNBg+bNqjDl7
-	 Lrnu/0h9KvzCCUEBMB9fGIHv4Bx3xdpI2P7zltDZTuFxc3/qq2gwMtcoNRbzDkVrND
-	 gl5azLN5eVxlKOfT6M3l92BS47h6Q8eMew+JZY6xA3t5AW0ppDonbBv+OBq1R0SMV1
-	 6WhEXQd82cB1DgAVi2x9tXLPPxa39PTu11r1kNA30/9QHz8JFPf5n7+EA96U671uDs
-	 xZ+HtU8h98K7w==
-Date: Mon, 13 Jul 2026 21:50:32 +0200
-From: Vincent Jardin <vjardin@free.fr>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="cWbgQGux"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XLFOsrykkmjhhrQmH6Dks8/4vHYkcYihcfL4eJooU9s0j4Qv0QzOd8ixkMB7QeLT8bHESlOio0AgVdcsYQvf/Dxq3KJ67ksl/AANEWvpD2Bmm26Q6o2nF9jmh1rouzBC0/h9c36rcnq5AcZaoeB+9Drq7GQu2SKjzyvHkig4oBuSL3rMbadOXZ2DwT9fj8IWDcv0Q35GvQTYc/QzcLeTIBNxodkXfYAeXmlVVPccamN30fQf+PIaV12FWoG5fFWlVpLmbrjrwiX5rTlIutymWgRVGCgu0RqQ0dGtjN7SCmdfyHXsKL4rXuGSHnoK7N7/cg7C2ZAm/gyF2W2Qol0gng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Sz7zL3bIwsPntLrICKuwxg0AyUymej2pJo+CbLeqgOo=;
+ b=P3gg5AHvyAuFaqyIyP0C7iQskCkaEFjLJiqPR7QMCfxJR6qbyWSdpN1CsZWl29R7ZaRKZge3DNibWPbidVXntRr8N5HgAbrQ9dFs9BRWGSDRMVIAn9wChUzMZzfXGs7txcSHyu5YQjjvN4X+yKhA8idn5liYetr6yLUQvpKwT8GcGJFhTPD6QIPj9MfLXBoHSQUMOQg/Zytu7my0jIZbP/F2AlVz6Jf3DnPche52ArLw9DSYdG9Y+qIJ784mXW2CSK9/42CLScTCd2FEw5mdRWAPhWoQ+9L9ynDV5Pok+kXLSTlWiX/E6mRCjTVdgjOnGNWP3u8pGPnQw/OVhEM5Hw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Sz7zL3bIwsPntLrICKuwxg0AyUymej2pJo+CbLeqgOo=;
+ b=cWbgQGuxde13kAAEXj6dF85Ut/28uRmxLMwb6tHChFgwbeH5km8IQLACcJNIaxGohNuDqwK64h/pS9vs59V5dM1bOL3ht5pK0wzQX7lQwwwiWqQVEcNZChVJoMH9Of5EnKqeLPM/kXhA+YYq+skEfBVKwSBSt6IWVkNlPVr4zYE5pu053DCgN2jrQTxtg5G1wzVErVnAja/AgmehDxlxbF5MRKY+KtCz3UFTwqBZq+b9dV/jEWfnsnHKzs4FNkwN4o0kun1RtaSYDrg2iaGwvme6TrtxBAWa6Md6x3U3vvDQQTwSE840ko+LdGLKrtLySHJIR606Vo27I4gwox1GaQ==
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
+ by VI1PR08MB5424.eurprd08.prod.outlook.com (2603:10a6:803:136::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
+ 2026 19:51:48 +0000
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
+ 19:51:48 +0000
+Date: Mon, 13 Jul 2026 20:51:40 +0100 (BST)
+From: Manuel Fombuena <fombuena@outlook.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v3 2/2] i2c: imx: fix locked bus on SMBus block-read of 0
- (IRQ)
-Message-ID: <alVBiC-9Gb15UMjT@l30177.home>
-References: <20260713-for-upstream-i2c-lx2160-fix-v1-v3-0-073ac9e103a5@free.fr>
- <20260713-for-upstream-i2c-lx2160-fix-v1-v3-2-073ac9e103a5@free.fr>
- <20260713182912.55D881F000E9@smtp.kernel.org>
+cc: linux-leds@vger.kernel.org, lee@kernel.org
+Subject: Re: [PATCH 1/1] leds: st1202: add hardware-accelerated blink
+ support
+In-Reply-To: <20260713153713.962DC1F00A3A@smtp.kernel.org>
+Message-ID:
+ <GV1PR08MB8497264D9FF91843D6F2FE8AC5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
+References: <GV1PR08MB8497C5B8CEB2CE19743DFCFFC5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com> <GV1PR08MB84973ADB74B084B108FFE389C5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com> <20260713153713.962DC1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+X-ClientProxiedBy: LO4P265CA0012.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2ad::7) To GV1PR08MB8497.eurprd08.prod.outlook.com
+ (2603:10a6:150:81::22)
+X-Microsoft-Original-Message-ID:
+ <4aed7752-6ce4-75b0-574d-a3a0bf64f532@outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260713182912.55D881F000E9@smtp.kernel.org>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|VI1PR08MB5424:EE_
+X-MS-Office365-Filtering-Correlation-Id: 27183037-9740-4081-5fa4-08dee1182c8e
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|23021999003|5072599009|25010399006|37011999003|6090799003|24021099003|51005399006|15080799012|19110799012|8060799015|440099028|3412199025|40105399003;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Bmszdo7SOmMvZj6GjstRrZKoFXzR1yO6FMZ0pW/UxJhtEhB0UC3qbBO2jmze?=
+ =?us-ascii?Q?ay3y3ZdJOISBWdZ1TsADPI/mJyDhKzxOZv6wOHdxj8/BrdkRF9tAd8lE45rj?=
+ =?us-ascii?Q?0bZLIidW9aKqXiIp4bZq0bEjzweMqMXnpyDn0VB1N0mwQVCZPIRl97Ktb8fF?=
+ =?us-ascii?Q?RXJD/QjfKNQ5clX9MdVGhEX3ODMTpb3cyfHYBe+B0d/SjLtMyjlZNNfgwhY3?=
+ =?us-ascii?Q?qDlpm/GCViSUzRsROqIBix+jrBZm4Hmo1UDIRbUxNKMtmCJDU/r4xMV+3KMv?=
+ =?us-ascii?Q?HYU46/E+cR8P+yfAWlrl5csXa1bddJ1SODi7jk8abSZW6nF2va52xi6AAlsd?=
+ =?us-ascii?Q?NS0TNGNykCQvhjh4Ss+hC47VBkTbpW0MC3Unh5Pqm5Z3tGuFQZ+mMy6X0It9?=
+ =?us-ascii?Q?zJp1TEe28xDKc2v4gI5Z28rdzmlEfmbX+nbp9axuwp7VKtBr1mFflNfay/yp?=
+ =?us-ascii?Q?MjzHlosDAOw4mdS2sCPE548ENTRE+jPRiLx2jAsZxZ0dred8dpBPbuzQL0hX?=
+ =?us-ascii?Q?CmH6EF7O6ZusM4pdXplWQkCVSv/EnJ3EA0ctGI9GvpS6QFjUB0G8TD5YbgDv?=
+ =?us-ascii?Q?29yoAbioO6fJ2Ph2oTdMLeYHjMi/4idW2XeluJ5+T5gq6Y6AwiT3i56ys1fn?=
+ =?us-ascii?Q?JuuXqqKvW/mmbrp+WA2C6kS1NoCRKWvCqdkaHB1q7zijJW2MV0tOIR74pJkp?=
+ =?us-ascii?Q?aiamsBbeoU6WdRq29I6h13TXmwt9UEjWHNgDULuJXg6Fn7oq3KiFvJ2RkuoF?=
+ =?us-ascii?Q?rgvNLaRLurFKISo/tIyAShGptPQz+c2JeABTiVua1m48n1j6djnlYqoQzbuQ?=
+ =?us-ascii?Q?llumWlJWnKqTn2QPNswSnjINDTDjwXe9kF81AFaIvQgWU0DEeq4UChz6eLzw?=
+ =?us-ascii?Q?wUx5g+qHaaD49HWulmmt9qXHyRlbu8iuu72C0oUOq7/6kmIw818h9VvEnDV7?=
+ =?us-ascii?Q?u0KNoe31rY3KtdUYiLZMLkpY4Mg+M19/pMMI8JEJErf6v9JDdB8QAtggahG0?=
+ =?us-ascii?Q?RTZC?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?hlZKl3vzTd27CoO8xFyBBCmz7wy21aiyIR3WKUfb8vOXroxH8TDBtHq20Mnp?=
+ =?us-ascii?Q?yG5gGiZrEIP+gv9lcqDHVW4UQrUp200IPVbRVL//5YSA93XQbHsHGlbyoICk?=
+ =?us-ascii?Q?SExgk1F5R78LBe56m0Cnmmq3J90zwe1L3nBWyTFfbhm1+Hv2Nal2XSDyHvrf?=
+ =?us-ascii?Q?wSYQmcDJS0IziVyPopd94wDC2oC3FYtUQqLPtoUrV6Q2eWp5yO4YgELtpv+D?=
+ =?us-ascii?Q?kEbccottpQ6BEDh6Zc7tcEcZcCYLg6y9WiFCZ11rWHTkgVaHucjvSBTLzQFd?=
+ =?us-ascii?Q?yPrIjB/9gvUX/NeMtcrwy/qkr54kHNbDksO9yHTYjfW1p8xVlQbczj9vzGfB?=
+ =?us-ascii?Q?NI7LvDNDAmxsXzplN8wTxIDm4Vym+yzR//bHhQhJu6YgRU0Gs9tD0Nl4ykHs?=
+ =?us-ascii?Q?lj6np6OPhGfkjs9nEaNF0Dy3IzO94qXshW5Y51Aux7OSjyWiN9rbMDgw+BJn?=
+ =?us-ascii?Q?sdg8jO83VQE7s8ywCMuOAcj6Wq+8ZXqYdr1xZtRy+2Revdc2G9Kh6XTpKmZx?=
+ =?us-ascii?Q?Qbm3BFsnPIq6MgV0odk5yVpgDjUmEamOZ9/L71vUJ+Dnc0NjS7jefW/v3F9e?=
+ =?us-ascii?Q?52s5XucSs+uwTRaYLN1/rX1t3Gb1568m3/7JlL+3yArNSmw4AnbkgraosnST?=
+ =?us-ascii?Q?0X6azPhUAcMVD8v3Bt4Gu8MHKoqDi3I9UgLowxPLpZu5YAuuoYzgGe2c1Z81?=
+ =?us-ascii?Q?LGNYC/06sUa7Mbpc41Jncq4t6Vrd25SkNDrFO3QwIAq5f0PHRXc2GFTyFtLr?=
+ =?us-ascii?Q?pciHe9x+aZCtAtR1z/qMd6MbhHjZh3mHMxP0wtI2dsdHhIoqgdRiJVdWLqRV?=
+ =?us-ascii?Q?aVyvHLKikQFJpWWdbK0dLFdvhlU8DRj+QB44m5+hv8c1I6G5hbZ5dS1xjGDo?=
+ =?us-ascii?Q?Pxz5CpRjN1xfPGKZha8q4sOABdpn1eb44Tfi3LN4f4FYZK8QzKWZezMu+kiK?=
+ =?us-ascii?Q?W644wwY9QU4RmRKXILY2vTPULanA8EjBdjNxTnWx4b8SIPVBf8OOZfncKFe7?=
+ =?us-ascii?Q?ANblI0CgzKzOSQPimB+lkjcLC7f/kIu0UPOhf6CFagL3lejiEUza1skQHede?=
+ =?us-ascii?Q?cezjtheZOxriDYvyNj2C3Qo8BhMTKhJgNds72AHfzNGEtW84hMxWpqW2a1CA?=
+ =?us-ascii?Q?+WbA+oRXrJQ97xtkR7+l5FI+vstEwoVZKcwvS1bRkrWIjubGNpq6Kg2Hh7cZ?=
+ =?us-ascii?Q?JyXg6b8EouqDNGeVsrQqcZDN/dwiwWWgNh5meyiUFYuJaHMG2ME4RTcuXM21?=
+ =?us-ascii?Q?1FT2CGyu4QdWQVZxqaig8sf7OGNi8f9i9iTxjTiRDAcgJzRrgm0t6gi9Wn2P?=
+ =?us-ascii?Q?3GXMEi8BJkKOVaiquGkX38w9VINjZJX4NgXI02fZI2kuG1uN1aCNaYMkbF1F?=
+ =?us-ascii?Q?nwpmgKnwjbhYHt54THOZyv/FkW6g4Ua0sPdjMJlLp/Q6mEVS3+fggkztBpRj?=
+ =?us-ascii?Q?RX3FOOjKYW0SPt5oFXnesjIeUSWPPtnt?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27183037-9740-4081-5fa4-08dee1182c8e
+X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 19:51:48.0934
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB5424
 
-Hi Bot,
 
+> New issues:
+> - [High] st1202_blink_set() destructively zeroes the PWM pattern 
+registers for all other active LED channels, forcing them dark and 
+breaking their steady states.
+
+This is an inherent hardware constraint. The LED1202 uses a single global
+pattern sequencer with shared timing registers, making it impossible for
+two channels to run independent blink configurations simultaneously. When
+blink_set() is called, the shared timing is reconfigured for the requested
+delays and other channels' PWM slots are set to LED_OFF so they remain
+dark rather than outputting unintended values. This behaviour is described
+in the commit message.
+
+> - [Medium] Blink brightness is hardcoded to maximum (`U8_MAX`), ignoring 
+user-configured levels.
+
+led_cdev->blink_brightness is set inside led_set_software_blink(), which
+is the fallback path taken when blink_set() is absent or returns non-zero.
+Since st1202_blink_set() returns 0 on success, led_set_software_blink() is
+never reached and blink_brightness is not updated by the core before our
+callback is invoked. Using it would risk reading 0 or a stale value from
+a previous software blink, causing the LED to blink invisibly. U8_MAX is
+intentional.
+
+> - [Low] The commit message description is not capitalized, violating LED 
+subsystem naming conventions.
+
+Noted, it would be fixed in v2 if it was necessary to send it because of
+code changes.
+ 
 > Pre-existing issues:
-> - [High] SMBus block read with a received length of 1 fails to NACK the final data byte in the ISR state machine, potentially causing a bus hang.
+> - [High] The sleepable st1202_brightness_set() function is incorrectly 
+assigned to the non-blocking brightness_set callback.
 
-You have a point, but it is a pre-existing side issue that is not the focus of this serie.
+This is a pre-existing issue outside the scope of this patch and will be
+addressed in a follow-up submission.
 
-> [Severity: High]
-> This is a pre-existing issue, but does this code properly handle the case where
-> the received length is 1?
-> 
-> When len is 1, the length is updated but we fail to set the I2CR_TXAK bit. Since
-> reading I2DR at the start of i2c_imx_isr_read_block_data_len() already initiated
-> reception of the final byte, doesn't the master end up ACKing the final byte
-> instead of NACKing it?
-
-It seems to be an OK argument.
-
-> 
-> If the slave holds SDA low, and we later try to generate a STOP condition in
-> i2c_imx_isr_read_continue():
-> 
-> 	if ((i2c_imx->msg->len - 1) == i2c_imx->msg_buf_idx) {
-> 		if (i2c_imx->is_lastmsg) {
-> 			/* ... */
-> 			temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
-> 			if (!(temp & I2CR_MSTA))
-> 				i2c_imx->stopped =  1;
-> 			temp &= ~(I2CR_MSTA | I2CR_MTX);
-> 			imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
-> 
-> Will the STOP fail and permanently hang the bus because SDA is held low?
-
-it was pre-existing. It is another issue to be checked, but I'd like to avoid
-widening the scope of this serie since it was already widely reviewed.
-
-I'll check for another specific patch for this case as a follow up. First, let's
-finalize this serie.
-
-Thanks,
-  Vincent
+--
+Manuel Fombuena
