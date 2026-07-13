@@ -1,171 +1,231 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF683B95E3;
-	Mon, 13 Jul 2026 23:27:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783985243; cv=none; b=LzorIFQZvx+hyXhfT6DmoSHrQAEn6f8pSowg+5OsEGE6OV/YO/yd3VVuWj7fLOjki7HuneILtLDgkAWou6LsyaZvHlhRtf+rKPwHIUs3T2T/wwYvrJ93ij+cDowLzfEd94KC6ZHcopt2rDBdEwcAB0dF5xSdEj+bMOd36DVJpUI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783985243; c=relaxed/simple;
-	bh=XJf98y7AoS4YfUWnQO9snJ/cXMlzoIoxg3AYArm9QYg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M+jkcp9+IJSxVFrJL78j+4DZtvoTn9GtL5ezk0BWrJ9Wh7CU37z3UL7qvuWoBCLvTxN+9JEg7sZG0J8xe5d+RsSlA6coVeSLcUjF9CbJo3BK6t+ZO2BRBiupUpkCxqey6cLl7C4JGa8S+iJrgaW0JOuT52uCrTXDMJgPUBjbqf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=gMJEvuUq; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE693769FE
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 23:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783985624; cv=pass; b=kV5jkN5OQKqiT/gxWAJwG0kSd7v2VrwVXNWUhxNGkZSQtz/khpMArL9YXaQg9mFD2UvIkDYAPw7S6LW6EtNrHGmcqm+B7Wwmmwo6TOw4ccTCScnQANIii5imxVDI/OxMPzB+d3TkGb/KxzojvIRh7Lky31Wu3mycijfFT1jEao8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783985624; c=relaxed/simple;
+	bh=hZrF5S3QhBMdU5APU243gVlQHnhbvgo7HqGiIL7AAh4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sT5GN0usGfSGLwV3IOrnzrJ1CTCxcbwOfu0sdUpkgUPgJh28W53Hjp5XyPDUYpFGMHnmZNVsrdMMsjMuDiZyxiLSLawCvzraY6moTlk/GLJbnRQzNdXaNwkJuuUzJz72cbjRlX/d0smFfHZXC7VypOIPCPtx0Scdx3hmV2gZaRc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GKuGEBpF; arc=pass smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="gMJEvuUq"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B96471199D6;
-	Tue, 14 Jul 2026 01:27:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1783985239;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=o/GWt+QYwjps3nuPm/JnZPXVZxL4jie70yU+1vvQkXQ=;
-	b=gMJEvuUqg81bjNsTgnh035UVY7LVDJJ10izi42gcm5MqLgScHqnlrL94Sqsu7Dd/qlDrgG
-	BdFv2bv0ghsc9Vahy2lYASm/Q4TSVxDf2oGv9y+e8KUzif9cFxzJ9wgCtgKyUCY4wLz/f6
-	wkLg7/LeY3DQfXMwQDJFtnWR9yGSUbSoXgoak/QOl8pGe/p/aX/TzFn076rsXed4505q02
-	/9qRGm5iqObje5ilJCmnP/SpTw0rQeg2X6r6aUEJTfbvVuF38mIDeEWn04OkaSSY7pdi4P
-	sWARCur1GDh+AIFrl15OHEtM1yIGRjQguqJkqLHixaJcYNq6yZc9c66nWRcLoQ==
-Message-ID: <aa134d00-df3d-4f0a-a598-4aea512d3cd0@nabladev.com>
-Date: Mon, 13 Jul 2026 18:41:02 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GKuGEBpF"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-493c556ada3so24545e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 16:33:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783985621; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PmIwondOiTFHSmo7burqV6dUcE1JeujKxS1WAYVBLElTFR+Zj+GgMIVczCMzluJBZm
+         WO7ZfjDtAKXB8S3MK72rIRiLW7I4pkx8esSts6qmIR22a4VDXWuMO+KbQXs8cxMZsC4P
+         eFCTlx0N564fdqibL3cuw0zuDMPkIeamlgIgVBmxQBK8dXcd8PV2AE1ikfYIX8IPb4iv
+         oht0ExkUtA9Z6GSl0simvkwailowiDjdKuccb1TyU6w5vUiq6YBSZnUxDiqB2QwMeYIH
+         dugzISrEL8/+UD5OmymktFUj7Dwwnta+KPRMtlP+AwONJtwt1UX5psBxlY9ZAAhCSMM9
+         dfZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=MhJXcRMH8N66F7+XzpKxCwXc3ej7YKBd+Nc2fID/XdY=;
+        fh=/cDIxB4Vcf19YVslA4yoBQlqdvfSx8wwTom34ErAjxc=;
+        b=blxDr2TWk+J5PAMHzo+qfF887YkXscLNnHuVBbOsH1lOX4ha9wlHlMjheCywhuFj/8
+         cYtnfPhUbH0OiOOmSruZqROcFTOYBy5SNPXsyCmyFroHvDcJMMGhkU4IQjxb8p1ml/y0
+         6S5jynZ40gocJc4wIkTDq57MgVj/0JTbzEZfVcZ1GzcNNfPxGTPFdmEOjbFCCqMRKLvd
+         zvKnGGgKTV8nvnjHdK8lvmN09OHxmhHfaKdaivRE9KG4YGrRNgRA5FsXW9UhuF3O61Ch
+         hzMmSnxvp48Ru7Z08CoOwvsj5BsH6fTu890fjyAJ8rhvZFpUNNVhaD76gfZgE1OSfZhJ
+         xgAA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783985621; x=1784590421; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=MhJXcRMH8N66F7+XzpKxCwXc3ej7YKBd+Nc2fID/XdY=;
+        b=GKuGEBpFhZpiYBGc8G1krUGRlkpGZUEk5XuGf0ORmOnYr//bHm8ncdzAUNKXYJStou
+         PiT6/FrZyZBdjo3AW6iXFY6ZsVs9hIG3Tk+VjH1CSostxzALxSwkK2snw2i0eGryEURj
+         1HZpTU4WU3CXzSBu+L9L7H+FceEtXmuu9TtIWz+3ELCl/VVjNdBc0tre7C2nWoU+nTk/
+         sVALxVSN5sUG15Hx8QHcbIdXwt6TfegKzVhjkcXU9C2+cU55/2WBD6QegjL0K4En+/GX
+         W/g2VkcP/Vb5pUtjwatDBlY7rpocXxGaQNtmnZYhLxoEpL6D+wNXIG02b6yqUvNFGyW6
+         Jppg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783985621; x=1784590421;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MhJXcRMH8N66F7+XzpKxCwXc3ej7YKBd+Nc2fID/XdY=;
+        b=A393VIPAvnQ/4WhFIEBDonyRLx3EPTcqKs1KSb3FbOI+18YjrtZQnTNHf/JAaTK2Hd
+         qQCtZ70J12GDtnySiAmRxlBHV0CxAF32zcjTi2bcUk8g41Zbv35bwQnGBfwv8aNTHEEa
+         RvVkBhHrURsx1Ckod49wNDjRaK0S8C6dRWY+ThbGhNumwTsl4h6HDN16svJHrpwwyEpx
+         lNag/ktUDs0JIIeHJqGqtDAX+A4IvdgyNZvhFxIsD9i9yEEN4ynyJ2nbMUARLPneETxh
+         Rwk6UWJZbMi6fMXvNWQMsE/NZF2od2cGbjoMtLP+qbZVdArpD2DwqsVkbxgk0YRkfjdY
+         cBbQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrFZY2EqYW5blt09tHr58B2ocNoAplEpmpmFnykUwe+AYbPnq3b2yU7/ccSNy80TblvKWRY2zoj5D3/lyANjIg=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywse4DgkVRRz1JoJ4FRfCyKpxDsjgcTgMA4Vah77xlS8abbAa+v
+	2xR9Jt8MPN8Wpi5VMDhGzmaSo6mm59f8AVI3MAQpK+BLumPnsNrXGr1rt72TabPC//EaEHW0mPi
+	h91BmKoKnW9x9dERFAMSBADmCz2snX2DE76OJwYGN
+X-Gm-Gg: AfdE7clSS6m8oIBaH6zlanJ/X1Jpk64093EfyC5NpRzQUxEy1DmI0QM5XQ23b/a+oex
+	AJ4DVMw+IzfB0OaIvY5SLHWk8ESqN/7UqKVz8qaNho/GeYaqLFVQOv6OIAzr1Gs+i/8NSy+xOAV
+	+0MiudxibKxqEVCoO/FZGLahR25NzORsQlcIN0/KJajfbqvYT9yhSdfZLysBpzXUR8l7nds35s0
+	7A+4QZAFcn+lzxg8j9Gdul72sm0xjZhMPDCDR3bL5VkcW3PiDweUomUNab0bIcXUG9ToXq1pO0k
+	7BvxwPvzqpuBAPUIB7VICjAyqnA=
+X-Received: by 2002:a05:600c:b48:b0:490:b2ae:44ca with SMTP id
+ 5b1f17b1804b1-4946215449cmr864595e9.5.1783985620885; Mon, 13 Jul 2026
+ 16:33:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs
- for Data Modul i.MX8M Mini and Plus eDM SBC
-To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev, robh@kernel.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260705200534.151803-1-marex@nabladev.com>
- <20260705200534.151803-6-marex@nabladev.com>
- <20260705202221.E99291F000E9@smtp.kernel.org> <alUJIlUUo98_x0Lm@SMW015318>
-Content-Language: en-US
-From: Marek Vasut <marex@nabladev.com>
-In-Reply-To: <alUJIlUUo98_x0Lm@SMW015318>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+References: <20260703080922.1838362-1-shoubaineng@gmail.com>
+ <20260710105740.3080070-1-shoubaineng@gmail.com> <20260710110645.079DC1F000E9@smtp.kernel.org>
+ <CABdmKX2xt6diYwCs32E7HNL8ULepDfrDQ20iB+HVw5o-pCd0xg@mail.gmail.com> <CAGCp47yZ4fWbuAg7HPPS0bknaTk88dPOVfCzc8J+H7-u4wM7bQ@mail.gmail.com>
+In-Reply-To: <CAGCp47yZ4fWbuAg7HPPS0bknaTk88dPOVfCzc8J+H7-u4wM7bQ@mail.gmail.com>
+From: "T.J. Mercier" <tjmercier@google.com>
+Date: Mon, 13 Jul 2026 16:33:29 -0700
+X-Gm-Features: AUfX_my0yOr8TW87vRlRgOFPapFZNgD4NX0kk5EWNSKtxsDMxsrk5E5tdSr98o8
+Message-ID: <CABdmKX21NHc2=9Sk2F-BFpu6is0vTg-QXLE+wiFNEPdsWWjvog@mail.gmail.com>
+Subject: Re: [PATCH v2] dma-buf: dma-heap: don't publish fd before
+ copy_to_user() succeeds
+To: =?UTF-8?B?5a+/5p+P6IO9?= <shoubaineng@gmail.com>
+Cc: gaoxiang17@xiaomi.com, dri-devel@lists.freedesktop.org, 
+	sashiko-reviews@lists.linux.dev, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, 
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>, Brian Starkey <Brian.Starkey@arm.com>, 
+	John Stultz <jstultz@google.com>, Sandeep Patil <sspatil@android.com>, 
+	"Andrew F . Davis" <afd@ti.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/13/26 5:49 PM, Frank Li wrote:
-> On Sun, Jul 05, 2026 at 08:22:21PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->> - [High] The SAI2 interface is incorrectly configured with `fsl,sai-asynchronous` and an invalid `fsl,sai-bit-clock-swap` property, leading to audio capture and playback failure.
->> - [Medium] The overlays instantiate new `clock-controller` nodes at the exact same unit addresses as the existing `sai5` nodes, causing DTC warnings and resource conflicts.
->> - [Medium] Missing interrupt override for the PCA9554 GPIO expander in the i.MX8MP overlay causes the device to listen on a dead interrupt line.
->> - [Medium] The commit message claims features that are not implemented in the patch.
->> --
->>
->> commit 1e6ee57031100e82b436dac299b0eed194860d5b
->> Author: Marek Vasut <marex@nabladev.com>
->>
->> arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs for Data Modul i.MX8M Mini and Plus eDM SBC
->>
->> This commit adds device tree overlays for the eDM-MOD-iMX8Mm-FIO1-Audio
->> feature connector expansion module. It provides support for the SGTL5000
->> codec, CAN, I2C, SPI, and other peripherals on the i.MX8M Mini and Plus
->> boards.
->>
->>> Add DT overlay for feature connector expansion module eDM-MOD-iMX8Mm-FIO1-Audio
->>> providing additional UARTs, CAN, PWM Beeper, I2C, SPI, GPIO breakout and
->>> SGTL5000 codec. This adapter can be optionally populated onto the eDM SBC.
->>
->> [Severity: Medium]
->> Is the commit message accurate regarding the features provided?
->>
->> The FIO1-Audio overlay only seems to enable a single UART (uart2, while uart4
->> is disabled) and doesn't contain a pwm-beeper node or PWM pin configuration.
->>
->> Could the commit message be updated to reflect only the features actually
->> implemented in this variant?
->>
->>> diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
->> [ ... ]
->>> +	gpio_feature: io-expander@20 {
->>> +		compatible = "nxp,pca9554";
->>> +		reg = <0x20>;
->>> +		#gpio-cells = <2>;
->>> +		gpio-controller;
->>> +		#interrupt-cells = <2>;
->>> +		interrupt-controller;
->>> +		interrupt-parent = <&gpio5>;
->>> +		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
->>
->> [Severity: Medium]
->> Since this file is shared between i.MX8MM and i.MX8MP overlays, does the
->> interrupt configuration need to be overridden for i.MX8MP?
->>
->> On the i.MX8MP baseboard, this feature connector signal seems to be physically
->> routed to GPIO1_IO08 instead of GPIO5_IO04. The i.MX8MP overlay doesn't
->> currently override these properties for gpio_feature, which might cause the
->> expander to listen on a dead interrupt line.
-> 
-> please check this
+On Fri, Jul 10, 2026 at 9:18=E2=80=AFPM =E5=AF=BF=E6=9F=8F=E8=83=BD <shouba=
+ineng@gmail.com> wrote:
+>
+> Hi T.J.,
+>
+> Thanks for the review.
+>
+> You are right, the export tracing was inadvertently lost when splitting
+> dma_buf_fd() apart. I've fixed it in v3 by introducing a new
+> dma_buf_fd_install() helper in dma-buf.c that wraps the DMA_BUF_TRACE
+> call together with fd_install(), and using that in dma-heap.c instead
+> of a bare fd_install(). The trace event fires after copy_to_user()
+> succeeds, just before the fd becomes visible to userspace =E2=80=94 the s=
+ame
+> observable moment as before.
+>
+>
+> Baineng
 
-Its GPIO5_IO04 on both MX8MM and MX8MP.
+Thanks Baineng, that LGTM.  Please have my RB:
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
 
->> [ ... ]
->>> +&sai2 {
->>> +	pinctrl-names = "default";
->>> +	pinctrl-0 = <&pinctrl_sai2>;
->>> +	assigned-clock-rates = <24576000>;
->>> +	fsl,sai-asynchronous;
->>
->> [Severity: High]
->> Does disabling internal synchronization between the TX and RX halves of the
->> SAI block break audio?
->>
->> The SGTL5000 codec only has a single set of I2S clocks, and the pinmux
->> settings only route one clock pair. This leaves the other half of the SAI
->> physically disconnected from any clock source.
->>
->> [ ... ]
->>> diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
->> [ ... ]
->>> +&sai2 {
->>> +	assigned-clocks = <&clk IMX8MM_CLK_SAI2>;
->>> +	assigned-clock-parents = <&clk IMX8MM_AUDIO_PLL1_OUT>;
->>> +	fsl,sai-bit-clock-swap;
->>
->> [Severity: High]
->> Is fsl,sai-bit-clock-swap intended to fix the asynchronous clocking issue?
->>
->> This property is a downstream vendor leftover that does not exist in
->> mainline device tree bindings and is ignored by the upstream fsl_sai.c
->> driver. Should fsl,sai-asynchronous be removed from the shared .dtsi
->> instead so the SAI can operate in synchronous mode?
-> 
-> Please check this ?
+You'll probably want to resend this with a "[PATCH v3]" subject though.
 
-dc06cf4268a4 ("ASoC: fsl_sai: Add RX/TX BCLK swap support") implements 
-"fsl,sai-bit-clock-swap" so this is AI being confused.
+Originally I wasn't sure if we really needed dma_buf_fd_install
+exported, but I looked around and see that fastrpc_dmabuf_alloc
+(drivers/misc/fastrpc.c), gntdev_ioctl_dmabuf_exp_from_refs
+(drivers/xen/gntdev-dmabuf.c), and I think video_usercopy
+(drivers/media/v4l2-core/v4l2-ioctl.c) also suffer from this same
+problem. Want to take a stab at those too? :)
 
->> [ ... ]
->>> +&spba2 {
->>> +	#address-cells = <1>;
->>> +	#size-cells = <1>;
->>> +
->>> +	sai5clk: clock-controller@30050000 {	/* SAI5 */
+-T.J.
+
+
+>
+> T.J. Mercier <tjmercier@google.com> =E4=BA=8E2026=E5=B9=B47=E6=9C=8811=E6=
+=97=A5=E5=91=A8=E5=85=AD 04:20=E5=86=99=E9=81=93=EF=BC=9A
 >>
->> [Severity: Medium]
->> Does declaring a new node here cause a duplicate unit-address warning and
->> potential resource conflicts?
+>> On Fri, Jul 10, 2026 at 4:06=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>> >
+>> > Thank you for your contribution! Sashiko AI review found 1 potential i=
+ssue(s) to consider:
+>> > - [Medium] Bypassing the standard dma_buf_fd() API skips the emission =
+of the trace_dma_buf_fd tracepoint.
+>> > --
+>> >
+>> > --- Patch [1]: [PATCH v2] dma-buf: dma-heap: don't publish fd before c=
+opy_to_user() succeeds ---
+>> > commit 869904722955c74d0c6e8c974d3c64c6befabac6
+>> > Author: Baineng Shou <shoubaineng@gmail.com>
+>> >
+>> > dma-buf: dma-heap: don't publish fd before copy_to_user() succeeds
+>> >
+>> > This commit restructures DMA_HEAP_IOCTL_ALLOC to delay publishing the
+>> > file descriptor until after copy_to_user() succeeds. It open-codes the
+>> > fd allocation and installation steps instead of using dma_buf_fd() to
+>> > prevent an fd leak on copy_to_user() failure.
+>> >
+>> > Link: https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a=
+8f7f62@amd.com/
+>> >
+>> > > diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
+>> > > index 3937dd41bb0f6..983dee947c851 100644
+>> > > --- a/drivers/dma-buf/dma-heap.c
+>> > > +++ b/drivers/dma-buf/dma-heap.c
+>> > [ ... ]
+>> > > @@ -175,15 +162,28 @@ static long dma_heap_ioctl(struct file *file, =
+unsigned int ucmd,
+>> > >
+>> > >       switch (kcmd) {
+>> > >       case DMA_HEAP_IOCTL_ALLOC:
+>> > > -             ret =3D dma_heap_ioctl_allocate(file, kdata);
+>> > > +             dmabuf =3D dma_heap_ioctl_allocate(file, kdata);
+>> > > +
+>> > > +             if (IS_ERR(dmabuf)) {
+>> > > +                     ret =3D PTR_ERR(dmabuf);
+>> > > +                     break;
+>> > > +             }
+>> > > +
+>> > > +             fd =3D ((struct dma_heap_allocation_data *)kdata)->fd;
+>> > > +             if (copy_to_user((void __user *)arg, kdata, out_size) =
+!=3D 0) {
+>> > > +                     put_unused_fd(fd);
+>> > > +                     dma_buf_put(dmabuf);
+>> > > +                     ret =3D -EFAULT;
+>> > > +             } else {
+>> > > +                     fd_install(fd, dmabuf->file);
+>> >
+>> > [Severity: Medium]
+>> > By open-coding the fd reservation and installation here instead of usi=
+ng
+>> > dma_buf_fd(), does this skip the emission of the trace_dma_buf_fd trac=
+epoint?
+>> >
+>> > If so, observability tools, BPF scripts, and perf tracing relying on
+>> > trace_dma_buf_fd to map dmabufs to file descriptors will silently miss=
+ all
+>> > allocations originating from the dma-heap subsystem.
 >>
->> The base SoC .dtsi files already define sai5: sai@30050000 at this exact
->> address. Because the node names differ (clock-controller vs sai), DTC will
->> create two distinct sibling nodes rather than merging them.
+>> Hi Xiang Gao,
 >>
->> If the baseboard enables the existing &sai5 node, both drivers could attempt
->> to map the identical physical MMIO region using devm_platform_ioremap_resource,
->> causing a -EBUSY error. Should this overlay reference the existing &sai5 node
->> by label instead?
-> 
-> Make sense, please check it.
-No, it won't, the other node is sai@... so this is a non-issue too.
+>> It looks like this change in its current form breaks the export
+>> tracing that you introduced. It looks fixable by adding a call to
+>> DMA_BUF_TRACE in after copy_to_user in dma_heap_ioctl. However I'm
+>> wondering if you're aware of the dmabuf iterator that traverses the
+>> dmabuf_list? I've backported it to 5.10, so it's available on all our
+>> kernels: https://r.android.com/q/Iaeda328f7693acc1506269c12cac5e7955e5c0=
+91
+>> Someone else from Xiaomi even helped with the 6.12 backport. So I
+>> guess I'm wondering if the dmabuf iterator would work for you instead
+>> of the tracepoints.
+>>
+>> Thanks,
+>> T.J.
+>>
+>> > > +             }
+>> > > +
+>> > >               break;
+>> > >       default:
+>> > >               ret =3D -ENOTTY;
+>> > >               goto err;
+>> > >       }
+>> >
+>> > --
+>> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710105740=
+.3080070-1-shoubaineng@gmail.com?part=3D1
