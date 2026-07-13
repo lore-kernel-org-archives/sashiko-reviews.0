@@ -1,167 +1,141 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazolkn19010006.outbound.protection.outlook.com [52.103.32.6])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2231283E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 19:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.6
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783972312; cv=fail; b=XRWP5PfnbW31jIgoJRsEm7sSEN3aCJpIcITOmv/PoJSeUAkkGk8Y93FKlDzA7RaGEbyc4gi+kxzFgSoo6HZzXJmBz2TNYRg+vwN2WMfgqtwTOk8TlHHFfff0kQiJcZyM6KYWc1PVkh3g3AbcVO7s1/T8QV7udeFZJZ/0GEZFzs8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783972312; c=relaxed/simple;
-	bh=8vVXV757Ihr3uf4lKKq5WCnRJz5NuHDFTg2CxmTmQ5Q=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 Content-Type:MIME-Version; b=mhmVmIHhtXkmy31EV9+7F/hLW0c/+3reVgFw/NnZiSiam8xJ77Z10ILvkwOr0vX+4jN3/+jdS/xoOxiISY5trx72B3n6dRLKcblhpd0NgZCTLqxQLTpiqMNC2jkGK4bZ/U0/KIl6Ra84feWP0qXPFDNkI4CUSMVX2vvW9/63Yjc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=cWbgQGux; arc=fail smtp.client-ip=52.103.32.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E6234DB74;
+	Mon, 13 Jul 2026 20:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783974809; cv=none; b=QiSOUZUtkKOSGwcas9w10xvyvHLW/z3Jd5PyAi97nzVhZnPoBV+2YNBWN7nMjkScu1EoteecjAOcy/TbP/HpQDgHM3j4TRZHuyU7d6oZ0f8rULTOGbM+eWYzwfRr6JcVixart1TDVR40wCO+QuIF4RVK2dRrd8hGNxsxPDRdmc4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783974809; c=relaxed/simple;
+	bh=BzXnWYycZtrsC4eYp80TBiwS/8l9vkPcVQHMfEwIaHM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YrVF1NO5lRK9+8mhfU1d3GmGNhE1uwkmDl/0d9sn0UUQ9HWdlfbx3uk8pNM/NXSH9qIl2xGvKh7f7fVx3im6KxGW+m3lzKy1CqcBwwCDJU5pDJcII/hlGdq0s3bwHvjdo91a63cObXOJJl5mkXbCJvqo3lP0WugN1LHK7nI9i10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+njEd0h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="cWbgQGux"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XLFOsrykkmjhhrQmH6Dks8/4vHYkcYihcfL4eJooU9s0j4Qv0QzOd8ixkMB7QeLT8bHESlOio0AgVdcsYQvf/Dxq3KJ67ksl/AANEWvpD2Bmm26Q6o2nF9jmh1rouzBC0/h9c36rcnq5AcZaoeB+9Drq7GQu2SKjzyvHkig4oBuSL3rMbadOXZ2DwT9fj8IWDcv0Q35GvQTYc/QzcLeTIBNxodkXfYAeXmlVVPccamN30fQf+PIaV12FWoG5fFWlVpLmbrjrwiX5rTlIutymWgRVGCgu0RqQ0dGtjN7SCmdfyHXsKL4rXuGSHnoK7N7/cg7C2ZAm/gyF2W2Qol0gng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Sz7zL3bIwsPntLrICKuwxg0AyUymej2pJo+CbLeqgOo=;
- b=P3gg5AHvyAuFaqyIyP0C7iQskCkaEFjLJiqPR7QMCfxJR6qbyWSdpN1CsZWl29R7ZaRKZge3DNibWPbidVXntRr8N5HgAbrQ9dFs9BRWGSDRMVIAn9wChUzMZzfXGs7txcSHyu5YQjjvN4X+yKhA8idn5liYetr6yLUQvpKwT8GcGJFhTPD6QIPj9MfLXBoHSQUMOQg/Zytu7my0jIZbP/F2AlVz6Jf3DnPche52ArLw9DSYdG9Y+qIJ784mXW2CSK9/42CLScTCd2FEw5mdRWAPhWoQ+9L9ynDV5Pok+kXLSTlWiX/E6mRCjTVdgjOnGNWP3u8pGPnQw/OVhEM5Hw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Sz7zL3bIwsPntLrICKuwxg0AyUymej2pJo+CbLeqgOo=;
- b=cWbgQGuxde13kAAEXj6dF85Ut/28uRmxLMwb6tHChFgwbeH5km8IQLACcJNIaxGohNuDqwK64h/pS9vs59V5dM1bOL3ht5pK0wzQX7lQwwwiWqQVEcNZChVJoMH9Of5EnKqeLPM/kXhA+YYq+skEfBVKwSBSt6IWVkNlPVr4zYE5pu053DCgN2jrQTxtg5G1wzVErVnAja/AgmehDxlxbF5MRKY+KtCz3UFTwqBZq+b9dV/jEWfnsnHKzs4FNkwN4o0kun1RtaSYDrg2iaGwvme6TrtxBAWa6Md6x3U3vvDQQTwSE840ko+LdGLKrtLySHJIR606Vo27I4gwox1GaQ==
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
- by VI1PR08MB5424.eurprd08.prod.outlook.com (2603:10a6:803:136::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
- 2026 19:51:48 +0000
-Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
- ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
- 19:51:48 +0000
-Date: Mon, 13 Jul 2026 20:51:40 +0100 (BST)
-From: Manuel Fombuena <fombuena@outlook.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+njEd0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBFA1F00A3A;
+	Mon, 13 Jul 2026 20:33:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783974807;
+	bh=cRkPSO91bFeK9182PS7Iusjus+5qu8ApU8Ds9AgNKO4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=J+njEd0hPiFuXkUjQ/5/i4upvCIBDFBxs5vg2NHF4FYvEtDBeJ2cQFRJ6WMOdltt3
+	 bhGNcW0smNWjC0n74L8kCC2kRofEcyhYc2Kr8xwHYfivqAtpQfQDLdjjVDjxBbkKGR
+	 Jpg/eoQXMiuhQnn60IG1UvMB6h3h+qAADqWo9xTtEkZX5mQRMm1HdgrgPNRkjaLxgm
+	 e3yK6LKKTrHFnHzComDtHn57rf6bbj2AE7FoF4OuARZ/Ax3TeR5K8+u8JIr34Em2Al
+	 A6HZOHiqshYEF5LoGvbAxzzufWMf4qVkrQgFkoXWPA60x+zKUrO9GEuhdLxe8QWoqA
+	 DIzyfOj+yZhGQ==
+Date: Mon, 13 Jul 2026 13:33:26 -0700
+From: Namhyung Kim <namhyung@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-cc: linux-leds@vger.kernel.org, lee@kernel.org
-Subject: Re: [PATCH 1/1] leds: st1202: add hardware-accelerated blink
- support
-In-Reply-To: <20260713153713.962DC1F00A3A@smtp.kernel.org>
-Message-ID:
- <GV1PR08MB8497264D9FF91843D6F2FE8AC5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
-References: <GV1PR08MB8497C5B8CEB2CE19743DFCFFC5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com> <GV1PR08MB84973ADB74B084B108FFE389C5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com> <20260713153713.962DC1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=US-ASCII
-X-ClientProxiedBy: LO4P265CA0012.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2ad::7) To GV1PR08MB8497.eurprd08.prod.outlook.com
- (2603:10a6:150:81::22)
-X-Microsoft-Original-Message-ID:
- <4aed7752-6ce4-75b0-574d-a3a0bf64f532@outlook.com>
+Cc: Trevor Allison <tallison@redhat.com>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 3/3] perf x86: Add .note.gnu.property to assembly linked
+ into perf
+Message-ID: <alVLlpmtps__MBCl@google.com>
+References: <20260708045606.43649-1-tallison@redhat.com>
+ <20260708045606.43649-4-tallison@redhat.com>
+ <20260708050839.BD9491F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|VI1PR08MB5424:EE_
-X-MS-Office365-Filtering-Correlation-Id: 27183037-9740-4081-5fa4-08dee1182c8e
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|23021999003|5072599009|25010399006|37011999003|6090799003|24021099003|51005399006|15080799012|19110799012|8060799015|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Bmszdo7SOmMvZj6GjstRrZKoFXzR1yO6FMZ0pW/UxJhtEhB0UC3qbBO2jmze?=
- =?us-ascii?Q?ay3y3ZdJOISBWdZ1TsADPI/mJyDhKzxOZv6wOHdxj8/BrdkRF9tAd8lE45rj?=
- =?us-ascii?Q?0bZLIidW9aKqXiIp4bZq0bEjzweMqMXnpyDn0VB1N0mwQVCZPIRl97Ktb8fF?=
- =?us-ascii?Q?RXJD/QjfKNQ5clX9MdVGhEX3ODMTpb3cyfHYBe+B0d/SjLtMyjlZNNfgwhY3?=
- =?us-ascii?Q?qDlpm/GCViSUzRsROqIBix+jrBZm4Hmo1UDIRbUxNKMtmCJDU/r4xMV+3KMv?=
- =?us-ascii?Q?HYU46/E+cR8P+yfAWlrl5csXa1bddJ1SODi7jk8abSZW6nF2va52xi6AAlsd?=
- =?us-ascii?Q?NS0TNGNykCQvhjh4Ss+hC47VBkTbpW0MC3Unh5Pqm5Z3tGuFQZ+mMy6X0It9?=
- =?us-ascii?Q?zJp1TEe28xDKc2v4gI5Z28rdzmlEfmbX+nbp9axuwp7VKtBr1mFflNfay/yp?=
- =?us-ascii?Q?MjzHlosDAOw4mdS2sCPE548ENTRE+jPRiLx2jAsZxZ0dred8dpBPbuzQL0hX?=
- =?us-ascii?Q?CmH6EF7O6ZusM4pdXplWQkCVSv/EnJ3EA0ctGI9GvpS6QFjUB0G8TD5YbgDv?=
- =?us-ascii?Q?29yoAbioO6fJ2Ph2oTdMLeYHjMi/4idW2XeluJ5+T5gq6Y6AwiT3i56ys1fn?=
- =?us-ascii?Q?JuuXqqKvW/mmbrp+WA2C6kS1NoCRKWvCqdkaHB1q7zijJW2MV0tOIR74pJkp?=
- =?us-ascii?Q?aiamsBbeoU6WdRq29I6h13TXmwt9UEjWHNgDULuJXg6Fn7oq3KiFvJ2RkuoF?=
- =?us-ascii?Q?rgvNLaRLurFKISo/tIyAShGptPQz+c2JeABTiVua1m48n1j6djnlYqoQzbuQ?=
- =?us-ascii?Q?llumWlJWnKqTn2QPNswSnjINDTDjwXe9kF81AFaIvQgWU0DEeq4UChz6eLzw?=
- =?us-ascii?Q?wUx5g+qHaaD49HWulmmt9qXHyRlbu8iuu72C0oUOq7/6kmIw818h9VvEnDV7?=
- =?us-ascii?Q?u0KNoe31rY3KtdUYiLZMLkpY4Mg+M19/pMMI8JEJErf6v9JDdB8QAtggahG0?=
- =?us-ascii?Q?RTZC?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?hlZKl3vzTd27CoO8xFyBBCmz7wy21aiyIR3WKUfb8vOXroxH8TDBtHq20Mnp?=
- =?us-ascii?Q?yG5gGiZrEIP+gv9lcqDHVW4UQrUp200IPVbRVL//5YSA93XQbHsHGlbyoICk?=
- =?us-ascii?Q?SExgk1F5R78LBe56m0Cnmmq3J90zwe1L3nBWyTFfbhm1+Hv2Nal2XSDyHvrf?=
- =?us-ascii?Q?wSYQmcDJS0IziVyPopd94wDC2oC3FYtUQqLPtoUrV6Q2eWp5yO4YgELtpv+D?=
- =?us-ascii?Q?kEbccottpQ6BEDh6Zc7tcEcZcCYLg6y9WiFCZ11rWHTkgVaHucjvSBTLzQFd?=
- =?us-ascii?Q?yPrIjB/9gvUX/NeMtcrwy/qkr54kHNbDksO9yHTYjfW1p8xVlQbczj9vzGfB?=
- =?us-ascii?Q?NI7LvDNDAmxsXzplN8wTxIDm4Vym+yzR//bHhQhJu6YgRU0Gs9tD0Nl4ykHs?=
- =?us-ascii?Q?lj6np6OPhGfkjs9nEaNF0Dy3IzO94qXshW5Y51Aux7OSjyWiN9rbMDgw+BJn?=
- =?us-ascii?Q?sdg8jO83VQE7s8ywCMuOAcj6Wq+8ZXqYdr1xZtRy+2Revdc2G9Kh6XTpKmZx?=
- =?us-ascii?Q?Qbm3BFsnPIq6MgV0odk5yVpgDjUmEamOZ9/L71vUJ+Dnc0NjS7jefW/v3F9e?=
- =?us-ascii?Q?52s5XucSs+uwTRaYLN1/rX1t3Gb1568m3/7JlL+3yArNSmw4AnbkgraosnST?=
- =?us-ascii?Q?0X6azPhUAcMVD8v3Bt4Gu8MHKoqDi3I9UgLowxPLpZu5YAuuoYzgGe2c1Z81?=
- =?us-ascii?Q?LGNYC/06sUa7Mbpc41Jncq4t6Vrd25SkNDrFO3QwIAq5f0PHRXc2GFTyFtLr?=
- =?us-ascii?Q?pciHe9x+aZCtAtR1z/qMd6MbhHjZh3mHMxP0wtI2dsdHhIoqgdRiJVdWLqRV?=
- =?us-ascii?Q?aVyvHLKikQFJpWWdbK0dLFdvhlU8DRj+QB44m5+hv8c1I6G5hbZ5dS1xjGDo?=
- =?us-ascii?Q?Pxz5CpRjN1xfPGKZha8q4sOABdpn1eb44Tfi3LN4f4FYZK8QzKWZezMu+kiK?=
- =?us-ascii?Q?W644wwY9QU4RmRKXILY2vTPULanA8EjBdjNxTnWx4b8SIPVBf8OOZfncKFe7?=
- =?us-ascii?Q?ANblI0CgzKzOSQPimB+lkjcLC7f/kIu0UPOhf6CFagL3lejiEUza1skQHede?=
- =?us-ascii?Q?cezjtheZOxriDYvyNj2C3Qo8BhMTKhJgNds72AHfzNGEtW84hMxWpqW2a1CA?=
- =?us-ascii?Q?+WbA+oRXrJQ97xtkR7+l5FI+vstEwoVZKcwvS1bRkrWIjubGNpq6Kg2Hh7cZ?=
- =?us-ascii?Q?JyXg6b8EouqDNGeVsrQqcZDN/dwiwWWgNh5meyiUFYuJaHMG2ME4RTcuXM21?=
- =?us-ascii?Q?1FT2CGyu4QdWQVZxqaig8sf7OGNi8f9i9iTxjTiRDAcgJzRrgm0t6gi9Wn2P?=
- =?us-ascii?Q?3GXMEi8BJkKOVaiquGkX38w9VINjZJX4NgXI02fZI2kuG1uN1aCNaYMkbF1F?=
- =?us-ascii?Q?nwpmgKnwjbhYHt54THOZyv/FkW6g4Ua0sPdjMJlLp/Q6mEVS3+fggkztBpRj?=
- =?us-ascii?Q?RX3FOOjKYW0SPt5oFXnesjIeUSWPPtnt?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27183037-9740-4081-5fa4-08dee1182c8e
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 19:51:48.0934
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB5424
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260708050839.BD9491F000E9@smtp.kernel.org>
 
+Hello,
 
-> New issues:
-> - [High] st1202_blink_set() destructively zeroes the PWM pattern 
-registers for all other active LED channels, forcing them dark and 
-breaking their steady states.
+On Wed, Jul 08, 2026 at 05:08:39AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Adding .note.gnu.property asserts IBT support without providing ENDBR64 instructions, causing a #CP crash in perf memory benchmarks.
+> - [Medium] The .note.gnu.property section hardcodes 8-byte alignment, violating the 32-bit x86 ELF specification.
+> --
 
-This is an inherent hardware constraint. The LED1202 uses a single global
-pattern sequencer with shared timing registers, making it impossible for
-two channels to run independent blink configurations simultaneously. When
-blink_set() is called, the shared timing is reconfigured for the requested
-delays and other channels' PWM slots are set to LED_OFF so they remain
-dark rather than outputting unintended values. This behaviour is described
-in the commit message.
+Can you please take a look and address the both comments?
 
-> - [Medium] Blink brightness is hardcoded to maximum (`U8_MAX`), ignoring 
-user-configured levels.
+Thanks,
+Namhyung
 
-led_cdev->blink_brightness is set inside led_set_software_blink(), which
-is the fallback path taken when blink_set() is absent or returns non-zero.
-Since st1202_blink_set() returns 0 on success, led_set_software_blink() is
-never reached and blink_brightness is not updated by the core before our
-callback is invoked. Using it would risk reading 0 or a stale value from
-a previous software blink, causing the LED to blink invisibly. U8_MAX is
-intentional.
-
-> - [Low] The commit message description is not capitalized, violating LED 
-subsystem naming conventions.
-
-Noted, it would be fixed in v2 if it was necessary to send it because of
-code changes.
- 
-> Pre-existing issues:
-> - [High] The sleepable st1202_brightness_set() function is incorrectly 
-assigned to the non-blocking brightness_set callback.
-
-This is a pre-existing issue outside the scope of this patch and will be
-addressed in a follow-up submission.
-
---
-Manuel Fombuena
+> 
+> --- Patch [3]: [PATCH 3/3] perf x86: Add .note.gnu.property to assembly linked into perf ---
+> commit b48d7edb7fb18bc3dace2af272de108eb561d69b
+> Author: Trevor Allison <tallison@redhat.com>
+> 
+> perf x86: Add .note.gnu.property to assembly linked into perf
+> 
+> This commit adds `.note.gnu.property` to x86 assembly files linked into
+> perf to indicate CET properties support. This is intended to prevent static
+> linking from dropping CET from the final binary.
+> 
+> > diff --git a/tools/perf/arch/x86/tests/regs_load.S b/tools/perf/arch/x86/tests/regs_load.S
+> > index 80f14f52e3f60..1947f95cceda5 100644
+> > --- a/tools/perf/arch/x86/tests/regs_load.S
+> > +++ b/tools/perf/arch/x86/tests/regs_load.S
+> [ ... ]
+> > @@ -97,3 +97,27 @@ SYM_FUNC_END(perf_regs_load)
+> >   * the ELF stack should not be restricted at all and set it RWX.
+> >   */
+> >  .section .note.GNU-stack,"",@progbits
+> > +
+> > +/*
+> > + * We need to provide .note.gnu.property section with IBT and SHSTK,
+> > + * saying that this object supports the same CET properties as C code
+> > + * built with -fcf-protection. Otherwise static linking drops CET from
+> > + * the final perf binary when other objects are CET-enabled.
+> > + */
+> > +	.pushsection .note.gnu.property, "a"
+> > +	.p2align 3
+> 
+> [Severity: Medium]
+> Does this unconditionally hardcode 8-byte alignment for 32-bit x86 builds?
+> 
+> The assembly file `regs_load.S` can be compiled for 32-bit x86, which requires
+> 4-byte alignment (`.p2align 2`) for ELF notes. When the linker merges these,
+> the forced 8-byte alignment can create zero-byte padding gaps between notes,
+> corrupting the contiguous ELF note structure.
+> 
+> Could this cause the dynamic loader or tools like `readelf` to fail to parse
+> the ELF notes properly?
+> 
+> [ ... ]
+> > diff --git a/tools/perf/bench/mem-memcpy-x86-64-asm.S b/tools/perf/bench/mem-memcpy-x86-64-asm.S
+> > index 1b9fef7efcdcc..e7b84aa43ab44 100644
+> > --- a/tools/perf/bench/mem-memcpy-x86-64-asm.S
+> > +++ b/tools/perf/bench/mem-memcpy-x86-64-asm.S
+> [ ... ]
+> > @@ -18,3 +18,27 @@
+> >   * the ELF stack should not be restricted at all and set it RWX.
+> >   */
+> >  .section .note.GNU-stack,"",@progbits
+> > +
+> > +/*
+> > + * We need to provide .note.gnu.property section with IBT and SHSTK,
+> > + * saying that this object supports the same CET properties as C code
+> > + * built with -fcf-protection. Otherwise static linking drops CET from
+> > + * the final perf binary when other objects are CET-enabled.
+> > + */
+> > +	.pushsection .note.gnu.property, "a"
+> > +	.p2align 3
+> 
+> [Severity: Medium]
+> Will this cause a Control Protection Exception (#CP) crash on IBT-capable
+> hardware when running `perf bench mem memcpy`?
+> 
+> Adding this section artificially claims IBT support and forces the linker to
+> enable CET on the final `perf` binary. However, `perf`'s local linkage headers
+> do not automatically emit `endbr64` instructions for `SYM_FUNC_START`.
+> 
+> When `do_memcpy()` in `tools/perf/bench/mem-functions.c` indirectly calls
+> these assembly entry points like `memcpy_orig`:
+> 
+> 	fn(dst, src, size);
+> 
+> the hardware may detect the missing `endbr64` on the indirect branch target
+> and throw a #CP fault.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260708045606.43649-1-tallison@redhat.com?part=3
