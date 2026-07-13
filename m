@@ -1,167 +1,198 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D98377560
-	for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 22:15:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783894526; cv=pass; b=TexrBE2GARtp8B/6BzB8h/tsHFUxXR9KUr6SMoG1mTpHDpJicCSgVhyG97kDta8sA5NRdUJ7fDFb+bVe5OU0h16Ev1qkEKUajkHl3lcDKrBNQYK5F7SAJm3HSUncNN/TrbpbCN9BlMWyNjsVoY5/kmNSzvSLip2upbQL+wYsrWg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783894526; c=relaxed/simple;
-	bh=0fCXXFEDAD7mvMeuL7r7BbbiMn8MPj1+tl1viAJTJfM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dkulgHVmgHuWOqwSnNdTQ7nI/tFo306SMCZh0o+AWSposOJ5LxiAF9r5LvcMy12sJRX9S488kUxHj6nBpWZswvF58k5exs7aAuJW2TjpjNlVzcNiwG7DEPl33P3aPNOn/1/hbdRV1HITeg0ygFCSUALzPWIlYKA6JtMnUd48xDM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A8HBx+sT; arc=pass smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41B97262B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 02:16:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783908971; cv=none; b=e/O8u7HbAURKkJQk07aXNqq2AfvkcjsEyQltdSvSrP6m5AkMcpVKtSIO98CqYEy8qb3Mik/X5dZorBJGwnZPw7nnricLyemlIre+M0DMDTpuJSh8yj0QLDjYSIRFktu2NNV2U9QOv9XMDRNtjjGfN+F3ClYeFeIzg4soHU01JNs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783908971; c=relaxed/simple;
+	bh=MP2DwSscQNp+EjMOUBeD++W0kL9VU2yb8oot+GZQwCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pz53yaFnkRV18DeiZKh3R7B8bEL3ugV5lardhGUxeWO75zoKXAPl6PQP3qeXPwoMfJOLRmje1SB2QUO4BcXx6lDb4WRETIrvd4e8v4mZ7q/UtNPlewvMme2qHiU82U3hpPrPuIK3LUWdEUg1mqSnL78LgnI8zf2P7DPX/caqr+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Kkyn0j2S; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A8HBx+sT"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5b0f19bea2fso1095946e87.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 12 Jul 2026 15:15:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783894522; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WQSvD0vQgNFQv4+92RBT9WY2EQNeZGJrChDZYSWmLZN7tA8DwEk4WJpeAiYUVQ8pqR
-         /eXAabGWx1KebQLT+NTyLpWzJi+eOEENtKofUw0rXeaymB1W3TeeJOSb6zBog8rVzf1p
-         vxOYnIzy8t+nXAsPozk+oa5+b4m/9qXTGj9WV/h+qfOrFwOC/m6N716+QLDS42fCUuG6
-         1/XKHjeGmZu+9UmRYoaA4e3VxDZshnGOUxQ46bdiuRgyh+n8r1/nFa/gAyWJHDrFRlyN
-         VMXTzCl4qsgx4ffe9iDK/cRmg6HvKpeM+gs2Mog5dtBTxzJaYl6z11MzOc6Ubk7c5DXp
-         ytQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=dzFgxOk+HAGOIQ1gtBaMzwBhzfd5e2hGicmuSHTdE00=;
-        fh=qZ573kJbboDlF5ZdFSpXBOtsvYGibtZSqSfyNLJoExQ=;
-        b=DzkGZqpFqi9OxjJZIHWR0VkZSi2+iuFFbklBGX0RZ8MHigqjClpVDFWgUlR8cY1TSH
-         Qx5wx9BtrlfTw5vgx2iDyLlHGT5kLPXtYWIkLuMoKyeGUYaTspSsyuvcKGW5b0lb9SM4
-         N5p7tcEHzp/BT84m4Eq8UI5kr43y93VU65r7qtaHS+geigiTw21GqdhKLSP2zLa1fq8p
-         VwpdlvXmLPzoUkTBfTioNHhdUcnZeLD4IiOeLlwTz6ydMNEuxwFvJrB1SIl9NcGneaFc
-         EIFJ7Hgx9JbfmWhkYuTEme3v4A7F5aXoqV5t2bPmg7Y50TqS8Y+I73zpROhJvAZGBy0e
-         eTKA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783894522; x=1784499322; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=dzFgxOk+HAGOIQ1gtBaMzwBhzfd5e2hGicmuSHTdE00=;
-        b=A8HBx+sTqDS3TVJQy5dxHnafAZOiEQX/iLWFC7+ADXdXNsDhkQsSab6uYkfD2UH4iF
-         61I0ObAmYLl3Sw65Wse2jzB2V9u0U87W57sxgKIhWOO5kVBZRRYsQqNXtNIWG1jYTUNc
-         cGQMOPcVqaOemM5EXprNZnmrFsRAwU+jds3uisivZljjY07y6l8IRsHWpq+N1RR+uMQb
-         /7ehczmjmZGSB7Y8SOnQpp6qiNFEz3DbuIFXxTXG/MbRsTQq0rC0T88JLEY44xOV995q
-         F9UcixbPl8e/mVTPZjfOZ+5T3UNhLH8lbTEQDp6bNkCUeuhQLwO3Yunqzv6cpLW/kQT3
-         ONKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783894522; x=1784499322;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dzFgxOk+HAGOIQ1gtBaMzwBhzfd5e2hGicmuSHTdE00=;
-        b=Y2DQuwzBy70gQLj//zP5FJJT+DSrlXglmS6sG0ECU8Jo728z9YEeecppGbLz3HdLra
-         So9YYTZ3lYXQt3L3HC56VNaij9Sns1vYIXADXAsc0jeh1+gxwOecpZU7yzTXVfpRzsh8
-         Ag/sFRGzO93/QFAqzABA1IfuGNo2inTuqBweYkArDtFrh9A6hLP9GJw/q4toGZcrHugo
-         EhCPtNeSsZm67ohltei0e3uEiq4x/iPC7dvVR1BK1Vi9dOeG0uAKpfjMTsu3uLMdd3ci
-         PMwRoAEilhVcclqa256I1vhOdmsrpayLQYOo0OeUUh6ZKhY29u5qG70b975zLuVpG/Fg
-         6cQQ==
-X-Gm-Message-State: AOJu0YwAt3s2MTba/a5yarHlArM+BdpncsgzaUooS7n0i0PY/bbL35zB
-	sZsqnnXVxXzbS5WAtRng2pSYLcKilA5WJ4bv8/5IOgGs04PY3p7UPQC07jy5qQbBi0oxACUlzij
-	exoGp9fJh7RZBbH41DbHa3IjhuX4jw6GAWA==
-X-Gm-Gg: AfdE7cm87HHk+BTQz6ONjCslKOWZ1UuK0MpxtoYizhGBb7nkhErn9sj387RTbNKK14Y
-	CI1FtdUwjxbRq+J/DiMGjbGrhhcrMjludTDuTuNwh3Bss8F+PB/VEA90al13Yx2tkG3lmeSSjsA
-	SRhgXpIvghNfvJ+q4iaisK3MVIvlM/qoSV2dghpupKjTsXjliDuE6g8RTnAsdGtj40dym6RtbMg
-	TLM0SzkCb4cDLSSu2lfQtWKVx4smHd6Dv6y5mg3D/WdVP2pyD/fgT8vR7KkxJK6dUJoNGbr+DnG
-	Xs9QtBKskeFOLneiKFMdLUIt/A0UFD1FZOJjFLDoeB7JkpoJkeclZNNLl1edi4S8/aPOuJrnDB6
-	qhHylUjJiu9zVIQ4xCNdSwusyi1TheVMi0bx4kKQX225jIvxfJt/yDi+ickv6n5pSpdtUPhoeWj
-	wrzMOamuM=
-X-Received: by 2002:a05:6512:159e:b0:5b0:20c6:a9b6 with SMTP id
- 2adb3069b0e04-5b0236b9303mr1400872e87.56.1783894521684; Sun, 12 Jul 2026
- 15:15:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Kkyn0j2S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783908969; x=1815444969;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=MP2DwSscQNp+EjMOUBeD++W0kL9VU2yb8oot+GZQwCU=;
+  b=Kkyn0j2S7usp9te1TfuXAgEvhmEx1y+8NYCh1A/EZMu5wYt1qosv7/fm
+   JmjhvKsMbRsF2PCG91gGGZMjwMNcPYUMNpQZFFtydNypNXFYWvqoCTG1q
+   uMWUAQ8uDS+GnG22pUac/DR54W91qmz640ZD4EaJjIFGomoJkkDvqiv2n
+   2EuKsqcsP7EWmNqVEF8rW2Rs5cRaJ5p1F9a+94JN5wiaLAUkwUmC/JBI4
+   vcwRWdvJq4eEw3vmUDP/3eHwMm81E/AWGqhro0QlphS1zTjZLcnJRgQKf
+   YQTpc/JLJRFEGfmJtaIjLIaYMN5HDLzNSsaMakwzIA549L+Y2VehOX/5u
+   Q==;
+X-CSE-ConnectionGUID: hahD+SaUSLmPjh2nUSZPHA==
+X-CSE-MsgGUID: RJ+XjRgTQP682oePqGxbYA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="84707701"
+X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
+   d="scan'208";a="84707701"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2026 19:16:09 -0700
+X-CSE-ConnectionGUID: 4lmS4Xl8ToqhCf/9OIf+Vw==
+X-CSE-MsgGUID: LPY0J7d4S+W+ivZMm8/8sQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
+   d="scan'208";a="279831043"
+Received: from unknown (HELO [10.238.2.244]) ([10.238.2.244])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2026 19:16:08 -0700
+Message-ID: <12c6add9-14c4-4fad-a6b7-7ef91730cb36@linux.intel.com>
+Date: Mon, 13 Jul 2026 10:16:06 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260712220039.924958-1-rosenp@gmail.com> <20260712220039.924958-2-rosenp@gmail.com>
- <20260712221110.7A0531F000E9@smtp.kernel.org>
-In-Reply-To: <20260712221110.7A0531F000E9@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Sun, 12 Jul 2026 15:15:09 -0700
-X-Gm-Features: AUfX_myv349aji-6oOm_gzkc6hXvmyh7Nl69nJb30alWyDMkR4Sb-h3tn5_dgE4
-Message-ID: <CAKxU2N-w_Uccz=upLvOVBGVy5p5UYYv8+znhc4w1rM2d8b-pQQ@mail.gmail.com>
-Subject: Re: [PATCHv2 1/2] dmaengine: idma64: use kzalloc_flex
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] KVM: TDX: Reject concurrent change to CPUID entry
+ count
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: kvm@vger.kernel.org, Sean Christopherson <seanjc@google.com>
+References: <20260710035324.3170534-1-binbin.wu@linux.intel.com>
+ <20260710040153.D8EA71F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Binbin Wu <binbin.wu@linux.intel.com>
+In-Reply-To: <20260710040153.D8EA71F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jul 12, 2026 at 3:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
+On 7/10/2026 12:01 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] If `idma64_prep_slave_sg()` is called with `sg_len =3D=3D 0`, it=
- eventually calls `idma64_desc_fill()` which accesses `desc->hw[UINT_MAX]`,=
- causing a kernel panic.
-Fixed in the second patch. This is just sashiko being broken with v2 patche=
-s.
+> - [High] Acquiring `cpus_read_lock()` while holding `kvm->lock` and `kvm->slots_lock` violates the KVM lock ordering hierarchy and creates an AB-BA deadlock risk with CPU hotplug.
+> - [High] Failing to charge the `misc_cg` in `__tdx_td_init()` jumps to a cleanup label that incorrectly uncharges and decrements a global counter.
+> - [High] Kernel heap buffer overflow when setting up TD params if the TDX module reports a large number of CPUID configurations.
 > --
->
-> --- Patch [1]: [PATCHv2 1/2] dmaengine: idma64: use kzalloc_flex ---
-> commit 54aec29a1bbe69497782adf915ba6169fd73e345
-> Author: Rosen Penev <rosenp@gmail.com>
->
-> dmaengine: idma64: use kzalloc_flex
->
-> This commit refactors the idma64_desc and idma64 structures to use flexib=
-le
-> array members. It simplifies allocations by using kzalloc_flex and adds
-> __counted_by annotations for runtime bounds checking.
->
-> > diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-> > index 5fcd1befc92da..d914f50ec3096 100644
-> > --- a/drivers/dma/idma64.c
-> > +++ b/drivers/dma/idma64.c
-> [ ... ]
-> > @@ -307,10 +289,12 @@ static struct dma_async_tx_descriptor *idma64_pre=
-p_slave_sg(
-> >       struct scatterlist *sg;
-> >       unsigned int i;
-> >
-> > -     desc =3D idma64_alloc_desc(sg_len);
-> > +     desc =3D kzalloc_flex(*desc, hw, sg_len, GFP_NOWAIT);
-> >       if (!desc)
-> >               return NULL;
-> >
-> > +     desc->ndesc =3D sg_len;
-> > +
->
+> 
+> --- Patch [1]: [PATCH v2] KVM: TDX: Reject concurrent change to CPUID entry count ---
+> commit 43b81457d393443ba395e2515a2d545aac295cf0
+> Author: Binbin Wu <binbin.wu@linux.intel.com>
+> 
+> KVM: TDX: Reject concurrent change to CPUID entry count
+> 
+> Reject KVM_TDX_INIT_VM if userspace changes cpuid.nent between the
+> initial read and the subsequent copy of the initialization data.
+> 
+>> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+>> index 2d7a4d52ccfb4..c2349c54d45b5 100644
+>> --- a/arch/x86/kvm/vmx/tdx.c
+>> +++ b/arch/x86/kvm/vmx/tdx.c
+>> @@ -2738,7 +2738,11 @@ static int tdx_td_init(struct kvm *kvm, struct kvm_tdx_cmd *cmd)
+>>  		goto out;
+>>  	}
+>>  
+>> -	if (init_vm->cpuid.padding) {
+>> +	/*
+>> +	 * Reject the request if userspace changes cpuid.nent between the
+>> +	 * initial read and the subsequent copy.
+>> +	 */
+>> +	if (init_vm->cpuid.padding || init_vm->cpuid.nent != nr_user_entries) {
+>>  		ret = -EINVAL;
+>>  		goto out;
+>>  	}
+> 
 > [Severity: High]
-> This is a pre-existing issue, but can this lead to an out-of-bounds acces=
-s
-> if idma64_prep_slave_sg() is called with sg_len =3D=3D 0?
->
-> If sg_len is 0, desc->ndesc is set to 0 and the for_each_sg() loop is
-> bypassed. The function then calls idma64_desc_fill() which does the
-> following:
->
-> drivers/dma/idma64.c:idma64_desc_fill() {
+> This is a pre-existing issue, but I noticed a potential lock ordering problem
+> in the initialization path called shortly after this check.
+> 
+> In __tdx_td_init(), the code acquires the cpu read lock:
+> 
+> arch/x86/kvm/vmx/tdx.c:__tdx_td_init() {
 >     ...
->     unsigned int i =3D desc->ndesc;
->     struct idma64_hw_desc *hw =3D &desc->hw[i - 1];
+>     cpus_read_lock();
 >     ...
 > }
->
-> Since i is 0, i - 1 underflows to UINT_MAX, causing an out-of-bounds
-> access on the hw flex array. With the new __counted_by bounds check,
-> this will likely trigger a panic immediately.
->
-> >       for_each_sg(sgl, sg, sg_len, i) {
-> >               struct idma64_hw_desc *hw =3D &desc->hw[i];
-> >
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260712220039.92=
-4958-2-rosenp@gmail.com?part=3D1
+> 
+> However, tdx_td_init() is called while the vm state locks are already held
+> higher in the stack:
+> 
+> arch/x86/kvm/vmx/tdx.c:tdx_acquire_vm_state_locks() {
+>     ...
+>     mutex_lock(&kvm->lock);
+>     ...
+> }
+> 
+> Taking cpus_read_lock() while holding kvm->lock creates a deadlock risk
+> against other subsystems, like cpu hotplug, that hold cpu_hotplug_lock
+> via cpus_write_lock() and subsequently attempt to acquire kvm->lock.
+> 
+> Can this lead to a system-wide deadlock during cpu hotplug operations?
+
+This is considered as a set_nx_huge_pages() problem, not a TDX
+problem per the discussion.
+https://lore.kernel.org/kvm/ak5L2csITyi1tGp0@google.com/
+
+> 
+> [Severity: High]
+> This is another pre-existing issue in the same __tdx_td_init() path.
+> 
+> If misc_cg_try_charge() fails, it jumps to the free_hkid label:
+> 
+> arch/x86/kvm/vmx/tdx.c:__tdx_td_init() {
+>     ...
+>     ret = misc_cg_try_charge(MISC_CG_RES_TDX, kvm_tdx->misc_cg, 1);
+>     if (ret)
+>         goto free_hkid;
+>     ...
+> }
+> 
+> The free_hkid cleanup path executes tdx_hkid_free(), which unconditionally
+> decrements the configured hkid counter and uncharges the cgroup:
+> 
+> arch/x86/kvm/vmx/tdx.c:tdx_hkid_free() {
+>     ...
+>     atomic_dec(&nr_configured_hkid);
+>     misc_cg_uncharge(MISC_CG_RES_TDX, kvm_tdx->misc_cg, 1);
+>     ...
+> }
+> 
+> Since the initial charge failed and the code jumped past the atomic_inc()
+> for nr_configured_hkid, does this error path underflow the global atomic
+> counter and corrupt the cgroup accounting?
+
+nr_configured_hkid has been removed on kvm-x86's next branch by Sean's patches
+https://lore.kernel.org/all/20260214012702.2368778-14-seanjc@google.com/
+https://lore.kernel.org/all/20260214012702.2368778-15-seanjc@google.com/
+
+But the issue raised for cgroup accounting is valid.
+Will cook a patch to fix it.
+
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but there is a potential out of
+> bounds write later in this function when setting up the td params.
+> 
+> In setup_tdparams_cpuids(), the loop is bounded by num_cpuid_config:
+> 
+> arch/x86/kvm/vmx/tdx.c:setup_tdparams_cpuids() {
+>     ...
+>     for (i = 0; i < td_conf->num_cpuid_config; i++) {
+>         ...
+>         value = &td_params->cpuid_values[i];
+>         value->eax = entry->eax;
+>         ...
+>     }
+> }
+> 
+> The td_params structure is strictly sized to 1024 bytes, which only leaves
+> room for 48 elements in the cpuid_values array.
+> 
+> Since tdx_global_metadata.c permits td_conf->num_cpuid_config to be up to 128,
+> will this loop write past the end of the td_params kernel heap allocation if 
+> the module reports a large number of cpuid configurations?
+> 
+The td_params structure is fixed to 1024byte, which is defined by the TDX spec
+and the value of  td_conf->num_cpuid_config is read from the TDX module.
+
+So, this should not happen unless there is a bug in the TDX module.
+Not sure if KVM should do a preventive check.
+
