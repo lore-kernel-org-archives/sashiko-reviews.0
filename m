@@ -1,154 +1,161 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.220])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7C739A079
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 07:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.220
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783929426; cv=pass; b=Etlpr2ny/tvStmEIiZfo6iWHom43iR01zBeP8h80AOaHqscpikr8SDpizhzdHwNnuL8Gz6hUrQJkcCP4cUKUgjz5DsO+0y0VkQGh7pz9hWcdJtPVYHe6c8rqnAynJdncHQnipliujVnWDgEyH5lbyX4s8U531Bckn5HvTLOljfA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783929426; c=relaxed/simple;
-	bh=JIJxtZg9pirwXwbQzi1OU+lzXYNe9iPkV0Vhrx7LQVE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O+URqpZeJ80czZ7KFmAh75eXsEsUyW6ySQKuwZSlIsT1VkQaMnsvCALQxo9FKxiSTUCRzpE7EGesfb/9dI9ae4+YVut40U4kNtfeIHsa53iOK4F1QPBBh8TxwNFqcMke7SJjMtmCYIMkzO9bDDmR1QK1ATSthYpU4l8y6jheRQ0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=hmdMNuu3; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=/aZs55V1; arc=pass smtp.client-ip=81.169.146.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42E203A5421
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 08:08:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783930103; cv=none; b=oPCEifvwwM0X/pmB4L2Hr1oiPc3y18UzsVscLPPsXONitbjrb+ev5i5X0OjcVy4aCT2wjZPwej0VfXFRy7OInuMrJ+CNcXPU7phI5W8npIeoT9u6wUvuSMx9ywu48rpIiihn4K9TdnztSxcbUPSkd1PqL24kr6jahPb9G7hCK7M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783930103; c=relaxed/simple;
+	bh=UZApS2edS3SSOM+33WEWbFeln7ja49nPlyAsMIHUXp0=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=CKZhhvFndXxJq1QSu0Wt42/lFdURMKrivNjqJAYb2USsFGKsoQiAhAaqoWhGgxYTRL2KJ+cs211GntW9mQdmXto5/E/10UhoU6zq+9dl3ltZKDMCjdGR1Sd+lpUh2UQlfCYQH5jCoeWhe1LwII29Mq35MrAb7djDZI2cjyjagb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=ISb09sNl; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="hmdMNuu3";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="/aZs55V1"
-ARC-Seal: i=1; a=rsa-sha256; t=1783929398; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=fhK2HNqM8ASFqkgFXxojtD6YxfAy/G0xUTcHa/+heAP4zBN6YyXb9/CDkZOj2n69Jz
-    o6QsQnng4d+KnJtU3JU/XyQY/LmFZQOUCB2b1phvFceIKOJs3A/803L+/wAAHG3yudxH
-    mfPOajmqRV1hdpPpWRaslrSJjwdwOztZh9BjXVBEtemBQprRuWPpo/m2vSVIyRlhDv2d
-    wHbc9g/Jh/zi0vRRoOhMY/OZlCUGfJ2KhK9KnH4IM+FWchx4Jo+cF2HbdNzpW5Qhjq+V
-    GkawGVPcMSQzQrqeBqRSH15KjbVer9EtXAgOqhoX03vxZsRmaqcxjfbVNhmdXRGHUWHy
-    W4Gg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1783929398;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=G6fwV1lsybGLIy4+Ze2TBEYeosUmqc6lpy1oP3kJ5XY=;
-    b=LdQ6GvFGhHEgFohBXN2pfBMOT9A30ymfjZqKAtQGT6if0tka2HVh2gljsX1wJNcysf
-    k/vWNyOM7PIff9Jq14ww01O9qi+27m/z6XtqeEH5vr3JxGB/rTp5UinOvD8h/NG42nQA
-    xCMfDM58reSuAjhdHkFVZ2eGj46rCUG8AKpOiFPP/hAbLODsMjHQToci6uBJ+BP3gjS9
-    QxRnLC7WIp5cEkUao+7vtatjomrvrkWhfO7v5K3GxmBwIjEej3mhJCyF4rfkeB/j7R45
-    BNm4OdEKq2yxqzCNu0FrtMcpkCF4HGMF+E99Fu9S168EKIb6RLJqSBfMZeoxs+6jgpSV
-    DV4Q==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1783929398;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=G6fwV1lsybGLIy4+Ze2TBEYeosUmqc6lpy1oP3kJ5XY=;
-    b=hmdMNuu3EzmoI+GL/OjllHXhyeOF+Tn4I7bC/UBwMqwSv24JYQHE18oxcpVQuqvO2a
-    PKAzk5kqy0gamgahdF10AKErq1ZnkwkqR9r+suu1xzlJSMZ5ls6TIyl0ERGevEVrE5tl
-    iZzqcGWmD+ThZ85C3ioRxoDj0oEz0Fp4026/PCGQuojef4F3oOd8fgAaNY3w7elw+ztx
-    HOUOh/0VceN7RuSxqpdSUdCakBzKuy/6TI0rOVl5SVJGwauo//glccJqezzaT8PkPXXE
-    zIpzPRH2RJdVBHE90CZ2UiwSveKPH2xaq240GzQanQ7P4mqFq/sout9aWAKl6ajlQwEa
-    ufgA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1783929398;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=G6fwV1lsybGLIy4+Ze2TBEYeosUmqc6lpy1oP3kJ5XY=;
-    b=/aZs55V1FT5F/NMRQrhaJNce2E9dGWOM7RmwHH4vBh/0O/aJnm/C6Tu2H5oHX2wiJR
-    gaFjyhm7CgV6z4AivFBA==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
-Received: from [192.168.20.236]
-    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
-    with ESMTPSA id Ka9fdb26D7ubZEa
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Mon, 13 Jul 2026 09:56:37 +0200 (CEST)
-Message-ID: <a2afe72f-5098-4a6f-9df7-b993f186337a@hartkopp.net>
-Date: Mon, 13 Jul 2026 09:56:32 +0200
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="ISb09sNl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=5HSRZYpzw686Gi3jE+bqow4FMeu78S17L
+	wEmfrBMKi0=; b=ISb09sNlFehG1pO+ZyPh3jmBO/qRH03wQaIrEGoTYHsyyiz8w
+	tT8oYcXpF6iEGU5kmKc6nTFmv3YyzJk4z0AIJXM/ZVpPC0xEwp64fS24Udz5WPjh
+	japzfcathctHDxcMMgl7QhL+lfoFPQzZb8Lfj64kCoomF0lx4B0ipqC+IU=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwDXEEIKnVRqNYYQAA--.16652S2;
+	Mon, 13 Jul 2026 16:08:43 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] vxcan: Support per-netns device unregistration.
-To: sashiko-reviews@lists.linux.dev, Kuniyuki Iwashima <kuniyu@google.com>
-Cc: linux-can@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
- Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol@kernel.org>
-References: <20260712212113.181121-1-kuniyu@google.com>
- <20260712213422.DB1111F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260712213422.DB1111F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 2/3] PCI: ultrarisc: get and enable DP1000 PCIe
+ clocks
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang <wangjia@ultrarisc.com>, linux-pci@vger.kernel.org, 
+ conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260706101114.129681F000E9@smtp.kernel.org>
+References: <20260706-ultrarisc-pci-clk-v2-0-2f3fb6fba66b@ultrarisc.com>
+ <20260706-ultrarisc-pci-clk-v2-2-2f3fb6fba66b@ultrarisc.com>
+ <20260706101114.129681F000E9@smtp.kernel.org>
+Date: Mon, 13 Jul 2026 16:08:11 +0800
+Message-Id: <178393009191.2317413.11810474348602616541.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783930092; l=3045;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=UZApS2edS3SSOM+33WEWbFeln7ja49nPlyAsMIHUXp0=;
+ b=HY+p46CO4RmVZUfgUsP5pOE9FpfH/FO8Itkx/yzvGOikh7pZJPmPek+3CUUqaDIcbFrgbSNd3
+ H5OACgbvAhWC/i1KSV6jAeWT/vxTnP8YoO6zTRnktJgF8aF9gKV/LOa
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwDXEEIKnVRqNYYQAA--.16652S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurykZFW3tFyxZryxGFyfWFg_yoW5AFWxp3
+	yUKayFkF4DJryY9rsIvw18ZF1YvrnIkry3Aa97Kr12vw1a9rykGrWrW34aq3Wvkr4j9wnF
+	kF4UC3WxCw1j9FDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUva14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+	6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJV
+	WxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_
+	JF0_Jw1lc2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI
+	8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AK
+	xVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI
+	8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280
+	aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyT
+	uYvjfU8miiUUUUU
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAHEWpUYNAAJgACs9
 
-
-
-On 12.07.26 23:34, sashiko-bot@kernel.org wrote:
+On 2026-07-06 10:11 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch calls the undefined function `unregister_netdevice_queue_net()`, resulting in a compilation error.
+> - [High] Unconditional register access in suspend after a prior resume failure causes kernel panic.
 > --
 > 
-> --- Patch [1]: [PATCH v1] vxcan: Support per-netns device unregistration. ---
-> commit 882fcd31630d9ce6b0a57cc99738c2ad0579763f
-> Author: Kuniyuki Iwashima <kuniyu@google.com>
+> commit 91b0a79d0e5b5b1e0d3c9731fd011273f668f0a9
+> Author: Jia Wang <wangjia@ultrarisc.com>
 > 
-> vxcan: Support per-netns device unregistration.
+> PCI: ultrarisc: get and enable DP1000 PCIe clocks
 > 
-> This commit updates vxcan_dellink() to unregister local and peer devices
-> safely across different namespaces by using xchg(). The change aims to
-> prevent double-queuing of device destruction when RTNL is removed.
+> Add the required core, dbi, and aux clocks for the DP1000 PCIe
+> controller and enable them before initializing the DesignWare host.
+> Also manage the clocks across system suspend and resume.
 > 
->> diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
->> --- a/drivers/net/can/vxcan.c
->> +++ b/drivers/net/can/vxcan.c
-> 
+> > diff --git a/drivers/pci/controller/dwc/pcie-ultrarisc.c b/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > index 6ee661ceff67a..6ed244770d538 100644
+> > --- a/drivers/pci/controller/dwc/pcie-ultrarisc.c
+> > +++ b/drivers/pci/controller/dwc/pcie-ultrarisc.c
 > [ ... ]
+> > @@ -135,14 +174,31 @@ static int ultrarisc_pcie_probe(struct platform_device *pdev)
+> >  
+> >  static int ultrarisc_pcie_suspend_noirq(struct device *dev)
+> >  {
+> > -	struct dw_pcie *pci = dev_get_drvdata(dev);
+> > +	struct ultrarisc_pcie *ultra = dev_get_drvdata(dev);
+> > +	struct dw_pcie *pci = &ultra->pci;
+> > +	int ret;
+> > +
+> > +	ret = dw_pcie_suspend_noirq(pci);
 > 
->> @@ -281,24 +284,25 @@ static int vxcan_newlink(struct net_device *dev,
->>   
->>   static void vxcan_dellink(struct net_device *dev, struct list_head *head)
->>   {
+> [Severity: High]
+> What happens here if a previous resume attempt failed to enable the clocks?
 > 
-> [ ... ]
+> Looking at ultrarisc_pcie_resume_noirq() below, if clk_bulk_prepare_enable()
+> fails, the function returns an error while the clocks remain disabled and
+> pci->suspended remains true.
 > 
->>   	unregister_netdevice_queue(dev, head);
->>   
->> -	if (peer) {
->> -		priv = netdev_priv(peer);
->> -		RCU_INIT_POINTER(priv->peer, NULL);
->> -		unregister_netdevice_queue(peer, head);
->> -	}
->> +	priv = netdev_priv(peer);
->> +	dev = unrcu_pointer(xchg(&priv->peer, NULL));
->> +	if (dev)
->> +		unregister_netdevice_queue_net(dev_net(dev), peer, head);
+> If the system then undergoes another suspend cycle, this function will call
+> dw_pcie_suspend_noirq(), which accesses hardware registers via
+> dw_pcie_link_up().
 > 
-> [Severity: Low]
-> Is this missing a prerequisite patch? It appears that
-> unregister_netdevice_queue_net() is not defined anywhere in the kernel
-> tree, which leads to a compilation error when building vxcan.c.
-
-The referenced veth.c patch was applied to net-next:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/commit/?id=d7fda2c776b2a969b9d78c5ad00e30824df43add
-
-where also unregister_netdevice_queue_net() exists.
-
-So this is a net-next resp. can-next patch.
-
-Regards,
-Oliver
-
-
+> Since the clocks are disabled, could this register access cause a bus error
+> and subsequent kernel panic?
 > 
->> +
->> +	netdev_put(peer, peer_tracker);
->> +	netdev_put(dev, &priv->peer_tracker);
->>   }
+> Should we check if the device is already suspended (or if the clocks are
+> already off) before calling dw_pcie_suspend_noirq()?
 > 
+
+Thanks.
+
+This will be fixed in the next version by handling the already-suspended
+case before calling dw_pcie_suspend_noirq(), so no register access is made
+with the clocks disabled.
+
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	if (pci->suspended)
+> > +		clk_bulk_disable_unprepare(ARRAY_SIZE(ultra->clks), ultra->clks);
+> >  
+> > -	return dw_pcie_suspend_noirq(pci);
+> > +	return 0;
+> >  }
+> >  
+> >  static int ultrarisc_pcie_resume_noirq(struct device *dev)
+> >  {
+> > -	struct dw_pcie *pci = dev_get_drvdata(dev);
+> > +	struct ultrarisc_pcie *ultra = dev_get_drvdata(dev);
+> > +	struct dw_pcie *pci = &ultra->pci;
+> > +	int ret;
+> > +
+> > +	if (pci->suspended) {
+> > +		ret = clk_bulk_prepare_enable(ARRAY_SIZE(ultra->clks), ultra->clks);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> >  
+> >  	return dw_pcie_resume_noirq(pci);
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260706-ultrarisc-pci-clk-v2-0-2f3fb6fba66b@ultrarisc.com?part=2
+>
+
+Best regards,
+Jia Wang 
+
 
