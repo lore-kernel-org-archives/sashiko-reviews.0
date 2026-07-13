@@ -1,63 +1,63 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D3D3ACF05
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 08:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA53AE1BD
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 08:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783931271; cv=none; b=BFtuwxj1lW+1kozCQFGmkPsCr/+qLBL0fEDdWwWfZMI93rl35rHlxf8c9M18Oh1u0PidYST8L0OEdCf3YP7E51fLymH3Hlwm+acYwk4uMy2gj6PoleOo//DwdsR+Vje7oo9Z0BiVHAH7HX6ofQhUZD6EeP9WerJZcLa4NFeRVLk=
+	t=1783931297; cv=none; b=eXabGXVWorJfia/IDEi0tF9PoGMahTFCWJJVrWQm8lap+18oAsQ1jDmkxlcZmmIHA8PkpcpQvRobAVpR9b6ozjwYxukbaow8nDUg+Ngwce4/QlKqMFzMt4X+g7Djdf3+EaNtAUcZY6lDfc/LimMieXAdCcVMOIAWYiBhzgvcUdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783931271; c=relaxed/simple;
-	bh=psE1qQi7+JPeylnHpAM99xWnw7wL5EqXGGzHGX0w128=;
+	s=arc-20240116; t=1783931297; c=relaxed/simple;
+	bh=1bdQxZ+KT2IXwA3Ltsi7cQksVnEt6y9F8PnZupL8F5A=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BvQ7W6p6WrFDuN3gXJ78y1MFi90drFR/NovOvArXVdMkGhS/5GBii0pmTlmkySTDBZ7jlUgBPPiz1ndPBBVGf+FByybXbFJ3imlOFVmwREO5jcNbiMers1FtCxidceKcVmFNZyK2j9Py67v9BS3rX8Y/JAsVgYOp5DT5eVvps84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDhIXPru; arc=none smtp.client-ip=209.85.215.182
+	 MIME-Version; b=IG+vUtaDx6el03BW4TLvJ0zgqLkLCTefvI5hlI5SPvtLyDlMG3uNiReZqUhA4q5BstRn2vu1hkm2BWZLRUroTr9neSlGKgDpVIwKxqjG5jc6WJcEmMNodnRxAMQH21QvbBfbC7lApgYb38qi4d50e5eOCDoyUABn9QumOrNW3QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U3a4NoDU; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDhIXPru"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c88a4d79ba5so1889701a12.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 01:27:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U3a4NoDU"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84a2dcede83so1345719b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 01:28:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783931269; x=1784536069; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1783931295; x=1784536095; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=psE1qQi7+JPeylnHpAM99xWnw7wL5EqXGGzHGX0w128=;
-        b=GDhIXPruaaQCzokasEsj/P7UMKWOpWpNrtcmgDz3HJHFxJt0KjWQMb6FblQg2KPPrp
-         uibPG+Zc3CuSbBlOdjQEp9YHjmKlUFVDTj3cGGvig+wGT324akVcqgR0HsTUryWn/kPe
-         sjOpJietLGPKBBjoqoe2zXLWP6U0CTckOPNWQDl+BqLsmCEzWSAHsbBfHiJ/fpUC3dpJ
-         N+SK9LnqouWu+gDiTJ6euJjDdHsHk9E6iPoYvsfMOW09+6ufcmEzdNUHHkB2moh+nDR2
-         5+Jj9WGRDMifTG59VnPiT6uRBgeFFEJtpnGUHH+kgD1esxVMTVB0HBPpdmOpIxj+jnEu
-         CeuA==
+        bh=1bdQxZ+KT2IXwA3Ltsi7cQksVnEt6y9F8PnZupL8F5A=;
+        b=U3a4NoDUksBepORvgG9FX5hINyvXmPRorScKJUfdIRXBOHQGkDA7dPXyqElrzjUz/6
+         35yOQ2JrjcnYDCHpq+t3n9Akjn+ooc4/8mEXZBYbMn5GZvqeEEmyk6ci0uV6xC9EMYat
+         rBbx5vaApzccTxsWvMarm5Lpl+qtKe2XknVS0pPGPXz6dXtjNlwgrG5jDKhAv0mLxE0h
+         XJB8bQIrQv4XE3K3Vu/hI1jyTJqTtBM1OadM5UoIKMFYEyNtLJQdCpjKgO0j/fUyDyyv
+         nVA3gNJMpEJ0SRyKezUV5w0P/mkafA/n3GDDZZcM3WyxsEAdEEX8wqNLBRPF9pXK+ia7
+         68Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783931269; x=1784536069;
+        d=1e100.net; s=20251104; t=1783931295; x=1784536095;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=psE1qQi7+JPeylnHpAM99xWnw7wL5EqXGGzHGX0w128=;
-        b=hfKpJlvf1YXH9+4eMTu3aQwOJgca8V/EoD5Kul4JcuCcFQDeBe/OWk4+yBW8cIC/gH
-         Bun26ZwDgJBidnxtUu7OQDUdNZ3jdTJQK3XFKUkzknYN6SqWdkQKk3F5WXp3Pli903Ws
-         qZ6c4nd2PWDSLSQ6THTbD6WxS31rvZBlb+Tm0I9c28/Egd5TR25MoY7/nIZXaPcAv6P3
-         tWubbin868nULxikO+IH3fSOWdLmyHNEbWHiHQ8idyoHS/PVrr5c6fX3/7ab3E3S/8eS
-         ZAeE4Bo2OH48gOmdUdocWC3q8BpGq76plxR/KcjtGbuV0PGsaTDjIcwUSjZZwiDajbxp
-         qTFA==
-X-Forwarded-Encrypted: i=1; AHgh+RqCsrFnbc8/2QplQJui40QxZf95E8DvzzgLXVbDudUoS2609h7g6l2JT/V/RzPVjzdXkuLOaotS2yEyDROAsmo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YytQy2/3eDOzwX/WhyDPKF7UDuBw9GUUMKIQLh27MU4k15VYakx
-	08FC6z6mdSO8GLlITVsHneUV0/ZaT+yUdMKy/zn1nQokjK2vx66NHupr
-X-Gm-Gg: AfdE7cm85T7NjliF97UYtbXxcaDl5e3tEFHba46OO5lc2aQh1G2fnBVfsgZTyVquV2S
-	66vWF8Bn3ZPAy3Lnv1guCo+LOLtfQX3ClI4MCIpjqx9RVGO6N4vMALQJpPWTSDxBhPkCxBFaN23
-	ytgR7tkwsIbu6wvjQP52qzG2xV0xbLBfWYGsEBwJcxAVvdJqZjY9+nP8/nS12TuLDuf7Osk7gKC
-	QA1YYPtpN17b2jLqxUnvCZE+0xcW0dgwjQYxfHKMHJBN6y+/0H76wgpAgRPgwF9PZmyACUZTUn/
-	8Tiru5iHD8CD9vKa+C8AX5b0kMTTs0d2OLbRYOMGonNm3GRTwkwBvaS5vdDdHJTIaVqEYhuEACY
-	xiqhQ+A8zseS7J6OwmFVqwj90oOXbr+de9d5M0AsfQGHOkffyID0XGhTx2W/FbU3q9juV4/GnwN
-	5Bpr4kR4r6qru+d8tq8JpcAA==
-X-Received: by 2002:a05:6a21:e097:b0:3b4:b276:a789 with SMTP id adf61e73a8af0-3c110b43701mr8134878637.36.1783931269266;
-        Mon, 13 Jul 2026 01:27:49 -0700 (PDT)
+        bh=1bdQxZ+KT2IXwA3Ltsi7cQksVnEt6y9F8PnZupL8F5A=;
+        b=QwF1VJNv5vSky9jiNRqGIRczuLr1Zun6nOg0x4IPG67S6J5XVxcVI1TzDDUhRUNRVb
+         Z30fCVuzcDjWiHFDIUGGpDGSZMZJ3htQBtxYf8LCQPlMCIQyByDra5fS9JOBzUJGGNoz
+         sOFn2Pft+AKKtQluKoOkW223y+7eBu4nWUZGzdL0ox1CAMNhv3x4gant+Qp7cy79MZBQ
+         Q5N8XeNQFStE6GBEF1AqdNGjVcJ0Pp4oftQISDZbxR8zwpWlUci57FUbnHXMPDNZy2xW
+         HmEPsNL8HS8XHnANsUhl8UoJycTMogoajJRG6qiYKfJMU31RLhVxhjGaDvcGSSQpAM+U
+         AeLg==
+X-Forwarded-Encrypted: i=1; AHgh+RrrNHv3CGJivXUzZ95pgwpSVCSLkICxsV6jibyKXyAoS2z6bgAxFPBJHDSBS9rItQBZvtCPRA3Jd3+buXSUt2U=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxTgG2b20G9BCFOFtZVNJZB1xrFxBTNl3CpXOB7xXWh9Etq61Jm
+	VAKUExGDwIhFzrAN1I7hv0dNabLLZP0iY3pwqtmJQvwGS1rQ6psVdzJb
+X-Gm-Gg: AfdE7cnMFnSfDT4j+D6cFX+Hk9PL0UBXw1692Gs3uxUYEXY+jEcPfCkKKCrFpWr1UvK
+	arE2jqGvNPhBfJp70uCuiUjyWK4pAyKWaAhd4eCgOBIoYzPbw6E/afZQRfz7u0pyxWTjESiDg6V
+	2EJzn1gGThb7KUFcUjACH8hEuKkC9U3dXFoGZtvM/Pv5J6gLYq1/2lC44pfBtEuQ11Yy7cybeHV
+	+Q7b0lv0JuLcadIBh8+vAOnP8T1Ar2LfHL9NYv1hn9Nf+j3HrVwmIxptYfGgWV4tUy10xaetP2n
+	aysc5umIs/m/Vxg3J7fR/ki9z8ffKSjFideD93+QeO1rJPDYZ6+PI0w7SeUZBkiQnh7ZP8oVD8N
+	IrSnUOF6Ut8S7eh8o9jt8XpNosfQo9VQtGLmirXmzT1cvud6PIMwBKL/pvslqvLHMS01/a/tR01
+	YWE8dACsOuxT0FXfL+sk2RFQ==
+X-Received: by 2002:a05:6a00:3306:b0:847:8dec:141e with SMTP id d2e1a72fcca58-848897569e9mr7818491b3a.54.1783931295613;
+        Mon, 13 Jul 2026 01:28:15 -0700 (PDT)
 Received: from HP.localdomain ([27.217.83.168])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca5af7d58f3sm8021941a12.1.2026.07.13.01.27.46
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8494b279e8bsm2691284b3a.33.2026.07.13.01.28.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 01:27:48 -0700 (PDT)
+        Mon, 13 Jul 2026 01:28:15 -0700 (PDT)
 From: Zaixiang Xu <zaixiang.xu.dev@gmail.com>
 To: linux-hwmon@vger.kernel.org,
 	devicetree@vger.kernel.org
@@ -68,12 +68,12 @@ Cc: Guenter Roeck <linux@roeck-us.net>,
 	linux-kernel@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
 	Zaixiang Xu <zaixiang.xu.dev@gmail.com>
-Subject: Re: [PATCH v7 2/4] dt-bindings: hwmon: Add Sensirion SHT30 series
-Date: Mon, 13 Jul 2026 16:27:43 +0800
-Message-Id: <20260713082743.24129-1-zaixiang.xu.dev@gmail.com>
+Subject: Re: [PATCH v7 3/4] hwmon: (sht3x) Add devicetree support
+Date: Mon, 13 Jul 2026 16:28:09 +0800
+Message-Id: <20260713082809.24184-1-zaixiang.xu.dev@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260713075512.A3BC21F000E9@smtp.kernel.org>
-References: <20260713075512.A3BC21F000E9@smtp.kernel.org>
+In-Reply-To: <20260713080129.D8A8E1F00A3D@smtp.kernel.org>
+References: <20260713080129.D8A8E1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,25 +82,31 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 13 Jul 2026 07:55:12 +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Medium]
-> Will devices using these newly defined compatible strings silently
-> fail to probe?
+On Mon, 13 Jul 2026 08:01:29 +0000, sashiko-bot@kernel.org wrote:
+> While reviewing this patch, I noticed a few pre-existing regressions
+> in this file that might be worth addressing.
 >
-> Looking at the existing driver in drivers/hwmon/sht3x.c, it lacks an
-> of_match_table and relies on this legacy ID table:
+> [Severity: Critical]
+> This is a pre-existing issue, but does this unaligned memory access
+> crash strict-alignment architectures?
 [...]
-> Does the driver need to be updated with an of_match_table to prevent
-> this regression?
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this integer
+> arithmetic overflow?
 
-The of_device_id table is added by patch 3/4 of this series
-("hwmon: (sht3x) Add devicetree support"), so there is no gap once
-the series is applied. Within the series the binding intentionally
-comes first, following the usual convention that dt-bindings changes
-precede the driver changes that implement them.
+Thanks for the report. All five findings are in pre-existing code and
+are not touched by this series, so I would prefer to keep them
+separate from the devicetree support here.
 
-The compatibles introduced here did not probe before this series
-either, so no bisection point regresses.
+I checked the first two: the unaligned access in sht3x_update_client()
+(buf + 3 is an odd offset into a byte buffer, so it needs
+get_unaligned_be16()), and the limit_write() overflow (temperature is
+clamped to 130000, and (130000 + 45000) * 24543 = 4295025000 just
+exceeds U32_MAX, so writing the maximum limit wraps the raw
+temperature field to 0). Both look real.
+
+I plan to go through all five and send fixes as a separate series
+after this one.
 
 Thanks,
 Zaixiang
