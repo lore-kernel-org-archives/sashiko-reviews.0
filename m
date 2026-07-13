@@ -1,79 +1,246 @@
-Received: from mx-2023-1.gwdg.de (mx-2023-1.gwdg.de [134.76.10.21])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012071.outbound.protection.outlook.com [52.101.66.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70091E1E12;
-	Mon, 13 Jul 2026 17:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.76.10.21
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783963743; cv=none; b=eIVgs5yOlAZwma38c5gakJB9YXFS335xoRx8CF3bSmP4b6fzu2pxFz7EDONT9gsw7KrGO57PmXYOtffRTfsIadI9KmStrJseu9ofodx1eOHptsZ11LEWPn1tdEuG0ZrhiZBGkQHdtWuc0fBRD4eYIELNWu30kgpbE8yX0l/2Dmk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783963743; c=relaxed/simple;
-	bh=J/WJmEiD138SPCYFDmZ6fDw6vG52ctRUqoLxYoj70x8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OT3+pgW3ce93scCPfLfugXCmCYJr9MyKfMqST+Zm2AijgS7FVkQcDf9ozwk0gBWH1N1VaUJltsejf3kvbPJ3KZ3ZLh/wiH6POZcLJczhbNwUCpp+bbhHyMoplAaspLn4reV+5Y9fsQyU28Cy3mqxuPwb+benjj2ApovQqThHMKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cispa.de; spf=pass smtp.mailfrom=cispa.de; dkim=pass (2048-bit key) header.d=cispa.de header.i=@cispa.de header.b=l7yKkjv0; arc=none smtp.client-ip=134.76.10.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cispa.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cispa.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8653E273D77;
+	Mon, 13 Jul 2026 18:22:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.71
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783966966; cv=fail; b=UtOLHli8jAsA+HaFs996yQgBNhiXeF9QZen93i7qHmwGt+vAGXCMd/8jq1lGO4H3arxPFqcKb6RRWoTQSAVEGZA1V8q6VefudcejcBvK9z7zD1K6evSAm3KAkZcilzYP8m33keDg3s7DYbtiLo6k2z3jtNEhXz6DhU5PoDDxZe4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783966966; c=relaxed/simple;
+	bh=ZBTakGzLoUAf9bYD4ocpxAIDgzxwxER5luN2nO6ebd0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=dZ6kl/D9p3ZtY4rDJZTikh+7A4/d50w4h0Z/uk5mYq7Mj3VT7vgC2LYlSL2J4+05BLBzX0XzK7KrfQXSO2xzNXjDQ3CpqHe78DDpeNRuGo+kCg3BSZ34eFCPvLGPM0iGgdIC7nj/k/rUehya/tknwGy1mfunqEqewAmEl7uFkPc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=gZYZV24e reason="signature verification failed"; arc=fail smtp.client-ip=52.101.66.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cispa.de header.i=@cispa.de header.b="l7yKkjv0"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=cispa.de;
-	s=2023-rsa; h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:CC:To:From:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=J/WJmEiD138SPCYFDmZ6fDw6vG52ctRUqoLxYoj70x8=; b=l7yKkjv0YgwhzR6E6jm/2dS5cD
-	CTb/nUNlRmcZDG9iu7g8YOwSXdxjLYT2Ivs9jVVtpYXIcKwbTCHJ20nEKTAZpa5sVx3V1CuQi804d
-	T1zwDXz+ILa9oxnHoFyg88pwFvOYCFpOEBQkFGA+J7/DH3tFHGl1VrFnAg6oM0Zlun7rYmYQqa1Kv
-	jyl7426Vh7eXeRr3EEzePDHYCED1Hu/CycdTaEPT317Xsbcp1Vj2fhfY2GeelxV0TZ1pp5xGPrbYV
-	7sjqBqE/G1uJ56hqc8mA8EBVNJdtfntPTWhPtx9kPM8eaTRFjs5ZtnLnJ27t3jXiJDBlr1n4uAQFY
-	vaTHXK/Q==;
-Received: from mailer.gwdg.de ([134.76.10.26]:51164)
-	by mailer.gwdg.de with esmtp (GWDG Mailer)
-	(envelope-from <amirmohammad.eftekhar@cispa.de>)
-	id 1wjKSg-009ek7-22;
-	Mon, 13 Jul 2026 19:28:58 +0200
-Received: from mbx19-gwd-01.um.gwdg.de ([10.108.142.50] helo=email.gwdg.de)
-	by mailer.gwdg.de with esmtps (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-	(GWDG Mailer)
-	(envelope-from <amirmohammad.eftekhar@cispa.de>)
-	id 1wjKSg-000K8n-1u;
-	Mon, 13 Jul 2026 19:28:58 +0200
-Received: from eftekhar-ubuntu.customer.ask4.lan (10.250.9.200) by
- mbx19-gwd-01.um.gwdg.de (10.108.142.50) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.2.2562.43; Mon, 13 Jul 2026 19:28:58 +0200
-From: Amirmohammad Eftekhar <amirmohammad.eftekhar@cispa.de>
-To: <kvm@vger.kernel.org>
-CC: Sean Christopherson <seanjc@google.com>, Paolo Bonzini
-	<pbonzini@redhat.com>, <sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH] KVM: nVMX: store L2's TSC frame in the VM-exit IA32_TSC MSR-store list
-Date: Mon, 13 Jul 2026 19:28:47 +0200
-Message-ID: <20260713172847.12697-1-amirmohammad.eftekhar@cispa.de>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260713144605.2773845-1-amirmohammad.eftekhar@cispa.de>
-References: <20260713144605.2773845-1-amirmohammad.eftekhar@cispa.de>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="gZYZV24e"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QxeF4AyyjFI/fCwKC/H6ZxcOiLUzwagHS+3T0/N+FXTQHTN6drg9iLJ4MhzqlbYGwNUPZfm/+ar/NIxLkmIUMT6Ybd6/XJk6dvvu2aBmFy+fgNSLKdGm+19eGm3tbYH7xVkm4M1r+QnOk8rTt9tAAKrgMGgbduXHqPHpcALc28KUic7Yj/+2LuDqmkcR0/0HNhYXBGPU01Wz6dh74MMkAe1R98W2Rcx00QBeA2vMdoMZmUfW0abBNfM7n/cbk6kFQoMbApEcR2ZYaJMHsTtW7HspL01FVkiMtu25y3JT+53REv0UhPqSpwWiCXvvz4JNP979NzXe6Ngk2o11vEPDQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rx6wbK2YEAnQoyUq/Z2S8HR+2UOhbfY3BKMGChyDMpA=;
+ b=rGQ+kNCCPllv6s4Lncd97p6AqhBX2jys+v/ZMwVW6axDTH/Fyon2B/0b9Ikm58CzYVdsFR7cNv9kJ5ZY7LsYMDOcmIavVygPn1zmPpLZx4z8yHnf8IO+FMPx8T8S3MaTRq6tzqpOb8LRQYgWBqAQn09z8y5SmCosm8vCknhjaNkwK2BNgaqgl5t+qybrCkzzF7P1ADRLQzOGTBc/1LKC1dgzzJbIZZxp8Wv4eRcMuX6FqsY3BQQ3p0+J3WGY65YXhPyv5chnuTqxileQpgsv9zY7gV+/86Xz32FM4cJqYY/WEXXf1E0Yu8xPMwhsJUsp4RzFq+LSYCJtr/ecycS8Eg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rx6wbK2YEAnQoyUq/Z2S8HR+2UOhbfY3BKMGChyDMpA=;
+ b=gZYZV24eN0QkSxK08ctV8nFuw1evkyDFvkgRgPi2Q2/tPIwf5DGXCe9cVsi1illBk5trb6kLpxtGioGgGw78WimvsuqUB7QNC008m98QD/GOKf7pWuuTwq20uK/4kHt03+af8Aj5PbKxCmUD5EqP1qDc+7vDZwwpAv2EMYHJONCcsPUzbdnWYHysOZjeK0Uj56EktIQqFmRxemwENRMOJBDwWVITPUtjxZ/V85/i02YolzmdjJDyi/ikLL6POs9brPA+qxTM9kbhkN56/ADdn4vK0lJhsgYfzmjhGdqddatDletMEkihZ65op+XAgbClJ2t2i0gbgqAdHHjNh3mntw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PA4PR04MB7646.eurprd04.prod.outlook.com (2603:10a6:102:f3::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
+ 2026 18:22:41 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0181.019; Mon, 13 Jul 2026
+ 18:22:41 +0000
+Date: Mon, 13 Jul 2026 13:22:33 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
+	imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH v7 01/10] dmaengine: dw-edma: Move control field update
+ of DMA link to the last step
+Message-ID: <alUs6X2OnZjzE4dF@SMW015318>
+References: <20260713-edma_ll-v7-0-6fb7498c901e@nxp.com>
+ <20260713-edma_ll-v7-1-6fb7498c901e@nxp.com>
+ <20260713171252.03DA81F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260713171252.03DA81F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA0PR11CA0200.namprd11.prod.outlook.com
+ (2603:10b6:806:1bc::25) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MBX19-SUB-08.um.gwdg.de (10.108.142.73) To
- mbx19-gwd-01.um.gwdg.de (10.108.142.50)
-X-Virus-Scanned: (clean) by clamav
-X-Spam-Level: -
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB7646:EE_
+X-MS-Office365-Filtering-Correlation-Id: 35c79370-0b92-4f81-f38f-08dee10bb9c4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|19092799006|366016|1800799024|376014|22082099003|18002099003|6133799003|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	RIHhQ3zzBw8bmHm2AV78wTTF7xKRrwVdm+HkxnRvGbKbuGGQQB6QjKOtvYIcrKNVlg5UaNsMwngV17h8me0VebRnc2cA6KUUAIBMyeD/RrmrN0WEP4OdJK4ElbI4h7GE+8apZH3BvLb3j37zz+gz+ckC1aI6HA2FVuNHdPO9jDil4QWXgeL7YO+K1EcKWC3FkMsStKL3s9LtAMGIyVBaVBxDAxfXRj2/beFmDXNlrfGKU4hD/sUGKxH9lR7w/6Jo8/18a9PjV05AzA5+9dE5736gmHoQopqkbLYsN3w4lJBI/2NPfXELKVyOJNltXiMNu7Vodun9T+SU4G+X1xnSiAkBjZ/DLqsQJryavmbsn1wEJGUZo3ZcwhvkMNhW2bf4tTq9EGRj4p04iEYZM1b6aQwVqDnORsMYSUsegiU4wSjTm0p1qVxiEkArzSE2O+ovUlwphAA7uD+NA65UT4OtTAnnkF+Q0U0669S+y2RlheyOif7dpBhB554IVHfTL70j5JNymiA73vPeDT/PBBHeg3+knqVslyt2vOhmy0Tt2MKAMsfb9PQt+c2WAaqPwkrZuaLKZqvkX/S/HbUv9ni4h/JyqayS9qmBs+Tbo86fBvI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(19092799006)(366016)(1800799024)(376014)(22082099003)(18002099003)(6133799003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?03dvk2u8LMZzxeuyaZLaYklySi5YNGU4o0nU69AhFZG8bjxnvqUxPQ9KRb?=
+ =?iso-8859-1?Q?n3atiRhNgdM5B+mI/RZw7xuc11OFo7fqkeUtHkiMSeGfGOENz6tjq1jrYC?=
+ =?iso-8859-1?Q?+9ho+FSy3PYwb6hAZ1z55uvQFUb01tl711tLd79x7BG+8DQiL5kuc87O0B?=
+ =?iso-8859-1?Q?SQTKQPmgMX//aoBv9pNr3g/2Ml0n+QlNn3kTCNj1WL1Ji38iyArPe8uqKr?=
+ =?iso-8859-1?Q?BBiKpwNa3aVhuW/AAzsu591hTVmw5f96Wmmcxz6X7RUfg1TKKtgv9I1Hl8?=
+ =?iso-8859-1?Q?X6n3QWJFujteMRtt8xpuWdaDNDPLl7bDNg+/+4Ia88WFaSJCHzIS0NNtwY?=
+ =?iso-8859-1?Q?VTU+zh8Qm3OxG52/sjaLcPyFFExdhyY5m1bJHaOQx5psAcMrP2oIrL1d6j?=
+ =?iso-8859-1?Q?ErciNx3NVOCV50SEBGnwYLWI+3RGrgyppy9/2fzRu1MFWeOa9qc2wRvA43?=
+ =?iso-8859-1?Q?1eyOtrBiweQJlS+0ofaegB9eIlHOaNEz8Q0YubEKWCfPUCkKxdln/LJoDG?=
+ =?iso-8859-1?Q?2bflC2zt4FtTSZxeqG+Kh47jMmZbQMYuNa+56MOrcsQ8DKpXqAMSndoFyD?=
+ =?iso-8859-1?Q?RqRppFfkjQ/bsayDMgj11LneCtFWYjS9fy3jRtBOk4eYyliw9L+R6gs4wx?=
+ =?iso-8859-1?Q?VYE3uTbs1mFE5esUJi7B8XM/QMztq8WACd/N8s6PcLiQxnw8qJ9c7S4bhf?=
+ =?iso-8859-1?Q?jRRj7JVMGa20AVEEg6momrxP46lWkGn1wl1Ak5cF6Q9PJTlLtQJWrSdK+E?=
+ =?iso-8859-1?Q?vF2Zu4JEicvSmiLZliKUwWJge49QbC5zISm1BeFIqhMO1w25IMVS4V9hVR?=
+ =?iso-8859-1?Q?nnqC2zy9bu5KUqtSQHDyOevWc+g9Xj67yvtunOXWM+mVM5htgDiWx0R2up?=
+ =?iso-8859-1?Q?VGKcaCP/VPiqFOYjPbypeatLeXA/iLcXQ5S1os8G3wAbmkTvH/W6OxKtZ3?=
+ =?iso-8859-1?Q?LOv1qMPtoWWru74McxhhfhHN4r0iNxVytsjqusV5oAzNopmBjdQDufwyXg?=
+ =?iso-8859-1?Q?+4EURRVLWOe3XuQyFaricC1AmB/VKMRXo76Y1srVfstnJVHTq1ALZ9ohtY?=
+ =?iso-8859-1?Q?xh+eH4efEPlCsma+UuPDL1EfYi5VYaXQLA58W5cAAQ33Fynu2hc2/7KJZp?=
+ =?iso-8859-1?Q?VaVf+pfe2dR06ssi2Dty2xBxRxO8yk32330n4m00y6Vb7bwnRUaieTH+YH?=
+ =?iso-8859-1?Q?pJccazO5FfACTiZU3xpLwSrkg5mWSVZtNA9b3ah+hOaJtdN4kjSvsuqoXy?=
+ =?iso-8859-1?Q?zycXwMEeATl9CCd/5wkHGTieI5dmnjPbVfqfNqDg2GIj9pINouiDljrc68?=
+ =?iso-8859-1?Q?pm6bsiJqI8C1Jhpaj1lIeEzivWhnXYyDdC+3/SaB9Kt6C4i2iMjr62xVZ8?=
+ =?iso-8859-1?Q?2zda6iT+TvAsx9oDiI2KO+WxjxE7zY5YOwp7JDxQg3XejgQz+GViNuZ75i?=
+ =?iso-8859-1?Q?OqfpPM4D4n6fwlHnLGn4S07DxKMd8EDxPivP/QmvD246FaBgKWMBxaehY6?=
+ =?iso-8859-1?Q?iAIqC8Ry5m6Xs0iJ8lOuZq4JYqDVZT7whT65cbIYdHjX40h9WsB3bSWs9v?=
+ =?iso-8859-1?Q?Yy6DiW2uHPJDRTWTgZPR4S7rxj+F5992eLaeRw850X/NW4NcJt9ASKMpfv?=
+ =?iso-8859-1?Q?WLMNPqU/MqivuljKuVoHYBVEMMgLTd1y6KM3pCGqH/lRUELhbwc/GyU1i9?=
+ =?iso-8859-1?Q?J7ocwM7MxXw/VBKm9Mjk74Th/VRqoHG0eyk8McMxUUrXOBVvaeo30xiCtd?=
+ =?iso-8859-1?Q?DflPXLjamPeM5hjT4XH/Rg9BhAp58jpJBJ/Ok81XuZysyGa7Qrc5EuhNha?=
+ =?iso-8859-1?Q?pj7sw+ZoSisMYxYR7/njEUneeOHWtx3XwS4oosKRK7BmRiXUn7qF?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35c79370-0b92-4f81-f38f-08dee10bb9c4
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 18:22:41.3562
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6NkRjhMuFZ6BBe7j6WtdSqXe28ZVputtwFDLXZeU+TXR1OqGWigIKA1NO78pk6/1drWHrqS7sAqjPoSbVD4o3v34hdIWvRGZDK/cNeGU7ZdKrgt9J4yWsCckl05vDWn8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7646
 
-The bot's review is correct -- I'd like to withdraw this patch.
+On Mon, Jul 13, 2026 at 05:12:51PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Non-atomic update of the DMA descriptor trigger field (`control`) due to `__packed` struct layout and lack of `WRITE_ONCE()`, which undermines the safe concurrent DMA updates intended by the patch.
+> --
+>
+> --- Patch [1]: [PATCH v7 01/10] dmaengine: dw-edma: Move control field update of DMA link to the last step ---
+> commit bd1de63f1d8dc07b26abcdf63111eb18b82af133
+> Author: Frank Li <Frank.Li@nxp.com>
+>
+> dmaengine: dw-edma: Move control field update of DMA link to the last step
+>
+> This patch reorders the initialization of the DMA link list entries to write
+> the control field last, followed by a dma_wmb() barrier. This is intended
+> to safely signal readiness to the hardware and prepare the driver for updating
+> descriptors while the DMA is actively running.
+>
+> > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > index cfdd6463252e6..ee5c3c317557b 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > @@ -284,17 +284,18 @@ static void dw_edma_v0_write_ll_data(struct dw_edma_chunk *chunk, int i,
+> >  	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
+> >  		struct dw_edma_v0_lli *lli = chunk->ll_region.vaddr.mem + ofs;
+> >
+> > -		lli->control = control;
+> >  		lli->transfer_size = size;
+> >  		lli->sar.reg = sar;
+> >  		lli->dar.reg = dar;
+> > +		dma_wmb();
+> > +		lli->control = control;
+>
+> [Severity: Medium]
+> Will this assignment safely guarantee an atomic update for the hardware?
+>
+> Since struct dw_edma_v0_lli is defined as __packed, the compiler might emit
+> byte-wise stores or tear the write instead of doing a single 32-bit store.
+> Without WRITE_ONCE(), the compiler could also potentially reorder or split
+> the store.
 
-I tested the underlying assumption on real hardware: a single-level (non-nested)
-VMX hypervisor that configures a TSC offset for a guest and lists IA32_TSC in
-its own VM-exit MSR-store area gets back its *own* TSC frame on exit, not the
-guest's. That contradicts the "single-level equivalence" reasoning this patch
-was based on. The original code was already correct.
+This problem is not existing because each field is 32bit aligned.
 
-Sorry for the noise -- please disregard this patch.
+Frank
 
-Amirmohammad
+>
+> If the goal is to safely update descriptors while the DMA is running, does
+> this need to use WRITE_ONCE() (along with ensuring proper alignment) so the
+> hardware doesn't observe a partially updated control field?
+>
+> >  	} else {
+> >  		struct dw_edma_v0_lli __iomem *lli = chunk->ll_region.vaddr.io + ofs;
+> >
+> > -		writel(control, &lli->control);
+> >  		writel(size, &lli->transfer_size);
+> >  		writeq(sar, &lli->sar.reg);
+> >  		writeq(dar, &lli->dar.reg);
+> > +		writel(control, &lli->control);
+> >  	}
+> >  }
+>
+> [ ... ]
+>
+> > @@ -306,13 +307,14 @@ static void dw_edma_v0_write_ll_link(struct dw_edma_chunk *chunk,
+> >  	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
+> >  		struct dw_edma_v0_llp *llp = chunk->ll_region.vaddr.mem + ofs;
+> >
+> > -		llp->control = control;
+> >  		llp->llp.reg = pointer;
+> > +		dma_wmb();
+> > +		llp->control = control;
+>
+> [Severity: Medium]
+> Would this also need WRITE_ONCE() since struct dw_edma_v0_llp is a __packed
+> struct?
+>
+> [ ... ]
+>
+> > diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > index 632abb8b481cf..1201f1ab5f359 100644
+> > --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > @@ -160,17 +160,18 @@ static void dw_hdma_v0_write_ll_data(struct dw_edma_chunk *chunk, int i,
+> >  	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
+> >  		struct dw_hdma_v0_lli *lli = chunk->ll_region.vaddr.mem + ofs;
+> >
+> > -		lli->control = control;
+> >  		lli->transfer_size = size;
+> >  		lli->sar.reg = sar;
+> >  		lli->dar.reg = dar;
+> > +		dma_wmb();
+> > +		lli->control = control;
+>
+> [Severity: Medium]
+> Similar to the v0_lli struct above, dw_hdma_v0_lli is also __packed. Could this
+> store tear and cause the DMA hardware to observe an incomplete control field?
+>
+> >  	} else {
+> >  		struct dw_hdma_v0_lli __iomem *lli = chunk->ll_region.vaddr.io + ofs;
+> >
+> > -		writel(control, &lli->control);
+> >  		writel(size, &lli->transfer_size);
+> >  		writeq(sar, &lli->sar.reg);
+> >  		writeq(dar, &lli->dar.reg);
+> > +		writel(control, &lli->control);
+> >  	}
+> >  }
+>
+> [ ... ]
+>
+> > @@ -182,13 +183,14 @@ static void dw_hdma_v0_write_ll_link(struct dw_edma_chunk *chunk,
+> >  	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
+> >  		struct dw_hdma_v0_llp *llp = chunk->ll_region.vaddr.mem + ofs;
+> >
+> > -		llp->control = control;
+> >  		llp->llp.reg = pointer;
+> > +		dma_wmb();
+> > +		llp->control = control;
+>
+> [Severity: Medium]
+> Could this assignment to the __packed dw_hdma_v0_llp struct tear as well?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260713-edma_ll-v7-0-6fb7498c901e@nxp.com?part=1
