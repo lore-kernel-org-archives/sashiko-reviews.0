@@ -1,112 +1,148 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA53AE1BD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 08:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8063BCD16
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 08:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.223
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783931297; cv=none; b=eXabGXVWorJfia/IDEi0tF9PoGMahTFCWJJVrWQm8lap+18oAsQ1jDmkxlcZmmIHA8PkpcpQvRobAVpR9b6ozjwYxukbaow8nDUg+Ngwce4/QlKqMFzMt4X+g7Djdf3+EaNtAUcZY6lDfc/LimMieXAdCcVMOIAWYiBhzgvcUdI=
+	t=1783932355; cv=none; b=o3t1c77hCG1MKd655SRE8R5U1M1D27a24ZMmD+ekJ1TqFYqR0qIeCTAJMZfBwr7eQvV+lWlJCo6D602QW8y2dYymI6xlCjsx1BSmChU/dZlZ9OxfITulP3hkJuFPAUqwKS3NtI2M6x5xf1GI071lbG6CWIEOplEBY2bwA2QKeXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783931297; c=relaxed/simple;
-	bh=1bdQxZ+KT2IXwA3Ltsi7cQksVnEt6y9F8PnZupL8F5A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IG+vUtaDx6el03BW4TLvJ0zgqLkLCTefvI5hlI5SPvtLyDlMG3uNiReZqUhA4q5BstRn2vu1hkm2BWZLRUroTr9neSlGKgDpVIwKxqjG5jc6WJcEmMNodnRxAMQH21QvbBfbC7lApgYb38qi4d50e5eOCDoyUABn9QumOrNW3QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U3a4NoDU; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783932355; c=relaxed/simple;
+	bh=gq2MvhinX35Ycm9JnKQm6WEoiO2n4ya3XhAAJ5aqtM0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Af1rHsbJqRAg4HTzLGIEZWNLO05AuzrZXpCB0+52LZvUFpH7DDE5A6RUezFlFXWlI86hQ9M7vFAtt/yXmVy/E83GYeo6YkIyVgwBu/KYU/zzo8l9TtnZVmZ4nmxOPX76+IhV98I/Tb+7aER26eoff4u4C/3z+4F2AI6SMYovNDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=Il7C+t8W; arc=none smtp.client-ip=113.46.200.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U3a4NoDU"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84a2dcede83so1345719b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 01:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783931295; x=1784536095; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1bdQxZ+KT2IXwA3Ltsi7cQksVnEt6y9F8PnZupL8F5A=;
-        b=U3a4NoDUksBepORvgG9FX5hINyvXmPRorScKJUfdIRXBOHQGkDA7dPXyqElrzjUz/6
-         35yOQ2JrjcnYDCHpq+t3n9Akjn+ooc4/8mEXZBYbMn5GZvqeEEmyk6ci0uV6xC9EMYat
-         rBbx5vaApzccTxsWvMarm5Lpl+qtKe2XknVS0pPGPXz6dXtjNlwgrG5jDKhAv0mLxE0h
-         XJB8bQIrQv4XE3K3Vu/hI1jyTJqTtBM1OadM5UoIKMFYEyNtLJQdCpjKgO0j/fUyDyyv
-         nVA3gNJMpEJ0SRyKezUV5w0P/mkafA/n3GDDZZcM3WyxsEAdEEX8wqNLBRPF9pXK+ia7
-         68Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783931295; x=1784536095;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1bdQxZ+KT2IXwA3Ltsi7cQksVnEt6y9F8PnZupL8F5A=;
-        b=QwF1VJNv5vSky9jiNRqGIRczuLr1Zun6nOg0x4IPG67S6J5XVxcVI1TzDDUhRUNRVb
-         Z30fCVuzcDjWiHFDIUGGpDGSZMZJ3htQBtxYf8LCQPlMCIQyByDra5fS9JOBzUJGGNoz
-         sOFn2Pft+AKKtQluKoOkW223y+7eBu4nWUZGzdL0ox1CAMNhv3x4gant+Qp7cy79MZBQ
-         Q5N8XeNQFStE6GBEF1AqdNGjVcJ0Pp4oftQISDZbxR8zwpWlUci57FUbnHXMPDNZy2xW
-         HmEPsNL8HS8XHnANsUhl8UoJycTMogoajJRG6qiYKfJMU31RLhVxhjGaDvcGSSQpAM+U
-         AeLg==
-X-Forwarded-Encrypted: i=1; AHgh+RrrNHv3CGJivXUzZ95pgwpSVCSLkICxsV6jibyKXyAoS2z6bgAxFPBJHDSBS9rItQBZvtCPRA3Jd3+buXSUt2U=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxTgG2b20G9BCFOFtZVNJZB1xrFxBTNl3CpXOB7xXWh9Etq61Jm
-	VAKUExGDwIhFzrAN1I7hv0dNabLLZP0iY3pwqtmJQvwGS1rQ6psVdzJb
-X-Gm-Gg: AfdE7cnMFnSfDT4j+D6cFX+Hk9PL0UBXw1692Gs3uxUYEXY+jEcPfCkKKCrFpWr1UvK
-	arE2jqGvNPhBfJp70uCuiUjyWK4pAyKWaAhd4eCgOBIoYzPbw6E/afZQRfz7u0pyxWTjESiDg6V
-	2EJzn1gGThb7KUFcUjACH8hEuKkC9U3dXFoGZtvM/Pv5J6gLYq1/2lC44pfBtEuQ11Yy7cybeHV
-	+Q7b0lv0JuLcadIBh8+vAOnP8T1Ar2LfHL9NYv1hn9Nf+j3HrVwmIxptYfGgWV4tUy10xaetP2n
-	aysc5umIs/m/Vxg3J7fR/ki9z8ffKSjFideD93+QeO1rJPDYZ6+PI0w7SeUZBkiQnh7ZP8oVD8N
-	IrSnUOF6Ut8S7eh8o9jt8XpNosfQo9VQtGLmirXmzT1cvud6PIMwBKL/pvslqvLHMS01/a/tR01
-	YWE8dACsOuxT0FXfL+sk2RFQ==
-X-Received: by 2002:a05:6a00:3306:b0:847:8dec:141e with SMTP id d2e1a72fcca58-848897569e9mr7818491b3a.54.1783931295613;
-        Mon, 13 Jul 2026 01:28:15 -0700 (PDT)
-Received: from HP.localdomain ([27.217.83.168])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8494b279e8bsm2691284b3a.33.2026.07.13.01.28.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 01:28:15 -0700 (PDT)
-From: Zaixiang Xu <zaixiang.xu.dev@gmail.com>
-To: linux-hwmon@vger.kernel.org,
-	devicetree@vger.kernel.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Zaixiang Xu <zaixiang.xu.dev@gmail.com>
-Subject: Re: [PATCH v7 3/4] hwmon: (sht3x) Add devicetree support
-Date: Mon, 13 Jul 2026 16:28:09 +0800
-Message-Id: <20260713082809.24184-1-zaixiang.xu.dev@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260713080129.D8A8E1F00A3D@smtp.kernel.org>
-References: <20260713080129.D8A8E1F00A3D@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="Il7C+t8W"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=wANqFl+rvWRG8f7SGehgfFmwU4caU9XO+4Yu3gI6HvM=;
+	b=Il7C+t8WK84sxOAftbzQuuAIyXr+bNLDxFgDL59dSKW6JVHciZqV496FWYChF5l2UIf50vvlI
+	VkZRlUSu6v1AlH5d1paewg673opDFHlxCMRx+TmR2fzYQ723Oc8byFYS+EcsmTQ6qVgNV1OCIca
+	AZ1cll/pwc6aivWfyZldmwM=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4gzG4R5TWWzmV6m;
+	Mon, 13 Jul 2026 16:36:23 +0800 (CST)
+Received: from whupemo200004.china.huawei.com (unknown [7.152.184.18])
+	by mail.maildlp.com (Postfix) with ESMTPS id 0B0E8402AB;
+	Mon, 13 Jul 2026 16:45:41 +0800 (CST)
+Received: from [10.67.120.233] (10.67.120.233) by
+ whupemo200004.china.huawei.com (7.152.184.18) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 13 Jul 2026 16:45:40 +0800
+Message-ID: <e767f7a6-0462-49e5-b8b8-b32149ab0778@huawei.com>
+Date: Mon, 13 Jul 2026 16:45:39 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] perf hisi-ptt: Add field-level parsing for header
+ DW2/DW3
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-perf-users@vger.kernel.org>, <linux-pci@vger.kernel.org>
+References: <20260604075005.2219785-10-liusizhe5@huawei.com>
+ <20260604075857.734541F00893@smtp.kernel.org>
+From: Sizhe Liu <liusizhe5@huawei.com>
+In-Reply-To: <20260604075857.734541F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ whupemo200004.china.huawei.com (7.152.184.18)
 
-On Mon, 13 Jul 2026 08:01:29 +0000, sashiko-bot@kernel.org wrote:
-> While reviewing this patch, I noticed a few pre-existing regressions
-> in this file that might be worth addressing.
+
+On 2026/6/4 15:58, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Host-endian-dependent C bitfields break cross-platform trace analysis on big-endian hosts.
+> --
 >
-> [Severity: Critical]
-> This is a pre-existing issue, but does this unaligned memory access
-> crash strict-alignment architectures?
-[...]
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this integer
-> arithmetic overflow?
+> commit b5a1a94b81406195d7c90b32fd8a96a3d26602c2
+> Author: Sizhe Liu <liusizhe5@huawei.com>
+>
+> perf hisi-ptt: Add field-level parsing for header DW2/DW3
+>
+> This commit adds detailed field parsing for TLP header DW2 and DW3 based on
+> the message type parsed from DW0. It aims to provide more structured
+> information for users analyzing PTT trace data.
+>
+>> diff --git a/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c b/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c
+>> index 59ab8ec3a03da..46f11d5719aca 100644
+>> --- a/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c
+>> +++ b/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c
+>> @@ -127,6 +142,45 @@ union hisi_ptt_field_data {
+>>   		uint32_t type : 5;
+>>   		uint32_t format : 3;
+>>   	} dw0_8dw;
+>> +	/*
+>> +	 * Header DW2 for MWr/Msg/MsgD/FetchAdd/Swap/CAS/IORd/IOWr TLPs.
+>> +	 * Affects both 4DW and 8DW format.
+>> +	 */
+>> +	struct {
+>> +		uint32_t header_dw2 : 16;
+>> +		uint32_t tag : 4;
+>> +		uint32_t t : 1;
+>> +		uint32_t tv : 1;
+>> +		uint32_t rsv : 1;
+>> +		uint32_t request_segment : 8;
+>> +		uint32_t reserved : 1;
+>> +	} dw2_mixed;
+> [Severity: Medium]
+> Does using C bitfields here create an issue for big-endian hosts?
+>
+> While le32_to_cpu() correctly handles the byte order of the raw integer,
+> the layout of C bitfields is implementation-defined. On big-endian systems,
+> won't the compiler pack these fields starting from the most significant
+> bit instead of the least significant bit?
+>
+>> +	/*
+>> +	 * Header DW3 for CfgRd0/CfgWr0/CfgRd1/CfgWr1 TLPs.
+>> +	 * Affects both 4DW and 8DW format.
+>> +	 */
+> [ ... ]
+>> @@ -211,6 +265,85 @@ static void hisi_ptt_print_head0(struct hisi_ptt_pkt_buf *pkt_buf)
+> [ ... ]
+>> +static void hisi_ptt_print_head2(struct hisi_ptt_pkt_buf *pkt_buf)
+>> +{
+>> +	const char *color = PERF_COLOR_BLUE;
+>> +	union hisi_ptt_field_data dw;
+>> +
+>> +	dw.value = le32_to_cpu(*(__le32 *)(pkt_buf->buf + pkt_buf->pos));
+>> +	hisi_ptt_print_raw_record(pkt_buf->pos, dw.value);
+>> +
+>> +	if (pkt_buf->pkt_msg_type == HISI_PTT_PKT_TYPE_MWR ||
+>> +	    pkt_buf->pkt_msg_type == HISI_PTT_PKT_TYPE_MSG ||
+>> +	    pkt_buf->pkt_msg_type == HISI_PTT_PKT_TYPE_ATOM ||
+>> +	    pkt_buf->pkt_msg_type == HISI_PTT_PKT_TYPE_IO)
+>> +		color_fprintf(stdout, color,
+>> +			      "  %s %x %s %x %s %x %s %x %s %x %s %x %s %x\n",
+>> +			      "Reserved", dw.dw2_mixed.reserved,
+>> +			      "Request Segment", dw.dw2_mixed.request_segment,
+> [Severity: Medium]
+> Will this result in extracting entirely incorrect bits when a big-endian
+> host processes an ARM perf.data trace file?
+>
+> Since perf tools are expected to support cross-platform trace analysis,
+> could we use bitwise operations instead of C bitfields to ensure the fields
+> are reliably extracted regardless of the host architecture's endianness?
 
-Thanks for the report. All five findings are in pre-existing code and
-are not touched by this series, so I would prefer to keep them
-separate from the devicetree support here.
+HiSilicon PTT deployment environment is strictly little-endian (ARM LE), 
+so the current layout works correctly for supported platforms.
 
-I checked the first two: the unaligned access in sht3x_update_client()
-(buf + 3 is an odd offset into a byte buffer, so it needs
-get_unaligned_be16()), and the limit_write() overflow (temperature is
-clamped to 130000, and (130000 + 45000) * 24543 = 4295025000 just
-exceeds U32_MAX, so writing the maximum limit wraps the raw
-temperature field to 0). Both look real.
+I understand the endianness dependency of C bitfields, and I think it's 
+better to use bitwise operations instead of C bitfields in 
+cross-platform cases.
 
-I plan to go through all five and send fixes as a separate series
-after this one.
+I will change these in the next patch version (Reply to all comments 
+related to C bitfields).
 
-Thanks,
-Zaixiang
+
+Sincerely,
+
+Sizhe
+
+>
