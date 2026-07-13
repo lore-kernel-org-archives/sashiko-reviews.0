@@ -1,256 +1,270 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012062.outbound.protection.outlook.com [40.107.209.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1D637475E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 04:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783916077; cv=none; b=OPgzwdUrSLbDJXaMcAOhRHyScNTVbP4U+DcUlzVn/m9g+lQJGbFZMVn4n+SSEOBKsqLVjSGIfCDrjofD/f7zAH1754WErz3s68hxy7LwhNRXeSzawMBYyTcMyPqVdosGdf6sI82yfVO0vkyOCZHot4wqLNFH64JKpeSMJrNlXAI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783916077; c=relaxed/simple;
-	bh=y1Yt2fykqjsWvs7kXOwQ+eAkXv958ODFE7VheXPWId0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MGOiDtYttUJ5aNcVX4SKqlUy4ke0QFyCl/wvlTgbicv/hV9QNZyipEQwh1VXaprraJ73JORE4GnLT0dCm+4qfU2vahR0MDXDt45dve8bTprhqcB3Gdj8I29TDOvYOQ/N4DGZEjs7l5WNRQ0aZLIQrGywdt6nJZgSouBw7Td1wG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xDOBaWfl; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0891E7C12
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 06:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783925238; cv=fail; b=CM9QV+rbmHUWrT/afkEViKMPoeJRRwg7jNHLcsD0oUY1skfuPV0NQL/seeWvCf3jxgfZORpI7B3Iwr/I2RNyMxox09oeykCHHMpW3omSH/iFVPAs2RNVzKofoqixRDhjfdAJAqTbHabsNZlUyQy532zwKsCSLA3HJviVgLn9dV0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783925238; c=relaxed/simple;
+	bh=V03rvkmshb4mXzSU/D5fI+KoYIDj72tDIhZJA0z94ao=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=A3f+Gf2kcBER9HbGXYfb3uUK7MNhAA/RwNWjVofvUaetIYuO9JcxKZ1Z1LZwlzH2ePFL4kePBUR5s/wyo8zin1e5M1eq/tkoeV8fDtGiSrwssr7YhukpW30x03aO2AhoazsHoWCbYQ6QH84H3r6oJMNeRK4gHTkN1nOCvvdYWfg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=sixhM8co; arc=fail smtp.client-ip=40.107.209.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xDOBaWfl"
-Message-ID: <5b07d2ab-84ee-46ae-84c9-7542499d26d7@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783916064;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nUYIJ9DN/aj3dekLHrJVHchQB1flIZYdeNNZTWSaweE=;
-	b=xDOBaWfl3M9diHS22ZehJhE9K0+bazKqg07i01Jz9Bxz5GvdXr5OMrd8A2frtvubdRqQf2
-	KNaR7BSVLYCk4kvDUpn6sOVgWTELSYzKr3EAaQ382ThUJO86Njg7vByw2X+XVJWvxMzXAO
-	K3k54fLG9xNwnnEFPgf6NqboCdsm6Ow=
-Date: Mon, 13 Jul 2026 12:14:07 +0800
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="sixhM8co"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P/Tdmkp2Ej/z80TnLGVeTLbdUqsdB/AultuA1O6IhslJ2QvWhXj2506c4tp9GiVUV0dtMesWLOBOhIU3vIt4gX9hKk5TaWlTi0igOU56If5mRsuG7BdI4ZnqQZ43/14m8/bK6h6q8l1p+JdBXlnE3bWlg8dvfp4xdlZqyUq6E2EcELs0rMRjEoZNAD71fk9Rk7WdJzmTqev/E/xQBOS0SXICMj/IfUU71O7NMuxmd+1gInoqGoLtzXFNrMc0gwmI/2Fra3vGNsFrQACaECOYaNXJQbDonP1go3OzM0jZTfckZe4zvImllwiFGLfeSM/FIRFYbH/vtkjaO/1IzBI3uw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RlLGktjmTsIf5ZC3RND2MH8JY+XwGhAuGW6qMXBuT2g=;
+ b=nSUa33aTcExCAdHHFvVzQwlUAzlU4b9AC/h5Dwcjk7iV58kHgWZyu2Z+t5I33HiIIF4ICuToxvUg8PYUv7VstYFmatbTIrBfHYYWFnWRCcR2RgzxzxdlMWtHwmxhQh48TVBmagNqsLDcHBVOJJXna3cU9vS48n0CzErMk8EHa4jxqzXfRdxClAGUBx2HiyXCDqQ8FmdUnq9HRmnwakh22Cc1v6sqWzA1OjkizJxw1Jb8Xjt2Ij1aF10611avBSJgZVusnorDVYnIN9ArzadzSJfUNWG3vmu8vIPFFa2PaF9k0eTIk+TAcmiixngBZwydcE90YkSADwZwqr3/pTZjKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RlLGktjmTsIf5ZC3RND2MH8JY+XwGhAuGW6qMXBuT2g=;
+ b=sixhM8co8pwH1wyMi++fYWJ17Gt4zLq7KHB8yOotTLPYJCHPf0rk7e7xec8WgIXujbPfFH6pvQtxA7LxGSlElsU4HCzfAwk7X3ePpY5FD40hvPlV/M5/8asc08ezDwdSq3ONDmwTU9qRxKj0sfVkG1U3o7zulx3PP8UHhtAwGWM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
+ by MN2PR12MB4127.namprd12.prod.outlook.com (2603:10b6:208:1d1::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
+ 2026 06:47:12 +0000
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965%4]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
+ 06:47:12 +0000
+Message-ID: <81de849d-a230-4240-8896-65366807598d@amd.com>
+Date: Mon, 13 Jul 2026 12:16:59 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7] dmaengine: dw-edma: Enable HDMA 64R/W Channels
+To: sashiko-reviews@lists.linux.dev, Devendra K Verma <devendra.verma@amd.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+References: <20260708134343.3806759-1-devendra.verma@amd.com>
+ <20260708135950.DEEEF1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Verma, Devendra" <devverma@amd.com>
+In-Reply-To: <20260708135950.DEEEF1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4PR01CA0045.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:279::11) To BL4PR12MB9482.namprd12.prod.outlook.com
+ (2603:10b6:208:58d::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [BUG] bpf, sockmap: spurious wakeup by tcp_msg_wait_data()
- causing unexpected EAGAIN in recvfrom()
-To: Nnamdi Onyeyiri <nnamdio@gmail.com>, sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, netdev@vger.kernel.org, john.fastabend@gmail.com,
- jakub@cloudflare.com, edumazet@google.com, ncardwell@google.com,
- kuniyu@google.com, davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com,
- horms@kernel.org
-References: <ak_rR-Skd8Mvn4mH@localhost.localdomain>
- <20260709185526.E4DAB1F000E9@smtp.kernel.org>
- <alFRK66z45eDNZA7@localhost.localdomain>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <alFRK66z45eDNZA7@localhost.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|MN2PR12MB4127:EE_
+X-MS-Office365-Filtering-Correlation-Id: 24847e6f-0228-4382-d0e7-08dee0aa91aa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|6133799003|4143699003|11063799006|5023799004|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	VGMun2/BqxwFU80giVyRw8L9rTgTUsHErcP2RrbUzfx/vM/xMobM9MJAVPiL6i83NRhv5WZGyop919gwFrOGBUXB7j1F85c5y28XjkMx01pz91ya8P5KH8QJ3ZhxqSpvCIHCk8TL858G+Nq9myTJrVuKFW82g4m/kdX80VTaxmACTqiMdMnot5lj5/o+jLDVv+9TcoczspyApFjAmBgvecQ+3t8zeDQPNZL3iV/RdwHU9+chgt2Ft3xQIA3gSma+AP5LQYaDi95oxeCj0uxJVop2UPFxf+OcpPPWutHbxiNULd4G6fc6arrSNOUgJj/HiLU5jTB8tSNotpnKSGVH3qIWQinIuk1cl4WkwhvUTzj2f8jDKEBIEQSulN45uU6+sED/3U23MCNsFVWl6hn/EvxFn4BpAdhKw5c7Fy5qjEfpvvErHr4ZI/TDUINtOkPBnd4LhaA2rpNtTWv0B+RgScsl2hokoXBrObl2aphxGF6ePvS58vck0Sj1ISi0KK3Zo2kvEyCgH9JEftJaf4/QXzn9gvqwPX+1A+8XYNXGzjR5TKe76MuYSZt59D9E8zlWH5LwNZRT5ykVrfteoG8pdK0YPJxF9+00MRjCNPEdxZxUBh/2TPSswu0TjR17ndfzDL1XKiDlAk9OJR/AKbG0T7GP3fxe8EYPlcUxEWeMD8c=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(4143699003)(11063799006)(5023799004)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Y20yTkJhMStpRytpQ2RzY3d4bFlHd1lWOUN1MVV6YUd0Z1BZUUNEem51MDNK?=
+ =?utf-8?B?blI0YXZQeGJhUzZ2a3d4Q2ozVTdMMlBzd3M2VldXYko1QytYM1ZHZlNWQVNp?=
+ =?utf-8?B?bDNrVzNzbDVCZG0zQnZCSG1kdXlYR21DRDJPZ1crcVJhaFN0NVFnRURDbzEx?=
+ =?utf-8?B?RFFVM0ZUMlZ1UVh3dlgrWFBJYjl0VEF3bnFWS1ozYjhLZ1JGOXZzakJNYmJR?=
+ =?utf-8?B?bHJNWDc2KzJEUzgxVElaYThlaWFWd2ZkSW16RVU3cTZJdUxOK0VyRzlkcXBL?=
+ =?utf-8?B?VTQ4NjVhTS9sZGFDVHd6TGtmMy9CWnlqdk91V21WNXlaSkRWc3NZQ3orNlFH?=
+ =?utf-8?B?QkI4VXJjWEwrLzVJanhDVXdYcWVoNHJhZHN4d3ord2NtN3dUWi9iY0Z4M1N5?=
+ =?utf-8?B?WW1BY0lKaVJQeHhHN3hpemt3RWVaZWlQUmx3VXkwckxwTkNEWm91V20wYjFB?=
+ =?utf-8?B?enZKMGJZMW0wako2NEZlNlBBZ2pYdVhjTGFINDR5dm1Md1F5Zk1qQVh2a2NP?=
+ =?utf-8?B?SVhCQTR4MnBzcDlTb0dxeUhRZG9PS2xud25Ub0NJM0EvcG5CcVNSUktPNDdo?=
+ =?utf-8?B?cXRSaktsTXhYN2UrYWJ0S2FNaDNWeEEzR3dIR0h6ZThweFdJWWVFUUtWT1Zl?=
+ =?utf-8?B?OVVjU3Yxb3ZJUVNGRzFIOFlaTmhKZHZLU2QvL21ERzNZdUtoYmdkeXM5Y1dk?=
+ =?utf-8?B?K3VlNDYwKzZmNWhXU1NZR2JoazYxajFaOEs2dElZcFNDQlB2VnZLN2VhTU5Q?=
+ =?utf-8?B?YlRFVHBkL3FTYm53QXprai9NbTFPNlU2cjlJOWQrM3lLRUwycThlcWRwbHV6?=
+ =?utf-8?B?YWNSQ2pmRGZlZmkvTEozbzhnYkJXSVhDSy9jL1FlNmJ2ZlpaTHJURGRsQlJm?=
+ =?utf-8?B?NmNMSGN6YnNGNTZTdW1DOVhQL2Y1b003dWVVM2ZmOENUbFdNNWx6N1JnRGs2?=
+ =?utf-8?B?Z2NFSm83eVgyWWg5Vy9VUTE1Uitld2wyRndMYUtIeGpnRHB3Tk5PeE5jSzJu?=
+ =?utf-8?B?dFB4c09kK0UveG00K1JQOStYTkJNZEVzbU1XNFRFTTFmV0FSQ05kaS9GY1Ey?=
+ =?utf-8?B?eGZmV3NWb2NsZlBPQWJYaDU3K2hqSXhKVWpCcmNQR2luRW41eFpzZXB2VHN1?=
+ =?utf-8?B?bDlSdnVQNVNCSGIrcEczTzB1ZmZPMDFQSzNmNFN0NUNzR1p6RWUxQkF5bjBt?=
+ =?utf-8?B?UjArVDZwdU5CdXdqb2Q4RUFuQ0N5ZTdtRkxCQlN6SWJxQUhxcStLMnV5Sk11?=
+ =?utf-8?B?UXlvdHpqU2hQaVlaN3JWeGl6cVFlUDhQQnRxZ1MxNThhYmdraHl2UndwUHJE?=
+ =?utf-8?B?VWlDT1NlTnRaUWE3UmJjenRtM1NLTnVJamduWlZRK2dyQ293aHJnS3dGcFJ3?=
+ =?utf-8?B?S0NBZWVGb2ZlWnFMUmoyRllncnhmbUgxVTUrcStMTDNGU3lKcGxBNi9QajNy?=
+ =?utf-8?B?dmxWbEZQTko2NVp4N2xIWFZ0S3A5bkVUU3kxemx5VzhCSmg4THVYZmg4bEpU?=
+ =?utf-8?B?L2VkSGhySDY5VytCS0pHUVE4R3VwblppanYzbnY3WkU2OXFJOGFpaW1vRUE5?=
+ =?utf-8?B?Vkh2M0ZjZlpCejNCcHVlMk1TMUQ1andoTHJ6Z3QyOThibHJZOTQ3NHAwcGU3?=
+ =?utf-8?B?UW51bjh6UkNJMndTMGwvOW1sNHdDYTFseHRmMEoyV25YdW83ZDNqYVRJTnMv?=
+ =?utf-8?B?Mis5UEpwREFyeEFKd09yYzVNa2JQQzJYZ0RMMDBteG5RWVZ2L2hLcEJoR3pS?=
+ =?utf-8?B?SkRQdTN6ZW40ZVhLRitmbkI4NUNnL3ZRTFByS05XU1hBcW9tbEZBTHcweFRO?=
+ =?utf-8?B?TnFCUkdrWk5pczN6M2MyQmRqdGVrTXZCWDY1anIyMkw3QzV6ZmdXWkFUaHdq?=
+ =?utf-8?B?ZEtPbWJrYlVFVEg1aUdOZmwvc2tVTERJcnByUkdyRCtxUDB1M0MvRG1LaGZJ?=
+ =?utf-8?B?VkYyUnNIWHJ5SU9jRDZ4TlROUjN2d2RlZFNkMUVPVnNsTE9LcFJFaUtGK29m?=
+ =?utf-8?B?T0JzbzM5cGI5QWNRTm15Tk5meVdKb0JzMXVPNllNU1FqSUlaZ2djdFc3U2xk?=
+ =?utf-8?B?VjRwbmxaUVZnTzVERWduTnVYM1hIOUpQNHgwaXA0bTZvOUVJNkxUMnJzOVdx?=
+ =?utf-8?B?dmJzdGxEOWVZekNsWXVwaC9WYkdiUWl5bHp2YWVhNkRKc1ozQmh4R1YycDYv?=
+ =?utf-8?B?OXpjcWRwN0c0YlJHdUZNUTAxaHVWb083NFVJMWo1NWk2ejRqL3oySHNuWFRT?=
+ =?utf-8?B?Umd4K1FtRTlOcDJlTXRFQUZtUVZIRXREV1QvMzVneHFUTTQ3MFJnV1ZvWGkz?=
+ =?utf-8?B?RFVHUDRXSDRhemRMU3VQUHgzQjE3b25kSjdrMFU0U1VyZTgzSFAwQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24847e6f-0228-4382-d0e7-08dee0aa91aa
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 06:47:12.7510
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ydu8iao7JHgiH+V2gVgYRK0vuoTnZfiWZoPONJ90MXGR3kl6ATK+hJdCmSHxTwtDkQBWutzVbOIugfPOiSOSYg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4127
 
 
-On 7/11/26 4:17 AM, Nnamdi Onyeyiri wrote:
-> Hi,
->
-> The updated patch below addresses the issues raised by sashiko-bot.  The closed
-> socket and signal handling code was added to tcp_bpf_recvmsg(), and the fix was
-> updated to work for sockets with SO_RCVTIMEO set.
->
-> Please let me know if any more changes are required, or if the patch would need
-> to be submitted some other way, I'm happy to adjust as necessary.
->
-> Thanks!
 
+On 08-Jul-26 19:29, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Designware PCIe core bounds checks reject HDMA configurations with more than 8 channels.
+> - [High] Standalone PCIe eDMA driver statically limits hardware to 8 channels.
+> 
+> Pre-existing issues:
+> - [Critical] Missing register offset when setting the eDMA/HDMA base register pointer.
+> - [High] Incorrect arguments passed to GET_CH_32 macro causing wrong channel registers to be accessed.
+> --
+> 
+> --- Patch [1]: [PATCH v7] dmaengine: dw-edma: Enable HDMA 64R/W Channels ---
+> commit 4834a312ef82b7f9b290aedb3a1f566db2548955
+> Author: Devendra K Verma <devendra.verma@amd.com>
+> 
+> dmaengine: dw-edma: Enable HDMA 64R/W Channels
+> 
+> As per 'Designware Cores PCI Express Controller Databook',
+> Section 7.1 - Overview, HDMA supports 64 Read and 64 Write
+> channels. Current controller driver supports up to 8 read and
+> write channels only. In order to utilize all the channels the
+> controller driver need to have the channel related structs
+> and variables as per the number of channels supported by IP.
+> Following changes are made to enable 64 Read / 64 Write
+> channel support:
+> 
+>> diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+>> index 1fafd5b0e3153..da7a5cc93ad43 100644
+>> --- a/include/linux/dma/edma.h
+>> +++ b/include/linux/dma/edma.h
+>> @@ -14,6 +14,8 @@
+>>   
+>>   #define EDMA_MAX_WR_CH                                  8
+>>   #define EDMA_MAX_RD_CH                                  8
+>> +#define HDMA_MAX_WR_CH                                  64
+>> +#define HDMA_MAX_RD_CH                                  64
+> 
+> [Severity: High]
+> This patch introduces 64-channel support for HDMA, but does this break
+> when used with the Designware PCIe host driver?
+> 
+> Looking at drivers/pci/controller/dwc/pcie-designware.c:dw_pcie_edma_find_channels():
+> 
+> 	/* Sanity check the channels count if the mapping was incorrect */
+> 	if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > EDMA_MAX_WR_CH ||
+> 	    !pci->edma.ll_rd_cnt || pci->edma.ll_rd_cnt > EDMA_MAX_RD_CH)
+> 		return -EINVAL;
+> 
 
-Thanks for the report.
+This specific function targets the channel detection for non-HDMA IPs.
+This piece of code is unaffected with the changes done to support 64 R/W
+channels for HDMA IP.
 
+> And in dw_pcie_edma_irq_vector():
+> 
+> 	if (nr >= EDMA_MAX_WR_CH + EDMA_MAX_RD_CH)
+> 		return -EINVAL;
+> 
+> Will these sanity checks reject HDMA configurations with more than 8 channels
+> because they strictly enforce the EDMA_MAX_WR_CH (8) limit?
+> 
 
-What's your use case here? With a verdict prog attached, we'd normally
+This can be enhanced and shall be taken in a separate patch series.
+The existing limits, functionality will not be affected and IP
+shall work fine.
 
-expect the data to be redirected in kernel rather than read back via
+> [Severity: High]
+> Does the standalone PCIe eDMA driver statically limit the hardware to
+> 8 channels?
+> 
+> Looking at drivers/dma/dw-edma/dw-edma-pcie.c:
+> 
+> static const struct dw_edma_pcie_data xilinx_mdb_data = {
+> ...
+> 	.wr_ch_cnt			= 8,
+> 	.rd_ch_cnt			= 8,
+> };
+> 
+> And later in dw_edma_pcie_get_xilinx_dma_data():
+> 
+> 	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
+> 			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH, val));
+> 
+> Doesn't the min() operation cap the dynamically detected hardware channel
+> count to the static limit of 8, negating the new 64-channel HDMA support
+> on Xilinx MDB controllers?
 
-  recvmsg(). Are you using SK_PASS? If so, please state that in the
+For the Xilinx DMA, the limit is 8 Read / 8 Write channels only.
+Enhancing the structs / arrays for 64 channels will not affect this
+piece of code.
 
-commit message instead of the email body.
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but is there a missing register offset when
+> setting the eDMA/HDMA base register pointer?
+> 
+> In drivers/dma/dw-edma/dw-edma-pcie.c:dw_edma_pcie_probe():
+> 
+> 	chip->reg_base = pcim_iomap_table(pdev)[vsec_data->rg.bar];
+> 	if (!chip->reg_base)
+> 		return -ENOMEM;
+> 
+> Should this map the whole PCIe BAR but also add vsec_data->rg.off to
+> chip->reg_base? Because all register accesses via __dw_regs(dw) directly
+> dereference chip->reg_base, will all reads and writes hit the beginning
+> of the BAR instead of the actual hardware registers on hardware where
+> rg.off is non-zero?
 
+This issue shall be taken in a separate patch series.
 
-Also, this message could be included into commit message.
+> 
+> [Severity: High]
+> This is a pre-existing issue, but are the arguments to GET_CH_32
+> swapped here?
+> 
+> In drivers/dma/dw-edma/dw-hdma-v0-core.c:dw_hdma_v0_core_ch_status():
+> 
+> static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+> {
+> 	struct dw_edma *dw = chan->dw;
+> 	u32 tmp;
+> 
+> 	tmp = FIELD_GET(HDMA_V0_CH_STATUS_MASK,
+> 			GET_CH_32(dw, chan->id, chan->dir, ch_stat));
+> 
+> The GET_CH_32(dw, dir, ch, name) macro expects the direction as the second
+> argument and the channel ID as the third. Here it is invoked with
+> chan->id as the direction and chan->dir as the channel ID.
+> 
+> Since chan->id is evaluated as the direction, won't any channel ID > 0 be
+> treated as a READ direction? And won't chan->dir restrict the accessed
+> channel index to 0 or 1, meaning it will always read the status of channel
+> 0 or 1 instead of the intended channel?
+> 
 
->
-> ----8<----
->  From 20a1275aa5ecb927ff049971454b62682356ef0e Mon Sep 17 00:00:00 2001
-> From: Nnamdi Onyeyiri <nnamdio@gmail.com>
-> Date: Fri, 10 Jul 2026 20:47:36 +0100
-> Subject: [PATCH v2 1/1] bpf, sockmap: handle spurious tcp_msg_wait_data()
->   wakeup
->
-> recvfrom()/recv() are documented as only returning EAGAIN for blocking sockets
-> when they have a receive timeout configured.  however, adding a blocking
-> ipv4 tcp socket without a receive timeout to a sockmap will cause EAGAIN errors
-> sporadically.  a socket with a receive timeout may return EAGAIN before the
-> timeout expires.
->
-> this happens when tcp_msg_wait_data() wakes spuriously (returning 0) in which
-> case, if there is no timeout, or the timeout has not yet expired, we loop
-> again instead of returning.
+This issue is being fixed as part of this patch series
+https://lore.kernel.org/all/20260710080903.2392888-2-den@valinux.co.jp/
 
-Also please add a selftest and send both as a patchset.
-
-
->
-> Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
-> ---
->   net/ipv4/tcp_bpf.c | 55 ++++++++++++++++++++++++++++++++++++++--------
->   1 file changed, 46 insertions(+), 9 deletions(-)
->
-> diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-> index cc0bd73f36b6..e3109edb9621 100644
-> --- a/net/ipv4/tcp_bpf.c
-> +++ b/net/ipv4/tcp_bpf.c
-> @@ -179,7 +179,7 @@ EXPORT_SYMBOL_GPL(tcp_bpf_sendmsg_redir);
->   
->   #ifdef CONFIG_BPF_SYSCALL
->   static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
-> -			     long timeo)
-> +			     long *timeo)
->   {
->   	DEFINE_WAIT_FUNC(wait, woken_wake_function);
->   	int ret = 0;
-> @@ -187,12 +187,12 @@ static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
->   	if (sk->sk_shutdown & RCV_SHUTDOWN)
->   		return 1;
->   
-> -	if (!timeo)
-> +	if (!(*timeo))
->   		return ret;
-
-'if (!*timeo)'  is enough
-
-
->   
->   	add_wait_queue(sk_sleep(sk), &wait);
->   	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-> -	ret = sk_wait_event(sk, &timeo,
-> +	ret = sk_wait_event(sk, timeo,
->   			    !list_empty(&psock->ingress_msg) ||
->   			    !skb_queue_empty_lockless(&sk->sk_receive_queue), &wait);
->   	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-> @@ -229,6 +229,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->   	int copied_from_self = 0;
->   	int copied = 0;
->   	u32 seq;
-> +	long timeo;
->   
->   	if (unlikely(flags & MSG_ERRQUEUE))
->   		return inet_recv_error(sk, msg, len);
-> @@ -262,6 +263,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->   		}
->   	}
->   
-> +	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
-> +
->   msg_bytes_ready:
->   	copied = __sk_msg_recvmsg(sk, psock, msg, len, flags, &copied_from_self);
->   	/* The typical case for EFAULT is the socket was gracefully
-> @@ -280,7 +283,6 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->   	}
->   	seq += copied_from_self;
->   	if (!copied) {
-> -		long timeo;
->   		int data;
->   
->   		if (sock_flag(sk, SOCK_DONE))
-> @@ -299,7 +301,6 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->   			goto out;
->   		}
->   
-> -		timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
->   		if (!timeo) {
->   			copied = -EAGAIN;
->   			goto out;
-> @@ -310,13 +311,15 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->   			goto out;
->   		}
->   
-> -		data = tcp_msg_wait_data(sk, psock, timeo);
-> +		data = tcp_msg_wait_data(sk, psock, &timeo);
->   		if (data < 0) {
->   			copied = data;
->   			goto unlock;
->   		}
->   		if (data && !sk_psock_queue_empty(psock))
->   			goto msg_bytes_ready;
-> +		if (!data && timeo > 0)
-> +			goto msg_bytes_ready;
->   		copied = -EAGAIN;
->   	}
->   out:
-> @@ -355,6 +358,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
->   {
->   	struct sk_psock *psock;
->   	int copied, ret;
-> +	long timeo;
->   
->   	if (unlikely(flags & MSG_ERRQUEUE))
->   		return inet_recv_error(sk, msg, len);
-> @@ -371,14 +375,45 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
->   		return tcp_recvmsg(sk, msg, len, flags);
->   	}
->   	lock_sock(sk);
-> +
-> +	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
-> +
->   msg_bytes_ready:
->   	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
->   	if (!copied) {
-> -		long timeo;
->   		int data;
->   
-> -		timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
-> -		data = tcp_msg_wait_data(sk, psock, timeo);
-> +		if (sock_flag(sk, SOCK_DONE)) {
-> +			ret = 0;
-> +			goto unlock;
-> +		}
-> +
-> +		if (sk->sk_err) {
-> +			ret = sock_error(sk);
-> +			goto unlock;
-> +		}
-> +
-> +		if (sk->sk_shutdown & RCV_SHUTDOWN) {
-> +			ret = 0;
-> +			goto unlock;
-> +		}
-> +
-> +		if (sk->sk_state == TCP_CLOSE) {
-> +			ret = -ENOTCONN;
-> +			goto unlock;
-> +		}
-> +
-> +		if (!timeo) {
-> +			ret = -EAGAIN;
-> +			goto unlock;
-> +		}
-> +
-> +		if (signal_pending(current)) {
-> +			ret = sock_intr_errno(timeo);
-> +			goto unlock;
-> +		}
-> +
-> +		data = tcp_msg_wait_data(sk, psock, &timeo);
->   		if (data < 0) {
->   			ret = data;
->   			goto unlock;
-> @@ -390,6 +425,8 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
->   			sk_psock_put(sk, psock);
->   			return tcp_recvmsg(sk, msg, len, flags);
->   		}
-> +		if (!data && timeo > 0)
-> +			goto msg_bytes_ready;
->   		copied = -EAGAIN;
->   	}
->   	ret = copied;
