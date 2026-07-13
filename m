@@ -1,85 +1,95 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E492357CE5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 19:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D51359A70;
+	Mon, 13 Jul 2026 19:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783971465; cv=none; b=gjBFAdtubtXzh/JfJUXZsPGRg+km7SAkXMgF7umdqZ1e0KYlApSCExh+fKYlkMRxRz/XrNXy9srjFXvbzp3sutYXjEVhDxYmgjxzICCgeVu5nXRe927CKQkowkbRScRel2H8ZJbz2Q1CbxQWrmgJMhvG1YGJRv1ZSCTuYxLTcAI=
+	t=1783971600; cv=none; b=T1arNNHS2QTjeyh7cLaXdbfonEzN4dpPUMwu0UHjcFewqn+YgSqvmeobUcgvB7w3dJtdyMIKZv3Aq33rNkNytIqJh9N7bI6j1aLTynq17CZ8lEPzEEX+K5clcBG2ETp3Mjrxd4b5YuoltEP7ePvd2n98iBjE//KTUMY+xO7lmKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783971465; c=relaxed/simple;
-	bh=fkT9lRkMwYghu/2SsT5/Spxavix5VefOiOOVGSHvrjs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=VWEAEQXDbLXL7UvPsY76LuzPbuVfKwwucPzFeAY33imjTrwJite0LOKro2brq/VArrI+knQoAkloAt/D7GmXMk+ZfnoAYk/iBNk4XoqMklef3rTNnRF/tW5/5IRWiRuGfRILPDGAjyyOEBZtIqLEdTqPOWRzgtpmt8eORXx5NMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPnNIsFj; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783971600; c=relaxed/simple;
+	bh=25GUxTbwYYmfMkF90o6hPSTkcsEY3JRtbo6d7x3juOQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sPJlE1LTKye4UW5ht1yxLQa4Phe9t3/KIg2LfHDuU2hfmfQZGDzMpN1EIIytjidfKFu84oqCdL4cK1cP/9OMpNu+Icp3e55x+UHdxnWQ6ziSkmoKYwkY2bMF/ouVm8EgslZKFXsT7VziKD+NwE8MKDHit178BypiXmkVG851QhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=dnhcHRvL; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPnNIsFj"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4938d5f86f3so1536515e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 12:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783971463; x=1784576263; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=fkT9lRkMwYghu/2SsT5/Spxavix5VefOiOOVGSHvrjs=;
-        b=bPnNIsFjZWZkNWSatbQEgfQwxdihlU6jTNDL5Pq+0eHyUttFxO4MrdY+ROhSN6eo85
-         Ifbl3dMZSgmRxetCdf795Q59RrVAURJTMtw/T8rXM0tXywlLl5e0X/Y4G91zj6daQyBR
-         Lq6RV2YOufjmuOKphL/umAsZVvNbhM2wAricDf8jy9waEKIa/6pqYGnQV7qLOtljNAqg
-         khodqWDJk1n5EMzLphYgFo58njWyErwsjbmnQx86iA7k7WaDCAStqxTV86rnj0fWTeeX
-         aAuIZ0lErd3q+c7OJ1ohclJyLnQKi8R8DfGGL8W711uvZwi81z7y/kIUj9GR2frxa8qV
-         Gm+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783971463; x=1784576263;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fkT9lRkMwYghu/2SsT5/Spxavix5VefOiOOVGSHvrjs=;
-        b=JvQaDhEsDthL0j48LwNEILTVPpF7GWKLD0FOeoJPiIHVtC54v4ATgGJS8iSh822slF
-         vpTb7cBdr8WFIZYM2BlA4exronC9dV/j7bF72PgeR4EOEKLp5CX3GGeZ3ojLHAMPuCYR
-         yxYX5SRYsoG2TzU+/o7BE1uElXtvrFMLbBzZjFUiKc74NrVXGj53B8H6ytawmXPMtCNa
-         yOSQYh8l579DXNIqanuUV8BFwQjLXnaTth3HgVHnDIQjCb93TlDrFlQj3/M/O5lGIaPh
-         Hh9kNWEMgAz9GX4IyR614AP5dbUZACkcuxNJI8TFuRiDgGj/mbGGeMRX2mxZVZh9Rqim
-         e17A==
-X-Gm-Message-State: AOJu0YwJOUYIXkq5e5QbR7J3/KNIper0tq85XSwVZcFH3C3+o2U6R58I
-	X4+EQJMK4q/UGr3LvFDk826w/rm5341P2yLYt5DWJWdJXZ+eFdWfy5732HOyfhBSPec=
-X-Gm-Gg: AfdE7cmJGb7nCjA9Ul23QTCRG89NGfxS6BeAsDOG4y8h41cmf+mp56CQZcTTdMbn/ZX
-	YODR607GEBTZB7QnCfdECthpv/XNPs/YuU9HjY80XPqeGI2thrR5XGbJAYJgyPkez6dsVAYABVC
-	UuUI/ixET5FnVmiWBVJ0okVuyhimNgvzxMKGoFt39ET7uNjaUc5iQP6b0w1/sxxVCRPK3UEP76w
-	y32Zd6eTQQG+Pm4PFYOi1FDXd9W2Pr18WerBvYyshYAJPjZ0lbuJh33jnZp+C0g8w3xerreBgWA
-	K5UzydZwqf7Tnf6Bfk2d4lcISCyb8V0oD1Lo32mobEXAl7eX7LkiMPSK9LXa4Iz1g2H6gIejQNg
-	TJIAaMGR6qYEJdzQtDjERJ04cVwx8c/rFzt17jl1Mh5QGhxMmiR5RXnmdHFktmEFj3IHNkLRaQe
-	LnqOXnEoQojNiCRZOa
-X-Received: by 2002:a7b:cd13:0:b0:493:cbd4:8925 with SMTP id 5b1f17b1804b1-493f2a85bcbmr128448055e9.4.1783971462835;
-        Mon, 13 Jul 2026 12:37:42 -0700 (PDT)
-Received: from localhost ([193.30.163.202])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464a9879sm2025314f8f.22.2026.07.13.12.37.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2026 12:37:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="dnhcHRvL"
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 89451DF8443;
+	Mon, 13 Jul 2026 21:39:34 +0200 (CEST)
+Received: from l30177.home (unknown [IPv6:2a01:e0a:ac2:22b0:1c85:c04e:9ad4:c6d8])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 8BDCD19F54D;
+	Mon, 13 Jul 2026 21:39:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1783971567;
+	bh=25GUxTbwYYmfMkF90o6hPSTkcsEY3JRtbo6d7x3juOQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dnhcHRvLMTyN43whZCL9qDhmrp8Z0aF2KPTdtk8hdRxMkEcgX3w+wQHQ+L6OhOHTi
+	 3S8NKbMjTSTZncq6E4wtZCv8WN+LVN2Xp2muxI3NtX1dDRhSBDoPjYdof9+BaO6vTZ
+	 N+mVWm/6Q5UvhPPn7lMLa/cldNehQPmH4WBCHHPFlN488U4y5ILPwcv8HqDL7fC/Na
+	 uEq9ZDB+O+EgYvKaaquqb7VEdErW14TAcmm1enu6YH2fl0FPxYCMJHwHRXkeR98TFb
+	 ZXXhsB7zeDQNz4NPJd7KWkIdUBMWrtueEHea3Br7sofzItCwqEeBo1Cb7HDqRVh4y2
+	 ZiPb5SOKHpooQ==
+Date: Mon, 13 Jul 2026 21:39:24 +0200
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH v3 1/2] i2c: imx: fix locked bus on SMBus block-read of 0
+ (atomic)
+Message-ID: <alU-7MXMiRth36Qr@l30177.home>
+References: <20260713-for-upstream-i2c-lx2160-fix-v1-v3-0-073ac9e103a5@free.fr>
+ <20260713-for-upstream-i2c-lx2160-fix-v1-v3-1-073ac9e103a5@free.fr>
+ <20260713182637.8A9141F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 13 Jul 2026 21:37:41 +0200
-Message-Id: <DJXP3RGL6OH2.2FBANQ2HJV2J4@gmail.com>
-Cc: <dri-devel@lists.freedesktop.org>
-Subject: Re: [PATCH 2/2] drm/amd/display: Use drm_edid_block_count() instead
- of raw extensions
-From: =?utf-8?q?Timo_Pr=C3=B6mer?= <timo.proemer04@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, =?utf-8?q?Timo_Pr=C3=B6mer?=
- <timo.proemer04@gmail.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260713183841.5921-1-timo.proemer04@gmail.com>
- <20260713183841.5921-3-timo.proemer04@gmail.com>
- <20260713185052.9251A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260713185052.9251A1F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260713182637.8A9141F000E9@smtp.kernel.org>
 
-Thanks for the report.
+Hi Bot,
 
-I have fixed this issue and just sent out a v2 of the series.
+Le 13/07/26 18:26, sashiko-bot@kernel.org a écrit :
+> - [High] `i2c_imx_prepare_read()` fails to clear `I2CR_TXAK` for SMBus block reads, causing the block length byte to be incorrectly NACKed.
+> - [High] The interrupt-driven SMBus block read path (`i2c_imx_isr_read_block_data_len`) fails to properly terminate the transaction when receiving an invalid length (0 or > I2C_SMBUS_BLOCK_MAX), leaving the I2C bus stuck.
+
+Both topics were already raised on v1 and v2 and answered. No change with v3,
+so no need to reopend those threads.
+
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the interrupt-driven
+> SMBus block read path in i2c_imx_isr_read_block_data_len() fail to properly
+> terminate the transaction when receiving an invalid length?
+ [...}
+> I see the commit message acknowledges this flaw exists in the interrupt
+> path but defers fixing it to a separate patch. Since that patch is not
+> included in this series, the hang remains active in the codebase.
+
+See 2/2 of this serie.
+
+Same for v1: https://lore.kernel.org/all/ahRoKMLtrirbowbj@L30177.local/
+and v2: https://lore.kernel.org/all/ahVZPLHymdsZtgg5@L30177.local/
+
+> [Severity: High]
+> This is a pre-existing issue, but does i2c_imx_prepare_read() fail to clear
+> I2CR_TXAK for SMBus block reads?
+> 
+> In i2c_imx_prepare_read(), there is no check for I2C_M_RECV_LEN:
+> 
+> 	if (msgs->len - 1)
+> 		temp &= ~I2CR_TXAK;
+ [...}
+> A compliant SMBus slave will immediately abort the transaction upon receiving
+> a nack, causing all subsequent data bytes to read as 0xFF. Should this check
+> include the I2C_M_RECV_LEN flag to properly clear TXAK?
+
+Already explained with v1:
+  https://lore.kernel.org/all/ahRmjr9cxYmkYvm5@L30177.local/
+
+Best regards,
+  Vincent
