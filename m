@@ -1,306 +1,256 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013060.outbound.protection.outlook.com [52.101.83.60])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412F9233937;
-	Mon, 13 Jul 2026 04:03:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783915417; cv=fail; b=L5XM4BeA9fnbgege1M23AgpRDyUGqpDxbmIzq4ZjTycv5NQZA1y+khzE1IgXhigD0jj1JQgkyulIcMzzKLE01yOCFLbMWH98RVdVY2baqhXb+opvD/M4sVRpdliizssWctMkMNF3DOCPCDvJi2sNwvDFTuOE+QagqR9NUFFKRyo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783915417; c=relaxed/simple;
-	bh=pRwhFfDDVfjMdi+22gJIIMVLx73AiEiq8bPrPkUFrow=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=qqUpA27epTyP0h4J5Yrn2H5It3pysZ9OqUmKeZkZLQErGKGRh8Vtxo+mLF6OnL2K51SPVFDv/jlrfpu1CONdXBIFWV9NFrraEHj+Hh8jX6o7BYK3B+r4jZzRtmmR/CDP9ZRiG9ymtBKtqsgFuGLaK1ME0DGM3UKV0RWlDtNsaqc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=HiTrExDK; arc=fail smtp.client-ip=52.101.83.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1D637475E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 04:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783916077; cv=none; b=OPgzwdUrSLbDJXaMcAOhRHyScNTVbP4U+DcUlzVn/m9g+lQJGbFZMVn4n+SSEOBKsqLVjSGIfCDrjofD/f7zAH1754WErz3s68hxy7LwhNRXeSzawMBYyTcMyPqVdosGdf6sI82yfVO0vkyOCZHot4wqLNFH64JKpeSMJrNlXAI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783916077; c=relaxed/simple;
+	bh=y1Yt2fykqjsWvs7kXOwQ+eAkXv958ODFE7VheXPWId0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MGOiDtYttUJ5aNcVX4SKqlUy4ke0QFyCl/wvlTgbicv/hV9QNZyipEQwh1VXaprraJ73JORE4GnLT0dCm+4qfU2vahR0MDXDt45dve8bTprhqcB3Gdj8I29TDOvYOQ/N4DGZEjs7l5WNRQ0aZLIQrGywdt6nJZgSouBw7Td1wG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xDOBaWfl; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="HiTrExDK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=x+IqCTdGhlrDcx4FszaUpnJAUmwmot4k8KZ9v7p9bkEBDtSkgyS4YLDyWTjtxs7MC+5ejqkqvZjooG/AhzRKHhPTFkw58uZdUs4x1q9bNSArZecPHMU0bfFIT3tloDVXlpHdiykETC0fOv6ioxbE9N1j8D6z9BCSLP3cyYQPOOjkbOZLpG8gFDaLnRIwa0A5cdykluQqoq5uClHEOqpKb/kz49hnUPwvWb714ZMpFlBs1RUZa0O7QS/MC3pi7i0gxPHYcvi6zDLPBdHUylkv6VYtDy8xmQOrZxnM/MJrckTB941OKq+qIqvAL6EhtxaXRaZQS4f1NDTytHrOqCGgcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HNnRZ30fV1IEmSkfVm+rGwmiD3L/3KR/Fd8KmVQOxDc=;
- b=j7ViI7tHH84ID5pIHt5PQFAqDp2/cnIpSh8UeDcf54ZoO7YrWaVQpXD9oGt5XJHV15GAFn8IMeu3Dri3dcNa41ciOhYk9n0tZ6TXepc8Cv4b1hMugb7lX0pow3/d6cyr+uVGo9Olw55v7egaiZ4+2R4DXzqoQUUiDn0IfaoJvRlSoymPhpi86cBGSFgu8uE6bXKMIs9lOcc4/h7eqGmsLn6+7JyBvGYOsPlvoGJhQYFvncWnByTtdNF+Q/sxqQamLRtzPjTNwcA8JbreEfvVXR+H90Ka5hLMm9m1oWO0CxsBz28BEMmOPxlAcWK+2lK+cnH7d7W3/rIpIYRcttCDcw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HNnRZ30fV1IEmSkfVm+rGwmiD3L/3KR/Fd8KmVQOxDc=;
- b=HiTrExDK7xx7qy+ovhUTzMF2Xu+GD5qhX05Jn74r5wNMif7Ztl4kv0Yd5VGfrm4KkDlBwbN89BEbtazyi01L0t/joxstLjiLj7KN2GYStCHaqmtTu7KC4YBsAJNhwBeT0GjhHwTRo2zqA2onc0vRM2+/nHdLHe/H7Lkum6eBivmp6K11we9YWvCJIaF+8gwp935JNl7YXBZvzeWzE7+ql/uFu61gHlosOSNr3gIXFoL1D1DqIQSnxalhJ6M5rMzMXtCBXysLhGIX7L0OgWo6AQ2531IBhk0ROPBpr+o0CAdU7zz1NBROGbBM6AWRwKLjq/jWsumXSA63gu9sFkA8WQ==
-Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
- (2603:10a6:800:315::13) by DU2PR04MB9212.eurprd04.prod.outlook.com
- (2603:10a6:10:2fb::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
- 2026 04:03:32 +0000
-Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
- ([fe80::feda:fd0e:147f:f994]) by VI0PR04MB12114.eurprd04.prod.outlook.com
- ([fe80::feda:fd0e:147f:f994%6]) with mapi id 15.21.0181.019; Mon, 13 Jul 2026
- 04:03:32 +0000
-From: Sherry Sun <sherry.sun@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"Sherry Sun (OSS)" <sherry.sun@oss.nxp.com>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "robh@kernel.org" <robh@kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>
-Subject: RE: [PATCH V6 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth device
- support using pwrseq
-Thread-Topic: [PATCH V6 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth device
- support using pwrseq
-Thread-Index: AQHdEm/b8LfnBcjhvUCaiAiI6/01h7ZqvbcAgAAQYfA=
-Date: Mon, 13 Jul 2026 04:03:31 +0000
-Message-ID:
- <VI0PR04MB12114A2118BDD22D627F6E84192FA2@VI0PR04MB12114.eurprd04.prod.outlook.com>
-References: <20260713023435.235765-1-sherry.sun@oss.nxp.com>
- <20260713023435.235765-4-sherry.sun@oss.nxp.com>
- <20260713024251.36B3D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260713024251.36B3D1F000E9@smtp.kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI0PR04MB12114:EE_|DU2PR04MB9212:EE_
-x-ms-office365-filtering-correlation-id: c12d9383-602d-48fe-16da-08dee093b426
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|19092799006|18002099003|22082099003|4143699003|4133799003|3023799007|38070700021|56012099006|11063799006|6133799003;
-x-microsoft-antispam-message-info:
- 27QH9PgmIWblLdDbys4UXPchT6qHjDbHJpJSRYoqOtnWVKNQxKpwlmh5lMEuP12FzYwpB6QDoN5BAcvQJjnlPvfbAonJ1x1RdnGNJLCHhRHK1JJCGYbdv1DU9MXdU5dyQlLJAdx7YN20/VefiG4FO27tiK7OsN3tTo3O/CwoIdxFd/Sa9Wp0K4R2ESre5r9k46obcURrW/WCAZrLpJRZc6EHGHK0kO/wwwaN83SWCEqHvW2yvioS2mG55m4MEvb7YqZ22yaVpofEUzT5l35uuBpAZSMZNjrHx6dxYgJDnG6O2RAsQ3MQ4I7woGWObAU6XOf6F3+nL3GTJXHcQg3TmLMAhCkOvn4uggYE/woREySwcVmgQu+WU9eIZIysC5OyEVPIqCC3furT/S/j1ZuxT8hcCvDGhipevzsJSahcGWrGJmDVIOgS65OF7TGDAwCtdcxJGtYILDJMp5DUTVFT1n0w2WOntB7c3oYMRkVTL2mrDLyC6z2xGusslVwmy8ibsJOw8Zwn7oVdW22yrRLFarqa9kZsBCKP9fH7xL5wi6Oh4YBC1xPlbnP5Jh5dHM7NjVVY9cl3ylKG1+na/tfetecwrBEMdAwsGVz7hxb9EvM9VO8Jx06r+WxG4VVc22SYV6moj1cFCBWSTaOGcmkCr8O7Aclg+xubiOrT3tu6+O8=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR04MB12114.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(19092799006)(18002099003)(22082099003)(4143699003)(4133799003)(3023799007)(38070700021)(56012099006)(11063799006)(6133799003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?cFk72hPZTehYuPfw/EcDDRvk/p6/8E3oEBB82D4bzziIUJl6ZzUyuai3Fgg4?=
- =?us-ascii?Q?NcRoHT6KOIx+dcqbUOjgwQumLngV0JLHJrJsfD+i1qgvT/tHR1xWc3LWt2MR?=
- =?us-ascii?Q?LHZMRrtvkIh+fnXAKFe4x5DdQbgo4a/oqezCbSFuz5L5UzgnsM82k3+M9HCp?=
- =?us-ascii?Q?jj+q6N1z77R6UgHo5oE/54UAh8KU9Q72U1D8c0gj/Bk/GZ/0EcVehj4Nb5rT?=
- =?us-ascii?Q?gCzhq9tepSghBoMqgGIvUqFdN9xgkNsEJ9oVNtKstn+OBTiptwB/PnKPy9e+?=
- =?us-ascii?Q?l55QVzQamkoF8k0WwGmWZ8KQ+mXl8XkngrMK/X/J1Pb33HE1dl7C9QMKWrLA?=
- =?us-ascii?Q?hXz1QecBLumvcQ5bxraScGLvrs7zmk0725q5xMKuULnut7mcGu1b+chnrvzp?=
- =?us-ascii?Q?Ewm+j3LRcWaFLjn6iNz7vrgCH2hW4RObpmEbHybyobsL5Qjva2N6UlLwkoVt?=
- =?us-ascii?Q?qhFRZOncX9CouVXZlw6Fd60jiR0o73Mqpf5gAyy3jYWEXxyOewTvLgX8piM1?=
- =?us-ascii?Q?EYIwYO5BiEDwhcUZSkmST5f0DrMyiHQKhGnw5SGzU2kxajQbbJU20ZGEoiF8?=
- =?us-ascii?Q?D7GtfRGwQStvKF/eeFU0naQq6646mGasHQjKIAYR8xWwWfUdjHLhwSii4tWv?=
- =?us-ascii?Q?bKsNJpc9mp5Ty/LEXz9G3wYhWZliMPsDg2AKFwZx+9Olyf+csqHQ5C2eeHiQ?=
- =?us-ascii?Q?+XFks8LVKfg0mzydFTXW3ZA5Dma3WRXWgMTJxDKsZ0xL+9vuLByW8kUJFh1+?=
- =?us-ascii?Q?jhiRBvaKLOwyofQVETwKj6OsfCQyicn9zmU9NpSRinzsS7a+AySOd3YUAp18?=
- =?us-ascii?Q?0jXqek+gmw2+KVG/WPSKcnaagXRE1PUaNz/tM1/om/+9kNNEx4zugqNa8M5u?=
- =?us-ascii?Q?WnFvLTbQYm1Uphp7uZvDba/senxpaUaUvITIkRFX4tnM9VLMIcEUgBhpaUSs?=
- =?us-ascii?Q?YUyj5QiRUIBOtrY/uUBxMFhYThJmR2ZCtT1gLuiOdkQDKRpaiIk2CAy5Gy1v?=
- =?us-ascii?Q?H/sHZsGgjDHY8lDXj5iSyXhVvXv3SAR0yOlT2DwjyxyUcoqe7H/huU9DIh+i?=
- =?us-ascii?Q?zxy0PFnPkgq6ofeoKV2qLCWPT7npPhlB45abBCq7XOI8xLGRi7Fb1RTOoxZi?=
- =?us-ascii?Q?OUGDxqeTvZR3/PKprSfzcss9sqeg2/DP76qzMZ+4MNPeZ/iWXkW8eGD/d3bH?=
- =?us-ascii?Q?r8XbBj2QjiuDpnZZreHKxWAunQPOmWMTm953yOxvZWORoJBhPwmImIkfB/oK?=
- =?us-ascii?Q?33fgWBanylkEweBUO9NE3eeDYDZNsJLVdvpFCNuU11lQOWUUna8jrfTvuIkv?=
- =?us-ascii?Q?jL2lkzE0GRmgO2WQmTtusWJDfsVzZkEAG2DLj6CjAAV8aqKrcBwG4aMNnkkZ?=
- =?us-ascii?Q?J8YPtlvA0dPft0TqvPOFUGHUhSjv3A/bMwrEpFBPYLDebdOu2N3NJ0+NW1yC?=
- =?us-ascii?Q?gS0M1YCCEXkPEMetR1YiEYuK3pKfKiK3WMCBz71Zkog5/6CoPPMfDw0Sz8bZ?=
- =?us-ascii?Q?ijJl3Gt/c+Tn6ehzvMikd49TyYe3dQwY/xuy6H/Eh3CUm44zRmpe85mKDdVT?=
- =?us-ascii?Q?ArimF4R9T/2mFHP1hlLoulkBpofRpMmshKkGkdzQqZw3VUx96KTOtzQO6UUn?=
- =?us-ascii?Q?ONBEKWvep+x8Fi431am5xstrZ01XKRYT7yK6Vc2hngAODt8DbaCEIRgvQDFy?=
- =?us-ascii?Q?q1D3YuKFwzfTCDdm/5jWjHdhZdZlIZT3P6Nil4RWIRG/wAtt?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xDOBaWfl"
+Message-ID: <5b07d2ab-84ee-46ae-84c9-7542499d26d7@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783916064;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nUYIJ9DN/aj3dekLHrJVHchQB1flIZYdeNNZTWSaweE=;
+	b=xDOBaWfl3M9diHS22ZehJhE9K0+bazKqg07i01Jz9Bxz5GvdXr5OMrd8A2frtvubdRqQf2
+	KNaR7BSVLYCk4kvDUpn6sOVgWTELSYzKr3EAaQ382ThUJO86Njg7vByw2X+XVJWvxMzXAO
+	K3k54fLG9xNwnnEFPgf6NqboCdsm6Ow=
+Date: Mon, 13 Jul 2026 12:14:07 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR04MB12114.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c12d9383-602d-48fe-16da-08dee093b426
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jul 2026 04:03:31.9780
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: IlqZ68rqIzb23JuLMYMY5JUXrX7dLrdYYS1EkOE/V5qmKLq6fkb5wsLw3xGTStvPWVTqIgs+bK8kCmltsNEjDw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB9212
+Subject: Re: [BUG] bpf, sockmap: spurious wakeup by tcp_msg_wait_data()
+ causing unexpected EAGAIN in recvfrom()
+To: Nnamdi Onyeyiri <nnamdio@gmail.com>, sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, netdev@vger.kernel.org, john.fastabend@gmail.com,
+ jakub@cloudflare.com, edumazet@google.com, ncardwell@google.com,
+ kuniyu@google.com, davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com,
+ horms@kernel.org
+References: <ak_rR-Skd8Mvn4mH@localhost.localdomain>
+ <20260709185526.E4DAB1F000E9@smtp.kernel.org>
+ <alFRK66z45eDNZA7@localhost.localdomain>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <alFRK66z45eDNZA7@localhost.localdomain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-> Subject: Re: [PATCH V6 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth devic=
-e
-> support using pwrseq
->=20
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s)
-> to consider:
->=20
-> New issues:
-> - [High] Brittle logic causing probe failure on valid hardware topologies=
-.
->=20
-> Pre-existing issues:
-> - [High] Race condition exposing device before initializing synchronizati=
-on
-> primitives.
-> - [High] Use-after-free and locking a destroyed mutex during device teard=
-own.
-> --
->=20
-> --- Patch [3]: [PATCH V6 3/4] Bluetooth: btnxpuart: Add M.2 Bluetooth dev=
-ice
-> support using pwrseq --- commit
-> 885432311fa71ac754d16037ae3e761e8192452c
-> Author: Sherry Sun <sherry.sun@nxp.com>
->=20
-> Bluetooth: btnxpuart: Add M.2 Bluetooth device support using pwrseq
->=20
-> Power supply to the M.2 Bluetooth device attached to the host using M.2
-> connector is controlled using the uart pwrseq device. This commit adds
-> support for getting the pwrseq device if the OF graph link is present.
->=20
-> > diff --git a/drivers/bluetooth/btnxpuart.c
-> > b/drivers/bluetooth/btnxpuart.c
-> > --- a/drivers/bluetooth/btnxpuart.c
-> > +++ b/drivers/bluetooth/btnxpuart.c
->=20
-> [ ... ]
->=20
-> > @@ -1872,11 +1875,26 @@ static int nxp_serdev_probe(struct
-> serdev_device *serdev)
-> >  		return err;
-> >  	}
-> >
-> > +	if (of_graph_is_present(dev_of_node(&serdev->ctrl->dev))) {
-> > +		struct pwrseq_desc *pwrseq;
-> > +
-> > +		pwrseq =3D pwrseq_get(&serdev->ctrl->dev, "uart");
-> > +		if (IS_ERR(pwrseq))
-> > +			return dev_err_probe(&serdev->dev,
-> PTR_ERR(pwrseq),
-> > +					     "failed to get pwrseq\n");
->=20
-> [Severity: High]
-> If the parent UART node has an OF graph for other purposes, like audio
-> routing or multiplexing, will this unconditionally fail the driver probe?
->=20
-> When of_graph_is_present() returns true, pwrseq_get() might return an err=
-or
-> like -ENOENT if there is no power sequencer configured for the uart targe=
-t.
->=20
-> Could this logic be made less brittle to support valid hardware topologie=
-s
-> where the UART has an OF graph but no power sequencer?
->=20
 
-This is not an issue, for btnxpuart specifically, the OF graph link on the =
-UART
-controller node is only ever present to describe a BT device attached via t=
-he
-M.2 Key E connector - that graph is the pwrseq link. There is currently no =
-other
-in-tree use of an OF graph on this controller node, so in every supported
-topology, graph-present implies a pwrseq provider and pwrseq_get() matches.
+On 7/11/26 4:17 AM, Nnamdi Onyeyiri wrote:
+> Hi,
+>
+> The updated patch below addresses the issues raised by sashiko-bot.  The closed
+> socket and signal handling code was added to tcp_bpf_recvmsg(), and the fix was
+> updated to work for sockets with SO_RCVTIMEO set.
+>
+> Please let me know if any more changes are required, or if the patch would need
+> to be submitted some other way, I'm happy to adjust as necessary.
+>
+> Thanks!
 
-A similar pattern can be found in drivers/pci/pwrctrl/generic.c, which also=
- gates
-the pwrseq path on of_graph_is_present() + dev_err_probe().
 
-Best Regards
-Sherry
+Thanks for the report.
 
-> > +
-> > +		nxpdev->pwrseq =3D pwrseq;
-> > +		err =3D pwrseq_power_on(pwrseq);
-> > +		if (err)
-> > +			goto err_pwrseq_put;
-> > +	}
->=20
-> [ ... ]
->=20
-> > @@ -1907,13 +1925,16 @@ static int nxp_serdev_probe(struct
-> serdev_device *serdev)
-> >  	if (bacmp(&ba, BDADDR_ANY))
-> >  		hci_set_quirk(hdev, HCI_QUIRK_USE_BDADDR_PROPERTY);
-> >
-> > -	if (hci_register_dev(hdev) < 0) {
-> > +	err =3D hci_register_dev(hdev);
-> > +	if (err < 0) {
-> >  		dev_err(&serdev->dev, "Can't register HCI device\n");
-> >  		goto probe_fail;
-> >  	}
-> >
-> > -	if (ps_setup(hdev))
-> > +	if (ps_setup(hdev)) {
-> > +		err =3D -ENODEV;
-> >  		goto probe_fail_unregister;
-> > +	}
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does calling hci_register_dev() before
-> ps_setup() create a race condition during initialization?
->=20
-> When hci_register_dev() is called, it schedules the power_on work
-> asynchronously, which opens the UART port via btnxpuart_open().
->=20
-> Once the UART is open, incoming data triggers the receive path:
->=20
-> btnxpuart_receive_buf()
->   ps_wakeup()
->=20
-> ps_wakeup() attempts to lock psdata->ps_lock and schedule psdata->work.
->=20
-> If ps_setup() has not yet completed its initialization of these structure=
-s, could
-> this result in operating on an uninitialized mutex or workqueue?
->=20
-> >
-> >  	hci_devcd_register(hdev, nxp_coredump, nxp_coredump_hdr,
->=20
-> [ ... ]
->=20
-> > @@ -1952,6 +1976,8 @@ static void nxp_serdev_remove(struct
-> serdev_device *serdev)
-> >  		}
-> >  	}
-> >
-> >  	ps_cleanup(nxpdev);
-> >  	hci_unregister_dev(hdev);
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does calling ps_cleanup() before
-> hci_unregister_dev() cause a use-after-free or a lock on a destroyed mute=
-x?
->=20
-> ps_cleanup() destroys psdata->ps_lock and cancels psdata->work.
->=20
-> However, hci_unregister_dev() shuts down the device. During this shutdown
-> process, the UART can still receive data or send commands.
->=20
-> If data is received or sent, the paths btnxpuart_receive_buf() to
-> ps_wakeup() or nxp_enqueue() will attempt to acquire the destroyed
-> psdata->ps_lock.
->=20
-> Should hci_unregister_dev() be called before cleaning up the synchronizat=
-ion
-> primitives?
->=20
-> >  	reset_control_assert(nxpdev->pdn);
-> > +	if (nxpdev->pwrseq)
-> > +		pwrseq_put(nxpdev->pwrseq);
-> >  	hci_free_dev(hdev);
-> >  }
->=20
-> --
-> Sashiko AI
-> review * https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
-F%2
-> Fsashiko.dev%2F%23%2Fpatchset%2F20260713023435.235765-1-
-> sherry.sun%40oss.nxp.com%3Fpart%3D3&data=3D05%7C02%7Csherry.sun%40
-> nxp.com%7C7fc8858da84f4a67665608dee088947e%7C686ea1d3bc2b4c6fa92
-> cd99c5c301635%7C0%7C0%7C639195074371576326%7CUnknown%7CTWFp
-> bGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4z
-> MiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3Dxmwpxx%
-> 2B1ofNIS08LXCuIRyjRW8g6PHY4iVOYOz6d9fg%3D&reserved=3D0
 
+What's your use case here? With a verdict prog attached, we'd normally
+
+expect the data to be redirected in kernel rather than read back via
+
+  recvmsg(). Are you using SK_PASS? If so, please state that in the
+
+commit message instead of the email body.
+
+
+Also, this message could be included into commit message.
+
+>
+> ----8<----
+>  From 20a1275aa5ecb927ff049971454b62682356ef0e Mon Sep 17 00:00:00 2001
+> From: Nnamdi Onyeyiri <nnamdio@gmail.com>
+> Date: Fri, 10 Jul 2026 20:47:36 +0100
+> Subject: [PATCH v2 1/1] bpf, sockmap: handle spurious tcp_msg_wait_data()
+>   wakeup
+>
+> recvfrom()/recv() are documented as only returning EAGAIN for blocking sockets
+> when they have a receive timeout configured.  however, adding a blocking
+> ipv4 tcp socket without a receive timeout to a sockmap will cause EAGAIN errors
+> sporadically.  a socket with a receive timeout may return EAGAIN before the
+> timeout expires.
+>
+> this happens when tcp_msg_wait_data() wakes spuriously (returning 0) in which
+> case, if there is no timeout, or the timeout has not yet expired, we loop
+> again instead of returning.
+
+Also please add a selftest and send both as a patchset.
+
+
+>
+> Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
+> ---
+>   net/ipv4/tcp_bpf.c | 55 ++++++++++++++++++++++++++++++++++++++--------
+>   1 file changed, 46 insertions(+), 9 deletions(-)
+>
+> diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+> index cc0bd73f36b6..e3109edb9621 100644
+> --- a/net/ipv4/tcp_bpf.c
+> +++ b/net/ipv4/tcp_bpf.c
+> @@ -179,7 +179,7 @@ EXPORT_SYMBOL_GPL(tcp_bpf_sendmsg_redir);
+>   
+>   #ifdef CONFIG_BPF_SYSCALL
+>   static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
+> -			     long timeo)
+> +			     long *timeo)
+>   {
+>   	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+>   	int ret = 0;
+> @@ -187,12 +187,12 @@ static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
+>   	if (sk->sk_shutdown & RCV_SHUTDOWN)
+>   		return 1;
+>   
+> -	if (!timeo)
+> +	if (!(*timeo))
+>   		return ret;
+
+'if (!*timeo)'  is enough
+
+
+>   
+>   	add_wait_queue(sk_sleep(sk), &wait);
+>   	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+> -	ret = sk_wait_event(sk, &timeo,
+> +	ret = sk_wait_event(sk, timeo,
+>   			    !list_empty(&psock->ingress_msg) ||
+>   			    !skb_queue_empty_lockless(&sk->sk_receive_queue), &wait);
+>   	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+> @@ -229,6 +229,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+>   	int copied_from_self = 0;
+>   	int copied = 0;
+>   	u32 seq;
+> +	long timeo;
+>   
+>   	if (unlikely(flags & MSG_ERRQUEUE))
+>   		return inet_recv_error(sk, msg, len);
+> @@ -262,6 +263,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+>   		}
+>   	}
+>   
+> +	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+> +
+>   msg_bytes_ready:
+>   	copied = __sk_msg_recvmsg(sk, psock, msg, len, flags, &copied_from_self);
+>   	/* The typical case for EFAULT is the socket was gracefully
+> @@ -280,7 +283,6 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+>   	}
+>   	seq += copied_from_self;
+>   	if (!copied) {
+> -		long timeo;
+>   		int data;
+>   
+>   		if (sock_flag(sk, SOCK_DONE))
+> @@ -299,7 +301,6 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+>   			goto out;
+>   		}
+>   
+> -		timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+>   		if (!timeo) {
+>   			copied = -EAGAIN;
+>   			goto out;
+> @@ -310,13 +311,15 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+>   			goto out;
+>   		}
+>   
+> -		data = tcp_msg_wait_data(sk, psock, timeo);
+> +		data = tcp_msg_wait_data(sk, psock, &timeo);
+>   		if (data < 0) {
+>   			copied = data;
+>   			goto unlock;
+>   		}
+>   		if (data && !sk_psock_queue_empty(psock))
+>   			goto msg_bytes_ready;
+> +		if (!data && timeo > 0)
+> +			goto msg_bytes_ready;
+>   		copied = -EAGAIN;
+>   	}
+>   out:
+> @@ -355,6 +358,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+>   {
+>   	struct sk_psock *psock;
+>   	int copied, ret;
+> +	long timeo;
+>   
+>   	if (unlikely(flags & MSG_ERRQUEUE))
+>   		return inet_recv_error(sk, msg, len);
+> @@ -371,14 +375,45 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+>   		return tcp_recvmsg(sk, msg, len, flags);
+>   	}
+>   	lock_sock(sk);
+> +
+> +	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+> +
+>   msg_bytes_ready:
+>   	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+>   	if (!copied) {
+> -		long timeo;
+>   		int data;
+>   
+> -		timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+> -		data = tcp_msg_wait_data(sk, psock, timeo);
+> +		if (sock_flag(sk, SOCK_DONE)) {
+> +			ret = 0;
+> +			goto unlock;
+> +		}
+> +
+> +		if (sk->sk_err) {
+> +			ret = sock_error(sk);
+> +			goto unlock;
+> +		}
+> +
+> +		if (sk->sk_shutdown & RCV_SHUTDOWN) {
+> +			ret = 0;
+> +			goto unlock;
+> +		}
+> +
+> +		if (sk->sk_state == TCP_CLOSE) {
+> +			ret = -ENOTCONN;
+> +			goto unlock;
+> +		}
+> +
+> +		if (!timeo) {
+> +			ret = -EAGAIN;
+> +			goto unlock;
+> +		}
+> +
+> +		if (signal_pending(current)) {
+> +			ret = sock_intr_errno(timeo);
+> +			goto unlock;
+> +		}
+> +
+> +		data = tcp_msg_wait_data(sk, psock, &timeo);
+>   		if (data < 0) {
+>   			ret = data;
+>   			goto unlock;
+> @@ -390,6 +425,8 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+>   			sk_psock_put(sk, psock);
+>   			return tcp_recvmsg(sk, msg, len, flags);
+>   		}
+> +		if (!data && timeo > 0)
+> +			goto msg_bytes_ready;
+>   		copied = -EAGAIN;
+>   	}
+>   	ret = copied;
