@@ -1,46 +1,46 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011048.outbound.protection.outlook.com [52.101.62.48])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011069.outbound.protection.outlook.com [52.101.57.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA6D1DED5C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 06:47:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5821DED5C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 07:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.69
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783925257; cv=fail; b=tzGOhqiKHK2R3SrHZOYGJcf72DM2/ULDaUy9byQc3/7XhiLuLSdc/TEUUD3IPgEyZp1m/+xdgUWKVV1BCFVP6MDbgaOVRQnT0jgCQf0IOor79LJjtN/5Avs4iIlfdcoFhX3hN5JoBSLJY+H5+PnzNdOJZIHQIQhWXppL5SeGDN8=
+	t=1783926343; cv=fail; b=J1PNgFPxWEsJmKBDEeQTTHY5bV066aYxF7YHsYWWeD8oB4fQSFxwvyOmmhJLCbeS7SINwE+V9estsymNEpBEe0F3eNcc86C2qInNr94ATO31qIu8gC7CxgBk9AwVkrFWj2MwQEN3OgaEnsS8U+sUlq0HS+ffD2WPovQgMVfQYys=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783925257; c=relaxed/simple;
-	bh=+fWYPObcPhKak9Z6by9Pc6XxsZ2HENOabkLCoFsUPAM=;
+	s=arc-20240116; t=1783926343; c=relaxed/simple;
+	bh=pMpJF4xg71UQMJ00SsHbRlSQNicILt83+ReDqryfDF8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SlJGHqrl13aBr0f0SJ1tNK650qqaloG9IaJyFmKpjxEbYIde+xEZi4DpwK6PLxZQDDZ/ocvYuocdb6oQP7YdnbVoknofjqgW+K8ho5M0VpntqIj5jbiLM7sF+zNBNAUj3y8CSEd/0YnG2gRLcphi2DN30QZ+9XGaTUPupg5lqto=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=DEagfobN; arc=fail smtp.client-ip=52.101.62.48
+	 In-Reply-To:Content-Type; b=LzMvuJwQZcnhH0WIJxSlUZ+RP6cv2qtBLG9i5mMiI86uSnr2VKEu2b73y4OFOk0eJK8GybzEGLUWBlVQuS10bF6qF564uUhxlxINtrbD7Ci10/smsEwGrEJ2v81PIPUbHLaQSiMcni1kWr+spBpN9ZEzbrGh4lGR6a9QSl8TkOM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=YuDz3w57; arc=fail smtp.client-ip=52.101.57.69
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="DEagfobN"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="YuDz3w57"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N7HqZJcIH4s7EBKOLUteMu2Jeb6Ip/G+p0H8GIOsxadMwM3UAUK9xPwMxo1EMjrKv5QPdRdYfrom+8+TMyLjgmgz0eYyJjXO62Y7cXXbd/aBqMe+xF7nD7dNxbiiwsgwzDEe20fxKCUp5lvlO3dL+Ut2ORRJI/fbK2g5eHBLE9o3uX+LXG9de1DtEj1m5LToW3WXk2vN3qg9MnNkbDqPwo5iyYl9cX9+DrqGXDZ/8KSXuJLDID11IZT3VYpcjaPUzqQi9L54A7BoTR7yT9iP9eU+Qg8ZGhJuEdR4kDPiCihfBT4ZgvU21hkgDx52KtRYsis0VtTTyLBAImQ3+sUqdg==
+ b=hqlMFW07r7PCLDTC3fzJOCyfpSsxkrPBuvNRcTt9w50Rrb4zoXVLazy7aBqFuoVGEoPhph2RjI3uS23NUzF9nIZ3MS6d7M59fUurmazX2+RmLlcRVbfyU93nvV1cqh5TlfJEIB5dISlFjwiBuxiBhvJOtoJXwLfZykfsV0q64fOOwoc/o0outHVBwupjPdGGXFgOceJG7vtWk3sqC79uRs+KXRszxhSuTIXZqEoDlH5B1Y0HmoIY7oJS+03/aeIjTDA8zl2fO1aqz3eeAvPhkDDbdilsHbakPC77yF8RT6PlDCtgzSBXiEN29c3VPj2s7dPj9AWy60W6UlDPG9IjRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FQ/NAPVxYmuFqNcaynhLkp7K+3+fL34Y9iWy5h2ZYhs=;
- b=owhvjTRgU8ZS9w9Wizfarth0uTs8pnL0xFqHrj7GbtdHpo8yfov/a5Dc4KITm4ma68exjwHUdFveICMD2G9kGdBgFQoVNylEvfyFvz0vCnzCqy1S7IGBHZODe7/JpqvGJkuG9vCnwrZgthG99m3oFLdA3q4+3OzXivITqs1zx5Kw0R76cdiZ7oVrx9n00S4A9eq6vZhc5xVVqqdhCw2wO01VzJVh0vLstlAyFFn5JQbH0g1a7zANY0AkoTu4zDnz5tm4iQOl9pHwc5A7lpo5oNdsf/Lor4yQqcOl8TK9wUvTgAwsDH9g7gRscLgji4IIPvCt2Va8LvKqqr5FQZFFFg==
+ bh=eSDiGlK/o6x24rHtGC9Ntt5XhmtWHvh5yzjoPkHEQPc=;
+ b=P5Bqdu2uompu/2z9NSuAtxLvc+ILHPUn8EqEHIOXlWHzmGlCu9N7kNcthTAL7sbUSuP65xZXvj0sHzwyOgA/fw8b/Yt1zoDvu054l/bn18q986JXBIlPKtE9ovBwDKFMNZ1cr2fucI3zeja2Zd8XK08GDxX4AGRmD1MHGcqRdk9pXbzok+pT4H1QaApC5eaW5HTFb3QQL9ZnOMclTKrs6+WUHxM8PvzLoCrRLlTD/OQ/vPKvKHSnUnjxBkzvWBfzBOYTlDdNDWppv8TEkFmw+mn4G4s6ySBO9DRUAcyMscNie3SN2mYcO6D9MWD51LIhhuVpDqYN9FdtBLR9UmAddw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
  dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
  header.from=amd.com; dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FQ/NAPVxYmuFqNcaynhLkp7K+3+fL34Y9iWy5h2ZYhs=;
- b=DEagfobNJMeB7yUe5suhBUsrYe1jATyi2bdxQ0fJJxZAn/BOE9KnliTcijmeq9FrUisRdkPdCHBLzAs0rUidi34//U8Vsb6dzZmQkv6EywMRhhJfmnPHvyCoCzW2DpzgcXGRi6wCjFbv+k179ydxBdedWXlGBLsRWXnAB5aXi4E=
-Received: from MW4PR04CA0364.namprd04.prod.outlook.com (2603:10b6:303:81::9)
- by MN2PR12MB4254.namprd12.prod.outlook.com (2603:10b6:208:1d0::17) with
+ bh=eSDiGlK/o6x24rHtGC9Ntt5XhmtWHvh5yzjoPkHEQPc=;
+ b=YuDz3w57R7Mtdpz9VL5e41pvS+as227+vIDJ+qAxItYrC3QeKQzljZGaC2vfYusLLoB+65OsmxczVrdSsN3eJ6zKbH+qKlSsqYkAJFOWYDVNjzwMwRI1yOCP+BEz/x68JWqS6Wr7UufG2h0CL/JubzxoA6AVmilJYGF60jDry+k=
+Received: from MN2PR08CA0022.namprd08.prod.outlook.com (2603:10b6:208:239::27)
+ by PH7PR12MB7139.namprd12.prod.outlook.com (2603:10b6:510:1ef::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.19; Mon, 13 Jul
- 2026 06:47:30 +0000
-Received: from SJ5PEPF000001CA.namprd05.prod.outlook.com
- (2603:10b6:303:81:cafe::a5) by MW4PR04CA0364.outlook.office365.com
- (2603:10b6:303:81::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
+ 2026 07:05:34 +0000
+Received: from BL02EPF0001A102.namprd05.prod.outlook.com
+ (2603:10b6:208:239:cafe::59) by MN2PR08CA0022.outlook.office365.com
+ (2603:10b6:208:239::27) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.202.19 via Frontend Transport; Mon,
- 13 Jul 2026 06:47:29 +0000
+ 13 Jul 2026 07:05:34 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -48,18 +48,18 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
 Received: from satlexmb08.amd.com (165.204.84.17) by
- SJ5PEPF000001CA.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ BL02EPF0001A102.mail.protection.outlook.com (10.167.241.134) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.223.9 via Frontend Transport; Mon, 13 Jul 2026 06:47:29 +0000
+ 15.21.223.9 via Frontend Transport; Mon, 13 Jul 2026 07:05:33 +0000
 Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
  (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 13 Jul
- 2026 01:47:28 -0500
+ 2026 02:05:33 -0500
 Received: from [10.136.45.190] (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Mon, 13 Jul 2026 01:47:27 -0500
-Message-ID: <6df492f7-fd8e-4f07-97a5-66620ba0abb2@amd.com>
-Date: Mon, 13 Jul 2026 12:17:26 +0530
+ Transport; Mon, 13 Jul 2026 02:05:32 -0500
+Message-ID: <336baf70-d8a3-45f3-b72e-5c5662b34244@amd.com>
+Date: Mon, 13 Jul 2026 12:35:31 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,123 +67,185 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] KVM: nSVM: Sanitize nested DR6 using
- kvm_dr6_fixed()
+Subject: Re: [PATCH v3 4/5] KVM: SVM: Compute DEBUGCTL reserved bits
+ dynamically
 To: <sashiko-reviews@lists.linux.dev>
 CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
 References: <20260709082953.69434-1-shivansh.dhiman@amd.com>
- <20260709082953.69434-4-shivansh.dhiman@amd.com>
- <20260709085100.C04BC1F000E9@smtp.kernel.org>
+ <20260709082953.69434-5-shivansh.dhiman@amd.com>
+ <20260709084459.6F23B1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Shivansh Dhiman <shivansh.dhiman@amd.com>
-In-Reply-To: <20260709085100.C04BC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260709084459.6F23B1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001CA:EE_|MN2PR12MB4254:EE_
-X-MS-Office365-Filtering-Correlation-Id: ecaaf19e-6159-473b-3736-08dee0aa9bb2
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A102:EE_|PH7PR12MB7139:EE_
+X-MS-Office365-Filtering-Correlation-Id: e5bbec19-7126-4d93-4ed7-08dee0ad221b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|36860700016|376014|82310400026|23010399003|18002099003|22082099003|11063799006|56012099006|6133799003|4143699003|13003099007;
+	BCL:0;ARA:13230040|376014|23010399003|82310400026|1800799024|36860700016|3023799007|18002099003|22082099003|6133799003|4143699003|56012099006|11063799006|13003099007;
 X-Microsoft-Antispam-Message-Info:
-	eC1r9Era9lwb+W7WGMV8ZJXaE8s8CDsRCVQT0XYJ5SYDvQyra1Krf/L4F/b5Js8RsA+dqsReNeA4K3N6nFyOX+8xVVxDmpXgvtO6o0kdUFUedL/l7LUiE+ZvI+YvASIgulHJabQ/nSo8YZagOSL8myoPpWu3ueO3u6tgdJ3aRyUqyn7TzjLC+VgVJA+wYxf+jq/w3SHh7iEKYGbjvqETYck2WVXqjIIpDdo7b2ZcoTqOGONVVAJZIG4QlpH04ZJMQwFt9LIecgA4K13TBQdzYBXNxb/PAurguUpAjKQ7J8HZ7rNBCvfomniv2xx8mI6T/ZqfG8T52lglORiveNM1r+cuyQL7nMYCO6wtLhjQrKynxkxO7+aEZMJfq3e+BG+u+U+aoCFQc6XaUmTL2Jqg0ryyUx2i6VT5vEeyfc98D+bPjHn6ZGWGE8+TQs0j3aV4Owxk4rPOAhkLs2M0ZB+0I7lCXq8b+RYhu6qpVkUYYSeUMIUn2ZESRo5Acc3szch2rbuNVcD3YUvC6kAbaDKTfDBIYLjFxlzg67VLwK1lcR9yOqVZ4UKvQUc1egmgTIkak1bzgltJKP1lDcgtxKKQMk4QIJiJErz/8/lz/R6eTN4QefQcu8DmveP2iETby9QU5Da1z/d2nb2QQFD5yTj5DQ==
+	K1hp9q3pVEXBTdXJUfCHQl8lXDpdlDXdOhLM7K5dG8ZMX/eubgUBqfIvekaJy2ocZ6CsXUVxX2GN4Uzzfn3sKHmqiIMlWxddfgunsFKgCH6vJYQbLO8E3YUvOVs9FBaWa/pHkjF05br+pNeEP579bvineaex2JEY0Q0q+3WLtC8jCG27Vi3pn6khfJVZlPji9FIrvW/PmPsHawVVrrtF/Nk6kNl4rR5SYhtAQCB1RR/OLUEN1Ko5lkYMisQw8F7JJzOVPncMn4+l0KmHvhPG3L0LEdvqilaRUbp6jGRyO/NlWhhz9HZFlNaBJ+71TNwTkCJ1xgM6UJj1nBY2nB7juXafpA9bCr8AcBmfu3rj+ISwczZnvpiFfj5CD1lrZWRxLYroK0M3gKTcetQW2m8x7ZbjtRpY1IMlvtuUTgjAk0yWZFlwA3P511OgQP15eKFVBtK1iml7axKhDWXS34xlfkND5ysugAgSESJRzHVl/iZvdgMflC0HyC026XoNtXELjbp3vJ6wj1gK7JlUCSRY6sSquFokkMF+t5CX6Pm4DXa5w6ZSUpm/568ojmcTFv2eYughDltWSBZADKTAFrPQ/HtR/pZSMm39glttVFqoV/FyjRrv3KEg5FtYXpLWqBJsM2htBi4pZEv1yYs4Rg/kjA==
 X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(376014)(82310400026)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(6133799003)(4143699003)(13003099007);DIR:OUT;SFP:1101;
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(23010399003)(82310400026)(1800799024)(36860700016)(3023799007)(18002099003)(22082099003)(6133799003)(4143699003)(56012099006)(11063799006)(13003099007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	UMMd3LzlAfZNPzqCugwVBYUVH0XeDtFueA3L9aeaw0ayHTNlP9hvWHdAxWuxmuLWQ+Y5vNRZB46rPSCYdUNZR5GPu34wv3fvYhPDsPfPSitfFQvVPJltItjN8mosu4vV75YxdGT38lz41PtJIGoqLH1Movmv7OniCCvGMxrJL5TwLBaa+tyiaIL4E30gOWAqB0IkORujqlm+Av/5Wy6vOs88ZYtiRMnRgCeZlmm5cJDxBM1UbivFFjNq4jW9fPiixZxSbUBJVQDH0q/+CtFcu5U7pjiymMccavoO/I+69bcz3LI3tjXSqVb065gNow/FPOqw6R/JDuZI/Yzw64hQZS5UX26morjT9wmSWgDfHFv1x4Rj4Z/kFc23xRaDYIXWJQTFDdFFGLJdzztKeDqZJVe8XbCsZ604xIyWcoKEUYpqbMnL/9C+9fgJvCGeH7WD
+	DZir6hXhpDj08ybhxtCcYmOH6w4WRgGxDsJfVZzb4kSbE4n0lqeX409p1lUiXrUpBNC6aOX7MFOf0E0T6EoeE/UH7ohKfmZpP0yAhokWgHs9VAA5wOx06gOTl3NwyKRw6dAhbsNg8eXs3wD9An2AUmsjumMMsRSmxkjFkTrTiZQw25uB6FSVPjukbakBQj+hXhbWJCPZfazbS1q1nDsqw+ile4M1q3BJokml9tdY1oq0DxP5oiXcWcbHCI0Cprx/edpcTIu6eN2HTM+H1P8OoMS1pxFTT7AQp3JGlVABHoOcMsXzdUWBugbQvPM65fEd1qfBkHDgYjqWWitgmeTOThP+OFdLSfQSVha2v/dqty/DDV974b3CoaRqtCnAxmFzh+9gJ4dwZ8BGA6K7JH06GNlHT55b9OKWUSIvTeBSbd4NVvD2vXZ48XrMy0xgMhCr
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 06:47:29.3127
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 07:05:33.9003
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ecaaf19e-6159-473b-3736-08dee0aa9bb2
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5bbec19-7126-4d93-4ed7-08dee0ad221b
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001CA.namprd05.prod.outlook.com
+	BL02EPF0001A102.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4254
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7139
 
 
 
-On 09-07-26 14:21, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The patch identifies that DR6_ACTIVE_LOW unconditionally sets DR6_BUS_LOCK (bit 11) to 1, and replaces it with kvm_dr6_fixed() in nested VMCB02 preparation. However, the patch fails to replace DR6_ACTIVE_LOW in L1 vCPU initialization and #DB payload processing paths, completely breaking Bus Lock Detect for L1 guests.
+On 09-07-26 14:14, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] The dynamic reserved bit check for DEBUGCTLMSR_BUS_LOCK_DETECT is dead code because KVM explicitly clears the feature from SVM's supported CPUID capabilities.
+> - [High] Hardware silently ignores the guest's Bus Lock Detect configuration on VMRUN unless the guest also enables LBRs, due to AMD SVM requirements for loading DEBUGCTLMSR.
+> - [High] Bus Lock Detect support is fundamentally broken because DEBUGCTLMSR state management is strictly gated by unrelated LBR Virtualization parameters and host capabilities.
 > --
 > 
-> --- Patch [3]: [PATCH v3 3/5] KVM: nSVM: Sanitize nested DR6 using kvm_dr6_fixed() ---
-> commit 0ee3ae36939ed695ccbd636580058ad35113add9
+> --- Patch [4]: [PATCH v3 4/5] KVM: SVM: Compute DEBUGCTL reserved bits dynamically ---
+> commit 8b16c8234c21a39b440d6a7688ffcc624702cdf8
 > Author: Shivansh Dhiman <shivansh.dhiman@amd.com>
 > 
-> KVM: nSVM: Sanitize nested DR6 using kvm_dr6_fixed()
+> KVM: SVM: Compute DEBUGCTL reserved bits dynamically
 > 
-> When preparing vmcb02 for nested VMRUN, KVM ORs DR6_ACTIVE_LOW into the
-> guest DR6 to force the fixed bits to 1. DR6_ACTIVE_LOW forces bit 11
-> (DR6_BUS_LOCK) to 1 unconditionally.
+> This patch replaces the static DEBUGCTL_RESERVED_BITS macro with a
+> per-vCPU helper that derives reserved bits from the guest's CPUID. This
+> allows DEBUGCTLMSR_BUS_LOCK_DETECT when the guest supports it.
 > 
 >> diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
->> index 84248e6665cfe..0a9e28a02692e 100644
 >> --- a/arch/x86/kvm/svm/nested.c
 >> +++ b/arch/x86/kvm/svm/nested.c
->> @@ -811,7 +811,7 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm)
+> 
+> [ ... ]
+> 
+>> @@ -1231,7 +1231,7 @@ void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
 >>
->>       if (unlikely(new_vmcb12 || vmcb12_is_dirty(control, VMCB_DR))) {
->>               vmcb02->save.dr7 = svm->nested.save.dr7 | DR7_FIXED_1;
->> -             svm->vcpu.arch.dr6  = svm->nested.save.dr6 | DR6_ACTIVE_LOW;
->> +             svm->vcpu.arch.dr6  = svm->nested.save.dr6 | kvm_dr6_fixed(vcpu);
+>>       if (kvm_cpu_cap_has(X86_FEATURE_LBRV)) {
+>>               svm_copy_lbrs(to_save, from_save);
+>> -             to_save->dbgctl &= ~DEBUGCTL_RESERVED_BITS;
+>> +             to_save->dbgctl &= ~svm_get_debugctl_reserved_bits(vcpu);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but since this patch correctly identifies that
-> DR6_ACTIVE_LOW unconditionally forces bit 11 (DR6_BUS_LOCK) to 1, should
-> DR6_ACTIVE_LOW also be replaced in the L1 vCPU initialization and #DB payload
-> processing paths?
+> Does Bus Lock Detect incorrectly depend on LBR Virtualization being supported
+> and enabled?
+
+This dependency is architectural, and has to be honored.
+
 > 
-> Currently, DR6_ACTIVE_LOW is still used to initialize L1's dr6:
+> Here, the guest's dbgctl is only copied if the host supports X86_FEATURE_LBRV.
 > 
-> arch/x86/kvm/x86.c:kvm_vcpu_reset() {
->     ...
->     vcpu->arch.dr6 = DR6_ACTIVE_LOW;
->     ...
+> Similarly, in svm_set_msr(), writes to MSR_IA32_DEBUGCTLMSR are unconditionally
+> rejected if the lbrv module parameter is disabled:
+> 
+> svm_set_msr() {
+>         ...
+>         case MSR_IA32_DEBUGCTLMSR:
+>                 if (!lbrv) {
+>                         kvm_pr_unimpl_wrmsr(vcpu, ecx, data);
+>                         break;
+>                 }
+>         ...
 > }
 > 
-> It is also used as a flip mask when KVM translates the exception payload to
-> guest DR6. Because Bus Lock Detect is actually active-high, XORing it with
-
-This looks like a false positive issue, since Bus Lock Detect is active-low.
-Meaning if DR6.BLD=0, then it indicates that a Bus Lock has been triggered.
-See APM 24593—Rev. 3.43 13.1.1.3:
-
-	Bus Lock Detected (BLD)—Bit 11. The processor clears this bit if
-	#DB was generated due to a bus lock.
-
-> DR6_ACTIVE_LOW incorrectly inverts the bus lock bit the guest sees:
+> And earlier in nested_vmcb02_prepare_save(), L2's dbgctl is replaced with
+> L1's dbgctl if L1 does not explicitly enable LBRV for L2:
 > 
-> arch/x86/kvm/x86.c:kvm_deliver_exception_payload() {
->     ...
->     vcpu->arch.dr6 ^= ex->payload & DR6_ACTIVE_LOW;
->     ...
+> nested_vmcb02_prepare_save() {
+>         ...
+>         if (nested_vmcb12_has_lbrv(vcpu)) {
+>                 ...
+>         } else {
+>                 svm_copy_lbrs(&vmcb02->save, &vmcb01->save);
+>         }
+>         ...
 > }
 > 
-> Similarly, SVM constructs the #DB payload by XORing the hardware exit DR6
-> with DR6_ACTIVE_LOW:
+> Will this break Bus Lock Detect for guests when LBR features are unavailable
+> or disabled?
+
+[...]
+
 > 
-> arch/x86/kvm/svm/svm.c:db_interception() {
->     ...
->     u32 payload = svm->vmcb->save.dr6 ^ DR6_ACTIVE_LOW;
->     ...
-> }
-> 
-> Could this leave Bus Lock Detect functionally broken for L1 guests by causing
-> them to observe corrupted hardware state (false positives or false negatives
-> for bus locks)?
-> 
->>               vmcb_mark_dirty(vmcb02, VMCB_DR);
 >>       }
+>>  }
+> 
+>> diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+>> --- a/arch/x86/kvm/svm/svm.h
+>> +++ b/arch/x86/kvm/svm/svm.h
+> 
+> [ ... ]
+> 
+>> @@ -783,7 +783,15 @@ BUILD_SVM_MSR_BITMAP_HELPERS(bool, test, test)
+>>  BUILD_SVM_MSR_BITMAP_HELPERS(void, clear, __clear)
+>>  BUILD_SVM_MSR_BITMAP_HELPERS(void, set, __set)
+>>
+>> -#define DEBUGCTL_RESERVED_BITS (~DEBUGCTLMSR_LBR)
+>> +static inline u64 svm_get_debugctl_reserved_bits(struct kvm_vcpu *vcpu)
+>> +{
+>> +     u64 debugctl = DEBUGCTLMSR_LBR;
+>> +
+>> +     if (guest_cpu_cap_has(vcpu, X86_FEATURE_BUS_LOCK_DETECT))
+>> +             debugctl |= DEBUGCTLMSR_BUS_LOCK_DETECT;
+> 
+> [Severity: High]
+> Is it possible for a guest to actually have this feature under SVM?
+> 
+> In svm_set_cpu_caps(), KVM unconditionally clears the feature:
+> 
+> svm_set_cpu_caps() {
+>         ...
+>         kvm_cpu_cap_clear(X86_FEATURE_BUS_LOCK_DETECT);
+>         ...
+> }
+> 
+> Because of this, guest_cpu_cap_has() will always evaluate to false,
+> rendering this new logic dead code. Guest writes to enable the feature
+> will inject a #GP.
+> 
+> [Severity: High]
+> If the dead-code issue above is fixed and KVM accepts the write to
+> DEBUGCTLMSR_BUS_LOCK_DETECT, will the hardware silently ignore the guest's
+> configuration on VMRUN unless the guest also enables LBRs?
+> 
+> AMD SVM only loads DEBUGCTLMSR from the VMCB save area during VMRUN if LBR
+> Virtualization is enabled. In svm_update_lbrv(), KVM disables V_LBR if the
+> LBR bit is not set:
+> 
+> svm_update_lbrv() {
+>         ...
+>         if (svm->vmcb->save.dbgctl & DEBUGCTLMSR_LBR)
+>                 enable_lbrv = true;
+>         ...
+>         else if (!enable_lbrv && current_enable_lbrv)
+>                 __svm_disable_lbrv(vcpu);
+>         ...
+> }
+> 
+> Could this create a state desynchronization where KVM accepts the feature
+> but the CPU ignores it?
+> 
+
+All these issues stem from AI reviewing the patch in isolation. The Bus Lock Detect
+feature in SVM is enabled in 5th patch of this series, so, the hunks in this patch
+are not dead code.
+
+>> +
+>> +     return ~debugctl;
+>> +}
 > 
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260709082953.69434-1-shivansh.dhiman@amd.com?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260709082953.69434-1-shivansh.dhiman@amd.com?part=4
 
