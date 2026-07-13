@@ -1,213 +1,301 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012006.outbound.protection.outlook.com [40.107.209.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B925037BE93
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 12:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783947053; cv=none; b=IQLrMqhU3V/1fTDM0LLu920ViYxpg6qiXcDcP1m554vMqCfBNIgz6iFdNaE4O6TjdjtsKfhWClW7XduMi6JvReD9AW2zxDtLzt8AELhg1zhYtZ7k5QyFz1mLMarjrjJWq+fJ70L8bhK7s+rY8ogpWNklvsj9fHmAgTG/5/4vHug=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783947053; c=relaxed/simple;
-	bh=31MQfY9NvRLjYTMlGrp+H9KNMPnbdIhFc33jeP6gZqY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nKn1IKJOXiU1erJMfkLVhmQgQoKx9ovAy2gTRweOKGVCjqykMw0zNt5mOVrdprEao3MPDKxHWfEgNLQaP1LPlor1XGu149uxVgGTzx7vBbG4RzwbwJQeFN1WU/IE4UwIIyNot5qdV2w2s1PMMofYCdSIBBsjai+x/BIEM5G6Zuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fz7aST+D; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB60837BE93
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 12:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.6
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783947391; cv=fail; b=q7P/60UZ4JLeLKjNp/aZWMUFZU2vB4Hmy+umUYLUaJgCE96DPRh2nYuymdANNvgzBuTwRMf/lmTZr0BwrrPNsABmXWNkzDlIzY8K4qWBGn5icgIdM7qnD99FJcTs3YgX3PuwSSqzP3BE1k3rUxJXttlL1/rir6zBN6r9iUkNk9Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783947391; c=relaxed/simple;
+	bh=yNSnS1ZBDBA/JkLUBFttHazF+Ypd5AWNykyoilPLOW0=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=mXeKmRLaPRpqROEGDvYWjJcr8GcGeqr6Bir/xALncDXlJet/n/s9Rd3R9HIGMp0zdJPAc23qmDORxayFaw2hUcKLrnlb/c7VFWlAurFvaC9BHYCb3y2dLY5q1M5pQpzD8zYb5xXcsmY2ibyJWW8dDBoQtwY7iS7R4IFQsuzfHM4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=gQ1PXta5; arc=fail smtp.client-ip=40.107.209.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fz7aST+D"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1783947051;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y5514gjBH+tEva2wlfuCJ1QoRwC/nd/W+ENw0Fx/t/Q=;
-	b=fz7aST+D13vv6iE4rXEb6LdVKwmtt99HlbQwf5o5eiuZwkXt8Ufmqud/UZGNS1Md9gBkoP
-	PCLK/DBgM3UJ7Hwmmfqkio0C7TGnLUpB31IcsvFFQi1R03enUiMgkXV2VwcUkG/7pgKf5e
-	zwRgFfwlDo1NffihpCd7lh/SvWb0kCQ=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-NhSYm15XM8Kj85reVbRpZw-1; Mon, 13 Jul 2026 08:50:49 -0400
-X-MC-Unique: NhSYm15XM8Kj85reVbRpZw-1
-X-Mimecast-MFC-AGG-ID: NhSYm15XM8Kj85reVbRpZw_1783947048
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-81e92ddc199so52964487b3.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 05:50:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783947048; x=1784551848;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=y5514gjBH+tEva2wlfuCJ1QoRwC/nd/W+ENw0Fx/t/Q=;
-        b=NXUjLr7QKqpzZ1MRxsdfSLF9yEwkKTKo41TFQXSINv7bekD4xYoLjooa/ejDQrdho7
-         xOZizq+8qEAGB70KzZK9wwI9XdGbox11uqtYVFOjitfMZEYhZpuspDSpq43YVVnwOpmJ
-         HNim20rGRQZAQteKJXRcimhcMUsOzgrTxrPmnFG+yzFykPi4OKtjJTw1m0dgMDgvZLFF
-         OerpmWalwsd3NrWmYhJickBrHqfOdoGVjlt9Dx1s95H5tQWAJTIRHtrQg39d3avz2kGp
-         WmYXRP3bn6FiAOb5h4vcAT9sGeTv09RpnNuA3WNFBiyOn4OaY0wITXchXukAGAqdSuwm
-         XmWg==
-X-Gm-Message-State: AOJu0Yz/+/UZKcRf8Ii8ZKNOb3aTGtmkmeoZhXsDD2sOUslf+haFJZ4B
-	p8aXa5LWaZUmLEGQsxgD+knVWn4ZGxtbCDTw/8Ykh/tMb5v5gii3Wubt5Uock4riyeUQkYtYUTO
-	hRAxgRRHFnOQZxsvIR+Z5JoNN6kE10ZD64eMorkukbZM8D3ZqYUwCJF6Z4tsaplZWCCjIPixwjM
-	IPEUPvD0egEUjG1iEq62M+vtRQx4a+cPTUwoF3DdvrFhlAxyJ+SzzIzw8=
-X-Gm-Gg: AfdE7cnGqid/NDDpjkgr3P3oo27AxIyL2TvFxfM5EwGgh1zl8LWpqsvJlsi/8aWJkb0
-	ydUMx/yqota3F1yaJ4oJKzIn5Bsd8bcxk/lDeUQftgQ84pZh2w89zUU6xEPfeNMhvQWPkNpXIDz
-	TMyL9Kkr7BpMD+jQwrvymbRDSPBHkblGqdcMP1b1hnRhEzQ8Vh66NUMSzeobY8NqZ165o=
-X-Received: by 2002:a05:690c:688a:b0:81e:8988:a76e with SMTP id 00721157ae682-81e9013f452mr69897647b3.50.1783947048357;
-        Mon, 13 Jul 2026 05:50:48 -0700 (PDT)
-X-Received: by 2002:a05:690c:688a:b0:81e:8988:a76e with SMTP id
- 00721157ae682-81e9013f452mr69897527b3.50.1783947047964; Mon, 13 Jul 2026
- 05:50:47 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="gQ1PXta5"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pkH4CL/5I+ZBNPYNyf+9Jq7d8+earbQoVoAlsZKmG7p2izB1er0jS09l0KsxqqnmQFYCrYgsk+HqHTMqwfQPA4beAkMlL8RvrohUMkH1yRPX1FncpTBn0dUg8SCcKdzb4gj5LPI99K7RrFaxsyhT57RZFvtCOWq1v1IxBY1VRvCgfKhBsUH7c+g0panibpoGp6HdKspcTpZEcRAJ4BicvosNSYUvubBHZXuqSQPFYemZN1CJhEZYwXPlKqk14ZYS8mnmdCKUDegXJbZZD9MmaCcgI8Y1RqJeTU7Z0aPc4KvZkzQ6cslYE09bCHK0D9JQVboFSJWkbEctXzGf9B20Tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OqQ5+/az/TovOov7C8YY0g/gy8oyYRsxlUnnG6hd0LQ=;
+ b=PrqnlQMaC5xdf08dxyAGXJEh0GT7FeNcvskUQOdjvhKu3oq545wJcYCniaOtEdkpNH25Ri6hduY7FCffiwvfz0M9znB+RKfmxV7HL221dUK+IZCgC/TepGXOyvq24p24wodI7WQC6TdTPt8rBImrVWYJpHfL0kDJKHZ2JqFc1z2GfNllswnHHEBFgiPUmpWAcvNVvJJalSvkxBAAkt7BqG4UeFiA52pNqSS3s17oWJ47+wcUVr3+oX2PTH4LgUQc7OrCf9LbfLXXizmHr03ZEq/bjnpFuEertiRLaWaBFdGomIH01owItlW2NJIg0gy3fKN8OIeZ7nI+Jdl+B2TQ5g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OqQ5+/az/TovOov7C8YY0g/gy8oyYRsxlUnnG6hd0LQ=;
+ b=gQ1PXta5orAD5YHZ7U3UOrwxQNwqMUIXALW0YDNvCVDAQedMDkvYyN4yChFl8YOhBSbsseQv6QktUsefyTeM3Pf41Cusv11vs/7+hkQbqc9PruzXsU99ukTzzeTwxHzZ11RTpiptR9rUqHevtG9oiwBMBWvhg07i92RFKWaNUqI=
+Received: from BY1P220CA0020.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::7)
+ by DS2PR12MB9823.namprd12.prod.outlook.com (2603:10b6:8:2ad::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.22; Mon, 13 Jul
+ 2026 12:56:25 +0000
+Received: from SJ5PEPF000001CF.namprd05.prod.outlook.com
+ (2603:10b6:a03:5c3:cafe::25) by BY1P220CA0020.outlook.office365.com
+ (2603:10b6:a03:5c3::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.202.19 via Frontend Transport; Mon,
+ 13 Jul 2026 12:56:25 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ5PEPF000001CF.mail.protection.outlook.com (10.167.242.43) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.223.9 via Frontend Transport; Mon, 13 Jul 2026 12:56:24 +0000
+Received: from [10.252.200.247] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 13 Jul
+ 2026 07:56:22 -0500
+Message-ID: <6adaf312-84ff-4fea-b072-61588fd73b40@amd.com>
+Date: Mon, 13 Jul 2026 18:26:19 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260713-drm_refcount_wiring-v2-0-d3bb61f4bd4d@redhat.com>
- <20260713-drm_refcount_wiring-v2-4-d3bb61f4bd4d@redhat.com> <20260713120850.50A971F000E9@smtp.kernel.org>
-In-Reply-To: <20260713120850.50A971F000E9@smtp.kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 13 Jul 2026 14:50:36 +0200
-X-Gm-Features: AUfX_mxIjyD9JT7DCnH8TLnCNyM1WFtSvLQWD-3yymdZrL3l4dLm3EqYUh3A3BM
-Message-ID: <CADSE00KCw_dA89NcKg-9zLf-HLhy=ASZyDrAk+15ko_eyowOUg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] drm/panel: find_panel_by_fwnode() return a counted reference
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sunxi@lists.linux.dev, Frank.Li@kernel.org, imx@lists.linux.dev, 
-	wsa+renesas@sang-engineering.com, dri-devel@lists.freedesktop.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 45s98ZiDthw5p4FSYvuKnDvpuLdQwTRCPDcuTyd8bF0_1783947048
-X-Mimecast-Originator: redhat.com
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
+Subject: Re: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC
+ Physical Processor Interrupt (GAPPI)
+Content-Language: en-US
+To: <sashiko-reviews@lists.linux.dev>
+References: <20260713105033.15405-1-sarunkod@amd.com>
+ <20260713105033.15405-6-sarunkod@amd.com>
+ <20260713111119.EC35E1F000E9@smtp.kernel.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20260713111119.EC35E1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001CF:EE_|DS2PR12MB9823:EE_
+X-MS-Office365-Filtering-Correlation-Id: 934a0e9e-5244-4e11-e41e-08dee0de257e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|36860700016|376014|1800799024|82310400026|6133799003|4143699003|56012099006|11063799006|5023799004|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	WHIAFKNZXGMi5R+Oh2uiHp2aRObmciHlRdbFH1TPz3HzKcBYTkRKqWf8SaVXtnlDxB+cAaatwk4m4QgLG0JE7U+eMI0LmxNFY3VYH3SelV19I1IF8PIX42qAS1uv65eBc0YrHhqTZFFLkn8SqDzviDeNWtIGFo0bGpGB+HFZY0XtmdKwQK+rvx1yKqkh+IXUcGXfv7WXz+9blhQ1sRFLb3GWTyugr8Snf2S2k2RaMHH7qutPhWXHPTzLC14vNhnzT2R3YarnZLCE02478ql5zL/G6rN5fTIx99+gbPQ5lVG1Mo6MJJRV8qfTXxYmPM9Mt18IGBC4zVPEPU2ON5q/Uihj/++S7XWGiF2F7oBpvt6cQj8K/Wjaz4TtpktCWgg9vZlzu53Qx/mkzEdPzh4X8fNh4EkbpKJmwjD7SBAd3klJsR90f9VOUUI7tDgpeLZEa0EACupzR6ehZiBTBqLhy5ELGhM8zonmX1Av6fob6zxPPxA+9M4+3g9UK8SfO7XBueNUH6GylDoOMYud518NQUidqgHHfvtpV/WWK09+c+JJbfyDfkosnThYWuCwV6JcwkbUgXRwQNA3MTIRpOZoSkjWz8daQ/zuLn0KW5JmRcdGm6LCWc5qAkJwhzSP5LVuU1pZAA1wg/tTimjfvdR1B0q5YiRkMVMcbC4ASe7zWVQGXKqR7KfL9k9/f38pjLg37VrINwvWrTEpVZ96OwtfTg==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(36860700016)(376014)(1800799024)(82310400026)(6133799003)(4143699003)(56012099006)(11063799006)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	xtRhzrSTTiOcPY63z6vSo1oeO9nLyxnZPyW8b/VZ+fu5/jt46Lqq7qiLI6jiaRdS0ZOnGc48CtkDgHCVJD4NmyAPgOk9Mr/Wz+0HhwuF+ZAMladkqr2yqwZ+V/S+q2NBSey1HxdhdSOkW6+b7sNcJ7q5vf1qUY4bJLXfLtH3tFFfNs+D6BtLVKFMIUykTEnGOMrAyvPrVp9KmsJRl+cwWIfKmbaYyjUoJ/Ts7GwZocHf7j4vTYVui3iXsHn7GTNTFnoxqNyTcPiXwgcrl0XNt4b0nNTYZbUv3RIbnlvriqenVF/A33q9yh+JLuBGYcUa0N54SxiYXOTBSuzLQ1amP6buhOI7veZ7TsVPJBJj1hf8fBONlBYqp6AVM2SU4dxj+/AOk5/dO8tId0cMhAsq50MHsTws8LZjtMkLPZnbexrTOp2ZgZI2GyXtywfIkGRm
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 12:56:24.8604
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 934a0e9e-5244-4e11-e41e-08dee0de257e
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001CF.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9823
 
-On Mon, Jul 13, 2026 at 2:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Medium] Drivers calling of_drm_find_panel() directly leak the returned=
- panel reference.
->
-> Pre-existing issues:
-> - [High] TOCTOU race in drm_panel_add_follower() when acquiring the panel=
-'s underlying device, leading to a potential Use-After-Free of panel->dev.
+
+
+On 7/13/2026 4:41 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Host-userspace-reachable WARN_ON due to uninitialized `svm->gappi_cpu` (-1) when configuring IRQ routing before a vCPU runs.
+> - [High] Missing CPU hotplug handling causes blocked vCPUs to hang if their last-run physical CPU goes offline.
+> - [High] ABBA deadlock between scheduler `rq_lock` and `gappi_vcpu_wakeup_list_lock` due to manipulating the wakeup list during vCPU preemption.
+> - [Low] Mixing scoped `guard()` cleanup with `goto` error handling violates architectural guidelines.
 > --
->
-> --- Patch [4]: [PATCH v2 4/5] drm/panel: find_panel_by_fwnode() return a =
-counted reference ---
-> commit 5cd4c479944cf29f6f5aa4a3e31207bf48dc0567
-> Author: Albert Esteve <aesteve@redhat.com>
->
-> drm/panel: find_panel_by_fwnode() return a counted reference
->
-> This commit updates find_panel_by_fwnode() to return a refcounted pointer
-> to the panel, mirroring a similar fix made to of_drm_find_panel(). It cal=
-ls
-> drm_panel_get() under the panel_lock before returning, ensuring the memor=
-y
-> is not freed prematurely. Callers are now responsible for balancing this
-> with drm_panel_put(), which is added to drm_panel_remove_follower().
->
-> > diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-> > index 72cf86253c0cd..a00ae98ed0956 100644
-> > --- a/drivers/gpu/drm/drm_panel.c
-> > +++ b/drivers/gpu/drm/drm_panel.c
-> > @@ -542,7 +542,13 @@ int of_drm_get_panel_orientation(const struct devi=
-ce_node *np,
-> >  EXPORT_SYMBOL(of_drm_get_panel_orientation);
-> >  #endif
-> >
-> > -/* Find panel by fwnode. This should be identical to of_drm_find_panel=
-(). */
-> > +/*
-> > + * Find panel by fwnode, returning a counted reference.
-> > + *
-> > + * Behaves identically to of_drm_find_panel(). On success the returned
-> > + * pointer has been passed through drm_panel_get(); the caller must ca=
-ll
-> > + * drm_panel_put() when done with it.
-> > + */
->
-> [Severity: Medium]
-> Since the earlier patch in this series updated of_drm_find_panel() to
-> also return a counted reference, do drivers that call it directly need
-> to drop their reference to prevent a memory leak?
->
-> For example, in bridge drivers like lvds-codec.c:
->
-> drivers/gpu/drm/bridge/lvds-codec.c:lvds_codec_probe() {
->     panel =3D of_drm_find_panel(panel_node);
->     of_node_put(panel_node);
->     ...
->     lvds_codec->panel_bridge =3D devm_drm_panel_bridge_add_typed(dev, pan=
-el,
->                                                 lvds_codec->connector_typ=
-e);
-> }
->
-> Because devm_drm_panel_bridge_add_typed() takes its own reference to the
-> panel via drm_panel_get(), does this code leak the initial reference
-> returned by of_drm_find_panel() since drm_panel_put() is never called?
->
-> This same leak pattern appears to exist in other callers as well, such as
-> samsung-dsim.c:samsung_dsim_host_attach() and
-> rcar_du_encoder.c:rcar_du_encoder_init().
-
-Uh this is a real issue that I missed in several callers. I will add
-drm_panel_put() after the bridge creation where needed in the next
-version.
-
-BR,
-Albert.
-
->
-> >  static struct drm_panel *find_panel_by_fwnode(const struct fwnode_hand=
-le *fwnode)
-> >  {
-> >       struct drm_panel *panel;
-> > @@ -554,6 +560,7 @@ static struct drm_panel *find_panel_by_fwnode(const=
- struct fwnode_handle *fwnode
-> >
-> >       list_for_each_entry(panel, &panel_list, list) {
-> >               if (dev_fwnode(panel->dev) =3D=3D fwnode) {
-> > +                     drm_panel_get(panel);
-> >                       mutex_unlock(&panel_lock);
->
+> 
+> --- Patch [5]: [RFC PATCH v3 5/6] KVM: SVM: Add support for AMD IOMMU Guest APIC Physical Processor Interrupt (GAPPI) ---
+> commit c3bb8845bd944e9a327f36d68b70032d436f727c
+> Author: Sairaj Kodilkar <sarunkod@amd.com>
+> 
+>     KVM: SVM: Add support for AMD IOMMU Guest APIC Physical Processor Interrupt (GAPPI)
+>     
+>     With AVIC guest-mode interrupt remapping, device interrupts are posted into
+>     the guest vAPIC backing page by the IOMMU. When the vCPU is not running
+>     (IRTE[IsRun] = 0), KVM must still be notified to schedule it. The legacy
+>     path uses the GA log.
+> 
+>> diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
+>> index 3b2d92a587098..982a5988532ff 100644
+>> --- a/arch/x86/kvm/svm/avic.c
+>> +++ b/arch/x86/kvm/svm/avic.c
+>> @@ -886,6 +892,42 @@ int avic_init_vcpu(struct vcpu_svm *svm)
+>>  	return ret;
+>>  }
+>>  
+>> +static void avic_add_vcpu_to_gappi_wakeup_list(struct vcpu_svm *svm, int cpu)
+>> +{
+>> +	struct list_head *wakeup_list;
+>> +	raw_spinlock_t *spinlock;
+>> +
+>> +	if (WARN_ON(unlikely(cpu < 0)))
+>> +		return;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but is there a time-of-check to time-of-use
-> race condition when callers attempt to pin the underlying device?
->
-> When find_panel_by_fwnode() (or find_panel_by_dev()) returns, the panel's
-> internal refcount is incremented under panel_lock, but the underlying
-> struct device (panel->dev) is not pinned.
->
-> If a concurrent unbind occurs before the caller pins the device, the devi=
-ce
-> memory could be freed. For example, looking at drm_panel_add_follower():
->
-> drivers/gpu/drm/drm_panel.c:drm_panel_add_follower() {
->     panel =3D find_panel_by_dev(follower_dev);
->     if (IS_ERR(panel))
->         return PTR_ERR(panel);
->
->     get_device(panel->dev);
-> }
->
-> If the panel device driver unbinds immediately after panel_lock is droppe=
-d,
-> could get_device(panel->dev) trigger a use-after-free on the destroyed
-> device?
->
-> >                       return panel;
-> >               }
->
+> Can an unprivileged user-space process trigger this WARN_ON?
+> 
+> When a vCPU is created, svm->gappi_cpu is initialized to -1 in
+> avic_init_vcpu(). It is only set to a valid CPU ID later during
+> __avic_vcpu_load().
+> 
+> If host user-space configures device interrupt routing via the KVM_IRQFD ioctl
+> before the vCPU runs, avic_pi_update_irte() is invoked. This will pass the
+> uninitialized svm->gappi_cpu (-1) down to this function, hitting the WARN_ON.
+> If the host has panic_on_warn enabled, this allows host userspace to trigger
+> a kernel panic.
+> 
 > [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260713-drm_refc=
-ount_wiring-v2-0-d3bb61f4bd4d@redhat.com?part=3D4
->
+>> @@ -947,6 +993,12 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
+>>  		 * scheduled out, KVM will update the pCPU info when the vCPU
+>>  		 * is awakened and/or scheduled in.  See also avic_vcpu_load().
+>>  		 */
+>> +		if (amd_iommu_gappi)
+>> +			pi_data.ga_tag = POSTED_INTR_WAKEUP_VECTOR;
+>> +		else
+>> +			pi_data.ga_tag = AVIC_GATAG(to_kvm_svm(kvm)->avic_vm_id,
+>> +						    vcpu->vcpu_idx);
+>> +
+>>  		entry = svm->avic_physical_id_entry;
+>>  		if (entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK) {
+>>  			pi_data.apicid = entry & AVIC_PHYSICAL_ID_ENTRY_HOST_PHYSICAL_ID_MASK;
+>> @@ -955,11 +1007,19 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
+>>  			pi_data.apicid = -1;
+>>  			pi_data.wakeup_intr = entry & AVIC_PHYSICAL_ID_ENTRY_WAKEUP_INTR;
+>>  			pi_data.is_running = false;
+>> +
+>> +			if (amd_iommu_gappi) {
+>> +				pi_data.apicid = kvm_cpu_get_apicid(svm->gappi_cpu);
+>> +				if (list_empty(&svm->ir_list)) {
+>> +					avic_add_vcpu_to_gappi_wakeup_list(svm, svm->gappi_cpu);
+>> +					is_vcpu_waiting = true;
+>> +				}
+>> +			}
+>>  		}
+>>  
+>>  		ret = irq_set_vcpu_affinity(host_irq, &pi_data);
+>>  		if (ret)
+>> -			return ret;
+>> +			goto gappi_err_out;
+> 
+> [Severity: Low]
+> Is it safe to mix goto-based error handling in a function that uses guard()?
+> 
+> Earlier in avic_pi_update_irte(),
+> guard(raw_spinlock_irqsave)(&svm->ir_list_lock) is used. According to
+> include/linux/cleanup.h, mixing goto with guard() in the same function creates
+> confusing ownership semantics and violates the subsystem's cleanup rules.
+> 
+>>  
+>>  		/*
+>>  		 * Revert to legacy mode if the IOMMU didn't provide metadata
+>> @@ -968,12 +1028,17 @@ int avic_pi_update_irte(struct kvm_kernel_irqfd *irqfd, struct kvm *kvm,
+>>  		 */
+>>  		if (WARN_ON_ONCE(!pi_data.ir_data)) {
+>>  			irq_set_vcpu_affinity(host_irq, NULL);
+>> -			return -EIO;
+>> +			ret = -EIO;
+>> +			goto gappi_err_out;
+>>  		}
+>>  
+>>  		irqfd->irq_bypass_data = pi_data.ir_data;
+>>  		list_add(&irqfd->vcpu_list, &svm->ir_list);
+>>  		return 0;
+>> +gappi_err_out:
+>> +		if (is_vcpu_waiting)
+>> +			avic_remove_vcpu_from_gappi_wakeup_list(svm, svm->gappi_cpu);
+>> +		return ret;
+>>  	}
+>>  	return irq_set_vcpu_affinity(host_irq, NULL);
+>>  }
+> [ ... ]
+>> @@ -1300,6 +1382,21 @@ static bool __init avic_want_avic_enabled(void)
+>>  	return true;
+>>  }
+>>  
+>> +static void avic_gappi_wakeup_handler(void)
+>> +{
+>> +	int cpu = smp_processor_id();
+>> +	struct list_head *vcpu_wakeup_list = &per_cpu(gappi_vcpu_wakeup_list, cpu);
+>> +	raw_spinlock_t *spinlock = &per_cpu(gappi_vcpu_wakeup_list_lock, cpu);
+>> +	struct vcpu_svm *svm;
+>> +
+>> +	raw_spin_lock(spinlock);
+>> +	list_for_each_entry(svm, vcpu_wakeup_list, gappi_vcpu_wakeup_list) {
+>> +		if (kvm_lapic_find_highest_irr(&svm->vcpu) >= 0)
+>> +			kvm_vcpu_wake_up(&svm->vcpu);
+>> +	}
+>> +	raw_spin_unlock(spinlock);
+>> +}
+> 
+> [Severity: High]
+> Does this lock ordering create an ABBA deadlock?
+> 
+> When a vCPU is preempted, the scheduler executes kvm_sched_out() while holding
+> the runqueue lock (rq_lock). KVM then calls __avic_vcpu_put(), which in turn
+> calls avic_add_vcpu_to_gappi_wakeup_list(). This acquires the
+> gappi_vcpu_wakeup_list_lock, establishing an ordering of rq_lock ->
+> gappi_vcpu_wakeup_list_lock.
+> 
+> Conversely, when a GAPPI interrupt arrives, avic_gappi_wakeup_handler()
+> acquires gappi_vcpu_wakeup_list_lock and calls kvm_vcpu_wake_up(). The wakeup
+> path then attempts to acquire the target task's runqueue lock, establishing
+> the reverse order: gappi_vcpu_wakeup_list_lock -> rq_lock.
+> 
+> This inversion will likely trigger a lockdep ABBA deadlock splat and violates
+> the scheduler locking hierarchy.
+
+For this condition to exist, Following two conditions must be true.
+1. avic_vcpu_put() and gappi interrupt handler() must be on same
+physical CPU.
+2. GAPPI must preempt the __avic_vcpu_put() once it has acquired
+gappi_vcpu_wakeup_list_lock().
+
+The second condition is not possible since __avic_vcpu_put() disables
+the interrupt while aquiring the ir_list lock.
+
+Hence ABBA deadlock is not possible
+
+Thanks
+Sairaj
+
+> 
+> [ ... ]
+>> @@ -1308,12 +1405,18 @@ static bool __init avic_want_avic_enabled(void)
+>>   */
+>>  bool __init avic_hardware_setup(void)
+>>  {
+>> +	int cpu;
+>>  	avic = avic_want_avic_enabled();
+>>  	if (!avic)
+>>  		return false;
+>>  
+>>  	pr_info("AVIC enabled\n");
+>>  
+>> +	for_each_possible_cpu(cpu) {
+>> +		INIT_LIST_HEAD(&per_cpu(gappi_vcpu_wakeup_list, cpu));
+>> +		raw_spin_lock_init(&per_cpu(gappi_vcpu_wakeup_list_lock, cpu));
+>> +	}
+> 
+> [Severity: High]
+> Are blocked vCPUs left stranded if their physical CPU is taken offline?
+> 
+> The per-CPU wakeup lists queue blocked vCPUs on the physical CPU they last ran
+> on. However, there are no CPU hotplug callbacks registered. If a physical CPU
+> is taken offline, the IOMMU hardware will not deliver GAPPI interrupts for
+> that offlined CPU's APIC ID.
+> 
+> Since there is no mechanism to migrate the stranded vCPUs to an online CPU's
+> wakeup list during the offline event, these vCPUs could hang indefinitely.
+> 
 
