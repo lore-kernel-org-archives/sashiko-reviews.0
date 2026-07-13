@@ -1,293 +1,163 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazolkn19013079.outbound.protection.outlook.com [52.103.35.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426E44499A4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 19:46:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450EE4499A4
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 19:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.35.79
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783971974; cv=pass; b=uAJ4la8RWneH7LUNm8KVifkTaIPUG0PlbM/FYB9QAzknDCbxRy4G/bso/oeanoGXs4newSemoQc67OQj26MeZQotlGyigWb0OfMEJuTLUyo/0TbssfxKh4ZZ/ztDU8OzMXv10qcDti1ZtTXJglqmptAzM9CBgi9pqeFWGqCwm0M=
+	t=1783972195; cv=fail; b=ZMZGPF6ajE0lc727Vl5swDLVG22ue48IyyNr1rwihEtciATZT+2sgKGlqhaeWr5gNySODZNsvm04Z4/b/UyABLh5uWay+rA5+jnAVaG466LHktXkzwCJ9L3VH1mjZKyfXNJiIPT0f3I0//q1L71jprqFwB7rQr7yLTn3emhNGy0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783971974; c=relaxed/simple;
-	bh=B0cMKe8c+q6VZAtfPJvsEQR9bKElmEm2xbnsBmbyRrc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N34EUlYbFJf8FKHHo93m+vsAiUJUkugl7sLuql/GA64L3Z4ZW7PZEP+QpZTaHw3uQHkwNr2yXKsOHJnj1atconfAvPmaEGuimYhIVd6ccYzMuIEIYO3wmbQHej+lFPPFW3DzLmmCnmTCrwuIbHsnWuSasO0r2GJpMdXsmUY0SXI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=msI1GFcn; arc=pass smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1783972195; c=relaxed/simple;
+	bh=Q0VSAzJ22pw5ADslO+/ooTFWIfMG1AucSyZNBbXC3O4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 Content-Type:MIME-Version; b=a9fbe9NWOs+MHaW95OPYt1B7BogqUkEaR4iXegSKOz/ycQiVFnkwALlpGg+4/AEiQKxb58/hLvzZxc2LtnJYe1WEGqK8AK/CknblAarJ7xafd4PRToRtt1xsa8J/i1Dw61e4+OBCiMr+1sEZHW56QNUIHDOBB55aeP2CFk/UCFI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=g5uOAUjr; arc=fail smtp.client-ip=52.103.35.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="msI1GFcn"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5b020a70f9bso1305e87.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 12:46:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783971970; cv=none;
-        d=google.com; s=arc-20260327;
-        b=al6yt9ECT9OHxf9bTNrkGnUEUpmOvbzAj72tiBjzpVa3cwkZEsXWOVy0ibdcZMNlTq
-         cDQAES6+FjFKlSmHirAwnLGgyoJXmhgRNEbvFjkL0dsmezSuuqxRVBzJcp9BXSiBwgHB
-         wTeWwvNHQ5GEkNmai0K00dqyc58G/BDR6FLtiaCz8Zufipgfp5Gn1KsdwK26PbCZs0yI
-         VPI5OiREHipgMWSkjlKGJ+McCmc7SWP19MnCEY8ah1qhb5L/4rLEdxaC7OuKLsCU7Qwe
-         bmW1MjDlqIXUzQ1JlRkr52ucaDVnVqop0LfX6i5NVbfjVJs/lXuJnkrJ7VOOKcLMucmo
-         Q6CA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cSqOOQONB6JQasgqDGGvjiOYMHIueBNAeX2B65ZUhc0=;
-        fh=fItrUtV5UsY1KSNx1ZNnzv3miYMbODbRRQWQ18AP5Zc=;
-        b=dNqeet7In/1+H7MKjMdS8JGnA3o4x947XaFDIRFhWKg4YPZ6Kohbc26as0uPqdFoT+
-         81iTLuv+YehJPduOwyGP2+9exl2FFENclsadvuJBiI4DA7vTdsTYih2Epy9OlrJSy++/
-         DMObw0AEvnhaxs/X7Q6GKGWH3M1PB0ClMsf059JNVoe2hBB0Waa2XdIHbIV+VFoICqSv
-         Qi9j6iON5RfAxkeenf6z9KVhnFeIAXu1LUZEP9mHWBLBzymtn3b6L4JoMRQKpzU1PAUr
-         Bot5EaECkDuFgXkXE2yiN9P//wRWwUHWkjRMbv8YFIbW3cBtCwQRovATevp8adGC9Frf
-         VA0g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783971970; x=1784576770; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=cSqOOQONB6JQasgqDGGvjiOYMHIueBNAeX2B65ZUhc0=;
-        b=msI1GFcnWxR3yL0XzwgIt17o3Y+LJV9bSoDhrVqVPjPHLtzvhwk5C8ykfFLPcdmHFY
-         /TMLJi6or8c/2KtN2Hs+TgS/0zgLbO5JHEdOnB0R8SWeQQp1gYxwm/sJPqmER5jtUQh6
-         bKv72cNqRHj71wuqYwUZ0AWXk6WYiFkNvHxjISJKbawTSHytKgt32f5NqzJ0jjs3mNDx
-         Y1PFb6Zjzh7ufNAyl3bXpxoHlO1rSQLQqqpMIxSpzKg/7L6efi3Ulwx0f320uu4+tItz
-         KG80mC894BekUsTnytQJz9Of5pf1ywgT4EjPY3huqFqzB0eU8cai6toaQwp6HcuPKBXW
-         76pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783971970; x=1784576770;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cSqOOQONB6JQasgqDGGvjiOYMHIueBNAeX2B65ZUhc0=;
-        b=ERQwFLU9hAeDUi0AmxqeYG0yAOr+HqhYmFuOw7mBdiXyw3N82PFcpvlml7WgBBEd/f
-         DDDFNmz1ak+KG5fTMjcR1uz2woi5fAhJi1mH0sD+qR+rq9EtRlsXNta0oBHcvtin++lz
-         SBSVgbsLiJYwfkR+nGPx0UFrgSM5ic88X+hOjZlyMZd0wDfohQjfy2yjx9gUxBMUZK2/
-         JxEw7pvAhVEmqmrsk98yED9y0gsF4qUAKpJnJ0ZUALhv7EOkzEywk0QBTQsKDB8K59jK
-         /WDbx/MSaALx7iq0dBpp+74JPFWDjdmxDvqYZs9eL1IGT4dsVmFaIGX+vwBcl5tqy5nb
-         czMA==
-X-Gm-Message-State: AOJu0YyZ7dqEiNWp1gHVfzIjqIgjtKfkt0xjAHI25JOfZQeMbznddhwm
-	TpJ52FiH5Ug4yOcQ0drKiHxzvO39tiGAPjcHoWGqOfvyrO7YgvMy6zg3NEDzfwr0uYaHtqqhZ/X
-	F6xfM88zSrSMihA5WqZy3o02e6xNLQcOsDptMEeNVM9gx1GaNlUrvveaa5w==
-X-Gm-Gg: AfdE7ckhDb0uNbmmYG9s4EbyqVyWViQwPuR4O13zafTYNRONKSnjBY5pEZEq6NGvuaT
-	EjLfkWZ4I+gYEkX363Drg7WcSnlSCY/6Mled5oH75MFm5pETmiF7l5p0mczTUiRTSkSk709LWC0
-	RtAWhUKSf/CrVMJykJrIG/jl9dkoLXXt4d6JiNL8QO2fnBiZMzRFf3Nqm+B6iGcGXbCtik8kvlw
-	6321FHrRNHnvvOWE3o9zbpDA2Y1Uai2rKHpqDNlZ4f5LENYU/nlJ7xUJ8jBwejBb70G
-X-Received: by 2002:a05:6512:3e1e:b0:5b1:5141:9156 with SMTP id
- 2adb3069b0e04-5b155441efdmr111663e87.9.1783971969847; Mon, 13 Jul 2026
- 12:46:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="g5uOAUjr"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IVWLickFXt6aGoFk7IbzyVnDmt/0t1sfnmHtRPGJz48L26PajDI+YHFDVVTBdQAC0J8ok70zw3NPfmirmyFRgxdcG5ehX9vzme8tipPa90T5SQ+vHO8tELjzft2GjObxACdzIuFiJ3if3wEJCmWsjNAq6RXOdAMmfcqvG74LOkdHLboFCjM3kdTgM8rfikFTSifXzpDiI7WAO5k8agKEireghj8KD2gKm/ghu1yPAky5aYCQHE9JnVsszrMsq/LcBXIVRf4hMX1MdN4P+Rw/lL97pX9NboqZO7cML/M1H6iNRhl4plUcoxEAbllLrn5y8VAVBwFCZ8hOeuAva6c7Rw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TKg6KkNHOjm8Nc/ZI7rIhGfJfa5PhJND0pvVtPuYRB4=;
+ b=Rop8qArILKMUflTNpbv527PXd0cqpCHb5+clCZsAlF5ZpKP0myfnihi/3ZdD5N+y06kbH2LaCWyZ6t9dwx97V+8zraNUNa7HcPD0EnX9IJE5R2ixh39y1KU8FztiudWWZgXZkYNbAEWwoKTxhB6WmHAPr2/3RBjHnfUlKn1apcYw9MKTw974QuWOLmZgQ5nCM7YGO/J29LodA1FA4LpLalKrVURxvjJQnmkI6KF+tG6or1leBNfHjYds19DoHcc2Z5sR+9eKsuZZE8gqwz/y8AftuKLW0KyXgIgpTQy5j6Ps04U64HPNnuimxmuXoTAe2LdVqSUzpFX8NZkRHA2WSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TKg6KkNHOjm8Nc/ZI7rIhGfJfa5PhJND0pvVtPuYRB4=;
+ b=g5uOAUjryxliM/5JXHuZBkzmwfYdXH/n8u6zBQtd92YTTXNCVsVXxnSg3x9PNWyhB04imyMCuQdeGzNQIs78oH7b0nOHuf10WSl3OpBbTji9HXLnZdbdpUXnzCxDOd3MHfoj0MXeMczgiQSXiAsNt6lVleI2faOudigImIIlmmt8F3OX6LC7Pa5gJZxMBNItrv2n73K4uL6Y0j7TUm2mGNcxKt6VrUF9GdJCIA+NTVAYFMWFuR6IMDSTv2w7qmWm3Z32FYOOvyw9zJonBCBnIT7JPMFOg2F7AETqIl5uXxJVDZWSjVBjttnw866Zu3BiYt7HpiJ8ajOHvBI6HNzcLw==
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
+ by VI1PR08MB5424.eurprd08.prod.outlook.com (2603:10a6:803:136::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
+ 2026 19:49:50 +0000
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
+ 19:49:49 +0000
+Date: Mon, 13 Jul 2026 20:49:42 +0100 (BST)
+From: Manuel Fombuena <fombuena@outlook.com>
+To: sashiko-reviews@lists.linux.dev
+cc: Xlinux-leds@vger.kernel.org, lee@kernel.org
+Subject: Re: [PATCH 1/1] leds: st1202: add hardware-accelerated blink
+ support
+In-Reply-To: <20260713153713.962DC1F00A3A@smtp.kernel.org>
+Message-ID:
+ <GV1PR08MB849773D21A4FBD48BCA8F92AC5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com>
+References: <GV1PR08MB8497C5B8CEB2CE19743DFCFFC5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com> <GV1PR08MB84973ADB74B084B108FFE389C5FA2@GV1PR08MB8497.eurprd08.prod.outlook.com> <20260713153713.962DC1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+X-ClientProxiedBy: LO4P123CA0259.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:194::12) To GV1PR08MB8497.eurprd08.prod.outlook.com
+ (2603:10a6:150:81::22)
+X-Microsoft-Original-Message-ID:
+ <59dde1db-f423-02ba-087f-6c234373d8f3@outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260710-igb_v3_b4-v4-0-56e7e2576cc1@google.com>
- <20260710-igb_v3_b4-v4-1-56e7e2576cc1@google.com> <20260710221939.CFE741F000E9@smtp.kernel.org>
-In-Reply-To: <20260710221939.CFE741F000E9@smtp.kernel.org>
-From: Josh Hilke <jrhilke@google.com>
-Date: Mon, 13 Jul 2026 12:45:58 -0700
-X-Gm-Features: AVVi8CdJPqxj80VD1ep3bK07Co9Yt3d-AkRQfpD6HSOhcuJ7mAKiZoDAYwzJdnY
-Message-ID: <CAAdrzjt7ib1ek83vF0pgppuxLE8GK623ZFDQu3aOSU=mGAm1-g@mail.gmail.com>
-Subject: Re: [PATCH v4 1/9] vfio: selftests: igb: Add driver for IGB QEMU device
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|VI1PR08MB5424:EE_
+X-MS-Office365-Filtering-Correlation-Id: 58358462-9516-4cbe-bc62-08dee117e5fd
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|24021099003|15080799012|8060799015|19110799012|23021999003|37011999003|6090799003|4140399003|5072599009|25010399006|40105399003|52005399003|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?AUdhOZe/di78FZbwlT38UxFej8lZCRrqiXRh6g3WxkDVkrrRec14ICRjbuYu?=
+ =?us-ascii?Q?EYJ/xMNhLt2zNd8r16zi85v1QmvtLyZ27moQ0iOp0sgu3w+uB3A8d22dUS0B?=
+ =?us-ascii?Q?QDVqeRi9Lnv1raD1fI+5A8JCvSilY7PKDfr3zqXyPVWRl2LjAWrZimzJ55Wa?=
+ =?us-ascii?Q?QJhqiVW/XozN8lvKCImMH0LZaJwBis2OD/tlQO1cUEbiMKePww5SXzKibgJQ?=
+ =?us-ascii?Q?3ZnPK9By1XAsfrMjLM3sM9zv7PZ8LaMAzVrofI4Qp2IxiEakKYL4k8clZeqk?=
+ =?us-ascii?Q?REB/dsZUyIsYaHr3f0Ke+u27jaol7H9dDsmGuPbpLujCmuxwmbtEWklaj0Wg?=
+ =?us-ascii?Q?Nj2BPVgxI2x0+lD1M0C7OBdh0v6KfBAKctDQSWRiDds+eTHzgPex1ppitYgJ?=
+ =?us-ascii?Q?XJGJYAhWxrZWL4S66UWa6T8daQpSe0mEsnZOkT9U4tWcTb5C/ELPWbgDiPNe?=
+ =?us-ascii?Q?tVLKypWJ4zB9ribUkGasYLMjubujqTdzOfeFgvywwPivcEeVwGFIB/FaXtSw?=
+ =?us-ascii?Q?fqFn20/DibeNHPfDH8RDE6CBFJ/I8hmi5azckj+TEoZQjwFeqgD2jptlbvWZ?=
+ =?us-ascii?Q?gI8+IZ2KaNWRZYLfdXYY8QBgLXWBdccEK2BT82bznsJQqmt3Tatm0BQEb0Sa?=
+ =?us-ascii?Q?2r93OwqgYkidrsxVhOpFvjif2hjjXtj8rqa9aDwpBaeTJ5iPmbiPqfYJ73Sd?=
+ =?us-ascii?Q?0KryNXCD86MlKStURFx0vCmTmADP4VsbcVBE4ppC+eUoMZA3NhFp2+IKej5w?=
+ =?us-ascii?Q?H+8kykVYZeBtnilQT8CuCVZ+goAfdRiv2BfqaCK000K5j1B6YJl4jgLpMpVd?=
+ =?us-ascii?Q?MKBw6C5Kp+sUshDVyPi626+QD+9ZDOPH7au0GsWg8ZqMdlCUnqm1G60bXhtj?=
+ =?us-ascii?Q?Al0jYJ7r++b8S8Ef6A3sIdXxbUdYdWoil/0i52truInBPw8dl7XmNnpAFiBp?=
+ =?us-ascii?Q?FmU9RzCximtfwESeG++GIE9gcN/BQ1fNDXLzLlordnac08V0jiI1cwf0mJzr?=
+ =?us-ascii?Q?hY/q?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?HcZd0P87TuecPxCSg4j7lpqTiIgojrLZp/vhf2OqGsO97DtF83d5fvdsGW0A?=
+ =?us-ascii?Q?vov+iZMYyONsMfdr33cyNhNt7Q/eyIvPydHjr72L6gbJMf1HwolyuVuhSDPA?=
+ =?us-ascii?Q?xg3x32jhYOriwo1uwC68PT/8vfQvhpYAKBi3/sHczg9pM0B6go3cUehnmQYy?=
+ =?us-ascii?Q?FMbKEo1N2D5jAO+2MS1UQYv8xrhFKg1jDK6aQLQxS1pUFNEsG7LKnuP5DxUc?=
+ =?us-ascii?Q?q4CVdh+FDMcHtgy3vNB5pE3gJ4HmBVQ/g3EqsL/XYSBEg6aAyhuaNh/UeQ+6?=
+ =?us-ascii?Q?+z2XYMktlfR3AtMVxtchvPLEkCo7+jgEwpjJ5rnCSVQiPmvrH38BX0Wo88EA?=
+ =?us-ascii?Q?T3LEvxkgRGDyGJFf3DiviYShLSTxkF4lfeRim13cpubMspEQlzkeW9SOF83p?=
+ =?us-ascii?Q?Fh/fw5NQl90JajwCSW7y5F7UmqhhMYfTHHHHUHPqM0lnSYq/Ctfaely+cAUz?=
+ =?us-ascii?Q?0qAWi9yV1roGiWQwYnWgt6FFKgv6XUSY2z8iu/ImbilhR/1+Enbaz85hx2i6?=
+ =?us-ascii?Q?IR7F/nMSBnLEEu+eT03/0m9+7IkkEtEEUL773Hkk/vizj9+My5/f9VZIJcPD?=
+ =?us-ascii?Q?g2Yz6DMhvOfGmjFcDPLWh0YCRkDOARGO7aT33fPGCoFmpN72E6OmiSF6gd9M?=
+ =?us-ascii?Q?CHVKM6k6oicjJNspkOjdcRTJsJBlGddoLNooM9NTmGfUJ1jFcy6xmdkAMf4z?=
+ =?us-ascii?Q?Z+dpY6e9Tp9je6AUKyVpohD0+mG6i+ucjUYuCBhUefFjAcfqxh2JeUD5JUlo?=
+ =?us-ascii?Q?dgHfn4E2cYPMebC5DwYApH+Gj7AwMAbNLcPnVPqW9vZ3ShzBUAncHy013zfP?=
+ =?us-ascii?Q?ZzCbfu5mOuG7OvZRWtQzKm0tDa8NjJma6T3XtixJYLJdb/g1x5JL9VPzXh+w?=
+ =?us-ascii?Q?Nq2amSrmMW3TPaJTlCOCZelOoydJX4dtCLCY/UrzSWVtmYxgT7nExNM4Zk+p?=
+ =?us-ascii?Q?wkr5XewmmhSFs4vXBkWgoV5PGhydh9C9+rk9bbI2JucXQout9fLpAHtB91B9?=
+ =?us-ascii?Q?MZvUfCIHOrh5KuqOudvocuOaLYoMjY0koRAB8XmSuyx/1tJWIzY/qIYQqFx5?=
+ =?us-ascii?Q?jr3jcV6Y649ms80VksVsyJnKFlD9TJdh81f/+1bn87qtaWW77Lno0U46cuGg?=
+ =?us-ascii?Q?4467iJ/G9CMnGWgBEZ04SvV8exJrB1KEgW8aTn3I8D5H4od7QUaOq9ayy0wC?=
+ =?us-ascii?Q?G4Hu3UO+p8R4amyTA+EJX4qBvGLE7zB9vjpNzvGa+OySJXqu95aJqfr+X3Lr?=
+ =?us-ascii?Q?Lxf7hLinC3URL4igoaiiB3iXq6QCLwQNZa5dZ9WKyxRbPRk+CJVbiQsbczTI?=
+ =?us-ascii?Q?rtVtrlCC06h99N6hvnWXpxCJdqNuh1BiLkuQpog8nk0Plt9gDyd5FmcGiKrK?=
+ =?us-ascii?Q?JSW0EQvdlxAVNVxXTQ7qbeKcj6Q+S2dBA617hpOrxTHBG0NYWs5Pvh/iUiV3?=
+ =?us-ascii?Q?dmXL4yr39tUkupWP/fuWPgAuySRay0Cl?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58358462-9516-4cbe-bc62-08dee117e5fd
+X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 19:49:49.7673
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB5424
 
-On Fri, Jul 10, 2026 at 3:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 6 potential issu=
-e(s) to consider:
-> - [Medium] Reading EICR does not clear the interrupt cause in MSI-X mode,=
- leading to spurious interrupts.
-> - [Medium] Failure to disable DMA completion timeout resend causes infini=
-te retries on intentional unmapped IOVA accesses.
-> - [Medium] Missing Multicast and Broadcast Promiscuous Modes will cause M=
-AC loopback to drop arbitrary test packets.
-> - [Medium] Unbounded hardware polling loop for device reset completion.
-> - [Medium] Disabling MSI-X before quiescing the device in `igb_remove` cr=
-eates a race condition causing PCIe faults.
-> - [Low] Driver ignores timeouts when polling for TX/RX queue enable.
-> --
->
-> --- Patch [1]: [PATCH v4 1/9] vfio: selftests: igb: Add driver for IGB QE=
-MU device ---
-> commit 163a68c618c35adde837d2be447ecb7a92e5fdf0
-> Author: Josh Hilke <jrhilke@google.com>
->
-> vfio: selftests: igb: Add driver for IGB QEMU device
->
-> Add a VFIO selftest driver for the Intel Gigabit Ethernet controller
-> (IGB) to test VFIO features under QEMU. Uses IGB's loopback mode to
-> implement the required memcpy operations.
->
-> > diff --git a/tools/testing/selftests/vfio/lib/drivers/igb/igb.c b/tools=
-/testing/selftests/vfio/lib/drivers/igb/igb.c
-> > new file mode 100644
-> > index 0000000000000..923b2341abadd
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/vfio/lib/drivers/igb/igb.c
->
-> [ ... ]
->
-> > +static void igb_init(struct vfio_pci_device *device)
-> > +{
-> > +     struct igb *igb =3D to_igb_state(device);
-> > +     u64 iova_tx, iova_rx;
-> > +     u32 ctrl, rctl;
-> > +     u16 cmd_reg;
-> > +     int retries;
-> > +
-> > +     VFIO_ASSERT_GE(device->driver.region.size, sizeof(struct igb));
-> > +
-> > +     /* Set up rings and calculate IOVAs */
-> > +     igb->bar0 =3D device->bars[0].vaddr;
-> > +
-> > +     iova_tx =3D to_iova(device, igb->tx_ring);
-> > +     iova_rx =3D to_iova(device, igb->rx_ring);
-> > +
-> > +     igb_write32(igb, E1000_CTRL, igb_read32(igb, E1000_CTRL) | E1000_=
-CTRL_RST);
-> > +     /*
-> > +      * Must wait at least 1 millisecond after setting the reset bit b=
-efore
-> > +      * checking if this device is ready to be used (82576 datasheet s=
-ection
-> > +      * 4.2.1.6.1).
-> > +      */
-> > +     usleep(1000);
-> > +     while (igb_read32(igb, E1000_CTRL) & E1000_CTRL_RST)
-> > +             usleep(10);
->
-> [Severity: Medium]
-> If the hardware or emulator enters a faulty state and fails to complete t=
-he
-> reset, will this unbounded loop hang the test process indefinitely? Shoul=
-d
-> this have a timeout?
+On Mon, 13 Jul 2026, sashiko-bot@kernel.org wrote:
+ 
+> New issues:
+> - [High] st1202_blink_set() destructively zeroes the PWM pattern registers for all other active LED channels, forcing them dark and breaking their steady states.
 
-Sure, I can replace the while loop with a VFIO_ASSERT in v5.
+This is an inherent hardware constraint. The LED1202 uses a single global 
+pattern sequencer with shared timing registers, making it impossible for 
+two channels to run independent blink configurations simultaneously. When
+blink_set() is called, the shared timing is reconfigured for the requested 
+delays and other channels' PWM slots are set to LED_OFF so they remain 
+dark rather than outputting unintended values. This behaviour is described 
+in the commit message.
 
-> > +     igb_write32(igb, E1000_IMC, 0xFFFFFFFF);
-> > +
-> > +     /* Signal that the driver is loaded */
-> > +     ctrl =3D igb_read32(igb, E1000_CTRL_EXT);
-> > +     ctrl |=3D E1000_CTRL_EXT_DRV_LOAD;
-> > +     ctrl &=3D ~E1000_CTRL_EXT_LINK_MODE_MASK;
-> > +     igb_write32(igb, E1000_CTRL_EXT, ctrl);
-> > +
-> > +     /* Enable PCI Bus Master. */
-> > +     cmd_reg =3D vfio_pci_config_readw(device, PCI_COMMAND);
-> > +     if ((cmd_reg & (PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY)) !=3D
-> > +         (PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY)) {
-> > +             cmd_reg |=3D (PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY);
-> > +             vfio_pci_config_writew(device, PCI_COMMAND, cmd_reg);
-> > +     }
->
-> [Severity: Medium]
-> Since the VFIO selftest framework contains negative tests that intentiona=
-lly
-> submit DMA descriptors targeting unmapped IOVAs, shouldn't we disable the
-> PCIe completion timeout resend behavior in the GCR register?
->
-> Without disabling the E1000_GCR_CMPL_TMOUT_RESEND bit, could the 82576
-> controller continuously retry failed PCIe reads indefinitely, flooding th=
-e
-> host with PCIe AER errors and IOMMU faults?
+> - [Medium] Blink brightness is hardcoded to maximum (`U8_MAX`), ignoring user-configured levels.
 
-Fixed in patch 6 of this series.
+led_cdev->blink_brightness is set inside led_set_software_blink(), which 
+is the fallback path taken when blink_set() is absent or returns non-zero. 
+Since st1202_blink_set() returns 0 on success, led_set_software_blink() is 
+never reached and blink_brightness is not updated by the core before our 
+callback is invoked. Using it would risk reading 0 or a stale value from 
+a previous software blink, causing the LED to blink invisibly. U8_MAX is 
+intentional.
 
-> [ ... ]
->
-> > +     /* Wait for TX and RX queues to be enabled */
-> > +     retries =3D 2000;
-> > +     while (retries-- > 0) {
-> > +             if ((igb_read32(igb, E1000_TXDCTL(0)) & E1000_TXDCTL_QUEU=
-E_ENABLE) &&
-> > +                 (igb_read32(igb, E1000_RXDCTL(0)) & E1000_RXDCTL_QUEU=
-E_ENABLE))
-> > +                     break;
-> > +             usleep(10);
-> > +     }
->
-> [Severity: Low]
-> Does this code silently proceed if the retries hit zero?
->
-> If the hardware queues fail to enable within the allotted time, it seems =
-we
-> might continue with disabled queues, leading to confusing downstream
-> failures. Should there be an assertion or error handling here?
+> - [Low] The commit message description is not capitalized, violating LED subsystem naming conventions.
 
-I'll add an assertion here in v5.
+Noted, it would be fixed in v2 if it was necessary to send it because of 
+code changes.
+ 
+> Pre-existing issues:
+> - [High] The sleepable st1202_brightness_set() function is incorrectly assigned to the non-blocking brightness_set callback.
 
-> > +
-> > +     /* Enable Receiver and Transmitter */
-> > +     rctl =3D E1000_RCTL_EN |       /* Receiver Enable */
-> > +            E1000_RCTL_UPE |      /* Unicast Promiscuous (for dummy MA=
-C) */
-> > +            E1000_RCTL_LBM_MAC |  /* MAC Loopback Mode */
-> > +            E1000_RCTL_SECRC;     /* Strip CRC (needed for memcmp) */
-> > +     igb_write32(igb, E1000_RCTL, rctl);
->
-> [Severity: Medium]
-> Since the driver uses the memcpy test framework which sends arbitrary mem=
-ory
-> data as Ethernet frames, shouldn't Multicast Promiscuous (E1000_RCTL_MPE)
-> and Broadcast Accept Mode (E1000_RCTL_BAM) be enabled here?
->
-> Without these flags, any test data where the first byte's least significa=
-nt
-> bit is 1 will be treated as a multicast/broadcast frame and dropped by th=
-e
-> hardware's MAC filter, causing a timeout.
+This is a pre-existing issue outside the scope of this patch and will be 
+addressed in a follow-up submission.
 
-I'll fix this in v5. I verified that the tests fail if I modify the
-test to memcpy all 1's.
-
-> [ ... ]
->
-> > +static void igb_remove(struct vfio_pci_device *device)
-> > +{
-> > +     struct igb *igb =3D to_igb_state(device);
-> > +
-> > +     vfio_pci_msix_disable(device);
-> > +     igb_write32(igb, E1000_RCTL, 0);
-> > +     igb_write32(igb, E1000_TCTL, 0);
-> > +     igb_write32(igb, E1000_CTRL, igb_read32(igb, E1000_CTRL) | E1000_=
-CTRL_RST);
-> > +}
->
-> [Severity: Medium]
-> Does disabling MSI-X before quiescing the device create a race condition?
->
-> If the device attempts to DMA an MSI-X interrupt during this window (e.g.=
-,
-> from a delayed loopback packet), it will perform an unmapped memory write
-> on the PCIe bus, which might trigger an AER or IOMMU fault.
->
-> Could we disable the receiver and transmitter before calling
-> vfio_pci_msix_disable()?
-
-I'll adjust the ordering in v5.
-
-> [ ... ]
->
-> > +static void igb_irq_clear(struct igb *igb)
-> > +{
-> > +     igb_read32(igb, E1000_EICR);
-> > +}
->
-> [Severity: Medium]
-> Will reading the EICR register clear the interrupt cause in MSI-X mode on
-> the 82576 controller without the EIAC (Extended Interrupt Auto Clear)
-> register being properly configured?
->
-> It appears the hardware might leave the interrupt cause active, which cou=
-ld
-> trigger immediate spurious interrupts once re-enabled. Should EIAC be
-> programmed during initialization?
-
-Fixed in patch 4 ("vfio: selftests: igb: Program MSI-X interrupt routing").
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710-igb_v3_b=
-4-v4-0-56e7e2576cc1@google.com?part=3D1
+--
+Manuel Fombuena
