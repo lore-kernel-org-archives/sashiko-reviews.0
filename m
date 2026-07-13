@@ -1,124 +1,154 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.220])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFE9367B7B;
-	Mon, 13 Jul 2026 07:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783928196; cv=none; b=m32VHb2+qVbM2bpKVjyy1weMeEggLjdbBBOMGceEPC3JfLAYYdonuCeXnv8YfAWB85qc2iqj9D69tngHQpQXHwzflmJ4ADL2oklvPQCT7W6aq5NzJdTpQEdvS3lm1bdF8NDwJRztnm/t1P6Y0nxtUCQx4F/TxJYv4kspKkr97As=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783928196; c=relaxed/simple;
-	bh=+xwh1bLsQTbStbbo2bW1BoxK6WTRt+1SRdIq3Cn6tLg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=Z8rGVqAX0iIiKcwN9uVMrQrjGsUxCXEWVJOlU/eXKEM02O4EFt95x3D6yZTNLSz/MnMy/VIEBQgHMqxz2O6/9y/gtFLOfazsYJtSNdESvFyqvGV2Az8bQ8bmqWnfA7ecC3zrbrJSRlxUUwcYe9Oz7bhnll9TAmZQEiBC4G3w5Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=dGGEsD/S; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7C739A079
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 07:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.220
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783929426; cv=pass; b=Etlpr2ny/tvStmEIiZfo6iWHom43iR01zBeP8h80AOaHqscpikr8SDpizhzdHwNnuL8Gz6hUrQJkcCP4cUKUgjz5DsO+0y0VkQGh7pz9hWcdJtPVYHe6c8rqnAynJdncHQnipliujVnWDgEyH5lbyX4s8U531Bckn5HvTLOljfA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783929426; c=relaxed/simple;
+	bh=JIJxtZg9pirwXwbQzi1OU+lzXYNe9iPkV0Vhrx7LQVE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O+URqpZeJ80czZ7KFmAh75eXsEsUyW6ySQKuwZSlIsT1VkQaMnsvCALQxo9FKxiSTUCRzpE7EGesfb/9dI9ae4+YVut40U4kNtfeIHsa53iOK4F1QPBBh8TxwNFqcMke7SJjMtmCYIMkzO9bDDmR1QK1ATSthYpU4l8y6jheRQ0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=hmdMNuu3; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=/aZs55V1; arc=pass smtp.client-ip=81.169.146.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="dGGEsD/S"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 23DE61A0F8E;
-	Mon, 13 Jul 2026 07:36:32 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E311560341;
-	Mon, 13 Jul 2026 07:36:31 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5DBDA11BD05B6;
-	Mon, 13 Jul 2026 09:36:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783928191; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=xrtYLNpKgFt+k+yed+P/AI4r+fYgn9QYhB8AabFAesQ=;
-	b=dGGEsD/STE+fwBKsByWSWBdV5cdo1K/rWN9MsNYVh9Nhga6tUGN6TzfUn8ReqgMzId/kho
-	h9UPdCPBAih/AQm4fJ6ei6pJnbrQstAU5ApbxNe/hAkNrXTeRXlWqqU8FP1V8KM6Oo+UvI
-	vVV83vnRhoJZstm5LEhXo8hK0UTO2q1T7JlTcmmGbw7R9wL+gVmzmsJdDPRy/uO8tvXX1O
-	4beqSA3xN/r4QZGFrzQ+yrrPFz2iI1i1J9m5xVrCSpFvKOdLNzBQfjREjW6ULsiJDb9BUs
-	ILS0O4kw4+tsmH4KKylZQ5EbBqANe0bSS2U96bryTt5U93BGmR5Zlq8bB/nFTA==
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="hmdMNuu3";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="/aZs55V1"
+ARC-Seal: i=1; a=rsa-sha256; t=1783929398; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=fhK2HNqM8ASFqkgFXxojtD6YxfAy/G0xUTcHa/+heAP4zBN6YyXb9/CDkZOj2n69Jz
+    o6QsQnng4d+KnJtU3JU/XyQY/LmFZQOUCB2b1phvFceIKOJs3A/803L+/wAAHG3yudxH
+    mfPOajmqRV1hdpPpWRaslrSJjwdwOztZh9BjXVBEtemBQprRuWPpo/m2vSVIyRlhDv2d
+    wHbc9g/Jh/zi0vRRoOhMY/OZlCUGfJ2KhK9KnH4IM+FWchx4Jo+cF2HbdNzpW5Qhjq+V
+    GkawGVPcMSQzQrqeBqRSH15KjbVer9EtXAgOqhoX03vxZsRmaqcxjfbVNhmdXRGHUWHy
+    W4Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1783929398;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=G6fwV1lsybGLIy4+Ze2TBEYeosUmqc6lpy1oP3kJ5XY=;
+    b=LdQ6GvFGhHEgFohBXN2pfBMOT9A30ymfjZqKAtQGT6if0tka2HVh2gljsX1wJNcysf
+    k/vWNyOM7PIff9Jq14ww01O9qi+27m/z6XtqeEH5vr3JxGB/rTp5UinOvD8h/NG42nQA
+    xCMfDM58reSuAjhdHkFVZ2eGj46rCUG8AKpOiFPP/hAbLODsMjHQToci6uBJ+BP3gjS9
+    QxRnLC7WIp5cEkUao+7vtatjomrvrkWhfO7v5K3GxmBwIjEej3mhJCyF4rfkeB/j7R45
+    BNm4OdEKq2yxqzCNu0FrtMcpkCF4HGMF+E99Fu9S168EKIb6RLJqSBfMZeoxs+6jgpSV
+    DV4Q==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1783929398;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=G6fwV1lsybGLIy4+Ze2TBEYeosUmqc6lpy1oP3kJ5XY=;
+    b=hmdMNuu3EzmoI+GL/OjllHXhyeOF+Tn4I7bC/UBwMqwSv24JYQHE18oxcpVQuqvO2a
+    PKAzk5kqy0gamgahdF10AKErq1ZnkwkqR9r+suu1xzlJSMZ5ls6TIyl0ERGevEVrE5tl
+    iZzqcGWmD+ThZ85C3ioRxoDj0oEz0Fp4026/PCGQuojef4F3oOd8fgAaNY3w7elw+ztx
+    HOUOh/0VceN7RuSxqpdSUdCakBzKuy/6TI0rOVl5SVJGwauo//glccJqezzaT8PkPXXE
+    zIpzPRH2RJdVBHE90CZ2UiwSveKPH2xaq240GzQanQ7P4mqFq/sout9aWAKl6ajlQwEa
+    ufgA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1783929398;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=G6fwV1lsybGLIy4+Ze2TBEYeosUmqc6lpy1oP3kJ5XY=;
+    b=/aZs55V1FT5F/NMRQrhaJNce2E9dGWOM7RmwHH4vBh/0O/aJnm/C6Tu2H5oHX2wiJR
+    gaFjyhm7CgV6z4AivFBA==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
+Received: from [192.168.20.236]
+    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
+    with ESMTPSA id Ka9fdb26D7ubZEa
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Mon, 13 Jul 2026 09:56:37 +0200 (CEST)
+Message-ID: <a2afe72f-5098-4a6f-9df7-b993f186337a@hartkopp.net>
+Date: Mon, 13 Jul 2026 09:56:32 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 13 Jul 2026 09:36:29 +0200
-Message-Id: <DJX9RKO8ROIP.1JOJVXZ11PANJ@bootlin.com>
-Subject: Re: [PATCH 2/5] arm: dts: st: Import optee node from u-boot device
- trees
-Cc: <imx@lists.linux.dev>, <robh@kernel.org>, <conor+dt@kernel.org>,
- <devicetree@vger.kernel.org>, <Frank.Li@kernel.org>
-From: "Mathieu Dubois-Briand" <mathieu.dubois-briand@bootlin.com>
-To: <sashiko-reviews@lists.linux.dev>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260710-mathieu-uboot-dts-import-v1-0-ffe0210e50c9@bootlin.com> <20260710-mathieu-uboot-dts-import-v1-2-ffe0210e50c9@bootlin.com> <20260710153944.BFC9B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260710153944.BFC9B1F000E9@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] vxcan: Support per-netns device unregistration.
+To: sashiko-reviews@lists.linux.dev, Kuniyuki Iwashima <kuniyu@google.com>
+Cc: linux-can@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
+ Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol@kernel.org>
+References: <20260712212113.181121-1-kuniyu@google.com>
+ <20260712213422.DB1111F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260712213422.DB1111F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri Jul 10, 2026 at 5:39 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Missing `bootph-pre-ram` property in the newly added `optee@fe00=
-0000` reserved memory node for `stm32mp157c-ed1.dts`, which will cause U-Bo=
-ot to strip the reservation during SPL and pre-relocation, leading to memor=
-y corruption.
+
+
+On 12.07.26 23:34, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The patch calls the undefined function `unregister_netdevice_queue_net()`, resulting in a compilation error.
 > --
->
-> --- Patch [2]: [PATCH 2/5] arm: dts: st: Import optee node from u-boot de=
-vice trees ---
-> commit e001824900768a597c1390aaf3fe0b9e2c46bdd1
-> Author: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
->
-> arm: dts: st: Import optee node from u-boot device trees
->
-> U-Boot is importing kernel device trees for these platforms, but adding
-> a firmware node to enable communication with OP-TEE. Importing
-> changes here will allow to remove these additions in U-Boot.
->
+> 
+> --- Patch [1]: [PATCH v1] vxcan: Support per-netns device unregistration. ---
+> commit 882fcd31630d9ce6b0a57cc99738c2ad0579763f
+> Author: Kuniyuki Iwashima <kuniyu@google.com>
+> 
+> vxcan: Support per-netns device unregistration.
+> 
+> This commit updates vxcan_dellink() to unregister local and peer devices
+> safely across different namespaces by using xchg(). The change aims to
+> prevent double-queuing of device destruction when RTNL is removed.
+> 
+>> diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
+>> --- a/drivers/net/can/vxcan.c
+>> +++ b/drivers/net/can/vxcan.c
+> 
 > [ ... ]
->
->> diff --git a/arch/arm/boot/dts/st/stm32mp157c-ed1.dts b/arch/arm/boot/dt=
-s/st/stm32mp157c-ed1.dts
->> index 49dd555cc228c..7da7260350869 100644
->> --- a/arch/arm/boot/dts/st/stm32mp157c-ed1.dts
->> +++ b/arch/arm/boot/dts/st/stm32mp157c-ed1.dts
->> @@ -70,6 +70,18 @@ retram: retram@38000000 {
->>  			reg =3D <0x38000000 0x10000>;
->>  			no-map;
->>  		};
+> 
+>> @@ -281,24 +284,25 @@ static int vxcan_newlink(struct net_device *dev,
+>>   
+>>   static void vxcan_dellink(struct net_device *dev, struct list_head *head)
+>>   {
+> 
+> [ ... ]
+> 
+>>   	unregister_netdevice_queue(dev, head);
+>>   
+>> -	if (peer) {
+>> -		priv = netdev_priv(peer);
+>> -		RCU_INIT_POINTER(priv->peer, NULL);
+>> -		unregister_netdevice_queue(peer, head);
+>> -	}
+>> +	priv = netdev_priv(peer);
+>> +	dev = unrcu_pointer(xchg(&priv->peer, NULL));
+>> +	if (dev)
+>> +		unregister_netdevice_queue_net(dev_net(dev), peer, head);
+> 
+> [Severity: Low]
+> Is this missing a prerequisite patch? It appears that
+> unregister_netdevice_queue_net() is not defined anywhere in the kernel
+> tree, which leads to a compilation error when building vxcan.c.
+
+The referenced veth.c patch was applied to net-next:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/commit/?id=d7fda2c776b2a969b9d78c5ad00e30824df43add
+
+where also unregister_netdevice_queue_net() exists.
+
+So this is a net-next resp. can-next patch.
+
+Regards,
+Oliver
+
+
+> 
 >> +
->> +		optee@fe000000 {
->> +			reg =3D <0xfe000000 0x02000000>;
->> +			no-map;
->> +		};
->
-> [Severity: High]
-> Does this optee reserved memory node also need the bootph-pre-ram propert=
-y
-> like the one added for stm32mp157a-dk1.dts?
->
-> Without the bootph-pre-ram property, U-Boot's fdtgrep utility strips the
-> optee reserved-memory node from the SPL and pre-relocation device trees.
->
-> Because U-Boot typically relocates itself to the top of available RAM (wh=
-ich
-> on this platform overlaps with 0xfe000000), omitting this reservation cou=
-ld
-> allow U-Boot to allocate over OP-TEE's secure memory region, potentially
-> causing data corruption or TrustZone violations.
-
-I'm a bit torn on this point.
-
-So first, this commit only imports existing code, so I was not planning
-to modify the device tree. But looking at the docs, and the
-stm32mp157a-dk1.dts file, I suspect bootph-pre-ram is also needed here.
-
-I will probably add a separate commit, adding bootph-pre-ram tag.
-
-Thanks,
-Mathieu
-
---=20
-Mathieu Dubois-Briand, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+>> +	netdev_put(peer, peer_tracker);
+>> +	netdev_put(dev, &priv->peer_tracker);
+>>   }
+> 
 
