@@ -1,65 +1,64 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011041.outbound.protection.outlook.com [40.107.130.41])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013067.outbound.protection.outlook.com [52.101.83.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5A02798F8;
-	Mon, 13 Jul 2026 15:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8CB33B6DF;
+	Mon, 13 Jul 2026 16:15:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.67
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783957808; cv=fail; b=R1cdzR97Y6Noy4/EjzxvOJcS8/EDJVmRhQyRMbkWJ6Zxnl2LxZL2YZ/PT73QyhEAM7vEWpWS5hN8twg8SQpnvTUkvg7iILwAq3Au9E5LvlPclDTxnnat9xnlxwXG2CveRvOaD4+B77REVMkpJZo1LJQ6vv6UrlLFFwpcS9lg1BM=
+	t=1783959313; cv=fail; b=S++SPmhC3Y6X4Jhmhu1mqjzrm1xXaRu3PYexCb2zpN1qBT2G76NzV2/YxyADv8e6yeOaL/InV2E1v/d1D5pMVgUCIBodF4DwOW3KGMmgs7VBD76yMwJij0rgGCjzZWdd2Hk4efP8C7GnO1L4EvMnhYbofNEZMwJV6X4r2xoLcg0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783957808; c=relaxed/simple;
-	bh=BS0eRM22uGS1uDvCEtLuRLrACQ2uPAFLc6AmY8NY/qE=;
+	s=arc-20240116; t=1783959313; c=relaxed/simple;
+	bh=tS1Q7r1KxILT7veBox9kQUd5Qas7nRYH2Z0+udJGNik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=JldbTeqsSx/OQR05QWruVrhXwNOGCNtaO5DxU3riYqPvxJPIoB0M6/otbWP0xwzmh+Qa0Bw9RzG19CYLmd6tpCtv676xDljgJ8tFo6yWBHgMCaOCB0DHUMpylVIx0v/RxNFnJPKGDs7VW4iNtdLNR5lZB83mp1rbWCDWYjVfSa4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=O51qVjNB reason="signature verification failed"; arc=fail smtp.client-ip=40.107.130.41
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Ce1zJY8D/rAnIIRTF5kzyAplFWlV7HctlG+4AaQtKzxSqvyrDQ2LZnpvtwYLvOYLLYdUI/gw9xhgjq7pawRYWbp0eKN405xINhQtHrdPkA2Bhbd+78n1HXP9GAlFm8scSCT6ETkYCRcHXCG3JSoQs9TUgqeoKuwu4moJ1gtuSLs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=GKBHZ5u0 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="O51qVjNB"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="GKBHZ5u0"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pRWHdURRE3aco/dYZ9DsZLW2P8cSQeM8ncIE3kxYaWxYW3w9pgwC1ViA47QGqJxnBRUXXcxN+CUpylAf6VEtjuD54oPSEDszrZ8DRmL4zT5QX1zVc3gJ5BQOjKuPpEGv+TCO+VNMDiOpU/djZey9c3gwL8wvijywGj31K7a6cGZuDMl7y1cgbYcuhc16guPyrsos1bvLX5GzYHd5lONS5r22vwrjYBdpVz1upuDyMBKv9GFEsGIFSWQ2e5EEVL95pQ1D7o7VvEXNKRuXHFFd+TNluItSXgxkcFUwRdRpUjd3sVGxxah+OEcWcBVXnUb/mkeCBMnNIQc2oeon12K0+Q==
+ b=tJeo0bvDvsUYMuw97b2xlJg38DABfEZyedKs5hHKOYB4QT3s6FoCp2eJoVrXmFXX6fZJHMkV1p8tC1PPRMe4fw0aHWLwYpQQV5McsdZrTZZFz+NQ5HML/qSTZGlcoT4c0qqA1oBsF4aoAg62phrnUF3BifUQOGlPwmqV0+iAivC1cfBCWX+K/Hqgs3LA+Ps25hN3mNSQWAvvBcUulqqniwGxUQcY2Rvpk2brulep0m0x7JrwhBbrtIRYgLvXBJzMDcQR32fxesKtW/0JBiyBSyjpRohMMAWk3CyzwKXzHdp6XKI65tM7Z5YX8tof97ILKooxq5xzIAL7svn0W1J+oA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5sd+689/Q04zJTUjqaD3LmKOBSNi0OBQ8ZnO0MR1iPs=;
- b=bvqzxUp9z66RFEyBKibHVcO3vfTNmgT7tThkbPLdWq7TwZsNc6jbWXPtmPi57fi5gPdyBvvOCYoR+KLHY8CNdHSVekhHC8gXbLoUUSKUlPTkbHXc0dgkPUIZSUu1W3/FZM/ESyqrNjbj4LbYQPu1IId6SO5W0EId1Az/rdCWCDEXizdhJU0qN6TU1V3ujWiUpzSYcv5TVo+hBPnV1ZZqd2TRuUtcgnQDrKLo3eo4FbsEl6S1eCQC9DlIOl75ovPe+yGhqWs9cDTGj0DEukC7t/vaKiE12dvKwLFITzmV2Gg7RM3hA2mx0HHcH1VkXpSLsaZhyo9ap7jaU700HM5x0w==
+ bh=jylRX8lgOMSrDLdFOXyFlEv7BMtwrMFPoPWXd5ubn5E=;
+ b=AFUdyUNsjJett5gjZ1IC87BbKvPDQ8hQ4tSDhZwSuNEHunljkIaeyZvM5IjkJKEPAqDOBl2VQ+gClw7+1GXUnl74VnKrNdh2i4E2cqwkmEbdyYx8XC98OV2Z/8QQbUmlNorAviLL8YPsyb3udSZ4lTtlaKeUv/zztB7+nHwzfbUObq/apeFu2Z0UXkh9W+taDcG+92fsHIB3cMpadqCoRoLOIywkCriPv+iw0k4XyXVfC0cW/VKdkaWgTz91ugbD5zA4LuvhqqN0tkg/WhE0u9WiXy/NQFRMWvTsNXguQrMReYgEaQpSSAHbEBwXXSXRgJtW8w/WLUle3HjUSrVJEw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5sd+689/Q04zJTUjqaD3LmKOBSNi0OBQ8ZnO0MR1iPs=;
- b=O51qVjNB+PwWjHQOX0xnhQpWnBFEppf893F68sDuu9fIZuDASM5611DaCTey3tM+KAS1hRV2pmboLVV2j1NJyAw3G6nKwCrtBZeiwaMRCR77j7O2x+7Nt/Rt2WYNOipTkB0NJcoIauhKNCrlD/cAashYNwq27ezQb95v+igLJ6mzFJ7wT8KpTTAYqgglMAsut2m9DPs5qUK6DoMw8S7ewlQTBomO4KMPiPdna1TEfvu5Y05D8v3jh4iGcz2vq/4iM9hgHJCeEWRQfnC+TlUPTkKkJ3XMf0ggxP+RbBseQyvtD0k1o40fb6tCQJr6zozFvpGWMsg+Prh30nqf+it+UA==
+ bh=jylRX8lgOMSrDLdFOXyFlEv7BMtwrMFPoPWXd5ubn5E=;
+ b=GKBHZ5u0IlgmoAx64tWeGyLgBn5uycKrEZuimYMBDeT+DvDhUj4zP0FiluPBBUvxy69CBpiuyQFRegvb7+82uSayHkiONarovhTMTFHPVcb3C4v4K06MI8ip9BZbn7ZgRv8At11RWYrC27+AzVbVp4mUhZrtnnnRBBlbrRH+T6hm0NKGMW8eRv/zAQ/Q44FIXtxAo3ZBGsWa+Sp1dmnad5OEnbt2vNeP8jTNO35yJYIvOqcBsBxK/05YL7koz586rBveMshrPFbE6f24KQVLiRqxHOhSkroYnUWlKkOgfr1zP1kQCW58HgvnIDHrZ+L7ji81khXdhG9vsQydhK0jFA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA4PR04MB7551.eurprd04.prod.outlook.com (2603:10a6:102:e9::16) with
+ by AM8PR04MB7459.eurprd04.prod.outlook.com (2603:10a6:20b:1dc::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.19; Mon, 13 Jul
- 2026 15:50:04 +0000
+ 2026 16:14:59 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0181.019; Mon, 13 Jul 2026
- 15:50:04 +0000
-Date: Mon, 13 Jul 2026 10:49:54 -0500
+ 16:14:59 +0000
+Date: Mon, 13 Jul 2026 11:14:50 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Marek Vasut <marex@nabladev.com>, Frank.Li@kernel.org,
-	imx@lists.linux.dev, robh@kernel.org, devicetree@vger.kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v4 6/6] arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs
- for Data Modul i.MX8M Mini and Plus eDM SBC
-Message-ID: <alUJIlUUo98_x0Lm@SMW015318>
-References: <20260705200534.151803-1-marex@nabladev.com>
- <20260705200534.151803-6-marex@nabladev.com>
- <20260705202221.E99291F000E9@smtp.kernel.org>
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
+	devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+	Frank.Li@kernel.org, conor+dt@kernel.org,
+	wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH v7 1/1] arm64: dts: add tqma9596la-mba95xxca
+Message-ID: <alUO-oOtWBescUK6@SMW015318>
+References: <20260707062506.949806-1-alexander.stein@ew.tq-group.com>
+ <20260707065956.124121F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260705202221.E99291F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH0PR07CA0023.namprd07.prod.outlook.com
- (2603:10b6:510:5::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260707065956.124121F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA0PR11CA0014.namprd11.prod.outlook.com
+ (2603:10b6:806:d3::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -68,190 +67,167 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB7551:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1ad75b59-8450-4bcd-8338-08dee0f66796
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM8PR04MB7459:EE_
+X-MS-Office365-Filtering-Correlation-Id: ae9476d0-1616-4c63-70c9-08dee0f9e2b9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|19092799006|366016|23010399003|376014|18002099003|22082099003|3023799007|6133799003|56012099006|4143699003|11063799006;
+	BCL:0;ARA:13230040|19092799006|23010399003|376014|366016|1800799024|6133799003|56012099006|4143699003|11063799006|18002099003|22082099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	LAqYtYWX/YoMrFwG+oXLQcR/9rDsvi4LPNAKJhXtzImzsbUMLZkut2RZkZQzWyRvqf08W8cc6ZsF4it1UkEtg9AmcMD730S83ZLmB4NNFoszCv++A3SRSP+uu48K35c1cq3OuXWN/fmkQkPOBBW4ZPL0mYNs2K7Bj7Jxh05PoFdLH4rWXtUJ/4+7ixV5Osf6WvGahtUyxd6lZLHZTGYJb3rRTVY9bzCXgruVBrChKG8mSpfM4COJPFcKlLYSQnfShJ1XpXascIbcxn/3XZDQIh8a+Z3CvlPSpJKGmTbesBpWLGNC4kzhjSgNsx0Tr+WrWAwP8zbKaF4NCAXqi/bSukaOytgGgLbCYxhrdWtM8DPVeiVDxxKiPsoBmQK9kkPGLV6z9u+d3SCDxjfKBc3lJJ75QV0U9+GgEcAup9m5Ep3lsKqmDvoZ82rm52z6G9CxLsrDMry0wh7ElJtyIBbYsMyENNTN3CK9S/ffEVHZ7snlKVQwFMv7gPwFeW9CjOJsUd3ZudIcSKZzfM3V6x8bcwl9jXDl38BOpmnweHyY1/I4ufPwkp19jkuS8LT76hfZ9WGQeQceGKO1aLwIjLv7mt8AxsCBT4ZfffnfObF0l3k=
+	1LjZfhv9319nYwZemP8fku+KqIrYXjalqIyxwfNbnrdiorFlLVqQQK8DGeIInossa4lYaFB3v4Kq+xBkxBIaNMMAaPlyLLLneAcHfwzZcgvB+l2C4lAkNkxdZqXby9QcPJeYRTwSLnjPI44MncMrFhDBLdsE/nO0US1D7JVBls2KjlobVzb0UdWa7YQHFuzdSocrY56JpMg7iyNUKe8vnzPGEiiREaZkWqeO+bX6cTjXe7zpw0dCEEpG+fEBZOEwRBiGAx5LDDq8dHnGEzVUMUgvefJ3w/oANxAYSZkXs/ZDb/ASIwdagVDkxUxu7c0sH6tA19eoSrC9YEpbc+atNSNyOIi38j2/CTqNOa00eoiNdiKPiH36tj4iX5kqsfVG8ZWR3xMb+LGFE0HknvODNjkmZhqPBO9FMrqFrR9jaPMfqRHNXR2UQVEuiRGwspzLipH7Sr/PsgqS0P2TwRHAZ5XKdptPNQ8p6/dtzV9VAChiJ7axWest0vUZNNkiVgv+cCPv7isP6C0XQdHXZjqmlKNBgBKkNdbbGgG/pQarS8dCJW+2wnSQpkXiei1Lk/SngJ3OO+j/UpWOnniYZ5o6UGDXHVyMz+L6zvi1CzDWf8c=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(366016)(23010399003)(376014)(18002099003)(22082099003)(3023799007)(6133799003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(366016)(1800799024)(6133799003)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?jPMHqn1mb74eIrdSsNOwhCQuUx3TfsnChF+mjG4dsSnGrhUzIlCWc6K1/o?=
- =?iso-8859-1?Q?Z23WPX2e0HeA4UKqYjH8T5B1UgbqzJ15PEOlTIrJAxooMXp3MI2JcvazYI?=
- =?iso-8859-1?Q?RZfvLvJo3RcV5PH//ptgXMscAjtI52aBQ2UVi0HtYi8JsdBPPSakiFhYM1?=
- =?iso-8859-1?Q?5Vc5YsDVxVIrMcvnNR8eO6cnpxTODabubbx3+4FYNYRsqUjez41kIxdZ+D?=
- =?iso-8859-1?Q?xHlK9Ike6SFds/F8NzXIgwWQGvwrohIdB4912f6VmMTHiRQnf/RSFjGl/f?=
- =?iso-8859-1?Q?+BwnJ/ufQsuu9IAhgiuTY3PxUoWJiNvoHTPKCeQ3nB8IkhAJ7nyUUOW3Ok?=
- =?iso-8859-1?Q?eBFg3u63KoISd5Lhb8HDb6tmUlWgrZJ8ArQmA3q0p7WYp7YbmNrwMqmftV?=
- =?iso-8859-1?Q?6Xe/cOMB+XKPSjM9K75kLVwCithO9D/hlbcGhNQ8bLTt9tB60ev4kAxLj9?=
- =?iso-8859-1?Q?6/hXBM/8bzmwojF8DD+DgbfLtQ1X6Vpd32C3D3gYRjuUjaBFa445ERa/3a?=
- =?iso-8859-1?Q?0A1GpJ31PShq6mVV9uMqLnUwKUnscuN1zSw2pq2RihSR30KjAZ9sYAq92d?=
- =?iso-8859-1?Q?e3giIkLMinRxnAaHzNi4GCgfnr84htQ9x8b8jqV/q6icBNd+p3Oxh68o5f?=
- =?iso-8859-1?Q?qhv8sLGyv2Ml60JdGQFKYvMEpwG5rK5ylR1p5Zcmvnfto3bj6GsLmonToR?=
- =?iso-8859-1?Q?7KAG5KIdSvm7mx7nOC6Exq3cmzqWu95JhWB2vgiFLaB2GNuvvU1yxNPv4q?=
- =?iso-8859-1?Q?VP57pc+CDiKhw5r3GnueZOeD1kIIKpgm8PEJ/btQYL3caozM9zEYlFC+KA?=
- =?iso-8859-1?Q?GC/zUjq7DHtVtkZgZZ0V+Mh1ifebCQ0mJ0AhKM/NVKyBa0scdPIkxVd4M0?=
- =?iso-8859-1?Q?noYLEV+ip16MoKQXHOjn1iHdSsUjj3CGrwzEjRsacHbBD2zuwoZPLH4+p/?=
- =?iso-8859-1?Q?4bWL7y8kdHDvwyeokEJLo8NbEdzZ/0zsBvsUA6NzZSwzKcwWYj18W74Stv?=
- =?iso-8859-1?Q?N08ZrsWChkg6akLNguH1Lg2gRlbyfV0u0XErPkOCeEW/wQuu3QYKqBFizx?=
- =?iso-8859-1?Q?RlTjbNF8y6sEnE6dcCL/+NUWpahKkyqAFrZOSTX7z24moyVedcekAUlwWk?=
- =?iso-8859-1?Q?VzcmCNyaF+NpsCODsxq5rDFi8YbwRzBrKMchPp2D757ry4l9HI20hMvesa?=
- =?iso-8859-1?Q?nFQBNg5iYhzXOGAMRNOEkV+V+UtbMbR1GE/YCu7EXaBpETNF7VxnKCq8L3?=
- =?iso-8859-1?Q?ajWzpg0RBdsTvgkWy7U6Dpl9HRUlRqNqevZDvNq9lvuVqKFR1v+jVPDF7s?=
- =?iso-8859-1?Q?S8+nRumq7Zj77dbJxuh23jSPFzYZqjSBPE8JWBQFI09VkrAHeUbeFTSyxz?=
- =?iso-8859-1?Q?H4FXNVL+UOVrM5SyO6ooO/j/PvhOB8EgAW1DMg5H7XUVAKOxLmA5I/LuW8?=
- =?iso-8859-1?Q?s+EgxTUAqT5OibhHUJPr9W3XC/q+LevFuJSh3T+B+vBtE9Sif0AjpO32A3?=
- =?iso-8859-1?Q?16tNtyogFY7aCcKl7ThANaPKGW+/RGX8x1E20ZXbEjFPsFk6Ngy1V3VqCW?=
- =?iso-8859-1?Q?xwiXWBRmXvt1Tq/MMWW6iIcSP4b/deFrdy63hnSlUh7OKGnSid8+k0rO5i?=
- =?iso-8859-1?Q?Pst+HW0bbpUOkhBPcRjaXpHkdgKO4Uckhkl0lnwzVhYcrx0SqBIQSWkTg7?=
- =?iso-8859-1?Q?t3c0YKpKubm+av0Hob0pv0z7ozDl4JBc6Xc23cr5BoFQ7BIVcwC5LH1qH7?=
- =?iso-8859-1?Q?2VCmnQZia5GXrvXNgZzIZHDcFT4ss8p1UhgbHgFHoYvuHfZ4dcH45VUSO2?=
- =?iso-8859-1?Q?dzJbjUsOxvqZYcN+bKO5WRHR4yI8pvdL1+ruBeu8iCOvbGbI6tVH?=
+	=?iso-8859-1?Q?JS8Zmjw3d6qC98+FEzboLOtFO5icwTNGkOzuUD6KkSW8jWS1fLTq1AP5jv?=
+ =?iso-8859-1?Q?dQ2H43NLB5BUskbiZfdkRR0msX/FDMlPWdPjJtxMEcZ1tj9TUE+DUWSaYm?=
+ =?iso-8859-1?Q?wCCtYZBbO5s82yCrHCBm0mu8/UnFI7nAGGRFMl6xNM0pgML91MwDGk59ks?=
+ =?iso-8859-1?Q?4rlvb+WZgXXmQ/x94B8/ERj1IN7DxdwTn95TnzZ60VIqqlevxj10vnmWtM?=
+ =?iso-8859-1?Q?f/X3GcG+t0CDx2VjDK04RVrSllyyj0GsbYZoNWlmXtbCGi5RxoFCnnUc3K?=
+ =?iso-8859-1?Q?/EBs3B5WL2d3N+e1+ei1/u5IXUZj/kAt1iWi6eROmqpkVomJj04Wivsh8f?=
+ =?iso-8859-1?Q?jBB8GgzJKTnIjq6yyHSfKOMbeZBnU66/0Q4WKi7GSbgfusEtOj7y7HjgG2?=
+ =?iso-8859-1?Q?rCiElXdQmmaWCseMqEBg1lRrGPfdsnvSDeLvyrF0fV1eFWbRtbzqF5ctPU?=
+ =?iso-8859-1?Q?pLniBbQ1F/cl9uiUD/zAIxW4xD3dvmXDS+p7ojSb1EWM9PXaIvrF3dt4Tk?=
+ =?iso-8859-1?Q?k0ZEU4PazCJsH164ZZG0TDTWGG/c47DgKbO2jkhyt8KE0htpE0IOqx3Ulo?=
+ =?iso-8859-1?Q?c8jbI3JOA2UGjLp+FP0BLUspNkpY7r/4YPc0Rq5mRcoDoQ9PaE7D2SH1JK?=
+ =?iso-8859-1?Q?/eWht0rPgKSHtEk0JVNPzjcoMY7EbJ8jbcuX/KKOp8kdBhb1VD0iOvTzaN?=
+ =?iso-8859-1?Q?zD5q8vSrkqke/RzTTkioFbqQgy4aul17dQoXgvByrIEf8q/73UMV3mz8QD?=
+ =?iso-8859-1?Q?2ZWCLlCf/S8KvI2vc44F/XqoaMH5VitBVNi5K0LebGVHHhF2b876BCvjuJ?=
+ =?iso-8859-1?Q?zHTglewI9CjfZQJnmMZEGqImPZ4NgAix0tXJ8ihna7gxPBYTE0kxxuYZkg?=
+ =?iso-8859-1?Q?3xZAdns4kgXxzjyKSRweO06nC/7kz0s7Akfv3FqggnTk6jNbiH16c2HNfm?=
+ =?iso-8859-1?Q?BVVqwO2rVklwrIpQxD5Gj8p7cuYQjfMUrx4EdrN5KdIiz6jEX2F7UEGDB6?=
+ =?iso-8859-1?Q?2fM9SMBFAA16OaB+qYW3YIqMYWbjqG4x5NSjrZrXLOIm2JDM/ONpyzGTIB?=
+ =?iso-8859-1?Q?QMVpaJ5dLREREZkpfaGhGy0vuMZ3Ncuef2V3e03ebKI6mp7+SykvfzvInC?=
+ =?iso-8859-1?Q?iW+bDXpoSl5Ei8IWNwOqhL8dbVG7yqQfRbPkmfWhg6z307eBC+PdJNEjXb?=
+ =?iso-8859-1?Q?CodaCBhQcbUsqlOw/aEbOoX87+fN13XAujvZq5eoVZBRGSDYmkmKIDwDa+?=
+ =?iso-8859-1?Q?vi9zJUy64pMuqeGAqLHzIjV17bLoyH7POHE0TcW9EgGMKK05lEG38pYyek?=
+ =?iso-8859-1?Q?P0gA6hch/XJRverNwgpEUbXs8hhyyf66pgx1YLPKcSmt4+Uw3Sba5k9Zd6?=
+ =?iso-8859-1?Q?7GC/Hy1yjNw9iiryruFF5zCru/Fumn0ehMKehEJQSMeAeDxz/AIbZzZHq9?=
+ =?iso-8859-1?Q?d+eTRqM5gmCe2vunEJo++MIp+0vUuj+16g6PuvZPrZ4wBN/1xnXga3202L?=
+ =?iso-8859-1?Q?4K8hhtBJtvHdNiiFy8vEaqBuKI9WgWHfDxXl6kZcYUyAuogQMSlKe9ScTH?=
+ =?iso-8859-1?Q?a3v4ldsqfgrjdpiRi7pQ+Mr/hVBdIQdUf/PzYQ1KBGgkS8IQjny0TUNP27?=
+ =?iso-8859-1?Q?m+fbGLLphLFeRSiPNV8qvIbLSFVePM0l2cX2INhgR8EgrDQabBirQ1a/nr?=
+ =?iso-8859-1?Q?9/WCm7mkSd4hNAfHnroBPiueZBAoB+2KPfBFPiUtSMIC5p3ekMVZapbHGk?=
+ =?iso-8859-1?Q?84IuWDdx93TBA5+BOczKTY0E9yym3DWrxha0bRYiWAFz+PFzJRn5o8iUXK?=
+ =?iso-8859-1?Q?esI3QLGhlK7LplxLrBoMVg42uBViWrDSWarhmj2kyRSpsJvRD8rP?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ad75b59-8450-4bcd-8338-08dee0f66796
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae9476d0-1616-4c63-70c9-08dee0f9e2b9
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 15:50:04.0765
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 16:14:59.2085
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d5niYR3d+nz3tO7VN0Uocslklzcb83Ub1CcqwVnLkd7yc8w3NmfKCjCBTisG6j5R2T+lyuBE8/ZmWUqCe90IxCxnxlVIcpFQLvUmrsKpbQgWaEc548omUeNqTgPYJraI
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7551
+X-MS-Exchange-CrossTenant-UserPrincipalName: KkYA3rjaixAFFtXu4UaVfRXsdFzfR3q0+LkOtdRCZ+jJJLC7zkb5xo2Fk6CQUelieC0AiqKb1r4rt+gURcPlccC+Zk8LQv2zhLLnLR8yMA+k/BAjpBfFJ9yIms65yImN
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7459
 
-On Sun, Jul 05, 2026 at 08:22:21PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] The SAI2 interface is incorrectly configured with `fsl,sai-asynchronous` and an invalid `fsl,sai-bit-clock-swap` property, leading to audio capture and playback failure.
-> - [Medium] The overlays instantiate new `clock-controller` nodes at the exact same unit addresses as the existing `sai5` nodes, causing DTC warnings and resource conflicts.
-> - [Medium] Missing interrupt override for the PCA9554 GPIO expander in the i.MX8MP overlay causes the device to listen on a dead interrupt line.
-> - [Medium] The commit message claims features that are not implemented in the patch.
+On Tue, Jul 07, 2026 at 06:59:55AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Conflicting GPIO assignments for M.2 Key-E SDIO Reset between the `wifi-connector` device node and a leftover `gpio-hog`.
+> - [High] The fan supply regulator `reg_pwm_fan` is never enabled, leaving the fan unpowered.
 > --
 >
-> commit 1e6ee57031100e82b436dac299b0eed194860d5b
-> Author: Marek Vasut <marex@nabladev.com>
+> --- Patch [1]: [PATCH v7 1/1] arm64: dts: add tqma9596la-mba95xxca ---
+> commit c06cc8eb19eb4a69fc0547caa6773b503beae3a7
+> Author: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 >
-> arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs for Data Modul i.MX8M Mini and Plus eDM SBC
+> arm64: dts: add tqma9596la-mba95xxca
 >
-> This commit adds device tree overlays for the eDM-MOD-iMX8Mm-FIO1-Audio
-> feature connector expansion module. It provides support for the SGTL5000
-> codec, CAN, I2C, SPI, and other peripherals on the i.MX8M Mini and Plus
-> boards.
+> This patch adds support for the TQMa95xxLA modules on the MBa95xxCA carrier
+> board. It introduces a common device tree include for the module and a specific
+> device tree for the carrier board.
 >
-> > Add DT overlay for feature connector expansion module eDM-MOD-iMX8Mm-FIO1-Audio
-> > providing additional UARTs, CAN, PWM Beeper, I2C, SPI, GPIO breakout and
-> > SGTL5000 codec. This adapter can be optionally populated onto the eDM SBC.
->
-> [Severity: Medium]
-> Is the commit message accurate regarding the features provided?
->
-> The FIO1-Audio overlay only seems to enable a single UART (uart2, while uart4
-> is disabled) and doesn't contain a pwm-beeper node or PWM pin configuration.
->
-> Could the commit message be updated to reflect only the features actually
-> implemented in this variant?
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
+> > diff --git a/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
+> > new file mode 100644
+> > index 0000000000000..db2fd6991d112
 > > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
+> > +++ b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
 > [ ... ]
-> > +	gpio_feature: io-expander@20 {
-> > +		compatible = "nxp,pca9554";
-> > +		reg = <0x20>;
-> > +		#gpio-cells = <2>;
-> > +		gpio-controller;
-> > +		#interrupt-cells = <2>;
-> > +		interrupt-controller;
-> > +		interrupt-parent = <&gpio5>;
-> > +		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
->
-> [Severity: Medium]
-> Since this file is shared between i.MX8MM and i.MX8MP overlays, does the
-> interrupt configuration need to be overridden for i.MX8MP?
->
-> On the i.MX8MP baseboard, this feature connector signal seems to be physically
-> routed to GPIO1_IO08 instead of GPIO5_IO04. The i.MX8MP overlay doesn't
-> currently override these properties for gpio_feature, which might cause the
-> expander to listen on a dead interrupt line.
-
-please check this
-
->
-> [ ... ]
-> > +&sai2 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pinctrl_sai2>;
-> > +	assigned-clock-rates = <24576000>;
-> > +	fsl,sai-asynchronous;
+> > +	wifi-connector {
+> > +		compatible = "pcie-m2-e-connector";
+> > +		vpcie3v3-supply = <&reg_v3v3_mb>;
+> > +		vpcie1v8-supply = <&reg_v1v8_mb>;
+> > +		i2c-parent = <&lpi2c2>;
+> > +		w-disable1-gpios = <&expander2 9 GPIO_ACTIVE_LOW>;
+> > +		w-disable2-gpios = <&expander2 10 GPIO_ACTIVE_LOW>;
+> > +		/* UART_WAKE is connected to SM */
+> > +		/* SDIO_WAKE is connected to SM */
+> > +		sdio-reset-gpios = <&expander3 2 GPIO_ACTIVE_LOW>;
+> > +	};
 >
 > [Severity: High]
-> Does disabling internal synchronization between the TX and RX halves of the
-> SAI block break audio?
+> Does this sdio-reset-gpios assignment conflict with the gpio-hog on the same
+> line?
 >
-> The SGTL5000 codec only has a single set of I2S clocks, and the pinmux
-> settings only route one clock pair. This leaves the other half of the SAI
-> physically disconnected from any clock source.
->
-> [ ... ]
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
-> [ ... ]
-> > +&sai2 {
-> > +	assigned-clocks = <&clk IMX8MM_CLK_SAI2>;
-> > +	assigned-clock-parents = <&clk IMX8MM_AUDIO_PLL1_OUT>;
-> > +	fsl,sai-bit-clock-swap;
->
-> [Severity: High]
-> Is fsl,sai-bit-clock-swap intended to fix the asynchronous clocking issue?
->
-> This property is a downstream vendor leftover that does not exist in
-> mainline device tree bindings and is ignored by the upstream fsl_sai.c
-> driver. Should fsl,sai-asynchronous be removed from the shared .dtsi
-> instead so the SAI can operate in synchronous mode?
+> The wifi-connector node requests expander3 line 2 here, but later in the file,
+> m2-keye-sdio-rst-hog hogs the exact same GPIO line. Won't this conflict cause
+> the wifi-connector driver to fail probing with -EBUSY?
 
-Please check this ?
+suppose needn't gpio hog for expander3 2 ?
+can you double check it?
 
 >
 > [ ... ]
-> > +&spba2 {
-> > +	#address-cells = <1>;
-> > +	#size-cells = <1>;
+> > +	fan_controller: fan-controller@2f {
+> > +		compatible = "microchip,emc2301", "microchip,emc2305";
+> > +		reg = <0x2f>;
+> > +		#address-cells = <1>;
+> > +		#size-cells = <0>;
+> > +		#pwm-cells = <3>;
+> > +		status = "okay";
 > > +
-> > +	sai5clk: clock-controller@30050000 {	/* SAI5 */
+> > +		fan: fan@0 {
+> > +			reg = <0x0>;
+> > +			pwms = <&fan_controller 40000 PWM_POLARITY_INVERTED 1>;
+> > +			#cooling-cells = <2>;
+> > +			fan-supply = <&reg_pwm_fan>;
+> > +		};
+> > +	};
 >
-> [Severity: Medium]
-> Does declaring a new node here cause a duplicate unit-address warning and
-> potential resource conflicts?
+> [Severity: High]
+> Will the reg_pwm_fan regulator ever be enabled?
 >
-> The base SoC .dtsi files already define sai5: sai@30050000 at this exact
-> address. Because the node names differ (clock-controller vs sai), DTC will
-> create two distinct sibling nodes rather than merging them.
->
-> If the baseboard enables the existing &sai5 node, both drivers could attempt
-> to map the identical physical MMIO region using devm_platform_ioremap_resource,
-> causing a -EBUSY error. Should this overlay reference the existing &sai5 node
-> by label instead?
+> The emc2305 driver does not parse or request the fan-supply property from
+> child nodes. Since reg_pwm_fan is not marked regulator-always-on earlier in
+> this file, does this leave the fan unpowered?
 
-Make sense, please check it.
+look like make sense, but dts itself should be correct. You'd better update
+driver also.
 
 Frank
+
 >
 > [ ... ]
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
-> [ ... ]
-> > +&spba5 {
-> > +	#address-cells = <1>;
-> > +	#size-cells = <1>;
+> > +	/* D41 OUT 1V8 */
+> > +	expander3: gpio@76 {
+> > +		compatible = "ti,tca9539";
+> > +		reg = <0x76>;
+> > +		vcc-supply = <&reg_v1v8_mb>;
+> > +		gpio-controller;
+> > +		#gpio-cells = <2>;
 > > +
-> > +	sai5clk: clock-controller@30c50000 {
+> > +		gpio-line-names =
+> > +			/* 00 */ "ENET1_RESET#", "ENET2_RESET#",
+> > +			/* 02 */ "M2_KEYE_SDIO_RST#", "M2_KEYE_DEV_WLAN_WAKE#",
+> > +			/* 04 */ "M2_KEYE_DEV_BT_WAKE", "M2_KEYB_W_DISABLE2#",
+> > +			/* 06 */ "M2_KEYB_RST#", "M2_KEYB_FULL_CARD_PWR_OFF#",
+> > +			/* 08 */ "M2_KEYB_DPR", "CAM0_PWR#",
+> > +			/* 10 */ "CAM1_PWR#", "CAM0_RST#",
+> > +			/* 12 */ "CAM1_RST#", "CAM0_TRIGGER",
+> > +			/* 14 */ "CAM1_TRIGGER", "FAN_PWR_EN";
+> > +
+> > +		m2-keye-sdio-rst-hog {
+> > +			gpio-hog;
+> > +			gpios = <2 GPIO_ACTIVE_LOW>;
+> > +			output-low;
+> > +			line-name = "M2_KEYE_SDIO_RST#";
+> > +		};
 >
-> [Severity: Medium]
-> Similarly, does this cause a duplicate unit-address warning on i.MX8MP?
->
-> The base SoC defines sai5: sai@30c50000. It seems the overlay should
-> reference the existing &sai5 node by label here as well.
+> [Severity: High]
+> This appears to be the leftover hog that conflicts with the wifi-connector
+> node above. Should this hog be removed to allow the driver to request the
+> GPIO?
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260705200534.151803-1-marex@nabladev.com?part=6
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260707062506.949806-1-alexander.stein@ew.tq-group.com?part=1
