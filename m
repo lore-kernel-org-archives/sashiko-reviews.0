@@ -1,270 +1,189 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012062.outbound.protection.outlook.com [40.107.209.62])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011048.outbound.protection.outlook.com [52.101.62.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0891E7C12
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 06:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA6D1DED5C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 06:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.48
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783925238; cv=fail; b=CM9QV+rbmHUWrT/afkEViKMPoeJRRwg7jNHLcsD0oUY1skfuPV0NQL/seeWvCf3jxgfZORpI7B3Iwr/I2RNyMxox09oeykCHHMpW3omSH/iFVPAs2RNVzKofoqixRDhjfdAJAqTbHabsNZlUyQy532zwKsCSLA3HJviVgLn9dV0=
+	t=1783925257; cv=fail; b=tzGOhqiKHK2R3SrHZOYGJcf72DM2/ULDaUy9byQc3/7XhiLuLSdc/TEUUD3IPgEyZp1m/+xdgUWKVV1BCFVP6MDbgaOVRQnT0jgCQf0IOor79LJjtN/5Avs4iIlfdcoFhX3hN5JoBSLJY+H5+PnzNdOJZIHQIQhWXppL5SeGDN8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783925238; c=relaxed/simple;
-	bh=V03rvkmshb4mXzSU/D5fI+KoYIDj72tDIhZJA0z94ao=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=A3f+Gf2kcBER9HbGXYfb3uUK7MNhAA/RwNWjVofvUaetIYuO9JcxKZ1Z1LZwlzH2ePFL4kePBUR5s/wyo8zin1e5M1eq/tkoeV8fDtGiSrwssr7YhukpW30x03aO2AhoazsHoWCbYQ6QH84H3r6oJMNeRK4gHTkN1nOCvvdYWfg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=sixhM8co; arc=fail smtp.client-ip=40.107.209.62
+	s=arc-20240116; t=1783925257; c=relaxed/simple;
+	bh=+fWYPObcPhKak9Z6by9Pc6XxsZ2HENOabkLCoFsUPAM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SlJGHqrl13aBr0f0SJ1tNK650qqaloG9IaJyFmKpjxEbYIde+xEZi4DpwK6PLxZQDDZ/ocvYuocdb6oQP7YdnbVoknofjqgW+K8ho5M0VpntqIj5jbiLM7sF+zNBNAUj3y8CSEd/0YnG2gRLcphi2DN30QZ+9XGaTUPupg5lqto=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=DEagfobN; arc=fail smtp.client-ip=52.101.62.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="sixhM8co"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="DEagfobN"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P/Tdmkp2Ej/z80TnLGVeTLbdUqsdB/AultuA1O6IhslJ2QvWhXj2506c4tp9GiVUV0dtMesWLOBOhIU3vIt4gX9hKk5TaWlTi0igOU56If5mRsuG7BdI4ZnqQZ43/14m8/bK6h6q8l1p+JdBXlnE3bWlg8dvfp4xdlZqyUq6E2EcELs0rMRjEoZNAD71fk9Rk7WdJzmTqev/E/xQBOS0SXICMj/IfUU71O7NMuxmd+1gInoqGoLtzXFNrMc0gwmI/2Fra3vGNsFrQACaECOYaNXJQbDonP1go3OzM0jZTfckZe4zvImllwiFGLfeSM/FIRFYbH/vtkjaO/1IzBI3uw==
+ b=N7HqZJcIH4s7EBKOLUteMu2Jeb6Ip/G+p0H8GIOsxadMwM3UAUK9xPwMxo1EMjrKv5QPdRdYfrom+8+TMyLjgmgz0eYyJjXO62Y7cXXbd/aBqMe+xF7nD7dNxbiiwsgwzDEe20fxKCUp5lvlO3dL+Ut2ORRJI/fbK2g5eHBLE9o3uX+LXG9de1DtEj1m5LToW3WXk2vN3qg9MnNkbDqPwo5iyYl9cX9+DrqGXDZ/8KSXuJLDID11IZT3VYpcjaPUzqQi9L54A7BoTR7yT9iP9eU+Qg8ZGhJuEdR4kDPiCihfBT4ZgvU21hkgDx52KtRYsis0VtTTyLBAImQ3+sUqdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RlLGktjmTsIf5ZC3RND2MH8JY+XwGhAuGW6qMXBuT2g=;
- b=nSUa33aTcExCAdHHFvVzQwlUAzlU4b9AC/h5Dwcjk7iV58kHgWZyu2Z+t5I33HiIIF4ICuToxvUg8PYUv7VstYFmatbTIrBfHYYWFnWRCcR2RgzxzxdlMWtHwmxhQh48TVBmagNqsLDcHBVOJJXna3cU9vS48n0CzErMk8EHa4jxqzXfRdxClAGUBx2HiyXCDqQ8FmdUnq9HRmnwakh22Cc1v6sqWzA1OjkizJxw1Jb8Xjt2Ij1aF10611avBSJgZVusnorDVYnIN9ArzadzSJfUNWG3vmu8vIPFFa2PaF9k0eTIk+TAcmiixngBZwydcE90YkSADwZwqr3/pTZjKw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
+ bh=FQ/NAPVxYmuFqNcaynhLkp7K+3+fL34Y9iWy5h2ZYhs=;
+ b=owhvjTRgU8ZS9w9Wizfarth0uTs8pnL0xFqHrj7GbtdHpo8yfov/a5Dc4KITm4ma68exjwHUdFveICMD2G9kGdBgFQoVNylEvfyFvz0vCnzCqy1S7IGBHZODe7/JpqvGJkuG9vCnwrZgthG99m3oFLdA3q4+3OzXivITqs1zx5Kw0R76cdiZ7oVrx9n00S4A9eq6vZhc5xVVqqdhCw2wO01VzJVh0vLstlAyFFn5JQbH0g1a7zANY0AkoTu4zDnz5tm4iQOl9pHwc5A7lpo5oNdsf/Lor4yQqcOl8TK9wUvTgAwsDH9g7gRscLgji4IIPvCt2Va8LvKqqr5FQZFFFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RlLGktjmTsIf5ZC3RND2MH8JY+XwGhAuGW6qMXBuT2g=;
- b=sixhM8co8pwH1wyMi++fYWJ17Gt4zLq7KHB8yOotTLPYJCHPf0rk7e7xec8WgIXujbPfFH6pvQtxA7LxGSlElsU4HCzfAwk7X3ePpY5FD40hvPlV/M5/8asc08ezDwdSq3ONDmwTU9qRxKj0sfVkG1U3o7zulx3PP8UHhtAwGWM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
- by MN2PR12MB4127.namprd12.prod.outlook.com (2603:10b6:208:1d1::24) with
+ bh=FQ/NAPVxYmuFqNcaynhLkp7K+3+fL34Y9iWy5h2ZYhs=;
+ b=DEagfobNJMeB7yUe5suhBUsrYe1jATyi2bdxQ0fJJxZAn/BOE9KnliTcijmeq9FrUisRdkPdCHBLzAs0rUidi34//U8Vsb6dzZmQkv6EywMRhhJfmnPHvyCoCzW2DpzgcXGRi6wCjFbv+k179ydxBdedWXlGBLsRWXnAB5aXi4E=
+Received: from MW4PR04CA0364.namprd04.prod.outlook.com (2603:10b6:303:81::9)
+ by MN2PR12MB4254.namprd12.prod.outlook.com (2603:10b6:208:1d0::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
- 2026 06:47:12 +0000
-Received: from BL4PR12MB9482.namprd12.prod.outlook.com
- ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
- ([fe80::e4cf:3801:9631:2965%4]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
- 06:47:12 +0000
-Message-ID: <81de849d-a230-4240-8896-65366807598d@amd.com>
-Date: Mon, 13 Jul 2026 12:16:59 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] dmaengine: dw-edma: Enable HDMA 64R/W Channels
-To: sashiko-reviews@lists.linux.dev, Devendra K Verma <devendra.verma@amd.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-References: <20260708134343.3806759-1-devendra.verma@amd.com>
- <20260708135950.DEEEF1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Verma, Devendra" <devverma@amd.com>
-In-Reply-To: <20260708135950.DEEEF1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0045.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:279::11) To BL4PR12MB9482.namprd12.prod.outlook.com
- (2603:10b6:208:58d::19)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.19; Mon, 13 Jul
+ 2026 06:47:30 +0000
+Received: from SJ5PEPF000001CA.namprd05.prod.outlook.com
+ (2603:10b6:303:81:cafe::a5) by MW4PR04CA0364.outlook.office365.com
+ (2603:10b6:303:81::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.202.19 via Frontend Transport; Mon,
+ 13 Jul 2026 06:47:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SJ5PEPF000001CA.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.223.9 via Frontend Transport; Mon, 13 Jul 2026 06:47:29 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 13 Jul
+ 2026 01:47:28 -0500
+Received: from [10.136.45.190] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Mon, 13 Jul 2026 01:47:27 -0500
+Message-ID: <6df492f7-fd8e-4f07-97a5-66620ba0abb2@amd.com>
+Date: Mon, 13 Jul 2026 12:17:26 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/5] KVM: nSVM: Sanitize nested DR6 using
+ kvm_dr6_fixed()
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
+References: <20260709082953.69434-1-shivansh.dhiman@amd.com>
+ <20260709082953.69434-4-shivansh.dhiman@amd.com>
+ <20260709085100.C04BC1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+In-Reply-To: <20260709085100.C04BC1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|MN2PR12MB4127:EE_
-X-MS-Office365-Filtering-Correlation-Id: 24847e6f-0228-4382-d0e7-08dee0aa91aa
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001CA:EE_|MN2PR12MB4254:EE_
+X-MS-Office365-Filtering-Correlation-Id: ecaaf19e-6159-473b-3736-08dee0aa9bb2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|6133799003|4143699003|11063799006|5023799004|56012099006|22082099003|18002099003;
+	BCL:0;ARA:13230040|1800799024|36860700016|376014|82310400026|23010399003|18002099003|22082099003|11063799006|56012099006|6133799003|4143699003|13003099007;
 X-Microsoft-Antispam-Message-Info:
-	VGMun2/BqxwFU80giVyRw8L9rTgTUsHErcP2RrbUzfx/vM/xMobM9MJAVPiL6i83NRhv5WZGyop919gwFrOGBUXB7j1F85c5y28XjkMx01pz91ya8P5KH8QJ3ZhxqSpvCIHCk8TL858G+Nq9myTJrVuKFW82g4m/kdX80VTaxmACTqiMdMnot5lj5/o+jLDVv+9TcoczspyApFjAmBgvecQ+3t8zeDQPNZL3iV/RdwHU9+chgt2Ft3xQIA3gSma+AP5LQYaDi95oxeCj0uxJVop2UPFxf+OcpPPWutHbxiNULd4G6fc6arrSNOUgJj/HiLU5jTB8tSNotpnKSGVH3qIWQinIuk1cl4WkwhvUTzj2f8jDKEBIEQSulN45uU6+sED/3U23MCNsFVWl6hn/EvxFn4BpAdhKw5c7Fy5qjEfpvvErHr4ZI/TDUINtOkPBnd4LhaA2rpNtTWv0B+RgScsl2hokoXBrObl2aphxGF6ePvS58vck0Sj1ISi0KK3Zo2kvEyCgH9JEftJaf4/QXzn9gvqwPX+1A+8XYNXGzjR5TKe76MuYSZt59D9E8zlWH5LwNZRT5ykVrfteoG8pdK0YPJxF9+00MRjCNPEdxZxUBh/2TPSswu0TjR17ndfzDL1XKiDlAk9OJR/AKbG0T7GP3fxe8EYPlcUxEWeMD8c=
+	eC1r9Era9lwb+W7WGMV8ZJXaE8s8CDsRCVQT0XYJ5SYDvQyra1Krf/L4F/b5Js8RsA+dqsReNeA4K3N6nFyOX+8xVVxDmpXgvtO6o0kdUFUedL/l7LUiE+ZvI+YvASIgulHJabQ/nSo8YZagOSL8myoPpWu3ueO3u6tgdJ3aRyUqyn7TzjLC+VgVJA+wYxf+jq/w3SHh7iEKYGbjvqETYck2WVXqjIIpDdo7b2ZcoTqOGONVVAJZIG4QlpH04ZJMQwFt9LIecgA4K13TBQdzYBXNxb/PAurguUpAjKQ7J8HZ7rNBCvfomniv2xx8mI6T/ZqfG8T52lglORiveNM1r+cuyQL7nMYCO6wtLhjQrKynxkxO7+aEZMJfq3e+BG+u+U+aoCFQc6XaUmTL2Jqg0ryyUx2i6VT5vEeyfc98D+bPjHn6ZGWGE8+TQs0j3aV4Owxk4rPOAhkLs2M0ZB+0I7lCXq8b+RYhu6qpVkUYYSeUMIUn2ZESRo5Acc3szch2rbuNVcD3YUvC6kAbaDKTfDBIYLjFxlzg67VLwK1lcR9yOqVZ4UKvQUc1egmgTIkak1bzgltJKP1lDcgtxKKQMk4QIJiJErz/8/lz/R6eTN4QefQcu8DmveP2iETby9QU5Da1z/d2nb2QQFD5yTj5DQ==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(4143699003)(11063799006)(5023799004)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(376014)(82310400026)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(6133799003)(4143699003)(13003099007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Y20yTkJhMStpRytpQ2RzY3d4bFlHd1lWOUN1MVV6YUd0Z1BZUUNEem51MDNK?=
- =?utf-8?B?blI0YXZQeGJhUzZ2a3d4Q2ozVTdMMlBzd3M2VldXYko1QytYM1ZHZlNWQVNp?=
- =?utf-8?B?bDNrVzNzbDVCZG0zQnZCSG1kdXlYR21DRDJPZ1crcVJhaFN0NVFnRURDbzEx?=
- =?utf-8?B?RFFVM0ZUMlZ1UVh3dlgrWFBJYjl0VEF3bnFWS1ozYjhLZ1JGOXZzakJNYmJR?=
- =?utf-8?B?bHJNWDc2KzJEUzgxVElaYThlaWFWd2ZkSW16RVU3cTZJdUxOK0VyRzlkcXBL?=
- =?utf-8?B?VTQ4NjVhTS9sZGFDVHd6TGtmMy9CWnlqdk91V21WNXlaSkRWc3NZQ3orNlFH?=
- =?utf-8?B?QkI4VXJjWEwrLzVJanhDVXdYcWVoNHJhZHN4d3ord2NtN3dUWi9iY0Z4M1N5?=
- =?utf-8?B?WW1BY0lKaVJQeHhHN3hpemt3RWVaZWlQUmx3VXkwckxwTkNEWm91V20wYjFB?=
- =?utf-8?B?enZKMGJZMW0wako2NEZlNlBBZ2pYdVhjTGFINDR5dm1Md1F5Zk1qQVh2a2NP?=
- =?utf-8?B?SVhCQTR4MnBzcDlTb0dxeUhRZG9PS2xud25Ub0NJM0EvcG5CcVNSUktPNDdo?=
- =?utf-8?B?cXRSaktsTXhYN2UrYWJ0S2FNaDNWeEEzR3dIR0h6ZThweFdJWWVFUUtWT1Zl?=
- =?utf-8?B?OVVjU3Yxb3ZJUVNGRzFIOFlaTmhKZHZLU2QvL21ERzNZdUtoYmdkeXM5Y1dk?=
- =?utf-8?B?K3VlNDYwKzZmNWhXU1NZR2JoazYxajFaOEs2dElZcFNDQlB2VnZLN2VhTU5Q?=
- =?utf-8?B?YlRFVHBkL3FTYm53QXprai9NbTFPNlU2cjlJOWQrM3lLRUwycThlcWRwbHV6?=
- =?utf-8?B?YWNSQ2pmRGZlZmkvTEozbzhnYkJXSVhDSy9jL1FlNmJ2ZlpaTHJURGRsQlJm?=
- =?utf-8?B?NmNMSGN6YnNGNTZTdW1DOVhQL2Y1b003dWVVM2ZmOENUbFdNNWx6N1JnRGs2?=
- =?utf-8?B?Z2NFSm83eVgyWWg5Vy9VUTE1Uitld2wyRndMYUtIeGpnRHB3Tk5PeE5jSzJu?=
- =?utf-8?B?dFB4c09kK0UveG00K1JQOStYTkJNZEVzbU1XNFRFTTFmV0FSQ05kaS9GY1Ey?=
- =?utf-8?B?eGZmV3NWb2NsZlBPQWJYaDU3K2hqSXhKVWpCcmNQR2luRW41eFpzZXB2VHN1?=
- =?utf-8?B?bDlSdnVQNVNCSGIrcEczTzB1ZmZPMDFQSzNmNFN0NUNzR1p6RWUxQkF5bjBt?=
- =?utf-8?B?UjArVDZwdU5CdXdqb2Q4RUFuQ0N5ZTdtRkxCQlN6SWJxQUhxcStLMnV5Sk11?=
- =?utf-8?B?UXlvdHpqU2hQaVlaN3JWeGl6cVFlUDhQQnRxZ1MxNThhYmdraHl2UndwUHJE?=
- =?utf-8?B?VWlDT1NlTnRaUWE3UmJjenRtM1NLTnVJamduWlZRK2dyQ293aHJnS3dGcFJ3?=
- =?utf-8?B?S0NBZWVGb2ZlWnFMUmoyRllncnhmbUgxVTUrcStMTDNGU3lKcGxBNi9QajNy?=
- =?utf-8?B?dmxWbEZQTko2NVp4N2xIWFZ0S3A5bkVUU3kxemx5VzhCSmg4THVYZmg4bEpU?=
- =?utf-8?B?L2VkSGhySDY5VytCS0pHUVE4R3VwblppanYzbnY3WkU2OXFJOGFpaW1vRUE5?=
- =?utf-8?B?Vkh2M0ZjZlpCejNCcHVlMk1TMUQ1andoTHJ6Z3QyOThibHJZOTQ3NHAwcGU3?=
- =?utf-8?B?UW51bjh6UkNJMndTMGwvOW1sNHdDYTFseHRmMEoyV25YdW83ZDNqYVRJTnMv?=
- =?utf-8?B?Mis5UEpwREFyeEFKd09yYzVNa2JQQzJYZ0RMMDBteG5RWVZ2L2hLcEJoR3pS?=
- =?utf-8?B?SkRQdTN6ZW40ZVhLRitmbkI4NUNnL3ZRTFByS05XU1hBcW9tbEZBTHcweFRO?=
- =?utf-8?B?TnFCUkdrWk5pczN6M2MyQmRqdGVrTXZCWDY1anIyMkw3QzV6ZmdXWkFUaHdq?=
- =?utf-8?B?ZEtPbWJrYlVFVEg1aUdOZmwvc2tVTERJcnByUkdyRCtxUDB1M0MvRG1LaGZJ?=
- =?utf-8?B?VkYyUnNIWHJ5SU9jRDZ4TlROUjN2d2RlZFNkMUVPVnNsTE9LcFJFaUtGK29m?=
- =?utf-8?B?T0JzbzM5cGI5QWNRTm15Tk5meVdKb0JzMXVPNllNU1FqSUlaZ2djdFc3U2xk?=
- =?utf-8?B?VjRwbmxaUVZnTzVERWduTnVYM1hIOUpQNHgwaXA0bTZvOUVJNkxUMnJzOVdx?=
- =?utf-8?B?dmJzdGxEOWVZekNsWXVwaC9WYkdiUWl5bHp2YWVhNkRKc1ozQmh4R1YycDYv?=
- =?utf-8?B?OXpjcWRwN0c0YlJHdUZNUTAxaHVWb083NFVJMWo1NWk2ejRqL3oySHNuWFRT?=
- =?utf-8?B?Umd4K1FtRTlOcDJlTXRFQUZtUVZIRXREV1QvMzVneHFUTTQ3MFJnV1ZvWGkz?=
- =?utf-8?B?RFVHUDRXSDRhemRMU3VQUHgzQjE3b25kSjdrMFU0U1VyZTgzSFAwQT09?=
+	UMMd3LzlAfZNPzqCugwVBYUVH0XeDtFueA3L9aeaw0ayHTNlP9hvWHdAxWuxmuLWQ+Y5vNRZB46rPSCYdUNZR5GPu34wv3fvYhPDsPfPSitfFQvVPJltItjN8mosu4vV75YxdGT38lz41PtJIGoqLH1Movmv7OniCCvGMxrJL5TwLBaa+tyiaIL4E30gOWAqB0IkORujqlm+Av/5Wy6vOs88ZYtiRMnRgCeZlmm5cJDxBM1UbivFFjNq4jW9fPiixZxSbUBJVQDH0q/+CtFcu5U7pjiymMccavoO/I+69bcz3LI3tjXSqVb065gNow/FPOqw6R/JDuZI/Yzw64hQZS5UX26morjT9wmSWgDfHFv1x4Rj4Z/kFc23xRaDYIXWJQTFDdFFGLJdzztKeDqZJVe8XbCsZ604xIyWcoKEUYpqbMnL/9C+9fgJvCGeH7WD
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24847e6f-0228-4382-d0e7-08dee0aa91aa
-X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 06:47:12.7510
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 06:47:29.3127
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Network-Message-Id: ecaaf19e-6159-473b-3736-08dee0aa9bb2
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ydu8iao7JHgiH+V2gVgYRK0vuoTnZfiWZoPONJ90MXGR3kl6ATK+hJdCmSHxTwtDkQBWutzVbOIugfPOiSOSYg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4127
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001CA.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4254
 
 
 
-On 08-Jul-26 19:29, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Designware PCIe core bounds checks reject HDMA configurations with more than 8 channels.
-> - [High] Standalone PCIe eDMA driver statically limits hardware to 8 channels.
+On 09-07-26 14:21, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Critical] Missing register offset when setting the eDMA/HDMA base register pointer.
-> - [High] Incorrect arguments passed to GET_CH_32 macro causing wrong channel registers to be accessed.
+> - [High] The patch identifies that DR6_ACTIVE_LOW unconditionally sets DR6_BUS_LOCK (bit 11) to 1, and replaces it with kvm_dr6_fixed() in nested VMCB02 preparation. However, the patch fails to replace DR6_ACTIVE_LOW in L1 vCPU initialization and #DB payload processing paths, completely breaking Bus Lock Detect for L1 guests.
 > --
 > 
-> --- Patch [1]: [PATCH v7] dmaengine: dw-edma: Enable HDMA 64R/W Channels ---
-> commit 4834a312ef82b7f9b290aedb3a1f566db2548955
-> Author: Devendra K Verma <devendra.verma@amd.com>
+> --- Patch [3]: [PATCH v3 3/5] KVM: nSVM: Sanitize nested DR6 using kvm_dr6_fixed() ---
+> commit 0ee3ae36939ed695ccbd636580058ad35113add9
+> Author: Shivansh Dhiman <shivansh.dhiman@amd.com>
 > 
-> dmaengine: dw-edma: Enable HDMA 64R/W Channels
+> KVM: nSVM: Sanitize nested DR6 using kvm_dr6_fixed()
 > 
-> As per 'Designware Cores PCI Express Controller Databook',
-> Section 7.1 - Overview, HDMA supports 64 Read and 64 Write
-> channels. Current controller driver supports up to 8 read and
-> write channels only. In order to utilize all the channels the
-> controller driver need to have the channel related structs
-> and variables as per the number of channels supported by IP.
-> Following changes are made to enable 64 Read / 64 Write
-> channel support:
+> When preparing vmcb02 for nested VMRUN, KVM ORs DR6_ACTIVE_LOW into the
+> guest DR6 to force the fixed bits to 1. DR6_ACTIVE_LOW forces bit 11
+> (DR6_BUS_LOCK) to 1 unconditionally.
 > 
->> diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
->> index 1fafd5b0e3153..da7a5cc93ad43 100644
->> --- a/include/linux/dma/edma.h
->> +++ b/include/linux/dma/edma.h
->> @@ -14,6 +14,8 @@
->>   
->>   #define EDMA_MAX_WR_CH                                  8
->>   #define EDMA_MAX_RD_CH                                  8
->> +#define HDMA_MAX_WR_CH                                  64
->> +#define HDMA_MAX_RD_CH                                  64
+>> diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+>> index 84248e6665cfe..0a9e28a02692e 100644
+>> --- a/arch/x86/kvm/svm/nested.c
+>> +++ b/arch/x86/kvm/svm/nested.c
+>> @@ -811,7 +811,7 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm)
+>>
+>>       if (unlikely(new_vmcb12 || vmcb12_is_dirty(control, VMCB_DR))) {
+>>               vmcb02->save.dr7 = svm->nested.save.dr7 | DR7_FIXED_1;
+>> -             svm->vcpu.arch.dr6  = svm->nested.save.dr6 | DR6_ACTIVE_LOW;
+>> +             svm->vcpu.arch.dr6  = svm->nested.save.dr6 | kvm_dr6_fixed(vcpu);
 > 
 > [Severity: High]
-> This patch introduces 64-channel support for HDMA, but does this break
-> when used with the Designware PCIe host driver?
+> This is a pre-existing issue, but since this patch correctly identifies that
+> DR6_ACTIVE_LOW unconditionally forces bit 11 (DR6_BUS_LOCK) to 1, should
+> DR6_ACTIVE_LOW also be replaced in the L1 vCPU initialization and #DB payload
+> processing paths?
 > 
-> Looking at drivers/pci/controller/dwc/pcie-designware.c:dw_pcie_edma_find_channels():
+> Currently, DR6_ACTIVE_LOW is still used to initialize L1's dr6:
 > 
-> 	/* Sanity check the channels count if the mapping was incorrect */
-> 	if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > EDMA_MAX_WR_CH ||
-> 	    !pci->edma.ll_rd_cnt || pci->edma.ll_rd_cnt > EDMA_MAX_RD_CH)
-> 		return -EINVAL;
+> arch/x86/kvm/x86.c:kvm_vcpu_reset() {
+>     ...
+>     vcpu->arch.dr6 = DR6_ACTIVE_LOW;
+>     ...
+> }
 > 
+> It is also used as a flip mask when KVM translates the exception payload to
+> guest DR6. Because Bus Lock Detect is actually active-high, XORing it with
 
-This specific function targets the channel detection for non-HDMA IPs.
-This piece of code is unaffected with the changes done to support 64 R/W
-channels for HDMA IP.
+This looks like a false positive issue, since Bus Lock Detect is active-low.
+Meaning if DR6.BLD=0, then it indicates that a Bus Lock has been triggered.
+See APM 24593—Rev. 3.43 13.1.1.3:
 
-> And in dw_pcie_edma_irq_vector():
-> 
-> 	if (nr >= EDMA_MAX_WR_CH + EDMA_MAX_RD_CH)
-> 		return -EINVAL;
-> 
-> Will these sanity checks reject HDMA configurations with more than 8 channels
-> because they strictly enforce the EDMA_MAX_WR_CH (8) limit?
-> 
+	Bus Lock Detected (BLD)—Bit 11. The processor clears this bit if
+	#DB was generated due to a bus lock.
 
-This can be enhanced and shall be taken in a separate patch series.
-The existing limits, functionality will not be affected and IP
-shall work fine.
-
-> [Severity: High]
-> Does the standalone PCIe eDMA driver statically limit the hardware to
-> 8 channels?
+> DR6_ACTIVE_LOW incorrectly inverts the bus lock bit the guest sees:
 > 
-> Looking at drivers/dma/dw-edma/dw-edma-pcie.c:
+> arch/x86/kvm/x86.c:kvm_deliver_exception_payload() {
+>     ...
+>     vcpu->arch.dr6 ^= ex->payload & DR6_ACTIVE_LOW;
+>     ...
+> }
 > 
-> static const struct dw_edma_pcie_data xilinx_mdb_data = {
-> ...
-> 	.wr_ch_cnt			= 8,
-> 	.rd_ch_cnt			= 8,
-> };
+> Similarly, SVM constructs the #DB payload by XORing the hardware exit DR6
+> with DR6_ACTIVE_LOW:
 > 
-> And later in dw_edma_pcie_get_xilinx_dma_data():
+> arch/x86/kvm/svm/svm.c:db_interception() {
+>     ...
+>     u32 payload = svm->vmcb->save.dr6 ^ DR6_ACTIVE_LOW;
+>     ...
+> }
 > 
-> 	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
-> 			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH, val));
+> Could this leave Bus Lock Detect functionally broken for L1 guests by causing
+> them to observe corrupted hardware state (false positives or false negatives
+> for bus locks)?
 > 
-> Doesn't the min() operation cap the dynamically detected hardware channel
-> count to the static limit of 8, negating the new 64-channel HDMA support
-> on Xilinx MDB controllers?
-
-For the Xilinx DMA, the limit is 8 Read / 8 Write channels only.
-Enhancing the structs / arrays for 64 channels will not affect this
-piece of code.
-
+>>               vmcb_mark_dirty(vmcb02, VMCB_DR);
+>>       }
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but is there a missing register offset when
-> setting the eDMA/HDMA base register pointer?
-> 
-> In drivers/dma/dw-edma/dw-edma-pcie.c:dw_edma_pcie_probe():
-> 
-> 	chip->reg_base = pcim_iomap_table(pdev)[vsec_data->rg.bar];
-> 	if (!chip->reg_base)
-> 		return -ENOMEM;
-> 
-> Should this map the whole PCIe BAR but also add vsec_data->rg.off to
-> chip->reg_base? Because all register accesses via __dw_regs(dw) directly
-> dereference chip->reg_base, will all reads and writes hit the beginning
-> of the BAR instead of the actual hardware registers on hardware where
-> rg.off is non-zero?
-
-This issue shall be taken in a separate patch series.
-
-> 
-> [Severity: High]
-> This is a pre-existing issue, but are the arguments to GET_CH_32
-> swapped here?
-> 
-> In drivers/dma/dw-edma/dw-hdma-v0-core.c:dw_hdma_v0_core_ch_status():
-> 
-> static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
-> {
-> 	struct dw_edma *dw = chan->dw;
-> 	u32 tmp;
-> 
-> 	tmp = FIELD_GET(HDMA_V0_CH_STATUS_MASK,
-> 			GET_CH_32(dw, chan->id, chan->dir, ch_stat));
-> 
-> The GET_CH_32(dw, dir, ch, name) macro expects the direction as the second
-> argument and the channel ID as the third. Here it is invoked with
-> chan->id as the direction and chan->dir as the channel ID.
-> 
-> Since chan->id is evaluated as the direction, won't any channel ID > 0 be
-> treated as a READ direction? And won't chan->dir restrict the accessed
-> channel index to 0 or 1, meaning it will always read the status of channel
-> 0 or 1 instead of the intended channel?
-> 
-
-This issue is being fixed as part of this patch series
-https://lore.kernel.org/all/20260710080903.2392888-2-den@valinux.co.jp/
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260709082953.69434-1-shivansh.dhiman@amd.com?part=3
 
