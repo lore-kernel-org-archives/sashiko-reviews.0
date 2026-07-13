@@ -1,130 +1,79 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mx-2023-1.gwdg.de (mx-2023-1.gwdg.de [134.76.10.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB9346ADE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 17:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70091E1E12;
+	Mon, 13 Jul 2026 17:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.76.10.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783963489; cv=none; b=G/io5NaYips9n1A6XkzL4w1vQ58JbfbtZMMIq+HTzsJWojTilz90L/kptH8Xjhu+xpGMABZhx+0ErlIWOJ5AygtvJu4fIIxG2JKL5Jm1i+eWWKb2LQis4brTrfXrhn58cl2nw/sSdpe1vHq4h/RW2mNNuvfIWZj4uh5sCISsaUo=
+	t=1783963743; cv=none; b=eIVgs5yOlAZwma38c5gakJB9YXFS335xoRx8CF3bSmP4b6fzu2pxFz7EDONT9gsw7KrGO57PmXYOtffRTfsIadI9KmStrJseu9ofodx1eOHptsZ11LEWPn1tdEuG0ZrhiZBGkQHdtWuc0fBRD4eYIELNWu30kgpbE8yX0l/2Dmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783963489; c=relaxed/simple;
-	bh=LhoU1IW1NUPYKzwG3u2YcU0ZdQy23+0F391w4hKM3io=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OFJeZiUDFhi6Jhh7n0KCmrda8rZzWOnHQ9v3xFBH0hywAz4l9fW3dpBolrSpLmeCrdRUiy0RDJ3n2tkfJ9azCfR1tsS35e8dCifBVxc/U2zwVBdhdBts8rry3N7AVLFHlV7X9teuUaYT9F2Ne9361cNyOkXYFo6saM/Hdkj8Mp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mKSwFiQ2; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1783963743; c=relaxed/simple;
+	bh=J/WJmEiD138SPCYFDmZ6fDw6vG52ctRUqoLxYoj70x8=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OT3+pgW3ce93scCPfLfugXCmCYJr9MyKfMqST+Zm2AijgS7FVkQcDf9ozwk0gBWH1N1VaUJltsejf3kvbPJ3KZ3ZLh/wiH6POZcLJczhbNwUCpp+bbhHyMoplAaspLn4reV+5Y9fsQyU28Cy3mqxuPwb+benjj2ApovQqThHMKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cispa.de; spf=pass smtp.mailfrom=cispa.de; dkim=pass (2048-bit key) header.d=cispa.de header.i=@cispa.de header.b=l7yKkjv0; arc=none smtp.client-ip=134.76.10.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cispa.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cispa.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mKSwFiQ2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783963487; x=1815499487;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=LhoU1IW1NUPYKzwG3u2YcU0ZdQy23+0F391w4hKM3io=;
-  b=mKSwFiQ2JATCIAjjUqIByJ7Er4hguX/i7QgdE0t5JAJxMmH8wuP7Wjlj
-   Gmq3KMsNBnE4t8WBqSQ/00mnh/URlFwyoDoXs7/27YnPpyoG4idPux0cy
-   rGk3LwCAGKGX8/rWQMn+pYgHQykSQvAvEP3FowvuMcQoKRr876HKblirh
-   PiWJyX7rnGnmfdDRyloOWD7Idgm5vkCVtP0hvCGyhDPREqYEQJrqcdjeZ
-   MavEGF7Dk2c1OGnu/1Gy0EH+vtYpupHXOpwqHIRLoa6CYUid2z75RGMjw
-   ipk7C9BO2394/NDFXrEzceTPm6OnnnRxCVxNBGt0lkVF4UzKj3jCIuvQ7
-   A==;
-X-CSE-ConnectionGUID: W/m+PViHSCmLW6JkzpTR0Q==
-X-CSE-MsgGUID: dx8/pvzhSa21veyGwUKHJg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="88402387"
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="88402387"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2026 10:24:47 -0700
-X-CSE-ConnectionGUID: iHszYsmwQpmrNPrtx3NmVA==
-X-CSE-MsgGUID: ijzKJy/wQt6MQdhBw70jHA==
-X-ExtLoop1: 1
-Received: from guptapa-desk.jf.intel.com (HELO desk) ([10.165.239.46])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2026 10:24:47 -0700
-Date: Mon, 13 Jul 2026 10:24:38 -0700
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH 7.1.y 3/6] bpf: Restrict JIT predictor flush to cBPF
-Message-ID: <7ggk6loahtxyw2mhjxu4tup6korbtrairwoi3rffxrwezedxkf@mww5mtcedfyp>
-References: <20260709-cbpf-jit-spray-hardening-7-1-y-v1-0-5ac5a2d6797f@linux.intel.com>
- <20260709-cbpf-jit-spray-hardening-7-1-y-v1-3-5ac5a2d6797f@linux.intel.com>
- <20260709223537.D189A1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=cispa.de header.i=@cispa.de header.b="l7yKkjv0"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=cispa.de;
+	s=2023-rsa; h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:
+	In-Reply-To:Message-ID:Date:Subject:CC:To:From:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=J/WJmEiD138SPCYFDmZ6fDw6vG52ctRUqoLxYoj70x8=; b=l7yKkjv0YgwhzR6E6jm/2dS5cD
+	CTb/nUNlRmcZDG9iu7g8YOwSXdxjLYT2Ivs9jVVtpYXIcKwbTCHJ20nEKTAZpa5sVx3V1CuQi804d
+	T1zwDXz+ILa9oxnHoFyg88pwFvOYCFpOEBQkFGA+J7/DH3tFHGl1VrFnAg6oM0Zlun7rYmYQqa1Kv
+	jyl7426Vh7eXeRr3EEzePDHYCED1Hu/CycdTaEPT317Xsbcp1Vj2fhfY2GeelxV0TZ1pp5xGPrbYV
+	7sjqBqE/G1uJ56hqc8mA8EBVNJdtfntPTWhPtx9kPM8eaTRFjs5ZtnLnJ27t3jXiJDBlr1n4uAQFY
+	vaTHXK/Q==;
+Received: from mailer.gwdg.de ([134.76.10.26]:51164)
+	by mailer.gwdg.de with esmtp (GWDG Mailer)
+	(envelope-from <amirmohammad.eftekhar@cispa.de>)
+	id 1wjKSg-009ek7-22;
+	Mon, 13 Jul 2026 19:28:58 +0200
+Received: from mbx19-gwd-01.um.gwdg.de ([10.108.142.50] helo=email.gwdg.de)
+	by mailer.gwdg.de with esmtps (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(GWDG Mailer)
+	(envelope-from <amirmohammad.eftekhar@cispa.de>)
+	id 1wjKSg-000K8n-1u;
+	Mon, 13 Jul 2026 19:28:58 +0200
+Received: from eftekhar-ubuntu.customer.ask4.lan (10.250.9.200) by
+ mbx19-gwd-01.um.gwdg.de (10.108.142.50) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.2.2562.43; Mon, 13 Jul 2026 19:28:58 +0200
+From: Amirmohammad Eftekhar <amirmohammad.eftekhar@cispa.de>
+To: <kvm@vger.kernel.org>
+CC: Sean Christopherson <seanjc@google.com>, Paolo Bonzini
+	<pbonzini@redhat.com>, <sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH] KVM: nVMX: store L2's TSC frame in the VM-exit IA32_TSC MSR-store list
+Date: Mon, 13 Jul 2026 19:28:47 +0200
+Message-ID: <20260713172847.12697-1-amirmohammad.eftekhar@cispa.de>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260713144605.2773845-1-amirmohammad.eftekhar@cispa.de>
+References: <20260713144605.2773845-1-amirmohammad.eftekhar@cispa.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260709223537.D189A1F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MBX19-SUB-08.um.gwdg.de (10.108.142.73) To
+ mbx19-gwd-01.um.gwdg.de (10.108.142.50)
+X-Virus-Scanned: (clean) by clamav
+X-Spam-Level: -
 
-On Thu, Jul 09, 2026 at 10:35:37PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Restricting JIT predictor flush to cBPF bypasses Spectre v2 mitigations for unprivileged native eBPF programs.
-> --
-> 
-> --- Patch [3]: [PATCH 7.1.y 3/6] bpf: Restrict JIT predictor flush to cBPF ---
-> commit 96d12fd545f6cf1b750e18b7bd03c2fd3abf27be
-> Author: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-> 
-> bpf: Restrict JIT predictor flush to cBPF
-> 
-> This commit restricts the branch predictor flush on BPF JIT memory reuse to
-> only execute for cBPF programs. The rationale provided is that only cBPF
-> programs can be loaded by an unprivileged user, whereas eBPF is privileged
-> by default.
->
-> > diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-> > index f49b9b23f95e6..1b7e74e63bd4b 100644
-> > --- a/kernel/bpf/core.c
-> > +++ b/kernel/bpf/core.c
-> [ ... ]
-> > @@ -957,7 +957,7 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
-> >  		 * safe because cBPF programs (the unprivileged attack surface)
-> >  		 * are bounded well below a pack size.
-> >  		 */
-> > -		if (static_branch_unlikely(&bpf_pred_flush_enabled))
-> > +		if (was_classic && static_branch_unlikely(&bpf_pred_flush_enabled))
-> >  			pr_warn_once("BPF: Predictors not flushed for allocations greater than BPF_PROG_PACK_SIZE\n");
-> >  		size = round_up(size, PAGE_SIZE);
-> >  		ptr = bpf_jit_alloc_exec(size);
-> 
-> [Severity: High]
-> Does this bypass the Spectre v2 mitigations for unprivileged native eBPF
-> programs?
-> 
-> If kernel.unprivileged_bpf_disabled=0 (which is the default when
-> CONFIG_BPF_UNPRIV_DEFAULT_OFF is not set), unprivileged users can load native
-> eBPF programs such as BPF_PROG_TYPE_SOCKET_FILTER. Since these are not cBPF,
-> was_classic is false, and the warning logic for large allocations explicitly
-> bypasses the check in bpf_prog_pack_alloc().
+The bot's review is correct -- I'd like to withdraw this patch.
 
-With unprivileged eBPF enabled there is a bigger problem to deal with. In
-such a case system already reports vulnerable to spectre-v2:
+I tested the underlying assumption on real hardware: a single-level (non-nested)
+VMX hypervisor that configures a TSC offset for a guest and lists IA32_TSC in
+its own VM-exit MSR-store area gets back its *own* TSC frame on exit, not the
+guest's. That contradicts the "single-level equivalence" reasoning this patch
+was based on. The original code was already correct.
 
-  spectre_v2_show_state()
-  {
-          if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
-                  return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
+Sorry for the noise -- please disregard this patch.
 
-> [ ... ]
-> > @@ -989,7 +989,9 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
-> >  	pos = 0;
-> >  
-> >  found_free_area:
-> > -	static_call_cond(bpf_arch_pred_flush)();
-> > +	/* Flush only for cBPF as it may contain a crafted gadget */
-> > +	if (static_branch_unlikely(&bpf_pred_flush_enabled) && was_classic)
-> > +		static_call_cond(bpf_arch_pred_flush)();
-> >  	bitmap_set(pack->bitmap, pos, nbits);
-> >  	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
-> 
-> [Severity: High]
-> For unprivileged native eBPF programs, the predictor flush during memory pack
-> reuse is also skipped here. Could this allow an unprivileged attacker to load
-> a crafted JIT gadget into a reused memory chunk and exploit leftover branch
-> predictor state from previously executed privileged BPF programs?
-
-Same as above.
+Amirmohammad
