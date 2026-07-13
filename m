@@ -1,134 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AC6347BAF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 18:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E492357CE5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 19:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783968887; cv=none; b=VabbnsRpdQBM0vWGHunqoj+YJHY16zoFEWxx0HM8kbj1yvkGjzhXypozdA63W27zPFw6aW5DGySwEu5kFzhEuNYU6cUXibULnBVrkal/1vVjJO+xnX03pU7kFWqnp9//6YRE2pT0UWdx0RCggkzOwVZW07p3NPRlfDzcMLdH7W0=
+	t=1783971465; cv=none; b=gjBFAdtubtXzh/JfJUXZsPGRg+km7SAkXMgF7umdqZ1e0KYlApSCExh+fKYlkMRxRz/XrNXy9srjFXvbzp3sutYXjEVhDxYmgjxzICCgeVu5nXRe927CKQkowkbRScRel2H8ZJbz2Q1CbxQWrmgJMhvG1YGJRv1ZSCTuYxLTcAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783968887; c=relaxed/simple;
-	bh=8Aqo43b5HcFmqCxaRsPpupxPWhwBoEmRb/JAjQdogco=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i0go3HR1TIJEQYP+Z8tt8/SFVaSPjOHrjm4PkS0nQFuZu7LyaZB5JEwYrBOBdQVHepLatAN2Idhsp2VHTJ+szXplVUSnRvKshujPdI4PZPjrLulvBFdhdqWxmraJGZ6/5fSOsvNs/P4frxS40hfrb0qb7Y3T9bw1erxGOzw3qj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBd1ttIx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783971465; c=relaxed/simple;
+	bh=fkT9lRkMwYghu/2SsT5/Spxavix5VefOiOOVGSHvrjs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=VWEAEQXDbLXL7UvPsY76LuzPbuVfKwwucPzFeAY33imjTrwJite0LOKro2brq/VArrI+knQoAkloAt/D7GmXMk+ZfnoAYk/iBNk4XoqMklef3rTNnRF/tW5/5IRWiRuGfRILPDGAjyyOEBZtIqLEdTqPOWRzgtpmt8eORXx5NMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPnNIsFj; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SBd1ttIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127D81F000E9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 18:54:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783968886;
-	bh=5SYoblZzCCT1HwzF+g6fWpTbc02Fi8F61v/SMPPoUkU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=SBd1ttIxk6Hy+NVoo4O+QRrx64omaoxlWUTme77deVsgxV6zUeACWRitqCV65WFzb
-	 QWS5nfGcNK96g+Q1hyh0fMU/LVYg1kaItn4Ec76SLLDv45A8qeXbXOf94Z+gnm2Qab
-	 ycRRZ7x9UtvO+Sjh5zL7UKb22DQgtG/qkkmr1zecRbKimOvB9cN7pyaRoDFEySHLu0
-	 W/Zgou3nl5VVuXoLxun9MB2mwvS8q6oi0g5qkSbyYsoPvpdDa3n/s0zx2zUauid0BF
-	 jnX7PIAJjzffmcxVrj8+RQnCdTKS2RxXLOKGzhbUMzg6oPBm+k23ynty5yzhKwytMO
-	 YfcZYryIviH5w==
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c15ea93028dso384172566b.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 11:54:45 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yx4JDXjGeCU3A+uiBbytY4Nt8xtU0RoMk5wxgMqgkRMuqFMweHW
-	Deawrt2ZPOLCjjbWl4BfBFngctAtYAr+NN9nutjAtGvSG7C1YXsNxC0LnScFeO6DrxE9TuKOU/C
-	LcmE0ZpX6EotOIAeBhE9OMATltfMnzmQ=
-X-Received: by 2002:a17:906:ca8a:b0:c15:dd3d:c6e1 with SMTP id
- a640c23a62f3a-c161eb9ee25mr311855266b.37.1783968884970; Mon, 13 Jul 2026
- 11:54:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPnNIsFj"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4938d5f86f3so1536515e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 12:37:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783971463; x=1784576263; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=fkT9lRkMwYghu/2SsT5/Spxavix5VefOiOOVGSHvrjs=;
+        b=bPnNIsFjZWZkNWSatbQEgfQwxdihlU6jTNDL5Pq+0eHyUttFxO4MrdY+ROhSN6eo85
+         Ifbl3dMZSgmRxetCdf795Q59RrVAURJTMtw/T8rXM0tXywlLl5e0X/Y4G91zj6daQyBR
+         Lq6RV2YOufjmuOKphL/umAsZVvNbhM2wAricDf8jy9waEKIa/6pqYGnQV7qLOtljNAqg
+         khodqWDJk1n5EMzLphYgFo58njWyErwsjbmnQx86iA7k7WaDCAStqxTV86rnj0fWTeeX
+         aAuIZ0lErd3q+c7OJ1ohclJyLnQKi8R8DfGGL8W711uvZwi81z7y/kIUj9GR2frxa8qV
+         Gm+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783971463; x=1784576263;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fkT9lRkMwYghu/2SsT5/Spxavix5VefOiOOVGSHvrjs=;
+        b=JvQaDhEsDthL0j48LwNEILTVPpF7GWKLD0FOeoJPiIHVtC54v4ATgGJS8iSh822slF
+         vpTb7cBdr8WFIZYM2BlA4exronC9dV/j7bF72PgeR4EOEKLp5CX3GGeZ3ojLHAMPuCYR
+         yxYX5SRYsoG2TzU+/o7BE1uElXtvrFMLbBzZjFUiKc74NrVXGj53B8H6ytawmXPMtCNa
+         yOSQYh8l579DXNIqanuUV8BFwQjLXnaTth3HgVHnDIQjCb93TlDrFlQj3/M/O5lGIaPh
+         Hh9kNWEMgAz9GX4IyR614AP5dbUZACkcuxNJI8TFuRiDgGj/mbGGeMRX2mxZVZh9Rqim
+         e17A==
+X-Gm-Message-State: AOJu0YwJOUYIXkq5e5QbR7J3/KNIper0tq85XSwVZcFH3C3+o2U6R58I
+	X4+EQJMK4q/UGr3LvFDk826w/rm5341P2yLYt5DWJWdJXZ+eFdWfy5732HOyfhBSPec=
+X-Gm-Gg: AfdE7cmJGb7nCjA9Ul23QTCRG89NGfxS6BeAsDOG4y8h41cmf+mp56CQZcTTdMbn/ZX
+	YODR607GEBTZB7QnCfdECthpv/XNPs/YuU9HjY80XPqeGI2thrR5XGbJAYJgyPkez6dsVAYABVC
+	UuUI/ixET5FnVmiWBVJ0okVuyhimNgvzxMKGoFt39ET7uNjaUc5iQP6b0w1/sxxVCRPK3UEP76w
+	y32Zd6eTQQG+Pm4PFYOi1FDXd9W2Pr18WerBvYyshYAJPjZ0lbuJh33jnZp+C0g8w3xerreBgWA
+	K5UzydZwqf7Tnf6Bfk2d4lcISCyb8V0oD1Lo32mobEXAl7eX7LkiMPSK9LXa4Iz1g2H6gIejQNg
+	TJIAaMGR6qYEJdzQtDjERJ04cVwx8c/rFzt17jl1Mh5QGhxMmiR5RXnmdHFktmEFj3IHNkLRaQe
+	LnqOXnEoQojNiCRZOa
+X-Received: by 2002:a7b:cd13:0:b0:493:cbd4:8925 with SMTP id 5b1f17b1804b1-493f2a85bcbmr128448055e9.4.1783971462835;
+        Mon, 13 Jul 2026 12:37:42 -0700 (PDT)
+Received: from localhost ([193.30.163.202])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464a9879sm2025314f8f.22.2026.07.13.12.37.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2026 12:37:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260713180153.2728382-1-yosry@kernel.org> <20260713180153.2728382-2-yosry@kernel.org>
- <20260713181413.94A481F00A3D@smtp.kernel.org>
-In-Reply-To: <20260713181413.94A481F00A3D@smtp.kernel.org>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Mon, 13 Jul 2026 11:54:33 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zPfZVTYQwgGhJtowcmSETUb4NHPB45_jwA=oXggUBhVQw@mail.gmail.com>
-X-Gm-Features: AVVi8Ceo8HDlNN4kswAVe0YW6PXBuS2V3nJDmilOM24GeW41uQB1ya06ZVbRUDg
-Message-ID: <CAO9r8zPfZVTYQwgGhJtowcmSETUb4NHPB45_jwA=oXggUBhVQw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] KVM: x86: Check EFER validity on KVM_SET_SREGS*
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 13 Jul 2026 21:37:41 +0200
+Message-Id: <DJXP3RGL6OH2.2FBANQ2HJV2J4@gmail.com>
+Cc: <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH 2/2] drm/amd/display: Use drm_edid_block_count() instead
+ of raw extensions
+From: =?utf-8?q?Timo_Pr=C3=B6mer?= <timo.proemer04@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, =?utf-8?q?Timo_Pr=C3=B6mer?=
+ <timo.proemer04@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260713183841.5921-1-timo.proemer04@gmail.com>
+ <20260713183841.5921-3-timo.proemer04@gmail.com>
+ <20260713185052.9251A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260713185052.9251A1F000E9@smtp.kernel.org>
 
-On Mon, Jul 13, 2026 at 11:14=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but the return val=
-ue of `kvm_x86_call(set_efer)` is ignored in `__set_sregs_common()`, leadin=
-g to a silent failure when nested state allocation fails.
-> --
->
-> --- Patch [1]: [PATCH v3 1/2] KVM: x86: Check EFER validity on KVM_SET_SR=
-EGS* ---
-> commit 6edd9e84461af3c58ac965b84f89b7c4985ddeb3
-> Author: Yosry Ahmed <yosry@kernel.org>
->
-> KVM: x86: Check EFER validity on KVM_SET_SREGS*
->
-> This commit adds checks to validate EFER against both KVM and guest caps
-> during KVM_SET_SREGS* writes, preventing userspace from writing bogus val=
-ues
-> through the per-vendor set_efer callbacks.
->
-> > diff --git a/arch/x86/kvm/regs.c b/arch/x86/kvm/regs.c
-> > index bd8147798cc3e..8f66438989e47 100644
-> > --- a/arch/x86/kvm/regs.c
-> > +++ b/arch/x86/kvm/regs.c
->
-> [ ... ]
->
-> > @@ -564,7 +564,8 @@ static bool kvm_is_valid_sregs(struct kvm_vcpu *vcp=
-u, struct kvm_sregs *sregs)
-> >       }
-> >
-> >       return kvm_is_valid_cr4(vcpu, sregs->cr4) &&
-> > -            kvm_is_valid_cr0(vcpu, sregs->cr0);
-> > +            kvm_is_valid_cr0(vcpu, sregs->cr0) &&
-> > +            kvm_valid_efer(vcpu, sregs->efer);
-> >  }
-> >
-> >  static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs =
-*sregs,
-> >                             int *mmu_reset_needed, bool update_pdptrs)
-> >  {
->
-> [ ... ]
->
-> >       vcpu->arch.cr3 =3D sregs->cr3;
-> >       kvm_register_mark_dirty(vcpu, VCPU_REG_CR3);
-> >       kvm_x86_call(post_set_cr3)(vcpu, sregs->cr3);
-> >
-> >       *mmu_reset_needed |=3D vcpu->arch.efer !=3D sregs->efer;
-> >       kvm_x86_call(set_efer)(vcpu, sregs->efer);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but should the return value
-> of kvm_x86_call() be checked here?
->
-> If a userspace process calls the KVM_SET_SREGS ioctl with EFER.SVME set,
-> kvm_x86_call(set_efer) could call into svm_set_efer(), which attempts to
-> allocate nested state via svm_allocate_nested().
->
-> If the system is under memory pressure, this allocation can fail and retu=
-rn
-> -ENOMEM. Because the return value is ignored in __set_sregs_common(),
-> doesn't this lead to a silent failure where KVM fails to set the guest's
-> EFER register but still returns success to userspace?
+Thanks for the report.
 
-This seems like a real issue, and I think it's not very easy to fix
-because it seems like KVM_SET_SREGS is currently atomic, we either do
-all the updates or we fail. So we can't just fail in the middle of
-__set_sregs_common() if set_efer() fails, we have to either undo the
-previous changes or re-order the writes to do EFER first. Re-ordering
-seems like it should be fine, I don't immediately see svm_set_efer()
-or vmx_set_efer() depending on any of the previous updates, but I
-didn't look too closely.
-
-Anyway, this is completely orthogonal to this patch AFAICT.
+I have fixed this issue and just sent out a v2 of the series.
