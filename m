@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E6234DB74;
-	Mon, 13 Jul 2026 20:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA2E309EEC;
+	Mon, 13 Jul 2026 23:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783974809; cv=none; b=QiSOUZUtkKOSGwcas9w10xvyvHLW/z3Jd5PyAi97nzVhZnPoBV+2YNBWN7nMjkScu1EoteecjAOcy/TbP/HpQDgHM3j4TRZHuyU7d6oZ0f8rULTOGbM+eWYzwfRr6JcVixart1TDVR40wCO+QuIF4RVK2dRrd8hGNxsxPDRdmc4=
+	t=1783983618; cv=none; b=Veahd88DfL1yRy1rbdz1+ctV6eoNJfmM9amklI5LMuIN08Sum/AB+vriqtpXeNINRHW6Qm0PZDPzANQvtInf7qT1t2LwmVE3bCNJroWbNOgl6qhiXDDHhMPYAX1p1oZ/rBm+uZXDsuVvSAQfPGGn7LFnnHUCn923Cr4Zni/X0JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783974809; c=relaxed/simple;
-	bh=BzXnWYycZtrsC4eYp80TBiwS/8l9vkPcVQHMfEwIaHM=;
+	s=arc-20240116; t=1783983618; c=relaxed/simple;
+	bh=LMoLRui/EtXQj6mQo2dUqv7rxflL8LRCeb9Db32J+Ds=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YrVF1NO5lRK9+8mhfU1d3GmGNhE1uwkmDl/0d9sn0UUQ9HWdlfbx3uk8pNM/NXSH9qIl2xGvKh7f7fVx3im6KxGW+m3lzKy1CqcBwwCDJU5pDJcII/hlGdq0s3bwHvjdo91a63cObXOJJl5mkXbCJvqo3lP0WugN1LHK7nI9i10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+njEd0h; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=bK5pEIDhjVZHQA6di0PSN99J8tvIhXwZvXeR2REj5pfzOG30NdxLC4sbNQIDWKzyn+zAw0slWETbBkDjdOgETjs7lHd7c0Y8VMu8M9e4258QYxet4fIVi3HyOOQQoNRZHwS5WQVZtne2RDhNYOoInbpXw8mASk4Uh6vCxcVvbFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDjyuQkm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+njEd0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBFA1F00A3A;
-	Mon, 13 Jul 2026 20:33:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDjyuQkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4AD1F00A3A;
+	Mon, 13 Jul 2026 23:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783974807;
-	bh=cRkPSO91bFeK9182PS7Iusjus+5qu8ApU8Ds9AgNKO4=;
+	s=k20260515; t=1783983616;
+	bh=msrD+pBuJUOZyD+C0lZnluFwc5+BBCL/UKHUchTd5e0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=J+njEd0hPiFuXkUjQ/5/i4upvCIBDFBxs5vg2NHF4FYvEtDBeJ2cQFRJ6WMOdltt3
-	 bhGNcW0smNWjC0n74L8kCC2kRofEcyhYc2Kr8xwHYfivqAtpQfQDLdjjVDjxBbkKGR
-	 Jpg/eoQXMiuhQnn60IG1UvMB6h3h+qAADqWo9xTtEkZX5mQRMm1HdgrgPNRkjaLxgm
-	 e3yK6LKKTrHFnHzComDtHn57rf6bbj2AE7FoF4OuARZ/Ax3TeR5K8+u8JIr34Em2Al
-	 A6HZOHiqshYEF5LoGvbAxzzufWMf4qVkrQgFkoXWPA60x+zKUrO9GEuhdLxe8QWoqA
-	 DIzyfOj+yZhGQ==
-Date: Mon, 13 Jul 2026 13:33:26 -0700
+	b=RDjyuQkmipttQJOY1OYSP4qwhKB0BjZ0y4d7+0kom4W8AUHJT8ri/wy4vHgDc22z2
+	 P6JVrhWYXc4iZXQe9Xl7IdBI9FJeNEShUJm1Fwtf4URCkLRWjtfRlAPObRa3ONyq05
+	 n3hi3mpn8ziEr2Ycn0rmYU4X6F88CVUZ2IuQNDEtr36EBO01CUIrcbhb73QYCr9gyo
+	 3XdPvv/P6eRzUMhk9M7ZioygFRCWX6dcvx6Uy36u/vw4pRq10zzXs2rvtkuUVdEBzP
+	 RiG2UebC7b+Iizgdv6y5t5i2q3KfURty1JmME+I6mf/VowZ9Gr3UsE5N+tvI13LLxW
+	 aP9VO4rG6mZqw==
+Date: Mon, 13 Jul 2026 16:00:15 -0700
 From: Namhyung Kim <namhyung@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Trevor Allison <tallison@redhat.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 3/3] perf x86: Add .note.gnu.property to assembly linked
- into perf
-Message-ID: <alVLlpmtps__MBCl@google.com>
-References: <20260708045606.43649-1-tallison@redhat.com>
- <20260708045606.43649-4-tallison@redhat.com>
- <20260708050839.BD9491F000E9@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v1 1/3] perf sched: Add missing perf_session__delete()
+Message-ID: <alVt_4Oaj8SvqAlv@google.com>
+References: <20260713204707.2181098-1-namhyung@kernel.org>
+ <20260713204707.2181098-2-namhyung@kernel.org>
+ <20260713205907.77D4F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,98 +43,44 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260708050839.BD9491F000E9@smtp.kernel.org>
+In-Reply-To: <20260713205907.77D4F1F000E9@smtp.kernel.org>
 
-Hello,
-
-On Wed, Jul 08, 2026 at 05:08:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Adding .note.gnu.property asserts IBT support without providing ENDBR64 instructions, causing a #CP crash in perf memory benchmarks.
-> - [Medium] The .note.gnu.property section hardcodes 8-byte alignment, violating the 32-bit x86 ELF specification.
+On Mon, Jul 13, 2026 at 08:59:07PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The patch introduces a double close of the file descriptor `fd` because `perf_session__delete(session)` inherently closes it before the explicit `close(fd)`.
 > --
+> 
+> --- Patch [1]: [PATCH v1 1/3] perf sched: Add missing perf_session__delete() ---
+> commit 2da9bd6a7ce8e17e442d8be81b1b57837aaee6e1
+> Author: Namhyung Kim <namhyung@kernel.org>
+> 
+> perf sched: Add missing perf_session__delete()
+> 
+> This patch addresses an ASAN-reported memory leak in the perf sched stats
+> record command by explicitly deleting the session before returning.
+> 
+> > diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+> > index 6e0d8f4d270e2..68147a0be5c71 100644
+> > --- a/tools/perf/builtin-sched.c
+> > +++ b/tools/perf/builtin-sched.c
+> > @@ -4027,6 +4027,7 @@ static int perf_sched__schedstat_record(struct perf_sched *sched,
+> >  	else
+> >  		fprintf(stderr, "[ perf sched stats: Failed !! ]\n");
+> >  
+> > +	perf_session__delete(session);
+> >  	evlist__put(evlist);
+> >  	close(fd);
+> 
+> [Severity: Medium]
+> Does adding perf_session__delete() result in closing the file descriptor twice?
+> 
+> Since perf_session__delete() internally closes the file descriptor associated
+> with the session data, the subsequent explicit close(fd) will attempt to
+> close it again. This could return EBADF or erroneously close an unrelated
+> file descriptor if another thread opens a file in the meantime.
 
-Can you please take a look and address the both comments?
+Hmm.. looks right.  I think I can just remove the close().
 
 Thanks,
 Namhyung
 
-> 
-> --- Patch [3]: [PATCH 3/3] perf x86: Add .note.gnu.property to assembly linked into perf ---
-> commit b48d7edb7fb18bc3dace2af272de108eb561d69b
-> Author: Trevor Allison <tallison@redhat.com>
-> 
-> perf x86: Add .note.gnu.property to assembly linked into perf
-> 
-> This commit adds `.note.gnu.property` to x86 assembly files linked into
-> perf to indicate CET properties support. This is intended to prevent static
-> linking from dropping CET from the final binary.
-> 
-> > diff --git a/tools/perf/arch/x86/tests/regs_load.S b/tools/perf/arch/x86/tests/regs_load.S
-> > index 80f14f52e3f60..1947f95cceda5 100644
-> > --- a/tools/perf/arch/x86/tests/regs_load.S
-> > +++ b/tools/perf/arch/x86/tests/regs_load.S
-> [ ... ]
-> > @@ -97,3 +97,27 @@ SYM_FUNC_END(perf_regs_load)
-> >   * the ELF stack should not be restricted at all and set it RWX.
-> >   */
-> >  .section .note.GNU-stack,"",@progbits
-> > +
-> > +/*
-> > + * We need to provide .note.gnu.property section with IBT and SHSTK,
-> > + * saying that this object supports the same CET properties as C code
-> > + * built with -fcf-protection. Otherwise static linking drops CET from
-> > + * the final perf binary when other objects are CET-enabled.
-> > + */
-> > +	.pushsection .note.gnu.property, "a"
-> > +	.p2align 3
-> 
-> [Severity: Medium]
-> Does this unconditionally hardcode 8-byte alignment for 32-bit x86 builds?
-> 
-> The assembly file `regs_load.S` can be compiled for 32-bit x86, which requires
-> 4-byte alignment (`.p2align 2`) for ELF notes. When the linker merges these,
-> the forced 8-byte alignment can create zero-byte padding gaps between notes,
-> corrupting the contiguous ELF note structure.
-> 
-> Could this cause the dynamic loader or tools like `readelf` to fail to parse
-> the ELF notes properly?
-> 
-> [ ... ]
-> > diff --git a/tools/perf/bench/mem-memcpy-x86-64-asm.S b/tools/perf/bench/mem-memcpy-x86-64-asm.S
-> > index 1b9fef7efcdcc..e7b84aa43ab44 100644
-> > --- a/tools/perf/bench/mem-memcpy-x86-64-asm.S
-> > +++ b/tools/perf/bench/mem-memcpy-x86-64-asm.S
-> [ ... ]
-> > @@ -18,3 +18,27 @@
-> >   * the ELF stack should not be restricted at all and set it RWX.
-> >   */
-> >  .section .note.GNU-stack,"",@progbits
-> > +
-> > +/*
-> > + * We need to provide .note.gnu.property section with IBT and SHSTK,
-> > + * saying that this object supports the same CET properties as C code
-> > + * built with -fcf-protection. Otherwise static linking drops CET from
-> > + * the final perf binary when other objects are CET-enabled.
-> > + */
-> > +	.pushsection .note.gnu.property, "a"
-> > +	.p2align 3
-> 
-> [Severity: Medium]
-> Will this cause a Control Protection Exception (#CP) crash on IBT-capable
-> hardware when running `perf bench mem memcpy`?
-> 
-> Adding this section artificially claims IBT support and forces the linker to
-> enable CET on the final `perf` binary. However, `perf`'s local linkage headers
-> do not automatically emit `endbr64` instructions for `SYM_FUNC_START`.
-> 
-> When `do_memcpy()` in `tools/perf/bench/mem-functions.c` indirectly calls
-> these assembly entry points like `memcpy_orig`:
-> 
-> 	fn(dst, src, size);
-> 
-> the hardware may detect the missing `endbr64` on the indirect branch target
-> and throw a #CP fault.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260708045606.43649-1-tallison@redhat.com?part=3
