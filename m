@@ -1,106 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.219])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDB01A3160;
-	Tue, 14 Jul 2026 14:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784040163; cv=none; b=RumPguY0fxfT3Vd9PLvDja+6iPOOAwkdVPUxGTd5aeuIixwgCcGrlLTSyEgDzGNbEx0ovQ0bZX5c0FHruZyPW8ZACtsbscGZmE0yR7PgmGwSwlSL5fy679d1pa4plMjb31pBhB+3Bsb5xaQ5EkRWR+BhCWaz/yTfvbjIsAg3HiM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784040163; c=relaxed/simple;
-	bh=24mGL5APZkTLfuw/8iScc+zBzGDnN9HTxzi46AtljAo=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ihS2kRUb/P7ZWUKyTZpYj+YkDbJjKM4kDoqfkdAIH7sD//S/2v96iM3Lkpuxa8pQqcoQa6dcB27TTiHEDwqnX9AfRNCd+lBlRBQ31tiXRufrNRakRcKB+MtJyW2VP2w4VGKJQXtmupMNFpTkOqT10UM4XREmfRLyTiD7ANs0ZBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IIbrfB1z; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FC648A2B2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 14:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.219
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784040257; cv=pass; b=fnZrmEZ4IMR4lVnQ7/eJ4CJof5EGg1EKZPwC28V5NhGLD8xSpWN6jFV8rvwSLiFj34BlToWIrHmyPMWwHCaoyHuHEUzO1Khcvghh9EyCfk5JxpGj+4BUZxh21dPOzQmN1Ribho7p0GSRgFx6MTYpouLduhew3az7Fa7BHV4idgo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784040257; c=relaxed/simple;
+	bh=/mqaC19Y/yMk5bYUbcHelPJJeBNbYVsBCKjfoXb9XcM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TYvVh422wGGk063Yo8EIGrzfwi6llU9iNteRom0tMTBMhtmfV2eg4OZGNXcW5ufPlnpqidVMNBqZdFolRX7qmEpb63kCo7s2QW6BcUdu035bkeLh7H3YQ8Wsaqh22sVyuMKlo271F4pAUZkmmjtM2iIFbg784F/RFtV6OwOwZ/0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=EnoKAamN; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=iQYAPV9W; arc=pass smtp.client-ip=81.169.146.219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IIbrfB1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7EB1F00A3A;
-	Tue, 14 Jul 2026 14:42:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784040155;
-	bh=mlBu1Bp61PlIYBzRRe1/GLFDWE1W4Gxddj0ESIkTctE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=IIbrfB1z4kkO6SGsMOnqbn3/2UldkavHVhW8Y4Un9UmibM6eHsgMJsjAZHUmPZ9GA
-	 UMLMswwn5C1D8ESKG8RXlsk0Fl169H4VjQQAU+8vQoxP3o2i965dAYNMMa/0+uV8Hl
-	 aORIHvD3fYe3g5oYneVFO3EwtOMo2AC5PzsgfBuPYcnIu8HjGsCnEmm3ISunQx9VUm
-	 2bHhGhW0JFbpk6xN0MHHGt/C7QfbA0dBj3UNUGepo8hL9QI3dGAIadRjZzQl4xjlrI
-	 Wem+6Sm7A8Urf4IS5vxq12D2eqOPmmyHTTldKq7bSqspFos245QOhPiG+c8T0s6wbK
-	 BVn0ukjDdiwXQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wjeLB-00000004wxi-28U6;
-	Tue, 14 Jul 2026 14:42:33 +0000
-Date: Tue, 14 Jul 2026 15:42:33 +0100
-Message-ID: <86mrvtoco6.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Oliver Upton" <oupton@kernel.org>,
-	kvm@vger.kernel.org,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v2 26/28] KVM: arm64: Add FEAT_NV3 detection
-In-Reply-To: <20260714100704.206731F000E9@smtp.kernel.org>
-References: <20260714091641.1970822-1-maz@kernel.org>
-	<20260714091641.1970822-27-maz@kernel.org>
-	<20260714100704.206731F000E9@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="EnoKAamN";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="iQYAPV9W"
+ARC-Seal: i=1; a=rsa-sha256; t=1784040055; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=rC/I1nPonJJYh5h+0Ape4YppV++25VAivFWOZL2GzE1d1supDkesnWZtqwPl35jQ0F
+    M0TaOkj0QLWdvN6txkX/8LPl3Qujtm3enP8yu93TcCr6jhKWKwZ/QL+0LSgiNEGEwTTr
+    FI9WB8K69oW4HtUnzC6np1LJjEgvHcwVUjL6bLiIQYXKNVNU+8/eWIcIGBGVdOI5zmuK
+    bO1zHoIpnfTJ3QrmzAR0Pa3kFCYUGzZm1RnEZB+NfUyu6psqSAwNA007+CkkGzzzlBlS
+    +EphvIGLslQyJhtkNYWW2af+BeFwkIp7qDXMuLmgIbJXgZxrxsax4sUvSEWgiRqRyNh+
+    KgeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784040055;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=KRax0Y0vd0zXdk9mMyXYZhbAztuKHFumKVBMHJCzQzk=;
+    b=eVn07jIGd1E3IgmIQI1iH4ylWSKAZhSGWYLKsWTCyhq5wFrIaQz+Kvv9OWYFTpfrSZ
+    kwUIMDrfIxynRppnTJKu3FPh02HsD1VlKKbgtn50RXj34Tj1PciNj34kTOJyLRZQuUSh
+    Xt16jM0lwERUiUIU0CEKDt/T+Lmze6U5Pslmuc/JufW4w/elvqnXIMHqdYbGV7JBihO4
+    xnmPXWpdTOPe4esDakb/G1dlQ6f8ldt2VuPJqG7zIscQ9fQoPnKcctMvqydXkyFWpYf9
+    pIcgY2E/jdUMlM6UecdMwENz6E/mXjPeRGlG0MfY2Sk1NVLao8g1NQPol1AIH2K2lme6
+    pdpQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784040055;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=KRax0Y0vd0zXdk9mMyXYZhbAztuKHFumKVBMHJCzQzk=;
+    b=EnoKAamN7cmTAZv0TVM1H0waeEyHdb38f9vozP/RKkxgbPX1SzIT1K0ij05pSHfcP9
+    2TiEwVtBCq2DzW1lJAjlpHHVvo7edvYA7vs8x9lBjEAnNc6vQqVvm7cr4e3b9KhFeH0B
+    zW6YKmGolecxr4FAV1drHCy8gSuJfnfKjO+q2TGixPYWptim//btyaOhw74AIYrTqXyP
+    V1PZ7yQs/yFWzjBidaDak4jo0sTh3ZKz84ShLiW9p0jbV1MI8P+DWCWffI0/XL1zPGyc
+    0al7AM7JjqQEgm6oI7mmSPaJBObEkA9dJUSmtvqgmRHOTxgdSRWGsXTm/iHCY6zBh/Wp
+    1ibg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784040055;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=KRax0Y0vd0zXdk9mMyXYZhbAztuKHFumKVBMHJCzQzk=;
+    b=iQYAPV9WazCHmWwgemFsezDdKKjUfMYaXge8ql+6LXyVuIMuuYa61WS7P9xORO0fgb
+    0pmOScli5mbPDQwE+eAw==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
+Received: from [192.168.20.190]
+    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
+    with ESMTPSA id Ka9fdb26EEetlSQ
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 14 Jul 2026 16:40:55 +0200 (CEST)
+Message-ID: <b6309f4c-3c8e-4f34-a01d-1a08c5998f7a@hartkopp.net>
+Date: Tue, 14 Jul 2026 16:40:55 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
+ removal
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: sashiko-reviews@lists.linux.dev, Oleksij Rempel
+ <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>
+References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
+ <20260714-bcm_fixes-v13-9-fd667c61099a@hartkopp.net>
+ <20260714104431.65C751F000E9@smtp.kernel.org>
+ <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
+ <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
+ <1a521f25-0aee-4eae-a0da-3eb7f0702e84@hartkopp.net>
+ <20260714-vehement-native-jaguar-4f52dd-mkl@pengutronix.de>
+ <ee59dccc-0532-4b00-8783-9763e04c327e@hartkopp.net>
+ <20260714-tidy-quizzical-collie-4aaee0-mkl@pengutronix.de>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260714-tidy-quizzical-collie-4aaee0-mkl@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 14 Jul 2026 11:07:03 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Writes to control-plane system registers (SYS_NVHCR_EL2 and SYS_VNCR_EL2) are missing the architecturally required `isb()` synchronization barrier.
-> --
-> 
-> --- Patch [26]: [PATCH v2 26/28] KVM: arm64: Add FEAT_NV3 detection ---
-> commit 1e08d22547f3313a77b075620f905436357c4b40
-> Author: Marc Zyngier <maz@kernel.org>
-> 
-> KVM: arm64: Add FEAT_NV3 detection
->     
-> Now that everything is in place to engage the FEAT_NV3 fast-path,
-> add the detection code to cpufeature.c.
-> 
-> > diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-> > index c9c124b0ccc8e..6ae1c816e2010 100644
-> > --- a/arch/arm64/kernel/cpufeature.c
-> > +++ b/arch/arm64/kernel/cpufeature.c
-> > @@ -2627,6 +2627,13 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
-> >  		.matches = has_cpuid_feature,
-> >  		ARM64_CPUID_FIELDS(ID_AA64MMFR4_EL1, NV_frac, NV2P1)
-> >  	},
-> > +	{
-> > +		.desc = "FEAT_NV3",
-> > +		.capability = ARM64_HAS_NV3,
-> > +		.type = ARM64_CPUCAP_SYSTEM_FEATURE,
-> > +		.matches = has_cpuid_feature,
-> > +		ARM64_CPUID_FIELDS(ID_AA64MMFR4_EL1, NV_frac, NV3)
-> > +	},
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but enabling FEAT_NV3 here exposes
-> pre-existing paths where control-plane system registers are written without
-> the architecturally required immediate isb() synchronization barrier.
 
-Plonk.
 
-	M.
+On 14.07.26 15:41, Marc Kleine-Budde wrote:
+> On 14.07.2026 15:07:48, Oliver Hartkopp wrote:
+>> When there was a new issue pointed out by sashiko I fixed it inside the
+>> patch with --amend when it belonged to the topic of the patch.
+> 
+> You've probably already working on this one:
+> https://lore.kernel.org/all/20260714115254.D9C2B1F000E9@smtp.kernel.org/
+> 
+>> So I tried to follow the one problem, one patch pattern. And every patch
+>> makes things better and introduces no new regressions (which sashiko-bot
+>> would have detected) - while probably not fixing everything at once.
+> 
+> Perfect!
+> 
+> regards,
+> Marc
+> 
 
--- 
-Without deviation from the norm, progress is not possible.
+In fact that was still a problem. working on it for patch 3. Easy thing.
+
+Thanks,
+Oliver
+
