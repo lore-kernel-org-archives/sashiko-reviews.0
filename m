@@ -1,185 +1,291 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011019.outbound.protection.outlook.com [52.101.62.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A38B308F0A;
-	Tue, 14 Jul 2026 07:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784015338; cv=none; b=eCamhvl7WdbFTj7+b38bcYAxOCvaiH7eenYUflATSeGSTDcTJKbdCwZ40V8/ZoPAZ7Ycctsb7LeH1dcNt+ru4yCs1BJFmg7aNHMJgiEQN6le9lf3hzBg4wQ6GWu0TO07H+jhY3befDPNrS+YmBnI3pmgtDgw31p0xcRjnMK4X/w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784015338; c=relaxed/simple;
-	bh=OzE33GcltAjDW5tcXG9BRYvtFttzRWQQ0noGuMNwYt8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G9ox51miozR+jcFM1m5P9fvLQk0tX0G8psHSV7YtjvDLPIEAAr3jgbZQFWXEPmXd894KK0YwxUXpKlsNQqaWRkA+NZIJvZqYlqcgwyvJTIvZzo5eRco2XWWf0UOlE5E3i5jubSnz1BbJjMilfnz7RjPqYYkGZvUjhtIz1yhcgjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mP6wINOx; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D5C32B12A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 07:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784015794; cv=fail; b=Lk/D22Gt+lYw5bRI3y4vIzy85ZTKa81YsZOLVLuTh+xvDC26541K/pOMro7/eSd1mXaKl+U1KOU0XHxuxE60cZ8Pe5f1jYsSmv7afVNmUdVVy7w4Lmh9aKSpQFiUyBQ1LS41Qo5dBcH/I+ws4KfIp4TrjF/uPMVDdnI0XKgH5+o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784015794; c=relaxed/simple;
+	bh=9bswQIK46014oREq4kx99e/8ixzgNosWD4Pl7C3/PUk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=iFCtDi4HP6GV8niWeQp1R+/k+WiFxwFCMF6sNvpC2GDnmtzpwJawGzDXz407JHV1NCUhvzRW0TZ+RAyncPSo61BoCeLViNAFjKiKvr3hiAxPPxCgnxLXE1HRNWMSPobRmMko4Tz9O9AGpSUJ5owsiu5wbztSj1sAObiv70yVulk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Id1btee4 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.62.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mP6wINOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711981F000E9;
-	Tue, 14 Jul 2026 07:48:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784015336;
-	bh=VQ6gzOozAQGk1FXpGVGaPrA/5KbS2tcHpdPlcbzeLl0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mP6wINOxIeFgFZrQH8Iu6SkRjKy5vO/wP2I5GaNxw2Tzv7t4erJrtyh1Gymeb9OrX
-	 4qAEW0o3lkSWfW5iXcaq0Hx/zzmDcR5gJDCpclvXyGmAf/NBUgx3XyXIxnv1mITGtR
-	 VzsFqsLblUVQOpQ2joHJ+J/2hzKeZsuCoVrNfyKp8kghZ2ZbRIA5GmZJLVNtt1K1Gl
-	 QfrhhLByCxd5sTvtkM/Rnf9qT00M2ZAtQu5od9txx3Lw8X/nMaMs2Oyt197gHt8d73
-	 UurX7TJWJpozp9uS07D1QNZssFv3YIZrdqk24EKA4aZ72/q08scQD1bPitVhHgxUQ9
-	 jBI4rDo/tRwqg==
-Date: Tue, 14 Jul 2026 09:48:50 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: 
-	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, 
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 1/3] dmaengine: dw-edma: Implement device_synchronize()
- callback
-Message-ID: <moxonhzmvp6mofmaabywhfe6xucxut6fgjjlfg73uadanghwx5@mhisbkzznlar>
-References: <20260629-mhi-ep-flush-v1-0-714e0d56e87c@oss.qualcomm.com>
- <20260629-mhi-ep-flush-v1-1-714e0d56e87c@oss.qualcomm.com>
- <20260629085716.D203C1F000E9@smtp.kernel.org>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Id1btee4"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SKdZAFC5vx6tYMPNMAu0UVqpL4TlaHKq3GcQtj4FRkWRGCqsBYxE268VIaMMiZ+fZMVuGD6U9VybVSQc3dmrf0epA7i8AxcIHK7lKk0n02/GjO676JuIvfaTSpkghtEQEN0B8oRQNGZGV7QMqZIxXqytbTY2udI7N3vcLnjlJOl20cKtAhwM/9aFZBPGGROkOOGydeZGPe24ECct/aSSoBpaEANz95B2CevH+Rdh/VEzqn97antHvCtXXqrZoUc/c9W4wW5eqKMrrtkmo8nM8nCtN6w3oupOpW0UJcXJjRovu7S2KQ6doQdeJy7kQDbnnveda0owhQWwLPv6khfo3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DpmAZxfegBEUX3DYJ0VzGBtW7SYSmdhWwXIgnpHTcS4=;
+ b=XBxRi9K+UR9+qZXAdooe42pypdBnvxM2knmMXm3rGruWePjQruvpYAFO81hEC+S5t2NsPWVmJFB1Dliru3vjqYPmyt7jg2ovz2K981HMYvR6rWrgWq7n/TK/Ws1EmEACA/xqSmFJcg2e7s+ONopfGjwb0SggD4MDMPHB6+cfpqQoXC5I3veRZkvHg0YX/yaAQVy0pALWUbsmmtdhsnvN+nEawNEHGYDCBBBaM70sQZMh77UhvwXquUjGvdXbyfJX6Net7etY5Q1K+APvAV317+0MQWCNiKz/l7ZCwsa5ZhNycDCCy4O7oVcq2C+A49gZsVpkLOOzhwDwZp60ScR0zQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DpmAZxfegBEUX3DYJ0VzGBtW7SYSmdhWwXIgnpHTcS4=;
+ b=Id1btee4E2IghpSXIXfCbmbKOUsKx0Vfox9ICe3FG4Gtvbvcni/5kYkf5c2JKOuHjis1LXtgJlTisZIvZnTYhr01jirKTwwRVQQ/+e2GD8/y/jpjC6dQ1vDEv97fFJ/Su/8b754PibZUr8cSN34LKboROXfDjGFQ3XUeV8G1YWTALZzU/zfqL/SudSp0f9rPhp6FxEGb0fB5Qj5FREs/e1p+nXxmFWuCdS6vHUvbzTwF222g4aytOSPTjIOp50azZmd7T3cdqToec9bsSz0PCoBVj+sTlU4awAHfiDjyzTVEptFjJlXGTHIKCO7YmZZtIyqQPPo0spKi2P9kc9oDVw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by MW4PR12MB7016.namprd12.prod.outlook.com (2603:10b6:303:218::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.22; Tue, 14 Jul
+ 2026 07:56:27 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0223.008; Tue, 14 Jul 2026
+ 07:56:27 +0000
+Date: Tue, 14 Jul 2026 15:56:18 +0800
+From: Richard Cheng <icheng@nvidia.com>
+To: Alison Schofield <alison.schofield@intel.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] cxl/region: Allow passthrough decoders with >16K
+ granularity
+Message-ID: <alXqISpyXQVzOlmq@MWDK4CY14F>
+References: <cover.1783795720.git.alison.schofield@intel.com>
+ <9a798f6b445ca8f2b16743d3e16fa289efadd86a.1783795720.git.alison.schofield@intel.com>
+ <20260711201508.082531F000E9@smtp.kernel.org>
+ <alL3a2UXB38XI7Nb@aschofie-mobl2.lan>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <alL3a2UXB38XI7Nb@aschofie-mobl2.lan>
+X-ClientProxiedBy: JH0PR01CA0183.apcprd01.prod.exchangelabs.com
+ (2603:1096:990:75::20) To BL0PR12MB2370.namprd12.prod.outlook.com
+ (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260629085716.D203C1F000E9@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|MW4PR12MB7016:EE_
+X-MS-Office365-Filtering-Correlation-Id: e3b646d8-2413-42c4-6b77-08dee17d677a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|11063799006|56012099006|4143699003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	uAjd1zc5ZlQNcFaFtfg/B+WNC0AEztBcHjhp6FeTt5pHKL302iStgNWK38HSXkVR0sEW3ZXuGm8hL3glZPw9UasHC+nowBraI0cjz/bsWSqr+eRvx+ZdUSlWqXgbMRPf4k/cm2MHlOxMX4r6jzpbSJ60yAi9o+zeJlFnyYW2fY91KpcIJ38oCrMBs+NzwgwlFmsAonIwcU5iI97CFmQHQXLJnRtW/AxAr1G8oaIyn+OdQorn34b5XHh5vivl5vhqM9oqxp7OMoMazPDLH2TmaSVSHYo0ad62eUsNdirFpZMQNhrZENQ4O9YWnQV6p6eQ8VD8PE0O8D+b+51bkUXs1X49du88dxi7sQq/Rhn+AvtidER+sSOEiPEEDgXrjLw/PCniwYIPj8q8TAxqOxgfBGdIIOeNwkfwOPxe9Z3fRYY/8wLxaw8Xa5SZYw9E3e8Q0FSIn2sR0cWHST4fmObJwyLdeu+rFLkfyjAv45rMLxBY155/YksLup7Lrb/ND8QgLuJnhwoK+nfowjPMOHoCYJ102mKUnXFBL3gzTc6jkfTcgMVs4TruK5GwavdSaiQRChRyqQB0fMKsHJltKN672ulFpp8vin07h4I0j4Fzj689mnhKtCSXirKHdbNOXFZELGvryD9lV2T9T9sCxFfJOhZKZwYKCpxuQ75a2L7ziQk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(11063799006)(56012099006)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?AryzNuLXQl0DEve7nt0JVP5+s37yT415XHstwElW5uRel+4NKln8XJKNlD?=
+ =?iso-8859-1?Q?i9TnUBY3bN42F2HC3S/10FHfJvvFCV01ZUj83kZs5PksAs24lavaxwMbY1?=
+ =?iso-8859-1?Q?M3yWw3Bt29rb3JNJFESsZnxG8c4OdD4o9AXCWxPIj1ejbWH8U9rg1Xte3j?=
+ =?iso-8859-1?Q?fqY9Te8QFYEatfDGI+0qyLmkl0tX/MRJEW9LrKXAdZ6Cues6li1scx0Mgg?=
+ =?iso-8859-1?Q?JT/1TDSiYIyCblo28/hKss/94M/tdp0o+AnKjRlWi5SThjauglh3sQE9CU?=
+ =?iso-8859-1?Q?PIIfTZOs0gogCvOl6OqL2z44buE6hBE1OGoCZifOApoZDWVVGRttRntQZr?=
+ =?iso-8859-1?Q?h0A81ErN+7S9V7Cftoih5O0ol1uixvKgSCxi4o9kARftFOEzeXF2cFQELf?=
+ =?iso-8859-1?Q?ESRzMq38JwT4gZcLbbESFXp9fk2eUSmuQsAwtdtfMqEuBaAe7HVWy7nytq?=
+ =?iso-8859-1?Q?H8Nu8BXE2QrZUoDcEq+IBSvMw6FAVvaBL5LbWwVI33wN/IT0FLK91v4vRQ?=
+ =?iso-8859-1?Q?LEMyYSVE7hvjyE3qdNb7dp7GJ1bMUnNTLOjIkhi19jtwbKZexW9SYEM4KU?=
+ =?iso-8859-1?Q?5fkUaCpNXk0hkWpzg55So5/jGiZJbfY3X1ASrTrGUn1D+xOBkRp5t1dAqm?=
+ =?iso-8859-1?Q?NPcwlNU1k971lT3TnX35gW46dYCZ72WVBshW0nfkliY1qI97NJdvprj0X4?=
+ =?iso-8859-1?Q?EBqX615c1mSNmRG0zZB6M+awsUrq1AQTKLnESzOOi1gCDzMKoXejrfGttZ?=
+ =?iso-8859-1?Q?RWzalKPcWiwZTrZ0KyHiEpqmUp2t831nQh6fXpwnYH4fNGWGOiBVtpEr0L?=
+ =?iso-8859-1?Q?TmOsHmrsFYLw4XELnz8vmDHEq7eEtlVSjOkgj8Xdql3YYrWpBNdhD2jE6D?=
+ =?iso-8859-1?Q?YP3GmOSaq9Jpt8XjAz82/05c1EBr+BBbLKT7pWtHwfxGg1v8oJlo4cw754?=
+ =?iso-8859-1?Q?HJP0qLZ5ZSDPiVg62MePX/zJONEecJojs/hfxgeb0dfHX8tFR62td2yQNG?=
+ =?iso-8859-1?Q?vHF0GesWXiR30Ag4D0vIHfui76/WL6qwYkGm/UIQbl3Jh3NUtdzANy8LlK?=
+ =?iso-8859-1?Q?QGovlxRK/bE9Qse0rQYtdO1nVMUjAdIXhd+eFl4E8w29g48MnbVKdnnUOF?=
+ =?iso-8859-1?Q?9tjthKNk6av9f7M8OP+WPu23w/mlf4Qd6FzS8XFv25gNWcVhsLuL7RRWFf?=
+ =?iso-8859-1?Q?0Pm4dtRK4qlAeh+G+k//Ll8MzJnCxH5Bd0dR3faEGwXaihUVcOfPClmlAE?=
+ =?iso-8859-1?Q?ZttVrmLhjrtLZvT+fWevFP690D7+3WcOeE/selIAQgqo1NmC/74H6UGze7?=
+ =?iso-8859-1?Q?A9FiEyKrhLn0y0Bj2xdHFnbfKY82+Ln6fFXiPnFdP92nVbqYWGsbNydRN3?=
+ =?iso-8859-1?Q?mIWBctbZpqiR5Nf4+cveATCAh7Vvs5CUD9mROv46Jj0jHhE560P2pG3eBY?=
+ =?iso-8859-1?Q?7GZ3HDynD6p6JI8uI5p06SrH+xn0p7cS0oZbJGHcCBuiCKAFnp40bN96EA?=
+ =?iso-8859-1?Q?YHFXevarNimBEIhwVf9AXRVsXrYoV3BDzTHtQ1pyePnM/UDD7Bcuadqz5Y?=
+ =?iso-8859-1?Q?QLhHNmauxjtKBQ9z9PsqWtPN1pG/gfKDqDNyC8qvBGQzZEk/r2aj3XwDa+?=
+ =?iso-8859-1?Q?vFW8lRHDRLDDViLb44iNmEg1bUUyxQvdXY6jN17Deou25BNiZYeRmDjZ94?=
+ =?iso-8859-1?Q?wX1gpiP7t/rPyREMWaOVgivPLWVSGXwKI/U5YY4SfF5A5hhS5GhlAloEPK?=
+ =?iso-8859-1?Q?diCYkQce6wVdBuIjKIC/pzsm7KzHmuW5gNUR5NxZ3LLv+c?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e3b646d8-2413-42c4-6b77-08dee17d677a
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 07:56:26.4152
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ly2av8eeNvCf9tcORAAowSBh9vNesiexV7uIi6yI0LUaKJqiqNi39qBRGN0gMcye9xMZvtxpsq1WwGzZGYPOvQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7016
 
-On Mon, Jun 29, 2026 at 08:57:16AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+On Sat, Jul 11, 2026 at 07:09:47PM +0800, Alison Schofield wrote:
+> On Sat, Jul 11, 2026 at 08:15:07PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] During auto-discovery (CXL_REGION_F_AUTO), passthrough decoders fail to update their `interleave_granularity` software state to the computed value, causing downstream decoders to inherit incorrect granularity and fail validation upon reboot.
 > 
-> New issues:
-> - [Critical] dw_edma_device_synchronize() silently fails if the timeout is reached, returning to the caller while the hardware channel is still active.
-> - [High] dw_edma_device_synchronize() implements a 5000ms busy-wait loop using cpu_relax() in a sleepable context.
-> - [Medium] Lockless read of chan->status without READ_ONCE() or memory barriers in dw_edma_device_synchronize().
+> Same NO as in v1[1]  and I don't see a way to graciously alert you to this
+> in the code. Gratuitously updating the field is not the right thing to
+> do.
 > 
-> Pre-existing issues:
-> - [High] dw_edma_device_terminate_all() fails to flush pending virt-dma descriptor queues, causing memory leaks and the risk of stale transfers resuming.
-> - [High] Virt-DMA descriptors are permanently leaked during channel teardown because vchan_free_chan_resources() is not called.
-> - [High] dw_edma_device_terminate_all() modifies channel state without holding the required spinlock.
-> --
 > 
-> commit dde223ef8e9950c9d18889da8638ba0fd963f5d8
-> Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> dmaengine: dw-edma: Implement device_synchronize() callback
-> 
-> device_synchronize() callback is required by the client drivers to ensure
-> all the DMA operations are completed so that they can free the memory
-> associated with the complete callbacks.
-> 
-> So implement this callback by first making sure that all the in-flight DMA
-> operations are completed and then call vchan_synchronize() to drain the
-> DMA tasklet.
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index c2feb3adc79fa..7b12dfe8cfd3e 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > @@ -331,6 +331,21 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
-> 
-> [Severity: High]
-> This is a pre-existing issue, but looking at dw_edma_device_terminate_all(),
-> it seems to lack the necessary virt-dma calls (like vchan_get_all_descriptors)
-> to extract and free pending descriptors:
-> 
->     } else {
->         chan->request = EDMA_REQ_STOP;
->     }
-> 
-> Since dmaengine_terminate_all() requires all active and pending descriptors
-> to be aborted and removed from the channel's queues, could setting this
-> software flag without flushing the virt-dma descriptor lists cause queued
-> descriptors to remain in vc->desc_issued and vc->desc_submitted?
-> 
-> If a client later submits new transfers, might the hardware unintentionally
-> resume processing the old, supposedly terminated descriptors?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does dw_edma_device_terminate_all()
-> modify channel state without holding the required spinlock?
-> 
->     } else if (chan->status == EDMA_ST_PAUSE) {
->         chan->status = EDMA_ST_IDLE;
->         chan->configured = false;
-> 
-> Since chan->status, chan->request, and chan->configured are concurrently
-> accessed and updated by the interrupt handler and issue pending paths under
-> chan->vc.lock, does modifying them unlocked introduce a race condition?
-> 
-> Could this corrupt the channel's internal state machine when a client
-> calls dmaengine_terminate_all() during interrupt processing?
-> 
-> >  	return err;
-> >  }
-> >  
-> > +static void dw_edma_device_synchronize(struct dma_chan *dchan)
-> > +{
-> > +	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-> > +	unsigned long timeout = jiffies + msecs_to_jiffies(5000);
-> > +
-> > +	/*
-> > +	 * Make sure all the in-flight DMA operations are completed before
-> > +	 * draining the tasklet using vchan_synchronize().
-> > +	 */
-> > +	while (chan->status == EDMA_ST_BUSY && time_before(jiffies, timeout))
-> 
-> [Severity: Medium]
-> Since chan->status is concurrently mutated by the interrupt handler under
-> vc->lock, does reading it locklessly in this while loop without READ_ONCE()
-> or memory barriers constitute a data race?
-> 
+> [1] https://lore.kernel.org/linux-cxl/alKP8OP4DNT2nJnu@aschofie-mobl2.lan/#r
+> No. A downstream decoder can't inherit an unecodable value into a failing
+> check. A >16K granularity only appears below a wide interleave, and
+> everything below that inherits an equal-or-larger value that an interleaving
+> decoder couldn't encode. So every descendant is necessarily passthrough and
+> never validates granularity. There is no path where updating the F_AUTO
+> value would prevent a failure because the failure cannot happen.
+>
 
-Using READ_ONCE() for 'chan->status' makes sense.
+Hi Alison,
 
-> Could this cause synchronization bypass if the state update is observed out
-> of order relative to the tasklet scheduling?
-> 
-> > +		cpu_relax();
-> 
-> [Severity: High]
-> Is it safe to implement a 5000ms busy-wait loop using cpu_relax() in a
-> sleepable context like dw_edma_device_synchronize()?
-> 
+I'm thinking of 1 scenario where a regression might still happen,
+independent of whether an interleaving decoder can appear below a >16k
+passthrough decoder.
 
-I was just following the existing pattern which uses the busy-wait loop in
-dw_edma_free_chan_resources().
+The new cxld_set_interleave() behavior writes EIG=0 for every IW=1 decoder,
+including cases where logical granularity is encodable.
 
-> Since busy-waiting for up to 5 seconds blocks a CPU core entirely, could
-> this starve other tasks and trigger soft lockups when a client driver calls
-> dmaengine_synchronize() to wait for DMA completion? Since this callback is
-> explicitly allowed to sleep, should a sleeping wait like wait_event_timeout()
-> or msleep() be used instead?
-> 
-> > +
-> > +	vchan_synchronize(&chan->vc);
-> 
-> [Severity: Critical]
-> Does dw_edma_device_synchronize() silently fail if the timeout is reached?
-> 
-> If the 5-second timeout expires while the channel is still busy, the loop
-> exits and the function returns to the caller without stopping the ongoing
-> hardware transfer or warning the client.
-> 
-> Since the client relies on device_synchronize() to ensure all active DMA
-> operations have fully completed before unmapping and freeing memory, could
-> this lead to silent data corruption and a use-after-free if the hardware
-> is still actively transferring data?
-> 
-> Should the function either wait indefinitely or forcefully abort the hardware
-> and emit a warning on timeout?
-> 
+For example,
+root: IW=2, IG=4k
+passthrough: IW=1, logical IG=8K
+downstream: IW=2, IG=8K
 
-Forcefully aboring the transfer will impact other channels also. So may be the
-safe bet would be to wait indefinitely.
+During manual setup, the passthrough decoder gets a logical IG of 8K.
+With your change, committing it writes EIG=0. On rediscovery, that is
+read back as 256 byte.
 
-For the loop, I'll use read_poll_timeout() with timeout of 0.
+The AUTO path accepts the passthrough decoder because it skips the IG
+comparison for IW=1, but it does not restore.
 
-- Mani
+The downstream decoder will inherits 256 bytes instead of 8K and its 8K config
+fails validation.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Could cxld_set_interleave() keep the real IG encoding when it's encodable and
+use EIG=0 only when an IW=1 value isn't encodable?
+For latter case, AUTO still need to restore the computed logical IG before
+walking descendants.
+
+What do you think ?
+
+Best regards,
+Richard Cheng.
+> 
+> 
+> > --
+> > 
+> > --- Patch [1]: [PATCH v2 1/2] cxl/region: Allow passthrough decoders with >16K granularity ---
+> > commit 9e2526342188a97e338bfc63d454c253f1e2b3ef
+> > Author: Alison Schofield <alison.schofield@intel.com>
+> > 
+> > cxl/region: Allow passthrough decoders with >16K granularity
+> > 
+> > This commit allows passthrough decoders beneath wide parent interleaves
+> > to have a granularity exceeding 16K by programming a don't-care value
+> > in hardware for non-interleaving decoders.
+> > 
+> > > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> > > index 0c80b76a5f9b4..d164662668c19 100644
+> > > --- a/drivers/cxl/core/hdm.c
+> > > +++ b/drivers/cxl/core/hdm.c
+> > > @@ -691,9 +691,16 @@ static void cxld_set_interleave(struct cxl_decoder *cxld, u32 *ctrl)
+> > >  	if (WARN_ONCE(ways_to_eiw(cxld->interleave_ways, &eiw),
+> > >  		      "invalid interleave_ways: %d\n", cxld->interleave_ways))
+> > >  		return;
+> > > -	if (WARN_ONCE(granularity_to_eig(cxld->interleave_granularity, &eig),
+> > > -		      "invalid interleave_granularity: %d\n",
+> > > -		      cxld->interleave_granularity))
+> > > +
+> > > +	/*
+> > > +	 * A non-interleaving decoder ignores the IG field. Encode a
+> > > +	 * don't-care value instead of validating the stored granularity.
+> > > +	 */
+> > > +	if (cxld->interleave_ways == 1)
+> > > +		eig = 0;
+> > > +	else if (WARN_ONCE(granularity_to_eig(cxld->interleave_granularity, &eig),
+> > > +			   "invalid interleave_granularity: %d\n",
+> > > +			   cxld->interleave_granularity))
+> > >  		return;
+> > >  
+> > >  	u32p_replace_bits(ctrl, eig, CXL_HDM_DECODER0_CTRL_IG_MASK);
+> > 
+> > [ ... ]
+> > 
+> > > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > > index 1e211542b6b64..5a443551288c4 100644
+> > > --- a/drivers/cxl/core/region.c
+> > > +++ b/drivers/cxl/core/region.c
+> > 
+> > [ ... ]
+> > 
+> > > @@ -1549,20 +1557,21 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+> > >  	 * Interleave granularity is a multiple of @parent_port granularity.
+> > >  	 * Multiplier is the parent port interleave ways.
+> > >  	 */
+> > > -	rc = granularity_to_eig(parent_ig * parent_iw, &eig);
+> > > -	if (rc) {
+> > > -		dev_dbg(&cxlr->dev,
+> > > -			"%s: invalid granularity calculation (%d * %d)\n",
+> > > -			dev_name(&parent_port->dev), parent_ig, parent_iw);
+> > > -		return rc;
+> > > -	}
+> > > +	ig = parent_ig * parent_iw;
+> > >  
+> > > -	rc = eig_to_granularity(eig, &ig);
+> > > -	if (rc) {
+> > > -		dev_dbg(&cxlr->dev, "%s:%s: invalid interleave: %d\n",
+> > > -			dev_name(port->uport_dev), dev_name(&port->dev),
+> > > -			256 << eig);
+> > > -		return rc;
+> > > +	/*
+> > > +	 * Keep the computed granularity for descendant setup. Only
+> > > +	 * interleaving decoders require an encodable granularity.
+> > > +	 */
+> > > +	if (iw > 1) {
+> > > +		rc = granularity_to_eig(ig, &eig);
+> > > +		if (rc) {
+> > > +			dev_dbg(&cxlr->dev,
+> > > +				"%s: invalid granularity calculation (%d * %d)\n",
+> > > +				dev_name(&parent_port->dev), parent_ig,
+> > > +				parent_iw);
+> > > +			return rc;
+> > > +		}
+> > >  	}
+> > >  
+> > >  	if (iw > 8 || iw > cxlsd->nr_targets) {
+> > 
+> > [Severity: High]
+> > Does this code break region auto-discovery on reboot for topologies
+> > containing a passthrough decoder?
+> > 
+> > When cxld_set_interleave() configures a passthrough decoder, it now sets
+> > eig = 0 (a don't-care value) in the hardware.
+> > 
+> > Upon reboot, reading this hardware state will initialize the decoder's
+> > software interleave_granularity to a stale value.
+> > 
+> > During auto-discovery in cxl_port_setup_targets(), the CXL_REGION_F_AUTO
+> > path skips validating the granularity for passthrough decoders (iw == 1),
+> > but it appears to be missing an update to correct the software state:
+> > 
+> > 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
+> > 		if (cxld->interleave_ways != iw ||
+> > 		    (iw > 1 && cxld->interleave_granularity != ig) ||
+> > 		    !spa_maps_hpa(p, &cxld->hpa_range) ||
+> > 		    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
+> > 			...
+> > 			return -ENXIO;
+> > 		}
+> > 		/* missing update: cxld->interleave_granularity = ig; */
+> > 	}
+> > 
+> > If cxld->interleave_granularity is not updated to the computed ig here, won't
+> > any interleaving descendants read the stale parent_ig, compute a mismatched
+> > expected granularity, and fail validation?
+> > 
+> > -- 
+> > Sashiko AI review � https://sashiko.dev/#/patchset/cover.1783795720.git.alison.schofield@intel.com?part=1
+> 
