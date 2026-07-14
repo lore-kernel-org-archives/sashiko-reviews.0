@@ -1,336 +1,162 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5105043F4B5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 09:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784021426; cv=none; b=rPj6gJXQtTv3Mlh82EcLj7J0Vk3dd2CRh26v780Dg3eY+T9wYKTQtycN4/6IjGCT7uIKoFOvplLl9ChlgGUJsAGN7vgNH+AjK6pLv1TXqegHeXd7MGsADFdu3/IqMm/IZzu+riRWg5Fszq7qNE+I/oeiqH1QRZ1ts/Ea5WV4O1c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784021426; c=relaxed/simple;
-	bh=3eMpBVPuMLm/bxuwADQsGqkfkNKWM6K+WJCRJIz6FEQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qp7vspAe/GBR9E1MReBln6Jp+Veux2zZOpB5DBYOANd5STTg7jW5Lbed7w4BJskIxMk8r6fNPnih1WHFpL+X/fiSVbGfes7VOL8t5Uu1I1sS1JrcryQvghHiOZCm1MPFhRErv7ei3ttdaZ1VtS3cicPvlckJ+SCt93wz6e40Nqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0D31F000E9;
-	Tue, 14 Jul 2026 09:30:15 +0000 (UTC)
-Message-ID: <5e17bba2-9259-4d39-8170-275927835943@tuxon.dev>
-Date: Tue, 14 Jul 2026 12:30:13 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19A843CEFC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 09:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784021443; cv=pass; b=WTSe/Hpc8IIFB2EA54S54mcQi847p56NXcCmSdAPORqCe/TY56WSu2Pn1VKQSriburjqKlr+ETxpKlHqjFb1lfBZlLCaMCsK98O49Ji3BpB72RD1KlPahC+LW0FY97FGiEF0v54oui8hJVjG8o6kQlDxJ2LIZZJ1Tf+VBFFcu8Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784021443; c=relaxed/simple;
+	bh=I6G3Q+FXZ5EmFID/Q3+wjhwXv5YFhtj8kbKtXbaP7aQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=roLRYSmRLaPYCRlBJUuG2qbeoQy2bEPzJFRHXuP73qmhDUevPW6AbDsXCYg4TmrU/i0e8cgi6K5D5zqaTLmVKcSYlu0YgAxkxKNhfgVQhq93NiVmlaD00aHTuoSWMmmOb4oyVDui1H+gQJuS8vLuYvGslYO6uySHbnMIHB2gCiA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KFdp8ADD; arc=pass smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KFdp8ADD"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ceae1ed204so8637655ad.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 02:30:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784021434; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EsDoyFrpawEWsvt9Nfjbu7LdPPJyOLwYYJDoTUc2zZOmU+kq2F+nhJYay2XV1Hzsvj
+         OwR+nu0Jiha8Itk/lZyPsfhlWI16QoPu6C8e6KpVgdEPd5fhMQ3n8PmcSOKb2qYsqx+S
+         s0gBzA5d3T04EFmSkb4bu+jPizoUXDz5DMlS0FGX/ZQl7QTA840jjwFn8YGyznEaCm8i
+         s5GqFKkleUicQ4ZfQW3HlwPALMf6hO6vIyI6E8oHx6gamahNVSJk2YqQr+U7jzqJP++Q
+         hrQeI+1wnSPbD/ujYNHVpRc8hGLxJwol/Ip5crznblgihAamPA80m4Oja2uur2KQx8/b
+         Nb4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=v+QJ/aXOEJkF1qKOqd78f73WO0NWahWbfl7RnnArRcg=;
+        fh=+68pE922n3bFxvFH476IsgDH5KHU7Oe9O13KVvgBe/w=;
+        b=RmXDgjuk/56yywYJfWq4MCnf9m/21Km0Orpr7kp9GYQP7OO/d5Q+KJvhdrmTIrj+Zm
+         lZNkSKQUx9LkGOQbGpL/h35bj92M35/5DXN88Wt9Ymrs5OQ4xAoBo/mbrizA8kEhPN/b
+         9OyG1mk692jI2uYBZKLKGmm/mgHhXFTNEQRG12GsgOYfYn4BhVp67PUtZPfjPKHwh/Jn
+         cUSYg+yKF0rLivKY1W+EUEEA0s6kltHV+x0U3E2HJdd6YGXJbugAQaW1ROMQnPQGQ4/Z
+         UPlF+OAHbxn5CSma/Bmxt7B6jHemviDQOSVmegCxTTCRtCRYSqCbYnEiJltgL7F249tm
+         e7NQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784021434; x=1784626234; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=v+QJ/aXOEJkF1qKOqd78f73WO0NWahWbfl7RnnArRcg=;
+        b=KFdp8ADDvXw2Ao+TmJtzW+KW3cgH79xb+p389OiVofwaiOsUynNJEXd/laQn5daMim
+         TfvTADUrk6KZvu4Hljc+fPBdUOpqZNhXq7AJzZvKA8Etf/c408p+TfGWC7cHnr53TVH6
+         IsN8JU+BLPhhitzzmuWuA62sI/C8oZPJ9MJo3LIrucqEPEcpP53QhqAGcEBBpVUa20uc
+         1QBJuiiwjZpLLPTC1RLmP618qIPDCE+AQMKxi4JORjB+NEjX/piT5r9U0xFHnxjeCmeZ
+         bUuu9parvFs0nkl3o/ecGn8uAm6cVwFffKsL+JrboiJvg6OMYeXHhDWI/M6J95d2UaYu
+         urww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784021434; x=1784626234;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=v+QJ/aXOEJkF1qKOqd78f73WO0NWahWbfl7RnnArRcg=;
+        b=WMfTlPnOz7VSY0IgRKPVh4FjLNIq7kRZVcIDm9p5hxyCAZTt8YjECoInz9+qHPTKee
+         4loe9ySga6/F8+myBnTNjwmA1bb/lbILw2Tn54ZfaeuNyP3tBXjeoHeNIdgkMcpfK14c
+         BF8b0O5xC9RYD54VFglGhwyESrcVvivqOkU3yFz1tinAmrHDXyux9IMpMmsBd/BYBJfk
+         0tUY9kryjInkyiog6FOZZRSWnvPELZG5G2KifqBzLERxqDLTBmd5R6DTxXlh5nJS0ZiB
+         MPVIxh+8kpikepjYn1jL4ggAAtELtlnfsK5ex9R4AHW6bB+aNa9V645TkiLfnWVFj1ff
+         gDsA==
+X-Gm-Message-State: AOJu0YwvE1lHItMVvg7uwrzt/WIvIlHNm7rHagi+9jedwxfoyvQx6zh0
+	ybMBtFC89lRi+RLcAd0mgWo+QLm2RfYHtfMJ1acRHSjYdmDDOwyH8nXJ9E1ylXMCUo/XtlCFKkO
+	caMHnkex9SxyoUA/Oe1s2eCk7ICAFQWdsMQglN3cm
+X-Gm-Gg: AfdE7cmtFjMyJowmU0oKmTVfl5f9kG4jHbzeZSFesP54Ivzw0LOJNeimrOb/igjjZDe
+	4NwN1HBwMocAt7KLlFy6sfnPzEmi83jN6RTCPIIdWToKZWLoDP4tiNFBBl66v/6fSg/8YTsi6pa
+	H4srUueTtMxgZjgkYJAfqiebKrrGs4NxGkFfFbYf/GGShDeALRed0gvww+fk8JVUz12WWKY5H3Q
+	//zxh+cgAugrB2vrssPNTjwhOBFEoerJByrH4PsWgAqXT84cSnFepBOjeUeEm3h/P08v8JFwehu
+	YYRGxBspkCvM5yxMaxZgpwDHVo1axVmir0nbAUhyAUNhkavEcaSU8zpyPvRmIrt/xYpEYgwpvph
+	r0ETk21K+BeQ=
+X-Received: by 2002:a05:6a21:496:b0:3a2:d79c:416c with SMTP id
+ adf61e73a8af0-3c110a0ec3dmr14089180637.32.1784021433321; Tue, 14 Jul 2026
+ 02:30:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/17] i3c: renesas: Perform Dynamic Address Assignment
- on resume
-To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-i3c@lists.infradead.org,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- wsa+renesas@sang-engineering.com, Frank.Li@kernel.org
-References: <20260713130545.568657-1-claudiu.beznea+renesas@tuxon.dev>
- <20260713130545.568657-7-claudiu.beznea+renesas@tuxon.dev>
- <20260713135032.ADFB41F00A3A@smtp.kernel.org>
- <alUZfNwy4VlMr06f@lizhi-Precision-Tower-5810>
-Content-Language: en-US
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-In-Reply-To: <alUZfNwy4VlMr06f@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260712212113.181121-1-kuniyu@google.com> <20260712213422.DB1111F000E9@smtp.kernel.org>
+ <a2afe72f-5098-4a6f-9df7-b993f186337a@hartkopp.net>
+In-Reply-To: <a2afe72f-5098-4a6f-9df7-b993f186337a@hartkopp.net>
+From: Kuniyuki Iwashima <kuniyu@google.com>
+Date: Tue, 14 Jul 2026 11:30:21 +0200
+X-Gm-Features: AVVi8Cdpr6dJWdakTie8bvgkbftvPiYnlf1nFXm4YqURw-4ZDxBH3T29_IrQQKQ
+Message-ID: <CAAVpQUBy2Ws8iuvv4WBBcCHQkkQLL5E2Nu=_dnvxR=ehN6gXkg@mail.gmail.com>
+Subject: Re: [PATCH v1] vxcan: Support per-netns device unregistration.
+To: Oliver Hartkopp <socketcan@hartkopp.net>
+Cc: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org, 
+	Oleksij Rempel <o.rempel@pengutronix.de>, Marc Kleine-Budde <mkl@pengutronix.de>, 
+	Vincent Mailhol <mailhol@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Jul 13, 2026 at 9:57=E2=80=AFAM Oliver Hartkopp <socketcan@hartkopp=
+.net> wrote:
+> On 12.07.26 23:34, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Low] The patch calls the undefined function `unregister_netdevice_qu=
+eue_net()`, resulting in a compilation error.
+> > --
+> >
+> > --- Patch [1]: [PATCH v1] vxcan: Support per-netns device unregistratio=
+n. ---
+> > commit 882fcd31630d9ce6b0a57cc99738c2ad0579763f
+> > Author: Kuniyuki Iwashima <kuniyu@google.com>
+> >
+> > vxcan: Support per-netns device unregistration.
+> >
+> > This commit updates vxcan_dellink() to unregister local and peer device=
+s
+> > safely across different namespaces by using xchg(). The change aims to
+> > prevent double-queuing of device destruction when RTNL is removed.
+> >
+> >> diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
+> >> --- a/drivers/net/can/vxcan.c
+> >> +++ b/drivers/net/can/vxcan.c
+> >
+> > [ ... ]
+> >
+> >> @@ -281,24 +284,25 @@ static int vxcan_newlink(struct net_device *dev,
+> >>
+> >>   static void vxcan_dellink(struct net_device *dev, struct list_head *=
+head)
+> >>   {
+> >
+> > [ ... ]
+> >
+> >>      unregister_netdevice_queue(dev, head);
+> >>
+> >> -    if (peer) {
+> >> -            priv =3D netdev_priv(peer);
+> >> -            RCU_INIT_POINTER(priv->peer, NULL);
+> >> -            unregister_netdevice_queue(peer, head);
+> >> -    }
+> >> +    priv =3D netdev_priv(peer);
+> >> +    dev =3D unrcu_pointer(xchg(&priv->peer, NULL));
+> >> +    if (dev)
+> >> +            unregister_netdevice_queue_net(dev_net(dev), peer, head);
+> >
+> > [Severity: Low]
+> > Is this missing a prerequisite patch? It appears that
+> > unregister_netdevice_queue_net() is not defined anywhere in the kernel
+> > tree, which leads to a compilation error when building vxcan.c.
+>
+> The referenced veth.c patch was applied to net-next:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/commi=
+t/?id=3Dd7fda2c776b2a969b9d78c5ad00e30824df43add
+>
+> where also unregister_netdevice_queue_net() exists.
+>
+> So this is a net-next resp. can-next patch.
 
-
-On 7/13/26 19:59, Frank Li wrote:
-> On Mon, Jul 13, 2026 at 01:50:32PM +0000,sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] Removal of the DATBASn save/restore mechanism completely breaks the I3C bus upon resume for previously attached devices, and fails to resume if the bus was fully occupied.
->> --
->>
->> --- Patch [6]: [PATCH v5 06/17] i3c: renesas: Perform Dynamic Address Assignment on resume ---
->> commit e4ac838c055dc33beb2ff4e8968a032da48a2a47
->> Author: Claudiu Beznea<claudiu.beznea.uj@bp.renesas.com>
->>
->> i3c: renesas: Perform Dynamic Address Assignment on resume
->>
->> This commit updates the suspend/resume operations by moving them out of
->> the noirq phase and attempting to perform Dynamic Address Assignment on
->> resume. It also removes the save and restore of the DATBASn registers.
->>
->>> diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
->>> --- a/drivers/i3c/master/renesas-i3c.c
->>> +++ b/drivers/i3c/master/renesas-i3c.c
->> [ ... ]
->>
->>> @@ -1495,15 +1484,19 @@ static int renesas_i3c_resume_noirq(struct device *dev)
->>>   	renesas_writel(i3c->regs, MSDVAD, MSDVAD_MDYADV |
->>>   		       MSDVAD_MDYAD(i3c->dyn_addr));
->>>
->>> -	/* Restore Device Address Table values. */
->>> -	for (i = 0; i < i3c->maxdevs; i++)
->>> -		renesas_writel(i3c->regs, DATBAS(i), i3c->DATBASn[i]);
->>> -
->>>   	/* I3C hw init. */
->>>   	renesas_i3c_hw_init(i3c);
->>>
->>> +	ret = i3c_master_do_daa_ext(&i3c->base, true);
->> [Severity: High]
->> Does removing the DATBASn save and restore mechanism break communication
->> with previously attached devices upon resume?
->>
->> Looking at renesas_i3c_daa(), it explicitly skips hardware register
->> initialization for previously attached devices:
->>
->> renesas_i3c_daa() {
->>          ...
->>          if (olddevs & BIT(pos))
->>                  continue;
->>          ...
->> }
->>
->> Since the controller was reset during suspend, won't these hardware
->> registers remain uninitialized (0) if DATBASn isn't manually restored here?
->>
->> Additionally, if the bus was fully occupied before suspend, will this cause
->> the DAA process to abort entirely?
->>
->> renesas_i3c_daa() {
->>          ...
->>          ret = renesas_i3c_get_free_pos(i3c);
->>          if (ret < 0)
->>                  return ret;
->>          ...
->> }
->>
->> If the bus is full, free_pos would be 0, causing this to return -ENOSPC
->> immediately. This aborts before the ENTDAA command is sent, which would
->> leave the previously attached devices permanently stranded without dynamic
->> addresses.
-> Please check this sashiko review result?
-
-I tried to address this though the versions v2-v4 variant of this patch that 
-I've posted previously but after more investigation and thinking it looked to me 
-that the solution to this is not that simple and related only to this driver 
-(see below).
-
-Last time I've asked for some guidance [1] but got no input on it.
-
-Apart from v4, I tried (before posting v5) to use separate free_pos list to be 
-used while resuming, and still use only i3c_master_add_i3c_dev_locked() in 
-renesas_i3c_daa() but that didn't work either, because the devices (present 
-before suspend and) discovered at resume, ended up to be added to the new list 
-then deleted by the code of i3c_master_add_i3c_dev_locked().
-
-I have also thought about increasing the free_pos bitmask with one extra entry 
-while resuming to allow attach, detach, reattach work (for the devices connected 
-before suspend), but I don't think that is going to work either, and looks 
-hackish to me.
-
-I also tried calling i3c_master_detach_free_devs() (only the code for I3C 
-devices) before running DAA on resume but that wasn't enough for the solution to 
-work.
-
-I think this issue reported by sashiko can be encountered (at some point) on all 
-the drivers that track and limit the number of attached devices with a bitmask 
-(or other mechanism) and check that bitmask in the ->attach_i3c_dev.
-
-E.g., on the Renesas RZ/G3S I can end up to that point even w/o the code from 
-this patch doing the following:
-1/ connect 2 I3C devices to the bus (I'm using the NXP P3T1085UK-ARD with 2
-    temperature sensors)
-2/ after the 2 I3C devices are attached, simulate the I3C bus is
-    full (no entries in the free_pos mask) (with the diff patch below)
-3/ cut the power to the NXP P3T1085UK-ARD board
-4/ connect the power to the NXP P3T1085UK-ARD
-5/ at this point if I run do_daa the devices are not going to attach anymore
-
-I can simulate this on my side. I think it is the case for any other driver 
-following the above mentioned pattern for attaching.
-
-That was the reason I have currently dropped the attempt to solve the problem 
-highlighted by sashiko as its solution looks to me to be more complicated and 
-involved more testing to be done, not only related to this driver.
-
-Since the issue is not only related to this patch but more on how the attach 
-procedure works, and can be reproduced w/o this patch, I considered only the 
-approach in this patch was be enough for suspend/resume fix and later fixes 
-should be added to cover this complicated scenario.
-
-Please let me know if you have any suggestions on how to go forward with this 
-problem.
-
-This is the patch I used for simulating full bus:
-
- > git show
-commit 01f99391ab3e (HEAD)
-Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Date:   Tue Jul 14 11:49:14 2026 +0300
-
-     test
-
-     Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index f1be38a640ca..4cb98328c8eb 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -810,6 +810,29 @@ static ssize_t do_daa_store(struct device *dev,
-
-  static DEVICE_ATTR_WO(do_daa);
-
-+bool i3c_full_bus = false;
-+
-+static ssize_t full_bus_store(struct device *dev,
-+                           struct device_attribute *attr,
-+                           const char *buf, size_t count)
-+{
-+       struct i3c_master_controller *master = dev_to_i3cmaster(dev);
-+       bool val;
-+       int ret;
-+
-+       i3c_full_bus = true;
-+
-+       return count;
-+}
-+
-+static DEVICE_ATTR_WO(full_bus);
-+
-+bool i3c_get_full_bus(void)
-+{
-+       return i3c_full_bus;
-+}
-+EXPORT_SYMBOL_GPL(i3c_get_full_bus);
-+
-  static struct attribute *i3c_masterdev_attrs[] = {
-         &dev_attr_mode.attr,
-         &dev_attr_current_master.attr,
-@@ -822,6 +845,7 @@ static struct attribute *i3c_masterdev_attrs[] = {
-         &dev_attr_hdrcap.attr,
-         &dev_attr_hotjoin.attr,
-         &dev_attr_do_daa.attr,
-+       &dev_attr_full_bus.attr,
-         NULL,
-  };
-  ATTRIBUTE_GROUPS(i3c_masterdev);
-diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
-index 65151991b4ec..8e78ef602c51 100644
---- a/drivers/i3c/master/renesas-i3c.c
-+++ b/drivers/i3c/master/renesas-i3c.c
-@@ -324,6 +324,9 @@ static inline u32 datbas_dvdyad_with_parity(u8 addr)
-
-  static int renesas_i3c_get_free_pos(struct renesas_i3c *i3c)
-  {
-+       if (i3c_get_full_bus())
-+               return -ENOSPC;
-+
-         if (!(i3c->free_pos & GENMASK(i3c->maxdevs - 1, 0)))
-                 return -ENOSPC;
-
-@@ -689,6 +692,11 @@ static int renesas_i3c_daa(struct i3c_master_controller *m)
-
-         renesas_i3c_wait_xfer(i3c, xfer);
-
-+       if (cmd->rx_count >= i3c->maxdevs)
-+               newdevs = 0;
-+       else
-+               newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
-+
-         newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
-         newdevs &= ~olddevs;
-
-@@ -867,6 +875,7 @@ static int renesas_i3c_attach_i3c_dev(struct i3c_dev_desc *dev)
-         struct renesas_i3c_i2c_dev_data *data;
-         int pos;
-
-+       pr_err("%s(): in\n", __func__);
-         pos = renesas_i3c_get_free_pos(i3c);
-         if (pos < 0)
-                 return pos;
-@@ -883,6 +892,7 @@ static int renesas_i3c_attach_i3c_dev(struct i3c_dev_desc *dev)
-                                     datbas_dvdyad_with_parity(i3c->addrs[pos]));
-         i3c_dev_set_master_data(dev, data);
-
-+       pr_err("%s(): out\n", __func__);
-         return 0;
-  }
-
-@@ -894,6 +904,8 @@ static int renesas_i3c_reattach_i3c_dev(struct i3c_dev_desc 
-*dev,
-         struct renesas_i3c_i2c_dev_data *data = i3c_dev_get_master_data(dev);
-         int pos;
-
-+       pr_err("%s(): in\n", __func__);
-+
-         pos = renesas_i3c_get_free_pos(i3c);
-
-         if (data->index > pos && pos >= 0) {
-@@ -911,7 +923,7 @@ static int renesas_i3c_reattach_i3c_dev(struct i3c_dev_desc 
-*dev,
-         renesas_writel(i3c->regs, DATBAS(data->index),
-                        DATBAS_DVSTAD(dev->info.static_addr) |
-                        datbas_dvdyad_with_parity(i3c->addrs[data->index]));
--
-+       pr_err("%s(): out\n", __func__);
-         return 0;
-  }
-
-@@ -922,11 +934,13 @@ static void renesas_i3c_detach_i3c_dev(struct i3c_dev_desc 
-*dev)
-         struct renesas_i3c *i3c = to_renesas_i3c(m);
-
-         renesas_writel(i3c->regs, DATBAS(data->index), 0);
-+       pr_err("%s(): in\n", __func__);
-
-         i3c_dev_set_master_data(dev, NULL);
-         i3c->addrs[data->index] = 0;
-         i3c->free_pos |= BIT(data->index);
-         kfree(data);
-+       pr_err("%s(): out\n", __func__);
-  }
-
-  static int renesas_i3c_i2c_xfers(struct i2c_dev_desc *dev,
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index 4d2a68793324..3ab31d85bff6 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -22,6 +22,8 @@
-  #define I3C_BROADCAST_ADDR             0x7e
-  #define I3C_MAX_ADDR                   GENMASK(6, 0)
-
-+bool i3c_get_full_bus(void);
-+
-  struct i2c_client;
-
-  /* notifier actions. notifier call data is the struct i3c_bus */
-
-
-Applied on top of the fixes patches from this series except the one in this thread:
-
-01f99391ab3e (HEAD) test
-6d3e526d34a3 Revert "i3c: renesas: Perform Dynamic Address Assignment on resume"
-7256e1a32469 i3c: renesas: Clean DATBAS register on detach
-1c9e940709a2 i3c: renesas: Perform Dynamic Address Assignment on resume
-305787a2f797 i3c: renesas: Reset the controller on resume
-d6edb5c5d46a i3c: renesas: Reconfigure the DATBAS register on re-attach
-88ab25e78d95 i3c: renesas: Follow the reset deassert order used in probe
-80908175920f i3c: renesas: Restore STDBR and EXTBR registers on resume
-455ff70955fc i3c: renesas: Check that the transfer is valid before accessing it
-27bc7a253560 arm64: dts: renesas: rzg3s-smarc-som: Enable I3C
-fd146e7c97f8 pinctrl: renesas: rzg2l: Add RZ/G3S support for selecting the I3C 
-power source
-277b0db8d168 dt-bindings: pinctrl: renesas,rzg2l-pinctrl: Document the missing 
-I3C power source option
-de297915b104 pinctrl: renesas: rzg2l: Drop defines present in struct rzg2l_hwcfg
-e9a915ca8cc7 pinctrl: renesas: rzg2l: Generalize the power source code
-34cf6dafc474 (tag: next-20260709, linux-next/master) Add linux-next specific 
-files for 20260709
-
-The steps I followed to reproduce the problem even w/o the patch in this series 
-is at [2].
-
-Thank you,
-Claudiu
-
-[1] https://lore.kernel.org/all/559b8b0c-412a-4d0f-9872-a4c92f3b9611@kernel.org/
-[2] 
-https://github.com/claudiubeznea/logs/blob/cc6a6e80936b8368a2187c72dd7e23a6a88b5a84/logs
+Yes, I meant this is for can-next, but I was not sure how frequently
+the tree is synced against net-next and what's the best approach here.
