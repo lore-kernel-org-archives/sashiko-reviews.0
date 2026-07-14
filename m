@@ -1,140 +1,212 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77491478874
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:08:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784034496; cv=pass; b=X5l1j8y4m7Ow49PMyrY7JoXxFtfmzjVfamdXoRFGFu6CpM/2KqmU7jdC3GYdhERwfcynoD4DyiO3coH+9UPPnlNKr3fencVLRPf+fBFCmK/MquZKPf+xi1iRdvxOFkQ5G3sjIz17mJna9NhPl5tKDr2dwgxXfk+C/in86iMgthg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784034496; c=relaxed/simple;
-	bh=znxXo87iY2K7i0i45/hzGRAFQP5Qw+DyoZxvELMx7Og=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=teoaZHxkE2EgnHKyBSSB4Pm22wHeAS5ICmy+NJz7ZUQx8mxixQMyQm7QH2nRWBEG8q6+dmHbXniUZUUHYV+qKWXSuFyFDr1MojXOuY7oftGT3mippg5UqlE5wDNZb3eMcaaxUc2Rnp4FNolRgcFzBn/Fg62vvy4yH/MzIe+bN3g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=eTpvkjxb; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=RHrkez8z; arc=pass smtp.client-ip=81.169.146.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33654466B70
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784034566; cv=none; b=NSn3eDKNoZgCiMMsMZy0ZI2nshkD8+wVCKFO8fvU8Bc/Wt/dYLoaAL43LWgN0jfdsiWdWB1wHpNoa81pKmUg3hx/PYN7k02HqH3Sqa/mFjxIbY9vFK50GCver12/u/V/fI7zBgryvZczPfcITTRLEn63u83ZTGSTsBj/1KlMu5A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784034566; c=relaxed/simple;
+	bh=pMbffV8+WnlzgGXlItzjUetsYGrV+g/M1yZ5DCe2lXY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u/aDXIqGAc0Hi7UiYBqnuMjUot+iRCw71nWxsED09aPujJYZrQZaQ1Bkx89pacrVAlV/6DJp+gW79zvRzwzr6T3pceuXv/+ePBPWvTs2nzfQYtXX5Xbn/CmI/I6ugE1wnpLnGFHEbJ77bLba7C5KCw1ugGvvInu3SuGpV2v9Tgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wGyERrkm; arc=none smtp.client-ip=91.218.175.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="eTpvkjxb";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="RHrkez8z"
-ARC-Seal: i=1; a=rsa-sha256; t=1784034469; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=mvCzuuFFHWuDsV3S9xC5/QKO2CaLh7IpLYVJ7RUBx6uwf6BNZ2wRsezduDQiCklaOT
-    Ae2MLitDufTTaEyIeqeSJ0BrptoyjhJ0876WbSOaeQPfIFvcKqVXcMiQ3TZOqxFrQm9Y
-    4ateklIU4uDAmThlp5vgICrPcg4ifIHULHoeP7/GXCqF8PlenDXj3klk/aHGV7+4gUnd
-    TsFNompTCwuTjlYf8mpz61x4f+Rt0HIDi9TsciZHSdolawleS8xekHy5jXM4IV8ZHm4z
-    yLl3pB1MvIOf59JphmCTprhRySaJfJkKoVbCt5FVBkaKVtuSEY6oNM1k+IuWl+pK5Yu3
-    rRIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784034469;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=guEuGcTlCYA/IKVUqHOhnf18L9VLtdbzdYlIh6ZIP+M=;
-    b=tacYFdwe2n9fiueao38evEcvR8BXY+S1FsfpOtizif0wa2hBmxc6IQf2KgBNFldRE/
-    9I9E04HxsCcsFk7bOwIuzTLt8XwWxgKz4QD54uxDidhCEcUIBc6O7H5Hbid9kZeM1ToU
-    PPCHXS0YVbNgwGPCdimssAkQ0wBOZhX7gC5yAkHjQRIynDRbNFE2hqINab2J6oTfmcou
-    PtTAyey8NFWvc1VTiYrB7dsdUgl6kD2C+nvuCWsgcrlVWNm7tbDjsvOmpLvwcCIpKlsa
-    atzvIkoRP8JxmaJNYuxkinzzVdc1TEis3C4B4r4l5KrTJXaw0uEqHYyIloVVTu++nU2V
-    mnlg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784034469;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=guEuGcTlCYA/IKVUqHOhnf18L9VLtdbzdYlIh6ZIP+M=;
-    b=eTpvkjxbWQUUq686Csxj7Ds70+kern3/XAU5yoUfW9McvqF9L1+NRa31MFPDEJ32E7
-    xuxgTjwNcfOfHxxm9Uts43fPfd2sAuQXusbPsO5TemlyRV70Yz5X/emIv/BGuNKHauw4
-    Q1trR+biGguScB/1IaGghJVHHhq+8p6RVHbkqkLBF2InHKiDxrg1UJs/o094vWbKuGln
-    2cZVD5zqo9vUwSIbw1Sqe1FyVkzfVAblsyI2Loq0VI4ymQIF/7o0/O+z0Jo0wMaR3/eB
-    Q6Q4K6r7Yz5G5Agj/dxRe9O0aDQ6gYrJQG7Lh14JQ+8dMpu+2FAigAYl2HTHXZBO8w+7
-    QI2A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784034469;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=guEuGcTlCYA/IKVUqHOhnf18L9VLtdbzdYlIh6ZIP+M=;
-    b=RHrkez8z3lCG4UCchphNTc3QgzvpozmJ66nIZwKyavn97n7YqHpYFLx3uxTahTNwje
-    RX7BI5d762GtbShqnJBQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
-Received: from [192.168.20.190]
-    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
-    with ESMTPSA id Ka9fdb26ED7nkpe
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 14 Jul 2026 15:07:49 +0200 (CEST)
-Message-ID: <ee59dccc-0532-4b00-8783-9763e04c327e@hartkopp.net>
-Date: Tue, 14 Jul 2026 15:07:48 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wGyERrkm"
+X-Gm-Message-State: AOJu0YxAqDBKXelF/ryT6NbAoQzhnJgtNSNABoWv25ZFFaXRkMg1hjGF
+	NiDmVGS2cMGcoFFGOUYCcJFoU9gQD01DOTGEaPH8tAFq742YdKoBKC1LUVCcMCG8iUFXuWSTU5E
+	URtYPtH1EOL64ERWa6auS1JgxIKbFuUw+2c9Ikd1w
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784034562;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NibVBK91s7x7Qg0aXzMK41qTwtyj1jEWlalOlyQqBec=;
+	b=wGyERrkmDOkA/qgMuF1LoFj3KklQxACGCIxjYEBk/1TNkqzBgTuCdbzpyHljDNET0+KIwK
+	0YbwE0EtOpWuer9ER9UwXjBh6slWP5/0tNfyAKPhayLvUqoSL8rC6NCRUUfaJQYC5zB6W3
+	a0hVkgdtffm+hlQrftepUGIRzr0OgHk=
+X-Received: by 2002:ac8:588f:0:b0:51c:d16:b48e with SMTP id
+ d75a77b69052e-51d8373f2b1mr14137651cf.22.1784034559960; Tue, 14 Jul 2026
+ 06:09:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
- removal
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, Oleksij Rempel
- <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
- Vincent Mailhol <mailhol@kernel.org>
-References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
- <20260714-bcm_fixes-v13-9-fd667c61099a@hartkopp.net>
- <20260714104431.65C751F000E9@smtp.kernel.org>
- <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
- <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
- <1a521f25-0aee-4eae-a0da-3eb7f0702e84@hartkopp.net>
- <20260714-vehement-native-jaguar-4f52dd-mkl@pengutronix.de>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260714-vehement-native-jaguar-4f52dd-mkl@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260714101601.4142645-1-fuad.tabba@linux.dev>
+ <20260714101601.4142645-9-fuad.tabba@linux.dev> <20260714123355.631A51F00A3A@smtp.kernel.org>
+In-Reply-To: <20260714123355.631A51F00A3A@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Tue, 14 Jul 2026 14:08:43 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTxiyUSJqRcadSCOmR+tELSsBiGaTYH9xxXh-g-xyuHZdA@mail.gmail.com>
+X-Gm-Features: AUfX_mzRmIoBD2J-UhkrzdHpoIgylipp9U_oqH7zaMC4epcst4SI-SOiQiuQsyU
+Message-ID: <CA+EHjTxiyUSJqRcadSCOmR+tELSsBiGaTYH9xxXh-g-xyuHZdA@mail.gmail.com>
+Subject: Re: [PATCH v5 8/8] KVM: arm64: Implement lazy vCPU state sync for
+ non-protected guests
+To: sashiko-reviews@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
+
+On Tue, 14 Jul 2026 at 13:33, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [High] Removal of `hcr_el2` synchronization back to the host prevents c=
+learance of `HCR_VSE`, causing infinite virtual SError storms in the guest.
+sync_hyp_vcpu  does sync VSE back ( hyp-main.c:712-713 ), host copy is clea=
+red.
+
+> - [High] Lazy state sync skips synchronization and clears `PKVM_HOST_STAT=
+E_DIRTY` on IRQ and IL exits, silently discarding host-side context modific=
+ations.
+the only in-loop ctxt writer is  KVM_REQ_VCPU_RESET  (PSCI CPU_ON
+target, not the running vCPU, DIRTY still set); injection state rides
+iflags , copied unconditionally. Nothing dropped.
+
+>
+> Pre-existing issues:
+> - [Critical] Protected guest register state is unconditionally leaked to =
+and overwritten by untrusted host memory (`host_vcpu->arch.ctxt`) on every =
+world switch.
+
+pre-existing upstream placeholder; per-field marshalling for protected
+VMs is the next series.
+
+/fuad
 
 
-
-On 14.07.26 14:36, Marc Kleine-Budde wrote:
-> On 14.07.2026 13:47:35, Oliver Hartkopp wrote:
->>>>> Pre-existing issues:
->>>>> - [High] Unprotected concurrent access to op->rx_stamp and op->rx_ifindex in bcm_rx_handler causes data races and torn 64-bit reads on 32-bit architectures.
->>>>
->>>> Fixed in patch 10
->>>
->>> Pre-existing issues are not a shot stopper, _new_ issues for a patch
->>> series are...usually are.
->>>
->>> Hopefully upstream will accept that you fix issues in a later patch that
->>> sashiko claim to be introduced by a patch in the series.
-> 
-> Sorry, let me clarify: This was a general statement.
-> 
-> I don't want to imply that _this_ patch introduces a new issue.
-> 
-> If you remove sashiko from this sentence it was valid before the LLM
-> review bots. Rule of thumb: You should not introduce "bad" code and fix
-> it later in a series. - As this is a huge amount of fixes that requires
-> a lot of code changes, I hope upstream doesn't insist.
-
-When there was a new issue pointed out by sashiko I fixed it inside the 
-patch with --amend when it belonged to the topic of the patch.
-
-So I tried to follow the one problem, one patch pattern. And every patch 
-makes things better and introduces no new regressions (which sashiko-bot 
-would have detected) - while probably not fixing everything at once.
-
-Best regards,
-Oliver
-
-> 
->> Is it?
->>
->> Patch 10 Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
->>
->> not anything in patch 9.
-> 
-> regards,
-> Marc
-> 
-
+> --
+>
+> --- Patch [8]: [PATCH v5 8/8] KVM: arm64: Implement lazy vCPU state sync =
+for non-protected guests ---
+> commit e68e83fa70438b2538d1ea836d971c6d52ffb760
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: Implement lazy vCPU state sync for non-protected guests
+>
+> pKVM copies a non-protected guest's register context between the host
+> and the hypervisor on every world switch, even when the host never
+> inspects it. Defer the copy: on entry, flush the host context into the
+> hyp vCPU only when the host marked it dirty; on exit, leave it in the
+> hyp vCPU and copy it back only when the host needs it.
+>
+> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
+c
+> > --- a/arch/arm64/kvm/handle_exit.c
+> > +++ b/arch/arm64/kvm/handle_exit.c
+> > @@ -486,9 +486,32 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
+on_index)
+>
+> [ ... ]
+>
+> > +static void handle_exit_pkvm_state(struct kvm_vcpu *vcpu, int exceptio=
+n_index)
+> > +{
+>
+> [ ... ]
+>
+> > +     if (exception_code =3D=3D ARM_EXCEPTION_TRAP ||
+> > +         exception_code =3D=3D ARM_EXCEPTION_EL1_SERROR ||
+> > +         ARM_SERROR_PENDING(exception_index)) {
+> > +             kvm_call_hyp_nvhe(__pkvm_vcpu_sync_state);
+> > +             vcpu_set_flag(vcpu, PKVM_HOST_STATE_DIRTY);
+> > +     } else {
+> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
+> > +     }
+> > +}
+>
+> [Severity: High]
+> If a non-protected guest exits due to an IRQ (such as a PMU overflow), th=
+is
+> clears PKVM_HOST_STATE_DIRTY. If the host kernel then handles the IRQ and
+> modifies the guest context (for example, setting PMOVSSET_EL0 for the
+> overflow or applying a reset like KVM_REQ_SUSPEND), these updates appear =
+to
+> be lost.
+>
+> On the next entry, flush_hyp_vcpu() will skip copying the host state beca=
+use
+> the dirty flag is clear. Then, on a subsequent exit or vcpu_put,
+> handle___pkvm_vcpu_put() will reverse-sync the stale hyp state back over =
+the
+> host state. Does this clear flag path silently discard host-side context
+> modifications?
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > @@ -172,7 +214,17 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *h=
+yp_vcpu)
+> >       fpsimd_sve_flush();
+> >       flush_debug_state(hyp_vcpu);
+> >
+> > -     hyp_vcpu->vcpu.arch.ctxt        =3D host_vcpu->arch.ctxt;
+> > +     /*
+> > +      * If we deal with a non-protected guest and the state is potenti=
+ally
+> > +      * dirty (from a host perspective), copy the state back into the =
+hyp
+> > +      * vcpu.
+> > +      */
+> > +     if (!pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
+> > +             if (vcpu_get_flag(host_vcpu, PKVM_HOST_STATE_DIRTY))
+> > +                     flush_hyp_vcpu_state(hyp_vcpu);
+> > +     } else {
+> > +             hyp_vcpu->vcpu.arch.ctxt =3D host_vcpu->arch.ctxt;
+> > +     }
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but doesn't this unconditionally overwrite =
+the
+> protected guest's private EL2 registers with the values from the untruste=
+d
+> host memory? By copying host_vcpu->arch.ctxt into the hyp_vcpu on entry,
+> could the host arbitrarily modify a protected VM's state before execution=
+?
+>
+> > @@ -203,9 +255,13 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
+p_vcpu)
+> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
+> >       sync_debug_state(hyp_vcpu);
+> >
+> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
+> > -
+> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
+> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
+> > +             host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
+>
+> [Severity: Critical]
+> This is also a pre-existing issue, but leaking the protected guest's
+> register state into the untrusted host memory seems to violate pKVM's
+> confidentiality guarantees. The untrusted host EL1 can read all private E=
+L2
+> registers via its mapped kvm_vcpu structure. Should this copy be avoided =
+for
+> protected VMs?
+>
+> [Severity: High]
+> By removing the assignment that copies hcr_el2 back to the host, do we br=
+eak
+> virtual SError injection?
+>
+> When the guest takes a virtual SError, the hardware clears the VSE bit in
+> the hyp vCPU's hcr_el2. Because we no longer sync this back in
+> sync_hyp_vcpu(), the host's copy remains set. On the next entry,
+> flush_hyp_vcpu() will read the stale host HCR_VSE bit and set it again,
+> which seems like it would trap the guest in an infinite virtual SError
+> storm.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714101601.41=
+42645-1-fuad.tabba@linux.dev?part=3D8
