@@ -1,87 +1,66 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f4.google.com (mail-yx2-f4.google.com [74.125.224.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702F345BD71
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:02:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092FF448390
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:03:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784034151; cv=none; b=E8XfwRVLk5Gq4w4ssFD1O5IOh+mEj3c3SkHf29l1NqDY2cmTtRr2WffInVTowhpRF6qMoQpgQ/NOFl3UDdu16CUpTcCjnu5II/aOy6i71sttWLbHEZJKFS4LeDF6476vGbadJylehRF3NUPmxUyuSeE6/ywDF5jhSwty8AbOyLA=
+	t=1784034206; cv=none; b=abjIMcd6S/TTlISqx9BV0C+FGTw2KR9fjTrFf8ePLxsmOMH7kKl0bEnapIuiQs2BMpkaJ4oxUrn3eoslKUH8/9HISNuItR8w3nhsXKpZQ99kjwdEGdfzPc/eszQzAYpTG8UaiaFU2sx21V432n0xQtvskbMN12LX73ZP7kAAHCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784034151; c=relaxed/simple;
-	bh=GDta4Uhk2X4fc6/jmA/F5JrC1KIEFErRwtrKoNQ1ZJI=;
+	s=arc-20240116; t=1784034206; c=relaxed/simple;
+	bh=rC2Kqe+sU5PqXGlFedUh2OqBv9Iid7OTb3etgq6VA5I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TOouANFQ5jr9GZOZEtcCdudKN9sCPW39pU7Jld1uBLehR6EHpmdN99z2fYiMmq5GxZknLtX4s7589xrlYcjnxto+YZ/rzNKhO4NR9MGfaL2bL3t1hbMH62IcP+fxHcZhTD4vUCGeDFsLroJikJ7K8OpDqK6C4YizdodW1r4PCKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dXyqGxk9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DMvhGiYU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=WEQbwKOAAaD9UHpi9CToRllGxf8UZBdVTAtmDD9RriOZTG6KDJcRa1IcHfRHxHP7Q6ICV3YdxOK4fuE6dcgFGW8sNdiUN2F90U2ChZzZkvXA7mrfqFunxELIF8buxODkcDdPGZ6q3sKXE28yj5qUI1ipM0yVA3fpUa8J0YmxmdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IhBlq/Sp; arc=none smtp.client-ip=74.125.224.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dXyqGxk9";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DMvhGiYU"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66EBNj0M494330
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:02:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	drji5NTNqWKsB2q0aH+BaAkELHZdH35cex72tz1Jscw=; b=dXyqGxk9fl9b36UD
-	MFbKZWKSTcslrnUdUiPRtJjDBOgvYaEsIEVF52NDz+sZI4GzAu9nOAwcrNUqP+Ev
-	YkfYT5mdAd5LMEFTXnjPpED3eXIRLQxq9M2FsNaFueWglq6Eg5tF16ZE99B7jGbY
-	q/xt8G5ahm3EoVHKWpL5PNcHH1GYas2rNODZM00/ldXUkHc61ITCgaRmkfUSjTxk
-	trEODuSLvjaIueKmWVI8j8msWm6rRRdphMnRYkdjJ/fOUPawBH8xhM3caK6lEwTG
-	Xr8a9rSqCQOsTsdv7w8MLZbBQTT1YTJKY66gQIb/hr0IslE7xttXttSovkwWjyeb
-	glU40w==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fd44cutgx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:02:28 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-84a4d8fd6deso1291020b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 06:02:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IhBlq/Sp"
+Received: by mail-yx2-f4.google.com with SMTP id 956f58d0204a3-664dfa166f1so300283d50.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 06:03:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784034148; x=1784638948; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784034203; x=1784639003; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=drji5NTNqWKsB2q0aH+BaAkELHZdH35cex72tz1Jscw=;
-        b=DMvhGiYUqOAWFAq/S0ZlwcVO7qrBqMpBONuqOAcDg7f83A0+oViXdCePMLgwH2zwVm
-         5w7lekfSfRDw6PqYYVDssDETrJcFOO8tdkKrlImZdlHHkJj4JdCjoUhSZw3pid+wVCMg
-         yP3am6w4q4lfWPP3lALTLn82WvYxNvOUQ358W43610p38VJTiz0v3Z/BUKlagZmVPost
-         G1YQ4nRezZgmeW+I2au3iakycchwA5imy4R1ZDpmTkjRtTYMeviiIBbt7tDMwwvCjuG9
-         qGLlMBrqzH1DhQXckWbPNQ8+ejnDVNhBQNBxe1eRCMv8jqvLKpcEErY0ntXgBKN3Hp6e
-         wr0w==
+        bh=CfSJmEAZPFbCA1isHeIkUteGlC+Qb4lvv34SMSUfW2g=;
+        b=IhBlq/SpdRJkctZWMLPAWxuqEyEmp/zThE2Z17AWBnbsk0hYch6jxJOzET5zSWbkeB
+         9EjXwnOlNOiZo2Q69TqxffgNnVldcWpTTqSvK/5gFBe7diHiolxePLsWjmr3BcQMp8g3
+         T52dwrxQSajR4EhJxOx58GeECsRiEMVgVKY/4JedpcsrIfrF7euYqkhcM1iMaKHrMEtG
+         GyIH12LYZxwK75KRCb2eUrMEcm3m+UaulfUTMA9RsgSU7DEMSnRtQvNZrGfrhSQN0iUA
+         Ugs9N8rwqAwZ7MRJ0bppNA2hOCvtaGZQbKwRKFzLvqeJvRUtzXv7xQRY8It3xNMRVdFx
+         goYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784034148; x=1784638948;
+        d=1e100.net; s=20251104; t=1784034203; x=1784639003;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=drji5NTNqWKsB2q0aH+BaAkELHZdH35cex72tz1Jscw=;
-        b=ZQqNfLMy2Ib1QsWgu5zJiPpFhrqebJ8F+mVPXAtYOHlTx5T6wiC3JTojkSa94XefJX
-         Q+LbmSeTnnj9XEzKvtUECKEIMqzLy5ipjVEsKmpHlp+WYmlqpUHp+D1LeSgBDqTJ9OSr
-         gajW1YAdZhmFWhwedvLhRm0bEo8dkwkbstDr65b+IS0pSJWy4Pl5ZY4g1KJgnjMJOpgm
-         5BNa9Pt4jlzcXeW7dt0hYt0pTBEAnBoRPZIk2kZ8d57ZgYwoN4vyo1P90muRAqN9mWp1
-         6qc22p99Zlmh8cG4TGCzymxAvHY03ddg0nNwYskGERMltBgRcmFudyQuaUWBFKdg8dkS
-         Hccw==
-X-Gm-Message-State: AOJu0Yz4yImLLMl4eUv0YuWaXgS28tEbtib0IaPod1Gob7zZZHzu9kn9
-	zbIQzO4Y8hx0B51mKDfeuoduIgOGk8hjZAwYoK7HEBT+3IE9a6DNirL1bElncSTMtip1egGFGtM
-	/HknDX54daylEtIxeDXToJQLiY5tweDStYBA5yyceWUOlk7dH4ZsGFYqdKbWkHubcyWx5uKeA1i
-	FLLas=
-X-Gm-Gg: AfdE7cnHDlSP/bzLJzIbRpzUa8iPo92/w9iyGRwUL0tbtqGelLhKxKFCQLGo9Z555ql
-	b4RW21FWI1EaSktphEBvpEd/qrnopHvK0pWOWbHAc4TPj9n6WnoKF5vcM3H8ptjPBJYaA/fgbiW
-	cd0bZEQKWw0zp4ZcTxIK3f5jVZP6qmgzMumN86do5m948xP/7IeYXbfdHOBa+LVDSxbeSnFXYG+
-	l5diCHgStFmI/49FCoY5nXTekbQhyN8+8Hr8dJU24IoSZp82TnK0O5/zrH4ZiibHakE9hVXnSRH
-	8Z2Hu/hqh0N86tKKV5tA1vZS5H38DIrk7vHpOaIco1UIOt3azKbGZyjznObWIyaUzdG1rTaGiBt
-	k1FqHHi9z0b/N7LppoG+s31360i3f1aLED6aoeSDvEyQ=
-X-Received: by 2002:a05:6a21:3116:b0:3bf:ab4b:2d34 with SMTP id adf61e73a8af0-3c110ad50a7mr13918538637.53.1784034146515;
-        Tue, 14 Jul 2026 06:02:26 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3116:b0:3bf:ab4b:2d34 with SMTP id adf61e73a8af0-3c110ad50a7mr13918455637.53.1784034145754;
-        Tue, 14 Jul 2026 06:02:25 -0700 (PDT)
-Received: from [10.206.103.83] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b659d8da9sm143649475c88.14.2026.07.14.06.02.22
+        bh=CfSJmEAZPFbCA1isHeIkUteGlC+Qb4lvv34SMSUfW2g=;
+        b=rsTAr9eTCxEqArLHnZH5r/mpHRxvBc7AP7ajJt0gHKcukbMy1GNFwlan4o6KScEFNG
+         DUZw0P4B7CsU0dp9cUq9iTgfOqorPxdvIS5z76WTGWvC/gVKEKhweZxiN8oy/CXxmUQN
+         xMFM/n5WzOnKg0Eg0KQzoNylNkO5DafVta5J04VPcyIZYG7BN3GSvKEwpcSu21RJ/ahS
+         16HX/yHLjXLfXzV5X3GFmnmvFZ5muQ18+qd+2eLQcBXeagbBinZxJ3R5U4kECfTIuHOH
+         zaRO9JcuxTOx6mZm5JY46ecgxM8KUo+PLvFnWXRmOq/lZo0QWCrHh5lNP6ScZFju5Mbo
+         uvOg==
+X-Gm-Message-State: AOJu0Yz2anykC1BU6hEn5dU1m94yc/CL8Xxi6KuWMm1asUCS/a9Wp1UT
+	XScaRMTVX5txXzyTf84ZYpGR7xsnSv4qlJ2Oac+gwSoxT3u0MdzeQ+V2ZY3COVOXUIU=
+X-Gm-Gg: AfdE7cmmmeW7Ex3tXNnHetRKZwbb86Rhf0RsohXKOI/tluYyosId0c45hb1pc8+izeN
+	LRbvgFDTCyYV1OctpVcrzBJoHeusQ2Bk6MkY3LzjiqzyorS4mSb6KTeb0+CSChf5V1TZHS0xqsy
+	V/CAXT6Pfc/eYQkViV1HQibTWSeTMGHrnVCQJNfHr3aeVuTcMqiCfj02i6dUNnqFAr1QSf4EDAO
+	+oaapp0bOVC52dqSidpsFTj9SxoX1H9ZYjxiR+OiXNXDq1n6UGIoBgpZYi6XTAFowk9aWrFWIpI
+	JnRUEHqFhJZJ7cyequ7S4sJBahf0gMmso5pjY2QwQswmzMSM7z6ttgietp35cEXOwbWOtlC32b9
+	hce+R8Kmx6SlnjW1S0a56bkRrL8ZFoF8Pfni4dG7Qwu24b98IHHGamdZZvsWqRJ3+EBA73l/Krs
+	Mjg2tqOSoiMrhjt4Y8ot/cMg==
+X-Received: by 2002:a05:622a:1f8f:b0:51c:7b12:5ff1 with SMTP id d75a77b69052e-51cbf3e12bcmr115593901cf.77.1784034121716;
+        Tue, 14 Jul 2026 06:02:01 -0700 (PDT)
+Received: from [192.168.101.113] ([45.249.9.114])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51caacad0cfsm117138491cf.8.2026.07.14.06.01.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jul 2026 06:02:24 -0700 (PDT)
-Message-ID: <f19076bf-5392-4267-bc6f-9698c045f9dd@oss.qualcomm.com>
-Date: Tue, 14 Jul 2026 18:32:20 +0530
+        Tue, 14 Jul 2026 06:02:01 -0700 (PDT)
+Message-ID: <4f0c1daa-dbc5-4a3c-8914-253372deec8b@gmail.com>
+Date: Tue, 14 Jul 2026 18:01:53 +0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,113 +68,138 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 07/11] arm64: dts: qcom: hamoa: Move Iris IOMMUs to
- sub nodes
+Subject: Re: [PATCH] PCI: starfive: Fix unchecked pm_runtime_get_sync() in
+ probe
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260709-vpu_iommu_iova_handling-v1-0-72bb62cb2dfd@oss.qualcomm.com>
- <20260709-vpu_iommu_iova_handling-v1-7-72bb62cb2dfd@oss.qualcomm.com>
- <20260709141034.15E201F000E9@smtp.kernel.org>
+Cc: linux-pci@vger.kernel.org
+References: <20260712175427.232234-1-alitariq45892@gmail.com>
+ <20260712180440.423421F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20260709141034.15E201F000E9@smtp.kernel.org>
+From: Ali Tariq <alitariq45892@gmail.com>
+In-Reply-To: <20260712180440.423421F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: ku_Dt7-i0A5AglX0zqY7roAVxcYMKVXW
-X-Proofpoint-ORIG-GUID: ku_Dt7-i0A5AglX0zqY7roAVxcYMKVXW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDEzNSBTYWx0ZWRfX34FpqdfMXQ8k
- rq6vOUtM5pxN/mKGo3rASIR2eelGTSlOzc+roFg+1RgLNvb18rDu4Zn2D6ORiO1PODtQbArsR/j
- sX6NYRI5e1fVOFW0OII9r/Uj9eh4KRE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDEzNSBTYWx0ZWRfX0zg81zyHODbv
- fZeyWoSU1DpwLS7EA2tOz80L5ATTSzhNVTWkakAdtr03eS8p2hhKyvFvWAp8ZzWfpgGXyXoc605
- K8EaPtjzBz2siblvWjkh1l/CNSZN+OTp5JeGFxfuBSB4pGuCVhzOIzNVhA2gcOCRA2qtT87Dxnn
- 0UFL2w8UQlNys0QPoOJwQexdFzfqBwMzqBMPFq6nmcHv3yDOb9VJpaACmIJoHLsWbvFPfjJrdbB
- giCC6/4uR3rlbD0MHTnGLP50gYlbNU2D/c9DOrmbQy4TKAw6lsQg25VO3G8P/vCqxpvhY3po76F
- ENY72UoIYg57uRlh3MsolgcgK3nlRK9+ccGroPC8U+l10dueKjrxNaMxJHrxH8d3IWA/Fv0rTuA
- ZOoIH6qkTqALLUUzcjlp0LBQ89m0x92XLeUm06s3w6vIeczS1qYXZPrG2nCNIT3PVmy/7go110R
- A+3V8k5TrXF/o1NdRRw==
-X-Authority-Analysis: v=2.4 cv=P84KQCAu c=1 sm=1 tr=0 ts=6a563364 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=9hASng3_XfuON5wlUrIA:9 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_03,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607140135
 
 
 
-On 7/9/2026 7:40 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The `iommu-addresses` property is incorrectly used to limit the non-pixel stream's IOVA space. Instead of restricting allocations to the 0-600 MB range, it marks the range as an IOMMU reservation (`IOMMU_RESV_RESERVED`), which forces the allocator to skip it and allocate IOVAs above 600 MB, directly violating hardware constraints.
+On 7/12/26 11:04 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The driver's removal path incorrectly calls asynchronous pm_runtime_put() before pm_runtime_disable(), and tears down PM references before disabling the hardware.
+> - [High] Failure in starfive_pcie_clk_rst_init() returns directly without powering off the PHY, causing a resource leak.
+> - [High] Missing return statement after regulator_enable() failure causes a silent fallthrough, later leading to an unbalanced regulator_disable().
 > --
 > 
-> --- Patch [7]: [RFC PATCH 07/11] arm64: dts: qcom: hamoa: Move Iris IOMMUs to sub nodes ---
-> commit 96b940efc5fae7db37d762be78144fc901472a7b
-> Author: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> --- Patch [1]: [PATCH] PCI: starfive: Fix unchecked pm_runtime_get_sync() in probe ---
+> commit 83a329f8aee98c4aec071468fc96ecc89497124e
+> Author: Ali Tariq <alitariq45892@gmail.com>
 > 
-> arm64: dts: qcom: hamoa: Move Iris IOMMUs to sub nodes
+> PCI: starfive: Fix unchecked pm_runtime_get_sync() in probe
 > 
-> This commit splits the Iris VPU into non-pixel and pixel sub-nodes to
-> describe separate IOVA constraints. It uses a reserved memory region with
-> iommu-addresses to attempt limiting the non-pixel stream to the 0-600 MB
-> range.
+> This patch replaces pm_runtime_get_sync() with pm_runtime_resume_and_get()
+> in starfive_pcie_probe() to properly handle runtime resume failures. It
+> adds error handling to disable runtime PM and bail out of the probe
+> function if the device fails to resume, preventing unbalanced usage
+> counters and hardware configuration on an unpowered device.
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
->> --- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
->> @@ -657,6 +657,10 @@ smem_mem: smem@ffe00000 {
->>   			hwlocks = <&tcsr_mutex 3>;
->>   			no-map;
->>   		};
->> +
->> +		iris_resv: reservation-iris {
->> +			iommu-addresses = <&iris_non_pixel 0x0 0x0 0x0 0x25800000>;
->> +		};
+>> diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
+>> index 298036c3e7f94..e9a472985b8ac 100644
+>> --- a/drivers/pci/controller/plda/pcie-starfive.c
+>> +++ b/drivers/pci/controller/plda/pcie-starfive.c
+>> @@ -410,7 +410,11 @@ static int starfive_pcie_probe(struct platform_device *pdev)
+>>   		return ret;
+>>   
+>>   	pm_runtime_enable(&pdev->dev);
+>> -	pm_runtime_get_sync(&pdev->dev);
+>> +	ret = pm_runtime_resume_and_get(&pdev->dev);
+>> +	if (ret < 0) {
+>> +		pm_runtime_disable(&pdev->dev);
+>> +		return dev_err_probe(dev, ret, "failed to resume device\n");
+>> +	}
+>>   
+>>   	plda->host_ops = &sf_host_ops;
+>>   	plda->num_events = PLDA_MAX_EVENT_NUM;
 > 
 > [Severity: High]
-> Does this iommu-addresses property actually restrict allocations to the
-> 0-600 MB range, or does it do the exact opposite?
+> This isn't a bug introduced by this patch, but looking at starfive_pcie_remove():
 > 
-> Because this reservation node lacks a physical reg property,
-> of_iommu_get_resv_regions() parses it as an IOMMU_RESV_RESERVED region.
-> When iova_reserve_iommu_regions() processes this, it permanently blocks
-> the 0-600 MB range from the device's IOVA allocator.
+> drivers/pci/controller/plda/pcie-starfive.c:starfive_pcie_remove() {
+>      ...
+> 	pm_runtime_put(&pdev->dev);
+> 	pm_runtime_disable(&pdev->dev);
+> 	plda_pcie_host_deinit(&pcie->plda);
+>      ...
+> }
 > 
-> Could this force the allocator to fall back to IOVAs above 600 MB (or
-> fail entirely), directly violating the hardware constraint and leading to
-> the device crashes mentioned in the commit message?
+> Does this leave the hardware in an active power state upon module unload?
+> 
+> Since pm_runtime_put() is asynchronous, wouldn't calling pm_runtime_disable()
+> immediately afterward risk canceling the idle/suspend work?
+> 
+> Also, does tearing down the PM reference before stopping the PCIe host
+> controller via plda_pcie_host_deinit() reverse the proper teardown order?
+> Could this cause the device to power off while still being actively accessed
+> by the core?
 
-Yes, thats the intended behavior too. The "non-pixel" sub node is 
-suppose to skip the region 0-600MB entirely, and return IOVAs above and 
-outside the range 0-600MB.
+This is fixed in a separate patch [1].
 
-Regards,
-Vikash
+> [Severity: High]
+> This is a pre-existing issue, but I noticed a potential resource leak in
+> starfive_pcie_host_init():
+> 
+> drivers/pci/controller/plda/pcie-starfive.c:starfive_pcie_host_init() {
+>      ...
+> 	ret = starfive_pcie_enable_phy(dev, pcie);
+> 	if (ret)
+> 		return ret;
 
+I do not think we need to call starfive_pcie_disable_phy() here inside
+the error handling. If starfive_pcie_enable_phy() fails, its internal 
+error path already cleans up by calling phy_exit() via the 'err_phy_on' 
+label. Calling starfive_pcie_disable_phy() here would cause a redundant, 
+unbalanced phy_exit() call.
+
+>      ...
+> 	ret = starfive_pcie_clk_rst_init(pcie);
+> 	if (ret)
+> 		return ret;
+>      ...
+> }
 > 
->>   	};
->>   
-> [ ... ]
->> @@ -5446,6 +5451,15 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
->>   			 */
->>   			status = "disabled";
->>   
->> +			iris_non_pixel: non-pixel {
->> +				iommus = <&apps_smmu 0x1940 0x0>;
->> +				memory-region = <&iris_resv>;
->> +			};
->> +
->> +			iris_pixel: pixel {
->> +				iommus = <&apps_smmu 0x1947 0x0>;
->> +			};
->> +
+> If starfive_pcie_clk_rst_init() fails, it returns the error code directly.
+> Does this fail to clean up the successfully initialized PHY?
 > 
+
+This is fixed in a separate patch [2].
+
+> [Severity: High]
+> This is a pre-existing issue, but does this code swallow the regulator error?
+> 
+> drivers/pci/controller/plda/pcie-starfive.c:starfive_pcie_host_init() {
+>      ...
+> 	if (pcie->vpcie3v3) {
+> 		ret = regulator_enable(pcie->vpcie3v3);
+> 		if (ret)
+> 			dev_err_probe(dev, ret, "failed to enable vpcie3v3 regulator\n");
+> 	}
+>      ...
+> }
+> 
+> Because there is no return statement after dev_err_probe(), the function
+> proceeds and eventually returns success at the end. Could this cause the
+> driver to continue operating with unpowered hardware?
+> 
+> Later on, starfive_pcie_host_deinit() unconditionally calls
+> regulator_disable(). Since the regulator was not successfully enabled,
+> would this trigger an unbalanced disable warning in the regulator core and
+> corrupt regulator use counts?
+> 
+
+This is also fixed in a separate patch [2].
+
+[1] 
+https://lore.kernel.org/linux-pci/20260713145014.740898-1-alitariq45892@gmail.com/T/#u
+[2] 
+https://lore.kernel.org/linux-pci/20260714113029.326207-1-alitariq45892@gmail.com/T/#u
 
