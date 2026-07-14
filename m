@@ -1,202 +1,140 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A76346AEE0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784034328; cv=none; b=gtPQYoBUssE4A9DTbALWHIj3KZ4fJ3SYjaDJRqEDGcOTxp1KvFH3BW1Tifi3WB8vDLukhFPAZwjQneqS5eNOUGTxLwXXvbpTHcHU+/7pK/bAdmFMQFkNQAF9hcHoEOHaKoYbAVZTfxalt1y6xVF5mZb22bfeqOSVlqPz/6V10dM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784034328; c=relaxed/simple;
-	bh=Pid4HPHuEVI5BTjms8jEZFNfwUSmNTjG2RzD1N+Dq34=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vl0qMMgbG5c7onXfBwg7/88E3W2CKFA2DKJBfCaJAitXGeAet5b729XE693Fc7NbQHbQsbp7fgKRGdxcuYXWiewkh5cEP+7j5rAe6AviAB4rPIukakkth+8MV1VbcStoZj+XB1o/0UsoHYlsiw2e4gTfFiF5nHDOYxfd4uBz2j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=LnVoQsc7; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77491478874
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784034496; cv=pass; b=X5l1j8y4m7Ow49PMyrY7JoXxFtfmzjVfamdXoRFGFu6CpM/2KqmU7jdC3GYdhERwfcynoD4DyiO3coH+9UPPnlNKr3fencVLRPf+fBFCmK/MquZKPf+xi1iRdvxOFkQ5G3sjIz17mJna9NhPl5tKDr2dwgxXfk+C/in86iMgthg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784034496; c=relaxed/simple;
+	bh=znxXo87iY2K7i0i45/hzGRAFQP5Qw+DyoZxvELMx7Og=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=teoaZHxkE2EgnHKyBSSB4Pm22wHeAS5ICmy+NJz7ZUQx8mxixQMyQm7QH2nRWBEG8q6+dmHbXniUZUUHYV+qKWXSuFyFDr1MojXOuY7oftGT3mippg5UqlE5wDNZb3eMcaaxUc2Rnp4FNolRgcFzBn/Fg62vvy4yH/MzIe+bN3g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=eTpvkjxb; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=RHrkez8z; arc=pass smtp.client-ip=81.169.146.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="LnVoQsc7"
-X-Gm-Message-State: AOJu0YxpZbRlKOwdRKhwV+FeslZwOeRIIKph5ukIh6K5LfvboFQp0BbP
-	rpw9zn3zPgpn7u/fC3ROByTJOvo/CLxUr8B3IuqnBzH6s4Gy4/6Xs/43LP1DPcYbSAMEjf/Xk3A
-	f45Ni1Pit6F7O3jfnqlTnmrH0KcwkGXV4ISthAi1B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784034324;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2b0nYPQ7iFRKYC7l9DHkU7h83GGC5kCZO6o3BUUeAyI=;
-	b=LnVoQsc7zuZ8Mq7WCyLlED/IK9JZDt3zXIYUfjp8oeq/k+cI91pXWewPDDeRgam70SJyjC
-	KPa0tjdjn0GlxsbbRwFH4bKUlMk3XuWJw+ALx5v1SLyNatRVRMjwi8ZGTtsoKdzDwH4b3K
-	7FXWsp3RrHI5l0eS1yl1rBHT8SAUAi0=
-X-Received: by 2002:a05:622a:4010:b0:517:5ac7:332e with SMTP id
- d75a77b69052e-51d7bc5040emr14294221cf.6.1784034290465; Tue, 14 Jul 2026
- 06:04:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="eTpvkjxb";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="RHrkez8z"
+ARC-Seal: i=1; a=rsa-sha256; t=1784034469; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=mvCzuuFFHWuDsV3S9xC5/QKO2CaLh7IpLYVJ7RUBx6uwf6BNZ2wRsezduDQiCklaOT
+    Ae2MLitDufTTaEyIeqeSJ0BrptoyjhJ0876WbSOaeQPfIFvcKqVXcMiQ3TZOqxFrQm9Y
+    4ateklIU4uDAmThlp5vgICrPcg4ifIHULHoeP7/GXCqF8PlenDXj3klk/aHGV7+4gUnd
+    TsFNompTCwuTjlYf8mpz61x4f+Rt0HIDi9TsciZHSdolawleS8xekHy5jXM4IV8ZHm4z
+    yLl3pB1MvIOf59JphmCTprhRySaJfJkKoVbCt5FVBkaKVtuSEY6oNM1k+IuWl+pK5Yu3
+    rRIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784034469;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=guEuGcTlCYA/IKVUqHOhnf18L9VLtdbzdYlIh6ZIP+M=;
+    b=tacYFdwe2n9fiueao38evEcvR8BXY+S1FsfpOtizif0wa2hBmxc6IQf2KgBNFldRE/
+    9I9E04HxsCcsFk7bOwIuzTLt8XwWxgKz4QD54uxDidhCEcUIBc6O7H5Hbid9kZeM1ToU
+    PPCHXS0YVbNgwGPCdimssAkQ0wBOZhX7gC5yAkHjQRIynDRbNFE2hqINab2J6oTfmcou
+    PtTAyey8NFWvc1VTiYrB7dsdUgl6kD2C+nvuCWsgcrlVWNm7tbDjsvOmpLvwcCIpKlsa
+    atzvIkoRP8JxmaJNYuxkinzzVdc1TEis3C4B4r4l5KrTJXaw0uEqHYyIloVVTu++nU2V
+    mnlg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784034469;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=guEuGcTlCYA/IKVUqHOhnf18L9VLtdbzdYlIh6ZIP+M=;
+    b=eTpvkjxbWQUUq686Csxj7Ds70+kern3/XAU5yoUfW9McvqF9L1+NRa31MFPDEJ32E7
+    xuxgTjwNcfOfHxxm9Uts43fPfd2sAuQXusbPsO5TemlyRV70Yz5X/emIv/BGuNKHauw4
+    Q1trR+biGguScB/1IaGghJVHHhq+8p6RVHbkqkLBF2InHKiDxrg1UJs/o094vWbKuGln
+    2cZVD5zqo9vUwSIbw1Sqe1FyVkzfVAblsyI2Loq0VI4ymQIF/7o0/O+z0Jo0wMaR3/eB
+    Q6Q4K6r7Yz5G5Agj/dxRe9O0aDQ6gYrJQG7Lh14JQ+8dMpu+2FAigAYl2HTHXZBO8w+7
+    QI2A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784034469;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=guEuGcTlCYA/IKVUqHOhnf18L9VLtdbzdYlIh6ZIP+M=;
+    b=RHrkez8z3lCG4UCchphNTc3QgzvpozmJ66nIZwKyavn97n7YqHpYFLx3uxTahTNwje
+    RX7BI5d762GtbShqnJBQ==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
+Received: from [192.168.20.190]
+    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
+    with ESMTPSA id Ka9fdb26ED7nkpe
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 14 Jul 2026 15:07:49 +0200 (CEST)
+Message-ID: <ee59dccc-0532-4b00-8783-9763e04c327e@hartkopp.net>
+Date: Tue, 14 Jul 2026 15:07:48 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714101601.4142645-1-fuad.tabba@linux.dev>
- <20260714101601.4142645-8-fuad.tabba@linux.dev> <20260714122015.EDCB71F000E9@smtp.kernel.org>
-In-Reply-To: <20260714122015.EDCB71F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Tue, 14 Jul 2026 14:04:13 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTx11sRDnH4XTMPREsMj6uX61=O7zqKk6=VAa+C4_2SLmw@mail.gmail.com>
-X-Gm-Features: AUfX_myjEnFIfozSNQOOGekDYHsfc2WHKHyez5Ug6JOHDXind_qhJP1fx_Z6Rq0
-Message-ID: <CA+EHjTx11sRDnH4XTMPREsMj6uX61=O7zqKk6=VAa+C4_2SLmw@mail.gmail.com>
-Subject: Re: [PATCH v5 7/8] KVM: arm64: Add primitives to flush/sync the VGIC
- state at EL2
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
+ removal
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: sashiko-reviews@lists.linux.dev, Oleksij Rempel
+ <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>
+References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
+ <20260714-bcm_fixes-v13-9-fd667c61099a@hartkopp.net>
+ <20260714104431.65C751F000E9@smtp.kernel.org>
+ <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
+ <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
+ <1a521f25-0aee-4eae-a0da-3eb7f0702e84@hartkopp.net>
+ <20260714-vehement-native-jaguar-4f52dd-mkl@pengutronix.de>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260714-vehement-native-jaguar-4f52dd-mkl@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 14 Jul 2026 at 13:20, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Missing its_vpe copy in flush_hyp_vgic_state breaks GICv4 virtua=
-l LPI injection
 
-pKVM has no vLPI, so  its_vm  is NULL either way; and  En  comes from
-the copied  vgic_hcr  anyway.
 
->
-> Pre-existing issues:
-> - [High] KVM_SET_ONE_REG updates to GICv3 VMCR are silently dropped under=
- pKVM during vcpu_put()
+On 14.07.26 14:36, Marc Kleine-Budde wrote:
+> On 14.07.2026 13:47:35, Oliver Hartkopp wrote:
+>>>>> Pre-existing issues:
+>>>>> - [High] Unprotected concurrent access to op->rx_stamp and op->rx_ifindex in bcm_rx_handler causes data races and torn 64-bit reads on 32-bit architectures.
+>>>>
+>>>> Fixed in patch 10
+>>>
+>>> Pre-existing issues are not a shot stopper, _new_ issues for a patch
+>>> series are...usually are.
+>>>
+>>> Hopefully upstream will accept that you fix issues in a later patch that
+>>> sashiko claim to be introduced by a patch in the series.
+> 
+> Sorry, let me clarify: This was a general statement.
+> 
+> I don't want to imply that _this_ patch introduces a new issue.
+> 
+> If you remove sashiko from this sentence it was valid before the LLM
+> review bots. Rule of thumb: You should not introduce "bad" code and fix
+> it later in a series. - As this is a huge amount of fixes that requires
+> a lot of code changes, I hope upstream doesn't insist.
 
-The uaccess holds  kvm_trylock_all_vcpus , so it can't run between load and=
- put.
+When there was a new issue pointed out by sashiko I fixed it inside the 
+patch with --amend when it belonged to the topic of the patch.
 
-/fuad
+So I tried to follow the one problem, one patch pattern. And every patch 
+makes things better and introduces no new regressions (which sashiko-bot 
+would have detected) - while probably not fixing everything at once.
 
-> --
->
-> --- Patch [7]: [PATCH v5 7/8] KVM: arm64: Add primitives to flush/sync th=
-e VGIC state at EL2 ---
-> commit 5a3c12abf480537e61537f1e45492ee3e349846c
-> Author: Marc Zyngier <maz@kernel.org>
->
-> KVM: arm64: Add primitives to flush/sync the VGIC state at EL2
->
-> pKVM performs its own world switch for protected VMs but has no primitive=
-s
-> to move the per-vCPU VGIC state between the host and hypervisor vCPU
-> contexts. Add flush_hyp_vgic_state() and sync_hyp_vgic_state().
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index f3233ee343a39..2db56146ec493 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > @@ -104,6 +104,45 @@ static void fpsimd_sve_sync(struct kvm_vcpu *vcpu)
-> >       *host_data_ptr(fp_owner) =3D FP_STATE_HOST_OWNED;
-> >  }
-> >
-> > +static void flush_hyp_vgic_state(struct pkvm_hyp_vcpu *hyp_vcpu)
-> > +{
-> > +     struct kvm_vcpu *host_vcpu =3D hyp_vcpu->host_vcpu;
-> > +     struct vgic_v3_cpu_if *host_cpu_if, *hyp_cpu_if;
-> > +     unsigned int used_lrs, i;
-> > +
-> > +     host_cpu_if     =3D &host_vcpu->arch.vgic_cpu.vgic_v3;
-> > +     hyp_cpu_if      =3D &hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3;
-> > +
-> > +     used_lrs        =3D host_cpu_if->used_lrs;
-> > +     used_lrs        =3D min(used_lrs, hyp_gicv3_nr_lr);
-> > +
-> > +     hyp_cpu_if->vgic_hcr    =3D host_cpu_if->vgic_hcr;
-> > +     /* Should be a one-off */
-> > +     hyp_cpu_if->vgic_sre    =3D (ICC_SRE_EL1_DIB |
-> > +                                ICC_SRE_EL1_DFB |
-> > +                                ICC_SRE_EL1_SRE);
-> > +     hyp_cpu_if->used_lrs    =3D used_lrs;
-> > +
-> > +     for (i =3D 0; i < used_lrs; i++)
-> > +             hyp_cpu_if->vgic_lr[i] =3D host_cpu_if->vgic_lr[i];
-> > +}
->
-> [Severity: High]
-> Does this code miss copying the its_vpe struct?
->
-> Previously, this was a full struct assignment. By explicitly copying fiel=
-ds
-> instead, its_vpe is omitted, leaving its_vpe.its_vm as NULL in the
-> hypervisor vCPU state.
->
-> When the guest runs, __vgic_v3_activate_traps() executes at EL2 and relie=
-s
-> on this field:
->
-> arch/arm64/kvm/hyp/vgic-v3-sr.c:__vgic_v3_activate_traps() {
->     if (static_branch_unlikely(&vgic_v3_cpuif_trap) ||
->         cpu_if->its_vpe.its_vm || !cpu_if->vgic_sre)
->         write_gicreg(vgic_ich_hcr_trap_bits() | ICH_HCR_EL2_En, ICH_HCR_E=
-L2);
->     ...
-> }
->
-> Since its_vm is NULL, ICH_HCR_EL2_En is not set. Could this break GICv4
-> direct virtual LPI injection for non-protected guests?
->
-> [ ... ]
->
-> > @@ -166,9 +199,6 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
-p_vcpu)
-> >  static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
-> >  {
-> >       struct kvm_vcpu *host_vcpu =3D hyp_vcpu->host_vcpu;
-> > -     struct vgic_v3_cpu_if *hyp_cpu_if =3D &hyp_vcpu->vcpu.arch.vgic_c=
-pu.vgic_v3;
-> > -     struct vgic_v3_cpu_if *host_cpu_if =3D &host_vcpu->arch.vgic_cpu.=
-vgic_v3;
-> > -     unsigned int i;
-> >
-> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
-> >       sync_debug_state(hyp_vcpu);
-> > @@ -181,10 +211,7 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
-p_vcpu)
-> >
-> >       host_vcpu->arch.iflags          =3D hyp_vcpu->vcpu.arch.iflags;
-> >
-> > -     host_cpu_if->vgic_hcr           =3D hyp_cpu_if->vgic_hcr;
-> > -     host_cpu_if->vgic_vmcr          =3D hyp_cpu_if->vgic_vmcr;
-> > -     for (i =3D 0; i < hyp_cpu_if->used_lrs; ++i)
-> > -             host_cpu_if->vgic_lr[i] =3D hyp_cpu_if->vgic_lr[i];
-> > +     sync_hyp_vgic_state(hyp_vcpu);
-> >  }
->
-> [Severity: High]
-> This is a pre-existing issue, but does handle___vgic_v3_save_aprs()
-> silently drop userspace modifications to the GICv3 VMCR?
->
-> When userspace sets the VMCR register, vcpu_load() first calls
-> handle___vgic_v3_restore_vmcr_aprs(), which copies host_cpu_if->vgic_vmcr
-> to the hyp vCPU. KVM_SET_ONE_REG then updates the host copy of the regist=
-er.
->
-> Finally, vcpu_put() calls handle___vgic_v3_save_aprs():
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v3_save_aprs() {
->     ...
->     hyp_cpu_if =3D &hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3;
->     ...
->     host_cpu_if =3D &host_vcpu->arch.vgic_cpu.vgic_v3;
->     host_cpu_if->vgic_vmcr =3D hyp_cpu_if->vgic_vmcr;
-> }
->
-> Doesn't this unconditionally overwrite the new host value (set by
-> KVM_SET_ONE_REG) with the old value stored in the hyp vCPU at load time,
-> potentially breaking VM migration and state restoration?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714101601.41=
-42645-1-fuad.tabba@linux.dev?part=3D7
+Best regards,
+Oliver
+
+> 
+>> Is it?
+>>
+>> Patch 10 Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+>>
+>> not anything in patch 9.
+> 
+> regards,
+> Marc
+> 
+
