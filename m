@@ -1,40 +1,40 @@
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0C3F8709
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D233F5BC7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784016600; cv=none; b=YOGTU7m8j18aJyhkhdv9AmBAHLcvHQ3Ste9jXG3tT91Kujie9jxEqxGxwWMBg9n4wcOP3/araPa3FRlX3CQHqnN8L+KOybNKMT3WkBhJShAPy7li8TgcJatQ2wJlwkw8b970XSQcRQBjdm1PQB+8rximV3nJN9RflpqX4XQdr5I=
+	t=1784016819; cv=none; b=ITZPrLDq1Pklxhl4v8fkKXOVWEmvZiEWWncVcjpcarWJ7Zos5kg/iEYE8+4kTJYAovkpt4elQIVXweCuExKlBbsTfliXqokMAadu+vTCEgFWS8OpFASvYipPyG6HBT0Jx7VkaC5OaKJjOurbCDCSvSXz9WVIRcsfIh+CLJb9o6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784016600; c=relaxed/simple;
-	bh=KM0AD2d1EYJgiOQUU1RPa2KcJ5Mzyd7oeXs7HFutUwc=;
+	s=arc-20240116; t=1784016819; c=relaxed/simple;
+	bh=j0SI4YRtONPH0K9xM6ukMCwDrLUf3U7zNF0KhtJk7As=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g7SY2q68ygC7FCmuMJvlY9AO/UYMYAyc1OZf/l/5DVNJ9trkKq8LopD2hQHZxZ3PDoPBBhoKyNd9KpF2Q5WCfQNwoj7+kgMOuNoIb6YRWb9tv4lhSP5VMk2sxAxvrGVM04O9zHQ6zh80/loYK6w938i8U2f2WV0Di4T4fVRo5Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ZqF0JTv5; arc=none smtp.client-ip=148.251.105.195
+	 In-Reply-To:Content-Type; b=r3qXazkBOslKUQoXrpd5qqtY0kTwHzwMR/lrrZjbs+6RUUZ3WJ5M5BF1Gwgf9v58HgPkep8fI1IQoknbT+plMIs8doNpOw9pNNrJp94jJR/mPAJ8rAFo4amWsZNd+V7hTi5wXmqEzCAqzvpZKI8vm5vVdEnbCL9bEEG9LaKZRgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=iMb1PBMM; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ZqF0JTv5"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="iMb1PBMM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1784016584;
-	bh=KM0AD2d1EYJgiOQUU1RPa2KcJ5Mzyd7oeXs7HFutUwc=;
+	s=mail; t=1784016816;
+	bh=j0SI4YRtONPH0K9xM6ukMCwDrLUf3U7zNF0KhtJk7As=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZqF0JTv5RavzCgRN3074owMAwCXT8XEumcwTeZvNHv5pCsarbgg8ccSCFOELEUpOk
-	 nZb7Gn0UTx7o5a4o0uNUr8r/woyFjKkmnAdRBRh4xCqkqTnCf9tbXh9nbvi2pjeuHb
-	 vMzRxeL6i9K8Wc+eV5gFGLzO21ULgP11joRef6VIr35qvq2wQwoselF0cORENi6nAZ
-	 mpdSHjp16BFPcXSdPXGufTh0yGcuefIo1ofzEaRYMvWxWcl+G7laCzd4kSRLRWhzWW
-	 Km7WNtEqVI+K92CM88BgDs1ZTnRkU7AE22yyxr6v/2ey9GLjO4khV+4qCRMRf3pN3Q
-	 ZyYBXd9i14EZQ==
+	b=iMb1PBMMF837bfEMQna4u7Y6ASqMFr/SL7NFmouS/Ju4iC4Nx6Tn2F//n26abYXzr
+	 ja6EJ+WBTCZ4WYQ/GBv1aVDTkWcHTXnc3/h/PNqIJ03DJ62y5AAB1ldRnX4aqX/wkB
+	 IHhWhaCnt1qW8Z3uI1nkQ9+pNTJDVRc1Q/7zjPvK/wp5hk5eszaElhPzROuxFJqNBE
+	 WYoaMV5dxI4MW0x559Fs55UxDpHlsO8zAjJTCTW87ao+wWlb451YdV2fFUuBI3qV+G
+	 8njOz4LJsil2xmzXip/pHie2UYb+FEKZXE6RNFmDIMJxX0HBo9JGrW1V9oFYoLPduj
+	 zF3+yyiWfHbPA==
 Received: from [100.64.1.21] (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7CBF617E05D3;
-	Tue, 14 Jul 2026 10:09:43 +0200 (CEST)
-Message-ID: <9cd02188-d697-43a2-b2f4-2868819133d3@collabora.com>
-Date: Tue, 14 Jul 2026 10:09:42 +0200
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id DE50B17E0851;
+	Tue, 14 Jul 2026 10:13:35 +0200 (CEST)
+Message-ID: <d6f220e2-2416-405c-b866-77179fcd0ad4@collabora.com>
+Date: Tue, 14 Jul 2026 10:13:35 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,234 +42,107 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/10] drm/mediatek: Implement Display Stream
- Compression support
+Subject: Re: [PATCH v4 08/10] drm/mediatek: mtk_dsi: Enable PM Runtime on
+ probe
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
- dri-devel@lists.freedesktop.org
+Cc: conor+dt@kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org,
+ devicetree@vger.kernel.org
 References: <20260713142746.40259-1-angelogioacchino.delregno@collabora.com>
- <20260713142746.40259-3-angelogioacchino.delregno@collabora.com>
- <20260713144154.0F1E11F000E9@smtp.kernel.org>
+ <20260713142746.40259-9-angelogioacchino.delregno@collabora.com>
+ <20260713144303.D147C1F000E9@smtp.kernel.org>
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-In-Reply-To: <20260713144154.0F1E11F000E9@smtp.kernel.org>
+In-Reply-To: <20260713144303.D147C1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/13/26 16:41, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Truncation of RC buffer thresholds due to incorrect bitwise masking instead of right-shifting.
-> - [High] Hardcoded and conflicting slice count assumptions without panel validation.
-> - [High] Component discovery loop skips DSI component, preventing DSC initialization.
-> - [High] DSI timing calculation ignores compression and overwrites D-PHY clock lane register.
-> - [Medium] State retention bug where `dsc_config_done` is never reset to false.
+On 7/13/26 16:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Enabling PM runtime leaves the DSI hardware permanently suspended, resulting in system crashes during unpowered MMIO register accesses.
+> - [High] The IRQ handler accesses hardware registers without verifying the device's PM runtime state.
 > --
 > 
-> --- Patch [2]: [PATCH v4 02/10] drm/mediatek: Implement Display Stream Compression support ---
-> commit 94686398e3eedc1a9e39476763b6747a4bcfb4c9
+> --- Patch [8]: [PATCH v4 08/10] drm/mediatek: mtk_dsi: Enable PM Runtime on probe ---
+> commit 7ce79b5636ac6fccf8b21d5b0f6a67f31c6b10eb
 > Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Subject: drm/mediatek: Implement Display Stream Compression support
 > 
-> This commit introduces a new driver for the Display Stream Compression (DSC)
-> Display Controller IP, implementing support for DSC v1.1 to v1.2. It adds
-> DSC handling into the DSI driver and integrates the bypass setup via CPU
-> writes instead of CMDQ.
+> drm/mediatek: mtk_dsi: Enable PM Runtime on probe
 > 
->> diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
->> index 8e552cdc3b53b..d4be40b2574a1 100644
->> --- a/drivers/gpu/drm/mediatek/mtk_crtc.c
->> +++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
-> [ ... ]
->> @@ -398,6 +401,17 @@ static int mtk_crtc_ddp_hw_init(struct mtk_crtc *mtk_crtc)
->>   		if (!mtk_ddp_comp_add(mtk_crtc->ddp_comp[i], mtk_crtc->mutex))
->>   			mtk_mutex_add_comp(mtk_crtc->mutex,
->>   					   mtk_crtc->ddp_comp[i]->id);
->> +
->> +		/* For now, only single DSI is supported */
->> +		if (mtk_crtc->ddp_comp[i]->id >= DDP_COMPONENT_DSI0 &&
->> +		    mtk_crtc->ddp_comp[i]->id <= DDP_COMPONENT_DSI3)
->> +			if (!comp_dsi)
->> +				comp_dsi = mtk_crtc->ddp_comp[i];
->> +
+> This commit enables PM runtime at the end of mtk_dsi_probe() to allow the
+> power domains for the DSI IP to be turned on and off when necessary. The
+> commit message assumes mtk_ddp_comp_power_on() will resume the device.
 > 
-> [Severity: High]
-> Does this loop terminate one iteration early, causing the DSI component
-> to be skipped?
-> 
-> Because the loop condition is i < mtk_crtc->ddp_comp_nr - 1, and the DSI
-> interface is typically the final component in the display pipeline, it
-> appears comp_dsi will remain NULL here. This would cause the subsequent
-> DSC initialization check to silently fail and bypass the DSC setup entirely.
-> 
->> diff --git a/drivers/gpu/drm/mediatek/mtk_disp_dsc.c b/drivers/gpu/drm/mediatek/mtk_disp_dsc.c
->> new file mode 100644
->> index 0000000000000..bed6b77bf9a9e
->> --- /dev/null
->> +++ b/drivers/gpu/drm/mediatek/mtk_disp_dsc.c
-> [ ... ]
->> +static void mtk_dsc_pps_setup(struct mtk_dsc *disp_dsc, struct drm_dsc_config *dsc_cfg)
->> +{
-> [ ... ]
->> +	/* PPS 8..11 - Each register holds 4 RC buffer thresholds (PPS 11 has two) */
->> +	for (i = 0; i < 4; i++) {
->> +		u8 block_num = i * 4;
->> +		data = 0;
->> +
->> +		for (j = 0; j < 4; j++) {
->> +			u8 buf_index = block_num + j;
->> +			u8 data_shift = j * 8;
->> +
->> +			/* rc_buf_thresh holds 14 elements in total */
->> +			if (buf_index > 13)
->> +				break;
->> +
->> +			data |= (rbt[buf_index] & DSC_P8_RC_BUF_THR_X) << data_shift;
-> 
-> [Severity: High]
-> Does this code truncate the RC buffer thresholds by masking with 0xFF
-> instead of shifting right?
-> 
-
-This is not truncating anything, and it is the equivalent of
-
-		dsc->dsc_cfg.rc_buf_thresh[idx+3] << 24 |
-		dsc->dsc_cfg.rc_buf_thresh[idx+2] << 16 |
-		dsc->dsc_cfg.rc_buf_thresh[idx+1] << 8 |
-		dsc->dsc_cfg.rc_buf_thresh[idx+0]);
-
-So this is fine.
-
-> The VESA DSC specification requires programming the Picture Parameter Set
-> registers with RC buffer thresholds divided by 64. Using a bitwise AND mask
-> instead of shifting right by 6 appears to write truncated values to the PPS
-> registers, which could break rate control.
-> 
-> [ ... ]
->> +void mtk_dsc_setup(struct device *dev, struct drm_dsc_config *dsc_cfg)
->> +{
-> [ ... ]
->> +	pic_height_ext_num = dsc_cfg->pic_height + dsc_cfg->slice_height - 1;
->> +	pic_group_width = dsc_cfg->slice_width * 4;
->> +	pic_group_width /= 3;
-> 
-> [Severity: High]
-> Does this calculation hardcode the picture group width to assume exactly
-> four slices per line?
-> 
-
-No, that makes the hardware process 1+1/4 pic width per iteration.
-
-> If a panel requests a different slice count, this could conflict with the
-> payload size assumptions made elsewhere in the pipeline and potentially
-> cause display corruption.
-> 
-> [ ... ]
->> +	if (dsc_en_bit)
->> +		dsc_con |= DSC_EN;
->> +
->> +	writel(dsc_con, disp_dsc->reg + DISP_REG_DSC_CON);
->> +
->> +	disp_dsc->dsc_config_done = true;
->> +}
-> 
-> [Severity: Medium]
-> Can this state retention cause issues on subsequent modesets?
-> 
-> Since the dsc_config_done flag is never reset to false on teardown, will a
-> subsequent non-DSC modeset bypass the check below in mtk_dsc_start() and
-> leave the DSC IP active with stale parameters?
-> 
-
-The dynamic DSC -> non-DSC modesets can be supported only after the mediatek-drm
-restructuring. As of now, only all-compressed or all-uncompressed modes displays
-are supported.
-
-> [ ... ]
->> +void mtk_dsc_start(struct device *dev)
->> +{
->> +	struct mtk_dsc *disp_dsc = dev_get_drvdata(dev);
->> +
->> +	/* If no DSC or config not done, set bypass mode */
->> +	if (!disp_dsc->dsc_config_done) {
-> 
-> [ ... ]
 >> diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
->> index 3f3f56eed3f92..8ab5c3431dbbc 100644
+>> index 93bc507d77e20..1726f5a2683cf 100644
 >> --- a/drivers/gpu/drm/mediatek/mtk_dsi.c
 >> +++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-> [ ... ]
->> +static void mtk_dsi_ps_control_dsc(struct mtk_dsi *dsi, bool config_vact)
->> +{
->> +	const struct mtk_dsi_driver_data *data = dsi->driver_data;
->> +	const u16 *reg_main = dsi->driver_data->reg_main;
->> +	const short dsi_buf_bpp = 3;
->> +	u32 ps_wc;
+>> @@ -1731,6 +1731,10 @@ static int mtk_dsi_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		return dev_err_probe(&pdev->dev, ret, "Failed to request DSI irq\n");
+>>   
+>> +	ret = devm_pm_runtime_enable(dev);
+>> +	if (ret)
+>> +		return ret;
 >> +
->> +	/* Word count */
->> +	ps_wc = FIELD_PREP(DSI_PS_WC, 2 * dsi->dsc->slice_chunk_size);
 > 
 > [Severity: High]
-> Does this hardcode the DSI payload to assume exactly two slices per line?
+> The commit message states that mtk_ddp_comp_power_on() will resume the
+> device. Is this assumption correct?
 > 
-> This appears to conflict with the assumption of four slices per line inside
-> mtk_dsc_setup(). Is it possible to validate the panel's requested slice
-> count against these assumptions during the mode_valid check?
+> Looking at mtk_crtc_atomic_enable() in drivers/gpu/drm/mediatek/mtk_crtc.c,
+> mtk_ddp_comp_power_on() is only called for the first component in the display
+> pipeline (comp[0]), bypassing the DSI component entirely.
+> 
+> Furthermore, even if mtk_ddp_comp_power_on() iterated over all components, it
+> executes after mtk_dsi_bridge_atomic_pre_enable(). The pre-enable hook calls
+> mtk_dsi_poweron(), which directly accesses hardware registers:
+> 
+> drivers/gpu/drm/mediatek/mtk_dsi.c:mtk_dsi_poweron() {
+> 	...
+> 	mtk_dsi_enable(dsi);
+> 
+> 	/* Bypass shadow and force commit only if the register is present */
+> 	if (data->reg_adv[DSI_SHADOW_DEBUG])
+> 		writel(FORCE_COMMIT | BYPASS_SHADOW,
+> 		       dsi->regs + data->reg_adv[DSI_SHADOW_DEBUG]);
+> 	...
+> }
+> 
+> Since the PM domain is still powered off at this point, will these direct
+> MMIO accesses cause a bus hang or system crash?
 > 
 
-No, that's another thing entirely, it's the per-iteration DSI word count and
-the dsc_setup is not hardcoding four slices per line.
+Before the mediatek-drm restructuring, the power domains and clocks will be always
+on because the poweron op will be called at startup time.
 
->> +
->> +	if (config_vact) {
->> +		writel(FIELD_PREP(VACT_NL, dsi->vm.vactive),
->> +		       dsi->regs + reg_main[DSI_VACT_NL]);
->> +		writel(ps_wc, dsi->regs + reg_main[DSI_HSTX_CKL_WC]);
-> 
+After the restructuring, power is OFF when DSI unused, and ON when DSI used.
+
+The power domains will therefore be ON when needed in both cases.
+
 > [Severity: High]
-> Will writing the compressed payload size here overwrite the correctly
-> calculated D-PHY High-Speed Clock Lane Word Count?
+> Now that the device supports PM runtime, can the IRQ handler run while the
+> device is in the RPM_SUSPENDED state?
+> 
+> The interrupt is unconditionally enabled in mtk_dsi_bind() and remains
+> enabled at the IRQ controller level even when the device is suspended. If a
+> spurious or delayed interrupt fires, mtk_dsi_irq() directly reads the
+> hardware register:
+> 
+> drivers/gpu/drm/mediatek/mtk_dsi.c:mtk_dsi_irq() {
+> 	...
+> 	status = readl(dsi->regs + dsi->driver_data->reg_main[DSI_INTSTA]) & flag;
+> 	...
+> }
+> 
+> Should the IRQ handler use pm_runtime_get_if_active() before accessing
+> hardware registers to avoid touching unpowered hardware?
 > 
 
-What!??! No!!!
+It's guaranteed to be powered. Anyway, even if it is, that will read zero and
+will not crash.
 
-> [ ... ]
->> -static void mtk_dsi_config_vdo_timing(struct mtk_dsi *dsi)
->> +static int mtk_dsi_config_vdo_timing(struct mtk_dsi *dsi)
->>   {
->>   	struct videomode *vm = &dsi->vm;
->> +	int ret;
->>   
->>   	writel(vm->vsync_len, dsi->regs + DSI_VSA_NL);
->>   	writel(vm->vback_porch, dsi->regs + DSI_VBP_NL);
->>   	writel(vm->vfront_porch, dsi->regs + DSI_VFP_NL);
->>   	writel(vm->vactive, dsi->regs + DSI_VACT_NL);
->>   
->> -	if (dsi->driver_data->has_size_ctl)
->> -		writel(FIELD_PREP(DSI_HEIGHT, vm->vactive) |
->> -			FIELD_PREP(DSI_WIDTH, vm->hactive),
->> -			dsi->regs + DSI_SIZE_CON);
->> -
->>   	if (dsi->driver_data->support_per_frame_lp)
->>   		mtk_dsi_config_vdo_timing_per_frame_lp(dsi);
->>   	else
->>   		mtk_dsi_config_vdo_timing_per_line_lp(dsi);
->>   
->> -	mtk_dsi_ps_control(dsi, false);
->> +	if (dsi->dsc) {
->> +		ret = mtk_dsi_set_dsc_params(dsi);
->> +		if (ret)
->> +			return ret;
->> +
->> +		mtk_dsi_ps_control(dsi, true);
-> 
-> [Severity: High]
-> Do the DSI lane timings calculated earlier in
-> mtk_dsi_config_vdo_timing_per_frame_lp() incorrectly use the uncompressed
-> pixel count?
-> 
-> By passing config_vact = true into mtk_dsi_ps_control() for DSC streams, it
-> looks like the raw compressed payload size will subsequently overwrite the
-> timing synchronized register DSI_HSTX_CKL_WC.
+>>   	ret = mipi_dsi_host_register(&dsi->host);
+>>   	if (ret < 0)
+>>   		return dev_err_probe(dev, ret, "Failed to register DSI host\n");
 > 
 
-It's done on purpose.
