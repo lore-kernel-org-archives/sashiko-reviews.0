@@ -1,187 +1,188 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013000.outbound.protection.outlook.com [40.107.162.0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2F636F428
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 15:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C263E44F0;
+	Tue, 14 Jul 2026 15:33:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.0
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784043197; cv=pass; b=poabF5ggefkbnypqJ+NQevnp3bgg8mtMF6sr3ALt+sCu01xK2bbXpAJ4wzru4U4wCwTtQ/jPsVjWKb+WwSaNwOqBrSFCXCGlNvyyehRQyzj4YvROmgZgHQ3PnQxayjGr2MlMWjeuJ94rWJhFbEMxa9XK3FgUsKTkO8xjYY1jq3s=
+	t=1784043234; cv=fail; b=big1JHlds4b6R+NkQKDAJuvo0D/8KS70JAlKnQPCKb4jNkjqkT0j54fawAioJXNeU/bbBfQEfeHpUMyQwtteMl4Z8JWF2yU9UFWTLqalGsMjlwSuoqcCtKWovALmU8jY8jPJJBibS08tCgSoR92jPYwUta4MfCXiaUcHmyeZ1wk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784043197; c=relaxed/simple;
-	bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dC8/kv6P915Qdd5oi/A3I8Vq5EsZZcuqHBOzBugOozIpZcX22Q9OLTvnsz/GjlLv/U2hBri2QUw54Y1cC4gzNoTSGhm1SIBOxAoI2B34PZu1pXajm/guy5q4cfYpQQqZB3B3zgksR+m5iUjcJ+5Yh+En2gxAKNZkHxZa3vVBGAM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=saX+c+Wu; arc=pass smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784043234; c=relaxed/simple;
+	bh=1evsgDy88HL9frqFS6DDH5F/0DL43AWFKxf69qDEYF8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=jXo95oHEqPhfBY4r23g9mP4gNy4WdY9u6cfE7vC57rEwIlE/Q0jbS/KUFzMsqFg/uhfQt6fZ2fzngV8kxJEVgBvnUfJuxNS7khZb+NMyRrJH35PMIhkkod2Q+yqYhB1mqAHgYpXPRlSaGNFITUIykJbigQElULkUgker+wOA6XE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=eRy3DeWe reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="saX+c+Wu"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-698aa7ba320so2987282a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:33:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784043194; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mPlU3Ly4FIj4mB2vCIKSuqvgiVqmpUgyGL+ukraFnKidh33IDx4DLP+GAhTc3zRixi
-         4vuNAORPArYkaEXJyYQr8FXHI+9vljXB8fe05AVTcv0MDmEwobwPL6cVsWEDfmuYKrot
-         NhC7PndrJ8RSj/rNsEW0C2WhMhAo5EuFtn5oAuI6zjSFWyGnYc4IJfEv06Z994TDXhqu
-         ZYndE4/SBDSptK5UCd8pLEH6mRwFfy43hwk4uaRmOQyfgkxFpc7D83WynpC1u/JFs2y6
-         she90ykkceznxOncaRWUH4u6LQ9mDt5Xi4DENtcUZrUB3MBNggWgNsODc8hISZdqRlMQ
-         Igww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
-        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
-        b=B5MpIjJZaBR5UXGUxw/v9BSj+IEkw+rrF5EeOCTvQ5E/Hb8p+ARegwRYauqmKXbNau
-         g61g09+kXWY6iDtKrszMSGPzeTaYd/uYZpXRm6G3oRB26LY2EkMYO9MDCS+F3kz7rB6T
-         +bDfNX5rcTO8PbdiMEaYXp35iXVn+MKEAYzWAYqWnnHIHa1M4K2J7vKRqtsz0aN7dRXr
-         4c0ZAM2sG5E1UzAYUSQS2QLtpMENE0ICfUgVtXBk1eyBxT1PmKWC7yzBbBN7Cj+YTPV8
-         fS1Vlr8s8wyva/xqG4JCUWl81svokmBCt3l/Mh+jEy3r/1pmFmrOxj+LSWMJNmAFMQBC
-         Lq6g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784043194; x=1784647994; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
-        b=saX+c+WuHXhKeEtvjSvR4c6w0iKXl/7IfMDRq3QJoYQeRnOkkwcmJU37++kiriPUkR
-         sN0DePF+He7VniCJcn6L78AC0yge1AaDI1eEYCmKLXGsFBSUO/Bbd0uCeish+Jt7FkPD
-         7p0ircAwIH2PLIK3W8setDjitzE9P3XSX4nkKDDEZisIo1z8QdA07ViiUF9yYeO8zmiV
-         SXsBN7UmO7U7GLdpPrMKVq57zFB2Rl6/9Ay6xMbNAvAXprDkNAR5x4RYxjql6Z9e0uHR
-         D6hvPIzuVuGgNsV/8vYOkBCoQhazAGbVtwEtGGptP8ad68yvmbsI6Ty7Fc5j0Elmc44c
-         yf8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784043194; x=1784647994;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
-        b=kcxdyW3QrtcRyW2BAxgHB0brjMM376JAx0haqCHYWPMHAWg+TlUgU/GnOu3nvHDGkW
-         YcMbQKYBIhNjlovnDJMNyUeR9vX1sIuhqb/6gUfA0HUEltrW5NP8wjoWpUOWVYqNXe1q
-         9Tm8/zaeKGJMWXWwfIC8FBOO2+hAqYoDE7QhdtnlaXfAi18zm7Qu4GtzrIcXMq+F15rj
-         MPcJ2YCyjNORCqItgzO5e/oAgGCNumpJ/j35DkIr3TbTsCBkHu0kSQAubYrISiQPMz6b
-         Sm6Ii53UKIoYaPKzLENf+JpLcn5CgP1UPiB9FQ1Lg98xE7J5QXimP45V4WW+OvcFeJ48
-         oMag==
-X-Gm-Message-State: AOJu0YxCOUSXFTyxBCNs0ue0vUniDzG1XbJfvheu92QEPzXvb4XAmxEw
-	am0qd7gtWNfX3Qe27t61OojVWvZBcmQ3V0qVyflvt/bJmOR/9j14A87wKqzEEvprqLa/2BL0NIz
-	KHM2ZCH+fauPUipQyr+kKe2gtgxbsMsADZsaY
-X-Gm-Gg: AfdE7cljgxCgU/0rfJZxTyFiclMNnDNI5/1I7Mza9veYZ91OxdwVLlwu1mpnLgZBmRQ
-	EX2YNH8ssN6odhEjS6FzLcnxmbwIpHhGMEKQDsZg1Z7DvNxcJoQmPHRbasXyDkFu8TWB8+v86PE
-	1X6N/7n4fxQTVz17Q8bJ7xLABfVHoaA34bzYDKiiRvNTZK85agFzkpLDsdQoKIWBdYmn8bMSc5E
-	Uc1oCVHCdTGVytBsfNTaIiW9vmMpvjDS9gUwOJMKrtXCTxyBXJc9Nl4dEvZhhBk7JKMOFItEQ==
-X-Received: by 2002:a17:907:7211:b0:c16:242a:4733 with SMTP id
- a640c23a62f3a-c16242a5993mr650163866b.18.1784043194326; Tue, 14 Jul 2026
- 08:33:14 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="eRy3DeWe"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ilI2NreHQRvHwLIIc3n+Eimrn5VLq9LkryKBLMuFO61PGHXbpTrdjzvPvgeAaDM9Wc5UF3KNz0zKfM8S+PT17BztghFpmwBnuSAw8XZlSH4OSe8t9Z4u3QFHahi5gO/hGxoVYK/Rx6nV6URV9gYdvIoFHDQffD/fAc5m4wnnKVa8ksUlybK0lacDLrzQ5SPuRCEubr616atiGxlS8QixEAP9ICXnPdlrr1rvoe4x3PIsgRuayRa+Uo4aj+Get+Li3Nv52PjF1yCh+Cn6vLhkHlFSlRnAvEn/9UpN5Evu/4stFaB9hosIaWX+HC0tiSZ9/Gb97MVgoOK6RXBB127qMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9d32Pdjw1oaUKaMA65QIAUnomqhlPke0ZLfZ06GH2NM=;
+ b=PscPwCYFzzlwEb5bEqa63NzdFkulaJiDojoWfavtJD6IbDjIeTcmHxxj2SOZBhm6JEcePNLJnRwql6aV0d+yscOzKI78UH31eiHsIiSscdlw4JfubQQHBU15pMYQyGTopHqx7mvWMYC+UCbiDRajid0tnGX91vYEOuk4A4WCsi1pO9yr20lYfPVh1k8Bu9fE3zSj70ioDgFR1PACOcqk1oJj2wQ9LQI0YGHQgoHHd/5/urHA11OiW6C2h8i8g9mpVfgqQy0NzNbwvm/ghwJlobTnYKXAOBKKwZsXEhl3ypkewQFeTTv/wzB19G7LUAjjE/i2sXVVhBoBoOgn6UwG5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9d32Pdjw1oaUKaMA65QIAUnomqhlPke0ZLfZ06GH2NM=;
+ b=eRy3DeWeY0Iuekp2S/1NHoBndrMtBoRxHZuuNoo8W/C3s+unI0ylzT+Lt2EWsKqr8lFIuNE5znMI75/HEdRg6rKYr44Q0y1QbB3bjh/dtGfm790XgT/RJSCUU+KTj8/3PkTpsdw167k340aNoNBPj7R73Y7U4J2x3qAM7QZDi8Ndsg7n+KxFGzuG4PtdJjht95C/+CzzofBuy64psbL/gFz1aiQsr55KylmJ3DHKWzeMC/aQhAZUkOZPBFn5tlBfpeRWUdUR8az1rlpxcjFOlHnHW/e/eRuzPbCXvL8JYLCjNBqOkNyXZuFxsMyDH4NlzWtxa4Nx3zMpx1jLORupuw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB8756.eurprd04.prod.outlook.com (2603:10a6:20b:42f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
+ 2026 15:33:49 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0202.018; Tue, 14 Jul 2026
+ 15:33:49 +0000
+Date: Tue, 14 Jul 2026 10:33:38 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>, imx@lists.linux.dev,
+	conor+dt@kernel.org, Frank.Li@kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org,
+	wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH v8 1/1] arm64: dts: add tqma9596la-mba95xxca
+Message-ID: <alZW0l9rJpn8L0Mh@SMW015318>
+References: <20260714143154.787825-1-alexander.stein@ew.tq-group.com>
+ <20260714150126.09D971F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260714150126.09D971F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA1P222CA0181.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:3c4::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260713131223.279555-1-a.shimko.dev@gmail.com>
- <20260713131223.279555-3-a.shimko.dev@gmail.com> <20260714131729.48CD81F00A3A@smtp.kernel.org>
-In-Reply-To: <20260714131729.48CD81F00A3A@smtp.kernel.org>
-From: Artem Shimko <a.shimko.dev@gmail.com>
-Date: Tue, 14 Jul 2026 18:33:03 +0300
-X-Gm-Features: AUfX_mwi-FnQhvC2JtVlr51haSy7xBYWK3yOmmbUT8m24rZgRfmOoOKYkm8x-Hs
-Message-ID: <CAOPX744Q2pyAv2ixFgrwGrW++-BVWs-0Hx7tW7XzJ9KbpwZC5w@mail.gmail.com>
-Subject: Re: [PATCH net-next 2/2] net: phy: add DAPU Telecom DAP8210R(I)
- Gigabit Ethernet PHY driver
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8756:EE_
+X-MS-Office365-Filtering-Correlation-Id: 28f74492-7850-472d-f2b1-08dee1bd4cea
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|19092799006|23010399003|376014|366016|18002099003|22082099003|11063799006|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	Ou25nI0OBxpIJdlJ34Xka94K04WCyRU8VrJC1vFsNI6uqqpChkTupc0cWRnL0ULRiHi8ouzX88UH15M9Z1EMymBLkzuBnKUn17cYNTO4voiQ0bQGr7uyMp9wRICwBWYz4zZ0LDKgb1+TTASWrR68M/v7Q/le4NigsLFN2UXqPVtYHVlLzh3uLhhiNGeBHyqkBviym2tLNtv1kD/uv1p7whqLAgYNyl/WWPosy2DfNwaS0A4NMIf88OVZPIZXOkNEg67XkcHLLgmD9xu+DYWsl7Xqjb7GHS0pRF2Mxl+kSaHMsKOkcKpKJDGKR3znGOiZXh+EXcfqCXivtrXiRK/BV4X7KzoYr3kxtLGHsM7w1/h+YJ5bhrwx5Ff3a5B7yEBOwO77fFpHqzQ6z336asZ1Guiw7nk3xa1MKhZURnteWH7PV/xI0ZSISdZqzV0v13XQY8bJJzQwQWxPq6IRHAUiZkHJgzRiI1PBho5bIAgSBha3zWl3OIN9ZiVSs4K5qpD2kehsD8N99Qz7z7VjlRMhrpRy0rFbug4cGVBAn+PFMScKum0XTG/ggBxr4o3lX3/L2iXC1FjrZVMxjXJtfayEEkpodJOgF6PQI0XoPgLKdMU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(23010399003)(376014)(366016)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?59kc9KlOYSjKMPloftHpPs+hRMR2hq94RLneibu0oy6HWtwIdYRw6uqQVp?=
+ =?iso-8859-1?Q?ROKSB3eiQYDPBcoTyr6l6QxIfw+rIeb8Q3Y1uMEJMsty6+8vb1ydocr9FR?=
+ =?iso-8859-1?Q?XTRAOeCEKXh+/JVLsLXdmVevuAG4Zs/SDwRRpsbZyOP3cf4CHrrGPy5SO9?=
+ =?iso-8859-1?Q?N4zkbvi7y1K+QQuuMv2BSLxktbJDlqFeGhswP+8X/exVbyUWqFW58OzmDQ?=
+ =?iso-8859-1?Q?JenljtciiOnUJw152EP2YR9OlKQ35rOa1IYwrvN+Rd5DEg20ZrHZSzQKHm?=
+ =?iso-8859-1?Q?e8VM3e+m9mYRxdImrOgMw8TVihRKBVO2rU53xXVgcdoYF6HgvBZFxgTPVQ?=
+ =?iso-8859-1?Q?BCXoypYDayrGOf2r0JIy00IUFC8W02uDi9HLjeWNjCaR0GHihjNd/6n831?=
+ =?iso-8859-1?Q?an3AtDIgEwNfHray6qi5gnhYjl/Go6aoUJzKo7IzuZ8zK8iO60/HbL3Pas?=
+ =?iso-8859-1?Q?cnbricLuVXeQYx59527k8J42kbQQr1jV2rEofazi4C6TwFWJJq06cJ/2F/?=
+ =?iso-8859-1?Q?3WloYuVm6cHNnhBQ+vbCu55AgBRlyE7vyycx8/qbRKpwdWR2gC77FJb0LS?=
+ =?iso-8859-1?Q?A6fkeim7s3Ntz6qevMYocU5O00p7or+wKkkWW5mKu+QRL/R0WHbifl5983?=
+ =?iso-8859-1?Q?+DdKgCXJPc2ZXajfvaLVoTevSc2ObZSD3OXUTlx8iwujLKA+T6Of+ztjVf?=
+ =?iso-8859-1?Q?TGqDlcrtcWVYVOB7Z41+KTQeNiurrYN7eg8cXGqw1kK+3Z11e7BPCEmafU?=
+ =?iso-8859-1?Q?dqpoT0y82sQkQJE5OLZfQTfeAt2bI0dRwnh6rMvSIIUzlSVWE740BKfasp?=
+ =?iso-8859-1?Q?L03nqRal/v3sunjioM+j9Sz40xElTroE2cACgUMLALvlRTjsN+vw1WPJDF?=
+ =?iso-8859-1?Q?EHby4ge2wyBDXjU9d0iSqiWW032TfJtI9FAfmYqLMeo932LpIyJwpO0ptF?=
+ =?iso-8859-1?Q?wPMCfMZ3mSsY20XDybAnWL7jImeLXZ+gFHMTGwCJ9SndmNl9Njx3U9Absb?=
+ =?iso-8859-1?Q?TZgGNkDkuxku6AS5j2VkYdO+ckUnlFYW6eZTw9J2EfvMk1wFY0Hly+6iv2?=
+ =?iso-8859-1?Q?O4TTY6Yi3t/ygqKhErVY/V5W2biGVfuhOnBdFLJCU1lte2aHYbdUK6HCTq?=
+ =?iso-8859-1?Q?NhkpvrndxKJYcx3fuxcXxmCYlucdBNS0miSWXcAXOZdI3zaKcwCIgVn0wy?=
+ =?iso-8859-1?Q?hqy7ZejpRkAEdl83nUd/VbQcXy5IvQeH2+uUiZRQt47onZZnNxSsZuV2os?=
+ =?iso-8859-1?Q?cc5Q9kNemsN4noBSH8OjofvkCXFG/lWwqo3xJMT5BEDRKR0QqapofKiZiJ?=
+ =?iso-8859-1?Q?Dv6ceOw/ej1fbpQqeLYrTeUxBTI3UUI4SNcmIBy5jiULOT/bOJaF1HPb+t?=
+ =?iso-8859-1?Q?zODH0WPzMdAZK3tK1RLgaPpRuuIPRwv2hu3t+LmpmHDeLB1O3EVrsmWCtq?=
+ =?iso-8859-1?Q?UdtfAGJUJyr+n25m59WrSGBZHUFNQU31b2BL9PjSrQhhJc5bL7kwCwdM7M?=
+ =?iso-8859-1?Q?siFlWjIwWmHuYAfh/mE3VqfZbVRUHsSPKUMgk5DH67oi20608UHiRbyfOx?=
+ =?iso-8859-1?Q?98szkd7BWBjblS3PFB1/H+HRtSTToc19D0Kc7+01nWyR8Rce1yVujtEmrY?=
+ =?iso-8859-1?Q?BX0WFNHBAQJrFq6z3UK36W4cyVklA4TFIgJZbc8IKcxJOGG02cpMiPkfrp?=
+ =?iso-8859-1?Q?Ivyy0MgGsF+oC9S9LXf0TGNL2iCOeqMWOglbkUgL63Be0/hZSB781Cwx2n?=
+ =?iso-8859-1?Q?B9WCPEIA3TdQjN8xBp/VfqUr24R2gWyIcZNWTOID8bmk0W72qeOAixNfmk?=
+ =?iso-8859-1?Q?EYp1kj0Kcy0NTLdjpKzivq2thuU6fBTSOuDNMVRrCAe6s9Yv6Y/G?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 28f74492-7850-472d-f2b1-08dee1bd4cea
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 15:33:49.1891
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vUzawnoB962/qv7XKfNWOG5efeNC8r0gczsIgyL7twHUh68wo9JWx3o9L6mR4D49ifgXyfX/T0tIwRTr0rzqIfqnlRtZuNxRm25QR+fdle+9cxV4S+IRZtJtQoSS/5h0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8756
 
-On Tue, Jul 14, 2026 at 4:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-
-> [Severity: Low]
-> The commit message documents the property as tx-inverted-clk, but the
-> code implementation looks for tx-use-inverted-clk.
+On Tue, Jul 14, 2026 at 03:01:25PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Unreferenced 10G SFP regulator will be unconditionally disabled by the regulator core.
+> --
 >
-> Which one is the intended property name?
-"dapu,tx-inverted-clk", it will be fixed in v2.
-
-> [Severity: Low]
-> Does this cause a compilation error?
-No
-
-> The abs() macro in the kernel strictly checks for signed types, but the
-> result of the subtraction here is unsigned.
-I inserted abs_diff instead of abs for u32 variables. It is safer.
-
-#define abs_diff(a, b) ({ \
-typeof(a) __a =3D (a); \
-typeof(b) __b =3D (b); \
-(void)(&__a =3D=3D &__b); \
-__a > __b ? (__a - __b) : (__b - __a); \
-})
-
-> [Severity: High]
-> If the bootloader configured RGMII delays, are they left intact here?
+> --- Patch [1]: [PATCH v8 1/1] arm64: dts: add tqma9596la-mba95xxca ---
+> commit b7aa596cf679be039938abc33965834ed28f5c60
+> Author: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 >
-> By not setting the mask to clear the delays for pure RGMII mode, this
-> leaves the PHY with whatever delays were previously configured, violating
-> the RGMII interface contract.
-It will be fixed.
-
-> [Severity: High]
-> Does this write actually trigger the software reset?
+> arm64: dts: add tqma9596la-mba95xxca
 >
-> This clears the reset bit by passing 0 for the set argument, instead of
-> asserting it by writing DAP8211R_PHY_SW_RST.
-In dap8211r's datasheet the low is active for this reset. I will
-comment it in the driver.
-
-> [Severity: Low]
-> Would it be safer to poll the self-clearing reset bit instead of using a
-> fixed sleep?
+> This adds support for TQMa95xxLA modules, designed to be soldered
+> on a carrier board. MBa95xxCA is a carrier reference board / starter kit
+> design.
 >
-> A fixed sleep might fail if the hardware reset takes longer than expected=
-,
-> and contradicts the comment about waiting for a self-clear.
-Agree, it will be fixed.
-
+> > diff --git a/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
+> > new file mode 100644
+> > index 0000000000000..1d745d66997cb
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
+>
+> [ ... ]
+>
+> > +	reg_3v3a_10g: regulator-3v3a-10g {
+> > +		compatible = "regulator-fixed";
+> > +		regulator-name = "3V3A_10G";
+> > +		regulator-min-microvolt = <3300000>;
+> > +		regulator-max-microvolt = <3300000>;
+> > +		gpio = <&expander2 15 GPIO_ACTIVE_HIGH>;
+> > +		startup-delay-us = <2000>;
+> > +		enable-active-high;
+> > +	};
+>
+> [ ... ]
+>
+> > +	sfp_xfi: sfp-xfi {
+> > +		compatible = "sff,sfp";
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&pinctrl_sfp>;
+> > +		i2c-bus = <&lpi2c7>;
+> > +		maximum-power-milliwatt = <2000>;
+> > +		mod-def0-gpios = <&expander1 3 GPIO_ACTIVE_LOW>;
+> > +		tx-fault-gpios = <&gpio2 30 GPIO_ACTIVE_HIGH>;
+> > +		los-gpios = <&gpio2 31 GPIO_ACTIVE_HIGH>;
+> > +		tx-disable-gpios = <&expander2 2 GPIO_ACTIVE_HIGH>;
+> > +	};
+>
 > [Severity: Medium]
-> Is it safe to modify MII_BMCR here without acquiring phydev->lock?
+> Will the 10G SFP regulator be turned off by the regulator core?
 >
-> Concurrent execution of the phylib state machine might race with this
-> debugfs write, leading to corrupted link state.
-As I see, the phy_modify acquires the lock internally.
-
-/**
- * phy_modify - Convenience function for modifying a given PHY register
- * @phydev: the phy_device struct
- * @regnum: register number to write
- * @mask: bit mask of bits to clear
- * @set: new value of bits set in mask to write to @regnum
- *
- * NOTE: MUST NOT be called from interrupt context,
- * because the bus read/write functions may wait for an interrupt
- * to conclude the operation.
- */
-int phy_modify(struct phy_device *phydev, u32 regnum, u16 mask, u16 set)
-{
-int ret;
-
-phy_lock_mdio_bus(phydev);
-ret =3D __phy_modify(phydev, regnum, mask, set);
-phy_unlock_mdio_bus(phydev);
-
-return ret;
-}
-EXPORT_SYMBOL_GPL(phy_modify);
-
-> [Severity: Medium]
-> Does the else branch intentionally destroy the previous BMCR state?
+> The reg_3v3a_10g regulator is defined without regulator-always-on, and the
+> sfp_xfi node seems to be missing the vcc-supply = <&reg_3v3a_10g>; property
+> to link the SFP to its power source.
 >
-> By unconditionally writing BMCR_ANENABLE to 1 when disabling the packet
-> generator, any manual speed or duplex settings previously configured by t=
-he
-> user via ethtool will be overwritten.
-No at all, it changes only loopback and AN fields.
+> Since it lacks consumers, won't the regulator core automatically disable this
+> unused regulator at the end of boot and unconditionally turn off power to the
+> 10G interface?
 
---
-Best regards,
-Artem
+Is it true?
+
+Frank
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260714143154.787825-1-alexander.stein@ew.tq-group.com?part=1
