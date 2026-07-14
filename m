@@ -1,203 +1,200 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B4243DA39
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 12:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7B838398E;
+	Tue, 14 Jul 2026 12:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784031518; cv=none; b=fmgyGEE5AeLmbZS36mO41KjweN4JQyOT1NEK/VE6Sluww8wYVaj7HWOCtKxHTW43eBzSCieePUJfGBo31+olJer2INGVhvFPaRQzx1afR6uwsCJgAEYwrx1OZ5eSytGHGDvqmX0AwyYmxhEuMTaT23Gm5NrvIWlWunrSeown4xI=
+	t=1784031794; cv=none; b=G1DTAOaGmOLNNxHlzMe0WoRpYueVwuU53u+BOFw+TS2676hfqwgNoUb0EtbN2frgGhapPUGDP5TptdO7bJDNewixozMVaKnxaa/w+RuVjBOuDf/rEllqDHhsgdS8V2wNeI28tvKZrGRd00u62CKdF0UHUQaet7A6JaLEcb/n6iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784031518; c=relaxed/simple;
-	bh=K/4klNxMi+9OR8RYrEooWyIOqMFa+1K+RRGPzJ/nQf0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tBJNnvBSmwkPp+YDATYUAW2Aqe9UfJJsUl/xlGzvEyNy+ew+n/qRW1kA3G6gLO+RPbxYheVfxa9bC+V//Ne5cf9i0BwXvvmEISZ9o5sAMwU0UWnpn8L0uO3TahAgjLtyQ5n/zUaFNTnGfZE6dvIU/mxH+WOuA8MCoQIDdXtz0iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=bG7/KiFg; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1784031794; c=relaxed/simple;
+	bh=auZ4C5ReUYq7BzaciJn06uxsOqN9s9GqqIYihlqkBtI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cNfSpFtdXHCPpRgv6jVicq28V9XRXL7OdINwfZXEFiGX7Xghi0871jTShF2RuHbi/4ihuNaLHMn+NqDqKk5CwdbKBX8ixGgyz30IXzUt+q7/D0mOb9C/l6/tOfFrZ4AwC6AQLNmKOQKRsFiIkLVpMjcwAaM4dRyiYHRdmFgcIgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=JXCj53Rf; arc=none smtp.client-ip=188.40.3.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="bG7/KiFg"
-X-Gm-Message-State: AOJu0Yyzi9xPGzX2tO52kgQD8zzUU65WaXngcN0y7QvZ+qblmOp3MNGV
-	5dzk3/xLC6dP/X/0Ax7ifixrWMutWXKZIktVVfG8HpoVW2RZs8+39Rljdz3EZNRcWd52XqT9Ds1
-	eA6k2dp22HLgHSx+JIxQGASgDLEcRfbzn2/Y4/1Ko
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784031514;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OLgH5rJkGlfpF3a9F6yG0sGBjFkWSWDbvdJBPcSZDXM=;
-	b=bG7/KiFgsQ2SQ5uu+McKjOQ/cAoYzq8S6sU2E7cSgMjER+1bk35QzwqTLg7SZiHvm7IIXU
-	2txa2dWsnj4jaMtU+IDKFvzHnCwDG1tRxcu5s+jaeiSuoJe6SjyhH+brbpFJ78rErfh/za
-	aNX9pDDkEZN7qTiNQY3UT+o/F31iC6U=
-X-Received: by 2002:a05:622a:5c12:b0:51c:7a8b:c3ff with SMTP id
- d75a77b69052e-51d7bdb83edmr14021141cf.24.1784031486784; Tue, 14 Jul 2026
- 05:18:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="JXCj53Rf"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=ew.tq-group.com; s=default2602; h=Content-Type:MIME-Version:References:
+	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=XrrEeqFj/zMDMUWNJzoASYNNQtEig1sQZ0PwjZWRQSI=; b=JXCj53RfarxMkZ0ybH40l7TIjO
+	TQBzb5NkO+dqgXPkr9+f4SZNx5b8sPTLIhoksu1x4qiH+pjaxa0EwzhYK0ID17t9zDAN9bhTnSWT5
+	ENytREbChrPK93WpW/lkFh3vKaKWuqoybbbWlGGPat2uuh+i3XideXAMMS7TmxvRCTSpFgejWk4+O
+	ZXoWQitk4YJ/hDoGaxrYL+0nZHV5ampLcmS+Y/4quX3IdycgCFdbirTKTofmd/i70udidf5V+13hM
+	ZEbKdg4MEG5TYDKAE2HgqQfdS4z9pln4eXpHz/NQk+XvQYj6h7vwHfMCUFmwmL2qDqKayKw0/GJq8
+	hu+ofSQg==;
+Received: from sslproxy04.your-server.de ([78.46.152.42])
+	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <alexander.stein@ew.tq-group.com>)
+	id 1wjcA3-000PTO-2X;
+	Tue, 14 Jul 2026 14:22:55 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy04.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <alexander.stein@ew.tq-group.com>)
+	id 1wjcA3-0000xs-25;
+	Tue, 14 Jul 2026 14:22:55 +0200
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
+To: sashiko-reviews@lists.linux.dev, Frank Li <Frank.li@oss.nxp.com>
+Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+ Frank.Li@kernel.org, conor+dt@kernel.org, wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH v7 1/1] arm64: dts: add tqma9596la-mba95xxca
+Date: Tue, 14 Jul 2026 14:22:54 +0200
+Message-ID: <1965063.tdWV9SEqCh@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <alUO-oOtWBescUK6@SMW015318>
+References:
+ <20260707062506.949806-1-alexander.stein@ew.tq-group.com>
+ <20260707065956.124121F000E9@smtp.kernel.org> <alUO-oOtWBescUK6@SMW015318>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714101601.4142645-1-fuad.tabba@linux.dev>
- <20260714101601.4142645-7-fuad.tabba@linux.dev> <20260714115332.1B2161F000E9@smtp.kernel.org>
-In-Reply-To: <20260714115332.1B2161F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Tue, 14 Jul 2026 13:17:29 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyGULmVCgyoya3bXG4gRj0OYFE1gnJLhNE6kvCrZFtXyQ@mail.gmail.com>
-X-Gm-Features: AUfX_myS5KUEwY9h0WY2nIF-xAnJOjibXd2sHjVydJnzqI-M53lzmp1FGIi_wAk
-Message-ID: <CA+EHjTyGULmVCgyoya3bXG4gRj0OYFE1gnJLhNE6kvCrZFtXyQ@mail.gmail.com>
-Subject: Re: [PATCH v5 6/8] KVM: arm64: Minimise EL2's exposure of host VGIC
- state during world switch
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="nextPart2273617.irdbgypaU6";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28060/Tue Jul 14 08:25:07 2026)
+
+--nextPart2273617.irdbgypaU6
 Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="iso-8859-1"; protected-headers="v1"
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
+To: sashiko-reviews@lists.linux.dev, Frank Li <Frank.li@oss.nxp.com>
+Subject: Re: [PATCH v7 1/1] arm64: dts: add tqma9596la-mba95xxca
+Date: Tue, 14 Jul 2026 14:22:54 +0200
+Message-ID: <1965063.tdWV9SEqCh@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <alUO-oOtWBescUK6@SMW015318>
+MIME-Version: 1.0
 
-On Tue, 14 Jul 2026 at 12:53, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] handle___vgic_v3_save_aprs erroneously overwrites the host's vgi=
-c_vmcr with a stale EL2 value.
+Hi Frank,
 
-__vgic_v3_save_aprs()  reads only AP0R/AP1R, so the copied  vgic_vmcr
-is the host's own value from the prior  restore_vmcr_aprs: redundant,
-not stale.
-
-> Pre-existing issues:
-> - [Critical] Incomplete fix leaves identical hypervisor memory corruption=
- vulnerability in GICv5 hypercalls.
-
-GICv5 is not supported under pKVM (vgic_v5_probe  ->  skip_v5), so
-those handlers are unreachable in protected mode.
-
-> - [Critical] The `handle___kvm_adjust_pc` hypercall blindly dereferences =
-a host-provided `vcpu` pointer via `kern_hyp_va()` without validation.
-
-Pre-existing upstream code, untouched by this series, so it's out of
-scope here; the pointer validation is being addressed separately.
-
-/fuad
-
-> --
->
-> --- Patch [6]: [PATCH v5 6/8] KVM: arm64: Minimise EL2's exposure of host=
- VGIC state during world switch ---
-> commit bad346f74febb306b17aa647c2da5c6747345fe8
-> Author: Marc Zyngier <maz@kernel.org>
->
-> KVM: arm64: Minimise EL2's exposure of host VGIC state during world switc=
-h
->
-> The host passes a vgic_v3_cpu_if pointer to the __vgic_v3_save_aprs and
-> __vgic_v3_restore_vmcr_aprs hypercalls, which EL2 dereferences wholesale.
-> This patch copies only vgic_vmcr and the active priority registers betwee=
-n
-> EL2's hyp-side state and the host vCPU to minimise exposure.
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index 45d717889f6ea..f3233ee343a39 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> [ ... ]
-> > @@ -508,16 +520,63 @@ static void handle___vgic_v3_init_lrs(struct kvm_=
-cpu_context *host_ctxt)
+Am Montag, 13. Juli 2026, 18:14:50 CEST schrieb Frank Li:
+> On Tue, Jul 07, 2026 at 06:59:55AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+> > - [High] Conflicting GPIO assignments for M.2 Key-E SDIO Reset between =
+the `wifi-connector` device node and a leftover `gpio-hog`.
+> > - [High] The fan supply regulator `reg_pwm_fan` is never enabled, leavi=
+ng the fan unpowered.
+> > --
 > >
-> >  static void handle___vgic_v3_save_aprs(struct kvm_cpu_context *host_ct=
-xt)
-> >  {
-> > -     DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
-> > +     struct pkvm_hyp_vcpu *hyp_vcpu;
-> > +     struct kvm_vcpu *host_vcpu;
+> > --- Patch [1]: [PATCH v7 1/1] arm64: dts: add tqma9596la-mba95xxca ---
+> > commit c06cc8eb19eb4a69fc0547caa6773b503beae3a7
+> > Author: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 > >
-> > -     __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
-> > +     host_vcpu =3D get_host_hyp_vcpus_from_vgic_v3_cpu_if(host_ctxt, 1=
-,
-> > +                                                        &hyp_vcpu);
-> > +     if (!host_vcpu)
-> > +             return;
-> > +
-> > +     if (unlikely(hyp_vcpu)) {
-> > +             struct vgic_v3_cpu_if *hyp_cpu_if, *host_cpu_if;
-> > +             int i;
-> > +
-> > +             hyp_cpu_if =3D &hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3;
-> > +             __vgic_v3_save_aprs(hyp_cpu_if);
-> > +
-> > +             host_cpu_if =3D &host_vcpu->arch.vgic_cpu.vgic_v3;
-> > +             host_cpu_if->vgic_vmcr =3D hyp_cpu_if->vgic_vmcr;
->
-> [Severity: High]
-> Does this overwrite the host's vgic_vmcr with a stale EL2 value?
->
-> When the guest performs an MMIO write to the GICv2 VMCR (emulated on a GI=
-Cv3
-> host), the trap is handled at EL1, updating
-> host_vcpu->arch.vgic_cpu.vgic_v3.vgic_vmcr.
->
-> Later, if the vCPU is preempted or userspace schedules out,
-> __vgic_v3_save_aprs is invoked. Because __vgic_v3_save_aprs() does not re=
-ad
-> VMCR from hardware, hyp_cpu_if->vgic_vmcr contains the stale value from t=
-he
-> previous guest exit.
->
-> This would silently clobber and destroy the EL1's MMIO emulation updates.
->
-> [ ... ]
->
-> This is a pre-existing issue, but I noticed a similar pattern in
-> handle___kvm_adjust_pc() in the same file:
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___kvm_adjust_pc() {
->         ...
->         __kvm_adjust_pc(kern_hyp_va(vcpu));
-> }
->
-> [Severity: Critical]
-> Could this allow an EL1 host to corrupt hypervisor memory?
->
-> An EL1 host can call the __KVM_HOST_SMCCC_FUNC___kvm_adjust_pc hypercall
-> and provide an arbitrary TTBR1 pointer. EL2's handle___kvm_adjust_pc()
-> applies kern_hyp_va() without bounds-checking or validation.
->
-> When __kvm_adjust_pc() is executed:
->
-> arch/arm64/kvm/hyp/exception.c:__kvm_adjust_pc() {
->         if (vcpu_get_flag(vcpu, PENDING_EXCEPTION)) {
->         ...
->
-> This dereferences the unvalidated pointer to read flags and modify memory=
-,
-> giving EL1 the ability to increment 64-bit values in EL2 memory.
->
->
-> This is also a pre-existing issue, but a similar pattern remains in the
-> GICv5 counterparts:
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_save_apr() {
->         ...
->         __vgic_v5_save_apr(kern_hyp_va(cpu_if));
-> }
->
-> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_restore_vmcr_apr() {
->         ...
->         __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
-> }
->
-> [Severity: Critical]
-> Does this leave an identical memory corruption regression?
->
-> An EL1 host can call these hypercalls with an arbitrary TTBR1 pointer,
-> which is directly dereferenced without validation, leading to arbitrary
-> memory read/write against EL2.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714101601.41=
-42645-1-fuad.tabba@linux.dev?part=3D6
+> > arm64: dts: add tqma9596la-mba95xxca
+> >
+> > This patch adds support for the TQMa95xxLA modules on the MBa95xxCA car=
+rier
+> > board. It introduces a common device tree include for the module and a =
+specific
+> > device tree for the carrier board.
+> >
+> > > diff --git a/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca=
+=2Edts b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
+> > > new file mode 100644
+> > > index 0000000000000..db2fd6991d112
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/freescale/imx95-tqma9596la-mba95xxca.dts
+> > [ ... ]
+> > > +	wifi-connector {
+> > > +		compatible =3D "pcie-m2-e-connector";
+> > > +		vpcie3v3-supply =3D <&reg_v3v3_mb>;
+> > > +		vpcie1v8-supply =3D <&reg_v1v8_mb>;
+> > > +		i2c-parent =3D <&lpi2c2>;
+> > > +		w-disable1-gpios =3D <&expander2 9 GPIO_ACTIVE_LOW>;
+> > > +		w-disable2-gpios =3D <&expander2 10 GPIO_ACTIVE_LOW>;
+> > > +		/* UART_WAKE is connected to SM */
+> > > +		/* SDIO_WAKE is connected to SM */
+> > > +		sdio-reset-gpios =3D <&expander3 2 GPIO_ACTIVE_LOW>;
+> > > +	};
+> >
+> > [Severity: High]
+> > Does this sdio-reset-gpios assignment conflict with the gpio-hog on the=
+ same
+> > line?
+> >
+> > The wifi-connector node requests expander3 line 2 here, but later in th=
+e file,
+> > m2-keye-sdio-rst-hog hogs the exact same GPIO line. Won't this conflict=
+ cause
+> > the wifi-connector driver to fail probing with -EBUSY?
+>=20
+> suppose needn't gpio hog for expander3 2 ?
+> can you double check it?
+
+Well pwrseq-pcie-m2.c doesn't support "sdio-reset-gpios" yet, so there is n=
+o -EBUSY.
+But I'm okay with remove the hog which seems appropriate.
+
+> >
+> > [ ... ]
+> > > +	fan_controller: fan-controller@2f {
+> > > +		compatible =3D "microchip,emc2301", "microchip,emc2305";
+> > > +		reg =3D <0x2f>;
+> > > +		#address-cells =3D <1>;
+> > > +		#size-cells =3D <0>;
+> > > +		#pwm-cells =3D <3>;
+> > > +		status =3D "okay";
+> > > +
+> > > +		fan: fan@0 {
+> > > +			reg =3D <0x0>;
+> > > +			pwms =3D <&fan_controller 40000 PWM_POLARITY_INVERTED 1>;
+> > > +			#cooling-cells =3D <2>;
+> > > +			fan-supply =3D <&reg_pwm_fan>;
+> > > +		};
+> > > +	};
+> >
+> > [Severity: High]
+> > Will the reg_pwm_fan regulator ever be enabled?
+> >
+> > The emc2305 driver does not parse or request the fan-supply property fr=
+om
+> > child nodes. Since reg_pwm_fan is not marked regulator-always-on earlie=
+r in
+> > this file, does this leave the fan unpowered?
+>=20
+> look like make sense, but dts itself should be correct. You'd better upda=
+te
+> driver also.
+
+I'ts on my TODO, but I won't manage to add it for the time being. How do you
+want to procede? I'd rather remove the fan-supply and disable the reg_pwm_f=
+an
+for the time being.
+
+Best regards,
+Alexander
+=2D-=20
+TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
+Amtsgericht M=FCnchen, HRB 105018
+Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
+http://www.tq-group.com/
+--nextPart2273617.irdbgypaU6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEByESxqszIvkmWRwbaS+g2M0Z/iUFAmpWKh4ACgkQaS+g2M0Z
+/iVX6gf8CPBANnI2cDftSXLqyxDSkPQeBrw29NY27Nf62/0kqw7KBe6+H3+dwo4p
+KXbgaJlOgIhwEdXVocHIQgzHvdziHS0gJrKFMm2ZYVby0ye3jPdQzwY4uZQcxDKP
+Qtwy8Diam4XANdlZ4olRnAk6USOxwEbocsELmeaq7ozh1n3HkAorNSEtMa3Dem6G
+knaMLQglNqkD/vcz+foCfe0stfWeSCj/S/HtqOH+f7+yhqPfHOC2sdaO43bGWSmI
+QzOHRKkRu3bmp/7Y5b1NNp3uHaxwVmhd8UqPZ7FC4why7EudcAeYMRQB9zXik1yn
+CbWZ5R9EAoopG/FhvhkN1KMXiJ6tyQ==
+=m9jA
+-----END PGP SIGNATURE-----
+
+--nextPart2273617.irdbgypaU6--
+
+
+
