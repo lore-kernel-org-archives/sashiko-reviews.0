@@ -1,160 +1,275 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5503F926B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0C3F8709
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784016583; cv=none; b=Bwbw6NNhtXeEcezeJP9qzIJ36DUqQkEflhk27jHti47AAmodb9hD6KEJLX/zxwptXkQRuAWY+YHilMfBaYyvt+qRuOUAHP3hSL0ZvdYCBz030MRZ+jMX+ESotOcTDvzUdDw2jeWzKiy/VugBKg2Bao5x9TtFT//AD4QYVNuzdw4=
+	t=1784016600; cv=none; b=YOGTU7m8j18aJyhkhdv9AmBAHLcvHQ3Ste9jXG3tT91Kujie9jxEqxGxwWMBg9n4wcOP3/araPa3FRlX3CQHqnN8L+KOybNKMT3WkBhJShAPy7li8TgcJatQ2wJlwkw8b970XSQcRQBjdm1PQB+8rximV3nJN9RflpqX4XQdr5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784016583; c=relaxed/simple;
-	bh=CSopGfg/2uqJ9qyI6V5MUClcNoSB2YHdurPLNoXQC8w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W/Uwb2b1qAJ6PADLRIqShJG/80XlstAmRMpOWXGY4feJ4vHiT89J4//VoYSx9mvAQKVAnXodg95S2pDJb2ByYjWbsZCYCi6Q50lgiC4DBG+seW5EYc8YgwpR5Y8KVyXWcKZ8fhRIt7zFO/HNaSUq8APO3kFmMay6IEP2GJ/qciI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=abdjSF3t; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1784016600; c=relaxed/simple;
+	bh=KM0AD2d1EYJgiOQUU1RPa2KcJ5Mzyd7oeXs7HFutUwc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g7SY2q68ygC7FCmuMJvlY9AO/UYMYAyc1OZf/l/5DVNJ9trkKq8LopD2hQHZxZ3PDoPBBhoKyNd9KpF2Q5WCfQNwoj7+kgMOuNoIb6YRWb9tv4lhSP5VMk2sxAxvrGVM04O9zHQ6zh80/loYK6w938i8U2f2WV0Di4T4fVRo5Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ZqF0JTv5; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="abdjSF3t"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-493f2e39e81so15937625e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 01:09:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1784016577; x=1784621377; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=aM36wlhWe5Za+7EYg7RTzmmHOw7LMbYpoEaZIu5nkYI=;
-        b=abdjSF3tTGi4TsIzv9XmbMp0DFlCUg0Q2zOZXtyCvwQW4utCvP8gqbomHCkDm2EWWT
-         JzMCYwbnJvZSRyJPogD9yP7wjvXmJz4lTUBxl02kBorUdbNC5DlhpVlZQzoQKhS2dxcI
-         JsLJtVMHyr4Tl3z3daXJVfz0GRqw8H1gm6NZAzul+FiAnszQtjQ06BbZWFKeLxkxxD4u
-         +FF4BBaYb5uCiJLtYHR4H9eozebz/faTjB/nzlUkhJvopNV23oc9iPESynx4BNi7r6Qd
-         yJbY8EorNhd2puSGk7iGPu5kccjGxv42UglmC90m6ej9Ft3Lj9DpY3DjBkmvjMn/tlQp
-         vpPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784016577; x=1784621377;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aM36wlhWe5Za+7EYg7RTzmmHOw7LMbYpoEaZIu5nkYI=;
-        b=htXAG+aT8c8v2qYFlO/pP32HFFx7/PkVUYESF9XoBa23XLUon3RzD/OSdr5cCqz3/8
-         5kZGxmOeZV7evA1rjPWY+c/Td028CPwdd5Y40qkCBOz8+mLg8PPZto920WDgejHge9Zf
-         4pLNGNzLvUTLuV5PGHxxy4CS2DE/xAS8Ven6DW4DZsKocWPZwA8xz/vXuTZRvZwmfS5l
-         5khMDMhu/JPdsipfPd/0UQ0b9NoDdAOeNJ3aU1OLFlWOTpnTpxxToIJxK9A0YmnVJvP+
-         HgT2KGj2BoGlIvC6Iq71Ifro+7QQ7dp96ZHPI2vNdPVUP1t9IJZZXbm6tCtdZy5MtkGA
-         Epag==
-X-Gm-Message-State: AOJu0YycOEbAfQVThKeRPnw7tVT3YLHK0F/rTrEYjIgfLuEcNytWT62P
-	zb5iOeDofOkhE+CNQFYOkRKYloVDDpeQlGsmTbANnokA7ta1ITwp8mnyLW5vjQ1G7MVk/dtuYeQ
-	2Sy+V
-X-Gm-Gg: AfdE7clhbUwgsMqNy0BZsSpflx4Up5jV8lk9XxBlcyHqj/LPNug0ZYSrH/YzWGQVD20
-	FmTQ4pWLp/Ilx+dgtcYB0X6XTm1n8ZsczX7NsUBPJRi7dWwtPLA4iFUAhmeuI07NLht4NCZkG9U
-	nd+F01g00omeh6RgW9Jala0CXfXPcGXGIqTCp7MndnN+6WbahA4nNCOQYe0vHunBFY0+8MTWJ6B
-	M1K8BFI0zWADAVM/rJLZcgGgK/QNKM5LCguJiu1PJwSTznzn5pJu44NvzkqOi/J4AkeepEeHDun
-	q2KgxfjD1zj2epLJpQLXkk3k/AvY/nWTtgLB7rAWaklfB2e7hKv1gUH40WqVNmz6pwI6MdPmUVg
-	fIEhXNR2aI3QIIn5jQJgVxPTVLUNTcMXOp4qRId7aaUvb25fM83hPUVAKTM4Rs3QF0iYygvayKt
-	WrYqbWT2snqKMLfQIWRNcEfZacQBq9nS4CxWNTtv8eVBG2hi5PsdjvavpW0/i8Hsx7A8RlpqfDF
-	z1l
-X-Received: by 2002:a05:600c:6304:b0:493:bb23:152a with SMTP id 5b1f17b1804b1-49485739980mr44250605e9.34.1784016576650;
-        Tue, 14 Jul 2026 01:09:36 -0700 (PDT)
-Received: from localhost (p200300f65f47db04b44a80421173aa03.dip0.t-ipconnect.de. [2003:f6:5f47:db04:b44a:8042:1173:aa03])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4950a2f9402sm61598235e9.13.2026.07.14.01.09.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 01:09:35 -0700 (PDT)
-Date: Tue, 14 Jul 2026 10:09:34 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v1 07/20] gpio: Add missing OF module annotations
-Message-ID: <alXtMOwKmsfM0LDE@monoceros>
-References: <cover.1784013063.git.u.kleine-koenig@baylibre.com>
- <72f0871dda4d65bb2b6ff8827da6a3b2dfdffab6.1784013063.git.u.kleine-koenig@baylibre.com>
- <20260714073425.CA6181F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ZqF0JTv5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1784016584;
+	bh=KM0AD2d1EYJgiOQUU1RPa2KcJ5Mzyd7oeXs7HFutUwc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ZqF0JTv5RavzCgRN3074owMAwCXT8XEumcwTeZvNHv5pCsarbgg8ccSCFOELEUpOk
+	 nZb7Gn0UTx7o5a4o0uNUr8r/woyFjKkmnAdRBRh4xCqkqTnCf9tbXh9nbvi2pjeuHb
+	 vMzRxeL6i9K8Wc+eV5gFGLzO21ULgP11joRef6VIr35qvq2wQwoselF0cORENi6nAZ
+	 mpdSHjp16BFPcXSdPXGufTh0yGcuefIo1ofzEaRYMvWxWcl+G7laCzd4kSRLRWhzWW
+	 Km7WNtEqVI+K92CM88BgDs1ZTnRkU7AE22yyxr6v/2ey9GLjO4khV+4qCRMRf3pN3Q
+	 ZyYBXd9i14EZQ==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7CBF617E05D3;
+	Tue, 14 Jul 2026 10:09:43 +0200 (CEST)
+Message-ID: <9cd02188-d697-43a2-b2f4-2868819133d3@collabora.com>
+Date: Tue, 14 Jul 2026 10:09:42 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="db73lwnkw6hdook6"
-Content-Disposition: inline
-In-Reply-To: <20260714073425.CA6181F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/10] drm/mediatek: Implement Display Stream
+ Compression support
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+ dri-devel@lists.freedesktop.org
+References: <20260713142746.40259-1-angelogioacchino.delregno@collabora.com>
+ <20260713142746.40259-3-angelogioacchino.delregno@collabora.com>
+ <20260713144154.0F1E11F000E9@smtp.kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260713144154.0F1E11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---db73lwnkw6hdook6
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v1 07/20] gpio: Add missing OF module annotations
-MIME-Version: 1.0
-
-Hello,
-
-On Tue, Jul 14, 2026 at 07:34:25AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] Missing MODULE_DEVICE_TABLE export for the mpc52xx_simple_gpioch=
-ip_match table.
+On 7/13/26 16:41, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Truncation of RC buffer thresholds due to incorrect bitwise masking instead of right-shifting.
+> - [High] Hardcoded and conflicting slice count assumptions without panel validation.
+> - [High] Component discovery loop skips DSI component, preventing DSC initialization.
+> - [High] DSI timing calculation ignores compression and overwrites D-PHY clock lane register.
+> - [Medium] State retention bug where `dsc_config_done` is never reset to false.
 > --
->=20
-> --- Patch [7]: [PATCH v1 07/20] gpio: Add missing OF module annotations -=
---
-> commit 292bbbdcede3ce86fe1309d514a852f272c27bac
-> Author: Uwe Kleine-K=F6nig (The Capable Hub) <u.kleine-koenig@baylibre.co=
-m>
->=20
-> gpio: Add missing OF module annotations
->=20
-> A driver module matching devices using an of device id table is supposed
-> to declare that in the module's metadata. Add this information for
-> several drivers that failed to declare these.
->=20
+> 
+> --- Patch [2]: [PATCH v4 02/10] drm/mediatek: Implement Display Stream Compression support ---
+> commit 94686398e3eedc1a9e39476763b6747a4bcfb4c9
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Subject: drm/mediatek: Implement Display Stream Compression support
+> 
+> This commit introduces a new driver for the Display Stream Compression (DSC)
+> Display Controller IP, implementing support for DSC v1.1 to v1.2. It adds
+> DSC handling into the DSI driver and integrates the bypass setup via CPU
+> writes instead of CMDQ.
+> 
+>> diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
+>> index 8e552cdc3b53b..d4be40b2574a1 100644
+>> --- a/drivers/gpu/drm/mediatek/mtk_crtc.c
+>> +++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
 > [ ... ]
->=20
-> > diff --git a/drivers/gpio/gpio-mpc5200.c b/drivers/gpio/gpio-mpc5200.c
-> > index 00f209157fd0f..2c828bc922ae3 100644
-> > --- a/drivers/gpio/gpio-mpc5200.c
-> > +++ b/drivers/gpio/gpio-mpc5200.c
-> > @@ -180,6 +180,7 @@ static const struct of_device_id mpc52xx_wkup_gpioc=
-hip_match[] =3D {
-> >  	{ .compatible =3D "fsl,mpc5200-gpio-wkup", },
-> >  	{}
-> >  };
-> > +MODULE_DEVICE_TABLE(of, mpc52xx_wkup_gpiochip_match);
-> > =20
-> >  static struct platform_driver mpc52xx_wkup_gpiochip_driver =3D {
-> >  	.driver =3D {
->=20
+>> @@ -398,6 +401,17 @@ static int mtk_crtc_ddp_hw_init(struct mtk_crtc *mtk_crtc)
+>>   		if (!mtk_ddp_comp_add(mtk_crtc->ddp_comp[i], mtk_crtc->mutex))
+>>   			mtk_mutex_add_comp(mtk_crtc->mutex,
+>>   					   mtk_crtc->ddp_comp[i]->id);
+>> +
+>> +		/* For now, only single DSI is supported */
+>> +		if (mtk_crtc->ddp_comp[i]->id >= DDP_COMPONENT_DSI0 &&
+>> +		    mtk_crtc->ddp_comp[i]->id <= DDP_COMPONENT_DSI3)
+>> +			if (!comp_dsi)
+>> +				comp_dsi = mtk_crtc->ddp_comp[i];
+>> +
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but since the patch focuses on
-> adding missing OF module annotations, should it also add one for the seco=
-nd
-> match table in this same file?
+> Does this loop terminate one iteration early, causing the DSI component
+> to be skipped?
+> 
+> Because the loop condition is i < mtk_crtc->ddp_comp_nr - 1, and the DSI
+> interface is typically the final component in the display pipeline, it
+> appears comp_dsi will remain NULL here. This would cause the subsequent
+> DSC initialization check to silently fail and bypass the DSC setup entirely.
+> 
+>> diff --git a/drivers/gpu/drm/mediatek/mtk_disp_dsc.c b/drivers/gpu/drm/mediatek/mtk_disp_dsc.c
+>> new file mode 100644
+>> index 0000000000000..bed6b77bf9a9e
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/mediatek/mtk_disp_dsc.c
+> [ ... ]
+>> +static void mtk_dsc_pps_setup(struct mtk_dsc *disp_dsc, struct drm_dsc_config *dsc_cfg)
+>> +{
+> [ ... ]
+>> +	/* PPS 8..11 - Each register holds 4 RC buffer thresholds (PPS 11 has two) */
+>> +	for (i = 0; i < 4; i++) {
+>> +		u8 block_num = i * 4;
+>> +		data = 0;
+>> +
+>> +		for (j = 0; j < 4; j++) {
+>> +			u8 buf_index = block_num + j;
+>> +			u8 data_shift = j * 8;
+>> +
+>> +			/* rc_buf_thresh holds 14 elements in total */
+>> +			if (buf_index > 13)
+>> +				break;
+>> +
+>> +			data |= (rbt[buf_index] & DSC_P8_RC_BUF_THR_X) << data_shift;
+> 
+> [Severity: High]
+> Does this code truncate the RC buffer thresholds by masking with 0xFF
+> instead of shifting right?
+> 
 
-Ah, this is snaky, there are two drivers in that file and thus two
-of_device_id arrays. My script only handles the first, so the style fixes
-are missing here, too.
+This is not truncating anything, and it is the equivalent of
 
-I will wait a bit for further review and then address this in a v2.
+		dsc->dsc_cfg.rc_buf_thresh[idx+3] << 24 |
+		dsc->dsc_cfg.rc_buf_thresh[idx+2] << 16 |
+		dsc->dsc_cfg.rc_buf_thresh[idx+1] << 8 |
+		dsc->dsc_cfg.rc_buf_thresh[idx+0]);
 
-Best regards
-Uwe
+So this is fine.
 
---db73lwnkw6hdook6
-Content-Type: application/pgp-signature; name="signature.asc"
+> The VESA DSC specification requires programming the Picture Parameter Set
+> registers with RC buffer thresholds divided by 64. Using a bitwise AND mask
+> instead of shifting right by 6 appears to write truncated values to the PPS
+> registers, which could break rate control.
+> 
+> [ ... ]
+>> +void mtk_dsc_setup(struct device *dev, struct drm_dsc_config *dsc_cfg)
+>> +{
+> [ ... ]
+>> +	pic_height_ext_num = dsc_cfg->pic_height + dsc_cfg->slice_height - 1;
+>> +	pic_group_width = dsc_cfg->slice_width * 4;
+>> +	pic_group_width /= 3;
+> 
+> [Severity: High]
+> Does this calculation hardcode the picture group width to assume exactly
+> four slices per line?
+> 
 
------BEGIN PGP SIGNATURE-----
+No, that makes the hardware process 1+1/4 pic width per iteration.
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpV7rwACgkQj4D7WH0S
-/k4XaAgAr47ojbzXcjqsjF1FttUvP817tdDTOildKlkxSlYP4gIjsiIubgQYdwg7
-MpSLhXX5sDIJmMklwzM5pALU2Ct5LQu6t/1MjKG6XHftyRj2LwgKbU2FbG2NNn+G
-JAQs0CdGH4mfmhux9mvhe39b0V4h5S3bpRe1lA2Iv9ex/dGL4bNEto3cM7QD31Ap
-FCw8wFkpbaZbBBppVbdK7o5utKerY5rA2f7Ns2vVPkLNhMx9ps61j4d8FB2BKaoJ
-0rPe6NVzC81WjsrwZUhpwUHucCbjsqHGxQrl7j3TaX77dy5pOXi9WxhTGNodm5JR
-z0Im+LrSjd/VfmFscgr6z0IU+KWrhA==
-=3L74
------END PGP SIGNATURE-----
+> If a panel requests a different slice count, this could conflict with the
+> payload size assumptions made elsewhere in the pipeline and potentially
+> cause display corruption.
+> 
+> [ ... ]
+>> +	if (dsc_en_bit)
+>> +		dsc_con |= DSC_EN;
+>> +
+>> +	writel(dsc_con, disp_dsc->reg + DISP_REG_DSC_CON);
+>> +
+>> +	disp_dsc->dsc_config_done = true;
+>> +}
+> 
+> [Severity: Medium]
+> Can this state retention cause issues on subsequent modesets?
+> 
+> Since the dsc_config_done flag is never reset to false on teardown, will a
+> subsequent non-DSC modeset bypass the check below in mtk_dsc_start() and
+> leave the DSC IP active with stale parameters?
+> 
 
---db73lwnkw6hdook6--
+The dynamic DSC -> non-DSC modesets can be supported only after the mediatek-drm
+restructuring. As of now, only all-compressed or all-uncompressed modes displays
+are supported.
+
+> [ ... ]
+>> +void mtk_dsc_start(struct device *dev)
+>> +{
+>> +	struct mtk_dsc *disp_dsc = dev_get_drvdata(dev);
+>> +
+>> +	/* If no DSC or config not done, set bypass mode */
+>> +	if (!disp_dsc->dsc_config_done) {
+> 
+> [ ... ]
+>> diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
+>> index 3f3f56eed3f92..8ab5c3431dbbc 100644
+>> --- a/drivers/gpu/drm/mediatek/mtk_dsi.c
+>> +++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
+> [ ... ]
+>> +static void mtk_dsi_ps_control_dsc(struct mtk_dsi *dsi, bool config_vact)
+>> +{
+>> +	const struct mtk_dsi_driver_data *data = dsi->driver_data;
+>> +	const u16 *reg_main = dsi->driver_data->reg_main;
+>> +	const short dsi_buf_bpp = 3;
+>> +	u32 ps_wc;
+>> +
+>> +	/* Word count */
+>> +	ps_wc = FIELD_PREP(DSI_PS_WC, 2 * dsi->dsc->slice_chunk_size);
+> 
+> [Severity: High]
+> Does this hardcode the DSI payload to assume exactly two slices per line?
+> 
+> This appears to conflict with the assumption of four slices per line inside
+> mtk_dsc_setup(). Is it possible to validate the panel's requested slice
+> count against these assumptions during the mode_valid check?
+> 
+
+No, that's another thing entirely, it's the per-iteration DSI word count and
+the dsc_setup is not hardcoding four slices per line.
+
+>> +
+>> +	if (config_vact) {
+>> +		writel(FIELD_PREP(VACT_NL, dsi->vm.vactive),
+>> +		       dsi->regs + reg_main[DSI_VACT_NL]);
+>> +		writel(ps_wc, dsi->regs + reg_main[DSI_HSTX_CKL_WC]);
+> 
+> [Severity: High]
+> Will writing the compressed payload size here overwrite the correctly
+> calculated D-PHY High-Speed Clock Lane Word Count?
+> 
+
+What!??! No!!!
+
+> [ ... ]
+>> -static void mtk_dsi_config_vdo_timing(struct mtk_dsi *dsi)
+>> +static int mtk_dsi_config_vdo_timing(struct mtk_dsi *dsi)
+>>   {
+>>   	struct videomode *vm = &dsi->vm;
+>> +	int ret;
+>>   
+>>   	writel(vm->vsync_len, dsi->regs + DSI_VSA_NL);
+>>   	writel(vm->vback_porch, dsi->regs + DSI_VBP_NL);
+>>   	writel(vm->vfront_porch, dsi->regs + DSI_VFP_NL);
+>>   	writel(vm->vactive, dsi->regs + DSI_VACT_NL);
+>>   
+>> -	if (dsi->driver_data->has_size_ctl)
+>> -		writel(FIELD_PREP(DSI_HEIGHT, vm->vactive) |
+>> -			FIELD_PREP(DSI_WIDTH, vm->hactive),
+>> -			dsi->regs + DSI_SIZE_CON);
+>> -
+>>   	if (dsi->driver_data->support_per_frame_lp)
+>>   		mtk_dsi_config_vdo_timing_per_frame_lp(dsi);
+>>   	else
+>>   		mtk_dsi_config_vdo_timing_per_line_lp(dsi);
+>>   
+>> -	mtk_dsi_ps_control(dsi, false);
+>> +	if (dsi->dsc) {
+>> +		ret = mtk_dsi_set_dsc_params(dsi);
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		mtk_dsi_ps_control(dsi, true);
+> 
+> [Severity: High]
+> Do the DSI lane timings calculated earlier in
+> mtk_dsi_config_vdo_timing_per_frame_lp() incorrectly use the uncompressed
+> pixel count?
+> 
+> By passing config_vact = true into mtk_dsi_ps_control() for DSC streams, it
+> looks like the raw compressed payload size will subsequently overwrite the
+> timing synchronized register DSI_HSTX_CKL_WC.
+> 
+
+It's done on purpose.
