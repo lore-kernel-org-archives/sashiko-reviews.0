@@ -1,367 +1,153 @@
-Received: from toucan.tulip.relay.mailchannels.net (toucan.tulip.relay.mailchannels.net [23.83.218.254])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2C637DAD0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 02:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.218.254
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8972C11FE
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 03:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783995013; cv=none; b=ng9zbBGgTPiTBAhNWBKC0gqg/fDeXfSKzTvCli+3SzY2xaKLDTAZbLWMUXrL9+JApaDuanrVaAb6jFqdguHkhDwhb3QuPae8SbNrlluxs6+hUxDmwpnblo4TMAyrbrJhsr9cSLzC7O9e/c7CtCfpXlP+D8tzSpBTjNOxvDD2LFQ=
+	t=1784000200; cv=none; b=P+WD0ck7RW7/8jSpmp+APYsRExs2QT8wfAHwZhs19HmRMA0B6kIW4ZhxB+7U5g+WdxPsmJNay8WQuxbNvFG7XRC1x4YSl4NrOmy5l++yd1tipYFKy614zam3m9C40jI52smSaXmegQXRE10y4FWq8QHqGGaJjVBxWx50Jp3Ahus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783995013; c=relaxed/simple;
-	bh=aYCBu/AQ+a4I/3Q4kkYKyCAFSQ8/vVYTkBVaUG/fb/k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YcSiLwue9cbxOMrkdsV7xCNNH10AWOy29INNdnPTxljWppFvOYef5ecr7cNPvm/6DVP/cFUwGkSBI5EJWVaok7JNZdCY2oyEn6hadG26GOjHwcJaV9V8LytFTpQo6EGnPBD7gcvR+Kg05a6elmeiZdbKTXQHApM9yxUzp4LH1+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=WRbmL1H4; arc=none smtp.client-ip=23.83.218.254
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
+	s=arc-20240116; t=1784000200; c=relaxed/simple;
+	bh=RLJl2QN0aWmHCCrxH0baI8DlMu2mxkJdxXrW0rQTWAU=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=eTSzGGRfKWSazjAnW+/A1o+AFGyZntLKYsQfUB6Cr3l7OCt/pCqYE/GpIPyqYew8H/psyIA284oU7BOIBOcKWZGjKx4fHtkZoXWOQA5xyzZ+YCj7yUtpY2ng1RjRDtMhOjM8WwlkSPfUUqRopRYiTlDOUr/YbXKZkXW+/WG1Qik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sTgQs6pC; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="WRbmL1H4"
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 83B6E8015C3;
-	Tue, 14 Jul 2026 02:01:22 +0000 (UTC)
-Received: from pdx1-sub0-mail-a260.dreamhost.com (100-104-243-177.trex-nlb.outbound.svc.cluster.local [100.104.243.177])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id C65768006BE;
-	Tue, 14 Jul 2026 02:01:19 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Shoe-Bubble: 0a5ec2aa60551679_1783994482382_2500815278
-X-MC-Loop-Signature: 1783994482382:378648659
-X-MC-Ingress-Time: 1783994482382
-Received: from pdx1-sub0-mail-a260.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.104.243.177 (trex/8.0.2);
-	Tue, 14 Jul 2026 02:01:22 +0000
-Received: from offworld (unknown [76.167.199.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a260.dreamhost.com (Postfix) with ESMTPSA id 4gzjG735g8z105B;
-	Mon, 13 Jul 2026 19:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1783994479;
-	bh=kWHQnb0EGGzHVURtBrlXhWPoc3UwUKt9uP8bMtaV14o=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=WRbmL1H4tIfIB+sLtnY2usunnpEphEfwfIP/bha4btsJglz25Om7vGnjUjyFHcJE8
-	 1UUIsyZpBsTyxmaAKAOytdX23mDX/vrjyy3dBJsDuL/dHNciMbbf2etubEM7ziNgIP
-	 kY8h4Mpv2cwHpohOjlwn85bQ560l55l+Tueg1BR6tShtLvSNdkJ+K/ZIkO8dq0cfdb
-	 RsmaQSKD/QAcDJvbCVJxy/8XDiST7SHIvTKJI2eBhdkmUGtc2JmDtvpLqVkHvxa3G+
-	 JZFSGBSZwVp/PMS9M7KyGc6RyLg/RtN4LKDmVNxfNPNAYVTGI9nog8cWTKxHT9OlPp
-	 EhIQR5LMJ2Nyg==
-Date: Mon, 13 Jul 2026 19:01:16 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: sashiko-reviews@lists.linux.dev, dave.jiang@intel.com
-Cc: linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v5 2/5] cxl/pci: Add BI topology enable/disable
-Message-ID: <20260714020116.gehv2wfqrlecu5bc@offworld>
-References: <20260615145529.13848-3-dave@stgolabs.net>
- <20260615173429.0CBB61F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sTgQs6pC"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84861fc51f5so2116697b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 13 Jul 2026 20:36:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784000198; x=1784604998; darn=lists.linux.dev;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=gAuM5M3KA28cxh47JFCQwmkbYWzL0Rnh2NzqCwCHs/Y=;
+        b=sTgQs6pCckBAe26Uwb+9Lzg4S5fUpIvWga0B0lV0WcFX2BwmdrCT0QNI9z2S2NPEl/
+         6HCCEMAU7Z2sK7Dy4yUVuRyQp5SqQ6Z4z4Uat8Zp/iBtsf+h3PqACbPEH63JWhWrl880
+         exbfZ69GnK2x/8hfKnpsqVyup0HFrbteAPL6TTWx+8EtFx3J90UFRFpPWpffg9OD1FlT
+         Mw9BX7BK6wNpSpUBdGZMQg9Y4yNn4ripDkNTM2zdrNNolK7dxujiFlVF+PC3XdPDsB/Z
+         0Yb8NEiCR+QzOdiSMDjxN7ukoMhywiDTtzt9Xez7oNpBFzzSOuy2Ef0JZP5+/enNAkas
+         tKmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784000198; x=1784604998;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gAuM5M3KA28cxh47JFCQwmkbYWzL0Rnh2NzqCwCHs/Y=;
+        b=cbnq0GAahKYy7munCeueuiRCjRwiec8diAoLkAuyjlIkTGGXzjG4nBmL1m7KgeLwsI
+         IKCJfvS1CYMWGxr3jx5GuFRPowwsfzfNVP7ly+/TW41wUREc1nQ3hAEheSDzITLNLYdr
+         Cu7lAaGkK7D+6BGH4h4NJ5+icA+HkVFlwI1zjdfodO/7ozcLF6/sKqk71VLKcK5LbQis
+         JAPjLFj33UTwcUska8BtPp+wwOU04MTZ57CSrzW5fj/ryc5pJnuHuJCYs4qMX8SLzLzm
+         YNqsm7fGyMTa2+IcTUHv7U1oq69C6peqDAX4DqGIRpXXLn+Y0Bl4u1wCYKGXYyD1Mk+Y
+         tmsw==
+X-Gm-Message-State: AOJu0Yw4HeGPwwLJVIkgf7004qEZnaeR8TSOD11ar0gMJBZEO0s9c98/
+	IMs1oqkOSGOEPDdgpPDYGwL2V+hM5d42RfdFD5zc6YHJAAYy/NTxNZ2EnZFflw==
+X-Gm-Gg: AfdE7cluoRdB9mZ54VnlkdFxKTa6irgNpdT2ZE5pfxQ6ZGWUO/tT6jncIkPKN1O2aaD
+	m5syWgX5Tw59Toe9wuBBffCsyMZ4EEVKZcX/eoACO06MHyzyQW9jiDS9XvzgCddNjKVdTwK3PMp
+	ICbUG45MKQslMYe0XiiYiMw7SAu/mhwkZWHvHOR6m0A+pbIgrFsRU+pl8JZKjEt2h5kCLHa3kpY
+	ulM29giqhMwRShfzOXn4Ky77KDoOlOSXu6lTpNrddhX32I+k6BXkoSR5gPGfUNM9/SNC1JLj7Kv
+	BT8LHsoO9gR7D4Bxzs4BMLSBSwjsc7xkbBplLnbhtP3jXWNbJizTkthoHISEYOaiHFKJ1GXWJRl
+	STwcO8V1twbBlTGjlTvMNNFjYwFamxgcLxbhZpuq5F5BEdfcZgc9XKWboaSjpeaMX5M2aaX1LCo
+	l86EkdN3xcHiknm+r/cjVWaCsKtWQ66Py0+IDFOikDltl2dA==
+X-Received: by 2002:a05:6a00:f89:b0:842:2419:6c0b with SMTP id d2e1a72fcca58-84889637ff9mr9302291b3a.10.1784000198378;
+        Mon, 13 Jul 2026 20:36:38 -0700 (PDT)
+Received: from smtpclient.apple ([43.224.245.231])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f242999sm723429b3a.1.2026.07.13.20.36.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Jul 2026 20:36:38 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260615173429.0CBB61F000E9@smtp.kernel.org>
-User-Agent: NeoMutt/20220429
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH] sched_ext: Validate cid override before updating tables
+From: zhidao su <soolaugust@gmail.com>
+In-Reply-To: <20260714025524.04EA31F000E9@smtp.kernel.org>
+Date: Tue, 14 Jul 2026 11:36:24 +0800
+Cc: sched-ext@lists.linux.dev,
+ bpf@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F5759324-507F-435F-A29B-CA8B1CC40FA9@gmail.com>
+References: <20260714024704.3318132-1-soolaugust@gmail.com>
+ <20260714025524.04EA31F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
 
-On Mon, 15 Jun 2026, sashiko-bot@kernel.org wrote:
+Thanks for the review.
+The current in-tree caller passes a BPF .bss array populated by =
+userspacebefore SCX_OPS_LOAD, and doesn't modify it afterwards. The =
+kfunc is alsoonly callable from the root scheduler's ops.init(), so the =
+mapping isexpected to stay stable for the duration of the call.
+If we later allow a different input source or concurrent mutation =
+duringthe call, we'd need to cache the validated values before updating =
+thetables. I don't think that's needed for the current contract,
 
->Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->- [High] Mixing `goto` error handling with `__free()` scope-based cleanup declarations.
-
-Trivial, fixed for v6. See below.
-
->- [High] Missing explicit commit for the Endpoint BI Decoder Control Register.
-
-False positive, this commit does not apply to endpoints.
-
->- [High] Root port BI enablement logic is unreachable and contradicts the commit message.
-
-False positive.
-
-Sashiko read !is_cxl_root(port_iter) as "the RP is skipped," but the RP sits a
-level below the platform root.
-
->- [High] Missing reference counting (`nr_bi`) for shared downstream ports in cascaded switch topologies.
-
-I am avoiding cascaded switch topologies (PBR/HBR), nor does this touch at all wrt
-BI in the latest spec.
-
-See: https://lore.kernel.org/all/20260608000226.jb2ploxc5nkjestk@offworld/
-
->--
->
->commit 31994c2bf9d14374bacdb07d505a19b18a761e35
->Author: Davidlohr Bueso <dave@stgolabs.net>
->
->cxl/pci: Add BI topology enable/disable
->
->This commit implements cxl_bi_setup() to walk the CXL port topology and enable
->BI flows on the device and every component in the path. It also implements a
->teardown counterpart, cxl_bi_dealloc().
->
->> diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
->> index d1f487b3d809a..b1b0f3eab90e8 100644
->> --- a/drivers/cxl/core/pci.c
->> +++ b/drivers/cxl/core/pci.c
->
->[ ... ]
->
->> +static int __cxl_bi_ctrl_dport(struct cxl_dport *dport, bool enable)
->> +{
->> +	struct pci_dev *pdev = to_pci_dev(dport->dport_dev);
->> +	void __iomem *bi = dport->regs.bi_decoder;
->> +	struct cxl_port *port = dport->port;
->> +	u32 ctrl, value;
->> +	int rc;
->
->[ ... ]
->
->> +	case PCI_EXP_TYPE_DOWNSTREAM:
->> +		if (enable) {
->> +			value = ctrl & ~CXL_BI_DECODER_CTRL_BI_FW;
->> +			value |= CXL_BI_DECODER_CTRL_BI_ENABLE;
->> +		} else {
->> +			if (!FIELD_GET(CXL_BI_DECODER_CTRL_BI_ENABLE, ctrl))
->> +				return 0;
->> +			value = ctrl & ~(CXL_BI_DECODER_CTRL_BI_FW |
->> +					 CXL_BI_DECODER_CTRL_BI_ENABLE);
->> +		}
->
->[Severity: High]
->In cascaded switch topologies, can this unconditionally clear the
->CXL_BI_DECODER_CTRL_BI_ENABLE bit while other endpoints below the switch
->are still actively using it?
->
->Unlike the root port case which uses dport->nr_bi for reference counting,
->downstream ports appear to clear this bit as soon as the first endpoint
->unbinds. This might break BI routing for other active endpoints on a shared
->downstream port.
->
->Does this need reference counting similar to the root port?
->
->[ ... ]
->
->> +static int __cxl_bi_ctrl_endpoint(struct cxl_dev_state *cxlds, bool enable)
->> +{
->
->[ ... ]
->
->> +	writel(val, bi + CXL_BI_DECODER_CTRL_OFFSET);
->> +	cxlds->bi = enable;
->> +
->> +	dev_dbg(cxlds->dev, "BI requests %s\n",
->> +		str_enabled_disabled(enable));
->> +
->> +	return 0;
->> +}
->
->[Severity: High]
->Is this missing an explicit commit for the Endpoint BI Decoder Control
->Register?
->
->The CXL 4.0 specification requires an explicit commit after changing
->BI_ENABLE for any BI Decoder via CXL_BI_DECODER_CAPS_EXPLICIT_COMMIT_REQ.
->
->While __cxl_bi_ctrl_dport() correctly calls __cxl_bi_commit_decoder() after
->updating the downstream ports, __cxl_bi_ctrl_endpoint() omits this step.
->
->Could this cause the endpoint device to ignore the BI enablement state and
->silently fail to enable BI flows?
->
->[ ... ]
->
->> +int cxl_bi_setup(struct cxl_dev_state *cxlds)
->> +{
->> +	struct cxl_port *endpoint = cxlds->cxlmd->endpoint;
->> +	struct cxl_dport *dport_iter, *dport, *failed;
->> +	struct cxl_port *port_iter;
->> +	struct pci_dev *pdev;
->> +	int rc;
->> +
->> +	if (!dev_is_pci(cxlds->dev))
->> +		return 0;
->> +
->> +	pdev = to_pci_dev(cxlds->dev);
->> +	struct cxl_port *port __free(put_cxl_port) =
->> +		cxl_pci_find_port(pdev, &dport);
->> +
->> +	if (!port)
->> +		return -EINVAL;
->
->[ ... ]
->
->> +	port_iter = port;
->> +	dport_iter = dport;
->> +	while (!is_cxl_root(port_iter)) {
->> +		rc = cxl_bi_ctrl_dport_enable(dport_iter);
->> +		if (rc)
->> +			goto err_rollback;
->
->[Severity: High]
->The commit message states this will write BI Enable on each dport's BI
->Decoder Control register. However, doesn't this loop terminate before
->processing the root port?
->
->Since the loop condition is !is_cxl_root(port_iter), when port_iter reaches
->the CXL root, the loop exits and skips configuring the root port entirely.
->
->Additionally, if the loop did reach the PCI_EXP_TYPE_ROOT_PORT code inside
->__cxl_bi_ctrl_dport(), that code actually clears the enable bit:
->
->__cxl_bi_ctrl_dport() {
->    ...
->    case PCI_EXP_TYPE_ROOT_PORT:
->        ...
->        value &= ~CXL_BI_DECODER_CTRL_BI_ENABLE;
->}
->
->Should this loop include the root port, and should the root port logic actually
->set the enable bit rather than clearing it?
->
->[ ... ]
->
->> +	/* finally, enable BI on the device */
->> +	rc = cxl_bi_ctrl_endpoint_enable(cxlds);
->> +	if (rc)
->> +		goto err_rollback;
->> +
->> +	return devm_add_action_or_reset(&cxlds->cxlmd->dev,
->> +					cxl_bi_dealloc, cxlds);
->> +
->> +err_rollback:
->> +	/*
->> +	 * Undo all dports enabled so far, including the failed one.
->> +	 */
->> +	failed = dport_iter;
->> +	dport_iter = dport;
->> +	port_iter = port;
->> +	while (!is_cxl_root(port_iter)) {
->> +		cxl_bi_ctrl_dport_disable(dport_iter);
->> +		if (dport_iter == failed)
->> +			break;
->> +		dport_iter = port_iter->parent_dport;
->> +		port_iter = dport_iter->port;
+> 2026=E5=B9=B47=E6=9C=8814=E6=97=A5 10:55=EF=BC=8Csashiko-bot@kernel.org =
+=E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential =
+issue(s) to consider:
+> - [High] Splitting the `cpu_to_cid` array validation and update into =
+two loops introduces a critical double-fetch TOCTOU vulnerability, =
+allowing an out-of-bounds kernel memory write.
+> --
+>=20
+> --- Patch [1]: [PATCH] sched_ext: Validate cid override before =
+updating tables ---
+> commit 3a1a6d6109297fa0a7f1d91d2dccc68df1527d12
+> Author: zhidao su (Xiaomi) <soolaugust@gmail.com>
+>=20
+> sched_ext: Validate cid override before updating tables
+>=20
+> This patch splits the validation and table updates in =
+scx_bpf_cid_override()
+> into separate loops. This prevents partial table updates if the =
+validation
+> fails midway through the user-supplied mapping.
+>=20
+>> diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+>> index af83084ec740a..e398e3f209bd4 100644
+>> --- a/kernel/sched/ext/cid.c
+>> +++ b/kernel/sched/ext/cid.c
+>> @@ -329,6 +329,11 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 =
+*cpu_to_cid, u32 cpu_to_cid__sz,
+>> 			scx_error(sch, "cid %d assigned to multiple =
+cpus", c);
+>> 			return;
+>> 		}
 >> +	}
->> +	return rc;
->> +}
->
->[Severity: High]
->Is it safe to mix goto-based error handling with scope-based cleanup in
->this function?
->
->This function declares struct cxl_port *port __free(put_cxl_port) at the
->top, but also uses a goto err_rollback pattern for failure paths.
->
->Mixing goto labels with __free() declarations in the same function creates
->confusing ownership semantics and violates subsystem cleanup guidelines.
->
->Should this be fully converted to scope-based cleanup, or avoid using
->__free() here?
+>> +
+>> +	for_each_possible_cpu(cpu) {
+>> +		s32 c =3D cpu_to_cid[cpu];
+>> +
+>> 		scx_cpu_to_cid_tbl[cpu] =3D c;
+>> 		scx_cid_to_cpu_tbl[c] =3D cpu;
+>> 	}
+>=20
+> [Severity: High]
+> Can the contents of cpu_to_cid change concurrently between these two =
+loops in
+> scx_bpf_cid_override()?
+>=20
+> If cpu_to_cid points to shared memory, such as a BPF map, could =
+another thread
+> or BPF program modify cpu_to_cid[cpu] after it passes the validation =
+in the
+> first loop?
+>=20
+> If this happens, the second loop would fetch the unvalidated value and =
+use it
+> as an index for scx_cid_to_cpu_tbl[c], potentially resulting in an
+> out-of-bounds write.
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260714024704.3318132-1-soolaugust@gmail.c=
+om?part=3D1
 
-Sure. I went with this this change/unwind consolidation, fyi:
-
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index ed54268e9ec7..dc700f7c75c0 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -1247,10 +1247,52 @@ static void cxl_bi_dealloc(void *data)
-  	}
-  }
-  
-+/*
-+ * Enable BI on every dport in the path, then on the device itself.
-+ * On failure, unwind only the dports that fully enabled.
-+ */
-+static int cxl_bi_enable_path(struct cxl_dev_state *cxlds,
-+			      struct cxl_port *port, struct cxl_dport *dport)
-+{
-+	struct cxl_dport *dport_iter, *failed;
-+	struct cxl_port *port_iter;
-+	int rc;
-+
-+	port_iter = port;
-+	dport_iter = dport;
-+	while (!is_cxl_root(port_iter)) {
-+		rc = cxl_bi_ctrl_dport_enable(dport_iter);
-+		if (rc)
-+			goto err_rollback;
-+
-+		dport_iter = port_iter->parent_dport;
-+		port_iter = dport_iter->port;
-+	}
-+
-+	/* finally, enable BI on the device */
-+	rc = cxl_bi_ctrl_endpoint_enable(cxlds);
-+	if (rc)
-+		goto err_rollback;
-+
-+	return 0;
-+
-+err_rollback:
-+	/* Undo dports that fully enabled; skip the failed one. */
-+	failed = dport_iter;
-+	dport_iter = dport;
-+	port_iter = port;
-+	while (!is_cxl_root(port_iter) && dport_iter != failed) {
-+		cxl_bi_ctrl_dport_disable(dport_iter);
-+		dport_iter = port_iter->parent_dport;
-+		port_iter = dport_iter->port;
-+	}
-+	return rc;
-+}
-+
-  int cxl_bi_setup(struct cxl_dev_state *cxlds)
-  {
-  	struct cxl_port *endpoint = cxlds->cxlmd->endpoint;
--	struct cxl_dport *dport_iter, *dport, *failed;
-+	struct cxl_dport *dport_iter, *dport;
-  	struct cxl_port *port_iter;
-  	struct pci_dev *pdev;
-  	int rc;
-@@ -1293,35 +1335,11 @@ int cxl_bi_setup(struct cxl_dev_state *cxlds)
-  		port_iter = dport_iter->port;
-  	}
-  
--	port_iter = port;
--	dport_iter = dport;
--	while (!is_cxl_root(port_iter)) {
--		rc = cxl_bi_ctrl_dport_enable(dport_iter);
--		if (rc)
--			goto err_rollback;
--
--		dport_iter = port_iter->parent_dport;
--		port_iter = dport_iter->port;
--	}
--
--	/* finally, enable BI on the device */
--	rc = cxl_bi_ctrl_endpoint_enable(cxlds);
-+	rc = cxl_bi_enable_path(cxlds, port, dport);
-  	if (rc)
--		goto err_rollback;
-+		return rc;
-  
-  	return devm_add_action_or_reset(&cxlds->cxlmd->dev,
-  					cxl_bi_dealloc, cxlds);
--
--err_rollback:
--	/* Undo dports that fully enabled; skip the failed one. */
--	failed = dport_iter;
--	dport_iter = dport;
--	port_iter = port;
--	while (!is_cxl_root(port_iter) && dport_iter != failed) {
--		cxl_bi_ctrl_dport_disable(dport_iter);
--		dport_iter = port_iter->parent_dport;
--		port_iter = dport_iter->port;
--	}
--	return rc;
-  }
-  EXPORT_SYMBOL_NS_GPL(cxl_bi_setup, "CXL");
