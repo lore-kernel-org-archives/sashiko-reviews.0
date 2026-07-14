@@ -1,126 +1,134 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C015A466B7B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFDA46AF31
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784036001; cv=pass; b=Pd8OI790g40ng+CWeyJt07srBhlDDCitXJNnxl/zpb0xV4dt9OCAqglNlHqiuUXgLXFMof7Ac3Sd/V0Jlz+I2/zsMMKkjKWcdlD3O/zDCfevTiWGP8SeRDZTEf+esP112snMF5TCpxOxg8pOA7D/mHdKzMHeI4aii0bJNfo7TGg=
+	t=1784036364; cv=pass; b=rvyrYxGN2vwVROf5uZyt4VSAhEOwe5LSiRpdVOqo0a6G4PnU1f0qZrb3J5H/W2DmtsJL62SiDO0myFnMlRN2W3O0EhCrBHpv5WUr80XF17OLhbdbrgb6Hfdq/CT7iuucLDXtrsB57Q8+cr5ctbzVe8izvxvmj9zNgBIqIfEZPTY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784036001; c=relaxed/simple;
-	bh=tFXARX4SHAk3PI59oKiV3+pkOUhhlBx2uKmJFHAo6l8=;
+	s=arc-20240116; t=1784036364; c=relaxed/simple;
+	bh=DwIb33/MUbNJ6SXd61hMtjAJP3vWKRsR+k6fH0eQFvQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lU/j7gn5bawe4wDJZ+g+UGiBQd9J9y579f1S8ir0jZl70eIogSOmLmg3jzDuH2pkjnizQp7LgAGk+6lwr4GD9GPrAq+mPuRg7Yqurdt3LaePQKmkYWQmQVqxSu+unZXF9Uh/5Kq2fCTgsH6IuWXWAGT+PgaS+Kqem6f1fiJ+M68=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQLAr/NA; arc=pass smtp.client-ip=209.85.217.48
+	 To:Cc:Content-Type; b=hTI2Ban5V3N4pGKhq8AjrcffniJ090T0+QBrdYrGLI7QQajAltglqPnOGC+5I6isrt0Zsr+fXT86En3AltnrNprTjS69oTInVx2jwJlpvPPI7rTeAa6yJ/KxfnQaH1IZoox03awgmma0nkHF6M8CeXT9hA+DUSE1fQjoeKCmSv8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mIylfxLG; arc=pass smtp.client-ip=209.85.222.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQLAr/NA"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-7370ea43b9cso626034137.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 06:33:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784035998; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mIylfxLG"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-973b676e5f5so475035241.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 06:39:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784036362; cv=none;
         d=google.com; s=arc-20260327;
-        b=Ky48l4F6ZAJkioMkJ0l+S/54yBe7ZG/DYmCEB7SXNBtnAlrwzTUwtm2RuY1O+RXfUU
-         BNvVXN2lCxDMMvexq+cmYS00dNHeeDsIpHl6IP2TiXSRQuQf21ADoT+1iDLBX5T192FK
-         OndLdqDMqcT7e5ZnBAkd9aBH7Aem5Ogu5Hsm/XSjFRDkfexlCRd/nSZdXm83JhpMLeJ4
-         UzOtap0kzEZ+nBG+CJ15a5ka/N3aGHVE072yJ2VB6TmDGto9UA1/N58HYnACFTJ0EuSJ
-         yvu7KwSc4d+sRz+JbUelOekC5LP1BBDULODCMhEq1mmX1eSckbmY0NNLWQaeWXLPCeZE
-         OChQ==
+        b=OSQ04ZqenMH7xug6g30redBo/EEnOKy9j5x9QHC0HgSS8PyD6AGLjfgoYebix/iT4N
+         KQ6Ofoglqcf+BqqPwX/gBkvOUxPL26fI5DFeXPa6znHCtLmcd14eNpW3gNM/O2b/h0ZK
+         yM0KcxbnhhDxLGScn55RE6WcAI1oI/r+IbWdc+QYHshpk+xaVkDu/2FzI9SBxTFubO0q
+         EiT5L7a7v73sH/oIYebQKxN2FYl07GK7ps94ex+OLDlwWWSvpHeYxH6Jnc/v1q6g6syd
+         IItFvXc69q/DXLafEMhsQIVyoWoFd7J+yl6crR59mkyS/jGSZoxvJzcx5YaPFJSj75sC
+         Nj5g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=tFXARX4SHAk3PI59oKiV3+pkOUhhlBx2uKmJFHAo6l8=;
-        fh=dfvPRi+t5KvUF1qpgNVmacxvd83mvku6fE8K+/2kbH8=;
-        b=VC8iFjn8koTfH2/inPAnNFqFcH8gAme0S2YyGqdkKqltbbgSjK8kZfR78p/jpVbxHT
-         ggtHmOgVpSIRXTiso9qjccezi7NWXdRPQoCtP6aE4iVUBf2aAtmkgzGe1PALn+kQqJE+
-         Lbxr35DScVPY/4oyqGRwyAXS3wllLgr4xkJ8uW2gyGIGpeF6GR3uIb4ObPAYx+3iPHkM
-         H5r/7b0T7NxCNnmT/YSDk8Z1s3PbJWMvvi5QFT/WprFO5KkaFYRGdzKMHzwJeJXDaWAN
-         nour32WYsekKLRTTxtkHHqOud3zhKDuVIjpCuQj9qksVYaCV6iBXYYzeJIi/svrHQotE
-         w9JQ==;
+        bh=DwIb33/MUbNJ6SXd61hMtjAJP3vWKRsR+k6fH0eQFvQ=;
+        fh=CcQ86f49oGl9srj5qqX+VrnKgviRK+XiAGNNzPzdATg=;
+        b=sSbvvjoL4PMdTiRhQMExXp+avNCfg7lCX4sghuuqMUQ9+jDkP6dOAHR6K1dPcrgwhu
+         A9QG1tljTOZstq9NJtodmh29mu+uHMFERlYhNImaLBX5u5My6I41HN5apvWwSfvIyoM3
+         kJUmGp2BXAl827yoCBp/gVRInSiiNS/9dLwgblGC4alGdzV2zTFyKJef3S663s/6KDUS
+         TtUjehCUO36B4Xye/verA6d7knI/qnitf9wAJBjDtoPjAnewWjz0V8gcDmTaGSqAPn1Y
+         RtRfy2i4CIPVEeRteXQeKxO9CShAulqPMA5rkHfhQedkMFlcLTMB1kHSs/gIMexVnrT7
+         9DzA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784035998; x=1784640798; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784036362; x=1784641162; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=tFXARX4SHAk3PI59oKiV3+pkOUhhlBx2uKmJFHAo6l8=;
-        b=nQLAr/NA1ZzTvvF4/0SyzfLdpLzBP9lurD1yaKbNvodrrx4/dys0v/3hGwXDP7Z3Qw
-         tbloTOKYTI5uZr7FcRcnZ2m26wQ+FYlZE7DvEctPPNkA11/Mw+6Xay7R0focR7TSJ4ta
-         5qXDjXmsNSpuDPg16fPzwYnKa+9HJU5o9xssdXq5ZkjNnRPDUuMq+oE7mRUkluVX+9Y9
-         4aQ2rYVScSO/nA7JUrodYDg9xTW/M0MROZPEdu6BEeIBNpsfEI1FvBCVnlOiLFiBny6+
-         HMyoNHL+pF5BU9Al9fGM/eXlS22/o6I8BHrXVQD5TfeIzOI/HQ0UTTBtKpbELdz0CLBa
-         YiXA==
+        bh=DwIb33/MUbNJ6SXd61hMtjAJP3vWKRsR+k6fH0eQFvQ=;
+        b=mIylfxLGsEiHe/RT2etgrMBwKGNxbx/6NIjfYO/w7nHh5AQISM1KaxK4VtCc7O0BR8
+         yVz8A8gTXZMO7kWuudpLGXp0+pl6mIWp59TQalWv0SVJGC+2mte+G1glCePujAzBB6sX
+         YjFZP5VbWRS3r0JNF+KzF4JeesusKKwafjnww7NWlNtqR30ichWKFYsF+1v08fVVptyg
+         PcSVn/nPqG57V4crLH4BmCZRlX3W/VUXYIjpf1PSNq+oquzmvs9GhnvngBX9mHTAttg+
+         YyLNTx8ucyW2mSk6PbHKITbi0wComVvCaoSzUr6rTdHmcLZNiGYIHmkAmBrjQ4V3tEyg
+         e8/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784035998; x=1784640798;
+        d=1e100.net; s=20251104; t=1784036362; x=1784641162;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tFXARX4SHAk3PI59oKiV3+pkOUhhlBx2uKmJFHAo6l8=;
-        b=oM4xhA1IpsfFSKC9yXrHIN/FciQOM2lFrUZpDMC7xipM30sD7FFIJcl+lqiMTyMyJg
-         +t1acQS60P2eoyzcohyfGJvlDkt/qbinbnicPNlzw7O6Lnz+y89im7LDAuHv0sYQRbIf
-         wRoY6tiQPlDtXbSr2bemsPK4Cl/QBervWVJPn1WiDjmQwCql7ElPIdRBSxgGXBHjNIw5
-         9Hj8ka4xkrH+kd+k12MjxGAiWqEVaJ7le9PjHyvKDjh+W5H4TUcbOiN4ZJh8ojNBI9ZQ
-         A4/Lj7kbFM+haRzI+4z1Jjs/brQ7aIQcvl7nIN1ToUP+U+Zc8o38jsOYe0OQJWIc1V71
-         bqTA==
-X-Gm-Message-State: AOJu0Yz0QC8/NSxZieRKhkbZZq2XNy9ifgKAKxMc96qQxQMhON24lIw0
-	n+Acldom+qs1Tu/Qd8rpcJimBEaMYWuC+XYxYbKeZ5NsXZ3Qv6cNvYF8Hu04zXHfdyuHhqMJqmi
-	cVOrVPgNcg1tIPI2RWYhLqjFnhtH/Ab5ARu6j6I4=
-X-Gm-Gg: AfdE7cldsdSXfHBsAWCc8hQT6qof8AkPussUe5TOM2JCf1//kCPVbg89Nvcf7qV6v6e
-	OOJ7tQmfhXkMPorEnKj88C4NzxGcH/4tS8gNPcHvIlOH3D8BgHX9NpGmVsi38uTQ8ngCT3V2U/B
-	9zC88WLk2+kqg6KVxsLpiELE0IGbFIQ6gbrNqR5NWp1XWBiD6LdiHOQTg3RfIhs0/KT0XJuE2qu
-	yVjiIYz3oICkyJVt8niOXfWGBGKGBME2NjdEFlv98zfRLXzZ/PDNYJI6f/JXozcqjb5KLY6pzo=
-X-Received: by 2002:a05:6102:620e:10b0:734:54fa:971d with SMTP id
- ada2fe7eead31-7450c7309f2mr7136897137.7.1784035998246; Tue, 14 Jul 2026
- 06:33:18 -0700 (PDT)
+        bh=DwIb33/MUbNJ6SXd61hMtjAJP3vWKRsR+k6fH0eQFvQ=;
+        b=L/FOOk2hPEBUdtEYb/IEQdo+/NebLu2m9jSiF5lKkoSbWQeRj/Lvwj3z06qDguoZ2c
+         KNy3yhiRdnZF+8haMzxW1XOpAgbkx4iN/RmcXqOgCXyWWnOlFE0+EmZqv2Q/9o+fVfoc
+         gqwEWZmk7vXyOUHkE3FUgDq3lM5C935G4LBM1EgiONN+7Ns8z76prEnnIYYvjoR5UwgZ
+         dWHLB25EtwHkeR3GMLGExLCd5kZn65iRXhRHJ5t/FGtM+vQdX+Gl4jXGBc+jbJ+a+FVm
+         eHLvRXdY+WumCNrP6YAUu/PpFDWmQ+LrxL5n97zq3ECoqeBBu0SvU1oMP5//b7qhBVWf
+         zDFg==
+X-Gm-Message-State: AOJu0Yw24ZsveiLtXyBZJYmyEFTachU7hvP8jZwo1omTlihXhIbEgmPi
+	fxatKyZ/VSznQ/u5zrB5yrYjZCqbA6Y3paEl3QLIl6NR2VdY3nKeoah/Fdmp5FY93/0OOUzK8nr
+	n9wlgoWCtu68y/E7nzbx8dTOshfE356KpzkCgvVI=
+X-Gm-Gg: AfdE7cmbjV432uueuO7TwkYvloZvjpgE1iqP8p8HiYqeh8dzkeZpmJXq9W0gtd3E/t0
+	C+Y9OIKDsvh+um/pGvQLwR+HR1gpG5FU6t783zbDUUVVgMmb+JI3FSAXpZxNHCKT7R5OqgdiL3y
+	JPJVNubbD0xMN87p5SxP9urahiofAJo7D8fzHFxUgPFnsuXG/N+D0y/pWULHhYPcCzYmsqnMFgS
+	56f41yXhgZyS+4Opsd9a8q5LUuNuCLMA0aePqa6KWxS75RPGGRy5JZKCOE3wfHHy5Rzn9fXVTM=
+X-Received: by 2002:a05:6102:441d:b0:643:80f1:350a with SMTP id
+ ada2fe7eead31-74533b42f88mr8627150137.2.1784036361731; Tue, 14 Jul 2026
+ 06:39:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714120052.255085-1-chlgustn3171@gmail.com> <20260714121819.5FCC91F00A3A@smtp.kernel.org>
-In-Reply-To: <20260714121819.5FCC91F00A3A@smtp.kernel.org>
+References: <20260714120052.255085-1-chlgustn3171@gmail.com>
+ <20260714121819.5FCC91F00A3A@smtp.kernel.org> <CAO2ma08Pap6PZKUV7iEpvu11zaKrzMK-cgBLBYKJEEfGH+0=1g@mail.gmail.com>
+In-Reply-To: <CAO2ma08Pap6PZKUV7iEpvu11zaKrzMK-cgBLBYKJEEfGH+0=1g@mail.gmail.com>
 From: chlgustn3171 <chlgustn3171@gmail.com>
-Date: Tue, 14 Jul 2026 22:33:06 +0900
-X-Gm-Features: AUfX_mziL_YIWK1mOLB4Cx8A5jwVQaeVlfikn-kbN8oMPqwTpHlQFBBl6-mR7M0
-Message-ID: <CAO2ma08Pap6PZKUV7iEpvu11zaKrzMK-cgBLBYKJEEfGH+0=1g@mail.gmail.com>
+Date: Tue, 14 Jul 2026 22:39:09 +0900
+X-Gm-Features: AUfX_myYjaJA6AxmS1f1aMv-_YdelHEt1X3VS9D4jvlYoByEOFtdLcCWT5iVDmo
+Message-ID: <CAO2ma095Hu1kOTMds9yHqTvwde8Gu+GWOLUst5U2eCnSffkm=g@mail.gmail.com>
 Subject: Re: [PATCH] HID: input: allocate input_dev name/phys/uniq using hid
  device devres
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, 
+	Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <bentiss@kernel.org>, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 14, 2026 at 9:18=E2=80=AFPM sashiko-bot wrote:
-> [Severity: High]
-> If a userspace process holds an open file descriptor for the evdev node
-> (/dev/input/eventX), the input_dev will outlive the parent hid->dev.
-> When the HID device is unbound, devres will free these strings.
+Adding maintainers and mailing list to CC. Sorry for the omission.
+
+On Tue, Jul 14, 2026 at 10:33=E2=80=AFPM chlgustn3171 <chlgustn3171@gmail.c=
+om> wrote:
 >
-> Can this cause a use-after-free when userspace later queries the
-> name, phys, or uniq strings via ioctl (e.g., EVIOCGNAME)?
-
-Thanks for the review.
-
-Using &hid->dev here is intentional.
-Using the input device for devm-managed input_dev strings is
-problematic; see CVE-2023-53454, where the allocation was moved to the
-HID device because the input device unregister path may still use the
-name for uevents.
-
-> [Severity: Low]
-> If devm_kstrdup() fails for phys or uniq, the code jumps here to the
-> error path. The earlier successful devm_kstrdup() allocations remain
-> tied to &hid->dev.
+> On Tue, Jul 14, 2026 at 9:18=E2=80=AFPM sashiko-bot wrote:
+> > [Severity: High]
+> > If a userspace process holds an open file descriptor for the evdev node
+> > (/dev/input/eventX), the input_dev will outlive the parent hid->dev.
+> > When the HID device is unbound, devres will free these strings.
+> >
+> > Can this cause a use-after-free when userspace later queries the
+> > name, phys, or uniq strings via ioctl (e.g., EVIOCGNAME)?
 >
-> If the caller continues the device probe successfully after this failure,
-> will these strings be leaked for the lifetime of the HID device?
-
-The name/phys/uniq copies are attached to &hid->dev, so the clean-up
-is handled by HID device devres.
-However, if it is better to explicitly unwind, I can add that in v2.
-
-Thanks,
-Hyeonsu
+> Thanks for the review.
+>
+> Using &hid->dev here is intentional.
+> Using the input device for devm-managed input_dev strings is
+> problematic; see CVE-2023-53454, where the allocation was moved to the
+> HID device because the input device unregister path may still use the
+> name for uevents.
+>
+> > [Severity: Low]
+> > If devm_kstrdup() fails for phys or uniq, the code jumps here to the
+> > error path. The earlier successful devm_kstrdup() allocations remain
+> > tied to &hid->dev.
+> >
+> > If the caller continues the device probe successfully after this failur=
+e,
+> > will these strings be leaked for the lifetime of the HID device?
+>
+> The name/phys/uniq copies are attached to &hid->dev, so the clean-up
+> is handled by HID device devres.
+> However, if it is better to explicitly unwind, I can add that in v2.
+>
+> Thanks,
+> Hyeonsu
