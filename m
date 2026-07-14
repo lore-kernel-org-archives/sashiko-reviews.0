@@ -1,122 +1,127 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.219])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FC648A2B2
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 14:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.219
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784040257; cv=pass; b=fnZrmEZ4IMR4lVnQ7/eJ4CJof5EGg1EKZPwC28V5NhGLD8xSpWN6jFV8rvwSLiFj34BlToWIrHmyPMWwHCaoyHuHEUzO1Khcvghh9EyCfk5JxpGj+4BUZxh21dPOzQmN1Ribho7p0GSRgFx6MTYpouLduhew3az7Fa7BHV4idgo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784040257; c=relaxed/simple;
-	bh=/mqaC19Y/yMk5bYUbcHelPJJeBNbYVsBCKjfoXb9XcM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TYvVh422wGGk063Yo8EIGrzfwi6llU9iNteRom0tMTBMhtmfV2eg4OZGNXcW5ufPlnpqidVMNBqZdFolRX7qmEpb63kCo7s2QW6BcUdu035bkeLh7H3YQ8Wsaqh22sVyuMKlo271F4pAUZkmmjtM2iIFbg784F/RFtV6OwOwZ/0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=EnoKAamN; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=iQYAPV9W; arc=pass smtp.client-ip=81.169.146.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F99C48AE28;
+	Tue, 14 Jul 2026 14:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784040302; cv=none; b=hmSRJe75Pgq+jRNWW90v72kuDNap0P2En17AnXJkl3F7RxiUBsJT+FDyXJO/Y2R3JzNxjfhMNai3mjZoHpzdbFaAIwx83YhBXCqbuj7teZBwgWjsw35R+Fxk6SRcyX0HSuiII2NUYhDzegrNpuDrSWz4/K82Hu8N3z9M2Peo6GQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784040302; c=relaxed/simple;
+	bh=qv8Kmpvfb5SyNXtN77NbpOpOzVdrKpai2vrj6o2sSRw=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HkDRQK9QXMmUodXUCAcUO4Vy5Kv8g56XKy2FXM7LwiCGK+q1dl/Pa7I89jyPsa3ZknmDwK7ITjb7iRoy9ZJhzujlad45HDBZSrG1M+/vuxiPasDk2q9KWKyW8F0NL2euaxo8LgRs7zFuFvRdw69y/1L5bxsQ3hHU1krsVnKl83g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GB4KvqqC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="EnoKAamN";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="iQYAPV9W"
-ARC-Seal: i=1; a=rsa-sha256; t=1784040055; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=rC/I1nPonJJYh5h+0Ape4YppV++25VAivFWOZL2GzE1d1supDkesnWZtqwPl35jQ0F
-    M0TaOkj0QLWdvN6txkX/8LPl3Qujtm3enP8yu93TcCr6jhKWKwZ/QL+0LSgiNEGEwTTr
-    FI9WB8K69oW4HtUnzC6np1LJjEgvHcwVUjL6bLiIQYXKNVNU+8/eWIcIGBGVdOI5zmuK
-    bO1zHoIpnfTJ3QrmzAR0Pa3kFCYUGzZm1RnEZB+NfUyu6psqSAwNA007+CkkGzzzlBlS
-    +EphvIGLslQyJhtkNYWW2af+BeFwkIp7qDXMuLmgIbJXgZxrxsax4sUvSEWgiRqRyNh+
-    KgeA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784040055;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=KRax0Y0vd0zXdk9mMyXYZhbAztuKHFumKVBMHJCzQzk=;
-    b=eVn07jIGd1E3IgmIQI1iH4ylWSKAZhSGWYLKsWTCyhq5wFrIaQz+Kvv9OWYFTpfrSZ
-    kwUIMDrfIxynRppnTJKu3FPh02HsD1VlKKbgtn50RXj34Tj1PciNj34kTOJyLRZQuUSh
-    Xt16jM0lwERUiUIU0CEKDt/T+Lmze6U5Pslmuc/JufW4w/elvqnXIMHqdYbGV7JBihO4
-    xnmPXWpdTOPe4esDakb/G1dlQ6f8ldt2VuPJqG7zIscQ9fQoPnKcctMvqydXkyFWpYf9
-    pIcgY2E/jdUMlM6UecdMwENz6E/mXjPeRGlG0MfY2Sk1NVLao8g1NQPol1AIH2K2lme6
-    pdpQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784040055;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=KRax0Y0vd0zXdk9mMyXYZhbAztuKHFumKVBMHJCzQzk=;
-    b=EnoKAamN7cmTAZv0TVM1H0waeEyHdb38f9vozP/RKkxgbPX1SzIT1K0ij05pSHfcP9
-    2TiEwVtBCq2DzW1lJAjlpHHVvo7edvYA7vs8x9lBjEAnNc6vQqVvm7cr4e3b9KhFeH0B
-    zW6YKmGolecxr4FAV1drHCy8gSuJfnfKjO+q2TGixPYWptim//btyaOhw74AIYrTqXyP
-    V1PZ7yQs/yFWzjBidaDak4jo0sTh3ZKz84ShLiW9p0jbV1MI8P+DWCWffI0/XL1zPGyc
-    0al7AM7JjqQEgm6oI7mmSPaJBObEkA9dJUSmtvqgmRHOTxgdSRWGsXTm/iHCY6zBh/Wp
-    1ibg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784040055;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=KRax0Y0vd0zXdk9mMyXYZhbAztuKHFumKVBMHJCzQzk=;
-    b=iQYAPV9WazCHmWwgemFsezDdKKjUfMYaXge8ql+6LXyVuIMuuYa61WS7P9xORO0fgb
-    0pmOScli5mbPDQwE+eAw==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
-Received: from [192.168.20.190]
-    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
-    with ESMTPSA id Ka9fdb26EEetlSQ
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 14 Jul 2026 16:40:55 +0200 (CEST)
-Message-ID: <b6309f4c-3c8e-4f34-a01d-1a08c5998f7a@hartkopp.net>
-Date: Tue, 14 Jul 2026 16:40:55 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GB4KvqqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E904A1F00A3D;
+	Tue, 14 Jul 2026 14:44:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784040292;
+	bh=a7tkdzgj9HquLuasSVJEnqyaaCzZmMfI9Rp4Cs7xG3I=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=GB4KvqqCSqFMCwKSqQWOl0odJMkF5P9QqpZVTTpTVeJr9mKYdVij5OEdoZXItBMid
+	 5csUKGYU32tJhvCutyET9nU2PabGJYA4sUpXmi+FVe7viSnwEJMMfOkeNIQ9E0Q7QO
+	 3qiimrANuQaHvkLQjtvyxa77qKKcurz/HYR3dxOeRRtvPsPryKvKSTTr0sod7k0ubo
+	 a/OkMCp2gqWifPbxCz6o5MGVaDtbcYNESdHyFb9hksYtwbIPQ+FwVVh2wVVGYrYueg
+	 erfkE1irC22ak3VwHaMGNSra+NXqg4nJO+GNswbSL9RMExV/VpYFWdyQKIYc/sdyGQ
+	 wEoYLVKak0t/A==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wjeNO-00000004x0W-0xbD;
+	Tue, 14 Jul 2026 14:44:50 +0000
+Date: Tue, 14 Jul 2026 15:44:49 +0100
+Message-ID: <86ldbdocke.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev,
+	kvm@vger.kernel.org,
+	"Oliver Upton" <oupton@kernel.org>
+Subject: Re: [PATCH v2 23/28] KVM: arm64: Add NVHCR_EL2 context switching
+In-Reply-To: <20260714100321.99ECB1F000E9@smtp.kernel.org>
+References: <20260714091641.1970822-1-maz@kernel.org>
+	<20260714091641.1970822-24-maz@kernel.org>
+	<20260714100321.99ECB1F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
- removal
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, Oleksij Rempel
- <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
- Vincent Mailhol <mailhol@kernel.org>
-References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
- <20260714-bcm_fixes-v13-9-fd667c61099a@hartkopp.net>
- <20260714104431.65C751F000E9@smtp.kernel.org>
- <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
- <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
- <1a521f25-0aee-4eae-a0da-3eb7f0702e84@hartkopp.net>
- <20260714-vehement-native-jaguar-4f52dd-mkl@pengutronix.de>
- <ee59dccc-0532-4b00-8783-9763e04c327e@hartkopp.net>
- <20260714-tidy-quizzical-collie-4aaee0-mkl@pengutronix.de>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260714-tidy-quizzical-collie-4aaee0-mkl@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-
-
-On 14.07.26 15:41, Marc Kleine-Budde wrote:
-> On 14.07.2026 15:07:48, Oliver Hartkopp wrote:
->> When there was a new issue pointed out by sashiko I fixed it inside the
->> patch with --amend when it belonged to the topic of the patch.
+On Tue, 14 Jul 2026 11:03:21 +0100,
+sashiko-bot@kernel.org wrote:
 > 
-> You've probably already working on this one:
-> https://lore.kernel.org/all/20260714115254.D9C2B1F000E9@smtp.kernel.org/
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] A guest can leak the SYS_NVHCR_EL2 hardware register state of a previous vCPU by configuring E2H=0 and NVTGE=1.
+> --
 > 
->> So I tried to follow the one problem, one patch pattern. And every patch
->> makes things better and introduces no new regressions (which sashiko-bot
->> would have detected) - while probably not fixing everything at once.
+> --- Patch [23]: [PATCH v2 23/28] KVM: arm64: Add NVHCR_EL2 context switching ---
+> commit d9946edce781237514b1a1fe42315834ea75838a
+> Author: Marc Zyngier <maz@kernel.org>
 > 
-> Perfect!
+> KVM: arm64: Add NVHCR_EL2 context switching
 > 
-> regards,
-> Marc
+> This commit introduces context switching for the NVHCR_EL2 register to
+> support nested virtualization. For an L1 guest in hyp context, the register
+> is eagerly synced with HCR_EL2 emulation. For an L2 guest, it is context
+> switched as an EL1 register if NV3 is in use.
 > 
+> > diff --git a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+> > index a17cbe7582de9..c382848d31947 100644
+> > --- a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+> > +++ b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+> > @@ -172,6 +172,10 @@ static inline void __sysreg_save_el1_state(struct kvm_cpu_context *ctxt)
+> >  
+> >  	if (ctxt_has_sctlr2(ctxt))
+> >  		ctxt_sys_reg(ctxt, SCTLR2_EL1) = read_sysreg_el1(SYS_SCTLR2);
+> > +
+> > +	/* Retrieve L2's HCR_EL2, and save it for future use */
+> > +	if (is_nested_nv3_ctxt(ctxt_to_vcpu(ctxt)))
+> > +		ctxt_sys_reg(ctxt, NVHCR_EL2) = read_sysreg_s(SYS_NVHCR_EL2);
+> 
+> [Severity: High]
+> Does this create an asymmetry with how __compute_hcr() initializes the
+> register?
+> 
+> In __compute_hcr(), the write to SYS_NVHCR_EL2 is gated by an E2H check:
+> 
+> 	if (cpus_have_final_cap(ARM64_HAS_NV3) && vcpu_el2_e2h_is_set(vcpu))
+> 		write_sysreg_s(__vcpu_sys_reg(vcpu, HCR_EL2), SYS_NVHCR_EL2);
+>
 
-In fact that was still a problem. working on it for patch 3. Easy thing.
+This is a host setting.
 
-Thanks,
-Oliver
+> However, this save path relies on is_nested_nv3_ctxt(), which checks NV and
+> NVTGE but does not verify E2H:
+> 
+> static inline bool is_nested_nv3_ctxt(struct kvm_vcpu *vcpu)
+> {
+> 	return (has_vhe() && kvm_has_nv3(vcpu->kvm) && is_nested_ctxt(vcpu) &&
+> 		(__vcpu_sys_reg(vcpu, HCR_EL2) & HCR_EL2_NV) &&
+> 		(__vcpu_sys_reg(vcpu, HCRX_EL2) & HCRX_EL2_NVTGE));
+> }
 
+This is a guest setting.
+
+> 
+> If an L1 guest sets HCR_EL2.E2H = 0, HCR_EL2.NV = 1, and HCRX_EL2.NVTGE = 1,
+> could __compute_hcr() skip writing SYS_NVHCR_EL2 on L1 entry, leaving the
+> hardware register uninitialized (holding a previous vCPU's state)?
+
+host != guest.
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
