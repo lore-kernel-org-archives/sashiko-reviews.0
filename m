@@ -1,72 +1,72 @@
 Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DECD37755A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 10:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46091F0995
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 10:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.84
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784025755; cv=pass; b=b22UI2RHNWjj3hM4vl9VmEI/jB6NlHKFWOUuM22gHQHrBLjXUox/bqCeodHVh9BgyWdLLBUMXXIiRQ3EjUk2wFNnHRdP7hESB+Sz6DEe/Q47A2DvsW5eoJXCWZMf9JKy4A5Ud1UEJHIhRuhh2xlbbttvD8/z0LaC0kJ7Hv8TMzE=
+	t=1784025979; cv=pass; b=nyAQr4V1eg2giH0aDzLk6YQueew5ybkIZ3C2AlfkQalp5n5y3clLGliaCkZSocLU79rTMI4/r+Vdva16iAvQaUYg8iQlDJAl3hdSMWwJep2hU6IoYUTEM0lq63tpv3L6xBVCKpSqWXDWCt7b2AOzBRuJLH2kPaIkcdHP+3W/f/M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784025755; c=relaxed/simple;
-	bh=N8SOvgZkBChhIonIF/peRZ11JlMEy8QAcmCDl8TOeUU=;
+	s=arc-20240116; t=1784025979; c=relaxed/simple;
+	bh=tSNyZ2cS2QdnGKKietIW2zZNfj2/GjawKXO6CWpCC/8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XCqxrcEiwDPMBLZ3Gr8cjZUG/+rdr0Yp8oUKsOpJ9eWxEe8fVRMFe14lD692ihpMTZTWLa1Jaj7vkDQYOX8bK11lhmjIdiLYLNBn9NDx1SlWbR8aJXjibHyi4hVKbNv0v8j9p5Dfzt8XPjY33dCseDAZ29Vj1uFpFp9fsEdfx9w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=b1LXczD+; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=8zj2MCf9; arc=pass smtp.client-ip=85.215.255.84
+	 In-Reply-To:Content-Type; b=Osae6Xkn5eBC9/X7Efclu9OXtQ3xDEfxXY/zdCjf7HxAtjmMOgpt0Ln0F50pwyl9g6UO4bdIb/eQCCoYyAbVk1MYIpVjKaaW5F8dJkRb18H94e7joLbBQ5wtqLAPEBtLaQu4uJEj9V7ZHigMDpWUyZtJ+4XfxEa/n1kvT6F7vDw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=YA4RyMD8; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=77YQDKci; arc=pass smtp.client-ip=85.215.255.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="b1LXczD+";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="8zj2MCf9"
-ARC-Seal: i=1; a=rsa-sha256; t=1784025736; cv=none;
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="YA4RyMD8";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="77YQDKci"
+ARC-Seal: i=1; a=rsa-sha256; t=1784025967; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=RLa7ZeEqM/7oWCbMWS+1NpLA/0h/SNnQUxRvHwbkcLcd7FAjteL9r6IHaIAv7cFAPH
-    C8fx2XH2VzMSAA1kyn1qkFIKsqsruCyelCjhriWxwukGeFOH4fzvZb6e6LZ36cONdV2b
-    nDOp0/5iY2b+UOZ+UWt9sHf/mXs1+WgVMAKNpZ1+tlrroZA8lywiwtC97//VKGkK6czJ
-    nptZMGBwbHbUIUvi/WsIzNA6cJybOEDXptqLmWWz0pYIt5ClGWe7lmwN4Qsb5Dfg5dpt
-    zzihf/paKNNliM6q1mn1Otqv7e1rdecmEFG4tJrRLjDPErBRGVERiUG0d6J5s3Gcrcwa
-    ODig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784025736;
+    b=Y3gyvhMdkZR3CS36areYtxmk6UQXy/VuX+s8EcDCkCI48FiLBzWg36ovFXEVQ9vtYJ
+    g8jtveo1eSwu6By4d8HfaYvhHVw9IYZodwGiYYGKCvNkgWaZC2kr5ILGtxr/FPWoDQTE
+    VjoeAWiM2VP6QvtRxIvplbjKadDOckmtls+Xh4RGLBz1rytaraxmOVOqMwNmFBbESb0b
+    ucZyHFXrD1E2SsfaK6nvxHIC9CMzKMGQN41dNpXWa2b2v/bcVs0HCocFtYAsxdPMn4Ot
+    Lo/nbFb/wehiE46JNSV5DQC0CRORKPLU52EH/jOZ7YZeSBd8QZbPJ375vtBXoq2rRfZF
+    A8KQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784025967;
     s=strato-dkim-0002; d=strato.com;
     h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
     From:Subject:Sender;
-    bh=mhJOruwc2a+41VXyHClvW3ZTzaJA0gbaUVN9cFiiWLI=;
-    b=WRhk0z3UtZ7zeXHjYRDFhSwWSL0cBMVPzjhoDVqSLl2mSGWh/a+atPmPie0qkwaeoQ
-    kuWQBf117Ew4TT7UKK8AD1BGVbMlbNRvlO4Qw/uQzJRFx+d1aUy1quywvtBvu3p6X/ym
-    pI/Kh712WjGtbnL70H0YyPgfdk/JDCVm6odZu8B/C0LGUTn4SGJrmKqneZjczV+wULPy
-    PJEkWCdaOFvVDYowsrIKFYb9NI4DPEhvO9BKgg94hjXivvpd93NSA+LmDDI4j/PMb3H3
-    G5+hoS9uPnIlKlH9XrD6585TDIEFmG8AceH7uwHJ1jofs+Ut0tFRyoiXQuV1eOZ7H92g
-    gvXg==
+    bh=PL4uF5S6bxoSH1oZ57EmOcoXDVAB98ojwXO3EqjS5nc=;
+    b=X8RLsc5dsJChWKYfStnIcl/RWj6gom0ouJW04TUt/wbtEzAgEBrETZCrNmXN2rmvmA
+    hlO/4qpiYn727SZwu2f9WyVJlQ+ZldJ9RVrfpznCJOCkHnfXRYq0gmiuXI2W7z/AAy6o
+    SnUQWJaLJqIt3ajn+zjFLKQc+eZj1wgjaPk2oiBmeL2AWGFqn/1oeYXGWj/xdhyyjfpZ
+    Qmmj36RWv5Jvc9H2uDG9q8WRP+CKErC3n5pzBOOCBYV7NImBZ6TiWltLTdcB8RGm88Lh
+    Pp+r5nLqZakkf1YK5jArhoaVCjB6512SqIFFdUWnllIfI96CRN6PhOWch75z9fED+iTG
+    /qUA==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784025736;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784025967;
     s=strato-dkim-0002; d=hartkopp.net;
     h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
     From:Subject:Sender;
-    bh=mhJOruwc2a+41VXyHClvW3ZTzaJA0gbaUVN9cFiiWLI=;
-    b=b1LXczD+02xnh8+Wo3WPYTdRpZbMcBlj+IkghHTkejIcSGqeLChMzjqOstferfKha5
-    qnKVM+OdatT/yVAk/GWq/Ra8XbvnWUWkTeVDTu+X4RoTzQu0/Gu8RuPzKlWnvI/Va9rE
-    J2uZiDproHcmGuYYK5Hi/+ii1JVVkAMWXeval5JNf+rl0xHaruWR+A2EwyV17/3Bba+b
-    UEUgPhX+HaAVPVbgHqcLIsfYylinoIRzLXgcfPCW/23+u38q3kVGLBgg7JKRRX6tckzS
-    8xensYiwAYVIFi2Q08VmvsJxGmVT5w1G/16y3G9fHzLS+GjMxsN/iuL0/25723mxwkyZ
-    mCRg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784025736;
+    bh=PL4uF5S6bxoSH1oZ57EmOcoXDVAB98ojwXO3EqjS5nc=;
+    b=YA4RyMD8sWKeWFp+R3KKQ257ylCNIUUMwdlCRtGla3nKPdF55kBnPC78WRTnhPMsjb
+    bF50CA3/IZSA3Aw9jA+etrSCtAuLTfvLUCqm2EhHtpAv1T6jSTOhjQt9YQtEFGw826Cb
+    VRqxc6VQZTVH+bUHgtCdJx95zEtVx2sIekJmVMgIhBqg83lf/WYi+VUSGI1Fy7YEhqD9
+    8ZcEr6NmoPw8oboz0csPQiZ1D6akvGgz804OaWyiswbYOjslzPhAhuqbkJF68cVtrlyS
+    Ki04zA1wUx9ERLUUFaHwHfFlvNCjdxk+FIAmhqqWp/upKL/YyrFnFssQDHKGWZmUIU+T
+    RP3g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784025967;
     s=strato-dkim-0003; d=hartkopp.net;
     h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
     From:Subject:Sender;
-    bh=mhJOruwc2a+41VXyHClvW3ZTzaJA0gbaUVN9cFiiWLI=;
-    b=8zj2MCf9WtU6/WIMA5mhTbnY3fIaQrGjmxapgdTl8L8ENcZrO9vOo2uIyUemE5rduT
-    KyE6TJpkc0snVZwRgtBA==
+    bh=PL4uF5S6bxoSH1oZ57EmOcoXDVAB98ojwXO3EqjS5nc=;
+    b=77YQDKci9L0J6RUFs7gfMn/hXzWzXj+qsq5qfw2MBPnYpJm8kCatw4yKJ5GUq5bs7I
+    DgCbOjfIdlWv2vUJKVDQ==
 X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
 Received: from [192.168.20.190]
     by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
-    with ESMTPSA id Ka9fdb26EAgGjA1
+    with ESMTPSA id Ka9fdb26EAk6jBJ
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
 	(Client did not present a certificate);
-    Tue, 14 Jul 2026 12:42:16 +0200 (CEST)
-Message-ID: <e1e073b6-b133-448e-bdfd-c9ea06d71f08@hartkopp.net>
-Date: Tue, 14 Jul 2026 12:42:15 +0200
+    Tue, 14 Jul 2026 12:46:06 +0200 (CEST)
+Message-ID: <a4ff0df6-4101-41c1-81c9-d0d2b6913d9a@hartkopp.net>
+Date: Tue, 14 Jul 2026 12:46:06 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,122 +74,109 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 01/11] can: bcm: defer rx_op deallocation to workqueue
- to fix thrtimer UAF
+Subject: Re: [PATCH v13 05/11] can: bcm: add missing rcu list annotations and
+ operations
 To: sashiko-reviews@lists.linux.dev
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>, linux-can@vger.kernel.org
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
 References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
- <20260714-bcm_fixes-v13-1-fd667c61099a@hartkopp.net>
- <20260714103950.538C31F000E9@smtp.kernel.org>
+ <20260714-bcm_fixes-v13-5-fd667c61099a@hartkopp.net>
+ <20260714103234.2F1681F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260714103950.538C31F000E9@smtp.kernel.org>
+In-Reply-To: <20260714103234.2F1681F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 14.07.26 12:39, sashiko-bot@kernel.org wrote:
+On 14.07.26 12:32, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> New issues:
-> - [High] Module exit sequence destroys the socket slab cache before flushing the deferred workqueue, causing a kernel warning and slab cache leak.
-> 
-
-Fixed later in patch 5.
-
 > Pre-existing issues:
-> - [High] Missing RCU-safe list primitives for rx_ops and tx_ops list modifications and traversals, causing potential crashes during procfs reads.
+> - [High] In `bcm_tx_setup()`, when updating an existing `bcm_op`, the CAN frames array (`op->frames`) is overwritten directly from userspace data using `memcpy_from_msg` without holding `bcm_tx_lock` and without using a staging buffer. This introduces a data race with concurrent transmission. Crucially, the direct overwrite stores user-provided frames into the active array before length validation. If an invalid length is provided, the function subsequently returns an error, but the corrupted frame remains active in `op->frames`. Concurrent or subsequent timer executions will transmit this malformed frame to the CAN driver, leading to out-of-bounds accesses and kernel panics.
+> - [Medium] Timer values in `bcm_tx_setup()` (`op->kt_ival1` and `op->kt_ival2`) are updated directly without holding `bcm_tx_lock`. Concurrently, `bcm_tx_timeout_handler()` running in softirq context reads these 64-bit `ktime_t` values without locks. On 32-bit architectures, this leads to torn reads, causing unpredictable timer behavior.
 > --
 > 
-> --- Patch [1]: [PATCH v13 01/11] can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF ---
-> commit 9beb61cd8491cca022797eead8556214843e4d99
-> Author: Lee Jones <lee@kernel.org>
+
+Fixed in patch 6
+
+> --- Patch [5]: [PATCH v13 05/11] can: bcm: add missing rcu list annotations and operations ---
+> commit 74409df5d31bac1c2081de9ebaae45419726cd9c
+> Author: Oliver Hartkopp <socketcan@hartkopp.net>
 > 
-> can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+> can: bcm: add missing rcu list annotations and operations
 > 
-> This commit fixes a use-after-free by deferring the deallocation of
-> bcm_op to a dedicated workqueue instead of using call_rcu(). It ensures
-> that hrtimer cancellation and memory freeing occur in a sleepable context.
-> It also takes a reference on the socket while the work is pending to
-> prevent the socket from being freed prematurely.
+> This commit addresses missing list_add_rcu() and list_del_rcu() calls in
+> the CAN broadcast manager to properly initialize and clean up bcm_op
+> structures. The operations are updated to protect concurrent procfs
+> traversals that use rcu_read_lock().
+> 
+> Link: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
 > 
 >> diff --git a/net/can/bcm.c b/net/can/bcm.c
->> index a4bef2c48a559..bdf53241bd7b3 100644
+>> index 38c3f690c1cd0..940cd9df1cca3 100644
 >> --- a/net/can/bcm.c
 >> +++ b/net/can/bcm.c
-> 
-> [ ... ]
-> 
->> @@ -1060,6 +1081,7 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
->>   
->>   		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
->>   		op->sk = sk;
->> +		sock_hold(sk);
->>   		op->ifindex = ifindex;
->>   
->>   		/* initialize uninitialized (kzalloc) structure */
+>> @@ -1009,6 +1009,7 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+>>   	struct bcm_sock *bo = bcm_sk(sk);
+>>   	struct bcm_op *op;
+>>   	struct canfd_frame *cf;
+>> +	bool add_op_to_list = false;
+>>   	unsigned int i;
+>>   	int err;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but can traversing the RCU-protected tx_ops
-> and rx_ops lists without RCU-safe primitives cause crashes during procfs
-> reads?
+> This is a pre-existing issue, but does this code overwrite the CAN frames
+> directly from userspace before validating their lengths?
 > 
-> Looking at bcm_tx_setup() and bcm_rx_setup(), list_add() is used instead
-> of list_add_rcu(), which lacks the smp_store_release() memory barriers:
+> In bcm_tx_setup() when updating an existing bcm_op, the frames array is
+> updated directly without holding bcm_tx_lock and without a staging buffer:
 > 
 > bcm_tx_setup() {
 >      ...
->      /* add this bcm_op to the list of the tx_ops */
->      list_add(&op->list, &bo->tx_ops);
+>      err = memcpy_from_msg((u8 *)cf, msg, op->cfsiz);
+>      if (op->flags & CAN_FD_FRAME) {
+>          if (cf->len > 64)
+>              err = -EINVAL;
 >      ...
 > }
 > 
-> Concurrently, if another thread reads /proc/net/can-bcm, bcm_proc_show()
-> traverses bo->tx_ops locklessly under rcu_read_lock() using the non-RCU
-> list_for_each_entry():
+> If an invalid length is provided, the function returns -EINVAL but the
+> corrupted frame remains active in op->frames.
 > 
-> bcm_proc_show() {
+> Could concurrent or subsequent timer executions transmit this malformed frame
+> to the CAN driver, potentially triggering out-of-bounds accesses and panics?
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but are the timer values updated locklessly?
+> 
+> bcm_tx_setup() updates the 64-bit ktime_t variables kt_ival1 and kt_ival2
+> directly without holding bcm_tx_lock:
+> 
+> bcm_tx_setup() {
 >      ...
->      list_for_each_entry(op, &bo->tx_ops, list) {
+>      op->kt_ival1 = bcm_timeval_to_ktime(msg_head->ival1);
+>      op->kt_ival2 = bcm_timeval_to_ktime(msg_head->ival2);
 >      ...
 > }
 > 
-> Can weakly ordered CPUs reorder the initialization of the bcm_op structure
-> after its insertion, allowing lockless RCU readers to observe uninitialized
-> memory and crash?
+> Concurrently, bcm_tx_timeout_handler() in softirq context reads these
+> values locklessly:
+> 
+> bcm_tx_timeout_handler() {
+>      ...
+>      if (op->kt_ival1 && (op->count > 0)) {
+>      ...
+> }
+> 
+> On 32-bit architectures, a 64-bit read/write is not atomic.
+> 
+> Could this result in torn reads where the timer handler sees a mix of old
+> and new 32-bit halves, leading to unpredictable timer behavior and erratic
+> transmission intervals?
 > 
 > [ ... ]
-> 
->> @@ -1869,6 +1898,8 @@ static void __exit bcm_module_exit(void)
->>   	can_proto_unregister(&bcm_can_proto);
->>   	unregister_netdevice_notifier(&canbcm_notifier);
->>   	unregister_pernet_subsys(&canbcm_pernet_ops);
->> +	rcu_barrier();
->> +	destroy_workqueue(bcm_wq);
->>   }
-> 
-> [Severity: High]
-> Does this module exit sequence destroy the socket slab cache before flushing
-> the deferred workqueue?
-> 
-> Looking at bcm_free_op_work(), the deferred work item drops the final socket
-> reference:
-> 
-> bcm_free_op_work() {
->      ...
->      sock_put(op->sk);
->      kfree(op);
-> }
-> 
-> If there are pending work items in bcm_wq during module unload,
-> can_proto_unregister() will call kmem_cache_destroy() on the protocol's
-> slab cache while sockets are still allocated.
-> 
-> Will this cause a kernel warning and a slab cache leak, since
-> destroy_workqueue() runs after can_proto_unregister() and will attempt to
-> free sockets into the destroyed slab?
 > 
 
