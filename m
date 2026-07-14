@@ -1,127 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F99C48AE28;
-	Tue, 14 Jul 2026 14:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784040302; cv=none; b=hmSRJe75Pgq+jRNWW90v72kuDNap0P2En17AnXJkl3F7RxiUBsJT+FDyXJO/Y2R3JzNxjfhMNai3mjZoHpzdbFaAIwx83YhBXCqbuj7teZBwgWjsw35R+Fxk6SRcyX0HSuiII2NUYhDzegrNpuDrSWz4/K82Hu8N3z9M2Peo6GQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784040302; c=relaxed/simple;
-	bh=qv8Kmpvfb5SyNXtN77NbpOpOzVdrKpai2vrj6o2sSRw=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HkDRQK9QXMmUodXUCAcUO4Vy5Kv8g56XKy2FXM7LwiCGK+q1dl/Pa7I89jyPsa3ZknmDwK7ITjb7iRoy9ZJhzujlad45HDBZSrG1M+/vuxiPasDk2q9KWKyW8F0NL2euaxo8LgRs7zFuFvRdw69y/1L5bxsQ3hHU1krsVnKl83g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GB4KvqqC; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520494C900B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 15:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784042235; cv=pass; b=l+gRjbjW7xU1dXYasHisDW0B3aQ3pr3DZDt991kQPuZo3yQ4ivHmPNtuc+sNCpecpT51EoyrLZp1YDGqAtoKvf52LM2awlWV96jPT/Dt8lWXjieGMa2cx7adLyhsAR+g6dZjnTGcB/iEcIH+pvYP8OzfwGEqlijudK1FPiIfK0I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784042235; c=relaxed/simple;
+	bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ohB8bvWtiEqUtJ4hQZINdlJr9wuvJTAVnkDndemAYMsWbnHIE2N77YbxTm2ToeIdrAy/RYMCnG/rRzJdZ5bj4qghps4E9/Wq5fj651bmeUphKakdtQcg41z/MCHlGM2ycHP0DFZvNyktDGnqtFa/WerFDRL6InjEhLOo2xNqswE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCL0LV1F; arc=pass smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GB4KvqqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E904A1F00A3D;
-	Tue, 14 Jul 2026 14:44:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784040292;
-	bh=a7tkdzgj9HquLuasSVJEnqyaaCzZmMfI9Rp4Cs7xG3I=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=GB4KvqqCSqFMCwKSqQWOl0odJMkF5P9QqpZVTTpTVeJr9mKYdVij5OEdoZXItBMid
-	 5csUKGYU32tJhvCutyET9nU2PabGJYA4sUpXmi+FVe7viSnwEJMMfOkeNIQ9E0Q7QO
-	 3qiimrANuQaHvkLQjtvyxa77qKKcurz/HYR3dxOeRRtvPsPryKvKSTTr0sod7k0ubo
-	 a/OkMCp2gqWifPbxCz6o5MGVaDtbcYNESdHyFb9hksYtwbIPQ+FwVVh2wVVGYrYueg
-	 erfkE1irC22ak3VwHaMGNSra+NXqg4nJO+GNswbSL9RMExV/VpYFWdyQKIYc/sdyGQ
-	 wEoYLVKak0t/A==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wjeNO-00000004x0W-0xbD;
-	Tue, 14 Jul 2026 14:44:50 +0000
-Date: Tue, 14 Jul 2026 15:44:49 +0100
-Message-ID: <86ldbdocke.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org,
-	"Oliver Upton" <oupton@kernel.org>
-Subject: Re: [PATCH v2 23/28] KVM: arm64: Add NVHCR_EL2 context switching
-In-Reply-To: <20260714100321.99ECB1F000E9@smtp.kernel.org>
-References: <20260714091641.1970822-1-maz@kernel.org>
-	<20260714091641.1970822-24-maz@kernel.org>
-	<20260714100321.99ECB1F000E9@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCL0LV1F"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-698562f10e7so6303170a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:17:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784042232; cv=none;
+        d=google.com; s=arc-20260327;
+        b=JuBtSrmmvnfGG6kIu3Y/W4WXSV7ILXLHx/e66lVc7v27CXY3JlFc10NSRU3Mg5/o0p
+         kJ3OVyg6W79dfbCyf+rd0GyhAw054fLbUd5gyMRcVaXbt036h23ihNnxKP/ZirPYVek+
+         emnZ/O2XGKiWbObVk77vQJ4Szi2BaK6qYCDtM3pHzEGEKRXHNW7eTovM89qOB6I/JLIE
+         aqbIMv33C3Nj/1nmJuvQX4obDeOWdFecq3fui018YcYSAPcQ8dF62dP1cY/SR1vJETjg
+         PwHjINT6Zh3AU7GkKMgDjw6UodbOa8LJZVrmwCq1x5N+xOoFAZNzUHU8buOx+CICP9tj
+         fx/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
+        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
+        b=X9W63mwQq/uwlCtL9/HzUTQLqGlerpW9zOle8Nlv0Fw0UfON7S/IQu5PG++p0m86P2
+         fGqG3oqVnRXk9ScmwY25qMoj52JtrmS1KeaZpYQHvNUnOCX3TCcWoIBGlY21rrlO6jBL
+         AK0Q+YkZQYwDi9ezV1WQMFk9CDUfIRR4bgtAIcHuKxuKsbTN43hArBN+HexTBDOgpJ6k
+         JoI/WOTqjKGG9YkqUpHq1Q9L08XhJHEdTXKbRbZnzqlBoy6Q0Ri3hdwmVPTmHMEyXxjd
+         hYk0wqOIRGxsmXbWm+IfVVxWBzp+Kh0VdNHfxjhH+OtJZm5naR6A4ahTfoufIeWp3BvL
+         m+xw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784042232; x=1784647032; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
+        b=RCL0LV1FN3GS7GMVT6ibv5uQYgsRt00/dvKSX7ivlpjkvvg+TEDBwrD8hQUdR1Knul
+         F/MRh7Ye6EKe27sHuvVNwL7FuD/6X3X9Z8jQqsJiYJPRWQXhc7iK8nAYoYPtdYA8aKc7
+         w9Bz2kUFJza16qzcHN6EZHWCIgMKLAaVQg25Tt/SHesnP03GIOWVmriyUVJVbWIOQhDN
+         zjA3X8Dg4myhEe03l2M4Q+OXYsC9oaifbaxTq2uTp4KouweAQ4Pqv8YuRk8ms33xBVo1
+         PRUEYFhreLi2aFHYP5PmcW+eIHU/cKV3vZz9Enmxtq75AfUesH2xHdWXaCw2tCOY+jt4
+         f7Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784042232; x=1784647032;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
+        b=E5JARPvfWWNdh1D9d1wCGsMHxu5Jjplx1qpDtcR4ZVAPchMEcEH96/PT9lDJzeWVwg
+         Yia/agN4+8WxkEyFUMlyqwzWP71upFmYhzQEuvzZ77okGniqBrTHPWKqNE6wGLFhYX/4
+         TvOvIGFWU3vYwJL8pwzefp1VjCeRkmI6tHMgLNPsXI/9AAEgQo1AjdlECEfrpHCyt1qo
+         KJZnJHXZRAfVu5TTZsV3h49hausdJiqkbe5OJ5+b9+jWDckm/INzoBx5NDilD28v++Rd
+         jXgc0lTVRaQEi/93uzqDA8ZBrCVyDt1VZc6/2zDkIAk/sKLxgKfsABvS4YgK6Uc+Vi/s
+         Cw0A==
+X-Gm-Message-State: AOJu0YzZQvRw3ZCzaTTY/0g0Ne/rZ4PXENJwH4X/gvztBduhpj1Vdk/0
+	xJfMdlE7r1y2C2cpoj0z/hY4YyD7+a6a/BA+OEFXbDLnTbLz0zCQ+HKrjcfyEhyuPCJ4ZgrQBsM
+	k4Zrm0R5kMCG77w5Z0gLpvcq7yNvGXoAksrlW
+X-Gm-Gg: AfdE7clZqxAbubTYAKcfTOYeEqKLuQlYZG9jxfA+gcU+VEUgPb6Y2EI38pVYhpqGWRV
+	diwx47vwH4iVZGrLMBKM7h1AGXB7yEz7A5KgfgXeOzBtx5+PIvj0X1UnEh/ahjBJPZp6Zmgxr/R
+	WYaqe1rG+85h2rOhxGTXluDqYILhvbFawfAS8Bu/1MQl19BtFace1BiUziGo59ELl9f9/pZR9yN
+	6QiPtTCLSQb2hHBh7UH0Vf+IFJQpOCTmb4WtRJChhadtyzzJVSQLNM0IcFar/vYqeNjTPWLxg==
+X-Received: by 2002:a17:907:da16:b0:c16:534:6a30 with SMTP id
+ a640c23a62f3a-c1667bb3a0dmr153796766b.58.1784042232390; Tue, 14 Jul 2026
+ 08:17:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20260713131223.279555-1-a.shimko.dev@gmail.com>
+ <20260713131223.279555-2-a.shimko.dev@gmail.com> <20260714131728.6C94F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260714131728.6C94F1F000E9@smtp.kernel.org>
+From: Artem Shimko <a.shimko.dev@gmail.com>
+Date: Tue, 14 Jul 2026 18:17:00 +0300
+X-Gm-Features: AUfX_mxoe0WVqnkvs3GVvNEK0y0uCrWT_C7Lanjv8yWfj1dW_K7a-g6ZJXk_Svs
+Message-ID: <CAOPX7470Xdk=O6xxQRUyiYg25yQfXDpD+MEeAWwVyLVF8zQJKA@mail.gmail.com>
+Subject: Re: [PATCH net-next 1/2] dt-bindings: net: add DAPU Telecom
+ DAP8211R(I) PHY binding
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 14 Jul 2026 11:03:21 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] A guest can leak the SYS_NVHCR_EL2 hardware register state of a previous vCPU by configuring E2H=0 and NVTGE=1.
-> --
-> 
-> --- Patch [23]: [PATCH v2 23/28] KVM: arm64: Add NVHCR_EL2 context switching ---
-> commit d9946edce781237514b1a1fe42315834ea75838a
-> Author: Marc Zyngier <maz@kernel.org>
-> 
-> KVM: arm64: Add NVHCR_EL2 context switching
-> 
-> This commit introduces context switching for the NVHCR_EL2 register to
-> support nested virtualization. For an L1 guest in hyp context, the register
-> is eagerly synced with HCR_EL2 emulation. For an L2 guest, it is context
-> switched as an EL1 register if NV3 is in use.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
-> > index a17cbe7582de9..c382848d31947 100644
-> > --- a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
-> > +++ b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
-> > @@ -172,6 +172,10 @@ static inline void __sysreg_save_el1_state(struct kvm_cpu_context *ctxt)
-> >  
-> >  	if (ctxt_has_sctlr2(ctxt))
-> >  		ctxt_sys_reg(ctxt, SCTLR2_EL1) = read_sysreg_el1(SYS_SCTLR2);
-> > +
-> > +	/* Retrieve L2's HCR_EL2, and save it for future use */
-> > +	if (is_nested_nv3_ctxt(ctxt_to_vcpu(ctxt)))
-> > +		ctxt_sys_reg(ctxt, NVHCR_EL2) = read_sysreg_s(SYS_NVHCR_EL2);
-> 
-> [Severity: High]
-> Does this create an asymmetry with how __compute_hcr() initializes the
-> register?
-> 
-> In __compute_hcr(), the write to SYS_NVHCR_EL2 is gated by an E2H check:
-> 
-> 	if (cpus_have_final_cap(ARM64_HAS_NV3) && vcpu_el2_e2h_is_set(vcpu))
-> 		write_sysreg_s(__vcpu_sys_reg(vcpu, HCR_EL2), SYS_NVHCR_EL2);
->
+On Tue, Jul 14, 2026 at 4:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> [Severity: Medium]
+> Since this property is a vendor-specific extension, should it include a
+> vendor prefix like dapu,tx-inverted-clk? Introducing custom properties
+> without a prefix risks colliding with future standard properties.
+It will be fixed.
 
-This is a host setting.
+> [Severity: Medium]
+> Will this compatible string cause the example to bypass validation for th=
+is
+> schema? The schema requires the compatible string to be exactly
+> "ethernet-phy-id0008.011b". If the example is not evaluated against this
+> file's schema, it can hide other validation failures.
+It will be fixed.
 
-> However, this save path relies on is_nested_nv3_ctxt(), which checks NV and
-> NVTGE but does not verify E2H:
-> 
-> static inline bool is_nested_nv3_ctxt(struct kvm_vcpu *vcpu)
-> {
-> 	return (has_vhe() && kvm_has_nv3(vcpu->kvm) && is_nested_ctxt(vcpu) &&
-> 		(__vcpu_sys_reg(vcpu, HCR_EL2) & HCR_EL2_NV) &&
-> 		(__vcpu_sys_reg(vcpu, HCRX_EL2) & HCRX_EL2_NVTGE));
-> }
-
-This is a guest setting.
-
-> 
-> If an L1 guest sets HCR_EL2.E2H = 0, HCR_EL2.NV = 1, and HCRX_EL2.NVTGE = 1,
-> could __compute_hcr() skip writing SYS_NVHCR_EL2 on L1 entry, leaving the
-> hardware register uninitialized (holding a previous vCPU's state)?
-
-host != guest.
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+> [Severity: Medium]
+> Will this value trigger a validation error when the compatible string
+> mismatch is fixed? The tx-internal-delay-ps property enforces an enum wit=
+h
+> strict 150 ps steps, and 1150 is not in the list of allowed values.
+I wanted to show that you can specify values other than just multiples
+of 150 ps. But I think that would be unnecessary.
+It will be fixed.
+--
+Best regards,
+Artem
