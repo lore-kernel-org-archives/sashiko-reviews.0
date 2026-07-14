@@ -1,103 +1,104 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEED2380FEE
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 11:41:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C249C35BDC7;
+	Tue, 14 Jul 2026 11:42:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784029279; cv=none; b=OpkwpnB5CTVxgFdAuJeBfa7vk+RUyFn2YjFuxWQX8h4oUY4JJt7qhq487TBxIENjWgMc/qbzG5sDx7y7ZP1F+Xv+tl0FGa3rnncjuxRMVNeugIQ5q/Qz1t15NeMDGaR4xNy4hps/vhseB4FdZ86K3DBYkoCtOw8wWysf3vW5kh8=
+	t=1784029369; cv=none; b=o62WX82GFlqzn8zLyRqZENmNGagDkm16wKILUyzT1BA408d+w9Sp4iiNw7FnmdcINo99/qdC9IsqnTnmoOxciZVojlgP0Dc1XUPhsykLcIYv42ZX61k2KwkhJzJN8JQ84pYfVOsur/9DE4IsZ3FVYjSPMHQo2hPqvJ4i4e4rBqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784029279; c=relaxed/simple;
-	bh=e9ie2++O17/2VsJs45NMWpbGyEMrtX5HgOp1uHeudlQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=grEjUrTWszVTaoiOry/pd60XwdmEwL45moTKiyL+se4pyfK/Epp0bX3655K5NCKiBWKeuXOeozMVmo8jiISkGzZfcNEXolrrktuVEOyZWrBd6C7Onsd3oPDvk/Mod/ukPQuW4uxrkLgOrz9HkLTn5/BGExmwEF72h9L4n4Os0DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id A11A920220C;
-	Tue, 14 Jul 2026 13:41:13 +0200 (CEST)
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1wjbVh-001lPl-1f;
-	Tue, 14 Jul 2026 13:41:13 +0200
-Received: from pengutronix.de (p4ffb2dc6.dip0.t-ipconnect.de [79.251.45.198])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 3EE13568AD0;
-	Tue, 14 Jul 2026 11:41:13 +0000 (UTC)
-Date: Tue, 14 Jul 2026 13:41:12 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: sashiko-reviews@lists.linux.dev, 
-	Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org, Vincent Mailhol <mailhol@kernel.org>
-Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
- removal
-Message-ID: <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
-References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
- <20260714-bcm_fixes-v13-9-fd667c61099a@hartkopp.net>
- <20260714104431.65C751F000E9@smtp.kernel.org>
- <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
+	s=arc-20240116; t=1784029369; c=relaxed/simple;
+	bh=mip6vOotjTeHeHFEye4+QF2YuUNXkW8bczYhq4JMfPc=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cPmDT0QNQBZOHpP4buih4lRKacyQauAyR1Yj2MbcmUrjg+gayN9NjI6XcEBl/Q856Ny3W32p1i8EPix3nEBupFFn6IvmxDeUyOUIdw7Y64Eq8auy82OkfbVb7AQnztfVep2bavJf4a7boXkSqW8U+BaghV6qODb1Ti+19dQ1rlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W1PCKt0h; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W1PCKt0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DBA1F000E9;
+	Tue, 14 Jul 2026 11:42:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784029368;
+	bh=zzyHRR5TfMS1Y5/ZDt2g0bZikwaXGvPTL5IXvljBqq4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=W1PCKt0hNROJ3VPfyiO7ay9EGoc10DpyXBHDIaX8lwjxVQxpLlC16NB1stPJjWiIz
+	 6ir//N+T4lgFSGNcpadqvgNaQQ6Ey72WJSLPrp3rNemUT0iZ1jjzvH3A+afT2Rvmzf
+	 /93EMeyjKa4iNZyfhU0EJLY8JzlW/Le4zzqMd+VHtRGr9POiR42/PIFlbaYA7foRry
+	 AoY7hDRoSkPD0HGLBPzgB2WrKUpvrEQSgU66mP+qXWTljif19tyuduCdkOZ2Sc0OZB
+	 Zk1gdr2bmJSXDskyf4Vvq60T3Vs0POX9AlKocdySgFezA+YXKk2VT6Fj3qY+7B01ZL
+	 wNPFV4wabeDaA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wjbXC-00000004reb-2Eay;
+	Tue, 14 Jul 2026 11:42:46 +0000
+Date: Tue, 14 Jul 2026 12:42:45 +0100
+Message-ID: <86y0fdokzu.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org,
+	"Oliver Upton" <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH v2 15/28] arm64: Add ARM64_HAS_NV3 capability
+In-Reply-To: <20260714094001.676121F000E9@smtp.kernel.org>
+References: <20260714091641.1970822-1-maz@kernel.org>
+	<20260714091641.1970822-16-maz@kernel.org>
+	<20260714094001.676121F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qa6k2nuxrgbfho5b"
-Content-Disposition: inline
-In-Reply-To: <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
+On Tue, 14 Jul 2026 10:40:00 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The newly added ARM64_HAS_NV3 capability lacks the required hardware detection logic, rendering it non-functional.
+> --
+> 
+> --- Patch [15]: [PATCH v2 15/28] arm64: Add ARM64_HAS_NV3 capability ---
+> commit 99ad2a0b713bc6373d924541643c7d6b05f45704
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> arm64: Add ARM64_HAS_NV3 capability
+> 
+> This commit adds the ARM64_HAS_NV3 capability ID to the cpucaps list. It is
+> intended to describe host support for FEAT_NV3 so that upcoming KVM code can
+> depend on it being detected.
+> 
+> > diff --git a/arch/arm64/tools/cpucaps b/arch/arm64/tools/cpucaps
+> > index 242dc211d8efa..7e0414509e89a 100644
+> > --- a/arch/arm64/tools/cpucaps
+> > +++ b/arch/arm64/tools/cpucaps
+> > @@ -52,6 +52,7 @@ HAS_LSUI
+> >  HAS_MOPS
+> >  HAS_NESTED_VIRT
+> >  HAS_NV2P1
+> > +HAS_NV3
+> 
+> [Severity: Medium]
+> Does this capability require a corresponding detection entry in the
+> arm64_features array located in arch/arm64/kernel/cpufeature.c?
+> 
+> Without an entry in the arm64_features array to perform the hardware
+> evaluation, the pointer in cpucap_ptrs for ARM64_HAS_NV3 remains NULL. 
+> Could this cause any subsequent code checking this capability to always
+> receive false, even on capable hardware?
 
---qa6k2nuxrgbfho5b
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
- removal
-MIME-Version: 1.0
+Yes, on purpose. See the followup patch adding the detection code once
+everything is in place.
 
-On 14.07.2026 13:24:17, Oliver Hartkopp wrote:
-> On 14.07.26 12:44, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] Unprotected concurrent access to op->rx_stamp and op->rx_ifind=
-ex in bcm_rx_handler causes data races and torn 64-bit reads on 32-bit arch=
-itectures.
->
-> Fixed in patch 10
+	M.
 
-Pre-existing issues are not a shot stopper, _new_ issues for a patch
-series are...usually are.
-
-Hopefully upstream will accept that you fix issues in a later patch that
-sashiko claim to be introduced by a patch in the series.
-
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---qa6k2nuxrgbfho5b
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCalYgVAAKCRDMOmT6rpmt
-0lNSAQD6GfIEjXJHGYZqTyGmtHCfVPtPBOYWpgzZ3UTec0b0EAEAtn3WIp88WKz7
-1SrSo+BgBDk7E+Lg8fxp8rNhf+WyowE=
-=jZXP
------END PGP SIGNATURE-----
-
---qa6k2nuxrgbfho5b--
+-- 
+Without deviation from the norm, progress is not possible.
