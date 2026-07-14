@@ -1,294 +1,120 @@
-Received: from out28-149.mail.aliyun.com (out28-149.mail.aliyun.com [115.124.28.149])
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728CB38F654
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 11:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784029620; cv=none; b=n/YASA6sXy9BVt0x9lhiGBBYlhKhwGa0shb1MEJmAaj7eUjUampTRe2LwBDL4gdKu8uaiMXtc6euIDL7y5ywviC8gx+HPjj1GBu52vx2she6IpSKeFh+ZjQHO5OWUfZApTibJC0ZBh2fL88p7e5KqDuW2cuKoIt6B78exMfd9GU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784029620; c=relaxed/simple;
-	bh=PpLrAeRhVpu1dWy+xVb8rUoHbuUV5k9Kd45x7IDUfsQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MAH+GRqk7hWt/IVqbjvNidctbCllwY2iqI2jiyjBSzhrvjPY6J+LhKl1u0UZZd263e9GkNT5Uo47DEhArnV3lw3flWWmz47AIWTC1OIRb2oTRn4fvmeQ7S/IDYsbsNAOZbupCgTxzJymWL/cUXdgnGG6A7Nuew3P1cWFZe43pOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lontium.com; spf=pass smtp.mailfrom=lontium.com; dkim=pass (2048-bit key) header.d=lontium.com header.i=@lontium.com header.b=oMNNH0TX; arc=none smtp.client-ip=115.124.28.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lontium.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lontium.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C329D35A952
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 11:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784029681; cv=pass; b=XbP40Nn4nOikdzUaj7j3GkO+/bgNHkwW2kwZi2vixcgRJ/Yiktt5f3pTWp3210Ekux/W3nQTCsbzvjcxe8kjDIC7GkLpynWpivxCoD8zC10MfWjRnCwaMNil4sS0bxaqa2Nrxb527lMwPPgKh/r4KW0AljB28mQ48mgbxMgQF7U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784029681; c=relaxed/simple;
+	bh=f3TqkgRoXgFadJ3Zw5quD61+Nj3I+Wq9hEgD37F0W48=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ItQEVjaa8MtOzG91YzXTxgE2q+cV5vCamQ8/dkiEmqf8jOEmDwcJioUhDKNWyd4z/etaH818oA7cKioU5m9RyirrPX+gxjqlom1LSFZVZ1c2i77GauNzxJS7mBjzCWK4efV7bdArdZAuBJLdvUQkp1pLjFbITASQhTng7pPNtAA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=UlJn+NuA; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=7U4Hb6dC; arc=pass smtp.client-ip=85.215.255.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lontium.com header.i=@lontium.com header.b="oMNNH0TX"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=lontium.com; s=default;
-	t=1784029608; h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
-	bh=i7cCoPUbrub6B12htwmRFp15EcZoaERECpcXhtYclkw=;
-	b=oMNNH0TXja24JYXP1a0qxngjFf7ZjbfH8/Ghr7durSEnuTC//jfGYjDUG2WvqoSgsOectzzqenFedREQUczLpygChKB1WlXfvnk9gyHAEsyWGB3K305EltGa7L3EjQccVacfbet4OEkQiyFC08j4jTReemW3mrxNVrGquiWzmBXEjnFTDlp98zvb+W4Zr+Kh+joM0piv8gajtoeYVw0RiQi7tKYIvEgGy+cHJ2E1Jp94i5hONBdtcX5ARDAzTC4fUFw4iTjf6CUAoTTahWJF4tiOxqjTM0onVAwo/8PnSTEOmkROCR2bkwJgyVT+ijTD7OGvL9CGrzYDVMgNHjioxA==
-X-Alimail-AntiSpam:AC=CONTINUE;BC=0.07437065|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0130186-0.00169102-0.98529;FP=3418604069976786166|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam033023018039;MF=syyang@lontium.com;NM=1;PH=DS;RN=1;RT=1;SR=0;TI=SMTPD_---.iL2VIQJ_1784029606;
-Received: from mail-oa1-f52.google.com(mailfrom:syyang@lontium.com fp:SMTPD_---.iL2VIQJ_1784029606 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Tue, 14 Jul 2026 19:46:47 +0800
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-43bf9548df4so2007528fac.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 04:46:47 -0700 (PDT)
-X-Gm-Message-State: AOJu0YznMdkPRUU9/X2PdJ48Zmmn/oC94CGxDyflio3oFhiW0hZe0pCz
-	OXilRW3wX4yTV14RdCruXNePpsKMFNSBSj84NZQ4Sui2MEShXlXHtsxrjxPBatG8Wa3Y9ZPlLPn
-	634JscpJDcX0UgbWKB9j03HO/ST1dQYk=
-X-Received: by 2002:a05:6808:1b99:b0:4a3:d383:b3ea with SMTP id
- 5614622812f47-4a47a5e054dmr1059263b6e.27.1784029605960; Tue, 14 Jul 2026
- 04:46:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="UlJn+NuA";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="7U4Hb6dC"
+ARC-Seal: i=1; a=rsa-sha256; t=1784029655; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=NXMVUufWkfQ0ulRHtoPwlMEiSktyluEwLhxRPJFT2hIZZIK/agRBSj5/9qowc0wZHM
+    AH2bkE6s1E+nq65apZEVTI8uJwiaweg1DNDYhxbA1nlwcyod2cVVMTwvlLe0yRsn+EkT
+    rE89SjJ6LIDdbOS41Mt35Y8pZLPaxPJYkQG5q6wREFcqWXvbCK1G8gWr5BrMXr0LF0hA
+    pVq/2nCLOpXLXRIhctZchaAd5l+VOT/rlK3eO7ZsRC0adjNYk3/WIFBaz/nGgfdZZMFC
+    sH9xygtkYSsO7bCRyI9abKila1XIaqEl+PXTDTST+awn8ddyNJueI7VW3HQWtr1Z9GTc
+    w4jQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784029655;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ulGlExmyGIJwwDpR21HQW+x4M19jopiWKr2LjYr80os=;
+    b=nOS2DsnYTuV2YR9ETCqrH0gIzE8jTQompGgorXKUW73PrRavQrfOoLJSkebpuI7+Qq
+    te6FJvpIyKwNuq9rMdj7A8n25z7cQ0pOgjaimZIUWpNqhZr9EatVF4gVJlhLm79qdXnL
+    USgTyR99VrAbPaKC+eEnLaFmxJ32BTmt1uUItdKlzvI4AT7FCvzORUh1dCl0xFW4tRns
+    uNzYOkIbDjqajECmxwqaw4rUv4OlWbnoboqJbWcg2C8oH6es8Ddmca3RBLDDAk/mTkt6
+    C9s2HsOq8PF2fp1y32FaIP1nzs9/EmEwTnYDkdfkH2QEy+Xfa53brtuv01tGsFkYjNxR
+    81gA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784029655;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ulGlExmyGIJwwDpR21HQW+x4M19jopiWKr2LjYr80os=;
+    b=UlJn+NuAog3tTVNSgMUqyLnmydhrJ6p2iPOlFTjfNLlJ+UkdzxV+n0mVJZnuomdMUp
+    Ht9smUIX445+E+DceGXBMUMv0hV07jnuQSQCNrzhJmEJgLZY5PqxD3bDiE+TnsF6m52U
+    xdcuMvlQU2nsNvrrv5bduPTQWi0Lrhhv3Fm6lnfsgwUsWZh47/JRBeJh6uNaSOL1JeeO
+    Q/eN95ROUTUEsEKOXFJDFXDas8v2vH1QzZrIMk4aw5Pp5j5tg1BzQjsTSjTrON/0IIZr
+    KyK9D2Y2iK7gyWPCZkH57fLPhE2sxuqrCLx21K1wXSZpZaIdVZoyiKZvXj9RtYbvIxRw
+    SVuA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784029655;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ulGlExmyGIJwwDpR21HQW+x4M19jopiWKr2LjYr80os=;
+    b=7U4Hb6dC8FhHiK5r5xfadiuQgOGcmIP4HUixDU0avcF1NLUGVFhyW19LcUenWlkb9V
+    VOYbLltWjKBqzQGFJgCA==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
+Received: from [192.168.20.190]
+    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
+    with ESMTPSA id Ka9fdb26EBlZjt3
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 14 Jul 2026 13:47:35 +0200 (CEST)
+Message-ID: <1a521f25-0aee-4eae-a0da-3eb7f0702e84@hartkopp.net>
+Date: Tue, 14 Jul 2026 13:47:35 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714105828.2763677-1-syyang@lontium.com> <20260714105828.2763677-3-syyang@lontium.com>
- <20260714111639.53ED11F000E9@smtp.kernel.org>
-In-Reply-To: <20260714111639.53ED11F000E9@smtp.kernel.org>
-From: Sunyun Yang <syyang@lontium.com>
-Date: Tue, 14 Jul 2026 19:46:33 +0800
-X-Gmail-Original-Message-ID: <CAFQXuNbYfMQO9EHm9Ym2ZPzHohNbkas9ThvLQmj=NLEe1bhi+A@mail.gmail.com>
-X-Gm-Features: AUfX_myp2kzOEm1DUx7Y224QGA5tgUgrUe_G0ESXBpXArFi_gt7X8ykS3UZ2jeU
-Message-ID: <CAFQXuNbYfMQO9EHm9Ym2ZPzHohNbkas9ThvLQmj=NLEe1bhi+A@mail.gmail.com>
-Subject: Re: [PATCH v16 2/2] drm/bridge: Add Lontium LT7911EXC eDP to MIPI DSI bridge
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 09/11] can: bcm: fix stale rx/tx ops after device
+ removal
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: sashiko-reviews@lists.linux.dev, Oleksij Rempel
+ <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>
+References: <20260714-bcm_fixes-v13-0-fd667c61099a@hartkopp.net>
+ <20260714-bcm_fixes-v13-9-fd667c61099a@hartkopp.net>
+ <20260714104431.65C751F000E9@smtp.kernel.org>
+ <2c2bc659-fd26-4c48-a5f4-e9e6a3c43003@hartkopp.net>
+ <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260714-towering-phenomenal-nyala-ad406f-mkl@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B47=E6=9C=8814=E6=97=A5=E5=91=
-=A8=E4=BA=8C 19:16=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
-e(s) to consider:
-> - [High] Dynamic devm allocation and bridge registration in DSI host atta=
-ch/detach causes devres leaks and list corruption.
-> - [High] Asynchronous workqueue dereferences dangling `bridge.dev` if the=
- DRM display controller unbinds.
-> - [Medium] Failure to clear `output_bridge` in `dsi_host_detach` prevents=
- panel re-attachment.
-> - [Low] Mutating `pre_enable_prev_first` of a downstream bridge object vi=
-olates subsystem API layering.
-> - [Low] Unsynchronized reads of `lt7911exc->removed` in the asynchronous =
-workqueue.
-> --
->
-> --- Patch [2]: [PATCH v16 2/2] drm/bridge: Add Lontium LT7911EXC eDP to M=
-IPI DSI bridge ---
-> commit f0896e2dbabe50d3cbe793868df9c6d4afd6db5f
-> Author: Sunyun Yang <syyang@lontium.com>
->
-> drm/bridge: Add Lontium LT7911EXC eDP to MIPI DSI bridge
->
-> This commit adds support for the Lontium LT7911EXC bridge chip, which
-> converts eDP input to MIPI DSI output. It implements firmware upgrades,
-> GPIO reset handling, and DSI host interface attachment.
->
-> > diff --git a/drivers/gpu/drm/bridge/lontium-lt7911exc.c b/drivers/gpu/d=
-rm/bridge/lontium-lt7911exc.c
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/bridge/lontium-lt7911exc.c
->
-> [ ... ]
->
-> > @@ -344,14 +344,14 @@ static void lt7911exc_firmware_upgrade_work(struc=
-t work_struct *work)
-> > +{
-> > +     struct lt7911exc *lt7911exc =3D container_of(work, struct lt7911e=
-xc, work);
-> > +     struct device *dev =3D lt7911exc->dev;
-> > +     const struct firmware *fw;
-> > +     u8 *buffer;
-> > +     size_t total_size =3D FW_SIZE - 4;
-> > +     u32 crc32, version;
-> > +     int ret;
-> > +
-> > +     mutex_lock(&lt7911exc->upgrade_lock);
-> > +     if (lt7911exc->removed)
->
-> [Severity: Low]
-> Should this read of the removed flag be protected by the ocm_lock? It
-> appears this can be evaluated concurrently with driver removal since the
-> lock isn't held here.
->
 
-Valid point. Will fix by protecting the initial removed check with ocm_lock=
-:
-mutex_lock(&lt7911exc->upgrade_lock);
-scoped_guard(mutex, &lt7911exc->ocm_lock) {
-      if (lt7911exc->removed)
-          goto out_unlock_upgrade;
-}
 
-> > +             goto out_unlock_upgrade;
-> > +
->
-> [ ... ]
->
-> > +out_unlock_upgrade:
-> > +     scoped_guard(mutex, &lt7911exc->ocm_lock) {
-> > +             if (!lt7911exc->removed)
-> > +                     lt7911exc->upgrade =3D false;
-> > +     }
-> > +
-> > +     /* Notify DRM to re-trigger modeset after firmware upgrade */
-> > +     if (!lt7911exc->removed && lt7911exc->bridge.dev)
-> > +             drm_kms_helper_hotplug_event(lt7911exc->bridge.dev);
->
-> [Severity: High]
-> Could this dereference a freed drm_device if the upstream DRM display
-> controller unbinds before the firmware upgrade completes?
->
-> The I2C device has a lifecycle independent of the DRM display controller.
-> If the upstream DRM driver is unloaded, the drm_device is destroyed, but
-> the I2C device remains, leaving bridge.dev populated but dangling.
->
-> If a sysfs write triggers this asynchronous workqueue in that window,
-> it looks like it will pass a freed pointer to drm_kms_helper_hotplug_even=
-t().
->
-This is a known limitation of the DRM bridge framework, not specific
-to this driver. drm_bridge_remove() does not clear bridge.dev, and
-there is no mechanism to bind the bridge lifecycle to the drm_device
-lifecycle. All bridge drivers that call drm_kms_helper_hotplug_event()
-share this risk. A proper fix requires framework-level support for
-bridge-to-drm_device lifetime tracking. Additionally, this scenario
-requires root sysfs access to trigger firmware upgrade while
-simultaneously unloading the DRM driver, which is an administrator
-operation outside normal usage.
+On 14.07.26 13:41, Marc Kleine-Budde wrote:
+> On 14.07.2026 13:24:17, Oliver Hartkopp wrote:
+>> On 14.07.26 12:44, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>
+>>> Pre-existing issues:
+>>> - [High] Unprotected concurrent access to op->rx_stamp and op->rx_ifindex in bcm_rx_handler causes data races and torn 64-bit reads on 32-bit architectures.
+>>
+>> Fixed in patch 10
+> 
+> Pre-existing issues are not a shot stopper, _new_ issues for a patch
+> series are...usually are.
+> 
+> Hopefully upstream will accept that you fix issues in a later patch that
+> sashiko claim to be introduced by a patch in the series.
 
-> > +
-> > +     mutex_unlock(&lt7911exc->upgrade_lock);
-> > +}
->
-> [ ... ]
->
-> > +static int lt7911exc_dsi_host_attach(struct mipi_dsi_host *host, struc=
-t mipi_dsi_device *dev)
-> > +{
-> > +     struct lt7911exc *lt7911exc =3D dsi_host_to_lt7911exc(host);
-> > +     struct drm_bridge *bridge;
-> > +
-> > +     /* currently do not support connecting several DSI devices to the=
- same host */
-> > +     if (lt7911exc->output_bridge)
-> > +             return -EBUSY;
-> > +
-> > +     if (dev->lanes > 4) {
-> > +             dev_err(lt7911exc->dev, "unsupported number of data lanes=
-(%u)\n", dev->lanes);
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     bridge =3D devm_drm_of_get_bridge(lt7911exc->dev, host->dev->of_n=
-ode, 1, 0);
->
-> [Severity: High]
-> Is it safe to dynamically allocate devm memory during panel attach?
->
-> If the downstream panel driver is repeatedly unbound and rebound by a
-> local administrator, this will repeatedly allocate devres memory without
-> freeing it, causing a memory leak.
->
-This is a false positive. The -EBUSY guard at the top of
-lt7911exc_dsi_host_attach() prevents re-attach when output_bridge is
-already set. After the first successful attach, any panel rebind
-attempt is rejected before reaching devm_drm_of_get_bridge() or
-drm_bridge_add(), so no devres leak or list corruption can occur. This
-follows the same pattern used in cdns-dsi-core.c (cdns_dsi_attach,
-line 1052).
+Is it?
 
-> > +     if (IS_ERR(bridge)) {
-> > +             dev_err(lt7911exc->dev, "failed to add DSI device\n");
-> > +             return PTR_ERR(bridge);
-> > +     }
-> > +
-> > +     lt7911exc->output_bridge =3D bridge;
-> > +
-> > +     /*
-> > +      * Force panel-first enable order: the DSI output stream (0xe0b0)
-> > +      * must not be enabled before the panel is powered on.
-> > +      * This override is safe because LT7911EXC's transfer() is a stub=
- =E2=80=94
-> > +      * panel DCS commands are silently discarded and panel init is do=
-ne
-> > +      * by the chip's internal firmware. The panel driver's
-> > +      * prepare_prev_first preference is therefore irrelevant here.
-> > +      */
-> > +     lt7911exc->output_bridge->pre_enable_prev_first =3D false;
->
-> [Severity: Low]
-> Is it acceptable to modify the state of a downstream bridge object
-> that is owned and managed by another driver? Doing so bypasses the
-> subsystem API layering.
->
+Patch 10 Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
 
-This override is a hardware constraint. The DSI output stream
-(register 0xe0b0) must be enabled after the panel is powered on. The
-override is safe because transfer() is a stub =E2=80=94 panel DCS commands =
-are
-silently discarded and panel initialization is handled entirely by the
-chip's internal firmware. The panel driver's prepare_prev_first
-preference is therefore irrelevant for this chip. The comment above
-the assignment documents this rationale.
+not anything in patch 9.
 
-> > +
-> > +     drm_bridge_add(&lt7911exc->bridge);
->
-> [Severity: High]
-> Does this corrupt the global bridge list if the panel driver is rebound?
->
-> When the downstream panel unbinds, lt7911exc_dsi_host_detach() calls
-> drm_bridge_remove(), which moves the bridge to the bridge_lingering_list
-> and destroys its mutexes.
->
-> If the panel binds again, this drm_bridge_add() will be called on the sam=
-e
-> bridge structure, invoking list_add_tail() on a node that is already trac=
-ked
-> in the lingering list.
->
+Best regards,
+Oliver
 
-This is a false positive. The -EBUSY guard at the top of
-lt7911exc_dsi_host_attach() prevents re-attach when output_bridge is
-already set. After the first successful attach, any panel rebind
-attempt is rejected before reaching devm_drm_of_get_bridge() or
-drm_bridge_add(), so no devres leak or list corruption can occur. This
-follows the same pattern used in cdns-dsi-core.c (cdns_dsi_attach,
-line 1052).
-
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int lt7911exc_dsi_host_detach(struct mipi_dsi_host *host, struc=
-t mipi_dsi_device *dev)
-> > +{
-> > +     struct lt7911exc *lt7911exc =3D dsi_host_to_lt7911exc(host);
-> > +
-> > +     drm_bridge_remove(&lt7911exc->bridge);
->
-> [Severity: Medium]
-> Does this prevent the panel from re-attaching later?
->
-> The detach function does not set lt7911exc->output_bridge back to NULL.
-> If the downstream panel driver tries to attach again,
-> lt7911exc_dsi_host_attach() will check if output_bridge is set and return
-> -EBUSY, leaving the display pipeline permanently broken until the bridge
-> driver is reloaded.
->
-This is intentional and consistent with cdns-dsi-core.c, where
-cdns_dsi_detach() (line 1082-1091) does not clear output->dev either.
-Clearing output_bridge would allow re-attach, which would call
-devm_drm_of_get_bridge() again and leak the previous devm allocation.
-The DRM bridge framework does not currently support dynamic
-reconfiguration of the bridge chain. Panel rebind is not supported;
-reloading the bridge driver is required, matching the upstream
-convention.
-
-> > +
-> > +     return 0;
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714105828.27=
-63677-1-syyang@lontium.com?part=3D2
