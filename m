@@ -1,60 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398E834F27B;
-	Tue, 14 Jul 2026 17:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784049424; cv=none; b=Fz1keocxhxJXm42HyxJ9KgAy4OuGVC3N/1tPaImRL5EDZ4KViW5jSfKHEyBkI/bEVWDnYsoZEguDCFIhC56mr0SPqud2hjQE87IRhPDd0ORs7krGLApQC8qD7DIIkdXvd18UgT6P3S18F8CW6nUIKNkatnPOApNpxMjlWUQuqOU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784049424; c=relaxed/simple;
-	bh=F00dEFoYaZPUHRSJsBe2o3vnKG21Du/AfiYCZpXXSgM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YBZR/DJP+eftOvIALpeZiDGhYoI/KK9r0AwyfSDJo3bYefFNW15Fp5G+y40X16/b2EXcUlZeeAaNjYfgZcwKSGllglXQjmCaUzZb9DOVq0j6hcenO0McBvtT2NTneXKp4kaymEIaEnoc5INfpOOLVvw50F7bQEat8ZKISBavqsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IIJ2Z6/x; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B674417BE8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 17:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784050939; cv=pass; b=WJtsmxn6iZO3JD90CRmhJB7qMVGRyF0zlctgi5dmvzqXJdN/KJlmTg9a8KzPAaOaQyVF/hCwL37r+qLdCLM14lyMoePbe+Z5ca3vo+WWb142IpGGhQsOcQoA60l/LyXHKULlgv8vPEF732pVMgQ/GUKQO8d6Lb46Bo1kr94AYUA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784050939; c=relaxed/simple;
+	bh=PJQMiBoDQ4Gx4VSUeyERwpCBV/hFLWxXiJWOwFgoD3k=;
+	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
+	 Date:MIME-Version; b=UwTOnqxIEIKccLKeb3MTDEaBFHQ9hYWpUlWtQ/zWZVaBDQAfSHuFC+9AGklB+EIQj2O9V33TrF51BCYMZrnQixZIVXSC62OYs9PrRtFYzavHTxxDVe/2rFaau++BGSaPZIFA2FuQ8C4xyOfEgeDds8B2v/vvBMR5U/wM1y34wpg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b=PB1w2fHv; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IIJ2Z6/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB55A1F000E9;
-	Tue, 14 Jul 2026 17:17:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784049423;
-	bh=YFd2ODVNqCT1i8ipJRx3ooKY5rDmdUuflpX3ddya/YU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=IIJ2Z6/xGS8lxnZR3YJnfAhZfDOQW7vt9o/So/kKG8bQTrgTgP500Jq6ijc1qaO06
-	 BkaJF/h7ktt+o1pmWXWE/oX21HphjricQdlTPgLZo6kqh7uDTu7enedxqItWeGPwL7
-	 kYIjo7VQUjIskxtrqTGZ8+8Bkj9KvWpo0sA7kQAkoLaRN5S+updcPV9PhXpbIj+tas
-	 urAcyq3+BsSSEXoejd9vA5rRKmBy3yNn8SFuXnp8FcaAJ/V5/K4i2p3T/sWyFS36EM
-	 gESkqO2RtXEulny2xYYvhFM/MLhbnQ8rVikzUzy7UWszkCZfVHUXAy0/67B80yhUv7
-	 iRxGA07A5HA8w==
-Date: Tue, 14 Jul 2026 10:17:01 -0700
-From: Namhyung Kim <namhyung@kernel.org>
+	dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b="PB1w2fHv"
+ARC-Seal: i=1; a=rsa-sha256; t=1784050933; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=gR2s5iQJ+t8YUxwOKCv+dM+ESf7VDbyt53sk/q0/SH0f6dWy+22AVtocbxSX7gNt82ElqFgs9lJHz8XSMdN+hkh6JJrK6JL6SGzrk+B54FWq8213hrEg/y+gFzCSPmMT6wmC9gc59Gx4H9UK1pd0hf5EMB+n3mI7nidYEu21mzw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1784050933; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4tGkI11D7DTEyQAblb/tV5Kx06tzVp6l+fi7Ui7d7us=; 
+	b=ZdfUnEEqfqjBR1J5LFtiTtTzft2oQjI3wepTKYPDB5XDMquUUvaKxEqXp2Ho8FLEvCUNxMq0KDKmDIRwu+A6IoZcUaIW4AfCdzkbCCHDb11n07ljzNa8Ks++WEV0IFW0esGff2RuiP/9NiFgMre2K+8Bo7YSmaRzMdVpE8EGweY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=rong.moe;
+	spf=pass  smtp.mailfrom=i@rong.moe;
+	dmarc=pass header.from=<i@rong.moe>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784050933;
+	s=zmail2048; d=rong.moe; i=i@rong.moe;
+	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:Date:MIME-Version:Message-Id:Reply-To;
+	bh=4tGkI11D7DTEyQAblb/tV5Kx06tzVp6l+fi7Ui7d7us=;
+	b=PB1w2fHvCKh5Yd2y/uWMZ4uv6Ld+ykQLM+zfUmyqth9TF0xGNPi/05tOZrqG/+sd
+	54c/8obKytwzhVsMf1lxpb5JjiW+dIF8Fk6u59Re3iTOtIryM9FrmrQE0nFQcR6vweg
+	hlY3wgQQlxOC3G9gJY/OxN2uwe228F+A3dZrzdbzgC9JpFPbIDLE/btcdqb42AVlMbL
+	WH9dgbR7uLDZrFIfK86DfBjZ+iYZGQ9uKcto0a1kNF9XuByTd9oY/ZA42JOHVoeeKQj
+	3z2DNXDCZp/WRSg204UVqEMc0awjrGY+hy35npDPTLP3jftqUbpCK801BKeJFKNk/7X
+	Ki8RUEfVpQ==
+Received: by mx.zohomail.com with SMTPS id 1784050930140452.94635249061605;
+	Tue, 14 Jul 2026 10:42:10 -0700 (PDT)
+Message-ID: <058dc5456dd8ab4620d4b0e4ba829eb492d1ebb8.camel@rong.moe>
+Subject: Re: [PATCH] leds: core: Disable hardware control when writing
+ brightness
+From: Rong Zhang <i@rong.moe>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] perf sched: Fix memory leaks in perf sched stats
- report
-Message-ID: <alZvDSIYFRnYkTjk@google.com>
-References: <20260713234536.2280374-1-namhyung@kernel.org>
- <20260713234536.2280374-3-namhyung@kernel.org>
- <20260713235452.912481F000E9@smtp.kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, Thomas
+ =?ISO-8859-1?Q?Wei=DFschuh?=
+	 <linux@weissschuh.net>, linux-leds@vger.kernel.org, LKML
+	 <linux-kernel@vger.kernel.org>
+In-Reply-To: <20260711185219.2BF991F00A3A@smtp.kernel.org>
+References: 
+	<20260712-leds-hw-control-brightness-set-v1-1-1de593b09d26@rong.moe>
+	 <20260711185219.2BF991F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 15 Jul 2026 01:37:04 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260713235452.912481F000E9@smtp.kernel.org>
+User-Agent: Evolution 3.56.2-10 
+X-ZohoMailClient: External
 
-On Mon, Jul 13, 2026 at 11:54:52PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Memory corruption and NULL pointer dereference when processing an early PERF_RECORD_SCHEDSTAT_DOMAIN event.
-> - [High] Out-of-bounds memory access and crash during second-pass list iteration due to missing bounds checks.
+Hi all,
 
-These are pre-existing issues not related to memory leaks.  We can
-handle them in a separate patchset.
+On Sat, 2026-07-11 at 18:52 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] TOCTOU race in brightness_store() can cause unintended removal=
+ of a newly registered trigger.
+
+I will integrate this into my hardware-initiated hardware control
+trigger transition series [1] to make things easier, as it will anyway
+move and refine led_trigger_is_hw_controlled().
+
+[1]: https://lore.kernel.org/all/20260618-leds-trigger-hw-changed-v2-1-c28c=
+44053cf3@rong.moe/
 
 Thanks,
-Namhyung
+Rong
+
+> --
+>=20
+> --- Patch [1]: [PATCH] leds: core: Disable hardware control when writing =
+brightness ---
+> commit 86a852e7c49262f7479b1653712185d4edd86c24
+> Author: Rong Zhang <i@rong.moe>
+>=20
+> leds: core: Disable hardware control when writing brightness
+>=20
+> This commit modifies the brightness sysfs attribute to disable hardware c=
+ontrol
+> when written. It addresses an issue where the brightness attribute become=
+s
+> confusingly write-only while hardware control remains active.
+>=20
+> > diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+> > index a51b0ed538864..3e25e5fb63dc8 100644
+> > --- a/drivers/leds/led-class.c
+> > +++ b/drivers/leds/led-class.c
+> > @@ -72,7 +72,7 @@ static ssize_t brightness_store(struct device *dev,
+> >  	if (ret)
+> >  		goto unlock;
+> > =20
+> > -	if (state =3D=3D LED_OFF)
+> > +	if (state =3D=3D LED_OFF || led_trigger_is_hw_controlled(led_cdev))
+> >  		led_trigger_remove(led_cdev);
+>=20
+> [Severity: Medium]
+> Could this introduce a race condition that removes an unrelated trigger?
+>=20
+> led_trigger_is_hw_controlled() takes and drops the read-side of trigger_l=
+ock:
+>=20
+> drivers/leds/led-class.c:led_trigger_is_hw_controlled() {
+> 	...
+> 	guard(rwsem_read)(&led_cdev->trigger_lock);
+> 	return led_cdev->trigger && led_cdev->trigger->trigger_type;
+> }
+>=20
+> Since the lock is dropped before led_trigger_remove() acquires the write-=
+side
+> lock, is it possible for a concurrent thread to unregister the hardware
+> trigger and attach a new default trigger in the window between the check =
+and
+> the removal?=20
+>=20
+> If that sequence occurs, led_trigger_remove() might inadvertently remove =
+the
+> newly attached trigger instead of the intended hardware trigger.
+>=20
+> >  	led_set_brightness(led_cdev, state);
+> >=20
