@@ -1,240 +1,158 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013048.outbound.protection.outlook.com [52.101.72.48])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26043446832
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 19:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784056221; cv=fail; b=IkczdXVGJY1OTxCSBzHzeCErRf0VWOqcFMkQS4hM+pY8DNwJMbbrJ6fPBEudbu4wbEd1Adt23EI8EFQutqU0t4ttqGKvcvTo1nTARaE0laggZblKWib1p6eZdIAHXgVImYxaFxQlVBAp1qfegYH8KtK10bOEo+gWEIPyMA8YlT4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784056221; c=relaxed/simple;
-	bh=5COp/TSKcg7kwo+kzOTmKpV38sVU/w8QGN/EkEz5h+4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=UUQilI7Bt6MrWKwmoulRzdsegEsQL05ymQ6R0rpZlJjR60Q3zdam/xkVjUGpAS/X8/qEXDSRmtBG6dYx+0ERNHKqwGWD3/+gMit2KnIXB2F2lMerR5ExDp54VBIaknm032/2Q5lrya/YnAtKoecyNSsCZmG3Vr2TdJVkBHbrFhA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=O7uC3kXn reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8770A418A28
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 19:12:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784056349; cv=none; b=SnCI1fXQdA8tfII2FJsM074HmiKpH49dmIZphouiENyOjkLa5kwBSQpcUPFDBvD5h8JfIJn1M4BefkNsxy7D4HwvcGWsUmBBVtAgmE/myiOA4OGn3oSeo6gf4jd54E+aD2KU4kEXnt63hBST3YBuKDy4A1xrzVCNbcwR6l4co5M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784056349; c=relaxed/simple;
+	bh=NKQz55hxpy4V2/xw8iMhAaHilmGFcZmdA4Bdw1G6rTo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=iWw58uFQs4mGNz+JbGHK8vkm0hMw8mPq9ZU62W24VF9YRJZYdmtUmoDCwp1LJhDiKt/X5XPguuqDpb+hWbmmqV609bmzR0EljIYI8SHtri6xr9bPVucH6L9eRGCCa1ups7AT0XgVxSXBjn98b8G8ux3s2pvxPBPSAd4dlhHDsN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=D7T3B79e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GDTRFcTs; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="O7uC3kXn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v30yOlDytVw7uKtLeZPsmk6FE/t6dl3U5ht0AsItcevyKRn+69My0In0UmTCqEJBgnoyVk5j57u6D11VH6P5HReBG59h2dy4vLEtJHHr3ZrMP7BfMFpieal4v/o4j6b+cXmd8ScAA6xevahzczIH8XVAiz2Me1rwXi3Y5nPedkgSXkEyqpiWHxYanWAdr7rjHvPeA+WC/Em+ZQSXe5dsWGHOVlt39ST4cSgbiWXYWOiMHUALq4MQdvd3mQ0JvyKMQyucFve6+CAbKlxU8xV1bjo96PNVHf/fJ38Hlq85E+CuPyhqVYhq1pB0b7ywTSd8KDKqfXtIksYvp3UMpBauJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TjQ+KtovMztVNiIbwrIbROnNTLlR1wEeQOEKGu+tnn8=;
- b=m26v8StkIjWfu+hDpuqaX9Scu5n/57+usY4e43jwDbl03xeryzguf2IwWbFqXifkNhLLauGWvAiWth0Yq1qEPugohCNgdNbmnmUtfE7igunS56FEKJj5wbzgYKOZJGBLHZv3ghsNmn/j9FYYa2DvC4k7PzcCGmVzYk9H8RSi2izghH4jdLxBSHbFGI7AZxjREV7POqu3XJFcnV7nu0Vj4Y+e9ata2hievAT+0vMRIvg/XqgL62nSZcsO8dvURGKfZRMzjw3fDds4SJ32ky0xgrtL5wyY3uyuTsjmQBO+tX23/5YGeXZVSK2hA9JOMYLWyog3RVMHlmzuxaGXHmTbPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TjQ+KtovMztVNiIbwrIbROnNTLlR1wEeQOEKGu+tnn8=;
- b=O7uC3kXnYcZ+MI8l5NHT/bbvkEPV200ac9QNgEZBYKMHDvOR2Brd/Y9y2f3y4kIMnWJLeCsC/Lte8R6iUM1Z2EaJCUnl8xCkHL9ezzvSLUw77ht/CzRXjw8N1Tj14kc0SZUnK+ekBpjKm8YZ+ERQWaKSj5TQNZuK0r8dWlSyaV92gM7//WrsEW+lyvIAbqc0USVNJ/eluU6EEARwacq3+jpOhm28H9OxG6gdccf7H6qWKOTtFceyAF8WqOqgBZVjnfyG5vKeMG/UT5rd1pJUFaJ4OEdNTYGctl3sG6sq8TOV1+ZlrJaQyMaoGNFtgmONyfuE0O93JmY6joPStk6//A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA4PR04MB9639.eurprd04.prod.outlook.com (2603:10a6:102:260::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.18; Tue, 14 Jul
- 2026 19:10:13 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0202.018; Tue, 14 Jul 2026
- 19:10:13 +0000
-Date: Tue, 14 Jul 2026 15:10:06 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Lakshay Piplani <lakshay.piplani@nxp.com>, conor+dt@kernel.org,
-	linux-i3c@lists.infradead.org,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, robh@kernel.org,
-	Frank.Li@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v14 2/8] i3c: master: Fix IBI request and free cleanup
- paths
-Message-ID: <alaJjgWkLKoQklNt@lizhi-Precision-Tower-5810>
-References: <20260714092053.2461482-1-lakshay.piplani@nxp.com>
- <20260714092053.2461482-3-lakshay.piplani@nxp.com>
- <20260714102026.510E01F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260714102026.510E01F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SA9PR13CA0087.namprd13.prod.outlook.com
- (2603:10b6:806:23::32) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="D7T3B79e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GDTRFcTs"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id DA75BEC00BB;
+	Tue, 14 Jul 2026 15:12:25 -0400 (EDT)
+Received: from phl-imap-05 ([10.202.2.95])
+  by phl-compute-04.internal (MEProxy); Tue, 14 Jul 2026 15:12:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784056345;
+	 x=1784142745; bh=tLip3RoufnJPJeBbpcoojxrxLCk+6g2vq1XFlcI4NnY=; b=
+	D7T3B79eqgvNNcgXs5wOLs6jcjNzHZ5iIolHLBxW1Oeb62FFt7Fz8IM1Eqypq1IQ
+	D4lBNgJBD37YDROUrqB5O3sqXbfFQ7x1nnhSXwTRpg9Va/jO4P3+3NRImMJgFQk/
+	lqHHyP3OdpN73ZQzhRtqxJCfNw3Q0xfFTLsxCKeNGCBXqgyAjoCtDpn+sfeLR4TF
+	5FuwIUQNbPjSoNvLqKoN21kmYpDwSyi/ESlS4alBQltxnvIir4Kied2hGdpnlQRb
+	7e45H8/79sgbRhgt85DHWa0BWXmd8AYO4dFYQhQ2jYIdyczN7KRXWPrQAxxvyHLT
+	3fVlzDq5IZL4RfFxYJiY5Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784056345; x=
+	1784142745; bh=tLip3RoufnJPJeBbpcoojxrxLCk+6g2vq1XFlcI4NnY=; b=G
+	DTRFcTspGQzHX0No0owi7/3QsH42KVB+/8qNjzHm0Z+HibJYkkGvhVDyNRpcS9Sw
+	PTGfU8P09TMN/zCJXiLzYy8fAWFw/CjcuIookfLYVit/6+guvJAgTolKnbK/IrKT
+	HY4IAk42D4bZzB8TL0hw7E6prNgU/WxQuxhVWMRlxQY6Xz26MLFETPloEQptAzqk
+	9bgo6xnLgtONB2z2+gMtfL/XQg7bDJ1ZcghPeJxjEnDiFICB/oBKW0DwZRFlG743
+	jM6q+x0/UfNMJkmYVV1B4KenRl5BLtymc1BOqqIxL2N72bqYZXxMj28yxMXD+l+I
+	t3ThIvWHSoXltr4h45Xyg==
+X-ME-Sender: <xms:GYpWah9aHwjwzulsOuw6GR9p1l7nl5KKtBu4u618Q-w8PDreV8KY9A>
+    <xme:GYpWaggNdHK0omDBpm_5-PLHndRj2n4cdSwq6wV6jWmrRRdaCl8tH3asgxKjRQCYy
+    rd5EgEj2DHF5sGpsHivx7wm-Rg4pKonGje1r4OvpyoRWfIZvKF4bVo>
+X-ME-Proxy-Cause: dmFkZTEszan4uBCfC6CBBOwC+6icxd081lKQSn1MZskwHoItpuHEdz+qLM04ltCMWvLQWg
+    vNwQsZuo/EHr2DPm3c8KV3BRW/3o+gZY1Rqdc9BjC+QrKvKbsZCrI2BVIshm3izHuH3Ya0
+    wci/QX0Fe4fIv+FTVP7FGvPA7Tl/KaXtF6RmQVsE+IwA3iiX/2tLmH1GkfnnVYw8F9WNAj
+    4rv9aefvuVnwZvnnYd2AtG7aYXeGk2I1+AxMuGhYpRhFTXbnYZr2jmWtYa1sk8kMLM9F8m
+    V2jP5ap/hZCEAfp5iWde3GVq7PENYGhuzlbnlPuNsGr4ntRC1u0zrMnBoiC5DJ4PoSTNnU
+    KHksBsUZ5SqWaTsENjVOnyKvl9hGzMLNOrNLT6kcXWGLTqKpZmcZVkL3mutxo2VAmW2L9z
+    EDyihBJllIC159RI2O3886S16ZYeRO8X9SzeWEMys7K1UhefeCGwS2FSCxEAwY4ejrovXd
+    tkc3eRV7paXBZy2m7w4RUFLS8puKeSVKx28fnDwnB3r6yqXecP6LI5p+St7GyPUPJ92Ecx
+    Yd4uosHPaCThHye2UNyxU5qafJTlPyUl4AkZSBYKvi/IS5EV5sem0I1xBnFFvYdL352eBj
+    fSj9mk92mD632xpOmI0Od7uptE8xJJcLgkui76COG459r7c0X+1UTteeZCPA
+X-ME-Proxy: <xmx:GYpWagKSOWVMNvAMYhfrC-NcyMhG82ofgzJFojGaStk0lbTjFUxWng>
+    <xmx:GYpWapFQhSxnCFLL3F1lsGil8uVeU5oN5iqfoOW3B-Op-_v-SporEw>
+    <xmx:GYpWasTbChXVxj3WAG0AoiON8ZBWW5om7PKHvahnK36Ed26wOXbJkA>
+    <xmx:GYpWatfrMj_nmH5VUDku3Z28re-BUBwMLd9EoLDHyiqDzAKwLSaIMQ>
+    <xmx:GYpWaqHVoZvLhtvMZPoudpm-LqU3-sjiolVlwvIDTiRr1o830SpLIPrO>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 934D31820082; Tue, 14 Jul 2026 15:12:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB9639:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5a492914-aae3-4209-9c77-08dee1db8816
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|366016|19092799006|1800799024|56012099006|4143699003|11063799006|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	TlEIKh2HTWRCV7kIA+ZRndLT25lwKmFqFrXcs7wgeCqOhu9+Po7uSwNexzPS8sZzVGvplws5U5o2J7SoEG7UAZiRsRtzo7NvvOy0A2p4kGO7+vSFXVGAWaNEo1UkOgYRmwosuwrbuN3WHfnV365pXh1zS+rENtUg6HYZAn5+eKSAANX5IEyojWNQ7nBX0ST4K63gSDaLBZxVLj5uMw3wqqSEyYSLJ5yck809NNq03mQiU8oC5Kpl17d3NlCNiWItw40OYVNs4yo4tNqjytWrDv/1Dkk0WXp3aOI96ywxSqcx1x+JVQdIKsa2mUcGgOAgw3dfzy1woeZJ88T+z5jc+YTl4NGTd7r/kDd+NtBVaWkhGzRKcJbWEYsg5TynzZt5NQ4UQ4/WSSTP/JoVbCs9TyMSFzr980wwrF634k1a9rfL60pJNIqEkMhqLU6x0h2qj8OKpt4+LJl/c5UKNVJLc1KsiNNKqcagW1iBD+gWjm+OW09OF4YeCRV8IOgtPAx8G+ElNrppPSnY2r9UIdks7lFnH8px5kvEdFjt0XQr6s4l/yD67eHUPSGBMZz18H2/+/HvovBo9oFW3H/wQB1f8Mxp8+/+FydrR7s1k2Wl7Lg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(19092799006)(1800799024)(56012099006)(4143699003)(11063799006)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?lDYnkUEd33BtiQSG3+E/s0dbcwGSTXset4awABob80mK7mM2ai9J9o2B+1?=
- =?iso-8859-1?Q?iAFH5OztrtFida5Sc5qL1SpSVOEf0JCVm1mcIYlsji0MXDhLurEMx1M31v?=
- =?iso-8859-1?Q?vlaWrk8Jr04rpDYBwHdNh1X4s2nDSjGzCd0ZNqUtomBxOn4jPNHcjlRbDV?=
- =?iso-8859-1?Q?oFeC1yPadcNX22X0UNYIS2foi2XuUsRNU1URX9GKWVvSN9pVhoCIGPkOVA?=
- =?iso-8859-1?Q?tcnUReySSj0gb5Lcyczqai+nEVz/nt1UKjpBGQUel7EvU8t5rNtHT93C6A?=
- =?iso-8859-1?Q?02ETnR5cYatw+HMsig5/7vxlIq4ooqvlbNU9TIhxxH7j/9iEmsxbTaK2ET?=
- =?iso-8859-1?Q?jubSkT+5lJpTP0Ux2kZeH3vpiuJscbQB3rw/ULCRZ+wkOtn44n8KLQKDte?=
- =?iso-8859-1?Q?txsTsxrPeog6kkvdV+TjEbf/BpKCNMr8El5Kmau1rkpUJYuKY3PMKnYNqZ?=
- =?iso-8859-1?Q?ml4Nn/xWg2KYLU46ql/2as16GqBu52QUR7NV46XQB/Wwotp2Oi8onUKuUU?=
- =?iso-8859-1?Q?789CD1/WbKsSvQdC8m229KzYp8bwR5EH2vB6GznlTbjUqJSWEAnGnZBNkM?=
- =?iso-8859-1?Q?HiHbIZBSU34Q1c9EK/G0vN3UvhqBzBZzLGQ0ole7w8DXdSXeOnJkqCwyT8?=
- =?iso-8859-1?Q?NUIT5A+AMOKulvCFnwxOWKUtWxIwAvHL0jOuTKPYEAXPfTuBzWHHvB7io7?=
- =?iso-8859-1?Q?f8s7r3IXwaL+Du14q8NK6YiRGv6z0OFTfiZR8Hr03O9dVWpZdK746AkYL1?=
- =?iso-8859-1?Q?asb84R0Q5ra96af5xH39tz96giyRLgylh0peTEoh2lXDE2TYw2hf4kftG6?=
- =?iso-8859-1?Q?St9z3e19VwgAp7vdbY2jwY1h8oqsHXQlFKThIiB1vEOFfPIBv+gEEuCO+4?=
- =?iso-8859-1?Q?lIOrtcITiioPHLb+APOa9LD5M7sD6Jr6hsyjoUigSEZRylOejFlEQkBWR3?=
- =?iso-8859-1?Q?oCNvwHGLZaNDUoBumk6qHvkxw++7zcTZfowaGBiGnSeThAu4t+8ifELNgS?=
- =?iso-8859-1?Q?jpoWvaRD6jLArNmmhh7O280h5lEvl3/v4BQE43Wr/qdDlFmyr86vr/4WYA?=
- =?iso-8859-1?Q?18zen3Mfkdq1f/1kGR9CWqD1xqhOIy6rnJ6/AvG01rbGy1UGSiplK1sDcx?=
- =?iso-8859-1?Q?UCdmxN+4o4hjC8vxG8fZn+Rr9tJs4TZnUyQci1zKmZTqXJQ0+1MvOZB+r/?=
- =?iso-8859-1?Q?KEownEtST23tExkyMXDzoK2xx4DYcTGmnm1r7npi+4qjkGfI6qnM0L42F4?=
- =?iso-8859-1?Q?kS64dmNJux3zRmERvul+ztX56w/cOQloLOobZ3qg0Ob8mxs+iywNrKHQ+q?=
- =?iso-8859-1?Q?LVQAtsvDyDE+zk+C5UUo/98xj8k4YvExbZKFz3yWdCqz5diHIUu6H8dCYx?=
- =?iso-8859-1?Q?TKl4qIZRLD8A5jfV8dE1zzzBN3zimeOu6BrdnJu1pEUhls0018aUvU6Ic9?=
- =?iso-8859-1?Q?Y2kfmPtgqnSGsJ1L1Yn56G1+3NbeRPvTTJCxOruUdj1OKaVPuP7OEZyb+j?=
- =?iso-8859-1?Q?rlI37P7791d6WioeKdmKul280/ixFFR5uuUk7C0q35HiPokx9MgiY8J2z4?=
- =?iso-8859-1?Q?4RMbjl4RIPU2uy5lc7/UjeGKRTaw0LS6gfihLpfUT2r2M1pzw/K9BmcEy5?=
- =?iso-8859-1?Q?eEz5O7PbCAvck2tab29LKaf1nSDaqzmxbM7VjczB0cB4DHm54JCwOv+LiJ?=
- =?iso-8859-1?Q?1QJLqZp05tOG4ew71Qx7X9NHRlvxU0U6xt5gGX8/NUrNPpIM2ejIEMRpXH?=
- =?iso-8859-1?Q?/cK3O2ODfamGI6Rfc5Ib7FjUOPb+d1Sy+5KVr0mJ0UTCTzmuzXyeTrVrS9?=
- =?iso-8859-1?Q?4nKXI0LUOeCjuaFBn8OOIP80DdltpMCgTtd646NoadelXh5jlnlE?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5a492914-aae3-4209-9c77-08dee1db8816
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 19:10:13.2713
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2v10q7w7EGR9ZM9cMxaHQK2go5VKXX+ebUU+hZodGfPH7iGBlNtPKMP/aPPjrmEaSD6kEoZNrid1gYsBd35UZRfr3SvaUjq2GxoLeI5zHzrgNJJ5wSmeWxHZlpx7AHjt
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9639
+X-ThreadId: AP3t97ZhQAc3
+Date: Tue, 14 Jul 2026 21:12:04 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Linus Walleij" <linusw@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: "Conor Dooley" <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+ "Rob Herring" <robh@kernel.org>
+Message-Id: <68d6b870-593c-47f1-aaff-373a448e518d@app.fastmail.com>
+In-Reply-To: 
+ <CAD++jLmUwxEdEw23H0sk6YsBCVDPLtY_SA=SeBRcxf+jTO=4tQ@mail.gmail.com>
+References: <20260709-ixp4xx-little-endian-v1-0-e9622d0ba9e4@kernel.org>
+ <20260709-ixp4xx-little-endian-v1-1-e9622d0ba9e4@kernel.org>
+ <20260708224834.138FC1F00A3D@smtp.kernel.org>
+ <CAD++jLmUwxEdEw23H0sk6YsBCVDPLtY_SA=SeBRcxf+jTO=4tQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] ARM: decompressor: always set endianess on xscale
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 14, 2026 at 10:20:25AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Thu, Jul 9, 2026, at 21:32, Linus Walleij wrote:
+> On Thu, Jul 9, 2026 at 12:48=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> New issues:
-> - [High] Bypassing the core cleanup paths when `dev->ibi` is cleared by a controller callback causes a permanent leak of the IBI workqueue (including its rescuer kthread) and potentially the `ibi` object itself.
+>> [Severity: High]
+>> This isn't a bug introduced by this patch, but does this XScale-speci=
+fic
+>> cache flush sequence execute unconditionally on all CPUs in a multipl=
+atform
+>> build?
+>>
+>> arch/arm/boot/compressed/head-xscale.S:__XScale_start()
+>>     ...
+>>     mcr p15, 0, r0, c7, c10, 4  @ drain WB
+>>     mcr p15, 0, r0, c7, c7, 0   @ flush I & D caches
+>>     ...
+>>
+>> When booting a multiplatform kernel configured with both CONFIG_CPU_X=
+SCALE and
+>> CONFIG_CPU_ARM720T on an ARM720T CPU (such as CLPS711x), could this c=
+ause a
+>> fatal undefined instruction exception during early boot?
+>>
+>> Since these CP15 cache flush instructions are undefined on the ARM720T
+>> architecture and execute before the exception vectors are set up, doe=
+s this
+>> lead to an unconditional system crash?
 >
-> Pre-existing issues:
-> - [High] Potential use-after-free of IBI pool during workqueue destruction if IBI disable fails.
-> --
+> Hm.
 >
-> --- Patch [2]: [PATCH v14 2/8] i3c: master: Fix IBI request and free cleanup paths ---
-> commit e0d1c57d2924f66898a40232f7e52ca0e1be0aea
-> Author: Lakshay Piplani <lakshay.piplani@nxp.com>
+> I did originally patch it like this:
 >
-> i3c: master: Fix IBI request and free cleanup paths
+> +               mrc p15, 0, r0, c1, c0, 0
+> +#ifdef CONFIG_CPU_BIG_ENDIAN
+> +               orr     r0, r0, #(1 << 7)       @ enable big endian mo=
+de
+> +#else
+> +               bic     r0, r0, #0x80
+> +#endif
+> +               mcr     p15, 0, r0, c1, c0, 0
+> + 0:           mrc     p15, 0, r0, c1, c0, 0
+> +               tst       r0, #0x80
+> +               bne     0b
+> +               sub     pc, pc, #4              @ flush instruction pi=
+peline
 >
-> This commit attempts to fix a workqueue leak in the IBI request failure path
-> by destroying the workqueue before freeing the IBI object. It also adds checks
-> to avoid touching dev->ibi after controller callbacks if they have already
-> cleared it, aiming to prevent NULL pointer dereferences.
+> which works fine as well.
 >
-> > diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-> > index 3b1c342be2bc5..ba37f71badac8 100644
-> > --- a/drivers/i3c/master.c
-> > +++ b/drivers/i3c/master.c
-> > @@ -3702,8 +3702,18 @@ int i3c_dev_request_ibi_locked(struct i3c_dev_desc *dev,
-> >
-> >  	dev->ibi = ibi;
-> >  	ret = master->ops->request_ibi(dev, req);
-> > -	if (ret) {
-> > -		kfree(ibi);
-> > +
-> > +	/*
-> > +	 * The controller callback may have already released and cleared dev->ibi
-> > +	 * when the request is forwarded by a virtual controller. Only clean up the
-> > +	 * IBI object if the callback left dev->ibi valid.
-> > +	 */
-> > +	if (ret && dev->ibi) {
-> > +		/* Avoid leaking the workqueue allocated for this IBI request. */
-> > +		if (dev->ibi->wq)
-> > +			destroy_workqueue(dev->ibi->wq);
-> > +
-> > +		kfree(dev->ibi);
-> >  		dev->ibi = NULL;
-> >  	}
->
-> [Severity: High]
-> Does this logic introduce a permanent leak of the IBI workqueue and the local
-> ibi object?
->
-> Since the core framework dynamically allocated ibi and ibi->wq earlier in
-> i3c_dev_request_ibi_locked(), if master->ops->request_ibi() fails and the
-> callback cleared dev->ibi, the check if (ret && dev->ibi) will be false.
->
-> Because the callback does not own these resources and cannot safely destroy
-> the framework's workqueue, the workqueue (including its rescuer kthread) and
-> the ibi object will be skipped during cleanup and leak permanently.
+> Shall we go for this version instead if it will be nicer on other CPUs?
+> It has the upside of just fiddling with a single bit.
 
-look like make sense
-	if (ret) {
-		if (ibi=>wq)
-			destroy_workqueue(...);
-		kfree(ibi)
-		dev->ibi = NULL;
-	}
+I think the version you posted makes more sense as this is the
+officially documented sequence from the manual.
 
->
-> [ ... ]
->
-> > @@ -3743,6 +3753,13 @@ void i3c_dev_free_ibi_locked(struct i3c_dev_desc *dev)
-> >
-> >  	master->ops->free_ibi(dev);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can this lead to a
-> use-after-free of the IBI pool memory if disabling the IBI fails?
->
-> Earlier in i3c_dev_free_ibi_locked(), if the IBI is still enabled, it tries
-> to disable it via i3c_dev_disable_ibi_locked(). If that disable fails
-> (e.g., due to a hardware timeout), it returns an error without waiting for
-> pending IBIs to finish, and we proceed directly to master->ops->free_ibi(dev).
->
-> This callback immediately frees the generic IBI pool. Subsequently,
-> destroy_workqueue() is called below, which synchronously drains
-> any executing IBI handler works. Since these pending work items reside inside
-> the newly-freed pool, won't the rescuer thread dereference freed memory as
-> the workqueue drains?
->
-> > +	/*
-> > +	 * The controller callback may have already released dev->ibi, for example
-> > +	 * when the request was forwarded by a virtual controller.
-> > +	 */
-> > +	if (!dev->ibi)
-> > +		return;
->
-> [Severity: High]
-> Similar to the request path above, does this early return bypass the
-> destruction of the workqueue and cause a resource leak?
->
-> If the controller callback cleared dev->ibi on the free path, we return
-> early and skip the destroy_workqueue(dev->ibi->wq) step, leaking the
-> workqueue and its rescuer thread.
+The potential bug I mentioned is with the instructions that are
+already there, not the ones you add, so nothing changes there.
 
-make sense
+The only ARM720 board we support is limited to 16MiB of RAM, so
+even if that is a real bug, nobody would ever want to run an IXP4xx
+enabled kernel on clps711x.
 
-Frank
->
-> > +
-> >  	if (dev->ibi->wq) {
-> >  		destroy_workqueue(dev->ibi->wq);
-> >  		dev->ibi->wq = NULL;
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260714092053.2461482-1-lakshay.piplani@nxp.com?part=2
+If we wanted to fix this properly, I think the head-xscale.S
+file should start with a CPU ID check and skip the rest when
+running on anything else. That would be a seperate patch though.
+
+       Arnd
