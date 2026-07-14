@@ -1,192 +1,129 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B39478851
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:49:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A3A35E1D3;
+	Tue, 14 Jul 2026 14:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784036954; cv=none; b=eaZsR7/Y9HfigH29rMAjW3UthcltEMXyt5jLKFN+DG2DOw3w7xboSzwBZ6EV0j8uf4X2MCqZyh5U69sY84Mn3H5Ca6buL+Xs5+FcKUwfaLrSnOcIEHX623x2p+TXIKtAAwLYwBHdFlzc0iv6MPR02CJWunQk1x3lEsJhl9P/bOU=
+	t=1784038344; cv=none; b=UejDA82EXau0Cw43KocA3ESe4KaVdJKDXkKsNVr6iQY8Go5TRRNSN1BhgViqfVn2cFaqlwSlUHV2WXM4Uniz+PsZrS2pl0saQcR5ehNUhqY7v9o4yNTxYC3x/EvD5oCWawfc1N5XWAIU5K3xzrO5cyICHYHRxdtTG9jhziT1MDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784036954; c=relaxed/simple;
-	bh=SClfuac9ud29KuSYJXQWNmV3qEKxt55agw1QUKxry4c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qnamnJO3OXNvObcHv4K5HBBtltEet5An2ALdm8f9l20dEeiVcyXBee4nySEStH4cIv0ll3zg+GLU29xmIGzA+6HTrFNCo3xgZWoIRMLoDNXg06uo0ucQNf5lIhSovQrgoVo1JaiKyAKwEi4Dv3gASUO6DUKn2rYwG7z99bojwiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m9Sf7JRG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RzpPUNcB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1784038344; c=relaxed/simple;
+	bh=aLyPVzhCOpxEYvqb+mdtt5+ZdV9EvzfsF8uBakUUHW0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GDS5cpX2Wm2GjP+98ZVi8FbhZtDirEA1sYGhvZcUi64Z8l6yVkRs9CPK4j3MS36u7tPVG1EAHj5sWx2tmIZF83cB9t1hDQ15LMbkNoVafqqXfsAlJjAkIT5547rCvFI5yEFwNqZgO3rg55Um2Hm7yOdg7AImpmLXxa36dwzsJC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S7a3NiNh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="m9Sf7JRG";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RzpPUNcB"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66ED5Lqm583069
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:49:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3Zb4BwnO9hBkM13ut4Dwv+PbiVMGnlurvOuDF7WQ+k4=; b=m9Sf7JRGshn4edY6
-	lHUhOJOVk6HwqwDHCLCJRLlbkiNMJajnrLITC9Onpi4dWXhgYHriPkp7yGfvnv7P
-	y1Q0UxzO9zUyRK6tmMMkXP8Pl8hT6RWgkCBUmbYVwQTUdTDG4RInKd8KRYPSe5XW
-	HiCtmzeTbSSm1Los5a7I2xv2/YfguocNgPG7YR89QZfe8R/n2GxRFTdBl92Tev5J
-	EAW6Ix8b0YDCGWHZcidSng1VI9Lr/xmIVsxfbvdUbHEorwbVyOJhSZwzNr+wUev5
-	G8EfEGdnQWjDzhQJuvWIjdrgICADWB2sJovKBzYFiRoEguSYme3AmyvPTaZQSWYJ
-	SOwHCg==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdnnr07bt-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 13:49:11 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-ca6bd8a190cso6424788a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 06:49:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784036950; x=1784641750; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3Zb4BwnO9hBkM13ut4Dwv+PbiVMGnlurvOuDF7WQ+k4=;
-        b=RzpPUNcBvLSoSHbmXojWjVFbbfZGLXxyV9FHgypINt6+8XAci8Y0oFHwi70XSEJjFK
-         f+7i9oxt2GQd07yvXk61fFszG8C3RMvsXy9GPF2h3s4DcBgjuCn+EGdKAiEDAczC0gMe
-         phNaKyPFBQfBIB8XUFLhPJfJN3qYDSdW1vWdVXSS9Kz6GA+NezXKbPSizzEsIax+Fje8
-         R8RwE8f+OrKfCYD1ot5HdZrDSRHeXqttqn2TaUeDe3drzrpHNcnDrWvRg56+oxjFX1bA
-         NTHzQJDG5KlRak7ievhrUYrmdppT06tLVjFxS23+hJUTOBT/7Iwr0NLCXnnJAmR1IxwU
-         LsYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784036950; x=1784641750;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3Zb4BwnO9hBkM13ut4Dwv+PbiVMGnlurvOuDF7WQ+k4=;
-        b=FkZIeTNE9N5MzHH2JMdY0G9J2tzsHTUFqYt2SqX12Gg8l8kDImSECXpYOz8HN2nr6w
-         ETK4sanWhIqgSrNAw9DZUFpjVDDJ9I+oukBjg83Dh0NX0nBntP96lMN7C7oxIHNZPvmj
-         UNf/Hh6L0SlLTYfAX5aPd/oQO/eDjDwGEEKlnkPaMAGlZh+rvqJQhQKaVf9UlznybSIk
-         iBmAVkY17GlFkNey9CDi6gPYdvUVOsREnLgvOoJ7F3tSwlLuJdjBZAgW1Wh4XxX21mUp
-         qHP/6OR4vAZNp7EG+1KKh12wyxHCBkOjRF55UUuf9WZGzxqKnllx5wOk2dTCOJ26/ugq
-         rZpA==
-X-Gm-Message-State: AOJu0Ywn0co73DSGYlqmyP3YTnF/qrOCP9MGYYgkuk5G7HlNKIJz/vmq
-	7ld3ViagErSbXgT2w8SO9V8xx/qw/5WW020KLdiCWOj4UXjKtahQbUiYHgpVDHcyaHzIYrZvRLZ
-	ZgkQo/CFoC3Yv5St836Yke/pTYICLrEfNwWEei3PD7azEeLYFawRL2lLaaNJYTKfCnZnQIe+QMj
-	HcGJg=
-X-Gm-Gg: AfdE7cl6QHfDQwlz4tWxokQBSPyvIxDNixc/9qlFKX94g/uHrr9+HIqFpJbSf207FUx
-	8bqMKe5MmXTFcjwq68GT4OyGjPcL3rx5j/GMFIQqYeg3oi6L1fx+LYmdq41lNYewyE+Se7Sl9lR
-	Bly6/qwRwljk6opHgCP+tg/s8l2j9F4txI6kKlptFqGm+gI7668gXUcFuU5nRtfKSL2Q2gCkXWg
-	EenkHv3MpsNCvlWVlsJvxoLqa55WhTRH8E5GA3XO+mm4zhpbVyuoWseavFSjD+k11HVNWkP17XZ
-	ZviiH4+z5xr/HAu8Au1wkI4GwjQa0vbN8XSnot6ITU/wNVbdID3MmG2bjAjqwjXjZiILQJSTBw0
-	kEA7u1sb0sGWivmTnWhEa1sUkav3aeNtEmWili/E1k7I=
-X-Received: by 2002:a05:6a21:9f17:b0:3bf:6c08:fb9a with SMTP id adf61e73a8af0-3c110a1e166mr16324513637.60.1784036950520;
-        Tue, 14 Jul 2026 06:49:10 -0700 (PDT)
-X-Received: by 2002:a05:6a21:9f17:b0:3bf:6c08:fb9a with SMTP id adf61e73a8af0-3c110a1e166mr16324489637.60.1784036950055;
-        Tue, 14 Jul 2026 06:49:10 -0700 (PDT)
-Received: from [10.206.103.83] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313b0240570sm48909158eec.28.2026.07.14.06.49.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jul 2026 06:49:09 -0700 (PDT)
-Message-ID: <6c060ba3-7d98-4699-8203-435264097482@oss.qualcomm.com>
-Date: Tue, 14 Jul 2026 19:19:05 +0530
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S7a3NiNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6971F000E9;
+	Tue, 14 Jul 2026 14:12:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784038343;
+	bh=hNRmwdjWvBOciKRs4ryAEgtsV7SkVI3x2lqu3ub7VWM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=S7a3NiNhkCoB5S81qVFcNTN/3CfyXyUFG+Y2GyW1fh5N4yj3cXWTg84JmLK/ICLvq
+	 0l+aatEwDgQEQ9YVZiLSKh36PgXMwY166nXSgiVjaf4bC8TgtyauZ3/rHHvTva54kV
+	 WCVjMoQBk2LpdhHxi59dDlnzEvjtg/U3DZ4Ud94818y9mP15bKhG6NGiL/wKiiB1sP
+	 tocpVjVeZgb+7UaXKp04ZI0NHGS6uzNrluB0LkEvBGkuO4mD3q+wQ4zkn6NIznfx5V
+	 r9Kq2L906KfmdsBfqvPMZmZoy3S/WECb9PI+wHQ0beAEwndFHnoM6Nk35CSqXrMrAu
+	 YREP8onuq7KdQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wjdrx-00000004w2v-0hGd;
+	Tue, 14 Jul 2026 14:12:21 +0000
+Date: Tue, 14 Jul 2026 15:12:20 +0100
+Message-ID: <86se5loe2j.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev,
+	"Oliver Upton" <oupton@kernel.org>,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v2 09/28] KVM: arm64: Relax CPTR_EL2 handling when FEAT_NV2p1 is present
+In-Reply-To: <20260714101236.905141F000E9@smtp.kernel.org>
+References: <20260714091641.1970822-1-maz@kernel.org>
+	<20260714091641.1970822-10-maz@kernel.org>
+	<20260714101236.905141F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] media: iris: Add helper to create a context
- bank device
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260709-vpu_iommu_iova_handling-v1-0-72bb62cb2dfd@oss.qualcomm.com>
- <20260709-vpu_iommu_iova_handling-v1-3-72bb62cb2dfd@oss.qualcomm.com>
- <20260709131006.A21C51F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20260709131006.A21C51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDE0NCBTYWx0ZWRfX1Z4dDwU8Be8D
- VqA1oO7m5lO1O7C05drWxxxOn2SiQoTMmk5En9xvbPfUxvUdTB3Mk2mDmJ6LEhryYY/mJ1lf0UN
- 7fySE4NgJnWxay80H8VAQRRMfkrhXEw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDE0NCBTYWx0ZWRfXzf3v/Ger5dw1
- oQMV6k8zTp5wjBokkVmGwzEJ07CO3KpHDo2JeBh5ml3P48YWcv61n41sgJn+2gujhEa/pQcArKy
- gjSrAMuIGaLMqhA+f7mXipfjObxmHCpnNi5WNSVZ4VKcnWWNoiE2zuKRqU+y8saKg2LI5fY3W5G
- e3oEOCVUl/nlycvIhmqqaLz8roicesPHdZjKrrmsD7Ld5LdqOB7kfLSIVMedB20YBOJnmo1hnSK
- NtQTQYadp6AQvTlvtz5T4NwBlepFWXURuLVa0cZJcZuh67b3eGa1XKWfHwKO3ZYLnYyWMtCTGpt
- y3dGJp95fo6i2sY3fhZSw8pZtL2EhKhf8ZKD75zH4bp/EY3ri3kHb5d266/GE2tX3jjlyiGik2W
- 3/K6haxZGeKEQ1xHn6iL4RimTAmTNnuutyQCHwnC3sKyEDaois09RjprpsoeIm3/ga9rfiEZjPG
- vKBiI3JdA2K9qNnQnUg==
-X-Proofpoint-ORIG-GUID: kAcYbGKJlRSaD3-mHGwmOIZtl3kuyOn4
-X-Authority-Analysis: v=2.4 cv=NfPWEWD4 c=1 sm=1 tr=0 ts=6a563e57 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NdL5NlN59Xxin2KEPb8A:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: kAcYbGKJlRSaD3-mHGwmOIZtl3kuyOn4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_03,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 clxscore=1015 spamscore=0
- suspectscore=0 bulkscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140144
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-
-
-On 7/9/2026 6:40 PM, sashiko-bot@kernel.org wrote:
+On Tue, 14 Jul 2026 11:12:36 +0100,
+sashiko-bot@kernel.org wrote:
+> 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The context bank platform device is registered with a hardcoded instance ID of 0 instead of `PLATFORM_DEVID_AUTO`, causing sysfs naming collisions and probe failures when multiple instances of the Iris core are present.
+> - [High] Nested trap configuration for CPTR_EL2 is evaluated using a stale memory backing store under FEAT_NV2P1, breaking nested virtualization isolation.
 > --
 > 
-> --- Patch [3]: [RFC PATCH 03/11] media: iris: Add helper to create a context bank device ---
-> commit d34d83e19b25d09de0876c75096c26d30aa90223
-> Author: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> --- Patch [9]: [PATCH v2 09/28] KVM: arm64: Relax CPTR_EL2 handling when FEAT_NV2p1 is present ---
+> commit c67129a02beeb5d291611085a5d2f889ac9d97e8
+> Author: Marc Zyngier <maz@kernel.org>
 > 
-> media: iris: Add helper to create a context bank device
+> KVM: arm64: Relax CPTR_EL2 handling when FEAT_NV2p1 is present
 > 
-> This commit adds a helper function to register a subnode from the device
-> tree as a separate platform device, allowing it to have its own IOMMU
-> context bank.
-> 
->> diff --git a/drivers/media/platform/qcom/iris/iris_resources.c b/drivers/media/platform/qcom/iris/iris_resources.c
->> --- a/drivers/media/platform/qcom/iris/iris_resources.c
->> +++ b/drivers/media/platform/qcom/iris/iris_resources.c
+> This patch relaxes the handling of CPTR_EL2 accesses via CPACR_EL1 when
+> FEAT_NV2P1 is present, stopping the trap of CPACR_EL1. It modifies the
+> read path to use the hardware SYS_CPACR_EL1 register instead of the
+> memory backing store for CPTR_EL2.
 > 
 > [ ... ]
 > 
->> +struct device *iris_create_cb_dev(struct iris_core *core, const char *name)
->> +{
->> +	struct platform_device_info plat_dev_info = {};
->> +	struct device_node *child_of_node;
->> +	struct platform_device *pdev;
->> +
->> +	child_of_node = of_get_child_by_name(core->dev->of_node, name);
->> +	if (!child_of_node)
->> +		return NULL;
->> +
->> +	plat_dev_info.dma_mask = core->iris_platform_data->dma_mask;
->> +	plat_dev_info.fwnode = &child_of_node->fwnode;
->> +	plat_dev_info.name = child_of_node->name;
->> +	plat_dev_info.parent = core->dev;
->> +
->> +	pdev = platform_device_register_full(&plat_dev_info);
+> > diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> > index 6b47d936efb32..1dfc1f88bec82 100644
+> > --- a/arch/arm64/kvm/sys_regs.c
+> > +++ b/arch/arm64/kvm/sys_regs.c
+> > @@ -326,7 +326,10 @@ u64 vcpu_read_sys_reg(const struct kvm_vcpu *vcpu, enum vcpu_sysreg reg)
+> >  			val |= __vcpu_sys_reg(vcpu, reg) & ~CNTKCTL_VALID_BITS;
+> >  			return val;
+> >  		case CPTR_EL2:
+> > -			return __vcpu_sys_reg(vcpu, reg);
+> > +			if (cpus_have_final_cap(ARM64_HAS_NV2P1))
+> > +				return read_sysreg_el1(SYS_CPACR);
+> > +			else
+> > +				return __vcpu_sys_reg(vcpu, reg);
 > 
-> [Severity: Medium]
-> Does this code risk a sysfs naming collision if multiple Iris instances are
-> present?
+> [Severity: High]
+> Since this changes CPTR_EL2 to be read directly from the hardware register
+> SYS_CPACR under FEAT_NV2P1 (as the memory backing store can be stale without
+> trapping), will direct readers of the backing store now read stale values?
 > 
-> Since plat_dev_info is zero-initialized, the device id defaults to 0 instead
-> of PLATFORM_DEVID_AUTO. If the SoC device tree specifies multiple Iris cores,
-> won't the second instance fail to register its context bank device due to a
-> sysfs naming collision in /sys/bus/platform/devices/ (for example, trying
-> to register a device named 'pixel.0' twice)?
+> For example, in arch/arm64/kvm/emulate-nested.c:get_behaviour():
+> 
+>     val = __vcpu_sys_reg(vcpu, tb->index);
 
-Ack
+get_behaviour() is only called when a trap from L2 needs to be routed
+to L1. Therefore, the L1 registers cannot be resident at this point,
+and looking for them in memory is the right thing to do.
 
 > 
->> +	of_node_put(child_of_node);
->> +	if (IS_ERR(pdev))
->> +		return ERR_CAST(pdev);
->> +
->> +	return &pdev->dev;
->> +}
+> And in arch/arm64/kvm/emulate-nested.c:check_cptr_tta():
 > 
+>     u64 val = __vcpu_sys_reg(vcpu, CPTR_EL2);
+> 
+> Because the L1 guest writes to CPACR_EL1 natively without trapping, the
+> backing store is not synchronously updated. If an L2 guest traps to host
+> KVM, wouldn't these functions evaluate trap configurations using the stale
+> memory backing store, potentially bypassing the L1 hypervisor's trap
+> configurations?
 
+If running an L2, L1's view of CPTR_EL2 (which it accessed as
+CPACR_EL1) cannot be resident. Where would L2's accesses to CPACR_EL1
+go otherwise?
+
+You don't understand NV.
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
