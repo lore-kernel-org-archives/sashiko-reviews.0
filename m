@@ -1,79 +1,79 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520494C900B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 15:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2F636F428
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 15:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784042235; cv=pass; b=l+gRjbjW7xU1dXYasHisDW0B3aQ3pr3DZDt991kQPuZo3yQ4ivHmPNtuc+sNCpecpT51EoyrLZp1YDGqAtoKvf52LM2awlWV96jPT/Dt8lWXjieGMa2cx7adLyhsAR+g6dZjnTGcB/iEcIH+pvYP8OzfwGEqlijudK1FPiIfK0I=
+	t=1784043197; cv=pass; b=poabF5ggefkbnypqJ+NQevnp3bgg8mtMF6sr3ALt+sCu01xK2bbXpAJ4wzru4U4wCwTtQ/jPsVjWKb+WwSaNwOqBrSFCXCGlNvyyehRQyzj4YvROmgZgHQ3PnQxayjGr2MlMWjeuJ94rWJhFbEMxa9XK3FgUsKTkO8xjYY1jq3s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784042235; c=relaxed/simple;
-	bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
+	s=arc-20240116; t=1784043197; c=relaxed/simple;
+	bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ohB8bvWtiEqUtJ4hQZINdlJr9wuvJTAVnkDndemAYMsWbnHIE2N77YbxTm2ToeIdrAy/RYMCnG/rRzJdZ5bj4qghps4E9/Wq5fj651bmeUphKakdtQcg41z/MCHlGM2ycHP0DFZvNyktDGnqtFa/WerFDRL6InjEhLOo2xNqswE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCL0LV1F; arc=pass smtp.client-ip=209.85.208.43
+	 To:Cc:Content-Type; b=dC8/kv6P915Qdd5oi/A3I8Vq5EsZZcuqHBOzBugOozIpZcX22Q9OLTvnsz/GjlLv/U2hBri2QUw54Y1cC4gzNoTSGhm1SIBOxAoI2B34PZu1pXajm/guy5q4cfYpQQqZB3B3zgksR+m5iUjcJ+5Yh+En2gxAKNZkHxZa3vVBGAM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=saX+c+Wu; arc=pass smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCL0LV1F"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-698562f10e7so6303170a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:17:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784042232; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="saX+c+Wu"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-698aa7ba320so2987282a12.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 08:33:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784043194; cv=none;
         d=google.com; s=arc-20260327;
-        b=JuBtSrmmvnfGG6kIu3Y/W4WXSV7ILXLHx/e66lVc7v27CXY3JlFc10NSRU3Mg5/o0p
-         kJ3OVyg6W79dfbCyf+rd0GyhAw054fLbUd5gyMRcVaXbt036h23ihNnxKP/ZirPYVek+
-         emnZ/O2XGKiWbObVk77vQJ4Szi2BaK6qYCDtM3pHzEGEKRXHNW7eTovM89qOB6I/JLIE
-         aqbIMv33C3Nj/1nmJuvQX4obDeOWdFecq3fui018YcYSAPcQ8dF62dP1cY/SR1vJETjg
-         PwHjINT6Zh3AU7GkKMgDjw6UodbOa8LJZVrmwCq1x5N+xOoFAZNzUHU8buOx+CICP9tj
-         fx/g==
+        b=mPlU3Ly4FIj4mB2vCIKSuqvgiVqmpUgyGL+ukraFnKidh33IDx4DLP+GAhTc3zRixi
+         4vuNAORPArYkaEXJyYQr8FXHI+9vljXB8fe05AVTcv0MDmEwobwPL6cVsWEDfmuYKrot
+         NhC7PndrJ8RSj/rNsEW0C2WhMhAo5EuFtn5oAuI6zjSFWyGnYc4IJfEv06Z994TDXhqu
+         ZYndE4/SBDSptK5UCd8pLEH6mRwFfy43hwk4uaRmOQyfgkxFpc7D83WynpC1u/JFs2y6
+         she90ykkceznxOncaRWUH4u6LQ9mDt5Xi4DENtcUZrUB3MBNggWgNsODc8hISZdqRlMQ
+         Igww==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
-        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
-        b=X9W63mwQq/uwlCtL9/HzUTQLqGlerpW9zOle8Nlv0Fw0UfON7S/IQu5PG++p0m86P2
-         fGqG3oqVnRXk9ScmwY25qMoj52JtrmS1KeaZpYQHvNUnOCX3TCcWoIBGlY21rrlO6jBL
-         AK0Q+YkZQYwDi9ezV1WQMFk9CDUfIRR4bgtAIcHuKxuKsbTN43hArBN+HexTBDOgpJ6k
-         JoI/WOTqjKGG9YkqUpHq1Q9L08XhJHEdTXKbRbZnzqlBoy6Q0Ri3hdwmVPTmHMEyXxjd
-         hYk0wqOIRGxsmXbWm+IfVVxWBzp+Kh0VdNHfxjhH+OtJZm5naR6A4ahTfoufIeWp3BvL
-         m+xw==;
+        bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
+        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
+        b=B5MpIjJZaBR5UXGUxw/v9BSj+IEkw+rrF5EeOCTvQ5E/Hb8p+ARegwRYauqmKXbNau
+         g61g09+kXWY6iDtKrszMSGPzeTaYd/uYZpXRm6G3oRB26LY2EkMYO9MDCS+F3kz7rB6T
+         +bDfNX5rcTO8PbdiMEaYXp35iXVn+MKEAYzWAYqWnnHIHa1M4K2J7vKRqtsz0aN7dRXr
+         4c0ZAM2sG5E1UzAYUSQS2QLtpMENE0ICfUgVtXBk1eyBxT1PmKWC7yzBbBN7Cj+YTPV8
+         fS1Vlr8s8wyva/xqG4JCUWl81svokmBCt3l/Mh+jEy3r/1pmFmrOxj+LSWMJNmAFMQBC
+         Lq6g==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784042232; x=1784647032; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784043194; x=1784647994; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
-        b=RCL0LV1FN3GS7GMVT6ibv5uQYgsRt00/dvKSX7ivlpjkvvg+TEDBwrD8hQUdR1Knul
-         F/MRh7Ye6EKe27sHuvVNwL7FuD/6X3X9Z8jQqsJiYJPRWQXhc7iK8nAYoYPtdYA8aKc7
-         w9Bz2kUFJza16qzcHN6EZHWCIgMKLAaVQg25Tt/SHesnP03GIOWVmriyUVJVbWIOQhDN
-         zjA3X8Dg4myhEe03l2M4Q+OXYsC9oaifbaxTq2uTp4KouweAQ4Pqv8YuRk8ms33xBVo1
-         PRUEYFhreLi2aFHYP5PmcW+eIHU/cKV3vZz9Enmxtq75AfUesH2xHdWXaCw2tCOY+jt4
-         f7Lw==
+        bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
+        b=saX+c+WuHXhKeEtvjSvR4c6w0iKXl/7IfMDRq3QJoYQeRnOkkwcmJU37++kiriPUkR
+         sN0DePF+He7VniCJcn6L78AC0yge1AaDI1eEYCmKLXGsFBSUO/Bbd0uCeish+Jt7FkPD
+         7p0ircAwIH2PLIK3W8setDjitzE9P3XSX4nkKDDEZisIo1z8QdA07ViiUF9yYeO8zmiV
+         SXsBN7UmO7U7GLdpPrMKVq57zFB2Rl6/9Ay6xMbNAvAXprDkNAR5x4RYxjql6Z9e0uHR
+         D6hvPIzuVuGgNsV/8vYOkBCoQhazAGbVtwEtGGptP8ad68yvmbsI6Ty7Fc5j0Elmc44c
+         yf8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784042232; x=1784647032;
+        d=1e100.net; s=20251104; t=1784043194; x=1784647994;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=QCZioSxZUKRoFUoafPKC6kOcWAwiCPQKbHmk8VnfLNk=;
-        b=E5JARPvfWWNdh1D9d1wCGsMHxu5Jjplx1qpDtcR4ZVAPchMEcEH96/PT9lDJzeWVwg
-         Yia/agN4+8WxkEyFUMlyqwzWP71upFmYhzQEuvzZ77okGniqBrTHPWKqNE6wGLFhYX/4
-         TvOvIGFWU3vYwJL8pwzefp1VjCeRkmI6tHMgLNPsXI/9AAEgQo1AjdlECEfrpHCyt1qo
-         KJZnJHXZRAfVu5TTZsV3h49hausdJiqkbe5OJ5+b9+jWDckm/INzoBx5NDilD28v++Rd
-         jXgc0lTVRaQEi/93uzqDA8ZBrCVyDt1VZc6/2zDkIAk/sKLxgKfsABvS4YgK6Uc+Vi/s
-         Cw0A==
-X-Gm-Message-State: AOJu0YzZQvRw3ZCzaTTY/0g0Ne/rZ4PXENJwH4X/gvztBduhpj1Vdk/0
-	xJfMdlE7r1y2C2cpoj0z/hY4YyD7+a6a/BA+OEFXbDLnTbLz0zCQ+HKrjcfyEhyuPCJ4ZgrQBsM
-	k4Zrm0R5kMCG77w5Z0gLpvcq7yNvGXoAksrlW
-X-Gm-Gg: AfdE7clZqxAbubTYAKcfTOYeEqKLuQlYZG9jxfA+gcU+VEUgPb6Y2EI38pVYhpqGWRV
-	diwx47vwH4iVZGrLMBKM7h1AGXB7yEz7A5KgfgXeOzBtx5+PIvj0X1UnEh/ahjBJPZp6Zmgxr/R
-	WYaqe1rG+85h2rOhxGTXluDqYILhvbFawfAS8Bu/1MQl19BtFace1BiUziGo59ELl9f9/pZR9yN
-	6QiPtTCLSQb2hHBh7UH0Vf+IFJQpOCTmb4WtRJChhadtyzzJVSQLNM0IcFar/vYqeNjTPWLxg==
-X-Received: by 2002:a17:907:da16:b0:c16:534:6a30 with SMTP id
- a640c23a62f3a-c1667bb3a0dmr153796766b.58.1784042232390; Tue, 14 Jul 2026
- 08:17:12 -0700 (PDT)
+        bh=DUDxctZujNARWIATLcjZzvBa5DYpwPhbf7vLFByLhYM=;
+        b=kcxdyW3QrtcRyW2BAxgHB0brjMM376JAx0haqCHYWPMHAWg+TlUgU/GnOu3nvHDGkW
+         YcMbQKYBIhNjlovnDJMNyUeR9vX1sIuhqb/6gUfA0HUEltrW5NP8wjoWpUOWVYqNXe1q
+         9Tm8/zaeKGJMWXWwfIC8FBOO2+hAqYoDE7QhdtnlaXfAi18zm7Qu4GtzrIcXMq+F15rj
+         MPcJ2YCyjNORCqItgzO5e/oAgGCNumpJ/j35DkIr3TbTsCBkHu0kSQAubYrISiQPMz6b
+         Sm6Ii53UKIoYaPKzLENf+JpLcn5CgP1UPiB9FQ1Lg98xE7J5QXimP45V4WW+OvcFeJ48
+         oMag==
+X-Gm-Message-State: AOJu0YxCOUSXFTyxBCNs0ue0vUniDzG1XbJfvheu92QEPzXvb4XAmxEw
+	am0qd7gtWNfX3Qe27t61OojVWvZBcmQ3V0qVyflvt/bJmOR/9j14A87wKqzEEvprqLa/2BL0NIz
+	KHM2ZCH+fauPUipQyr+kKe2gtgxbsMsADZsaY
+X-Gm-Gg: AfdE7cljgxCgU/0rfJZxTyFiclMNnDNI5/1I7Mza9veYZ91OxdwVLlwu1mpnLgZBmRQ
+	EX2YNH8ssN6odhEjS6FzLcnxmbwIpHhGMEKQDsZg1Z7DvNxcJoQmPHRbasXyDkFu8TWB8+v86PE
+	1X6N/7n4fxQTVz17Q8bJ7xLABfVHoaA34bzYDKiiRvNTZK85agFzkpLDsdQoKIWBdYmn8bMSc5E
+	Uc1oCVHCdTGVytBsfNTaIiW9vmMpvjDS9gUwOJMKrtXCTxyBXJc9Nl4dEvZhhBk7JKMOFItEQ==
+X-Received: by 2002:a17:907:7211:b0:c16:242a:4733 with SMTP id
+ a640c23a62f3a-c16242a5993mr650163866b.18.1784043194326; Tue, 14 Jul 2026
+ 08:33:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -81,42 +81,107 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260713131223.279555-1-a.shimko.dev@gmail.com>
- <20260713131223.279555-2-a.shimko.dev@gmail.com> <20260714131728.6C94F1F000E9@smtp.kernel.org>
-In-Reply-To: <20260714131728.6C94F1F000E9@smtp.kernel.org>
+ <20260713131223.279555-3-a.shimko.dev@gmail.com> <20260714131729.48CD81F00A3A@smtp.kernel.org>
+In-Reply-To: <20260714131729.48CD81F00A3A@smtp.kernel.org>
 From: Artem Shimko <a.shimko.dev@gmail.com>
-Date: Tue, 14 Jul 2026 18:17:00 +0300
-X-Gm-Features: AUfX_mxoe0WVqnkvs3GVvNEK0y0uCrWT_C7Lanjv8yWfj1dW_K7a-g6ZJXk_Svs
-Message-ID: <CAOPX7470Xdk=O6xxQRUyiYg25yQfXDpD+MEeAWwVyLVF8zQJKA@mail.gmail.com>
-Subject: Re: [PATCH net-next 1/2] dt-bindings: net: add DAPU Telecom
- DAP8211R(I) PHY binding
+Date: Tue, 14 Jul 2026 18:33:03 +0300
+X-Gm-Features: AUfX_mwi-FnQhvC2JtVlr51haSy7xBYWK3yOmmbUT8m24rZgRfmOoOKYkm8x-Hs
+Message-ID: <CAOPX744Q2pyAv2ixFgrwGrW++-BVWs-0Hx7tW7XzJ9KbpwZC5w@mail.gmail.com>
+Subject: Re: [PATCH net-next 2/2] net: phy: add DAPU Telecom DAP8210R(I)
+ Gigabit Ethernet PHY driver
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Tue, Jul 14, 2026 at 4:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> [Severity: Medium]
-> Since this property is a vendor-specific extension, should it include a
-> vendor prefix like dapu,tx-inverted-clk? Introducing custom properties
-> without a prefix risks colliding with future standard properties.
+
+> [Severity: Low]
+> The commit message documents the property as tx-inverted-clk, but the
+> code implementation looks for tx-use-inverted-clk.
+>
+> Which one is the intended property name?
+"dapu,tx-inverted-clk", it will be fixed in v2.
+
+> [Severity: Low]
+> Does this cause a compilation error?
+No
+
+> The abs() macro in the kernel strictly checks for signed types, but the
+> result of the subtraction here is unsigned.
+I inserted abs_diff instead of abs for u32 variables. It is safer.
+
+#define abs_diff(a, b) ({ \
+typeof(a) __a =3D (a); \
+typeof(b) __b =3D (b); \
+(void)(&__a =3D=3D &__b); \
+__a > __b ? (__a - __b) : (__b - __a); \
+})
+
+> [Severity: High]
+> If the bootloader configured RGMII delays, are they left intact here?
+>
+> By not setting the mask to clear the delays for pure RGMII mode, this
+> leaves the PHY with whatever delays were previously configured, violating
+> the RGMII interface contract.
 It will be fixed.
 
-> [Severity: Medium]
-> Will this compatible string cause the example to bypass validation for th=
-is
-> schema? The schema requires the compatible string to be exactly
-> "ethernet-phy-id0008.011b". If the example is not evaluated against this
-> file's schema, it can hide other validation failures.
-It will be fixed.
+> [Severity: High]
+> Does this write actually trigger the software reset?
+>
+> This clears the reset bit by passing 0 for the set argument, instead of
+> asserting it by writing DAP8211R_PHY_SW_RST.
+In dap8211r's datasheet the low is active for this reset. I will
+comment it in the driver.
+
+> [Severity: Low]
+> Would it be safer to poll the self-clearing reset bit instead of using a
+> fixed sleep?
+>
+> A fixed sleep might fail if the hardware reset takes longer than expected=
+,
+> and contradicts the comment about waiting for a self-clear.
+Agree, it will be fixed.
 
 > [Severity: Medium]
-> Will this value trigger a validation error when the compatible string
-> mismatch is fixed? The tx-internal-delay-ps property enforces an enum wit=
-h
-> strict 150 ps steps, and 1150 is not in the list of allowed values.
-I wanted to show that you can specify values other than just multiples
-of 150 ps. But I think that would be unnecessary.
-It will be fixed.
+> Is it safe to modify MII_BMCR here without acquiring phydev->lock?
+>
+> Concurrent execution of the phylib state machine might race with this
+> debugfs write, leading to corrupted link state.
+As I see, the phy_modify acquires the lock internally.
+
+/**
+ * phy_modify - Convenience function for modifying a given PHY register
+ * @phydev: the phy_device struct
+ * @regnum: register number to write
+ * @mask: bit mask of bits to clear
+ * @set: new value of bits set in mask to write to @regnum
+ *
+ * NOTE: MUST NOT be called from interrupt context,
+ * because the bus read/write functions may wait for an interrupt
+ * to conclude the operation.
+ */
+int phy_modify(struct phy_device *phydev, u32 regnum, u16 mask, u16 set)
+{
+int ret;
+
+phy_lock_mdio_bus(phydev);
+ret =3D __phy_modify(phydev, regnum, mask, set);
+phy_unlock_mdio_bus(phydev);
+
+return ret;
+}
+EXPORT_SYMBOL_GPL(phy_modify);
+
+> [Severity: Medium]
+> Does the else branch intentionally destroy the previous BMCR state?
+>
+> By unconditionally writing BMCR_ANENABLE to 1 when disabling the packet
+> generator, any manual speed or duplex settings previously configured by t=
+he
+> user via ethtool will be overwritten.
+No at all, it changes only loopback and AN fields.
+
 --
 Best regards,
 Artem
