@@ -1,136 +1,115 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B674417BE8
-	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 17:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784050939; cv=pass; b=WJtsmxn6iZO3JD90CRmhJB7qMVGRyF0zlctgi5dmvzqXJdN/KJlmTg9a8KzPAaOaQyVF/hCwL37r+qLdCLM14lyMoePbe+Z5ca3vo+WWb142IpGGhQsOcQoA60l/LyXHKULlgv8vPEF732pVMgQ/GUKQO8d6Lb46Bo1kr94AYUA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784050939; c=relaxed/simple;
-	bh=PJQMiBoDQ4Gx4VSUeyERwpCBV/hFLWxXiJWOwFgoD3k=;
-	h=Message-ID:Subject:From:To:Cc:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=UwTOnqxIEIKccLKeb3MTDEaBFHQ9hYWpUlWtQ/zWZVaBDQAfSHuFC+9AGklB+EIQj2O9V33TrF51BCYMZrnQixZIVXSC62OYs9PrRtFYzavHTxxDVe/2rFaau++BGSaPZIFA2FuQ8C4xyOfEgeDds8B2v/vvBMR5U/wM1y34wpg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b=PB1w2fHv; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3955328B7F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 18:19:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784053183; cv=none; b=fkNCzDFnJ7Knl49WUbpLxybCcVOYL1RoOaPECIbPYA57BoYi5HGTGBo+Nl245qOhj/T9ZTFLWju32jFS6FHzrLpgxMyeGkDU8t7r9n99fOwnDc/ApwyCauzRPmniesFo3B4YNLLcngxVm/hK4OuNhjsZjIfdgazDRqlHeFODYg0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784053183; c=relaxed/simple;
+	bh=C1sFBtxE69ioRh1QGckxAsEgc8urMOayeNMSZKFqcyM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aWhVRa5vUvCSxJ+CiexjX9mF/16DmMEJU+PLz8Sg1uzqZOoCfP279Ylh9LnfUXQ9jS9X4c0MOB/PDCXgPNmlXcKRmAHMZwVrXmeLEErPJpfuHf6HIBLXlAzTWfcFt+3y7u6Gz2gxNCxqcbvnR/J+T/9BfDCEoTTFLVe56AT1wws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=saJ/2x+z; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rong.moe header.i=i@rong.moe header.b="PB1w2fHv"
-ARC-Seal: i=1; a=rsa-sha256; t=1784050933; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=gR2s5iQJ+t8YUxwOKCv+dM+ESf7VDbyt53sk/q0/SH0f6dWy+22AVtocbxSX7gNt82ElqFgs9lJHz8XSMdN+hkh6JJrK6JL6SGzrk+B54FWq8213hrEg/y+gFzCSPmMT6wmC9gc59Gx4H9UK1pd0hf5EMB+n3mI7nidYEu21mzw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1784050933; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=4tGkI11D7DTEyQAblb/tV5Kx06tzVp6l+fi7Ui7d7us=; 
-	b=ZdfUnEEqfqjBR1J5LFtiTtTzft2oQjI3wepTKYPDB5XDMquUUvaKxEqXp2Ho8FLEvCUNxMq0KDKmDIRwu+A6IoZcUaIW4AfCdzkbCCHDb11n07ljzNa8Ks++WEV0IFW0esGff2RuiP/9NiFgMre2K+8Bo7YSmaRzMdVpE8EGweY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784050933;
-	s=zmail2048; d=rong.moe; i=i@rong.moe;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:Date:MIME-Version:Message-Id:Reply-To;
-	bh=4tGkI11D7DTEyQAblb/tV5Kx06tzVp6l+fi7Ui7d7us=;
-	b=PB1w2fHvCKh5Yd2y/uWMZ4uv6Ld+ykQLM+zfUmyqth9TF0xGNPi/05tOZrqG/+sd
-	54c/8obKytwzhVsMf1lxpb5JjiW+dIF8Fk6u59Re3iTOtIryM9FrmrQE0nFQcR6vweg
-	hlY3wgQQlxOC3G9gJY/OxN2uwe228F+A3dZrzdbzgC9JpFPbIDLE/btcdqb42AVlMbL
-	WH9dgbR7uLDZrFIfK86DfBjZ+iYZGQ9uKcto0a1kNF9XuByTd9oY/ZA42JOHVoeeKQj
-	3z2DNXDCZp/WRSg204UVqEMc0awjrGY+hy35npDPTLP3jftqUbpCK801BKeJFKNk/7X
-	Ki8RUEfVpQ==
-Received: by mx.zohomail.com with SMTPS id 1784050930140452.94635249061605;
-	Tue, 14 Jul 2026 10:42:10 -0700 (PDT)
-Message-ID: <058dc5456dd8ab4620d4b0e4ba829eb492d1ebb8.camel@rong.moe>
-Subject: Re: [PATCH] leds: core: Disable hardware control when writing
- brightness
-From: Rong Zhang <i@rong.moe>
-To: sashiko-reviews@lists.linux.dev
-Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, Thomas
- =?ISO-8859-1?Q?Wei=DFschuh?=
-	 <linux@weissschuh.net>, linux-leds@vger.kernel.org, LKML
-	 <linux-kernel@vger.kernel.org>
-In-Reply-To: <20260711185219.2BF991F00A3A@smtp.kernel.org>
-References: 
-	<20260712-leds-hw-control-brightness-set-v1-1-1de593b09d26@rong.moe>
-	 <20260711185219.2BF991F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 15 Jul 2026 01:37:04 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="saJ/2x+z"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-84830c774a0so1094727b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 11:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784053181; x=1784657981; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=aZW9BZhR1bEUCTQBEiW6Qsx2NvsQORDmw5UKJ5XbZAA=;
+        b=saJ/2x+zrOaUv9bURMSWgcU2WBkqam5p03LJgDfpmerCmIhjr3e6G0mr+vUuDHQwgo
+         k/9vcwUQtwkyNu55modPJh/zYjQup/oqk7FDV7WuJe5n2ZYBMAa+goD6udIqeaVPCE+P
+         78hiRzDxh8Db1BOShMUg26DUmy6Z9Mo5r1D4MJjOK4Fohr9fciHdsM1MZtQxXc3xEWag
+         bp39E3FZNJ1H4rbh4Co8O3wTD7wa21GMiwcE5Y+dYgzmXW+QCYz5hqVXax0eBVrVvnIh
+         dz9sbNMqa0seRf/yvI1OqsduJyYXRWbu5azRxl6bmNYX4GUbvgNaKhVEjk4XcXDfZLzT
+         uwwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784053181; x=1784657981;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=aZW9BZhR1bEUCTQBEiW6Qsx2NvsQORDmw5UKJ5XbZAA=;
+        b=QGd3tbnf9+swj+JSAT4v4W3KPatIfbLw9J6o68fl/hsqF9GdfiCm+Bws6/d0Ym7vR3
+         +23YJGB4xXjHuJ4DdA7JfNReEjNksSjbXFLA2jh/aYuSebZ6ncwO/WSWLXzXeqUM/WYQ
+         +K++5HSYxqqSyJpuIjq8O+z8M8VSXyaAWiOHn1YHYZOG76gVMtApbZBPrIHQnpA8Ys7N
+         k9vwrEZ/8qXvIHJ1up9LgE9zBPCYbrP9maJ8VwHMUcZ11YCAvStRbqMmegfp+7CBKvPR
+         hCa85KpsEzxzRVb1+Zy764iA3ThkZs6G8aHAkgvJQzj70JnznW2kaLS63Ya2pYGXKG1l
+         k4cA==
+X-Forwarded-Encrypted: i=1; AHgh+RpJeySU4EwGhW5VGnP+A72fBUv+BeyfkvjW4FR3+THX8yDT0yGGOgXXFJ2cv+RI7eCFMy8ZMsqFpPsx5MCu9k8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwsTEGuDNo32um1Cyr7NAWRoKWssCvBduoGChGM4FUv6uZxTxPD
+	wMMJxzZjIWI4jV4fNGYihvvwJGxxK81KYMy0Kyrs5pX7igLzgr2zqyMx
+X-Gm-Gg: AfdE7cnWVo95IwSF0lDsfbAIWwof/AgW1PR7pVSh5ysvqEakN63vyTZ1HAXUmXo6QCI
+	N14ut0PShiFWdBZyIjUjr/ancLttS82i5uhlXBdLPIli18V7TGVLGZC6o4cUWLXVrrRR1a9jPqs
+	5oJQn0VR23+9MmHMQTmwLns2Ty2XQ7Nq9LTEkJwLFjXmFV+WP5jiA6kFEV+qSsxNE/wKutHObmT
+	3DsTJHKxR2eIl/3N8E0FeePs2Ur1fKl8FErZh94v0TFfzTgJFkm/bR+eswlf+0AVHjn2PvJNmgK
+	9H9rtnusmElksid6felTUhno1GwkoqCOb1HOr7MiMk2FF5uRFKitanb3Xe2AF/SORAJ8IkaR5WA
+	4K8JlnYd6dXrWJ07GBSS9Zp8uHXMoPALcwde6ANS2tftRezGR3A6zpuHw3b4Jn65neXzZ3nQdFu
+	YR66YlsOsF1Q9gck7iDT4y
+X-Received: by 2002:a05:6a00:228e:b0:82c:e9cc:f61d with SMTP id d2e1a72fcca58-848896c39e2mr12654855b3a.9.1784053181128;
+        Tue, 14 Jul 2026 11:19:41 -0700 (PDT)
+Received: from john-p8 ([98.97.42.39])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f7da667sm1855269b3a.41.2026.07.14.11.19.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2026 11:19:40 -0700 (PDT)
+Date: Tue, 14 Jul 2026 11:19:38 -0700
+From: John Fastabend <john.fastabend@gmail.com>
+To: Jiayuan Chen <jiayuan.chen@linux.dev>
+Cc: Nnamdi Onyeyiri <nnamdio@gmail.com>, sashiko-reviews@lists.linux.dev, 
+	bpf@vger.kernel.org, netdev@vger.kernel.org, jakub@cloudflare.com, 
+	edumazet@google.com, ncardwell@google.com, kuniyu@google.com, davem@davemloft.net, 
+	kuba@kernel.org, pabeni@redhat.com, horms@kernel.org
+Subject: Re: [BUG] bpf, sockmap: spurious wakeup by tcp_msg_wait_data()
+ causing unexpected EAGAIN in recvfrom()
+Message-ID: <alZ9ZUWbUbVJuBmZ@john-p8>
+References: <ak_rR-Skd8Mvn4mH@localhost.localdomain>
+ <20260709185526.E4DAB1F000E9@smtp.kernel.org>
+ <alFRK66z45eDNZA7@localhost.localdomain>
+ <5b07d2ab-84ee-46ae-84c9-7542499d26d7@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Evolution 3.56.2-10 
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5b07d2ab-84ee-46ae-84c9-7542499d26d7@linux.dev>
 
-Hi all,
+On Mon, Jul 13, 2026 at 12:14:07PM +0800, Jiayuan Chen wrote:
+>
+>On 7/11/26 4:17 AM, Nnamdi Onyeyiri wrote:
+>>Hi,
+>>
+>>The updated patch below addresses the issues raised by sashiko-bot.  The closed
+>>socket and signal handling code was added to tcp_bpf_recvmsg(), and the fix was
+>>updated to work for sockets with SO_RCVTIMEO set.
+>>
+>>Please let me know if any more changes are required, or if the patch would need
+>>to be submitted some other way, I'm happy to adjust as necessary.
+>>
+>>Thanks!
+>
+>
+>Thanks for the report.
+>
+>
+>What's your use case here? With a verdict prog attached, we'd normally
+>
+>expect the data to be redirected in kernel rather than read back via
+>
+> recvmsg(). Are you using SK_PASS? If so, please state that in the
+>
+>commit message instead of the email body.
 
-On Sat, 2026-07-11 at 18:52 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] TOCTOU race in brightness_store() can cause unintended removal=
- of a newly registered trigger.
-
-I will integrate this into my hardware-initiated hardware control
-trigger transition series [1] to make things easier, as it will anyway
-move and refine led_trigger_is_hw_controlled().
-
-[1]: https://lore.kernel.org/all/20260618-leds-trigger-hw-changed-v2-1-c28c=
-44053cf3@rong.moe/
-
-Thanks,
-Rong
-
-> --
->=20
-> --- Patch [1]: [PATCH] leds: core: Disable hardware control when writing =
-brightness ---
-> commit 86a852e7c49262f7479b1653712185d4edd86c24
-> Author: Rong Zhang <i@rong.moe>
->=20
-> leds: core: Disable hardware control when writing brightness
->=20
-> This commit modifies the brightness sysfs attribute to disable hardware c=
-ontrol
-> when written. It addresses an issue where the brightness attribute become=
-s
-> confusingly write-only while hardware control remains active.
->=20
-> > diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-> > index a51b0ed538864..3e25e5fb63dc8 100644
-> > --- a/drivers/leds/led-class.c
-> > +++ b/drivers/leds/led-class.c
-> > @@ -72,7 +72,7 @@ static ssize_t brightness_store(struct device *dev,
-> >  	if (ret)
-> >  		goto unlock;
-> > =20
-> > -	if (state =3D=3D LED_OFF)
-> > +	if (state =3D=3D LED_OFF || led_trigger_is_hw_controlled(led_cdev))
-> >  		led_trigger_remove(led_cdev);
->=20
-> [Severity: Medium]
-> Could this introduce a race condition that removes an unrelated trigger?
->=20
-> led_trigger_is_hw_controlled() takes and drops the read-side of trigger_l=
-ock:
->=20
-> drivers/leds/led-class.c:led_trigger_is_hw_controlled() {
-> 	...
-> 	guard(rwsem_read)(&led_cdev->trigger_lock);
-> 	return led_cdev->trigger && led_cdev->trigger->trigger_type;
-> }
->=20
-> Since the lock is dropped before led_trigger_remove() acquires the write-=
-side
-> lock, is it possible for a concurrent thread to unregister the hardware
-> trigger and attach a new default trigger in the window between the check =
-and
-> the removal?=20
->=20
-> If that sequence occurs, led_trigger_remove() might inadvertently remove =
-the
-> newly attached trigger instead of the intended hardware trigger.
->=20
-> >  	led_set_brightness(led_cdev, state);
-> >=20
+For our use case we never do redirect or packet operations (push, pop)
+we merely use it as a mechanism to read data and possibly drop data
+if it violates some policy.
