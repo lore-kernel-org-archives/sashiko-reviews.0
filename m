@@ -1,67 +1,40 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8824A386425
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 14:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E623128D4;
+	Wed, 15 Jul 2026 14:47:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784126811; cv=none; b=VNUkX7RX+PZoi7M4Vi9bppjKyyFU2IkpXWBrOBdtKLDIvcFAsudmnbqTcuOD3Tlr2rsQ8fO/5ndKoceg+yfrt0zh4Sbr/WTsC8TWxUDJ8+jdKiDWZcDVSg105/ne/aKPCVVNUXMMwMzQjULEyCSk9rB4HsfABSyitxGizysdA1g=
+	t=1784126867; cv=none; b=lgVCiCoURr+mqdQwsmCf8adLY3CWVJs8aAHc+H9IcO7E6CvEQMhUwZY3YSn3HDZmF67ClptDQMF9lARUUKSXwm46OHgGxEKt2PTmrzq3Ej4x1S7i/oKhHniv6qKfS/l43681aJhjif+pbjIkw3Q6wlQF+58L+3uvp/UQFzczIpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784126811; c=relaxed/simple;
-	bh=mo64BaUYAihjdcVVKQcSfM6eK8LWt+arXGZ+s8lWgfA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BxvfMtOIIMtlvBRQdxuu6DyiIS9Jv7Ee1vGAxujwQpX9+rggSEkUFQPKrLBl3rG9ojFjGDJjDgX1tEK7jgCXzk+xofdyYFURIts0UlY+RsAaNMScmBlaj+WyfYfpf3YLE7zsh7n1m8AtJI353HEFYJ62vdm7gUQ3cU0HR5tHJYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K6F1A8HM; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1784126867; c=relaxed/simple;
+	bh=x0lcUkul7tihSU3b5qaGDxIMmKGpWftsYVj9fVGBKQs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=j0Auv6kFvOC96OOuLA7RnUpYIk+AE9pOHzjnkKxXPweQ6pizHkGuV9sj5N0tQmLk0MH5Pt5ADvfS5TekQ8IoDcQ0qQE8t3Le5iksRcf8S021ahJuwAvFqTdkqrX/iOazaZ6iUi7PRVBvjmPDnpYM78EtkeY6BeAoBWih7hIVj5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=rx1Hlkrm; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K6F1A8HM"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c15f6d667bcso701001366b.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 07:46:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784126806; x=1784731606; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xqdxpiRH6Z2ScU/4HRU79Jz4czUFiYR0vIxP6WbDz1c=;
-        b=K6F1A8HMUvelh5sWnA1PjkH2cWuNLX2ByXF2oAzo9VRe9BQhN04oFZJJEAzQ3Cz7vJ
-         KVC7BftqnBpQaW5VO4habycn1nng86oxb+PdgsPmq2+xZb3CNbQ/0920ir/I13kp8BO9
-         CZpuOgqMW08M6B30QB3L8cpHXDkM6CORAK8q/XDkVyhPRGbLTljKoChsA/yqEED3sGkI
-         jftKGclrGuZmoM5ehsFbJr6nsIEt5MGXJMlgRL8hw+exNGK/JDQjxnoTAmNIPjEfDtiJ
-         X1hBKvm4DWEXAhXaiVmxzBhDJ1UjUWgQFmmxDGpswDWFW08SQjvuGgw0KHYOaP0tr2Tv
-         6LiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784126806; x=1784731606;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xqdxpiRH6Z2ScU/4HRU79Jz4czUFiYR0vIxP6WbDz1c=;
-        b=Z/6X7NvdQPVZOkuA2wDpPO3Eb1xQrx+tV2Y6TBvQyJUFjPPazgs9WMtdEZtjJc34DQ
-         efF6JrNuzj6sm0fuS3CsxDPUZPYHjbM5WvaQe585mzL2Nytc0Z/Gz6Azv9bQSsGf4OW3
-         hBnJvUA27t1UNx34p2YcgnYuqOSEvGbKlqxrhrpykK17DElkKw9FJrSyT7eYijIMnsRw
-         LulqpdJ2M1UN7icgnZfzc6DtoYOmtubC8FnD5+VcpduPo5D4nx/9+AJ524GJ7jVZqcz6
-         Yn12lp0T8cvZODyaOuLdv+yyA+BuA4kZroakUmQVNvZqM/Y1nglTRT9+D7AFXwuVto4N
-         7/Pg==
-X-Gm-Message-State: AOJu0Yxum2ea/qZsM1J6gx/HjosqdwbEeVfMQ21e4pKasf7wLJLKwK6N
-	hB4MFSEeSY5fyHc6eMGgZTlsxthVIm4L1HzEZhXNq4xi1jjgU290LXIRKtRRu7EdjmKra/+Ollj
-	WlT25
-X-Gm-Gg: AfdE7cmADxBUgeTbZbqxoKhZ5IIQ+h1CovhDj2J04BRPtQGM2QTLt1SCiMC5wK1wZxQ
-	aEq8Qv5C1Y17SwsgZ86eyLW7e2mt0fKhyJAY+T2k9+42GkgQ/RxJSakxwJc2j3w/AmrFmEYa+UJ
-	4CBgxw2Mq/Oom0kfGeFTw6ijSrxLuPnswosAHqez5Jq/TDNNPh4C1KIhYSiHWx2xY97xnQpXjIJ
-	RhwMSgAbjrumdF1FdVrJTKqhxcGIdYx7dPyMP1xS7u+OcH7NFnhuDS1cHiWdgK76eYiBn0Ax5uW
-	VI2VYUO3Vm32kjlyEO+Sjmfm0mbOj58sDIxiFI6O9dREV5ZCdWCORsw50kLaqWGpb86fhsl1wjJ
-	/9Xhyul8ZmmsfroNNtMlRFW0M4JJ0FbXAP+Vq9NWjkaEfS8WjFdnTliguspJkAdJUwpaEJ2FeYY
-	zlaBhu4f4NM56ZwiORnyfk28w=
-X-Received: by 2002:a17:907:9451:b0:c16:7402:1abc with SMTP id a640c23a62f3a-c167949a4ccmr216570466b.47.1784126805726;
-        Wed, 15 Jul 2026 07:46:45 -0700 (PDT)
-Received: from [172.27.236.118] ([212.187.182.162])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c16873187absm45796466b.38.2026.07.15.07.46.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2026 07:46:45 -0700 (PDT)
-Message-ID: <617b1d89-35f5-4dee-9aeb-eac7a0d34d38@linaro.org>
-Date: Wed, 15 Jul 2026 15:46:44 +0100
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="rx1Hlkrm"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=gjLK+4kwLRvrkEFIk57WCJlsRt2hY3FiQ2tDrAjGOos=;
+	b=rx1Hlkrmouz7/BB9Iojhd95DZuNSg/QtW0RdYUzK5NcGwkPDX8G0S8Era3C6aCVlra6f23lgR
+	VW2oZn+jrd9VeQWjdHCzmxr1gj/QMw2AIV6HhS+fUwhNdO6KHjMS+U2tWDsZ39Lng9ShtgbniPm
+	NhYf+yQjdFmD8JctaNgj5pQ=
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4h0fCg30DPzHnH4s;
+	Wed, 15 Jul 2026 22:47:27 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id D03A440577;
+	Wed, 15 Jul 2026 22:47:39 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 15 Jul 2026 17:47:39 +0300
+Message-ID: <ad2caf50-0352-451e-bbfa-94df2280acc9@huawei-partners.com>
+Date: Wed, 15 Jul 2026 17:47:38 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,75 +42,98 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/5] tools/build: selftests: Allow versioning LLVM lld
-To: sashiko-reviews@lists.linux.dev, Ihor Solodrai <ihor.solodrai@linux.dev>
-Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
-References: <20260715-james-perf-llvm-version-v3-0-8854bfe5af7e@linaro.org>
- <20260715-james-perf-llvm-version-v3-4-8854bfe5af7e@linaro.org>
- <20260715124513.8DA9E1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v1 3/3] mm/damon/sysfs: support hugepage_mem_bp quota goal
+ metric
+To: SeongJae Park <sj@kernel.org>
+CC: <sashiko-reviews@lists.linux.dev>, <damon@lists.linux.dev>
+References: <20260617041515.98906-1-sj@kernel.org>
 Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <20260715124513.8DA9E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260617041515.98906-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
+
+Hi SJ,
+
+On 6/17/2026 7:15 AM, SeongJae Park wrote:
+> On Tue, 16 Jun 2026 22:35:21 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>>
+>>
+>> On 6/16/2026 6:21 PM, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>>>
+>>> New issues:
+>>> - [Low] The new `DAMOS_QUOTA_HUGEPAGE_MEM_BP` metric is exposed via sysfs but lacks required documentation updates.
+>>>
+>>> Pre-existing issues:
+>>> - [Critical] Potential divide-by-zero in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` due to an unhandled zero denominator.
+>>> - [High] 32-bit integer overflow in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` when calculating memory ratios.
+>>> --
+>>>
+>>> commit be304699fb94d4d73bd979237fb4d7b08b7216f7
+>>> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>
+>>> mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+>>>
+>>> DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
+>>> This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
+>>>
+>>>> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+>>>> index 329cfd0bbe9f3..4b5429a5b4158 100644
+>>>> --- a/mm/damon/sysfs-schemes.c
+>>>> +++ b/mm/damon/sysfs-schemes.c
+>>>> @@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+>>>>  		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+>>>>  		.name = "node_eligible_mem_bp",
+>>>>  	},
+>>>> +	{
+>>>> +		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+>>>> +		.name = "hugepage_mem_bp",
+>>>> +	},
+>>>
+>>> [Severity: Critical]
+>>> This isn't a bug introduced by this patch, but exposing this metric directly
+>>> to userspace makes a potential divide-by-zero triggerable by users
+>>> configuring DAMON quotas.
+>>>
+>>> In mm/damon/core.c:damos_hugepage_mem_bp(), the denominator is computed as:
+>>>
+>>>     total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+>>>
+>>> Due to per-CPU vmstat lag or an idle system, the free pages counter can equal
+>>> totalram_pages(), resulting in total being 0. This is then passed to
+>>> mult_frac():
+>>>
+>>>     return mult_frac(thp, 10000, total);
+>>>
+>>> This inherently computes thp / total, causing a strict division by zero and a
+>>> kernel panic. The same issue exists in damos_get_in_active_mem_bp() where
+>>> total = active + inactive, which can be 0 if the LRU lists are empty.
+>>>
+>>> Should a zero-check on total be added before performing the division?
+>> DAMON is enabled after the system is fully loaded. total will not be 0 by then.
+> 
+> Could you please further clarify what "system is fully loaded" means, reaards
+> to what Sashiko is claiming, particularly the per-CPU vmstat lag?
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
+> 
+
+What I meant is the system already initialized after booting. The thing
+is that by the time the sysadmin sets up DAMON, vmstat should show at
+least some memory usage, not 0. That was my guess, but I may be wrong.
+
+If my initial thought was wrong, I can just add a guard there.
 
 
-
-On 15/07/2026 13:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Bypassing Clang's internal linker path resolution causes silent linker version mismatches for out-of-path toolchains.
-> - [Low] Unbalanced parenthesis in the `USE_LD_ERR` error messages.
-> --
-> 
-> --- Patch [4]: [PATCH v3 4/5] tools/build: selftests: Allow versioning LLVM lld ---
-> commit cdccb2d14502b0641ebfd4e8ddb945bdb605ed46
-> Author: James Clark <james.clark@linaro.org>
-> 
-> tools/build: selftests: Allow versioning LLVM lld
-> 
-> This commit updates the BPF selftests Makefile to use the LLD variable
-> from Makefile.include to ensure consistency with the rest of the LLVM
-> toolchain. It explicitly resolves paths to the linker via shell commands
-> and passes the result to clang's -fuse-ld flag.
-> 
->> diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
->> --- a/tools/testing/selftests/bpf/Makefile
->> +++ b/tools/testing/selftests/bpf/Makefile
->> @@ -264,30 +264,34 @@ $(OUTPUT)/%:%.c
->>   
->>   # LLVM's ld.lld doesn't support all the architectures, so use it only on x86
->>   ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
->> -LLD := lld
->> +USE_LD := $(shell command -v $(LLD))
-> 
-> [Severity: Medium]
-> Will this shell resolution cause silent linker version mismatches if a user
-> builds with an out-of-path compiler (e.g., CLANG=/path/to/clang) without
-> setting LLVM= or modifying the system PATH?
-> 
-> Previously, passing -fuse-ld=lld allowed clang to natively resolve the ld.lld
-> binary relative to its own executable path. Bypassing clang's internal linker
-> path resolution with `shell command -v` might cause the build to pick up a
-> system linker (like /usr/bin/ld.lld) instead of the bundled one.
-> 
-
-I can just drop this patch. I assumed $LLD should behave like the other 
-tools, but it's only used here where the compiler already picks it's 
-sibling linker with the correct version.
-
->> +USE_LD_ERR = linker '$(LLD)' not found - add it to PATH, or pass LLVM=/path/ or LLD=/abs/ld.lld)
-> 
-> [Severity: Low]
-> Is there an extra closing parenthesis at the end of this error message string?
-> 
->>   else
->> -LLD := $(shell command -v $(LD))
->> +USE_LD := $(shell command -v $(LD))
->> +USE_LD_ERR = linker '$(LD)' not found - add it to PATH, or pass LLVM=/path/ or LD=/abs/ld)
-> 
-> [Severity: Low]
-> Is there also an unbalanced closing parenthesis here?
-> 
->>   endif
-> 
+-- 
+Asier Gutierrez
+Huawei
 
