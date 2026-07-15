@@ -1,40 +1,40 @@
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B493438474
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 12:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DDC44C653
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 12:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784117972; cv=none; b=eZtJDl1PZNYXkZJf3X/KYo855eTJCf5z/1P5/UUFo8xCw0TIcjHOhuZTZsf7EOrMf5Fuu3GQ1wwNsooLaAU7k9uhGJGLM5V90SSTvu+E9L6ISAmx89ggFWBdEYucrGjUmkmdVl1SPf0lTF6Q8CUwVYeU6fiiZazAdmASrdyLgSA=
+	t=1784118074; cv=none; b=t6zYrOBbNzImhXuawT6pD4WxQeNCTbsawhXsJIoGBBprUUc39N7PKyZouakv8iYSyFjdG1EF5ynwAG/ak7w3NZKf3sH/1GIVJN6RV8fF6i5KkMP0fxCxPD/StmRi3kyqkJ+jfjB4GOZlM87pEmWwzuGVB3SuO2qg68uQVgDkVFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784117972; c=relaxed/simple;
-	bh=GwgR0uDlU7raDjnYwmqupcREvOTo+vbqF9PgmiaMa0o=;
+	s=arc-20240116; t=1784118074; c=relaxed/simple;
+	bh=P5Lr5a8lnxJ2NwysU8T3ytLeFd87MlRNnosplKhhFvA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xu42G2XJ4a3RjmY/an3hVAJebap0UMyWjuJLhMqX5pUQLuhLnMx/OjQfKC/DaiTPLXS6tO6GSSZTdMs3ec6ReHP0RJMf+X6g+jjidShlE1o859Xvijq8ezQHz1Zd6Dtxw+XpStowD/yZE7eBJnRUuQczY8k1Vr2WVsGGdf4uR+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=J5/9iFtZ; arc=none smtp.client-ip=148.251.105.195
+	 In-Reply-To:Content-Type; b=HZs7ePcboF2LFSBHVIAO0W/gRQFfspvnamAvCyoQ71ciDyG1OnFVYTS6qYoc6XA6NVAtq6H82ZagaxUuX5pJOwA/tGsNOAQbTgdVvS0n7khZ4Sd+MCDPadIhKUlCdj06npbgM23koLtKR2qnb58x97ZWWsCw6eAZ2KxkR3NxtA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=O85N4H+5; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="J5/9iFtZ"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="O85N4H+5"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1784117969;
-	bh=GwgR0uDlU7raDjnYwmqupcREvOTo+vbqF9PgmiaMa0o=;
+	s=mail; t=1784118070;
+	bh=P5Lr5a8lnxJ2NwysU8T3ytLeFd87MlRNnosplKhhFvA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=J5/9iFtZJFrG3V6FNALKifW13kVwgqclKBNmX1t3GsIbmfnf4tadH2GNOt38hBP++
-	 SVA2LV1DwhZM0d3Mf/gnl0XOwXO4UeaqmCHHySMvG7EuMt7e45/Xd5uS1vluFs2XJQ
-	 uYIsbJ5py8A8kvuQ/YZOVTIRA2UsBy/TyDCm7ysPU7BjatVL6fTmjAgnH5gYxcPSDE
-	 IBTYsCG/nqFfqJKTlPKGGH/nxJ4VT2YlLTE76+l7oLJ3vawQow8OCpX2haxavPFBIq
-	 XERR7+Ea1BOWxJMtECpaYieIQUFP5SlUETB2EFt+8te570G9gjObgsOm9thOrSni/D
-	 LhZ0gxIfVIeZA==
+	b=O85N4H+5j2DsMB+X6luVDzDfu7UiPw4R8Kr6JfIZuQBpa4gYq9HUi9x2LNSf+fNDU
+	 xJosArBmUa8DvGjU0KdmDXn/4HFu+t439/HuiK4jjENKOVn1OtXxo9B7QVAj2CPLPC
+	 UL4cVpM+1q0+8jodlAZ6NCW0ce7Jnr4mGFRe8H7htAr983qBHhfdUyBEiCyRk6ow1g
+	 esuWYBdGK9Ya/046SnecIZ8IkF6VaSoPwpSKjXvqip6BIbEZBmZiml51aScCV3qJGW
+	 u92LIJ646Qyy/PkKxk77gGjK0crWrhLuMh/FoejcsrBAWt/2Fpc4mrNtWJBw+YDhZQ
+	 5eP9xcHZnKOjg==
 Received: from [100.64.1.21] (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 2EC5517E07AA;
-	Wed, 15 Jul 2026 14:19:29 +0200 (CEST)
-Message-ID: <ab158fcd-5d6b-4b9f-9eb0-6b135ea7b1eb@collabora.com>
-Date: Wed, 15 Jul 2026 14:19:28 +0200
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id A8D8617E023C;
+	Wed, 15 Jul 2026 14:21:10 +0200 (CEST)
+Message-ID: <e21d768e-36e1-40c0-8058-92acefe7cc95@collabora.com>
+Date: Wed, 15 Jul 2026 14:21:10 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,70 +42,26 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/11] dt-bindings: display: mediatek: wdma: Add
- compatibles for more SoCs
+Subject: Re: [PATCH v5 09/11] drm/mediatek: mtk_dsi: Enable PM Runtime on
+ probe
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org,
- devicetree@vger.kernel.org
+Cc: devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ robh@kernel.org, conor+dt@kernel.org
 References: <20260715114916.19690-1-angelogioacchino.delregno@collabora.com>
- <20260715114916.19690-11-angelogioacchino.delregno@collabora.com>
- <20260715121553.103AE1F000E9@smtp.kernel.org>
+ <20260715114916.19690-10-angelogioacchino.delregno@collabora.com>
+ <20260715121611.420601F000E9@smtp.kernel.org>
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-In-Reply-To: <20260715121553.103AE1F000E9@smtp.kernel.org>
+In-Reply-To: <20260715121611.420601F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/15/26 14:15, sashiko-bot@kernel.org wrote:
+On 7/15/26 14:16, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Inconsistent compatibility fallback for 64-bit SoCs (MT8192/MT8195) violating hardware constraints described in the commit.
+> - [Critical] Enabling PM runtime causes a kernel panic because the DSI device is never resumed, leaving its power domain off during register access.
 > --
-> 
-> --- Patch [10]: [PATCH v5 10/11] dt-bindings: display: mediatek: wdma: Add compatibles for more SoCs ---
-> commit ffb6d1b73de2ee2d9fba381dca064a6d8fef7acf
-> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> 
-> dt-bindings: display: mediatek: wdma: Add compatibles for more SoCs
-> 
-> This commit adds missing compatibles for the Write DMA hardware in the
-> Display Controller for Dimensity 1200 (MT6893) and Kompanio
-> 500/520/820/1200 (MT8183/MT8186/MT8192/MT8195).
-> 
->> diff --git a/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml b/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml
->> --- a/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml
->> +++ b/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml
->> @@ -22,11 +22,16 @@ properties:
->>     compatible:
->>       oneOf:
->>         - enum:
->> +          - mediatek,mt6893-disp-wdma
->>             - mediatek,mt8173-disp-wdma
->>         - items:
->>             - enum:
->>                 - mediatek,mt6795-disp-wdma
->>                 - mediatek,mt8167-disp-wdma
->> +              - mediatek,mt8183-disp-wdma
->> +              - mediatek,mt8186-disp-wdma
->> +              - mediatek,mt8192-disp-wdma
->> +              - mediatek,mt8195-disp-wdma
->>             - const: mediatek,mt8173-disp-wdma
-> 
-> [Severity: Medium]
-> The commit message explicitly excludes MT6893 from falling back to
-> MT8173 because it introduces support for destination addresses larger
-> than 32 bits. Should this same rule apply to MT8192 and MT8195?
-> 
-> Since MT8195 (Kompanio 1200) and MT6893 (Dimensity 1200) are the same
-> generation of SoCs sharing the same IP, grouping MT8192 and MT8195 here
-> implies they can safely fall back to the legacy 32-bit driver.
 
-What?! No!! They're not the same SoC generation, and THAT is also why they
-are not compatible with each other?!?!?!?!?!?! :-)))))
+Same comments as v4 apply.
 
-Cheers!
-
-> 
-> If an OS binds a legacy 32-bit driver to the MT8195 WDMA using this
-> fallback, won't it misprogram the DMA addresses by truncating them to 32
-> bits when attempting a DMA operation above 4GB?
-> 
+In short: This is not true and, even if it was, the HW won't crash and writes will
+simply be ignored; that's how MTK SoCs work in the vast majority of cases.
