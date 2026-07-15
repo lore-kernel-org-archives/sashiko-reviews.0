@@ -1,249 +1,294 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2384A2E0C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 17:41:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784137299; cv=pass; b=tMxKm0mCu431AHt35C6AmwIFbCIF1pJfV48Sj3O2FNvObHn5uW399OC1Ph03M2D3KBMR+61ghPG06OF6mPsGRniP3AReIP1K5W5FkW4/SRFFuyoNrF7sMLyWw8vL8JQYzEQOzcnrEMx2nSoeIYZs74gnIKibIRy1HZ0jOWYwEaU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784137299; c=relaxed/simple;
-	bh=dQW6TQ1rFh953Dt2vhupwt1QO2viiCbkjMu0LKVypn0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uRW18Dl2Q2s/rp9dgBlMA7lvNGfIGReGsTXCMmKUTykpyjj3/vitQqUHIkgQ+CPl3uOsLWAZ0J0LyIaMIJ7voaxLMEj4cQjtIR6QwYGWadq/jJ5lZMnyYH03y3x6W1YghU0hgzLIF+VNXW69OJwGfby5Crs9aLIyfgg+i2Tvrbw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rJ8jZo8d; arc=pass smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E98D48A2A5
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 17:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784137975; cv=none; b=N2paSqdlGCklYIuV0e2AbpJawlbRSJjNT6Dutz1hFLAag7TBxD8Y8wLlLTE3h3n0+9QeZJHNicWDYP64MAkjIekh1OJslfW/F5TmCh9cTfT8MHVUzKRQvMYmHqjVw7qQHFubmGf4mx6qhUgZp54+IEYpIA/q0rlygwkeGE7QjSg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784137975; c=relaxed/simple;
+	bh=bQzTH7x2NztmHuNH9ktCjOUzXb893+uHjR7hZAvDuZA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=OQ4lbwyXXTZ6sH6ePCtzbeIcbNgLg+O0CjUKsZcosuDbbUIq0Yz0lNzvx22eWijofoJ7/WR8uG7u/N23n07+sOl8GVWfjdJn3GpwMvZA3BpCS/+lofcVjd1L7rBdZBKC+oPpiX7/rA98Y6hTVaN2MvuQbqdPMmgnekB+1+DQEbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=Ff018Pq2; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rJ8jZo8d"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81e8c68c0cdso7250817b3.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 10:41:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784137294; cv=none;
-        d=google.com; s=arc-20260327;
-        b=prNe9Ur2Qu5du1cV9+W7yXqicKyU+Yg5SUcJGewahsxDP334mkk50V8NHHCWc/SU0i
-         ZE6u/1oLtKAAmaR+sm4AcEd/8w7Vx0ikv2bIbieGh2Y0j+J3V5AnXipai4Q5Weixq8RP
-         47W2NiQ+MMU2sY4rdw4WPKbsy3zPEiMOkE87j9uvO2Kz5uNRRZ7UBIXKau7rOZpdoNNp
-         W+sW3GThXb0wGnM0wRjpoo/bAsmzW13Z6/Aiq5kHuJTOinnlCKuHbRYoCAp+r0isxv7q
-         DTame/bhN0B7CxDNJW5c1TF/22lnD43PubAbAdlhy9L/8i0zqHW7Ztgf6rXO6KTZzT8b
-         yVoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zg7A5Jpo8DbdBBYZQVt5X+er30m85xx835hMZvBqipc=;
-        fh=WZAN7zYDkj46/sWJhsNA34MX4s/UgKB7jgni8mQ3rC8=;
-        b=ssdbj0cVnm0Iex89VmKr8Ut5EwC8vJ4i3BCrANPMLPhcaSOhDOVplA9llbeW8Tv5ss
-         ffovpmxu7aGY8Cg/zV+XwBOmcfbW+fM0zuPlji0WxCgGdGCxAORWPlnMXXNI1Iw0GiXg
-         bctXSYLPh2HbjI6dRheKAgKsaHrk+ATNx5vXyCqb5ScSZQo5ecYIIIxn0XRAaCy4wWiv
-         u5pHFOKjbm/DtH+fx68sR0qVEE+5006lZQZm/f9250vsuCRWCYdWsolXG4OoSNTweKXm
-         BHbnKQ/E6ueqKFfRjYMoFx7ifcgo4XAHcLiQUeAS0T2xvYbJRoLt+86VE3s/XOdMGyRy
-         iw9A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784137294; x=1784742094; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zg7A5Jpo8DbdBBYZQVt5X+er30m85xx835hMZvBqipc=;
-        b=rJ8jZo8dTdvNB3ARMs8YwxAVRYGU+dyR0pryM8y5ZhviWzzFhskq+Q/NJPYFniZQYh
-         +J40eqgiqty62apiYBcZIiRY+Bb9V3LlltaL0XI5fpkeQEAyCUum9D+nvWXgtA3BzsA/
-         96Tp36FgDrvPYPYyzhhuOuO299gVv3ahH615szapaMuSJgWbUuvmnpSIh56Il1kSVWDK
-         o9hKtUNVdrCD/V3zjVlJUWTMFnHBU8L1m2tdU28o9N6KaG5WpC/VWtN+N0yQYE6qkxUo
-         yg7UtHyiiRlaIGJJsZ9I1i1LHeEF24TwYmN08XqV5WonuQXThkIIvVdV8R69LQh5VJtO
-         wLIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784137294; x=1784742094;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zg7A5Jpo8DbdBBYZQVt5X+er30m85xx835hMZvBqipc=;
-        b=raVZcyIVq34XSZfHyJundu49Ve/u2LHPjqn2R/2W85Vt27c2ypcrVIyj3RbnQbBF7H
-         P4SWutOzxnh0zsJYuOln3EBtL/lgRHUE1dZ0JcLvgY/inCrBl/uUWYs51Us+eMVMOoKD
-         BTvpum6PAdn+SQ0D8LZR1/t9KX0ADvSEkuu+1AuEp2BS5CwalTngOBvQwGLRhp2ZVBDT
-         Ngtx9ROVNvyPRX7I5tW2pERE1zd/Vcz/p4K8c3jz4dUl67tkrerBkP4vomCZMHIMQSSY
-         j0s/hvDyL/M15XGbS1BXefgr36nd3mo6WI4DvBkJoiLLMaSbuMVFGO8OEGedWqjWbCBB
-         0pfw==
-X-Gm-Message-State: AOJu0YzxurIJ5XuEnp42LTYvr2hMWD5PSdghtpVkfDde91f7DMOlaSSq
-	x11f1z7oAWp29KhBtyG9p5YMuic+3NFE+Jl+Ot8L4+wsJ9tyxiv2c+mCPCSyAh+qmDEHIS9PXx4
-	Q7GssdyBEQ8p5dZd+ty55pZ4CRaAzBlY=
-X-Gm-Gg: AfdE7cmyH4VZBEb/EkPwLfQdY50D35MhXXT0mMniHJGt5AKp/12IQ1v/UPXqFC7WgWh
-	mSYWx+Dfxp7jPl9eXHX6EuHxySLFSaciyHoNJ7JUuEJdCNUC/aF4+W3/czQ+WPiww/uCXAFrwgY
-	41+I4m3S+5Y+YOLJoTN2KHaeQbeKkstobHoAFZIGv0KbXsBl1IxVBnVvpC8cM92LLzbziVrMzUU
-	8UazSoMgJsnt577uoZ5SaFOkVVDNWd3znyad15V4pugL+v1zng25992PnSQIZAoJJ8n+1u1SmDI
-	oClwBcXVrEsvPHmcJ+b5hTgsI2gu3zU=
-X-Received: by 2002:a05:690e:1447:b0:664:d93f:b5f2 with SMTP id
- 956f58d0204a3-667d7a98cdcmr11438958d50.1.1784137294186; Wed, 15 Jul 2026
- 10:41:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="Ff018Pq2"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 975B9240027
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 19:52:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
+	s=1984.8680eb; t=1784137970;
+	bh=uppFLYZEKdPSHWk7UrhpBtU2MX2EFrENz0Run2QZ1Y0=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=Ff018Pq27OgWyNbo+3HpCHaHhptSA/iixl04wRe+wtteKYbqCW/yP3ti/TwDifzZW
+	 PtTTlxWTeuqVD/P6tkICVYoaGgdY6x2LsH1lT+AkLu16PNuCK8N6W9ghnvjs6hiekd
+	 oGdZBYS44btgHPYixncH1XcZ77MXr7Mp3z8+iUj0CwiJftyyPEavv+BjL1HYIYwYiR
+	 wQlaqjR+vqDl9HbAhMFHlvlMe5qVWeS0m8eht09K6pUoxdtWajkh77CtOEg+fylJm9
+	 LirynwDY1jfT9ktvw20KeRbbsAjJUmLWZrfBJNGhnXP+zc0ZqYmRaRT0c8HUnj7hWM
+	 UziGs4OEdtMQg==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4h0kKY3YKRz9rxR;
+	Wed, 15 Jul 2026 19:52:49 +0200 (CEST)
+Message-ID: <1a88b379490acf95826fea999084073ec75e32ed.camel@posteo.de>
+Subject: Re: [PATCH v13 2/3] samples: rust: add Rust serial device bus
+ sample device driver
+From: Markus Probst <markus.probst@posteo.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: ojeda@kernel.org, dri-devel@lists.freedesktop.org
+Date: Wed, 15 Jul 2026 17:52:50 +0000
+In-Reply-To: <20260712171942.5CE161F000E9@smtp.kernel.org>
+References: <20260712-rust_serdev-v13-0-2c4060bc8e30@posteo.de>
+	 <20260712-rust_serdev-v13-2-2c4060bc8e30@posteo.de>
+	 <20260712171942.5CE161F000E9@smtp.kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-N0BrJNR+DVlt3yfB9c4X"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260715051939.64652-1-royalnet026@gmail.com> <20260715051939.64652-2-royalnet026@gmail.com>
- <20260715055448.AEA021F000E9@smtp.kernel.org> <CAEWPSH7OqecBKvxUVtwFe4B9y0-=gsQ7vy6kdBHx-Nsne-Ct1g@mail.gmail.com>
- <aleBPE5YHlC7pLpi@venus> <CAEWPSH4AYfSR_DBcLFr6a=SJxnAAcjoK612v+g-TpP046qTBmg@mail.gmail.com>
- <alfCQd689ATJOdwM@venus>
-In-Reply-To: <alfCQd689ATJOdwM@venus>
-From: Igor Paunovic <royalnet026@gmail.com>
-Date: Wed, 15 Jul 2026 19:41:22 +0200
-X-Gm-Features: AUfX_mxAn0tlPy3Nu6Juugzw1ag0FrnBRekTl-ObKL4Q73o9n5lkkPOvfoeeM0s
-Message-ID: <CAEWPSH6L79Kb9wQna9Cg8yGMJAN88__PwsuXvA+oo+fPStLoYg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] dt-bindings: media: snps,dw-hdmi-rx: add #sound-dai-cells
-To: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org, 
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	linux-media@vger.kernel.org, kernel@collabora.com, 
-	linux-kernel@vger.kernel.org
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
+
+
+--=-N0BrJNR+DVlt3yfB9c4X
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello Sebastian,
+On Sun, 2026-07-12 at 17:19 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+> - [High] The `receive` callback issues an unbounded blocking write (`serd=
+ev::Timeout::Max`), which can stall the TTY receive worker indefinitely and=
+ cause kernel hangs during module unload.
+> - [High] The serdev abstraction's `remove_callback` fails to drop the dri=
+ver's private data, leaking memory and leaving the device open, which leads=
+ to a null-pointer dereference in the receive workqueue.
+> - [Medium] The driver attempts to read a non-standard "baudrate" property=
+ instead of the standard "current-speed" property.
+> - [Medium] The driver's probe function will fail on many valid hardware p=
+latforms because it rejects inexact baud rates.
+> - [Low] The commit message falsely claims the driver supports device/driv=
+er name matching and omits mention of ACPI support.
+> --
+>=20
+> --- Patch [2]: [PATCH v13 2/3] samples: rust: add Rust serial device bus =
+sample device driver ---
+> commit 44e3438d1218c2205d779354d11c50718f82dc2f
+> Author: Markus Probst <markus.probst@posteo.de>
+>=20
+> samples: rust: add Rust serial device bus sample device driver
+>=20
+> Add a sample Rust serial device bus device driver illustrating the usage
+> of the serial device bus abstractions.
+>=20
+> > This drivers probes through either a match of device / driver name or a
+> > match within the OF ID table.
+>=20
+> [Severity: Low]
+> This isn't a bug, but the commit message inaccurately describes the bus m=
+atching
+> behavior.
+>=20
+> serdev_device_match() exclusively checks ACPI and OF ID tables and does n=
+ot
+> fall back to device/driver name matching. The implemented ACPI matching i=
+s also
+> omitted from the description.
+>=20
+> Could the commit message be updated to accurately reflect the supported
+> matching mechanisms?
+There is a todo comment in serdev_device_match, so I will leave it for
+now.
 
-> Not implementing all features in the driver is perfectly fine.
-> Ideally you return -ENOTSUP if somebody tries to use the S/PDIF
-> DAI interface instead of I2S.
+>=20
+> > diff --git a/samples/rust/rust_driver_serdev.rs b/samples/rust/rust_dri=
+ver_serdev.rs
+> > new file mode 100644
+> > index 0000000000000..824affbf65936
+> > --- /dev/null
+> > +++ b/samples/rust/rust_driver_serdev.rs
+> [ ... ]
+> > +    fn probe<'bound>(
+> > +        sdev: &'bound serdev::Device<Core<'_>>,
+> > +        _info: Option<&'bound Self::IdInfo>,
+> > +    ) -> impl PinInit<Self, Error> + 'bound {
+> > +        let dev =3D sdev.as_ref();
+> > +
+> > +        dev_dbg!(dev, "Probe Rust Serial device bus device driver samp=
+le.\n");
+> > +
+> > +        if sdev
+> > +            .set_baudrate(
+> > +                dev.fwnode()
+> > +                    .and_then(|fwnode| fwnode.property_read(c"baudrate=
+").optional())
+>=20
+> [Severity: Medium]
+> Will this fail to read the configured speed from standard device trees?
+>=20
+> The driver attempts to read a non-standard "baudrate" property instead of=
+ the
+> standard "current-speed" property. This causes a silent fallback to the 1=
+15200
+> default.
+>=20
+> Should this use the standard "current-speed" property instead?
+Just an example.
 
-Done for v2: the codec registration now exposes the S/PDIF DAI as
-well, so the DAI indexes match the binding (0 =3D I2S, 1 =3D S/PDIF),
-and hw_params() rejects the S/PDIF interface with -EOPNOTSUPP until
-that path is actually wired up.
+>=20
+> > +                    .unwrap_or(115200),
+> > +            )
+> > +            .is_err()
+>=20
+> [Severity: Medium]
+> Does strictly rejecting any Err with EINVAL cause the driver to fail prob=
+e when
+> an inexact baud rate is achieved?
+>=20
+> The bindings::serdev_device_set_baudrate() function returns the actual
+> configured speed. The Rust set_baudrate() abstraction returns Err(actual_=
+speed)
+> if the hardware cannot exactly match the requested speed due to clock div=
+iders.
+Just an example.
 
-Thanks!
+>=20
+> > +        {
+> > +            return Err(EINVAL);
+> > +        }
+> > +        sdev.set_flow_control(false);
+> > +        sdev.set_parity(serdev::Parity::None)?;
+> > +
+> > +        Ok(Self { sdev: sdev.into() })
+> > +    }
+> > +
+> > +    fn receive<'bound>(
+> > +        sdev: &'bound serdev::Device<Bound>,
+> > +        _this: Pin<&Self>,
+> > +        data: &[u8],
+> > +    ) -> usize {
+> > +        let _ =3D sdev.write_all(data, serdev::Timeout::Max);
+>=20
+> [Severity: High]
+> Can this unbounded blocking write stall the TTY receive worker indefinite=
+ly?
+>=20
+> The receive() callback executes in the TTY RX workqueue. serdev::Timeout:=
+:Max
+> maps to a 0 timeout in serdev_device_write(), which waits indefinitely. I=
+f the
+> hardware TX buffer fills up due to a slow remote device or flow control, =
+the
+> worker thread will block forever.
+>=20
+> This deadlock of the TTY RX worker leads to an unkillable task and system=
+ hang
+> when cancel_work_sync() is called during module unload.
+Might or might not be an issue, I have to look into this. But its still
+an example.
 
-Igor
+>=20
+> > +        data.len()
+> > +    }
+> > +}
+>=20
+> Additionally, I noticed an issue in the underlying serdev abstraction cod=
+e in
+> rust/kernel/serdev.rs:
+>=20
+> [Severity: High]
+> Does Adapter::remove_callback() in rust/kernel/serdev.rs fail to drop the
+> driver's private data during unbind?
+>=20
+> During device unbind, remove_callback() uses drvdata_borrow() instead of
+> drvdata_obtain(). This fails to take ownership of the KBox<PrivateData>,
+> leaking the memory.
+driver.rs should take care of dropping PrivateData, which will also
+drop the underlying driver data.
 
-On Wed, Jul 15, 2026 at 7:28=E2=80=AFPM Sebastian Reichel
-<sebastian.reichel@collabora.com> wrote:
->
-> Hi,
->
-> On Wed, Jul 15, 2026 at 03:19:54PM +0200, Igor Paunovic wrote:
-> > For completeness: the driver part of the series currently wires
-> > up only the I2S interface (DAI 0); the binding now describes both
-> > interfaces as per the hardware.
->
-> Not implementing all features in the driver is perfectly fine.
-> Ideally you return -ENOTSUP if somebody tries to use the S/PDIF
-> DAI interface instead of I2S.
->
-> Greetings,
->
-> -- Sebastian
->
-> >
-> > Thanks for the review!
-> >
-> > Igor
-> >
-> > On Wed, Jul 15, 2026 at 3:00=E2=80=AFPM Sebastian Reichel
-> > <sebastian.reichel@collabora.com> wrote:
-> > >
-> > > Hello Igor,
-> > >
-> > > On Wed, Jul 15, 2026 at 08:55:37AM +0200, Royal Net wrote:
-> > > > > Should the constraint be set to 0 to follow standard device tree
-> > > > > norms?
-> > > >
-> > > > Fair point. The current RFC wires up a single I2S DAI, and for a
-> > > > single-DAI provider 0 is indeed the norm -- rockchip,dw-hdmi does
-> > > > exactly that for its one DAI on the TX side.
-> > > >
-> > > > The reason I picked 1 is that the controller also has an S/PDIF
-> > > > audio output path (the vendor driver exposes both I2S and S/PDIF
-> > > > DAIs through hdmi-codec), so a DAI index becomes meaningful if that
-> > > > second path is wired up later.
-> > > >
-> > > > Unless the DT maintainers prefer keeping 1 from the start to avoid
-> > > > changing the cell count if/when the S/PDIF DAI is added, I'll switc=
-h
-> > > > to const: 0 in the next revision -- please let me know which you'd
-> > > > prefer.
-> > >
-> > > It should be 1 from the start as the DT binding is supposed to
-> > > describe the hardware and be stable. But in the next version you
-> > > should look into updating the commit descriptions to be less about
-> > > the kernel driver and more about the hardware. Maybe something like
-> > >
-> > > > The HDMI RX controller has two digital audio interfaces, one for
-> > > > I2S and one for S/PDIF. Allow referencing connections from audio
-> > > > codecs to these interfaces by documenting the missing #sound-dai-ce=
-lls
-> > > > property.
-> > >
-> > > Apart from that it makes sense to document that argument 0 means
-> > > I2S and argument 1 means S/PDIF interface in the property description=
-.
-> > >
-> > > Last but not least drop "A value of 1 lets a sound card reference
-> > > the audio DAI as <&hdmirx 0>.". Instead you can add this to the
-> > > example section at the end of the file.
-> > >
-> > > Greetings,
-> > >
-> > > -- Sebastian
-> > >
-> > > >
-> > > > Igor
-> > > >
-> > > > On Wed, Jul 15, 2026 at 7:54=E2=80=AFAM <sashiko-bot@kernel.org> wr=
-ote:
-> > > > >
-> > > > > Thank you for your contribution! Sashiko AI review found 1 potent=
-ial issue(s) to consider:
-> > > > > - [Medium] Incorrect cell count constraint for single-DAI provide=
-r.
-> > > > > --
-> > > > >
-> > > > > --- Patch [1]: [RFC PATCH 1/2] dt-bindings: media: snps,dw-hdmi-r=
-x: add #sound-dai-cells ---
-> > > > > commit e6b0bac0b97f568ce749084e6c1e728bcd258b10
-> > > > > Author: Igor Paunovic <royalnet026@gmail.com>
-> > > > > dt-bindings: media: snps,dw-hdmi-rx: add #sound-dai-cells
-> > > > >
-> > > > > This commit adds the #sound-dai-cells property to the HDMI RX con=
-troller
-> > > > > bindings, enabling a generic audio codec to capture incoming embe=
-dded audio.
-> > > > >
-> > > > > > diff --git a/Documentation/devicetree/bindings/media/snps,dw-hd=
-mi-rx.yaml b/Documentation/devicetree/bindings/media/snps,dw-hdmi-rx.yaml
-> > > > > > index b7f6c87d0e06a..83c10d9997c8e 100644
-> > > > > > --- a/Documentation/devicetree/bindings/media/snps,dw-hdmi-rx.y=
-aml
-> > > > > > +++ b/Documentation/devicetree/bindings/media/snps,dw-hdmi-rx.y=
-aml
-> > > > > > @@ -78,6 +78,13 @@ properties:
-> > > > > >        The phandle of the syscon node for the Video Output GRF =
-register
-> > > > > >        to enable EDID transfer through SDAIN and SCLIN.
-> > > > > >
-> > > > > > +  "#sound-dai-cells":
-> > > > > > +    const: 1
-> > > > > > +    description:
-> > > > > > +      The HDMI RX controller registers a generic HDMI audio co=
-dec so the
-> > > > > > +      audio embedded in the incoming stream can be captured. A=
- value of 1
-> > > > > > +      lets a sound card reference the audio DAI as <&hdmirx 0>=
-.
-> > > > >
-> > > > > [Severity: Medium]
-> > > > > Is this cell count constraint correct for a single-DAI provider?
-> > > > >
-> > > > > Looking at properties:#sound-dai-cells, the hardware exposes only=
- a single
-> > > > > generic audio DAI. Requiring a cell count of 1 forces device tree=
- nodes to
-> > > > > use a non-standard syntax like <&hdmirx 0> instead of just <&hdmi=
-rx> for a
-> > > > > single resource.
-> > > > >
-> > > > > Should the constraint be set to 0 to follow standard device tree =
-norms?
-> > > > >
-> > > > > --
-> > > > > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/202607150=
-51939.64652-1-royalnet026@gmail.com?part=3D1
+
+>=20
+> Because PrivateData::drop never runs, bindings::serdev_device_close() is =
+never
+> called. The C driver core then resets dev->driver_data to NULL. Because t=
+he
+> device is still open, incoming serial data triggers receive_buf_callback(=
+),
+> which calls drvdata_borrow() on the now-NULL drvdata pointer, causing a p=
+anic
+> when locking the mutex.
+See above.
+
+
+--=-N0BrJNR+DVlt3yfB9c4X
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmpXyOkbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPS/xEQAL+tJ55EoR0SO1xGsR5W
+3/t2+2wm0PYNi4mH+oxDGDyqflJNllcY1AlwuJp0mfGiRlnHB02Y1HRjZnQml+rO
+S8acnekNd3450i1RqVAeKsoVryJuiH5EoHXmAYLn8ZSumlZ5UI4FGgxYHY9rUB5F
+K+5J1E7ZBvT4ZrU6hmYo5WUyjDWB4KPnZ7USib6KIQWVqiFdbfoV/tEOgczmcJ/A
+oKzNRfrJvMDzbK1E1/zDGw17krCulMZWzu4cPunRWGuWpvjsOsOxi1E5nSxHqzT3
+TFNELfgE7BvX6UAbb2h8bTiLI92dauYuNJBbZJdLeMsoonUb9vYDiis9SOZraPIQ
+1Ag1SyylSe0/BSNpNLL5UAvycnOvOXY5ZRjQH8lRSkRynNiwWjvEV64lzD7jorpt
++HTYxEdj7etmQS9nCaPRzqmhPF/UvB0gqESA1HtJW7ZOqclRTRAbG95/tMQQvzBA
+R/n8oqWxH+hCjMjREupJ6h+zmj5RA53n/+oAQqkaMNSqcJrbR67db9Y8BmoCfDbl
+WAZv5j7sCBfvHUDXHSUF92BCye/Ee6aimKXVLq8m8e1tzm66HvkrfIXHVF7kKXzC
+EzfXUFcU+Fr7lRr1LlkueCISj7/dABPbe9EP3WfqpBTnd3Lu5DwsdXs2tKHnuJyA
+ZnxCSvxLpDto4clYeD6BgwZ4
+=fCc8
+-----END PGP SIGNATURE-----
+
+--=-N0BrJNR+DVlt3yfB9c4X--
