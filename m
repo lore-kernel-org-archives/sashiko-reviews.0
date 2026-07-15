@@ -1,206 +1,287 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07192F1FDE
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 06:26:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784096807; cv=pass; b=lt7jbfEYi4txca7o/G/yg2SQ46zCGVkLa1EQ9mslm7l97hKIYUs7lvLWvnqHA7WAtpqT7rCqWx1mWBtO3ISwlzhtls0mEht6/3MvH1yu+2UktBsvF2Mb/k4YZlKfmJQbZYpMHR7M/cm88YOyzOfZbfC59KEEEPdRP7dWjNN30pQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784096807; c=relaxed/simple;
-	bh=J5yflZ12W07m1WJ0c1r553NE35yxYBcPpPqsM2tClZk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kzGWb+Tv+Eoyqr3EZe4xZjVzk948qz8QHgc8XS8s8Y3DT0t5SmGErAG4m7eEp02MtNq9v253gBG3MVKHYVo6S5/gVv94M4vGPkAwULGclkpJOxHvNZTQc04fd5YI8piiuaNqAbofaDXHOTMhtTBv/75xCqV9MQmrodNOd0b48kE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cc1fDDsq; arc=pass smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91722FD69A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 06:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784096816; cv=none; b=KhjbwdTUXIF3VafJkORlrh+jWG12g+BhamD379vuqShQ+bvKo+j05wJbzFyILAqiUzHYqMCw3K2+0PCLeVkxQ6/vo0AZCVLDlZZbWjE4rHA8giANK7mPdQkz9HfP2SilDSFCAbtBt5+K5XN4demiyhSgk3Cyo3AKNbP7ml4FUz8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784096816; c=relaxed/simple;
+	bh=XZFtM14MtZhwFjDpfZO9/a88x840ePr2yxhaphV/+sE=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=abDZQg2lDxZTJRPTXU/PMUeHzunBOMk1AVFsNZfyIVatGEtciOFSKaC4ghvUHDDWVgiuIieBUhqaJFtZQUvEJyHSaOXN9IqrS/ut9heikI6sNalQEdfeiGLTWP5CgtOurwfFHLHTY2ThL05cKR5DGa6CcOjsTav96/gzKkXFzn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c0TcZZyF; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cc1fDDsq"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-662d984bedeso780066d50.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 23:26:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784096805; cv=none;
-        d=google.com; s=arc-20260327;
-        b=C1RgWw55qunbYJTMGxdRCYkO/IzH0tNoEXGHVWQA0d3F6hT/0rl2J7us9XOya73uXp
-         PoPTp1la30D+iRckPrdFAra1KaVKyqx/ZaNSJVrCpgGiKqxy6eE0AJTXQz7kjQU9Yn6j
-         hAYAZCtdG/fJ5MTpDo0sn+h2/Ve9qOe2ErpmaNJziDRLIab2AVNHHr3Sv1aOjQEKlmWQ
-         c5h0oFEf1czi8vvNzOY/1e0h098nnnh3AYkCsIfJRnBHByc2g2P+b1kMhczamH/dP1nb
-         O/yWjjcSPCWBwH30qsxvzQlYqm4662tcnmWzUxvUfotGGFOg58kyrTWXEQnn9cSGThtH
-         mh5g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gWSeKvpcppphKo4JuhaQYfS686HzGPt1n2IjvkPZLEQ=;
-        fh=GBmacVDeFEJjMoVFDdJ4RApqi7WOhPuR6bgG07yIMU8=;
-        b=O/t1mUThutdcwFFA4vWmbFf0YGBg3lxOx9P1LVryoIYNoqUsPXrX7hnl1ObPT1/UAC
-         362cF3nGMfdefd7DaABM+o4XLmWY4lmYyZP3vJJzFJ5L2R+lamfhOG/6Ct5yoZcUme9K
-         SZN//CCy63KSp442k0jWD/kE3JPA96UD7FY7Y/FWGoowGNfwkzqnBEwm8YFkcvRpcmiB
-         PyNmDHIwom0+BuuEdRjNHaeVlmDkgOawW3ZrCYW8EibdzSp/fxbY7kTpwNrLosDqhxMl
-         sfDHV5ULDKmV6hdLTw73bxIUKczHtxmKmZ4e/ZUV+8Mc+92aNCWZOZs2M9+o5Y5nFLA8
-         7tHQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c0TcZZyF"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2cc891373e0so61279145ad.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 23:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784096805; x=1784701605; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gWSeKvpcppphKo4JuhaQYfS686HzGPt1n2IjvkPZLEQ=;
-        b=cc1fDDsqutNelRUgF2GqIC0XnQMEANh/vJt6pDtrhSdpZlKrjpArzjH13fO6LaQfrW
-         UiykHmbzPaAkGoa9dDOw2KQR1Gl0lNW1cUuiGLVVfVqylNrTQYhxRFTFOu1EDw6uJrQX
-         1ChszTs0T9kHVKhejQ4d3Fr0HWyHZb/nd8Bbw0z0P81ZNqaWqnkCtMkvA12bE1Q7pBe0
-         P1YxbbeN/4/uDR9lJ+1EotrBQYjWQh2NPWNUfzbhA2zLouz3dzDt9a2OggA5gvxQTiK1
-         Ssr2LzasXYxRyn9Uz69OewMGJDelvYrZ8Z+CLQNS5ODRuNBsZ6E6uIyfvY+Z8W/lh8o/
-         SkSA==
+        d=gmail.com; s=20251104; t=1784096814; x=1784701614; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RNjB/18ZjX1BoG8WcSx8UlkekMWL3ErJWmxvHjaYP4s=;
+        b=c0TcZZyFMwvD50THkExmiZ/SvBEngdvwggR8rqcySwyEIu08uNKqkXnUJw0src9bnF
+         Fs9JYgJDuSS0BgfyEK5QLfSXCUa9/+wP8OTL7bYD0zgUWQeB/oYjwPfes57wmml+lKm5
+         e20rEIWu71vm1RELEPGrmUQaqNQq2xM9gpqjK5zIIKiJbzLhYYFOPQv/7E4zG5hbir5r
+         Eh8qZ8CY32OxQNdpz+Obul43vilHTXZRutERvkoloHxIFM55cFvWfD8QM2fmmrjjpAsM
+         18FnmE5/ALoAzYTawPIYy6ree+KpCqjGRsSpuiPE953f5i8NrhNVnsxHmQCdZHwh0E/T
+         mJaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784096805; x=1784701605;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gWSeKvpcppphKo4JuhaQYfS686HzGPt1n2IjvkPZLEQ=;
-        b=NTsaEsnyosZ+62D37uiA8bF5R4CcjmfiSG7JbDfjKRniILA10f3FVdEPonMH+osC9Z
-         8jeMGyAsB6/t6p+u5vUJrkgvlkZBGvuwR90njT7ncAUcxkCJspoRJ9ZInHFBl/o0/e+m
-         I9Thp8m0PGKLu38Xxwm1mK1NT4CP5Rcu8LMTJfLs4J7IL+bWFWVyCzJrQTg3Gpc/M52E
-         5SdArYPrVXrpZLF/rzLXSuvDGDRoX+4d7jxBeiajfsn7hzJov1sZelAb0zU0qEIVlkMb
-         /+HQju+Ytb/G/Y1Q/q65Msalzy+HM6pjeYXNv2jG2zQunoir6+diJ97yyxApxI2+Soqd
-         e9GQ==
-X-Gm-Message-State: AOJu0YwlS0i//7Xw35K1Ek9yCcUEgInAsRo/vJzHfQDDyPzRh1r+cUSk
-	Ny9AIheZ8xiRy+ckbibswqdYim2P4GVQYHprTOvujM5GIJAfIiDa3z64x2a/uz9JkNrw1mBEJv6
-	Ig1+vNKzJ8n6JUUtBMRv7IMPwejsdS7u3ctbNMKw=
-X-Gm-Gg: AfdE7cmRaHMlTjDIfGtMdOq+1MbWx3EWq5McbBrBRlztS4h0KtMKuD7+TQVdJmeeIBd
-	mZies0TrI1G21IbbV+A2V95TGxouChx5rgd3dMxRA1PNwC41YGKtJX655LA4UbwbYRtiHhrdfBa
-	B/bHYJXF9pdzIDKpfIgy5S9JFS+SZu9KytFujT7RJAEonTXsWNb5DO4HgQiPfbv8byxgHSDSTKg
-	u4oAie7HbZjOE6Kos3UWXwG3F+mVbAKn1Wc8dJ3JGpqnJ8enUIEOB0xxI0r8s3rhkC/0Q9e+Dsi
-	zTtB/3xVi14gvF9bkq9XqC0CeC+63ZU=
-X-Received: by 2002:a05:690e:4883:20b0:668:7e4:b078 with SMTP id
- 956f58d0204a3-66807e4be6dmr2370313d50.5.1784096804761; Tue, 14 Jul 2026
- 23:26:44 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1784096814; x=1784701614;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=RNjB/18ZjX1BoG8WcSx8UlkekMWL3ErJWmxvHjaYP4s=;
+        b=inSHyLFBKy5aD9apZnrbgCLWrYGx3FYeT0SmiimDK4PuYZMQnr516PgvTT1X6odwZz
+         fcFDh8H2Wfzs3CpM5s4vnRJ2Vt624skEBucFQskmgm67dkJixHAKB2sRF55z7lRTNOpD
+         UbYIvZeU0Es63BbG+xZWQ5rSuDTADBTxZdAvqvRl8hBUvfYIKwVLzN2zZs/Ulcx2o+Qy
+         dIzNvEjwHqOnQqe4oNmgNVOAZ5uBjB/cBZI65okIqMaRtDoh/klOSC80KWSPlDyFPaiX
+         o4Jq0Yvpn1cL5PT/oI4W+/N8yWGY1Dx3Rue3KgdqwuhSC9kZ8ojiSY7Ey+zs3nxleWze
+         yO3w==
+X-Gm-Message-State: AOJu0YxCuUWvdRIx4gbNFvIjoWmIxLOv5JqSVsjQK/ILfuHTAZuMHfm6
+	/1TA8PRDjsJJd1xM542wu2g+abCrRVLzdjY+y5mQpRemB5EKvS9tbfDA2y+bKw==
+X-Gm-Gg: AfdE7cnD0SLvcB1HpHRUVxA01hHooPrOtnR1AQEzxUf1k1SeC5dmyQnCxTMd+QiOS8y
+	uwydVFhkTN3dZM6qF8fDUWUrIk+Z1yamqLJXIrVhbj5AiuQanw2QQD36JwRk7cf3DHE0uHlP0yd
+	/PgW+9yEC6EARuoqc8N+6Suaqi04t1Cjx2SqBuBseWOAsLY8sIFEpQtCQpiJwbFzWLE9WKsutKj
+	j1H5lhFDiZ57BS8yJNS+kHitNpW62MpjFbhmEv7UKdJ8CKmPNTFqge2bNOyKKVhOHVwR3Il16KO
+	D26xsEf0WFF9IcN+hAsoQ2lWnenIIYSTHhWw3hF7eODMdOXLUDRBBcFE3PuY7PVb3CCXRYvnm6D
+	nqPG0z/YzJDWFQMDE1qTjcxfQC9ZOk2W8oyhI257rFMV5/SJZ9DGgG5NDUqapzcVw29/hpgYw+r
+	9wD92BuPZaAwIgo9tzZfZrJspUFKnT4Nzlzya1PHHG1Uts7dNbDlNrx5MqwVGvxWgknedv
+X-Received: by 2002:a05:6a20:9183:b0:3bf:d62f:44e1 with SMTP id adf61e73a8af0-3c36c35d250mr1891705637.53.1784096813979;
+        Tue, 14 Jul 2026 23:26:53 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31189cd8234sm79742519eec.9.2026.07.14.23.26.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2026 23:26:53 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Tue, 14 Jul 2026 23:26:53 -0700
+To: sashiko-reviews@lists.linux.dev
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v11 02/31] cxl/mem: Read dynamic capacity configuration
+ from the device
+Message-ID: <alcoLW9717L-GuLN@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-3-anisa.su@samsung.com>
+ <20260625181636.E59BD1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714202850.40999-1-royalnet026@gmail.com> <20260714204026.84B601F000E9@smtp.kernel.org>
-In-Reply-To: <20260714204026.84B601F000E9@smtp.kernel.org>
-From: Royal Net <royalnet026@gmail.com>
-Date: Wed, 15 Jul 2026 08:26:32 +0200
-X-Gm-Features: AUfX_mx_GykK3yZd7csrMrPNJbBaiwMkpZUk534rlKvfi9UnpbROgKKA1H36E9M
-Message-ID: <CAEWPSH5KVBDE6s+7EYsyGEJ5BNv2Y6dtXXcKOfS=9xxjw6MtPA@mail.gmail.com>
-Subject: Re: [PATCH] drm/rockchip: dw_hdmi_qp: attach the HDMI Colorspace
- connector property
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, Sandy Huang <hjc@rock-chips.com>, 
-	=?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
-	Andy Yan <andy.yan@rock-chips.com>, 
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>, linux-rockchip@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260625181636.E59BD1F00A3A@smtp.kernel.org>
 
-> [Severity: High] This is a pre-existing issue, but by adding this
-> error path, the patch exposes it further. Does returning an error
-> here without cancelling hdmi->hpd_work risk a use-after-free?
+On Thu, Jun 25, 2026 at 06:16:36PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Mailbox payload size statically requests too many partitions, failing initialization on devices with small mailboxes.
 
-Thanks for taking a look.
+fine... I fixed it but I find it unlikely for a DCD to have the minimum 256B
+mailbox size
 
-The window you describe does exist, but it is not introduced or
-widened by this patch: hdmi->hpd_work is initialized and the HPD
-interrupt requested early in dw_hdmi_qp_rockchip_bind(), and the
-function already has several error returns after the interrupt is
-live -- encoder init, dw_hdmi_qp_bind() and drm_bridge_connector_init()
--- none of which cancel the delayed work. This patch adds one more
-return immediately after the last of those, following the function's
-existing error-handling pattern.
-Since the cancellation gap is common to all of bind()'s error paths,
-I think the right fix is a separate patch addressing all of them at
-once (e.g. switching to devm_delayed_work_autocancel() or a devres
-action) rather than special-casing the new return. I'm happy to send
-that as a follow-up.
+> - [High] Incorrect unit conversion of DC partition decode_length causes severe integer overflow.
 
-Igor
+false pos
+explained below
 
+> - [High] Logic Error in DPA Skip Check mathematically guarantees failure, breaking DCD on all devices.
+false pos
+explained below
 
-On Tue, Jul 14, 2026 at 10:40=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Returning an error from `dw_hdmi_qp_rockchip_bind()` without can=
-celling `hdmi->hpd_work` leads to a Use-After-Free when the delayed work or=
- HPD interrupt fires.
+> - [Medium] Valid CXL devices configured with 0 Dynamic Capacity partitions are erroneously treated as having an I/O error.
+
+false pos. Partition info is only requested if mds->dcd_supported, which is set
+to true if the device supports the full set of DCD commands. If the
+device supports the commands and has 0 partitions that is an error.
+
 > --
->
-> --- Patch [1]: [PATCH] drm/rockchip: dw_hdmi_qp: attach the HDMI Colorspa=
-ce connector property ---
-> commit 77d2f0e8bc60d50755aec22dee119ad08bb92b3c
-> Author: Igor Paunovic <royalnet026@gmail.com>
->
-> drm/rockchip: dw_hdmi_qp: attach the HDMI Colorspace connector property
->
-> This commit creates and attaches the standard HDMI colorspace property
-> after the bridge connector is initialised. This allows userspace to reque=
-st
-> BT.2020 colorimetry and enables wide-gamut/HDR output on RK3588.
->
-> > diff --git a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c b/drivers/g=
-pu/drm/rockchip/dw_hdmi_qp-rockchip.c
-> > --- a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-> > +++ b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
+> 
+> commit cbb0f735b5888cbb19cb493b31cc330ef3afdadf
+> Author: Ira Weiny <iweiny@kernel.org>
+> 
+> cxl/mem: Read dynamic capacity configuration from the device
+> 
+> This commit implements the mailbox commands to read Dynamic Capacity
+> partition configurations from CXL devices. It validates the partitions
+> and configures the first partition as dynamic RAM.
+> 
+> > diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+> > index 07aba6f0b7194..2932bbd67e550 100644
+> > --- a/drivers/cxl/core/mbox.c
+> > +++ b/drivers/cxl/core/mbox.c
+> > @@ -1347,6 +1347,188 @@ int cxl_mem_sanitize(struct cxl_memdev *cxlmd, u16 cmd)
+> 
 > [ ... ]
-> > @@ -695,6 +695,20 @@ static int dw_hdmi_qp_rockchip_bind(struct device =
-*dev, struct device *master,
-> >               return dev_err_probe(hdmi->dev, PTR_ERR(connector),
-> >                                    "Failed to init bridge connector\n")=
-;
-> >
-> > +     /*
-> > +      * Attach the HDMI Colorspace property. The HDMI connector framew=
-ork
-> > +      * already consumes conn_state->colorspace for the AVI infoframe
-> > +      * (drm_hdmi_avi_infoframe_colorimetry()), and HDR_OUTPUT_METADAT=
-A and
-> > +      * max bpc are attached by drmm_connector_hdmi_init(), but withou=
-t the
-> > +      * Colorspace property userspace cannot request BT.2020 signallin=
-g,
-> > +      * which keeps wide-gamut/HDR output unavailable. Passing 0 selec=
-ts
-> > +      * the full HDMI colorspace set defined by the core.
-> > +      */
-> > +     ret =3D drm_mode_create_hdmi_colorspace_property(connector, 0);
-> > +     if (ret)
-> > +             return ret;
->
+> 
+> > +static int cxl_dc_check(struct device *dev, struct cxl_dc_partition_info *part_array,
+> > +			u8 index, struct cxl_dc_partition *dev_part)
+> > +{
+> > +	u64 blk_size = le64_to_cpu(dev_part->block_size);
+> > +	u64 len = le64_to_cpu(dev_part->length);
+> > +
+> > +	part_array[index].start = le64_to_cpu(dev_part->base);
+> > +	part_array[index].size = le64_to_cpu(dev_part->decode_length);
+> > +	part_array[index].size *= CXL_CAPACITY_MULTIPLIER;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but by adding this error path, the patch
-> exposes it further. Does returning an error here without cancelling
-> hdmi->hpd_work risk a use-after-free?
->
-> If a hardware HPD interrupt fires right before the devres cleanup
-> unregisters the IRQ, hdmi->hpd_work can get queued. The DRM master
-> teardown then frees hdmi (which was allocated via drmm_kzalloc),
-> leaving the delayed work to execute later with a dangling pointer:
->
-> drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c:dw_hdmi_qp_rk3588_hpd_work=
-() {
->         struct rockchip_hdmi_qp *hdmi =3D container_of(work,
->                                                      struct rockchip_hdmi=
-_qp,
->                                                      hpd_work.work);
->         struct drm_device *drm =3D hdmi->encoder.encoder.dev;
->         ...
-> }
->
-> Could we ensure that the delayed work is properly cancelled before
-> returning errors from dw_hdmi_qp_rockchip_bind()?
->
-> > +     drm_connector_attach_colorspace_property(connector);
-> >
-> >       return 0;
-> >  }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714202850.40=
-999-1-royalnet026@gmail.com?part=3D1
+> Is it correct to multiply decode_length by CXL_CAPACITY_MULTIPLIER here?
+> 
+it is.
+
+> The CXL specification provides the decode length in bytes, similar to the 
+> base and length fields. Multiplying this by 256MB will cause a 64-bit 
+
+r4.0 8.3.10.9.9.1 Table 8-347 "Region Decode Length" The
+device-assigned number of bytes of DPA that this region consumes, in
+multiples of 256MB"
+
+decode length is provided in multiples of 256B. This conversion is
+necessary to get actual # of bytes.
+
+> integer overflow for capacities of 64GB or larger. This overflow can wrap 
+> around to a small value, bypassing the later DPA ordering checks and 
+> registering a corrupted partition size.
+> 
+> [ ... ]
+> 
+> > +/* Returns the number of partitions in dc_resp or -ERRNO */
+> > +static int cxl_get_dc_config(struct cxl_mailbox *mbox, u8 start_partition,
+> > +			     struct cxl_mbox_get_dc_config_out *dc_resp,
+> > +			     size_t dc_resp_size)
+> > +{
+> > +	struct cxl_mbox_get_dc_config_in get_dc = (struct cxl_mbox_get_dc_config_in) {
+> > +		.partition_count = CXL_MAX_DC_PARTITIONS,
+> > +		.start_partition_index = start_partition,
+> > +	};
+> > +	struct cxl_mbox_cmd mbox_cmd = (struct cxl_mbox_cmd) {
+> > +		.opcode = CXL_MBOX_OP_GET_DC_CONFIG,
+> > +		.payload_in = &get_dc,
+> > +		.size_in = sizeof(get_dc),
+> > +		.size_out = dc_resp_size,
+> > +		.payload_out = dc_resp,
+> > +		.min_out = 8,
+> > +	};
+> 
+> [ ... ]
+> 
+> > +int cxl_dev_dc_identify(struct cxl_mailbox *mbox,
+> > +			struct cxl_dc_partition_info *dc_info)
+> > +{
+> > +	struct cxl_dc_partition_info partitions[CXL_MAX_DC_PARTITIONS];
+> > +	struct cxl_mbox_get_dc_config_out *dc_resp __free(kfree);
+> > +	struct device *dev = mbox->host;
+> > +	u8 start_partition;
+> > +	u8 num_partitions;
+> > +	size_t dc_resp_size = struct_size(dc_resp,
+> > +					  partition,
+> > +					  CXL_MAX_DC_PARTITIONS);
+> 
+> [Severity: High]
+> Can this static size calculation cause initialization failures on devices 
+> with small mailboxes?
+> 
+> The code requests CXL_MAX_DC_PARTITIONS (8 partitions), resulting in an 
+> expected response payload size of 328 bytes (an 8-byte header plus 8 
+> 40-byte partition entries). However, the CXL specification allows a minimum 
+> mailbox payload size of 256 bytes. 
+> 
+> If a device has a mailbox smaller than 328 bytes, cxl_internal_send_cmd() 
+> will unconditionally fail with -E2BIG. Should the requested number of 
+> partitions be dynamically bounded by the device's negotiated payload size?
+> 
+Fixed. # of partitions requested per iteration of the loop
+capped to mailbox size.
+
+> > +	dc_resp = kmalloc(dc_resp_size, GFP_KERNEL);
+> > +	if (!dc_resp)
+> > +		return -ENOMEM;
+> > +
+> > +	/**
+> > +	 * Read and check all partition information for validity and potential
+> > +	 * debugging; see debug output in cxl_dc_check()
+> > +	 */
+> > +	start_partition = 0;
+> > +	num_partitions = 0;
+> > +	do {
+> > +		int rc, i, j;
+> > +
+> > +		rc = cxl_get_dc_config(mbox, start_partition, dc_resp, dc_resp_size);
+> > +		if (rc < 0) {
+> > +			dev_err(dev, "Failed to get DC config: %d\n", rc);
+> > +			return rc;
+> > +		}
+> > +
+> > +		if (rc == 0) {
+> > +			dev_err(dev,
+> > +				"Device reported %u partitions available but returned none at index %u\n",
+> > +				dc_resp->avail_partition_count, start_partition);
+> > +			return -EIO;
+> > +		}
+> 
+> [Severity: Medium]
+> Does this unintentionally fail on valid devices configured with 0 Dynamic 
+> Capacity partitions?
+> 
+> If a device supports DCD but is configured with zero partitions, 
+> avail_partition_count is 0, and cxl_get_dc_config() legitimately returns 0. 
+> This path treats it as a hard error and returns -EIO, logging a confusing 
+> error message instead of cleanly disabling DCD and proceeding.
+> 
+> [ ... ]
+> 
+> > +void cxl_configure_dcd(struct cxl_memdev_state *mds, struct cxl_dpa_info *info)
+> > +{
+> > +	struct cxl_dc_partition_info dc_info = { 0 };
+> > +	struct device *dev = mds->cxlds.dev;
+> > +	int rc;
+> > +
+> > +	rc = cxl_dev_dc_identify(&mds->cxlds.cxl_mbox, &dc_info);
+> > +	if (rc) {
+> > +		dev_warn(dev,
+> > +			 "Failed to read Dynamic Capacity config: %d\n", rc);
+> > +		cxl_disable_dcd(mds);
+> > +		return;
+> > +	}
+> > +
+> > +	/* Skips between pmem and the dynamic partition are not supported */
+> > +	if (dc_info.start != info->size) {
+> > +		dev_warn(dev,
+> > +			 "Dynamic Capacity skip from pmem not supported\n");
+> > +		cxl_disable_dcd(mds);
+> > +		return;
+> > +	}
+> 
+> [Severity: High]
+> Is it intended to compare dc_info.start against info->size here?
+> 
+> Because cxl_mem_dpa_fetch() initializes info->size to mds->total_bytes, 
+> it already includes the dynamic capacity. 
+
+no it doesn't. it only includes ram and pmem partitions.
+
+> This means dc_info.start will 
+> always be strictly less than info->size, causing this skip check to falsely 
+> fail on every valid device with a DC partition and breaking DCD entirely.
+> 
+> > +
+> > +	info->size += dc_info.size;
+> 
+> [Severity: High]
+> Does this inadvertently double-count the dynamic capacity?
+> 
+no.
+
+> Since info->size already includes the total device capacity, adding 
+> dc_info.size here will inflate the total DPA span incorrectly.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=2
