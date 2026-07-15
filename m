@@ -1,158 +1,220 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697473B2FFF;
-	Wed, 15 Jul 2026 19:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2912743F0AC
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 19:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784144177; cv=none; b=M5EybN//s3lB/MUvfI2+WRWAMjgtR3rqjHaqJp5quGBqr6yIV7bV/tO99I7YxUdBACAd+8Evx7j6uQGhC1JElOcN6BThAXMGyo0ftCrecv+q52hh2z9SbJ+tB9l1VVhVFr58BIZdKJUva4G8c4TZuBNMIMBu65wPeJgDctRNxtA=
+	t=1784144550; cv=none; b=tMgkhbBR6C0ojJv91M9L2p6xTzcT+vf5px8ECJ8MpFpc8Lie6Ml8mTk1Uzy54Cpz5bHe4CAG91fxnub2hEkv17orte7je5Wg9Rl+Wyf3g0T5fIN5WsHgft0kwZUmPdOZy3ICJubji/01uhjaZsChXQ2cA384xbdqggnUtCVoZuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784144177; c=relaxed/simple;
-	bh=nnkRURN/ufjqj1pT4Z4U6+9doJG3iWy1rUXX6RB7B18=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nlf8LKEG6J1mcbqI0EoajCA3BHL/e4RWgIcORQAqN6lye5Shj7SF0v4Nn3H5vpSZa99LRUMateFfXdwAsqy3/A50jd/38N1QzQU9WW688dJ+JlyGBJAKietv5Q9H4B33AxR6nj56ocZV9aezl1p62snlrTJ80YFNsw1Dbpxq5H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=kbQauLnx; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+	s=arc-20240116; t=1784144550; c=relaxed/simple;
+	bh=ivn+ns0/9HUTJGZP/TUu/nVUE4yfqrs0N8NAHnbEUnQ=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s8JeCrVjJWN18h0qj3VOyd23cvyX2NMnbBMClapvD5PBlNLCUzQvTfliCJiChu4b9FZ65bV5+W8j1L9o8yHbMIuqZvs6cKyZu/d8BiYEFJ1E/4nVi3HQFwgQXRAZSONiy5/VsI0ztEEXXg4CYOoU0lPRKGlj1uLFy4y+/aeFGdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m877dyqX; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="kbQauLnx"
-dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=jhC1DKpJMRCe2eiBnTkhhbAIpvBFIzv1cTqob4CLHs8=;
-	b=kbQauLnxlQu4gKuCJ+aKwz/TVLDb1yH8E9zYLuyQBNiMUH34aooZc+1U4S3ORON4YVjEEN14j
-	rSYLQ/VAYi7CsK+2jtf6ymfRMi5NoMZjb53VarGE5y167f9eVaEJjMlHXcJWIDpyhSb8SCxbee7
-	xeBdAq57CE3nCPiMZT0MU4w=
-Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4h0mcR4vS9zHnGdq;
-	Thu, 16 Jul 2026 03:35:51 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 7EED240575;
-	Thu, 16 Jul 2026 03:36:04 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 15 Jul 2026 22:36:03 +0300
-Message-ID: <0a0741a2-4a43-48d6-8c22-5a4774617236@huawei-partners.com>
-Date: Wed, 15 Jul 2026 22:36:03 +0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m877dyqX"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cc6dd436c6so30892105ad.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 12:42:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784144547; x=1784749347; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xOT+iJ3ReQwbtNlxysq1AxWjZnmdfnRFxYkgt5mzAq4=;
+        b=m877dyqX2l8XpZyyWlcawP4I1qrUzqcmfpVG60HPQG8lXblkCzeMFc3Me30+eJqHcv
+         775u0dybPB8O/xn1y7VZdGtUpHlNUQDRqjR3XdE233ge20lXf6u6mvaxukW8MeQhqeWH
+         dZrXjkcRm/a+9I80pXms8sIwvGgjcf7nAMZr/4GdEEny/O3XbJa1Ui+Bq5eJP5ydaJfe
+         ruFfgltjWEziiVWCuaU8vmMYwueF+RpD4XUWvGBHmTMuiZagoj8u6paBSf313Dl5S6R+
+         s1lsXBqC0Xuk/NvCVGekcY032USiU1JZhxOjZ9IdyGaPw6qDIr/U3rm3EqYodD9Y4o9q
+         EZ4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784144547; x=1784749347;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=xOT+iJ3ReQwbtNlxysq1AxWjZnmdfnRFxYkgt5mzAq4=;
+        b=RKqs5iln7d2vpAAp9c2dLxhpjO6QyIKewgvl5DkKvobvziUvNBjOSzCqTpvAXjPkQl
+         SqWG6+5U4Dbl/Fmq7/nY4FCXmw+1r93ZvPTqsv2bomg4ozawjQ6YtgTdgH/AWcBqxl4c
+         KtQgbHbX4ZfjxJHrEkdTsanwWW19YHL2JRVyvzLQ36uacXgulPPrC2aEMPyLn7gtyIeg
+         NVAh0UPAtSHlfA3H3LjRYsHqH6LsNZDSpNYuTQQtt++Uuw37BhLDYquwnbmi7mso8hzJ
+         qr8QpPFTj+AoctnX32GKjT5AiM9HXlFeY/fthMvxc9UhUSC2/v7NHVyFu7QUQAwYXxKw
+         SOeQ==
+X-Gm-Message-State: AOJu0YwJWLo+F2Bw2IH81deW9Z5K3huR6aqDU0f1UqsglLMXr3lzKO6q
+	MHP4Bptc20DKxG1ej92M9bDUxnHq693U/o2ZAw6XJGkXzGwROTSrVR98Q9VKKQ==
+X-Gm-Gg: AfdE7ckKTQ6q4kmGH3ZxB+C182VMCW5vHA5WyTDUngR3cIVRSfKFNzMCR3Dg/ZvpgYD
+	NYHeLZSrdKG5HQusgVdZgzQSLxnLFh5ZpIIxR2SqsBGIK8FOqX/X61Axwk7IuJCoSY5qNAVr9Ni
+	zKHFSNJh5y+JJL3b54z+0882SNT9hFF9juMJvKabJGhYrtbWIoRoTn1Ge+APgnNdo0TP12wHJIn
+	30Av3rkUO/BvkWQmFHasIbmvB+dGN66xCX9Vs/i2qtMqHH+FARCAYLeq7+qRx8Uh7QvzTLuAxNO
+	QGCEAX1qWjXEOSSDY2tyqKNy/xr0d0mrj144ncy3vxUwhz8WdEdHyKFSyYXolnB3dlbbovBxTIx
+	hEVVDUJ9WDSswvUKlTGegbMR6/PiaGyXiZ4uqua56pFmGBlln2isnPTItUQbIFzddi9gOcUO5bc
+	Bl5A3cizLbZ+mSNWqw1r9HZ1U8ZEDYkOlKJtpjEk/cJOPTYHRJMzCMj6ZHpDA8s7RZx0KzflCLW
+	DHpEK4=
+X-Received: by 2002:a05:6a21:7e0c:b0:3c3:7762:5d5f with SMTP id adf61e73a8af0-3c377626ec5mr2621801637.19.1784144546826;
+        Wed, 15 Jul 2026 12:42:26 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13cd4359166sm3647854c88.14.2026.07.15.12.42.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 12:42:26 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 15 Jul 2026 12:42:25 -0700
+To: sashiko-reviews@lists.linux.dev
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v11 07/31] cxl/region: Add DC DAX region support
+Message-ID: <alfiocEYiKmIoe1Q@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-8-anisa.su@samsung.com>
+ <20260625181650.52E881F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] mm/damon/sysfs: support hugepage_mem_bp quota goal
- metric
-To: SJ Park <sj@kernel.org>
-CC: <sashiko-reviews@lists.linux.dev>, <damon@lists.linux.dev>
-References: <20260715151615.99767-1-sj@kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260715151615.99767-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260625181650.52E881F000E9@smtp.kernel.org>
 
+On Thu, Jun 25, 2026 at 06:16:49PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Lockless access to `cxlmd->cxlds` via the newly introduced `cxled_to_mds()` helper in `store_targetN()` leads to a NULL pointer dereference during concurrent device teardown.
 
+Fixed.
 
-On 7/15/2026 6:16 PM, SJ Park wrote:
-> On Wed, 15 Jul 2026 17:47:38 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> --
 > 
->> Hi SJ,
->>
->> On 6/17/2026 7:15 AM, SeongJae Park wrote:
->>> On Tue, 16 Jun 2026 22:35:21 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
->>>
->>>>
->>>>
->>>> On 6/16/2026 6:21 PM, sashiko-bot@kernel.org wrote:
->>>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->>>>>
->>>>> New issues:
->>>>> - [Low] The new `DAMOS_QUOTA_HUGEPAGE_MEM_BP` metric is exposed via sysfs but lacks required documentation updates.
->>>>>
->>>>> Pre-existing issues:
->>>>> - [Critical] Potential divide-by-zero in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` due to an unhandled zero denominator.
->>>>> - [High] 32-bit integer overflow in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` when calculating memory ratios.
->>>>> --
->>>>>
->>>>> commit be304699fb94d4d73bd979237fb4d7b08b7216f7
->>>>> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>>>>
->>>>> mm/damon/sysfs: support hugepage_mem_bp quota goal metric
->>>>>
->>>>> DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
->>>>> This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
->>>>>
->>>>>> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
->>>>>> index 329cfd0bbe9f3..4b5429a5b4158 100644
->>>>>> --- a/mm/damon/sysfs-schemes.c
->>>>>> +++ b/mm/damon/sysfs-schemes.c
->>>>>> @@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
->>>>>>  		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
->>>>>>  		.name = "node_eligible_mem_bp",
->>>>>>  	},
->>>>>> +	{
->>>>>> +		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
->>>>>> +		.name = "hugepage_mem_bp",
->>>>>> +	},
->>>>>
->>>>> [Severity: Critical]
->>>>> This isn't a bug introduced by this patch, but exposing this metric directly
->>>>> to userspace makes a potential divide-by-zero triggerable by users
->>>>> configuring DAMON quotas.
->>>>>
->>>>> In mm/damon/core.c:damos_hugepage_mem_bp(), the denominator is computed as:
->>>>>
->>>>>     total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
->>>>>
->>>>> Due to per-CPU vmstat lag or an idle system, the free pages counter can equal
->>>>> totalram_pages(), resulting in total being 0. This is then passed to
->>>>> mult_frac():
->>>>>
->>>>>     return mult_frac(thp, 10000, total);
->>>>>
->>>>> This inherently computes thp / total, causing a strict division by zero and a
->>>>> kernel panic. The same issue exists in damos_get_in_active_mem_bp() where
->>>>> total = active + inactive, which can be 0 if the LRU lists are empty.
->>>>>
->>>>> Should a zero-check on total be added before performing the division?
->>>> DAMON is enabled after the system is fully loaded. total will not be 0 by then.
->>>
->>> Could you please further clarify what "system is fully loaded" means, reaards
->>> to what Sashiko is claiming, particularly the per-CPU vmstat lag?
->>>
->>>
->>> Thanks,
->>> SJ
->>>
->>> [...]
->>>
->>
->> What I meant is the system already initialized after booting. The thing
->> is that by the time the sysadmin sets up DAMON, vmstat should show at
->> least some memory usage, not 0. That was my guess, but I may be wrong.
+> commit 0243c2c435424873e37aafdcb17aee31b0ea07a1
+> Author: Ira Weiny <iweiny@kernel.org>
 > 
-> I think that's a fair argument.  And I also not quite sure.  But having zero
-> due to the races in per-CPU vmstat sounds possible in an extreme and weird lab
-> environments.
+> cxl/region: Add DC DAX region support
 > 
->>
->> If my initial thought was wrong, I can just add a guard there.
+> This commit introduces dynamic DAX regions to support CXL DC capabilities.
+> It adds a new sysfs attribute for creating dynamic RAM regions and updates
+> target attachment logic to handle DCD support.
 > 
-> So I'm not really sure if you're wrong.  But adding the guard would be simple.
-> I'd recommend just adding the guard instead of get wrestle on this thoery for
-> now.  Does that make sense?
-Yes, makes sense. I will add a guard.
+> > diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+> > index 82ca3a4767080..9ed141fa13341 100644
+> > --- a/drivers/cxl/core/core.h
+> > +++ b/drivers/cxl/core/core.h
+> [ ... ]
+> > @@ -18,6 +19,13 @@ enum cxl_detach_mode {
+> >  	DETACH_INVALIDATE,
+> >  };
+> >  
+> > +static inline struct cxl_memdev_state *
+> > +cxled_to_mds(struct cxl_endpoint_decoder *cxled)
+> > +{
+> > +	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+> > +	return to_cxl_memdev_state(cxlmd->cxlds);
+> > +}
 > 
-> Thanks,
-> SJ
+> [Severity: High]
+> Can this result in a NULL pointer dereference during concurrent device
+> teardown?
 > 
-> [...]
+> If a user writes to a CXL region's targetX sysfs file, store_targetN()
+> calls cxled_to_mds() without holding locks that synchronize with device
+> teardown.
+> 
+> Concurrently, if the CXL device is hot-removed or the driver is unbound,
+> cxl_memdev_shutdown() nullifies cxlmd->cxlds under cxl_memdev_rwsem.
+> 
+> This would cause cxled_to_mds() to pass a NULL pointer to
+> to_cxl_memdev_state(), which unconditionally dereferences it:
+> 
+> drivers/cxl/cxlmem.h:to_cxl_memdev_state() {
+>     if (cxlds->type != CXL_DEVTYPE_CLASSMEM)
+>         return NULL;
+>     ...
+> }
+> 
+> Does this path need to hold cxl_memdev_rwsem or otherwise verify
+> cxlmd->cxlds is not NULL before using it?
+> 
 
--- 
-Asier Gutierrez
-Huawei
+Fixed:
 
+Added new helper function cxled_dcd_check() in memdev.c instead of
+called cxled_to_mds(). The new helper grabs the lock before reading
+cxlmd->cxlds:
+
+int cxled_dcd_check(struct cxl_endpoint_decoder *cxled)
+{
+	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+	struct cxl_dev_state *cxlds;
+
+	guard(rwsem_read)(&cxl_memdev_rwsem);
+	cxlds = cxlmd->cxlds;
+	if (!cxlds || cxlds->type != CXL_DEVTYPE_CLASSMEM)
+		return -ENODEV;
+	if (!cxl_dcd_supported(to_cxl_memdev_state(cxlds)))
+		return -EINVAL;
+	return 0;
+}
+EXPORT_SYMBOL_NS_GPL(cxled_dcd_check, "CXL");
+
+Exported to cxl/core/region.c so it can be called from store_targetN()
+for dcd checks:
+
+if (cxlr->mode == CXL_PARTMODE_DYNAMIC_RAM_1) {
+	rc = cxled_dcd_check(cxled);
+	if (rc == -ENODEV)
+		dev_dbg(dev, "No memdev state\n");
+	else if (rc == -EINVAL)
+		dev_dbg(dev, "DCD unsupported\n");
+	if (rc)
+		goto out;
+}
+
+> > +
+> >  #ifdef CONFIG_CXL_REGION
+> >  
+> >  struct cxl_region_context {
+> [ ... ]
+> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > index e50dc716d4e82..ba03ec5e27c32 100644
+> > --- a/drivers/cxl/core/region.c
+> > +++ b/drivers/cxl/core/region.c
+> [ ... ]
+> > @@ -2389,6 +2396,8 @@ static size_t store_targetN(struct cxl_region *cxlr, const char *buf, int pos,
+> >  	if (sysfs_streq(buf, "\n"))
+> >  		rc = detach_target(cxlr, pos);
+> >  	else {
+> > +		struct cxl_endpoint_decoder *cxled;
+> > +		struct cxl_memdev_state *mds;
+> >  		struct device *dev;
+> >  
+> >  		dev = bus_find_device_by_name(&cxl_bus_type, NULL, buf);
+> > @@ -2400,8 +2409,21 @@ static size_t store_targetN(struct cxl_region *cxlr, const char *buf, int pos,
+> >  			goto out;
+> >  		}
+> >  
+> > -		rc = attach_target(cxlr, to_cxl_endpoint_decoder(dev), pos,
+> > -				   TASK_INTERRUPTIBLE);
+> > +		cxled = to_cxl_endpoint_decoder(dev);
+> > +		if (cxlr->mode == CXL_PARTMODE_DYNAMIC_RAM_1) {
+> > +			mds = cxled_to_mds(cxled);
+> > +			if (!mds) {
+> > +				dev_dbg(dev, "No memdev state\n");
+> > +				rc = -ENODEV;
+> > +				goto out;
+> > +			}
+> > +			if (!cxl_dcd_supported(mds)) {
+> > +				dev_dbg(dev, "DCD unsupported\n");
+> > +				rc = -EINVAL;
+> > +				goto out;
+> > +			}
+> > +		}
+> > +		rc = attach_target(cxlr, cxled, pos, TASK_INTERRUPTIBLE);
+> >  out:
+> >  		put_device(dev);
+> >  	}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=7
