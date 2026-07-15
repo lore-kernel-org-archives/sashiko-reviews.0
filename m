@@ -1,181 +1,218 @@
-Received: from out203-205-221-155.mail.qq.com (out203-205-221-155.mail.qq.com [203.205.221.155])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BDA207A20
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 01:03:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E7670809
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 01:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784077393; cv=none; b=dv4lxvpFOsl8dO8thOrDmplysn/ux+58ihrfYO7/XiGa1OQ0I47+GoFFdDF+5P0WA7GTva6quRMYw+nOwySwy9QSYOSaoTJALlsXZ7X0DFfJ3MG9F5nCUGWRM0JOcISYVmcKpB1gYGJ/Rk7oD39/rgGhHkDVded6ENVkHqtBX0Q=
+	t=1784079080; cv=none; b=MncdVY+KAGyONIRaUIznberQn/JYrv8oY2Nnrgp1q0MlOkpqhbzTXghGMV3dEIPVyVJ2mm+Y84DO1sZ08/+Uxx9SZHtA90X+LG9o3tXChG/hhgkQPHN4/x0KCftb5hzRqM0FMlmGVY4TKbNxfjczg4yij/wT8D8VqXmOrv6ckYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784077393; c=relaxed/simple;
-	bh=Pr+FcyIJAIaGTPvNLVGNiqEwVwmLoj1wNuaL56VSm0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G4XtBy1J2D2PD/jAdZdp+kaQ1CJ33UwqpgFIc/zmUk+1/NHt/lUNQs6s1d2ZBxPQs8TK5X30XBNpr9UirzI4Q6Qlsntw/omg8lAQmXELsYxOpnrhSwCNTuL3AXt7+yYa7/NOefi4FyBg9ZrsOPHjZL1OUG3xsd0xTbxKS5AClB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=WJd4kA55; arc=none smtp.client-ip=203.205.221.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	s=arc-20240116; t=1784079080; c=relaxed/simple;
+	bh=gEZSpkDWmhVTu28ZP23SlosL6YgIl0g5v4JYYcUHyyU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mbn1Gz+fUjzEU1rRR88Xl6ax2yvUoa3TsBpRw21OGZKgL8k9pFD8X1XtC+k8ElasfQoPFlzsYiNkr7R2SE72xtbqXPQARKouC9gvTFABCp1jpU4daMxcvKEdEHRPQiXZCTUaxRz5Rb6m6/k+mToGqLzrFo56b/WYPuha6AXsDiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gkCMbJoO; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="WJd4kA55"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1784077382;
-	bh=+ezWaPL8o+Bf9DeBMrDIJ6C9VjJpCHDmRZLbvOm2aLw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=WJd4kA55fRvoz7Elgy3JD9LPVMaIipWdI+7pG5bxbUgngu6gbIVIgHsj01skZbjPI
-	 iRfeap7xwz19SB6PWaRiJZJrhj6u1ww4wAPM7QvmwVTVFvxQNtImemqRUjXCOWjXON
-	 Frko+mjizBX7sEZbjTTblQJmkisnex+JIQd7vBj0=
-Received: from [10.56.52.25] ([39.156.73.14])
-	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
-	id C0B066F; Wed, 15 Jul 2026 09:03:00 +0800
-X-QQ-mid: xmsmtpt1784077380t5aucd3hs
-Message-ID: <tencent_D85EA546CD11A70CDA84E0B33A2F87547009@qq.com>
-X-QQ-XMAILINFO: OIJV+wUmQOUAceMm1HCrPD82gY1K0qPip8ARpzE3CNhE3XxC9b9m4vSwo/V1bC
-	 yviS4Kbtiwuqz5HivRRLVqYHEVLoMPoDswR8fIcF8U3yfSpiRsYOP5jbS8422pq05L0ruKGgylip
-	 Ah23E3GGrOSSaWUqwom5UX9X5qQpymAeWlDxFKx1K6+lpcgAE2NFPyJilNESwy5gFlxXDtDXLZQk
-	 aRTNB3Pbo0bjDh0BdNyNwN1cL36r2HSOuVt18rNsR5uJV0F0IrOzg0ntPzFzMtHWKucOU41QF/Mg
-	 mXWf71Kl5B6BLjVCxBNR7/cjKGZKEdltP8+1BAQpaxybt3Tovo4tpBAH9zceHE2EhEA09QGxs8qP
-	 FxA1U0XRr5nDyO7Q3cPt5m4rmFrFiCOBjwoa6rlGxW+VohRaXBS0q3M9cEwpIHYJsDvVbLG7v44Y
-	 xAdOyn/SWjhHD/tnxxhDjspI4FFEQn1V53pItmBXFAyXVXMGSA0xsY3rVu8bxeewlruTHLsbDoFf
-	 OZ+iWwrLJZ8JEWaTW/V4XnJom6MIXSeTt0QOoLEiPU0w2llPRlAAlG0x25GQXu3zxmw6F9RYBcFS
-	 lf6eSnMIltez+XbSHipWbeAsZ0fV426uTmL46jnmg43kA8T9fh2g7b3dl+s6zr4PUn4IvcTN7/4z
-	 v+JRoLVpvK+tzTn8IP/Mk6JSkcN9uNSWK95lbusupmBE4qBmJcxIlYxx+GGnHzvR8s5H0Y2CE/7b
-	 R4YxfUI/5pHzUWI0Mwxhpic3e5bNolSAHt047hiHt9hLow23BFTnEGgoKIPDh+EUMTpc7kUYUszG
-	 ISvC1u6FMhefNcH+La47HMrq5hwLMGZacNfM70f8lcRM/Z7OS1/57cKMQvxgV1ZWMzbmLCJz3hn9
-	 +x0nrrRGU1yIEBONFW79HItX0Cn7z4KQKlIF1CEH6sGVVn2hvCQdqX4O11b0ifWcYBsFK2fIdmfm
-	 6i1j5X97/Ma0i+cyYTqXP4+dKy3blhijioEASDHPI/4bTg8NfP98/BEukEci5dC18fCA/PPWZN8r
-	 txnoxLioFbJ4apm+TD
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-OQ-MSGID: <4c4fa501-95a2-47c3-bbc7-b9816eeb435f@foxmail.com>
-Date: Wed, 15 Jul 2026 09:03:00 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gkCMbJoO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1784079077; x=1815615077;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=gEZSpkDWmhVTu28ZP23SlosL6YgIl0g5v4JYYcUHyyU=;
+  b=gkCMbJoOOVZ9Zim5hBeXvYrzIEGjTz4BFNOUEWh5aM2AL2uJpRnQ1IkY
+   Y6vkxUNuJsfz4nUJzcWnn0bpIS8C5AqgPLVfp5dkN2tvH3uLeajwCm085
+   nQJh7XAMI+tWcZOoRDIJxzVNF1Ay+4224qa5y7/+fL+LFn8hKzcrrJEwF
+   zd1zaszrbdtf8JjMXxn8x+VZ1kyQqCwQCXYxdcqOgaADq3ETfQIUi8X8Z
+   qjwej85RmO9RH+A9gT1tQsUv90+j8i2GmIcnW+9D3+sJwWWcldRU4Jxi+
+   Pk8QTbWSlU970uEZC1VZ2AbL/5rlC/0mgkRwLXoZCxX/rtk6PE53jf7Lt
+   g==;
+X-CSE-ConnectionGUID: z29oMyHeQEipjYqVaTL0KA==
+X-CSE-MsgGUID: itdz/yYcQ3KYgp2wCx5FTQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11847"; a="107504539"
+X-IronPort-AV: E=Sophos;i="6.25,164,1779174000"; 
+   d="scan'208";a="107504539"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2026 18:31:17 -0700
+X-CSE-ConnectionGUID: t27DOH7CTACLuYt0UMLbVQ==
+X-CSE-MsgGUID: GZhyI5tyRt6g9SV5pPzX1w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,164,1779174000"; 
+   d="scan'208";a="254281293"
+Received: from bradocaj-mobl.ger.corp.intel.com (HELO vcostago-mobl3) ([10.125.108.174])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2026 18:31:17 -0700
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+Subject: Re: [PATCH 2/4] crypto: iaa - fall back to software for multi-entry
+ scatterlists
+In-Reply-To: <20260714043606.BBD8B1F000E9@smtp.kernel.org>
+References: <20260713-iaa-crypto-fixes-zswap-v1-0-65cac23c684d@intel.com>
+ <20260713-iaa-crypto-fixes-zswap-v1-2-65cac23c684d@intel.com>
+ <20260714043606.BBD8B1F000E9@smtp.kernel.org>
+Date: Tue, 14 Jul 2026 18:31:16 -0700
+Message-ID: <87a4rtqbrv.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 1/2] bpf: add bpf_strcat,bpf_strncat kfunc
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <cover.1784021302.git.rongtao@cestc.cn>
- <tencent_59689407B1C3204B08362BEEF244A5FE5505@qq.com>
- <20260714101933.4AD381F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Rong Tao <rtoax@foxmail.com>
-In-Reply-To: <20260714101933.4AD381F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+sashiko-bot@kernel.org writes:
 
-On 7/14/26 18:19, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [Critical] Arbitrary Kernel Memory Write via Verifier Bypass
-> - [High] Missing page fault protection leading to sleeping in atomic context
-> - [High] Time-Of-Check to Time-Of-Use (TOCTOU) race leading to unbounded loop and soft lockup
-> - [Medium] Unbounded out-of-bounds read on destination buffer
-> - [Medium] Unbounded out-of-bounds read on source buffer
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [High] Hardcoding the `nents` parameter to 1 in `dma_map_sg` causes
+> a kernel panic if `req->dst` is NULL.
+
+Upper layers tries to not give us req->dst being NULL, but will be a bit
+more defensive.
+
+> - [Medium] The implementation tracks fallback calls rather than processed=
+ bytes, contradicting the commit message.
+>
+
+Will fix the commit message.
+
+> Pre-existing issues:
+> - [High] Software fallback writes to CPU memory while DMA bounce buffers =
+are mapped, risking data corruption during unmap.
+> - [High] A timeout during hardware polling causes the CPU to free DMA str=
+uctures while the hardware device may still be performing DMA, leading to U=
+se-After-Free memory corruption.
 > --
 >
-> --- Patch [1]: [PATCH bpf-next 1/2] bpf: add bpf_strcat,bpf_strncat kfunc ---
-> commit a7b2e5fa67dde4d93faf939b8283a2aa59b8ca2d
-> Author: Rong Tao <rongtao@cestc.cn>
+> --- Patch [2]: [PATCH 2/4] crypto: iaa - fall back to software for multi-=
+entry scatterlists ---
+> commit 6f1532575ac946d82236e0ac6dffd05320f89063
+> Author: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+> Subject: crypto: iaa - fall back to software for multi-entry scatterlists
 >
-> bpf: add bpf_strcat,bpf_strncat kfunc
+> This commit adds a software fallback for the IAA driver when dealing with
+> scatterlists containing multiple entries, as the hardware cannot process
+> them directly. It simplifies the DMA mapping path to expect a single entry
+> and adds counters for the fallback path.
 >
-> This commit introduces bpf_strcat and bpf_strncat kfuncs to allow string
-> concatenation in BPF programs. It requires the destination buffer size as a
-> parameter for safety.
+>>     Add counters to track the number of bytes processed by the software
+>>     implementation on the compression direction.
 >
->> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
->> index c18f1e16edee4..e99b643136822 100644
->> --- a/kernel/bpf/helpers.c
->> +++ b/kernel/bpf/helpers.c
+> [Severity: Medium]
+> The commit message states that counters are added to track the number of
+> bytes processed. However, looking at the updates in iaa_crypto_stats.c:
+>
+> void update_total_sw_comp_calls(void)
+> {
+>         atomic64_inc(&total_sw_comp_calls);
+> }
+>
+> Could it be that the implementation only tracks fallback calls rather than
+> the processed bytes?
+>
+>> diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto=
+/intel/iaa/iaa_crypto_main.c
+>> index f62b994e18e58..fb154959c2aa8 100644
+>> --- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
+>> +++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
 > [ ... ]
->> @@ -4195,6 +4195,95 @@ __bpf_kfunc int bpf_strncasestr(const char *s1__ign, const char *s2__ign,
->>   	return __bpf_strnstr(s1__ign, s2__ign, len, true);
->>   }
->>   
->> +static int __bpf_strncat(char *dst, u32 dsz, const char *src, u32 sz)
+>> @@ -983,17 +984,43 @@ static inline int check_completion(struct device *=
+dev,
+>>  	return ret;
+>>  }
+>
+> [Severity: High]
+> This is a pre-existing issue, but how does the driver handle hardware
+> DMA after a timeout?
+>
+> In check_completion(), if the polling loop exceeds IAA_COMPLETION_TIMEOUT,
+> it returns -ETIMEDOUT:
+>
+> check_completion() {
+>     while (!comp->status) {
+>         if (status_checks++ >=3D IAA_COMPLETION_TIMEOUT) {
+>             ret =3D -ETIMEDOUT;
+>             goto out;
+>         }
+>         ...
+>     }
+> }
+>
+> When this timeout happens, the caller immediately frees the IDXD descript=
+or
+> and unmaps the DMA buffers. However, the hardware might still be actively
+> processing the request. If the delayed hardware eventually performs a DMA
+> write to the destination address after the CPU has reallocated that memory
+> for something else, could this cause silent memory corruption?
+>
+>> -static int deflate_generic_decompress(struct acomp_req *req)
+>> +static int deflate_fallback(struct acomp_req *req, bool compress)
+> [ ... ]
+>> +static int deflate_generic_decompress(struct acomp_req *req)
 >> +{
->> +	int dlen, slen, space, copied;
->> +	char cs = '?';
+>> +	int ret;
 >> +
->> +	if (!copy_from_kernel_nofault_allowed(dst, 1) ||
->> +	    !copy_from_kernel_nofault_allowed(src, 1)) {
->> +		return -ERANGE;
->> +	}
+>> +	ret =3D deflate_fallback(req, false);
+>> +	if (ret)
+>> +		return ret;
 >> +
->> +	dlen = bpf_strnlen(dst, XATTR_SIZE_MAX);
-> [Severity: Medium]
-> Does this code perform an unbounded read on the destination buffer? The limit
-> should be bounded by the provided size dsz, rather than statically set to
-> XATTR_SIZE_MAX.
-Thanks!
+>>  	update_total_sw_decomp_calls();
+>>=20=20
+>> -	return ret;
+>> +	return 0;
+>>  }
 >
->> +	if (dlen < 0)
->> +		return dlen;
->> +	slen = bpf_strnlen(src, XATTR_SIZE_MAX);
-> [Severity: Medium]
-> Does this scan read out-of-bounds on the source buffer? The limit could be
-> bounded by the requested copy length sz rather than unconditionally reading
-> up to XATTR_SIZE_MAX.
-Thanks!
->
->> +	if (slen < 0)
->> +		return slen;
->> +
->> +	if (dlen >= dsz || sz == 0 || dsz == 0)
->> +		return -EINVAL;
->> +
->> +	space = dsz - dlen;
->> +	if (space <= 1 || space < min(slen, sz) + 1)
->> +		return -E2BIG;
->> +
->> +	for (copied = 0; copied < space - 1 && copied < sz; copied++) {
 > [Severity: High]
-> Does this code introduce a Time-Of-Check to Time-Of-Use race? The loop bounds
-> omit checking copied < slen, relying entirely on encountering a null
-> terminator.
+> This is a pre-existing issue, but I noticed a potential problem when
+> deflate_generic_decompress() is called as a fallback from iaa_decompress(=
+).
 >
-> If a concurrent thread modifies the source buffer to remove the null terminator
-> after bpf_strnlen() executes, could this loop run out of bounds and lead to a
-> soft lockup?
-Thanks!
+> If a hardware error like IAA_ANALYTICS_ERROR occurs in iaa_decompress(),
+> the software fallback writes to the CPU virtual mapping of req->dst:
 >
->> +		__get_kernel_nofault(&cs, src, char, err_out);
-> [Severity: High]
-> Does this sequence lack page fault protection? Unlike other string helpers,
-> __bpf_strncat() fails to wrap its memory accesses in guard(pagefault)().
+> iaa_decompress() {
+>     ...
+>     if (idxd_desc->iax_completion->status =3D=3D IAA_ANALYTICS_ERROR) {
+>         ret =3D deflate_generic_decompress(req);
+>         ...
+>     }
+> }
 >
-> If a BPF program executing in a non-sleepable context calls this on an unmapped
-> address, it seems the generic page fault handler will attempt to take sleepable
-> locks.
-Thanks ;)
->> +		if (cs == '\0')
->> +			break;
->> +
->> +		__put_kernel_nofault(dst + dlen + copied, &cs, char, err_out);
-> [Severity: Critical]
-> Can this write to arbitrary kernel memory? The function writes to the unchecked
-> destination pointer.
+> Since req->dst is still mapped for DMA_FROM_DEVICE at this point,
+> when dma_unmap_sg() is eventually called, might it synchronize memory
+> from a bounce buffer over the original CPU buffer, overwriting the
+> software fallback's output? Should the scatterlist be unmapped before
+> invoking the software fallback?
 >
-> Because the bpf_strcat() kfunc signature uses the __ign suffix for dst__ign,
-> verifier safety checks are bypassed. Any user capable of loading BPF programs
-> could potentially use this to write user-controlled bytes to arbitrary kernel
-> memory.
-Thanks ;)
->
->> +
->> +		src++;
->> +	}
 > [ ... ]
->> +__bpf_kfunc int bpf_strcat(char *dst__ign, u32 dst__sz, const char *src__ign)
-> [Severity: Critical]
-> Does the dst__ign argument bypass verifier checks? The __ign suffix explicitly
-> instructs the BPF verifier to ignore this argument, which removes all memory
-> safety and bounds checks for the destination pointer.
+>> @@ -1507,30 +1538,25 @@ static int iaa_comp_acompress(struct acomp_req *=
+req)
+> [ ... ]
+>> -	nr_sgs =3D dma_map_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVI=
+CE);
+>> -	if (nr_sgs <=3D 0 || nr_sgs > 1) {
+> [ ... ]
+>> +	if (!dma_map_sg(dev, req->dst, 1, DMA_FROM_DEVICE)) {
+>
+> [Severity: High]
+> If req->dst is NULL, sg_nents() will return 0, bypassing the fallback che=
+ck
+> earlier in this function. Calling dma_map_sg() unconditionally with nents=
+=3D1
+> will then attempt to dereference the NULL scatterlist pointer.
+>
+> Would it be safer to verify req->dst is not NULL before attempting to map
+> it, preserving the old behavior where sg_nents(req->dst) returning 0 was
+> handled safely?
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260713-iaa-cryp=
+to-fixes-zswap-v1-0-65cac23c684d@intel.com?part=3D2
 
-Thank you very much, I will fix all the potential problems.
-
-Rong Tao
-
-
+--=20
+Vinicius
