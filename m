@@ -1,236 +1,242 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBE73CF034
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 23:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784156956; cv=none; b=pIAdOja+tTQUKrYIz2KqwLotNZuvOxQmwxksYZKFYRYgilO6n/8iLNom16/uCihdECD6o1a0YbWHhFNNK+qe61e1TAZEeRmc+ILtRP+JFMkpLNmNj/NlAtdfwkoyf7iX6Yy5fum+3DVQz4QggzQg3HlCtEUZdxCN6fajkXU6cVk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784156956; c=relaxed/simple;
-	bh=0NFG4Ww2jSroHmWiUivePZxK2XpVdq/qHaQxr1Q7fsY=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=glsSiWQVERXFUJHU4vXjcA/SxI4MMevrbRgltyR21nlEA9sTdTJOwp/+kmtNg+HXIZYF0zgcN0D/8eLyr7PCxitWoPQj4EIWhGzTIu/N+dDPNPNxN4mijQpEzwo4BQE0IJzHPvfgE1RdHLZBL0DmQIkrsX+h6H44W5cWLI0fx/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=frZbSgGe; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AFA34104E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 23:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784159163; cv=pass; b=bI5Ret1q3buumYGuMiR2Z1Dep4cbImoouLJrf1PCiLrrvbMWtCnoXHmiwTlif6VdZq4ULLOtVtHI1Nd1ODGndpKltKC1IXuT1LURO30LPCdGHb6Wgzt6J+pkt6c981EVx1DpjcDBULwpIOAOioQf0NCPyycDFePrC8Sdj+X6JaY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784159163; c=relaxed/simple;
+	bh=q3mSGuk1T0a5S7+ZIg0LGEQscYiwEWehrfnAcVSEgTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rg/p/kFeu2sH19epHPjIqNf4urDERHCexRoFR2yS2+/2g+6HItkZL0klGMGLig5EtCo+/qUpCifK+J7po2KdNR4lYzdhY6uvYwvm4UrVcJB91L1Qd7erJqJ0cAfrxBP6ca/9CuUI2Fkl99Lg2bgfwV+7/xfSGeREtjGIe33VVf4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H1fbh5sU; arc=pass smtp.client-ip=74.125.224.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frZbSgGe"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e347638adso811042a91.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 16:09:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H1fbh5sU"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-664ae043b7fso283963d50.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 16:46:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784159161; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MbfHSI+U4io//u0GwyLYExPA4zaLqcUr2XShgBt5bfEl6tYqC8+yH1uB4hXYrY5sQz
+         juJL2g23+/YXVRJddGyDSmoMr76ugWDagebskUbyAhVJVnKcdWvonTbqWYNpHV8kTl1c
+         H+5QrEiTATEKDrnPDC2vH37OnJSAEV3wYP1ywES5exMxLup2GOkkAvC8vLxAkNlWT1OF
+         E5BwlGNH2K//1069/RdYKrTCqYYgRWdSNcIwE08PABJNOY/KIrqp6R3DxMRRBFPLVpXs
+         cOm7FnHUhvFY3xU3UnZTYzzTedT09oJJH59V9eC2pEkXx/6E5TPwesiRjc4b3tuMfsPQ
+         Jz7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Qtcj7bjUvx/7zEMgJ28XClKqpTHr1Cc9dk8ktxaKnI0=;
+        fh=+2LolrGb2HPU57I3lZIWbnpyjK30A/54WTrn2m453uo=;
+        b=oIuZxzMPF+cV6u1RW2xglAHYtBTCi1vbcQuSjNjDudeaGl0HnZHpXge1IXZIIZbqk4
+         C7i9JD8xV3WApmlmDQMd22PXOC3IVvrSsTdRUjrNfgV1akLPzPTxbY1UvCn8wVd5Jr+S
+         A9NQ++/vD6YQEpLVQk+BeKV0+dJvDiBHAgdUqSImUdcRu6OvfFW4kF2XCfFMeIjb9nOB
+         VaHsno9BK8ylenQY64a8CToyHOcEpdR9TgjCqoI2tdROCf46oRTh4kAdJ0YwdYoZlKg8
+         pnT1EHZhNsRu6nP19ShazEX9Vd6wQNu8M3H1Wwn7QCg3PtmlO+PrjSrQdJUBQp3RD91/
+         hoDQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784156954; x=1784761754; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ElxrIYjyBDIOHQflkE/kwut9Q3GwTe8Bx9Dw1cR1MdI=;
-        b=frZbSgGezYfjDKnsz7YrWnwjFJsQHvWvv6vubfgvPIr10AZ3beC7wOVIwdpY3aZCla
-         8VsOnRo34jDiB2xOP8exRkc9rH9MvVSq0sqNTjL6KLIbd0OaZsYbbc1u3pPPePAundK1
-         tECZS/ePfzZX1Imq2ofAK5WNuyqhVmP6fTiOtNQrEtmWoFPlJylLwmdkTX+YuPpLmdmA
-         BTIJm5vkBe1t4vd1SSjHmVPDM/ekn2sCgPb8Bfgz5JrUPPm9Ea8WnY3m/xSHKwdYawHE
-         ETHfkvME/J/Qy/dVRUbUQr3KiTHU50ddvCVsb7JJU50pgtlh5lTHEjoIAZF5JW52ToXx
-         sbXg==
+        d=gmail.com; s=20251104; t=1784159161; x=1784763961; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Qtcj7bjUvx/7zEMgJ28XClKqpTHr1Cc9dk8ktxaKnI0=;
+        b=H1fbh5sUU5sYOxPyu7OvXjQKv7IxzoY5eLooZTMTaOYbF/QtHYqcoJ1SZVJ3TGSs1m
+         GZZMTym2UhH0iK6qvGmsVzvCL3EaiwFLWnTzmBpnumBN8v8G2b8ccieShK6Pqx4LwUe7
+         NV92oTgMvrZq43/Ua9cp5jWn/RKw8srctH3OtJKcTXbfNcya96nThIzgWn6PpJU+AfZg
+         2/SgCnZczIZ/5UXlerKintrmU2e0nYHndOe83r2feEOQ5CBu6Qj/hPciA+90hX57le9i
+         BLapCRQ5zHpfVsN0863J/DfkIzZoGxnHgtzQfitl3ZrgV7WBaJKsf1z2jdzLfAXtvVwZ
+         STNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784156954; x=1784761754;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ElxrIYjyBDIOHQflkE/kwut9Q3GwTe8Bx9Dw1cR1MdI=;
-        b=rFVAbJBot+uNl5lwe00g3nzUfs/W77E4aZRJYQ7u15t1D+fgQp5o4sGEN1IIDS6HLV
-         GRd02hJPIFEJGHrEGLSFT9EMKpBJf19Iqna0UEgJpSMYCgveZqM4IWpUMzTxngDiPUF8
-         tEzHHlkXf9cZchnQBalV+LMTjoi7Ory4ZEz//0hYga7yXzXrh3d4d84WvIrMFD4f1QpX
-         iWDGVATiJzHRM8cTp9RZjD3/Ovvk+9kayVekafNU8XOQ9va3xYm8EYxc6m6NxbhZP1lu
-         BLzZ2kugVgInaH7kdXkcNaBmlTDD/rU+SBttp1i/07+DHQMWJVjCQQvbs28zXIvmwHum
-         MMDw==
-X-Gm-Message-State: AOJu0YxhyIXnmJ6xEvPFZeCEtQFXAUK2BkEfvoKagbRjgnkvQ7O/g5SC
-	8eY3gVeGHM1yCgYxufZ9b/BPHwxznEWVyYjTgYGyz0akUSGCS+xXyMgkQvUUbg==
-X-Gm-Gg: AfdE7cm1NwAxWKtV6ofKqncrhSq+3MecxANTpCsr6/cBbDEWXsNf6jK8tWRimiJTePw
-	Kicj01m8qbFuYvOM+FX2FPWHUoneOMfBMxJ6YOZ1RLqyAFrRklS0zaO2oGioSHlCzoyAjzCpZic
-	enU9PsfT9V/QRZ9lRCNSrl0lHJRkYQ9lXMoFA7bQRqusFgE5eG69+AOCkwnBFdxWIqdSg2uFT8d
-	JWz6XKiTyPVDWV9+z3k84vbfshTw47NQDtXfQFJv1o83dMb0E9XdMC5tt2JGczekr03VIuQj9Ne
-	XJbmw9JKlLbmcJuyP9jBjCUR5TFlwxGFhMA47uW9pLx6gZHhu9UKA9wJKSXPEdztMgEuFJYivVv
-	qU020V3CVQaCdA24jMKxeOnqYUaKaHFafjnSiqrsbGkPKGFQdpDEZZRHvv7xXn5SPNYY2i/P8IC
-	QOOPMsKDWAPdeSlfmyrcfBiR7PEcSYcI2MoSIOsFf7EQD1qU1rTp9GyBm2NiQbe/EiBwHD
-X-Received: by 2002:a17:90b:2dcc:b0:38c:e9e9:e7ce with SMTP id 98e67ed59e1d1-38e29facf55mr4440727a91.3.1784156954192;
-        Wed, 15 Jul 2026 16:09:14 -0700 (PDT)
-Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e53349dsm5371877eec.7.2026.07.15.16.09.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 16:09:13 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Wed, 15 Jul 2026 16:09:12 -0700
-To: sashiko-reviews@lists.linux.dev
-Cc: Anisa Su <anisa.su887@gmail.com>, linux-cxl@vger.kernel.org,
-	nvdimm@lists.linux.dev
-Subject: Re: [PATCH v11 10/31] cxl/mem: Configure dynamic capacity interrupts
-Message-ID: <algTGPgDuwTUFI_q@AnisaLaptop.localdomain>
-References: <20260625112638.550691-1-anisa.su@samsung.com>
- <20260625112638.550691-11-anisa.su@samsung.com>
- <20260625181442.33E561F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1784159161; x=1784763961;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Qtcj7bjUvx/7zEMgJ28XClKqpTHr1Cc9dk8ktxaKnI0=;
+        b=VblnhlAwHlF5qY355YBLyUJimsM+pC/cN2S1yL/tLB3s7kXwSXF3VBjXiv2gfTM8R5
+         mIyoJBkzIPyoY73XgPPPKY0LYeL8cFHcPpzOQ3b0EfmoaVQMwkrJcDmckJUeeZC/kli9
+         Am8TMQNwuGOPj8+VWLTXDjQLKTPAfd/Tj/OY4r9q87thHWZlkwNOlus3YQAw4CoTJkRu
+         JK1zoqnzxUmj5vBTvxuIoEa6k9fORhYdGgsvGrJoxVob62E0KK9ZzZXit+tW3rYHxc1x
+         V2npK82CucPJSGxmflYcBQWjGRVCmPPF1qw4DmyOt0pfhUWuOs2jbqKsD1mi0gG1lma0
+         jbhg==
+X-Gm-Message-State: AOJu0Yyupz8CkDW3JsOM9k8xoEQ37hTrVqBDdB1PYJ/blrPgSV+BmzSP
+	1Jt8kx8XuT4C1kOJFEW2UvIcnJAjdv0Zgg3ndzdS9vWLTZWBh4Urx3EQeWWpOQhMa9ac82CoAqr
+	0oYR+EHHRFb12qW489Pl0YT+riPRYsOKqjXkhzkk=
+X-Gm-Gg: AfdE7cnRQzowL4m3YCFxcDpwHkCA1o+bBwSaByu1BsEC0juMVYdIhIVIr56Y7AHSl7t
+	rBuBCIaJT3iXaFIXAgiUAruazhi7rzZydu2qebS8aCs5cBWbclCTNPZ8sRkFQQnoCEyMgg5KmeN
+	EYI5DqxDxkZXI4tSwVPhER0DOJ3d95AOF32JwYfCXD7h4rAvNjB/2ysOKAkoSNHKrRm5wuhGrH5
+	jq2VSXF9D6K+J27WB/gWtU2SAj6giqEHg/bFw3Yoz8jaTsuYdFom83Ru9XPq/ZWcyLRp5TNVofG
+	OeAENXNGpaaujFxrahm/m43JB097mg==
+X-Received: by 2002:a05:690e:438c:b0:664:ae6a:f0c with SMTP id
+ 956f58d0204a3-667d7cdbfc5mr8414066d50.9.1784159160589; Wed, 15 Jul 2026
+ 16:46:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260625181442.33E561F000E9@smtp.kernel.org>
+References: <20260715200834.8486-1-royalnet026@gmail.com> <20260715200834.8486-3-royalnet026@gmail.com>
+ <20260715202215.1F6C21F000E9@smtp.kernel.org>
+In-Reply-To: <20260715202215.1F6C21F000E9@smtp.kernel.org>
+From: Igor Paunovic <royalnet026@gmail.com>
+Date: Thu, 16 Jul 2026 01:45:49 +0200
+X-Gm-Features: AUfX_mwqe7gBAVGpG7oJ_d6k_0qQRljfaCttF5nLeBDdypAJn-V9qW1YLtuzmp0
+Message-ID: <CAEWPSH7hEuOkhmv4WFgvU8ba5MW44vy9fFT=kYhCV4aLy9m-fA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] media: synopsys: hdmirx: add HDMI audio capture support
+To: sashiko-reviews@lists.linux.dev, 
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Sebastian Reichel <sebastian.reichel@collabora.com>, linux-media@vger.kernel.org, 
+	kernel@collabora.com, linux-kernel@vger.kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 25, 2026 at 06:14:41PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] An unhandled DCD event status bit will cause an infinite loop in the `cxl_event_thread` IRQ handler if DCD processing is disabled dynamically.
-Fixed
+> Does this code incorrectly parse the ACR N and CTS values?
 
-> - [High] The driver fails to perform an initial drain of the DCD event log when the BIOS has control of standard CXL errors (`!native_cxl`), stranding pre-existing events.
-Fixed
+No -- but the variable naming makes it look like it does, so this is
+worth cleaning up. The packet decoder stores the ACR subpacket bytes
+with packet byte 0 in register bits [7:0], so the byte swap is what
+lines the bytes up for extraction: CTS is packet bytes 1-3 (register
+PKTDEC_ACR_PB3_0) and N is packet bytes 4-6 (PKTDEC_ACR_PB7_4), and
+the masks then take exactly the 20-bit fields. The two locals are
+named after the wrong registers (inherited from the vendor driver),
+which is confusing but has no functional effect.
 
+The path is also validated on hardware: with a 44.1 kHz source the
+card reports 44.1 kHz rather than falling back to the 48 kHz default,
+and sample rate switches are followed -- neither would work if the
+parsing were broken. I'll rename the locals and add a comment about
+the byte packing in the next revision.
+
+> Could this dummy callback simply be removed to allow the core to
+> map the reg property to the correct DAI ID naturally?
+
+The #sound-dai-cells path is not affected -- there the DAI index
+comes from the phandle cell, so <&hdmirx 1> still reaches the S/PDIF
+DAI and gets the intended -EOPNOTSUPP. But you're right that the stub
+is unnecessary and would wrongly force DAI 0 for an OF-graph card, so
+I'll drop it in the next revision.
+
+Igor
+
+On Wed, Jul 15, 2026 at 10:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Severe logical and mathematical errors in Audio Clock Regenerati=
+on (ACR) N and CTS parsing, leading to hardware clock recovery failure.
+> - [High] Dummy `hdmirx_audio_get_dai_id` callback unconditionally returns=
+ 0, breaking S/PDIF DAI OF graph mapping.
 > --
-> 
-> commit 4e2d7455b6a9875d8ee530fc91ae3a8b65741caa
-> Author: Ira Weiny <iweiny@kernel.org>
-> 
-> cxl/mem: Configure dynamic capacity interrupts
-> 
-> Dynamic Capacity Devices (DCD) support extent change notifications
-> through the event log mechanism.  The interrupt mailbox commands were
-> extended in CXL 3.1 to support these notifications.  Firmware can't
-> configure DCD events to be FW controlled but can retain control of
-> memory events.
-> 
-> > diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-> > index 8d12c684d6700..95a4bf7c1e466 100644
-> > --- a/drivers/cxl/pci.c
-> > +++ b/drivers/cxl/pci.c
+>
+> --- Patch [2]: [PATCH v2 2/2] media: synopsys: hdmirx: add HDMI audio cap=
+ture support ---
+> commit c4b60dd6e2a0b110adfab2b5a2ccf3d214ed0d05
+> Author: Igor Paunovic <royalnet026@gmail.com>
+>
+> media: synopsys: hdmirx: add HDMI audio capture support
+>
+> The Synopsys DesignWare HDMI RX controller extracts the audio stream
+> embedded in the incoming HDMI signal and feeds it to an on-SoC I2S
+> controller. Expose it as an ALSA capture device by registering the
+> generic hdmi-codec as a child of the controller, so that a
+> simple-audio-card in the device tree can bind the HDMI RX audio DAI.
+>
+> > diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/dri=
+vers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+> > index 25f8ca0d6d946..acabd43664c10 100644
+> > --- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+> > +++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+>
 > [ ... ]
-> > @@ -632,6 +657,30 @@ static int cxl_event_irqsetup(struct cxl_memdev_state *mds,
-> >  	return 0;
-> >  }
-> >  
-> > +static int cxl_irqsetup(struct cxl_memdev_state *mds,
-> > +			struct cxl_event_interrupt_policy *policy,
-> > +			bool native_cxl)
+>
+> > @@ -2646,6 +2662,255 @@ static int hdmirx_register_cec(struct snps_hdmi=
+rx_dev *hdmirx_dev,
+>
+> [ ... ]
+>
+> > +/* Recover the incoming audio sample rate from the ACR N/CTS + TMDS cl=
+ock. */
+> > +static u32 hdmirx_audio_fs(struct snps_hdmirx_dev *hdmirx_dev)
 > > +{
-> > +	struct cxl_dev_state *cxlds = &mds->cxlds;
-> > +	int rc;
+> > +     u64 tmds_clk, fs_audio =3D 0;
+> > +     u32 acr_cts, acr_n, tmdsqpclk_freq;
+> > +     u32 acr_pb7_4, acr_pb3_0;
 > > +
-> > +	if (native_cxl) {
-> > +		rc = cxl_event_irqsetup(mds, policy);
-> > +		if (rc)
-> > +			return rc;
-> > +	}
-> > +
-> > +	if (cxl_dcd_supported(mds)) {
-> > +		rc = cxl_event_req_irq(cxlds, policy->dcd_settings);
-> > +		if (rc) {
-> > +			dev_err(cxlds->dev, "Failed to get interrupt for DCD event log\n");
-> > +			cxl_disable_dcd(mds);
-> 
+> > +     tmdsqpclk_freq =3D hdmirx_readl(hdmirx_dev, CMU_TMDSQPCLK_FREQ);
+> > +     hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PH2_1);
+> > +     acr_pb7_4 =3D hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PB3_0);
+> > +     acr_pb3_0 =3D hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PB7_4);
+> > +     acr_cts =3D be32_to_cpu((__force __be32)acr_pb7_4) & 0xfffff;
+> > +     acr_n =3D (be32_to_cpu((__force __be32)acr_pb3_0) & 0x0fffff00) >=
+> 8;
+>
 > [Severity: High]
-> If cxl_event_req_irq() fails here, cxl_disable_dcd() is called, but the
-> device is already programmed to generate DCD interrupts.
-> 
-> When a DCD event interrupt fires, cxl_event_thread() will read the status
-> and retain the CXLDEV_EVENT_STATUS_DCD bit because the mask includes it.
-> However, cxl_mem_get_event_records() skips draining the log when
-> cxl_dcd_supported() is false:
-> 
-> drivers/cxl/core/mbox.c:cxl_mem_get_event_records() {
->     ...
->     if (cxl_dcd_supported(mds) && (status & CXLDEV_EVENT_STATUS_DCD))
->         cxl_mem_get_records_log(mds, CXL_EVENT_TYPE_DCD);
->     ...
-> }
-> 
-> Will this cause cxl_event_thread() to spin in an infinite loop since the
-> status bit is never cleared by draining the log?
-> 
-
-The fix is in cxl_event_thread(). Instead of setting the event drain
-mask based only on the value of native_cxl:
-
-mask = host_bridge->native_cxl_error ? CXLDEV_EVENT_STATUS_ALL
-                                     : CXLDEV_EVENT_STATUS_DCD;
-
-we additionally check cxl_dcd_supported(), because the native_cxl value
-only determines if the standard logs are owned by firmware. DCD event
-logs are always OS owned.
-
-So the mask becomes:
-
-u32 mask = 0;
-
-if (host_bridge->native_cxl_error)
-        mask |= CXLDEV_EVENT_STATUS_ALL & ~CXLDEV_EVENT_STATUS_DCD;
-if (cxl_dcd_supported(mds))
-        mask |= CXLDEV_EVENT_STATUS_DCD;
-
-This gets put in a new helper function cxl_event_drain_mask() because
-the second bug below uses it too.
-
-The helper is called from cxl_event_thread():
-static irqreturn_t cxl_event_thread(int irq, void *id)
-{
-	struct cxl_dev_id *dev_id = id;
-	struct cxl_dev_state *cxlds = dev_id->cxlds;
-	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlds);
-	struct pci_host_bridge *host_bridge =
-		pci_find_host_bridge(to_pci_dev(cxlds->dev)->bus);
-	u32 mask = cxl_event_drain_mask(host_bridge, mds);
-...
-
-So if dcd has been disabled afterwards, DCD events are still cleared.
-
-> > +		}
-> > +	}
-> > +
-> > +	return 0;
+> Does this code incorrectly parse the ACR N and CTS values?
+>
+> The variables acr_pb7_4 and acr_pb3_0 are assigned the swapped register
+> contents (PKTDEC_ACR_PB3_0 is assigned to acr_pb7_4, and vice versa).
+>
+> Additionally, applying be32_to_cpu() to the native-endian result of
+> hdmirx_readl() will cause big-endian byte-swapping on little-endian
+> architectures. Because of the swapped assignment and byte reversal, the
+> bitwise shift operations extract completely incorrect bytes.
+>
+> Will this cause hardware clock regeneration to fail and silently fall bac=
+k
+> to the ALSA default sample rate (48kHz)?
+>
+> > +     tmds_clk =3D tmdsqpclk_freq * 4 * 1000U;
+> > +     if (acr_cts !=3D 0) {
+> > +             fs_audio =3D div_u64((tmds_clk * acr_n), acr_cts);
+> > +             fs_audio /=3D 128;
+> > +             fs_audio =3D hdmirx_audio_closest_fs(fs_audio);
+> > +     }
+> > +     return (u32)fs_audio;
 > > +}
+>
 > [ ... ]
-> > @@ -687,11 +744,16 @@ static int cxl_event_config(struct pci_host_bridge *host_bridge,
-> >  	if (rc)
-> >  		return rc;
-> >  
-> > -	rc = cxl_event_irqsetup(mds, &policy);
-> > +	rc = cxl_irqsetup(mds, &policy, native_cxl);
-> >  	if (rc)
-> >  		return rc;
-> >  
-> > -	cxl_mem_get_event_records(mds, CXLDEV_EVENT_STATUS_ALL);
-> > +	if (native_cxl)
-> > +		cxl_mem_get_event_records(mds, CXLDEV_EVENT_STATUS_ALL);
-> 
+>
+> > +static int hdmirx_audio_get_dai_id(struct snd_soc_component *component=
+,
+> > +                                struct device_node *endpoint,
+> > +                                void *data)
+> > +{
+> > +     return 0;
+> > +}
+>
 > [Severity: High]
-> If the BIOS has control of standard CXL errors (!native_cxl), does this skip
-> the initial drain of the DCD event log?
-> 
-> Since the driver owns the DCD log regardless of native_cxl, it appears that
-> pre-existing DCD events might be left in the log, potentially preventing
-> subsequent edge-triggered interrupts from firing.
-> 
-
-Fixed by calling previous defined helper cxl_event_drain_mask()
-which also checks if dcd is enabled.
-
-So if (native_cxl)
-	cxl_mem_get_event_records()
-
-is replaced by
-
-status = cxl_event_drain_mask(host_bridge, mds);
-if (status)
-	cxl_mem_get_event_records(mds, status);
-
+> Does this dummy callback break the S/PDIF DAI OF graph mapping?
+>
+> The driver registers two audio DAIs (0 for I2S, 1 for S/PDIF) to match th=
+e
+> DT binding. However, this callback unconditionally returns 0, which overr=
+ides
+> the standard DAI index parsing in the ASoC core.
+>
+> Consequently, any DT endpoint requesting S/PDIF (reg =3D <1>) will be
+> incorrectly forced to map to DAI 0 (I2S). This bypasses the intended
+> -EOPNOTSUPP rejection in hdmirx_audio_hw_params() and erroneously configu=
+res
+> the hardware for I2S when S/PDIF was requested.
+>
+> Could this dummy callback simply be removed to allow the core to map the =
+reg
+> property to the correct DAI ID naturally?
+>
 > > +
-> > +	dev_dbg(mds->cxlds.dev, "Event config : %s DCD %s\n",
-> > +		native_cxl ? "OS" : "BIOS",
-> > +		cxl_dcd_supported(mds) ? "supported" : "not supported");
-> >  
-> >  	return 0;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=10
+> > +static const struct hdmi_codec_ops hdmirx_audio_codec_ops =3D {
+> > +     .hw_params =3D hdmirx_audio_hw_params,
+> > +     .audio_shutdown =3D hdmirx_audio_shutdown,
+> > +     .get_dai_id =3D hdmirx_audio_get_dai_id,
+> > +};
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715200834.84=
+86-1-royalnet026@gmail.com?part=3D2
