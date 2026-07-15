@@ -1,263 +1,187 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-ej2-f2.google.com (mail-ej2-f2.google.com [74.125.228.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE5E4248DF
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:19:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784146744; cv=none; b=sVV41TbMUqSMkvFPB1xQHW/0HywBUvGtzWByBLuNtxCuPDPMAocXxh9PGhDmWvCmDeTzC84EX/r+ngJZI7wf/N4rt7K2p5FHcq5ZJzgqpO6rZp6g/FllT+Q11hV8bYs1nhAfGXXFI7Z6afHDKvoA7dXocUNf7DEve9PCxWtxf5I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784146744; c=relaxed/simple;
-	bh=k2vVOzSRHmTKV6iKmzo94luYEZQOvkDzvGf/+/TRdww=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oNdMq5vl5hqr6qOna+y8Y1lV3FQeIGaeSIb95sA/jm3UE/8kpeY8giZtM5XsCNgoypKgMTYt1MVYMYlmqhrst/Ykx8EoO2H6Augm1PtwTMTgHeeILaXQ/+AqGHJq68H8p551IuIZdbUzfWQbTmnTTFdYXobTU1tx/KY6k2Uix7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C3ShSHCz; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A344D2EC4
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.130
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784146787; cv=pass; b=MVUXwmWwvpJDMmaGZIOSS3YrlKP9Rt6lekwiZLiIxdUkjFRFk60FselfzXjyA9RpDmnNr0nr1S04tRJi3hNr31e2gpAhTCm1wrOMPQqhptpF7gMRQYp/wy4pWh4ECK2PUxzyOirELpKNgG0ku5Wh0Il1UcbQW0xn6ZK4dob1KAc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784146787; c=relaxed/simple;
+	bh=Q5ccYVWvR+5jgS+UYin62kxL9TLl/TrtAkaA8NvL9HI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cOHRBhr6xWoxpwaA5mfeFOaxBWlqTB3NLCiVZVQ7oG9wSS6/UF8JzNEl1yB5gp7u5qaY75QLzklUH0svLPAI0IppUFBs+repaxPGpVGvGE2V1WVBSRFrAlrSUXdWeIY0JUolMv/x4YYUAwSfSWoLZDOuLPRFB6UO11MJr88NMmQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s4dKTRXz; arc=pass smtp.client-ip=74.125.228.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C3ShSHCz"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-471eeac43bfso5741884f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:19:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4dKTRXz"
+Received: by mail-ej2-f2.google.com with SMTP id a640c23a62f3a-c15f8dd6f18so360729766b.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:19:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784146784; cv=none;
+        d=google.com; s=arc-20260327;
+        b=aTaPl7smCIEO4QpI5n/kmKBlkz5cTsfUfdojAawLyI4l/hXG1Tp5vS1hkkj4RCSEwi
+         I916wEAmfKsLeOHta1CpOXUnC5qvcM0h+wqdcGBfXyYn3uZdSKJFBCA71aiu7TtBKD8f
+         WP/prHYZjoEZBflYM6TIN3xIZYBNJopM+8OJocH+4S7qbkSD2oUUB5U7wlEHjdQpDLew
+         /VlJJcELlaMwuOQEPQKQeDVGTfKxAoYXJlIjk13pyLBRcp8ztw0xdcn0yRPX2X4gskJO
+         WBDBwL0xUG7W179JJDO9w3GDWB3+wtqxvvD0iRUFY3odcZgI1QdFYISLs0OJIM2DaljU
+         AiaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nubd27NNIvTV4B3FNhrgAkY1uJlNnIcqTLmtlT2/89o=;
+        fh=RaVSQyovX+axG/rFSpJv47KhzLBKKJV+/S7D0MMWgBI=;
+        b=C+/DCJTrdZliqFtUzSc/s4sKz+pjYJEx9bSsRABmxkOzUVxnMarKBAltB3bcg2EfuB
+         gfl4TUWeRIlWd4j5x+vn+qDh/T1yIHjNsWtZj2h8Qf+pAW61WRt95gNEkqIBiLwBVGiJ
+         GcLnj+1mwQzUxbWrBoCSBdUEpX43wV5a1+UWPmF0ujAob0vcprfQOLmer19HQTXNJiNj
+         /YfN19OyEhVDL6c6SQPcN92xMBfiOVc2YB68398WeMsUQ0PjUNRCVQTh7no4NBWIVEoY
+         FfQ9clmgvs858OWq2/EP3uETCxZa36i/8BcBhIdVJJxgqGt2MO/VgASUxvgifD21q2BC
+         auEg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784146741; x=1784751541; darn=lists.linux.dev;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1784146784; x=1784751584; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=7HRGfRZp6riY4S2dWkx8gtcMTY1YiznpYBmmZdtr/CE=;
-        b=C3ShSHCzrxViTQdMQon4FIvmmejlluSyGL/kzkVLwHNiC/o8UQlLi9reOMjhZWa8ZA
-         MHIe0JmDssIXqK2Em9+PcJmtrfu8JH+CEjpx7RfndE4/4B+5tEvqusBZRTpjg59YRSK5
-         UkAnnc01DH04ipIrminpMVisMbqTEvorB5YtM/EC1gysB9iizcsB3+DLpie10/hU/43m
-         1lyJ2jzALjnpTN2yP6/0WQ/TXyY/vMEbdzrVnJnKanU9Hixk67u9ac8kLoyHJ0IaqN4e
-         I5r23NiF2xl8dG8Fk+oDTm1VJmLKMWQXymzCLiD3kftVqcTuCWclBDeYzYK2FpQ5rqGw
-         zeyA==
+        bh=nubd27NNIvTV4B3FNhrgAkY1uJlNnIcqTLmtlT2/89o=;
+        b=s4dKTRXz0Q39g+zLwuNtZv5MIngvftrBdJcjoGRcdmohey3ScvU0ZL4HAhL1DuxAZk
+         CvMn9erfMaKBg1Vz974qvWs34QSjSqlwKHIcQ46z6Pq815hSnrnVvZlvodoqSlUrwW+G
+         so8MowcFdmT+AfZ5h/42eSON0YAK26yTPLq/j4J3+IbDSJixSJG2MVprSSkVEo9sEkDI
+         5YDwzVetVvuqRQ0e0C1WJWipjx5EcHag4H+oNrW71f/50Ky+lbrmI6/WowXhH57IjxS4
+         un8hu5+jLrQ1OzydMwK/BZtDtlQkf2tu9284la6p7v1QDA3Pm+VR7Q7KpYAT6vVowrr2
+         JEPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784146741; x=1784751541;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20251104; t=1784146784; x=1784751584;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7HRGfRZp6riY4S2dWkx8gtcMTY1YiznpYBmmZdtr/CE=;
-        b=B9DIDsfd1mKyDJ5OVN8alqPaqtgd6dutLdLoE0GjAw+x5+DI1xIpAJruSzdgSpTNy7
-         7Az8OxOwdDNaKHA6bL1S/fOQXq+6swHEKVKAOTZw/98ucBOvM2itRcx/+1HIDIGoMALC
-         2JcUX26uqHzV7V4X8tn/0kEjeAGrMnr0R/rlI/Dv/Mo7GskSDyFT6r/nneUrgDw1HZO/
-         3fRWM5lNjruCq35G4apLBjJcmr3VyhVztB4c0pJBhqmdoWVVniMKth1keUUxQICOxp2I
-         LHlXmC4uBZIYOZqbhmHDrT5v8CHZ1ZwzL2Im2nwwQ6ZdzOiwJR2CZf2JY0VTx3roaSoM
-         Kquw==
-X-Gm-Message-State: AOJu0Yzt98Ti/if7hI5T3ZwDeRyxd/Oh+QVb3H71meJxQTLoQzcQqGc9
-	sD4msbnOh2QfXZ8BEAvfSaeuPy48GrfnNUbAQ5voMT88dQ8BSz60TA0unKLa5lgP
-X-Gm-Gg: AfdE7ckPaKB2gIgzAwNE9WJ9/p1azsIG5i+PSAb2Oa1zcRKwm64Yn8FguAHLUJ60GwW
-	a8enE+MvC7+gsF9QczHAh5qdwcs3HhjaVbYpry+dklTyhfShQ8qSbTaCjpdGf/48FQClbD7/05D
-	ZNkcYA1YPeK70MsWpFFQJOw1FnHFgLBvsHBHpUIcX31QtL4IV2GFTdR/kM5KFUvR/inwsMoFSXQ
-	6qVeVJOLUl4p6wrI8U2h+1SX/BwMfzvfMs6e7EV4015AipOsVLrmTY4/mYufQv73SHo1GX5yvlo
-	bBXVtQ7sOJzIAUG9jnosdzAL+f0q5oBnj2G9dOap8ztRmPAz0NjLIOCxxdRdcGZKg9sspkE/FSR
-	Bnogl7tLxLDc7HAfF34GcniXKLb0zIOc/fXDph2sBVIGIi0ybuZdjXy7HjKVzRMk2mka4iXLb09
-	4yxSDAr5Ofx/d8wiHBbu5gFS0KzUk575hvWN2qgtBdLz8oQotn26+8SPT1zNyUByRTF3NbpqGDI
-	RitleSW/vTcQsIIAzo=
-X-Received: by 2002:a5d:64cc:0:b0:475:c946:36c5 with SMTP id ffacd0b85a97d-47f4fcc87c5mr4964106f8f.9.1784146741164;
-        Wed, 15 Jul 2026 13:19:01 -0700 (PDT)
-Received: from timur-max.localnet (20014C4E24CD7200F6BBA872344E1A32.dsl.pool.telekom.hu. [2001:4c4e:24cd:7200:f6bb:a872:344e:1a32])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f4635ac2esm19386874f8f.13.2026.07.15.13.19.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 13:19:00 -0700 (PDT)
-From: Timur =?UTF-8?B?S3Jpc3TDs2Y=?= <timur.kristof@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject:
- Re: [PATCH 3/4] drm/amd/display: Support DRM format modifiers on GFX6-8
-Date: Wed, 15 Jul 2026 22:18:59 +0200
-Message-ID: <74354275.0thIPus4bt@timur-max>
-In-Reply-To: <20260715110821.BF5F01F000E9@smtp.kernel.org>
-References:
- <20260715105757.13125-1-timur.kristof@gmail.com>
- <20260715105757.13125-4-timur.kristof@gmail.com>
- <20260715110821.BF5F01F000E9@smtp.kernel.org>
+        bh=nubd27NNIvTV4B3FNhrgAkY1uJlNnIcqTLmtlT2/89o=;
+        b=ZpyZcKAl2DKQqDxLZTJ53ZtrMiMNOBnfV+JyxdWqyqeiv5iqPOtNHQrT+CRRRJKdtc
+         wKyTcahGUBKtG4MlXIl+x4QJ3f4sgIH9CLg8n+HtBsrTz/QxDoaAIfwzpKWrz2MoVSE1
+         xMiV7IIZMLEPUBSuzmARQqhKF6tv0VBmhA3YKkKpGpc9qf5aDUiMD8gAfaQZSlj/tgp1
+         NeiQoxTAvDQpHyHfWJg0ExqT1PuBKb/SDbN9LLpZptiiuylHliQ13V0WzuPZWd0+YIto
+         gd94e/p7moNfsVMD7QagQ6ejNkNP+V6SXRd5BqHFnLJqtkao1z9GU6QI89lAARLdMmgH
+         MkKA==
+X-Gm-Message-State: AOJu0YxDmW5vIDCWW5JU9GJk1AcVSu0LHZEUoZTLxTpPdH31WBCed5Jl
+	sdghzNDE2Kd4x/+UhvObQvqQmqkklxSTZSwmdN4nh17NNDgMzAVwq5JOKuB7RUU3EX2vKJ4BEn9
+	4dWNlEvmfwUR6Z2Xu/ZbTWIU342FNPrU/MWn2+Pa5YrePymM=
+X-Gm-Gg: AfdE7cmMHLLs1MZhXLMyDeqBEuxh4/5g870CNGrJ4xxdqx8bwt1QWlKJVVILXboKet5
+	VqoZzQi2n6HFdJAspCszOg8Pz0iFJZ/QWqMb+7VScmBn2EajbR75LSmR0cqKjyxscpjOGAHb4Hu
+	Q/9XsWUjze5qEBiTCgscjZKXpZTpUZyDAurD+OAjOdh1RY4hs9kXPdwu8sA0ajZrDNnG+wjbNVe
+	baPlGr/nZ/+OUQrBtJv+YmHe29ebpmtB0A52ZSXJPFBicL9JIAMUb8/uU1saSj4W8yYXHxJTuA=
+X-Received: by 2002:a17:907:9484:b0:c16:1227:e3d8 with SMTP id
+ a640c23a62f3a-c16790fa355mr278084266b.13.1784146783933; Wed, 15 Jul 2026
+ 13:19:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260714191341.690906-1-coiaprant@gmail.com> <20260714191341.690906-7-coiaprant@gmail.com>
+ <20260715191453.DEE731F000E9@smtp.kernel.org>
+In-Reply-To: <20260715191453.DEE731F000E9@smtp.kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
+Date: Thu, 16 Jul 2026 04:19:32 +0800
+X-Gm-Features: AUfX_my5g85fDayigq-hMxxzbVtYHNZXP8Ax7QFobz0v3NSrNqtAVYC0ELzRnTI
+Message-ID: <CALj3r0ge83r9kmcDbnhvsEyD983Q7_oNcFTrd2iSFdvOsHTFdQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 06/10] net: pcs: xpcs: improve SGMII AN state handling
+ for Rockchip RK3568
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, olteanv@gmail.com, neil.armstrong@linaro.org, 
+	robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, 
+	linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
 
-On 2026. j=C3=BAlius 15., szerda 13:08:20 k=C3=B6z=C3=A9p-eur=C3=B3pai ny=
-=C3=A1ri id=C5=91 sashiko-
-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issue(s) to consider: - [High] Missing bit-to-byte conversion in
-> `tile_bytes` calculation. - [High] NULL pointer dereference in
-> `amdgpu_dm_plane_add_modifier_dedup`. - [Medium] Missing 8-bpp modifier
-> exposure in `amdgpu_dm_plane_add_gfx6_modifiers`. --
->=20
-> --- Patch [3]: [PATCH 3/4] drm/amd/display: Support DRM format modifiers =
-on
-> GFX6-8 --- commit 3fb28c857b70a3a3413b8818708816df4bf9fc7e
-> Author: Timur Krist=C3=B3f <timur.kristof@gmail.com>
->=20
->     drm/amd/display: Support DRM format modifiers on GFX6-8
->=20
->     Expose displayable DRM format modifiers based on which
->     tiling modes are supported by the GFX block.
->=20
-> > diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c index
-> > b2507c5de7c86..9d56ce635cbda 100644
-> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
->=20
+Thanks for the review.
+
 > [ ... ]
->=20
-> > @@ -180,6 +180,19 @@ STATIC_IFN_KUNIT void
-> > amdgpu_dm_plane_add_modifier(uint64_t **mods, uint64_t *si>=20
-> >  }
-> >  EXPORT_IF_KUNIT(amdgpu_dm_plane_add_modifier);
-> >=20
-> > +STATIC_IFN_KUNIT void amdgpu_dm_plane_add_modifier_dedup(uint64_t **mo=
-ds,
-> > uint64_t *size, +					=09
-	 uint64_t *cap, uint64_t mod)
-> > +{
-> > +	uint64_t i;
-> > +
-> > +	for (i =3D 0; i < *size; ++i)
-> > +		if ((*mods)[i] =3D=3D mod)
-> > +			return;
->=20
-> [Severity: High]
-> If a previous call to amdgpu_dm_plane_add_modifier() fails to reallocate =
-the
-> array, it sets *mods to NULL but leaves *size at its previous non-zero
-> value:
->=20
-> amdgpu_dm_plane_add_modifier() {
->     ...
-> 		if (!new_mods) {
-> 			kfree(*mods);
-> 			*mods =3D NULL;
-> 			return;
-> 		}
->     ...
-> }
->=20
-> Will this loop cause a NULL pointer dereference on the next call to
-> amdgpu_dm_plane_add_modifier_dedup() since it unconditionally evaluates
-> (*mods)[i] without checking if *mods is NULL?
-
-This can't happen in practice. amdgpu_dm_plane_get_plane_modifiers() alloca=
-tes=20
-enough space for 128 modifiers but amdgpu_dm_plane_add_gfx6_modifiers() onl=
-y=20
-adds up to 4 modifiers to the array.
-
-That being said, let me know what you recommend to do with this.
-
->=20
-> > +
-> > +	amdgpu_dm_plane_add_modifier(mods, size, cap, mod);
-> > +}
-> > +EXPORT_IF_KUNIT(amdgpu_dm_plane_add_modifier_dedup);
->=20
-> [ ... ]
->=20
-> > @@ -468,6 +516,246 @@ static void
-> > amdgpu_dm_plane_add_gfx10_1_modifiers(const struct amdgpu_device *ad
-> [ ... ]
->=20
-> > +/**
-> > + * amdgpu_dm_plane_get_gfx7_macro_tile_idx() - Get macro tile mode ind=
-ex
-> > on GFX7-8 + *
-> > + * @bpp: bits per pixel in the image
-> > + * @tile_split_bytes: actual tile split bytes, see
-> > amdgpu_dm_plane_calc_gfx7_tile_split() + *
-> > + * Select which macro tiling mode from the table is suitable for the
-> > given bits per pixel, + * assuming 2D_TILED_THIN1 array mode and DISPLAY
-> > micro tile mode (and no multisampling). + * Note that the tiling table =
-is
-> > uAPI and userspace relies on specific modes being + * present at specif=
-ic
-> > indices.
-> > + * See CiLib::HwlComputeMacroModeIndex() in addrlib.
-> > + */
-> > +static u32 amdgpu_dm_plane_get_gfx7_macro_tile_idx(const u32 bpp, const
-> > u32 tile_split_bytes) +{
-> > +	const u32 tile_bytes =3D clamp(8 * 8 * bpp, 64, tile_split_bytes);
->=20
-> [Severity: High]
-> Does this calculation compute the microtile size in bits instead of bytes?
-> Because it lacks a division by 8 (e.g., (8 * 8 * bpp) / 8), the computed
-> tile_bytes is artificially inflated. For a 16bpp format, this would
-> calculate 1024 instead of 128, leading to an incorrect macro tile index
-> being selected which may cause tiled buffers to be rejected or misrendered
-> on GFX7-8.
-
-This may be a real issue. I will look into this.
-
->=20
-> > +	const u32 macro_tile_idx =3D ilog2(tile_bytes / 64);
-> > +
-> > +	WARN_ON(macro_tile_idx >=3D 16);
-> > +
-> > +	return macro_tile_idx;
-> > +}
->=20
-> [ ... ]
->=20
-> > +/**
-> > + * amdgpu_dm_plane_add_gfx6_modifiers() - Expose modifiers for GFX6-8
-> > + *
-> > + * @adev: amdgpu_device pointer
-> > + * @mods: Pointer to array of format modifiers
-> > + * @size: Pointer to size of the array
-> > + * @capacity: Pointer to capacity of the array
-> > + *
-> > + * Calculate a DRM format modifier for macro tiled modes for each
-> > supported + * bits per pixel value. Use de-duplication because on some
-> > GPUs it may happen + * that different bpp results in the exact same mac=
-ro
-> > tiling mode, depending + * on the tiling table.
-> > + *
-> > + * Also expose a micro tiled only mode. This is less optimal, but
-> > supported. + */
-> > +static void amdgpu_dm_plane_add_gfx6_modifiers(const struct amdgpu_dev=
-ice
-> > *adev, +					       u64 **mods,
-> > +					       u64 *size,
-> > +					       u64 *capacity)
-> > +{
-> > +	/* 2D tiled displayable */
-> > +	amdgpu_dm_plane_add_modifier(mods, size, capacity,
-> > +		amdgpu_dm_plane_calc_gfx6_mod(adev, 16,=20
-DC_ARRAY_2D_TILED_THIN1));
->=20
+>
+> > @@ -884,7 +889,7 @@ static int xpcs_config_aneg_c37_1000basex(struct dw=
+_xpcs *xpcs,
+> >
+> >       if (neg_mode =3D=3D PHYLINK_PCS_NEG_INBAND_ENABLED) {
+> >               ret =3D xpcs_write(xpcs, MDIO_MMD_VEND2, MII_BMCR,
+> > -                              mdio_ctrl | BMCR_ANENABLE);
+> > +                              mdio_ctrl | BMCR_ANENABLE | BMCR_ANRESTA=
+RT);
+>
 > [Severity: Medium]
-> Are we missing the 8-bpp modifier exposure here?
->=20
-> The helper function amdgpu_dm_plane_get_gfx6_tile_idx() explicitly suppor=
-ts
-> bpp =3D=3D 8, but we only seem to expose 16, 32, and 64 bpp formats here.
-> Without this, userspace might not be able to negotiate 2D tiling for 8-bpp
-> formats.
+> The commit message mentions improving SGMII AN state handling, but this
+> adds BMCR_ANRESTART to the 1000BASE-X configuration path in
+> xpcs_config_aneg_c37_1000basex(). Was this unintentional, or should the
+> commit message be updated to mention this behavior change for 1000BASE-X?
 
-The macro tile mode array has macro tile modes for 8 bpp, but DC doesn't=20
-expose any formats with 8 bpp. So we don't need to expose modifiers for 8 b=
-pp=20
-either.
+You are correct. This was unintentional. The `BMCR_ANRESTART` change in
+`xpcs_config_aneg_c37_1000basex()` is a mistake that was introduced
+during development and should not be there. I will remove it in v2.
 
->=20
-> > +	amdgpu_dm_plane_add_modifier_dedup(mods, size, capacity,
-> > +		amdgpu_dm_plane_calc_gfx6_mod(adev, 32,=20
-DC_ARRAY_2D_TILED_THIN1));
-> > +	amdgpu_dm_plane_add_modifier_dedup(mods, size, capacity,
-> > +		amdgpu_dm_plane_calc_gfx6_mod(adev, 64,=20
-DC_ARRAY_2D_TILED_THIN1));
+The SGMII path (`xpcs_config_aneg_c37_sgmii()`) is the one that actually
+needs this change, and that is what I have tested on the Photonicat board.
+The 1000BASE-X path was not tested and the change was not intended.
+
+> [ ... ]
+>
+> > @@ -1086,7 +1094,24 @@ static int xpcs_get_state_c37_sgmii(struct dw_xp=
+cs *xpcs,
+> >                       state->duplex =3D DUPLEX_FULL;
+> >               else
+> >                       state->duplex =3D DUPLEX_HALF;
+> > -     } else if (ret =3D=3D DW_VR_MII_AN_STS_C37_ANCMPLT_INTR) {
 > > +
-> > +	/* 1D tiled displayable */
-> > +	amdgpu_dm_plane_add_modifier(mods, size, capacity,
-> > +		amdgpu_dm_plane_calc_gfx6_mod(adev, 0,=20
-DC_ARRAY_1D_TILED_THIN1));
-> > +}
+> > +             return 0;
+> > +     }
+> > +
+> > +     /* Clear AN complete status or interrupt */
+> > +     if (state->an_complete)
+> > +             xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INTR_STS, 0=
+);
+>
+> [Severity: High]
+> Can clearing the interrupt here lead to a permanently stalled link on
+> Wangxun platforms if the subsequent xpcs_read() fails?
+>
+> The original code cleared DW_VR_MII_AN_INTR_STS at the very end of the
+> DW_VR_MII_AN_STS_C37_ANCMPLT_INTR block, after successfully reading
+> MII_BMCR and MII_ADVERTISE.
+>
+> By moving the interrupt clear here:
+>
+>     if (state->an_complete)
+>         xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INTR_STS, 0);
+>
+> If a transient MDIO error occurs during the subsequent MII_BMCR read:
+>
+>     speed =3D xpcs_read(xpcs, MDIO_MMD_VEND2, MII_BMCR);
+>     if (speed < 0)
+>         return speed;
+>
+> The function will exit with an error and the link will remain down, but t=
+he
+> AN complete status has already been cleared. Will this prevent the Wangxu=
+n
+> initialization block from running on the next poll and leave the link
+> stuck?
 
+No, this is safe. The `ret` value used to determine whether to enter the
+Wangxun-specific path is read from the register before the clear operation.
+The clear only affects the hardware register, not the stack variable. So
+Wangxun's `if (ret =3D=3D DW_VR_MII_AN_STS_C37_ANCMPLT_INTR)` block will st=
+ill
+be reached correctly.
 
+If the subsequent MDIO read fails, the function will return the error and
+the link state will remain down. Since the hardware interrupt status has
+already been cleared, the next poll will not see `state->an_complete` set
+again, so the Wangxun block will not be entered until a new AN event
+occurs. This is actually the intended behavior =E2=80=94 the interrupt is o=
+nly
+valid for the current AN event and should not be processed more than once.
 
+Therefore, the change does not introduce a regression on Wangxun platforms.
 
+I will remove the 1000BASE-X change in v2 and keep only the SGMII-related
+fixes.
