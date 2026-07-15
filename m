@@ -1,197 +1,195 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010060.outbound.protection.outlook.com [52.101.69.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD46340A4D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:12:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784146331; cv=none; b=PmQPeV18CM0O3FqTooGz2C7Qu8C2Rd1NyZAvcBMkSRb6+4v0LppxtFwUZJvpfbNAZvS/ImyNeWQivvvFeSwHGtiCO2UA4CFru+qmSzZuZG6EcU8LmZFRByNdeinuR+Jq+JmTqplrm+/LLlG72rjVDgfkrh8g4k+lcsgDb4i42G4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784146331; c=relaxed/simple;
-	bh=LQoP97ee6SAuWO+aYX1Sg011Xu8NdiUQLdZzTXeAMgs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P30XgDZnMqeZm8s4W+2cZsaG/QErF9XjRmoFCWoWb6ukPgc7tuvhUVc5ZMIRppIQB3ag/M8TxytrMuPmGniYq7vqkxTKin/bY12eDx704Yc31tUilpcTUArrc/1MQ9vAs3IK3gUXG9WxSSXXwosYPIoX/8PsArLlZ+aYjPqhBxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AtK20bnL; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F3B3624C2;
+	Wed, 15 Jul 2026 20:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784146353; cv=fail; b=jZ4jXMJlc/TbkFb7+1rgHCxnQ5mUGb+MJdm2AkSfmW/g6BIWrhzzKDxE1NwY8GZXGxypVlDRxdQBPVVJDPNZ34kanUrFIOxKbeOkWnuoVRHMuu3kt6B72oEudZ7ynMCC5s34BtskUVvwVkmbc1Q/f2cL522j6YIeDMM7bUusoAY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784146353; c=relaxed/simple;
+	bh=v9tKo8bGP/e1Sh3G3vPcZN5Mnsa06UXjDBK3mMPmwO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=mj/8bPPstvIPxp9cyYeKOmkty3Q7fwUjTkpqROky0sDBkC+689ClagQvUvqS3x6ahH6BGywZxnuVYwkQE6zBdeS1T6QKgSdphww7hPVn10zfCtj4KRY7DmfxagjMMHeZktWIDx/5kjQ72EEQSr94I8qRZe23+oPp+weHUc8uHI0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=OmnrnxQk reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AtK20bnL"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47d70879764so4085043f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784146328; x=1784751128; darn=lists.linux.dev;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LINappzTtqOvEOGJ2/VoPfdVWpHlvhISScXV6/Tgz94=;
-        b=AtK20bnLL5ShiFN8DcBwqQhEMdtHc4DkNtGzo1crEISStRNfItf9rw1laewPraoXce
-         d+0qzS6JKyUXH/6W83+ZMeu4DF+UbPY5o3xdA7k58WL0yAIZFrpJuCsAge/mruRRNw35
-         Res8vwI+NMuVMhwbVT+tbndyhYGvhxCtrsVUiVOEDzXrcjuoGMRtQlWSJ0aIPNLO3A1R
-         AHC7T1zE1x+SQZf1/6UsCSrhOwUoHr3sdOBCZlNJ9bpNqxmhJULG82EPinxnmr5nXv0+
-         VqdeHRiDwiqHIj2DiGba95H7QDmsD2XoXQM0w7SZbE7jV23RgzM39zY1qmHwxrf3K19F
-         wIbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784146328; x=1784751128;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LINappzTtqOvEOGJ2/VoPfdVWpHlvhISScXV6/Tgz94=;
-        b=bas6XEkmqRQm5H4bMkIFUeBYQhV3ytiYCx831wZTm0LM5RZNnemf3hHKinPpma/F0y
-         HVzJi0aV1GZu1dfkdd46WIadJnyK0PjVLONPIurdaCfWIneh6kZ7u8tEB6TCCql1Fqrw
-         UBQDRDC8EKNmsKUVf6UPYS+wDBKripIThjBj1Y6BZPg+hn49B2GAxMfhrhPK8iee7CJZ
-         V42x6bKqFfUIhXFP8H554M+Ni4lzAVAYqBsC7KyapaNs5PdDum1s5zyF3ndta0vCdecC
-         cKyPH36O4dp1rn3nmI0WOKoNcqS0aQkEPZ24cvZsVgp3iIPA3YQLo/Xt8CbagWfHvwVk
-         1yQw==
-X-Gm-Message-State: AOJu0Yzgb0mSWkdIDrQ8X2eHXc+aH6ASlqsyisEhn4/MVTw3N+GQIL3J
-	8j2zO9dpUs027oEf+oXUfJ2zQtUalOwDn9z60r38imYQtCWW8+Qf8YfbmlFYmLxe
-X-Gm-Gg: AfdE7cmw2CIA7YNW7tRnGZLn3MbwYD7QmKuURt5tUuoL/3Tf7Z3PiGVrLxn6dBXQ5x5
-	GNAXl213sXInpTQilt8v3UhPfMA/HWtGeFG0rQKPCWOAtiGSOq/KO21ke5wkINrgJMoZ3FctifX
-	Wxil5veSxyob1AyvP+oag2Mj2QsPLTQ1N4oESkIKFiWDXHiO2eRn424Ptw5ZuDqqlcLd5GMTYIn
-	wP9p31xIjLjEaVVweA6tHPgUxF2hxKArFLcnOKBNVd2Fn5h0knEUZzDzdTBoekO3/GyxCzfsufr
-	JyhZliSLG6bdWvL0Xpd3qIFg2/iztsR5FsyVfEd6eFbtY9+JZg9t46MAi9tX1FNANC3ouRGPwq8
-	3/BiqoWQ1lGJfiMw5D3raqylaK5GbyYjoIF4XEpI4jsFIPNuyE6SBsZ2C48QYU27bcDMdSnNP3c
-	wU/ZxTIqqULRjY5AkrjtPP76n2dKj4cLUtDTSSGX1Pc8lrlVnlnGqjsdpXWGU6qvY2sekg23JbA
-	LNs4df8S3osTJUlHnNra4x4Vj4TuA==
-X-Received: by 2002:a05:6000:4a0a:b0:47d:f43b:fd63 with SMTP id ffacd0b85a97d-47f4fcc1527mr5056710f8f.26.1784146328035;
-        Wed, 15 Jul 2026 13:12:08 -0700 (PDT)
-Received: from timur-max.localnet (20014C4E24CD7200F6BBA872344E1A32.dsl.pool.telekom.hu. [2001:4c4e:24cd:7200:f6bb:a872:344e:1a32])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f4634e5b8sm17552158f8f.6.2026.07.15.13.12.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 13:12:07 -0700 (PDT)
-From: Timur =?UTF-8?B?S3Jpc3TDs2Y=?= <timur.kristof@gmail.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="OmnrnxQk"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QNgomUim8jRqeSglMGHc4OCjWvg5eMpXnCbGPC1A4ytcNZkHjUsgs6NJ3ulIdTXVGeVt/tzAd+QUnv2eakuhV8sRr6Vgzp7zKZuY2o3eWmzVxAll5fM25LACuewvVGbLLNm2S6DhbYVuVYk01Kd3rBRpqj5Cv54lGLuyqghaT8As+5Q/Ywc5gw9SnjP8AgUj9x1GfP40cCo7Y9g0qe7TBNe+eTM/feB7c8gLCMNFb+o9FiQc2yxwjGy2fzvLp64ngaj0yjPJigFU3zv+LYXgFoo1CykrtOTmBnHXJU0dLgZGEOrYbLEscxpV/qp4sdlYVZF6mlyYAjyZ/V/cUr/8BQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rWt0ECucVWPs6sa6W/zYXSvFV9moo3O/cRxNYnLH+Fo=;
+ b=VYPT6s2yjG4ysQaJyfvplq1VBBPBWDYtq8RenNC1wr+jXAnKWq+8Rh2U3tnljQDrZ72bTqvGrOoR4ZES2SgIw7OCQcYYwBDJq+1Mgs9owHlKZowNLAEQAtnH9UoB4TwxA30cFuySEWlYSv8h5M61zKw3om17nlI7dZABpDn+1ZLDGUS//5fox/zGkbZX7WXRUfEzc4NaQIQ0Z9Bw+BZY7TFQ2qTTLLKnfroMLB+TPx5AfxmDMUTd3W3vxgmzZkhB4/Ok/OV3tggYwzT1YpAZ/Ayyf2bCA+P7wOyD1hv877ezb8qJXvxrtgcoUYlkYDb+dYnxG+t/rNQd5cTBCYjIYQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rWt0ECucVWPs6sa6W/zYXSvFV9moo3O/cRxNYnLH+Fo=;
+ b=OmnrnxQkM+EX57wnUW6Cuo2qeaTIe+qCyl43pJWBEiF+1GewFc/myQ0YnGMlW4o7d9wmOLsrqxueli+55bqm0z6GhiljgrkUoH7LZYCRUPx+b83hAMKnF6UUq89RZtxAt/6yyucsMsW+tY26xgqZ8ZVLHM7LNgor5umucMnluJrqvrRf47eWv4OwF1suMKH8Wf1WDun+tfk2S/2vf78OFKpRwdH7RtSgal7EpsN6qc14kLgxfBFighXI6nMydCijD4bTqahC4zg/tayRriSmq45ee9GJ2BB6akcfFdG2qHJ3kRIU4HNkE9OHm21RG3jKUUIGV578/4q4fis8CquD5Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DB9PR04MB9792.eurprd04.prod.outlook.com (2603:10a6:10:4c2::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.11; Wed, 15 Jul
+ 2026 20:12:29 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0223.011; Wed, 15 Jul 2026
+ 20:12:28 +0000
+Date: Wed, 15 Jul 2026 15:12:21 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 4/4] drm/amd/display: Don't use tiling flags anymore
-Date: Wed, 15 Jul 2026 22:12:06 +0200
-Message-ID: <31315640.VsfAaAtOVx@timur-max>
-In-Reply-To: <20260715114238.856321F000E9@smtp.kernel.org>
-References:
- <20260715105757.13125-1-timur.kristof@gmail.com>
- <20260715105757.13125-5-timur.kristof@gmail.com>
- <20260715114238.856321F000E9@smtp.kernel.org>
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH 1/1] pinctrl: pinctrl-generic-mux: use
+ mux_state_try_select()
+Message-ID: <alfppbOGE4bC5h2s@SMW015318>
+References: <20260715193546.2852108-1-Frank.Li@oss.nxp.com>
+ <20260715195143.DEFC81F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260715195143.DEFC81F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH7PR17CA0045.namprd17.prod.outlook.com
+ (2603:10b6:510:323::10) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB9792:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7a95769-663d-4174-8952-08dee2ad64f4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|376014|19092799006|1800799024|4143699003|5023799004|56012099006|11063799006|6133799003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	yfdCD5YiqSGJPOW5eLjqgpjo9JXuVtua5N1M6/1FVypSEbhyvbOJARDEFZ3Yv+yFyys8dMSLmvPlJhQH2GPt3DTHguDsTDbvS+pIeD682zot1prdDHzibKE+Mk2M/95bt1Ih66u+6s2K9u6dr0gzxqeDBWKNPyy4MqAQeQXhmcJBZV1Mqp0mSqaCJbEcRhyMjwFXsH3El3cQQH7m57yKIRxmCi4lFXx/SMkYxKc2xj1POxbxHvLnFg7DuuDMbmQos9B7N25Aq0eiXy32nsPWikpuqAtJJwgxD2SRg2aGpG6LIj5fTfvb3fNys36UHwDoPRlkh5lj6UE/vOIwUD0Y1X2FGSlQG9P7hnyllNCfN56Io7tlkaBN2LDTZHwSwP1NTalNhcI2WbrD91PIqrRVqIrYrH/nlvtHZ6h1BMwY4Xwtd5xcT0LLM17LvqDQ7gkZYZvtnAoRs942IDTcitg/A6QRFpkM+do1RBXeLcp58I870+H2sNup2SPLAZIQr2+DTxUfI0cUzfd6CcFEP2evxamFFiXL8SnwEkDbrQZK0aUXUD58ICcMUYz7Yl5uwyY6tYpJJ6wqBRic2QHg+poBwfjNUar72ycP8Xxr+rU2Lf0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(19092799006)(1800799024)(4143699003)(5023799004)(56012099006)(11063799006)(6133799003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?QikbtZmvqSsaaCdAN0hDsrGbQb5vpQarQXb0EVfDI70fPkKqS4jLdmp4nh?=
+ =?iso-8859-1?Q?3qZKoDi18G7nWgysWj4xaITxe/S3l75hx9C7SC+aGwUvXwcBkc25s56I92?=
+ =?iso-8859-1?Q?1KR6scuw9wdezaoBzXGPZJuNKYhI95GqVkhIq0+cwtch7knM/rHUlPwS6k?=
+ =?iso-8859-1?Q?gvUJofnW+lxLgmZ5FL1GkCSY1yWNugfGtSc9fD1tG5r5TBcs+j72pdX4QR?=
+ =?iso-8859-1?Q?BZfPBflrfdWM39ALmXieqz9BmqtJ26C9XDD1KlBUVwlP4f8CqkMQ9NOYSL?=
+ =?iso-8859-1?Q?rv/mJ8sICeucnaoCu4NhvaL1YmXX2lQT5FFJYBSTpMxmcxFwUECxrX/TDX?=
+ =?iso-8859-1?Q?X5TsuJnaZ/xum7j1LCTk8/QRJW/B4Bjo+BYVsykP7Vq84Yb0VKV7ilbOz5?=
+ =?iso-8859-1?Q?T9nBa7TsPQPxkZ65xwbk2W5t5htk5iIFNRrUxmno8lrE4esiYZxaaa8f4R?=
+ =?iso-8859-1?Q?DTHNs+1qfIegVELP5sOXKXlXeXoJOJR0/69972PFJgG0Vt7b/v13e4pAfO?=
+ =?iso-8859-1?Q?G8PLiFrpKa8vLq4le7FDH/FASpt3dA2yeh6VCulmK+7FnjbKsbHnQJzqLs?=
+ =?iso-8859-1?Q?A3utTE6KMFHVucS9q5nwwWFsDYtmlSK45WwK/jEImIDva4B8PqMujUk4fM?=
+ =?iso-8859-1?Q?r98g1CM2KlSTOhb44iUtrDhANabDGxifqz1Jq271XzZf1zgeLO4DPwehZQ?=
+ =?iso-8859-1?Q?bg2UCCyR4RIgxDgse9glgv2dtHAKqTVaing1khQC5E731K592iMmfyDk1q?=
+ =?iso-8859-1?Q?dO/NG9eXfoM6c2W2HoQgQVhcK7zPwHgP0KiC2bpZs1kQKbAx9KV6c6CgB/?=
+ =?iso-8859-1?Q?UYMGNT6ytvPSg7vxlC+WqCxpCSuF+I3hh6rDkahf0bdt0ELJKSkxs/aKI+?=
+ =?iso-8859-1?Q?6ATI+9nkwwa1aCPOYsjtAaRUcV+lsP6cWZv/UOGRvkzJEEUOr9l//mAcfW?=
+ =?iso-8859-1?Q?UyoVWLXf0f0cvt01rh67MTF13sqge2eYcighrLHzZ+l+Mh9B3miKkaQi7W?=
+ =?iso-8859-1?Q?cdQQ95akZu1sJDquDRiNHZLfXoWZZNAZ+ol6kjHfEb1N6MHDCGtcvET87V?=
+ =?iso-8859-1?Q?1hAjGxcSUKtTTi7EcvoY8VjAAWuQuwQVJ/Rfnz4NAwvkSwlMH3SE/S/DVu?=
+ =?iso-8859-1?Q?E0Oaa/0dTcKAeb8EZ1lZkV76J0tOTdUU1s3vsmGnrDbQDNk3YsxgZzTFz8?=
+ =?iso-8859-1?Q?Mj+oudcSxPs8Ah+EOH76c5aMugcEw/KrMUGQJOAkdcV0bLC3kwIxjbw/QR?=
+ =?iso-8859-1?Q?jiQ8OifZ1v29q2BET07VgmGf4YEc808YaF/h/e/EjfBJ0LNtRw0sDIEtHv?=
+ =?iso-8859-1?Q?r3QtTYAIH2k7RJEqO6HSzHqew4OWKbSkj7pScXGF13TWOtrYbpF8rRzHlH?=
+ =?iso-8859-1?Q?pYZV53ADdMnDxaoganzIz8l+2jLAUOSu/iTJckK4FAnTnDqc7Mc6k7lzp+?=
+ =?iso-8859-1?Q?6NMBz5t2OdBZ6mVGRmiwWOZlcBilLS30KFq+x1rYmShNu153heJl9UhGCJ?=
+ =?iso-8859-1?Q?4MUh0WGfQmc+fZ0fZTpeT7J+ztQLddPS5s+2OWrej5pvaSuPH0aX7Llu4+?=
+ =?iso-8859-1?Q?dd/o9jKiY7LbRNWWNd6Ig/lcpma/A8hzDxEfHndyZCMF+KuOiLWK/liWUF?=
+ =?iso-8859-1?Q?LzkN/wrQOZGH30ph8Rl4SuntyrnWM0ExD5Rhmb2nu994qyatofhtYLMYE/?=
+ =?iso-8859-1?Q?qFLsjBn+nD413cdoha/FGnfWpR5Ub60WM/8R72k2RE6q0zdift62K/8nH3?=
+ =?iso-8859-1?Q?TKrCzNR2yxlamaAhv8C6XHchMlaUrcOAba597iO+qPlJTyeQDYT8x2mcOO?=
+ =?iso-8859-1?Q?cKXRgAL24jH0B00ZbrCUgrcilkOOk/X94HcVCiCXI4cuSqL/La/w?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7a95769-663d-4174-8952-08dee2ad64f4
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2026 20:12:28.7444
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: t6x95OXlD1LYaGhJgKgMhS32w3f98h/vLNcS7q2Ln8npjGug2OMtGxQktrqZzyCli8r157kelzHx+At5DD1mCSpw7z0KKq8WHgurCJD/K/PN8yiM0jZi3c9T7FhHbtf7
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB9792
 
-On 2026. j=C3=BAlius 15., szerda 13:42:38 k=C3=B6z=C3=A9p-eur=C3=B3pai ny=
-=C3=A1ri id=C5=91 sashiko-
-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider: - [High] Removing the `tiling_flags` check in
-> `should_reset_plane` allows framebuffers with different DCC pitches or
-> dimensions (but identical modifiers) to bypass DRM atomic check validatio=
-n,
-> leading to hardware corruption and stale DML calculations during commit. =
-=2D-
-
-This is not an issue. DCC is not supported at all on GFX6-7 and is not=20
-supported by the display engine on GFX8. The code does not advertise any=20
-modifiers with DCC on GFX6-8 either.
-
->=20
-> --- Patch [4]: [PATCH 4/4] drm/amd/display: Don't use tiling flags anymore
-> --- commit b71fc193d0b1254508d4ef4e5b1e90decbcba27a
-> Author: Timur Krist=C3=B3f <timur.kristof@gmail.com>
->=20
-> drm/amd/display: Don't use tiling flags anymore
->=20
-> This commit removes all code from amdgpu_dm that dealt with tiling flags,
-> as all supported GPU generations now support DRM format modifiers. The
-> legacy non-DC display code still relies on tiling flags.
->=20
-> > diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c index
-> > c643cc5428577..2f7388c47d02a 100644
-> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
->=20
-> [ ... ]
->=20
-> > @@ -4279,7 +4277,6 @@ static void amdgpu_dm_commit_planes(struct
-> > drm_atomic_state *state,>=20
-> >  		fill_dc_plane_info_and_addr(
-> >  	=09
-> >  			dm->adev, new_plane_state,
-> >=20
-> > -			afb->tiling_flags,
-> >=20
-> >  			&bundle->plane_infos[planes_count],
-> >  			&bundle->flip_addrs[planes_count].address,
-> >  			afb->tmz_surface);
->=20
+On Wed, Jul 15, 2026 at 07:51:43PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [High] Replacing `mux_state_select()` with `mux_state_try_select()` causes silent pin configuration failures during driver probe.
+>
+> Pre-existing issues:
+> - [High] Concurrent radix tree insertions and data races due to missing lock in `mux_pinmux_dt_node_to_map`.
+> --
+>
+> --- Patch [1]: [PATCH 1/1] pinctrl: pinctrl-generic-mux: use mux_state_try_select() ---
+> commit 8b69728953c0e1594fa409568136b389105c9d0b
+> Author: Frank Li <Frank.Li@nxp.com>
+> pinctrl: pinctrl-generic-mux: use mux_state_try_select()
+>
+> This commit updates the generic mux driver to use mux_state_try_select()
+> instead of mux_state_select(). This prevents the consumer driver from
+> blocking during probe when the mux state is already selected.
+>
+> > diff --git a/drivers/pinctrl/pinctrl-generic-mux.c b/drivers/pinctrl/pinctrl-generic-mux.c
+> > index da5a5ec015833..202b72351efb7 100644
+> > --- a/drivers/pinctrl/pinctrl-generic-mux.c
+> > +++ b/drivers/pinctrl/pinctrl-generic-mux.c
+> > @@ -93,7 +93,7 @@ static int mux_pinmux_set_mux(struct pinctrl_dev *pctldev,
+> >  	function = pinmux_generic_get_function(pctldev, func_selector);
+> >  	func = function->data;
+> >
+> > -	ret = mux_state_select(func->mux_state);
+> > +	ret = mux_state_try_select(func->mux_state);
+>
 > [Severity: High]
-> Since the return value of fill_dc_plane_info_and_addr() is ignored here,
-> what happens if DCC validation fails due to missed dimension or pitch
-> changes?
+> Does returning -EBUSY here lead to silent pin configuration failures?
+>
+> When mux_pinmux_set_mux() returns -EBUSY on contention during a consumer's
+> probe, the error propagates up to the pinctrl core in pinctrl_bind_pins().
+>
+> Because the device core intentionally ignores most errors from
+> pinctrl_bind_pins() (only propagating -EPROBE_DEFER and -EINVAL), it
+> swallows the -EBUSY error. As a result, the probe silently succeeds while
+> the device's pins remain unconfigured.
 
-DCC is not supported by the display engine on GFX6-8 so there is no DCC=20
-validation.
+It is wrong, consumer driver return failure.
 
->=20
-> Could this result in a zero-filled plane_info structure being sent to the
-> hardware (for example, setting global_alpha to 0) and causing a black
-> screen?
+fsl_lpspi 5a030000.spi: error -EBUSY: Error applying setting, reverse things back
 
-No, it couldn't.
+Frank
 
->=20
-> [ ... ]
->=20
-> > @@ -6248,8 +6245,7 @@ static bool should_reset_plane(struct
-> > drm_atomic_state *state,>=20
-> >  		new_afb =3D (struct amdgpu_framebuffer *)new_other_state-
->fb;
-> >  	=09
-> >  		/* Tiling and DCC changes also require bandwidth=20
-updates. */
-> >=20
-> > -		if (old_afb->tiling_flags !=3D new_afb->tiling_flags ||
-> > -		    old_afb->base.modifier !=3D new_afb->base.modifier)
-> > +		if (old_afb->base.modifier !=3D new_afb->base.modifier)
-> >=20
-> >  			return true;
-> >  =09
-> >  	}
->=20
+>
+> >  	if (ret)
+> >  		return ret;
+> >
+>
 > [Severity: High]
-> By removing the tiling_flags check here in should_reset_plane(), how do we
-> ensure that framebuffers with identical modifiers but different DCC pitch=
-es
-> or dimensions still trigger a validation reset?
-
-The tiling flags are no longer used because they are converted to modifiers=
-=2E=20
-Therefore, removing the tiling flag check is not changing the behavior of t=
-he=20
-code.
-
-As I explained above, DCC is not supported by this HW.
-
-Additionally, "identical modifiers but with different DCC pitches" would be=
-=20
-illegal for DRM format modifiers.
-
-
->=20
-> If a user-space client flips between two framebuffers with the same format
-> and source rectangle, but different backing buffer dimensions, it seems
-> this might bypass DRM atomic check validation.
-
-How?
-
->=20
-> Could this lead to DC hardware being programmed using stale Display Mode
-> Logger (DML) calculations and watermarks, resulting in display corruption?
-
-How?
-
-
-
-
-
+> This is a pre-existing issue, but is it safe to add functions to the radix
+> tree without locking?
+>
+> When multiple consumer devices probe concurrently, their execution paths
+> can run in parallel and invoke pinctrl_dt_to_map(), which calls
+> mux_pinmux_dt_node_to_map() on the shared generic mux:
+>
+> drivers/pinctrl/pinctrl-generic-mux.c:mux_pinmux_dt_node_to_map() {
+>     ...
+> 	ret = pinmux_generic_add_function(pctldev, np_config->name, group_names,
+> 					  1, function);
+>     ...
+> }
+>
+> Because pinmux_generic_add_function() modifies pctldev->pin_function_tree
+> and increments pctldev->num_functions without protection, concurrent
+> insertions can structurally corrupt the radix tree.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260715193546.2852108-1-Frank.Li@oss.nxp.com?part=1
