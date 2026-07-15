@@ -1,130 +1,206 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D516C3B9DAE
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 05:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784095032; cv=none; b=aOnqYD1WIRCaSjqBsS1Sk6Qbv8W/QzNBrbHqrDrJf60FK2E92zpeLptq4dng8bkHFKwV1Gjy6jXAN8r6W5ucqttqfYRwney020jOjc0UomoRBGCCuBHsMFyDgJiKdgwO4wYoxFJbdwXKbVMWQHLm9sxsoy8cMeT6oFKsudDtTwI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784095032; c=relaxed/simple;
-	bh=w8TATEoB6pxgJRrivcnib5fz34jW0UieP1XhmcHAs+s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aPT04ENPmTPoTLsojSUmkNZig0i8JQDYeyWqEgwbsoly9eZzZsgDvPSfMeFlKYqisD3Yzg0bjCcvBD9CZyZc+eF2V3uTaluqLE4sZ1g4fI9MFrVbLucNZ7FXHoZcBfjQ9QyeAWvkxJqLzOVRytNusM9mOEZeqISpmkyzRP4PQMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UyLdpMkP; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07192F1FDE
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 06:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784096807; cv=pass; b=lt7jbfEYi4txca7o/G/yg2SQ46zCGVkLa1EQ9mslm7l97hKIYUs7lvLWvnqHA7WAtpqT7rCqWx1mWBtO3ISwlzhtls0mEht6/3MvH1yu+2UktBsvF2Mb/k4YZlKfmJQbZYpMHR7M/cm88YOyzOfZbfC59KEEEPdRP7dWjNN30pQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784096807; c=relaxed/simple;
+	bh=J5yflZ12W07m1WJ0c1r553NE35yxYBcPpPqsM2tClZk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kzGWb+Tv+Eoyqr3EZe4xZjVzk948qz8QHgc8XS8s8Y3DT0t5SmGErAG4m7eEp02MtNq9v253gBG3MVKHYVo6S5/gVv94M4vGPkAwULGclkpJOxHvNZTQc04fd5YI8piiuaNqAbofaDXHOTMhtTBv/75xCqV9MQmrodNOd0b48kE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cc1fDDsq; arc=pass smtp.client-ip=74.125.224.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UyLdpMkP"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38e07ebd263so1339013a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 22:57:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cc1fDDsq"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-662d984bedeso780066d50.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 23:26:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784096805; cv=none;
+        d=google.com; s=arc-20260327;
+        b=C1RgWw55qunbYJTMGxdRCYkO/IzH0tNoEXGHVWQA0d3F6hT/0rl2J7us9XOya73uXp
+         PoPTp1la30D+iRckPrdFAra1KaVKyqx/ZaNSJVrCpgGiKqxy6eE0AJTXQz7kjQU9Yn6j
+         hAYAZCtdG/fJ5MTpDo0sn+h2/Ve9qOe2ErpmaNJziDRLIab2AVNHHr3Sv1aOjQEKlmWQ
+         c5h0oFEf1czi8vvNzOY/1e0h098nnnh3AYkCsIfJRnBHByc2g2P+b1kMhczamH/dP1nb
+         O/yWjjcSPCWBwH30qsxvzQlYqm4662tcnmWzUxvUfotGGFOg58kyrTWXEQnn9cSGThtH
+         mh5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=gWSeKvpcppphKo4JuhaQYfS686HzGPt1n2IjvkPZLEQ=;
+        fh=GBmacVDeFEJjMoVFDdJ4RApqi7WOhPuR6bgG07yIMU8=;
+        b=O/t1mUThutdcwFFA4vWmbFf0YGBg3lxOx9P1LVryoIYNoqUsPXrX7hnl1ObPT1/UAC
+         362cF3nGMfdefd7DaABM+o4XLmWY4lmYyZP3vJJzFJ5L2R+lamfhOG/6Ct5yoZcUme9K
+         SZN//CCy63KSp442k0jWD/kE3JPA96UD7FY7Y/FWGoowGNfwkzqnBEwm8YFkcvRpcmiB
+         PyNmDHIwom0+BuuEdRjNHaeVlmDkgOawW3ZrCYW8EibdzSp/fxbY7kTpwNrLosDqhxMl
+         sfDHV5ULDKmV6hdLTw73bxIUKczHtxmKmZ4e/ZUV+8Mc+92aNCWZOZs2M9+o5Y5nFLA8
+         7tHQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784095025; x=1784699825; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=z9/qISsdQUme5GsgRDDsX/+bi7zmIEF/ab3Tsuj6Oco=;
-        b=UyLdpMkPvwlLydjEa/Lit5VHwSRrjoscnKyOuaKgUvYb5rNyswwumETfRf9JODEiO4
-         KkuUjMd3BI6Owl4MHFq4J3CKgGKb9qg9dFv4ak7tIzEkXE7GssSG/OOLwIsACWcDymYR
-         4QTR/ROZhp3Vzh6bzAyab1FQ5LeuU4g0nbTYoanwqHk6LUt30/kXp0mpgD5Vz8m3TNOC
-         Awt7sR7gVX9XvcR1ubau4iLNSO+X+m/Hzfj68HWqZbLbLp026BRBjZY1XXMD91S9Y/FR
-         BlyUgu9A7wOwxfDzHSR5a+N51RZpQ3brVeP1INn7cvfZhYrmmOFum5djKFE6nCfCHdee
-         vmWg==
+        d=gmail.com; s=20251104; t=1784096805; x=1784701605; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gWSeKvpcppphKo4JuhaQYfS686HzGPt1n2IjvkPZLEQ=;
+        b=cc1fDDsqutNelRUgF2GqIC0XnQMEANh/vJt6pDtrhSdpZlKrjpArzjH13fO6LaQfrW
+         UiykHmbzPaAkGoa9dDOw2KQR1Gl0lNW1cUuiGLVVfVqylNrTQYhxRFTFOu1EDw6uJrQX
+         1ChszTs0T9kHVKhejQ4d3Fr0HWyHZb/nd8Bbw0z0P81ZNqaWqnkCtMkvA12bE1Q7pBe0
+         P1YxbbeN/4/uDR9lJ+1EotrBQYjWQh2NPWNUfzbhA2zLouz3dzDt9a2OggA5gvxQTiK1
+         Ssr2LzasXYxRyn9Uz69OewMGJDelvYrZ8Z+CLQNS5ODRuNBsZ6E6uIyfvY+Z8W/lh8o/
+         SkSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784095025; x=1784699825;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=z9/qISsdQUme5GsgRDDsX/+bi7zmIEF/ab3Tsuj6Oco=;
-        b=oy6vazZjF3hBsJwzVcf+zy0XMrEmNzRcy78xZoA3CaEwE0GiPbmhTT1xwXm/h4B3ff
-         /6WBt8dQvln6PVvIhtgDO/3JAeH3/mRO9xLGCRt77tkoz5vYxDHNast20KavX0gGOb4E
-         2fdVkpmxfx0sCCFTvz2QzhMaFlXDnMkIo/sPncJY/oNSJxf3Z3SdG25lBACrp9gFNKvy
-         NQdWJ/V25vO4QXqQWMPnPMbm9MxoQLEI9iMlGc6A8nsF8gXDjwbGrqjABUVo2lRSH1MK
-         5TXKTC5uKtdzTbJ9p018JpxdiEQg5A1Yj5HwOpNXr9sMNeqvoAHpRyNe98oVXGTZJE+s
-         bZgQ==
-X-Gm-Message-State: AOJu0YzuIIh4jOX1H3Qv7HtmxCJfNvvK6U+wsTVmT8HzSXkIQ0ktkgdt
-	R1YoIgWflpJN0J/QgrP+0CFlkOCbCb7oAD66ksimfnlOpAk/KOEAgGEq
-X-Gm-Gg: AfdE7clmTSN0rnleu3/wfI/ik4I80JqsegQ2n09gqpeQ8FbEz38FfggeG3PJ4HcJlvO
-	QMmPfgE45cMx0C0DRMg1AbNqiKUNFRMBW1akCo79WGq046DeS4Jb1i2bjw0Rh9DaWmkIcuA0/E0
-	JvupNZmulLN3+UNAr+/8PqXqrVd5VQpowp4CDfUnOijwqc/I360pqCpWnf1havCE6GBQr01xwXI
-	o2uh7pV54LpLO0cksvqUnG7K7DOPZNw8CqqF+XeT0l6a3EGzVDEXBMI0BQH6VZemGFND5m+pjMU
-	7rUBLRZUfUAjR4ygLPvQX5r65qdqK9umdXp8u6IeVDQ5Gy+WGrTqUV9xzZj7z134XV++nU6QYJo
-	9M2hwaMQrdQvuUpvxd5/BVVmcCPwkCRp8dEQIo2xl1wZ3caZgIrzQ6qyDj86gxO0NlzGo3MkAiV
-	XmT2qFGQMcgul+kNw9zRORwS9x6SdlxSybl2bY2DVhIUWWUs/mTKA=
-X-Received: by 2002:a17:90b:3a83:b0:382:1a6f:ba3b with SMTP id 98e67ed59e1d1-38dc74d04d6mr14377317a91.5.1784095024738;
-        Tue, 14 Jul 2026 22:57:04 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:93:a597:7931:c950])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313f81f17eesm10617514eec.31.2026.07.14.22.57.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 22:57:04 -0700 (PDT)
-Date: Tue, 14 Jul 2026 22:57:01 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: chlgustn3171 <chlgustn3171@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-input@vger.kernel.org, 
-	Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <bentiss@kernel.org>, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] HID: input: allocate input_dev name/phys/uniq using hid
- device devres
-Message-ID: <alcCgHzV730RKPmR@google.com>
-References: <20260714120052.255085-1-chlgustn3171@gmail.com>
- <20260714121819.5FCC91F00A3A@smtp.kernel.org>
- <CAO2ma08Pap6PZKUV7iEpvu11zaKrzMK-cgBLBYKJEEfGH+0=1g@mail.gmail.com>
- <CAO2ma095Hu1kOTMds9yHqTvwde8Gu+GWOLUst5U2eCnSffkm=g@mail.gmail.com>
+        d=1e100.net; s=20251104; t=1784096805; x=1784701605;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gWSeKvpcppphKo4JuhaQYfS686HzGPt1n2IjvkPZLEQ=;
+        b=NTsaEsnyosZ+62D37uiA8bF5R4CcjmfiSG7JbDfjKRniILA10f3FVdEPonMH+osC9Z
+         8jeMGyAsB6/t6p+u5vUJrkgvlkZBGvuwR90njT7ncAUcxkCJspoRJ9ZInHFBl/o0/e+m
+         I9Thp8m0PGKLu38Xxwm1mK1NT4CP5Rcu8LMTJfLs4J7IL+bWFWVyCzJrQTg3Gpc/M52E
+         5SdArYPrVXrpZLF/rzLXSuvDGDRoX+4d7jxBeiajfsn7hzJov1sZelAb0zU0qEIVlkMb
+         /+HQju+Ytb/G/Y1Q/q65Msalzy+HM6pjeYXNv2jG2zQunoir6+diJ97yyxApxI2+Soqd
+         e9GQ==
+X-Gm-Message-State: AOJu0YwlS0i//7Xw35K1Ek9yCcUEgInAsRo/vJzHfQDDyPzRh1r+cUSk
+	Ny9AIheZ8xiRy+ckbibswqdYim2P4GVQYHprTOvujM5GIJAfIiDa3z64x2a/uz9JkNrw1mBEJv6
+	Ig1+vNKzJ8n6JUUtBMRv7IMPwejsdS7u3ctbNMKw=
+X-Gm-Gg: AfdE7cmRaHMlTjDIfGtMdOq+1MbWx3EWq5McbBrBRlztS4h0KtMKuD7+TQVdJmeeIBd
+	mZies0TrI1G21IbbV+A2V95TGxouChx5rgd3dMxRA1PNwC41YGKtJX655LA4UbwbYRtiHhrdfBa
+	B/bHYJXF9pdzIDKpfIgy5S9JFS+SZu9KytFujT7RJAEonTXsWNb5DO4HgQiPfbv8byxgHSDSTKg
+	u4oAie7HbZjOE6Kos3UWXwG3F+mVbAKn1Wc8dJ3JGpqnJ8enUIEOB0xxI0r8s3rhkC/0Q9e+Dsi
+	zTtB/3xVi14gvF9bkq9XqC0CeC+63ZU=
+X-Received: by 2002:a05:690e:4883:20b0:668:7e4:b078 with SMTP id
+ 956f58d0204a3-66807e4be6dmr2370313d50.5.1784096804761; Tue, 14 Jul 2026
+ 23:26:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAO2ma095Hu1kOTMds9yHqTvwde8Gu+GWOLUst5U2eCnSffkm=g@mail.gmail.com>
+References: <20260714202850.40999-1-royalnet026@gmail.com> <20260714204026.84B601F000E9@smtp.kernel.org>
+In-Reply-To: <20260714204026.84B601F000E9@smtp.kernel.org>
+From: Royal Net <royalnet026@gmail.com>
+Date: Wed, 15 Jul 2026 08:26:32 +0200
+X-Gm-Features: AUfX_mx_GykK3yZd7csrMrPNJbBaiwMkpZUk534rlKvfi9UnpbROgKKA1H36E9M
+Message-ID: <CAEWPSH5KVBDE6s+7EYsyGEJ5BNv2Y6dtXXcKOfS=9xxjw6MtPA@mail.gmail.com>
+Subject: Re: [PATCH] drm/rockchip: dw_hdmi_qp: attach the HDMI Colorspace
+ connector property
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, Sandy Huang <hjc@rock-chips.com>, 
+	=?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, 
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>, linux-rockchip@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+> [Severity: High] This is a pre-existing issue, but by adding this
+> error path, the patch exposes it further. Does returning an error
+> here without cancelling hdmi->hpd_work risk a use-after-free?
 
-On Tue, Jul 14, 2026 at 10:39:09PM +0900, chlgustn3171 wrote:
-> Adding maintainers and mailing list to CC. Sorry for the omission.
-> 
-> On Tue, Jul 14, 2026 at 10:33 PM chlgustn3171 <chlgustn3171@gmail.com> wrote:
+Thanks for taking a look.
+
+The window you describe does exist, but it is not introduced or
+widened by this patch: hdmi->hpd_work is initialized and the HPD
+interrupt requested early in dw_hdmi_qp_rockchip_bind(), and the
+function already has several error returns after the interrupt is
+live -- encoder init, dw_hdmi_qp_bind() and drm_bridge_connector_init()
+-- none of which cancel the delayed work. This patch adds one more
+return immediately after the last of those, following the function's
+existing error-handling pattern.
+Since the cancellation gap is common to all of bind()'s error paths,
+I think the right fix is a separate patch addressing all of them at
+once (e.g. switching to devm_delayed_work_autocancel() or a devres
+action) rather than special-casing the new return. I'm happy to send
+that as a follow-up.
+
+Igor
+
+
+On Tue, Jul 14, 2026 at 10:40=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Returning an error from `dw_hdmi_qp_rockchip_bind()` without can=
+celling `hdmi->hpd_work` leads to a Use-After-Free when the delayed work or=
+ HPD interrupt fires.
+> --
+>
+> --- Patch [1]: [PATCH] drm/rockchip: dw_hdmi_qp: attach the HDMI Colorspa=
+ce connector property ---
+> commit 77d2f0e8bc60d50755aec22dee119ad08bb92b3c
+> Author: Igor Paunovic <royalnet026@gmail.com>
+>
+> drm/rockchip: dw_hdmi_qp: attach the HDMI Colorspace connector property
+>
+> This commit creates and attaches the standard HDMI colorspace property
+> after the bridge connector is initialised. This allows userspace to reque=
+st
+> BT.2020 colorimetry and enables wide-gamut/HDR output on RK3588.
+>
+> > diff --git a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c b/drivers/g=
+pu/drm/rockchip/dw_hdmi_qp-rockchip.c
+> > --- a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
+> > +++ b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
+> [ ... ]
+> > @@ -695,6 +695,20 @@ static int dw_hdmi_qp_rockchip_bind(struct device =
+*dev, struct device *master,
+> >               return dev_err_probe(hdmi->dev, PTR_ERR(connector),
+> >                                    "Failed to init bridge connector\n")=
+;
 > >
-> > On Tue, Jul 14, 2026 at 9:18 PM sashiko-bot wrote:
-> > > [Severity: High]
-> > > If a userspace process holds an open file descriptor for the evdev node
-> > > (/dev/input/eventX), the input_dev will outlive the parent hid->dev.
-> > > When the HID device is unbound, devres will free these strings.
-> > >
-> > > Can this cause a use-after-free when userspace later queries the
-> > > name, phys, or uniq strings via ioctl (e.g., EVIOCGNAME)?
+> > +     /*
+> > +      * Attach the HDMI Colorspace property. The HDMI connector framew=
+ork
+> > +      * already consumes conn_state->colorspace for the AVI infoframe
+> > +      * (drm_hdmi_avi_infoframe_colorimetry()), and HDR_OUTPUT_METADAT=
+A and
+> > +      * max bpc are attached by drmm_connector_hdmi_init(), but withou=
+t the
+> > +      * Colorspace property userspace cannot request BT.2020 signallin=
+g,
+> > +      * which keeps wide-gamut/HDR output unavailable. Passing 0 selec=
+ts
+> > +      * the full HDMI colorspace set defined by the core.
+> > +      */
+> > +     ret =3D drm_mode_create_hdmi_colorspace_property(connector, 0);
+> > +     if (ret)
+> > +             return ret;
+>
+> [Severity: High]
+> This is a pre-existing issue, but by adding this error path, the patch
+> exposes it further. Does returning an error here without cancelling
+> hdmi->hpd_work risk a use-after-free?
+>
+> If a hardware HPD interrupt fires right before the devres cleanup
+> unregisters the IRQ, hdmi->hpd_work can get queued. The DRM master
+> teardown then frees hdmi (which was allocated via drmm_kzalloc),
+> leaving the delayed work to execute later with a dangling pointer:
+>
+> drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c:dw_hdmi_qp_rk3588_hpd_work=
+() {
+>         struct rockchip_hdmi_qp *hdmi =3D container_of(work,
+>                                                      struct rockchip_hdmi=
+_qp,
+>                                                      hpd_work.work);
+>         struct drm_device *drm =3D hdmi->encoder.encoder.dev;
+>         ...
+> }
+>
+> Could we ensure that the delayed work is properly cancelled before
+> returning errors from dw_hdmi_qp_rockchip_bind()?
+>
+> > +     drm_connector_attach_colorspace_property(connector);
 > >
-> > Thanks for the review.
-> >
-> > Using &hid->dev here is intentional.
-> > Using the input device for devm-managed input_dev strings is
-> > problematic; see CVE-2023-53454, where the allocation was moved to the
-> > HID device because the input device unregister path may still use the
-> > name for uevents.
-
-Thank you for the patch. However, I do not believe it fixes anything, as
-moving to devres will not extend (and may even shorten) life time of
-name, phys and uniq. Normally they are character array members of HID
-device, and HID device continues existing past drivers disconnecting
-from it. OTOH devres-controlled resources will get freed when driver
-unbinds from a device.
-
-Additionally, HID devices are parents of input devices, and should stick
-around because input devices hold references to their parents until
-device_del() is called in input_unregister_device(). However before that
-it will disconnect this input device from all the handlers, including
-evdev, evdev will mark the device as !exist and evdev ioctl will not
-attempt to process ioctls for such device.
-
-I however am not sure why we see this syzkaller report. Maybe there is
-memory corruption somewhere or maybe syzkaller itself gets confused when
-tracing numerous allocations.
-
-Thanks.
-
--- 
-Dmitry
+> >       return 0;
+> >  }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714202850.40=
+999-1-royalnet026@gmail.com?part=3D1
