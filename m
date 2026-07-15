@@ -1,163 +1,142 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B843A302149;
-	Wed, 15 Jul 2026 20:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1552371043
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 21:35:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784148400; cv=none; b=ELK1unaQXQ6YtMcNnVz+6Mbc4G6Ah0AWbceJVrRV+PMDcexc1WJIVV+1kHC2j+jWL0aRChhgpUznb9z/PxOFYay4Es4cW6wkY55HlYgj2AyyG6CADxCWXafYEdpuXYfaU1J+vxvKcazDVxa2Gbbg4fRBRnSg2dP7jxlNMpgMAhA=
+	t=1784151346; cv=none; b=DQf3e7cE+zqLwfgGRmWLt55tct1K1IzBCEzLUtrB82mUXK96kJwimkxzJ4vGVjO30IrIf6eB6N9Q9UVzg0XZK+KofSUsxUalYuO33rLpon2Uf5+r7q9Gp85SXSTiOkY0q64iS2h+qjoWjOVHM4ZuPBUkHUDRi74wBK36yVH20TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784148400; c=relaxed/simple;
-	bh=+Jwszswhw1ZXgx9jt6vgiNqsibTmv9QYm3AISbx34ms=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=SYiXeXl9IKYz1+My8Ek26RqUKllJlmzy++alL7I21XXBa8c4UytpNWkldivzwI5eA3ne/wpdYXQXmao7IOUAyhrrK2VuqAZv7R+SY7HGtbOm918XOqIOxCDufMWSeyPMojKMFkaNMD2M/FxjaprT13nkkQu26R3ghMvvAfQZf/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=H37+1jXu; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	s=arc-20240116; t=1784151346; c=relaxed/simple;
+	bh=H06707SCcUEpQKy3SuFkb5jGYwBixHq8bDcyFHkpNwg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EjwM/D66p7FsrIFOquHH3U9iOmjtTYoah7CQgZClhYn4zJ/tHgZ8ljzHhtEUQaPrbJlsCnB69XQsuYS0ZJxE5MKIIDcryoYUv2U1CD6OGJYvOYiNFWt6tk0lOEHM64hZjRjlH+oPklgDH0GBkPrlcx3+XIMKl1v8DZGnDmg+Y9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nj2SX5l7; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="H37+1jXu"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B8963100162;
-	Wed, 15 Jul 2026 22:46:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1784148395;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=IxTC0PcmTi5Z0sUROFUes4Uwvb15X6CctNLo1ceG9Vs=;
-	b=H37+1jXunekFsGDKykbUuwVhXzzPmHb+jpJgTli/Qk6AxJhfLnMUbovORA1zmRncdANPQQ
-	y5WyeqlLmQF5KjFj05h36fOCJiKU8Brybv+OmiFL6iIeEuHiLKgHdulGuQK8IO9UsfvpUh
-	1EOqWDpZ2qelHCZ16tWLxD1YgJQ0Sy6xabv1oMWLiF/AZrXSctRofuGCK1ZiKG9dUmpJXD
-	0CFCD77B0zT2th9d+9xu7UwygobpoTHaxcs6GzGt6QbrsKFJNXKIcUkQQ+Y6UGpFLy4Czp
-	HxO6cgmpmnTO5jJsQ45W8nIKRg5SyZDlUVDJWksbPBPcCyP9pqqP+II2oDkXSw==
-Message-ID: <c9a67cbd-fda8-4016-9cff-9125f3191b74@nabladev.com>
-Date: Wed, 15 Jul 2026 18:38:32 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nj2SX5l7"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-47de0093c42so2159995f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 14:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784151343; x=1784756143; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=XoPbLUiXGDVybmpDf9ldp04oUouyQ+e8sy+2Axcu02k=;
+        b=Nj2SX5l7JCIlaJLiVXlVi53iR4cxg624nppYG+7BTNXfHjCiwrtOIu1AXR0jALvR69
+         RiPIw8Vf//31s4bc6DZkGypZ5skiv1ey7BCS8gyu3ZeRn/XStO28ea4XO3LEY5iWaOZW
+         bcVIwZ8kyCtd8xKlSAL1qhTFZdygFlyhegcMOzp9buPs7uI7xIeBHMkvjTmdyRd9lWYM
+         B/GGkB0kL5nioBovWMviGd3UDA/bg7KEqVeNhOBBlQGdX0mJc1fczowPzCRBRVaNoMUR
+         kxH6PsdVa9pFGHCbIPPnWbbfmcUgQnh73rFCYdLf+aAmKtHssWrounO7o6Ar13DfzBQj
+         viOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784151343; x=1784756143;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=XoPbLUiXGDVybmpDf9ldp04oUouyQ+e8sy+2Axcu02k=;
+        b=O/ce5lF4KooBiMq9KWeaGKyhLnrC0MGJygtjU5adx2y/kNeCNd64IABnezkZvahJZK
+         ZWBtc5CLd/coWX9h/ulorVT8WQfctpwdust5xVw6PlxoZeW+D7UcEF7lvYdOl3yyN99U
+         7QBM+fcZ/IrbEOlbgaYbFvg+AZWyIDfcVb3SbZDjj2ELN14Hs22FAJh9qquXvr1FdRSU
+         vDj3PvAFt2Zz8XksCuiiQnRZmUr9Ll1956StByK5cILsgGJuxSThkJuBtGjbmVu4PZdc
+         RuWvg2ruRh/eHXNXc0HrarSwxXmJfNTsVfymeJBXnOWnl6ARwLr1PG6JP2DHrbXy9biz
+         VrbA==
+X-Forwarded-Encrypted: i=1; AHgh+RrI/09ZLrYLkY1qeEgH+l4jQCoT9WBQJGfNJbW5tmRN8rOH/bm330BiVWihwkVbmaFw40ldd2R012Dk/jEDNaM=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz5ES1c11x4oyvF07ectVVu+a404xiLFsLwn4ALpt9riFqJ1PUh
+	XlsXuPADW1I2MGlWp8gTx8xd4BUkv+PhVzuqSMAA/dzeqpWR86PGjW3r
+X-Gm-Gg: AfdE7cmlFv6yus7awoIhX0wErpSA/vNN+/fmIBumCUlLM3MuoB6AHEt3MK/2kVmz8Lm
+	haAaT9QiJUQrSItM9G2NCLYQ1uGtnqczKs/5LUmTqDMVHjFLfxp85xBjYCfr5fHEbIsZMg2C+tB
+	8xIx1e8gpIsESc6BbPY/3fSpAnptZ7kFIT53KxjtyuUs78MysidAFgj3fCpKK7jlMReSEfDdpsP
+	D3eprS2wekdmf72NdZSkstwx41v5E/cZNipXxVwQMYR7e8Xokyjp/FNBF289gkP6FAsW7zMeXYW
+	jkFXT0d8xndl52Pxbbh6yR8Ma9VlkKDfRLpD/SE5j8EQEdr1+RYW/Xpx6k15alFcb93Dlfc5m8N
+	D1vzALazyYGOHADPKAqnHFTsfa6qM9wfK026DKTr2YtqGenP9Jc+47ptVuZOzJkORcLvALzKID8
+	MDYdNVQpLM6QXYbgenevjqgX2isqbsWpMUBQac9zv2VOaDcbKbRlE2A8UA2ri0o65lUedoqS4RX
+	WOu
+X-Received: by 2002:a5d:5f51:0:b0:47f:51bc:efe2 with SMTP id ffacd0b85a97d-47f51bd05bcmr4660373f8f.11.1784151342782;
+        Wed, 15 Jul 2026 14:35:42 -0700 (PDT)
+Received: from localhost.localdomain (host86-153-201-25.range86-153.btcentralplus.com. [86.153.201.25])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f4635c86csm19224122f8f.16.2026.07.15.14.35.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 14:35:42 -0700 (PDT)
+From: Nnamdi Onyeyiri <nnamdio@gmail.com>
+To: jiayuan.chen@linux.dev
+Cc: bpf@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	horms@kernel.org,
+	jakub@cloudflare.com,
+	john.fastabend@gmail.com,
+	kuba@kernel.org,
+	kuniyu@google.com,
+	ncardwell@google.com,
+	netdev@vger.kernel.org,
+	nnamdio@gmail.com,
+	pabeni@redhat.com,
+	sashiko-reviews@lists.linux.dev
+Subject: [PATCH v4 0/2] bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
+Date: Wed, 15 Jul 2026 22:35:36 +0100
+Message-ID: <20260715213538.37229-1-nnamdio@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <5b07d2ab-84ee-46ae-84c9-7542499d26d7@linux.dev>
+References: <5b07d2ab-84ee-46ae-84c9-7542499d26d7@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Marek Vasut <marex@nabladev.com>
-Subject: Re: [PATCH v4 4/6] arm64: dts: imx8mm: imx8mp: Add CM DTOs for Data
- Modul i.MX8M Mini and Plus eDM SBC
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org,
- imx@lists.linux.dev
-References: <20260705200534.151803-1-marex@nabladev.com>
- <20260705200534.151803-4-marex@nabladev.com>
- <20260705202439.3F5771F000E9@smtp.kernel.org> <alUICTI-24tREZO8@SMW015318>
- <f1e52327-42da-48e1-8e4a-dabf148ce216@nabladev.com>
- <alWR66rjt-9jGEOV@SMW015318>
- <a3602ef8-2b77-4cc3-adef-2c4cba08a5d9@nabladev.com>
- <alezsOsf61Zv6F4F@lizhi-Precision-Tower-5810>
-Content-Language: en-US
-In-Reply-To: <alezsOsf61Zv6F4F@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
 
-On 7/15/26 6:22 PM, Frank Li wrote:
+Spurious wakeups in tcp_msg_wait_data() isn't being handled by
+tcp_bpf_recvmsg() and tcp_bpf_recvmsg_parser(), leading to unexpected
+EAGAIN errors returned by recvfrom()/recv().  Adding handling for the
+wakeup and a selftest.
 
-Hello Frank,
+This issue was first discovered in an application that adds sockets to
+a sockmap as a way to view the received data.  No redirects or any
+other operations are performed.
 
->>>>>> [Severity: Medium]
->>>>>> Will this node name bypass the driver's carveout exclusion logic?
->>>>>>
->>>>>> Looking at imx_rproc_prepare(), it iterates over memory-regions and checks
->>>>>> specifically for the name "vdev0buffer" to skip processing the vdev buffer:
->>>>>>
->>>>>> 	if (!strcmp(it.node->name, "rsc-table") ||
->>>>>> 	    !strcmp(it.node->name, "vdev0vring0") ||
->>>>>> 	    !strcmp(it.node->name, "vdev0vring1") ||
->>>>>> 	    strstarts(res.name, "vdev0buffer"))
->>>>>> 		continue;
->>>>>>
->>>>>> Because this node is named "vdevbuffer" instead of "vdev0buffer", it appears
->>>>>> it will be mapped as a generic carveout via ioremap_wc() and unintentionally
->>>>>> included in the remoteproc coredump.
->>>>>>
->>>>>> Could this node be renamed to "vdev0buffer" to avoid wasting vmalloc space
->>>>>> and bloating the coredump?
->>>>>
->>>>> Look like make sense, please check it.
->>>>>
->>>>> It is not good to use node-name as ABI. Laurentiu is working on use
->>>>> memory-region-namses.
->>>> The memory regionss are referenced from imx8mm-cm4 { } node via the
->>>> memory-region property:
->>>>
->>>> memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>, <&rsc_table>;
->>>
->>> I known, but now code parser node-name, At your case, it.node->name is
->>> vdevbuffer, but driver expected vdev0buffer.  so above check will be failure.
->>>
->>> suppose it should be
->>>
->>>    vdevbuffer: vdev0buffer@b8400000
->>>                ^^^^^^^^^^^
->>>
->>> I know it is bad, but waiting for Laurentiu to fix it.
->> Actually, if I look at "git log -p drivers/remoteproc/imx_rproc.c" in
->> current linux-next 20260714 , which has the entire history of imx_rproc.c
->> and the latest content, the code cited by the AI:
->>
->> "
->> 	if (!strcmp(it.node->name, "rsc-table") ||
->> 	    !strcmp(it.node->name, "vdev0vring0") ||
->> 	    !strcmp(it.node->name, "vdev0vring1") ||
->> 	    strstarts(res.name, "vdev0buffer"))
->> 		continue;
->> "
->>
->> never existed in imx_rproc.c:
-> 
-> AI refer old version code, but problem is the same
+Sashiko has noted a few other pre-existing issues in the same area
+(https://patch.msgid.link/20260714205118.17DB11F000E9@smtp.kernel.org)
+that can lead to EAGAIN in tcp_bpf_recvmsg() and
+tcp_bpf_recvmsg_parser().  A local run of Sashiko also identified a
+potential issue in tcp_bpf_recvmsg() handling zero-data FIN packets when
+the MSG_PEEK flag is set.  To prevent this patchset from growing too
+large, I intend to submit follow up patches to address these once this
+one has been accepted.
 
-No, sorry, the aforementioned piece of code never existed in imx_rproc.c 
-according to git log. There is no old version of the code that looked 
-anything like what the AI produced above.
+Changes in v2:
+- In tcp_bpf_recvmsg, handle signals and the socket closing in the loop.
+- Fix spurious wakeups when SO_RCVTIMEO has been set on the socket.
+- Link to v1: https://patch.msgid.link/ak_rR-Skd8Mvn4mH@localhost.localdomain
 
-> if (strstarts(res.name, "vdev0buffer"))
-> 
->>
->> "
->> $ git log --follow -p next/master -- drivers/remoteproc/imx_rproc.c | grep
->> vdev0vring1
->    ^^^^^^^^^^
-> 
-> vdev0buffer
+Changes in v3:
+- Added the sockmap_recvfrom selftest.
+- Link to v2: https://patch.msgid.link/alFRK66z45eDNZA7@localhost.localdomain
 
-The AI generated review content above does refer to vdev0vring1 , which 
-is a unique identifier, but that unique identifier exists only once is 
-the entire history of drivers/remoteproc/imx_rproc.c and that is as a 
-code comment . That proves my point that the aforementioned AI generated 
-review feedback is not based on code that ever existed in the kernel.
+Changes in v4:
+- Fix potential data loss in tcp_bpf_recvmsg() when a FIN or RST has
+  been received.
+- Check the return code of pthread_create() in the selftest.
+- Fix race caused by using EXPECT macros in a thread in selftest.
+- Link to v3: https://patch.msgid.link/20260714203927.32289-1-nnamdio@gmail.com
 
->>      vdev regions are vdev0vring0, vdev0vring1, vdevbuffer and similar.
->> "
->>
->> It seems the AI hallucinated something which is not based in reality ?
-> 
-> git log --follow -p linux-next/master -- drivers/remoteproc/imx_rproc.c | grep vdev0buffer
-> -		if (!strcmp(it.node->name, "vdev0buffer"))
-> +		if (strstarts(res.name, "vdev0buffer"))
+Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
+---
+Nnamdi Onyeyiri (2):
+  bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
+  bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
 
-"
-if (strstarts(res.name, "vdev0buffer"))
-"
+ net/ipv4/tcp_bpf.c                            |  69 +++-
+ tools/testing/selftests/net/.gitignore        |   2 +
+ tools/testing/selftests/net/Makefile          |   5 +
+ .../selftests/net/sockmap_recvfrom.bpf.c      |  31 ++
+ .../testing/selftests/net/sockmap_recvfrom.c  | 299 ++++++++++++++++++
+ 5 files changed, 397 insertions(+), 9 deletions(-)
+ create mode 100644 tools/testing/selftests/net/sockmap_recvfrom.bpf.c
+ create mode 100644 tools/testing/selftests/net/sockmap_recvfrom.c
 
-and
+-- 
+2.52.0
 
-"
-	    strstarts(res.name, "vdev0buffer"))
-"
-
-looks like different code , and the AI reported "strstarts(res.name, 
-"vdev0buffer"))" which never existed in drivers/remoteproc/imx_rproc.c 
-as is clearly visible from the command output you shared above.
-
-So, what exactly is the problem here , can you please clarify it without 
-referencing the AI generated content above ?
-
-Thank you for your help !
