@@ -1,291 +1,105 @@
-Received: from out198-26.us.a.mail.aliyun.com (out198-26.us.a.mail.aliyun.com [47.90.198.26])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F073C3791
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 07:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34473B840E;
+	Wed, 15 Jul 2026 07:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784101411; cv=none; b=tUhP3atF3Oi60g16tlPCHQ+LbncMPKDsZbV0gZSQKCRpjAD9tg3L857tNpg61nypWu/vopWAtVCgB3EGVW2+YOtGGp12g46urQ4t7dTDtYem73gEawGRL2hs7J70Sg41v4uwEQhIvCyWceg1QEYIy7E3Rom2V/YC1R3hWUJ2mJ8=
+	t=1784101477; cv=none; b=DDZsY/yOZzHdpuSsbolY1KK7mBnuO/l7pCgzqIxAKEzrocRKXDXqODZBmHxgDMixIZYjOBKQt5CC9zrGSRhnrz+Pfc0m2YMuTdYRUiqEcavCjtv+qxn2e3BQ569h+1RiIxY7ULzOGDqXMR+9FKPZ8IpiHyYvz+k0dYTV2Fq2P5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784101411; c=relaxed/simple;
-	bh=eYwuW4vmV1NRfCF9e/kPy7g+6JHXYDajt+Al5Gz8oqw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kT3gFmiTqqg/4vQ57pVvvqfJxJSZQDAYRgMbv+prCP0U1u7VQ7lR75+eUxC3Z1JmT/jT5gMBW2bYEoQ7o1S7tVLgUaMPh6gjNaEega+bHJo2jj2AABewHSet3lPbOQevvFWVDXcvbqd3Ux4t59lQt/fz+iFbWQ5zE9o28cvUkSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lontium.com; spf=pass smtp.mailfrom=lontium.com; dkim=pass (2048-bit key) header.d=lontium.com header.i=@lontium.com header.b=PcFVwjnO; arc=none smtp.client-ip=47.90.198.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lontium.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lontium.com
+	s=arc-20240116; t=1784101477; c=relaxed/simple;
+	bh=UdQma2hTkdoPGNuuyWFOD/sUrfqi5btc69f3eudvtyw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zd7rakJHaSiE/TYeDZeiUVscLzpze6vXHMGASqB9TQR2nD8/QLLIoYnh5ZIYMipDPQ4Qlj7LuMVRxfamU6bktgsexRulc5fUkn5KJkmzLA5sjw7zqF8Zo5/KrPcAkOxax6dSU4nwTBjPvl9nY+eJw+Q/s+o1rOArvvGKUEwTpZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hbaxCwwQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lontium.com header.i=@lontium.com header.b="PcFVwjnO"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=lontium.com; s=default;
-	t=1784101390; h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
-	bh=fYczancSDpXTTTTzNgOct5Z1D1AO/aaqYRYfDjK901E=;
-	b=PcFVwjnOX47F4YoOqPD7iXagUXRsuQyI2jhPwz05Pht1tDsqJcEU3Zg4llRry5HWiXWvOk+NGNU755ICxpLzm332qIUewucT6zJtJn8eReerTFsHaX430A86nwcvhp2hEbUi1OIbtkGc6CCVJIou8NXM8CQEEDUgNUZiI85IqcAsr3wNuyCqRiNYqcOrdFKc55xiSQriSMJZU4uIOCH09CjxjIhbo04A8sqCxoM+QFEZtaw8QJaWr6s77FepaSjEpa3ujzmMHITRiWPCKLyz2FJNaBdsn5A3BPULhGjLOMhPd8yx4SAngUaA2c9zW6jaHVYC2n/8Gn5hz/lmG35c2g==
-X-Alimail-AntiSpam:AC=CONTINUE;BC=0.07436262|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0027374-0.000409488-0.996853;FP=3276738345256568050|2|1|3|0|-1|-1|-1;HT=maildocker-contentspam033037028158;MF=syyang@lontium.com;NM=1;PH=DS;RN=1;RT=1;SR=0;TI=SMTPD_---.iLoJYfa_1784101388;
-Received: from mail-ot1-f44.google.com(mailfrom:syyang@lontium.com fp:SMTPD_---.iLoJYfa_1784101388 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Wed, 15 Jul 2026 15:43:09 +0800
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e6128bd9b3so2628702a34.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 00:43:09 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyJbbXBoXSW32j+tlFDEnNmrSVZwlpilxdaWNODczy4MgOIZ76N
-	7wVg0uKIA2JpJUb+mhFmfqj9jYkfE+YS94ZuSDTRt0gl357Si+/yZukxOJKKxJVCU1ByZTLVDbu
-	VWZzOsYzNT1/DlJlv1QTyTwYVtQNugC4=
-X-Received: by 2002:a05:6808:1986:b0:4a4:68a9:5f04 with SMTP id
- 5614622812f47-4a495ff24eemr1298337b6e.27.1784101387714; Wed, 15 Jul 2026
- 00:43:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hbaxCwwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8441F000E9;
+	Wed, 15 Jul 2026 07:44:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784101475;
+	bh=MXacSfVESMbBM4Km6XTpIUSK+nBYKaMgTrWivCXMIGc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=hbaxCwwQaqHLOp/Kee/FS6zAt8h3JJUDlsMQ4IoajYzkk4/w8t9aoyrm87le60WrA
+	 EaG2lYQS+qn+MVdou3tsRGFeniWp7UrZCVwU6EHEW/jAl3dW6rR55lqZgSjdIhSOW/
+	 Re82y6o/pK0XLpECicrH+WxBAzfDksfKUGaXJhLVRVneQvf3zMPA+xTj0LpnOB9J4Q
+	 azU76dxr73W2th7nt6Kkf4kYrV/pO3Xusl2heTQYbmp2qC9o19gAQSiB07DBpRGuCl
+	 +AeW0gVZJFegz+L+V6fbMv7JDocNqPxsBGleqY1v2FJE4+qUFhrYPh1vjzR+bfJK2T
+	 o0/j9ovvbYzCQ==
+Date: Wed, 15 Jul 2026 09:44:29 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Hans Zhang <18255117159@163.com>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v8 2/3] PCI: cadence: Add HPA IP debugfs for LTSSM status
+Message-ID: <rrf3bid5g7hsaigimjy6d5i5sv63n6af3sriksfx7tyymg6fqz@a6vsjz6zrthr>
+References: <20260701073513.1101559-1-18255117159@163.com>
+ <20260701073513.1101559-3-18255117159@163.com>
+ <20260701074818.E3F291F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260715015438.2770155-1-syyang@lontium.com> <20260715015438.2770155-3-syyang@lontium.com>
- <20260715020616.B73771F000E9@smtp.kernel.org>
-In-Reply-To: <20260715020616.B73771F000E9@smtp.kernel.org>
-From: Sunyun Yang <syyang@lontium.com>
-Date: Wed, 15 Jul 2026 15:42:55 +0800
-X-Gmail-Original-Message-ID: <CAFQXuNZdwNxbAsnK7P4zs0eZnm4pN+6kKkO-aP6Q_higPEW-yg@mail.gmail.com>
-X-Gm-Features: AUfX_mxYgF1LKb3HBSUHlun9wnYnCA6QN_5HsLuDULVayA3SKvsDowqxL49a2q4
-Message-ID: <CAFQXuNZdwNxbAsnK7P4zs0eZnm4pN+6kKkO-aP6Q_higPEW-yg@mail.gmail.com>
-Subject: Re: [PATCH v17 2/2] drm/bridge: Add Lontium LT7911EXC eDP to MIPI DSI bridge
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260701074818.E3F291F000E9@smtp.kernel.org>
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B47=E6=9C=8815=E6=97=A5=E5=91=
-=A8=E4=B8=89 10:06=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
-e(s) to consider:
-> - [High] Missing cleanup of `output_bridge` in `mipi_dsi_host_detach` pre=
-vents DSI device rebinds and causes use-after-free.
-
-Intentional design, consistent with cdns-dsi-core.c cdns_dsi_detach()
-(lines 1082-1091) which does not clear output->dev. Clearing
-output_bridge would allow re-attach, causing devm_drm_of_get_bridge()
-to allocate new devres without freeing the previous one, resulting in
-a real memory leak. The DRM bridge framework does not support dynamic
-bridge chain reconfiguration. No use-after-free: the -EBUSY guard
-returns before dereferencing output_bridge, and bridge_attach is not
-called by the SoC encoder after drm_bridge_remove().
-
-> - [High] Sysfs attribute `lt7911exc_firmware` is accessible before the dr=
-iver has finished initialization in `probe`, leading to a kernel panic.
-
-False positive. The driver core creates dev_groups sysfs attributes
-AFTER probe() returns successfully. In drivers/base/dd.c
-really_probe(), call_driver_probe() (line 706) executes before
-device_add_groups(dev, drv->dev_groups) (line 725). By the time the
-sysfs file is visible to userspace, all mutexes, workqueue, and regmap
-are fully initialized. There is no window where userspace can access
-the sysfs attribute before initialization completes.
-
-> - [High] Asynchronous firmware upgrade worker accesses `bridge.dev` witho=
-ut holding a reference, causing a Use-After-Free if the DRM display control=
-ler unbinds.
-
-This is a known DRM bridge framework limitation, not specific to this
-driver. drm_bridge_remove() does not clear bridge.dev, so all bridge
-drivers calling drm_kms_helper_hotplug_event() share this risk. A
-proper fix requires framework-level bridge-to-drm_device lifetime
-tracking. Triggering requires root sysfs access to start firmware
-upgrade while simultaneously unbinding the DRM master driver =E2=80=94 an
-administrator operation outside normal usage.
-
-> - [Medium] Driver illegitimately mutates the state of a downstream bridge=
- object by explicitly modifying `pre_enable_prev_first`.
-
-Hardware constraint. The DSI output stream (register 0xe0b0) must be
-enabled after the panel is powered on. The override is safe because
-transfer() is a stub =E2=80=94 panel DCS commands are silently discarded an=
-d
-panel initialization is handled entirely by the chip's internal
-firmware. The panel driver's prepare_prev_first preference is
-therefore irrelevant for this chip. The comment above the assignment
-documents this rationale.
-
-> - [Low] The `lt7911exc->removed` flag is read without a lock or memory ba=
-rrier in the firmware upgrade work, leading to a data race.
-
-Valid.
-
+On Wed, Jul 01, 2026 at 07:48:18AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Modpost link error when building Cadence drivers as modules due to an orphaned debugfs object.
 > --
->
-> --- Patch [2]: [PATCH v17 2/2] drm/bridge: Add Lontium LT7911EXC eDP to M=
-IPI DSI bridge ---
-> commit f9cec7dee2928b841f4104ddf68c1ebfeffba41a
-> Author: Sunyun Yang <syyang@lontium.com>
->
-> drm/bridge: Add Lontium LT7911EXC eDP to MIPI DSI bridge
->
-> Add support for the Lontium LT7911EXC bridge chip, which converts
-> eDP input to MIPI DSI output using an internal firmware-controlled
-> pipeline.
->
-> > diff --git a/drivers/gpu/drm/bridge/lontium-lt7911exc.c b/drivers/gpu/d=
-rm/bridge/lontium-lt7911exc.c
-> > new file mode 100644
-> > index 0000000000000..5b7a184e96194
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/bridge/lontium-lt7911exc.c
->
-> [ ... ]
->
-> > @@ -458,6 +458,25 @@ static void lt7911exc_firmware_upgrade_work(struct=
- work_struct *work)
-> >  out_mcu_run:
-> >       scoped_guard(mutex, &lt7911exc->ocm_lock)
-> >               lt7911exc_inside_mcu_run(lt7911exc);
-> >
-> >  out_release_fw:
-> >       release_firmware(fw);
-> >
-> >  out_unlock_upgrade:
-> >       scoped_guard(mutex, &lt7911exc->ocm_lock) {
-> >               if (!lt7911exc->removed)
-> >                       lt7911exc->upgrade =3D false;
-> >       }
-> >
-> >       /* Notify DRM to re-trigger modeset after firmware upgrade */
-> >       if (!lt7911exc->removed && lt7911exc->bridge.dev)
->
+> 
+> commit 98a72e00615e702fb5448b12d14570527e38b67f
+> Author: Hans Zhang <18255117159@163.com>
+> 
+> PCI: cadence: Add HPA IP debugfs for LTSSM status
+> 
+> This commit adds debugfs support for HPA-based Cadence PCIe controllers,
+> exposing the current LTSSM state through a new ltssm_status file.
+> 
+> > diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
+> > index b8ec1cecfaa88..2cdc4617e0c20 100644
+> > --- a/drivers/pci/controller/cadence/Makefile
+> > +++ b/drivers/pci/controller/cadence/Makefile
+> > @@ -4,6 +4,7 @@ pcie-cadence-host-mod-y := pcie-cadence-host-common.o pcie-cadence-host.o pcie-c
+> >  pcie-cadence-ep-mod-y := pcie-cadence-ep.o
+> >  
+> >  obj-$(CONFIG_PCIE_CADENCE) = pcie-cadence-mod.o
+> > +obj-$(CONFIG_PCIE_CADENCE_DEBUGFS) += pcie-cadence-debugfs.o
+> 
 > [Severity: Low]
-> Is there a data race on the removed flag here?
->
-> The lt7911exc->removed flag is set under ocm_lock in lt7911exc_remove(), =
-but
-> it is read here outside of any lock or memory barrier.
->
-> While cancel_work_sync() in the remove path prevents a logical use-after-=
-free,
-> could this still trigger unmarked data race warnings from KCSAN?
->
-> [Severity: High]
-> Can this code trigger a use-after-free if the DRM display controller unbi=
-nds?
->
-> The firmware upgrade work accesses bridge.dev asynchronously. The bridge.=
-dev
-> pointer is assigned when the DRM master attaches, but the I2C bridge driv=
-er
-> holds no reference to it.
->
-> If a user starts a firmware upgrade via sysfs and then unbinds the DRM
-> master driver before the async work completes, the drm_device is freed.
->
-> Does this leave a dangling pointer that the worker will then dereference =
-in
-> drm_kms_helper_hotplug_event()?
->
-> >               drm_kms_helper_hotplug_event(lt7911exc->bridge.dev);
-> >
-> >       mutex_unlock(&lt7911exc->upgrade_lock);
-> >  }
->
-> [ ... ]
->
-> > @@ -515,10 +515,31 @@ static int lt7911exc_dsi_host_attach(struct mipi_=
-dsi_host *host, struct mipi_dsi_device *dev)
-> >       lt7911exc->output_bridge =3D bridge;
-> >
-> >       /*
-> >        * Force panel-first enable order: the DSI output stream (0xe0b0)
-> >        * must not be enabled before the panel is powered on.
-> >        * This override is safe because LT7911EXC's transfer() is a stub=
- =E2=80=94
-> >        * panel DCS commands are silently discarded and panel init is do=
-ne
-> >        * by the chip's internal firmware. The panel driver's
-> >        * prepare_prev_first preference is therefore irrelevant here.
-> >        */
-> >       lt7911exc->output_bridge->pre_enable_prev_first =3D false;
->
-> [Severity: Medium]
-> Is it safe to explicitly mutate the state of a downstream bridge object?
->
-> The downstream bridge object belongs to the panel driver. Overriding its
-> pre_enable_prev_first flag violates object ownership and could disrupt th=
-e
-> panel's expected power-on sequence.
->
-> Could this cause the panel to fail to power on correctly?
->
-> >
-> >       drm_bridge_add(&lt7911exc->bridge);
-> >
-> >       return 0;
-> >  }
-> >
-> >  static int lt7911exc_dsi_host_detach(struct mipi_dsi_host *host, struc=
-t mipi_dsi_device *dev)
-> >  {
-> >       struct lt7911exc *lt7911exc =3D dsi_host_to_lt7911exc(host);
-> >
-> >       drm_bridge_remove(&lt7911exc->bridge);
-> >
-> >       return 0;
-> >  }
->
-> [Severity: High]
-> Does this missing cleanup prevent DSI device rebinds and cause a
-> use-after-free?
->
-> In lt7911exc_dsi_host_attach(), output_bridge is initialized, but it is n=
-ever
-> cleared back to NULL in this detach function.
->
-> If the downstream DSI panel is unbound via sysfs, the old wrapper remains=
-,
-> pointing to a freed panel.
->
-> If the panel is subsequently rebound, the check for output_bridge in
-> lt7911exc_dsi_host_attach() will falsely trigger and return -EBUSY,
-> permanently breaking the display pipeline. Should output_bridge be set to
-> NULL here?
->
-> [ ... ]
->
-> > @@ -662,11 +662,20 @@ static int lt7911exc_probe(struct i2c_client *cli=
-ent)
-> >       lt7911exc =3D devm_drm_bridge_alloc(dev, struct lt7911exc, bridge=
-, &lt7911exc_bridge_funcs);
-> >       if (IS_ERR(lt7911exc))
-> >               return dev_err_probe(dev, PTR_ERR(lt7911exc), "drm bridge=
- alloc failed.\n");
-> >
-> >       dev_set_drvdata(dev, lt7911exc);
-> >
-> >       lt7911exc->dev =3D dev;
-> >       lt7911exc->upgrade =3D false;
-> >       lt7911exc->removed =3D false;
-> >
-> >       ret =3D devm_mutex_init(dev, &lt7911exc->ocm_lock);
->
-> [Severity: High]
-> Could a concurrent sysfs write during probe trigger a kernel panic?
->
-> Because lt7911exc_attr_groups is attached via driver.dev_groups, the driv=
-er
-> core creates the sysfs files before probe() runs.
->
-> Here, dev_set_drvdata() exposes the struct before ocm_lock, upgrade_lock,
-> and the work struct are initialized.
->
-> If a user writes to the sysfs file during this window,
-> lt7911exc_firmware_store() will retrieve the partially initialized struct=
- and
-> attempt to lock the uninitialized mutex. Should the drvdata be set after
-> initialization is complete?
->
-> >       if (ret)
-> >               return dev_err_probe(dev, ret, "failed to init mutex\n");
-> >
-> >       ret =3D devm_mutex_init(dev, &lt7911exc->upgrade_lock);
->
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715015438.27=
-70155-1-syyang@lontium.com?part=3D2
+> Will this cause a link error during modpost when building the Cadence drivers
+> as modules? 
+> 
+> Since CONFIG_PCIE_CADENCE_DEBUGFS is a boolean, this adds the object directly
+> to obj-y instead of appending it to a composite module target like
+> pcie-cadence-mod-y. When the driver is configured as a module (e.g.,
+> CONFIG_PCIE_CADENCE=m), the object is compiled but left unlinked.
+> 
+> Could this lead to undefined symbol errors for cdns_pcie_debugfs_init and
+> cdns_pcie_debugfs_deinit in the caller modules?
+> 
+
+This is a real concern. So I fixed the Makefile with below change while
+applying:
+
+diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
+index b8ec1cecfaa8..80be0b885ac8 100644
+--- a/drivers/pci/controller/cadence/Makefile
++++ b/drivers/pci/controller/cadence/Makefile
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ pcie-cadence-mod-y := pcie-cadence-hpa.o pcie-cadence.o
++pcie-cadence-mod-$(CONFIG_PCIE_CADENCE_DEBUGFS) += pcie-cadence-debugfs.o
+ pcie-cadence-host-mod-y := pcie-cadence-host-common.o pcie-cadence-host.o pcie-cadence-host-hpa.o
+ pcie-cadence-ep-mod-y := pcie-cadence-ep.o
+
+This will ensure that the debugfs functions are always built into the
+'pcie-cadence-mod*' object.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
