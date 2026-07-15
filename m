@@ -1,122 +1,102 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2965F2931D1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 07:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED233CAA51
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 08:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784102317; cv=none; b=nw3+tS1tcSfllDAINL3UY4O5Azo/PtzpCPTJ5d6VwSNhsbS+fr/zZkxzNdZI39bRO5vxx6YVAvESnjB45iHB7L8fyf5E0D8G3FqFPcqJxMG4BJsG+s+CRc51xxmK4Y+jPGE1YqgVHhcQf6+VLWC+eakhY0lPXczdatvGOyyfkmY=
+	t=1784104142; cv=none; b=Q56/sOqVR1PpVhEJ88hbwJ8gW/j+NQQwHAQwt/mbSTfM3BUw8LgpNrbgJ7vXDlk6qahel/T4rLwSIBlfUY8G0Nmgw8WKAINXooHerDAvEe93Z6ujFzu5mEEyA2pFSrZUKp+3XAe2W3RvpTjyD2Km+ffqxRLvzicWZ5SLK2R4o7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784102317; c=relaxed/simple;
-	bh=1VPdX9pDtSPZUkKaAqv+B+3T1bpAAcYTXwPP+GQyXpU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jrxs7mcC2QxYzYfUqfQf1ikOZeEDG2WfBTwwFIyK4jV73g0JzuiEpqycXJ6+lw8kJrUwKom8yBrE5UIVkEDJmdudfv8OssFcNT/ig/4TCx2tWo2K+PwVqADlm2vGxMZjQJCAJmslFJD00QmHw98/MTwfJc867rXWVHyrZJ0rndM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=c0fcRdbe; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1784104142; c=relaxed/simple;
+	bh=SxjpvUuhid5kie/ZpflUJ3Lsjarwt3I+5gwMxF8Ot5Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hkS/0fwal4ypJ2xtVLB4dM+jr5K3a7uDt72hzg1TwngCEasjxndgxONu3aLsHfRo3BoX+2Umva5tkM5mnKH0LrYBb9Ln9LMlU/FUU80dOdhdOu63cWRyl6RcBPDCYPeeQcMaRgfgOuMmtE4uNV80ZmIG01v3lqjkyX3pEH8epmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=abJD6caV; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="c0fcRdbe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=Hi4O8KIiCyXeFNxWl9xgXoqyTQKSTJOcECFLM2oHMr0=;
-	b=c0fcRdbe5h4j2ZvQud3zaBuJF/Q6wNPXSPsAgxzjQ989UD3gGz0zEVQr5R/Vpj
-	nj19tUhPrrZBN3kHjbBIZir/8Sbylu0AysmJUuQt8h9Lj+wz823aqLIGcW/ork0D
-	E67X/+51RAoXmohJCVpWJRgH41XDLUrfyreWzkqgoWT6c=
-Received: from [10.111.8.51] (unknown [])
-	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wCHBNmLPVdqHuTTJw--.46184S2;
-	Wed, 15 Jul 2026 15:58:04 +0800 (CST)
-Message-ID: <7a754ea9-c3bf-4507-9cc6-ceef32b3ecae@163.com>
-Date: Wed, 15 Jul 2026 15:57:48 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="abJD6caV"
+X-Gm-Message-State: AOJu0YzH0RA7st4Y9AxNws2zje7A7rirHju/LcDRUrsBb59GJVIT3t1S
+	CboULw9yjo1pwCgpSnhLhuWpd2QYzX99YXMRX5/j9Igi+T9R67DXKwAtHeSG0gVbWy9ixSYOQKY
+	gB64/84f7eC6BdzlqAX6dLOaNiM4OaljiLz3xj8l1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784104138;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SxjpvUuhid5kie/ZpflUJ3Lsjarwt3I+5gwMxF8Ot5Y=;
+	b=abJD6caVGrMgcJKsGqw+WJw2+eFkJhCne7GV50M+iVqxVOyofHxbqbmytAw08c6Tn4VBdI
+	+MUijdIiSxYCJz3GHSYmlWm5D5BHIlSwmbhWHO7LjaPWA146iZcOjyzgBh+Ndo4/HPUsqU
+	maV5vaRHNs/JaK5teLwfBOQbPxlB2Aw=
+X-Received: by 2002:a05:622a:3:b0:517:64f6:3365 with SMTP id
+ d75a77b69052e-51d71546a03mr22843281cf.4.1784104128893; Wed, 15 Jul 2026
+ 01:28:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/3] PCI: cadence: Add HPA IP debugfs for LTSSM status
-To: Manivannan Sadhasivam <mani@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <20260701073513.1101559-1-18255117159@163.com>
- <20260701073513.1101559-3-18255117159@163.com>
- <20260701074818.E3F291F000E9@smtp.kernel.org>
- <rrf3bid5g7hsaigimjy6d5i5sv63n6af3sriksfx7tyymg6fqz@a6vsjz6zrthr>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <rrf3bid5g7hsaigimjy6d5i5sv63n6af3sriksfx7tyymg6fqz@a6vsjz6zrthr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wCHBNmLPVdqHuTTJw--.46184S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGr48Xw43Kr18ur17ZrWfAFb_yoW5Xr48pa
-	4kGFWfCF4xZa1Yvanak3WUXr13t3s7Z348Jan09r17ur13ur4UtFs2gFW5XFW7Gw4DKr1x
-	Zw15Kasrtr18Z3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zK9a9hUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC7AzihmpXPYw+8AAA3G
+References: <20260715081238.1891918-1-fuad.tabba@linux.dev>
+ <20260715081238.1891918-5-fuad.tabba@linux.dev> <20260715082411.3987F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260715082411.3987F1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Wed, 15 Jul 2026 09:28:11 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTwhjztjg7HTEMxuaY2-fUD0=YGKZ6uXwuUEKVhhQz6LXg@mail.gmail.com>
+X-Gm-Features: AUfX_my7Hs3EP1N_PoMndc7TswMQav2np4-KYQOT-BjqulCM0MbSrtOxFp29ZgY
+Message-ID: <CA+EHjTwhjztjg7HTEMxuaY2-fUD0=YGKZ6uXwuUEKVhhQz6LXg@mail.gmail.com>
+Subject: Re: [PATCH v6 4/8] KVM: arm64: Move PSCI helper functions to a shared header
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
+On Wed, 15 Jul 2026 at 09:24, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The header `include/kvm/arm_psci.h` is not self-contained because=
+ it uses `vcpu_set_reg()` and `vcpu_get_reg()` without including `<asm/kvm_=
+emulate.h>`.
 
+https://lore.kernel.org/all/CA+EHjTwpB2fmoYGfkP5RVZcB4sgbVPQ0=3DQR5dyUJnpQ_=
+VQa+pA@mail.gmail.com/
 
-On 7/15/26 15:44, Manivannan Sadhasivam wrote:
-> On Wed, Jul 01, 2026 at 07:48:18AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Low] Modpost link error when building Cadence drivers as modules due to an orphaned debugfs object.
->> --
->>
->> commit 98a72e00615e702fb5448b12d14570527e38b67f
->> Author: Hans Zhang <18255117159@163.com>
->>
->> PCI: cadence: Add HPA IP debugfs for LTSSM status
->>
->> This commit adds debugfs support for HPA-based Cadence PCIe controllers,
->> exposing the current LTSSM state through a new ltssm_status file.
->>
->>> diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
->>> index b8ec1cecfaa88..2cdc4617e0c20 100644
->>> --- a/drivers/pci/controller/cadence/Makefile
->>> +++ b/drivers/pci/controller/cadence/Makefile
->>> @@ -4,6 +4,7 @@ pcie-cadence-host-mod-y := pcie-cadence-host-common.o pcie-cadence-host.o pcie-c
->>>   pcie-cadence-ep-mod-y := pcie-cadence-ep.o
->>>   
->>>   obj-$(CONFIG_PCIE_CADENCE) = pcie-cadence-mod.o
->>> +obj-$(CONFIG_PCIE_CADENCE_DEBUGFS) += pcie-cadence-debugfs.o
->>
->> [Severity: Low]
->> Will this cause a link error during modpost when building the Cadence drivers
->> as modules?
->>
->> Since CONFIG_PCIE_CADENCE_DEBUGFS is a boolean, this adds the object directly
->> to obj-y instead of appending it to a composite module target like
->> pcie-cadence-mod-y. When the driver is configured as a module (e.g.,
->> CONFIG_PCIE_CADENCE=m), the object is compiled but left unlinked.
->>
->> Could this lead to undefined symbol errors for cdns_pcie_debugfs_init and
->> cdns_pcie_debugfs_deinit in the caller modules?
->>
-> 
-> This is a real concern. So I fixed the Makefile with below change while
-> applying:
-> 
-> diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
-> index b8ec1cecfaa8..80be0b885ac8 100644
-> --- a/drivers/pci/controller/cadence/Makefile
-> +++ b/drivers/pci/controller/cadence/Makefile
-> @@ -1,5 +1,6 @@
->   # SPDX-License-Identifier: GPL-2.0
->   pcie-cadence-mod-y := pcie-cadence-hpa.o pcie-cadence.o
-> +pcie-cadence-mod-$(CONFIG_PCIE_CADENCE_DEBUGFS) += pcie-cadence-debugfs.o
->   pcie-cadence-host-mod-y := pcie-cadence-host-common.o pcie-cadence-host.o pcie-cadence-host-hpa.o
->   pcie-cadence-ep-mod-y := pcie-cadence-ep.o
-> 
-> This will ensure that the debugfs functions are always built into the
-> 'pcie-cadence-mod*' object.
-> 
+/fuad
 
-Hello Mani,
-
-Thank you very much.
-
-Best regards,
-Hans
-
-> - Mani
-> 
-
+> --
+>
+> --- Patch [4]: [PATCH v6 4/8] KVM: arm64: Move PSCI helper functions to a=
+ shared header ---
+> (Note: The format of this report has been altered to a free-form summary =
+without direct patch quotation due to automated system recitation restricti=
+ons.)
+>
+> commit 41ab99d154503d49e14931a3e9bb6c067e760b44
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: Move PSCI helper functions to a shared header
+>
+> This patch moves several PSCI helper functions out of psci.c and into the
+> shared include/kvm/arm_psci.h header. It renames the file-local
+> psci_affinity_mask() to kvm_psci_affinity_mask() to support follow-up wor=
+k
+> for protected-guest PSCI calls.
+>
+> [Severity: Low]
+> In the newly moved kvm_psci_narrow_to_32bit() function within
+> include/kvm/arm_psci.h, the code makes use of vcpu_set_reg() and
+> vcpu_get_reg(). Does this new header location need an explicit include
+> for asm/kvm_emulate.h to ensure it remains self-contained?
+>
+> If a C file includes kvm/arm_psci.h without having already included
+> asm/kvm_emulate.h, it looks like it might lead to a build failure due to
+> missing function declarations.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715081238.18=
+91918-1-fuad.tabba@linux.dev?part=3D4
