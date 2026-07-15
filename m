@@ -1,82 +1,197 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5C534EF0F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 12:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784117542; cv=none; b=pjIewnhSnfz7aktVDGGkSKBPfBGS1rnOF1OK6QokAmQQtHVhHXq7bZcQvfLKl1hK+4b2/ob62zFAKOwlMXt4gHpzBDbesbcfwnnokmt/IdL+WVjMWiIQ/u3o6JC6OjSp7/A3vgO13qbsZCfohDpEDB7Ka7dyGaUDO5jeGj6S3I8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784117542; c=relaxed/simple;
-	bh=/Utrn0FuhDu7FxctadkjGTJJOKFpnXSBb/4fpl/qJGM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xo1yVa0aeL4NAdG0VGaAy8gnqHHmpmB9ywz9endZziG1PNF0Nq/7nJpHbIdrQBlPK8AOFYfBZ/PvAE5TCgsuTUDbaH/Uqc2T3kAe/yOpoV0LtuCQ6Tu7sk1mh6nfujQPagk4R7yZZY41pwmqyEUqKLulY6tZ8gc5/G96Rv3YidY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Icg54jm7; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EBD353A7F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 12:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784117544; cv=pass; b=VY+1VEdOGltAxd9fEN3W/xsDe9qKmyZNPRMrYFgtTUDkGVwETazuJz/6oJTkeY9QNOaM6eoHWnBMzq5Q9+sPFeQClQJnEYcbAXcc+uusPjEZR/rBHe9OYQ8KAA3dkP+i60FIzQE8SO6byBHERw7vboRuLcyzMlzlBI35Lbo32dM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784117544; c=relaxed/simple;
+	bh=aOrVeHtXzsM1pRkqxNNddE3wD/FxMb2Yh1OYwAbAeQs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=oqHyT0sbSxem/MYugV7wUYGHKhhvoq3dB458i5UMSB8h575lWIkeGTHPTkUBSaegGfkxCIFXCp/yRvWaUWLaFicEt18RAnHrDX2o2AQu+oWLpsF2s4XVB4srokccfQ5z9ejzSbcRFbEXdLkU+kqCY3hKGMaEuOqjuqZY+pf+IxQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de; spf=none smtp.mailfrom=iokpp.de; dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=sdGMsn5x; dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b=JDQOyGmN; arc=pass smtp.client-ip=81.169.146.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iokpp.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=iokpp.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Icg54jm7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1784117538;
-	bh=/Utrn0FuhDu7FxctadkjGTJJOKFpnXSBb/4fpl/qJGM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Icg54jm7Zc0WfgDc7fKmejc8NuNqnYfhKrimnkYXGgtr9ffyQo1it6U5olV0HqMXV
-	 Vnaz5gI2j9QpoDUXv+69Pb+SNq38IqtETysII4yJEQDqnNLjzPbY3hsgkjdwX2xjnm
-	 dPRYYo5qaTizsQpiLbx3LB1LYVFkZ1HWpjw5mKVPhNA5XZR8Fhks6ZcLTr3GlbemTK
-	 m7DEL+fAkBmZrnD7aOsj79K3WgFUWhE8j6nETPmyMG51ECuKB2JK6QkTcCSMyodHYz
-	 lBgzT4+kMKr+LAqJLc1CSZfLnvbfkprPmA9C5y1nsX//UVwEekmr4zbVT73dmPFkus
-	 2p8m6MixpSWGw==
-Received: from [100.64.1.21] (unknown [100.64.1.21])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 8451317E07AA;
-	Wed, 15 Jul 2026 14:12:18 +0200 (CEST)
-Message-ID: <baec7dc4-cc0b-4655-9d17-190c0a4d9a8c@collabora.com>
-Date: Wed, 15 Jul 2026 14:12:18 +0200
+	dkim=pass (2048-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="sdGMsn5x";
+	dkim=permerror (0-bit key) header.d=iokpp.de header.i=@iokpp.de header.b="JDQOyGmN"
+ARC-Seal: i=1; a=rsa-sha256; t=1784117530; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=a/C6r5DF3R+Y1Ks3iNwIJUapFpxCwF4w4LEQy7Id4OV73TFXevynSp+tpko9vnipk+
+    Wuz684JOYaB2PIzILyCEnWXXOU5K2AdsgiTYcXXdCy1ynDqaGR/fCoxHFSwPsgOhXydl
+    IzwQvmMB69B5Xn3ZcP0Eyz0zLuMT0Zsmro+mePA6K5fvLsG1AQ24acsbWQft+c0WpIYK
+    j5BLh993byIw0H6/8zufmJQOEsMAlS9fk0YjpSWIz64tHKIBLWmSZ3vXnMyrEYi2WeS1
+    44a6h/N2Odb8i84pSzMV/2T9XCY63Zp3e7R/p9vhtp9jzDnDmIEc3r7kqusgAXe90GBs
+    0S7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1784117530;
+    s=strato-dkim-0002; d=strato.com;
+    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=aOrVeHtXzsM1pRkqxNNddE3wD/FxMb2Yh1OYwAbAeQs=;
+    b=EDHUgpEisSGRdDMQi2oDId6oAmXsHlRVkPLExcEuB4MuYuAXmi+6+Jep/zsws2VHqj
+    kdQpwGv1xi1k75lELtCCZhlTTzJchBYWNuxiEXKNceUMzAh5QJCHG8++xs6KWm5pPRKs
+    r4xT7mPTnXuTpJ+F9AKdPUWxL4sU5VJZdpvc/zYeTPz7ASmb6f76s3eHj/y9jxZjHCjf
+    Pk3wyldM9tQqHa7Y7y6Y5cWOYHuVH+0D9Q+msFstoFF1SwvZUN6aUZaMhZkDhKTGPa9t
+    xCAQbuDwzOXs4HS/LI/CEJPBMcWGs8H0jh2bHduYjS6NvHA23g9R+VzPAmrA+YSDUlse
+    BMQA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1784117530;
+    s=strato-dkim-0002; d=iokpp.de;
+    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=aOrVeHtXzsM1pRkqxNNddE3wD/FxMb2Yh1OYwAbAeQs=;
+    b=sdGMsn5xkczACH78Z7fAcNGkGwI/KgPW1YgVGUJyA0OAZuG48mx3ds+5z5AkUGV95w
+    /wjnFrLpl5Nfh+2isLfNZHaBzHPwzr6UBtj8CFnWOoGUeZQOKbdMyGF5PNmAuQjJpqkA
+    5b+Dhi55WGeeWA//tYW6aGyLagIid5KxeGhanu3TdPhJVgOXGCQVt19YbUuCRVBHR+zX
+    iReyS7aLk9fYk7VrFClmu3tNGcE1qALJU3PMCP6LAuS18+ev3PcoPdfpZrWKn/BY9Ftf
+    E237ZX49KCvAC9QrcdmTXK+FvL1QhOy0DgNe9FM7MDS3WfsQOiAaqs0tAp7EEpjhPPTu
+    5i6A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1784117530;
+    s=strato-dkim-0003; d=iokpp.de;
+    h=References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=aOrVeHtXzsM1pRkqxNNddE3wD/FxMb2Yh1OYwAbAeQs=;
+    b=JDQOyGmNwcfLVpvak6VZpFpjVubp/cOk7Ux5rnaBJTSodl/A/bKx/zdA4kmsnjyymS
+    FmT18xHC7dRuhqx3juCw==
+X-RZG-AUTH: ":LmkFe0i9dN8c2t4QQyGBB/NDXvjDB6pBSe9tgBDSDt0V0DBslXBtZUxPOub3IZik"
+Received: from [10.176.237.62]
+    by smtp.strato.de (RZmta 55.5.6 AUTH)
+    with ESMTPSA id z4d38826FCCAOLg
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Wed, 15 Jul 2026 14:12:10 +0200 (CEST)
+Message-ID: <c3b5899213c76c62fa0c7f9dffdf56607c3ae1f0.camel@iokpp.de>
+Subject: Re: [PATCH v2] scsi: ufs: core: cancel RTC work in active-active
+ suspend
+From: Bean Huo <beanhuo@iokpp.de>
+To: sashiko-reviews@lists.linux.dev, Guangshuo Li <lgs201920130244@gmail.com>
+Cc: linux-scsi@vger.kernel.org
+Date: Wed, 15 Jul 2026 14:12:09 +0200
+In-Reply-To: <20260714174406.6FD471F00A3A@smtp.kernel.org>
+References: <20260714172726.1736967-1-lgs201920130244@gmail.com>
+	 <20260714174406.6FD471F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/11] drm/mediatek: mtk_dsi: Add support for MT8189
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- dri-devel@lists.freedesktop.org
-References: <20260715114916.19690-1-angelogioacchino.delregno@collabora.com>
- <20260715114916.19690-8-angelogioacchino.delregno@collabora.com>
- <20260715120718.807D91F000E9@smtp.kernel.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20260715120718.807D91F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 7/15/26 14:07, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Bandwidth check and PHY clock calculations do not account for DSC compression, incorrectly rejecting high-resolution modes and over-clocking the PHY.
-> 
+On Tue, 2026-07-14 at 17:44 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s)
+> to consider:
+> - [Medium] The `ufs_rtc_update_work` is permanently lost if
+> `__ufshcd_wl_suspend()` fails after cancelling it in the active-active su=
+spend
+> path, stopping periodic UFS RTC updates until the next successful
+> suspend/resume cycle.
+> --
+>=20
+> --- Patch [1]: [PATCH v2] scsi: ufs: core: cancel RTC work in active-acti=
+ve
+> suspend ---
+> commit 9a4850975ce80edc6032f13153aa50eb19b4cc19
+> Author: Guangshuo Li <lgs201920130244@gmail.com>
+>=20
+> scsi: ufs: core: cancel RTC work in active-active suspend
+> =C2=A0=C2=A0=C2=A0=20
+> This commit cancels the UFS RTC update work in the active-active suspend
+> path before calling the vendor suspend callback to prevent an SError.
+>=20
+> > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> > index d3044a3089b53..c3b105b2678e4 100644
+> > --- a/drivers/ufs/core/ufshcd.c
+> > +++ b/drivers/ufs/core/ufshcd.c
+> > @@ -10269,6 +10269,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *=
+hba,
+> > enum ufs_pm_op pm_op)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+req_link_state =3D=3D UIC_LINK_ACTIVE_STATE) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0ufshcd_disable_auto_bkops(hba);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0flush_work(&hba->eeh_work);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+>=20
+> [Severity: Medium]
+> If the active-active suspend path fails after this point, is the
+> ufs_rtc_update_work permanently lost?
+>=20
+> When this jumps to the vops_suspend label, if ufshcd_vops_suspend() retur=
+ns
+> an error, the function branches to the error handling path:
+>=20
+> __ufshcd_wl_suspend() {
+> =C2=A0=C2=A0=C2=A0 ...
+> vops_suspend:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D ufshcd_vops_suspe=
+nd(hba, pm_op, POST_CHANGE);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (ret)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0goto set_link_active;
+> =C2=A0=C2=A0=C2=A0 ...
+> out:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0...
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (ret) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0ufshcd_update_evt_hist(hba, UFS_EVT_WL_SUSP_ERR, (u=
+32)ret);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0hba->clk_gating.is_suspended =3D false;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0ufshcd_release(hba);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0hba->pm_op_in_progress =
+=3D false;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return ret;
+> }
+>=20
+> The error path doesn't appear to re-arm the canceled RTC update work befo=
+re
+> returning the error code. Does this mean periodic UFS RTC updates will st=
+ay
+> stopped until the next successful suspend and resume cycle?
 
-No, because the width or height will be half for each slice.
+This is not a real issue, for the following reasons:
 
+1\ The RTC work is not permanently lost. If suspend fails, the device stays=
+ in
+the active state and the PM core will retry the suspend later (runtime PM
+retries once the device idles again; a failed system suspend is simply retr=
+ied
+on the next suspend attempt). The next successful suspend/resume cycle re-a=
+rms
+the work via the now unconditional schedule_delayed_work() in
+__ufshcd_wl_resume().
 
-> Pre-existing issues:
-> - [High] Error path in `mtk_dsi_poweron` fails to decrement `refcount`, permanently leaving the DSI driver in a corrupted state.
+2\ RTC updates being paused between a failed suspend and the next successfu=
+l
+cycle is harmless. The device only uses the RTC for internal housekeeping/a=
+ge
+estimation, and periodic updates are opt-in anyway: rtc_update_period defau=
+lts
+to 0 and must be enabled via sysfs.
 
-This is real, never happened and will not happen for now, but has to be fixed.
-
-Will do that after this series, because I really-really-really ran out of time now.
-
-> - [High] Signal interruptions during IRQ waits are incorrectly treated as successful operations.
-
-This has to be carefully checked, because this may be a situation in which two
-wrongs are making one right.
-
-As said, I am out of time and will look at this in the future, definitely not in
-this merge cycle.
+3\ This behavior is not introduced by this patch. The common suspend path h=
+as
+worked exactly the same way since commit b0bd84c39289 ("scsi: ufs: core: Fi=
+x
+SError in ufshcd_rtc_work() during UFS suspend"): it cancels the work befor=
+e the
+PRE_CHANGE vendor callback and does not re-arm it on the error paths either=
+. If
+anything, this could be a separate follow-up cleanup, but it should not hol=
+d
+this bug fix.
 
