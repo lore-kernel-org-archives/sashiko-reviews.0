@@ -1,159 +1,197 @@
-Received: from mail-ej2-f3.google.com (mail-ej2-f3.google.com [74.125.228.131])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786FD425864
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.131
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784146175; cv=pass; b=MOViVch6LAXF8p54gJ2Tvo3Ab1e3JT/PjHNdph0v+spB8FvdjvXGJN1hf1Daj7DIywUApE2ult5+xAXzRcKhSl5Rq+FkzyqEVWs69j65RZvX05VMj/v/TE3dlMbWbU0mGNwDFon05ygw1aIUiQquntzKv7zarxFo/r/LOgzQXpk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784146175; c=relaxed/simple;
-	bh=6bKMUFoOov3nHfzSXonIoSh+sTcY9ShaYsuR754444E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q4eysZUvI4sao5KNhmVipn4LUvM27QXrdwXL6Jg4graT7Ost6K0RHHp3Yn2sYZA6VluYWf2pNcuwrH71zFyOHr0kVu8QAa52RbFUcho+YX5RDDuPGVLiMiuTmLilSlwSAnIJWLv2pnVtEiIJh3mGiqxq7ZBfry6puIe3LISJf8s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evlPtA6g; arc=pass smtp.client-ip=74.125.228.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD46340A4D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:12:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784146331; cv=none; b=PmQPeV18CM0O3FqTooGz2C7Qu8C2Rd1NyZAvcBMkSRb6+4v0LppxtFwUZJvpfbNAZvS/ImyNeWQivvvFeSwHGtiCO2UA4CFru+qmSzZuZG6EcU8LmZFRByNdeinuR+Jq+JmTqplrm+/LLlG72rjVDgfkrh8g4k+lcsgDb4i42G4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784146331; c=relaxed/simple;
+	bh=LQoP97ee6SAuWO+aYX1Sg011Xu8NdiUQLdZzTXeAMgs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=P30XgDZnMqeZm8s4W+2cZsaG/QErF9XjRmoFCWoWb6ukPgc7tuvhUVc5ZMIRppIQB3ag/M8TxytrMuPmGniYq7vqkxTKin/bY12eDx704Yc31tUilpcTUArrc/1MQ9vAs3IK3gUXG9WxSSXXwosYPIoX/8PsArLlZ+aYjPqhBxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AtK20bnL; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evlPtA6g"
-Received: by mail-ej2-f3.google.com with SMTP id a640c23a62f3a-c15ec8d6663so182431066b.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:09:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784146173; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sTZVZtExrbi+MTMGYZ9nNN0YyE1J3lD1xm0rXSnpVlj//6UzE1gwgCP5KHaMVolQat
-         ht+/osTiMxH2Uel059HqJTLB1VQPIvUIDNIPa6W5uMkNfF2R/CdvABqJ54z86Aw965Go
-         bN75t09KBunhUg9OMKa2F/XMhB9djxL0SRJeXEIi4Daf9sTz/6X49OoyEhdvU+zRnubJ
-         THJaeCjrWx6vRp1T5FqjYIFrbNp22+XboRSjlXuy4Hf3ROWSejWsJQBCeY6dHlr86PFO
-         zhsYaBPpogDRu1DernkTJ9fRdGRCwVnXtuestjav52L4T0OL5xovbK1Ao+iTdnONvYE3
-         Gl3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zukIYuuCALMdyDk2rEuWfswlsQCB9YpIGZVHtbRJrWk=;
-        fh=PqRaIwEVPFbUO22ZPgv2p01verSWJsxBI9W+d19luX8=;
-        b=JVChwQ1nvw1JAcABSNhIw/S59eb63EtDDOrHjiSaJpTbPQdBSOcDzzAUjyF3t9dwER
-         GU58qSJNgUMdBa3NhozNPAB7C6kPNtZa9Vn/BeoREiVFagpOfyyk8CKYEO2QQnP9A2Pq
-         FyIZKJG6UPp6nv3gFTfpnTQrI87BlTriKT2JXRnUSxsH53XRY8LVTcJ1mUHRZsBehvHK
-         djzLRYqmZSudIjxO/+g6B28HtqGaCCKRMRgkADe77yBifxjzMR/ELZ0S9v+UCh3UCxnJ
-         H/5cE7mF3bETawgw6QJXVtkc6wd43azzNPL+3Sdhuv+EHrxSnruCuH2M+xuTPCX2Grsw
-         fQ8A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AtK20bnL"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47d70879764so4085043f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:12:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784146173; x=1784750973; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1784146328; x=1784751128; darn=lists.linux.dev;
+        h=content-type:content-transfer-encoding:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=zukIYuuCALMdyDk2rEuWfswlsQCB9YpIGZVHtbRJrWk=;
-        b=evlPtA6gTp8PUUC7eY3YR6mJ97tYxORyMdKZw4l2nkxY2tlBddfWulDYd9nXiUQIix
-         ezNCWCGQe7k5eOMoBAQX80zZWescamy4UxIKXy/JxtFoKvKgZeYLh+LJjs8hRratbPcJ
-         /0IMJlKSFSsvjNx1W76/53lVvv/5AwBA4rGkFz8O7n2OfW84iD8Ogus+IGD658rka+0S
-         xm2m2yG/BFTGQKrnMEW8BzTaqQw9H6BDB/LO9tM3URoWO3kl9JxO13S0HU5zy52BxDjc
-         mEUM29VZQBMCcAOUKyAjn096aBGobuDhlpOFxEGJgPUgdTxCpQZt5YMZUCY8QHa3GZ2p
-         hh3g==
+        bh=LINappzTtqOvEOGJ2/VoPfdVWpHlvhISScXV6/Tgz94=;
+        b=AtK20bnLL5ShiFN8DcBwqQhEMdtHc4DkNtGzo1crEISStRNfItf9rw1laewPraoXce
+         d+0qzS6JKyUXH/6W83+ZMeu4DF+UbPY5o3xdA7k58WL0yAIZFrpJuCsAge/mruRRNw35
+         Res8vwI+NMuVMhwbVT+tbndyhYGvhxCtrsVUiVOEDzXrcjuoGMRtQlWSJ0aIPNLO3A1R
+         AHC7T1zE1x+SQZf1/6UsCSrhOwUoHr3sdOBCZlNJ9bpNqxmhJULG82EPinxnmr5nXv0+
+         VqdeHRiDwiqHIj2DiGba95H7QDmsD2XoXQM0w7SZbE7jV23RgzM39zY1qmHwxrf3K19F
+         wIbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784146173; x=1784750973;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1784146328; x=1784751128;
+        h=content-type:content-transfer-encoding:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zukIYuuCALMdyDk2rEuWfswlsQCB9YpIGZVHtbRJrWk=;
-        b=PlEqTc3S66ga4OmhwLMGsjoKz+ZtCzW5BO38WWoX0eiFTIP/MCVJXCnGO3iBqxB7Kn
-         nHUD/KdRstYjGwqja0hJjgSHKqruWhP3weDDW6u7FrlPDiwXZSoWA7K/ldDWfWEt/aC8
-         3a3l2/HRH9ss4QR7rx4bnxrvf07m3mUaQWRsaNIgaP3D1sUq13qIUd5FQiBhFkMprBM8
-         7MZYimiY6o/MeQwX9F/S0rFPEpmB7yecQN7L3wQGz6LvwjAq6S8RAvab+3vFnIiZVLsy
-         uKXQoNmhHXj+mXm4Hv2pvIYx3mO52254GZcl3No6K4Y9uWsFO9UBaU9uGCQ/okccJzq6
-         3JxA==
-X-Gm-Message-State: AOJu0Yyrk/PrqyReCQm0CXDyEkBV7BZzjLhDwRpV3abcKBHJbLoudSq4
-	netnYTcueora46Uo6JFxaC0P6u5wUEYao9OZHseKdB8RbR3olEyUK9kBCHWkzMTijEkduTe6nyz
-	gzQ2sWwgeE0zOOPCe9FNIVEnPLjSSrQjOxg34jXKy28E9dXE=
-X-Gm-Gg: AfdE7clmAECYEmmm+ff3alkBvTtumkGRRz8Ibt4Q+1p8THHWHbMfwfIc3J56ywRDUuH
-	AhRWpPl82waSuNnZRaixGDLhc6P0RzgRQ6eNKEsipyEIhNmV2Xj4wTRNEy3Zrb6ZnSeL+mMWBXb
-	ACiWZtPmjr3+cgqrETT5IDl9ZMWphAiD6dKb0RthHOlVYCg6v/JuG2i6KreScllNLHqKRu74xJV
-	2tgD4l0jUsYSqOBsQxDhOlMpFDQyyfMNxZME9y0gIMcc1qaVMvAaTfhHh0/66ZarM5beqfI1UA=
-X-Received: by 2002:a17:907:a785:b0:c12:9285:8f0f with SMTP id
- a640c23a62f3a-c161e93cebamr1058312866b.15.1784146172643; Wed, 15 Jul 2026
- 13:09:32 -0700 (PDT)
+        bh=LINappzTtqOvEOGJ2/VoPfdVWpHlvhISScXV6/Tgz94=;
+        b=bas6XEkmqRQm5H4bMkIFUeBYQhV3ytiYCx831wZTm0LM5RZNnemf3hHKinPpma/F0y
+         HVzJi0aV1GZu1dfkdd46WIadJnyK0PjVLONPIurdaCfWIneh6kZ7u8tEB6TCCql1Fqrw
+         UBQDRDC8EKNmsKUVf6UPYS+wDBKripIThjBj1Y6BZPg+hn49B2GAxMfhrhPK8iee7CJZ
+         V42x6bKqFfUIhXFP8H554M+Ni4lzAVAYqBsC7KyapaNs5PdDum1s5zyF3ndta0vCdecC
+         cKyPH36O4dp1rn3nmI0WOKoNcqS0aQkEPZ24cvZsVgp3iIPA3YQLo/Xt8CbagWfHvwVk
+         1yQw==
+X-Gm-Message-State: AOJu0Yzgb0mSWkdIDrQ8X2eHXc+aH6ASlqsyisEhn4/MVTw3N+GQIL3J
+	8j2zO9dpUs027oEf+oXUfJ2zQtUalOwDn9z60r38imYQtCWW8+Qf8YfbmlFYmLxe
+X-Gm-Gg: AfdE7cmw2CIA7YNW7tRnGZLn3MbwYD7QmKuURt5tUuoL/3Tf7Z3PiGVrLxn6dBXQ5x5
+	GNAXl213sXInpTQilt8v3UhPfMA/HWtGeFG0rQKPCWOAtiGSOq/KO21ke5wkINrgJMoZ3FctifX
+	Wxil5veSxyob1AyvP+oag2Mj2QsPLTQ1N4oESkIKFiWDXHiO2eRn424Ptw5ZuDqqlcLd5GMTYIn
+	wP9p31xIjLjEaVVweA6tHPgUxF2hxKArFLcnOKBNVd2Fn5h0knEUZzDzdTBoekO3/GyxCzfsufr
+	JyhZliSLG6bdWvL0Xpd3qIFg2/iztsR5FsyVfEd6eFbtY9+JZg9t46MAi9tX1FNANC3ouRGPwq8
+	3/BiqoWQ1lGJfiMw5D3raqylaK5GbyYjoIF4XEpI4jsFIPNuyE6SBsZ2C48QYU27bcDMdSnNP3c
+	wU/ZxTIqqULRjY5AkrjtPP76n2dKj4cLUtDTSSGX1Pc8lrlVnlnGqjsdpXWGU6qvY2sekg23JbA
+	LNs4df8S3osTJUlHnNra4x4Vj4TuA==
+X-Received: by 2002:a05:6000:4a0a:b0:47d:f43b:fd63 with SMTP id ffacd0b85a97d-47f4fcc1527mr5056710f8f.26.1784146328035;
+        Wed, 15 Jul 2026 13:12:08 -0700 (PDT)
+Received: from timur-max.localnet (20014C4E24CD7200F6BBA872344E1A32.dsl.pool.telekom.hu. [2001:4c4e:24cd:7200:f6bb:a872:344e:1a32])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f4634e5b8sm17552158f8f.6.2026.07.15.13.12.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 13:12:07 -0700 (PDT)
+From: Timur =?UTF-8?B?S3Jpc3TDs2Y=?= <timur.kristof@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 4/4] drm/amd/display: Don't use tiling flags anymore
+Date: Wed, 15 Jul 2026 22:12:06 +0200
+Message-ID: <31315640.VsfAaAtOVx@timur-max>
+In-Reply-To: <20260715114238.856321F000E9@smtp.kernel.org>
+References:
+ <20260715105757.13125-1-timur.kristof@gmail.com>
+ <20260715105757.13125-5-timur.kristof@gmail.com>
+ <20260715114238.856321F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714191341.690906-1-coiaprant@gmail.com> <20260714191341.690906-6-coiaprant@gmail.com>
- <20260715191452.4A4821F00A3F@smtp.kernel.org>
-In-Reply-To: <20260715191452.4A4821F00A3F@smtp.kernel.org>
-From: Coia Prant <coiaprant@gmail.com>
-Date: Thu, 16 Jul 2026 04:09:21 +0800
-X-Gm-Features: AUfX_mwA1bFOnihfrZJfgB4Or9T0LdiVICJLS_d3L7PnHRbxyoxVmIpr7vZMqGg
-Message-ID: <CALj3r0gZcEWONH_TkLGagyG7JqR9CkqMT5ucxsEYD3kw4xErBQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 05/10] arm64: dts: rockchip: rk3568: add XPCS and
- fixed-clock nodes
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, neil.armstrong@linaro.org, 
-	linux-phy@lists.infradead.org, vkoul@kernel.org, olteanv@gmail.com, 
-	conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Thanks for the review.
+On 2026. j=C3=BAlius 15., szerda 13:42:38 k=C3=B6z=C3=A9p-eur=C3=B3pai ny=
+=C3=A1ri id=C5=91 sashiko-
+bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider: - [High] Removing the `tiling_flags` check in
+> `should_reset_plane` allows framebuffers with different DCC pitches or
+> dimensions (but identical modifiers) to bypass DRM atomic check validatio=
+n,
+> leading to hardware corruption and stale DML calculations during commit. =
+=2D-
 
-> [Severity: Low]
-> The commit message states these clocks are used as assigned-clock-parents
-> for the respective GMAC nodes, but the patch doesn't appear to add the
-> assigned-clock-parents properties to the gmac0 or gmac1 nodes. Are these
-> assignments missing?
+This is not an issue. DCC is not supported at all on GFX6-7 and is not=20
+supported by the display engine on GFX8. The code does not advertise any=20
+modifiers with DCC on GFX6-8 either.
 
-The `assigned-clock-parents` assignments are not added in the SoC-level
-`rk3568.dtsi` because doing so would break existing boards that use
-RGMII mode. The clock parent for GMAC0/1 is currently hardcoded to the
-RGMII clock path in the mainline device tree.
+>=20
+> --- Patch [4]: [PATCH 4/4] drm/amd/display: Don't use tiling flags anymore
+> --- commit b71fc193d0b1254508d4ef4e5b1e90decbcba27a
+> Author: Timur Krist=C3=B3f <timur.kristof@gmail.com>
+>=20
+> drm/amd/display: Don't use tiling flags anymore
+>=20
+> This commit removes all code from amdgpu_dm that dealt with tiling flags,
+> as all supported GPU generations now support DRM format modifiers. The
+> legacy non-DC display code still relies on tiling flags.
+>=20
+> > diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> > b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c index
+> > c643cc5428577..2f7388c47d02a 100644
+> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>=20
+> [ ... ]
+>=20
+> > @@ -4279,7 +4277,6 @@ static void amdgpu_dm_commit_planes(struct
+> > drm_atomic_state *state,>=20
+> >  		fill_dc_plane_info_and_addr(
+> >  	=09
+> >  			dm->adev, new_plane_state,
+> >=20
+> > -			afb->tiling_flags,
+> >=20
+> >  			&bundle->plane_infos[planes_count],
+> >  			&bundle->flip_addrs[planes_count].address,
+> >  			afb->tmz_surface);
+>=20
+> [Severity: High]
+> Since the return value of fill_dc_plane_info_and_addr() is ignored here,
+> what happens if DCC validation fails due to missed dimension or pitch
+> changes?
 
-Instead, the `assigned-clock-parents` are applied at the board level.
-This is already done in Patch 9 of this series for the Photonicat board:
+DCC is not supported by the display engine on GFX6-8 so there is no DCC=20
+validation.
 
-    &gmac0 {
-        assigned-clocks =3D <&cru SCLK_GMAC0_RX_TX>;
-        assigned-clock-parents =3D <&xpcs_gmac0_clk>;
-        ...
-    };
+>=20
+> Could this result in a zero-filled plane_info structure being sent to the
+> hardware (for example, setting global_alpha to 0) and causing a black
+> screen?
 
-So the assignments exist, but in the board DTS rather than the SoC DTSI.
+No, it couldn't.
 
-> [Severity: Low]
-> Should this internal SoC clock be modeled as a clock provider from the
-> generating XPCS IP node using #clock-cells, rather than using a dummy
-> fixed-clock?
+>=20
+> [ ... ]
+>=20
+> > @@ -6248,8 +6245,7 @@ static bool should_reset_plane(struct
+> > drm_atomic_state *state,>=20
+> >  		new_afb =3D (struct amdgpu_framebuffer *)new_other_state-
+>fb;
+> >  	=09
+> >  		/* Tiling and DCC changes also require bandwidth=20
+updates. */
+> >=20
+> > -		if (old_afb->tiling_flags !=3D new_afb->tiling_flags ||
+> > -		    old_afb->base.modifier !=3D new_afb->base.modifier)
+> > +		if (old_afb->base.modifier !=3D new_afb->base.modifier)
+> >=20
+> >  			return true;
+> >  =09
+> >  	}
+>=20
+> [Severity: High]
+> By removing the tiling_flags check here in should_reset_plane(), how do we
+> ensure that framebuffers with identical modifiers but different DCC pitch=
+es
+> or dimensions still trigger a validation reset?
 
-The XPCS block does not have a clock controller interface. It simply
-outputs a fixed 125MHz clock for the GMAC when operating in SGMII mode.
-There is no register interface to control or configure this clock =E2=80=94=
- it
-is a fixed-rate output from the PCS hardware.
+The tiling flags are no longer used because they are converted to modifiers=
+=2E=20
+Therefore, removing the tiling flag check is not changing the behavior of t=
+he=20
+code.
 
-Using `fixed-clock` is therefore the correct and accurate representation
-of the hardware. The XPCS is not a clock controller, so it should not
-be modeled as one.
+As I explained above, DCC is not supported by this HW.
 
-> Additionally, the commit message states "All nodes are left disabled by
-> default", but this node is missing the status =3D "disabled" property. Wi=
-ll
-> this leave the clock unconditionally enabled?
-> [Severity: Low]
->
-> Similarly, does this node also need a status =3D "disabled" property to a=
-lign
-> with the behavior described in the commit message?
+Additionally, "identical modifiers but with different DCC pitches" would be=
+=20
+illegal for DRM format modifiers.
 
-The fixed-clock nodes are always present and do not have a `status`
-property. This is intentional: they are part of the SoC's fixed clock
-infrastructure, similar to other fixed-clock nodes in the SoC DTSI.
-They are not "devices" that need to be enabled/disabled, but rather
-static clock providers.
 
-The "all nodes are left disabled by default" statement in the commit
-message refers to the XPCS node and its pcs-mii sub-nodes, not the
-fixed-clock nodes. I will revise the commit message to clarify this.
+>=20
+> If a user-space client flips between two framebuffers with the same format
+> and source rectangle, but different backing buffer dimensions, it seems
+> this might bypass DRM atomic check validation.
 
-Thanks,
-Coia
+How?
+
+>=20
+> Could this lead to DC hardware being programmed using stale Display Mode
+> Logger (DML) calculations and watermarks, resulting in display corruption?
+
+How?
+
+
+
+
+
