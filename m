@@ -1,161 +1,130 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005E73B7760
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 05:55:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D516C3B9DAE
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 05:57:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784094944; cv=none; b=REqnPvj9N58E1GptnjNUG4bIJ96f2LeWSO6WdAeGFZpweQocDcG18zfSBCloCcfXIdz3fFUprKa8deYklv4BlRD6mtB8nYTvXSSmQp12K808B6d3/vduFsZRxy8pENjH17nEzwDZB2ZPg57m/8clEb4R0bDwEGLC811Z5WzKJWs=
+	t=1784095032; cv=none; b=aOnqYD1WIRCaSjqBsS1Sk6Qbv8W/QzNBrbHqrDrJf60FK2E92zpeLptq4dng8bkHFKwV1Gjy6jXAN8r6W5ucqttqfYRwney020jOjc0UomoRBGCCuBHsMFyDgJiKdgwO4wYoxFJbdwXKbVMWQHLm9sxsoy8cMeT6oFKsudDtTwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784094944; c=relaxed/simple;
-	bh=B4Zmlu2VreGmMwudKumfsHsYVzHL9X2ieoVGQe/OCmY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JIlU22NEqz1w6WVPqaTL3jVDL2q6Zp+bVm76yMFi92roN67G65t6mb3xLnLS4wwNFQ0aajY71u0roe4Z0E/4unkNNrR76D08BQHbegvznCu0CIv2JojlLO95Hgu51ctHS038S8/ra8p0hwWL0vdvqovrsTvp9f1RgjS8aB0Rtdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HlM6796R; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NKDOBFla; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1784095032; c=relaxed/simple;
+	bh=w8TATEoB6pxgJRrivcnib5fz34jW0UieP1XhmcHAs+s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aPT04ENPmTPoTLsojSUmkNZig0i8JQDYeyWqEgwbsoly9eZzZsgDvPSfMeFlKYqisD3Yzg0bjCcvBD9CZyZc+eF2V3uTaluqLE4sZ1g4fI9MFrVbLucNZ7FXHoZcBfjQ9QyeAWvkxJqLzOVRytNusM9mOEZeqISpmkyzRP4PQMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UyLdpMkP; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HlM6796R";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NKDOBFla"
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66F3lGZv2406127
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 05:55:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N/B6IES+9ZXNm6GUIpKPEsMYXkmhaQ/SumHrsSWagv8=; b=HlM6796RnhvW2YJV
-	iqrKV0vmI+rFhjQcwPOzG9JDkiGoxrgjB+2DJKHPh4TF939Sd1CL9UuEQpUK84sj
-	nVRkUcFGTpNDNwa1HTn9ONaVY6qzURJd4Q0n4bGcHo33QAi6zONOmVCcc/Lviz+U
-	CXefwQe1FtTfUsCtUiYHuc0ns8mP1NThDrapl0vgqDXOnx2HILpfhlyQV2xC7+fC
-	gOkVJEG0hNnpv1S/8VHP9Nd+COI2YWzJnv4dqHXZvsQ9ysSfGYHl5fXPYFDsYBLC
-	JXmCUQqcaiAjka6lguxr+QDlekwauUU1bcO+aMGyt1NIr1WgDM1lAZOTF+a7jyBP
-	vd/AFQ==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fds9g24x8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 05:55:41 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2cefa1a2be6so13995875ad.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 22:55:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UyLdpMkP"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38e07ebd263so1339013a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 14 Jul 2026 22:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784094941; x=1784699741; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=N/B6IES+9ZXNm6GUIpKPEsMYXkmhaQ/SumHrsSWagv8=;
-        b=NKDOBFlapybVtvBse3mIMqAaT5FBRtNUnKMlASu4JCxotazxCqS3mY1fmZbLj3lMSS
-         hKue9xk1GEk9w7OwBckz8Z5wGsnOfnEv1IHz+qXrFEEjn2A1JZgIJXkKderb6bueYcr3
-         e1/D3Tj1X2+hTcoHkp7KZeUhYgxD9NBPHw31esIz44886ESWLlqEQdA9pmrGPwUIqoDH
-         lDZ6Mwj8JqLXOapPmqQuDEVduLOAvjX3r3RoptFr9J0uOlfoDb/wp0F0d/c0gQo5cK4h
-         7nV8SJT1Q1w2UQHeW9k9hq4PW6fdgQbqcbjWwnZqFSPewfnAHU48wwa0Ul6/1dusFBYs
-         XiAg==
+        d=gmail.com; s=20251104; t=1784095025; x=1784699825; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=z9/qISsdQUme5GsgRDDsX/+bi7zmIEF/ab3Tsuj6Oco=;
+        b=UyLdpMkPvwlLydjEa/Lit5VHwSRrjoscnKyOuaKgUvYb5rNyswwumETfRf9JODEiO4
+         KkuUjMd3BI6Owl4MHFq4J3CKgGKb9qg9dFv4ak7tIzEkXE7GssSG/OOLwIsACWcDymYR
+         4QTR/ROZhp3Vzh6bzAyab1FQ5LeuU4g0nbTYoanwqHk6LUt30/kXp0mpgD5Vz8m3TNOC
+         Awt7sR7gVX9XvcR1ubau4iLNSO+X+m/Hzfj68HWqZbLbLp026BRBjZY1XXMD91S9Y/FR
+         BlyUgu9A7wOwxfDzHSR5a+N51RZpQ3brVeP1INn7cvfZhYrmmOFum5djKFE6nCfCHdee
+         vmWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784094941; x=1784699741;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=N/B6IES+9ZXNm6GUIpKPEsMYXkmhaQ/SumHrsSWagv8=;
-        b=G+WDPZZyXygC5LVbrlNgNVStnVkcdH//kbo7qbWjg67oddgDJmTCyVc53bVX8ozwOc
-         DpCkcvNS8FpwTyrdiL2gG5LCRGKXfzR/dBmYq1adtwmsd6exY7/QcwCN7R1gTWChHl0E
-         asjRHNTYV1gd2PuZwksWCKphNzBrLjl5VAfcyqvmBD5BRw1kE/KbT2CyKYuXgrLV1PX7
-         Wnf3KkZn/Q07SVjOp65sFwCQEyY/d3nRQot6jlh+ETIKJv5uUSKyTBVJTe9cBsJZleZm
-         QH1s7xXmB37PRtPMj3Kv49D+hv/1KCB17CuZlefUw2m9OKPTmz3ixiyh1yvGZqji1eng
-         31eg==
-X-Gm-Message-State: AOJu0YzPU+qCDn66EZNdca2JciplWWIY8t+YgYilNg8/hTEcX2IUC1kp
-	ud1EF5DqF509TsVLAtlM9h3Xy+7UAHrYJq2IGRY/Q1OzETtvs/vEGdgHRmBnyI2JaIy/CoQkJzP
-	llKMypOObCGcyvTsWqHpXcmh4yJnbiCiHI0vcHw6WgfMhFQSApW19LwQij3ajn6KCBM2BVUbfEF
-	1k1xg=
-X-Gm-Gg: AfdE7cn97s/+hh/kmXFGZP7zFVErhqMsZPr7SN6wJvcU19iq0OpqAw4GKN9PZgxOVZy
-	pL2JAwlK5Lh5zH4nenfVsk+U9hANNpnGwjt6eSXMdeQTskbWGP0aqsDVyrmAybLbLISq/3quEg0
-	3lXRu8WhQbTrZCIk+5gqp7ScdX/1dO4bvpYpa6RCrQvZCGMEnnHF6IKdlUYFofVPeCZsO5VYNr3
-	xW6PvcJRDU8gzWjTkTPLinGAQwRoCc07cLIB9fage4p/707UjTB9G7SgnH0eBujKQQeWgtarp0n
-	dvAFJm6OJFTJKvlc4QaVI0WI83pEf0PzMf7xfr474xOydOZwrGn/B5KdiGMApJn97Kz233xChwl
-	ZDrMvndIwxkAXTBVfLWbhpUKpQIzU2e+5ZZ1tCw3s2w==
-X-Received: by 2002:a17:903:2c8b:b0:2ca:b48f:3395 with SMTP id d9443c01a7336-2ce9f3a112fmr152899355ad.34.1784094940652;
-        Tue, 14 Jul 2026 22:55:40 -0700 (PDT)
-X-Received: by 2002:a17:903:2c8b:b0:2ca:b48f:3395 with SMTP id d9443c01a7336-2ce9f3a112fmr152899185ad.34.1784094940219;
-        Tue, 14 Jul 2026 22:55:40 -0700 (PDT)
-Received: from [10.218.31.125] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9d3d952sm126360485ad.61.2026.07.14.22.55.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jul 2026 22:55:39 -0700 (PDT)
-Message-ID: <e34de9f0-f828-4b96-a115-27d262969a25@oss.qualcomm.com>
-Date: Wed, 15 Jul 2026 11:25:35 +0530
+        d=1e100.net; s=20251104; t=1784095025; x=1784699825;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=z9/qISsdQUme5GsgRDDsX/+bi7zmIEF/ab3Tsuj6Oco=;
+        b=oy6vazZjF3hBsJwzVcf+zy0XMrEmNzRcy78xZoA3CaEwE0GiPbmhTT1xwXm/h4B3ff
+         /6WBt8dQvln6PVvIhtgDO/3JAeH3/mRO9xLGCRt77tkoz5vYxDHNast20KavX0gGOb4E
+         2fdVkpmxfx0sCCFTvz2QzhMaFlXDnMkIo/sPncJY/oNSJxf3Z3SdG25lBACrp9gFNKvy
+         NQdWJ/V25vO4QXqQWMPnPMbm9MxoQLEI9iMlGc6A8nsF8gXDjwbGrqjABUVo2lRSH1MK
+         5TXKTC5uKtdzTbJ9p018JpxdiEQg5A1Yj5HwOpNXr9sMNeqvoAHpRyNe98oVXGTZJE+s
+         bZgQ==
+X-Gm-Message-State: AOJu0YzuIIh4jOX1H3Qv7HtmxCJfNvvK6U+wsTVmT8HzSXkIQ0ktkgdt
+	R1YoIgWflpJN0J/QgrP+0CFlkOCbCb7oAD66ksimfnlOpAk/KOEAgGEq
+X-Gm-Gg: AfdE7clmTSN0rnleu3/wfI/ik4I80JqsegQ2n09gqpeQ8FbEz38FfggeG3PJ4HcJlvO
+	QMmPfgE45cMx0C0DRMg1AbNqiKUNFRMBW1akCo79WGq046DeS4Jb1i2bjw0Rh9DaWmkIcuA0/E0
+	JvupNZmulLN3+UNAr+/8PqXqrVd5VQpowp4CDfUnOijwqc/I360pqCpWnf1havCE6GBQr01xwXI
+	o2uh7pV54LpLO0cksvqUnG7K7DOPZNw8CqqF+XeT0l6a3EGzVDEXBMI0BQH6VZemGFND5m+pjMU
+	7rUBLRZUfUAjR4ygLPvQX5r65qdqK9umdXp8u6IeVDQ5Gy+WGrTqUV9xzZj7z134XV++nU6QYJo
+	9M2hwaMQrdQvuUpvxd5/BVVmcCPwkCRp8dEQIo2xl1wZ3caZgIrzQ6qyDj86gxO0NlzGo3MkAiV
+	XmT2qFGQMcgul+kNw9zRORwS9x6SdlxSybl2bY2DVhIUWWUs/mTKA=
+X-Received: by 2002:a17:90b:3a83:b0:382:1a6f:ba3b with SMTP id 98e67ed59e1d1-38dc74d04d6mr14377317a91.5.1784095024738;
+        Tue, 14 Jul 2026 22:57:04 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:93:a597:7931:c950])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313f81f17eesm10617514eec.31.2026.07.14.22.57.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2026 22:57:04 -0700 (PDT)
+Date: Tue, 14 Jul 2026 22:57:01 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: chlgustn3171 <chlgustn3171@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-input@vger.kernel.org, 
+	Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <bentiss@kernel.org>, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] HID: input: allocate input_dev name/phys/uniq using hid
+ device devres
+Message-ID: <alcCgHzV730RKPmR@google.com>
+References: <20260714120052.255085-1-chlgustn3171@gmail.com>
+ <20260714121819.5FCC91F00A3A@smtp.kernel.org>
+ <CAO2ma08Pap6PZKUV7iEpvu11zaKrzMK-cgBLBYKJEEfGH+0=1g@mail.gmail.com>
+ <CAO2ma095Hu1kOTMds9yHqTvwde8Gu+GWOLUst5U2eCnSffkm=g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: shikra: Add ICE, TRNG and QCE
- nodes
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, vkoul@kernel.org, robh@kernel.org,
-        Frank.Li@kernel.org, devicetree@vger.kernel.org,
-        dmaengine@vger.kernel.org
-References: <20260714-b4-shikra_crypto_changse-v4-0-06a4ea97c209@oss.qualcomm.com>
- <20260714-b4-shikra_crypto_changse-v4-6-06a4ea97c209@oss.qualcomm.com>
- <20260714102240.B586C1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-In-Reply-To: <20260714102240.B586C1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDA1MyBTYWx0ZWRfX2OyI4kK4c/7I
- BsYPB0s9irVJQYKQ7wZDyxChf06GdO/xH5lu6/rHHr+Ogp2DddvljiKFFuSMyjicEqXU7eCVyaK
- /lt++GJ6+ULeSzQ/T3D13a6dR5RLhf8=
-X-Proofpoint-ORIG-GUID: V0jPbUZCLUI5Zf9ToFC7BEj1FzqciE98
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDA1MyBTYWx0ZWRfX1CvCHQapcTkF
- MYzRrrJxLMSKTCSofkqdXbRo1SQ1Y+SnqZ/kS9KSJRFgUteJWrFEMAxRWUt9Qs0XB8RprI4Hr7D
- I6AXC9KCuKTtVu9oyYxhFBq1Yien13suAjmZlXVM+zR1zxJ1E0D4e2qsW9hV2U9i7Q7AN+r8hk1
- evM5ZR+q/dLwb68priU7vihsp0DNJBvXEYhDZ1WnvyuPWSM3DBn8WPXlXxOKQZvvrBygWRhI1Yc
- S7UYcHtuYaMFIgY/6ZS+TbO2bQkAt3D/QeEYLPlG8V4kLiZg6cLRpQx7ioeVpxFTCgUNpOkRGiz
- CJxpU3vQgdE3c9v7lpDb6lFVWEpQiqzwdTggB4zlSj9oglUag3Q1QUHUX0fNM+8upZ+dB3seM6J
- 9wCpwG3aCkwum/HX5lT2B8+wzderbVkH3DZdwiLhVRGX79nA5GQia1BZM+8hNC4A668BfWIfp2k
- W8G46V3icKMUH4+RVjg==
-X-Proofpoint-GUID: V0jPbUZCLUI5Zf9ToFC7BEj1FzqciE98
-X-Authority-Analysis: v=2.4 cv=VoATxe2n c=1 sm=1 tr=0 ts=6a5720dd cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=8wWWxnHPA6uIG9S2x-oA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-15_02,2026-07-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607150053
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAO2ma095Hu1kOTMds9yHqTvwde8Gu+GWOLUst5U2eCnSffkm=g@mail.gmail.com>
 
->> +		sdhc_ice: crypto@4748000 {
->> +			compatible = "qcom,shikra-inline-crypto-engine",
->> +				     "qcom,inline-crypto-engine";
->> +			reg = <0x0 0x04748000 0x0 0x18000>;
->> +			clocks = <&gcc GCC_SDCC1_ICE_CORE_CLK>,
->> +				 <&gcc GCC_SDCC1_AHB_CLK>;
->> +			clock-names = "core",
->> +				      "iface";
->> +			power-domains = <&rpmpd RPMHPD_CX>;
-> 
-> [Severity: Low]
-> Does this code use an RPMh power domain macro (RPMHPD_CX) for an RPM SMD
-> power controller instead of RPMPD_VDDCX?
-> 
-> The sdhc_ice node references the rpmpd (RPM SMD) provider but incorrectly
-> assigns it the RPMHPD_CX macro. Because dt-bindings/power/qcom-rpmpd.h
-> explicitly includes dt-bindings/power/qcom,rpmhpd.h, the macro is defined
-> and evaluates to 0, which happens to match RPMPD_VDDCX. 
-> 
-> While this avoids build errors and runtime impact, should this use the
-> correct RPMPD_VDDCX macro to prevent a semantic mismatch?
+Hi,
 
-This is valid, though both macros resolve to 0 value but best to match
-with RPMPD_VDDCX which also matches sdhc power-domains property too.
+On Tue, Jul 14, 2026 at 10:39:09PM +0900, chlgustn3171 wrote:
+> Adding maintainers and mailing list to CC. Sorry for the omission.
+> 
+> On Tue, Jul 14, 2026 at 10:33 PM chlgustn3171 <chlgustn3171@gmail.com> wrote:
+> >
+> > On Tue, Jul 14, 2026 at 9:18 PM sashiko-bot wrote:
+> > > [Severity: High]
+> > > If a userspace process holds an open file descriptor for the evdev node
+> > > (/dev/input/eventX), the input_dev will outlive the parent hid->dev.
+> > > When the HID device is unbound, devres will free these strings.
+> > >
+> > > Can this cause a use-after-free when userspace later queries the
+> > > name, phys, or uniq strings via ioctl (e.g., EVIOCGNAME)?
+> >
+> > Thanks for the review.
+> >
+> > Using &hid->dev here is intentional.
+> > Using the input device for devm-managed input_dev strings is
+> > problematic; see CVE-2023-53454, where the allocation was moved to the
+> > HID device because the input device unregister path may still use the
+> > name for uevents.
+
+Thank you for the patch. However, I do not believe it fixes anything, as
+moving to devres will not extend (and may even shorten) life time of
+name, phys and uniq. Normally they are character array members of HID
+device, and HID device continues existing past drivers disconnecting
+from it. OTOH devres-controlled resources will get freed when driver
+unbinds from a device.
+
+Additionally, HID devices are parents of input devices, and should stick
+around because input devices hold references to their parents until
+device_del() is called in input_unregister_device(). However before that
+it will disconnect this input device from all the handlers, including
+evdev, evdev will mark the device as !exist and evdev ioctl will not
+attempt to process ioctls for such device.
+
+I however am not sure why we see this syzkaller report. Maybe there is
+memory corruption somewhere or maybe syzkaller itself gets confused when
+tracing numerous allocations.
+
+Thanks.
 
 -- 
-Regards
-Kuldeep
-
+Dmitry
