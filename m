@@ -1,313 +1,163 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCC737A82E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B843A302149;
+	Wed, 15 Jul 2026 20:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784147621; cv=none; b=mI8YrhNp1fq5GJ6IBt4OQK4ywbk5ZKknRHxbhs0R9Kd7FGykcY2XO51gtilVuzBMSHsZqoXfrLesSinr9aJ06OJsPq4fnu0fXmD2WZb3cGKNInweojB6o6v7RjVka4rYrB4oPJGT8PGkG9ke1kVsydIIKxwqJ6PbYd6Gecn93g4=
+	t=1784148400; cv=none; b=ELK1unaQXQ6YtMcNnVz+6Mbc4G6Ah0AWbceJVrRV+PMDcexc1WJIVV+1kHC2j+jWL0aRChhgpUznb9z/PxOFYay4Es4cW6wkY55HlYgj2AyyG6CADxCWXafYEdpuXYfaU1J+vxvKcazDVxa2Gbbg4fRBRnSg2dP7jxlNMpgMAhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784147621; c=relaxed/simple;
-	bh=Xh09wGYfk9vJaVCGhnKXhGJnPw2h3NjmbLyjGUrYzGw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SgMn5+95qUz4+8Ab7P8OCg/Qjbpt+OD/f1PUg2QHQjmyZ6mmFFnKXw5MSQUiUM56tw8sO2V3MDX2GuABRJ9GeF931BK1H2DOMJQu+GiRgN/iv7B0xeVMUGLc9ns9j+Gsnsk2C/v9G8PHc3t+B5ywLhloDwCD0zsMsDYeaRjtfc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UGFyKWUs; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784148400; c=relaxed/simple;
+	bh=+Jwszswhw1ZXgx9jt6vgiNqsibTmv9QYm3AISbx34ms=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=SYiXeXl9IKYz1+My8Ek26RqUKllJlmzy++alL7I21XXBa8c4UytpNWkldivzwI5eA3ne/wpdYXQXmao7IOUAyhrrK2VuqAZv7R+SY7HGtbOm918XOqIOxCDufMWSeyPMojKMFkaNMD2M/FxjaprT13nkkQu26R3ghMvvAfQZf/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=H37+1jXu; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UGFyKWUs"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493b966dd74so23785235e9.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784147618; x=1784752418; darn=lists.linux.dev;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=nAB/Dxh5aQngnDlynNEsilHV8wWynbKXlXm4+QUJxuk=;
-        b=UGFyKWUsiKaBkx4F/atK60zLrn8mFnv3zSTIwzzcT+TZ2NQe7x2QztH74GU4z4yHrk
-         mh/Csu71hu7fB2esvu5wQaP7gsabdFFGa/3+Omqo4lOqk5fi/UGSUGFsnBtXK/fUYgMt
-         R/3W89qlzABzq2ppEqbeZ32fzzRqepSrWMRW4YW9IaxlWoyNuwRfFD6JCb6pYElYnIde
-         YRjbJbNnRcD2jebFdwA/O7xfDJYs70MN0pSUwEj11sRWgr7BBIEpPgSJ1/ZxSFHhVLWb
-         xfHYy0roCaF1F4dxzedJzC/w41XoO/SuzylQvKRNXix1kn5ywFbdZu0OciUJQyMA9lhF
-         i26w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784147618; x=1784752418;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nAB/Dxh5aQngnDlynNEsilHV8wWynbKXlXm4+QUJxuk=;
-        b=XEf8Zd0fRh/+DXugP2Mo3HQTUTh73FYR25fOiaNxqzmoub3FcaTFYytxqx5WqGDlfs
-         9p/ViVOgOIqYlPC6N4aOZh3smvhH6UqFpuMLyt3D4zOxL6OwZXJwqNCFAHRxBFo/wcDa
-         Xw3QoMcyGh7skgk4k/tpk/45b5vx62XpiYgKzY4KrUoYG9YgH0K8vsHT/+R5jthMTbkW
-         gssjf3T47L3dP8vPCxMwk1F03knQg1qqhJb8Hm4I+99+ot0vkyyga0bnYpQgfC4ScUKi
-         S3CQaVq9i+GNc10gR9X5IAeTW3kQpOaido8pd+lbBlIWl+xrHXWindSyYdx7kQFQkwfL
-         vx5Q==
-X-Gm-Message-State: AOJu0YyJbGyuC5NMySKXUiXGs1C80YwNhw08XWUAjDvjGGb+kg1DjbrC
-	2Gl+SJAd76FCQ5+uuA7Ogbm8pdsn+AggbBmJE/3f8ghQbQf9/TKFrUJU1mAuyI94
-X-Gm-Gg: AfdE7cmWNqnbDsgXvNMfO3sWcKdh5M72E0GUQxvtDYwGfLl+0tzULRTWuFXnrxT5OET
-	oMoqSf0Ap0U/BIrzbkwzf8xZpCaZh4XXLIcLaN5RDzb/wlNZ5JbSn0UITqB/50iPcEcOV0Mf9EM
-	NzmNM0Px+FHVs0Z5MaqBId/xI7efXsQI1T/aillI1WZH7m51KFU06SUKHPf9V+XL+nr6fasCKBI
-	gGW2znfaALXaei0APmNEJ0/Cq7oLIF3Xh+tWZveUJe6bgOvTccrqSsrddQf31IxDQedrNJtFDyI
-	ZBKT0Lm2N8eB/XEtjfl4QJr5eLh6Pdj1FzduTIOmP+c9ZojHAOzvhs1cz52s4C33HQ7WLTtfNoq
-	Hc8PAQ8TruhGUUANSDXiXHhJ3mLKruYlrIcT60KO4igSgOq8BsanvaOD6xDa213iQ6sAvYrh568
-	sgfyi8VWIN3xDn1bDCObgER+nImRsmUkYh9cywlMsmJxBUJa4UHcY9MP3UkCZ/LSjYwuasz+h+5
-	Dyrlw3DInZm16aYBmc=
-X-Received: by 2002:a05:600c:8115:b0:493:aa0a:45ad with SMTP id 5b1f17b1804b1-4953c14f78dmr45418425e9.2.1784147617760;
-        Wed, 15 Jul 2026 13:33:37 -0700 (PDT)
-Received: from timur-max.localnet (20014C4E24CD7200F6BBA872344E1A32.dsl.pool.telekom.hu. [2001:4c4e:24cd:7200:f6bb:a872:344e:1a32])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4953c59b810sm83871685e9.0.2026.07.15.13.33.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 13:33:37 -0700 (PDT)
-From: Timur =?UTF-8?B?S3Jpc3TDs2Y=?= <timur.kristof@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject:
- Re: [PATCH 2/4] drm/amdgpu: Convert tiling flags to modifiers on GFX6-8
-Date: Wed, 15 Jul 2026 22:33:36 +0200
-Message-ID: <14520093.2vocr9iq0E@timur-max>
-In-Reply-To: <20260715111051.A0D9F1F000E9@smtp.kernel.org>
-References:
- <20260715105757.13125-1-timur.kristof@gmail.com>
- <20260715105757.13125-3-timur.kristof@gmail.com>
- <20260715111051.A0D9F1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="H37+1jXu"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B8963100162;
+	Wed, 15 Jul 2026 22:46:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1784148395;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=IxTC0PcmTi5Z0sUROFUes4Uwvb15X6CctNLo1ceG9Vs=;
+	b=H37+1jXunekFsGDKykbUuwVhXzzPmHb+jpJgTli/Qk6AxJhfLnMUbovORA1zmRncdANPQQ
+	y5WyeqlLmQF5KjFj05h36fOCJiKU8Brybv+OmiFL6iIeEuHiLKgHdulGuQK8IO9UsfvpUh
+	1EOqWDpZ2qelHCZ16tWLxD1YgJQ0Sy6xabv1oMWLiF/AZrXSctRofuGCK1ZiKG9dUmpJXD
+	0CFCD77B0zT2th9d+9xu7UwygobpoTHaxcs6GzGt6QbrsKFJNXKIcUkQQ+Y6UGpFLy4Czp
+	HxO6cgmpmnTO5jJsQ45W8nIKRg5SyZDlUVDJWksbPBPcCyP9pqqP+II2oDkXSw==
+Message-ID: <c9a67cbd-fda8-4016-9cff-9125f3191b74@nabladev.com>
+Date: Wed, 15 Jul 2026 18:38:32 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Marek Vasut <marex@nabladev.com>
+Subject: Re: [PATCH v4 4/6] arm64: dts: imx8mm: imx8mp: Add CM DTOs for Data
+ Modul i.MX8M Mini and Plus eDM SBC
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org,
+ imx@lists.linux.dev
+References: <20260705200534.151803-1-marex@nabladev.com>
+ <20260705200534.151803-4-marex@nabladev.com>
+ <20260705202439.3F5771F000E9@smtp.kernel.org> <alUICTI-24tREZO8@SMW015318>
+ <f1e52327-42da-48e1-8e4a-dabf148ce216@nabladev.com>
+ <alWR66rjt-9jGEOV@SMW015318>
+ <a3602ef8-2b77-4cc3-adef-2c4cba08a5d9@nabladev.com>
+ <alezsOsf61Zv6F4F@lizhi-Precision-Tower-5810>
+Content-Language: en-US
+In-Reply-To: <alezsOsf61Zv6F4F@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 2026. j=C3=BAlius 15., szerda 13:10:51 k=C3=B6z=C3=A9p-eur=C3=B3pai ny=
-=C3=A1ri id=C5=91 sashiko-
-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issue(s) to consider: - [High] Uninitialized variable `block_size_log2` in
-> GFX6 modifier path causes undefined behavior and potential kernel panic. -
-> [High] User-controlled `PIPE_CONFIG` in GFX6 modifier can trigger
-> `unreachable()`, leading to kernel panic or undefined behavior. - [Medium]
-> Unbounded `drm_err()` on invalid GFX6 array mode allows userspace to flood
-> the kernel log. --
->=20
-> --- Patch [2]: [PATCH 2/4] drm/amdgpu: Convert tiling flags to modifiers =
-on
-> GFX6-8 --- commit 642125971654c581668fe700356dfbee6905eccc
-> Author: Timur Krist=C3=B3f <timur.kristof@gmail.com>
-> Subject: drm/amdgpu: Convert tiling flags to modifiers on GFX6-8
->=20
-> This commit converts the tiling flags to modifiers on GFX8 and older,
-> so that the DC display driver can rely on them like on newer generations.
->=20
-> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> > b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c index
-> > 950937b363fbe..dcca930ed3c04 100644
-> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
->=20
-> [ ... ]
->=20
-> > @@ -940,6 +940,55 @@ static int convert_tiling_flags_to_modifier(struct
-> > amdgpu_framebuffer *afb)>=20
-> >  	return 0;
-> > =20
-> >  }
-> >=20
-> > +static int convert_tiling_flags_to_modifier_gfx6(struct
-> > amdgpu_framebuffer *afb) +{
-> > +	const uint32_t array_mode =3D AMDGPU_TILING_GET(afb->tiling_flags,
-> > ARRAY_MODE); +	const uint32_t pipe_config =3D
-> > AMDGPU_TILING_GET(afb->tiling_flags, PIPE_CONFIG);
-> [ ... ]
->=20
-> > +	switch (array_mode) {
-> > +	case DC_ARRAY_LINEAR_GENERAL:
-> > +	case DC_ARRAY_LINEAR_ALLIGNED:
-> > +		modifier =3D DRM_FORMAT_MOD_LINEAR;
-> > +		break;
-> > +
-> > +	case DC_ARRAY_2D_TILED_THIN1:
-> > +		/* Macro tiled modes only */
-> > +		modifier |=3D
-> > +			AMD_FMT_MOD_SET(PIPE_CONFIG, pipe_config) |
-> > +			AMD_FMT_MOD_SET(TILE_SPLIT, tile_split) |
-> > +			AMD_FMT_MOD_SET(BANK_WIDTH, bank_width) |
-> > +			AMD_FMT_MOD_SET(BANK_HEIGHT, bank_height) |
-> > +			AMD_FMT_MOD_SET(MACRO_TILE_ASPECT,=20
-macro_tile_aspect) |
-> > +			AMD_FMT_MOD_SET(NUM_BANKS, num_banks);
-> > +		fallthrough;
-> > +
-> > +	case DC_ARRAY_1D_TILED_THIN1:
-> > +		/* Micro and macro tiled modes */
-> > +		modifier |=3D
-> > +			AMD_FMT_MOD |
-> > +			AMD_FMT_MOD_SET(TILE_VERSION,=20
-AMD_FMT_MOD_TILE_VER_GFX6) |
-> > +			AMD_FMT_MOD_SET(TILE, array_mode) |
-> > +			AMD_FMT_MOD_SET(MICROTILE, micro_tile_mode);
-> > +		break;
-> > +
-> > +	default:
-> > +		drm_err(&adev->ddev, "array mode 0x%x not supported by=20
-DCE\n",
-> > array_mode);
-> [Severity: Medium]
-> Could this drm_err() be triggered repeatedly by a user space process
-> providing an invalid array_mode to DRM_IOCTL_MODE_ADDFB2, flooding the
-> kernel log?
->=20
-> Should this use a rate-limited print or drm_dbg_kms() instead to prevent =
-log
-> spam from unprivileged users?
+On 7/15/26 6:22 PM, Frank Li wrote:
 
-I will just change this to drm_dbg_kms()
+Hello Frank,
 
->=20
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	afb->base.modifier =3D modifier;
-> > +	afb->base.flags |=3D DRM_MODE_FB_MODIFIERS;
-> > +	return 0;
-> > +}
->=20
-> [ ... ]
->=20
-> > @@ -1093,7 +1142,7 @@ static int amdgpu_display_verify_sizes(struct
-> > amdgpu_framebuffer *rfb)>=20
-> >  			get_block_dimensions(block_size_log2,=20
-format_info->cpp[i],
-> >  		=09
-> >  					     &block_width,=20
-&block_height);
-> >=20
-> > -		} else {
-> > +		} else if (AMD_FMT_MOD_GET(TILE_VERSION, modifier) >=3D
-> > AMD_FMT_MOD_TILE_VER_GFX9) {>=20
-> >  			int swizzle =3D AMD_FMT_MOD_GET(TILE,=20
-modifier);
-> >  		=09
-> >  			switch ((swizzle & ~3) + 1) {
-> >=20
-> > @@ -1120,6 +1169,60 @@ static int amdgpu_display_verify_sizes(struct
-> > amdgpu_framebuffer *rfb)>=20
-> >  			get_block_dimensions(block_size_log2,=20
-format_info->cpp[i],
-> >  		=09
-> >  					     &block_width,=20
-&block_height);
-> >=20
-> > +		} else if (AMD_FMT_MOD_GET(TILE_VERSION, modifier) =3D=3D
-> > AMD_FMT_MOD_TILE_VER_GFX6) { +			const u32=20
-display_micro_tile_pitch =3D 32;
-> > /* required by DCE */ +			const u32=20
-micro_tile_width =3D 8;
-> > +			const u32 micro_tile_height =3D 8;
-> > +			const u32 micro_tile_mode =3D=20
-AMD_FMT_MOD_GET(MICROTILE, modifier);
-> > +			const u32 array_mode =3D AMD_FMT_MOD_GET(TILE,=20
-modifier);
-> > +			u32 num_banks, bank_width, bank_height,=20
-pipe_config,
-> > macro_tile_aspect;
-> > +			u32 num_pipes;
-> > +
-> > +			if (AMD_FMT_MOD_GET(DCC, modifier)) {
-> > +				drm_dbg_kms(rfb->base.dev, "DCC=20
-is not displayable on GFX6-8\n");
-> > +				return -EINVAL;
-> > +			}
-> > +			if (array_mode !=3D=20
-AMD_FMT_MOD_TILE_GFX6_1D_TILED_THIN1 &&
-> > +			    array_mode !=3D=20
-AMD_FMT_MOD_TILE_GFX6_2D_TILED_THIN1) {
-> > +				drm_dbg_kms(rfb->base.dev,
-> > +					"Array mode %u is not=20
-supported by the display driver\n",
-> > +					array_mode);
-> > +				return -EINVAL;
-> > +			}
-> > +			if (micro_tile_mode !=3D=20
-AMD_FMT_MOD_MICROTILE_DISPLAY) {
-> > +				drm_dbg_kms(rfb->base.dev,
-> > +					"Micro tile mode %u is=20
-not displayable on GFX6-8\n",
-> > +					micro_tile_mode);
-> > +				return -EINVAL;
-> > +			}
-> > +
-> > +			num_banks =3D 2 << AMD_FMT_MOD_GET(NUM_BANKS,=20
-modifier);
-> > +			bank_width =3D 1 <<=20
-AMD_FMT_MOD_GET(BANK_WIDTH, modifier);
-> > +			bank_height =3D 1 <<=20
-AMD_FMT_MOD_GET(BANK_HEIGHT, modifier);
-> > +			pipe_config =3D AMD_FMT_MOD_GET(PIPE_CONFIG,=20
-modifier);
-> > +			macro_tile_aspect =3D 1 <<=20
-AMD_FMT_MOD_GET(MACRO_TILE_ASPECT, modifier);
-> > +
-> > +			if (pipe_config >=3D=20
-AMD_FMT_MOD_PIPE_CONFIG_P16_32x32_8x16)
-> > +				num_pipes =3D 16;
-> > +			else if (pipe_config >=3D=20
-AMD_FMT_MOD_PIPE_CONFIG_P8_16x16_8x16)
-> > +				num_pipes =3D 8;
-> > +			else if (pipe_config >=3D=20
-AMD_FMT_MOD_PIPE_CONFIG_P4_8x16)
-> > +				num_pipes =3D 4;
-> > +			else if (pipe_config =3D=3D=20
-AMD_FMT_MOD_PIPE_CONFIG_P2)
-> > +				num_pipes =3D 2;
-> > +			else
-> > +				unreachable();
->=20
-> [Severity: High]
-> Since pipe_config comes from AMD_FMT_MOD_GET(PIPE_CONFIG, modifier), which
-> is user-controlled via the framebuffer modifier, could a user pass a value
-> smaller than AMD_FMT_MOD_PIPE_CONFIG_P2?
->=20
-> If so, hitting unreachable() here would result in undefined compiler
-> behavior. With CONFIG_OBJTOOL enabled, it can emit an invalid instruction
-> that immediately panics the kernel. If execution falls through, num_pipes
-> remains uninitialized and is subsequently used in a multiplication.
+>>>>>> [Severity: Medium]
+>>>>>> Will this node name bypass the driver's carveout exclusion logic?
+>>>>>>
+>>>>>> Looking at imx_rproc_prepare(), it iterates over memory-regions and checks
+>>>>>> specifically for the name "vdev0buffer" to skip processing the vdev buffer:
+>>>>>>
+>>>>>> 	if (!strcmp(it.node->name, "rsc-table") ||
+>>>>>> 	    !strcmp(it.node->name, "vdev0vring0") ||
+>>>>>> 	    !strcmp(it.node->name, "vdev0vring1") ||
+>>>>>> 	    strstarts(res.name, "vdev0buffer"))
+>>>>>> 		continue;
+>>>>>>
+>>>>>> Because this node is named "vdevbuffer" instead of "vdev0buffer", it appears
+>>>>>> it will be mapped as a generic carveout via ioremap_wc() and unintentionally
+>>>>>> included in the remoteproc coredump.
+>>>>>>
+>>>>>> Could this node be renamed to "vdev0buffer" to avoid wasting vmalloc space
+>>>>>> and bloating the coredump?
+>>>>>
+>>>>> Look like make sense, please check it.
+>>>>>
+>>>>> It is not good to use node-name as ABI. Laurentiu is working on use
+>>>>> memory-region-namses.
+>>>> The memory regionss are referenced from imx8mm-cm4 { } node via the
+>>>> memory-region property:
+>>>>
+>>>> memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>, <&rsc_table>;
+>>>
+>>> I known, but now code parser node-name, At your case, it.node->name is
+>>> vdevbuffer, but driver expected vdev0buffer.  so above check will be failure.
+>>>
+>>> suppose it should be
+>>>
+>>>    vdevbuffer: vdev0buffer@b8400000
+>>>                ^^^^^^^^^^^
+>>>
+>>> I know it is bad, but waiting for Laurentiu to fix it.
+>> Actually, if I look at "git log -p drivers/remoteproc/imx_rproc.c" in
+>> current linux-next 20260714 , which has the entire history of imx_rproc.c
+>> and the latest content, the code cited by the AI:
+>>
+>> "
+>> 	if (!strcmp(it.node->name, "rsc-table") ||
+>> 	    !strcmp(it.node->name, "vdev0vring0") ||
+>> 	    !strcmp(it.node->name, "vdev0vring1") ||
+>> 	    strstarts(res.name, "vdev0buffer"))
+>> 		continue;
+>> "
+>>
+>> never existed in imx_rproc.c:
+> 
+> AI refer old version code, but problem is the same
 
-I will replace unreachable() with "return -EINVAL"
+No, sorry, the aforementioned piece of code never existed in imx_rproc.c 
+according to git log. There is no old version of the code that looked 
+anything like what the AI produced above.
 
->=20
-> > +
-> > +			if (array_mode <=20
-AMD_FMT_MOD_TILE_GFX6_2D_TILED_THIN1) {
-> > +				block_width =3D=20
-display_micro_tile_pitch;
-> > +				block_height =3D micro_tile_height;
-> > +			} else {
-> > +				/* Assume non-PRT macro tiling=20
-modes */
-> > +				block_width =3D num_pipes *=20
-micro_tile_width *
-> > +					      bank_width *=20
-macro_tile_aspect;
-> > +				block_height =3D micro_tile_height=20
-* bank_height *
-> > +					       num_banks /=20
-macro_tile_aspect;
-> > +			}
-> >=20
-> >  		}
-> >  	=09
-> >  		ret =3D amdgpu_display_verify_plane(rfb, i, format_info,
-> >  	=09
-> >  						 =20
-block_width, block_height, block_size_log2);
->=20
-> [Severity: High]
-> Does this pass an uninitialized block_size_log2 into
-> amdgpu_display_verify_plane()?
+> if (strstarts(res.name, "vdev0buffer"))
+> 
+>>
+>> "
+>> $ git log --follow -p next/master -- drivers/remoteproc/imx_rproc.c | grep
+>> vdev0vring1
+>    ^^^^^^^^^^
+> 
+> vdev0buffer
 
-I will fix that, thanks for noticing.
+The AI generated review content above does refer to vdev0vring1 , which 
+is a unique identifier, but that unique identifier exists only once is 
+the entire history of drivers/remoteproc/imx_rproc.c and that is as a 
+code comment . That proves my point that the aforementioned AI generated 
+review feedback is not based on code that ever existed in the kernel.
 
+>>      vdev regions are vdev0vring0, vdev0vring1, vdevbuffer and similar.
+>> "
+>>
+>> It seems the AI hallucinated something which is not based in reality ?
+> 
+> git log --follow -p linux-next/master -- drivers/remoteproc/imx_rproc.c | grep vdev0buffer
+> -		if (!strcmp(it.node->name, "vdev0buffer"))
+> +		if (strstarts(res.name, "vdev0buffer"))
 
+"
+if (strstarts(res.name, "vdev0buffer"))
+"
 
+and
+
+"
+	    strstarts(res.name, "vdev0buffer"))
+"
+
+looks like different code , and the AI reported "strstarts(res.name, 
+"vdev0buffer"))" which never existed in drivers/remoteproc/imx_rproc.c 
+as is clearly visible from the command output you shared above.
+
+So, what exactly is the problem here , can you please clarify it without 
+referencing the AI generated content above ?
+
+Thank you for your help !
