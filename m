@@ -1,105 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34473B840E;
-	Wed, 15 Jul 2026 07:44:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD1D3C3457
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 07:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784101477; cv=none; b=DDZsY/yOZzHdpuSsbolY1KK7mBnuO/l7pCgzqIxAKEzrocRKXDXqODZBmHxgDMixIZYjOBKQt5CC9zrGSRhnrz+Pfc0m2YMuTdYRUiqEcavCjtv+qxn2e3BQ569h+1RiIxY7ULzOGDqXMR+9FKPZ8IpiHyYvz+k0dYTV2Fq2P5I=
+	t=1784101942; cv=none; b=sTsWWEg5T6dBm5UujHyc5TrWD7Aa0/SqT8O5K/9tkJOi/Pd+DGJRphSQP0Z+u2sbuP54dwHGX7YC2SprzZx9iMd4KBq3U/c62konU0CVjeWJnXMi7Dec3+6l8oVXDEiT62jbjIyQl2ipZ4NyN4Rcv8SVPzCYWWSy02kdKWS0yBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784101477; c=relaxed/simple;
-	bh=UdQma2hTkdoPGNuuyWFOD/sUrfqi5btc69f3eudvtyw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zd7rakJHaSiE/TYeDZeiUVscLzpze6vXHMGASqB9TQR2nD8/QLLIoYnh5ZIYMipDPQ4Qlj7LuMVRxfamU6bktgsexRulc5fUkn5KJkmzLA5sjw7zqF8Zo5/KrPcAkOxax6dSU4nwTBjPvl9nY+eJw+Q/s+o1rOArvvGKUEwTpZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hbaxCwwQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784101942; c=relaxed/simple;
+	bh=SFfaixy5mSLcBLwBntye6Z3BtPZ39eJulCWZ9W5HDL0=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tpsGEHyWrJ37oBLJZzHdKmgEsLdWPGXgqH1xKU8gm48F55gUQiaiPF6ADosgNVWNv501gRiJ5gnerfP1yD7Hrna82nhJ3v2DVZrR0avWO7uSDmZ4X9Gihq6MyxoEhVB4Wewqn5dZfpm0yysTKN1n0SS0hP4CIEAU6Dd4h5OBcms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FIo4X9ss; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hbaxCwwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8441F000E9;
-	Wed, 15 Jul 2026 07:44:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784101475;
-	bh=MXacSfVESMbBM4Km6XTpIUSK+nBYKaMgTrWivCXMIGc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hbaxCwwQaqHLOp/Kee/FS6zAt8h3JJUDlsMQ4IoajYzkk4/w8t9aoyrm87le60WrA
-	 EaG2lYQS+qn+MVdou3tsRGFeniWp7UrZCVwU6EHEW/jAl3dW6rR55lqZgSjdIhSOW/
-	 Re82y6o/pK0XLpECicrH+WxBAzfDksfKUGaXJhLVRVneQvf3zMPA+xTj0LpnOB9J4Q
-	 azU76dxr73W2th7nt6Kkf4kYrV/pO3Xusl2heTQYbmp2qC9o19gAQSiB07DBpRGuCl
-	 +AeW0gVZJFegz+L+V6fbMv7JDocNqPxsBGleqY1v2FJE4+qUFhrYPh1vjzR+bfJK2T
-	 o0/j9ovvbYzCQ==
-Date: Wed, 15 Jul 2026 09:44:29 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FIo4X9ss"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-38e071ed6aeso2217331a91.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 00:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784101940; x=1784706740; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=LkoZxLu3mKiKId6IT2QmHjKJhmmkO8Ne64sGip4OZac=;
+        b=FIo4X9ss1li+RJe2GbxewqCYzeV4BFJzdxXH9cDodcPhDPPJOgAqqstwP25jmemvU2
+         kwbhFItozMcNgt4tjBHkt3iHp0Pv47eoIFH4Zv5e0FrspFopAg3P+JOpsM4hNwp6LMc6
+         2+n4zpAz1SJz/YeVHbqYM/ZvCF+GgdtUMsNrwytgYfQfXJI4LTDCQtzgZAzwllQjyiSX
+         7N6quwA8lZMeLW5yrN+EzqLtAQggGrAL2O7NCZnGaQocC5l4DisgRGXoRBZgwtJkW1Cl
+         lJpEePvLSiQcC/dE5uymPehIT04C+XeugxwGCuiFY5n0aRxduLVe1eM5QVtGXS36ubzS
+         mQIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784101940; x=1784706740;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=LkoZxLu3mKiKId6IT2QmHjKJhmmkO8Ne64sGip4OZac=;
+        b=DAldPViMWl+JXqnkN11MtO4VcP4XlCrtegURFCgnpwds3Z3wN56rAcG/1mtGVbJekb
+         Vr42zA2EfBxAAVjG+KKyc8S8UuM7wU3vVCKgch9kPvbjlwOZjRd32CMtwMh9MXPWTKTt
+         YV2anrkF5axZ8iZ4IHe/WqKTv1Ic8+5+6GCKJcKTWzZ9zkpvL03rs+nXwEcENsKLd388
+         zmlAM6AerFSCh/hyd5w6rPNOE9K1SyZ7cT1uB8bbausNryePo69jvffLYzco1dYviKfR
+         V3WoYUTQbJ4ZHq5TL6O5EXiprIAPKQKB5z+f2MzL1o1oWI/bhVcw6T/UXXTOb5yPrcFc
+         +lmg==
+X-Gm-Message-State: AOJu0YxOwq7MKPj9nR3gtRZic4Ers6pWQsv0K+nDQD7WsXOON+KPei4k
+	h+K+1qsLudd6ICRYU8B4MML6e77TDCGNMDV4v5cPjnnFJEkKufjZCcWnpszinA==
+X-Gm-Gg: AfdE7ckTajVAFJQcKRMtZWiaMVREcnVYR7bXmrUBwB4oHU/E38SWAB2n2Ybm7cMXI72
+	Cw3YA8iBZwpvmUOC3QNLbLJhTNYwEw1EBmHhnpDH8AS+Bn+7Dprz22NgPaLULqHCRwwcwJNJue8
+	RlhJyYf78rhLagBYLI9UuuEiOX+rEBiM3+g3eLarqoFCKiXlDQfgUARDS0F5cOYgiOuh0XTPi8z
+	ceh0bdYarcPjRlaBUODn1xezmAIuVacnudW/CoBe/jmT9mT7o27Vd7Bi/H6iVyl/3spK7eKLo9v
+	ZpI2nOArlyztEY1Mtk78p05uOlBOlJuXTWo8WlufzXK0AN0LtlwJglUbejsLjJAzHqEnImjLVfv
+	O9Sde+LUMApZ/jrh1WrKtqdMM7vzeNpMIAN6gGQ1LSXs+9XiJcD/PVAiI+CqmwmZhY36PYiuwKb
+	HIF7tzArTvOliRk5L3oSA7LkWEg9WcJVBaqlrJTe80V/5guaN8yICb+a2NdJugU4HSCBjlqpXB6
+	4F2Gvw=
+X-Received: by 2002:a17:90b:3142:b0:387:e0db:3d8e with SMTP id 98e67ed59e1d1-38e2a0a87cfmr1777436a91.41.1784101940512;
+        Wed, 15 Jul 2026 00:52:20 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174ac14f2sm94910291eec.27.2026.07.15.00.52.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 00:52:20 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 15 Jul 2026 00:52:17 -0700
 To: sashiko-reviews@lists.linux.dev
-Cc: Hans Zhang <18255117159@163.com>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v8 2/3] PCI: cadence: Add HPA IP debugfs for LTSSM status
-Message-ID: <rrf3bid5g7hsaigimjy6d5i5sv63n6af3sriksfx7tyymg6fqz@a6vsjz6zrthr>
-References: <20260701073513.1101559-1-18255117159@163.com>
- <20260701073513.1101559-3-18255117159@163.com>
- <20260701074818.E3F291F000E9@smtp.kernel.org>
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v11 05/31] cxl/mem: Expose dynamic ram 1 partition in
+ sysfs
+Message-ID: <alc8MagZWKAAcNA_@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-6-anisa.su@samsung.com>
+ <20260625181243.77F581F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260701074818.E3F291F000E9@smtp.kernel.org>
+In-Reply-To: <20260625181243.77F581F000E9@smtp.kernel.org>
 
-On Wed, Jul 01, 2026 at 07:48:18AM +0000, sashiko-bot@kernel.org wrote:
+On Thu, Jun 25, 2026 at 06:12:42PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Modpost link error when building Cadence drivers as modules due to an orphaned debugfs object.
+> - [Low] Empty sysfs directory created for absent dynamic RAM partitions.
+
+Fixed.
+
 > --
 > 
-> commit 98a72e00615e702fb5448b12d14570527e38b67f
-> Author: Hans Zhang <18255117159@163.com>
+> commit 839299dd9514d54314e661cd789de765da08d4f4
+> Author: Ira Weiny <iweiny@kernel.org>
 > 
-> PCI: cadence: Add HPA IP debugfs for LTSSM status
+> cxl/mem: Expose dynamic ram 1 partition in sysfs
 > 
-> This commit adds debugfs support for HPA-based Cadence PCIe controllers,
-> exposing the current LTSSM state through a new ltssm_status file.
+> This commit exposes the details of the first dynamic ram partition via
+> sysfs so user space can properly configure CXL regions.
 > 
-> > diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
-> > index b8ec1cecfaa88..2cdc4617e0c20 100644
-> > --- a/drivers/pci/controller/cadence/Makefile
-> > +++ b/drivers/pci/controller/cadence/Makefile
-> > @@ -4,6 +4,7 @@ pcie-cadence-host-mod-y := pcie-cadence-host-common.o pcie-cadence-host.o pcie-c
-> >  pcie-cadence-ep-mod-y := pcie-cadence-ep.o
+> > diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+> > --- a/drivers/cxl/core/memdev.c
+> > +++ b/drivers/cxl/core/memdev.c
+> 
+> [ ... ]
+> 
+> > @@ -519,6 +551,29 @@ static struct attribute_group cxl_memdev_pmem_attribute_group = {
+> >  	.is_visible = cxl_pmem_visible,
+> >  };
 > >  
-> >  obj-$(CONFIG_PCIE_CADENCE) = pcie-cadence-mod.o
-> > +obj-$(CONFIG_PCIE_CADENCE_DEBUGFS) += pcie-cadence-debugfs.o
+> > +static umode_t cxl_dynamic_ram_1_visible(struct kobject *kobj, struct attribute *a, int n)
+> > +{
+> > +	struct device *dev = kobj_to_dev(kobj);
+> > +	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+> > +	struct cxl_dpa_perf *perf = part_perf(cxlmd->cxlds, CXL_PARTMODE_DYNAMIC_RAM_1);
+> > +
+> > +	if (a == &dev_attr_dynamic_ram_1_qos_class.attr &&
+> > +	    (!perf || perf->qos_class == CXL_QOS_CLASS_INVALID))
+> > +		return 0;
+> > +
+> > +	if (a == &dev_attr_dynamic_ram_1_size.attr &&
+> > +	    (!cxl_part_size(cxlmd->cxlds, CXL_PARTMODE_DYNAMIC_RAM_1)))
+> > +		return 0;
 > 
 > [Severity: Low]
-> Will this cause a link error during modpost when building the Cadence drivers
-> as modules? 
+> Should cxl_dynamic_ram_1_visible() return SYSFS_GROUP_INVISIBLE here when the
+> dynamic RAM partition is absent?
 > 
-> Since CONFIG_PCIE_CADENCE_DEBUGFS is a boolean, this adds the object directly
-> to obj-y instead of appending it to a composite module target like
-> pcie-cadence-mod-y. When the driver is configured as a module (e.g.,
-> CONFIG_PCIE_CADENCE=m), the object is compiled but left unlinked.
+> Since cxl_memdev_dynamic_ram_1_attribute_group is a named group
+> (.name = "dynamic_ram_1"), returning 0 hides the individual attributes but
+> still creates the group directory.
 > 
-> Could this lead to undefined symbol errors for cdns_pcie_debugfs_init and
-> cdns_pcie_debugfs_deinit in the caller modules?
+> Won't this result in a permanently empty "dynamic_ram_1" directory in sysfs if
+> the size is 0, rather than suppressing the directory entirely?
 > 
+Fixed.
 
-This is a real concern. So I fixed the Makefile with below change while
-applying:
+If a DC partition's size is 0, better not the expose the directory at
+all, instead of hide both attributes.
 
-diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
-index b8ec1cecfaa8..80be0b885ac8 100644
---- a/drivers/pci/controller/cadence/Makefile
-+++ b/drivers/pci/controller/cadence/Makefile
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- pcie-cadence-mod-y := pcie-cadence-hpa.o pcie-cadence.o
-+pcie-cadence-mod-$(CONFIG_PCIE_CADENCE_DEBUGFS) += pcie-cadence-debugfs.o
- pcie-cadence-host-mod-y := pcie-cadence-host-common.o pcie-cadence-host.o pcie-cadence-host-hpa.o
- pcie-cadence-ep-mod-y := pcie-cadence-ep.o
+Ram and pmem always expose the size attribute, even if the
+size of the ram/pmem partition is 0, but that makes less sense for a DC
+partition, especially if support for multiple partitions is added later.
 
-This will ensure that the debugfs functions are always built into the
-'pcie-cadence-mod*' object.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> > +
+> > +	return a->mode;
+> > +}
+> > +
+> > +static struct attribute_group cxl_memdev_dynamic_ram_1_attribute_group = {
+> > +	.name = "dynamic_ram_1",
+> > +	.attrs = cxl_memdev_dynamic_ram_1_attributes,
+> > +	.is_visible = cxl_dynamic_ram_1_visible,
+> > +};
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=5
