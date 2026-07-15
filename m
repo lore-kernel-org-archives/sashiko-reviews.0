@@ -1,107 +1,114 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5C9441636
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 10:27:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784111243; cv=pass; b=j7PZrHW6+zLl64VH6IQjruw3dLg11OnZ+2fhnpEepdTJEm75FF3yhcxIzLqTET69EjSgTo/NBt9kMXieTmH8Sih8mjKSr6OKxV/dqv/MBLSG+lYrn07tpI7h23WBHAqgOEImmYFp2pFccrBPlFo9Qa+Hazj+5X2foP0qeVCL454=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784111243; c=relaxed/simple;
-	bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FpdvF9vGrV7nk/miv1i8HHhIWiTEd+rpq51FhV4m6Hv4iiZCKllq/wEly59Y6RxuhyEXoqrVxDn+gOtRx1bH7SAWacEAoICw0DUkXaeqOrTu0pRXI6AglyvZsa83uPws3yrnJ9cnJcSYZFPgXKCV1Aekym6a5V5rVKsLj0u6eVo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=coralogix.com; spf=pass smtp.mailfrom=coralogix.com; dkim=pass (2048-bit key) header.d=coralogix.com header.i=@coralogix.com header.b=DNjVKo4o; arc=pass smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=coralogix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=coralogix.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C875A441633
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 10:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784111369; cv=none; b=Q2ClO1b8d3evgWiKsl4zMxsm7R/oclmui4WfNBgQRGq1gM3vtU+tAW668XdmZ3lPomvhOw2We0OsCl4a06p+PRNh6v2VVMYiV7r+R4l9I8T7JBazu7TT1NqamyPzkjGdFYcKy+kB6bZ3Oga2Qml+Z/YOq81a+sLCYm+paUXFrYQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784111369; c=relaxed/simple;
+	bh=AX9ADKwhGNIejnHdgFTOEpMoelGADDU7g5rb4mpm7eA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Dz+yrOh9Xj1GeahjucGlonc8jknQAoA+5HrHTkfwxd2C2tG4GGEzIMcp/V9/0MlOQhFHzqKcWpTP1eGFJALokzjLR9Yv5vG5yDI06sk4ZQ8deGUg9Dx3Y62w3fW0odPYMdtl1J+Idayc8hZa8lswDhcUNTr0SduWUOXEAtoMwxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=njsWkz2u; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=coralogix.com header.i=@coralogix.com header.b="DNjVKo4o"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8ff20870ac7so39478136d6.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 03:27:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784111240; cv=none;
-        d=google.com; s=arc-20260327;
-        b=nu7bIKAVSAdaReSEE1wl4hmRM7dlRLvN8WhcAM3N+nRw7Q60NYdJZl7B6scWjyAkp4
-         TGSpgHJ1eUhL+kzBFdOxTuK3k5yZ7OvBPWCQrM8l56MS8jxS4iA5QZNZJhLDcXfA3yVj
-         U4mKiTkqH5ZnWI+ZX8TUAE23pqE1nsLJGvz1Tycy1YdoGPpFfJZuMcfkjAv5TD9Z2gdg
-         5E8V+hNaBspgbpRm6c61ao21dd1z7sT2S8XmkbpDXI1cr3Ow/9SvDjTh3A0PYiKf39HT
-         1zJLxb7B9kvj5K7cUnv37ffE0px7cZvr/EAW3C0idbRrmVSl+S7MJfsyy0A7st+MOU8w
-         2AoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
-        fh=AnPORTJRycz1VPlUfqXDHxD/z3fnF6QPAbdgjDiylBw=;
-        b=LdvIKplqrsXDq9yUIvJL83RvxeUwvJRDPkRoA4vIMe/m2NTcpR5CGwejS9iTcslCa9
-         wYZ/+Xe0xnNRVHFt82PdkDNVZPwq251VFO+L+3IS4OXSM74Ku/eFLzydeqAvH5MooprR
-         cTpeCVMkpYaZ+OOhhV0hbs6dc8rIendCBv2A6Hngom5lU1x0llxm0vg+D7B/ZDEbj4c/
-         LJ1gz7fxkj+LWE6zKjKpFo8krtn0oDJ54ZMiYlXaEdvBRWs1NzSSHK5etQMQbgrY8ddp
-         y6irBDp0OmRmrKR3u3t+/mQYs8U2jBw1l2DlJuldruegiTW9tf0tg6cQIldDvnP7tmJo
-         hmnA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coralogix.com; s=google; t=1784111240; x=1784716040; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
-        b=DNjVKo4oFBTM5LbXJ/qwVG6eYNup6l6kQH1dPU05jp8vmIOB9FcpGPedtIVB5j73Jb
-         kJhhQHELsDjXr7BKtvLpy2hwUWHmikG6f+/CFfPsgcF1UDj24eab/7qHVSC6466pIauG
-         SW72zU823HRIyxVyQy8ivh+Lg9Md19ln0lUny5Bn2F8BevFU6WDCzpHB7RIuLCETUW4p
-         +Y+hWx/fvivp3B++tGbJfeHTLQCUwSBR7KnLn3VPV1q832MPotRiozwMIRbPNcjStOde
-         KNSEavg0KEPj7FOk0gKCrXsgtNFugNjOA77Rh2Xrin7fuuwEjdP3ENN/q1KzdoDJ3F3q
-         gWqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784111240; x=1784716040;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
-        b=fwVFHfcdXCtZcP+HsH5GAtI1yiAXD6UuF1q1YCVCiDmDOPyswJpt0CcBM0rvOzAiLA
-         Tlp97JV4NuTDl0mYgfMrv3Wd0YD5wgVAYIok+9NQ8nmtsnREMpyQuP8Qhtnk4c/Ck3Xd
-         du5v8NDfYAwTHIoFJbAnVaMwj4/ECGXuHcaBNp0CWSfTnRum1kcvHSNWFv9raZNJDoTH
-         NyX4HIZOT5V7/uDq1CoeYO9MQsj4NJ1lQrlf9wofKlAO4EgonQZBPxVpV48ZoEceuvTk
-         1GY9aAPwkli4lRAgR3O2S2ni83W/GARvNj/n9/kl+jCzG3LRTG/VARhisphtcEuZbp8j
-         Jy4w==
-X-Gm-Message-State: AOJu0YyHx5vYTGXtivUZEHqyNsXRsoTJ5bXNuN9taP7IbM0N8WEAyE4l
-	8jOMbTuu+oR4rdTisTgGrXXJBD4lvvEVEUiDYWo0YQ095+qm8g5le4XCnC551uXYm+oC065AByP
-	eYiZk/kUpO5Sz5DPzpb6VaDpM40eagJ7EhUB4jUOrFg==
-X-Gm-Gg: AfdE7clHinBd6Z5UbBKW7MOmcKtDvGQlRG7v36Y6FnSRCA4QsJMH4ETHDsheaHlnyPT
-	Ng1X9ZJf/SuvziwC9y/DHons5485XF2J7sHDNYlgE0jON/7BN+Nk7u31ZzO5QoKWqDIiZOuOPAM
-	3zFEdlGei24AVJBGFd5mwB8QBpv+ppn6P6gv9Z/6q7/xJ49R92HZKZ7KiVgqbBnVl/YbBjxcmf6
-	I04e5VeUtlT9Hiqjv5I0L6jVIdyY8G09s/0woiTu5OR2JQfGV5bBWqSImpCcueaxKS7wHF4arGE
-	9rWkccw=
-X-Received: by 2002:a05:6214:5541:b0:8ef:ec2c:6b70 with SMTP id
- 6a1803df08f44-9074c84cb1fmr58440516d6.53.1784111240385; Wed, 15 Jul 2026
- 03:27:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="njsWkz2u"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1784111366;
+	bh=AX9ADKwhGNIejnHdgFTOEpMoelGADDU7g5rb4mpm7eA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=njsWkz2uS1gOp/dA0tZU/1k3/3eRmfVMITIvSDTNlKwG/trgoT5scu1qflAw7kvoN
+	 DLhKBrLL/DDASRzQQcujS8xAIdPe/bTOqe948ZK3a4b4ZIBfPdlPLobO0Y5Vv/YlG0
+	 84T3f3W58yN5UM6e73a6TUSbBM4UsUa/OPa/ZDhCPpkz5oRU0RBO7n461JjULsYMQv
+	 9Q5cKLkxShpIdZk2FpmZzLReCeKSbQRgdZnyUbIQYCCZJcuAwL75EDSRaTMF/SgT9E
+	 H1xFER++rQ2Mpipx+zcwvxmwmBblBW2s2wAnnxaH9rGfpiVPQTkU/AjQ7QsEmMOfDq
+	 0xKbLDIWL7Hbg==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id B602A17E07AA;
+	Wed, 15 Jul 2026 12:29:25 +0200 (CEST)
+Message-ID: <e8d3efc2-bc93-438a-a45d-6ae0b303ad02@collabora.com>
+Date: Wed, 15 Jul 2026 12:29:25 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260708-fionread-no-verdict-v3-0-b4ee31b3af53@coralogix.com>
- <20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com>
- <20260708171659.8695B1F000E9@smtp.kernel.org> <alaAp3qrrn3XYd8u@john-p8>
-In-Reply-To: <alaAp3qrrn3XYd8u@john-p8>
-From: Mattia Meleleo <mattia.meleleo@coralogix.com>
-Date: Wed, 15 Jul 2026 12:27:08 +0200
-X-Gm-Features: AUfX_mx6oFAp_WKlpkqbUOQh5ytb63C69yfL4tT2SFTAbZzCUy50wCNpgxIxtDY
-Message-ID: <CAOvpEWNSyn40iwJg7DRTTq0z8nFqPAFx1oakfwk06bJPssj84w@mail.gmail.com>
-Subject: Re: [PATCH bpf v3 1/2] bpf, sockmap: Account for receive queue in
- FIONREAD without a verdict program
-To: John Fastabend <john.fastabend@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 09/10] dt-bindings: display: mediatek: wdma: Add
+ compatibles for more SoCs
+To: Rob Herring <robh@kernel.org>, sashiko-reviews@lists.linux.dev,
+ CK Hu <ck.hu@mediatek.com>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org,
+ dri-devel@lists.freedesktop.org
+References: <20260713142746.40259-1-angelogioacchino.delregno@collabora.com>
+ <20260713142746.40259-10-angelogioacchino.delregno@collabora.com>
+ <20260713144221.2C4F91F00A3A@smtp.kernel.org>
+ <20260714143433.GA1476641-robh@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260714143433.GA1476641-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 14, 2026 at 8:45=E2=80=AFPM John Fastabend <john.fastabend@gmai=
-l.com> wrote:
-> Sure but doesn't need to hold up this patch. Mattia would you want to
-> fix this as well? Otherwise I'll put it on my list and get to it at
-> some point.
+On 7/14/26 16:34, Rob Herring wrote:
+> On Mon, Jul 13, 2026 at 02:42:20PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] The compatible string `mediatek,mt6893-disp-wdma` is incorrectly added to the standalone enum instead of the fallback items list.
+>> --
+>>
+>> --- Patch [9]: [PATCH v4 09/10] dt-bindings: display: mediatek: wdma: Add compatibles for more SoCs ---
+>> commit 8001f83833ae9c684be67bc719c7aaa056f90763
+>> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>>
+>> dt-bindings: display: mediatek: wdma: Add compatibles for more SoCs
+>>
+>> Multiple MediaTek SoCs have the Write DMA hardware in their Display
+>> Controller. This commit adds the missing compatibles for Dimensity 1200
+>> (MT6893) and for Kompanio 500/520/820/1200.
+>>
+>>> diff --git a/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml b/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml
+>>> index 97d052b0fb614..c3ed867d058d9 100644
+>>> --- a/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/mediatek/mediatek,wdma.yaml
+>>> @@ -22,11 +22,16 @@ properties:
+>>>     compatible:
+>>>       oneOf:
+>>>         - enum:
+>>> +          - mediatek,mt6893-disp-wdma
+>>
+>> [Severity: Medium]
+>> Does this incorrectly place mediatek,mt6893-disp-wdma as a standalone
+>> compatible string rather than in the items list requiring a fallback?
+>>
+>> If a device tree uses compatible = "mediatek,mt6893-disp-wdma" to satisfy
+>> this schema, the DRM driver will not probe the device since it only matches
+>> mediatek,mt8173-disp-wdma. If the developer instead provides the fallback
+>> compatible = "mediatek,mt6893-disp-wdma", "mediatek,mt8173-disp-wdma" so the
+>> driver can probe it, won't the device tree fail schema validation here?
+> 
+> Sashiko fails to look at patch 10. However, the commit message gives no
+> clue whether mt6893 is or is not compatible with something else. If not
+> compatible, explain why it isn't. What's different?
+> 
+Eh, MT6893 supports 64-bits image data destination address (has two registers,
+lower 32 bits and upper 32 bits), while MT8173 and others supports 32-bits only.
 
-I'll follow-up with the UDP fix.
+Should I resend with an improved commit message, or would it be fine to change
+that while applying?
 
-Thanks for the reviews!
+Multiple MediaTek SoCs have the Write DMA hardware in their Display
+Controller. This commit adds the missing compatibles for Dimensity 1200
+(MT6893), supporting image destination address of up to 64 bits, and for
+Kompanio 500/520/820/1200, fully compatible with MT8173, supporting only
+32 bits.
+
+Cheers,
+Angelo
