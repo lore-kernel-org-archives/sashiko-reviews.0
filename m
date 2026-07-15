@@ -1,45 +1,26 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+Received: from mail-m49212.qiye.163.com (mail-m49212.qiye.163.com [45.254.49.212])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA2130B50A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26183EB0EC
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.212
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784106072; cv=none; b=Bh7nqDCG0C3CdRaqYdLVnpHWa70Vr2FHFx/AWxo2/izMmZUPH2EVIk4TMeyVIpuVl59stWZkHKl1aVZ7fXWzkpBC8ExKhwTmUPdchl9Y0KPsjy5vpMYOY1s+dpje14WqPvcUj7Mi4MRuyJeezZPO/XyJ8Z9w/xmGn5OTEgjGtXk=
+	t=1784106469; cv=none; b=e6O8tOhwo1dYwBYBlfUmtx/SOxlXRrbdIFaSq1v2qUqkuu5QgEspSTYndjoyRTCsLsxmC8XvY8G38awQuzrbVmbI9fyfz4WdYg3fe1TTAClpokLU9Kx4l6eSTxWgBX3YCt56H+7HsoT7ZcNb17nmOvVap+mt+nHHRGRt12EmotM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784106072; c=relaxed/simple;
-	bh=OKkSFDZ66YR/BNRsYcwZGA1tk/BaALY2ha4cYLaYDEI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=TKJXV8HoZWj18AHKodbX3JCM2dJ/OuiseWONN9HPZ0VL3NQMI6TWqKkbBKk3J0FduNs3+vXjKf2ou/g26KGGt9l0ZkFp5p4pJ6e5CfhE9qgJdDcKy4uetr2aSUTXKe6keKn4iyq23UFRlpYTlZ7CKNBywzL9IVafHBgCoPXv5LE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=IpGr/5jE; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
+	s=arc-20240116; t=1784106469; c=relaxed/simple;
+	bh=H2qnXEImwoz2zrzCd/qOrzTqaRIv16NPS/LflTFmdns=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rycafWAQ4vr3Ew++vhZgV58uRHpc57vdylNgK6m6w0tigb6t1Oy98ssfSK5OLkBt12OKE73a0joeM5GqlGdGW+blrTy7wZe2BGhcuZTnuEf0URZdM3DRKEzgdjoXoZA4+Kd2GoUgDRxmwslU75uAXkBhO1Nb12dWg5u3lJgnGAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=D5eEkzfW; arc=none smtp.client-ip=45.254.49.212
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="IpGr/5jE"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <mhal@rbox.co>)
-	id 1wjvUA-000ppZ-1q; Wed, 15 Jul 2026 11:00:58 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
-	s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
-	Cc:To:Subject:From:MIME-Version:Date:Message-ID;
-	bh=guZZaPUwV8kO1fHGpvyvmxQca3hz5bLgy1RkSNf6DpY=; b=IpGr/5jEbjDPm7tHUXl3JdRgvK
-	FuCRGU0hUUi+n1eah11+jNewYEFlqhi9BETgiqZ4E8j51dQGexpScWH7LG5zq/HKF/nWUpyAwF5fk
-	0YqRC7bpdZVPqZORF1vH/hXEBHf4aVfLUCtJBV72+lvBMADATG21dhexFB+G3MDSeQXWsco7THOan
-	7MRVE9FsEQahBD1OeIZCc+fiPTLSm1KgI4RRhTbN4s6ncFF75fh6Dw2vkl+e4pI0jXyIMFteoAW/C
-	jQLYN6WXTgS5VqbfPQaC7EmBEGl+iK5YjN7ot1f6c7bc4EaQ5dsSvorsnIbVcZ76nSWK3Ii7X3jAB
-	yOA/VL0Q==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <mhal@rbox.co>)
-	id 1wjvU9-00039Z-BD; Wed, 15 Jul 2026 11:00:57 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.95)
-	id 1wjvTr-000dkv-1s;
-	Wed, 15 Jul 2026 11:00:39 +0200
-Message-ID: <9312e5c3-e0dd-4b28-9455-75547b4f313f@rbox.co>
-Date: Wed, 15 Jul 2026 11:00:34 +0200
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="D5eEkzfW"
+Received: from [172.16.12.74] (unknown [61.154.14.86])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 4644b288e;
+	Wed, 15 Jul 2026 16:32:08 +0800 (GMT+08:00)
+Message-ID: <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
+Date: Wed, 15 Jul 2026 16:32:07 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,90 +28,110 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Michal Luczaj <mhal@rbox.co>
-Subject: Re: [PATCH bpf v4 2/4] bpf, sockmap: Reject unhashed UDP sockets on
- sockmap update
-To: Kumar Kartikeya Dwivedi <memxor@gmail.com>,
- sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Kuniyuki Iwashima <kuniyu@google.com>,
- Jakub Sitnicki <jakub@cloudflare.com>,
- John Fastabend <john.fastabend@gmail.com>,
- Emil Tsalapatis <emil@etsalapatis.com>
-References: <20260707-sockmap-lookup-udp-leak-v4-0-f878346f27ab@rbox.co>
- <20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co>
- <20260707045338.B30C41F00A3A@smtp.kernel.org>
- <DJZ0DOKOTZ5Q.45F1NZIM8WJX@gmail.com>
-Content-Language: pl-PL, en-GB
-In-Reply-To: <DJZ0DOKOTZ5Q.45F1NZIM8WJX@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory samsung
+ DP DT properties
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, robh@kernel.org,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>
+References: <20260707040613.1992841-1-damon.ding@rock-chips.com>
+ <20260707040613.1992841-4-damon.ding@rock-chips.com>
+ <20260707041711.4F7351F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Damon Ding <damon.ding@rock-chips.com>
+In-Reply-To: <20260707041711.4F7351F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-HM-Tid: 0a9f64e79dc103a8kunmb5bc9ffe10ec8e
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCShhLVkpIGE5KGkkYQktLSFYVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=D5eEkzfWlQsu8P+ISq0oa6wJ8Fp89x3afKPHLzKZvgX2lw9+6aZwVlxKVWZEnPs8FJw9gB1HyUInUGo5sG6lF8usQP/Cti1YYzJXaqiAg3P+iHzT5vpLiFPZi78Tbf+TYkyKnMW/6neIZfvs9qsVEtaBK6JQyK+xJMcYCB+BA98=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=5k3VLyTE2W0brh6QXzfvnZyb5UNm/t6xk2HiFeq09E0=;
+	h=date:mime-version:subject:message-id:from;
 
-On 7/15/26 10:40, Kumar Kartikeya Dwivedi wrote:
-> On Tue Jul 7, 2026 at 6:53 AM CEST, sashiko-bot wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] The patch prevents a refcount leak for UDP sockets by rejecting unhashed sockets, but an identical reference count leak can be triggered for TCP sockets because `sk_is_refcounted()` relies on the mutable `SOCK_RCU_FREE` flag.
->> --
->>
->> --- Patch [2]: [PATCH bpf v4 2/4] bpf, sockmap: Reject unhashed UDP sockets on sockmap update ---
->> commit efe688dfced966a49066087e860ab73696a8f75a
->> Author: Michal Luczaj <mhal@rbox.co>
->> Date:   Tue Jul 7 04:23:57 2026 +0000
->>
->> bpf, sockmap: Reject unhashed UDP sockets on sockmap update
->>
->> This patch addresses a socket reference count leak by preventing unhashed UDP
->> sockets from being updated in sockmaps. It removes the ability for BPF programs
->> to increment a refcount on an unbound socket that subsequently gets bound and
->> skips the refcount decrement upon release.
->>
->>> diff --git a/net/core/sock_map.c b/net/core/sock_map.c
->>> --- a/net/core/sock_map.c
->>> +++ b/net/core/sock_map.c
->>> @@ -542,6 +542,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
->>>  {
->>>  	if (sk_is_tcp(sk))
->>>  		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
->>
->> [Severity: High]
->> This is a pre-existing issue, but can the exact same reference count leak
->> happen for TCP sockets because sk_is_refcounted() relies on the mutable
->> SOCK_RCU_FREE flag?
->>
->> If a user creates a TCP socket, connects it (entering TCP_ESTABLISHED), and
->> adds it to a sockmap, a BPF program can call bpf_map_lookup_elem() on the
->> sockmap. This increments the socket's refcount because SOCK_RCU_FREE is not
->> set on established sockets.
->>
->> If a user thread concurrently calls connect(AF_UNSPEC) to disconnect the
->> socket (moving it to TCP_CLOSE and removing it from the map), and then calls
->> listen() on the same socket, inet_hash() unconditionally sets the
->> SOCK_RCU_FREE flag.
->>
->> When the BPF program subsequently calls bpf_sk_release(sk):
->>
->> net/core/filter.c:bpf_sk_release() {
->>     ...
->>     if (sk && sk_is_refcounted(sk))
->>         sock_gen_put(sk);
->>     ...
->> }
->>
->> sk_is_refcounted(sk) will now return false because SOCK_RCU_FREE is set,
->> causing bpf_sk_release() to skip the decrement and permanently leak the
->> acquired reference.
->>
->> Could this sequence be abused to cause memory exhaustion, and is there a way
->> to safely track the acquired references without relying on a flag that might
->> change mid-flight?
+On 7/7/2026 12:17 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Failing probe when deprecated DT properties are missing breaks DT ABI and prevents their deprecation.
+> --
 > 
-> Could sockmap/net experts comment on whether this case needs fixing too?
+> --- Patch [3]: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties ---
+> commit b573dba50acc6087122ffa4a65680322f4d004f8
+> Author: Damon Ding <damon.ding@rock-chips.com>
+> 
+> drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
+> 
+> This commit reverts a change that made the samsung,link-rate and
+> samsung,lane-count properties optional for Exynos DP. It adds error checking
+> to fail the probe early if these properties are missing, aiming to prevent
+> link training failures caused by zero values.
+> 
+>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> index 8cf6b73bceac0..293d8adfe9856 100644
+>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+> [ ... ]
+>> @@ -1258,10 +1259,14 @@ static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)
+>>   		 * NOTE: those property parseing code is used for
+>>   		 * providing backward compatibility for samsung platform.
+>>   		 */
+>> -		of_property_read_u32(dp_node, "samsung,link-rate",
+>> -				     &video_info->max_link_rate);
+>> -		of_property_read_u32(dp_node, "samsung,lane-count",
+>> -				     &video_info->max_lane_count);
+>> +		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
+>> +			return dev_err_probe(dp->dev, -EINVAL,
+>> +					     "Failed to get samsung,link-rate\n");
+> 
+> [Severity: Critical]
+> Does failing the probe when this property is missing break the DT ABI?
+> 
+> Since samsung,link-rate is a deprecated property, a modern schema-compliant
+> Device Tree might intentionally omit it. If a system boots with such a DT,
+> this check will fail the probe with -EINVAL and disable the display.
+> 
+> Could the driver instead fall back to hardware maximums or sensible defaults
+> when the deprecated property is absent, rather than returning an error?
+> 
 
-I'm not an expert, but I think Sashiko is right. Please see
-https://lore.kernel.org/bpf/e08be4f5-0bd9-4228-843d-86ed20594bac@rbox.co/
+I'm afraid it's difficult to provide a universal sensible default value 
+here.
 
-I'll take care of it in a follow up series.
+The samsung,lane-count and samsung,link-rate values vary significantly 
+across Exynos DP device trees, so a generic fallback to hardware 
+maximums cannot guarantee stable link training.
 
-thanks,
-Michal
+Even though these two properties are marked deprecated, all existing DTS 
+files in our projects have already populated them completely. Moreover, 
+the current link training logic relies on these two parameters; omitting 
+either will directly cause link training failures at runtime.
+
+Therefore, retaining the mandatory property check in probe is a 
+reasonable approach for now.
+
+>> +		video_info->max_link_rate = val;
+>> +		if (of_property_read_u32(dp_node, "samsung,lane-count", &val))
+>> +			return dev_err_probe(dp->dev, -EINVAL,
+>> +					     "Failed to get samsung,lane-count\n");
+> 
+> [Severity: Critical]
+> Does making samsung,lane-count mandatory similarly break backward compatibility
+> for valid Device Trees that have intentionally omitted this deprecated property?
+> 
+
+I don't think so. Missing either property will inevitably cause link 
+training failure, and all functional DTs have these deprecated 
+properties filled in already.
+
+>> +		video_info->max_lane_count = val;
+>>   		break;
+>>   	}
+>>
+> 
+
+Best regards,
+Damon
+
