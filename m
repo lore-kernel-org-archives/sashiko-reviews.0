@@ -1,234 +1,157 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528D9422533
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D96B429027
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784107244; cv=none; b=p5aCrcGGhVhMlHLmVXnVJBi2pGdGRx3lzWs/D03dGMLU01w55yS6WhMq3x4HX9GFJA0DcIpOyzJfEg6aftRJlwlRQq8RFd5Fcp3zQ44Rt63aYwbcnZhv1TVP5TXo87uUOK00GP7+nej7up6hz54MTzpvWJmd59AtNAd3JLiOUZw=
+	t=1784107700; cv=none; b=jrBzofMWebdXekUP4nUXvGHlPcxyGKBJvae2n11wu1yhP67/LHo7H42/t/ROqjkW1yQUhT26e6+TSgpEvO1TZMIsv0JSYKDAyLHxg5+SS/KyO7YFmuK05rEu84mGIaXkhT4wAV28SGDUy40yf0nFQr/M065HHO5SDNzR2TXNqqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784107244; c=relaxed/simple;
-	bh=0aF2tXqVSZJ+KzEI8hvUhfrB4O8Tj5s5ExsezUdork0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=icKjly9H5+mlFfw8llbbdI/YPEp4ghM8DMlncc0jQbvqQ7dbdzaoNzgkQKRdCycKaD0ZDPDxXz5le0IrXt8T6wgJWyDytilQhcnqih9fMOvLrjZUgo18j3ek2hOmaOqZvWrSyzYdPfVVGzmcBQbdaXWp75n9AqAoCokS+Ze0wQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=o/X7pNzh; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1784107700; c=relaxed/simple;
+	bh=XLlmmz7WzIflrQBPHIDtKXXqkcj+Jgzs8TFRynXU1iI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cIQygSa3f04JgQIPtduJKZFcfrW96AhNwaq9rjzVU30/NcgAurVk5mhi9TvJAjzG3wk4iLd5fwfez6d5QnsHHynxL6C/kM/UJ/HZe/RkQ/n6D3mucy65h5Ja+zbbcUW3slJTyx4O7GD6yUAp9hssTr8ExiACoooZ3MCASJ1AZbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zz7Y+dPf; arc=none smtp.client-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="o/X7pNzh"
-X-Gm-Message-State: AOJu0YzdUrR+FBiFBNtZqotbzFvw3JVIM8hqBGENEiegH/j0Qz+KVkq+
-	Dm9FJDWQ3H03UJabdJcVE0Me9wuc6s2jKfOowa8viJ7K8gIwZsKfUmpBdYUKILaCk+0d69HU9UO
-	/553KYpuhqR0Bj1kft66VIoqTVlgG14N4NZB05CjZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784107241;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+w7C3+NagRQkTxTKtZanj6iawsWBCIYUN0QzC15AWME=;
-	b=o/X7pNzhQzm5mMb6/mvT+8W+ZXb7jkn2tGLpnzAIQOsffmVr1NZ4P405OQAXEzZ7Al4dm/
-	VobPhS1Q+P17BONaFfl/ItM4d3ShLclH4n0q6hDDmB1t/KuhI4njJREkBCN/jViuwqGZDj
-	VNsmg9D2JZG0nmsboFFDEl6x5tL4yBE=
-X-Received: by 2002:ac8:5cc6:0:b0:51b:fd5e:e81a with SMTP id
- d75a77b69052e-51d7c6a88e1mr24424431cf.20.1784107237702; Wed, 15 Jul 2026
- 02:20:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zz7Y+dPf"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7e6b5737bb2so4413757a34.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 02:28:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784107697; x=1784712497; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ZnbIoDxi2GapRWlrmBlXMx1BB+ECtF1C6EhxHJoyFKo=;
+        b=Zz7Y+dPf7tl+HztpAKe+Q68P2A9C2xUcnPMzxxx+Hz5jEG8a0mAiWRYBDR9EeuVt52
+         Z4dT1QcR8F53nclC2yi4XuUERx9jj2xe1Ma2J8VFLBJ9CNWxkvj90df+SC7lJm9OrCl3
+         wtWNcriSpQciZxnXM5KsqJuZimsjE15k4JrJ+99k0v3+mG1pjkxAz4s5bFMxLNxPsCvT
+         ktrOwjWXsqCqCfhyuVzeyH0kH0dbeWxPTnqJW3BUdjYW2B4Dgo7f8eLnlQ6/aP68v+AO
+         0vTvEJByX7qbP6+7Is2TzpCwG27Cuha7bJi7Hr/eORVwe2AMYiMJgOF+oVniTXHee9O1
+         Jnqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784107697; x=1784712497;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZnbIoDxi2GapRWlrmBlXMx1BB+ECtF1C6EhxHJoyFKo=;
+        b=d1VaEse1q+hFOuYIHafuf8J2HAnFEYNjBJDc+QtOPDm70mEzLUj6/eNJtC3ZTwA1Ah
+         6OeWmDb/eYNKxgVvhz5j9u/xaSLTUnaEfk+72seuzmA/ayqab1LI0Okh52kcFLLlKBXW
+         v2oqzySO3gwP5lCAaz5QWUJ5Vy+rky8Eawjf71NDtYzk5nljdI6Nb0VBXvWOeUGsKlSs
+         4e7x8/ObyiwPxvxi4QB2gt9G0mqR1k8Dy43tt93my3TUUJWdbrX51m+6vjjbicm9efDs
+         y4vR/KXhknfUvJnK9+iVrmmfkmXgsX5Sti/LfONhMW6mvU9Qy7r8vq3itvEaJAQqzpgT
+         tlrQ==
+X-Gm-Message-State: AOJu0Yz1R8ODUtRq2TJt7YMIRgj03ZOnxS2oTU3YboGmNFGQ0m0Z2uah
+	ElzajntcKa8nF1+UiGU555MuyZSxbPy9UPJGIM16ISpAdXVQreul5euHr6hIjYtCONM=
+X-Gm-Gg: AfdE7cm+6aL80bJX7yuPEl8wkjExHpmmEJzr7exB3WLC/tkzcufDE6soZCD4bTH1EfS
+	oWIUIq0UPbMEU5D9v7axrM5z7VKlCIZiXOz0lkZy2BXOi4MpLQ9/6nsGsqPqpIyOTr0cDm81q2e
+	Z6RrCeBMC1EBe9Osn8wZznF6k0GSOMhVO3jOcEtf3O6Fq/OqlVtjO/kactZQH0yzOIvdDEV6117
+	GUUDi5/ICoF9/HzzIbeMm82wXP/FQ6sJHqAOh95QRqGihNQEDyB4qLhuieSS7aoOWYu5PcXQUK3
+	dt4teNs7u9Y9b818dyE4dlI/TcDtXiJNZfrc1/yU3jUzZaIKakdmP3OpOvR2nUuYCkmB36Rz6zU
+	kPTyatyGv0pyf1/OfDxUWzj64gAYU9c6OABmZhxi0yxZqo85tTAYfuo+RIsqZJ37TfiRYVa3i+I
+	qrRzv6Bd9FTzI3hwWgl6VisIvj2O1UkRmsTQ==
+X-Received: by 2002:a05:6830:6b0d:b0:7e9:db7f:49a2 with SMTP id 46e09a7af769-7ec4ab3fed5mr3048090a34.19.1784107696616;
+        Wed, 15 Jul 2026 02:28:16 -0700 (PDT)
+Received: from devvm29614.prn0.facebook.com ([2a03:2880:ff:45::])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ec14489139sm9059985a34.5.2026.07.15.02.28.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 02:28:14 -0700 (PDT)
+Date: Wed, 15 Jul 2026 02:28:12 -0700
+From: Bobby Eshleman <bobbyeshleman@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH net-next v5 1/3] net: devmem: allow rx-buf-size >
+ PAGE_SIZE per dmabuf binding
+Message-ID: <aldSrNgB4+EJRI0X@devvm29614.prn0.facebook.com>
+References: <20260708-tcpdm-large-niovs-v5-0-34bf6fac941b@meta.com>
+ <20260708-tcpdm-large-niovs-v5-1-34bf6fac941b@meta.com>
+ <20260710072712.BC57B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260715081238.1891918-1-fuad.tabba@linux.dev>
- <20260715081238.1891918-9-fuad.tabba@linux.dev> <20260715083412.433141F000E9@smtp.kernel.org>
-In-Reply-To: <20260715083412.433141F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Wed, 15 Jul 2026 10:20:00 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyFH3EeVCVg14ow=vGYX9hcvcnY_PpaC3+bYCOXm4bcYg@mail.gmail.com>
-X-Gm-Features: AUfX_mwHNUGF999MIZRmMiosO-SWRhA13pmJXgmKk3ndgyMw0ua1XEUTQ8EyUHc
-Message-ID: <CA+EHjTyFH3EeVCVg14ow=vGYX9hcvcnY_PpaC3+bYCOXm4bcYg@mail.gmail.com>
-Subject: Re: [PATCH v6 8/8] KVM: arm64: Implement lazy vCPU state sync for
- non-protected guests
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260710072712.BC57B1F000E9@smtp.kernel.org>
 
-On Wed, 15 Jul 2026 at 09:34, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Removal of hcr_el2 synchronization breaks virtual SError injecti=
-on, causing an infinite loop of virtual SErrors.
-> - [High] Asynchronous host-side modifications to vCPU system registers (e=
-.g., PMU overflow updating PMOVSSET_EL0) are permanently lost due to lazy s=
-tate sync.
->
+On Fri, Jul 10, 2026 at 07:27:12AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [Critical] The hypervisor unconditionally overwrites a protected guest'=
-s register context with the untrusted host context on every entry, and leak=
-s it back to the host on exit.
-
-https://lore.kernel.org/all/CA+EHjTxiyUSJqRcadSCOmR+tELSsBiGaTYH9xxXh-g-xyu=
-HZdA@mail.gmail.com/
-
-/fuad
+> - [High] On 32-bit architectures with 64-bit DMA addresses (e.g., CONFIG_ARCH_DMA_ADDR_T_64BIT), passing `dma_addr_t` to `gen_pool` functions truncates the DMA address to 32 bits, leading to broken bit allocations, leaked chunks, and possible data corruption.
 > --
->
-> --- Patch [8]: [PATCH v6 8/8] KVM: arm64: Implement lazy vCPU state sync =
-for non-protected guests ---
-> commit 89d46644a5cb6e03eee6a1ef5d530db27a9d6cdb
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
-> Subject: KVM: arm64: Implement lazy vCPU state sync for non-protected gue=
-sts
->
-> This commit defers the register context copy for non-protected guests bet=
-ween
-> the host and hypervisor. The state is only flushed to the hypervisor if i=
-t is
-> marked dirty by the host on entry, and copied back to the host on exit on=
-ly
-> when needed. Protected guests continue to have their state copied
-> unconditionally.
->
-> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
-c
-> > index 54aedf93c78b6..29108e5c0206e 100644
-> > --- a/arch/arm64/kvm/handle_exit.c
-> > +++ b/arch/arm64/kvm/handle_exit.c
+> 
+> --- Patch [1]: [PATCH net-next v5 1/3] net: devmem: allow rx-buf-size > PAGE_SIZE per dmabuf binding ---
+> commit 700c87449a5348e02d33589504f632f46bed92e7
+> Author: Bobby Eshleman <bobbyeshleman@meta.com>
+> 
+> net: devmem: allow rx-buf-size > PAGE_SIZE per dmabuf binding
+> 
+> This commit introduces the NETDEV_A_DMABUF_RX_BUF_SIZE netlink attribute.
+> It allows userspace to request an RX buffer size larger than PAGE_SIZE
+> for devmem dmabuf bindings, avoiding CPU churn for large flows.
+> 
+> > diff --git a/net/core/devmem.c b/net/core/devmem.c
+> > index 957d6b96216b3..3ce3cc14bec07 100644
+> > --- a/net/core/devmem.c
+> > +++ b/net/core/devmem.c
 > [ ... ]
-> > @@ -486,9 +486,32 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
-on_index)
-> >       }
+> > @@ -113,12 +114,13 @@ void net_devmem_free_dmabuf(struct net_iov *niov)
+> >  {
+> >  	struct net_devmem_dmabuf_binding *binding = net_devmem_iov_binding(niov);
+> >  	unsigned long dma_addr = net_devmem_get_dma_addr(niov);
+> > +	size_t niov_size = 1UL << binding->niov_shift;
+> >  
+> >  	if (WARN_ON(!gen_pool_has_addr(binding->chunk_pool, dma_addr,
+> > -				       PAGE_SIZE)))
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can this truncate the DMA address? 
+> Looking at net_devmem_free_dmabuf() in net/core/devmem.c, dma_addr is
+> derived as a dma_addr_t (which can be 64-bit), but is passed to
+> gen_pool_has_addr() and gen_pool_free() which expect an unsigned long. 
+> 
+> On 32-bit architectures with 64-bit DMA addresses (like
+> CONFIG_ARCH_DMA_ADDR_T_64BIT), this will silently truncate the upper 32
+> bits. If a chunk crosses a 4GB boundary in its lower 32 bits, the end
+> address could wrap around, causing gen_pool_has_addr() to fail the bounds
+> check and permanently leak memory via this WARN_ON path.
+
+Let's defer pre-existing issues to future work?
+
+> 
+> > +				       niov_size)))
+> >  		return;
+> >  
+> > -	gen_pool_free(binding->chunk_pool, dma_addr, PAGE_SIZE);
+> > +	gen_pool_free(binding->chunk_pool, dma_addr, niov_size);
 > >  }
-> >
-> > +static void handle_exit_pkvm_state(struct kvm_vcpu *vcpu, int exceptio=
-n_index)
-> > +{
-> > +     int exception_code =3D ARM_EXCEPTION_CODE(exception_index);
 > [ ... ]
-> > +     if (exception_code =3D=3D ARM_EXCEPTION_TRAP ||
-> > +         exception_code =3D=3D ARM_EXCEPTION_EL1_SERROR ||
-> > +         ARM_SERROR_PENDING(exception_index)) {
-> > +             kvm_call_hyp_nvhe(__pkvm_vcpu_sync_state);
-> > +             vcpu_set_flag(vcpu, PKVM_HOST_STATE_DIRTY);
-> > +     } else {
-> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
->
+> > @@ -288,7 +295,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+> >  
+> >  		owner->area.base_virtual = virtual;
+> >  		owner->base_dma_addr = dma_addr;
+> > -		owner->area.num_niovs = len / PAGE_SIZE;
+> > +		owner->area.num_niovs = len >> niov_shift;
+> >  		owner->binding = binding;
+> >  
+> >  		err = gen_pool_add_owner(binding->chunk_pool, dma_addr,
+> 
 > [Severity: High]
-> Does clearing the dirty flag on IRQ exits result in dropping asynchronous
-> host modifications to vCPU system registers?
->
-> When an external IRQ triggers during guest execution, handle_exit_pkvm_st=
-ate()
-> clears the dirty flag. If the host's IRQ handler asynchronously updates t=
-he
-> host's vcpu->arch.ctxt (for example, kvm_pmu_perf_overflow() setting
-> PMOVSSET_EL0), flush_hyp_vcpu() will skip syncing this updated state on t=
-he
-> next guest entry.
->
-> When the guest later traps, handle_exit_pkvm_state() calls
-> __pkvm_vcpu_sync_state(), which overwrites the host's updated context wit=
-h the
-> hypervisor's stale context, permanently erasing the asynchronous update.
->
-> > +     }
-> > +}
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index 2db56146ec493..4a8445b636e60 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> [ ... ]
-> > @@ -172,7 +214,17 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *h=
-yp_vcpu)
-> >       fpsimd_sve_flush();
-> >       flush_debug_state(hyp_vcpu);
-> >
-> > -     hyp_vcpu->vcpu.arch.ctxt        =3D host_vcpu->arch.ctxt;
-> > +     /*
-> > +      * If we deal with a non-protected guest and the state is potenti=
-ally
-> > +      * dirty (from a host perspective), copy the state back into the =
-hyp
-> > +      * vcpu.
-> > +      */
-> > +     if (!pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
-> > +             if (vcpu_get_flag(host_vcpu, PKVM_HOST_STATE_DIRTY))
-> > +                     flush_hyp_vcpu_state(hyp_vcpu);
-> > +     } else {
-> > +             hyp_vcpu->vcpu.arch.ctxt =3D host_vcpu->arch.ctxt;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this unconditionally overwrite the
-> protected guest's register context with the untrusted host context?
->
-> In flush_hyp_vcpu(), this line allows the host EL1 to arbitrarily modify =
-the
-> protected guest's general purpose and system registers, bypassing pKVM's =
-guest
-> confidentiality and integrity guarantees.
->
-> > +     }
-> >
-> >       /* __hyp_running_vcpu must be NULL in a guest context. */
-> >       hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu =3D NULL;
-> [ ... ]
-> > @@ -203,9 +255,13 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
-p_vcpu)
-> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
-> >       sync_debug_state(hyp_vcpu);
-> >
-> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
-> > -
-> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
->
-> [Severity: High]
-> Does removing the synchronization of hcr_el2 break virtual SError injecti=
-on and
-> cause an infinite loop of virtual SErrors?
->
-> When the host injects a virtual SError by setting HCR_VSE in its local
-> hcr_el2 copy, the guest takes the SError, and the hardware clears HCR_VSE=
- in
-> the hypervisor's active hcr_el2.
->
-> Without this line, the hypervisor's cleared state is never synchronized b=
-ack
-> to the host. The host's copy permanently retains HCR_VSE=3D1, and on ever=
-y
-> subsequent guest entry, flush_hyp_vcpu() will copy HCR_VSE=3D1 back to th=
-e
-> hypervisor, endlessly re-injecting the SError.
->
-> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
-> > +             host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this leak the protected guest's
-> registers back to the untrusted host?
->
-> Similar to the issue in flush_hyp_vcpu(), this line in sync_hyp_vcpu() co=
-pies
-> the protected guest's register context to the untrusted host on exit, whi=
-ch
-> violates pKVM's threat model guarantees.
->
-> > +     } else {
-> > +             /* Keep PC (tracepoint) and PSTATE (vcpu_mode_is_bad_32bi=
-t) current. */
-> > +             host_vcpu->arch.ctxt.regs.pc =3D hyp_vcpu->vcpu.arch.ctxt=
-.regs.pc;
-> > +             host_vcpu->arch.ctxt.regs.pstate =3D hyp_vcpu->vcpu.arch.=
-ctxt.regs.pstate;
-> > +     }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715081238.18=
-91918-1-fuad.tabba@linux.dev?part=3D8
+> This is a pre-existing issue, but does this suffer from the same 64-bit to
+> 32-bit truncation? 
+> 
+> In net_devmem_bind_dmabuf() in net/core/devmem.c, gen_pool_add_owner()
+> takes an unsigned long for its virtual address parameter. Passing the
+> 64-bit dma_addr here will truncate the upper 32 bits on 32-bit systems. 
+> 
+> If two dmabuf chunks happen to share the same lower 32 bits, this
+> truncation could cause overlapping chunk registrations. This might
+> eventually lead to double allocations of the same network buffers and
+> silent data corruption.
+
+Ditto?
