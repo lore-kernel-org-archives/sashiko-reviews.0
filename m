@@ -1,137 +1,190 @@
-Received: from mail-m49212.qiye.163.com (mail-m49212.qiye.163.com [45.254.49.212])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26183EB0EC
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.212
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C252941F35B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784106469; cv=none; b=e6O8tOhwo1dYwBYBlfUmtx/SOxlXRrbdIFaSq1v2qUqkuu5QgEspSTYndjoyRTCsLsxmC8XvY8G38awQuzrbVmbI9fyfz4WdYg3fe1TTAClpokLU9Kx4l6eSTxWgBX3YCt56H+7HsoT7ZcNb17nmOvVap+mt+nHHRGRt12EmotM=
+	t=1784107160; cv=none; b=jHT4gp4Wj7D6Bnj6UHGQZYaORckRWRdDK93SB2+1QV9lOubz4JuhVN3Lh5yodFUo+Lr/W9+rFerONbscrOP7NRIg7mCXH7xk0bZcgCe+gyD5AxecjVuCV002cY38glET+iUvSLlyQ8meqGVHvS/UIgI0ezzKqlG7uCgTfW6St5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784106469; c=relaxed/simple;
-	bh=H2qnXEImwoz2zrzCd/qOrzTqaRIv16NPS/LflTFmdns=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rycafWAQ4vr3Ew++vhZgV58uRHpc57vdylNgK6m6w0tigb6t1Oy98ssfSK5OLkBt12OKE73a0joeM5GqlGdGW+blrTy7wZe2BGhcuZTnuEf0URZdM3DRKEzgdjoXoZA4+Kd2GoUgDRxmwslU75uAXkBhO1Nb12dWg5u3lJgnGAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=D5eEkzfW; arc=none smtp.client-ip=45.254.49.212
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+	s=arc-20240116; t=1784107160; c=relaxed/simple;
+	bh=E4zDmmpmeZaORO/vPb3fiEfTwfrYdFUlhgjCMr17hwI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EKef92pwGJrwkwC/kDskDio/uYCmh3vyTK8MqczjUy9GWyvWTnTIPRy+2jxmSkMBPsP6OY8WfE3Gmg6rMmAhjYU6Y88EVfFnRPpjItDuoRgNWiN1LNJpUio4Biq3NiLGfikscm+OiJQDsJJlepSRq/aL7yCXVG4X3OXGdp7MZSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=B0ATY+Rr; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="D5eEkzfW"
-Received: from [172.16.12.74] (unknown [61.154.14.86])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4644b288e;
-	Wed, 15 Jul 2026 16:32:08 +0800 (GMT+08:00)
-Message-ID: <00d3f58e-73bb-41da-a2df-dfeeca644b6f@rock-chips.com>
-Date: Wed, 15 Jul 2026 16:32:07 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="B0ATY+Rr"
+X-Gm-Message-State: AOJu0YyAsoubbOhZQTUmjgcu71QbU59Qg6MmdXZEDJWI0DKnrUOfYHGM
+	dBRGs2g1okdrJTmkhMVNE60F0kamlkJnqRRMxZPmVl1vjPwTI4nOCPzPNesiYzId11t8EnokMiX
+	eqHgmSvhtLMPGOliBTdSkAeObvN4gtVNI/8CQ2hMO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784107153;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rjn1CF6e23GD6w9GNHyPRfdKmhPZEOpgmcfSe8x/Z7Y=;
+	b=B0ATY+RrxxaJqDfJA+NGMPxF3Vctf8Grd40roxDe0Rvu0QrziukUHh3mQyS/AOXdpvtrth
+	wXFu+QxGgpfncCAcQOsKPX5wwiibBsxb6IjrfHsbpA9vSRSKNOJ6QqBp13OC4jiidcDf2t
+	HAfbi9KgFBWSldHz2X/oLu8rDwXI42A=
+X-Received: by 2002:a05:622a:53cb:b0:51c:ba4f:9d14 with SMTP id
+ d75a77b69052e-51d7bd70c65mr25990601cf.17.1784107149447; Wed, 15 Jul 2026
+ 02:19:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory samsung
- DP DT properties
+References: <20260715081238.1891918-1-fuad.tabba@linux.dev>
+ <20260715081238.1891918-7-fuad.tabba@linux.dev> <20260715083708.68D2A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260715083708.68D2A1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Wed, 15 Jul 2026 10:18:32 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTwWUCHfPuiO3cJD4KAqNq_LvPotRiaABqUmfK08EmKOyQ@mail.gmail.com>
+X-Gm-Features: AUfX_mxdMLfioSdsNDXgzAuLNv3ySH5AAzK1PAR-zfK_ZUTlW3ycQsl3sgu-zFU
+Message-ID: <CA+EHjTwWUCHfPuiO3cJD4KAqNq_LvPotRiaABqUmfK08EmKOyQ@mail.gmail.com>
+Subject: Re: [PATCH v6 6/8] KVM: arm64: Minimise EL2's exposure of host VGIC
+ state during world switch
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org,
- dri-devel@lists.freedesktop.org, robh@kernel.org,
- Luca Ceresoli <luca.ceresoli@bootlin.com>
-References: <20260707040613.1992841-1-damon.ding@rock-chips.com>
- <20260707040613.1992841-4-damon.ding@rock-chips.com>
- <20260707041711.4F7351F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Damon Ding <damon.ding@rock-chips.com>
-In-Reply-To: <20260707041711.4F7351F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0a9f64e79dc103a8kunmb5bc9ffe10ec8e
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCShhLVkpIGE5KGkkYQktLSFYVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
-	9PT0hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=D5eEkzfWlQsu8P+ISq0oa6wJ8Fp89x3afKPHLzKZvgX2lw9+6aZwVlxKVWZEnPs8FJw9gB1HyUInUGo5sG6lF8usQP/Cti1YYzJXaqiAg3P+iHzT5vpLiFPZi78Tbf+TYkyKnMW/6neIZfvs9qsVEtaBK6JQyK+xJMcYCB+BA98=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=5k3VLyTE2W0brh6QXzfvnZyb5UNm/t6xk2HiFeq09E0=;
-	h=date:mime-version:subject:message-id:from;
+Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
+	Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On 7/7/2026 12:17 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Failing probe when deprecated DT properties are missing breaks DT ABI and prevents their deprecation.
+On Wed, 15 Jul 2026 at 09:37, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [High] handle___vgic_v3_save_aprs silently overwrites host modification=
+s to vgic_vmcr with a stale value.
+>
+> Pre-existing issues:
+> - [Critical] The patch addresses the host-pointer trust vulnerability for=
+ GICv3 but leaves the identical vulnerability open for GICv5.
+
+Both already covered:
+https://lore.kernel.org/all/CA+EHjTyGULmVCgyoya3bXG4gRj0OYFE1gnJLhNE6kvCrZF=
+tXyQ@mail.gmail.com/
+
+/fuad
+
+
+
 > --
-> 
-> --- Patch [3]: [PATCH v6 3/5] drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties ---
-> commit b573dba50acc6087122ffa4a65680322f4d004f8
-> Author: Damon Ding <damon.ding@rock-chips.com>
-> 
-> drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
-> 
-> This commit reverts a change that made the samsung,link-rate and
-> samsung,lane-count properties optional for Exynos DP. It adds error checking
-> to fail the probe early if these properties are missing, aiming to prevent
-> link training failures caused by zero values.
-> 
->> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->> index 8cf6b73bceac0..293d8adfe9856 100644
->> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>
+> --- Patch [6]: [PATCH v6 6/8] KVM: arm64: Minimise EL2's exposure of host=
+ VGIC state during world switch ---
+> commit d47381d6be1828e59e8906a9d69d3c104d673dc3
+> Author: Marc Zyngier <maz@kernel.org>
+>
+> KVM: arm64: Minimise EL2's exposure of host VGIC state during world switc=
+h
+>
+> This commit modifies the world switch to stop EL2 from dereferencing the =
+host's
+> vgic_v3_cpu_if pointer wholesale. It copies only vgic_vmcr and active pri=
+ority
+> registers to the hyp-side state.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > index 45d717889f6ea..f3233ee343a39 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
 > [ ... ]
->> @@ -1258,10 +1259,14 @@ static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)
->>   		 * NOTE: those property parseing code is used for
->>   		 * providing backward compatibility for samsung platform.
->>   		 */
->> -		of_property_read_u32(dp_node, "samsung,link-rate",
->> -				     &video_info->max_link_rate);
->> -		of_property_read_u32(dp_node, "samsung,lane-count",
->> -				     &video_info->max_lane_count);
->> +		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
->> +			return dev_err_probe(dp->dev, -EINVAL,
->> +					     "Failed to get samsung,link-rate\n");
-> 
+> > @@ -508,16 +520,63 @@ static void handle___vgic_v3_init_lrs(struct kvm_=
+cpu_context *host_ctxt)
+> >
+> >  static void handle___vgic_v3_save_aprs(struct kvm_cpu_context *host_ct=
+xt)
+> >  {
+> > -     DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+> > +     struct pkvm_hyp_vcpu *hyp_vcpu;
+> > +     struct kvm_vcpu *host_vcpu;
+> >
+> > -     __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
+> > +     host_vcpu =3D get_host_hyp_vcpus_from_vgic_v3_cpu_if(host_ctxt, 1=
+,
+> > +                                                        &hyp_vcpu);
+> > +     if (!host_vcpu)
+> > +             return;
+> > +
+> > +     if (unlikely(hyp_vcpu)) {
+> > +             struct vgic_v3_cpu_if *hyp_cpu_if, *host_cpu_if;
+> > +             int i;
+> > +
+> > +             hyp_cpu_if =3D &hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3;
+> > +             __vgic_v3_save_aprs(hyp_cpu_if);
+> > +
+> > +             host_cpu_if =3D &host_vcpu->arch.vgic_cpu.vgic_v3;
+> > +             host_cpu_if->vgic_vmcr =3D hyp_cpu_if->vgic_vmcr;
+>
+> [Severity: High]
+> Does this assignment overwrite host modifications to vgic_vmcr with a sta=
+le
+> value?
+>
+> When userspace modifies a VMCR field (like SYS_ICC_PMR_EL1) via
+> KVM_SET_ONE_REG, the execution flow modifies the host state:
+>
+> kvm_vcpu_ioctl()
+>   vcpu_load()
+>     handle___vgic_v3_restore_vmcr_aprs()
+>   // ioctl modifies host_cpu_if->vgic_vmcr
+>   vcpu_put()
+>     handle___vgic_v3_save_aprs()
+>
+> Since __vgic_v3_save_aprs() does not read ICH_VMCR_EL2 from the hardware,
+> hyp_cpu_if->vgic_vmcr contains the old value. Does copying it back to
+> host_cpu_if->vgic_vmcr here cause the userspace changes to be lost?
+>
+> > +             for (i =3D 0; i < ARRAY_SIZE(host_cpu_if->vgic_ap0r); i++=
+) {
+> > +                     host_cpu_if->vgic_ap0r[i] =3D hyp_cpu_if->vgic_ap=
+0r[i];
+> > +                     host_cpu_if->vgic_ap1r[i] =3D hyp_cpu_if->vgic_ap=
+1r[i];
+> > +             }
+> > +     } else {
+> > +             __vgic_v3_save_aprs(&host_vcpu->arch.vgic_cpu.vgic_v3);
+> > +     }
+> >  }
+> [ ... ]
+>
 > [Severity: Critical]
-> Does failing the probe when this property is missing break the DT ABI?
-> 
-> Since samsung,link-rate is a deprecated property, a modern schema-compliant
-> Device Tree might intentionally omit it. If a system boots with such a DT,
-> this check will fail the probe with -EINVAL and disable the display.
-> 
-> Could the driver instead fall back to hardware maximums or sensible defaults
-> when the deprecated property is absent, rather than returning an error?
-> 
-
-I'm afraid it's difficult to provide a universal sensible default value 
-here.
-
-The samsung,lane-count and samsung,link-rate values vary significantly 
-across Exynos DP device trees, so a generic fallback to hardware 
-maximums cannot guarantee stable link training.
-
-Even though these two properties are marked deprecated, all existing DTS 
-files in our projects have already populated them completely. Moreover, 
-the current link training logic relies on these two parameters; omitting 
-either will directly cause link training failures at runtime.
-
-Therefore, retaining the mandatory property check in probe is a 
-reasonable approach for now.
-
->> +		video_info->max_link_rate = val;
->> +		if (of_property_read_u32(dp_node, "samsung,lane-count", &val))
->> +			return dev_err_probe(dp->dev, -EINVAL,
->> +					     "Failed to get samsung,lane-count\n");
-> 
-> [Severity: Critical]
-> Does making samsung,lane-count mandatory similarly break backward compatibility
-> for valid Device Trees that have intentionally omitted this deprecated property?
-> 
-
-I don't think so. Missing either property will inevitably cause link 
-training failure, and all functional DTs have these deprecated 
-properties filled in already.
-
->> +		video_info->max_lane_count = val;
->>   		break;
->>   	}
->>
-> 
-
-Best regards,
-Damon
-
+> This is a pre-existing issue and was not introduced by the patch under re=
+view,
+> but does the same pattern remain open for GICv5?
+>
+> Looking at handle___vgic_v5_save_apr():
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_save_apr() {
+>         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+>         __vgic_v5_save_apr(kern_hyp_va(cpu_if));
+> }
+>
+> And similarly in handle___vgic_v5_restore_vmcr_apr():
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_restore_vmcr_apr() {
+>         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+>         __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
+> }
+>
+> Since these handlers apply kern_hyp_va() to an untrusted host pointer wit=
+hout
+> validation, and kern_hyp_va() is idempotent for already-hyp-tagged pointe=
+rs,
+> could a malicious host provide a pointer to EL2 private metadata?
+>
+> Could this allow the host to arbitrarily read or write EL2 memory?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715081238.18=
+91918-1-fuad.tabba@linux.dev?part=3D6
