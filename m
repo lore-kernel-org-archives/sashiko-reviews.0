@@ -1,98 +1,240 @@
-Received: from out30-98.freemail.mail.aliyun.com (out30-98.freemail.mail.aliyun.com [115.124.30.98])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED68429AAFA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:33:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641C7322B9F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784122414; cv=none; b=b6uaJL8cX6i/4dnOn3JXwCsIlspxUvJV9dukXqyLHm2sD5ZRMV4S7OidYDxOQtbsfjmgbiK4fezZqp8b7DXAhV8HBGZjS68Hg5dSHRaCJ4GyWBfdMJqpytuDnXJptIC1ewBkKAyR+17fn5i5WBgbuFzRcjvyubhuiT3C0NbuxP8=
+	t=1784123542; cv=none; b=n+nexJXa1DCJMqGEoYBdDXYqhfTZoDsBHnxD12+Zww94WEI/yaSrGSm3rhN90ivtFuQ5iWXELfxPTHCYjXABPjYypmkmAknhP0PbxQOX5t3VaED/t2cRczxj+wzvZ44ye4Te+B+6gazdfBF5eWBcpHFTtuJRuA9ZRoA63XYtm2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784122414; c=relaxed/simple;
-	bh=yhK+gWds0kqmJMK8oYokhqCx2haI6WBmsi0ir4zS+eM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P/V3yUW5YyKuR6jCOn1/w4rawIHlM/ZVWfzAiU96aWaUyHa+Wfagj+9Veu7O+7Ytb2UQHf5Tu9zXFNVrVBBuoZi5LABf89yd1gLZzp028JdCjKCOIxHUNPC8AggwZpykGGHp7bXTu935lzNWa799jqByFpFsBmkWCMoKrCdIx88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=sUDluyrn; arc=none smtp.client-ip=115.124.30.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	s=arc-20240116; t=1784123542; c=relaxed/simple;
+	bh=FW104Yn0vU4ziR3QiwwF/Tc3uTUX6RTtPXAjGc7bIcw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cFQ6mvAmdN1IRdTIGCrTHrF/3vBt1ixwyUZ/fd4gMH3qO34HscEp4Z0UUaSCH5GtvK04HjODa3DKs4u4OdI7nJl38uwvXrBw5I2C+8HEgHeJrOE2Xx2jEjuU5D6pcf77zpavAPbRscdAyxOt5s60pw45EeuwrrHaPUkHmmovmfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Ij2YCYZr; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="sUDluyrn"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1784122406; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	bh=JCr+B/B1w1jArutjB0fuPO9lz1kJ/HqQv993yIGFPyE=;
-	b=sUDluyrnFbcer8Fa7e4riQp0fGNItGVp4rE+dX5S11S7OiVKfd31XUpfy6OBVCKkQxZZoI0NqYOuFPDVRwDI1iJUHsikTpH0WuyFRA3Do0J/GkTJLe4J/dJsPn30KB++p3bE+dr6Y1mpuB17t0r6VB5d/v9MJzmgJaiY7lgSycw=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R561e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045133197;MF=cp0613@linux.alibaba.com;NM=1;PH=DS;RN=11;SR=0;TI=SMTPD_---0X79XPtG_1784122400;
-Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com fp:SMTPD_---0X79XPtG_1784122400 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Wed, 15 Jul 2026 21:33:23 +0800
-From: Chen Pei <cp0613@linux.alibaba.com>
-To: dave.jiang@intel.com,
-	alison.schofield@intel.com,
-	bhelgaas@google.com,
-	rafael@kernel.org,
-	lenb@kernel.org,
-	guoren@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org,
-	linux-cxl@vger.kernel.org,
-	linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ACPI: PCI: Clear driver_data on all error paths in acpi_pci_root_add()
-Date: Wed, 15 Jul 2026 21:33:10 +0800
-Message-ID: <20260715133020.3282712-1-cp0613@linux.alibaba.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260707122549.C01DC1F00A3A@smtp.kernel.org>
-References: <20260707121258.11640-1-cp0613@linux.alibaba.com> <20260707122549.C01DC1F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Ij2YCYZr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784123540;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=wEQR9a2ZwOoKfO74/7iDwCv+D8Y4eljlpUTeLzkGT4k=;
+	b=Ij2YCYZrQ3S1OeBXt2yf0d9YhLiWAc3McdyIR0gt6zjBX7dy+ZWBCK4BJwe4JNc4ibV0g9
+	EE2eb/JSkH5jidlttY+LV2FxXYy291ofMt8y7lE1B02IzMVCIgXXwlMS3Fqv6L4TiklNVg
+	OQFZN4vj6wj+Edm6eia2oWlZ+jAW4oA=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-179-v2_hvZDrO_qyiRiLuNVw4g-1; Wed, 15 Jul 2026 09:52:15 -0400
+X-MC-Unique: v2_hvZDrO_qyiRiLuNVw4g-1
+X-Mimecast-MFC-AGG-ID: v2_hvZDrO_qyiRiLuNVw4g_1784123534
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c88da04b719so2049443a12.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 06:52:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784123534; x=1784728334;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wEQR9a2ZwOoKfO74/7iDwCv+D8Y4eljlpUTeLzkGT4k=;
+        b=SZqKKCwS+W4VXNq1rEJJigprivdCvE/2KWyNPJ/8KpKLtlxG2nDy0WnKf9DjIJUt/3
+         g7F8xHraF/KUHnwN5JsSRTHkutSTeWK0D/FX1eS0RvBkq+LVpLQgr/bC9818hneztS6k
+         MbTOaWzqzX0G92OzayDLdbW3PYJZoCPoTaA6fl5f1pbKQ4x99AJab8eUqrCKZ7rCMO6X
+         6BMIM6kaWvAs00+67Hk03wCuIuZO2HTHoWY1S8rktAImAfrsItFi+gTE77H/M8zy0rd2
+         BbRihST9r/uEpVCDlRfD7Ww0Oi2/x0jINS01L685e4rmlWsycbuIGjyr90rLcEagSWq2
+         5x5Q==
+X-Gm-Message-State: AOJu0YyzVXkjpJq92NI0FJkT90mey7CqQQrOYyEEsaoA7ypvvUROD86c
+	i2kh9lFhLM/Ue1Wj5faC6oAqAgKM1VRU9eIKtswiMqR4kvdS/9BEfi6qniw9pNbsGBn0ZJEHN+V
+	jF4pkgOcv1A5fMp7+ZPCN/gmhbYDm8t8gTJZmyZuHaZzXSOxrHXDHkALQ/60IDHTFQpKgKrmi3e
+	uwekkiUBo/P8HsE0vNDtYAVKIHtLm+m6HADASXbJHaHkLnwqeXgrZVE1o=
+X-Gm-Gg: AfdE7ckVvXxP/c2ACqJ372zvD6UB5GC4DD9FqRRi5Vnm8E0B2ue/F98YcMVHVKq3xX0
+	8gMCQchj2AE2I+Xhv7RqEGhNrNr5eeWXrNHjCDwMqBPrd9nLI+VLNSuBpldZENPltd8jBpGITIf
+	0U3AXRTwpLicDveC8PfhRqEyCT7gdUxhUmO1iWnA1WbK31Ehe73qdyjwuKciUq2hgH1sY4r+Rch
+	fryFV9hL3Q6J0V07dibdZFjiw4=
+X-Received: by 2002:a05:6a21:32a2:b0:3bf:9cbd:9a39 with SMTP id adf61e73a8af0-3c11076d85bmr20380466637.10.1784123533593;
+        Wed, 15 Jul 2026 06:52:13 -0700 (PDT)
+X-Received: by 2002:a05:6a21:32a2:b0:3bf:9cbd:9a39 with SMTP id
+ adf61e73a8af0-3c11076d85bmr20380437637.10.1784123533101; Wed, 15 Jul 2026
+ 06:52:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20260715124235.1444895-1-aharivel@redhat.com> <20260715124839.DCB811F000E9@smtp.kernel.org>
+ <CACUOEi9wRzr2yJJiu1fAk1xYFuDu8NDbpKKzbhQ-9bZhxaKRpQ@mail.gmail.com>
+In-Reply-To: <CACUOEi9wRzr2yJJiu1fAk1xYFuDu8NDbpKKzbhQ-9bZhxaKRpQ@mail.gmail.com>
+From: Anthony Harivel <aharivel@redhat.com>
+Date: Wed, 15 Jul 2026 15:52:02 +0200
+X-Gm-Features: AUfX_mzBf6o7KTNkVIgVybdhZQDr47WvQdJ6_YsNIALK6hoAdctfeew4EC8r8T4
+Message-ID: <CACUOEi-0LGCh0ZYnsABPb=yL9H7D4dF0gnw-gHv37gge_ZzndA@mail.gmail.com>
+Subject: Re: [RFC PATCH] KVM: x86: RFC for per-VM C-state policy enforcement (KVM_CAP_CSTATE_POLICY)
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: zszKnEAJbZ5OPtdOngR0_e6b0Cucv2VyshGxrldFkLw_1784123534
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thanks for the review.=0D
-=0D
-> Pre-existing issues:=0D
-> - [High] The acpi_pci_root_remove() function frees the acpi_pci_root=0D
->   object but fails to clear device->driver_data, leaving a dangling=0D
->   pointer.=0D
-=0D
-Agreed. acpi_pci_root_remove() calls kfree(root) without resetting=0D
-device->driver_data, which leaves exactly the same dangling pointer=0D
-this patch removes from the add() error paths. I'll fix it in v2 by=0D
-also clearing device->driver_data in acpi_pci_root_remove(), so the=0D
-add and remove paths leave driver_data consistent.=0D
-=0D
-> - [High] Lockless access to `device->driver_data` causes a TOCTOU=0D
->   Use-After-Free race during hot-add failure and hot-remove.=0D
-=0D
-I don't think this is reachable, so I'll leave the locking model=0D
-unchanged:=0D
-=0D
-- driver_data is published early (device->driver_data =3D root), but the=0D
-  PCI hierarchy below this root bridge is not created until=0D
-  pci_acpi_scan_root() and pci_bus_add_devices(), both of which run=0D
-  only on the success path, after the dmar_device_add() error goto.=0D
-  During the error window there are no child PCI devices yet, so an AER=0D
-  or CXL consumer under this bridge has no way to obtain the handle and=0D
-  call acpi_pci_find_root() against a half-initialized root.=0D
-=0D
-- The early publish of driver_data is pre-existing; this patch does not=0D
-  change it, it only makes the error-path cleanup consistent.=0D
-=0D
-- ACPI .add and .remove are serialized by acpi_scan_lock, so add cannot=0D
-  race remove.=0D
-=0D
-If there is a concrete caller that can reach acpi_pci_find_root() for=0D
-this handle during the add-failure window, I'm happy to revisit. Adding=0D
-RCU or locking to the find_root() fast path otherwise seems unwarranted=0D
-for this fix.=0D
-=0D
-I'll send a v2 with the acpi_pci_root_remove() fix.=0D
-=0D
-Thanks,=0D
-Pei=0D
-=0D
-=0D
+Thanks for the review - both points are valid and I should have been
+more precise in the proposed internal flow.
+
+You're right that executing MWAIT inline in the exit handler has two
+fundamental problems:
+
+1. The VM exit clears the monitor armed state (SDM Vol 3, 27.5.5), so
+a host-side MWAIT would fall through immediately as a NOP.
+
+2. Bypassing schedule()/rcu_idle_enter() would break scheduler load
+balancing and stall RCU grace periods.
+
+The correct approach is to NOT execute MWAIT directly from the exit
+handler. Instead, KVM should go through the existing kvm_vcpu_halt()
+path ( which already handles scheduler and RCU correctly ) but enforce
+a per-VM ceiling on the C-state the host cpuidle governor is allowed
+to select.
+
+So the refined flow becomes:
+
+```
+Guest issues MWAIT with C-state hint
+    -> VM exit (MWAIT exiting =3D 1)
+    -> KVM reads per-VM max_cstate from struct kvm
+    -> enter kvm_vcpu_halt() with max_cstate constraint
+    -> host cpuidle governor selects C-state <=3D max_cstate
+    -> schedule() / rcu_idle_enter() as normal
+```
+
+The enforcement point moves from "execute a capped MWAIT" to
+"constrain cpuidle state selection within the existing halt path."
+
+I'll update the RFC with the corrected internal flow.
+
+Anthony
+
+
+On Wed, Jul 15, 2026 at 3:44=E2=80=AFPM Anthony Harivel <aharivel@redhat.co=
+m> wrote:
+>
+> Thanks for the review - both points are valid and I should have been more=
+ precise in the proposed internal flow.
+>
+> You're right that executing MWAIT inline in the exit handler has two fund=
+amental problems:
+>
+> 1. The VM exit clears the monitor armed state (SDM Vol 3, 27.5.5), so a h=
+ost-side MWAIT would fall through immediately as a NOP.
+>
+> 2. Bypassing schedule()/rcu_idle_enter() would break scheduler load balan=
+cing and stall RCU grace periods.
+>
+> The correct approach is to NOT execute MWAIT directly from the exit handl=
+er. Instead, KVM should go through the existing kvm_vcpu_halt() path ( whic=
+h already handles scheduler and RCU correctly ) but enforce a per-VM ceilin=
+g on the C-state the host cpuidle governor is allowed to select.
+>
+> So the refined flow becomes:
+>
+> ```
+> Guest issues MWAIT with C-state hint
+>     -> VM exit (MWAIT exiting =3D 1)
+>     -> KVM reads per-VM max_cstate from struct kvm
+>     -> enter kvm_vcpu_halt() with max_cstate constraint
+>     -> host cpuidle governor selects C-state <=3D max_cstate
+>     -> schedule() / rcu_idle_enter() as normal
+> ```
+>
+> The enforcement point moves from "execute a capped MWAIT" to "constrain c=
+puidle state selection within the existing halt path."
+>
+> I'll update the RFC with the corrected internal flow.
+>
+> Anthony
+>
+> On Wed, Jul 15, 2026 at 2:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>>
+>> Thank you for your contribution! Sashiko AI review found 2 potential iss=
+ue(s) to consider:
+>> - [High] VM-Exits clear the CPU's monitor event pending flag, causing ho=
+st-side MWAIT to immediately fall through (NOP).
+>> - [High] Executing MWAIT synchronously within the KVM exit handler viola=
+tes Linux scheduler and RCU invariants.
+>> --
+>>
+>> --- Patch [1]: [RFC PATCH] KVM: x86: RFC for per-VM C-state policy enfor=
+cement (KVM_CAP_CSTATE_POLICY) ---
+>> commit ba053ea08a3b49a2e72662168226ef280171ed4d
+>> Author: Anthony Harivel <aharivel@redhat.com>
+>>
+>> KVM: x86: RFC for per-VM C-state policy enforcement (KVM_CAP_CSTATE_POLI=
+CY)
+>>
+>> This RFC proposes KVM_CAP_CSTATE_POLICY, a new VM-scoped capability
+>> that lets the host set a per-VM maximum C-state ceiling. When active,
+>> KVM intercepts MWAIT, inspects the requested C-state, and enforces
+>> the ceiling by executing a capped MWAIT on behalf of the guest.
+>>
+>> > diff --git a/rfc/KVM_CAP_CSTATE_POLICY.txt b/rfc/KVM_CAP_CSTATE_POLICY=
+.txt
+>> > new file mode 100644
+>> > index 0000000000000..15439e6e7ebbf
+>> > --- /dev/null
+>> > +++ b/rfc/KVM_CAP_CSTATE_POLICY.txt
+>>
+>> [ ... ]
+>>
+>> > @@ -60,18 +60,18 @@
+>> >  3. Internal flow
+>> >  ----------------
+>> >
+>> >  When max_cstate >=3D 0 (policy active):
+>> >
+>> >    1. VMCS "MWAIT exiting" =3D 1 (intercept MWAIT).
+>> >    2. On VM exit for MWAIT:
+>> >       a. Extract the C-state hint from the MWAIT operand.
+>> >       b. Map the hint to a logical C-state level (MWAIT sub-states
+>> >          are CPU-family-specific; a translation table is needed).
+>> >       c. If requested_cstate <=3D max_cstate: execute native MWAIT wit=
+h
+>> >          the guest's original hint.
+>> >       d. If requested_cstate > max_cstate: execute MWAIT with the
+>> >          capped hint, or return to guest immediately (C0).
+>>
+>> [Severity: High]
+>> Does executing native MWAIT on the host side work as intended here?
+>>
+>> According to the Intel SDM (Vol 3, 27.5.5 Updates to Non-Register State)=
+,
+>> a VM-Exit unconditionally clears the state of the monitor hardware.
+>>
+>> Since the state established by the guest's preceding MONITOR instruction
+>> is wiped out by the VM-Exit, won't the subsequent host-side MWAIT find n=
+o
+>> armed monitor and immediately fall through as a NOP, resulting in a busy
+>> wait loop instead of entering an idle power state?
+>>
+>> [Severity: High]
+>> If we execute MWAIT synchronously within the KVM exit handler, how does
+>> this interact with the Linux scheduler and RCU?
+>>
+>> If the CPU successfully enters a deep sleep state via an inline host
+>> MWAIT, it seems the KVM vCPU thread would remain in the TASK_RUNNING
+>> state without yielding via schedule() or notifying RCU via
+>> rcu_idle_enter().
+>>
+>> Could this hide the CPU's true idle status from the scheduler, break loa=
+d
+>> balancing, and stall RCU grace periods by bypassing the host cpuidle
+>> framework?
+>>
+>> --
+>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715124235.1=
+444895-1-aharivel@redhat.com?part=3D1
+>>
+
