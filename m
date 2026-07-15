@@ -1,122 +1,158 @@
-Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113333BB9FD
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 19:20:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784143241; cv=pass; b=K+X/qoYc0eQYI2aWpRuecJWuYtAmKIu5SMpNQBqd53JGnYmrogCA4mi36iO9q5zwitQ7VK67mq1yVyHRcnQH+j3SKFA7hoNv97FdQG/XxRvHyKNdhpL4KYJD6y7rMQA37SCgNMdGDNmZ9YEQm9KYT3fOx/P3AE1V7hCbM2FsugM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784143241; c=relaxed/simple;
-	bh=z4+tLqOerfQ9USKtD/ecO7iXIoy+d2Wj8l4h5iDOk3Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IR4aRsIo7Jrs7zA2syQ4AOGGrz22bjHmmAZwLhf19hBbXSc+HgxX1BmCtxyoZOos4Sd7OmTREixvzLGJJUlhpkJYSB8ZO8UP4XEooJ885j8G4rewPBK8RFoEBOmYQ6GGJugLfKHg/1litcH7/3ya8+vci9pkox2JBvo0CvhoLfI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=Cv//09bd; arc=pass smtp.client-ip=136.143.188.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697473B2FFF;
+	Wed, 15 Jul 2026 19:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784144177; cv=none; b=M5EybN//s3lB/MUvfI2+WRWAMjgtR3rqjHaqJp5quGBqr6yIV7bV/tO99I7YxUdBACAd+8Evx7j6uQGhC1JElOcN6BThAXMGyo0ftCrecv+q52hh2z9SbJ+tB9l1VVhVFr58BIZdKJUva4G8c4TZuBNMIMBu65wPeJgDctRNxtA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784144177; c=relaxed/simple;
+	bh=nnkRURN/ufjqj1pT4Z4U6+9doJG3iWy1rUXX6RB7B18=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nlf8LKEG6J1mcbqI0EoajCA3BHL/e4RWgIcORQAqN6lye5Shj7SF0v4Nn3H5vpSZa99LRUMateFfXdwAsqy3/A50jd/38N1QzQU9WW688dJ+JlyGBJAKietv5Q9H4B33AxR6nj56ocZV9aezl1p62snlrTJ80YFNsw1Dbpxq5H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=kbQauLnx; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="Cv//09bd"
-ARC-Seal: i=1; a=rsa-sha256; t=1784143217; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=a1MKzUZJlGHaLY4VDJ83Rxs7T07th72BmzmxgQaXO8JGgQqoAo2KLnQRmLJahPmYDN3cygMuwQbi1vBEbCFnE1w4Sgxun17NU/31PeTucqxxcUI/kjrcXoqL+8GetRX3oJpJtm215yENFaRVlaSBcYMZuM18bZM4s/ZPojJincI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1784143217; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=z4+tLqOerfQ9USKtD/ecO7iXIoy+d2Wj8l4h5iDOk3Q=; 
-	b=CxNMwXe1PQUtB440m0mm7pKOh+7c/p3+M/fHByUl9AhWl3/dEw4pOL9f+3YEs0BzeN6VdzSMr6/AfWSo03kgFwKTlPA9y+WjHQjRW52WrXCVJa+NinTbdWysVcxb5HFlGZgyOPnqXoIcoWz3urt5ki06wcZoAvNN0I+ldkNy04A=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784143217;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=z4+tLqOerfQ9USKtD/ecO7iXIoy+d2Wj8l4h5iDOk3Q=;
-	b=Cv//09bdWp79RVzRtwlDtFY49fyEBWmbOevhC0LGVxPbxC8bKerHT6FvwTztsTG4
-	ahMG2lRzK6LyO+KS4RnSatrUqDpZ7JWI2cJpa5aVrXvMUO516akh2MzqnwxgwxkKmXE
-	p/1fvFHlQ89dXnJY+Uo5t62wZwMUKi8tmYQYPwCg=
-Received: by mx.zohomail.com with SMTPS id 1784143215185954.3482006909511;
-	Wed, 15 Jul 2026 12:20:15 -0700 (PDT)
-Received: by venus (Postfix, from userid 1000)
-	id DAA25180820; Wed, 15 Jul 2026 21:20:11 +0200 (CEST)
-Date: Wed, 15 Jul 2026 21:20:11 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Igor Paunovic <royalnet026@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org, kernel@collabora.com, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 1/2] dt-bindings: media: snps,dw-hdmi-rx: add
- #sound-dai-cells
-Message-ID: <alfcy_rcmjrKJb0H@venus>
-References: <20260715051939.64652-1-royalnet026@gmail.com>
- <20260715051939.64652-2-royalnet026@gmail.com>
- <20260715055448.AEA021F000E9@smtp.kernel.org>
- <CAEWPSH7OqecBKvxUVtwFe4B9y0-=gsQ7vy6kdBHx-Nsne-Ct1g@mail.gmail.com>
- <aleBPE5YHlC7pLpi@venus>
- <CAEWPSH4AYfSR_DBcLFr6a=SJxnAAcjoK612v+g-TpP046qTBmg@mail.gmail.com>
- <alfCQd689ATJOdwM@venus>
- <CAEWPSH6L79Kb9wQna9Cg8yGMJAN88__PwsuXvA+oo+fPStLoYg@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="kbQauLnx"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=jhC1DKpJMRCe2eiBnTkhhbAIpvBFIzv1cTqob4CLHs8=;
+	b=kbQauLnxlQu4gKuCJ+aKwz/TVLDb1yH8E9zYLuyQBNiMUH34aooZc+1U4S3ORON4YVjEEN14j
+	rSYLQ/VAYi7CsK+2jtf6ymfRMi5NoMZjb53VarGE5y167f9eVaEJjMlHXcJWIDpyhSb8SCxbee7
+	xeBdAq57CE3nCPiMZT0MU4w=
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4h0mcR4vS9zHnGdq;
+	Thu, 16 Jul 2026 03:35:51 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 7EED240575;
+	Thu, 16 Jul 2026 03:36:04 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 15 Jul 2026 22:36:03 +0300
+Message-ID: <0a0741a2-4a43-48d6-8c22-5a4774617236@huawei-partners.com>
+Date: Wed, 15 Jul 2026 22:36:03 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dxswjltreapgibcc"
-Content-Disposition: inline
-In-Reply-To: <CAEWPSH6L79Kb9wQna9Cg8yGMJAN88__PwsuXvA+oo+fPStLoYg@mail.gmail.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/284.121.97
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] mm/damon/sysfs: support hugepage_mem_bp quota goal
+ metric
+To: SJ Park <sj@kernel.org>
+CC: <sashiko-reviews@lists.linux.dev>, <damon@lists.linux.dev>
+References: <20260715151615.99767-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260715151615.99767-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
 
---dxswjltreapgibcc
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [RFC PATCH 1/2] dt-bindings: media: snps,dw-hdmi-rx: add
- #sound-dai-cells
-MIME-Version: 1.0
 
-Hi Igor,
+On 7/15/2026 6:16 PM, SJ Park wrote:
+> On Wed, 15 Jul 2026 17:47:38 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>> Hi SJ,
+>>
+>> On 6/17/2026 7:15 AM, SeongJae Park wrote:
+>>> On Tue, 16 Jun 2026 22:35:21 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+>>>
+>>>>
+>>>>
+>>>> On 6/16/2026 6:21 PM, sashiko-bot@kernel.org wrote:
+>>>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>>>>>
+>>>>> New issues:
+>>>>> - [Low] The new `DAMOS_QUOTA_HUGEPAGE_MEM_BP` metric is exposed via sysfs but lacks required documentation updates.
+>>>>>
+>>>>> Pre-existing issues:
+>>>>> - [Critical] Potential divide-by-zero in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` due to an unhandled zero denominator.
+>>>>> - [High] 32-bit integer overflow in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` when calculating memory ratios.
+>>>>> --
+>>>>>
+>>>>> commit be304699fb94d4d73bd979237fb4d7b08b7216f7
+>>>>> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>>>
+>>>>> mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+>>>>>
+>>>>> DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
+>>>>> This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
+>>>>>
+>>>>>> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+>>>>>> index 329cfd0bbe9f3..4b5429a5b4158 100644
+>>>>>> --- a/mm/damon/sysfs-schemes.c
+>>>>>> +++ b/mm/damon/sysfs-schemes.c
+>>>>>> @@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+>>>>>>  		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+>>>>>>  		.name = "node_eligible_mem_bp",
+>>>>>>  	},
+>>>>>> +	{
+>>>>>> +		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+>>>>>> +		.name = "hugepage_mem_bp",
+>>>>>> +	},
+>>>>>
+>>>>> [Severity: Critical]
+>>>>> This isn't a bug introduced by this patch, but exposing this metric directly
+>>>>> to userspace makes a potential divide-by-zero triggerable by users
+>>>>> configuring DAMON quotas.
+>>>>>
+>>>>> In mm/damon/core.c:damos_hugepage_mem_bp(), the denominator is computed as:
+>>>>>
+>>>>>     total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+>>>>>
+>>>>> Due to per-CPU vmstat lag or an idle system, the free pages counter can equal
+>>>>> totalram_pages(), resulting in total being 0. This is then passed to
+>>>>> mult_frac():
+>>>>>
+>>>>>     return mult_frac(thp, 10000, total);
+>>>>>
+>>>>> This inherently computes thp / total, causing a strict division by zero and a
+>>>>> kernel panic. The same issue exists in damos_get_in_active_mem_bp() where
+>>>>> total = active + inactive, which can be 0 if the LRU lists are empty.
+>>>>>
+>>>>> Should a zero-check on total be added before performing the division?
+>>>> DAMON is enabled after the system is fully loaded. total will not be 0 by then.
+>>>
+>>> Could you please further clarify what "system is fully loaded" means, reaards
+>>> to what Sashiko is claiming, particularly the per-CPU vmstat lag?
+>>>
+>>>
+>>> Thanks,
+>>> SJ
+>>>
+>>> [...]
+>>>
+>>
+>> What I meant is the system already initialized after booting. The thing
+>> is that by the time the sysadmin sets up DAMON, vmstat should show at
+>> least some memory usage, not 0. That was my guess, but I may be wrong.
+> 
+> I think that's a fair argument.  And I also not quite sure.  But having zero
+> due to the races in per-CPU vmstat sounds possible in an extreme and weird lab
+> environments.
+> 
+>>
+>> If my initial thought was wrong, I can just add a guard there.
+> 
+> So I'm not really sure if you're wrong.  But adding the guard would be simple.
+> I'd recommend just adding the guard instead of get wrestle on this thoery for
+> now.  Does that make sense?
+Yes, makes sense. I will add a guard.
+> 
+> Thanks,
+> SJ
+> 
+> [...]
 
-On Wed, Jul 15, 2026 at 07:41:22PM +0200, Igor Paunovic wrote:
-> Hello Sebastian,
->=20
-> > Not implementing all features in the driver is perfectly fine.
-> > Ideally you return -ENOTSUP if somebody tries to use the S/PDIF
-> > DAI interface instead of I2S.
->=20
-> Done for v2: the codec registration now exposes the S/PDIF DAI as
-> well, so the DAI indexes match the binding (0 =3D I2S, 1 =3D S/PDIF),
-> and hw_params() rejects the S/PDIF interface with -EOPNOTSUPP until
-> that path is actually wired up.
+-- 
+Asier Gutierrez
+Huawei
 
-Sounds good to me.
-
-Greetings,
-
--- Sebastian
-
---dxswjltreapgibcc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmpX3WsACgkQ2O7X88g7
-+poCkw/+JPyyaiO3x/Jodfj5BW9q2m4XxQh8EWQroBhi8WUgGUPzGl6Z+JL6no3E
-gVYlbNBbc59Tjd6bXpiyuvTizQH3MyuXkuKEF86KZWFr4dfVJZ9V0wSiljNc9ZD3
-XBHRLZ9gpOzP4ApWeaYdAi7kij80XKa7DEoQvUpNMSSZzAUDnZ8ha+pdX5cwQ+HP
-YqTgGpQtRYD1xrnHC/NjKXxGzWo9BuDzeTIhTn6yMV96gyaRnPEhZ6LEPkSGWkXf
-ImP31JzYd7iRieyzgJX9Zfk/+g8781+Y4iZoaQuhVvN0LUJE5G+6R0HDxC1eWm+E
-lmdqJTwbDsAPYYe2I6TDZWTZO/dQsL6jxz8qrvFVppFXhCYkjWU0/NtMtcFbAaeH
-BVlbJn7qLUhNVeRqGFSb+jQdh1ZZAHIIEt+PKzlpaFcTZ0HYOPBeVY7rkNjKphg0
-oQTWMjR8To2qnJxq+XVKJZBfvH1ktGEvBg83Dt7pGdxka/tMUeZ3P+7YUWTFUJSO
-05lTujsuG5ocilVJGuouDWyPbDk0axtDYAO/ojbEpSWCzH3mit1Aci0e83zyGl7u
-Ve3aAA2AYOyvHpLeB5fsUpVbuS0V8Rdo/Zq41R50RI6Zwf6en6A4EB0wZEN92NQi
-hBCUwNt9vlLPJNi8QFzumPYcptaWIhFzVaUphXNfBEi40YejFDM=
-=Q2Qd
------END PGP SIGNATURE-----
-
---dxswjltreapgibcc--
