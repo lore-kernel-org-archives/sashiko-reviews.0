@@ -1,178 +1,234 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077D8420899;
-	Wed, 15 Jul 2026 09:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528D9422533
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784107175; cv=none; b=ngMycn/Um1yh7HVDAGluSJUvs+GYj4ZY8yAu/nqfHfR8Z47M2WcCJr/Wmqz47kPpmekOCQj0inRTUneEmrocbachdiBsowTxI2xpvCgYxAZKhnzmOzD0HE3DH77Sr5Gz00dsnuCFIjYbSZhlxL9MH3WOFukU5qFkTplP/fr+S4A=
+	t=1784107244; cv=none; b=p5aCrcGGhVhMlHLmVXnVJBi2pGdGRx3lzWs/D03dGMLU01w55yS6WhMq3x4HX9GFJA0DcIpOyzJfEg6aftRJlwlRQq8RFd5Fcp3zQ44Rt63aYwbcnZhv1TVP5TXo87uUOK00GP7+nej7up6hz54MTzpvWJmd59AtNAd3JLiOUZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784107175; c=relaxed/simple;
-	bh=nUk7g+IhB5Nyz/prQTTYbYB25//DpD+rB1OcRETpl5E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rpyJroKk8prBZKs/ic5/k0rEay1noGi1Y7Gb8+8KEJulLRLLyzwkK4WqxlZPCTOfS19Vb5wAleJaD8T3fzT4rZShn8rkHAMAsvyBCfwZS9GuXU/zV43j3AfaBRcAAtIEyRk+Pq1f1lsl4iMyC3qgwE1b9c+5xhxChvHpx+jAA50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Kkt4dOEb; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1784107244; c=relaxed/simple;
+	bh=0aF2tXqVSZJ+KzEI8hvUhfrB4O8Tj5s5ExsezUdork0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=icKjly9H5+mlFfw8llbbdI/YPEp4ghM8DMlncc0jQbvqQ7dbdzaoNzgkQKRdCycKaD0ZDPDxXz5le0IrXt8T6wgJWyDytilQhcnqih9fMOvLrjZUgo18j3ek2hOmaOqZvWrSyzYdPfVVGzmcBQbdaXWp75n9AqAoCokS+Ze0wQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=o/X7pNzh; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Kkt4dOEb"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66F4C5oU3272900;
-	Wed, 15 Jul 2026 09:19:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=Coji7X
-	c69oHilevycZqRnTjxpr+xLAAwbkdPXHNk9To=; b=Kkt4dOEbDrhdFoWNK+rYMz
-	AjTqce7fP9KG/q0CrETsRlA1G65Lq7yLbp9v5v0AFP/aLuyKkj0ijW7DBq44VXLS
-	mhSE1K+KLKar0YyZx+vdwN1djcOUzyTUW/m5fbV1k1n2mFGJz4A2MuPy603TzSzF
-	W+/6ecTFpc13UhnbZMsLgl6n1IIuSXnV9FMYMisGA4zJzTt3tCAE/G9U2REqYfzh
-	YXeEUOE5c7Ax2hBVWr1MNcEWax49Dii7F8yihpBNEeYDkJT3A2aouSUHJ75YpSyP
-	5ynlHp/DveCqVJ+BUvyguXsyHzCyoyGS0R34YftpB80AlQ6bp8WMPShX3ziqmVFw
-	==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbt3b4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jul 2026 09:19:30 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66F94dAp017046;
-	Wed, 15 Jul 2026 09:19:30 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2uy6tw6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jul 2026 09:19:30 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66F9JQ9r34406872
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 15 Jul 2026 09:19:26 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 558582004B;
-	Wed, 15 Jul 2026 09:19:26 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 23D9920040;
-	Wed, 15 Jul 2026 09:19:26 +0000 (GMT)
-Received: from [9.111.23.116] (unknown [9.111.23.116])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 15 Jul 2026 09:19:26 +0000 (GMT)
-Message-ID: <869ceed8-1c04-46ff-aa0d-c1ae5e01badb@linux.ibm.com>
-Date: Wed, 15 Jul 2026 11:19:25 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="o/X7pNzh"
+X-Gm-Message-State: AOJu0YzdUrR+FBiFBNtZqotbzFvw3JVIM8hqBGENEiegH/j0Qz+KVkq+
+	Dm9FJDWQ3H03UJabdJcVE0Me9wuc6s2jKfOowa8viJ7K8gIwZsKfUmpBdYUKILaCk+0d69HU9UO
+	/553KYpuhqR0Bj1kft66VIoqTVlgG14N4NZB05CjZ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784107241;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+w7C3+NagRQkTxTKtZanj6iawsWBCIYUN0QzC15AWME=;
+	b=o/X7pNzhQzm5mMb6/mvT+8W+ZXb7jkn2tGLpnzAIQOsffmVr1NZ4P405OQAXEzZ7Al4dm/
+	VobPhS1Q+P17BONaFfl/ItM4d3ShLclH4n0q6hDDmB1t/KuhI4njJREkBCN/jViuwqGZDj
+	VNsmg9D2JZG0nmsboFFDEl6x5tL4yBE=
+X-Received: by 2002:ac8:5cc6:0:b0:51b:fd5e:e81a with SMTP id
+ d75a77b69052e-51d7c6a88e1mr24424431cf.20.1784107237702; Wed, 15 Jul 2026
+ 02:20:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/21] KVM: s390: vsie: Add helper to pin multiple guest
- pages
-To: sashiko-reviews@lists.linux.dev,
-        Christoph Schlameuss <schlameuss@linux.ibm.com>
-Cc: linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-        kvm@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>
-References: <20260709-vsie-sigpi-v1-0-ea9f12066408@linux.ibm.com>
- <20260709-vsie-sigpi-v1-13-ea9f12066408@linux.ibm.com>
- <20260709152820.BA50D1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Janosch Frank <frankja@linux.ibm.com>
-Autocrypt: addr=frankja@linux.ibm.com; keydata=
- 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
-In-Reply-To: <20260709152820.BA50D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a5750a2 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=0UtCLVEFYwN47_7NgLQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDA4OSBTYWx0ZWRfXx/3B99pr1eWr
- 8CJk8TT/cBOjw28vTs6RBPeKDTB0jALnFlu4haArlrQv1DowFO5lXIKhZpO50V+3t3Pp9DBG+7U
- GGCpRs7gpQBREq7UXk2m8UkuJgcP06VVoATaOmasGcOf2RmM6jRhjmwHP41V3HY1B9xHDc3JWUU
- c2XBv0Dpp9qyRMCWKFI2Cbu0EPQfvHFVUq5SrKvHamwkm/8XMh2oLLGxy4wlRnTAP9SOxRIcYGE
- oj3JHq8oU3ehU9DHOlR0fjmL3REg80FfETyVEt7AyW/7MHsV4jQRDRhwsTmX9UUFt9kniT2X5RC
- 3hFly69v6/6WjndQLzaMgPX3tThNhIM4GDAaph2j3In9ZOxE5uA/T1DRqb0zW3XhEVTtkemSQE5
- EF7wOYdRPOTQPfstN1ZXuf1Dfb6wmP91ZY41EVxxW3wiSfYEAaFqTpe+yHwRkQ+/boGhH3xBk7p
- Aoqm1sIE4edltbrW53g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDA4OSBTYWx0ZWRfXza9QSkZwZmtD
- x9q5+eDUqXYTDwIH0O8pcMeK5y7RlbsBesEspuN0XkyYRTYrHtfrdo1sM02R+bsieG8jQvARVBm
- vUUQqm78HM/Th8YPdxjAnIlyv/eQzW8=
-X-Proofpoint-GUID: aJroS7LVlYVadbndY5Nfpuik1B_SGNSn
-X-Proofpoint-ORIG-GUID: aJroS7LVlYVadbndY5Nfpuik1B_SGNSn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-15_02,2026-07-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1011 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607150089
+References: <20260715081238.1891918-1-fuad.tabba@linux.dev>
+ <20260715081238.1891918-9-fuad.tabba@linux.dev> <20260715083412.433141F000E9@smtp.kernel.org>
+In-Reply-To: <20260715083412.433141F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Wed, 15 Jul 2026 10:20:00 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTyFH3EeVCVg14ow=vGYX9hcvcnY_PpaC3+bYCOXm4bcYg@mail.gmail.com>
+X-Gm-Features: AUfX_mwHNUGF999MIZRmMiosO-SWRhA13pmJXgmKk3ndgyMw0ua1XEUTQ8EyUHc
+Message-ID: <CA+EHjTyFH3EeVCVg14ow=vGYX9hcvcnY_PpaC3+bYCOXm4bcYg@mail.gmail.com>
+Subject: Re: [PATCH v6 8/8] KVM: arm64: Implement lazy vCPU state sync for
+ non-protected guests
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On 7/9/26 17:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incorrect address calculation for unaligned GPAs in `pin_guest_pages`, leading to data corruption for multi-page contiguous buffers.
+On Wed, 15 Jul 2026 at 09:34, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [High] Removal of hcr_el2 synchronization breaks virtual SError injecti=
+on, causing an infinite loop of virtual SErrors.
+> - [High] Asynchronous host-side modifications to vCPU system registers (e=
+.g., PMU overflow updating PMOVSSET_EL0) are permanently lost due to lazy s=
+tate sync.
+>
+> Pre-existing issues:
+> - [Critical] The hypervisor unconditionally overwrites a protected guest'=
+s register context with the untrusted host context on every entry, and leak=
+s it back to the host on exit.
+
+https://lore.kernel.org/all/CA+EHjTxiyUSJqRcadSCOmR+tELSsBiGaTYH9xxXh-g-xyu=
+HZdA@mail.gmail.com/
+
+/fuad
 > --
-
-[...]
-
-> 
-> [Severity: Medium]
-> Could this address calculation cause issues if the initial gpa is unaligned?
-> 
-> If a caller passes an unaligned gpa to pin_guest_pages() (for example, 0x1010),
-> adding PAGE_SIZE * i propagates this initial page offset to every subsequent
-> page. This would mean the calculation requests 0x2010, 0x3010, and so on,
-> skipping the guest memory between 0x2000 and 0x200F.
-> 
-> Would it be safer to align the gpa calculation for the subsequent pages to
-> ensure a truly contiguous buffer is correctly pinned?
-> 
->> +		if (rc)
->> +			goto err;
->> +		addr[i].gpa = gpa + PAGE_SIZE * i;
->> +		addr[i].hpa = hpa;
->> +	}
-When unpinning that shouldn't matter since gpa_to_gfn() removes those 
-remaining bits. Are you ever using a hpa other than the index 0 one?
-
-But yeah, there shouldn't be any offsets for follow on pages.
+>
+> --- Patch [8]: [PATCH v6 8/8] KVM: arm64: Implement lazy vCPU state sync =
+for non-protected guests ---
+> commit 89d46644a5cb6e03eee6a1ef5d530db27a9d6cdb
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> Subject: KVM: arm64: Implement lazy vCPU state sync for non-protected gue=
+sts
+>
+> This commit defers the register context copy for non-protected guests bet=
+ween
+> the host and hypervisor. The state is only flushed to the hypervisor if i=
+t is
+> marked dirty by the host on entry, and copied back to the host on exit on=
+ly
+> when needed. Protected guests continue to have their state copied
+> unconditionally.
+>
+> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
+c
+> > index 54aedf93c78b6..29108e5c0206e 100644
+> > --- a/arch/arm64/kvm/handle_exit.c
+> > +++ b/arch/arm64/kvm/handle_exit.c
+> [ ... ]
+> > @@ -486,9 +486,32 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
+on_index)
+> >       }
+> >  }
+> >
+> > +static void handle_exit_pkvm_state(struct kvm_vcpu *vcpu, int exceptio=
+n_index)
+> > +{
+> > +     int exception_code =3D ARM_EXCEPTION_CODE(exception_index);
+> [ ... ]
+> > +     if (exception_code =3D=3D ARM_EXCEPTION_TRAP ||
+> > +         exception_code =3D=3D ARM_EXCEPTION_EL1_SERROR ||
+> > +         ARM_SERROR_PENDING(exception_index)) {
+> > +             kvm_call_hyp_nvhe(__pkvm_vcpu_sync_state);
+> > +             vcpu_set_flag(vcpu, PKVM_HOST_STATE_DIRTY);
+> > +     } else {
+> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
+>
+> [Severity: High]
+> Does clearing the dirty flag on IRQ exits result in dropping asynchronous
+> host modifications to vCPU system registers?
+>
+> When an external IRQ triggers during guest execution, handle_exit_pkvm_st=
+ate()
+> clears the dirty flag. If the host's IRQ handler asynchronously updates t=
+he
+> host's vcpu->arch.ctxt (for example, kvm_pmu_perf_overflow() setting
+> PMOVSSET_EL0), flush_hyp_vcpu() will skip syncing this updated state on t=
+he
+> next guest entry.
+>
+> When the guest later traps, handle_exit_pkvm_state() calls
+> __pkvm_vcpu_sync_state(), which overwrites the host's updated context wit=
+h the
+> hypervisor's stale context, permanently erasing the asynchronous update.
+>
+> > +     }
+> > +}
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > index 2db56146ec493..4a8445b636e60 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> [ ... ]
+> > @@ -172,7 +214,17 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *h=
+yp_vcpu)
+> >       fpsimd_sve_flush();
+> >       flush_debug_state(hyp_vcpu);
+> >
+> > -     hyp_vcpu->vcpu.arch.ctxt        =3D host_vcpu->arch.ctxt;
+> > +     /*
+> > +      * If we deal with a non-protected guest and the state is potenti=
+ally
+> > +      * dirty (from a host perspective), copy the state back into the =
+hyp
+> > +      * vcpu.
+> > +      */
+> > +     if (!pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
+> > +             if (vcpu_get_flag(host_vcpu, PKVM_HOST_STATE_DIRTY))
+> > +                     flush_hyp_vcpu_state(hyp_vcpu);
+> > +     } else {
+> > +             hyp_vcpu->vcpu.arch.ctxt =3D host_vcpu->arch.ctxt;
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does this unconditionally overwrite the
+> protected guest's register context with the untrusted host context?
+>
+> In flush_hyp_vcpu(), this line allows the host EL1 to arbitrarily modify =
+the
+> protected guest's general purpose and system registers, bypassing pKVM's =
+guest
+> confidentiality and integrity guarantees.
+>
+> > +     }
+> >
+> >       /* __hyp_running_vcpu must be NULL in a guest context. */
+> >       hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu =3D NULL;
+> [ ... ]
+> > @@ -203,9 +255,13 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
+p_vcpu)
+> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
+> >       sync_debug_state(hyp_vcpu);
+> >
+> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
+> > -
+> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
+>
+> [Severity: High]
+> Does removing the synchronization of hcr_el2 break virtual SError injecti=
+on and
+> cause an infinite loop of virtual SErrors?
+>
+> When the host injects a virtual SError by setting HCR_VSE in its local
+> hcr_el2 copy, the guest takes the SError, and the hardware clears HCR_VSE=
+ in
+> the hypervisor's active hcr_el2.
+>
+> Without this line, the hypervisor's cleared state is never synchronized b=
+ack
+> to the host. The host's copy permanently retains HCR_VSE=3D1, and on ever=
+y
+> subsequent guest entry, flush_hyp_vcpu() will copy HCR_VSE=3D1 back to th=
+e
+> hypervisor, endlessly re-injecting the SError.
+>
+> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
+> > +             host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does this leak the protected guest's
+> registers back to the untrusted host?
+>
+> Similar to the issue in flush_hyp_vcpu(), this line in sync_hyp_vcpu() co=
+pies
+> the protected guest's register context to the untrusted host on exit, whi=
+ch
+> violates pKVM's threat model guarantees.
+>
+> > +     } else {
+> > +             /* Keep PC (tracepoint) and PSTATE (vcpu_mode_is_bad_32bi=
+t) current. */
+> > +             host_vcpu->arch.ctxt.regs.pc =3D hyp_vcpu->vcpu.arch.ctxt=
+.regs.pc;
+> > +             host_vcpu->arch.ctxt.regs.pstate =3D hyp_vcpu->vcpu.arch.=
+ctxt.regs.pstate;
+> > +     }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715081238.18=
+91918-1-fuad.tabba@linux.dev?part=3D8
