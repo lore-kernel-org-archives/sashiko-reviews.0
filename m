@@ -1,97 +1,152 @@
-Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1D1273D8D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 05:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C97E36DA0D;
+	Thu, 16 Jul 2026 05:39:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784179550; cv=none; b=X2twtAzkrTTXJAo9ZkmKM8C38h0Md0CauPa06+urizeioGRGyS2Gq5kg2eZB2LnN0fvKWyuwOG2z6cCXFIgGMYEyPMdunu3QzGbRRvcoejaDGSOGA52iOVQhA5eqzcApUXYQnfqPEUpYRLdZ4spzDH2x91uVF6L4JnUJ5IRFYRA=
+	t=1784180374; cv=none; b=gxyCQkwoQU1l+sWqKnFzADyjEGSc5Q//qjBdNRkbStY0eH/ds4J7L9t+sZwcHhII83hRaSxVeH7342fns/5QNoi3oabSlBnKkojV6m48NfNHp2O1R3qG1M7dMk6t6eDhnI7Kx37klF0ylfKVWEDdygEv3XJeLcI+y8MOPiRvl6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784179550; c=relaxed/simple;
-	bh=HacPp76f7MbZ0l/33PEsTDhw3UqRMzXJscmUnDcINYI=;
+	s=arc-20240116; t=1784180374; c=relaxed/simple;
+	bh=OzV8K/HP/1iZwZHlRvlRr551cc6p86QiqmtxfigEHxU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AW8S0lUYIV+zWGNSGWBtpMxanZmSgx0gmJmSxbgTWLA1FnGOy0nLQMudjWh7ZDA3ctu+1Mn9VibylADAsy6FKI7quqghX7/IlHG6jjRZzgjMdLxIDPv7Vda0r4CcboeD8J4JsrXgf8fIPj0bJlUT6+T6j/wB4Cvj1y2zaPI5MSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=GE8bFbe5; arc=none smtp.client-ip=95.215.58.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=hOj8PeAmykeVXV0xZtxwT0aukzC1Ew7MrEOyC0kBq1gnmeTgg7QCoNILGUis85CZefDG3PugvJU8gB9q55VwUYX7XwAOm/9xZu/G5Pgmv/fwEX+O4yP4ndGMu5YYJRsSacrqnEI4VFG4HwizMPZ8lE54WymaMU7+vD2qBkUqffs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=CT5qQ7Fm; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="GE8bFbe5"
-Message-ID: <7766c6e0-fa2c-4b54-b43c-c544b03c868d@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784179546;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LvGbqB4OvMJAxqsUksgkb/N4w0LeMQ21qEProLJfBEs=;
-	b=GE8bFbe5Ue3vHlVRZbNNz4vDkikc5ETpLUC+CPLkwVZ8F3JAep7GxqcuJp4I5XZJXBONJP
-	18Yt+v/kg8NPQkeAX/f8ZSxb+rYIwgw9E0kopYpfgcoGEGjMNRI9uP2U6lBU8SxbjEDW9C
-	+kJx8haWzQBulAk/zyI4GCwDvdlrdd0=
-Date: Thu, 16 Jul 2026 13:25:32 +0800
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="CT5qQ7Fm"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0D623119B41;
+	Thu, 16 Jul 2026 07:39:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1784180363;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=PpI4q3/2Dkx3mceJVBfFoGBFN2uhwy2+sNYNJl9A4qk=;
+	b=CT5qQ7Fm3RrmYQ6t4IfCGZOkLydtHieEXKtkDtihEPfVoV01gCIuEJG8wVb0hDZYq1Pqgk
+	Z4cnS04qkn3pFirZaBf2EHJYs8RUDMzpoWWOOQuqf9vQif1wv/eUSpGQI4LoWw7FraRYHB
+	tL/CRORnPXgEE8WlD9ch7pglt0LmE55MtuzCRoKJLqYOJu+oXO679a6kVow19sgE3nTj6V
+	JV96k1s0OMYf3lxfpP8xyNS3ZfT6pFzo9gcH8Td1iB7c4asxzvLda5GNcKsqdrRIFyuSxQ
+	a3KjjxW7dVobbA5SVVaBpKlTJd6p12XgBngHRH1+Y/akGsE+KPdib7C04q9Jqg==
+Message-ID: <56953f06-2e3d-4137-a51a-ed91e9b0d577@nabladev.com>
+Date: Thu, 16 Jul 2026 01:30:17 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v10 6/9] selftests/bpf: Add tests to verify
- global percpu data
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260715153254.92010-1-leon.hwang@linux.dev>
- <20260715153254.92010-7-leon.hwang@linux.dev>
- <20260715155501.C8C5F1F00A3D@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Leon Hwang <leon.hwang@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/6] arm64: dts: imx8mm: imx8mp: Add CM DTOs for Data
+ Modul i.MX8M Mini and Plus eDM SBC
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org,
+ imx@lists.linux.dev
+References: <20260705200534.151803-1-marex@nabladev.com>
+ <20260705200534.151803-4-marex@nabladev.com>
+ <20260705202439.3F5771F000E9@smtp.kernel.org> <alUICTI-24tREZO8@SMW015318>
+ <f1e52327-42da-48e1-8e4a-dabf148ce216@nabladev.com>
+ <alWR66rjt-9jGEOV@SMW015318>
+ <a3602ef8-2b77-4cc3-adef-2c4cba08a5d9@nabladev.com>
+ <alezsOsf61Zv6F4F@lizhi-Precision-Tower-5810>
+ <c9a67cbd-fda8-4016-9cff-9125f3191b74@nabladev.com>
+ <alf9pp3c_zI4rwC0@SMW015318>
 Content-Language: en-US
-In-Reply-To: <20260715155501.C8C5F1F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Marek Vasut <marex@nabladev.com>
+In-Reply-To: <alf9pp3c_zI4rwC0@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 15/7/26 23:55, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The `test_global_percpu_data_subskel` selftest fails unconditionally because it asserts `var_cnt > 0` on a subskeleton that is generated with zero variables.
-> --
-> 
-> --- Patch [6]: [PATCH bpf-next v10 6/9] selftests/bpf: Add tests to verify global percpu data ---
-> commit c5a32c0630bc8d9b3aedfc264c75289a1f8e6d98
-> Author: Leon Hwang <leon.hwang@linux.dev>
-> 
-> selftests/bpf: Add tests to verify global percpu data
-> 
-> This commit adds selftests to verify operations on global percpu data in BPF
-> programs. It tests various libbpf APIs and skeleton behaviors for percpu
-> maps. It also adds a test to ensure live variables of a subskeleton do not
-> include global percpu data.
-> 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/global_percpu_subskel.c b/tools/testing/selftests/bpf/prog_tests/global_percpu_subskel.c
->> new file mode 100644
->> index 0000000000000..8aebd533d86b5
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/global_percpu_subskel.c
->> @@ -0,0 +1,37 @@
-> 
-> [ ... ]
-> 
->> +	if (!ASSERT_OK_PTR(subskel->maps.percpu, "maps.percpu"))
->> +		goto out;
->> +	ASSERT_EQ(bpf_map__type(subskel->maps.percpu), BPF_MAP_TYPE_PERCPU_ARRAY,
->> +		  "percpu_map_type");
->> +	ASSERT_GT(subskel->subskel->var_cnt, 0, "var_cnt");
-> 
-> [Severity: Medium]
-> Since test_global_percpu_data.c only contains variables in .percpu* sections,
-> and the subskeleton generator skips percpu array variables, will var_cnt
-> always be exactly 0 here, causing this test to unconditionally fail?
-> 
-> Would it make sense to either add a standard global variable to
-> test_global_percpu_data.c (e.g. in .bss or .data), or adjust this assertion?
+On 7/15/26 11:37 PM, Frank Li wrote:
 
-My bad to miss a new 'int data3 SEC(".data.percpu")' in
-test_global_percpu_data.c in this revision, which would mute this review.
+Hello Frank,
 
-Thanks,
-Leon
+>>>>>>>> [Severity: Medium]
+>>>>>>>> Will this node name bypass the driver's carveout exclusion logic?
+>>>>>>>>
+>>>>>>>> Looking at imx_rproc_prepare(), it iterates over memory-regions and checks
+>>>>>>>> specifically for the name "vdev0buffer" to skip processing the vdev buffer:
+>>>>>>>>
+> ...
+>>>>
+>>>> never existed in imx_rproc.c:
+>>>
+>>> AI refer old version code, but problem is the same
+>>
+>> No, sorry, the aforementioned piece of code never existed in imx_rproc.c
+>> according to git log. There is no old version of the code that looked
+>> anything like what the AI produced above.
+>>
+>>> if (strstarts(res.name, "vdev0buffer"))
+>>>
+>>>>
+>>>> "
+>>>> $ git log --follow -p next/master -- drivers/remoteproc/imx_rproc.c | grep
+>>>> vdev0vring1
+>>>     ^^^^^^^^^^
+>>>
+>>> vdev0buffer
+>>
+>> The AI generated review content above does refer to vdev0vring1 , which is a
+> 
+> No, AI talk about "vdev0buffer" at beginning, never said vdev0vring1 at all.
 
-> [...]
+This is the code the AI quoted in the review feedback:
+
+"
+	if (!strcmp(it.node->name, "rsc-table") ||
+	    !strcmp(it.node->name, "vdev0vring0") ||
+	    !strcmp(it.node->name, "vdev0vring1") || <-------- HERE
+	    strstarts(res.name, "vdev0buffer"))
+		continue;
+"
+
+It does not matter which identifier we use to look up the AI quoted code 
+snippet in git log, the important point is, that the aforementioned code 
+snippet never existed in the Linux kernel as far as I can tell.
+
+But as far as I understand this, I should adjust the DT to cover the 
+test in the aforementioned non-existent code snippet ?
+
+> "   Looking at imx_rproc_prepare(), it iterates over memory-regions and checks
+>     specifically for the name "vdev0buffer" to skip processing the vdev buffer:
+> "
+> 
+>> unique identifier, but that unique identifier exists only once is the entire
+>> history of drivers/remoteproc/imx_rproc.c and that is as a code comment .
+>> That proves my point that the aforementioned AI generated review feedback is
+>> not based on code that ever existed in the kernel.
+>>
+>>>>       vdev regions are vdev0vring0, vdev0vring1, vdevbuffer and similar.
+>>>> "
+>>>>
+>>>> It seems the AI hallucinated something which is not based in reality ?
+>>>
+>>> git log --follow -p linux-next/master -- drivers/remoteproc/imx_rproc.c | grep vdev0buffer
+>>> -		if (!strcmp(it.node->name, "vdev0buffer"))
+>>> +		if (strstarts(res.name, "vdev0buffer"))
+>>
+>> "
+>> if (strstarts(res.name, "vdev0buffer"))
+>> "
+>>
+>> and
+>>
+>> "
+>> 	    strstarts(res.name, "vdev0buffer"))
+>> "
+>>
+>> looks like different code , and the AI reported "strstarts(res.name,
+>> "vdev0buffer"))" which never existed in drivers/remoteproc/imx_rproc.c as is
+>> clearly visible from the command output you shared above.
+>>
+>> So, what exactly is the problem here , can you please clarify it without
+>> referencing the AI generated content above ?
+> 
+> The problem is simple, node name should use
+> 
+> 	vdevbuffer: vdev0buffer@b8400000
+>                          ^
+I see.
