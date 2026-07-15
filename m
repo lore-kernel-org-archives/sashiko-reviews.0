@@ -1,187 +1,139 @@
 Received: from mail-ej2-f2.google.com (mail-ej2-f2.google.com [74.125.228.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A344D2EC4
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DF0377ABD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.130
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784146787; cv=pass; b=MVUXwmWwvpJDMmaGZIOSS3YrlKP9Rt6lekwiZLiIxdUkjFRFk60FselfzXjyA9RpDmnNr0nr1S04tRJi3hNr31e2gpAhTCm1wrOMPQqhptpF7gMRQYp/wy4pWh4ECK2PUxzyOirELpKNgG0ku5Wh0Il1UcbQW0xn6ZK4dob1KAc=
+	t=1784147598; cv=pass; b=XUyI3BhA6tjkV+pJriIJjGE5QLy1kbV3OIoxtpfs4c3kb0+nZNG8zZC1rD6CFZFBEPVHzr5Ti+wFg+P8q98TzUOMw0J3xPVbka2vFgWGMgFmIEBSonLLcz8wwgIp9owxhLnzl6HyPiKJZL69IbYZM+g/b8wGFNnJkAH8rszeUc0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784146787; c=relaxed/simple;
-	bh=Q5ccYVWvR+5jgS+UYin62kxL9TLl/TrtAkaA8NvL9HI=;
+	s=arc-20240116; t=1784147598; c=relaxed/simple;
+	bh=HSzxeZhp2T25IO3LQKbxthYfzo4pgx22m+KFKX8aCQs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cOHRBhr6xWoxpwaA5mfeFOaxBWlqTB3NLCiVZVQ7oG9wSS6/UF8JzNEl1yB5gp7u5qaY75QLzklUH0svLPAI0IppUFBs+repaxPGpVGvGE2V1WVBSRFrAlrSUXdWeIY0JUolMv/x4YYUAwSfSWoLZDOuLPRFB6UO11MJr88NMmQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s4dKTRXz; arc=pass smtp.client-ip=74.125.228.130
+	 To:Cc:Content-Type; b=O+oZxykkicmOZZY6bE9kISHwBOSPydOqzK2lkCU7wdpZtnZR+P5htXK+V+rbWDE7zaJyC8FD6TJ1aJ9yLVQczajQ8er5zet3NSRgWBJQspxMz7vRKbeyMnEOYH1cWhpGj6o2k60rUD9+zyKEnmtP7Pq3tWABjYCd8vJkhcUbKEU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LCwR3Q6S; arc=pass smtp.client-ip=74.125.228.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4dKTRXz"
-Received: by mail-ej2-f2.google.com with SMTP id a640c23a62f3a-c15f8dd6f18so360729766b.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:19:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784146784; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LCwR3Q6S"
+Received: by mail-ej2-f2.google.com with SMTP id a640c23a62f3a-c159467cca6so137917366b.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 13:33:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784147596; cv=none;
         d=google.com; s=arc-20260327;
-        b=aTaPl7smCIEO4QpI5n/kmKBlkz5cTsfUfdojAawLyI4l/hXG1Tp5vS1hkkj4RCSEwi
-         I916wEAmfKsLeOHta1CpOXUnC5qvcM0h+wqdcGBfXyYn3uZdSKJFBCA71aiu7TtBKD8f
-         WP/prHYZjoEZBflYM6TIN3xIZYBNJopM+8OJocH+4S7qbkSD2oUUB5U7wlEHjdQpDLew
-         /VlJJcELlaMwuOQEPQKQeDVGTfKxAoYXJlIjk13pyLBRcp8ztw0xdcn0yRPX2X4gskJO
-         WBDBwL0xUG7W179JJDO9w3GDWB3+wtqxvvD0iRUFY3odcZgI1QdFYISLs0OJIM2DaljU
-         AiaA==
+        b=ATMtUi7PPsA4C1RgJB+YW5IRr+eZZTjVQMeoUohVa5bgetCBr26nTz07nk+5cKhWQC
+         f+sPMzl+zgfZqB3l/merP/U6Ofjf8kNbjdAS7/EayUFFiiIYLFWacp/dYdd84l10JJ8I
+         eF+3jwigIC4IVBA5eIr1phRY1xSI5k58naoa4hykL01uSRKv+n5mQrSRk3LGeF3223Af
+         Y84G5lXUBwNceXKiReWa5CZW4GyqB20gilyyvK8qAyL/qTdo4w1405ktCPAAac3OuFuO
+         /TD7TOlxIzQ3aj+/Wmbj/nHjAjp6YJCympVVUG3Rv/8h3gsK4mN3mg5jbkuvnpyX3J12
+         /d/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nubd27NNIvTV4B3FNhrgAkY1uJlNnIcqTLmtlT2/89o=;
-        fh=RaVSQyovX+axG/rFSpJv47KhzLBKKJV+/S7D0MMWgBI=;
-        b=C+/DCJTrdZliqFtUzSc/s4sKz+pjYJEx9bSsRABmxkOzUVxnMarKBAltB3bcg2EfuB
-         gfl4TUWeRIlWd4j5x+vn+qDh/T1yIHjNsWtZj2h8Qf+pAW61WRt95gNEkqIBiLwBVGiJ
-         GcLnj+1mwQzUxbWrBoCSBdUEpX43wV5a1+UWPmF0ujAob0vcprfQOLmer19HQTXNJiNj
-         /YfN19OyEhVDL6c6SQPcN92xMBfiOVc2YB68398WeMsUQ0PjUNRCVQTh7no4NBWIVEoY
-         FfQ9clmgvs858OWq2/EP3uETCxZa36i/8BcBhIdVJJxgqGt2MO/VgASUxvgifD21q2BC
-         auEg==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ChZRrIPY+q69QoNpgGM5mCWAZDJasoa0uEar2XXIlDE=;
+        fh=8hBtreYcl/Xwp0K8+F6CFb5NwwH7ju745orhrb/nIRI=;
+        b=Iba6ghZ7Qv7H151YssbwC724xhNBqoW3HXkFhbfW5VN3HXmGnixxcxcyPQD7T3rDqi
+         JF2H8Q17Gpm2AXW1KEz7x4FLLlJuaGRdxYLsI6wrA8rHAphUXVq/3pPWM2kjZebnaW06
+         kZdI/iBetflWYpiiFWV8ubsLaXoY1sV5MmfnFhOpxz1NrL/fhZXtX9HCIlEq4w8mKOlc
+         OHdwPtk3+kPLyE8tQhNSbaWHTSA33Hkra8wOZDeY0QQwhqvYl3zBaUkrRPkFFYNZuXz9
+         l7NVjJYM5T5nnI5h3e0NphsqR7QL8NcBRYrGc2kqZnHhhIdbCTxQTdnf38Iz99qFauFi
+         54/A==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784146784; x=1784751584; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=nubd27NNIvTV4B3FNhrgAkY1uJlNnIcqTLmtlT2/89o=;
-        b=s4dKTRXz0Q39g+zLwuNtZv5MIngvftrBdJcjoGRcdmohey3ScvU0ZL4HAhL1DuxAZk
-         CvMn9erfMaKBg1Vz974qvWs34QSjSqlwKHIcQ46z6Pq815hSnrnVvZlvodoqSlUrwW+G
-         so8MowcFdmT+AfZ5h/42eSON0YAK26yTPLq/j4J3+IbDSJixSJG2MVprSSkVEo9sEkDI
-         5YDwzVetVvuqRQ0e0C1WJWipjx5EcHag4H+oNrW71f/50Ky+lbrmI6/WowXhH57IjxS4
-         un8hu5+jLrQ1OzydMwK/BZtDtlQkf2tu9284la6p7v1QDA3Pm+VR7Q7KpYAT6vVowrr2
-         JEPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784146784; x=1784751584;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1784147596; x=1784752396; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nubd27NNIvTV4B3FNhrgAkY1uJlNnIcqTLmtlT2/89o=;
-        b=ZpyZcKAl2DKQqDxLZTJ53ZtrMiMNOBnfV+JyxdWqyqeiv5iqPOtNHQrT+CRRRJKdtc
-         wKyTcahGUBKtG4MlXIl+x4QJ3f4sgIH9CLg8n+HtBsrTz/QxDoaAIfwzpKWrz2MoVSE1
-         xMiV7IIZMLEPUBSuzmARQqhKF6tv0VBmhA3YKkKpGpc9qf5aDUiMD8gAfaQZSlj/tgp1
-         NeiQoxTAvDQpHyHfWJg0ExqT1PuBKb/SDbN9LLpZptiiuylHliQ13V0WzuPZWd0+YIto
-         gd94e/p7moNfsVMD7QagQ6ejNkNP+V6SXRd5BqHFnLJqtkao1z9GU6QI89lAARLdMmgH
-         MkKA==
-X-Gm-Message-State: AOJu0YxDmW5vIDCWW5JU9GJk1AcVSu0LHZEUoZTLxTpPdH31WBCed5Jl
-	sdghzNDE2Kd4x/+UhvObQvqQmqkklxSTZSwmdN4nh17NNDgMzAVwq5JOKuB7RUU3EX2vKJ4BEn9
-	4dWNlEvmfwUR6Z2Xu/ZbTWIU342FNPrU/MWn2+Pa5YrePymM=
-X-Gm-Gg: AfdE7cmMHLLs1MZhXLMyDeqBEuxh4/5g870CNGrJ4xxdqx8bwt1QWlKJVVILXboKet5
-	VqoZzQi2n6HFdJAspCszOg8Pz0iFJZ/QWqMb+7VScmBn2EajbR75LSmR0cqKjyxscpjOGAHb4Hu
-	Q/9XsWUjze5qEBiTCgscjZKXpZTpUZyDAurD+OAjOdh1RY4hs9kXPdwu8sA0ajZrDNnG+wjbNVe
-	baPlGr/nZ/+OUQrBtJv+YmHe29ebpmtB0A52ZSXJPFBicL9JIAMUb8/uU1saSj4W8yYXHxJTuA=
-X-Received: by 2002:a17:907:9484:b0:c16:1227:e3d8 with SMTP id
- a640c23a62f3a-c16790fa355mr278084266b.13.1784146783933; Wed, 15 Jul 2026
- 13:19:43 -0700 (PDT)
+        bh=ChZRrIPY+q69QoNpgGM5mCWAZDJasoa0uEar2XXIlDE=;
+        b=LCwR3Q6SpqmXCbubQTFac9yUkBo06MM9vBXRmijR/d30KkEhsfnh36uK0eWnkljD6V
+         3FIz3Q6drz16gnDggVdL1IwStA/9zV5R8c/DJwZnD14hcKRd+iNZjT//SMXOnM1RJoTg
+         /ARVg0nnSV6k0Kkd7s/P3tNdjfzFM0NDcjHa1EqgkXQYnxOY175yK4K1Jexx6ezdUrWA
+         gPBTocKICsGk0qodjpPQJ04OMtrfsB6T6czu8cdjsiFuvsisf0ivfPHepovc7juZeiap
+         AtYtaVfycosBsIBBgKwHoGB4siRW8LGyc0QuxrKA46BebuvqMkEd8wZ9hKa14f4AgngV
+         +fKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784147596; x=1784752396;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ChZRrIPY+q69QoNpgGM5mCWAZDJasoa0uEar2XXIlDE=;
+        b=RSdp02RazUUgWORC87oZCOSX3/m+nt4pSGDX9HNDP9pvW+6tDaMzdcueGosla4cAOw
+         jpyzsX2jce3AeKb/01HP8/Fhjg31djkWerQFmFdlLapTNAI2V7+zrXrF+dhnRbxFyS79
+         n+gu5wCO75xJJUvmg6GEMdLe5hGvIKpkVbgSmjSdsASklWzx5S/50/5zYbCOn8C9nJ29
+         H+fR/s0jy52zaNQDA//a5pnErFCTJPIzgMdAhT47OtboB+PuGY2T7amCBskP9rl8Y81e
+         dSCReOTmARyKRDpZ3TReSxWbt1AnFxbQ6ewzb7yzcWQaNy5EvRd8VRn+T0Glw/ui7HE2
+         0/Iw==
+X-Gm-Message-State: AOJu0YyGmYI6a2OlMmMATvxtLEp1KNj92dJ5aW5ZVmqy2HcWOcwm7EcX
+	ya6XQh5qSpVQBc5SjM35hT0POvOs7xdwsulwK9kWVcdKXFbMCVFSudFiGgoA197PdBIgpluLFs4
+	9R5eJp5jReLDlRTHj09N3x14z99yKQaIQ+BTszNe8CYMzlAk=
+X-Gm-Gg: AfdE7cmiR0xR2Bq0Q7gXqb8+f3P8TsO4MyV1kwaIsz4haoDOtKsN4HBopY6cvLfXqsc
+	CKXSLqfJDh/HPL6c81vaap0N3uFAxM8qtxUv+37ysXF8LpH5IrWykmEm5aH3LsiEPsd6dLVaxc6
+	VfJ89IScJEREi+1D7KFDwgp8xScTbz65qhW3kxu+XUJRJWcK9ydQpwedEXq+pX4yIUjYYNUSNmo
+	tDc2XrE7qYEE2tznf5QnuZPhFyHKHaGIlhOqkv0ZGLHhJ/AAs5gJiVqvbqKHlhro33qidN1wcY=
+X-Received: by 2002:a17:907:d649:b0:c16:5cdb:9f89 with SMTP id
+ a640c23a62f3a-c165cdba195mr563594166b.64.1784147595530; Wed, 15 Jul 2026
+ 13:33:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714191341.690906-1-coiaprant@gmail.com> <20260714191341.690906-7-coiaprant@gmail.com>
- <20260715191453.DEE731F000E9@smtp.kernel.org>
-In-Reply-To: <20260715191453.DEE731F000E9@smtp.kernel.org>
+References: <20260714191341.690906-1-coiaprant@gmail.com> <20260714191341.690906-9-coiaprant@gmail.com>
+ <20260715191455.D033A1F00ACA@smtp.kernel.org>
+In-Reply-To: <20260715191455.D033A1F00ACA@smtp.kernel.org>
 From: Coia Prant <coiaprant@gmail.com>
-Date: Thu, 16 Jul 2026 04:19:32 +0800
-X-Gm-Features: AUfX_my5g85fDayigq-hMxxzbVtYHNZXP8Ax7QFobz0v3NSrNqtAVYC0ELzRnTI
-Message-ID: <CALj3r0ge83r9kmcDbnhvsEyD983Q7_oNcFTrd2iSFdvOsHTFdQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 06/10] net: pcs: xpcs: improve SGMII AN state handling
- for Rockchip RK3568
+Date: Thu, 16 Jul 2026 04:33:04 +0800
+X-Gm-Features: AUfX_mywQaSTkJvyJzv8XehCE-odr5e5YLAuGpoxeXM7OtZo7VSAqzu94NbaTns
+Message-ID: <CALj3r0hjOBgRL21R9tRPDP+yrN0QbAXw=NcOvp4jiu_0PxFeWw@mail.gmail.com>
+Subject: Re: [RFC PATCH 08/10] net: stmmac: dwmac-rk: add SGMII support for RK3568
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, olteanv@gmail.com, neil.armstrong@linaro.org, 
-	robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, 
-	linux-phy@lists.infradead.org
+Cc: robh@kernel.org, devicetree@vger.kernel.org, neil.armstrong@linaro.org, 
+	olteanv@gmail.com, linux-phy@lists.infradead.org, vkoul@kernel.org, 
+	conor+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Thanks for the review.
 
 > [ ... ]
->
-> > @@ -884,7 +889,7 @@ static int xpcs_config_aneg_c37_1000basex(struct dw=
-_xpcs *xpcs,
+> > @@ -1379,6 +1441,9 @@ static int rk_gmac_powerup(struct rk_priv_data *bsp_priv)
+> >       if (ret)
+> >               return ret;
 > >
-> >       if (neg_mode =3D=3D PHYLINK_PCS_NEG_INBAND_ENABLED) {
-> >               ret =3D xpcs_write(xpcs, MDIO_MMD_VEND2, MII_BMCR,
-> > -                              mdio_ctrl | BMCR_ANENABLE);
-> > +                              mdio_ctrl | BMCR_ANENABLE | BMCR_ANRESTA=
-RT);
->
-> [Severity: Medium]
-> The commit message mentions improving SGMII AN state handling, but this
-> adds BMCR_ANRESTART to the 1000BASE-X configuration path in
-> xpcs_config_aneg_c37_1000basex(). Was this unintentional, or should the
-> commit message be updated to mention this behavior change for 1000BASE-X?
-
-You are correct. This was unintentional. The `BMCR_ANRESTART` change in
-`xpcs_config_aneg_c37_1000basex()` is a mistake that was introduced
-during development and should not be there. I will remove it in v2.
-
-The SGMII path (`xpcs_config_aneg_c37_sgmii()`) is the one that actually
-needs this change, and that is what I have tested on the Photonicat board.
-The 1000BASE-X path was not tested and the change was not intended.
-
-> [ ... ]
->
-> > @@ -1086,7 +1094,24 @@ static int xpcs_get_state_c37_sgmii(struct dw_xp=
-cs *xpcs,
-> >                       state->duplex =3D DUPLEX_FULL;
-> >               else
-> >                       state->duplex =3D DUPLEX_HALF;
-> > -     } else if (ret =3D=3D DW_VR_MII_AN_STS_C37_ANCMPLT_INTR) {
+> > +     if (bsp_priv->phy_iface == PHY_INTERFACE_MODE_SGMII)
+> > +             goto set_mode;
 > > +
-> > +             return 0;
-> > +     }
-> > +
-> > +     /* Clear AN complete status or interrupt */
-> > +     if (state->an_complete)
-> > +             xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INTR_STS, 0=
-);
 >
 > [Severity: High]
-> Can clearing the interrupt here lead to a permanently stalled link on
-> Wangxun platforms if the subsequent xpcs_read() fails?
+> Does this goto skip enabling the MAC clocks? By jumping directly to set_mode,
+> we bypass the call to gmac_clk_enable() further down in this function.
 >
-> The original code cleared DW_VR_MII_AN_INTR_STS at the very end of the
-> DW_VR_MII_AN_STS_C37_ANCMPLT_INTR block, after successfully reading
-> MII_BMCR and MII_ADVERTISE.
->
-> By moving the interrupt clear here:
->
->     if (state->an_complete)
->         xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INTR_STS, 0);
->
-> If a transient MDIO error occurs during the subsequent MII_BMCR read:
->
->     speed =3D xpcs_read(xpcs, MDIO_MMD_VEND2, MII_BMCR);
->     if (speed < 0)
->         return speed;
->
-> The function will exit with an error and the link will remain down, but t=
-he
-> AN complete status has already been cleared. Will this prevent the Wangxu=
-n
-> initialization block from running on the next poll and leave the link
-> stuck?
+> Can this cause a synchronous external abort when the MAC registers are accessed
+> subsequently while their clock domain remains disabled?
 
-No, this is safe. The `ret` value used to determine whether to enter the
-Wangxun-specific path is read from the register before the clear operation.
-The clear only affects the hardware register, not the stack variable. So
-Wangxun's `if (ret =3D=3D DW_VR_MII_AN_STS_C37_ANCMPLT_INTR)` block will st=
-ill
-be reached correctly.
+You are correct. The original RFC patch had this issue: the SGMII path
+bypassed `gmac_clk_enable()` via the `goto set_mode`, which could lead
+to hardware faults when accessing MAC registers with the clock disabled.
 
-If the subsequent MDIO read fails, the function will return the error and
-the link state will remain down. Since the hardware interrupt status has
-already been cleared, the next poll will not see `state->an_complete` set
-again, so the Wangxun block will not be entered until a new AN event
-occurs. This is actually the intended behavior =E2=80=94 the interrupt is o=
-nly
-valid for the current AN event and should not be processed more than once.
+This has been fixed in the updated version of the patch. The clock enable
+is now moved before the SGMII check:
 
-Therefore, the change does not introduce a regression on Wangxun platforms.
+    ret = gmac_clk_enable(bsp_priv, true);
+    if (ret)
+        return ret;
 
-I will remove the 1000BASE-X change in v2 and keep only the SGMII-related
-fixes.
+    if (bsp_priv->phy_iface == PHY_INTERFACE_MODE_SGMII)
+        goto set_mode;
+
+So the clocks are always enabled before any register access, regardless of
+the interface mode.
+
+The error handling has also been cleaned up with a unified `clk_disable`
+label, and the default (unhandled interface) case now properly returns an
+error and disables the clocks.
+
+Regarding stable backport: this issue does not exist in the 6.18
+kernel that I am using for backport testing, as the code structure in
+`rk_gmac_powerup()` is significantly different there. The fix only
+affects the mainline version of the patch.
+
+Thanks,
+Coia
