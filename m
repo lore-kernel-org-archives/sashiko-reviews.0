@@ -1,128 +1,107 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44ACD4302F1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 09:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784108016; cv=none; b=tJ7U7BPCiD3tyTM0d00wnJvgJG84exEquPXcWaEJR5hg1zVlRybGlDbdwkDy466anXlcAmyAaU/uYMxMjP56JNBZ4dI539DDlJLIMyi3bllRKzsh5v5yB6mE+AORQUnVBdgJ0R130/vJIVWrtwSxBIui4sRR+GohFyE06ockvqo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784108016; c=relaxed/simple;
-	bh=RDX1Uo9WlVNnTxYEtR2+gBUgrmWDdLhar2YbSB4dzGw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kN/wcj0eRIDMaibDRXiAhcNduQRBtnSBHtD1cqUyo8tFhOSvGhpCSfY76H9Po1yQ1tE20f/HhZcK5B+5KzlLF+957ZKh1ixcgEsEPB1os6jdA2U0fEmWIsAMoUJtUTWWU8g0aLs1SKRZYCNRDb5a5xN4hrSROaJnBDzASQDCV6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M9adETue; arc=none smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5C9441636
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 10:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784111243; cv=pass; b=j7PZrHW6+zLl64VH6IQjruw3dLg11OnZ+2fhnpEepdTJEm75FF3yhcxIzLqTET69EjSgTo/NBt9kMXieTmH8Sih8mjKSr6OKxV/dqv/MBLSG+lYrn07tpI7h23WBHAqgOEImmYFp2pFccrBPlFo9Qa+Hazj+5X2foP0qeVCL454=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784111243; c=relaxed/simple;
+	bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FpdvF9vGrV7nk/miv1i8HHhIWiTEd+rpq51FhV4m6Hv4iiZCKllq/wEly59Y6RxuhyEXoqrVxDn+gOtRx1bH7SAWacEAoICw0DUkXaeqOrTu0pRXI6AglyvZsa83uPws3yrnJ9cnJcSYZFPgXKCV1Aekym6a5V5rVKsLj0u6eVo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=coralogix.com; spf=pass smtp.mailfrom=coralogix.com; dkim=pass (2048-bit key) header.d=coralogix.com header.i=@coralogix.com header.b=DNjVKo4o; arc=pass smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=coralogix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=coralogix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9adETue"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-448b89f700fso3180402fac.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 02:33:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=coralogix.com header.i=@coralogix.com header.b="DNjVKo4o"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8ff20870ac7so39478136d6.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 03:27:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784111240; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nu7bIKAVSAdaReSEE1wl4hmRM7dlRLvN8WhcAM3N+nRw7Q60NYdJZl7B6scWjyAkp4
+         TGSpgHJ1eUhL+kzBFdOxTuK3k5yZ7OvBPWCQrM8l56MS8jxS4iA5QZNZJhLDcXfA3yVj
+         U4mKiTkqH5ZnWI+ZX8TUAE23pqE1nsLJGvz1Tycy1YdoGPpFfJZuMcfkjAv5TD9Z2gdg
+         5E8V+hNaBspgbpRm6c61ao21dd1z7sT2S8XmkbpDXI1cr3Ow/9SvDjTh3A0PYiKf39HT
+         1zJLxb7B9kvj5K7cUnv37ffE0px7cZvr/EAW3C0idbRrmVSl+S7MJfsyy0A7st+MOU8w
+         2AoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
+        fh=AnPORTJRycz1VPlUfqXDHxD/z3fnF6QPAbdgjDiylBw=;
+        b=LdvIKplqrsXDq9yUIvJL83RvxeUwvJRDPkRoA4vIMe/m2NTcpR5CGwejS9iTcslCa9
+         wYZ/+Xe0xnNRVHFt82PdkDNVZPwq251VFO+L+3IS4OXSM74Ku/eFLzydeqAvH5MooprR
+         cTpeCVMkpYaZ+OOhhV0hbs6dc8rIendCBv2A6Hngom5lU1x0llxm0vg+D7B/ZDEbj4c/
+         LJ1gz7fxkj+LWE6zKjKpFo8krtn0oDJ54ZMiYlXaEdvBRWs1NzSSHK5etQMQbgrY8ddp
+         y6irBDp0OmRmrKR3u3t+/mQYs8U2jBw1l2DlJuldruegiTW9tf0tg6cQIldDvnP7tmJo
+         hmnA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784108008; x=1784712808; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=coralogix.com; s=google; t=1784111240; x=1784716040; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=qpKE0Ztd8LwTs3URtxw/L1Mr92CYYHr0Elkx6ZybgOo=;
-        b=M9adETuenm8J6Q4IeIBt+v846LdFGe0URGh00y3ZphhS1l2unwLlJm/iSWRVO82dlq
-         vbRiYmH8VN12mDQkTlyqnLvfVtRg3+IOXDLTAFfULNxWWr+x+kSmRISahssZTA1p4VCx
-         jnIrdRJvUhqMX9InA/fIMi3nOCS1rXEjhqa28vGO7lxRHFHHjzN4jLFpMZl+zKJrTCpe
-         zghUsVPXZF3hzt/4e0cbKdwwDkXAsGh1wgNK8IptcMv/rCMThNW1HFNSrdtnsjLvtm/y
-         m1sEhUyPDIkpM0CDZQotchN+LNP6wYvNaxrxHgkx9oMPq9a7MkO2xg95R7xQYQzpg4Sk
-         /jGQ==
+        bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
+        b=DNjVKo4oFBTM5LbXJ/qwVG6eYNup6l6kQH1dPU05jp8vmIOB9FcpGPedtIVB5j73Jb
+         kJhhQHELsDjXr7BKtvLpy2hwUWHmikG6f+/CFfPsgcF1UDj24eab/7qHVSC6466pIauG
+         SW72zU823HRIyxVyQy8ivh+Lg9Md19ln0lUny5Bn2F8BevFU6WDCzpHB7RIuLCETUW4p
+         +Y+hWx/fvivp3B++tGbJfeHTLQCUwSBR7KnLn3VPV1q832MPotRiozwMIRbPNcjStOde
+         KNSEavg0KEPj7FOk0gKCrXsgtNFugNjOA77Rh2Xrin7fuuwEjdP3ENN/q1KzdoDJ3F3q
+         gWqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784108008; x=1784712808;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1784111240; x=1784716040;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qpKE0Ztd8LwTs3URtxw/L1Mr92CYYHr0Elkx6ZybgOo=;
-        b=b2oiU3fB4NONYwEW4BaVfzbqZ3lDkCzuIw7Gl49REeC9zpHQ97QMl/gTHuv5rtCUsN
-         aMgsBxcYqvfLPDOe22KqMk2AoIj5oW75Z0AvUZmxRQ41+qZU/UJXInphFTr2ZA/rN9Nr
-         aM32yLh5MBg1f7VMn6j3Z83omyPvD3/Z/26NqBa1qCm6Fq/8Yxdd+0KYCsiARPE3S4KB
-         JLm7txqyc8m5TR8QFI4ClYkV5XZYLzcQrzHFg7CCrroiTW61SyZsybmzKV/XKZw/aL5g
-         Nnxl6+A8hZ+4+lpI8wrWpSc+nOA6JQ9M04KMWcn9trCW2GvISCifC78+SNK0TIdQHlvv
-         fSDg==
-X-Gm-Message-State: AOJu0YzUEGuysUZ6bM0RQ2H4eRkpoOd85BOFwSdJiBp8xyJweQ/A58hZ
-	g/z/DlkYzID7z0SEVT1ppXGm3EL/5qSKMibUGWw2N0D8afK3eAKxFe0pP7QXiRz5uXA=
-X-Gm-Gg: AfdE7cnMkr56BPv0LqqyVcaYOP7avBRvFTxn7zj/tMf6pLLQhTcFaGztPnHhR/DTLyb
-	L68PhsPYbK0SMGY9VLrL9M33QzWHVYgZ9CBq7aAx35i3H2XrDPGjumyHqnO2QAlMFFyVNmz/gKs
-	lqX6qvGmMjuUFP8nC+TJodctAsnL3Sm94Xt+j9MHsyYWMMiRANnNP3PsdrpU4YADXGMae5hX+q9
-	9X9tsa5QzifEdISdoYc+PVGBxXnCU+jMgJl0ZHQ8sjw8iL5gi8fOg6ezy3agJqV5DC0+LpU4sOC
-	T+Ttl4UZcArfSN5vYaffEjkdDc21/aojI8Jbd0ckYJjOPXlSxuoCNK0Li6QM/i2Qba1jGcm/7dA
-	/kU8kRYUcxTcnvzDdxUyfHfHaz5AmUx9dNw1wlO49V7rPYc0/ac+0GfEUxgjy+9jnuLPECvH/AT
-	c6aBtG5MnMbIIX4leWNNt/MSaYGcjBlRq6suYOLtxhpE0=
-X-Received: by 2002:a05:6870:d32b:b0:448:6ba8:be6f with SMTP id 586e51a60fabf-4562b4c48f0mr1353839fac.19.1784108007743;
-        Wed, 15 Jul 2026 02:33:27 -0700 (PDT)
-Received: from devvm29614.prn0.facebook.com ([2a03:2880:ff:6::])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-455ad91df9esm9770592fac.9.2026.07.15.02.33.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 02:33:27 -0700 (PDT)
-Date: Wed, 15 Jul 2026 02:33:24 -0700
-From: Bobby Eshleman <bobbyeshleman@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH net-next v5 3/3] selftests/net: devmem.py: add
- check_rx_large_niov
-Message-ID: <aldT5PnKUFHTlCkg@devvm29614.prn0.facebook.com>
-References: <20260708-tcpdm-large-niovs-v5-0-34bf6fac941b@meta.com>
- <20260708-tcpdm-large-niovs-v5-3-34bf6fac941b@meta.com>
- <20260710072712.0F50B1F000E9@smtp.kernel.org>
+        bh=Ye/9u/kfw2ldB2HnBfjL0BYaRgTTNbK1gZ0f7JtbS1g=;
+        b=fwVFHfcdXCtZcP+HsH5GAtI1yiAXD6UuF1q1YCVCiDmDOPyswJpt0CcBM0rvOzAiLA
+         Tlp97JV4NuTDl0mYgfMrv3Wd0YD5wgVAYIok+9NQ8nmtsnREMpyQuP8Qhtnk4c/Ck3Xd
+         du5v8NDfYAwTHIoFJbAnVaMwj4/ECGXuHcaBNp0CWSfTnRum1kcvHSNWFv9raZNJDoTH
+         NyX4HIZOT5V7/uDq1CoeYO9MQsj4NJ1lQrlf9wofKlAO4EgonQZBPxVpV48ZoEceuvTk
+         1GY9aAPwkli4lRAgR3O2S2ni83W/GARvNj/n9/kl+jCzG3LRTG/VARhisphtcEuZbp8j
+         Jy4w==
+X-Gm-Message-State: AOJu0YyHx5vYTGXtivUZEHqyNsXRsoTJ5bXNuN9taP7IbM0N8WEAyE4l
+	8jOMbTuu+oR4rdTisTgGrXXJBD4lvvEVEUiDYWo0YQ095+qm8g5le4XCnC551uXYm+oC065AByP
+	eYiZk/kUpO5Sz5DPzpb6VaDpM40eagJ7EhUB4jUOrFg==
+X-Gm-Gg: AfdE7clHinBd6Z5UbBKW7MOmcKtDvGQlRG7v36Y6FnSRCA4QsJMH4ETHDsheaHlnyPT
+	Ng1X9ZJf/SuvziwC9y/DHons5485XF2J7sHDNYlgE0jON/7BN+Nk7u31ZzO5QoKWqDIiZOuOPAM
+	3zFEdlGei24AVJBGFd5mwB8QBpv+ppn6P6gv9Z/6q7/xJ49R92HZKZ7KiVgqbBnVl/YbBjxcmf6
+	I04e5VeUtlT9Hiqjv5I0L6jVIdyY8G09s/0woiTu5OR2JQfGV5bBWqSImpCcueaxKS7wHF4arGE
+	9rWkccw=
+X-Received: by 2002:a05:6214:5541:b0:8ef:ec2c:6b70 with SMTP id
+ 6a1803df08f44-9074c84cb1fmr58440516d6.53.1784111240385; Wed, 15 Jul 2026
+ 03:27:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260710072712.0F50B1F000E9@smtp.kernel.org>
+References: <20260708-fionread-no-verdict-v3-0-b4ee31b3af53@coralogix.com>
+ <20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com>
+ <20260708171659.8695B1F000E9@smtp.kernel.org> <alaAp3qrrn3XYd8u@john-p8>
+In-Reply-To: <alaAp3qrrn3XYd8u@john-p8>
+From: Mattia Meleleo <mattia.meleleo@coralogix.com>
+Date: Wed, 15 Jul 2026 12:27:08 +0200
+X-Gm-Features: AUfX_mx6oFAp_WKlpkqbUOQh5ytb63C69yfL4tT2SFTAbZzCUy50wCNpgxIxtDY
+Message-ID: <CAOvpEWNSyn40iwJg7DRTTq0z8nFqPAFx1oakfwk06bJPssj84w@mail.gmail.com>
+Subject: Re: [PATCH bpf v3 1/2] bpf, sockmap: Account for receive queue in
+ FIONREAD without a verdict program
+To: John Fastabend <john.fastabend@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 10, 2026 at 07:27:11AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Unhandled Python exception in selftests when hugepages are disabled or sysctl is read-only.
-> --
-> 
-> --- Patch [3]: [PATCH net-next v5 3/3] selftests/net: devmem.py: add check_rx_large_niov ---
-> commit c6680f91b9c04fa78f7d8b9d5f92ce1bee9816c1
-> Author: Bobby Eshleman <bobbyeshleman@meta.com>
-> 
-> selftests/net: devmem.py: add check_rx_large_niov
-> 
-> This commit adds a new devmem test case for binding a dmabuf with a 16K
-> rx-buf-size. It also sweeps various RX payload sizes across the niov boundary
-> to exercise the sub-niov, exact-niov, and multi-niov RX paths.
-> 
-> > diff --git a/tools/testing/selftests/drivers/net/hw/devmem_lib.py b/tools/testing/selftests/drivers/net/hw/devmem_lib.py
-> > --- a/tools/testing/selftests/drivers/net/hw/devmem_lib.py
-> > +++ b/tools/testing/selftests/drivers/net/hw/devmem_lib.py
-> 
-> [ ... ]
-> 
-> > +def run_rx_large_niov(cfg):
-> > +    """Run the devmem RX test with a large niov (rx-buf-size > PAGE_SIZE).
-> > +
-> > +    Sweep payload sizes that straddle the niov boundary: below, equal to,
-> > +    and above rx_buf_size, to exercise sub-niov, exact-niov, and multi-niov
-> > +    RX paths.
-> > +    """
-> > +    hp_file = "/proc/sys/vm/nr_hugepages"
-> > +    with open(hp_file, 'r+', encoding='utf-8') as f:
-> 
-> [Severity: Medium]
-> Will this crash with an unhandled exception on systems without hugepages
-> enabled or when run without write permissions to /proc/sys?
-> 
-> If the system was compiled without CONFIG_HUGETLB_PAGE=y, opening this file
-> will throw a FileNotFoundError, causing the kselftest framework to report a
-> test failure rather than gracefully skipping. 
-> 
-> Could this be wrapped in a try/except block to catch these exceptions and
-> raise KsftSkipEx instead?
+On Tue, Jul 14, 2026 at 8:45=E2=80=AFPM John Fastabend <john.fastabend@gmai=
+l.com> wrote:
+> Sure but doesn't need to hold up this patch. Mattia would you want to
+> fix this as well? Otherwise I'll put it on my list and get to it at
+> some point.
 
-Do we usually defend against kernels not using the config (in this case,
-selftests/drivers/net/hw/config)? Maybe should be a skip? We do already
-use this pattern in iou-zcrx.py and nk_qlease.py.
+I'll follow-up with the UDP fix.
 
-Best,
-Bobby
+Thanks for the reviews!
