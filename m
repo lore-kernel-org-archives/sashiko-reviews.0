@@ -1,194 +1,270 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011006.outbound.protection.outlook.com [52.101.57.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891DB331EB4;
-	Wed, 15 Jul 2026 11:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784115027; cv=none; b=YDzeme5dVMBH4v96VgrxGm729ZV67NdRzy/3B4IhOHkN0uvomOCtd2PW8389NkzSUNRjooQas2MaAyux21tdDMHmYQlWdpoVUkmL1vA+1gp+LCXfue9iXzOapfTV+4XzlEb7MHsTlTgkGDWOgSzizYmieFkLU6DQG8DBEX4XemM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784115027; c=relaxed/simple;
-	bh=nXdPLM+0VI/1PU44QgwoR5Qqx8FshCX91XsesGL+PnQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tq8T2Gj2YTWV4JIHDvrJtwiiAb4EFFITU1bQO8HoVKAveuAKpxlJAt1yEWx6eabvMnwq8QagmHNx5i5eggN4QvywYoC0gCSZChd+QoLuqpvPIjSon4trYEksiI3w93YbJ+PgfHyC/+bcwmu0swgoP9svG0Kw06SKwCv+V9hgzUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=QaBM4Aq7; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8B7449EC3
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 11:42:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.6
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784115734; cv=fail; b=iugVvTETQ5Xzi2rEboSucnzM8EsPl6oD7IK0xqKyd1+u4irWRZvhT17aQ1i07Q1NZ1PTqXN3RldX7bQ+NSUh67LwJM8/SErAmaJd4RoeocAcP+1mWaTiM8vIfHl+T618ouJWOJRFS9WPqh44rI2nfTQ39jgjhbOOzOLIlkzAFH0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784115734; c=relaxed/simple;
+	bh=FGzUJFBrakKawPy8GOSbRR1pEZWcJxmNR/YkIca/Suc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LoIXTqXape3hXfqMyPBnFMp3dvRJjVWd0tGtWy997aXtofKXacpVGT36s1agbxBagVmdGY+p2ruUWgeunEHJiiovf2HAl54923Tu4AU0hmkSA/R7v+Qsu1J/ZpLDjwMhSzbmZiWf9Iwkqx8QSH1z7KYI9JExq03FcelrB7qvmdQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=yK3FZiAv; arc=fail smtp.client-ip=52.101.57.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="QaBM4Aq7"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66FBBnwm008938;
-	Wed, 15 Jul 2026 11:30:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=Vj07Yp
-	aTKXMzSIw8+HTsBCB73nav4hx9gl65FHKz66Y=; b=QaBM4Aq7B/axF5SV6xDiae
-	L/f/pPxqAmUEuz8HrWi7blGUPUHoRzZ2SAdLu88URAzF+QtOcr7DPpRXbnV1sjUm
-	rKI0xeCQbuP3fB23DpStRbvGAxHwkQjS87FcURda0qZsHFShe6sxj7r/Zrj6SiK6
-	qiypzoWDZUlGVTwApAuAb9zMwZE67gGFmFDz2ws9zF0zkCDTiW5uz43gAQ8IO4LW
-	HC+7XlCNQ+GHXLLfNqlnxlQA+d+WC5KIn3gkfchWBurNtHib6qOYdLD2HWr2fFw9
-	pVyueK7NBpVaxQlNdPi7oEBe80VaN3zvF2b/vCBT8TE2Ibhn9pX8I5kxf88oJTMQ
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegtba25-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jul 2026 11:30:25 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66FBJwZp022767;
-	Wed, 15 Jul 2026 11:30:24 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hw7v8s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jul 2026 11:30:24 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66FBUK2839190962
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 15 Jul 2026 11:30:20 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 738D020043;
-	Wed, 15 Jul 2026 11:30:20 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5AE4220040;
-	Wed, 15 Jul 2026 11:30:20 +0000 (GMT)
-Received: from li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com (unknown [9.224.92.206])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed, 15 Jul 2026 11:30:20 +0000 (GMT)
-Date: Wed, 15 Jul 2026 13:30:19 +0200
-From: Alexander Gordeev <agordeev@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>
-Subject: Re: [PATCH v5 3/4] mm/kasan: Introduce helpers for lazy MMU mode
- sanitizer
-Message-ID: <8b38fa72-a069-4f9f-82b0-e591f6f8fe3d-agordeev@linux.ibm.com>
-References: <cover.1783945507.git.agordeev@linux.ibm.com>
- <38a663eeccd060d961990baf65338e2f2550e580.1783945507.git.agordeev@linux.ibm.com>
- <20260713143024.5EA041F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="yK3FZiAv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Wbn/HkHEA+PMwFyllEVSYVfW37XXMEwMoDU0t6wjn5YhxDrmIoe5u2Z/ASNxzLpOyDdtJSgQpKw91p7Sh89idghCQG8Eub/COpU1VAqOuW/uB9+I9gt/Z768/tz9WJRcdQvvbOvCi7RaSzJ8YRFj/bYthKbceGU+bnly/7N37kHGQsQVqj010oa8CjGe9XIfhBH28gGvkICmJ7GIHXjiCmVfQHIAajEfnRLlzfv02LZ6/Thucr3Sadni18llnm1Bx1Jro/R6avNpmn+C0fnB1AoRUJXE68E9e7h4jjgGBRFmnYv6gKRKC1QsXlzoIw7vf8NNrx5UG8V0wiBq8ovKbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=COAEwB+/9zQA6NdCpcJoKaQbXqkSyZ8mQFvWOtB8+Gk=;
+ b=p8VZ7JSAJS6qv6SX2/op5TDnBd6DAziQuF1ZkJmxlBdlS/CFXYj+qPWsgaCKd9XsXd9a++WBexzxtiJKtLm2DhiLc5ezRyl+uCv5XcOBBNClsMZ2CaDo/hj0arDDMHStTavUpI58J6i8nVj3NOTm5TvdLKdcghVJrhHVVti0C8FE29OTJo/pnYbB95ZHfc2D03U31X2w8tTin3tIGhFwSQ+Kmrw2fsVOhuZEdYW6H4Lg3n5MFSb9Keqn8tXACaKNuT88BWsfaXmfjDVqnfc8VDKDNmRIxhChtBXgKwGGOwiZy75y8lrEZ5hywXL37MS7h2BoUF1+TVP66Dx+S4HhEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=COAEwB+/9zQA6NdCpcJoKaQbXqkSyZ8mQFvWOtB8+Gk=;
+ b=yK3FZiAvL3tRIVOZtfJPFj1JNUJia49AC8bIOmyO+LZF1aJ2Gi8NKeMUNB6vjhR/oWM/ARHNuII+vVMxlBovJ9IdW2pcLWRaZaoPP2HH2Zr3RsApH27dblkhYNFKL7oB6qQOTTL1XEgkfc/xY9qDNantvS3+QBLBVaEno05mWeA=
+Received: from SJ0PR03CA0072.namprd03.prod.outlook.com (2603:10b6:a03:331::17)
+ by DS4PR12MB9562.namprd12.prod.outlook.com (2603:10b6:8:27e::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.10; Wed, 15 Jul
+ 2026 11:42:03 +0000
+Received: from CO1PEPF000075F3.namprd03.prod.outlook.com
+ (2603:10b6:a03:331:cafe::8c) by SJ0PR03CA0072.outlook.office365.com
+ (2603:10b6:a03:331::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.223.10 via Frontend Transport; Wed,
+ 15 Jul 2026 11:42:02 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CO1PEPF000075F3.mail.protection.outlook.com (10.167.249.42) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.223.9 via Frontend Transport; Wed, 15 Jul 2026 11:42:02 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 15 Jul
+ 2026 06:42:02 -0500
+Received: from [10.252.195.157] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Wed, 15 Jul 2026 06:42:00 -0500
+Message-ID: <024fdb87-b16c-4a6c-b9ea-e4953a7abe21@amd.com>
+Date: Wed, 15 Jul 2026 17:12:00 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] KVM: SVM: Add Bus Lock Detect support
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
+References: <20260709082953.69434-1-shivansh.dhiman@amd.com>
+ <20260709082953.69434-6-shivansh.dhiman@amd.com>
+ <20260709085535.3D8F81F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+In-Reply-To: <20260709085535.3D8F81F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260713143024.5EA041F000E9@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rHikk3gbSO4-ukwL-fsxBkxaH1DnCmlJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDExMCBTYWx0ZWRfX4Y2+gQ8MhYjX
- TB2lzC0hO+K+tCzbzZdC+WN5vgXGW/sLL0sYB0cnvmQkvOkniIIQusyHWzlo9rpVE87D6JoAFDA
- dXhH3AXgTsMw/RPbs7mDvOz/LjJlNYs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDExMCBTYWx0ZWRfX5Bw8gaij5ff4
- z/++B6V3/9LTD0R/KaMjtpodHjbY5OS1LvB+OMDpCNgFlCvuYMv/8girXk1IbmJFIpg/e7F/2vV
- o2Qpt+Tw65PQ0BOAmJSZJVjhvbCu/dC36Pz2/7WG2oUSOiVO8GY0A9sMB8IZ9IW+w1HLclZ+BXE
- /c17PBjI1t4W0zgLHg7oGoKMqOZWawE+++e7G4ojI24gVhfLnwNXv5Rx9HpFQIAtlliTMBo5dLn
- 50pNaR9Pwvl5Q7Oytahsh0Ds+kLNbwSZRQDbM9CZukAUwBgxdW2jHMi8P/MuqfW4j8gSAjKdjCc
- 8wZ0pzbhoEgxAwsbXeBiZHCXos+Lp7/aiEZ3QIipFgz8s7iqWaDYQpjqsDf68CW/hsy8hIKnyT4
- van5NVx0ZAQDM2exSbfH/nN0lZEt4oUgEUPdiKIRiDHU95/COS+HJwJRrgPgpHleJkIawZyIJW2
- t1W7nhjYgJX3iM/7aOA==
-X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a576f51 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=8nJEP1OIZ-IA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=c92rfblmAAAA:8
- a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=lUPfQHfRZ_PyWXBUwmsA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-GUID: rHikk3gbSO4-ukwL-fsxBkxaH1DnCmlJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-15_02,2026-07-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607150110
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000075F3:EE_|DS4PR12MB9562:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2180d35c-0084-4fba-ebe0-08dee266167f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|1800799024|36860700016|82310400026|11063799006|3023799007|4143699003|10067099003|18002099003|22082099003|56012099006|6133799003|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	3EapNhhT7TYFS2SkFKtWYYoxcXcgk6quiTxr0mr4zmB+F3l6/3WTnrDt8QMKrpmqNq3Vzj8/5ZmD9WpNMRhAaxlXZlz6mU5xQwwpWlr9caUp5R7bRmSQp+foiexsOqLU1NV/bUJ2orz87eNXlRWeOf8BGsusyDpjLVJ4XLnVOEq8LDzK6MJWGIhfHwG/wVF87n+rrJvz5Lh+sbfgoyTnIg1zWcWYKaamt1DjnXzF0TRO+bXeHt23tGZ31d0kIzWrk0gaM1zUR+TN6khkqB2r+pNtJX2qsqiEXAKMgx4mAG7KL0KlJv6rATQbYGalq9NhrKI7iQsNIhurf1j1Rh/Pi0ok4cvAwIEuX7Tr657OYBHG9QdxGqVqXSZTikiE7lCGhU5SUH9nMVZZtEEw5Qu5s/uwu64yEaZq9J/Wv7ARf8iqSnSC7rpIhfZRA4uVkaaDy1wlcafKHqi6WXRZw9JVUD55RyvPDJIpOf6vyFV2PJTK3SgTex1tJ3oGbhWtlLAvSagw6fmenelnxTPUvDdGCqyfbz5uVQgcQF4w0KuXpTu1vxheY52pyxdMQNZEzcyuOUg18tWOSbyCL/jDtIp9npGsFgBD4yS85kj4REqfRVRpi3+sk6nuIq9+kPJJJEbET6f1Hkip0J1kmAJS5CiBSg==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(36860700016)(82310400026)(11063799006)(3023799007)(4143699003)(10067099003)(18002099003)(22082099003)(56012099006)(6133799003)(13003099007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	mRf20c0kSt0ZRDZhL6a1AXXVdJ04GDLmFTN/lRf80OTRhXvjx83vVPgh5qYUI5InZ7UBjmIQBxeTNI5fuXaZQRk8D3pUcz1CeFXXTal1OG//q+Owxjn4XqLsZyLXgloOPqRkK5kb6jV7YdYowJXwZ7dazKjdjwl9eNYCIvQuVnuPsFmj6jv8skKBZxtVmPRAPJ/b3p9LsFptwcFOj0gj2rPdxwkYkpD8zHxDJAoaeWRDlIWSgTT8q6Z3iDqx4KDFBLtmO5sLyBibyCaQPIvwSbEbRnm6YP/lk0/Rer7MJvtbsBKBmd4sF0Valjpqsq2Jfism1JapTDVcTe4Y5kYhXJw47PU43xySrQSym5JVzFwL/eEmV9gErQv7cWyhnym9Y05z1RQmw+VHLbifpklJCFiAlgbWoJdtvYSrfBs5LZGRm15pyWtMVZ2/dgWym6SI
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2026 11:42:02.4113
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2180d35c-0084-4fba-ebe0-08dee266167f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000075F3.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9562
 
-On Mon, Jul 13, 2026 at 02:30:23PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] The newly introduced KASAN PTE helpers lack `EXPORT_SYMBOL`, which will cause module build failures when utilized in inline page table accessors.
-> - [Medium] The generic `kasan_[un]poison_pte` API inherently conflicts with KASAN tracking requirements on architectures where `sizeof(pte_t) < KASAN_GRANULE_SIZE` (e.g., 32-bit architectures), causing WARN_ON splats and silent shadow memory corruption.
-> - [Medium] KASAN poisoning of PTEs during lazy MMU mode fundamentally breaks concurrent lockless PTE readers (e.g., GUP-fast), causing false-positive KASAN splats.
+
+
+On 09-07-26 14:25, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Unprivileged host userspace can trigger a KVM_BUG_ON (resulting in a WARN_ON_ONCE and potential host panic) by dynamically toggling MSR_IA32_DEBUGCTLMSR for a SEV-ES guest.
+> - [High] Enabling Bus Lock Detect inadvertently un-intercepts LBR MSRs, granting the guest unauthorized hardware access to LBRs.
+> 
+> Pre-existing issues:
+> - [High] L2 guest can bypass MSR intercepts and overwrite L1's MSR_IA32_DEBUGCTLMSR and LBR state when L1 enables Bus Lock Detect or LBR.
+> - [High] Bus Lock Trap #DB causes are lost during reinjection, rendering the feature non-functional in the guest.
 > --
 > 
-> --- Patch [3]: [PATCH v5 3/4] mm/kasan: Introduce helpers for lazy MMU mode sanitizer ---
-> commit ad7a1a1292ef9676ee173915cfe50c0da8ea27a4
-> Author: Alexander Gordeev <agordeev@linux.ibm.com>
+> --- Patch [5]: [PATCH v3 5/5] KVM: SVM: Add Bus Lock Detect support ---
+> commit d2f71feda9dbdbb51e59bc110b5518d4f10bcf93
+> Author: Shivansh Dhiman <shivansh.dhiman@amd.com>
 > 
-> mm/kasan: Introduce helpers for lazy MMU mode sanitizer
+> KVM: SVM: Add Bus Lock Detect support
 > 
-> This commit introduces KASAN helpers to allow architectures to catch
-> illegitimate direct PTE accesses while lazy MMU mode is enabled. It provides
-> kasan_poison_pte() and kasan_unpoison_pte() routines, along with a new
-> KASAN_LAZY_MMU_PTE shadow bug type.
+> Add Bus Lock Detect support in AMD SVM. Bus Lock Detect is enabled through
+> MSR_IA32_DEBUGCTLMSR and MSR_IA32_DEBUGCTLMSR is virtualized only if LBR
+> Virtualization is enabled. Add this dependency in the SVM.
 > 
-> > diff --git a/mm/kasan/common.c b/mm/kasan/common.c
-> > index b7d05c2a6d93d..cbf68680614e5 100644
-> > --- a/mm/kasan/common.c
-> > +++ b/mm/kasan/common.c
+>> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+>> index a59389c322da1..bd204aa33e47f 100644
+>> --- a/arch/x86/kvm/svm/svm.c
+>> +++ b/arch/x86/kvm/svm/svm.c
+>> @@ -882,7 +882,8 @@ void svm_update_lbrv(struct kvm_vcpu *vcpu)
+>>       bool current_enable_lbrv = svm->vmcb->control.misc_ctl2 & SVM_MISC2_ENABLE_V_LBR;
+>>       bool enable_lbrv = false;
+>>
+>> -     if (svm->vmcb->save.dbgctl & DEBUGCTLMSR_LBR)
+>> +     /* Bus Lock Detect in guest depends on LBR Virtualization */
+>> +     if (svm->vmcb->save.dbgctl & (DEBUGCTLMSR_LBR | DEBUGCTLMSR_BUS_LOCK_DETECT))
+>>               enable_lbrv = true;
+> 
+> [Severity: High]
+> Could this change allow unprivileged host userspace to trigger a kernel panic
+> on systems with panic_on_warn=1?
+> 
+> If userspace calls KVM_SET_MSRS for a SEV-ES vCPU before the guest is
+> finalized and sets MSR_IA32_DEBUGCTLMSR with DEBUGCTLMSR_LBR or
+> DEBUGCTLMSR_BUS_LOCK_DETECT, svm_update_lbrv() will set enable_lbrv = true.
+> 
+> If userspace subsequently writes 0 to clear the bit, enable_lbrv becomes
+> false, causing KVM to call __svm_disable_lbrv().
+> 
+> This would then hit the following assertion:
+> 
+> arch/x86/kvm/svm/svm.c:__svm_disable_lbrv() {
+>     ...
+>     KVM_BUG_ON(is_sev_es_guest(vcpu), vcpu->kvm);
+>     ...
+> }
+
+For SEV-ES guests, LBRV is always enabled once guest_state_protected is set,
+and the LBR MSRs are left un-intercepted. From that point on,
+guest_state_protected makes sev_es_prevent_msr_access() block any further
+MSR writes, so LBRV can no longer be toggled.
+
+> 
+> 
+> [Severity: High]
+> Does enabling Bus Lock Detect inadvertently grant the guest unauthorized
+> hardware access to LBRs?
+> 
+> When a guest with Bus Lock Detect sets DEBUGCTLMSR_BUS_LOCK_DETECT,
+> enable_lbrv becomes true. This leads to a call to
+> svm_recalc_lbr_msr_intercepts():
+> 
+> arch/x86/kvm/svm/svm.c:svm_recalc_lbr_msr_intercepts() {
+>     ...
+>     bool intercept = !(svm->vmcb->control.misc_ctl2 & SVM_MISC2_ENABLE_V_LBR);
+>     ...
+> }
+> 
+> Because intercepts are disabled entirely based on SVM_MISC2_ENABLE_V_LBR,
+> could this un-intercept all LBR MSRs (e.g., MSR_IA32_LASTBRANCHFROMIP) even
+> if the guest does not possess the LBRV CPUID feature?
+
+LBR is always available on AMD x86 processors. There's no CPUID feature
+gating guest access to them. Un-intercepting them via V_LBR bit just
+exposes the guest's own LBR state, not host state.
+
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can an L2 guest bypass MSR intercepts and
+> overwrite L1's state if L1 enables Bus Lock Detect or LBRs?
+> 
+> If L1 enables these features but does not expose LBRV to L2, KVM populates
+> vmcb02->save.dbgctl with L1's state. When svm_update_lbrv() sees these bits,
+> it appears to activate hardware LBRV (SVM_MISC2_ENABLE_V_LBR) for L2.
+> 
+> This would un-intercept MSRs for L2, allowing L2 to modify DEBUGCTLMSR
+> natively. Upon nested VMEXIT, KVM copies this modified state back to L1:
+> 
+> arch/x86/kvm/svm/nested.c:nested_svm_vmexit() {
+>     ...
+>     if (!nested_vmcb12_has_lbrv(vcpu)) {
+>         svm_copy_lbrs(&vmcb01->save, &vmcb02->save);
+>         vmcb_mark_dirty(vmcb01, VMCB_LBR);
+>     }
+>     ...
+> }
+> 
+> Would this allow a malicious L2 guest to corrupt L1's state?
+> 
 > [ ... ]
-> > @@ -163,6 +163,16 @@ void __kasan_poison_slab(struct slab *slab)
-> >  		     KASAN_SLAB_REDZONE, false);
-> >  }
-> >  
-> > +void __kasan_poison_pte(pte_t *pte, int nr)
-> > +{
-> > +	kasan_poison(pte, sizeof(*pte) * nr, KASAN_LAZY_MMU_PTE, false);
-> > +}
 > 
-> [Severity: Medium]
-> Since lazy MMU mode is generally a per-thread or per-CPU state, but KASAN
-> shadow memory is a globally shared mapping, will poisoning a live PTE page
-> here trigger false-positive KASAN splats for concurrent legitimate lockless
-> page table walkers?
+
+This is intentional. When L1 doesn't enable LBRV for L2, L1 and L2 share the
+LBRs. The L2's branches are recorded into L1's LBRs and copied back on
+#VMEXIT which lets an L1 profiler record L2's branches.
+
+If L1 wants isolation, it enables LBRV for L2, giving L2 its own virtualized
+LBR state. So it is not a corruption or an isolation breach.
+
+>> @@ -5595,9 +5596,17 @@ static __init void svm_set_cpu_caps(void)
+>>        * Clear capabilities that are automatically configured by common code,
+>>        * but that require explicit SVM support (that isn't yet implemented).
+>>        */
+>> -     kvm_cpu_cap_clear(X86_FEATURE_BUS_LOCK_DETECT);
+>>       kvm_cpu_cap_clear(X86_FEATURE_MSR_IMM);
+>>
+>> +     /*
+>> +      * LBR Virtualization must be enabled to support BusLockTrap inside the
+>> +      * guest, since BusLockTrap is enabled through MSR_IA32_DEBUGCTLMSR and
+>> +      * MSR_IA32_DEBUGCTLMSR is virtualized only if LBR Virtualization is
+>> +      * enabled.
+>> +      */
+>> +     if (!lbrv)
+>> +             kvm_cpu_cap_clear(X86_FEATURE_BUS_LOCK_DETECT);
 > 
-> For instance, if get_user_pages_fast() or handle_pte_fault() executes a
-> READ_ONCE() on another CPU against this PTE, it seems they would hit the
-> globally poisoned shadow memory.
-
-Yes, and I learned it hard way. As result, ptep_get_lockless() is marked
-as __no_sanitize_address on s390. That is ugly, but that is the only way
-I came up with to avoid the above issue.
-
-> [Severity: Medium]
-> On 32-bit architectures where sizeof(pte_t) is 4 bytes, kasan_poison() will
-> receive a size of 4 when nr is 1.
+> [Severity: High]
+> This isn't a bug introduced by this patch, but are Bus Lock Trap exceptions
+> actually reaching the guest?
 > 
-> Since generic KASAN enforces an 8-byte alignment constraint, will this trigger
-> the WARN_ON(size & KASAN_GRANULE_MASK) check?
-
-I will exclude platforms with such pgtable entries altogether.
-
-> [Severity: Medium]
-> If architectures call this helper from inline page table accessors like
-> ptep_get() or set_pte() in header files, will loadable modules fail to build
-> with undefined symbol errors?
+> According to the AMD APM, when a #DB is intercepted, the CPU provides the
+> new DR6 value (containing the DR6_BUS_LOCK bit) in EXITINFO1 and does not
+> update the guest's DR6.
 > 
-> It looks like this function and __kasan_unpoison_pte() are missing an
-> EXPORT_SYMBOL() or EXPORT_SYMBOL_GPL() declaration.
+> However, when KVM reinjects the exception, it reads the stale save.dr6:
 > 
-> > +
-> > +void __kasan_unpoison_pte(pte_t *pte, int nr)
-> > +{
-> > +	kasan_unpoison(pte, sizeof(*pte) * nr, false);
-> > +}
-
-Will fix.
-
-> [Severity: Medium]
-> kasan_unpoison() implicitly rounds the size up to the nearest
-> KASAN_GRANULE_SIZE, which is 8 bytes.
+> arch/x86/kvm/svm/svm.c:db_interception() {
+>     ...
+>     u32 payload = svm->vmcb->save.dr6 ^ DR6_ACTIVE_LOW;
+>     kvm_queue_exception_p(vcpu, DB_VECTOR, payload);
+>     ...
+> }
 > 
-> On 32-bit architectures with 4-byte PTEs, could unpoisoning a single PTE
-> inadvertently unpoison the adjacent PTE and corrupt its tracking state?
+> Does this cause the DR6_BUS_LOCK bit to be lost during reinjection, rendering
+> the feature non-functional in the guest?
+
+False positive. Per APM 15.12.2, on a #DB intercept the saved DR6/DR7 match
+what a #DB handler would see and EXITINFO1/2 are undefined. So DR6_BUS_LOCK is
+in vmcb->save.dr6, not EXITINFO1.
+
 > 
-> > +
-> >  void __kasan_unpoison_new_object(struct kmem_cache *cache, void *object)
-> >  {
-> >  	kasan_unpoison(object, cache->object_size, false);
+> --
+> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260709082953.69434-1-shivansh.dhiman@amd.com?part=5
 
-Same as for kasan_poison().
-
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1783945507.git.agordeev@linux.ibm.com?part=3
-
-Thanks!
