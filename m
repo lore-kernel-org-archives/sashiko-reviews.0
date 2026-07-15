@@ -1,127 +1,236 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6F63D4112
-	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 22:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBE73CF034
+	for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 23:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784154471; cv=none; b=OyQfPMdqL+EkvarYHiUkpLIXP8DXNGD0s13LfL/vVcVneGnlwhGkixvDcHrlMAsHONJtMI2+FTAfkTAe4VekgJ5eVTftL4P2WkcTK0v/YsYv6OtRGVMQO5TFPfVtz+hXR37frhPDuI4pC80axLBfRTQwoO9yWORIgDSUsqFCIYo=
+	t=1784156956; cv=none; b=pIAdOja+tTQUKrYIz2KqwLotNZuvOxQmwxksYZKFYRYgilO6n/8iLNom16/uCihdECD6o1a0YbWHhFNNK+qe61e1TAZEeRmc+ILtRP+JFMkpLNmNj/NlAtdfwkoyf7iX6Yy5fum+3DVQz4QggzQg3HlCtEUZdxCN6fajkXU6cVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784154471; c=relaxed/simple;
-	bh=NKAFqrIo/N34Qlzfl8cF07HDq2Q54AsT+hgjfQQKVCM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QD/ISlfY5SMtiAbea3A/6UoFVdbO9lOmKybu7RufzVIMujuMcNYDK+mhd4PdWNrzhk5wdmkRCG1K5AwXlolIWDfZLIE+o2scMe0/kbf7EOpurALWaAm3/94X8p73xFMFKEa9H/Ermef43Cwkssa4cejwADAHT8O0JwYzbYhPI6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ZCIDexud; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1784156956; c=relaxed/simple;
+	bh=0NFG4Ww2jSroHmWiUivePZxK2XpVdq/qHaQxr1Q7fsY=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=glsSiWQVERXFUJHU4vXjcA/SxI4MMevrbRgltyR21nlEA9sTdTJOwp/+kmtNg+HXIZYF0zgcN0D/8eLyr7PCxitWoPQj4EIWhGzTIu/N+dDPNPNxN4mijQpEzwo4BQE0IJzHPvfgE1RdHLZBL0DmQIkrsX+h6H44W5cWLI0fx/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=frZbSgGe; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ZCIDexud"
-Message-ID: <9ddec85b-2a70-4bf6-af09-701f485d0cae@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784154466;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=N5pDJqFLXru8M/uzKbcNpqPlIPSM24gtV8scs/eEnfQ=;
-	b=ZCIDexudtVUl6RNVh575inHkvo69NjBuJwSGNsBt6gChaNKiOpjZMKd08I0AwYhWwlL0QZ
-	CU8LHZ2+iu0vkdP32eyEm+eINtXW31KfKSTCm6m2c6v8P9b5tg/YBJSdsC0jBzhZWZtQsu
-	rVYStTmbF1wmIujnrpwo1kvSZHYveUA=
-Date: Wed, 15 Jul 2026 15:27:12 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frZbSgGe"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e347638adso811042a91.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 16:09:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784156954; x=1784761754; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ElxrIYjyBDIOHQflkE/kwut9Q3GwTe8Bx9Dw1cR1MdI=;
+        b=frZbSgGezYfjDKnsz7YrWnwjFJsQHvWvv6vubfgvPIr10AZ3beC7wOVIwdpY3aZCla
+         8VsOnRo34jDiB2xOP8exRkc9rH9MvVSq0sqNTjL6KLIbd0OaZsYbbc1u3pPPePAundK1
+         tECZS/ePfzZX1Imq2ofAK5WNuyqhVmP6fTiOtNQrEtmWoFPlJylLwmdkTX+YuPpLmdmA
+         BTIJm5vkBe1t4vd1SSjHmVPDM/ekn2sCgPb8Bfgz5JrUPPm9Ea8WnY3m/xSHKwdYawHE
+         ETHfkvME/J/Qy/dVRUbUQr3KiTHU50ddvCVsb7JJU50pgtlh5lTHEjoIAZF5JW52ToXx
+         sbXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784156954; x=1784761754;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ElxrIYjyBDIOHQflkE/kwut9Q3GwTe8Bx9Dw1cR1MdI=;
+        b=rFVAbJBot+uNl5lwe00g3nzUfs/W77E4aZRJYQ7u15t1D+fgQp5o4sGEN1IIDS6HLV
+         GRd02hJPIFEJGHrEGLSFT9EMKpBJf19Iqna0UEgJpSMYCgveZqM4IWpUMzTxngDiPUF8
+         tEzHHlkXf9cZchnQBalV+LMTjoi7Ory4ZEz//0hYga7yXzXrh3d4d84WvIrMFD4f1QpX
+         iWDGVATiJzHRM8cTp9RZjD3/Ovvk+9kayVekafNU8XOQ9va3xYm8EYxc6m6NxbhZP1lu
+         BLzZ2kugVgInaH7kdXkcNaBmlTDD/rU+SBttp1i/07+DHQMWJVjCQQvbs28zXIvmwHum
+         MMDw==
+X-Gm-Message-State: AOJu0YxhyIXnmJ6xEvPFZeCEtQFXAUK2BkEfvoKagbRjgnkvQ7O/g5SC
+	8eY3gVeGHM1yCgYxufZ9b/BPHwxznEWVyYjTgYGyz0akUSGCS+xXyMgkQvUUbg==
+X-Gm-Gg: AfdE7cm1NwAxWKtV6ofKqncrhSq+3MecxANTpCsr6/cBbDEWXsNf6jK8tWRimiJTePw
+	Kicj01m8qbFuYvOM+FX2FPWHUoneOMfBMxJ6YOZ1RLqyAFrRklS0zaO2oGioSHlCzoyAjzCpZic
+	enU9PsfT9V/QRZ9lRCNSrl0lHJRkYQ9lXMoFA7bQRqusFgE5eG69+AOCkwnBFdxWIqdSg2uFT8d
+	JWz6XKiTyPVDWV9+z3k84vbfshTw47NQDtXfQFJv1o83dMb0E9XdMC5tt2JGczekr03VIuQj9Ne
+	XJbmw9JKlLbmcJuyP9jBjCUR5TFlwxGFhMA47uW9pLx6gZHhu9UKA9wJKSXPEdztMgEuFJYivVv
+	qU020V3CVQaCdA24jMKxeOnqYUaKaHFafjnSiqrsbGkPKGFQdpDEZZRHvv7xXn5SPNYY2i/P8IC
+	QOOPMsKDWAPdeSlfmyrcfBiR7PEcSYcI2MoSIOsFf7EQD1qU1rTp9GyBm2NiQbe/EiBwHD
+X-Received: by 2002:a17:90b:2dcc:b0:38c:e9e9:e7ce with SMTP id 98e67ed59e1d1-38e29facf55mr4440727a91.3.1784156954192;
+        Wed, 15 Jul 2026 16:09:14 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e53349dsm5371877eec.7.2026.07.15.16.09.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 16:09:13 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 15 Jul 2026 16:09:12 -0700
+To: sashiko-reviews@lists.linux.dev
+Cc: Anisa Su <anisa.su887@gmail.com>, linux-cxl@vger.kernel.org,
+	nvdimm@lists.linux.dev
+Subject: Re: [PATCH v11 10/31] cxl/mem: Configure dynamic capacity interrupts
+Message-ID: <algTGPgDuwTUFI_q@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-11-anisa.su@samsung.com>
+ <20260625181442.33E561F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v5 05/10] bpf, x86: refactor BPF_ST management in
- do_jit
-To: sashiko-reviews@lists.linux.dev,
- =?UTF-8?Q?Alexis_Lothor=C3=A9_=28eBPF_Foundation=29?=
- <alexis.lothore@bootlin.com>
-Cc: bpf@vger.kernel.org
-References: <20260709-kasan-v5-0-1c64af8e4e1e@bootlin.com>
- <20260709-kasan-v5-5-1c64af8e4e1e@bootlin.com>
- <20260709110819.6BED51F000E9@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <20260709110819.6BED51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <20260625181442.33E561F000E9@smtp.kernel.org>
 
-On 7/9/26 4:08 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The `emit_st()` helper absorbs `Arg 6` pseudo-store and `BPF_REG_PARAMS` translation, causing invalid KASAN instrumentation for BPF_ST instructions.
+On Thu, Jun 25, 2026 at 06:14:41PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] An unhandled DCD event status bit will cause an infinite loop in the `cxl_event_thread` IRQ handler if DCD processing is disabled dynamically.
+Fixed
+
+> - [High] The driver fails to perform an initial drain of the DCD event log when the BIOS has control of standard CXL errors (`!native_cxl`), stranding pre-existing events.
+Fixed
+
 > --
 > 
-> --- Patch [5]: [PATCH bpf-next v5 05/10] bpf, x86: refactor BPF_ST management in do_jit ---
-> commit b88dd49e34d6904772392eec8dfdeba3542805c4
-> Author: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+> commit 4e2d7455b6a9875d8ee530fc91ae3a8b65741caa
+> Author: Ira Weiny <iweiny@kernel.org>
 > 
-> bpf, x86: refactor BPF_ST management in do_jit
+> cxl/mem: Configure dynamic capacity interrupts
 > 
-> This commit extracts the x86-64 BPF_ST instruction emission logic into a single
-> emit_st() helper function. It is intended to prepare for KASAN checks being
-> inserted before memory loads and stores.
+> Dynamic Capacity Devices (DCD) support extent change notifications
+> through the event log mechanism.  The interrupt mailbox commands were
+> extended in CXL 3.1 to support these notifications.  Firmware can't
+> configure DCD events to be FW controlled but can retain control of
+> memory events.
 > 
->> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
->> index d35f58350d710..959fcaa0cde9a 100644
->> --- a/arch/x86/net/bpf_jit_comp.c
->> +++ b/arch/x86/net/bpf_jit_comp.c
->> @@ -1410,6 +1410,64 @@ static void emit_st_index(u8 **pprog, u32 size, u32 dst_reg, u32 index_reg, int
->>  	*pprog = prog;
->>  }
->>  
->> +static void emit_st(u8 **pprog, struct bpf_insn *insn, int dst_reg,
->> +		    s32 outgoing_arg_base, u16 outgoing_rsp)
->> +{
->> +	s32 imm32 = insn->imm;
->> +	u8 *prog = *pprog;
->> +	s32 insn_off;
->> +
->> +	switch (BPF_SIZE(insn->code)) {
+> > diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+> > index 8d12c684d6700..95a4bf7c1e466 100644
+> > --- a/drivers/cxl/pci.c
+> > +++ b/drivers/cxl/pci.c
 > [ ... ]
->> +	case BPF_DW:
->> +		if (dst_reg == BPF_REG_PARAMS && insn->off == -8) {
->> +			/* Arg 6: store immediate in r9 register */
->> +			emit_mov_imm64(&prog, X86_REG_R9, imm32 >> 31,
->> +				       (u32)imm32);
->> +			*pprog = prog;
->> +			return;
->> +		}
->> +		EMIT2(add_1mod(0x48, dst_reg), 0xC7);
->> +		break;
->> +	}
->> +
->> +	insn_off = insn->off;
->> +	if (dst_reg == BPF_REG_PARAMS) {
->> +		/*
->> +		 * Args 7+: reverse BPF negative offsets to
->> +		 * x86 positive rsp offsets.
->> +		 * BPF off=-16 → [rsp+0], off=-24 → [rsp+8], ...
->> +		 */
->> +		insn_off = outgoing_arg_base - outgoing_rsp -
->> +			insn_off - 16;
->> +		dst_reg = BPF_REG_FP;
->> +	}
+> > @@ -632,6 +657,30 @@ static int cxl_event_irqsetup(struct cxl_memdev_state *mds,
+> >  	return 0;
+> >  }
+> >  
+> > +static int cxl_irqsetup(struct cxl_memdev_state *mds,
+> > +			struct cxl_event_interrupt_policy *policy,
+> > +			bool native_cxl)
+> > +{
+> > +	struct cxl_dev_state *cxlds = &mds->cxlds;
+> > +	int rc;
+> > +
+> > +	if (native_cxl) {
+> > +		rc = cxl_event_irqsetup(mds, policy);
+> > +		if (rc)
+> > +			return rc;
+> > +	}
+> > +
+> > +	if (cxl_dcd_supported(mds)) {
+> > +		rc = cxl_event_req_irq(cxlds, policy->dcd_settings);
+> > +		if (rc) {
+> > +			dev_err(cxlds->dev, "Failed to get interrupt for DCD event log\n");
+> > +			cxl_disable_dcd(mds);
 > 
 > [Severity: High]
-> Does hiding the BPF_REG_PARAMS translation inside emit_st() conflict with the
-> stated goal of adding KASAN instrumentation before the call?
+> If cxl_event_req_irq() fails here, cxl_disable_dcd() is called, but the
+> device is already programmed to generate DCD interrupts.
 > 
-> If KASAN checks are inserted in do_jit() before emit_st() is called, wouldn't
-> they attempt to instrument Arg 6 (which uses register r9, not memory)?
+> When a DCD event interrupt fires, cxl_event_thread() will read the status
+> and retain the CXLDEV_EVENT_STATUS_DCD bit because the mask includes it.
+> However, cxl_mem_get_event_records() skips draining the log when
+> cxl_dcd_supported() is false:
 > 
-> Additionally, wouldn't any KASAN checks added before this helper use the raw
-> BPF_REG_PARAMS pseudo-register before it is translated to BPF_REG_FP, causing
-> instrumentation against an unmapped register (which evaluates to rax)?
+> drivers/cxl/core/mbox.c:cxl_mem_get_event_records() {
+>     ...
+>     if (cxl_dcd_supported(mds) && (status & CXLDEV_EVENT_STATUS_DCD))
+>         cxl_mem_get_records_log(mds, CXL_EVENT_TYPE_DCD);
+>     ...
+> }
+> 
+> Will this cause cxl_event_thread() to spin in an infinite loop since the
+> status bit is never cleared by draining the log?
+> 
 
-I think sashiko is wrong, because BPF_REG_PARAMS stores should always have
-non_stack_access = false, but please double check
+The fix is in cxl_event_thread(). Instead of setting the event drain
+mask based only on the value of native_cxl:
 
-> 
+mask = host_bridge->native_cxl_error ? CXLDEV_EVENT_STATUS_ALL
+                                     : CXLDEV_EVENT_STATUS_DCD;
+
+we additionally check cxl_dcd_supported(), because the native_cxl value
+only determines if the standard logs are owned by firmware. DCD event
+logs are always OS owned.
+
+So the mask becomes:
+
+u32 mask = 0;
+
+if (host_bridge->native_cxl_error)
+        mask |= CXLDEV_EVENT_STATUS_ALL & ~CXLDEV_EVENT_STATUS_DCD;
+if (cxl_dcd_supported(mds))
+        mask |= CXLDEV_EVENT_STATUS_DCD;
+
+This gets put in a new helper function cxl_event_drain_mask() because
+the second bug below uses it too.
+
+The helper is called from cxl_event_thread():
+static irqreturn_t cxl_event_thread(int irq, void *id)
+{
+	struct cxl_dev_id *dev_id = id;
+	struct cxl_dev_state *cxlds = dev_id->cxlds;
+	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlds);
+	struct pci_host_bridge *host_bridge =
+		pci_find_host_bridge(to_pci_dev(cxlds->dev)->bus);
+	u32 mask = cxl_event_drain_mask(host_bridge, mds);
+...
+
+So if dcd has been disabled afterwards, DCD events are still cleared.
+
+> > +		}
+> > +	}
+> > +
+> > +	return 0;
+> > +}
 > [ ... ]
+> > @@ -687,11 +744,16 @@ static int cxl_event_config(struct pci_host_bridge *host_bridge,
+> >  	if (rc)
+> >  		return rc;
+> >  
+> > -	rc = cxl_event_irqsetup(mds, &policy);
+> > +	rc = cxl_irqsetup(mds, &policy, native_cxl);
+> >  	if (rc)
+> >  		return rc;
+> >  
+> > -	cxl_mem_get_event_records(mds, CXLDEV_EVENT_STATUS_ALL);
+> > +	if (native_cxl)
+> > +		cxl_mem_get_event_records(mds, CXLDEV_EVENT_STATUS_ALL);
+> 
+> [Severity: High]
+> If the BIOS has control of standard CXL errors (!native_cxl), does this skip
+> the initial drain of the DCD event log?
+> 
+> Since the driver owns the DCD log regardless of native_cxl, it appears that
+> pre-existing DCD events might be left in the log, potentially preventing
+> subsequent edge-triggered interrupts from firing.
 > 
 
+Fixed by calling previous defined helper cxl_event_drain_mask()
+which also checks if dcd is enabled.
+
+So if (native_cxl)
+	cxl_mem_get_event_records()
+
+is replaced by
+
+status = cxl_event_drain_mask(host_bridge, mds);
+if (status)
+	cxl_mem_get_event_records(mds, status);
+
+> > +
+> > +	dev_dbg(mds->cxlds.dev, "Event config : %s DCD %s\n",
+> > +		native_cxl ? "OS" : "BIOS",
+> > +		cxl_dcd_supported(mds) ? "supported" : "not supported");
+> >  
+> >  	return 0;
+> >  }
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=10
