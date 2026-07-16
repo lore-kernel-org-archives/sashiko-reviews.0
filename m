@@ -1,171 +1,88 @@
-Received: from mail-4320.protonmail.ch (mail-4320.protonmail.ch [185.70.43.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4240A4314B5
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 17:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439C13C3C0F;
+	Thu, 16 Jul 2026 17:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784223144; cv=none; b=D7HBRWSecJXVfFlxPvD3CcPcK5UKFbb4r4mhsmwuPVjohd0XYu2OnqpVs/z7p30tekXmak2AxDjBL+/GMRDvjkQGrNxJCOGQUWZQjUlK3K1CGgVdTdbPd7EE+elxxZrWRHrtJJO80DmhjBFQh2Hcotb5uGDio1Vkah+gLmZ3rvw=
+	t=1784223581; cv=none; b=ImSl0sPhwAMXoprdbIuxLruGS0RS7Lf+nOS31lL8Hq3X3ftfAdyWn8iVU4B/oucIC96II+8LdiAQj483GA7rmQ+a+ArdWXSOujHgUa3LjIgo6X2en2PPvKoLuFdeqBJZctkVd8yGGviFATmLvPLbPfgJvOCLsZmeL4WOO9erojM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784223144; c=relaxed/simple;
-	bh=b41BGWI35zuaBsqDYUZC+2NepKzUXdwyYIZzuJAqvuc=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jj8cuJJFK2Da8dg6ZZA7CV9YByLX0MFycymhT7kSsjT+8TXmgFPxM7a2C5+yT4NgOXGFNLO5WsUxJ6H1zAbHKZZFPXe+KhgEqrOhD755LqGg01BBF+8Vm9ylrnMMU0ABLyvqs5853is/VJk4ptf9UtzWF5pv30nN1HZ0JZD5PiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chimac.ro; spf=pass smtp.mailfrom=chimac.ro; dkim=pass (2048-bit key) header.d=chimac.ro header.i=@chimac.ro header.b=sWbPg5gw; arc=none smtp.client-ip=185.70.43.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chimac.ro
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chimac.ro
+	s=arc-20240116; t=1784223581; c=relaxed/simple;
+	bh=2ZQxHGI3ZTnozlapTPfdKcy3pnbyBmszrXFLoYK6gZM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pyfL31/HjVtIj8zRH5rNLh99+KgXTqPKfNcPPYDvuQloqUg5OOXwbdW1tlM/4e5pf/0+Hld0q9ucdElwTkJ5K2RYgjKQ6BPYcBdoGScWi0VvLP7lHl90G/MDE8LDxqdYLQz1sD4Iob/anByNxOVuPAzv2smsdd4UTgrg9v6MG8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=miHnslRW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chimac.ro header.i=@chimac.ro header.b="sWbPg5gw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chimac.ro;
-	s=protonmail3; t=1784223129; x=1784482329;
-	bh=OryP4DwZ3rpepIET6F4yqu1dFUupcoglDwhWe9KuEvQ=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=sWbPg5gw4PriRnl/iMkKKsHWnHI9E54Ut4FpEzKb1eUQxuOUOHA7IXNcAlGHimkNV
-	 F44flBixBVCXpsn0c2tOYZhYzUOBYyAk1hNoon7ZnJaZbD6CS6316szgV83ZsY2FA1
-	 6f7jL7n4BsZVIMRqaji75x3fZLDwF+C7Oi9saO3OwW6POuAEw7vFQtkSBnA2vwEqkM
-	 ZzpuS5YduqA994cpJPRHc9+53n+m5ATfO93C9n9A8KNxfSIcBkC23kac1IaeGOrFDS
-	 L4twJBo1XWzbrcSgggykTZ48ypYc38PXpR3vV6wV/ZTa6/x7K4oRFmUt/Up81SfVXz
-	 XOvZs6f/hhisg==
-Date: Thu, 16 Jul 2026 17:32:06 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="miHnslRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E921F000E9;
+	Thu, 16 Jul 2026 17:39:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784223580;
+	bh=sOkF0YsuKhatqPg7tJVAjGsXGNTKUWD80Uui3C5Yd5E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=miHnslRW7RSNpdZihkob+Dw2cCKrUhW8wSdg/ZhDBegMtyqb6aDuAYDxFTxRWMRfp
+	 Lak8pBJ6GeaONU3mI95fLu3Tf6t7KXrRYwHVFjB6G9HC3t/TYRlbDSKIYENH/QPwmj
+	 FLx8KnHJTrexvFm3ekOQnZzqn/3j4NOjG3mIxjfkJDBT4NuthxUkL/1zSHC+ehvvzS
+	 x2cv/+v0rJqxvlm4SX6kbyMEJJpLJzaZXGjEzP6qBxEjz0G0o5SPqSoBZGUvEpnRPj
+	 BaJAvmFVf7MxlPSAJBjLGJz8hsAz9pecXPwKG8fKQxBnPoxUeX7z4V6syTmY8NZWWc
+	 U0rr3CMiXy6Kw==
+Date: Thu, 16 Jul 2026 12:39:39 -0500
+From: Rob Herring <robh@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-From: Alexandru Chimac <alex@chimac.ro>
-Subject: Re: [PATCH v2 1/5] dt-bindings: clock: samsung: Add Exynos9610 CMU bindings
-Message-ID: <SbPtxHjgow0vaHCuj1jtZ-iFkC1Ur8qV7AITruEuAZlwq_Ov78N8kBiV6A--CTjphlzGQCYk6kOBVhXGmFSVAcfde6xR3LPWZMw5y_jTH78=@chimac.ro>
-In-Reply-To: <20260716172128.6910F1F000E9@smtp.kernel.org>
-References: <20260716-exynos9610-clocks-v2-0-c13ce8ef1861@chimac.ro> <20260716-exynos9610-clocks-v2-1-c13ce8ef1861@chimac.ro> <20260716172128.6910F1F000E9@smtp.kernel.org>
-Feedback-ID: 139133584:user:proton
-X-Pm-Message-ID: 38e46a69c0e9628fe012cf8e77c6afbbc71f7573
+Cc: Ninad Naik <ninadnaik07@gmail.com>, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, lee@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH] dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
+Message-ID: <20260716173939.GB534222-robh@kernel.org>
+References: <20260701175330.1645927-1-ninadnaik07@gmail.com>
+ <20260701180553.473121F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260701180553.473121F000E9@smtp.kernel.org>
 
-Hello!
-
-On Thursday, 16 July 2026 at 8:21 PM, sashiko-bot@kernel.org <sashiko-bot@k=
-ernel.org> wrote:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Clock IDs for CMU_CMGP muxes and dividers overlap, reusing IDs 0=
- through 6, causing ID collisions.
-> - [Low] Incorrect header file referenced in the YAML binding description.
+On Wed, Jul 01, 2026 at 06:05:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The schema conversion incorrectly restricts LED child node names to `^led(-[0-9a-z]+)?$`, which breaks `dtbs_check` validation for all existing upstream device trees using this binding.
 > --
->=20
-> --- Patch [1]: [PATCH v2 1/5] dt-bindings: clock: samsung: Add Exynos9610=
- CMU bindings ---
-> commit 23fcebc1c69a1cfdcd9b3f745d13b2ff694b6b10
-> Author: Alexandru Chimac <alex@chimac.ro>
->=20
-> dt-bindings: clock: samsung: Add Exynos9610 CMU bindings
->=20
-> This commit adds the device tree binding documentation for the Exynos9610=
- clock
-> controller. It defines the compatible strings and properties for various =
-clock
-> management units, and introduces the corresponding header file with clock=
- IDs.
->=20
-> > diff --git a/Documentation/devicetree/bindings/clock/samsung,exynos9610=
--cmu.yaml b/Documentation/devicetree/bindings/clock/samsung,exynos9610-cmu.=
-yaml
+> 
+> commit 6c59295f22b17d02a2b26847db54458f820fa4f3
+> Author: Ninad Naik <ninadnaik07@gmail.com>
+> 
+> dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
+> 
+> Convert lacie,ns2-leds to DT schema.
+> 
+> > diff --git a/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
 > > new file mode 100644
-> > index 0000000000000..4406c25545229
+> > index 0000000000000..679a618906d80
 > > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/samsung,exynos9610-cmu.ya=
-ml
+> > +++ b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
+> > @@ -0,0 +1,87 @@
 > [ ... ]
-> > @@ -0,0 +1,335 @@
-> [ ... ]
-> > +description: |
-> > +  Exynos9610 clock controller is comprised of several CMU units, gener=
-ating
-> > +  clocks for different domains. Those CMU units are modeled as separat=
-e device
-> > +  tree nodes, and might depend on each other. The root clock in that r=
-oot tree
-> > +  is an external clock: OSCCLK (26MHz). This external clock must be de=
-fined
-> > +  as a fixed-rate clock in the device tree.
-> > +
-> > +  CMU_TOP is a top-level CMU, where all base clocks are prepared using=
- PLLs and
-> > +  dividers; all other clocks of function blocks (other CMUs) are usual=
-ly
-> > +  derived from CMU_TOP.
-> > +
-> > +  Each clock is assigned an identifier and client nodes can use this i=
-dentifier
-> > +  to specify the clock which they consume. All clocks available for us=
-age
-> > +  in clock consumer nodes are defined as preprocessor macros in
-> > +  'include/dt-bindings/clock/samsung,exynos9610.h'.
->=20
-> [Severity: Low]
-> This isn't a bug, but there is a typo in the header file name here. Shoul=
-d
-> it be samsung,exynos9610-cmu.h instead of samsung,exynos9610.h?
->=20
-> > +
 > > +properties:
 > > +  compatible:
-> [ ... ]
-> > diff --git a/include/dt-bindings/clock/samsung,exynos9610-cmu.h b/inclu=
-de/dt-bindings/clock/samsung,exynos9610-cmu.h
-> > new file mode 100644
-> > index 0000000000000..c07093bae253e
-> > --- /dev/null
-> > +++ b/include/dt-bindings/clock/samsung,exynos9610-cmu.h
-> [ ... ]
-> > @@ -0,0 +1,722 @@
-> [ ... ]
-> > +/* CMU_CMGP muxes */
-> > +#define CLK_MOUT_CLK_CMGP_ADC=09=09=090
-> > +#define CLK_MOUT_CLK_CMGP_I2C=09=09=091
-> > +#define CLK_MOUT_CLK_CMGP_USI00=09=09=092
-> > +#define CLK_MOUT_CLK_CMGP_USI01=09=09=093
-> > +#define CLK_MOUT_CLK_CMGP_USI02=09=09=094
-> > +#define CLK_MOUT_CLK_CMGP_USI03=09=09=095
-> > +#define CLK_MOUT_CLK_CMGP_USI04=09=09=096
+> > +    const: lacie,ns2-leds
 > > +
-> > +/* CMU_CMGP dividers */
-> > +#define CLK_DOUT_CLK_CMGP_ADC=09=09=090
-> > +#define CLK_DOUT_CLK_CMGP_I2C=09=09=091
-> > +#define CLK_DOUT_CLK_CMGP_USI00=09=09=092
-> > +#define CLK_DOUT_CLK_CMGP_USI01=09=09=093
-> > +#define CLK_DOUT_CLK_CMGP_USI02=09=09=094
-> > +#define CLK_DOUT_CLK_CMGP_USI03=09=09=095
-> > +#define CLK_DOUT_CLK_CMGP_USI04=09=09=096
->=20
-> [Severity: High]
-> Does this overlap in clock IDs cause a collision within the CMU_CMGP cloc=
-k
-> controller domain?
->=20
-> Since both the muxes and dividers share the same IDs (0 through 6), it se=
-ems
-> one clock will overwrite the other in the provider's clock array. Will co=
-nsumers
-> requesting a divider receive the corresponding mux instead, breaking devi=
-ce
-> drivers that depend on CMGP clocks like the ADC, I2C, and USI?
+> > +patternProperties:
+> > +  "^led(-[0-9a-z]+)?$":
+> 
+> [Severity: Low]
+> Will this restrictive regex cause existing device trees to fail dtbs_check?
+> 
+> The old text binding example used a child node named blue-sata, which does
+> not match this pattern. Since additionalProperties is set to false below,
+> nodes in existing device trees that don't start with led will be rejected
+> during validation.
+> 
+> Should this regex be relaxed to allow existing node names, or should those
+> device tree files be updated alongside this conversion?
 
-I may not like LLMs, but this is a good catch. Will fix in v3.
+While yes we prefer what you did, it's perhaps not worth changing these 
+old .dts files to match the preference.
 
-> > +
-> > +/* CMU_CMGP gates */
-> > +#define CLK_GOUT_CMGP_CMU_PCLK=09=09=097
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716-exynos96=
-10-clocks-v2-0-c13ce8ef1861@chimac.ro?part=3D1
->=20
-
-Regards,
-Alexandru Chimac <alex@chimac.ro>
+Rob
