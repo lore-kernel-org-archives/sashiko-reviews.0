@@ -1,127 +1,250 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC4B3A9612
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:19:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A7C3A8724
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784186380; cv=none; b=s2JPwmMPUkzfdXqthgv3SY+zhvzS1An4+P1WcAblE2HAm+4Nm6IUgGPM/CEAkpqtmxJOP48tRUW2022ETjhfCNqonDKzpd7jYwo0FRoJd4q8CObaD5hSU9+sgK2A27KunmYcvIEKqH8s3jLouUlRS6Tj8cOTqS0AQqmVynAt2V4=
+	t=1784186991; cv=none; b=ZC0mjQ0EOnmYgXC/0edyza18YtOq66CQAvzihZVqx78i/Oz7mXUGs7Vojl1l+Pn+ezRqXFgYDpcwQmiNe2UKX0p4JJaAMGUGOtfSSIgJLlxmhCSWwLSmNX9kmkXV347B6AfpKroXMXfJ92EnE/l+SqE5Sv6C9aapZJKNibv46LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784186380; c=relaxed/simple;
-	bh=y4yHZGxT74a6MspUjQGJIAo038r7XXw7zxCaM56ULQQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SLEWn5j+S5HwmB3HD6SqbtwxvXYg86foAg/uIruXAGH5dQkYqH8SH8lOJ1G0hBdNqCfwFu+7yVavED+FtYD6lD1zn5mMwRyT51sns3mfxyzMtSK4DQcslo5ou2vagJvCVstlens6S2b4vqClNIfQ/0CREq3Qy38Od0Upla+IfTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b=Xnf/hPFF; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=resnulli.us
+	s=arc-20240116; t=1784186991; c=relaxed/simple;
+	bh=7ZuvRHnrS9XXz4pcVdkYZsscP6jbDq7J4PouVz6GVOs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iHeLr1CnbZNgMEbpeNj8h/GfBRiDHlLHv1p6SvqEgcSfk4xEWR8a4QI9b9hfLLDJJq14n5iELqcmdV10LtnNSeJaIRbObHES4gkwgJrTRPhQOsUprco7Q78MIGpLHS4hfvn9z9ZZoaoFopiv4r8Dm5SReYQfEYdHjU/mTWhjWa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=A/O6gv2R; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=/g4jUZz1; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lwB2BVxZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=avDpyJLb; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b="Xnf/hPFF"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-493f4638f4aso24997415e9.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 00:19:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1784186364; x=1784791164; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Xo+t1wRWpFilpcKELYi9v4ykQHKL/M+Rp1FsYxe7xSM=;
-        b=Xnf/hPFFbRjwLrZIfVOFm7JJmKgE86zquV6QS/31G9SDsdM09J0OL8lP9Dk7lAxroB
-         LAnmkv/5AxhcYy4iwOz0EgSuy1XzTxuP9Mu4TNQDXGQsO6r3KfSUSl0KigDYlhXcNcuI
-         ppS1Or6DC3oXFqZ5gNloFC34sGEK42joT17rChU78OHM3R35NFaCeDh+Ya+BC30C1QAg
-         QyW3ILk2wwV8NX0hvR7apthl+ChtcBkNOC0jQX9ZYqVDm52oY1LBgwNLw8y6hQcwCCum
-         A1r4XYqcBZKZXEDlj1PCBWTDAt7gFQQlxq4i1UAYvmVslu5s0LoklXfWQwFav9CRkKar
-         mWJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784186364; x=1784791164;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Xo+t1wRWpFilpcKELYi9v4ykQHKL/M+Rp1FsYxe7xSM=;
-        b=e/YZPjho4kmEc15NAnvOVmBWDRr2+T7q6tvV4S4RsfjJWwnD4020T8rQTEHU2C98Oi
-         AswZwrn+8juRvBPKGQM6zO6yFCsj2norBKE69ZDx7fG/ETNAdwV0HrdzjtQsLmjAAuKH
-         jF7aaC6INpsoDOC5K3MsrIq2cCYm3DNZ9DD3M5i0fjFWE9tgdU+QkB5mni1PpqItWAFa
-         NeUE855nJ/8ZVa+MzoX1tTPBNzb/chQV/m6ztDmAdDLkvygBPm02Gz6Cvto/mrx7KnJ9
-         l7aIHyy9hFilez046kcBH7sJuCUJb5Q4uvlBr6WrjRrzf6cGvEHK07SdU5+t7i5lvjHO
-         pz9w==
-X-Gm-Message-State: AOJu0YxYWkmNm61XadF020vg8jvkdG5QBiwu9aN0eqcTL1YkhJo+I6Y9
-	gI/ivr+SWytNzwt1/8LvYryORs5Be8oWqhUM42ZRtbyMlyg84O//FS1BCHroiuAFVXBTvh0x/Qg
-	lFIbP
-X-Gm-Gg: AfdE7clKt9Z21wcktmoGfqxJaTB1O/bvo7yhj+deKKObhWy1zOBnA6eE+xCi+ybgCJn
-	Gvuod/1p5cKFWnKk5VLq8CUqwuRxNSiD0cuWrtXz3mseqtpe1Z7oS8optboex803Ie7VcHKiJvt
-	bE7hFZ8ja64SE5kXx7VCuhFMtKZGwv2Qku/1ZJDMAGr/81aJ1Rdci0HRTgGhuLRXAXxRrGYo0gU
-	+m8xkIZsYq/FKgKx3tUyBD3SkR+OpFgDSFn5cz+ccBp1fgTCqIoyvwb+ufzZ/VtiEuakUV8WECt
-	N6fM7w7uEyVo9vB6MHB/eyHdEfVpp6XIFxIX49ihtxJM2HTJrGeJNQHrwUgGzA7v74bqjbnIYZ8
-	flzlwn38I+6uVzavSqWoFHtzuW3SEs1DqzfiuFsuSMD852S1P1CMhi2l4vcAyl8RIsel0ucU88R
-	2eZGsLbxFJEHs=
-X-Received: by 2002:a05:600c:528d:b0:493:b4cf:d37f with SMTP id 5b1f17b1804b1-493f87e5e0dmr226727475e9.16.1784186364315;
-        Thu, 16 Jul 2026 00:19:24 -0700 (PDT)
-Received: from localhost ([140.209.217.211])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49541e9a7bbsm36681925e9.13.2026.07.16.00.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 00:19:23 -0700 (PDT)
-Date: Thu, 16 Jul 2026 09:19:20 +0200
-From: Jiri Pirko <jiri@resnulli.us>
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com, 
-	linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>, 
-	Vasily Gorbik <gor@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: Re: [PATCH rdma-next v2 06/14] net/smc: Look up the pnetid ib device
- within the net namespace
-Message-ID: <aliF6MhKWL_iilRP@FV6GYCPJ69>
-References: <20260714142927.1298897-1-jiri@resnulli.us>
- <20260714142927.1298897-7-jiri@resnulli.us>
- <20260715143043.4F3CC1F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="A/O6gv2R";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="/g4jUZz1";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lwB2BVxZ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="avDpyJLb"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 15C603E3B;
+	Thu, 16 Jul 2026 07:29:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1784186987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
+	b=A/O6gv2RvyfqNmGxk0Oy8S/zaZ2s9aPqEUGDtAfVgBtQxMp43nD7bgoYvzJfuoq6yxW5Zj
+	w3HLB/wCHiq7T7NJhCFqYp5XowEnxU/dWGpvqIEdiBOeVJk8THp7jJkzy4vZHVmN6jUobp
+	Hm/ewXdNrJR1rXul/R7U1XO9TMH+STg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1784186987;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
+	b=/g4jUZz1Z9+NweA40yV+/qeyjxaf6sn/R06knr+Oke7O/UtDdVqP8Do2Y+slPio3DbhHNZ
+	ZcNvyli9PHX3eWCw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lwB2BVxZ;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=avDpyJLb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1784186986; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
+	b=lwB2BVxZRa0GrUlin+WmK61EopznlDzcm5bzidyRFH+3N902mujlYb0N5KLJRDVK2dMQ47
+	2XFpLwCMUgAE/eoIYUqOE1NDCm4h+AdGlvHVL54NrpZOhz2Dtmjvg+UlwOFpQ52Pr4CwLM
+	nIFGB0OCUynHt3uEzr3ZcHNb8hpYlgY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1784186986;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
+	b=avDpyJLbi45/FV0c1zvSK6pnKbEza7yevXJJn7a64VxHTQQxqPKzOg/3ARhOAFUn5O8fsw
+	nILGjPvmVD4ACPDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D844A779AD;
+	Thu, 16 Jul 2026 07:29:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id kTCbM2mIWGpsHAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 16 Jul 2026 07:29:45 +0000
+Message-ID: <1a10cacd-46da-44dd-822f-898966bd7c63@suse.de>
+Date: Thu, 16 Jul 2026 09:29:45 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260715143043.4F3CC1F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/vboxvideo: Use damage iterator and plane damage
+ clips
+To: hansg@kernel.org, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+ airlied@gmail.com, simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
+References: <20260703151841.375364-1-tzimmermann@suse.de>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260703151841.375364-1-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 15C603E3B
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_TO(0.00)[kernel.org,linux.intel.com,gmail.com,ffwll.ch];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	DKIM_TRACE(0.00)[suse.de:+];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_NONE(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-Wed, Jul 15, 2026 at 04:30:42PM +0200, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
->Pre-existing issues:
->- [High] Returning unreferenced device pointers from `smc_pnet_find_ib()` and `smc_pnet_find_smcd()` causes Use-After-Free vulnerabilities when devices are concurrently removed.
->--
->
->--- Patch [6]: [PATCH rdma-next v2 06/14] net/smc: Look up the pnetid ib device within the net namespace ---
->commit 4529cf06709604767797679d2d489bb89001f950
->Author: Jiri Pirko <jiri@nvidia.com>
->Date:   Tue Jul 14 14:29:19 2026 +0000
->
->    net/smc: Look up the pnetid ib device within the net namespace
->    
->    Scope smc_pnet_find_ib() to the caller's net namespace so pnetid setup
->    cannot bind to a same-named RDMA device from another namespace once names
->    become per-netns.
->
->> diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
->> index 63e286e2dfaa8..ff9c9c35cc2f5 100644
->> --- a/net/smc/smc_pnet.c
->> +++ b/net/smc/smc_pnet.c
->> @@ -408,8 +413,8 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
->>  	return rc;
->>  }
->>  
->> -static int smc_pnet_add_ib(struct smc_pnettable *pnettable, char *ib_name,
->> -			   u8 ib_port, char *pnet_name)
->> +static int smc_pnet_add_ib(struct smc_pnettable *pnettable, struct net *net,
->> +			   char *ib_name, u8 ib_port, char *pnet_name)
->>  {
->>  	struct smc_pnetentry *tmp_pe, *new_pe;
->>  	struct smc_ib_device *ib_dev;
->> @@ -419,7 +424,7 @@ static int smc_pnet_add_ib(struct smc_pnettable *pnettable, char *ib_name,
->>  	bool new_ibdev;
->>  
->>  	/* try to apply the pnetid to active devices */
->> -	ib_dev = smc_pnet_find_ib(ib_name);
->> +	ib_dev = smc_pnet_find_ib(net, ib_name);
->
->[Severity: High]
->This is a pre-existing issue, but can this lead to a use-after-free?
+gentle reminder to review this patch
 
-Unrelated to this patch/set. Ignoring.
+Am 03.07.26 um 17:18 schrieb Thomas Zimmermann:
+> Use damage iterator to handle updates without damage clips correctly.
+> If no damage clips have been given, drivers should update the entire
+> display area.
+>
+> Also enable damage clips for the plane to minimize the area of each
+> display update.
+>
+> v2:
+> - fix plane-state order when calling _damage_iter_init() (Sashiko)
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>   drivers/gpu/drm/vboxvideo/vbox_mode.c | 24 +++++++++++-------------
+>   1 file changed, 11 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/vboxvideo/vbox_mode.c b/drivers/gpu/drm/vboxvideo/vbox_mode.c
+> index 8e4e5fc9d3c5..cd78071b6cbb 100644
+> --- a/drivers/gpu/drm/vboxvideo/vbox_mode.c
+> +++ b/drivers/gpu/drm/vboxvideo/vbox_mode.c
+> @@ -15,6 +15,7 @@
+>   
+>   #include <drm/drm_atomic.h>
+>   #include <drm/drm_atomic_helper.h>
+> +#include <drm/drm_damage_helper.h>
+>   #include <drm/drm_edid.h>
+>   #include <drm/drm_fb_helper.h>
+>   #include <drm/drm_fourcc.h>
+> @@ -282,9 +283,10 @@ static void vbox_primary_atomic_update(struct drm_plane *plane,
+>   									   plane);
+>   	struct drm_crtc *crtc = new_state->crtc;
+>   	struct drm_framebuffer *fb = new_state->fb;
+> +	struct drm_plane_state *old_plane_state = drm_atomic_get_old_plane_state(state, plane);
+>   	struct vbox_private *vbox = to_vbox_dev(fb->dev);
+> -	struct drm_mode_rect *clips;
+> -	uint32_t num_clips, i;
+> +	struct drm_rect damage;
+> +	struct drm_atomic_helper_damage_iter iter;
+>   
+>   	vbox_crtc_set_base_and_mode(crtc, fb,
+>   				    new_state->src_x >> 16,
+> @@ -292,22 +294,17 @@ static void vbox_primary_atomic_update(struct drm_plane *plane,
+>   
+>   	/* Send information about dirty rectangles to VBVA. */
+>   
+> -	clips = drm_plane_get_damage_clips(new_state);
+> -	num_clips = drm_plane_get_damage_clips_count(new_state);
+> -
+> -	if (!num_clips)
+> -		return;
+> -
+>   	mutex_lock(&vbox->hw_mutex);
+>   
+> -	for (i = 0; i < num_clips; ++i, ++clips) {
+> +	drm_atomic_helper_damage_iter_init(&iter, old_plane_state, new_state);
+> +	drm_atomic_for_each_plane_damage(&iter, &damage) {
+>   		struct vbva_cmd_hdr cmd_hdr;
+>   		unsigned int crtc_id = to_vbox_crtc(crtc)->crtc_id;
+>   
+> -		cmd_hdr.x = (s16)clips->x1;
+> -		cmd_hdr.y = (s16)clips->y1;
+> -		cmd_hdr.w = (u16)clips->x2 - clips->x1;
+> -		cmd_hdr.h = (u16)clips->y2 - clips->y1;
+> +		cmd_hdr.x = (s16)damage.x1;
+> +		cmd_hdr.y = (s16)damage.y1;
+> +		cmd_hdr.w = (u16)drm_rect_width(&damage);
+> +		cmd_hdr.h = (u16)drm_rect_height(&damage);
+>   
+>   		if (!vbva_buffer_begin_update(&vbox->vbva_info[crtc_id],
+>   					      vbox->guest_pool))
+> @@ -539,6 +536,7 @@ static struct drm_plane *vbox_create_plane(struct vbox_private *vbox,
+>   		goto free_plane;
+>   
+>   	drm_plane_helper_add(plane, helper_funcs);
+> +	drm_plane_enable_fb_damage_clips(plane);
+>   
+>   	return plane;
+>   
+>
+> base-commit: a2d82f27ac35c691c1c65b40c72b13d8b2a7f91f
+> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
+> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
+> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
+
