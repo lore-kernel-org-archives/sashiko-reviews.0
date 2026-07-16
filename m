@@ -1,314 +1,261 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD1930C637
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2CB3815DF
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 04:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784172330; cv=none; b=oYCvdqccf4BZmB49Lj9/h3uYvOFp0RQ6bH83FCNZRMgMQFygI2nsY8AIeM79LHbCfPQrU7D2T+9GTcu/2fUysKZTQUQy53BszJYIHfmMJqg+5CWq0Mqwb39owJhu3k4VSEWFFP+daIstadMr+LLo9MXZPCEILlxE9cQJ8eTcHzs=
+	t=1784174579; cv=none; b=douZYeBlcTDUkkdsiceiK2ymhjslMtM/9EDStAltpo/zLWvro3DGJQ/uKS4yCfscibKJhEU8ChxUhOuDlykKN/tNXyz0cW/Je9xxdP6p7G2efrw1vttBvBlshsD/DTKR/3lCpW15PWyPiLY7ExU2EbBPJAhY9Vr150m3dwYn2QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784172330; c=relaxed/simple;
-	bh=JJJqpdOoOWRkbbqhEFoEULmuzOBL9e8cVVq+8PgWqQg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EO9sKhbCSq3N1Kzbj7gEL4oZjqlutAF/UipuSvr7v49bpW8dkLwRLFyjfA3blP59wiVZkQEjFMa2mhizpHXsZiHq3gJjfH7nvJhioopIJUF9QHlysrJkJVx3AYmYU2i6swxadE6WzykFwGOtyQNmW6xp95Wd4b2V7fML+wwYaUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LnyxeJJ1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Kqg+KihM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1784174579; c=relaxed/simple;
+	bh=d7aU3uyKLG34LsTMI0paCwFYeD/+/RMdEYPDr82BvYY=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aoo6gR5p5EkPQsATaJdQ1gA9pA8i5fMBbOCUADdOdZcWk6gld4iUGv+C17AyiFbq5EOjzq4ytKyFg9zMHrGrHMXUlGR+xVU25QnWxTc2dwcCO7ZtJj87M0vycttTxn8EB2l6Z5q8RUOK+j5uPTU87NPV+0/EAbp2Q52y6zpmmbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D+qgXlWW; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LnyxeJJ1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Kqg+KihM"
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66G0XZwt858358
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:25:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	X1ybYc426zROeJ2cJ654qj0Tvm1CL4rw4t5xtxWhRtk=; b=LnyxeJJ1am22rRlJ
-	kj9iIzzTcvPkHUqsBgKwKNqgwOycQ+uu+WxltiVERTdCS5LwSsWXRQEulZ+Q2QNb
-	kFlz0TkG0Woa6XSakMVRhKdVmHM0ArN3Fr+jZX6nK1bhXRb9IuTMQX/ao2Kglyql
-	XszFK+H9KPqtO1rME5J/8c80McDzhLRjh1yBRJPEwTBZJdtaSiCqAroyJBC/QVs2
-	+AlISUZOkbBr6UzNVPRIofzvJUcB2h9tRQOxIukPZ5OUrhy8FAivK0in0hmpb/kT
-	cP9uZPc00+qMAAoy3G3Yivld0twMjZNRcV3CVFVBKXtZSb63ns8n1vPJ+O7A6n+n
-	3z9UBQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fed062c0t-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:25:27 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-38e2237bc43so3650665a91.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:25:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D+qgXlWW"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c998fd549a8so4134196a12.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 21:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784172327; x=1784777127; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=X1ybYc426zROeJ2cJ654qj0Tvm1CL4rw4t5xtxWhRtk=;
-        b=Kqg+KihMgwzFfcx71S7F38yC/mSV9wsSwtHgOpOLnoIkuJBpHfkVaUhClCQuG18z5I
-         U1VACL8tKk5kJH/zNDOFVY3tV7gnBQpzdZqoHI7KHt8huU1SH9j1sm8nNt+oXs9gJiIG
-         JEGHSnmhEcw6aIhl0ZlLiLsU+ssYaqJkzYjYiSJAAHVyvc+n0n0gzP8/ZaB+lZEpBY5z
-         IE2dKaqySdVZVdwxSI33lpLCp5y6fkkQpCJ+AOzLLYAOf18pFl0U8PwyCZHxGF25FnQY
-         q2QYypn+0d5xOhdaHocjcG1rxIRZlD1gxwYKvGRN8ey3Flt9K56WfHz94W8Y4TU2p23O
-         Z6FA==
+        d=gmail.com; s=20251104; t=1784174578; x=1784779378; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=c/F5UyiFVMTs/o+v2W4iOriLL7VjvVx1zCXRlvh4eUo=;
+        b=D+qgXlWWjs7+Z34grXRW/aOpEvQ1YydQl2p3NmJR8FAM+V2CoEXFNyUaNB/YicJGL3
+         o/6VfMN+cDs7WdcAj7lypwhPLGx6k9Qvvj2sv4CLl5jPEFu3DRuQG5q23KfLMu1AHSXn
+         9sRgBI4ANxFNvlz2n6K5wfIkjIQ3HDTOr/+vvV4vvq3gIxK7mYBsCoNVJdS83Ul4xhIW
+         O15MDZ7ySYCIjsHGFkK2yK28GXtmiNWlneO1QJLbjYagqMAuwa9dAujeJdNIOsKNDF6U
+         d5sP1fjXrZTgrjvlKmNBhY/Q4SUOLyI9Ues9JEL+EmgQdbVLMh5Ap0wyoTlMF5cD4ZQu
+         tZPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784172327; x=1784777127;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=X1ybYc426zROeJ2cJ654qj0Tvm1CL4rw4t5xtxWhRtk=;
-        b=VytaUg1GyMsN1r904qyLP44Es1rDtf/dC5L3UPDcDKDINdCvm1k3nml2nVXkhQp2xC
-         FD3jMRLa3suzVgLfG8e//LXMffQEKhwo06l0rDArwSHs6gJxCTXmrhceLjjYCPevDtcp
-         5bjGVwInCT6ECqH8apvmKU2p7wOtmMFMCYR841BoUNHj8OwrPBA+zUCbytdQlY1nNj87
-         +dP42AR3G4FpCCm1b9Hbi3fBM4SP57z/TZvqsi4PfJeaUqte3EQCr0QRc9K1o7JpFCWl
-         2802vdlq9ppBCcA83fsAzDuF4SHODL3mn8/IWEJJWXp36qqR6vH5YAb32rOgkOkWl1bG
-         Cm+w==
-X-Gm-Message-State: AOJu0YwIhiHskfLuEgypCLO2lFEnzPZTE5cs8MGSgRqiCLwCg6pV+fSI
-	piqoIzef7pNQDKPQFCDJe4NUJOm+7/k/riWEKhNpHRmGNGGBRFUtpbTbn8WnPEq5sc84ksgwF6R
-	eR5/14P1YfGx4LThvvJSy0tymkUoiAwItnk3JGAbwR68iPXS7Dli8dPQ7n3H5F4PK9Zt3bIsNo0
-	dT1KQ=
-X-Gm-Gg: AfdE7cmh0u/cbFTcvoQ+t5e1Z63R8/x/KCUpzJFQiC1JZRsINUQ5OW3LSVlfXmKoBqT
-	S0TZayhxz/iRA4+AfZ1T/MkNB2tFtfwaZJA7XV3DXjq86u2nhul34YVgRRJhLnKWuWeBGOfD7bW
-	ZhcLWEuBIpaajr9vUPoK5Ly4aBMojUiVU6+TT52rIRmtpS6s1xol6DXFA64W8D6i0o1ydNjrSVt
-	twCFug583W0KfeoLSn2sBlhYZ3fcQze1E4CmF7CS/6l5MX+PuPA3agNweTQ7OtR06FevK07vEvY
-	dKWCdoHbNVL9J0WYkd8fxwXwZ6Ul2EilHNuAQsJOg/3mL2fFeSaKfqi3SIjZV8Uu/ULOpIi5r56
-	AMS8YeEeGDGovv0OwH0zm9DixyZ88cEL2
-X-Received: by 2002:a17:90b:58cd:b0:37f:9cdf:f0af with SMTP id 98e67ed59e1d1-38e17e675fcmr8351614a91.30.1784172326838;
-        Wed, 15 Jul 2026 20:25:26 -0700 (PDT)
-X-Received: by 2002:a17:90b:58cd:b0:37f:9cdf:f0af with SMTP id 98e67ed59e1d1-38e17e675fcmr8351590a91.30.1784172326302;
-        Wed, 15 Jul 2026 20:25:26 -0700 (PDT)
-Received: from [10.206.105.200] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e6c0702sm6022581eec.22.2026.07.15.20.25.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2026 20:25:25 -0700 (PDT)
-Message-ID: <33d2e2dc-949a-c570-77ad-cb7aa31de110@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 08:55:21 +0530
+        d=1e100.net; s=20251104; t=1784174578; x=1784779378;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=c/F5UyiFVMTs/o+v2W4iOriLL7VjvVx1zCXRlvh4eUo=;
+        b=iTUokgjgoMzIP0BrobBgBRfA9iV9JlDSsXvQoJgIPvFWZyoDH1eDgApbeDAgXkFng1
+         /r7tj7erRaVY9YAZr02alyENcnHujma9eZZHOaRpPcj44UJnZdAwR0/1AbyEI+IJg8PF
+         6UFke53g/qbL81aI1ORCcKab/7Qtl2zNuZrMvCXdWuUhr8PVsuZo/fm31rEj+q9kJTnd
+         ktqzYL2S0DpPLH6wseUB1U2+guzlmJC7sAjeuZhSw8lnvhAJk1PJKZP+KyxDphHNKNat
+         dbp8IpeOZiHYHO1BkEueKQD6jCZkr46WAr9IGgROC5ePQ7v9Dm1rCOc1qo7s9VmYm1FA
+         k6FA==
+X-Gm-Message-State: AOJu0Yz3/Iq7p4sPBf1pyAJHCWl8K2ogyWC4F9yNMxSmDktKVTCZaQlV
+	o0SMPDPSzvJkAzhHWdpQ391042TSxwxAV4xyDYNZ6hbpbCkM0nyt0tVvrX6MLQ==
+X-Gm-Gg: AfdE7ckiqLnnVcaql48643aCm2fmhInxFNELNzqY7iBeE3vFcGa3BQ7uQZAv5B4JDG7
+	JjHCTeimmwF1PVe0AhhtEwAX8CnFD2GJK3VSH1lURmnkQLIslxtu/MNv34ahDKzNZkbREtPNCcz
+	Knd4QlvDkkHB+PMiACe1iRi24tAELCT/85U4PIQitSs7NJTZdhOl43ejShHT6P8Z/okk79VdycF
+	bbJ9OmrvdCxRkpadchO6GsBX3lPfNwf4Owfk/3YROADVLvvBRP09EgNIWtehfF3FKJKO9Qrc6je
+	KEFG5LL1t0/znOKNm6gTHnfWJd6++g8VBxA3NHVfkECRYJZKk4sSljE/dK6Q2OUtwLs+wfD2tuN
+	eyDXBNc32065XFI0w5af7DRa2Rm3VicLRReIUf8smsXtZHWb8fVMz5mtwugaiip6/onxm1TNsX6
+	BXEdDa3NjH/c2haeibE6PlB+kbMklyYTsS3HJ/0+D2k/uCJ7PlsKdq2bWpEA==
+X-Received: by 2002:a05:6a20:12d3:b0:3c0:9c19:65b1 with SMTP id adf61e73a8af0-3c36c48f699mr6334076637.73.1784174577571;
+        Wed, 15 Jul 2026 21:02:57 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13cd426b36asm5404870c88.2.2026.07.15.21.02.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 21:02:57 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 15 Jul 2026 21:02:56 -0700
+To: sashiko-reviews@lists.linux.dev
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v11 12/31] cxl/mem: Set up framework for handling DC
+ Events
+Message-ID: <alhX8FgHlb39VLFN@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-13-anisa.su@samsung.com>
+ <20260625181219.4E8B51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v9 06/14] media: iris: Enable Secure PAS support with
- IOMMU managed by Linux
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-References: <20260715-glymur-v9-0-8cf2cbe12a07@oss.qualcomm.com>
- <20260715-glymur-v9-6-8cf2cbe12a07@oss.qualcomm.com>
- <20260715143702.5B4871F000E9@smtp.kernel.org>
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-In-Reply-To: <20260715143702.5B4871F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDAzMSBTYWx0ZWRfXwRT06e88vty6
- iek2i/yZO0xrbBvTzslBxxqK1DD3pf10R2zVvsnFaFaNzWcwNVi5xi+B1kwLNEtn4ZEsovpA67m
- Ju4FHqRfX38BhN2Akyb2Wiw4k+cVqTg=
-X-Proofpoint-GUID: iAlM-P9z07PieuNYQrdAjptG5dUTs0AI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDAzMSBTYWx0ZWRfX3GK55JIXwN6X
- cDKpe02JQHUYWyXTfDVsH8Gr1MBjLcp8bSb4fJJxyEXU4HIk2o+zobodedTw8zE6tm+wfT/6M6o
- inwYeFl2qCXGMww1Yr3Jbw2RFeJDxuGM1LpaOgHprBdFU+8ncNcdHHjWHKe4zxeB3gwLF/J8KIR
- MYWVtROHAK2+uelOrMnT8IWbsJgEjAc1HvOi0BT6HMaqRacZ7EuwyawtX1lkCjtPN1fWpi9YUIE
- 5dpwXRBods+/8nsNhMOMTZ+2GbTHcD9b3KixM2D2UIYZJYdH96nnAVHxKfuVnrYaUrtr1FAdEn9
- BV5TrrmRvg28M1UKtw8iJ9kXPYzYSZ6oR9VvKWEZ9zgaffj5Ih75CUx3BGf9p824v3BBb5XASAx
- N0uOl6vdyQ7kGF4aYf/ea4qxOHF82dkOwTNoMyJZfUM2E/uh6t9maoxLAPE2M8womp/VJ0CGidk
- ROGSUPf3J8WHpbA8nXQ==
-X-Authority-Analysis: v=2.4 cv=Xb25Co55 c=1 sm=1 tr=0 ts=6a584f27 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=lvrHWu7ls6kq8uvtA70A:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-ORIG-GUID: iAlM-P9z07PieuNYQrdAjptG5dUTs0AI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_01,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- impostorscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160031
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260625181219.4E8B51F000E9@smtp.kernel.org>
 
-
-On 7/15/2026 8:07 PM, sashiko-bot@kernel.org wrote:
+On Thu, Jun 25, 2026 at 06:12:18PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] Missing cleanup of PAS metadata DMA allocation introduces a memory leak on every firmware load/unload and load error.
-> - [High] The `core->fw_dev` pointer is added to support Linux-managed IOMMU mapping for the firmware context device, but it is never initialized anywhere in the driver.
->
-> Pre-existing issues:
-> - [High] Missing cancel_delayed_work_sync() for sys_error_handler in driver remove path leads to Use-After-Free.
+> - [High] Missing DCD response on memory allocation failure leaves the device state machine permanently blocked while unconditionally clearing the event log.
+fixed
+
+> - [Medium] Stack-allocation optimization in `memdev_release_extent()` is defeated by an internal dynamic allocation in `cxl_send_dc_response()`.
+false pos
+
+> - [Medium] Invalid `__counted_by` attribute on a little-endian struct member breaks bounds checking on big-endian architectures.
+fixed
+
 > --
->
-> --- Patch [6]: [PATCH v9 06/14] media: iris: Enable Secure PAS support with IOMMU managed by Linux ---
-> commit d784ba63809fa89007c5ca51f86bf7421bf5d466
-> Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
->
->     media: iris: Enable Secure PAS support with IOMMU managed by Linux
+> 
+> commit f5333550094fcaacb4e98dbf0c270b32ec17b506
+> Author: Ira Weiny <iweiny@kernel.org>
+> 
+> cxl/mem: Set up framework for handling DC Events
 >     
->     On platforms where a hypervisor is present, all Secure Monitor Calls
->     (SMC) are intercepted. For qcom_scm_pas_auth_and_reset(), the hypervisor
->     registers a Shared Memory (SHM) bridge over the Peripheral Image Loader
->     (PIL) memory region so that TrustZone (TZ) can access it, forwards the
->     authentication SMC to TZ, and upon return maps the PIL region and
->     triggers the co-processor bring-up sequence.
->
->     Link: https://lore.kernel.org/lkml/20260105-kvmrprocv10-v10-0-022e96815380@oss.qualcomm.com/
->
->> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
->> index 1a476146d7580..56c477b36b619 100644
->> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
->> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> Adds the support for receiving DC event records but defers
+> the real add/release logic to subsequent commits. Simply refuse all
+> extents for DC_ADD and ack all DC_RELEASE events for now. Forced
+> release is currently unsupported.
+> 
+> > diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+> > --- a/drivers/cxl/core/mbox.c
+> > +++ b/drivers/cxl/core/mbox.c
+> 
 > [ ... ]
->> @@ -15,11 +17,14 @@
->>  #define IRIS_PAS_ID				9
->>  
->>  #define MAX_FIRMWARE_NAME_SIZE	128
->> +#define IRIS_FW_START_ADDR	0
->>  
->>  static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
->>  {
->> +	struct device *fw_dev = core->fw_dev ? core->fw_dev : core->dev;
-> [Severity: High]
-> Is core->fw_dev initialized anywhere before this point? It appears to be
-> allocated as part of struct iris_core using devm_kzalloc(), but never
-> assigned a value in the driver, meaning it will always be NULL and this will
-> always fall back to core->dev.
->
->>  	const struct firmware *firmware = NULL;
->> -	struct device *dev = core->dev;
->> +	struct qcom_pas_context	*ctx;
->> +	struct iommu_domain *domain;
->>  	struct resource res;
+> 
+> > +static void memdev_release_extent(struct cxl_memdev_state *mds, struct range *range)
+> > +{
+> > +	struct device *dev = mds->cxlds.dev;
+> > +	struct cxl_extent extent = {
+> > +		.start_dpa = cpu_to_le64(range->start),
+> > +		.length = cpu_to_le64(range_len(range)),
+> > +	};
+> > +	struct cxl_extent_list_node node = { .extent = &extent };
+> > +	LIST_HEAD(extent_list);
+> > +
+> > +	dev_dbg(dev, "Release response dpa %pra\n", range);
+> > +
+> > +	/*
+> > +	 * Stack-allocated instead of kzalloc'ed to avoid potential -ENOMEM,
+> > +	 * which would prevent sending the release DC rsp.
+> > +	 */
+> > +	list_add_tail(&node.list, &extent_list);
+> > +	if (cxl_send_dc_response(mds, CXL_MBOX_OP_RELEASE_DC, &extent_list, 1))
+> 
+> [Severity: Medium]
+> The comment mentions stack-allocating to avoid -ENOMEM so we can ensure the
+> release DC response is sent.
+> 
+> However, cxl_send_dc_response() uses kzalloc() to allocate the
+> cxl_mbox_dc_response message:
+> 
+>     struct cxl_mbox_dc_response *response __free(kfree) =
+>                         kzalloc(pl_size, GFP_KERNEL);
+> 
+> Doesn't this dynamic allocation defeat the optimization, since memory
+> pressure could still cause kzalloc() to fail, preventing the release
+> response from being sent?
+> 
+No.
+
+In cxl_send_dc_response(), we send an empty rsp if kzalloc() fails.
+
+struct cxl_mbox_dc_response *response __free(kfree) =
+						kzalloc(pl_size, GFP_KERNEL);
+if (!response) {
+	/* Refuse all extents rather than stall the device. */
+	struct cxl_mbox_dc_response empty = { };
+	return send_one_response(cxl_mbox, &empty, opcode, 0, 0);
+}
+
+Originally, this function kzalloc'ed the node that was the input for
+cxl_send_dc_response. If that failed, we would never reach
+cxl_dc_response(), and no rsp would be sent, which is why it was changed
+to stack allocation.
+
+Anyway the comment is deleted since it seems misleading and stack-allocating
+two small local structs for a single extent is the obvious choice and does need
+extra justification. There is no issue of correctness.
+
+> > +		dev_dbg(dev, "Failed to release %pra\n", range);
+> > +}
+> 
 > [ ... ]
->> @@ -53,9 +65,23 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
->>  		goto err_release_fw;
->>  	}
->>  
->> -	ret = qcom_mdt_load(dev, firmware, fw_name,
->> -			    IRIS_PAS_ID, mem_virt, mem_phys, res_size, NULL);
->> +	core->pas_ctx->use_tzmem = !!core->fw_dev;
+> 
+> > +static int handle_add_event(struct cxl_memdev_state *mds,
+> > +			    struct cxl_event_dcd *event)
+> > +{
+> > +	struct device *dev = mds->cxlds.dev;
+> > +	int rc;
+> > +
+> > +	rc = add_to_pending_list(&mds->add_ctx.pending_extents, &event->extent);
+> > +	if (rc) {
+> > +		clear_pending_extents(mds);
+> > +		return rc;
+> > +	}
+> 
 > [Severity: High]
-> Since core->fw_dev is never initialized, will use_tzmem always be false,
-> causing the entire iommu_map() block below to become dead code?
+> If add_to_pending_list() fails and returns -ENOMEM, we return early without
+> sending the required CXL_MBOX_OP_ADD_DC_RESPONSE command.
+> 
+> Since cxl_handle_dcd_event_records() drops the error and the event is cleared
+> from the device log, will this leave the device state machine permanently
+> blocked waiting for a response that never arrives?
+> 
+Fixed.
 
-core->fw_dev will initialized in iris_vpu3x_init_cb_devs function before
-reaching here. It's there in patch-11.
+This only applies in the case for a More chain with a single event
+record. So the first and only event record has More=0 and the 20s
+watchdog is never armed. Otherwise, the watchdog would catch it.
 
->> +	ret = qcom_mdt_pas_load(core->pas_ctx, firmware, fw_name, mem_virt, NULL);
->> +	if (ret)
->> +		goto err_mem_unmap;
->> +
->> +	if (core->pas_ctx->use_tzmem) {
->> +		domain = iommu_get_domain_for_dev(fw_dev);
->> +		if (!domain) {
->> +			ret = -ENODEV;
->> +			goto err_mem_unmap;
-> [Severity: High]
-> If this error path is taken, will it leak the PAS metadata DMA allocation?
-> It seems the caller is required to free the metadata allocated by
-> qcom_mdt_pas_load() using qcom_pas_metadata_release(), but this call
-> is omitted during cleanup and error handling.
+However, we may as well send an empty response anyway for both cases. So
+the fix is:
 
-It was discussed here, not to add metadata release call in video driver.
-https://lore.kernel.org/all/20260415074140.46bg27tzbuyzjq3d@hu-mojha-hyd.qualcomm.com/
+rc = add_to_pending_list(&ctx->pending_extents, &event->extent);
+if (rc) {
+	clear_pending_extents(mds);
+	/*
+	 * If More chain only has 1 record and errors before watchdog is
+	 * armed, cxl_add_pending will never be reached, so no response
+	 * is sent. Return an empty response. Also sends empty response
+	 * for multi-record chain pre-emptively rather than waiting for
+	 * watchdog to trigger.
+	 */
+	if (!(event->flags & CXL_DCD_EVENT_MORE)) {
+		ctx->armed = false;
+		cancel_delayed_work(&ctx->timeout_work);
+		if (cxl_send_dc_response(mds, CXL_MBOX_OP_ADD_DC_RESPONSE,
+					 &ctx->pending_extents, 0))
+			dev_dbg(dev, "Failed to refuse chain after staging error\n");
+	}
+	return rc;
+}
 
->> +		}
->> +
->> +		ret = iommu_map(domain, IRIS_FW_START_ADDR, mem_phys, res_size,
->> +				IOMMU_READ | IOMMU_WRITE | IOMMU_PRIV, GFP_KERNEL);
->> +	}
->>  
->> +err_mem_unmap:
->>  	memunmap(mem_virt);
->>  err_release_fw:
->>  	release_firmware(firmware);
->> @@ -77,13 +115,13 @@ int iris_fw_load(struct iris_core *core)
->>  	ret = iris_load_fw_to_memory(core, fwpath);
->>  	if (ret) {
->>  		dev_err(core->dev, "firmware download failed\n");
->> -		return -ENOMEM;
->> +		return ret;
->>  	}
->>  
->> -	ret = qcom_scm_pas_auth_and_reset(IRIS_PAS_ID);
->> +	ret = qcom_pas_prepare_and_auth_reset(core->pas_ctx);
->>  	if (ret)  {
->>  		dev_err(core->dev, "auth and reset failed: %d\n", ret);
->> -		return ret;
->> +		goto err_unmap;
-> [Severity: High]
-> Does this error path also need to call qcom_pas_metadata_release()? The
-> metadata does not appear to be released here or in the normal success path.
+> > +
+> > +	if (event->flags & CXL_DCD_EVENT_MORE) {
+> 
+> [ ... ]
+> 
+> > diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+> > --- a/drivers/cxl/cxlmem.h
+> > +++ b/drivers/cxl/cxlmem.h
+> 
+> [ ... ]
+> 
+> > +/*
+> > + * Add Dynamic Capacity Response
+> > + * CXL rev 3.1 section 8.2.9.9.9.3; Table 8-168 & Table 8-169
+> > + */
+> > +struct cxl_mbox_dc_response {
+> > +	__le32 extent_list_size;
+> > +	u8 flags;
+> > +	u8 reserved[3];
+> > +	struct updated_extent_list {
+> > +		__le64 dpa_start;
+> > +		__le64 length;
+> > +		u8 reserved[8];
+> > +	} __packed extent_list[] __counted_by(extent_list_size);
+> 
+> [Severity: Medium]
+> Should this use __counted_by_le() instead of __counted_by()?
+> 
+> Since extent_list_size is explicitly little-endian (__le32), using
+> __counted_by() on big-endian architectures will result in the bounds checking
+> instrumentation reading an inflated integer value, leading to out-of-bounds
+> errors or kernel panics.
+> 
+Fixed.
 
-Above reply applicable here also.
+Also updated spec reference to r4.0 Section 8.2.10.9.9.3; Table 8-350 & Table 8-351
 
->>  	}
->>  
->>  	for (i = 0; i < core->iris_platform_data->tz_cp_config_data_size; i++) {
->> @@ -94,20 +132,31 @@ int iris_fw_load(struct iris_core *core)
->>  						     cp_config->cp_nonpixel_size);
->>  		if (ret) {
->>  			dev_err(core->dev, "qcom_scm_mem_protect_video_var failed: %d\n", ret);
->> -			qcom_scm_pas_shutdown(IRIS_PAS_ID);
->> -			return ret;
->> +			goto err_pas_shutdown;
->>  		}
->>  	}
->>  
->> +	return 0;
->> +
->> +err_pas_shutdown:
->> +	qcom_pas_shutdown(IRIS_PAS_ID);
->> +err_unmap:
->> +	iris_fw_iommu_unmap(core);
->> +
->>  	return ret;
->>  }
->>  
->>  int iris_fw_unload(struct iris_core *core)
->>  {
->> -	return qcom_scm_pas_shutdown(IRIS_PAS_ID);
->> +	int ret;
->> +
->> +	ret = qcom_pas_shutdown(IRIS_PAS_ID);
->> +	iris_fw_iommu_unmap(core);
->> +
->> +	return ret;
->>  }
-> [Severity: High]
-> Does iris_fw_unload() also need to call qcom_pas_metadata_release()?
-> If the PAS metadata context is not released, won't it cause a memory leak
-> on every firmware load/unload cycle?
->
->
-> [Severity: High]
-> This is a pre-existing issue, but does iris_remove() need to cancel the
-> sys_error_handler delayed work before destroying resources?
-
-Yes, this is addressed with
-https://lore.kernel.org/all/20260604054708.42426-1-dennylin0707@gmail.com/
-
-> If a hardware fatal error interrupt schedules the work, and the driver is
-> unbound before the delay expires, it looks like iris_remove() will destroy
-> the mutex and free the core struct without calling cancel_delayed_work_sync().
-> Could this lead to a use-after-free when the delayed work eventually executes?
->
-> drivers/media/platform/qcom/iris/iris_probe.c:iris_remove() {
-> ...
-> 	iris_core_deinit(core);
-> 	...
-> 	iris_deinit_cb_devs(core);
->
-> 	mutex_destroy(&core->lock);
-> }
->
-> drivers/media/platform/qcom/iris/iris_probe.c:iris_sys_error_handler() {
-> 	struct iris_core *core =
-> 			container_of(work, struct iris_core, sys_error_handler.work);
->
-> 	iris_core_deinit(core);
-> 	iris_core_init(core);
-> }
->
+> > +} __packed;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=12
