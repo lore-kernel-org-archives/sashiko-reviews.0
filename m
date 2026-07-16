@@ -1,126 +1,176 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E8283264EF;
-	Thu, 16 Jul 2026 15:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D34B3BD64A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 15:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784216504; cv=none; b=XG44uJPXAFLbw0wfnt2vRBg6Wa1i8K4aNta80VWuqKcJ9uW7kUzTwFRgWe6NiW488T2t2Ghi1/wV8Gb9WPkI6dG48mIAoUb1YJlU+wf5ROSlO+0WwzC6Ctl3ezDcOIRDrj5OXodeMq0u+z3jrTTyneKlpzwk4q+UktsU5OoJIw8=
+	t=1784217397; cv=none; b=SSp4Y63+R3Zav4A6D/WtXjYBd9TjZqaLksvtwq1ra6hTCXQyA5XZLwQajQIIJch0W/O5HANs9cAQfj1mceigP+yywPhNyi3PO7lQMKkon+vNFjhX4+5+zL7KmbDGAgIWZlYtjSVavVEJPc3N8mjvfJZjsGSAPM7zZRn+KDaihMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784216504; c=relaxed/simple;
-	bh=94RGRdEYqLxWTR/qNw7RW0jWuRssx8EWadWOUPz8xWw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LDdkpEM01TyWw2ZBkRo6zphemrBS/pMyeetH/As/U/Hvk0+ozopQ0LLMw4rHSl77Jz162TpQpRQdzNHlORXWZaAYnPB+0llkgHi/4ijZXYzRSVyzrYmMhllgFjcDW5dH5trbPCURYU8C1ZSNjKkJBRAcgdiRKHdifollugmbG7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=qe2rBSUG; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="qe2rBSUG"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 61C722B;
-	Thu, 16 Jul 2026 08:41:36 -0700 (PDT)
-Received: from [10.1.25.27] (e122027.cambridge.arm.com [10.1.25.27])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8CDF03F66F;
-	Thu, 16 Jul 2026 08:41:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784216500; bh=94RGRdEYqLxWTR/qNw7RW0jWuRssx8EWadWOUPz8xWw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qe2rBSUG2XlWx7aqp/91UgrwTpklVL5jajjQkyhG4MV6xrsVSLdf/B+5TAqHznr+U
-	 NJY3TxzbaEMlz/1FhDbM9His1yccfUP4DMKOuBLzSQb4V1EmHFi/MbX3CULic3wd/0
-	 ako5C5rXbF4TRotxNgLwTsPPIRIfrC88r8bwokUE=
-Message-ID: <0119c198-3272-4245-afbe-755f8ee47c9a@arm.com>
-Date: Thu, 16 Jul 2026 16:41:37 +0100
+	s=arc-20240116; t=1784217397; c=relaxed/simple;
+	bh=cCGsoJCBbHXiEuEyCMMGWYEJSWHCq8lacOeEGbqUFFg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DToOuxkgjhppO8CWdIIP4eBd8QRvNBnIWIJ5vFEYykJibBsCiKk0j1rqesAOLTNAXI8qPLIbRCrUubX8ymMGPGkS0MsNKMvMmjljfWAnV0ExcuowJ/O0VNitoD3cr4sxTNj0hyP7B/Lc95ASbk4fcYOuhghqzeMLhiTbI3+cDK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 8551E202286;
+	Thu, 16 Jul 2026 17:56:24 +0200 (CEST)
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1wkORk-0027p3-16;
+	Thu, 16 Jul 2026 17:56:24 +0200
+Received: from blackshift.org (p4ffb2dc6.dip0.t-ipconnect.de [79.251.45.198])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id DA1B156C3E4;
+	Thu, 16 Jul 2026 15:55:31 +0000 (UTC)
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: netdev@vger.kernel.org
+Cc: davem@davemloft.net,
+	kuba@kernel.org,
+	linux-can@vger.kernel.org,
+	kernel@pengutronix.de,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	sashiko-reviews@lists.linux.dev,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH net 10/19] can: bcm: add missing rcu list annotations and operations
+Date: Thu, 16 Jul 2026 17:47:35 +0200
+Message-ID: <20260716155528.809908-11-mkl@pengutronix.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260716155528.809908-1-mkl@pengutronix.de>
+References: <20260716155528.809908-1-mkl@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] firmware: arm_rmm: Configure the RMM with the host's
- page size
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
- Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
-References: <20260715142739.80398-1-steven.price@arm.com>
- <20260715142739.80398-5-steven.price@arm.com>
- <20260715151849.4CFC11F00A3D@smtp.kernel.org>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260715151849.4CFC11F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 15/07/2026 16:18, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing validation of RMM granule size against cached feature registers.
-> --
-> 
-> --- Patch [4]: [PATCH 4/6] firmware: arm_rmm: Configure the RMM with the host's page size ---
-> commit db91734b5b3e860f7a56847c4c9ab7f969eaf312
-> Author: Steven Price <steven.price@arm.com>
-> 
-> firmware: arm_rmm: Configure the RMM with the host's page size
-> 
-> This commit introduces a function to configure the RMM's granule size to match
-> the host's page size. It allocates a configuration page, populates the
-> rmi_granule_size according to PAGE_SIZE, and calls rmi_rmm_config_set() to
-> apply the settings.
-> 
->> diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/arm_rmm/rmi.c
->> index c4850976544ff..e7ab4a7df3ca8 100644
->> --- a/drivers/firmware/arm_rmm/rmi.c
->> +++ b/drivers/firmware/arm_rmm/rmi.c
-> [ ... ]
->> @@ -76,6 +76,45 @@ static int rmi_read_features(void)
->>  	return 0;
->>  }
->>  
->> +static int rmi_configure(void)
->> +{
->> +	unsigned long ret;
->> +	struct rmm_config *config __free(free_page) = (struct rmm_config *)get_zeroed_page(GFP_KERNEL);
->> +
->> +	if (!config)
->> +		return -ENOMEM;
->> +
->> +	switch (PAGE_SIZE) {
-> 
-> [Severity: Medium]
-> The commit message states "Check the feature registers and configure the
-> RMM so that it matches the host's page size."
-> 
-> Does rmi_configure() actually verify the host's PAGE_SIZE against the
-> cached RMM feature registers before proceeding?
-> 
-> It appears to unconditionally assign the configuration based on PAGE_SIZE.
-> If the RMM does not support the host's page size, the driver will blindly
-> send an unsupported configuration to the RMM firmware.
-> 
-> Should there be a validation check here using the features read in
-> rmi_read_features() before configuring the granule size?
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-The commit message is a bit misleading. In practise the RMM will reject
-an attempt to set a granule size that it doesn't support. And size Linux
-requires the granule size to match PAGE_SIZE either the RMM supports the
-granule size we request or we fail and don't use the RMM. So the feature
-check in itself doesn't help.
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-But we can have a more helpful error message so I'll fix this up to
-actually check the feature bits and produce an appropriate error message
-if the RMM doesn't support the required granule size.
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
 
-Steve
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
 
->> +	case SZ_4K:
->> +		config->rmi_granule_size = RMI_GRANULE_SIZE_4KB;
->> +		break;
->> +	case SZ_16K:
->> +		config->rmi_granule_size = RMI_GRANULE_SIZE_16KB;
->> +		break;
->> +	case SZ_64K:
->> +		config->rmi_granule_size = RMI_GRANULE_SIZE_64KB;
->> +		break;
->> +	default:
->> +		BUILD_BUG();
->> +	}
-> 
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+---
+ net/can/bcm.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 03c98e4cc677..5c1e83eeb4ff 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -265,7 +265,7 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
+ 
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -1017,6 +1017,7 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1158,8 +1159,7 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1181,6 +1181,10 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op, NULL);
+ 
+@@ -1373,9 +1377,6 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1449,10 +1450,12 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1786,8 +1789,10 @@ static int bcm_release(struct socket *sock)
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1818,8 +1823,10 @@ static int bcm_release(struct socket *sock)
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
+-- 
+2.53.0
 
