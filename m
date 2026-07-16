@@ -1,250 +1,177 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A7C3A8724
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:29:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4448235836B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784186991; cv=none; b=ZC0mjQ0EOnmYgXC/0edyza18YtOq66CQAvzihZVqx78i/Oz7mXUGs7Vojl1l+Pn+ezRqXFgYDpcwQmiNe2UKX0p4JJaAMGUGOtfSSIgJLlxmhCSWwLSmNX9kmkXV347B6AfpKroXMXfJ92EnE/l+SqE5Sv6C9aapZJKNibv46LU=
+	t=1784188212; cv=none; b=kBgPMpW9TcTBLO1VYPQ9B5G8ckyZu/Pk9nMhywUct1dMFBvWp7gKnvBhEpz+mevAG6MKECoww/BjFKH4vuornAE4ZNJ45Mi2qOY2zo8Tom3e3JqaEEnsl0oHi3UtGuWaTThwGGMFGOMluwg+4KWJGEcP3zF24CCDOIqTKN2CNz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784186991; c=relaxed/simple;
-	bh=7ZuvRHnrS9XXz4pcVdkYZsscP6jbDq7J4PouVz6GVOs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iHeLr1CnbZNgMEbpeNj8h/GfBRiDHlLHv1p6SvqEgcSfk4xEWR8a4QI9b9hfLLDJJq14n5iELqcmdV10LtnNSeJaIRbObHES4gkwgJrTRPhQOsUprco7Q78MIGpLHS4hfvn9z9ZZoaoFopiv4r8Dm5SReYQfEYdHjU/mTWhjWa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=A/O6gv2R; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=/g4jUZz1; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lwB2BVxZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=avDpyJLb; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1784188212; c=relaxed/simple;
+	bh=WSm5DvyF8kAHJUVbVgOYyfVr+aqNLZrjwo3Xgdhidzg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c0eI8cUf6KRyoZYnAxSH6nxqeyxm6lGSH8aEUOiURhfucsgHGTy/oDc+MnEhr1TBQuNSk+bG3ZYZRmHW6gIf08hTzEo1WodoX9/lejcvrP2CvHRWfLt0SDltBerbX1RGzTHlVj93u8Dznk5imu+tWC1Wtf8XU5d9ZvuupR01kTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=Mtsdp8Le; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="A/O6gv2R";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="/g4jUZz1";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lwB2BVxZ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="avDpyJLb"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 15C603E3B;
-	Thu, 16 Jul 2026 07:29:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784186987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
-	b=A/O6gv2RvyfqNmGxk0Oy8S/zaZ2s9aPqEUGDtAfVgBtQxMp43nD7bgoYvzJfuoq6yxW5Zj
-	w3HLB/wCHiq7T7NJhCFqYp5XowEnxU/dWGpvqIEdiBOeVJk8THp7jJkzy4vZHVmN6jUobp
-	Hm/ewXdNrJR1rXul/R7U1XO9TMH+STg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784186987;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
-	b=/g4jUZz1Z9+NweA40yV+/qeyjxaf6sn/R06knr+Oke7O/UtDdVqP8Do2Y+slPio3DbhHNZ
-	ZcNvyli9PHX3eWCw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lwB2BVxZ;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=avDpyJLb
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784186986; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
-	b=lwB2BVxZRa0GrUlin+WmK61EopznlDzcm5bzidyRFH+3N902mujlYb0N5KLJRDVK2dMQ47
-	2XFpLwCMUgAE/eoIYUqOE1NDCm4h+AdGlvHVL54NrpZOhz2Dtmjvg+UlwOFpQ52Pr4CwLM
-	nIFGB0OCUynHt3uEzr3ZcHNb8hpYlgY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784186986;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=g3LIyX3WKvKZKCDiNegcjdvV9KrE5GuZqI1LGl55y+k=;
-	b=avDpyJLbi45/FV0c1zvSK6pnKbEza7yevXJJn7a64VxHTQQxqPKzOg/3ARhOAFUn5O8fsw
-	nILGjPvmVD4ACPDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D844A779AD;
-	Thu, 16 Jul 2026 07:29:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id kTCbM2mIWGpsHAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 16 Jul 2026 07:29:45 +0000
-Message-ID: <1a10cacd-46da-44dd-822f-898966bd7c63@suse.de>
-Date: Thu, 16 Jul 2026 09:29:45 +0200
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="Mtsdp8Le"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-493d92b7db3so22508045e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 00:50:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1784188207; x=1784793007; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ZHFPco7TSnfWS2raS1ySQoxI4o7bq53nli6SfJ3sWqE=;
+        b=Mtsdp8Le5v1nEVbnKEnARuBun0o2iQR81lk3fMfDInQXOhOCmTuhHgBB1WYMPU2+23
+         MDs97lq90R10ugznShYEmK+J/0OAe6gVzKUEVL8LPUKvmM51hTfQbxeejeAUfsnmgr8J
+         RVvHI31FCbML7Djc7d0tT5kl7Us1Tsrh1JJI3TFEJNT/Usmp9Z12UNaHv35b30qI2AnU
+         JhEPWyQj/neBKEBROOM4yGw3dbExhFFJ/v2UeEMdJZSl8rcn6yf5ncf49EaQBKb6R1i1
+         PIX96JnEuABqVgXr+88Ak0fyaYqMchQ5ZlGsSCCK/73yOSmKglQpBvAET3D1EWJBjG9N
+         N6mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784188207; x=1784793007;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZHFPco7TSnfWS2raS1ySQoxI4o7bq53nli6SfJ3sWqE=;
+        b=Fam2FPtNEalM6Slb/3R9lgb1BmqR0XtBmn5ZxCMI0qaG4QntSg8G8N3atrYxpjaQWo
+         zwDxn99aXZLtoJQhzGNWh1ciEgamw5FNb5IRocMGiHO7B6w4xRT6EE2231Y1DO+N+EcR
+         uCDG5rx6afoZvRy4YDT8vBL2mf0zinV1Pz/kd9huxmC6dOf28jIvApm5cXIxy50yJ568
+         kmdPQ84plwGwkZXIP9LVBgPRiUVoXVg7WdAcw19OjJB9ZFesCdb1oUhuPBpaVMWFAQVa
+         K1aHG2nkoCT65/lIyJj2nDAV9LBDW6i/XcXWlIHXnWubpcvNzaUG/7WUrLzhfkO6Iquv
+         yV5w==
+X-Gm-Message-State: AOJu0YxPjE6BKQWLS4heD5dbGHDIuwBAcloCYQEf1E0Bo2qHUrI5Trwj
+	Agv9QQFJsJdEE27Fqho9xbgPyfgH5QRDSZXzjL1KJwJgNwAl43R8bzmww1YStL6sY3xNLNPmx/u
+	wlgn+
+X-Gm-Gg: AfdE7clEgL8V/jLbbCfWnsf39Sr+aC38DxNDZ4eQOZ1QArTlAOJv3w5GnhVycUUs1D5
+	RXuepSEPOiAAXpBQQHLF/Cb4Dgv7QuJFGLwaiVurzLLrZLxJdrQHsRH9yUcmsvkKO9Qp+aGN903
+	eI8c+NlCvBIeHpWr7jBqw6h4aP4vWTGhjCAD8s6BaaMRlRfF/LQI/2OFcr5+VPSWIAroJVXc4e5
+	Eds5O1r4otDXptFhjXsOwT83c67z3LHfO9bIR+5UjnwzQqBeVsbv4jiZIJmS9Q8GBlwIn5fEWED
+	qsbyxEuLtVhc8md6ZFkx+akD+VhE3HH4wZWIvbmLSqNJsGyK/yLPo5e5+8RnoH93FTdd22rrMWv
+	YSvCXJ4R4Z/W5I/f8ULdqT2DSQT6tjrxNF0paN5Cb1zS6B9LRWY4ZebZnJp3U2K7WYZ94MqTclF
+	IAajjUkflJ7lPHr58JIRRE7VXY5GKdAxLFyh8gluTkZX2cVozBQCt8zDLfr/aM/4ca7g==
+X-Received: by 2002:a05:600c:a03:b0:495:4572:21af with SMTP id 5b1f17b1804b1-4954572224dmr31265e9.9.1784188207461;
+        Thu, 16 Jul 2026 00:50:07 -0700 (PDT)
+Received: from localhost (p200300f65f47db046a548a0537ec1e67.dip0.t-ipconnect.de. [2003:f6:5f47:db04:6a54:8a05:37ec:1e67])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-49541e53680sm35386345e9.0.2026.07.16.00.50.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2026 00:50:06 -0700 (PDT)
+Date: Thu, 16 Jul 2026 09:50:05 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: sashiko-reviews@lists.linux.dev, robh@kernel.org
+Cc: Biju <biju.das.au@gmail.com>, wsa+renesas@sang-engineering.com, 
+	robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	linux-pwm@vger.kernel.org
+Subject: Re: [PATCH v6 02/11] dt-bindings: pwm: rzg2l-gpt: Document
+ renesas,poegs property
+Message-ID: <aliM3iVA1LY7tW38@monoceros>
+References: <20260604095647.108654-3-biju.das.jz@bp.renesas.com>
+ <20260604100619.75EC51F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/vboxvideo: Use damage iterator and plane damage
- clips
-To: hansg@kernel.org, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- airlied@gmail.com, simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
-References: <20260703151841.375364-1-tzimmermann@suse.de>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260703151841.375364-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 15C603E3B
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[kernel.org,linux.intel.com,gmail.com,ffwll.ch];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	DKIM_TRACE(0.00)[suse.de:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_NONE(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-
-gentle reminder to review this patch
-
-Am 03.07.26 um 17:18 schrieb Thomas Zimmermann:
-> Use damage iterator to handle updates without damage clips correctly.
-> If no damage clips have been given, drivers should update the entire
-> display area.
->
-> Also enable damage clips for the plane to minimize the area of each
-> display update.
->
-> v2:
-> - fix plane-state order when calling _damage_iter_init() (Sashiko)
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->   drivers/gpu/drm/vboxvideo/vbox_mode.c | 24 +++++++++++-------------
->   1 file changed, 11 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/gpu/drm/vboxvideo/vbox_mode.c b/drivers/gpu/drm/vboxvideo/vbox_mode.c
-> index 8e4e5fc9d3c5..cd78071b6cbb 100644
-> --- a/drivers/gpu/drm/vboxvideo/vbox_mode.c
-> +++ b/drivers/gpu/drm/vboxvideo/vbox_mode.c
-> @@ -15,6 +15,7 @@
->   
->   #include <drm/drm_atomic.h>
->   #include <drm/drm_atomic_helper.h>
-> +#include <drm/drm_damage_helper.h>
->   #include <drm/drm_edid.h>
->   #include <drm/drm_fb_helper.h>
->   #include <drm/drm_fourcc.h>
-> @@ -282,9 +283,10 @@ static void vbox_primary_atomic_update(struct drm_plane *plane,
->   									   plane);
->   	struct drm_crtc *crtc = new_state->crtc;
->   	struct drm_framebuffer *fb = new_state->fb;
-> +	struct drm_plane_state *old_plane_state = drm_atomic_get_old_plane_state(state, plane);
->   	struct vbox_private *vbox = to_vbox_dev(fb->dev);
-> -	struct drm_mode_rect *clips;
-> -	uint32_t num_clips, i;
-> +	struct drm_rect damage;
-> +	struct drm_atomic_helper_damage_iter iter;
->   
->   	vbox_crtc_set_base_and_mode(crtc, fb,
->   				    new_state->src_x >> 16,
-> @@ -292,22 +294,17 @@ static void vbox_primary_atomic_update(struct drm_plane *plane,
->   
->   	/* Send information about dirty rectangles to VBVA. */
->   
-> -	clips = drm_plane_get_damage_clips(new_state);
-> -	num_clips = drm_plane_get_damage_clips_count(new_state);
-> -
-> -	if (!num_clips)
-> -		return;
-> -
->   	mutex_lock(&vbox->hw_mutex);
->   
-> -	for (i = 0; i < num_clips; ++i, ++clips) {
-> +	drm_atomic_helper_damage_iter_init(&iter, old_plane_state, new_state);
-> +	drm_atomic_for_each_plane_damage(&iter, &damage) {
->   		struct vbva_cmd_hdr cmd_hdr;
->   		unsigned int crtc_id = to_vbox_crtc(crtc)->crtc_id;
->   
-> -		cmd_hdr.x = (s16)clips->x1;
-> -		cmd_hdr.y = (s16)clips->y1;
-> -		cmd_hdr.w = (u16)clips->x2 - clips->x1;
-> -		cmd_hdr.h = (u16)clips->y2 - clips->y1;
-> +		cmd_hdr.x = (s16)damage.x1;
-> +		cmd_hdr.y = (s16)damage.y1;
-> +		cmd_hdr.w = (u16)drm_rect_width(&damage);
-> +		cmd_hdr.h = (u16)drm_rect_height(&damage);
->   
->   		if (!vbva_buffer_begin_update(&vbox->vbva_info[crtc_id],
->   					      vbox->guest_pool))
-> @@ -539,6 +536,7 @@ static struct drm_plane *vbox_create_plane(struct vbox_private *vbox,
->   		goto free_plane;
->   
->   	drm_plane_helper_add(plane, helper_funcs);
-> +	drm_plane_enable_fb_damage_clips(plane);
->   
->   	return plane;
->   
->
-> base-commit: a2d82f27ac35c691c1c65b40c72b13d8b2a7f91f
-> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
-> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dlfpmfyr2hw5fshj"
+Content-Disposition: inline
+In-Reply-To: <20260604100619.75EC51F00893@smtp.kernel.org>
 
 
+--dlfpmfyr2hw5fshj
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v6 02/11] dt-bindings: pwm: rzg2l-gpt: Document
+ renesas,poegs property
+MIME-Version: 1.0
+
+Hello Rob,
+
+On Thu, Jun 04, 2026 at 10:06:19AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The `renesas,poegs` property improperly encodes the consumer's=
+ channel index as a phandle specifier, which is a Devicetree anti-pattern a=
+nd breaks standard phandle-array parsing semantics.
+> --
+>=20
+> commit 9d7f9847d3f320fb715022b6159c9c7e869aeedd
+> Author: Biju Das <biju.das.jz@bp.renesas.com>
+>=20
+> dt-bindings: pwm: rzg2l-gpt: Document renesas,poegs property
+>=20
+> RZ/G2L GPT IP supports output pin disable function by dead time
+> error and detecting short-circuits between output pins.
+> Add documentation for the optional property renesas,poegs to
+> link a pair of GPT IOs with POEG.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/pwm/renesas,rzg2l-gpt.ya=
+ml b/Documentation/devicetree/bindings/pwm/renesas,rzg2l-gpt.yaml
+> > --- a/Documentation/devicetree/bindings/pwm/renesas,rzg2l-gpt.yaml
+> > +++ b/Documentation/devicetree/bindings/pwm/renesas,rzg2l-gpt.yaml
+>=20
+> [ ... ]
+>=20
+> > @@ -245,6 +245,28 @@ properties:
+> >    resets:
+> >      maxItems: 1
+> > =20
+> > +  renesas,poegs:
+> > +    minItems: 1
+> > +    maxItems: 8
+> > +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +    items:
+> > +      items:
+> > +        - description: phandle to POEG instance that serves the output=
+ disable
+> > +        - enum: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+> > +          description: |
+> > +            An index identifying pair of GPT channels.
+>=20
+> [Severity: Medium]
+> Does this property correctly follow standard Devicetree phandle semantics?
+>=20
+> By Devicetree specification, phandle arguments in a phandle-array are
+> defined and interpreted by the target provider node, with their length
+> dictated by a cell-count property on the provider.
+>=20
+> This definition appears to invert that model by using the specifier to en=
+code
+> the consumer's (GPT) own channel index rather than a provider argument.
+>=20
+> Additionally, standard OS-agnostic DT parsers might fail to resolve this
+> because the referenced provider binding (renesas,rzg2l-poeg.yaml) enforces
+> additionalProperties: false and natively lacks a #poeg-cells property to
+> dictate the specifier length.
+>=20
+> Is it possible to redesign this binding so it doesn't encode the consumer=
+'s
+> index into the provider's phandle argument, or at least ensure the POEG
+> provider specifies a #poeg-cells property?
+
+You acked the patch. Is that review concern by Sashiko valid?
+
+Best regards
+Uwe
+
+--dlfpmfyr2hw5fshj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpYjSoACgkQj4D7WH0S
+/k6tuwgAoYXQ694Z1W43wtbN4Q8kTFE8ndqpCfHlpuCbB0NRKCtNaHfMKk1OPa4/
+0gPb9j+93rmTvlexpk6MtwSdwO+elEB7SbAsXmIFnybR+b3ciwZr+5LmGMRKBsw2
+xorhAlS2ouIZjnTYBDcmaXZB1mpodWWYzDvRdimGK9+eX+DH2lPtNCJ6g9wRtOvl
+F+YM1zXNuwWAxLoB6s2pfw83iG2CMLowNj4/q4rfmgFUHlWk0wOR2iDHDJDQbusJ
+e/rANSqVjpOz2hIl/Dz/+gJpUPQKph6siwen5swjqmVtIkTBW8L3YYc7RIhBkVA+
+J7364EUYQSEfnSx+nNBE/CnQWmhMgQ==
+=SEOL
+-----END PGP SIGNATURE-----
+
+--dlfpmfyr2hw5fshj--
