@@ -1,251 +1,195 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AEA21CC44
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 08:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784D434D90D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 09:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784191962; cv=pass; b=kr1eV5oRGqL3hLWvTJQ/DlpTRv/V3r9gdri8x936eX73Cqs/OWRWm7N4VT9fOw71Tw6pyDRELhIK+KFT15uZAuSBIpOPmzkvp/j4non8SZC3IMnAy7+PMXz5KoizqyIhtjC1PajQcXaurWFwhFr/JA/yVC83OjsTsQXLJW4inpw=
+	t=1784193107; cv=pass; b=Yyz68YgAGklcicku+pmSd1ZnFbxY/3qOED9ysvrFOrupyUv7xhQ1iUB5zC8HvrTpvIWcEshwuFhAfINCB7vILH5Xsb1dL3TCeM5lmhJTB1O5ZZsFxG/VukW38pPCGN8ZVBUWFeg1mc2zLnzUukEDo/oKJpIwcEUwpcCvSBCEYiM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784191962; c=relaxed/simple;
-	bh=bY5f5NUrAmXPEdBrsvfj96nHb5zMKiNKEpHnjthNsRg=;
+	s=arc-20240116; t=1784193107; c=relaxed/simple;
+	bh=wVaUyhiHHt8mdGxE8HABkjb3Q1pGok7lbO2wwK1myg8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vEJTzfIIzxICg6NJoFzk3Ls/1IvP1Ig75FtbIQbKeBFUEibATYzdnvoWW99XkO7fBYBYsG4ySQNc/oKhxbQkcyluCCy2ITWlFWV37z6FWWTVf4Jo5QjYu+2rXVisAMi40qti8uvF7zYB1WsiHXyGRmK7e0Dw3LmBolJhpG/rVyE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=BZqXvw1J; arc=pass smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	 To:Cc:Content-Type; b=hn0sg8ReMjMofzafG1cP8+64aldxBFqOJKW4lMXAZAMp1HAm+jLydAQqBvvAAgA84l7+dd6/pskVBfCV6OMEDUKBfDT5F4ZctWRe4GVM3bRU2dPWgFHx48grqeMmKioZ7GQQPGsTvMVCoS+aq8az0WFG1PB/GadYrGVpeHPjMwg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tJfof4Qw; arc=pass smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="BZqXvw1J"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-664ce3000e6so2687984d50.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 01:52:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784191959; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tJfof4Qw"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81ee6b2da98so2476477b3.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 02:11:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784193102; cv=none;
         d=google.com; s=arc-20260327;
-        b=bdHkRPvpLsUwUMwe82QWa/r1PJgXpoceABZ/m65duaZZUaRpIlRsTZUsN9DRiOLgpc
-         6q00Q9A64JaRuZ3qoVdhCoY+ldZcS7apzoGXWvGxb37ce3DOyHjsB8KAu+mkJ65wd0M6
-         zbtGxnvr4Cm1yaYMlN56PztNLPUXprHQb7SgM7H6PyC8oprytUQGQCd+Cj51N9lRx6Xe
-         sNgn6/Xo7KoJFr85jt33kN/G8UqovY3UdS2KFie7eZT9YaBqz9KcLNKIB0r95PsCTw51
-         LrISz9b2OnjuD1AtnEIShbTqw1+BevU+mdQ7iDc+UWIgXSCcJNFQhxWsO5QU2ZKIntMC
-         eXnw==
+        b=h1fr4enYdnOvBQm6nPCLdaPe+/8xLrXPXgYdV1kGc/chLmprMxjT7Zqt4ZTtasBfxM
+         ESoUuB7DeY8o7hIbkPKyLNysSjnrahXS/ZOwItJ8yWMaRx76DKkOyBdOV/D1hxNXTPy4
+         ewAA5fuMDq4vJNmCISePgMx9/QSMueRUwDHuCyxxiPUyO75o7edZftn5ffKnOh+0a5Bx
+         laFrIZlDAFWWqbbB5So0ZkNZFpt2FDmUUaItPB0CHt9Ay305icfoUfnsrlcccSiMdbZa
+         tbRcfZEGGcNSgiEurY8Sj+w2r2lX9fuk2EYhLYfGFno4vYqHPUgW3k80PyfJPXCdVRM9
+         Cy1g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=IQq0m8gF/uxTNnEpTPTV3bbQ5uoOyMBO8OOWoNri3OY=;
-        fh=V6kcQS1327tEc6/i2ebCWqEIrhHECi+Dw9tAqmakQGk=;
-        b=DfKCAyZJmHd2DRmubdnL4IX6HKO23XDOAeI1azXutuJIVNxDg/mO+zXuPBNwafFsYL
-         rvher+OoUCX/EWB2QDaJBhqWl6XO5KfTZB7y/kDk6FNLzUhT7ROwX3Fssk8r0W22vfwj
-         eDheI9PNCwuLWMA1Ue+3/chhJygT8OZ6CrETdNa9nvxh/SzlGVh4/iB3OYfZWb+QdFOt
-         z8Pi5QfmLNRE4WPAGXcuqapTOZydXYr7NnKbeXE3TPu9eoXcy3zRz5DSn8z62lcdTkl1
-         rHp2WVw1pxz2qY6MLdLhOFhLgOo19WrOLCs8LlTtO58jT/N6d8dKYJSKa+BRTrkQfJxp
-         l8ug==;
+        bh=fba8lwegZlYj1IsPa0gj15+gvYVmAsXII13vXbs6KfY=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=NHG+0bMXYDLR5q9b5jnAwljDkJEWjLyixjZNrne1/6bbDFRREI6G21ZsEot5eK4GdO
+         EFA0prSbUliKP8keExfIIJeC6imdXZl9hepc7t31L+vA4BiCecrVh9oK7P2MVjrzom4h
+         aUa+x4t4jamA9v2WWIuLEfFNjc1jImQttmctNo3pVWCRhzY5baJf4zbJ10+p5YunjKkI
+         rZxyvJgYAwKIWYRHVKdkJbQcY8jhWQIkOzz3qGTcJyswCZo3jM/mIujIGUdEdyp1IY36
+         yw842nyLbp0GTPraMnUYZT64GDpIY4l6hY+wpyTSTcQyTejRi1qKD3AHU4ff0bQ5lzwr
+         aDGw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1784191959; x=1784796759; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784193102; x=1784797902; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=IQq0m8gF/uxTNnEpTPTV3bbQ5uoOyMBO8OOWoNri3OY=;
-        b=BZqXvw1Jn2gE0pu7EhpiPC0RjNydXGwOqqp7MjEMV2b0bTN402YHaKqxvcTX9UJFFu
-         xT/O+fSPKXzYVkeqAJ2fv+OE0jbwOS3pQ+0uvxtCO7L8LIUgPXLK9IEri0GdKm1ImJMw
-         XicxkcazlW4Oj4D5jxHy9Qh647N39g/jj/INY=
+        bh=fba8lwegZlYj1IsPa0gj15+gvYVmAsXII13vXbs6KfY=;
+        b=tJfof4QwyPv5zu0hQYI5MK+kBKESqfrBWhB4MlvpSRq0DI4tlg0UpEiOw5HzCc7+UY
+         sHcTq58w+yeVpD/aWQBRoet6V9fhx5Jj6YaK9mBDpepMmGxwDf12wYOTy/2ONN+SCyun
+         3wpTUi/AIyYbsoYPUfnizWnauBcgxBvNJUSczB9FzJuzbPxohLHVoO+qydnmlBf6euor
+         uViafsklzl+CwF+dUf4vWliabDIeBvp00jKrDmB7IENSb4V5ljoXcKHPcNj+62ZSHJ6/
+         ckQawkI12/QC2jS8cYpyrrxjUL9BeW/5zhrTzBcRv7Bs2uFLPsWNXKxQR/7zGMfJL7Zv
+         DakQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784191959; x=1784796759;
+        d=1e100.net; s=20251104; t=1784193102; x=1784797902;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=IQq0m8gF/uxTNnEpTPTV3bbQ5uoOyMBO8OOWoNri3OY=;
-        b=jTryNoGPrlf+3Q5ORweNXfQ0vak5XcTba/HMxM2XoZ10EQUyifAg3ZIiGutjmzXINO
-         As/ZBD2y4OpepfiOsOt7CzIm/mz2wLaeOSbilTjlo6lwdc2s6ApmgSwqH341+79MqNT8
-         cbLkdVYtgqY/euL/XLLczoOm8LLMF/SBkiXvjuXdFRdY6Mg0acyCJ7p6PYp8/8L51E0L
-         wMp7BGgyuhxTJHIQDErNe6QqwYos+eAhpcOkV6zFcXM010w1GOeWEq7g/6gjG/f/fQD+
-         ZrXvo9dtTLvJQaXDt9S9v2xr6zSDfcIsEEiXIkyzhzQ/qUlBL0kgZNGqnyzvH77jZgZ2
-         +Pkg==
-X-Gm-Message-State: AOJu0YwivZNklxplq7bAVvZ6TT4avNksu2GJrccBRsT7HppVy7qyGT0r
-	wzgUzcd8NCFn8hT8+4USTsz2Xo+yQMSx7UojFZG2jf9tCQYG+ErH8WDfieGvDNqFBWXJ2yWmLCg
-	RRVxpCx06KMx/08Ti2dDuJTmy5FkTzDKnfAKgfyUL7hnMGBpeslaSdA==
-X-Gm-Gg: AfdE7cmJ1KkJsy4nWW63l9RPuprb5VSSUPyXFGUM/teYVak2d1WjC9otkEvJBqlA6Et
-	Ok2Y+mr2sMUMyTJUxHiIeIicwwmOKIFvVECIUna5IVBLx/jUrSoBPXQyNrO9JtCEPvlA9WjJfcB
-	YPVV702gnewj9rpz8UV6/eVXuFm8p6oJCk/eP0WBm6gvtONRnNiByRn1nAezwLEjEdX+HrdfSu+
-	ixe8xp/pADRYUauYRgTOSyVMt6WIAeL1bmsC2sswfaFa0Er/Vux5DLKT1tOfraq9Qs1rlffktxU
-	Sxl3AWaYzpUsyZFK
-X-Received: by 2002:a05:690e:154f:10b0:664:c436:e523 with SMTP id
- 956f58d0204a3-667d7babd34mr11429992d50.57.1784191959478; Thu, 16 Jul 2026
- 01:52:39 -0700 (PDT)
+        bh=fba8lwegZlYj1IsPa0gj15+gvYVmAsXII13vXbs6KfY=;
+        b=a8or5oOLGtGVQYPNyBopINmJQH2Gl48m8G549C3DibLHfWgHzRSuJuI3u3wBOlEtot
+         uNCHcvbpMIkubidh/bDI7TIdiTtmDFqve+6ERB1ZvA9kfn1QT5pG4g3BbmEWY/2by0Ny
+         qXWdLR7y78YacIxegc8Ph32GZSS5VqdVSL4IQj1LlNYIlNR3jg5NcW/+E3dVuN0/y07h
+         +JM3ATkAFcWniJ3XOlAsmEX43POVS5ZDirJQSvCjfr8dVLvMNzBbTisE29h/yL0ppbtO
+         jegQaBNdyEzhrPXqyirkyIboG0kuf2nYM6Nt+/3MIdcf1TmqqXiVuzfzgZbs5pZp/qg8
+         Ql6A==
+X-Gm-Message-State: AOJu0Yx+BEgpoCeBJARsOML7S7weKnojTWuzI8DjhzGSGYaQ85YuFWHT
+	BGJTqr4nLRdE/yIUU/Ry6/J5MUD4mypVWfT5mhN65pj4e74vcBHPvI4mvIhuzXHnDpU5oGKvn41
+	0C8xQgCas6Hazo/Z9QPuJ4ycVMvudXnVTFMK0Duc=
+X-Gm-Gg: AfdE7cmewGpeyT2D9ryQZSiUP7sk6CiZPQjDHQaFu4f0uE4TuWIGGs5hpZVJEL+niCd
+	XPSdpWhpiSo6jCqDM3u3O1EQtZxMEkVbtSBsv/XDVfZV50Knvaa4c3NhECp5WpFvszxKNtXaHis
+	10TC/aRJ+hzmn4L8wahO5YOqgMEVsQZMBauaLm+3YC1qzR/DcaG4rqI4jrJdzeP29N0gh3uwFOU
+	0g5YzHsp962OJ/dvd7+h9QqYYb1m3Ece2ZQoxj5ryuD6sjkJAfiReeP3SaVMw8xpRn1lToL2+RL
+	Pwjp0OysbaKjqobIpok=
+X-Received: by 2002:a05:690c:6985:b0:814:5312:47bb with SMTP id
+ 00721157ae682-81e902edf4cmr160319997b3.69.1784193101804; Thu, 16 Jul 2026
+ 02:11:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260715085348.3457359-1-wenst@chromium.org> <20260715085348.3457359-3-wenst@chromium.org>
- <20260715090944.2B4441F000E9@smtp.kernel.org>
-In-Reply-To: <20260715090944.2B4441F000E9@smtp.kernel.org>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Thu, 16 Jul 2026 16:52:27 +0800
-X-Gm-Features: AUfX_myLEQVBTlPy6_HTTPqxRUbMK0BTjrNXj-lz-dRMS2F8a-I6Tld4DGNkvxg
-Message-ID: <CAGXv+5Ffsrc9r6d_RrgL1mBW1Zmt1RxCrMCjaD7vuF3+EaeAqw@mail.gmail.com>
-Subject: Re: [PATCH v5 02/16] device property: Add fwnode_graph_get_next_port_endpoint()
+References: <20260716025342.42628-1-laoar.shao@gmail.com> <20260716030116.C613E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260716030116.C613E1F000E9@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Thu, 16 Jul 2026 17:11:05 +0800
+X-Gm-Features: AUfX_mzbQk6cyOjkJvVnkqd3j5MPhxg-oxSB2r6szyXH0u_dDwMsDN22ChRo4OE
+Message-ID: <CALOAHbBQhAsTMHMMZH5Sen0cDYg8GREZMmQcT4Njc9VW_WHe4Q@mail.gmail.com>
+Subject: Re: [PATCH v2] kbuild: rpm-pkg: Preserve .BTF section in kernel
+ modules during debuginfo stripping
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, driver-core@lists.linux.dev, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 15, 2026 at 5:09=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Jul 16, 2026 at 11:01=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [High] The new `fwnode_graph_get_next_port_endpoint()` helper breaks th=
-e `fwnode` graph abstraction by hardcoding OF-specific naming conventions, =
-which will silently ignore valid ACPI and software node endpoints.
-> - [Medium] `fwnode_graph_get_next_port_endpoint()` fails to unconditional=
-ly put the `prev` fwnode reference if an invalid `port` is provided, violat=
-ing its documented API contract.
->
-> Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but iterating over=
- endpoints using `fwnode_get_next_child_node()` causes an infinite loop and=
- Use-After-Free when a device has secondary fwnodes attached.
+> - [Medium] The check for `find-debuginfo.sh` capabilities in `mkspec` har=
+dcodes host properties into `kernel.spec`, breaking SRPM portability across=
+ distributions and failing silently when the tool is not in `$PATH`.
 > --
 >
-> --- Patch [2]: [PATCH v5 02/16] device property: Add fwnode_graph_get_nex=
-t_port_endpoint() ---
-> commit 8a16a51eeb8e99439d5b85ce61789ff1153e9060
-> Author: Chen-Yu Tsai <wenst@chromium.org>
+> --- Patch [1]: [PATCH v2] kbuild: rpm-pkg: Preserve .BTF section in kerne=
+l modules during debuginfo stripping ---
+> commit 99202060a54c32638e01a2bfdc4d23b190f3f77c
+> Author: Yafang Shao <laoar.shao@gmail.com>
 >
-> device property: Add fwnode_graph_get_next_port_endpoint()
+> kbuild: rpm-pkg: Preserve .BTF section in kernel modules during debuginfo=
+ stripping
 >
-> Adds a helper function to iterate through the endpoint firmware nodes
-> under a given port. This is intended to be used in USB power sequencing
-> integration to verify graph connections and supported connector types.
+> This commit updates the RPM packaging scripts to pass --keep-section .BTF
+> to find-debuginfo.sh. This ensures that BTF information is preserved when
+> debuginfo is stripped from kernel modules.
 >
-> > diff --git a/drivers/base/property.c b/drivers/base/property.c
-> > index 0bd45f8b01c14..62c6221d65d05 100644
-> > --- a/drivers/base/property.c
-> > +++ b/drivers/base/property.c
->
+> > diff --git a/scripts/package/mkspec b/scripts/package/mkspec
+> > index c604f8c174e2c..00acef348ba84 100755
+> > --- a/scripts/package/mkspec
+> > +++ b/scripts/package/mkspec
 > [ ... ]
->
-> > @@ -1099,6 +1099,31 @@ int fwnode_irq_get_byname(const struct fwnode_ha=
-ndle *fwnode, const char *name)
-> >  }
-> >  EXPORT_SYMBOL(fwnode_irq_get_byname);
+> > @@ -65,6 +65,11 @@ fi
+> >  echo "%define with_debuginfo_manual $with_debuginfo_manual"
+> >  echo "%define with_debuginfo_rpm $with_debuginfo_rpm"
 > >
-> > +/**
-> > + * fwnode_graph_get_next_port_endpoint - Get next endpoint firmware no=
-de in port
-> > + * @port: Pointer to the target port firmware node
-> > + * @prev: Previous endpoint node or %NULL to get the first
-> > + *
-> > + * The caller is responsible for calling fwnode_handle_put() on the re=
-turned
-> > + * fwnode pointer. Note that this function also puts a reference to @p=
-rev
-> > + * unconditionally.
-> > + *
-> > + * Return: an endpoint firmware node pointer or %NULL if no more endpo=
-ints
-> > + * are available.
-> > + */
-> > +struct fwnode_handle *fwnode_graph_get_next_port_endpoint(const struct=
- fwnode_handle *port,
-> > +                                                       struct fwnode_h=
-andle *prev)
-> > +{
-> > +     do {
-> > +             prev =3D fwnode_get_next_child_node(port, prev);
->
-> [Severity: High]
-> This is a pre-existing issue, but iterating over endpoints using
-> fwnode_get_next_child_node() can cause an infinite loop and a use-after-f=
-ree
-> if a device has secondary fwnodes attached.
->
-> If a device port has both primary children and a secondary fwnode, the pr=
-imary
-> ops finish and drop the reference to the last primary child, returning NU=
-LL.
-> Then, fwnode_get_next_child_node() incorrectly passes this same dropped c=
-hild
-> pointer to the secondary ops:
->
-> drivers/base/property.c:fwnode_get_next_child_node() {
->         /* Try to find a child in primary fwnode */
->         next =3D fwnode_call_ptr_op(fwnode, get_next_child_node, child);
->         if (next)
->                 return next;
->
->         /* When no more children in primary, continue with secondary */
->         return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node,=
- child);
-> }
->
-> This can result in a double-put. Furthermore, when traversing secondary
-> children, the primary ops don't recognize the software node, treat it as =
-NULL,
-> and return the first primary child again, creating an infinite loop.
+> > +# Detect if find-debuginfo.sh supports --keep-section (RHEL 9+)
+> > +if find-debuginfo.sh --help 2>&1 | grep -q keep-section; then
+> > +     echo "%global with_keep_section 1"
+> > +fi
 >
 > [Severity: Medium]
-> Does this fail to unconditionally put the prev reference if the provided =
-port
-> is invalid?
+> Is it safe to assume find-debuginfo.sh is in the standard user $PATH?
 >
-> If a caller passes a valid prev node but port is NULL or an error pointer=
-,
-> fwnode_get_next_child_node() returns early without dropping prev:
+> On many systems, this script resides in /usr/lib/rpm/, which isn't typica=
+lly
+> in the $PATH. This could cause the check to silently fail and strip the .=
+BTF
+> section during a local make rpm-pkg build.
 >
-> drivers/base/property.c:fwnode_get_next_child_node() {
->         struct fwnode_handle *next;
+> Also, since mkspec runs during SRPM generation (make srcrpm-pkg), doesn't
+> this statically bake the generation host's capabilities into the resultin=
+g
+> kernel.spec file?
 >
->         if (IS_ERR_OR_NULL(fwnode))
->                 return NULL;
->     ...
-> }
->
-> Could this lead to a reference count leak, violating the documented API
-> contract that prev is unconditionally put?
-
-This seems like what the other fwnode_get_next_*() functions are doing.
-I'd say this is a pre-existing issue as well.
-
-> > +             if (fwnode_name_eq(prev, "endpoint"))
->
-> [Severity: High]
-> Does hardcoding this string match break the fwnode graph abstraction for
-> non-DeviceTree platforms?
->
-> By strictly matching the "endpoint" prefix, this bypasses the provider-sp=
-ecific
-> fwnode_operations, which could silently ignore valid ACPI and software no=
-de
-> endpoints that don't follow this exact naming scheme. Shouldn't this rely=
- on
-> the backend-specific graph_get_next_endpoint operations instead?
-
-From drivers/acpi/property.c it seems that ACPI graphs follow the same
-structure. I don't have visibility into ACPI implementations though.
-
-We also have the following in include/linux/fwnode.h:
-
-#define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
-#define SWNODE_GRAPH_ENDPOINT_NAME_FMT          "endpoint@%u"
-
-So this should not be a problem.
-
-
-ChenYu
-
-> > +                     break;
-> > +     } while (prev);
-> > +
-> > +     return prev;
-> > +}
-> > +EXPORT_SYMBOL_GPL(fwnode_graph_get_next_port_endpoint);
+> If the SRPM is rebuilt on an older distribution, rpmbuild might fail beca=
+use
+> the older script rejects the --keep-section argument. If generated on an
+> older host and built on a newer one, BTF info would be silently stripped.
+> Could we dynamically query the target host's capabilities using something
+> like %(__find_debuginfo) inside the spec file itself?
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715085348.34=
-57359-1-wenst@chromium.org?part=3D2
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716025342.42=
+628-1-laoar.shao@gmail.com?part=3D1
+
+I believe we could use the builtin _rpmconfigdir to locate
+find-debuginfo.sh reliably. This avoids relying on $PATH.
+What do you think about the following change?
+
+diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+index c732415662ef..4335e99f2aca 100644
+--- a/scripts/package/kernel.spec
++++ b/scripts/package/kernel.spec
+@@ -67,7 +67,21 @@ This package provides debug information for the
+kernel image and modules from th
+ %undefine _unique_debug_srcs
+ %undefine _debugsource_packages
+ %undefine _debuginfo_subpackages
++
++# Preserve .BTF section in kernel modules during debuginfo stripping
++# find-debuginfo.sh (from debugedit) uses eu-strip which removes
++# non-allocated ELF sections like .BTF by default.
++# --keep-section .BTF preserves BPF Type Format information.
++#
++# Uses _rpmconfigdir for reliable script location instead of relying on $P=
+ATH.
++%{!?with_keep_section:%global __fd %{_rpmconfigdir}/find-debuginfo.sh}
++%{!?with_keep_section:%global with_keep_section %(%{__fd} --help 2>&1
+| grep -c keep-section)}
++%if %{with_keep_section}
++%global _find_debuginfo_opts -r --keep-section .BTF
++%else
+ %global _find_debuginfo_opts -r
++%endif
++
+ %global _missing_build_ids_terminate_build 1
+ %global _no_recompute_build_ids 1
+ %{debug_package}
+
+Please let me know if this approach works or if there are any concerns.
+
+--=20
+Regards
+Yafang
