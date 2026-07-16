@@ -1,76 +1,76 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03AF3A0E97
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C189A3A8734
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784186298; cv=none; b=DbU7r+9WnpO1jmS625iFfVHGF4SxheUouz6yy5M6WnGkeIMhcrms+uOIggCYs97G0hztldWH9rKA7bPqATYP6xOjliUpaUZQNOGE0XGAT++GeFbiP1+uhuc1D0bW/QALKqGlhsUrjV9Kc+q5Uhgv5BfzywysSrpdyGrK9adUNjU=
+	t=1784186338; cv=none; b=OjcvyzaAbh0VMdmkLfnYERA0DfkI1sy4Vrkg5UvyeBdhm0/1DWChCoq1XgD755b9RCWgtQ/p+iDsZbCO82EYjjZa3C6AVEw+pLpgJeYgYU4prn7FZkJXdI2Ehhq8VqoD8DIMvyO5aPGE8dpbSLVfQ6eM5RVrwnJBB2X3pDyBUrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784186298; c=relaxed/simple;
-	bh=wCOrf4Gl1Kcl375uPlXE+ALtdINw1fX6Rz+X+UFuWis=;
+	s=arc-20240116; t=1784186338; c=relaxed/simple;
+	bh=8nnOASWEJf9wnFPTtpSZl+pGkbaX09Rm/eaNCoyaCSo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iCIinNrAWy6MB7y/jjRCVIswEA0dNXvR181rk5YCmvY76G5X4peHxlJ58wstBXb4s2JO/4fkxu5paROIVXOUZezfCYIvSjJVgGgEU7Zlt/NS+7ehORN1MGcqf0iUQ7FYo6lBAftfOezeUX77e/oknv0dRWHMlsW5mHoHr1CTj1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b=SLZZHxFs; arc=none smtp.client-ip=209.85.128.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=H23JOV0ir6x4o7tTYWlYItt2CI7GfwH8saR43mB+7ZLZDV/d/R0Yw3WbMH3MbxgYbFTJ9IKltoblsQSzV8lgbhcUkCaJTbYpSWK1hzPx9LsCmNkwke8DFzMu12AI/RhlbHOWYbH2U5CFiVuAH8E4A1Lzm3MgsOMiWdQQDl+x7+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b=vKLp/SCG; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=resnulli.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b="SLZZHxFs"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493f431e317so21562065e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 00:18:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b="vKLp/SCG"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-493b966dd74so25221665e9.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 00:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1784186291; x=1784791091; darn=lists.linux.dev;
+        d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1784186325; x=1784791125; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ixWQT49fcvwii9ShrrSJHWLi6DgSNOGFoa6xSTGg1wM=;
-        b=SLZZHxFs2wpPmecJrILzJZ7fIFu+M0pdfbi7nv9bxifAV5wwKfJt2zlO/dbeg+9/O3
-         aD7MyxvATerfXsAyqU0nqAMxnYdy3ui1rXAJDvBxCbX99ZZ5zjVmDU6JI4L+PrbVZE1S
-         r33+1rq6iye1e5mJfZLc7VUlj5dLNIeaamH2Y3V1vQLEsdPfgfz8p+fxbB4QeBVJJMkP
-         dmFv1JZdwuGGIdpnU7d1KGezJKKqZhZZ+fpURgqQtRJA3lYjupnfvFP12e3eOZLsfTKu
-         x+XKMhsDvULa+Xn5Q6MBIs2W9sEggNnVZUogVg2N18HHNI3BGNiAHhFZMCSu0UbCyMmd
-         L1eA==
+        bh=5DeKdX/3Smbb9NgVSq5evfrMeYX1J7raVEFT32QHvpg=;
+        b=vKLp/SCGSSbY4JGMrlT7HDCKWtk3Z7ouOMc8a7tRzfLwGq2mF3qFyI7lPTfFReXoPn
+         aqfo18l1PpTEtML44boc61o0sui03/VU8F0mR+O3TCuHKXcY2CDBfHwXcLJ3BvGLCgBi
+         0/gdS58NVyo49aHt3I3zvC9/h0NTVUskJKnYXkjsrdgNkTWheF2FjbDKFtI2Tw9rVqJc
+         hb2KMQ7wYHTarMu8YXbPRAc0/Ck6jYZDo3g2RdIrB1FCE0wS2hPlhC3oWpk5rEtncB9f
+         pdidnxuwUriTXOpJEXm8wOge0kSj1sXcz6H5WHwv2I2di5x9JQlX/FuOpmlOqc5TtlyK
+         z+Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784186291; x=1784791091;
+        d=1e100.net; s=20251104; t=1784186325; x=1784791125;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ixWQT49fcvwii9ShrrSJHWLi6DgSNOGFoa6xSTGg1wM=;
-        b=cpXVClL7+qWjtY2HCbfm+oMF8UrtTXJ6l4wXP6Bluqbe4Ck0hhkWPh7eHlrno11dFs
-         lJSOyd7d4eRQbadgcKFCvct/KFIc80k1ZFjJjL3nV7tl//yPxgu+W7N5aYWDebI9JnRm
-         fS9Fj5L4mlv3AN3r8XTfjvTBTvO5K07/+2bsqY96L6YIvv7yrM5PrU+Exxv2qNYEI2IA
-         MfLD0Gj2kfZNVnQMqnZ2pDFtVXxhqFWMxnY03/W8BHf98pWsAihWi6F0Ad4gadpJApbc
-         xIFBT1alH0VU9al2mUUrqE1lxM4TdgZnxW/mkTbuFsjVaoU4qscBX63bBZqB6a8Q1ul0
-         x97Q==
-X-Gm-Message-State: AOJu0YzZ9W9rDbQn1252DJHEMQqBJBHqkDaHHZOrEBocnsnuPwTrF/fK
-	rs7VhWqDVO9secKoXAE/ul1kTZNHxWtItEpCZ971he2qhKLM2c04cLVGGeVUUdxxkP2e8mpTx2d
-	cesNj
-X-Gm-Gg: AfdE7cnE79abjZRI51yqPdzgiR1DFtxv/L9t+9w8pqNxyeBfWEHZwg0ETyQ+GDwGBTs
-	4BEeJGAWR9Q27PjrG6sL5eKmg91MDrbBlDCEnnqIcn/CKJ0FSsrFNLHxx8IKk6PfXjovBZcysGU
-	KWammYCaIjBseN96GeFjtJ4MTREoKTfxogcN3quza0FvLAP8VhNKGUVqQHfJVxoWuYJgDKfcGHs
-	8GeU3cd3IgaNFJF4bUOFioCIUMXQy9VDyjMIO5zD+/IFJBZU56FrUYTT1mnttYwbXzbERM1UqG9
-	PPmXGeXR9kuMQXLAeq2WReS94Bzf4gCUEFMkdF7K3bJ05Nn1xwocFl+12+VyupnCW/dQEnTIWuV
-	/FSa2FIROtaAPclZU/BazZz2s9etd/Fq+BbGsZqaleIhTnozki/QYslev3fFZjfFQn1YuJwpibI
-	v0nYNMbgnAxH8=
-X-Received: by 2002:a05:600c:3e0d:b0:493:f0f5:f2d7 with SMTP id 5b1f17b1804b1-493f87d6118mr220650365e9.7.1784186290293;
-        Thu, 16 Jul 2026 00:18:10 -0700 (PDT)
+        bh=5DeKdX/3Smbb9NgVSq5evfrMeYX1J7raVEFT32QHvpg=;
+        b=iDVYwmcIFbhkX0BOfSiypf5v9ABH6R0cSdvI9pZejuVOPaBPo5HpQDdMz+TrMh4N0Q
+         3mdffV6cELUwrahjVCxzx7xZB2kssacy+f2sd2D2M2UQF6gz6LcU8PcyQF1/J2PiSdux
+         bDsAOKFMwDEpRZ+aZ/9xbp2C2Wj5T+f1iu9hl7cGqusKr/Yb1xUVD32VgXx7yBBMFnUL
+         Rr2q1JA8WM87macomYi2BeLhsbiajT3WNvt22NpChSgYMcSmBp+VlHfGGpusjnYLGJ7s
+         t7BDusP2Xkd1kIrMZvSAW4IyustLDKyz3YSReVGGTPsX4Pn+zswMYIIYL22goY0aEfDx
+         lCPA==
+X-Gm-Message-State: AOJu0YyWfJ7sFwFwYGV2CG6XM3xNFLEFjMS8awcp/89ZhBCQ8IDMuKtR
+	0DEWDGFVpnTP6eS818grGpQx8/RBHuLuVHYR05ZMUFOaRtSq5gjuZdEUYqao/WZ1LxmD7NvPq35
+	vPmdF
+X-Gm-Gg: AfdE7cn6Z8hgdtJLhCgFS8LkU4PkqAjrBrmOMAhG9sqG0lIIwDBlUUzr59AgFOaLDQ4
+	aqXblIGrlPN5Tlex4JpNVVHjWmWKdcsoxQGAalYe6Rsk37pH67606bVoOtlZfGrNTFx8tIQCK5f
+	QCXG5YIxzuU2Jom7YRUElIemUtpByNPN3iFxrrO9bavzVZXXnMjBE8T+2sBPnllH9appbqeB2Cv
+	xLCYlaVOXizt/o8C/UH8gBSEeXX5N2Ea6Z7MopDR6TRyjW15lmXnCHjf4T7fAew17smU2XRd3bb
+	8B4K8lnuCNxuL9MgTm7f++2SLmPxrERW6UmZDju0KQnQE5m7hObLsWl2FjMv7k6foJ8dmBj73RK
+	aToNMpoDJ2WBD/OY4ZS8rnOMU9sN0V7YBZ7qY+RGrOfaJ2dYtP2fInUbvVGPI6fYmzZ6PQGZNyw
+	cws/bIzx79PfA=
+X-Received: by 2002:a05:600c:b8d:b0:493:f5bf:4dc6 with SMTP id 5b1f17b1804b1-4953c14ef45mr61678205e9.7.1784186325189;
+        Thu, 16 Jul 2026 00:18:45 -0700 (PDT)
 Received: from localhost ([140.209.217.211])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4953c708313sm67561525e9.1.2026.07.16.00.18.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464a9879sm23000181f8f.22.2026.07.16.00.18.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 00:18:08 -0700 (PDT)
-Date: Thu, 16 Jul 2026 09:18:04 +0200
+        Thu, 16 Jul 2026 00:18:44 -0700 (PDT)
+Date: Thu, 16 Jul 2026 09:18:36 +0200
 From: Jiri Pirko <jiri@resnulli.us>
 To: sashiko-reviews@lists.linux.dev
-Cc: hannes@cmpxchg.org, Vasily Gorbik <gor@linux.ibm.com>, 
-	linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>, 
-	Alexander Gordeev <agordeev@linux.ibm.com>, tj@kernel.org, mkoutny@suse.com
-Subject: Re: [PATCH rdma-next v2 03/14] RDMA/core: Support renaming a device
- when changing its net namespace
-Message-ID: <aliFm7wdxDf-56rW@FV6GYCPJ69>
+Cc: Vasily Gorbik <gor@linux.ibm.com>, tj@kernel.org, mkoutny@suse.com, 
+	hannes@cmpxchg.org, Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: Re: [PATCH rdma-next v2 11/14] RDMA/core: Make device names unique
+ per net namespace
+Message-ID: <aliFulxrT8aFLNXi@FV6GYCPJ69>
 References: <20260714142927.1298897-1-jiri@resnulli.us>
- <20260714142927.1298897-4-jiri@resnulli.us>
- <20260715143041.A46771F000E9@smtp.kernel.org>
+ <20260714142927.1298897-12-jiri@resnulli.us>
+ <20260715143044.E91711F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -79,38 +79,44 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260715143041.A46771F000E9@smtp.kernel.org>
+In-Reply-To: <20260715143044.E91711F000E9@smtp.kernel.org>
 
-Wed, Jul 15, 2026 at 04:30:37PM +0200, sashiko-bot@kernel.org wrote:
+Wed, Jul 15, 2026 at 04:30:44PM +0200, sashiko-bot@kernel.org wrote:
 >Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->- [High] Unreachable feature and silent failure in netlink handler for RDMA namespace moves
+>
+>Pre-existing issues:
+>- [Critical] Format String Vulnerability / Arbitrary Memory Write
 >--
 >
->--- Patch [3]: [PATCH rdma-next v2 03/14] RDMA/core: Support renaming a device when changing its net namespace ---
->commit 4056da04c986796c81666352d7fa9e90d5591d4e
+>--- Patch [11]: [PATCH rdma-next v2 11/14] RDMA/core: Make device names unique per net namespace ---
+>commit db3597c8065e66f96858593e01ba04bca7a7d075
 >Author: Jiri Pirko <jiri@nvidia.com>
 >
->RDMA/core: Support renaming a device when changing its net namespace
+>RDMA/core: Make device names unique per net namespace
 >
->This commit introduces support for renaming an RDMA device when moving
->it to a new network namespace. It preserves the literal-name path for
->user requests and keeps the fallback naming on the teardown path.
+>This commit updates RDMA device name lookups and index allocations to be
+>scoped within the relevant net namespace. It uses rdma_dev_access_netns()
+>to ensure name uniqueness per namespace while maintaining system-wide
+>behavior in shared mode.
 >
->> diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
->> index 32b6c4d68ca0a..77a7580801486 100644
->> --- a/drivers/infiniband/core/nldev.c
->> +++ b/drivers/infiniband/core/nldev.c
+>> diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+>> --- a/drivers/infiniband/core/device.c
+>> +++ b/drivers/infiniband/core/device.c
+>
 >[ ... ]
->> @@ -1195,7 +1195,7 @@ static int nldev_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
->>  		u32 ns_fd;
->>  
->>  		ns_fd = nla_get_u32(tb[RDMA_NLDEV_NET_NS_FD]);
->> -		err = ib_device_set_netns_put(skb, device, ns_fd);
->> +		err = ib_device_set_netns_put(skb, device, ns_fd, NULL);
 >
->[Severity: High]
->Does hardcoding NULL here make the newly introduced naming feature
->unreachable from user space?
+>> @@ -452,7 +457,7 @@ static int __alloc_name_id(struct net *net, const char *name,
+>>  	xa_for_each (&devices, index, device) {
+>>  		char buf[IB_DEVICE_NAME_MAX];
+>>  
+>> -		if (device == skip)
+>> +		if (device == skip || !rdma_dev_access_netns(device, net))
+>>  			continue;
+>>  		if (sscanf(dev_name(&device->dev), name, &i) != 1)
+>>  			continue;
+>
+>[Severity: Critical]
+>This isn't a bug introduced by this patch, but is it possible that the
+>sscanf call here is vulnerable to a format string injection?
 
-False positive. "RDMA/nldev: Allow setting the device name while
-changing net namespace" adds this.
+Unrelated to this patch/set. Ignoring.
