@@ -1,157 +1,151 @@
-Received: from mail-wm2-f9.google.com (mail-wm2-f9.google.com [74.125.225.137])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27B641A761
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 11:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.137
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC46311592
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 12:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784201566; cv=none; b=GmAXxLjSgwFCm4VIJSxMeoRgIgnbKxpoghRbAf9AivDa4PJsmh3581puk5+8bAJWQsVTJNWxnfDGQZVTZaGPYw+5AYaMDKr3A4xztpVusyCG9n2gmHHwZE+N738TsrTDEF0tv3FGY4jYZBa2eeAhkTvZ5BVT5RLHlBO68UEM4cg=
+	t=1784204433; cv=none; b=F696xhqldszeSz5Am3pnyMKaXgEjpPABuJ9H3226U7a6Rxd1biVchUkXmzNpkf9bY5fuk1FYolpa+hBy0CQPnyw2HKTHM9ZWXO2bv8Kbqg4haonQe9w2hzA0gS5F9Tjp3hpxd3uYhQXpi6iO6yuoY/MW2oteoKs2MjcOEPXBYuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784201566; c=relaxed/simple;
-	bh=YZKBbW2GomCys1dMhNIiGDO21zwKxj5N/Rh2Z2W9Znk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=p2bZZQ2vl3HivmklmMQAxKtM51jZN5No/V6rij2JT7Bq8r+NYl3MkISWMKDTjQEckBe6UeCVxHTYNZqnN2vcvZzK2Rxib3yBY9Y9h4No3wieAl3YIQf07gC1KQAOQV11Ue26DYGbVZE35jdlHjGjMbZNYuhUOCYAtWuq42GyDA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qEFrtI67; arc=none smtp.client-ip=74.125.225.137
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qEFrtI67"
-Received: by mail-wm2-f9.google.com with SMTP id 5b1f17b1804b1-493e55619a2so16729795e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 04:32:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784201563; x=1784806363; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nQFV6uTevVnEZyY/RP6SSrTntWr7oAjSimUXIkwaAKQ=;
-        b=qEFrtI67VR9cWX5EyxO6tc8k39DBvemlSDBe4qQ4vwKWe3Kf3lKDxKUg1RSEpBDKkX
-         qedsn7cyE1V4n1/xe10X+UIqE0Pe6E51Z3ef725hh6Q8BiHjf84l3YdZRbF/REqMoP/I
-         PezwcIBx0hhR71I95XSxrD6X9abXvdchZAxV6IgDL6OIy4OjoBTgyVaPs9HFQ1t6S9KS
-         15h1cch8HI63tAPEabVyDDmadnm7cH5V94g2HV0PDJxFOOJ7E0ZmCkQyIS4BULGDtvYk
-         sRRDyIfDnZkT9LS+cMNSQRpe9gOIRrXj5wDKJjWn1uhkKy4YrBcIfXxOauGF7yFRwGw3
-         KPyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784201563; x=1784806363;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nQFV6uTevVnEZyY/RP6SSrTntWr7oAjSimUXIkwaAKQ=;
-        b=bfrUQL/EpMhR8Raf+CpPVQQkYvmg4QPBfDm4/Beelyq39ROgTYLfOGCHBKHk5B9Bit
-         Necf3b6RQSkKAeKfsju3Am4mxWK2u6oqliCeaH4C5A7520D0FV/m+ZHyEQV9/ssa4Jxi
-         wxR1ZJeZeOWnqsxPD5V3q1Nb20hwyQLXECsSRMlnCE+psCw29L+4UNVKbKZ+eKZAi/1m
-         uObVpAuzCbE+gLny1w4jT0qdm+zKAVTLXKH0w03b7ZFCMupXR5vwMso4kLVJkxsL3HNc
-         l+QqSKMuYEOYdEFOn7TJDjRIV6rORYSh1uqhBPl39lQpixhqmaopXKq3/jbsvRB9LGo7
-         PN+g==
-X-Gm-Message-State: AOJu0Yy5DIew5+2u5oOIpCR/FeiXqUhFOUgHmtqE+2HV4x+guDbNQSnB
-	QRcfqg5LuJBvykfZ84gO2b6UV6KQ0YQtMKlXtCNM3Gx4bdT/eXXyKU4Ahko1+UcF
-X-Gm-Gg: AfdE7cmdjY0tmzqBighCu3d7e4L5j3tBiFIw5ngz3D+RxXfcH2UDRPD0jm0vTOzOP6Z
-	LzmcJk/Yr4y4c4FgZVw3FShFhSXu0aWbfVyUzl6sT32fmu7IDDgyITX2hwwXNW7uWdaNGbIQHcZ
-	KtOXLmQ9uNYlVtOeJF7eESA12yUpAlzyjUeYlgI6VfdLezngO4nbj0fK8rsklOCzOQ4Ki1FX4x/
-	jRKoSH1xn/QLroVOYIYd7gURIxDeUc81Npj9FkxVMOmVU4L6MY2UUpDn4YOM261K8dt+WxNOonN
-	WSfNxxGkvKPcIaPAsdOiUjvBtC+UhJIBq1kzu526LcIBH2gEcl7WF0S1Fvlg+WAayB06nOGbfAl
-	z8CimEIQRDFZ8Fzci8nFMrbANELV5NNQ0zZhXQBzCB+mq9t8iDNgpVu7TP+ruSJij2Ktj3t6U+/
-	k4ha3VevadMJGYPC4mxbCQFJuUA/4iMEUvRQjrx3qXdkvujZJI4p4PP4rgS3bzEjy+ZIrJo4oFf
-	1XZI0btF8pbiMgvsToQ2MjZnC85gjC/5ob1yQqKXzd1
-X-Received: by 2002:a05:600c:1d9a:b0:493:c535:3934 with SMTP id 5b1f17b1804b1-495384a43aemr130193515e9.36.1784201562704;
-        Thu, 16 Jul 2026 04:32:42 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f47688f29sm21622919f8f.21.2026.07.16.04.32.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 04:32:41 -0700 (PDT)
+	s=arc-20240116; t=1784204433; c=relaxed/simple;
+	bh=JmiPUvKPXK7uICHoJ6QARw/aUUqKkfAYRdjqZhFZj9k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DmgI5lNdLrB9BtW+cDRJ2XP+a+U/BQC5mMuFpAu5nhoDYX19K9HufImfy4vxn3ck/R1xjnF36nGPR9GZOTRvlNIEY3QbUx6yA1UGwk6HmG+DcfEX9QnIJW/VuXJR7+0O9ehvhAAOtMQNeiriFrisdqZqi4WJr0E75jZvjXu9UsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h1Bv735xfzYQtkG
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 20:20:03 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id 2469B4058F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 20:20:22 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDXBliEzFhq0EDHBQ--.592S2;
+	Thu, 16 Jul 2026 20:20:22 +0800 (CST)
+Message-ID: <c2c325cf-8ce2-4cbf-aed7-cd9c22b922da@huaweicloud.com>
+Date: Thu, 16 Jul 2026 20:20:20 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 16 Jul 2026 13:32:41 +0200
-Message-Id: <DJZYO1XU6ANR.27W4M62WISKOV@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v1 8/9] bpf, x86: Fix stack-passed arguments
- for indirect trampolines
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260715220052.1590783-1-memxor@gmail.com>
- <20260715220052.1590783-9-memxor@gmail.com>
- <20260715221412.ACF3D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260715221412.ACF3D1F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v3 2/3] bpf: Reject callback subprogs invoke
+ tailcall
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260716120157.835937-1-pulehui@huaweicloud.com>
+ <20260716120157.835937-3-pulehui@huaweicloud.com>
+ <20260716121115.53BBB1F000E9@smtp.kernel.org>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <20260716121115.53BBB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:gCh0CgDXBliEzFhq0EDHBQ--.592S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryktr15Jw18Gw1DWF47CFg_yoW5tw1UpF
+	Z7WasrXry8Xa12v3ZFkF4xAFWrJrs5JFW7Gr48CF13AF1qkryDWFZ0grWF9Fyj9rs8tay0
+	vr4UZFZxJw1vyaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-On Thu Jul 16, 2026 at 12:14 AM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Medium] The patch correctly fixes the struct_ops stack argument offset=
- bug for x86, but leaves the exact same bug unfixed in the ARM64, RISC-V, a=
-nd LoongArch BPF JIT implementations.
+
+
+On 2026/7/16 20:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Direct tail calls inside async and exception callbacks are no longer rejected, bypassing the Tail Call Counter (TCC) limit and potentially causing infinite tail calls or crashes.
 > --
->
-> --- Patch [8]: [PATCH bpf-next v1 8/9] bpf, x86: Fix stack-passed argumen=
-ts for indirect trampolines ---
-> commit 804aec167442bbd8ddbbc13495bc188618bbaeaf
-> Author: Tejun Heo <tj@kernel.org>
->
-> bpf, x86: Fix stack-passed arguments for indirect trampolines
->
-> This commit fixes a bug in the x86 BPF JIT where stack-passed arguments
-> for indirect trampolines (such as struct_ops) were read from the wrong
-> offset. It correctly adjusts the offset to account for only the caller's
-> return address being on the stack, which fixes callbacks that have more
-> than six arguments.
->
->> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
->> index 2f25353f135bd..672fe54dfeb8d 100644
->> --- a/arch/x86/net/bpf_jit_comp.c
->> +++ b/arch/x86/net/bpf_jit_comp.c
->> @@ -3074,6 +3074,7 @@ static void save_args(const struct btf_func_model =
-*m, u8 **prog,
->>  {
->>  	int arg_regs, first_off =3D 0, nr_regs =3D 0, nr_stack_slots =3D 0;
->>  	bool use_jmp =3D bpf_trampoline_use_jmp(flags);
->> +	int stack_args_off =3D (use_jmp || (flags & BPF_TRAMP_F_INDIRECT)) ? 1=
-6 : 24;
->
-> [Severity: Medium]
-> This is a pre-existing issue, but does this same bug also need to be fixe=
-d
-> in the ARM64, RISC-V, and LoongArch BPF JIT implementations?
->
-> On ARM64, save_args() unconditionally hardcodes a 32-byte offset:
->
-> arch/arm64/net/bpf_jit_comp.c:save_args() {
->     ...
->     soff =3D 32; /* on stack arguments start from FP + 32 */
->     ...
-> }
->
+> 
+> --- Patch [2]: [PATCH bpf-next v3 2/3] bpf: Reject callback subprogs invoke tailcall ---
+> commit 99ae0587c85d574b41c654707864af3b7ff51fa8
+> Author: Pu Lehui <pulehui@huawei.com>
+> 
+>      bpf: Reject callback subprogs invoke tailcall
+> 
+> This commit aims to fix infinite tailcalls by rejecting tailcalls inside
+> all subprograms of synchronous callbacks. It also consolidates the existing
+> async and exception callback checks into a single unified check.
+> 
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 782d939c38cdc..62d46b4c9962f 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+>> @@ -5237,10 +5237,6 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
+>>   		if (verifier_bug_if(sidx < 0, env, "callee not found at insn %d", next_insn))
+>>   			return -EFAULT;
+>>   		if (subprog[sidx].is_async_cb) {
+>> -			if (subprog[sidx].has_tail_call) {
+>> -				verifier_bug(env, "subprog has tail_call and async cb");
+>> -				return -EFAULT;
+>> -			}
+> 
+> [Severity: High]
+> Does removing this explicit check allow direct tailcalls inside async and
+> exception callbacks to bypass validation?
+> 
+> If an async or exception callback does not make any subprogram calls (acting
+> as a root subprogram), the local variable tail_call_reachable will remain
+> false, as it is only set to true when traversing into or returning from a
+> callee subprogram.
 
-Yes, but it will be sent separately as a separate patch.
+callback is also subprog, and as mentioned before:
 
-> This seems to assume two 16-byte frames (FP+LR and FP+R9), but struct_ops
-> only pushes one, meaning stack arguments would start at FP + 16.
->
-> Similarly, on RISC-V and LoongArch, store_args() unconditionally skips 16
-> bytes for the traced function's T0 and FP frame:
->
-> arch/riscv/net/bpf_jit_comp64.c:store_args() {
->     ...
->     /* skip slots for T0 and FP of traced function */
->     emit_ld(RV_REG_T1, 16 + (i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
->     ...
-> }
->
-> For BPF_TRAMP_F_INDIRECT (is_struct_ops), the prologue aligns FP directly
-> to the caller's SP, so arguments start exactly at FP. Will these hardcode=
-d
-> offsets cause the JIT to read 16 bytes past the actual arguments on these
-> architectures as well?
->
->>  	int i, j, slot =3D 0;
->>
->>  	/* Store function arguments to stack.
+Tailcall is meaningless for async/exception callback or its subprogs 
+because the `ctx` cannot be passed along.
+
+As for sync callback, callback is also a subprog, and if it calls 
+tailcall, local tail_call_reachable will be marked as `true`, and then 
+reject in the follow is_cb check.
+
+But it will be reject early on the following path or more earlier:
+check_helper_call
+   if (func_id == BPF_FUNC_tail_call) {
+     if (env->cur_state->curframe) {
+       mark_reg_unknown(env, regs, BPF_REG_0); <-- R0 is unknown
+       prepare_func_exit
+         if (callee->in_callback_fn) {
+           /* callback_ret_range is precise */
+           if (!retval_range_within(callee->callback_ret_range, r0))
+             goto reject;
+         }
+     }
+   }
+
+> 
+>>   			/* async callbacks don't increase bpf prog stack size unless called directly */
+>>   			if (!bpf_pseudo_call(insn + i))
+>>   				continue;
+>> @@ -5281,8 +5277,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
+>>   	 */
+>>   	if (tail_call_reachable) {
+>>   		for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller) {
+>> -			if (subprog[tmp].is_exception_cb) {
+>> -				verbose(env, "cannot tail call within exception cb\n");
+>> +			if (subprog[tmp].is_cb) {
+> 
+> Because tail_call_reachable evaluates to false for callbacks without
+> subprogram calls, will this unified check be completely bypassed?
+> 
+> Since these callbacks are invoked directly by the kernel rather than via a
+> BPF-to-BPF call, the Tail Call Counter register might be uninitialized. Could
+> this bypass the TCC limit and lead to infinite tailcalls?
+> 
+>> +				verbose(env, "cannot tail call within callback\n");
+>>   				return -EINVAL;
+>>   			}
+>>   			if (subprog[tmp].stack_arg_cnt) {
+> 
 
