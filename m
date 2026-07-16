@@ -1,170 +1,168 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F243BB126;
-	Thu, 16 Jul 2026 09:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53933164AA
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 09:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.223
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784194608; cv=none; b=iu/1inX08YtqcSOh51oKqqNxV44idYvbD5oNZ/5bX17x6aVPFJ1/3TQ4apo1OW41O/HJp9Jv+GwXIEPc9LRm+e7K4B1fgZHzSlZSZdGHcoUBiKY/t2zmeUZi0LE1EKSFJYIVucQwa8+P/Uh9+l6ftctr5YYsKwPhKPneARHol50=
+	t=1784195152; cv=none; b=Jbi4UbCsRXlO/z6c4MXBQWDjQoMMmHV8KxscovgCoT/KCEAKpLm3p9GGF8rrhGgWTTMp44fpGqBxVItkLYGaa5tPbH/60gYHz+3Oea2gaMPCRQy+UeEILWQKzAqKgoUR17ArgB7KksYGEukoTnWAkxngbTihZFnd3fkLV56/wwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784194608; c=relaxed/simple;
-	bh=Igdt2Jxy4NLY08/a/9QDgah/C4JtmJyrHGrbliKpUGc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E4daDX64lBTKUIk5xPu4dbv5ehBaB4sKBvgf8S7zwYrx/TNdqIYIBGj2i1jfZivnPbxKPf5xbu0xk3zAEweYlgos52fO05G+1xw4cZu9XLF14ExZAy7HR63YUe9hSMgYX6cV4le192dq2VzDLkgfetBVk1wwteuvvAPllcLwKig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B9HgSbW6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	s=arc-20240116; t=1784195152; c=relaxed/simple;
+	bh=DXHIPIx2VuUUtJcFUxJQ7iBRX0E16+iSuTLuu4xI+lU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HyomuIYqflwBmvGJzKlNinM+PWJOyTWfYBlaufz673QTnprgQTTLqACPcPF45XI12waNAD2Q91aq30C4NW/HQEfGH/tz0LZ54uI9eetGGlXt68U7dF5E3E3FkCLQ1t9r2E+XsTzHYKrPrrbNAXmsCgnQroO+NrZxGSITzmp6aco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=h-partners.com; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=GUw3oPzG; arc=none smtp.client-ip=113.46.200.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B9HgSbW6"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66G7DU8G1994824;
-	Thu, 16 Jul 2026 09:36:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SFUiJlIJSjO4iBGJ7Ma5WSZocrKRwGJx01ubuU6TOPI=; b=B9HgSbW6Fo5qhqs9
-	wyhgb1qVyMTTa/0+ZLA6GG+cn1LHIUAsdvM8yKIPjtCga9pgODLRzil7zqsk7zeL
-	+fI0kVwY0ED77Tlkh64+6wM+CTkDxO0lkkh272MJyuTBOS3C7EfqbuJv3MeyaOAR
-	NbhF7SgjHZ91L1BqAfuNnylNMYGuu1yU/KgaWvBMkDc2A4murOtxvEl35m9KYOxF
-	2riAi7kXDQoanUt75toUuGA30kyn7WN3iML6W5KYGSPwWRaaznRr0lKp3dJhflgu
-	Jktt5fW7SeAURBUXNTGeA5h3MIJlahR8DerZYKNtXWwRJqkxXPh8NlKYHmpEKBa+
-	w76POg==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feefqk213-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jul 2026 09:36:44 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 66G9afbi014753;
-	Thu, 16 Jul 2026 09:36:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4fbewkfpsw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jul 2026 09:36:41 +0000 (GMT)
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66G9afi8014748;
-	Thu, 16 Jul 2026 09:36:41 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 66G9aed2014746
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jul 2026 09:36:41 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id 107E7B36; Thu, 16 Jul 2026 15:06:40 +0530 (+0530)
-Date: Thu, 16 Jul 2026 15:06:40 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
-        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-Subject: Re: [PATCH v5 1/2] dt-bindings: power: reset: qcom-pon: Add new
- compatible PMM8654AU
-Message-ID: <20260716093640.6girzdseyuwj62bj@hu-kotarake-hyd.qualcomm.com>
-References: <20260713-b4-add_pwrkey_and_resin-v5-0-3bea476e1453@oss.qualcomm.com>
- <20260713-b4-add_pwrkey_and_resin-v5-1-3bea476e1453@oss.qualcomm.com>
- <20260713121328.339151F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="GUw3oPzG"
+dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=GslGGlaZ38+Ofq+gpW5fJ69tPLIPXH9n5BlMGa7ZAaA=;
+	b=GUw3oPzGiJym0ECAqOLfyWQCC8xCvsQ9dAg+dYNYmFuCOxAtZjouHodGnb9dT+t9q7oFs9OqI
+	arU27EyiXvHdpadw+ryfgdXDpsqTTcScJZUtcuJ9Qvnswu/CoqFi+/+9/vxTF/q1b54YvzqP2ar
+	dJpKfQ5lCtBFBLootHnabJ4=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4h17GK28FgzmVD7;
+	Thu, 16 Jul 2026 17:36:25 +0800 (CST)
+Received: from kwepemj100018.china.huawei.com (unknown [7.202.194.12])
+	by mail.maildlp.com (Postfix) with ESMTPS id 72F4840572;
+	Thu, 16 Jul 2026 17:45:44 +0800 (CST)
+Received: from [10.67.120.108] (10.67.120.108) by
+ kwepemj100018.china.huawei.com (7.202.194.12) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.36; Thu, 16 Jul 2026 17:45:44 +0800
+Message-ID: <93ae1a51-4d7f-62fd-08e4-352043d87bfb@huawei.com>
+Date: Thu, 16 Jul 2026 17:45:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH v3] scsi: libsas: fix HA resume deadlock and hisi_sas
+ disk-wake race
+Content-Language: en-CA
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-scsi@vger.kernel.org>
+References: <20260716081145.3950172-1-yangxingui@huawei.com>
+ <20260716084735.91D7A1F000E9@smtp.kernel.org>
+From: yangxingui <yangxingui@huawei.com>
+In-Reply-To: <20260716084735.91D7A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260713121328.339151F000E9@smtp.kernel.org>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Authority-Analysis: v=2.4 cv=APNfGQ4N c=1 sm=1 tr=0 ts=6a58a62c cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=IkX1Yui6ihke5z-Rmc4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDA5OCBTYWx0ZWRfX1RXmtQqbJ2I2
- ooQxj3B9psfldRegGLn6CrpN86+Xapr349kwrmj2Cs9RCAdsDvXBS8F8nGASrVth1bkdo4Lo2jr
- wVSNRe36QWQpSfPQEQbQcm/VBxehAGs=
-X-Proofpoint-ORIG-GUID: PSWI8A1W_iUFPjrKNZgpE78uKmVOwZqk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDA5OCBTYWx0ZWRfX4Oh3BQ9/HH1H
- 3uJbXkn+B6HraIBHxlvC3tlAgBixAbPF6X1iO89UmSvuT9C2k/sdbfzM7b9F6i4hc19MKQ8NUwO
- x7xky5uhLqn115wo/4Jr7uSPcTVs1NDcaNvEEh+2Q0aknq+diufVG26BnCyd8Xkm04SHe/X2KV6
- AmOkyYL7tz3kZhsCfaXcUpLHCiSw/mfKoVgi9UiOkGtDuA4+63nkq+aY00xwcHO0M4PMs15A1mf
- zJ7OYWEAp3RholI9bf24inYMvo2mtTU8A7GCB9FJXd1gmi5EA1CK5cpDg6zLbHGt8POIM2AcwVV
- Wv3+2g6mptHt80qSSyxAkLcPDYi3wIVvGeJU9wGmajE2aH/DF+az3FsQXi9prXxeALM4E0WjCHX
- Z4A6ViL5lYIAaga+nLBtBFRsO2YUZE572q+AO3FOrss75rNQB/LYYpRBvkMaMzPy43v8ov6s41O
- YUKeYbkj36Bnko74q3Q==
-X-Proofpoint-GUID: PSWI8A1W_iUFPjrKNZgpE78uKmVOwZqk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_03,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160098
+X-ClientProxiedBy: kwepemh100005.china.huawei.com (7.202.181.88) To
+ kwepemj100018.china.huawei.com (7.202.194.12)
 
-On Mon, Jul 13, 2026 at 12:13:27PM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 2026/7/16 16:47, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The schema incorrectly forbids `mode-*` properties for `pmk8350-pon` and its fallbacks, breaking reboot mode configuration.
+> - [High] Removing `sas_resume_ha_no_sync()` and restoring `sas_resume_ha()` reintroduces a resume deadlock for hardware events like `PHYE_LOSS_OF_SIGNAL`.
 > --
 > 
-> --- Patch [1]: [PATCH v5 1/2] dt-bindings: power: reset: qcom-pon: Add new compatible PMM8654AU ---
-> commit c59d0da4493e27ba6b287b072dffcd65652a9310
-> Author: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> --- Patch [1]: [PATCH v3] scsi: libsas: fix HA resume deadlock and hisi_sas disk-wake race ---
+> commit f62439ea23dd5d0db3e1f9ebd2572dcb77f2890b
+> Author: Xingui Yang <yangxingui@huawei.com>
 > 
-> dt-bindings: power: reset: qcom-pon: Add new compatible PMM8654AU
+> scsi: libsas: fix HA resume deadlock and hisi_sas disk-wake race
 > 
-> This commit introduces the PMM8654AU compatible string as a fallback to the
-> baseline PMK8350 PON implementation. It also updates the schema to enforce
-> that both the hlos and pbs register address spaces are always present for
-> the Gen3 PON peripherals.
+> This patch moves the PHYE_RESUME_TIMEOUT notification after sas_drain_work()
+> to fix a deadlock in the resume path. It then removes sas_resume_ha_no_sync()
+> and restores the draining sas_resume_ha() in hisi_sas.
 > 
-> > diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> > index 979a377cb4ffd..09eea48c709e5 100644
-> > --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> > +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> > @@ -17,12 +17,16 @@ description: |
-> >  
-> >  properties:
-> >    compatible:
-> > -    enum:
-> > -      - qcom,pm8916-pon
-> > -      - qcom,pm8941-pon
-> > -      - qcom,pms405-pon
-> > -      - qcom,pm8998-pon
-> > -      - qcom,pmk8350-pon
-> > +    oneOf:
-> > +      - enum:
-> > +          - qcom,pm8916-pon
-> > +          - qcom,pm8941-pon
-> > +          - qcom,pms405-pon
-> > +          - qcom,pm8998-pon
-> > +          - qcom,pmk8350-pon
-> > +      - items:
-> > +          - const: qcom,pmm8654au-pon
-> > +          - const: qcom,pmk8350-pon
+>> diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+>> index 213d5b5dea94f..8a2500993e19d 100644
+>> --- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+>> +++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+> [ ... ]
+>> @@ -5261,15 +5261,7 @@ static int _resume_v3_hw(struct device *device)
+>>   		return rc;
+>>   	}
+>>   	phys_init_v3_hw(hisi_hba);
+>> -
+>> -	/*
+>> -	 * If a directly-attached disk is removed during suspend, a deadlock
+>> -	 * may occur, as the PHYE_RESUME_TIMEOUT processing will require the
+>> -	 * hisi_hba->device to be active, which can only happen when resume
+>> -	 * completes. So don't wait for the HA event workqueue to drain upon
+>> -	 * resume.
+>> -	 */
+>> -	sas_resume_ha_no_sync(sha);
+>> +	sas_resume_ha(sha);
+>>   	clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
+>>   
+>>   	dev_warn(dev, "end of resuming controller\n");
+> 
+>> diff --git a/drivers/scsi/libsas/sas_init.c b/drivers/scsi/libsas/sas_init.c
+>> index 0bec236f0fb59..c3f3d05b46dea 100644
+>> --- a/drivers/scsi/libsas/sas_init.c
+>> +++ b/drivers/scsi/libsas/sas_init.c
+> [ ... ]
+>> @@ -426,6 +426,23 @@ static void _sas_resume_ha(struct sas_ha_struct *ha, bool drain)
+>>   		dev_info(ha->dev, "waiting up to 25 seconds for %d phy%s to resume\n",
+>>   			 i, i > 1 ? "s" : "");
+>>   	wait_event_timeout(ha->eh_wait_q, phys_suspended(ha) == 0, tmo);
+>> +
+>> +	/*
+>> +	 * All phys are back up or timed out. Turn on I/O and drain
+>> +	 * pending work.
+>> +	 */
+>> +	scsi_unblock_requests(ha->shost);
+>> +	sas_drain_work(ha);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does the current schema incorrectly forbid
-> mode-* properties for pmk8350-pon and its fallbacks, breaking reboot mode
-> configuration?
+> Could this reintroduce a resume deadlock for hardware events like
+> PHYE_LOSS_OF_SIGNAL?
 > 
-> Because the Gen3 compatibles are missing from the earlier allOf if condition
-> that matches pm8916-pon, pms405-pon, and pm8998-pon, they fall into the else
-> branch:
+> During host resume in _resume_v3_hw(), hardware is re-enabled via
+> phys_init_v3_hw() just before calling sas_resume_ha(). If a hardware event
+> fires during the 25-second wait window, the interrupt handler will queue it.
 > 
->     else:
->       patternProperties:
->         "^mode-.*$": false
+> Looking at sas_defer_event() in sas_event.c, events for suspended phys are
+> not deferred:
 > 
-> Will this cause dtbs_check to spuriously reject valid mode-* properties for
-> the newly added pmm8654au-pon PMIC?
+> drivers/scsi/libsas/sas_event.c:sas_defer_event() {
+>      ...
+>      if (test_bit(SAS_HA_RESUMING, &ha->state) && !phy->suspended) {
+>          ... deferred = true;
+>      }
+>      ...
+> }
+> 
+> Since it isn't deferred, the event worker executes it immediately:
+> sas_phye_loss_of_signal() -> sas_deform_port() -> sas_destruct_devices() ->
+> sas_rphy_delete() -> device_del().
+> 
+> Because hisi_sas uses device links with DL_FLAG_PM_RUNTIME, device_del()
+> triggers a synchronous resume (pm_runtime_get_sync()), which blocks waiting
+> for the host to finish resuming.
+> 
+> At the same time, this sas_drain_work() call blocks waiting for the event
+> worker to finish, resulting in a deadlock. Could a hardware event fire
+> during this wait and cause this scenario?
 
-This is a pre-existing issue and not introduced by this patch. The else
-branch forbidding mode-* for Gen3 compatibles is intentional — Gen3
-hardware uses SDAM for reboot reasons, not PON_SOFT_RB_SPARE, so mode-*
-properties have no meaning there. qcom,pmm8654au-pon is also a Gen3
-device and falls into the same else branch, so mode-* : false is correct
-for it as well. dtbs_check rejecting them is expected behaviour. No
-change needed here.
+The deadlock cannot occur due to a contradiction in the triggering 
+conditions.
 
-regards
-Rakesh kota
+For PHYE_LOSS_OF_SIGNAL to execute synchronously during
+sas_drain_work(), it must bypass sas_defer_event(), which requires
+phy->suspended == 1 (since SAS_HA_RESUMING is still set during
+drain). But PHYE_LOSS_OF_SIGNAL also requires an active link on that
+phy to generate a hardware interrupt — and phy->suspended == 1 means
+the phy was deactivated by lldd_port_deformed() during suspend, with
+no active link to lose.
+
+We have verified that removing a disk during suspend does not generate
+a phy loss event — the phy is already deactivated.
+
+During resume, if the phy came back up (suspended == 0), the event is
+deferred by sas_defer_event() and does not execute during drain. If
+the phy never came up (suspended == 1), there is no link and no
+interrupt. Either way, the deadlock condition cannot be reached.
+
+Thanks,
+Xingui
