@@ -1,113 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659CE4248C2
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 16:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12B436D9E7;
+	Thu, 16 Jul 2026 16:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784220028; cv=none; b=AS4+SydFWI/4aWdik+Q0E9WE77zwqKByI9/AoN4lNGaB9XlSZFt+cpWSJFaIDKTbTbycix8+UZifLC2WlZ0v+hO7Kh/L4SsHdDDIn9BJRsW0TUbcNmV43A2b39sXYHfOrkibZubCvb+cONEIR8PVzZxhqZcyjMgJ+NY25l2C0Tc=
+	t=1784220876; cv=none; b=AM7jJJ7/dH0bLwclrYm152eHa3od7WLCjv3UIzkGAjZP2tNDbQKszCQlO+bqts8gHHk3oJDiMlsWCoIsav79mryyrd6nTDG/kvUWlzKPw7QBowWYnJyffZ/wnuMy5poBXGkf9Hi3SmtjjNbHAppGfwUpD/UQUnWxqXX9oBbP2fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784220028; c=relaxed/simple;
-	bh=GnMsOn2FxijKLEEE78xxFX8lsvMcvElNL6rjlxEfGZc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kJB08XLz86vLglNgiL3gKd2OZX1NiJMg2lPP/r5hy4wRtw8zxYH7igMgUVOzFYXTF17mQzsjmSKoXm4lixj6VFkK9W0YxQBw5tXAdRkVoCdotzM1HWYDU+Mja0oVl7ozuhg5fDqoPKfBNg3+uyKg3Th02lg8mufnPOV9FBW4QOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgHwWiGU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784220876; c=relaxed/simple;
+	bh=W/L+E6Bpgf1w17HOXtiE1hRBpI2QbTBmxfxVWYeqoWo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mI28V4GuAmvaq0646BIpASj8fyNGiLu5mNTkMzuxXu1qc1sYGNg8fZmrPyNn6xj/DBGT3NMgJsX3OEkGGtbIEV1fkNvGjUeKrMncP9Eal0d2gYsZfUHoZ46C7jzH68amsu6bbNbTDMZ71kDNL+lWgBjmrd2a2fsmfgJUOPVbzzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N71dIZEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgHwWiGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE97F1F00A3A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 16:40:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N71dIZEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5501F000E9;
+	Thu, 16 Jul 2026 16:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784220019;
-	bh=Ubb1ojwWucMPdKao8wXbeBk6fXEn7lIqP1RDM767QUI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=PgHwWiGU2NQKyzjc1qtgZznOknE2k1/n2ym2qgMEl9PNsckrnmd4IK7V2Wy2nuVy+
-	 caasqhoT0G6cf0RhA+f4gBylMWksNKrCGMa/TR0nyiQVFkSGQHIpkflhsL/BpegY4F
-	 zFgeoCuzI0Ej1qKUoy6naRhlr3zUgBo1EGE4TbHuF2Z6fAfqVvJQTxVNyzqJ+eUFQ0
-	 smJUQNm4thq3cSm9c8Fx6V1UHdAOkYYCQVEyFOIeyTKXblbYbTZjxkT9f6W2PKpRBb
-	 BbHHkhlK5bRqcgI2AyAuI/Fv4UWAEkxRMlecaU/7KFyqwXl6URf2WoVEL7ovtsQP5S
-	 MY7jsvB2VMLtw==
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5aeb5e85378so7415996e87.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 09:40:19 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yw0Hdy3jI8unhL43p7W3ItNm+63rKGXQrPEKv2HTL98IfDTwtkb
-	+U6XglI144TWVh4PpSQKeTfJBSP6VhG6LextRkU+H0jYHjkn6AWfH5nkswueIXsL5woVbsVB2YA
-	43B4zbldjxKS0YQtjxRptxlrDhYpb8OQ=
-X-Received: by 2002:a05:6512:3c87:b0:5ae:bf46:2acc with SMTP id
- 2adb3069b0e04-5b159b92c1emr2765512e87.63.1784220018125; Thu, 16 Jul 2026
- 09:40:18 -0700 (PDT)
+	s=k20260515; t=1784220875;
+	bh=eizyMw1RZYBP05RNE6IyW2G1IdFAvlrLk3hdDOWwDGo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=N71dIZEBgnTMvh9MHwyNqWlAz4kogA6x2nLMcn/Bw1DsmwGrKmM+aRBG1E2aQLt2u
+	 EAFQl+24NJYi0Y+hAgZ4xaEEFH2SSVPYU9zQjcnRGowNLKKBsOeqCNSn5gu+Nkwm5A
+	 ui1muzHdvYDwWkmpH1DSXbiYcE31yXsqyrBi3fnTruvVu8KyLwWL5hze2bod8ULsmU
+	 SyKsljYlt6b9ipS9Les3t/ZNwQMqcpFKoGqX/WTec0SceVDLgOayUWi7JskplYri79
+	 Ntt98KoqEsoBlOPWph9J7KtOe2eYbGRI+uduoow9bm2PmrAlpCs58yxxb0WJxN3kaw
+	 zWfTYItMpUhWA==
+Date: Thu, 16 Jul 2026 11:54:34 -0500
+From: Rob Herring <robh@kernel.org>
+To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add
+ glymur video codec
+Message-ID: <20260716165434.GA290489-robh@kernel.org>
+References: <20260715-glymur-v9-0-8cf2cbe12a07@oss.qualcomm.com>
+ <20260715-glymur-v9-1-8cf2cbe12a07@oss.qualcomm.com>
+ <20260715142224.5FA721F00A3A@smtp.kernel.org>
+ <b179ac7a-af91-da67-3232-e9e41203ade0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <12935400.O9o76ZdvQC@rafael.j.wysocki> <3430928.44csPzL39Z@rafael.j.wysocki>
- <20260716141844.4A3171F000E9@smtp.kernel.org>
-In-Reply-To: <20260716141844.4A3171F000E9@smtp.kernel.org>
-From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Date: Thu, 16 Jul 2026 18:40:05 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0ipEPY4WnckVWjHrAXK36WsQ4dy9PqskAU6Nfxj8315FQ@mail.gmail.com>
-X-Gm-Features: AUfX_mzAyF749w4YSOeuZuyl-WftquA2PRFLDPKhrj9qEzVnxDMkmjuMIVVq5cM
-Message-ID: <CAJZ5v0ipEPY4WnckVWjHrAXK36WsQ4dy9PqskAU6Nfxj8315FQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] ACPI: PCI: Introduce acpi_dev_get_pci_dev()
-To: sashiko-reviews@lists.linux.dev
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b179ac7a-af91-da67-3232-e9e41203ade0@oss.qualcomm.com>
 
-On Thu, Jul 16, 2026 at 4:18=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Use-after-free in acpi_get_pci_dev() due to unpinned acpi_device=
- pointer
-> --
->
-> --- Patch [2]: [PATCH v2 2/4] ACPI: PCI: Introduce acpi_dev_get_pci_dev()=
- ---
-> commit 96691f509a95b92252e42efea5c07ebf2acebfd2
-> Author: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
->
-> ACPI: PCI: Introduce acpi_dev_get_pci_dev()
->
-> Some acpi_get_pci_dev() callers already have a struct ACPI device for
-> which they want to get the struct pci_dev pointer of the associated
-> PCI device. Add acpi_dev_get_pci_dev() to handle this and turn
-> acpi_get_pci_dev() into a static inline helper.
->
-> > diff --git a/include/acpi/acpi_drivers.h b/include/acpi/acpi_drivers.h
-> > index 402b97d121381..bff2ca035fcf3 100644
-> > --- a/include/acpi/acpi_drivers.h
-> > +++ b/include/acpi/acpi_drivers.h
-> > @@ -59,14 +59,19 @@ int acpi_pci_link_free_irq(acpi_handle handle);
-> [ ... ]
-> > +static inline struct pci_dev *acpi_get_pci_dev(acpi_handle handle)
-> > +{
-> > +     return acpi_dev_get_pci_dev(acpi_fetch_acpi_dev(handle));
-> > +}
->
-> [Severity: High]
-> This is a pre-existing issue, but does this inline function expose a
-> race condition with ACPI hot-remove?
->
-> acpi_fetch_acpi_dev() returns an unpinned acpi_device pointer without
-> incrementing its reference count. If a concurrent ACPI hot-remove event
-> occurs immediately after the lookup, the device object could be destroyed
-> and freed by the hotplug workqueue.
->
-> When the dangling pointer is passed into acpi_dev_get_pci_dev(), it
-> gets dereferenced here in drivers/acpi/pci_root.c:
->
-> acpi_dev_get_pci_dev() {
->     ...
->     guard(mutex)(&adev->physical_node_lock);
->
-> Could this be prevented by using acpi_get_acpi_dev() to acquire a referen=
-ce
-> before calling acpi_dev_get_pci_dev(), and then releasing it with
-> acpi_dev_put()?
+On Thu, Jul 16, 2026 at 08:37:17AM +0530, Vishnu Reddy wrote:
+> 
+> On 7/15/2026 7:52 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Low] Unnecessary `#address-cells` and `#size-cells` properties on a node without addressable children.
+> > --
+> >
+> > --- Patch [1]: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur video codec ---
+> > commit 8ca344fa9395fcf1d13bd1ea93de8bee21a5c176
+> > Author: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> >
+> > dt-bindings: media: qcom,glymur-iris: Add glymur video codec
+> >
+> > This commit adds the device tree binding for the Qualcomm Glymur Iris video
+> > codec. It introduces a new dual-core architecture requiring additional
+> > power domains and clocks, and updates the maxItems limits in the common
+> > venus schema to accommodate these changes.
+> >
+> >> diff --git a/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
+> >> new file mode 100644
+> >> --- /dev/null
+> >> +++ b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
+> >> @@ -0,0 +1,255 @@
+> > [ ... ]
+> >> +  interconnect-names:
+> >> +    items:
+> >> +      - const: cpu-cfg
+> >> +      - const: video-mem
+> >> +
+> >> +  '#address-cells':
+> >> +    const: 2
+> >> +
+> >> +  '#size-cells':
+> >> +    const: 2
+> > [Severity: Low]
+> > Are these properties necessary here? The schema strictly enforces const: 2
+> > for #address-cells and #size-cells at the root node, but none of the child
+> > nodes (non-pixel, pixel, firmware) define a reg property, and the parent
+> > does not define a ranges property. 
+> >
+> > Will this cause the DeviceTree compiler (dtc) to emit an 
+> > avoid_unnecessary_addr_size warning when compiling device trees using this
+> > node?
+> >
+> >> +
+> >> +  non-pixel:
+> >> +    type: object
+> > [ ... ]
+> >> +        resets = <&gcc_video_axi0c_clk_ares>,
+> >> +                 <&gcc_video_axi0_clk_ares>,
+> >> +                 <&videocc_mvs0c_freerun_clk_ares>,
+> >> +                 <&videocc_mvs0_freerun_clk_ares>,
+> >> +                 <&gcc_video_axi1_clk_ares>,
+> >> +                 <&videocc_mvs1_freerun_clk_ares>;
+> >> +        reset-names = "core_bus",
+> >> +                      "vcodec0_bus",
+> >> +                      "core",
+> >> +                      "vcodec0_core",
+> >> +                      "vcodec1_bus",
+> >> +                      "vcodec1_core";
+> >> +
+> >> +        #address-cells = <2>;
+> >> +        #size-cells = <2>;
+> > [Severity: Low]
+> > Does the example need #address-cells and #size-cells? It demonstrates their
+> > use without any child nodes containing reg properties, which directly causes a
+> > dtc warning during dt_binding_check validation.
+> 
+> Without #address-cells and #size-cells, getting the below kernel warning prints.
+> [    6.953615] Missing '#address-cells' in /soc@0/video-codec@aa00000
+> [    6.968288] WARNING: drivers/of/base.c:115 at of_bus_n_addr_cells+0xa4/0xf4
+> 
+> [    7.440909] Missing '#size-cells' in /soc@0/video-codec@aa00000
+> [    7.447044] WARNING: drivers/of/base.c:142 at of_bus_n_size_cells+0xa4/0xf8
 
-This just retains the previous behavior of the function in question
-and after the 4th patch in the series, it is not a real issue for the
-last 2 remaining callers.
+Then the kernel is wrong.
+
+Rob
