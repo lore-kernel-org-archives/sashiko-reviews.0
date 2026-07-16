@@ -1,195 +1,193 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784D434D90D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 09:11:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F63346E44
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 09:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.170
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784193107; cv=pass; b=Yyz68YgAGklcicku+pmSd1ZnFbxY/3qOED9ysvrFOrupyUv7xhQ1iUB5zC8HvrTpvIWcEshwuFhAfINCB7vILH5Xsb1dL3TCeM5lmhJTB1O5ZZsFxG/VukW38pPCGN8ZVBUWFeg1mc2zLnzUukEDo/oKJpIwcEUwpcCvSBCEYiM=
+	t=1784193874; cv=pass; b=GSnWNxD1y+mPfrVKRHFpsbSmm3FGtV6QfA3AsUQAOmFnL8mWtArFUUkPWYZ1pQxyH6hi5rHjGTdcnLoP1xtbwhaqEKt9WEbUE7HFkSRSd6Rl3wLwnZA37H9br8ytMzGxivzEeJ3IPG6EQKqqTss7awrBJbL5t1ZZYVg/HNl9Uqs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784193107; c=relaxed/simple;
-	bh=wVaUyhiHHt8mdGxE8HABkjb3Q1pGok7lbO2wwK1myg8=;
+	s=arc-20240116; t=1784193874; c=relaxed/simple;
+	bh=GvSH71Mgio9+/dFqhEYp2Ny9KgmU25cJ8taf/z3B8M0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hn0sg8ReMjMofzafG1cP8+64aldxBFqOJKW4lMXAZAMp1HAm+jLydAQqBvvAAgA84l7+dd6/pskVBfCV6OMEDUKBfDT5F4ZctWRe4GVM3bRU2dPWgFHx48grqeMmKioZ7GQQPGsTvMVCoS+aq8az0WFG1PB/GadYrGVpeHPjMwg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tJfof4Qw; arc=pass smtp.client-ip=209.85.128.182
+	 To:Cc:Content-Type; b=F3YCNgFQr494fr798X3jHSsYEPVeBF2ZpW0Ouk0kN1Ax7ZhEYUCDsrVaotr99CrqK0N0JwXlb6dICv4NUPXtGQKhZrYAHg0OydarPBvBViRl6C9O/1bIUDbm5XZ/kyaxSeNs3SjPsiezjRZ7AbAO1ZxJ9QXQji4lPnWpr78HqfI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sSIqIvlF; arc=pass smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tJfof4Qw"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81ee6b2da98so2476477b3.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 02:11:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784193102; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sSIqIvlF"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-84536ecfc5bso3063153b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 02:24:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784193872; cv=none;
         d=google.com; s=arc-20260327;
-        b=h1fr4enYdnOvBQm6nPCLdaPe+/8xLrXPXgYdV1kGc/chLmprMxjT7Zqt4ZTtasBfxM
-         ESoUuB7DeY8o7hIbkPKyLNysSjnrahXS/ZOwItJ8yWMaRx76DKkOyBdOV/D1hxNXTPy4
-         ewAA5fuMDq4vJNmCISePgMx9/QSMueRUwDHuCyxxiPUyO75o7edZftn5ffKnOh+0a5Bx
-         laFrIZlDAFWWqbbB5So0ZkNZFpt2FDmUUaItPB0CHt9Ay305icfoUfnsrlcccSiMdbZa
-         tbRcfZEGGcNSgiEurY8Sj+w2r2lX9fuk2EYhLYfGFno4vYqHPUgW3k80PyfJPXCdVRM9
-         Cy1g==
+        b=TlYrY1ZiEp/Go+8/JJYKOcZpND7UoQD5E9jXnK3MIPofkhboB8Hot8D3XsBH0W0h6S
+         Q41sCgNsEJ/PpdOhjxDc8daEuP0WM+VMbS/6hLaB+XxVX68TpJIGiGdMTjP9NGY+MqY/
+         BZS9cPQFo1F0FFmNnqvZ4OZuvFTstjlkQixMItaLosu8/UGYlweDQH/hBsbbMHcq4+F9
+         F4FHMHCgr2DMMyj+Qo/O83R1pKMmPwyoelR2nCbZ3QZ7764bisz2Z+850mtVwcRyjV8z
+         9WDPHFNxD03laZp+QLBtsYgaWfK2Ahdlq5eI4ZG7Vkt9aqff7Z3RjP6h5RyB4+oZAKQk
+         LAIA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=fba8lwegZlYj1IsPa0gj15+gvYVmAsXII13vXbs6KfY=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=NHG+0bMXYDLR5q9b5jnAwljDkJEWjLyixjZNrne1/6bbDFRREI6G21ZsEot5eK4GdO
-         EFA0prSbUliKP8keExfIIJeC6imdXZl9hepc7t31L+vA4BiCecrVh9oK7P2MVjrzom4h
-         aUa+x4t4jamA9v2WWIuLEfFNjc1jImQttmctNo3pVWCRhzY5baJf4zbJ10+p5YunjKkI
-         rZxyvJgYAwKIWYRHVKdkJbQcY8jhWQIkOzz3qGTcJyswCZo3jM/mIujIGUdEdyp1IY36
-         yw842nyLbp0GTPraMnUYZT64GDpIY4l6hY+wpyTSTcQyTejRi1qKD3AHU4ff0bQ5lzwr
-         aDGw==;
+        bh=D5AXjA9Tcy5dG64KZLElqY/MzuwlW4GyobQ/vNPe094=;
+        fh=36T+4j8qrl4N3Zsf1TXCwHdQKrBrZv2YpXEadN+1YkI=;
+        b=TKmSr74RItIE0XRPLHGwIIvERkd7rY2i0A++iA0zmIJzLg4cU+QXAf9+PF9UpUftCy
+         tQS4kW+Jbtf5mV4fmAcWnIdmFOQCTek8SwGMCdeeIkMM9EjS17GjvzpG8QMoB+yTjr9/
+         E6xwcfmHo+FFmf/OW48R6xCcz3Ux4D8YDz5YyVd4q+N0PihAl1X6J0sK9nHIAE06/AHV
+         UMHXDWVtLAh5TsttSJ/bJTMW58d5NFmGB0qmmAc5+Xn4dZ9rU7v90XTovJmCYERpafTV
+         4Kj/beJ99NTkGYvA5RaP+AOqFdOGX3663Yqy1iZzmHTmgelz8jyCBt/1tlgfew7PFMVf
+         L9Aw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784193102; x=1784797902; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784193872; x=1784798672; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=fba8lwegZlYj1IsPa0gj15+gvYVmAsXII13vXbs6KfY=;
-        b=tJfof4QwyPv5zu0hQYI5MK+kBKESqfrBWhB4MlvpSRq0DI4tlg0UpEiOw5HzCc7+UY
-         sHcTq58w+yeVpD/aWQBRoet6V9fhx5Jj6YaK9mBDpepMmGxwDf12wYOTy/2ONN+SCyun
-         3wpTUi/AIyYbsoYPUfnizWnauBcgxBvNJUSczB9FzJuzbPxohLHVoO+qydnmlBf6euor
-         uViafsklzl+CwF+dUf4vWliabDIeBvp00jKrDmB7IENSb4V5ljoXcKHPcNj+62ZSHJ6/
-         ckQawkI12/QC2jS8cYpyrrxjUL9BeW/5zhrTzBcRv7Bs2uFLPsWNXKxQR/7zGMfJL7Zv
-         DakQ==
+        bh=D5AXjA9Tcy5dG64KZLElqY/MzuwlW4GyobQ/vNPe094=;
+        b=sSIqIvlFp122RX8Xw1i4wcAXOMgKt1tJiXRRYiGtthw1UUvA1cqzKV3ywZs3XVTeWa
+         OIjyRebA/odK0sy6eOn8hrmTNVDBG6vQdM1dciifUOzwBMIiiDfGwDTp/o5ghA9JcTg8
+         2XEX+8p1Qv33cDN9irjjydAjaRQO2MQVQmR5BGBvXOgKsyeLAH8s/X3x0b+VyB4w1BdP
+         2E9hdPF4f7+Gu2jCE6g7NZ7/WYfNw62noAnKUHJ2oqoWHOHhm6Di1VAXOsLWx6KA0Lq7
+         nD1h3bdYntEkJxkQmNvM3C3OgPw6VbRwQs2yalXXMdufnXKtXFlrvJigMWvAuxe6DuPv
+         mLNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784193102; x=1784797902;
+        d=1e100.net; s=20251104; t=1784193872; x=1784798672;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fba8lwegZlYj1IsPa0gj15+gvYVmAsXII13vXbs6KfY=;
-        b=a8or5oOLGtGVQYPNyBopINmJQH2Gl48m8G549C3DibLHfWgHzRSuJuI3u3wBOlEtot
-         uNCHcvbpMIkubidh/bDI7TIdiTtmDFqve+6ERB1ZvA9kfn1QT5pG4g3BbmEWY/2by0Ny
-         qXWdLR7y78YacIxegc8Ph32GZSS5VqdVSL4IQj1LlNYIlNR3jg5NcW/+E3dVuN0/y07h
-         +JM3ATkAFcWniJ3XOlAsmEX43POVS5ZDirJQSvCjfr8dVLvMNzBbTisE29h/yL0ppbtO
-         jegQaBNdyEzhrPXqyirkyIboG0kuf2nYM6Nt+/3MIdcf1TmqqXiVuzfzgZbs5pZp/qg8
-         Ql6A==
-X-Gm-Message-State: AOJu0Yx+BEgpoCeBJARsOML7S7weKnojTWuzI8DjhzGSGYaQ85YuFWHT
-	BGJTqr4nLRdE/yIUU/Ry6/J5MUD4mypVWfT5mhN65pj4e74vcBHPvI4mvIhuzXHnDpU5oGKvn41
-	0C8xQgCas6Hazo/Z9QPuJ4ycVMvudXnVTFMK0Duc=
-X-Gm-Gg: AfdE7cmewGpeyT2D9ryQZSiUP7sk6CiZPQjDHQaFu4f0uE4TuWIGGs5hpZVJEL+niCd
-	XPSdpWhpiSo6jCqDM3u3O1EQtZxMEkVbtSBsv/XDVfZV50Knvaa4c3NhECp5WpFvszxKNtXaHis
-	10TC/aRJ+hzmn4L8wahO5YOqgMEVsQZMBauaLm+3YC1qzR/DcaG4rqI4jrJdzeP29N0gh3uwFOU
-	0g5YzHsp962OJ/dvd7+h9QqYYb1m3Ece2ZQoxj5ryuD6sjkJAfiReeP3SaVMw8xpRn1lToL2+RL
-	Pwjp0OysbaKjqobIpok=
-X-Received: by 2002:a05:690c:6985:b0:814:5312:47bb with SMTP id
- 00721157ae682-81e902edf4cmr160319997b3.69.1784193101804; Thu, 16 Jul 2026
- 02:11:41 -0700 (PDT)
+        bh=D5AXjA9Tcy5dG64KZLElqY/MzuwlW4GyobQ/vNPe094=;
+        b=l0DxL3A6AhUxLz7Ff+7+AIj3V0I3VtZ/J6K6+Z7tsYcftrEpWn+GiHFKzjGDR4HyN7
+         visLVwL1MZfXCVinUPSDBrEtzmj5ppxz0QGXmeTs7JX/jJ+twQ/xemaRukp0zEF6FC52
+         EoFE9NV33NBx4aRJsnxUZtaU7LYwKWV42koN1Melo4odnF8u1e+mYkIArZZ60doyii2v
+         OWlOZrNPP4weNym9hb+xgwtbrgGrLWJgzOzTyV+Tv1+oPbKUvKKWdmsuJmngNZTYNjzX
+         VCBbdAvshgCHJrHaTcGD7v6xc9miW9YKZflV8E/QpgEvG05YlkkzeT5AzOvXDvQWcu0D
+         TQEQ==
+X-Gm-Message-State: AOJu0YwDyEzxS+Gu9bwm/LNqI9E2wMR0QveslHND7daZzkmpS1AYPxkM
+	PTNLGq2A2y/h37ZmBXZpRBPCP0UVM/40/Bp0FaNXh8uqKsJeZ8yzY3P5a1WDu1p00mEtdtnC7xe
+	PZ8Zn9NNOJVxcP2BxiGvNdofu3eSkZEulGEliSAs=
+X-Gm-Gg: AfdE7cnMG7votOxMGWtlEIWIE1yStnr/TfFQBQzvBn4waNDvg/tMre5497cRyz+5TZG
+	bZPnmvavHgGn64ADBqiUD1vzNT6p/bitHuDgrxBr90nqp8HpB0PRqVi6WxiZlpXf9gDsNd7SDwC
+	HDpC2YSEDudICrj+AI9YiKSED79XPkjKQ4FHGYbbpDd1mrELOnXOSJm4jY/1iGLuuK/szr+HRBl
+	Qvq7Lb+OCdJNXwT0fn8M67wtyx9jwy7DnMHeQ6NtZjszCW/JzB4TKUkC/dD5knrdVk3FWLeTSq/
+	016hmXrfrsbuYAFrCxcCnzobwReY0huIyIV16H6uqUU=
+X-Received: by 2002:a05:6a00:f08:b0:847:8504:9946 with SMTP id
+ d2e1a72fcca58-84a6726b83dmr5832591b3a.25.1784193872009; Thu, 16 Jul 2026
+ 02:24:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260716025342.42628-1-laoar.shao@gmail.com> <20260716030116.C613E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260716030116.C613E1F000E9@smtp.kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Thu, 16 Jul 2026 17:11:05 +0800
-X-Gm-Features: AUfX_mzbQk6cyOjkJvVnkqd3j5MPhxg-oxSB2r6szyXH0u_dDwMsDN22ChRo4OE
-Message-ID: <CALOAHbBQhAsTMHMMZH5Sen0cDYg8GREZMmQcT4Njc9VW_WHe4Q@mail.gmail.com>
-Subject: Re: [PATCH v2] kbuild: rpm-pkg: Preserve .BTF section in kernel
- modules during debuginfo stripping
+References: <20260713-nanopi-m6-v3-0-227567ffc5dc@gmail.com>
+ <20260713-nanopi-m6-v3-11-227567ffc5dc@gmail.com> <20260713204131.C58091F000E9@smtp.kernel.org>
+In-Reply-To: <20260713204131.C58091F000E9@smtp.kernel.org>
+From: Joachim Eastwood <joachim.eastwood@gmail.com>
+Date: Thu, 16 Jul 2026 11:24:20 +0200
+X-Gm-Features: AUfX_myLtG8XdKEHnucqiDRzCNz_tCXXHKJzmB4U4Ch-HDmXpuQEg3jOwAHCgo8
+Message-ID: <CAPSPb=v=ZDGJ41auxGgSOpKo69MycE=FtMyHf9sG9a3ju9PAaQ@mail.gmail.com>
+Subject: Re: [PATCH v3 11/12] arm64: dts: rockchip: rk3588s-nanopi-r6:
+ refactor to support M6 boards
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	Heiko Stuebner <heiko@sntech.de>, linux-rockchip@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Diederik de Haas <diederik@cknow-tech.com>, Jonas Karlman <jonas@kwiboo.se>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 16, 2026 at 11:01=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+Hi,
+
+On Mon, 13 Jul 2026 at 22:41, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] The check for `find-debuginfo.sh` capabilities in `mkspec` har=
-dcodes host properties into `kernel.spec`, breaking SRPM portability across=
- distributions and failing silently when the tool is not in `$PATH`.
+> - [Medium] Unintentional restoration of `regulator-boot-on` for `vdd_npu_=
+s0` during refactoring.
+> - [Low] Dangling phandle reference `&vcc5v0_usb_otg0` in the common `.dts=
+i` file.
 > --
 >
-> --- Patch [1]: [PATCH v2] kbuild: rpm-pkg: Preserve .BTF section in kerne=
-l modules during debuginfo stripping ---
-> commit 99202060a54c32638e01a2bfdc4d23b190f3f77c
-> Author: Yafang Shao <laoar.shao@gmail.com>
+> --- Patch [11]: [PATCH v3 11/12] arm64: dts: rockchip: rk3588s-nanopi-r6:=
+ refactor to support M6 boards ---
+> commit 056adff75ec08989b96f09adc0efff6c3a5d662f
+> Author: Joachim Eastwood <joachim.eastwood@gmail.com>
 >
-> kbuild: rpm-pkg: Preserve .BTF section in kernel modules during debuginfo=
- stripping
+> arm64: dts: rockchip: rk3588s-nanopi-r6: refactor to support M6 boards
 >
-> This commit updates the RPM packaging scripts to pass --keep-section .BTF
-> to find-debuginfo.sh. This ensures that BTF information is preserved when
-> debuginfo is stripped from kernel modules.
+> FriendlyElec NanoPi6 series consists of four distinct boards; R6S, R6C,
+> M6 and M6V2. Refactor FriendlyElec NanoPi R6 base dtsi in preparation
+> for adding NanoPi M6 support.
 >
-> > diff --git a/scripts/package/mkspec b/scripts/package/mkspec
-> > index c604f8c174e2c..00acef348ba84 100755
-> > --- a/scripts/package/mkspec
-> > +++ b/scripts/package/mkspec
+> > diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi.dtsi b/arch/ar=
+m64/boot/dts/rockchip/rk3588s-nanopi.dtsi
+> > new file mode 100644
+> > index 0000000000000..a8e532ad8b7a8
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi.dtsi
+>
 > [ ... ]
-> > @@ -65,6 +65,11 @@ fi
-> >  echo "%define with_debuginfo_manual $with_debuginfo_manual"
-> >  echo "%define with_debuginfo_rpm $with_debuginfo_rpm"
-> >
-> > +# Detect if find-debuginfo.sh supports --keep-section (RHEL 9+)
-> > +if find-debuginfo.sh --help 2>&1 | grep -q keep-section; then
-> > +     echo "%global with_keep_section 1"
-> > +fi
+>
+> > +&i2c2 {
+> > +     status =3D "okay";
+> > +
+> > +     vdd_npu_s0: regulator@42 {
+> > +             compatible =3D "rockchip,rk8602";
+> > +             reg =3D <0x42>;
+> > +             fcs,suspend-voltage-selector =3D <1>;
+> > +             regulator-name =3D "vdd_npu_s0";
+> > +             regulator-min-microvolt =3D <550000>;
+> > +             regulator-max-microvolt =3D <950000>;
+> > +             regulator-ramp-delay =3D <2300>;
+> > +             regulator-boot-on;
 >
 > [Severity: Medium]
-> Is it safe to assume find-debuginfo.sh is in the standard user $PATH?
+> Is the addition of regulator-boot-on here intentional?
+
+Seems like I screwed up the refactoring of the code, and Sashiko caught me.
+I will fix it and send out a new patch set later.
+
+> This appears to accidentally revert a prior fix that removed the boot-on
+> property for vdd_npu_s0 to save power during early boot.
 >
-> On many systems, this script resides in /usr/lib/rpm/, which isn't typica=
-lly
-> in the $PATH. This could cause the check to silently fail and strip the .=
-BTF
-> section during a local make rpm-pkg build.
+> > +             vin-supply =3D <&vcc5v0_sys>;
+> > +
+> > +             regulator-state-mem {
+> > +                     regulator-off-in-suspend;
+> > +             };
+> > +     };
+> > +};
 >
-> Also, since mkspec runs during SRPM generation (make srcrpm-pkg), doesn't
-> this statically bake the generation host's capabilities into the resultin=
-g
-> kernel.spec file?
+> [ ... ]
 >
-> If the SRPM is rebuilt on an older distribution, rpmbuild might fail beca=
-use
-> the older script rejects the --keep-section argument. If generated on an
-> older host and built on a newer one, BTF info would be silently stripped.
-> Could we dynamically query the target host's capabilities using something
-> like %(__find_debuginfo) inside the spec file itself?
+> > +&u2phy0_otg {
+> > +     phy-supply =3D <&vcc5v0_usb_otg0>;
+>
+> [Severity: Low]
+> Does this create a dangling phandle reference in the common dtsi file?
+>
+> Since the vcc5v0_usb_otg0 regulator was left in the board-specific
+> rk3588s-nanopi-r6.dtsi file, it looks like compiling a new board (like th=
+e M6)
+> that includes this common dtsi will fail to build if it doesn't also defi=
+ne a
+> regulator with this exact label.
+
+I don't think this is really an issue. Both nanopi-r6.dtsi and nanopi-m6.dt=
+si
+will have those regulators defined.
+
+Unless someone tells me this is bad practice I will keep this as it is.
+
+
+best regards,
+Joachim Eastwood
+
+> > +     status =3D "okay";
+> > +};
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716025342.42=
-628-1-laoar.shao@gmail.com?part=3D1
-
-I believe we could use the builtin _rpmconfigdir to locate
-find-debuginfo.sh reliably. This avoids relying on $PATH.
-What do you think about the following change?
-
-diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-index c732415662ef..4335e99f2aca 100644
---- a/scripts/package/kernel.spec
-+++ b/scripts/package/kernel.spec
-@@ -67,7 +67,21 @@ This package provides debug information for the
-kernel image and modules from th
- %undefine _unique_debug_srcs
- %undefine _debugsource_packages
- %undefine _debuginfo_subpackages
-+
-+# Preserve .BTF section in kernel modules during debuginfo stripping
-+# find-debuginfo.sh (from debugedit) uses eu-strip which removes
-+# non-allocated ELF sections like .BTF by default.
-+# --keep-section .BTF preserves BPF Type Format information.
-+#
-+# Uses _rpmconfigdir for reliable script location instead of relying on $P=
-ATH.
-+%{!?with_keep_section:%global __fd %{_rpmconfigdir}/find-debuginfo.sh}
-+%{!?with_keep_section:%global with_keep_section %(%{__fd} --help 2>&1
-| grep -c keep-section)}
-+%if %{with_keep_section}
-+%global _find_debuginfo_opts -r --keep-section .BTF
-+%else
- %global _find_debuginfo_opts -r
-+%endif
-+
- %global _missing_build_ids_terminate_build 1
- %global _no_recompute_build_ids 1
- %{debug_package}
-
-Please let me know if this approach works or if there are any concerns.
-
---=20
-Regards
-Yafang
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260713-nanopi-m=
+6-v3-0-227567ffc5dc@gmail.com?part=3D11
