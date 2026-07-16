@@ -1,157 +1,190 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0893742FCA7
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 14:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20F8433BDF
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 14:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212026; cv=none; b=tQCG6oKXISDpKxydEZaHTsmvYwJf3s+t8cGPSzMFf0SaEWFqO0Lp2DEGo2vcJyKVZWHwKIiACn8eDQxfr0yuYoDVqwJEX59RnZ0cuSyKI3pqv5pj2QwxtahBk4vQd9Nd4FZ5va84zkxekQQaKpAIoU5FezNYhFcVRH58uiH/iMg=
+	t=1784212118; cv=none; b=HS7eeD/k00o2DgtgdaMJwOOp/d7Jd6sFJFl8BzhakdPfXCAkDnn587eVkMVACVQU38bwgJB8ZnGnALCBnBPZ3VHNheuj2lOSFPe1O5MyUShaEZN3c1/kCBGyiYARLzFHhzZXQgq/2bHJNspOKPEE9Ji/6JgP6njsTl3g57C8T9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212026; c=relaxed/simple;
-	bh=GEYRtdVKJg3gQgx+1tH57F94eyYInzrfNCOIAu5Iak4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A3rSRYYppdO9JYCaqLs0YpvSmrqhx3ZVP+EPYZE3QNW+911uDrBbnp2e0E9Iblgd08hkjysjO2FohlycdBgpTX82t7B7YByDm4bMFIzxUo1SzfEblfPge16czejtLwVOIonm44sBUOkEOoW6Rzyi6aP3gFb42zfvE/GanpiPBEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=Lk7otTPr; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1784212118; c=relaxed/simple;
+	bh=XbeiP+quxy8JdRYY++ddACJ6YqpfwZkPJ9dVg3KWp98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Etcp1T67J3cde1lKTu7faFw4kzhuyIfktRq2LMc/L5zuww4wfXgiMRw1gdeSMkmCEdwKzuNXiSTi1kkbQqBTJ4toiwDvLfkkLt7Ubxnqi4hw/up7d3Rwp5dA3pa1O7IR7ZCf473gdHQIPzb+CHTp7t1/U49xndYZSxqe+yc3Enc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LASPYrWw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KhR1hyw0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="Lk7otTPr"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49546c690ffso1720015e9.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:27:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LASPYrWw";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KhR1hyw0"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66GDK3x12959573
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 14:28:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rL4SpDLV0gQsFTbrH61VS1SQZ29IO/LN7dDdsh0VUgw=; b=LASPYrWwAQxt9RWf
+	2kk5WrOkQUghcwjikBG/7ohp0vYfzhIfIaExT7fgnOZJLyTyVyLEQl+5PZZgKGZO
+	57rLAUhOho4QKeoUzuqurW3ugffa3TZeyAm5lg3TvPgMckdXguS65n8In++VEWSM
+	HzopEBHYCfopYHhOOUri2IHQL6/gkJMj7Mha97O+7gIEBjy2aVN/wsKJhW5JW3i1
+	kQ2vFeHNmHpmi1c8pllcU401/CBb7Vh2zh2nuVI/LYBx9+YNs2UNj3+ChhYo+suv
+	UcKM0ncRtvVjQkfJ2J2CUFE09yHX0uTJXiIqEkBILkC8wBQNHMAp7nIdGHiYGRiG
+	P0cBjA==
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com [209.85.210.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feym18fq9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 14:28:35 +0000 (GMT)
+Received: by mail-ot1-f71.google.com with SMTP id 46e09a7af769-7ebeeb51976so742522a34.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 07:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1784212021; x=1784816821; darn=lists.linux.dev;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=lxE5XZQtOH+yq3837rq2MGs0Vy95QDtnOg1qhcM8VUw=;
-        b=Lk7otTPrJJT90VAto5obx1PY7pqOoF2oYzf5rEiJoHavlIaytTjyiasW+FPUTuYvtq
-         P0WqJWB5BKXoJ2v+E/MYwdQOtTM8kRXQierFI5Im0Wr29ev29983gqGx/aeNEm3flCYL
-         kVPURU9fLaZSfide0jqk7BwjOmWZyHMhgm9eVIZGH1uqGSBdbXAdgzmgAO52jwDCowb/
-         mKl6XboTBmvyV3uqSQpL4wI6NLmZ6tB1tN87sZaDzR7c8ii/Yo1GfePMzWf9/bed9zTd
-         /oZjqEEdtpGIQwPR3YJyYNdYktOHY4dJQ33rjeMmYG4JQIykeisvUJ/vyxE0Mp+HgxOI
-         K42g==
+        d=oss.qualcomm.com; s=google; t=1784212115; x=1784816915; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rL4SpDLV0gQsFTbrH61VS1SQZ29IO/LN7dDdsh0VUgw=;
+        b=KhR1hyw0y6JJhoS9uTNEBvQ0GnYAH9mVXGphbh+Q9zolCB2Paamn87QMOYV2z2nHZr
+         UHS81RWX0CogLCxCQvHhUiDRnpeeNCWtnCcabLlXlbp2Vcs39Fxuu2NXkinad3O9ja2P
+         Xz5k9kv22UFtg7Kjm9iMI+FINcTM8tForfts5CHF/5KCYwh8CKJUN7IpJA6pPqxz6bj+
+         tURLz2fscBkUFqWYDr69toEM2Culh3Yjh29xja6r77G+aUDTN+3IfC7d8yChmeIhoXYh
+         ECq7jF+tdjwCMkWSgvImhPdynup2X+pL/yMIvvXB10HerIVrVxOUmpYdVdNB6oGDksTQ
+         kfSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784212021; x=1784816821;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=lxE5XZQtOH+yq3837rq2MGs0Vy95QDtnOg1qhcM8VUw=;
-        b=WwhgCu/tVFl3bw9mayI682lZrnMOM43YQRkr51nW7BePHL/cnrjAn7385WFcqlc882
-         lXqE5FdAyGlV2q0TAGdwPIVAx52TSmxR10itS7+/L4OHSyvVjyTX18JnPR+wDUjS6n3I
-         1uLLX1wiHxmdezBh/nkodWXq2/LOeqLlzAPBd032jmSXFVtqQU4btbcNoWymqQBLuBfH
-         33kBSdvwLWrQri2oR0ETPMdpuMnr6Hrg0Zjx9isAFk9Bm6i2NtKzkmwv0Sdvrpq4My6S
-         CjGphZdA5aoz0J/4IBUc+0v5aujlH7mmIxxeYqtmqA9q40DGjefEfcs89qUZ5dP+9Wax
-         UT+w==
-X-Forwarded-Encrypted: i=1; AHgh+RpwEm4WqqoLNkh9ZNHH4EqoezPnp8izIChm+elfgl3YrM6gtcN+JewsEVZU/mnEA0bQtogfE/vJDegzYPdlY5A=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwdjrFqHf4zccsUFYZ4NW4dANKTCydta+D9pJdQgHdHOMuRFM3I
-	Fg1k98J6xgV3gpjdSl8V/suVugTdE6rBJ7t2k3Fha34ANmzYGfMroVlJPqAP6fFC29Xtu7xn4ly
-	bT52v
-X-Gm-Gg: AfdE7ckxz+nCqdqKbzzm+/5YQ5AAi9jucyYACF+vBTjE2R+QO13HnOVPCZFvg7Co58X
-	ElEinBNAei46Ngt7qhv9WG8lM/KyxMXbo/HBYGnGAL1POYvOK0cRIQEXP4+fphu+dC3hrI8xskz
-	LfAJnHDB/1+4nSBaS5Tt3TzTPwFvWqkyAm3fzy8bkZGpCwLnbyZm8/3A6fn5Je0xXChxIPn0RGz
-	FtUy0LoC2QavwOsng9hK3/tr9yaDZ5cFN97TwUEUk2ctc6vDP/kVatApWvoaxtMQk6xXwIPASed
-	0g5EpwypQoHujWprHtpQpqIZ78nq0fi5ASW+FIDVidRlguCKBDr8ltqKWnZpYKun8gSjk6gVSWA
-	Oi9aO2iyk8Phv7wTwXQb5wbR02a37fmiZMZjwWwPN7Bh17lGYpSq4gDqlKMaBJKbvXKq67Nfo3L
-	B/RBJt1v1k5f8=
-X-Received: by 2002:a05:600d:6446:20b0:493:e034:a3b5 with SMTP id 5b1f17b1804b1-4953c27ab18mr65173875e9.24.1784212021209;
-        Thu, 16 Jul 2026 07:27:01 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:9758:7353:c342:aed3])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4953c704bfasm134422995e9.2.2026.07.16.07.27.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 07:27:00 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: sashiko-bot@kernel.org
-Cc: "Linmao Li" <lilinmao@kylinos.cn>,  sashiko-reviews@lists.linux.dev,
-  linux-amlogic@lists.infradead.org,  neil.armstrong@linaro.org
-Subject: Re: [PATCH] ASoC: meson: Keep link pointers valid on realloc failure
-In-Reply-To: <20260716102544.8B7681F00A3A@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Thu, 16 Jul 2026 10:25:44
-	+0000")
-References: <20260716100939.1381759-1-lilinmao@kylinos.cn>
-	<20260716102544.8B7681F00A3A@smtp.kernel.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 16 Jul 2026 16:26:58 +0200
-Message-ID: <1jbjc7f1sd.fsf@starbuckisacylon.baylibre.com>
+        d=1e100.net; s=20251104; t=1784212115; x=1784816915;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rL4SpDLV0gQsFTbrH61VS1SQZ29IO/LN7dDdsh0VUgw=;
+        b=GhgIB+P246yp93vHcVOqHIrjvXO4OEQpw/jqKomVFo/oUBZyboet938uGPCrH2+JEa
+         NL7UCVXmP/f4QhXwFyWgtOxLvsKwkksvmeCK4r8geteIveobVYG0zmwTuPLl/WO/GNZm
+         tRoW5R41iWDiFMQPPkufpORpDA1UwztGkyAkaMVV7wHVuT1R2utVx1r7ZqWO7AESauyi
+         xbaG1zMJ7yra8P5S1BTXdoVzOL3Q8/F0jyJJXWYcP+XZHnd+ixX25tuFrjhHYlK+wZj3
+         50JjDT5i8ACflg3D1C2EZcQH343epxnsNNBZnEzWrBATKaT9o8H9uaRsNtsQOcKQlSpF
+         12qw==
+X-Gm-Message-State: AOJu0YyB0GMxSLsvaY8uD54XOz7JLNJffMedMGCQtlEkjMpN8J18BQ2D
+	ImfLigvgnatH5LcvFWTyBp1uyNiF6r6hxGBEYcz0X/qGO3HDpriGEiBPJXpf1qK2nyfjGnQSbGT
+	hrR8TN/QP4oB6CjcmcKbNytOYZnxLZtplt+78a5o+VpUFdu3unwS6hZ525/AMneFiQvi5xLCast
+	NJ9lw=
+X-Gm-Gg: AfdE7cnH9salDoxTuSl0/l+X27z29YVNq2VYHfjnhFG5pRrz5hsWimGEDnB4+NhC+3L
+	Ipu8AwntMUu1r56OpNYWaTGcL8fafFfzInUzq0J6jjPOEhWyRdLjqVRTJGxXYdnKYkO7eocMfkR
+	N/V0d/fYIDSZeURCEwihZ0+WtHA4H/KyBPcWrj2WoTPAiok72AZU8PTbGFdaG8NobN3VIAEQLdR
+	Gu7ndH7xnqGj0LDi3OHAqhA5wHf2wSexOmBjFpKEKv9W1BoBV/KB9Gx1FVa0iCqdz3UkmOy2E4+
+	yg2BALctFi2w91k+J2BcUmkpSY7OHY5sFW4dBtOkpprB7iaW9WFskSc8uI+gheqNw5xDl9wcNCx
+	1Mi9MTnvXZ7UdStVxn58qKdnOQrWtl+Vm
+X-Received: by 2002:a05:6830:3c86:b0:7e9:b673:cbfd with SMTP id 46e09a7af769-7ec6e5ee816mr1662255a34.7.1784212114921;
+        Thu, 16 Jul 2026 07:28:34 -0700 (PDT)
+X-Received: by 2002:a05:6830:3c86:b0:7e9:b673:cbfd with SMTP id 46e09a7af769-7ec6e5ee816mr1662154a34.7.1784212109651;
+        Thu, 16 Jul 2026 07:28:29 -0700 (PDT)
+Received: from [10.218.25.112] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ec2183a28fsm10376641a34.24.2026.07.16.07.28.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jul 2026 07:28:29 -0700 (PDT)
+Message-ID: <c66cb2e1-b403-4241-b63c-e71abf8f49c7@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 19:58:24 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 1/3] arm64: dts: qcom: monaco: Move eMMC CQE support
+ from SoC to board DT
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260701081715.2580329-1-monish.chunara@oss.qualcomm.com>
+ <20260701081715.2580329-2-monish.chunara@oss.qualcomm.com>
+ <20260701082834.EA3E11F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Monish Chunara <monish.chunara@oss.qualcomm.com>
+In-Reply-To: <20260701082834.EA3E11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=KPRqylFo c=1 sm=1 tr=0 ts=6a58ea93 cx=c_pps
+ a=OI0sxtj7PyCX9F1bxD/puw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=AICR_x1_rTwGJrEgV6EA:9 a=QEXdDO2ut3YA:10
+ a=Z1Yy7GAxqfX1iEi80vsk:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0OSBTYWx0ZWRfX9K1QYK/Rv3Sw
+ xBsCN2cZaj0hOZpd8rpw2Po36bws2kKdTjFXz67GYzazQw45kPE+/sB8ukkFNGt1Zi4dOcAAFLC
+ C9JJpSm5tXBS4CbnKP6gAIakkHgEk6ZNwIiwlfUm1sGnoHRwFkRC7kfpq4V2+m/R4hxLDRK6lIF
+ B+BU3LlrB6ldiETCmO9YJ44W0jfS4u1e9KN4sP7AQzbUJP6DoJwSnXP1fBruJGgt2YsmaJJSnk8
+ f11Ms9Vs3ibMHeuFqaS35lZlxtwzMau0GvJWfqH/GsKgSnMJJCGmtdM7DIlhqzPb5WW1nYkJPBI
+ 6JD4WSdEgVz4ENVSe6w+05aH5Xp7aykuPA9LpqXP7OC9vxSJ/quR04hrdaKLN4tCcx3z9qU2cTg
+ OMg/bYob0UnqEzU/JwYVxMEKlJTBQz0XA0EIdak8K20sKr0YUf5FPZ21KwebHsupF3JoFvcmxL/
+ fz8xitqrG2HyGYJGJqw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0OSBTYWx0ZWRfX+iXEDubSl1SZ
+ tuujVv9Bb/wUaB1b/eNCPyihgYKvzfXbYq9cbigoRyAmMJjrUa32h3bpoizmooQtPCqfc52jbsj
+ 8Oj5BZ3UUDqH6mU+iLlxDrtjkoyl7dc=
+X-Proofpoint-GUID: ipgXvOBffAPy25mCpEHjBJFvZNvc7KSI
+X-Proofpoint-ORIG-GUID: ipgXvOBffAPy25mCpEHjBJFvZNvc7KSI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607160149
 
-On jeu. 16 juil. 2026 at 10:25, sashiko-bot@kernel.org wrote:
 
+
+On 7/1/2026 1:58 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Unbinding the device causes a use-after-free because `meson_card_remove` frees `card->dai_link` manually before the devres callbacks unregister the card.
+> - [High] Missing `supports-cqe` property for eMMC in `monaco-evk.dts`.
 > --
->
-> --- Patch [1]: [PATCH] ASoC: meson: Keep link pointers valid on realloc failure ---
-> commit 677ad75f5fb5a578b984e744f26d24b961c89685
-> Author: Linmao Li <lilinmao@kylinos.cn>
->
-> ASoC: meson: Keep link pointers valid on realloc failure
->
-> This commit fixes a potential use-after-free and double free in the error
-> path of meson_card_reallocate_links(). It updates the card->dai_link
-> pointer immediately after the first successful krealloc(), ensuring the
-> cleanup path can safely free the memory if the second krealloc() fails.
->
->> diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
->> index cdb759b466ad4..38c1b2ae227ff 100644
->> --- a/sound/soc/meson/meson-card-utils.c
->> +++ b/sound/soc/meson/meson-card-utils.c
->> @@ -52,19 +52,18 @@ int meson_card_reallocate_links(struct snd_soc_card *card,
->>  	if (!links)
->>  		goto err_links;
+> 
+> commit 5c91ec5c205c89bd965c17fc6805d964575e0468
+> Author: Monish Chunara <monish.chunara@oss.qualcomm.com>
+> 
+> arm64: dts: qcom: monaco: Move eMMC CQE support from SoC to board DT
+> 
+> This commit removes the 'supports-cqe' property from the Monaco SoC device
+> tree to allow SD card compatibility, and moves it into the board-specific
+> device trees that use eMMC.
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+>> index 7b1d57460f1e6..e5f316897706b 100644
+>> --- a/arch/arm64/boot/dts/qcom/monaco.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
+>> @@ -4828,7 +4828,6 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>>  			qcom,dll-config = <0x000f64ee>;
+>>  			qcom,ddr-config = <0x80040868>;
+>>  			bus-width = <8>;
+>> -			supports-cqe;
+>>  			dma-coherent;
 >>  
->> +	priv->card.dai_link = links;
->> +
->>  	ldata = krealloc(priv->link_data,
->>  			 num_links * sizeof(*priv->link_data),
->>  			 GFP_KERNEL | __GFP_ZERO);
->>  	if (!ldata)
->> -		goto err_ldata;
->> +		goto err_links;
->>  
->> -	priv->card.dai_link = links;
->>  	priv->link_data = ldata;
->>  	priv->card.num_links = num_links;
->>  	return 0;
->>  
->> -err_ldata:
->> -	kfree(links);
->>  err_links:
->>  	dev_err(priv->card.dev, "failed to allocate links\n");
->>  	return -ENOMEM;
->
+>>  			mmc-ddr-1_8v;
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does unbinding the device
-> cause a use-after-free because meson_card_remove() frees card->dai_link
-> manually before the devres callbacks unregister the card?
->
-> When the driver is unbound, the driver core calls meson_card_remove(), which
-> calls meson_card_clean_references() to free the links:
->
-> sound/soc/meson/meson-card-utils.c:meson_card_clean_references() {
->     ...
->     kfree(card->dai_link);
->     ...
-> }
->
-> Only after .remove returns does the driver core run devres callbacks, which
-> includes unregistering the card via devm_snd_soc_register_card's cleanup
-> handler.
->
-> The ASoC unregister path iterates over all PCM runtimes and dereferences
-> rtd->dai_link, which points directly to elements of the already freed
-> card->dai_link array.
+> Does this unintentionally drop CQE support for the monaco-evk board?
+> 
+> The &sdhc_1 node in arch/arm64/boot/dts/qcom/monaco-evk.dts configures the
+> controller for eMMC:
+> 
+> &sdhc_1 {
+> 	vmmc-supply = <&vreg_l8a>;
+> 	vqmmc-supply = <&vreg_s2s>;
+> 
+> 	no-sd;
+> 	no-sdio;
+> 	non-removable;
+> 
+> 	status = "okay";
+> };
+> 
+> Since supports-cqe is removed from the base monaco.dtsi here, but is not
+> explicitly added to monaco-evk.dts in this patch, booting the standalone
+> monaco-evk.dtb will now bring up eMMC without Command Queue Engine support.
+> 
+> Should monaco-evk.dts be updated alongside the other boards in this patch
+> to prevent a performance regression?
+> 
 
-Indeed. We need to move away from devres card registration to deregister
-the card before freeing the rest in the ressource clean up. I'll do so
-as soon as we have the v2 of this change.
+This property will come from the monaco-evk-emmc.dtso file to enable eMMC.
 
--- 
-Jerome
+Regards,
+Monish
