@@ -1,399 +1,471 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07354371CE3;
-	Thu, 16 Jul 2026 16:04:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784217899; cv=none; b=qqa8WCT4x3YYEM7g0loB++ZqkjFY8mQ3zrfov4GIf85+bifK5VItlC9DXtmjWd2/XJ3bDxB5F7ezPz13VxjEWXv7hR7EOYFAsUQ2lmo0mxjDwOKObaDjeb/Jyzl+KFW23O9dIjOp1i0p1EQdfnHaQKSr7TVZYbQ2bsVZ6APXkKA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784217899; c=relaxed/simple;
-	bh=e+knd2aySDpztrDcilmsVa3LPUBYbigaUm4PhJZZo+M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S67dV8Wmil0pvpDyQHuSxuKC5nAMA3sEq1L3uewj0ezFur2/hNMcIqhCiWWeX9hAAXheAXVunQ/ZXYHqveBQphlCAzkBXecbM5WyZF3bzdO0l+/wKdNO2o1s4n4/agguLm0PlP3wcLGbXdmJr0MogmTECTxQ2hdgKdTLdfvD4B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=HDdsPvgo; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013043.outbound.protection.outlook.com [40.107.159.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3747D36D503;
+	Thu, 16 Jul 2026 16:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784218122; cv=fail; b=K3Dljnu0wdSpZQigzEI4aC38OCGgzOw4JHco8XdlPEb6Ri3eHUN+albpc/0TQmtS/yUAtv0TKCAcAU3OZ0dskPA+cgTQmFd//A+AFX9NTce4B3dr73YZd25F4w9sgEEfpMqUuiTsCLK5nA6CZe1veOOTsa/OxrCeBOH0zHMJgI4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784218122; c=relaxed/simple;
+	bh=PVCzVByii/Ap+WCVbCU3yuWjzyF39kYdwMS1Dt3oUEw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=qfIOuCzTqEKTBHSHbWdl1gO5j9YiPMFyRPCOyZHGKwp6Vh8yl3JUVIcmQ1jjkg5oP2mWO7kA0BXn/Oogn7VpTzBBKd2YNAKoqBRWvyUK7MpmplWv8fwqGvlGqELCX/0au1FSTmyClOJi9T3bEvHB9f3CF+S2UcqqqQ0RbFRxY1U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NyvPBvkg; arc=fail smtp.client-ip=40.107.159.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="HDdsPvgo"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1B5992B;
-	Thu, 16 Jul 2026 09:04:51 -0700 (PDT)
-Received: from [10.1.25.27] (e122027.cambridge.arm.com [10.1.25.27])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3439B3F7B4;
-	Thu, 16 Jul 2026 09:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784217895; bh=e+knd2aySDpztrDcilmsVa3LPUBYbigaUm4PhJZZo+M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HDdsPvgo59wTS2pWZEFgH3Ffhl5VVm5i72D/PjJ1GhJ8lrAIS+jYY+I75uf94btUC
-	 O9bfBs9NlrcKHqWEuGJfuIyTOEZIjbfD/5B+NvpnPTOgOT20s9+uAdLoA2vWarKZp2
-	 7RpBN6/HjdRMzeSKIfMmgXVPDBPYBE0UD+CYRdrE=
-Message-ID: <69af1617-bd20-4cb3-bdb8-725b8f22b072@arm.com>
-Date: Thu, 16 Jul 2026 17:04:52 +0100
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NyvPBvkg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FuqevhtSjSKN7UCOSMhV2s+zCJUU0tGdS2YfKONdbNMq05/C4hn51ErR5Jb8Xbt52mWl8N6Iy4N+delieBNsLUABNOFpH6qKuYSHtp2A2QrLHMsvVVOLfNm0SHRTAGqcB5TZCkN7ojBPwoAoP/xZ/ZYtGKIjEXOM64MjqIVWNReTS6XGaZpZxbSmDG/YYm4pnKMt8uKpAIhXMib1h/KurdY3CeEy3sjcfLVK18b6VdE1Jz7vgYev7t6sz0EUQxyyKGbReS+e4BcKK4wEj0HjccF1v8FgKwjyuvzDOEGCKoz3XH65pAe4CJWHOIjb5F6ETM9LrF83aIm8ThOOnrWKIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5FlaGoD4YR3J4VUZSnY0HHTVIC5svK6IdAOSb1SAedc=;
+ b=w0i7J5Fi9cwL/vuUIJRDJuFw06vnN7xH/8NdBoSjMSa+5CCvDkOVRTTxhjGvrcr8I04CTEW3K/HK1qmvLQu5hVN6OwTpfbr9kDg8hZh4xvm4cAUZ8eq7XNt6yly3Jdz6sh2viH39MbjUXvMqjIFgYzUyJH/j+zN/bcBKF4bfhu8Bi2SxPSH5grsWWQ2OCVpWiQFnObRUTtX0aehGo/Zy3gB/nUpPHcwYkHU9Uh89pYQq6SxjMgupt8YE271i+66EB9Oabl6U1OKTYaO+hI/lcnk74ByDUwbmmlPNXEuX1s+q7O3K5ClG5wIy6gbe1Lj6rwMLlojOM1PLO1Q3qrk+hA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5FlaGoD4YR3J4VUZSnY0HHTVIC5svK6IdAOSb1SAedc=;
+ b=NyvPBvkga2J5nWtEn9BIONs1efQL+67aT6xkKWqCVEz9T8gKmzljzpn6k2yA/5Ex+royN00JqXGpMSe1tNN2lmqX21SVY5ktmGKRbGo70f/GUyMxsFBqd3jlKX18wX1Ex6PRuISr/3tTXujgsZxg7R0C/RoxAZyjc2tBa1DvCoQQuGt93dcTMH9Nct6xqpAyflrMm2FLrqS+KZJS6rNbocQtWLTWA9Kw9aXR1te3Uvnh0l6SoPtzjUHbtXAPbOnzasqNLOWRKDYXIC7/4vXAyDmLKswU258DNdvjjJCBRvgdJZcBg5UEl05wzGV7WcEu107A8NOywARBy/bwl7kwsQ==
+Received: from AS8PR04MB9080.eurprd04.prod.outlook.com (2603:10a6:20b:447::16)
+ by AS5PR04MB9998.eurprd04.prod.outlook.com (2603:10a6:20b:67e::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Thu, 16 Jul
+ 2026 16:08:31 +0000
+Received: from AS8PR04MB9080.eurprd04.prod.outlook.com
+ ([fe80::92c2:2e03:bf99:68eb]) by AS8PR04MB9080.eurprd04.prod.outlook.com
+ ([fe80::92c2:2e03:bf99:68eb%6]) with mapi id 15.21.0223.011; Thu, 16 Jul 2026
+ 16:08:31 +0000
+From: "G.N. Zhou (OSS)" <guoniu.zhou@oss.nxp.com>
+To: "Frank Li (OSS)" <frank.li@oss.nxp.com>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: "G.N. Zhou (OSS)" <guoniu.zhou@oss.nxp.com>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>, "robh@kernel.org" <robh@kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "media-ci@linuxtv.org"
+	<media-ci@linuxtv.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>
+Subject: RE: [PATCH v12 3/3] media: nxp: Add i.MX95 CSI pixel formatter v4l2
+ driver
+Thread-Topic: [PATCH v12 3/3] media: nxp: Add i.MX95 CSI pixel formatter v4l2
+ driver
+Thread-Index: AQHdFPI2BxCx6oGQ30ixtkjati0BTbZvvV8AgABer4CAADK14A==
+Date: Thu, 16 Jul 2026 16:08:30 +0000
+Message-ID:
+ <AS8PR04MB90802814B5BCDD9FF1C89742FAC72@AS8PR04MB9080.eurprd04.prod.outlook.com>
+References: <20260716-csi_formatter-v12-0-2601d17fc4af@oss.nxp.com>
+ <20260716-csi_formatter-v12-3-2601d17fc4af@oss.nxp.com>
+ <20260716072052.A20961F000E9@smtp.kernel.org> <aljVwX1wzPqV3c_7@SMW015318>
+In-Reply-To: <aljVwX1wzPqV3c_7@SMW015318>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR04MB9080:EE_|AS5PR04MB9998:EE_
+x-ms-office365-filtering-correlation-id: f610835b-9102-4b57-abc1-08dee3547acc
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|376014|1800799024|19092799006|366016|56012099006|11063799006|5023799004|4143699003|6133799003|18002099003|22082099003|10067099003|38070700021;
+x-microsoft-antispam-message-info:
+ rKG8WSt7z39LSHJtXjYTzskwpnxBVB1q185BCUIiL9J7LqfNbPNo+8RsAA3cst0zhXHvjtyCN/rEdNMDDI7BxQyAk+r7jB3dfId1x1WaUf7HRcx8Ozgt1WdpDDVyweKovLCRDd8gRCZCEUkMDfffdDWrNLTVRh/MgB+09FCkpk3S38lNmtlUVGnX88m0nwZJ2nfHyANqOPh6ak38OPaPr9InBQCh1mUavpbEb6ZupopTEixrL8UZ2TotqvWTC5p6/vTjhci0cTcO12fEm2ESzrFrKQ+tZNZ+iBezB/wsEdbbau8efc8hsnVLzEH2WYn0yaUGR+PfFkOtqXKyS9mqpeT2OofziXfPwTI4UY0e6z6EpDgFgBXx240me4d8dmWI2+tO2NwJGFPiDCrH7kQrOa7mLTCKTFkoU6XJbG/cjtCGahFA8asb8bTtcKAuW4IdF/hV+k95qZlM3dHhLsmtRq3BJONbkBWFhYLBbbWYV7XYxhmvFtNWzatfBOZOX6ibchMEnDe+ztL1q7cMvO4VjcujoIuYvuIWi1jKIRWJEb/uILtvQ+9a96BpLfzbgNs5QysqGinNZ1gD73/exyTQ18mLJDwJuM/Ooy5M5wGGahYy8+EKKRXPzUZV8VI4QeWfp6PmBFI44tnLMjIgDwXgksteCMPQLmALuy640Ng5l4g=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9080.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(19092799006)(366016)(56012099006)(11063799006)(5023799004)(4143699003)(6133799003)(18002099003)(22082099003)(10067099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?7tvlatccyYlMuzmdVrWZgfZYtOTDLrDnm5/6FcrSQin24UyUs5w9FEUaPUHE?=
+ =?us-ascii?Q?dhbzQRBl0kDuNALJYiplgO5v6DYIF7rPMU8dhqF6rmAZkGhYUyRqMWoC9yw/?=
+ =?us-ascii?Q?N7z9V71j2imkBJDdct0ullYt2tpsJF1JY07FmuimyHExrIad6YEH3GXjsXYD?=
+ =?us-ascii?Q?zbPUedYczjt47x4zeqPWR3lqPWn8VlG9jmEnd4ZPuydxxCczVkwN0Ta25OWx?=
+ =?us-ascii?Q?WhmbXmMviu4B7IdeUiHzbus271p6apa9r9k66vEKqSiiBBPDRS2LZWkW8WYz?=
+ =?us-ascii?Q?p3+7F2w2UoMRZDWEB+7igyaUUa7LIdsw2lJx6IzDwScdQJsqSHCoO0JLDl7H?=
+ =?us-ascii?Q?cz/La/2eNshqupYfeBAWsUbjBBOMUyADbbIUpWAnQBD14XPIluk1Dy+3pRYT?=
+ =?us-ascii?Q?IEuG9vhQagpQe3DYKcW6AMg+O/rdYJ3E8soU/OhlEWMfJ/s89YKET1qI37vt?=
+ =?us-ascii?Q?RWl6hFAQ1NL/kbMGw4OAe7pCcWJciDHYfMHRkkSD5sw/DLz624cFOs5ptU2w?=
+ =?us-ascii?Q?1dyER8OqZMaRd2bcpWOU+zpkim63K04k5iaXRWQkwGU4fhgyBGdtsusBgmBu?=
+ =?us-ascii?Q?SmbOuDPOIdJdId3MlgM6+sRzk0+zlPWcxfdW20RH/a16zer6TW9Cxu1ghtyw?=
+ =?us-ascii?Q?c54hsfhJ/fMAHZw58CCpH3XW6g2Hq+PpFnB59pUyVPGfNjyj5kXHQ6/l85K9?=
+ =?us-ascii?Q?eazsx+q88wrTS9ClMEcllFUeWN53CHqNQqJUWqCN2cfBK9F7hFc6/beT05v+?=
+ =?us-ascii?Q?PEn6KVkygAlj9rBDB402p7EGbrOBRyLbgCK6zfXYezMlkmzyih8zE0plAs9O?=
+ =?us-ascii?Q?YJ3Lydn+lU88cze9aaQ/mPtsUO3rWcWyc0Cu8cg/zcZ3pTu55+wkmtqBbYrQ?=
+ =?us-ascii?Q?OwjtEumWGBqALUlE+ddWzE9GkmbxvbPtcY7MErjBbf0f/s3U7YH2VXyAmIJN?=
+ =?us-ascii?Q?543lPPaCX+E/rg33UDbVM5JImoqABhCc1zQKKZ22DQu4CwcUHDmT6wvw/S7A?=
+ =?us-ascii?Q?V0CmgjKwaUPbABRx4AMceqwiknbuO8WV9oWQhn5OzWJexAT0nJmhI5P4Ag6L?=
+ =?us-ascii?Q?atCjaINbei8V85rerw3LPHtEA5jop7iYSRuSCCqvbJDwJU+jjBHCTto9ooJP?=
+ =?us-ascii?Q?qSLBmEZ4uBNiffFd6vo7HkrJVSz1Gp8LG4gA6wcDWQPWOBlKQGJjkh8RMU/q?=
+ =?us-ascii?Q?zW1eILvVhtTOT5dR6sZMKadXKR4ut9l5PqEocF+QqdOZy8fld79Q6NmnVw5B?=
+ =?us-ascii?Q?TVqr0nu4IjsWdyCGmvqWyNFUzDfnmfPtf18hUJeOgeE13bdDMKfILWKC10EV?=
+ =?us-ascii?Q?fOtKOAFH5TO1hWWFAvkz8VGw/j8wwHTKiXzxa2FwNLf+fp6u7g0YJOwAku8g?=
+ =?us-ascii?Q?TeErfTXme2Jabz28JWKlBpA3Mv29uPJhWE9aTFadHzp1+HTG87T90ZH1tAfa?=
+ =?us-ascii?Q?nxiRFqcHt760Z+MRSuysuAxaenL7p0hvBfnNT4Alt20kWzshknTWikU0MmlI?=
+ =?us-ascii?Q?xR2FugmYZ6v4zo06HHAHWyczYPPhCtloDcp5MBHlIUQlNRc927MLB5HBq1Mr?=
+ =?us-ascii?Q?j9IXiuOnFfeurePFSaEuSAIxqCsh6BNFLWT2dnQDzmOLr9eKN+xPZ71fy7uy?=
+ =?us-ascii?Q?lW0hJGumImExHmmU6A+MvBxxKzceyc3MF6x9WuZv5WcEfpK2dYKz8YxcudT+?=
+ =?us-ascii?Q?sBaT+FxpMWX7OvvLBFLn9uAsQ2xH9h4saXOGBUiAwJ8iYP8X/0NeMJ6se/H6?=
+ =?us-ascii?Q?xXFz+AZqiA=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] firmware: arm_rmm: Add support for SRO
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
- Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
-References: <20260715142739.80398-1-steven.price@arm.com>
- <20260715142739.80398-6-steven.price@arm.com>
- <20260715152954.ECAEA1F000E9@smtp.kernel.org>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260715152954.ECAEA1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB9080.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f610835b-9102-4b57-abc1-08dee3547acc
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2026 16:08:30.9672
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hRu8QyPqdQhY4B8wjHXtGa8s+HJaWYn8IqTKeTWxjHAwnSxMmgRDGFsh27F7bz8CRjPWGCEXoEBM0D7j/qFAQg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5PR04MB9998
 
-On 15/07/2026 16:29, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 8 potential issue(s) to consider:
-> - [High] Kernel infinite loop when SRO memory allocation fails and the operation cannot be cancelled.
-> - [High] SRO wrappers wipe and free the `rmi_sro_state` struct unconditionally, leaking cached memory and breaking cross-call reuse.
-> - [High] `rmi_op_cancel` overwrites the `regs` structure with the cancellation request result, destroying the SRO loop state and leaving the RMM operation incomplete.
-> - [High] Out-of-bounds array read and arbitrary memory free when handling an overflow condition in SRO reclaim.
-> - [High] Missing clamp on `donated_granules` in `rmi_sro_donate_contig` allows a malicious or buggy RMM to trigger arbitrary out-of-bounds page frees.
-> - [Medium] Incorrect alignment check using `IS_ALIGNED` with potentially non-power-of-two sizes.
-> - [Medium] SRO wrappers hardcode `GFP_KERNEL`, directly contradicting the stated goal of supporting atomic execution contexts.
-> - [Low] Usage of non-standard macro `kmalloc_obj()` causes compilation failure.
-> --
-> 
-> --- Patch [5]: [PATCH 5/6] firmware: arm_rmm: Add support for SRO ---
-> commit 105823e0511b9065ecd4f5281f43bd808384b24c
-> Author: Steven Price <steven.price@arm.com>
-> 
-> firmware: arm_rmm: Add support for SRO
-> 
-> This commit introduces Stateful RMI Operations (SRO) for RMM v2.0, allowing
-> SMC operations to return while still in progress and be continued later. It
-> adds infrastructure to track and reuse allocated memory during these
-> operations to support execution in contexts where memory allocation is
-> difficult. The patch also provides wrappers for SRO commands and modifies
-> delegate/undelegate handlers to use the stateful infrastructure.
-> 
->> diff --git a/arch/arm64/include/asm/rmi_cmds.h b/arch/arm64/include/asm/rmi_cmds.h
->> index 7eb2c8d7f7fa8..f13ecdb40ded4 100644
->> --- a/arch/arm64/include/asm/rmi_cmds.h
->> +++ b/arch/arm64/include/asm/rmi_cmds.h
-> 
-> [ ... ]
-> 
->> @@ -46,6 +142,98 @@ static inline int rmi_realm_activate(unsigned long rd)
->>  	return res.a0;
->>  }
->>  
->> +/**
->> + * rmi_realm_create() - Create a realm
->> + * @rd: PA of the RD
->> + * @params: PA of realm parameters
->> + * @sro: Preallocated SRO context to be used
->> + *
->> + * Create a new realm using the given parameters.
->> + *
->> + * Return: RMI return code
->> + */
->> +static inline int rmi_realm_create(unsigned long rd, unsigned long params,
->> +				   struct rmi_sro_state *sro)
->> +{
->> +	return rmi_sro_memxfer_cmd(sro, GFP_KERNEL,
->> +				   SMC_RMI_REALM_CREATE, rd, params);
->> +}
-> 
-> [Severity: Medium]
-> The commit message states the SRO framework permits operations to be done in a
-> context where memory allocation may be difficult, such as an atomic context.
-> However, does passing GFP_KERNEL here directly contradict that goal? If
-> rmi_sro_ensure_capacity() requires memory, it will call alloc_pages_exact()
-> with GFP_KERNEL, which will sleep.
+Hi Frank,
 
-But this particular RMI function is called from a context where sleeping
-is fine.
+> -----Original Message-----
+> From: Frank Li (OSS) <frank.li@oss.nxp.com>
+> Sent: Thursday, July 16, 2026 9:00 PM
+> To: sashiko-reviews@lists.linux.dev
+> Cc: G.N. Zhou (OSS) <guoniu.zhou@oss.nxp.com>; Frank.Li@kernel.org;
+> robh@kernel.org; conor+dt@kernel.org; media-ci@linuxtv.org;
+> devicetree@vger.kernel.org; imx@lists.linux.dev
+> Subject: Re: [PATCH v12 3/3] media: nxp: Add i.MX95 CSI pixel formatter v=
+4l2
+> driver
+>=20
+> On Thu, Jul 16, 2026 at 07:20:52AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 5 potential is=
+sue(s) to
+> consider:
+> > - [High] Missing NULL checks for the return value of
+> `v4l2_subdev_state_get_format()` allow userspace to trigger a kernel pani=
+c.
+> > - [High] The driver caches a pointer to the remote subdevice when bound=
+, but
+> fails to implement an `.unbind` callback to clear it, leading to a Use-Af=
+ter-Free.
+> > - [Medium] Mixing `goto`-based error handling with scope-based cleanup
+> (`__free` and `guard`) in the same function violates kernel cleanup guide=
+lines.
+> > - [Medium] `csi_formatter_subdev_set_fmt` partially modifies the subdev=
+ice
+> state but returns `-EINVAL` if the stream has no active route.
+> > - [Medium] The `csi_formatter_read` wrapper ignores the return value of
+> `regmap_read`, potentially leading to uninitialized stack variable usage.
+> > --
+> >
+> > --- Patch [3]: [PATCH v12 3/3] media: nxp: Add i.MX95 CSI pixel
+> > formatter v4l2 driver --- commit
+> > 0cff6156940653a6a408d93ee678b339b7218ebb
+> > Author: Guoniu Zhou <guoniu.zhou@nxp.com>
+> > Subject: media: nxp: Add i.MX95 CSI pixel formatter v4l2 driver
+> >
+> > The CSI pixel formatter is a module found on i.MX95 used to reformat
+> > packet info, pixel and non-pixel data from CSI-2 host controller to
+> > match Pixel Link(PL) definition. Add data formatting support.
+> >
+> > > diff --git a/drivers/media/platform/nxp/imx95-csi-formatter.c
+> > > b/drivers/media/platform/nxp/imx95-csi-formatter.c
+> > > new file mode 100644
+> > > index 0000000000000..cea60327c9729
+> > > --- /dev/null
+> > > +++ b/drivers/media/platform/nxp/imx95-csi-formatter.c
+> >
+> > [ ... ]
+> >
+> > > +static int csi_formatter_subdev_enum_mbus_code(struct v4l2_subdev *s=
+d,
+> > > +					       struct v4l2_subdev_state *sd_state,
+> > > +					       struct
+> v4l2_subdev_mbus_code_enum *code) {
+> > > +	if (code->pad =3D=3D CSI_FORMATTER_PAD_SOURCE) {
+> > > +		struct v4l2_mbus_framefmt *fmt;
+> > > +
+> > > +		if (code->index > 0)
+> > > +			return -EINVAL;
+> > > +
+> > > +		fmt =3D v4l2_subdev_state_get_format(sd_state, code->pad,
+> > > +						   code->stream);
+> > > +		code->code =3D fmt->code;
+> >
+> > [Severity: High]
+> > Can this cause a NULL pointer dereference?
+> >
+> > The V4L2 core does not validate the stream ID provided by userspace in
+> > VIDIOC_SUBDEV_ENUM_MBUS_CODE against the active routing table before
+> > calling this function. If a user passes an invalid stream ID,
+> > v4l2_subdev_state_get_format() returns NULL, which is then
+> > unconditionally dereferenced here.
+>=20
+> Is it true?
 
->> diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/arm_rmm/rmi.c
->> index e7ab4a7df3ca8..6a9f61760fd77 100644
->> --- a/drivers/firmware/arm_rmm/rmi.c
->> +++ b/drivers/firmware/arm_rmm/rmi.c
-> 
-> [ ... ]
-> 
->> @@ -22,6 +23,487 @@ unsigned long rmi_feat_reg(unsigned long id)
-> 
-> [ ... ]
-> 
->> +static void rmi_op_cancel(unsigned long sro_handle,
->> +			  struct arm_smccc_1_2_regs *out_regs)
->> +{
->> +	struct arm_smccc_1_2_regs regs = {
->> +		SMC_RMI_OP_CANCEL, sro_handle
->> +	};
->> +
->> +	rmi_smccc_invoke(&regs, out_regs);
->> +}
-> 
-> [Severity: High]
-> Does rmi_op_cancel() overwrite the caller's out_regs with the cancellation
-> result?
+No, it will not cause a NULL pointer dereference since V4L2 core's check_st=
+ate validates first.
+If NULL, it returns early and never calls the callback, so the callback won=
+'t encounter NULL.
 
-Yes
+>=20
+> >
+> > > +		return 0;
+> > > +	}
+> >
+> > [ ... ]
+> >
+> > > +static int csi_formatter_subdev_set_fmt(struct v4l2_subdev *sd,
+> > > +					struct v4l2_subdev_state *sd_state,
+> > > +					struct v4l2_subdev_format *sdformat) {
+> > > +	struct csi_formatter_pix_format const *format;
+> > > +	struct v4l2_mbus_framefmt *fmt;
+> > > +
+> > > +	if (sdformat->pad =3D=3D CSI_FORMATTER_PAD_SOURCE)
+> > > +		return v4l2_subdev_get_fmt(sd, sd_state, sdformat);
+> > > +
+> > > +	format =3D csi_formatter_find_format(sdformat->format.code);
+> > > +	if (!format)
+> > > +		format =3D &formats[0];
+> > > +
+> > > +	v4l_bound_align_image(&sdformat->format.width, 1, 0xffff, 2,
+> > > +			      &sdformat->format.height, 1, 0xffff, 0, 0);
+> > > +
+> > > +	fmt =3D v4l2_subdev_state_get_format(sd_state, sdformat->pad,
+> > > +					   sdformat->stream);
+> > > +	*fmt =3D sdformat->format;
+> >
+> > [Severity: High]
+> > Does this also risk a NULL pointer dereference for the same reason?
+> > Userspace can provide an invalid stream ID during VIDIOC_SUBDEV_S_FMT,
+> > resulting in v4l2_subdev_state_get_format() returning NULL.
+> >
+> > > +
+> > > +	/* Set default code if user set an invalid value */
+> > > +	fmt->code =3D format->code;
+> > > +	sdformat->format =3D *fmt;
+> > > +
+> > > +	/* Propagate the format from sink stream to source stream */
+> > > +	fmt =3D v4l2_subdev_state_get_opposite_stream_format(sd_state,
+> sdformat->pad,
+> > > +							   sdformat->stream);
+> > > +	if (!fmt)
+> > > +		return -EINVAL;
+> >
+> > [Severity: Medium]
+> > Does this leave the subdevice in an inconsistent state?
+> >
+> > If a user configures the format on a sink pad stream that does not
+> > currently have an active route to a source pad,
+> > v4l2_subdev_state_get_opposite_stream_format()
+> > returns NULL. This causes the driver to return -EINVAL after the sink
+> > format has already been updated in the state earlier in this function.
+> > Setting a format on an unrouted stream is generally a valid V4L2 operat=
+ion.
+>=20
+> look like make sense,
+>=20
+> Does v4l2_subdev_state_get_opposite_stream_format() call before fmt->code=
+?
 
-> When called from rmi_sro_memxfer_execute(), a successful cancel
-> returns RMI_SUCCESS in out_regs->a0.
+No, this does not leave the subdevice in an inconsistent state since in V4L=
+2, setting
+a format on an unrouted stream is a valid operation. The sink pad format ca=
+n be
+configured independently of routing. The state remains consistent - the sin=
+k format
+is updated as requested by userspace. The -EINVAL return when trying to pro=
+pagate
+to a non-existent opposite stream is correct behavior, as there's no active=
+ route to
+propagate to. This is expected and does not corrupt the state.
 
-A 'successful' cancel returns RMI_INCOMPLETE. Or as the spec puts it:
+Best Regards
+G.N Zhou
 
- | The RMI_OP_CANCEL command does not have any success conditions
 
-> This would cause the loop condition
-> (RMI_RETURN_STATUS(regs->a0) == RMI_INCOMPLETE) to fail early and abandon
-> the operation before it completes, potentially causing future RMM operations
-> to fail.
-
-There's a WARN_ON_ONCE if regs->a0 is anything but RMI_INCOMPLETE in
-rmi_sro_memxfer_execute(). This should never happen.
-
-> [ ... ]
-> 
->> +static int rmi_sro_donate_contig(struct rmi_sro_state *sro,
->> +				 unsigned long sro_handle,
->> +				 unsigned long donatereq,
->> +				 struct arm_smccc_1_2_regs *out_regs,
->> +				 gfp_t gfp)
->> +{
->> +	unsigned long unit_size = RMI_DONATE_SIZE(donatereq);
->> +	unsigned long unit_size_bytes = donate_req_to_size(donatereq);
->> +	unsigned long count = RMI_DONATE_COUNT(donatereq);
->> +	unsigned long state = RMI_DONATE_STATE(donatereq);
->> +	unsigned long size = unit_size_bytes * count;
->> +	unsigned long addr_range;
->> +	int ret;
->> +	void *virt;
->> +	phys_addr_t phys;
->> +
->> +	for (int i = 0; i < sro->addr_count; i++) {
->> +		unsigned long entry = sro->addr_list[i];
->> +
->> +		if (RMI_ADDR_RANGE_SIZE(entry) == unit_size &&
->> +		    RMI_ADDR_RANGE_COUNT(entry) == count &&
->> +		    RMI_ADDR_RANGE_STATE(entry) == state &&
->> +		    IS_ALIGNED(RMI_ADDR_RANGE_ADDR(entry), size)) {
-> 
-> [Severity: Medium]
-> Can size be a non-power-of-two here?
-
-According to the spec: no.
-
-> The IS_ALIGNED() macro evaluates a> bitwise AND with (size - 1) and
-strictly requires the alignment to be a
-> power of two. If the RMM requests a contiguous donation where count is not a
-> power of two, this check uses an invalid bitmask.
-
-I'll add a check (with a WARN_ON_ONCE) for buggy RMM behaviour which
-errors out early.
-
->> +			sro->addr_count--;
->> +			swap(sro->addr_list[sro->addr_count],
->> +			     sro->addr_list[i]);
->> +
->> +			goto out;
->> +		}
->> +	}
-> 
-> [ ... ]
-> 
->> +out:
->> +	rmi_op_mem_donate(sro_handle,
->> +			  virt_to_phys(&sro->addr_list[sro->addr_count]), 1,
->> +			  0, out_regs);
->> +
->> +	unsigned long donated_granules = out_regs->a1;
->> +	unsigned long donated_size = donated_granules << PAGE_SHIFT;
->> +
->> +	if (donated_granules == 0) {
->> +		/* No pages used by the RMM */
->> +		sro->addr_count++;
->> +	} else if (donated_size < size) {
-> 
-> [Severity: High]
-> Is it possible for the RMM to return a maliciously large value for
-> donated_granules here?
-
-Yes, but the RMM is considered trusted.
-
-> Unlike rmi_sro_donate_noncontig() which clamps
-> this value, this function does not. If the value overflows the bitwise shift,
-> donated_size could appear small, causing the kernel to erroneously enter the
-> free loop below and release pages that the RMM may actively be using.
-
-There are plenty of other ways of the RMM breaking the normal world. In
-particular APIs like RMI_RTT_DATA_UNMAP return physical addresses which
-Linux trusts are correct.
-
->> +		phys = sro->addr_list[sro->addr_count] & RMI_ADDR_RANGE_ADDR_MASK;
->> +
->> +		/* Not all granules used by the RMM, free the remaining pages */
->> +		for (long i = donated_size; i < size; i += PAGE_SIZE) {
->> +			if (state == RMI_OP_MEM_DELEGATED)
->> +				free_delegated_page(phys + i);
->> +			else
->> +				__free_page(phys_to_page(phys + i));
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
-> 
-> [ ... ]
-> 
->> +static int rmi_sro_reclaim(struct rmi_sro_state *sro,
->> +			   unsigned long sro_handle,
->> +			   struct arm_smccc_1_2_regs *out_regs)
->> +{
->> +	unsigned long capacity;
->> +	int ret;
->> +
->> +	ret = rmi_sro_ensure_capacity(sro, 1);
->> +	if (ret)
->> +		rmi_sro_free(sro);
-> 
-> [Severity: High]
-> If rmi_sro_ensure_capacity() fails because sro->addr_count is greater than
-> RMI_MAX_ADDR_LIST, it returns -EOVERFLOW.
-
-This is a "should never happen" condition (which has a WARN_ON_ONCE).
-
-> Passing sro to rmi_sro_free() in> this state will cause the loop in
-rmi_sro_free() to iterate out-of-bounds
-> past the end of the addr_list array, reading garbage data and attempting to
-> free it.
-
-True - a corrupted list length causes further things to break. It seems
-a bit much to try to handle such corruption.
-
->> +
->> +	capacity = RMI_MAX_ADDR_LIST - sro->addr_count;
-> 
-> [ ... ]
-> 
->> +unsigned long rmi_sro_memxfer_execute(struct rmi_sro_state *sro, gfp_t gfp)
->> +{
->> +	unsigned long sro_handle;
->> +	struct arm_smccc_1_2_regs *regs = &sro->regs;
->> +
->> +	rmi_smccc_invoke(regs, regs);
->> +
->> +	sro_handle = regs->a1;
->> +
->> +	while (RMI_RETURN_STATUS(regs->a0) == RMI_INCOMPLETE) {
->> +		bool can_cancel = RMI_RETURN_CAN_CANCEL(regs->a0);
->> +		int ret = 0;
->> +
->> +		switch (RMI_RETURN_MEMREQ(regs->a0)) {
->> +		case RMI_OP_MEM_REQ_NONE:
->> +			rmi_op_continue(sro_handle, RMI_CONTINUE_KEEP_GOING,
->> +					regs);
->> +			break;
->> +		case RMI_OP_MEM_REQ_DONATE:
->> +			ret = rmi_sro_donate(sro, sro_handle, regs->a2, regs,
->> +					     gfp);
->> +			break;
->> +		case RMI_OP_MEM_REQ_RECLAIM:
->> +			ret = rmi_sro_reclaim(sro, sro_handle, regs);
->> +			break;
->> +		default:
->> +			ret = WARN_ON_ONCE(1);
->> +			break;
->> +		}
->> +
->> +		if (ret) {
->> +			if (can_cancel)
->> +				rmi_op_cancel(sro_handle, regs);
->> +
->> +			if (WARN_ON_ONCE(RMI_RETURN_STATUS(regs->a0) != RMI_INCOMPLETE))
->> +				return ret;
->> +		}
->> +	}
-> 
-> [Severity: High]
-> Does this code loop infinitely if a memory allocation fails and can_cancel is
-> false?
-
-The specification requires that can_cancel is true when a memory
-allocation is requested.
-
-It's also not really clear what the alternative is here - if the RMM
-requests memory and doesn't allow cancellation then the only way of
-finishing the operation is to provide it with the memory.
-
-> If ret is set to an error code and can_cancel is false,
-> rmi_op_cancel()> is skipped. The regs state is not modified, so
-RMI_RETURN_STATUS(regs->a0)
-> remains RMI_INCOMPLETE, the WARN_ON_ONCE check fails, and the loop repeats
-> indefinitely without returning the error.
-
-Indeed, if the operation is incomplete the code attempts to complete the
-operation. The only other option would be to give up on using the RMM,
-but how do we choose the maximum number of loops before giving up?
-
-Ultimately we do have to trust the RMM to some extent to obey the spec.
-
-> [ ... ]
-> 
->> @@ -80,8 +562,9 @@ static int rmi_configure(void)
->>  {
->>  	unsigned long ret;
->>  	struct rmm_config *config __free(free_page) = (struct rmm_config *)get_zeroed_page(GFP_KERNEL);
->> +	struct rmi_sro_state *sro __free(kfree) = (struct rmi_sro_state *)kmalloc_obj(*sro);
-> 
-> [Severity: Low]
-> Is kmalloc_obj() a standard kernel macro?
-
-Yes
-
-> It does not appear to exist in the> standard kernel headers, which
-will result in an implicit function declaration
-> error and build failure.
-
-I'm not sure what braindead version of Sashiko was used on this patch.
-For some reason it seems to have completely forgotten standard Linux and
-somewhat missed the context of how the RMM fits into the system.
-
->> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi-cmds.h
->> index c038c1d685fad..138983ab4e3c2 100644
->> --- a/include/linux/arm-rmi-cmds.h
->> +++ b/include/linux/arm-rmi-cmds.h
-> 
-> [ ... ]
-> 
->> @@ -19,10 +19,45 @@ struct rtt_entry {
-> 
-> [ ... ]
-> 
->> +#define rmi_sro_memxfer_cmd(sro, gfp, ...) ({				\
->> +	struct rmi_sro_state *__sro = (sro);				\
->> +	*__sro = (struct rmi_sro_state){ .regs = {__VA_ARGS__} };	\
->> +	int __ret = rmi_sro_memxfer_execute(__sro, gfp);		\
->> +	rmi_sro_free(__sro);						\
->> +	__ret;								\
->> +})
-> 
-> [Severity: High]
-> Does this macro unconditionally wipe and free the rmi_sro_state struct? The
-> compound literal assignment *__sro = (struct rmi_sro_state){ ... } will
-> zero-initialize addr_count and addr_list, wiping any cached addresses from a
-> previous attempt. Furthermore, calling rmi_sro_free() unconditionally before
-> returning frees any allocated memory, defeating the stated design goal of
-> reusing memory across calls.
-> 
-
-Yes it unconditionally wipes the context of the struct - the struct is
-provided purely to avoid having to do an extra memory allocation. This
-is a helper maco for the cases where we don't provide a way of dropping
-into a less restrictive state to retry the allocation.
-
-This is admittedly a missing piece - currently there are no call sites
-that do the stated dance of dropping locks to retry a memory allocation.
-
-Steve
-
+>=20
+> >
+> > > +
+> > > +	*fmt =3D sdformat->format;
+> > > +
+> > > +	return 0;
+> > > +}
+> >
+> > [ ... ]
+> >
+> > > +static inline void csi_formatter_read(struct csi_formatter *formatte=
+r,
+> > > +				      unsigned int reg, unsigned int *value) {
+> > > +	u32 offset =3D formatter->reg_offset;
+> > > +
+> > > +	regmap_read(formatter->regs, reg + offset, value); }
+> >
+> > [Severity: Medium]
+> > Can this write uninitialized stack memory to hardware registers?
+> >
+> > The wrapper csi_formatter_read() ignores the return value of regmap_rea=
+d().
+> > If the read fails, local stack variables remain uninitialized.
+> >
+> > For example, when called from csi_formatter_start_stream():
+> >
+> >     u32 val;
+> >     ...
+> >     csi_formatter_read(formatter, CSI_VC_PIXEL_DATA_TYPE(vc), &val);
+> >     val |=3D BIT(csi_formatter_get_index_by_dt(pix_fmt->data_type));
+> >     csi_formatter_write(formatter, CSI_VC_PIXEL_DATA_TYPE(vc), val);
+> >
+> > The driver performs bitwise operations on val and writes it back to
+> > the CSI_VC_PIXEL_DATA_TYPE register. If regmap_read() failed, this
+> > writes garbage data to the hardware.
+>=20
+> It should be fine. MMIO never return failure.
+>=20
+> >
+> > [ ... ]
+> >
+> > > +static int csi_formatter_subdev_enable_streams(struct v4l2_subdev *s=
+d,
+> > > +					       struct v4l2_subdev_state *state,
+> > > +					       u32 pad, u64 streams_mask) {
+> > > +	struct csi_formatter *formatter =3D sd_to_formatter(sd);
+> > > +	struct device *dev =3D formatter->dev;
+> > > +	u64 sink_streams;
+> > > +	int ret;
+> > > +
+> > > +	sink_streams =3D v4l2_subdev_state_xlate_streams(state,
+> > > +
+> CSI_FORMATTER_PAD_SOURCE,
+> > > +
+> CSI_FORMATTER_PAD_SINK,
+> > > +						       &streams_mask);
+> > > +	if (!sink_streams || !streams_mask)
+> > > +		return -EINVAL;
+> > > +
+> > > +	guard(mutex)(&formatter->lock);
+> > > +
+> > > +	if (!formatter->enabled_streams) {
+> > > +		ret =3D pm_runtime_resume_and_get(formatter->dev);
+> > > +		if (ret < 0) {
+> > > +			dev_err(dev, "Failed to resume runtime PM: %d\n", ret);
+> > > +			return ret;
+> > > +		}
+> > > +	}
+> > > +
+> > > +	ret =3D csi_formatter_start_stream(formatter, state, streams_mask);
+> > > +	if (ret)
+> > > +		goto err_runtime_put;
+> > > +
+> > > +	ret =3D v4l2_subdev_enable_streams(formatter->csi_sd,
+> > > +					 formatter->remote_pad,
+> > > +					 sink_streams);
+> > > +	if (ret)
+> > > +		goto err_stop_stream;
+> > > +
+> > > +	formatter->enabled_streams |=3D streams_mask;
+> > > +
+> > > +	return 0;
+> > > +
+> > > +err_stop_stream:
+> > > +	csi_formatter_stop_stream(formatter, state, streams_mask);
+> > > +err_runtime_put:
+> > > +	if (!formatter->enabled_streams)
+> > > +		pm_runtime_put(formatter->dev);
+> > > +	return ret;
+> > > +}
+> >
+> > [Severity: Medium]
+> > Is it safe to mix guard() with goto labels in the same function?
+> >
+> > The kernel cleanup guidelines note that the expectation is that usage
+> > of goto and cleanup helpers is never mixed in the same function to
+> > avoid resource leaks or double-free bugs during future maintenance.
+>=20
+> This should be fine if goto to error path only
+>=20
+> Frank
+>=20
+> >
+> > [ ... ]
+> >
+> > > +static const struct v4l2_async_notifier_operations formatter_notify_=
+ops =3D {
+> > > +	.bound =3D csi_formatter_notify_bound, };
+> >
+> > [Severity: High]
+> > Could this result in a use-after-free?
+> >
+> > The driver saves the remote subdev pointer in
+> > csi_formatter_notify_bound() via formatter->csi_sd =3D sd, but there is
+> > no unbind callback in formatter_notify_ops to clear formatter->csi_sd.
+> >
+> > If the remote subdevice is unbound (e.g. the sensor module is
+> > removed), the
+> > V4L2 async framework tears down the link. Because the pointer isn't
+> > cleared, subsequent calls to VIDIOC_SUBDEV_ENABLE_STREAMS on the
+> > still-registered formatter video node will dereference the freed
+> > formatter->csi_sd pointer in csi_formatter_subdev_enable_streams().
+> >
+> > [ ... ]
+> >
+> > > +static int csi_formatter_async_register(struct csi_formatter
+> > > +*formatter) {
+> > > +	struct device *dev =3D formatter->dev;
+> > > +	struct v4l2_async_connection *asc;
+> > > +	int ret;
+> > > +
+> > > +	struct fwnode_handle *ep __free(fwnode_handle) =3D
+> > > +		fwnode_graph_get_endpoint_by_id(dev_fwnode(dev), 0, 0,
+> > > +
+> 	FWNODE_GRAPH_ENDPOINT_NEXT);
+> > > +	if (!ep)
+> > > +		return -ENOTCONN;
+> > > +
+> > > +	v4l2_async_subdev_nf_init(&formatter->notifier, &formatter->sd);
+> > > +
+> > > +	asc =3D v4l2_async_nf_add_fwnode_remote(&formatter->notifier, ep,
+> > > +					      struct v4l2_async_connection);
+> > > +	if (IS_ERR(asc)) {
+> > > +		ret =3D PTR_ERR(asc);
+> > > +		goto err_cleanup_notifier;
+> > > +	}
+> > > +
+> > > +	formatter->notifier.ops =3D &formatter_notify_ops;
+> > > +
+> > > +	ret =3D v4l2_async_nf_register(&formatter->notifier);
+> > > +	if (ret)
+> > > +		goto err_cleanup_notifier;
+> > > +
+> > > +	ret =3D v4l2_async_register_subdev(&formatter->sd);
+> > > +	if (ret)
+> > > +		goto err_unregister_notifier;
+> > > +
+> > > +	return 0;
+> > > +
+> > > +err_unregister_notifier:
+> > > +	v4l2_async_nf_unregister(&formatter->notifier);
+> > > +err_cleanup_notifier:
+> > > +	v4l2_async_nf_cleanup(&formatter->notifier);
+> > > +	return ret;
+> > > +}
+> >
+> > [Severity: Medium]
+> > Does mixing __free() scope declarations with goto error labels here
+> > risk cleanup ordering issues?
+> >
+> > The kernel guidelines specify that functions should either convert all
+> > resources that need a goto cleanup to scope-based cleanup, or convert
+> > none of them.
+> >
+> > --
+> > Sashiko AI review *
+> > https://sashiko.dev/#/patchset/20260716-csi_formatter-v12-0-2601d17fc4
+> > af@oss.nxp.com?part=3D3
