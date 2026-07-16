@@ -1,115 +1,176 @@
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Received: from out162-62-57-64.mail.qq.com (out162-62-57-64.mail.qq.com [162.62.57.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8183F3DB625
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 08:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7363ED3B4
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 08:31:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784190304; cv=none; b=PhLgXyMdnsnQq/p+w0/XSrdqJYYSaa+epbYzTItyYsV0r92YZp5tMEHb34AWKbAHm9YF3kqo+UOSGaT8/pVBvG0kzXSTlNY6somu7x7eZAVck2PDImtrgid9ZVPIRIGA2suYGP1hM6I0sAODNV6mstiW3tNzP0uRHdJJzskZZIk=
+	t=1784190696; cv=none; b=tPLuzckw7kMv7qcW+NjHMFOadod2liOMRHbcxo/OYyDc2ziLIv8XT+YwQjk3hiracyvnXgzBV8tEHMFTh6bRAf4VRlgCGW0R8+hAYwMWE+ueLNA7Pq+LLjG7LQMdzlMUs7GMAdixXDa9jigTDY5KcfYh1LtWS+4kpHMfuIr3v48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784190304; c=relaxed/simple;
-	bh=s9CuyhlzHYaOIObOvl7RYKjdhHvVMr2Qp8TS9dl5Mak=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XwaiYnxP3S+/i2s1MWb40ifXesKaQYmE5u+icgfYM1rEwe2nHaKN3nGElXPGhnMd32+uPZyWUfMFJfgf6ctNDjqFYNW0/G1Uoc9f7StYneCggcXN3Saje1hH/KibQGUcuEz4z63xyH/p509YSZUiCkXIGwvlPs0HzzjLmlSz3Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=bh4re1UI; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+	s=arc-20240116; t=1784190696; c=relaxed/simple;
+	bh=oAKcpYyqB5R1GIsbR8uVDRb31dUeyXygJM/OY9+d25M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cdAXwiSwEq6Lp4rkJepjzI9JWbu3V77RH3WvUm+GrQ6OMbUPO6TpzKjpC5da8iLcF4GiDf/Ltf15rLpogvFOAvlvmwgP+k5+TlNrkB1JavDggXYrxG09am/cBiPzl4sd+g4j4htIiUklPuObR9ZuJLNUQ9fggC45r+5vkYCWDs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=TdU4F8zf; arc=none smtp.client-ip=162.62.57.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="bh4re1UI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=m+IG
-	cg8S2PNbdHOMlD4HmdwJVgpvkudUdaSBUvH0Fhs=; b=bh4re1UIs3wXZGuIY1Mp
-	U0huKFwzWzdJypH/Pe+WU9YSMLhqZDVNO+DewqRUzQ6eGXAJgjauyM+XkVzUla+f
-	WQKrxhSrSdGGFav+EzdujmllAKxeoKgu38jxf5NguTpE/AEKOe1uXY9KUkuXSB/B
-	xd6P5clnXW4ZZJsBJtX8k/qlqNx/FrNqKJmO0X+VarzHN9lH7yeTL7tIdtHwqSSG
-	O+V7xPktBSzwR1xKFaaJbadfEcT6f6UBS0JbloTlflBJUrdFYAGVJleLX9pzzZQc
-	lT2N5Oj/MBzrpfVRqXCtm6aF+CXzONLyW7461iHKlSiwhpQIQVi9hX3f9XQdJf6z
-	Qg==
-Received: (qmail 979495 invoked from network); 16 Jul 2026 10:24:55 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 16 Jul 2026 10:24:55 +0200
-X-UD-Smtp-Session: l3s3148p1@crW9LLZWDpsujntt
-Date: Thu, 16 Jul 2026 10:24:54 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: linux-renesas-soc@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: renesas: r9a06g032-rzn1d400-eb: enable GPIOs
- on CN12
-Message-ID: <aliVVqnokN4s856T@ninjato>
-References: <20260715122341.47838-2-wsa+renesas@sang-engineering.com>
- <alfNV-_Cb3WlqiHB@shikoro>
+	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="TdU4F8zf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+	s=s201512; t=1784190682;
+	bh=eRn/vLGNe3UxqQjtdEDgrmLkrNtu+4WFyBXxC1Qnvpo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=TdU4F8zfNhWd1vdAPENJYS7d5+RQUfKbVhceeY7rPqxaGPlwTBAYt6sLiidD9tAEf
+	 MA3dQxORJSWjVdTWRwjLf4DYMxe79y+0z28alyrlIIFUdBcGMX7UPKRw4CMx13MwQm
+	 lZQz82o+YykePMPOiUJGWnws3mmTVSDjuAXrlp1g=
+Received: from [10.56.52.25] ([39.156.73.14])
+	by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
+	id 7D4B5638; Thu, 16 Jul 2026 16:31:20 +0800
+X-QQ-mid: xmsmtpt1784190680txyde9d0d
+Message-ID: <tencent_5B3A21BA18AC085166295ED6A994BD8A8F0A@qq.com>
+X-QQ-XMAILINFO: MJf32pulH4819N1UT0GEzj0CD443KacVz9RTt9pv4YpO3CycAx0lOpKxKDB0Bv
+	 MiFdMVF0Y56vy9r8OXU8nJzZ4D61/ZIBJ0e5iZioK6cXleEqz5amtwFwvZo51qkEpLW5wiZ4krLd
+	 32q0501odPh/P4nNV/X/DFTRtCQoIZ14+IuB/1tEBfA5PAaDuEM9cySfiGH0uDFcaGfbsgnXPhRV
+	 B5Blj4VTdhxJaInzZUxA8fUorVxLs3TfwAbKEGd1G9s2C89biRlLSTniv8JWVsFjil0DxwWu5QaU
+	 smSIZ2TXzR8ltxRmNfIjVJNKo2xs756+CZHaX7rktQlE+1WDGxXncgTu+8Mzr8hRAZH5JlcaYCmT
+	 tG5lakdOI/TiPInNsgUew8BRodFKSO2T+crnNFmiGFL+sG1AWT9ak7wYHZgoXLIZr6EYRQNe5D3n
+	 dyVEbg3dhXfh1D3MD2cE9OfyEtd6vd2FQJnG32oPjmu8ab6Z9zKjnypHEvvRYV3sjeRtALsf+P8h
+	 ykoOWBsAg7Q6nD3cMEr2WI9jhpC9baidcOx2qgOIEiTYolY+ulo9TTYyohJrGA0o18djj9iBIKEQ
+	 9fQeozaTBdjq5d5lz9onvF278Q/T7iqMSv7Jw6h1Fao+ZmdUfOcmK+XSIrRV+FoF58Mbh6mfVVkF
+	 QbCalHg/5FnUvXH2ag1wwXviaZ58HrKCQiQr6NeMNrSNG0GdM37oMQqmbm9NHUcStWHQVDWP0SXM
+	 H3Mgt3ZVvSKTsWSL45nYbB8mQT6wfBlDWatuehZgNfpOHFFcpIzZxYReJHs5hCxKYTidEKF5dSPH
+	 of+Uh38b8YHaosfrSZwULX/MoUL7JjIQALTFeeXAwhtYL3C8AXVkWMjo1sj4+K+YBqsLu12ptzu3
+	 HWhP3HuU4X4k2ZRQs54AfS3dkKAUFc3YMDgNwBgxjClTttymKDoLfcQn8rCPPXJ7ZYi5PFQuK9lc
+	 vKZmPEXJToM0zteOuMWsudX72pkYbAGcnQO2TmKl+BVCZQuzMS345Q6MhGUv0pjsftGG4r7eEdp/
+	 0PMmE8gh4EQme3kbZMD5NyP3uaRmM7Jm165ITbEw==
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-OQ-MSGID: <454584d3-b45e-41db-b65c-c70476157c89@foxmail.com>
+Date: Thu, 16 Jul 2026 16:31:20 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8BQGfmeULC7Ogh7f"
-Content-Disposition: inline
-In-Reply-To: <alfNV-_Cb3WlqiHB@shikoro>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 1/2] bpf: add bpf_strcat,bpf_strncat kfunc
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <cover.1784078494.git.rtoax@foxmail.com>
+ <tencent_9EC04DC824CBF5124305E73564341511C405@qq.com>
+ <20260715014036.B00561F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Rong Tao <rtoax@foxmail.com>
+In-Reply-To: <20260715014036.B00561F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---8BQGfmeULC7Ogh7f
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-
-> > The snps,dw-apb-gpio driver iterates over its port subnodes (like gpio2b)
-> > to register gpio_chip interfaces, but it doesn't appear to register these
-> > subnodes as independent platform devices.
-> >
-> > Because the driver core only applies pinctrl-0 properties automatically
-> > during probe for fully initialized device instances, this configuration
-> > might be silently ignored by the kernel.
+On 7/15/26 09:40, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] bpf_strncat unconditionally reads one byte beyond the caller-specified source limit (len) after the copy loop, causing a spurious -EFAULT if the source buffer ends at a page boundary.
+> - [Medium] The destination string is left completely non-null-terminated if a memory fault occurs during the copy loop.
+> - [Medium] Integer overflow in the `space` calculation causes spurious `-E2BIG` failures for destination buffers larger than 2GB.
+> --
 >
-> True. Will rework.
+> --- Patch [1]: [PATCH bpf-next v2 1/2] bpf: add bpf_strcat,bpf_strncat kfunc ---
+> commit 638de7ac547b3d0857f680c3e68dbfcae6e2543c
+> Author: Rong Tao <rongtao@cestc.cn>
+>
+> bpf: add bpf_strcat,bpf_strncat kfunc
+>
+> This patch adds string concatenation kfuncs bpf_strcat and bpf_strncat to
+> the BPF subsystem. These functions allow appending non-null bytes from a
+> source string to a destination string with size limits.
+>
+>> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+>> index c18f1e16edee4..401f94efd687c 100644
+>> --- a/kernel/bpf/helpers.c
+>> +++ b/kernel/bpf/helpers.c
+> [ ... ]
+>> @@ -4195,6 +4195,96 @@ __bpf_kfunc int bpf_strncasestr(const char *s1__ign, const char *s2__ign,
+>>   	return __bpf_strnstr(s1__ign, s2__ign, len, true);
+>>   }
+>>   
+>> +static int __bpf_strncat(char *dst, u32 dsz, const char *src, u32 sz)
+>> +{
+>> +	int dlen, slen, space, copied;
+>> +	char cs = '?';
+>> +
+>> +	if (!copy_from_kernel_nofault_allowed(dst, 1) ||
+>> +	    !copy_from_kernel_nofault_allowed(src, 1)) {
+>> +		return -ERANGE;
+>> +	}
+>> +
+>> +	dlen = bpf_strnlen(dst, dsz);
+>> +	if (dlen < 0)
+>> +		return dlen;
+>> +	slen = bpf_strnlen(src, sz);
+>> +	if (slen < 0)
+>> +		return slen;
+>> +
+>> +	if (dlen >= dsz || sz == 0 || dsz == 0)
+>> +		return -EINVAL;
+>> +
+>> +	space = dsz - dlen;
+>> +	if (space <= 1 || space < min(slen, sz) + 1)
+>> +		return -E2BIG;
+> [Severity: Medium]
+> Will this calculation overflow if dsz is greater than or equal to 2GB?
+>
+> Since space is a signed int and dsz is a u32, dsz - dlen can result
+> in a negative number for large destination buffers, such as those from a
+> BPF arena. A negative value satisfies the space <= 1 check, causing the
+> function to incorrectly abort and return -E2BIG.
+Already check above 'dlen >= dsz'.
+>
+>> +
+>> +	guard(pagefault)();
+>> +	for (copied = 0; copied < space - 1 && copied < slen; copied++) {
+>> +		__get_kernel_nofault(&cs, src, char, err_out);
+>> +		if (cs == '\0')
+>> +			break;
+>> +
+>> +		__put_kernel_nofault(dst + dlen + copied, &cs, char, err_out);
+> [Severity: Medium]
+> Does this leave the destination string non-null-terminated if a memory fault
+> occurs during the copy?
+I'll use strncpy_from_kernel_nofault() in v3, thanks ;)
+>
+> If the loop copies at least one character (overwriting the destination's
+> original null terminator) and then a subsequent read or write triggers a
+> page fault, the code jumps directly to err_out without restoring a null
+> terminator.
+>
+> While it returns an error, BPF programs that do not check the return value
+> might operate on corrupted state.
+>
+>> +
+>> +		src++;
+>> +	}
+>> +	cs = '\0';
+>> +	__put_kernel_nofault(dst + dlen + copied, &cs, char, err_out);
+>> +
+>> +	__get_kernel_nofault(&cs, src, char, err_out);
+>> +	if (cs != '\0' && sz > copied)
+>> +		return -E2BIG;
+> [Severity: High]
+> Can this unconditionally read one byte beyond the caller-specified limit sz?
+>
+> When the copy loop finishes, copied may equal sz. The pointer src will
+> have been incremented sz times. If the original src buffer is exactly
+> sz bytes and ends at a page boundary, this read will trigger a page fault,
+> causing a spurious -EFAULT return.
+>
+> Additionally, if copied == sz, the subsequent sz > copied check evaluates
+> to false anyway, making the read unnecessary in that case.
+Thanks ;)
+>
+>> +
+>> +	return dlen + copied;
+>> +err_out:
+>> +	return -EFAULT;
+>> +}
+> [ ... ]
+>
 
-After some more research: not true
-
-gpiolib handles this, check this comment:
-
-5351 /*
-5352  * The DT node of some GPIO chips have a "compatible" property, but
-5353  * never have a struct device added and probed by a driver to register
-5354  * the GPIO chip with gpiolib. In such cases, fw_devlink=on will cause
-5355  * the consumers of the GPIO chip to get probe deferred forever because
-5356  * they will be waiting for a device associated with the GPIO chip
-5357  * firmware node to get added and bound to a driver.
-5358  *
-5359  * To allow these consumers to probe, we associate the struct
-5360  * gpio_device of the GPIO chip with the firmware node and then simply
-5361  * bind it to this stub driver.
-5362  */
-
-Further proof, 'pinmux-pins' in debugfs shows that these pins are tied
-to the gpiochip with this patch. It doesn't without this patch.
-
-I think it is okay as-is. But I need to make another update anyhow, so I
-will send a v2 nonetheless.
-
-
---8BQGfmeULC7Ogh7f
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmpYlVIACgkQFA3kzBSg
-KbbkPhAAi0TEZA7foWQWPRdzjz6wKn+SqHwPsiScZj/fmC0C9yBo2rmXnFo+4EC6
-YiofFpn0y1oDjR5Y6zpxaJ7xkYTFryIyQSg74raot/OOL2LwRpPNXesjFz85fnNz
-IuoLTeO+JAUjVfZLxDmqCUKnvxvVgqgd62102hhIxWRFT0k9Bprr53LlnhRyia6+
-9OVIrKULthTzSNqIW5x0HkEd3BszjUJf/ZaziZMYAp58QNIMp5vR6qRUf9wSxEaa
-yINgQUMVq0h2gtxl5JYweAEzaHvD9ik8vQTUVj+zj+/pK6Zd01GQxmb/TrXJL2dr
-eYltyipNs6JJZLGY+BSdnKid/Qte0dORdhtEho5SkTrVuCddYZSnmJyLX68hJsh2
-SUGSO45V2SCgyiKtStjHL/0Fm+OaV+5Ots38kKpL/oPG1F6y0hzGLRRNWTc+bfng
-UoFJU1ggCjHkFTzU9gLcbbAKb8isYyOd83XAmLgciMPWOkYge3CSOmtMLfWNlL2q
-ZaFLF7SQDLUYYhI4+jpbavpq8rbjnRk92cdSLQXcAwkuFFldnJYjNBUt4hfEYBGW
-S6BJKLpgjhjZ8Tty2z5HZQE6ynOtlT0Z+qzDI10U56kcGZkIRF3IAIicSBemzdDQ
-Z2tqW1UyBUZwWqi90nJ0MshKfCKw148by/sWK+xprObdIc67YKo=
-=6KMV
------END PGP SIGNATURE-----
-
---8BQGfmeULC7Ogh7f--
