@@ -1,129 +1,169 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71A4E408606;
-	Thu, 16 Jul 2026 10:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9EF334C3C;
+	Thu, 16 Jul 2026 11:15:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784199546; cv=none; b=bKGv2WjaycfXsK5m5Aoxjbs72goDX1qMa9DQd6/lg/F8D0qraDvF5KJoeCXqexJQieSQobmeGzBPTZpaxG8+PyUwXo7D5W4gTTFq9Mnd8IRCs74gIIkcin+NZGU0JKjfTbP+OEaOZl8E1SrDu0TwmU+BMdYuFSA1TyvUsklFgNY=
+	t=1784200544; cv=none; b=DWwitvM2Cy+FDwbUbmB9mpXwL9qX4sMivnlxv0OtkbQrw+dBgud8rmF5trv0AJpJqjD9rdfs6mwn1jiGbStYn61nc31bR+5L8a7Yic235tjBMqO1nflw54XNn+FmTfpmI+3nRYnc5et11+U1BxM+AI/1JMjcF6QdM9tiM3bn3vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784199546; c=relaxed/simple;
-	bh=RrtlIcDf/RFlWt5OyWTeJ+DmZPw/5Wm/dNhsmp2OJN4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=srgvUKX8ilqP9FVInJsr6rceqgnvtcmqTbPS0vAiQVa5e5avt2b2fs5Zej95RiXiG5w9HaLCCe+4ertZH5aarV/BdKjkRos41zs/d78vf83+aWpB1bUT+xDq5yvxt8cpEPFwF5Ml+GsJoxaREmNnbQs75gAEr+9A1XYcuOlwSII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=A7Ho2nGp; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1784200544; c=relaxed/simple;
+	bh=Btmb1XeTBgBy2fNJUcD7E30W9WNy4gFsbODvVTRbkHk=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=UVRZnCvJpi73QRtqex8mv/0NukXljYi05FEH45/KIeJ6Itg9V0sGHch03N73vK0yUXfFU3VqbIUpTafw4w6UuLTKZAzpa5pPGarlWSJe6njYpCVNELXg4lBBTE1LQ03IOv/4/quTuSEvh1mKg20SuXkM29b+TocLLCpm9dL68os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lylBx5mX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="A7Ho2nGp"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8C5B3339;
-	Thu, 16 Jul 2026 03:58:59 -0700 (PDT)
-Received: from [10.1.25.27] (e122027.cambridge.arm.com [10.1.25.27])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C558E3F7B4;
-	Thu, 16 Jul 2026 03:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784199543; bh=RrtlIcDf/RFlWt5OyWTeJ+DmZPw/5Wm/dNhsmp2OJN4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=A7Ho2nGpnvLv/Mg/MLAQTVrxOWePBOc+PMzBu/qHNH6KkfcDdKqy5l8te44nAlmb+
-	 7Uga8n5tIWcNduzUBmEdWxmqyrP7oY2aANyEbOaabuOjiWmRJTC3MqzwIsygEkZPme
-	 /TjbRo1goAE43yFgPNnEA5EMRrHIj/1BJBgPxRV0=
-Message-ID: <6ec5f7d4-df0d-42b5-a882-824e2df017ec@arm.com>
-Date: Thu, 16 Jul 2026 11:59:00 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lylBx5mX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0ED1F000E9;
+	Thu, 16 Jul 2026 11:15:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784200543;
+	bh=zWPzKaDIXTB5hQFzVtEim1Yg21f39RdjyxB/OMddJPw=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References;
+	b=lylBx5mXAnVXVhflTBOLyAZ2OuNd3Z2lhgsyn9E4eScYSJ/fyRAtx6GUfoB28Rung
+	 7AG5brfS0He+2/2Bg2gpmTaiZfAiERZX0sIHgxJoKRhJP4w4+3Cl5wfc3AHT/6ikE6
+	 NAYLNJVKC2FdW/M9PjqREhx/gMHON4EjEsaPMLdAa+crwoqYAsFITH1uK92+63SuHx
+	 Ua0DOK5s5jL+S6nbfEq+h4nqUA9X+z28M273HhdWt48X21el8YHU/bIY3lRZadecUv
+	 UwJC9IhUNDJpaiquelWAbs2pW5ikE/lAyuZiplPGeJYcd9s3qB+rR9ZJJVA4erj6ir
+	 IDBQi9p0sHGQw==
+Date: Thu, 16 Jul 2026 13:15:39 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org,
+ Damien Le Moal <dlemoal@kernel.org>
+CC: dlemoal@kernel.org, linux-ide@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_1/2=5D_ata=3A_libata-scsi=3A_t?=
+ =?US-ASCII?Q?erminate_deferred_commands_on_time_out?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <20260715092017.05CBF1F000E9@smtp.kernel.org>
+References: <20260715085824.854200-1-dlemoal@kernel.org> <20260715085824.854200-2-dlemoal@kernel.org> <20260715092017.05CBF1F000E9@smtp.kernel.org>
+Message-ID: <19CECED4-8BC0-4028-914B-2EF1C55C729D@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] firmware: arm_rmm: Add SMC definitions for calling
- the RMM
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>,
- kvmarm@lists.linux.dev, kvm@vger.kernel.org
-References: <20260715142739.80398-1-steven.price@arm.com>
- <20260715142739.80398-2-steven.price@arm.com>
- <20260715143804.ADDF41F000E9@smtp.kernel.org>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260715143804.ADDF41F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 15/07/2026 15:38, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] `struct rec_exit` contains 4 bytes of implicit compiler padding between `padding9` and `plane`.
-> - [Low] Discrepancy between the `PROT_MAP` macro prefix and the `DATA_MAP` comment and SMC command name.
-> --
-> 
-> --- Patch [1]: [PATCH 1/6] firmware: arm_rmm: Add SMC definitions for calling the RMM ---
-> commit c161f24da1669945cb4dc961f3a3c4ef452450b6
-> Author: Steven Price <steven.price@arm.com>
-> firmware: arm_rmm: Add SMC definitions for calling the RMM
-> 
-> The RMM (Realm Management Monitor) provides functionality that can be
-> accessed by SMC calls from the host.
-> 
->> diff --git a/include/linux/arm-smccc-rmi.h b/include/linux/arm-smccc-rmi.h
->> new file mode 100644
->> index 0000000000000..c965e8867518f
->> --- /dev/null
->> +++ b/include/linux/arm-smccc-rmi.h
-> 
-> [ ... ]
-> 
->> +	union { /* 0x600 */
->> +		struct {
->> +			u16 imm;
->> +			u16 padding9;
->> +			u64 plane;
-> 
-> [Severity: Low]
-> Does this struct layout contain implicit padding? The sequence of two u16
-> fields followed by a u64 field forces the compiler to inject 4 bytes of
-> padding to align the plane field to an 8-byte boundary. While deterministic
-> on ARM64, implicit padding in ABI structures shared with firmware is usually
-> avoided. Should an explicit 32-bit padding field be added here?
-
-Indeed this padding is broken. Amusingly I'd actually asked AI to write
-a script to generate this file from the specification source (which had
-identified a few minor issues that I'd already fix), but it managed to
-preserve this bug :(
-
-I've fixed the script and this now produces:
-
-                struct {
-                        u16 imm;
-                        u8 padding9[6];
-                        u64 plane;
-                };
-
->> +		};
->> +		u8 padding6[0x100];
->> +	};
-> 
-> [ ... ]
-> 
->> +/* RMI_RTT_DATA_MAP_FLAGS definitions */
->> +#define RMI_RTT_PROT_MAP_FLAGS_OADDR_TYPE	GENMASK(1, 0)
->> +#define RMI_RTT_PROT_MAP_FLAGS_LIST_COUNT	GENMASK(15, 2)
-> 
-> [Severity: Low]
-> This isn't a bug, but there seems to be a naming discrepancy. The comment
-> mentions RMI_RTT_DATA_MAP_FLAGS, which corresponds to the
-> SMC_RMI_RTT_DATA_MAP command, but the macros are prefixed with
-> RMI_RTT_PROT_MAP_FLAGS. Should these macros use the DATA_MAP prefix instead?
-
-These comments were manually generated - again I've fixed the script to
-generate the comments automatically to avoid this mismatch in the future.
-
-Thanks,
-Steve
-
+On 15 July 2026 11:20:16 CEST, sashiko-bot@kernel=2Eorg wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>- [High] Deferred commands retried via `ata_eh_retry_deferred_qc` will be=
+ erroneously processed as ghost timeouts during SCSI EH, leading to lost re=
+tries or erroneous `DRIVER_TIMEOUT` failures for unissued commands, and `ho=
+st_failed` underflows=2E
+>--
+>
+>--- Patch [1]: [PATCH v4 1/2] ata: libata-scsi: terminate deferred comman=
+ds on time out ---
+>commit 40daf934a62cbe822fdf8ae16b1ee66e4ac23f37
+>Author: Damien Le Moal <dlemoal@kernel=2Eorg>
+>
+>ata: libata-scsi: terminate deferred commands on time out
+>
+>This patch introduces ata_scsi_eh_timed_out() to immediately schedule a r=
+etry
+>of all waiting deferred QCs using the eh_timed_out SCSI host template
+>operation=2E It implements ata_eh_retry_deferred_qc() to schedule the ret=
+ry
+>through libata EH with ata_qc_schedule_eh() and flags waiting QCs with
+>ATA_QCFLAG_RETRY=2E
+>
+>Fixes: 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation"=
+)
+>
+>> diff --git a/drivers/ata/libata-eh=2Ec b/drivers/ata/libata-eh=2Ec
+>> index 05df7ea6954a9=2E=2E5c56e1dd580b6 100644
+>> --- a/drivers/ata/libata-eh=2Ec
+>> +++ b/drivers/ata/libata-eh=2Ec
+>> @@ -546,6 +546,27 @@ static void ata_eh_unload(struct ata_port *ap)
+>>  	spin_unlock_irqrestore(ap->lock, flags);
+>>  }
+>> =20
+>> +void ata_eh_retry_deferred_qc(struct ata_port *ap,
+>> +			      struct scsi_cmnd *timedout_scmd)
+>> +{
+>> +	struct ata_queued_cmd *qc;
+>> +	struct ata_link *link;
 >> +
->> +/* S2AP Direct Encodings, used in RMI_RTT_UNPROT_MAP_FLAGS_S2AP */
->> +#define RMI_S2AP_DIRECT_WRITE			BIT(0)
->> +#define RMI_S2AP_DIRECT_READ			BIT(1)
+>> +	lockdep_assert_held(ap->lock);
 >> +
->> +#endif /* __LINUX_ARM_SMCCC_RMI_H_ */
-> 
+>> +	/* Trigger EH for retrying any deferred qc that has not timed out=2E =
+*/
+>> +	ata_for_each_link(link, ap, PMP_FIRST) {
+>> +		qc =3D link->deferred_qc;
+>> +		if (!qc || qc->scsicmd =3D=3D timedout_scmd)
+>> +			continue;
+>> +
+>> +		link->deferred_qc =3D NULL;
+>> +		cancel_work(&link->deferred_qc_work);
+>> +		qc->flags |=3D ATA_QCFLAG_RETRY;
+>
+>[Severity: High]
+>Does clearing link->deferred_qc here break the deferred QC lookup in
+>ata_scsi_cmd_error_handler()?
+>
+>When the SCSI EH thread runs ata_scsi_cmd_error_handler(), it attempts to
+>identify the deferred QC:
+>
+>drivers/ata/libata-eh=2Ec:ata_scsi_cmd_error_handler() {
+>    =2E=2E=2E
+>    if ((qc->flags & ATA_QCFLAG_ACTIVE) ||
+>        qc =3D=3D qc->dev->link->deferred_qc)
+>        break;
+>    =2E=2E=2E
+>}
+>
+>Because ATA_QCFLAG_ACTIVE is not set on deferred commands and we have alr=
+eady
+>cleared link->deferred_qc to NULL above, the condition fails=2E The loop
+>finishes without breaking and falls through to the ghost timeout branch:
+>
+>drivers/ata/libata-eh=2Ec:ata_scsi_cmd_error_handler() {
+>    =2E=2E=2E
+>    } else {
+>        /* Normal completion occurred after
+>         * SCSI timeout but before this point=2E
+>         * Successfully complete it=2E
+>         */
+>        scmd->retries =3D scmd->allowed;
+>        scsi_eh_finish_cmd(scmd, &ap->eh_done_q);
+>    }
+>}
+>
+>Will this cause the retry budget for the deferred command to be artificia=
+lly
+>exhausted, resulting in erroneous DRIVER_TIMEOUT failures for unissued
+>commands?
+>
+>Additionally, when libata EH later processes this same qc in ata_eh_finis=
+h()
+>and calls ata_eh_qc_retry(), it will execute __ata_eh_qc_complete() and c=
+all
+>scsi_eh_finish_cmd() a second time for the same command=2E Could this dou=
+ble
+>completion cause host_failed to underflow and corrupt the SCSI EH state
+>machine
+
+I'm on vacation mode, so not thinking clearly,
+but does Sashiko have a point here?
+
+You modify __ata_eh_qc_complete(), so it will NOT call __ata_qc_complete()
+if ((qc->flags & ATA_QCFLAG_RETRY) && !(qc->flags & ATA_QCFLAG_ACTIVE))
+
+But __ata_eh_qc_complete() will still call scsi_eh_finish_cmd()=2E So it t=
+here a chance that=20
+scsi_eh_finish_cmd() will be called twice?
+
+Do we perhaps need a QC flag anyway, so that an "aborted" deferred QC does=
+ not call scsi_eh_finish_cmd() in ata_scsi_cmd_error_handler()? (Such that =
+the=20
+scsi_eh_finish_cmd() in __ata_eh_qc_complete() is the only one that will b=
+e called=2E)
+
+
+Kind regards,
+Niklas
 
