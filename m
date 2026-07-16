@@ -1,205 +1,211 @@
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021085.outbound.protection.outlook.com [40.107.74.85])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5F32D7DC4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.85
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784171216; cv=fail; b=nm7TR3Jl0IX5H2PzJyE5MaWn6ttgY0MnmM6YKWsI6mK0lvBPhXO6tubTDfxPbYJ51F+2SR6qqdlamfhf0+nj6+sa6AN14n6H+rfOuIgY5VoDho3Krico16mqFt5kkzxOrxR1jc6zjsaLjCoATF89eKtfB0elEby+9Zemn/1f1KU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784171216; c=relaxed/simple;
-	bh=S/HL3vfO20O7funZcEIKGnlHbkQio/VIZdizyFBYJCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=IDa2rcspxY9D7YkPyE87d4sXIguQ0DK1VcaQQP6oCYE/+09u9GPMnBbVjq9D3/lvMA9V0Rbk+rLM/JWirSLk39fY+4fq890n09A/I2s0s9zbZ8siSJV340hTj1hPoFALEfuwPPD7sxQOzzU8pXvlm86bhWS5vCh7CoukrUKPHMc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=TEvXFcUS reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAFF1AA797
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:07:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784171246; cv=none; b=QeIZx0wy1APTzOMGWVwZEhlmtcWFHXCTEcKRNSXYSLzDf9Ii8NeG3JIO3j3YlHLSqIzQkyclrXnylMaxC1ykQLmNUku/L7B9ArMHGb6/d0RFkW6NJkS9FYrnxWFiiSP1XCeABWSl8c7gh7QfgMR5XIdn8khykv7vseOjVrmqLB4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784171246; c=relaxed/simple;
+	bh=/UJRK6D3yVufqnwJNnfHrdC4GBbWgiY71qr9c8vzhts=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VKklUuDE7vZRZdjJ3qcsbBNCIoG7d/45AVxsQIGW7m8qjWIn7xsrcTpkqoqx2K6AXjKQncc28O8uBEmkVK/xmqpKvbxfNW2Sc5P0iusCXEjUnoUchrQK1M+8xo5Q5UMach8lOROt1ddtIxsS6J+FFoes9yro+w/vQNJsW3a/1/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cBe07Y/Z; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ke3Wtg3m; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="TEvXFcUS"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V2LTs2rBcl/X5gjwR8MmafQ+h9TyTZKp/Y7XRSMgXeGVGqsTp1qOzvYQk5FwWE52zGlIN6201nEvw28whwRchZozP6JE1SH6VMCKY48JcdMkc3I5Zx5pZAytjNjnbqgrXJNT56IQslUP8ef1+BPP64Yzw3GW/N1SGTKT3hPFk9Ll6noenll0CLa4/y0HHohx2ctNstJZcV2kb6c/UzAw4nw/75SlQhtEU6VWNModll9GEeYY1W1CzAyTjC//Uctm9DjIkYwBDfectQkR//3aKMCGWquXc9o7sCsjgpth5h7fxsLDwa/FJs+iRDO2MIpoYRKQGq9Wn7ws5Rnqz1rPcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dzUCBK9WrDNCUT6pHCJiUFouVy4AAdULrmPSInIYpIc=;
- b=mOKwW84UZV3n2brpCu3mYAfbZfuLqylVEY1tlCpg2CtgOGjEU3Oefp0FT1CDILdxzjbJqrPBQ8mfGtGQIWKnL/ug5aVma5c3CWJAjgwuIfmabysVtPG/bw2aDg+dFra9rK0xJ3ZDOG86D8Sepi3Ghpcgp1m93HbYD2c1302duwqWZcVB/1PhxPtA+M+VytYWqDeDwvWNUqgaIiT43Uzp7+jO+zNw2l56CuuPIAJjJ0Cr8LpP/WFS3WLKBQTvBVQAdzECH0YuU/3VLDRHlBZrUaVeDolvGgWuldNAKqN4CwcHg6MIBcHh7SA6BF7Ur+QyQF65bxjQwHMGaf9/jvT2Ag==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dzUCBK9WrDNCUT6pHCJiUFouVy4AAdULrmPSInIYpIc=;
- b=TEvXFcUS7HacKaznBPUksh0OyBF3ExMK59mTGrtBCk08+vxwOgbTgVzRMA9m42ag/iQUdVi35E2mcPa6MOklx50S5AqCUtzkB0wVu7Q6F95KH+/Bc3pzwJpfgCy5JPNgH18TMkbd/pV9qGGH0ohjFY/cBcOseWswenvjUV3Ob6o=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by OS3P286MB1566.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:17a::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Thu, 16 Jul
- 2026 03:06:51 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0223.008; Thu, 16 Jul 2026
- 03:06:50 +0000
-Date: Thu, 16 Jul 2026 12:06:50 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 5/9] dmaengine: dw-edma: Serialize channel state checks
-Message-ID: <tz52uqhz3bs5i4cn6nt2ewtjqghkgkygxayqumln6wdgxsm46d@zptn3yhdnvmq>
-References: <20260715175740.1110404-1-den@valinux.co.jp>
- <20260715175740.1110404-6-den@valinux.co.jp>
- <20260715181921.CA6551F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260715181921.CA6551F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TYCP286CA0108.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:29c::14) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cBe07Y/Z";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ke3Wtg3m"
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66G0Xap01305020
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:07:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9oQ1KIuqWah4dyLVQGgcaf3i7K09sCl1iS5GhyRguhQ=; b=cBe07Y/Zr2n6PGwX
+	edGoy3DxeB+jXCK8AXrpLCKQInd058pOfMznb2ZIBW8qMoWCcfbnrWrmz+V5SRKh
+	izMhkbl18+ptSmuYDqn3pwDSu8MnrC7bHyR03Qcb0WnyKf9Fh2cNp94PDzzNpt1O
+	8r4HDuuankSx4oocgEgoJXTcwKmvrsHW/TnQDEs6Qobzobx1hH67u9CQWQ5GYx1z
+	UcaIdpoMQk/02q7+/Ynvfh/KAqeLQYX+r1GQ0cteEDkY9wa9AORCFE2a3pO3ZK+n
+	/xMHS/hMuZ/67wlozo1HRs+m+E4PbsYJaiVm7F/eBsx4EMmbNDrqg7rjpXdaKFLB
+	Un+sVQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fe855bpqd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 03:07:23 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-38e2da7191fso1054020a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 15 Jul 2026 20:07:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784171243; x=1784776043; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=9oQ1KIuqWah4dyLVQGgcaf3i7K09sCl1iS5GhyRguhQ=;
+        b=Ke3Wtg3mnIOCIS1ISrcqHvpnMVqAxqeF6j7Rm0fQW4zvHSRE0QLl5+7JdzgsmaC7sf
+         SF2gTxI31skRGpolnxk684FsH71zmDTL3Q0eHPWiyID9VSplMUh6wfJMH2nK+VXkoxTJ
+         fuJoj5wUAmvjJQX1DMCAwmeXlKFlus3hT5FrTfQmIT2q0NFq7fHK54AUtkwsPTup3Rv7
+         JJWkS0P2w3f8EV0UL/ZLU8Qqh4woxIOV45f33tMxg3w4lfJJQi74u3F2ner2HrgoGiJm
+         6q5B9QIzFgDjvotDVY+9NRZweia+m6ewqpRs0j7Der29M6ULU/SgjKV7WsgddzQcIVnB
+         TCTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784171243; x=1784776043;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=9oQ1KIuqWah4dyLVQGgcaf3i7K09sCl1iS5GhyRguhQ=;
+        b=JljAvnU/1rNW5Hra4i1v8PXFSwjB/npsy+cmIJuM2fV978gB+Xc3QG0WyMFkHvRxUP
+         lpi6UHVeV8Wd4iKys02bs1yjpwefaUaZjcF2K5iGrAysXoL3yR/1wizwLrZcWfBxnnoj
+         FqO6gSXzeGmzGxQrXNuoLS0G30Jtg39+VGUR+GHk308P9Y731jSEpn395hnEbUW+S1G7
+         8v5KfFB0zcyTyKyXiIyBMtyAZHVuOXVnEAXRLAvGjW+FBqCzBPGZAeARZb2ViAuNNcgl
+         GiRVrNTK/j5ZdoOsjX4rWFFIwDy1ZB9kRf8faHXbb8+vG+1UPCgWw8qIxvvFrGfxgHm5
+         DJJA==
+X-Gm-Message-State: AOJu0YwzvFI9lY/z7kVTNQO4plFfucHz6xsYuj2llGCKP5v/YIzA1g/M
+	OhX8gb8JiI/VSi049VcKjJsZJHCFL8i0I0FKzqk1zUytItwVKdOKomCJXrThdr1uf/j/TGcSuS3
+	jNGgaeLwWcngIC8ykVsCJ9vXNqE9f4qNig2AYkJgb8XZ7wru+b1nQWN6rnsL9qX6DinBOJjuGa2
+	Y9nC4=
+X-Gm-Gg: AfdE7cnbBMQ4ku9yKasa85VuOD+/Xs9k9Isr2+uD/C0457LGYSQCOzntTVeqcbVf36D
+	/bg1/qSyNDQ+8uFIFlu0h4m/FGNs6yOIZqaS+KMD/ZqueCKv4etrFfOwBvmENRVNfERiPwXQK6K
+	WdbFrbl6M23hXF7bn8Aa/idkMr+pHDh7uowYWeS6VbXUmWZryIoz3+T+FKXMrH95GKR+Gjx989P
+	z0K/IAZdr4NAKECeOAXQPOmDZiAuHKbTsCaZ/mM+MXqic9gjOnudiQKpOSSsJ6JrdyFjdMf7fu6
+	8vygsi4bJp+7ChoXCxmXZdQ8tP+zP8SbKWKu71t+0AUzxQLbSCVK6cri1DLMHLV1K41A3vjm+9K
+	Im2Eig/gm8ZRwfxgVb63W+zn/hE9O9ffF
+X-Received: by 2002:a17:90b:554e:b0:387:e0db:bc30 with SMTP id 98e67ed59e1d1-38dc7bb6bf8mr17608482a91.38.1784171243106;
+        Wed, 15 Jul 2026 20:07:23 -0700 (PDT)
+X-Received: by 2002:a17:90b:554e:b0:387:e0db:bc30 with SMTP id 98e67ed59e1d1-38dc7bb6bf8mr17608445a91.38.1784171242540;
+        Wed, 15 Jul 2026 20:07:22 -0700 (PDT)
+Received: from [10.206.105.200] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e6c10dcsm6946343eec.23.2026.07.15.20.07.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jul 2026 20:07:21 -0700 (PDT)
+Message-ID: <b179ac7a-af91-da67-3232-e9e41203ade0@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 08:37:17 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS3P286MB1566:EE_
-X-MS-Office365-Filtering-Correlation-Id: 120659db-1975-489a-c0e2-08dee2e7481c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|10070799003|18002099003|22082099003|4143699003|56012099006|10067099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	q0EjauUPE7sRcNLpBfy/DUObyOqrY82htdlIUcdc9l39VaGtIvmMv/25J9XtBAMGrBvCtX+x7mdYDrxcXe4lQodzko39lSMtoOdXDs6+33sFDcmsqthTGe29TV9XR12Y/Il6BAKw62q5ZDqyZzZT5dfakAJAWPdGAt7I95fcYrTV6F3ohS7EGaZmg4YOH732hkcQ8DdFHUeAjRav03SxbHwASC5SrlXDjuz3+aYKXoe2imNZiM6EeI5YX04Cg9pm4nOw7+EJc7oe0KIyvHmwUqN1l84qnqnNS+L9eWnPe+beiWzpYOqnAwTXkmM3s/zSEgoV9ylLqUBrE0n/sTaJvVsdH3uMGf9iFmsT5yuffhe6QvhxqGFeP6SIEOvNHhuQkLy0tkk0GaAw4ai57uLy1sstre1tMTmmOWNQkuDC542rxQ0lxBaC84Awl709I6fXa0QZZkc8TlcbBAG6mBykqrBFwPbE6t2lksbL1xWJpt6JzjAoKPlyb9AgdtOUUXihjMe/z0WMo+LWXPoXjo1wM3T18QNpum4NrEqDKXilErvwRVySUn0zd57CHD1WnDRsbiFyqiBNNrhRGtdWo7WIzuXZxhddI1Oy7Zd1m5VVQk4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(10070799003)(18002099003)(22082099003)(4143699003)(56012099006)(10067099003)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?OZnmqKT8HTx3WDkhytXArXq1fHjBGv9FoXzgqspytTNhAk+Mg+Nkp3KCSM?=
- =?iso-8859-1?Q?7/oxLUg8LSlWyYjhFZPUwSsbUEo/TG2Lgz0RbDe4SLdJHmM/17HDqQDfGU?=
- =?iso-8859-1?Q?1PaSyzwQemPOzTRxG+Hgwky0tRBCMv9QygIksuCkedSk+dG2Tn59Vt7/91?=
- =?iso-8859-1?Q?aU854niGinFzIA53hk518C/9ZH9IyWU8vHY9m0iwQ7Bbw9vI7jl7g1wJPf?=
- =?iso-8859-1?Q?EHPxEWTXHXjtvcWAjoV5Iv05y4PqekSVhdZ7tFyg6iO7ImfMqxCSgbZvKg?=
- =?iso-8859-1?Q?lSf4+EOelN9uCimc3Xn7QPKYpDBNr/PiVo3O7L0nYtIEzxRkSMf1j6iJCX?=
- =?iso-8859-1?Q?EmxPIneGKu3/cvb4FOxpeliskj1/WNtLzXAWZA9+AG8pIeiK8uBlpmkZM2?=
- =?iso-8859-1?Q?0sB7SAaHDhr2dTcc3TmEo+rKcfNkdkOX+cEI4vUqaw8BR7fuHgoqkf1VHm?=
- =?iso-8859-1?Q?DkdNH9XvZyUz13Te6mgLy0qUe9XF7V5CFU50gfjb+zl1EIvlGdPIyPG7k2?=
- =?iso-8859-1?Q?QiuNUI5P0XpZtfyeEsiQ/LPQDE8W33wLgb5Y4Kolp8KcA6vSZXM40SD0Hs?=
- =?iso-8859-1?Q?dT+12rrN/Vu9LGgwX/K7PMzBv5onErjz7zb459ptFDzcuidnAzkroPk4FV?=
- =?iso-8859-1?Q?41YeSM+bkGPEePMdAuacj3oFcq4HkKzMCa/5u0Qu6fSxforszwA864AWDU?=
- =?iso-8859-1?Q?B66LPibUaUr+pfaW4g/huELwbXM1PF2MJMQLZ/s/gQzoqTaz1zRxuUWCdB?=
- =?iso-8859-1?Q?Clz6ygpFuBUVEYkXAevdfuGvGZR7Nw8WOqHhI5ofjJnTKxF4Ugg6wDAQQZ?=
- =?iso-8859-1?Q?j8mV8ffpKadbTJUBzu2cnAaxwlI45gCqSODtQK65dE58b6YDIjqVa0Bn9D?=
- =?iso-8859-1?Q?QKdsUOXexhTST31znJIt01w8H9Z9igVPPVAGQHDPwL5SI2zNOX0VrpHUAK?=
- =?iso-8859-1?Q?6LArqFx4e2iDR0KOi+I9ogcmuvs8X3eOKDjL7ha9xLhoiuGI0YbZbwxjvt?=
- =?iso-8859-1?Q?Vqp4UOJC/XAoI6Y2xTdJRA+dwSFsUmFEwMCP29y8cN2jf2HUJYXhEyZQ7m?=
- =?iso-8859-1?Q?G9/xGkP/gAXz5Azqj0oydIV3p4lnWmoYgwsSwF0raofixNBr5AJeHlz0Qd?=
- =?iso-8859-1?Q?Oag0+rOss8yMNyeX3HvIWcjt+27ZQ2xdnXdylfPDRM1TP0zFY2J2H5MqHB?=
- =?iso-8859-1?Q?28xlfA/S/XsWpLKKV4gwbqwDKq42tv70FTLvHGmcnTwwqXv2AZ68tUhy6b?=
- =?iso-8859-1?Q?JR62KzfLhZiXQtT3SyqteGKycJy8s3Ad3GCABkyF004XZMB+6osIHYlxTj?=
- =?iso-8859-1?Q?GWPXaCxj+nd6XHvVgj3jEFMmaPVAFYIuB/XmwtLxQ435DnZsDBMTQT8IKf?=
- =?iso-8859-1?Q?ItjHxenTOI6MLCn5w7KX9l59m84P4uL9A4tpsx2dJS9weqIC08bYsk4nMH?=
- =?iso-8859-1?Q?AgmrmFzZ44ezQXQacLFIY7w2jHyDc+aoogK9mbZgejnXFxLkuHlVxruGw/?=
- =?iso-8859-1?Q?IoiSCTpd/l6h9Y5+Yi3MJJC0ANKsoHWrXXJAhCJFM1OhY8SWxbDodeYYCr?=
- =?iso-8859-1?Q?02xNunAVQtO6yEZFrgXIoiwY5gWTwXCfx0io77/lcs/+dQ4e87+BAyGnLq?=
- =?iso-8859-1?Q?YCTmG5RJC/ojltrFXzwAGlAWwI7nrbKA6EizQdgZNMMkTcXFMbCAx6xadW?=
- =?iso-8859-1?Q?WQZkYWEEfh07HmwzeVwMN7+B+foKT9GB6O9a/MEIQ7flRIG0Xb7iFP7M0i?=
- =?iso-8859-1?Q?2mIENwHLQOXdEUSl3MiieZTRItkeY0O+QKunEgKAST0qW8eiOaux8K7hip?=
- =?iso-8859-1?Q?xhMPl3YHgmO1Y8hfWeD5fRg944IszeiNX5kVHhilqGNxIcEHS9lz?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 120659db-1975-489a-c0e2-08dee2e7481c
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 03:06:50.9092
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: j/ah0qYUmzcLlD+81ylwn/80QjNJZBoY6qOCtV3IMLw38Uw+GvjFV7oRj0ob7fzoyGA5NMq4/0ypP/S129DDgw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3P286MB1566
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur
+ video codec
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260715-glymur-v9-0-8cf2cbe12a07@oss.qualcomm.com>
+ <20260715-glymur-v9-1-8cf2cbe12a07@oss.qualcomm.com>
+ <20260715142224.5FA721F00A3A@smtp.kernel.org>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <20260715142224.5FA721F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: hEN7Cu8SQEON7bdZXxIY6AjrPdOHgsFF
+X-Authority-Analysis: v=2.4 cv=KOlqylFo c=1 sm=1 tr=0 ts=6a584aeb cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KnhrVl0X9m98bs8rsNEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDAyOSBTYWx0ZWRfX/w+gTp1iXKLE
+ nLaHiJj06yVG2B5JI6j3ER97vdKrdqOaqEja+QBKJGO1/rPwKN7Qy6PosNPGIfPSqfQkDL8pmFP
+ 8Svs9kyYZJPmL35Vx19Qts2IkCkDL4SDbgUq1Pi2EAXXZDo+F40w9wcjcXRJSafj1UDl8ZnlzpP
+ UgYGvv4Kq8JEn5S1fLK4WYOGf+Ve3gw95Ge2eWxbuJw3EjOdBgOpDov9jR+eZDcq0dFv+7kVzzi
+ DB4eS77yYPtGNDvC4XTmL6i6zl+sWim1e+DaGJurVuXvwkL1ynGyvoRWSwTrL8wg+DhJfPs7IL3
+ qmM3nHVI92j0GcyG2fG30ObcJHD1Jl/vomv+OYaKSZUKs8sQusJ5X2Ef68LgSdkvCyqMng3T5qY
+ jDlVp0PBmgXhN7f5daU24wc/6XCBD3bYoTMR5kxDOHdg/XlokmubcoVXoxighZtYWZzPSfGEnMc
+ nGb8MMFSccvMXcce/Nw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDAyOSBTYWx0ZWRfX84+eWwCHz3Ri
+ 53vE3/qSz1EqWVS3etvxnca0g7+wdIh/E2i/7F2+ykDuTHVHxopwd9MM9D90/S70z10/xrPdLBQ
+ PnvMnU5FEeIBNQo0a4W9wKzwf6s/TZ0=
+X-Proofpoint-ORIG-GUID: hEN7Cu8SQEON7bdZXxIY6AjrPdOHgsFF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_01,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607160029
 
-On Wed, Jul 15, 2026 at 06:19:21PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] `dw_edma_device_terminate_all()` fails to actually stop the DMA hardware engine, leaving it vulnerable to permanent hangs if the hardware stalls.
 
-This requires a larger change, so I would prefer to address it in a separate
-series.
-
-> - [High] The driver advertises `DMA_CYCLIC` support and accepts cyclic transfers, but fails to implement true infinite looping or fire the required period completion callbacks.
-
-The same goes here.
-
+On 7/15/2026 7:52 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Unnecessary `#address-cells` and `#size-cells` properties on a node without addressable children.
 > --
-> 
-> --- Patch [5]: [PATCH v3 5/9] dmaengine: dw-edma: Serialize channel state checks ---
-> commit 1467b5248fd39f737e5901d6f209dccdfffd622e
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> dmaengine: dw-edma: Serialize channel state checks
-> 
-> The commit fixes a race condition between pause()/resume() and interrupt 
-> handlers by extending vc.lock coverage to include channel state checks. 
-> This prevents the channel from becoming permanently wedged due to missed state 
-> updates, and ensures issue_pending() uses the correct configuration state.
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index b06b299661c02..8b0e2af734da9 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> 
+>
+> --- Patch [1]: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur video codec ---
+> commit 8ca344fa9395fcf1d13bd1ea93de8bee21a5c176
+> Author: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+>
+> dt-bindings: media: qcom,glymur-iris: Add glymur video codec
+>
+> This commit adds the device tree binding for the Qualcomm Glymur Iris video
+> codec. It introduces a new dual-core architecture requiring additional
+> power domains and clocks, and updates the maxItems limits in the common
+> venus schema to accommodate these changes.
+>
+>> diff --git a/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
+>> @@ -0,0 +1,255 @@
 > [ ... ]
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does dw_edma_device_terminate_all() fail to
-> actually stop the DMA hardware engine?
-> 
-> If the hardware stalls (e.g., due to an unresponsive peripheral or AXI bus 
-> hang), it looks like the DMA channel could become permanently wedged. When a
-> client calls dmaengine_terminate_all() to abort a transfer, the code sets a
-> software flag:
-> 
-> drivers/dma/dw-edma/dw-edma-core.c:dw_edma_device_terminate_all() {
->     ...
->     } else if (chan->request > EDMA_REQ_PAUSE) {
->         err = -EPERM;
->     } else {
->         chan->request = EDMA_REQ_STOP;
->     }
->     ...
-> }
-> 
-> Will this cause the polling loop in dw_edma_wait_termination() to time out 
-> if the hardware is stalled and the interrupt never fires? Should the hardware 
-> be explicitly stopped rather than relying exclusively on natural completion?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the driver fail to implement true 
-> infinite looping for DMA_CYCLIC transfers?
-> 
-> When a client submits a cyclic transfer via device_prep_dma_cyclic(), it is 
-> unrolled into a finite list of bursts based on xfer.cyclic.cnt. However, in 
-> dw_edma_done_interrupt(), the descriptor appears to be completely finished 
-> without calling vchan_cyclic_callback(vd):
-> 
-> drivers/dma/dw-edma/dw-edma-core.c:dw_edma_done_interrupt() {
->     ...
->     case EDMA_REQ_PAUSE:
->         desc = vd2dw_edma_desc(vd);
->         if (!desc->chunks_alloc) {
->             dw_hdma_set_callback_result(vd,
->                                         DMA_TRANS_NOERROR);
->             list_del(&vd->node);
->             vchan_cookie_complete(vd);
->         }
->     ...
-> }
-> 
-> Will this cause subsystems relying on cyclic DMA (like ALSA for audio) to hang 
-> indefinitely while waiting for period completion events?
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260715175740.1110404-1-den@valinux.co.jp?part=5
+>> +  interconnect-names:
+>> +    items:
+>> +      - const: cpu-cfg
+>> +      - const: video-mem
+>> +
+>> +  '#address-cells':
+>> +    const: 2
+>> +
+>> +  '#size-cells':
+>> +    const: 2
+> [Severity: Low]
+> Are these properties necessary here? The schema strictly enforces const: 2
+> for #address-cells and #size-cells at the root node, but none of the child
+> nodes (non-pixel, pixel, firmware) define a reg property, and the parent
+> does not define a ranges property. 
+>
+> Will this cause the DeviceTree compiler (dtc) to emit an 
+> avoid_unnecessary_addr_size warning when compiling device trees using this
+> node?
+>
+>> +
+>> +  non-pixel:
+>> +    type: object
+> [ ... ]
+>> +        resets = <&gcc_video_axi0c_clk_ares>,
+>> +                 <&gcc_video_axi0_clk_ares>,
+>> +                 <&videocc_mvs0c_freerun_clk_ares>,
+>> +                 <&videocc_mvs0_freerun_clk_ares>,
+>> +                 <&gcc_video_axi1_clk_ares>,
+>> +                 <&videocc_mvs1_freerun_clk_ares>;
+>> +        reset-names = "core_bus",
+>> +                      "vcodec0_bus",
+>> +                      "core",
+>> +                      "vcodec0_core",
+>> +                      "vcodec1_bus",
+>> +                      "vcodec1_core";
+>> +
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+> [Severity: Low]
+> Does the example need #address-cells and #size-cells? It demonstrates their
+> use without any child nodes containing reg properties, which directly causes a
+> dtc warning during dt_binding_check validation.
+
+Without #address-cells and #size-cells, getting the below kernel warning prints.
+[    6.953615] Missing '#address-cells' in /soc@0/video-codec@aa00000
+[    6.968288] WARNING: drivers/of/base.c:115 at of_bus_n_addr_cells+0xa4/0xf4
+
+[    7.440909] Missing '#size-cells' in /soc@0/video-codec@aa00000
+[    7.447044] WARNING: drivers/of/base.c:142 at of_bus_n_size_cells+0xa4/0xf8
+
+>> +
+>> +        non-pixel {
+>> +            iommus = <&apps_smmu 0x1940 0x0000>,
+>> +                     <&apps_smmu 0x1944 0x0000>,
+>> +                     <&apps_smmu 0x19e0 0x0000>;
