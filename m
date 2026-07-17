@@ -1,107 +1,133 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7977D3D333B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 06:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784271551; cv=pass; b=TEmokz/gHLhSm3g5p8duji5KdxsVXAtcZvro/pdkQ6pS/KEB72gEEh8tpgzGqc60VVyhIRSM0cYLi74Rh2eG9vG3a6kEA7HSkfDnnDdK2HD1YL71NKfyKs0smWF/4JnD23QUvXge3ZDwakdipD0zyaf3y3Bt0sq3V98cAIzvrfA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784271551; c=relaxed/simple;
-	bh=LRhaAiyoY63/EjHSGFr1tgoiXiEMzGg3wcIFnjjeKug=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cJGMm8w+SuY2DA8ixajBNhOtwF/M4mKkkW1Fzn48+qgPO+lHSjIHAQdPq56NfcT1K/vkODQfobYSwe1oL2i+JskTk8RwbZPpy8aYytOI7S/dULeUavubVvIMmZn4yX7649lRVgYmLybo4fpeIEWKJ3UhS2wEafdK/eQdT312YBA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UD2vYv8A; arc=pass smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UD2vYv8A"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-51c04bf4711so71770341cf.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 23:59:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784271549; cv=none;
-        d=google.com; s=arc-20260327;
-        b=HV5fb0e8UEyHrPsZswvA8rL50qPspbrmb7ugp00EpdoBEob0u87tD7Hnw5cZtwf04e
-         Spf/nkhYFsGSUOWOkFSUUm+LtiMwAf3VNzcIPzBUii8TDLHqbkL9QrF3FOLN11A6XK4z
-         lF0aTChBoiefFxvUbReCe+9+hPzDV0gAcStBZXP02PIGGC8brkuFeF8HykHL2S1A5Cwb
-         r9lxQXzkbIgfiEo0DaXImYBIR/2A5lDy6HhLKpfAV8XULEPN3sdFzKO9nHqb3yJQm/jv
-         dL25e8QKcZimGqW+uzocdBayXOCHNhAjaBq+2FnzrgVRYeM16xtV+CjbO0qkEXiVJYwD
-         6enQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LRhaAiyoY63/EjHSGFr1tgoiXiEMzGg3wcIFnjjeKug=;
-        fh=lUMQWPkEZ6AcKIyZSvVSOYy9u0mvoyhr4Ztb1hNfA7U=;
-        b=cnBJEq3iZjzT56NFwve8zOyn+HAeN/tPLoHExHEX5/SJvYyZNOIZTZLKqCY7Msdz0o
-         sDi42Ag83npXHxDRn9cPPcsL3pnkFQcax5H4yvTIMex/TDKT90dPt01rZyHenXmqfxU3
-         Pl6MvNeaBUAa2fu/W/qZFLyFYX1rlMV/3aeptCYMMHlJz9EoZaY8ypUdiRivuNh8xkjW
-         mtYhHGKUZ+QOcdLjpeXn9WwaF2+ZoB/NOxp2iXv2xwgJI0eilCvhV/JM97kN1AT2FUO7
-         u4z3YX+PiamtMe8ArauuZ7veNF1J206j66t0KeBv0/PC8ebP8G6VnpTIJaLOiy29Ctur
-         pTGA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784271549; x=1784876349; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LRhaAiyoY63/EjHSGFr1tgoiXiEMzGg3wcIFnjjeKug=;
-        b=UD2vYv8AOvK+Ot+kpqMFk52d+emgsHfxZ2J+H+/UyPy8VqjREwXpTSqVtZX3TAZvJ+
-         k9cE5XdYRJsryYbDauM68uDR9SR1YdtGBigDbfI0PsPvUguYLeBf4XWWlIQHvgB/2/PT
-         2Hecfoox+hGZQ9qUWRxNLuMCk54yMJqPd2lr6eOXuOc1scNCfQMQhTTy/wtz4cTEoG/S
-         QBWrBVkRq3vWU4cH5tDXTGu9glniKvLQXAMWElIzhFaKm4uYmDUlx8xKnfRy9/374z/T
-         9YN++qcJ7k/HKWFmkhe6bTGNrcz4XMsfC5TOTbel51t9FJWhiw5Gbg0LdOKUCEHg37UN
-         Hvjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784271549; x=1784876349;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LRhaAiyoY63/EjHSGFr1tgoiXiEMzGg3wcIFnjjeKug=;
-        b=fhIU/0+4JUiMyJ9wH+7NgRQnx/zj/cCfFql/EBJQ3axBHZJnelJzqVIb+VakqQOX8V
-         pFmlC2BYFcZC3Nusy8brfLhjA3Ooo9FyM6Mab68OpAq392qwr+5uH6EEW9W605SG9PKG
-         /mVGsz1Vh5WX1npgEa26YeMjBHvuTi+KxPCppBBnZihjiRhWnCtWMGtBVYK4VG31opU8
-         bDXXjv2YtC1bPed3GZ4G8cVVhnt2cyFZnd+Ts+R7tPH89CUF5MtwLbLIaIkB8MakNGEA
-         3zPE9xI/kuRUnSc4ZFg8ZGO0rTRWAoslDmfvIz3T1610G+oWNjIZitoUkqTES/kE1sGt
-         JOhg==
-X-Gm-Message-State: AOJu0YwocAieE0q3LUzEU6VEjuFgcU92vMikV/2XvonXajHdKwXkAIke
-	dmwnQ8J9hhUrHrq0XfHQA0ZTmKeuPjFjUUt1SqDjtRusLzVvSd3l7wxHn84GblZhhuFJQkMac/p
-	poNmi8jetVkQzAm4cMp0uwpj0hIuC3eBjBA==
-X-Gm-Gg: AfdE7cnyycpmqtr0Y+Zcbdor7zeKqRbQEM1wwIzZ5ZArzSHIbOgKFuiaLZtD89jcl54
-	bPjH6mzBu0e60L+WEIgTn1xzU7C6dGwMjDHY+MznWNRmszHLcfkfpXb1yhq4KQvdXPddkJz1C3p
-	IqIqVQVsSSrC74BwqWfgRyAkXmU6ayxYc34f1EOiRsK1iPGXU5JC0mEzf6cL0vk3nIVjjeBabRw
-	FCPhnDm+yLxFEtWVUy87lIaCX032o6L8k5IsczcUiD1PWBsrsGlCUy7HUhlj08n
-X-Received: by 2002:a05:622a:181f:b0:51a:8c86:bd3c with SMTP id
- d75a77b69052e-5213c9d9a01mr11762361cf.57.1784271549319; Thu, 16 Jul 2026
- 23:59:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E143D6463
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 07:19:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784272750; cv=none; b=ubRd3479KAc0fb7Kg8rDUuQmmtltqu0mIVFVqdMq7rTlF9vLu1Gt2WGzGbKItL1JhfCslsR5QYy31jRUA9jSNUrrdx0ROZl18VG7KRkxSo4roBVe0boqyqoo1+nVlN2kaUfL1v0PSXO1N1UKdeDTSPGbS+dYTBbZLjKtt6DhYYA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784272750; c=relaxed/simple;
+	bh=4XV5j8l+ZaaMiZ3dJH+bmX/koa4RnjUehAxPZxq37ko=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e6LSNkcbWmlIW0RzsWLta8UKa7fqgVXec1qPuioQL8Zjbq52GqTotwd+tcniYDTu0DfNQrDr8nMqXbdB9h5KRMNplCCAGgIyAYP+sClHJWK6KJnTumuuA7LdiVp9Q3Q0t5NXHPhcpILchLw2Sh+4WfYSmeVkruZbGWWFcgepTiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h1h8z367KzYQtM0
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 15:18:43 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 7C5644080F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 15:19:03 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgAH7Shm11lq0ygiBg--.18846S2;
+	Fri, 17 Jul 2026 15:19:03 +0800 (CST)
+Message-ID: <5890190e-125c-4555-bf35-f9e7003ee08d@huaweicloud.com>
+Date: Fri, 17 Jul 2026 15:19:02 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260716171733.300885-1-akkun11.open@gmail.com>
- <20260716171733.300885-4-akkun11.open@gmail.com> <20260716172730.089081F000E9@smtp.kernel.org>
-In-Reply-To: <20260716172730.089081F000E9@smtp.kernel.org>
-From: Akari Tsuyukusa <akkun11.open@gmail.com>
-Date: Fri, 17 Jul 2026 15:58:57 +0900
-X-Gm-Features: AUfX_mw-f0NpYAct72rPmUcEbtzcmaBSPm7yFj-EtAmmmokjNJ0yQdRy__B__oo
-Message-ID: <CAKr_iV6PsWZ8MPsO2NdfS1ppy6pUCGjvn4MFF8UMz7updckW_g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] soc: mediatek: pwrap: add MT6589 PWARP and MT6320
- PMIC support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf] bpf, cgroup: Fix storage null-ptr-deref after
+ replacing prog
+Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
-Cc: mfd@lists.linux.dev, lee@kernel.org, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20260714014659.401063-1-pulehui@huaweicloud.com>
+ <20260714015658.123021F000E9@smtp.kernel.org>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <20260714015658.123021F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgAH7Shm11lq0ygiBg--.18846S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurykGF1rtFWUtrWrWF47XFb_yoW5XF4kpF
+	WDAr95u34DJwnYvrnrt3yIvF18ZF1ktF15KrZ8Xw4xCr4SqFyFgrySg3y5uFZ3Zrnruw10
+	qr1Yvw4vkr12vFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-On Fri, Jul 17, 2026 at 2:27=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-> [Severity: Medium]
-> Does using PWRAP_DEW_DIO_EN here instead of PWRAP_SLV_CAP_DUALIO accident=
-ally
-> disable Dual I/O mode?
+
+
+On 2026/7/14 9:56, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] In-place updates of `item->cgroup_storage` in the active RCU-protected `bpf_prog_array` cause data races with concurrent RCU readers, leading to NULL pointer dereferences or Out-Of-Bounds memory accesses.
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716171733.30=
-0885-1-akkun11.open@gmail.com?part=3D3
+> 
+> --- Patch [1]: [PATCH bpf] bpf, cgroup: Fix storage null-ptr-deref after replacing prog ---
+> commit 3d155d588030a7a30403e9ee7737c108f47b5cb3
+> Author: Pu Lehui <pulehui@huawei.com>
+> 
+> bpf, cgroup: Fix storage null-ptr-deref after replacing prog
+> 
+> This commit fixes a storage null pointer dereference when replacing a
+> program by allocating, assigning, and linking the required cgroup storage
+> for the replacement program during link_update.
+> 
+>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>> index 4355ccb78a9c6..52b5b685a93c5 100644
+>> --- a/kernel/bpf/cgroup.c
+>> +++ b/kernel/bpf/cgroup.c
+>> @@ -1014,6 +1014,7 @@ static void replace_effective_prog(struct cgroup *cgrp,
+>>   				desc->bpf.effective[atype],
+>>   				lockdep_is_held(&cgroup_mutex));
+>>   		item = &progs->items[pos];
+>> +		bpf_cgroup_storages_assign(item->cgroup_storage, pl->storage);
+> 
+> [Severity: High]
+> Does this in-place update of item->cgroup_storage create a data race with
+> concurrent RCU readers?
+> 
+> If CPU1 is executing bpf_prog_run_array_cg() under the RCU read lock and
+> starts running the old program:
+> 
+> CPU1:
+> bpf_prog_run_array_cg()
+>      while ((prog = READ_ONCE(item->prog))) {
+>          run_ctx.prog_item = item;
+>          func_ret = run_prog(prog, ctx);
+> 
+> And CPU2 concurrently replaces the program with one that doesn't use storage,
+> it updates the storage in-place:
+> 
+> CPU2:
+> replace_effective_prog()
+>      bpf_cgroup_storages_assign(item->cgroup_storage, pl->storage);
+>      WRITE_ONCE(item->prog, pl->link->link.prog);
+> 
+> If CPU1's executing program then calls bpf_get_local_storage(), it could
+> read the updated NULL storage pointer while still executing the old program:
+> 
+> CPU1:
+> bpf_get_local_storage()
+>      storage = ctx->prog_item->cgroup_storage[stype];
+>      if (stype == BPF_CGROUP_STORAGE_SHARED)
+>          ptr = &READ_ONCE(storage->buf)->data[0];
+> 
+> Could this lead to a NULL pointer dereference or out-of-bounds access?
 
-100% correct review, I'll fix in v2.
+Sashiko is right. When the storage changes, rcu readers calling 
+bpf_get_local_storage could trigger an invalid access. Therefore, for 
+scenarios where the storage changes, we need to fallback to RCU-safe 
+operations, update_effective_progs. I will fix this in the next version.
+
+> 
+>>   		WRITE_ONCE(item->prog, pl->link->link.prog);
+>>   	}
+>>   }
+> 
+
