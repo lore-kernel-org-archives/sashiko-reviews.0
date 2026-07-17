@@ -1,86 +1,86 @@
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6651898FB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220273328FA
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784256085; cv=none; b=NUCtCCBgqHSPh/Tr2P2SWFH3GssrtgUUNVoxqUrZbDHpccp3MLywFOmCu/ty/2GO1Z2KjjhGvvgCwfuqE1cPSHT8OkbfE/PGWzCCEgP0QLnKj4rGEY60Y88LnFaydRBp/tGceG2BXWssYYe3RAAl8BXH/9pJ4CQMq2S3ZOX+Y/c=
+	t=1784256106; cv=none; b=tbv6mVqt2NU2sWjr7gf0gP91lZ29zSFHwLNZdxAtfyqhexNT6fLHR9EMQahy2O3n0dFBxK5IRHCUJkcTIswx9EB8niPGNZYuku8gCgwsHDlupyhZ3E80hX1VosSd/stNuaz1nLK0D7huUmG+Laeykzc76TesFlH3Jw/emi0fBbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784256085; c=relaxed/simple;
-	bh=CUCbB5LJlFy8pgxVVZhwHkwh6Zio6mIUqIKH5vSyXzU=;
+	s=arc-20240116; t=1784256106; c=relaxed/simple;
+	bh=a71YTWI0wrsSCd6HSZdUyWH7tn6B2M+FmSmWSuj2hqE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LfLrzilSPcxV+/g6uASgGTO3O2dK5MARs27qHtbBw+YdSYeDU6jp127sGPNwke/WUyADC5iX7DGxxNwwzjvXCmiPeTksU/NtIvMOd5XQSwR8t7JMaOZ/IrzOa6E/xbWHfKVXRov3Ffdldg5PCv+lXzIUFLjpaiXrTGqMjOmOvlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ikpj56d1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UClIp9x8; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=DEyh1AYwynbTq+isJUrTcGLnBP+vs4Iq9IDUYdW/LUesq29I/Y2s6pzgexLzw53U1m2/c4a6p05ySuqdug2/sHJp0QQiFfIr/SGCtvKPOloglDApUJ5BjJaOQxgCe7qM6WFNAoDPgVdjfqyNKTmPddOfivnF3fnMYvKCZ8gPtkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PRYI2ZIg; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bbQ0rxx+; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ikpj56d1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UClIp9x8"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66GNIZ8B107646
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:41:23 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PRYI2ZIg";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bbQ0rxx+"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66GNIr4s4076496
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:41:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xz4xt+e8dWjfcT2i2h4KEU0Pe4rwhXpno+W3ucpoTgI=; b=ikpj56d10f6FlWcj
-	YQsrwb0GQxiYg+shzziyF6rXV8VZ5FqT4oK2cSOpCP6UrXbeoUQCT66OWDDmvvpv
-	SnNh5LiDblL6vA8VyS337AOL0cXqw3EK2KeY4AFTE2mxsE/HLuKfxIi05k0NHluL
-	+MfEkRXy2vqMmBeTyYp8VyBV7XvwdyoVis36/NVRymVXI9XeUIQkvHyfPcjf8ymD
-	5DfOa1DAvDKVGMEKI+lBS3Fs3tHawbrBkZer0ymYkkI2nwvPCLdd9HotEZECXU/H
-	icZMlVjrBLs6IWC5MZfOWybv51NIL1PFPMTSsnsL7rlgFJ5hvU9e7nBnqhPMVz20
-	JssdLg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feym1b1dp-1
+	jiHqrvT+mM6D6jdKW6Gxav0qmC++bQtkMzZTkAbIWzQ=; b=PRYI2ZIg/BCe0QKH
+	bV3QYjRAbVe90C9Nu5MQgruDZwtwavnBfHaKNBvV3HbXUD8Kivek/lKmQI2+fa5y
+	BIrsaaU0y/gIMci3CqWpzI3CbrqUrB3mO0ZZ3Ccr7TfIY8st8M/ahKL+xPJKzv/4
+	n4rAW8d0/GTKLy2Dncazo5RR49U0iJ2vTCeyyxFTNEUhoF+LIH5jzBAgOihCboE3
+	+ZlbawMoPTeCJxnhJHNlFvyGT/l9iGn81xZ1E8Lb3OP1knJHhYgRe5nZtzINUQwA
+	0JNQQvm8Rb9FoM9KS4zEb7IkRc0CR2MhEvDresY6A2o2nNyxRHr8RKmXE7Q4JrG/
+	1/1xeA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fevkv3wj0-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:41:22 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cf1c86963bso8368325ad.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 19:41:22 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:41:42 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-38dad28e86eso9547993a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 19:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784256082; x=1784860882; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1784256102; x=1784860902; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xz4xt+e8dWjfcT2i2h4KEU0Pe4rwhXpno+W3ucpoTgI=;
-        b=UClIp9x8XV53geC7UNBBBNYngTZpYJ8Yxhj3SbZkBQ8GS/SqcddtihWg0T1ozxbTWC
-         mvRSzCdCFwSC6FBap1U6rIdQcHuQ+FVZlr4Tf0Oc8jVj19O2LWG0jKvCxJ06ACr6oQ6R
-         TIKZwknqIvus/MV7YZQM3C7DkQYOkExtOBMWYH+0EMBfXHlG+oNoOJv/OKZP2cVe4YOr
-         KSqw1PmdGpOO7AM6CUaTl2xMoLMDurznn38LK19+Y9k2O2QZE6wjWyTVTX0+YiVSgWJ4
-         wbwzIMVmHHz/mRyvHGn4e98V4FgxjWhrhQib9bs/ZX3O+hZ3MnLfBJRY83QAAaZ6/Swh
-         4LuA==
+        bh=jiHqrvT+mM6D6jdKW6Gxav0qmC++bQtkMzZTkAbIWzQ=;
+        b=bbQ0rxx+IXUNNfcvx7o3A9iu4U0FXGU8KPza7IuxH5ZB2YnnBQ6EougwFoV9XM2R/c
+         44ASt8z4praDjbMTTCUD9kfK3QUO6gCPSKHjgRn8hHqMoaH5J02k9NMQxNGtXnKvd4ut
+         DBVPvnQCjorzZCi1k2T6YjaLVTOE5f9usbjPhfSCn+YXrdRf0FaccnZwJfG5xBwrgdF2
+         6dZSnG6rxuz/fv+sdJG+Ikivpr4UdnyT4mexSWiuAidKgVBOjztIAP/RvSh9bBL/qBrW
+         WGI774mSOoJ+9TV17CjFZq3n/9noesKeKaCYrohzQ9QgzYOPex/x9ofze+MNzMFrPrrn
+         hVOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784256082; x=1784860882;
+        d=1e100.net; s=20251104; t=1784256102; x=1784860902;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xz4xt+e8dWjfcT2i2h4KEU0Pe4rwhXpno+W3ucpoTgI=;
-        b=ruYGWo5EgLC1oThVI1/jfhPfVbtNbK9Ytk6sB0rPwWMcX2l09zYb0F5Az9zfh0sMDg
-         gKFm1ZQBNvRxWr8eadhxL4Ch31ZhHCIkcn3UzTZPoBk0xg90B7L4xSnQqPU0/eePVf9i
-         14LdzZOXEH+FuDkRJIrR7nD8AeASpqAGus4/WTYP94Y36SHSwyWZeqry5f2mXrIa1GL1
-         0Y74/jYknowT+3iQamR0gn4kCGP2Xa5ff019eEdXvupqHllZbwB/BbzZuj2ZluHl59sC
-         c3TehbF6bahyThWJZ9V6Ytrnc4q2Vk/rk/ILGCzB9Bfca62vtuUae1FlvolHfU+rsYKj
-         NZRg==
-X-Gm-Message-State: AOJu0YyWolOo3w7RSSA1B36q9afcZnMEUN+YDUJ3h/LJhq4umqIz2X6u
-	Jtkm3cIYgrs//soq3JZW2lSWQfDgAYnr5w1OU6jnbh2O3mM3z0eZO86ggM70aAmnEdhVm5tkoNu
-	Jj4IGrSTOtKH28CefiyzIQFPhKQv5p467itOA4OVIrhDrGfcw6gca6sbhcKWaBsDNY5SjKV8Xza
-	z7QhQ=
-X-Gm-Gg: AfdE7cmjuOqZz3UFL8YvBtra0mmdfkMdrfX4la9E3rvsx0Ngo5FEW4o+nn3efOSFUEj
-	PeXxBIE6WL+6vHY8WEBnEVNvovkSIppIL1/QCQZKANcsgLzcKN++QXtb7PtdevlOWDLKIb2ANKo
-	XlKE3Pik78JgEVTLTKcc+snfxnwod6PjXZhw+KLoO11ZK3HNPCE0lbH6CdJRiWxn6zFJTWmV0dU
-	9iTGECgJg8qXzhQ3P/S8AMFXZQd1ETh5fJxpo/9KwwHXWnf9LqF9vwyF1FQgMuKT8D2Tj2bBUuF
-	A6DxXBFLfKhgyEksn3BwL89IdcTwqfuxX+yNRbfeIjIO357Kpv1lslN9pU3najFCGpt6mYKXSwI
-	jlEPz3V0uWEKb0teZdmgqn8W8e+E4dkgGEbcaZJwxA2KGRV0EtGw00bYamolpCwIAfEmM9AET
-X-Received: by 2002:a17:903:26c7:b0:2cc:92ae:b36 with SMTP id d9443c01a7336-2cf1f5495a3mr51951815ad.24.1784256081814;
-        Thu, 16 Jul 2026 19:41:21 -0700 (PDT)
-X-Received: by 2002:a17:903:26c7:b0:2cc:92ae:b36 with SMTP id d9443c01a7336-2cf1f5495a3mr51951605ad.24.1784256081309;
-        Thu, 16 Jul 2026 19:41:21 -0700 (PDT)
+        bh=jiHqrvT+mM6D6jdKW6Gxav0qmC++bQtkMzZTkAbIWzQ=;
+        b=SF/Ae1z9rKoWbd1JbPPFRSFSCoHdk6eMuk6wkXxaAmxr42RX2J5MvLlj8z/WujcoL5
+         EdZYcvSoQ9hV5jH6MBBPjpd/pRTxIb5WDcp4TdUfMi1B96KvEdP3VVqvfUjjjLcio33Q
+         wNpezoq7/wt77UDtT5UlkL9eTihwAzJGbIl+M6xmNghs5mP7zZGyuQ/NoOpLRQQZ6CX1
+         FjzK8MDSBGah8PvassLdRIxbOAqHFrvPFd9yP1Hn5yki93IxMK+BdA5EeqcTYsvXZe5U
+         XO96QCgXGKEP/e1WDpdILdmakGRqpMD2wC3KAIRApttdwXjC+jFv3owCZx10iUKChyEx
+         K/tA==
+X-Gm-Message-State: AOJu0YxWSzyn/runtHWCNjiAQrpjGyFMF0gqF5gMNo9SoWwopOUoAc/N
+	en6kwdwi2x+wY1M0mb6YVeyXmfOhpcRFfNBxNN4Js5H/QWwfCglx18Ftz+lC8sH+G2x0ReEhWaD
+	q8xg3si/o4u0TtmjiJpd5cLVrVY/WzDFRkEVXW1I509Xh7dbPH6zk/TKq3NTFr8TaDBROWw2Yto
+	zXqVA=
+X-Gm-Gg: AfdE7ckU1K8T2cf/vp8kSl/wrVWebd38F63diqv8CsZsrSXfuQyspa0qwc/mNjqHZIR
+	jM2OnshvtpXZV0kdwzHpQZMQU4cLbWUKf/SQpSA7gggD6Z6bHYjegSCxJruhbYMYYaGKFiQILXO
+	nxL/k91xQs5S6t9JLbDtNovoMNtvj/49BsSiZ7cRF4hHKbZkjg1HN2sCceoGK4g2VpYFssShqhd
+	gyaFNxCrn9F6Be3nlqv9ETN2PNL+sBmdDj1ruHNbtlpV2Y6s7q2fUbqxblqhUCeSoNUzftZxk+J
+	wa+U4By0lyD9w9M/N9ZquCql7575sE9Hhy6njZs281yS7fVXT7Z6/1hP28Y/hOfvoW/rm8OuC/z
+	zCESIqi80u2xKBJfqnX9roALwD8p++shlGNk4Rz8YPaGpBZzUHeQPL0aszFV3SmzSKQG1Y7VU
+X-Received: by 2002:a05:6a20:9397:b0:3bf:6c08:2843 with SMTP id adf61e73a8af0-3c3ad97155fmr668975637.50.1784256101626;
+        Thu, 16 Jul 2026 19:41:41 -0700 (PDT)
+X-Received: by 2002:a05:6a20:9397:b0:3bf:6c08:2843 with SMTP id adf61e73a8af0-3c3ad97155fmr668962637.50.1784256101157;
+        Thu, 16 Jul 2026 19:41:41 -0700 (PDT)
 Received: from [10.133.33.101] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf344cf96bsm2363225ad.28.2026.07.16.19.41.19
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cb519aeb69csm151310a12.20.2026.07.16.19.41.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2026 19:41:21 -0700 (PDT)
-Message-ID: <406d1c3b-cf7f-44e9-8de5-7e397ff4cf84@oss.qualcomm.com>
-Date: Fri, 17 Jul 2026 10:41:18 +0800
+        Thu, 16 Jul 2026 19:41:40 -0700 (PDT)
+Message-ID: <e997f350-df80-4ab0-bb94-462ac5ed2232@oss.qualcomm.com>
+Date: Fri, 17 Jul 2026 10:41:38 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,174 +89,142 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Subject: Re: [PATCH v7 07/15] drm/msm/dp: move the pixel clock control to its
- own API
+Subject: Re: [PATCH v7 08/15] drm/msm/dp: break up dp_display_enable into two
+ parts
 To: sashiko-reviews@lists.linux.dev
 Cc: dri-devel@lists.freedesktop.org
-References: <20260609-dp_mstclean-v7-7-ea04113e8233@oss.qualcomm.com>
- <20260609100437.758151F00899@smtp.kernel.org>
+References: <20260609-dp_mstclean-v7-8-ea04113e8233@oss.qualcomm.com>
+ <20260609095951.B0A1E1F00893@smtp.kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260609100437.758151F00899@smtp.kernel.org>
+In-Reply-To: <20260609095951.B0A1E1F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=KPRqylFo c=1 sm=1 tr=0 ts=6a599652 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDAyMyBTYWx0ZWRfX8gA5Mu8wDw58
+ VLSIDfWB8oS5ZOMBJ+DlFHm+xooJzC+qLyVNR8rvIR3xSqXBbB7dIHTyqsuBLTCHVuT8otjzbZR
+ YLeOGgNYfpIvHsl0JCCxp0RsQqkQnfz2FsGK4ZSIG01E2Fwa4Ug+O6hhNl6FTOOJHCX95//63sN
+ +UMFr8IyggKBD1THHFs8MGH7/7X98COcAIPcIgRR7nweHecSenvSxJWXZJqN0HOIS59+e5WZ/7c
+ gEqyzfUwfK7kdUEo/yAxHW4NV2a+pSdAXXGNskquILDjXkNSJ+xqJbFnUe9SNP1hQolfn42SJN7
+ A5jUVaIASyGglOSh1LIax8c+L9U9bjU1Gapyi3PRPIPZ/bf07bCfbWi0BHZ2N4VgEw4NJYBAPhR
+ 28jrOl2NK4K+WCylGr1qGmku2o0oY3q9R9uQCmwEug2/zW3EDx6y440/+48WcF8QctHu+An7tca
+ gqAdpHFfTxjX0R2GIMQ==
+X-Authority-Analysis: v=2.4 cv=WrEb99fv c=1 sm=1 tr=0 ts=6a599666 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=tIJq6jK7UZ6rIIlOuEwA:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDAyMyBTYWx0ZWRfX+fIBpwhfJ2/Y
- Nz+dMy3YBXopcv8uRqwVssP3DZiEpIVlrelD79kanx7BNeHICDUCttORn2JcxutdA7AuJ0iz8s9
- ioFEqpLGPuvp6vTSoqj2B79mYTggkLe8+hqdKTOLtLsD/dVPNBAAwiJf3YLvKRdDrutqxGEXjjx
- 2R9p9v0y8ISYNCfff/fI1yjdMZCKZZW6ZgTbjH2E3GiPYiIN9zjrqn0945qvMIMwMACqR54/KMW
- nrCH/o4zOHBV41tNFcUtFJZe2s+c05gEn/ldbr7L/G/9+xzeB90+iz54JVt3nRB4/bbMxgHRwPX
- N/tCFNluZsEpwIvuVqyGLOvfAVS/9pbJ3D6WTO+irXQ62w8/hnELN13GD1onwJVtvGTOnlAL44s
- iMPDAVWFfdP4KUDY+Kez5N1w7hAgxN4hoPHS7m+aG5JOyNsB3LO5tcpgKUbv5vfBz/LApG9deot
- jaOeSu/63+HRY3ArOJA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDAyMyBTYWx0ZWRfXzkIlnly0VKJN
- 2UW2NNs4/QnsbI2f1lJS0czHeMpN1vPgLSc+qkiP4FDGJQH8B+NbMznsOzhvBcHCB6Xj2nJj12i
- DjqFrUC1pdBl4l6r0ojMpZhLq6UzyT0=
-X-Proofpoint-GUID: 7MAPvtyT3pdwqN4NynxNLgOZeVSJ7JMb
-X-Proofpoint-ORIG-GUID: 7MAPvtyT3pdwqN4NynxNLgOZeVSJ7JMb
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=Y219pdqfsrRzYske1R4A:9 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: C4Gepee1CEh6TyLxZO8OPGF2jGFaSnNE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDAyMyBTYWx0ZWRfXyQdr1oxQMr7r
+ 0JPrEdCI4vqsvKUJqVMiSTcYNqgKgoUf1NLpUuL7uMZw9AHDZoEvdWD6M1aUdudepjjrXL3+FQD
+ pRgidAtNBKd5aDw0fI2NBsw+eDLuTWY=
+X-Proofpoint-ORIG-GUID: C4Gepee1CEh6TyLxZO8OPGF2jGFaSnNE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_08,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 impostorscore=0
- clxscore=1011 malwarescore=0 bulkscore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607170023
+ suspectscore=0 phishscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ adultscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170023
 
 
 
-On 6/9/2026 6:04 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Unhandled error return from `msm_dp_ctrl_on_pixel_clk()` causing potential system crash.
-> - [High] Invalid `WARN_ON_ONCE` escalation leading to potential Denial of Service (DoS) on hardware timeouts.
-> 
-> Pre-existing issues:
-> - [High] Lockless concurrent access to `ctrl->stream_clks_on` between DRM atomic commit and HPD IRQ threads.
+On 6/9/2026 5:59 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Missing error return when sink_count == 0 leads to unclocked hardware accesses and kernel panic.
+> - [High] Missing early return when link training fails causes stream enablement on a broken link.
 > --
 > 
-> commit 4ab86d41ec16eead989a4b3a8579ccd95556770a
-> Author: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> commit b8a02a483af0ac409e7c1790ebfbe296067ea49d
+> Author: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> drm/msm/dp: move the pixel clock control to its own API
+> drm/msm/dp: break up dp_display_enable into two parts
 > 
-> Enable/Disable of DP pixel clock happens in multiple code paths
-> leading to code duplication. Move it into individual helpers so that
-> the helpers can be called wherever necessary.
+> This commit splits dp_display_enable() into two parts: prepare and
+> enable APIs. This allows inserting MST payload functions between enabling
+> stream clocks and programming the registers.
 > 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index 1c2eccec6ec6d..a2c44088e6a68 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -2171,6 +2171,41 @@ static bool msm_dp_ctrl_send_phy_test_pattern(struct msm_dp_ctrl_private *ctrl)
->>   	return success;
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 155beefdfdef2..2cf4c984c7ca7 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> [ ... ]
+>> @@ -617,7 +617,40 @@ static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
+>>   	return 0;
 >>   }
 >>   
->> +static int msm_dp_ctrl_on_pixel_clk(struct msm_dp_ctrl_private *ctrl, unsigned long pixel_rate)
+>> -static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_link_train)
+>> +static int msm_dp_display_prepare_link(struct msm_dp_display_private *dp)
 >> +{
->> +	int ret;
+>> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>> +	int rc = 0;
+>> +	bool force_link_train = false;
 >> +
->> +	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->> +	if (ret) {
->> +		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
->> +		return ret;
+>> +	drm_dbg_dp(dp->drm_dev, "sink_count=%d\n", dp->link->sink_count);
+>> +
+>> +	if (msm_dp_display->is_edp)
+>> +		msm_dp_hpd_plug_handle(dp);
+>> +
+>> +	rc = pm_runtime_resume_and_get(&msm_dp_display->pdev->dev);
+>> +	if (rc) {
+>> +		DRM_ERROR("failed to pm_runtime_resume\n");
+>> +		return rc;
 >> +	}
 >> +
->> +	if (WARN_ON_ONCE(ctrl->stream_clks_on))
->> +		return 0;
+>> +	if (dp->link->sink_count == 0)
+>> +		return rc;
 > 
-> [Severity: High]
-> Does this WARN_ON_ONCE() introduce a potential system crash with panic_on_warn
-> enabled?
+> [Severity: Critical]
+> Does this unintentionally allow the enable sequence to continue when the
+> sink_count is 0?
 > 
-> If msm_dp_ctrl_wait4video_ready() in msm_dp_ctrl_on_stream() times out, the
-> function returns an error but leaves ctrl->stream_clks_on as true. This causes
-> the caller, msm_dp_display_enable(), to refuse setting
-> msm_dp_display->power_on = true.
+> Since pm_runtime_resume_and_get() succeeded, rc is 0 here. Returning 0
+> causes the caller, msm_dp_bridge_atomic_enable(), to continue directly into
+> msm_dp_display_enable() because the prepare step appears successful:
 > 
-> Later, on teardown, msm_dp_display_disable() bails out early because power_on
-> is false, skipping msm_dp_ctrl_off_pixel_clk() and leaving
-> ctrl->stream_clks_on as true.
+> msm_dp_bridge_atomic_enable() {
+>      ...
+>      rc = msm_dp_display_prepare_link(dp);
+>      if (rc) {
+>          DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
+>          return;
+>      }
 > 
-> On the next modeset or hotplug attempt, when msm_dp_ctrl_on_pixel_clk() is
-> called again, it will trigger this newly added warning. Since external
-> display hardware timeouts can be triggered by a faulty sink, is it safe to
-> escalate this from the previous debug print to a warning?
+>      rc = msm_dp_display_enable(dp);
+>      ...
+> }
 > 
-No, it is okay, printing the call stack can help identify the issue.
-> [Severity: High]
-> This is a pre-existing issue, but does lockless concurrent access to
-> ctrl->stream_clks_on between DRM atomic commit and HPD IRQ threads risk a NoC
-> error?
-> 
-> The boolean flag ctrl->stream_clks_on and the pixel clock are accessed and
-> modified in msm_dp_ctrl_on_pixel_clk() and msm_dp_ctrl_off_pixel_clk()
-> without any synchronization primitives.
-> 
-> msm_dp_ctrl_on_pixel_clk() can be executed by the DRM atomic commit thread
-> while the asynchronous HPD IRQ worker thread simultaneously handles a PHY test
-> request via msm_dp_ctrl_process_phy_test_request(). If Thread 1 evaluates
-> ctrl->stream_clks_on as true to disable the clock concurrently with Thread 2
-> accessing DP PHY registers, can it lead to a synchronous external abort when
-> accessing unclocked DP registers?
+> Because msm_dp_ctrl_on_link() was skipped, the DP link clocks are not
+> enabled. Will the subsequent call to msm_dp_ctrl_on_stream() within
+> msm_dp_display_enable() then perform an unclocked hardware access when
+> writing to REG_DP_STATE_CTRL, potentially triggering a bus stall and kernel
+> panic?
 > 
 >> +
->> +	ret = clk_prepare_enable(ctrl->pixel_clk);
->> +	if (ret) {
->> +		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> +		return ret;
+>> +	if (!msm_dp_display->power_on) {
+>> +		msm_dp_display_host_phy_init(dp);
+>> +		force_link_train = true;
 >> +	}
->> +	ctrl->stream_clks_on = true;
 >> +
->> +	return ret;
+>> +	rc = msm_dp_ctrl_on_link(dp->ctrl);
+>> +	if (rc)
+>> +		DRM_ERROR("Failed link training (rc=%d)\n", rc);
+>> +	// TODO: schedule drm_connector_set_link_status_property()
+>> +
+>> +	return msm_dp_ctrl_prepare_stream_on(dp->ctrl, force_link_train);
 >> +}
->> +
->> +static void msm_dp_ctrl_off_pixel_clk(struct msm_dp_ctrl *msm_dp_ctrl)
->> +{
-> 
-> [ ... ]
-> 
->> @@ -2196,22 +2231,7 @@ static int msm_dp_ctrl_process_phy_test_request(struct msm_dp_ctrl_private *ctrl
->>   	}
->>   
->>   	pixel_rate = ctrl->panel->msm_dp_mode.drm_mode.clock;
->> -	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->> -	if (ret) {
->> -		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
->> -		return ret;
->> -	}
->> -
->> -	if (ctrl->stream_clks_on) {
->> -		drm_dbg_dp(ctrl->drm_dev, "pixel clks already enabled\n");
->> -	} else {
->> -		ret = clk_prepare_enable(ctrl->pixel_clk);
->> -		if (ret) {
->> -			DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> -			return ret;
->> -		}
->> -		ctrl->stream_clks_on = true;
->> -	}
->> +	ret = msm_dp_ctrl_on_pixel_clk(ctrl, pixel_rate);
->>   
->>   	msm_dp_ctrl_send_phy_test_pattern(ctrl);
 > 
 > [Severity: High]
-> Does this code ignore the return value of msm_dp_ctrl_on_pixel_clk()?
+> If msm_dp_ctrl_on_link() fails, does this mask the failure and force the
+> pipeline to stream video over a broken link?
 > 
-> In msm_dp_ctrl_process_phy_test_request(), ret is assigned from
-> msm_dp_ctrl_on_pixel_clk(), but it isn't checked before calling
-> msm_dp_ctrl_send_phy_test_pattern().
+> In the original code, an error from msm_dp_ctrl_on_link() would explicitly
+> return and abort the atomic enable sequence. Here, the error is logged, but
+> execution falls through to msm_dp_ctrl_prepare_stream_on(), which often
+> returns 0.
 > 
-> If clock enablement fails (e.g., due to an unsupported clock rate requested by
-> a malicious DP sink), the function unconditionally proceeds to send the PHY
-> test pattern. Will accessing DP PHY and mainlink hardware registers without
-> the required clock running trigger a synchronous external abort and panic the
-> kernel?
+> If it returns 0, the caller receives a success status and proceeds to
+> configure and start the video stream on an uninitialized link.
 > 
-will fix next patch.
+Will fix it next patch.
+
