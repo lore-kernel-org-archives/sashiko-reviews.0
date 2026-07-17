@@ -1,127 +1,122 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8BB3FD125
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 13:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187F42882CD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 13:46:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784294350; cv=none; b=o0e6z9xVqhG7JDxHQmrlYnsGvr8gLZYr080RlAHaEC0meUBaUFGmrr2vNF+sQ5TXiIrDv32Wm4AMXhxj/rTApfdySSn7KTJGJbk5G2u75z4JBEeYbcj5Lv47miVoamaRza+bQmZF/oEjxRCNeofRb6c8WktfJpm7fo8eqZpkdpQ=
+	t=1784296020; cv=none; b=AGkqxdu/9X87Sl/aaW3wdXxf+qIZZy8xBhNAlIgFYOSaVPYrTTj7zbFZWCF67TGdX5ZewPj1MawM5ZtDww1tGrwFyQmb+eYZhMy06Ug1d3/zUyY2qy5Wi1JUPgw7ZAX/iacNd7Wjtjo6o9ADyTBB+uMGhdFnrWKLcRN5+t/bx74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784294350; c=relaxed/simple;
-	bh=+Bt6+Goat+FUbSO1uQ+yOgPj04WcdtNgvnfxalQE8HA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=glQZhsCX5VBDO0EOJ/pfTD634kp5JLGpDoA+aaAP5B56VPMH4eZOTMDyytu6UqwLLk4iRtYCaDYgmc4qPLL7l+Lq679e77JefrowG9CSsylKMKPo6nlar2dc5ArdRu0oEC1yRyfVAiWqt97sOOLZGAuGqrIIPMjgvxuzsKcfkuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BrR5XkKt; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1784296020; c=relaxed/simple;
+	bh=pkFpIKsnXuNOL+ArN2UIRyweTbPgoDEDn2DJz7Lvqh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KPbsOv72c9hraUCeTbNi31fa1WdliWF842VtdOBlLeu2S+ndefVkc15ErGlYjT8ZoXjNI26Mctb4an+r9Rn/RH1QInWTcI1tFX1ieYm3HOmRYGNXel37MnDQNKLAmiJcDnrhfy6udLhVvKo0a+xcchnfQYt6Y8KK+FWRLgkNPsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+lsw2K0; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BrR5XkKt"
-Message-ID: <d365c74d-a8a0-4331-921b-4cb3d546590f@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784294345;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CE2YjpJZ8eOHIiNT+EOnxdh14S4kY6fOB/FwDIqk4TU=;
-	b=BrR5XkKtzzku74edaNJNiLI2odtR61mLvqAMqsQThMdX0pOC815KMoSnO/P12kNQ9wWU6x
-	U1xQqoY+XMIbiZSUbbi/X9bxGY8AB8JYYwnzx184RMVLNQnksTOVnREEx2qBxvoz9CVeT/
-	KBZV+uZjynxEq+jnBDWILPPI7vzeKXs=
-Date: Fri, 17 Jul 2026 21:18:47 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+lsw2K0"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-493e4ccccc2so49615455e9.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 06:46:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784296017; x=1784900817; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=usUeK0ixpk0N/58fI6VofoCsRjg+TZxevKmDKvB1suE=;
+        b=g+lsw2K0Kkm8tHsj44FFYpY3QcU1kF3qAJI8yxeVnMTaxEo0Kg7NWgMWAPHd+4djtQ
+         zg/Wt1oVhM27m98M27XqHdVl/Btgmqvw/g+yV8HC3q2nt/srChPyR6GqRc5QfC5R3pPh
+         NDC3trSYMSCa75W+a/IMGUOZ9mr2F+2sn6zLgSZysAKqsAIkYyO4uY+4rk7ZE5Jdz+K9
+         4RxcpbXHe/KKCDySTOQ5zlEqQRNRGviYI5pWSnO5qQZ6wdazNVknuC3jEfCYbFJPoBb/
+         6MOqSlBSZAB8wS422gC5hTUW66tHlxGiGC5t5jRCUdUUbnJOKZKAV8baJq6hnfnyqHun
+         uZkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784296017; x=1784900817;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=usUeK0ixpk0N/58fI6VofoCsRjg+TZxevKmDKvB1suE=;
+        b=gup3SmGFBjdhNxX2zBFNaTKzY9KpI6lH+nuoa19e1nlX4MewY7Rm8cCLQmh/CZ4SkO
+         VyifhTG3QF2O056CA7w1s4anXoE3bjO/p5JjEER6Nqh9bk3gLwwpsraLRwHDhjcpY9z7
+         BrkYdZNoDALl2AF2/E0odnd/gbVYLTBBxiwSmP4UUFuaojNeQ68KJrNw4sRiAIfDz/rx
+         r4UJHOV0CqnbHqTlZW5D7Rg1GdPQ0DQv1sqWi7DNCpey77SV0hYVdjf8x07oFyLXJlZL
+         Uz2vpqFg4ZB+aOu8GglYgKqscYqhmhB7sviq5wmcccoMZa4ARW/em0Gj4qPN73HNdabR
+         szoQ==
+X-Gm-Message-State: AOJu0YzrUaHrJ0BaYiihXXhEm8SWGHOKL+iK4uYtVz93YgSkL3RfRsTI
+	Gsy8Mau6EQP5/GzTwRB/jgr7gR35fhG0b0264WL/Ix2slmsuiMchR6IB
+X-Gm-Gg: AfdE7ckRZre8LhuI3hJ9VQ/f16UhqR+EMCxTktKBnkmv9R7rZ5KAblokNDrYLjKv44B
+	V0sKBEqveBA79fn21EM1mRmH/qqPJKpYaQsfwk5TOzOJMqqAi36SoQc8jpJEDZwKMQS0Nm2mA0N
+	QXePBlqbaZmX3ze4/sjyc9taNttkBzAMFAdpwbfiYEooadBk/w5+qw18Cws3DWR2VSqdRoceFIA
+	Jmxho+cFZ1g0j3L9M5PDxTjHr6MkRnkS0Fokrn2WthPHN2yzrMfvfI/eKiJGU5q9uUvLufICHQD
+	xwv0+XUaxTFFC4J1xvrdJ6zBApGWOKJsmRsyZ0jG157r+g5NmxI8HQBK2A2/6qJ7yEUbVRodzeI
+	sy34lijrPg+H9+0Vggu34kOIO1la6jInfmRkFTABtLNOTRJc3Cyyn6Qg/fMFgFCMB1j5zDq4B+0
+	EpZuIMYe1qEqp0RC6iRcp/WspNN0Y6WNHAaVa74EC8xNfAPnDOEWOla8U9OvZo7AsWuZlJDTckh
+	N3UOePutL3okJZyLNBF9w==
+X-Received: by 2002:a05:600c:6a08:b0:493:bcba:46a4 with SMTP id 5b1f17b1804b1-4954a404528mr19709365e9.20.1784296016986;
+        Fri, 17 Jul 2026 06:46:56 -0700 (PDT)
+Received: from Lord-Beerus.station (net-93-144-65-248.cust.dsl.teletu.it. [93.144.65.248])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49549a3f07esm51142905e9.6.2026.07.17.06.46.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jul 2026 06:46:56 -0700 (PDT)
+Date: Fri, 17 Jul 2026 15:46:54 +0200
+From: Stefano Radaelli <stefano.radaelli21@gmail.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, Frank.Li@kernel.org,
+	imx@lists.linux.dev, robh@kernel.org, devicetree@vger.kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v2 05/15] arm64: dts: freescale: imx8mn-var-som: Add
+ support for WM8904 audio codec
+Message-ID: <aloyTsfV5ngd431Z@Lord-Beerus.station>
+References: <cover.1783330236.git.stefano.r@variscite.com>
+ <4487a350b0e4667816c3fe62e9fd6df2696c18cf.1783330236.git.stefano.r@variscite.com>
+ <20260706100948.DDA391F000E9@smtp.kernel.org>
+ <akvC8UV5N6Tpk0_h@SMW015318>
+ <akz_Lr1bRSEE5rhC@Lord-Beerus.station>
+ <ak1KYjOUWDy6po5j@SMW015318>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v2 4/4] selftests/bpf: Add tests for memory usage
- for arena
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260717114117.350851-1-jiayuan.chen@linux.dev>
- <20260717114117.350851-5-jiayuan.chen@linux.dev>
- <20260717115336.A78DC1F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260717115336.A78DC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ak1KYjOUWDy6po5j@SMW015318>
 
+Hi Frank,
 
-On 7/17/26 7:53 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incorrect use of ASSERT_OK_PTR to check for a NULL pointer read from BPF userspace memory, breaking intended error handling.
-> --
->
-> --- Patch [4]: [PATCH bpf-next v2 4/4] selftests/bpf: Add tests for memory usage for arena ---
-> commit b8bd79585d9f7cbf2a83d5381d0df2c316e65ed7
-> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
->
-> selftests/bpf: Add tests for memory usage for arena
->
-> This patch adds a selftest to verify memory usage tracking for BPF arenas.
-> It allocates and frees arena pages both from BPF and user-space and checks
-> the map's memlock value via fdinfo to ensure it tracks populated pages.
->
->> diff --git a/tools/testing/selftests/bpf/prog_tests/arena_mem_usage.c b/tools/testing/selftests/bpf/prog_tests/arena_mem_usage.c
->> new file mode 100644
->> index 0000000000000..14c2d1a1d673c
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/arena_mem_usage.c
-> [ ... ]
->
->> +void serial_test_arena_mem_usage(void)
->> +{
->> +	struct arena_mem_usage *skel;
->> +	const long ps = PAGE_SIZE;
->> +	char *base;
->> +	size_t sz;
->> +	int fd, i;
->> +
->> +	skel = arena_mem_usage__open_and_load();
->> +	if (!ASSERT_OK_PTR(skel, "open_load"))
->> +		return;
->> +	fd = bpf_map__fd(skel->maps.arena);
->> +
->> +	/* Fresh arena: no data pages, and the scratch page is not counted. */
->> +	ASSERT_EQ(map_memlock(fd), 0, "initial");
->> +
->> +	/* BPF-side allocation of 17 pages. */
->> +	skel->bss->alloc_cnt = 17;
->> +	if (run(skel->progs.alloc, "alloc"))
->> +		goto out;
->> +	/*
->> +	 * A NULL ptr means bpf_arena_alloc_pages() itself failed (e.g. the host
->> +	 * is under memory pressure), not a miscount -- flag it distinctly so a
->> +	 * red CI run is not mistaken for a counting bug.
->> +	 */
->> +	if (!ASSERT_OK_PTR(skel->bss->ptr, "arena_alloc_pages"))
-> [Severity: Medium]
-> Will this check actually catch a NULL pointer when bpf_arena_alloc_pages()
-> fails?
->
-> When skel->bss->ptr is NULL, ASSERT_OK_PTR() evaluates libbpf_get_error(NULL),
-> which returns -errno. Since the userspace errno is likely 0 following a
-> successful bpf_prog_test_run_opts() ioctl call, ASSERT_OK_PTR silently
-> evaluates to true (success).
->
-> This would cause the goto out to be skipped, and the test to proceed to
-> evaluate ASSERT_EQ(map_memlock(fd), 17 * ps). This subsequent check would
-> then fail, emitting the exact counting bug error the comment mentions trying
-> to avoid.
->
-> Should this use a different macro, like ASSERT_NEQ(skel->bss->ptr, NULL), to
-> correctly verify the userspace pointer?
+On Tue, Jul 07, 2026 at 01:50:10PM -0500, Frank Li wrote:
+> >
+> > Thanks for pointing this out.
+> >
+> > This audio routing is not new for this board. It follows the same WM8904
+> > routing that we have been using on our other platforms for quite some
+> > time, and we are not aware of any reported issues related to the
+> > analogue microphone path.
+> >
+> > If adding an explicit route to MICBIAS is indeed required by the
+> > codec driver, then this would not be specific to this board but would
+> > potentially apply to all of our WM8904-based platforms.
+> >
+> > I'd prefer not to introduce this functional change as part of this DTS
+> > alignment series without validating it across all affected platforms.
+> > If needed, we can investigate the MICBIAS routing separately and
+> > submit a dedicated fix covering all WM8904-based boards.
+> 
+> Okay, thanks.
+> 
+> Frank
+> 
+> >
+> > Thanks,
+> > Stefano
 
+Hi Frank,
 
-On success ptr is a valid arena address and ASSERT_OK_PTR() passes 
-correctly.
+Just for my understanding, is this patch series going to be applied or
+are there any further changes you would like me to make?
 
-On alloc failure ptr is NULL and ASSERT_OK_PTR() may treat it as OK 
-(libbpf_get_error(NULL)
-returns -errno, which can be 0), but the next ASSERT_EQ(map_memlock(fd), 
-17 * ps) still fails.
-
-I can switch it to ASSERT_NEQ(skel->bss->ptr, NULL, ...) in the next 
-revision.
+Thank you,
+Best Regards,
+Stefano
