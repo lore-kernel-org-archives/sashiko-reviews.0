@@ -1,116 +1,100 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AC043F0BE
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 20:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D797B25F98A;
+	Fri, 17 Jul 2026 20:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784319844; cv=none; b=epljGbFoIvQayTa04KzqnnZDnOu+BcbrWO27GcqsO+DNFgdePMhM8tovGOdjT6kM5azi11T8hD3XU4cDR1N46UPNRrpY8jnEJVmQh0wBBeDkpVCVkK15W1w1oills7ivpTMyV2MgN3W1jl1v0fu51OdAjEj9EjYNkhvOi/vX1yg=
+	t=1784321883; cv=none; b=uwaMaW5qGpGnn1jApoRMHDR6O6haFFLbRjoZLBH/nIjkdlGz9SOm6G55sNt8d+L234IGj93puniPd/QL7wVwecwXwlsA1EUXPqnfvqUExrNN8HlDCH/5PTVMcF0H7oKrCHUd/bpZNKlz/Qc3wNqUgBWfFgeRN6tqbgVkpLJDYec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784319844; c=relaxed/simple;
-	bh=J/aVlv5w68JEEKVOSbweiIpzoIbMDl0dssgFB8vqV5A=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=X+FTUnx1GpFDkhFkC2IXb2o/WfhusSn7G860HR7BQ8bvfxUJf8ef14odAYc7F3SI2xEucMCuxkIpDNakTLuEie13Fnwjpp9YOKh+f31MUmfS99hEKRsFyqBXOQIE4k4XM0hXS8alf8P9bQd3flFhpJm54dOBPcwfYJjFokodexc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=oACo6MrJ; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1784321883; c=relaxed/simple;
+	bh=AOCcIIfaEH+bV9kcCYzaAU/ZO4FuVJoxZarDy3zWIFE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FjQcLtV+CEq3e5GUfYNSkbd2TJu0hdp1k7uDS9szhvqMGKzdSKMGjto91KpyXegMqvznc/L4oEdbxAvShwEKguQY6Jzsn21JJE+ugQWmg43ocx3EerhR+Al1rJkWFe2/8jcI6phOYnduGgBDX7MgAKHxxnqo8t5Lg5cLp+PqqMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=vIEmv3bW; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="oACo6MrJ"
-Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id B70F78FA;
-	Fri, 17 Jul 2026 22:23:03 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1784319783;
-	bh=J/aVlv5w68JEEKVOSbweiIpzoIbMDl0dssgFB8vqV5A=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oACo6MrJeaLDcKfALp7Q/cCmTZTmF0hiuPE4FxqOyXBErIbEc/l/sz1zZFUIe4Zze
-	 Lo17UpCnbEfdcsDhAzIwUMRN4SSZxgzm2eNio/87g7gDX3E4kcM3RstUkNgGSyVDjx
-	 eua29fwPJ/RtQLpiHWl70+El6U+NhUYG6t3DqYzQ=
-Message-ID: <2628679d895e947c52515a273612d114@killaraus.ideasonboard.com>
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, wsa+renesas@sang-engineering.com
-Subject:
- Re: [PATCH v2] drm/bridge: display-connector: Fix I2C adapter resource leak
-Date: Fri, 17 Jul 2026 23:23:50 +0300
-In-Reply-To: <20260717190128.ED10E1F00A3D@smtp.kernel.org>
-References:
- <20260717184836.2017386-1-laurent.pinchart+renesas@ideasonboard.com>
- <20260717190128.ED10E1F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="vIEmv3bW"
+Received: from francesco-nb (xcpe-178-82-120-96.dyn.res.sunrise.net [178.82.120.96])
+	by mail11.truemail.it (Postfix) with ESMTPA id 15D15214F2;
+	Fri, 17 Jul 2026 22:57:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1784321877;
+	bh=ZY59QmJoDS4x6XunqiqFX794Y6AFTfjbSPkMaoden4M=; h=From:To:Subject;
+	b=vIEmv3bWCu7GGACJsv1Rx3V4ix/1xckRb5NWI5csFIidmxE1WxpymWfbmEEZUSgnA
+	 fjPg7sNX5PD3skxSqKofdWO95LvZr8lQL7dcYleUFM9Eh7RmSIcKOoJbQDJw73NZ75
+	 Yeq+HIt5BQozcysJqoZeQp0i71qrNtnL9RUuSJlmVzL7jGEtZ7cttsHVM+ALtt4di/
+	 /CUSRnA5jTwqOqhDlKdqJgHBltk+ZiRQetndLo00rmkhX8CUKlPhknrz1PUwAqPIt6
+	 DpqFYyR1WYjl+L5PNCgU7puPtV5LwgVvenzUkCA1Mv/gmP1D8f4D3zv4Cows/HqLz9
+	 OH8ZUemSQ/v3g==
+Date: Fri, 17 Jul 2026 22:57:54 +0200
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev,
+	Francesco Dolcini <francesco@dolcini.it>,
+	devicetree@vger.kernel.org, robh@kernel.org,
+	dri-devel@lists.freedesktop.org, Frank.Li@kernel.org,
+	conor+dt@kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH v1 1/4] dt-bindings: lcdif: Add interface pixel format
+Message-ID: <20260717205754.GB512678@francesco-nb>
+References: <20260717121847.488148-1-francesco@dolcini.it>
+ <20260717121847.488148-2-francesco@dolcini.it>
+ <20260717122808.693211F000E9@smtp.kernel.org>
+ <alpQh0ASY1HgdNqE@SMW015318>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpQh0ASY1HgdNqE@SMW015318>
 
-Hello,
+On Fri, Jul 17, 2026 at 10:55:51AM -0500, Frank Li wrote:
+> On Fri, Jul 17, 2026 at 12:28:07PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Low] Introduction of the legacy, non-standard `interface-pix-fmt` property for a standard hardware concept (parallel bus width), violating modern DT principles.
+> > --
+> >
+> > --- Patch [1]: [PATCH v1 1/4] dt-bindings: lcdif: Add interface pixel format ---
+> > commit 7225ea545d2ff50540972dd75d375b8ecea4f315
+> > Author: Francesco Dolcini <francesco.dolcini@toradex.com>
+> >
+> > dt-bindings: lcdif: Add interface pixel format
+> >
+> > This commit updates the fsl,lcdif device tree binding to support the
+> > interface-pix-fmt property. The property is used to describe the hardware's
+> > parallel data bus transfer width to match board wiring and prevent shifted
+> > colors.
+> >
+> > > diff --git a/Documentation/devicetree/bindings/display/fsl,lcdif.yaml b/Documentation/devicetree/bindings/display/fsl,lcdif.yaml
+> > > index 2dd0411ec6516..209ee5a96e393 100644
+> > > --- a/Documentation/devicetree/bindings/display/fsl,lcdif.yaml
+> > > +++ b/Documentation/devicetree/bindings/display/fsl,lcdif.yaml
+> > > @@ -58,6 +58,13 @@ properties:
+> > >      items:
+> > >        - const: rx
+> > >
+> > > +  interface-pix-fmt:
+> > > +    $ref: /schemas/types.yaml#/definitions/string
+> > > +    enum:
+> > > +      - rgb24
+> > > +      - rgb565
+> > > +      - rgb666
+> >
+> > [Severity: Low]
+> > Is this introducing a legacy, non-standard property into the new schema ABI?
+> >
+> > Standard devicetree guidelines usually prefer endpoint properties like
+> > bus-width (defined in video-interfaces.yaml) to describe physical parallel
+> > data line configurations, such as setting bus-width = <18> for RGB666.
+> 
+> Make sense, can we use standard property?
 
-This is the friendly mail bot of Laurent Pinchart. You have sent him
-what appears to be an e-mail generated by an LLM. In order to preserve
-his mental health, the e-mail has been automatically ignored.
+video-interfaces.yaml is for video capture interfaces (cameras and the
+media/v4l subsystem). It does not apply here for DPI display interfaces.
 
-Thank you,
+Francesco
 
-Laurent's mail bot
-
-On Fri, 17 Jul 2026 19:01:28 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
->=20
-> Pre-existing issues:
-> - [High] Use-After-Free of devm-managed resources (hpd_gpio, hpd_irq) and l=
-ocking of destroyed mutexes during driver unbind.
-> --
->=20
-> --- Patch [1]: [PATCH v2] drm/bridge: display-connector: Fix I2C adapter re=
-source leak ---
-> commit 2b26eaff927cdb68a6ad11049169cdda7d66a1f8
-> Author: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
->=20
-> drm/bridge: display-connector: Fix I2C adapter resource leak
->=20
-> This commit moves the release of the I2C adapter to the bridge .destroy()
-> handler to fix a reference leak when probe fails after getting the DDC
-> adapter.
->=20
-> > diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm=
-/bridge/display-connector.c
-> > --- a/drivers/gpu/drm/bridge/display-connector.c
-> > +++ b/drivers/gpu/drm/bridge/display-connector.c
->=20
-> [ ... ]
->=20
-> > @@ -439,9 +447,6 @@ static void display_connector_remove(struct platform_=
-device *pdev)
-> >  		regulator_disable(conn->supply);
-> > =20
-> >  	drm_bridge_remove(&conn->bridge);
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does the bridge removal sequence leave
-> devm-managed resources vulnerable to a use-after-free?
->=20
-> If the driver is unbound while the bridge is still attached to a DRM encode=
-r,
-> drm_bridge_remove() destroys bridge->hpd_mutex and moves the bridge to a
-> lingering list. Because hpd_gpio and hpd_irq are devm-managed, devres will
-> free them as soon as display_connector_remove() returns.
->=20
-> Could an incoming HPD interrupt fire right after drm_bridge_remove() and try
-> to lock the destroyed bridge->hpd_mutex via drm_bridge_hpd_notify()?
->=20
-> Additionally, if the DRM core later calls display_connector_detect() or
-> display_connector_hpd_disable() on the lingering bridge, would it result in=
- a
-> use-after-free when accessing the freed conn->hpd_gpio or conn->hpd_irq?
->=20
-> > -
-> > -	if (!IS_ERR(conn->bridge.ddc))
-> > -		i2c_put_adapter(conn->bridge.ddc);
-> >  }
-> > =20
-> >  static const struct of_device_id display_connector_match[] =3D {
->=20
