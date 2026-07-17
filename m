@@ -1,87 +1,87 @@
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC5A26A08F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A619D375ADF
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784257728; cv=none; b=SWj9+fmdxznW1dQE0R//VNKlFHOhXLzHe+vAwbjOkFouyXGaZl5H5mI3D/4Z9JyFJ7ZTPUn6bQmrNEuzxJ6mpjqH9yC5t6TEE1exrDQ2PFgtUrT8In2L6LpSr4N3SXXiyrE8cNXkkmkgZ/qzUTZqHVS1pQjhwWDHPZOVaG1HazE=
+	t=1784258627; cv=none; b=MTcxYMtUmhqvp94oA+oyRMuL0aNuW+5sOilXHHwleYLQz8DNcunG+qkCqfMhicF1wKUdRfZDvAdRtqi89Jk8XFiFnT+gfg882hC+aSGyT3ZwrU+A225Ey7UmEOnK8CH5TM4PwcGR/tFuAJtwUuuC9Cow3qiEU+4lNVEhgANAHi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784257728; c=relaxed/simple;
-	bh=2kODCU52lT/W/+CJKzLgYG2Fzk4wfuhTAYEzLBCYtHM=;
+	s=arc-20240116; t=1784258627; c=relaxed/simple;
+	bh=7Eqw+UANy8ZmD5J35oxC7mY1QMeVLVeLuHMKwxXbdhI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WnexvXhvZ7Guny2XVWaZBOBHApeYobrdJ9VKAb0XbFAg016tAdmnXLlyGPM03mzysDx+fS7stxieuGmZV2t0ESFrLOhNANP72LIeSzUVQdSWQFTsyeZMyK1+TkYdR8qUZiJo0z9rYzUqyxcuYcs4hH5Vn8PzjoJlYwYB6Mkk+6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AxPv+dDN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Q2dBy5Ya; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=utRfLuiTAtRQdk2cQm2cAsubJya2crbj4YukcUIakGTuRqz49TTJFVYGWZU+sp/irNRpK6vKpTKBbA4BFCYubn+oNFXt6BGhryBTExta+fkCBwBzFVmSTjl1IFNakJm5ZrgTpolQ6yAc54Y+fB+Z9rwsAn/PIF9MQDhmL8aW6iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gBjFOCIp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cqII/ooX; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AxPv+dDN";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Q2dBy5Ya"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66H33tkb338240
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:08:46 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gBjFOCIp";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cqII/ooX"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66H33pIc314605
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:23:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TXyVGivf3UWZOqVUOzlxgpcD7lIywizl54v1ZomEtRs=; b=AxPv+dDNNMbwYNrZ
-	6DV69VbHQ8VNc4FrHjJPQG76qpoXI8ZbmDULTkGqYxDHPt+H0IFnBosOnk8x8MWX
-	pBxyF+x5vn3Z7NQLQx/KTDTC0zm74gMZpjXUKXAKxkFmaprURWc9e7YSjeKZcb58
-	8jc0emcdvk43QPtxo0PMTpncPawVtK5W39tLRA+QCsImFy+ZBMK9kLOm030e1opE
-	sKMJl1mCKNKaucEGJPxx5KkxhiFcKWl7tEYbUkn4rRjrEm3Pzka/DFc0umerVUXl
-	NkDQTRmVsjZSQL2UW/G2wzUQAUGckASuzvu3gnDjphoVHVOnpTVJImo2mJSdCA9E
-	+S3tAw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff1weab2u-1
+	fcnuXBSRbMxyYq/r18DW90RqJgdaTDM5lwjetPpSSzI=; b=gBjFOCIpDOUgkrQY
+	cqHQfB96RMEEeHc4k7ISnQ2+uAFs5EZWZhZD9cWSPj/SgpED4jBY6t1LnPIXdhXB
+	uYaLgxJvKPZ1EiSD2ADuLOoDjMSiAjEaHebfhq51BlMJhGDOzVlHC0z00od6J1mR
+	+6I8FzjowGiFMDWnFeIJ77ADXx5e7btNxYM9e+9zGGPXYJjPQ7UO8PW6dZhXG7np
+	haYr5ZpClRtUz6EAEHxYZLHJ2esUf+x4kWdz0RsnQQV9ySiZW7g5cPbnwbVwAEd0
+	jdb8DiXGgHMJq+GNqQMGgUPE5NxL5iy33SXWu1H2wmktUs0SC/N1OhNp1BFs4/im
+	yihsUw==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff3u8htm0-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:08:45 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-38e11baa66eso4048684a91.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 20:08:45 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:23:42 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-84a4d8fd6deso5231990b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 16 Jul 2026 20:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784257725; x=1784862525; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1784258622; x=1784863422; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=TXyVGivf3UWZOqVUOzlxgpcD7lIywizl54v1ZomEtRs=;
-        b=Q2dBy5Yak4Ax5a8ZXjx35S0eyrt7oxzblyC93coRQ1FBMIMsICBBb6pC5Y5FTgg0Vc
-         D9HAb+vIfyQTIegx2je4if1HSNPW0VsTfyZpnNOtS5HjqwGsqS75vL6FimwsJzZHpP2k
-         2m7Z3X8f2wl3lictULe4rfthYCPGTKhZ5kvlDdbxF6g+VTy/Z9nvx17iQYdYs8I2T721
-         U16AXIVSk3lvBg5txza+pxeinPuvZA0BtNKcvs6qHsC5FJtMvPMqQ3YOdWkrRYYDQDMr
-         2bNyx+ukg6u9h+cFFiuk7ur01oHFtOwjlHgTSnN1GL44v9D7VDLTddf9/gd/EZVSwLZH
-         W1Sw==
+        bh=fcnuXBSRbMxyYq/r18DW90RqJgdaTDM5lwjetPpSSzI=;
+        b=cqII/ooX5Jut9xKt1arYSb2G1SDXoXmwyC5ccT0QvraXGm77wKGxIM3hSDdEmeg1cO
+         rgg2+so8Sv7tt6KEFbbR2qJwtTZlYJEqm3Iul06E9f8Irvxm2F+Cxd42XIUfft2y+oxJ
+         rxYpMf5OfSTOAd8fgEPxcMbsFcqVu7gONdqPmd/MhrVsUi9JllWZSuWjWjn/M193Os0/
+         vK8z0gXbqxwLaGudHqasbA6qB9ifcw6Z07xvcWf/zeZuFl7QL679ijESSsULf2VQy0OA
+         Jy4KSqG3m2ciRZ8YMdWC0yRxc3rOF+NZ46k1nJX1VeRFWbjkbmm9aw9YQXZwC02RhOXh
+         XHug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784257725; x=1784862525;
+        d=1e100.net; s=20251104; t=1784258622; x=1784863422;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=TXyVGivf3UWZOqVUOzlxgpcD7lIywizl54v1ZomEtRs=;
-        b=rBbHTtG1N7WNwBUkWBeqL3Ziosz9uWljE824KoOZgP2xXJOxFCS/OjbXRk6gLf4l7C
-         oGISoh4ai9PDSfEMQ7LOe88YiO/SV0MBaGL21W6/pMlxMMzLT/MifsmWQFbAzF+xvPHx
-         z1dw/ml6lKyXRu+S9og02WzEgr8wbc7jvVEBkJJi+9lzTMiqkNMFWLP2v9pia4J3/PcV
-         0ClykaD1ElQPICeGdwjSx9RzDEA1rv3F0YbMoUlDs+DI2Pg9ItuLVpNW7F/j3ujekgxD
-         UEEbi0mToILuWWpF+zggI2fAEEfqSmjWrnWhd/xu2LiRico/E2Hq1x7A8g5YdqHU6Dsq
-         f2tA==
-X-Gm-Message-State: AOJu0Yx/T0UWMUcYMg3GL/C9JLIsaveOiTTPePYe/skJghP/S1DR86DU
-	8GFtyDRcYRRspshk96KzvMa/MXu32FOWFkt7KNpvdLRES9a0Hrysfcp+1JygN8VyCj8el/EVX6V
-	38BdyAXAOQhuk/s/m1KwwuTKSrWSRxSMYk1qaNbeWX9y9P3Iotdf6TMp9ikmHlW+3bFPwX1W268
-	w5T8U=
-X-Gm-Gg: AfdE7cnpPNcrBHon1v6GeDHGwdwDWJoyXDKuySwnsCLG7KfG54nPM1VpeZHa3mbs0SY
-	shKyfdTF4LneyY3xcOP2CIFklYoy2VhxeMubC99VNo2Ok1phaWT7h9QxyvL+ChhdABcHvBa3kkm
-	3JRJjKW+FDEj0JL0OzFfp+YnG/Tkd170SnBCXP4iObhIC8+Iw70Jy1p+CGHrKUw6vu7zs/ArmKu
-	pFTW8WpLfLgL1BSCigpvyO0UwKYA9gGazGXRTjvjtEousnz3Eg6qCV85z+iVkmQjSfA/6N4nkdl
-	5C2aKHk9FeT/ATS5vwfHI9Q4Ti/p6gtrCHkQMo66BIetStxZk93LPcL7IhPaFvB9HRZQpiBGn4H
-	UEvlYAWhwWt7FDVOnz6IyFQTKDZnBZIiNDhXpachXipM5I8vjSMnb8XjjSSLYHiE6cmSViIUg
-X-Received: by 2002:a17:90b:2785:b0:380:15fa:c5b2 with SMTP id 98e67ed59e1d1-38e4b42dafemr723813a91.18.1784257725155;
-        Thu, 16 Jul 2026 20:08:45 -0700 (PDT)
-X-Received: by 2002:a17:90b:2785:b0:380:15fa:c5b2 with SMTP id 98e67ed59e1d1-38e4b42dafemr723786a91.18.1784257724618;
-        Thu, 16 Jul 2026 20:08:44 -0700 (PDT)
-Received: from [10.133.33.101] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e48085853sm144811a91.2.2026.07.16.20.08.42
+        bh=fcnuXBSRbMxyYq/r18DW90RqJgdaTDM5lwjetPpSSzI=;
+        b=T0HXNtpVcSS8uUBz67qpwohxcKBXCSeHzMPZm2YvyroTwlFgpnKEKpNmrM3Ux/By+G
+         WFG6kM64DnD8ipakk2l8MthdzKG3/ymTMnyiIp2mj6QE6DKK592BMsuJqaWmUJgYeJS1
+         0SUmxc9ddtsboQEV6Cp6VvhiQBISz+yqe9Y8c4MLyHkDKS5mgOiDmel5er0tLVgd85wQ
+         HEgonMtt4LCqNG3kKCDsXKLCWchYkpfWUgKwmHxt6UZRJCfplBdsj8VseeUgf6LSPgw0
+         V2KWylK08u7pbwc2RUkUc1LVUhkhr+AUXGFg8ur+QKy0cFLKHLykFd1bVsvbRZ84fa7+
+         63FQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rr4HpYx35NMRl7MAvAVlvrYj1zwXoZUdu5T371t0tctHv3trrYp/ZwYRSlQkz3GIQS3Z1FNURICA33dWbm8GUw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxbjxChlNvTc+7lbVnGQHd2OXNABXZrM1+MoHcDbnpX95ZOe1bN
+	UPConbTejfJSZwVFxOaG7qd25bXl/J288dUmrxP63CS+5KV5Hz8ErWbduvYTwwfpkzYBrmGa0NG
+	6UCKj4jQoxISHjCSXGegKdsgkDz0iI1tK7nU0pQXiudH4+9a/xAZ4XbWlzh7OZokXwwXaeYc=
+X-Gm-Gg: AfdE7cnrT2iYpbPqrI5HBEeclc8wjLODCOiv2v3YfXQuuAvllsPoTiskL1W1ee8qeBB
+	nhcdd/5xmYCV3X+NMD+Vi65hJ+j12QR0OcBHHC4k8COu7Elk9UlGIUKVoIjfeUcugANzBsb5Y4i
+	VL2uNjC4toN7rdpOnvLGxL2trZfFV2y7BIsXuVHZRIELaD62ebXSaA/+WUwLoeaQ7uJ2CuHzsTK
+	OaGN9nMGPG6bZVX38TjIQuWsQhDZw5h4YYMW1Q2Xy/uw0UJCIVII8migSjh++hWXMI+09qNgRRf
+	Kfg59tU9iydvqG4D9SoDTrz+hA4jHsCycq28dGR58LK+kNySTklUjM0PntvnLxvGkF48mezStiq
+	Jg3gNZFEWkqhHTSmzktgoFhjHDbB4CP780FLeA+VbtGCRHfZnUDOdiuCQE7Wt7xWf2jwU
+X-Received: by 2002:a05:6a00:179c:b0:848:425a:4e31 with SMTP id d2e1a72fcca58-84c29274827mr728779b3a.24.1784258622068;
+        Thu, 16 Jul 2026 20:23:42 -0700 (PDT)
+X-Received: by 2002:a05:6a00:179c:b0:848:425a:4e31 with SMTP id d2e1a72fcca58-84c29274827mr728758b3a.24.1784258621559;
+        Thu, 16 Jul 2026 20:23:41 -0700 (PDT)
+Received: from [10.133.33.65] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84c2adfdfd0sm138573b3a.25.2026.07.16.20.23.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2026 20:08:44 -0700 (PDT)
-Message-ID: <d3c1909e-6ae6-459d-8bf5-8e8c5aff4ce7@oss.qualcomm.com>
-Date: Fri, 17 Jul 2026 11:08:41 +0800
+        Thu, 16 Jul 2026 20:23:40 -0700 (PDT)
+Message-ID: <30956c63-1324-48a7-9543-2bda8d716bb5@oss.qualcomm.com>
+Date: Fri, 17 Jul 2026 11:23:37 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,150 +89,60 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 13/15] drm/msm/dp: make bridge helpers use dp_display
- to allow re-use
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260609-dp_mstclean-v7-13-ea04113e8233@oss.qualcomm.com>
- <20260609100904.452091F00893@smtp.kernel.org>
+Subject: Re: [PATCH v5] leds: rgb: leds-qcom-lpg: Fix LED color balancing in
+ HW pattern mode
+To: Lee Jones <lee@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: linux-leds@vger.kernel.org
+References: <20260707-lpg-rgb-color-balance-fix-v5-1-99e2d73084fc@oss.qualcomm.com>
+ <20260708051716.3C4241F000E9@smtp.kernel.org>
+ <20260716130721.GJ1260374@google.com>
 Content-Language: en-US
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-In-Reply-To: <20260609100904.452091F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+In-Reply-To: <20260716130721.GJ1260374@google.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDAyOCBTYWx0ZWRfXxbZErQPuV+1L
- 3sHLcABp4gOWH8IAJ9sM29DiGfLWvm1EdWR9go5Qf7HRE6R/PtFvuy46jYOTKtnJrxYzB6SIo/4
- 173xN7B77sbpsO30chwtVNBq8Bx4SFSmUq/vNT7Ee+lNFes4lzeOl6lNQOYuOWXNnmus5NFbiIK
- tBst9zN5MGS5hqgkds9lv9hBVdrjjE3H0KQOtq9eQDHi5KCNge/s5falIOSY0uwQZhYraEd+wul
- FhS21nRMnI8lE26SMZQSe5cB/C6c8OFCqx7Uke1c6UmVGEyO59KxwoBo8Sbd2NXWEg2bbOAIHwr
- v3JqqClPVjvBp5fM07rv/xoKblCwnTCWfhsOVnBiPr+sSYMB5303CA61npzYrL2Bt3hjqkZknvJ
- t+A6xN08ishzYe67mF79+Tu1wo8WE0WcwjczqtLK+4agDaiR8q902gIv9jYHFz4Q08Cq/4NapkO
- 8iV1v04x+ef8gnePozw==
-X-Authority-Analysis: v=2.4 cv=JJ8LdcKb c=1 sm=1 tr=0 ts=6a599cbd cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-GUID: BnaWFWCRV2xtWrMGa2r0SPVfRmeNyRMr
+X-Proofpoint-ORIG-GUID: BnaWFWCRV2xtWrMGa2r0SPVfRmeNyRMr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDAzMCBTYWx0ZWRfXwH26KWO7jizj
+ nJArEBFk94KQeuXy4+cS24BiKC9I+yNiiENDUL1I4uAZk0xYR53g5NJWMxFFMQ221w29e8hQsuw
+ iYsxuEoWTs9migK9dAplLBePqLW2UTc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDAzMCBTYWx0ZWRfXyyIKkrig2ru4
+ El+DmLtXGMoc1Qjg5fYg36aVtT9P4sxSoPSxXMpGHYDB8aGMPy5OcEero4/gszQtBr4CEehIPlF
+ egulsjDB/eFF145oOU/pMEjr+EODHEOpbRWIeQcUjfOOFi+XmbahOLw75saAxxcbOr/fZjdr2EC
+ qTmCPeygVjjfLu7yLp8SQOD8hPnRq37CbvIlHWGzeu3Jbrkc05g3Rw3H4HiV7dpocZHTp5vjxiU
+ uR03dtxeeywcm7eZuCs/WwI4es8cczgaDy+ES3tYq88NbpMlFkDB4OZbUYtMEIGMr5wSW83RHdm
+ keVMcxiSa8hudUWveSoBqxg7hRRIAln2y5AoJjI6Ps/yelxDq7jyn5isvIVgOZadQCMXXZPPutJ
+ IsH39uH/Ea/yZcf6hegCfCZ/92sjqVnvEPAEjUmmEyrbQvA8i3Xi4nllwtcL0SZ/Znm2cuGu9ky
+ WN3RHyYjuYyR90471Fw==
+X-Authority-Analysis: v=2.4 cv=TL11jVla c=1 sm=1 tr=0 ts=6a59a03e cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=z6SnXkDR-izpW1DdgxoA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDAyOCBTYWx0ZWRfX7cJlGt/p5lqH
- 0zoRsqK3N6IlVPOmiiyVh86L0ubnliS3cPw59w3QNRYyayzu6rH9dtadQafeO5FSj5dGONZgBJH
- E/UiDIWoO5N2iHyXCfPlkbJ5QljXSQs=
-X-Proofpoint-ORIG-GUID: dtIAFJvGTajvPTLGH-U0FgpFoD8uJ5me
-X-Proofpoint-GUID: dtIAFJvGTajvPTLGH-U0FgpFoD8uJ5me
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=zfrkMIPrB1FTTd2ez9sA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
+ a=zc0IvFSfCIW2DFIPzwfm:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-17_01,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 suspectscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170028
+ impostorscore=0 priorityscore=1501 clxscore=1011 lowpriorityscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607170030
 
 
 
-On 6/9/2026 6:09 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On 7/16/2026 9:07 PM, Lee Jones wrote:
+> On Wed, 08 Jul 2026, sashiko-bot@kernel.org wrote:
 > 
-> New issues:
-> - [High] Hardcoded base encoder in `msm_dp_display_atomic_enable` breaks MST reuse
-> - [Low] Kernel-doc mismatch for `msm_dp_display_mode_valid`
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>>
+>> New issues:
+>> - [Medium] Mixing goto-based error handling with scope-based cleanup (__free and guard) in the same function.
 > 
-> Pre-existing issues:
-> - [High] `msm_dp_display_mode_valid` ignores the `info` parameter, validating against the wrong sink in MST
-> --
+> Either provide a good explanation or fix please.
 > 
-> commit 79702b8fc2a6d1a516b0d64051edab10a8d7764e
-> Author: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Subject: drm/msm/dp: make bridge helpers use dp_display to allow re-use
-> 
-> This commit modifies the DP bridge helpers to directly take the dp_display
-> object rather than a drm_bridge pointer. This refactoring is intended to
-> allow the MST bridge to reuse the same helpers.
-> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index f1970e6dd7e46..cdb7dd4cd7cbd 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -738,24 +738,21 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
->>   
->>   /**
->>    * msm_dp_bridge_mode_valid - callback to determine if specified mode is valid
->> - * @bridge: Pointer to drm bridge structure
->> + * @dp: Pointer to dp display structure
->>    * @info: display info
->>    * @mode: Pointer to drm mode structure
->>    * Returns: Validity status for specified mode
->>    */
-> 
-> [Severity: Low]
-> This isn't a bug, but there is a mismatch in the documentation. The
-> kernel-doc still refers to the old function name msm_dp_bridge_mode_valid,
-> while the function was renamed to msm_dp_display_mode_valid.
-> 
-Will update it.
->> -enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
->> -					  const struct drm_display_info *info,
->> -					  const struct drm_display_mode *mode)
->> +enum drm_mode_status msm_dp_display_mode_valid(struct msm_dp *dp,
->> +					       const struct drm_display_info *info,
->> +					       const struct drm_display_mode *mode)
-> 
-> [Severity: High]
-> This is a pre-existing issue, but since these helpers are being exposed for
-> MST bridge reuse, does it cause problems that the info parameter is ignored?
-> 
-> Inside msm_dp_display_mode_valid(), the code checks capabilities against
-> dp->connector->display_info instead of using the provided info parameter:
-> 
-> 	if ((drm_mode_is_420_only(&dp->connector->display_info, mode) &&
-> 	     msm_dp_display->panel->vsc_sdp_supported) ||
-> 	     msm_dp_wide_bus_available(dp))
-> 		mode_pclk_khz /= 2;
-> 
-> If this is used for an MST stream, won't this validate the mode against the
-> main DP connector's capabilities rather than the specific MST sink's
-> capabilities?
-> 
-When MST call it , will pass corresponding *info.
-> [ ... ]
-> 
->> @@ -1406,11 +1403,9 @@ int msm_dp_modeset_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
->>   	return 0;
->>   }
->>   
->> -void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
->> -				 struct drm_atomic_commit *state)
->> +void msm_dp_display_atomic_enable(struct msm_dp *msm_dp_display,
->> +				  struct drm_atomic_commit *state)
->>   {
->> -	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
->> -	struct msm_dp *msm_dp_display = msm_dp_bridge->msm_dp_display;
->>   	struct drm_crtc *crtc;
->>   	struct drm_crtc_state *crtc_state;
->>   	int rc = 0;
->> @@ -1419,7 +1414,7 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
->>   	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
->>   
->>   	crtc = drm_atomic_get_new_crtc_for_encoder(state,
->> -						   drm_bridge->encoder);
->> +						   msm_dp_display->bridge->encoder);
-> 
-> [Severity: High]
-> Will this hardcoded encoder lookup break MST support?
-> 
-> In an MST topology, each stream operates through its own distinct virtual
-> drm_bridge and drm_encoder. By hardcoding msm_dp_display->bridge->encoder
-> here, the primary DP encoder is used instead of the encoder for the specific
-> bridge being updated.
-> 
-> If the primary encoder isn't participating in the MST stream's atomic commit,
-> won't drm_atomic_get_new_crtc_for_encoder() return NULL and cause the
-> helper to bail out silently without programming the mode?
-> 
-We will further refactor this in a follow-up patch series so that MST 
-can use the corresponding APIs.
->>   	if (!crtc)
->>   		return;
->>   	crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
-> 
+Okay. I will update and transfer 'pattern.data' to a '__free(kfree)'
+local after 'lpg_prepare_pattern()', to get rid of the manual free and goto.
+
 
