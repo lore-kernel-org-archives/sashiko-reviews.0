@@ -1,88 +1,168 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824FF31326B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 01:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934AE309EF9
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784252612; cv=none; b=uOF6uY8jZQUgSqTxFeaWzf2PFeFfFRsr1inozztkXt3LLGw88lQ03Rqv6GTfpb/Fz4wShSmgs+vP2XwHPAgtqMv0q+p8TgN9IqK2veYoebBEuXTqkpU50OeXjHaIVSwWuGmKvD1TEm8eBqtoIqZyPdMra0JdZff2BPbT7hOqowA=
+	t=1784254096; cv=none; b=nMhYoPRFqFaLoKlmKSJL6KUadeEy9YqNkA6TYgmZZk8DqbzkVlgGRJKgglpDj5T8t4Gc6ALpzjQmNYRM8o8qnJ75YvcjY8p22bMt2J1DsV44K49dbdELBv6TvrRHlvjYmyBiHFRuVPG6JdBlPPlVoDRv5EiNsEiYtkScFGLdAQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784252612; c=relaxed/simple;
-	bh=SJe6K4EVV88SB8cuhIEnZVflO/QAKz9EH1yeTdwJ3cQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAaTEly+9+/oaugQRLLJuq9ASU+oYH5ct+qVA8Zyxs8S694n+qYMRFIp1MSeBvajAJ7DisFpSN9UsRbEt4GHKyMRFZjn1c7kO8bQb+9W0AHtrL4CW57AlebEn3VAv/p3U6HMqJC93UdgmxwRvvhDhmlLjnDJkYiyBQS2l4idyFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EKCFvlG0; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1784254096; c=relaxed/simple;
+	bh=By3FimZceyxGDktINDq9g2IrqhxlFRDBNtG+uonqiis=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U+bjips8XSd/ygXDCLLjZOkbP+yAZNOond7MjK4ICYp1eQ4IbfaGkQzntDxLdyaLIBGSLbZ3VxAPdIdRNHE5a6tEUt1VDp2T4Q8XsXMoKw86ilagmkgsFRFZWQmFzHVOnFqT6PmPwq1NwdDBvu0qI5YyEOfCFJV3A6ztXGx3L8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=UxetImme; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EKCFvlG0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784252610; x=1815788610;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=SJe6K4EVV88SB8cuhIEnZVflO/QAKz9EH1yeTdwJ3cQ=;
-  b=EKCFvlG0xqL5HbgYh9eSaUIOGtaQ6GyJ5lZJEMPiMT9xg5sJeEKMtybQ
-   JjQXznlHIqQDPHkZxjdMEPLJ7RHhAQmvAAXDaOjEfHy5XYXv732lzmtcc
-   2BrI4lcw6QxV64t0WuuNmOWGaIMtvIMzngJ+lCPFhj2MGgvIC1pyDfxqG
-   pXznspZGrJjJeOPW4K2fSULhLC9fiN8bDqblgZctvezkgEXgIUz83EmOf
-   CsICkACdkKfLdl7nwBuSfeTof2vZGl8GYy2IglODKP1Qz3UOeqNlaKUVS
-   j9JwUdCUvjdHyz+mqRpNnL0bhrXubNNli+wVHVA1hrwi+dGRerJZCJ6Pr
-   w==;
-X-CSE-ConnectionGUID: m1wAyowEQGeBuZJWnziPIA==
-X-CSE-MsgGUID: 1Q3dUG+lTmWWV6DaQdIJ1w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11848"; a="96435536"
-X-IronPort-AV: E=Sophos;i="6.25,168,1779174000"; 
-   d="scan'208";a="96435536"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2026 18:43:29 -0700
-X-CSE-ConnectionGUID: luTSXsIUR2GyuWDn9Ik5rw==
-X-CSE-MsgGUID: ndLaIka8S4WISw4eGwNQsA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,168,1779174000"; 
-   d="scan'208";a="254886712"
-Received: from linux-pnp-gnr-1.sh.intel.com ([10.239.83.186])
-  by orviesa006.jf.intel.com with ESMTP; 16 Jul 2026 18:43:28 -0700
-From: Jiebin Sun <jiebin.sun@intel.com>
-To: namhyung@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,
-	linux-perf-users@vger.kernel.org,
-	Jiebin Sun <jiebin.sun@intel.com>
-Subject: Re: [PATCH 01/14] perf c2c: extract shared data structures into c2c.h
-Date: Fri, 17 Jul 2026 09:43:33 +0800
-Message-ID: <20260717014333.1614940-1-jiebin.sun@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <alkaBTSMVXPWMJW6@google.com>
-References: <alkaBTSMVXPWMJW6@google.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="UxetImme"
+Message-ID: <50c2d308-cfed-41bb-9084-54e380463ad2@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784254091;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ut/bn6tdhBjZ2U2t5bilQwjTZNYcf8S/FU1sHi3PRTA=;
+	b=UxetImmeMTy5r1AYTSDL9wpcQq8iz7sKP2lWQiRcVORWAiqdOdlpRQX/O9IBfrqtPfaW2/
+	6OIUBHp/83de+2HKv3EehAta6d62yMLQIjDERGjlv3CSBq9U6pfwYlKohDGK8odOf9U3qM
+	+n3uTtrrzJ/QW0cFomXHU3DW6b0xdbY=
+Date: Fri, 17 Jul 2026 10:08:04 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH bpf-next 1/3] bpf: Add memory usage for arena
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260716142746.8794-1-jiayuan.chen@linux.dev>
+ <20260716144840.3DE1F1F00A3A@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260716144840.3DE1F1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-Hi Namhyung,
 
-Thanks, agreed.
-
-> On Fri, Jun 26, 2026 at 07:13:52AM +0000, sashiko-bot@kernel.org wrote:
-> > > -static void fmt_free(struct perf_hpp_fmt *fmt)
-> > > +void fmt_free(struct perf_hpp_fmt *fmt)
-> > ...
-> > > -static bool fmt_equal(struct perf_hpp_fmt *a, struct perf_hpp_fmt *b)
-> > > +bool fmt_equal(struct perf_hpp_fmt *a, struct perf_hpp_fmt *b)
-> >
-> > Since fmt_free() and fmt_equal() lack a subsystem prefix (like c2c_ or
-> > perf_c2c_), exporting these generic names to the global namespace
-> > increases the risk of collisions during static linking or Link-Time
-> > Optimization with other perf tool objects.
+On 7/16/26 10:48 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
-> I think this is a meaningful.  Even without collisions, it'd be better
-> to have a prefix for global functions.
+> New issues:
+> - [Medium] The `nr_pages` counter is modified using plain writes while being read concurrently locklessly, constituting a data race.
+>
+> Pre-existing issues:
+> - [High] Functions that can sleep and acquire sleepable locks are called while holding a raw spinlock with interrupts disabled.
+> --
+>
+> --- Patch [1]: [PATCH bpf-next 1/3] bpf: Add memory usage for arena ---
+> commit 68cbc4739a7a9be56d49db779d319ec002523097
+> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
+> Subject: bpf: Add memory usage for arena
+>
+> This patch adds memory usage tracking for the arena map type by counting
+> the pages mapped into the arena. It bumps a counter in apply_range_set_cb()
+> when a page is added, drops it in apply_range_clear_cb() when removed, and
+> returns the calculated usage in map_mem_usage().
+>
+>> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+>> index 80b7b8a694464..bc34602116040 100644
+>> --- a/kernel/bpf/arena.c
+>> +++ b/kernel/bpf/arena.c
+> [ ... ]
+>
+>> @@ -196,6 +198,7 @@ static int apply_range_set_cb(pte_t *pte, unsigned long addr, void *data)
+>>   	set_pte_at(&init_mm, addr, pte, pteval);
+>>   #endif
+>>   	d->i++;
+>> +	d->arena->nr_pages++;
+>>   	return 0;
+>>   }
+> [Severity: Medium]
+> Is it safe to use a plain increment here since nr_pages is read concurrently?
+>
+> In arena_map_mem_usage(), arena->nr_pages is read locklessly via
+> READ_ONCE(arena->nr_pages). The Linux Kernel Memory Model requires that writes
+> pairing with a lockless READ_ONCE must be marked with WRITE_ONCE to prevent
+> the compiler from splitting the writes or assuming no concurrent access.
+>
+> Could this lead to incorrect statistics or torn writes?
+>
+> [ ... ]
+>
+>> @@ -227,10 +230,11 @@ static int apply_range_clear_cb(pte_t *pte, unsigned long addr, void *data)
+>>   	 * scratches its PTE. A later bpf_arena_free_pages() over that range walks
+>>   	 * here. Without the skip, scratch_page would be freed.
+>>   	 */
+>> -	if (page == d->scratch_page)
+>> +	if (page == d->arena->scratch_page)
+>>   		return 0;
+>>   
+>>   	__llist_add(&page->pcp_llist, d->free_pages);
+>> +	d->arena->nr_pages--;
+> [Severity: Medium]
+> Similar to the increment above, does this plain decrement need WRITE_ONCE() to
+> safely pair with the READ_ONCE() in arena_map_mem_usage()?
 
-I'll add a c2c_ prefix to the exported functions in the next revision:
-fmt_free() -> c2c_fmt_free() and fmt_equal() -> c2c_fmt_equal().
+It's true.
 
-Thanks,
-Jiebin
+
+> [ ... ]
+>
+>> @@ -506,8 +512,7 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
+>>   	if (ret)
+>>   		goto out_sigsegv_memcg;
+>>   
+>> -	struct apply_range_data data = { .pages = &page, .i = 0,
+>> -					 .scratch_page = arena->scratch_page };
+>> +	struct apply_range_data data = { .arena = arena, .pages = &page, .i = 0 };
+>>   	/* Account into memcg of the process that created bpf_arena */
+>>   	ret = bpf_map_alloc_pages(map, NUMA_NO_NODE, 1, &page);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this function call
+> sleepable allocators while holding a raw spinlock?
+>
+> In arena_vm_fault(), the raw spinlock is acquired before this block:
+>
+> 	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
+>
+> Then bpf_map_alloc_pages() performs sleepable memory allocations (GFP_USER
+> with __GFP_DIRECT_RECLAIM). Furthermore, apply_to_page_range() is called
+> shortly after, which may dynamically allocate kernel page tables using
+> GFP_PGTABLE_KERNEL while taking init_mm.page_table_lock (a sleepable
+> spinlock on PREEMPT_RT).
+>
+> Can this cause a kernel panic (BUG: sleeping function called from invalid
+> context) or potential deadlocks?
+
+
+Not true. __bpf_alloc_page::can_alloc_pages already check whether we are 
+under lock.
+
+
+> [ ... ]
+>
+>> @@ -696,8 +701,8 @@ static long arena_alloc_pages(struct bpf_arena *arena, long uaddr, long page_cnt
+>>   		bpf_map_memcg_exit(old_memcg, new_memcg);
+>>   		return 0;
+>>   	}
+>> +	data.arena = arena;
+>>   	data.pages = pages;
+>> -	data.scratch_page = arena->scratch_page;
+>>   
+>>   	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
+> [Severity: High]
+> This isn't a bug introduced by this patch, but are sleepable functions also
+> called inside this atomic section in arena_alloc_pages()?
+>
+> After the lock is acquired, the code enters a loop that calls
+> bpf_map_alloc_pages() and apply_to_page_range(), both of which can sleep
+> or acquire sleepable locks.
+
+
+apply_to_page_range() does not allocate page tables here. 
+arena_map_alloc() already did it.
+
+
