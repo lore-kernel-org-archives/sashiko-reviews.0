@@ -1,92 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AFC3D16FC;
-	Thu, 16 Jul 2026 22:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824FF31326B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 01:43:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784239960; cv=none; b=G0NwgEnyWxsbkrx4SM1FJNryQZpAvccF4x4zw4kuFtTXi+RnBik7XSv+TDA9xN7VpKXNFeeH5XhGU6pUog1RPm9+16wb3Uzqz3fFnD9vmOtA9Ls3eF34kGDCbxoEkj6J76SbhFWADeBK9so4P5cH3knFjrbzfcT9rS6HSUlzLHc=
+	t=1784252612; cv=none; b=uOF6uY8jZQUgSqTxFeaWzf2PFeFfFRsr1inozztkXt3LLGw88lQ03Rqv6GTfpb/Fz4wShSmgs+vP2XwHPAgtqMv0q+p8TgN9IqK2veYoebBEuXTqkpU50OeXjHaIVSwWuGmKvD1TEm8eBqtoIqZyPdMra0JdZff2BPbT7hOqowA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784239960; c=relaxed/simple;
-	bh=eJzzq0+eI4rwVsvSmcEtmwZJhnaVhKwdMpipS+zcvSY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nqNSXXwpBxlB0FzkfQCNEaQn6VlV6GnplOsgSx6mFKOviuSTvYJAGH8kPmwwhazDuO9MMseW3dBxYT7Yb0bcWiZ1gzGIXIYWnFhqJSdjizqXP1qYQb855Q6kW9QF6v3etsChPm1B88j+bWbYqqFNZp1LkbBiUlZMXjvcw3GiP8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohIkqRSa; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784252612; c=relaxed/simple;
+	bh=SJe6K4EVV88SB8cuhIEnZVflO/QAKz9EH1yeTdwJ3cQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YAaTEly+9+/oaugQRLLJuq9ASU+oYH5ct+qVA8Zyxs8S694n+qYMRFIp1MSeBvajAJ7DisFpSN9UsRbEt4GHKyMRFZjn1c7kO8bQb+9W0AHtrL4CW57AlebEn3VAv/p3U6HMqJC93UdgmxwRvvhDhmlLjnDJkYiyBQS2l4idyFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EKCFvlG0; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohIkqRSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11031F000E9;
-	Thu, 16 Jul 2026 22:12:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784239959;
-	bh=wqHcuPVvvxXWxaysAf9SzeGo2yhyLZDJBTeRKU8ATfc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ohIkqRSaZ1F+eaXNAQmZkOjwuLDD8rkHwHrJ0rJj+tzNRibmdoaXMrPWqfwS0LKrQ
-	 +QSML5WqXq6l1m4Z5sVZcy7iDeGzrtBCHIpPu5H3E7EsyekTazlLCl+SviOEVEGtBK
-	 1zvzerPAKXFTvHqWjI3eRPc2E5OPPzRgrMuxVfMHwHBfkgKf9+xYGX9CUuZ7IK3DMg
-	 hLYcyGG2SEjpdC+qt30X4g5vU9H9S12UwaYTl/begEvFeS2ygWX1y7eU6Ahv97pfM1
-	 kB5Dvi92clrMZZAs7b5RiE+3O4MeeV8As0ngac03dxd0LSsXhkse5R4/mdxoq6MgBL
-	 VFv2UVcNHFhZA==
-Date: Thu, 16 Jul 2026 17:12:38 -0500
-From: Rob Herring <robh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Eduard Bostina <egbostina@gmail.com>, dmitry.torokhov@gmail.com,
-	conor+dt@kernel.org, linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: input: Convert TI Keypad Controller to DT
- schema
-Message-ID: <20260716221238.GA1523257-robh@kernel.org>
-References: <20260708123252.1768355-1-egbostina@gmail.com>
- <20260708124112.1DC541F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EKCFvlG0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1784252610; x=1815788610;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=SJe6K4EVV88SB8cuhIEnZVflO/QAKz9EH1yeTdwJ3cQ=;
+  b=EKCFvlG0xqL5HbgYh9eSaUIOGtaQ6GyJ5lZJEMPiMT9xg5sJeEKMtybQ
+   JjQXznlHIqQDPHkZxjdMEPLJ7RHhAQmvAAXDaOjEfHy5XYXv732lzmtcc
+   2BrI4lcw6QxV64t0WuuNmOWGaIMtvIMzngJ+lCPFhj2MGgvIC1pyDfxqG
+   pXznspZGrJjJeOPW4K2fSULhLC9fiN8bDqblgZctvezkgEXgIUz83EmOf
+   CsICkACdkKfLdl7nwBuSfeTof2vZGl8GYy2IglODKP1Qz3UOeqNlaKUVS
+   j9JwUdCUvjdHyz+mqRpNnL0bhrXubNNli+wVHVA1hrwi+dGRerJZCJ6Pr
+   w==;
+X-CSE-ConnectionGUID: m1wAyowEQGeBuZJWnziPIA==
+X-CSE-MsgGUID: 1Q3dUG+lTmWWV6DaQdIJ1w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11848"; a="96435536"
+X-IronPort-AV: E=Sophos;i="6.25,168,1779174000"; 
+   d="scan'208";a="96435536"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2026 18:43:29 -0700
+X-CSE-ConnectionGUID: luTSXsIUR2GyuWDn9Ik5rw==
+X-CSE-MsgGUID: ndLaIka8S4WISw4eGwNQsA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,168,1779174000"; 
+   d="scan'208";a="254886712"
+Received: from linux-pnp-gnr-1.sh.intel.com ([10.239.83.186])
+  by orviesa006.jf.intel.com with ESMTP; 16 Jul 2026 18:43:28 -0700
+From: Jiebin Sun <jiebin.sun@intel.com>
+To: namhyung@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	Jiebin Sun <jiebin.sun@intel.com>
+Subject: Re: [PATCH 01/14] perf c2c: extract shared data structures into c2c.h
+Date: Fri, 17 Jul 2026 09:43:33 +0800
+Message-ID: <20260717014333.1614940-1-jiebin.sun@intel.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <alkaBTSMVXPWMJW6@google.com>
+References: <alkaBTSMVXPWMJW6@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260708124112.1DC541F00A3A@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 08, 2026 at 12:41:11PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Properties strictly required by the hardware and driver ('keypad,num-rows', 'keypad,num-columns', 'interrupts', and 'linux,keymap') are omitted from the 'required:' list, allowing non-functional device trees to silently pass validation.
-> --
-> 
-> --- Patch [1]: [PATCH] dt-bindings: input: Convert TI Keypad Controller to DT schema ---
-> commit 31e1662350e854e7b96beb7e7de83fc2b0d265e2
-> Author: Eduard Bostina <egbostina@gmail.com>
-> 
-> dt-bindings: input: Convert TI Keypad Controller to DT schema
-> 
-> This commit converts the Texas Instruments Keypad Controller bindings to DT
-> schema format. It updates the autorepeat property name, adds the reg-names
-> property, and omits the keypad row and column properties from the required
-> list to prevent validation failures.
-> 
-> > diff --git a/Documentation/devicetree/bindings/input/ti,omap4-keypad.yaml b/Documentation/devicetree/bindings/input/ti,omap4-keypad.yaml
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/input/ti,omap4-keypad.yaml
-> [ ... ]
-> > +required:
-> > +  - compatible
-> > +  - reg
-> 
-> [Severity: Medium]
-> The commit message mentions that keypad,num-rows and keypad,num-columns were
-> omitted from this required list because enforcing them causes validation
-> failures. Should these properties, along with interrupts and linux,keymap,
-> be included here to accurately reflect the driver's probing requirements?
-> 
-> Omitting them allows non-functional device tree nodes to silently pass
-> schema validation. At runtime, the omap4-keypad driver will unconditionally
-> fail to probe via platform_get_irq(), matrix_keypad_parse_properties(), and
-> matrix_keypad_build_keymap() when these properties are missing.
-> 
-> Would it be better to enforce the strict hardware and driver requirements in
-> the schema, and instead fix the incomplete device tree nodes that are
-> failing validation?
+Hi Namhyung,
 
-Yes. sashiko is right.
+Thanks, agreed.
 
-Rob
+> On Fri, Jun 26, 2026 at 07:13:52AM +0000, sashiko-bot@kernel.org wrote:
+> > > -static void fmt_free(struct perf_hpp_fmt *fmt)
+> > > +void fmt_free(struct perf_hpp_fmt *fmt)
+> > ...
+> > > -static bool fmt_equal(struct perf_hpp_fmt *a, struct perf_hpp_fmt *b)
+> > > +bool fmt_equal(struct perf_hpp_fmt *a, struct perf_hpp_fmt *b)
+> >
+> > Since fmt_free() and fmt_equal() lack a subsystem prefix (like c2c_ or
+> > perf_c2c_), exporting these generic names to the global namespace
+> > increases the risk of collisions during static linking or Link-Time
+> > Optimization with other perf tool objects.
+>
+> I think this is a meaningful.  Even without collisions, it'd be better
+> to have a prefix for global functions.
+
+I'll add a c2c_ prefix to the exported functions in the next revision:
+fmt_free() -> c2c_fmt_free() and fmt_equal() -> c2c_fmt_equal().
+
+Thanks,
+Jiebin
