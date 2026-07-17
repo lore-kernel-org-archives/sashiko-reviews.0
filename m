@@ -1,207 +1,167 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078E73009E1;
-	Fri, 17 Jul 2026 16:33:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AB73F99E1
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 16:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784306012; cv=none; b=lEitXcw9UsgTte7LviYdvxejxDnRLDZbHNjc4rmh2iqindW0LKwyaNuvoH4Xitq4TdNuDE5idWHpJNzGsbi75z5AZ1axsNLbFwqh/y4+7vdLFbOQi3drmzAw+KTIMZPaH5bOec0i5/TdbH24oQFwh/pYqs2GV+biEJIcfKaZr7Q=
+	t=1784306061; cv=none; b=DJAbH2jUzOzU404GGFuU/Q4IiIFDl+HF9pufI1hQcPo+h+H490tiyqjI5i2kpA56YAIId94UFk4UXaKAWZv7MJpkf9l/yhZrB9oqG3DYXpi0BijiL8Dkfq/2TKDSX3Dm96g2nXnjK+90yDQDJI5w5hfDpgJsahhu5UdqoXArVXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784306012; c=relaxed/simple;
-	bh=Io3ds/w/9KLyhjESEFhjl0UtnJORPqYNi1v3E3bM/gE=;
+	s=arc-20240116; t=1784306061; c=relaxed/simple;
+	bh=6wnDDJQBQfpjll1dAST5KuLlqAlQD+gfIzZDEDQKs6o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kX3xbisy42T81cJqcYsRchPo2M8dkn+NFs4NXmWAjVKyb+WijLFyf1dbppu/xplMYcMIMGoJrymU6XKEoHJkfQg+29I2O6ovr6ctqflVRzCwGb+oqHKpWPUu3fPzXGEHmTF5q2Ge7MBJXEBSf/1mS/MSQaKKI9lF4FSzhSuDTA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VWatbO3P; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=iL9bQn+lo8gfbX6Br23+0fP42XhqIhbjbPCJ84s2iyYfsszaz8QpeZOJ7u7HNl5UEaVXpH960b5GD7WcLNhIh3KLcxVpDPIq9Mznqxby/59SZEkRE2D/74fqqaD96C9RqBlNnAsHyjT28e+IzMBW5tVUfRunla2bC+uh2egPwUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Afi9nzk9; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VWatbO3P"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784306010; x=1815842010;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=Io3ds/w/9KLyhjESEFhjl0UtnJORPqYNi1v3E3bM/gE=;
-  b=VWatbO3PSx2vXGm2Bi5KNY1Cg/p5VNlbwNBq94vmT6MYaCdIi+vFxNSo
-   g/SAgSrLKBHEixn4XvLQEXVevCaani0dSaqjPOrP3wMVjd99aWZknQayx
-   RQgakrO8c3eBAOX1c/zqzZCYvTJM7zQvI+nmAMSeIceO3PKWubpky+yYC
-   gH72UHNEoabBjzZChoYHMYAubd7EaUam4M2q9dVFK2Cu5FiueWKlsQKfA
-   Tob1kbUCjXRc0UFoyJGQjSr1+ipVPLcowmHBHYlxn2hFyTCnf4pKcP14x
-   Enn1VAkr77iYoTJEnek40suUaAM3o4MJA6VAUt5Qxf28C1rakrfJYzVK3
-   g==;
-X-CSE-ConnectionGUID: L/0Ku9bDRy6oRKkRPqmfNw==
-X-CSE-MsgGUID: TdcOEsULTB+m0YdQsXJ/gw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11849"; a="87526471"
-X-IronPort-AV: E=Sophos;i="6.25,169,1779174000"; 
-   d="scan'208";a="87526471"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2026 09:33:29 -0700
-X-CSE-ConnectionGUID: gcMJdWumR46RYX5syV2nfw==
-X-CSE-MsgGUID: M+5JhkdVRT26c+iOX1C5cA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,169,1779174000"; 
-   d="scan'208";a="261104881"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.143])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2026 09:33:28 -0700
-Date: Fri, 17 Jul 2026 19:33:25 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Chen-Yu Tsai <wenst@chromium.org>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	driver-core@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: Re: [PATCH v5 02/16] device property: Add
- fwnode_graph_get_next_port_endpoint()
-Message-ID: <alpZVUEOidfGMpfD@ashevche-desk.local>
-References: <20260715085348.3457359-1-wenst@chromium.org>
- <20260715085348.3457359-3-wenst@chromium.org>
- <20260715090944.2B4441F000E9@smtp.kernel.org>
- <CAGXv+5Ffsrc9r6d_RrgL1mBW1Zmt1RxCrMCjaD7vuF3+EaeAqw@mail.gmail.com>
- <allHTc-bJrPwDA0b@ashevche-desk.local>
- <CAGXv+5HS3neb=8EW0FT2-tP-dhPFqQ+q8YRS8Gy_XBic4z4Mug@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Afi9nzk9"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-80814edb536so49226917b3.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 09:34:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784306056; x=1784910856; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=SN6iKB84XjlCdyQZDXiTIhq7M2trG088S3ZqcAJw8RI=;
+        b=Afi9nzk95b+meu0d1+PeHNWhcTAjQNDEG9SgtoyBF3Ut3U+UmLXr8FaLKILYJwyOG0
+         /B+GcRh6sgN+DRCRJjJs9w8RlblsMm/Upzp7qT+SWkfo49YSPuFoMKbjjztJdtmhucLG
+         jtONJbBM6BIILer4SFZ6Lom9QkswaiyFZ2/hFLBzFBP2w1ww2SUT6YKFCAocLlW++ajM
+         WEPi9sAcmAbWfnC0733Q3ugMrdr0PV3ts8SxaYX9B7TQ5MrGyQwxA6FlCjMjDH/J4j8f
+         pxu6X+tZx7OdoVO27r+Bz5At/65Ds13P+4f8tfesCcyMxMHgKIGI0Ocl/48e/cXw9Naq
+         MrLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784306056; x=1784910856;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=SN6iKB84XjlCdyQZDXiTIhq7M2trG088S3ZqcAJw8RI=;
+        b=L2a5luY/SCwo4SZhy9E1L19fQkFlHx0xTT8wRQJuwj9Q8d7yBqctf8YqkvzEQ2+v5s
+         NPN/rhpNF90Usr6RScOexsGufl/qTeuZwGy4vC6qLeVKtSzXNKX6aRaDiaXDDKYAZWHF
+         VEo0CzSu/6fd4DWGYbTRbSkMJmejn1RYZHPpe9zPSFmltyU8BX0tXxo5e7Pi0/t/3Yvg
+         WJxrHcCr4lPkzUFB45gXiTxp5ZJLeBdRJXZqMWQ4c3ieAEj0rEs4PScKxFoWq81nPh1I
+         I1+unDnJPEwhe391S5H8GD+kOLccJN7SPkWUKyUeOeM5OKk0OWDd0GekCtPHtmaWA3Cv
+         RUSQ==
+X-Gm-Message-State: AOJu0YyJFRI9E1Cj/Yvv3DwurHzCi3bYpak5MwcWi/3QYhRatfmWgz1h
+	lFQUqMhAMyv28Cmo5f+v8tvXU51YetZS8HZ5/xv2bjgknjXSS9jURgLQ7NOUzQ==
+X-Gm-Gg: AfdE7ck+lmwcIpKZ4V+lcUxxN6+F1p0X2GZBADKvOpfB2Sc9dx5RMd1hwo19t+BVRT4
+	TkQ7alTjYgRRtLtDHPhb+FG/FrZYCJxRmGZrhnkj5D+Uf8eHMDr5SHmJSUnOC0b2rHqNOZV4s5d
+	i5AVLCtGmSnn9e4EF4Cor2Uf6IyPFSFjh3dFg50MV8tiOfMxgUbKOAVEuFTHJWoW/Q0nHa2YTdS
+	b+vkCecfq9fZZXCXUGR9xSzy/4gzknOubqrneOiRg80Q0zEwD1vED4hbNucu54QOWZE98Y+wrTb
+	nZPWR/mmT+d5Yz1LtmgaARuQh5e5QQ3FE/iwfF0UNs2oJ/dM2Zz6d/RBrw3sR/lKm7fwkMb2I9S
+	fQaaYxtVEjruMZL9eLqTgsADpA+fFysBPmmHA4aZ67x7hxqofa103d5E+WsiZRn34FwrZisVuKP
+	16ZNRXBXTPCSI=
+X-Received: by 2002:a05:690c:6107:b0:81e:bbcd:f5c3 with SMTP id 00721157ae682-81ef25e16eamr11174017b3.36.1784306056131;
+        Fri, 17 Jul 2026 09:34:16 -0700 (PDT)
+Received: from localhost ([2804:30c:1f09:b400:47f8:7933:2105:dd41])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81efe45416fsm53397b3.6.2026.07.17.09.34.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jul 2026 09:34:14 -0700 (PDT)
+Date: Fri, 17 Jul 2026 13:35:14 -0300
+From: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marcelo Schmitt <marcelo.schmitt@analog.com>, robh@kernel.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org,
+	linux-iio@vger.kernel.org, marcelo.schmitt1@gmail.com
+Subject: Re: [PATCH v7 3/4] iio: adc: ltc2378: Enable high-speed data capture
+Message-ID: <alpZwoau3QVPtBsP@debian-BULLSEYE-live-builder-AMD64>
+References: <cover.1784235595.git.marcelo.schmitt@analog.com>
+ <564b975c2c62d28ee6733f86bd5632c41a7c80e4.1784235595.git.marcelo.schmitt@analog.com>
+ <20260716212451.923951F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGXv+5HS3neb=8EW0FT2-tP-dhPFqQ+q8YRS8Gy_XBic4z4Mug@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <20260716212451.923951F000E9@smtp.kernel.org>
 
-On Fri, Jul 17, 2026 at 07:05:56PM +0800, Chen-Yu Tsai wrote:
-> On Fri, Jul 17, 2026 at 5:04 AM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> > On Thu, Jul 16, 2026 at 04:52:27PM +0800, Chen-Yu Tsai wrote:
-> > > On Wed, Jul 15, 2026 at 5:09 PM <sashiko-bot@kernel.org> wrote:
-
-...
-
-> > > > > +struct fwnode_handle *fwnode_graph_get_next_port_endpoint(const struct fwnode_handle *port,
-> > > > > +                                                       struct fwnode_handle *prev)
-> > > > > +{
-> > > > > +     do {
-> > > > > +             prev = fwnode_get_next_child_node(port, prev);
-> > > >
-> > > > [Severity: High]
-> > > > This is a pre-existing issue, but iterating over endpoints using
-> > > > fwnode_get_next_child_node() can cause an infinite loop and a use-after-free
-> > > > if a device has secondary fwnodes attached.
-> > > >
-> > > > If a device port has both primary children and a secondary fwnode, the primary
-> > > > ops finish and drop the reference to the last primary child, returning NULL.
-> > > > Then, fwnode_get_next_child_node() incorrectly passes this same dropped child
-> > > > pointer to the secondary ops:
-> > > >
-> > > > drivers/base/property.c:fwnode_get_next_child_node() {
-> > > >         /* Try to find a child in primary fwnode */
-> > > >         next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
-> > > >         if (next)
-> > > >                 return next;
-> > > >
-> > > >         /* When no more children in primary, continue with secondary */
-> > > >         return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
-> > > > }
-> > > >
-> > > > This can result in a double-put. Furthermore, when traversing secondary
-> > > > children, the primary ops don't recognize the software node, treat it as NULL,
-> > > > and return the first primary child again, creating an infinite loop.
-> >
-> > Yeah, it has to be implemented in a way how fwnode_graph_get_next_endpoint() is done.
+On 07/16, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Integer divide-by-zero leading to kernel panic in `ltc2378_update_conversion_rate` when a sampling frequency of 1 Hz is requested and the PWM driver rounds the period length above 1 second.
+> --
 > 
-> If your patch series addresses the issue, I guess we can consider it
-> covered? Sashiko labeled this a pre-existing.
-
-I noticed that it addresses only main get_next case, but get_next_available is
-still with the same issue. It's not that critical, we don't use much that API,
-but still will be good to fix at some point.
-
-> > > > [Severity: Medium]
-> > > > Does this fail to unconditionally put the prev reference if the provided port
-> > > > is invalid?
-> > > >
-> > > > If a caller passes a valid prev node but port is NULL or an error pointer,
-> > > > fwnode_get_next_child_node() returns early without dropping prev:
-> > > >
-> > > > drivers/base/property.c:fwnode_get_next_child_node() {
-> > > >         struct fwnode_handle *next;
-> > > >
-> > > >         if (IS_ERR_OR_NULL(fwnode))
-> > > >                 return NULL;
-> > > >     ...
-> > > > }
-> > > >
-> > > > Could this lead to a reference count leak, violating the documented API
-> > > > contract that prev is unconditionally put?
-> > >
-> > > This seems like what the other fwnode_get_next_*() functions are doing.
-> > > I'd say this is a pre-existing issue as well.
-> >
-> > See this series (not yet applied, you even have chance to review it!):
-> > 20260611203537.1786399-1-andriy.shevchenko@linux.intel.com
+> --- Patch [3]: [PATCH v7 3/4] iio: adc: ltc2378: Enable high-speed data capture ---
+> commit ef54f2c79f2cac1649922032814adc7fcc5f9684
+> Author: Marcelo Schmitt <marcelo.schmitt@analog.com>
+> Subject: iio: adc: ltc2378: Enable high-speed data capture
 > 
-> I believe that series addresses the first issue, not this one, even
-> though it partially mitigates it.
+> This commit enables high-speed data capture for the ltc2378 ADC driver by
+> utilizing SPI transfer offloading. It allows data acquisition at faster sample
+> rates up to 2 MSPS.
 > 
-> The contract says "puts a reference to @prev unconditionally." What it
-> doesn't say is that it requires @node to be valid, i.e. the function
-> is a no-op if node == NULL.
+> > diff --git a/drivers/iio/adc/ltc2378.c b/drivers/iio/adc/ltc2378.c
+> > index 5600c820c7f45..7d29f021cb7b4 100644
+> > --- a/drivers/iio/adc/ltc2378.c
+> > +++ b/drivers/iio/adc/ltc2378.c
 > 
-> "node != NULL" being an implicit requirement seems to be the norm for
-> the fwnode_* and of_* APIs. It's not explicitly spelled out and Sashiko
-> lacks the context for it.
+> [ ... ]
 > 
-> I'm not sure this should be changed within this patch. It would end up
-> as a mismatch between the various functions and possibly lead to more
-> confusion.
-
-How does node become invalid after that patch?
-
-> > > > > +             if (fwnode_name_eq(prev, "endpoint"))
-> > > >
-> > > > [Severity: High]
-> > > > Does hardcoding this string match break the fwnode graph abstraction for
-> > > > non-DeviceTree platforms?
-> > > >
-> > > > By strictly matching the "endpoint" prefix, this bypasses the provider-specific
-> > > > fwnode_operations, which could silently ignore valid ACPI and software node
-> > > > endpoints that don't follow this exact naming scheme. Shouldn't this rely on
-> > > > the backend-specific graph_get_next_endpoint operations instead?
-> > >
-> > > From drivers/acpi/property.c it seems that ACPI graphs follow the same
-> > > structure. I don't have visibility into ACPI implementations though.
-> >
-> > Sashiko might be right. ACPI has device and data nodes, for device nodes the
-> > name will be FourCC, so never longer than 4 characters. For data nodes, it
-> > takes their names, which are arbitrary strings and seems should follow the given
-> > schema. You need Sakari Ailus to review this patch.
+> > +	/*
+> > +	 * Configure SPI offload PWM trigger.
+> > +	 * The trigger should fire after tBUSYLH + tCONV + tDSDOBUSYL.
+> > +	 * Minimum time needed: TBUSYLH (13ns) + TCONV (part-specific) + TDSDOBUSYL (5ns)
+> > +	 *
+> > +	 * Use the same period as CNV PWM to avoid timing issues.
+> > +	 * Convert back from period to frequency for the SPI offload API.
+> > +	 */
+> > +	offload_period_ns = cnv_wf.period_length_ns;
+> > +	config.periodic.frequency_hz = div_u64(HZ_PER_GHZ, offload_period_ns);
+> > +	min_read_offset = LTC2378_TBUSYLH_NS + st->info->tconv_ns + LTC2378_TDSDOBUSYL_NS;
+> > +	offload_offset_ns = min_read_offset;
+> > +	count = 100;
+> > +	do {
+> > +		config.periodic.offset_ns = offload_offset_ns;
+> > +		ret = spi_offload_trigger_validate(st->offload_trigger, &config);
+> > +		if (ret)
+> > +			return ret;
+> > +		offload_offset_ns += 10;
+> > +	} while (count-- && config.periodic.offset_ns < min_read_offset);
+> > +
+> > +	/* Check the minimum CNV to SCLK delay is met */
+> > +	if (config.periodic.offset_ns < min_read_offset)
+> > +		return -EDOM;
+> > +
+> > +	/* Check the PWM periods remain the same */
+> > +	offload_period_ns = div64_u64(HZ_PER_GHZ, config.periodic.frequency_hz);
 > 
-> OK. Will add Sakari in the next version.
+> [Severity: High]
+> Could this result in a kernel panic due to an integer division by zero?
+> 
+> If a user writes 1 to the IIO in_voltage_sampling_frequency sysfs attribute,
+> ltc2378_update_conversion_rate() is called with freq_Hz = 1, and the initial
+> requested PWM period is calculated as 1,000,000,000 ns.
+> 
+> If the underlying hardware PWM driver rounds the period slightly upwards
+> (e.g., to 1,000,000,001 ns) during pwm_round_waveform_might_sleep() due to
+> clock granularity, offload_period_ns will exceed HZ_PER_GHZ.
+> 
+> This causes config.periodic.frequency_hz = div_u64(HZ_PER_GHZ, offload_period_ns)
+> to evaluate to 0.
+> 
+> When div64_u64(HZ_PER_GHZ, config.periodic.frequency_hz) is subsequently called,
+> it divides by zero.
 
-Hmm... This is interesting. For any fwnode API changes you should add the
-respective reviewers. Do you use tools or doing that manually? You should use
-tools. I know that `b4` is capable of doing that, but I use a script [1] I
-wrote a few years ago.
+If we have cnv_wf.period_length_ns == NSEC_PER_SEC + 1 after the offset_ns loop
+and config.periodic.frequency_hz == 0 as suggested, then spi_offload_trigger_validate()
+will fail the frequency_hz check and ltc2378_update_conversion_rate() errors
+out with -EINVAL before reaching div64_u64(HZ_PER_GHZ, config.periodic.frequency_hz).
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/spi/spi-offload-trigger-pwm.c?h=v7.2-rc3#n48
 
-> > > We also have the following in include/linux/fwnode.h:
-> > >
-> > > #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
-> > > #define SWNODE_GRAPH_ENDPOINT_NAME_FMT          "endpoint@%u"
-> > >
-> > > So this should not be a problem.
-> > >
-> > > > > +                     break;
-> > > > > +     } while (prev);
-> > > > > +
-> > > > > +     return prev;
-> > > > > +}
-
-[1]: https://github.com/andy-shev/home-bin-tools/blob/master/ge2maintainer.sh
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+> 
+> > +	if (cnv_wf.period_length_ns != offload_period_ns)
+> > +		return -EDOM;
+> > +
+> > +	st->offload_trigger_config = config;
+> > +	st->cnv_wf = cnv_wf;
+> > +	st->cnv_Hz = DIV_ROUND_CLOSEST_ULL(HZ_PER_GHZ, cnv_wf.period_length_ns);
+> > +
+> > +	return 0;
+> > +}
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/cover.1784235595.git.marcelo.schmitt@analog.com?part=3
