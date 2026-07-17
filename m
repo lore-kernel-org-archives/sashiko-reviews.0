@@ -1,151 +1,127 @@
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69AE2C21F1
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 12:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8BB3FD125
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 13:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784293059; cv=none; b=I4th7qm/QhraYVH8IRroaUyjB8ZljGEK+X7FtaosNfRglqKmpjE4307mJXJ1nsM1dUVmCJGaD4otdy5aAMH7WJ+zI3s8O84Rwnyok3Xd7FkwToAjBJOBE9+cJc42Xkwd6z969PVAFFAd60ixhLLNMObQ5iU0XwausiKibBLiMvY=
+	t=1784294350; cv=none; b=o0e6z9xVqhG7JDxHQmrlYnsGvr8gLZYr080RlAHaEC0meUBaUFGmrr2vNF+sQ5TXiIrDv32Wm4AMXhxj/rTApfdySSn7KTJGJbk5G2u75z4JBEeYbcj5Lv47miVoamaRza+bQmZF/oEjxRCNeofRb6c8WktfJpm7fo8eqZpkdpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784293059; c=relaxed/simple;
-	bh=GhxDQXA/DWqtyNQUezuLE9ghbfUV2/5HJLZzxOmPtBI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mw+i4og5xe+oy1VKK4cvqo0+dUdQBRsvDeVsmQ824QkAj/YQbzCFDDt1kUuf8Y+ueRg/1IIp/QNhZ6DLnYrrMVGcu6AvDZAPuA7rDi4PJ2SZAn4lA8X54wbsecYZK0xbDWUM0dmo0UERtCzFzuEO+qun5iT2iW5aXXfnU8Zvc7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=hlmpmPnd; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1784294350; c=relaxed/simple;
+	bh=+Bt6+Goat+FUbSO1uQ+yOgPj04WcdtNgvnfxalQE8HA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=glQZhsCX5VBDO0EOJ/pfTD634kp5JLGpDoA+aaAP5B56VPMH4eZOTMDyytu6UqwLLk4iRtYCaDYgmc4qPLL7l+Lq679e77JefrowG9CSsylKMKPo6nlar2dc5ArdRu0oEC1yRyfVAiWqt97sOOLZGAuGqrIIPMjgvxuzsKcfkuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BrR5XkKt; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="hlmpmPnd"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id A8A63C2B9F9;
-	Fri, 17 Jul 2026 12:57:51 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E06B460361;
-	Fri, 17 Jul 2026 12:57:33 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1DE5B11BD16F5;
-	Fri, 17 Jul 2026 14:57:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1784293053; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=5bizaNWFoc+PmBpwnYFuVL842Hs5RjnxZvnhEheX4EU=;
-	b=hlmpmPnd5WY30jeSCJPYUTq2GsuXafRybmBxcrHK6XFrw3P/SNx9BNGxLjn5UNJSSf6L6x
-	+Yy0hsPu5f2ssvUjqXXYqnLBbg+CJG4LqPHYTphCEgnvkG3S6oGySEinYalxT9l2LK6pjX
-	eWFidKWwLuBh5hvyuAdWE11S+ThgEsSslAzVRH7knPEr44R29vGlsjYkoGxGDbLthYJzgc
-	4U4qzFCYaeoCVwLmAji/HxaLh0xtQbKSJ8suRk+mSrf8igZblI83VDrLQ7cRA4xUTCv19E
-	/bPJ3MbwgWt5/GKzKCIHIrDe2rozUU0HcHT8YaeEXSMMAwrn6X3es1kckGpgpQ==
-Date: Fri, 17 Jul 2026 14:57:31 +0200
-From: Herve Codina <herve.codina@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org,
- linux-pci@vger.kernel.org
-Subject: Re: [PATCH v9 7/9] PCI: of: Clear fwnode->dev during root bridge
- node removal
-Message-ID: <20260717145731.0b878b27@bootlin.com>
-In-Reply-To: <20260708103435.2E2421F000E9@smtp.kernel.org>
-References: <20260708100302.517792-1-herve.codina@bootlin.com>
-	<20260708100302.517792-8-herve.codina@bootlin.com>
-	<20260708103435.2E2421F000E9@smtp.kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BrR5XkKt"
+Message-ID: <d365c74d-a8a0-4331-921b-4cb3d546590f@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784294345;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CE2YjpJZ8eOHIiNT+EOnxdh14S4kY6fOB/FwDIqk4TU=;
+	b=BrR5XkKtzzku74edaNJNiLI2odtR61mLvqAMqsQThMdX0pOC815KMoSnO/P12kNQ9wWU6x
+	U1xQqoY+XMIbiZSUbbi/X9bxGY8AB8JYYwnzx184RMVLNQnksTOVnREEx2qBxvoz9CVeT/
+	KBZV+uZjynxEq+jnBDWILPPI7vzeKXs=
+Date: Fri, 17 Jul 2026 21:18:47 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+Subject: Re: [PATCH bpf-next v2 4/4] selftests/bpf: Add tests for memory usage
+ for arena
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260717114117.350851-1-jiayuan.chen@linux.dev>
+ <20260717114117.350851-5-jiayuan.chen@linux.dev>
+ <20260717115336.A78DC1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260717115336.A78DC1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, 08 Jul 2026 10:34:34 +0000
-sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Missing fw_devlink cleanup in the error path of of_pci_make_host_bridge_node(), leaving a dangling fwnode->dev pointer.
-> - [High] Kernel panic on removal of overlay-provided PCI host bridge nodes due to unsafe changeset revert.
+On 7/17/26 7:53 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Incorrect use of ASSERT_OK_PTR to check for a NULL pointer read from BPF userspace memory, breaking intended error handling.
 > --
-> 
-> --- Patch [7]: [PATCH v9 7/9] PCI: of: Clear fwnode->dev during root bridge node removal ---
-> commit 9e6873c21d6442ce4222fe6e9ac417348c8b3fbd
-> Author: Herve Codina <herve.codina@bootlin.com>
-> 
-> PCI: of: Clear fwnode->dev during root bridge node removal
-> 
-> This commit clears fwnode->dev during of_pci_remove_host_bridge_node() to
-> prevent a dangling pointer. It ensures fw_devlink_set_device() is called
-> with a NULL device before the fwnode is cleared.
-> 
-> > diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-> > index ee9eb384b377a..8dd558a490bbd 100644
-> > --- a/drivers/pci/of.c
-> > +++ b/drivers/pci/of.c
-> > @@ -743,6 +743,7 @@ void of_pci_remove_host_bridge_node(struct pci_host_bridge *bridge)
-> >  	if (!np || !of_node_check_flag(np, OF_DYNAMIC))
-> >  		return;
-> >  
-> > +	fw_devlink_set_device(&np->fwnode, NULL);  
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does of_pci_make_host_bridge_node()
-> also need to clear the fwnode->dev pointer on its error path?
-> 
-> If device_add_of_node() fails in of_pci_make_host_bridge_node(), it jumps
-> to the error paths but leaves np->fwnode.dev pointing to the bridge device:
-> 
-> drivers/pci/of.c:of_pci_make_host_bridge_node() {
-> 	...
-> 	fw_devlink_set_device(&np->fwnode, &bridge->dev);
-> 	...
-> 	/* Add the of_node to host bridge and the root bus */
-> 	ret = device_add_of_node(&bridge->dev, np);
-> 	if (ret)
-> 		goto out_revert_cset;
-> 
-> 	ret = device_add_of_node(&bridge->bus->dev, np);
-> 	if (ret)
-> 		goto out_remove_bridge_dev_of_node;
-> 	...
-> out_remove_bridge_dev_of_node:
-> 	device_remove_of_node(&bridge->dev);
-> out_revert_cset:
-> 	np->data = NULL;
-> 	of_changeset_revert(cset);
-> out_free_node:
-> 	of_node_put(np);
-> 	...
-> }
-> 
-> If a concurrent thread acquired a reference to np, could the node outlive
-> the error path and result in a use-after-free where fwnode->dev points to
-> freed memory?
+>
+> --- Patch [4]: [PATCH bpf-next v2 4/4] selftests/bpf: Add tests for memory usage for arena ---
+> commit b8bd79585d9f7cbf2a83d5381d0df2c316e65ed7
+> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
+>
+> selftests/bpf: Add tests for memory usage for arena
+>
+> This patch adds a selftest to verify memory usage tracking for BPF arenas.
+> It allocates and frees arena pages both from BPF and user-space and checks
+> the map's memlock value via fdinfo to ensure it tracks populated pages.
+>
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/arena_mem_usage.c b/tools/testing/selftests/bpf/prog_tests/arena_mem_usage.c
+>> new file mode 100644
+>> index 0000000000000..14c2d1a1d673c
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/prog_tests/arena_mem_usage.c
+> [ ... ]
+>
+>> +void serial_test_arena_mem_usage(void)
+>> +{
+>> +	struct arena_mem_usage *skel;
+>> +	const long ps = PAGE_SIZE;
+>> +	char *base;
+>> +	size_t sz;
+>> +	int fd, i;
+>> +
+>> +	skel = arena_mem_usage__open_and_load();
+>> +	if (!ASSERT_OK_PTR(skel, "open_load"))
+>> +		return;
+>> +	fd = bpf_map__fd(skel->maps.arena);
+>> +
+>> +	/* Fresh arena: no data pages, and the scratch page is not counted. */
+>> +	ASSERT_EQ(map_memlock(fd), 0, "initial");
+>> +
+>> +	/* BPF-side allocation of 17 pages. */
+>> +	skel->bss->alloc_cnt = 17;
+>> +	if (run(skel->progs.alloc, "alloc"))
+>> +		goto out;
+>> +	/*
+>> +	 * A NULL ptr means bpf_arena_alloc_pages() itself failed (e.g. the host
+>> +	 * is under memory pressure), not a miscount -- flag it distinctly so a
+>> +	 * red CI run is not mistaken for a counting bug.
+>> +	 */
+>> +	if (!ASSERT_OK_PTR(skel->bss->ptr, "arena_alloc_pages"))
+> [Severity: Medium]
+> Will this check actually catch a NULL pointer when bpf_arena_alloc_pages()
+> fails?
+>
+> When skel->bss->ptr is NULL, ASSERT_OK_PTR() evaluates libbpf_get_error(NULL),
+> which returns -errno. Since the userspace errno is likely 0 following a
+> successful bpf_prog_test_run_opts() ioctl call, ASSERT_OK_PTR silently
+> evaluates to true (success).
+>
+> This would cause the goto out to be skipped, and the test to proceed to
+> evaluate ASSERT_EQ(map_memlock(fd), 17 * ps). This subsequent check would
+> then fail, emitting the exact counting bug error the comment mentions trying
+> to avoid.
+>
+> Should this use a different macro, like ASSERT_NEQ(skel->bss->ptr, NULL), to
+> correctly verify the userspace pointer?
 
-This issue is relevant and clearing np->fwnode.dev in the error path will
-be take into account in the next iteration.
 
-> 
-> >  	device_remove_of_node(&bridge->bus->dev);
-> >  	device_remove_of_node(&bridge->dev);
-> >  	of_changeset_revert(np->data);  
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does calling
-> of_changeset_revert(np->data) unconditionally cause a crash when removing
-> an overlay-provided PCI host bridge node?
-> 
-> When an overlay provides the device tree node for a PCI host bridge, the
-> node inherently has the OF_DYNAMIC flag set. If the bridge is removed,
-> of_pci_remove_host_bridge_node() assumes the node was created by
-> of_pci_make_host_bridge_node() and executes of_changeset_revert(np->data).
-> 
-> Since np->data is NULL for standard overlay nodes, does this result in a
-> NULL pointer dereference in __of_changeset_revert_entries() when it tries
-> to evaluate &ocs->entries?
-> 
+On success ptr is a valid arena address and ASSERT_OK_PTR() passes 
+correctly.
 
-This scenario should not exist but anyway, I will add a new patch in the
-series in order to have a more robust code checking for a NULL np->data in
-both of_pci_remove_host_bridge_node() and of_pci_remove_node().
+On alloc failure ptr is NULL and ASSERT_OK_PTR() may treat it as OK 
+(libbpf_get_error(NULL)
+returns -errno, which can be 0), but the next ASSERT_EQ(map_memlock(fd), 
+17 * ps) still fails.
 
-Hervé
+I can switch it to ASSERT_NEQ(skel->bss->ptr, NULL, ...) in the next 
+revision.
