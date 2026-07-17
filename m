@@ -1,211 +1,182 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D533D1AA0
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 10:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784283713; cv=fail; b=WzFl/6Tqt/zrG0aSH96140QPW91w/oIgV63s3tl7D2GC+BCnGJvEST38FELij9tqhqj8yJLlAAHJ2vFmyYh9xtTwL1Ai14GrNaDilxyjIaqY9nM154dzbnoKwfrwD4ZrMMXsaDe8XCUQb4DNpixLND2Ngzb7RbujxJ1vyyiOaKI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784283713; c=relaxed/simple;
-	bh=/Svuo5Ar/YS+HwyM4okLdf6oyR0eEZrW/47ztWC7d+A=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=bddUB0s0ZlturUofqYNuXHY1V/6u8tRkW4ESMJA039ouvYCEs6/RncKZiPQh6ayhz27cVRXDRmPaPxlotlc9COlg26F6o/pNj7qP90K/DDsAvmicc4EB72camn8QeilKCsU1dIKBKfzXwlcN00E2dE0+GdM9yrZ/7zIvg+yBUBU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mfme51Z0; arc=fail smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A0A317161
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 10:23:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784283802; cv=none; b=e9fdLMihOUznx3kVFWe8LODBYJNWXsMzjGFIQNCeCAorftAlZ087+1kinAWAdU6petABBkf0zibjmGVQhx3fgyeks8vph6TL7TWf/sue1K/vrrZxpowFbB2ZcZhWwH8ue0ghJ0/Bp5vVTDkj7AR6ixkntwPWKC7HegPzlc5CTu4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784283802; c=relaxed/simple;
+	bh=wjtwCOjjTvgQ+HrIg2iU3Xvguk/orqpRv48VaOoSMPM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZiYyBbgxk9VBDtkdUi5bPlbbxasvoVnh7gjiu8vJCdnAMFePWxD0uJO7nR2bl4170Jpe4EaW01LdNT46cY5zNWekNJu9kOKX8biXoVnzPWQWeurkCUf475tT2xnl3lUNe22MwVCTQkPk0J0RehX8mbgh2WqzSUPea1INZnRnPGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pVfDZ4eT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WYWbUzL0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mfme51Z0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784283709; x=1815819709;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=/Svuo5Ar/YS+HwyM4okLdf6oyR0eEZrW/47ztWC7d+A=;
-  b=mfme51Z0qGvC03f6g23RihBKcxzgansLhAZ+VpWI8wE9H2mH56YnpLUR
-   02MyThaXSXmWWdhNvVcpB7TFfFFRTNFC2SARVX32DVYU057ipDnZ1XReF
-   oIopld16ThuMrYesZgvOlOqt9LbDnPvw+/CiGn5vWTCq8Sknl+6vadBT6
-   FChHPA4SnbplWQB5NG57ZPqJNZlslRDAvvA4pTsJFPU8D881iWHF5a3QV
-   9m0LkdBnRUtsaRPpK0JMYGHXIo9koIhbrbfO5TEhokiPiKW8d0CybIaQX
-   C+uD+pxc/vuqD76ZIW68RCmZsnv+SyQgiajGHN9ZrHBZheGsyI/jdn8db
-   A==;
-X-CSE-ConnectionGUID: oI2HeePcQKmlzo08mIUIjQ==
-X-CSE-MsgGUID: SMSoBYTGQRWkzWjPjHL5Sw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11848"; a="84075546"
-X-IronPort-AV: E=Sophos;i="6.25,169,1779174000"; 
-   d="scan'208";a="84075546"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2026 03:21:47 -0700
-X-CSE-ConnectionGUID: rM/vO+s2T7228P+nYH/8Fw==
-X-CSE-MsgGUID: YAwDhu8RTSqPlGilt8y01g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,169,1779174000"; 
-   d="scan'208";a="260571349"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2026 03:21:46 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Fri, 17 Jul 2026 03:21:45 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Fri, 17 Jul 2026 03:21:45 -0700
-Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.42) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Fri, 17 Jul 2026 03:21:45 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yX22pvAPx9wix6RLlKKn/sW4ThpmNd3bBvp8YuF90A+fhvYNk2yxHjfIKQTeu7UZEiEhMtBtNRdYCfVS4bN3YA/sLbnPRCpmbim6y48WNhpJereoPNLRZCgPPqmu9zNjeUbXgXTkUo2JLM6U7HUMSlArx/Hj5rja9hdEjGHDur+CCyGoVgFxMBmkYjXuYpZlUuEG1xabiHiFmT5iZTn7xR53troficGrO/7uSVDbCF7wBTBcQWt5Lrhfbok1tfLnLCgPg7SACKh76MnHJvnvmEFjMD3HumiVQAbesxRdvr3sVcuBRB9jfbEdbGOIscUkGnLQGrbeAEHnciCD5izAoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LUyTzNbXrIIgxcbxX0MrqeaSg1Isye+ExA6Hgjz7uyM=;
- b=kJqBuVsmM5ZkbJXWpicuS7noFXJ5wNbtUzGHmRFr6oGzSxU75S6R+bQRUqycm/3XDCFfiK7FNDrDhJJU4TyeY1XVeXeSfdSra0rxyrLJ4tlMJ//9RlW2pBDfDZ74hZUGepR2E09qBLn3tkBjjoWS7TaSpWWyMnzV2yHOmf1QpeBrnqhV88KPf990Y6BN0pR6d06TBiMdFeQ9NM7YLzRxVDUu52JsRmneLFrMf//UGB6ouItQmAYD5y1yRVP56+enMbFx+Gl4J0IDNTKgqh06m1BMLO1g/clIjaPlsf3UofyWl2JUbbLh+g1O8RtnWPorjznJvnKUM5JIyyWZQg7Xow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH0PR11MB5643.namprd11.prod.outlook.com (2603:10b6:510:d5::21)
- by CY5PR11MB6390.namprd11.prod.outlook.com (2603:10b6:930:39::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.19; Fri, 17 Jul
- 2026 10:21:43 +0000
-Received: from PH0PR11MB5643.namprd11.prod.outlook.com
- ([fe80::db77:8171:4d1:22c0]) by PH0PR11MB5643.namprd11.prod.outlook.com
- ([fe80::db77:8171:4d1:22c0%3]) with mapi id 15.21.0223.012; Fri, 17 Jul 2026
- 10:21:43 +0000
-Date: Fri, 17 Jul 2026 03:21:42 -0700
-From: Peter Fang <peter.fang@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>
-Subject: Re: [PATCH 2/2] virt: tdx-guest: Allocate Quote buffer dynamically
-Message-ID: <20260717102142.GF3178326@pedri>
-References: <20260612110853.3188196-3-peter.fang@intel.com>
- <20260612112202.82E011F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260612112202.82E011F000E9@smtp.kernel.org>
-X-ClientProxiedBy: BY3PR03CA0006.namprd03.prod.outlook.com
- (2603:10b6:a03:39a::11) To PH0PR11MB5643.namprd11.prod.outlook.com
- (2603:10b6:510:d5::21)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pVfDZ4eT";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WYWbUzL0"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66H6cHSe2098529
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 10:23:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wdu3irNj+KTWgR7xMpoE4z/EjpwdFaLI83sqipED4Cw=; b=pVfDZ4eTmry4ifXN
+	VrHS9uy7rZzw8mLnI6y52YAEcj+4VijRB4AqALjD2RNnILal4i04nrEU8sVJmc28
+	8EEikTkvYNqTsB4MA0mZ3TNKm5Rvi1tp9D4sBtH5vEmKGr1UipjJLF2i1I9WhcX8
+	Y8Z1wCesgPK0c64WGegfBS10oeL9WpnDgtR5Vw0cAMc9ZUVTtqd4XCAyOz5bjNrR
+	+pu/YC2zTd3jJvtwo2KJUvzkP5xy+Wv72A49Xm9PNTv3US5EfGkXT5Ow4MxuT4nU
+	8FkGczeIlFrWt2NNUNvmMcpHQlVIaXJtwNPELOGG4dJU6d+Z4P09AGJvICScINIe
+	JaBRfQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff3u6k8fh-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 10:23:19 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2cacd6d37edso104302095ad.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 03:23:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784283799; x=1784888599; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=wdu3irNj+KTWgR7xMpoE4z/EjpwdFaLI83sqipED4Cw=;
+        b=WYWbUzL0Qiet+/lgXbNiOV6zVOGBDeVg3JTHJOqqOazhmYVL0uH3fR6Q3fT22fa+3P
+         qyS2gXQNu+Wn5Zur1sv+2UwqBDoNgA5fZQ48BYR1xsT/2HOFUeyxzSzPwC8TDbHDtnLd
+         6VKT3suu33gB5ToSM4wdIyWLYbD3doDKEbtzu0s/08RshEOHnS2LJ2c38GNWXYtUdWmJ
+         xEJFL6zuzAG/GjTvvheD6IejWRZgIs4Ox7GuBT+lYxw5tnEO+3dq3ccKBwQA8vdACjko
+         5fdwPVIICTgyFGY85YLzjB+HXC4KqZn7vTPaqtGh38ui1iAKlZZ6VxkDadMYrmM+nDjX
+         lvqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784283799; x=1784888599;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=wdu3irNj+KTWgR7xMpoE4z/EjpwdFaLI83sqipED4Cw=;
+        b=GOX2clDk86LoAE8INEenjNlSjVhG0HqsLYHbmYVyu9E0nZTxqEo3qzYXCLtqCocjFl
+         5pRuKLRCy7tAOdxeZTmRFtV2VMP3IQP9hW/9kjIrRkgh+p0ucYZgSUPsVI3oUNdpATwI
+         8RdRkCWJPaj0AuUJubGlS2/c1LqRQBgZtSuGgIHOz5ghDowQTQwX0XGswglLUaa+OP2w
+         m5zZJrQQumFRjV/uwTq8xvioU5eE4E1gsp5g+YfBeDEdsF7RNlUH3yGMKi0nibknhFm8
+         h0LRwuzyE2MB3+dVDk7Gii7YblxbLpiK9x5D/+A19WIXY7FAH7XKw2bpWV+Zn+rtpUUk
+         Rsbw==
+X-Gm-Message-State: AOJu0Yy0KwidP5rajNLaZf2gTni8xZcXhQwooSrpfHxO5b7IZDBIk5P1
+	i8+CcqzsuG7/0il2qiG3nf0LaBUsNLjbuGBOc8z4DTH0l+kg/o9aeIXdmDEWvjpsWvuto+VCqqC
+	uCfaeJ3waBeCbT84+Uh9A3//FItW9jTB7CZa+0ebcxz96BoY+vCgf9LfJy1W+KKNRuh5b5IWfjX
+	CvLj4=
+X-Gm-Gg: AfdE7cmRmSgPn+WiYMbEJ4lHpeYP7+IR7mfv2OJGWqIdP+z+uHGca8arF+hv7pSw5++
+	x2Fbb30Uu4U1vmBVXkBb2eLunpLfDmLuuARvGuMjO8iaOvoUGb10Ie/ypr3QWlAuTMd/8LlEQQf
+	RyfXKdZ1LFLcELLSZwMyIDQH+7iMaoQYOmP00SSn+nGLNlr1qSFrx/XsaFxbJEOgiV9Ftjl1q6b
+	1U9gjnqMnLMQre+mFvyD87/CeKn97MCNpAAuvrMm/CK6QHesYtHl4Uy2zEBM+uGjj4oe22hdlhc
+	kqhMomTrtiMsTUaGexjzCKs/pvX3EkdizL+y0C2WakOPdaVSpMgtRwINmD91vjl4R4h2sey6D4i
+	WH3VC7Ar1hYwp6DTs4KQ4HhkTaF5c9EXIACveKBHqzIyg5ow=
+X-Received: by 2002:a17:902:fdae:b0:2ca:ecf6:910e with SMTP id d9443c01a7336-2cf3466a93fmr21891095ad.0.1784283799072;
+        Fri, 17 Jul 2026 03:23:19 -0700 (PDT)
+X-Received: by 2002:a17:902:fdae:b0:2ca:ecf6:910e with SMTP id d9443c01a7336-2cf3466a93fmr21890895ad.0.1784283798587;
+        Fri, 17 Jul 2026 03:23:18 -0700 (PDT)
+Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf346db2d9sm8079975ad.43.2026.07.17.03.23.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jul 2026 03:23:18 -0700 (PDT)
+Date: Fri, 17 Jul 2026 03:23:16 -0700
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH v9 1/7] dt-bindings: clock: qcom: Move glymur TCSR to own
+ binding
+Message-ID: <aloClFTsTpiszExR@hu-qianyu-lv.qualcomm.com>
+References: <20260713-tcsr_qref_0714-v9-0-373670ab15f9@oss.qualcomm.com>
+ <20260713-tcsr_qref_0714-v9-1-373670ab15f9@oss.qualcomm.com>
+ <20260714050953.BACC51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR11MB5643:EE_|CY5PR11MB6390:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1530e0b5-04ed-404d-5d29-08dee3ed32d9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|18002099003|22082099003|4143699003|6133799003|56012099006|11063799006|10067099003;
-X-Microsoft-Antispam-Message-Info: sUKR/rnU4SjYHY0OOZzn/EztgxFaAMtKf9cR1kuXOGACoCFhTP0SAPHgtiRY6qs7kvpRlLWBOkOzqdw/0m2HhgXkWk5Uc0HRkwmBkgxUn9Oe17ob9mSoHBIx32ztH6AJOcQY1cBad+LgNh2jQTBL4bvs8aNuLZyl/146qN7usUK6RWIiWHzWqBuE4zd608BXmsk/vw6BtJ7KZ/thJF3E21znkRSZoXS7jA+HiH6l3IoEry7b0lz3++nYf5WKCQWy2sEn0A7tOzCtYlNs519MZpsoM9RYPgWyAadt2asnmPc42Hv5rLFDQ6FntyprJD4LAHMqYs47oDNy3ZPXxVniPqN9s7fsOQ4Tp8RTT03chIpet8+UdwCyuWOV8rfqJstSI13Ji71hbCsRS+S8OuhNq8wg//pH6k9OGFQImRGKqNJyn4+P9KtQD0m3MU+/z3M+KH745nNqvbNROTDdWwKaoIIsJDyec4II104gzju7bfw2v2c85sXkzG52I0vX43eTnZUafPDJiW6AdZLIyjFsXSzZVrsTXIpLhkmUFKsY/3EufR3x4X+vR55QmdXquHXrs07ZWNcyNGthMtGqWapW5Zkk3f0ELt1DR+Am1ePtwrU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB5643.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(18002099003)(22082099003)(4143699003)(6133799003)(56012099006)(11063799006)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UStCbDlJMlllTm5JUVhSb1dicWVKWkhaY1BDZkRtejI4RTR0UnE1Y3RsZ3k0?=
- =?utf-8?B?WU12SzdRdC9WQTU4NnJlOURleDdRWnNEOXc4QnVRU1h6OGRzTDJMbGN2bG4z?=
- =?utf-8?B?SWtzakVtWmFoZ0VJZXgrNk1TdkZDNE9vUEV4Tjd4RU5JNGlnbG5jVFhVU1pS?=
- =?utf-8?B?UHpUZWEwR3VLV25FTVJhRVF5VzFHTGU1Q1M0S1paeG5kcEJ4LzR1K094a3FL?=
- =?utf-8?B?TUlZRjlJZllkS21mNHBCeFlPQjRZdno0KzBxb3hjaklKd002Tm41ZXdxaS85?=
- =?utf-8?B?S3FXaXF1Si85eDl4eHAyS1ZmZTRDelp5b0FtTklkdEZtTEtCUDAzUTREb3Az?=
- =?utf-8?B?NFNzUnRONGRpTStSNFl0U0hLM0NCMVV2bHl6Y0VaeDVJQXlrRTBEVkhVZ3pz?=
- =?utf-8?B?QnlJOFZMUFpXN3dobXpSQzlOTmNMT05RTlRTODYyRHNqNXlBdVZwWWRUZFpK?=
- =?utf-8?B?MzVnbFZSUUF2T29QYWEzeVU3QUdmYWpyUWxQZlJhVWVSQXRTTDJaelBvTWlT?=
- =?utf-8?B?VUh5MHZGY3dqMlJxVkZ5aDVzanNncjBxQ1V5TlAwNkFqZC9MeFJqa1NEd3Zq?=
- =?utf-8?B?Y3E3ODcwS25JTVF3bTlpRHp0WTVzb3VNNE9naHM2OWJIS0RjeWtvRDUwcEdH?=
- =?utf-8?B?dUI4SitmMGFsTDJpZ2tMRDlFT09LWWpZQ1U1RFUzSDdhMmNwaGx2SWxvQXJu?=
- =?utf-8?B?NitRTUg3YWVxREJYbGl5VmRibmFzOFJmOXZvOVY5dTNWOWgwWUhmNnNGYXdx?=
- =?utf-8?B?Z05BY1A4UG10aXB1ZEFSNHlWQVloR2NtZCtXRDYwdWVtV3dBQjF5M2VBNzBD?=
- =?utf-8?B?RXVSQ3FGaTJkd0JVSlpzY21XM1RGbzN1TUxtZitLZnVzT1JtOVVTL3RtRXBO?=
- =?utf-8?B?VDVsZUZNcnArMk8rWURnQ0hFdjhvNUNzVkdoMkE1VkZ3S2lsOTlvNk0xSlRZ?=
- =?utf-8?B?YzVUaDVnWXR6MnVpSjVTMlRzOFY4SDd6enk5TXloenc1T29iR1BHb1dwRHdu?=
- =?utf-8?B?TFFOdXYwbUpnbmVOdHZtWVg4K2JBaWZMS1V0Z2N5dnRWOHlNWTM3SksrdFFq?=
- =?utf-8?B?MWkveXdWRUpvQkgzRXdKSTJFV3l4SmZ0eDF1d3BrcWp2c1BDNThER0VyeU13?=
- =?utf-8?B?cHRlRGpXUVhSU05sclNNVHRhbVdqdEtDUEtCR1ZrZEhxRDFMVmw2SjhzV0M4?=
- =?utf-8?B?aDQ1RFlmTFV1SUp6WUd3OXFaZThPbHlnUTMyTVVUNTBadGdFVFI1WHVtNHpR?=
- =?utf-8?B?YzFkdVFGRmJHWXdBZW9RdkF0cXhpTFBlVVRDWFIrbjVEOUQxbnE2NDZFS3BI?=
- =?utf-8?B?bk9icU9Lcyt0TTQ1R25jSnVodW9iR1BFL3pEUE8xTTMvakkrYW9DNWVqN3U5?=
- =?utf-8?B?NzdKSTgrZ3NBbGpjdVkweG4wWitqTC80VlJML2VnTW1KKy9QZXgxRmNzU3N0?=
- =?utf-8?B?WnRWWlZORHFrcWdpVWt1K1M3NzJoanVhTklCaVBaRGNtTEdtT3Q1eDZ5Ykly?=
- =?utf-8?B?YnRXTE02UDJKcmlXMnRHM2E4TURGd210MGlpb09GYkt5YlRLYitwbDh0SzhX?=
- =?utf-8?B?V3VTeElFVU5BTlNMZVpFU3k1Smx3RmJIdGRSeXJTSFYyQnJYTVYyWmFKbTJT?=
- =?utf-8?B?N0xsZElDZ2N5NTJHaUFId1gvY2RueTQ3NW9DWVhaK2EvMko5V0M2SHZLL3Yy?=
- =?utf-8?B?blFrMHFNNldhREgvVTUzR1lrekZmV1M5RVJqWWlEaVQ3S1V2RmNSWC91NCs3?=
- =?utf-8?B?aVZid0tCL3FlMVE2cW55YmZtbDBEZ0FoRXNsNEhNNEhWbG11aUtWMXpqOWMy?=
- =?utf-8?B?c044ZmdYNzVLc2svQkZWUFJmbE01d3Fnem9JeHQ2K0NMQXVwcitlTFFWOW1x?=
- =?utf-8?B?ZGVWSjdhSVJMN2hkRzQxMllsbFluUUdubUR3cHNpNmluNnJJZk1OcGZzNlFu?=
- =?utf-8?B?RUxVS0R4VHAzMkRrcUV0SXM1dWlBaW9uVDNYdHRXcVFWVE5PMkNKZTJ3blQx?=
- =?utf-8?B?Y1p4NGdNU2UvK1JBelpWd1hpL3lkK1FXbHY0elAzakJzYU9VVlJxcG1aQXRn?=
- =?utf-8?B?K3F2Vm5vN2VLTHNNVXd2VkM1R3JBbGdYZzlCNUljOXVtbFN0cVEwOUlzSnQv?=
- =?utf-8?B?ZXI3UjN5S004Sm9ST1BxWW1nOWNGQk9tTTJCNW1ObEo3NDVIcUJ3bTg4RDlp?=
- =?utf-8?B?N0Zva2pZR2JoU3JEcWwxR1djUkE4MzhLSU1OU2RDREhTUERTV3ZQUitmMmQr?=
- =?utf-8?B?cThMU1BCdURPV2hETkhobHpaVm9QZ0Fvd2hIR0xoOHNnRysveU5vcG0vdXlj?=
- =?utf-8?B?emZkbXhjaitsYUVXSGZjQVZwYll2OXF0cGxqcmRkQ2xESzNLSHRBdz09?=
-X-Exchange-RoutingPolicyChecked: hxjJoUe5dyXmxfWOshRr6RDIZBSBW54GFEOIjNVM5I4dLWMxCPTgPQQFN7jlUEv/1bLonqP620Bx+UwG69Jt6SOVD+7k5qr0XOrd8WdKlaok+H/dieWVxWG0aiZqtS/Drao7SK0xmuApnmQBCqneF0uNjwpNveXdl/XwxWCnIa2K5BRIRAMduH5MNgYbEWkGAojkTgcGb3IJM9DGR/hFtLxLCBFq5NVwZAPt5HSa8jqoVzERM4Iua6uPuKHFuRrX2oeDmMaZFsEo5c/qeeuVMR5WNTczkXrTPo6aRbF/TdGqn0zh4kBsITy4ANSo3eSY9LBoUCSAXfZzz/8+pW/oTw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1530e0b5-04ed-404d-5d29-08dee3ed32d9
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB5643.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2026 10:21:43.5011
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eMNAEPA5WQo/zYzf1AP7lebWQEF2OegGDpnwzQtmYpTtS3yfZSG9+KQI6cj7gVNIzdKDxp7JrCbm5Rn5WPogvQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6390
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260714050953.BACC51F000E9@smtp.kernel.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDEwNCBTYWx0ZWRfX3MG9N9nH56N0
+ sWHarxlW8NfHlr67tokJ0EQKwXSdav64zx32rycgmB3CdmCE4XvdSeo6aLnuRCydc9QXGkuQLwR
+ jCR+UimIw5TWv7sFtJHNUhFVRv2NVERu/ju36a40VmeD1eUKUgnRZYMijGtLZMA9w4oKFNI4Be5
+ xa01+aQFirMOTGUUgJIDnp45TtyBGaabYHiIcvykywnJreaHBirF6PCkssJAm36bJrzqEio7pwT
+ yCXW3gGUJzNc23rpRPY/A9lP1DJTayKaWIRqMPl0kcAqTgOoNL+kiebrIlPc5l2jkHmjiaF2i0/
+ IA3FnSn2SB7ESiyhQVSrb/s27I9vDWJtpoLHef/YfDrSs+ZCPrsMjUDeD3iMKjsrjn62URgo7Iv
+ a0Unfzgxq7EhDyr3PUSUiHkPPLDVpLdUzHHRooplquAhPbe+DEr6v4QbyLkiNg980EGkOyDxXxJ
+ 3KBxgLWB+eWyl5ZBjFg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDEwNCBTYWx0ZWRfX6aMsB4kp+ggl
+ wodZvmplTogiVFCWb/b5I3pw41gZkfbs/ZsrIQv6wNqyYdCpwnlYuQfG9M5STkyAWfhHyixiTTh
+ lIu27QGWV2rJ3Mj7VTK3RROiB7erITM=
+X-Authority-Analysis: v=2.4 cv=DYMnbPtW c=1 sm=1 tr=0 ts=6a5a0297 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=8nJEP1OIZ-IA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=s8IvIF-zRrWUOPtcMVsA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=GvdueXVYPmCkWapjIL-Q:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: hBZt82hbWSBSNsbGPVkjPA1CRCLIuwST
+X-Proofpoint-ORIG-GUID: hBZt82hbWSBSNsbGPVkjPA1CRCLIuwST
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_02,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170104
 
-On Fri, Jun 12, 2026 at 11:22:02AM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Jul 14, 2026 at 05:09:53AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Unbounded host-provided quote size causes guest kernel warning (and potential panic) during allocation.
+> - [Medium] The newly added qcom,glymur-tcsr.yaml binding marks 17 `vdda-qref*` supply properties as unconditionally required, but existing device trees do not provide them, causing a `dtbs_check` validation regression.
 > --
 > 
-> commit 918e9fdc48e5a03b41dab3a999be1a3f631327c1
-> Author: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+> --- Patch [1]: [PATCH v9 1/7] dt-bindings: clock: qcom: Move glymur TCSR to own binding ---
+> commit 6bffb0197809346112dba264dc91035d8e1ed982
+> Author: Qiang Yu <qiang.yu@oss.qualcomm.com>
 > 
-> virt: tdx-guest: Allocate Quote buffer dynamically
+> dt-bindings: clock: qcom: Move glymur TCSR to own binding
 > 
-> This commit modifies the TDX attestation driver to allocate the Quote
-> buffer dynamically based on the size reported by the TDX module. It falls
-> back to a default 128 KB buffer if the reported size is unavailable,
-> supporting larger quotes needed for newer schemes.
+> This commit extracts the Glymur TCSR block into its own dedicated YAML binding
+> file and documents the supply properties required by the QREF block. It uses
+> an allOf conditional block to enforce these supplies for the qcom,glymur-tcsr
+> compatible string.
 > 
-> > +
-> > +static void *alloc_quote_buf(size_t *buflen)
-> > +{
-> > +	unsigned int count;
-> > +	size_t len;
-> >  	void *addr;
-> >  
-> > +	len = get_quote_buf_size();
-> > +
-> > +	/*
-> > +	 * This fails if the requested size exceeds the buddy allocator's
-> > +	 * maximum order (order-10, 4MB).
-> > +	 */
-> >  	addr = alloc_pages_exact(len, GFP_KERNEL | __GFP_ZERO);
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,glymur-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,glymur-tcsr.yaml
+> > new file mode 100644
+> > index 0000000000000..ec89feff89e4e
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,glymur-tcsr.yaml
+> [ ... ]
+> > +allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: qcom,glymur-tcsr
+> > +    then:
+> > +      required:
+> > +        - vdda-qrefrpt0-0p9-supply
+> > +        - vdda-qrefrpt1-0p9-supply
 > 
-> [Severity: High]
-> If the host provides an excessively large quote_sz, could this allocation
-> trigger a kernel warning?
+> [Severity: Medium]
+> Does this cause a dtbs_check validation regression for existing platforms?
 > 
-> The comments indicate the buddy allocator will fail requests exceeding
-> its maximum order. However, passing an unbounded, host-controlled size
-> directly to alloc_pages_exact() without __GFP_NOWARN will trigger a
-> WARN_ON_ONCE_GFP in the page allocator's slow path before failing.
+> By marking these 17 vdda-qref* supply properties as unconditionally required
+> in the allOf block, validation will fail for existing device trees (such as
+> arch/arm64/boot/dts/qcom/glymur.dtsi) that use the qcom,glymur-tcsr
+> compatible string but do not yet provide these supplies.
 > 
-> If a host is malicious or misconfigured, could this be used to spam the
-> guest's kernel log or cause a denial-of-service crash if the guest runs
-> with panic_on_warn=1?
-> 
-> Would it be better to explicitly check the size against a reasonable upper
-> bound or include the __GFP_NOWARN flag here?
+> Would it be better to introduce these properties as optional first, or ensure
+> the corresponding device tree updates are included in the same patch series
+> to prevent breaking schema validation?
+>
+This yaml only is used by glymur and mahua so these properties only affect
+them. I have provided all qref/refgen LDOs they require and did the dtb
+check, no warnings or errors.
 
-Good point. I'll add __GFP_NOWARN here since the host is untrusted.
-
-> 
+- Qiang Yu
 > -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260612110853.3188196-1-peter.fang@intel.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260713-tcsr_qref_0714-v9-0-373670ab15f9@oss.qualcomm.com?part=1
