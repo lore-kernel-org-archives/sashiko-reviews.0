@@ -1,76 +1,76 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C3731326B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 14:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9214229A6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 14:08:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784297228; cv=none; b=eZxkRuxkb7V30iufZZrgcXNumaY5xvuM+fApeaBWvc8HQO4MZ9v6wJZSpHgx3lQF1Kba41aCxIv34s7krrFFRMdEAt+ZU14fefdcQVaKxOmfB2fFjhgfrE3dO5wjhuU4GmpbYx2eAzNTN180tWdxLc/hAcJXzGCcNQsX9LrU2TM=
+	t=1784297307; cv=none; b=fHifN4NbTQB4Jyl6rxK3qJBQxkkmWPuHUxvIdC3TvveN3hyAtjZP/aEhEPpbLgmzez14kUUkIZBPr6pnanlQgmscD0l0LLedz6T0+jrtQztSfunSFY+c3ZyR/JjAdyDrWn3D9ChX6NP1yKx4g9KW1Y3mRev4agx3AKUcV359O9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784297228; c=relaxed/simple;
-	bh=niIAMeWp3sfWWDNS+nr3CeGnrS7IWhMy8sB3hlByAiw=;
+	s=arc-20240116; t=1784297307; c=relaxed/simple;
+	bh=XHrLfrqMhOnwSAqqJE2eiDYz9T7bCK0U/3kXl0cj3MQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bW2AxXYws1KQrgTtugHJ1R/M6HRZhmQsJDy7/EVPJG0/74/EnVWazipcpy+sdclUrqaJpJUmewdjmsS0S+laZoZ9UjjvsAApultWE1o0+dd6IoB2OXZxoe7WNgvjBLrlnef+cuVrGg2UZmpl7lGocV/BMYJBO2Sr6lpO+xg9ums=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b=TY53abMD; arc=none smtp.client-ip=209.85.128.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=VGuZj9v/mnq6V5b+EIA1A3NuOVh7F3H+xfyEXcEU8LwPrR+Y0aAcOeStcjiCWZsjdMxvXDkOM4jgq0rc5rX8xxXrYKk5Tt89tLxWOYuRLI2TnrNo1I7zl5yvmWZ/leh4OwqFif10Tzk00NAxqbl93dR5F9Byz32G2yp6lVs+eW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b=SE6++Dli; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=resnulli.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b="TY53abMD"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-493f4638f4aso37704225e9.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 07:07:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b="SE6++Dli"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-490cf322ed0so55997575e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 07:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1784297222; x=1784902022; darn=lists.linux.dev;
+        d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1784297302; x=1784902102; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4ZBETXE+xVYVuA7yrbznrJ7UH+vvhmgnrffSRGRbFAk=;
-        b=TY53abMDuHpZceGhgiUBRB+CNKQOSN0+A7djnewiBMowniS5sDSarneifIPQWgvrLD
-         GVDwauDdFKDa8EWTVTFaOOFdS9sPiBLSWN2RxZTYeL5uvMrV3+GHcQSvJS8QWoQWJluw
-         4Q8u26EH4j2R0XDUl03A08QfU4Fju1ZPPzd8F7Yhq+wZMaHTqGnk3+DaJ5aEhfJ9QXPL
-         uNepAMJeaLZc/P6bQVYb6AwpwYgpIESttUS05iduzdqTTYyv0H/SgTNuXQBLrcdPB3YZ
-         LoD7NMbLLRv252RamASVkRRVkRHvQvzc5CsY35lRQTEPquBPWHNgpTUADDWKlsrBe2nb
-         ml5g==
+        bh=gDShIOzPBvzJyBY084ZK4U4pFvb4W0NeDIeOEkdFeUI=;
+        b=SE6++DliTW3xj5+tRq0tykZ2kWjPLD32jL28Oma/5p+DoIVs0NVSczbs1x8/iMC8b9
+         lPb7I1y+ZeRYD/8iD6mfEyD9h9zdlkXRgT7eImRzfMtQ4XEfU4DnKyKqmVArELWJ7guz
+         YOm4q/Rb7UzZu28ihInfPWVzmzllF83IIYT0D0e98TMScmI0mBOG6kXNSUmAXcq523v2
+         9H0iRC1GZUNoUkfDvOuRDViP+9+t/Ztap5YYqpbUwnafX1rg8BWHtDF2Br4euu1WdwuS
+         mCplnwybHhHLZy4h8i8C3daDdNYjxzQDaSJr8HkGL/Ccyt5ev7m3vNv+8BjKXw6xEReY
+         22CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784297222; x=1784902022;
+        d=1e100.net; s=20251104; t=1784297302; x=1784902102;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=4ZBETXE+xVYVuA7yrbznrJ7UH+vvhmgnrffSRGRbFAk=;
-        b=OmRsx3Jl7LOrJ5ARclEI98AZQnmXtq1nlnwTcLn1hoD6aPwokGgv05IN8ke0eSa6xG
-         XNGmBehoXzdNruJKDK27EBWuo3Ffh3tAepM8Y3vF2JrftqqqBl/YvsFMuhON3S8eY97J
-         LmIdp5j/+dDNxYYctYRQ21NCETGmGGQ+MMbWuL2f9O3dQvBqC02eUh8DgQVakC/YlCzR
-         DXiw6yw9X8EdRMrWQZpseynDbhiMtqIvy/hspxv5wY2bt0Z54MquieOdI76hAYSBqvOn
-         bTg5uBTmac44KCbeUZjpdVSH1TIpIHuLxfFPo/LWEmtqaLgxQj/bvUBibxELw0ITnZn4
-         +eGw==
-X-Gm-Message-State: AOJu0YyY5ZMKsS4BT1lenyZSEN/J1tyvubjeIUnYPKn2zOOqD9N+pNJ+
-	1nZGRD11dh+ewCX6a/JI3Zdxgx9EIAXQxtpR0OnbEU72gBYF8x4gjKN3EZ8wc9G/p3WTPWhOEeI
-	G5dP5
-X-Gm-Gg: AfdE7cn4aJKqGMNghdaEcZZPhthjkCVbRqYkhpFBdpogM6iR6rwKVxsBROVbajoq3PT
-	r3GASnmvqDu5bcNbrptS2f7C6kAwe3QZkGIh4HpNuAzuJotNDb9g4xx145fCuNK/J0RVCr8BzuV
-	vlZnREnIvDsIDhYa2jL/Cmein7z2puDP/qKKgsVnD6SQhN73M9b43t8a60mRBcRLRHzQpn36hlw
-	miazbZdXu3tulwgetZqh78wyQMSfy2eOZ3YE5Eo0j8306grTdJ+lFN8SRM4xPNmUrkNVnsmrfXB
-	zWLvTApbcrDgXb3/OMEO+6XbkEfK2W6zBHdDIw98vDWGOUKMx3jIBCQLYKNR2/bnEchH0M4S+js
-	braCQuVqtt4Gm7vHE7f85RjvKz9GYnMLLA7CiGGzENxOFu62AmzislKfwFKWodrymfEW5vpmqqD
-	gMxUlk78qIdWA=
-X-Received: by 2002:a05:600c:3553:b0:492:3773:a230 with SMTP id 5b1f17b1804b1-4954a50e75dmr34323345e9.27.1784297221977;
-        Fri, 17 Jul 2026 07:07:01 -0700 (PDT)
+        bh=gDShIOzPBvzJyBY084ZK4U4pFvb4W0NeDIeOEkdFeUI=;
+        b=QWm+owH/NRPAK6iZWmFSILx9P4V+YznHvYx5kjRwrVMG+ovMMD891fVJ9EwIJkh02u
+         g9KL/dXlH8kPb1H3VZGFCwSZF+R0dpbCJXCCrhCk3FGPQ8LtxzN9klViZ2llgP4Hsd7x
+         ZjhsI3iJrW8RtvLBlj7Ht5le9PeskYhhRXnEI+/Z6KXTS3n0TfvPdYVe9FKUvZagu0mj
+         8nRGsaUf0Hujcbl3ZaWCWXqhzmhkQjQtpt95NW1PD+Py8/ZgOazWLoaPl5ZebbX8Q3Ro
+         QahMC+NmcESQKjopVkBZ8nuj8T85CjJ3pqHGCJBmmIfevlHbg5gBj9HIhaBBAwFSMCz5
+         wQOw==
+X-Gm-Message-State: AOJu0YyHhCaT9WWZDmmlNS8KVBxVMMWjJxdiDbypXC3dpxsNEubmRWve
+	ZT9Z540jykBQscom30Fapcg9o9o6v7R42FEyPSykQVPb37RuUsY7c1ICAdIVwJRak5aiyD9SAPz
+	YGGAJ
+X-Gm-Gg: AfdE7ck4NyjzQnvobIuDdUewGiP5VUFvUssPnz9Fvm3OMKQUEYuuSCCtT1/BoUQya/p
+	R9PtJoPldOjaLyROMF1yQUltknqD9GGp21LAFHfvtgcW241ljrtRw61D7f/A9Z/MbaBJiECkwjv
+	j/oGY+Od9HQCOMyl9lHhGJ9bvthEb1WsdKiJrqI9c6Nz4LjKD3wrJYulIaI1ezSjnh1fJc14phR
+	yUC3l9uV9T5AvTCiUk1BNsNur6QX6217DUHuOvFJeXWzwlIrTgHZTU/zANEtLYYS+2e8K7QPp6r
+	E0hkX9Ld/OwAGmhfdkF+vq1zQcXE9iFkQr9zAkM5V7K4FSt8tdDSRep7p2uDdzH0Fdq0dOoIhAt
+	2nQekGVkWH5blU4mgS5NhPNXnXkHaLCXOOac/CY/Tdj9dmt2KrsbziG/F0U8ei9U3HHalSRLv6G
+	TrBhy4qk2cZOc=
+X-Received: by 2002:a05:600c:3b91:b0:495:4c62:9d43 with SMTP id 5b1f17b1804b1-4954c629e5emr24722955e9.34.1784297302169;
+        Fri, 17 Jul 2026 07:08:22 -0700 (PDT)
 Received: from localhost ([140.209.217.211])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edbe4sm53164435e9.12.2026.07.17.07.07.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49549c9c929sm48330635e9.12.2026.07.17.07.08.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jul 2026 07:07:01 -0700 (PDT)
-Date: Fri, 17 Jul 2026 16:06:57 +0200
+        Fri, 17 Jul 2026 07:08:21 -0700 (PDT)
+Date: Fri, 17 Jul 2026 16:08:18 +0200
 From: Jiri Pirko <jiri@resnulli.us>
 To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, tj@kernel.org, mkoutny@suse.com, 
-	hannes@cmpxchg.org, linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>, 
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: Re: [PATCH rdma-next v3 02/14] RDMA/core: Handle device name
- conflicts when changing net namespace
-Message-ID: <alo27vVuMMAb303f@FV6GYCPJ69>
+Cc: tj@kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>, 
+	hannes@cmpxchg.org, mkoutny@suse.com, Heiko Carstens <hca@linux.ibm.com>, 
+	Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org
+Subject: Re: [PATCH rdma-next v3 06/14] net/smc: Look up the pnetid ib device
+ within the net namespace
+Message-ID: <alo3Qx6ou7ElY6Un@FV6GYCPJ69>
 References: <20260716132316.1495242-1-jiri@resnulli.us>
- <20260716132316.1495242-3-jiri@resnulli.us>
- <20260717132424.DD4661F000E9@smtp.kernel.org>
+ <20260716132316.1495242-7-jiri@resnulli.us>
+ <20260717132427.82BA81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -80,115 +80,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260717132424.DD4661F000E9@smtp.kernel.org>
+In-Reply-To: <20260717132427.82BA81F000E9@smtp.kernel.org>
 
-Fri, Jul 17, 2026 at 03:24:24PM +0200, sashiko-bot@kernel.org wrote:
+Fri, Jul 17, 2026 at 03:24:27PM +0200, sashiko-bot@kernel.org wrote:
 >Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 >
 >Pre-existing issues:
->- [High] Skipping device_rename() during namespace teardown fallback leaves the sysfs kobject tagged with a dying namespace, leading to Use-After-Free.
+>- [Critical] `smc_pnet_find_ib()` and `smc_pnet_find_smcd()` return unreferenced pointers leading to a Use-After-Free during concurrent device removal.
 >--
 >
->--- Patch [2]: [PATCH rdma-next v3 02/14] RDMA/core: Handle device name conflicts when changing net namespace ---
->commit 8e5328bda494a60bcfbc9c96c81fb95f503e0fdd
+>--- Patch [6]: [PATCH rdma-next v3 06/14] net/smc: Look up the pnetid ib device within the net namespace ---
+>commit 22bac16fe9606993a05fb72609386eb7b37fed92
 >Author: Jiri Pirko <jiri@resnulli.us>
 >
->RDMA/core: Handle device name conflicts when changing net namespace
->    
->Prepare namespace moves for per-netns names. Check user-initiated moves for
->destination-name conflicts before disabling the device, keep same-netns
->moves as no-ops, and make teardown moves detach from the exiting namespace
->even if fallback naming fails.
+>net/smc: Look up the pnetid ib device within the net namespace
 >
->> diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
->> index de610f52c9b23..b55fb075d0aef 100644
->> --- a/drivers/infiniband/core/device.c
->> +++ b/drivers/infiniband/core/device.c
+>Scope smc_pnet_find_ib() to the caller's net namespace so pnetid setup
+>cannot bind to a same-named RDMA device from another namespace once names
+>become per-netns.
+>
+>> diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+>> index 63e286e2dfaa8..ff9c9c35cc2f5 100644
+>> --- a/net/smc/smc_pnet.c
+>> +++ b/net/smc/smc_pnet.c
+>
 >[ ... ]
->> @@ -1704,30 +1778,63 @@ static int rdma_dev_change_netns(struct ib_device *device, struct net *cur_net,
->>  		goto out;
->>  	}
+>
+>> @@ -408,8 +413,8 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
+>>  	return rc;
+>>  }
 >>  
->[ ... ]
->>  	/*
->> -	 * At this point no one can be using the device, so it is safe to
->> -	 * change the namespace.
->> +	 * Recompute the destination name under the write side of devices_rwsem
->> +	 * now that the device is disabled, closing races with a concurrent
->> +	 * registration or rename, then publish the new namespace at the sysfs
->> +	 * level.
->>  	 */
->> -	write_pnet(&device->coredev.rdma_net, net);
->> +	down_write(&devices_rwsem);
->> +	ret = rdma_dev_pick_netns_name(device, net, fallback_pattern, buf,
->> +				       sizeof(buf), &new_name);
->> +	if (ret) {
->> +		if (fallback_pattern) {
->> +			WARN(1,
->> +			     "%s: failed to pick device name during namespace teardown: %d\n",
->> +			     __func__, ret);
->> +			write_pnet(&device->coredev.rdma_net, net);
->> +			ret = 0;
->> +		}
->> +		goto rename_done;
->> +	}
+>> -static int smc_pnet_add_ib(struct smc_pnettable *pnettable, char *ib_name,
+>> -			   u8 ib_port, char *pnet_name)
+>> +static int smc_pnet_add_ib(struct smc_pnettable *pnettable, struct net *net,
+>> +			   char *ib_name, u8 ib_port, char *pnet_name)
+>>  {
+>>  	struct smc_pnetentry *tmp_pe, *new_pe;
+>>  	struct smc_ib_device *ib_dev;
+>> @@ -419,7 +424,7 @@ static int smc_pnet_add_ib(struct smc_pnettable *pnettable, char *ib_name,
+>>  	bool new_ibdev;
 >>  
->> -	down_read(&devices_rwsem);
->> -	/*
->> -	 * Currently rdma devices are system wide unique. So the device name
->> -	 * is guaranteed free in the new namespace. Publish the new namespace
->> -	 * at the sysfs level.
->> -	 */
->> -	ret = device_rename(&device->dev, dev_name(&device->dev));
->> -	up_read(&devices_rwsem);
->> +	write_pnet(&device->coredev.rdma_net, net);
->> +	ret = device_rename(&device->dev, new_name);
->>  	if (ret) {
->> -		dev_warn(&device->dev,
->> -			 "%s: Couldn't rename device after namespace change\n",
->> -			 __func__);
->> -		/* Try and put things back and re-enable the device */
->> -		write_pnet(&device->coredev.rdma_net, cur_net);
->> +		if (fallback_pattern) {
->> +			WARN(1,
->> +			     "%s: failed to rename device during namespace teardown: %d\n",
->> +			     __func__, ret);
->> +			ret = 0;
->> +		} else {
+>>  	/* try to apply the pnetid to active devices */
+>> -	ib_dev = smc_pnet_find_ib(ib_name);
+>> +	ib_dev = smc_pnet_find_ib(net, ib_name);
 >
->[Severity: High]
->This isn't a bug introduced by this patch, but does skipping device_rename()
->during namespace teardown fallback leave the sysfs kobject tagged with a dying
->namespace?
+>[Severity: Critical]
+>This isn't a bug introduced by this patch, but does returning an unreferenced
+>pointer from smc_pnet_find_ib() create a use-after-free window?
 >
->If rdma_dev_pick_netns_name() fails and the code jumps to rename_done, or if
->device_rename() fails and the error is suppressed by setting ret = 0, the
->kernfs_node->ns tag for the device's sysfs directory would appear to remain
->pointing to the dying network namespace.
+>Looking at smc_pnet_find_ib(), the function holds smc_ib_devices.mutex while
+>finding the device, but then drops the lock and returns the raw ibdev pointer:
 >
->Once the network namespace is freed, couldn't a subsequent sysfs traversal or
->lookup calling kernfs_ns_id(kn->ns) dereference the freed pointer and result
->in a use-after-free?
+>net/smc/smc_pnet.c:smc_pnet_find_ib() {
+>    ...
+>    out:
+>        mutex_unlock(&smc_ib_devices.mutex);
+>        return ibdev;
+>}
+>
+>If a concurrent device removal path acquires the mutex, removes the device
+>from the list, and frees the struct smc_ib_device via kfree(), could the
+>netlink thread subsequently dereference the freed pointer?
+>
+>>  	if (ib_dev) {
+>>  		ibdev_applied = smc_pnet_apply_ib(ib_dev, ib_port, pnet_name);
+>>  		if (ibdev_applied)
+>
+>For example, smc_pnet_apply_ib() re-acquires the mutex and writes to
+>ib_dev->pnetid, and the caller then reads ib_dev->ibdev->name for logging.
+>
+>Does this same unreferenced pointer pattern also affect smc_pnet_find_smcd()
+>when it is called immediately after?
 
-unrelated to this patch/set. Ignoring.
+Unrelated to this patch/set. Ignoring.
 
 
->
->> +			dev_warn(&device->dev,
->> +				 "%s: Couldn't rename device after namespace change\n",
->> +				 __func__);
->> +			/* Try and put things back and re-enable the device */
->> +			write_pnet(&device->coredev.rdma_net, cur_net);
->> +		}
->> +	} else {
->> +		strscpy(device->name, dev_name(&device->dev),
->> +			IB_DEVICE_NAME_MAX);
->>  	}
->> +rename_done:
->> +	up_write(&devices_rwsem);
->>  
->>  	ret2 = enable_device_and_get(device);
->>  	if (ret2) {
 >
 >-- 
->Sashiko AI review · https://sashiko.dev/#/patchset/20260716132316.1495242-1-jiri@resnulli.us?part=2
+>Sashiko AI review · https://sashiko.dev/#/patchset/20260716132316.1495242-1-jiri@resnulli.us?part=6
