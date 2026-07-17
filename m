@@ -1,168 +1,132 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAAE3E5EC6
-	for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 09:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B49938E8B7;
+	Fri, 17 Jul 2026 10:20:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784281907; cv=none; b=qIDBQIJ+5cWpQNF1N/ilPiTVTs/e0I15ULnDezgqjqEvICnYN90j9nW2oHigKSSVvSu8IGw4mlnjcUsRUmzcXJs5fmdrbgVQUjKPp3ZHqTGoa8CrUjztgGZnWh1vZhSZysUQ6QC9P6Mp+ABr/N1Wsu4z6gig5uOZbv2NiPJKCrs=
+	t=1784283617; cv=none; b=sy+9hGMwH1l4vUsTypuVlZlmosCgGbiAk0IUrHL0vS8yx60NoHcIsH9oEBKvpdhhT/b8/XSzpSjpFkll//ujh/mSwlKslykJ/0cHhpTqeprJOD+NNSWj1rHSSoN3ltBpye0sQWkb4FTcooIz/W+tHOssGbc39LgHwji6UxL4sjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784281907; c=relaxed/simple;
-	bh=zcD1hjG8I7aQcefl5mRU2TmV2uE/QdOshRluOqLqelQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L81+4Ym7L6QIfSIRQ7s3POBx6hSVVIElpqUevnlAxejy06KAhcztoXQ3VobH05gqBfWVNc1O6iFDiIezeBo4yfdf0iIzNYVs907JJTPlrs5mIpj4Xf+z+4DBvxgbccWY7ixk4fhI8qnn2wI5kS6DoVTxwJ4y25SNBWqw7FZSyWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=nkyng51U; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1784283617; c=relaxed/simple;
+	bh=4jHJbu5xS30U3M8BoRo2FzejAHrKWrbPOs9CtjuJfDg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pDzFyQAxzZ8hIy+wuu/b94QjE116oBu1qKPZPZt3MCIWFkB4yCkSerFgktNRA0luF2rQKM/NKGl8qdxDHt/tMp3L9IINgms1FUPYRSXtZpiPim93p3ZFusu3Xb+811KcM2w+9lITV851C8Y5NJ3swz/NRzppZ4138PTmyGtzgvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Nej3+8KQ; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="nkyng51U"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-493bfe9f886so42273875e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 02:51:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1784281903; x=1784886703; darn=lists.linux.dev;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=pJCC0wO896nE8gyYR5Mds0J8ooeePUhEH/e6YbBZ+3s=;
-        b=nkyng51UTAmtpBsVjUSf18OrRY8IuFq3ekehsMqqTmWdlB0nPUY5K/9BMU4p6pO1jo
-         jWezh+U+ANtqvM3oqVkSN+s/fnHwFdxlvrikYCq+absw8WBg/OoXt40W9C+p9g0SG/Zp
-         DTBgpG3mwFockwgNkDg5lYEXfNBMyTFiNPybovlqPM+qgZ/+H9JMiVt2x+T24GtEZ3l3
-         uTpkEvlUdh6reEPjNznBgo7JM1ub2RGGdnKvuXFo9oPRcUaAJF6n0cz/igoUwP+H/Ffl
-         8fpSPSfOXtXvhA9G+ppDyMwdHmDCOo5ozA7okKx0jv6t3CYKWmzNJHphZH+lPy3NruSm
-         3ibQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784281903; x=1784886703;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=pJCC0wO896nE8gyYR5Mds0J8ooeePUhEH/e6YbBZ+3s=;
-        b=LO32dNqsWG2uLtizZD4lY461Q82MkINvFWu6ujRmNRbzV1xhdy9NwTxMYDNjL/ha1H
-         LOLMKaMkPamDDF/S6U6W+Wb66NMZbXCJc73814uVinKXQOAVIqeBB2LrjhL/ftV9ttT/
-         3loleMQq8kjoWT+5t+qTpyuf/5fXpmTZP0ZubWPx5Fc6QknB2M3G7US/qqcfQL0XSTI2
-         sSfP2pCBC4NEX4bKcr4BF74mAEH2nDUQiE3yzjGXqat51QgjToJbUNw/KdjSX+hlj54X
-         gx91rOD3UKOhLcqWFScJ45SoyLLF/FteL2H3kG1FcEamJA9cN/eu8zbKQzx1ertYmm3P
-         p7Gw==
-X-Gm-Message-State: AOJu0YzOIQaN8/kwGW03vimLq6eCQzQsO+B1FW4YlObIdiQ8w6ryosKu
-	2e0N6UlEhTrLsp33vRrn6EITNyC7yX8vaHASOEC0FyYc3e9Zp3NDFEEndk0e08G46kvrqWvLHIh
-	XQ9Om
-X-Gm-Gg: AfdE7cmJz65bx/J4zBC4kTQYejlZLC4EKd0zZsZlwIHfMYp6L5wpFA63LkZtxbTf6kl
-	b1DHxO3laAgK+9GOG73RZ+rbQ7OMeFNlfWcZO5xid1cMFb4CmLryl6ID8iJ5bHRY89eS7y0LyX4
-	OShYvvL6uRnB9hlg0gIhPovrjzXkjjSs76UoYfuwRi6ici6fz1xFVFJv4NkdE1ZWT+99q0xsvwv
-	xZqb2VdRnELFt87gfS0RhcA6BBWXqPZFgDMiQAApN1vexGOjy8sO/eVt1dnFVl/3ewFTJejtQHZ
-	g5sd6IkpRX9uh38wOJhv3OEeymThe/VxQAoAQgI5JPiEqlycnsCxNSe1Zu2Gfox9cuCoInFFTOI
-	SDebh7AIFl3N+w/+gfXBmQE+DBw3k582yRxM6qn6maQvUJmoElvetzu56kzipjIs9l/1PTEVm0a
-	/b
-X-Received: by 2002:a05:600c:46ca:b0:493:e460:1f6 with SMTP id 5b1f17b1804b1-4954a396371mr21218985e9.0.1784281903373;
-        Fri, 17 Jul 2026 02:51:43 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:8e22:8a15:f33f:dc60])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4954a2e8529sm33184115e9.11.2026.07.17.02.51.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jul 2026 02:51:42 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  conor+dt@kernel.org,
-  devicetree@vger.kernel.org,  robh@kernel.org
-Subject: Re: [PATCH v3 2/4] mfd: axp20x: Add support for AXP318W PMIC
-In-Reply-To: <20260717090209.2A09B1F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Fri, 17 Jul 2026 09:02:08
-	+0000")
-References: <20260717-axp318-regulator-v3-0-779dc1b97dd4@baylibre.com>
-	<20260717-axp318-regulator-v3-2-779dc1b97dd4@baylibre.com>
-	<20260717090209.2A09B1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 17 Jul 2026 11:51:40 +0200
-Message-ID: <1j5x2eeyfn.fsf@starbuckisacylon.baylibre.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Nej3+8KQ"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66H6g4k51293177;
+	Fri, 17 Jul 2026 10:20:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=CwZcVkrqIcp8a5kHPE4bSh5sot1ouY
+	j24Ca+iwy9sGQ=; b=Nej3+8KQVFvn/mv1VhDDTjqcnDKe0POZW8PxRDEVuhgrnQ
+	GcQv26lEgNLeZGliN3woXXVzQD7Y8ceTu/cK+/VowjLhWBCYSx+z/K5mW/qq0mEv
+	llUofZD5NuxfI2zhmhX+TX+q/MU0+3CQCcp7N4cFgJNdTpEUyRBW0sVg8Q8uQOdF
+	kijGMtxxR6gsL0RbCAkPl4bBrzpHTJ10ofZLD6QonVwT/uHJACJynjMtBKT4conm
+	h2SbhkOgJ2RXwyfLoBtwFbKIJlOU/P1UaQTZ+9PQ3VYUImZyLBeyuBogDmMpeeCl
+	F4l991VbrJsFax4ur8OCi4uyqAKm5guU+4eDmLEQ==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxww58-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Jul 2026 10:20:12 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66HAJd8i007845;
+	Fri, 17 Jul 2026 10:20:11 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhs4gw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Jul 2026 10:20:10 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66HAK6sw35455270
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 17 Jul 2026 10:20:06 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C8BB820069;
+	Fri, 17 Jul 2026 10:20:06 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8DC2720065;
+	Fri, 17 Jul 2026 10:20:06 +0000 (GMT)
+Received: from osiris (unknown [9.111.76.206])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 17 Jul 2026 10:20:06 +0000 (GMT)
+Date: Fri, 17 Jul 2026 12:20:05 +0200
+From: Heiko Carstens <hca@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, kvm@vger.kernel.org,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: Re: [PATCH v2 4/4] s390: Add support for DCACHE_WORD_ACCESS (again)
+Message-ID: <20260717102005.9583A33-hca@linux.ibm.com>
+References: <20260717092415.3039699-1-hca@linux.ibm.com>
+ <20260717092415.3039699-5-hca@linux.ibm.com>
+ <20260717093632.8E3FF1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260717093632.8E3FF1F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 7dxmTgN4zT0cKnF1u6NAcoBV21NohAIM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDEwMiBTYWx0ZWRfX/hmd8bvTGnhg
+ LJs5a4xU7Ggfvl3hxfHw3QmzYujIWEuHC4ca80zRFIXq66XrZZ3LnH/yOt18VgOPXAIJsq49Uzg
+ jW1p4HOYz3oITivjZNTKh0SBeayoGns=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDEwMiBTYWx0ZWRfX2qPAhpjabfm6
+ PQim/usaTHftVkFi76QKF7VcuiMLOyi8yFU5y39x+l6hqvAsun+xIZmTUhvGSTlnKMgOAGZ3AZr
+ 7nfywzeopLgD+up1sQSm36IWv4b8qBhwCsOUyzYpCCQaG5n9TYZ160dYkAunjmvRiA/pPy4fo5r
+ 9/4pNWzsxDkFosQwSHKEoD8F9rOlCqDzGVvmgKHfwJU6jx9GzBAVnUPSoRydog3AtKGHjzE/KLM
+ 6xc8IUNr6+hk+a4VnisXAgEKt/Em9L4ANSxKpqAd/bgwyOO3agC2yq4fl8OYIp7ACUidorwnyQA
+ yvchufJJlu1qY/cwwDmSP7DopO4zgU1kJXHZSgL0Ycbu3mFdkSNi+fhW9MHNp4kPxJ+Zx4WhqWp
+ 8xovOjNnOsAHf4Xa3GzOiXhzdR7zHjeYm/wjxtEFhN6GEr0M2SY3miY1y62kMhjHPu6qoGx7xY3
+ dK+emIG4rup/wKw+xqQ==
+X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a5a01dc cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=_su_6yxrm-6F5Z5OsgwA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: 7dxmTgN4zT0cKnF1u6NAcoBV21NohAIM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_02,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170102
 
-On ven. 17 juil. 2026 at 09:02, sashiko-bot@kernel.org wrote:
+On Fri, Jul 17, 2026 at 09:36:32AM +0000, sashiko-bot@kernel.org wrote:
+> > +static inline unsigned long load_unaligned_zeropad(const void *addr)
+> > +{
+> > +	unsigned long data;
+> > +
+> > +	asm_inline volatile(
+> > +		"0:	lg	%[data],0(%[addr])\n"
+> > +		"1:	nopr	%%r7\n"
+> > +		EX_TABLE_ZEROPAD(0b, 1b, %[data], %[addr])
+> > +		EX_TABLE_ZEROPAD(1b, 1b, %[data], %[addr])
+> > +		: [data] "=d" (data)
+> 
+> [Severity: High]
+> Could GCC allocate the same register for both the [addr] input and the
+> [data] output since there is no earlyclobber modifier here?
+> 
+> If a page-crosser triggers a terminating secure storage access exception,
+> the hardware leaves the result register in an unpredictable state.
+> 
+> The exception handler ex_handler_zeropad() relies on reading the original
+> address from the register specified by [addr] to compute the valid bytes.
+> If GCC uses the exact same register for both input and output, the handler
+> will read a corrupted address from the clobbered register, dereference it,
+> and cause a kernel panic.
+> 
+> Should this use the earlyclobber constraint "=&d" for the data output to
+> ensure the address register is preserved during a terminating exception?
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] The newly added I2C device ID `axp318w` fails to use named initializers and omits the `.driver_data` field, resulting in it defaulting to `0` (`AXP152_ID`).
-> - [Medium] The MFD cell and resources for the power key (`axp20x-pek`) are completely omitted from `axp318_cells`, despite the commit message claiming to support it and IRQs being defined.
-> - [Low] The `axp318_cells` array uses a hard-coded ID of `1` for the regulator cell, which violates MFD subsystem guidelines and risks sysfs naming collisions.
-> --
->
-> --- Patch [2]: [PATCH v3 2/4] mfd: axp20x: Add support for AXP318W PMIC ---
-> commit c0a61d967fff87b52d26e4cb329e69e10684fb89
-> Author: Andre Przywara <andre.przywara@arm.com>
->
-> mfd: axp20x: Add support for AXP318W PMIC
->
-> This patch adds support for the AXP318W PMIC connected via I2C. It sets up
-> the regmap configurations, volatile ranges, interrupts, and registers the
-> MFD cells for the regulator devices.
->
->> Describe the regmap and the MFD bits, along with the registers exposed
->> via I2C only. This covers the regulator, interrupts and power key
->> devices for now.
->
-> [Severity: Medium]
-> Is the power key device missing from the MFD cells array in this patch? The
-> commit message mentions it is covered, but there are no power key resources
-> or cells defined for the AXP318W.
-
-Had fixed that but rebasing multiple time a lost it somehow ... will fix.
-
->
->> diff --git a/drivers/mfd/axp20x-i2c.c b/drivers/mfd/axp20x-i2c.c
->> index 5c93136f977e7..4e4ebfc78525c 100644
->> --- a/drivers/mfd/axp20x-i2c.c
->> +++ b/drivers/mfd/axp20x-i2c.c
->> @@ -83,6 +84,7 @@ static const struct i2c_device_id axp20x_i2c_id[] = {
->>  	{ "axp221" },
->>  	{ "axp223" },
->>  	{ "axp313a" },
->> +	{ "axp318w" },
->
-> [Severity: Medium]
-> Does this need named initializers to provide the .driver_data payload?
->
-> Without setting .driver_data like the of_device_id table does, won't this
-> default to 0, which is AXP152_ID? If this device is instantiated via legacy
-> I2C methods, device_get_match_data() might return AXP152_ID instead,
-> causing the driver to mistakenly configure it as an AXP152 variant.
-
-I don't think this driver as ever been intanciated through the legacy
-i2c interface or was meant to be. While this may need to looked at for
-correctness, this is not something new introduced by this change
-
->
->> diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
->> index 679364189ea58..c8aeebd01bbcd 100644
->> --- a/drivers/mfd/axp20x.c
->> +++ b/drivers/mfd/axp20x.c
-> [ ... ]
->> @@ -1061,6 +1129,10 @@ static struct mfd_cell axp313a_cells[] = {
->>  	MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
->>  };
->>  
->> +static const struct mfd_cell axp318_cells[] = {
->> +	MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1),
->
-> [Severity: Low]
-> Should this use PLATFORM_DEVID_AUTO instead of a hard-coded ID of 1?
->
-> Assigning a hardcoded ID can lead to device naming collisions in sysfs if
-> multiple instances of the device are present.
-
-PLATFORM_DEVID_AUTO does not go in here as far as can tell.
-
-The driver uses PLATFORM_DEVID_NONE while registering the device.
-I honestly do not know the reason, if there is one. If it is problem, it
-is not related to this specific change. I don't mind submitting a change
-for this but
-1) it should not be mixed with this series
-2) I can't test the other devices
-
->
->> +};
->> +
-
--- 
-Jerome
+This doesn't make sense to me. Secure storage access exceptions are
+nullifying per architecture, not terminating.
