@@ -1,135 +1,116 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B2737BE8E
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 08:15:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F6626158B;
+	Sat, 18 Jul 2026 08:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784362549; cv=none; b=MZAgrSIy87UvTY9YQTo2Ygn3fyIiSf6KhCJDm3RWDIzeukPO5958vbb42RaiZGYJftrubGbiYiH+TfJEBzVtJhi2lAcxOv5sqvlamyX9k4f4qPP+eKluh5C5sjGmNxc0Q3GdotW+yRU/uPaZbd1YVbVaWPeytXzpM5H18Tj74HI=
+	t=1784364239; cv=none; b=f5bPQOMhUsf+DeTUZXqSYSk3pdVQdOyzWBj0xzH6N1rD3IZ8e0OpQ1+BP44siMx6X4l/NLLtENPVJCBgatnxSkhx0wQLkx2ZWftAK/BDuVVgrvq3T+Mnh6V7TUdRPGcSMNGNI8auZftbnbebkiDXbw7ks15KzQyRvUZPodAGd+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784362549; c=relaxed/simple;
-	bh=EzqbWeSzT85oPY2MHsX+tDDam0WXfL2C/ffFGRTeXHY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=duBVFvZqO5sH1Tr3HRigsnHhjNA7Dh5JbBinnrnxEOKGAX8fTkwpcA94J7WbAAh803lHs1QRCNV0dChkJ6W6A+tBn+mbX0+9bGU0GcjdCCAOopv/rUeaGtk+16yz8J5L/iwepx8ey+p5zngZXiHZFgnmlwIP8eeHLf+q0Q6GQxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qz1GgM0Y; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784364239; c=relaxed/simple;
+	bh=WG4QyGgRAds4Fx+hUJ/f+/4iwh4iv0+ZRp8WPrJdW+g=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LuinSHC4utly4HGbWQJ7BmV9fn1Cv5/q4LXpXncf+CLd3b8oR22SzuOiLWRV4DWfWSW07wo65qWdB2Zi0gc9h7xmZGuJKegKvOz+UUO+TQIl9iPr5Ugsg2yJKwpWCxEkLS63jG5ZcRbyg69+UbnHAtf9fBNEkignY83q/MC8QzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cWRB8j95; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qz1GgM0Y"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8486ac3f347so2093158b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 01:15:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784362548; x=1784967348; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=bSp1oXB6t0r670gpxmHzNoI/B82n3yPGLeuK8fscBxA=;
-        b=qz1GgM0YQRl4UOke+vg84tPfpdL16MbCWq6lPSVFdONjpxR6Ov8YNV/pvpt4LfbO70
-         mtlxIAjArxSUGlV5vot1oMKQNCEEZa4l9aRD3NrRx+anEMIVTx2mGkg0l8dpYED4kWMN
-         81aTw+A+2MRzKXcN9bpvB9jPL3Ixb8PaANAendwzNPWTiM1LPz4OqWSv+eVjZ32RH9TQ
-         CQ15VNlC5i423R4Bn14yLMQpuXGIFejGkl5/zMD0zfrffBEUOg2oZMmO2s/4ScAUKir5
-         ag8caVKw6S8WqTl3cRcL4CWpJJBnQELu2H+xNbtQzmkGeSPl3wMvPRXLn6VDve5jJTUu
-         ZDFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784362548; x=1784967348;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bSp1oXB6t0r670gpxmHzNoI/B82n3yPGLeuK8fscBxA=;
-        b=gWXWdO2xarII9MG31YaljZ9K39i+V271UKP0d+ROZUTDttMUbIBVeaNijtGnFJpJHJ
-         MuapgIqSKCci3HMy6jjWOZiMG7yjeP5Z1dTnNOOoy0f45ASydXmdkyLjnotj7DP7mYLF
-         AGByAoQfXSup84QNHM0ukqqYrpbqZzYwiqAzHYec+IWkzIDcMRv9qMaT9DWsisf/RpcV
-         MIo7gwDvxq7ceyR7EA9yYQvrF8hgFonfeey6jh/wfT6jPtsm6p9YBX1yblTd7pj3CRit
-         bu1ycdh3PoeqqcgoCTwXDALrOU+jVNGMvLlRdGbrtFLx1Lho7e5uWUcMdulhBCOVKUll
-         okfQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rq8M/mW+Q3JYv+zDpAagwVSdfjN6EESY7gl8+cEOv0m5Hrv2XYT7NNTM8PSZrvL+GzyIlHHLePxUzv/uHYQkF0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyvwSitoZJwuW36dDeMJwFgcFuYavStmmTlL0/4ULWnN6Pj8uWu
-	BAXdx2rGpfuxN5+gAscFYfF8BR/aetM8/5k2ei0lfSVMrf+btfpEDP+7
-X-Gm-Gg: AfdE7ck20+oNlPoJz7lPu4rLWviXj7sUNKrO18URsA09ErMsyPvjYvHctdA8icCghhz
-	Uf+r7sMbr1nOCbqNPD3u6bv5xNLUxR/iHvSX/0SjxAXo6ZFIys/1MxHEqh/oqQPq0M9yI3B1zvA
-	bxxSTzajUaKULA6l3KbAVNH0kkxpwBIUDVYRJEFOVbYs0YjDAeYH1PavjL0WXXCnrALYG5eUUxd
-	nd1/t3O3mIGrv/zPzpge4SiV7PbL+m+NLlgjmY15iYzTE0lsa2w7+mSD+rzMG+fNPEhgzhvJHde
-	KZgwiYEqfIbcjsIU6oN/mbFAEnvCg/LxMA3tOYN/5lBavjd5e9O6+feOwA5w2jRzRds5ITu4GgI
-	DpsK3hzi0cmAwCKtf99qRC+SGYA7eywb37LMYPXB7auUC6a1LtyMzYMNtJHX1KAS9JiKGmymyAF
-	2mkjkwIcqiGL2vR6CYEY7sFpXt+AC/jnbiK8ZA8Ms49I7GvF17/NT7xZWBH4tOHAss2E1TDdT9I
-	6WWJ4KN39aldNkvN53WLwWvyCuh4RWIsILKfUWYQsJb
-X-Received: by 2002:a05:6a21:e082:b0:3b4:8c67:51d4 with SMTP id adf61e73a8af0-3c38dc7b38dmr11363127637.39.1784362547811;
-        Sat, 18 Jul 2026 01:15:47 -0700 (PDT)
-Received: from [192.168.0.100] ([202.179.95.46])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1dde81sm27605069eec.21.2026.07.18.01.15.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Jul 2026 01:15:47 -0700 (PDT)
-Message-ID: <2f1795b5-cab3-4241-b3f8-532a7fc4df9b@gmail.com>
-Date: Sat, 18 Jul 2026 13:45:43 +0530
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cWRB8j95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E97D1F000E9;
+	Sat, 18 Jul 2026 08:43:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784364238;
+	bh=HIuHp9Jni0inkQDV9bDTsEN515xgLllrv7OG/bjPhWI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=cWRB8j95Z23pac909kh1HuO9zcZg/1I9gn5O3CRiu1rqVCHYe+tw0u9lb0WND+T8F
+	 FePN93zDkx4LBNW3qD8COcp+sm/ONTvzk/DP5XpJEC8g3UfqZPZJByZFTmluOhiIPX
+	 hXB/8IkeCBWsQR5lKMUpeFe2S0r21Vmyf362a9spam+D06GLyFpR7nGjziVWsHqacV
+	 lbJUo51GnOSX3ncM7qWqsArm7CbS58H5fUU/PPzXHdLIUpBXsiLMx91j4kfab7qgGc
+	 ZIln4WvRcLZZv4zhSz3BzZ6hIc+/8dpy0lf5SiVdTWLgi/ngSXi1WAhpUltUk9s+U3
+	 voczSAVKlSi6g==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wl0eK-00000006Imq-0XRT;
+	Sat, 18 Jul 2026 08:43:56 +0000
+Date: Sat, 18 Jul 2026 09:44:31 +0100
+Message-ID: <87cxwkr8k0.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <fuad.tabba@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v5 3/7] KVM: arm64: Top up stage-2 memcache for dirty logging faults
+In-Reply-To: <CA+EHjTzZxa7Yb2GJhbJdtnTgGoiPTmSAotWTF7S7acq6M_trwg@mail.gmail.com>
+References: <20260717130317.1953574-1-fuad.tabba@linux.dev>
+	<20260717130317.1953574-4-fuad.tabba@linux.dev>
+	<20260717131537.71F531F000E9@smtp.kernel.org>
+	<CA+EHjTzZxa7Yb2GJhbJdtnTgGoiPTmSAotWTF7S7acq6M_trwg@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Ninad Naik <ninadnaik07@gmail.com>
-Subject: Re: [PATCH] dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
-To: Rob Herring <robh@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, lee@kernel.org,
- conor+dt@kernel.org
-References: <20260701175330.1645927-1-ninadnaik07@gmail.com>
- <20260701180553.473121F000E9@smtp.kernel.org>
- <20260716173939.GB534222-robh@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20260716173939.GB534222-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: fuad.tabba@linux.dev, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
+On Fri, 17 Jul 2026 15:17:00 +0100,
+Fuad Tabba <fuad.tabba@linux.dev> wrote:
+> 
+> On Fri, 17 Jul 2026 at 14:15, <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >
+> > Pre-existing issues:
+> > - [High] A malicious nested (L1) guest can crash the KVM host via a Break-Before-Make (BBM) violation that triggers a BUG_ON() due to an empty memory cache during a permission fault.
+> 
+> From my understanding of NV code, this looks like a real issue. I
+> don't think it changes this patch, though: this one only widens the
+> top-up for the dirty-logging case, and the path you describe is a
+> non-logging permission fault. So, it would be a separate fix, a top up
+> for nested permission faults too, the same way we already do for pKVM?
+> 
+>         if (!perm_fault || memslot_is_logging(s2fd->memslot) ||
+>             is_protected_kvm_enabled() || s2fd->nested) {
+> 
+> If that's right, I'll send a separate fix later. Marc, what do you think?
 
-On 16/07/26 11:09 pm, Rob Herring wrote:
-> On Wed, Jul 01, 2026 at 06:05:52PM +0000,sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Low] The schema conversion incorrectly restricts LED child node names to `^led(-[0-9a-z]+)?$`, which breaks `dtbs_check` validation for all existing upstream device trees using this binding.
->> --
->>
->> commit 6c59295f22b17d02a2b26847db54458f820fa4f3
->> Author: Ninad Naik<ninadnaik07@gmail.com>
->>
->> dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
->>
->> Convert lacie,ns2-leds to DT schema.
->>
->>> diff --git a/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
->>> new file mode 100644
->>> index 0000000000000..679a618906d80
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
->>> @@ -0,0 +1,87 @@
->> [ ... ]
->>> +properties:
->>> +  compatible:
->>> +    const: lacie,ns2-leds
->>> +
->>> +patternProperties:
->>> +  "^led(-[0-9a-z]+)?$":
->> [Severity: Low]
->> Will this restrictive regex cause existing device trees to fail dtbs_check?
->>
->> The old text binding example used a child node named blue-sata, which does
->> not match this pattern. Since additionalProperties is set to false below,
->> nodes in existing device trees that don't start with led will be rejected
->> during validation.
->>
->> Should this regex be relaxed to allow existing node names, or should those
->> device tree files be updated alongside this conversion?
-> While yes we prefer what you did, it's perhaps not worth changing these
-> old .dts files to match the preference.
->
-> Rob
+I don't think this is correct. Yes, this papers over the guest being
+buggy, but i don't think that's what we should really do.
 
-I understand this. Should I relax the regex to allow any pattern so that 
-the existing as well
+Doing the same thing (changing the output size without a TLBI) on real
+HW would result in a permission fault being signalled to EL2, and we
+should model our SW MMU the same way.
 
-as new DTS files could be properly validated?
+I think the latent bug here is the way we always walk L1's S2 on S2
+fault, irrespective of the fault type, and that feels wrong. This is
+ignoring the fact that we already have a TLB (the shadow S2) for this
+mapping, and rewalk anyway. Since we now find valid permissions, we
+take it at face value and try to install this new translation (which
+could point to a different OA, and even bigger problem).
 
-Thanks,
+So ideally we'd simply tell the guest to bugger off, but we need to
+solve a few problems first:
 
-Ninad Naik
+- some permission faults are caused by the host rather than the guest
+  (dirty logging, HAFDBS), and we need to treat those specially.
 
+- we need to rebuild an ESR based on the content of our TLB, not L1's
+  S2, which is not always easy to obtain (we have some limited TTL
+  caching in the shadow S2, but that's not always reliable).
+
+All of this strongly intersects with Wei-Lin's reverse map, and
+Oliver's HAFDBS support.
+
+Oliver?
+
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
