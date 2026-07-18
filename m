@@ -1,231 +1,157 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E24242D88
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 18:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945532874FB
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 18:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784398932; cv=none; b=D6nxcQcplULDLEdMDT7T0uNJH6FVMpfl+c1wPk9lHaGGCJt3yTIrHGzAe833iGIt9AckLgaqxhaTWkGKcabWnHUJ4IF1W9EUbKOe4MOtoOzQ2e/ksh2chUxkADxuErDDgI9iHi/09QhXOVD67B1ZGrGVne4KHhr9cQ+U9lb4ZOM=
+	t=1784400452; cv=none; b=TT5POZFlZtOy/Ix7VfDEafQznxe5jn+6o2MsVGZT5PnRkSzZBVkY11FkGAwHdgvGvJvwyHdfwOaW/o028Y4ElNXCg0aZkrfOZA1GiarqGa4TZjPQPPR6ac1lzJ4JrOsTrE/4BpBzTYc0Too8zwuNscME/QYZ5ttlW2q9IZAq/SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784398932; c=relaxed/simple;
-	bh=mmhCxtvOcCVPzYJpjWdf54JNQMO8RYQ1+xtt+7mSAIE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=H5xXAjwcAgG6pQN3ifIPFrI56yGJ7CPeJ0LdmWlKL4xhNph5T7fA3X8iUae4FK550RfYhKqHZ7PemAAj7/ypFiOs/2u+bRbrn6znJ2Q08m7hVdQlWMIVLzATH6FvjWHj5AuhX8HIqLg5LPe6J2asgb6TuVkZ/yRYtRxexEJwsVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fGNZsNoC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iVCHG6WO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1784400452; c=relaxed/simple;
+	bh=5brdqZ/1wXfjtic17d235LNB+dpZfhc5OvtCZzsQ5RU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CEc8NTPLirmyml0hYD4CaqczIfi400iZf2sKAjPlGptrP5jbLyPr0o9wSh5WnWm1x5l0AVFeJllAcyZ4TFjSpp+lbmbzSNQY/ERIeSL1NLkUfeJXBdzRcMSG9X4NMA4DtFWiLrD9LWZ9KV5vJ6VYee+QcqOAkhd9lIfqsQYX1YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZZ24oM12; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fGNZsNoC";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iVCHG6WO"
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66IGONls1262528
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 18:22:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HyBbYwp5p4Yke6LTJxxI12Zk78NEYeUMQXe2QXNyi9Q=; b=fGNZsNoCnta2l9tI
-	FEPN5AaesMZTVVdySsoa1jZrc6/5uojsZCld5WXLUhoAFfZNfxYWG7j8782rW7z6
-	ArsngHIB07mOYl/Rpum6JWK/cL2duwOcfyiYNdny1Qye9Zr+F8I7v937NIpg0TTo
-	7AhIkc2WgM68oMlSqqRrS3V7p9uh5LpnN1V7wTkOj4TCpQlT8PxeN0dXvYdXvHtl
-	xO3JnFQz5rbRTnRhnJnJOPv1rX+l/P0qy0iXLlB9CkVsM8D2KqkrvaDSViJlhC9h
-	qTyltTZNzIcarxtvEQKLAZOZgrloCuyZkpnt70irZj7lS/dnLiUCqUulhmui6nEn
-	abiKew==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2c69b36-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 18:22:09 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38827cee19eso9469789a91.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 11:22:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZZ24oM12"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8114a4542b2so39164497b3.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 11:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784398928; x=1785003728; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=HyBbYwp5p4Yke6LTJxxI12Zk78NEYeUMQXe2QXNyi9Q=;
-        b=iVCHG6WOGu8QYR324kH3nV+45F7bE77VCK8X+MMcLzTDqHP/1Huuv+cFXLRKpu1x2W
-         9oRc12+vBSK2Cl+KAMMgLXKyfRsu2RBeTRNV4J2Mh9iifHuQrB+f6OcCQfHcy0qmc7us
-         exS4j0IPKiOblKYjedLcLCG4tSJJIlaNaik24jZgWouiuInr3UhCrpipI+VBDM1xdG7o
-         QrYmlDnKYWTJDCb8D/fyxx/La2akN3zvTfDa7bM9+oJQWhUarc96yL7sOFLXSrYOM7Kc
-         KhZEPS8+g2LqnNwh1ANORVE7nieg9cAJo2at1CdOyiDUBPMabpdZjQUVFYYLwiKwLS/o
-         Pq/Q==
+        d=gmail.com; s=20251104; t=1784400449; x=1785005249; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=fQTOmrHG5pvHqSModWaQQhiPltxOaTHtUmOHNGx1d18=;
+        b=ZZ24oM12MdLIiaFClvCgu76j0+8u9w0mOtfY7fTK6fW5m1UuRFAxXWsGL3JlqRszWC
+         FVz0EdTRSvLjqfL/8yN8XcmU+O6ygPbDz/bkBqQyTdDANMwnoSyB1Rk8lQOI6ducP7FL
+         NBkNesQlfe5O08cKp31C3RZ9FCui2ogGFkmjsA3ZyUnG6+1ghcV3zJRdaxvh2Z4Ruk75
+         LVcnBbSH7r4EdxGnrkRefNfOupmUdXGRJOjeEu35cYS1kta5NDWjJzCa87NOU8AzMBKv
+         SG+uidiBEEnIpw/HIajJKTbM6Lv7K7I73be956yEosMlAnu0QYtZ5I0ZrZc2lC77caJL
+         TZZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784398928; x=1785003728;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1784400449; x=1785005249;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HyBbYwp5p4Yke6LTJxxI12Zk78NEYeUMQXe2QXNyi9Q=;
-        b=Ko85DIZbKISQNQQjmrPJGhdlR8d/oe6JG7OkXgksFCwhQoI5cpb5QNo+xACpjlwJ/Z
-         2v6chza5l9jpWxVHlvnfI5zVvYci9V+lqbCTAGaAvB0hZwxC1hyyoDYlB1fInVM4x/pf
-         MTcALQRheZ/tSkXmaLOREk2d1fEP1pRAsivETCKmEQBs5OHQ0uWUCGAlBrDyIila0dKF
-         LQEgy/ziv70V9txuDWXti8+Oc1pS6E3UdJCHx9bfss253fp6+HlEUlHk45+Pw73uiNJX
-         0R0Bz4vxO+1D344JblWVLAmcsquqJryCv1Zf3evK+ZX2u5Zju+GzCkVvgDJwjqkH+N7G
-         jx0Q==
-X-Gm-Message-State: AOJu0YxSfPrsnawcrv0ovesU390fSpCd7lY0N/2MdsdzUgUx9hDwBU3P
-	9zRwxd6XnI3cqH0U9wQ9tA1VjpDbdojVzPIxgk9GZFvOeKlsP43CORnfGb9cRShNXLj9LITCSoZ
-	iCxU9rn4IfrPv7iIzOib/+UT6D0LBMncaoZixnBkwwVH+qqe2vLs2ac1DjPrQh67G7PCLqIqsVu
-	JdjJLrgzMq
-X-Gm-Gg: AfdE7ck+ER6pr6mDEdSeposU2/QMr/lpXgCLdZRV/5XW6Jy5qDNLB4CfHDLjzHzvknI
-	6qdJDE8qJ8MRusURxDgTiHQHevm1o19b4pTxa112qXgoVyBH33dHLk70wqQyY+BJSR+5/DbJV4o
-	UqmBSelK/SoLst7UQ51eGgcsC8TYJMN3bEWJyUyTHKzdKz4Njl26XYNk3LaF7P/8cAQsZIJhXkD
-	vovSNImRXxaSTiIT2BJ3v8AhJ79M6b2wfphWi4dzlriuOau8de6a8YKIfA0/CChSYPiRkQrl0Er
-	7a0jwN+CSY+ycrcgPOa3fukXAg56I4ZjD5gh/lHxP1+u6RSBLS9cJmp2vvduwPgs9XS9UDnv8pE
-	/kR37PQ==
-X-Received: by 2002:a17:90a:d605:b0:37f:9ce3:ca95 with SMTP id 98e67ed59e1d1-38e4b54436bmr8084701a91.30.1784398928606;
-        Sat, 18 Jul 2026 11:22:08 -0700 (PDT)
-X-Received: by 2002:a17:90a:d605:b0:37f:9ce3:ca95 with SMTP id 98e67ed59e1d1-38e4b54436bmr8084675a91.30.1784398928065;
-        Sat, 18 Jul 2026 11:22:08 -0700 (PDT)
-Received: from localhost ([188.253.117.185])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ce2de31a7sm16705718c88.15.2026.07.18.11.22.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Jul 2026 11:22:07 -0700 (PDT)
+        bh=fQTOmrHG5pvHqSModWaQQhiPltxOaTHtUmOHNGx1d18=;
+        b=LqaPad1HuWB5Pl0Ze6eyDOsUHPY9eGAyEcNwZTdiXyjt/O5HsEZdDhpeTxQ0c26ZIt
+         aD4DumvTsc+NekntNw6rEd2gpMJSU2TWt0xTEB+ZJX9+CI8cbCeHAOkuruu3c1lXfA9U
+         FjfHgJgKJbQkXUsfvY0d6Ahhf8Bg25Dq99h95tb6481/4S45cfUDXgbmYhH6H50tKUTr
+         viDrIC9In0c9Ge+k1Rf6NBcFv05gOtrDCxTfJs/j7R2ca2+pUENFEhTzYcZRlMP4hsLk
+         RwOMuN04s2h+nGfcz09cnCg072+Fl8kBzNiV+CnDjxowOG0CogzE7C8yRlU5gJCrQwRQ
+         Srlg==
+X-Gm-Message-State: AOJu0YyTg4Mrg2VRI14uWhycHaTtlDWAs0s1O761L4aB+LOd1UmzVJ6L
+	LZK+On9r099pdt8SP1iKPABBRSHF8beDUqVwmHVnlngT3s4+f37BTGg4
+X-Gm-Gg: AfdE7cmfwYNO3gCuqd+llAbZcwPMckQMut6R6o38Y94BLTomob/IeNjHwqLmyFBiQR7
+	1etrDFzEkF+dQtFZm0t489dvYsCDTyOCkF42TwJwioj7QSJivFQl0zQ+aTaKoR8SW39aYwfTEZx
+	eo2QqM4BKo9++7bcY2Y/iJ42yUC449vyc1/BGkBIDTahqD71o3DR7WpH4fEgx8hZRu/l58JJv/T
+	OyyEfBDVQes+x2rgg9bhZj76MIEtZBth33CR24UGYTXlxjdfme5yVJQ3RjFqP6MsyTRTgUVrgf4
+	rVo7Jdu5ErTk3SoJD1xQ9e+CoEjSCPNsBWbrSF9vtaZ4ry7tMKHZfWFF+w0VGHELT+fzEZFsJ4E
+	9y/J8gAdEpx+l1Tq5UA8QaMn+3UWSmAMAQU5XSbLJRePuEfImbq0EQm8mwlGcBket285lsRptMI
+	F+bhuYsSJWhg==
+X-Received: by 2002:a05:690c:9a8f:b0:7ff:19d6:74ee with SMTP id 00721157ae682-81ef28589d4mr26330087b3.33.1784400449216;
+        Sat, 18 Jul 2026 11:47:29 -0700 (PDT)
+Received: from localhost ([2804:30c:90d:6100:8a69:5cf5:f1f8:a1e1])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81ef4279508sm33890157b3.26.2026.07.18.11.47.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jul 2026 11:47:28 -0700 (PDT)
+Date: Sat, 18 Jul 2026 15:48:29 -0300
+From: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+To: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org,
+	linux-iio@vger.kernel.org
+Subject: Re: [PATCH v7 2/4] iio: adc: ltc2378: Add support for LTC2378-20 and
+ similar ADCs
+Message-ID: <alvKfTS8Kj1MF3db@debian-BULLSEYE-live-builder-AMD64>
+References: <cover.1784235595.git.marcelo.schmitt@analog.com>
+ <5108c89986ae8723139419058db1b2f2e74daff6.1784235595.git.marcelo.schmitt@analog.com>
+ <20260716212838.95B3F1F000E9@smtp.kernel.org>
+ <alpab2gBs4nPDU5g@debian-BULLSEYE-live-builder-AMD64>
+ <20260718024628.3e2872ca@jic23-huawei>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Jul 2026 02:22:03 +0800
-Message-Id: <DK1WMKS5DBMB.3O0SCPNN6ZSVV@oss.qualcomm.com>
-From: "Ze Huang" <ze.huang@oss.qualcomm.com>
-To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
- <ze.huang@oss.qualcomm.com>
-Cc: <imx@lists.linux.dev>, <dri-devel@lists.freedesktop.org>,
-        <Frank.Li@kernel.org>
-Subject: Re: [PATCH v2 7/8] drm/tve200: replace struct
- drm_simple_display_pipe with regular atomic helpers
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260716-drm-simple-kms-removal-v2-0-1133a8fc3785@oss.qualcomm.com> <20260716-drm-simple-kms-removal-v2-7-1133a8fc3785@oss.qualcomm.com> <20260716092549.D4B5A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260716092549.D4B5A1F000E9@smtp.kernel.org>
-X-Proofpoint-GUID: QOKNwA4_zk4Vo0TC4P6dbWL-a8fvP8co
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE4MDE5MiBTYWx0ZWRfX5s7PVBZu97Ko
- LxagjiVDbmY9LsUw1jcB6kpjtu4W7Gy0PvdZSUMsyQSx1vW0zYn+b+6WXEi0o9DKuT4AlWKZXMR
- lVlzEOKZxqdNY9KLi20PCUf3KS+zwL4gIk+MnIpTKIftIiSUtcRBefFFGZwZ6M5b9aJxfVHznbK
- h9h2iwgREcBSMI80QRz6HTMbYE3/PecH18bDQo8eHOCLk8WGy1Xt/yUu/Syzv5ZcFeQKoyZvXRL
- tF1gupLtDVnqizm/SCGFB9/1TQ8SCT2aoQpWJWY2NLC0uVL2lvvC1cgkGHwbQ7T8CRXnlA9M8zm
- 79Ao/xUd1zh23dfKS6PGWPydCm8sbRmOch2q2mMvR8Ly/7ijFF7e3qnuzNP57EwISOGEsq+Tgim
- 6OU5SAA7Rd0rNjnJMG323ux5+oqB/0TmDSjMO8Jc/K6sg4n62lsvVb30nZSBMMqG1i1TrPgoNGW
- ko6MFyBl+5T34CmeTFg==
-X-Proofpoint-ORIG-GUID: QOKNwA4_zk4Vo0TC4P6dbWL-a8fvP8co
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE4MDE5MiBTYWx0ZWRfX9EX7fnFYglpS
- PSCI94yej7oYnzqcidwb5dTCTyMTbXbIZ7n0mieit9z0CtNrv5ks2GtkmPiQlfTjInQVO8NlVQR
- Tqfo32/so7LMbRst0IoN3VtPwXJFWYg=
-X-Authority-Analysis: v=2.4 cv=CJQamxrD c=1 sm=1 tr=0 ts=6a5bc451 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=RQ3dwY0XcLBFaqRX7rIGyg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=kdYVNXHMfqCZok_UY-oA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-18_05,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607180192
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260718024628.3e2872ca@jic23-huawei>
 
-On Thu Jul 16, 2026 at 5:25 PM CST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Directly accessing `priv->plane.state` in the CRTC atomic enable=
- callback introduces a Time-of-Check to Time-of-Use (TOCTOU) race condition=
- with subsequent non-blocking commits.
-> - [High] Missing `.cleanup_fb` callback in `tve200_plane_helper_funcs` le=
-ads to memory and resource leaks of pinned GEM objects and DMA-buf mappings=
-.
->
-> Pre-existing issues:
-> - [High] The CRTC atomic enable and disable callbacks call functions that=
- can sleep (`clk_prepare_enable`, `usleep_range`), violating DRM atomic con=
-text guidelines.
-> --
->
-> --- Patch [7]: [PATCH v2 7/8] drm/tve200: replace struct drm_simple_displ=
-ay_pipe with regular atomic helpers ---
-> commit 30e007b0736d27ee72ba4a5f39e203c3808e470e
-> Author: Ze Huang <ze.huang@oss.qualcomm.com>
-> drm/tve200: replace struct drm_simple_display_pipe with regular atomic he=
-lpers
->
-> Convert TVE200 to explicit plane, CRTC and encoder objects. Keep generic
-> plane-state validation before TVE200-specific mode, alignment, pitch and
-> format-change checks, and install GEM framebuffer prepare helper explicit=
-ly.
->
->> diff --git a/drivers/gpu/drm/tve200/tve200_display.c b/drivers/gpu/drm/t=
-ve200/tve200_display.c
->> --- a/drivers/gpu/drm/tve200/tve200_display.c
->> +++ b/drivers/gpu/drm/tve200/tve200_display.c
-> [ ... ]
->> @@ -119,16 +140,72 @@ static int tve200_display_check(struct drm_simple_=
-display_pipe *pipe,
-> [ ... ]
->> +static const struct drm_plane_helper_funcs tve200_plane_helper_funcs =
-=3D {
->> +	.prepare_fb	=3D drm_gem_plane_helper_prepare_fb,
->> +	.atomic_check	=3D tve200_plane_helper_atomic_check,
->> +	.atomic_update	=3D tve200_plane_helper_atomic_update,
->> +};
->
-> [Severity: High]
-> Since .prepare_fb is assigned to drm_gem_plane_helper_prepare_fb, will th=
-e
-> lack of a corresponding .cleanup_fb callback lead to memory and resource
-> leaks of pinned GEM objects and DMA-buf mappings when the framebuffer is
-> swapped out?
+TL;DR: Will switch to voltageY-voltageZ ABI.
 
-The documentation for drm_gem_plane_helper_prepare_fb() [1] explicitly says
-that simple GEM framebuffer drivers do not need a matching cleanup_fb hook.
+On 07/18, Jonathan Cameron wrote:
+> On Fri, 17 Jul 2026 13:38:07 -0300
+> Marcelo Schmitt <marcelo.schmitt1@gmail.com> wrote:
+> 
+> > On 07/16, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [Medium] The `LTC2378_DIFF_CHANNEL` macro defines an IIO channel that is intended to be differential but lacks the `.differential = 1`, `.indexed = 1`, `.channel = 0`, and `.channel2 = 1` attributes.
+> > > --
+> > > 
+> > > --- Patch [2]: [PATCH v7 2/4] iio: adc: ltc2378: Add support for LTC2378-20 and similar ADCs ---
+> > > commit 5710d5f25b45906977e2522567c1964b1d3219f8
+> > > Author: Marcelo Schmitt <marcelo.schmitt@analog.com>
+> > > 
+> > > iio: adc: ltc2378: Add support for LTC2378-20 and similar ADCs
+> > > 
+> > > This commit adds a new driver for the Analog Devices LTC2378-20 and
+> > > similar analog-to-digital converters.
+> > >   
+> > > > diff --git a/drivers/iio/adc/ltc2378.c b/drivers/iio/adc/ltc2378.c
+> > > > new file mode 100644
+> > > > index 0000000000000..5600c820c7f45
+> > > > --- /dev/null
+> > > > +++ b/drivers/iio/adc/ltc2378.c
+> > > > @@ -0,0 +1,416 @@  
+> > > [ ... ]  
+> > > > +#define LTC2378_DIFF_CHANNEL(_sign, _real_bits, _storage_bits)			\
+> > > > +{										\
+> > > > +	.type = IIO_VOLTAGE,							\
+> > > > +	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |				\
+> > > > +			      BIT(IIO_CHAN_INFO_SCALE),				\
+> > > > +	.scan_index = 0,							\  
+> > > 
+> > > [Severity: Medium]
+> > > Does this macro need to set .differential = 1, .indexed = 1, .channel = 0,
+> > > and .channel2 = 1? The name suggests these are differential channels, but
+> > > without these attributes, the IIO ABI will expose them as single-ended
+> > > (e.g., in_voltage_raw instead of in_voltage0-voltage1_raw).  
+> > 
+> > For parts with multiple inputs and configurable differential channels (e.g.
+> > AD4130-8, MCP3561/2/4R, NAFE13388 [1, 2, 3]), the voltageY-voltageZ ABI helps
+> > clarifying what physical inputs make up a channel. For differential only parts,
+> > the ABI seems to be flexible by only requiring a 'consistent labeling' (either
+> > voltageY or voltageY-voltageZ IIUC). Will set the channel with the differential
+> > ABI if maintainers believe that's the best way to have it. Might slightly tweak
+> > the channel macros to keep .differential = 0 for pseudo-differential chips
+> > (e.g.LTC2369-18).
+> 
+> Whilst I get your point on differential only cases not really requiring the
+> specification of two inputs, I think that does provide a simple indication
+> to users that they are differential channel.
+Agree. The first ADCs I've worked with were single-ended so having to provide
+the negative input when working with differential ones was something noticeable
+to me. Though, one applications engineer once called me out for the
+voltageY-voltageZ naming arguing that a differential channel provided only one
+input to his application and thus it should be labeled only 'voltageY' or even
+just 'voltage'. Despite understanding that argument, I share the opinion 
+that an indication of differential channel is helpful. Anyways, besides the
+possibility for application to display channel names differently in user space,
+I see we now have .read_label so the whole discussion seems pointless.
 
-[1] https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_gem_=
-atomic_helper.c#L107
+> 
+> I would prefer that we make them 'look' like differential channels so make up
+> a suitable number for the negative side.
 
->
-> [ ... ]
->> -static void tve200_display_enable(struct drm_simple_display_pipe *pipe,
->> -				 struct drm_crtc_state *cstate,
->> -				 struct drm_plane_state *plane_state)
->> +static void tve200_crtc_helper_atomic_enable(struct drm_crtc *crtc,
->> +					     struct drm_atomic_commit *commit)
->>  {
->> -	struct drm_crtc *crtc =3D &pipe->crtc;
->> -	struct drm_plane *plane =3D &pipe->plane;
->>  	struct drm_device *drm =3D crtc->dev;
->>  	struct tve200_drm_dev_private *priv =3D drm->dev_private;
->> +	struct drm_crtc_state *cstate =3D drm_atomic_get_new_crtc_state(commit=
-, crtc);
->>  	const struct drm_display_mode *mode =3D &cstate->mode;
->> -	struct drm_framebuffer *fb =3D plane->state->fb;
->> +	struct drm_plane_state *plane_state =3D priv->plane.state;
->> +	struct drm_framebuffer *fb =3D plane_state->fb;
->
-> [Severity: High]
-> Could this direct access to priv->plane.state introduce a race condition
-> with subsequent non-blocking commits? A fast sequence of commits might sw=
-ap
-> the global state before a previous commit's worker executes this function=
-.
->
-> Would it be safer to extract the current commit's plane state using
-> drm_atomic_get_new_plane_state(commit, &priv->plane) instead to guarantee
-> it reads the correct snapshot?
+Would it make sense to adjust the ABI doc to encourage the dual numbering for
+differential channels? So I don't fall the temptation of single index in the
+future :)
 
-Will do
-
->
-> [Severity: High]
-> This is a pre-existing issue, but does tve200_crtc_helper_atomic_enable()
-> call sleeping functions in an atomic context?
->
-> Looking further down in this function, it calls clk_prepare_enable() and
-> usleep_range(). Similarly, tve200_crtc_helper_atomic_disable() calls
-> clk_disable_unprepare(). Since atomic commit callbacks can run in an
-> atomic context where sleeping is forbidden, could this cause system
-> instability or deadlocks?
-
-It is a false positive.
+Thanks,
+Marcelo
