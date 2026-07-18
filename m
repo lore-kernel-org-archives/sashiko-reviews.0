@@ -1,48 +1,48 @@
 Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F168462
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 13:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCCF34EF0E
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 13:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784380025; cv=none; b=tAFZVuEKSs50IaCEIHcrHgXJ14fBVoGdG1LZIHMIkccdYXNMCQndILF5+D+jHNTBn/VgA5os5Yp3rYzU2FqjEwvLF/VBEK4v6w/zrKxz0h4GdJFiXhCwMocVp68reCEMa2zLSvIs6pYDok3bpQBGBPkUS0PLT8QcGrEgL5uQ/fA=
+	t=1784380117; cv=none; b=Dfq54t59EPaSzUmnJGV140tyH7OaCnpqG3Fq5694WbGpFHzGswD0zUObg+/f5n8DVCloTowOlkQFuT0Z+JqtVAhB4JqUZUZiS3+DlRXGakSXdjzSDUmMxcNUZy8aWc0xzq9b0WCSexR+PxrkxWoOU/uHqrYwHNcb72dl0VEgBoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784380025; c=relaxed/simple;
-	bh=RvXe9kWAuKBe1AbUROCD+9Q0OVFdFjSunwI03BAlk1k=;
+	s=arc-20240116; t=1784380117; c=relaxed/simple;
+	bh=1CA1YSqSsQHUtvYot9U99z4Wbh+Q1pdmidjW1kJrA4s=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=jEndBqmgzxF0pmIJqdh3UDY5OoU3rlSP+BJsTLQpZdF3twlCXfFDxIm9Tate/2UxupCVPuXwgOJljqzu5xqib45plcQviNe9/bNiRGroImDrmui0+hL1kYGdLG4Mm8FpaCIBhzTSxQrLdXIRSFrSQ0M3EPRO68So4xQJ/VWuCqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=hNRLRGOg; arc=none smtp.client-ip=185.67.36.65
+	 Content-Type:MIME-Version; b=ENcqdEYPlQi1150zTPrzu8PLRrp35igYak3HdymFAETHQAgF8sk3XvBmslli9McZGSy3FU4pajGh5+XxPS7kVxcBZyYxM8yiXWRrsqnP15qSMXpHkTMGv0bCuGuBlSnF+xDvK24X44aO1wiDu2lgcWQAXbtIQHebMxwphv7P988=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=oFO6xKrx; arc=none smtp.client-ip=185.67.36.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="hNRLRGOg"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="oFO6xKrx"
 Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id EDF2D240027
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 15:07:00 +0200 (CEST)
+	by mout01.posteo.de (Postfix) with ESMTPS id 7010F240027
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 15:08:33 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1784380020;
-	bh=zoR/07cNipfqPG7Komw+d9XvzKJGNdClqZIvS2Va2W4=;
+	s=1984.8680eb; t=1784380113;
+	bh=LEC8c5ywrxayZFx8HKgXhGV5NObkBgLx0uZlxtjvDU0=;
 	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
 	 MIME-Version:OpenPGP:From;
-	b=hNRLRGOgKxttHK+/BrDBgLUPJYI6Q/0umeNNix3RJf1IAlTkurwdPb+k2W7n6oD0u
-	 h9qBRjc0Ne5oWvKlvI/J3kMlIkppLD2R3RAcJO0YZTEO+x2oFqNVXoCnwb8faAxbsV
-	 ZezGXujq6qo0SUjfeElB6unLMzqaXp722u0mblPSw2MA/yygjdpTpYCNaRmJNUxIdD
-	 /WNXViYRNSuqZba6uCEOkcD3Epht0bXDJ0jSqrptJiUBL3vx5VchCYPE3/x+/ppHyM
-	 nyzjeEcpueNaCvDovSFAI3vKbVgq9Me3TnMX0uh1t+Y+VVKPcFnSRUrJB9ULFX9wlY
-	 +YTb9QPTfzkGw==
+	b=oFO6xKrx00MwNqCISzsa/ddB920NquVjzcDPPkX1fzvZfbQ2BateuXtqNxUSTJQGq
+	 VAiM/tVe2hqgxFAxFIjftO5urw+7iOI09mgAKZicePPnqZe8kltJ+RUQyK/kEomlSl
+	 9rpIBt279EmebLtQjmEnXMZafHbMdC6vypukqSzBPiKsjeI/CgdTtGd7O4Fg45K2lm
+	 dTAoJWdskqMFx3H/eLHSvIaQEJZdU2vzeT1U3Mqj2QBTghNGg0TGRU90pEypoAu06k
+	 smMV3smgE6RtpaODTXD97ccVbqvNECqInu4cIdeAJRq4Uv2tYFMaaLmEEJDESFW/DA
+	 dLrnfp+f36pBw==
 Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4h2RrN3lRGz6tvs;
-	Sat, 18 Jul 2026 15:07:00 +0200 (CEST)
-Message-ID: <277c33cf5cbc5f2f067ab24c174d6c60bf8054e7.camel@posteo.de>
-Subject: Re: [PATCH v2 2/4] rust: serdev: mark small functions as `#[inline]`
+	by submission (posteo.de) with ESMTPSA id 4h2Rt903lYz6tsg;
+	Sat, 18 Jul 2026 15:08:32 +0200 (CEST)
+Message-ID: <ca639d7f2ca93533d085e72603c3aa8ff530b9d2.camel@posteo.de>
+Subject: Re: [PATCH v2 4/4] rust: serdev: remove `serdev::Timeout`
 From: Markus Probst <markus.probst@posteo.de>
 To: sashiko-reviews@lists.linux.dev
 Cc: ojeda@kernel.org
-Date: Sat, 18 Jul 2026 13:07:00 +0000
-In-Reply-To: <20260718125438.ADE381F000E9@smtp.kernel.org>
+Date: Sat, 18 Jul 2026 13:08:33 +0000
+In-Reply-To: <20260718125757.C986B1F00A3A@smtp.kernel.org>
 References: <20260718-rust_serdev_fixes-v2-0-e5214e03de13@posteo.de>
-	 <20260718-rust_serdev_fixes-v2-2-e5214e03de13@posteo.de>
-	 <20260718125438.ADE381F000E9@smtp.kernel.org>
+	 <20260718-rust_serdev_fixes-v2-4-e5214e03de13@posteo.de>
+	 <20260718125757.C986B1F00A3A@smtp.kernel.org>
 Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  keydata=mQINBGiDvXgBEADAXUceKafpl46S35UmDh2wRvvx+UfZbcTjeQOlSwKP7YVJ4JOZrVs93
  qReNLkOWguIqPBxR9blQ4nyYrqSCV+MMw/3ifyXIm6Pw2YRUDg+WTEOjTixRCoWDgUj1nOsvJ9tVA
@@ -88,7 +88,7 @@ Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  dQNGrZ91M9nlIBKw8Y7c7xZ4098qX2b8JX/CxD+gC1r4C8vuA3GkhFLx+KlkON7LyiJPkrePp6Qky
  jfGillcaQOqFZ3WwVqyzG1BUfTow==
 Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-DX3R9NO/T8D8x2K888+Q"
+	protocol="application/pgp-signature"; boundary="=-Lq9dZlOM4CCXO2Zhgb4S"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -98,129 +98,112 @@ MIME-Version: 1.0
 OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
 
---=-DX3R9NO/T8D8x2K888+Q
+--=-Lq9dZlOM4CCXO2Zhgb4S
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2026-07-18 at 12:54 +0000, sashiko-bot@kernel.org wrote:
+On Sat, 2026-07-18 at 12:57 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->=20
-> Pre-existing issues:
-> - [Low] This problem wasn't introduced by this patch, but the patch incom=
-pletely applies the `#[inline]` attribute, missing several small and forwar=
-ding functions in the same module, violating the Rust subsystem guide.
+> - [High] The signature `impl Into<Jiffies>` fails to enforce time unit sa=
+fety, as `Jiffies` and `Msecs` are type aliases for primitive integers, sil=
+ently bypassing unit conversion.
 > --
 >=20
-> --- Patch [2]: [PATCH v2 2/4] rust: serdev: mark small functions as `#[in=
-line]` ---
-> commit 51b61be6e88e2f99505c9aba8afbad7558d43605
+> --- Patch [4]: [PATCH v2 4/4] rust: serdev: remove `serdev::Timeout` ---
+> commit 0f6c93da8f797f31f699e23c7c0c2ff923d0ea30
 > Author: Markus Probst <markus.probst@posteo.de>
 >=20
-> rust: serdev: mark small functions as #[inline]
+> rust: serdev: remove serdev::Timeout
 >=20
-> This commit adds #[inline] annotations to several methods in the Device
-> struct to allow cross-crate inlining for optimization.
+> This commit removes the serdev::Timeout enum in favor of accepting timeou=
+t
+> values through an impl Into<Jiffies> trait bound. This applies to both th=
+e
+> write_all() and wait_until_sent() functions.
 >=20
 > Link: https://lore.kernel.org/rust-for-linux/DK0SX3P5K1J6.1OV4ETJMXW83R@g=
 aryguo.net/
 >=20
 > > diff --git a/rust/kernel/serdev.rs b/rust/kernel/serdev.rs
-> > index 47ca57966abfe..79d61c6ceeecd 100644
 > > --- a/rust/kernel/serdev.rs
 > > +++ b/rust/kernel/serdev.rs
+> > @@ -505,11 +476,13 @@ pub fn set_parity(&self, parity: Parity) -> Resul=
+t {
+> >      /// [`Device::wait_until_sent`] to make sure the controller write =
+buffer has actually been
+> >      /// emptied.
+> >      ///
+> > +    /// Use a timeout of 0 to wait indefinitely.
+> > +    ///
+> >      /// Returns the number of bytes written (less than `data.len()` if=
+ interrupted).
+> >      /// [`kernel::error::code::ETIMEDOUT`] or [`kernel::error::code::E=
+RESTARTSYS`] if interrupted
+> > -    /// before any bytes were written.
+> > +    /// before any bytes were written. [`kernel::error::code::EINVAL`]=
+ if `data.len() > i32::MAX`.
+> >      #[inline]
+> > -    pub fn write_all(&self, data: &[u8], timeout: Timeout) -> Result<u=
+size> {
+> > +    pub fn write_all(&self, data: &[u8], timeout: impl Into<Jiffies>) =
+-> Result<usize> {
+>=20
+> [Severity: High]
+> Since Jiffies is a type alias for usize and Msecs is an alias for u32, do=
+es
+> this impl Into<Jiffies> bound silently bypass time unit conversion?
+>=20
+> If a caller passes a value typed as Msecs (u32), it inherently implements
+> Into<usize> and will compile, but the value will be silently zero-extende=
+d
+> rather than being correctly converted via msecs_to_jiffies(), resulting i=
+n
+> timeouts that are grossly incorrect depending on CONFIG_HZ.
+It is intended to be used for Jiffies or Delta only.
+
 >=20
 > [ ... ]
 >=20
-> > @@ -547,6 +554,7 @@ pub fn write_flush(&self) {
+> > @@ -570,11 +543,19 @@ pub fn write_flush(&self) {
+> > =20
 > >      /// Wait for the data to be sent.
 > >      ///
-> >      /// After this function, the write buffer of the controller should=
+> > -    /// After this function, the write buffer of the controller should=
  be empty.
-> > +    #[inline]
-> >      pub fn wait_until_sent(&self, timeout: Timeout) {
-> >          // SAFETY: `self.as_raw()` is guaranteed to be a pointer to a =
-valid `serdev_device`.
-> >          unsafe { bindings::serdev_device_wait_until_sent(self.as_raw()=
-, timeout.into_jiffies()) };
+> > +    /// After this function, the write buffer of the controller should=
+ be empty or the timeout
+> > +    /// elapsed.
+> > +    ///
+> > +    /// Use a timeout of 0 to wait indefinitely.
+> >      #[inline]
+> > -    pub fn wait_until_sent(&self, timeout: Timeout) {
+> > +    pub fn wait_until_sent(&self, timeout: impl Into<Jiffies>) {
 >=20
-> [Severity: Low]
-> This is a pre-existing issue, but since this commit aims to mark small
-> functions as inline, could we also add the attribute to the other forward=
-ing
-> methods in this module?
->=20
-> The Rust subsystem guidelines mandate that small or forwarding functions =
-in
-> abstractions should be annotated with #[inline].
->=20
-> For example, Timeout::into_jiffies() is quite small:
->=20
-> rust/kernel/serdev.rs:Timeout::into_jiffies()
->     fn into_jiffies(self) -> isize {
->         match self {
->             Self::Jiffies(value) =3D> value.get().try_into().unwrap_or_de=
-fault(),
->             Self::Milliseconds(value) =3D> {
->                 msecs_to_jiffies(value.get()).try_into().unwrap_or_defaul=
-t()
->             }
->             Self::Max =3D> 0,
->         }
->     }
-This will be removed in the same patch series.
+> [Severity: High]
+> Does this also suffer from the same unit safety bypass issue, since it
+> relies on impl Into<Jiffies>?
 
->=20
-> And the forwarding trait methods at the end of the file are also missing =
-it:
->=20
-> rust/kernel/serdev.rs:AlwaysRefCounted
->     fn inc_ref(&self) {
->         self.as_ref().inc_ref();
->     }
->=20
->     unsafe fn dec_ref(obj: NonNull<Self>) {
->         // SAFETY: The safety requirements guarantee that the refcount is=
- non-zero.
->         unsafe { bindings::serdev_device_put(obj.cast().as_ptr()) }
->     }
->=20
-> rust/kernel/serdev.rs:AsRef
->     fn as_ref(&self) -> &device::Device<Ctx> {
->         // SAFETY: By the type invariant of `Self`, `self.as_raw()` is a =
-pointer to a valid
->         // `struct serdev_device`.
->         let dev =3D unsafe { &raw mut (*self.as_raw()).dev };
->=20
->         // SAFETY: `dev` points to a valid `struct device`.
->         unsafe { device::Device::from_raw(dev) }
->     }
->=20
-> Would it make sense to update these functions in a subsequent patch, or
-> include them here to ensure the module fully complies with the guidelines=
-?
-Those are trait implements. I haven't seen inline to be used on those.
-
---=-DX3R9NO/T8D8x2K888+Q
+--=-Lq9dZlOM4CCXO2Zhgb4S
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmpbem8bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSLOQP/isEHeCTj64NEysRKVeo
-Zk4AtIKAv+PlZne5NVJCCYh3+kuGnf1eX0xL6k2ek1e77JTWsV+iSIsow/8TNOmq
-6+PH613dHFABgSBSeGBbR8BYTG0EAJLaRZVfNISWXPg8QZLXCTQ+PQ8OQOz1VbaM
-T/9doUFyn0jL/BdOoGNmPq8QoF4hJopvHR4m0oJn7MTsp0sY9LNpLJFHLdPQmg0w
-HeK9J5MS4AErN0xz8bOwbkDFZOoDIfFATvQxcbUjf5MaFj78bter2ZzyUtMzASW1
-zIZwDz37NCK6+filz12KbqNr2trzquVFTCWKXXyneeInd4D/8zKQYdsPudYmhK0T
-qIHrWW+aXwhqs1JcYURAY4xDh3YIwA1tLjAeYlOztcoYXDjsbWipUh9uAQOszFpu
-kqAO3Cc5ld02uEEprsDS9kdzW9QtT0Zlip6FKB980yOmw8HZzl7C0FC5Pob94o5J
-el6249EEwRCX+SCKDFcdFfe/5VjSoETkrkQ/khCZnJGI1SDFPM0qYt82IE5Llfk7
-0tsalFQ24rjD83N2gIso6oIQll+OCuaqQJQR+aG6nc75ERCB9t8SGII79qziU7FI
-BJ6GB3XgdqQmKJtZuZODjzJIdkl1GFgp9x/ruzOrP+TIRLUAqjxNn1Eclez4stVZ
-Ioeygu9NSRfQ8qdmqHTnLf8/
-=d0SF
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmpbetAbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSI4oP/1x1APDTk+m+ukJpOblL
+Z6QQlB6JLmBP4fHKA8VH+MHEuB+F6nhlcBJZwoctwegfDx2Y8hr1y2ufNVMKtO5e
+xiUHn7+JH7wO8+HFkt0W5hwmZz0JPrZeWUuctaMipSNAv0Zx/upOJ2IepcNy9BxA
+slcD1H5XlWHT0rWHxZ32ZP9DK0SHm80F4MYNylDFegpD15rhzsSG1HR5YLUZlm11
+gv/rHEhYSx6WAllmXQUNWCUNxA4KMHmWG1Ke4VqXsecbkEE33JYVtUtzU1/8oOzi
+YDbLUcEgxJGMC/Op2KQ4wtRmChkCaDyXIwWYY7EoypDEQGMIBE/5xo5GVtsjVX1c
+crFe5VXNaKJrwN323gbV9SVsmxu1ab36x3uRT5Cch2X1F7IHM7h+faqNIGlEFp/8
+u7mjwGegynbqikwuX89ejHNLmP1F6TV5eVQcKxatMeckoWntgxRITtZYPmWruYFH
+jH7WvtaNmrd/hnsmXIUeAQ+ay5FLlaOLtN25FiuHhrVybX+2frmHHZrRzGsM13WM
+/Hw4IqlGBJAdP6qP3GmobzTsHYt9Sb1MAtEJR+w0UgXDW89T+CRgG1byR/ao8dCz
+Nh1swZyzZ51rb7njEDLsIFjbLJxVqz9cAMMgXSHd+gPyxoZA1XPKv9rtMy5No/a9
+iM8mcK7NMJanOWVE1oAyj+HW
+=2KrD
 -----END PGP SIGNATURE-----
 
---=-DX3R9NO/T8D8x2K888+Q--
+--=-Lq9dZlOM4CCXO2Zhgb4S--
