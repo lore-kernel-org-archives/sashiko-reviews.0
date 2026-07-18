@@ -1,145 +1,135 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01B3305E32;
-	Sat, 18 Jul 2026 05:38:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B2737BE8E
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 08:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784353138; cv=none; b=rrxNYnhfxcz6O6Gr2LAoor9X0N5yNoajVs39+RcLujSy+yNwSK/zCX7uegIHf/hUbd+/2xafdtqtwl1YZ3hsZWSb5rktqLQDlwXGALe7MQMOkmpvOs3CHxPbjxOTAzfSBGGmsfmu4w5k658X5++yeARVP5DYq5UUEA/U4UNrDig=
+	t=1784362549; cv=none; b=MZAgrSIy87UvTY9YQTo2Ygn3fyIiSf6KhCJDm3RWDIzeukPO5958vbb42RaiZGYJftrubGbiYiH+TfJEBzVtJhi2lAcxOv5sqvlamyX9k4f4qPP+eKluh5C5sjGmNxc0Q3GdotW+yRU/uPaZbd1YVbVaWPeytXzpM5H18Tj74HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784353138; c=relaxed/simple;
-	bh=f/auU1sLUSmjRcM56684IB6M/B565j4C9rHnEmJV8QE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r7AMAgmUvUbOcIzqVBtQTTfqo6aE1w6b3z6zLPKwEdSTFtp9CJgFRmK8ulByhla44PPoX/+7XVx5dsF9cyBAG4XgLNP4OAwU/9vNeQs8hxdWuYZnsbQWBG2Y4pe9fBzUseF16xBDWXRomOABOe54yc23ECRUfFZfXdRG4SOY+Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y25DGUgS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784362549; c=relaxed/simple;
+	bh=EzqbWeSzT85oPY2MHsX+tDDam0WXfL2C/ffFGRTeXHY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=duBVFvZqO5sH1Tr3HRigsnHhjNA7Dh5JbBinnrnxEOKGAX8fTkwpcA94J7WbAAh803lHs1QRCNV0dChkJ6W6A+tBn+mbX0+9bGU0GcjdCCAOopv/rUeaGtk+16yz8J5L/iwepx8ey+p5zngZXiHZFgnmlwIP8eeHLf+q0Q6GQxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qz1GgM0Y; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y25DGUgS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0841F000E9;
-	Sat, 18 Jul 2026 05:38:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784353136;
-	bh=ciuMwKRA9gRoRCTgj/gmZ+7142E2Ydcj+uCYfNC/kIo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Y25DGUgSwP9/+v6c/XMiEh/AskKW0wiVc6HYlDWlEBiDgL7pxG8LhDjYr0g8KH27W
-	 5XkCiqX1utv0djTs2ZANGTd687U6uDpYuwf9njIaVmK6bVI9msl6WqTwdkZ/iHy/Xr
-	 Cx85cgmEgTlYlyqoJbN6Yi+iHoapYN4S3gfRIJ+YacG2XmUGAC37ckXfG04k+efgw0
-	 JAKMXEVSuQnS4+MbA/DxlmUBusCWkbACNyFO+/DNpXkAzy6WFSMFEd40mqzXVTMLBZ
-	 cpOYWf6y+3PQpF/UfLtfiTuEXKO8iUMSxDXSMUDoPTIHiYvw8dbcfUty6OjR+xyvu5
-	 UKzFKcH5j6VMA==
-Date: Fri, 17 Jul 2026 22:38:54 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v6 08/10] perf ui hists: Remove duplicated thread in
- popup_action
-Message-ID: <alsRbqrQagNFdflR@google.com>
-References: <20260710053628.1861645-1-irogers@google.com>
- <20260716072351.560311-1-irogers@google.com>
- <20260716072351.560311-8-irogers@google.com>
- <20260716073751.40C301F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qz1GgM0Y"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8486ac3f347so2093158b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 01:15:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784362548; x=1784967348; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=bSp1oXB6t0r670gpxmHzNoI/B82n3yPGLeuK8fscBxA=;
+        b=qz1GgM0YQRl4UOke+vg84tPfpdL16MbCWq6lPSVFdONjpxR6Ov8YNV/pvpt4LfbO70
+         mtlxIAjArxSUGlV5vot1oMKQNCEEZa4l9aRD3NrRx+anEMIVTx2mGkg0l8dpYED4kWMN
+         81aTw+A+2MRzKXcN9bpvB9jPL3Ixb8PaANAendwzNPWTiM1LPz4OqWSv+eVjZ32RH9TQ
+         CQ15VNlC5i423R4Bn14yLMQpuXGIFejGkl5/zMD0zfrffBEUOg2oZMmO2s/4ScAUKir5
+         ag8caVKw6S8WqTl3cRcL4CWpJJBnQELu2H+xNbtQzmkGeSPl3wMvPRXLn6VDve5jJTUu
+         ZDFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784362548; x=1784967348;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=bSp1oXB6t0r670gpxmHzNoI/B82n3yPGLeuK8fscBxA=;
+        b=gWXWdO2xarII9MG31YaljZ9K39i+V271UKP0d+ROZUTDttMUbIBVeaNijtGnFJpJHJ
+         MuapgIqSKCci3HMy6jjWOZiMG7yjeP5Z1dTnNOOoy0f45ASydXmdkyLjnotj7DP7mYLF
+         AGByAoQfXSup84QNHM0ukqqYrpbqZzYwiqAzHYec+IWkzIDcMRv9qMaT9DWsisf/RpcV
+         MIo7gwDvxq7ceyR7EA9yYQvrF8hgFonfeey6jh/wfT6jPtsm6p9YBX1yblTd7pj3CRit
+         bu1ycdh3PoeqqcgoCTwXDALrOU+jVNGMvLlRdGbrtFLx1Lho7e5uWUcMdulhBCOVKUll
+         okfQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rq8M/mW+Q3JYv+zDpAagwVSdfjN6EESY7gl8+cEOv0m5Hrv2XYT7NNTM8PSZrvL+GzyIlHHLePxUzv/uHYQkF0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyvwSitoZJwuW36dDeMJwFgcFuYavStmmTlL0/4ULWnN6Pj8uWu
+	BAXdx2rGpfuxN5+gAscFYfF8BR/aetM8/5k2ei0lfSVMrf+btfpEDP+7
+X-Gm-Gg: AfdE7ck20+oNlPoJz7lPu4rLWviXj7sUNKrO18URsA09ErMsyPvjYvHctdA8icCghhz
+	Uf+r7sMbr1nOCbqNPD3u6bv5xNLUxR/iHvSX/0SjxAXo6ZFIys/1MxHEqh/oqQPq0M9yI3B1zvA
+	bxxSTzajUaKULA6l3KbAVNH0kkxpwBIUDVYRJEFOVbYs0YjDAeYH1PavjL0WXXCnrALYG5eUUxd
+	nd1/t3O3mIGrv/zPzpge4SiV7PbL+m+NLlgjmY15iYzTE0lsa2w7+mSD+rzMG+fNPEhgzhvJHde
+	KZgwiYEqfIbcjsIU6oN/mbFAEnvCg/LxMA3tOYN/5lBavjd5e9O6+feOwA5w2jRzRds5ITu4GgI
+	DpsK3hzi0cmAwCKtf99qRC+SGYA7eywb37LMYPXB7auUC6a1LtyMzYMNtJHX1KAS9JiKGmymyAF
+	2mkjkwIcqiGL2vR6CYEY7sFpXt+AC/jnbiK8ZA8Ms49I7GvF17/NT7xZWBH4tOHAss2E1TDdT9I
+	6WWJ4KN39aldNkvN53WLwWvyCuh4RWIsILKfUWYQsJb
+X-Received: by 2002:a05:6a21:e082:b0:3b4:8c67:51d4 with SMTP id adf61e73a8af0-3c38dc7b38dmr11363127637.39.1784362547811;
+        Sat, 18 Jul 2026 01:15:47 -0700 (PDT)
+Received: from [192.168.0.100] ([202.179.95.46])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1dde81sm27605069eec.21.2026.07.18.01.15.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Jul 2026 01:15:47 -0700 (PDT)
+Message-ID: <2f1795b5-cab3-4241-b3f8-532a7fc4df9b@gmail.com>
+Date: Sat, 18 Jul 2026 13:45:43 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260716073751.40C301F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+From: Ninad Naik <ninadnaik07@gmail.com>
+Subject: Re: [PATCH] dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
+To: Rob Herring <robh@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, lee@kernel.org,
+ conor+dt@kernel.org
+References: <20260701175330.1645927-1-ninadnaik07@gmail.com>
+ <20260701180553.473121F000E9@smtp.kernel.org>
+ <20260716173939.GB534222-robh@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20260716173939.GB534222-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 16, 2026 at 07:37:50AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Assigning a raw pointer to `actions->ms.map` without taking a reference, followed by `free_popup_actions()` dropping the reference, causes a refcount underflow.
-> - [Low] The commit removes the `thread` member from `struct popup_action` but leaves multiple read and write accesses to it intact, breaking the build.
-> --
-> 
-> --- Patch [8]: [PATCH v6 08/10] perf ui hists: Remove duplicated thread in popup_action ---
-> commit 1a6678f7f83293dd5e22da61354ad80c36378c0a
-> Author: Ian Rogers <irogers@google.com>
-> 
-> perf ui hists: Remove duplicated thread in popup_action
-> 
-> This commit removes the thread member from struct popup_action since it is
-> duplicated in the map_symbol structure. It aims to ensure there is only ever
-> one thread associated with a popup_action.
-> 
-> > diff --git a/tools/perf/ui/browsers/hists.c b/tools/perf/ui/browsers/hists.c
-> > index 6145c7878c648..89c3d3dc69a27 100644
-> > --- a/tools/perf/ui/browsers/hists.c
-> > +++ b/tools/perf/ui/browsers/hists.c
-> > @@ -2359,7 +2359,6 @@ static int hists_browser__scnprintf_title(struct hist_browser *browser, char *bf
-> >  
-> >  struct popup_action {
-> >  	unsigned long		time;
-> > -	struct thread		*thread;
-> 
-> [Severity: Low]
-> Does this removal cause a build regression?
 
-Right, this should be the last patch in the series.
+On 16/07/26 11:09 pm, Rob Herring wrote:
+> On Wed, Jul 01, 2026 at 06:05:52PM +0000,sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Low] The schema conversion incorrectly restricts LED child node names to `^led(-[0-9a-z]+)?$`, which breaks `dtbs_check` validation for all existing upstream device trees using this binding.
+>> --
+>>
+>> commit 6c59295f22b17d02a2b26847db54458f820fa4f3
+>> Author: Ninad Naik<ninadnaik07@gmail.com>
+>>
+>> dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
+>>
+>> Convert lacie,ns2-leds to DT schema.
+>>
+>>> diff --git a/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
+>>> new file mode 100644
+>>> index 0000000000000..679a618906d80
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
+>>> @@ -0,0 +1,87 @@
+>> [ ... ]
+>>> +properties:
+>>> +  compatible:
+>>> +    const: lacie,ns2-leds
+>>> +
+>>> +patternProperties:
+>>> +  "^led(-[0-9a-z]+)?$":
+>> [Severity: Low]
+>> Will this restrictive regex cause existing device trees to fail dtbs_check?
+>>
+>> The old text binding example used a child node named blue-sata, which does
+>> not match this pattern. Since additionalProperties is set to false below,
+>> nodes in existing device trees that don't start with led will be rejected
+>> during validation.
+>>
+>> Should this regex be relaxed to allow existing node names, or should those
+>> device tree files be updated alongside this conversion?
+> While yes we prefer what you did, it's perhaps not worth changing these
+> old .dts files to match the preference.
+>
+> Rob
+
+I understand this. Should I relax the regex to allow any pattern so that 
+the existing as well
+
+as new DTS files could be properly validated?
 
 Thanks,
-Namhyung
 
-> 
-> There are still accesses to act->thread and actions->thread in several places
-> that will no longer compile:
-> 
-> tools/perf/ui/browsers/hists.c:do_zoom_thread() {
->     struct thread *thread = act->thread;
-> ...
-> }
-> 
-> tools/perf/ui/browsers/hists.c:do_run_script() {
-> ...
->     if (act->thread)
->         len += strlen(thread__comm_str(act->thread));
-> ...
-> }
-> 
-> tools/perf/ui/browsers/hists.c:evsel__hists_browse() {
-> ...
->         } else if (top == &browser->hists->thread_filter) {
->             actions->thread = thread;
->             do_zoom_thread(browser, actions);
->         }
-> ...
-> }
-> 
-> [Severity: Medium]
-> Can this code cause a refcount underflow regression?
-> 
-> In evsel__hists_browse(), when handling K_ESC or K_LEFT, actions->ms.map is
-> assigned directly without taking a reference:
-> 
-> tools/perf/ui/browsers/hists.c:evsel__hists_browse() {
-> ...
->         case K_ESC:
->         case K_LEFT: {
->             ...
->             actions->ms.map = map;
->             ...
->             continue;
->         }
-> ...
-> }
-> 
-> The loop then hits continue, and at the do_hotkey label, free_popup_actions()
-> drops the reference, which can cause an underflow when map_symbol__exit()
-> calls map__zput():
-> 
-> tools/perf/ui/browsers/hists.c:evsel__hists_browse() {
-> ...
-> do_hotkey:
->         free_popup_options(options, MAX_OPTIONS);
->         free_popup_actions(actions, MAX_OPTIONS);
-> ...
-> }
-> 
-> >  	int (*fn)(struct hist_browser *browser, struct popup_action *act);
-> >  	struct map_symbol	ms;
-> >  	int			socket;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260716072351.560311-1-irogers@google.com?part=8
+Ninad Naik
+
