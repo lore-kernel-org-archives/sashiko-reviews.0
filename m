@@ -1,241 +1,409 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011033.outbound.protection.outlook.com [40.107.130.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53F91AA780
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 01:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784339196; cv=none; b=WO9PsdMROFKyHFL2dPQ1pD0XoMOkre1RTizWysXbJMsFZkF8nSwW0HsVdPa/2GQYv2wNoMmD3kTnLMg5WP1Jnnagen6k2ePG4E/nv5KYkdD/Vp3U+6inUXWfBuYXC63Jx+2+6eQvYToSum9dATXHU1JsLk0gfAcc9FRIDLL1mng=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784339196; c=relaxed/simple;
-	bh=2BY/jOU2jW5sGPniP+dSUc4YrnmOUUIUVFBJZBa6g6E=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MhbRW6CuVE4qSlOBIyBoWdS+RpHfnlmlAaNS4OSDwS/tLpgnYz7NQuoF6NYs2IB4b24I8RY2ZWpb7lus2IBcNhPbnqgFfY10dF2g6bM8qDXntbYKKqvnDvxYJFZRKbgXqcDeJQlG8ujMlzU2rPhwZt59n4xQ3I520J3gD8E5ua4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mWPi8s1e; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e7m8lL3p; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBAA283FD9;
+	Sat, 18 Jul 2026 03:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.33
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784343883; cv=fail; b=rdQMMqmETMjIxZHksEtL3/HsZROHnJ5uzAsQt4DFvcqzKzNjEcKFhfFCAPq1GBul+4uHBnJGjOBrQSpoPqpBxq/97+xpTEM0NHcWGGhpQr1QXAYpirkuGHBKTkXjWezogOkg6m35OyQYDnqfhJ7ykL5DUOkUvFqm/bkwYZK2ngI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784343883; c=relaxed/simple;
+	bh=OWADNJe7Ux8QnoIf5WFpazUPwUKrVXlZwdKo2kA0zfM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=XmIHVKprPnQkY+59sSsszP7ao6/JBUlP5URJhtaKphWUBf/Fm/+Fd5INXwrnKIIVS8WRJAAKMmEEXQRf8W66KOHkxUI926YlIShtsCvdF0kBg33l590htXdKu1bNJ8qLMZAztmbI6FwkGiSWRuuLL87UhfgnK+dMVDkgLZzGpWM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YZcp5pvV; arc=fail smtp.client-ip=40.107.130.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mWPi8s1e";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e7m8lL3p"
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66HNEKPu3308495
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 01:46:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tgCrjCImBhZvpsd46+fio8T962Fne8bdWlz6Aa88TKo=; b=mWPi8s1eZ5qm6mx6
-	ZGeDopPGp80MCU9jZsc7jqhi6DnX5KjdVv1NLCJslPAwENvwTkQG/Xex1V+pmdVS
-	fu0uqF5MamA1ngEgCbUbAX9pIpS6oni3srSDDPxOCHljkPC/wRlta1wbTfCgqaEi
-	MIZHnxr/73AxEI+DCNp8b8WaSovgen8T/dHCCKy6+17pEU+cOIBcvAbS06WLBJoh
-	M2UZ81iRXDy5KIyOFvXSZFSgFSxnUTlnK06oFPaG7yQBwvdrkjMKaRew1h3TKjfV
-	GinepD94Z6ZSDgTsI2/rbAGHNBlOcgLRqpcXNX2puD/cakkjTh+YcsW4L9eV7JC5
-	tL+O/A==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ffrqd9g17-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 01:46:33 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-38e22137fb3so5260298a91.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 18:46:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784339193; x=1784943993; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tgCrjCImBhZvpsd46+fio8T962Fne8bdWlz6Aa88TKo=;
-        b=e7m8lL3p0Sx5Yirn5S2DKQTrUYUdHYjeXdvChK0EpAs3ZQ8EiyKxS6hsmSoX808FQJ
-         /HTCvU0sBSGcakqpMTDSKsNk0LEbGEIObmJC0yuYgGJU8M27kgklFaDRf2fanN80QrrL
-         /rGlhUrHMoaMvdZ/WxGVXeiU9Ta3kJLkd7Pdo2qKSp4HGpa788AaCGgbYqkuUkLuQEHs
-         0U+Wd92MtLHpfG3nq3NRPICbFrEDL0xOTTtPXnNWjPbaHt/rsl5EYwhTwpPTjSMlFJOm
-         S3mH0rfK+TJ1ljbMgI+MWu9WlTVx7Itqqh1qBPRPDGPAxQV7cBRwZZmvTnWcYfXnUOm3
-         cX4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784339193; x=1784943993;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tgCrjCImBhZvpsd46+fio8T962Fne8bdWlz6Aa88TKo=;
-        b=odsilNJRToO+rKtXfN0FNk2eC/iN5NMc9eegZFrpRRpOVdqqTOlVjuhlPw1lPsCS9c
-         PX2UJAu1jctCTwpyVs554ZqUiZucuT+0o0wGRukuIjlN41aM7bD6NYh0vt2/rbVlfLFk
-         geTF+t4l+0MNO4A3KTcTSs46WuVI2RNd79iHagAtbB0xorKxplDUG19Bmsf6iBBE1iId
-         zE5rIIMVc7+NOkIP8b+rXtwVJvkUVZSEfE64PpPWFcLVjIhbg8zRaBtHcv8zrn1Gcync
-         9KCYoHuKBBNFytrA0IAaJ8vjxg5HBPXXl+O98d9LliEaULNKr59F5lKZE16nVD4pKEol
-         cBxA==
-X-Gm-Message-State: AOJu0YxvB/3QPHle305EYtHUKmMGONipx5MDX5Db92WdnNhD2gvulcR1
-	i+Jt1X1EikfY6cOF1il32dWg/bPRvhRAJ3bVNwPp2f1iNpc/xLctgY1WYgAer/3IF+9Y9RsKTA2
-	SMJw2qQngz4asAIzVHSP8K+uG0GWoWJ1WdIIkFUMWu0HDGdXqFAJWhf/c1LkG4jCliedEbV0=
-X-Gm-Gg: AfdE7ck7jX8q6Zv0z21S2xn3drlzJOPL85NJAl9jHPXvY+OQsYPlo/2X25Hep+ucdkT
-	kCPK0TOPk+bePM/hsNdSKdIR0tKtHuW9Mqe1GcMGq9G/B7DuK24U+5Bd0BBNP39U4S8pll2KXNp
-	XX4kFvlscruqw62/zAtGZBmwXrdvRY+cB1x7yR1N3pg2usexSiKuPdURAv51GASfHHGpnJWXthl
-	dJ9CGc8txjp2ABpzBqnfpn0wcG5zPt9uvkA0uMBkeZFFMP8eNyAbazlEsnTNq45LJDIkggXeB9i
-	PjPlMu4/tFaIMrTW7XPAnezm5PwUAWM1SegbkNovWiGIVgO69kgMyRNhUYJO94GDbl0wDRKVJl6
-	5CBpUBvcjpyHnmgU5
-X-Received: by 2002:a17:90b:2dc1:b0:37f:c97a:939f with SMTP id 98e67ed59e1d1-38e4b3e11a5mr5098996a91.7.1784339193091;
-        Fri, 17 Jul 2026 18:46:33 -0700 (PDT)
-X-Received: by 2002:a17:90b:2dc1:b0:37f:c97a:939f with SMTP id 98e67ed59e1d1-38e4b3e11a5mr5098978a91.7.1784339192658;
-        Fri, 17 Jul 2026 18:46:32 -0700 (PDT)
-Received: from jic23-huawei ([50.35.46.84])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e4afcc117sm1929803a91.3.2026.07.17.18.46.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jul 2026 18:46:32 -0700 (PDT)
-Date: Sat, 18 Jul 2026 02:46:28 +0100
-From: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-To: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev,
-        Marcelo Schmitt
- <marcelo.schmitt@analog.com>, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, linux-iio@vger.kernel.org
-Subject: Re: [PATCH v7 2/4] iio: adc: ltc2378: Add support for LTC2378-20
- and similar ADCs
-Message-ID: <20260718024628.3e2872ca@jic23-huawei>
-In-Reply-To: <alpab2gBs4nPDU5g@debian-BULLSEYE-live-builder-AMD64>
-References: <cover.1784235595.git.marcelo.schmitt@analog.com>
-	<5108c89986ae8723139419058db1b2f2e74daff6.1784235595.git.marcelo.schmitt@analog.com>
-	<20260716212838.95B3F1F000E9@smtp.kernel.org>
-	<alpab2gBs4nPDU5g@debian-BULLSEYE-live-builder-AMD64>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YZcp5pvV"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=p6qe6PRlk4ihFy46PO+P5IPysbQnzuM4YMlwbUX8rci1et8XKJeh4m7Wpmg0jTMk/+odgBnYbTvzOyUpo3vHEXBcHnVPstfbz6TqjGm7ktBBqqBt1ZI/QG8a2ldp3vgbF5IIBRmuYiZH5dKN4B60hESzRCmWyIRQN/GquGwKxtNKL2e0AdC+0cePyA6RslIQAqwADdHjS42NZVFleCTA6lmBUgi2doALzYgmfYQs93f4MWOl4pcL6yLWUb/BXUyxz8qInyBIpwrA6JTYD1/43TdXENBtrOGAlRq5LVAa77OQCM+qVJ5hHq3k19o6+DkvU5+Ab9vNwShsrGcuzJq5Ow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TvPDpH3pDAy8UPS0CmlV9h7+bDloOLR4iSB2BzUcyTE=;
+ b=d4IZaauGZnGCZPigg8/wocQsGxAgegcDME6A5oWTGD0g3Na02ToHGeV064WomoxKpWpkCLF/Z/rPuG+iLbGzfpgKcNtEyHLj8vwIl+RNTYC6Fl/fEW7MzAFLiss6i9WULICNO0tj6eYPfKWpWjN6QnKIpXtwd1qtq9yezv64GWBiVkt7TI9uFoEkMBy4nb1UhGL974x2VsM4roh+KVhNd/ZCBRVFA5EgTcJmnqKDtDlqa9wsYjts7Y9ZYiD2PNzMJI4Qo7v3S3y6mbYyOOhHzvymSz6G119EOaIr0k6ZFVfV0CrCm1/tOyHpw4SQpW4fpNW1A4DSPr9EPSEastyuPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TvPDpH3pDAy8UPS0CmlV9h7+bDloOLR4iSB2BzUcyTE=;
+ b=YZcp5pvV7EfMPBfduRVtH7CwpWB1CXPBnyLmVlG63IEdHA5AK6kj1GLI+OSxvx0Ug4xjml2VuiZ46Pe0apIe2VG1Wvvr5i1/xkLl+fSvBWI0UOr/ZoYU5NpGdlE3r0JjfMJbIr6hWK0vP0iVvQlJTJMrZBRuXNdODqWdt62xYzFc5Ga6amjNHuBjcOUnvsed1p0DGPZwy535rJwQuYQx8hACntq6cUHv4vro8m2ISujpmcpv7RnoX8As5zJo3rTXXqWCbAuiW+UACagp6PY+H87yNtzyyWc73qygyXBvRqYY2V6Qic1eInRIsGktW05VEDPNyp9T4+VPPaqNl+ewKw==
+Received: from GV2PR04MB12271.eurprd04.prod.outlook.com (2603:10a6:150:32a::5)
+ by VI0PR04MB10300.eurprd04.prod.outlook.com (2603:10a6:800:218::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Sat, 18 Jul
+ 2026 03:04:33 +0000
+Received: from GV2PR04MB12271.eurprd04.prod.outlook.com
+ ([fe80::3b38:4ed4:2164:c035]) by GV2PR04MB12271.eurprd04.prod.outlook.com
+ ([fe80::3b38:4ed4:2164:c035%5]) with mapi id 15.21.0223.012; Sat, 18 Jul 2026
+ 03:04:32 +0000
+From: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>
+To: "Frank Li (OSS)" <frank.li@oss.nxp.com>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>
+Subject: RE: [PATCH v28 3/7] firmware: imx: add driver for NXP EdgeLock
+ Enclave
+Thread-Topic: [PATCH v28 3/7] firmware: imx: add driver for NXP EdgeLock
+ Enclave
+Thread-Index: AQHdFdrMrQ2/7lZrskWtBxUe/LrG/bZxjfOAgABUUoCAAAwxAA==
+Date: Sat, 18 Jul 2026 03:04:32 +0000
+Message-ID:
+ <GV2PR04MB122710DD95A0AEC916818F4AC95C52@GV2PR04MB12271.eurprd04.prod.outlook.com>
+References: <20260717-imx-se-if-v28-0-0a9659c7e69d@nxp.com>
+ <20260717-imx-se-if-v28-3-0a9659c7e69d@nxp.com>
+ <20260717111009.B55531F000E9@smtp.kernel.org> <alpUTTH1VA9hvQva@SMW015318>
+In-Reply-To: <alpUTTH1VA9hvQva@SMW015318>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2PR04MB12271:EE_|VI0PR04MB10300:EE_
+x-ms-office365-filtering-correlation-id: 4adbabdf-a2f8-4cad-0e8c-08dee4794aa2
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|23010399003|376014|19092799006|1800799024|38070700021|13003099007|10067099003|6133799003|4143699003|56012099006|5023799004|11063799006|3023799007|22082099003|18002099003;
+x-microsoft-antispam-message-info:
+ MjJ+QnShJ748ufcSWlE5HMIOyC+rh95hYh58/Y9ovbaefBavgbEPHIZGIwd/VXoE9rvvb4aDldUdUZGwxtbaPHNidyU+XeskWsFPOICWop2kmYRlKHg3OgA6t4eKuvFidx13ncvhzfO+me2K7eHO114Wn/SP4AMAaV6PqIblpjCY8vNoefVnZCvt/j41jA4ce2viocEzQU6AtgySLjcpoZv2ahB+Bu/WQ2FDoGlk6HbGioNsrT7yQijAd4tWDeXomUTUIlx9eF2VDBMjY523WkxCBJJABxoVonCk9th37ljOR5Qwhq4Ua8XHAzugTV/WD+HXQhz0SLtOsTLP+fQFF9QN2Gx36E8k8yh3QRJiOO1CffeYDAPf0xdaL1+s6B84DIE4gQQQAYW3vhhBRw/6yfsjmMbd52JLbh0F2+TpzRjKg0LNWf6Mczh5S6IHswFEyXm/RF6wYHL6Fi/Z7ZOBOMkzCqsyGFTyh0ucUGV3aEVOgo3nPXz/Knnohk6O0usWGkFini0NTeiPQQcLyKGWTnfHiyOdHuTL6nLrOJ/yiYMiTWug7LkBPWyPGdvTmJDNDFsC78w8RFIMAsxlg41d1Mn12TV2dhCXoD+43reyarOTQAPnW3R2ryu4f9fbzLPKV4hqCEM/hZZgrvGQq2/ZIsfH4LRe6PchD66xkewIDZE=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12271.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(19092799006)(1800799024)(38070700021)(13003099007)(10067099003)(6133799003)(4143699003)(56012099006)(5023799004)(11063799006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?X+Qp0iqM4Y3YC9gTZJyUiu8WGisBfDBRSbPmzUcnhWOfDUW7zOEJlLDhtNSO?=
+ =?us-ascii?Q?45hPLxEha5BR8dOc4hEg34/8baM0V7HMt7ysnuTj0NCab2LMt7LDlDcsAg3Q?=
+ =?us-ascii?Q?B/+WYugTxDceNVQX3CLABMdbfIxawnD4QN0h/mC1ADD9xqjZAxKeDgy2H+3x?=
+ =?us-ascii?Q?uIV5kolc43KDbczkSPXIoV5hig+SO6/kwHzp7vY0SoSZ0PgUt8ytRrOwi99W?=
+ =?us-ascii?Q?uCNTZemvxIrxUzQdVNH1cs9VqD4HxrvG6FwMB70Z98AbHUWQjtn5X3Jwjmz0?=
+ =?us-ascii?Q?VvTa8xxOE1A33F27YdavkraqhVHejso3eEgLtoS2oCugc/grEOB8mJH6XRyV?=
+ =?us-ascii?Q?QF81SMtzOuNDBuvNpF6pCdR/tpX2hDFvI5hYD50AIAOD+oKogJ3LRHfmzUM6?=
+ =?us-ascii?Q?O7iEP49BVeVJupOjizu7zt7tNL1ijHOhQiy0hE9ebaHiV+7PZm3qZEVoELeu?=
+ =?us-ascii?Q?HSDCP4zVpCuaJ/bt9sy5DrBvKGNMCWtFunyXStnd84TC6a3b4qf3axXZAw82?=
+ =?us-ascii?Q?hkddAgvfoQvyoeNpJEcDCS093OlSbrmxsx6oDOqZX96WoNvb0Y+AAmIbfS52?=
+ =?us-ascii?Q?5kKD/TP2ZSZJSDNFUSvIh/iSFeDy7YX3ulqII43pgwPZ97bapz0OqmAgTSEZ?=
+ =?us-ascii?Q?XUu8aFnb465CqQFq8zswJTr4n3QOYJhiTCxg8DixvXumYQRQuGE1EfZK1mmC?=
+ =?us-ascii?Q?mNPfmgbs+ER/dpo7m3QnlOe4fqsP2xJQ/0MeJcsOsGY7rpdJF1YVLezYINt2?=
+ =?us-ascii?Q?XwHTZh43itVUe/70F1/ABlstqfNJnD/L1kIiv1tzj5SDqUnbtv6sn+nepdhu?=
+ =?us-ascii?Q?SHK9ejLgoLzpAXVwcxStDncBJwjaJgMq1z7kDN3cedFlKo9mmsmKlYGSgAnw?=
+ =?us-ascii?Q?9LoYvY6cj8d1ODq/B+qF0GGtA7bQUAMU3yoBVOrCZQ3IkczKwxmd/C9RStSQ?=
+ =?us-ascii?Q?iOrqRm/uipuvxXNLKPmW5xKYVWryfnMrxvjbQ1uClME+hsSTgz8NMmqNCNEa?=
+ =?us-ascii?Q?WcwatE7LAmoaB6zN1E01iii+gv0OhVUQ8HtgCYClt4V/dzDVCCiWPyGWbl8W?=
+ =?us-ascii?Q?R5+yo/3y0gx9Lp24RlQoGmqbMV+I021pzUFuaImN3F7HStKPaxpEXf/7fEF+?=
+ =?us-ascii?Q?VwAv14OKEvrf8mrRAxES0hqsMsLqk2hZ8NEeo27DogGqii1V6R5VK6k1wQpP?=
+ =?us-ascii?Q?gLm8946b2fzsaSRiCWKrkScWh1ScV/9PkE89eEXKdcNWFUr9GIK/OpbEDb0G?=
+ =?us-ascii?Q?GgBdtcjfCEA4FjoWFfnZ2cQ5OUyP1hpkspGdaqWF84RyW7oCA3mZqOeyiVM3?=
+ =?us-ascii?Q?lDwIwa8d3+oLbHGjOpPAJ8i/TkzrZHizF6wfY+KJAt2gOhLTsdrVSNptAvCp?=
+ =?us-ascii?Q?ZlESxHEf1CykDXgzbanfu0eMKvszFQZ4N7b16yLJuXHNTI+gdA/zvxU838cC?=
+ =?us-ascii?Q?pl3ab5W9/wOknWl0bQEEYfCKYKLAtXbBBgaxm9Dqk332f1MIdqZJ8+A36sNq?=
+ =?us-ascii?Q?kiEnm/vL2+DijXMON9PXogp/icloh8XlgouW4H4rz5eWGzIVWalDWpwu4VPZ?=
+ =?us-ascii?Q?GAYYoBYsPavmeFcqCV9vKKFYpNXd3QvzhvNgbEhbIZehUr5nH1gWxQiRYkC2?=
+ =?us-ascii?Q?cx+IPZHI8WuofQymtEpoEM66EwnYv73+9tNfvFHr9ogA0/rlBhXBXHfVoP3L?=
+ =?us-ascii?Q?+MBH4sFnWugorX9iOtQo+wN7JgkVMiUtOZ8gQsnV0+Okh8NKqJXWgrSSp71F?=
+ =?us-ascii?Q?cIy6Ad4bvg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: ib56JlIgwLOqrguP4zAABePaaKk5o8vS
-X-Authority-Analysis: v=2.4 cv=DbYnbPtW c=1 sm=1 tr=0 ts=6a5adaf9 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=qC1CW/w66vtJz1P9yTJxNA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=gAnH3GRIAAAA:8 a=XYAwZIGsAAAA:8 a=8AirrxEcAAAA:8 a=c92rfblmAAAA:8
- a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8 a=Wwo5UH-IqIJyjYPLOEcA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=E8ToXWR_bxluHZ7gmE-Z:22 a=ST-jHhOKWsTCqRlWije3:22
- a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-GUID: ib56JlIgwLOqrguP4zAABePaaKk5o8vS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE4MDAxNCBTYWx0ZWRfX+7Z3LfoXJGpq
- xbzF3jPMjoRGyeDoJIyF47djRPDtLnF9RhGT1aWK/txQSUfh37a7+cHfIPFRJNDwPZ+gFVxY+8T
- dNJGDBtWn+GjAL476WSeQlE3+ADLVs0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE4MDAxNCBTYWx0ZWRfX0tRd4B21adxd
- 0DOOHz5iscr6vMkd2typzScb3CNve6rh26/+MBm1nHoJjBoAOS75HmbXD7CNwvEVYOnhbKlAEAv
- o20sdVLOuQn2I/Akh3tFTowFtJnUbk8KPC/ZLUKozBzxSjH7gP+rpvdiKVtREtd7Y5+/5bOfu3d
- v9ESHJePSFXIyL5onNf3iWkZeoGnwbp5kH2Fun/Tw9v8uNYsMpCKtih+4Wt9iPLVbvw7XU6UU/+
- 66XZGGEh5ghV9hKyqyyWCWE7+wX1RlNWBbK79b+fmBI2qFpAjyNujRiEKFUtuXur0Bzb+7vd3cV
- 6VRONoC0PGQKBvE9WhiTI65cDZVLWPX5PbTva5Gk6V7ceDjbpyCwL/X5ZWAEjY06AaxC79ShWP5
- s3L75WbxAX2GMwNJvH2rPZ7GYkbkTT6VHyMPXzaSAGpyy16106gpRzRL2Rhrn//fpoNluTaEW79
- i9EzaTIOGxn1uTAt1Xg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-17_07,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
- malwarescore=0 clxscore=1011 priorityscore=1501 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607180014
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12271.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4adbabdf-a2f8-4cad-0e8c-08dee4794aa2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jul 2026 03:04:32.6867
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Jju7tHcTyPDg4w2cZ0rXLSN22Zy6RtFosWLzzKQ5GbW/pUEpylrbF1jGhAY/gG23105Jzd3FzI6rok1p1564xA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10300
 
-On Fri, 17 Jul 2026 13:38:07 -0300
-Marcelo Schmitt <marcelo.schmitt1@gmail.com> wrote:
-
-> On 07/16, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] The `LTC2378_DIFF_CHANNEL` macro defines an IIO channel that=
- is intended to be differential but lacks the `.differential =3D 1`, `.inde=
-xed =3D 1`, `.channel =3D 0`, and `.channel2 =3D 1` attributes.
+=20
+> On Fri, Jul 17, 2026 at 11:10:09AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 6 potential is=
+sue(s)
+> to consider:
+> > - [High] The mailbox receive callback `se_if_rx_callback` dereferences =
+`msg`
+> without checking `IS_ERR()`, leading to a kernel panic if the mailbox con=
+troller
+> returns an error.
+> > - [High] `ele_msg_rcv()` uses `MAX_SCHEDULE_TIMEOUT` causing an infinit=
+e
+> uninterruptible wait and subsystem deadlock if the firmware hangs.
+> > - [Medium] Global state `var_se_info.soc_rev` prevents SoC device
+> registration and per-device IMEM state initialization on driver rebind or
+> secondary device instances.
+> > - [Medium] Casting a 1-byte aligned stack array to `struct ele_dev_info=
+` and
+> `u32` pointers causes undefined behavior and potential unaligned memory
+> access faults.
+> > - [Medium] The driver fails to expose the file descriptor interfaces cl=
+aimed in
+> the commit message and Kconfig.
+> > - [Low] The SoC revision is incorrectly formatted as minor.major instea=
+d of
+> major.minor.
 > > --
-> >=20
-> > --- Patch [2]: [PATCH v7 2/4] iio: adc: ltc2378: Add support for LTC237=
-8-20 and similar ADCs ---
-> > commit 5710d5f25b45906977e2522567c1964b1d3219f8
-> > Author: Marcelo Schmitt <marcelo.schmitt@analog.com>
-> >=20
-> > iio: adc: ltc2378: Add support for LTC2378-20 and similar ADCs
-> >=20
-> > This commit adds a new driver for the Analog Devices LTC2378-20 and
-> > similar analog-to-digital converters.
-> >  =20
-> > > diff --git a/drivers/iio/adc/ltc2378.c b/drivers/iio/adc/ltc2378.c
-> > > new file mode 100644
-> > > index 0000000000000..5600c820c7f45
-> > > --- /dev/null
-> > > +++ b/drivers/iio/adc/ltc2378.c
-> > > @@ -0,0 +1,416 @@ =20
-> > [ ... ] =20
-> > > +#define LTC2378_DIFF_CHANNEL(_sign, _real_bits, _storage_bits)			\
-> > > +{										\
-> > > +	.type =3D IIO_VOLTAGE,							\
-> > > +	.info_mask_separate =3D BIT(IIO_CHAN_INFO_RAW) |				\
-> > > +			      BIT(IIO_CHAN_INFO_SCALE),				\
-> > > +	.scan_index =3D 0,							\ =20
-> >=20
-> > [Severity: Medium]
-> > Does this macro need to set .differential =3D 1, .indexed =3D 1, .chann=
-el =3D 0,
-> > and .channel2 =3D 1? The name suggests these are differential channels,=
- but
-> > without these attributes, the IIO ABI will expose them as single-ended
-> > (e.g., in_voltage_raw instead of in_voltage0-voltage1_raw). =20
->=20
-> For parts with multiple inputs and configurable differential channels (e.=
-g.
-> AD4130-8, MCP3561/2/4R, NAFE13388 [1, 2, 3]), the voltageY-voltageZ ABI h=
-elps
-> clarifying what physical inputs make up a channel. For differential only =
-parts,
-> the ABI seems to be flexible by only requiring a 'consistent labeling' (e=
-ither
-> voltageY or voltageY-voltageZ IIUC). Will set the channel with the differ=
-ential
-> ABI if maintainers believe that's the best way to have it. Might slightly=
- tweak
-> the channel macros to keep .differential =3D 0 for pseudo-differential ch=
-ips
-> (e.g.LTC2369-18).
-
-Whilst I get your point on differential only cases not really requiring the
-specification of two inputs, I think that does provide a simple indication
-to users that they are differential channel.
-
-I would prefer that we make them 'look' like differential channels so make =
-up
-a suitable number for the negative side.
-
-I vaguely recall we did once consider handling these as inX-inX but it seem=
-ed
-a little too weird.  Hohum. ABI was designed against the max1363 and I didn=
-'t
-think much about device that always did differential.  What can I say, I was
-young and foolish ;)
-
-Jonathan
-
->=20
-> [1]: https://www.analog.com/media/en/technical-documentation/data-sheets/=
-ad4130-8.pdf
-> [2]: https://ww1.microchip.com/downloads/aemDocuments/documents/APID/Prod=
-uctDocuments/DataSheets/MCP3561_2_4R-Data-Sheet-DS200006391C.pdf
-> [3]: https://www.nxp.com/docs/en/data-sheet/NAFE13388.pdf
->=20
-> >  =20
-> > > +	.scan_type =3D {								\
-> > > +		.format =3D _sign ? IIO_SCAN_FORMAT_SIGNED_INT :			\
-> > > +				  IIO_SCAN_FORMAT_UNSIGNED_INT,			\
-> > > +		.realbits =3D _real_bits,						\
-> > > +		.storagebits =3D _storage_bits,					\
-> > > +		.shift =3D _storage_bits - _real_bits,				\
-> > > +		.endianness =3D IIO_BE,						\
-> > > +	},									\
-> > > +}
-> > > +
-> > > +#define LTC2378_BIPOLAR_DIFF_CHANNEL(_real_bits)				\
-> > > +	LTC2378_DIFF_CHANNEL(1, _real_bits, (((_real_bits) > 16) ? 32 : 16))
-> > > +
-> > > +#define LTC2378_UNIPOLAR_DIFF_CHANNEL(_real_bits)				\
-> > > +	LTC2378_DIFF_CHANNEL(0, _real_bits, (((_real_bits) > 16) ? 32 : 16))
-> > > + =20
+> >
+> > --- Patch [3]: [PATCH v28 3/7] firmware: imx: add driver for NXP
+> > EdgeLock Enclave --- commit a06a0c9a5464457c1ae77bb60350c41fff331ed9
+> > Author: Pankaj Gupta <pankaj.gupta@nxp.com>
+> > Subject: firmware: imx: add driver for NXP EdgeLock Enclave
+> >
+> > Add MU-based communication interface for secure enclave.
+> > The secure enclave FW communicates with Linux over single or multiple
+> > dedicated messaging unit(MU) based interface(s).
+> >
+> > Link:
+> > https://sashiko.dev/#/patchset/20260715-imx-se-if-v27-0-bb7c45952f06@n
+> > xp.com?part=3D3
+> >
+> > > diff --git a/drivers/firmware/imx/Kconfig
+> > > b/drivers/firmware/imx/Kconfig index 127ad752acf86..e3cb7f965e70e
+> > > 100644
+> > > --- a/drivers/firmware/imx/Kconfig
+> > > +++ b/drivers/firmware/imx/Kconfig
+> >
 > > [ ... ]
-> >=20
-> > --=20
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.178423559=
-5.git.marcelo.schmitt@analog.com?part=3D2 =20
+> >
+> > > @@ -55,3 +55,16 @@ config IMX_SCMI_MISC_DRV
+> > >  	  core that could provide misc functions such as board control.
+> > >
+> > >  	  This driver can also be built as a module.
+> > > +
+> > > +config IMX_SEC_ENCLAVE
+> > > +	tristate "i.MX Embedded Secure Enclave - EdgeLock Enclave Firmware
+> driver."
+> > > +	depends on MAILBOX && ((IMX_MBOX && ARCH_MXC && ARM64) ||
+> COMPILE_TEST)
+> > > +	select FW_LOADER
+> > > +	default m if ARCH_MXC
+> > > +
+> > > +	help
+> > > +	  Exposes APIs supported by the iMX Secure Enclave HW IP called:
+> > > +	  - EdgeLock Enclave Firmware (for i.MX8ULP, i.MX93),
+> > > +	    like base, HSM, V2X & SHE using the SAB protocol via the shared
+> Messaging
+> > > +	    Unit. This driver exposes these interfaces via a set of file de=
+scriptors
+> > > +	    allowing to configure shared memory, send and receive messages.
+> >
+> > [Severity: Medium]
+> > Is this Kconfig description accurate? It mentions exposing interfaces
+> > via a set of file descriptors allowing to configure shared memory,
+> > send and receive messages. However, there is no character device
+> > registration or file operations implemented in this patch.
 >=20
+> please check this
 
+Patch 3/7 only adds the base firmware communication path. The
+misc-device file descriptor interface is added later in patch 5/7.=20
+Will remove the file-descriptor wording from the Kconfig help in patch 3/7.
+And add it with the miscdev patch 5/7.
+>=20
+> >
+> > > diff --git a/drivers/firmware/imx/ele_base_msg.h
+> > > b/drivers/firmware/imx/ele_base_msg.h
+> > > new file mode 100644
+> > > index 0000000000000..4c3699543e879
+> > > --- /dev/null
+> > > +++ b/drivers/firmware/imx/ele_base_msg.h
+> >
+> > [ ... ]
+> >
+> > > @@ -0,0 +1,98 @@
+> > > +/* SPDX-License-Identifier: GPL-2.0+ */
+> > > +/*
+> > > + * Copyright 2025 NXP
+> > > + *
+> > > + * Header file for the EdgeLock Enclave Base API(s).
+> > > + */
+> >
+> > [ ... ]
+> >
+> > > +#define GET_SERIAL_NUM_FROM_UID(x, uid_word_sz) ({\
+> > > +	const u32 *__x =3D (const u32 *)(x); \
+> > > +	size_t __sz =3D (uid_word_sz); \
+> > > +	((u64)__x[__sz - 1] << 32) | __x[0]; \
+> > > +	})
+> >
+> > [Severity: Medium]
+> > Can this macro cause undefined behavior? When called from
+> > get_se_soc_info(), the x parameter points into a 1-byte aligned stack
+> > array (u8 data). Casting this to a u32 pointer and dereferencing it
+> > could trigger unaligned memory access faults on architectures with stri=
+ct
+> alignment requirements.
+> >
+> > > diff --git a/drivers/firmware/imx/ele_common.c
+> > > b/drivers/firmware/imx/ele_common.c
+> > > new file mode 100644
+> > > index 0000000000000..ca8a32a82689b
+> > > --- /dev/null
+> > > +++ b/drivers/firmware/imx/ele_common.c
+> >
+> > [ ... ]
+> >
+> > > @@ -0,0 +1,470 @@
+> > > +// SPDX-License-Identifier: GPL-2.0+
+> > > +/*
+> > > + * Copyright 2025 NXP
+> > > + */
+> >
+> > [ ... ]
+> >
+> > > +int ele_msg_rcv(struct se_if_priv *priv, struct se_clbk_handle
+> > > +*se_clbk_hdl) {
+> > > +	bool wait_uninterruptible =3D false;
+> > > +	unsigned long remaining_jiffies;
+> > > +	unsigned long flags;
+> > > +	int ret;
+> > > +
+> > > +	remaining_jiffies =3D MAX_SCHEDULE_TIMEOUT;
+> > > +	do {
+> > > +		if (wait_uninterruptible)
+> > > +			ret =3D wait_for_completion_timeout(&se_clbk_hdl-
+> >done,
+> > > +							  remaining_jiffies);
+> >
+> > [Severity: High]
+> > Can this loop cause a subsystem deadlock? Since remaining_jiffies is
+> > set to MAX_SCHEDULE_TIMEOUT, wait_for_completion_timeout() blocks
+> > indefinitely. If the firmware hangs and wait_uninterruptible is set to
+> > true after a signal, the thread will enter an infinite uninterruptible
+> > sleep while holding the se_if_cmd_lock mutex. The timeout fallback and
+> > circuit breaker logic become unreachable.
+>=20
+> Can you use reasonable timeout value to avoid deadlock?
+
+Accepted. Will fix in v29. Though it will get corrected in patch 5/7
+
+>=20
+> >
+> > > +		else
+> > > +			ret =3D
+> wait_for_completion_interruptible_timeout(&se_clbk_hdl->done,
+> > > +
+> 	remaining_jiffies);
+> >
+> > [ ... ]
+> >
+> > > +void se_if_rx_callback(struct mbox_client *mbox_cl, void *msg) {
+> > > +	struct se_clbk_handle *se_clbk_hdl;
+> > > +	struct device *dev =3D mbox_cl->dev;
+> > > +	struct se_msg_hdr *header;
+> > > +	bool sz_mismatch =3D false;
+> > > +	struct se_if_priv *priv;
+> > > +	unsigned long flags;
+> > > +	u32 rx_msg_sz;
+> > > +
+> > > +	priv =3D dev_get_drvdata(dev);
+> > > +
+> > > +	/* The function can be called with NULL msg */
+> > > +	if (!msg) {
+> > > +		dev_err(dev, "Message is invalid\n");
+> > > +		return;
+> > > +	}
+> > > +
+> > > +	header =3D msg;
+> > > +	rx_msg_sz =3D header->size << 2;
+> >
+> > [Severity: High]
+> > Does this code safely handle mailbox errors? If the mailbox controller
+> > returns an error (like a timeout), it typically passes ERR_PTR(err) to
+> > the callback. The check for !msg allows ERR_PTR to bypass the check,
+> > which would lead to a kernel panic when msg is cast to struct
+> > se_msg_hdr and dereferenced here.
+>=20
+> Please double check this ? if yes, should use IS_ERR()
+Accepted will fix in v29.
+
+>=20
+> >
+> > > diff --git a/drivers/firmware/imx/se_ctrl.c
+> > > b/drivers/firmware/imx/se_ctrl.c new file mode 100644 index
+> > > 0000000000000..9bb59c200911b
+> > > --- /dev/null
+> > > +++ b/drivers/firmware/imx/se_ctrl.c
+> >
+> > [ ... ]
+> >
+> > > @@ -0,0 +1,417 @@
+> > > +// SPDX-License-Identifier: GPL-2.0+
+> > > +/*
+> > > + * Copyright 2026 NXP
+> > > + */
+> >
+> > [ ... ]
+> >
+> > > +static int get_se_soc_info(struct se_if_priv *priv, const struct
+> > > +se_soc_info *se_info) {
+> > > +	struct se_fw_load_info *load_fw =3D get_load_fw_instance(priv);
+> > > +	struct soc_device_attribute *attr;
+> > > +	u8 data[MAX_SOC_INFO_DATA_SZ];
+> > > +	struct ele_dev_info *s_info;
+> > > +	struct soc_device *sdev;
+> > > +	int err =3D 0;
+> > > +
+> > > +	/*
+> > > +	 * This function should be called once.
+> > > +	 * Check if the se_soc_rev is zero to continue.
+> > > +	 */
+> > > +	guard(mutex)(&var_se_info.se_var_info_lock);
+> > > +	if (var_se_info.soc_rev)
+> > > +		return err;
+> >
+> > [Severity: Medium]
+> > Will this early return prevent initialization on driver rebind? When
+> > the driver is unbound, soc_device_unregister() removes the SoC device,
+> > but the global var_se_info.soc_rev is never cleared. On a subsequent
+> > bind, a non-zero soc_rev causes an early return, bypassing
+> > soc_device_register() and leaving load_fw->imem.state uninitialized.
+> >
+> > > +
+> > > +	err =3D ele_fetch_soc_info(priv, &data);
+> >
+> > [ ... ]
+> >
+> > > +	if (FIELD_GET(DEV_GETINFO_MIN_VER_MASK, var_se_info.soc_rev))
+> > > +		attr->revision =3D devm_kasprintf(priv->dev, GFP_KERNEL,
+> "%x.%x",
+> > > +
+> 	FIELD_GET(DEV_GETINFO_MIN_VER_MASK,
+> > > +							  var_se_info.soc_rev),
+> > > +
+> 	FIELD_GET(DEV_GETINFO_MAJ_VER_MASK,
+> > > +
+> var_se_info.soc_rev));
+> >
+> > [Severity: Low]
+> > Is this string format correct? It prints MIN_VER_MASK before
+> > MAJ_VER_MASK, resulting in minor.major instead of major.minor. This
+> > might break userspace parsing expectations.
+>=20
+> Make sense, please fix it.
+>=20
+> Frank
+
+[Accepted] Will correct the order. Will fix this in v29
+
+>=20
+> >
+> > --
+> > Sashiko AI review *
+> > https://sashiko.dev/#/patchset/20260717-imx-se-if-v28-0-0a9659c7e69d@n
+> > xp.com?part=3D3
