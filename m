@@ -1,48 +1,48 @@
 Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9785C34EF0E
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 11:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F168462
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 13:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784375524; cv=none; b=A+BGGQlOFyBwZQ5/OiXbjjsOgsHJriz+70aOeP9lxAuKD7/CNwL6OFG3NO7XGW4ozbfQOVUY/VOQEpuxVpYpsJmyAinGFyF6zKeJO5ZEufUszLE/8AbIJoN3Z4kTxdH8dPYEcCVHwUWmSXmRvwUrefslJeZoPNzVruAzYvdd1v0=
+	t=1784380025; cv=none; b=tAFZVuEKSs50IaCEIHcrHgXJ14fBVoGdG1LZIHMIkccdYXNMCQndILF5+D+jHNTBn/VgA5os5Yp3rYzU2FqjEwvLF/VBEK4v6w/zrKxz0h4GdJFiXhCwMocVp68reCEMa2zLSvIs6pYDok3bpQBGBPkUS0PLT8QcGrEgL5uQ/fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784375524; c=relaxed/simple;
-	bh=3BKvuoLna1nKJyNGw4kMLw0wivdtB2XCVyn1FStQocY=;
+	s=arc-20240116; t=1784380025; c=relaxed/simple;
+	bh=RvXe9kWAuKBe1AbUROCD+9Q0OVFdFjSunwI03BAlk1k=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=pVpRmDTE4kLaUOjpYao6Zr2smqu/8qbWT+Tgap6kmPwM19gAWXBzeHbAu1SJp5+tkS6ItUhxpZeCuIvTfhsfpbtNZ/TbLWgJ9sOFW3QM9W3rj2nHHz58PxmKM1iu0nZskUPmYpqEUI7EyB7xUFEqREm4wnGdhLe77KN9b55EWP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=Ko9GfJ+W; arc=none smtp.client-ip=185.67.36.65
+	 Content-Type:MIME-Version; b=jEndBqmgzxF0pmIJqdh3UDY5OoU3rlSP+BJsTLQpZdF3twlCXfFDxIm9Tate/2UxupCVPuXwgOJljqzu5xqib45plcQviNe9/bNiRGroImDrmui0+hL1kYGdLG4Mm8FpaCIBhzTSxQrLdXIRSFrSQ0M3EPRO68So4xQJ/VWuCqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=hNRLRGOg; arc=none smtp.client-ip=185.67.36.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="Ko9GfJ+W"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="hNRLRGOg"
 Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 4837B240027
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 13:51:59 +0200 (CEST)
+	by mout01.posteo.de (Postfix) with ESMTPS id EDF2D240027
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 15:07:00 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1784375519;
-	bh=4qH+iKLr193cZCGI6LCKp71Db0dF7o7zMoNy6fgbDrQ=;
+	s=1984.8680eb; t=1784380020;
+	bh=zoR/07cNipfqPG7Komw+d9XvzKJGNdClqZIvS2Va2W4=;
 	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
 	 MIME-Version:OpenPGP:From;
-	b=Ko9GfJ+W5BjqT39NNzwIXAaeAjy4R19aX8NFsUldjbyYE2OrwoCYOKdag5U6zM6gQ
-	 wYTLpDl8wn8Iwo48CLuop8+4u/OWvkGzMKLM1b0uNKuzRSgujcpXoCu5B60SjXTJMB
-	 JdJ5GMZssD2bJKkQY1HnbuZpYNJB841ePo1JFYk3w7GoqPKeW0LQLKFxqTBv9n8DzB
-	 BScUnMHo8WTxUr8u+gkLCWOV60ldTtRinH/r2hfqaLBEb7b2zZscnm9Zz+1L9fqXni
-	 KrCYT/heYX4I5/HsK0E/msUpm72fxfOa/l/gaN/CsDK0C3WCZKrYcYxPfdEtmJCw4G
-	 0CVpjSPzAOP0g==
+	b=hNRLRGOgKxttHK+/BrDBgLUPJYI6Q/0umeNNix3RJf1IAlTkurwdPb+k2W7n6oD0u
+	 h9qBRjc0Ne5oWvKlvI/J3kMlIkppLD2R3RAcJO0YZTEO+x2oFqNVXoCnwb8faAxbsV
+	 ZezGXujq6qo0SUjfeElB6unLMzqaXp722u0mblPSw2MA/yygjdpTpYCNaRmJNUxIdD
+	 /WNXViYRNSuqZba6uCEOkcD3Epht0bXDJ0jSqrptJiUBL3vx5VchCYPE3/x+/ppHyM
+	 nyzjeEcpueNaCvDovSFAI3vKbVgq9Me3TnMX0uh1t+Y+VVKPcFnSRUrJB9ULFX9wlY
+	 +YTb9QPTfzkGw==
 Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4h2Q9p55CVz9rxP;
-	Sat, 18 Jul 2026 13:51:58 +0200 (CEST)
-Message-ID: <ca990170ca95c0c513c8ed114faf96bebaca9add.camel@posteo.de>
-Subject: Re: [PATCH 3/4] rust: serdev: document `PrivateData::active`
+	by submission (posteo.de) with ESMTPSA id 4h2RrN3lRGz6tvs;
+	Sat, 18 Jul 2026 15:07:00 +0200 (CEST)
+Message-ID: <277c33cf5cbc5f2f067ab24c174d6c60bf8054e7.camel@posteo.de>
+Subject: Re: [PATCH v2 2/4] rust: serdev: mark small functions as `#[inline]`
 From: Markus Probst <markus.probst@posteo.de>
 To: sashiko-reviews@lists.linux.dev
 Cc: ojeda@kernel.org
-Date: Sat, 18 Jul 2026 11:51:59 +0000
-In-Reply-To: <20260718114652.4C1DD1F000E9@smtp.kernel.org>
-References: <20260718-rust_serdev_fixes-v1-0-35433b6dce0f@posteo.de>
-	 <20260718-rust_serdev_fixes-v1-3-35433b6dce0f@posteo.de>
-	 <20260718114652.4C1DD1F000E9@smtp.kernel.org>
+Date: Sat, 18 Jul 2026 13:07:00 +0000
+In-Reply-To: <20260718125438.ADE381F000E9@smtp.kernel.org>
+References: <20260718-rust_serdev_fixes-v2-0-e5214e03de13@posteo.de>
+	 <20260718-rust_serdev_fixes-v2-2-e5214e03de13@posteo.de>
+	 <20260718125438.ADE381F000E9@smtp.kernel.org>
 Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  keydata=mQINBGiDvXgBEADAXUceKafpl46S35UmDh2wRvvx+UfZbcTjeQOlSwKP7YVJ4JOZrVs93
  qReNLkOWguIqPBxR9blQ4nyYrqSCV+MMw/3ifyXIm6Pw2YRUDg+WTEOjTixRCoWDgUj1nOsvJ9tVA
@@ -88,7 +88,7 @@ Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  dQNGrZ91M9nlIBKw8Y7c7xZ4098qX2b8JX/CxD+gC1r4C8vuA3GkhFLx+KlkON7LyiJPkrePp6Qky
  jfGillcaQOqFZ3WwVqyzG1BUfTow==
 Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-00en9WidJ4JdiapFaOMD"
+	protocol="application/pgp-signature"; boundary="=-DX3R9NO/T8D8x2K888+Q"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -98,170 +98,129 @@ MIME-Version: 1.0
 OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
 
---=-00en9WidJ4JdiapFaOMD
+--=-DX3R9NO/T8D8x2K888+Q
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2026-07-18 at 11:46 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+On Sat, 2026-07-18 at 12:54 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
 >=20
-> New issues:
-> - [Low] Documentation incorrectly references a non-existent trait method =
-`Driver::receive_buf`.
-> - [Low] Intra-doc link from a public struct to a private associated item.
-> - [Low] Documentation uses the non-standard term 'receival'.
->=20
 > Pre-existing issues:
-> - [High] Use-After-Free and NULL pointer dereference in `receive_buf_call=
-back` during device probe failure.
+> - [Low] This problem wasn't introduced by this patch, but the patch incom=
+pletely applies the `#[inline]` attribute, missing several small and forwar=
+ding functions in the same module, violating the Rust subsystem guide.
 > --
 >=20
-> --- Patch [3]: [PATCH 3/4] rust: serdev: document `PrivateData::active` -=
---
-> commit d30c5d18f4ae9af1ec1875509c50169875963fd4
+> --- Patch [2]: [PATCH v2 2/4] rust: serdev: mark small functions as `#[in=
+line]` ---
+> commit 51b61be6e88e2f99505c9aba8afbad7558d43605
 > Author: Markus Probst <markus.probst@posteo.de>
-> rust: serdev: document PrivateData::active
 >=20
-> This commit adds documentation comments for the active mutex in PrivateDa=
-ta,
-> explaining its purpose in blocking data reception during probe and drop.
+> rust: serdev: mark small functions as #[inline]
+>=20
+> This commit adds #[inline] annotations to several methods in the Device
+> struct to allow cross-crate inlining for optimization.
 >=20
 > Link: https://lore.kernel.org/rust-for-linux/DK0SX3P5K1J6.1OV4ETJMXW83R@g=
 aryguo.net/
 >=20
 > > diff --git a/rust/kernel/serdev.rs b/rust/kernel/serdev.rs
-> > index 79d61c6ceeecd..3556fe066ace8 100644
+> > index 47ca57966abfe..79d61c6ceeecd 100644
 > > --- a/rust/kernel/serdev.rs
 > > +++ b/rust/kernel/serdev.rs
-> > @@ -132,6 +132,23 @@ pub struct PrivateData<'bound, T: Driver> {
-> >      #[pin]
-> >      driver: UnsafeCell<MaybeUninit<T::Data<'bound>>>,
-> >      open: UnsafeCell<bool>,
-> > +    /// Whether `receive_buf_callback` is allowed to call `Driver::rec=
-eive_buf`.
+>=20
+> [ ... ]
+>=20
+> > @@ -547,6 +554,7 @@ pub fn write_flush(&self) {
+> >      /// Wait for the data to be sent.
+> >      ///
+> >      /// After this function, the write buffer of the controller should=
+ be empty.
+> > +    #[inline]
+> >      pub fn wait_until_sent(&self, timeout: Timeout) {
+> >          // SAFETY: `self.as_raw()` is guaranteed to be a pointer to a =
+valid `serdev_device`.
+> >          unsafe { bindings::serdev_device_wait_until_sent(self.as_raw()=
+, timeout.into_jiffies()) };
 >=20
 > [Severity: Low]
-> Is the reference to Driver::receive_buf correct here? The Driver trait
-> seems to implement a method named receive rather than receive_buf.
-True.
-
+> This is a pre-existing issue, but since this commit aims to mark small
+> functions as inline, could we also add the attribute to the other forward=
+ing
+> methods in this module?
 >=20
-> > +    ///
-> > +    /// If locked, the receive_buf_callback will be blocked on data re=
-ceival.
+> The Rust subsystem guidelines mandate that small or forwarding functions =
+in
+> abstractions should be annotated with #[inline].
 >=20
-> [Severity: Low]
-> This isn't a bug, but should "receival" be replaced with "reception"?
-Shouldn't matter that much, but might be a better fit.
-
+> For example, Timeout::into_jiffies() is quite small:
 >=20
-> > +    /// This is the case while the driver is being probed or while [`P=
-rivateData`] is being dropped.
-> > +    /// This is necessary, because we need to open the serdev device b=
-efore the driver has been
-> > +    /// probed in order to allow it to be configured, which allows [`A=
-dapter::receive_buf_callback`]
->=20
-> [Severity: Low]
-> Can this intra-doc link cause build warnings under -Dwarnings?
-> Adapter::receive_buf_callback appears to be an implicitly private functio=
-n.
-There is no clippy warning at least.
-
->=20
-> > +    /// to be called. Thus we need to block data until probe completes=
- and the driver data becomes
-> > +    /// initialized.
-> > +    ///
-> > +    /// If unlocked and true, the receive_buf_callback will forward th=
-e data to
-> > +    /// `Driver::receive_buf`. This is the normal state of operation.
-> > +    ///
-> > +    /// If unlocked and false, the receive_buf_callback will throw awa=
-y the data.
-> > +    /// This is only the case, if the serdev device is open and
-> > +    /// - the driver returned an error in probe
->=20
-> [Severity: High]
-> This is a pre-existing issue, but could this sequence lead to a use-after=
--free
-> or a null pointer dereference if T::probe fails?
->=20
-> If T::probe fails, the probe_callback executes the ScopeGuard cleanup,
-> which calls drvdata_obtain and frees the PrivateData allocation:
->=20
-> rust/kernel/serdev.rs:probe_callback() {
->     ...
->     let private_data =3D ScopeGuard::new_with_data(private_data, |_| {
->         drop(unsafe { sdev.as_ref().drvdata_obtain::<PrivateData<'_, T>>(=
-) });
->     });
->     // ...
->     to_result(unsafe { bindings::serdev_device_open(sdev.as_raw()) })?;
->     // ...
->     let data =3D T::probe(sdev, info);
->     // ...
-> }
->=20
-> However, serdev_device_close is only called inside the Drop implementatio=
-n
-> of PrivateData:
->=20
-> rust/kernel/serdev.rs:PrivateData::drop() {
->     ...
->     if unsafe { *self.open.get() } {
->         unsafe { bindings::serdev_device_close(self.sdev.as_raw()) };
+> rust/kernel/serdev.rs:Timeout::into_jiffies()
+>     fn into_jiffies(self) -> isize {
+>         match self {
+>             Self::Jiffies(value) =3D> value.get().try_into().unwrap_or_de=
+fault(),
+>             Self::Milliseconds(value) =3D> {
+>                 msecs_to_jiffies(value.get()).try_into().unwrap_or_defaul=
+t()
+>             }
+>             Self::Max =3D> 0,
+>         }
 >     }
-> }
->=20
-> Because this close happens after the drvdata pointer is cleared, the C
-> serdev subsystem could asynchronously invoke receive_buf_callback while
-> the memory is being destroyed.
->=20
-> Would receive_buf_callback then fetch a null pointer from drvdata_borrow,
-> or access the Mutex memory after PrivateData is freed if it was already
-> waiting on the active Mutex?
-
-No, because active is set to false. Then serdev_device_close is called
-which should synchronize the receive_buf_callback.
+This will be removed in the same patch series.
 
 >=20
-> rust/kernel/serdev.rs:receive_buf_callback() {
->     ...
->     let private_data =3D unsafe { sdev.as_ref().drvdata_borrow::<PrivateD=
-ata<'_, T>>() };
->     let active =3D private_data.active.lock();
->     ...
-> }
+> And the forwarding trait methods at the end of the file are also missing =
+it:
 >=20
-> > +    /// or
-> > +    /// - the driver data already has been dropped, because it was unb=
-ound.
-> >      #[pin]
-> >      active: Mutex<bool>,
-> >  }
+> rust/kernel/serdev.rs:AlwaysRefCounted
+>     fn inc_ref(&self) {
+>         self.as_ref().inc_ref();
+>     }
+>=20
+>     unsafe fn dec_ref(obj: NonNull<Self>) {
+>         // SAFETY: The safety requirements guarantee that the refcount is=
+ non-zero.
+>         unsafe { bindings::serdev_device_put(obj.cast().as_ptr()) }
+>     }
+>=20
+> rust/kernel/serdev.rs:AsRef
+>     fn as_ref(&self) -> &device::Device<Ctx> {
+>         // SAFETY: By the type invariant of `Self`, `self.as_raw()` is a =
+pointer to a valid
+>         // `struct serdev_device`.
+>         let dev =3D unsafe { &raw mut (*self.as_raw()).dev };
+>=20
+>         // SAFETY: `dev` points to a valid `struct device`.
+>         unsafe { device::Device::from_raw(dev) }
+>     }
+>=20
+> Would it make sense to update these functions in a subsequent patch, or
+> include them here to ensure the module fully complies with the guidelines=
+?
+Those are trait implements. I haven't seen inline to be used on those.
 
---=-00en9WidJ4JdiapFaOMD
+--=-DX3R9NO/T8D8x2K888+Q
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmpbaN4bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSLWoQAKzYDZgnfwf1W9Xdgo9u
-rl0gqyrMWgQh5iW6rsV6+7G5bG2E0RTNy8p+E7+IyqbmlxRkS/tO0kvTz2xj7xTm
-ezUdcF9DbK44jjWInbsv1hxkqCfKtC9oWGZ5FxAAwNNxiy5nMNxloe14yozbV+IW
-n0QLBsmcp01PR+rQiqCUWkQu1IpPSZnXdkIUqy08VzdVC6LD7raniSsm3sEF9sh+
-xE/YkXCzQf+Bpoa2o9YTtpVipXJTsa7tEjOB723RD+XHo+quycJTdDU7BjCuUh/P
-+bZ4Jbto5cI4NYKsRmXAmagHVzyxIU1jGmz2O4AZG0nhQAPQY+pjVjkHUN9qEnmm
-zPup3o6hutJ8HQcTAvL6AwYCCH1yVf/enpxyFQ6RqmO9qgecSkNOZAa+neZVqfzd
-kplwnczTLbB5sS+H7rt31b7goM0zFfsJMVMzXumCMNdGUnBB66yMudPwHg+p1WoV
-EIbM9/cQkeUFf0hyFvZa7CLmhcQ9yAYWkQ4iFCQCG/onHzLnUqORCGaD2VsUpg+o
-Zboz8U+ZVgfGGoX5xuZzKLpRN0FnZrJndcQB3O5XPJCYVQg1dZ6XuhlWBAZ8V8+c
-BD4WIlDKmJIiZjDTnmoJDoJPbXyyojGsb+f1evALidWBOWp4FcUNtoQZyfdpgIDB
-W9Df/eNhD19c4nfSmn0b8+nH
-=9nix
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmpbem8bFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSLOQP/isEHeCTj64NEysRKVeo
+Zk4AtIKAv+PlZne5NVJCCYh3+kuGnf1eX0xL6k2ek1e77JTWsV+iSIsow/8TNOmq
+6+PH613dHFABgSBSeGBbR8BYTG0EAJLaRZVfNISWXPg8QZLXCTQ+PQ8OQOz1VbaM
+T/9doUFyn0jL/BdOoGNmPq8QoF4hJopvHR4m0oJn7MTsp0sY9LNpLJFHLdPQmg0w
+HeK9J5MS4AErN0xz8bOwbkDFZOoDIfFATvQxcbUjf5MaFj78bter2ZzyUtMzASW1
+zIZwDz37NCK6+filz12KbqNr2trzquVFTCWKXXyneeInd4D/8zKQYdsPudYmhK0T
+qIHrWW+aXwhqs1JcYURAY4xDh3YIwA1tLjAeYlOztcoYXDjsbWipUh9uAQOszFpu
+kqAO3Cc5ld02uEEprsDS9kdzW9QtT0Zlip6FKB980yOmw8HZzl7C0FC5Pob94o5J
+el6249EEwRCX+SCKDFcdFfe/5VjSoETkrkQ/khCZnJGI1SDFPM0qYt82IE5Llfk7
+0tsalFQ24rjD83N2gIso6oIQll+OCuaqQJQR+aG6nc75ERCB9t8SGII79qziU7FI
+BJ6GB3XgdqQmKJtZuZODjzJIdkl1GFgp9x/ruzOrP+TIRLUAqjxNn1Eclez4stVZ
+Ioeygu9NSRfQ8qdmqHTnLf8/
+=d0SF
 -----END PGP SIGNATURE-----
 
---=-00en9WidJ4JdiapFaOMD--
+--=-DX3R9NO/T8D8x2K888+Q--
