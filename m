@@ -1,409 +1,234 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011033.outbound.protection.outlook.com [40.107.130.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBAA283FD9;
-	Sat, 18 Jul 2026 03:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784343883; cv=fail; b=rdQMMqmETMjIxZHksEtL3/HsZROHnJ5uzAsQt4DFvcqzKzNjEcKFhfFCAPq1GBul+4uHBnJGjOBrQSpoPqpBxq/97+xpTEM0NHcWGGhpQr1QXAYpirkuGHBKTkXjWezogOkg6m35OyQYDnqfhJ7ykL5DUOkUvFqm/bkwYZK2ngI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784343883; c=relaxed/simple;
-	bh=OWADNJe7Ux8QnoIf5WFpazUPwUKrVXlZwdKo2kA0zfM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=XmIHVKprPnQkY+59sSsszP7ao6/JBUlP5URJhtaKphWUBf/Fm/+Fd5INXwrnKIIVS8WRJAAKMmEEXQRf8W66KOHkxUI926YlIShtsCvdF0kBg33l590htXdKu1bNJ8qLMZAztmbI6FwkGiSWRuuLL87UhfgnK+dMVDkgLZzGpWM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YZcp5pvV; arc=fail smtp.client-ip=40.107.130.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410481940B0
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 03:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784345596; cv=none; b=rIboAPs+JE1/OcHjipT9W7taCFasOA9XXsSaiv7tQ6o6wfajvefFbBX8+jzTXQJWnuGIZpeMkqj42Kv50e9oplLxblpVsr9uE5dRw+pZTZOqjIEL/wiDn0+Az++ibojfuafP+dg9IBo2g/6WIKCR10ee4ZxNjiQtBTKn09ud2M0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784345596; c=relaxed/simple;
+	bh=kaqjCteR81ythu/pDBmenR0kkU7QwNiyr7zQkyHZO5A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YiH99s/+0W/wSIGrizHaQtCUDHwD2l490LNB4Vvtn3HkFIY+xn5ut0mtoLiLC2V3qAGN90DmWJfSY/R0OmpUtRccYD0CLSsc1PV+v6YxEXMhiua8KCKjKcABTTbVrS0tvLWrbC729V2PNHXG94Aw94hK5L3Mn3S312JF58jF0BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kAOY3n0F; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YZcp5pvV"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=p6qe6PRlk4ihFy46PO+P5IPysbQnzuM4YMlwbUX8rci1et8XKJeh4m7Wpmg0jTMk/+odgBnYbTvzOyUpo3vHEXBcHnVPstfbz6TqjGm7ktBBqqBt1ZI/QG8a2ldp3vgbF5IIBRmuYiZH5dKN4B60hESzRCmWyIRQN/GquGwKxtNKL2e0AdC+0cePyA6RslIQAqwADdHjS42NZVFleCTA6lmBUgi2doALzYgmfYQs93f4MWOl4pcL6yLWUb/BXUyxz8qInyBIpwrA6JTYD1/43TdXENBtrOGAlRq5LVAa77OQCM+qVJ5hHq3k19o6+DkvU5+Ab9vNwShsrGcuzJq5Ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TvPDpH3pDAy8UPS0CmlV9h7+bDloOLR4iSB2BzUcyTE=;
- b=d4IZaauGZnGCZPigg8/wocQsGxAgegcDME6A5oWTGD0g3Na02ToHGeV064WomoxKpWpkCLF/Z/rPuG+iLbGzfpgKcNtEyHLj8vwIl+RNTYC6Fl/fEW7MzAFLiss6i9WULICNO0tj6eYPfKWpWjN6QnKIpXtwd1qtq9yezv64GWBiVkt7TI9uFoEkMBy4nb1UhGL974x2VsM4roh+KVhNd/ZCBRVFA5EgTcJmnqKDtDlqa9wsYjts7Y9ZYiD2PNzMJI4Qo7v3S3y6mbYyOOhHzvymSz6G119EOaIr0k6ZFVfV0CrCm1/tOyHpw4SQpW4fpNW1A4DSPr9EPSEastyuPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TvPDpH3pDAy8UPS0CmlV9h7+bDloOLR4iSB2BzUcyTE=;
- b=YZcp5pvV7EfMPBfduRVtH7CwpWB1CXPBnyLmVlG63IEdHA5AK6kj1GLI+OSxvx0Ug4xjml2VuiZ46Pe0apIe2VG1Wvvr5i1/xkLl+fSvBWI0UOr/ZoYU5NpGdlE3r0JjfMJbIr6hWK0vP0iVvQlJTJMrZBRuXNdODqWdt62xYzFc5Ga6amjNHuBjcOUnvsed1p0DGPZwy535rJwQuYQx8hACntq6cUHv4vro8m2ISujpmcpv7RnoX8As5zJo3rTXXqWCbAuiW+UACagp6PY+H87yNtzyyWc73qygyXBvRqYY2V6Qic1eInRIsGktW05VEDPNyp9T4+VPPaqNl+ewKw==
-Received: from GV2PR04MB12271.eurprd04.prod.outlook.com (2603:10a6:150:32a::5)
- by VI0PR04MB10300.eurprd04.prod.outlook.com (2603:10a6:800:218::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Sat, 18 Jul
- 2026 03:04:33 +0000
-Received: from GV2PR04MB12271.eurprd04.prod.outlook.com
- ([fe80::3b38:4ed4:2164:c035]) by GV2PR04MB12271.eurprd04.prod.outlook.com
- ([fe80::3b38:4ed4:2164:c035%5]) with mapi id 15.21.0223.012; Sat, 18 Jul 2026
- 03:04:32 +0000
-From: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>
-To: "Frank Li (OSS)" <frank.li@oss.nxp.com>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>
-CC: "Pankaj Gupta (OSS)" <pankaj.gupta@oss.nxp.com>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>
-Subject: RE: [PATCH v28 3/7] firmware: imx: add driver for NXP EdgeLock
- Enclave
-Thread-Topic: [PATCH v28 3/7] firmware: imx: add driver for NXP EdgeLock
- Enclave
-Thread-Index: AQHdFdrMrQ2/7lZrskWtBxUe/LrG/bZxjfOAgABUUoCAAAwxAA==
-Date: Sat, 18 Jul 2026 03:04:32 +0000
-Message-ID:
- <GV2PR04MB122710DD95A0AEC916818F4AC95C52@GV2PR04MB12271.eurprd04.prod.outlook.com>
-References: <20260717-imx-se-if-v28-0-0a9659c7e69d@nxp.com>
- <20260717-imx-se-if-v28-3-0a9659c7e69d@nxp.com>
- <20260717111009.B55531F000E9@smtp.kernel.org> <alpUTTH1VA9hvQva@SMW015318>
-In-Reply-To: <alpUTTH1VA9hvQva@SMW015318>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR04MB12271:EE_|VI0PR04MB10300:EE_
-x-ms-office365-filtering-correlation-id: 4adbabdf-a2f8-4cad-0e8c-08dee4794aa2
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|23010399003|376014|19092799006|1800799024|38070700021|13003099007|10067099003|6133799003|4143699003|56012099006|5023799004|11063799006|3023799007|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- MjJ+QnShJ748ufcSWlE5HMIOyC+rh95hYh58/Y9ovbaefBavgbEPHIZGIwd/VXoE9rvvb4aDldUdUZGwxtbaPHNidyU+XeskWsFPOICWop2kmYRlKHg3OgA6t4eKuvFidx13ncvhzfO+me2K7eHO114Wn/SP4AMAaV6PqIblpjCY8vNoefVnZCvt/j41jA4ce2viocEzQU6AtgySLjcpoZv2ahB+Bu/WQ2FDoGlk6HbGioNsrT7yQijAd4tWDeXomUTUIlx9eF2VDBMjY523WkxCBJJABxoVonCk9th37ljOR5Qwhq4Ua8XHAzugTV/WD+HXQhz0SLtOsTLP+fQFF9QN2Gx36E8k8yh3QRJiOO1CffeYDAPf0xdaL1+s6B84DIE4gQQQAYW3vhhBRw/6yfsjmMbd52JLbh0F2+TpzRjKg0LNWf6Mczh5S6IHswFEyXm/RF6wYHL6Fi/Z7ZOBOMkzCqsyGFTyh0ucUGV3aEVOgo3nPXz/Knnohk6O0usWGkFini0NTeiPQQcLyKGWTnfHiyOdHuTL6nLrOJ/yiYMiTWug7LkBPWyPGdvTmJDNDFsC78w8RFIMAsxlg41d1Mn12TV2dhCXoD+43reyarOTQAPnW3R2ryu4f9fbzLPKV4hqCEM/hZZgrvGQq2/ZIsfH4LRe6PchD66xkewIDZE=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12271.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(19092799006)(1800799024)(38070700021)(13003099007)(10067099003)(6133799003)(4143699003)(56012099006)(5023799004)(11063799006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?X+Qp0iqM4Y3YC9gTZJyUiu8WGisBfDBRSbPmzUcnhWOfDUW7zOEJlLDhtNSO?=
- =?us-ascii?Q?45hPLxEha5BR8dOc4hEg34/8baM0V7HMt7ysnuTj0NCab2LMt7LDlDcsAg3Q?=
- =?us-ascii?Q?B/+WYugTxDceNVQX3CLABMdbfIxawnD4QN0h/mC1ADD9xqjZAxKeDgy2H+3x?=
- =?us-ascii?Q?uIV5kolc43KDbczkSPXIoV5hig+SO6/kwHzp7vY0SoSZ0PgUt8ytRrOwi99W?=
- =?us-ascii?Q?uCNTZemvxIrxUzQdVNH1cs9VqD4HxrvG6FwMB70Z98AbHUWQjtn5X3Jwjmz0?=
- =?us-ascii?Q?VvTa8xxOE1A33F27YdavkraqhVHejso3eEgLtoS2oCugc/grEOB8mJH6XRyV?=
- =?us-ascii?Q?QF81SMtzOuNDBuvNpF6pCdR/tpX2hDFvI5hYD50AIAOD+oKogJ3LRHfmzUM6?=
- =?us-ascii?Q?O7iEP49BVeVJupOjizu7zt7tNL1ijHOhQiy0hE9ebaHiV+7PZm3qZEVoELeu?=
- =?us-ascii?Q?HSDCP4zVpCuaJ/bt9sy5DrBvKGNMCWtFunyXStnd84TC6a3b4qf3axXZAw82?=
- =?us-ascii?Q?hkddAgvfoQvyoeNpJEcDCS093OlSbrmxsx6oDOqZX96WoNvb0Y+AAmIbfS52?=
- =?us-ascii?Q?5kKD/TP2ZSZJSDNFUSvIh/iSFeDy7YX3ulqII43pgwPZ97bapz0OqmAgTSEZ?=
- =?us-ascii?Q?XUu8aFnb465CqQFq8zswJTr4n3QOYJhiTCxg8DixvXumYQRQuGE1EfZK1mmC?=
- =?us-ascii?Q?mNPfmgbs+ER/dpo7m3QnlOe4fqsP2xJQ/0MeJcsOsGY7rpdJF1YVLezYINt2?=
- =?us-ascii?Q?XwHTZh43itVUe/70F1/ABlstqfNJnD/L1kIiv1tzj5SDqUnbtv6sn+nepdhu?=
- =?us-ascii?Q?SHK9ejLgoLzpAXVwcxStDncBJwjaJgMq1z7kDN3cedFlKo9mmsmKlYGSgAnw?=
- =?us-ascii?Q?9LoYvY6cj8d1ODq/B+qF0GGtA7bQUAMU3yoBVOrCZQ3IkczKwxmd/C9RStSQ?=
- =?us-ascii?Q?iOrqRm/uipuvxXNLKPmW5xKYVWryfnMrxvjbQ1uClME+hsSTgz8NMmqNCNEa?=
- =?us-ascii?Q?WcwatE7LAmoaB6zN1E01iii+gv0OhVUQ8HtgCYClt4V/dzDVCCiWPyGWbl8W?=
- =?us-ascii?Q?R5+yo/3y0gx9Lp24RlQoGmqbMV+I021pzUFuaImN3F7HStKPaxpEXf/7fEF+?=
- =?us-ascii?Q?VwAv14OKEvrf8mrRAxES0hqsMsLqk2hZ8NEeo27DogGqii1V6R5VK6k1wQpP?=
- =?us-ascii?Q?gLm8946b2fzsaSRiCWKrkScWh1ScV/9PkE89eEXKdcNWFUr9GIK/OpbEDb0G?=
- =?us-ascii?Q?GgBdtcjfCEA4FjoWFfnZ2cQ5OUyP1hpkspGdaqWF84RyW7oCA3mZqOeyiVM3?=
- =?us-ascii?Q?lDwIwa8d3+oLbHGjOpPAJ8i/TkzrZHizF6wfY+KJAt2gOhLTsdrVSNptAvCp?=
- =?us-ascii?Q?ZlESxHEf1CykDXgzbanfu0eMKvszFQZ4N7b16yLJuXHNTI+gdA/zvxU838cC?=
- =?us-ascii?Q?pl3ab5W9/wOknWl0bQEEYfCKYKLAtXbBBgaxm9Dqk332f1MIdqZJ8+A36sNq?=
- =?us-ascii?Q?kiEnm/vL2+DijXMON9PXogp/icloh8XlgouW4H4rz5eWGzIVWalDWpwu4VPZ?=
- =?us-ascii?Q?GAYYoBYsPavmeFcqCV9vKKFYpNXd3QvzhvNgbEhbIZehUr5nH1gWxQiRYkC2?=
- =?us-ascii?Q?cx+IPZHI8WuofQymtEpoEM66EwnYv73+9tNfvFHr9ogA0/rlBhXBXHfVoP3L?=
- =?us-ascii?Q?+MBH4sFnWugorX9iOtQo+wN7JgkVMiUtOZ8gQsnV0+Okh8NKqJXWgrSSp71F?=
- =?us-ascii?Q?cIy6Ad4bvg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kAOY3n0F"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49545ba3d4eso10537825e9.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 17 Jul 2026 20:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1784345593; x=1784950393; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0oED1FrZVUrTl2AQuQZdpXVSq6u4FM7QrMIHjereqjI=;
+        b=kAOY3n0FdTCRo7yQtDH5pXU0nPpMVWLFxvFV5hkMcZ7rt9+5kMKwiIt5lvxcQudqC0
+         J7mHhVVto+D/K8gZHEPp/z29+1jmbz/iEK/EIIiC2xhImTfrr+8ZueNxKzlCXrM7+ZU0
+         8p2PiF0cFG77jwSfmTJwtu/H5sPSSDtVn3jo/omA2hCJbTr9KeG8A0yDMKkwtc3c6dYo
+         aI+YjQJrP9WCQhSc1A9DOVeHeJsrU9Utgr4eL8W/xsDjSXAMyY1n+6vZvv8jx388VOeE
+         GzzIk5L1D5zt1dn+XroH1C0SkhXuYAT9sp3KvemDiqFqYBc5rL0/uEVL5jANLxJirEMp
+         tpGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784345593; x=1784950393;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0oED1FrZVUrTl2AQuQZdpXVSq6u4FM7QrMIHjereqjI=;
+        b=IXoLtS++skK8lK6USjHxgpwW/7VejQtBE9/BijsOkN5DdJCMkCz2ia/8dmFjtqQU5+
+         waNnNSrBrbVM58pnccatj2hCVDY6d4Asku4xfYOgrQAM5tPRTDS82BzFfQeDDjZUfL+u
+         LbBvIM74Iqu84kF174EPHjVkDKbn0OvFa2j9Q1MrxjqRVDClpQqpHEVULGxN5ohDJEoH
+         FRWV7b83bwxLocKm1l1F4a7VrhNKmgpJ+/90xhNXRY1GpCHhahuqQ6rzxkjXmwWZLlZc
+         9GLbxHutKqJdraY/8XxHPD4Lcy8d/OoHfzG0RhcobDwzohfwPdAm7EGQ4GVbYAO7FxFY
+         Lr5g==
+X-Gm-Message-State: AOJu0YwzveK5CVENtJyz/7IxjVtWPgji1F0c7FPa4HgsFFWsJOiapVs/
+	sJRiA2RwP4kTxtfZq/vIRo2gfWwYRQf2aBfMj6cGu/j+2DdBfrRik/NNYEKOX8kb1W7bowkSgwu
+	aXFYleZY=
+X-Gm-Gg: AfdE7clCz3HIUNOitI8zqFzcGtTM8I+JykKLYM7coBTIedNq2T34I2+YWbENWcCqPS1
+	RY4nxi/mQFodTg9kqdr1qarDDT7xFFuCZXqxVyZbMXHsMjR7s0QgXi8JFXMQvXywlsVB+Zya5L6
+	1ohHlRaZDLO8NhqrLJab/xW0F/l3sNl4TW16UkwicAM0vbJLxx6CI5w20xNCKPi+00qDHNwfA2s
+	Cj6y4EAeX12NivUF9FdSHJ64TlqmiEydeBpQhEWCQ+y555/L5VVexzEQ6TlfPyqoHFKQEjdaFkE
+	43UxpPqTt+moUT/hoRK3u16wbGi29+nAsH1GDEqO1Cn/MYDYUaNuRVbAALRIF1FUpMzgW8hdboW
+	2zcU+08+7ClLRpjL17oUJqf5AUxGmf6NJkzZhqF3pYFXaDyY9v6y0Vij8x7DuBM4KnZ6CUpQqcO
+	zYtHOLWv6y7IpBSndFgR+6U5Y=
+X-Received: by 2002:a05:600c:3512:b0:493:cfe8:5b36 with SMTP id 5b1f17b1804b1-4954a3eec4bmr60734855e9.8.1784345593339;
+        Fri, 17 Jul 2026 20:33:13 -0700 (PDT)
+Received: from [192.168.0.35] ([109.76.77.100])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2e8529sm91284285e9.11.2026.07.17.20.33.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jul 2026 20:33:12 -0700 (PDT)
+Message-ID: <e8e9c2c8-b0a5-446b-860c-a693f33a03c5@linaro.org>
+Date: Sat, 18 Jul 2026 04:33:11 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12271.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4adbabdf-a2f8-4cad-0e8c-08dee4794aa2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jul 2026 03:04:32.6867
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Jju7tHcTyPDg4w2cZ0rXLSN22Zy6RtFosWLzzKQ5GbW/pUEpylrbF1jGhAY/gG23105Jzd3FzI6rok1p1564xA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+To: sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, linux-phy@lists.infradead.org,
+ olteanv@gmail.com, devicetree@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org, media-ci@linuxtv.org, vkoul@kernel.org
+References: <20260718-x1e-csi2-phy-v10-0-5720a7888953@linaro.org>
+ <20260718-x1e-csi2-phy-v10-2-5720a7888953@linaro.org>
+ <20260718025109.EED601F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20260718025109.EED601F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-=20
-> On Fri, Jul 17, 2026 at 11:10:09AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 6 potential is=
-sue(s)
-> to consider:
-> > - [High] The mailbox receive callback `se_if_rx_callback` dereferences =
-`msg`
-> without checking `IS_ERR()`, leading to a kernel panic if the mailbox con=
-troller
-> returns an error.
-> > - [High] `ele_msg_rcv()` uses `MAX_SCHEDULE_TIMEOUT` causing an infinit=
-e
-> uninterruptible wait and subsystem deadlock if the firmware hangs.
-> > - [Medium] Global state `var_se_info.soc_rev` prevents SoC device
-> registration and per-device IMEM state initialization on driver rebind or
-> secondary device instances.
-> > - [Medium] Casting a 1-byte aligned stack array to `struct ele_dev_info=
-` and
-> `u32` pointers causes undefined behavior and potential unaligned memory
-> access faults.
-> > - [Medium] The driver fails to expose the file descriptor interfaces cl=
-aimed in
-> the commit message and Kconfig.
-> > - [Low] The SoC revision is incorrectly formatted as minor.major instea=
-d of
-> major.minor.
-> > --
-> >
-> > --- Patch [3]: [PATCH v28 3/7] firmware: imx: add driver for NXP
-> > EdgeLock Enclave --- commit a06a0c9a5464457c1ae77bb60350c41fff331ed9
-> > Author: Pankaj Gupta <pankaj.gupta@nxp.com>
-> > Subject: firmware: imx: add driver for NXP EdgeLock Enclave
-> >
-> > Add MU-based communication interface for secure enclave.
-> > The secure enclave FW communicates with Linux over single or multiple
-> > dedicated messaging unit(MU) based interface(s).
-> >
-> > Link:
-> > https://sashiko.dev/#/patchset/20260715-imx-se-if-v27-0-bb7c45952f06@n
-> > xp.com?part=3D3
-> >
-> > > diff --git a/drivers/firmware/imx/Kconfig
-> > > b/drivers/firmware/imx/Kconfig index 127ad752acf86..e3cb7f965e70e
-> > > 100644
-> > > --- a/drivers/firmware/imx/Kconfig
-> > > +++ b/drivers/firmware/imx/Kconfig
-> >
-> > [ ... ]
-> >
-> > > @@ -55,3 +55,16 @@ config IMX_SCMI_MISC_DRV
-> > >  	  core that could provide misc functions such as board control.
-> > >
-> > >  	  This driver can also be built as a module.
-> > > +
-> > > +config IMX_SEC_ENCLAVE
-> > > +	tristate "i.MX Embedded Secure Enclave - EdgeLock Enclave Firmware
-> driver."
-> > > +	depends on MAILBOX && ((IMX_MBOX && ARCH_MXC && ARM64) ||
-> COMPILE_TEST)
-> > > +	select FW_LOADER
-> > > +	default m if ARCH_MXC
-> > > +
-> > > +	help
-> > > +	  Exposes APIs supported by the iMX Secure Enclave HW IP called:
-> > > +	  - EdgeLock Enclave Firmware (for i.MX8ULP, i.MX93),
-> > > +	    like base, HSM, V2X & SHE using the SAB protocol via the shared
-> Messaging
-> > > +	    Unit. This driver exposes these interfaces via a set of file de=
-scriptors
-> > > +	    allowing to configure shared memory, send and receive messages.
-> >
-> > [Severity: Medium]
-> > Is this Kconfig description accurate? It mentions exposing interfaces
-> > via a set of file descriptors allowing to configure shared memory,
-> > send and receive messages. However, there is no character device
-> > registration or file operations implemented in this patch.
->=20
-> please check this
+On 18/07/2026 03:51, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Incorrect translation of logical to physical lanes causes register offset errors and bitwise truncation.
+> - [High] Integer truncation in division leads to potential division-by-zero panic in settle count calculation.
+> - [Low] Hardware version register read does not mask upper bits, potentially corrupting the version struct.
+> --
+> 
+> --- Patch [2]: [PATCH v10 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver ---
+> commit 3a4ef513bbeefe5185b0f08d343f98883cbe66ca
+> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
+> phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+> 
+> This commit adds a new MIPI CSI2 driver in DPHY mode initially. It supports
+> devices like "qcom,x1e80100-csi2-phy" and imports CAMSS CSI PHY init sequences.
+> 
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+>> index 0000000000000..5ac0d041b36b7
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+> 
+> [ ... ]
+> 
+>> +static void phy_qcom_mipi_csi2_hw_version_read(struct mipi_csi2phy_device *csi2phy)
+>> +{
+>> +	const struct mipi_csi2phy_device_regs *regs = csi2phy_dev_to_regs(csi2phy);
+>> +	u32 tmp;
+>> +
+>> +	writel(CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID, csi2phy->base +
+>> +	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->common_regs_offset, 6));
+>> +
+>> +	tmp = readl_relaxed(csi2phy->base +
+>> +			    CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->common_regs_offset, 12));
+>> +	csi2phy->hw_version = tmp;
+> 
+> [Severity: Low]
+> Is it possible for the hardware register to return garbage or reserved bits in
+> the upper bytes here? Since this first read is assigned directly without
+> masking (e.g., tmp & 0xFF), any upper garbage bits would remain in hw_version
+> and wouldn't be cleared by the subsequent bitwise OR operations.
 
-Patch 3/7 only adds the base firmware communication path. The
-misc-device file descriptor interface is added later in patch 5/7.=20
-Will remove the file-descriptor wording from the Kconfig help in patch 3/7.
-And add it with the miscdev patch 5/7.
->=20
-> >
-> > > diff --git a/drivers/firmware/imx/ele_base_msg.h
-> > > b/drivers/firmware/imx/ele_base_msg.h
-> > > new file mode 100644
-> > > index 0000000000000..4c3699543e879
-> > > --- /dev/null
-> > > +++ b/drivers/firmware/imx/ele_base_msg.h
-> >
-> > [ ... ]
-> >
-> > > @@ -0,0 +1,98 @@
-> > > +/* SPDX-License-Identifier: GPL-2.0+ */
-> > > +/*
-> > > + * Copyright 2025 NXP
-> > > + *
-> > > + * Header file for the EdgeLock Enclave Base API(s).
-> > > + */
-> >
-> > [ ... ]
-> >
-> > > +#define GET_SERIAL_NUM_FROM_UID(x, uid_word_sz) ({\
-> > > +	const u32 *__x =3D (const u32 *)(x); \
-> > > +	size_t __sz =3D (uid_word_sz); \
-> > > +	((u64)__x[__sz - 1] << 32) | __x[0]; \
-> > > +	})
-> >
-> > [Severity: Medium]
-> > Can this macro cause undefined behavior? When called from
-> > get_se_soc_info(), the x parameter points into a 1-byte aligned stack
-> > array (u8 data). Casting this to a u32 pointer and dereferencing it
-> > could trigger unaligned memory access faults on architectures with stri=
-ct
-> alignment requirements.
-> >
-> > > diff --git a/drivers/firmware/imx/ele_common.c
-> > > b/drivers/firmware/imx/ele_common.c
-> > > new file mode 100644
-> > > index 0000000000000..ca8a32a82689b
-> > > --- /dev/null
-> > > +++ b/drivers/firmware/imx/ele_common.c
-> >
-> > [ ... ]
-> >
-> > > @@ -0,0 +1,470 @@
-> > > +// SPDX-License-Identifier: GPL-2.0+
-> > > +/*
-> > > + * Copyright 2025 NXP
-> > > + */
-> >
-> > [ ... ]
-> >
-> > > +int ele_msg_rcv(struct se_if_priv *priv, struct se_clbk_handle
-> > > +*se_clbk_hdl) {
-> > > +	bool wait_uninterruptible =3D false;
-> > > +	unsigned long remaining_jiffies;
-> > > +	unsigned long flags;
-> > > +	int ret;
-> > > +
-> > > +	remaining_jiffies =3D MAX_SCHEDULE_TIMEOUT;
-> > > +	do {
-> > > +		if (wait_uninterruptible)
-> > > +			ret =3D wait_for_completion_timeout(&se_clbk_hdl-
-> >done,
-> > > +							  remaining_jiffies);
-> >
-> > [Severity: High]
-> > Can this loop cause a subsystem deadlock? Since remaining_jiffies is
-> > set to MAX_SCHEDULE_TIMEOUT, wait_for_completion_timeout() blocks
-> > indefinitely. If the firmware hangs and wait_uninterruptible is set to
-> > true after a signal, the thread will enter an infinite uninterruptible
-> > sleep while holding the se_if_cmd_lock mutex. The timeout fallback and
-> > circuit breaker logic become unreachable.
->=20
-> Can you use reasonable timeout value to avoid deadlock?
+This is not credible.
 
-Accepted. Will fix in v29. Though it will get corrected in patch 5/7
+>> +
+>> +	tmp = readl_relaxed(csi2phy->base +
+>> +			    CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->common_regs_offset, 13));
+>> +	csi2phy->hw_version |= (tmp << 8) & 0xFF00;
+> 
+> [ ... ]
+> 
+>> +static u8 phy_qcom_mipi_csi2_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
+>> +{
+>> +	u32 t_hs_prepare_max_ps;
+>> +	u32 timer_period_ps;
+>> +	u32 t_hs_settle_ps;
+>> +	u8 settle_cnt;
+>> +	u32 ui_ps;
+>> +
+>> +	if (link_freq <= 0)
+>> +		return 0;
+>> +
+>> +	ui_ps = div_u64(PSEC_PER_SEC, link_freq);
+> 
+> [Severity: High]
+> Does this code silently truncate link_freq?
+> 
+> The div_u64() macro expects a u32 divisor, but link_freq is an s64. This will
+> implicitly truncate the 64-bit link_freq value to 32 bits.
+> 
+> If link_freq happens to be an exact multiple of 2^32, the truncated divisor
+> becomes exactly 0, which would cause a division-by-zero panic. Frequencies
+> exceeding 4.29 GHz would also be silently corrupted.
+> 
+> Could this be updated to use div64_u64() or similar to avoid truncation?
 
->=20
-> >
-> > > +		else
-> > > +			ret =3D
-> wait_for_completion_interruptible_timeout(&se_clbk_hdl->done,
-> > > +
-> 	remaining_jiffies);
-> >
-> > [ ... ]
-> >
-> > > +void se_if_rx_callback(struct mbox_client *mbox_cl, void *msg) {
-> > > +	struct se_clbk_handle *se_clbk_hdl;
-> > > +	struct device *dev =3D mbox_cl->dev;
-> > > +	struct se_msg_hdr *header;
-> > > +	bool sz_mismatch =3D false;
-> > > +	struct se_if_priv *priv;
-> > > +	unsigned long flags;
-> > > +	u32 rx_msg_sz;
-> > > +
-> > > +	priv =3D dev_get_drvdata(dev);
-> > > +
-> > > +	/* The function can be called with NULL msg */
-> > > +	if (!msg) {
-> > > +		dev_err(dev, "Message is invalid\n");
-> > > +		return;
-> > > +	}
-> > > +
-> > > +	header =3D msg;
-> > > +	rx_msg_sz =3D header->size << 2;
-> >
-> > [Severity: High]
-> > Does this code safely handle mailbox errors? If the mailbox controller
-> > returns an error (like a timeout), it typically passes ERR_PTR(err) to
-> > the callback. The check for !msg allows ERR_PTR to bypass the check,
-> > which would lead to a kernel panic when msg is cast to struct
-> > se_msg_hdr and dereferenced here.
->=20
-> Please double check this ? if yes, should use IS_ERR()
-Accepted will fix in v29.
+This is a pretty outlandish level of defensive coding. Nope, not doing it.
 
->=20
-> >
-> > > diff --git a/drivers/firmware/imx/se_ctrl.c
-> > > b/drivers/firmware/imx/se_ctrl.c new file mode 100644 index
-> > > 0000000000000..9bb59c200911b
-> > > --- /dev/null
-> > > +++ b/drivers/firmware/imx/se_ctrl.c
-> >
-> > [ ... ]
-> >
-> > > @@ -0,0 +1,417 @@
-> > > +// SPDX-License-Identifier: GPL-2.0+
-> > > +/*
-> > > + * Copyright 2026 NXP
-> > > + */
-> >
-> > [ ... ]
-> >
-> > > +static int get_se_soc_info(struct se_if_priv *priv, const struct
-> > > +se_soc_info *se_info) {
-> > > +	struct se_fw_load_info *load_fw =3D get_load_fw_instance(priv);
-> > > +	struct soc_device_attribute *attr;
-> > > +	u8 data[MAX_SOC_INFO_DATA_SZ];
-> > > +	struct ele_dev_info *s_info;
-> > > +	struct soc_device *sdev;
-> > > +	int err =3D 0;
-> > > +
-> > > +	/*
-> > > +	 * This function should be called once.
-> > > +	 * Check if the se_soc_rev is zero to continue.
-> > > +	 */
-> > > +	guard(mutex)(&var_se_info.se_var_info_lock);
-> > > +	if (var_se_info.soc_rev)
-> > > +		return err;
-> >
-> > [Severity: Medium]
-> > Will this early return prevent initialization on driver rebind? When
-> > the driver is unbound, soc_device_unregister() removes the SoC device,
-> > but the global var_se_info.soc_rev is never cleared. On a subsequent
-> > bind, a non-zero soc_rev causes an early return, bypassing
-> > soc_device_register() and leaving load_fw->imem.state uninitialized.
-> >
-> > > +
-> > > +	err =3D ele_fetch_soc_info(priv, &data);
-> >
-> > [ ... ]
-> >
-> > > +	if (FIELD_GET(DEV_GETINFO_MIN_VER_MASK, var_se_info.soc_rev))
-> > > +		attr->revision =3D devm_kasprintf(priv->dev, GFP_KERNEL,
-> "%x.%x",
-> > > +
-> 	FIELD_GET(DEV_GETINFO_MIN_VER_MASK,
-> > > +							  var_se_info.soc_rev),
-> > > +
-> 	FIELD_GET(DEV_GETINFO_MAJ_VER_MASK,
-> > > +
-> var_se_info.soc_rev));
-> >
-> > [Severity: Low]
-> > Is this string format correct? It prints MIN_VER_MASK before
-> > MAJ_VER_MASK, resulting in minor.major instead of major.minor. This
-> > might break userspace parsing expectations.
->=20
-> Make sense, please fix it.
->=20
-> Frank
+> 
+>> +	ui_ps /= 2;
+>> +	t_hs_prepare_max_ps = 85000 + 6 * ui_ps;
+> 
+> [ ... ]
+> 
+>> +static int phy_qcom_mipi_csi2_lanes_enable(struct mipi_csi2phy_device *csi2phy,
+>> +					   struct mipi_csi2phy_stream_cfg *cfg)
+>> +{
+>> +	const struct mipi_csi2phy_device_regs *regs = csi2phy_dev_to_regs(csi2phy);
+>> +	struct mipi_csi2phy_lanes_cfg *lane_cfg = &cfg->lane_cfg;
+>> +	u8 settle_cnt;
+>> +	u8 val;
+>> +	int i;
+>> +
+>> +	settle_cnt = phy_qcom_mipi_csi2_settle_cnt_calc(cfg->link_freq, csi2phy->timer_clk_rate);
+>> +	if (!settle_cnt)
+>> +		return -EINVAL;
+>> +
+>> +	/*
+>> +	 * CSI_COMMON_CTRL5 is a physical lane power-up bitmap:
+>> +	 * - Bits [0,2,4,6] → D-PHY data lanes(LN0, LN2, LN4, LN6)
+>> +	 * - Bits [1,3,5] → C-PHY trio lanes(LN1, LN3, LN5)
+>> +	 * - Bit [7] → D-PHY clock lane(LNCK) dedicated clock enable
+>> +	 */
+>> +	val = BIT(lane_cfg->clk.pos);
+>> +	for (i = 0; i < cfg->num_data_lanes; i++)
+>> +		val |= BIT(lane_cfg->data[i].pos * 2);
+> 
+> [Severity: High]
+> Can this bitmask overflow the u8 val?
+> 
+> If the device tree uses physical indices (e.g., 4 or 6) for pos, pos * 2
+> becomes 8 or 12. Since val is a u8, using BIT(8) or BIT(12) will overflow
+> and silently truncate to 0, failing to enable the corresponding hardware lane.
+> 
 
-[Accepted] Will correct the order. Will fix this in v29
+Actually no - the current yaml has a range of data-lanes = <0 1 2 3> => 
+3 * 2 == 6
 
->=20
-> >
-> > --
-> > Sashiko AI review *
-> > https://sashiko.dev/#/patchset/20260717-imx-se-if-v28-0-0a9659c7e69d@n
-> > xp.com?part=3D3
+>> +
+>> +	writel(val, csi2phy->base +
+>> +	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->common_regs_offset, 5));
+>> +
+>> +	/* Lane configuration for polarity @ CSIPHY-base + CTRL9 */
+>> +	for (i = 0; i < cfg->num_data_lanes; i++) {
+>> +		if (lane_cfg->data[i].pol) {
+>> +			u8 pos = lane_cfg->data[i].pos;
+>> +
+>> +			writel(BIT(2), csi2phy->base + CSIPHY_2PH_LN_CSI_2PHASE_CTRL9n(pos));
+> 
+> [Severity: High]
+> Does this correctly map logical to physical lanes?
+> 
+> The CSIPHY_2PH_LN_CSI_2PHASE_CTRL9n(pos) macro computes 0x200 * pos + 0x24.
+> However, D-PHY data lane blocks are spaced at offsets 0, 0x400, 0x800, and
+> 0xC00.
+> 
+> If pos is a logical index like 1, this would access offset 0x200 (which is a
+> C-PHY lane) instead of the intended 0x400.
+
+True.
+
+Baby don't be sad, cause 1/4 ain't bad.
+> 
+>> +		}
+>> +	}
+>> +
+>> +	if (lane_cfg->clk.pol)
+>> +		writel(BIT(2), csi2phy->base + CSIPHY_2PH_LN_CSI_2PHASE_CTRL9n(lane_cfg->clk.pos));
+> 
+
