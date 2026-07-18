@@ -1,267 +1,234 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46CB2571C7
-	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 10:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00828246BCD
+	for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 11:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784372005; cv=pass; b=C7ZZ0VEbYA7FXPypzekYNAkoji9g9Uf2z67pY1Ng48GEGwPxKl9SHZRLG42Nf0P70kOH65NjILRzBY+cZduu0tF6hmJ/JaeJziwWG54a3nknK3l4McmSv1CRgv4sFyv6yvXoYKt9kL3R77VFJagUPMozvaObaqNJeWfOxp7dhbw=
+	t=1784372687; cv=pass; b=G0jG920QUGd5yrqoMnyDGYLzaX2j/o3GDHv+UnOVp8xvCdhBRSBBaB9umcHCTAJDZ4kru3CnDCf1XBvxOogPr4XQK2CDsdMI8h/nQO1pAMXFtBTZGUS/T+83ML3jlh777YcM3Kjxp22XWq3CMCa/A0NcGt7aE+/iWTs1OFLVyIA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784372005; c=relaxed/simple;
-	bh=JGgwZZnE1y8KJOtlsAIYdBnf+29pDWlCFFjUwVetfQQ=;
+	s=arc-20240116; t=1784372687; c=relaxed/simple;
+	bh=9oXnPdc5M5kFL0zR2usbcRQetuEtaE9CxxIQBqFaYTs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q0oSYjTp7HSwdCsvYSjfWr8nrB6tAWOrjyJfmT9FXfZ84Qwhnlxn58hebIRimEK1eeYsjRZsjASoA2OnXxSNrB5Y4WdF4Sm9TI0qsbYhxz/N/vNBdZhB+ETx69GmE80+jqLt8BX3EKyNF6xsFOiZ1pBTxNf9ykaewd5mQN9p8HA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tOVpy34p; arc=pass smtp.client-ip=74.125.224.50
+	 To:Cc:Content-Type; b=Y3yYIIsnQifqQAhgKbM0c9rpSVew22tAI/I3palpFnY3X8YvQuOxQuUU9jEU9X/MYGnHcky6RLSkxhsl9og8zSuQb3392ZcJZY23w7cPQpJgIztf5RMbwdaCM84aFOqsgK1nAmJJlZyRWRLA3tzdaUgSiaU3MqRNdHyIYcVJ2d0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h4ksq8hC; arc=pass smtp.client-ip=74.125.224.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tOVpy34p"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-6681e786b81so448085d50.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 03:53:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784372003; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4ksq8hC"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-664b8b65192so1056228d50.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 18 Jul 2026 04:04:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784372685; cv=none;
         d=google.com; s=arc-20260327;
-        b=mZQiVwCC2p1KlBxBWxjOvDVmTBkZSqan2FZ+CyaYMGIF3f0VPpxDWTNi+j9Dpz9SRs
-         5turcjyz92QVk9VHL79SsF2Tr/N9necydpUF+OaN7XP+Al1KdgGQRe2OdOzOOH5Ch9ie
-         yj0XW1b+mwvWeAqP0Kr4Px80131RppUU48N3NqN1RhNaZV2QhiwiTstR9pDddGqPrStr
-         B704SY1Ts8niUPGQQwmE3kgWlzhZ8ZxZvtnJn3uCL3Rj4lzFGgih9fI1VXBigWx86i7e
-         GMLB1Gr7KtxbLAIxUUk7xOIhi3rpDZ4hugkZKqCsYrc4vpWt8axwVioseKtXTUV1kOc5
-         JE9Q==
+        b=P+wPYwvtt4laU1oINtPIiCMjXKqgnnHbfcvkXbeQgaYJ0Qiq03RPJ62WM7BHRQfMpM
+         8ziqbkJTsoeLo3HPSbJFQ5ZUank3RTL6mSw8mxYv7HEAiJueRaNkEN6/LvmNz77b6i9V
+         RZttMJKi4mWwOyPFq+Byc0dcuBko9SAupFpDn1uWT60X6wKn1W5UNOGgzDCTLeJc2dtf
+         p1zc/JcuNNiG61JvZt9Fn5itUMUljagCvYrJkexjwTmzGChu/Lg2Jk7a8J9I0h9qTu3T
+         0jbyPZVCxUO0DgkdP8Zq28qzljY7p4gfVsaJuqi1nYmDV1SfsEVnGWRNphhYbnU2HQzb
+         i3Ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=g5VfXhgwYuTBmwNIMAkrlRtJzbyswvn4JxfZ/7609S8=;
-        fh=56a1th/CUASJufaIw28FFASBYJSxN4rIhmjwTOVHSFw=;
-        b=fRva+Kqq51Duuwo6WhyWS2WAQDJ2W64+nA2H3FGQttitREbS/4x7fAOOxSZGrNzXVn
-         OOqytY9+chfctH7xZUAx7GcFKXZ8/LsCjktW15z5Bv6m1abjben5LR9KLDsnQEAdITE3
-         yhRitGdNLo1OY/zNiqF2igeqtXLt9p+y7//siuJnFzPfpRcLxsrImFDjgPLcUrFdMp3a
-         0jv+RnYTgTO5+6QLNIqFXeGaEQUB7Pzw5p/kplcUicLbBL4acgkNtuXuznaMEAJD4YlG
-         N0kz/aiIsFnU29BhHOunAUIE3WqOgiGOvwDkrUEbC09k6pPFScoZdXj3pyCNX865GG2r
-         z6LA==;
+        bh=vt2l2OcHA0eMP2cNyDZEsGAIycIWGJ5grI24JGOYQmM=;
+        fh=xe4emxZEcQBVt02to8FaosjdLxA6bFQlvQ4JcI/FS7M=;
+        b=VeqNm2/lmngXjBSDTpcXzBJftua4bt/EUyNL+AfhBMOPnfok676EIJj6lUtkf7LKtk
+         Frcb4Q9GKp96hnwansvNXX3YpL2RBh6si75aiFk+aPRd4awMUXbPd/Xcx7s7WU2iUnjP
+         wyF0gmYXz8yGf+Kri+Eu1hdFcOyEGEUNw+8zGGatSenbuvInJUeV7JSdHv4DdyBq9arW
+         /ShG8urvXYUqSUPDAkcMRys6g2r8oF6D1kFW+z8XFR7n3DYCaIOX9+gZq6lELCilTlIk
+         Kz89178idikKt9drubIXCTgWxH+NwHNxe1JiuqyUs/NGGzVl4vSOmUJ89inslAb9/vSo
+         u9oA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784372003; x=1784976803; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784372685; x=1784977485; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=g5VfXhgwYuTBmwNIMAkrlRtJzbyswvn4JxfZ/7609S8=;
-        b=tOVpy34pW+WT98cZ6DND0+p124f4cekQGX+hCBhkWjd+YhNS9h81XbJ2zsp4Yk3Skb
-         yBmh5MD/VqeMDYXbtwLKOteNQ584Vml8mGkZO2i6ER/FYiTZ5nbgdsfzAvNodH0Dj0TC
-         MelizMAxr0bS8lItpOMYCQX+HUhlOfNSRg9kgtSHV/vO9zSk0hS1JVkcKSL8fY3zEK0+
-         Txy+OwjoQroYf9jijbDlmUUoC2oamQtJikvGpsMw+9SITYgNQ/SHP3HRcUM89+ag0omq
-         uhLRBCWCEYM0NYqpf4902GFgcEXGFLs2JEUQjCONUwFvOfBh5hM3ktcmumtUgBrFh3UJ
-         F02A==
+        bh=vt2l2OcHA0eMP2cNyDZEsGAIycIWGJ5grI24JGOYQmM=;
+        b=h4ksq8hC1DG2ywRLoNTTE80T6b6uw9qavtnL532osWti7orkE7it6Lcq8GvcsMO5tX
+         u8Yf4EkpM81OavLUOyBSMndKn8UHPmMV8VoH2p9NCx03bigi9lrIZ5gDqxHQGpKePwRH
+         /38PKNNMpc64ikFvx4C1L6lljmmi50TnosNmIlidVCjI7ERYTiDcHSsya3MY6Kc3e9hk
+         K1QRKwww0pWiTdLx1tsa6cEZ3gG4UdTyc5GLADrBMNnfbgJhWmz2gPhYBIfXsIkscN5h
+         pfP+HHsdO6klkwfzZarv9HqWkP2JJ0oGv1TrWJVc7yXsGxrtX7U8imsMZ8pGpmw8xClk
+         bPWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784372003; x=1784976803;
+        d=1e100.net; s=20251104; t=1784372685; x=1784977485;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=g5VfXhgwYuTBmwNIMAkrlRtJzbyswvn4JxfZ/7609S8=;
-        b=Oo2b+Rq0mmQE0VUFV6ZV7C/d4+6vngJBBAI+7bBgMGtb9vwyIItB+fVa8ykCUWirjV
-         cs4ip6gEd5O6dCtWgwZq1WSWbWxmGPb0LJ8KoE5Q4fN3qSKyZIMbtn22yED+0/vzF7PF
-         n2uw6+QSQelBSgLGrG/jsy6r6sxFGVyn6bsyXGSvLpaPgzLdy2QVmVo3qrmH7lonmPsM
-         l2yHaRVKLPOwqpMUTLlaHOnY1iBoeSmwv1fRrDnk5xhEYc2rY8H4Y/b3rj3IGUwUh2UM
-         wC0Y2jI66J+NhNk7ABTVYp3ye3yuffXBg0ytqnHk6y2v6+7Ps35WzRHaoa8bFaU4UMKW
-         3iyg==
-X-Gm-Message-State: AOJu0YxBQ0X14aAaEvL/6lapYw0ZM3dlfpQO6whOtfsmEiicvq2Crp+A
-	hslrUfzllr0wH0c51WDAMguh/ZWGkE/cIk50gNaW19uPez5x5dmqPEH3HvsvE3VBwdaFF3mKWhC
-	o1QWknIIhrZjfqjCaYh9QE8mLnkEtWmV+1i9XQXA=
-X-Gm-Gg: AfdE7ckjZtzPl5xfIqFD6GfB6zUv7ilLZOycL98/VIuQu18xRlhKxuoYFmH8nbfbeSx
-	MJltd8ulvW/33VP/6FrsRJjlBfKC45afr6n06gbdr94Liicpi6Uo/LrtRId0RiEJG3uCqxtyXzw
-	PG8faBthjqIdBeH/lD/TBKvZ4c6hyo3KkQcz4EggS8t2O1bn7HyqlSEh3tVMXqaY9j0o5qgw/0B
-	hV3s7u+vM9qbXAvbRwPYaQhRdqhb2Zsv0mFt1qxCyDH9PVO5malFzyVUXR9vu5cc5PKI9/ktlfC
-	zXhQduerEV0EFuoXVxc=
-X-Received: by 2002:a05:690e:458a:20b0:664:f227:385a with SMTP id
- 956f58d0204a3-6683bdde001mr1424612d50.6.1784372002826; Sat, 18 Jul 2026
- 03:53:22 -0700 (PDT)
+        bh=vt2l2OcHA0eMP2cNyDZEsGAIycIWGJ5grI24JGOYQmM=;
+        b=gIqq7o9Bwn8L3olkg2frFmGnYSKmpiIz5ADgGyw83rtqkD/BBIFMZjYYsh2xCPkHTH
+         T+RbH5cXY7espwl+niS96jCyXi6SeO9nkc1SFqSLhxDWlXfB7CEaMWtujY/13/DfH+1g
+         uZ+7ahoI6yUwE6UZeY9Nm1xWV3sc/HAGLeNb+senyO+hv4NcNwvDZMbjSRzNBDSwZQNY
+         FHIWDPqXkpcdCr9XX8gJqAAFolJP+WBXEN/KnXu3UWVx7BxBMlDDriNQ16ibsaH1ZOPK
+         qm3LsG5vc7AjqBz49LmGFo4nBSsIA77nytfeSpJXwe4AEJI/OQXOIN8rFLDOhkV+e48q
+         gpZA==
+X-Gm-Message-State: AOJu0YwFzu4Oo9JQ8Ui4AGnuBg22byFlreywT2CSuPFJAHH2BKB5lZaQ
+	rBMZfw+HCPyW9+NGf3q3HPL3E6SevIkdoqdxGNcOu6B++QW2Q8JVXmV3ZZOSUgOhiba4pRRotx2
+	zshyTfqmAH035fZvy06bGX8ELuJU+qUntqGQreaU=
+X-Gm-Gg: AfdE7cm0tv/ikwwXkxT4TL0uTrjUmuFX/VF8XOHMDAmegrPqm5dZmYKiKBrcGeoaIOr
+	yPGLquyX57tz62lOTGSDbugeidoi4w8Z+T20jtEC68yJsWB3XSvcE+vZVNtpbj6+KiSMAA8cAIi
+	1dtCCA5ttx/FfdHpkv1xUW3burcOiZcYjVjPTGa9JDQVJRvm6ogSfW94U5RxYzT68qX6PKr9nB2
+	D0IvniuFtqf3GpCt72SSpPSBfrIhnUQInyEs+birBbcSu2TaebsCqJqlguEJsJmvhgt1MhWWvEn
+	GzLhirdWWo5wbgFKInyg9bnwcVHgYQ==
+X-Received: by 2002:a53:b19d:0:b0:667:8db0:76a7 with SMTP id
+ 956f58d0204a3-6683be700d6mr1278751d50.9.1784372684813; Sat, 18 Jul 2026
+ 04:04:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260718085728.6797-1-royalnet026@gmail.com> <20260718085728.6797-3-royalnet026@gmail.com>
- <20260718090955.A79E51F000E9@smtp.kernel.org>
-In-Reply-To: <20260718090955.A79E51F000E9@smtp.kernel.org>
+References: <20260718085728.6797-1-royalnet026@gmail.com> <20260718085728.6797-5-royalnet026@gmail.com>
+ <20260718091200.65AE21F000E9@smtp.kernel.org>
+In-Reply-To: <20260718091200.65AE21F000E9@smtp.kernel.org>
 From: Igor Paunovic <royalnet026@gmail.com>
-Date: Sat, 18 Jul 2026 12:53:10 +0200
-X-Gm-Features: AUfX_mwF1UuqQgMjQjfeJUF2YEeUCF9mcy5VYFqR6MQOo8I3upFsyKrktRhAwBs
-Message-ID: <CAEWPSH6AFkMEVLJQxt4X554w47S6iVzupxh=eL_Rrfbcmb-hkA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] media: synopsys: hdmirx: add HDMI audio capture support
+Date: Sat, 18 Jul 2026 13:04:33 +0200
+X-Gm-Features: AUfX_mzv1PFiBSswpTxs5ztrtbcERZseF6OCGF3wFsdhSvoLcm5qvDBSH066Hi4
+Message-ID: <CAEWPSH7CMoQB=ypHQvrV058VxpX_+Wdfthb9SJrHczVPZKqmcQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] arm64: dts: rockchip: enable HDMI RX audio capture
+ on Orange Pi 5 Plus
 To: sashiko-reviews@lists.linux.dev, 
 	Dmitry Osipenko <dmitry.osipenko@collabora.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
 	Sebastian Reichel <sebastian.reichel@collabora.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
 	linux-media@vger.kernel.org, linux-rockchip@lists.infradead.org, 
 	linux-arm-kernel@lists.infradead.org, kernel@collabora.com, 
 	linux-kernel@vger.kernel.org
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
-	media-ci@linuxtv.org
+Cc: media-ci@linuxtv.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	robh@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> Does this byte-swapping logic scramble the extraction of the CTS and N
-> values on little-endian architectures?
+> Does exposing this codec to the ALSA subsystem trigger a suspend
+> regression in the hdmirx driver?
 
-No. This is the same finding as in the v2 review, where it was already
-answered, and the comment this v3 adds above the swap documents exactly
-this. Two premises in the report don't match the ACR packet layout:
-CTS does not live in PB0..PB2 and is not little-endian. Subpacket
-byte 0 is reserved, CTS[19:16] sits in PB1[3:0], CTS[15:8] in PB2 and
-CTS[7:0] in PB3 (MSB first), with N likewise in PB4..PB6. The packet
-decoder stores PB0 in register bits [7:0], so the byte swap is
-precisely what lines the bytes up before the 20-bit masks.
+Good catch -- this one is real. The audio worker missed the pattern
+the driver already applies to its hotplug and res_change works,
+which hdmirx_disable_irq() cancels on the suspend path. Fixed for
+v4: suspend cancels audio_work before the controller clocks are
+gated, and resume re-arms it when a capture stream is active; the
+worker's FIFO error path then resynchronizes the clock and the FIFO
+on its first run after resume.
 
-It is also the path validated on hardware: with a 44.1 kHz source the
-card reports 44.1 kHz rather than falling back to the 48 kHz default,
-and sample-rate switches are followed. Neither would work if the
-extraction produced garbage.
+> Should swab32() be used here instead to ensure the byte swap happens
+> unconditionally on all architectures?
 
-> Can this lead to a use-after-free if the driver is unbound while an
-> audio stream is active?
+Yes -- readl() already abstracts the bus endianness, so what this
+code wants is an unconditional byte reversal, not an endian
+conversion. Switched to swab32() for v4 (no functional change on
+arm64, where this controller lives, but the right primitive
+regardless).
 
-No -- the synchronization the report treats as missing is provided by
-the ALSA core, and relying on it is why the v2 workaround was dropped
-on Dmitry's review in the first place.
-
-The worker is only ever armed between hw_params() and
-audio_shutdown(). If a capture stream is still open when the codec
-platform device is unregistered, teardown does not complete until the
-stream is gone: soc_cleanup_card_resources() calls snd_card_free()
-(sound/soc/soc-core.c), which blocks in wait_for_completion() until
-the last file handle is closed (sound/core/init.c: "wait, until all
-devices are ready for the free operation"). A disconnected card still
-routes that final close through the original release path
-(snd_disconnect_release() -> disconnected_f_op->release()), so
-snd_pcm_release() runs soc_pcm_close() -> hdmi_codec shutdown ->
-hdmirx_audio_shutdown(), which clears the streaming flag and
-cancel_delayed_work_sync()s the worker.
-
-platform_device_unregister() therefore cannot return with the worker
-armed, and the devm-allocated state is freed only after remove()
-returns. There is no window for the work to fire on freed memory.
-
-Also exercised on the Orange Pi 5 Plus: unbinding the driver through
-sysfs while arecord was actively capturing. The ALSA disconnect kicks
-the reader out with ENODEV, the file handle is closed -- which is
-where audio_shutdown() runs and cancels the worker -- and only then
-does the unbind complete. A subsequent bind re-probes cleanly and the
-card comes back. The kernel log stays free of warnings throughout.
+Both changes are in my tree, compile-tested, and will be part of v4
+together with whatever comes out of human review of the series.
 
 Igor
 
-
-On Sat, Jul 18, 2026 at 11:09=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Sat, Jul 18, 2026 at 11:12=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] Incorrect byte-swapping logic completely scrambles the extractio=
-n of Audio Clock Regeneration (ACR) CTS and N values, breaking sample rate =
-recovery on little-endian architectures.
-> - [High] The `audio_work` delayed work is not explicitly cancelled in `hd=
-mirx_remove()`, leading to a Use-After-Free if the driver is unbound while =
-an audio stream is active.
+> - [High] The audio_work delayed work is not cancelled during system suspe=
+nd, leading to a fatal bus fault.
+> - [Medium] Incorrect use of be32_to_cpu() for unconditional byte swapping=
+ breaks audio capture on big-endian architectures.
 > --
 >
-> --- Patch [2]: [PATCH v3 2/4] media: synopsys: hdmirx: add HDMI audio cap=
-ture support ---
-> commit b04bcd22f40b424aac824100715c46f764531875
+> --- Patch [4]: [PATCH v3 4/4] arm64: dts: rockchip: enable HDMI RX audio =
+capture on Orange Pi 5 Plus ---
+> commit 030cd8fd5334b79e1751dec57b1de1f5fa4e3df3
 > Author: Igor Paunovic <royalnet026@gmail.com>
 >
-> media: synopsys: hdmirx: add HDMI audio capture support
+> arm64: dts: rockchip: enable HDMI RX audio capture on Orange Pi 5 Plus
 >
-> The Synopsys DesignWare HDMI RX controller extracts the audio stream
-> embedded in the incoming HDMI signal and feeds it to an on-SoC I2S
-> controller. Expose it as an ALSA capture device by registering the
-> generic hdmi-codec as a child of the controller.
+> This patch routes the HDMI receiver audio to the i2s7_8ch interface. It c=
+reates
+> a simple-audio-card configuration to expose a capture-only ALSA card driv=
+en
+> by the HDMI input. The setup uses the receiver as the bitclock and frame =
+master.
 >
-> > diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/dri=
-vers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-> > index 25f8ca0d6d946..22f50cbf3fa7a 100644
-> > --- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-> > +++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
->
-> [ ... ]
->
-> > +/* Recover the incoming audio sample rate from the ACR N/CTS + TMDS cl=
-ock. */
-> > +static u32 hdmirx_audio_fs(struct snps_hdmirx_dev *hdmirx_dev)
-> > +{
-> > +     u64 tmds_clk, fs_audio =3D 0;
-> > +     u32 acr_cts, acr_n, tmdsqpclk_freq;
-> > +     u32 acr_pb3_0, acr_pb7_4;
-> > +
-> > +     tmdsqpclk_freq =3D hdmirx_readl(hdmirx_dev, CMU_TMDSQPCLK_FREQ);
-> > +     hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PH2_1);
-> > +     acr_pb3_0 =3D hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PB3_0);
-> > +     acr_pb7_4 =3D hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PB7_4);
-> > +     /*
-> > +      * The packet decoder stores the ACR subpacket bytes with packet =
-byte
-> > +      * 0 in register bits [7:0], so byte-swap each word to line the b=
-ytes
-> > +      * up: CTS is packet bytes 1-3 (PKTDEC_ACR_PB3_0) and N is packet
-> > +      * bytes 4-6 (PKTDEC_ACR_PB7_4), 20 bits each.
-> > +      */
-> > +     acr_cts =3D be32_to_cpu((__force __be32)acr_pb3_0) & 0xfffff;
-> > +     acr_n =3D (be32_to_cpu((__force __be32)acr_pb7_4) & 0x0fffff00) >=
-> 8;
->
-> [Severity: High]
-> Does this byte-swapping logic scramble the extraction of the CTS and N va=
-lues
-> on little-endian architectures?
->
-> Since the HDMI ACR packet transmits the 20-bit CTS value across PB0, PB1,=
- and
-> PB2, and because it is little-endian, applying a bitmask like
-> acr_pb3_0 & 0xfffff natively yields the correct CTS value without any swa=
-ps.
->
-> By byte-swapping the 32-bit register, the bytes are completely reversed.
-> The subsequent bitmask extracts the lower 20 bits of the swapped word, wh=
-ich
-> correspond to the lower nibble of PB1, all of PB2, and all of PB3, discar=
-ding
-> PB0 entirely.
->
-> The same applies to acr_pb7_4 to extract N. Will this regression result i=
-n
-> garbage values for both acr_cts and acr_n, forcing the driver to blindly
-> fall back to the default sample rate?
->
-> [ ... ]
->
-> > @@ -2784,6 +3052,9 @@ static void hdmirx_remove(struct platform_device =
-*pdev)
-> >       struct device *dev =3D &pdev->dev;
-> >       struct snps_hdmirx_dev *hdmirx_dev =3D dev_get_drvdata(dev);
+> > diff --git a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts b/=
+arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
+> > index 145986695720a..2a68610cddbc3 100644
+> > --- a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
+> > +++ b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
+> > @@ -37,6 +37,22 @@ hdmi1_con_in: endpoint {
+> >               };
+> >       };
 > >
-> > +     if (hdmirx_dev->audio_pdev)
-> > +             platform_device_unregister(hdmirx_dev->audio_pdev);
+> > +     hdmiin-sound {
+> > +             compatible =3D "simple-audio-card";
+> > +             simple-audio-card,name =3D "rockchip,hdmiin";
+> > +             simple-audio-card,format =3D "i2s";
+> > +             simple-audio-card,bitclock-master =3D <&hdmiin_codec>;
+> > +             simple-audio-card,frame-master =3D <&hdmiin_codec>;
 > > +
+> > +             simple-audio-card,cpu {
+> > +                     sound-dai =3D <&i2s7_8ch>;
+> > +             };
+> > +
+> > +             hdmiin_codec: simple-audio-card,codec {
+> > +                     sound-dai =3D <&hdmi_receiver 0>;
 >
 > [Severity: High]
-> Can this lead to a use-after-free if the driver is unbound while an audio
-> stream is active?
+> Does exposing this codec to the ALSA subsystem trigger a suspend regressi=
+on in
+> the hdmirx driver?
 >
-> The v3 changelog notes that the synchronous cancel for the audio_work
-> delayed work was removed here under the assumption that audio_shutdown()
-> handles it.
+> Looking at the underlying codec driver hdmirx_suspend() in snps_hdmirx.c:
 >
-> However, ALSA does not synchronously invoke the PCM .shutdown callback
-> when a device is unregistered if a userspace application holds the file
-> descriptor open.
+> drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c:hdmirx_suspend()
+> {
+>         struct snps_hdmirx_dev *hdmirx_dev =3D dev_get_drvdata(dev);
 >
-> Because hdmirx_dev is allocated using devm_kzalloc, it is freed immediate=
-ly
-> after hdmirx_remove() returns. Will the un-cancelled audio_work delayed w=
-ork
-> subsequently fire and access the freed hdmirx_dev memory?
+>         hdmirx_disable_irq(dev);
 >
-> >       v4l2_debugfs_if_free(hdmirx_dev->infoframes);
-> >       debugfs_remove_recursive(hdmirx_dev->debugfs_dir);
+>         /* TODO store CEC HW state */
+>         disable_irq(hdmirx_dev->cec->irq);
+>
+>         return hdmirx_disable(dev);
+> }
+>
+> The audio_work delayed work is queued on system_unbound_wq, which is not
+> freezable, but this suspend callback doesn't cancel it.
+>
+> If system suspend is initiated while audio capture is active, the worker
+> could fire after clocks are disabled via hdmirx_disable(), resulting in
+> a bus fault when it performs MMIO reads.
+>
+> [Severity: Medium]
+> Will this audio capture work correctly on big-endian architectures?
+>
+> The underlying hdmirx_audio_fs() driver function uses be32_to_cpu() for a=
+n
+> unconditional byte swap when calculating the ACR subpacket:
+>
+> drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c:hdmirx_audio_fs()
+> {
+> ...
+>         acr_cts =3D be32_to_cpu((__force __be32)acr_pb3_0) & 0xfffff;
+>         acr_n =3D (be32_to_cpu((__force __be32)acr_pb7_4) & 0x0fffff00) >=
+> 8;
+> ...
+> }
+>
+> Since be32_to_cpu() behaves as a no-op on big-endian CPUs, the bytes rema=
+in
+> unswapped, causing the bitwise masking to extract the wrong bytes for the
+> ACR CTS and N fields.
+>
+> Should swab32() be used here instead to ensure the byte swap happens
+> unconditionally on all architectures?
+>
+> > +             };
+> > +     };
+> > +
+>
+> [ ... ]
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260718085728.67=
-97-1-royalnet026@gmail.com?part=3D2
+97-1-royalnet026@gmail.com?part=3D4
