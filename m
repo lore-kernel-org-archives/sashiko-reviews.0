@@ -1,64 +1,64 @@
-Received: from mail-wm2-f9.google.com (mail-wm2-f9.google.com [74.125.225.137])
+Received: from mail-wr2-f0.google.com (mail-wr2-f0.google.com [74.125.225.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2CD390608
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:50:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.137
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD16F3A4274
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:50:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784476230; cv=none; b=lmyxUKxRHvLlQ8ZecK7fU6uADXPgBmMGz1lNg4yCrCayIvcLmxmT2Q88M5lqNTg7CTn1LyjWPIKTMxWFORz1nMpbAOVzedsdl8gENHhC+1IpTTClXUmAND9v08b0pIFML3w7yfgp/KrJacmw9JIV9WBdzvT9UTH1qUzD2A7i1lY=
+	t=1784476261; cv=none; b=VoqN++ygKGYhkOHoB/nh/8FAjE/2BFS5p18sEyKXYNCekotKY2Wn5lF40oqFyCr0Ts/hkG32lvGU+zSXGpJvMBLkZfLgXPsWBFDL16rO2BkfgkZ8x7mzqsy7ZutPM+6l3jNvsyCOYtn39sNqcmB3VWCtFCYoMSMTQwaTXIuBUuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784476230; c=relaxed/simple;
-	bh=7aSOI5EYULtzA++ySrn8SAJOMzpGwkicqJmliqx3tpU=;
+	s=arc-20240116; t=1784476261; c=relaxed/simple;
+	bh=M42+QN7g06FnCWI24XlVFuqTmluNJh0Hjbo/TmkFubk=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=LSpkMfZbj9Jrok01LTQw8ffkzAjM0kmmm2NLltdkZuIlz6oxubKOX/h4DFbbBXh2Y7N0BkBrHgbRydLzr9cauDmFt1AsbXvZNisjro53ldSuOhTuGpRqKUTcMC76cFHaYn7yM3Xp40NLv9Bzz2DV+htTDS5Vws5l0ms5Bonq5fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mxMxpd1t; arc=none smtp.client-ip=74.125.225.137
+	 References:In-Reply-To; b=YSMPSdcqxiLBzEGYQU2qhIQPg5ZfqrB2LBuGmOsjDar27xQwqOogpJms+XWjJ0jSLvJL2S4ZQbCcRqPPjgRUuZYvRJtFQCagtr1KxmSe2r1P5RyvcrigQYGVTmHi46HvllFtkqL8KnYfUDzO1P8RxJ8IU3ooR/qCVhMnqbm4SGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FgVtiOjR; arc=none smtp.client-ip=74.125.225.64
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mxMxpd1t"
-Received: by mail-wm2-f9.google.com with SMTP id 5b1f17b1804b1-49553b57612so1711895e9.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 08:50:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FgVtiOjR"
+Received: by mail-wr2-f0.google.com with SMTP id ffacd0b85a97d-4744516a312so1277534f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 08:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784476228; x=1785081028; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784476258; x=1785081058; darn=lists.linux.dev;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Z4/BDi01G4d6omML5te3TMEqNCT4a4sL8UbQKe44Jho=;
-        b=mxMxpd1t4HTrsuNDRWNp0zrt1TifhKgW2nlfwDYsYwFDjhAsn8SE1wCx8z9n1gks5/
-         ql6a6QdHdkCJJzz5GXTxVcrdQoZdGloUKBzcgb8b1BSRYT3HBpSlgNAdA062Mezdk2TM
-         0FWntBh66nC71AQIZsJd1974VBbgbIBshdKKmWhAZnn0rvwkNNc464qxTekg4IK6cZSt
-         IG5sJucsa4HPEyu/gN5eaf57hChN7JrkUUTJI1rz5Vonaz4BRygZ56EcRiIR3V/B635A
-         Gbt0NRQHbtl91ljW5ZAX+qyXtx6zpmdy5/mpvm6Zai46WD2m8V8+V7aZ17H63z5QuFbC
-         DwbQ==
+        bh=PXkXoZcPYatQN5jk0nmNsirA5Eu/FVrdYn879C+3tX8=;
+        b=FgVtiOjRk3q2LFmcfzGQjQK+rMfd5gVO2SeeMs1W6IUuMpg8YHcjmia8EsoV/HFOgy
+         4CKZVyHC5HT7qPgoTGhovWI5nykZ5FMmPGTQ5kHNseYTwXJhsjiSsi/WKfULpOtfuasC
+         p8cOZ/PSTDl9J1orLLvxsRq+HuUMC+5ZzxaxgZo/wPbti235yP5EZ8EqMnJr2g1JHNOb
+         gEoEj4GNXkQEoP+c+PN5M5f71vms5oY/sL46CqH6NSlc+fwFOHMvxkSYOLyYZ8KiFhPk
+         r19s+K8PfHEHWTtD7BSIc9KWXobya4hceOO0DpWDK2FklSNGp/AX42LtwwTxDqhnERvg
+         vZRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784476228; x=1785081028;
+        d=1e100.net; s=20251104; t=1784476258; x=1785081058;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Z4/BDi01G4d6omML5te3TMEqNCT4a4sL8UbQKe44Jho=;
-        b=giHbsaRlVB6Fu1KTv8VpgTgWp+3SumDG+LKwIYwMEWMOb0vVXpnoz3Ki3HjP2Y2v9o
-         p6IQRcU2tNd1GAzn3+P7B2bI/UfNk5Fh4PuPesBIBLuz0uIEsMbqcsnhOZHOd43XQ8cM
-         YDMRzjl4hMIADusPJImhtoyPU9emvEZ2fbN337USpzAVNYhRCNF80Z/NRrYwCCD6vVDj
-         j1Cw2fiYsPRGOmRQR6MMUUOoHFIyAdqctwgLXcB1qhJLH7QfAlc4YQe/CCFnPW9SR12R
-         uJIVB56H2zan8jxBwuxXTzeC2ubLEzVvtcNpgSzLCPEbFv1m3+Yp1LQ9QKxiPqVRjlNC
-         8FOQ==
-X-Gm-Message-State: AOJu0YwTlCVyHPwGkF42G5UPVfgopBphGcB5VsxNQxEVg6Gtsvl5x1Yu
-	XeuRdCANA+UneurH0yC1Mw5uChBswHP8JSkodmO1QxiihkYKT8JpX4d3CfFe+ZCe
-X-Gm-Gg: AfdE7cmvO0Kpyci/xnPy8BenV2plEjLxAraRT4SAGZwZjCspF0b5RodQzKiKWDA8X+Y
-	iPHDSBb//XTLX05r0BChmgqY8nbqqk4pdhqddeuseXuD9ppU9tC22ZzB5D+JyKRZC1IOk2BIWDf
-	D8WDkfRtUVVLGauuZIzRDSGQe4a0olC1qenCGVaEDO08S/op7Zog3qz/uqRkEpS8MExixiIfoIV
-	/gaUxo2DCfzw6YT7h/6PIrMGDFe6CvPNQNJQZmPxkPG2n04ikYT4nlYvDq/+EpcRfE/+Gq61Zej
-	SgD4hJhuW6kgAAaDZbHZ41/dqxG2vQEIi5Lv9D3mgx88mqlQLB/VikdklrbZwZAkJka9ljIVM+C
-	3+7bTEPsczPnb25nJfskuL8yzqgslThnopKaZSo+1yHXh8Q179CGPlvaB3nDZVVV5bPAPEsnBcO
-	l97a1wj3bDG9J0SNOrYqO/TsEsQ0dJkGLEWhLvxhuZQeDU4mvGucWER94aJeRTzrPPjKfIkshkA
-	hGxI8B4NLLGDgfsZdFjF4zYIhtEzqxWxedhoZuteL6d
-X-Received: by 2002:a05:600c:190b:b0:493:c77c:108a with SMTP id 5b1f17b1804b1-4954aa1a10amr110737575e9.36.1784476227713;
-        Sun, 19 Jul 2026 08:50:27 -0700 (PDT)
+        bh=PXkXoZcPYatQN5jk0nmNsirA5Eu/FVrdYn879C+3tX8=;
+        b=W9EWQf5Yc1WQiseJwgD3zx/fBqhmP5CywEOdCLuuxw32Z8Hlm1YaMbgw3xrNDszyKA
+         ADa/IT0Uge3NUPhmuajuVC3h6K5iX9i2QOE/aculnlZ2nYrRSSmI2k766NcD07HF8IVm
+         FU94qVe3HyLeCVg0OOAUtsQ/U6ZUvE6L/4OfEgPuhYc0b3tgCkwdMVSpieHCPxzdjHlJ
+         pW5e53FswwE4WFlk24MLSxI/pQkzNu0kRv2u2/i4wuWT3If5S/bMQC6iWMLXN8AofA8o
+         a/pnOP/oyn/CwBgUrXJ/snhKRExo82l1rhOgVP8EDXgsDjJAMtfpb6rZvQRbypr9Opmw
+         wE9Q==
+X-Gm-Message-State: AOJu0Ywr7VfL9sWrtmpjr4f/aPw1PAh+kUevkaHJdkxyRTFxm00JfHc1
+	f8zgooYWMamHMUEL74XJ3tV1/gswzn1wklD09yVTO30zHj5xQ49C2NOeKNZYgqcg
+X-Gm-Gg: AfdE7clvpLlEjLG0IefYc6ig1VHmqHiSSg5XRWTAPiMNoVW5YvOwodfUOyoUa4ivxSB
+	wQl2n77yM56HElN0N3FFnuOXaRS3VMbo0IbaTfqKY+bVmQjxeF04/ObOyB9XuPfurZ9W3a1b+rP
+	qUJs1hAccUEl9IGnOZeE5fgb2M5VY7U9db9q5r+u0QKXIlodLqkNlnMOmT6BNCqlE9C8MrePIc0
+	9XlSTBJ2QOuYkuQI2jKJzv3+HLR4LpkmJfuObtxSRnIOWD8bmoFb14XrqejrPLrbwxKouuHgUMv
+	5peMnqpsRedkSn7T8rdVVanFt7ccj3ngSfckIRkdy1VzsoiRTSJBT9SMXfYnGeVnEo/SVlobISu
+	m/NDIC7vJb1Hvu0OkvqJnVMyuPS/g+Pgk+D9RJt0GvoXtza49RpCHTx9Svw2KywZ3gI3UqT8tMN
+	xpL1bCUwMNogFJgZi3KZudQx0kpP/nN1rc6pakK6FjGSLsjfTbPW5UMM3fktZX7PBfVpIzkPomK
+	BDKV/KroogHs59YbJ4jtVwZ4WOb4nJjduR4XQq1OhIx
+X-Received: by 2002:a5d:6f05:0:b0:47f:7045:dab8 with SMTP id ffacd0b85a97d-47f7045db28mr4801609f8f.7.1784476257907;
+        Sun, 19 Jul 2026 08:50:57 -0700 (PDT)
 Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2aa698sm191898255e9.4.2026.07.19.08.50.26
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f6b85970esm15744545f8f.15.2026.07.19.08.50.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 08:50:27 -0700 (PDT)
+        Sun, 19 Jul 2026 08:50:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,87 +67,76 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Jul 2026 17:50:25 +0200
-Message-Id: <DK2O112CXTEQ.1DTPFZ5ZF4B66@gmail.com>
+Date: Sun, 19 Jul 2026 17:50:56 +0200
+Message-Id: <DK2O1FA85Q5Y.20IOU7GKJ6O6G@gmail.com>
 Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 2/5] bpf: Preserve unique-field state across
- nested structs
+Subject: Re: [PATCH bpf-next v2 1/5] bpf: Fix offset warn check for
+ bpf_res_spin_lock
 From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
 To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
  <memxor@gmail.com>
 X-Mailer: aerc 0.21.0
 References: <20260719153634.2908692-1-memxor@gmail.com>
- <20260719153634.2908692-3-memxor@gmail.com>
- <20260719154924.5C3C31F000E9@smtp.kernel.org>
-In-Reply-To: <20260719154924.5C3C31F000E9@smtp.kernel.org>
+ <20260719153634.2908692-2-memxor@gmail.com>
+ <20260719154827.54DA51F000E9@smtp.kernel.org>
+In-Reply-To: <20260719154827.54DA51F000E9@smtp.kernel.org>
 
-On Sun Jul 19, 2026 at 5:49 PM CEST, sashiko-bot wrote:
+On Sun Jul 19, 2026 at 5:48 PM CEST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Multiple BPF_REFCOUNT fields in a BTF struct bypass the seen_mas=
-k uniqueness check because is_unique =3D false, allowing them to trigger a =
-reachable WARN_ON_ONCE() in btf_parse_fields().
+> - [High] Userspace-triggerable kernel warning (WARN_ON_ONCE) due to neste=
+d struct bypassing `seen_mask` uniqueness check, potentially leading to ker=
+nel panic.
 > --
 >
-> --- Patch [2]: [PATCH bpf-next v2 2/5] bpf: Preserve unique-field state a=
-cross nested structs ---
-> commit f8de1a7879c048283531a81778eac42891723a9d
+> --- Patch [1]: [PATCH bpf-next v2 1/5] bpf: Fix offset warn check for bpf=
+_res_spin_lock ---
+> commit f617fbd9a79f403f8e8be07c38922dcd0eedd840
 > Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 >
-> bpf: Preserve unique-field state across nested structs
+> bpf: Fix offset warn check for bpf_res_spin_lock
 >
-> btf_find_struct_field() initializes a fresh seen mask for every recursive
-> descent. This commit passes a shared seen mask pointer through the entire
-> field traversal to ensure unique special fields in different levels of th=
-e
-> same aggregate properly see one another.
+> This commit fixes an incorrect offset check for BPF_RES_SPIN_LOCK in
+> btf_parse_fields(). It now correctly checks res_spin_lock_off instead of
+> spin_lock_off.
 >
 >> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
->> index e7d4e9ba24e26..c577f00e9d885 100644
+>> index cbb1e49b9bcbf..e7d4e9ba24e26 100644
 >> --- a/kernel/bpf/btf.c
 >> +++ b/kernel/bpf/btf.c
->
-> [ ... ]
->
->> @@ -3947,10 +3947,12 @@ static int btf_find_field(const struct btf *btf,=
- const struct btf_type *t,
->>  			  u32 field_mask, struct btf_field_info *info,
->>  			  int info_cnt)
->>  {
->> +	u32 seen_mask =3D 0;
->> +
->>  	if (__btf_type_is_struct(t))
->> -		return btf_find_struct_field(btf, t, field_mask, info, info_cnt, 0);
->> +		return btf_find_struct_field(btf, t, field_mask, info, info_cnt, 0, &=
-seen_mask);
+>> @@ -4168,7 +4168,7 @@ struct btf_record *btf_parse_fields(const struct b=
+tf *btf, const struct btf_type
+>>  			rec->spin_lock_off =3D rec->fields[i].offset;
+>>  			break;
+>>  		case BPF_RES_SPIN_LOCK:
+>> -			WARN_ON_ONCE(rec->spin_lock_off >=3D 0);
+>> +			WARN_ON_ONCE(rec->res_spin_lock_off >=3D 0);
 >
 > [Severity: High]
-> This is a pre-existing issue, but since this patch improves the uniquenes=
-s
-> tracking via seen_mask, should BPF_REFCOUNT also be treated as a unique f=
-ield?
->
-> In btf_get_field_type(), BPF_REFCOUNT is currently defined with
-> is_unique =3D false:
->
->     { BPF_REFCOUNT, "bpf_refcount", false },
->
-> Because it bypasses the uniqueness validation, a user could load a BTF st=
-ruct
-> containing multiple bpf_refcount fields. If this happens, does it eventua=
-lly
-> reach btf_parse_fields() and intentionally trigger the WARN_ON_ONCE there=
-?
->
->     case BPF_REFCOUNT:
->         WARN_ON_ONCE(rec->refcount_off >=3D 0);
->         /* Cache offset for faster lookup at runtime */
->         rec->refcount_off =3D rec->fields[i].offset;
->         break;
->
-> Could a crafted user BTF cause a kernel panic here if panic_on_warn is
+> This is a pre-existing issue, but could this WARN_ON_ONCE() be triggered
+> from userspace and cause a kernel panic on systems with panic_on_warn
 > enabled?
+>
+> If a crafted BTF with multiple identical unique fields (like
+> BPF_RES_SPIN_LOCK) is provided in different nested structures, it appears
+> btf_find_struct_field() resets seen_mask to 0 for each nested level:
+>
+> kernel/bpf/btf.c:btf_find_struct_field() {
+> 	u32 i, off, seen_mask =3D 0;
+> 	...
+> }
+>
+> This could allow duplicate unique fields to bypass the seen_mask check an=
+d
+> be returned to btf_parse_fields(). When iterating over these duplicates
+> here, would it hit this WARN_ON_ONCE() and panic the system? Should we
+> return an error instead of warning, or pass seen_mask down during the
+> recursive struct traversal to prevent this?
+>
+>>  			/* Cache offset for faster lookup at runtime */
+>>  			rec->res_spin_lock_off =3D rec->fields[i].offset;
+>>  			break;
 
-Yes, but exactly what next commit fixes.
+Fixed by next commit.
