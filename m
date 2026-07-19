@@ -1,172 +1,167 @@
-Received: from mail-wr2-f0.google.com (mail-wr2-f0.google.com [74.125.225.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B63C1386C9
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 12:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905AC11CBA;
+	Sun, 19 Jul 2026 13:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784462529; cv=none; b=U1rxih3XCXstQxFZwHw2QL/4/bGq9BVeiUtVuQKxVCs8K1/abDB+C4V0dYPFw9OByZwb6sVuxChN+t2LdwiJ42uABbIpc6Czu6SIeDR/ou9TbtxLqolqWcu6I3oQX/6oGpX3VHH/RAY3ywBqd1JizJTa3fOUWG7r2zWBXyGgxzA=
+	t=1784466228; cv=none; b=Y/meGC9fSutKz7DowX6jm3Y4KyBtrcSykeoUXym58xBHYBBxa6yIMp/LjxVd4wnOT3GZQgnI4Nlp6YDzfs0TsI9T24kGDyNHQ/36EQDkW9hmDYAPuoIPZh4YhyfKczUbmboET9U0UsCWKwi3BWjekPhZQwDoY18t2So31j+4TNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784462529; c=relaxed/simple;
-	bh=crLKfKSNuXiC9EWrD8lnMeXCugkwlEgYbzJdTF6Ocjs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=M9PnwStAxk6QEXByQUEe5ddjygZxThTf9ypaWeHJhzy7wYN5P2Byd7xXveBOs/88sU0oMLCXYdaQtvDfJK5We06RcrtasW+bJE+x4ywUkwJU3oafalt+aYot3IJ4LicB6+DgJQDYG0CrzZ9SlYaEl5Se8rWbkYgKfihDXhRfae0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rl7Bju5D; arc=none smtp.client-ip=74.125.225.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784466228; c=relaxed/simple;
+	bh=IuvNPhz/qs9bKIOzWkFfEKumIM149XuxFtB5N3oRRLo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EypcKDfElmXh8olW8SYyywhIozRaBH3LC3CIptU2eFpaeLclMTiCYALYRb852XFtzuK68EuCF1tukxl4k3DnWiRqJltjt8hxNvcQu5Eu4cuqTtjR2uEk6SJ1t+AEIkgtO74cEJqaXsdtukAZVmxirl3n0CrCqkg94YZAJdSNyuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=g5eZ2vt6; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rl7Bju5D"
-Received: by mail-wr2-f0.google.com with SMTP id ffacd0b85a97d-4784b41f3aeso1436109f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 05:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784462526; x=1785067326; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ZzBSwW8MVDWvYCXQ+ucsCugAcDr4PVX8fEAbJpnAx+I=;
-        b=Rl7Bju5DE+9g+M8u2oEqMvptDb68rK3BYsXmTy2Rrn/Gc+Z2zPUQ6eEAl1U6QTYT9b
-         kfffzBHkCRG4Rbor90qYA9SpT/xEMmBouqjVUzzFhx0L3a8XrZM3Tjz9QUfYXuG5SBWI
-         mNv7ZaPyEcZyu8/eje0uWoDawI6aIM7xmjWSrwesDQX5ilnHBvpu9h4YOqLx0Gc5shFU
-         F3De0v4QAiDFEMfWcuPa9ZE6azyEGxtNXJ78nxnIly6zdFUEfi8bsMVv47+aTXnMMwup
-         JaOlWR01Nl1rFrAeZh4v0yzke5i9kegSdEVdQ5QvMvOMZE3QcD1Ko8BKUj1ZjbDEJUQg
-         2VSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784462526; x=1785067326;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZzBSwW8MVDWvYCXQ+ucsCugAcDr4PVX8fEAbJpnAx+I=;
-        b=fPJ7yx+UtJv218ej3wGYI4RVY7DRTySU+RMpFBgQDcFqt/aImQLTkJUKTULbphxXy2
-         +w2qYWkQIUTu8IgXgt2jxTRT7XnEIL7iF1qz3mbFcyP2rRF6TzOSOoejxjl+a3daGOcd
-         Zs0SRwT+F0wyZ1IydC7hVjunf7n9SQCGPhLXcdKASnQFk59up97geP9ckLIyc2Va2YnY
-         /y5JTVBko9jIpIyNEnFP+4oVP/v3sax9pE1cnPKwWYCE9vJ7LvkK2VsgE++h89oWQFAs
-         EHr6JRqJOuqX2Cs9GFEAxEE50C7dsZN6UkL/P1+vFfmVxUonoBVlps2WOO+0RWXO4D6g
-         lszw==
-X-Gm-Message-State: AOJu0Yw8V5hEwIlR1tK9qbZowvtX6SzqGYgDQwSVeVA5dNOGqMaGFo00
-	jBMoYiD5BUctC2nM48UZLPNK1UGNJu1zsjV4xwen5HQmvR/Tv5sGyhwy1qNiLWUE
-X-Gm-Gg: AfdE7cn4E0QEcHhHAkHD3UKhYIvUy9eigE6swXlQoD6Eo+ZUlDStjWXHTxbzdc7l3lD
-	XZS97EmuvB/2s1WQcoGdx4iIBZ9j8thG2EdZMFAkaO1bLavGZrjySocG84ryT98EnDTUZ8hOBgU
-	XlUD6b9s16AklH/Cs3t3IJj/jwcn5Dwe8PJEP6l3FqnKxXzY2NRPwlxNMliXn1zqTE/uGOzqBkc
-	zmsNr9J73JUm1id3tj0TakRRzAWg6ugy62sROZZMWSVdbB7319n8Pydx4wygCdBkK284c6kQZVp
-	v/pc0tazMrgkTVdq5j4TZf5PQTKRE2v7YkvJpBe4dJpil3z1iS86SBpFetavuBwTR11Yd5UPNPY
-	ZrJQXScsbJX5twQycgKp+g6t0BchbZIiwWW6mA0RbzdwVBhUa4Vgz+r5F9IxxOW0jepB9WHDxb0
-	T7Un9Fl1Wbez8h/kcooEm+QpYhFuiJ6U/5XF+bNKWWcyzfW0xErrrF+cyRjv7NRtrPWhcFy0qjK
-	JdMHN7Y7NgXEydnm3TfY8gNS8WsGdXtD1/mgOFZKIJ8
-X-Received: by 2002:a7b:c383:0:b0:495:48d7:7eaf with SMTP id 5b1f17b1804b1-4954a40bbd3mr67218065e9.28.1784462526188;
-        Sun, 19 Jul 2026 05:02:06 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2692a3sm172701825e9.0.2026.07.19.05.02.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 05:02:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="g5eZ2vt6"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66JBChCl3352920;
+	Sun, 19 Jul 2026 13:03:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=trwG6Z2mln5d7fkk2b+593flmrbwvv
+	jvX6Ut/8gYq7w=; b=g5eZ2vt6w92OGJm+kNsy9LA38wwBAKPovdSWGZ+uWImmFI
+	M+A/U8lK2NSXOqn/+QmL2VOBDnEN8Sui1w9BES0hL2M1rXaDFRznnzeXeFL/FqrO
+	xYHYITW6HdFhhF7RoAE4YBNCeIAxBSB4L2rVMI+AIS7LxFmmGiOjwm7BliUHv5XC
+	iYnk6+aXUr/nUrXetGuDVkZO+UCniVl2rUZwVZHzx5lc34J0/736gDkTePHFFS61
+	rQRlqu5+ojm0C7AWzSlZvLSxc5s544v95TJYE6FW74365Ok+H8xXXOlc0Z8QNVXa
+	sgr9m8Vc41qSGggz55nqEbKQNcTQIJS0YQzQZpgA==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg7ab3g0t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 19 Jul 2026 13:03:46 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66JCniO0001552;
+	Sun, 19 Jul 2026 13:03:45 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgm6vsshr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 19 Jul 2026 13:03:45 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66JD3fdp39911892
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Sun, 19 Jul 2026 13:03:41 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7873F20043;
+	Sun, 19 Jul 2026 13:03:41 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3759120040;
+	Sun, 19 Jul 2026 13:03:41 +0000 (GMT)
+Received: from osiris (unknown [9.87.153.223])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Sun, 19 Jul 2026 13:03:41 +0000 (GMT)
+Date: Sun, 19 Jul 2026 15:03:39 +0200
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH 1/4] KVM: s390: pv: Use VM_SPARSE area for guest variable
+ storage area
+Message-ID: <20260719130339.22878A6e-hca@linux.ibm.com>
+References: <20260716141436.2125703-1-hca@linux.ibm.com>
+ <20260716141436.2125703-2-hca@linux.ibm.com>
+ <20260716143333.20B891F00A3A@smtp.kernel.org>
+ <778ba45f-bd2e-46e0-8b08-fcd209dd174d@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Jul 2026 14:02:04 +0200
-Message-Id: <DK2J66UJL9Y2.1CFPFRV92X1S5@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v1 1/2] bpf: Allow bpf_res_spin_lock() in all
- contexts
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260719113551.1294284-1-memxor@gmail.com>
- <20260719113551.1294284-2-memxor@gmail.com>
- <20260719115625.B498D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260719115625.B498D1F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <778ba45f-bd2e-46e0-8b08-fcd209dd174d@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE5MDEzOSBTYWx0ZWRfX+Ug5FSmkny1x
+ yj39YhXZOX7SGQsXUgJ316pEUcInDdGc/mEU6tID1PnrFXmZUV4atDhMldPS2rHKc+3YvmTNvkT
+ fecpbQ4e5/qm5EChuptDbz9flHYHKoAx1knUTZ925xJHBKi4H7/nJVXEAnaeOwfd8kqW7529Y+U
+ W317acv72E1M95wK2ZIV3iQGc1cGybBsc0cFqcoMkbfML0QVrg1dgRjbkbjwOA2YXxOphWq1lVV
+ SO1bkm9hKnGQhpk7riza5rdCYiFXepHWcXQEZiUBRJD089SAphk5VV46aP+Xr7bC8DkORlfNwWd
+ ts4ujNUYthpy9skv8t/SpJmZbjYV/gQVQF4QOdAkUUMSUZ2kHeyW/qW/mzfQApvQP67Ql5D4V4P
+ BAcsD0dM6mI4x9jOtdiKvDklsJa271giqYr2N7s/VIxSKbM6QGw7TdRHpASTaVkFQUqp8iFmcQe
+ 1ADFwNOcpFjf/KWfpbw==
+X-Authority-Analysis: v=2.4 cv=F7ZnsKhN c=1 sm=1 tr=0 ts=6a5ccb32 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=xuUelXlGgw66GkdJ-MUA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: --knOerf1ZMHvZH9p9Z-x9qLGJcCk06h
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE5MDEzOSBTYWx0ZWRfX9VKY//NZo/yE
+ EPjki8NfGUd/q2c7O8i9k2Q0G0jJ+oSVuKbhNo8xkQ3YSJoBpgtfjTw7pIUOPCmqpqvGvjretQD
+ uKV6jIEXLCCTyPpKSOt+sS8Muvsawa0=
+X-Proofpoint-GUID: --knOerf1ZMHvZH9p9Z-x9qLGJcCk06h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-19_04,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607190139
 
-On Sun Jul 19, 2026 at 1:56 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Medium] bpf_res_spin_lock() remains disabled for socket filter program=
-s, contradicting the commit title 'Allow bpf_res_spin_lock() in all context=
-s'.
->
-> Pre-existing issues:
-> - [High] When parsing BTF fields, the check for a valid `bpf_res_spin_loc=
-k` offset incorrectly checks `rec->spin_lock_off` instead of `rec->res_spin=
-_lock_off`.
-> --
->
-> --- Patch [1]: [PATCH bpf-next v1 1/2] bpf: Allow bpf_res_spin_lock() in =
-all contexts ---
-> commit 88a844e18ff8ff22c90389d929ce1c63353b73fe
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
->
-> bpf: Allow bpf_res_spin_lock() in all contexts
->
-> This commit removes the restriction that prevents tracing programs from
-> using bpf_res_spin_lock(). The stated goal is to allow its use in all
-> contexts.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 4446f0bde88b5..bb6e16668d0d1 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -17815,7 +17815,9 @@ static int check_map_prog_compatibility(struct b=
-pf_verifier_env *env,
->>  			verbose(env, "socket filter progs cannot use bpf_spin_lock yet\n");
->>  			return -EINVAL;
->>  		}
->> +	}
->
-> [Severity: Medium]
-> The commit message states the goal is to allow bpf_res_spin_lock() in all
-> contexts. However, just above this block in check_map_prog_compatibility(=
-),
-> there is a check that still blocks it:
->
-> 	if (btf_record_has_field(map->record, BPF_SPIN_LOCK | BPF_RES_SPIN_LOCK)=
-) {
-> 		if (prog_type =3D=3D BPF_PROG_TYPE_SOCKET_FILTER) {
->
-> Does this contradict the commit title by leaving it disabled for socket
-> filter programs?
->
+On Fri, Jul 17, 2026 at 11:12:09AM +0200, Christian Borntraeger wrote:
+> Am 16.07.26 um 16:33 schrieb sashiko-bot@kernel.org:
+> [...]
+> > [Severity: High]
+> > Does this create a Use-After-Free window during VM teardown?
+> > 
+> > In uv_free_stor_var(), we call apply_to_existing_page_range() which invokes
+> > uv_free_range_cb() for each page. The callback frees the physical page
+> > directly to the buddy allocator via __free_page() while the PTE remains
+> > fully present and writable in the init_mm page tables.
+> > 
+> > After all pages are freed, free_vm_area() is called to clear the PTEs and
+> > flush the TLB. If a freed page is immediately reallocated to another
+> > subsystem, can concurrent accesses via the stale vmalloc alias read or
+> > overwrite the newly reallocated page before free_vm_area() completes?
+> 
+> I guess this is a very very theoretical problem. Not sure if we really want
+> to address this. The necessary allocation in a freeing function might be
+> worse than temporary access via the kernel mapping.
 
-We don't want to enable it for socket filter.
+I added a comment why this won't be addressed. The existing vmalloc
+code already implements lazy TLB flushing (even though it is not
+active on only s390 because of our special ptep_get_and_clear()
+implementation).
 
->>
->> +	if (btf_record_has_field(map->record, BPF_SPIN_LOCK)) {
->>  		if (is_tracing_prog_type(prog_type)) {
->>  			verbose(env, "tracing progs cannot use bpf_spin_lock yet\n");
->>  			return -EINVAL;
->
->
-> While reviewing this area, I also noticed a potential issue in another fi=
-le.
->
-> kernel/bpf/btf.c:btf_parse_fields() {
-> 	...
-> 		case BPF_RES_SPIN_LOCK:
-> 			WARN_ON_ONCE(rec->spin_lock_off >=3D 0);
-> 			/* Cache offset for faster lookup at runtime */
-> 			rec->res_spin_lock_off =3D rec->fields[i].offset;
-> 			break;
-> 	...
-> }
->
-> [Severity: High]
-> This is a pre-existing issue, but does this WARN_ON_ONCE() incorrectly ch=
-eck
-> rec->spin_lock_off instead of rec->res_spin_lock_off?
->
-> If a user creates a BPF map value containing both a bpf_spin_lock and a
-> bpf_res_spin_lock, and BPF_SPIN_LOCK is parsed first, rec->spin_lock_off =
-will
-> be non-negative. When BPF_RES_SPIN_LOCK is then processed, it appears thi=
-s
-> would trivially trigger the warning, which could cause a kernel panic if
-> panic_on_warn is enabled.
+> > > +void *uv_alloc_stor_var(unsigned long size)
+> > > +{
+> > > +	struct vm_struct *area;
+> > > +	unsigned long addr;
+> > > +
+> > > +	area = get_vm_area(size, VM_SPARSE);
+> > > +	if (!area)
+> > > +		return NULL;
+> > > +	addr = (unsigned long)area->addr;
+> > > +	if (apply_to_page_range(&init_mm, addr, size, uv_alloc_range_cb, NULL))
+> > 
+> > [Severity: High]
+> > If an unaligned size is passed to uv_alloc_stor_var(), could this cause an
+> > infinite loop in the page table walker?
+> > 
+> > The size parameter is passed directly to apply_to_page_range(). The internal
+> > page table walker loop relies on the end boundary being exactly page-aligned
+> > to terminate:
+> 
+> This is one of those things that wont happen in reality as the returned sized
+> will be aligned, but as the interface for base variable storage returns bytes
+> and in theory _COULD_ be unaligned
+> maybe change belows hunk to
+> 
+> @@ -369,7 +369,7 @@ static int kvm_s390_pv_alloc_vm(struct kvm *kvm)
+>  	/* Allocate variable storage */
+>  	vlen = ALIGN(virt * ((npages * PAGE_SIZE) / HPAGE_SIZE), PAGE_SIZE);
+> ---->	vlen += uv_info.guest_virt_base_stor_len;   <--- also add ALIGN here
+> -	kvm->arch.pv.stor_var = vzalloc(vlen);
+> +	kvm->arch.pv.stor_var = uv_alloc_stor_var(vlen);
+>  	if (!kvm->arch.pv.stor_var)
+>  		goto out_err;
+>  	return 0;
+> 
+> Could also be a separate patch if we want to.
 
-Yeah, it's not that serious, but will fix when I respin (or follow up separ=
-ately).
-That said, for now, I will wait for more reviews.
+I added the alignment handling uv_alloc_stor_var(), so that it doesn't
+matter what callers pass.
