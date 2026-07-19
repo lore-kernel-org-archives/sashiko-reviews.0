@@ -1,142 +1,189 @@
-Received: from mail-wr2-f0.google.com (mail-wr2-f0.google.com [74.125.225.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ixit.cz [185.100.197.86])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD16F3A4274
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:50:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCEA1A6817
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 18:57:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784476261; cv=none; b=VoqN++ygKGYhkOHoB/nh/8FAjE/2BFS5p18sEyKXYNCekotKY2Wn5lF40oqFyCr0Ts/hkG32lvGU+zSXGpJvMBLkZfLgXPsWBFDL16rO2BkfgkZ8x7mzqsy7ZutPM+6l3jNvsyCOYtn39sNqcmB3VWCtFCYoMSMTQwaTXIuBUuY=
+	t=1784487428; cv=none; b=Xf4d99RXYJc8ZOYgm58JTFlvA2TrhKo644v47e8n3ASCd/OzR8DAhh1mB0oAplNWhVZupRkax0XD31cuj0S1+ttbcxo7/BWFoUEIoOXs3PY9NHpp0e7EK8winEY1i3lBTnxaZWv6guChliAzoUdUqNgLCy5wS5KnIJejKcKe8hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784476261; c=relaxed/simple;
-	bh=M42+QN7g06FnCWI24XlVFuqTmluNJh0Hjbo/TmkFubk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=YSMPSdcqxiLBzEGYQU2qhIQPg5ZfqrB2LBuGmOsjDar27xQwqOogpJms+XWjJ0jSLvJL2S4ZQbCcRqPPjgRUuZYvRJtFQCagtr1KxmSe2r1P5RyvcrigQYGVTmHi46HvllFtkqL8KnYfUDzO1P8RxJ8IU3ooR/qCVhMnqbm4SGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FgVtiOjR; arc=none smtp.client-ip=74.125.225.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784487428; c=relaxed/simple;
+	bh=m8iaPY7YFuKpcueS3QWeksBwilW6M2mmlKOuioskBi0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kP+Sb+q6+5KfdNVzOMp2a0qkjLjWcGzVLWf5DeZu8WWu10OmNMEYaDzlVKg5KBBfVl78vhfki4ePC+4O5P38ykLeZXTVPNrkyIfMBX/HumMnY+OcXXyvsLp55kFvdPpUFpj7JP9dPthwQN2csi30Gbx6hSVk/PCFAR5JBdXZdCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=roinVsHy; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FgVtiOjR"
-Received: by mail-wr2-f0.google.com with SMTP id ffacd0b85a97d-4744516a312so1277534f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 08:50:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784476258; x=1785081058; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=PXkXoZcPYatQN5jk0nmNsirA5Eu/FVrdYn879C+3tX8=;
-        b=FgVtiOjRk3q2LFmcfzGQjQK+rMfd5gVO2SeeMs1W6IUuMpg8YHcjmia8EsoV/HFOgy
-         4CKZVyHC5HT7qPgoTGhovWI5nykZ5FMmPGTQ5kHNseYTwXJhsjiSsi/WKfULpOtfuasC
-         p8cOZ/PSTDl9J1orLLvxsRq+HuUMC+5ZzxaxgZo/wPbti235yP5EZ8EqMnJr2g1JHNOb
-         gEoEj4GNXkQEoP+c+PN5M5f71vms5oY/sL46CqH6NSlc+fwFOHMvxkSYOLyYZ8KiFhPk
-         r19s+K8PfHEHWTtD7BSIc9KWXobya4hceOO0DpWDK2FklSNGp/AX42LtwwTxDqhnERvg
-         vZRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784476258; x=1785081058;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PXkXoZcPYatQN5jk0nmNsirA5Eu/FVrdYn879C+3tX8=;
-        b=W9EWQf5Yc1WQiseJwgD3zx/fBqhmP5CywEOdCLuuxw32Z8Hlm1YaMbgw3xrNDszyKA
-         ADa/IT0Uge3NUPhmuajuVC3h6K5iX9i2QOE/aculnlZ2nYrRSSmI2k766NcD07HF8IVm
-         FU94qVe3HyLeCVg0OOAUtsQ/U6ZUvE6L/4OfEgPuhYc0b3tgCkwdMVSpieHCPxzdjHlJ
-         pW5e53FswwE4WFlk24MLSxI/pQkzNu0kRv2u2/i4wuWT3If5S/bMQC6iWMLXN8AofA8o
-         a/pnOP/oyn/CwBgUrXJ/snhKRExo82l1rhOgVP8EDXgsDjJAMtfpb6rZvQRbypr9Opmw
-         wE9Q==
-X-Gm-Message-State: AOJu0Ywr7VfL9sWrtmpjr4f/aPw1PAh+kUevkaHJdkxyRTFxm00JfHc1
-	f8zgooYWMamHMUEL74XJ3tV1/gswzn1wklD09yVTO30zHj5xQ49C2NOeKNZYgqcg
-X-Gm-Gg: AfdE7clvpLlEjLG0IefYc6ig1VHmqHiSSg5XRWTAPiMNoVW5YvOwodfUOyoUa4ivxSB
-	wQl2n77yM56HElN0N3FFnuOXaRS3VMbo0IbaTfqKY+bVmQjxeF04/ObOyB9XuPfurZ9W3a1b+rP
-	qUJs1hAccUEl9IGnOZeE5fgb2M5VY7U9db9q5r+u0QKXIlodLqkNlnMOmT6BNCqlE9C8MrePIc0
-	9XlSTBJ2QOuYkuQI2jKJzv3+HLR4LpkmJfuObtxSRnIOWD8bmoFb14XrqejrPLrbwxKouuHgUMv
-	5peMnqpsRedkSn7T8rdVVanFt7ccj3ngSfckIRkdy1VzsoiRTSJBT9SMXfYnGeVnEo/SVlobISu
-	m/NDIC7vJb1Hvu0OkvqJnVMyuPS/g+Pgk+D9RJt0GvoXtza49RpCHTx9Svw2KywZ3gI3UqT8tMN
-	xpL1bCUwMNogFJgZi3KZudQx0kpP/nN1rc6pakK6FjGSLsjfTbPW5UMM3fktZX7PBfVpIzkPomK
-	BDKV/KroogHs59YbJ4jtVwZ4WOb4nJjduR4XQq1OhIx
-X-Received: by 2002:a5d:6f05:0:b0:47f:7045:dab8 with SMTP id ffacd0b85a97d-47f7045db28mr4801609f8f.7.1784476257907;
-        Sun, 19 Jul 2026 08:50:57 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f6b85970esm15744545f8f.15.2026.07.19.08.50.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 08:50:57 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="roinVsHy"
+Received: from [192.168.1.182] (ip-62-24-73-79.bb.vodafone.cz [62.24.73.79])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 4EBF453402C7;
+	Sun, 19 Jul 2026 20:57:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1784487421;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=uwuygl609oY5jPviWbtTa2poMC/Sj4YTbIRXUtyilZk=;
+	b=roinVsHyVfvjHAYVYlM2yiy2tU1Wm1taJTrG+ftkm4+PE14MEbQa3tfDvHKyNIJJ/ufv2g
+	wgkCNJ99Nm596UNmhx0OzGEs/Q0qk7vqZ7hDnlKPesrtZ7mCks1xE52LUmZKD0AjIU4dSw
+	8AdhEwCOiY51dnCxkH1vfg0btNqW6y4=
+Message-ID: <1e24a75d-8e23-4767-8648-72d148e7083a@ixit.cz>
+Date: Sun, 19 Jul 2026 20:57:00 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Jul 2026 17:50:56 +0200
-Message-Id: <DK2O1FA85Q5Y.20IOU7GKJ6O6G@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 1/5] bpf: Fix offset warn check for
- bpf_res_spin_lock
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260719153634.2908692-1-memxor@gmail.com>
- <20260719153634.2908692-2-memxor@gmail.com>
- <20260719154827.54DA51F000E9@smtp.kernel.org>
-In-Reply-To: <20260719154827.54DA51F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] arm64: dts: qcom: sdm845-google: Add dual front
+ IMX355 cameras
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260719-pixel3-camera-v5-0-99593f1bd8ec@ixit.cz>
+ <20260719-pixel3-camera-v5-1-99593f1bd8ec@ixit.cz>
+ <20260719182401.D720A1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20260719182401.D720A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun Jul 19, 2026 at 5:48 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Userspace-triggerable kernel warning (WARN_ON_ONCE) due to neste=
-d struct bypassing `seen_mask` uniqueness check, potentially leading to ker=
-nel panic.
+On 19/07/2026 20:24, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Pinctrl for MCLK2 is attached to the camss consumer, causing a probe deadlock that breaks camera initialization.
+> - [Medium] Incorrect pinctrl sleep state override for I2C bus causes power leakage and configuration conflict.
 > --
->
-> --- Patch [1]: [PATCH bpf-next v2 1/5] bpf: Fix offset warn check for bpf=
-_res_spin_lock ---
-> commit f617fbd9a79f403f8e8be07c38922dcd0eedd840
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
->
-> bpf: Fix offset warn check for bpf_res_spin_lock
->
-> This commit fixes an incorrect offset check for BPF_RES_SPIN_LOCK in
-> btf_parse_fields(). It now correctly checks res_spin_lock_off instead of
-> spin_lock_off.
->
->> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
->> index cbb1e49b9bcbf..e7d4e9ba24e26 100644
->> --- a/kernel/bpf/btf.c
->> +++ b/kernel/bpf/btf.c
->> @@ -4168,7 +4168,7 @@ struct btf_record *btf_parse_fields(const struct b=
-tf *btf, const struct btf_type
->>  			rec->spin_lock_off =3D rec->fields[i].offset;
->>  			break;
->>  		case BPF_RES_SPIN_LOCK:
->> -			WARN_ON_ONCE(rec->spin_lock_off >=3D 0);
->> +			WARN_ON_ONCE(rec->res_spin_lock_off >=3D 0);
->
+> 
+> --- Patch [1]: [PATCH v5 1/2] arm64: dts: qcom: sdm845-google: Add dual front IMX355 cameras ---
+> commit 650af867be78a11fabbd3346603a6fc8f7cb758f
+> Author: David Heidelberg <david@ixit.cz>
+> 
+> arm64: dts: qcom: sdm845-google: Add dual front IMX355 cameras
+> 
+> The Pixel 3 features two front-facing Sony IMX355 sensors with different
+> focal lengths (standard and wide-angle). Sensors are connected via CSIPHY
+> port 1 and 2 and controlled over CCI I2C1, using MCLK2 as the clock source.
+> This enables support for the dual front camera configuration.
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+>> index 9368fd6b87515..cb5c261802bc9 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+> 
+> [ ... ]
+> 
+>> @@ -351,6 +389,52 @@ vreg_s3c_0p6: smps3 {
+>>   	};
+>>   };
+>>   
+>> +&camss {
+>> +	vdda-phy-supply = <&vreg_l1a_0p875>;
+>> +	vdda-pll-supply = <&vreg_l26a_1p2>;
+>> +
+>> +	/*
+>> +	 * MCLK2 (GPIO15) is shared between both front camera sensors.
+>> +	 * The clock is generated by CAMCC, therefore the pin is
+>> +	 * configured here rather than in individual sensor nodes.
+>> +	 */
+>> +	pinctrl-0 = <&cam_mclk2_default>;
+>> +	pinctrl-1 = <&cam_mclk2_sleep>;
+>> +	pinctrl-names = "default", "sleep";
+> 
 > [Severity: High]
-> This is a pre-existing issue, but could this WARN_ON_ONCE() be triggered
-> from userspace and cause a kernel panic on systems with panic_on_warn
-> enabled?
->
-> If a crafted BTF with multiple identical unique fields (like
-> BPF_RES_SPIN_LOCK) is provided in different nested structures, it appears
-> btf_find_struct_field() resets seen_mask to 0 for each nested level:
->
-> kernel/bpf/btf.c:btf_find_struct_field() {
-> 	u32 i, off, seen_mask =3D 0;
-> 	...
-> }
->
-> This could allow duplicate unique fields to bypass the seen_mask check an=
-d
-> be returned to btf_parse_fields(). When iterating over these duplicates
-> here, would it hit this WARN_ON_ONCE() and panic the system? Should we
-> return an error instead of warning, or pass seen_mask down during the
-> recursive struct traversal to prevent this?
->
->>  			/* Cache offset for faster lookup at runtime */
->>  			rec->res_spin_lock_off =3D rec->fields[i].offset;
->>  			break;
+> Will this cause a probe deadlock that breaks camera initialization?
 
-Fixed by next commit.
+No
+
+> 
+> Since fw_devlink parses the remote-endpoint properties, it establishes that
+> camss depends on the imx355 sensors, meaning imx355 will probe first.
+> During the imx355 probe, it requests and enables MCLK2.
+> 
+> However, because the pinctrl for MCLK2 is attached to the camss consumer
+> rather than the provider (camcc) or a dedicated gpio-gate-clock node, the
+> physical pin (GPIO15) won't be configured to output the clock until camss
+> probes.
+> 
+> Without the clock active, will the imx355 sensor fail to respond to the I2C
+> read for its CHIP_ID and fail to probe entirely?
+
+Yes
+
+> 
+> [ ... ]
+> 
+>> +};
+>> +
+>> +&cci0_sleep {
+>> +	/* bus has external pull-up, don't pull down */
+>> +	bias-disable;
+>> +};
+> 
+> [Severity: Medium]
+> Is this targeting the correct CCI bus?
+
+Yes.
+
+> 
+> The commit message states the cameras are controlled over CCI I2C1, which
+> uses cci1_sleep. By overriding cci0_sleep instead, does this leave the
+> I2C lines for the cameras pulled down against their external pull-ups
+> during sleep, causing a continuous power leak?
+> 
+> Additionally, without using /delete-property/ bias-pull-down;, won't
+> cci0_sleep incorrectly contain both bias-disable and bias-pull-down
+> conflicting settings?
+> 
+
+-- 
+David Heidelberg
+
