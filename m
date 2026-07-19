@@ -1,67 +1,67 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2AD1DB13A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 13:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69771BF33
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 14:01:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784468735; cv=none; b=f3v75wV/Zcd2uzbRNX+d0Y897bfTp3JZK7qOk9cWeg+UuZypOBRRhcV3vYGhzLFUcjmBDUAPoDjkRW1gnSr8yUdGWnIeL4uWqHhDiJMe7781AowzFgy6HsZM6iFlVpWGy82mPR3KaTBmZCwtckX73OkGnkYEkQy+HbvQq3mnNlc=
+	t=1784469663; cv=none; b=aoluOfxSSdPpaej2A5GS1ATXcUV1fwomQ3WmkjmJD+dvB2n4hO5oNVScHtQ12j3+J1yrNNXaPo/TsHDvqJNNKkNfMywtDDsuHZwqQEEQNGGbsZpC9V7b/zty3mg9cVdl37UFiBuqjAY/WD7COIVG6BThgGGBzdmOs+VTx6p1k9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784468735; c=relaxed/simple;
-	bh=d9dE3M1R+jlDzEuypie7rRoq0o09DnUhVu8NnHFMbl4=;
+	s=arc-20240116; t=1784469663; c=relaxed/simple;
+	bh=M47f7VIh1kNoZPfW0dI5ea/kkcnn6tS5VLR9zdkXom0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LW0CVXDsMc9XX2aij6/u5qB2b4ohK4NvTFkX2wLbWaDRX3YxGF7vJmN1Rs096+fN1VTz1vDkeNzP/FCitCTwDmeQ5sdzySWyy363UlKa89mdgcbaG8KJu5x0ANk1guFGq8/ujXRr9kXPVCeCrf+OtbgYaZ0vaQ8UN5HEyJV9nPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eCLjbdBq; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 In-Reply-To:Content-Type; b=gQyXAjTNiFv+iThidQdjQuWsKpT4AxP6pLO0xRbr7zGLgdB4dVk4yIwhzjcks8tFaNcjNKEhRy8Vzzm0F2UXQMGPEniBMw4iOlYwFGygHU/YeiCjPlVMWuqvCUuCgNhhW5tx5XCCaNN/0GoRs+KoiDTqrI++jNLVujmLuKL8rK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O04IQlaX; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eCLjbdBq"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-495437bb891so21561995e9.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 06:45:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O04IQlaX"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2cacf197759so99079805ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 07:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784468732; x=1785073532; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=gmail.com; s=20251104; t=1784469661; x=1785074461; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=S8oezzhPlACWhvhdZH/Jait1ZXvVzzjG4ACItSTIAt0=;
-        b=eCLjbdBq2hEdwFlDjFIUb+YkxMVJY3sukl7Ur9b+RmWAMCFdJFAOHgb0VkHsz+6jfW
-         WrF4nvknL+AxzE6nZSdMV6UEDx/cucfYBYUaFX7dC1HHRuJFAN4qH2P1GXlQBT5NS+zE
-         xcBEzQ4nOdZPA8q20oeT6ELNAnzBvW+ZU4RoC7migeX7mOc59R4tuKDeEVJikMb8VcxK
-         sBRfsHDv641c0cxoW7UAemUjwVBPsd9gVI1MiF/GOW7y9lUmv1r0t823E5esYMO7/YS0
-         6/ooKCzY/9epZTUb6XjnwwViuxBYaR4Fe8P+uYmHkiRpjt+Rj6bDWRz/zWUfttxHGWtb
-         zjRQ==
+        bh=mONfO392/ulTQGfkgVIBctz3TKuVwRBShyEvO/haUhc=;
+        b=O04IQlaXh+AMJAdsW76cjt2Dp7ksWFpGE4oR2FhJQ+sFBRG2THpi+PdqWfz4vdbO2h
+         JqMQLvC3vadPE6S7N7H9IENBWjZHgnGj8r0fw7Nov8XTD4c7AhSdU5TQNfns3KPNXYtv
+         oUPjwbjFVpIVyPi19hvOuliu9SrWG4Ii3Tu6txGS2zlE0tli/GGXcJ32Rs9OLp02fWrE
+         G/Ies4kw1HK9EFiTfssz2Op7Z3VDF1SNcm4Pk1FwhNU1hlWHBTNeg2PDij8ftQjRbQvA
+         +UWy42kKQx9uOEHUV7lKsDK5POb2QIRwzg2IRptoYIwvDCB9pYPLBuoyx4T4OidpT4+e
+         lQ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784468732; x=1785073532;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=1e100.net; s=20251104; t=1784469661; x=1785074461;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=S8oezzhPlACWhvhdZH/Jait1ZXvVzzjG4ACItSTIAt0=;
-        b=GCN3p1EJpOaCYfPaek6JsJPx1w7BpYhigqSjDavsG7J+nvpD0n23EQcOaCJImfMjKc
-         JrRx9keKmStfJs7dJgEK+pOSFyTSYQ/eNY3/Wjs+00Fjz8pKvR1Kz/q1mCX4q5U/th5L
-         djY59tbXOZvIr7Qzhfh15v51oXuIuJeFZ36S2IK0Rwyg4TclTB9y+DCbGFz6YKdM045Z
-         hq3UcRzhy97pHsJ8RF/VOFwN/4Bw8J5zGH3KRfeULMS5+qVNQgNjh1REv+ELb/DCfy4e
-         b88yQFdFw09OA3M5OhwQuInzqL41tCRWIFkU6qOURmBXXSdT5lRUx//OIFHgKjk9JpZm
-         VOEg==
-X-Gm-Message-State: AOJu0YzJpby2lcrB0025KugHzCu+4jR0QOM4Jc5fwXJ97hbKy3/jw2p9
-	UKpmWVdO2n+M33eOWHy97INXvCunLfCswJ2MsfScwfquDMfoUqcgsQIU+Uw4DtrXDiEm29IYO6/
-	HtraOCIA=
-X-Gm-Gg: AfdE7cngIWw6ygFhb4jJSivsw3o1nxjqMBuRh+fQH7WfJTnpKR8DiyF5KTf+FMxBZDI
-	QMK0fKHspP+LEf4L4sTFdF62sBBET/BZFi2MNevYKqn7oRT6mT+Q/vutliHBidVPnG1yAZDfsfp
-	rFGXX6mhzdtwDhfWvT+iekV0YQ05EsvxAUMcdCufh99JC61jTLjtDbeDhz29OjFas0lCbHuj7TL
-	S72Jk+qEQHCBk6WxeSNKjwf9DRBwaNJsWULshqlV3qpIFCGBVp04X42lSUmuI+E4NMOgAl0tu+2
-	RlhakXpQDg+EXKlAFCQ9nUcnm7i33skfm2nDVKM7t3NpxyBQ8Iw63zD+Ilu8c96UFDvGuLHKlbY
-	EDraLZJs2dnHn/kQYbkh7Cg9o9W0czExOaPrONQnKGwXRJOQSpzdIhYItIKlnyhzfLK60WpFosz
-	KaqeDB/4i3jgS6
-X-Received: by 2002:a05:600c:c178:b0:495:5d6d:9cc1 with SMTP id 5b1f17b1804b1-4955d6d9f9bmr10727905e9.0.1784468730934;
-        Sun, 19 Jul 2026 06:45:30 -0700 (PDT)
-Received: from [192.168.0.35] ([109.76.79.119])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954995b78dsm134249105e9.0.2026.07.19.06.45.28
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mONfO392/ulTQGfkgVIBctz3TKuVwRBShyEvO/haUhc=;
+        b=m5TSKXxM8J+I+bnUkm6+j5rF5vKx1I4C6/VtXwsXZ9qEqdjk3zI+9nAGX/tQ7RrYNS
+         jbdai5/puDpSKuCsRnRX4o8i2GlisayfRhetdaDDuZhJ8MCrNnfdX8PGIF+86qBLkRPj
+         KqiBmiBEJBFZbcNZMc+xL86P/+sMxrAKl9zGT3wrHOoVrEagYYRmPpj4NPlAIdFNCbYu
+         68cfOXOp5byK9Dr+e09NMLFu7raBEEQUDgrzE4RtvXBMW4sp7Ksv8hdXO3n8BuI8XzVU
+         jis67BCM0BLaHYhJf7+gM/Uop3v8oE1Qg8EYqTB5FH3tWQI2fTLjKN/jftN/JINGLOIJ
+         C44w==
+X-Gm-Message-State: AOJu0YwXJgsHq4HzCqooFsw1aSkZ9oyODWZ+O5MZZG89hVqsqYmR+P7o
+	bVBwqEQwJqfCnz9hF2kkbzwJJoQw3o9cwqJqrzeGHbUNHyjQQFWwQmOWb5iQSg==
+X-Gm-Gg: AfdE7cnLeeG7bQSOdpREA84R4HlC2QlpvkjKlhnviwT4WBMkEUaVgZ0GlGEYTUI5Prl
+	M1WbE/DR8nACsozok5grvZkFC86cY/AhqxQR1ZNsSGodeBoE+F+Fco2vHc3nJ33p0gISzV348Hx
+	mWWz0h0HD4K86BgRfQyBYsrusRyta/BljJFopMfeAExREEg55XX86VFN9egzuaeaamdZe60R7Rc
+	pMSNXXwSf9r+BFviR15iV9tZOo0vEqR9nmAbFjnPBDhMtcAP/+0bbMEgMpgb3Eyk1TcDHcenA8N
+	/pLuQ8R+qzgDP8vpQyvbalVFr98c1sbuEoCoAPVqeULsPTSXsfgBARMw9DRtmoV6rYeBrGYpOK5
+	/LXd6fmktJWgF9/sXPNmLdfNxKpMs17LVfPfDx1yQKDoKlKNG0bQkkomX7wwJBCKGYKByoIi9/J
+	r1OseRXZm0ipG8S4Uh49wfXg4r4aELVOHcydSYN9UXTWNV3xFdSjQ=
+X-Received: by 2002:a17:902:d590:b0:2ca:b89:7bcf with SMTP id d9443c01a7336-2cf3494b178mr111404475ad.22.1784469661111;
+        Sun, 19 Jul 2026 07:01:01 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf3448f614sm40536485ad.5.2026.07.19.07.00.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Jul 2026 06:45:29 -0700 (PDT)
-Message-ID: <add20096-6b98-460c-8d4c-5e497cfa857e@linaro.org>
-Date: Sun, 19 Jul 2026 14:45:27 +0100
+        Sun, 19 Jul 2026 07:01:00 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <eecfb767-972a-4b21-a088-d7c7b68c29c5@roeck-us.net>
+Date: Sun, 19 Jul 2026 07:00:58 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,208 +69,135 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, conor+dt@kernel.org,
- neil.armstrong@linaro.org, vkoul@kernel.org, media-ci@linuxtv.org,
- olteanv@gmail.com, devicetree@vger.kernel.org, robh@kernel.org
-References: <20260719-x1e-csi2-phy-v11-0-9d0a1ed0632d@linaro.org>
- <20260719-x1e-csi2-phy-v11-2-9d0a1ed0632d@linaro.org>
- <20260719124126.397901F000E9@smtp.kernel.org>
+Subject: Re: [PATCH 2/3] hwmon: (pmbus/max34440): add support for newer
+ version of max34451
+To: sashiko-reviews@lists.linux.dev,
+ Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260716-max34451_fixes-v1-0-a941b27eaecb@analog.com>
+ <20260716-max34451_fixes-v1-2-a941b27eaecb@analog.com>
+ <20260716083544.1B5B91F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20260719124126.397901F000E9@smtp.kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260716083544.1B5B91F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 19/07/2026 13:41, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Insufficient validation of the `data-lanes` property allows values up to 7, leading to integer truncation and out-of-bounds MMIO writes into common PHY registers.
-> - [Medium] The driver statically configures lanes based on the device tree instead of respecting dynamic `dphy_cfg->lanes` requests, violating the MIPI D-PHY API contract.
-> - [Medium] Setting lane polarity unconditionally overwrites the entire `CTRL9` register instead of performing a read-modify-write.
-> - [Low] Unmasked assignment of the first byte in `hw_version` may corrupt the final value with undefined upper bits.
+On 7/16/26 01:35, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Forward compatibility issue in ETNA8+ revision check due to strict equality
 > --
 > 
-> --- Patch [2]: [PATCH v11 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver ---
-> commit cff02f6508398df4f254c675b3580c3c848e17c2
-> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Subject: phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+> --- Patch [2]: [PATCH 2/3] hwmon: (pmbus/max34440): add support for newer version of max34451 ---
+> commit 02e46b67255562393d163820572cc52a0cabe3e7
+> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
 > 
-> This commit adds a new MIPI CSI2 PHY driver in DPHY mode for Qualcomm
-> hardware. It ports logic from existing camss drivers to initialize and
-> configure data and clock lanes based on device tree properties.
+> hwmon: (pmbus/max34440): add support for newer version of max34451
 > 
->> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+> This commit adds support for the max34451etna8+ hardware revision.
+> It updates the direct format coefficients specifically for this newer
+> revision.
 > 
-> [ ... ]
-> 
->> +static void phy_qcom_mipi_csi2_hw_version_read(struct mipi_csi2phy_device *csi2phy)
->> +{
->> +	const struct mipi_csi2phy_device_regs *regs = csi2phy_dev_to_regs(csi2phy);
->> +	u32 tmp;
->> +
->> +	writel(CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID, csi2phy->base +
->> +	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->common_regs_offset, 6));
->> +
->> +	tmp = readl_relaxed(csi2phy->base +
->> +			    CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->common_regs_offset, 12));
->> +	csi2phy->hw_version = tmp;
-> 
-> [Severity: Low]
-> Does this assignment to csi2phy->hw_version need a mask like & 0xFF?
-> 
-> If the hardware register returns non-zero garbage values in the upper 24
-> bits, those bits might remain in hw_version and corrupt the final value
-> when the subsequent shifted bytes are OR'ed in.
-> 
-> [ ... ]
-
-No not validating for "hardware returns garbage" that's a rabbit hole we 
-don't go down. The bits out of registers are trusted as correct.
-> 
->> +static int phy_qcom_mipi_csi2_lanes_enable(struct mipi_csi2phy_device *csi2phy,
->> +					   struct mipi_csi2phy_stream_cfg *cfg)
->> +{
->> +	const struct mipi_csi2phy_device_regs *regs = csi2phy_dev_to_regs(csi2phy);
->> +	struct mipi_csi2phy_lanes_cfg *lane_cfg = &cfg->lane_cfg;
->> +	u8 settle_cnt;
->> +	u8 val;
->> +	int i;
+>> diff --git a/drivers/hwmon/pmbus/max34440.c b/drivers/hwmon/pmbus/max34440.c
+>> index e56057e9273c1..024109df26db5 100644
+>> --- a/drivers/hwmon/pmbus/max34440.c
+>> +++ b/drivers/hwmon/pmbus/max34440.c
 > 
 > [ ... ]
 > 
->> +	/*
->> +	 * CSI_COMMON_CTRL5 is a physical lane power-up bitmap:
->> +	 * - Bits [0,2,4,6] → D-PHY data lanes(LN0, LN2, LN4, LN6)
->> +	 * - Bits [1,3,5] → C-PHY trio lanes(LN1, LN3, LN5)
->> +	 * - Bit [7] → D-PHY clock lane(LNCK) dedicated clock enable
->> +	 */
->> +	val = BIT(lane_cfg->clk.pos);
->> +	for (i = 0; i < cfg->num_data_lanes; i++)
->> +		val |= BIT(lane_cfg->data[i].pos * 2);
-> 
-> [Severity: High]
-> Could this cause an integer truncation?
-> 
-> Because the val variable is defined as a u8, shifting by 8 or more will
-> silently truncate to 0. If a lane position is >= 4, lane_cfg->data[i].pos * 2
-> becomes >= 8, which means the driver might fail to power up the lane.
-
-Will validate data_lanes[i] against >= MAX_DATA_LANES
-> 
->> +	writel(val, csi2phy->base +
->> +	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->common_regs_offset, 5));
+>> @@ -343,12 +344,24 @@ static int max34451_set_supported_funcs(struct i2c_client *client,
+>>   		max34451_na6 = true;
+>>   		data->info.format[PSC_VOLTAGE_IN] = direct;
+>>   		data->info.format[PSC_CURRENT_IN] = direct;
+>> -		data->info.m[PSC_VOLTAGE_IN] = 1;
 >> +
->> +	/* Lane configuration for polarity @ CSIPHY-base + CTRL9 */
->> +	for (i = 0; i < cfg->num_data_lanes; i++) {
->> +		if (lane_cfg->data[i].pol) {
->> +			u8 pos = lane_cfg->data[i].pos;
->> +
->> +			writel(BIT(2), csi2phy->base + CSIPHY_2PH_LN_CSI_2PHASE_CTRL9n(pos * 2));
+>>   		data->info.b[PSC_VOLTAGE_IN] = 0;
+>> -		data->info.R[PSC_VOLTAGE_IN] = 3;
+>> -		data->info.m[PSC_CURRENT_IN] = 1;
+>>   		data->info.b[PSC_CURRENT_IN] = 0;
+>> -		data->info.R[PSC_CURRENT_IN] = 2;
+>> +		if (rv == MAX34451ETNA8_MFR_REV) {
 > 
-> [Severity: High]
-> Can this result in an out-of-bounds memory write?
-> 
-> If pos is >= 4, pos * 2 is >= 8. The CSIPHY_2PH_LN_CSI_2PHASE_CTRL9n macro
-> will compute an offset that overflows the physical lane register space and
-> aliases directly into the common PHY register block, potentially clobbering
-> common registers.
-
-
-Will validate data_lanes[i] against >= MAX_DATA_LANES
-
 > [Severity: Medium]
-> Is it safe to use an absolute writel() here instead of a read-modify-write?
+> Will this strict equality check cause issues with future hardware revisions?
 > 
-> Writing BIT(2) directly clears any hardware defaults or reserved bits that
-> might be present in the rest of the register. This also creates asymmetric
-> handling since the register is left untouched if polarity is false.
+> The commit message mentions adding support for the ETNA8+ version, but if a
+> subsequent hardware revision probes with a manufacturer revision greater than
+> MAX34451ETNA8_MFR_REV (e.g., 0x0015), the outer check
+> rv >= MAX34451ETNA6_MFR_REV will evaluate to true, but this inner check will
+> fail.
+> 
+> This causes the code to silently fall through to the else block, regressing to
+> the older ETNA6 coefficients rather than retaining the newer ETNA8 ones.
+> 
+> Could this use >= instead of == to maintain forward compatibility, similar
+> to how ETNA6 is checked on line 328?
+> 
 
-Overwriting the register is deliberate at this point
+Please comment on Sashiko's feedback for this and the next patch of the series.
 
+Thanks,
+Guenter
+
+>> +			data->info.m[PSC_VOLTAGE_IN] = 125;
+>> +			data->info.R[PSC_VOLTAGE_IN] = 0;
+>> +			data->info.m[PSC_VOLTAGE_OUT] = 125;
+>> +			data->info.R[PSC_VOLTAGE_OUT] = 0;
+>> +			data->info.m[PSC_CURRENT_IN] = 250;
+>> +			data->info.R[PSC_CURRENT_IN] = -1;
+>> +			data->info.m[PSC_CURRENT_OUT] = 250;
+>> +			data->info.R[PSC_CURRENT_OUT] = -1;
+>> +		} else {
+>> +			data->info.m[PSC_VOLTAGE_IN] = 1;
+>> +			data->info.R[PSC_VOLTAGE_IN] = 3;
+>> +			data->info.m[PSC_CURRENT_IN] = 1;
+>> +			data->info.R[PSC_CURRENT_IN] = 2;
 >> +		}
->> +	}
->> +
->> +	if (lane_cfg->clk.pol)
->> +		writel(BIT(2), csi2phy->base + CSIPHY_2PH_LN_CSI_2PHASE_CTRL9n(lane_cfg->clk.pos));
-> 
-> [Severity: Medium]
-> Similarly, could this absolute write clobber the clock lane CTRL9 register?
-
-Overwriting the register is deliberate at this point
-
-
->> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
-> 
-> [ ... ]
-> 
->> +static int phy_qcom_mipi_csi2_configure(struct phy *phy,
->> +					union phy_configure_opts *opts)
->> +{
->> +	struct mipi_csi2phy_device *csi2phy = phy_get_drvdata(phy);
->> +	struct phy_configure_opts_mipi_dphy *dphy_cfg = &opts->mipi_dphy;
->> +	struct mipi_csi2phy_stream_cfg *stream_cfg = &csi2phy->stream_cfg;
->> +	int ret;
->> +
->> +	ret = phy_mipi_dphy_config_validate(dphy_cfg);
->> +	if (ret)
->> +		return ret;
->> +
->> +	if (dphy_cfg->lanes < 1 || dphy_cfg->lanes > CSI2_MAX_DATA_LANES)
->> +		return -EINVAL;
->> +
->> +	stream_cfg->link_freq = dphy_cfg->hs_clk_rate;
->> +
->> +	return 0;
->> +}
-> 
-> [Severity: Medium]
-> Should the dynamically requested dphy_cfg->lanes value be saved into the
-> active configuration here?
-> 
-> The value is validated but discarded, meaning the driver will always
-> statically power up the maximum number of lanes configured in the device
-> tree instead of respecting dynamic requests from the consumer. Does this
-> violate the MIPI D-PHY API contract for dynamic lane configuration?
-
-We use a fixed configuration right now. Future work may allow for 
-dynamic lane configuration - requires way more work defining registers 
-and bits plus logic to configure based on requested input.
-
-
-> [ ... ]
-> 
->> +static int phy_qcom_mipi_csi2_parse_routing(struct mipi_csi2phy_device *csi2phy)
->> +{
->> +	struct mipi_csi2phy_stream_cfg *stream_cfg = &csi2phy->stream_cfg;
-> 
-> [ ... ]
-> 
->> +	csi2phy->stream_cfg.lane_cfg.clk.pos = CSI2_DEFAULT_CLK_LANE;
->> +	csi2phy->stream_cfg.lane_cfg.clk.pol = lane_polarities[0];
->> +
->> +	for (i = 0; i < csi2phy->stream_cfg.num_data_lanes; i++) {
->> +		if (data_lanes[i] > CSI2_MAX_LANE_NUM) {
-> 
-> [Severity: High]
-> Is CSI2_MAX_LANE_NUM (7) too large for this bounds check?
-> 
-> As noted in phy_qcom_mipi_csi2_lanes_enable(), allowing lane numbers >= 4
-> results in pos * 2 being >= 8 later on, which causes both truncation in the
-> u8 bitmask and out-of-bounds writes into the common PHY register region.
-
-No data-lanes is constrained and will be validated in the next pass.
-
->> +			dev_err(dev, "Invalid lane %d\n", data_lanes[i]);
->> +			ret = -EINVAL;
->> +			goto out_put;
->> +		}
->> +		csi2phy->stream_cfg.lane_cfg.data[i].pos = data_lanes[i];
->> +		csi2phy->stream_cfg.lane_cfg.data[i].pol = lane_polarities[i + 1];
->> +	}
+>>   		data->iout_oc_fault_limit = PMBUS_IOUT_OC_FAULT_LIMIT;
+>>   		data->iout_oc_warn_limit = PMBUS_IOUT_OC_WARN_LIMIT;
+>>   	}
 > 
 
