@@ -1,188 +1,138 @@
-Received: from mail-wm2-f7.google.com (mail-wm2-f7.google.com [74.125.225.135])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EEE39C631
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.135
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F4C38D6A9
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784473705; cv=none; b=m360hR8yWliXieIdT4h+T+2ijVHYhgVmmMBAYuNF8h5q2s66JdxJpqD7/bPt11+gw9VAOzzaAWmcuCtdR7jfbaHZQrfQLRPW0pESbmzD1KF7zqQ6DQUnsr+PN1vMcn9TZXoBLBTDJQeC2sLj6HWWsMXd7Lk6zKwewSZ5LH8U0tw=
+	t=1784473991; cv=none; b=t5ZgCI6jQQ7RW/o/4ei5SMY5S4nmRSaL8wLe9xaH8HMUgpeVNOtgTmQNG2TVDgOdvHILkXqpGtvZQk9SLVOA878GSJFm5IDBGgXv3ecHGuAMma0AvX/GxTEssZJdaKMX4MDrkU+DSeML5rTm0O14TKpBxGFvZQuAoPIqfPfOHAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784473705; c=relaxed/simple;
-	bh=g6LQqsrWXiY+7OUBAHp4kf8xGJBX3+UC8Sq0rfIkDHg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=RiN5QSUOrwlxmlyRZxfoRD2iR3/75ykShbeAV2vE1/KBdwpgWQPjTMEopSI2L3ck12bzcyUeN8CaOop2NX7BDVc5BtZ6cqsqG9rzbjLl0KIK6ZR0/m4vMhg+Im7ZPOeRt+miFoMFVSS2YMJ2r9FDMYNyKfLH9aiDsFWwGDEuxBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KyPIMdfh; arc=none smtp.client-ip=74.125.225.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784473991; c=relaxed/simple;
+	bh=MD59CK3QQysWMnxCfGdnDSvMtuVD9pPnifDPBB5elbk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DR92ZDkS6hVnyZNHQmzSY6QVBis0gv9kko+GsgCtnChdPqSXNyWFWkjP4M7V8Ph7WOa9tbsPtXuXo27G2Aa/44EgLacKFm6McGU60E/DqA3dcuKYO5x88NjHB1kQdusv5Y846Xp8p++Bwo1cDGHQile48krge+2lw6REZJv+yCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTlJfbGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KyPIMdfh"
-Received: by mail-wm2-f7.google.com with SMTP id 5b1f17b1804b1-49557073245so2766615e9.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 08:08:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784473702; x=1785078502; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ZQ1FlXHQOc6lZCsP6dU6XTD5qiNU+Uv/Pn0cEhz4kks=;
-        b=KyPIMdfh/knph+bpLqnvaFAZwsQ8A8yueHWsScanInCcDfTPrwjOzyrBJrkSVZOqT1
-         s3xk+mdp3ao/Y8bIwA8jaVsakn3tltAz6mMkCoFi6L4cTK2CA9JNdCjcRlQGpKZX9FcI
-         DzuyLZH/+W6NqZ1uh1QX4mSblFldK+7ZEnYWQVQh6KW6mfNWeg41RTIcc4ObuSxeeelW
-         0wSkhJslBA2WOo9Ih3cZljaJR110kQYyBweP1ytSdFkTb4TkPHjYwXSAbRlKVuiM+57j
-         b7OCad/pTdFWFAuVbGnV8F5bSWWKTQ6MwBha4i82xwkfn/Qfbk4STxPm2gMF0bRkUg1b
-         bNMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784473702; x=1785078502;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZQ1FlXHQOc6lZCsP6dU6XTD5qiNU+Uv/Pn0cEhz4kks=;
-        b=K51Mig0+Aw/3H1+kWktenradShhZPK9cZ3+UygAy/ZzGZAydhgyNeFy+7FBM0lmFjS
-         4Fz3lS2DgExUZarSFaEk8pq+phRbvzpPikS0e69eVkkQLg0HoW8iwrV+A4a8DuRQSTfA
-         +aVRRzeTkx6YhyOFyFMvV+t4qu9iK1twifWa438iD6L7tXqwcpqg1i3fH3KZROxEnOgI
-         XSAmXRD2lVQzx3xIcIuPuF2xWlWK+cv9XVmfJqBKAd97GxvOOq8WLsAldrm/mxKDDiz7
-         RUU1qpPnvlHSUMm3yx67RAjy1kA5qdRTmw4jB+kCXql9nkknGybZldpTd5FWx/Li3Yjj
-         e7TQ==
-X-Gm-Message-State: AOJu0Ywxoj2tyGyq4eNKqk8hGXa4SbLFfLK2RznAzuuqJ2WABhVYKlq7
-	4/4x2M2f68ddrGkcm3jbxwDqcS4/aAUHzpKw09BjWne6IQ02lDoZYN2Fk5WBG8Gq
-X-Gm-Gg: AfdE7cmOxBuTMIJBNUqDpurSYAXJVBjh/fLaRR+XLdUSneqU7ikTik7PzLpqZMqEGaI
-	K1eWbaUICq3+NYNoOFLiFQzhXomP1oUF/UCHFl+3Y9Z7F1nLdp1B/LWrLoV7+UWdZPQWGCQtXO6
-	Iwnm+/jf3ZGkOflunQmnqtwq/j2l6BiYWVTDlupBC5Y5BZy1Q51WhEd1b5VhCn/dcPN+i7kWlVW
-	P/fL+qh+2SfTSzqQz17w7/jOWJs3Cx28zM5whKAal+HiS4rFE/JGgwNx6KKC4EbLbCgERhJLwe9
-	Z8S0o3lxV0chDnGCn6j1rpUlIYa4uRyFCv5PCxRK41KslAsF6oycCWU6wo975KFuKBuBwMb5GsA
-	jie3SeD9M1+dzpr0pL+BczGdORJ48MAejdA9JG9Mw+tWX5zP+enEgVk4tHwVssNMxv/pt0cl0kp
-	vIPTPEh4l2sQFAniwbMIPuhjk5QHEkK76hMFUmBLmLNlKu+LFaFE3KBkcYzZlnpCb0MNrsULDQ6
-	A8e7YjVyPgmd97MUXyOnJbHNwCrsf8adIhMB7VM1N2j
-X-Received: by 2002:a05:600c:1382:b0:495:699:5c8b with SMTP id 5b1f17b1804b1-4954a3e206dmr110350985e9.7.1784473701710;
-        Sun, 19 Jul 2026 08:08:21 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edbe4sm220178415e9.12.2026.07.19.08.08.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 08:08:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTlJfbGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEC11F00A3A
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:13:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784473989;
+	bh=D+8MChE3E/8mzRAH16kW2uYtH8JUv/UhkhLZCdVeGV4=;
+	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc;
+	b=bTlJfbGClEKb/Q/6Ns6xA44USc+LTKlciAd6hfcI/hnpMcoVgjrjPvUKcZVPLE+zQ
+	 xDwUdzquvprqU4Y1n/Y45SXCbbOlXBH9YFIuYpv+3dL/22YmDZDjmBHpn80oUollqx
+	 hkKQdxksVVXnOLFE/ggH9LXU1UWdeLKBwyM4VTAGuqv+/2qLOB0JPvmOJOUAX0+V0R
+	 7bNDrTAnL02oVVh33RJwBEIaKFLlkpjFdjmsDpzFYoOSkmkr4nQ5WDzHX4v99bgqTw
+	 f+HJlrlzXzPdAbOHOJNuORUxXQKnXv4aFxuf/k2cDFeyDQfU7iWQQw3tY/dO+zQzMM
+	 9/vm+jylOG0Ow==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-39ca0a30148so76396801fa.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 08:13:08 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yy8Uq7EmKiVh8JUD3YxqhjtQu+V5B8il5CBQVFk5exIelBpeglb
+	s4CPlHhMr8R6I8+04StL7XQ9d14foqCeN+VcTaPKs6siEv3kvlFdHmyyZ12dPKk3ieXv3rEQmna
+	yhuw1QUOIusf8OK/OrjY+HEUq32uVBfM=
+X-Received: by 2002:a05:651c:a11:b0:39c:7919:fcf1 with SMTP id
+ 38308e7fff4ca-39eb28e00eamr23399521fa.33.1784473987401; Sun, 19 Jul 2026
+ 08:13:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260717-a733-rtc-v5-0-3874cc26abf7@baylibre.com>
+ <20260717-a733-rtc-v5-2-3874cc26abf7@baylibre.com> <20260717154005.444E41F000E9@smtp.kernel.org>
+ <CAGb2v65PmMnm=gusbVRJqwHkMFAdKpFyk8coXK=pf0-dBgv8kw@mail.gmail.com> <1jqzkzds54.fsf@starbuckisacylon.baylibre.com>
+In-Reply-To: <1jqzkzds54.fsf@starbuckisacylon.baylibre.com>
+Reply-To: wens@kernel.org
+From: Chen-Yu Tsai <wens@kernel.org>
+Date: Sun, 19 Jul 2026 23:12:54 +0800
+X-Gmail-Original-Message-ID: <CAGb2v67n7=TtGtThhMvRY=0YwohAOCtvGUO_2A46SynK10axfQ@mail.gmail.com>
+X-Gm-Features: AUfX_myvVG7ADgJJXLtTSAVbNpOGFeUtBp63taMiVGNacocgHbMpjmjv0ND4nhU
+Message-ID: <CAGb2v67n7=TtGtThhMvRY=0YwohAOCtvGUO_2A46SynK10axfQ@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] clk: sunxi-ng: div: add read-only operation support
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org, 
+	linux-rtc@vger.kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	linux-sunxi@lists.linux.dev, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, linux-clk <linux-clk@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Jul 2026 17:08:19 +0200
-Message-Id: <DK2N4SFI9HSJ.26TX2WCT67ZHY@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v1 1/2] bpf: Preserve unique-field state across
- nested structs
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260719142401.2420111-1-memxor@gmail.com>
- <20260719142401.2420111-2-memxor@gmail.com>
- <20260719143429.1BA8D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260719143429.1BA8D1F000E9@smtp.kernel.org>
 
-On Sun Jul 19, 2026 at 4:34 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
+On Sun, Jul 19, 2026 at 9:29=E2=80=AFPM Jerome Brunet <jbrunet@baylibre.com=
+> wrote:
 >
-> Pre-existing issues:
-> - [High] BPF_REFCOUNT is incorrectly marked as non-unique, allowing users=
- to trigger a WARN_ON_ONCE via duplicate fields.
-> - [High] Typo in BPF_RES_SPIN_LOCK parsing checks the wrong offset, allow=
-ing users to trigger a WARN_ON_ONCE.
-> --
+> On dim. 19 juil. 2026 at 18:59, Chen-Yu Tsai <wens@kernel.org> wrote:
 >
-> --- Patch [1]: [PATCH bpf-next v1 1/2] bpf: Preserve unique-field state a=
-cross nested structs ---
-> commit cc8eb6296aa42dface6bb303fbfdec9c1e0e7566
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> >
+> >> > +
+> >> > +     } else {
+> >>
+> >> [ ... ]
+> >>
+> >> > @@ -143,3 +157,15 @@ const struct clk_ops ccu_div_ops =3D {
+> >> >       .set_rate       =3D ccu_div_set_rate,
+> >> >  };
+> >> >  EXPORT_SYMBOL_NS_GPL(ccu_div_ops, "SUNXI_CCU");
+> >> > +
+> >> > +const struct clk_ops ccu_rodiv_ops =3D {
+> >> > +     .disable        =3D ccu_div_disable,
+> >> > +     .enable         =3D ccu_div_enable,
+> >> > +     .is_enabled     =3D ccu_div_is_enabled,
+> >> > +
+> >> > +     .get_parent     =3D ccu_div_get_parent,
+> >> > +
+> >> > +     .determine_rate =3D ccu_div_determine_rate,
+> >> > +     .recalc_rate    =3D ccu_div_recalc_rate,
+> >> > +};
+> >>
+> >> [Severity: High]
+> >> Could the missing .set_parent callback in ccu_rodiv_ops lead to a sile=
+nt
+> >> desynchronization between the software clock tree and the hardware?
+> >>
+> >> The struct provides reparenting capabilities via .get_parent and
+> >> .determine_rate, but omits .set_parent. If a rate request causes
+> >> ccu_mux_helper_determine_rate() to evaluate and select a new parent, t=
+he
+> >> Common Clock Framework will apply this new parent in software but skip
+> >> updating the hardware since .set_parent is NULL.
+> >
+> > This is an issue. I'm not sure if what Sashiko says actually happens.
 >
-> bpf: Preserve unique-field state across nested structs
+> I think it could. I've defenitely made a mistake here.
 >
-> This commit addresses an issue where btf_find_struct_field() initialized =
-a
-> fresh seen mask for every recursive descent. By sharing the seen_mask poi=
-nter
-> across the traversal, it properly detects duplicate unique fields to prev=
-ent
-> an invariant warning during map creation.
+> > But 1. this is "read-only divider", not "read-only mux & divider",
 >
->> btf_find_struct_field() initializes a fresh seen mask for every recursiv=
-e
->> descent. Unique special fields in different levels of the same aggregate
->> therefore do not see one another. The duplicate fields can reach
->> btf_parse_fields(), where they trigger an invariant WARN_ON_ONCE(). A
->> crafted user BTF can consequently trigger the warning before map creatio=
-n
->> checks capabilities.
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking at
-> btf_get_field_type() in kernel/bpf/btf.c, BPF_REFCOUNT is defined as
-> non-unique (is_unique =3D false).
->
-> If a user creates a BPF map using a BTF struct containing two bpf_refcoun=
-t
-> fields, they bypass the uniqueness check. When btf_parse_fields() process=
-es
-> them, the second field triggers the invariant check:
->
-> kernel/bpf/btf.c:btf_parse_fields() {
->     ...
->     case BPF_REFCOUNT:
->         WARN_ON_ONCE(rec->refcount_off >=3D 0);
->     ...
-> }
+> The correct way to choose between the 2 is CLK_SET_RATE_NO_REPARENT I thi=
+nk.
 
-Will fix and respin.
+For standard muxes, just dropping the .set_parent and .determine_rate
+callbacks works. The core will just pass the determine_rate request
+to the current parent. In fact that is what the basic clk-mux does.
+However we have to deal with the pre-dividers, so we need the
+.determine_rate callback.
 
->
-> Can a crafted user BTF still trigger this WARN_ON_ONCE() using duplicate
-> refcount fields?
->
->
-> [Severity: High]
-> This is a pre-existing issue, but looking at the BPF_RES_SPIN_LOCK case i=
-n
-> btf_parse_fields(), it appears to check the wrong offset:
->
-> kernel/bpf/btf.c:btf_parse_fields() {
->     ...
->     case BPF_RES_SPIN_LOCK:
->         WARN_ON_ONCE(rec->spin_lock_off >=3D 0);
->         /* Cache offset for faster lookup at runtime */
->         rec->res_spin_lock_off =3D rec->fields[i].offset;
->         break;
->     ...
-> }
->
-> If a user provides a BTF struct containing both a bpf_spin_lock and
-> a bpf_res_spin_lock, wouldn't this trigger the WARN_ON_ONCE() before
-> reaching the intended graceful rejection?
->
-> kernel/bpf/btf.c:btf_parse_fields() {
->     ...
->     if (rec->spin_lock_off >=3D 0 && rec->res_spin_lock_off >=3D 0) {
->         ret =3D -EINVAL;
->         goto end;
->     }
->     ...
-> }
->
+On the other hand CLK_SET_RATE_NO_REPARENT just says that the rate change
+cannot reparent the clock. And it requires the ops to actually check for
+it. (In the past we didn't always check ...). So we should still drop the
+.set_parent op for clarity.
 
-Already sent, but will roll the fix for this in this series.
+But I think the main thing is that the naming and your intention in
+this patch is that the divider is read-only, not the mux.
 
->> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
->> index cbb1e49b9bcbf..8d628552ef99e 100644
->> --- a/kernel/bpf/btf.c
->> +++ b/kernel/bpf/btf.c
->> @@ -3751,7 +3751,7 @@ static int btf_repeat_fields(struct btf_field_info=
- *info, int info_cnt,
->>  static int btf_find_struct_field(const struct btf *btf,
->>  				 const struct btf_type *t, u32 field_mask,
->>  				 struct btf_field_info *info, int info_cnt,
->> -				 u32 level);
->> +				 u32 level, u32 *seen_mask);
->>
-> [ ... ]
+> > so the .set_parent callback should be provided. And 2. this is using
+> > the ccu_mux_determine_rate_helper, so it's possible a clk_set_rate()
+> > call is going to cause a reparent.
+> >
+> > I can add it while applying if there are no other issues.
+>
+> As you prefer, I don't mind sending another version in a few days
+> (giving some review time to patch #1)
 
+That also works if you want to do it. It does help with preserving
+history.
+
+
+Thanks
+ChenYu
