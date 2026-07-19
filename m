@@ -1,67 +1,67 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DF525A2C6
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 14:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475F439E190
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 14:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784471097; cv=none; b=cvU7Tg6DtS/4pzISCQFH+l3zffTbZnDVGhzV94HM+VokPpnIGOl3iB6E1RM8LOda/yOKUuX9eiecwOtlq/4KKJPYDl0uLw5Bo6NYkcgnPu+BdRTii76HGdNOnAfPhCdbgxaEAcS+9OPce8iYL+uRaXO5Q07yMWM16Q8ZejDGYd4=
+	t=1784473108; cv=none; b=bb8Wi1RRjtzpe35l6+LHzjMdPtclZQ+IUb7RhR210T9RrvHmiHKS9LpyfI0+jyh9493c6S5cTUnZO+/O+3lSO2qEa1Dhvu4fYPvNe0+8QTghK5QqeKfJchph+ae01MPFpInjLkDPJ/MKTe1SST0IVNOenGm08EwyTpqD/EHl2zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784471097; c=relaxed/simple;
-	bh=zpvxg856tCMzy2Od0dI7kZqxz/2/b1p04/CcpMW/COs=;
+	s=arc-20240116; t=1784473108; c=relaxed/simple;
+	bh=vIu51+UabEj+k31ihBNMoU3VBiRSMcsY9vtx33VG4tY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ElF3h7NsWH4W/EfHLyuF9QKrEwTKiWXhjHQ3HfuCH60hboVjdbz2RUgu29gpUosepILdB59zLxr6jQPt4/FxuHKCtux+0GTkylj2Y3LPFIIz0HMPvIOJk9EAl7UtCn/YJl2arp/ZyKZnE1LMC6V8dGskfCDfZuX+GH18zcX/DGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NA/tT5oT; arc=none smtp.client-ip=209.85.210.174
+	 In-Reply-To:Content-Type; b=KAZGmyRz/+0VnjUDTbIC4Qt+7DbQ4PXsKquGYUp5holBKjozHc449wgLwKqjCV81tjMdraSgUdRcz2HSchX5MTidQOCpuYlqR/HCMDhI5MO7YA0QwZo14dLmYkjNfpCNn+j3rrH+INCWSD9Jo3t9Z3Un7pqUtxw6CQp9cNJFcIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EgX4G++k; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NA/tT5oT"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8487b7b4066so9526138b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 07:24:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EgX4G++k"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2cacf197759so99451275ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 07:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784471096; x=1785075896; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784473106; x=1785077906; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ovcWgRh/SehcaPYcqFS1j99Q2R9oW6Tj3JBJPCP1Liw=;
-        b=NA/tT5oTIoCDwxT4gCqKCqrq5krArxQ0p5kqtix2VwnZrqokC7SbCA048Dd7Q4SaKb
-         EHnjOKsEkjKYw+NQsP482AndsbCOpjApbDMo/fhT535VCp6BpuX1hzborYpuk9r5F/Da
-         OdKWDY2DXblA56QI2aanohP8XFGxAHjTQnRAx0Nhgn/x2FP6w3NmY6JKpZtegSAm/RLv
-         kHSUqX4OJUb6srNEUOSNywmT2u/r+k/KJ34uL5TW64y4M4vMxh1Eqmr8x2a2geQkWmVF
-         h1e9YdqtWs7cWQO5s81CmQhTJuyN4WJTklgULTt6koYfCR5a65SgCrrofhXGg6aNFTTq
-         m73A==
+        bh=TuOWOYZJPqjblXYjLbi1DDIlFLJoew1zOivoY0LmtQM=;
+        b=EgX4G++ktuybKUxFyZ4XD9A3QadFIXJUAwJNV9CVZ2cXubSBXUBTjgkT1HWOiePbbY
+         NsjWBECwTmGJDPgPdrw4EcteltReIbK0EqcZiDx63i8UHjCFP2kfLzdZ3gHuEb7C/CsY
+         olvLP/aLutNS1d1zIdhaZFm9pBp+5508o5W5T4MG6V7ls9iWDXc9RP8snDPA9/trOnQK
+         bQwfXj6YyoBeaeL1euRjf2S/uHvo3IKThbe8fjhXjKVRgyHkPzfOzb0S4PyVT4WpuofQ
+         Lh30YaMZWXmVCtDsGekSipnKdW9GXukiyLwDBWeyJIxi1BXoiFz3lfKNYOz854oLB/TM
+         MWdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784471096; x=1785075896;
+        d=1e100.net; s=20251104; t=1784473106; x=1785077906;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ovcWgRh/SehcaPYcqFS1j99Q2R9oW6Tj3JBJPCP1Liw=;
-        b=AwD7lcp7NgHEvNW5vck6aUv8yBQr5AS9OBbfuzcwdDlT3bV+okiQTNDM/i3++4KHlG
-         QH0CVDd/7b2fTycaKZbL9X/3JbxJGKw7Xed5p3Ezmr9nkHtFiUVU6FDA/+iChIEEdOLr
-         NeG1kF7iKrpYfiLWfSNwphHjF3JQnNqJgCRjoI8cKIQh4DFsBewA3RWRd7WPp/YjgBed
-         VwWvtTuC+5ZC3kitfs92pkazYPp6tQqe9G6PWTYQyPkBY2GCU+jn/74VLDzP5AZFGGwS
-         Me34fcx3JfllAWcTG/a+Rv5rLoT+x6PvLg81xQACwr1ySzbUG6KQOE+3fLYhb+B8S48D
-         bBhw==
-X-Gm-Message-State: AOJu0Yz1md++YQ7ulQRI1MzY7Wv8Ju3P/cNdRtcL+lyvMccnYeOMMJGw
-	mtl+LqStLV4Qa+I17GSjSm9sgxS5SJJ+0S4O5RmvOwzEN6NBjH8im9dsOMhmnA==
-X-Gm-Gg: AfdE7claPF07LK3j6wsjAJ2HkX6fALyKqdB3XJwf7TMhcivTVBJqzwpa9ZcOzCCKcSY
-	N++1zZH2zs9+8XmNFSqm2OHXqgMkn2AxwYHcXgzEGSZl/L874/FCgt4/t7MOJtJUhq9RilHg+Rf
-	OK6sMBMqREnA9LSlmg+MOSpg1WWjA3FJaS/7r63O4h4wH/whSAfTQmyDuDFkFRlf8YcEw3o+mAJ
-	mGZ7ifs9n3d853kA8atEv3IWipznpvKmmAF3GuCeU7ykPYT870KvceB8+Wm9NzHFqXVOAwlOeoX
-	+00hkehxoZopnsTqwnGRwqAIQMXSRzxE8L/5wUKPpMG57WanBepHViJdYlGswv1Jhf7WaLQ2HsP
-	85oBPqfA0ghguyYJCxpYlnyz2K+vjdyr4A0rScEnIR3kqzHZBerI3Ub2C9cYPwG5PrKtCNkPFmx
-	Pjdois1zvY7mnjEprZDhTNyqG79ADgLlALOqus1e547E0p4GQR2vM=
-X-Received: by 2002:a05:6a21:6110:b0:3c3:a140:938a with SMTP id adf61e73a8af0-3c3ad947db0mr11892130637.45.1784471095830;
-        Sun, 19 Jul 2026 07:24:55 -0700 (PDT)
+        bh=TuOWOYZJPqjblXYjLbi1DDIlFLJoew1zOivoY0LmtQM=;
+        b=J05TVIYdJ+BByjLAQztJl1g+AyeM9MoLkA4XpG0cJmMWGihg0s0n6+Haci6mhm7Rlf
+         w0pFwc+IpfpHq7httb90tgG5CrQtvwP/3sVvUMqX4Fkzmttjv3CiRWpedi/fFPSASShF
+         AIh689DlYCNXJvb/kzMa9pYPcvpt8aeQDQ5PJoC7VrgBtiYRw/4rYdKWrhPTFbycgexm
+         UKtztB/THLo29jQOhIMsDB9/PMAcT43hYFnjxHfoFT3mvZ9cU+1JQFXP5TeKPUrICwQS
+         LvQSVqvOYrhHRNsLSZJTHFUxvxLx9mlxEgq7/2GmBUf1TYd3C07c/Hz1vxRPVEHOYYHQ
+         2nHw==
+X-Gm-Message-State: AOJu0Yx7Y5AVbJnc8qCiFmozm8hfOLkyLdNKd3uTxW8wtkYZ2UB4CvRJ
+	SdC0/QLjhPFKehUEMtwrkwQz0h8J/wbt7ik9lURtipYO4Fh7mczWZOF5rspTgg==
+X-Gm-Gg: AfdE7cmoeAk2+fCw8ehzztgq5eg5Z4oYNPWcXeYlhcaR9P8RFBLFfhmguK5GgRKSDtl
+	uOxbungUSkY7DMF6TN/DGVdBW07yTo2kuSA0QKb7m655IFXeKIiP7YTVbXqyKIVb0CU6Tm1/tEF
+	4cNbY8YA5a1BURw284hOfJhVwwCBxFTB2pP3ToyBD7BZxzUxE/XLndMpnnZ1w36dAMK9dnkGxvq
+	1jIPlHsirb5FPeiglkEKK9DtZ7GEtD/sBRTLPaQ2Y2jHBFIOOArLTES6SxiAV0/IJcJy30VWhkz
+	JSmNBmm6WhtB0RQuXYE9/NX20xlcE0l7S6l9PdCXkc3r0tah60e6HHk8VBEYEA18ZhbRW/npBn8
+	u9fBnd7zWJ4nLBHSemDf2uv8QSLVZeHn1i7aqn7YQ33WlmttnP0axYO23HZBAo4C0PBaYuhZvqv
+	uGEu9O64t5fp+MakSTZFNbzfht5mFSsPkLqWCht6ndEjk8ZErSQFk=
+X-Received: by 2002:a17:903:380f:b0:2ca:4f33:e86f with SMTP id d9443c01a7336-2cf348456ecmr112818385ad.12.1784473106538;
+        Sun, 19 Jul 2026 07:58:26 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cb517aad95dsm3238581a12.7.2026.07.19.07.24.54
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf344bd3aesm41488535ad.26.2026.07.19.07.58.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Jul 2026 07:24:54 -0700 (PDT)
+        Sun, 19 Jul 2026 07:58:25 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <1de9d366-469a-489f-99b1-b667705bf491@roeck-us.net>
-Date: Sun, 19 Jul 2026 07:24:53 -0700
+Message-ID: <417d6eac-409a-4b8e-995e-5ec8bdd62be9@roeck-us.net>
+Date: Sun, 19 Jul 2026 07:58:23 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,15 +69,14 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] hwmon: (pmbus/max20830): add VOUT feedback
- resistor scaling support
-To: sashiko-reviews@lists.linux.dev,
- Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
-Cc: linux-hwmon@vger.kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, robh@kernel.org
-References: <20260706-dev-max20830c-v2-0-37761e89bb5f@analog.com>
- <20260706-dev-max20830c-v2-3-37761e89bb5f@analog.com>
- <20260706022155.C5B251F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 3/4] hwmon: (kb9002) Add driver for Kandou KB9002
+ retimer
+To: sashiko-reviews@lists.linux.dev, Andy Chung <Andy.Chung@amd.com>
+Cc: conor+dt@kernel.org, robh@kernel.org, linux-hwmon@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20260715-kb9002-upstream-v2-0-2fd390383da5@amd.com>
+ <20260715-kb9002-upstream-v2-3-2fd390383da5@amd.com>
+ <20260715091724.18BC21F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -123,122 +122,77 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260706022155.C5B251F000E9@smtp.kernel.org>
+In-Reply-To: <20260715091724.18BC21F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 7/5/26 19:21, sashiko-bot@kernel.org wrote:
+On 7/15/26 02:17, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Scaled `PMBUS_READ_VOUT` value can exceed the 16-bit capacity of the PMBus `LINEAR16` format, causing silent truncation and incorrect voltage reporting.
-> - [High] Missing software scaling for VOUT limit attributes and missing `.write_word_data` callback causes hardware limits to be programmed completely out of bounds.
+> - [Medium] The driver implements its own internal mutex for locking hardware accesses instead of using the hwmon subsystem's `hwmon_lock()` API.
+> - [Low] The `i2c_device_id` array is initialized using a positional instead of a named initializer.
 > --
 > 
+> --- Patch [3]: [PATCH v2 3/4] hwmon: (kb9002) Add driver for Kandou KB9002 retimer ---
+> commit 59c6448090144292eb629f4257436694b1eaaa0d
+> Author: Andy Chung <Andy.Chung@amd.com>
+> 
+> hwmon: (kb9002) Add driver for Kandou KB9002 retimer
+>      
+> The Kandou KB9002 is an 8-lane PCIe 5.0 retimer that exposes an SMBus
+> target with mandatory PEC. Add a hwmon driver reporting the firmware
+> aggregated maximum die temperature as temp1_input, with the firmware
+> version and boot status under debugfs.
+> 
+>> diff --git a/drivers/hwmon/kb9002.c b/drivers/hwmon/kb9002.c
+>> new file mode 100644
+>> index 0000000000000..94c7d95b3fff5
+>> --- /dev/null
+>> +++ b/drivers/hwmon/kb9002.c
+> [ ... ]
+>> +struct kb9002_data {
+>> +	struct i2c_client *client;
+>> +	struct mutex lock;	/* serialises register accesses */
+>> +};
+> [ ... ]
+>> +static int kb9002_fw_read(struct kb9002_data *data, u16 reg, u32 *val)
+>> +{
+>> +	struct i2c_client *client = data->client;
+>> +	u8 addr[2];
+>> +	u8 rbuf[I2C_SMBUS_BLOCK_MAX];
+>> +	int ret;
+>> +
+>> +	put_unaligned_le16(reg, addr);
+>> +
+>> +	mutex_lock(&data->lock);
+> 
+> [Severity: Medium]
+> Is this custom mutex necessary? The hwmon subsystem guidelines state that
+> drivers should use hwmon_lock() and hwmon_unlock() to serialize operations
+> for attributes registered by other means.
+> 
+> By using a custom internal mutex, does the driver bypass the standard
+> subsystem synchronization architecture and introduce inefficient double-locking
+> on sysfs reads, which are already protected by the hwmon core?
+> 
 
-Please comment on Sashiko's findings and either fix or explain in
-comments why the issues do not apply.
+Same question here. I do not see the point of this additional lock.
+
+> [ ... ]
+>> +static const struct i2c_device_id kb9002_id[] = {
+>> +	{ KB9002_DEV_NAME },
+>> +	{ }
+>> +};
+> 
+> [Severity: Low]
+> This isn't a bug, but does this array initialization bypass the I2C
+> subsystem guidelines?
+> 
+> The I2C client initialization rules request that initialized arrays of type
+> struct i2c_device_id use named initializers rather than positional
+> initializers.
+> 
+Correct. Please fix.
 
 Thanks,
 Guenter
-
-> commit 19e6041d100f0e80c9e49784d17900b141e3ea61
-> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
-> 
-> hwmon: (pmbus/max20830): add VOUT feedback resistor scaling support
->      
-> Implement support for external voltage divider scaling using the
-> adi,vout-rfb1-ohms and adi,vout-rfb2-ohms device tree properties.
-> 
-> When the desired output voltage exceeds VREF, a resistor divider
-> (RFB1 and RFB2) is used to scale down the feedback voltage. The
-> driver reads these resistor values from device tree and applies
-> the scaling formula: VOUT_actual = VOUT_measured × (1 + RFB1/RFB2)
-> 
->> diff --git a/drivers/hwmon/pmbus/max20830.c b/drivers/hwmon/pmbus/max20830.c
->> index cb2c23672166d..5aad4448054fc 100644
->> --- a/drivers/hwmon/pmbus/max20830.c
->> +++ b/drivers/hwmon/pmbus/max20830.c
-> 
-> [ ... ]
-> 
->> @@ -14,6 +15,45 @@
->>   
->>   #define MAX20830_IC_DEVICE_ID_LENGTH	9
->>   
->> +struct max20830_data {
->> +	struct pmbus_driver_info info;
->> +	u32 vout_rfb1;
->> +	u32 vout_rfb2;
->> +};
->> +
->> +/*
->> + * Driver currently only supports READ_VOUT for monitoring that needs scaling to
->> + * convert from feedback voltage to actual output voltage.
->> + *
->> + * vout_actual = vout_fb × (1 + RFB1/RFB2)
->> + *
->> + * VOUT_COMMAND and VOUT_MAX are currently not in use, but work with feedback
->> + * voltage. If regulator support is added, VOUT_COMMAND values would need
->> + * to be adjusted accordingly.
->> + */
->> +static int max20830_read_word_data(struct i2c_client *client, int page,
->> +				   int phase, int reg)
->> +{
->> +	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
->> +	const struct max20830_data *data = container_of(info, struct max20830_data, info);
->> +	int ret;
->> +
->> +	switch (reg) {
->> +	case PMBUS_READ_VOUT:
->> +		ret = pmbus_read_word_data(client, page, phase, reg);
->> +		if (ret < 0)
->> +			return ret;
->> +
->> +		/* Apply voltage divider scaling if resistors are non-zero */
->> +		if (data->vout_rfb1 && data->vout_rfb2)
->> +			ret = DIV_ROUND_CLOSEST_ULL((u64)ret * (data->vout_rfb1 +
->> +						    data->vout_rfb2), data->vout_rfb2);
->> +		return ret;
-> 
-> [Severity: High]
-> Does this returned value need bounds checking?
-> 
-> If a large resistor divider is used, the scaled PMBus word calculated here
-> can exceed 0xFFFF. The generic PMBus core function pmbus_reg2data_linear()
-> will cast this returned value to a u16, silently wrapping the value modulo
-> 65536 and resulting in wildly incorrect telemetry (e.g., reporting 2V instead
-> of 12V).
-> 
-> Should this be clamped using clamp_val(ret, 0, 0xffff)?
-> 
->> +	default:
->> +		return -ENODATA;
->> +	}
->> +}
-> 
-> [Severity: High]
-> Will returning -ENODATA bypass software scaling for VOUT limit attributes?
-> 
-> The driver sets PMBUS_HAVE_VOUT below, which exposes hardware VOUT limits
-> (like inX_max or inX_lcrit). Because only PMBUS_READ_VOUT is intercepted
-> here, the core will read those limits unscaled from the hardware.
-> 
->> +
->>   static struct pmbus_driver_info max20830_info = {
->>   	.pages = 1,
->>   	.format[PSC_VOLTAGE_IN] = linear,
->> @@ -24,13 +64,25 @@ static struct pmbus_driver_info max20830_info = {
->>   		PMBUS_HAVE_TEMP |
->>   		PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
->>   		PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP,
->> +	.read_word_data = max20830_read_word_data,
-> 
-> [Severity: High]
-> Does this struct also need a .write_word_data callback?
-> 
-> Since PMBUS_HAVE_VOUT is enabled, user writes to limit attributes will fall
-> through to the PMBus core, which writes the scaled PMBus word directly into
-> the hardware's limit register. Because the hardware expects limits in the
-> unscaled feedback voltage range, the written value will be completely out
-> of bounds.
-> 
 
