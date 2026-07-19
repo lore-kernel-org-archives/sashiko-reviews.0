@@ -1,104 +1,211 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D0A1991CB
-	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 22:02:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D15199949
+	for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 22:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784498535; cv=none; b=RFvoOOTR4HKL+ic1IUbPMIJsTdVY4jLrRN8YFSFvqf+CtBLIAFRf/TV0AHnbtqrcY2D4x0xdm6Q9a9fNYnAZmhNlChq9WL2/NVAJPUhf31UxkeEf2B9K7O6WGHw4QmyURg5KWS/F5rJlY8hKdK9+792wYTymlxVmwCBMITCve1U=
+	t=1784500238; cv=none; b=kMeoOwyKIoqAlbrZHFQhIYA6txv8ZrW/LPi75NjSZByJgAIUNl6p0r9w1mco8dDM2JPitAFFa9zJhHPgimLvQ8lCBX8O64x8i017SBCiP9l89No4peAwnhYuJGp/5BTOBXUaS/q9Zx3UoM4SIKxq38OrcTSYmEXV6RVEzgVaerk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784498535; c=relaxed/simple;
-	bh=67kSqJxBYeYORHm3dPY68gMhUJtatG/gvs2HaazGZ88=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MdK7f/7Wua8Y8Dcl2NCx1pDz77w5OUaF9w0MjBypXQ5NRZS28HaaVvtbBeNWXDFbQR3EUw4Gyl2mhDLRnRu/ihB+3rZPtbliNVwLMKrO2mpaFM9earmOedpM4UftTARLSi61jBLwPEx1/tntLfKB0mzDhHEjNVKLUghLEuTTkbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/mChse9; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784500238; c=relaxed/simple;
+	bh=0C2jaq6CHwX65Dpl7hbWEPT8Pg5z8tLgPBCiFFKIv+U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WWGEO0ZBibp2zy/Ec7O4MMu9DlbDH6ItTicyhnGbtazZU2DRuOIZuXfzWncj09aT79czxJG7LCaoEsM0/gF8L18IatTLxYC5Vcsbi+C3hBi41T3r7Z2sY5iL7MFdRlHUjyCAvDhQNTr0hhlhtXMEihHRtpBF5fhb+vySwRwQqOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HV9uM8Fm; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/mChse9"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-493d92b7db3so47100225e9.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:02:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HV9uM8Fm"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-493f75f7172so73913975e9.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 15:30:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784498532; x=1785103332; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CtzMPjTew5PFKy9cuAsUj9YRpPA5Fe9E0O8jZqCNoi0=;
-        b=E/mChse9yRP9FAWMFSb6vzZwxAHKsYSKUuMOjj5NkVuayVSGLA9ETAfsCk06Moyavs
-         fC/HSL+XL/XHcKakgYCdLXg6HmWeJxfSUsfDylqQ1vIKEXKUAv7EqqczXuNGC8SS6W/k
-         x3sg3unHDayDuraJvwGjgz5Iu0pguqvTwFiCr/V+uIHj4O2lcYpyVyUAJ6pRdkYNJNK5
-         1KYhXpoOPXOvM1mYYMjJJN+77u5Q9FrH2FYqOp5MyGtFZapWrRQdEoZqtv/nHrjygVXq
-         xVOAtbRB3gbwtoadwyoVzncVwEWq69IViYgb0ke/gWongnaXATeNUMbfGu2Ts2RXPgy4
-         OQsA==
+        d=linaro.org; s=google; t=1784500235; x=1785105035; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=VNPJswjr3SJLrlJpAZg7EHmOY10XaD74Uxuqros5GpM=;
+        b=HV9uM8FmfMoJ6GDlMmlQNME+FGVNDb+hGu2CPvM4qlS+Ls53RxlleJSRXZS9EXIhC9
+         ij1/of3J2WqKU3aEn2i9BQt7p4wm15WmUdfvDuJdg67ihbnBPeRwRp3sIHx3FxKtTFW9
+         k1EiEfkHOWOvo9ukDUzXaSuS9awuSO6XNvOymbN7Q3MqM3wP+ycJUzV0IKBKojLeAp49
+         igvZiN0rXbNKv05fpR1fD0XxCFkRhoeVibQ7zMAyQ94yWJ9G40LXNEKklyuVTOGs3arZ
+         tPtuywXzOJuyicVUfCrKGAXlVrD4bkMCcZeaDDvtSe2SG3QeMgk7Ni30Wk+l2ZllZ8w1
+         ZISA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784498532; x=1785103332;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CtzMPjTew5PFKy9cuAsUj9YRpPA5Fe9E0O8jZqCNoi0=;
-        b=VjqYoKD1hiWvIJZahc73tZ9xZhlbMfUBksQ0oIPdPSh5Whb5vAsrWcFgsVfuowM37C
-         7IOwfTSEH4EnmOnKKVtdnwzRD1vnPuBmcmxkD3/tT3wyBfizhe+75GO9oA9tfsGDsaB9
-         UzOlRVv4YvzrvwOwL+pXk0X1TysGHSu48GolQdJBjNB7HGgElVfgM3FJ87Uz3dJIMtHc
-         vwlJ7ZxXj1cKzz+nzbOlQ2lcVEJJBxSPdf7FjkrZcz9g3l8Y7h8ZFXiDhEIMPe5xVWfs
-         GaDu3zIXoVd4BgqQikZZBt47+M2DV3aHQogKknChtyyS4POBFs/oqt8eT9A+B71yiwaS
-         piBg==
-X-Gm-Message-State: AOJu0YyZ94tsV7+DzDzNwkFYsnU8WdEH776CP70cJOrwx1XiEnlU6xra
-	Z7IvRWc8YIy7yKBXJy6g7+wtzBTOtJv8FbFCndIYHvTXeQDDq80eE8z0Yn1FC906
-X-Gm-Gg: AfdE7cmiVeEUlC8rBJZ5AaZYXSV7sc6Y+6DRQT4l7E1aaMi6JWaowDSmJDXgJv2IKsX
-	gF5SmvNFr+5B8VTEPhUGpyhco2F9PgEHXmjeKq/fW0ebW1cyJAObDI/QYRy8AeI0LBfC7lKjIwW
-	8ta0cQ17duqTEw51hJTlJxqMtyMTAtozesILmyq5+nIwfP9+LXuJP3KnAxfDF9E8Klw6g05ng6a
-	7VRsKQrKDtkTQwjkoJpaS/fBBIywSR1yEppYXBLOUtlCSAWQ2hErWN+LxWDv6W51lpr8v1ZdarI
-	yb0uj2TNDoZhq+wqAPCy9Mxv8MN02OdzdEggoYoTFP8ufCneubrUy3P0Nmw4FnzkX6JSf/M5ryy
-	U4/1PuNOY8uNcURDeHDHPAPTufSZs4Ff0qSPsreOMdsBBftGu1yT/V6V0yOCATIYRnwLxr6BLOX
-	pq3XcvCJE43A9hLY28ZYQXhQxmq6ptQ7m1YZpcIqpjMi3PRIiqZ2cHg8Ato1e8ZQEeSWlpjQXct
-	l28rX5R8Z+Ntr3NcGONzzKMEFy12PMe3dx3Bi75b1gb9OGI6CSBv1mRZabK2H9GaxcT9AaEUIBr
-	h5LYX1Xl
-X-Received: by 2002:a05:600c:6a0b:b0:493:c453:6002 with SMTP id 5b1f17b1804b1-4954a516453mr75828265e9.35.1784498531930;
-        Sun, 19 Jul 2026 15:02:11 -0700 (PDT)
-Received: from MacBook-Pro-von-Karl (dynamic-2a02-3100-aeaf-bd01-78a0-2a2d-507f-c97c.310.pool.telefonica.de. [2a02:3100:aeaf:bd01:78a0:2a2d:507f:c97c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954995b78dsm151510615e9.0.2026.07.19.15.02.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 15:02:11 -0700 (PDT)
-Date: Mon, 20 Jul 2026 00:02:09 +0200
-From: Karl Mehltretter <kmehltretter@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: imx@lists.linux.dev, Frank.Li@kernel.org
-Subject: Re: [PATCH 4/4] serial: imx: clear imx_uart_ports[] entry on probe
- failure and removal
-Message-ID: <al1CmLgNC4Tf5amR@gmail.com>
-References: <20260719160812.35407-1-kmehltretter@gmail.com>
- <20260719160812.35407-5-kmehltretter@gmail.com>
- <20260719162850.043B41F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1784500235; x=1785105035;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=VNPJswjr3SJLrlJpAZg7EHmOY10XaD74Uxuqros5GpM=;
+        b=Y6C1RorL6wGD/nXTUqY/pRZMk95CLn9JDAxYbGl75HCkedFl4TiUZGzjUdtTf7D8ny
+         deRdYOgFnpifPY4veEwRVs+PL0NEQTmG8waQ+SzsWa6qvIGSo9IUIQWXIVbY09yr3K5I
+         YXCpG1iJ5GzXVnRpy5Vh+pwxem6FfK4AOqNtiueTzypluOV5FV+X9JFsu6vPcRCRKxfK
+         It0soJjJhbVJ9VOTRr4F3F1CvJW2+j9gAOeISLp4G3BqulvloOdxEI+eK9QSaUH4k47+
+         2NtF7SR0qQ80gjXImgb+/xGg54DSrOtN807synfNB5xBgyqiIiF9NvgEhHBWdBklmihE
+         +ptw==
+X-Gm-Message-State: AOJu0YxMPj+z6p71qYavFWha7rGeSyb+qGf7WRF5Cacs+vW9uurTwvnM
+	h0CjG2E+gw6xeJNj60qhFm9Vtx/G2TKVF3OEuFSZZLkxdTdz1fTzwt4v7uBhv0k33yozwQ8gg73
+	BZw+HkqE=
+X-Gm-Gg: AfdE7ck6apO+st5lpEFQjlyUM5gEALTBfJZvjGnQySFtRgMyVrkNutOw43XpO9DZlA2
+	33DScnFHN+PjaP0TkxnldwiqtD0NBJSIcCDfE4zG5qCp1cj7v08h8W/Iuf75LiLeoPeTqePhdEI
+	3RvD6IS/gpLxRSufHqsm3BYXoZ1bZKGbR5ufJmOkEU7I5NnJLRaFLGoo1lfzAep1XdVqGMNh+aA
+	PGdWZBCSLuQwoi2LQXQonhEWCwOOgC1vrRPpdFzwNiFMYyae2v2jdc+IRJYJV9AvEF3FIPgjIox
+	fyIrczvdO2t7y2LzilKM22RavhF9izgmRQdHgFs7Jw3zc12qeWAxYOc/2wxnc1mZKwPS+CBQ9Jn
+	i2JvMlgHOR40BOF+OUYdzxgq6nFMquTjVQaXsrqHuvhZhrSNEI9UI5N42IFsW5hSh3F8uYMmDsm
+	mEDv7py91NlTZE3BGXhUoTkCsk
+X-Received: by 2002:a05:600c:4445:b0:493:f262:b8 with SMTP id 5b1f17b1804b1-4954a3e374cmr116983045e9.1.1784500234679;
+        Sun, 19 Jul 2026 15:30:34 -0700 (PDT)
+Received: from [192.168.0.101] ([109.76.79.119])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm217846365e9.13.2026.07.19.15.30.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Jul 2026 15:30:34 -0700 (PDT)
+Message-ID: <61f7c25d-fd50-42bd-aabc-8da1ea28e233@linaro.org>
+Date: Sun, 19 Jul 2026 23:30:33 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260719162850.043B41F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, media-ci@linuxtv.org, vkoul@kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org, neil.armstrong@linaro.org,
+ linux-phy@lists.infradead.org, olteanv@gmail.com
+References: <20260719-x1e-csi2-phy-v12-0-cc7311326d1b@linaro.org>
+ <20260719-x1e-csi2-phy-v12-2-cc7311326d1b@linaro.org>
+ <20260719135920.2195A1F00A3A@smtp.kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-GB
+In-Reply-To: <20260719135920.2195A1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jul 19, 2026 at 04:28:49PM +0100, sashiko-bot@kernel.org wrote:
-> >  	uart_remove_one_port(&imx_uart_uart_driver, &sport->port);
-> > +	imx_uart_ports[line] = NULL;
+On 19/07/2026 14:59, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Valid calculated settle_cnt of 0 is erroneously rejected as an error, causing PHY initialization to fail.
+> - [High] Potential NULL pointer dereference in clock name comparison during probe when parsing malformed device trees.
+> - [Medium] Missing PM_OPP Kconfig dependency causes unconditional runtime probe failures.
+> --
+> 
+> --- Patch [2]: [PATCH v12 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver ---
+> commit 7fdedc509474184e47a62af468ae08b71f96dfd5
+> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Subject: phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+> 
+> This commit adds a new MIPI CSI2 driver in DPHY mode. It imports existing
+> CAMSS CSI PHY initialization sequences to support devices like the
+> qcom,x1e80100-csi2-phy.
+> 
+>> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+>> index 60a0ead127fa9..779a3511ba852 100644
+>> --- a/drivers/phy/qualcomm/Kconfig
+>> +++ b/drivers/phy/qualcomm/Kconfig
+>> @@ -28,6 +28,20 @@ config PHY_QCOM_EDP
+>>   	  Enable this driver to support the Qualcomm eDP PHY found in various
+>>   	  Qualcomm chipsets.
+>>   
+>> +config PHY_QCOM_MIPI_CSI2
+>> +	tristate "Qualcomm MIPI CSI2 PHY driver"
+>> +	depends on ARCH_QCOM || COMPILE_TEST
+>> +	depends on OF
+>> +	depends on PM
+>> +	depends on COMMON_CLK
+>> +	select GENERIC_PHY
+>> +	select GENERIC_PHY_MIPI_DPHY
+> 
+> [Severity: Medium]
+> Should this Kconfig entry select or depend on PM_OPP?
+> 
+> Without CONFIG_PM_OPP enabled, the stub for devm_pm_opp_of_add_table()
+> used during probe will return -EOPNOTSUPP, causing the driver probe to
+> unconditionally fail with an "invalid OPP table" error.
+
+By design in fact as a result of a Sashiko review as I recall. Context 
+window between runs seems required for this tool.
+
+> 
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+> 
+> [ ... ]
+> 
+>> +static int phy_qcom_mipi_csi2_lanes_enable(struct mipi_csi2phy_device *csi2phy,
+>> +					   struct mipi_csi2phy_stream_cfg *cfg)
+>> +{
+>> +	const struct mipi_csi2phy_device_regs *regs = csi2phy_dev_to_regs(csi2phy);
+>> +	struct mipi_csi2phy_lanes_cfg *lane_cfg = &cfg->lane_cfg;
+>> +	u8 settle_cnt;
+>> +	u8 val;
+>> +	int i;
+>> +
+>> +	settle_cnt = phy_qcom_mipi_csi2_settle_cnt_calc(cfg->link_freq, csi2phy->timer_clk_rate);
+>> +	if (!settle_cnt)
+>> +		return -EINVAL;
 > 
 > [Severity: High]
-> Does clearing imx_uart_ports[] after uart_remove_one_port() create a race
-> condition with concurrent sibling probes?
+> Does this incorrectly reject a valid settle count of zero?
+> 
+> Looking at the math in phy_qcom_mipi_csi2_settle_cnt_calc():
+> 
+> phy_qcom_mipi_csi2_settle_cnt_calc() {
+>          ...
+>          settle_cnt = t_hs_settle_ps / timer_period_ps - 6;
+>          return settle_cnt;
+> }
+> 
+> If the link frequency and timer clock rate yield exactly 6 timer periods
+> for t_hs_settle, the calculation results in 0. By rejecting 0 here,
+> legitimate MIPI CSI2 configurations might fail to initialize.
+
+Yeah, I guess a zero settle count should be legitimate.
+
+> 
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
+> 
+> [ ... ]
+> 
+>> +static int phy_qcom_mipi_csi2_probe(struct platform_device *pdev)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	ret = devm_clk_bulk_get_all(dev, &csi2phy->clks);
+>> +	if (ret < 0)
+>> +		return dev_err_probe(dev, ret, "Failed to get clocks\n");
+>> +
+>> +	if (num_clk != ret) {
+>> +		return dev_err_probe(dev, -ENODEV, "clock count %d expected %d\n",
+>> +				     ret, num_clk);
+>> +	}
+>> +
+>> +	for (i = 0; i < num_clk; i++) {
+>> +		if (!strcmp(csi2phy->clks[i].id, "timer")) {
+> 
+> [Severity: High]
+> Could csi2phy->clks[i].id be NULL here?
+> 
+> The clk_bulk_get_all() infrastructure can leave the .id field as NULL if
+> the device tree node has a "clocks" property but is missing "clock-names".
+> Calling strcmp() on a NULL pointer will cause a kernel panic during probe
+> when parsing malformed device trees.
+
+clock-names are required in the schema but sure I add a check for this.
+
+This ping-pong with this tool is taking forever, I need to figure out 
+how to run this locally to stop wasting my own time.
+
+>> +			csi2phy->timer_clk = csi2phy->clks[i].clk;
+>> +			break;
+>> +		}
+>> +	}
+>> +	if (!csi2phy->timer_clk)
+>> +		return dev_err_probe(dev, -ENODEV, "no timer clock\n");
 > 
 
-Yes, this is valid, but the underlying issue is not new.
-
-Before this change, a dangling pointer remained in the table and could
-be used by a later sibling probe.
-
-This change narrows it to a window where a NULL-pointer dereference is
-possible.
-
-I'll send a v2 with a driver-wide mutex around the table updates and
-port add/remove.
-
-Thanks,
-Karl
