@@ -1,184 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EE242A80;
-	Mon, 20 Jul 2026 21:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98E842A80
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 21:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784583390; cv=none; b=hfU88yW7w55yq03j50k7WjmAla86almE7rZ08scDYofBvokp2FeqvpsFlyAIKHpPwqzIKdjUyenUI6x55BoKB5d9pw0XEUG3Pdq5vYzLBJfGZgG05AIolHJCipI7R+7hgEfpW5uRCcJUvfNHWh4IaiTLMGjl53E1hDXfTP8bw0I=
+	t=1784583513; cv=none; b=txwvIFRZWFNUDfJan9g+VlB5JhTFI9kwPP33WNn09ywsPXI64i3xOrnW72D+JWD96XS6/SbhhrU1sE/BYDKxND7rTFPCKItYic/0RaU6pwOc2ncFcq28E2Qz5nJQbzOEeHm7Bf0A78voeWqTj4HS1A2pumiZUkIe7QTFD0z0Ikk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784583390; c=relaxed/simple;
-	bh=BL+9f56UTCEJO+eMC7ihfAG0NyN83fcjjrZIH6SCZvk=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WZqmwBrpgtGjy2jls4WjW91HGdqQ0TjZ8C9X/tS3KBSptkiTK1IgNVHclkiKCdXB2JlQEKhKWWsyQF7ENPqMaAth0Xjd2ZRWoKA1uZ1TH7BG5SJ9xnBFEGHdOQbumRhSS7ycefKXVngOe6cfjjJvXkyBaHjwlZkToduweapLd7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WffceVuj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784583513; c=relaxed/simple;
+	bh=fgqOdfqGehyPp39uBRzhkJKpjE04+TA6AHiAA/V8Uq4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=EDkhetze07CDD6U/UWujrdzj3VVGALKF5mk4+Kx5/qiCWeC7g48UPpcKqVXRyG76w6Crs7FftYmjWK+51pz/Rr+inpI4pt23ebqQcnU1423yUJSzxLZdNTas/jRqcOviPQx5YBmuE8wavCLQdrD4NSTAGFIAyzFvXrpWOweyhMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GoCMH67g; arc=none smtp.client-ip=209.85.214.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WffceVuj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0F51F000E9;
-	Mon, 20 Jul 2026 21:36:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784583388;
-	bh=5xcm1f6RAqbi8oLN7UHtMa4VnW9ylZSq3hoXwK/VxXs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=WffceVuj3rlT8i77X17/8GdwzB58M+xlZJe4FtnqE34F0xH0h4qgt7QUxp0877S3F
-	 FWakL3GorQJBRI/NgZ4RxNG59Mk3USLtmQat39QBq04onYjKpRIWL8L1f4+vBo7GD2
-	 znMgxQ1ZSp47bQmykTNyagCTaTq9Dbeo7T8phW+BcJiv2VMGaJF9jK/JLMVYnIl6ia
-	 Bjs2KXQV2+l6p2jgbn7ikCUxNLA1YDylkC7dqx+60bSg0f9u8Zkq2dyNlEIcgPUYDa
-	 nMBQX3l4Ux10MLvkDn9Pa23H0txz6xQwt6rCEM0rjNfFKOOhuP8TTZ85OgODnEVCJA
-	 0Bi8YHl5Vwvxw==
-Date: Mon, 20 Jul 2026 22:36:25 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: "Bowman, Terry" <terry.bowman@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org,
- linux-pci@vger.kernel.org, Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: Re: [PATCH v18 02/13] acpi/apei/ghes: Use raw_spinlock_t for CXL
- CPER work locks
-Message-ID: <20260720223625.6176294c@jic23-huawei>
-In-Reply-To: <e4e1bb5b-2cc3-452c-9499-d74aa41965e6@amd.com>
-References: <20260717222706.3540281-1-terry.bowman@amd.com>
-	<20260717222706.3540281-3-terry.bowman@amd.com>
-	<20260717224919.9F80E1F000E9@smtp.kernel.org>
-	<e4e1bb5b-2cc3-452c-9499-d74aa41965e6@amd.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GoCMH67g"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ccb6f6a3f4so76775965ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784583512; x=1785188312; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Kb+H3gD1/z5LwqMW5Zz4TLwHZH22H10KWNrwvGv21eU=;
+        b=GoCMH67gSxGQ0vpczBHr2xiJl8tgxbBemIejeTV/eIls44Bv07Srk9dwm0nWhXiU3B
+         EwSEfZAT1n56QVyLb3rUi1h6UAyxpR3Zw+8CqK60yG64iwHQUY01t4OPt6z64MIRzVu1
+         aNhd9FdYd13YpM9DgVjFo7mAHCygnqkSE5R07M8EvxWceS7bz0GF4bDdnrBv0ix8ECju
+         chbGVQPMNNcwuXHmQ74+BgvQGA1LNdfCdFSuuszOc9+dHl0UaSFScERlyrpyqUUcMLbo
+         FHU3kNPUOySCoNLslogP10DBJLmiLZmo1QpfC6UfRRevcWF/wlIe+A0t+27rwp68cZIw
+         5erA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784583512; x=1785188312;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Kb+H3gD1/z5LwqMW5Zz4TLwHZH22H10KWNrwvGv21eU=;
+        b=JkFcO+sqUBLtZo12U6KjK1SoZMg302W0NeLq5tubaeYAgDmbve3NHNNIWzQiw7TXUl
+         MIBnEpsmgQ8m3sKsE+pyh8LSTWg4H6ud8Ctjg3fsgljJbi59b5Yxd9N5eRGf+cmTZj7C
+         MJT510HT/0HLGRxM6shQevbZzxmrUHzamrSHBnzY4q0Zunff394DDOGZ8SKWZsFh7RTQ
+         6+xqFyoDNXsZjgmiz0IJKb/r1K9ac47cpjoVzihU35MO2KV/li3kgVLdD4F9k9b4r2UO
+         BbjC7Q8mdN7ffe0WvHGWcFrDXg1O+BkSMiOwMjQGjlngCMfEYYtYPZt7HDmnvvYK07DY
+         RN/Q==
+X-Forwarded-Encrypted: i=1; AHgh+Ro2ysjoM/QjVr7SMihGzikLv4ruil/ssPzDOafD6oVnWk2qQ2brWJ73nWYgV4pW5AzK0kxpzCpblNnO3Lfwc7o=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxsjrzxev+84bpyliDUdIFUO1TsdzqnxDBBQmD9sPn3es/Uv1TZ
+	naM+PHOKsW+Kw8G5VeMBsus22xx91JqVA/roI8qvxbqNKZuEuP06EQNs8/R7IlIjkiSeXON1Cl/
+	yDb6TMg==
+X-Received: from plblq3.prod.google.com ([2002:a17:903:1443:b0:2cf:6c53:48ca])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:d483:b0:2ca:f417:396b
+ with SMTP id d9443c01a7336-2cf1f25625cmr211823005ad.3.1784583511786; Mon, 20
+ Jul 2026 14:38:31 -0700 (PDT)
+Date: Mon, 20 Jul 2026 14:38:31 -0700
+In-Reply-To: <al4rNqpBYy8FGKPw@blrnaveerao1>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260716160801.3155582-1-dmaluka@chromium.org>
+ <20260716162900.9D8131F000E9@smtp.kernel.org> <alkTuicE2ELcakS9@google.com> <al4rNqpBYy8FGKPw@blrnaveerao1>
+Message-ID: <al6VVx1rKn46ZCUl@google.com>
+Subject: Re: [PATCH] KVM: VMX: Postpone IPIv setup after successful vCPU creation
+From: Sean Christopherson <seanjc@google.com>
+To: Naveen N Rao <naveen@kernel.org>
+Cc: Dmytro Maluka <dmaluka@chromium.org>, sashiko-reviews@lists.linux.dev, 
+	kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, 20 Jul 2026 10:02:05 -0500
-"Bowman, Terry" <terry.bowman@amd.com> wrote:
-
-> The LOW issue is valid and the extra cancel_work_sync() needs to be 
-> removed. I propose we fix if a series respin is necessary or otherwise 
-> fix in future. 
+On Mon, Jul 20, 2026, Naveen N Rao wrote:
+> On Thu, Jul 16, 2026 at 07:24:10PM +0200, Dmytro Maluka wrote:
+> > On Thu, Jul 16, 2026 at 04:29:00PM +0000, sashiko-bot@kernel.org wrote:
+> > > [Severity: Critical]
+> > > This isn't a bug introduced by this patch, but does this exact same
+> > > vulnerability exist in the AMD SVM AVIC code?
+> > > 
+> > > It looks like the SVM code suffers from the same use-after-free pattern
+> > > when userspace creates a duplicate vCPU ID.
+> > 
+> > Seems plausible. Can someone with AMD expertise look into this?
+> > 
+> > > In arch/x86/kvm/svm/avic.c:avic_init_backing_page(), the newly allocated
+> > > APIC backing page address is written into the VM-wide hardware IPI table
+> > > before the vCPU ID duplicate check:
+> > > 
+> > >     WRITE_ONCE(kvm_svm->avic_physical_id_table[id], new_entry);
 > 
-> The preexisting HIGH issues are GHES area and to be fixed by owners.
-
-Mauro, this smells like one that your nice QEMU + scripts could detect.
-Fancy it as a test case? (he says hoping you'll also fix it :)
-
-Also, I just flagged on discord that we should discuss what we do about
-these sort of issues and tracking them at the CXL sync call tomorrow.
-(Tracking somewhat discussion here: 
-https://lore.kernel.org/ksummit/78346752-E2AC-4ACB-929D-70A45794474C@linux.dev/T/#t
-
-Jonathan
-
+> Yes, this write (or just setting AVIC_PHYSICAL_ID_ENTRY_VALID_MASK) will 
+> need to be delayed to a post-create phase similar to VMX.
 > 
-> Terry 
-> 
-> On 7/17/2026 5:49 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > 
-> > New issues:
-> > - [Low] The patch adds internal cancellation to both unregister functions but misses removing the redundant `cancel_work_sync()` for the protocol error work in `cxl_ras_exit()`.
-> > 
-> > Pre-existing issues:
-> > - [High] Fixed-size memcpy in cxl_cper_post_event causes an out-of-bounds read if the provided GHES CPER payload is smaller than sizeof(*rec).
-> > - [High] Missing bounds check on untrusted dvsec_len in cxl_cper_setup_prot_err_work_data leads to an out-of-bounds read.
-> > --
-> > 
-> > --- Patch [2]: [PATCH v18 02/13] acpi/apei/ghes: Use raw_spinlock_t for CXL CPER work locks ---
-> > commit 70fa064ce36bd35723148aab9a91c80d0fbef760
-> > Author: Terry Bowman <terry.bowman@amd.com>
-> > 
-> > acpi/apei/ghes: Use raw_spinlock_t for CXL CPER work locks
-> > 
-> > This commit converts cxl_cper_work_lock and cxl_cper_prot_err_work_lock from
-> > spinlock_t to raw_spinlock_t to prevent a deadlock between IRQ and process
-> > contexts. It also restructures registration functions to warn on double
-> > registration and clear work pointers before cancelling them. Redundant
-> > cancel_work_sync() calls are removed since quiescing is handled internally.
-> >   
-> >> diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-> >> index 3236a3ce79d6b..ca7a138c1ff2e 100644
-> >> --- a/drivers/acpi/apei/ghes.c
-> >> +++ b/drivers/acpi/apei/ghes.c  
-> > [ ... ]  
-> >> @@ -761,7 +761,7 @@ static void cxl_cper_post_prot_err(struct cxl_cper_sec_prot_err *prot_err,
-> >>  	if (cxl_cper_sec_prot_err_valid(prot_err))
-> >>  		return;
-> >>  
-> >> -	guard(spinlock_irqsave)(&cxl_cper_prot_err_work_lock);
-> >> +	guard(raw_spinlock_irqsave)(&cxl_cper_prot_err_work_lock);
-> >>  
-> >>  	if (!cxl_cper_prot_err_work)
-> >>  		return;  
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does cxl_cper_setup_prot_err_work_data()
-> > lack bounds checking on the untrusted dvsec_len?
-> > 
-> > If firmware provides a CXL protocol error record with a maliciously large
-> > dvsec_len, could this lead to an out-of-bounds read when calculating
-> > cap_start?
-> > 
-> > drivers/acpi/apei/ghes_helpers.c:cxl_cper_setup_prot_err_work_data() {
-> >     ...
-> >     dvsec_start = (u8 *)(prot_err + 1);
-> >     cap_start = dvsec_start + prot_err->dvsec_len;
-> > 
-> >     memcpy(&wd->ras_cap, cap_start, sizeof(wd->ras_cap));
-> >     ...
-> > }
-> > 
-> > [ ... ]  
-> >> @@ -831,7 +839,7 @@ static void cxl_cper_post_event(enum cxl_event_type event_type,
-> >>  		return;
-> >>  	}
-> >>  
-> >> -	guard(spinlock_irqsave)(&cxl_cper_work_lock);
-> >> +	guard(raw_spinlock_irqsave)(&cxl_cper_work_lock);
-> >>  
-> >>  	if (!cxl_cper_work)
-> >>  		return;  
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does cxl_cper_post_event() have an
-> > out-of-bounds read if the provided GHES CPER payload is smaller than
-> > sizeof(*rec)?
-> > 
-> > If firmware provides a CXL event record where gdata->error_data_length is
-> > smaller than sizeof(struct cxl_cper_event_rec), this fixed-size memcpy
-> > could exceed the bounds of the error status block:
-> > 
-> > drivers/acpi/apei/ghes.c:cxl_cper_post_event() {
-> >     ...
-> >     wd.event_type = event_type;
-> >     memcpy(&wd.rec, rec, sizeof(wd.rec));
-> >     ...
-> > }
-> > 
-> > [ ... ]  
-> >> diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-> >> index 267c679b0b3c2..7c6faee7f85ed 100644
-> >> --- a/drivers/cxl/pci.c
-> >> +++ b/drivers/cxl/pci.c
-> >> @@ -1083,7 +1083,6 @@ static int __init cxl_pci_driver_init(void)
-> >>  static void __exit cxl_pci_driver_exit(void)
-> >>  {
-> >>  	cxl_cper_unregister_work(&cxl_cper_work);
-> >> -	cancel_work_sync(&cxl_cper_work);
-> >>  	pci_unregister_driver(&cxl_pci_driver);
-> >>  }  
-> > 
-> > [Severity: Low]
-> > Is there a missed redundant cancel_work_sync() call in cxl_ras_exit()
-> > that should also be removed?
-> > 
-> > Since internal cancellation was added to the unregister functions,
-> > cxl_ras_exit() now has redundant synchronization:
-> > 
-> > drivers/cxl/core/ras.c:cxl_ras_exit() {
-> >     ...
-> >     cxl_cper_unregister_prot_err_work(&cxl_cper_prot_err_work);
-> >     cancel_work_sync(&cxl_cper_prot_err_work);
-> >     ...
-> > }
-> >   
-> 
+> The alternative is to simply skip setting the entry valid during vCPU 
+> creation and to instead do it unconditionally during vcpu_load(), where 
+> we anyway have to update the entry.
 
+Won't work, vcpu_load() is called during vCPU creation.  :-(
