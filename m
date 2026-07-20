@@ -1,113 +1,186 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD9B3C8196;
-	Mon, 20 Jul 2026 08:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148D734AB03;
+	Mon, 20 Jul 2026 08:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784535242; cv=none; b=Q6HvijmyQCJKMwWtUqzJPszY7t98mplm+dWuL2yzVn1ZDparW+JSyFua4MIVppaUU/oxJWdH9Q7R1AVWJhMc/6ozDjkT3oYsXYFC4koRsNs8cceEqop2orN6cVcV9sA/Tr47kJ+Rz7utLO9iYJx95Myx/OEg/uyzYwSznVhQVPw=
+	t=1784535458; cv=none; b=ejSPx0CWjv0p955fGbFKkYepJbrKIUvWLoZxVpIhz4oKMrEfmUphwMLSUcjVE/jjvnjmxBDn8EazF+CITRKW4dFXOfw5FtFhEB+sDdum/eyhyMRBZcnQE/UjdmiXX0DpZN6IQ+7cGZtW/88VRgw3Sko/xS2M8fAIkR2bVVAsGEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784535242; c=relaxed/simple;
-	bh=6mNhg2L6Fzr5sI+qzEFiXGQ8eLWeQjI5AUGbKFSaVoY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kERdtlGBgAddObHGggkck+8VFIuYn4gKlm22uutDD4ySC5qA5dfi+J/lBZl5g0TZ5weqhPgHxOPXjwsb893JiICN6jUt4INfbmRyJapEx/h+I0IPLg6sbls7+Ag/SqC5q4yQyBqS3ScIMLvs6BWaADgkU4ScH3SIIpvzJIwxOjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KMZFnXbu; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=VyOrT0D2; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1784535458; c=relaxed/simple;
+	bh=UOv7/mxoOLwldaafIf/TGnLCbCd+/1yTASiVSazfcRc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=I5Q6+motAXILH/op0hFJe4D2k25SuBSKhjOyhs987yXZTcUmlBZS3eQ1PPvPvPdgZRurdbNhW+GRJQLNAcmlIsB6y+ifX2TnIl3n6A3ZUJnMxD6IOMLionfmeznOnB39bH0WfEx1hWKcSpxqxYZrtU8iq2GyVZQKG8rKuYGxfdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=joTR08Od; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KMZFnXbu";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="VyOrT0D2"
-From: John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1784535238;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=w3TCmEF1MdOub2Cj/08kORjw9H8KFt4ZHxdgW7TKjLA=;
-	b=KMZFnXbuZhLRV+UaBQaRGT+mwXvwq3+Zz39zb7rZLMcnaRITpm0sjhRxckH93KyIGpkWpJ
-	4jEvtdsrhS9n967AeE0g+9WAPReM79AF6deLxmH1Phmuvut5ebVp9Mf6ktZGhOdNnLKg5g
-	SAwsAXAF9TBiAmPj0pAcoVujAA0Isi+mlQmpmTy6taZb7tbZrW19luJGkFfafN411fie0Z
-	tViU2v1szzPCfaud9w6jJE9AlqVphFaUI3RNZv6z01ySBuZre3dAlJWKKInbyAkbTYAvo3
-	sZRlXuu/YWONwno81q53GU4svTkR1hLi+tfjCabojM0W4v0h6k/H+TRIw2SQcw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1784535238;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=w3TCmEF1MdOub2Cj/08kORjw9H8KFt4ZHxdgW7TKjLA=;
-	b=VyOrT0D2AHafnANbR8xCg0VqaVLv3x9+3WWEHvde4qMFpBkgWb88hvKSMUxGaiT/43kbzs
-	Jh4d4sZnjG+HKDAw==
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- sashiko-reviews@lists.linux.dev, Petr Mladek <pmladek@suse.com>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>, linux-kernel@vger.kernel.org,
- linux-rt-devel@lists.linux.dev
-Subject: Re: [PATCH 2/2] serial: amba-pl011: keep console clock enabled for
- atomic writes
-In-Reply-To: <20260720080100.Mk9zZFql@linutronix.de>
-References: <20260719063502.18852-1-kmehltretter@gmail.com>
- <20260719063502.18852-3-kmehltretter@gmail.com>
- <20260719065214.A40521F000E9@smtp.kernel.org>
- <20260720080100.Mk9zZFql@linutronix.de>
-Date: Mon, 20 Jul 2026 10:19:58 +0206
-Message-ID: <8733xeaxix.fsf@jogness.linutronix.de>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="joTR08Od"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66K6fmJt1367865;
+	Mon, 20 Jul 2026 08:17:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=UOv7/m
+	xoOLwldaafIf/TGnLCbCd+/1yTASiVSazfcRc=; b=joTR08Odn9vzchpNEDkMIU
+	Og/wTpKAdM/JnBF4NXYLHipNfry0OdmKkJETxnsUciHR3udx9G1hgBFeiifkx6oc
+	6144Ht2J0zPHS+JQItmwDHMNP/ysuiWrCVYG7RUp/10Inw9+rwARTNR1JwQeMaC+
+	MNvRCdpR+hZIvo0myQkGknJMoMOte5+KtPfl7pAl9KFfAFpA2RHdeKkH7w4idifM
+	TPqwmJX5kBwNUh7A7EQcw59OcMM5OcIGcE1k2vf8K5YckZRBOzbPUK+4vhwB5few
+	V4gBfUg6PLVeovEau+fi6E70OQzU4fSOaspQXyLPkPJDGH9jB7D5iEZukr2l30Zw
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78fx7gh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 08:17:35 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66K84bql031428;
+	Mon, 20 Jul 2026 08:17:35 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgmtjmqdq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 08:17:34 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66K8HWjV49283378
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 20 Jul 2026 08:17:33 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E12342004B;
+	Mon, 20 Jul 2026 08:17:32 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3E5DD20043;
+	Mon, 20 Jul 2026 08:17:32 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.39.16.54])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 20 Jul 2026 08:17:32 +0000 (GMT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH 1/9] tool/perf: Move auxtrace_record__init for
+ powerpc-vpadtl as separate utility
+From: Athira Rajeev <atrajeev@linux.ibm.com>
+In-Reply-To: <20260701085631.1964F1F000E9@smtp.kernel.org>
+Date: Mon, 20 Jul 2026 13:47:20 +0530
+Cc: linux-perf-users@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <858D1D5D-D09C-4EA2-8DEB-1681EB741311@linux.ibm.com>
+References: <20260701084115.80383-1-atrajeev@linux.ibm.com>
+ <20260701084115.80383-2-atrajeev@linux.ibm.com>
+ <20260701085631.1964F1F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5MCBTYWx0ZWRfXy0W5zV9PeYya
+ pmvoyhHrEtxJItrLtnhw0Ng8EZpAaCjxpNDX6qkjLT3P87Z6LVYg4jXVRkuhir4LA2j/++60lk2
+ WvGe3MWPOecZh61nM6TcmafQm+cfjZNCCjg+0ZT+4B7OI7t/GTxg3FOhgmiBh56TfSM6XL9AyEH
+ H46XUikQBYOfcsVn4u6yblylIayWTJBE3fgHRcn5WKcehEwNbix9ZpWKHiSlvTUGi/8xroy+M6W
+ /Tnwtb5nY9mEYG0EKqEmaJU+6styIVGIXx0Nq2jyHdrksIlLOCAKr3Dnbm0WHxlQcpet38KWPri
+ MYqvXnG1N50ul8jy4zGz1eJfITXbvlF9aOX3Ta2WqrMv1XuNLIRLhsa38bQnvhcbGKvTxYkFlr9
+ fb5S7nwcR1VMUH6OVDfN3SP45dRC88fKxbQ8V1/7q1YQf3fAugGInWInmr3LfxsN7y+opwHAYhS
+ ITS3NrH1tbRJ+fY4Hxg==
+X-Proofpoint-GUID: 2_kyOAv5Kpelm03Yh8svragg7kET4-Yn
+X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a5dd99f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=Jix3sQQKJjvBtDP5BVUA:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5MCBTYWx0ZWRfX4HUbWMVCrRSg
+ KSa/hfdpT7ieCG0ABerTdgxLff4l8Erceaq0/j3iLeplzY7NcraFAsg1Uh46onm1bq/uYN4bc9L
+ pbK9x9xE/mTOryC/GYM1nR24mSiEPiY=
+X-Proofpoint-ORIG-GUID: 2_kyOAv5Kpelm03Yh8svragg7kET4-Yn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200090
 
-On 2026-07-20, Sebastian Andrzej Siewior <bigeasy@linutronix.de> wrote:
-> On 2026-07-19 06:52:14 [+0000], sashiko-bot@kernel.org wrote:
->> > diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba=
--pl011.c
->> > index 1aa43994a3cdc..4facd1b350d5d 100644
->> > --- a/drivers/tty/serial/amba-pl011.c
->> > +++ b/drivers/tty/serial/amba-pl011.c
->> > @@ -2523,7 +2523,11 @@ static int pl011_console_setup(struct console *=
-co, char *options)
->> >  	/* Allow pins to be muxed in and configured */
->> >  	pinctrl_pm_select_default_state(uap->port.dev);
->> >=20=20
->> > -	ret =3D clk_prepare(uap->clk);
->> > +	/*
->> > +	 * Keep the clock enabled while registered because write_atomic() may
->> > +	 * run in NMI context and must not acquire the clock framework lock.
->> > +	 */
->> > +	ret =3D clk_prepare_enable(uap->clk);
->>=20
->> [Severity: High]
->> Will this keep the UART clock unconditionally enabled during system susp=
-end?
->>=20
->> Because the persistent clock reference is acquired here during console
->> registration and only dropped on console exit in pl011_console_exit(), t=
-he
->> reference remains active.
->>=20
->> During system suspend, pl011_suspend() delegates to uart_suspend_port() =
-but
->> fails to drop this console's persistent clock enable reference. This mig=
-ht
->> prevent the SoC from turning off the clock tree or parent PLLs, preventi=
-ng
->> deep system sleep.
->
-> The comment somehow makes sense. What is the general advice here? If we
-> drop the clock during suspend and acquire it again during resume we need
-> to keep track and ignore all prints in between. Is the printk core
-> taking care of this?
 
-This is what the suspend/resume pm callbacks are for. In this case, it
-is pl011_suspend() and pl011_resume().
 
-> There is also this no_console_suspend argument=E2=80=A6
+> On 1 Jul 2026, at 2:26=E2=80=AFPM, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> - [High] Memory allocation failure in vpa_dtl_recording_init silently =
+returns success, masking -ENOMEM and causing a subsequent NULL pointer =
+dereference.
+> - [Low] Missing explicit inclusion of POSIX standard headers =
+<stdlib.h> and <limits.h> breaks musl libc compatibility.
 
-Yes, the callbacks need to check @console_suspend_enabled. If false, the
-clocks obviously must not be disabled.
+Thanks for the feedback and review from Sashiko
 
-John Ogness
+I will send a V2 with fixes :
+- Handle memory allocation failure in vpa_dtl_recording_init
+- add POSIX standard headers
+
+Thanks
+Athira
+> --
+>=20
+> (Note: The format of this report is altered to provide a free-form =
+summary of the findings, rather than inline diff comments, due to system =
+recitation restrictions.)
+>=20
+> commit 9f7d3d8f8dc04ee94edc0507b7b561997e9bd6a5
+> Author: Athira Rajeev <atrajeev@linux.ibm.com>
+>=20
+> tool/perf: Move auxtrace_record__init for powerpc-vpadtl as separate =
+utility
+>=20
+> This commit extracts the auxtrace_record__init logic for =
+powerpc-vpadtl into a
+> separate utility file, vpa-dtl.c, allowing other PMUs to share the =
+auxtrace
+> infrastructure.
+>=20
+> [Severity: High]
+> When zalloc() fails in the new vpa_dtl_recording_init() function, it =
+returns
+> NULL. However, because the refactored function no longer takes the err =
+pointer
+> argument, it cannot propagate the -ENOMEM error back up the stack.=20
+>=20
+> In auxtrace_record__init(), the err variable is initially set to 0. If
+> vpa_dtl_recording_init() returns NULL due to memory exhaustion,
+> auxtrace_record__init() will also return NULL while leaving the error =
+code
+> as 0 (success).=20
+>=20
+> Could this regression lead to memory corruption or crashes? Since
+> pos->needs_auxtrace_mmap is already set to true earlier in the =
+function,
+> the caller will see a success code and incorrectly proceed to map the =
+auxtrace
+> buffer. Eventually, this reaches __auxtrace_mmap__read(), which =
+evaluates
+> itr->alignment. If itr is NULL because of the masked allocation =
+failure, won't
+> this trigger a NULL pointer dereference?
+>=20
+> [Severity: Low]
+> The newly added file tools/perf/arch/powerpc/util/vpa-dtl.c uses the =
+POSIX
+> function free() in powerpc_vpadtl_free() and the constant UINT_MAX in
+> powerpc_vpadtl_recording_options().
+>=20
+> Are we missing some required include directives here? The file doesn't =
+seem to
+> explicitly include stdlib.h or limits.h. While this might compile fine =
+under
+> glibc due to implicit header inclusions, does this regression break =
+compilation
+> on stricter libc implementations like musl?
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260701084115.80383-1-atrajeev@linux.ibm.c=
+om?part=3D1
+
