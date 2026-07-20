@@ -1,187 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA98382F1E;
-	Mon, 20 Jul 2026 15:33:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BB2382F01
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 15:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784561588; cv=none; b=YcFRK6qfWMJL04Yy4y+SRlLaCAESmmUCVOYYVUDY4AezQTcJ8Slr8ub2APGrkU6lz/LmzfWvSw2joDsKSI0M52VjDR52myhV8My28SGQ8Bz2urkP9M74jlXwguOjjW9dcPQLWKxMu2giyODk3NGaCY6j8jDsGxiiGEMBYtQL9Dk=
+	t=1784561589; cv=none; b=rdEGTLGr7t+O7y7y43xWILNUgc77KUmGpp2tQLPPoZm/PwqSfWf7wacQc5ZTU7F3oLsJQUFlldsKqSvSgrwIga2OJNxS34lrRVpx4fyfv+fufHDSAekdobHRQLdOmawPej+JkE7eyDqOeZ6gjYLMXrO0UIVH/QAWoFN5v0+rFIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784561588; c=relaxed/simple;
-	bh=MdEidk9nIB5NgOaJbgLZkCVAJJML0aPZe1hsF4VcjGE=;
-	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=QVfgypBQ0JV5PH+hkjqEXRCNpxgT+9ectRTv8b/d+I1dhJ8hgkhYgHLCaS37Ds2NLgbAwEX/+GXePvsVS5QB4IpIZLizgVeSmpTRqmWs1aFrhVvWcvy0xULzRZCXelI3nhqBTSYjhChipOTUzxPYrLK26ov5XlEiqvzLdikjVN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNqv+J9V; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784561589; c=relaxed/simple;
+	bh=Y8pRSNHXpk5nAHr2J6+aiRnieb7bqeK/ymraygTOaj0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=l1C5dMzLARBkXp8lhcpgb2mOKMlvnwIey1DgN22QtowyqcL1xKN8CsF1bPN9o1ApfOxOPP2JrSwfkg5PKVEGRykZN8Qpdzrb8CwY+G5EqSBX24ATYpWxDcQje+ecyNMwSxdo2OUmFNWI2y/lh9pPkb+G1RNODlPJGgT2/1Fw94U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=jLJ4hSXL; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNqv+J9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FEC1F00A3A;
-	Mon, 20 Jul 2026 15:33:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784561584;
-	bh=huCagZh3bkI7bPAtjbQPbTCWcunnj/sybzismqiqG3o=;
-	h=Subject:To:Cc:From:Date;
-	b=hNqv+J9VYUYXWGG5vSivfJd/UY1feKhjQVY8ssdaumxYpFVEFz20l5tBD2HtEd6z5
-	 ta3uw0UwoTj1AMr2e/+IfAXmMLwc52bhSCtSyo6Sgz+SXHsvYlVy3TbfCOVJ6hFWgG
-	 vA7sz06lGYaegw6aVzTgmRlVOwfpRYn62fnLqpVE=
-Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 6.1-stable tree
-To: gregkh@linuxfoundation.org,mkl@pengutronix.de,sashiko-reviews@lists.linux.dev,socketcan@hartkopp.net,stable@kernel.org
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Mon, 20 Jul 2026 17:24:17 +0200
-Message-ID: <2026072017-handclap-exploring-2059@gregkh>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="jLJ4hSXL"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66KECGLG2325012;
+	Mon, 20 Jul 2026 15:33:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=Sw2xFY
+	2RN2NoYlHfxcfz1nyunry7a9IhXXBFNwtOwR8=; b=jLJ4hSXL3wFbyzVA5WUpLR
+	8IPeMWSOiF3+kt7zGjbkhyeyE23pve2y5sBux6SOePMQRSPRPcCZxesUam8kH0Uw
+	mSNExHYmm9u0pMd3utRqQQBm5zjd7pBKMaqZZ9Q9zkPl4HDBQEYNLJWPLUbLR8ko
+	NiqY7wf9CmUaNivoOoMSIu4nVSqT74nmCO9v2AXaPZyFQY5DJjnsz+oybkEMQ6zf
+	3s+1Da8fgMCIgKGsOPtn+p+y9AgfFMhKZrn7U5F3qe8+CAzodbatg3L3+j3DPNdU
+	GQK0qafjnlJEaQI6qBhwc3iexXFHBqtO3Qq2FNUgiF07kyqR3NELBYaxRbqHurDQ
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78fyxas-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 15:33:05 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66KFJgeq001113;
+	Mon, 20 Jul 2026 15:33:05 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgmtjp739-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 15:33:05 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66KFX1vL11469072
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 20 Jul 2026 15:33:01 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 242DA20040;
+	Mon, 20 Jul 2026 15:33:01 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DE6432004B;
+	Mon, 20 Jul 2026 15:33:00 +0000 (GMT)
+Received: from [9.111.141.238] (unknown [9.111.141.238])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 20 Jul 2026 15:33:00 +0000 (GMT)
+Message-ID: <1220cd72-c2cc-4ad9-8673-809bb37f9072@linux.ibm.com>
+Date: Mon, 20 Jul 2026 17:33:00 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] net/iucv: take a reference on the socket found in
+ afiucv_hs_rcv()
+To: Bryam Vargas <hexlabsecurity@proton.me>
+Cc: sashiko-reviews@lists.linux.dev, Hidayath Khan <hidayath@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        linux-s390@vger.kernel.org
+References: <20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me>
+ <20260707032441.B1FB31F00A3A@smtp.kernel.org>
+ <b524ae17-9fe5-4270-bb8d-3e411ef683e5@linux.ibm.com>
+ <20260711041119.12764-1-hexlabsecurity@proton.me>
+Content-Language: en-US
+From: Alexandra Winter <wintera@linux.ibm.com>
+In-Reply-To: <20260711041119.12764-1-hexlabsecurity@proton.me>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE2OSBTYWx0ZWRfX9l1WWLN5qepf
+ G4FEI/sXLWhQF0p26bgIKteW/HYI5kDsxh66Wg/OWepb2gMd3nyIacN4oyki0BIRrZgxaNn33iE
+ 664vn7GlOEGw/4lFXB40trW6FOFCJ7l3sx6cBc+JkM9k2ONvjDl+fohWiaLMJhHJn7OLHzNRyhj
+ L8wLtnaBjCleQF7pzvJaSxjIgO1m+Ms3s4DZLNOXAHfmV06zvwYsos1e5tb+8M1dZvnT6Atvmzc
+ 6Hw6KIw0HyH7rCreFAk8iPdYOLrFBPCq5gXrEVKizeqI1zQUThmx5Zf8ATsW6gUW4FF3AFSFgyQ
+ 26gGQXOuAdeJOvrrRYgVM0lxZOjnTNwMMRdr11qwx0kLCKTTBhM3kyQWkT+pdqErEbvYZoS9Gr9
+ 2Tve+MYXaferC9zG9IaWV3ar1bi8wpwn3qV4jeOuJO7ExA0yEN7lEIparyOLjvRmNjOGJ5AghIU
+ EYwEieK+pv7HHbKwmxg==
+X-Proofpoint-GUID: WpblYh98GkdypqBvVoMJX_C90C07VDrv
+X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a5e3fb1 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=mpG3tCo3JFPGy_rZ:21 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
+ a=VwQbUJbxAAAA:8 a=kuH73zJZA9zSU-iPmnQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE2OSBTYWx0ZWRfX7/AEDgmjqvyy
+ JR6Lwruwv+HQo3fTL4f/Jo0YhOuyCmtYqS279JLmgSOESmitu/jmPMZdvl+32KbHkbzNuAZHueK
+ RlaQnxn+liwoIPMvtSqKlu8GBaJZJbo=
+X-Proofpoint-ORIG-GUID: WpblYh98GkdypqBvVoMJX_C90C07VDrv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_03,2026-07-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200169
 
 
-This is a note to let you know that I've just added the patch titled
 
-    can: bcm: add missing rcu list annotations and operations
-
-to the 6.1-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-
-The filename of the patch is:
-     can-bcm-add-missing-rcu-list-annotations-and-operations.patch
-and it can be found in the queue-6.1 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From 7b2c3eabc4dafc062a25e10711154f2107526a78 Mon Sep 17 00:00:00 2001
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-Date: Tue, 14 Jul 2026 18:55:27 +0200
-Subject: can: bcm: add missing rcu list annotations and operations
-
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
-
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
-
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
-
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -248,7 +248,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -903,6 +903,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1045,8 +1046,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
- 			     HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1068,6 +1068,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op);
- 
-@@ -1211,9 +1215,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 			     HRTIMER_MODE_REL_SOFT);
- 		op->thrtimer.function = bcm_rx_thr_handler;
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1292,10 +1293,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1625,8 +1628,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1657,8 +1662,10 @@ static int bcm_release(struct socket *so
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
+On 11.07.26 06:11, Bryam Vargas wrote:
+> Alexandra,
+> 
+> Agreed -- and thanks for the pointer to f558120cd709. The reference pin
+> closes the lookup-without-hold free in afiucv_hs_rcv(), but sashiko is
+> right that it doesn't touch the larger gap: the receive path changes
+> sk_state from softirq without honoring sock_owned_by_user(), so it still
+> races a process-context lock_sock(). Same class as the close-path UAF you
+> fixed.
+> 
+> I'll take a first pass. Plan is an RFC that routes the softirq state
+> changes through the standard sock_owned_by_user()/backlog path instead of
+> mutating the socket under bh_lock_sock() alone, so a held socket defers
+> rather than races. af_iucv is s390-only and I don't have HiperSockets
+> hardware -- I verify against a KASAN model of the receive path -- so I'd
+> rely on you or Hidayath to validate each revision on real HW before it
+> lands.
+> 
+> I'm already in this code from a separate severed-path UAF fix [1]. If
+> you'd rather keep the rework in-house on the s390 side, say so and I'll
+> send my analysis and the model instead.
+> 
+> [1] https://lore.kernel.org/all/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea@proton.me/
+> 
+> Thanks,
+> Bryam
+> 
 
 
-Patches currently in stable-queue which might be from socketcan@hartkopp.net are
+Hello Bryam,
+your help is highly appreciated, please send the RFC and we will continue to work on this together.
 
-queue-6.1/can-bcm-defer-rx_op-deallocation-to-workqueue-to-fix-thrtimer-uaf.patch
-queue-6.1/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
-queue-6.1/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
-queue-6.1/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+Please make sure you send all discussion about iucv or af_iucv to netdev@vger.kernel.org as well.
