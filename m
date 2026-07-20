@@ -1,200 +1,183 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773743939D7
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 03:23:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784517837; cv=none; b=tR7p9FD2nbCgVPOEj8Wn+NNr/4qlzqoXgXlQMXLHz+had/21Sdi57tRw5RhhbyBcourgKQdPjC/5bDW/8gLyBgjlBavdjzwgmFZBxEnts3/0M9tTcE3l210yjmR4KRB8DreI1RSK1x/GYqG2vr8vCU1LBM+9KVvqH3gSUKN1gtI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784517837; c=relaxed/simple;
-	bh=KX5orifZR0uNHdc5IzRNOQWq8tDHvKst6CwR7OwrYM8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hPK0ywEDZHSh02lAmbQ3d2r4qfz9Fy1Za2+ewV2bN16CF3pwpkxgw+YAeb013fz8XfJX96bBFNl6KSeKGeGptpf2ugU+9l64Jc3n813aWEGq44aAi+7QjJTFi5TsiPjhlxtFb+J5kN4ridF2XopB0gVaxFsi6orugXvJtlr0DAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h3Qnk5ZyBzKHMNB
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 11:23:06 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 5F8BC4056E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 11:23:46 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBHdlfBlF1qi89_Bw--.27966S2;
-	Mon, 20 Jul 2026 11:23:46 +0800 (CST)
-Message-ID: <d150349e-a913-4a31-8210-b58aaaf5c4d2@huaweicloud.com>
-Date: Mon, 20 Jul 2026 11:23:44 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6AB394462
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 03:24:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784517846; cv=pass; b=fNyfM5JmSgK1PYw5oZgr2+k3KfqYMSiV0sBXkSHTQGIK1UdxotdJUNSRVoDmuz7Cvtz7a7r0jqlaogGnqxU6yM0gNQMQGyuSfO8oj7pEzd8czwbYoC7WSqbtQHISBHIPQhCvG5ivCTvhGASA9l5tWBhchJHkQ75Rb7ii+5VF+G4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784517846; c=relaxed/simple;
+	bh=oRIe/84zUcYPF7WKctWcQse43kn0k7OaGkq/Am/HD3U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pFgYtdvG/CTRxUJ6in8MkjZgFh1QjDNF3iPoUKh4QX2zYNg7rj+H7uRYJlZ7txV4UtOxLys127ff8aw3O6avLfmIqgz2jfT7yBvasVhSqhDx08PXKS+5SpMLeP9qME0sm5q8Aew8Xez0JMmFYOBXiuuigTxBEygWUS15c12FBnI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cxJxGMrV; arc=pass smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cxJxGMrV"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c15d111ca99so994412766b.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 20:24:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784517843; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gM6HcAlNPR9vxHevdTN7SZHPkeDyEbAqdmXKTuz4Da5WTyfjPXAClCRwpDmfop7YyR
+         WQJ0Ab1HGsWxQHUAz+JI+LlAtgYPZB4yxWwUQWE2W5MfosFYkdXxobZLYCwk6154Mlk7
+         vsN6c06OP/QlTtVp9w6I/bqBugYXnDT4FFI/Ao1M3nzmbJdI2iI8kqFigo2YAf0iliTE
+         TOiTnuOtgHrv9AbFzrsgibE5qx6pO9IbP8ozjE2voXFMkvnPCWnkj2HYhwWncT4/bxdZ
+         tTVKm4yAh7f1yLUkkiHrlK50s05EofZc9zee3HI5ebu5kKwPBZiq867JBMQll1POv7gN
+         3ZkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8V+cmq0ObXqhIAMf/P6Sid/1xN3TypvFqnYYrUPHLBo=;
+        fh=N9Z87eG/HzL8ti0cgBStMTEqiW810YfndzyMugtMrHs=;
+        b=fSc0YvzbznzylpMqflyZ0eLzNMvvvtm/rPTGMCQWxrSEhTXjCdyTgSwIOWuBU6G1az
+         PUk9AkAz4sK49z92MyfHCzrdzE70rTY+5ao9HHpg4PEabIGksCDyYZb9VAuO11DWUFLo
+         n0EZa7FzRRfCf5WPILz1XFo0S/ktf6ikQvWUlz8oTzLqLr3k2EBtMhxEzAOFgJNyNEL5
+         h0Ya0zckJC9xsGP/p0gTNaWKsvLQYsUwm+dROG2J9CwMOtKvUb5hPwdN2qoOhjjX3oxm
+         cEoOxMYZuYgDAQoyY1sDP8Y+u0o9prRLtn2gY9ZLUyLsuBAdmKYraYk2AsE9L5/+iRau
+         hcvw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784517843; x=1785122643; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8V+cmq0ObXqhIAMf/P6Sid/1xN3TypvFqnYYrUPHLBo=;
+        b=cxJxGMrVcQeZoQ6Ox8vCAAN/uFJhzR8IenMAHbQw4odKb5wHGdRN898AHqIgwtGtph
+         mBsfmZNDedu1L3c4i2kXfZ04+IvUut7Devu3GBw/ehEMrlLEyWYarNpz2/atblrl6a2t
+         rqWoGGc7HUTxxRn0ZJX9DvYO3FCj859MHwC1NFIaaUYzSGfxpEVwi4ORFMYTiRxSb+cb
+         CliZPjLEiS9yObQU1ILl9l7PoUV0kXAp3dwpBsASkpNUmyUKQdLXmQGAXCIQBkU8YE6X
+         UKkAt/oL/oKKPcC4TKBxmmSFGhsXivoGuI360IGHPu/xikeVrvlR5oJEYkj9t/9I2om9
+         CgUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784517843; x=1785122643;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8V+cmq0ObXqhIAMf/P6Sid/1xN3TypvFqnYYrUPHLBo=;
+        b=QAH3EZ4mMFtAT55a//xLs6HaY80+LSU6Ebe9+aQhxjBNxxDET4O6QeCOzWhvzULLSl
+         Jh3inkRy2kHMczBo2RGoioT8w9I8kY3hEOQatIif76nyxFiN/elmEpwe5Pq/cLU4qNYp
+         Z8ClV4NUnb+dR1O4dQBabywDXWazb/6aluFVsqCZRc2TBcYbqohg2fDS8yGwNRC1hECC
+         kQAJ9c1EH5VZ9D6/XbtBjgN1Ffed2ecQ2HwgrAbEQvUR3oFOY/IQLrV3WjBUVTVF6HMd
+         YjysuNBmPawmQf9OBSS8w/5CxakrdWupqq4cgQIlGW4CzURpUcJedVlhDc3KrPKISRez
+         3cCQ==
+X-Gm-Message-State: AOJu0YwydCQYpZipSNpki+I8y6c8K3jI7BhwJvUIuzF2/a8ItVd6P5MB
+	tAyUJO0NAbFEVpKe4WEXfbITPzkytk884ojyAQcgcZsPiwaQz9Ym0BHvViNMRyA6TuJh7hFNVeq
+	aDR5p6Rzov/iGf0i0QWjOsSKYcwF+CUesIRcS
+X-Gm-Gg: AfdE7ck7miyEyB3HTnowHKngfkT9ookTgfIJXrw8h1/lM7FvZi5ukOogiUVA6iIP3fp
+	ogV38kCjshJtTv75nccQrqbimNgFyT00qZpL1O0MuU3IVDtmK72pHHA5fhbyVWv2LgczuIWC0dd
+	QrRJsoOcFW0Ce470y8r/gtWIrlnYAjisp3JKevh6XntY8tUXGkGRf83ApHM0qtxJwARtqiL/h3e
+	cUqW1AvssHRcb5q5ztcERFkePnePlL4uHD5OE/qlBSwMHRk9jlPYWyudD3lAajOa1gRZHr3Abhw
+	sN8vQ7XdvohczWa2V0k2
+X-Received: by 2002:a17:906:7947:b0:c12:9b93:61fd with SMTP id
+ a640c23a62f3a-c16b46aa27amr427440366b.6.1784517842957; Sun, 19 Jul 2026
+ 20:24:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v2] bpf, cgroup: Fix storage null-ptr-deref after
- replacing prog
-Content-Language: en-US
+References: <20260717-adt7470_thermalzone-v2-0-a55147958fad@gmail.com>
+ <20260717-adt7470_thermalzone-v2-1-a55147958fad@gmail.com> <20260717210439.356FF1F000E9@smtp.kernel.org>
+In-Reply-To: <20260717210439.356FF1F000E9@smtp.kernel.org>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Date: Mon, 20 Jul 2026 00:23:50 -0300
+X-Gm-Features: AUfX_mzsv1aeyFo6ikWaI5--bnju7xbF9TV1ObqLQI1Nx-0zHSbgM8sQSA2VqxQ
+Message-ID: <CAJq09z73W9rtS75K2802jmZpHcAag-Sz6roKQW31cYANH4gjFA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] dt-bindings: hwmon: add binding for adi,adt7470
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260717073343.958862-1-pulehui@huaweicloud.com>
- <20260717080028.7C9F11F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260717080028.7C9F11F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgBHdlfBlF1qi89_Bw--.27966S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw47uF4xXFWUZFy3XFb_yoWrtr43pF
-	1DJ3Z8Jw15JwsYvr4kXwn2vFyrXa18XF1jkrZ8tw1rCF45tFWFgry7urWY9Fy3uFn7Ww1I
-	vws0qF4qkr1jvFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
-	xhVjvjDU0xZFpf9x07UWHqcUUUUU=
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 2026/7/17 16:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Lockless access to `link->prog` in `bpf_link_show_fdinfo` can race with program replacement, leading to a use-after-free.
-> - [High] `__cgroup_bpf_attach` fails to restore `pl->storage` on its error path, leaving dangling pointers when replacing a BPF program.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The binding defines PWM output and thermal sensor provider cap=
+abilities but fails to include `#pwm-cells` and `#thermal-sensor-cells` in =
+the `required` list.
 > --
-> 
-> --- Patch [1]: [PATCH bpf v2] bpf, cgroup: Fix storage null-ptr-deref after replacing prog ---
-> commit 1bd69188dee95afa5142df58a443716090d9272e
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> bpf, cgroup: Fix storage null-ptr-deref after replacing prog
-> 
-> This commit addresses a null pointer dereference caused when an empty BPF
-> program is replaced by one requiring cgroup storage. It properly allocates
-> the new storage and checks if the storage pointers changed to decide between
-> an in-place update or a full RCU-safe replacement array update.
-> 
-> Link: https://lore.kernel.org/bpf/20260714014659.401063-1-pulehui@huaweicloud.com
-> 
->> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
->> index 4355ccb78a9c6..e2fa0ebeed830 100644
->> --- a/kernel/bpf/cgroup.c
->> +++ b/kernel/bpf/cgroup.c
->> @@ -1032,11 +1032,17 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
->>   				struct bpf_cgroup_link *link,
->>   				struct bpf_prog *new_prog)
->>   {
-> 
+>
+> --- Patch [1]: [PATCH v2 1/6] dt-bindings: hwmon: add binding for adi,adt=
+7470 ---
+> commit 6372aff696282f1ac0ec9a8f1372c186734704a2
+> Author: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+>
+> dt-bindings: hwmon: add binding for adi,adt7470
+>
+> The ADT7470 hardware monitoring chip supports PWM fan control and tempera=
+ture
+> monitoring. This commit introduces the YAML device tree binding schema fo=
+r it,
+> defining PWM and thermal sensor provider capabilities.
+>
+> > diff --git a/Documentation/devicetree/bindings/hwmon/adi,adt7470.yaml b=
+/Documentation/devicetree/bindings/hwmon/adi,adt7470.yaml
+> > new file mode 100644
+> > index 0000000000000..14bb6359c91f2
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/hwmon/adi,adt7470.yaml
 > [ ... ]
-> 
->> @@ -1056,10 +1062,39 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
->>   	if (!found)
->>   		return -ENOENT;
->>   
->> +	if (bpf_cgroup_storages_alloc(storage, new_storage, link->link.attach_type,
->> +				      new_prog, cgrp))
->> +		return -ENOMEM;
->> +
->> +	for_each_cgroup_storage_type(stype) {
->> +		if (storage[stype] != pl->storage[stype]) {
->> +			storage_changed = true;
->> +			break;
->> +		}
->> +	}
->> +
->>   	cgrp->bpf.revisions[atype] += 1;
->>   	old_prog = xchg(&link->link.prog, new_prog);
->> -	replace_effective_prog(cgrp, atype, pl);
->> +
->> +	if (!storage_changed) {
->> +		replace_effective_prog(cgrp, atype, pl);
->> +		bpf_prog_put(old_prog);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does dropping the reference to old_prog
-> here introduce a race condition with lockless readers like
-> bpf_link_show_fdinfo() in kernel/bpf/syscall.c?
-> 
-> If a user reads the fdinfo of the cgroup link, bpf_link_show_fdinfo() reads
-> link->prog without holding a lock or taking a reference:
-> 
-> kernel/bpf/syscall.c:bpf_link_show_fdinfo() {
-> 	...
-> 	prog = link->prog;
-> 	...
-> 	if (prog) {
-> 		bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
-> 		...
-> 	}
-> }
-> 
-> If __cgroup_bpf_replace() is called concurrently, it replaces link->prog via
-> xchg() and immediately releases old_prog. If the RCU grace period elapses
-> before bpf_link_show_fdinfo() accesses prog->tag, could this result in a
-> use-after-free?
+> > +properties:
+> > +  compatible:
+> > +    const: adi,adt7470
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  "#pwm-cells":
+> > +    const: 2
+> > +    description: |
+> > +      Number of cells in a PWM specifier.
+> > +      - The first cell is the PWM channel (0 to 3).
+> > +      - The second cell is the PWM period in nanoseconds.
+> > +
+> > +  "#thermal-sensor-cells":
+> > +    const: 1
+> > +    description: |
+> > +      Number of cells required to uniquely identify the temperature se=
+nsors.
+> > +      Valid index values are 0 to 9, corresponding to temp1 through te=
+mp10.
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+>
+> [Severity: Medium]
+> Should #pwm-cells and #thermal-sensor-cells be included in this required =
+list?
+>
+> Because this binding defines the device as a PWM output and thermal senso=
+r
+> provider, omitting these cell properties from the required list allows
+> incomplete device tree nodes to silently pass schema validation.
+>
+> If an adt7470 node is created without them, dependent drivers attempting =
+to
+> reference it as a provider may fail at runtime when parsing the provider
+> specifier.
+>
+> Could both #pwm-cells and #thermal-sensor-cells be added to the required
+> array to enforce complete node validation?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717-adt7470_=
+thermalzone-v2-0-a55147958fad@gmail.com?part=3D1
 
-right, bpf_link_show_fdinfo and bpf_link_get_info_by_fd will suffer this 
-potential UAF
+It would be nice if Sashiko-bot could have previous submission threads
+as input context. It would be a great way to avoid false-positives
+like this.
 
-> 
->> +		return 0;
->> +	}
->> +
->> +	bpf_cgroup_storages_assign(old_storage, pl->storage);
->> +	bpf_cgroup_storages_assign(pl->storage, storage);
->> +	err = update_effective_progs(cgrp, atype);
->> +	if (err) {
->> +		xchg(&link->link.prog, old_prog);
->> +		bpf_cgroup_storages_assign(pl->storage, old_storage);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but while this rollback correctly restores
-> pl->storage in __cgroup_bpf_replace(), does the error path in
-> __cgroup_bpf_attach() have a similar issue?
-> 
-> In __cgroup_bpf_attach(), if update_effective_progs() fails, the code restores
-> pl->prog but seems to miss restoring pl->storage before freeing the newly
-> allocated storage:
-> 
-> kernel/bpf/cgroup.c:__cgroup_bpf_attach() {
-> 	...
-> 	bpf_cgroup_storages_assign(pl->storage, storage);
-> 	err = update_effective_progs(cgrp, atype);
-> 	if (err)
-> 		goto cleanup;
-> 	...
-> cleanup:
-> 	if (old_prog) {
-> 		pl->prog = old_prog;
-> 		pl->link = NULL;
-> 	}
-> 	bpf_cgroup_storages_free(new_storage);
-> 	...
-> }
-> 
-> Since pl->storage was overwritten but never restored, does freeing
-> new_storage leave pl->storage with dangling pointers?
-> 
->> +		bpf_cgroup_storages_free(new_storage);
->> +		cgrp->bpf.revisions[atype] -= 1;
->> +		return err;
->> +	}
->> +
->>   	bpf_prog_put(old_prog);
->> +	bpf_cgroup_storages_link(new_storage, cgrp, link->link.attach_type);
->>   	return 0;
->>   }
-> 
+The ADT7470 can be (and is, in real-world devices ) used as a PWM-only
+device. Likewise, nothing prevents its use solely as an ADC for
+temperature sensors. Because its use cases are modular, neither of
+these provider properties should be strictly required in the binding.
 
-progs = bpf_prog_array_alloc(cnt, GFP_KERNEL);
+Regards,
 
-failed for the above alloc may not be high issue, as cnt max is no more 
-than BPF_CGROUP_MAX_PROGS. But we might as well fix it along the way.
-
+Luiz
