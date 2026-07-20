@@ -1,190 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD81E433BC7;
-	Mon, 20 Jul 2026 15:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF4A400967
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 16:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784562241; cv=none; b=nXzB/3MZIiZfEGc6yYdbBiZCziCRdGqiywuqkhAWZcb5j18LBv+SHYjeC0HCL6iXlJkWq1zTJM1uwJ4M05lVXtkHfJF8SiT0+JXqxkauvGf12SJmNruUvjNNGuvJyE9fDQKwoxg+3So2BW/aGeuodRssqd/rDdRgJGMD2D/F8zM=
+	t=1784563629; cv=none; b=H+NWvqXh1ZlXEL4ybBADtYLFoiASnHRQJaXURdvfm54gMbO2UeL9Ldn0gZ48GkWVesNff1YjMq6IuUBP7dkRyiiCcpQBhGny1nQDn076DkCePmeIbV+fMpuxJZmS6dJPNGfOm0f3iAuUdI8aEGbc4lYtWhEJ3OxpEzCSSAi05dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784562241; c=relaxed/simple;
-	bh=WzvxSrR5VMyqJmt/8nBLstBEGMEetpdW7AXnsVD2eGU=;
-	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=ik2Prxh435OyVKffHjWZol3OfrJNiyQHahKLtRqskrJV1rYkJnLvoyboknwMHJVIRpDynDq04QtR4NhsqHcltaKBPrfpylEL/LxzovOtSK8U+OxPhJhA8G/vc2d2FW7S47xheuVuTWGRo7yoZuTffM3PO1S9f5vF4Uderfhvslc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAMBC12/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784563629; c=relaxed/simple;
+	bh=cDnkQdPIuOoFtVNYtxgiA3XD7U8fp+F1Z8/GP4AscrA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I1HF3tbQWw/kc2sqVcK7tiBLr0Kk5WjNM1LMulPZLfr4DknNwWxAIny8l1l5BLwU3EAD3NC4KkvFUgAdbBwqkrL1DnqPsLshWRC54Qdp+uNeeTPgvaCf2nY8kZ45sklzVF+T0B9owTOhqUmBecxOeT7/5Qg2+47hr2dXFVLuWno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=SfEVFH66; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAMBC12/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C2D1F000E9;
-	Mon, 20 Jul 2026 15:43:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784562239;
-	bh=z2T1XYQAelyZQ857mgYb+cRFuIeeGuSjk7385V7fQo4=;
-	h=Subject:To:Cc:From:Date;
-	b=JAMBC12/mjq2uILEaAEyNHgbenevUVIlz7h5TWsUp7udeq3okNtbT9/8FoJb6uJlV
-	 ux7Pbcxe9XCMnY4WBKUassvzn+NAgwyJnuO3O+ItTJAPKXC8qEkVLFvQKpV7c5LbMB
-	 7Aa/Ky1dpZzGtqGxSV56esus+A55BB8T7mNJYUiw=
-Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 6.18-stable tree
-To: gregkh@linuxfoundation.org,mkl@pengutronix.de,sashiko-reviews@lists.linux.dev,socketcan@hartkopp.net,stable@kernel.org
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Mon, 20 Jul 2026 17:31:00 +0200
-Message-ID: <2026072000-dupe-posing-89a6@gregkh>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="SfEVFH66"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 48B1B4E40E75;
+	Mon, 20 Jul 2026 16:07:05 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 18F8360360;
+	Mon, 20 Jul 2026 16:07:05 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C6EC211BD3CC1;
+	Mon, 20 Jul 2026 18:07:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1784563624; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=utWdvu19UNZoxJGvC9DGJv7trvlZp6J4sIOyLrpLToc=;
+	b=SfEVFH66oqT+dpdZlYmxW8cXj8hCgnZvQ97i28dcV+BpRyTibFoFlF/Oc1X5s32eT+PHe7
+	kWk35LUlaNlwXb+BsJPoSV2izZ1wPTJ6HUES4TVmdVnreurls+o6M6gwdyLnwWVNP1Uh6s
+	wlFjUNlZTqmESIhVINyYXkDn/+v7sVGy8sjtpvEaC9mKh6jxQAfDIZTshLJO6HURGVZdCC
+	uMY+fUKdbDbU4BUFDGRhmEAClWdR+bQqydFPF32+osTDh3fls/Jpd5fl3bhNF/e5kYCZbL
+	okwjeC9X6VESZV5XsND/gpGsei34x1TKpx7vXoV/I7KUh461x/+MHObPyANCtA==
+Date: Mon, 20 Jul 2026 18:07:01 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Akhil R <akhilrajeev@nvidia.com>
+Cc: frank.li@oss.nxp.com, Frank.Li@kernel.org, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org,
+	linux-i3c@lists.infradead.org, robh@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v5 04/12] i3c: master: Add support for devices using
+ SETAASA
+Message-ID: <202607201607012c70129a@mail.local>
+References: <aj0iG5xplWPWc6m_@SMW015318>
+ <20260703090855.1519255-1-akhilrajeev@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260703090855.1519255-1-akhilrajeev@nvidia.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
+On 03/07/2026 09:08:55+0000, Akhil R wrote:
+> On Thu, 25 Jun 2026 07:42:03 -0500 Frank Li wrote:
+> > On Thu, Jun 25, 2026 at 09:38:15AM +0000, Akhil R wrote:
+> >> On Wed, 24 Jun 2026 13:57:46 -0400, Frank Li wrote:
+> >> ...
+> >> ...
+> >> >> [Severity: High]
+> >> >> Is it possible that sending the SETAASA broadcast before direct SETDASA
+> >> >> assignments breaks initialization for devices that natively support SETAASA
+> >> >> but are configured for SETDASA?
+> >> >>
+> >> >> According to the I3C specification, any device on the bus natively supporting
+> >> >> SETAASA will respond to this broadcast by adopting its static address as its
+> >> >> dynamic address.
+> >> >>
+> >> >> After this broadcast, the driver iterates through devices and attempts to
+> >> >> assign custom dynamic addresses via direct SETDASA commands:
+> >> >>
+> >> >> drivers/i3c/master.c:i3c_master_early_i3c_dev_add() {
+> >> >>     ...
+> >> >> 	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
+> >> >> 					i3cdev->boardinfo->init_dyn_addr);
+> >> >>     ...
+> >> >> }
+> >> >>
+> >> >> Since the target device already adopted its dynamic address during the
+> >> >> SETAASA broadcast, it is no longer in the unassigned state and will NACK
+> >> >> the subsequent SETDASA command.
+> >> >
+> >> > Look like correct, but I am not sure if target will NACK SETDASA. Or should
+> >> > use SETNEWDA for SETAASA method.
+> >>
+> >> Yes, this looks valid for mixed device buses. I can move
+> >> i3c_master_setaasa_locked() after the SETDASA handling and before
+> >> i3c_master_do_daa() in the same function, so SETDASA-assigned devices will
+> >> ignore the later SETAASA broadcast. Does that sound good to you?
+> > 
+> > yes, try it to follow spec.
+> 
+> I just noticed that the specification says: if both bits 0 and 1 are set,
+> meaning both SETDASA and SETAASA are supported, the I3C Bus Controller should
+> use SETDASA first.
+> 
+> So moving i3c_master_setaasa_locked() after SETDASA handling follows the spec.
+> 
+> I will wait a few more days before sending v6, to see if there are any other
+> concerns.
 
-This is a note to let you know that I've just added the patch titled
+No other concerns on my side.
 
-    can: bcm: add missing rcu list annotations and operations
-
-to the 6.18-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-
-The filename of the patch is:
-     can-bcm-add-missing-rcu-list-annotations-and-operations.patch
-and it can be found in the queue-6.18 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From 7b2c3eabc4dafc062a25e10711154f2107526a78 Mon Sep 17 00:00:00 2001
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-Date: Tue, 14 Jul 2026 18:55:27 +0200
-Subject: can: bcm: add missing rcu list annotations and operations
-
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
-
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
-
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
-
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -260,7 +260,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -946,6 +946,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1087,8 +1088,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1110,6 +1110,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op);
- 
-@@ -1250,9 +1254,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1331,10 +1332,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1664,8 +1667,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1696,8 +1701,10 @@ static int bcm_release(struct socket *so
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
-
-
-Patches currently in stable-queue which might be from socketcan@hartkopp.net are
-
-queue-6.18/can-bcm-defer-rx_op-deallocation-to-workqueue-to-fix-thrtimer-uaf.patch
-queue-6.18/can-isotp-serialize-tx-state-transitions-under-so-rx_lock.patch
-queue-6.18/can-isotp-fix-use-after-free-race-with-concurrent-netdev_unregister.patch
-queue-6.18/alsa-hda-fix-kconfig-dependency-of-hd-audio-pci.patch
-queue-6.18/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
-queue-6.18/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
-queue-6.18/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+> 
+> Best Regards,
+> Akhil
+> 
+> -- 
+> linux-i3c mailing list
+> linux-i3c@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-i3c
