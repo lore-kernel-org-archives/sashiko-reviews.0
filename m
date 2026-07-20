@@ -1,66 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A93254B18;
-	Mon, 20 Jul 2026 23:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ADF449B31;
+	Mon, 20 Jul 2026 23:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784591598; cv=none; b=rOVjtVhSvQZFv3sIbweXMt/I9aJQj5gQ+/qn0T3eGu8/zVpVdpJqlM5+aiuNi+zHTd3cgVADOwJlEHyuOL7y4KWmA5ThtJ2X1hnPssMPxDMBlmktVzi8WVnVhtrFRccAPI52pPOMn818ZvAcRhLIPx0CfUU4jr7PvETI+W1FGRQ=
+	t=1784591909; cv=none; b=LztgJhYJKTIN6d3KmW+Coc2bLIJ03UM0RPfi13x9vU8IfBYAX7Buqr9UUwLYFgtE14HAcRLbS4rAYqD4p5fM3JmfVaMHN9VfLCL5co0pfonKrdU9/Rr9tXcPnmhf3IW5a+8Mex+Yid5QOnmnSp0ao54CvYSurUfiWt0vb0WyrmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784591598; c=relaxed/simple;
-	bh=q7fjk7ySe8tMF07ls7domV896YuN1gswx9g3SDXon0M=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D48dhMI3Y2WBs+rqveL6w8HffuZeMGkO0QjN1i2X1HKLOoe3mi8GbFcrxUyL8j04moMuKfVvugjv0dLZjtER6RTf7plB5jX3024kt0p+FNc9aKKJI0rfHQIIa9on+XBz1mxxWb67T11PtJgQVYB1ToggFepa77/D7GgiucmkqE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWdKjHHL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784591909; c=relaxed/simple;
+	bh=BhnvLPfjBhqReUr6mTe58IXcF0OiouKlt8Pj9p7uvCA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u/JbMofQIwtyZGkNQ3q2AWRtmnsjS1kzw4vb7j4kUtgIfoRDehmUoPMgg7ps0qftYf+FNlNdI9rXCNb9WE2RSN05XHzmOd5/chnxhK9DVc7wQQJzTC4XHQruaHX+7YfIplknsei7dN6p+OcdCab8cRUBOHYpBqL4H7kcwdHz9VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNrdT6/g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWdKjHHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754791F000E9;
-	Mon, 20 Jul 2026 23:53:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNrdT6/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE881F000E9;
+	Mon, 20 Jul 2026 23:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784591597;
-	bh=BLhnvNf/85wnLfb3go4qsPaXWY4wivWkwsn6ENwE/jc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=kWdKjHHLsYpoKqztUqo2WzOLH9eaXTzckUcKGa+/i6JG0cCc9xiRm4RjZDIZyX9Fj
-	 pqrdE17arKn//rs/bsKFPTlybjbIgX5J9Ds6tT/O4suhhLIbmZ0O59Q07LgZQm8CzQ
-	 RgYon6gPPPpC+Cq2x6epFd70I3qHL4iJ46sPk/oDkpYcHJkQIy5n4r8zodY+LKFXQy
-	 14AytinsWs71fKBUvacfL35gUGGFHjLERjTbc1DtUNfCIRP/IaKDllh7cHE1s14UwE
-	 +gsnWFYr3GSsynXhk6ezwgKJB5TaS4AJJIezEtJ9dSZHykSGBS9K/Bfhl8yB4+pm2N
-	 ckRpn0HwMjH1Q==
-Date: Tue, 21 Jul 2026 00:53:12 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: "Bowman, Terry" <terry.bowman@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org,
- linux-pci@vger.kernel.org
-Subject: Re: [PATCH v18 10/13] cxl: Add port and dport identifiers to CXL
- AER trace events
-Message-ID: <20260721005312.3c0bb10e@jic23-huawei>
-In-Reply-To: <75709fbe-3825-45ea-9a98-884b31430eb6@amd.com>
-References: <20260717222706.3540281-1-terry.bowman@amd.com>
-	<20260717222706.3540281-11-terry.bowman@amd.com>
-	<20260717225316.02D321F000E9@smtp.kernel.org>
-	<75709fbe-3825-45ea-9a98-884b31430eb6@amd.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	s=k20260515; t=1784591908;
+	bh=/P0skrbYyqE0q1+DCGGww4fGsVLyiqIXtfRaxXt0qKI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=oNrdT6/gG+0+jYatFkxcD4vhfHNLmZJg2RUf6GWE1RGE/WG5dyPkM3E2F9zDGDPF6
+	 /7ZwOY1/JM2ZkA0qxQATdFKLRdWKf7KwMEWglI41y0CEyqbAc96mvfGZljgRWIrea2
+	 4TyJtej/d1FU2+OTkKBJuCaxYKJgs081q2g7M7P4bYrLspkBVUaTPbZwwEzIEI0XTu
+	 4KvuH+cpVNPi7O2baomLLcqXZnkmUmXObilEfJ0lgcMs9T6Scf9eZPlx62SwT3fG6x
+	 GLyLrW+uR9ZsXNMYkDK3JVMNhAArHT9e4nskJItd5xQheXYZSgML4TFkaPAerilBKQ
+	 ncpS8XBUnxkqQ==
+Message-ID: <7b68dcb2-9b52-42cc-9524-debcb01185d0@kernel.org>
+Date: Tue, 21 Jul 2026 08:58:25 +0900
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ata: pata_pxa: use devres for DMA channel management
+To: sashiko-reviews@lists.linux.dev, Rosen Penev <rosenp@gmail.com>
+Cc: cassel@kernel.org, linux-ide@vger.kernel.org
+References: <20260720015014.1912040-1-rosenp@gmail.com>
+ <20260720020148.7A2DA1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20260720020148.7A2DA1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Mon, 20 Jul 2026 10:14:27 -0500
-"Bowman, Terry" <terry.bowman@amd.com> wrote:
-
-> On 7/17/2026 5:53 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [High] Asynchronous CPER error handling races with ACPI driver unbind, causing Use-After-Free of cxl_dport.  
-> This is a false positive.
+On 7/20/26 11:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The commit message falsely claims that `ata_host_activate()` registers a managed host detach and that the patch preserves the previous teardown ordering.
+> --
 > 
-> The Downstream port lifecycle is tied to the Port's xarray and synchronized here using the 
-> Port's device lock.
+> --- Patch [1]: [PATCH] ata: pata_pxa: use devres for DMA channel management ---
+> commit d581effc5d41a82779ae2b411de235a8efbfb017
+> Author: Rosen Penev <rosenp@gmail.com>
 > 
-> > - [High] Live PCI configuration space reads on a potentially frozen or dead link during AER recovery.  
-> This is fixed in patch 11 with introduction of cached PCI DSN.
-Why not flip the patch order?
+> ata: pata_pxa: use devres for DMA channel management
+> 
+> Convert the DMA channel request to devm_dma_request_chan() so the
+> channel is released automatically on device teardown. This removes
+> the explicit dma_release_channel() calls in the probe error paths
+> and in pxa_ata_remove().
+> 
+>> Devres releases in LIFO order, so the managed host detach registered
+>> by ata_host_activate() runs before the DMA channel is released, which
+>> preserves the previous teardown ordering.
+> 
+> [Severity: Medium]
+> Is this description accurate regarding the managed host detach and teardown
+> ordering?
 
+Rosen,
+
+Can you resend with a fixed up commit message?
+Thanks.
+
+-- 
+Damien Le Moal
+Western Digital Research
