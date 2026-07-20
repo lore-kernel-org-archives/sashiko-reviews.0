@@ -1,43 +1,45 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 116513859F5;
-	Mon, 20 Jul 2026 23:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A93254B18;
+	Mon, 20 Jul 2026 23:53:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784589416; cv=none; b=c8MbQPoYBJtezkjhPirsuj+T2f7yDh6qB+jQ9sutBh7JgD8Alnc7IYrTmHS1NbwE6ntrDkR2rVcg4Msgndk9CxTwaE9BSS8Wc5mtbCeE5QJAwfMUAAWfTcCInikupdSbitKWMhSBvTLwQndQZb+BU/c0tUHbWCLmIMvWOPMVWts=
+	t=1784591598; cv=none; b=rOVjtVhSvQZFv3sIbweXMt/I9aJQj5gQ+/qn0T3eGu8/zVpVdpJqlM5+aiuNi+zHTd3cgVADOwJlEHyuOL7y4KWmA5ThtJ2X1hnPssMPxDMBlmktVzi8WVnVhtrFRccAPI52pPOMn818ZvAcRhLIPx0CfUU4jr7PvETI+W1FGRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784589416; c=relaxed/simple;
-	bh=9Yj9ZWRDrdzmRKYdoAn+kCtmpfgcX9zHdJicsV+ghV4=;
+	s=arc-20240116; t=1784591598; c=relaxed/simple;
+	bh=q7fjk7ySe8tMF07ls7domV896YuN1gswx9g3SDXon0M=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DUa7i/vk9lkNn7oU+FhkTBujlcu4Gi7/isMb8XiymEWgwNhDLBgO6hdACqJV5aD93Q0AKC5j6fJ6ni8PcP1Nbzp8wCig8yOwMjliKHKs7/Syl/T1NZ3CA1pXMKSui1dybaBh7hLUgXMCfk8PHGVVBqlfOv4x329S0X9S+0yYCtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=hLxtapdA; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 MIME-Version:Content-Type; b=D48dhMI3Y2WBs+rqveL6w8HffuZeMGkO0QjN1i2X1HKLOoe3mi8GbFcrxUyL8j04moMuKfVvugjv0dLZjtER6RTf7plB5jX3024kt0p+FNc9aKKJI0rfHQIIa9on+XBz1mxxWb67T11PtJgQVYB1ToggFepa77/D7GgiucmkqE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWdKjHHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="hLxtapdA"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C2939143D;
-	Mon, 20 Jul 2026 16:16:48 -0700 (PDT)
-Received: from ryzen.lan (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8B4C73F66F;
-	Mon, 20 Jul 2026 16:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784589412; bh=9Yj9ZWRDrdzmRKYdoAn+kCtmpfgcX9zHdJicsV+ghV4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=hLxtapdAHP7mT+Bg5vDVV0WBmUf5Ux2fUMCgjeX//8C0DujVq8phw929NWTkvAbgC
-	 UPDE8GW+WX3FHUNAAQ26CVAnXvIwQEU4aaqL/6MIQa9O9FRJy5EGmKhfFVs4Vn0bpa
-	 WKCQ/a9TIGOWsjXayXNIuZ7DONGv1FPn3mHPgJ3g=
-Date: Tue, 21 Jul 2026 01:13:05 +0200
-From: Andre Przywara <andre.przywara@arm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
- devicetree@vger.kernel.org, robh@kernel.org, linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH] arm64: dts: allwinner: a523: x96qpro+: overvolting eMMC
-Message-ID: <20260721011305.5167d19e@ryzen.lan>
-In-Reply-To: <20260720215035.ED2D51F000E9@smtp.kernel.org>
-References: <20260720213832.3763-1-andre.przywara@arm.com>
-	<20260720215035.ED2D51F000E9@smtp.kernel.org>
-Organization: Arm Ltd.
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.31; x86_64-slackware-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWdKjHHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754791F000E9;
+	Mon, 20 Jul 2026 23:53:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784591597;
+	bh=BLhnvNf/85wnLfb3go4qsPaXWY4wivWkwsn6ENwE/jc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=kWdKjHHLsYpoKqztUqo2WzOLH9eaXTzckUcKGa+/i6JG0cCc9xiRm4RjZDIZyX9Fj
+	 pqrdE17arKn//rs/bsKFPTlybjbIgX5J9Ds6tT/O4suhhLIbmZ0O59Q07LgZQm8CzQ
+	 RgYon6gPPPpC+Cq2x6epFd70I3qHL4iJ46sPk/oDkpYcHJkQIy5n4r8zodY+LKFXQy
+	 14AytinsWs71fKBUvacfL35gUGGFHjLERjTbc1DtUNfCIRP/IaKDllh7cHE1s14UwE
+	 +gsnWFYr3GSsynXhk6ezwgKJB5TaS4AJJIezEtJ9dSZHykSGBS9K/Bfhl8yB4+pm2N
+	 ckRpn0HwMjH1Q==
+Date: Tue, 21 Jul 2026 00:53:12 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: "Bowman, Terry" <terry.bowman@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org,
+ linux-pci@vger.kernel.org
+Subject: Re: [PATCH v18 10/13] cxl: Add port and dport identifiers to CXL
+ AER trace events
+Message-ID: <20260721005312.3c0bb10e@jic23-huawei>
+In-Reply-To: <75709fbe-3825-45ea-9a98-884b31430eb6@amd.com>
+References: <20260717222706.3540281-1-terry.bowman@amd.com>
+	<20260717222706.3540281-11-terry.bowman@amd.com>
+	<20260717225316.02D321F000E9@smtp.kernel.org>
+	<75709fbe-3825-45ea-9a98-884b31430eb6@amd.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,72 +49,18 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Mon, 20 Jul 2026 21:50:35 +0000
-sashiko-bot@kernel.org wrote:
+On Mon, 20 Jul 2026 10:14:27 -0500
+"Bowman, Terry" <terry.bowman@amd.com> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Bumping the eMMC IO regulator (`reg_cldo1`) to 1.9V inadvertently misconfigures the SoC's IO bank (Port C) into 3.3V power mode instead of 1.8V mode, creating a logic threshold mismatch.
-
-Huh, that's interesting, but might actually point to the real root
-cause: it seems like the meaning of the bits in the withstand register
-is inverted on the A523: 0 encodes 1.8V, a 1 encodes 3.3V. But that's
-the opposite of the H6 definition, which we use in the kernel for the
-A523 as well. Which means they were wrongly programmed before, but now
-the wrong voltage selection turns out to trigger the really correct
-setting.
-
-So I will try playing around with those registers instead.
-
-Cheers,
-Andre.
-
-
-> --
+> On 7/17/2026 5:53 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [High] Asynchronous CPER error handling races with ACPI driver unbind, causing Use-After-Free of cxl_dport.  
+> This is a false positive.
 > 
-> --- Patch [1]: [PATCH] arm64: dts: allwinner: a523: x96qpro+: overvolting eMMC ---
-> commit e4c261c388d6e406babdf0d56ac61d104d537230
-> Author: Andre Przywara <andre.przywara@arm.com>
-> Date:   Mon Jul 20 21:38:32 2026 +0000
+> The Downstream port lifecycle is tied to the Port's xarray and synchronized here using the 
+> Port's device lock.
 > 
-> arm64: dts: allwinner: a523: x96qpro+: overvolting eMMC
-> 
-> This commit changes the eMMC IO regulator voltage on PortC from 1.8V to 1.9V
-> for the X96QPro+ device. The goal is to improve eMMC stability and performance
-> without drastically limiting the clock frequency.
-> 
-> > diff --git a/arch/arm64/boot/dts/allwinner/sun55i-h728-x96qpro+.dts b/arch/arm64/boot/dts/allwinner/sun55i-h728-x96qpro+.dts
-> > --- a/arch/arm64/boot/dts/allwinner/sun55i-h728-x96qpro+.dts
-> > +++ b/arch/arm64/boot/dts/allwinner/sun55i-h728-x96qpro+.dts
-> [ ... ]
-> > @@ -194,8 +194,8 @@ reg_bldo4: bldo4 {
-> >  
-> >  			reg_cldo1: cldo1 {
-> >  				regulator-always-on;
-> > -				regulator-min-microvolt = <1800000>;
-> > -				regulator-max-microvolt = <1800000>;
-> > +				regulator-min-microvolt = <1900000>;
-> > +				regulator-max-microvolt = <1900000>;
-> 
-> [Severity: High]
-> Does bumping this regulator to 1.9V inadvertently force the SoC's IO bank
-> (Port C) into 3.3V power mode?
-> 
-> Looking at sunxi_pinctrl_set_io_bias_cfg() in
-> drivers/pinctrl/sunxi/pinctrl-sunxi.c, the driver uses a strict check when
-> evaluating the voltage:
-> 
->     case BIAS_VOLTAGE_PIO_POW_MODE_SEL:
->         val = uV <= 1800000 ? 1 : 0;
-> 
-> Since 1900000 is greater than 1800000, this evaluates to 0 and clears the
-> PIO_POW_MOD_SEL register bit, incorrectly configuring the IO bank for 3.3V
-> mode while being powered at 1.9V.
-> 
-> Could this mismatch alter input receiver thresholds and drive strengths,
-> potentially causing signal integrity issues or long-term hardware
-> degradation?
-> 
-> >  				regulator-name = "vcc-codec-sd";
-> >  			};
-> 
+> > - [High] Live PCI configuration space reads on a potentially frozen or dead link during AER recovery.  
+> This is fixed in patch 11 with introduction of cached PCI DSN.
+Why not flip the patch order?
 
