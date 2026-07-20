@@ -1,80 +1,45 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327844071D2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 12:36:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050F73D88E5;
+	Mon, 20 Jul 2026 12:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784550984; cv=none; b=nmObHNOL2WpP/JRT5N9pKFWNHmfR0IT60aGUbe19zclPNJ/UFmDyo6sBGuUg9Hv8CSlcRalvThPj7fRU4/DZg4QZjQ7pzzGXM+gXoQ913yYYliP4kHDPmghAMHVQ3hGvQx8xpTVoT6xPLf4XmwClBdixPuEfZhMla9MRYkKegN8=
+	t=1784551196; cv=none; b=X7bdHCJLwPT8ou3zoa8s9D+sqIb9BA2luLdEllxtEcWrdEmgus63hBJy7/1+/YCLKjZmi3DOAOf/h98aXHTCsKo3+NA0sLhcqlVKgTll1IX2uCYN+MS9YW1XFWwvSQjMMCgwrt3vqGCfwicSxj6qiQ/EEmCiT1+I7zahK/cQ8yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784550984; c=relaxed/simple;
-	bh=w6T1m6LSQH/DF/XHTmFYvyE31D5F+54HvaLnYW5+BVE=;
+	s=arc-20240116; t=1784551196; c=relaxed/simple;
+	bh=OuYgJoqfN2tXwSz9Zj360tBdhGj2u2duQ6eha1TEkuQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B+2tSVUHMGjMejUFr5ps+HQrkKjwZLgRFGoWXRCJen0Cix3arrpd+ezHQHPmbB3NxTvb5s9YBt2GcuWLtZgoboguHHxajUe/7fJOyf3PYAe2TnN7TTDRfVBOem4fY1u42lQWKYFYYCDUypu4nqrI0xj0i5uQrHk11Ss+8GWW3nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fFR1VBHJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hyX256ub; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=pTtsy8sL; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=O8QYjiFk; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fFR1VBHJ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hyX256ub";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="pTtsy8sL";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="O8QYjiFk"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id EC5C23E09;
-	Mon, 20 Jul 2026 12:36:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784550981; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
-	b=fFR1VBHJmAcu8jGbXAlibPGlPfI7cLx/3FgsEdHg5guy6rydO9dyl+RjcoTTyGoKFHqg4e
-	dNeBZfJ4q2+Yu+haQ2T17nizBw9X5Z6oUG37HwKJWqDoD4yI3jG0awsDizGZKq3mj5PNki
-	Uk3bb2YwB9YW256tBn1uigNwVFPLViI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784550981;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
-	b=hyX256ubhGpAPeB1jULKvqfQ/q7jtWXlaZ2IxBMFKzXdo1RmzXVHdQlythLgzMbmS8dqpb
-	3g6V7XplZ3NgtPCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784550979; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
-	b=pTtsy8sL4ovlj3iNTrmc9A1wlOkcnk8Hi668U7diBMT2+rwiknYWHs0CquEfiX+D99rWZZ
-	gkZv9oRmV4oF8Czm7iIywKlooZF8pwEPBkwUH/DwZvRfcc66JkqSLdLPLitfo7Sv0MbBHa
-	EXU1hN1m4/kjScY1OcO7HVNkr73CrL0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784550979;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
-	b=O8QYjiFkJMUEi2PPji9osqkX81ilMzc5mYnwhQqYmLpUFk7lRLB4rPF/6BqZlRHakt982B
-	79it1bDxtBV7k/Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C3584779AA;
-	Mon, 20 Jul 2026 12:36:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id Ndd2LkMWXmrrXAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 20 Jul 2026 12:36:19 +0000
-Message-ID: <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
-Date: Mon, 20 Jul 2026 14:36:19 +0200
+	 In-Reply-To:Content-Type; b=DdiSPFQ+z1ZDEh7yehM8HmeaYuD+wrjsNSKIIs9+1HRXJpCRUse01AsPY3U8O0arEEKABDJhGsgicM4fA6CNKMNKwhq8o9SrHY8f/KIYu93RsUP75xZk7rK7L+/mtT+Qg9Pvxp3zfNInjr16YQ8UwpTJor71aAN8Eb5WnSQc+Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 1542c4d4843811f1aa26b74ffac11d73-20260720
+X-CID-O-RULE: Release_Ham
+X-CID-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:98fe691b-2941-42c6-908c-9b8520f2b40a,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:10
+X-CID-INFO: VERSION:1.3.12,REQID:98fe691b-2941-42c6-908c-9b8520f2b40a,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:10
+X-CID-META: VersionHash:e7bac3a,CLOUDID:765c68286b450e9ea7e2b2e4253f738f,BulkI
+	D:260720173546778U6DTU,BulkQuantity:1,Recheck:0,SF:17|19|64|66|78|80|81|82
+	|83|102|127|841|865|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil
+	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
+	KP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 1542c4d4843811f1aa26b74ffac11d73-20260720
+X-User: lienze@kylinos.cn
+Received: from [192.168.3.106] [(61.48.211.50)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 1879139922; Mon, 20 Jul 2026 20:39:43 +0800
+Message-ID: <a55c6a62-4d27-4676-90b5-0db87f795b0a@kylinos.cn>
+Date: Mon, 20 Jul 2026 20:39:40 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,161 +47,100 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-To: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
+Subject: Re: [PATCH] samples/damon/mtier: use damon_addr_range consistently
+To: sashiko-reviews@lists.linux.dev
+Cc: damon@lists.linux.dev
+References: <20260720092355.237599-1-lienze@kylinos.cn>
+ <20260720093536.E22941F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:url,bootlin.com:url,suse.de:mid]
-X-Spam-Level: 
-X-Spam-Score: -4.30
+From: Enze Li <lienze@kylinos.cn>
+In-Reply-To: <20260720093536.E22941F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi
+Hi Sashiko AI,
 
-Am 18.07.26 um 21:12 schrieb Ze Huang:
-[...]
->>>   
->>> -	if (event) {
->>> -		crtc->state->event = NULL;
->>> +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane *plane,
->>> +					      struct drm_atomic_commit *commit)
->>> +{
->>> +	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(commit, plane);
->>> +	struct drm_crtc *crtc = plane_state->crtc;
->>> +	struct drm_crtc_state *crtc_state = NULL;
->>>   
->>> -		spin_lock_irq(&crtc->dev->event_lock);
->>> +	if (crtc)
->>> +		crtc_state = drm_atomic_get_new_crtc_state(commit, crtc);
->>>   
->>> -		if (crtc->state->active && drm_crtc_vblank_get(crtc) == 0)
->>> -			drm_crtc_arm_vblank_event(crtc, event);
->>> -		else
->>> -			drm_crtc_send_vblank_event(crtc, event);
->>> +	return drm_atomic_helper_check_plane_state(plane_state, crtc_state,
->> [Severity: High]
->> Can fetching the CRTC state this way cause a kernel panic in the core atomic
->> helpers?
->>
->> If userspace submits a commit that modifies only plane properties without
->> affecting the CRTC, the CRTC is not implicitly added to the atomic commit
->> state.
->>
->> In this scenario, drm_atomic_get_new_crtc_state() returns NULL. Passing this
->> NULL pointer directly to drm_atomic_helper_check_plane_state() causes a crash
->> when it dereferences crtc_state->enable.
->>
->> Could this use drm_atomic_get_crtc_state() instead to ensure the state is
->> brought into the commit if it is missing?
-> I think it is fine here; I'll just copy the pattern from [1].
->
-> [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L487
+On 2026/7/20 17:35, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The commit message incorrectly claims `struct damon_addr_range` has an identical layout to `struct region_range`, masking a physical address truncation issue on 32-bit PAE architectures.
+> - [Low] The refactoring removes a custom struct but leaves a redundant local variable `range` and unnecessary field-by-field copy operations.
+> --
+> 
+> --- Patch [1]: [PATCH] samples/damon/mtier: use damon_addr_range consistently ---
+> commit 71c06f0196fa4997fb5e79c1b3b9f9f2e74eb370
+> Author: Enze Li <lienze@kylinos.cn>
+> 
+> samples/damon/mtier: use damon_addr_range consistently
+> 
+> This commit removes the local struct region_range and uses struct
+> damon_addr_range for unified address range management.
+> 
+>> The DAMON provides struct damon_addr_range for unified address range
+>> management.  However, the mtier sample still defines a local struct
+>> region_range with an identical layout (start and end as phys_addr_t) and
+>> mixes its usage with struct damon_addr_range in
+> 
+> [Severity: Medium]
+> Is this description of struct damon_addr_range accurate?
+> 
+> Looking at include/linux/damon.h, struct damon_addr_range is defined with
+> unsigned long fields, not phys_addr_t:
+> 
+> struct damon_addr_range {
+> 	unsigned long start;
+> 	unsigned long end;
+> };
+> 
+> On 32-bit architectures with PAE, phys_addr_t is 64-bit while unsigned long
+> is 32-bit, meaning assignments of physical addresses via PFN_PHYS() will
+> silently truncate.
+> 
+> Could the commit message be updated to avoid stating they have identical
+> layouts?
 
-It could be that there's a long standing problem in the overall logic. 
-Not having a CRTC (and hence crtc_state) should also mean !fb, so we'd 
-return at [1]. If we have a CRTC on the plane but pass a crtc_state of 
-NULL, we could get a panic at [2], where it does crtc_state->crtc.  I'm 
-not aware of any bug reports about this problem, but it's still an issue.
+Thanks for catching this.  The commit message is inaccurate when
+describing the two structs as having "identical layout".
 
-A number of drivers get this wrong by using 
-drm_atomic_helper_get_new_crtc_state(). The bot suggests to use 
-drm_atomic_helper_get_crtc_state() instead.  This helper also returns 
-the new state. But  if there's no new state, it duplicates the CRTC's 
-existing state. That's a bit of an overhead, but probably not an issue.  
-Several drivers use this helper, but also get it wrong. They tend to 
-return early in the case of !crtc or !fb without calling 
-_check_plane_state(). See [3] and [4] for examples.
+I'll update the commit message in v2 to remove the "identical layout"
+claim and instead describe the change as replacing the local struct
+with struct damon_addr_range for consistency with the DAMON API.
 
-I think, going with the bot's suggestion to use 
-drm_atomic_helper_get_crtc_state() might be the best resolution for now. 
-It still needs a crtc pointer, so the pattern is
+> 
+>> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+>> index ac9c24b92ead8..67f20b52dc7bb 100644
+>> --- a/samples/damon/mtier.c
+>> +++ b/samples/damon/mtier.c
+> [ ... ]
+>> @@ -78,8 +73,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+>>  	struct damos *scheme;
+>>  	struct damos_quota_goal *quota_goal;
+>>  	struct damos_filter *filter;
+>> -	struct region_range addr;
+>> -	struct damon_addr_range range;
+>> +	struct damon_addr_range range, addr;
+> 
+> [Severity: Low]
+> Since addr and range are now exactly the same type, is it still necessary to
+> keep the separate range variable?
+> 
+> Further down in damon_sample_mtier_build_ctx(), there is a field-by-field
+> copy that is now redundant:
+> 
+> 	range.start = addr.start;
+> 	range.end = addr.end;
+> 
+> 	ret = damon_set_regions(target, &range, 1, DAMON_MIN_REGION_SZ);
+> 
+> Could we remove the range variable entirely and just pass &addr directly to
+> damon_set_regions() instead?
 
-crtc_state = NULL
-if (plane_state->crtc)
-     crtc_state = drm_atomic_helper_get_crtc_state(plane_state->crtc)
+Nice catch!  Now that both variables are struct damon_addr_range, the
+separate range variable and the field-by-field copy are redundant.
+damon_set_regions() only reads from the ranges array and doesn't modify
+it, so passing &addr directly is safe.  I'll fold this into v2.
 
-_check_plane_state(plane_state, crtc_state);
+Thanks,
+Enze
 
-And in this case, _check_plane_state() should work correctly. But you 
-can only use _get_crtc_state() in the atomic_check helpers! In the 
-atomic_update, atomic_enable, etc helpers, it's too late for the helper 
-to copy the CRTC state.
-
-I think some other DRM dev should look over this as well. It's one of 
-the trickier things in DRM to get right.
-
-Best regards
-Thomas
-
-
-[1] 
-https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atomic_helper.c#L912
-[2] 
-https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atomic_helper.c#L907
-
-[3] 
-https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/mediatek/mtk_plane.c#L230
-[4] 
-https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/tidss/tidss_plane.c#L31
-
-
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
-
+<...>
 
