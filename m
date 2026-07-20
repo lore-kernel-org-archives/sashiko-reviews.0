@@ -1,212 +1,198 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F442C234E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 15:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BED72DB795;
+	Mon, 20 Jul 2026 15:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784560799; cv=none; b=g+9QybqhbiuVo0b8D987tw63hzcATjSh7g8NoTWqXUdMiJ8i3s3QtAVTB/wyuk/UpVy/Dd2pLkPgjF1jHpuX0lxRpdTzDS6PxsyXXQbRgOdT4E7OTOqAPmqiVARwjDbTHe/3TD/dWKtaaMPd/bmL3FMPNmrvXhfMFr/iz1pgm04=
+	t=1784561176; cv=none; b=fT+TzJoJwGshWpJao/0gYP7IuScNcrfAbwQyWdCHKDKXvub5rG6+gG6nOXNYevI4n7loCmOa5N41iX4KeMwXhiqdmC9REVux+TS6/u9ic2MqaFGCUn3VVuQuikbxEOqO5gTMozhM0NGU302ILjPNNZomG0uK2cpjS3GWY7RvYxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784560799; c=relaxed/simple;
-	bh=1D1sKEa/Qff+Tb9URO3TIUV9ce1vUhdd8hBkVZX90rg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kmTvECuFMzipfui/KY300/Y95f/kZTXoI4J4oCMgyNqNUN7pfsDTM3dYwNjMDUqbUN+59ZlsmxJ7lx6QQqX4mIJp+9aq2nWt8gZWUJORsVbBDjJfVl97nmGzhzR5O6UQhduyiaxezIe/DijO7SIJrrtYO1IBWJxzamK2c/+i+90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=VK/ALKAX; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1784561176; c=relaxed/simple;
+	bh=HCktH2JZ+gpVmlhA1Wty4OFGQZBrVgbw92tlApWFuq4=;
+	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=eYT3IXi/JdY3AtNaX8fQ2ZMoTxnX4yhYoGrIxNlcayGh3n/zuMRg3EF+8IdNkgognt/ILW8+LmMHhrw1bC0ATnZf7XsdD3FxNWb3jjBJtoOJ7ajZYmPlMdWAauviikc+HT3+Qj9WH/NkRaNhejC13UiA0q1PhhuBMLUk2LTgfOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t01rrx90; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VK/ALKAX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1784560795;
-	bh=1D1sKEa/Qff+Tb9URO3TIUV9ce1vUhdd8hBkVZX90rg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VK/ALKAXQxOxYHh226uH+caIytyBVCaIOBA9zt/VVVEGDl9ExoSiOYFjrU4Af17Ou
-	 kkq5BwPsh9hCU8BO6wp7SwsaAmrMgXw6DogvJO1iiAL5WlIvr9Hflz0upeQWa1M8Bm
-	 jXdv96ZecpKVgT6VwO+8pkqQ9v1Hcu4usO2jp8UzQO4lw1fkdCLep4NKEgr3SIGRto
-	 5A2zkyD/aM7G+vC7HA/VnPirpqwpzHJYXo7IYftLbygheoFT4Xj+ZCGNaNXwtpS0sd
-	 RcdMCaA2pdkO+54xrtqi44pQkAIkulfG5L7GTO53+xlxOQze1A65RR0xVz4Pu+yf45
-	 RgbHse1py/Vxw==
-Received: from [100.64.1.21] (unknown [100.64.1.21])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7D2D817E07A2;
-	Mon, 20 Jul 2026 17:19:55 +0200 (CEST)
-Message-ID: <e41075b9-8999-48f4-9a61-56b85042b0c5@collabora.com>
-Date: Mon, 20 Jul 2026 17:19:55 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t01rrx90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9281F000E9;
+	Mon, 20 Jul 2026 15:26:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784561174;
+	bh=utms7Ln/FfwScFPNgnGLuvFO+cuGaf20H9coQnKarcM=;
+	h=Subject:To:Cc:From:Date;
+	b=t01rrx90t/v7uW0jHFkgENqjGUrtxJhRicddabZegNxur2o3Ra2hmFy6AG2bsEg7X
+	 rRztm4CBNHZiW6T8ucidmWLPmQ1Oo9PILEeirHq+s20QPl+qYMob9iIWlv5Ujybnk4
+	 FDe7XF4gBVz3ohPYucApGdCXdPHoxCzN+raR0Ljg=
+Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 7.1-stable tree
+To: gregkh@linuxfoundation.org,mkl@pengutronix.de,sashiko-reviews@lists.linux.dev,socketcan@hartkopp.net,stable@kernel.org
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Mon, 20 Jul 2026 17:24:02 +0200
+Message-ID: <2026072002-stratus-reaction-367a@gregkh>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] phy: mediatek: Add support for PCI-Express Gen4
- S-PHY
-To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, olteanv@gmail.com, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux-phy@lists.infradead.org, conor+dt@kernel.org,
- robh@kernel.org
-References: <20260720135344.84183-1-angelogioacchino.delregno@collabora.com>
- <20260720135344.84183-3-angelogioacchino.delregno@collabora.com>
- <20260720141301.482441F00A3A@smtp.kernel.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20260720141301.482441F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
+X-stable: commit
+X-Patchwork-Hint: ignore 
 
-On 7/20/26 16:13, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Improper handling of missing or unsupported NVMEM calibration data causes spurious error logs and hard probe failures.
-> - [Medium] A valid calibration value of 0 is incorrectly treated as missing data, discarding all calibrations.
-> - [Low] The TX_IMPSEL registers are updated twice with identical values during initialization.
-> - [Low] Macros for AEQ_EGEQ_RATIO are defined but unused in favor of literal magic numbers.
-> --
-> 
-> --- Patch [2]: [PATCH v2 2/2] phy: mediatek: Add support for PCI-Express Gen4 S-PHY ---
-> commit d91c6c0718440c44adc7e6a83f5aeca706a6c3d5
-> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Subject: phy: mediatek: Add support for PCI-Express Gen4 S-PHY
-> 
-> This patch adds support for the PCI-Express Gen4 S-PHY found in the latest
-> MediaTek SoCs, including MT8196 and MT8894.
-> 
->> --- a/drivers/phy/mediatek/phy-mtk-pcie-sphy.c
->> +++ b/drivers/phy/mediatek/phy-mtk-pcie-sphy.c
-> [ ... ]
->> +#define PEXTP_DIG_LN_RX2_AEQ_EDGE_0			0x6004
->> +#  define RG_XTP_LN_RX_AEQ_EGEQ_RATIO_GEN3		GENMASK(21, 16)
->> +#  define RG_XTP_LN_RX_AEQ_EGEQ_RATIO_GEN4		GENMASK(29, 24)
->> +#  define AEQ_EGEQ_RATIO_GEN3_TO_22			0x16
->> +#  define AEQ_EGEQ_RATIO_GEN4_TO_22			0x16
-> [ ... ]
->> +		mtk_phy_update_field(sif_lane_base + PEXTP_DIG_LN_RX2_AEQ_EDGE_0,
->> +				     RG_XTP_LN_RX_AEQ_EGEQ_RATIO_GEN3, 22);
->> +
->> +		mtk_phy_update_field(sif_lane_base + PEXTP_DIG_LN_RX2_AEQ_EDGE_0,
->> +				     RG_XTP_LN_RX_AEQ_EGEQ_RATIO_GEN4, 22);
-> 
-> [Severity: Low]
-> Is there a reason the literal 22 is used here instead of the
-> AEQ_EGEQ_RATIO_GEN3_TO_22 and AEQ_EGEQ_RATIO_GEN4_TO_22 macros defined
-> earlier?
-> 
 
-I forgot to remove those definitions. Will do for a v3 tomorrow.
+This is a note to let you know that I've just added the patch titled
 
-> [ ... ]
->> +static void mtk_pcie_sphy_apply_calibration(struct mtk_pcie_sphy *pcie_sphy)
->> +{
-> [ ... ]
->> +		mtk_phy_update_field(sif_lane_base + PEXTP_ANA_LN_TRX_A0,
->> +				     RG_XTP_LN_TX_IMPSEL_PMOS, cal->tx_impsel.pmos);
->> +
->> +		mtk_phy_update_field(sif_lane_base + PEXTP_ANA_LN_TRX_A0,
->> +				     RG_XTP_LN_TX_IMPSEL_NMOS, cal->tx_impsel.nmos);
->> +	}
->> +}
->> +
-> [ ... ]
->> +static int mtk_pcie_sphy_init(struct phy *phy)
->> +{
-> [ ... ]
->> +	if (pcie_sphy->calibration.supported) {
->> +		mtk_pcie_sphy_apply_calibration(pcie_sphy);
->> +
->> +		tx_impsel.pmos = pcie_sphy->calibration.tx_impsel.pmos;
->> +		tx_impsel.nmos = pcie_sphy->calibration.tx_impsel.nmos;
->> +	} else {
->> +		/* Set P=10, N=9 to prevent EMI if no calibration present */
->> +		tx_impsel.pmos = 10;
->> +		tx_impsel.nmos = 9;
->> +	}
->> +
->> +	/* Select TX Impedance on N and P MOSFETs */
->> +	for (i = 0; i < pcie_sphy->num_lanes; i++) {
->> +		void __iomem *sif_lane_base = pcie_sphy->sif_base + PEXTP_REG_LANE(i);
->> +
->> +		mtk_phy_update_field(sif_lane_base + PEXTP_ANA_LN_TRX_A0,
->> +				     RG_XTP_LN_TX_IMPSEL_PMOS, tx_impsel.pmos);
->> +
->> +		mtk_phy_update_field(sif_lane_base + PEXTP_ANA_LN_TRX_A0,
->> +				     RG_XTP_LN_TX_IMPSEL_NMOS, tx_impsel.nmos);
->> +	}
-> 
-> [Severity: Low]
-> Are these register updates redundant?
-> 
-> When calibration is supported, mtk_pcie_sphy_apply_calibration() already
-> writes cal->tx_impsel.pmos and cal->tx_impsel.nmos to PEXTP_ANA_LN_TRX_A0.
-> 
-> Then this loop immediately overwrites the same registers with the exact same
-> values.
-> 
+    can: bcm: add missing rcu list annotations and operations
 
-Eh yes, fixed for v3.
+to the 7.1-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
-> [ ... ]
->> +static int mtk_pcie_sphy_get_one_cal_para(struct device *dev, const char *name, u8 max_val)
->> +{
-> [ ... ]
->> +	ret = nvmem_cell_read_u8(dev, name, &tmp);
->> +	if (ret == 0)
->> +		buf = tmp;
->> +	else
->> +		ret = nvmem_cell_read_u16(dev, name, &buf);
->> +
->> +	if (ret)
->> +		return dev_err_probe(dev, ret,
->> +				     "Cannot get calibration data for %s\n", name);
-> 
-> [Severity: High]
-> Will this cause spurious error logs or fail the probe when calibration data is
-> missing or unsupported?
-> 
-> If the system does not have CONFIG_NVMEM enabled, nvmem_cell_read_u8() returns
-> -EOPNOTSUPP, which gets logged as an error here.
-> 
-> This error is then passed back up to mtk_pcie_sphy_get_calibration_data(),
-> where it is not caught. This will cause the entire driver probe to fail.
-> 
-> Similarly, if the cell is simply missing from the Device Tree, it returns
-> -ENOENT. This also triggers an error log via dev_err_probe(), even though
-> missing calibration data is explicitly documented as non-fatal and optional.
-> 
->> +
->> +	if (buf == 0) {
->> +		dev_info(dev, "No calibration for %s. Using defaults\n", name);
->> +		return -ENOENT;
->> +	}
-> 
-> [Severity: Medium]
-> Is a value of 0 always indicative of missing calibration?
-> 
-> If a valid tuned calibration value is 0, this check will return -ENOENT and
-> cause mtk_pcie_sphy_get_calibration_data() to discard all calibrations entirely.
-> 
-> This also seems to prevent the quirk for cal-version == 0 from ever being
-> applied:
-> 
+The filename of the patch is:
+     can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+and it can be found in the queue-7.1 subdirectory.
 
-Fixed for v3.
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
 
-> [ ... ]
->> +static int mtk_pcie_sphy_get_calibration_data(struct mtk_pcie_sphy *pcie_sphy)
->> +{
-> [ ... ]
->> +	ret = mtk_pcie_sphy_get_one_cal_para(dev, "cal-version", 15);
->> +	if (ret < 0)
->> +		goto end;
->> +	version = ret;
->> +
->> +	/* Quirk for eFuse calibration table versions 0 to 4 */
->> +	if ((version <= MTK_PCIE_SPHY_CALIBRATION_LAST_QUIRK_VER) &&
->> +	    cal->rx_leq_rl_ctle == 10) {
-> 
-> Because mtk_pcie_sphy_get_one_cal_para() returns -ENOENT when it reads a 0,
-> the version == 0 condition will never be reached.
-> 
 
-Fixed for v3.
+From 7b2c3eabc4dafc062a25e10711154f2107526a78 Mon Sep 17 00:00:00 2001
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+Date: Tue, 14 Jul 2026 18:55:27 +0200
+Subject: can: bcm: add missing rcu list annotations and operations
+
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
+
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -262,7 +262,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
+ 
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -994,6 +994,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1135,8 +1136,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1158,6 +1158,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op, NULL);
+ 
+@@ -1350,9 +1354,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1426,10 +1427,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1763,8 +1766,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1795,8 +1800,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
+
+
+Patches currently in stable-queue which might be from socketcan@hartkopp.net are
+
+queue-7.1/can-bcm-track-a-single-source-interface-for-anydev-timeout-throttle-ops.patch
+queue-7.1/can-bcm-validate-frame-length-in-bcm_rx_setup-for-rtr-replies.patch
+queue-7.1/can-bcm-defer-rx_op-deallocation-to-workqueue-to-fix-thrtimer-uaf.patch
+queue-7.1/can-isotp-serialize-tx-state-transitions-under-so-rx_lock.patch
+queue-7.1/can-isotp-fix-use-after-free-race-with-concurrent-netdev_unregister.patch
+queue-7.1/alsa-hda-fix-kconfig-dependency-of-hd-audio-pci.patch
+queue-7.1/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
+queue-7.1/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
+queue-7.1/can-bcm-extend-bcm_tx_lock-usage-for-data-and-timer-updates.patch
+queue-7.1/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+queue-7.1/can-bcm-add-missing-device-refcount-for-can-filter-removal.patch
+queue-7.1/can-bcm-add-locking-when-updating-filter-and-timer-values.patch
+queue-7.1/can-bcm-fix-can-frame-rx-tx-statistics.patch
+queue-7.1/can-bcm-fix-data-race-on-rx_stamp-rx_ifindex-in-bcm_rx_handler.patch
+queue-7.1/can-bcm-fix-stale-rx-tx-ops-after-device-removal.patch
