@@ -1,266 +1,171 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4E442E8F5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 22:07:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D075D4302E7
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 22:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784585252; cv=none; b=LIKYAY6xDDujlmTpaqDp31o7FLEhJ4xbsPbuvzh/IXo1kBUAYaPOC0930/Hd7ir41NtqVgIXtVwiKc3Ed494TuJ68dN6d0W5kac3SVAmRJEEUo9NCBOmRxeU558E4nI6TN/fl+R4f/PniHBi8Zwok4JdMLtfvmpFGjFXXrd9ZaA=
+	t=1784585426; cv=none; b=VqCorReaTeb9pTUeUMafI7FRGCtttPnx9j0Q9SA+81slEYXO+nLkq2hA5P/RcBVcKzDM/cbYHCMBAE6DF5n9Wzi2E7M6rtHvbfJNWqaKfu/+G39AA0gJlJUj7FHBeB/59Gs3DOJ/PYOTgrBGKPUbHj0ZbGZRCQJS46Pqa6JtN/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784585252; c=relaxed/simple;
-	bh=7Ufq8Gqdt0Yq2rwd1UOICRPhbWWW4yi1uYk/x/Ivq1c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EOoNBLjuV/mKJ8bcRfgDk72cfqDJveAKRhZsFye8DrhSz7IrFtLnKwFJoHbZTOk6k6Q5OGSmTPGkD4zU6EsO3YbYW3CZ5JVb/6Ep4iemLJxtIYp5GjO1bbSTEvRQxqq3yWaYLvYqfU6plG0SziRhPo0yag1XvkKCWv7AT8bQGas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iF2+O5Xh; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784585426; c=relaxed/simple;
+	bh=f43Tg6R34NEaIQ/FSdL+0yQV4MQEKKFGnTxvz0PSSI4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Kh4jNxD2MpyXaxpdD5zoU+R18afXgo0ygHui515uJJdCpKUUeOJfuFToW9tNb3wOzbMTgESZjcmvU6iqjLkyaR4fRaf+o0Jjd9xsS8deHBkPM+bg2CzG11sfJetbxM2YDiooKCGU4IVWYqZVqclLkdpIKdwmEGVOD/OPkjN+GPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DeW804jo; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iF2+O5Xh"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-472326ca506so8214238f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 15:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784585248; x=1785190048; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=mhIAwX66RMzzqWQQBA+7hZ0C/T1kQn62KHsmHZuPTAU=;
-        b=iF2+O5XhissQYVnadJeJfCtnp/4eVVkl7gru2Qfc3cIyQChp36kjxr8Mih0BXIDR80
-         QI0sAanADVL6VoRegB1vR1UxEL0kDfB7mO9yM3COj2YbbUeUKlel5wk2YuojI/ckjbGJ
-         OqL6zH54eSFmC7lwYvyPu6VSMiZsyfoNuH+i/NgGyJhIARvDFEAjLHtbT3nQOmmaCpbU
-         DY/u9yL4FVKxvPSkr2atLhSKRMQawLoknLcHNKgPZo3OOvyH5lmB5RTHfU6XC/hgT7Z9
-         txkEE9mRwcYIc+F2g2/mOKc63lkWemWuitmZZCrbWblx7mGJPUSqSkUHZqrDLwNMjXZS
-         oOVQ==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DeW804jo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784585422;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=f43Tg6R34NEaIQ/FSdL+0yQV4MQEKKFGnTxvz0PSSI4=;
+	b=DeW804joQ482wCCRZiGbHxAoWdUVBp8EintlfF8KsKZS98jQRcuJjDqE6SWQxBr+NVhiTB
+	X/85mYsdAJj9bfGmijjaffTu3Zg54nesxpdlHZg42PUF14EmxsjUpWly8S6dEYKwiwf7Od
+	F85c18ucrkuSCyna3EEWxUoORu1yeC4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-711-5E9eK45UOaWlG_ZCWB4E1w-1; Mon, 20 Jul 2026 18:10:21 -0400
+X-MC-Unique: 5E9eK45UOaWlG_ZCWB4E1w-1
+X-Mimecast-MFC-AGG-ID: 5E9eK45UOaWlG_ZCWB4E1w_1784585421
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-9077b4c35c5so97258836d6.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 15:10:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784585248; x=1785190048;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1784585421; x=1785190221;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mhIAwX66RMzzqWQQBA+7hZ0C/T1kQn62KHsmHZuPTAU=;
-        b=mFkpmSdIltNM/o2/+g+MbESYflRAhEvo856b6hVfaD1/4hUHEoPG9jDsGsb6vgxwRo
-         UPrTvqBQV3oQDxrzxRsUEwRs/Hu3PzuUk6kG1m4iHzf00G5JgsaqHhE4/M7J2V8OY5wm
-         4t9RLtwXCxJ85KUmp8ikUiRdgXmBXg+4o5mU0tK7bHwHk2DEnUEs1FR8EYQqKkhAUi7F
-         E03GaGC/YqBcxzcR7Z7+QnwmplPTHZWY/AwSPHFqVg7CSuhwErv8qB+/qiuxkjZze7Un
-         swepRCGcbmFtr5wpaLVGfZcw1i3RSvUpiRPNbRUYJEy2g9kwXODYYBKZNLa13g8omcxI
-         9Z4A==
-X-Forwarded-Encrypted: i=1; AHgh+RrcpTBoHcjJVbr6e/6Yw1jU1QKPF5j1j5bv/oaxVjRZl75Br6SOpdkH2Gn49zcVsk0WvXvAbqYNlOsVd019WRI=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx8yKUwXjayK+zLf/wHD8XiCUCa6NtcQagJOQJfNJQH0/csY73Q
-	BVWwrIUVEQEyNM/cobPOwsW+GFpG6JcaZWL0C+7YkDkjm0c/S7qvTZL4
-X-Gm-Gg: AR+sD13DFyhkHkTzBvG0dzqifBnjv2BXcKngKutFXnHvxnVdTPAbe1uF9ks6lNp+/uj
-	JDamyookY+6OS6/9CmJWYTSpljTzzhWRkF1Wqc1jBS8QOA4x1hKaayiK6kkwv/idqii886h/KUN
-	mfSXqNvBWAL/9Qea2euzqfqftsoSw730tnoTzfp6rw/scUeKNKMtH8yHbATI4bkkLQVi8DV3wYP
-	8OQZdmw6kB+rZJhHRifVOmDvzVwbSMlaUXrIWUASA+G356It9toNOvhV7wjd70Fq5jA4sXeVdrM
-	hTInzWyUcyBbsQ65ZR035npfbF4SlJhegJ3Wl2w0mDKcA/L4vIff3EDm3J5LKbmFcquQ2d9ltww
-	jRdFJXkcwy3M5C9ZMyTr8ED6cLBDziaTtNrMBqyjb1VYv66+vMcAlt8MdzpsGheDdlC74yxfIqr
-	4/7CKoQfZs/sCCYDcpac/5x7GD7X5pVKxaF0X8NBp59cA11G/1XLdRJCZm0QcU+6UiuQ==
-X-Received: by 2002:a5d:5d85:0:b0:47f:6d55:a063 with SMTP id ffacd0b85a97d-47f6d55a3f6mr13332571f8f.32.1784585248103;
-        Mon, 20 Jul 2026 15:07:28 -0700 (PDT)
-Received: from localhost.localdomain (host86-153-201-25.range86-153.btcentralplus.com. [86.153.201.25])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63ec7c69sm35467457f8f.17.2026.07.20.15.07.26
+        bh=Ap8TB1t8MVKfU1KnGjOWiKZymcp8eb6PIIp5l59xk5Y=;
+        b=i3nlUxLO9+vq3rTHwmszIWYSUetji5HOHrPJsb4vK6yK0XgqUpqGWI9ZfLL2jvAAIv
+         /cg6k5gM03rlvpriIIe6Ly+FGKAWSnQnG5QJ47WDMj4EJ5vtVsUYRVw3Ixk0J6/jTJ/X
+         VSzRP9leIJGDmSg5LfcgWhvXGWzlo/rvhc1BqlxWhEMpwiGARck8Md9O5bVaDAHQBXqR
+         X9motK86ff+ZdgmFm6+fbZ7pcF6AgNqdMNg09XqX8e1UG2iX2UvrUxhlNDO58+sr0/fJ
+         /WMGu0mmzWtKEXdRSiJU+U+3JPpQhjGDOr5n2F4njW81YOWCAIMiibuO9DXoZUDoGYu1
+         eXxA==
+X-Gm-Message-State: AOJu0YzQBFS6NjjcmS6NOmfNlOxfQ9XddtqsJad6G9aRVImhzA6y1du2
+	eKMRsysJ+7s8tn1Ug8GWYhGt0qozVmDRbyJCoY5QXklgjcKFy55kOtu6dgB934wrdwFhz82GwN1
+	idrI5hntQgJhyGo7kWIXHSUE/hBGe+yaTjELigjABqJ5UNkVyit0QzuVYgJROyfGXOMea3OWeO0
+	8aBLyaKXCyrYz6zqdlJkN6L+lLVQy8kHWVUKFKYxY9wwJPjpMhtw==
+X-Gm-Gg: AR+sD118Q9YyNyMK9rtMrwXFvyaHfhkncJeXC6AS/fsFwv77PYhd1OBipjuXkQbQ4zm
+	tRjPUnMTM8usCrQhfYK4s5lfkAdAkxjSlAWaQf+4B1tXEt8U5nN7JgG3tdfvR2bKeL3ebJbaiuz
+	JqcO9uJhwCVGBWsT3DsZgZ1SGRPSMMJO05MMeCEqU5JWErIVI4PIBBNnTxpfXy/dkR1+zkof47P
+	MGmN9gZpemlLQOUFrwJ67ETNMRc1BNp39hK3j8b07dUHXfFATFIYjFT4DDki07wXwlqvSPAJkhk
+	wUoFl1qRrdTl+X4fp45MCdD0X+YJSa0GNPHHCqHLabcs0EztTmdxnl4X4Khk3PUhq+BZOdZY
+X-Received: by 2002:a05:6214:2589:b0:8ef:295c:3acc with SMTP id 6a1803df08f44-907783ddec8mr173179856d6.56.1784585420787;
+        Mon, 20 Jul 2026 15:10:20 -0700 (PDT)
+X-Received: by 2002:a05:6214:2589:b0:8ef:295c:3acc with SMTP id 6a1803df08f44-907783ddec8mr173179296d6.56.1784585420125;
+        Mon, 20 Jul 2026 15:10:20 -0700 (PDT)
+Received: from [192.168.8.4] ([100.0.180.93])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-907786f9de0sm101030296d6.40.2026.07.20.15.10.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 15:07:27 -0700 (PDT)
-Date: Mon, 20 Jul 2026 23:07:25 +0100
-From: Nnamdi Onyeyiri <nnamdio@gmail.com>
-To: Emil Tsalapatis <emil@etsalapatis.com>
-Cc: bpf@vger.kernel.org, davem@davemloft.net, edumazet@google.com, 
-	horms@kernel.org, jakub@cloudflare.com, jiayuan.chen@linux.dev, 
-	john.fastabend@gmail.com, kuba@kernel.org, kuniyu@google.com, ncardwell@google.com, 
-	netdev@vger.kernel.org, pabeni@redhat.com, sashiko-reviews@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] selftests/bpf: add sockmap recvfrom EAGAIN
- selftest
-Message-ID: <al6amg9-PpZVpQyN@localhost.localdomain>
-References: <20260720171535.67867-1-nnamdio@gmail.com>
- <20260720171535.67867-3-nnamdio@gmail.com>
- <DK3Q8PFVGNAV.GZNZC89346A9@etsalapatis.com>
+        Mon, 20 Jul 2026 15:10:19 -0700 (PDT)
+Message-ID: <50172752298fe6881b747a21a07a9ab1a1742ecf.camel@redhat.com>
+Subject: Re: [PATCH v3 2/3] drm/nouveau/kms/nv50-: Introduce
+ nv50_wndw_default_state()
+From: lyude@redhat.com
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Date: Mon, 20 Jul 2026 18:10:18 -0400
+In-Reply-To: <20260720220633.0A6851F000E9@smtp.kernel.org>
+References: <20260720215058.398210-1-lyude@redhat.com>
+	 <20260720215058.398210-3-lyude@redhat.com>
+	 <20260720220633.0A6851F000E9@smtp.kernel.org>
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DK3Q8PFVGNAV.GZNZC89346A9@etsalapatis.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: DoIFrhIVTgiN3xGzm4DCAQHtr23BaSvBFfxatB1NvJE_1784585421
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 20, 2026 at 05:47:09PM -0400, Emil Tsalapatis wrote:
-> On Mon Jul 20, 2026 at 1:15 PM EDT, Nnamdi Onyeyiri wrote:
-> > These selftests exercise the tcp_bpf_recvmsg() and tcp_bpf_recvmsg_parser()
-> > functions, to ensure that they are properly handling spurious wakeups in
-> > tcp_msg_wait_data().
-> >
-> > The expected behaviour is that recvfrom() does not return an EAGAIN
-> > error.  If the spurious wakeups are incorrectly handled, this assertion
-> > will fail.
-> >
-> > Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
-> 
-> The test looks fine, even if slightly flaky. Running with only patch 2/2
-> still passes sometimes on my box. Can we handle this somehow, e.g., do
-> more attempts?
-> 
-> There's also a couple magic numbers in the tests that may need some
-> explanation (noted below).
->
-
-Thanks for the review!  I'll attach an explaination to the numbers.
-Essentially the larger the payload the fewer iterations seemed to be
-required to reproduce (on my machine).
-
-With the issue fixed though, larger payloads and more iterations make
-the test run longer.  Is there is a rule of thumb I should follow for
-tuning the runtime?
-
-> > ---
-> >  .../selftests/bpf/prog_tests/sockmap_basic.c  | 124 ++++++++++++++++++
-> >  1 file changed, 124 insertions(+)
-> >
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-> > index cb3229711f93..d18faf46fac0 100644
-> > --- a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-> > +++ b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-> > @@ -1373,6 +1373,126 @@ static void test_sockmap_multi_channels(int sotype)
-> >  	test_sockmap_pass_prog__destroy(skel);
-> >  }
-> >  
-> > +static void *test_sockmap_recvfrom_eagain_thread(void *arg)
+On Mon, 2026-07-20 at 22:06 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [High] Unconditional dereference of `wndw->plane.state` which may
+> be NULL if the initial state allocation fails.
+> --
+>=20
+> --- Patch [2]: [PATCH v3 2/3] drm/nouveau/kms/nv50-: Introduce
+> nv50_wndw_default_state() ---
+> commit 2d2dcbda94d37e6b985a1775b04d636840fd94c1
+> Author: Lyude Paul <lyude@redhat.com>
+>=20
+> drm/nouveau/kms/nv50-: Introduce nv50_wndw_default_state()
+>=20
+> This commit introduces nv50_wndw_default_state() to ensure the
+> initial
+> atomic state for a window always starts with a supported value in
+> pixel_blend_mode. It hooks this function into
+> nv50_display_read_hw_state()
+> to enforce a valid blend mode value during driver startup.
+>=20
+> > diff --git a/drivers/gpu/drm/nouveau/dispnv50/wndw.c
+> > b/drivers/gpu/drm/nouveau/dispnv50/wndw.c
+> > index 2635458d52acc..dfa1ba45acd99 100644
+> > --- a/drivers/gpu/drm/nouveau/dispnv50/wndw.c
+> > +++ b/drivers/gpu/drm/nouveau/dispnv50/wndw.c
+>=20
+> [ ... ]
+>=20
+> > +/*
+> > + * Setup defaults for the atomic wndw state
+> > + */
+> > +void
+> > +nv50_wndw_default_state(struct nv50_wndw *wndw)
 > > +{
-> > +	int fd = *(int *)arg;
-> > +	char buf[1024];
-> > +	void *result = NULL;
+> > +=09struct nv50_wndw_atom *armw =3D nv50_wndw_atom(wndw-
+> > >plane.state);
+> > +=09const unsigned int blend_modes =3D wndw->func->blend_modes;
 > > +
-> > +	while (true) {
-> > +		ssize_t len = recvfrom(fd, buf, sizeof(buf), 0, NULL, NULL);
+> > +=09drm_modeset_lock_assert_held(&wndw->plane.mutex);
 > > +
-> > +		if (len == -1) {
-> > +			if (errno == EINTR)
-> > +				continue;
-> > +			result = (void *)1;
-> > +			break;
-> > +		}
-> > +
-> > +		if (!len || buf[len - 1] == 'e')
-> > +			break;
-> > +	}
-> > +
-> > +	send(fd, "test", 4, MSG_NOSIGNAL);
-> > +
-> > +	close(fd);
-> > +
-> > +	return result;
+> > +=09/* Ensure the plane's atomic state didn't default to a
+> > pixel_blend_mode we don't support */
+> > +=09if (blend_modes && (!(BIT(armw->state.pixel_blend_mode) &
+> > blend_modes))) {
+>=20
+> [Severity: High]
+> Could this dereference a NULL pointer if memory allocation fails
+> during
+> drm_mode_config_reset()?
+>=20
+> If plane state allocation fails in the plane's reset hook, wndw-
+> >plane.state
+> is left as NULL. When nv50_display_read_hw_state() subsequently calls
+> this
+> function, armw will evaluate to NULL, leading to a fault when
+> accessing
+> armw->state.pixel_blend_mode.
+
+there we go. I got worried when it had been a while since sashiko last
+hallucinated :).
+
+(there is absolutely no way we could be in the function described if
+that allocation failed, and additionally this function has nothing to
+do with drm_mode_config_reset())
+
+>=20
+> > +=09=09if (blend_modes & BIT(DRM_MODE_BLEND_COVERAGE))
+> > +=09=09=09armw->state.pixel_blend_mode =3D
+> > DRM_MODE_BLEND_COVERAGE;
+> > +=09=09else if (blend_modes &
+> > BIT(DRM_MODE_BLEND_PREMULTI))
+> > +=09=09=09armw->state.pixel_blend_mode =3D
+> > DRM_MODE_BLEND_PREMULTI;
+> > +=09=09else if (blend_modes &
+> > BIT(DRM_MODE_BLEND_PIXEL_NONE))
+> > +=09=09=09armw->state.pixel_blend_mode =3D
+> > DRM_MODE_BLEND_PIXEL_NONE;
+> > +=09}
 > > +}
-> > +
-> > +static void test_sockmap_recvfrom_eagain(bool with_verdict)
-> > +{
-> > +	struct test_sockmap_pass_prog *skel = NULL;
-> > +	struct bpf_program *prog = NULL;
-> > +	size_t buflen = 1024 * 1024 * 25;
-> 
-> Here
-> 
-> > +	char *buf = NULL;
-> > +	int map, err;
-> > +
-> > +	skel = test_sockmap_pass_prog__open_and_load();
-> > +	if (!ASSERT_OK_PTR(skel, "open_and_load"))
-> > +		return;
-> > +
-> > +	map = bpf_map__fd(skel->maps.sock_map_msg);
-> > +
-> > +	if (with_verdict) {
-> > +		prog = skel->progs.prog_skb_verdict;
-> > +		err = bpf_prog_attach(bpf_program__fd(prog), map, BPF_SK_SKB_STREAM_VERDICT, 0);
-> > +		if (!ASSERT_OK(err, "bpf_prog_attach verdict"))
-> > +			goto cleanup;
-> > +	}
-> > +
-> > +	buf = malloc(buflen);
-> > +	if (!ASSERT_OK_PTR(buf, "malloc buf"))
-> > +		goto cleanup;
-> > +	memset(buf, 0, buflen);
-> > +	buf[buflen - 1] = 'e';
-> > +
-> > +	for (int i = 0; i < 200; ++i) {
-> 
-> Also here. Why 200 iterations specifically? Can we at least name the
-> defaults to make it clearer that we've chosen those numbers because
-> that's how we trigger the bug?
-> 
-> > +		ssize_t sent;
-> > +		char ignored[128];
-> > +		pthread_t thread;
-> > +		bool thread_created = false;
-> > +		size_t rem = buflen;
-> > +		int c = -1, p = -1, zero = 0;
-> > +		bool success = false;
-> > +
-> > +		err = create_pair(AF_INET, SOCK_STREAM, &c, &p);
-> > +		if (!ASSERT_OK(err, "create_pair"))
-> > +			goto end_attempt;
-> > +
-> > +		err = pthread_create(&thread, NULL, &test_sockmap_recvfrom_eagain_thread, &p);
-> > +		if (!ASSERT_OK(err, "pthread_create"))
-> > +			goto end_attempt;
-> > +		thread_created = true;
-> > +
-> > +		err = bpf_map_update_elem(map, &zero, &c, BPF_ANY);
-> > +		if (!ASSERT_OK(err, "bpf_map_update_elem"))
-> > +			goto end_attempt;
-> > +
-> > +		while (rem) {
-> > +			sent = xsend(c, buf + (buflen - rem), rem, 0);
-> > +			if (sent == -1)
-> > +				goto end_attempt;
-> > +			rem -= sent;
-> > +		}
-> > +
-> > +		/* we cannot use recv_timeout(), otherwise EAGAIN would be an expected errno. */
-> > +		err = recvfrom(c, ignored, sizeof(ignored), 0, NULL, NULL);
-> > +
-> > +		/*
-> > +		 * we are checking for the invalid return of EAGAIN, any other return is considered
-> > +		 * successful for the purposes of this test.
-> > +		 */
-> > +		if (err < 0 && !ASSERT_NEQ(errno, EAGAIN, "recvfrom eagain"))
-> > +			goto end_attempt;
-> > +
-> > +		success = true;
-> > +
-> > +end_attempt:
-> > +		if (c >= 0)
-> > +			close(c);
-> > +
-> > +		if (thread_created) {
-> > +			void *retval = NULL;
-> > +
-> > +			pthread_join(thread, &retval);
-> > +			if (!ASSERT_NULL(retval, "retval"))
-> > +				success = false;
-> > +		}
-> > +
-> > +		if (!thread_created && p >= 0)
-> > +			close(p);
-> > +		if (!success)
-> > +			break;
-> > +	}
-> > +
-> > +cleanup:
-> > +	if (buf)
-> > +		free(buf);
-> > +
-> > +	test_sockmap_pass_prog__destroy(skel);
-> > +}
-> > +
-> >  void test_sockmap_basic(void)
-> >  {
-> >  	if (test__start_subtest("sockmap create_update_free"))
-> > @@ -1451,4 +1571,8 @@ void test_sockmap_basic(void)
-> >  		test_sockmap_multi_channels(SOCK_STREAM);
-> >  	if (test__start_subtest("sockmap udp multi channels"))
-> >  		test_sockmap_multi_channels(SOCK_DGRAM);
-> > +	if (test__start_subtest("sockmap recvfrom eagain"))
-> > +		test_sockmap_recvfrom_eagain(false);
-> > +	if (test__start_subtest("sockmap recvfrom eagain with verdict"))
-> > +		test_sockmap_recvfrom_eagain(true);
-> >  }
-> 
+
