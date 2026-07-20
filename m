@@ -1,152 +1,186 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E313ACA5A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:14:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2111242FCBD
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784571249; cv=none; b=Rr9XnDiJ+gw7GZe0nsMn+Btwzyrvm0mXXg0PM2+/LE8eDi6KbPqKadIn66cgtKxROucPbE7EUDKXMdIIIPSZZ5Ir/EF4oYrcMyGdSGuxFgX3ioleVmj8gjemKqjP3CvZhETl1NgM2n7Zfqq3MJjc6FwWjcjZoCtmdOpFgZssiuI=
+	t=1784571935; cv=none; b=F3x1KyjGv/WKriy54B6LgYAanhjwJCTorI0qg4LNM6xDWmxeRfE7kw5K7WtAEcY42bnK42W5cwBMi9CNdVfGAWGq0lc6jV5G19jHehzHJ6BLrRaGjdNhL/2cDlmgR6sNJZrqpkNWxEl1LzesdlkcSToGgG9kOFSz0/nPphNandY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784571249; c=relaxed/simple;
-	bh=+qvA1DAn3c4tmHb756vc3gqaw+6jkHIGpCUavjx6dPI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oQRLG+a7AtxXI1PXfTKZzkifkPb2CnlZLvMBVdGQPh585ESbf09fsnG0m/Pc3JtH3yv5UfAjppNq4/w9Uzt57a6VQ+zDi+dCGBJteZD+pfgStxIYWm7e+veUkISu5ne1reh790f8gHYwuh96J0fCAWqrfUbiPa9Q9+QcftGsVFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IF1LXNwD; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1784571935; c=relaxed/simple;
+	bh=k+fQpm49l1+4lmdnx1rm8Musxyu597fruggM/xFVb8s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bOilLWKvhBq6bzE3PUcf155oUqkLR2fCjiWR6NXKYlcd/FRIVV9vwhcObhkyJacKgETzyUQ+85ThsfLABoiw/Tf7pgBKBCLzYpa2dOVq5sXoHUV5xhGZBARUetkbUvYWcdOAKtNnAL8q2UG4LebRQiO9yfSrs/AXUA/enyoz1u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WfQhYska; arc=none smtp.client-ip=91.218.175.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IF1LXNwD"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cede6375caso355435ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 11:14:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784571247; x=1785176047; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2oSA8tKdyLlHK1z/E0CUcnY7QLdvcjeQOvJxYi4x9Gk=;
-        b=IF1LXNwDXgmNznFckWCJ5iy0AARunWXDUa1GXPZVYZzCikX/3O+Ctm3jYrlG30dPKM
-         UxX8cN0NV5hdGXNrHNegH/vHXZv5iys8UnQTfGngYM1CVgiQkPjSlnhCl6EqJLbgZ1b7
-         r3L6nNaFzMWpyrm8AE6/zQcW5UpHZOdjtmqguk551frIyJ64/N1OLOJd4wAYZMKPBVuQ
-         4zObG8AU3CyEvw11XGpqMBA8iqTETiY/XTaAaHJOftLx9tLKleOPI3WRONHt/hU3cjrr
-         4WHucYAgYhoDDfJQ1jTPXlRfr46ZDOIVE7FasiNE59XRGKTTny18GRo+r+emSSfLWJfb
-         cwKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784571247; x=1785176047;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=2oSA8tKdyLlHK1z/E0CUcnY7QLdvcjeQOvJxYi4x9Gk=;
-        b=sOTvZvFmSe+FhXxyvpcQ9QuMO37X+7J4X6wfE/X0NRu83kCzzCVeLKa9Pb03ztCjLE
-         PBX6DUynUc7pufTQXxNlmH3C7vCV98kMW0g4gmBzxiJeW/wS6AQMftkBQmynRKa56y6G
-         hyfUbHtv5wObDaF83mfRE2hnPie5sg6R1G+4X6+wIK+vqYIdGKFXMY2AbrdWZm+Vasfx
-         2jyoeFkT2VfupBm2L9r8cxYRIdtO31FIk1+e8LLYhMxbcXRSSTf146pNkISmv5A8l2c/
-         LVqLzv4GX2X1X53qPEcSYIpjk2+HtkaUyI+IPQsN2Yxix8g7Rz5yClpRjVboOmEMSg3d
-         T6lA==
-X-Gm-Message-State: AOJu0YzmD/+JJFZfoLPeazldqr9/2Qpxhuw3Sw7giQKZXdDIBelO6e1d
-	xK4dKFFfQeCSH/Itpln+DzqUgvBButpU9bggnNQ2ngP+Fni77mD81jjdiceZvG/kUCQqgwqn+DK
-	qkBDEP1AiyQM=
-X-Gm-Gg: AR+sD11s/BJ6Cngw/uQMCtnW9DBwKKsnxwzrTvFkczJh5kfJdls379Aho67GNiIcQ23
-	dUcuaqqy0GELfCtV9TNhSOv05r/jspgunpTkCLNDGPgbV0BMswsV1aABuzI4tuoMtUF3N5cI7yW
-	hbk0jfpG8AcIx5dp0UHVJm25YfCqmJCrOb/iMcF9CxeUGdATZIO5bu7V30lC8ejDgGBIT0fUSwz
-	a2z/mCnoDWxLV5fm0IR57YvC74pG7UIGJeGC69Qmf1khvCshlyVflG/syKHw0ED5hbJstKjicmd
-	IZxmsozp+Bdv8rw85AONxBXuxt35RvNPuo0kx72QBg+GMwsNW33EKgNDI2lDOSDay0TI1J9ZJ/J
-	ypGWmFl9ZNkkZDeQeUTpudYDkg6vxDPAzj4VDe4PQIrjVPZAWhyprWb255GUkNjgllWxS4lVwCt
-	of/pjZlq718yomHJtsY4FcjU2zODdWTNjM5VQUleTB/Pv6V7uj9qJt+hsBPw==
-X-Received: by 2002:a17:903:4084:b0:2cf:4353:f117 with SMTP id d9443c01a7336-2cf7b35e690mr1165405ad.0.1784571246672;
-        Mon, 20 Jul 2026 11:14:06 -0700 (PDT)
-Received: from google.com (60.89.247.35.bc.googleusercontent.com. [35.247.89.60])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e921f2e1esm169813a91.0.2026.07.20.11.14.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 11:14:05 -0700 (PDT)
-Date: Mon, 20 Jul 2026 11:14:02 -0700
-From: Vipin Sharma <vipinsh@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v5 17/20] vfio: selftests: Add
- vfio_pci_liveupdate_kexec_test
-Message-ID: <20260720181313.GF1381701.vipinsh@google.com>
-References: <20260714151505.3466855-1-vipinsh@google.com>
- <20260714151505.3466855-18-vipinsh@google.com>
- <20260714153527.2F8311F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WfQhYska"
+X-Gm-Message-State: AOJu0YwEh3ZMoXB8ly1BgTmoTP8KIywOHb+Mp1CwVbcGnL4gCgxDR0Qg
+	adKUuXUDFlfH16WDpu3rdXs7uUX3HXrThUWtn7pVJ548lxxUb+vwL2/Hpxs5pzfQHb+hQgk/0uK
+	Xej33ZAPb3sMnJCBDUOgh7gbSfkf05GxT/0x9H2M6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784571929;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8Oz31bQMHhvgoNQfGkOKJ8LkWQ7qWzkNqWD5sX8hF6Y=;
+	b=WfQhYskatIJYH6v44TtEnvzs47Kjl6O4/MfnO22D2RAMTJokcenxYaJ6X37sm9Edmmd+Yj
+	E+aAA1QWmhvbZO0EHIVbnCkLRJqAomnoN1E3N1mipgRISkQy5fOsWURxpPEIGapJOU7QCO
+	4x8zvA5rgl+8C+4+llV4SgUFYa7mRH0=
+X-Received: by 2002:ac8:5a8b:0:b0:51b:fd5e:e81a with SMTP id
+ d75a77b69052e-526027c23camr4280141cf.20.1784571920974; Mon, 20 Jul 2026
+ 11:25:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260714153527.2F8311F000E9@smtp.kernel.org>
+References: <20260720161343.1367007-1-fuad.tabba@linux.dev>
+ <20260720162412.1401272-1-fuad.tabba@linux.dev> <20260720162412.1401272-2-fuad.tabba@linux.dev>
+ <20260720175513.8D4DF1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260720175513.8D4DF1F00A3A@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Mon, 20 Jul 2026 19:24:44 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTz4gsfbr04gqFwAu1DXvrC97wSor5DnDGG17qaWbMiRaA@mail.gmail.com>
+X-Gm-Features: AUfX_mxH03Vw1Gcio4Cr31tILBRNuZ8GhAs6QvKGRHwHuKt0nwU5F641beYYmc0
+Message-ID: <CA+EHjTz4gsfbr04gqFwAu1DXvrC97wSor5DnDGG17qaWbMiRaA@mail.gmail.com>
+Subject: Re: [PATCH v1 11/11] KVM: arm64: Tag host-VA hypercall parameters __hostva
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Jul 14, 2026 at 03:35:26PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Missing header and Makefile dependencies for liveupdate library.
+On Mon, 20 Jul 2026 at 18:55, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Medium] `kern_hyp_va_host()` macro fails to strip the `__hostva` addre=
+ss space tag for Sparse.
+>
+> Pre-existing issues:
+> - [Critical] Missing host pointer ownership validation in always-on hyper=
+calls allows a malicious host to corrupt EL2-private memory (Confused Deput=
+y).
 > --
-> 
-> --- Patch [17]: [PATCH v5 17/20] vfio: selftests: Add vfio_pci_liveupdate_kexec_test ---
-> commit 5f1d9fcb84decd9a67e94d71a492e75ba0113c1b
-> Author: Vipin Sharma <vipinsh@google.com>
-> 
-> vfio: selftests: Add vfio_pci_liveupdate_kexec_test
-> 
-> This commit adds a new selftest to exercise preserving a vfio-pci device
-> across a Live Update. The test verifies that the device file can be
-> preserved before kexec and retrieved afterward.
-> 
-> > diff --git a/tools/testing/selftests/vfio/vfio_pci_liveupdate_kexec_test.c b/tools/testing/selftests/vfio/vfio_pci_liveupdate_kexec_test.c
-> > new file mode 100644
-> > index 0000000000000..15b3e3af91d1e
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/vfio/vfio_pci_liveupdate_kexec_test.c
-> > @@ -0,0 +1,89 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +
-> > +#include <libliveupdate.h>
-> 
-> [Severity: Low]
-> Does this header file exist in the tree? It looks like this could cause a
-> build failure because libliveupdate.h cannot be found. The other liveupdate
-> selftests appear to rely on luo_test_utils.h or direct ioctl calls instead
-> of a libliveupdate library.
-> 
+>
+> --- Patch [11]: [PATCH v1 11/11] KVM: arm64: Tag host-VA hypercall parame=
+ters __hostva ---
+> commit 4acf0dff6116caffddce5517211ac9136d9b0ee1
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: Tag host-VA hypercall parameters __hostva
+>
+> This commit introduces the __hostva sparse address space to tag host virt=
+ual
+> addresses passed as hypercall arguments in the nVHE hypervisor. It adds
+> kern_hyp_va_host() to explicitly unwrap and translate these tagged pointe=
+rs,
+> ensuring that untranslated host VAs are caught by sparse checks.
+>
+> > diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/=
+kvm_mmu.h
+> > --- a/arch/arm64/include/asm/kvm_mmu.h
+> > +++ b/arch/arm64/include/asm/kvm_mmu.h
+>
+> [ ... ]
+>
+> > @@ -140,6 +142,14 @@ static __always_inline unsigned long __kern_hyp_va=
+(unsigned long v)
+> >
+> >  #define kern_hyp_va(v)       ((typeof(v))(__kern_hyp_va((unsigned long=
+)(v))))
+> >
+> > +/*
+> > + * Translate a __hostva-tagged host VA, dropping the tag: the only san=
+ctioned
+> > + * unwrap. Translation only, no ownership or bounds validation; the re=
+sult
+> > + * carries the pointee type stripped of the tag and of any cv-qualifie=
+rs.
+> > + */
+> > +#define kern_hyp_va_host(v)                                          \
+> > +     ((TYPEOF_UNQUAL(*(v)) *)__kern_hyp_va((unsigned long)(__force voi=
+d *)(v)))
+>
+> [Severity: Medium]
+> Does TYPEOF_UNQUAL() actually strip the address space tag in Sparse?
+>
+> Sparse treats address spaces as type qualifiers that typeof_unqual (and
+> by extension TYPEOF_UNQUAL) does not remove, unlike const or volatile.
+> Consequently, this cast evaluates to a pointer that still carries the
+> __hostva tag.
+>
+> When assigned to a regular kernel pointer, this will trigger incorrect ty=
+pe
+> in assignment (different address spaces) false positive warnings across t=
+he
+> codebase when running make C=3D2.
+>
+> Should this use an explicit cast to __kernel (address_space(0)) to
+> correctly strip the tag, similar to how per_cpu_ptr handles __percpu?
 
-This series is on top of in-progress PCI Live Update series.
-https://lore.kernel.org/linux-pci/20260710212616.1351130-1-dmatlack@google.com/
+The __hostva tag is stripped, so these warnings don't occur. Under
+sparse TYPEOF_UNQUAL() is __typeof_unqual__(), which in sparse >=3D
+v0.6.5-rc1 removes the address_space qualifier, so kern_hyp_va_host()
+returns a plain kernel pointer. Verified: C=3D2 over the nvhe objects is
+warning-free, while a control doing an implicit __hostva -> plain
+conversion does warn. Older sparse lacks __typeof_unqual__, so
+scripts/checker-valid.sh disables checking with a warning rather than
+emitting false positives.
 
-Same for the below issues.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+>
+> [ ... ]
+>
+> > @@ -421,9 +421,9 @@ DEFINE_KVM_HOST_HCALL(int, __pkvm_host_mkyoung_gues=
+t, 1,
+> >  }
+> >
+> >  DEFINE_KVM_HOST_HCALL_VOID(__kvm_adjust_pc, 1,
+> > -     struct kvm_vcpu *, vcpu)
+> > +     struct kvm_vcpu __hostva *, vcpu)
+> >  {
+> > -     __kvm_adjust_pc(kern_hyp_va(vcpu));
+> > +     __kvm_adjust_pc(kern_hyp_va_host(vcpu));
+> >  }
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does this lack of ownership validation
+> allow the host to corrupt EL2-private memory?
 
-> [ ... ]
-> 
-> > +static void before_kexec(int luo_fd)
-> > +{
-> > +	struct vfio_pci_device *device;
-> 
-> [ ... ]
-> 
-> > +	printf("Preserving device in session\n");
-> > +	ret = luo_session_preserve_fd(session_fd, device->fd, DEVICE_TOKEN);
-> 
-> [Severity: Low]
-> Will this result in a linker error? It seems luo_session_preserve_fd is
-> undefined without the accompanying library implementation. Should this test
-> use direct ioctls or are there missing Makefile dependencies for a library?
-> 
-> [ ... ]
-> 
-> > +static void after_kexec(int luo_fd, int state_session_fd)
-> > +{
-> > +	struct vfio_pci_device *device;
-> 
-> [ ... ]
-> 
-> > +	printf("Retrieving the device FD from LUO\n");
-> > +	device_fd = luo_session_retrieve_fd(session_fd, DEVICE_TOKEN);
-> 
-> [Severity: Low]
-> Similarly here in after_kexec(), is luo_session_retrieve_fd implemented
-> elsewhere in the test suite? It looks like this will also fail to link.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260714151505.3466855-1-vipinsh@google.com?part=17
+Working on it :) Different series group [1].
+
+/fuad
+
+[1] https://lore.kernel.org/all/20260715081238.1891918-1-fuad.tabba@linux.d=
+ev/
+
+>
+> Under pKVM, the host is treated as an adversary. If the host provides a
+> TTBR1 virtual address that maps to an EL2-private physical address,
+> kern_hyp_va_host() will translate it into a valid EL2 linear map pointer
+> without verifying ownership.
+>
+> The hypervisor will then write into EL2-private memory when modifying
+> flags in __kvm_adjust_pc() or hardware register state in
+> __vgic_v3_save_aprs(), corrupting its own state or the state of
+> protected guests.
+>
+> Should there be an explicit ownership check before dereferencing
+> pointers from these always-on hypercalls?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720162412.14=
+01272-1-fuad.tabba@linux.dev?part=3D11
