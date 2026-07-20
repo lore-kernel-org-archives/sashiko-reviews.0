@@ -1,148 +1,169 @@
-Received: from va-2-53.ptr.blmpb.com (va-2-53.ptr.blmpb.com [209.127.231.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F15B1DDA18
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EE8430CDF;
+	Mon, 20 Jul 2026 14:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784558328; cv=none; b=j9y7PNsAC+JI81vbxGJr9kY5oooqJFkeW406YBCwlU6/HRcZGp2KksvXmYlUwR0ciQVm4iWe/HuWeukbriLAK3u452+uKNNk+RKlhAbLKJXtT560gGB1ufSUBJib0SFwuaiM/B2zpgfIF30SDy6A7I2U+tNE/oFHlZXj6eUz+1k=
+	t=1784558995; cv=none; b=E4TVWlS3EYeiz+YcgI6S0MsNQgPA/vEioGkWjuLSxUP8HAK3mE/VOnE+FzZSYi59u3Eek6BW1dAHFEAS0n1NTnnFv04ApXwxJj4MQRT+fZxw8rM2BzvqsUnqx/gHZnFE5iikGmXmggDMtn9FdHeSvQuFHOG8QXSjNJNWECJEj0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784558328; c=relaxed/simple;
-	bh=8sN/gASbE2UtPKXKz5J4QgZgJuO3ftn0phVSlHOl8Nc=;
-	h=To:Cc:In-Reply-To:From:Date:Message-Id:Mime-Version:References:
-	 Subject:Content-Type; b=I6yegzqfsG90JHWO+41aVaXthOmcMWu5qHhsroVxIQXzSpKHIQbkookpycG7guhbqRCuWeDioA8Tcp8b5OcUvyzel4AhQIZ1rR1qAwLoOwYbkNibb59DqyKunWcbmeq3CYYX2acUOPycMMYJnOSTMwZe02rD7iV7hLYKIANMIMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=V7szyncS; arc=none smtp.client-ip=209.127.231.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
+	s=arc-20240116; t=1784558995; c=relaxed/simple;
+	bh=Gt4p8m90LjnKpWVt0rIxdsQ18ko373s8oRh8mw/sDA8=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rweIPDxQuzVZYeAzFzwV9wIN/2W9LK+WzniD2bw0XVkVrZrxKoXNblrsz3Kza9A17sWwo70maSE6xIYBOopYeYArDHvcJ1UbQVxGTJbHKZ40P2wkTUYhKgrD9I6Q+Z88I9AgbCKCgIio+vnI3gByxJogCPSymjQz8/Wbq7t3ECI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l6lo7M4M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="V7szyncS"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1784558320;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=0uGC4WzXOhklcTOliQe6F0uluMokozPayluXadM4UA4=;
- b=V7szyncS4faQUPH8bz121PBdWND6NZyL/hjo/SCFh/blZmFFhBa/7AgPesakhB4Hx/cGt6
- z571NR3HH/Hpg8TChHOsyoMg8XpBHpc5MHJX2f5f8PanRId3XEjkpCl5A6u6HRVEgACAG8
- cHOwg5wDBW3ZHQ6pcIOUSZ4E5FxGnmh6xnFDTpWu5asfeQnB2uSZ5OZSgN2pZPMJ9XsV3d
- /552LOBTlbCT/BYERR0ujuu20kunqQ0seedODP2VOyRtJzPhtDQbIjNGfvdVtsoRgmd972
- 39dSrWpzS5vGwC5lUM/40yP+LzGtzKNl1gOg2+xQQs56HPWX35zsdojf/QO53g==
-To: <sashiko-reviews@lists.linux.dev>
-Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
-In-Reply-To: <20260720113553.9353D1F000E9@smtp.kernel.org>
-X-Lms-Return-Path: <lba+26a5e32ef+a42bd3+lists.linux.dev+colyli@fygo.io>
-X-Original-From: Coly Li <colyli@fygo.io>
-From: "Coly Li" <colyli@fygo.io>
-Date: Mon, 20 Jul 2026 22:38:26 +0800
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <00B41B17-0B11-4999-8FA8-4E0B33E53B3C@fygo.io>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l6lo7M4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACC81F000E9;
+	Mon, 20 Jul 2026 14:49:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784558993;
+	bh=kcWH8DVHI0oyeNtJrcuZjafVvSZSF6geIfeSDd2TKCs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=l6lo7M4MFIR0nt1q6Npl7jl5v74oXNv+tvm0k0zcXaeoHN+6cG7xphmW1not+qGc/
+	 H1UkPZPVkkl8g9EXq3QOs5LczQ4RsGTEtRgZMHg4ssnTSMHBsbvedVdAILNK3ematM
+	 UMlBQuJ8zqsMoa/UBWeKJN5dPHNIT50G+oa+Mr/p3KvFvaHCDi2djC/g5hIXcW/lV3
+	 3v0fIu6nRzDOWmmiGSYIsSBf6m40dK5FwYO3qViq8YZjD1tdHd69Sgu3dm13y83Rtc
+	 PZ0AzH9JiZdg5WudIHBjWCieW2xjyoZCNdoSyVFKm+zas/RG3S1o9P9fCCAGWLHE2j
+	 ZsPw7NKLpR0+g==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wlpJX-00000006qjM-3L1U;
+	Mon, 20 Jul 2026 14:49:51 +0000
+Date: Mon, 20 Jul 2026 15:49:51 +0100
+Message-ID: <867bmpg1gw.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev,
+	"Oliver Upton" <oupton@kernel.org>
+Subject: Re: [PATCH 2/5] KVM: arm64: Add a helper providing an inlined literal value for ICH_VTR_EL2
+In-Reply-To: <20260720134628.BEB071F000E9@smtp.kernel.org>
+References: <20260720132220.2143486-1-maz@kernel.org>
+	<20260720132220.2143486-3-maz@kernel.org>
+	<20260720134628.BEB071F000E9@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260720111400.2120834-1-colyli@fygo.io> <20260720113553.9353D1F000E9@smtp.kernel.org>
-Subject: Re: [PATCH] md: do overflow check for sb->bblog_shift in super_1_load()
-Content-Type: text/plain; charset=UTF-8
-Received: from smtpclient.apple ([120.245.64.95]) by smtp.larksuite.com with ESMTPS; Mon, 20 Jul 2026 14:38:39 +0000
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 19:35=EF=BC=8Csashiko-bot@kernel.org =
-=E5=86=99=E9=81=93=EF=BC=9A
->=20
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] The newly added bounds check for `sb->bblog_shift` incorrectly a=
-llows values up to 63, failing to prevent 32-bit integer overflows and unde=
-fined behavior which can lead to a divide-by-zero kernel panic.
+On Mon, 20 Jul 2026 14:46:28 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The `kvm_patch_ich_vtr_el2()` helper fails to apply the `vgic_v3_broken_seis()` workaround mask to the `ICH_VTR_EL2` value.
+> - [High] The `noinstr` function `kvm_patch_ich_vtr_el2()` calls out-of-line instrumentable functions, which violates `.noinstr.text` safety rules.
 > --
->=20
-> --- Patch [1]: [PATCH] md: do overflow check for sb->bblog_shift in super=
-_1_load() ---
-> commit 36f9915dbd10f1c3803610b32e46390e9cb7ec7c
-> Author: Coly Li <colyli@fygo.io>
->=20
-> md: do overflow check for sb->bblog_shift in super_1_load()
->=20
-> This commit adds a bounds check for sb->bblog_shift in super_1_load() to
-> prevent possible overflows in the badblocks API. It limits the shift valu=
-e
-> to be less than BITS_PER_TYPE(sector_t).
->=20
->> diff --git a/drivers/md/md.c b/drivers/md/md.c
->> index d1465bcd86c81..67f8edf4db368 100644
->> --- a/drivers/md/md.c
->> +++ b/drivers/md/md.c
->> @@ -1920,6 +1920,13 @@ static int super_1_load(struct md_rdev *rdev, str=
-uct md_rdev *refdev, int minor_
->>  rdev->bb_page, REQ_OP_READ, true))
->> return -EIO;
->> bbp =3D (__le64 *)page_address(rdev->bb_page);
->> +
->> + /* check for badblocks api. */
->> + if (sb->bblog_shift >=3D BITS_PER_TYPE(sector_t)) {
->                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 
+> --- Patch [2]: [PATCH 2/5] KVM: arm64: Add a helper providing an inlined literal value for ICH_VTR_EL2 ---
+> commit aedd950f23aaa5667277a7a495b598168c06eb84
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> KVM: arm64: Add a helper providing an inlined literal value for ICH_VTR_EL2
+> 
+> This commit adds an alternative patching callback to provide an inlined
+> literal value for the ICH_VTR_EL2 system register. It computes the value
+> at boot time and patches it into the relevant code locations.
+> 
+> > diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
+> > index 9e841e7afd4a7..ef62dd498f5cf 100644
+> > --- a/arch/arm64/kvm/vgic/vgic-v3.c
+> > +++ b/arch/arm64/kvm/vgic/vgic-v3.c
+> > @@ -876,6 +876,57 @@ void noinstr kvm_compute_ich_hcr_trap_bits(struct alt_instr *alt,
+> >  	*updptr = cpu_to_le32(insn);
+> >  }
+> >  
+> > +void noinstr kvm_patch_ich_vtr_el2(struct alt_instr *alt,
+> > +				   __le32 *origptr, __le32 *updptr,
+> > +				   int nr_inst)
+> > +{
+> > +	struct arm_smccc_res res = {};
+> > +	u32 insn, oinsn, rd, vtr;
+> > +
+> > +	/* No KVM? Nothing to do */
+> > +	if (!is_hyp_mode_available())
+> > +		return;
+> > +
+> > +	/* No v3 (or v3 compat)? Nothing to do either */
+> > +	if (!this_cpu_has_cap(ARM64_HAS_GICV5_LEGACY) &&
+> > +	    !this_cpu_has_cap(ARM64_HAS_GICV3_CPUIF))
+> > +		return;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does this bounds check still allow valu=
-es
-> that can cause undefined behavior and integer overflows?
->=20
-> Since BITS_PER_TYPE(sector_t) is 64, this allows sb->bblog_shift to be up
-> to 63.
->=20
-> However, count is declared as a 32-bit signed int in super_1_load(), so t=
-he
-> following operation:
->=20
->    count <<=3D sb->bblog_shift;
->=20
-> will cause undefined behavior if the shift is >=3D 31.
->=20
-> Additionally, downstream in block/badblocks.c (such as in badblocks_check=
-()
-> and _badblocks_set()), the shift is used with a 32-bit literal:
->=20
->    rounddown(s, 1 << bb->shift);
->=20
-> If sb->bblog_shift is >=3D 32, this can result in undefined behavior and
-> yield 0, leading to a divide-by-zero panic in the rounddown() macro durin=
-g
-> array IO.
->=20
-> Should the maximum shift be restricted to a smaller value?
+> Is it safe to call out-of-line and instrumentable functions like
+> this_cpu_has_cap() from a noinstr context?
 
+Yeah, that's borderline stupid. This should be "cpus_have_cap()".
 
-With an overflow check patch from Ramesh Adhikari <adhikari.resume@gmail.co=
-m>,=20
-only checking sb->bblog_shift >=3D BITS_PER_TYPE(sector_t) is enough. The r=
-ested overflow
-check will be performed inside badblocks API.
+> 
+> This violates the .noinstr.text safety rules and might expose the
+> alternative patching sequence to ftrace, KASAN, and kprobes, potentially
+> leading to recursive faults.
+> 
+> [ ... ]
+> 
+> > +	if (WARN_ON(res.a0 == HVC_STUB_ERR))
+> > +		return;
+> 
+> [Severity: High]
+> Could WARN_ON() also expand to out-of-line instrumentable trap or warning
+> functions, further violating the noinstr constraints of
+> kvm_patch_ich_vtr_el2()?
 
-And if variables are overflowed before calling badblocks API, this is not t=
-he badblocks API
-issue, should not belong to the badblocks API check fixes.
+I guess that if that fails, we will already have failed much earlier,
+while probing for TDIR. I'll drop that.
 
-Also I don=E2=80=99t feel it is necessary to do restricted overflow checkin=
-g in super block loading stage,
-if the invalid values are rejected, this super block will fail to load and =
-won=E2=80=99t introduce any run time
-problem.
+> 
+> > +
+> > +	vtr = res.a1;
+> > +
+> > +	/* Compute target register */
+> > +	oinsn = le32_to_cpu(*origptr);
+> 
+> [Severity: High]
+> Does this sequence miss the workaround mask for broken locally generated
+> System Error Interrupts (SEI)?
 
-Therefore, current checking with (sb->bblog_shift >=3D BITS_PER_TYPE(sector=
-_t) is sufficient.
+It isn't missing. It is just that the relevant hunk is in the wrong
+patch and needs to be moved here.
 
+> 
+> The code reads SYS_ICH_VTR_EL2 and directly bakes it into instructions
+> without applying the vgic_v3_broken_seis() mask to clear the
+> ICH_VTR_EL2_SEIS bit. Affected hardware might incorrectly advertise SEI
+> support as a result.
+> 
+> > +	rd = aarch64_insn_decode_register(AARCH64_INSN_REGTYPE_RD, oinsn);
+> > +
+> > +	/* movz rd, #(vtr & 0xffff) */
+> > +	insn = aarch64_insn_gen_movewide(rd,
+> > +					 (u16)vtr,
+> > +					 0,
+> > +					 AARCH64_INSN_VARIANT_64BIT,
+> > +					 AARCH64_INSN_MOVEWIDE_ZERO);
+> > +	*updptr++ = cpu_to_le32(insn);
+> 
+> [Severity: High]
+> Like this_cpu_has_cap() above, aarch64_insn_decode_register() and
+> aarch64_insn_gen_movewide() are out-of-line C functions. Should these
+> calls be avoided inside a noinstr patching callback to prevent recursive
+> faulting during instruction patching?
 
->=20
->> + pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
->> + rdev->bdev, sb->bblog_shift);
->> + return -EINVAL;
->> + }
->> rdev->badblocks.shift =3D sb->bblog_shift;
->> for (i =3D 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
->> u64 bb =3D le64_to_cpu(*bbp);
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720111400.21=
-20834-1-colyli@fygo.io?part=3D1
+That's something that needs to be separately addressed. There was some
+work from Ada a long while ago that needs to be brought back to life.
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
