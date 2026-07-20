@@ -1,190 +1,284 @@
-Received: from mx0a-00128a01.pphosted.com (mx0a-00128a01.pphosted.com [148.163.135.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B19F1BF33;
-	Mon, 20 Jul 2026 03:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.135.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208C33603C9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 03:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784518122; cv=fail; b=iBOGYAv+ne5aWoEHSdvBogQWxdRXRhPRjCQ9AB3gz1P3PVw7tFKCH+AXqbBaxZwWuSyEZdmIic8q6j5EL/ZORXvE79ArWmBYva5YlE3pGqy9MGvYef6QN8o+2c9BTuuIL1TCPRCQDfmgxs1onSC9w2R1iyRzSrhecQcvEy4/4EY=
+	t=1784519898; cv=pass; b=Q8yTz1KVpFYInS++/YxkOfKZt1zr8LVMPY3ItMTqVenw7rIMT0ukOKFCATgacHh3w2kjrK5NdvfEbghYm41Bn8fdVzYqrVmoKUEtQ2L42PRZGn3bzFK4OFxDO/huXm7FO7aSHNWWvRK2C9MdZeDaEdzZGWTBQusRHBpzha8+c8s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784518122; c=relaxed/simple;
-	bh=ZBe1Oq4m8I28pu8mkqnINnFpy1/X9DbApNykPzk2zQs=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=AQaUH2QnFfRSfnt2M5Y53UQzj+qk/NTYJOO1zAQ5McCma2vQB6unjqXZAqTcOUxn5wBwJsres6evEM6p5iJN/TcO59xWTu2S/n1p/GkWLdti1OyknIG1ZFlI6GBTgU086n0mzkDPIP2WwwQlydMIGtm12i+u6HyfXlwgHzXfE8g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com; spf=pass smtp.mailfrom=analog.com; dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b=wdGxRFE2; arc=fail smtp.client-ip=148.163.135.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analog.com
+	s=arc-20240116; t=1784519898; c=relaxed/simple;
+	bh=dxh3xd7dwLFCm9HEMceZqX5OiKkpL2P9khsPdjNvBTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gWiDZngr80U6GUmQkasOBno9LLxcqNW2C3YjJukNlld7hik1qw6wwfsk+zDMADGpjxSvaV0PskMympkuvAnsgVKVMBdZVDknPGbQGbTlaJUMoMs3DQimaSRbEfLXXEx5/7XnMTIOUfsbunTeUPfexzFiChz5YJ4b00UOVbcHPxk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=QkuFJT0f; arc=pass smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b="wdGxRFE2"
-Received: from pps.filterd (m0516787.ppops.net [127.0.0.1])
-	by mx0a-00128a01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66JNtG3w453475;
-	Sun, 19 Jul 2026 23:28:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analog.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=DKIM; bh=ZBe1O
-	q4m8I28pu8mkqnINnFpy1/X9DbApNykPzk2zQs=; b=wdGxRFE2RxL/pm2RAxlSE
-	LkwQKwJdQgzPCGuImP7U+HeieeOdIYzWNuUwCrnsPJpLf6xzu73BpbcXZxE9Asjc
-	EUAwoGXVq/775YvYTtjp443545GcC10Gxzz8FHBmtv5LbyfeJWtLHSuI1BVRE+Lg
-	umD1CT/bDo6tS492VwbBHsM3efotIJ1KykXapekpe0q7B+JfEEhfyXOQZd+OcEBI
-	vIkuSu0YE2BXwjMXB3kgMyMnYp3fG8+elCsrIQxtjTJkqgqTan+Hl3QWXEIYPeH3
-	LiCyJxeHVjndpm2l6rj+ZX6f2LxNfans0QM4Icsd1shLYZufAI7wO6OzkVNnhp8a
-	g==
-Received: from bn1pr04cu002.outbound.protection.outlook.com (mail-eastus2azon11010004.outbound.protection.outlook.com [52.101.56.4])
-	by mx0a-00128a01.pphosted.com (PPS) with ESMTPS id 4fgttga6bb-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Sun, 19 Jul 2026 23:28:39 -0400 (EDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XH/OCAkz7lKts5peAW5goa1Jl18TW6l4PddvK7puxd9RDVfiGyH8ORU+botPdMbfZoTmezchSiFpNdU904BU4K1R71OOsnQq/OTEu2WPB64HkkVvyWMAWZ7pus92BMZz1qWmsZEkqwNleBQd1WErUzaB7MOfbobBTJ3Mw/wKPFgy4aW1u91+EDbnfp/IJh1IqYeMhH89vD/juqtidov23kT6gmwbqNYrYlGFPYGdKNgF2+k0n52k3o9R/O2AwxL5OcXItPxQOzXw98Vb4Xs4UiXsqLyrgaFtuotmvvcrWAUzLyENdWI80lOdSK2RTP0HZ1ddXzgL+CV0ZRtmDTaJ+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZBe1Oq4m8I28pu8mkqnINnFpy1/X9DbApNykPzk2zQs=;
- b=hXG9kDqOpEGRHP98kLxrBdT894QXUcX5uJeistNu1/HFG/+nRkBkX+WJ56rbV00V/fZyS4UpVk+wJOoK8D1wXOivxVOm/LSvCTtBMXEvccUKHzbdtqaJJQH7/3WsSi7iOcmhEk0TRd0pkj+bz8Ol3SPvHO3psF31dsDydreHzoBrt5zL4+xTjB7uRuGZ4aUAjgatQdgADlHmkwzp9q0PndZjoKJVfNu8mvKIZJKEmtvE7Z8xxQggQUTwYOAhCu+LjAuMruypgXnLf5MUXjeDs70bGh0G90FOxghb5ugxoc2xpHt+AtUPqwXKe4/WIs3KEZSHpXpTfEdEeaSGyC15ew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=analog.com; dmarc=pass action=none header.from=analog.com;
- dkim=pass header.d=analog.com; arc=none
-Received: from PH0PR03MB6351.namprd03.prod.outlook.com (2603:10b6:510:ab::18)
- by CY1PR03MB8124.namprd03.prod.outlook.com (2603:10b6:930:105::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 20 Jul
- 2026 03:28:36 +0000
-Received: from PH0PR03MB6351.namprd03.prod.outlook.com
- ([fe80::1578:4572:29b5:2442]) by PH0PR03MB6351.namprd03.prod.outlook.com
- ([fe80::1578:4572:29b5:2442%4]) with mapi id 15.21.0223.015; Mon, 20 Jul 2026
- 03:28:36 +0000
-From: "Torreno, Alexis Czezar" <AlexisCzezar.Torreno@analog.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
-        "robh@kernel.org" <robh@kernel.org>,
-        "conor+dt@kernel.org"
-	<conor+dt@kernel.org>
-Subject: RE: [PATCH v3 1/4] dt-bindings: hwmon: (pmbus/max20830): add VOUT
- feedback resistor properties and complete examples
-Thread-Topic: [PATCH v3 1/4] dt-bindings: hwmon: (pmbus/max20830): add VOUT
- feedback resistor properties and complete examples
-Thread-Index: AQHdF/X8Z2VmjJDBfE+uXgH6InSLHLZ1vfaAgAABCrA=
-Date: Mon, 20 Jul 2026 03:28:36 +0000
-Message-ID:
- <PH0PR03MB6351355291337F1598475B7DF1C32@PH0PR03MB6351.namprd03.prod.outlook.com>
-References: <20260720-dev-max20830c-v3-0-9d06d27d6da3@analog.com>
- <20260720-dev-max20830c-v3-1-9d06d27d6da3@analog.com>
- <20260720032207.E5A9A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260720032207.E5A9A1F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR03MB6351:EE_|CY1PR03MB8124:EE_
-x-ms-office365-filtering-correlation-id: a9691257-a81b-4e24-a732-08dee60efc00
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|4143699003|56012099006|11063799006|18002099003|22082099003|10067099003|38070700021;
-x-microsoft-antispam-message-info:
- mIXetd/yxtLpA8yk8Spcj77pKj4EkyqSJSUpPz33pP43s7xUNGWwPnjTCIiI1XY+qL0XLq3XriTsn8P1TO+NoT33vtz0e1C8Cgzd4kiMbPwggQa7B4V+/EHXa/EWZcnecg10Yr+4hYKfBaq0ZZEwjbpadf1ihJgtK4LcVyQV8bLnZkWrUG0nKQZIRZIn1q0YTFACiRnk2oGVbJUKVxbvp82swLHP/DpOQBgqsGHW2JK3LJ9v+KlAppIRbg8ElSuaRiCCyb0bb/YMXGe/Vc0dQcvI3p7YGZZRstbhHHB/KNBXvDA14Y3lHHmb9MMkf5qQ67pQy/eKA8WBdgceIZv25RZKk7FHd4znrQpmbzgQCiKVeKRQc3bQWQcDPvfJqVIqTMpd0quDQu5a7p0tR78M/qq31AeDxtfuEpF6+Uweauk0rCY2juL6MxSq05jsJQjRyYx/3ZSLG8+9Fyogmv1ZpjaOf+AnB2zyZSoMgqskPKeZeY6jl3CvKivRbaeZAAZQoDuyYl3/QC+P7Wu9wPz2jBkVL8msisrkKw+1F65BpBPQHS5tQhXkf9BBPfyV9JXfLPyu3TqOOeqlAdULjdJU++QzM4zx5HJP48Ga+sOJDShAU9Rf6cSGiACwwwB4wzX64m2lEsWQwLCpvWmRDi8XjdDJU4iCSUhBT1PLoXeaSyXaD0+Vh3zrJFS4i7RHRvWmw/2w9flmA66hZAFwk5s2Qg==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR03MB6351.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003)(10067099003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?UHk3L2FxUEtDL2FNeDNNMFNDRHI5bEQ4M2V6dTFDUWJBSkY5bCtmdkNsNDcv?=
- =?utf-8?B?eWF5NEIrQlo3ekM3NVFQVDY5cG5BV3pFMlV3NFY1ZlR4cktzck95UDRlVDZX?=
- =?utf-8?B?eDVXVE94MVBBaFZZdEV6N2xzOVZiQWZ4WUt2L1NESVJGTllEY1ZneEVjVE1L?=
- =?utf-8?B?bE53TCs3eWhCZzJRMUxrbUtKeEdmSWUvV1BtYTFuV3NISTdScC9oUlFra2Ur?=
- =?utf-8?B?RFlEZDRRSHVFVkdyc3Jyb2ZzM2JLQWxTbWpseUczcGdHNTJFU2NOZlhSNkxG?=
- =?utf-8?B?VERQbVRXYW9RL0lKaE4vQjVvQ2dYM3daNW56ekQ2QVZsYThVWXVNK3ppNXZH?=
- =?utf-8?B?QlBKZmxjaHlqVnE4R2ovaUFKVWFCTnVEMW1RQ3BUdTJ3NkduMG8xRWE4TUdE?=
- =?utf-8?B?c1ZKeHhWRlhIb0g3TGpJaHJ5ME1VcWc5NXJzaFc3MW4rd2xCb0tNRURGby84?=
- =?utf-8?B?dXRNZmI4UmZ6NW5uN3VzZnd6b2F2SUhva2JrQmZJMytKMlVxckhBVWtKZkM2?=
- =?utf-8?B?ZTJGNkxHeFdBeDZKTkUwNFdRY2hQWEd0blVOc01Bb1JrOCtWblM1YTBlaUxo?=
- =?utf-8?B?T0J2bERURm5aekMrSVNOMEM3MGoyM1lCQUMrY282TkhiTmJuMFgxK1cyR3VB?=
- =?utf-8?B?MGhEZ3FvYWN0dVdubGxtZWlOa0RFMFJldXJocks2RUNFbHJmU1VMbFBjSm1G?=
- =?utf-8?B?VWhoaUlyVk5FeU1aU3llVlFCZ2l6NXp3aWZhSXpubk1Ua1lLRStZYnpaMVVU?=
- =?utf-8?B?WE9HZERHWTU3WlYyOVUxbXNkYmR3a3dtQWlhSjNxUGlwazlNRkFVZkwxclhF?=
- =?utf-8?B?bldFcGQ0SkgrcTZvVmVQTWZOdjIxc1NyZmJUZlpqRGlBZEREeVVMM015MDJS?=
- =?utf-8?B?KzNBWHdtck10Z3A0cktTbWZPbStPUmphblplOWRYdk1sR1BBeUV6WThvMDlw?=
- =?utf-8?B?Tm44ZWQ1ZVppa2w5SUdMZEw5S1JsZWFENDdndW9EaU1YTnJiQXdMb2JWSlNa?=
- =?utf-8?B?eENFQWh1TVEvUkRPb2N5T2IyL0N6SkpLYW10RDdnVkJPaVgxWWRnWnp1NEM4?=
- =?utf-8?B?WVNyREE0VzZZTDdDODByWHprTk1pamRva0w0VVlmZVprRTYvNS84Tm41YTNS?=
- =?utf-8?B?bE92a1RCWEJDWTErbmtYM1p6NDV5SCtIRmZJLzNnZ0tFNEpvbnN3YjFsWVkv?=
- =?utf-8?B?M0dNa2IzWjVUM1NpRGFjRmVidlY4VU1pS3Zwb0xuS09mSW84dXRsSW52aHQz?=
- =?utf-8?B?cWNldlBlR0hvMEtzcUN4eW12VmRTTHpzeDNPMGI1dG5WaUFsS21OTG9NOHJB?=
- =?utf-8?B?V01BUmRhdGdLS2xjVno4YWxybjRGRG1EUUp1eWIxMUpxalFvaUEvR0pBdXN4?=
- =?utf-8?B?akNXY2Z4QkVUaGU4QmQvN2NGNUNybVRuNFA3UGg0Q0k3UmlLY2Q3QkFXSmk5?=
- =?utf-8?B?cnJKVS9qbm1wZlhDbS9sRDdyaTFzcjd5SmpuRThDZEJuMkxMMnE0ckFSRGJK?=
- =?utf-8?B?RzM0Wk1hNE9ySyttOStHU2VhUTU2NkNVSERJRGlDekFqcktvY08zNkdkTTFD?=
- =?utf-8?B?RGNpQ0ZmQWpDVGxwMGVuYlNveGNXcnZ6Q2JycXltRFFvQmFqdzd3RjVGRjI0?=
- =?utf-8?B?N3NrQ1dMTTBOdmNsKzZsMzBGTFg3RjdMMVczdVU2b3B0VmlKdWhNRTdaZVMy?=
- =?utf-8?B?cld1eVhPWk5mZGlJZDF2R3Zqajh3bTNHU3lxMVhVak85MHBMNHdhRFkxUnpy?=
- =?utf-8?B?eTI2dDhvNysxdEZITFBaY0d2ZUcxT2V2QVkzbS9yME16NUU0V3VoOUpsS01O?=
- =?utf-8?B?Mk9uek1rMHhhWEZaVnpVRkg1WkNtWWYyWE1NSG9pYXozckpXTHIxTUMvQmJE?=
- =?utf-8?B?Y1BjU2ZTUjFCZlQ4dkptWGpLbFlCcFdZN0c4cjl1SnRkblhJL2t0Y0FPaFRK?=
- =?utf-8?B?M2RJVmRFcjFVVWVBUmJyWGh5bklwcU16OEh6Z3N2ZDNNRlpmSDhET2YzWTE3?=
- =?utf-8?B?MVhWWEthblREVG0xMEZMU3BMZnBOZWZFL1dvdkI1bWF5MWZ6Y3VhN2xjb2p6?=
- =?utf-8?B?ZjJxcHNvMk9wa3k5U1dwMk1HdWQzcURSRUFjUVI2L3R0ZURmSGdLWFBQRFlx?=
- =?utf-8?B?UHVrR3lKYS8xS3dyN3RFOVdGQllEdGhMZTZxTll1MFM4ZE1FOE5ldnJ1ZXlp?=
- =?utf-8?B?bnR5UUkwMkZUOXU3eXlpVUthVHc2MTU5MG9JMnZDTFlId2pwYWh3UGNKNTMw?=
- =?utf-8?B?UHh3NE02MjlhNkN6c2FFUmZPamtTM1pveEQxTjFCWVNHcWQycXRBVDNyUjJN?=
- =?utf-8?B?WER0QlUwVkZkc0Q5S0dLdzN3cVFhNWdDZ2l0Qit6RmpzSDJ2Sm9VWm5zM1RN?=
- =?utf-8?Q?bGiZ6QWr/jw6bQGA=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="QkuFJT0f"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-81ecf499af9so61981037b3.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 20:58:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784519896; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iqCXVXrNTOCUiChqN+vYLXoaPB/7lBMTE8eOX6s5/YUqp+s3PUDX8xWgoahEgjxv76
+         3P3UDZaz4kWZmxOj7K2QcyXbLs+FxOsjHF1bFwrnUhdnegEvJ0+mo2DqrbFSyrFPYSz/
+         awx3QF6EuLCeGLlrahD463HpVRnBqXwCZeXxyqYLb9eHj359LMPccm9iLjYinkL2ChYx
+         OOg5x3pEEO45CGlSFSpyLQV7nb2ZXecpIj6yBlnw/Ua2P4fXVnulBVkouqmkBvEX+Hy7
+         aciweLh7/xpf3Vu1gEnMzWdql2YvMayyDlfhBqM+YRZFmMTTc+lt7jAc1NlIriePiSVY
+         VgeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=KafO/WcSs8IZV3ceugHPjvBD3hWgrTgFOQhWZ7ZmXh4=;
+        fh=rQB7wRh7EfRBJIrZo7+Qz2xY0F9WCq9J2TBx3vCtNlw=;
+        b=kK2oFlJkBTY73RcrS7zvZ/XzXaWhdfoTxV51IK7L0IshXDkLp9vR5MxijUo9kBrXnq
+         agfpnZ61fryIu4hJ3aLU2ZxqRIMugCzxuGITxcdGUT3v4ndoaBHhhwcmPlFxIZ8VVrKO
+         k+iYz5gF0eWdHUSWf6zljIJ/ZylGwF9zm3bdyfDfs/T6KFg9PWN+Zf8XH4N33u7WlWF5
+         AzU0qC3urJlq5Ohb4LXyVRiCan7oV9N4J+6XttmSA7mF82uBfyhofp3vgACBVxfZccez
+         bVskLTPJqCBsTT54REcQYiNIkpSZjvA1vUL5ZKYlnCeVlHo2jpRiAWKdl/C4/bVxC/yj
+         HJyA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1784519896; x=1785124696; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=KafO/WcSs8IZV3ceugHPjvBD3hWgrTgFOQhWZ7ZmXh4=;
+        b=QkuFJT0fMOUzWQdb5ESNKrUSpsFJEprTPoGHtsiKSWyDAFu5D2d4KO08qRXCAVUfgT
+         h0bMWzxSMUrdIiho5tQMfChPHjQybuev42uKA5pgKwXNXJMC9S6RfojfGYowLfnmNqsn
+         0AncUhtFZCSgR9Rrxv51t1iHdiYeDGrc2X8Iw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784519896; x=1785124696;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KafO/WcSs8IZV3ceugHPjvBD3hWgrTgFOQhWZ7ZmXh4=;
+        b=a5uG3rrtsRDKb8Y04a37EQBRHrhWjNJOHx7hZ1I9jAyKAUHJz4SN03AYOTGM/HmNBz
+         xPJcdvQpxy17HlTry2cPEyYyY5wHI8zye4XMJSmTECmUA4LM8dCyJpJSTB6kF/vzGRx6
+         87cfSu8gAMj70qGZsMB3bLUclDHcDMPRXhibdD12siiyQtQCDT6Qp83KgEROHbQ9cdIT
+         unT9oOOkAnQOJvNFBa82p6bE4QFP6M38Q/SqhPnqchrb1UOFKvO+gXWLmPgqvoI8Ak2h
+         gmh2mZJTu/Z8Ws55qG4s93ZBsZnX6c/JO80cfsG4M7gpgXq0WVcZxXfpXlhwuiFFF3U7
+         B0Vg==
+X-Gm-Message-State: AOJu0YyFeE5RZPzb70h8BMA7Ro9Ni6wxTfwuXqn6r79D1ycVP6DeQ3G0
+	uCIbB+cVCYEi1Y+QW5C9STtiTyh8ZwQmPgXSzWCqMTD5IsDWTTyj+WLlj+OoVAG1e5q7PX21tXq
+	1oDL06hXmditAuMncuIk460cXD2IDAfJRoaVcuaLV
+X-Gm-Gg: AR+sD10qPMLTkErSysGjv5JHtsVgz1NAAjOUOpYSTvZc2wd30VM98w3gQSBim6zBgiU
+	LJNNAhx/o4jWoF6mQg5gPKCMAfCLIMGDUKSQJmWgHzQm6cf9kblN2DKDb1qLJPD6k9znfOmhlOe
+	JLGq5jHsnTm/zDFyvaKIPEB0Fgf4ef+wMLUrpHqnF6iTCyJJMuTfcHM2+v9GtEYMuPGq536t9jd
+	585kFXWmaDjgcpn5Se+xRULQIGOIWXEzYw3AZKbwurqPpJeHUh6p3aIbCM+EXDpE7ttimC8lPPL
+	A4vFX5s6dUDmHa35
+X-Received: by 2002:a05:690c:4d07:b0:81e:c898:bc51 with SMTP id
+ 00721157ae682-81ef26df344mr34874147b3.70.1784519895100; Sun, 19 Jul 2026
+ 20:58:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	b/gcB+hBsZYaK5HyQaSiCFPposXhWwHlrma4Aa9iHb47WHCjxL75fPxqlrX41V+pq7cXRrNEF6ZboIdH4pB9tzXDCum5pdk7LzPFghwvhp1rJI63lVOl+52YWbDmShsDY8zvhVzVFCBnk7IqtSuQ8WgNu7+E/9c6Ro0K22Z1oH1SRtv77s7V1TJ8uN0rf9HMCI2KBf0DxeQIS3KiIB1cv5ByPfOOYvl/4kspgDMcvdJClMN8Mo/ySI4sdl/PhmYhDm06FZjF+bdFjsisc9oJIWzuJZHMUISZAAi5uoC6HZ9q0ubrcr4OdZmtLf/RO9qMEzC8MoGmVVhg1xJ6VbEiHA==
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR03MB6351.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a9691257-a81b-4e24-a732-08dee60efc00
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2026 03:28:36.4738
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fK7kQvMn1WmH3fMRu55ST+gs/rybquRMEOrvX3slUXv6PpkjXyy4ucVLIyaPygAUPZuXIjH2ceqL6FSN+4ybh2NwseB2e9dZTDerkWOMmMQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR03MB8124
-X-Proofpoint-ORIG-GUID: N7aNZc5Z4utmeDuNUpp8n0myRr-XWaG3
-X-Authority-Analysis: v=2.4 cv=DagnbPtW c=1 sm=1 tr=0 ts=6a5d95e7 cx=c_pps
- a=5+b0Cb5m1vs/r/JsbObUdA==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=0sLvza09kfJOxVLZPwjg:22
- a=OmVn7CZJonkx5R5zMQLL:22 a=F7p8smQl9KHZsajzSgoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDAzNSBTYWx0ZWRfX15+m0Ppqylsk
- oCoH/mvQgaWH88CFsULUH/IrDbkkTExvmfux0QljLxO+MM6lpHFuvrW97QPRoj5YmwBgl33Jz5e
- 16dwbi+hlGXshkWzKQ+BRnjYkfnGllb2NIBU1L5oLsecDUfY+lxh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDAzNSBTYWx0ZWRfX/L/bBPzYykfv
- 8Fxz/rB2L4DVJclfan/th7m8VPRPUO1sfsNDaKcx8hYCKkNKCy1PkFmmIHGjXFsxbxkLIoOL1Gw
- 9CqnWX4ySjvNOzeQxfSUNFpgQDgH73IfreoLIDGii8B3+m0JwZE/w7G3xheQUuqXjmIj9tPsAUD
- Yszo9kzMcauFVkku9mqNo1M7Hu7tO6YVB06VVYicNlnlkBL/guy/iiTfC/TtlINJTpXtFAXwSbN
- KFCTCNjHSe3BV8bqpuM/5zmhz2/hKy4Ks033aRkMwDCTijF0FDlabMsZDU/oXPOmFBQxNxtHBea
- Pr0rzxMlY8/kX1CMsqRfoIZYCECsn8NHA1nUauhrKkoLzLGyT+DdPPmnoxGEhHRht4E9bYIOF7a
- skBIP/nPdNrA95yCtGFhdnhDYBZD4CX3EYnvYSFcC5hWo9iHaAugG+PpC2zWdsEebEVQ9bYr6ml
- 0Sfj5dd3Mds6bgqUZoQ==
-X-Proofpoint-GUID: N7aNZc5Z4utmeDuNUpp8n0myRr-XWaG3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-19_08,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607200035
+References: <20260715085348.3457359-1-wenst@chromium.org> <20260715085348.3457359-3-wenst@chromium.org>
+ <20260715090944.2B4441F000E9@smtp.kernel.org> <CAGXv+5Ffsrc9r6d_RrgL1mBW1Zmt1RxCrMCjaD7vuF3+EaeAqw@mail.gmail.com>
+ <allHTc-bJrPwDA0b@ashevche-desk.local> <CAGXv+5HS3neb=8EW0FT2-tP-dhPFqQ+q8YRS8Gy_XBic4z4Mug@mail.gmail.com>
+ <alpZVUEOidfGMpfD@ashevche-desk.local>
+In-Reply-To: <alpZVUEOidfGMpfD@ashevche-desk.local>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Mon, 20 Jul 2026 11:58:04 +0800
+X-Gm-Features: AUfX_mxLin0OT--5qibPct2dJsaS8LrcUeIhX0neP8aGKP71f2cGpT0RUhWh8_s
+Message-ID: <CAGXv+5FoXBfc6GOEnEhhnRcNTJp6bazLS1ZJEUEiZWfc=EZy2g@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] device property: Add fwnode_graph_get_next_port_endpoint()
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
+	driver-core@lists.linux.dev, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-PiANCj4gPiBAQCAtNjEsNiArNzYsMTEgQEAgZXhhbXBsZXM6DQo+ID4gICAgICAgICAgICAgIGNv
-bXBhdGlibGUgPSAiYWRpLG1heDIwODMwIjsNCj4gPiAgICAgICAgICAgICAgcmVnID0gPDB4MzA+
-Ow0KPiA+ICAgICAgICAgICAgICB2ZGRoLXN1cHBseSA9IDwmdmRkaD47DQo+ID4gKyAgICAgICAg
-ICAgIGF2ZGQtc3VwcGx5ID0gPCZhdmRkPjsNCj4gPiArICAgICAgICAgICAgbGRvaW4tc3VwcGx5
-ID0gPCZsZG9pbj47DQo+ID4gKyAgICAgICAgICAgIHB3ci1nb29kLWdwaW9zID0gPCZncGlvIDIg
-R1BJT19BQ1RJVkVfSElHSD47DQo+IA0KPiBbU2V2ZXJpdHk6IExvd10NCj4gRG9lcyB0aGUgbWlz
-c2luZyAjaW5jbHVkZSA8ZHQtYmluZGluZ3MvZ3Bpby9ncGlvLmg+IGhlcmUgY2F1c2UgbWFrZQ0K
-PiBkdF9iaW5kaW5nX2NoZWNrIHRvIGZhaWwgZHVlIHRvIHRoZSB1bmV4cGFuZGVkIEdQSU9fQUNU
-SVZFX0hJR0ggbWFjcm8/DQo+IA0KDQpNaXNzZWQgc29tZXRoaW5nIHNvIGJhc2ljLi4uDQpBcG9s
-b2dpZXMgZm9yIGV2ZW4gY2FycnlpbmcgdGhlIHJldmlldyB0YWcsIEkgc2hvdWxkbid0IGRvIHRo
-YXQuDQo=
+On Sat, Jul 18, 2026 at 12:33=E2=80=AFAM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Fri, Jul 17, 2026 at 07:05:56PM +0800, Chen-Yu Tsai wrote:
+> > On Fri, Jul 17, 2026 at 5:04=E2=80=AFAM Andy Shevchenko
+> > <andriy.shevchenko@linux.intel.com> wrote:
+> > > On Thu, Jul 16, 2026 at 04:52:27PM +0800, Chen-Yu Tsai wrote:
+> > > > On Wed, Jul 15, 2026 at 5:09=E2=80=AFPM <sashiko-bot@kernel.org> wr=
+ote:
+>
+> ...
+>
+> > > > > > +struct fwnode_handle *fwnode_graph_get_next_port_endpoint(cons=
+t struct fwnode_handle *port,
+> > > > > > +                                                       struct =
+fwnode_handle *prev)
+> > > > > > +{
+> > > > > > +     do {
+> > > > > > +             prev =3D fwnode_get_next_child_node(port, prev);
+> > > > >
+> > > > > [Severity: High]
+> > > > > This is a pre-existing issue, but iterating over endpoints using
+> > > > > fwnode_get_next_child_node() can cause an infinite loop and a use=
+-after-free
+> > > > > if a device has secondary fwnodes attached.
+> > > > >
+> > > > > If a device port has both primary children and a secondary fwnode=
+, the primary
+> > > > > ops finish and drop the reference to the last primary child, retu=
+rning NULL.
+> > > > > Then, fwnode_get_next_child_node() incorrectly passes this same d=
+ropped child
+> > > > > pointer to the secondary ops:
+> > > > >
+> > > > > drivers/base/property.c:fwnode_get_next_child_node() {
+> > > > >         /* Try to find a child in primary fwnode */
+> > > > >         next =3D fwnode_call_ptr_op(fwnode, get_next_child_node, =
+child);
+> > > > >         if (next)
+> > > > >                 return next;
+> > > > >
+> > > > >         /* When no more children in primary, continue with second=
+ary */
+> > > > >         return fwnode_call_ptr_op(fwnode->secondary, get_next_chi=
+ld_node, child);
+> > > > > }
+> > > > >
+> > > > > This can result in a double-put. Furthermore, when traversing sec=
+ondary
+> > > > > children, the primary ops don't recognize the software node, trea=
+t it as NULL,
+> > > > > and return the first primary child again, creating an infinite lo=
+op.
+> > >
+> > > Yeah, it has to be implemented in a way how fwnode_graph_get_next_end=
+point() is done.
+> >
+> > If your patch series addresses the issue, I guess we can consider it
+> > covered? Sashiko labeled this a pre-existing.
+>
+> I noticed that it addresses only main get_next case, but get_next_availab=
+le is
+> still with the same issue. It's not that critical, we don't use much that=
+ API,
+> but still will be good to fix at some point.
+>
+> > > > > [Severity: Medium]
+> > > > > Does this fail to unconditionally put the prev reference if the p=
+rovided port
+> > > > > is invalid?
+> > > > >
+> > > > > If a caller passes a valid prev node but port is NULL or an error=
+ pointer,
+> > > > > fwnode_get_next_child_node() returns early without dropping prev:
+> > > > >
+> > > > > drivers/base/property.c:fwnode_get_next_child_node() {
+> > > > >         struct fwnode_handle *next;
+> > > > >
+> > > > >         if (IS_ERR_OR_NULL(fwnode))
+> > > > >                 return NULL;
+> > > > >     ...
+> > > > > }
+> > > > >
+> > > > > Could this lead to a reference count leak, violating the document=
+ed API
+> > > > > contract that prev is unconditionally put?
+> > > >
+> > > > This seems like what the other fwnode_get_next_*() functions are do=
+ing.
+> > > > I'd say this is a pre-existing issue as well.
+> > >
+> > > See this series (not yet applied, you even have chance to review it!)=
+:
+> > > 20260611203537.1786399-1-andriy.shevchenko@linux.intel.com
+> >
+> > I believe that series addresses the first issue, not this one, even
+> > though it partially mitigates it.
+> >
+> > The contract says "puts a reference to @prev unconditionally." What it
+> > doesn't say is that it requires @node to be valid, i.e. the function
+> > is a no-op if node =3D=3D NULL.
+> >
+> > "node !=3D NULL" being an implicit requirement seems to be the norm for
+> > the fwnode_* and of_* APIs. It's not explicitly spelled out and Sashiko
+> > lacks the context for it.
+> >
+> > I'm not sure this should be changed within this patch. It would end up
+> > as a mismatch between the various functions and possibly lead to more
+> > confusion.
+>
+> How does node become invalid after that patch?
+
+Sashiko is arguing that the kernel-doc says "reference to @prev is _always_
+put". But if you look at all the *_get_next_*() functions, they all just
+return directly if @node is NULL.
+
+I'm saying that this is implicit across the full API, and adding text
+explaining it in just one of the functions creates a discrepancy. I can
+add a patch before this to clarify the existing documentation, and change
+the text in this patch as well, to make Sashiko happy.
+
+Does that make sense?
+
+> > > > > > +             if (fwnode_name_eq(prev, "endpoint"))
+> > > > >
+> > > > > [Severity: High]
+> > > > > Does hardcoding this string match break the fwnode graph abstract=
+ion for
+> > > > > non-DeviceTree platforms?
+> > > > >
+> > > > > By strictly matching the "endpoint" prefix, this bypasses the pro=
+vider-specific
+> > > > > fwnode_operations, which could silently ignore valid ACPI and sof=
+tware node
+> > > > > endpoints that don't follow this exact naming scheme. Shouldn't t=
+his rely on
+> > > > > the backend-specific graph_get_next_endpoint operations instead?
+> > > >
+> > > > From drivers/acpi/property.c it seems that ACPI graphs follow the s=
+ame
+> > > > structure. I don't have visibility into ACPI implementations though=
+.
+> > >
+> > > Sashiko might be right. ACPI has device and data nodes, for device no=
+des the
+> > > name will be FourCC, so never longer than 4 characters. For data node=
+s, it
+> > > takes their names, which are arbitrary strings and seems should follo=
+w the given
+> > > schema. You need Sakari Ailus to review this patch.
+> >
+> > OK. Will add Sakari in the next version.
+>
+> Hmm... This is interesting. For any fwnode API changes you should add the
+> respective reviewers. Do you use tools or doing that manually? You should=
+ use
+> tools. I know that `b4` is capable of doing that, but I use a script [1] =
+I
+> wrote a few years ago.
+
+Actually Sakari is already in the list of recipients.
+
+I'm running get_maintainers.pl on all the files I changed, which is not
+the formatted patches, but I don't think that affects the output much.
+It's a bit less automated, but I sometimes trim the recipient list
+slightly as I know they probably won't look at it.
+
+> > > > We also have the following in include/linux/fwnode.h:
+> > > >
+> > > > #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
+> > > > #define SWNODE_GRAPH_ENDPOINT_NAME_FMT          "endpoint@%u"
+> > > >
+> > > > So this should not be a problem.
+> > > >
+> > > > > > +                     break;
+> > > > > > +     } while (prev);
+> > > > > > +
+> > > > > > +     return prev;
+> > > > > > +}
+>
+> [1]: https://github.com/andy-shev/home-bin-tools/blob/master/ge2maintaine=
+r.sh
+
+Thanks for sharing!
+
+
+ChenYu
