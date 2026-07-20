@@ -1,111 +1,148 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52ACE379ED6;
-	Mon, 20 Jul 2026 11:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C13E40B6F9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 12:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784547039; cv=none; b=R+PgwQXuCtid4gTyKC1gD1dZz56hwTS4vR0PVjcBu4Q8bAUjEz4YT8gDHcInreBM6jvPzb6UzumHFozhEdowJy0s0oF5VaDfC5gr89AkUFNBnW4ar83sClqCF1PaU06rI8uYwgxSxJfbijDEVHl2kMm8nSqgTTxRwroTWpuF42M=
+	t=1784549210; cv=none; b=W6GHzcuP2hd1Hq6MkiITTNIY/8sOMk1R1G9KzwJq4thBBUdu2JdJLrBq7aPkljjdCnX/rBnlzRVvTLr6bOmghjeGClgml0gPepbJwOKAzgSG97kLzRSyvS32+aq8F+nZkazhGnPgnXEHRgegmMXpJBw0vLJhzN09IKlP5pv1BpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784547039; c=relaxed/simple;
-	bh=FHiPHG6GMQXKp7yaGIbgNN9Q9g7WtNOkhFqkDZ29cvU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=by+GCmo+Rpfvtf9ekjluLkownMFFmWPMBFoC3lkG64O16EyeHD7Y6GST07+7M/WaVuI902UBkOhUh96eKq7gJtOHmw9iPRVtACudCUszkvFMIoyHDWFF8g2YGRp/y1Q2fFrtPhRZCOxt7KJKOPcpWZLqe3sMLbv/Iy1r7XXFrMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FEYFe7HA; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FEYFe7HA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BE11F00A3A;
-	Mon, 20 Jul 2026 11:30:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784547034;
-	bh=WyW+r9sksJgBpMD36RNeUsaevoVTkZP5hzcwgxCVcTY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FEYFe7HADDb4RfPdoBf7ETujzDEJc+IcdanVnI5HWqCmlDS4ikopPqxjKjT1tMt/r
-	 6J4bVEtTIz5SCof4YUi/sIE22h4bVYYF/oFi3iAKKYJ0gCTy9YP4XOTAgQTOjOLkhX
-	 FWxfA0p9W4xHJJGSOWi+UWExUQPP9RQAJ/uwJw2g1Wq6/xYFPkjfzhYp3w+GyQOXLD
-	 U38jJDNPRzxQ+qi/dqLrGDq872AT2O0K9rXG8Mek33MsOPKLHUxC6jYfn04IXhBuKy
-	 B+mVm2q+8W0JRPtIUKpU2mKhHoCoNQcbX+vu6THWgmLd842/w+2bFNBUQQFLftEf3V
-	 NNUOSprlalXjQ==
-Date: Mon, 20 Jul 2026 13:30:31 +0200
-From: Christian Brauner <brauner@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH 01/21] exec: do not act on a stale execfd request without
- an executable
-Message-ID: <20260720-fanblock-authentisch-typisch-6c69318d3ac5@brauner>
-References: <20260720-work-bpf-binfmt_misc-ptinterp-v1-0-ddb76c9a508e@kernel.org>
- <20260720-work-bpf-binfmt_misc-ptinterp-v1-1-ddb76c9a508e@kernel.org>
- <20260720100022.9212B1F00A3A@smtp.kernel.org>
+	s=arc-20240116; t=1784549210; c=relaxed/simple;
+	bh=W9ysGgeud+PgmmG660NwiP8TFxSwk5U4/dvu7RQNEKg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o3lJ5lR7SuAu7HfBSfAz9naYqx+1IaTNs7UBrfaoP0hScGt9eboUA5owRWnHoLThid8RRMHHPXNIhkybRREfqzjh0pGhumEoao+S7+s+tPBOgGunnPrct8Ri2ieZa1PpcHBP/dAVbGAWlfeYqkPwwPRX59LpEaCAhF3xOxHMl6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h3fPL19bNzYQtpT
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 20:06:14 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id B46EC4056B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 20:06:39 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgB3RKVOD15qZu6WBw--.27241S2;
+	Mon, 20 Jul 2026 20:06:39 +0800 (CST)
+Message-ID: <129fd2d4-ba44-4aff-baff-7a2cf86564ba@huaweicloud.com>
+Date: Mon, 20 Jul 2026 20:06:38 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260720100022.9212B1F00A3A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf v3 2/3] bpf, cgroup: Fix storage not restored when
+ update_effective_progs failed
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260720033055.1215477-1-pulehui@huaweicloud.com>
+ <20260720033055.1215477-3-pulehui@huaweicloud.com>
+ <20260720034110.19AB51F000E9@smtp.kernel.org>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <20260720034110.19AB51F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_Ch0CgB3RKVOD15qZu6WBw--.27241S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxurWUZw4DZF1DAFW7Jw1rtFb_yoW5ZFWUpF
+	n5Zas8G3Wqq395Ar4kt34xuF48Jw48XryYkr98tryrCF42gF9YgryxJayY9Fy3CFnruw1I
+	yryYvF4qk3WUZFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
+	Ja73UjIFyTuYvjxUrNtxDUUUU
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-On Mon, Jul 20, 2026 at 10:00:22AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+
+On 2026/7/20 11:41, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] Uninitialized memory is read when saving `pl->storage` into `old_storage` for newly allocated `bpf_prog_list` entries.
 > 
 > Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but the patch fails to fix it completely. It fails to clear leaked `have_execfd` and `execfd_creds` flags if the fallback format uses an interpreter (e.g., `binfmt_script`), potentially allowing setuid script execution.
+> - [High] If the first program attach to a cgroup fails, `cgrp->bpf.flags[atype]` is not rolled back, leading to a complete bypass of ancestor mandatory security policies.
 > --
 > 
-> --- Patch [1]: [PATCH 01/21] exec: do not act on a stale execfd request without an executable ---
-> commit 9dcfa7daaba6407f79aa884e4fa9f0bc5d755870
-> Author: Christian Brauner <brauner@kernel.org>
+> --- Patch [2]: [PATCH bpf v3 2/3] bpf, cgroup: Fix storage not restored when update_effective_progs failed ---
+> commit 30470afb00630f3ed1a914958997d62e12b1f60a
+> Author: Pu Lehui <pulehui@huawei.com>
 > 
-> exec: do not act on a stale execfd request without an executable
+> bpf, cgroup: Fix storage not restored when update_effective_progs failed
 > 
-> This commit addresses an issue where binfmt_misc leaves bprm->have_execfd
-> and bprm->execfd_creds set when it fails to open an interpreter. It clears
-> these flags in begin_new_exec() if bprm->executable is NULL to prevent a
-> subsequent NULL pointer dereference.
+> In __cgroup_bpf_attach(), if update_effective_progs() fails, pl->storage
+> is not restored to old_storage. This patch saves the old_storage before
+> assigning the new one, and restores it in the error path.
 > 
-> > diff --git a/fs/exec.c b/fs/exec.c
-> > index c698aabe9abd0..2f50aa0398278 100644
-> > --- a/fs/exec.c
-> > +++ b/fs/exec.c
-> > @@ -1112,6 +1112,12 @@ int begin_new_exec(struct linux_binprm * bprm)
-> >  	struct task_struct *me = current;
-> >  	int retval;
-> >  
-> > +	/* A declined execfd request has no executable for a later format. */
-> > +	if (!bprm->executable) {
-> > +		bprm->have_execfd = 0;
-> > +		bprm->execfd_creds = 0;
-> > +	}
+>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>> --- a/kernel/bpf/cgroup.c
+>> +++ b/kernel/bpf/cgroup.c
+> [ ... ]
+>> @@ -883,6 +884,7 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
+>>   	pl->prog = prog;
+>>   	pl->link = link;
+>>   	pl->flags = flags;
+>> +	bpf_cgroup_storages_assign(old_storage, pl->storage);
+> 
+> [Severity: Medium]
+> When __cgroup_bpf_attach() allocates a new bpf_prog_list entry, it does so
+> without zeroing the memory:
+> 
+>          pl = kmalloc_obj(*pl);
+> 
+> Because pl is not zero-initialized, does calling bpf_cgroup_storages_assign()
+> here result in reading uninitialized garbage pointers from pl->storage and
+> copying them into old_storage? This could trigger KMSAN uninit-value warnings
+> when attaching a new program.
+
+will fix in next
+
+> 
+>>   	bpf_cgroup_storages_assign(pl->storage, storage);
+>>   	cgrp->bpf.flags[atype] = saved_flags;
+>>   
+> [ ... ]
+>> @@ -916,6 +918,7 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
+>>   		pl->prog = old_prog;
+>>   		pl->link = NULL;
+>>   	}
+>> +	bpf_cgroup_storages_assign(pl->storage, old_storage);
+>>   	bpf_cgroup_storages_free(new_storage);
+>>   	if (!old_prog) {
+>>   		hlist_del(&pl->node);
+>>   		kfree(pl);
+>>   	}
+>>   	return err;
+>>   }
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this check completely
-> resolve the leaked flags issue?
+> This isn't a bug introduced by this patch, but looking at the error path, if
+> the very first program attach to a cgroup fails (for example, if
+> update_effective_progs() fails), the newly added list entry is deleted and
+> freed here, making the list empty again.
 > 
-> If load_misc_binary() leaks the have_execfd flag and the kernel falls back to
-> binfmt_script, it looks like exec_binprm() might unconditionally consume the
-> leaked flag and set bprm->executable to the script:
+> However, the flags set earlier in the function are not rolled back:
 > 
-> fs/exec.c:exec_binprm() {
->     ...
->     if (unlikely(bprm->have_execfd)) {
->         if (bprm->executable) {
->             fput(exec);
->             return -ENOEXEC;
->         }
->         bprm->executable = exec;
->     } else
->     ...
-> }
+>          cgrp->bpf.flags[atype] = saved_flags;
 > 
-> In the case of a setuid script with a statically linked interpreter (like
-> #!/sbin/busybox.static sh), would this cause begin_new_exec() to see a
-> non-NULL bprm->executable?
+> Could an attacker attempt an attach with BPF_F_ALLOW_MULTI, intentionally
+> force an error (like hitting memory limits in update_effective_progs()), and
+> leave the compromised cgroup with permanently altered BPF flags?
 > 
-> If so, would it bypass this cleanup and compute credentials from the script
-> rather than the interpreter, potentially honoring the setuid bit on the script?
+> If the flags stay stuck, does this allow bypassing mandatory, non-overridable
+> programs from ancestor cgroups during compute_effective_progs()?
+> 
 
-This is the same finding I had basically. It means we need to clear this
-where the flags are set. That needs to be backported to a lot of older
-kernels so we need it right at the beginning of everything that is in
-vfs-7.3.binfmt... I'll send that as a standalone fix in a bit.
+It's hard to make update_effective_progs fail in __cgroup_bpf_attach, 
+but for the sake of code rigor, I will include the storage and flags 
+rollbacks in the original bugfix patch.
+
