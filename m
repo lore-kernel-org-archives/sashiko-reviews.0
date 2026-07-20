@@ -1,201 +1,242 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216303AFD09;
-	Mon, 20 Jul 2026 12:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327844071D2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 12:36:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784550196; cv=none; b=CyH9OOThg4koIZmR0x6wgY+H3itFnykkO2yUH1y0KafNZVo2Oy///pARkivRFn7l8N43GjpoIpxmruEu23uipb7dCn6tv5iEbV2VqdMR4g8hdri+Z+an6a/HPTwFlGVCNsPxnGQRojb+JQSmDEcINvk/t4E81vY5UNQ7TvSGW08=
+	t=1784550984; cv=none; b=nmObHNOL2WpP/JRT5N9pKFWNHmfR0IT60aGUbe19zclPNJ/UFmDyo6sBGuUg9Hv8CSlcRalvThPj7fRU4/DZg4QZjQ7pzzGXM+gXoQ913yYYliP4kHDPmghAMHVQ3hGvQx8xpTVoT6xPLf4XmwClBdixPuEfZhMla9MRYkKegN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784550196; c=relaxed/simple;
-	bh=UMDKl8dJ44BBGkesQ7g/9JyMHf7E7n3PYfq2QkPJpCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hJs+ifxncg2VpHa8Q8aYG01yWrC+/G6jZFZ6zafUjBEj71rGpicXnX5WRfUwnYfLBVmWvT19yWgZ+zlcR0IJPCq/jqBx4KDocGxRPgCNrrVbCHRGKAFH3/bb0YcHi73Vnuo0Z01DZSwcHdIdXU2ODvB/s772anJ3N1xYXnxPFTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CYMD5HYE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	s=arc-20240116; t=1784550984; c=relaxed/simple;
+	bh=w6T1m6LSQH/DF/XHTmFYvyE31D5F+54HvaLnYW5+BVE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B+2tSVUHMGjMejUFr5ps+HQrkKjwZLgRFGoWXRCJen0Cix3arrpd+ezHQHPmbB3NxTvb5s9YBt2GcuWLtZgoboguHHxajUe/7fJOyf3PYAe2TnN7TTDRfVBOem4fY1u42lQWKYFYYCDUypu4nqrI0xj0i5uQrHk11Ss+8GWW3nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fFR1VBHJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hyX256ub; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=pTtsy8sL; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=O8QYjiFk; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CYMD5HYE"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66KAvrOx2078671;
-	Mon, 20 Jul 2026 12:23:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dRyzcsAbdZAS4gQ+StKibkxzxnTst18uUQHOn2WP8lM=; b=CYMD5HYEW10WLUBF
-	FOKRv4zBdwuEGuxDCmqalqboI2K9rwcyPDRlfap4jhGvwlxVv1rf2qqaLAtPMh8B
-	INTAY73GU6HaplDu4mFrxuLz9K0sOrgtWqjU+f68K2VhxhVMrG/YJSZokhNMd4jd
-	yN0TQwUIHto3JKYt4XQa1FHG/3GPaZx7ixEdxgPL1D4pStp1BguLXKhU6FZzhXLT
-	ieA8PeLix5hBrnyY9It+5lI+ob7gS75qoZGpQPMD/y3F3sVHFpURGx0r5XfOkmT5
-	OHQrjgbLm1ZSc9awBAspd/RmiQ+QMfeL51AA1X7sb75Ef7fn3IQ1mr0FrH1FcaDb
-	OPS/DQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhh5y0pq8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jul 2026 12:23:12 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 66KCN7PE024044;
-	Mon, 20 Jul 2026 12:23:07 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4fgj53dp2e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jul 2026 12:23:07 +0000 (GMT)
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66KCN7Hx024037;
-	Mon, 20 Jul 2026 12:23:07 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 66KCN7rJ024034
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jul 2026 12:23:07 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id E03F1B0C; Mon, 20 Jul 2026 17:53:06 +0530 (+0530)
-Date: Mon, 20 Jul 2026 17:53:06 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
-        devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: Add PMIC thermal support for
- Shikra IQ2390S SoM platform
-Message-ID: <20260720122306.sur7quly2u6km526@hu-kotarake-hyd.qualcomm.com>
-References: <20260715-shikra_adc_support-v4-0-5e07b6d21429@oss.qualcomm.com>
- <20260715-shikra_adc_support-v4-4-5e07b6d21429@oss.qualcomm.com>
- <20260715075839.B05821F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fFR1VBHJ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hyX256ub";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="pTtsy8sL";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="O8QYjiFk"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id EC5C23E09;
+	Mon, 20 Jul 2026 12:36:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1784550981; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
+	b=fFR1VBHJmAcu8jGbXAlibPGlPfI7cLx/3FgsEdHg5guy6rydO9dyl+RjcoTTyGoKFHqg4e
+	dNeBZfJ4q2+Yu+haQ2T17nizBw9X5Z6oUG37HwKJWqDoD4yI3jG0awsDizGZKq3mj5PNki
+	Uk3bb2YwB9YW256tBn1uigNwVFPLViI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1784550981;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
+	b=hyX256ubhGpAPeB1jULKvqfQ/q7jtWXlaZ2IxBMFKzXdo1RmzXVHdQlythLgzMbmS8dqpb
+	3g6V7XplZ3NgtPCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1784550979; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
+	b=pTtsy8sL4ovlj3iNTrmc9A1wlOkcnk8Hi668U7diBMT2+rwiknYWHs0CquEfiX+D99rWZZ
+	gkZv9oRmV4oF8Czm7iIywKlooZF8pwEPBkwUH/DwZvRfcc66JkqSLdLPLitfo7Sv0MbBHa
+	EXU1hN1m4/kjScY1OcO7HVNkr73CrL0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1784550979;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=f8pLKE53MsMSJHxP6tUJaXAsP0fNPXLjKYgxqynHKRE=;
+	b=O8QYjiFkJMUEi2PPji9osqkX81ilMzc5mYnwhQqYmLpUFk7lRLB4rPF/6BqZlRHakt982B
+	79it1bDxtBV7k/Bw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C3584779AA;
+	Mon, 20 Jul 2026 12:36:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Ndd2LkMWXmrrXAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 20 Jul 2026 12:36:19 +0000
+Message-ID: <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
+Date: Mon, 20 Jul 2026 14:36:19 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
+ regular atomic helpers
+To: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
+References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
+ <20260716091459.1D8101F000E9@smtp.kernel.org>
+ <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260715075839.B05821F000E9@smtp.kernel.org>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEzOCBTYWx0ZWRfXwDw7oBDZ/1v2
- QKn7IxeTfWQ0X9SoqWwm6CJfQzfEibuutHxDsyJIXdu1n8XZac3BPiFGOlXFFT2uawmK3OyDiVC
- F9rZgW+hNNUeQZ61mBcyHVnnqWoejnk=
-X-Proofpoint-GUID: wqBQSkqeJXnWStq138v3FJcabUoHOQtm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEzOCBTYWx0ZWRfX4NxFeQm/0Au4
- Yt+5rL4GFlQxy8N+pnS+HMZpGiN1H0tht0UmxGzVQ2GjfUT7PVqHJVceZcfaZK05AYbWoEx9MAw
- YK4MztlMBmLiRnevfKa4ivyScXu161LWxMsXG3H8Pyv1L98lojKb17lTP6ekrfhzrLd0UsbvC7p
- JuXkZemsilr0b/+nkiHrFacxNgQ1uQcqFjmIiRQZb9JtalJxJGmOR5j3M2NDstueODATldt2xnz
- sTQQfPb8eHUNcbSvG8ZTvvQ7ukI703MeJUPRKqM6TLdYk5TqL3XY0tQusOZ3mS7Jzh1kMf2LPwK
- 2ve4BZ3Q51HQXp4AT7P8/jehSnzUtyE4ua43ePbikjr2hEzCEinVTq+MRKL92hJsCjVmn4mvfjz
- gQGCu3JtDjLDxvZCgFupELlJ+IHUDVl+Rni6R1hg6RWXflUpZPbAKdqJRMMdu/svKEVNq3NWJFh
- wrGRRHsIEfQUNBPZ7Ng==
-X-Proofpoint-ORIG-GUID: wqBQSkqeJXnWStq138v3FJcabUoHOQtm
-X-Authority-Analysis: v=2.4 cv=f/x4wuyM c=1 sm=1 tr=0 ts=6a5e1330 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=c92rfblmAAAA:8
- a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=e8m7mRO4VQPBql9L6qoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- malwarescore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200138
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:url,bootlin.com:url,suse.de:mid]
+X-Spam-Level: 
+X-Spam-Score: -4.30
 
-On Wed, Jul 15, 2026 at 07:58:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Mismatched PMIC ADC channels and pinctrl configurations for thermistors.
-> --
-> 
-> --- Patch [4]: [PATCH v4 4/4] arm64: dts: qcom: Add PMIC thermal support for Shikra IQ2390S SoM platform ---
-> commit 5e80ce0d3c9c4dc567c3d3d335a508d11f309e50
-> Author: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: Add PMIC thermal support for Shikra IQ2390S SoM platform
-> 
-> This commit adds ADC channels for system thermistors used for thermal
-> mitigation. It includes ADC_TM nodes for PA, quiet, and MSM thermistors,
-> along with corresponding thermal zones.
-> 
-> > diff --git a/arch/arm64/boot/dts/qcom/shikra-iqs-som.dtsi b/arch/arm64/boot/dts/qcom/shikra-iqs-som.dtsi
-> > index 73945bf42112d..9ab0b44b00bed 100644
-> > --- a/arch/arm64/boot/dts/qcom/shikra-iqs-som.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/shikra-iqs-som.dtsi
-> 
-> [ ... ]
-> 
-> > +&pm8150_adc {
-> > +	pinctrl-0 = <&pm8150_adc_gpio2_default>, <&pm8150_adc_gpio3_default>;
-> > +	pinctrl-names = "default";
-> > +
-> 
-> [ ... ]
-> 
-> > +	channel@52 {
-> > +		reg = <ADC5_GPIO1_100K_PU>;
-> > +		label = "gnss_therm";
-> > +		qcom,ratiometric;
-> > +		qcom,hw-settle-time = <200>;
-> > +		qcom,pre-scaling = <1 1>;
-> > +	};
-> > +
-> > +	channel@55 {
-> > +		reg = <ADC5_GPIO4_100K_PU>;
-> > +		label = "pa_therm";
-> > +		qcom,ratiometric;
-> > +		qcom,hw-settle-time = <200>;
-> > +		qcom,pre-scaling = <1 1>;
-> > +	};
-> > +};
-> 
-> [Severity: High]
-> Is there a mismatch between the pinctrl configurations and the ADC channels
-> being used?
-> 
-> The pinctrl-0 property specifies configurations for gpio2 and gpio3, but the
-> ADC channels instruct the hardware to read from ADC5_GPIO1 and ADC5_GPIO4.
-> 
-> Could this result in the gnss_therm and pa_therm thermal zones reading
-> garbage data since they point to unconfigured PMIC GPIOs?
-> 
-> If the unconfigured pins float to a voltage that translates to a temperature
-> above the 125°C trip point, it might cause spurious system shutdowns or
-> unnecessary throttling.
-> 
+Hi
 
-The pinctrl state names (gpio2, gpio3) are symbolic labels only and vary
-between PMICs — they carry no functional meaning to the hardware or
-driver. The ADC channel selection is determined solely by the reg value
-(ADC5_GPIO1_100K_PU, ADC5_GPIO4_100K_PU), which directly encodes the
-AMUX channel the hardware reads from. There is no mismatch — no garbage
-data or spurious shutdowns are expected.
+Am 18.07.26 um 21:12 schrieb Ze Huang:
+[...]
+>>>   
+>>> -	if (event) {
+>>> -		crtc->state->event = NULL;
+>>> +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane *plane,
+>>> +					      struct drm_atomic_commit *commit)
+>>> +{
+>>> +	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(commit, plane);
+>>> +	struct drm_crtc *crtc = plane_state->crtc;
+>>> +	struct drm_crtc_state *crtc_state = NULL;
+>>>   
+>>> -		spin_lock_irq(&crtc->dev->event_lock);
+>>> +	if (crtc)
+>>> +		crtc_state = drm_atomic_get_new_crtc_state(commit, crtc);
+>>>   
+>>> -		if (crtc->state->active && drm_crtc_vblank_get(crtc) == 0)
+>>> -			drm_crtc_arm_vblank_event(crtc, event);
+>>> -		else
+>>> -			drm_crtc_send_vblank_event(crtc, event);
+>>> +	return drm_atomic_helper_check_plane_state(plane_state, crtc_state,
+>> [Severity: High]
+>> Can fetching the CRTC state this way cause a kernel panic in the core atomic
+>> helpers?
+>>
+>> If userspace submits a commit that modifies only plane properties without
+>> affecting the CRTC, the CRTC is not implicitly added to the atomic commit
+>> state.
+>>
+>> In this scenario, drm_atomic_get_new_crtc_state() returns NULL. Passing this
+>> NULL pointer directly to drm_atomic_helper_check_plane_state() causes a crash
+>> when it dereferences crtc_state->enable.
+>>
+>> Could this use drm_atomic_get_crtc_state() instead to ensure the state is
+>> brought into the commit if it is missing?
+> I think it is fine here; I'll just copy the pattern from [1].
+>
+> [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L487
 
-> [ ... ]
-> 
-> >  &pm8150_gpios {
-> > +	pm8150_adc_gpio2_default: pm8150-adc-gpio2-state {
-> > +		pins = "gpio2";
-> > +		function = PMIC_GPIO_FUNC_NORMAL;
-> > +		bias-high-impedance;
-> > +	};
-> > +
-> > +	pm8150_adc_gpio3_default: pm8150-adc-gpio3-state {
-> > +		pins = "gpio3";
-> > +		function = PMIC_GPIO_FUNC_NORMAL;
-> > +		bias-high-impedance;
-> > +	};
-> > +
-> 
-> [Severity: High]
-> Because these configurations explicitly target gpio2 and gpio3 instead of the
-> pins actually used by the ADC, does forcing them into high-impedance mode
-> risk breaking or interfering with whatever hardware is actually connected
-> to them?
-> 
+It could be that there's a long standing problem in the overall logic. 
+Not having a CRTC (and hence crtc_state) should also mean !fb, so we'd 
+return at [1]. If we have a CRTC on the plane but pass a crtc_state of 
+NULL, we could get a panic at [2], where it does crtc_state->crtc.  I'm 
+not aware of any bug reports about this problem, but it's still an issue.
 
-The pinctrl state names are symbolic labels only and vary between PMICs
-— the ADC channel is determined solely by the reg value
-(ADC5_GPIO3_100K_PU, ADC5_GPIO4_100K_PU). No mismatch here.
+A number of drivers get this wrong by using 
+drm_atomic_helper_get_new_crtc_state(). The bot suggests to use 
+drm_atomic_helper_get_crtc_state() instead.  This helper also returns 
+the new state. But  if there's no new state, it duplicates the CRTC's 
+existing state. That's a bit of an overhead, but probably not an issue.  
+Several drivers use this helper, but also get it wrong. They tend to 
+return early in the case of !crtc or !fb without calling 
+_check_plane_state(). See [3] and [4] for examples.
 
-regards
-Rakesh Kota
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260715-shikra_adc_support-v4-0-5e07b6d21429@oss.qualcomm.com?part=4
+I think, going with the bot's suggestion to use 
+drm_atomic_helper_get_crtc_state() might be the best resolution for now. 
+It still needs a crtc pointer, so the pattern is
+
+crtc_state = NULL
+if (plane_state->crtc)
+     crtc_state = drm_atomic_helper_get_crtc_state(plane_state->crtc)
+
+_check_plane_state(plane_state, crtc_state);
+
+And in this case, _check_plane_state() should work correctly. But you 
+can only use _get_crtc_state() in the atomic_check helpers! In the 
+atomic_update, atomic_enable, etc helpers, it's too late for the helper 
+to copy the CRTC state.
+
+I think some other DRM dev should look over this as well. It's one of 
+the trickier things in DRM to get right.
+
+Best regards
+Thomas
+
+
+[1] 
+https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atomic_helper.c#L912
+[2] 
+https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atomic_helper.c#L907
+
+[3] 
+https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/mediatek/mtk_plane.c#L230
+[4] 
+https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/tidss/tidss_plane.c#L31
+
+
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+
+
