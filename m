@@ -1,237 +1,190 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B48386564
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 15:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD81E433BC7;
+	Mon, 20 Jul 2026 15:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784562179; cv=none; b=kKLn73eGjwDDQqdGMsAqkNfNVci7lgI3vZ1ORLJtEybWP0ilR4SAYvb9zkHd3jZmR2DO6NBBjp7CltcbN9j7tnPrn+L2XE9gg5zm0LnRyYIG1yOIjcDMCvJdeDpt/SjPzVg7U2xrq3RUMoy3snatQQCEz1eVJd+1WLFpqOhJOkQ=
+	t=1784562241; cv=none; b=nXzB/3MZIiZfEGc6yYdbBiZCziCRdGqiywuqkhAWZcb5j18LBv+SHYjeC0HCL6iXlJkWq1zTJM1uwJ4M05lVXtkHfJF8SiT0+JXqxkauvGf12SJmNruUvjNNGuvJyE9fDQKwoxg+3So2BW/aGeuodRssqd/rDdRgJGMD2D/F8zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784562179; c=relaxed/simple;
-	bh=bqptOEYTnMG0xH43KU83uKF6vN1s61/Q/KAVwC65HWo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BOK6mDOBGMM3A4ymRBt6SN/6aD9LIYdBdZQL+PsXu8Km4jGaXHDcOx3UUgs0/wRC90eJGwGgpM7B79nuwcLcbd15PvIqpT9LzAdeb7MRQsFM+5Bc8vlJWJcNWNOPea39t/DEruLchKBqyfSGV1MIGpBke+zdwV533jiiPYleuCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=jR/HLDHM; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1784562241; c=relaxed/simple;
+	bh=WzvxSrR5VMyqJmt/8nBLstBEGMEetpdW7AXnsVD2eGU=;
+	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=ik2Prxh435OyVKffHjWZol3OfrJNiyQHahKLtRqskrJV1rYkJnLvoyboknwMHJVIRpDynDq04QtR4NhsqHcltaKBPrfpylEL/LxzovOtSK8U+OxPhJhA8G/vc2d2FW7S47xheuVuTWGRo7yoZuTffM3PO1S9f5vF4Uderfhvslc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAMBC12/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="jR/HLDHM"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 66C311A10FA;
-	Mon, 20 Jul 2026 15:42:54 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 2A70E60360;
-	Mon, 20 Jul 2026 15:42:54 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5A2DA11BD3002;
-	Mon, 20 Jul 2026 17:42:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1784562173; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=p/tRl3um/s+K+6CX2a/QC8jrdiXLGaEGuLPuQIf0C3I=;
-	b=jR/HLDHMjkI533cP8Ol7T0gp+dw2K75CNSHBhozkPhrPu9pbYEN91lE6hSXDa8L0Ph64lF
-	+ZSpkxZbfVn5q5Ldz1e+K2z4yHB9yXgTzb8SdZqcvBw/9uffI6u7VcDAzMHniC+sO9fn+Z
-	PKmPfskxihBufegCxsRqB03H6uLmADZHUO7os3JKMNPKuh9i9fgwX3O+F/YA398VV7NnCG
-	PXZUzqGCdfc9OmNR8UuPgKCCESvRT1iVJcfBhUoBZtkf1JmefnPZlIKr86tYJhZaQAODUT
-	QGLo0LmWUgLrq2EXRXAsP9efohdWS/7q+K1U8/A72UzRcGY0SyCip9bxV2RAWw==
-Date: Mon, 20 Jul 2026 17:42:51 +0200
-From: Herve Codina <herve.codina@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, wsa+renesas@sang-engineering.com,
- devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH v3 2/4] clocksource/drivers: Add support for the Renesas
- RZ/N1 timers
-Message-ID: <20260720174251.4b312f71@bootlin.com>
-In-Reply-To: <20260717100827.592531F000E9@smtp.kernel.org>
-References: <20260717095552.767475-1-herve.codina@bootlin.com>
-	<20260717095552.767475-3-herve.codina@bootlin.com>
-	<20260717100827.592531F000E9@smtp.kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAMBC12/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C2D1F000E9;
+	Mon, 20 Jul 2026 15:43:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784562239;
+	bh=z2T1XYQAelyZQ857mgYb+cRFuIeeGuSjk7385V7fQo4=;
+	h=Subject:To:Cc:From:Date;
+	b=JAMBC12/mjq2uILEaAEyNHgbenevUVIlz7h5TWsUp7udeq3okNtbT9/8FoJb6uJlV
+	 ux7Pbcxe9XCMnY4WBKUassvzn+NAgwyJnuO3O+ItTJAPKXC8qEkVLFvQKpV7c5LbMB
+	 7Aa/Ky1dpZzGtqGxSV56esus+A55BB8T7mNJYUiw=
+Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 6.18-stable tree
+To: gregkh@linuxfoundation.org,mkl@pengutronix.de,sashiko-reviews@lists.linux.dev,socketcan@hartkopp.net,stable@kernel.org
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Mon, 20 Jul 2026 17:31:00 +0200
+Message-ID: <2026072000-dupe-posing-89a6@gregkh>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+X-stable: commit
+X-Patchwork-Hint: ignore 
 
-Hi,
 
-On Fri, 17 Jul 2026 10:08:26 +0000
-sashiko-bot@kernel.org wrote:
+This is a note to let you know that I've just added the patch titled
 
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] Off-by-one error in CPU bounds check allows out-of-bounds array access in the hotplug callback.
-> - [High] A 16-bit high-frequency clocksource is incorrectly flagged with CLOCK_SOURCE_SUSPEND_NONSTOP, breaking system suspend timekeeping.
-> - [High] Probe incorrectly returns a positive IRQ number on devm_request_irq failure.
-> - [High] Missing teardown callback in cpuhp_setup_state causes a Use-After-Free of clockevent devices.
-> - [Medium] Down-counting timer values are potentially returned directly, breaking the requirement for monotonic increasing counters.
-> - [Medium] Failing CPU bringup by returning an error from a CPU hotplug starting callback.
-> --
-> 
-> --- Patch [2]: [PATCH v3 2/4] clocksource/drivers: Add support for the Renesas RZ/N1 timers ---
-> commit 67eeb3e62e1eb246f2738740b9b5319a484b8d50
-> Author: Herve Codina (Schneider Electric) <herve.codina@bootlin.com>
-> 
-> clocksource/drivers: Add support for the Renesas RZ/N1 timers
-> 
-> The Renesas RZ/N1 timer block controller is the controller in charge of
-> timers available in the Renesas RZ/N1 SoCs family. This controller handles
-> 8 timers: 6 16-bit timers and 2 32-bit timers.
-> 
-> > diff --git a/drivers/clocksource/timer-rzn1.c b/drivers/clocksource/timer-rzn1.c
-> > new file mode 100644
-> > index 0000000000000..024f01bb0227b
-> > --- /dev/null
-> > +++ b/drivers/clocksource/timer-rzn1.c  
-> 
-> [ ... ]
-> 
-> > +static u64 notrace rzn1_sched_read(void)
-> > +{
-> > +	return readl_relaxed(rzn1_sched_clock->base + RZN1_TIMER_CURRENT_COUNT_REG);
-> > +}
-> > +
-> > +static u64 rzn1_clksrc_read(struct clocksource *cs)
-> > +{
-> > +	return readl_relaxed(rzn1_sched_clock->base + RZN1_TIMER_CURRENT_COUNT_REG);
-> > +}  
-> 
-> [Severity: Medium]
-> Since RZN1_TIMER_LOAD_COUNT_REG is used earlier to set the timer period,
-> does this hardware act as a down-counter?
-> 
-> If the hardware counts downward, will returning the raw value here break the
-> timekeeping requirement for monotonically increasing values?
+    can: bcm: add missing rcu list annotations and operations
 
-The timer counter is an incrementing counter.
-It is compared to the LOAD_COUNT register value to trig an interrupt. 
+to the 6.18-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
-> 
-> > +static struct clocksource rzn1_clocksource = {
-> > +	.name = "rzn1_timer_clocksource",
-> > +	.rating = 200,
-> > +	.flags = CLOCK_SOURCE_IS_CONTINUOUS | CLOCK_SOURCE_SUSPEND_NONSTOP,  
-> 
-> [Severity: High]
-> Is it safe to flag a 16-bit clocksource with CLOCK_SOURCE_SUSPEND_NONSTOP?
-> 
-> Since a 16-bit counter fed by a high-frequency clock will wrap around very
-> quickly, will this cause massive wall time jumps if the system suspends for
-> longer than the wrap interval?
+The filename of the patch is:
+     can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+and it can be found in the queue-6.18 subdirectory.
 
-This flag shouldn't be present. Will be removed in the next iteration.
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
 
-> 
-> > +	.read = rzn1_clksrc_read,
-> > +};
-> > +
-> > +/* Timers table where 32-bit timers will be assigned per-cpu */
-> > +static struct rzn1_timer *rzn1_tab_timers;
-> > +
-> > +static int rzn1_local_timer_starting_cpu(unsigned int cpu)
-> > +{
-> > +	struct rzn1_timer *timer;
-> > +
-> > +	if (cpu > RZN1_TIMER_NB_32BIT_TIMERS)
-> > +		return -EINVAL;  
-> 
-> [Severity: Medium]
-> Will returning an error like -EINVAL completely abort the hotplug process
-> for any CPU beyond the first two?
-> 
-> Should this return 0 instead, allowing additional CPUs to still boot online
-> and rely on a global broadcast timer?
 
-Indeed, returning 0 is better even if we should reach this case on RZ/N1 SoCs.
-Will update in the next iteration.
+From 7b2c3eabc4dafc062a25e10711154f2107526a78 Mon Sep 17 00:00:00 2001
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+Date: Tue, 14 Jul 2026 18:55:27 +0200
+Subject: can: bcm: add missing rcu list annotations and operations
 
-> 
-> [Severity: High]
-> Also, does the greater-than condition here have an off-by-one error?
-> 
-> If RZN1_TIMER_NB_32BIT_TIMERS is 2, a cpu value of 2 bypasses this check.
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-Will update in the next iteration.
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
 
-> 
-> > +
-> > +	timer = &rzn1_tab_timers[cpu + RZN1_TIMER_BASE_INDEX_32BIT_TIMERS];  
-> 
-> [Severity: High]
-> If a cpu value of 2 bypassed the check above, will this access out of bounds?
-> 
-> The array is only sized for 8 elements total. Adding a cpu value of 2 to
-> RZN1_TIMER_BASE_INDEX_32BIT_TIMERS (which is 6) computes an index of 8.
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-The cpu value check against RZN1_TIMER_NB_32BIT_TIMERS will be update in the
-next iteration. This possible out of bound access will not exist anymore.
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
 
-> 
-> [ ... ]
-> 
-> > +static int rzn1_timer_setup_timers(struct platform_device *pdev,
-> > +				   struct rzn1_timer *tab_timers,
-> > +				   unsigned int first_timer_index,
-> > +				   unsigned int last_timer_index,
-> > +				   void __iomem *base, unsigned long clock_rate)
-> > +{  
-> 
-> [ ... ]
-> 
-> > +		ret = devm_request_irq(dev, timer->ced.irq, rzn1_timer_interrupt,
-> > +				       IRQF_TIMER, timer->ced.name, timer);
-> > +		if (ret < 0)
-> > +			return dev_err_probe(dev, irq, "timer%u: Failed to request IRQ\n", i);  
-> 
-> [Severity: High]
-> Will calling dev_err_probe() with irq return the positive IRQ number back to
-> the caller instead of the negative ret code?
-> 
-> If the driver probe returns a positive integer, won't the driver core assume
-> the probe succeeded despite the failure?
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
 
-Indeed, will be update in the next iteration.
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-> 
-> [ ... ]
-> 
-> > +static int rzn1_timer_probe_first(struct platform_device *pdev,
-> > +				  struct rzn1_timer *tab_timers,
-> > +				  void __iomem *base, unsigned long clock_rate)
-> > +{  
-> 
-> [ ... ]
-> 
-> > +	/*
-> > +	 * Second step, almost all operations that can fail have been called.
-> > +	 * Timers are ready to work. Start with the last operation that can fail,
-> > +	 * installing and invoking hotplug callbacks
-> > +	 */
-> > +	rzn1_tab_timers = tab_timers;
-> > +	ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN,
-> > +				"clockevents/rzn1/global_timer:starting",
-> > +				rzn1_local_timer_starting_cpu, NULL);  
-> 
-> [Severity: High]
-> Does passing a NULL teardown callback here leave registered clockevent
-> devices dangling if a subsequent step fails during probe?
-> 
-> If the driver fails and frees its timer structures via devres, or if a CPU
-> is dynamically offlined later, will this lack of teardown cause a
-> use-after-free in the clockevents core?
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -260,7 +260,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
+ 
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -946,6 +946,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1087,8 +1088,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1110,6 +1110,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
+ 
+@@ -1250,9 +1254,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1331,10 +1332,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1664,8 +1667,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1696,8 +1701,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
 
-The probe cannot fail after the call to cpuhp_setup_state(). This has been taken
-into account. The only case to handle is offlining a CPU (which I am not sure
-it could happen in embedded system using a RZ/N1 SoC).
 
-Anyway, will add the teardown function and:
-  - Adapt the probe to set IRQ_NOAUTOEN flag on interrupt related to timers
-    handled by hotplug.
-  - Enable irq hotplug startup function.
-  - Disable irq in teardown function.
+Patches currently in stable-queue which might be from socketcan@hartkopp.net are
 
-Best regards,
-Hervé
+queue-6.18/can-bcm-defer-rx_op-deallocation-to-workqueue-to-fix-thrtimer-uaf.patch
+queue-6.18/can-isotp-serialize-tx-state-transitions-under-so-rx_lock.patch
+queue-6.18/can-isotp-fix-use-after-free-race-with-concurrent-netdev_unregister.patch
+queue-6.18/alsa-hda-fix-kconfig-dependency-of-hd-audio-pci.patch
+queue-6.18/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
+queue-6.18/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
+queue-6.18/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
