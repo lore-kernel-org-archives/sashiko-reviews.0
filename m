@@ -1,244 +1,148 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from va-2-53.ptr.blmpb.com (va-2-53.ptr.blmpb.com [209.127.231.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FE742640E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:38:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F15B1DDA18
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784558311; cv=none; b=NBoOgebSabTviAEI0VTRwGm9O1D8P9Ph1i0NWUdLX6E5mOY0qL32YYQP1WOdBvaRoaw9GyTBAUPuyCTjc1tWhXcn7ASRDC5XnWTTfhwkU1d3H9XKh6X1BRN27UbqaUuCc7i5QRcfVxN5KkLzBxIZHrXWh+Rtnarkf7obfSiiIl8=
+	t=1784558328; cv=none; b=j9y7PNsAC+JI81vbxGJr9kY5oooqJFkeW406YBCwlU6/HRcZGp2KksvXmYlUwR0ciQVm4iWe/HuWeukbriLAK3u452+uKNNk+RKlhAbLKJXtT560gGB1ufSUBJib0SFwuaiM/B2zpgfIF30SDy6A7I2U+tNE/oFHlZXj6eUz+1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784558311; c=relaxed/simple;
-	bh=n7O8f3S6Cnzx1DNjtsRdcdGb9/JLYIhLgnZZlL5zNiQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JPL56Qdw/34mzmrLwo1lYsRnbxkary8a8KteS85HYpbNJ0u/ihTQcW1+n1iJVknjqG25YW1yESp7SZKf4YbzxlFTTX2TEYd6BbmhL1UISihPQNs8FRw3BSySnmj+1dH2mb/jxB8Tpxlxf8sWw5FYkGpbafiVkM1IqGeg1AzIy7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ZfLkGEyw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hObceBdX; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ZfLkGEyw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hObceBdX; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1784558328; c=relaxed/simple;
+	bh=8sN/gASbE2UtPKXKz5J4QgZgJuO3ftn0phVSlHOl8Nc=;
+	h=To:Cc:In-Reply-To:From:Date:Message-Id:Mime-Version:References:
+	 Subject:Content-Type; b=I6yegzqfsG90JHWO+41aVaXthOmcMWu5qHhsroVxIQXzSpKHIQbkookpycG7guhbqRCuWeDioA8Tcp8b5OcUvyzel4AhQIZ1rR1qAwLoOwYbkNibb59DqyKunWcbmeq3CYYX2acUOPycMMYJnOSTMwZe02rD7iV7hLYKIANMIMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=V7szyncS; arc=none smtp.client-ip=209.127.231.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ZfLkGEyw";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hObceBdX";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ZfLkGEyw";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hObceBdX"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 313B179FDA;
-	Mon, 20 Jul 2026 14:38:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784558307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Bt3+PoEJX3fHBQCDGcRsQBo0tTv+9Oajtm9xIzjy8wM=;
-	b=ZfLkGEywmMRWX/G/+/iAfswkgjrvARXI4jVXMfvN2+5JHa4AMhaPCRhhqbFSwaANepsYXM
-	RFExNWiwnbRNMJq1Lr7g36FJVJZMXQzTOX4mqKfXnsv4Kn59tDvWSXmc/nJ0LW52+DIxxr
-	He/qLJ0gIB8jMlO05dX+FpzLq+eVUeE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784558307;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Bt3+PoEJX3fHBQCDGcRsQBo0tTv+9Oajtm9xIzjy8wM=;
-	b=hObceBdXKj9Dit4x5HbKVLRCMdLNezObAp6XAIat6Wv0HkFA7Izu2UTrg6ntFlxE9j6Y5H
-	SxwQg7OPpvXYqdCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784558307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Bt3+PoEJX3fHBQCDGcRsQBo0tTv+9Oajtm9xIzjy8wM=;
-	b=ZfLkGEywmMRWX/G/+/iAfswkgjrvARXI4jVXMfvN2+5JHa4AMhaPCRhhqbFSwaANepsYXM
-	RFExNWiwnbRNMJq1Lr7g36FJVJZMXQzTOX4mqKfXnsv4Kn59tDvWSXmc/nJ0LW52+DIxxr
-	He/qLJ0gIB8jMlO05dX+FpzLq+eVUeE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784558307;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Bt3+PoEJX3fHBQCDGcRsQBo0tTv+9Oajtm9xIzjy8wM=;
-	b=hObceBdXKj9Dit4x5HbKVLRCMdLNezObAp6XAIat6Wv0HkFA7Izu2UTrg6ntFlxE9j6Y5H
-	SxwQg7OPpvXYqdCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 03E80779AA;
-	Mon, 20 Jul 2026 14:38:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id bltEO+IyXmpXVwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 20 Jul 2026 14:38:26 +0000
-Message-ID: <3749a60a-a8bb-45a0-a06e-a21017990c10@suse.de>
-Date: Mon, 20 Jul 2026 16:38:26 +0200
+	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="V7szyncS"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1784558320;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=0uGC4WzXOhklcTOliQe6F0uluMokozPayluXadM4UA4=;
+ b=V7szyncS4faQUPH8bz121PBdWND6NZyL/hjo/SCFh/blZmFFhBa/7AgPesakhB4Hx/cGt6
+ z571NR3HH/Hpg8TChHOsyoMg8XpBHpc5MHJX2f5f8PanRId3XEjkpCl5A6u6HRVEgACAG8
+ cHOwg5wDBW3ZHQ6pcIOUSZ4E5FxGnmh6xnFDTpWu5asfeQnB2uSZ5OZSgN2pZPMJ9XsV3d
+ /552LOBTlbCT/BYERR0ujuu20kunqQ0seedODP2VOyRtJzPhtDQbIjNGfvdVtsoRgmd972
+ 39dSrWpzS5vGwC5lUM/40yP+LzGtzKNl1gOg2+xQQs56HPWX35zsdojf/QO53g==
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
+In-Reply-To: <20260720113553.9353D1F000E9@smtp.kernel.org>
+X-Lms-Return-Path: <lba+26a5e32ef+a42bd3+lists.linux.dev+colyli@fygo.io>
+X-Original-From: Coly Li <colyli@fygo.io>
+From: "Coly Li" <colyli@fygo.io>
+Date: Mon, 20 Jul 2026 22:38:26 +0800
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <00B41B17-0B11-4999-8FA8-4E0B33E53B3C@fygo.io>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-To: Maxime Ripard <mripard@redhat.com>
-Cc: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev,
- dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
- <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
- <20260720-bold-jasmine-goldfish-d979e5@penduick>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260720-bold-jasmine-goldfish-d979e5@penduick>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.com:url]
-X-Spam-Level: 
-X-Spam-Score: -4.30
+Mime-Version: 1.0
+References: <20260720111400.2120834-1-colyli@fygo.io> <20260720113553.9353D1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH] md: do overflow check for sb->bblog_shift in super_1_load()
+Content-Type: text/plain; charset=UTF-8
+Received: from smtpclient.apple ([120.245.64.95]) by smtp.larksuite.com with ESMTPS; Mon, 20 Jul 2026 14:38:39 +0000
 
-Hi
-
-Am 20.07.26 um 16:08 schrieb Maxime Ripard:
-> On Mon, Jul 20, 2026 at 02:36:19PM +0200, Thomas Zimmermann wrote:
->> Hi
->>
->> Am 18.07.26 um 21:12 schrieb Ze Huang:
->> [...]
->>>>> -	if (event) {
->>>>> -		crtc->state->event = NULL;
->>>>> +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane *plane,
->>>>> +					      struct drm_atomic_commit *commit)
->>>>> +{
->>>>> +	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(commit, plane);
->>>>> +	struct drm_crtc *crtc = plane_state->crtc;
->>>>> +	struct drm_crtc_state *crtc_state = NULL;
->>>>> -		spin_lock_irq(&crtc->dev->event_lock);
->>>>> +	if (crtc)
->>>>> +		crtc_state = drm_atomic_get_new_crtc_state(commit, crtc);
->>>>> -		if (crtc->state->active && drm_crtc_vblank_get(crtc) == 0)
->>>>> -			drm_crtc_arm_vblank_event(crtc, event);
->>>>> -		else
->>>>> -			drm_crtc_send_vblank_event(crtc, event);
->>>>> +	return drm_atomic_helper_check_plane_state(plane_state, crtc_state,
->>>> [Severity: High]
->>>> Can fetching the CRTC state this way cause a kernel panic in the core atomic
->>>> helpers?
->>>>
->>>> If userspace submits a commit that modifies only plane properties without
->>>> affecting the CRTC, the CRTC is not implicitly added to the atomic commit
->>>> state.
->>>>
->>>> In this scenario, drm_atomic_get_new_crtc_state() returns NULL. Passing this
->>>> NULL pointer directly to drm_atomic_helper_check_plane_state() causes a crash
->>>> when it dereferences crtc_state->enable.
->>>>
->>>> Could this use drm_atomic_get_crtc_state() instead to ensure the state is
->>>> brought into the commit if it is missing?
->>> I think it is fine here; I'll just copy the pattern from [1].
->>>
->>> [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L487
->> It could be that there's a long standing problem in the overall logic. Not
->> having a CRTC (and hence crtc_state) should also mean !fb, so we'd return at
->> [1]. If we have a CRTC on the plane but pass a crtc_state of NULL, we could
->> get a panic at [2], where it does crtc_state->crtc.  I'm not aware of any
->> bug reports about this problem, but it's still an issue.
->>
->> A number of drivers get this wrong by using
->> drm_atomic_helper_get_new_crtc_state(). The bot suggests to use
->> drm_atomic_helper_get_crtc_state() instead.  This helper also returns the
->> new state. But  if there's no new state, it duplicates the CRTC's existing
->> state. That's a bit of an overhead, but probably not an issue.  Several
->> drivers use this helper, but also get it wrong. They tend to return early in
->> the case of !crtc or !fb without calling _check_plane_state(). See [3] and
->> [4] for examples.
->>
->> I think, going with the bot's suggestion to use
->> drm_atomic_helper_get_crtc_state() might be the best resolution for now. It
->> still needs a crtc pointer, so the pattern is
->>
->> crtc_state = NULL
->> if (plane_state->crtc)
->>      crtc_state = drm_atomic_helper_get_crtc_state(plane_state->crtc)
->>
->> _check_plane_state(plane_state, crtc_state);
->>
->> And in this case, _check_plane_state() should work correctly. But you can
->> only use _get_crtc_state() in the atomic_check helpers! In the
->> atomic_update, atomic_enable, etc helpers, it's too late for the helper to
->> copy the CRTC state.
->>
->> I think some other DRM dev should look over this as well. It's one of the
->> trickier things in DRM to get right.
-> drm_atomic_helper_get_crtc_state is safe in atomic_check. It's
-> everything after that must use either get_new_crtc_state or
-> get_old_crtc_state, as the global state cannot be modified anymore.
-
-Thanks a lot for confirming.
-
-Wrt. the logic in plane atomic_check, we might have to fix a number of 
-drivers. As I outlined above, some use _get_new_crtc_state(), some use 
-_get_crtc_state() incorrectly. But that's for another series.
-
-Best regards
-Thomas
-
->
-> Maxime
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 19:35=EF=BC=8Csashiko-bot@kernel.org =
+=E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>=20
+> Pre-existing issues:
+> - [High] The newly added bounds check for `sb->bblog_shift` incorrectly a=
+llows values up to 63, failing to prevent 32-bit integer overflows and unde=
+fined behavior which can lead to a divide-by-zero kernel panic.
+> --
+>=20
+> --- Patch [1]: [PATCH] md: do overflow check for sb->bblog_shift in super=
+_1_load() ---
+> commit 36f9915dbd10f1c3803610b32e46390e9cb7ec7c
+> Author: Coly Li <colyli@fygo.io>
+>=20
+> md: do overflow check for sb->bblog_shift in super_1_load()
+>=20
+> This commit adds a bounds check for sb->bblog_shift in super_1_load() to
+> prevent possible overflows in the badblocks API. It limits the shift valu=
+e
+> to be less than BITS_PER_TYPE(sector_t).
+>=20
+>> diff --git a/drivers/md/md.c b/drivers/md/md.c
+>> index d1465bcd86c81..67f8edf4db368 100644
+>> --- a/drivers/md/md.c
+>> +++ b/drivers/md/md.c
+>> @@ -1920,6 +1920,13 @@ static int super_1_load(struct md_rdev *rdev, str=
+uct md_rdev *refdev, int minor_
+>>  rdev->bb_page, REQ_OP_READ, true))
+>> return -EIO;
+>> bbp =3D (__le64 *)page_address(rdev->bb_page);
+>> +
+>> + /* check for badblocks api. */
+>> + if (sb->bblog_shift >=3D BITS_PER_TYPE(sector_t)) {
+>                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> [Severity: High]
+> This is a pre-existing issue, but does this bounds check still allow valu=
+es
+> that can cause undefined behavior and integer overflows?
+>=20
+> Since BITS_PER_TYPE(sector_t) is 64, this allows sb->bblog_shift to be up
+> to 63.
+>=20
+> However, count is declared as a 32-bit signed int in super_1_load(), so t=
+he
+> following operation:
+>=20
+>    count <<=3D sb->bblog_shift;
+>=20
+> will cause undefined behavior if the shift is >=3D 31.
+>=20
+> Additionally, downstream in block/badblocks.c (such as in badblocks_check=
+()
+> and _badblocks_set()), the shift is used with a 32-bit literal:
+>=20
+>    rounddown(s, 1 << bb->shift);
+>=20
+> If sb->bblog_shift is >=3D 32, this can result in undefined behavior and
+> yield 0, leading to a divide-by-zero panic in the rounddown() macro durin=
+g
+> array IO.
+>=20
+> Should the maximum shift be restricted to a smaller value?
 
 
+With an overflow check patch from Ramesh Adhikari <adhikari.resume@gmail.co=
+m>,=20
+only checking sb->bblog_shift >=3D BITS_PER_TYPE(sector_t) is enough. The r=
+ested overflow
+check will be performed inside badblocks API.
+
+And if variables are overflowed before calling badblocks API, this is not t=
+he badblocks API
+issue, should not belong to the badblocks API check fixes.
+
+Also I don=E2=80=99t feel it is necessary to do restricted overflow checkin=
+g in super block loading stage,
+if the invalid values are rejected, this super block will fail to load and =
+won=E2=80=99t introduce any run time
+problem.
+
+Therefore, current checking with (sb->bblog_shift >=3D BITS_PER_TYPE(sector=
+_t) is sufficient.
+
+
+>=20
+>> + pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
+>> + rdev->bdev, sb->bblog_shift);
+>> + return -EINVAL;
+>> + }
+>> rdev->badblocks.shift =3D sb->bblog_shift;
+>> for (i =3D 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+>> u64 bb =3D le64_to_cpu(*bbp);
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720111400.21=
+20834-1-colyli@fygo.io?part=3D1
