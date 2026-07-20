@@ -1,246 +1,131 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3E0439908
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 17:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6BC44683B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 17:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784567748; cv=none; b=pVooVDLwHQnVs9BECpwJf7iZdcj/wZAnvcls3AjRgoO1+K9ZwUmXJeg0aNGnYPxbqyCrULLXJvALQyl4P/UvE2aE8dGMd/dvOr6qeymFRy/69dywdni3iUIs9pBigL3+3AZouLHm3z+hb5TTSxEgHZzLFwXr/PxXdGHNNyd5fns=
+	t=1784568709; cv=none; b=fZxuWE1PlDjL2MFNMM5YZ0g/YIB1RzO1Qw9OSpO1D5BSa++g7rdR9z+/5MxM9Jp+m3zoZ8LkObkXhZ6F5Ek24LUACQEysEWB/i/1tc8TbA/WkCEcgDu8KUqB1kd/sFSAxvaTm/hYgz/CsMTP7rIaOH/I09X5/rYos6UVAzLVty0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784567748; c=relaxed/simple;
-	bh=64a4DlTYawvxG91ejYkDajPG8YP3qyD1+Oc+1khMMCs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJzC9hHJQb8bGVrfWnGuhROr3lqkt9Iykt1s9u2jrUnnSVwHte8RNKmVoKxAYxu9xVciqidro85KYL9SBuNo8zS9CZA1qV32rlyzSbyYXGmJyJx3y6CJu6l1UvdxyV6J8l7KDX1VQjMpZOkWFWto8OkHx2HGdTQp3qkW6mBHi70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZN/ZvXk; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784568709; c=relaxed/simple;
+	bh=qw4JPuFzFFBPT4iH1s9YU2BZkhtjNYvO5TG+CT6T0gA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fJbpNkYSm7Y12rkNACs08uGOYnn4pM6gCSnFbPWpYrC3Qsq3MQSspoVQX/LWXJcP9wieFnHon+jfafddcajsYKblHOUXWwKCAHxayXW2wMY2xQ2JDIi3XU47bAvmZbwP7xyUQmqdyQYAQhmZCDoidzIUe3U/g6PV7B6EnVnWzlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=X118h2pF; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZN/ZvXk"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47de0093c42so5671997f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 10:15:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="X118h2pF"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cacef7d299so387945ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 10:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784567741; x=1785172541; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=k1cSOK1WPe3ELJQklD1aQ2qR0lnoMm7ijOjPxD/9WX8=;
-        b=SZN/ZvXkRPSBEbHlN3OXRUfAqttRx1x9uoOZweHdTRYx5B16z6iYcphhEXtBhM5kB5
-         SxAvv2ltGWQ8uFOTaQ52xPPilmau1K+24AQJFVeAmdUswUANJuqXDLSMPTd0VUhqD4r6
-         66HbXiyPwDheWly6TrkHx8mcWFLirudg8PSkjYmHtcOt8PfQ3HsMt9acIEIGp1r63LUT
-         1eIgEJhndE8/xxUDDgBJktpam+FzZP4VutmZcoQtiqp/a6kYwshbRxwr0dhh81Ifuw/i
-         pNuU2yATZNL/+k3Qc76/bgBgf5D7ND2YrAiKH07AUFTX3HcmyKmHYJlJaRfaDz6ybY80
-         JUZw==
+        d=google.com; s=20251104; t=1784568699; x=1785173499; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=354gFNaVuvmOpRh2GIKgIn4uIuwVXTK+d7q38SvtQbc=;
+        b=X118h2pFd8KJFw+C/7hWOxSFC9xtDLu/EWjUVThN5srI+r5yPdrdNNFDgKdNYj/OlN
+         6FlamKTV5Kguep5On392Sfazq4RTWKhmboSgOZRglnSx5bNAzf9LUJobK5lLgJb6XIg4
+         LlDmbpGCucR7xzN5FeFMKuKJEWGXbHyAFNyVEjM/xjnHpqj7/VrjFKuQCr3+0FNTtPN4
+         RZVlAULQMTsRdxuSoZcDVYN/Oc5peuwgSWy+q3DfBkOXXJgB4rKa9ntvWdhdB1DKCPSc
+         meMMTs6lj+iNjcYVnIZK/7pAThhvPvS66mv7nLMQVCqOAwNvz2cs1nHZUFuvMs4ask4C
+         vFvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784567741; x=1785172541;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=k1cSOK1WPe3ELJQklD1aQ2qR0lnoMm7ijOjPxD/9WX8=;
-        b=PGnVCKlI10E0qFcVGd3MsXMnK+jBsbA95y5y7Ci9DH/oEnPq2mn2d0lrRIAUfP8NYS
-         Ke7RHGY9oDbzhrbCGjaPZ2dBZOp3f8Xyf9e0RLJ6KlfwRxD3SgtJgVIgEEqYjmxi6fGr
-         m5OivqM+sqVloB40lkwc7wm1ufbfPOnNg7ApV2W9yYmFFAitE6jgXaueHpntQ6m/dQxZ
-         YVqmiw3DGUQjVhb+6IovonZ2HsuOcDtaIjaD4zcLi4QjTzxSnCdEj/sHXZkBRbyWMQJF
-         xbC74hjme6bP5tHTxjmHxfAKn4uYtnRn7IvKynCsM+ZjtOzcAXThxleYna4voWeCfwrh
-         tmjQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rrk8VDszsZL1IfwjpJmLUjexVgj8CcAhK0xpn1WEfDeVIKYVz8pyOsYpdvd3xwML63MWUMXdc6db+goS3XdiiU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzWLTYu/e9fWmvUw3LSAEi2cVuTnAYIes/9QSLZUUUFgB05N3DG
-	y/bqEl2gaw39tV0PrVoX8XOhp3hEhz3U+wdMf9EQB+hLFi5dvEwiNSFq
-X-Gm-Gg: AfdE7ck1iWXjw0qQxp8jRbXug8LjQSDehuIkHWex2/VdNPXx19zKnQEpqrQHrmH8c08
-	pYmko2Cglt/VWMm7JFHD+f1OMXlyb2MoMTQmRkFp2eFbLv+0sRBXTuEcLjhRCEkVy1hJTsK88ZD
-	mOqI1qb5C6ooyep1N3HHX8XxNvzZNoq69JtVpzia84Y7HsbHIw/hg0iUQUvcNy9zvMI6XiYZAK4
-	F+TN+zRXetdNZX7S/M4oPRs7yMPXV4iE+vuJhf1kKKCNvSt+NPQPHujfnl7LnY2X6Ns0wfplPiY
-	nuMo4HxjZZXufN3uelW4//IE5hx+dmxc6jMtx/46IqIdGjrM1mOBEduweMscHwrX7yN5KGNAM/f
-	gVJmvtoS2NcJ7T6cM6gPA4rgl8y6J+JI1qRDTvdd5Uqpi9LztJrokiNUGll1GMGwz9A1cYAD3la
-	v+HK3HAfjY7VBxeo+IIjmAgRFlGm0cQ4qvqIzGUW9ddoP9zY+KU4/XJbTktJZIK0kZAg==
-X-Received: by 2002:a05:600c:524a:b0:495:641a:bd3f with SMTP id 5b1f17b1804b1-495641abe94mr24542225e9.13.1784567741407;
-        Mon, 20 Jul 2026 10:15:41 -0700 (PDT)
-Received: from localhost.localdomain (host86-153-201-25.range86-153.btcentralplus.com. [86.153.201.25])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4956547af7esm2304865e9.8.2026.07.20.10.15.40
+        d=1e100.net; s=20251104; t=1784568699; x=1785173499;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=354gFNaVuvmOpRh2GIKgIn4uIuwVXTK+d7q38SvtQbc=;
+        b=sIR+DYol+DgedNTe0A3BVS76sPOfk7F1tEa75X9w2FBU4TfI9qpELGm0Rj+fkneZgA
+         tj6Iz7toLCg5LO9KDYRBTGTG2IR+Z7JP2mpG/OvRtPzASnbvIIsyCpS+lOtbWyz4z/ta
+         Jc6V4ebxsiU0gTKOdmK2r0kxMqkIWz18mWuho4uyLFheDTW7bXWXLNF0sxO5ksW5ukYM
+         Zxmor3hAzCHdqMvbqcBe3k4FR3S/iLCbhphuDzDmkb0arYIjQ33UBDXbmc4ruTK/C0IU
+         gUtieT1v0EAxcf7H3IyKlIGu8iGzXDrOJdj0qKxQt/zUiGZtBCmEqK5DTtO3weHr1CuI
+         fAIw==
+X-Gm-Message-State: AOJu0Yyf7xnC8/KzAxHvtMZwJietBQifs5wb8FYsTQcap1QDrpDfqssu
+	QoO7XetTsM2TbGAbvO576LlInS+e/TnBYsYZ0hZ5+Ihmxe8a2F59y7pJht4/vhPFgfsWJ2VDbWF
+	ZPJOs7HPD
+X-Gm-Gg: AR+sD11yLKRwW1JYDNY+WPNjSL5Dr0vkEEDGIrsBF+kEnNqq6j2+OIQvMxUTyHMAbCC
+	WgDMZr2XztROZH1JK56lDRFRXIGKAEUG3jiBjaoyl7v98Pd3umwKJ++pgUa/tEcAed0ijoMKMw2
+	d9A0JhSUOxaOuW0H3rX+NSpgXPN8j18ClVqE+/fPWb3pMaNsEbmHOZESiZjDsO+rLvGjuYErhwS
+	yb2ucMJpzFBWiSXWKaVfVHFW6EcnPTIZdgcHtmyFl0/BadhOKz6Fo8JeyFenk4PBLGW4VGSHikz
+	bheukuylehieQmyIlhtPzeZtUP3cfCE4bqYl8LL5c+RFplt0M9RWWbHQTMpMHSMcA6YwVn5/RrS
+	mTY5OTTaDm21GNP50Zd51LGkHtQFU1ZE8CikI6t5ux8J0S4ujbCw6/wPpphMqbEY1LpNhLKKvo7
+	cBQ9vGKntTBd81OycN72KGyh/yRtJovJZFTN828j4=
+X-Received: by 2002:a17:902:e349:b0:2c7:df7a:859a with SMTP id d9443c01a7336-2cf7b68e207mr1146615ad.15.1784568698588;
+        Mon, 20 Jul 2026 10:31:38 -0700 (PDT)
+Received: from google.com (176.13.105.34.bc.googleusercontent.com. [34.105.13.176])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e921f2e1esm116328a91.0.2026.07.20.10.31.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 10:15:40 -0700 (PDT)
-From: Nnamdi Onyeyiri <nnamdio@gmail.com>
-To: nnamdio@gmail.com
-Cc: bpf@vger.kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	horms@kernel.org,
-	jakub@cloudflare.com,
-	jiayuan.chen@linux.dev,
-	john.fastabend@gmail.com,
-	kuba@kernel.org,
-	kuniyu@google.com,
-	ncardwell@google.com,
-	netdev@vger.kernel.org,
-	pabeni@redhat.com,
-	sashiko-reviews@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v6 2/2] selftests/bpf: add sockmap recvfrom EAGAIN selftest
-Date: Mon, 20 Jul 2026 18:15:35 +0100
-Message-ID: <20260720171535.67867-3-nnamdio@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260720171535.67867-1-nnamdio@gmail.com>
-References: <20260720171535.67867-1-nnamdio@gmail.com>
+        Mon, 20 Jul 2026 10:31:37 -0700 (PDT)
+Date: Mon, 20 Jul 2026 10:31:34 -0700
+From: Vipin Sharma <vipinsh@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v5 02/20] vfio: Export various helpers from VFIO
+Message-ID: <20260720172344.GD1191959.vipinsh@google.com>
+References: <20260714151505.3466855-1-vipinsh@google.com>
+ <20260714151505.3466855-3-vipinsh@google.com>
+ <20260714153051.DDBCD1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260714153051.DDBCD1F00A3A@smtp.kernel.org>
 
-These selftests exercise the tcp_bpf_recvmsg() and tcp_bpf_recvmsg_parser()
-functions, to ensure that they are properly handling spurious wakeups in
-tcp_msg_wait_data().
+On Tue, Jul 14, 2026 at 03:30:51PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Missing EXPORT_SYMBOL_GPL for vfio_pci_ops, violating the stated intent to export the variable for other modules.
+> --
+> 
+> --- Patch [2]: [PATCH v5 02/20] vfio: Export various helpers from VFIO ---
+> commit fcee4889ab47813a22592eb00c453edea425e0f0
+> Author: Vipin Sharma <vipinsh@google.com>
+> 
+> vfio: Export various helpers from VFIO
+> 
+> This commit makes several vfio helpers and the vfio_pci_ops variable globally
+> visible by removing their static declarations and adding them to headers. The
+> stated intent is to export these symbols for use by other modules, such as
+> the upcoming live update feature.
+> 
+> > diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
+> > index 0c771064c0b84..1fb4b276afe7c 100644
+> > --- a/drivers/vfio/pci/vfio_pci.c
+> > +++ b/drivers/vfio/pci/vfio_pci.c
+> > @@ -125,7 +125,7 @@ static int vfio_pci_open_device(struct vfio_device *core_vdev)
+> >  	return 0;
+> >  }
+> >  
+> > -static const struct vfio_device_ops vfio_pci_ops = {
+> > +const struct vfio_device_ops vfio_pci_ops = {
+> >  	.name		= "vfio-pci",
+> 
+> [Severity: Low]
+> The commit message states the intent is to "Export these functions and
+> variable for other modules to use them", but is there a missing
+> EXPORT_SYMBOL_GPL(vfio_pci_ops) here?
+> 
+> The other helpers modified in this patch received an EXPORT_SYMBOL_GPL() tag,
+> but vfio_pci_ops did not. Without it, external modules attempting to reference
+> vfio_pci_ops will fail with unresolved symbol errors during the build.
+> 
 
-The expected behaviour is that recvfrom() does not return an EAGAIN
-error.  If the spurious wakeups are incorrectly handled, this assertion
-will fail.
+We don't need EXPORT_SYMBOL_GPL() because it is accessed in
+vfio_pci_liveupdate.c which is compiled in the same module vfio-pci.ko
+which has the definition.
 
-Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
----
- .../selftests/bpf/prog_tests/sockmap_basic.c  | 124 ++++++++++++++++++
- 1 file changed, 124 insertions(+)
+I could have done better job in the commit message log to explain this. I
+will fix it in the next version.
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-index cb3229711f93..d18faf46fac0 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-@@ -1373,6 +1373,126 @@ static void test_sockmap_multi_channels(int sotype)
- 	test_sockmap_pass_prog__destroy(skel);
- }
- 
-+static void *test_sockmap_recvfrom_eagain_thread(void *arg)
-+{
-+	int fd = *(int *)arg;
-+	char buf[1024];
-+	void *result = NULL;
-+
-+	while (true) {
-+		ssize_t len = recvfrom(fd, buf, sizeof(buf), 0, NULL, NULL);
-+
-+		if (len == -1) {
-+			if (errno == EINTR)
-+				continue;
-+			result = (void *)1;
-+			break;
-+		}
-+
-+		if (!len || buf[len - 1] == 'e')
-+			break;
-+	}
-+
-+	send(fd, "test", 4, MSG_NOSIGNAL);
-+
-+	close(fd);
-+
-+	return result;
-+}
-+
-+static void test_sockmap_recvfrom_eagain(bool with_verdict)
-+{
-+	struct test_sockmap_pass_prog *skel = NULL;
-+	struct bpf_program *prog = NULL;
-+	size_t buflen = 1024 * 1024 * 25;
-+	char *buf = NULL;
-+	int map, err;
-+
-+	skel = test_sockmap_pass_prog__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "open_and_load"))
-+		return;
-+
-+	map = bpf_map__fd(skel->maps.sock_map_msg);
-+
-+	if (with_verdict) {
-+		prog = skel->progs.prog_skb_verdict;
-+		err = bpf_prog_attach(bpf_program__fd(prog), map, BPF_SK_SKB_STREAM_VERDICT, 0);
-+		if (!ASSERT_OK(err, "bpf_prog_attach verdict"))
-+			goto cleanup;
-+	}
-+
-+	buf = malloc(buflen);
-+	if (!ASSERT_OK_PTR(buf, "malloc buf"))
-+		goto cleanup;
-+	memset(buf, 0, buflen);
-+	buf[buflen - 1] = 'e';
-+
-+	for (int i = 0; i < 200; ++i) {
-+		ssize_t sent;
-+		char ignored[128];
-+		pthread_t thread;
-+		bool thread_created = false;
-+		size_t rem = buflen;
-+		int c = -1, p = -1, zero = 0;
-+		bool success = false;
-+
-+		err = create_pair(AF_INET, SOCK_STREAM, &c, &p);
-+		if (!ASSERT_OK(err, "create_pair"))
-+			goto end_attempt;
-+
-+		err = pthread_create(&thread, NULL, &test_sockmap_recvfrom_eagain_thread, &p);
-+		if (!ASSERT_OK(err, "pthread_create"))
-+			goto end_attempt;
-+		thread_created = true;
-+
-+		err = bpf_map_update_elem(map, &zero, &c, BPF_ANY);
-+		if (!ASSERT_OK(err, "bpf_map_update_elem"))
-+			goto end_attempt;
-+
-+		while (rem) {
-+			sent = xsend(c, buf + (buflen - rem), rem, 0);
-+			if (sent == -1)
-+				goto end_attempt;
-+			rem -= sent;
-+		}
-+
-+		/* we cannot use recv_timeout(), otherwise EAGAIN would be an expected errno. */
-+		err = recvfrom(c, ignored, sizeof(ignored), 0, NULL, NULL);
-+
-+		/*
-+		 * we are checking for the invalid return of EAGAIN, any other return is considered
-+		 * successful for the purposes of this test.
-+		 */
-+		if (err < 0 && !ASSERT_NEQ(errno, EAGAIN, "recvfrom eagain"))
-+			goto end_attempt;
-+
-+		success = true;
-+
-+end_attempt:
-+		if (c >= 0)
-+			close(c);
-+
-+		if (thread_created) {
-+			void *retval = NULL;
-+
-+			pthread_join(thread, &retval);
-+			if (!ASSERT_NULL(retval, "retval"))
-+				success = false;
-+		}
-+
-+		if (!thread_created && p >= 0)
-+			close(p);
-+		if (!success)
-+			break;
-+	}
-+
-+cleanup:
-+	if (buf)
-+		free(buf);
-+
-+	test_sockmap_pass_prog__destroy(skel);
-+}
-+
- void test_sockmap_basic(void)
- {
- 	if (test__start_subtest("sockmap create_update_free"))
-@@ -1451,4 +1571,8 @@ void test_sockmap_basic(void)
- 		test_sockmap_multi_channels(SOCK_STREAM);
- 	if (test__start_subtest("sockmap udp multi channels"))
- 		test_sockmap_multi_channels(SOCK_DGRAM);
-+	if (test__start_subtest("sockmap recvfrom eagain"))
-+		test_sockmap_recvfrom_eagain(false);
-+	if (test__start_subtest("sockmap recvfrom eagain with verdict"))
-+		test_sockmap_recvfrom_eagain(true);
- }
--- 
-2.52.0
-
+> >  	.init		= vfio_pci_core_init_dev,
+> >  	.release	= vfio_pci_core_release_dev,
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260714151505.3466855-1-vipinsh@google.com?part=2
