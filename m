@@ -1,157 +1,146 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4743612F4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:53:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4EB3CA49C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 20:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784573604; cv=none; b=fCJXlcqTBrHbF2EIDvimXxMmvrNECIy9oU9ZIEYSgWJONnB6rMPAnno+Ih6H0EnZeIRuovQl1K52V8/qDcHly+iKO8MJDPM5vC2vr1hLXVhI1KzFcxbVShG0K83lZuuvKcao0+nnNwye/CREMapA2ufEaJADOXPqrDE80S0p8Kk=
+	t=1784579470; cv=none; b=EoZERrgMgc8zUz24s0zxJ3FF0ZbXSDaedLRwn03cBZ6YNXBy3lpviQZrpElKuAqbFUmhtTolgZkhdOg0BzTNHPz7yc07eWNTWwosHWzaApoqQ2COwny4G47Jjdf9+Ix4/oL0YhrwDqHCuGVby51XKmKX7cayDFfrlUEPbdR9j6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784573604; c=relaxed/simple;
-	bh=nl+8dHevbr8d+1I2hyQuYMgYkBnX7YsQIPS5nKx9j/I=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A+MuyE0geLoKrqpI/l1juopMxZUPoSLEw/L9tUhaQsxpNcK4PumARlTUVh2ACjHwmMUfl3B/Fxx2jZjg+gnYEgrc1P0N0mhaYUIXRvPEBIjPXhsSLcFZjDwy8zQ4xkHU/ssvE40vf9NbJdhri44p2ASA3T7LHhGftfEGRph3fEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=EMZGG+It; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UseNxZtF; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
+	s=arc-20240116; t=1784579470; c=relaxed/simple;
+	bh=7Rh9K/aMUgrUkaTFrCF6H0sgp3ex8gQh4yF3iV3opCE=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=htnNZeBUxTtPopTssTdrFvfOCfUIPtd7pu6S70SlXJKeiMxCsKWX3OcUyDoPaX+eRwW3aI8DnsdQ3kRkbw4kmp5d/y7ViblrUSydWmk8ScyIHlWOFqJ1vM1NnKdciMfsAYEDMQbm9cUOKjaG5ODbzVMT5WpwggNNxkYpCjLaxhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RnfEQldN; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="EMZGG+It";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UseNxZtF"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6536F1D0006F;
-	Mon, 20 Jul 2026 14:53:20 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 20 Jul 2026 14:53:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784573600;
-	 x=1784660000; bh=wvZZt0bZcJBD9/7ZFG0CaLB3tlgmwWBvdTXc4eefsis=; b=
-	EMZGG+It/Dyv3Qli+TdWOZy0120rmkzebU8AOZb424R07D/k3RIIIwGPtJf03XF/
-	W0ZNFY+d/6e6oOOeJjcTwlCZnfQIjIUddfKnMFgaXpf2gNHsBQRNjCX+Gw8w61Xn
-	SvXA77Y6mcuIMAShPgufhFnWrGPuKoKxcvcW0kO50hVO5EP7NUX18QDWKMT0sWq9
-	zRjPG1GNfV4GipWOhfksH4qMVRbRToMhbr5lsf3tQAlk3O7f70rhuNHrgQrPmkEk
-	CH27zNiDnbnbBlD9igQw4xNZWyAw3XnuE4tOIgwO9vJW9WcUgS2nbXw/JkxTZeeQ
-	DwifqaYlT+AuXO5QkpMCQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784573600; x=
-	1784660000; bh=wvZZt0bZcJBD9/7ZFG0CaLB3tlgmwWBvdTXc4eefsis=; b=U
-	seNxZtFjrtaeEgWZNXhOyEocsGt7kqY3+P1BPnjMVekOwQ+PgviLIr3zvcf85GNc
-	50QHZ3n3fMxtGx1rx1uhlzEc4hOeele+Pi7AoegJw6gL6Vz9ENu6xQ8UvAupcuYl
-	ujy8WoVDUtHxKD1zOcDFTquvIg4zMXFVtlRXH9GtFBsGwiTdY9cc4HfPewmTQ4Z5
-	kxyn+YzodewvTM+suxrWURU/+WH3S7BghF4mcgow0ZjgvKZ7E+dOIoL7TkDUfSHt
-	e1WgNul15v/klr7/Z6LTxLHW1pnTxx3os3fw8AJ15MMKnYgXIyG01ykg81VVpzm+
-	E44aRP0RR3xjkstHoWydw==
-X-ME-Sender: <xms:oG5ealY_MtE1YjVHjwoUyR3uL2GpLAjlLqMd9JWunCAB_wV5Qhrsjg>
-    <xme:oG5eat5lNbQRNLAGp_7LwN-Vgy74ui5WaVgJvct70TYuqgmgiO_LTJTv3cC0hsW0Z
-    EgA7S4lmQLRxSdPNf3IAVHKE-Vt2LoT3WaqkfrPgzsNdcZrCPJk>
-X-ME-Received: <xmr:oG5eaoCQ_1VxL9zAUjj-hLydyMeO8-7XRTjKKjpaGZDH2Sqc3vANOAFCrHY>
-X-ME-Proxy-Cause: dmFkZTEIyLKp7UcLOG6Izn0piZ0DTPsGZpK/1SdimrQiWBiimGFht+qe7LRmm3PrMo+QTY
-    Uu84SA4NZWoIVtY/kJbcmILPww6JT61WYG7WSXC1yws26EpwFXTY5EM4EzwB5PQB2W4haw
-    asYQUPrlbg7jHzwslNB/WZsysbXEIxDEOh5wUXx3/n0sxTjTl4A4xClIsV338y7FZb+umc
-    fjhrRN4C7/MsmeL1BLdk83rpCcNMe8wl4J6wOaxULnx4oxKvH9QGXP4Y0WbRxAlFTPyNkR
-    o8yEDk10JzpkoRBnAkcy38uYkF966iLbgLIpaATQvQZ3Je3nH0fiagVvPj0wOsD1jrcte2
-    3ggDv9o3cx87vv0mOXpWNoz0Uw+d9n5ahdE+WlHzPV1Kxi+0SybrHinKUM/KWw6eejyZCB
-    oQ+xzpkHB8+A/9YcsoAVvHn0jxuPHTh/iouF74TVrVme6uLl+hlPUUov6DJ5uenpgRSrF2
-    rcmezzT7T8hlrlYoEOyoUnF5456rxiD7MHnG122tl7jYyVVgfgkE24v143Fr/HHUBdgeIu
-    +dymFU3MEGQDJrjKGybOotS6Bp2WCQGsgukiD3yLOIWeABK972zObe5YgO+4YfOiVY2+5l
-    OGBPpBU/EW7Ypg5JTy4/62UC2nWfj23IBkv31DNt1d3h+tC3NZ3ftn6XDsEw
-X-ME-Proxy: <xmx:oG5eajfgn3OAusG_6zVx61CrG2ld70kd1MPKtSr6maMJDQEW-uSrrQ>
-    <xmx:oG5eanIpcZkWKf7QQvbQWxDZYiA5pBfCqdLtVp4_llxyqn-oFAzQlw>
-    <xmx:oG5eau1S9AhuQ1vWX3WGPnf74-EDpL7jTMaSw_sg5afCdm-dfOQ9zg>
-    <xmx:oG5eapiXx5NCXdbDcII86WYLwijMSZ07dVo1vUZI7RfS72zyrPGxhQ>
-    <xmx:oG5eakujNG3Fpv3zri3UJnBVZ3k6-PRhY0rU4ikoMSvYTRFJ_NVA8mYu>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 14:53:19 -0400 (EDT)
-Date: Mon, 20 Jul 2026 12:53:18 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Cc: sashiko-bot@kernel.org, linux-pci@vger.kernel.org,
- sashiko-reviews@lists.linux.dev, alex@shazbot.org
-Subject: Re: [PATCH v12] PCI: Add device-specific reset for Qualcomm devices
-Message-ID: <20260720125318.15508343@shazbot.org>
-In-Reply-To: <20260713085233.411519-1-jtornosm@redhat.com>
-References: <20260630070914.3B5E61F000E9@smtp.kernel.org>
-	<20260713085233.411519-1-jtornosm@redhat.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RnfEQldN"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-476a130c138so7066301f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 13:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784579467; x=1785184267; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=HCoN88NAevl2MQDJ7m5oXovQm6Rv4VDkCN88nmuIeQ8=;
+        b=RnfEQldNyJtzIlZ0x4g8CpEQ3sLhtB1Hcfa0LlD3MU/wR1TnPBOmkWqck4Wi1AIQy+
+         eZlfB/qofAq4LqZgcFieX4Vi8iJs0DJzIr0oySXGphFRzWANIhKCDczMQlbCRi8I2P3T
+         qxWtZfh+X3jbrfYUTxRhOPS7reDgPw7KdhHC3/+4xcvKm8csP6VucqX5hYb+UOf+PwjS
+         dV3pheqnk2fzsBwIHcGPqV7CvydkHG49RPQdRJjxCdq/wz+BlQSXj4dkmeqn+hsdbgrl
+         Xfl2rsTu6PgWK4K5vFo4FOOkzWoj+CqhIdn7jcJ8Hbs3BaM8k0zi7wu3FiNB7avBV8o2
+         gcXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784579467; x=1785184267;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=HCoN88NAevl2MQDJ7m5oXovQm6Rv4VDkCN88nmuIeQ8=;
+        b=jUnbS5LqQfEM1jJRLu1bOCjCUCfav8locI4N5PKt6t2Da4uXgPt9SorTf7OVxJSGNe
+         AaD4DUH7H5YADzqzpYU5BvQ5iAB5/ctlEsjAopxRXQXy2bWaRIHciF6vWoLBXTDQnktC
+         P9S0XOkmxkmcEi2Rb1PaMitlrJ0yDgyFRUkchxIqy1m1B6j8+QFJhUAmeNfdxIcLkFsA
+         fNoHLsyxh/sskaC7iSS3bt6cox8xBa4ksqYk9aOskjDXWpYwdH4zUA1PdRymNwVN86EJ
+         cIvRKxqylADMYhRJ6DjeR8bGacqxwtRvBostIRxGX6Y+MgJmn3J4Fn6AJOZ+bBumksrf
+         IoWg==
+X-Gm-Message-State: AOJu0Ywa31GEfqU/PUdwkmUCwwVpW7QCZBwchiemcLi9T3iA0df8T295
+	h8iEjd4oWpC5KpNPPQ6Y+F2Zsc9jQcmG4htL7gaKdE21sdM8o5SA67W/+F3lVkGD
+X-Gm-Gg: AR+sD11iCBWfLMN0jZ6KY1d8FOiQn9LUvLDpRyKf15+6dxlu6KfC5kX0mJKp5ruWPqq
+	keQDvEla69B3ksDWZqO+Vh9fCS7gEjaxEsh3vWvyesBrV9VvlYjb1dSAI/QLXp/x6QspWJzC882
+	AAYzO7KQEiKqPV6L399VfmTwQUyPWXB5kLfVVu+5pHstleejIlndEqbLpxPK0TKgPGKH4/DeWhr
+	xvPmHtUxj3dWGW3avBR91gdlwebZ0VdCNDBb1AtSRR/53P+GvQs9yQ8GGocTAUhEmt61VyiEgW5
+	CD0Jbv/BDZoP2lJgAnmlFX87Tm9/1Pp1+JCTgKkJx/dRWP1XxfoZXum/yFNpGWBn7T/T7i/N0Fu
+	zyUe+82hlKO62dpCJThd0NSx6X/PsVOgCUck1AtyS2v3JF/wdmikSBOUDL+ILQFaTPg==
+X-Received: by 2002:a05:6000:41f8:b0:472:8c12:b93a with SMTP id ffacd0b85a97d-47f62318cdfmr18135543f8f.28.1784579466837;
+        Mon, 20 Jul 2026 13:31:06 -0700 (PDT)
+Received: from krava ([176.74.159.170])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63edcf8dsm35417470f8f.27.2026.07.20.13.31.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2026 13:31:06 -0700 (PDT)
+From: Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date: Mon, 20 Jul 2026 22:31:04 +0200
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next 3/9] bpf: Factor stackid_new_bucket from
+ __bpf_get_stackid
+Message-ID: <al6FiPN_p5EVMrob@krava>
+References: <20260720085351.655075-1-jolsa@kernel.org>
+ <20260720085351.655075-4-jolsa@kernel.org>
+ <20260720090141.54DC81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260720090141.54DC81F000E9@smtp.kernel.org>
 
-On Mon, 13 Jul 2026 10:52:32 +0200
-Jose Ignacio Tornos Martinez <jtornosm@redhat.com> wrote:
-
-> > [Severity: Medium]
-> > If the device is hung or the link is temporarily unresponsive, could the
-> > initial ioread32() return PCI_ERROR_RESPONSE (0xFFFFFFFF)?
-> >
-> > If it does, this read-modify-write operation would write 0xFFFFFFFF (and
-> > later 0xFFFFFFFE) back to the device. Could writing these values trigger
-> > unintended resets across the SoC or leave the hardware in an invalid state?
-> >
-> > Would it be safer to verify !PCI_POSSIBLE_ERROR(val) before modifying
-> > and writing it back?  
+On Mon, Jul 20, 2026 at 09:01:40AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The newly introduced `stackid_new_bucket` function accepts `trace` and `flags` parameters which are completely unused within its body.
+> --
 > 
-> The read-modify-write on the SOC_GLOBAL_RESET register replicates
-> the existing ath11k/ath12k driver reset sequence
-> (ath11k_pci_soc_global_reset()). If the device already returns
-> 0xFFFFFFFF at this point, it is unresponsive and writing to it
-> will not make things worse - the purpose of this function is
-> precisely to reset a device in a bad state. The link recovery
-> loop below already handles the case where the device remains
-> unresponsive after the reset attempt.
-
-The "will not make things worse" claim is really the best case
-scenario, there are platforms that won't silently swallow the write
-error and could escalate this to a platform level APEI/GHES error.
-Testing the initial ioread() value is a valid improvement in robustness.
-
-> > [Severity: Medium]
-> > Is this polling loop vulnerable to false timeouts due to scheduling delays?
-> >
-> > If the thread is preempted during msleep(20) and delayed for more than 5
-> > seconds, time_before(jiffies, timeout) will evaluate to false upon waking
-> > up. The loop will exit without a final check of the register, returning
-> > -ETIMEDOUT even if the link successfully recovered during the delay.
-> >
-> > Should there be a final condition check after the loop, or perhaps use
-> > read_poll_timeout() instead to handle preemption robustly?  
+> --- Patch [3]: [PATCH bpf-next 3/9] bpf: Factor stackid_new_bucket from __bpf_get_stackid ---
+> commit cee0ea77a9c1144b54fb0472b1788623044b5650
+> Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> The time_before()/msleep() polling pattern replicates the existing
-> driver recovery logic and is standard kernel practice, used
-> throughout drivers/pci/quirks.c and PCI core. A scheduling delay
-> exceeding 5 seconds would indicate a severe system issue beyond
-> the scope of this reset function. The 5-second timeout is generous
-> for what typically recovers in under 1 second.
+> bpf: Factor stackid_new_bucket from __bpf_get_stackid
+> 
+> This commit factors out the bucket allocation and initialization logic
+> from __bpf_get_stackid into a new stackid_new_bucket helper function.
+> 
+> > diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+> > index 7bc2a966e3e81..48a2e28f0c68a 100644
+> > --- a/kernel/bpf/stackmap.c
+> > +++ b/kernel/bpf/stackmap.c
+> > @@ -559,31 +559,53 @@ static int stackid_fastpath(struct stackid *stackid, struct bpf_map *map,
+> >  	return -ENOENT;
+> >  }
+> >  
+> > +static struct stack_map_bucket *
+> > +stackid_new_bucket(struct stackid *stackid, struct bpf_map *map,
+> > +		   struct perf_callchain_entry *trace, u64 flags)
+> 
+> [Severity: Low]
+> Are the trace and flags parameters needed here?
+> 
+> Looking at the implementation of stackid_new_bucket() below, neither trace
+> nor flags are used anywhere in the function body. Could they be removed
+> from the function signature to clean up the API?
 
-IMO, this is also a valid finding and the suggestion to use
-read_poll_timeout() actually simplifies the code.  The entire loop just
-becomes something like:
+right, will remove
 
-	ret = read_poll_timeout(ioread32, val, !PCI_POSSIBLE_ERROR(val),
-				20 * USEC_PER_MSEC, 5 * USEC_PER_SEC, false,
-				bar + QUALCOMM_WLAN_PCIE_SOC_GLOBAL_RESET);
+jirka
 
-It might indeed only be a pathological case that behaves exactly as
-sashiko identifies, but in fact any exit from the loop due to timeout
-returns with a stale value in val.  The similar use cases in quirks.c
-might well be improved in the same way.
-
-> Since the implementation replicates existing driver behavior,
-> both points were already discussed during review with the
-> subsystem maintainer, and are handled in the code, no changes
-> are needed.
-
-Likewise, maybe an opportunity to improve the driver code.  Thanks,
-
-Alex
+> 
+> > +{
+> > +	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
+> > +	struct bpf_stack_build_id *id_offs;
+> > +	struct stack_map_bucket *bucket;
+> > +	u32 i;
+> > +
+> > +	bucket = (struct stack_map_bucket *) pcpu_freelist_pop(&smap->freelist);
+> > +	if (unlikely(!bucket))
+> > +		return NULL;
+> > +
+> > +	if (stack_map_use_build_id(map)) {
+> > +		id_offs = (struct bpf_stack_build_id *)bucket->data;
+> > +		for (i = 0; i < stackid->nr; i++)
+> > +			id_offs[i].ip = stackid->ips[i];
+> > +	} else {
+> > +		memcpy(bucket->data, stackid->ips, stackid->len);
+> > +	}
+> > +
+> > +	bucket->hash = stackid->hash;
+> > +	bucket->nr = stackid->nr;
+> > +	return bucket;
+> > +}
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260720085351.655075-1-jolsa@kernel.org?part=3
