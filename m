@@ -1,239 +1,224 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011071.outbound.protection.outlook.com [52.101.70.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D681433024
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 15:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784560007; cv=none; b=rcHcmrUFx2XBTK4ZqpOZUck7djgc8Wr/kj70/nLN7DsXJGzzx5bRSip1yeXA2dDFVnYOZGRBFw4bt469lnRnBBN3zTXiIUMUAEUvHfGSfAsFWx+X5jOBOa0no8rKHGX5Y9T84M6IkyHqD9T7cpTmJPwmcz7ahSZb4MU8lCxBlX4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784560007; c=relaxed/simple;
-	bh=a175UQzqR86d6YYzqf8qOPOSkOvvssKXDA8KRWIDhyw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mJoldrSEMN3fer6ehqwQIIKetdqXMdD8AV6miA4w638DBzmJW7mhsz/cDX7eT/iFL3/OGu304AvnJTK6/uWFp1B1h8jS5pdYlFK2GstmmWEH2KbKoSKQ6Q18bkmwagApaVfPfC+R+yE7f3lPkfx/R5PlznwqIpMDnB2mQJ+kJRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UgVA8sC3; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=H7hFra83; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE88D433BA9;
+	Mon, 20 Jul 2026 15:07:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.71
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784560041; cv=fail; b=K5eZ1rTBLwYgGymbb7tAMt4RKjvR7Vu8f+AgBQuQlcbokjmQG5N+FxgXIczMHFuM1dheT103WyInN0YnIWKcgbA1JEFHS+OR8u1tQBFyhAibVV8TIIxPabPRHGeFZjjZK7EJu+f2yc5+QtTLzeB7g4wzz9lgmJgjmZlKtHuxwe0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784560041; c=relaxed/simple;
+	bh=2WWlj6j0QxzOU62ns1Ep81miChUgQE/DWaBNirTWhjY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=VPLuXqL0b0snEu/+4qgPWw+9YG9Top3ubYiNW2HO2/j1Twi97vDDph4cu2wqzk+XtoAghjEcDFmDKxeb55DHfq0ipFN6J1aOP6OvHV64OxDx1fzQCqEMf3z+yjkojzRdcl2t57JHR7QuFrNlK4ROVz0mwKkjqukiDfF9u+vtmtQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=F+YVwzR+ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UgVA8sC3";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="H7hFra83"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1784560005;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=raPd+j2sNnja6yObFkLuI3fBBY7t0sFpL6aJ3ppEwEQ=;
-	b=UgVA8sC3bAHuUWH3XtUA5TxyXGFuoVXWQANJR7FBF+8/K7Qm82z9Wo9USpeYubfVt2eugY
-	5pilK6JQOvMv7HT4B8UOlX4jQIWWqy4YjSl/GareuFO37VC2XgOS+8YTRJ3+WQkOzeDuOf
-	i5PWeTEvDfdH3hgJ2vpBgohI4/2vVKA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-RGepsTB-NKSDP7VeL8JhGA-1; Mon, 20 Jul 2026 11:06:43 -0400
-X-MC-Unique: RGepsTB-NKSDP7VeL8JhGA-1
-X-Mimecast-MFC-AGG-ID: RGepsTB-NKSDP7VeL8JhGA_1784560002
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49545071724so42242665e9.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 08:06:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1784560002; x=1785164802; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=raPd+j2sNnja6yObFkLuI3fBBY7t0sFpL6aJ3ppEwEQ=;
-        b=H7hFra83PyHUtdm631POTRjUyypgZP0gZmLhF6bBl98PZCmhn37Wt/cafx53VDX0se
-         hYHLOh/id2YLyEk4QYwMZ7h6vqVG3NFmTqwJkWI6KZnsVIAXOMK+FsXdZFOyTDvEVjvz
-         80FCt8ai1x0Scwvg/Qp8upn18gW8tPiilvwpiJnQF7NNX3J/mdb9DarLIueFGbv8/SWZ
-         nB+etPjUhW1fLxnUUrboqqjFSHab/wO2orM6vZn3YVVt3zlcMXm5WdYZyl0v0WLQ7fYq
-         9tDDtEb5teUDOSi+v2lbr6AQkHw+yIysY19dqImR7sjwLy20jfaWjMqIAXRrUnT9dEtp
-         l7kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784560002; x=1785164802;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=raPd+j2sNnja6yObFkLuI3fBBY7t0sFpL6aJ3ppEwEQ=;
-        b=Xr+pamSeE2hCHdcKLJ49lUn0sedcXCy4VrPx9vN5IHRo8SCtIm7kN+Y6d3m7YxoU36
-         6MWUjZ/vYGBdVQR7iBh9SKH4K2BVFIMo8w2B9PzKW45oSAEOHnXMhQ7omXOdvlAOoHni
-         PjmRw4uCEfNuYwV6eggRKUCp5nHYmqczHya8FowQapgkHuRhurEC79Vs3AMfYNlItNs8
-         I9grPKX2N0b8HYq0VAGZTUMAMomGihRR0uag96WZQYjtOemme9eWU09mEx3k1YpK1QJ7
-         XH9wAg7aTEUm43cfAzX3VXe+oPFADk2dpYWvh2JhFbfx4Spbb8oGfqj4MjKJEtoYriKw
-         oPlA==
-X-Forwarded-Encrypted: i=1; AHgh+RpM583qLqHMm/xstILTg2Q7xWyICUO2g2k43cGjGJzfFT+i5gFz+skkzMbvSSh4PMOK23pQ0Ca8AGsTq7ET45o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxavOMd8r9i+vD0lbEfknL3fomEKbaM6qBJT3k7htMrartvQjOD
-	hRgkVx1FSCHUFaUdSdEj+TtKTE20CWHxYe7ojIQ423nAUHuCPmPAAsAtuSCWGCKvPisGONjpmAv
-	2NvdDJ+kmAYtv3cntCW5ALzDyXvuijIsp+vhrfYQb+iIqMNfR4uQ7ZLB123Pk+ey9ltlouA==
-X-Gm-Gg: AfdE7cm48kaCTPBu5vxflz0xuiW/4YHICe2mECA3wTv0t0nLp4LSlUxk1HqGrrG+Vib
-	u/mUf12jbPHMzPfM92Bvena081mFvcjrWuzde2pK0JJGJCqG4SlcsEaIeIZ6W624Iv2ltjqAMKo
-	qUv7A7vo1IJL/7OfPRd8MXLKa5KpjVP82qpaPZym60z4z6mQTgFcXcFC/JL51OgE2eZ/hhC3coY
-	nFMl4h35FhcAoqoB+8Q83wDmb4e7gb96zN1GobWjDVJCwor9r+6GA9e/x3cOCjOiJSivcFkAipN
-	+aEqZjVJ1XPDQNL2RntpAixe6zYF9qWVlL5t90PemFrYTp2wqbe/tRc6Hsrv9VZ6lcX7iB8Oow=
-	=
-X-Received: by 2002:a05:600c:4685:b0:495:4a77:1327 with SMTP id 5b1f17b1804b1-4954a771521mr171385235e9.33.1784560001975;
-        Mon, 20 Jul 2026 08:06:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:4685:b0:495:4a77:1327 with SMTP id 5b1f17b1804b1-4954a771521mr171384685e9.33.1784560001343;
-        Mon, 20 Jul 2026 08:06:41 -0700 (PDT)
-Received: from localhost ([2a01:e0a:a99:9822:edbd:5894:eb1d:c2c7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49562709500sm57729825e9.14.2026.07.20.08.06.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 08:06:39 -0700 (PDT)
-Date: Mon, 20 Jul 2026 17:06:38 +0200
-From: Maxime Ripard <mripard@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-Message-ID: <20260720-sly-tricky-elephant-c8afa1@penduick>
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
- <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
- <20260720-bold-jasmine-goldfish-d979e5@penduick>
- <3749a60a-a8bb-45a0-a06e-a21017990c10@suse.de>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="F+YVwzR+"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ag9YHzFkIw00GfJPQvJwmu1epF9xvZqXl4c0yFFgQee8dKnwLGWd4YagN1YpPPtT+S+GPM1XQ+k3UnHtiRa9nEf7Y7OE3/N8OD1K5Aq7iuffQUx5m1Gvdz1jOo8+yVmiqY4396FJ2CZiBiIppMfKGBVTt4Q/V/EU4twMDsr8MIBzObQoFyfGN/fW7FDWJs25SSuOeNFV0hEVI8/hsPGNE5XgiREXIfI4ym3odsd30z2y5RfWVAUB9jBru7yWsVwJ0r4UNydrC/ES3RIOy5P/pUgCOrGqmHwhun5rFxZL59PnJpfeOLlTDEEFaF74X4SO/+/hBLf8eaNR7a4ZxSpfVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mihWxY8hCC3E1/feUiP+NAgQY880mNytAOxKEvJ4Tg8=;
+ b=f8b8xz8R/A2pA5LnLLzw5RkUUvDCJ9nDlEMb0ClHKGzypBWWRDjmKPlQfMevgYNViSNiG0kXeSZlhXHkJmPmPTpFP6U2DWhsdu+KYQaVfkd+BW7TIIVfynedePJxRS9mZNaXm1TOCrvyRHa5NupbsDnPXoGbta1fOLlXednpmanrqeixfI0BAj110G35v04Xnc8TpOwSmwhR48a9b4DVMsrqtdGPQi/QQpxaNZezV66KPCXCn325xkYMwpm5K8C1ODABk06PUKlncLPvEXEZTef6EMr+wx/KwNb6WYbzj6tlUNnIwcPc9Psg6eyAr/Oj8rySHeIkAsnMIw4pQJ0iXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mihWxY8hCC3E1/feUiP+NAgQY880mNytAOxKEvJ4Tg8=;
+ b=F+YVwzR+3xt24lV4g0FA+eMYWgpb6ZyrmdL6UOT1l1+GlAnerPl+cq0tNvSEhJS+k4muve/REcMwKEfXjtPo8aBRbSwU0pGdUIhMEHET3qoHeRmrj5ZWdUMuLElwEfhXZf+EFewaLosGlWDchv1m+swcGG3TX1liK2Kq72BYhPW/qgh6MHsR+rfk+ZDX186ezETnY6WkDIFwZi8oMFlhLX7C9xdts6ZpZntYhpijUiDB9bSwgJm+M6QcuhSTBpiLoXeeCQYSpI5KbMdDUEfkAjAbcjh7QWbaP4ax4K5c3dz6Hdgr7tvpJDCkM9NmJrJD01qxfpATUbiCGFs6DHgGtg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by VI0PR04MB12352.eurprd04.prod.outlook.com (2603:10a6:800:322::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Mon, 20 Jul
+ 2026 15:07:15 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0223.012; Mon, 20 Jul 2026
+ 15:07:15 +0000
+Date: Mon, 20 Jul 2026 10:07:05 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Joseph Guo <qijian.guo@nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org, Frank.Li@kernel.org,
+	conor+dt@kernel.org, imx@lists.linux.dev,
+	devicetree@vger.kernel.org
+Subject: Re: [EXT] Re: [PATCH 2/2] arm64: dts: freescale: add i.MX952 FRDM
+ Board support device tree
+Message-ID: <al45mQ_okIqpkDW1@SMW015318>
+References: <20260720-imx952_frdm-v1-0-6d145eaaa5c4@nxp.com>
+ <20260720-imx952_frdm-v1-2-6d145eaaa5c4@nxp.com>
+ <20260720065549.C24301F000E9@smtp.kernel.org>
+ <56975936-9db1-431d-91a5-c038dc16c196@nxp.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <56975936-9db1-431d-91a5-c038dc16c196@nxp.com>
+X-ClientProxiedBy: PH7PR10CA0019.namprd10.prod.outlook.com
+ (2603:10b6:510:23d::27) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="7vkstdocennjbk5t"
-Content-Disposition: inline
-In-Reply-To: <3749a60a-a8bb-45a0-a06e-a21017990c10@suse.de>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB12352:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1d185fd8-e201-41a9-7259-08dee6709532
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|1800799024|376014|23010399003|366016|56012099006|11063799006|10067099003|4143699003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	o3vVjZeu+zdqqX+k6yj0+M4GgfTTFPIRUmPS029QiaHlHx+eEdI4MFRQHRu8BUNLm8+zTSsOY7AsDF6Iy5bduE+Y+QSHERtClRuoszumxNYBxvLDqpREA6xjPl80BTsXbCNpk0ED7D2FZpaQCjj0jZVdquxilvLJlYzE0f+EQDU8skbKYnbiOejaYoJYY4lb5wi0aGJe5ddXCCNnwPvqum8fV9GcQ3QPvMxhzl/yi31sSoLRKI+EOMn+bNNMQCenk+ApUuIUZq6842ojP3l0giVo6G3G0aHnc+w4U1Vz1rWe1LmxrN06Rcu43jiOa+p+xoamK43LLmcG72exIQ5lbP420GYqO0MgG5LojrwgwH8oHkd9RB6XnJQyA8XKInGtl0smzZvivcxC7P7rMPImJY1gESFtPa4T1Ux26zDT05RMBjxU+oYk5eywJKgRC7CiSuzs1jfIlDQ5GeboFB5grnq9tYiD553C/EMX9IFQiraMCoC9C24RKWB3BPgpNijd/e6A360cQO1QP62aJstZOkqf3klMXjHecCDnwJP14e62G64OPnDwvozS4z+H7b0ELRE8THSSQnppQJ/DCQHDK3xcrjW8FcKC8o5YJUTVEBI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(376014)(23010399003)(366016)(56012099006)(11063799006)(10067099003)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?rpNvPUmj6haWgcTTEwwokJU75nNnvZjsl/2IULerZXJ9DfQADmqvdYKOAr?=
+ =?iso-8859-1?Q?+XxGO/LEOeXwdrt/l/X12LYwthnLO91IpL+6eY+tq3CbMr2vBJdKazlXwD?=
+ =?iso-8859-1?Q?CKsPpz9vM+uvAMlRijpkRyjDGLF5qyAoOaLgTV1hTap200EXyphyWSaCLB?=
+ =?iso-8859-1?Q?FSWRgHgUeXrVhhpPL11OS7zCqViwdwX5vwf8Ka6BgFMQzpGl1IbD8oR6vQ?=
+ =?iso-8859-1?Q?8Lm7Yfw9LUCu+hRND0QGlX/CdDxKheu2aQ0zrkXbzgwdU5j1na+QHSwzMs?=
+ =?iso-8859-1?Q?ncTYM1CsoJzmDFsadL1bivLaV0/qKBmeLwm6SRgGfC4JDCRc5ai//kovNN?=
+ =?iso-8859-1?Q?xHCK7mTKjWbxrb6+7tt8xC7Rvzrx5+VEYOk/D/L3DVmvkMPmKC71DzZJoT?=
+ =?iso-8859-1?Q?orjZpoxPHCeMfK3VZsNILpL/3zpCQH2w1iWMuSgUUmsj4k+RDxMzLGezPS?=
+ =?iso-8859-1?Q?yS+hxXoD284xa0sHRk+OSg/G8clYKLyL7JY9zPHuX3nwmNJefJM5fdYeyb?=
+ =?iso-8859-1?Q?VERuBTSryL0iiDXWM8pTucYUsRd2gli+Neq1XG8gTvsIjUMA3R2Awv/UTq?=
+ =?iso-8859-1?Q?pLBgki1Xmc4hoExWDOtTzB8nMnbD2z/8XMNdFCBcwCX8Ci3jxmYTRQtiFC?=
+ =?iso-8859-1?Q?+xM9zu3GerC8K68opnKfkXbEeOzVXEC2lJIb2T9U8ZsikNqAQC18o69rNi?=
+ =?iso-8859-1?Q?VQq3ufpFfJq2E57Gjpf1tE4vT51UQi/avjCG/Rrel4s7dGI6IkPdB3ziJe?=
+ =?iso-8859-1?Q?1VcfxoYR+X0CCoStsV8JCQDJZMAEsEpyUzKpMLtUp13ILkJ0L1mv8ht7lJ?=
+ =?iso-8859-1?Q?YHjXzX9UFkMw2Hu+xuVL5q9BvA3nsyRZOnJ6IqjliRAJJ5IOFRgQaBQGMu?=
+ =?iso-8859-1?Q?jiknaq+dsNdeYw1OizkbhRSgQVPp/SOmv3hS8wIGARoFBsYdyxP98tDQl4?=
+ =?iso-8859-1?Q?sPGWmg7V6vaGh3HvxfPGeDkye2/ENoXZgKRiVQpQlYrY9wCwhBz2DKfULp?=
+ =?iso-8859-1?Q?c1qqQNBNEzm3IxlUjFZAqRumPSsNuAyMoCOssORmlH0VXGfBYz9bHoMaba?=
+ =?iso-8859-1?Q?Lw2Ukgr04TJi+l2+NPmXJDXcbsElTKb/kgaoSb3z+WRUzG5ss0ZpFb3eW5?=
+ =?iso-8859-1?Q?bPwBgMnakY6ItIKqGb/aK49wkdZb84PHJjpY8lo2X/iCaVIsabNcoO2a2i?=
+ =?iso-8859-1?Q?gADYoNiV9mc4vjTZRGqtTeho4T3F2k8r5tKYGlg6D6O1qIEr9Jioshrbn/?=
+ =?iso-8859-1?Q?fhLzjP4OomE+uL0lrw4FTN1jMn64uCwZx2ToPEo7hZxFqxFx+gOOO93RCA?=
+ =?iso-8859-1?Q?1nBmK7gfFZjYQYRWIcFqNyC88yewKR5+kj6nKjSwukwOIdklW/ejdXWWlg?=
+ =?iso-8859-1?Q?8r2cGkAZ4fDb2ii5cPeHJp9XNgnsvaOE2/xQW2af5NFsfE9CfItjectJ1Q?=
+ =?iso-8859-1?Q?W87PabAQtDrSWSpTCOfgXQYFhGScMRTY11ViPTv8vAyiEQck7BMVJnSHAw?=
+ =?iso-8859-1?Q?mEFBdNZ0dhlta1v/Hn6kjqFkRQCoX85WySfvdfAujMeA6xDHZQQ5Tyy9Sw?=
+ =?iso-8859-1?Q?KaLlcJoAm3+U3ZYgPYadyaR4C67p//Ra8dGSrIlVVH8o8pUW263hC79zoP?=
+ =?iso-8859-1?Q?1MqOX2Ma3gE73eu+nmAdRwE0TqXw2SFIzgJ7T9mdwbcSUSbuUpoLyhhved?=
+ =?iso-8859-1?Q?sevhlhQoYJuI/9oIIkOBA6csfxnjh5JRnjSd0O9y9BobBD27LXfnV3Ecn7?=
+ =?iso-8859-1?Q?SNchss/HnTtL8Sbz45A8LacDd/3/x5XayLoQQuoXP1HBGzBUtIr89jug+9?=
+ =?iso-8859-1?Q?psmIkWeEIZGNBaOutTDS9EN1T0hwJkt6Yq9N+GN8KWI97uCi8/IM?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d185fd8-e201-41a9-7259-08dee6709532
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 15:07:14.9891
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gmZRCCdaS4vUnudXw3IHPzh4SVRI6l/FVM63wq/HIhK51UC80ShXZzCnPnvshPev9NnrtC7Hr5+v5O9QBkd7lr1zR57Fo3TU7JuraP2bWUxZ+cJv65dFgWL0jEELoWPJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB12352
 
+On Mon, Jul 20, 2026 at 03:03:20PM +0800, Joseph Guo wrote:
+> On 7/20/2026 2:55 PM, sashiko-bot@kernel.org wrote:
+> > [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> >
+> > Caution: This is an external email. Please take care when clicking links or opening attachments. When in doubt, report the message using the 'Report this email' button
+> >
+> >
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [High] Shared GPIO requested exclusively by two CAN transceivers causes probe failure for the second transceiver.
+> > - [Low] Use of undocumented, downstream-only device tree property `fsl,cd-gpio-wakeup-disable`.
+> > --
+> >
+> > --- Patch [2]: [PATCH 2/2] arm64: dts: freescale: add i.MX952 FRDM Board support device tree ---
+> > commit 8bbcb28d08a05e0f4c57023333492b4e023f7caf
+> > Author: Joseph Guo <qijian.guo@nxp.com>
+> >
+> > arm64: dts: freescale: add i.MX952 FRDM Board support device tree
+> >
+> > Add basic device tree support for i.MX952 FRDM Board. The board-common hardware
+> > description is placed in imx952-frdm.dtsi so that it can be shared with future
+> > i.MX952-based FRDM derivative boards.
+> >
+> >> diff --git a/arch/arm64/boot/dts/freescale/imx952-frdm.dtsi b/arch/arm64/boot/dts/freescale/imx952-frdm.dtsi
+> >> new file mode 100644
+> >> index 0000000000000..b9ef6bec2bd5a
+> >> --- /dev/null
+> >> +++ b/arch/arm64/boot/dts/freescale/imx952-frdm.dtsi
+> >> @@ -0,0 +1,727 @@
+> > [ ... ]
+> >> +     flexcan2_phy: can-phy0 {
+> >> +             compatible = "nxp,tja1051";
+> >> +             #phy-cells = <0>;
+> >> +             max-bitrate = <8000000>;
+> >> +             silent-gpios = <&pcal6416 6 GPIO_ACTIVE_HIGH>;
+> >> +     };
+> >> +
+> >> +     flexcan3_phy: can-phy1 {
+> >> +             compatible = "nxp,tja1051";
+> >> +             #phy-cells = <0>;
+> >> +             max-bitrate = <8000000>;
+> >> +             silent-gpios = <&pcal6416 6 GPIO_ACTIVE_HIGH>;
+> >
+> > [Severity: High]
+> > Does this cause a probe failure for the second transceiver?
+> >
+> > The first PHY node successfully requests this GPIO line, taking exclusive
+> > ownership. Because the phy-can-transceiver driver uses standard exclusive
+> > requests (without GPIOD_FLAGS_BIT_NONEXCLUSIVE), the second request for the
+> > exact same GPIO line fails with -EBUSY.
+> >
+> > This prevents the flexcan3_phy and the flexcan3 controller from probing and
+> > functioning.
+> >
+>
+> This two CAN PHY did share same pin as their silent-gpio on hardware.
 
---7vkstdocennjbk5t
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-MIME-Version: 1.0
+Hardware share gpio, but driver may not handle this case. Are you sure
 
-On Mon, Jul 20, 2026 at 04:38:26PM +0200, Thomas Zimmermann wrote:
-> Am 20.07.26 um 16:08 schrieb Maxime Ripard:
-> > On Mon, Jul 20, 2026 at 02:36:19PM +0200, Thomas Zimmermann wrote:
-> > > Hi
-> > >=20
-> > > Am 18.07.26 um 21:12 schrieb Ze Huang:
-> > > [...]
-> > > > > > -	if (event) {
-> > > > > > -		crtc->state->event =3D NULL;
-> > > > > > +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane=
- *plane,
-> > > > > > +					      struct drm_atomic_commit *commit)
-> > > > > > +{
-> > > > > > +	struct drm_plane_state *plane_state =3D drm_atomic_get_new_pl=
-ane_state(commit, plane);
-> > > > > > +	struct drm_crtc *crtc =3D plane_state->crtc;
-> > > > > > +	struct drm_crtc_state *crtc_state =3D NULL;
-> > > > > > -		spin_lock_irq(&crtc->dev->event_lock);
-> > > > > > +	if (crtc)
-> > > > > > +		crtc_state =3D drm_atomic_get_new_crtc_state(commit, crtc);
-> > > > > > -		if (crtc->state->active && drm_crtc_vblank_get(crtc) =3D=3D =
-0)
-> > > > > > -			drm_crtc_arm_vblank_event(crtc, event);
-> > > > > > -		else
-> > > > > > -			drm_crtc_send_vblank_event(crtc, event);
-> > > > > > +	return drm_atomic_helper_check_plane_state(plane_state, crtc_=
-state,
-> > > > > [Severity: High]
-> > > > > Can fetching the CRTC state this way cause a kernel panic in the =
-core atomic
-> > > > > helpers?
-> > > > >=20
-> > > > > If userspace submits a commit that modifies only plane properties=
- without
-> > > > > affecting the CRTC, the CRTC is not implicitly added to the atomi=
-c commit
-> > > > > state.
-> > > > >=20
-> > > > > In this scenario, drm_atomic_get_new_crtc_state() returns NULL. P=
-assing this
-> > > > > NULL pointer directly to drm_atomic_helper_check_plane_state() ca=
-uses a crash
-> > > > > when it dereferences crtc_state->enable.
-> > > > >=20
-> > > > > Could this use drm_atomic_get_crtc_state() instead to ensure the =
-state is
-> > > > > brought into the commit if it is missing?
-> > > > I think it is fine here; I'll just copy the pattern from [1].
-> > > >=20
-> > > > [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/=
-mgag200/mgag200_mode.c#L487
-> > > It could be that there's a long standing problem in the overall logic=
-=2E Not
-> > > having a CRTC (and hence crtc_state) should also mean !fb, so we'd re=
-turn at
-> > > [1]. If we have a CRTC on the plane but pass a crtc_state of NULL, we=
- could
-> > > get a panic at [2], where it does crtc_state->crtc.=A0 I'm not aware =
-of any
-> > > bug reports about this problem, but it's still an issue.
-> > >=20
-> > > A number of drivers get this wrong by using
-> > > drm_atomic_helper_get_new_crtc_state(). The bot suggests to use
-> > > drm_atomic_helper_get_crtc_state() instead.=A0 This helper also retur=
-ns the
-> > > new state. But=A0 if there's no new state, it duplicates the CRTC's e=
-xisting
-> > > state. That's a bit of an overhead, but probably not an issue.=A0 Sev=
-eral
-> > > drivers use this helper, but also get it wrong. They tend to return e=
-arly in
-> > > the case of !crtc or !fb without calling _check_plane_state(). See [3=
-] and
-> > > [4] for examples.
-> > >=20
-> > > I think, going with the bot's suggestion to use
-> > > drm_atomic_helper_get_crtc_state() might be the best resolution for n=
-ow. It
-> > > still needs a crtc pointer, so the pattern is
-> > >=20
-> > > crtc_state =3D NULL
-> > > if (plane_state->crtc)
-> > >  =A0 =A0 crtc_state =3D drm_atomic_helper_get_crtc_state(plane_state-=
->crtc)
-> > >=20
-> > > _check_plane_state(plane_state, crtc_state);
-> > >=20
-> > > And in this case, _check_plane_state() should work correctly. But you=
- can
-> > > only use _get_crtc_state() in the atomic_check helpers! In the
-> > > atomic_update, atomic_enable, etc helpers, it's too late for the help=
-er to
-> > > copy the CRTC state.
-> > >=20
-> > > I think some other DRM dev should look over this as well. It's one of=
- the
-> > > trickier things in DRM to get right.
-> > drm_atomic_helper_get_crtc_state is safe in atomic_check. It's
-> > everything after that must use either get_new_crtc_state or
-> > get_old_crtc_state, as the global state cannot be modified anymore.
->=20
-> Thanks a lot for confirming.
->=20
-> Wrt. the logic in plane atomic_check, we might have to fix a number of
-> drivers. As I outlined above, some use _get_new_crtc_state(), some use
-> _get_crtc_state() incorrectly. But that's for another series.
+flexcan3_phy probed if can-phy0 already probed?
 
-Sigh... I removed all of them a couple of years ago, I guess some crept
-back in. Maybe we should warn loudly if it happens?
+Frank
 
-Maxime
-
---7vkstdocennjbk5t
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCal45eQAKCRAnX84Zoj2+
-dg/AAYDTsrf3Fkgk1ZRklRK6roAOsuZiFoREp5NdX6u03Jpi4+thGFxdq0lEKyS0
-6K/TZMcBgL6ZYUXFbXvt4bZJ6BknrGbVMlzCNEfV2lYGsQdJWBLqDAfrlypdfYay
-4ZjNz+WlxA==
-=nM5m
------END PGP SIGNATURE-----
-
---7vkstdocennjbk5t--
-
+>
+> The same design on i.MX95 15x15 FRDM. This should be fine.
+>
+> Regards,
+> Joseph
+>
+> >> +     };
+> > [ ... ]
+> >> +&usdhc2 {
+> >> +     bus-width = <4>;
+> >> +     cd-gpios = <&gpio3 0 GPIO_ACTIVE_LOW>;
+> >> +     pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
+> >> +     pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
+> >> +     pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
+> >> +     pinctrl-3 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
+> >> +     pinctrl-names = "default", "state_100mhz", "state_200mhz", "sleep";
+> >> +     vmmc-supply = <&reg_usdhc2_vmmc>;
+> >> +     fsl,cd-gpio-wakeup-disable;
+> >
+> > [Severity: Low]
+> > Is this out-of-tree vendor property invalid in the upstream kernel?
+> >
+> > The property fsl,cd-gpio-wakeup-disable does not exist in any upstream device
+> > tree bindings (such as fsl-imx-esdhc.yaml) and is not handled by any driver
+> > code in the upstream Linux tree. This acts as dead code and will trigger
+> > `make dtbs_check` validation warnings.
+> >
+> >> +     status = "okay";
+> >> +};
+> >
+> > --
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260720-imx952_frdm-v1-0-6d145eaaa5c4@nxp.com?part=2
+>
+> --
+> Best Regards,
+> Joseph
