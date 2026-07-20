@@ -1,217 +1,145 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628762D595B;
-	Mon, 20 Jul 2026 17:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A5E43D51A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 17:15:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784567135; cv=none; b=ihY2nUtNG52WUzHesObZGP3Zn6UvWEJsoZLrIWR9Yv1zSz9svWndvqBv8mzGEoNO2nDjeY9rfWxH3x86ukAnjkVko0FAbfB9/BOS2myzmLVbC02F3Vl6GDSwz7kLpum75HqVuQ4FZPYkXjoVuFu1qRMxzhYbAbvErLhEh/SbFjo=
+	t=1784567744; cv=none; b=XSkkDLcHChMA3jEujTBKetb0vWJ3L0+9pklVtI9kisLTnW5IVCU5O77RAiob7hs7bvjVRYPFaH/mUkQbd8XDWmSjRbdU1B3Um64tRA7u9XqgIjyxFdNmKFWtVD7Xi4YFCWUpEnjjvlhQIkEvcl2UI+7KhJU2H+FnWBrN3HqcGgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784567135; c=relaxed/simple;
-	bh=qJeYsETwP+eEhGKCdzERV0x47En3aHrqDDL9gK8PiMw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=no8QQveTQ03Nq2s4nIbm1J5/QaSY6ebKG29IgpQ/T6LqUcdKnitnqVvZV6Hl/MAa5D+I7t7kc/tZ7RMMpz254746cAgRhDt/0C+pDpB1379kV2XpWPIqdlak7EeI+/0aug9CHWlCXmEqdFesW6LTcFV3j8nWlIFQHv8tggmK2Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=pG2kfhOI; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	s=arc-20240116; t=1784567744; c=relaxed/simple;
+	bh=aotS4eEfRpVStcxAhOhiA18MzhLy96mjpdyq44LYXME=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OnGtu8zMnAsgJn4BqIXe3ZktUwTRvLbPrJwHMjvG6QwG8QGIhpi1mHe8sPsUP5d/yXMwwUrXhL24hB9D7QiYAlCGHsJ+ynDu0nvD9K6sQcqJX4vvn5SdHaD9Q/lKwBLD579nMie9JV8VwRYtPhHZF4P6Fg5CRVKU9mHG6Ab9hAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hJ7Ylhfx; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="pG2kfhOI"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=qJeYsETwP+eEhGKCdzERV0x47En3aHrqDDL9gK8PiMw=; b=pG2kfhOIEsUMA7C/qhY4MPmnOf
-	JMenr4AxtB0Zl85fQQzPQqAZIl/KJlqpIVEl8fIQdgpKn78WG62/5N8TAc+vGBYbkgGgaFrjM4+PJ
-	4Cj97xOFYt0+4hPTjRDGfQB0uB23hkJsfk+sywUorAWQUrqcYhRcXA9aSj5nDGwRQiY1Ps277BFdN
-	QW/K1CTs2tAdbso5IbG7O2fe2S2oEs9IsyXdYYfK5wf7+T2EAWtQwTm0joK++F0vNPgMvT4bHjEQO
-	/nx9GE2JpoDbku8jtH73danDFy8uCbzoSAX4VvQVh5PvsXnpo6Qk7D5/oyE+68OwfVLNI+wfYF8q5
-	ArH/mKQQ==;
-Received: from [2001:8b0:10b:5:20bb:46f3:73c2:f4b2] (helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wlrQb-0000000BMNG-3ANl;
-	Mon, 20 Jul 2026 17:05:17 +0000
-Message-ID: <68c461ea922df8878a1cfa8a914906372a012e30.camel@infradead.org>
-Subject: Re: [PATCH v2 20/20] KVM: x86: Use gfn_to_pfn_cache for
- record_steal_time
-From: David Woodhouse <dwmw2@infradead.org>
-To: sashiko-bot@kernel.org, Sebastian Andrzej Siewior
- <bigeasy@linutronix.de>,  Mauricio Faria de Oliveira	 <mfo@igalia.com>
-Cc: seanjc@google.com, pbonzini@redhat.com, tglx@kernel.org,
- mingo@redhat.com, 	bp@alien8.de, dave.hansen@linux.intel.com,
- x86@kernel.org, hpa@zytor.com, 	kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org, 	sashiko-reviews@lists.linux.dev,
- stollmc@amazon.com
-Date: Mon, 20 Jul 2026 18:05:16 +0100
-In-Reply-To: <3291d47ea5fdd6ee2f284cadb518473130954cfc.camel@infradead.org>
-References: <3291d47ea5fdd6ee2f284cadb518473130954cfc.camel@infradead.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-FbRdK00l1UqrfFZPVBh+"
-User-Agent: Evolution 3.60.3-0ubuntu1~ppa9~24.04 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hJ7Ylhfx"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4956242332dso7928885e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 10:15:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784567740; x=1785172540; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=PMzyY0w2hvyVLQCy4KUYX/zX5WWoesLqRMdPQHdI44g=;
+        b=hJ7YlhfxSUFpKbrRxkO1JMHoeW/1TPfZtcNQ/62FYGX12NvDO6xZDK1Gvt5Mrd3CBS
+         aVbyC3DYPOaELnyPdUQJxzq3kYvCaoW0/K0M6/df2Q8eTa9Wsfe+6iWjzX62X4WJZ4xG
+         4LuIlpZxIJqK92r1RBvqSiHOrscxlm39OG2zkHVXW3jgLtG1cl5MzrLsf3qONWJALB+p
+         MrUbGJLV1HqyePF0F8q11ziWPlHF+J1hC+22/jtxkxO0CycTveLxVAy6btyogEIZJ4YF
+         jG1X5pj/dq5t40T4G5bqgK5vBcIU6mzXPVFnKPhkZWD1+QZQwzYlKoiQOjfHjM0kyBLU
+         QuEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784567740; x=1785172540;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PMzyY0w2hvyVLQCy4KUYX/zX5WWoesLqRMdPQHdI44g=;
+        b=eHZ+qU4Bpex7dLDtZlKe+qpEbYQJNxcYJ9uN2qLqsn/LZG6+MXAziQRyV0Cj0WWXuD
+         XhSerCcvZPk2BFvH+D/5VzsnazJH+fI5+aqi13PtqDT1L9iGoRClp1YeClGNiH8lriRB
+         +Gt6XVjPXPzSjPJOxDeQYhqysshjIMgLBlMI6RJ3cUAQ1PIcxpqV2+7/bdu75RypIrkt
+         MkP/6pymi4aQcSOUk3x1IA1AfPNbHhEzABYG47QLk3p+7wNdkbDUHzD6M/Y3NsjLGWUH
+         FI95D4QVjpLrguu0ZLI9EIA+IPN4Kq3JRy16xL19Rqy7v3kBFb2AyxL4Y/sNDqTwk8GN
+         jgsQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqY6i6+tD54pWRi+F3eH8aOyTvvyY5lJ3Z7u3pk5jQjh9Z3UeuIWXG/DONcJsX+PrSC+yiIXPaGVpzIPV+3vFQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw7eez7zSYd6ig7NfTuFShtxeWWGd1McbL4Xqh8nE4Kbk6ijQXn
+	NXGf+l3JFaZ9MX9AHdUvQYwPWv0B6MNjxZqXwpbrU+60G/DztNCu1aW0
+X-Gm-Gg: AfdE7cmcbQaR+WMuYUpWGTtbPuqbYJIprbM4HbU66EHiVHhCkzCcyrICVdj1ZFK9RGH
+	WmCxdP0Ru+W+4eSTBPW/0H+1N+myJljcHvPaTVmxA2bngu1NwyNEzwrdpTjCm9+loRpXz8VdFsx
+	GqlGbcduAVDmDselRO10VuZ0LqC9fuO7Fn6tw97BKA9372DOFGvm+O5rcalndP114WFf8j5YdrV
+	eTiMvotWszPnM7s+cX4Gc+fm4fkMsNhjbmIWOHtdN/q+lHCRK2+AVNaI9SKaoqivG62LmAquT6R
+	v0/6IIs9S3KAqwydUny544JRfA4yqWwIGj+wmZMd2QuGP9e8FqSSmwdnpcyFiihiFWIY9IZGYgW
+	asW/4VQIrQltu0xbmngafiJhgAuz8TsLatNYGRCbMd/THcDQQ1UJnVu10W/3Xho9CrvwEMydEpT
+	NzpOo9DoqbjaruyvkZkImqKC/fKMXv/hVKS3xpokgXxAfTyXfYexHq1IZ7O24di4yevQ==
+X-Received: by 2002:a05:600c:4f13:b0:495:4fd5:570 with SMTP id 5b1f17b1804b1-4954fd506eemr130115115e9.4.1784567739453;
+        Mon, 20 Jul 2026 10:15:39 -0700 (PDT)
+Received: from localhost.localdomain (host86-153-201-25.range86-153.btcentralplus.com. [86.153.201.25])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4956547af7esm2304865e9.8.2026.07.20.10.15.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2026 10:15:38 -0700 (PDT)
+From: Nnamdi Onyeyiri <nnamdio@gmail.com>
+To: nnamdio@gmail.com
+Cc: bpf@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	horms@kernel.org,
+	jakub@cloudflare.com,
+	jiayuan.chen@linux.dev,
+	john.fastabend@gmail.com,
+	kuba@kernel.org,
+	kuniyu@google.com,
+	ncardwell@google.com,
+	netdev@vger.kernel.org,
+	pabeni@redhat.com,
+	sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v6 0/2] bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
+Date: Mon, 20 Jul 2026 18:15:33 +0100
+Message-ID: <20260720171535.67867-1-nnamdio@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Content-Transfer-Encoding: 8bit
 
+Spurious wakeups in tcp_msg_wait_data() aren't being handled by
+tcp_bpf_recvmsg() and tcp_bpf_recvmsg_parser(), leading to unexpected
+EAGAIN errors returned by recvfrom()/recv().  Adding handling for the
+wakeup and a selftest.
 
---=-FbRdK00l1UqrfFZPVBh+
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This issue was first discovered in an application that adds sockets to
+a sockmap as a way to view the received data.  No redirects or any
+other operations are performed.
 
-On Tue, 2026-06-02 at 13:29 +0100, David Woodhouse wrote:
->=20
-> > [Severity: High]
-> > Can this cause an ABBA deadlock in the scheduler on PREEMPT_RT?
-> >=20
-> > kvm_steal_time_set_preempted() is called during a vCPU context switch
-> > via kvm_sched_out(), which is a preempt notifier hook. This runs with
-> > the local CPUs runqueue lock (rq->lock) held.
-> >=20
-> > While the code correctly uses a trylock to avoid sleeping when acquirin=
-g
-> > the lock, the CLASS macro destructor will implicitly call read_unlock()
-> > at the end of the function. On PREEMPT_RT kernels, unlocking an rt_rwlo=
-ck
-> > can wake up a waiting writer, such as a concurrent kvm_gpc_refresh().
->=20
-> This one is more fun, and the problem already exists on RT for the Xen
-> runstate update so it's not even really new with this patch.
->=20
-> I think the gpc lock needs to be a raw_rwlock_t, so that it remains a
-> true spinning lock even on PREEMPT_RT. The writer side
-> (kvm_gpc_refresh) only holds the lock briefly to swap in the new
-> pfn/khva after doing the heavyweight work, so it should be fine as a
-> raw lock.
+Sashiko has noted a few other pre-existing issues in the same area
+(https://patch.msgid.link/20260714205118.17DB11F000E9@smtp.kernel.org)
+that can lead to EAGAIN in tcp_bpf_recvmsg() and
+tcp_bpf_recvmsg_parser().  A local run of Sashiko also identified a
+potential issue in tcp_bpf_recvmsg() handling zero-data FIN packets when
+the MSG_PEEK flag is set.  To prevent this patchset from growing too
+large, I intend to submit follow up patches to address these once this
+one has been accepted.
 
-Alternatively, since *most* uses of GPC are per-vCPU, a spinlock might
-suffice. The exception is the Xen shared_info page, which is accessed
-by all vCPUs.
+Changes in v6:
+- Closing the file descriptor in the selftest worker thread.
+- Ensuring the selftest loop breaks early for an error in the worker
+  thread.
+- Added comments to selftest regarding focus on EAGAIN error.
+- Updated selftest commit message to imperative mood.
+- Link to v5: https://patch.msgid.link/20260717155348.54975-1-nnamdio@gmail.com
 
-We probably *could* turn that into a GPC per vCPU all pointing at the
-same GFN, I suppose... but as someone pointed out fairly recently,
-rwlocks don't scale that well as all the readers contend on the same
-cache line anyway, so a spinlock might not turn out to be that much
-worse even for the shared_info page.
+Changes in v5:
+- Move selftest from net into bpf/prog_tests/sockmap_basic.c
+- Link to v4: https://patch.msgid.link/20260715213538.37229-1-nnamdio@gmail.com
 
-Or maybe we should do a KVM_GPC_LOCK along the lines of KVM_MMU_LOCK,
-which selects between rwlock_t and spinlock_t based on PREEMPT_RT?
+Changes in v4:
+- Fix potential data loss in tcp_bpf_recvmsg() when a FIN or RST has
+  been received.
+- Check the return code of pthread_create() in the selftest.
+- Fix race caused by using EXPECT macros in a thread in selftest.
+- Link to v3: https://patch.msgid.link/20260714203927.32289-1-nnamdio@gmail.com
 
---=-FbRdK00l1UqrfFZPVBh+
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+Changes in v3:
+- Added the sockmap_recvfrom selftest.
+- Link to v2: https://patch.msgid.link/alFRK66z45eDNZA7@localhost.localdomain
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-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
-SoVuRTP13MZBeLBAj9gfm2UAAAAAAAA=
+Changes in v2:
+- In tcp_bpf_recvmsg, handle signals and the socket closing in the loop.
+- Fix spurious wakeups when SO_RCVTIMEO has been set on the socket.
+- Link to v1: https://patch.msgid.link/ak_rR-Skd8Mvn4mH@localhost.localdomain
 
+Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
+---
+Nnamdi Onyeyiri (2):
+  bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
+  selftests/bpf: add sockmap recvfrom EAGAIN selftest
 
---=-FbRdK00l1UqrfFZPVBh+--
+ net/ipv4/tcp_bpf.c                            |  69 ++++++++--
+ .../selftests/bpf/prog_tests/sockmap_basic.c  | 124 ++++++++++++++++++
+ 2 files changed, 184 insertions(+), 9 deletions(-)
+
+-- 
+2.52.0
+
