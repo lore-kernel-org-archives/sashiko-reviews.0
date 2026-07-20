@@ -1,186 +1,149 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2111242FCBD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B298478874
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784571935; cv=none; b=F3x1KyjGv/WKriy54B6LgYAanhjwJCTorI0qg4LNM6xDWmxeRfE7kw5K7WtAEcY42bnK42W5cwBMi9CNdVfGAWGq0lc6jV5G19jHehzHJ6BLrRaGjdNhL/2cDlmgR6sNJZrqpkNWxEl1LzesdlkcSToGgG9kOFSz0/nPphNandY=
+	t=1784572108; cv=none; b=dMFIb5r051kZgsD5+vSBLXKxn02sF1Hjcz6ctehHxjbeUbS+6b+b8Taask1T6jHmoqDK7mziztEPubEnanWjc6PJkUM3UupH6Uf6s8l9R5k91GTVloR2kmhvzhbPN7m+1fvC7pcCGI9J1WC4wt+DoWHh+Qfe3kFZxJ4Ibi3mZxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784571935; c=relaxed/simple;
-	bh=k+fQpm49l1+4lmdnx1rm8Musxyu597fruggM/xFVb8s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bOilLWKvhBq6bzE3PUcf155oUqkLR2fCjiWR6NXKYlcd/FRIVV9vwhcObhkyJacKgETzyUQ+85ThsfLABoiw/Tf7pgBKBCLzYpa2dOVq5sXoHUV5xhGZBARUetkbUvYWcdOAKtNnAL8q2UG4LebRQiO9yfSrs/AXUA/enyoz1u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WfQhYska; arc=none smtp.client-ip=91.218.175.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1784572108; c=relaxed/simple;
+	bh=qB1qZm+HRTg8pqCweELVHv8jUzWxu0os0ZQCjUBjG6U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cxxLqumDI3Sx5Dz1UTKP7OvXYERTAVRVB9EjIRcJQfapRE8+tGhDL4oVw1LA+gZpYSGKkMc/CCQRGXe1yBtuda+wFDjOMdN65jzJcqGg6ja492OH2KckT2gy5Lg8Z1FrtDID/lrO1Hava0WVLXENsaPZF9dBUMHEmcQ+nR6cgBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=aCVcKkMa; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WfQhYska"
-X-Gm-Message-State: AOJu0YwEh3ZMoXB8ly1BgTmoTP8KIywOHb+Mp1CwVbcGnL4gCgxDR0Qg
-	adKUuXUDFlfH16WDpu3rdXs7uUX3HXrThUWtn7pVJ548lxxUb+vwL2/Hpxs5pzfQHb+hQgk/0uK
-	Xej33ZAPb3sMnJCBDUOgh7gbSfkf05GxT/0x9H2M6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784571929;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8Oz31bQMHhvgoNQfGkOKJ8LkWQ7qWzkNqWD5sX8hF6Y=;
-	b=WfQhYskatIJYH6v44TtEnvzs47Kjl6O4/MfnO22D2RAMTJokcenxYaJ6X37sm9Edmmd+Yj
-	E+aAA1QWmhvbZO0EHIVbnCkLRJqAomnoN1E3N1mipgRISkQy5fOsWURxpPEIGapJOU7QCO
-	4x8zvA5rgl+8C+4+llV4SgUFYa7mRH0=
-X-Received: by 2002:ac8:5a8b:0:b0:51b:fd5e:e81a with SMTP id
- d75a77b69052e-526027c23camr4280141cf.20.1784571920974; Mon, 20 Jul 2026
- 11:25:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aCVcKkMa"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cab97c86bdso426795ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 11:28:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784572105; x=1785176905; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=F4chItj7ZQ/m18fHajf2tDvUHuTNAS2VcTDNk0ORlSY=;
+        b=aCVcKkMa1TyfWlPiHIu+miJiHqIz5g2Hg1DJ4QrCwFR3vUsp0AlgiratQwFU3ETP2n
+         p+xQuhgeDdthCdEgnRsPIpdW/FqXfORaeysscYRbLene3CV5fUcwdYCpeiu+1V5BNx07
+         tfoT8C0o1C0ucGlALEhIFvPgeqt42ZeTYK8w4WGgW3ebhGLVHtS8m3NdFAGRkg0z5l8w
+         NbKh++db7p9zD8mykrhKvp6icb11qlvMLhD44zfWJDwyghYbuC0K4kYzRT7rwbmf7+77
+         MbEsw60n5ZJ8bmBvPy8+hTaihYFxsYHX85uYWP3LGjciSbDnTuewtyrTOwbEv6GsW6RE
+         Yq3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784572105; x=1785176905;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=F4chItj7ZQ/m18fHajf2tDvUHuTNAS2VcTDNk0ORlSY=;
+        b=Sx8JZYed5i4L2j2E8Fkz+Zza4+2lQ7r90vPIrw1b+jG1UMqeEeXrPdjtPwJi2VAadP
+         25etyxmEf3scK14CCk7RWmQIWsKQafEV8i1hUKeRaEgO/fM4efsFHN72pGkNmkgMleIh
+         Khk0eGDKPFn1QklWlG5JgUr/5SWEzx2umBhFwwTijzLedo0343kKZ5zI7csUe6vouSUU
+         1kVkBa6VYPbnMzFL/7E9CGEKZPRam7Oeuk3Scz+h/VBm6T2303SiD1QpafL+yFwWq2ym
+         ZlvYWnxDSAZOolzes2QE4mZ2kpvmytvpMKmu4cMOU2817lLuhLplEqrJXzBpc+/BIDHl
+         OeeQ==
+X-Gm-Message-State: AOJu0Yys9qq6+vROw18lzfIvaWnCJSs0WOQrcquXJk4Ok/hsp2tmOK86
+	I8R5UEH2XNZqUM4uKeH1pyx8WqA9YvhfhbQzn3PyQNudYE+NrcmesMA+BgQ4iV9RrznpjHpI+ZN
+	LI5cj2xk3
+X-Gm-Gg: AR+sD10FEPRD4C/LLqLMucmtSrB/pZI/dZVR5o6gRL0mCovLjD7XNIsL4ZUj8tNjN1J
+	Xd8qsaD+mIDWO6L6I3aAPuq+UWO/UvPoZ3BYyzSw9E6StxTtHISxR0wlo5Z+A/lpXq1P6O1dVwc
+	KteYFcGs63MoqvYhqm3Mn2/AiM3Y4K9Zg2f+MNMtPgufuEvX0/5Mdij8IokbZ/x8pxctpxOgrG9
+	ipJ/6fgDE+LPI3B/kY0gDNWDF8N3Cfh4zoh+oz8tlQQt4bXgFbFyuuaS1OmKUQje7NcXoDEV9HD
+	3BTegXMeZDGZ2marogeTNyE/adpvq9xF60py//DiL9h7ur3R0KTQPecJGAsFo95k7OWQe2Y2Hwg
+	PZLJzGMrrG2LHJKLMw7wJCrvFBWGtsUiLLroiFXOjidGA58oUSkXida4RYq++0sHrcfoQr5z5Wr
+	hVDrnOTFbTLx4SAX/X9w+u4I8hHGhfOn4k2/mpPck=
+X-Received: by 2002:a17:902:c94f:b0:2c0:bf57:8746 with SMTP id d9443c01a7336-2cf7b6989a3mr1866065ad.18.1784572103969;
+        Mon, 20 Jul 2026 11:28:23 -0700 (PDT)
+Received: from google.com (176.13.105.34.bc.googleusercontent.com. [34.105.13.176])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cb517f8f77dsm5120904a12.11.2026.07.20.11.28.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2026 11:28:23 -0700 (PDT)
+Date: Mon, 20 Jul 2026 11:28:19 -0700
+From: Vipin Sharma <vipinsh@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v5 19/20] vfio: selftests: Verify that opening VFIO
+ device fails during Live Update
+Message-ID: <20260720182453.GG1381701.vipinsh@google.com>
+References: <20260714151505.3466855-1-vipinsh@google.com>
+ <20260714151505.3466855-20-vipinsh@google.com>
+ <20260714154208.274791F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260720161343.1367007-1-fuad.tabba@linux.dev>
- <20260720162412.1401272-1-fuad.tabba@linux.dev> <20260720162412.1401272-2-fuad.tabba@linux.dev>
- <20260720175513.8D4DF1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260720175513.8D4DF1F00A3A@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 20 Jul 2026 19:24:44 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTz4gsfbr04gqFwAu1DXvrC97wSor5DnDGG17qaWbMiRaA@mail.gmail.com>
-X-Gm-Features: AUfX_mxH03Vw1Gcio4Cr31tILBRNuZ8GhAs6QvKGRHwHuKt0nwU5F641beYYmc0
-Message-ID: <CA+EHjTz4gsfbr04gqFwAu1DXvrC97wSor5DnDGG17qaWbMiRaA@mail.gmail.com>
-Subject: Re: [PATCH v1 11/11] KVM: arm64: Tag host-VA hypercall parameters __hostva
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260714154208.274791F000E9@smtp.kernel.org>
 
-On Mon, 20 Jul 2026 at 18:55, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Medium] `kern_hyp_va_host()` macro fails to strip the `__hostva` addre=
-ss space tag for Sparse.
->
-> Pre-existing issues:
-> - [Critical] Missing host pointer ownership validation in always-on hyper=
-calls allows a malicious host to corrupt EL2-private memory (Confused Deput=
-y).
+On Tue, Jul 14, 2026 at 03:42:07PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] Test assertion failure due to IOMMU group already being claimed by preserved cdev
+> - [Medium] Test assertion failure due to re-binding already bound preserved cdev
+> - [Low] Abstraction violation using free() instead of vfio_pci_device_free()
 > --
->
-> --- Patch [11]: [PATCH v1 11/11] KVM: arm64: Tag host-VA hypercall parame=
-ters __hostva ---
-> commit 4acf0dff6116caffddce5517211ac9136d9b0ee1
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Tag host-VA hypercall parameters __hostva
->
-> This commit introduces the __hostva sparse address space to tag host virt=
-ual
-> addresses passed as hypercall arguments in the nVHE hypervisor. It adds
-> kern_hyp_va_host() to explicitly unwrap and translate these tagged pointe=
-rs,
-> ensuring that untranslated host VAs are caught by sparse checks.
->
-> > diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/=
-kvm_mmu.h
-> > --- a/arch/arm64/include/asm/kvm_mmu.h
-> > +++ b/arch/arm64/include/asm/kvm_mmu.h
->
-> [ ... ]
->
-> > @@ -140,6 +142,14 @@ static __always_inline unsigned long __kern_hyp_va=
-(unsigned long v)
-> >
-> >  #define kern_hyp_va(v)       ((typeof(v))(__kern_hyp_va((unsigned long=
-)(v))))
-> >
-> > +/*
-> > + * Translate a __hostva-tagged host VA, dropping the tag: the only san=
-ctioned
-> > + * unwrap. Translation only, no ownership or bounds validation; the re=
-sult
-> > + * carries the pointee type stripped of the tag and of any cv-qualifie=
-rs.
-> > + */
-> > +#define kern_hyp_va_host(v)                                          \
-> > +     ((TYPEOF_UNQUAL(*(v)) *)__kern_hyp_va((unsigned long)(__force voi=
-d *)(v)))
->
+> 
+> --- Patch [19]: [PATCH v5 19/20] vfio: selftests: Verify that opening VFIO device fails during Live Update ---
+> Note: Due to recitation restrictions, this report uses a free-form summary
+> of the findings rather than quoting the original patch diff.
+> 
+> commit b5a56d527567933e2f5fd3077aed99e8404f21c3
+> Author: David Matlack <dmatlack@google.com>
+> Subject: vfio: selftests: Verify that opening VFIO device fails during Live Update
+> 
+> This patch verifies that opening a VFIO device through its cdev file and via
+> VFIO_GROUP_GET_DEVICE_FD both fail with -EBUSY if the device was preserved
+> across a Live Update.
+> 
 > [Severity: Medium]
-> Does TYPEOF_UNQUAL() actually strip the address space tag in Sparse?
->
-> Sparse treats address spaces as type qualifiers that typeof_unqual (and
-> by extension TYPEOF_UNQUAL) does not remove, unlike const or volatile.
-> Consequently, this cast evaluates to a pointer that still carries the
-> __hostva tag.
->
-> When assigned to a regular kernel pointer, this will trigger incorrect ty=
-pe
-> in assignment (different address spaces) false positive warnings across t=
-he
-> codebase when running make C=3D2.
->
-> Should this use an explicit cast to __kernel (address_space(0)) to
-> correctly strip the tag, similar to how per_cpu_ptr handles __percpu?
+> In check_open_vfio_device_fails(), the test loops over legacy modes and
+> calls vfio_pci_group_setup(). Since the device is already opened via cdev
+> before kexec, the group's cdev_device_open_cnt is greater than zero. 
+> 
+> Does this cause the group open attempt inside vfio_pci_group_setup() to
+> fail with EBUSY? If so, it looks like this will trigger the VFIO_ASSERT_GE()
+> assertion on the group_fd, which would abort the test before it can even
+> reach the VFIO_GROUP_GET_DEVICE_FD ioctl it is intended to verify.
+> 
 
-The __hostva tag is stripped, so these warnings don't occur. Under
-sparse TYPEOF_UNQUAL() is __typeof_unqual__(), which in sparse >=3D
-v0.6.5-rc1 removes the address_space qualifier, so kern_hyp_va_host()
-returns a plain kernel pointer. Verified: C=3D2 over the nvhe objects is
-warning-free, while a control doing an implicit __hostva -> plain
-conversion does warn. Older sparse lacks __typeof_unqual__, so
-scripts/checker-valid.sh disables checking with a warning rather than
-emitting false positives.
+Not an issue.
 
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
->
-> [ ... ]
->
-> > @@ -421,9 +421,9 @@ DEFINE_KVM_HOST_HCALL(int, __pkvm_host_mkyoung_gues=
-t, 1,
-> >  }
-> >
-> >  DEFINE_KVM_HOST_HCALL_VOID(__kvm_adjust_pc, 1,
-> > -     struct kvm_vcpu *, vcpu)
-> > +     struct kvm_vcpu __hostva *, vcpu)
-> >  {
-> > -     __kvm_adjust_pc(kern_hyp_va(vcpu));
-> > +     __kvm_adjust_pc(kern_hyp_va_host(vcpu));
-> >  }
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this lack of ownership validation
-> allow the host to corrupt EL2-private memory?
+Kernel data structures are initialized after kexec. So,
+cdev_device_open_cnt will be 0 and vfio_pci_group_setup() will not fail.
 
-Working on it :) Different series group [1].
 
-/fuad
+> [Severity: Medium]
+> In after_kexec(), the test retrieves the preserved device_fd and attempts to
+> initialize it with a newly created iommufd by calling
+> __vfio_pci_device_init(), which then issues the VFIO_DEVICE_BIND_IOMMUFD
+> ioctl.
+> 
+> Because the device_fd is preserved across the Live Update, doesn't it still
+> retain its original binding state and reference to the original iommufd
+> context? It appears this might cause the bind ioctl to return -EINVAL,
+> triggering a fatal VFIO_ASSERT_EQ() in vfio_device_bind_iommufd() and
+> crashing the test.
+> 
 
-[1] https://lore.kernel.org/all/20260715081238.1891918-1-fuad.tabba@linux.d=
-ev/
+Not an issue.
 
->
-> Under pKVM, the host is treated as an adversary. If the host provides a
-> TTBR1 virtual address that maps to an EL2-private physical address,
-> kern_hyp_va_host() will translate it into a valid EL2 linear map pointer
-> without verifying ownership.
->
-> The hypervisor will then write into EL2-private memory when modifying
-> flags in __kvm_adjust_pc() or hardware register state in
-> __vgic_v3_save_aprs(), corrupting its own state or the state of
-> protected guests.
->
-> Should there be an explicit ownership check before dereferencing
-> pointers from these always-on hypercalls?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720162412.14=
-01272-1-fuad.tabba@linux.dev?part=3D11
+We do not have support for iommufd preservation yet it will not
+retain reference to the original iommufd context.
+
+> [Severity: Low]
+> In check_open_vfio_device_fails(), the code directly calls free(device) on
+> the pointer returned by vfio_pci_device_alloc().
+> 
+> Would it be better to use vfio_pci_device_free() here instead? Even if it
+> only wraps free() currently, using the library's abstraction might help
+> prevent future memory leaks if internal allocations are added later.
+
+It is not an issue right now. But I do agree we should use
+vfio_pci_device_free() for future proofing. I will change it.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260714151505.3466855-1-vipinsh@google.com?part=19
