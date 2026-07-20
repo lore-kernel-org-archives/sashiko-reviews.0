@@ -1,345 +1,384 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0223C2BAF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 07:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C093C279D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 07:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784532812; cv=none; b=fjpwd2APeL3CPlmsPRLxCiM+TAKzO2jTlWIP0PLxL/f7toby/SXjudQBPCvk7bZn/ECIvSR78U4/0Fsi7k4Bz9wgigLOZat37EBXSRF2u911SyZpQKkeQE/4Dhb957JzkYSBxHjuGRmkr49aOisqlGavJY7UHWiuUHnS9aOuyKM=
+	t=1784532929; cv=none; b=nZB+DV8lqlEOadtw5SahRiWcJnU3mR4hvd5nt306+qI9uwRVpQi0t3jNuvjRsqP/g8P/lmie9W+u7VMFht/nKK2R99jj/axACMlR2LrEkHP6Qpy55URSYZfhKUA2ilmMHnpzNmFwlHN4kOVKWx6nvZRFfhs7lEKBhxqeMtefTMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784532812; c=relaxed/simple;
-	bh=EtFr7SpaBZPqMsLgiZiW+YfjFccwIhevLWBpka1ep4M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RMxaJZtSELLt8jLS28EM/mE1xQ7iE3l81ff0yjP3+K3tsm+ftmIjCzaHS5e+vImZHU59N21Z4GuTDok8aKcrb/yUfFYLqjiDUvCIX45z9n+en/Bfu1OQnEh3lhZoC1Zy9oBJ6CP9bjFbDk7M3pM1Y2HAXvx9dVsGFEtyQJDBOis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GtRvascR; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1784532929; c=relaxed/simple;
+	bh=PMZBM/MTbGlxhzANi5QHwMBKS4BFZFDGMcnOFLX+RDQ=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=h6U7TUK05isAM57emBz6BDkcsODnlxgni5QANm43unFvjrir1fTbn45F4yq0zFhBaZKb44S2FNGpMopP37hZ7jyRM6mJheRjLb+084hB+kuDBEKxPAAL2XNQSnGl8BDQSnoEOKX0lsIe3T47i1jRICiaQBUloGHGiuJqSk6ZG8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qslAWDie; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GtRvascR"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-47f71156e1aso487538f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 00:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784532805; x=1785137605; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9dlR1VSEOP+P+zQGfaFMhFwH/x1vDY3bfx6C3cbYWvs=;
-        b=GtRvascRAJVDP/sggulm45cTzob97sCHSzAxUL4DssajD0RZaF5oEGWU4wm5HWU+qj
-         5mIN4jX1C+tDtRIU8KoEEQmyNl+uhosjVz5XM0jhU9Y13n601EmPalqKo0rBp6PX4z78
-         3YcuAlmrK5LdwY5cz6+UiXsM2JP64NjSbrcPXGlCayLmXNmrV58SePAs0ft6Sal95eOx
-         /WK/X+bYplEY5dpMccWCgEjYe2trdeLWuNqAzRiJuO4BR4dpc2GhlYN7XgsjZKN5usZV
-         ZHzcsghPO246dn8y+sp3OBHBKn4sbQvbwW3hzfGuER7XlYxDJglyecfYw84Ky6VQ4BMU
-         Xzxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784532805; x=1785137605;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9dlR1VSEOP+P+zQGfaFMhFwH/x1vDY3bfx6C3cbYWvs=;
-        b=Pxls9VP+JyNBjJwAqcR1AcqB/BhfNc2b6mSLkU6ijMlC4ngGPMrmrRzGBt0FNYTVhX
-         oQC2HmY4NsQl4DlcozlbQiz7orv3ws2s+i1n9x67yAfJxn5i1GcJHc4hO/UQcZWXLSD4
-         e3qDi7KZilAnTmxcQKdYGNehRXvl1bn3OgV23f13RYKTHxlmOVpZtQ2TPPriFm8S8UxU
-         G5O/MNVl2p7Mzt2MZjrpvYecNPZOS5kNaFzNAICNe9q6OCF+BtQ79lpeW8Wwu6VT5MjX
-         kD83mhTSuglSuWFMbTThspHjdEv7PqRYaqrjxPwRiUnn+cEwlaFuUFPTYY5t4/ZcN8SW
-         n8kw==
-X-Forwarded-Encrypted: i=1; AHgh+Rozmk7MI0iyDxbDZapYWxPuWS1MTfn335YBmQJIe+XQK8hLr9O8yz1nej3JjSsq3uicG6GxbRDg7O6ZZ6e1IMY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzasoevuvQZkKGLguYCGtUuv1ZDcZ0z572SLFeQq5U7v3cxQ1Gl
-	a+st61UFhS+EvSuw2UR5SH96k9zh6Rpf3oIIgmJEKukLMAfCa2qkeCWObsM9Ef70+/g=
-X-Gm-Gg: AfdE7cmN4TUf8BM2fARCYPUYKveD518IQaS03Zh9xLfPGbAb6i+nRmUstNcGv85XrwX
-	YuenNpT+fXi6Web9iXWSVyzX3HsGhjrW9bSa6I7g/pnbW/9VElPn32JlXD7D4OjRcgXWFbJJIoj
-	uJUM4bC9b0pr5d1I83XtwFhrCXREPQSfoNhDctJq6SE4XyWdHlfTRo5Pon4a869JkZ0znPtB3kx
-	wlrsRK80w+DunbZNkLJxwBMvH6wgKMJPzfMXP01tJlXLwDnY0ei7W3okUClxhtm8vGX94OvVmQj
-	biUAp6vgNxX7W+9BIS/wRO7TJRhE2lfTnMDflxgjqxxtvplV6ydZBe5Aks/OW8jNnjed8ouKuRA
-	l8aVdMGWkge1slRsNxM7VY90G6Qk+3SikGPvTjMnUHBLmH1u+9zzQyGTpw6ul3sUUZwXcp5re/p
-	CrIW/X1MTWRR3bbg==
-X-Received: by 2002:a05:6000:491c:b0:47f:73d3:bfc3 with SMTP id ffacd0b85a97d-47f73d3c0fcmr5580169f8f.61.1784532805224;
-        Mon, 20 Jul 2026 00:33:25 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff24:7210:b6d9:bb37:a20c:1c55])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63edd7d3sm26586179f8f.25.2026.07.20.00.33.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 00:33:24 -0700 (PDT)
-Date: Mon, 20 Jul 2026 09:33:13 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, brgl@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v22 06/14] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <al3POSAJKHkLYVgW@linaro.org>
-References: <20260717-qcom-qce-cmd-descr-v22-0-ff0d18b27246@oss.qualcomm.com>
- <20260717-qcom-qce-cmd-descr-v22-6-ff0d18b27246@oss.qualcomm.com>
- <20260717085136.E0FBC1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qslAWDie"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66K6frR21368179;
+	Mon, 20 Jul 2026 07:35:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=1dd5BX
+	JNx6IK185kgg7iBetV9iiR+8HQJxE0crLTrYE=; b=qslAWDieDwmIo3k4VHgc0v
+	MujTl3GaZXuD+30VTvZ8fJ/zBRSt/Jydzmq0bkgKLEQ1bNUgUc+vxz+bS8QYPogU
+	QqeQ2QLHJ5b9j03law7AJx3BRqtg90f/Sdx8v9Lg9aMcFmgK7sPCELjXbj6ngZrY
+	+BcvHRxNiGEA4/xHoU5vMNEO+DTr+ucwkzNdG/vBwNBpTlG3VUZtk2g7x3F/XxQB
+	ewX0+mTL/3NStcdHf1rkxTEFcbaliJAc6RyREF1YS7zdhgBB11shVW9au71Z7X7+
+	Q7HfZTJ5mhSy7oJHp+xXOY+iSOQMi6InUupHdCnO5lxFM5ThF0Ftcun7c8aOViJg
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78fx2x2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 07:35:26 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66K7Yb3m019033;
+	Mon, 20 Jul 2026 07:35:25 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgp1g4ct1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 07:35:25 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66K7ZNTl14418378
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 20 Jul 2026 07:35:23 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 805BC2004D;
+	Mon, 20 Jul 2026 07:35:23 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6CC3320043;
+	Mon, 20 Jul 2026 07:35:22 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.39.16.54])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 20 Jul 2026 07:35:22 +0000 (GMT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260717085136.E0FBC1F000E9@smtp.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH 1/5] powerpc/htm: Add interface to expose HTM trace data
+ via perf
+From: Athira Rajeev <atrajeev@linux.ibm.com>
+In-Reply-To: <20260701085047.1C2CE1F000E9@smtp.kernel.org>
+Date: Mon, 20 Jul 2026 13:05:10 +0530
+Cc: linux-perf-users@vger.kernel.org,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <ADBD0626-25CA-4CE4-B93D-81FF96B28903@linux.ibm.com>
+References: <20260701083806.79358-1-atrajeev@linux.ibm.com>
+ <20260701083806.79358-2-atrajeev@linux.ibm.com>
+ <20260701085047.1C2CE1F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA3OCBTYWx0ZWRfXxEtddxAUxHQX
+ gY2uVa2gIYUk6oZFSPHpzl5BH9FcmBjPiedkVBh8FIdsp/0IbHFynmVKK8vxAhHqBjcu0TbiFI+
+ Rqu4AUCyYzhgjqPiEhl+2/n56w85HBuUy43ubP3+Cero6kdtIsMadup5Kh9gAodN7OUfHQp8WV/
+ ElX5kwQ/8zilk3FXx2U/HOAIUmD2CyJr71B/dXu9h5et0JSqWZ/C6NXO/3v0jYnH1wlmVk7kWn1
+ IRYPIujSDXwsWdPBP2oYluZ9tjlbBXiBZNOgdzMuBK21jnCyC4BKpe3o86W2/NM0UU2DWUmtm3s
+ gi1FEbSymtIV+zwQXWsBxJfZPRV7jwBbTbDTHFslldBBUpb0NOEpDabLpUq3IMGUFUBBwlk9PYX
+ 9iZIwEi2ggrZf5SS2pa1jhyjAfDK2VX1DpDxbWLOn8Zy/zMwWHYyEGYHPIgqmmxiF9SXzm4670I
+ l+Y6PcJ7yYiKH+r5hXA==
+X-Proofpoint-GUID: jZMhfFFKLhoFJ4PAnCZVXe5cxTHwwTRQ
+X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a5dcfbe cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=rnXohLmvZyVGqXXwKb4A:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA3OCBTYWx0ZWRfX3bVKitk69Z/W
+ qiptoaygvWHpBSL25TDJD2JGZpPATpwx5DSlDH5DwRKySigOLJKzkLdC3LRCdjkov531rR/AFAK
+ lprpVc967l3vR2OFlRlR2dnRFlf1UEU=
+X-Proofpoint-ORIG-GUID: jZMhfFFKLhoFJ4PAnCZVXe5cxTHwwTRQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1011 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200078
 
-On Fri, Jul 17, 2026 at 08:51:36AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] DMA API violation due to mismatched device pointers in dma_map_sg and dma_unmap_sg.
-> - [High] The client-provided physical address for the lock scratchpad is silently truncated to 24 bits.
-> - [Medium] Transient allocation failure for lock descriptors causes a permanent channel stall.
-> - [Medium] Pipe locking is restricted to TX channels instead of RX channels, contradicting intended design.
-> - [Medium] The dummy lock descriptor clears the `reconfigure` flag using a hardcoded TX direction, potentially misconfiguring the channel.
-> - [Low] Missing integer argument for `%d` in `dev_err_ratelimited` call.
+
+
+> On 1 Jul 2026, at 2:20=E2=80=AFPM, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 7 potential =
+issue(s) to consider:
+> - [High] Missing Firmware Feature Check allows PMU to register on =
+bare-metal systems.
+> - [High] Improper Error Handling treats unhandled hypervisor errors as =
+success.
+> - [High] Resource leak when `H_HTM_OP_START` fails.
+> - [High] Missing cpumask attribute leads to concurrent identical =
+hypercalls.
+> - [Medium] Retry loops spin endlessly on deterministic errors.
+> - [Medium] PMU API violation for start/stop operations.
+> - [Medium] Improper handling of `sample_freq` corrupts the sampling =
+logic.
+
+Thanks for the valuable review comments.
+
+I will be sending a V2 with changes to address:
+- missing firmware feature check
+- Error handling in status check
+- Handling concurrent hupervisor calls
+- Fixing retry loop
+- Adding start/stop callbacks
+- Remove the sample freq
+- Resource leak in H_HTM_OP_START fail cases
+
+Thanks
+Athira
 > --
-> 
-> --- Patch [6]: [PATCH v22 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
-> commit c786d3c51276cef4b55a461357b399c32982316b
-> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> Subject: dmaengine: qcom: bam_dma: add support for BAM locking
-> 
-> This commit adds support for BAM pipe locking by prepending and appending
-> dummy command descriptors with LOCK and UNLOCK bits set. It aims to prevent
-> writes into config registers while the engine is busy.
-> 
-
-Thanks for all the changes! It looks good to me for the most part, so
-I'll just comment on the remaining Sashiko comments below.
-
-> > Add support for BAM pipe locking. To that end: when starting DMA on an RX
-> > channel - prepend the existing queue of issued descriptors with an
-> 
-> [Severity: Medium]
-> Is this intended to be restricted to TX channels? The commit message mentions
-> starting DMA on an RX channel, but the implementation in bam_setup_pipe_lock()
-> aborts the lock setup if the direction is not DMA_MEM_TO_DEV.
-> 
-
-Is this a typo in your commit message? I guess RX vs TX depends on the
-perspective (kernel or peripheral), but I think "TX channel" would be
-clearer here (or even just put DMA_MEM_TO_DEV).
-
-> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > index f3e713a5259c2..edaa694eb9df0 100644
-> > --- a/drivers/dma/qcom/bam_dma.c
-> > +++ b/drivers/dma/qcom/bam_dma.c
-> 
-> [ ... ]
-> 
-> > @@ -859,6 +887,15 @@ static int bam_resume(struct dma_chan *chan)
-> >  	return 0;
-> >  }
-> >  
-> > +static void bam_dma_free_lock_desc(struct virt_dma_desc *vd)
-> > +{
-> > +	struct bam_async_desc *async_desc = container_of(vd, struct bam_async_desc, vd);
-> > +	struct dma_chan *chan = vd->tx.chan;
-> > +
-> > +	dma_unmap_sg(chan->slave, &async_desc->lock_sg, 1, DMA_TO_DEVICE);
-> 
+>=20
+> commit 400fb092e994f5871c30e25b796b6ab855238ea4
+> Author: Athira Rajeev <atrajeev@linux.ibm.com>
+>=20
+> powerpc/htm: Add interface to expose HTM trace data via perf
+>=20
+> H_HTM (Hardware Trace Macro) hypervisor call is an HCALL to export =
+data
+> from Hardware Trace Macro (HTM) function. Add support for setup,
+> configuration and control of HTM function via PMU.
+>=20
+>> diff --git a/arch/powerpc/perf/htm-perf.c =
+b/arch/powerpc/perf/htm-perf.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/arch/powerpc/perf/htm-perf.c
+>=20
+>> [ ... ]
+>=20
+>> +static ssize_t htm_return_check(int rc)
+>> +{
+>> + switch (rc) {
+>> + case H_SUCCESS:
+>> + break;
+>=20
+>> [ ... ]
+>=20
+>> + case H_AUTHORITY:
+>> + return -EPERM;
+>> + }
+>> +
+>> + /*
+>> + * Return 1 for H_SUCCESS/H_PARTIAL
+>> + */
+>> + return 1;
+>> +out:
+>> + return -EINVAL;
+>> +}
+>=20
 > [Severity: High]
-> Will this cause a DMA API violation? 
-> 
-> The scatterlist is unmapped here using the client device (chan->slave), but it
-> is mapped in bam_make_lock_desc() using the DMA controller device 
-> (bchan->bdev->dev).
-> 
-
-Yep, we need to change all those DMA calls to bchan->bdev->dev.
-
-> > +	kfree(async_desc);
-> > +}
-> 
-> [ ... ]
-> 
-> > @@ -1046,13 +1090,101 @@ static void bam_apply_new_config(struct bam_chan *bchan,
-> >  	bchan->reconfigure = 0;
-> >  }
-> >  
-> > +static struct bam_async_desc *
-> > +bam_make_lock_desc(struct bam_chan *bchan, unsigned long flag)
-> > +{
-> > +	struct bam_async_desc *async_desc;
-> 
-> [ ... ]
-> 
-> > +	bam_prep_ce_le32(&async_desc->lock_ce, bchan->lock_scratchpad_addr, BAM_WRITE_COMMAND, 0);
-> 
+> Will unhandled hypercall return codes fall through the switch =
+statement
+> and return 1 (success)? If the hypervisor returns an unhandled error =
+code,
+> this code might silently interpret critical failures as successes.
+>=20
+>> [ ... ]
+>=20
+>> +static int htm_event_init(struct perf_event *event)
+>> +{
+>> + struct hw_perf_event *hwc =3D &event->hw;
+>> + u64 config =3D event->attr.config;
+>> + u32 htmtype;
+>=20
+>> [ ... ]
+>=20
+>> + if (event->attr.freq) {
+>> + hwc->sample_period =3D event->attr.sample_period;
+>> + local64_set(&hwc->period_left, hwc->sample_period);
+>> + hwc->last_period =3D hwc->sample_period;
+>> + event->attr.freq =3D 0;
+>> + }
+>> +
+>> + return 0;
+>> +}
+>=20
+> [Severity: Medium]
+> Does copying the target frequency into the sample period break the =
+sampling
+> logic? Since frequency-based sampling does not appear to be supported, =
+should
+> this return -EINVAL instead of disabling dynamic frequency adjustment?
+>=20
+>> [ ... ]
+>=20
+>> +static int htm_event_add(struct perf_event *event, int flags)
+>> +{
+>> + int rc, ret;
+>> + unsigned long param1 =3D -1, param2 =3D -1;
+>> + int retries =3D 0;
+>> + u64 config =3D event->attr.config;
+>> + u32 htmtype, nodeindex, nodalchipindex, coreindexonchip;
+>> +
+>> + /*
+>> + * Invoke H_HTM call with:
+>> + * operation as htm configure (H_HTM_OP_CONFIGURE)
+>> + * last three values are unused, hence set to zero
+>> + */
+>> + htmtype =3D config & 0xf;
+>> + nodeindex =3D (config >> 4) & 0xff;
+>> + nodalchipindex =3D (config >> 12) & 0xff;
+>> + coreindexonchip =3D (config >> 20) & 0xff;
+>> + do {
+>> + rc =3D htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, =
+coreindexonchip,
+>> + htmtype, H_HTM_OP_CONFIGURE, param1, param2, 0);
+>> + ret =3D htm_return_check(rc);
+>> + } while (ret <=3D 0 && ++retries < 100);
+>=20
+> [Severity: Medium]
+> Does this loop retry 100 times for deterministic errors like -EINVAL =
+and
+> -EPERM? The condition ret <=3D 0 causes it to spin needlessly on =
+errors that
+> will not succeed on retry.
+>=20
+>> + if (ret <=3D 0)
+>> + return -1;
+>> +
+>> + /* Reset retries */
+>> + retries =3D 0;
+>> +
+>> + /*
+>> + * Invoke H_HTM call with:
+>> + * operation as htm  start (H_HTM_OP_START)
+>> + * last three values are unused, hence set to zero
+>> + */
+>> + do {
+>> + rc =3D htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, =
+coreindexonchip,
+>> + htmtype, H_HTM_OP_START, 0, 0, 0);
+>> + ret =3D htm_return_check(rc);
+>> + } while (ret =3D=3D -EBUSY && ++retries < 100);
+>> +
+>> + if (htm_return_check(rc) <=3D 0)
+>> + return -1;
+>=20
 > [Severity: High]
-> Can this truncate the physical address and cause memory corruption?
-> 
-> The client-provided lock_scratchpad_addr is a 64-bit phys_addr_t, but
-> bam_prep_ce_le32() masks the address to 24 bits:
-> 
-> bam_ce->cmd_and_addr = cpu_to_le32((addr & 0xffffff) | ((cmd & 0xff) << 24));
-> 
-> If the physical address is above 16MB, the BAM engine will perform its dummy
-> write to an arbitrary truncated address.
-> 
-
-This looks correct as well. It seems the address in a BAM command
-descriptor is more like a "address within the peripheral" than an actual
-physical address, so the same applies to the lock_scratchpad_addr. Can
-you clarify this inside the struct bam_config documentation comment?
-
-This also means there is no point to accept a phys_addr_t in
-lock_scratchpad_addr, u32 is sufficient.
-
-> > +	sg_set_buf(&async_desc->lock_sg, &async_desc->lock_ce, sizeof(async_desc->lock_ce));
-> > +
-> > +	mapped = dma_map_sg(bchan->bdev->dev, &async_desc->lock_sg, 1, DMA_TO_DEVICE);
-> 
-> [ ... ]
-> 
-> > +static int bam_setup_pipe_lock(struct bam_chan *bchan)
-> > +{
-> > +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
-> > +	struct bam_async_desc *lock_desc, *unlock_desc;
-> > +
-> > +	lockdep_assert_held(&bchan->vc.lock);
-> > +
-> > +	if (!bdata->pipe_lock_supported || !bchan->lock_scratchpad_addr ||
-> > +	    bchan->direction != DMA_MEM_TO_DEV)
-> > +		return 0;
-> 
+> If H_HTM_OP_START fails, does this return without cleaning up the
+> configuration? Because event_add fails, the perf core aborts event =
+creation
+> and won't call event_del, potentially leaving the hypervisor state =
+permanently
+> configured and leaking tracing resources.
+>=20
 > [Severity: Medium]
-> Does this restriction conflict with the commit message? 
-> 
-> The condition limits pipe locking to DMA_MEM_TO_DEV (TX), making this feature
-> dead code for RX channels (DMA_DEV_TO_MEM).
-> 
-
-Clarifying the commit message should fix this comment as well.
-
-> > +
-> > +	/*
-> 
-> [ ... ]
-> 
-> > @@ -1072,6 +1205,22 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >  		return;
-> >  
-> >  	while (vd && !IS_BUSY(bchan)) {
-> > +		/*
-> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
-> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
-> > +		 * already have bam_locked set and must not trigger a second pair.
-> > +		 */
-> > +		if (!bchan->bam_locked) {
-> > +			ret = bam_setup_pipe_lock(bchan);
-> > +			if (ret) {
-> > +				dev_err_ratelimited(bdev->dev,
-> > +					"failed to setup the pipe lock, deferring transfer: %d\n");
-> 
-> [Severity: Low]
-> Is this missing the integer argument for the %d format specifier?
-> 
-
-Yep.
-
+> Is it expected to execute the start operation unconditionally during =
+event_add
+> instead of using the standard pmu->start callback? If the event is =
+created in
+> a disabled state, it will immediately start tracing anyway.
+>=20
+>> + return 0;
+>> +}
+>> +
+>> +static void htm_event_del(struct perf_event *event, int flags)
+>> +{
+>> + long rc;
+>> + int ret;
+>> + int retries =3D 0;
+>> + u64 config =3D event->attr.config;
+>> + u32 htmtype, nodeindex, nodalchipindex, coreindexonchip;
+>=20
+>> [ ... ]
+>=20
+>> + /* Reset retries */
+>> + retries =3D 0;
+>> +
+>> + /*
+>> + * Invoke H_HTM call with:
+>> + * operation as htm configure (H_HTM_OP_DECONFIGURE)
+>> + * last three values are unused, hence set to zero
+>> + */
+>> + do {
+>> + rc =3D htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, =
+coreindexonchip,
+>> + htmtype, H_HTM_OP_DECONFIGURE, 0, 0, 0);
+>> + ret =3D htm_return_check(rc);
+>> + } while (ret <=3D 0 && ++retries < 100);
+>> +}
+>=20
 > [Severity: Medium]
-> Will this cause a permanent channel stall on memory pressure? 
-> 
-> If bam_setup_pipe_lock() fails due to a GFP_NOWAIT allocation failure, the
-> loop breaks and leaves the descriptors on the desc_issued list, but no
-> mechanism appears to schedule a retry.
-> 
-> > +				break;
-
-Could be true, if we break out of the loop here, where will this
-deferral happen? Will anything call bam_start_dma() again?
-
-Perhaps we should have queue_work() here?
-
-> > +			}
-> > +			if (bchan->bam_locked)
-> > +				vd = vchan_next_desc(&bchan->vc);
-> > +		}
-> > +
-> >  		list_del(&vd->node);
-> >  
-> >  		async_desc = container_of(vd, struct bam_async_desc, vd);
-> 
-> [ ... ]
-> 
-> >  		/* on first use, initialize the channel hardware */
-> >  		if (!bchan->initialized)
-> >  			bam_chan_init_hw(bchan, async_desc->dir);
-> >  
-> >  		/* apply new slave config changes, if necessary */
-> >  		if (bchan->reconfigure)
-> >  			bam_apply_new_config(bchan, async_desc->dir);
-> 
+> Similar to the configure path, does this loop needlessly spin on =
+deterministic
+> errors like -EINVAL and -EPERM?
+>=20
+>> [ ... ]
+>=20
+>> +static void htm_event_stop(struct perf_event *event, int flags)
+>> +{
+>> +}
+>=20
 > [Severity: Medium]
-> Could the dummy lock descriptor clear the reconfigure flag with the wrong
-> direction?
-> 
-> The lock descriptor is created with async_desc->dir hardcoded to
-> DMA_MEM_TO_DEV. If pipeline locking is ever enabled for RX channels,
-> bam_apply_new_config() will configure the BAM engine using dst_maxburst
-> instead of src_maxburst, and clear the bchan->reconfigure flag before the
-> real data descriptor is processed.
-> 
-
-Err, what? I think we can ignore this one, since I don't think there is
-a use case for locking on the RX channel.
-
-Although, looking a bit more at your changes, I think you should make
-sure the direction is correct already in bam_slave_config():
-
-+	/*
-+	 * This is required to setup the pipe locking and must be done even
-+	 * before the first call to bam_start_dma().
-+	 */
-+	if (bdata->pipe_lock_supported && peripheral_cfg) {
-+		bchan->lock_scratchpad_addr = peripheral_cfg->lock_scratchpad_addr;
-+		bchan->direction = cfg->direction;
-+	}
-+
-
-I don't think there is much point to store the direction at all if we
-just support DMA_MEM_TO_DEV in bam_setup_pipe_lock(). I would just check
-the direction inside this if statement and return -EINVAL if some user
-tries to setup pipe locking on a TX channel. Then you don't need to
-store bchan->direction at all.
-
-> >  
-> 
-> [ ... ]
-> 
-> > @@ -1191,8 +1344,11 @@ static void bam_issue_pending(struct dma_chan *chan)
-> >   */
-> >  static void bam_dma_free_desc(struct virt_dma_desc *vd)
-> >  {
-> > -	struct bam_async_desc *async_desc = container_of(vd,
-> > -			struct bam_async_desc, vd);
-> > +	struct bam_async_desc *async_desc = container_of(vd, struct bam_async_desc, vd);
-> > +	struct dma_chan *chan = vd->tx.chan;
-> > +
-> > +	if (async_desc->is_lock_desc)
-> > +		dma_unmap_sg(chan->slave, &async_desc->lock_sg, 1, DMA_TO_DEVICE);
-> 
+> Does providing an empty stop callback prevent users from disabling =
+tracing via
+> the standard perf API? ioctl(PERF_EVENT_IOC_DISABLE) relies on this =
+callback
+> to pause the hardware.
+>=20
+>> +static struct pmu htm_pmu =3D {
+>> + .task_ctx_nr =3D perf_invalid_context,
+>> +
+>> + .name =3D "htm",
+>> + .attr_groups =3D attr_groups,
+>> + .event_init  =3D htm_event_init,
+>> + .add         =3D htm_event_add,
+>> + .del         =3D htm_event_del,
+>> + .read        =3D htm_event_read,
+>> + .start     =3D htm_event_start,
+>> + .stop     =3D htm_event_stop,
+>> + .capabilities =3D PERF_PMU_CAP_NO_EXCLUDE | PERF_PMU_CAP_EXCLUSIVE,
+>> +};
+>=20
 > [Severity: High]
-> Does this share the same DMA API violation mentioned earlier? 
-> 
-> The abort/cleanup path also unmaps using the client device instead of the
-> DMA controller device.
-> 
+> Does this system-wide PMU require a cpumask attribute to prevent =
+concurrent
+> access? Without a cpumask, running perf stat -a might attempt to open =
+and
+> start the HTM event on every CPU simultaneously, leading to race =
+conditions
+> on the hypervisor side for the same node/chip target.
+>=20
+>> +static int htm_init(void)
+>> +{
+>> + int r;
+>> +
+>> + /* This driver is intended only for L1 host. */
+>> + if (is_kvm_guest()) {
+>> + pr_debug("Only supported for L1 host system\n");
+>> + return -ENODEV;
+>> + }
+>> +
+>> + r =3D perf_pmu_register(&htm_pmu, htm_pmu.name, -1);
+>=20
+> [Severity: High]
+> Can this PMU register on bare-metal systems (PowerNV/OPAL) where the =
+PAPR
+> hypervisor isn't present? It might be necessary to verify the presence =
+of the
+> hypervisor using firmware_has_feature(FW_FEATURE_LPAR) to prevent =
+system
+> traps or panics when executing H_HTM.
+>=20
+>> + if (r)
+>> + return r;
+>> +
+>> + return 0;
+>> +}
+>> +
+>> +device_initcall(htm_init);
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260701083806.79358-1-atrajeev@linux.ibm.c=
+om?part=3D1
 
-Same thing here as above, yeah. Should be bchan->bdev->dev.
-
-Thanks,
-Stephan
