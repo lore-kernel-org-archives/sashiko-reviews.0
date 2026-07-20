@@ -1,120 +1,186 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911B4314B8C;
-	Mon, 20 Jul 2026 15:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53703812E5;
+	Mon, 20 Jul 2026 15:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784561284; cv=none; b=IRr4T8kW54wQOzsqONnHBDKOgRKu/EnAJbWtbuXBX7AGgbfjylteHf6okhuJNUGafq9HTgfY3nOLqO3oKZGSglgBb76tqqtPHM3ybUsthqCs/iIijZka5ukVe2ukvZwKynUYWWvcIO3gZ06WNLJfYW9fose4kHXfjq4igNsImQc=
+	t=1784561458; cv=none; b=B/CuKDBnJA6Dct3j3V5TabvSbbyQYaHrt96oerIDRCV/5A48Juxaz74ginqgOVSDFA3BfkUVB9rW9ja9e6SEiUM1yD845oPzivB5Xxirud+UKsJag7dO/NbHJNAp2qY9ZoshDm05B5MnrBf4gNXLx/ZN1+Svp1lZEcLrwtVzOwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784561284; c=relaxed/simple;
-	bh=jreQu3izKdVk4O8ukNsef/vgS1gc0C06TEXby33qvVE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ndOs7YT9mSqNjYWf9N7DIHnkaW0DjtbT1D+kLT0QTO7x7ngoiG4nmYD4uw3lD9VZ3xxCXXFugqGuOqLpzDwO4SK3I6LeRW413jUW85V5cCkqfgqCsOFgSntoQgEsbtyvOv2fl7m+DFbvEJf+FSKkQ/6TSMsxHxcKaPtpe6xat8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=oozf8t22; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1784561458; c=relaxed/simple;
+	bh=umtag+wkZJb4Cx6Y2hpHKUBKzIENMT2TYppgnjNDPHc=;
+	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=XHjHPHbp2LFqdboRj12p+CV4L/4Sxt8G1AtDMC8k9moolFh8qu5/MDVQ2wwvWBa7ZPnpIAKN0y+5L76OaNpBn3Ej7EKxxif1BGh5ivEhza8Zzp4+PwrOeP1vlqzMuJ+go8DqdG/P7Zgr5MAkEIa1thti9w3QK2TWmRJlOEr6udI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yewT66+A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="oozf8t22"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=qcO4Jx5AKS6Igcf3/JaMxYeNZarJWUVQHogxhHenLsQ=;
-	b=oozf8t223x6rPeIKh3fmOHRTrFfQEJHXO5I1LTSkPyUvi/v8oNl9euSwX9hk7I
-	7ChfbVtq4Tabfm7+2t+8vO2eg3/K57yr/35p3O6QNrVqgqRe5NgCzUppEu/soTNh
-	tHyP1Aeb9EwpaW0sBzrazvG0R3Qsk5QBmpK21+/Za7DRU=
-Received: from [IPV6:240e:b8f:91b3:d000:f138:f837:e143:4264] (unknown [])
-	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wD31y5hPl5qiykBKQ--.65457S2;
-	Mon, 20 Jul 2026 23:27:30 +0800 (CST)
-Message-ID: <7b76cdd1-1001-4d2d-a221-33988261faf9@163.com>
-Date: Mon, 20 Jul 2026 23:27:29 +0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yewT66+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DD41F000E9;
+	Mon, 20 Jul 2026 15:30:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784561456;
+	bh=LMArJ3queop1l/A3Xr89Zu+ZooVfxMCEzxB6+fhmdMo=;
+	h=Subject:To:Cc:From:Date;
+	b=yewT66+A0z/YtfwuODcwvaeTwDpB1W5Q6y0I7iqhoTcNbKGCJDIYsiYKyQ/PPMzSz
+	 DemlqpQKWNf8ykF6ObBlBVyozMQVYfpoARMzlum3/O8M1gtkR9YCV+Y+wYYQDsJqaI
+	 MQAFqktVvucsi8UpZcjBnLWTElqlT+08r13nNjbk=
+Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 5.15-stable tree
+To: gregkh@linuxfoundation.org,mkl@pengutronix.de,sashiko-reviews@lists.linux.dev,socketcan@hartkopp.net,stable@kernel.org
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Mon, 20 Jul 2026 17:24:12 +0200
+Message-ID: <2026072012-grid-limit-988e@gregkh>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/16] PCI: dwc: Add pcie_cap field and helper in
- designware header
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, linux-pci@vger.kernel.org, imx@lists.linux.dev,
- neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
-References: <20260720150619.24733-1-18255117159@163.com>
- <20260720150619.24733-2-18255117159@163.com>
- <20260720151732.7B9A41F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <20260720151732.7B9A41F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD31y5hPl5qiykBKQ--.65457S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KFW5WF1UurW5ZFyUXFWfuFg_yoW8Kr1Upa
-	9xJFyayF48JF43ZF97Aa15WF1akF9IyFy3G3y3G34fZFya9F17Ka1FyrWrKF17GrZ7Kr1Y
-	kr4UtF9xCrn5JFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U4BTOUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC7APZfWpePmPkIQAA3n
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
+X-stable: commit
+X-Patchwork-Hint: ignore 
 
 
+This is a note to let you know that I've just added the patch titled
 
-On 7/20/26 23:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Data race and logically flawed caching in dw_pcie_get_pcie_cap() due to unprotected read-modify-write and failure to cache 'not found' state.
-> --
-> 
-> --- Patch [1]: [PATCH v3 01/16] PCI: dwc: Add pcie_cap field and helper in designware header ---
-> commit ab22dc6f534d77b34df13c99dd929771547f5ff1
-> Author: Hans Zhang <18255117159@163.com>
-> 
-> PCI: dwc: Add pcie_cap field and helper in designware header
-> 
-> This commit adds a pcie_cap field to struct dw_pcie to cache the offset of
-> the PCI Express Capability structure. It introduces dw_pcie_get_pcie_cap()
-> to perform the capability search on the first call and cache the result.
-> 
->> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->> --- a/drivers/pci/controller/dwc/pcie-designware.h
->> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> [ ... ]
->> @@ -829,6 +831,21 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
->>   	dw_pcie_writel_dbi(pci, reg, val);
->>   }
->>   
->> +/**
->> + * dw_pcie_get_pcie_cap() - Return cached PCIe Capability offset
->> + * @pci: DWC instance
->> + *
->> + * Finds and caches the offset of PCI_CAP_ID_EXP on first call.
->> + * Returns 0 if the capability is not present.
->> + */
->> +static inline u8 dw_pcie_get_pcie_cap(struct dw_pcie *pci)
->> +{
->> +	if (!pci->pcie_cap)
->> +		pci->pcie_cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> 
-> [Severity: Medium]
-> Will this repeatedly search the configuration space if the capability is
-> not found? If dw_pcie_find_capability() returns 0 when the capability is
-> missing, pci->pcie_cap will remain 0, causing the search to be repeated
-> on every subsequent call instead of being cached.
-> 
-> Also, since this helper might be called concurrently by different threads,
-> could the unprotected read and write to pci->pcie_cap cause a data race?
-> 
+    can: bcm: add missing rcu list annotations and operations
 
-Hi,
+to the 5.15-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
-As mentioned in the previous reply, there is no need for us to worry 
-about this.
+The filename of the patch is:
+     can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+and it can be found in the queue-5.15 subdirectory.
 
-https://lore.kernel.org/linux-pci/5cc6fbcc-98eb-4da5-b123-2c04c4d39326@163.com/
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
 
 
-Best regards,
-Hans
+From 7b2c3eabc4dafc062a25e10711154f2107526a78 Mon Sep 17 00:00:00 2001
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+Date: Tue, 14 Jul 2026 18:55:27 +0200
+Subject: can: bcm: add missing rcu list annotations and operations
+
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
+
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
+ 
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
+ 			     HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
+ 
+@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 			     HRTIMER_MODE_REL_SOFT);
+ 		op->thrtimer.function = bcm_rx_thr_handler;
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
 
 
->> +
->> +	return pci->pcie_cap;
->> +}
-> 
+Patches currently in stable-queue which might be from socketcan@hartkopp.net are
 
+queue-5.15/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
+queue-5.15/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
+queue-5.15/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
