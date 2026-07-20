@@ -1,37 +1,37 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EE140D593
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 17:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FCC47798A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784570392; cv=none; b=CmydrjufTl7At/rdDFN5TAm7x8YyhUv4MYQGK9fpu1p55x4dmwh5cpFwRPfzC+ObTPFpfyQgPivmLlK63xmNZCQvtFjQf6aprCKKlxSwB/KfF+4CPkI+ZkQQvMg1/OVwR9iV9beM8NfaeiIz3IU1cgrnK3sDRgrmhdesgLxOruQ=
+	t=1784570575; cv=none; b=GrmgAua7YcFYSm6iWxLZIa+VXIqzSSHzc8ljul4QCKrAiFPyc+JSm4j1vhLMA8Llgj1LQFtvRt+lsbB1JcADtAXkGqCNCkUttQ6YlfbFguclDMvShE9AiK2h1CJkyGhJzEbv7A57MEm7DIHq3Wu0Z8Mx/nKztuPfPBKMB+NRJKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784570392; c=relaxed/simple;
-	bh=eJV/QKPRl0nQ58CX6raU94v8GT2LbNVT4nHU4Cu9Qxk=;
+	s=arc-20240116; t=1784570575; c=relaxed/simple;
+	bh=FbxTSG7B0R0fDQI4Zt96E7iHeP2B4xF124Fz2FykG0s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rZAPz1ifytSP+xyugFKB7LzuVhRQsKTWuIBjoFQDpxLaHzmeDmhfPH8hxyDiZrczgmGwfq+qN9f5RLcNnWgx7j50uD8SQ1pSvgRfaJEfrtS6BytgbM5CEMMLc9aN26vacgQQd7z1XBUT/mT2vasunRegYtQ/9TYseOnX4cC3NRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=GLRIuZEH; arc=none smtp.client-ip=91.218.175.173
+	 To:Cc:Content-Type; b=IZYkOapNfZHF7QaNR9691/acaFBnzoW4IO1bZK48zJrCiQxctPso0FKrYPqsWoMH/lPglMNFS3HN97YqNUHfF0/3m7l4/6YACMhTAN/HWy0V2beyl7MZDcFat1r7lUMCU/fy3vKLjX4o+jpbX7ks3LK70uEJubhVVbtckCc8zP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wv4B0QSS; arc=none smtp.client-ip=95.215.58.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="GLRIuZEH"
-X-Gm-Message-State: AOJu0YyvcWXMEivp9aDX764tobOWg6DqRHze7R5PNYZeDiBSxj2vfXCC
-	tJ3B3l3ajXKBgZ0NQwOpFWhxBdGgqId/oYOO4/e7iDeaD8LC4kVtdufN2E0sPn5yjARw/rwOJBe
-	xJrypBlQepMGM/tj/EP3+TmFtoZI7lC6zHZpASfGn
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wv4B0QSS"
+X-Gm-Message-State: AOJu0YybDKC/sOt2jiW9fDnakFOBHDDieqLdaob7WdFpgMy0aAyq30R9
+	NJyc0Hk7AA/eaLPm1IsBQGUoond7JgEmD6ml6I5IgmBHUD8X8p2mbyVlPIufoTsfAsWYKTOvuTY
+	emWkpVCIDqoUTYJtJJMdZK35iyVuKAbNriA/uBW+d
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784570381;
+	t=1784570570;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=pSjjs1T/fGlvzcUytES43w/zoIxeAWRYz4e8PGpL2fc=;
-	b=GLRIuZEH9OFQOr/znm/n8Ylqa0ypPJ1SacM3dzN8vVZEuXZqIbCS62tDstk7gHvGo9tvXx
-	Z74w2ERYWIRG/mTxfWBzkWcqbrfdgUDrUcFTW9i5zwJlXZ4Y3mlkmNXzaZQ6hUDXe8uVdu
-	5g0B3pIFHdDEZ1QHU5ErrnNcd0gFR+A=
-X-Received: by 2002:a05:622a:2b47:b0:4ff:c0e7:be9c with SMTP id
- d75a77b69052e-525fcfa53f6mr4668601cf.0.1784570378553; Mon, 20 Jul 2026
- 10:59:38 -0700 (PDT)
+	bh=G+753BV2OTKBKhIRsjvrO6VQ0UCpvoUpMC/Bxc7JhBQ=;
+	b=wv4B0QSSx6un0g6zu7WBgm5oGG9ttghvhrctJ9w23bYt0bjU1wZfifPtZi83y3dPdMUUbZ
+	iUxPd22qMbPx7wwYy+Cl9rcjWmZWrUnE5arxPJP0d4E7W1MB/PEBPUf3pAcseS58Bh5KNh
+	9n0jabd9I5WFTpFhX+0/LfxEVNG4Hco=
+X-Received: by 2002:a05:622a:2447:b0:517:6dc0:698d with SMTP id
+ d75a77b69052e-525fd38e85cmr4534891cf.0.1784570554772; Mon, 20 Jul 2026
+ 11:02:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -39,85 +39,118 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260720161343.1367007-1-fuad.tabba@linux.dev>
- <20260720161343.1367007-10-fuad.tabba@linux.dev> <20260720172923.E4F161F000E9@smtp.kernel.org>
-In-Reply-To: <20260720172923.E4F161F000E9@smtp.kernel.org>
+ <20260720162412.1401272-1-fuad.tabba@linux.dev> <20260720174229.DF3AB1F000E9@smtp.kernel.org>
+In-Reply-To: <20260720174229.DF3AB1F000E9@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 20 Jul 2026 18:59:01 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyOWhWRo=W0dp5qdBOLnaQMB9WW0Y8MOYDnJR_qHCs3AA@mail.gmail.com>
-X-Gm-Features: AUfX_mwcTtHzH5EdgVipRg09TkTHSMSuxIF002h3-f_9PAq_fJ2tY675UvpwgRI
-Message-ID: <CA+EHjTyOWhWRo=W0dp5qdBOLnaQMB9WW0Y8MOYDnJR_qHCs3AA@mail.gmail.com>
-Subject: Re: [PATCH v1 09/11] KVM: arm64: Type-check hypercall arguments at
- the caller
+Date: Mon, 20 Jul 2026 19:01:57 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTznttX+cqdrndR28OeOLqaZX4suaG_E5an7_ER_gYwz3g@mail.gmail.com>
+X-Gm-Features: AUfX_my_ve-rpD8E3GBCRW9xQhL7dBOd9z6G87B0ydP5HJBiOOPLWHMpdNutBTw
+Message-ID: <CA+EHjTznttX+cqdrndR28OeOLqaZX4suaG_E5an7_ER_gYwz3g@mail.gmail.com>
+Subject: Re: [PATCH v1 10/11] KVM: arm64: nVHE: Check hypercall handlers
+ against the declared ABI
 To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Migadu-Flow: FLOW_OUT
 
-On Mon, 20 Jul 2026 at 18:29, <sashiko-bot@kernel.org> wrote:
+On Mon, 20 Jul 2026 at 18:42, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Disabling the hypervisor trace clock fails to stop the backgroun=
-d clock synchronization worker.
-> --
->
-> --- Patch [9]: [PATCH v1 09/11] KVM: arm64: Type-check hypercall argument=
-s at the caller ---
-> commit 171ebbffa4142a86e7fab981732cd83df6923869
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
->
-> KVM: arm64: Type-check hypercall arguments at the caller
->
-> This commit replaces the untyped kvm_call_hyp_nvhe macro with typed stubs
-> generated for each declared hypercall. This ensures that hypercall argume=
-nts
-> are checked for correct number and types at compile time.
->
-> > diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
-> > index 2411b4c32932c..7fe0e8feb7d7c 100644
-> > --- a/arch/arm64/kvm/hyp_trace.c
-> > +++ b/arch/arm64/kvm/hyp_trace.c
->
-> [ ... ]
->
-> [Severity: High]
-> This is a pre-existing issue, but I noticed a logic error in this same fi=
-le
-> in hyp_trace_clock_enable() when tracing is disabled:
->
-> arch/arm64/kvm/hyp_trace.c:hyp_trace_clock_enable() {
-> ...
->         if (!enable) {
->                 cancel_delayed_work_sync(&hyp_clock->work);
->                 hyp_clock->running =3D false;
->         }
-> ...
->
-> Does this accidentally restart the background clock synchronization worke=
-r
-> instead of stopping it?
+> - [Critical] The MDCR_EL2 trap configuration register is unconditionally =
+copied from the untrusted host VCPU on every guest entry, violating pKVM is=
+olation guarantees for protected VMs.
+> - [Critical] The protected VM's register context (`ctxt`) is copied back =
+to the untrusted host VCPU on every exit, leaking confidential guest state.
 
-Yes. I will send a separate patch to fix this, as you noted, it's not
-introduced by this series.
-
+I'm working on it [1]. This is part of upstreaming pKVM. We'll get
+there eventually...
 
 /fuad
 
+https://lore.kernel.org/all/20260715081238.1891918-1-fuad.tabba@linux.dev/
+> --
 >
-> Without a return statement inside the if (!enable) block, execution appea=
-rs
-> to continue down the function. This would cause the worker to be inadvert=
-ently
-> re-initialized and restarted, leaving the background task running and mak=
-ing
-> periodic __tracing_update_clock hypercalls indefinitely after tracing has
-> been disabled.
+> --- Patch [10]: [PATCH v1 10/11] KVM: arm64: nVHE: Check hypercall handle=
+rs against the declared ABI ---
+> commit 3f8ed457b3a7f1b8aabe10f15d93afe4df7e93a2
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: nVHE: Check hypercall handlers against the declared ABI
+>
+> This commit generates the unmarshalling of hypercall handlers using
+> DEFINE_KVM_HOST_HCALL. It checks the handler's parameter list against the
+> signature declared in kvm_hcall.h to prevent caller/handler disagreements=
+.
+> Manual DECLARE_REG casts are removed from the handler bodies.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+>
+> [ ... ]
+>
+> > @@ -228,15 +282,11 @@ static void handle___kvm_vcpu_run(struct kvm_cpu_=
+context *host_ctxt)
+> >                * loading a vcpu. Therefore, if SME features enabled the=
+ host
+> >                * is misbehaving.
+> >                */
+> > -             if (unlikely(system_supports_sme() && read_sysreg_s(SYS_S=
+VCR))) {
+> > -                     ret =3D -EINVAL;
+> > -                     goto out;
+> > -             }
+> > +             if (unlikely(system_supports_sme() && read_sysreg_s(SYS_S=
+VCR)))
+> > +                     return -EINVAL;
+> >
+> > -             if (!hyp_vcpu) {
+> > -                     ret =3D -EINVAL;
+> > -                     goto out;
+> > -             }
+> > +             if (!hyp_vcpu)
+> > +                     return -EINVAL;
+> >
+> >               flush_hyp_vcpu(hyp_vcpu);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does this function allow the untrusted
+> host to bypass pKVM isolation guarantees?
+>
+> Looking at flush_hyp_vcpu() in arch/arm64/kvm/hyp/nvhe/hyp-main.c, the
+> MDCR_EL2 trap configuration is copied unconditionally from the untrusted
+> host vCPU on every guest entry:
+>
+> hyp_vcpu->vcpu.arch.mdcr_el2 =3D host_vcpu->arch.mdcr_el2;
+>
+> For a protected VM, the MDCR_EL2 trap configuration should be strictly
+> EL2-private and initialized internally. By syncing this from the host on
+> every entry, could the host maliciously reconfigure the guest's debug
+> traps?
+>
+> [Severity: Critical]
+> This is also a pre-existing issue, but does the exit path leak
+> confidential guest execution state to the host?
+>
+> In the corresponding sync_hyp_vcpu() function called after the guest
+> run, the protected VM's register context is copied back to the host
+> vCPU:
+>
+> host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
+>
+> Since this copies the hypervisor's private copy of the guest's context
+> back into the host-controlled structure, won't this allow the host EL1
+> to directly inspect highly confidential execution state (including
+> general purpose registers and system registers) after the hypercall
+> returns?
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720162412.14=
-01272-1-fuad.tabba@linux.dev?part=3D9
+01272-1-fuad.tabba@linux.dev?part=3D10
