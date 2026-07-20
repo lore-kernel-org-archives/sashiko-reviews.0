@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111DD42DA4C;
-	Mon, 20 Jul 2026 15:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014CB3FC5CF;
+	Mon, 20 Jul 2026 15:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784561862; cv=none; b=d+zfdb69jNxntRvV/CYqFW7TZnzE1JMeJn7Cz+YejeeT3YjtdVm4JkqAinlUUUTAObgOav6MMox1bkSm0mspNKMrSD8q47svDJvrI+9Gsfvos2FpGj1ikb+I2EZNwIUzT0nhYvXj4joFErkOMfKK8Obo9RRFoq+IhWcaoYx7Pcw=
+	t=1784562042; cv=none; b=nPkszTLWKFPdci3RVgTeqy3jXlrqk8N3DltzSyE6jr/V7j5YkAr/LNWFkBdmFPxBibJa/smMnHF8UoSTmMbMXSpNk98Q3g1KsSAre3QAgunS3IdazmjSegx+0hO3G+x0DAzXGNiRz+GUcJ+czHPJ/ekzWJPKuyHzfZf1wzD7+zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784561862; c=relaxed/simple;
-	bh=230YduhXIwJAKHVikMxqkumcyKGaNnXBMyUUiZK098Y=;
-	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=qBK9S0ruj8dMSXgMGhar355JkoP3nSJ1ArYxZ6dOd5ppINBKvfzNl6WLFtdt/lD8YFYxHXaKoPIHw2Wwsri3hKGe9gm/mG12Sk+TSl6uc5ZQ4w+LQxxkLt7vfdWhKvAJ7G5jqyWSnOFCpr44y5NvJ9bx3EMENOiRoFT9nuJwD/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0cw+n0u; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784562042; c=relaxed/simple;
+	bh=Oku8/AOK6ckPZBtal+j5i/rX+I23037JjmSLBzFdyYw=;
+	h=Subject:To:Cc:From:Date:Message-ID:MIME-Version:Content-Type; b=l72Fr10j6Zd4PcDuiALWjJcOn2G1gzYiN972IhnxVusS8zAxCxhb6vawJ892mvvnYJGqi9nBECURXNWmXrLSYcccu2GhHxN3RffchuUrPbt49CCaNwT42g1Kf6Xod1BLDHndAN3e/TwALd1/tvzT2ykYIQ6LWeYgpFTy+ZzGVDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJot5mBf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0cw+n0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7277E1F000E9;
-	Mon, 20 Jul 2026 15:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJot5mBf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E861F000E9;
+	Mon, 20 Jul 2026 15:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784561861;
-	bh=Qq4hgaE3QORwBrHf3eTNO6oOK8a/4QCzfnlSgyq71dg=;
+	s=korg; t=1784562040;
+	bh=nC3xEXpukMGFntvlBLBoRIIybaqfbcHONpmXL1i4lro=;
 	h=Subject:To:Cc:From:Date;
-	b=K0cw+n0uAV6XRxiqneN8Na65htmll3vPAvehoXhnS+nJBMdtkMhyReSAZ6kwC0Ygv
-	 s4KcS2vN+s2/IH9thCnxwA4Fek7Ghvn1RvxDY3QQwxAhNnNVVizLYmENJx58k2fJVm
-	 r5jKzvp67nF3XPV3FnXNSUTLsbgEP6zDPrGovguU=
-Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 5.10-stable tree
+	b=OJot5mBfPkPIiDG5dPW08913T/lrMvzjCZnktbe3dQ2ADxlnsJ+7asOaGO4fvEfaq
+	 itTI++bswb+wWHFILorqRPcrog9bW7bJhG5VMrNWncV47gI3YgCYcWbQQbe0x2n1h/
+	 VCnNpBHav9szRo8CWNh3CjHoKbXN7mK9ndrNjg0I=
+Subject: Patch "can: bcm: add missing rcu list annotations and operations" has been added to the 6.12-stable tree
 To: gregkh@linuxfoundation.org,mkl@pengutronix.de,sashiko-reviews@lists.linux.dev,socketcan@hartkopp.net,stable@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 20 Jul 2026 17:25:44 +0200
-Message-ID: <2026072044-unfrosted-extended-3102@gregkh>
+Date: Mon, 20 Jul 2026 17:27:12 +0200
+Message-ID: <2026072012-clapper-durably-ef3f@gregkh>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,12 +44,12 @@ This is a note to let you know that I've just added the patch titled
 
     can: bcm: add missing rcu list annotations and operations
 
-to the 5.10-stable tree which can be found at:
+to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
      can-bcm-add-missing-rcu-list-annotations-and-operations.patch
-and it can be found in the queue-5.10 subdirectory.
+and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
@@ -91,7 +91,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/can/bcm.c
 +++ b/net/can/bcm.c
-@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
+@@ -260,7 +260,7 @@ static int bcm_proc_show(struct seq_file
  			   (reduction == 100) ? "near " : "", reduction);
  	}
  
@@ -100,7 +100,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  		seq_printf(m, "tx_op: %03X %s ", op->can_id,
  			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+@@ -945,6 +945,7 @@ static int bcm_tx_setup(struct bcm_msg_h
  	struct bcm_sock *bo = bcm_sk(sk);
  	struct bcm_op *op;
  	struct canfd_frame *cf;
@@ -108,7 +108,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	unsigned int i;
  	int err;
  
-@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+@@ -1087,8 +1088,7 @@ static int bcm_tx_setup(struct bcm_msg_h
  		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
  			     HRTIMER_MODE_REL_SOFT);
  
@@ -118,7 +118,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
  
-@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+@@ -1110,6 +1110,10 @@ static int bcm_tx_setup(struct bcm_msg_h
  		op->flags |= TX_ANNOUNCE;
  	}
  
@@ -129,7 +129,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	if (op->flags & TX_ANNOUNCE)
  		bcm_can_tx(op);
  
-@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+@@ -1253,9 +1257,6 @@ static int bcm_rx_setup(struct bcm_msg_h
  			     HRTIMER_MODE_REL_SOFT);
  		op->thrtimer.function = bcm_rx_thr_handler;
  
@@ -139,7 +139,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		/* call can_rx_register() */
  		do_rx_register = 1;
  
-@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+@@ -1334,10 +1335,12 @@ static int bcm_rx_setup(struct bcm_msg_h
  					      bcm_rx_handler, op, "bcm", sk);
  		if (err) {
  			/* this bcm rx op is broken -> remove it */
@@ -153,7 +153,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  
  	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
+@@ -1667,8 +1670,10 @@ static int bcm_release(struct socket *so
  		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
  #endif /* CONFIG_PROC_FS */
  
@@ -165,7 +165,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
  		/*
-@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
+@@ -1699,8 +1704,10 @@ static int bcm_release(struct socket *so
  
  	synchronize_rcu();
  
@@ -181,6 +181,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 Patches currently in stable-queue which might be from socketcan@hartkopp.net are
 
-queue-5.10/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
-queue-5.10/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
-queue-5.10/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
+queue-6.12/can-bcm-defer-rx_op-deallocation-to-workqueue-to-fix-thrtimer-uaf.patch
+queue-6.12/can-isotp-use-unconditional-synchronize_rcu-in-isotp_release.patch
+queue-6.12/can-bcm-fix-lockless-bound-ifindex-race-and-silent-rx_setup-failure.patch
+queue-6.12/can-bcm-add-missing-rcu-list-annotations-and-operations.patch
