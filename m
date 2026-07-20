@@ -1,74 +1,74 @@
 Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8A38472
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E313ACA5A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784571204; cv=none; b=VFnHhvY+7D/0mElJQPuDJ/s1yHlINa5ZFXjBuhNjMvd+paLOV+DcXwQp4TIrwKhSSp5QuEYgkeyJzQENl7f/gvDAK25p3xR3+Czra2KoXPwRaeKGkHHMsCECYrLdBpi3RQNVopyHihwyrhfOaVrnmITXgRwEpzyfyoWvhsclysk=
+	t=1784571249; cv=none; b=Rr9XnDiJ+gw7GZe0nsMn+Btwzyrvm0mXXg0PM2+/LE8eDi6KbPqKadIn66cgtKxROucPbE7EUDKXMdIIIPSZZ5Ir/EF4oYrcMyGdSGuxFgX3ioleVmj8gjemKqjP3CvZhETl1NgM2n7Zfqq3MJjc6FwWjcjZoCtmdOpFgZssiuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784571204; c=relaxed/simple;
-	bh=Ynfe6G02XWaPRrihbfperCWnlNOvk+Q31z7WR7ZtVF8=;
+	s=arc-20240116; t=1784571249; c=relaxed/simple;
+	bh=+qvA1DAn3c4tmHb756vc3gqaw+6jkHIGpCUavjx6dPI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ILkU2xmOCvgZym3XHAqkHkuKLIGP/Yx8ZiJigAPthHXqDY4MEMp7MPSeRtwCt/CAySXPnMGRqardd7bJLOHaTFF7r0ndWH5guf86oEcjTB9hlZS4iHdcY5VzGLZKRmIQU1I8gozZsi/PgfxUgsSTJ0+c2dSnySWzltdVOQKNtOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XBmYPRVQ; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=oQRLG+a7AtxXI1PXfTKZzkifkPb2CnlZLvMBVdGQPh585ESbf09fsnG0m/Pc3JtH3yv5UfAjppNq4/w9Uzt57a6VQ+zDi+dCGBJteZD+pfgStxIYWm7e+veUkISu5ne1reh790f8gHYwuh96J0fCAWqrfUbiPa9Q9+QcftGsVFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IF1LXNwD; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XBmYPRVQ"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ccdf36f63dso405385ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 11:13:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IF1LXNwD"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cede6375caso355435ad.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 11:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784571202; x=1785176002; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1784571247; x=1785176047; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jQg5MSn5GIQMrrHb/N0B6MSuNfWqtdsH4Etxd7dMb2I=;
-        b=XBmYPRVQtVQoVG55ZbJm1z2jf6T2rCg7+6vZXB4hH7k8IfO3qcB+X+EKk02gZhK5MQ
-         +QzY5caaeqoi7D8k+qnw5Qdzqr9OTD51sVw9+kFOZCvyf/u5aywR+9QhBTIuZ6RdKSN7
-         rowJmBakVknc4GiFyQEnn8l8sKPl79QRbXTHjpB1mbNP+33UcR/rUjjGUQZ+mbsiIuRV
-         jLY6zmc+fX+qPha1B8T5tumGVB3LzUEWZ4M+dB6Xa7iYyaW18+iGwsPxnuYeYlrWSRh6
-         PXmBTAQjzM36K7p5JLaKc2dIEJZ98r4sOkRvwfPsiYGr65W+jle8MOIHYC7eUNpehLqu
-         qifA==
+        bh=2oSA8tKdyLlHK1z/E0CUcnY7QLdvcjeQOvJxYi4x9Gk=;
+        b=IF1LXNwDXgmNznFckWCJ5iy0AARunWXDUa1GXPZVYZzCikX/3O+Ctm3jYrlG30dPKM
+         UxX8cN0NV5hdGXNrHNegH/vHXZv5iys8UnQTfGngYM1CVgiQkPjSlnhCl6EqJLbgZ1b7
+         r3L6nNaFzMWpyrm8AE6/zQcW5UpHZOdjtmqguk551frIyJ64/N1OLOJd4wAYZMKPBVuQ
+         4zObG8AU3CyEvw11XGpqMBA8iqTETiY/XTaAaHJOftLx9tLKleOPI3WRONHt/hU3cjrr
+         4WHucYAgYhoDDfJQ1jTPXlRfr46ZDOIVE7FasiNE59XRGKTTny18GRo+r+emSSfLWJfb
+         cwKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784571202; x=1785176002;
+        d=1e100.net; s=20251104; t=1784571247; x=1785176047;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=jQg5MSn5GIQMrrHb/N0B6MSuNfWqtdsH4Etxd7dMb2I=;
-        b=hTDjFITa/6YXgfQyBykfffgF2EFWSW5lbboKKpg1AP3DqGtJoCyuP1Tb8Inf7sIwGq
-         pmD+ltrOds4FQPGbip+EBodq3UVhF5VSGLpn7Dvl3+FzMuSqhb81m18S17sNaympHoxH
-         R8fv79qX7SzSP6R5ANEx6SL8q1XWcY2qSIwlw12vEFj20VpxobaZyzTwzmKYd+KkPi3d
-         8tyorfK08YqU1AGsmZZIggS2EwlU+OxveDJyPZnfDXXC3jOWP4IxAuGBxNEsMltpJY8a
-         vH1bLxUX6SVcwsIAyv2pK39guujE9X5cCUogBdxodgwZtFqgzt8t/VPytMy3Vnb6lMvp
-         I8Ow==
-X-Gm-Message-State: AOJu0YyTP/HJ3EqboP3yA5+ucfkL2z1jyGpaTl+JrwZczts95TgRrfVx
-	nKHORJ1U6Gf5WCslX8PdSg80iqjW9K7ieu5qchm9FhStyljFXqgFKOEg8wTADO/xIVB5NTBuhfs
-	it5lB6IP3YKk=
-X-Gm-Gg: AR+sD12MuKziUAKbHUtuZ1YDV4TikasI9kOUJ9Y/xh50XGlncay3R6hd8i2EmyPBWKZ
-	cXwUQlmfgDmD8+fMQlbrO9u/K6/xgbBdhuXi6x1P6yPE3TsTMTxAVK6uVlNkucu2cFp1fy255EE
-	B6n1Rs3y3O4AhsdeC9c2ew2FZG0QUz+ip6pCRXxpBlxsqROWSsoROBw6CHgevVgInBeI0jCE8ow
-	IfZzJcZNLRf/AAtHX3YlqjIJQDHUTJ2rMRcu/sYPObF0xrshqZIxQw/E5ExuIXfUhj0bJRFYKJp
-	KuJ+zCx6WAV1o8Cn4j79/NK+tbWTDHD1ceMG1ngPS0yP7aVZQXNEWXutau1p3nqdrZ1GFqgHXMC
-	y9LFkbOYdmOcE47kG6VKJX/OMnMiWG4StBOHz7D7vZtaofjyyNhxy8F/Bcsw3vDZ70/6BENHe9C
-	0NTsWE4UeLJGoStlyhpfvWGuBtSKmgUbKqQm+m
-X-Received: by 2002:a17:902:ec92:b0:2ce:f9e2:4646 with SMTP id d9443c01a7336-2cf7b71d50emr1730055ad.27.1784571170441;
-        Mon, 20 Jul 2026 11:12:50 -0700 (PDT)
+        bh=2oSA8tKdyLlHK1z/E0CUcnY7QLdvcjeQOvJxYi4x9Gk=;
+        b=sOTvZvFmSe+FhXxyvpcQ9QuMO37X+7J4X6wfE/X0NRu83kCzzCVeLKa9Pb03ztCjLE
+         PBX6DUynUc7pufTQXxNlmH3C7vCV98kMW0g4gmBzxiJeW/wS6AQMftkBQmynRKa56y6G
+         hyfUbHtv5wObDaF83mfRE2hnPie5sg6R1G+4X6+wIK+vqYIdGKFXMY2AbrdWZm+Vasfx
+         2jyoeFkT2VfupBm2L9r8cxYRIdtO31FIk1+e8LLYhMxbcXRSSTf146pNkISmv5A8l2c/
+         LVqLzv4GX2X1X53qPEcSYIpjk2+HtkaUyI+IPQsN2Yxix8g7Rz5yClpRjVboOmEMSg3d
+         T6lA==
+X-Gm-Message-State: AOJu0YzmD/+JJFZfoLPeazldqr9/2Qpxhuw3Sw7giQKZXdDIBelO6e1d
+	xK4dKFFfQeCSH/Itpln+DzqUgvBButpU9bggnNQ2ngP+Fni77mD81jjdiceZvG/kUCQqgwqn+DK
+	qkBDEP1AiyQM=
+X-Gm-Gg: AR+sD11s/BJ6Cngw/uQMCtnW9DBwKKsnxwzrTvFkczJh5kfJdls379Aho67GNiIcQ23
+	dUcuaqqy0GELfCtV9TNhSOv05r/jspgunpTkCLNDGPgbV0BMswsV1aABuzI4tuoMtUF3N5cI7yW
+	hbk0jfpG8AcIx5dp0UHVJm25YfCqmJCrOb/iMcF9CxeUGdATZIO5bu7V30lC8ejDgGBIT0fUSwz
+	a2z/mCnoDWxLV5fm0IR57YvC74pG7UIGJeGC69Qmf1khvCshlyVflG/syKHw0ED5hbJstKjicmd
+	IZxmsozp+Bdv8rw85AONxBXuxt35RvNPuo0kx72QBg+GMwsNW33EKgNDI2lDOSDay0TI1J9ZJ/J
+	ypGWmFl9ZNkkZDeQeUTpudYDkg6vxDPAzj4VDe4PQIrjVPZAWhyprWb255GUkNjgllWxS4lVwCt
+	of/pjZlq718yomHJtsY4FcjU2zODdWTNjM5VQUleTB/Pv6V7uj9qJt+hsBPw==
+X-Received: by 2002:a17:903:4084:b0:2cf:4353:f117 with SMTP id d9443c01a7336-2cf7b35e690mr1165405ad.0.1784571246672;
+        Mon, 20 Jul 2026 11:14:06 -0700 (PDT)
 Received: from google.com (60.89.247.35.bc.googleusercontent.com. [35.247.89.60])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf3448db72sm62309825ad.1.2026.07.20.11.12.49
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e921f2e1esm169813a91.0.2026.07.20.11.14.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 11:12:49 -0700 (PDT)
-Date: Mon, 20 Jul 2026 11:12:45 -0700
+        Mon, 20 Jul 2026 11:14:05 -0700 (PDT)
+Date: Mon, 20 Jul 2026 11:14:02 -0700
 From: Vipin Sharma <vipinsh@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v5 14/20] vfio: selftests: Add
- vfio_pci_liveupdate_uapi_test
-Message-ID: <20260720181201.GE1381701.vipinsh@google.com>
+Subject: Re: [PATCH v5 17/20] vfio: selftests: Add
+ vfio_pci_liveupdate_kexec_test
+Message-ID: <20260720181313.GF1381701.vipinsh@google.com>
 References: <20260714151505.3466855-1-vipinsh@google.com>
- <20260714151505.3466855-15-vipinsh@google.com>
- <20260714154402.D3C651F000E9@smtp.kernel.org>
+ <20260714151505.3466855-18-vipinsh@google.com>
+ <20260714153527.2F8311F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -78,73 +78,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260714154402.D3C651F000E9@smtp.kernel.org>
+In-Reply-To: <20260714153527.2F8311F000E9@smtp.kernel.org>
 
-On Tue, Jul 14, 2026 at 03:44:02PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Jul 14, 2026 at 03:35:26PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The selftest `vfio_pci_liveupdate_uapi_test.c` fails to compile and link due to missing headers, libraries, and undefined functions.
+> - [Low] Missing header and Makefile dependencies for liveupdate library.
 > --
 > 
-> --- Patch [14]: [PATCH v5 14/20] vfio: selftests: Add vfio_pci_liveupdate_uapi_test ---
-> commit 4ef2d85343eb23f4f743330b67aabe0e09e08f3d
-> Author: David Matlack <dmatlack@google.com>
+> --- Patch [17]: [PATCH v5 17/20] vfio: selftests: Add vfio_pci_liveupdate_kexec_test ---
+> commit 5f1d9fcb84decd9a67e94d71a492e75ba0113c1b
+> Author: Vipin Sharma <vipinsh@google.com>
 > 
-> vfio: selftests: Add vfio_pci_liveupdate_uapi_test
+> vfio: selftests: Add vfio_pci_liveupdate_kexec_test
 > 
-> This commit adds a selftest to exercise preserving various VFIO files
-> through /dev/liveupdate. It verifies that VFIO cdev device files can be
-> preserved while group-based device files, group files, and container files
-> fail.
+> This commit adds a new selftest to exercise preserving a vfio-pci device
+> across a Live Update. The test verifies that the device file can be
+> preserved before kexec and retrieved afterward.
 > 
-> > diff --git a/tools/testing/selftests/vfio/vfio_pci_liveupdate_uapi_test.c b/tools/testing/selftests/vfio/vfio_pci_liveupdate_uapi_test.c
+> > diff --git a/tools/testing/selftests/vfio/vfio_pci_liveupdate_kexec_test.c b/tools/testing/selftests/vfio/vfio_pci_liveupdate_kexec_test.c
 > > new file mode 100644
-> > index 0000000000000..f81c8ab21db3f
+> > index 0000000000000..15b3e3af91d1e
 > > --- /dev/null
-> > +++ b/tools/testing/selftests/vfio/vfio_pci_liveupdate_uapi_test.c
-> > @@ -0,0 +1,97 @@
+> > +++ b/tools/testing/selftests/vfio/vfio_pci_liveupdate_kexec_test.c
+> > @@ -0,0 +1,89 @@
 > > +// SPDX-License-Identifier: GPL-2.0-only
 > > +
 > > +#include <libliveupdate.h>
 > 
 > [Severity: Low]
-> Does this header file exist in the tree? The build fails because
-> <libliveupdate.h> cannot be found. 
+> Does this header file exist in the tree? It looks like this could cause a
+> build failure because libliveupdate.h cannot be found. The other liveupdate
+> selftests appear to rely on luo_test_utils.h or direct ioctl calls instead
+> of a libliveupdate library.
 > 
-> Additionally, is the Makefile missing an include for
-> ../liveupdate/lib/libliveupdate.mk to ensure the dependencies are properly
-> pulled in for the build?
 
-This series is built on top of in-progress Live Update series.
+This series is on top of in-progress PCI Live Update series.
 https://lore.kernel.org/linux-pci/20260710212616.1351130-1-dmatlack@google.com/
 
-Same for the other issue below.
+Same for the below issues.
 
+> [ ... ]
 > 
-> > +#include <libvfio.h>
-> > +#include <kselftest_harness.h>
+> > +static void before_kexec(int luo_fd)
+> > +{
+> > +	struct vfio_pci_device *device;
 > 
 > [ ... ]
 > 
-> > +TEST_F(vfio_pci_liveupdate_uapi_test, preserve_device)
-> > +{
-> > +	int ret;
-> > +
-> > +	ret = luo_session_preserve_fd(self->session_fd, self->device->fd, 0);
+> > +	printf("Preserving device in session\n");
+> > +	ret = luo_session_preserve_fd(session_fd, device->fd, DEVICE_TOKEN);
 > 
 > [Severity: Low]
-> Is this calling a kernel-space function from a user-space selftest?
+> Will this result in a linker error? It seems luo_session_preserve_fd is
+> undefined without the accompanying library implementation. Should this test
+> use direct ioctls or are there missing Makefile dependencies for a library?
 > 
-> Looking at the code, luo_session_preserve_fd() appears to be defined in
-> kernel/liveupdate/luo_session.c. Since this is a user-space selftest,
-> calling it here results in an undefined reference during compilation. 
+> [ ... ]
 > 
-> Should this be invoking an ioctl directly, or is there a user-space library
-> wrapper intended to be used instead?
+> > +static void after_kexec(int luo_fd, int state_session_fd)
+> > +{
+> > +	struct vfio_pci_device *device;
 > 
-> > +
-> > +	/* Preservation should only be supported for VFIO cdev files. */
-> > +	ASSERT_EQ(ret, self->iommu->iommufd ? 0 : -ENOENT);
-> > +}
+> [ ... ]
+> 
+> > +	printf("Retrieving the device FD from LUO\n");
+> > +	device_fd = luo_session_retrieve_fd(session_fd, DEVICE_TOKEN);
+> 
+> [Severity: Low]
+> Similarly here in after_kexec(), is luo_session_retrieve_fd implemented
+> elsewhere in the test suite? It looks like this will also fail to link.
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260714151505.3466855-1-vipinsh@google.com?part=14
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260714151505.3466855-1-vipinsh@google.com?part=17
