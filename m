@@ -1,67 +1,67 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8231439479B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 04:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3146A1FE451
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 04:21:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784520740; cv=none; b=Q4l9YKQ5MJ1keLP99OQpIeuwodz9gbG0yuW+Cor/Q2kKzO3zWPmTPEKgQ11AaLc46DO91v3lRqDe/aWnnByorcEokPB/aC4xhQjlje6ou7jXpdE4CypAGBqcURET7rUNIhpFnmvwcjEkkofDi55A5OYsPFZf+Fen59AxY7fqYqE=
+	t=1784521285; cv=none; b=CEcPPeFPFWOrzan4WVVXGR98hrOxLj30yb7BXUkRMCuMy67TBvXCBPg13OQdxLnbAiSieJPDCJT3sAIurFVw/WBj+AbJSbHdnO1spTVNv+WvVB+lDEQokyweEF6yN2gDLXdR0eCuzuq51/UC2d8dmo/l+6oAMHL3q/ZFkEMS6zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784520740; c=relaxed/simple;
-	bh=MahNnmHfBFKaEQlOxNZeB9MlIEjVptgN6UdiJXJxTKg=;
+	s=arc-20240116; t=1784521285; c=relaxed/simple;
+	bh=urULaECE59RZEu9ADc4DXXGJYGQ9SwkmznoHPHteils=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ku2j/nHWxyIbmRVGB/QbkjUmDc62Rw6Mp5A7Q08meI5CWpJZUe/UVaCx7vaYiaT478Qr9xPGRsVx9HQnSCw7/QwbDFOEdYwShllSnZMGk5bD0s2cXdUmQx0bYqVcM9OFEBNHd6impQpJmgi2Cy63ZsULNnTJx4vnX1YALIjtMok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GXkYHNar; arc=none smtp.client-ip=209.85.214.177
+	 In-Reply-To:Content-Type; b=fgz9v3SMJCUdQM1EC/oK45dN2DUPeD38xWFBT5s5ruH7EGGstswLyNK3xTAeVh2Fy/kaVvnUYU3j1YptkJcU0M4R/HubJ3eg2Xeo5wInIFgdfj/678j6BBlHuoWcTUpXrKSS7M0trcinOQGmDdo5bCcfNZAU8NLWy4v25s+o8EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ScSdSpUk; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GXkYHNar"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2cc891373e0so117529995ad.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 21:12:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ScSdSpUk"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ced3386430so60468325ad.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 21:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784520738; x=1785125538; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784521283; x=1785126083; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ZsPfgXM8yCBKdRd6xHG+Wz0jhhmcKdYGDlTmaSBPLLE=;
-        b=GXkYHNarLlFMVzNHbbJUEOAykZpc7nDa50AVnPQ/2+F4Nco99cpil526gKq0xKYtue
-         76G3LQ3MLvp1GLGJ9KoOZqbNKrYF23IRaG5Rn2g18c8TrTXcLGe6Cp+1BJEyiMDhmhUS
-         hiLJ6x6KTxvsc9uwLkezr4nNNT0C3h4rAWjbDU6Ek1SdFDRkc+JXh5xG+KnStES2qfNV
-         iuEsvJYCvboveuU219S5lKZDllNLalVe5bg6lyJYiopwfNRcxl6aV5J9rHrblpOyPAuQ
-         26tvFWRDULPZ0oOf531GRvlkeGLkKbTKNGEgsAiPFCX2hmV9yFXHXZ4+/49cJoxuo33I
-         X/Rg==
+        bh=b6WKNm0qU+rSJG12xVDEjsgwTkXYDkcZZZaMLl49pMY=;
+        b=ScSdSpUkoY2Zc8FDobb37mw40k+Pp3QiKxx+vQjukp8RZqTaNA83iv2AiNPI31f2G6
+         uR98PvHKGKI9Qr3NQq5wuTQR6ZB8j5+0u03d+XpMDXXJCQp5XOiw+dAVrc/V/aoNbLcD
+         m3XrtNWlLoNvCA9sFKOHBtdQEnqHE2x2GFhpVADNLFpkzbmSxpstVSXmDhfXnolWzPpm
+         WpnVELicjXxixawkkEeAcue5rbyorTm0FzJl8Ku7wl1W5VG0UTl6NVymjUQsX/GBctU+
+         fvq6t8kOlNEycyYR4UVCe/vGokSStFAC3rUtfW/BOihWwwzJn5ZC/gJXs4wwdOcaAT9/
+         rqyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784520738; x=1785125538;
+        d=1e100.net; s=20251104; t=1784521283; x=1785126083;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ZsPfgXM8yCBKdRd6xHG+Wz0jhhmcKdYGDlTmaSBPLLE=;
-        b=IazCtyxCar37DP2zD3MWQzH6advN6kJANa7arHBa2sfZw00jcxOddt1LzpS84u3BZx
-         qvwVyC3PfWM7EweH55U+Swk+EEbZuiuuBnEwmCELaaavgBoC0LGNxmy1DvBSzCj9wlGp
-         NDAGVmt7bq/USSbaRaiM1wO4a5+ecfc4OcX2e5hXMxs8vWBz+N4o6VFbVr1O2uJZeJzS
-         nao3l08Yo/KjdsYqN+B28N9HIe0z2bA30sj1OjuDN76kBuFOYB/s0SnHap6au/RqnqoV
-         7jeQOv67WpDXQS9J/trQqPa7AX9aMh5jtLiZqJcGZxR7/L8Jnw8fB7xMDQNPOcm6izhd
-         gYqQ==
-X-Gm-Message-State: AOJu0YzPLeozs2TPxLafsk3Ls/AmhKNgSjPKeDWjMf7zWRFQ6GQ7bu2C
-	0HRIl865K++IbPvySOoDyoVYPegYcerE/VdBL94OzWC4Bx7BZGZE4Zc/Bd1g1A==
-X-Gm-Gg: AfdE7ckYTacAg17iipMvh3B0qTWiD8UZ+vqNuj6E7FhFpvOZiWpbQsOmu5Z9FBkGf/w
-	luoX9xQPqsmQW10OKS8yOYkLRhod2V8z6wyqByxbc/s2CrVjCyS8gsISmf2yqfHKoexxzifTBS0
-	ciZbcli5bApUhz/0bwowEKd4nmRIYkVxBYiBShFOKADXeZG2Emu+lhe3WHNuv+bkrF1PhZSsuAM
-	UM1YxFkTckNE/AZEDwg4LzZBRp/ToEdN8xZR5rX4yDNJnsF60kb3P5zl2pGrK+HD9nF40I956AF
-	oUOBfKzY97PH166gJKElEUz2jdc5Tt8KDw+lyzqs3OX4wxiIo/NLxxYz3QnJRKZW8PlF1BcxMQU
-	TaSLgTDGBHNhcYkhTOksoq0VMfhvOVBr4SLXCRu8itJhykYalf/G+7/eIc7QHq7t+jsI5hlz1aG
-	+oVn5YHfyXeGr9mUj6Pe16sQG1liljVlU6g+FWEalwrG2/5SJfye4=
-X-Received: by 2002:a17:903:2ec8:b0:2ca:b8d:e65e with SMTP id d9443c01a7336-2cf349fec81mr140545595ad.37.1784520737792;
-        Sun, 19 Jul 2026 21:12:17 -0700 (PDT)
+        bh=b6WKNm0qU+rSJG12xVDEjsgwTkXYDkcZZZaMLl49pMY=;
+        b=XmIU44SlFZEuOWGaQAKjmaJRaWqd4o+VvGHshmD6ARoBDCXMPeKI523ogIKNNgZVDL
+         sUS7HeCFIih5a8dQFARcpLggwEX1o3+JxKWylkWWhJ7eHpx+nNV3SCxAwR7fq4YR2Yo7
+         1Fc5E5or1M+CtOsjUD59qeyhz9k12dV9gLUWAV6nFbedsUU964xofHyqaofVkjLbRn2v
+         ZEwH648HTxyAwKD6/TL/QlTxUOruv1jZMxqeXcxGaB22cV7sEF6D/4MjNhW44ALYJOZo
+         IqBEUjojjVShlUzdGspnj6EXJfOLCwmT2EKXcG8bX23YmJ2RXTQ1V8PLLVVBcYphxUzz
+         qEwA==
+X-Gm-Message-State: AOJu0YwvyKSX0lmkJ+Juv03Fx+sZJdDaICbqISlKMoYDmAgUK5XGV4uQ
+	O3l3zzVx/5nCZL95C7ZVUuUMSpjxR0VLzP/VUHBDq2PWzRq0Dqc4BEqvuaQAmA==
+X-Gm-Gg: AfdE7cmJWysHDWAgdoR5jae+OsLrALC4UD6vW+UHPgP6sKeM41xpUI2b4NltDc5NTX3
+	Qd1BTT8zp9S3+LZbK0gIOWLWeo2aKtvQ9UAjVjC651mP/VxT1BORyhkxCh8zMh1ApVGhXVN/u26
+	HYqVwXc8Ko+9SBbS2MEqGllsomR8pZX5uy1RCQw6j96ihyp26mg49mMn7puLQfQd2kuIp+Nswau
+	rmQHO7F+e9Fy95o2HLPgQubABdJ/V4Ck/CGXzYQxcnonRmYnDw1JfaCD30Zdyg6XjHT3zus1d8x
+	5gD5rsVs6kAF8NEaV01JB6UCrWAwVkiJJpkoLMRZPjyJQNf9EI0STXUWWOF/Dp/gJeE4nGY/T7a
+	8a7GD4YA9eFB32vtIGsZbnbGkhqTRHApbLIIx1VmDuQAgYX4zm2C/R5iAkX/hi6qUH07EjY3RGw
+	L39ivMHcRILwiOMYZVJCX+a2ps2kN5QDETNwl9ZwDMlGkZJsKUMzB9kkvEg+903Q==
+X-Received: by 2002:a17:903:1a43:b0:2cc:7d4a:3f5a with SMTP id d9443c01a7336-2cf3487711cmr146046185ad.20.1784521283240;
+        Sun, 19 Jul 2026 21:21:23 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf347430f8sm49965465ad.67.2026.07.19.21.12.16
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf346d9b00sm50125975ad.53.2026.07.19.21.21.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Jul 2026 21:12:17 -0700 (PDT)
+        Sun, 19 Jul 2026 21:21:22 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <d8d49283-d85c-4009-b638-fc6dcce5f304@roeck-us.net>
-Date: Sun, 19 Jul 2026 21:12:16 -0700
+Message-ID: <f5189cb4-570e-4eb0-9152-759512d351d5@roeck-us.net>
+Date: Sun, 19 Jul 2026 21:21:22 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,13 +69,13 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] firmware: stratix10-svc: add async HWMON read
- commands and register socfpga-hwmon device
+Subject: Re: [PATCH v6 2/2] hwmon: add Altera SoC FPGA hardware monitoring
+ driver
 To: sashiko-reviews@lists.linux.dev, tze.yee.ng@altera.com
 Cc: linux-hwmon@vger.kernel.org
 References: <cover.1784516953.git.tze.yee.ng@altera.com>
- <a79aee37be7067691fd02a3a9cfd134c995e5a95.1784516953.git.tze.yee.ng@altera.com>
- <20260720033718.783F01F000E9@smtp.kernel.org>
+ <a686d2c3ef56a3ce28b059621a237259af314032.1784516953.git.tze.yee.ng@altera.com>
+ <20260720033636.A08491F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -121,112 +121,117 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260720033718.783F01F000E9@smtp.kernel.org>
+In-Reply-To: <20260720033636.A08491F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/19/26 20:37, sashiko-bot@kernel.org wrote:
+On 7/19/26 20:36, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Hardware monitoring functionality is registered as a platform device rather than an auxiliary device, violating hwmon subsystem layering rules.
-> 
-> Pre-existing issues:
-> - [High] Asynchronous service layer APIs and resources are destroyed before client devices are unregistered, leading to a Use-After-Free and NULL pointer dereference race condition.
+> - [High] Missing break in async poll loop causes severe kernel log spam and unnecessary blocking on hard errors.
+> - [High] Synchronous read timeouts leave stale requests in the channel FIFO, causing all subsequent reads to process stale data and return mismatched sensor values.
 > --
 > 
-> --- Patch [1]: [PATCH v6 1/2] firmware: stratix10-svc: add async HWMON read commands and register socfpga-hwmon device ---
-> commit 552947f984c2b5770daa9717c679362b5561cfa3
+> --- Patch [2]: [PATCH v6 2/2] hwmon: add Altera SoC FPGA hardware monitoring driver ---
+> commit ab6c0c0f95d3890d759e04d9d9aecd151d6406fd
 > Author: Tze Yee Ng <tze.yee.ng@altera.com>
+> Subject: hwmon: add Altera SoC FPGA hardware monitoring driver
 > 
-> firmware: stratix10-svc: add async HWMON read commands and register socfpga-hwmon device
+> This commit adds a hardware monitoring driver for Altera SoC FPGA devices using
+> the Stratix 10 service layer.
 > 
-> Add asynchronous Stratix 10 service layer support for hardware monitor
-> temperature and voltage read commands in stratix10_svc_async_send() and
-> stratix10_svc_async_prepare_response().
-> 
-> Register a socfpga-hwmon platform device from the service layer driver
-> when hardware monitor support is enabled, similar to the RSU device.
-> 
->> diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
->> index c24ca5823078f..fc38afed5b7fe 100644
->> --- a/drivers/firmware/stratix10-svc.c
->> +++ b/drivers/firmware/stratix10-svc.c
+>> diff --git a/drivers/hwmon/socfpga-hwmon.c b/drivers/hwmon/socfpga-hwmon.c
+>> new file mode 100644
+>> index 0000000000000..72418201b65d6
+>> --- /dev/null
+>> +++ b/drivers/hwmon/socfpga-hwmon.c
 > [ ... ]
->> @@ -2013,16 +2028,38 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
->>   	if (ret)
->>   		goto err_put_device;
->>   
->> +	if (IS_ENABLED(CONFIG_SENSORS_ALTERA_SOCFPGA_HWMON)) {
->> +		svc->stratix10_svc_hwmon =
->> +			platform_device_alloc(SOCFPGA_HWMON, 0);
->> +		if (!svc->stratix10_svc_hwmon) {
->> +			dev_err(dev, "failed to allocate %s device\n",
->> +				SOCFPGA_HWMON);
->> +		} else {
->> +			svc->stratix10_svc_hwmon->dev.parent = dev;
->> +
->> +			ret = platform_device_add(svc->stratix10_svc_hwmon);
-> 
-> [Severity: Medium]
-> Should the hardware monitoring functionality be implemented as an auxiliary
-> device driver instead of a platform device?
-> 
-> The hardware monitoring subsystem guidelines state that when hardware
-> monitoring is a secondary function of a chip, it should be implemented as an
-> auxiliary device and reside in drivers/hwmon/.
-> 
-> Does registering socfpga-hwmon directly as a platform device from this
-> firmware service driver bypass the architectural layering rules for hwmon?
-> 
-
-It should be implemented as auxiliary driver, but feel free to ignore since
-I only recently added this guidance to Sashiko.
-
+>> +static int socfpga_hwmon_async_read(struct device *dev,
+>> +				    enum hwmon_sensor_types type,
+>> +				    struct stratix10_svc_client_msg *msg)
+>> +{
 > [ ... ]
->> @@ -2046,6 +2083,9 @@ static void stratix10_svc_drv_remove(struct platform_device *pdev)
->>   	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
->>   	struct stratix10_svc *svc = ctrl->svc;
->>   
->> +	if (svc->stratix10_svc_hwmon)
->> +		platform_device_unregister(svc->stratix10_svc_hwmon);
->> +
->>   	stratix10_svc_async_exit(ctrl);
->>   
->>   	of_platform_depopulate(ctrl->dev);
+>> +	ret = -ETIMEDOUT;
+>> +	while (!time_after(jiffies, deadline)) {
+>> +		status = stratix10_svc_async_poll(priv->chan, handle, &data);
+>> +		if (status == -EAGAIN) {
+>> +			dev_dbg(dev, "Async message is still in progress\n");
+
+This also creates a lot of noise if debugging is active. I don't know
+how long the command usually takes, but it does seem to me that this debug
+message isn't really helpful.
+
+>> +		} else if (status < 0) {
+>> +			dev_alert(dev, "Failed to poll async message: %d\n", status);
+>> +			ret = -ETIMEDOUT;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but can the destruction order in
-> stratix10_svc_drv_remove() lead to a NULL pointer dereference or a
-> use-after-free race condition?
+> Does this loop need a break statement here when status < 0?
 > 
-Pre-existing, so your call if you want to fix it or not.
+> If stratix10_svc_async_poll() returns a hard error, the code sets
+> ret = -ETIMEDOUT but continues to loop for up to 2 seconds. This could
+> flood the kernel log with dev_alert() messages on every 1ms retry.
+> 
+
+Sashiko has a good point, especially since the function returns
+-EINVAL which, if seen, seems to be  _real_ hard error and retrying
+seems pointless. Also, why replace -EINVAL with -ETIMEDOUT ?
+That would need an explanation.
+
+On top of that, "ret = -ETIMEDOUT;" is pointless here since ret is
+already set to -ETIMEDOUT.
+
+Oh, and the called code already displays an error message unless
+the parameters are bad.
+
+>> +		} else if (status == 0) {
+>> +			ret = 0;
+>> +			break;
+>> +		}
+>> +		msleep(HWMON_RETRY_SLEEP_MS);
+
+I would suggest to use usleep_range().
+
+>> +	}
+> [ ... ]
+>> +static int socfpga_hwmon_sync_read(struct device *dev,
+>> +				   enum hwmon_sensor_types type,
+>> +				   struct stratix10_svc_client_msg *msg)
+>> +{
+> [ ... ]
+>> +	ret = stratix10_svc_send(priv->chan, msg);
+>> +	if (ret < 0)
+>> +		goto status_done;
+>> +
+>> +	ret = wait_for_completion_timeout(&priv->completion, HWMON_TIMEOUT);
+>> +	if (!ret) {
+>> +		dev_err(priv->client.dev, "timeout waiting for SMC call\n");
+>> +		ret = -ETIMEDOUT;
+>> +		goto status_done;
+> 
+> [Severity: High]
+> If a timeout occurs here, could the unfulfilled request remain in the
+> SVC channel's FIFO?
+> 
+> When the timeout hits, this path calls stratix10_svc_done() which stops the
+> worker thread, but it doesn't appear to remove the request from chan->svc_fifo.
+> 
+> Would the next sensor read enqueue a new request and receive the stale data
+> from this timed-out request, permanently desynchronizing all subsequent
+> sensor readings?
+> 
+
+Please either address or explain why it is not a problem.
 
 Thanks,
 Guenter
 
-> When stratix10_svc_async_exit() is called, it destroys the async ID pool
-> and sets actrl->invoke_fn to NULL:
-> 
-> drivers/firmware/stratix10-svc.c:stratix10_svc_async_exit() {
->      ...
->      ida_destroy(&actrl->async_id_pool);
->      actrl->invoke_fn = NULL;
->      ...
-> }
-> 
-> However, the RSU client device is unregistered after this destruction step
-> via platform_device_unregister(svc->stratix10_svc_rsu).
-> 
-> If a user interacts with a client device's sysfs attribute while the module
-> is being unloaded, could the still-active client device invoke
-> stratix10_svc_async_send()?
-> 
-> If so, it would concurrently access freed asynchronous channels or attempt
-> to execute actrl->invoke_fn(actrl, &args, &res) after it has been locklessly
-> cleared, resulting in a kernel crash.
-> 
-> Would it be safer to unregister all child and client devices before the
-> resources they depend on are torn down?
+>> +	}
+>> +
+>> +	ret = priv->last_err;
+>> +
+>> +status_done:
+>> +	stratix10_svc_done(priv->chan);
+>> +	return ret;
+>> +}
 > 
 
