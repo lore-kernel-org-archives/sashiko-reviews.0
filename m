@@ -1,220 +1,151 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36928426EB3
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9D03DCD96
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784556535; cv=none; b=F3LhYNtG7S6b/vEsDdRV8q4a9zjcolweIjziA/cbOxK4uvFpg1wzzSw2DJ+Qbdp+upv0aGz0kiVnVU3FQB2o5zletCbES0PM6XjWfxWauLwXz9kNIH/F2ymdJ9Qj2kvlVUjYrYlgkZ5JTW0w2PEIgiDlbitJJj2Ayiq2053Qzo4=
+	t=1784556619; cv=none; b=D7xzi4AS2OZnDRREREzS0OUNp9mGvA3hXXejGi52GtaKi479ZbsQxmorEZfMtIWcXCpGkPjSsUCrgBRmEjAYLiqesp0oGYXqgTOdEUerVSVbV1PZU3hABcj58+q4dYMwV8W1GgzoKleIFHN/UKTPaAb5at1F1PVjoEok7HUYw/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784556535; c=relaxed/simple;
-	bh=4/QLGXVN3YtC8wbV86UX79GdVGNiO0IzNFsiHKzoyk8=;
+	s=arc-20240116; t=1784556619; c=relaxed/simple;
+	bh=eeifG+KCUF+ggQSAa4sX4MACvBu36hwWPw6LlvuYs/s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EYcetkgBfkdbTjA1LHmXRswuYaxHH/AZIIntY2zjYMGayB+IJ/Wccs2Sfu/4xHrUsVuY/YcwkyzrDw4njURppKqQ5JNruj738x8AwTeZeg7OXl2m96Y6cV2Xz4g4BW/pC/7sO02XyJ3fdLE/zpgGwBbYdIRYBlA5e/vXIPT9VNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hH/7RxQm; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=cJg7K6kO; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=U2DWBTJT+edIfz8WYsLrY4ZR+INlfmGQKfIAnznSYcFW7PMNoROsruEyz1NV2X7/TVa99TtYAiEycP2JUCS1NTZcfPWrb8XA/SBNMZV9rB9/fjHCGLRqgKkaFycLeq4UiSqsQv2tm6RjZufI2FTnlYhNYd42wMuWSbHGek+AiFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DlMPY0Tt; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NPklf7CD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hH/7RxQm";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="cJg7K6kO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1784556533;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bYhdFOpmK669qfgd8VOdJ1wWxaKRFhsnw8y+lE3N65U=;
-	b=hH/7RxQm3kH2XJ1pZvW7BWLDKNtPG9v0JG5aK5n9G63VjBCG+LoeRHRsV+YF+kQG8p0shM
-	dUo4cBK6wNB3C4BaquzVSbEb/q48XkBHBlG8/mQ863ovSpYMKoTqcuUZls6sHsSCnE1YyW
-	TXClDniocaka94T4TGnK68fAD+Zhwzw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-fIVclnBdNduRrX1THy5P-w-1; Mon, 20 Jul 2026 10:08:51 -0400
-X-MC-Unique: fIVclnBdNduRrX1THy5P-w-1
-X-Mimecast-MFC-AGG-ID: fIVclnBdNduRrX1THy5P-w_1784556530
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-47f726186c4so944374f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 07:08:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DlMPY0Tt";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NPklf7CD"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66KDqgPD2702126
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:10:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=zlw37I77UEcu7PgkZBonU+7U
+	vpDEzNU8P95fsirsjcY=; b=DlMPY0TtAh3MqzDXJewBmdT4nyVrYFggSvpVO2O7
+	rZfeWlNtFd8Mo6/QHmpjJ/HmhmIjXZKf2FpKWk9DctBoGsQ/PLnU1XWVy5fe3HVU
+	EKB+6RValYz9BudzSOGv5QZHkx90Um/Q9+HiXFfgbutvNZ6WaXN7HfRWI1qshVr+
+	X3pxefnGaxVJQvDzr+N4af3Jwv9/wpJl0Wj5cKtsZcUrrdgk7TuVy+hpxTmVmCnu
+	TCFCYbE1bIrivJ0Ga2ps5gJcAk9RYVPKrjguGZiiPfxqU8Bp5j6Izi9QmoA7hsv5
+	yd3L4CYZ0flFSoKWC51oAP9mafWq0kUFJIFqDR+OeMgVsg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhf0c1u4a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 14:10:16 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-51c1c7f135bso141267221cf.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 07:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1784556529; x=1785161329; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1784556616; x=1785161416; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=bYhdFOpmK669qfgd8VOdJ1wWxaKRFhsnw8y+lE3N65U=;
-        b=cJg7K6kOnRLWv4WMR5gWUV+wrsQE5yP8brBgtcv+rGD8JFQbS1/whRThW3rnjqYg7Z
-         2AJvNto5smtqKEZN2WEvEc2m/3z1+RHbGuauWifC/DmuPIW/nJpHDDT/fzcD6A9QrUPR
-         TPW7TQ1Qk+fmV3BUlbz88abdDF4DyEQXU2rkEF2UIG/W11HiJzwOm9vaybFQ4lDwVW4w
-         M9Tg+r/SgdNLbKXftOwBBh8SQFaluDJzY+UalWiQ11S7MCDUqEbtD2a+Jof/2pbiQebQ
-         IsxPG7Se6NOM218TvmkzEorceZvloSCReuk/Tc/lO/j2kugoAnXbe6GxivhKtnCqup6W
-         bwIQ==
+        bh=zlw37I77UEcu7PgkZBonU+7UvpDEzNU8P95fsirsjcY=;
+        b=NPklf7CD+zoNB3FOL3sDefSzbZF0ksh4XZiTHCZ4geCYGK8bQz2xdnU0wRcaI5PJGG
+         h9K4TLl133rrVrRKXZZl6cE3K+7glkcnfE4FMkPWnZu4lPCC5vcG7HTbGXnnWosVwkSD
+         0wACGD8Jh5uvrHyhN/3dr2P0fqQB1MuYfTSVGKgXI2xqJ7EYKa6JbjeeGQW7fvvxN8sH
+         9qXD9UOC87RpIQ8BgEa576Bux0ZlYaia1q2n3A/53dOnL7/Tv4U8xaFbv4IR878Am0aT
+         9kLOAfslLkK7gFcS7BnifAAWSu3oMxMOuxqy/5pRoMN3UCaHOPN4cUp48Ef+ePMq8ass
+         1DaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784556529; x=1785161329;
+        d=1e100.net; s=20251104; t=1784556616; x=1785161416;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bYhdFOpmK669qfgd8VOdJ1wWxaKRFhsnw8y+lE3N65U=;
-        b=jiRRph97xiHnOe5we1wBNaIPn4IR0bruv6ZJg8hG0HTzjG8mzb4sRcqJ3WKcGEwhQc
-         z6arZJfKBWfzS+DALucu2Y9DqDdwkC3rhoLvv7RArrs4VMoXQZEtYjAJ0JPRE4icNrLW
-         VilHETbbNQzPKTqVEgu8sGZl9Eu2FFEPgMOjxfuj3QigM7Te5ltWXGmIq2Y7uV4qJjWE
-         SXwZTGMv+JJXGmsMvq1Gn10rGU053V0Y4M7NSVf+M4C2rcKUpNdA6I4PewMJUz+a2J6l
-         TQjw7EN6cyNzxagZWZFlvJXjoOzqvNZWllZT1yvlsm2/s7v/EAIO/ul38hs4ZtkoeBfm
-         lOmA==
-X-Forwarded-Encrypted: i=1; AHgh+RoBd+8DPyjmZYCC8PRPqey3o9HFKl4aHMgvVVHayvqPtPpciS7iaEqB8D1v4a6bK5DwaG7Avy17B7EUACPHNLQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyDP/fxMx0okJL2w7naVhUFa8au9Kup+j1MaKODzSg2zU6VF3zs
-	S8+VuNvHEk+sbwTXY0sJgnURGxpxikZfeFWfpoubP2PoedCCyiId0HfJ8dyaNAO501tQXNYN9ll
-	Yx/M3FvXb3HNDN0IsrgkSb9Lm3JiSgapDtlLKb0XuJ5QlRCDlXjSP2YUWQTYcoZf70jgh3Q==
-X-Gm-Gg: AfdE7ckGtkyKHj0GBJVky/zQPZXLMGO+e+KiU05EUrmEyYNYeepBF5KDyVUHK+K9Gyv
-	GnNKTP3teVpX4il3yxHlEnWO7SPlSb4OScLW0bvxGsaHNGh2+FwiPLtubjkOwOtl5Af4pdPQ4sY
-	F6IaKwQltLfmDFs90Nc2f8JkH0uuvU9QCq8NZ8sY3YKmbgNDx85st+MqWzBTR7VDQg4klQauK2l
-	DNeQ35yqK4OPSa685s+vVmsm/MnxB8x22bIKFrhwRQXmo5VVpL6NhwEJpPEXOtNsBpr7pcbqspZ
-	wGs+mNl+FCW65fSdQ7zSYR6jdt2REp0+aFDKeKfV9x1heMgzLCmZydMrrj1v3rbRZo7STG2mMg=
-	=
-X-Received: by 2002:a05:600d:8486:20b0:495:6022:5a20 with SMTP id 5b1f17b1804b1-49560319fe9mr26968445e9.33.1784556529519;
-        Mon, 20 Jul 2026 07:08:49 -0700 (PDT)
-X-Received: by 2002:a05:600d:8486:20b0:495:6022:5a20 with SMTP id 5b1f17b1804b1-49560319fe9mr26967995e9.33.1784556528895;
-        Mon, 20 Jul 2026 07:08:48 -0700 (PDT)
-Received: from localhost ([2a01:e0a:a99:9822:edbd:5894:eb1d:c2c7])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63e499c2sm28394845f8f.4.2026.07.20.07.08.47
+        bh=zlw37I77UEcu7PgkZBonU+7UvpDEzNU8P95fsirsjcY=;
+        b=mZ3B8F8xi9oKxtfqQPY4Q845WWrgzh60VxxVwPFJR6t3VyB0z6h3SaDQ4hua6MP8uh
+         p+lIV9s4qSMlPvHY/dtdb6rZO1HUZ+lK4s7qIYx32TU2tLBSYT/l+/gH4R/LGT2OJrbl
+         IE08Pi56iZ4aZ6CsLyLPGInW2aLCIU+G41f1rGAOvT6gmQe5/fkRD+crz6RGSLQQ4aa2
+         85jBe2/9qCSBZOdY95C9E7+uChw2k7Urs0XP+/h/gxXXW3VcrMAZqlIelgDDAcK8FyYZ
+         npaCcNd62j0HDkf95g2YBWGJ4Zko+xw47TUIrbKQJyKNDZq/MrNXwrOqFlTxwZV6TrhP
+         Rb8A==
+X-Gm-Message-State: AOJu0YyooP7bATjLmRZXhkoIa/nc8q37o+6U1wzdrB98TicpWuiWQkn7
+	ngbqN36cVtJiPq6cFK9ivPaYU4TNV59vqbY8M/FtVvQ5tmWMpc/eivIOyFuqHO88pQTnhvEbdJ6
+	8z0gYhHWjf4TbOsbj2SFywis/j7gvLnd84wD1gtEmNNCjM9+nerke1MT7jVdLqH3e8dec/MQ=
+X-Gm-Gg: AfdE7cmEGXgnsRQ1K6bFnaTobK3OLyvwRLIXJbWVujmHTXn5++m5ziRNSXgIgD3dRdD
+	O+eO+81BJFcemiTxmI9hFtho3coPraN0ejxx+/jEsVRH8yy/Xm6OTTkVTj+Jfj+xxP4+w/JsjVj
+	Z4D8e07/NFrFraOONvnw8SeK0uImUQ4wBEHf+CNIrCfjt/tVrKqbhmkznUeyQuEW3+szhEmRZ6+
+	4V7gkA2GEaZACEPrPcBZagiNBRmHCH9OGL4qz3Ml5S6pLmuKXSBN0TBP3hABcxc1qyMr0Q9qIdn
+	iiWE+S2txIcEpm2N7jr/P/x4lx0LmZPDPfHSlyDIVUIgnoaTSLuxgVMMTdbxQvycwhVvVMBMvbP
+	D1UjFOfg3PvZ1gMN0aVx5gprWyCd+DFuXatfr0vc2Yw/neb4HibHfsGx7fyuCDIciFGUGgBAszl
+	N4+swyCNdO6lcU+g==
+X-Received: by 2002:a05:622a:5cd:b0:51c:1291:911c with SMTP id d75a77b69052e-5213d2b728dmr130012301cf.14.1784556615727;
+        Mon, 20 Jul 2026 07:10:15 -0700 (PDT)
+X-Received: by 2002:a05:622a:5cd:b0:51c:1291:911c with SMTP id d75a77b69052e-5213d2b728dmr130011791cf.14.1784556615296;
+        Mon, 20 Jul 2026 07:10:15 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b291e298d5sm2320723e87.84.2026.07.20.07.10.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 07:08:48 -0700 (PDT)
-Date: Mon, 20 Jul 2026 16:08:47 +0200
-From: Maxime Ripard <mripard@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-Message-ID: <20260720-bold-jasmine-goldfish-d979e5@penduick>
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
- <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
+        Mon, 20 Jul 2026 07:10:13 -0700 (PDT)
+Date: Mon, 20 Jul 2026 17:10:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Cc: sashiko-reviews@lists.linux.dev, neil.armstrong@linaro.org,
+        olteanv@gmail.com, linux-phy@lists.infradead.org, vkoul@kernel.org
+Subject: Re: [PATCH v4 2/8] phy: rockchip: samsung-hdptx: Prevent
+ divide-by-zero when computing clk rate
+Message-ID: <al4sQ1kNriKH7hHL@umbar.lan>
+References: <20260612-hdptx-clk-fixes-v4-2-ce5e1d456cda@collabora.com>
+ <20260611235702.0E9691F000E9@smtp.kernel.org>
+ <90ac7bbc-977b-432a-9f17-b7280e19d819@collabora.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="lkbwojfab5zeg2qh"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
+In-Reply-To: <90ac7bbc-977b-432a-9f17-b7280e19d819@collabora.com>
+X-Authority-Analysis: v=2.4 cv=HeYkiCE8 c=1 sm=1 tr=0 ts=6a5e2c48 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=SANp81FrUiQe7WWXlqYA:9 a=CjuIK1q_8ugA:10 a=ZXulRonScM0A:10
+ a=zZCYzV9kfG8A:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: j37h_ZZ041QbibJDgN5FZIiGCqu_F5M_
+X-Proofpoint-ORIG-GUID: j37h_ZZ041QbibJDgN5FZIiGCqu_F5M_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE1NyBTYWx0ZWRfX7QZkABM4tzyJ
+ 0hGo2sqbE/MEVD4aQKf81ySX7a10F1I6H9SKjmsLfd2pgLvkjWdtr/Ia8UK/soNHoqUOt0mN/9O
+ 5W3qpi+1g4Qjt0V+zaqO/HXLdYfuHKA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE1NyBTYWx0ZWRfXxe4tugRsbfuM
+ lgklfgIS2M6LTbE81i1VGp1TzXgYB9vLYYTRsEovhG+xfutlxG1W7koVU0fmmHlzIOayZ28Ls5x
+ vtURrw0uRqPzINKosD2HCX8qGDKuMVcD6IOBWu/ePkF1suzBLibrrPXVqgwOp9BFfcRTq9S7x4T
+ YTEvu9I5kJ64FapuXezzPft38jIYmUGZOKWuKzPVxFe8+tpvvw+XgU9XWZbpxwffM6YBp0Na4iJ
+ cWCU8Q1e4Sd+KAAgET9frJXLpSvTlDlcC4bvIE8PuESdV0ExDmlGRRoVxHFw77VcERi7kH11Z4b
+ De/jM3kP04wzunnkflB6YcrwTZTq8K5Q7F/JqgScPd+TS2m4SZan/QW5WYtZOQh1m8HVdpAZ1Y5
+ kk/XfnDWBnZ/R4OY06qzfpq9brBvoGJXAoR80hWy+cv/c3rc4/26llkDj/tFFcg3zpNW6JCumOi
+ W2zsdzOhXJ7b46RR1YQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_03,2026-07-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 clxscore=1015 adultscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200157
+
+On Fri, Jun 12, 2026 at 03:18:52AM +0300, Cristian Ciocaltea wrote:
+> On 6/12/26 2:57 AM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > 
+> > Pre-existing issues:
+> > - [High] Potential integer underflow in `fout` calculation when hardware state is misconfigured, leading to a massive bogus clock rate that could hang downstream components.
+> > --
+> 
+> If the hardware reached such a damaged state, the kernel is likely already encountering more serious issues.
+> 
+> Regardless, I will address this in the "FRL TxFFE level control" series, which is currently blocked by this one, to avoid any further delays.
+> 
+
+With the overflow handled:
 
 
---lkbwojfab5zeg2qh
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-MIME-Version: 1.0
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-On Mon, Jul 20, 2026 at 02:36:19PM +0200, Thomas Zimmermann wrote:
-> Hi
->=20
-> Am 18.07.26 um 21:12 schrieb Ze Huang:
-> [...]
-> > > > -	if (event) {
-> > > > -		crtc->state->event =3D NULL;
-> > > > +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane *pl=
-ane,
-> > > > +					      struct drm_atomic_commit *commit)
-> > > > +{
-> > > > +	struct drm_plane_state *plane_state =3D drm_atomic_get_new_plane_=
-state(commit, plane);
-> > > > +	struct drm_crtc *crtc =3D plane_state->crtc;
-> > > > +	struct drm_crtc_state *crtc_state =3D NULL;
-> > > > -		spin_lock_irq(&crtc->dev->event_lock);
-> > > > +	if (crtc)
-> > > > +		crtc_state =3D drm_atomic_get_new_crtc_state(commit, crtc);
-> > > > -		if (crtc->state->active && drm_crtc_vblank_get(crtc) =3D=3D 0)
-> > > > -			drm_crtc_arm_vblank_event(crtc, event);
-> > > > -		else
-> > > > -			drm_crtc_send_vblank_event(crtc, event);
-> > > > +	return drm_atomic_helper_check_plane_state(plane_state, crtc_stat=
-e,
-> > > [Severity: High]
-> > > Can fetching the CRTC state this way cause a kernel panic in the core=
- atomic
-> > > helpers?
-> > >=20
-> > > If userspace submits a commit that modifies only plane properties wit=
-hout
-> > > affecting the CRTC, the CRTC is not implicitly added to the atomic co=
-mmit
-> > > state.
-> > >=20
-> > > In this scenario, drm_atomic_get_new_crtc_state() returns NULL. Passi=
-ng this
-> > > NULL pointer directly to drm_atomic_helper_check_plane_state() causes=
- a crash
-> > > when it dereferences crtc_state->enable.
-> > >=20
-> > > Could this use drm_atomic_get_crtc_state() instead to ensure the stat=
-e is
-> > > brought into the commit if it is missing?
-> > I think it is fine here; I'll just copy the pattern from [1].
-> >=20
-> > [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/mgag=
-200/mgag200_mode.c#L487
->=20
-> It could be that there's a long standing problem in the overall logic. Not
-> having a CRTC (and hence crtc_state) should also mean !fb, so we'd return=
- at
-> [1]. If we have a CRTC on the plane but pass a crtc_state of NULL, we cou=
-ld
-> get a panic at [2], where it does crtc_state->crtc.=A0 I'm not aware of a=
-ny
-> bug reports about this problem, but it's still an issue.
->=20
-> A number of drivers get this wrong by using
-> drm_atomic_helper_get_new_crtc_state(). The bot suggests to use
-> drm_atomic_helper_get_crtc_state() instead.=A0 This helper also returns t=
-he
-> new state. But=A0 if there's no new state, it duplicates the CRTC's exist=
-ing
-> state. That's a bit of an overhead, but probably not an issue.=A0 Several
-> drivers use this helper, but also get it wrong. They tend to return early=
- in
-> the case of !crtc or !fb without calling _check_plane_state(). See [3] and
-> [4] for examples.
->=20
-> I think, going with the bot's suggestion to use
-> drm_atomic_helper_get_crtc_state() might be the best resolution for now. =
-It
-> still needs a crtc pointer, so the pattern is
->=20
-> crtc_state =3D NULL
-> if (plane_state->crtc)
-> =A0 =A0 crtc_state =3D drm_atomic_helper_get_crtc_state(plane_state->crtc)
->=20
-> _check_plane_state(plane_state, crtc_state);
->=20
-> And in this case, _check_plane_state() should work correctly. But you can
-> only use _get_crtc_state() in the atomic_check helpers! In the
-> atomic_update, atomic_enable, etc helpers, it's too late for the helper to
-> copy the CRTC state.
->=20
-> I think some other DRM dev should look over this as well. It's one of the
-> trickier things in DRM to get right.
 
-drm_atomic_helper_get_crtc_state is safe in atomic_check. It's
-everything after that must use either get_new_crtc_state or
-get_old_crtc_state, as the global state cannot be modified anymore.
 
-Maxime
-
---lkbwojfab5zeg2qh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCal4r6QAKCRAnX84Zoj2+
-djhGAYCtixMssCdv8dqBLhL8AGCbqHVEcB24miO1/lrC21m8xRJjw/XtwiTe9uk3
-u4LZbpABgJqkOJIhKLmzGuvYfOvGsyd49cCHHxPbfZ61/iBr5yCbvhnk0bm7yW/6
-PWaUe1AQtQ==
-=Kjek
------END PGP SIGNATURE-----
-
---lkbwojfab5zeg2qh--
-
+-- 
+With best wishes
+Dmitry
