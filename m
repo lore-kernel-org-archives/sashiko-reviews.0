@@ -1,311 +1,226 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F783B7750;
-	Mon, 20 Jul 2026 08:53:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784537594; cv=none; b=af6+GxAEEGKyiBlGIeWwcHP3vUAd+LFUxHb3I+y05HkKxtPLLMxnfWTFYVxI5aBCy8XnPChlSwM/o2ZcqHrGmb/ZiEFvwk0efmDyYPGn+TXTwPaK0scDuDKnkW0PJ66JrYWhPTsUcjQJkMKiq7dbR4Kc0zZr+9QIGdK7DeGu9bQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784537594; c=relaxed/simple;
-	bh=pwpSmfIszZVG1QbqAmZm2FDblzgDUxBTWMqVh3ruwIw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=J8TFC0/8zJOD4enC/1E8cJDi2EDFsrnMnnIYaUXohrI0NthVMPLofyIOHHmMDI80D6AfrZbxg4sitBSD21RnLwqILgRQe4zevqeYzaiEdXNJGy9YX3qFkGQBVXA0LbZXTV46mtLzw3XX3JE92R0YKRi0mQz37nJpteiC2BcxoTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=d5mX4OFh; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B223C76A2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 09:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784539265; cv=pass; b=OO7yfDItLyAJMj/lQyrCiJ/9OzKD0CC3jNecldbUcT56zeD/5jDaK2cK/3Z3cPpGbmjSTaWMG/epDfW/enasirkVJVyZ7PZmaUgbaN9z4z/FHDuveAeT25tSxr6ZWEmwIB6LDHx4f+TaUt4RZXJyUaUnO0TH1N5UvYUZCuAv4/U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784539265; c=relaxed/simple;
+	bh=nVoTWQyfEHYdtxuskiX83mBuE4FebcDcTS0211N/3T0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XGMeCP2h/UgChhHMLB8wnskMaoGqF/MgwYLTjWrqoeM93+cKkbI0364WdRTp/BAOBH1zjDa4fThtQdWn3xhFAQiNQHTyac9LRUYRpeAyyO6mhsb2bPhlBxM+D1q9IExJi2oTmG+8Da0izy1YArRv1ra8/laK+8LVpv/1CR+ChIU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=i+CoVNPc; arc=pass smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="d5mX4OFh"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66K6gJEp1471783;
-	Mon, 20 Jul 2026 08:53:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=iWWu7m
-	QsR3tM83MWCID5TAEDXQhLoZsiLCZaC0NolSI=; b=d5mX4OFhRlqD9AwE8Dobjn
-	Sx8Wza4t4w2YBhHJVESyvA/SiNCBxhS9b0L2dSRTTHYaG3Kv02UbOeCTcZNwGdNx
-	jVDqAEnXx5DkGx2B7mKivw3Zrd/DB1SHsZPe9kjfAgbJ020meLkmkqPZxElPWsaz
-	XnrdOKyWODbNsAXN2j2QajZUQ0aaqpIyEIQ9TPKSy4k3uyGRgtpGsInVOB388HRq
-	lfSAYkhMJKCNt/fnybNJBCD3jExPcBl+C3xdKc4mjAVMHUT0EEzV9rQWWtz+8K8J
-	7fiexGmfo+b87a3YWWWElx17xB6EMSD4eBmlf3hcM2WdhiHpcXI4ngo7H8MzwNtQ
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg790pkh2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jul 2026 08:53:11 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66K8nb9l013143;
-	Mon, 20 Jul 2026 08:53:10 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgnagvrsg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jul 2026 08:53:10 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66K8r8RO53477828
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 20 Jul 2026 08:53:08 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 763A72004B;
-	Mon, 20 Jul 2026 08:53:08 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C5EC020043;
-	Mon, 20 Jul 2026 08:53:07 +0000 (GMT)
-Received: from smtpclient.apple (unknown [9.39.16.54])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon, 20 Jul 2026 08:53:07 +0000 (GMT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="i+CoVNPc"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-ca00f126b7eso6556085a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 02:21:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784539263; cv=none;
+        d=google.com; s=arc-20260327;
+        b=eGdQNxwk5oq1Xk1x/q7t6XoHpeLyNoH27Tp7M52D8Oc3cOZtXxveJMGUjrxJvB797P
+         zefCkavFpqI+BodzNsMJthcKEh0P2YNGW0iw80x0lMEaXkwjQT9JHEleZ/7s6edjyFhV
+         VHz1NkfmMZCg7PVRmiF1Of4P/N4afKK7KbatLnkx/TPPRRm/gdMxYa4a+/vURmojnsLa
+         SLgOTfBnkpraCGeZvWuLo7YZLOxBadbonPTgNRxjNBwaN9Bb1T38Ux1BvqeQIgALFx3A
+         Vv8qEYCPTPdOXEBdHt4BOeXFLrE4CIzr0pXK5/PIcc2Lwo9L2Gdraw8RnD+1ecNJx0a1
+         iPwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kFQlNZKrCEhOc+6aXOTGSVDcwURJmp18SbzxbmbgH5Q=;
+        fh=4nJYHeB81JL7yBgGUNehVtwNRX3z0KpvqufdmbYAcUg=;
+        b=ofmsefStnl9+cCs4mndvk5HSe3ndXEWd1QXd1c8XCfgsbjRRedJgGOFoaVAj39tnAR
+         6lNOWo9eWiL163sIAhzON26NwU/ydCFUDV6h5cxYeBCBpw4CL6K02gHamL26l6k5nQxN
+         PWvsuvmlK22M1cPc0ts4bMdluW373wETZhg6OnNuzKokJEGwD/HBiIxkSSS+t+QDzK42
+         aKLnw0hL12Rtc178hWyn/gJjaplpClhfoFPzvvQhm2G90x2h72ApGd7wI5ZQlYXSWK4I
+         o1B/148RxnGxqJFOuDLBpn57AZS5ONmMfr+FJHw1vvbHjYbUOeaXl1rLg2/m3sM2mOBe
+         JXyg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1784539263; x=1785144063; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kFQlNZKrCEhOc+6aXOTGSVDcwURJmp18SbzxbmbgH5Q=;
+        b=i+CoVNPcEF4692zQB9BFHcvqmKvGytD/jPQlYkpeCfP/oZOQoybamziGw1XZJTrMM4
+         RHtaxDJqwQIMg2ngyUhxt+z5LIFOXcidysjn3k6t7/WNtYEcMslpur1W2gpNqZxfCsgm
+         Sv0+gy4yGQNRM6YPmFOrK3b6WO4F6fM7Tvd4pdboinDfKIMOjdS9fkkZJqYWu7NE7mW4
+         fp3xDHGRElSfycMWCTVM9JoHYphgwhro7k6ohFSgp5qxkKeFXDPjvTzRj4WDN5WQAMDk
+         0YYAP2PcvQx7aHOnTAyvmi0+bBwDksg0HorH8qgQhp9WXZ9dPV4OySaBibxRWRrzKnlH
+         MU4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784539263; x=1785144063;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kFQlNZKrCEhOc+6aXOTGSVDcwURJmp18SbzxbmbgH5Q=;
+        b=nl2M7bkbBIU9ZCnEeVn9SuPCmeAPK35D06yGwTbyJ7yUQ4Xx89e/ouJ1Z+svoo3ods
+         OvJGWyU7WViVOUOu24QMoIcF0i+EL8QmH2gNLQVzNkb1jZOXVXAzbKfjH6hBOCfeZiOa
+         fcA9trCR+ChP9svJzlJQG51kuNsP5G8JhsOcaToEdnfvsmNwhSsZOJ6K1EEwDoxnLHKn
+         P0taRRJh5BkQHgpHA7u/3A9QPTlrRp4NqJa/D+n+1ZF9bGqlv0UemoEJY9+stQYmmI3A
+         LnWw5DfIvIUyzI+2I5fR3ahRSWWF2stX9EsP7BIN4sCVD5MNAlUMt3wzqAyrOV12Z6Jt
+         ay5Q==
+X-Gm-Message-State: AOJu0YxidlL/RfBn2s0nEZ0ny/7uQV/gOBdN2FEK3LLkeiev4sNENQ/T
+	c1//OUMRjdETfJNaHTwGCSPAtkqiuvrFLjY7OuYhAenIqUTBN+fmwgIVzcXkNg6yMvfshyO/KSf
+	3XOFnicfSFhXLUy0v9kyQwEP5hLCJQwnETVXb3Yn/0hfspPv4IQYcJWBVUQ==
+X-Gm-Gg: AfdE7cmVhs94mUcARdWOKNe1bjLm3eY3YH0u9Ty1FqZAoORx5+lmhxqA9dfawA1m938
+	zDZYtH1VtO4EBZTLE7N+/8DbALXhIIQTSDVDU6858vUdXJV/lG48tW6GNN7HgO/TizRdBsrWmg0
+	j0OA7ulRJ8DOHteVs9hqcd8caQQXzlWBQSxfjZJW6V23X69VL41kufazCdyTxFl73R15KQprM7/
+	HC8zi22tn8EbllkjupYZQoZJwhVIsapvvIxWCV5oQSvWX/rcmV6s2zTLUQGztg=
+X-Received: by 2002:a05:6a00:3d4b:b0:848:7784:37d6 with SMTP id
+ d2e1a72fcca58-84c295526eemr13782465b3a.58.1784539263267; Mon, 20 Jul 2026
+ 02:21:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH 3/9] tools/perf: Add arch_record__collect_final_data to
- collect additional data before closing the event
-From: Athira Rajeev <atrajeev@linux.ibm.com>
-In-Reply-To: <20260701085454.8ECCB1F000E9@smtp.kernel.org>
-Date: Mon, 20 Jul 2026 14:22:55 +0530
-Cc: linux-perf-users@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5C291435-7940-49C7-92AC-47219665011D@linux.ibm.com>
-References: <20260701084115.80383-1-atrajeev@linux.ibm.com>
- <20260701084115.80383-4-atrajeev@linux.ibm.com>
- <20260701085454.8ECCB1F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+References: <20260717-pwm_meson_convert_to_waveform_api-v1-1-d7dbdae1318d@baylibre.com>
+ <20260717192735.3E71E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260717192735.3E71E1F000E9@smtp.kernel.org>
+From: Alexandre Mergnat <amergnat@baylibre.com>
+Date: Mon, 20 Jul 2026 11:20:50 +0200
+X-Gm-Features: AUfX_myvcar7qwuq7Xpd8sJoS8D_uPqo1YRJ3UYnt0Ec3GkeZR_OjanqrOWTVXw
+Message-ID: <CAFGrd9rnPVAhiTJi964t0AH=1S8sjDWhy1U2iBs3aaQ=zk+85A@mail.gmail.com>
+Subject: Re: [PATCH] pwm: meson: Convert to waveform API
 To: sashiko-reviews@lists.linux.dev
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rzVpeluJlBYS4tqBsDkfm24sxihHiFks
-X-Authority-Analysis: v=2.4 cv=V6RNF+ni c=1 sm=1 tr=0 ts=6a5de1f7 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Sb3nUQvwxnNj9nUj:21 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=c92rfblmAAAA:8 a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=EvvSA9XnrJP2oyhSO5EA:9
- a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5NiBTYWx0ZWRfX5AkUUiC5bo/g
- 9M+fgtkVLvYkc8MyfJNvLzoNPbnhpVpDmhK3kACYiJyhZoRWTuZV0hIvXspFNc2oMF+Fwef5yjJ
- B7T9Kh0eeL1dqMb9ZEKxOvjb+giChk0=
-X-Proofpoint-GUID: rzVpeluJlBYS4tqBsDkfm24sxihHiFks
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5NiBTYWx0ZWRfX1PA2xXbiP0+2
- sw+987SVhZBqn7wgRr8CyWa0odVQSL58xshSFuaIuK3tlwzFdGX9pzR/o9XSYhLb1M7P8iAw3AZ
- 0W1goIQVFtcFBYfQq1JWHRmHk70Cg75ce7LBGSX2PIIltwYqq6locWSNz0ejtg6ex7tPQl9BbMG
- 5Ii3ABnm0NTUm7IN5pmdzpIncInpPlbYJ9kXJwC47YhTIIB2kH5H/hg2MyAs86fUEpbcGxAh635
- YYcZD3wNgFPBY9ahRUKIW0U/Ggm+MnA+uyPPn2/TvEdAzgiNQEuvna8PY/m61rjbHQOrQIdOcJc
- VJE/tLCTYSVdQyCGKIHDP+zR/WHQx7pAagyEF8JJgM+RdlI2VL+fdClzRb5gLuOSXg6J8IkmtfO
- Xd+RpDO+FR+RZ+YfzWaLz0OODd2wAuntnS7SCSugYUh2Q/mZ+g+9wEbKjPci7DxkTXpxL3H/AsG
- e0Mm2/KJPPftlB5f/Pw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200096
+Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, linux-pwm@vger.kernel.org, 
+	linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, 
+	linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-> On 1 Jul 2026, at 2:24=E2=80=AFPM, sashiko-bot@kernel.org wrote:
->=20
-> Thank you for your contribution! Sashiko AI review found 6 potential =
-issue(s) to consider:
-> - [High] `record__final_data` implements a defective busy-wait loop =
-that causes CPU pegging and infinite loops.
-> - [High] Redundant and potentially harmful calls to `evlist__enable` =
-during the shutdown phase.
-> - [High] Collection of final architecture-specific data is randomly =
-skipped due to an early loop break race condition.
-> - [High] Final data collection is completely omitted when tracing =
-child workloads.
-> - [Low] Unnecessary full header inclusions in `record.h` violate =
-subsystem guidelines.
-> - [Low] The function name mentioned in the commit message does not =
-match the actual code implementation.
-
-Thanks for the valuable feedback
-I will send a V2 with changes:
-- Avoid evlist__enable() calls
-- Handle proper check to prevent busy wait loop
-- Handle full header inclusions in record.h
-- Correct commit message
-
-Thanks
-Athira
+On Fri, Jul 17, 2026 at 9:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Truncation error in hardware waveform quantization breaks legacy=
+ polarity inversion.
+> - [Medium] Independent rounding in waveform readback produces an invalid =
+state where duty + offset > period.
 > --
->=20
-> commit 4b101c454c9b203ae14e9902eb253bcd6be33523
-> Author: Athira Rajeev <atrajeev@linux.ibm.com>
->=20
-> tools/perf: Add arch_record__collect_final_data to collect additional =
-data before closing the event
->=20
-> While collecting samples using "perf record", function
-> "__cmd_record" checks if monitoring is done. Once recording
-> is done, event list will be disabled using "evlist__disable".
-> After this, event fd won't be read and event will be removed.
->=20
-> Before removing the event, if any additional data needs
-> to be captured/written to perf.data, currently its not
-> possible. Introduce arch_record__collect_final_data to
-> collect additional data before closing the event
->=20
->> Introduce arch_record__collect_final_data to
->> collect additional data before closing the event
->=20
-> [Severity: Low]
-> This isn't a bug, but the commit message mentions introducing
-> arch_record__collect_final_data, but the function added is actually =
-named
-> arch_perf_record__need_read.
->=20
->> diff --git a/tools/perf/builtin-record.c =
-b/tools/perf/builtin-record.c
->> index e915390556752..a60bc039401a2 100644
->> --- a/tools/perf/builtin-record.c
->> +++ b/tools/perf/builtin-record.c
->> @@ -2425,6 +2425,34 @@ static unsigned long record__waking(struct =
-record *rec)
->> return waking;
->> }
->>=20
->> +/*
->> + * Weak symbol - architecture can override to indicate if more
->> + * data needs to be collected before finishing output.
->> + *
->> + * Returns: 1 if more data exists, 0 if collection is complete
->> + */
->> +__weak int arch_perf_record__need_read(struct evlist *evlist =
-__maybe_unused)
->> +{
->> + return 0;  /* Default: no arch-specific data to collect */
->> +}
->> +
->> +static void record__final_data(struct record *rec)
->> +{
->> + /*
->> + * Collect any remaining architecture-specific data.
->> + * The arch code checks if more data exists, and we do the actual
->> + * reading here since we have access to record__mmap_read_all().
->> + */
->> + while (arch_perf_record__need_read(rec->evlist)) {
->> + if (record__mmap_read_all(rec, false) < 0)
->> + break;
->=20
+...
+> > +     if (meson->data->has_polarity && duty_cnt) {
+> > +             u64 offset_cnt =3D mul_u64_u64_div_u64(fin_freq, wf->duty=
+_offset_ns,
+> > +                                                  NSEC_PER_SEC);
+> > +
+> > +             /*
+> > +              * Waveforms with duty_offset_ns + duty_length_ns =3D=3D
+> > +              * period_length_ns are implemented by inverting the outp=
+ut:
+> > +              * The signal then is low for hi counts (the offset) foll=
+owed
+> > +              * by high for lo counts (the duty cycle). Other nonzero
+> > +              * duty_offset_ns values are rounded down to 0.
+> > +              */
+> > +             if (offset_cnt && duty_cnt + offset_cnt >=3D cnt) {
+>
 > [Severity: High]
-> Does this create a busy-wait loop that pegs the CPU? This loop =
-repeatedly calls
-> record__mmap_read_all() without yielding or polling.
->=20
-> Additionally, record__mmap_read_all() flushes mmap buffers based on =
-the
-> thread-local variable, so when running on the main thread it only =
-flushes
-> thread_data[0]. If the data to be consumed resides in a worker =
-thread's buffer,
-> could this starve the worker thread and cause an infinite loop?
->=20
->> + /* Re-enable events for next batch */
->> + evlist__enable(rec->evlist);
->=20
-> [Severity: High]
-> Is it intentional to re-enable the events here during the shutdown =
-phase?
->=20
-> Since this is called when done is true to drain the final buffers, =
-calling
-> evlist__enable() instructs the kernel to resume generating normal =
-profiling
-> samples. Could this continuously feed new samples into the buffers and =
-trap
-> the tool in an infinite loop while generating massive amounts of =
-ioctls?
->=20
->> + }
->> +
->> + return;
->> +}
->> +
->=20
-> [ ... ]
->=20
->> @@ -2852,6 +2880,7 @@ static int __cmd_record(struct record *rec, int =
-argc, const char **argv)
->> */
->> if (done && !disabled && !target__none(&opts->target)) {
->> trigger_off(&auxtrace_snapshot_trigger);
->> + record__final_data(rec);
->=20
-> [Severity: High]
-> Could the early break condition earlier in the event loop cause this =
-final data
-> collection to be silently bypassed?
->=20
-> If the main thread's mmap buffers contain no new normal events during =
-the
-> iteration when the done flag is observed:
->=20
-> __cmd_record() {
->    ...
->    if (hits =3D=3D thread->samples) {
->        if (done || draining)
->            break;
->    ...
-> }
->=20
-> It breaks out of the loop and skips over this block, randomly missing =
-the
-> final architecture-specific data.
->=20
-> [Severity: High]
-> Will this fail to collect final data when tracing child workloads?
->=20
-> The condition !target__none(&opts->target) evaluates to false when a =
-child
-> workload is specified (e.g., perf record ./my_app). Because =
-record__final_data()
-> is placed inside this pre-existing guard, won't it silently omit the =
-data
-> collection for normal child workloads?
->=20
->> evlist__disable(rec->evlist);
->> disabled =3D true;
->> }
->> diff --git a/tools/perf/util/record.h b/tools/perf/util/record.h
->> index 93627c9a73387..21f51efd36fc7 100644
->> --- a/tools/perf/util/record.h
->> +++ b/tools/perf/util/record.h
->> @@ -8,6 +8,8 @@
->> #include <linux/stddef.h>
->> #include <linux/perf_event.h>
->> #include "util/target.h"
->> +#include "util/evlist.h"
->> +#include "util/util.h"
->=20
-> [Severity: Low]
-> Is it possible to use a forward declaration here instead of full =
-header
-> inclusions?
->=20
-> Since arch_perf_record__need_read() only references struct evlist by =
-pointer, a
-> forward declaration like "struct evlist;" would avoid including these =
-heavy
-> headers, aligning with the perf subsystem guidelines.
->=20
->>=20
->> struct option;
->>=20
->> @@ -95,4 +97,6 @@ static inline bool =
-record_opts__no_switch_events(const struct record_opts *opts)
->> return opts->record_switch_events_set && !opts->record_switch_events;
->> }
->>=20
->> +int arch_perf_record__need_read(struct evlist *evlist);
->> +
->> #endif // _PERF_RECORD_H
->=20
-> --=20
-> Sashiko AI review =C2=B7 =
-https://sashiko.dev/#/patchset/20260701084115.80383-1-atrajeev@linux.ibm.c=
-om?part=3D3
+> Could integer division truncation cause this check to fail for inverted
+> waveforms?
+>
+> If duty_cnt and offset_cnt are calculated with independent truncation, th=
+eir
+> sum might end up strictly less than cnt even when the original lengths su=
+m to
+> the period.
+>
+> Would this cause the driver to incorrectly fall back to normal polarity w=
+ith a
+> zero offset?
+>
 
+At a sub-count boundary floor(duty) + floor(offset) can be cnt - 1 instead =
+of
+cnt, so an inverted request can indeed fall back to a non-inverted setting =
+with
+duty_offset rounded down to 0. That is a valid result, not a failure:
+.round_waveform_tohw() must round every quantity down and only has to retur=
+n a
+waveform not exceeding the request (see the contract above
+pwm_set_waveform_might_sleep() and pwm_check_rounding() in drivers/pwm/core=
+.c).
+duty_offset 0 <=3D requested duty_offset, so the result stays within the co=
+ntract
+and CONFIG_PWM_DEBUG accepts it.
+
+The same count-based test is used by pwm-stm32.c (duty_ticks + offset_ticks=
+ >=3D
+arr + 1). So the conservative count-based check is intentional. No change.
+
+> > +     /*
+> > +      * wfhw->hi and wfhw->lo are u16, so their sum doesn't overflow a=
+nd
+> > +      * NSEC_PER_SEC * (hi + lo) fits into the u64 dividend in
+> > +      * meson_pwm_cnt_to_ns().
+> > +      */
+> > +     wf->period_length_ns =3D meson_pwm_cnt_to_ns(wfhw->rate, wfhw->hi=
+ + wfhw->lo);
+> > +
+> > +     if (wfhw->inverted && wfhw->lo =3D=3D 0) {
+> > +             /*
+> > +              * The output is constant low. Report a normal constant-l=
+ow
+> > +              * waveform instead of duty_offset_ns =3D=3D period_lengt=
+h_ns
+> > +              * which wouldn't be a valid waveform description. This
+> > +              * setting is only reachable when the hardware was progra=
+mmed
+> > +              * by the bootloader as .round_waveform_tohw() never prod=
+uces
+> > +              * it.
+> > +              */
+> > +             wf->duty_length_ns =3D 0;
+> > +             wf->duty_offset_ns =3D 0;
+> > +     } else if (wfhw->inverted) {
+> > +             wf->duty_length_ns =3D meson_pwm_cnt_to_ns(wfhw->rate, wf=
+hw->lo);
+> > +             wf->duty_offset_ns =3D meson_pwm_cnt_to_ns(wfhw->rate, wf=
+hw->hi);
+>
+> [Severity: Medium]
+> Since meson_pwm_cnt_to_ns() explicitly rounds up, can rounding duty_lengt=
+h_ns
+> and duty_offset_ns independently result in their sum exceeding
+> period_length_ns?
+>
+> For example, if rate is 333333333 Hz and both hi and lo counts are 1,
+> period_length_ns rounds up to 7 ns, while duty_length_ns and duty_offset_=
+ns
+> would each round up to 4 ns. Their sum (8 ns) would exceed the period len=
+gth,
+> potentially leading to integer underflow in consumers attempting to calcu=
+late
+> the remaining period time.
+
+duty_offset_ns + duty_length_ns > period_length_ns is not an invalid wavefo=
+rm.
+The waveform API requires only duty_length_ns <=3D period_length_ns and
+duty_offset_ns < period_length_ns (pwm_wf_valid() in drivers/pwm/core.c); t=
+he
+sum is deliberately allowed to exceed the period and represents the high ph=
+ase
+wrapping past the period end, i.e. inverted polarity (see the kerneldoc on
+struct pwm_waveform in include/linux/pwm.h). For the example {period 7, dut=
+y 4,
+offset 4} both invariants hold (4 <=3D 7, 4 < 7), so it is valid.
+
+The core handles it explicitly: pwm_wf2state() maps
+duty_length + duty_offset >=3D period to PWM_POLARITY_INVERSED with
+duty_cycle =3D period - duty_length =3D 3 ns, so there is no underflow. Rou=
+nding
+each reported value up independently is what pwm-stm32.c, pwm_th1520.rs and
+pwm-axi-pwmgen.c do as well; it is required so that feeding the reported
+waveform back through .round_waveform_tohw() reproduces the same counters.
+No change.
+
+Alexandre Mergnat
