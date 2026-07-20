@@ -1,284 +1,232 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208C33603C9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 03:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784519898; cv=pass; b=Q8yTz1KVpFYInS++/YxkOfKZt1zr8LVMPY3ItMTqVenw7rIMT0ukOKFCATgacHh3w2kjrK5NdvfEbghYm41Bn8fdVzYqrVmoKUEtQ2L42PRZGn3bzFK4OFxDO/huXm7FO7aSHNWWvRK2C9MdZeDaEdzZGWTBQusRHBpzha8+c8s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784519898; c=relaxed/simple;
-	bh=dxh3xd7dwLFCm9HEMceZqX5OiKkpL2P9khsPdjNvBTM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gWiDZngr80U6GUmQkasOBno9LLxcqNW2C3YjJukNlld7hik1qw6wwfsk+zDMADGpjxSvaV0PskMympkuvAnsgVKVMBdZVDknPGbQGbTlaJUMoMs3DQimaSRbEfLXXEx5/7XnMTIOUfsbunTeUPfexzFiChz5YJ4b00UOVbcHPxk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=QkuFJT0f; arc=pass smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8231439479B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 04:12:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784520740; cv=none; b=Q4l9YKQ5MJ1keLP99OQpIeuwodz9gbG0yuW+Cor/Q2kKzO3zWPmTPEKgQ11AaLc46DO91v3lRqDe/aWnnByorcEokPB/aC4xhQjlje6ou7jXpdE4CypAGBqcURET7rUNIhpFnmvwcjEkkofDi55A5OYsPFZf+Fen59AxY7fqYqE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784520740; c=relaxed/simple;
+	bh=MahNnmHfBFKaEQlOxNZeB9MlIEjVptgN6UdiJXJxTKg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ku2j/nHWxyIbmRVGB/QbkjUmDc62Rw6Mp5A7Q08meI5CWpJZUe/UVaCx7vaYiaT478Qr9xPGRsVx9HQnSCw7/QwbDFOEdYwShllSnZMGk5bD0s2cXdUmQx0bYqVcM9OFEBNHd6impQpJmgi2Cy63ZsULNnTJx4vnX1YALIjtMok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GXkYHNar; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="QkuFJT0f"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-81ecf499af9so61981037b3.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 20:58:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784519896; cv=none;
-        d=google.com; s=arc-20260327;
-        b=iqCXVXrNTOCUiChqN+vYLXoaPB/7lBMTE8eOX6s5/YUqp+s3PUDX8xWgoahEgjxv76
-         3P3UDZaz4kWZmxOj7K2QcyXbLs+FxOsjHF1bFwrnUhdnegEvJ0+mo2DqrbFSyrFPYSz/
-         awx3QF6EuLCeGLlrahD463HpVRnBqXwCZeXxyqYLb9eHj359LMPccm9iLjYinkL2ChYx
-         OOg5x3pEEO45CGlSFSpyLQV7nb2ZXecpIj6yBlnw/Ua2P4fXVnulBVkouqmkBvEX+Hy7
-         aciweLh7/xpf3Vu1gEnMzWdql2YvMayyDlfhBqM+YRZFmMTTc+lt7jAc1NlIriePiSVY
-         VgeA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KafO/WcSs8IZV3ceugHPjvBD3hWgrTgFOQhWZ7ZmXh4=;
-        fh=rQB7wRh7EfRBJIrZo7+Qz2xY0F9WCq9J2TBx3vCtNlw=;
-        b=kK2oFlJkBTY73RcrS7zvZ/XzXaWhdfoTxV51IK7L0IshXDkLp9vR5MxijUo9kBrXnq
-         agfpnZ61fryIu4hJ3aLU2ZxqRIMugCzxuGITxcdGUT3v4ndoaBHhhwcmPlFxIZ8VVrKO
-         k+iYz5gF0eWdHUSWf6zljIJ/ZylGwF9zm3bdyfDfs/T6KFg9PWN+Zf8XH4N33u7WlWF5
-         AzU0qC3urJlq5Ohb4LXyVRiCan7oV9N4J+6XttmSA7mF82uBfyhofp3vgACBVxfZccez
-         bVskLTPJqCBsTT54REcQYiNIkpSZjvA1vUL5ZKYlnCeVlHo2jpRiAWKdl/C4/bVxC/yj
-         HJyA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GXkYHNar"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2cc891373e0so117529995ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 19 Jul 2026 21:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1784519896; x=1785124696; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=KafO/WcSs8IZV3ceugHPjvBD3hWgrTgFOQhWZ7ZmXh4=;
-        b=QkuFJT0fMOUzWQdb5ESNKrUSpsFJEprTPoGHtsiKSWyDAFu5D2d4KO08qRXCAVUfgT
-         h0bMWzxSMUrdIiho5tQMfChPHjQybuev42uKA5pgKwXNXJMC9S6RfojfGYowLfnmNqsn
-         0AncUhtFZCSgR9Rrxv51t1iHdiYeDGrc2X8Iw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784519896; x=1785124696;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1784520738; x=1785125538; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KafO/WcSs8IZV3ceugHPjvBD3hWgrTgFOQhWZ7ZmXh4=;
-        b=a5uG3rrtsRDKb8Y04a37EQBRHrhWjNJOHx7hZ1I9jAyKAUHJz4SN03AYOTGM/HmNBz
-         xPJcdvQpxy17HlTry2cPEyYyY5wHI8zye4XMJSmTECmUA4LM8dCyJpJSTB6kF/vzGRx6
-         87cfSu8gAMj70qGZsMB3bLUclDHcDMPRXhibdD12siiyQtQCDT6Qp83KgEROHbQ9cdIT
-         unT9oOOkAnQOJvNFBa82p6bE4QFP6M38Q/SqhPnqchrb1UOFKvO+gXWLmPgqvoI8Ak2h
-         gmh2mZJTu/Z8Ws55qG4s93ZBsZnX6c/JO80cfsG4M7gpgXq0WVcZxXfpXlhwuiFFF3U7
-         B0Vg==
-X-Gm-Message-State: AOJu0YyFeE5RZPzb70h8BMA7Ro9Ni6wxTfwuXqn6r79D1ycVP6DeQ3G0
-	uCIbB+cVCYEi1Y+QW5C9STtiTyh8ZwQmPgXSzWCqMTD5IsDWTTyj+WLlj+OoVAG1e5q7PX21tXq
-	1oDL06hXmditAuMncuIk460cXD2IDAfJRoaVcuaLV
-X-Gm-Gg: AR+sD10qPMLTkErSysGjv5JHtsVgz1NAAjOUOpYSTvZc2wd30VM98w3gQSBim6zBgiU
-	LJNNAhx/o4jWoF6mQg5gPKCMAfCLIMGDUKSQJmWgHzQm6cf9kblN2DKDb1qLJPD6k9znfOmhlOe
-	JLGq5jHsnTm/zDFyvaKIPEB0Fgf4ef+wMLUrpHqnF6iTCyJJMuTfcHM2+v9GtEYMuPGq536t9jd
-	585kFXWmaDjgcpn5Se+xRULQIGOIWXEzYw3AZKbwurqPpJeHUh6p3aIbCM+EXDpE7ttimC8lPPL
-	A4vFX5s6dUDmHa35
-X-Received: by 2002:a05:690c:4d07:b0:81e:c898:bc51 with SMTP id
- 00721157ae682-81ef26df344mr34874147b3.70.1784519895100; Sun, 19 Jul 2026
- 20:58:15 -0700 (PDT)
+        bh=ZsPfgXM8yCBKdRd6xHG+Wz0jhhmcKdYGDlTmaSBPLLE=;
+        b=GXkYHNarLlFMVzNHbbJUEOAykZpc7nDa50AVnPQ/2+F4Nco99cpil526gKq0xKYtue
+         76G3LQ3MLvp1GLGJ9KoOZqbNKrYF23IRaG5Rn2g18c8TrTXcLGe6Cp+1BJEyiMDhmhUS
+         hiLJ6x6KTxvsc9uwLkezr4nNNT0C3h4rAWjbDU6Ek1SdFDRkc+JXh5xG+KnStES2qfNV
+         iuEsvJYCvboveuU219S5lKZDllNLalVe5bg6lyJYiopwfNRcxl6aV5J9rHrblpOyPAuQ
+         26tvFWRDULPZ0oOf531GRvlkeGLkKbTKNGEgsAiPFCX2hmV9yFXHXZ4+/49cJoxuo33I
+         X/Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784520738; x=1785125538;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ZsPfgXM8yCBKdRd6xHG+Wz0jhhmcKdYGDlTmaSBPLLE=;
+        b=IazCtyxCar37DP2zD3MWQzH6advN6kJANa7arHBa2sfZw00jcxOddt1LzpS84u3BZx
+         qvwVyC3PfWM7EweH55U+Swk+EEbZuiuuBnEwmCELaaavgBoC0LGNxmy1DvBSzCj9wlGp
+         NDAGVmt7bq/USSbaRaiM1wO4a5+ecfc4OcX2e5hXMxs8vWBz+N4o6VFbVr1O2uJZeJzS
+         nao3l08Yo/KjdsYqN+B28N9HIe0z2bA30sj1OjuDN76kBuFOYB/s0SnHap6au/RqnqoV
+         7jeQOv67WpDXQS9J/trQqPa7AX9aMh5jtLiZqJcGZxR7/L8Jnw8fB7xMDQNPOcm6izhd
+         gYqQ==
+X-Gm-Message-State: AOJu0YzPLeozs2TPxLafsk3Ls/AmhKNgSjPKeDWjMf7zWRFQ6GQ7bu2C
+	0HRIl865K++IbPvySOoDyoVYPegYcerE/VdBL94OzWC4Bx7BZGZE4Zc/Bd1g1A==
+X-Gm-Gg: AfdE7ckYTacAg17iipMvh3B0qTWiD8UZ+vqNuj6E7FhFpvOZiWpbQsOmu5Z9FBkGf/w
+	luoX9xQPqsmQW10OKS8yOYkLRhod2V8z6wyqByxbc/s2CrVjCyS8gsISmf2yqfHKoexxzifTBS0
+	ciZbcli5bApUhz/0bwowEKd4nmRIYkVxBYiBShFOKADXeZG2Emu+lhe3WHNuv+bkrF1PhZSsuAM
+	UM1YxFkTckNE/AZEDwg4LzZBRp/ToEdN8xZR5rX4yDNJnsF60kb3P5zl2pGrK+HD9nF40I956AF
+	oUOBfKzY97PH166gJKElEUz2jdc5Tt8KDw+lyzqs3OX4wxiIo/NLxxYz3QnJRKZW8PlF1BcxMQU
+	TaSLgTDGBHNhcYkhTOksoq0VMfhvOVBr4SLXCRu8itJhykYalf/G+7/eIc7QHq7t+jsI5hlz1aG
+	+oVn5YHfyXeGr9mUj6Pe16sQG1liljVlU6g+FWEalwrG2/5SJfye4=
+X-Received: by 2002:a17:903:2ec8:b0:2ca:b8d:e65e with SMTP id d9443c01a7336-2cf349fec81mr140545595ad.37.1784520737792;
+        Sun, 19 Jul 2026 21:12:17 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf347430f8sm49965465ad.67.2026.07.19.21.12.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Jul 2026 21:12:17 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <d8d49283-d85c-4009-b638-fc6dcce5f304@roeck-us.net>
+Date: Sun, 19 Jul 2026 21:12:16 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260715085348.3457359-1-wenst@chromium.org> <20260715085348.3457359-3-wenst@chromium.org>
- <20260715090944.2B4441F000E9@smtp.kernel.org> <CAGXv+5Ffsrc9r6d_RrgL1mBW1Zmt1RxCrMCjaD7vuF3+EaeAqw@mail.gmail.com>
- <allHTc-bJrPwDA0b@ashevche-desk.local> <CAGXv+5HS3neb=8EW0FT2-tP-dhPFqQ+q8YRS8Gy_XBic4z4Mug@mail.gmail.com>
- <alpZVUEOidfGMpfD@ashevche-desk.local>
-In-Reply-To: <alpZVUEOidfGMpfD@ashevche-desk.local>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Mon, 20 Jul 2026 11:58:04 +0800
-X-Gm-Features: AUfX_mxLin0OT--5qibPct2dJsaS8LrcUeIhX0neP8aGKP71f2cGpT0RUhWh8_s
-Message-ID: <CAGXv+5FoXBfc6GOEnEhhnRcNTJp6bazLS1ZJEUEiZWfc=EZy2g@mail.gmail.com>
-Subject: Re: [PATCH v5 02/16] device property: Add fwnode_graph_get_next_port_endpoint()
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
-	driver-core@lists.linux.dev, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/2] firmware: stratix10-svc: add async HWMON read
+ commands and register socfpga-hwmon device
+To: sashiko-reviews@lists.linux.dev, tze.yee.ng@altera.com
+Cc: linux-hwmon@vger.kernel.org
+References: <cover.1784516953.git.tze.yee.ng@altera.com>
+ <a79aee37be7067691fd02a3a9cfd134c995e5a95.1784516953.git.tze.yee.ng@altera.com>
+ <20260720033718.783F01F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260720033718.783F01F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Jul 18, 2026 at 12:33=E2=80=AFAM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> On Fri, Jul 17, 2026 at 07:05:56PM +0800, Chen-Yu Tsai wrote:
-> > On Fri, Jul 17, 2026 at 5:04=E2=80=AFAM Andy Shevchenko
-> > <andriy.shevchenko@linux.intel.com> wrote:
-> > > On Thu, Jul 16, 2026 at 04:52:27PM +0800, Chen-Yu Tsai wrote:
-> > > > On Wed, Jul 15, 2026 at 5:09=E2=80=AFPM <sashiko-bot@kernel.org> wr=
-ote:
->
-> ...
->
-> > > > > > +struct fwnode_handle *fwnode_graph_get_next_port_endpoint(cons=
-t struct fwnode_handle *port,
-> > > > > > +                                                       struct =
-fwnode_handle *prev)
-> > > > > > +{
-> > > > > > +     do {
-> > > > > > +             prev =3D fwnode_get_next_child_node(port, prev);
-> > > > >
-> > > > > [Severity: High]
-> > > > > This is a pre-existing issue, but iterating over endpoints using
-> > > > > fwnode_get_next_child_node() can cause an infinite loop and a use=
--after-free
-> > > > > if a device has secondary fwnodes attached.
-> > > > >
-> > > > > If a device port has both primary children and a secondary fwnode=
-, the primary
-> > > > > ops finish and drop the reference to the last primary child, retu=
-rning NULL.
-> > > > > Then, fwnode_get_next_child_node() incorrectly passes this same d=
-ropped child
-> > > > > pointer to the secondary ops:
-> > > > >
-> > > > > drivers/base/property.c:fwnode_get_next_child_node() {
-> > > > >         /* Try to find a child in primary fwnode */
-> > > > >         next =3D fwnode_call_ptr_op(fwnode, get_next_child_node, =
-child);
-> > > > >         if (next)
-> > > > >                 return next;
-> > > > >
-> > > > >         /* When no more children in primary, continue with second=
-ary */
-> > > > >         return fwnode_call_ptr_op(fwnode->secondary, get_next_chi=
-ld_node, child);
-> > > > > }
-> > > > >
-> > > > > This can result in a double-put. Furthermore, when traversing sec=
-ondary
-> > > > > children, the primary ops don't recognize the software node, trea=
-t it as NULL,
-> > > > > and return the first primary child again, creating an infinite lo=
-op.
-> > >
-> > > Yeah, it has to be implemented in a way how fwnode_graph_get_next_end=
-point() is done.
-> >
-> > If your patch series addresses the issue, I guess we can consider it
-> > covered? Sashiko labeled this a pre-existing.
->
-> I noticed that it addresses only main get_next case, but get_next_availab=
-le is
-> still with the same issue. It's not that critical, we don't use much that=
- API,
-> but still will be good to fix at some point.
->
-> > > > > [Severity: Medium]
-> > > > > Does this fail to unconditionally put the prev reference if the p=
-rovided port
-> > > > > is invalid?
-> > > > >
-> > > > > If a caller passes a valid prev node but port is NULL or an error=
- pointer,
-> > > > > fwnode_get_next_child_node() returns early without dropping prev:
-> > > > >
-> > > > > drivers/base/property.c:fwnode_get_next_child_node() {
-> > > > >         struct fwnode_handle *next;
-> > > > >
-> > > > >         if (IS_ERR_OR_NULL(fwnode))
-> > > > >                 return NULL;
-> > > > >     ...
-> > > > > }
-> > > > >
-> > > > > Could this lead to a reference count leak, violating the document=
-ed API
-> > > > > contract that prev is unconditionally put?
-> > > >
-> > > > This seems like what the other fwnode_get_next_*() functions are do=
-ing.
-> > > > I'd say this is a pre-existing issue as well.
-> > >
-> > > See this series (not yet applied, you even have chance to review it!)=
-:
-> > > 20260611203537.1786399-1-andriy.shevchenko@linux.intel.com
-> >
-> > I believe that series addresses the first issue, not this one, even
-> > though it partially mitigates it.
-> >
-> > The contract says "puts a reference to @prev unconditionally." What it
-> > doesn't say is that it requires @node to be valid, i.e. the function
-> > is a no-op if node =3D=3D NULL.
-> >
-> > "node !=3D NULL" being an implicit requirement seems to be the norm for
-> > the fwnode_* and of_* APIs. It's not explicitly spelled out and Sashiko
-> > lacks the context for it.
-> >
-> > I'm not sure this should be changed within this patch. It would end up
-> > as a mismatch between the various functions and possibly lead to more
-> > confusion.
->
-> How does node become invalid after that patch?
+On 7/19/26 20:37, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] Hardware monitoring functionality is registered as a platform device rather than an auxiliary device, violating hwmon subsystem layering rules.
+> 
+> Pre-existing issues:
+> - [High] Asynchronous service layer APIs and resources are destroyed before client devices are unregistered, leading to a Use-After-Free and NULL pointer dereference race condition.
+> --
+> 
+> --- Patch [1]: [PATCH v6 1/2] firmware: stratix10-svc: add async HWMON read commands and register socfpga-hwmon device ---
+> commit 552947f984c2b5770daa9717c679362b5561cfa3
+> Author: Tze Yee Ng <tze.yee.ng@altera.com>
+> 
+> firmware: stratix10-svc: add async HWMON read commands and register socfpga-hwmon device
+> 
+> Add asynchronous Stratix 10 service layer support for hardware monitor
+> temperature and voltage read commands in stratix10_svc_async_send() and
+> stratix10_svc_async_prepare_response().
+> 
+> Register a socfpga-hwmon platform device from the service layer driver
+> when hardware monitor support is enabled, similar to the RSU device.
+> 
+>> diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+>> index c24ca5823078f..fc38afed5b7fe 100644
+>> --- a/drivers/firmware/stratix10-svc.c
+>> +++ b/drivers/firmware/stratix10-svc.c
+> [ ... ]
+>> @@ -2013,16 +2028,38 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		goto err_put_device;
+>>   
+>> +	if (IS_ENABLED(CONFIG_SENSORS_ALTERA_SOCFPGA_HWMON)) {
+>> +		svc->stratix10_svc_hwmon =
+>> +			platform_device_alloc(SOCFPGA_HWMON, 0);
+>> +		if (!svc->stratix10_svc_hwmon) {
+>> +			dev_err(dev, "failed to allocate %s device\n",
+>> +				SOCFPGA_HWMON);
+>> +		} else {
+>> +			svc->stratix10_svc_hwmon->dev.parent = dev;
+>> +
+>> +			ret = platform_device_add(svc->stratix10_svc_hwmon);
+> 
+> [Severity: Medium]
+> Should the hardware monitoring functionality be implemented as an auxiliary
+> device driver instead of a platform device?
+> 
+> The hardware monitoring subsystem guidelines state that when hardware
+> monitoring is a secondary function of a chip, it should be implemented as an
+> auxiliary device and reside in drivers/hwmon/.
+> 
+> Does registering socfpga-hwmon directly as a platform device from this
+> firmware service driver bypass the architectural layering rules for hwmon?
+> 
 
-Sashiko is arguing that the kernel-doc says "reference to @prev is _always_
-put". But if you look at all the *_get_next_*() functions, they all just
-return directly if @node is NULL.
+It should be implemented as auxiliary driver, but feel free to ignore since
+I only recently added this guidance to Sashiko.
 
-I'm saying that this is implicit across the full API, and adding text
-explaining it in just one of the functions creates a discrepancy. I can
-add a patch before this to clarify the existing documentation, and change
-the text in this patch as well, to make Sashiko happy.
+> [ ... ]
+>> @@ -2046,6 +2083,9 @@ static void stratix10_svc_drv_remove(struct platform_device *pdev)
+>>   	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
+>>   	struct stratix10_svc *svc = ctrl->svc;
+>>   
+>> +	if (svc->stratix10_svc_hwmon)
+>> +		platform_device_unregister(svc->stratix10_svc_hwmon);
+>> +
+>>   	stratix10_svc_async_exit(ctrl);
+>>   
+>>   	of_platform_depopulate(ctrl->dev);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can the destruction order in
+> stratix10_svc_drv_remove() lead to a NULL pointer dereference or a
+> use-after-free race condition?
+> 
+Pre-existing, so your call if you want to fix it or not.
 
-Does that make sense?
+Thanks,
+Guenter
 
-> > > > > > +             if (fwnode_name_eq(prev, "endpoint"))
-> > > > >
-> > > > > [Severity: High]
-> > > > > Does hardcoding this string match break the fwnode graph abstract=
-ion for
-> > > > > non-DeviceTree platforms?
-> > > > >
-> > > > > By strictly matching the "endpoint" prefix, this bypasses the pro=
-vider-specific
-> > > > > fwnode_operations, which could silently ignore valid ACPI and sof=
-tware node
-> > > > > endpoints that don't follow this exact naming scheme. Shouldn't t=
-his rely on
-> > > > > the backend-specific graph_get_next_endpoint operations instead?
-> > > >
-> > > > From drivers/acpi/property.c it seems that ACPI graphs follow the s=
-ame
-> > > > structure. I don't have visibility into ACPI implementations though=
-.
-> > >
-> > > Sashiko might be right. ACPI has device and data nodes, for device no=
-des the
-> > > name will be FourCC, so never longer than 4 characters. For data node=
-s, it
-> > > takes their names, which are arbitrary strings and seems should follo=
-w the given
-> > > schema. You need Sakari Ailus to review this patch.
-> >
-> > OK. Will add Sakari in the next version.
->
-> Hmm... This is interesting. For any fwnode API changes you should add the
-> respective reviewers. Do you use tools or doing that manually? You should=
- use
-> tools. I know that `b4` is capable of doing that, but I use a script [1] =
-I
-> wrote a few years ago.
+> When stratix10_svc_async_exit() is called, it destroys the async ID pool
+> and sets actrl->invoke_fn to NULL:
+> 
+> drivers/firmware/stratix10-svc.c:stratix10_svc_async_exit() {
+>      ...
+>      ida_destroy(&actrl->async_id_pool);
+>      actrl->invoke_fn = NULL;
+>      ...
+> }
+> 
+> However, the RSU client device is unregistered after this destruction step
+> via platform_device_unregister(svc->stratix10_svc_rsu).
+> 
+> If a user interacts with a client device's sysfs attribute while the module
+> is being unloaded, could the still-active client device invoke
+> stratix10_svc_async_send()?
+> 
+> If so, it would concurrently access freed asynchronous channels or attempt
+> to execute actrl->invoke_fn(actrl, &args, &res) after it has been locklessly
+> cleared, resulting in a kernel crash.
+> 
+> Would it be safer to unregister all child and client devices before the
+> resources they depend on are torn down?
+> 
 
-Actually Sakari is already in the list of recipients.
-
-I'm running get_maintainers.pl on all the files I changed, which is not
-the formatted patches, but I don't think that affects the output much.
-It's a bit less automated, but I sometimes trim the recipient list
-slightly as I know they probably won't look at it.
-
-> > > > We also have the following in include/linux/fwnode.h:
-> > > >
-> > > > #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
-> > > > #define SWNODE_GRAPH_ENDPOINT_NAME_FMT          "endpoint@%u"
-> > > >
-> > > > So this should not be a problem.
-> > > >
-> > > > > > +                     break;
-> > > > > > +     } while (prev);
-> > > > > > +
-> > > > > > +     return prev;
-> > > > > > +}
->
-> [1]: https://github.com/andy-shev/home-bin-tools/blob/master/ge2maintaine=
-r.sh
-
-Thanks for sharing!
-
-
-ChenYu
