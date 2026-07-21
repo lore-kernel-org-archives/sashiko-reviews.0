@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CF23B95E0;
-	Tue, 21 Jul 2026 21:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD1244605F;
+	Tue, 21 Jul 2026 22:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670210; cv=none; b=MpvXFOswmMoP5/VB6MokXqUQ0GEQSdJgM68ilyEsU87UHTL3hLGqxdg94AJdDNUw5TCec51N8syUf+xCfOZmHuaotA+JxfCNuR3QCOrqsspahajyLpDlTSAZZphAK1hj+RtPSjF7pVdc7iXoPLTrJ9Udl/a+fCrs63ULRB0rjNc=
+	t=1784672501; cv=none; b=bAKZoeSstcD5/18bp6gn/IvuIjT8Hr2Vbl35coutKOpP0xrJKS2Xp2DjlgJ5gR/jG2uTA8fzvpA9RJvS/64Z2U7HZ3FQeeHH3CVukWP/t5wb0XiBRKApxvEnrYw7Og+08VpOxCEf3Rb0glx8hH0cnxnR1/CPAzZ5l9ufLMKG6cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670210; c=relaxed/simple;
-	bh=eyNjzUgxX0XdlAhjaAqf+l+t7QE0SQK1F/Z1Vru2t6E=;
+	s=arc-20240116; t=1784672501; c=relaxed/simple;
+	bh=dNNdeQT8LIZ10uAuGfc5ABCEcuMx1ejJ8in1OgK4rxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bm438OfNtcQ2cK1s/hxLancfndSo5li4l4+rzugIX1y9KBobl4hKh0dTP8uMMzSWjyTwV7S3DQ36gGEMl1XLJe6VvKxFVmLmG3OQBPo3WGFJyNF/RO81jyhFDT/IZggoa7dHPtQvvH3sDJJh7El4/YxqFA3RvYMk/8ZkS4F5A2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6Dr826t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W4zxAO7GOP41qYIhzy7b93zismV+/9JKvKA7AgWzSv/EX1uWG2xp3Ow9FJ6X7LApXxMhARLOD0RK1R9hvnA9x1HGYatj6lx+6nOTiVOxpTMrsWZ8VKzEGeDxvS9q1K0oY5ehNS8VsciVAB1IJfBBUc1WhEKpzPwP+XdoksIq0PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCeFup1V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6Dr826t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C331F000E9;
-	Tue, 21 Jul 2026 21:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCeFup1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D86C1F000E9;
+	Tue, 21 Jul 2026 22:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670208;
-	bh=7VwghNQu/vF9MqVO7Zi8AXfsRXTmrVCLIAxwWo3kppU=;
+	s=korg; t=1784672499;
+	bh=NVijzOZOySx+g3AlQM3x18jOPZBowSN3iSE3KA9YzYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6Dr826tJn8PVH+L2N7xxWrl3lllHQS3exfLab4dnfAAysw9OCC6FBom7vHb8ISEt
-	 XSSh2ej+paOU4mIRo0BVaEArRztIsGISWpnmgopWhivoDMxTFm6J3eu4NiT7fCBSKH
-	 y7/HqbjpkAEscHaRvBLKo9U+9ag3FU+vRm1iDR8s=
+	b=GCeFup1VImymeYdfeU4uBxBWWS8tT+hzsoQguXTV1rHxk3JahZgcOM4n1Fd/Zf3kJ
+	 2LTkFuXRPnwU1SrdKt0gnAchRYOTF773awD+9AxkShLOFii/MFcyVcldABjRNv9hkM
+	 Si/d4+dU077x8w85XYvFooiPIrGT6gDJm8pcK/8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 0839/1067] can: bcm: add missing rcu list annotations and operations
-Date: Tue, 21 Jul 2026 17:24:00 +0200
-Message-ID: <20260721152443.319568979@linuxfoundation.org>
+Subject: [PATCH 5.15 649/843] can: bcm: add missing rcu list annotations and operations
+Date: Tue, 21 Jul 2026 17:24:44 +0200
+Message-ID: <20260721152420.668676558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
-References: <20260721152424.521567757@linuxfoundation.org>
+In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
+References: <20260721152405.946368001@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -83,7 +83,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/can/bcm.c
 +++ b/net/can/bcm.c
-@@ -248,7 +248,7 @@ static int bcm_proc_show(struct seq_file
+@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
  			   (reduction == 100) ? "near " : "", reduction);
  	}
  
@@ -92,7 +92,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  		seq_printf(m, "tx_op: %03X %s ", op->can_id,
  			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -903,6 +903,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
  	struct bcm_sock *bo = bcm_sk(sk);
  	struct bcm_op *op;
  	struct canfd_frame *cf;
@@ -100,7 +100,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	unsigned int i;
  	int err;
  
-@@ -1045,8 +1046,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
  		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
  			     HRTIMER_MODE_REL_SOFT);
  
@@ -110,7 +110,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
  
-@@ -1068,6 +1068,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
  		op->flags |= TX_ANNOUNCE;
  	}
  
@@ -121,7 +121,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	if (op->flags & TX_ANNOUNCE)
  		bcm_can_tx(op);
  
-@@ -1211,9 +1215,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
  			     HRTIMER_MODE_REL_SOFT);
  		op->thrtimer.function = bcm_rx_thr_handler;
  
@@ -131,7 +131,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		/* call can_rx_register() */
  		do_rx_register = 1;
  
-@@ -1292,10 +1293,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
  					      bcm_rx_handler, op, "bcm", sk);
  		if (err) {
  			/* this bcm rx op is broken -> remove it */
@@ -145,7 +145,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  
  	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1625,8 +1628,10 @@ static int bcm_release(struct socket *so
+@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
  		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
  #endif /* CONFIG_PROC_FS */
  
@@ -157,7 +157,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
  		/*
-@@ -1657,8 +1662,10 @@ static int bcm_release(struct socket *so
+@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
  
  	synchronize_rcu();
  
