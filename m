@@ -1,267 +1,181 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFC4435518
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 07:51:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784620288; cv=pass; b=GkY6M6vlXi4wFIQBIiHH1S4JqK4KyfoSfxg4Tb9/YZfoABukt5fxVmaqoJIdAg63L1J6vZLIigX9X51+dxGNC5MF/KBSBO+QJHWBFx2WmxjbTu4zENi8AB/kBZzvluw1pQfKFxgECTNVCR7wij0/uNNfHqXfcx712qZ/9GpO27k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784620288; c=relaxed/simple;
-	bh=CtMhL4ZCm1kTXN/tbtKm7J4VifWySfdzn/e2RDGEauo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=trjb961TOlo7XnZsN38EXcaGI/JEAW/6T+ZZmCUXLXDXfmeCXYK013ciA6kSr6O2+1u6i8INBchwkoN10nvIcVLbete4bjw8+mpkIoZeZvTrWj01wDTKp4dhFTxUtgdYeYZernVMngqQoOn+a+Uucgh7xbCbjeAfWMSapFJvS54=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkgp5D2s; arc=pass smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61F843846C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 08:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784621333; cv=none; b=VbRIlQ4pJ/3xMFGPtU+Dv4i2apZTab6jFbmAo9kEgOrRfAqdrsrw+97tiU2jKKvhjVX2KsKoF2e4MBtuabM6MunkvlHaeur4Uwg7vltHsX00y/INfK64b20is3F9UFJETLlDI8yqpmZhxXRa0I4gIzSqRsAj++8hwYYUS1v+BQM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784621333; c=relaxed/simple;
+	bh=MnJJznTNb0T2HRhw/9Df72HjOjsDh+evdHwrOlq8d/E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KKTzrQCzMLciABbu2IpMhTg/Pv9gcFr4dImtDnu210USk8oV4+nArpZKzH2Ti19cYE37hR1AnEkNu402Wv6nyAYX2RvEGYct8+Xn9kQQ6czNPfcob2CD6k3igjqXieR+VR2gyOWopC3Y9TcIBHQdvBQmcIDE14dvMQQxz3LcJZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C/rlAThi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VfvOvgqg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkgp5D2s"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-8080651d2cfso20694377b3.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 00:51:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784620285; cv=none;
-        d=google.com; s=arc-20260327;
-        b=a+ojSTruo192pUje0NRSGcEz/u+RSd0ryrMDMUKd1Laxk8bQiK6hh+JE6wNqII+aeK
-         OHrqsPLGjxCvTqLDYO21so4v6Rt62BTd1mvjzHXD1OKEnyMZZg+UOTWMybsypDsjrAw4
-         GgrNZK15ycyyAoHG18MPut67cCX8CXh+hvdT8vXX4IDDqggO5W2JZolWPfYviIOVyFe2
-         SRmjOrGfeNd3v6DmI5rUK9i74h6uNXT+HiinG+Jlo2QWYt2arX62atyX09ZHwgzkYWe7
-         kR35rG1aMBLOv38IyVBecSm4WUzVRfBjF/fTYruUiA/TXqiFgLKz75yreUqpVcnEYOEF
-         4XeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vZzSeZR0bkDEH8l+WELeqcCX8Q33dRM0eRRSsd4cPwc=;
-        fh=YIwptRjn+lrxRySbupMezZ3u+e7/J2qdGXSS5MoKTAY=;
-        b=WTpkydTO2riaSJw02eSN+/reudZCQv3L8w6bFucmWFjkLTsUottFtpCyPotEhS25wG
-         TewzQ6rj4HByy3Q6rCWWrcl/UyewfXrpo0QmcmN+pADG5lRROEzClxXxHthz9FAy4+fD
-         FDqvqStoL1uLz4/92JLVvwpzNbcDiVblASdrrCUKKFh0yb0R75wVxwrnCDK5d/+vQ+DV
-         9mMLmrYs3cP5VaX79hsDwIs6wy5b46HJ+NmRwiGM6MRuMxYtTdBghIalN0aCfIAy8tXq
-         W+rhtTs0ULzfMXdgdzqXE27iLjznU1EcNEHptHwylJIDTIHw1iBqVGnHjwv9wze/q9XT
-         r9iw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="C/rlAThi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VfvOvgqg"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66L6FqlF4107084
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 08:08:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=HtLBlAg4r0+Aka+/4sxNKNln
+	C5hTN13yNk/Kzymsu0U=; b=C/rlAThiRCvbpy6/usGw/BT5RxBapOsPrC6mOdfd
+	HltX+qIiRmq1taP0prZ5nI3P7aTQAuJoWy18yyLmrPeC7LQXl3VnB6Gay75Y21i3
+	AphPtpb1w7EqaIL/Abm+a8VyVNWhtdpA02wLOxSag8DUvHueUdLI4a8LCb82IfVG
+	RWLQ2IL9N1+UC3L81gV0qsF3hslskbcVuw0OQp4mE74UrcKwh3NarEe+wJnPtLRd
+	nXXc4iazYR5kwtpi5F5kJS97VrdaAZJONjlVXLvjHAdTFP7FP8fW9J/IWneEUDby
+	aHsU4IVjFWGqNYs1lP2O4WzrBS88ZgsxtQ7ML1jEsB01ow==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhvqn9w90-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 08:08:51 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-51bfe3fa93bso226346161cf.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 01:08:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784620285; x=1785225085; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=oss.qualcomm.com; s=google; t=1784621330; x=1785226130; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=vZzSeZR0bkDEH8l+WELeqcCX8Q33dRM0eRRSsd4cPwc=;
-        b=nkgp5D2sjAa9z/6qNilZRF5U0AdI+1S71PpyjOa3N//A5Nt1HDLmI04gxPZ5g2z/aQ
-         IK8aoGb9h+Roj8d/qh6+nNZH8aT0u4IbTgjNFkDt36iC1Tl4ExBxDo7qJsZShYATAQP+
-         /B16uPij+zC0eJSQRvlMgFUgrlZIhcYoe/sUkcDmbY2doQHAXz4hAjLISvZoUMKEFXnz
-         dbw1IK3ge4JVoyMhdPZ91lY95dAUXJDm/qndtnhUm4QYMNAl9fKUHZcx5xWWI9JYDBFI
-         niTXFSpycsKBg26/p0T89RiliPMO9VR8ZnYhDPQUV3k9YlEiccSt0OssSkwDTSIS1qIg
-         OItA==
+        bh=HtLBlAg4r0+Aka+/4sxNKNlnC5hTN13yNk/Kzymsu0U=;
+        b=VfvOvgqgbg0I9a3VtN+yKoe3OQrgzeVBHh7yeCgD4yvBNxLNQFlFceAtTkC/vP5cQp
+         UDZJ1B6C4YSRnc+VBsjhsdMgOQMdGqrm4F748VSnUA7iDdOAZgwVTSqU1YGNyX8M9QY3
+         IrCiqU5NCH/RJj+qSdfKvpklqQi4OWeAWJ52lzXwmVDPAWbQxV8K53n5KKk+3aFZW37Z
+         TwsPaiSk3tA4V/OBzH5v0lspjfwEPXwE+JZ5sLi9CoXRd6bR6skfhACfCPYa2zquBfj7
+         5XS4nrOACid3LbWXWmZYcxYO2QEFO9Jp7IrBXjkZyyEAyMKyPEgUvXBDaBePAEz1bEkU
+         Sj1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784620285; x=1785225085;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1784621330; x=1785226130;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vZzSeZR0bkDEH8l+WELeqcCX8Q33dRM0eRRSsd4cPwc=;
-        b=Kq5VrUqpTvBslU9dYhIo9HJjnP0k0fk2vYY5riAc/o2FBCd707wfJStOo6XSm2n77s
-         0ItTyJD0PDzNtbD1m/HaRODyKLrhlFh+O3//kpa4uGa9dMuE0k2nMZlgIsfT8iHXLDi9
-         2xXsB1tCrEo587oxVa+pBrnR75u6wfxs8mbjBmCJrdRSPmit65BIHE9um9ivpUX8WrLX
-         NA0ZaxeFzA96ECfwKDpDVI7+n2sErhIdIIxghgKObEKpcX6PgSLi6g8zVItkv3z/7y/C
-         lFKE+j9PUAKI37jJV2wzytaeLj7QC4wBj2nKVmJja/+ELq8hKk20aMMimUI6cnd73Vj9
-         TM9A==
-X-Gm-Message-State: AOJu0Yzq8MgSOR/hCZlW6J2ljcW+wx3Aq/hds7zk0TcCgihEyG2yYwoU
-	4+Ez2QmqnHtbQOYf3emkrscDifTKApRNOWXbcdint7VbQKQM1SeSqotJUd6L8qEFzrigK3VCUf+
-	sB4Y3E3TmMCfjHQTjggZqYC3Q7+d9K/tJc8iLYIg=
-X-Gm-Gg: AR+sD12PaCahUw7TjGdUHZ/KNdIMB0ahoGvm962uXuY5DrxdmSTrzkaLLlu/SFG8cG5
-	3YPs4YyUoGlboqpWzCIk2waQ3Dg9sxZ+drZ73YRqv8TzbkxI85TAeon3hpOwwANs4T5uGWeBwtl
-	TR5bXth3aRzKySr9kMsgryZX6F6RCD6bw/sUuL89pNqKeo9wjil7zM0uIVM4o0nS2Atb+z9T7CW
-	iG2ypLghkUs3wPhip/qIqsCOv+s6ESZLckF2Qyn9W6h5Cn/si0u70rlc9vax9IZOQzOJqxtvg1a
-	kAt0cQhK33WlZ1shG7tv
-X-Received: by 2002:a53:b186:0:b0:668:7dbd:7a07 with SMTP id
- 956f58d0204a3-66880b4d962mr392625d50.5.1784620285255; Tue, 21 Jul 2026
- 00:51:25 -0700 (PDT)
+        bh=HtLBlAg4r0+Aka+/4sxNKNlnC5hTN13yNk/Kzymsu0U=;
+        b=ZdJK4u3m5XUQop2F82fKyOCH4kGmUBYAKxwFql0HnVw23VnPgnRgJRDvUee7AlEEp9
+         6dcmoZ2hX4wjjnSXZuPvwSlZGqvo6U+oXpq6U/jMGxnhyDLcS3M0Sb+DFun9sNF7uX70
+         etBzyTomsfU0vj4DOLpvXWRqShb9xztiq522P3fPsgA03AIs+WaydfePh4hCiPC3e+gQ
+         UW663iibqwHhRl3v2aMohEPxGQux964wY209eQShb/1N94S0xXVDoHK1zG9PVqR1VWDX
+         VWISxoppk3PW7F8StWkHcOJAoGD4MIIGDKeD8vVclK0Yn1eYj+iaw5BKL6xv5d6Nn2tX
+         Vzhg==
+X-Gm-Message-State: AOJu0Yzb0/QW1OknrVxG7Q0chv6c3q3uoiZdvdo9egzw636+2Q6PH5xF
+	8eg7pgDccf5oPuu5ybuLxGZHgESd6EGNcLh4/L3KXCkXW1sKFupcSp6JrlMzeiTrZfGYwusL3pg
+	afcgHGKcYmzLuh46qqQFSDSSiEty6QnXlL25LgJJDT53P9fPT5AMvLL90d6am5Mx7+3lFKT2vEl
+	jdij4=
+X-Gm-Gg: AfdE7cmkdAr1rzKxusbQ74gM24mp7103iiExx3GUwaN3oueTfl5aJDfrFCDwcBtxnTc
+	a0B4tUueTvUjDjWutbpugM2VOQFb7DUWjGQm1oZszAaSTqdY4txwlw/ha8fArws1YF1GmvjyYpm
+	sCgxvCbiJES8YJN+Bu9JRzAdplV7ERfGK7Lcv+T5USySLflf0BoGSYXP0OgyqyrsF86Gkxn4c8A
+	jWLWIeQIXbqIyT4n++i2I5yfHgnxfWwsGsWJ1WkZuJ2EZ98ZsbyDqQ6W5oNZbQv6sIfzUruf5yU
+	7IpuUds6lQNb4aKY9fWoKb329buFwwm2fvu1gqIAHhgwb0nBzVnhabQ+GJVOgkcSRtRnDFK2vxa
+	7LG6vkbhlslExSSE=
+X-Received: by 2002:a05:622a:ce:b0:51b:ff00:46e with SMTP id d75a77b69052e-5213c7e64b6mr167047871cf.32.1784621329918;
+        Tue, 21 Jul 2026 01:08:49 -0700 (PDT)
+X-Received: by 2002:a05:622a:ce:b0:51b:ff00:46e with SMTP id d75a77b69052e-5213c7e64b6mr167047641cf.32.1784621329310;
+        Tue, 21 Jul 2026 01:08:49 -0700 (PDT)
+Received: from oss.qualcomm.com ([86.121.163.114])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63eeece9sm35872990f8f.37.2026.07.21.01.08.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2026 01:08:48 -0700 (PDT)
+Date: Tue, 21 Jul 2026 11:08:46 +0300
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: eliza-mtp: Enable CDSP remoteproc
+Message-ID: <64uogzqxtz4sfwhg3kyrxcspuv7bmq6u3kxelbwun3d6wmf674@rayzujuahc3r>
+References: <20260714-dts-qcom-eliza-add-cdsp-v1-0-525e757a23b0@oss.qualcomm.com>
+ <20260714-dts-qcom-eliza-add-cdsp-v1-2-525e757a23b0@oss.qualcomm.com>
+ <20260714134955.CFFC51F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260721064115.64809-1-royalnet026@gmail.com> <20260721064115.64809-3-royalnet026@gmail.com>
- <20260721070036.51C371F000E9@smtp.kernel.org>
-In-Reply-To: <20260721070036.51C371F000E9@smtp.kernel.org>
-From: Igor Paunovic <royalnet026@gmail.com>
-Date: Tue, 21 Jul 2026 09:51:14 +0200
-X-Gm-Features: AUfX_myuY5cs_jihA3WZbNrynJGYGTTN4HuyfxbJXYsOu2kmiTef-qbsCaf3Zt8
-Message-ID: <CAEWPSH7FZw7XDhHD6x+mWcQR2VnLs5yF5LUGMisQoCsv43-z8w@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] media: synopsys: hdmirx: add HDMI audio capture support
-To: sashiko-reviews@lists.linux.dev, 
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Sebastian Reichel <sebastian.reichel@collabora.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
-	linux-media@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@collabora.com, 
-	linux-kernel@vger.kernel.org
-Cc: robh@kernel.org, media-ci@linuxtv.org, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260714134955.CFFC51F00A3A@smtp.kernel.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDA4NCBTYWx0ZWRfX695Mb/YkyGQs
+ gLvxtxiCGtu3ZUm9ESE7uJfxfUltAN4L273CIYtpCQDIi3OZ3r0aWwQkLh+if83ViseRs9SxaSK
+ 9p8Ylrsyn/07IpN4ykXTqE9WHYKaGESzMJutgShhzRok9FdTIs5ITs7flVW8zOjuGO//MZG4mkx
+ BYTBLJlNz++xZxWZBPUgfC8QeCUKfTYM3P8oK2Q5+0ckG7KnwTczv1RUVEw5MW6xp4RL+ABtKUT
+ 5r+njngQbIpC2W0hebA7LKvDIXzm9HoqHg3h1ApnwE4mwzuTYCZU0MU8F5AKFTY2V0Y+H6r07T7
+ t+e8afiGn/1Zo2HPYeGJLjL123WaEkfUYeXqX7mFyPK6u/qLJ2Ku8Q0rqq8R5VfWZ8USfyOjRg5
+ p0hndBU98D7s56MEJtMxNr8dc7qTd/AuIVQtlhZDzRzPXiVJJxJIMe4e6o9BbHr0SaFned8S0MJ
+ vc1HA0yc2hiYw4ZRXCA==
+X-Proofpoint-ORIG-GUID: kss03R0tCiM1zkTR6PR_fhSnP6gHQTWe
+X-Proofpoint-GUID: kss03R0tCiM1zkTR6PR_fhSnP6gHQTWe
+X-Authority-Analysis: v=2.4 cv=M5F97Sws c=1 sm=1 tr=0 ts=6a5f2913 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=6dw9+iwJWV8PcCi9M4lOBg==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=g-jXLJ6NlkpF3N7jzMkA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDA4NCBTYWx0ZWRfX3oR6rd1+cNm8
+ IjlJFYB8tY/bCHi3B13YBDNLT78HRAOYNxUD8XiRjCBkiterAFg2mbDVYzOXWhHsCE4UN2sjj2Z
+ aRrB63o4q4PnQcMtb9VGXRA1BC6u+ec=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607210084
 
-> Does this byte reversal using swab32() incorrectly scramble the N and
-> CTS values?
-
-No. This is the third review of this finding -- it was raised on v2
-and v3 in the be32_to_cpu() spelling and answered both times, and the
-comment above the code documents the layout. The premise doesn't
-match the ACR subpacket format: CTS is not stored LSB-first from PB1.
-Per the HDMI spec, subpacket byte 0 is reserved, CTS[19:16] sits in
-PB1[3:0], CTS[15:8] in PB2 and CTS[7:0] in PB3 -- MSB first -- with N
-likewise in PB4..PB6. The packet decoder stores PB0 in register bits
-[7:0], so reversing the word is precisely what lines the bytes up
-before the 20-bit masks. swab32() and the previous
-be32_to_cpu()/cpu_to_be32 spelling produce the same value on both
-endiannesses; the v4 change only makes the reversal unconditional.
-
-It also remains the path validated on hardware, as noted in the
-cover letter: a 44.1 kHz source is detected as 44.1 kHz rather than
-falling back to the 48 kHz default, and 44.1/48 kHz switches are
-followed. Neither would work if the extraction produced garbage.
-
-> is there a use-after-free risk during device unbind in this driver?
-> [video_device embedded in devm-allocated struct, release set to
-> video_device_release_empty]
-
-This one looks structurally plausible, but as the report itself
-notes it predates this series: it concerns the video_device lifetime
-on the V4L2 side and is independent of the audio support added here
-(the audio teardown path was exercised on unbind with an active
-stream during v3 review, see the v3 thread). Addressing it would be
-a separate fix for the existing driver -- happy to leave that call
-to Dmitry.
-
-Igor
-
-On Tue, Jul 21, 2026 at 9:00=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] The use of `swab32()` when extracting the 20-bit ACR N and CTS v=
-alues incorrectly scrambles their bits. Because the packet bytes are stored=
- contiguously from the LSB up (PB0 in [7:0], PB1 in [15:8], etc.), reversin=
-g the 32-bit word using `swab32()` places the LSB of CTS (PB1) into the MSB=
- of the extracted value, and the MSB of CTS (PB3) into the LSB. Masking thi=
-s result produces a completely invalid sample rate.
->
-> Pre-existing issues:
-> - [High] The V4L2 `video_device` is embedded in `struct snps_hdmirx_dev`,=
- which is allocated using `devm_kzalloc`. The driver sets `vdev.release =3D=
- video_device_release_empty`. If a user space process keeps the `/dev/video=
-X` file descriptor open during device unbind, the `devm` subsystem will fre=
-e the `snps_hdmirx_dev` memory. When the process later closes the file desc=
-riptor, the V4L2 core will access the freed `video_device` to decrement its=
- refcount and call the release callback, causing a use-after-free vulnerabi=
-lity.
+On 26-07-14 13:49:55, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The `remoteproc_cdsp` node is missing the `glink-edge` subnode required for IPC.
 > --
->
-> --- Patch [2]: [PATCH v4 2/4] media: synopsys: hdmirx: add HDMI audio cap=
-ture support ---
-> commit 19c9c4db1394f1dc0fc1cb44d51317198a87b078
-> Author: Igor Paunovic <royalnet026@gmail.com>
-> Date:   Tue Jul 21 06:41:13 2026 +0000
->
->     media: synopsys: hdmirx: add HDMI audio capture support
->
-> This patch adds HDMI audio capture support to the Synopsys DesignWare HDM=
-I RX
-> controller. It extracts the embedded audio stream and exposes it as an AL=
-SA
-> capture device via the generic hdmi-codec. It also introduces a periodic
-> worker to keep the local audio reference clock locked to the source.
->
-> > diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/dri=
-vers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-> > index 25f8ca0d6d946..1b4a7fda9e195 100644
-> > --- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-> > +++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
->
-> [ ... ]
->
-> > +static u32 hdmirx_audio_fs(struct snps_hdmirx_dev *hdmirx_dev)
-> > +{
-> > +     u64 tmds_clk, fs_audio =3D 0;
-> > +     u32 acr_cts, acr_n, tmdsqpclk_freq;
-> > +     u32 acr_pb3_0, acr_pb7_4;
+> 
+> --- Patch [2]: [PATCH 2/3] arm64: dts: qcom: eliza-mtp: Enable CDSP remoteproc ---
+> commit 5af49a73d9e2d56636adad16779d928f64bfc0a3
+> Author: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> 
+> arm64: dts: qcom: eliza-mtp: Enable CDSP remoteproc
+> 
+> This commit enables the CDSP remoteproc node on the Eliza MTP. It provides 
+> the required firmware names and sets the status to okay to bring the DSP out 
+> of reset.
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/eliza-mtp.dts b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+> > index a7d6f9d52ef31..7de4ee3935e63 100644
+> > --- a/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+> > @@ -484,6 +484,13 @@ &remoteproc_adsp {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&remoteproc_cdsp {
+> > +	firmware-name = "qcom/eliza/cdsp.mbn",
+> > +			"qcom/eliza/cdsp_dtb.mbn";
 > > +
-> > +     tmdsqpclk_freq =3D hdmirx_readl(hdmirx_dev, CMU_TMDSQPCLK_FREQ);
-> > +     hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PH2_1);
-> > +     acr_pb3_0 =3D hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PB3_0);
-> > +     acr_pb7_4 =3D hdmirx_readl(hdmirx_dev, PKTDEC_ACR_PB7_4);
-> > +     /*
-> > +      * The packet decoder stores the ACR subpacket bytes with packet =
-byte
-> > +      * 0 in register bits [7:0], so byte-reverse each word to line th=
-e
-> > +      * bytes up: CTS is packet bytes 1-3 (PKTDEC_ACR_PB3_0) and N is
-> > +      * packet bytes 4-6 (PKTDEC_ACR_PB7_4), 20 bits each. readl()
-> > +      * already abstracts the bus endianness, so the reversal is
-> > +      * unconditional.
-> > +      */
-> > +     acr_cts =3D swab32(acr_pb3_0) & 0xfffff;
-> > +     acr_n =3D (swab32(acr_pb7_4) & 0x0fffff00) >> 8;
->
-> [Severity: High]
-> Does this byte reversal using swab32() incorrectly scramble the N and CTS
-> values?
->
-> Because the packet bytes are stored contiguously from the LSB up (with pa=
-cket
-> byte 0 in [7:0], packet byte 1 in [15:8], etc.), reversing the 32-bit wor=
-d
-> using swab32() places the LSB of CTS (from PB1) into the MSB of the extra=
-cted
-> value, and the MSB of CTS (from PB3) into the LSB.
->
-> Will this result in an invalid sample rate being calculated, causing the
-> driver's fallback logic to silently ignore the broken rate and use 48kHz?=
- This
-> could cause any audio stream not natively at 48kHz to be played back at t=
-he
-> wrong rate.
->
-> > +     tmds_clk =3D tmdsqpclk_freq * 4 * 1000U;
-> > +     if (acr_cts !=3D 0) {
-> > +             fs_audio =3D div_u64((tmds_clk * acr_n), acr_cts);
->
-> [ ... ]
->
-> > @@ -2765,6 +3064,10 @@ static int hdmirx_probe(struct platform_device *=
-pdev)
-> >                                                      V4L2_DEBUGFS_IF_AV=
-I, hdmirx_dev,
-> >                                                      hdmirx_debugfs_if_=
-read);
-> >
-> > +     ret =3D hdmirx_register_audio_device(hdmirx_dev);
-> > +     if (ret)
-> > +             dev_warn(dev, "failed to register HDMI audio codec: %d\n"=
-, ret);
-> > +
-> >       return 0;
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a use-after-free =
-risk
-> during device unbind in this driver?
->
-> The V4L2 video_device is embedded in struct snps_hdmirx_dev, which is
-> allocated using devm_kzalloc() earlier in hdmirx_probe(). However, the dr=
-iver
-> sets the release callback to video_device_release_empty in
-> hdmirx_register_stream_vdev().
->
-> If a user space process keeps the /dev/videoX file descriptor open during
-> device unbind (such as during driver unbind or module removal), the devm
-> subsystem will free the snps_hdmirx_dev memory. When the process later cl=
-oses
-> the file descriptor, will the V4L2 core access the freed video_device mem=
-ory
-> to decrement its refcount and call the release callback?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721064115.64=
-809-1-royalnet026@gmail.com?part=3D2
+> > +	status = "okay";
+> > +};
+> 
+> [Severity: Medium]
+> Is this missing the glink-edge subnode required for IPC?
+> 
+> Looking at the base device tree definition in 
+> arch/arm64/boot/dts/qcom/eliza.dtsi, the remoteproc_cdsp node is defined 
+> without a glink-edge child node:
+> 
+> 	remoteproc_cdsp: remoteproc@32300000 {
+> 		compatible = "qcom,eliza-cdsp-pas";
+> ...
+> 		qcom,smem-states = <&smp2p_cdsp_out 0>;
+> 		qcom,smem-state-names = "stop";
+> 
+> 		status = "disabled";
+> 	};
+> 
+> Without this subnode, qcom_glink_smem won't be instantiated for the CDSP. 
+> Will this leave the DSP functionally isolated since the host cannot establish 
+> RPMSG IPC channels (like fastrpcglink-apps-dsp) to perform compute offloading?
+
+glink-edge subnode will come with fastrpc as a separate patch, since
+it wasn't ready by the time this patchset was sent.
+
+But this is still enough to load the firmware and start the CDSP.
