@@ -1,195 +1,233 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011030.outbound.protection.outlook.com [52.101.65.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D13B44C664
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784627703; cv=none; b=qX1oinDfaMuYiGN9PWkyAtG8OOEttGRUMjzO26TCYrK7xdXoAu3N4ehVbXfHSenMU5DkW2EOTXxLwlMKEswVpzLE/Z01iMEFsG3hiIJ+QBSRKhfQjuTtd829foc23HSgvcN1rb3aIqHyZOEGYqmBp8RDZNTZCYE9uB44HoAeSC8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784627703; c=relaxed/simple;
-	bh=yjVClPnUvtjVs0S+2DH+jfb+ubDnClsDuAfU/YnrNGU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FW7O9udLL9vr26O1S/ay7HCtImk/Ktf9KwOAH2FF7JxIPQTZYwxg8mW1oQ/7WrptKxxnB2RUqauOoQSgZUDd+SljFF42uBTQpvPdSBqeHRUVaRTudsgRlWaUPy0yO+ZaD/kXaTV6TbqNzNxeK9AWJJ7hU+0/3kF36k+XRVQZzfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1rX2eBn6; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yve6qeDw; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1rX2eBn6; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=yve6qeDw; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7143C331A77;
+	Tue, 21 Jul 2026 10:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.30
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784630245; cv=fail; b=evL6nTl+izEca6vEJ2jSr+ZxHEjW6NixImUowrrm+wwQDRPLVANESlnMIjtHIBTEvC+OePt7BZ6BXUOGLmts2GPINB9BohqzZxrYkr0N89MWqsEEmqr+5ZQXepo4LTG4yz30Uy4z8sF3yv1kPhanjSF3i7G5PVEPGjkvEyIn/mM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784630245; c=relaxed/simple;
+	bh=o2f87/YdxCsLYB22lBFLCYxtNBnXT4rxSlFiCTHH8Jc=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=NavAgPSXYAb9JEG+xmTAe6cHSbNpSPb3u82wB8J/Gt5y7m+8sfHpI9+OeTMfItYjggiz2CvRSIs/lWl6T4OTWqtelJwapV238fImFZxGpSLIdCUP0Rqp4/LAch+YpxoJd1iwk91AjMJBEEuXQBsYbdI2TTmVIwc+4YbAvAm2t2w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Ysjy4fEl; arc=fail smtp.client-ip=52.101.65.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1rX2eBn6";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yve6qeDw";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1rX2eBn6";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="yve6qeDw"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 463373DF8;
-	Tue, 21 Jul 2026 09:55:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784627700; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=CnetzD2X0soEU98L6h+pzMU54A4FTkeqZhhdt7nUwTU=;
-	b=1rX2eBn6p9WuvlmxC5LMXdGWXfFn26bFVrfolETII10fdlYROUPmLV6GhAySFrafytEQ2Z
-	F2hkifIhqyMWU/z8Ez7GVwgnlESbWTZq7A3+/cka1pyiIa8ESSIPUQLLsxwfQ7uRSNX4ee
-	+i/hktT02jSG5nXT4US7y9SqwBrzHpI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784627700;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=CnetzD2X0soEU98L6h+pzMU54A4FTkeqZhhdt7nUwTU=;
-	b=yve6qeDw51M5WM01y/yaw7VbUIrm+KkFHXi7f+t3fnG9lc86LOPygsro87fLZVClsPjKLr
-	A0iBT3VuGG60faCw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784627700; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=CnetzD2X0soEU98L6h+pzMU54A4FTkeqZhhdt7nUwTU=;
-	b=1rX2eBn6p9WuvlmxC5LMXdGWXfFn26bFVrfolETII10fdlYROUPmLV6GhAySFrafytEQ2Z
-	F2hkifIhqyMWU/z8Ez7GVwgnlESbWTZq7A3+/cka1pyiIa8ESSIPUQLLsxwfQ7uRSNX4ee
-	+i/hktT02jSG5nXT4US7y9SqwBrzHpI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784627700;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=CnetzD2X0soEU98L6h+pzMU54A4FTkeqZhhdt7nUwTU=;
-	b=yve6qeDw51M5WM01y/yaw7VbUIrm+KkFHXi7f+t3fnG9lc86LOPygsro87fLZVClsPjKLr
-	A0iBT3VuGG60faCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E45B3779AA;
-	Tue, 21 Jul 2026 09:54:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id y9eCNvNBX2rNMgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 21 Jul 2026 09:54:59 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: ville.syrjala@intel.com,
-	rodrigo.vivi@intel.com,
-	jani.nikula@linux.intel.com,
-	joonas.lahtinen@linux.intel.com,
-	tursulin@ursulin.net,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH v3] drm/i915/display: Handle struct drm_plane_state.ignore_damage_clips
-Date: Tue, 21 Jul 2026 11:54:11 +0200
-Message-ID: <20260721095454.404298-1-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Ysjy4fEl"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Kmu/nX34ujwsapWysUtiEmnSq51wzi4m6eZ827bxeXHpGQBWEIEQjF5MOMGIiUApWu6QfVT0CnZ++Zi89Z5lMgOY9Mhakdw2KhJoyyH5z9TxPu0J7uqfOLbCROSHnQEunFcX+S8cTq9FjTIr8kIVqbzzbtfraALwnRqmeLhq0Jl9aG6xFYgyLVaR7zJGNTMObSZtxoBWzsTc8ihFB/981liyiH6lOWsKBhBWrNcsl0yZgaMurqmzBaG5neWTfTzA4/8GYuWhivqQjXA7WR0DEV8XPhg5PFaIhP1ofC2TMiTyGN8gZyzvn2CKU+RZrHT0mQMYyKSUFf8DYaYjEkn8gA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=o2f87/YdxCsLYB22lBFLCYxtNBnXT4rxSlFiCTHH8Jc=;
+ b=SvCMjFWxqrCQuzhMMfXmYNbZodKg7kUsJHXEbQLyk2jHIRO3SDbEUIdo8EvurUByTxc6fuf48yR2Ww1PEP9gsVgrXZy1D3TwxPjTtW/5vel7CpoDjWeNbNL9JyiT4vaI7GhuC1bgeFK4Mmh0HNqxdOdoVlKhVfDcWQrQ7FlJTu8RVj0wvpZPZFb5QKMrMZFINWmY0JgZGwNzMOH1zqD/nJzxHlCuvproIASJS7Q/zrdEpBL4887LXZVdfPH9fphu0qt5eMVZr5TxcQf3PHKIG9aFkRuebJTln6MoM/KoKCW9yt1N4ElmuYfnO7Gi7GqgniioWC8PKe6KT951TaAfNw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=o2f87/YdxCsLYB22lBFLCYxtNBnXT4rxSlFiCTHH8Jc=;
+ b=Ysjy4fElauQnc4G13KSSx+txROJjCzMRXHXD+QppSweHGgvH6s4RJ5if7v/rmu5kvDglLiiPu07WXW3eb2qE9fILI2zCVWcbcfSlb+CNeUDkxBLAiF2xgPaTI5APc/ANg5EyhpnGbhllGjroGKP6BoTLgnPbDnfuqdt1FwiNlGvOItOmbBXqyVB6LggRanXSUCnnpKiLbC+BoasnSUD8+RcFuNE2hTxYdHMA6DxFEeRkdoS4FowuY3HBWHrelGhZ3yJv7GAIzIa3M+HHlhkz22lj8VHQYToA2UTAkrTtlaxy10nDBHRNfUmrtENvp8YASE7K3ZFWKKbza1WMAwBu7g==
+Received: from AS8PR04MB8150.eurprd04.prod.outlook.com (2603:10a6:20b:3f0::12)
+ by PA4PR04MB9391.eurprd04.prod.outlook.com (2603:10a6:102:2aa::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Tue, 21 Jul
+ 2026 10:37:19 +0000
+Received: from AS8PR04MB8150.eurprd04.prod.outlook.com
+ ([fe80::24f0:af2:c6f6:38f1]) by AS8PR04MB8150.eurprd04.prod.outlook.com
+ ([fe80::24f0:af2:c6f6:38f1%4]) with mapi id 15.21.0223.013; Tue, 21 Jul 2026
+ 10:37:19 +0000
+From: "Robby Cai (OSS)" <robby.cai@oss.nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"Robby Cai (OSS)" <robby.cai@oss.nxp.com>
+CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>
+Subject: RE: [PATCH 2/2] regulator: fp9931: Fix Runtime PM usage count
+ underflow in v3p3 ops
+Thread-Topic: [PATCH 2/2] regulator: fp9931: Fix Runtime PM usage count
+ underflow in v3p3 ops
+Thread-Index: AQHdGPc7ZUdc8wX0NEaVA8k2RBwREbZ3v2sAgAAF9MA=
+Date: Tue, 21 Jul 2026 10:37:19 +0000
+Message-ID:
+ <AS8PR04MB8150C2474C737884F6C0E907F2C22@AS8PR04MB8150.eurprd04.prod.outlook.com>
+References: <20260721095959.1855436-1-robby.cai@oss.nxp.com>
+ <20260721095959.1855436-3-robby.cai@oss.nxp.com>
+ <20260721100703.44B3A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260721100703.44B3A1F000E9@smtp.kernel.org>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR04MB8150:EE_|PA4PR04MB9391:EE_
+x-ms-office365-filtering-correlation-id: 36852c40-4412-48b9-79df-08dee7140a59
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|19092799006|6133799003|11063799006|10067099003|4143699003|56012099006|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info:
+ KhpbYiYU69lmVjBt5v/MWIwGADSkbB9FVXLadGpiH4FsKal3LSAPUwosiRzLy+8QIQGtO+CoXobkACbNHKZA7eN8gRg2mD5gRjtV5/S3rHjqqNUcSRc/Vr5aEvFj0ABinVTR5XYE8K6p6zLyztjaeehaeigoJYc1bAHzZ+urA4zSUYjHRJ1ESB2n+N0ZVE6W5h1rxPUqjXqtbVR+EEfTsyyoZrWFXIWjA4+ErIEW2jd1pVEVEd/i0IakWmVHShDqi0Fw6Ghgxs6BLPTrZFzOvkHr49J6jDm2ftM4gkrE+FSSC97pKFX9S9PeUuKVyICmcwrIieYumfwU0MtshkI/tMQdy5jTMJDItCo+pflw1hn5VAUsotsHmfmTbVj0dBW2S/VYcSBP26Knsf56sqzmWII2jHZCczPObwcYh98gyCkxaTiSpJ+shCoco/TFx8tdj40JZ0RCt1glHaDwHisXe9Z2UOSgmUq1BNlzF/k9xesbl2mYcqaockOvCo+mIC9JeMeVdKaKPqncPPo75IphnA/EAhn56w6MdWBnwGcGbOAFPJfQjyKgbPqjAeyDxbJ+qP5u7pHQt/g4VL9zP5fuPirgJHMyH7IsAgPHtp60GnB6MFrIj4P1gWgdfTm8G2VbOiEeBQkWRjXTA9rj/RcG7cZx3LCTc0nHHvw9FlfqVoU=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8150.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(19092799006)(6133799003)(11063799006)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?KzF5dnZvMXh3eHhKdDBxWDdlUHRCMW9KWmxVZmdOa2hGMjNLOG1ZZG5SRm5N?=
+ =?utf-8?B?QVBBOGZnSGlOOWowNGkxR2NlbVFLUmRYbVNYdFBvUkdXdTVtRVVaV2FxUTlL?=
+ =?utf-8?B?MzJMSkx5TSs1QVJQSDkyRjdmZE4yZ3BiWWtBaDZtREFuWG0rREZOTlpCRWlC?=
+ =?utf-8?B?V3RlNmlVbS9GSUVBMUpmTUoxM1RKMTVUM1FLZFNNeTVyOTNvR1hCcUFvNFAv?=
+ =?utf-8?B?dmpGelRnOVVZWjE1VEcrSXJMQXdUNis2eEJad1pOSnNSRWIyYkJBcEFzWlh5?=
+ =?utf-8?B?aVFQV25ja3AwSlFSU3NJNUE0YUdGTUI3UjlEUlFzd3d0SGFDRVRTVXZBQk9O?=
+ =?utf-8?B?OS9jN0duNGxRMW9LQTB2Z2xodVcza2dkRnBPSW5vVHd3azNmQjZNVEZybXFT?=
+ =?utf-8?B?VW5wU2EvOTd3bkhwYXRiUkV2S01zbTVhZy9LUDg4Q0w4VmsvTzhJTTNIckJw?=
+ =?utf-8?B?c0RDUU1RNTA3SW5ycVJyL08rQlhBWDdKN1lRUkxnK0tZV29nUXd2OGp4enkv?=
+ =?utf-8?B?OVFlOUNvcC9CTWJJSVBpR25Ud2x3QmxkNm9KcmM3dEVpdHpDQitYWVlzV3dy?=
+ =?utf-8?B?TGRuWTNCRWYzanJyQXJFeEFpQ0t4Nk9GNlVXLzgxVEkrb3VzeHBOZE4yTnA2?=
+ =?utf-8?B?Y20zQmwxMUpDbUVERys1WGhYMUJuZVgxYXZGYi9Ha2VRdExJaG02ckY4dFM2?=
+ =?utf-8?B?bnQ0U1U4QWZKUC9hKzFSdDdic2R2UDdKZGVVM2h6YnNBbG8yRFR6Z3lkN3pV?=
+ =?utf-8?B?UFp6V0xYcEd1clJtWmhiR3FoS1B2NmRzdlBFbWo5YVdIdU53SFpENHY3K2N5?=
+ =?utf-8?B?Mmp1TnBQcWYxMnc1Rk94WjRFT0ZsQU41OHU3aGo5K1BhdFZIOXFZSGV4Yk1n?=
+ =?utf-8?B?VE1wbVozazBzcThvakZiYTh6VTJIbitURDNSdDF3SmlGRmplV1pMWk5jUTFo?=
+ =?utf-8?B?cG82RXNDaW4zZWVnSGd1REQzT3BDdCt3QnNrRnVYdlo3MUlUcGpVZmhwSThZ?=
+ =?utf-8?B?bERtNUFBdFZmZDE3RncrZkhNQkVFZTBmbjdHMmV6cTE1UER2U0pVelJ3OFJ5?=
+ =?utf-8?B?eTNtUlFSY1UydzFOQ0lLdjQ5azBCRG9xMXAvMlhaYlFLTE1tV050NExQTmta?=
+ =?utf-8?B?cGFqMklEMGJDdUlYcFhzYmE2YUZydGo3cVJ5RFVBMmFkdjdteFYrZk5wUmsw?=
+ =?utf-8?B?MUw3Ty9xNks3cXFsK2FrRUJuRXdKNUVFZzhqZ3JzbnFhc2FPWHpDSTlERzA2?=
+ =?utf-8?B?SXNYVHNvYlJhNXplOXJBOWJ0UXUrc1JXVjZkWjJSTlpnKzA0WUFyN252Nk5I?=
+ =?utf-8?B?WS93RVpDR1dhdVRPUURDQlpkSVR6RENsUUFzVnJDb0xyN2RqZnFEM0RmSWJw?=
+ =?utf-8?B?Q2dzbE5CdGt4T3NIc1dMUitPcjUvSkt5VzdxVGZaSUFOb2NVbnVKWnQ0MWFa?=
+ =?utf-8?B?UldBRWp3ZmdpYktIejQ5QlpUQms5MHpJN2xlY2RIc251S2ZFTHdmMXpja0RN?=
+ =?utf-8?B?QUlkdEg1ODkxZlVkUjl0d3hubXQzVlJ5YmhEOEFZYkpxLzN6clJGWUxiL3Nl?=
+ =?utf-8?B?OVR1YlJwOFZOT1NTbjhFV0ovSVZmQ0wzMERuK3M4c3dPQ21uMkZPeWRKTjJs?=
+ =?utf-8?B?SG1BUmVpRWFqVVFMOHFNbXU5T2tFUnJwNVRJMUtlOUp1cUtsOXRnQ0hVVFNJ?=
+ =?utf-8?B?TDJuRllUVXFaU2ZzY0VmYUVNQlpxZnZ6YUdUZERkSXNrQXlaTlhtbzE0Z1pP?=
+ =?utf-8?B?N1dCSmxmVVlXWXBpYUtXSXdSdFJFb3FwTGxLSEJUaFN3aVdmVnc0SFdJVGor?=
+ =?utf-8?B?cHE2U09IekxrQk1Wc3RDZElrb01WM3dBYXQ5MlVZWnVtUkhzeVkyYXRrTXBq?=
+ =?utf-8?B?ZFVxWXZUWEEzN0tFY0lXSzJhT1hCbGtiK0c3Y2w1UkpQb2hoRFR2K1hYOUZP?=
+ =?utf-8?B?d2xqVFd3UGdmUGVqb2tpaTc0Si9hMnRNYzJiK2VOMTgwSzNnSkVXRDBrbERz?=
+ =?utf-8?B?dTBTM3VtUHJtS2I2dEJkbmRjNWhVSTdJMTBJNDJNcUc2VWdwRVh0OC85aHFy?=
+ =?utf-8?B?aFB3bGJIMUE2N2l4NkNYSDVIWGErRXlDUW1QUHNLS1FTWU01bER3eCtXUE9N?=
+ =?utf-8?B?Zjd4N0RJbURrcmtXd2djR0JmcU8vNk1zdEh2dmNqcjR0K3VwMy93V1NhSUVF?=
+ =?utf-8?B?MENrTHFwODlWMUN4WkFoQUlka0k5ZGxNWUV5a211dG0zZDJHNVBSRFVQTlJi?=
+ =?utf-8?B?UUtLVmFaSWE5MmorNGZReFl6MVdheW0yeWFkWjkvalpZaG1EdThGZE9WdGVU?=
+ =?utf-8?Q?uUINxNSWHi2AVWI+6R?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_TO(0.00)[intel.com,linux.intel.com,ursulin.net,gmail.com,ffwll.ch];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
-X-Spam-Score: -2.80
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8150.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36852c40-4412-48b9-79df-08dee7140a59
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jul 2026 10:37:19.2124
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: UTBUHML3dYh5liWbvwhWig2yEC83nEUSsEbDOhiPcaoUO9EDhGXyFXYYIHMIqUIIfT9IC+tqoiTAo584s5l7/w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9391
 
-Call drm_atomic_helper_check_plane_damage() in plane_atomic_check()
-before copying the damage information to guarantees that ignore_damage_clips
-from struct drm_plane_state has the correct value. Although i915 does not
-directly modify or use the flag, DRM's damage iterator will soon rely on
-it.
-
-As a side effect, if the CRTC has been marked for a full modeset before
-the call to drm_atomic_helper_check_plane_damage() happens, the plane now
-ignores all damage clips and does a full update.
-
-Git commit 35ed38d58257 ("drm: Allow drivers to indicate the damage
-helpers to ignore damage clips") introduced ignore_damage_clips to
-selectively ignore damage clipping for certain framebuffer changes. The
-mode-setting pipeline can disabled damage clippings for an atomic commit
-by setting ignore_damage_clips in struct drm_plane_state. The atomic
-commit will then do a full display update.
-
-Future directions: there's currently a multitude of options that affect
-damage clipping; with different places seeing different state. In order
-to unify this, drm_atomic_helper_check_plane_state() will soon evaluate
-all options in a single place and set ignore_damage_clips accordingly. All
-later stages of the mode-setting pipeline will only look at this field.
-
-v3:
-- fix the call to drm_atomic_helper_check_plane_state()
-- use primary-CRTC's plane state (Sashiko)
-- note full-plane updates in commit description
-v2:
-- move _check_plane_damage() before reading damage first time (Sashiko)
-- expand commit description
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
----
-Taken with updates from the series at
-
-  https://lore.kernel.org/dri-devel/20260610152505.260172-1-tzimmermann@suse.de/
----
- drivers/gpu/drm/i915/display/intel_plane.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/i915/display/intel_plane.c b/drivers/gpu/drm/i915/display/intel_plane.c
-index a440f92ff00c..d64f151ce410 100644
---- a/drivers/gpu/drm/i915/display/intel_plane.c
-+++ b/drivers/gpu/drm/i915/display/intel_plane.c
-@@ -850,7 +850,7 @@ static int plane_atomic_check(struct intel_atomic_state *state,
- 		intel_atomic_get_new_plane_state(state, plane);
- 	const struct intel_plane_state *old_plane_state =
- 		intel_atomic_get_old_plane_state(state, plane);
--	const struct intel_plane_state *new_primary_crtc_plane_state;
-+	struct intel_plane_state *new_primary_crtc_plane_state;
- 	const struct intel_plane_state *old_primary_crtc_plane_state;
- 	struct intel_crtc *crtc = intel_crtc_for_pipe(display, plane->pipe);
- 	const struct intel_crtc_state *old_crtc_state =
-@@ -873,6 +873,14 @@ static int plane_atomic_check(struct intel_atomic_state *state,
- 		old_primary_crtc_plane_state = old_plane_state;
- 	}
- 
-+	/*
-+	 * Prepare plane-damage state before using it; do this on all
-+	 * display versions to keep the underlying DRM plane state in
-+	 * good shape.
-+	 */
-+	drm_atomic_helper_check_plane_damage(&state->base,
-+					     &new_primary_crtc_plane_state->uapi);
-+
- 	intel_plane_copy_uapi_plane_damage(new_plane_state,
- 					   old_primary_crtc_plane_state,
- 					   new_primary_crtc_plane_state);
-
-base-commit: fcaba3bc017906059b910ece3f83185e93010581
-prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
-prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
--- 
-2.54.0
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IHNhc2hpa28tYm90QGtlcm5l
+bC5vcmcgPHNhc2hpa28tYm90QGtlcm5lbC5vcmc+DQo+U2VudDogVHVlc2RheSwgSnVseSAyMSwg
+MjAyNiA2OjA3IFBNDQo+VG86IFJvYmJ5IENhaSAoT1NTKSA8cm9iYnkuY2FpQG9zcy5ueHAuY29t
+Pg0KPkNjOiBpbXhAbGlzdHMubGludXguZGV2OyBGcmFuay5MaUBrZXJuZWwub3JnDQo+U3ViamVj
+dDogUmU6IFtQQVRDSCAyLzJdIHJlZ3VsYXRvcjogZnA5OTMxOiBGaXggUnVudGltZSBQTSB1c2Fn
+ZSBjb3VudA0KPnVuZGVyZmxvdyBpbiB2M3AzIG9wcw0KPg0KPltZb3UgZG9uJ3Qgb2Z0ZW4gZ2V0
+IGVtYWlsIGZyb20gc2FzaGlrby1ib3RAa2VybmVsLm9yZy4gTGVhcm4gd2h5IHRoaXMgaXMNCj5p
+bXBvcnRhbnQgYXQgaHR0cHM6Ly9ha2EubXMvTGVhcm5BYm91dFNlbmRlcklkZW50aWZpY2F0aW9u
+IF0NCj4NCj5UaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmll
+dyBmb3VuZCAzIHBvdGVudGlhbCBpc3N1ZShzKQ0KPnRvIGNvbnNpZGVyOg0KPg0KPk5ldyBpc3N1
+ZXM6DQo+LSBbSGlnaF0gRHJvcHBpbmcgdGhlIFJ1bnRpbWUgUE0gcmVmZXJlbmNlIGluIHRoZSBy
+ZWd1bGF0b3IgZW5hYmxlIHBhdGgNCj5hbGxvd3MgdGhlIGRldmljZSB0byBhdXRvLXN1c3BlbmQg
+d2hpbGUgdGhlIHJlZ3VsYXRvciBpcyBsb2dpY2FsbHkgYWN0aXZlLA0KPmNhdXNpbmcgc2lsZW50
+IHBvd2VyIGZhaWx1cmUuDQoNClRoaXMgc2hvdWxkIG5vdCBiZSBhbiBpc3N1ZSBmb3IgRlA5OTMx
+Lg0KDQpUaGUgVjNQMyByZWd1bGF0b3IgaXMgbm90IGluZGVwZW5kZW50bHkgY29udHJvbGxpbmcg
+dGhlIGRldmljZSBwb3dlcg0Kc3RhdGUuIEZQOTkzMSByZWd1bGF0b3JzIHNoYXJlIGEgY29tbW9u
+IGVuYWJsZSBtZWNoYW5pc20gdGhyb3VnaCB0aGUgRU4NCmNvbnRyb2wgcGF0aCwgaW1wbGVtZW50
+ZWQgYnkgZnA5OTMxX3NldF9lbmFibGUoKSAvDQpmcDk5MzFfY2xlYXJfZW5hYmxlKCkuDQoNCkEg
+cnVudGltZSBQTSByZWZlcmVuY2UgaGVsZCBieSBmcDk5MzFfdjNwM19lbmFibGUoKSBkb2VzIG5v
+dCByZXByZXNlbnQNCnRoZSBsaWZldGltZSBvZiB0aGUgVjNQMyByZWd1bGF0b3IgaXRzZWxmLiBJ
+biBmYWN0LCBrZWVwaW5nIHRoZQ0KcmVmZXJlbmNlIHVudGlsIGZwOTkzMV92M3AzX2Rpc2FibGUo
+KSBjYXVzZXMgcmVmZXJlbmNlIGFjY291bnRpbmcNCnByb2JsZW1zIGJlY2F1c2UgUnVudGltZSBQ
+TSBzdGF0ZSBpcyBzaGFyZWQgYWNyb3NzIG11bHRpcGxlIHJlZ3VsYXRvcnMuDQoNClRoZSBwdXJw
+b3NlIG9mIHRoZSBSdW50aW1lIFBNIHJlZmVyZW5jZSBpbiBmcDk5MzFfdjNwM19lbmFibGUoKSBh
+bmQNCmZwOTkzMV92M3AzX2Rpc2FibGUoKSBpcyBvbmx5IHRvIGd1YXJhbnRlZSB0aGF0IHRoZSBk
+ZXZpY2UgaXMgYWN0aXZlDQp3aGlsZSB0aGUgcmVnaXN0ZXIgYWNjZXNzIGlzIHBlcmZvcm1lZC4g
+T25jZSB0aGUgcmVnaXN0ZXIgdXBkYXRlDQpjb21wbGV0ZXMsIHRoZSByZWZlcmVuY2UgY2FuIGJl
+IHJlbGVhc2VkIHNhZmVseS4NCg0KVGhlcmVmb3JlIHRoZSBjaGFuZ2Ugc2NvcGVzIFJ1bnRpbWUg
+UE0gcmVmZXJlbmNlcyB0byB0aGUgcmVnbWFwIGFjY2Vzcw0KaXRzZWxmIHJhdGhlciB0aGFuIHRo
+ZSBsb2dpY2FsIHJlZ3VsYXRvciBlbmFibGUgc3RhdGUuDQoNClJlZ2FyZHMsDQpSb2JieQ0KPg0K
+PlByZS1leGlzdGluZyBpc3N1ZXM6DQo+LSBbSGlnaF0gVGhlIFZDT00gcmVndWxhdG9yJ3MgZGlz
+YWJsZSBjYWxsYmFjayB1bmNvbmRpdGlvbmFsbHkgZHJvcHMgYSBydW50aW1lDQo+UE0gcmVmZXJl
+bmNlLCBjYXVzaW5nIGEgdXNhZ2UgY291bnQgdW5kZXJmbG93IGlmIGRpc2FibGVkIGR1cmluZyBj
+bGVhbnVwLg0KPi0gW0hpZ2hdIENhbGxpbmcgYHJlZ3VsYXRvcl9lbmFibGUoKWAgZnJvbSB3aXRo
+aW4gYSBgcnVudGltZV9yZXN1bWVgIGNhbGxiYWNrDQo+dHJpZ2dlcnMgYSBXVyBNdXRleCBuZXN0
+aW5nIGRlYWRsb2NrIGFuZCBsb2NrZGVwIEJVRy4NCj4tLQ0KPg0KPi0tLSBQYXRjaCBbMl06IFtQ
+QVRDSCAyLzJdIHJlZ3VsYXRvcjogZnA5OTMxOiBGaXggUnVudGltZSBQTSB1c2FnZSBjb3VudA0K
+PnVuZGVyZmxvdyBpbiB2M3AzIG9wcyAtLS0gY29tbWl0DQo+ZTBjN2Y1ZTU1OTFmNGQwNjNkNDk0
+OTE3YzJlNTNkMjkwZGRjYTRlNA0KPkF1dGhvcjogUm9iYnkgQ2FpIDxyb2JieS5jYWlAbnhwLmNv
+bT4NCj4NCj5yZWd1bGF0b3I6IGZwOTkzMTogRml4IFJ1bnRpbWUgUE0gdXNhZ2UgY291bnQgdW5k
+ZXJmbG93IGluIHYzcDMgb3BzDQo+DQo+VGhpcyBwYXRjaCBhdHRlbXB0cyB0byBmaXggYSBydW50
+aW1lIFBNIHVzYWdlIGNvdW50IHVuZGVyZmxvdyBieSBzY29waW5nIHRoZQ0KPlBNIHJlZmVyZW5j
+ZSBsaWZldGltZSBzdHJpY3RseSB0byB0aGUgcmVnaXN0ZXIgYWNjZXNzZXMgaW4gdGhlIHYzcDMg
+ZW5hYmxlIGFuZA0KPmRpc2FibGUgY2FsbGJhY2tzLg0KPg0KPj4gQXMgYSByZXN1bHQsIGZwOTkz
+MV92M3AzX2Rpc2FibGUoKSBtYXkgY2FsbA0KPj4gcG1fcnVudGltZV9wdXRfYXV0b3N1c3BlbmQo
+KSB3aGVuIHRoZSBkZXZpY2UgcnVudGltZSBQTSB1c2FnZSBjb3VudA0KPmhhcyBhbHJlYWR5IHJl
+YWNoZWQgMCwgdHJpZ2dlcmluZzoNCj4+DQo+PiAgIGZwOTkzMSAxLTAwMTg6IFJ1bnRpbWUgUE0g
+dXNhZ2UgY291bnQgdW5kZXJmbG93IQ0KPg0KPltTZXZlcml0eTogSGlnaF0NCj5UaGlzIGlzIGEg
+cHJlLWV4aXN0aW5nIGlzc3VlLCBidXQgZG9lc24ndCB0aGlzIHdhcm5pbmcgYWN0dWFsbHkgc3Rl
+bSBmcm9tIHRoZQ0KPlZDT00gcmVndWxhdG9yJ3MgZnA5OTMxX2NsZWFyX2VuYWJsZSgpIHVuY29u
+ZGl0aW9uYWxseSBkcm9wcGluZyBhIHJ1bnRpbWUNCj5QTSByZWZlcmVuY2U/DQo+DQo+SWYgdGhl
+IHJlZ3VsYXRvciBmcmFtZXdvcmsgZGlzYWJsZXMgVkNPTSBkdXJpbmcgbGF0ZSBpbml0IGNsZWFu
+dXAgKGZvcg0KPmV4YW1wbGUsIGlmIGl0IGlzIG1hcmtlZCBib290LW9uIGJ1dCBoYXMgbm8gYWN0
+aXZlIGNvbnN1bWVycyksDQo+ZnA5OTMxX2NsZWFyX2VuYWJsZSgpIGNhbGxzIHBtX3J1bnRpbWVf
+cHV0X2F1dG9zdXNwZW5kKCkgd2l0aG91dCBhDQo+Y29ycmVzcG9uZGluZyBnZXQuIFRoaXMgdW5i
+YWxhbmNlZCBwdXQgZHJvcHMgdGhlIHNoYXJlZCB1c2FnZSBjb3VudCwgd2hpY2gNCj5zZWVtcyB0
+byBiZSB0aGUgYWN0dWFsIHJvb3QgY2F1c2Ugb2YgdGhlIHVuZGVyZmxvdyB3YXJuaW5nIG1lbnRp
+b25lZCBoZXJlLg0KPg0KPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcmVndWxhdG9yL2ZwOTkzMS5j
+IGIvZHJpdmVycy9yZWd1bGF0b3IvZnA5OTMxLmMNCj4+IGluZGV4IDVlZWUyMTAzNGY2YjcuLjNm
+ZmJhNmZiNzVmZjIgMTAwNjQ0DQo+PiAtLS0gYS9kcml2ZXJzL3JlZ3VsYXRvci9mcDk5MzEuYw0K
+Pj4gKysrIGIvZHJpdmVycy9yZWd1bGF0b3IvZnA5OTMxLmMNCj4+IEBAIC0yNDMsOCArMjQzLDcg
+QEAgc3RhdGljIGludCBmcDk5MzFfdjNwM19lbmFibGUoc3RydWN0IHJlZ3VsYXRvcl9kZXYNCj4q
+cmRldikNCj4+ICAgICAgICAgICAgICAgcmV0dXJuIHJldDsNCj4+DQo+PiAgICAgICByZXQgPSBy
+ZWd1bGF0b3JfZW5hYmxlX3JlZ21hcChyZGV2KTsNCj4+IC0gICAgIGlmIChyZXQgPCAwKQ0KPj4g
+LSAgICAgICAgICAgICBwbV9ydW50aW1lX3B1dF9hdXRvc3VzcGVuZChkYXRhLT5kZXYpOw0KPj4g
+KyAgICAgcG1fcnVudGltZV9wdXRfYXV0b3N1c3BlbmQoZGF0YS0+ZGV2KTsNCj4NCj5bU2V2ZXJp
+dHk6IEhpZ2hdDQo+RG9lcyBkcm9wcGluZyB0aGUgcnVudGltZSBQTSByZWZlcmVuY2UgaW1tZWRp
+YXRlbHkgYWZ0ZXIgZW5hYmxpbmcgdGhlDQo+cmVndWxhdG9yIGFsbG93IHRoZSBkZXZpY2UgdG8g
+YXV0by1zdXNwZW5kIHdoaWxlIHRoZSByZWd1bGF0b3IgaXMgbG9naWNhbGx5IHN0aWxsDQo+YWN0
+aXZlPw0KPg0KPklmIHRoZSB1c2FnZSBjb3VudCByZWFjaGVzIDAsIHRoZSBkZXZpY2Ugd2lsbCBz
+dXNwZW5kLiBUaGUgYXV0by1zdXNwZW5kDQo+dHJpZ2dlcnMgZnA5OTMxX3J1bnRpbWVfc3VzcGVu
+ZCgpLCB3aGljaCBjYWxscyByZWd1bGF0b3JfZGlzYWJsZShkYXRhLQ0KPj52aW5fcmVnKS4gVGhp
+cyB3b3VsZCBjdXQgcGh5c2ljYWwgcG93ZXIgdG8gdGhlIElDLCBjYXVzaW5nIHNpbGVudCBwb3dl
+ciBmYWlsdXJlDQo+Zm9yIGFueSBjb25zdW1lcnMgdXNpbmcgdGhlIHYzcDMgcmVndWxhdG9yLg0K
+Pg0KPj4NCj4+ICAgICAgIHJldHVybiByZXQ7DQo+PiAgfQ0KPj4gQEAgLTI1NCw2ICsyNTMsMTAg
+QEAgc3RhdGljIGludCBmcDk5MzFfdjNwM19kaXNhYmxlKHN0cnVjdCByZWd1bGF0b3JfZGV2DQo+
+KnJkZXYpDQo+PiAgICAgICBzdHJ1Y3QgZnA5OTMxX2RhdGEgKmRhdGEgPSByZGV2X2dldF9kcnZk
+YXRhKHJkZXYpOw0KPj4gICAgICAgaW50IHJldDsNCj4+DQo+PiArICAgICByZXQgPSBwbV9ydW50
+aW1lX3Jlc3VtZV9hbmRfZ2V0KGRhdGEtPmRldik7DQo+DQo+W1NldmVyaXR5OiBIaWdoXQ0KPlRo
+aXMgaXMgYSBwcmUtZXhpc3RpbmcgaXNzdWUsIGJ1dCBkb2VzIGNhbGxpbmcgcG1fcnVudGltZV9y
+ZXN1bWVfYW5kX2dldCgpDQo+ZnJvbSB3aXRoaW4gYSByZWd1bGF0b3IgY2FsbGJhY2sgdHJpZ2dl
+ciBhIFdXIG11dGV4IG5lc3RpbmcgZGVhZGxvY2s/DQo+DQo+VGhlIHJlZ3VsYXRvciBmcmFtZXdv
+cmsgaG9sZHMgdGhlIHYzcDMgcmVndWxhdG9yJ3MgV1cgbXV0ZXggd2hlbiBjYWxsaW5nDQo+dGhp
+cyBkaXNhYmxlIGNhbGxiYWNrLiBUaGUgc3luY2hyb25vdXMgcmVzdW1lIHRyaWdnZXJzDQo+ZnA5
+OTMxX3J1bnRpbWVfcmVzdW1lKCksIHdoaWNoIGV4ZWN1dGVzOg0KPg0KPmZwOTkzMV9ydW50aW1l
+X3Jlc3VtZSgpDQo+ICAgIHJlZ3VsYXRvcl9lbmFibGUoZGF0YS0+dmluX3JlZyk7DQo+DQo+VGhp
+cyBhdHRlbXB0cyB0byBhY3F1aXJlIHRoZSB2aW4gcmVndWxhdG9yJ3MgV1cgbXV0ZXggdXNpbmcg
+YSBuZXcgY29udGV4dA0KPndoaWxlIGFscmVhZHkgaG9sZGluZyBhbm90aGVyIFdXIG11dGV4IG9m
+IHRoZSBzYW1lIGNsYXNzDQo+KHJlZ3VsYXRvcl93d19jbGFzcykuDQo+DQo+PiArICAgICBpZiAo
+cmV0IDwgMCkNCj4+ICsgICAgICAgICAgICAgcmV0dXJuIHJldDsNCj4+ICsNCj4+ICAgICAgIHJl
+dCA9IHJlZ3VsYXRvcl9kaXNhYmxlX3JlZ21hcChyZGV2KTsNCj4+ICAgICAgIHBtX3J1bnRpbWVf
+cHV0X2F1dG9zdXNwZW5kKGRhdGEtPmRldik7DQo+Pg0KPg0KPi0tDQo+U2FzaGlrbyBBSSByZXZp
+ZXcgwrcgaHR0cHM6Ly9zYXNoaWtvLmRldi8jL3BhdGNoc2V0LzIwMjYwNzIxMDk1OTU5LjE4NTU0
+MzYtDQo+MS1yb2JieS5jYWlAb3NzLm54cC5jb20/cGFydD0yDQo=
