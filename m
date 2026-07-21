@@ -1,140 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA4A46D099;
-	Tue, 21 Jul 2026 16:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAEE46D2DB
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:27:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784650565; cv=none; b=j2iDqDwsg+UFLtwnobI7p/bftKpJm7cNl4dmsaBnUzTEmYt8EM1Eyd7ytkV2jKAR2mjXvXIG3MEr1XFM40B2v8I0bhsFOvF5A/shUQKV3T1OfNp2HaesgZyhFMOQro23HNusp+f3koRS2a4lw7Ja1pirc750OO/AZ+jUr+3I+xo=
+	t=1784651248; cv=none; b=VbItvELibeKWgeoBquypRuO7MRhteWQ94xe2uZYkqlv0SHUaxiwWKVDuTjitwodXTeg3GnV3dL9bdzewLIao8c2GCy8fT2vCoV/gmjAFMIwbZYjPJbrUKm8prpoIbgq3GZEpmDLmtlUwEzqZPgQadRdIcWVx+ZueFDSSUByC13c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784650565; c=relaxed/simple;
-	bh=NF7m7sXWK3jL3IZA54OTtlWh2pEqFednJNV0MuYAN7Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ivuU7tJNsViXmOgSX6fx8Uvft3eM8oAIxtmvxhu9wtjPZwIU6/7NlEK195vMSR74UzKBWdwDmuJxIRrFZYrGklwxQEAu8QXDMKCTdwp2IUxdJeEu7gz44I/yiM6JxVcWho4JvzR8XFidAJUH3addWNBDAUOaza9u3EZWuGUDOUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZizH9xc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784651248; c=relaxed/simple;
+	bh=OriPdBhOp4I8NSaUQ1ilqiW02cNYD+mMRedsfTxi01Q=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=EMpHBIHGNGgnXEbhClZo57HZRUSqbBau7brsXxWXmVC1qzVAg34wIJC9f1KxZbTmC5/eYmnBzd6sWsF2WLGLetk4S1C2l1SPj0BhP/jRGFJ7L5ZnSQzfz5cVW0xGyeGQotGoZWaMNyXVFU/Ap5yqXHPwqGrxdIsFlfWGWR/OrMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Iow0JJya; arc=none smtp.client-ip=209.85.214.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZizH9xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E0B1F00A3A;
-	Tue, 21 Jul 2026 16:16:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784650563;
-	bh=RyNxHg81ZggZzP40oRqyhJVqp6HHsIYQX+/3Qe7jgCg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FZizH9xcKfn6V6Iul8ouhjkepfiIO8F/nazHbFOwG2B5NB7iMN5Eir/+NEZaPlb5F
-	 FugNAgK1xgpL/Nesmu4Bvkny5BFM4aajKg50R9S5RzUubezGca50MbReDfaayOzQRG
-	 OD2gN5w93FiTys5tyKgTGcDAZKXsBKRYLOkrKPX6ssOzW+b6QUPo53ZwYlPAFKFjqf
-	 BctljMuUwJPszKKZK75p4kUp7+4Mp5mNpsMEbRKb7tGMNQWV8f7asno2KO4AaSmwBm
-	 KTHVLG50BUZnAFtSugqjlhl5Z7k0cwVftpuoxmwF4R8NqmnvJKIBfqAxWtxb5czBbm
-	 FaK1cxtGBzYxQ==
-Date: Tue, 21 Jul 2026 18:15:55 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, 
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dmaengine: dw-edma: Implement
- device_synchronize() callback
-Message-ID: <wnfdmxsof5opa3ozxlwd6e2kbmnziekkacbsjb3tpiueqcjrit@y6f6hh2e4l3y>
-References: <20260714-mhi-ep-flush-v2-0-b6a9db011e85@oss.qualcomm.com>
- <20260714-mhi-ep-flush-v2-1-b6a9db011e85@oss.qualcomm.com>
- <20260714122431.72B951F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Iow0JJya"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2caf4173b1cso165614715ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:27:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784651246; x=1785256046; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=rOtJSmkWSx9WAA3VgSUe2HFHil8cbgDYatSRRMP5Rgw=;
+        b=Iow0JJyagWa54LalfheD74NpTdGuVNj65Sa5Ub3mJ6sXKQ0/6sA4xz9N35R/HiUnuk
+         m8VuW0+zhnBqyOCuy8Im+iFdeYRAkP4g4mSQqGDbnKoYRqJSIOGbbcoioKiD6NsOItEr
+         hgBJCaNdXzWC4qEY7KGPTf0x5gvH256bgA4vO4zFZSNAQkl2tfJT6Jzv8ZC/YNfVnYAF
+         j4aII+LUYd08eq7AsfCUwfoJFayR7xzZ4p0L9vjaIBwFfGgWwDK7D3KZnqjWNeIlCjwM
+         8A7kgTmbhfQ9J05ZeuTFtKStSj2bULA+aN56MApjq9DLX5+vJ3MZx/S3WtIAl/Mo4nOp
+         iErg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784651246; x=1785256046;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rOtJSmkWSx9WAA3VgSUe2HFHil8cbgDYatSRRMP5Rgw=;
+        b=SPysxEqKdcUt6Vc+bDJLhGpYWI2Dw7gbAaEiGqPZfNFGfuqKzMDi/73XVWeY5EeS0r
+         wblVTYzY/8pSGxal8JYOVaHGd5b/3IOLJQz8dnrCNQL/UxXPMDUMkGGRLkD+XnOEfS7I
+         qHG8N7HcQEi5Cw41Gb9Z1iz05zP3hdb8uAMDgJkrIqYzjru796fn29cSbO1HS3GCurqQ
+         WrNUsiPTANMHuZd8YmxXWRbR1L/AtMeUqI5JXA1orOTfiWQlX9KUF9olEIrAtkXM23ME
+         fPQj2Xedm84yNiic9QSF06p7QJrdMMgZwZ+q9Fz5l5zgY63akwecxTX/eqw3O1QvxMID
+         HcuA==
+X-Gm-Message-State: AOJu0Yy104MugIRhEenjIbXZ6qegCYFwXaKHhLa96mRyPGlaMRRo7pDT
+	ZFz+ocMikmRy8FyfptDCAKQmRN3JFqvNVpoe+S8OHKpVvRfpvXyQHRzPMI4s89DKuUZKM1Bzs3C
+	/QxcUEg==
+X-Received: from pgmu30.prod.google.com ([2002:a63:235e:0:b0:c99:a30a:7619])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:391:b0:3c3:890f:6d7e
+ with SMTP id adf61e73a8af0-3c3ad8ecd35mr23113643637.47.1784651246131; Tue, 21
+ Jul 2026 09:27:26 -0700 (PDT)
+Date: Tue, 21 Jul 2026 09:27:25 -0700
+In-Reply-To: <CABgObfbL3t21yVeSwiLSjjOUER+rTYDPHYAH9YU4TWGRjx6XHg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260714122431.72B951F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260721102827.313208-1-pbonzini@redhat.com> <20260721104819.B5A101F00A3E@smtp.kernel.org>
+ <al-PSX0sOPdYdvIg@google.com> <CABgObfbL3t21yVeSwiLSjjOUER+rTYDPHYAH9YU4TWGRjx6XHg@mail.gmail.com>
+Message-ID: <al-d7WPocYgEtgFU@google.com>
+Subject: Re: [PATCH] KVM: nVMX: Hide shadow VMCS right after VMCLEAR
+From: Sean Christopherson <seanjc@google.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 14, 2026 at 12:24:31PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Misuse of the `read_poll_timeout` macro causes an unlocked read-modify-write data race on `chan->status`, which can overwrite the interrupt handler's state completion and lead to an infinite loop.
-> 
-> Pre-existing issues:
-> - [High] The `dw_edma_device_terminate_all()` function performs read and write access to the state machine variables `chan->status` and `chan->request` without acquiring the required `chan->vc.lock` spinlock.
-> --
-> 
-> --- Patch [1]: [PATCH v2 1/3] dmaengine: dw-edma: Implement device_synchronize() callback ---
-> commit dad772ddd69c60671b5bb40802d893826d2fa9c5
-> Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> dmaengine: dw-edma: Implement device_synchronize() callback
-> 
-> This commit implements the device_synchronize() callback for the dw-edma
-> driver. It uses read_poll_timeout() to wait for all in-flight DMA operations
-> to complete by polling the channel status. Once complete, it drains the
-> tasklet using vchan_synchronize().
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index c2feb3adc79fa..df0d1a946ed06 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> [ ... ]
-> > @@ -331,6 +332,20 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
-> >  	return err;
-> >  }
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does
-> dw_edma_device_terminate_all() perform read and write accesses to state
-> machine variables without acquiring the required chan->vc.lock spinlock?
-> 
-> Looking at dw_edma_device_terminate_all(), it modifies chan->status and
-> chan->request locklessly:
-> 
->     } else if (chan->request > EDMA_REQ_PAUSE) {
->         err = -EPERM;
->     } else {
->         chan->request = EDMA_REQ_STOP;
->     }
-> 
-> Since the DMA engine API allows asynchronous termination, could this race with
-> dw_edma_done_interrupt() or dw_edma_device_issue_pending(), both of which hold
-> the spinlock while modifying the same fields? If the interrupt handler reads
-> chan->request right before terminate_all writes it, it might mistakenly start
-> the next pending transfer instead of stopping it.
-> 
-> >  
-> > +static void dw_edma_device_synchronize(struct dma_chan *dchan)
-> > +{
-> > +	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-> > +
-> > +	/*
-> > +	 * Make sure all the in-flight DMA operations are completed before
-> > +	 * draining the tasklet using vchan_synchronize().
-> > +	 */
-> > +	read_poll_timeout(READ_ONCE, chan->status, chan->status != EDMA_ST_BUSY,
-> > +			  10, 0, false, chan->status);
-> 
-> [Severity: High]
-> Could this read_poll_timeout() macro usage introduce a regression by causing
-> an unlocked read-modify-write data race on chan->status?
-> 
-> The read_poll_timeout() macro expands to (val) = op(args). By passing
-> chan->status as the val parameter, it expands to:
-> 
->     (chan->status) = READ_ONCE(chan->status)
-> 
-> This loop executes without the chan->vc.lock spinlock. If the hardware
-> interrupt handler dw_edma_done_interrupt() fires exactly after READ_ONCE()
-> reads EDMA_ST_BUSY but before the assignment back to chan->status, it will
-> cleanly set chan->status = EDMA_ST_IDLE. 
-> 
-> Would the polling thread then overwrite the newly set EDMA_ST_IDLE state with
-> its stale EDMA_ST_BUSY value? Because the timeout parameter is 0, if this
-> corrupted EDMA_ST_BUSY state is written back, no further interrupts will arrive
-> to clear it, which could result in a permanent hang.
-> 
+On Tue, Jul 21, 2026, Paolo Bonzini wrote:
+> On Tue, Jul 21, 2026 at 5:25=E2=80=AFPM Sean Christopherson <seanjc@googl=
+e.com> wrote:
+> > FWIW, I had a pretty strong preference for Paolo's off-list suggestion =
+of
+> > explicitly disabling preemption, even before seeing Sashiko's response.=
+  Every
+> > other path the VMCLEARs the shadow VMCS runs with preemption disabled, =
+IMO it's
+> > more intuitive to follow suit here.  And even with the comment, it took=
+ a good
+> > 5-10 minutes of staring to understand what exactly is going wrong, thou=
+gh that's
+> > probably a me problem.
+>=20
+> Well, it would be at least an us problem---but I thought I was in the
+> minority... The only (IMO bad) reason to leave preemption enabled is
+> to obscure the change, but that's a lost battle anyway these days so
+> why bother.
+>=20
+> That said, I am surprised that VMCLEAR/VMREAD/VMWRITE/VMPTRLD do not
+> have a memory clobber, since they access internal processor registers
+> and the compiler may reorder them without the clobber. Fixing that
+> would also work around Sashiko's complaint, so I guess we should do it
+> anyway?=20
 
-This is a valid concern. This should be fixed by using a local variable for
-holding the chan->status.
+Ya, good point.  We should probably hardcode that into vmx_asm1() and vmx_a=
+sm2()?
+INVVPID and INVEPT also need the "memory" clobber, no?
 
-- Mani
+> And disabling preemption can be done separately on top of this change, wh=
+ich
+> is already on its way to Linus.
 
--- 
-மணிவண்ணன் சதாசிவம்
++1
