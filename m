@@ -1,264 +1,240 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB78A31F99D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784652560; cv=fail; b=gUWAXea92rSYI7vG9xNNQwoRA/0asf2JKxnTRo9+zrpTN4Rqfxt+WeAz3A46yRchnNDBNNQk9YVu8mDHNk1AJud6Q9l5SVwasLbNu0qOTi6L1oQZR4y9+LUbRFtYL/fDeyA8u5idT0XRW7QDeQeHAYyN6rX26l6/uVRYaBrd87Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784652560; c=relaxed/simple;
-	bh=a4BaM691Ilfn45Yory/ivJ4em44KVgMznPmBYZ6SZnk=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rksP2yR/NK6TYoZcylVJJ1q2ZTSYkLi/z94279qqKnDhvN49ateMwvAXz3bwHSuoBl3BSaBpDTRzJ3UFaDWKFgmINZ2zKs0Rpp9gOcBphkLfEbvV88h9QQHubz7JkHChfGoieuQ4+NnHoAYKxDaOyK9GvD32EjCVBLpkqQETrLc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Fpxkx3Fs; arc=fail smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6B9370AFB
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:49:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784652578; cv=none; b=rLF+FW9qAPMz0OV9UwDF5JIUaHXIUqcLyLDcnbeslZtYfbovhvpPXuE2i4giJMgLnNG3gAWIAFxSliBNvd3+BeOKdDKGX56UO0+ssHLmHTFPcqeo2FcI2Y4G3F5BdzAjB8gD4opKEMEhBm+0lSWiJVxuYRVPUJIvmmJgDeXHlq8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784652578; c=relaxed/simple;
+	bh=zNHnVTypKgfgvOficguWFVlpkvG6iHharcWR4PswgHQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RUEwgsKSzE5w0Hr5k4bV66zn9WyglWtFMkntY7ssSmR5ik+0vVmuwMR1C377BNDs28kSIEvufMCXAidcEFpHFO0n12fepb9lXlvA/HE0zY2iV4jnVJ897Ex3+hMgfo9Evqtnqe4RZyCpBCwy28UW/6kWUSEgfXIfU0xoCbp7y08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IRWq4jR5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ikpe0+mM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Fpxkx3Fs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784652559; x=1816188559;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=a4BaM691Ilfn45Yory/ivJ4em44KVgMznPmBYZ6SZnk=;
-  b=Fpxkx3FsPrfvzQyJ16QBhqYrni7CM1K0jDl8zN+avmOeJtgFxsDeLyem
-   xCIMUNE9EMz5nDKNKmbcmXlUsqmxlhg8eMHYcgLyerud20FWOiK8Rz7O4
-   1StJP0l8wmdPfpc2VA+TlO9R1NPIsCk9Di6OFh3SP3HZszi4IsAmMwEut
-   J1tW9k+yhc3znwPnXPjy82brLBZGDYtC047PScBkGBzSNLgdjvJG7uZ/V
-   CWHPCdhVcIJiAcspvdamzyBFSBmYB1bwlCjbgfZQiQvyGTlDhNWmSktCR
-   wNu2LlfvxfVRcIQrUXfzNODO5flm4FzeXo5nhUAVL2iyilLHoF0002kfc
-   A==;
-X-CSE-ConnectionGUID: dCEtOLA2Re6Jb+jiOQqL4A==
-X-CSE-MsgGUID: lqEjtEmFSe2NR1vE4PQFXw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11853"; a="85206098"
-X-IronPort-AV: E=Sophos;i="6.25,177,1779174000"; 
-   d="scan'208";a="85206098"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2026 09:49:19 -0700
-X-CSE-ConnectionGUID: HKA4HJpZSkOKt0aNS2/UVg==
-X-CSE-MsgGUID: 8eWv6f/JSsys++fryMZUag==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,177,1779174000"; 
-   d="scan'208";a="262099142"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2026 09:49:19 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 21 Jul 2026 09:49:17 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Tue, 21 Jul 2026 09:49:17 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.45) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 21 Jul 2026 09:49:17 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=apKHUZj5AznRCg9KzrIW50RdUoeTr2m0xcQPfsYTqSzskEmV9veSn8jqKHBUOZ3ONmRDGhWuJMA8PXtum1FdoBlVYeoRkbLV9sXFfCVZyjAC0GiNDFWwzci5yRia66YmmKOmd5hie11JDSq+r1PljGif0W9IurndUP5P+xbpoLUzh6RMu5Cy0anoZEpK+adrvIwTVi/wv6xrP2MvdtvGoWhcVGnaFHBvebme3s5df27o7R+02Kah6bdoq3/5p7uTezWYIqXaI9GMJdRlaKXgjUYXFufl0AvLnGLAzvRHw0KhkuPhUvFZklucC33eWyl1+uzErO4bX0J7PbNHl2cY8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KJevmbT21+zgkFWgGF849aTo9Ir3a5hlzMDSphHHcXA=;
- b=YLgZoRZ2zkmkHMFnd65LFFcW0yLggk7x1K5SCqq9Sh3i530P5hsoDI+yQ03IWpl+m9WWad22KConzbrubA4IBWroZy6IcWtogb+5xdO0yBsDkgmbrZO8YSzl2DKK92WABenT+YwQ0TRCUm3EgsoC2k/mr9w31WPra6H0S8PszA2WxiZ/ZPch3V4W6LT7PrN5IojMBgzameqJvtmkUVJyEu+Jn8r9VSflL569qkuOCYwXXioI3iYCeojcVI0m2nUyfHqiGk7+Gg+C1MeL+Hipnh3Iux5418aPMYsWaMhNLavDJTjaU4+eALsgOKhl5la7vH7l0yXMplKXiuxfAYip7w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by CH3PR11MB7762.namprd11.prod.outlook.com (2603:10b6:610:151::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Tue, 21 Jul
- 2026 16:49:12 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891%4]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
- 16:49:12 +0000
-Date: Tue, 21 Jul 2026 09:49:08 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH] cxl/region: Fix use-after-free in find_pos_and_ways()
- error path
-Message-ID: <al-jBGiYfN5o7NZ_@aschofie-mobl2.lan>
-References: <20260711180755.1779002-1-alison.schofield@intel.com>
- <20260711181949.A4B1D1F000E9@smtp.kernel.org>
- <alKe-MPcCLbLgFQt@aschofie-mobl2.lan>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <alKe-MPcCLbLgFQt@aschofie-mobl2.lan>
-X-ClientProxiedBy: SJ0PR13CA0171.namprd13.prod.outlook.com
- (2603:10b6:a03:2c7::26) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IRWq4jR5";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ikpe0+mM"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66LDfqfu1687307
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:49:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0KLaMb5Nn+c0pJrhabC4RdLZ94OtddIVgvprkhAXtwA=; b=IRWq4jR5tAK1Lj+X
+	tgfzvYcl1EeXV6L3DdGAmq1XSvUOyvGr2C+UwmCgfQf3jLKW7G1NWIy/V+ICxU1H
+	TdIcasyApCI3jcORv0gj4gvZno83PyURstN5cDrwRXCeusSYfgNPJBXROfKay5ZE
+	J87A4J1ctzO+Y4IEaYG0PYveP1CARGoUyDn9xQXZ6XIWf7QVBn2IeacQ1r1OapS2
+	ysaMnzLCynGXNDtvtzZ2J1YAQtVHMjvi9bWrqZIBne+TwLWlHawGx7qPDijaj8ii
+	sdjxepTiuFJXbOxaUM+/3WPtUTUgwpp1Ltz2SrCmyebh1vtAUZVRA17tnpieCvoN
+	azHKAg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj9c4135e-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:49:34 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cc77a6943eso197355955ad.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784652574; x=1785257374; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0KLaMb5Nn+c0pJrhabC4RdLZ94OtddIVgvprkhAXtwA=;
+        b=ikpe0+mMw/DwMoH8dq7c0B5iN5NCBSj8KH+ykLfrqnKhNNqRWMx/0j47w99WLySfyz
+         oLq6g9KFgMUyxLAwP1c41sQSaCArk6+IKQ9NaXYALFnrJn6zJelo5tYrjw4amGRueaP6
+         l9UU7d3Sl0vy6sazIid6gfLdncoh/j9wmqmI4GKBV4c8aljhtTVJ4hkjK+kxCKTF4CD0
+         4hVjJ++Q1P0wYr3IN6r8CZ2QdGEQfOCNrMzamN/oXhel01Q8waD/n1Gjtksrbwmv7IBm
+         iMXM/qPfAVvr0UnFGxDzWkOR7XTIX7S7alu45Otd3ObnS/KszllolmAKIjsukapgP75W
+         RTNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784652574; x=1785257374;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0KLaMb5Nn+c0pJrhabC4RdLZ94OtddIVgvprkhAXtwA=;
+        b=pJ7cimG2mJAkQbKNr8vzTBVZCO6deaKxKSvAKfh+0KxyIttRstG7wr9OeaHH0Yu8DL
+         s8uM/MKN50K+3+eysn2nKnZiW/p/dO+2uK+wHU7aVfIkGL15d+hQHYJTLrB5f+bsumb/
+         sujS0LJ7vMGknsbGEYSo53+MdctnYvrgoCb+uErJkfNzlgtJxIWuIYMDMzBWTS/QgxtI
+         3O5Gd9TjgZNYgp8UhKO+zGlEMkModtnLJVCK2+ytI7p90LqTIVuSofGClt+5dw3PF88M
+         sB+8ko8pWJ16X1weTh5/Ff5V5OlA1bWK72/gwGEqAiYBqWy8CCrTngrk0LcYyI5gLK4w
+         lXEw==
+X-Gm-Message-State: AOJu0Yycx7NRZNsnDhLiSqn3u4JDk4Z55wcY9z18r/+tkdhJ4l6z/vS8
+	nIdumDrH+u97jQ6ToSR8HeE/s87F9mZU5a66U/8f/GFkGv0xwl3nWa8n05ow2Fook7Lefnybbzm
+	KqVRVThFmCt+qpMmRbXMt5WBYOFDQKjjgGjrsCFeNQ3FPUJ5WaIM/Ko5/WQXLdrBRwtDwsh2uQq
+	rgdRA=
+X-Gm-Gg: AR+sD11bDLCUMKO88Y9R3ABf4kTiX4lf2IRt2dykWkLtdh4XQ89BsflCiJlDL0d7UDE
+	f9MVfC4Kh6uIHnlHdWKVjrmsuPreTYw8Ap0Gf4pJ+597100M9IHtmFQBbIkfhks5zEMFFvOa771
+	D1I2xaNr62dCxMiXunwrUWVKRRsPMdhd75NfKJLezJhH+9UIeVxIBf3Dcfs4xpk7tVE5lJ6e+y4
+	I4+rCCBkP5EWIoDAEyUMkxvT3BE6NI2z5g2aUUy/cuO5hPmK38zqQ5BZjwX1BGokNIok9a0ozac
+	35BNC4Y2OEcx3cfK8YwYBI/RUyguD0wih7hUpuelO72o0RvniFFuw5wfOsX5RvFvYdLamw0oKQR
+	Tx31GO4UMfefcN2sUzOaXMXfNqy2j2pvU
+X-Received: by 2002:a17:902:fc8f:b0:2cf:4544:104b with SMTP id d9443c01a7336-2cf45441560mr173412855ad.5.1784652573777;
+        Tue, 21 Jul 2026 09:49:33 -0700 (PDT)
+X-Received: by 2002:a17:902:fc8f:b0:2cf:4544:104b with SMTP id d9443c01a7336-2cf45441560mr173412665ad.5.1784652573307;
+        Tue, 21 Jul 2026 09:49:33 -0700 (PDT)
+Received: from [10.206.105.200] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147dc1a67esm684593eec.2.2026.07.21.09.49.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 09:49:32 -0700 (PDT)
+Message-ID: <c9f8cb9c-0b6a-d866-81ae-02a0e14bd9a3@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 22:19:27 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|CH3PR11MB7762:EE_
-X-MS-Office365-Filtering-Correlation-Id: d2889c79-3e54-4d39-72bd-08dee747fda2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|10067099003|11063799006|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: AKe/kELzYcgcmqP8M0EEqM2e1FwID5hHAGqgE1QbU5A/i9iY9IckXWO69AdzX6BXQdUPer8gDoTqXzfnUmgpZGxzdLa7cZ03vciN46a97ePdQWj/5VB9bnJ5BsbFmaR7+rzoGja1e1s6PxVcJZ9zq0vua4UFQgT1TbtxMmMzPkrQNsfXDq5MdTp910q23NGARTcCe5QyNDwjn5tAWY89Aw9dY2y3Lp3UIkb2HpBvFkz9e8qdn7EnJE8mnDR+8DjKiM5HgZ+nNNxdpVqwjisdQi5p7FKWRM3vl7WwjCuW3ekOIsSKfcTEleQZtv5BDI/YSOMSuFM/UltMa3CMNAJpsJcVe0A46QLTn5jxbWz23TPJRxeqDxqKlRdOwJjhhTfbwmT8TUoTYG7WlMuqhtX6eg9+8SjksNeFxQr5gF8Bg5gtnJIwF+69zCJWZVV3Xkg/gulZy3NXGEERyFlxPtTA/Dd8TLZPBEP/lonnwdMs3Yn+tiqbnztWtXC3aE84L9bZa9jcU1Bm2SiKrDKSk3K9ufEpyMI1e5dytI/0r7Zo6N9SFFKo0tZh0HVF2Uk6zaK+WIn9Vug4tAcnW3ERqVM3Gt1eBh/4u8nNoKVxBuRl0zc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(10067099003)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?0qQoW6bLKfxsztuHVD6trspHsga0ARVxoSdtSJLSoDhSUX4IxPLX5hux4W?=
- =?iso-8859-1?Q?N86iPZIuY/PBkHHGsrLMQmleRtL9J3zcDC4B1tm0mhzMOor8nV3KaZG50X?=
- =?iso-8859-1?Q?FSePRbLvhVgepZVp6k+1iBAkIrPJsBORlyVhbXzTXKo8HiUNd9VPVPwS0h?=
- =?iso-8859-1?Q?BWPZVU+wVyTUFgoMUG0Dm6mRxTSNksirCc20NF7HVhAx77FncH30VbSeY+?=
- =?iso-8859-1?Q?w0MB2BCy++26d0MMaQr0gOee78NaCEULxwD0sXHFhC4erPL9I0NE6IUWHA?=
- =?iso-8859-1?Q?CebpiVU4qXEIzBiwZmpI6iw5a7poTDI3oMBvRNqp/4mOlSINQrqXzjzcQ5?=
- =?iso-8859-1?Q?wZGD6m9iLLGC3dGGES9mmFon4Y+CbO0qp1nVxPMmtWcHt0z1kOfl3piM0x?=
- =?iso-8859-1?Q?EOTmI+pE1cJkUhNZFc08CuFZ/vXlrga5bGvx0Zof2AKL3AYoNWSAHg0lMW?=
- =?iso-8859-1?Q?xro4UrKPGO2ruwUL7w3HJhiCv5f8XvtMrkdkucEeeu1nOui9t2DxYcYXkN?=
- =?iso-8859-1?Q?+PEYh928pc5I1Skrd28OIXgXbul/IOGwqb6u0Dn1kNWdXJKmAlgYB9l90H?=
- =?iso-8859-1?Q?q3jLwo6LfN92TTAscypKuiL7crB1wrtXKhvS788eWGNFxbedqZlgU3CEGW?=
- =?iso-8859-1?Q?5Gv2i1X5zJq604tpUUGKprC+D3qoTR44x8insrGNKGZnkYcR1Tn4SVeB/r?=
- =?iso-8859-1?Q?CFf/Hkm1jLGAPglxRpOxAkCNYyxUQD00zxWBgcP3XvvICNzIKZ9vzeoFjf?=
- =?iso-8859-1?Q?oAl5YdrtkYihu4ZaxTDXybfGNX3D+xytp2hhInzwLCYdWIOsoCXtNAW2ua?=
- =?iso-8859-1?Q?8lfLEGuveJZe/sFLZQYmv1wpmqUBCrdmDO93HUOs2IZRawENAwWEySZBEG?=
- =?iso-8859-1?Q?5YAeVG2QqopIlyG+r3PYYUHcJ6hNPBYqM8n5Q0tKssG7VnwLKmpZYW4rQx?=
- =?iso-8859-1?Q?iCy3MVUvoCVdjgbvxJ6oDp1G8yVlnTBPJMaLsxJaJwenQ81hXUxgFA01BX?=
- =?iso-8859-1?Q?LMFsi44Jlx1q8KD6jeYzwsmXdn3GqXKEBQCouKIsVveJWCN9TIxqJs+f01?=
- =?iso-8859-1?Q?STaVKieVoW26XFqdwvb+9klNTBzIZQ6g+8aJjYCg381pvPfxXLn/dursUs?=
- =?iso-8859-1?Q?qrc0ezUAOEuHhr/XrVNKpzHnJvUMH6DPHFQaRVYSXfn3dPig3Ukb6GMN1K?=
- =?iso-8859-1?Q?L7DH4fL+UP6WU/YVMm9goA8AHbmP5iEyX7k7dItd25VJMXSZHpfpCBggn+?=
- =?iso-8859-1?Q?1ABLxWmNNHhx4LKJy0Zh+0p9yZwUVRTzhB1pj95yEcBubivlC+jQcdyTWp?=
- =?iso-8859-1?Q?S5oclnuNaM3FTLZ05iQdbZii333W8HWjKTiPAKuJJqw5obcOQW9MqCeXO0?=
- =?iso-8859-1?Q?LR7dNjOVkCCjMu5se7b3dVtl72D3CdGEq7SkT++3b34pc6wJ1BA43pni8c?=
- =?iso-8859-1?Q?qZixcQhpGukrLqC1LDpusAu8cD3fXxnlBttQX4tTIV0Jq8J4dzMsrWpuO1?=
- =?iso-8859-1?Q?QY3SggbQGV2F5wvbuoo3hLx6DGwc2JE0Ow85Mx3DBDf2q2IqCUB4Sx5Laz?=
- =?iso-8859-1?Q?HjGkScPw9oWWplTJOgWSyDy/HbfLYxnOcO7xSV9kdJZHEPX+bMX4o15Tni?=
- =?iso-8859-1?Q?1s1Fq9w5vYgMhAGauEy1s4h6WB6L9LgFg4ZEv0VKWozkDynAPxErJhAO8A?=
- =?iso-8859-1?Q?1mPXQEB+i3kYow+7Mv9TX0S/G52RPkn8AuEMLVQyOVGuSNFahv1Q9eRZkB?=
- =?iso-8859-1?Q?KRp0snmcCrfkaK0NDbJcy8ddISSKvxOwa5NwJ6SkeVsSRn9QTVMNyH39ZX?=
- =?iso-8859-1?Q?yFvEcFuiRmsGRjhSI4h2yu9I3bjzCUU=3D?=
-X-Exchange-RoutingPolicyChecked: C9capIJWGzV9C0XSQmLhARpBXXX98hKJD3/md+C74XUWyvTMLpRSKCKtOBhB6L6HHQJ2mPWkHkndHNxO9LE04E46DJjazTIfovNYZWlubJJeO5FjDBh9etK7w2GjnGiMmH3xPFcl9rxfsVUOXfloNy45ISgeVSNQ14Ykv9bhu4F/zRarZTj2k00h1f0zxoYaoim5Lc8EfOaPqGsVworAixkz4pOBeaXq419uoDRS0dFNKB5MIofBnd2E3FV/p1+YWe6ls4xwBci+9XoiK8mXVdEWCWOMuy5D4nvCqLrhSQj+KA00m9gEcQiOs99zSIXIICwBVo+xhaQHt6A6rm+rFA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2889c79-3e54-4d39-72bd-08dee747fda2
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 16:49:11.9153
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pNU9RIzfAkNWAfFNrdYmprw4trBmU8gRBeLTm4tB8yEJ5gphxmh4gYZiH5uD8rXWuDYQDVVGphY/y4239kh6H1LJaIC/JbHh9A3qeZ/Ozys=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB7762
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur
+ video codec
+Content-Language: en-US
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+        devicetree@vger.kernel.org
+References: <20260715-glymur-v9-0-8cf2cbe12a07@oss.qualcomm.com>
+ <20260715-glymur-v9-1-8cf2cbe12a07@oss.qualcomm.com>
+ <20260715142224.5FA721F00A3A@smtp.kernel.org>
+ <b179ac7a-af91-da67-3232-e9e41203ade0@oss.qualcomm.com>
+ <20260716165434.GA290489-robh@kernel.org>
+ <7bec94ea-a5b9-be03-0e40-5de8262d2197@oss.qualcomm.com>
+ <CAL_JsqJGc1hJtrxWA5OJh9=R-S5mgDsAZfS9vze4-REwANpikw@mail.gmail.com>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <CAL_JsqJGc1hJtrxWA5OJh9=R-S5mgDsAZfS9vze4-REwANpikw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=I4JVgtgg c=1 sm=1 tr=0 ts=6a5fa31e cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=7CQSdrXTAAAA:8 a=yb9WwcpXJQ139jM9Wo8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+ a=a-qgeE7W1pNrGK8U0ZQC:22
+X-Proofpoint-ORIG-GUID: FmyZRUfVdcpYygRFi1jByagOFabDGc20
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDE3NyBTYWx0ZWRfX+OTOIM6++YDK
+ TidcCfcFuRbMIHLV1fsHuzzE7XEya/ZqyAdirKSDM3EOVOHPO194TaJL2z2PdOjC8Zg78ZVeRbZ
+ 2TxVIZ/cAbbSJ/XVIbH2yHxQ54AwbdZTTrIg5a2lCNcuqGA5fTySqMW+dS0IaPrT/NlvD6BbfNJ
+ Ag+4u+SRmKVHaMrUM+61CStK7fKr9Za9hsNRxAKEsUKFbycISHzyY/ZJyXEIggunjsUv3DQkDVL
+ 6iCKZBePJIz93j3ZeohSvPu/iJ0IvQbzISe7HvucQ7DkYtcWwIwA8GXxmGciD6vN5YLKjxNmSET
+ Tn1SFhxw1vr2fRHrutk3NzXSzMzGxP94DdFgb5OpUID0QLKIMUHDj64lVKx1l0qLX8ZL4BeDWDa
+ qupyXcFsICLdTYH7fmy4Vy8bzWVA6le77ZwfgFMKNNnaA0UDdVdM43y5j3jy6QlXN58PqlKkQZV
+ EMUUSdUTh4sk/D3B1Gg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDE3NyBTYWx0ZWRfXwFvCkKINflBw
+ J/js0kk4V1zu9k80xK/Lz+qXr31CPOCWYXrkwQRTU6E0ADqlr11D9NeeszcGRqLLUCWmowuJ/QU
+ OVED0/MQY2M9dYCx90Aw7ELK7LFOg9c=
+X-Proofpoint-GUID: FmyZRUfVdcpYygRFi1jByagOFabDGc20
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_03,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210177
 
-On Sat, Jul 11, 2026 at 12:52:24PM -0700, Alison Schofield wrote:
-> On Sat, Jul 11, 2026 at 06:19:49PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] Unchecked `interleave_ways` value from untrusted CXL device leads to heap out-of-bounds read and write on the `cxlsd->target[]` flexible array.
-> > - [High] Out-of-bounds read of stack variable `target_list` when initializing HDM switch decoder targets.
-> 
-> For both of these...
-> interleave_ways is not fully unchecked. It is decoded by eiw_to_ways(),
-> which rejects any encoding outside the legal set and caps the result at
-> 16, and init_hdm_decoder() checks that return value and bails on error.
-> So the value is always in [1, 16]
-> 
-> But - as noted here it could exceed HW target list or reported target
-> count. That would happen w a bad device, ie malfunctioning or malicious
-> since good hardware won't advertise an interleave that exceeds its own
-> target list.
-> 
-> Worth hardening, and I'll follow w the fixup.
 
-The fixup I 'promise' here is in the patchset under review
-titled Harden HDM decoder enumeration.
+On 7/21/2026 7:50 PM, Rob Herring wrote:
+> On Mon, Jul 20, 2026 at 8:00â€¯PM Vishnu Reddy
+> <busanna.reddy@oss.qualcomm.com> wrote:
+>>
+>> On 7/16/2026 10:24 PM, Rob Herring wrote:
+>>> On Thu, Jul 16, 2026 at 08:37:17AM +0530, Vishnu Reddy wrote:
+>>>> On 7/15/2026 7:52 PM, sashiko-bot@kernel.org wrote:
+>>>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>>> - [Low] Unnecessary `#address-cells` and `#size-cells` properties on a node without addressable children.
+>>>>> --
+>>>>>
+>>>>> --- Patch [1]: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur video codec ---
+>>>>> commit 8ca344fa9395fcf1d13bd1ea93de8bee21a5c176
+>>>>> Author: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+>>>>>
+>>>>> dt-bindings: media: qcom,glymur-iris: Add glymur video codec
+>>>>>
+>>>>> This commit adds the device tree binding for the Qualcomm Glymur Iris video
+>>>>> codec. It introduces a new dual-core architecture requiring additional
+>>>>> power domains and clocks, and updates the maxItems limits in the common
+>>>>> venus schema to accommodate these changes.
+>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
+>>>>>> new file mode 100644
+>>>>>> --- /dev/null
+>>>>>> +++ b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
+>>>>>> @@ -0,0 +1,255 @@
+>>>>> [ ... ]
+>>>>>> +  interconnect-names:
+>>>>>> +    items:
+>>>>>> +      - const: cpu-cfg
+>>>>>> +      - const: video-mem
+>>>>>> +
+>>>>>> +  '#address-cells':
+>>>>>> +    const: 2
+>>>>>> +
+>>>>>> +  '#size-cells':
+>>>>>> +    const: 2
+>>>>> [Severity: Low]
+>>>>> Are these properties necessary here? The schema strictly enforces const: 2
+>>>>> for #address-cells and #size-cells at the root node, but none of the child
+>>>>> nodes (non-pixel, pixel, firmware) define a reg property, and the parent
+>>>>> does not define a ranges property.
+>>>>>
+>>>>> Will this cause the DeviceTree compiler (dtc) to emit an
+>>>>> avoid_unnecessary_addr_size warning when compiling device trees using this
+>>>>> node?
+>>>>>
+>>>>>> +
+>>>>>> +  non-pixel:
+>>>>>> +    type: object
+>>>>> [ ... ]
+>>>>>> +        resets = <&gcc_video_axi0c_clk_ares>,
+>>>>>> +                 <&gcc_video_axi0_clk_ares>,
+>>>>>> +                 <&videocc_mvs0c_freerun_clk_ares>,
+>>>>>> +                 <&videocc_mvs0_freerun_clk_ares>,
+>>>>>> +                 <&gcc_video_axi1_clk_ares>,
+>>>>>> +                 <&videocc_mvs1_freerun_clk_ares>;
+>>>>>> +        reset-names = "core_bus",
+>>>>>> +                      "vcodec0_bus",
+>>>>>> +                      "core",
+>>>>>> +                      "vcodec0_core",
+>>>>>> +                      "vcodec1_bus",
+>>>>>> +                      "vcodec1_core";
+>>>>>> +
+>>>>>> +        #address-cells = <2>;
+>>>>>> +        #size-cells = <2>;
+>>>>> [Severity: Low]
+>>>>> Does the example need #address-cells and #size-cells? It demonstrates their
+>>>>> use without any child nodes containing reg properties, which directly causes a
+>>>>> dtc warning during dt_binding_check validation.
+>>>> Without #address-cells and #size-cells, getting the below kernel warning prints.
+>>>> [    6.953615] Missing '#address-cells' in /soc@0/video-codec@aa00000
+>>>> [    6.968288] WARNING: drivers/of/base.c:115 at of_bus_n_addr_cells+0xa4/0xf4
+>>>>
+>>>> [    7.440909] Missing '#size-cells' in /soc@0/video-codec@aa00000
+>>>> [    7.447044] WARNING: drivers/of/base.c:142 at of_bus_n_size_cells+0xa4/0xf8
+>>> Then the kernel is wrong.
+>> Hi Rob,
+>>
+>> Looking at the iris DT node from the link below:
+>> https://lore.kernel.org/all/20260715-glymur-v9-13-8cf2cbe12a07@oss.qualcomm.com/
+>>
+>> The iris is the parent node and non_pixel is the child node, which does not
+>> have a reg property, but does have a memory-region reference containing
+>> iommu-addresses. During of_translate_dma_region, #address-cells and
+>> #size-cells are required from the parent node for address translation.
+> iommu-addresses in the reserved memory node would use
+> #address-cells/#size-cells from that node.
 
-https://lore.kernel.org/linux-cxl/cover.1784595445.git.alison.schofield@intel.com/
+of_translate_dma_region() passes the device parent node to get the #address-cells
+and #size-cells. In this case, the device is non-pixel and parent node is iris.
 
-> 
-> 
-> > --
-> > 
-> > --- Patch [1]: [PATCH] cxl/region: Fix use-after-free in find_pos_and_ways() error path ---
-> > commit 1c57e04f0aa13be6ae927836e151c3bc815eda70
-> > Author: Alison Schofield <alison.schofield@intel.com>
-> > 
-> > cxl/region: Fix use-after-free in find_pos_and_ways() error path
-> > 
-> > This commit drops the reference to a switch decoder after logging an
-> > error message that includes the decoder's name. This prevents a potential
-> > use-after-free if it was the last reference.
-> > 
-> > > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> > > index 1e211542b6b64..c86dd9d55e939 100644
-> > > --- a/drivers/cxl/core/region.c
-> > > +++ b/drivers/cxl/core/region.c
-> > > @@ -1938,8 +1938,6 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but is there a risk of an out-of-bounds array
-> > access in this function and others when handling interleave_ways?
-> > 
-> > Just above this hunk, find_pos_and_ways() loops up to
-> > cxlsd->cxld.interleave_ways and accesses the cxlsd->target[] flexible array:
-> > 
-> > 	for (int i = 0; i < *ways; i++) {
-> > 		if (cxlsd->target[i] == port->parent_dport) {
-> > 
-> > The interleave_ways value originates from the HDM Decoder Control register in
-> > init_hdm_decoder():
-> > 
-> > drivers/cxl/core/hdm.c:init_hdm_decoder() {
-> > ...
-> > 	rc = eiw_to_ways(FIELD_GET(CXL_HDM_DECODER0_CTRL_IW_MASK, ctrl), &cxld->interleave_ways);
-> > ...
-> > }
-> > 
-> > If an untrusted CXL device provides a small target_count but a maliciously
-> > inflated interleave_ways, could this result in heap out-of-bounds reads here
-> > in find_pos_and_ways(), as well as out-of-bounds writes in
-> > decoder_populate_targets() and update_decoder_targets() when they iterate
-> > up to the inflated value?
-> > 
-> > >  			break;
-> > >  		}
-> > >  	}
-> > > -	put_device(dev);
-> > > -
-> > >  	if (rc)
-> > >  		dev_err(port->uport_dev,
-> > >  			"failed to find %s:%s in target list of %s\n",
-> > 
-> > [Severity: High]
-> > This is also a pre-existing issue, but does this same unchecked
-> > interleave_ways value cause a stack out-of-bounds read in
-> > init_hdm_decoder()?
-> > 
-> > drivers/cxl/core/hdm.c:init_hdm_decoder() {
-> > ...
-> > 	for (i = 0; i < cxld->interleave_ways; i++)
-> > 		cxld->target_map[i] = target_list.target_id[i];
-> > ...
-> > }
-> > 
-> > Since target_list.target_id is an 8-byte stack-allocated union, if
-> > interleave_ways is larger than 8 (e.g., 16), could this loop read past
-> > the end of the 8-byte array and leak adjacent stack memory into
-> > cxld->target_map?
-> > 
-> > > @@ -1947,6 +1945,8 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
-> > >  			dev_name(port->parent_dport->dport_dev),
-> > >  			dev_name(&cxlsd->cxld.dev));
-> > >  
-> > > +	put_device(dev);
-> > > +
-> > >  	return rc;
-> > >  }
-> > 
-> > -- 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260711180755.1779002-1-alison.schofield@intel.com?part=1
-> > 
-> 
+> IMO, you shouldn't even have 'pixel' and 'non-pixel' nodes. Their
+> contents belong in the parent.
+
+Regarding about pixel and non-pixel nodes, it has been discussed in detail on
+the need of it.
+https://lore.kernel.org/all/c7b956a9-d3e8-4e18-b780-5d08f5cd2ca1@kernel.org
+https://lore.kernel.org/all/f61a0a67-2cb5-4fac-818e-70eb9ed69f95@arm.com
+
+> Rob
