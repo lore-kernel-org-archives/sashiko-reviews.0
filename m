@@ -1,202 +1,151 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7752FD1DA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 03:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784603424; cv=pass; b=AvnGyfOdsRw7FjLknvczDaZEDkVvyGvcPKFe1Ji2+vqsTY6Ye5S4Cck2s06fsEQEb9cDWtXPtdb2P1FO6xgqzog7rQOK2xb8hyUODivQGW0pEma6g0Jm4BxaBrlGu7ZMXcWWwx6RKyAuA5gAguLjA0RbzolSWerN9K9gkd566BQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784603424; c=relaxed/simple;
-	bh=Ll0oXFaUVmJjuNd/liZj62ZGpCxxtgMatuhbXv24e9c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XcXY+QWP0OvZ5RP+UUb8Ky9vSnCvnY4dVuwinc0p+JxBbL9CfJVqkCvAv5QY4uYQyxSXBMxSCjBmBOEckABlZsSt8UtxESqT/ck3+xY6bRdOd0q9JFZmCrBKGjzB2gpHjGc3yLkQnfLa1XqyVuYKX+uz402eIAEFBYzFx/ZqSkM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ElxYxSlX; arc=pass smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ElxYxSlX"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-80a123ef90aso64506247b3.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 20:10:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784603422; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fQK/Zdxu23o9DEyfY4873hNYn41e06iUE5P2h4nXMynBQTY88zwkjpJ4TyYkPs+oMR
-         y2PZ+E4P+wbqFCRhb3luOsK7deCpA68X2zMLd3R8kAZpQtoCi/poJ0fA7Di3X7fvQCts
-         B7VpNQHJTJHITxsdZH7hHQJVNJMikZgQjrqhh7S6eEZRnlTbrjow+/ZJ1fjGXGeHF+gO
-         chcfZW8LVlVaWAhkWQpOQlIZ8T9SvWPzwHX1kL9vbZYBK9OxkHYssbCINYcYH+2Wp5pz
-         82gjrkxfXBuCjKBU9UZ0dXNTzXVga5QcKLaAQiMvscgIjDTkxMiWZNRWhYlBVoxN1pke
-         mTJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=phLMwCnRovNBL2FCZmS9hb02QIovvFlxaoITzfa1zfE=;
-        fh=ZjoP3inPy0EcODIMaiQgZsErGHXdH6i47dh1g1UTqyg=;
-        b=j+w59irPU4rWSXK6XFVRQUJ14c0djowqxRrood0OPwItrIxvbKLdr/SzrS38Cx9bvK
-         P62ZFA3aQDvJK7rJboMn6JBUsPHTWAziJlrwP6J8hwBHIGnPUynPN2FlWhIuvhLh0Z4T
-         gfzH3Xsm+4hatWCl9n4qRdf43P3ag4C9c1+cuQMa7zi0FdodHp+lqxopTYnH1scXSm7p
-         SiAdNbOJJevZjzuDYGu1bVto2hJ95/pvgHgghUXKll33ZmAtycGBlhlR8oeryEVVSkj8
-         nGgEMYm4jb+pDft1u7YF4MiOoQUpjiMc+Io6FT0bBc8G/rBQ4MSqa+SzyJ/oaQCSVqXU
-         CtDw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1784603422; x=1785208222; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=phLMwCnRovNBL2FCZmS9hb02QIovvFlxaoITzfa1zfE=;
-        b=ElxYxSlX+X5WxrzkRunFb1HBvh4C5sWNfjWQl9dhPiJvzlD5ykqgaspLTKwLLbki93
-         ReBATGjjAs3tq8cgSD8VOAhEZ8LhjaUW2rVz9jfWQnzxPgoy0AmH8X/abChlwX1hrfQA
-         gS2q2zn0ngpm+dsAjMmH4QU++ls8MSdk3Ik54=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784603422; x=1785208222;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=phLMwCnRovNBL2FCZmS9hb02QIovvFlxaoITzfa1zfE=;
-        b=nCPPq2JzH42gdKj7kchodIfEapJu/StWmciAKfS5qBuEISjAql/mdNW+jwdam3nxNN
-         FYycmMpcdTLlflwBt5s6mfsnlMVsuKqnyT8py6wxToh55dcgSrmdOX0w0XJXKXMM0co0
-         eZo/rReJ9Tmr8k6ghbxAmxN5DSY+VFle6bLouCkQ83ZR/Nacr/M7/iNf1uSqIxKaP226
-         XR6Qhy0kNnCOQ8kYmOsdmR1zEG/vVTKwH4KzxJogXyL2l2SgiG+wfQvJPHDX5w/SHTVe
-         X7gXaw0UF+1EqF8/3rfL31q8tSPTBHhCdzlP66ia/yYWxeF6Z76/wu3akUliPgOGHR0W
-         ZPmg==
-X-Gm-Message-State: AOJu0YwUhvoeK2xVDxIiARF0PiKPQe5pnOk2DODeSpQoYtKvYgo+VWBp
-	gx33yJ7vZvAXANOMAefJAZSCBwrUPeA/Sw858IWZAhutrvI9FjTY3IreeaXmBxowqxmdokPQkw2
-	wm9pWDElHfJ8vyNEP5vut6xBXlAJMjXPq9d5Gmo8UV3WEavC/nTM=
-X-Gm-Gg: AR+sD13c38xAibJshB0im354sxKHwmeoZo9rKoQOaxDU8oVX8638Ch2V6n56AV2OCPH
-	R/qhF8GHJqIGrbn8SCb5YsGqaEv12HuKCqnuLsUnwnTOJHXsueKYV0gUWCKk9j1mvB5tH1h72A2
-	P9gnUn+gg72QloZf763SpYi55Ibf9WbKIohkUniDV2E86JfXA8A1ieq5xrrO/Tzfi4lKSmKy0bI
-	npIa4UFA4tyqBC9+h596yNmH9KKsPaNTgB5B3DFo5ewMLRs84hrgvzj5ucYwexEvQTYlUAr6HLm
-	aRsOq1d3NOx5GguL
-X-Received: by 2002:a05:690c:e1c3:10b0:81e:f57f:1f8f with SMTP id
- 00721157ae682-81ef57f23cemr34445977b3.6.1784603422238; Mon, 20 Jul 2026
- 20:10:22 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4516A1643B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 03:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784605306; cv=none; b=dbYR5vY+N1t4hG498DYxQLEzmh2wTaOLiXJns1K0N1iSUPhyJ88bvqvCGiKTMZEm6G7XEBHjwARslrQyLmHwHvoy0M/Zt8KOSpw1c/o7lbxfRJ83jLm52LgvobCXPplwR8M0fXW9UdUrINZJ7LidTRfOC871vBFKpyctsjvX90o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784605306; c=relaxed/simple;
+	bh=S2SmuOpaKdMH99L035p4mj4ezeVtLYBDG6qbWJaF5c4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ULLdTglKF/T/nn7IblvKrl9slhK6lMkJ7Xaq/s8iXf1XXV/lk3/XDdmEPlhkLPwmKAmDka7fQgEdnaFe+saCysuMKPeeiu/bLUXUzgkdS+tmI5y97+/F+qT611xAFHnX4wRfkU16cnECvueOSG8QBoa9/W/4A6j/Hwt+RXZ6kOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h437t6XWYzKHMnn
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 11:40:58 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 5E8584056B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 11:41:40 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgCnjSl06l5q0Cf3Bw--.36020S2;
+	Tue, 21 Jul 2026 11:41:40 +0800 (CST)
+Message-ID: <8635b514-51a6-4715-956c-8de53c3604cd@huaweicloud.com>
+Date: Tue, 21 Jul 2026 11:41:40 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1784600387.git.daniel@makrotopia.org> <91b40322b07b967fcf286b3e4bd11e5f821bff1c.1784600387.git.daniel@makrotopia.org>
- <20260721024147.2FEE71F000E9@smtp.kernel.org>
-In-Reply-To: <20260721024147.2FEE71F000E9@smtp.kernel.org>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Tue, 21 Jul 2026 11:10:11 +0800
-X-Gm-Features: AUfX_mx4qcPgLK3orBZOGVBUCGLkc4lvsRzCU905dlQI4f0WIMZbU3ENBGxGpF0
-Message-ID: <CAGXv+5HhSyr-q-T-JxOjPv013CsNh1wtf4QxPYxQbrf1XQcaXg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] drm/bridge: it6505: cancel outstanding work before
- teardown in remove()
-To: Daniel Golle <daniel@makrotopia.org>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org, 
-	"moderated list:ARM/Mediatek SoC support" <linux-mediatek@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf v4 1/4] bpf: Fix potential UAF in
+ bpf_netns_link_update_prog
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260720134547.1289964-1-pulehui@huaweicloud.com>
+ <20260720134547.1289964-2-pulehui@huaweicloud.com>
+ <20260720135523.AB3461F000E9@smtp.kernel.org>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <20260720135523.AB3461F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgCnjSl06l5q0Cf3Bw--.36020S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw1DKF18Zry7GFW8Crg_yoW5ZF1xpF
+	WfG3WkCw48Wrs29F1Iq3WkuFyxZF48WF1UCr1q9r18ZFyYvFWxKFyUurWfur9I9r4kGa1I
+	qryjqr1Fqw1UZFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1QVy3UUUUU==
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-Hi Daniel,
 
-On Tue, Jul 21, 2026 at 10:41=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Medium] Calling cancel_work_sync() on the potentially uninitialized ex=
-tcon_wq triggers a WARN_ON(!work->func) kernel splat.
->
+On 2026/7/20 21:55, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] Canceling work items without first disabling their scheduling so=
-urces (IRQ and extcon notifier) leaves a race window where works can be req=
-ueued, leading to a use-after-free.
+> - [High] Lockless access to `link->prog` in generic BPF link info retrieval functions and mprog logic can lead to a Use-After-Free when an updateable link replaces its program concurrently.
 > --
->
-> --- Patch [1]: [PATCH v3 1/4] drm/bridge: it6505: cancel outstanding work=
- before teardown in remove() ---
-> commit 06b35e4209da852ce0af8e4b1dd2aec2e9e172b4
-> Author: Daniel Golle <daniel@makrotopia.org>
->
-> drm/bridge: it6505: cancel outstanding work before teardown in remove()
->
-> This commit adds calls to cancel_work_sync() and cancel_delayed_work_sync=
-()
-> in it6505_i2c_remove() to ensure background works do not dereference free=
-d
-> memory after the device is unbound. It notes that extcon_wq might not be
-> initialized, but claims a zero-allocated work_struct is safe to cancel.
->
-> > cancel_work_sync() on extcon_wq is safe even
-> > when it was never INIT_WORK()'d, since it6505 is zero-allocated and a
-> > zeroed work_struct is reported as not pending.
->
-> [Severity: Medium]
-> Is this description accurate?
->
-> Looking at __flush_work() in kernel/workqueue.c, the workqueue core asser=
-ts
-> WARN_ON(!work->func) when flushing a work item. If the DRM bridge was nev=
-er
-> attached, extcon_wq remains zero-allocated.
->
-> During module removal, calling cancel_work_sync(&it6505->extcon_wq) will
-> unconditionally call __flush_work(work, true), which immediately triggers
-> the WARN_ON because the work function is NULL. On systems with panic_on_w=
-arn,
-> this leads to a kernel panic.
-
-Sashiko seems to be correct here. This is going to cause a very loud
-warning, which we likely don't want.
-
-ChenYu
-
-> > diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/brid=
-ge/ite-it6505.c
-> > index 8ecb43611dba8..2f349aefb7054 100644
-> > --- a/drivers/gpu/drm/bridge/ite-it6505.c
-> > +++ b/drivers/gpu/drm/bridge/ite-it6505.c
-> > @@ -3644,6 +3644,10 @@ static void it6505_i2c_remove(struct i2c_client =
-*client)
-> >  {
-> >       struct it6505 *it6505 =3D i2c_get_clientdata(client);
-> >
-> > +     cancel_work_sync(&it6505->link_works);
-> > +     cancel_work_sync(&it6505->hdcp_wait_ksv_list);
-> > +     cancel_delayed_work_sync(&it6505->hdcp_work);
-> > +     cancel_work_sync(&it6505->extcon_wq);
->
+> 
+> --- Patch [1]: [PATCH bpf v4 1/4] bpf: Fix potential UAF in bpf_netns_link_update_prog ---
+> commit 1e9631860a41f1ee87e0b9afa5e2e3ca3f35147e
+> Author: Pu Lehui <pulehui@huawei.com>
+> 
+> bpf: Fix potential UAF in bpf_netns_link_update_prog
+>      
+> This commit fixes a potential use-after-free race condition in
+> bpf_netns_link_update_prog. By moving the old_prog and prog->type checks
+> inside the netns_bpf_mutex critical section, it prevents concurrent
+> BPF_LINK_UPDATE operations from freeing the program while it is being accessed.
+> 
+>> diff --git a/kernel/bpf/net_namespace.c b/kernel/bpf/net_namespace.c
+>> index 25f30f9edaefd..9fc62db1441c6 100644
+>> --- a/kernel/bpf/net_namespace.c
+>> +++ b/kernel/bpf/net_namespace.c
+>> @@ -171,13 +171,17 @@ static int bpf_netns_link_update_prog(struct bpf_link *link,
+>>   	struct net *net;
+>>   	int idx, ret;
+>>   
+>> -	if (old_prog && old_prog != link->prog)
+>> -		return -EPERM;
+>> -	if (new_prog->type != link->prog->type)
+>> -		return -EINVAL;
+>> -
+>>   	mutex_lock(&netns_bpf_mutex);
+>>   
+>> +	if (old_prog && old_prog != link->prog) {
+>> +		ret = -EPERM;
+>> +		goto out_unlock;
+>> +	}
+>> +	if (new_prog->type != link->prog->type) {
+>> +		ret = -EINVAL;
+>> +		goto out_unlock;
+>> +	}
+>> +
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does this leave a race window where the=
-se
-> work items could be requeued?
->
-> The driver uses devres for the IRQ and extcon notifier, which remain acti=
-ve
-> during these cancel_work_sync() calls. Furthermore, the hardware interrup=
-t
-> is disabled after the works are cancelled.
->
-> If we look further down in it6505_i2c_remove():
->
->         ...
->         drm_bridge_remove(&it6505->bridge);
->         drm_dp_aux_unregister(&it6505->aux);
->         it6505_debugfs_remove(it6505);
->         it6505_poweroff(it6505);
->         ...
->
-> The interrupt is only disabled inside it6505_poweroff(it6505). If an
-> interrupt or extcon event fires immediately after the work is cancelled b=
-ut
-> before it6505_poweroff() and devres cleanup, won't the handler run and
-> re-queue the work via schedule_work()?
->
-> This could lead to a use-after-free when devres frees the it6505 structur=
-e
-> while the re-queued work is still pending.
->
-> >       drm_bridge_remove(&it6505->bridge);
-> >       drm_dp_aux_unregister(&it6505->aux);
-> >       it6505_debugfs_remove(it6505);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1784600387.=
-git.daniel@makrotopia.org?part=3D1
+> This isn't a bug introduced by this patch, but while looking at the lockless
+> accesses of link->prog being fixed here, I noticed other places that might
+> have similar race conditions.
+> 
+> For example, in kernel/bpf/syscall.c, bpf_link_show_fdinfo() reads link->prog
+> locklessly:
+> 
+> kernel/bpf/syscall.c:bpf_link_show_fdinfo() {
+>      ...
+>      const struct bpf_prog *prog = link->prog;
+>      ...
+>      if (prog) {
+>          bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
+>      ...
+> }
+> 
+> Similarly, bpf_link_get_info_by_fd() in the same file accesses
+> link->prog->aux->id locklessly, and bpf_mprog_link() in kernel/bpf/mprog.c
+> checks link->prog->type without locks.
+
+patch 3 have been covered bpf_link_get_info_by_fd and 
+bpf_link_show_fdinfo. patch 2 have been covered bpf_mprog_link
+
+> 
+> If a user-space thread calls one of these info retrieval functions and is
+> preempted, could a concurrent BPF_LINK_UPDATE (like tcx_link_update or
+> the one being fixed in this patch) swap out link->prog via xchg() and free
+> it?
+> 
+> Since the reading threads do not appear to hold rcu_read_lock() or take a
+> reference on the program, it seems the RCU grace period could complete,
+> resulting in a use-after-free when they resume and dereference prog->tag or
+> prog->aux->id.
+> 
+> Should we add RCU read locks or reference counting around these generic info
+> retrieval paths to prevent the program from being freed out from under them?
+> 
+>>   	net = net_link->net;
+>>   	if (!net || !check_net(net)) {
+>>   		/* Link auto-detached or netns dying */
+> 
+
