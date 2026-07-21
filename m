@@ -1,337 +1,259 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00128a01.pphosted.com (mx0a-00128a01.pphosted.com [148.163.135.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4961531E858
-	for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 23:58:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784591914; cv=none; b=VT/5vKxxe3chu/aAikB6gwOv9GFVpDOpNXlmK2Bow7hOLdx0ADohEn2XT57NHxeNHlhdoBiPRCJOX7EJeUukzMnRRjnqqaK7a4AfNgbya9Ymy+Le8fb8yY+J5B5q3pFWRL4uRK7N3A/OgoJ8wop7badgElS7eQsWRobH3s4KZkk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784591914; c=relaxed/simple;
-	bh=JxFGolTGFdvyAz36xQVGbPohwCObbW8ZVFsU579opKs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=td9T9JtGk/AdTj4lBkQOYqRbscQHyVy+mD3822ZLoRnKtUKJ9yomedDqS+ozeRXH1X4BanazrgQb1OGLukDf/pRluJEhLADzc8JosTB7ZSN1u1BfhRcf8UariAs9/yT788tEAc7sa36b/dZGeqMs+MaqtQCzW8rJ5roWjd+TCno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=HCCEjVXy; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981A5390CBF;
+	Tue, 21 Jul 2026 00:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.135.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784594685; cv=fail; b=apEfX33AuChh0DTJdTM32BySXXp8ophefgHmOEagLBdegbHAyP9/liC/Cq0V12tHY9DS2uoBpBi2E5LOmj5PNd8Dp8lyVSRb/5Bvaj82kp30yTiKrMeFWl5oizDxCjF2Ztw+FkYsZt+DlunKh0GE6r9/h2AveEkDMoCrE62a4zc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784594685; c=relaxed/simple;
+	bh=O+PYagsX4e5rlOWVn4HGyO3puyK47rsltYb2c7L4jA8=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=oJmd/DIi2W+RXHhkf4t1rCRPV3sTAmitc/U3xqzSZzN+Uc1zfjdx+VaeLL1woWpo/OUFR8CmHwhVUC5wqKEd/RcEnYJig8KNHynlWB6MVM7sB7WY8+hRrn3tJRwoOeDNvhakdhdMhgsH/kNiJnMlVT9NgW06t/52+SLj1p599Mo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com; spf=pass smtp.mailfrom=analog.com; dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b=Z+T88oW3; arc=fail smtp.client-ip=148.163.135.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analog.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="HCCEjVXy"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2cf50c6f235so26530585ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 16:58:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1784591911; x=1785196711; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=zF+4d6/CcI+ikH/4L72pwhOHENVRkJB74Kt9/nH0fmo=;
-        b=HCCEjVXyOmPhSz9ARUCwfuB7iZ1ggilTGvcxwzOQIL2+/0RFDQ002jxCw6UJL/WN1n
-         3Dr6lXohvKJgvA4Qz/7+S/Uerdl6/pntN+8dQ3AU5vhCxM5MSoVY+dpQRSmB3A/6EpdT
-         EUHYDudBmopqTThXhdfxUXBNNgkV8JYFG/IKgybublJ4hd8mQhQUK8cyulntf1+fpf+/
-         56+cku2T51CJm7Y46MOJ4ipcT4pDogzJAZLxuEYDjUaSDwj3UDxBEGE4AC11wpXaMw/G
-         03oU5acISEYWf71MSObyfh75bDDvVkrVqoK7cmOx+ZLVvixP+vKzBb3B7aSAGvF8xWjg
-         r8jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784591911; x=1785196711;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zF+4d6/CcI+ikH/4L72pwhOHENVRkJB74Kt9/nH0fmo=;
-        b=hXKX5QW77j4LGVGnME3Jd5P2w31wK/iA3C9XVtEg3488SFrDmvIMC7GvXY9QBEG0Na
-         kAJOXuabBIbvxVeubHjhPzeczq2Yx+S+YYr7QonH6qe8oEuJxQxFuicRI1MaTQ8KxATP
-         A4FoWJMjPq4HoMrRGc6nVBE4/KMIX05chnqceQ1vqdRHRYtR9yYwgEyZKDU+iH3y4RdO
-         mTF7WIm5xqnjMUEMdlLNZQwygvtTCjQ7zxTtqX3ai9TURAKGFnR9/7QD2RKWMbIVo+76
-         MMj/7D5vOf9wdxwHflmFnGmY+ehPSUooqUsxbRWEi8Ug9SmFLzILMY1r8PhsP5Ve9hoY
-         oqgw==
-X-Forwarded-Encrypted: i=1; AHgh+RqT4Lb6IZaae/axe12V8qfmuT5Zi+WWXtSYSb07w94yZu3pG39esekHSgHxwnWLjxAeftX7pFv53nXtFaV9wWo=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzo4G6XJ92YYxb/JHDbRar+bzOXtc9cBIfCS1+hiI3WhFAJ4NwK
-	glYJF86YONzAj0jQ4foOk6nlGUyT2qpJg4p/rvk0kwZxTtbFRLIb2fu5zpXCsgChGC4=
-X-Gm-Gg: AR+sD121d7yOCSn/HeKO3f8WX+RJGYK1HhT5tO9/D9ICRIUzsSg4gE/Mcig3G7IPW6A
-	y50ZmDUlI6/O/h+ZvrpldVraU8HgBsoshNOyt24TcSZfV0gBraQVRA4NN08KDhPT5G8vXOlKfYs
-	4leItb6pg8WbG4emufosMfDtTuCvGf32/siEj170HvwaiiGxcs25ucaguQ/XJu1rR0s6rKSiY+2
-	wfSuLBLDtUndrASN78DyYND6KsTLd+3Z/6G444k8JmGdopAWVCl3AqLezGOo74AqEYb1+eApmhD
-	vwab2cdqYzek5hKz01OWR9tv/MqUrawc/l0CvkaURdPh7sMhCOzK/mtP2QXN8Tkuv9YkgEM2gw7
-	OIiGlq4fgwg/rYxYe5gmLDLa7HYXGFoDTR209uDJOXt1muXtIgBwLmVDecdL8DRQ1ferTK6saVk
-	vCogm0gMjto5i6CUQ7LPmIEsW6Pd+abJY=
-X-Received: by 2002:a17:903:288:b0:2c2:7baf:139f with SMTP id d9443c01a7336-2cf3496003dmr169103715ad.30.1784591910468;
-        Mon, 20 Jul 2026 16:58:30 -0700 (PDT)
-Received: from localhost (107-190-31-17.cpe.teksavvy.com. [107.190.31.17])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf3448f91bsm64632745ad.8.2026.07.20.16.58.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jul 2026 16:58:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b="Z+T88oW3"
+Received: from pps.filterd (m0516787.ppops.net [127.0.0.1])
+	by mx0a-00128a01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66KNCm1g3190060;
+	Mon, 20 Jul 2026 20:44:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analog.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=DKIM; bh=zNqoN
+	O6bG7fCO+ouKpZiyWOv9aNJb1nqCgDjcjwyZdw=; b=Z+T88oW3k51no3C5DgTqD
+	hkUWc0rCek5kBfUG42Yr2xn4hZAneSMR9mmDYgbl2jNOZcKE/ABowWLEJx47pv/J
+	U2yVbpvIAK5qPb9TIQJrlsKzJaATWSNiB0BWB5AWLr5zyx1YAKKOZ+wz+PiRCNs3
+	/StUxqLD1oeDX5iK5Njo2pQAvgaeMhzUa7l0i82N4GP2VfpUKA1CyqjW5e9cNa6E
+	FnXZ1RUx/am1RoFNu2jx1N/vzeqShTEcKC88KEuMEeUnxWmcWUTZG0qVb96Qgedd
+	ZzXIfWEgiTadZrL5oE4HkCn8gp4IsxwUb/1DZsXEFB2lqEk8p6OkmLaEDvTVfAhn
+	A==
+Received: from byapr05cu005.outbound.protection.outlook.com (mail-westusazon11010007.outbound.protection.outlook.com [52.101.85.7])
+	by mx0a-00128a01.pphosted.com (PPS) with ESMTPS id 4fgttgef10-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 20 Jul 2026 20:44:35 -0400 (EDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=atACVr3Iw54koO2459kZeweKS5ivqJFy/8+UErRP2C+KWEh7uZHbgy3LqRft+S7KeyHyWsdS6X7nnhK3bYG/FRDSLTLBEUkqInlAnNs6QR9QBUxBKvZXLEgsJl3OG16tjG90YrYO7BZFCZaEDQVouORpvSI03auclUgM5IGBFdKTh90uUti1WPq9aB3pUSazYbG9X3yRiuvfe4OdSseHuKXp76y0Fm4PXJjkRqdQJaF9qVrpnkVdkEMbjwn0qhvZ6YOt8jsj5tFl33WFp829MKwPN9b/ASbGY3/Grb7DX5uo8pER5IrzbxdO1RT/TToS0rZa+f8lisRvj4ODVu0I1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zNqoNO6bG7fCO+ouKpZiyWOv9aNJb1nqCgDjcjwyZdw=;
+ b=bPdCgY+ZPqDz9Q5s/zjU0Yl7srzd8bT6ayr1s7qTyWjdlC7CAZmC0fwhZ+1vV1X7sOJ2wjMFB3j/PjQa/dpW2zsIechqSm0xW8Q0ltCrIFM0nHui05bX4z+dWCD2Cnz+3VLo4ztd/PjDI9hKHk8pAmAAxvJMblmycPjKPPpaGJiCAFly0RswV9EOrxd3zaRDRKl8bPtNzCaLyWHgfpI7F+Mp6m/3dMvEg1uxF41f/CJvidBDAA1Yuqp2xb6USpKOrKVOKXKeUxNhLMC3Z0SpeRP/39l/GtKrq/DGMD24ZFK4z2PW/bPfTapHzH2iMo4+iAhJid4nI/Bk2KqQwI4gvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=analog.com; dmarc=pass action=none header.from=analog.com;
+ dkim=pass header.d=analog.com; arc=none
+Received: from PH0PR03MB6351.namprd03.prod.outlook.com (2603:10b6:510:ab::18)
+ by SJ0PR03MB6951.namprd03.prod.outlook.com (2603:10b6:a03:419::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Tue, 21 Jul
+ 2026 00:44:33 +0000
+Received: from PH0PR03MB6351.namprd03.prod.outlook.com
+ ([fe80::1578:4572:29b5:2442]) by PH0PR03MB6351.namprd03.prod.outlook.com
+ ([fe80::1578:4572:29b5:2442%4]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
+ 00:44:32 +0000
+From: "Torreno, Alexis Czezar" <AlexisCzezar.Torreno@analog.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "conor+dt@kernel.org" <conor+dt@kernel.org>,
+        "robh@kernel.org"
+	<robh@kernel.org>
+Subject: RE: [PATCH v3 3/4] dt-bindings: hwmon: (pmbus/max20830): add
+ max20830c and max20840c support
+Thread-Topic: [PATCH v3 3/4] dt-bindings: hwmon: (pmbus/max20830): add
+ max20830c and max20840c support
+Thread-Index: AQHdF/YHYeVjYhUSnUWQiL0CSyRQHrZ1vdsAgAFe/FA=
+Date: Tue, 21 Jul 2026 00:44:32 +0000
+Message-ID:
+ <PH0PR03MB6351B1AAD3F9422CA98B5CE3F1C22@PH0PR03MB6351.namprd03.prod.outlook.com>
+References: <20260720-dev-max20830c-v3-0-9d06d27d6da3@analog.com>
+ <20260720-dev-max20830c-v3-3-9d06d27d6da3@analog.com>
+ <20260720032145.B5A6C1F000E9@smtp.kernel.org>
+In-Reply-To: <20260720032145.B5A6C1F000E9@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR03MB6351:EE_|SJ0PR03MB6951:EE_
+x-ms-office365-filtering-correlation-id: cc9ba2dc-ae9a-4ed6-fe61-08dee6c13b32
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|4133799003|11063799006|10067099003|4143699003|56012099006|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info:
+ 0BNJcXFPpDFdjkeEyqpWxI3JAjXPW2j8Fmxk6k+LxeoTzxBfrNfgv/Lzb41rrkYcyMT4+82gDRv8HM9nHCySPOcxjQ3ckNfZfxNpyo8oA6UOQaXYDTs6fnvIkybxZi7hyN8dJ8AosjLOJxTltx4s8KXdIyAMrVH2hQFgt2uUs++Ni7bXp8wzzYltCsJUMmncrCGHO+TtDVsyaImx+CRmkf5+MN/eOSre3NZFXD6wD+erjDpciuQDTIk++SjcS/lxAeN8wE7S8PtJPx3pb2FvM4VoUvmqP4Mv6tYwMnkT0CqDXxI7swJsbZKOkeWn1TBmdhvIdbj2JJSAVPOiXHdV9KYed5OrTsi1slLF/QxQ9fagoO+/rJW+ENqscoQfN9ekRGATlwOf3C+lqFxqYICW9hCmEEWroYL6yYPyVx+lGUoRUYMNXdDLb7vAxLVcv9dIW7/c2BTgj/j5M2Axvh3OwG5TgHkVvVnldpvatVAnJe/yrKR85P5dCXyFaOoKFZrR/SMcOtL40jXhtRrIBSnQkEJeb1bxs3064UNbTbyLaeYaHySsF+oXb/hA86ZGbQbsjl5lNEHleMLkBKZ/dhhjx19phA+d2/BwmqkL9TSq5522x3iM+WvUpnqFKwoS1wymd/lptbsutrzxkFYZj8roT8qzAZRFk0RlsW4s57v43HM=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR03MB6351.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(4133799003)(11063799006)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?9mOegY0YMkTdP61lCPzKXB6PSx4+c/FTTLxGwf9dU5IYvQy+jDAoNb1rJEpG?=
+ =?us-ascii?Q?5NORYDgCg4uLuGUyqYUi1dnahpK81FjzU+IXw6WQq9k2//fGUkS94vB1CX36?=
+ =?us-ascii?Q?2egcNSyLYvV8jCikoLVPFv+DuCkaD/EQTjQQHQXYHPWfs6cJbq6im28qekIq?=
+ =?us-ascii?Q?dWGoLNB7uGDX7tMutU4Z+fj9uXQEMkbqfZ3lsMokjTptl60bc9HkKIhRfL0N?=
+ =?us-ascii?Q?Kq2ScT+eBD+zoPnJZVZ+EJBcDcv8CcZbzHQXWZ+Xr3FWoO+SFUqyURO5SO4g?=
+ =?us-ascii?Q?LF3kUyS9N4A6FiTBv9KCcz7To8tW04P2EtT1SvH77O7+4So3fZrc2TYOHuPq?=
+ =?us-ascii?Q?SBE/3/rtwBWpbY791eWdXD8vCLYiLqMTRohRboEi4UJ3gqFSLspkz2LfYVQx?=
+ =?us-ascii?Q?4yWgbBOmfUe6J0KmLZlhhy2WYkhwRAU/990VEBx5ZF/ee7983meUfkT2J+3j?=
+ =?us-ascii?Q?jbNMRLGF2BJggS8SQnadlZTI0p6xu7WEZvnyRYLgOI1WdTQa4podyPvR2R3q?=
+ =?us-ascii?Q?qStXlAsMmCibu2ZO8eSmtMeQNA37U3KhmLXWr32qIjRR+/ewA5jwA+dxmhAW?=
+ =?us-ascii?Q?J2CrvVyMS5rd4LFNbIwm+IpN1AO/4XiAPXm3lxSfqJSggaSx4XrBKipcoBW0?=
+ =?us-ascii?Q?Ue/JGNAfdFpUBfbtgN5qfgDHEnTbHDEVGwO4rgkeZ+3N2Qbu/dhplWKzmsUI?=
+ =?us-ascii?Q?GLJdbm/8WE2q1hx8h1PQUzmN1CzTAMy3vijOG53zNCN0bb358phrlDeZGL/e?=
+ =?us-ascii?Q?+ZZXu21ijkArqsAK3dTDaYAFs/v27R99yLYkI2565xd+i7p9SqcgSbKsLxQL?=
+ =?us-ascii?Q?tR0YGqAW9T3lxOjoAVKxdowWtzsJVRrL3guatHqRcuaJWu53Xh4djKP5Karz?=
+ =?us-ascii?Q?WOLEpicoKRA3zFMbOZFLOC7TefGYnOx1p2/0f3vcsjhjaIUk+3NOc6rpJWwe?=
+ =?us-ascii?Q?GcKSpabkJUDBtDeV4KQV5+jAex38k2DRg9VQ4dRaeVb3H2ekBoKNMW+UtPPR?=
+ =?us-ascii?Q?bIqa4S45nnUQ4sgE2LhP0hJXfLhIN0X4oa1MV90mzFHjdFLOg/KiBBlTqThT?=
+ =?us-ascii?Q?AeUwmFUnKcuhdMAp1jF/9IJEyPqRkASRch33lirsdEiBaW/MRyELOhtndBj1?=
+ =?us-ascii?Q?euc69KfUhAh8f23S68HzZNlZYTYfHkpyKX9s6/+Z4//tJ4txfcZ4IEgwX+71?=
+ =?us-ascii?Q?Tw1LEG0Ng3TDQTWm3o0FldnVMq6damVS9jbbChbd1x+esXtNJCHNykkwvcJM?=
+ =?us-ascii?Q?0oKzCStJllySp6jIrlOeXklsJmiKo6LT7/VmjX06xa5juPgae4vCa7YfyGSO?=
+ =?us-ascii?Q?GHkjvW70jSICiHbsIQdqBX+K0JJBO8JatbYmN1P+yFy5fUZ4NT/H/IM5W2cT?=
+ =?us-ascii?Q?JhGUgtxQiVr+kD1ljXzHlwpu+c/HUQfF4TS24U5OSgYhiwh/yqfDpZiDNF29?=
+ =?us-ascii?Q?xfGN73oc3fAAfX2x6XfCxslAj2VvCEIVHbIW3l25QqzZ1oOfZQkBhqEfz9ra?=
+ =?us-ascii?Q?Kln+rTKCP13cAXXyTQCV+wrnnr/djwRwwJwrn0sz58wbypD6r5LAQnxJy3OF?=
+ =?us-ascii?Q?b3puz8QL/gDECabJ7ggNRaZFNCsh5uQ0fV49OzWR0lg9Hk4wSQsCH7V+P2Y1?=
+ =?us-ascii?Q?lUOze5c7k0OjI/RtEu/qH7h40BaROjsje4iKuZDDkP7hWtgDZssnZ0nVBN2y?=
+ =?us-ascii?Q?qIUSoY08Rt9ctkCbTgi8sD0+rnLUgyRif3RzSMgVFvj3jxiDb3hMLUiqoEW+?=
+ =?us-ascii?Q?TxuDXP87hNrJ/nPs9A4bZv9KY0w/Nqc=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 20 Jul 2026 19:58:28 -0400
-Message-Id: <DK3T18YN2PIG.21FN4EV1MFYSD@etsalapatis.com>
-Cc: <bpf@vger.kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
- <horms@kernel.org>, <jakub@cloudflare.com>, <jiayuan.chen@linux.dev>,
- <john.fastabend@gmail.com>, <kuba@kernel.org>, <kuniyu@google.com>,
- <ncardwell@google.com>, <netdev@vger.kernel.org>, <pabeni@redhat.com>,
- <sashiko-reviews@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 1/2] bpf, sockmap: handle spurious
- tcp_msg_wait_data() wakeup
-From: "Emil Tsalapatis" <emil@etsalapatis.com>
-To: "Nnamdi Onyeyiri" <nnamdio@gmail.com>
-X-Mailer: aerc 0.20.1
-References: <20260720171535.67867-1-nnamdio@gmail.com>
- <20260720171535.67867-2-nnamdio@gmail.com>
- <DK3PKY6RN5FI.4DKPSHWNEBHM@etsalapatis.com>
- <al6iBv_Yn4YSCmWc@localhost.localdomain>
-In-Reply-To: <al6iBv_Yn4YSCmWc@localhost.localdomain>
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked:
+	DLVQRy20YknTsiIqCyBy0iiCKb9umTuqrkLy0JFiXGhUEoddM896Rur9XBmc63r36eTwVALugmE8TenAXCNnHgfObDKs5zQFvv8JYoiMQliMg3e8XAj5yK9YpTPyLZILQPBwKoenLOKNSAyZNLtmwNk4cZc5ZCooXW8l5iriqOs5A9OAcwOmnVl0GU7AoxIy0aB1krdNOFeP/Nk/mr7+iCB0zkHKqrtRMJUd0wnj7+IQkWGnTiZcRrITcHfg/xzfXCTFbv2rmKax2fsqfhOS0JcWDNcq2/ivU01ceK2p+dVlHvVZahzEPDbtkHIjmUpKbGrGWCjiuJrdmnCpWScHaQ==
+X-OriginatorOrg: analog.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR03MB6351.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc9ba2dc-ae9a-4ed6-fe61-08dee6c13b32
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jul 2026 00:44:32.9363
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VglW3jYfZ7woRIqTKGOQrCKg0qQ7srzNMZg+9gtmqrk4Jc0LC7P9923J++ZHrBocbP98rdoarO540DabAi79Hswtapgv5iPC8RQqIpVq8mU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR03MB6951
+X-Proofpoint-ORIG-GUID: rF0KCM3FU66JkWma0QFqWU_Q3TH_Kw6-
+X-Authority-Analysis: v=2.4 cv=DagnbPtW c=1 sm=1 tr=0 ts=6a5ec0f3 cx=c_pps
+ a=x36oJTDjInEio3y4qvlK/w==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=0sLvza09kfJOxVLZPwjg:22
+ a=OmVn7CZJonkx5R5zMQLL:22 a=uherdBYGAAAA:8 a=c92rfblmAAAA:8 a=VwQbUJbxAAAA:8
+ a=gAnH3GRIAAAA:8 a=ghsNeOaGaNpaI2TWLiQA:9 a=CjuIK1q_8ugA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDAwNCBTYWx0ZWRfX+IlSOrhFEX6q
+ ZIMzf7bN9WrhmQBxTS3d/787/H2OqZhf/sJrALN6ZnBeqmkpJ/knXwlUUyE6pMRQEg6OjB3K6ED
+ ygWV3RPbqGhB4/Kh7oWYvEKnEd1KrkgSRyJIftPTCFU3HtKuJv7h
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDAwNCBTYWx0ZWRfXyfD0MbDhHBld
+ p2FWIcdldB5fzlpq9ThoP+Jz+h2L8sTOx9kNtIktF1sMKPca2EEWj1Y08sGGly0ruMOTa9guvuy
+ aCQV6+VtFu/8JnZEpvpWT+3UAogbGuGyIHzdhBBXiG+3jZTkIeCD62aVU7AModCPtgCLewn7r7H
+ tNdN94VQmnmD0bH9uNAVhMRAa4HrJz+prP7GKYGRM7JALMYUDb/1lsnQcxsw78NPX53P9VkWHcg
+ eVFnIr9zCyj42Xffx3fl/u6yR1KotdL7esReeo10EiLX3JaJvvYAld2tesETIQ1SAL1TQVzc8SW
+ CK+UwsKaPK07nVqkHMXH/ZexUljho+wsfc7B79v8SEkMnpFpZbq+6KcGAuQidWFqyrTgQGVo+hU
+ GeeKPfGLXoECRbJXd02vVzNyQeBLqUrdyMKBPeDruBxTVCMcA6IklQ1vDidbSiekkrGqGuLtkXS
+ QmwFr6qpHRPRrPNAhyA==
+X-Proofpoint-GUID: rF0KCM3FU66JkWma0QFqWU_Q3TH_Kw6-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0 bulkscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607210004
 
-On Mon Jul 20, 2026 at 6:53 PM EDT, Nnamdi Onyeyiri wrote:
-> On Mon, Jul 20, 2026 at 05:16:08PM -0400, Emil Tsalapatis wrote:
->> On Mon Jul 20, 2026 at 1:15 PM EDT, Nnamdi Onyeyiri wrote:
->> > recvfrom()/recv() are documented as only returning EAGAIN for blocking=
- sockets
->> > when they have a receive timeout configured.  However, adding a blocki=
-ng
->> > ipv4 tcp socket without a receive timeout to a sockmap will cause EAGA=
-IN errors
->> > sporadically.  A socket with a receive timeout may return EAGAIN befor=
-e the
->> > timeout expires.
->> >
->> > There are 2 code paths affected by this:
->> >
->> >   1. tcp_bpf_recvmsg() - Used when the socket has been added to a sock=
-map
->> >      that has no verdict program attached.
->> >
->> >   2. tcp_bpf_recvmsg_parser() - Used when the socket has been added to=
- a
->> >      sockmap that has a verdict program.  To reproduce this issue, it =
-is
->> >      enough for the verdict program to do nothing but return SK_PASS.
->> >
->> > In both cases this happens when tcp_msg_wait_data() wakes spuriously
->> > (returning 0).  To fix it, we now loop back to msg_bytes_ready instead
->> > of returning -EAGAIN on spurious wakeup.
->> >
->> > To ensure the looping does not cause sockets with a SO_RCVTIMEO set to
->> > wait excessively long, tcp_msg_wait_data() now takes a pointer to time=
-o,
->> > allowing sk_wait_event() to update it as appropriate.
->> >
->> > The logic in tcp_bpf_recvmsg_parser() that allow it to handle signals,
->> > socket errors and closuers in its loop was also added to tcp_bpf_recvm=
-sg().
->> >
->> > Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
->> > ---
->> >  net/ipv4/tcp_bpf.c | 69 ++++++++++++++++++++++++++++++++++++++++-----=
+
+
+> -----Original Message-----
+> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+> Sent: Monday, July 20, 2026 11:22 AM
+> To: Torreno, Alexis Czezar <AlexisCzezar.Torreno@analog.com>
+> Cc: linux-hwmon@vger.kernel.org; devicetree@vger.kernel.org;
+> conor+dt@kernel.org; robh@kernel.org
+> Subject: Re: [PATCH v3 3/4] dt-bindings: hwmon: (pmbus/max20830): add
+> max20830c and max20840c support
+>=20
+> [External]
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to
+> consider:
+> - [Medium] The max20830 driver will reject the newly added MAX20840C
+> device during probe due to a hardcoded IC_DEVICE_ID check.
+> --
+>=20
+> --- Patch [3]: [PATCH v3 3/4] dt-bindings: hwmon: (pmbus/max20830): add
+> max20830c and max20840c support --- commit
+> b032b17e50351faefc688ad31e1428a3c641197a
+> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+>=20
+> dt-bindings: hwmon: (pmbus/max20830): add max20830c and max20840c
+> support
+>=20
+> This commit adds compatible strings for the MAX20830C and MAX20840C
+> variants to the max20830 device tree binding, using a fallback to adi,max=
+20830.
+>=20
+> > diff --git
+> > a/Documentation/devicetree/bindings/hwmon/pmbus/adi,max20830.yaml
+> > b/Documentation/devicetree/bindings/hwmon/pmbus/adi,max20830.yaml
+> > index 214adf1a3b9e9..b7d3b6152b582 100644
+> > --- a/Documentation/devicetree/bindings/hwmon/pmbus/adi,max20830.yaml
+> > +++
+> b/Documentation/devicetree/bindings/hwmon/pmbus/adi,max20830.yaml
+> > @@ -22,7 +22,13 @@ allOf:
+> >
+> >  properties:
+> >    compatible:
+> > -    const: adi,max20830
+> > +    oneOf:
+> > +      - const: adi,max20830
+> > +      - items:
+> > +          - enum:
+> > +              - adi,max20830c
+> > +              - adi,max20840c
+>=20
+> [Severity: Medium]
+> Will the driver correctly probe for the 'adi,max20840c' variant?
+>=20
+> Looking at max20830_probe() in drivers/hwmon/pmbus/max20830.c, there is a
+> hardcoded string comparison for the device ID:
+>=20
+
+Addressed in patch 4/4. Driver support for new variants is added in the nex=
+t patch
+in this series.
+
+> drivers/hwmon/pmbus/max20830.c:max20830_probe() {
+>     ...
+>     if (strncmp(buf, "MAX20830", MAX20830_IC_DEVICE_ID_LENGTH - 1))
+>         return dev_err_probe(&client->dev, -ENODEV,
+>                      "Unsupported device: '%s'\n", buf);
+>     ...
+> }
+>=20
+> If a MAX20840C device is probed via the 'adi,max20830' fallback, it seems=
+ the
+> buffer will start with "MAX20840", causing this check to fail and return =
 -
->> >  1 file changed, 60 insertions(+), 9 deletions(-)
->> >
->> > diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
->> > index cc0bd73f36b6..aa5c5d741599 100644
->> > --- a/net/ipv4/tcp_bpf.c
->> > +++ b/net/ipv4/tcp_bpf.c
->> > @@ -179,7 +179,7 @@ EXPORT_SYMBOL_GPL(tcp_bpf_sendmsg_redir);
->> > =20
->> >  #ifdef CONFIG_BPF_SYSCALL
->> >  static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
->> > -			     long timeo)
->> > +			     long *timeo)
->> >  {
->> >  	DEFINE_WAIT_FUNC(wait, woken_wake_function);
->> >  	int ret =3D 0;
->> > @@ -187,12 +187,12 @@ static int tcp_msg_wait_data(struct sock *sk, st=
-ruct sk_psock *psock,
->> >  	if (sk->sk_shutdown & RCV_SHUTDOWN)
->> >  		return 1;
->> > =20
->> > -	if (!timeo)
->> > +	if (!*timeo)
->> >  		return ret;
->> > =20
->> >  	add_wait_queue(sk_sleep(sk), &wait);
->> >  	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
->> > -	ret =3D sk_wait_event(sk, &timeo,
->> > +	ret =3D sk_wait_event(sk, timeo,
->> >  			    !list_empty(&psock->ingress_msg) ||
->> >  			    !skb_queue_empty_lockless(&sk->sk_receive_queue), &wait);
->> >  	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
->> > @@ -229,6 +229,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->> >  	int copied_from_self =3D 0;
->> >  	int copied =3D 0;
->> >  	u32 seq;
->> > +	long timeo;
->> > =20
->> >  	if (unlikely(flags & MSG_ERRQUEUE))
->> >  		return inet_recv_error(sk, msg, len);
->> > @@ -262,6 +263,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->> >  		}
->> >  	}
->> > =20
->> > +	timeo =3D sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
->> > +
->> >  msg_bytes_ready:
->> >  	copied =3D __sk_msg_recvmsg(sk, psock, msg, len, flags, &copied_from=
-_self);
->> >  	/* The typical case for EFAULT is the socket was gracefully
->> > @@ -280,7 +283,6 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->> >  	}
->> >  	seq +=3D copied_from_self;
->> >  	if (!copied) {
->> > -		long timeo;
->> >  		int data;
->> > =20
->> >  		if (sock_flag(sk, SOCK_DONE))
->> > @@ -299,7 +301,6 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
->> >  			goto out;
->> >  		}
->> > =20
->> > -		timeo =3D sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
->> >  		if (!timeo) {
->> >  			copied =3D -EAGAIN;
->> >  			goto out;
->> > @@ -310,13 +311,15 @@ static int tcp_bpf_recvmsg_parser(struct sock *s=
-k,
->> >  			goto out;
->> >  		}
->> > =20
->> > -		data =3D tcp_msg_wait_data(sk, psock, timeo);
->> > +		data =3D tcp_msg_wait_data(sk, psock, &timeo);
->> >  		if (data < 0) {
->> >  			copied =3D data;
->> >  			goto unlock;
->> >  		}
->> >  		if (data && !sk_psock_queue_empty(psock))
->> >  			goto msg_bytes_ready;
->> > +		if (!data && timeo > 0)
->> > +			goto msg_bytes_ready;
->> >  		copied =3D -EAGAIN;
->> >  	}
->> >  out:
->> > @@ -355,6 +358,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct=
- msghdr *msg, size_t len,
->> >  {
->> >  	struct sk_psock *psock;
->> >  	int copied, ret;
->> > +	long timeo;
->> > =20
->> >  	if (unlikely(flags & MSG_ERRQUEUE))
->> >  		return inet_recv_error(sk, msg, len);
->> > @@ -371,14 +375,59 @@ static int tcp_bpf_recvmsg(struct sock *sk, stru=
-ct msghdr *msg, size_t len,
->> >  		return tcp_recvmsg(sk, msg, len, flags);
->> >  	}
->> >  	lock_sock(sk);
->> > +
->> > +	timeo =3D sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
->> > +
->> >  msg_bytes_ready:
->> >  	copied =3D sk_msg_recvmsg(sk, psock, msg, len, flags);
->> >  	if (!copied) {
->> > -		long timeo;
->> >  		int data;
->> > =20
->> > -		timeo =3D sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
->> > -		data =3D tcp_msg_wait_data(sk, psock, timeo);
->> > +		if (sock_flag(sk, SOCK_DONE)) {
->> > +			ret =3D 0;
->> > +			goto unlock;
->> > +		}
->> > +
->> > +		if (sk->sk_err) {
->> > +			if (!sk_psock_queue_empty(psock))
->> > +				goto msg_bytes_ready;
->> > +			if (!skb_queue_empty(&sk->sk_receive_queue)) {
->> > +				release_sock(sk);
->> > +				sk_psock_put(sk, psock);
->> > +				return tcp_recvmsg(sk, msg, len, flags);
->> > +			}
->> > +			ret =3D sock_error(sk);
->> > +			goto unlock;
->> > +		}
->> > +
->> > +		if (sk->sk_shutdown & RCV_SHUTDOWN) {
->> > +			if (!sk_psock_queue_empty(psock))
->> > +				goto msg_bytes_ready;
->> > +			if (!skb_queue_empty(&sk->sk_receive_queue)) {
->> > +				release_sock(sk);
->> > +				sk_psock_put(sk, psock);
->> > +				return tcp_recvmsg(sk, msg, len, flags);
->> > +			}
->> > +			ret =3D 0;
->> > +			goto unlock;
->>=20
->> These two error handling routines above look identical. Can you refactor
->> them?
->>
->
-> Will do.  My understanding is the same logic is needed to address the
-> issue Sashiko raised with the SOCK_DONE check as well.
->
->> > +		}
->> > +
->> > +		if (sk->sk_state =3D=3D TCP_CLOSE) {
->> > +			ret =3D -ENOTCONN;
->> > +			goto unlock;
->> > +		}
->> > +
->> > +		if (!timeo) {
->> > +			ret =3D -EAGAIN;
->> > +			goto unlock;
->> > +		}
->> > +
->>=20
->> Since this handling (which Sashiko flags by the way, correctly AFAICT)=
-=20
->> are taken from tcp_bpf_recvmsg, there is obvious overlap between the two
->> functions. Please factor those out so that they share the logic between
->> them.
->>=20
->> pw-bot: cr
->>=20
->
-> Sashiko highlighted the "if (!timeo)" and signal_pending early returns
-> when MSG_DONTWAIT is set, but I think I'm missing part of the picture.
-> By the time we reach these branches, haven't we already checked for data
-> in sk_receive_queue (line 372, after the patch is applied to 7.2-rc2)
-> [copied below for ease of viewing]:
->
->     if (!skb_queue_empty(&sk->sk_receive_queue) &&
->         sk_psock_queue_empty(psock)) {
->         sk_psock_put(sk, psock);
->         return tcp_recvmsg(sk, msg, len, flags);
->     }
->
-> and in the psock (line 382) [again copied below for viewing]:
->
->     copied =3D sk_msg_recvmsg(sk, psock, msg, len, flags);
-
-If I'm understanding your question correctly, and AFAICT:
-sk_msg_recvmsg only drains the psock out of sk_msg data. If any data is
-still in the backing struct sock but has _not_ been drained into the psock
-it gets missed under the new code.
-
->
->> > +		if (signal_pending(current)) {
->> > +			ret =3D sock_intr_errno(timeo);
->> > +			goto unlock;
->> > +		}
->> > +
->> > +		data =3D tcp_msg_wait_data(sk, psock, &timeo);
->> >  		if (data < 0) {
->> >  			ret =3D data;
->> >  			goto unlock;
->> > @@ -390,6 +439,8 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct=
- msghdr *msg, size_t len,
->> >  			sk_psock_put(sk, psock);
->> >  			return tcp_recvmsg(sk, msg, len, flags);
->> >  		}
->> > +		if (!data && timeo > 0)
->> > +			goto msg_bytes_ready;
->> >  		copied =3D -EAGAIN;
->> >  	}
->> >  	ret =3D copied;
->>=20
-
+> ENODEV.
+>=20
+> Does the driver need to be updated to recognize this new device ID so it =
+does
+> not reject the device?
+>=20
+> > +          - const: adi,max20830
+>=20
+> --
+> Sashiko AI review *
+> https://urldefense.com/v3/__https://sashiko.dev/*/patchset/20260720-dev-
+> max20830c-v3-0-9d06d27d6da3@analog.com?part=3D3__;Iw!!A3Ni8CS0y2Y!9Y1-
+> 8bG621IAS4vRsBACPsWZTRxOMjvl6GwpDV_aXAdZxqf91aj0gx9M_D5G-
+> LpeIpdqqGP6DniI1ScWRRNswxG98cP105I$
