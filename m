@@ -1,235 +1,219 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477C23F58E0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 01:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1411736A354
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 01:05:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784595629; cv=none; b=TbMMP+kNjASR1tLW2sj82kgp9kMRID1i+v9ORJ4QFgSBD4DdOoyavnWFWUOJPxoSFogPatfPAeccgOSyRLe+V3nhg6IzOHIaN3YfsrRtC8D/qeOy2qitNF6sACIqCwwZ6Ziz9uYjzPKz5QbppsGMo8pW//QxNL4Pm9Xq+SILhUo=
+	t=1784595953; cv=none; b=I8Qql3LU3qKsWh5v4yUif2E9HSnkgmdupeJGdmfEAkieqzwEZ/sleX9nhQCKFreyirdAtESOFewzRj9lfHgMUezCbBLZcRKzx5141Km4Hvl0mXbxnY0USM/vI9SBEPPjFPeGm/SjPGzXuspxyP8TSa6u7eWfxiTIS10JFnfAAKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784595629; c=relaxed/simple;
-	bh=9KoC10LJtSeDEGSTTKojoNONjqdolpEmv27FZiRX0K0=;
+	s=arc-20240116; t=1784595953; c=relaxed/simple;
+	bh=U0D6nZ8gfwpMjdg12liNmjdw41QW3L3/wMMBpolMT8s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BLn24VMN1fzUoU2+eWqtV1KU2fSes1/MJKOPfeZkDnAjUWK6EKKLgtQhzOKcwE6o2r49dL9jYseqVW5gPEDdfbnoYNPPntLX9xNDI/7BoWohesHRlt9kpF6/mMFI7Bg2lOMLWbpGjxYceq+gWrPvuHr9/MCE6OD3267nASh4K18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XyrhOJxz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UNKJRHi7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=oT/FfUIfgJIYocSujWau7lOkfaNMm3wHLhcDF+BFFt5RTiQRHB52cTZo4YL08m1EKs+WAPaIEMmHtAxR4mDvgAk0VzrIRjH/xVKLJUeBKvn9ShwUdffHiQ4wuw025uNKnnUzCFSqW16N8UBiQJ/Vh846PAmZJIi3svhav+jUv2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wr7CL+EJ; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XyrhOJxz";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UNKJRHi7"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66KND36X046582
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 01:00:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vIFQW66lWasQ4teYy7kGfOEnxcGwdViOIr1+IS87Wp8=; b=XyrhOJxz/4gBeB2Z
-	SNOTGyX3iAQtgBoGbG6pW2Xm1FVMiLTJ5LFZb0Zl8pO8WYIsQ9CRnmVWZhKL91rx
-	hxFsDl14Qz9jfX7MJVsLRt6ofah+2Vzg+fv4KoqTkATfXCwskKDCnz9E+RsYhMFj
-	jTjsLyl9g9dI+CzdE4pTF3t6gy4FWuRHYvfnXj6VcfmXePKfnnT7KNYPQ05PYEzy
-	zUbbxBVXNdae5BMEhWg8Y9vqWOGI3TvJzru/JdUEmKYQXGcZMhbSGH0Rz6F7ONPe
-	NY6AGv2fYBE/tti6f+ohFcA+s06UrH1XvROKleCm/TOjWE+i0X9dbHeipqro1kPz
-	GJP/sQ==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqv5shqa-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 01:00:24 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cc86a9ef97so232288465ad.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:00:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wr7CL+EJ"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2cab973140bso131694835ad.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 18:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784595624; x=1785200424; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=gmail.com; s=20251104; t=1784595951; x=1785200751; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vIFQW66lWasQ4teYy7kGfOEnxcGwdViOIr1+IS87Wp8=;
-        b=UNKJRHi7wKOWwC8XZqu0N64ObgBw4Z+brMwm1u9w7/OvnmmEEBIAFQuKnNaVt1NpfW
-         6nh3Nm4gRWNT0JqiIv+dVftG/GX23C5w9F+2d1cbVd8wDiZxq3Fg5i5KB8XFZGQuBvTb
-         UpVvxSn1aSBLmA0HTVTFJh5xNSvCQWYliRlvupobzpIckeZR/vQn5jee5l5OI/VRF5lA
-         blQTMqxn/iDYWRlDZOzQ/3Ss3CIiy/txyekygAEsm5VtzywxfD+TScCI5j9WdZ8iBbA1
-         eQUdhWvaJh+bN6yvtTjlfY+sw8eFsfublUChb+F4GIj1YayqCuc7VT86oE3Y74yq6V3E
-         88lw==
+        bh=vxJokmGzxjcSVDm8vBuFGdiZIy7g8VJmra47cR07BqQ=;
+        b=Wr7CL+EJruAJWu6jBBa+cxjQleh52eYjpGItRO8AnutlpYV34+f8RGsAacOGs7E4lL
+         n14YjcbLAT+R15zXm2ytqABqelzirDvbZ5nwzly/pzsFyk01lI1Vrr9sZLnOIlJf4H2E
+         FjxtxG7Vea/F33PwWY6MqWRwI3ZIr0bkIr/g8nN6b/J3sxnndFgksDpLCh3fb27iHOu8
+         6Jz3XwYEjH3YIgtueZbRSEF+9ywcJB5tzYdy4Yh7IbjaA+lKzWBW57gs6r8CT3TFTdWX
+         psRjcepAdbrmjrE5Tg2C6PIai0uj2dZhVecwpUseFbkA6yKQoNT1L5bJtowbHIugpYxQ
+         IwAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784595624; x=1785200424;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=1e100.net; s=20251104; t=1784595951; x=1785200751;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=vIFQW66lWasQ4teYy7kGfOEnxcGwdViOIr1+IS87Wp8=;
-        b=UBGAjd1WwOdA26N88d+KJA0x7k++KsUhOmHug5cf+UONQmF7nlny6UZakXMst2zim7
-         4uBwUDq3v1Y08OSSMZqRM7pCUFfecS/U+J24NfBdnSkNBzl2XiIXrc26uMGP0b+kKGju
-         vH9nXSXEymqwdtvHmp8Qfs4MWUNXyoBZBKWo3wqr0Nh6h9hNo1BO0eDh2FZX8neM+m8p
-         GxZwqjizp8qEVEvB5lz6LjAGyAnLwTjrlZi1rYsQf8eql6lVg8JEHbgPR4uJQC7x7zIn
-         MGnQ8x3sQZCOzKcgZI1nETHYzVVMqRwgNaAx3/PHwBBLQ5jiRyXeQarav0sqKRkpq1gJ
-         jI/g==
-X-Gm-Message-State: AOJu0YyKfIxRjb4KrQqyouQyFS/uGb/zSoYJMqvmhB1cY2UfrOEF+IQu
-	ZH7rhHJshTQa6H+/EH+Zs4/H6MP8pMxOO1JWIMo4h3s8UzSxtAX2H6mCyEJvX5nJeas0CqQzVls
-	f8PPNsgVcIAkMzeo4v45vpKtSvvl/DgBaGfjaF6eRJ/j0YSUiSJ6xFkTqW4sE30euW6DsT2FmGP
-	rgHOU=
-X-Gm-Gg: AfdE7ckGhGELuQ7mDAO8b+v77sa3Oh5X0hSMOtpBMYK/NTLztbIWqn+C7MGMbG/n4Yi
-	WE2jzt6Iv3bCMtVatc4y6g0bRW7S2SLuMYTLB7biELcIay0vCldfnRxjwra5APzl26XM//x7L1L
-	wyJyosibp8InO6nDZFzZs8XLHK9ZqsLpcx6FsZ7BcLKbPjhYFN3Mi3fSQIfEpx2ZP0WBKClm1+y
-	mLoUttyFEDKLPq2gh/zA//0DTywck9bjK+7WavNvM3ZngC8H4ryjqdILoz2busKfwpuUyN6X56p
-	ZNa5iYikluJytAaTlafAZKo3XJAV/Fo3/GFz4aRY1v2gX48ZCaaKf+lCLZlT1zYyG+eJEnULa6y
-	kri5BS7K0uz2tMYEd5veYzkSXtFSv6rE=
-X-Received: by 2002:a05:6a20:cc0b:b0:3c3:6b6e:8ba0 with SMTP id adf61e73a8af0-3c3ad66a4ccmr17599896637.11.1784595624111;
-        Mon, 20 Jul 2026 18:00:24 -0700 (PDT)
-X-Received: by 2002:a05:6a20:cc0b:b0:3c3:6b6e:8ba0 with SMTP id adf61e73a8af0-3c3ad66a4ccmr17599830637.11.1784595623410;
-        Mon, 20 Jul 2026 18:00:23 -0700 (PDT)
-Received: from [192.168.0.5] ([49.205.251.140])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ce29c2c93sm37644053c88.3.2026.07.20.18.00.21
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=vxJokmGzxjcSVDm8vBuFGdiZIy7g8VJmra47cR07BqQ=;
+        b=hAxeTTN5iSC0gDOZCgByqisyWEkLuMyJvyQnAoSjFUxQjvrCauWMVN29KcSA8alwRI
+         6ntyMCk3S5DH2S5ssHJ7HX72kYOmIOkxOE9RaJxkVhp1uQwgKplSUa2YwfNlZDzWot0m
+         4fMZ6jlfJoHoc0/CLKLn8DzHzZq/OSQTGRkRz3df03gKKax9kgOy5oXKIALpTVLdpUOJ
+         1oYcqd1ANEHBAq5psiTPfsJLNhKKRQsUrcyz9iivcvOIVdMOFdbMXig+2gobauTfUh5N
+         nt+STXjqWuo7oId1q2Hibc1F5EEm+Tr6Fij3TaWBocJ1RizepoLfbYJBQ7TblpZ27T6F
+         k8vQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpybYUXmy69a07JSAOAgC5AL1P5dR8BS/013X7BfGpVVrSsaxVv0HpKIY9a/zHPwu+hILGLXPH2gDMLuKxWUBs=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2z8sIkfa5Bs/o723JRE9OpwAlwBXKo4+4Z5ybLOmlzSGRjHdR
+	UosB8S6SvKcatjk97ddSOrs4E0GsCrKxn0ATfCqnVzv92hefqJGSxePh
+X-Gm-Gg: AR+sD10ko++8iWG/YQ6M5J51yR9bmZUPEq5dT9exPlY/DUg4LEQCmeIwsahyz+8Gjne
+	jL4OWdlI9AsdjJqnWlAec/0RjZOvqC7phIst+B5UkLTPuk7JiXtvmnAn0WRP+qOWYwh9f6hbBpl
+	vysNTVQjQe8ifMDu51rXlVw28T5BaGcoPwwhbTdOXqAaCtNRWhkaQrlumdI3HpjJln+eTGoiT4d
+	lvNr5N90uaP7Iy9dP16W4/VmqKkPU9VuZNMS0Pjtt+vjxFANT8oNgL1ebQX5gh2rcVYao+UO3eq
+	ofVbvNViyi2Qs7oFDNOgxx1GJ2cLnLNQBzXyKuVYdT/9/CeTEk7KpE0MIQ3pKfguhEcf50Avpb9
+	kWG2LrMmqDVA9x5EpKidZ3+Q4nId53Z2Lfqw5pjT9zpssf4QW4V9Ct+cN43/YJLk9vFvTIPGwHr
+	3WexiFjQgmTQ7TGEwQIPDfotkqui2uxveNLGoUQwmEkxXZ1r2oL2A=
+X-Received: by 2002:a17:902:d2d2:b0:2ca:d7a0:1312 with SMTP id d9443c01a7336-2cf34961d82mr197230145ad.25.1784595951017;
+        Mon, 20 Jul 2026 18:05:51 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf3471513bsm64399125ad.57.2026.07.20.18.05.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jul 2026 18:00:22 -0700 (PDT)
-Message-ID: <7bec94ea-a5b9-be03-0e40-5de8262d2197@oss.qualcomm.com>
-Date: Tue, 21 Jul 2026 06:30:18 +0530
+        Mon, 20 Jul 2026 18:05:50 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <b0442a31-deda-413a-955e-1ab8c99b2033@roeck-us.net>
+Date: Mon, 20 Jul 2026 18:05:48 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur
- video codec
-To: Rob Herring <robh@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
-        devicetree@vger.kernel.org
-References: <20260715-glymur-v9-0-8cf2cbe12a07@oss.qualcomm.com>
- <20260715-glymur-v9-1-8cf2cbe12a07@oss.qualcomm.com>
- <20260715142224.5FA721F00A3A@smtp.kernel.org>
- <b179ac7a-af91-da67-3232-e9e41203ade0@oss.qualcomm.com>
- <20260716165434.GA290489-robh@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] hwmon: (pmbus/max20830): add VOUT feedback
+ resistor scaling support
+To: "Torreno, Alexis Czezar" <AlexisCzezar.Torreno@analog.com>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Cc: "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+ "conor+dt@kernel.org" <conor+dt@kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "robh@kernel.org" <robh@kernel.org>
+References: <20260720-dev-max20830c-v3-0-9d06d27d6da3@analog.com>
+ <20260720-dev-max20830c-v3-2-9d06d27d6da3@analog.com>
+ <20260720032550.A4F891F000E9@smtp.kernel.org>
+ <PH0PR03MB635109584F166EBD4A5510B4F1C22@PH0PR03MB6351.namprd03.prod.outlook.com>
 Content-Language: en-US
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-In-Reply-To: <20260716165434.GA290489-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDAwNyBTYWx0ZWRfXxplhZth0M5kK
- Svu3B2bP7/GY/aaTaOV1IxxuqfjhbBgZGttwM8H8yvd8KzwrReGweyO0z7Izvmc2J9q1rgjt1jH
- 7dKPt2tWmBpt33E52czG13htmXc28dfE5b9fnRgYssL+S6u8RdB1ISdhgtnWid2Hus/snig/6uN
- G5r3KTL3I1a/TobRCqvSXIEZJhyzKsC4D+u++HS0ukUUVxOJsNDJmikNbj4I4vLgdlYB6f7Yhfb
- KH4g3s+RH1H32SkTaJmsLJVdAjKbXReDfsdkJ3LOqdsI2xoAgvTCVclibHj+iOfAP8DGKw69DdS
- ryJF1qgbazfYbBakq8ZMk3dMUYQRAR/+uNnMlTpJGiHC9W3RiKR+0f3W/+fvobSQ7xFgSqGZNwF
- UUBSaId70oVkmvxRnMCH4jCO3Vt5A1ZX3kScxKb3JFhY6CAWH/5xy7KzyWKmmexK7GhwyYoGEht
- RvxHsDwXyiBPCLCTzPA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDAwNyBTYWx0ZWRfX5KHZ985XWSs7
- 1H5tfLPpuHHXuGObqVG23tA7UDVe9y2jJMs7eL/Usy+cYMm6XEulMbEvB7GFWP81DyEEkt4OTua
- /xRHbNW75N3wfq84USmqe/v8IUdFhSs=
-X-Authority-Analysis: v=2.4 cv=WNpPmHsR c=1 sm=1 tr=0 ts=6a5ec4a9 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=oHgmLS9T6KHqMfKxrEeemw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=UXIAUNObAAAA:8 a=waDrRbdePDZ9fwWd1tsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
- a=a1s67YnXd6TbAZZNj1wK:22
-X-Proofpoint-GUID: 0o4-kYoqxULxQ1gbdc4XzSXivQhGRkWn
-X-Proofpoint-ORIG-GUID: 0o4-kYoqxULxQ1gbdc4XzSXivQhGRkWn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607210007
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <PH0PR03MB635109584F166EBD4A5510B4F1C22@PH0PR03MB6351.namprd03.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On 7/16/2026 10:24 PM, Rob Herring wrote:
-> On Thu, Jul 16, 2026 at 08:37:17AM +0530, Vishnu Reddy wrote:
->> On 7/15/2026 7:52 PM, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>> - [Low] Unnecessary `#address-cells` and `#size-cells` properties on a node without addressable children.
->>> --
->>>
->>> --- Patch [1]: [PATCH v9 01/14] dt-bindings: media: qcom,glymur-iris: Add glymur video codec ---
->>> commit 8ca344fa9395fcf1d13bd1ea93de8bee21a5c176
->>> Author: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
->>>
->>> dt-bindings: media: qcom,glymur-iris: Add glymur video codec
->>>
->>> This commit adds the device tree binding for the Qualcomm Glymur Iris video
->>> codec. It introduces a new dual-core architecture requiring additional
->>> power domains and clocks, and updates the maxItems limits in the common
->>> venus schema to accommodate these changes.
->>>
->>>> diff --git a/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
->>>> new file mode 100644
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/media/qcom,glymur-iris.yaml
->>>> @@ -0,0 +1,255 @@
->>> [ ... ]
->>>> +  interconnect-names:
->>>> +    items:
->>>> +      - const: cpu-cfg
->>>> +      - const: video-mem
->>>> +
->>>> +  '#address-cells':
->>>> +    const: 2
->>>> +
->>>> +  '#size-cells':
->>>> +    const: 2
->>> [Severity: Low]
->>> Are these properties necessary here? The schema strictly enforces const: 2
->>> for #address-cells and #size-cells at the root node, but none of the child
->>> nodes (non-pixel, pixel, firmware) define a reg property, and the parent
->>> does not define a ranges property. 
->>>
->>> Will this cause the DeviceTree compiler (dtc) to emit an 
->>> avoid_unnecessary_addr_size warning when compiling device trees using this
->>> node?
->>>
->>>> +
->>>> +  non-pixel:
->>>> +    type: object
->>> [ ... ]
->>>> +        resets = <&gcc_video_axi0c_clk_ares>,
->>>> +                 <&gcc_video_axi0_clk_ares>,
->>>> +                 <&videocc_mvs0c_freerun_clk_ares>,
->>>> +                 <&videocc_mvs0_freerun_clk_ares>,
->>>> +                 <&gcc_video_axi1_clk_ares>,
->>>> +                 <&videocc_mvs1_freerun_clk_ares>;
->>>> +        reset-names = "core_bus",
->>>> +                      "vcodec0_bus",
->>>> +                      "core",
->>>> +                      "vcodec0_core",
->>>> +                      "vcodec1_bus",
->>>> +                      "vcodec1_core";
->>>> +
->>>> +        #address-cells = <2>;
->>>> +        #size-cells = <2>;
->>> [Severity: Low]
->>> Does the example need #address-cells and #size-cells? It demonstrates their
->>> use without any child nodes containing reg properties, which directly causes a
->>> dtc warning during dt_binding_check validation.
->> Without #address-cells and #size-cells, getting the below kernel warning prints.
->> [    6.953615] Missing '#address-cells' in /soc@0/video-codec@aa00000
->> [    6.968288] WARNING: drivers/of/base.c:115 at of_bus_n_addr_cells+0xa4/0xf4
+On 7/20/26 17:44, Torreno, Alexis Czezar wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+>> Sent: Monday, July 20, 2026 11:26 AM
+>> To: Torreno, Alexis Czezar <AlexisCzezar.Torreno@analog.com>
+>> Cc: linux-hwmon@vger.kernel.org; conor+dt@kernel.org;
+>> devicetree@vger.kernel.org; robh@kernel.org
+>> Subject: Re: [PATCH v3 2/4] hwmon: (pmbus/max20830): add VOUT feedback
+>> resistor scaling support
 >>
->> [    7.440909] Missing '#size-cells' in /soc@0/video-codec@aa00000
->> [    7.447044] WARNING: drivers/of/base.c:142 at of_bus_n_size_cells+0xa4/0xf8
-> Then the kernel is wrong.
+>> [External]
+>>
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to
+>> consider:
+>> - [Medium] The voltage divider scaling calculation suffers from a 32-bit addition
+>> overflow and an unsafe 64-bit to 32-bit signed integer truncation before
+>> clamping.
+>> --
+>>
+>> --- Patch [2]: [PATCH v3 2/4] hwmon: (pmbus/max20830): add VOUT feedback
+>> resistor scaling support --- commit
+>> ac88893286286c633f117369db91c2cffd163afd
+>> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+>>
+>> hwmon: (pmbus/max20830): add VOUT feedback resistor scaling support
+>>
+>> This commit implements support for external voltage divider scaling using the
+>> adi,vout-rfb1-ohms and adi,vout-rfb2-ohms device tree properties. The driver
+>> reads these values and applies the scaling formula to the raw VOUT reading.
+>>
+>>> diff --git a/drivers/hwmon/pmbus/max20830.c
+>>> b/drivers/hwmon/pmbus/max20830.c index cb2c23672166d..7a5e67bd33c0a
+>>> 100644
+>>> --- a/drivers/hwmon/pmbus/max20830.c
+>>> +++ b/drivers/hwmon/pmbus/max20830.c
+>>
+>> [ ... ]
+>>
+>>> +static int max20830_read_word_data(struct i2c_client *client, int page,
+>>> +				   int phase, int reg)
+>>> +{
+>>> +	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
+>>> +	const struct max20830_data *data = container_of(info, struct
+>> max20830_data, info);
+>>> +	int ret;
+>>> +
+>>> +	switch (reg) {
+>>> +	case PMBUS_READ_VOUT:
+>>> +		ret = pmbus_read_word_data(client, page, phase, reg);
+>>> +		if (ret < 0)
+>>> +			return ret;
+>>> +
+>>> +		/* Apply voltage divider scaling if resistors are non-zero */
+>>> +		if (data->vout_rfb1 && data->vout_rfb2) {
+>>> +			ret = DIV_ROUND_CLOSEST_ULL((u64)ret * (data-
+>>> vout_rfb1 +
+>>> +						    data->vout_rfb2), data-
+>>> vout_rfb2);
+>>> +			ret = clamp_val(ret, 0, 0xFFFF);
+>>
+>> [Severity: Medium]
+>> Can this calculation suffer from a 32-bit addition overflow and an unsafe 64-bit
+>> to 32-bit signed integer truncation?
+>>
+>> If data->vout_rfb1 and data->vout_rfb2 sum to more than 2^32 - 1, the 32-bit
+>> addition will wrap around before the 64-bit multiplication.
+>>
+>> Additionally, since ret is a signed 32-bit integer, if the 64-bit result returned
+>> from DIV_ROUND_CLOSEST_ULL exceeds 2^31 - 1, the assignment to ret will
+>> overflow into a negative integer. The clamp_val() macro will then evaluate this
+>> negative number and incorrectly clamp it to 0 instead of 0xFFFF.
+>>
+> 
+> Although technically correct, is sashiko a bit paranoid?
+> Feedback resistors won't typically reach those values.
+> 
 
-Hi Rob,
+It does what it is asked to do, which for hwmon drivers is to explicitly check
+for over- and underflows because those happen surprisingly often in hwmon
+drivers. There is a reason why more than 50 patches in drivers/hwmon
+have either "overflow" or "underflow" in the subject line.
 
-Looking at the iris DT node from the link below:
-https://lore.kernel.org/all/20260715-glymur-v9-13-8cf2cbe12a07@oss.qualcomm.com/
+Guenter
 
-The iris is the parent node and non_pixel is the child node, which does not
-have a reg property, but does have a memory-region reference containing
-iommu-addresses. During of_translate_dma_region, #address-cells and
-#size-cells are required from the parent node for address translation.
-
-As per the Device Tree Specification:
-https://devicetree-specification.readthedocs.io/en/stable/devicetree-basics.html#address-cells-and-size-cells
-
-#address-cells and #size-cells cannot be inherited from ancestors and shall
-be explicitly defined at the parent level. Therefore, adding them to the iris
-DT parent node seems appropriate in this case.
-Please let me know if I am misunderstanding something.
-
-Regards,
-Vishnu Reddy.
-
-> Rob
