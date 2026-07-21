@@ -1,45 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD1244605F;
-	Tue, 21 Jul 2026 22:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955F5346771
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 22:38:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672501; cv=none; b=bAKZoeSstcD5/18bp6gn/IvuIjT8Hr2Vbl35coutKOpP0xrJKS2Xp2DjlgJ5gR/jG2uTA8fzvpA9RJvS/64Z2U7HZ3FQeeHH3CVukWP/t5wb0XiBRKApxvEnrYw7Og+08VpOxCEf3Rb0glx8hH0cnxnR1/CPAzZ5l9ufLMKG6cM=
+	t=1784673502; cv=none; b=ZLFLf+MG2xreurooYDEjJbWr98zD1AwWqdD/LLhjpIM5J/3mquOjW2kNek3BH+X6LJY9Khryk1YLduHWXzhQjOFvP1Yfs6U9I8q269z9rRC2Y1HoEs/chP4ERZq6gRI3I7fxtdaAjHMr42YVwOwidm2GdHBwzOkRgXtpoe5K1Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672501; c=relaxed/simple;
-	bh=dNNdeQT8LIZ10uAuGfc5ABCEcuMx1ejJ8in1OgK4rxA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4zxAO7GOP41qYIhzy7b93zismV+/9JKvKA7AgWzSv/EX1uWG2xp3Ow9FJ6X7LApXxMhARLOD0RK1R9hvnA9x1HGYatj6lx+6nOTiVOxpTMrsWZ8VKzEGeDxvS9q1K0oY5ehNS8VsciVAB1IJfBBUc1WhEKpzPwP+XdoksIq0PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCeFup1V; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784673502; c=relaxed/simple;
+	bh=JQ6jy/Liue8WW5wFfNIdvfNn2mNrYwM8ygCatIkUUQQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LvC4QfVcIPukpzNil632naMcanDzPjanWBcopqqeB8pF/M7w3Z+GDMV/9VeBRHNsk6z35HGrYbD9WBOmLP8uOrCpwWDR/3WIbUk/z7Hb1q7Amy3QC1klaLjnxgr+iMoP8xOE5wOy6UteJOsaE2QJmwjFoLEyf6BmVrPfODpfitQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bwWPTquv; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCeFup1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D86C1F000E9;
-	Tue, 21 Jul 2026 22:21:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672499;
-	bh=NVijzOZOySx+g3AlQM3x18jOPZBowSN3iSE3KA9YzYQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GCeFup1VImymeYdfeU4uBxBWWS8tT+hzsoQguXTV1rHxk3JahZgcOM4n1Fd/Zf3kJ
-	 2LTkFuXRPnwU1SrdKt0gnAchRYOTF773awD+9AxkShLOFii/MFcyVcldABjRNv9hkM
-	 Si/d4+dU077x8w85XYvFooiPIrGT6gDJm8pcK/8E=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bwWPTquv"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4954f5e8020so18085015e9.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 15:38:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784673492; x=1785278292; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=lLg62SoAvmrp+34mR0N76mbDra0q9WddbEhVc9/YGR8=;
+        b=bwWPTquvI/SRD0BHG49QBCSdoXjdDgmmgq30fomRb4x5ylM0lK/lEoo8qMbRAIUkud
+         2xeTiHDdUss3vW3k9qD7VVmGi0bA1WztXqW/1GcOuZjZdkWFBq915EZ3cDzCfXb78sOH
+         ajdR+OhtYwDEhClBQ9m5x0CEpRtzLMruR/PpIfvuA1Vxf5hjPPnO0lQ4C9zOtQq9SCJn
+         DMxVXuZ1RgmacYqcwUAfsI6q+lb073Ew+Z8eOzNRfYnRvomuxgwG0D/k6yoJo30oSVV2
+         J0XPxmVetORVBMjkhX3o3lFFbMSH7R+xAeTpVcqYOH1VGSdpLicscXAkj0hSJV9Doyma
+         bRYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784673492; x=1785278292;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lLg62SoAvmrp+34mR0N76mbDra0q9WddbEhVc9/YGR8=;
+        b=RQwy3TDz80ssAUKNAX2MJshTEzCG/RqunoeB2v4cCR1WalWFQpSkBrQZmBcUHRF5u2
+         ZhNyJ9jO4lvkDt64dB1LJYDKd4CzwvCnzc0xCRWtoLPqXojtq+PcpgCryKm5fHwh4A2A
+         ks7a+3GuAZIbRLl/DDCbsYhZC1wVacTuZn05dXi9AdqMvBNziGe0/9/KtaMnxcbmXEzP
+         2N6vu7EN76iB0lfivIpUZHvxC71bz1JS1ucThYyD0mJimbNDQlj9GXO1+d/ntDImCjj5
+         k1mO4Air6BnmVTk8uEU+NywQzyXunfTRh2T25QLBTHTSI34/uo5GdJFklVi9hkGvL8sL
+         Lp6w==
+X-Forwarded-Encrypted: i=1; AHgh+RoAM9dR5IBIQ2wAe0/hVu2OsqgW3KGfSTsacUERnTF6jbharhmOZIZi2kbR9aTjOR2gRA4APWMHEEAbrrBCH98=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxT1RVnn49o++2nJN9cI156UBE1JmoSOl2UQLrGvpDc9qgUzQLT
+	9RVjruX+OQjD5kdZPeTCHjL94zgZMIvBDFuIeiXDT/mF91F43FN1B3fD
+X-Gm-Gg: AfdE7cktitUPb53i5KL/LPmm1lRZ/UvBGX+GFc0p/Il6LAWKjQQF1Qvbziq23426lmQ
+	4vhSlqqJt4pnq21DWhXnlVP36DcC/QWGzFbLucuBEu6QW9N9lx6+/syWtJlwx0beFU81+XmdQAA
+	qKboAcETL1WpIXxwlUdlsZUVJLuJ39OFWq4k3Yr3Qoubx0XOKC7IOl7qeeu3tWL8BqZdmUIbnNy
+	2S05b4PcHzDtch5OJKR/EIxrwZmr0RlFFPQcns529yQuijHKDKr0rWgtqraHaE7x9FwTDdh0aEC
+	AttdbmHqHz3TUWNQqn4tAFxIKyGzHU8hfAe6x7esUEZDN39KDEpKEPhUxn0t9Uyx7lE6xGnR+o+
+	rUF/8DRkpSn4vwNslLD8ZBKI/0KWFocZhmc+YqwJsfrdIpi8EMGwjIvVBBH//XBvRdNOfvP53lL
+	k0VgnfVgLz/0uRP4h99YI0jMfubpE6O/R1w+0OAt5POCsDJGOKtCzDx450Tk57WkH2dw==
+X-Received: by 2002:a05:600c:3143:b0:492:7142:f46e with SMTP id 5b1f17b1804b1-4954a3d0cd7mr246829545e9.2.1784673491644;
+        Tue, 21 Jul 2026 15:38:11 -0700 (PDT)
+Received: from localhost.localdomain (host86-153-201-25.range86-153.btcentralplus.com. [86.153.201.25])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653c9d99sm101290455e9.12.2026.07.21.15.38.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2026 15:38:10 -0700 (PDT)
+From: Nnamdi Onyeyiri <nnamdio@gmail.com>
+To: nnamdio@gmail.com
+Cc: bpf@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	horms@kernel.org,
+	jakub@cloudflare.com,
+	jiayuan.chen@linux.dev,
+	john.fastabend@gmail.com,
+	kuba@kernel.org,
+	kuniyu@google.com,
+	ncardwell@google.com,
+	netdev@vger.kernel.org,
+	pabeni@redhat.com,
 	sashiko-reviews@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 649/843] can: bcm: add missing rcu list annotations and operations
-Date: Tue, 21 Jul 2026 17:24:44 +0200
-Message-ID: <20260721152420.668676558@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
-References: <20260721152405.946368001@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	emil@etsalapatis.com
+Subject: [PATCH v7 0/2] bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
+Date: Tue, 21 Jul 2026 23:38:05 +0100
+Message-ID: <20260721223807.75101-1-nnamdio@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -48,126 +85,70 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+Spurious wakeups in tcp_msg_wait_data() aren't being handled by
+tcp_bpf_recvmsg() and tcp_bpf_recvmsg_parser(), leading to unexpected
+EAGAIN errors returned by recvfrom()/recv().  Adding handling for the
+wakeup and a selftest.
 
-------------------
+This issue was first discovered in an application that adds sockets to
+a sockmap as a way to view the received data.  No redirects or any
+other operations are performed.
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+Sashiko has noted a few other pre-existing issues in the same area
+(https://patch.msgid.link/20260714205118.17DB11F000E9@smtp.kernel.org)
+that can lead to EAGAIN in tcp_bpf_recvmsg() and
+tcp_bpf_recvmsg_parser().  A local run of Sashiko also identified a
+potential issue in tcp_bpf_recvmsg() handling zero-data FIN packets when
+the MSG_PEEK flag is set.  To prevent this patchset from growing too
+large, I intend to submit follow up patches to address these once this
+one has been accepted.
 
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+Changes in v7:
+- In tcp_bpf_recvmsg check for data in the TCP_CLOSE, !timeo and
+  signal_pending branches.
+- Refactored changes to tcp_bpf_recvmsg to reduce duplication.
+- Increase the number of iterations in the selftests.
+- Documented selftests numeric constants.
+- Link to v6: https://patch.msgid.link/20260720171535.67867-1-nnamdio@gmail.com
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+Changes in v6:
+- Closing the file descriptor in the selftest worker thread.
+- Ensuring the selftest loop breaks early for an error in the worker
+  thread.
+- Added comments to selftest regarding focus on EAGAIN error.
+- Updated selftest commit message to imperative mood.
+- Link to v5: https://patch.msgid.link/20260717155348.54975-1-nnamdio@gmail.com
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+Changes in v5:
+- Move selftest from net into bpf/prog_tests/sockmap_basic.c
+- Link to v4: https://patch.msgid.link/20260715213538.37229-1-nnamdio@gmail.com
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+Changes in v4:
+- Fix potential data loss in tcp_bpf_recvmsg() when a FIN or RST has
+  been received.
+- Check the return code of pthread_create() in the selftest.
+- Fix race caused by using EXPECT macros in a thread in selftest.
+- Link to v3: https://patch.msgid.link/20260714203927.32289-1-nnamdio@gmail.com
 
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Changes in v3:
+- Added the sockmap_recvfrom selftest.
+- Link to v2: https://patch.msgid.link/alFRK66z45eDNZA7@localhost.localdomain
+
+Changes in v2:
+- In tcp_bpf_recvmsg, handle signals and the socket closing in the loop.
+- Fix spurious wakeups when SO_RCVTIMEO has been set on the socket.
+- Link to v1: https://patch.msgid.link/ak_rR-Skd8Mvn4mH@localhost.localdomain
+
+Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
 ---
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+Nnamdi Onyeyiri (2):
+  bpf, sockmap: handle spurious tcp_msg_wait_data() wakeup
+  selftests/bpf: add sockmap recvfrom EAGAIN selftest
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
- 			     HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op);
- 
-@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 			     HRTIMER_MODE_REL_SOFT);
- 		op->thrtimer.function = bcm_rx_thr_handler;
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
+ net/ipv4/tcp_bpf.c                            |  72 ++++++++--
+ .../selftests/bpf/prog_tests/sockmap_basic.c  | 136 ++++++++++++++++++
+ 2 files changed, 199 insertions(+), 9 deletions(-)
 
+-- 
+2.52.0
 
