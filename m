@@ -1,133 +1,234 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEDF233932;
-	Tue, 21 Jul 2026 12:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784637481; cv=none; b=foPYUAY1WgLQj9KNoLZ7PliHTqdk35uzUPLXhrLZHBUK8Vk0684gJPADGQpJ+7ci70hycOnGjDH7tw68zBD6NyOsketzlJb6RDWU3VZbDr2yNx+Yh3uB+6KMuF6srJ4dYOUA2Wialtp3tnMc4gFha+9gw4/odRefPfbdQNPbOBY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784637481; c=relaxed/simple;
-	bh=qhnwwtEuhXcxYk0MypyGlFNJANPxkQlnhPsNlITEluU=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
-	 References:MIME-Version; b=HP4G5QsS+vnigek7ShOPNbyhXSWm4au1GlW/vbmC8iKbAbl8jjeq8sTGfWa1xvIQJ7oJha1aGlHO6R0HCeotzSemXpaj9oQ/PkkoPHRuFleXOFTiOu8yK+z1gS2Z2cbTXH0aJcoN7/zRenSLbGxPSl+GO9sI/pBhhMYvp35uSrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=TOoSss+v; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EDA1FC101;
+	Tue, 21 Jul 2026 13:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784640452; cv=pass; b=jpfKTMHJyDVETcqgkg2UHO6/NpzHjOKZiY+MLyfxvyQUzMB1D4zXHV6MG+c9Zcz/0jm2GFZZRbJkrYl48nclLrOziqgYK3tpVI8aC8arVtJSig4JrKb2UhVaJ6+Xji9thRAMSxNIC6lYA9iMAfYsFYfIVEaysaACO7qQLoWr4Rs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784640452; c=relaxed/simple;
+	bh=OGVP0VVx8vkpiUDVvpcXD03bzZfoDtW1pVTTRtnqOpE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OlhCcvS0Yad7M7jfkECmqbNkcK0OxISSdmuRUL4BRfoP/+cnLObVnNzCJNm1OLyXNUevC9/L+5WDSCwANpiuNAi4SdMGgah0WOeIltvEyjTahKMav/kZnC7xxJxh/r90MWMqbT0PVvmcuTIr0c57+FanSdns7MU4KJDd9DlExps=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=nicolas.frattaroli@collabora.com header.b=JhDto0ZR; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="TOoSss+v"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1784637437;
-	bh=P6/1sr4qvixoiNkBTsBAYtxWyovt0dZLYXNq2QiK1qc=;
-	h=Date:Message-Id:Subject:From:To:MIME-Version;
-	b=TOoSss+vACADodypSEDUPuJVWCmUyvRPI8PJkLWycWiTFxFHbHvv5Km/ArMArSk8w
-	 5J56bZBQOduKmM15G0aC64GfLymIM43mIOyI23gelQTj1D9BCAwhJiJxKdWKVl1GtC
-	 uaoq4GOyOZX4aldF1VnXXsROsLB06eHFo97vxCAA=
-X-QQ-mid: esmtpgz11t1784637435t47ac860c
-X-QQ-Originating-IP: tntK1MQ1IUOg67b1uF/vVh5yYOC+UElvBpzgzBVoRVA=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 21 Jul 2026 20:37:13 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4120638745816220918
-EX-QQ-RecipientCnt: 15
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 21 Jul 2026 05:37:12 -0700
-Message-Id: <DK4966E0B5GS.3FTMQR43Z9LA8@linux.spacemit.com>
-Cc: <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Krzysztof
- Kozlowski" <krzysztof.kozlowski@oss.qualcomm.com>,
- <devicetree@vger.kernel.org>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH 3/3] clk: spacemit: k3: fix missing /2 factor in i2s
- sysclk dividers
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: <sashiko-reviews@lists.linux.dev>, "Michael Turquette"
- <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>, "Brian
- Masney" <bmasney@redhat.com>, "Yixun Lan" <dlan@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>
-In-Reply-To: <20260717073701.94A511F000E9@smtp.kernel.org>
-References: <20260717-k3-clk-fix-i2s-v1-0-e95001a692ee@linux.spacemit.com>
-	<20260717-k3-clk-fix-i2s-v1-3-e95001a692ee@linux.spacemit.com>
-	<20260717073701.94A511F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=nicolas.frattaroli@collabora.com header.b="JhDto0ZR"
+ARC-Seal: i=1; a=rsa-sha256; t=1784640447; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=NJwfsYtV3MIZBekDB/KUatXs8lC+2a+ICO80rGmX8GgQPBVxi0ChhRTYLTbG3l0FjhpFtoPB9NIvTD/fDBTH+krqkkRSJYcK9UyOpcJt+cmMlQQamaGRXRvzgTXWxktfvfolphaTTw/k6MdjAGIBdZP8bg3mGB6DzBK16m/2lvg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1784640447; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=vji0eOH2kOJChsUBQzXd/kLf5aGtxXHg+qKk4ia+R2k=; 
+	b=krNfFCZP6tKODtIaNVcQNNfI9KrIjFLImkJoFW+RWj5CU+TBbBwSNd4VOJhZTpEs0GXZwjQtGn0+EGw7Lse2uVG3UX4LwCw2r25eZWjJ7AJ6xVcCuZIOGLqsP6EElzDQsKi16GxXPFC471VBN23vBGCHaOcIUnW7yT8eRnStaQg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=nicolas.frattaroli@collabora.com;
+	dmarc=pass header.from=<nicolas.frattaroli@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784640447;
+	s=zohomail; d=collabora.com; i=nicolas.frattaroli@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:MIME-Version:Content-Transfer-Encoding:Content-Type:Message-Id:Reply-To;
+	bh=vji0eOH2kOJChsUBQzXd/kLf5aGtxXHg+qKk4ia+R2k=;
+	b=JhDto0ZRvbtJQjCYNlLmtDLp3e6vDhsCn1ryN2xQ5RKN81SKBvsZ1rd34sLO1CLj
+	sLDgEP9/sE42nL5sTE7oDSdbOPQClprNrXAcIZCuIeDvuk4mSgeQmJd01hXJMcAT+bf
+	bjNa7tLfYc2uVCeJQZHzW70a9rvL8ku33chJzttw=
+Received: by mx.zohomail.com with SMTPS id 1784640446275793.1170840479422;
+	Tue, 21 Jul 2026 06:27:26 -0700 (PDT)
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sunxi@lists.linux.dev, dri-devel@lists.freedesktop.org
+Subject:
+ Re: [PATCH v7 3/5] drm/scdc-helper: Implement parsing and printing HDMI 2.1
+ fields
+Date: Tue, 21 Jul 2026 15:27:22 +0200
+Message-ID: <7WoIxTIITfip4OFe95yhkA@collabora.com>
+In-Reply-To: <20260721091044.237A21F00A3A@smtp.kernel.org>
+References:
+ <20260721-scdc-link-health-v7-0-92df1b6ad5fc@collabora.com>
+ <20260721-scdc-link-health-v7-3-92df1b6ad5fc@collabora.com>
+ <20260721091044.237A21F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NqN/wpVFVRYX/G06CwSHiSlbcGwOKm01fQagEUdYtFVa37FudlzP7X/+
-	SujzOGQ7mXk8B7TrBLOZYqGJ+C0g9JPUsH+gpPcDZ4N9FohUh0dcZf4qAumgaFVUDxf7rbW
-	m5AU696zreSYJIv1V2xKkViv0sOhi7M5udnEMzbadPPy1LQe7wrdTLev8gFX3s2SK33wzQo
-	neT1WslrHGHVPds4rQBDD51fLP51SSv0wmn/UD5OKASrSpre8TWcNMGrddnH5oM2J5pTOuB
-	vDcHxRkxqYL0OnGhQ7OZcDIEOPrD5xOn/iqzdIntjpH3gn+aCzFM1HBe6wtQJxsiVMckBtY
-	0ptXH9d13JpLms+iUAc8X1tioSPNZoK6FchpUbBh9M26sFEKSj54tLQGA3h0m5awr0gNWp6
-	b4xkDWrorOxytG0vuFJDm5tG1gOY1y4h7q50JcEWxWok7tOofLq3lpSC8mNjyLVL8vT7XeM
-	qj8DEEzimv2pZzgFXCi1jcGUfjL1ASbqrFpl8GSzYs0BViYqVeWPEuhRzcSUCIRusSVo8ox
-	n7S0h32nEDej3sDC4PYethKjEj6NMyCK70LdgZFCncaklE9fQrpToqqMGQsO9Oex2GM1ri0
-	15KyIowbY2C2nTAm3C/RDCtizeoTTYoh+wEfjFG2qBUBIumbluekK7nL/yklxLD1fFAacLH
-	pn8m8xiEck9WYy6iOD6YeQ6z2Q68eqjCwibRUdz0hihw7DMfhCjvVRAmUrE+AqrpuuAMhR9
-	Bz0mUCtNAhZehGw3ZEc3EMF+ZdMtN13/IVA8tlrDPmkRhXWXMSYZrr8UZk086WXuk1Yipnb
-	pqY6U1pCYJbbacQrNUb94+iHie+Lmf2qAuiNw+8+cd4OxMjvWA3gLxeeqUfBBsJhJRW5+uw
-	hLbKpaSJzs7kBGUnMssCyUBStUOmlljw89kRniLsEcV5BFEz5bjhpEtgaRE5Tvk8KRzDbGX
-	t5B3Kk6o+Vn0zadGlCiARsY3kbTRsFkfkVzJKakQ5HpuLIi8tVMpW8sA471Cqe7lB+kGcW1
-	CV7SCa3A6cPfBPm+Um19scwLA0EpbzlLLTZM7DhB0Q19sH3fbg22XVlKy+EB6pIt+rAQUI3
-	Np1rYHk4HB4
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-> The i2s{0,2,3,4,5}_sysclk_div DDNs have an additional fixed 1/2
-> divider in the hardware IP after the configurable divider, so the
-> real output rate is:
->
->     rate = parent_rate * num / (den * 2)
->
-> [Severity: Medium]
-> Does this formula mathematically contradict the driver's implementation?
->
-> The code in drivers/clk/spacemit/ccu_ddn.c calculates the rate by
-> multiplying by den and dividing by num:
->
->     return prate * den / pre_div / num;
->
-> Could the commit message be updated to reflect the actual hardware behavior?
-
-Good catch. The formula in the commit message has num and den reversed. The
-correct formula is:
-
-    rate = parent_rate * den / (num * 2)
-
-I will correct the commit message in the next revision. The pre_div = 2
-change itself remains correct.
-
-> [...]
->
+On Tuesday, 21 July 2026 11:10:43 Central European Summer Time sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Incorrect checksum validation range breaks 4-lane FRL error parsing.
+> - [High] Redefinition of `SCDC_CH_LOCK_MASK` breaks TMDS lock checking for HDMI 2.0 sinks.
+> - [Medium] Stale state leakage for `rs_corrections` across debugfs reads.
+> - [Medium] Reserved FRL rates cause debugfs read failures and unreachable dead code.
+> - [Medium] Concurrent debugfs reads cause a data race on `priv->state`.
+> --
+> 
+> --- Patch [3]: [PATCH v7 3/5] drm/scdc-helper: Implement parsing and printing HDMI 2.1 fields ---
+> commit c31217f1c2c58d659c6532a48bf298ea495b08b1
+> Author: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+> 
+> drm/scdc-helper: Implement parsing and printing HDMI 2.1 fields
+> 
+> HDMI 2.1 redefines previously reserved fields in SCDC for various new uses.
+> Implement reading and outputting these fields over debugfs.
+> 
+> > diff --git a/drivers/gpu/drm/display/drm_scdc_helper.c b/drivers/gpu/drm/display/drm_scdc_helper.c
+> > index 5871fc101815d..7e17272d52f23 100644
+> > --- a/drivers/gpu/drm/display/drm_scdc_helper.c
+> > +++ b/drivers/gpu/drm/display/drm_scdc_helper.c
+> 
+> [ ... ]
+> 
+> > -static int drm_scdc_parse_error_counters(const u8 scdc[256], u16 counter[3])
+> > +static int drm_scdc_parse_error_counters(const u8 scdc[256], u16 counter[4],
+> > +					 unsigned int num_lanes)
+> >  {
+> > +	u8 end_reg;
+> >  	u8 sum = 0;
+> >  	int i;
+> >  
+> > -	for (i = SCDC_ERR_DET_0_L; i <= SCDC_ERR_DET_CHECKSUM ; i++)
+> > +	switch (num_lanes) {
+> > +	case 3:
+> > +		end_reg = SCDC_ERR_DET_CHECKSUM;
+> > +		break;
+> > +	case 4:
+> > +		end_reg = SCDC_ERR_DET_3_H;
+> > +		break;
+> > +	default:
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	for (i = SCDC_ERR_DET_0_L; i <= end_reg; i++)
+> >  		sum = wrapping_add(u8, sum, scdc[i]);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but can this lead to a kernel panic due to an
-> unhandled zero divisor?
->
-> In drivers/clk/spacemit/ccu_ddn.c, ccu_ddn_recalc_rate() reads hardware
-> registers directly:
->
->     num = (val & ddn->num_mask) >> ddn->num_shift;
->     den = (val & ddn->den_mask) >> ddn->den_shift;
->
->     return ccu_ddn_calc_rate(prate, num, den, ddn->pre_div);
->
-> If the register contains 0 for num, ccu_ddn_calc_rate() will divide by zero.
-> Additionally, ccu_ddn_calc_best_rate() can pass num = 0 when
-> prate / ddn->pre_div evaluates to 0.
->
-> Should we add validation to prevent division by zero in these paths?
+> Does this break the checksum validation for 4-lane FRL links?
+> 
+> The standard HDMI checksum is designed to sum registers 0x50 through 0x56
+> (SCDC_ERR_DET_CHECKSUM) to zero.
+> 
+> By extending the loop's end_reg to SCDC_ERR_DET_3_H (0x58) for 4-lane mode,
+> won't this incorporate non-checksum data into the sum and incorrectly return
+> -EPROTO whenever Lane 3 has errors or its valid bit is set?
+> 
+> [ ... ]
+> 
+> > @@ -356,11 +423,26 @@ int drm_scdc_read_state(struct drm_connector *connector, struct drm_scdc_state *
+> >  
+> >  	state->scrambling_detected = buf[SCDC_SCRAMBLER_STATUS] & SCDC_SCRAMBLING_STATUS;
+> >  
+> > +	state->rate = FIELD_GET(SCDC_FRL_RATE, buf[SCDC_CONFIG_1]);
+> > +	num_lanes = drm_scdc_num_frl_lanes(state->rate);
+> > +	if (num_lanes < 0)
+> > +		return num_lanes;
+> 
+> [Severity: Medium]
+> If a sink reports a reserved FRL rate (between 7 and 15), does this cause
+> debugfs reads to fail entirely?
+> 
+> drm_scdc_num_frl_lanes() returns -EINVAL for these reserved rates, causing
+> drm_scdc_read_state() to immediately abort. This makes the reserved rate
+> strings in drm_scdc_frl_rate_str() unreachable dead code.
+> 
+> > +	if (!num_lanes)
+> > +		num_lanes = 3;
+> > +
+> > +	state->ffe_levels = FIELD_GET(SCDC_FFE_LEVELS, buf[SCDC_CONFIG_1]);
+> > +
+> >  	drm_scdc_parse_status0_flags(buf[SCDC_STATUS_FLAGS_0], &state->stf);
+> > -	ret = drm_scdc_parse_error_counters(buf, state->error_count);
+> > +	drm_scdc_parse_status1_2_flags(buf[SCDC_STATUS_FLAGS_1],
+> > +				       buf[SCDC_STATUS_FLAGS_2], &state->stf);
+> > +	ret = drm_scdc_parse_error_counters(buf, state->error_count, num_lanes);
+> >  	if (ret)
+> >  		return ret;
+> >  
+> > +	if (num_lanes == 4 && (buf[SCDC_ERR_DET_RS_H] & SCDC_CHANNEL_VALID))
+> > +		state->rs_corrections = (buf[SCDC_ERR_DET_RS_H] & ~SCDC_CHANNEL_VALID) << 8 |
+> > +					buf[SCDC_ERR_DET_RS_L];
+> > +
+> >  	return 0;
+> >  }
+> 
+> [Severity: Medium]
+> Does this leak stale state across debugfs reads?
+> 
+> If a 4-lane link transitions to a state where the RS channel valid bit is
+> cleared, or if it drops to 3 lanes, the missing else branch here leaves the
+> old rs_corrections value intact.
+> 
+> Since the state struct is reused across reads, could this expose stale
+> correction counts to userspace?
+> 
+> [ ... ]
+> 
+> > @@ -406,6 +488,8 @@ static int scdc_status_show(struct seq_file *m, void *data)
+> >  {
+> >  	struct scdc_debugfs_priv *priv = m->private;
+> >  	struct drm_scdc_state *st = &priv->state;
+> >  	struct drm_connector *connector = priv->connector;
+> >  	struct drm_scdc *scdc = &connector->display_info.hdmi.scdc;
+> >  	int i, ret;
+> >  
+> >  	drm_connector_get(connector);
+> >  
+> >  	if (connector->status != connector_status_connected) {
+> >  		ret = -ENODEV;
+> >  		goto err_conn_put;
+> >  	}
+> >  
+> >  	if (scdc->supported) {
+> >  		ret = drm_scdc_read_state(connector, st);
+> 
+> [Severity: Medium]
+> Can concurrent debugfs reads cause a data race on the shared state structure?
+> 
+> Multiple threads reading the scdc_status debugfs file share the same private
+> context. Calling drm_scdc_read_state() mutates the shared I2C buffer
+> (state->scdc) and its bitfields directly without serialization, which could
+> corrupt I2C reads and mangle the debugfs output.
+> 
+> [ ... ]
+> 
+> > diff --git a/include/drm/display/drm_scdc.h b/include/drm/display/drm_scdc.h
+> > index 3d58f37e8ed8e..7f0b05b2f2800 100644
+> > --- a/include/drm/display/drm_scdc.h
+> > +++ b/include/drm/display/drm_scdc.h
+> > @@ -46,14 +48,25 @@
+> >  #define SCDC_CONFIG_0 0x30
+> >  #define  SCDC_READ_REQUEST_ENABLE (1 << 0)
+> >  
+> > +#define SCDC_CONFIG_1 0x31
+> > +#define  SCDC_FRL_RATE   0x0f
+> > +#define  SCDC_FFE_LEVELS 0xf0
+> > +
+> >  #define SCDC_STATUS_FLAGS_0 0x40
+> > +#define  SCDC_DSC_FAIL (1 << 7)
+> > +#define  SCDC_FLT_READY (1 << 6)
+> > +#define  SCDC_LN3_LOCK (1 << 4)
+> >  #define  SCDC_CH2_LOCK (1 << 3)
+> >  #define  SCDC_CH1_LOCK (1 << 2)
+> >  #define  SCDC_CH0_LOCK (1 << 1)
+> > -#define  SCDC_CH_LOCK_MASK (SCDC_CH2_LOCK | SCDC_CH1_LOCK | SCDC_CH0_LOCK)
+> > +#define  SCDC_CH_LOCK_MASK (SCDC_LN3_LOCK | SCDC_CH2_LOCK | SCDC_CH1_LOCK | \
+> > +			    SCDC_CH0_LOCK)
+> 
+> [Severity: High]
+> Can this redefinition break TMDS lock checking for HDMI 2.0 sinks?
+> 
+> Since HDMI 2.0 sinks only have 3 lanes, the SCDC_LN3_LOCK bit will always
+> be 0. Existing drivers performing an equality check against this mask
+> will systematically fail to detect the lock.
+> 
+> 
 
-Yes, these paths should guard against a zero divisor. This issue predates
-the K3 I2S change and is independent of the fixed-divider correction, so I
-will address it in a separate ccu_ddn patch rather than expanding the scope
-of this series.
+One of those (state race) is already in the previous patch's review,
+the rest are all delirious nonsense.
 
-                                            - Troy
+
+
