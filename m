@@ -1,245 +1,216 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011028.outbound.protection.outlook.com [52.101.62.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C4B443308
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784626146; cv=none; b=kpPstZZgf1+0VXzhV/xBxEhf2G81WbbXoueaHhbVoqn2Ef/lMTAbSQlo5x13oe+Qqx6vk/TxNOEGEhdtg1+WrEaWIhXcVhv2IeVVo5Xu83xL5lXaCi/TNWSszTUUqD4zBWXrok7wmUdrlwalJYZbLqN0lApMCRkTBS/N6BZa6bc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784626146; c=relaxed/simple;
-	bh=f+tAOEFe/ZozGHopzGMvkF4QvWQSOwN+hn+D23vyFKA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c7MuFyOzbdJowlp17a8Iy4lou+kZTjjXiaS7VYOZ02XhItOMlQZbfdhYsPPfLhRsiYoxYmiF+jesb5Xne3OD5SS0DWH58yOLpDJKeDGaZEcFHOR/0KRpDXBNZhUUioN+wFN4NWuvBRNaCOdQN9GhFA0F2VXER4W54hHdO6gb7lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Fj9w6tHm; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=TkjQyC5g; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CFE435538
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.28
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784626427; cv=fail; b=U//HYjjXuTsb+K6cUUkt+zQ14x0i1Vie7vNquoODyFMf9nJTIgNnRxi1QZiQnzxrvnPcHSiNyPiPN6jXpiNOqTSukOwBy9U7QIt/eWCRMlqDFg2RGMjczcmzsw7IVqXJfsLqxsIpmSV4q+1nOH4e+6/Xd1W6lyifXazp6n3kjcA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784626427; c=relaxed/simple;
+	bh=dmUhHLT3DLDrZv8QmsY3wwD+dp3Vcz+IsuOsNmLerFw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=MyjRWomSVxrwQh4lubWh4KTWDrobjwjb1+OpqHDOpV291f3bC14TxGE4EFVhqURnCSLpohh2gSWbJbYG9XLzlu8VPwWJ6UmjRDUaLigIHpgex8AtS8i5B4xV7gfpDsl5w4Csttb/EkwS5kdSaCHKrWt+ULtnMRClQYrUvfQmc5k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hGXJkUYh reason="signature verification failed"; arc=fail smtp.client-ip=52.101.62.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Fj9w6tHm";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="TkjQyC5g"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1784626143;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=L3nIrtb3ZIx5YQo/Azj3k+CrJf5VH+rRdrIKrJmE4Ec=;
-	b=Fj9w6tHmNgNez+WlisL0DfOMcnJEEDcWtXgHkA4lZd8lc5ebBACNzGjSsMXE6hn35zpyzm
-	Ia8/4VMybh+whR8JtUlEBLuPKhg7HaqOMgv+DOm47hMAy29qmtgHzGDgt4QMY3Xv5Pecv3
-	EZZAFL+Cmjp7C97tXVo8TaXpRKoET00=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-Mw0TlllGPHGxXTKeig9oyQ-1; Tue, 21 Jul 2026 05:29:01 -0400
-X-MC-Unique: Mw0TlllGPHGxXTKeig9oyQ-1
-X-Mimecast-MFC-AGG-ID: Mw0TlllGPHGxXTKeig9oyQ_1784626140
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-47bbe3b9705so10252666f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 02:29:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1784626140; x=1785230940; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=L3nIrtb3ZIx5YQo/Azj3k+CrJf5VH+rRdrIKrJmE4Ec=;
-        b=TkjQyC5gXb8vte0N3Qd75deeziUVjGnsZEdfQeB9IHYPp9IVUMem38yYrkDMUiIyrm
-         Daxkk8le38OftGdWDVovntK4wjdQiJfmDhTOzfvdBr9J4DPCOQyw6fiB1NpNTo5JofIv
-         vCDjQnXKwqfPkXl0AD4dbrcUUUxiKRnb6GYP1VUj2W7vz5LG4ssARoMnB5AKCl5ti6m1
-         Ja5SvY3lEUBOkqHirxw4ZtFvyXcgIhV5nP4Ame5Ev0fTIfmOlV9m9FQG45mxNYmQOebV
-         cjmqvSQUz7GJYBwE2x9/Jnjykcx0NatmDJ5on08Bkl/WgeTCa7OrOW3Cr9mDVLmahP39
-         DUiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784626140; x=1785230940;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=L3nIrtb3ZIx5YQo/Azj3k+CrJf5VH+rRdrIKrJmE4Ec=;
-        b=qXo+OR6WsANP93VBsUxofBwaE6sjjeRq2bDdg+zVPIDQFWTS139WeOn66KEtsf1tLA
-         38clKK0T4+pEDHAomIvbcRGTIDN9rZ2tM6stOZi0c/RdmXBNDhRy3w0TExSKFpD7DZy0
-         mWmi8T2rcc/zBcUkXlE6hhJMkvPo1rJkSkeigZkydCGEfj3hOsOSamcD2+/yKFk+Lxa3
-         gcrpqCGv5HQ3xssP/wOZtA1MmRHfN4RPD/k+uNh/OSJYh9WQag/UoJLxuuAuiQmOJ+DH
-         hiBcapHCkpH/OHxPU8BZp5Ae8EPSWjEISgI/tek6455Z+tTHr1nUhPwkmLu5LB1RnHMr
-         8DSg==
-X-Forwarded-Encrypted: i=1; AHgh+Rrl5J8NwEOfDgVqsmpgIgGffiIbBD0Qe9daObGPO9LvCWGBYUpX18ZZ6YoS1LQUlBN1weG7Q3snfYbE3wEa0G0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy6m66rbasM/ATeKb/A/dEeo5ORyeI31RFk7p9K6kcJmDYuPO2q
-	8Dk1FHbFfFB/bAMu/TmUIsDdhFgRtGrGo0PHtjI7SBmVYLLyBlwjqA8a2UigKd/xNwkqHl7B4Hx
-	iB5i4Fge7ptHL/ScE6RR/rAKH56M4nolXtnkXZM0MNsGCVrIKNvOIGiiFtnIqEIoCrjeZJQ==
-X-Gm-Gg: AR+sD11LqLDTms2YUtalvv2H0L1jE9LkQiAC3YOlIVBAabI/zAlIdIdPpc/cY0mqpe9
-	r0F/+1KpzE0Zw7mk+vN9OLWwxpPWSzMshurA95ABV72e3lFSq4tbLQ0T6rdsJ9i+HipRY3lCjWQ
-	ruFPp7RBpEFX+nlUy5jtKrv9KjNjierscFIkBIwd5lKCZ7/rKNWNKctmKCZWj2Z/WN5CcSyqXy9
-	8dePmzrhQLjF6oIWqygl8UZC0Ncq5UObooHRp4FFCB/wKy9544DwpOZjXwls+rbZ3aAgUd2u9To
-	Wj/AkgAez1Mx2WvlvXfshxOVqCjlXkqxXFYpshQm9AqpiXBr+xOSNDdGuNsmtA2DrtMf54dJNw=
-	=
-X-Received: by 2002:a5d:5d0e:0:b0:47d:eedb:ee62 with SMTP id ffacd0b85a97d-47f6230389fmr22149589f8f.14.1784626140322;
-        Tue, 21 Jul 2026 02:29:00 -0700 (PDT)
-X-Received: by 2002:a5d:5d0e:0:b0:47d:eedb:ee62 with SMTP id ffacd0b85a97d-47f6230389fmr22149546f8f.14.1784626139778;
-        Tue, 21 Jul 2026 02:28:59 -0700 (PDT)
-Received: from localhost ([2a01:e0a:a99:9822:edbd:5894:eb1d:c2c7])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63e496afsm39272808f8f.1.2026.07.21.02.28.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 02:28:58 -0700 (PDT)
-Date: Tue, 21 Jul 2026 11:28:57 +0200
-From: Maxime Ripard <mripard@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-Message-ID: <20260721-vagabond-lovely-loon-d126e7@penduick>
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
- <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
- <20260720-bold-jasmine-goldfish-d979e5@penduick>
- <3749a60a-a8bb-45a0-a06e-a21017990c10@suse.de>
- <20260720-sly-tricky-elephant-c8afa1@penduick>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hGXJkUYh"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=a/1xd6AYThZz2UuDfcuccvBG036fFKaCSiLViK4WTs1u/GcIONfSdmNs+DvnIh+LLJREjcNwqNvwEGby1CReBBiNsc+4beXVGEHvUtUKh1oRC2e/rDFz+YCrWmFz4yPXM6c7xVcUj7/6Rr3LEY2yIX0cLiCyJ+xcZrO8RsPkfKFOoh0rzwpSPAIaLGRxcTvKEIjpfivc48QX1qrWEyLTw/Fb4ACHAQTi1VQks5ypyOpeLmCYPwrnIBxqDDOG1tv1xYpoztHjbr5+/3vBLyxxkLkhBcZAZ4YoGTiUQoL/WOQnWI8XjbOuQorPGwSgNQwKxmGCpgZ9svAIlo2evtbodQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MDMNQ1SQeuQZmUzlN2i8rTVQynE7k5+/nfvgh0fjAm8=;
+ b=bGrmGPa0UIQymbxOgx+IPaw9W8dS1fWH8revx/kK1ZQ7MV61+jiLUS8/X8mQ8n/hA03TVXr+gb/iXPWt07hF7uwHZVOXjiDcJx1F5VQnXgYoWpB9Dczw4jDkgZhcRaM3u9slymAJXNmQ0B8CNUSDhVe3pYDD9UuaGFUcRPwdqQrIyVBs2iP358HKPfq/pctX1vuqylp/d0oLuzH5ngYzGfjasoE4iLQtGNXIhunMFI8UoAnc44OxoDaV6hs6jvyWa0Fifyh1ZzMsEt1pnjmAAwKX4sD1cp6lmIEPsHtVAVhaEvhuNYKhU8mb7REK6+cXq+R1VA112xKo5P8YCV5cew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MDMNQ1SQeuQZmUzlN2i8rTVQynE7k5+/nfvgh0fjAm8=;
+ b=hGXJkUYhZzzBfd6NAAl3hoifRHa9zE7jvF3Gk7txcX17hJHnn5BAB2Wev6UZwkiT18k5KD16XUY5kCoY6YO9vV/CjGakNHZ01a4zCpu4Y+sHxp4GqGFYCM3IMo8EG1BQCwDR8z7s72K9RLhxSGm+fEnvQ/jJHYkBPV4Hl53nrDL23ObzPQKRhpDPYH7YiQvXAKweUD2IZJrA+j5QlStWiAaskfmYG3kGtZVWh5PllxEbHIq2TBEu0DG0Alaq2vLIFlvsBUiePJXo9LDyAhaU4ez7ZXFZn5OCJPcnkiwFLdYBVFZqmbrhyYUXo5N4eooNXbm/idpHjU+kiI+hHLsIxA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by SA0PR12MB4479.namprd12.prod.outlook.com (2603:10b6:806:95::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Tue, 21 Jul
+ 2026 09:33:42 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
+ 09:33:42 +0000
+Date: Tue, 21 Jul 2026 17:33:37 +0800
+From: Richard Cheng <icheng@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH] cxl/region: Reject delete of a provider-locked region
+Message-ID: <al875ItHwiz7ZFeM@MWDK4CY14F>
+References: <20260721055131.20935-1-icheng@nvidia.com>
+ <20260721060403.188271F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260721060403.188271F00A3A@smtp.kernel.org>
+X-ClientProxiedBy: TPYP295CA0035.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:7::7)
+ To BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="svtaodo43k2a7zkz"
-Content-Disposition: inline
-In-Reply-To: <20260720-sly-tricky-elephant-c8afa1@penduick>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SA0PR12MB4479:EE_
+X-MS-Office365-Filtering-Correlation-Id: e6a930dc-9124-4b80-1d9f-08dee70b272d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|22082099003|18002099003|3023799007|11063799006|5023799004|56012099006|10067099003|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	YRafL55a8SS30NtSAAjbJRdJM5DSNaz5AU0QtG9BtquBecbjqikGN3YDYjbQ++8gj7bf4AwNd8kaoTgPPWOxNEO5QwnDZAjiTK13bq5WvsoKdp+hoD5t44NIcG/OpC2Q+r6V7wuYqri+eijELANI/HkNNAlGd36sKXyR+74uW0DWMGOGf80zXc9HXyqGDMqPDgP/qU/VQHsQGjLs+TUFN2V3IHHWXqKcl7jpINHfim8zqtkFyTi6hSyMngVj3MHWKlsPukA2Eyp4SZRF4hfQBobIlT6gizHXrgaITC5KLb7FhV6jGhjq7wKfJ6pIXyCESkAMg5TnbGEFY3ohRsfd1Mgz7H3ELwM8e6fDhL3j3XcciU4jTZaTc5Ch8osz1ur4RkLdXvY3YXeHtphaIYdqZvFmgPm8Hpi6Yl9hHMb+DF45geTrVphMAsMftfSfO6hGZOL1sSFPmee0vD0UnpKi8fBdpMRMqYzRrSnf6IHw1GzQ6YZRdF+p5S4UvWrzlvHPqekc0ty5iytbgjW9tw4/B2fb8nE1dl0YK/KpBQeQgyBOPcfJ2m8FdH6VfSksW18ZObb57EP2bUYmRjYV+LMBTXGJH+L9mpfkB3dIuZ0Vm4UrttKzDXviGkDy80jITiYs6+oKGuwZJiakyxWYkmPf6CwrwoOVpu/lN11srK6CBSs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(22082099003)(18002099003)(3023799007)(11063799006)(5023799004)(56012099006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?k5JHt65U4JIo/FHkyBwRIi/FGxzIkbEDg/7wawLO/DJ8FH2ZTxkH2mADoz?=
+ =?iso-8859-1?Q?SJozsYwNsza3v26A9CIcB6+e5pDUiIybM/QxkmJNsIJibPJvOHvUr858UC?=
+ =?iso-8859-1?Q?Pkn9vLGdZHWHFsH0NjUTTNsCJtWfnO4nS3zmtSsOOb+JinHNaCJkH791Mk?=
+ =?iso-8859-1?Q?zv8l4YPReUjPQ9Ld7zCwjw9sS85N/fmT6IT8EUjYzze+tgcSZVOD42aVTC?=
+ =?iso-8859-1?Q?2QFIeOw9QrDm531o0AKf/mWebwXWbRwWNUclW/F6MdO5KnBJRWu5+e7HBa?=
+ =?iso-8859-1?Q?50bygrXnXCZLxNBtmMPIytF7dUXNTrmBmVJkwJKN2jNVdRcNzRVWSgXBql?=
+ =?iso-8859-1?Q?Nibf+h3eqbdAQh6u3MfbyBtm0S0cVGUE8kMA/MN2LObQRtXF9VC6GlWNVA?=
+ =?iso-8859-1?Q?C3OjzP4L2yErTU8uCTZ1wwnb1cA65k8TQqixsm5a30TzcjMFfvMgsJ/WhA?=
+ =?iso-8859-1?Q?0oNfAozwlHkKNJf6kAbQu+FxpimpgnK0cqEiNO/qzPNCgRdpH+zTzn/BIa?=
+ =?iso-8859-1?Q?uWa+PhcHDES5g0PXisLUYpLUqUFhW5peqW8z6hM4uC7OGxDCe8/7/ek+mW?=
+ =?iso-8859-1?Q?UMyrlaA5fIUVvfcXjdi3ntFqLzUXaRPx/cEvbVkNqMWP82CSPT5Ys6ZZA/?=
+ =?iso-8859-1?Q?LbE3TYNV1R5/s1RL6mZFkkbAtCMv0TImwxkDVuBXwrarHWZiBDsWA96eDW?=
+ =?iso-8859-1?Q?HJ3ks44XJXLNONPNLMrQWs7HwqoYuz8ZAiQwUsxLbpoOmvb4GXv8cxh8zh?=
+ =?iso-8859-1?Q?mnohMYvVyYWABG9SOigbQ1KSZB80OZetxO7tm36M6SbC75X8URABGb+EQD?=
+ =?iso-8859-1?Q?63FdjkzLyO+t05AOjmQEbbXFPV5zTO3MiuErUCZHMBE918WzHqUMVE59o4?=
+ =?iso-8859-1?Q?/XalPzIQOLZW+5gJdXTkTu1z9iMdcO5B7Wn85R1qlpFid4T3T+nSaDoujl?=
+ =?iso-8859-1?Q?QA8VahUXXsY9RyRECOnNRHOvnqaX8P93ePHWNNKdyq8ZknawPfx03Imk80?=
+ =?iso-8859-1?Q?FHddCvK0EqYgAsYu/VZLFSqBBJ5cPYWUlZ+E9AYMoSc0pko12/SvjH+uC5?=
+ =?iso-8859-1?Q?whysML1iylsyZy3JHKXFHwZFWjnuF5LY+Q7K6xoPl8XaZ4/DkRysOuMUuf?=
+ =?iso-8859-1?Q?JN7HJU/ELlKDpuma3fTLt40zgMSHcghgHVE12vYzim26VzowjbVFtqNOPW?=
+ =?iso-8859-1?Q?3q9JCn7IIWIftBnHOldLCU/td6SOYyqW6j1s+xFeuApG68ulcDJwtTtr4f?=
+ =?iso-8859-1?Q?nUh1gpw6m1z+fkl2diDbO7jVWtg7nhkE7K7w5xbVmgRCAx0yukl5OzLIP6?=
+ =?iso-8859-1?Q?/2HhxTn4cwaVJ/WUa4et6ksNqmmZt8rVIFJ3a6IZUKdrD3WLAkC5PUDhDo?=
+ =?iso-8859-1?Q?BqQ6pzE+OE5R7nnY9wAy5W0rD2Uhykw42l2hHquILqZP92iwLDXHrPQgb+?=
+ =?iso-8859-1?Q?iwOwdVhPa1zQYT0qD/BkRpJv0ru7aKRsMGGLjd0j2UdaqoSvy2vAKFDn2C?=
+ =?iso-8859-1?Q?ImyKQp1AHcaDZIaX/atmuQl+dA+v71wtVFGQLldUoddrsjlBSYfpwoo2Mm?=
+ =?iso-8859-1?Q?CbZeOIcWM5wn/uRJJYyMqj2Ds+vA210+eiMZ+08DAFu02JtQQcwrhx7RZA?=
+ =?iso-8859-1?Q?gTGGAAxE92oUgWErQGzaY6H5ow4uNLyo7SyJossYhPcVHOBbonu3jBOghX?=
+ =?iso-8859-1?Q?Q/uTlEBIReuglveD4RElTih4l2EBsF2yCtTIKcL/4VU+KLgL6MnA3iWHIb?=
+ =?iso-8859-1?Q?3RO4bU9weiJvdg5fCoC3Iro0OnhVdpLRXu8KSn8gZft2N1kRHpMkHO+RSv?=
+ =?iso-8859-1?Q?tKDIPsXtaQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e6a930dc-9124-4b80-1d9f-08dee70b272d
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 09:33:42.3089
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xV78IvQwPvkj4+IxliaFp4oAchXGFZDkm1XSbTCfeZrGQQakaVWW9/khjLZ2cQdAjTpHxyL1DG6ssHn2EuRDwA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4479
 
+On Tue, Jul 21, 2026 at 06:04:02AM +0800, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] A Time-Of-Check to Time-Of-Use (TOCTOU) race condition in `delete_region_store()` allows userspace to bypass the `CXL_REGION_F_LOCK` protection, leading to orphaned hardware decoders.
+> 
+> Pre-existing issues:
+> - [High] Userspace can bypass `CXL_REGION_F_LOCK` restrictions and tear down region software state by manually detaching targets via `targetN` sysfs attributes, leading to orphaned hardware decoders.
+> --
+> 
+> --- Patch [1]: [PATCH] cxl/region: Reject delete of a provider-locked region ---
+> commit 447746e2d3844401b6bdd5604c498e319f1e7719
+> Author: Richard Cheng <icheng@nvidia.com>
+> 
+> cxl/region: Reject delete of a provider-locked region
+>     
+> delete_region_store() destroys a region object without checking
+> CXL_REGION_F_LOCK, unlike commit_store() which refuses locked regions
+> with -EPERM. This patch gates delete_region_store() on CXL_REGION_F_LOCK.
+> 
+> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > index 578622240401d..cfc9622c93095 100644
+> > --- a/drivers/cxl/core/region.c
+> > +++ b/drivers/cxl/core/region.c
+> > @@ -2894,6 +2894,9 @@ static ssize_t delete_region_store(struct device *dev,
+> >  	if (!cxlr || !sysfs_streq(buf, dev_name(&cxlr->dev)))
+> >  		return -ENODEV;
+> >  
+> > +	if (test_bit(CXL_REGION_F_LOCK, &cxlr->flags))
+> > +		return -EPERM;
+> > +
+> 
+> [Severity: High]
+> Is there a Time-Of-Check to Time-Of-Use (TOCTOU) race condition here?
+> 
+> The CXL_REGION_F_LOCK check is performed without holding synchronization
+> like the region rwsem, leaving a window open before unregister_region()
+> completes.
+> 
+> If userspace writes to delete_region while concurrently writing to targetN
+> to attach a target, delete_region_store() could check the lock flag before
+> it is set.
+> 
+> Then unregister_region() calling device_del() can block in kernfs_drain
+> until the concurrent target attachment finishes and sets CXL_REGION_F_LOCK.
+> 
+> Once resumed, the software region would be destroyed with the lock flag
+> set, skipping the hardware reset. Could this sequence recreate the exact
+> orphaned hardware decoder state this patch intended to prevent?
+>
 
---svtaodo43k2a7zkz
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-MIME-Version: 1.0
+I'd push back on this.
 
-On Mon, Jul 20, 2026 at 05:06:41PM +0200, Maxime Ripard wrote:
-> On Mon, Jul 20, 2026 at 04:38:26PM +0200, Thomas Zimmermann wrote:
-> > Am 20.07.26 um 16:08 schrieb Maxime Ripard:
-> > > On Mon, Jul 20, 2026 at 02:36:19PM +0200, Thomas Zimmermann wrote:
-> > > > Hi
-> > > >=20
-> > > > Am 18.07.26 um 21:12 schrieb Ze Huang:
-> > > > [...]
-> > > > > > > -	if (event) {
-> > > > > > > -		crtc->state->event =3D NULL;
-> > > > > > > +static int imx_lcdc_plane_helper_atomic_check(struct drm_pla=
-ne *plane,
-> > > > > > > +					      struct drm_atomic_commit *commit)
-> > > > > > > +{
-> > > > > > > +	struct drm_plane_state *plane_state =3D drm_atomic_get_new_=
-plane_state(commit, plane);
-> > > > > > > +	struct drm_crtc *crtc =3D plane_state->crtc;
-> > > > > > > +	struct drm_crtc_state *crtc_state =3D NULL;
-> > > > > > > -		spin_lock_irq(&crtc->dev->event_lock);
-> > > > > > > +	if (crtc)
-> > > > > > > +		crtc_state =3D drm_atomic_get_new_crtc_state(commit, crtc);
-> > > > > > > -		if (crtc->state->active && drm_crtc_vblank_get(crtc) =3D=
-=3D 0)
-> > > > > > > -			drm_crtc_arm_vblank_event(crtc, event);
-> > > > > > > -		else
-> > > > > > > -			drm_crtc_send_vblank_event(crtc, event);
-> > > > > > > +	return drm_atomic_helper_check_plane_state(plane_state, crt=
-c_state,
-> > > > > > [Severity: High]
-> > > > > > Can fetching the CRTC state this way cause a kernel panic in th=
-e core atomic
-> > > > > > helpers?
-> > > > > >=20
-> > > > > > If userspace submits a commit that modifies only plane properti=
-es without
-> > > > > > affecting the CRTC, the CRTC is not implicitly added to the ato=
-mic commit
-> > > > > > state.
-> > > > > >=20
-> > > > > > In this scenario, drm_atomic_get_new_crtc_state() returns NULL.=
- Passing this
-> > > > > > NULL pointer directly to drm_atomic_helper_check_plane_state() =
-causes a crash
-> > > > > > when it dereferences crtc_state->enable.
-> > > > > >=20
-> > > > > > Could this use drm_atomic_get_crtc_state() instead to ensure th=
-e state is
-> > > > > > brought into the commit if it is missing?
-> > > > > I think it is fine here; I'll just copy the pattern from [1].
-> > > > >=20
-> > > > > [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/dr=
-m/mgag200/mgag200_mode.c#L487
-> > > > It could be that there's a long standing problem in the overall log=
-ic. Not
-> > > > having a CRTC (and hence crtc_state) should also mean !fb, so we'd =
-return at
-> > > > [1]. If we have a CRTC on the plane but pass a crtc_state of NULL, =
-we could
-> > > > get a panic at [2], where it does crtc_state->crtc.=A0 I'm not awar=
-e of any
-> > > > bug reports about this problem, but it's still an issue.
-> > > >=20
-> > > > A number of drivers get this wrong by using
-> > > > drm_atomic_helper_get_new_crtc_state(). The bot suggests to use
-> > > > drm_atomic_helper_get_crtc_state() instead.=A0 This helper also ret=
-urns the
-> > > > new state. But=A0 if there's no new state, it duplicates the CRTC's=
- existing
-> > > > state. That's a bit of an overhead, but probably not an issue.=A0 S=
-everal
-> > > > drivers use this helper, but also get it wrong. They tend to return=
- early in
-> > > > the case of !crtc or !fb without calling _check_plane_state(). See =
-[3] and
-> > > > [4] for examples.
-> > > >=20
-> > > > I think, going with the bot's suggestion to use
-> > > > drm_atomic_helper_get_crtc_state() might be the best resolution for=
- now. It
-> > > > still needs a crtc pointer, so the pattern is
-> > > >=20
-> > > > crtc_state =3D NULL
-> > > > if (plane_state->crtc)
-> > > >  =A0 =A0 crtc_state =3D drm_atomic_helper_get_crtc_state(plane_stat=
-e->crtc)
-> > > >=20
-> > > > _check_plane_state(plane_state, crtc_state);
-> > > >=20
-> > > > And in this case, _check_plane_state() should work correctly. But y=
-ou can
-> > > > only use _get_crtc_state() in the atomic_check helpers! In the
-> > > > atomic_update, atomic_enable, etc helpers, it's too late for the he=
-lper to
-> > > > copy the CRTC state.
-> > > >=20
-> > > > I think some other DRM dev should look over this as well. It's one =
-of the
-> > > > trickier things in DRM to get right.
-> > > drm_atomic_helper_get_crtc_state is safe in atomic_check. It's
-> > > everything after that must use either get_new_crtc_state or
-> > > get_old_crtc_state, as the global state cannot be modified anymore.
-> >=20
-> > Thanks a lot for confirming.
-> >=20
-> > Wrt. the logic in plane atomic_check, we might have to fix a number of
-> > drivers. As I outlined above, some use _get_new_crtc_state(), some use
-> > _get_crtc_state() incorrectly. But that's for another series.
->=20
-> Sigh... I removed all of them a couple of years ago, I guess some crept
-> back in. Maybe we should warn loudly if it happens?
+I think check-then-act observation is fair, but it doesn't affect the patch's
+target, which is a provider-locked region that is F_LOCK'd during assembly
+before any userspace delete is possible, and F_LOCK is never cleared,
+so the flag is always already set when delete_region_store() runs for it.
 
-I started to look into it for drm_atomic_helper_get_crtc_state and I
-cannot find an occurence of this in drm-misc-next. Do you have a
-specific example in mind?
+The window described by the sashiko-bot requires userspace to concurrently
+attach an F_LOCK-setting target to the same region.
+I don't see a reachable path for that. And it can't be closed with a lock
+in delete_region_store() because unregister_region() calls device_del()
+before reset.
+ 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does a similar bypass exist in
+> store_targetN() when userspace manually detaches targets?
+> 
+> If a root user writes \n to a targetN sysfs attribute of a locked region,
+> store_targetN() calls detach_target() which eventually reaches
+> __cxl_decoder_detach(). This software teardown path lacks an F_LOCK check.
+> 
+> Because cxl_region_decode_reset() deliberately skips the hardware reset
+> for F_LOCK regions, the software state is dropped while the hardware
+> decoders remain committed.
+> 
+> The user could then write 0 to the size attribute, freeing the physical
+> memory while it is still actively decoded by hardware.
+> 
+> Should store_targetN() or __cxl_decoder_detach() also be gated by
+> CXL_REGION_F_LOCK to prevent userspace from tearing down the software
+> state of locked regions?
+> 
+> >  	unregister_region(cxlr);
+> >  
+> >  	return len;
+> 
 
-Maxime
+Will send another patch fix for this one.
 
---svtaodo43k2a7zkz
-Content-Type: application/pgp-signature; name="signature.asc"
+Best regards,
+Richard Cheng.
 
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCal87zwAKCRAnX84Zoj2+
-dpD4AX9mZR8Tsica/YCVr+szvbzpc2I1L6zbnMp7qBJPP5suVRXai0/c6lQELN2s
-/orBPSYBfRNMFmYBwJUkOABk0ocUxGax7KlpNoG7ktNzSEMH72f9U3G/1A/5b/ay
-jQHqVqGSZQ==
-=QgDA
------END PGP SIGNATURE-----
-
---svtaodo43k2a7zkz--
-
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260721055131.20935-1-icheng@nvidia.com?part=1
