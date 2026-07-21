@@ -1,234 +1,167 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EDA1FC101;
-	Tue, 21 Jul 2026 13:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784640452; cv=pass; b=jpfKTMHJyDVETcqgkg2UHO6/NpzHjOKZiY+MLyfxvyQUzMB1D4zXHV6MG+c9Zcz/0jm2GFZZRbJkrYl48nclLrOziqgYK3tpVI8aC8arVtJSig4JrKb2UhVaJ6+Xji9thRAMSxNIC6lYA9iMAfYsFYfIVEaysaACO7qQLoWr4Rs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784640452; c=relaxed/simple;
-	bh=OGVP0VVx8vkpiUDVvpcXD03bzZfoDtW1pVTTRtnqOpE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OlhCcvS0Yad7M7jfkECmqbNkcK0OxISSdmuRUL4BRfoP/+cnLObVnNzCJNm1OLyXNUevC9/L+5WDSCwANpiuNAi4SdMGgah0WOeIltvEyjTahKMav/kZnC7xxJxh/r90MWMqbT0PVvmcuTIr0c57+FanSdns7MU4KJDd9DlExps=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=nicolas.frattaroli@collabora.com header.b=JhDto0ZR; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A12136F91E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 13:41:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784641302; cv=none; b=tN+g2nYQXgfLhfl2vmNN+26+09HFmJCYEJcA5jFI1hx2j8I0KBWhUaQuBIvE7bNXqrJueo0mHM7VhTT2fxiqDnvuYxJ8zEUGLZtlrDJoFImtUtlusyT17p8EpjMvaQ0tx2ylt4HymzeZK3+N4s5YZJQb2SJn/WbpAnqqqBl6fWQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784641302; c=relaxed/simple;
+	bh=Lvcl3CRfeVXVAFghv3svpdGw2qc7DCUrpgugO4Rld+s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZslFq+3v102Hkmkv5IKCs+eniLUvuAxUxz2vktJZ4Zbkfbd9o+BW80XaT3Gz6bKwtS4Dw6SQrlSVeuLTqeEo6MrqgH83XOYtmbx7ctRdOVS1trXDy4cB84Dquo3BZ9SlrO2YqpX9Y/RdVMvcVJxl9VhdfkXxo1Nwh/zO+O0AvIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XIOpLeQU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FhUMGcfz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=nicolas.frattaroli@collabora.com header.b="JhDto0ZR"
-ARC-Seal: i=1; a=rsa-sha256; t=1784640447; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=NJwfsYtV3MIZBekDB/KUatXs8lC+2a+ICO80rGmX8GgQPBVxi0ChhRTYLTbG3l0FjhpFtoPB9NIvTD/fDBTH+krqkkRSJYcK9UyOpcJt+cmMlQQamaGRXRvzgTXWxktfvfolphaTTw/k6MdjAGIBdZP8bg3mGB6DzBK16m/2lvg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1784640447; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=vji0eOH2kOJChsUBQzXd/kLf5aGtxXHg+qKk4ia+R2k=; 
-	b=krNfFCZP6tKODtIaNVcQNNfI9KrIjFLImkJoFW+RWj5CU+TBbBwSNd4VOJhZTpEs0GXZwjQtGn0+EGw7Lse2uVG3UX4LwCw2r25eZWjJ7AJ6xVcCuZIOGLqsP6EElzDQsKi16GxXPFC471VBN23vBGCHaOcIUnW7yT8eRnStaQg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=nicolas.frattaroli@collabora.com;
-	dmarc=pass header.from=<nicolas.frattaroli@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784640447;
-	s=zohomail; d=collabora.com; i=nicolas.frattaroli@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:MIME-Version:Content-Transfer-Encoding:Content-Type:Message-Id:Reply-To;
-	bh=vji0eOH2kOJChsUBQzXd/kLf5aGtxXHg+qKk4ia+R2k=;
-	b=JhDto0ZRvbtJQjCYNlLmtDLp3e6vDhsCn1ryN2xQ5RKN81SKBvsZ1rd34sLO1CLj
-	sLDgEP9/sE42nL5sTE7oDSdbOPQClprNrXAcIZCuIeDvuk4mSgeQmJd01hXJMcAT+bf
-	bjNa7tLfYc2uVCeJQZHzW70a9rvL8ku33chJzttw=
-Received: by mx.zohomail.com with SMTPS id 1784640446275793.1170840479422;
-	Tue, 21 Jul 2026 06:27:26 -0700 (PDT)
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XIOpLeQU";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FhUMGcfz"
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66LDLsAY2023793
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 13:41:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=k4E2eWDKLcnSPoYw7vDjCZz9
+	5PSBT94/QtIXEfEoZP4=; b=XIOpLeQUBLN1jHSc3o8d4n2p8dbHRRcsZ2CL5Se1
+	Yg0ZCP7vik8xr/PBR5e8+E61kbHwgRONOJNvwdiCsgW+RyWeSZJRv7WPOZIi+pJy
+	aeHfNn50ey3dSDLSpg+SqmDrZs+rsSlrpJoyQBY5abLp53dj8FWTA93EmKfeCHlp
+	d6TOitrkkM332gnzgL0ZhjQKvrFvEIwpFW5ojD0Ygh4ymXHgV0o5R1J6irtCuTaL
+	fvTyoXEkXKCU2kR5mgahbPQIm/QaXDas81igVRaJqmXr/T6NmL78BOUIoFF0gx6H
+	zgeY6TQ0TJWoSB/gjnHjl/Eltnv2f7m68734N/ElRqRWjw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj6r3gyns-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 13:41:40 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-51c21c01cf3so176219851cf.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 06:41:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784641299; x=1785246099; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=k4E2eWDKLcnSPoYw7vDjCZz95PSBT94/QtIXEfEoZP4=;
+        b=FhUMGcfzGvrBKOHR23nFZzv7cIRqx2iaJYe0IOfuSZq1v18N/TJenfoFgRwYqtAnuB
+         g1k1Sw053XayrIVFNj3i00RLf+w/gObzfC2aQcE79JgkvOs6VH1DWEsjKQycmonJ9V90
+         PDUDbA4lTAhtyPcfEsRnutQ2dvN2bG7zPUGjVLZfcnRx0h+6RK1A7SSPke23pD9gY+9V
+         x1wXw6sHWd+sitP5493vSPcJA8vTFpCfKebz0rr3Xve+SoZymd7J8fUFsG8JmMuHLDPN
+         q7tw36OKS52JzaULsxH9aX1TzCY6mWdt+Ef2sFpl/3Ny/SVEbAFOoFfhkYGcY+B5Hp3E
+         GKZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784641299; x=1785246099;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=k4E2eWDKLcnSPoYw7vDjCZz95PSBT94/QtIXEfEoZP4=;
+        b=HMY5dJxme23E08zqusSt70GKcRSHTBfKikDzSBWLkKB37/h4xM95hd4T/z6jbEK8og
+         ReS77TKkGe6iV1GwC+8nO5YOGZub69Vz/8Eo3RjK+BN0h+WNZrKLCqZuTfb93DWPZAaK
+         8v1P3Ne5lhfbsw5nEFiO4RFWqiEg/xiI0nTn9Byo1UYTrxkv173q9mTSOdticwBTKCKa
+         0xMwaKxz9rB7Ob6WjG5kO5KgmDaZKASw83hqTJMAteXQzSOSuPRtrZ6GKi+Y3HWbOC/L
+         0pfuCswtA6oWlT8iMqtTbMkaeefnUJKfHYlrd5Z3FuXVYR7MSpWXoqMk/CM3hSiq09cK
+         I7ew==
+X-Gm-Message-State: AOJu0Ywh99RM0nE/u52k0Z5tdUJzbyPcizG917h1sb9xMcv7RVcOE0CQ
+	AFrU05tLTktoRqfW8uR9HcgeprSqZLo9GGEz05KUuvoIus1B1f47A4srVrmwv4v9x7Mb50vjGfW
+	EAP2nyDafSlcMxwKGijDjP3VzNbLBoNYHOy/TehtAYSoI31V2dIvp59/0bdygEeWfoDv16TtiZT
+	RbN9Q=
+X-Gm-Gg: AfdE7cmVUmw+KnHR5GtVC/Hr9uJ8+eR+zahUojvnXYFc7xtAvh5zVF3AInozmvnhysg
+	iutSzIfDN9W91YiGXMEx27vxF3Lzhpome2ioH84cMrWrfs6MX5NkHT/BSBzwvAV6Rx8wWU9gCyj
+	JBqEIcPOUbpOQ6oVZgKqNQZdvaGfX90paQPIPXY+Vv7KQHorQYDzuKS8slFyqPEKmB4bYyNNwQt
+	+i7ZuclhIx0a0l9rgalFDSTyVwOj/hxaHOuY2vL0ZoRZl1rWt2azZBiRdkpVWtm5/co7ZXZOKAP
+	UyYZH76IjStJjdIqfJKJgvuEowQ4MOh2tlTatfSJ7tbHSUOTU+NBqIkuG05aPT9TCrLO8V9rOU5
+	CNMoD8Od+7NimqQhoj1s571EOtZ+GW8IBv+ICJxmko8vEU7m7Zn23L+ikhxQCPTjsGkMda8J8Qe
+	DXBh3DDBeBUdvEaA==
+X-Received: by 2002:a05:622a:118e:b0:519:75f9:e874 with SMTP id d75a77b69052e-5213d2b6d47mr167996731cf.10.1784641254642;
+        Tue, 21 Jul 2026 06:40:54 -0700 (PDT)
+X-Received: by 2002:a05:622a:118e:b0:519:75f9:e874 with SMTP id d75a77b69052e-5213d2b6d47mr167996461cf.10.1784641254232;
+        Tue, 21 Jul 2026 06:40:54 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b291e1949csm2902431e87.65.2026.07.21.06.40.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2026 06:40:53 -0700 (PDT)
+Date: Tue, 21 Jul 2026 16:40:51 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-sunxi@lists.linux.dev, dri-devel@lists.freedesktop.org
-Subject:
- Re: [PATCH v7 3/5] drm/scdc-helper: Implement parsing and printing HDMI 2.1
- fields
-Date: Tue, 21 Jul 2026 15:27:22 +0200
-Message-ID: <7WoIxTIITfip4OFe95yhkA@collabora.com>
-In-Reply-To: <20260721091044.237A21F00A3A@smtp.kernel.org>
-References:
- <20260721-scdc-link-health-v7-0-92df1b6ad5fc@collabora.com>
- <20260721-scdc-link-health-v7-3-92df1b6ad5fc@collabora.com>
- <20260721091044.237A21F00A3A@smtp.kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] soc: qcom: ubwc: Get HBB from SMEM
+Message-ID: <6rmntcmouwenb3t5xk5rh2rijd3sc3re5m4aeuqive3wifn6ux@hauua7ltycvj>
+References: <20260721-topic-smem_dramc-v4-0-748f992278a3@oss.qualcomm.com>
+ <20260721-topic-smem_dramc-v4-2-748f992278a3@oss.qualcomm.com>
+ <20260721124005.E00041F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260721124005.E00041F00A3A@smtp.kernel.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDE0NCBTYWx0ZWRfX7TDAQYxxjMcU
+ 3KGA6TC7J5ybOtJqyHNAD5R4Vcx6K4mz+L9qiQtf8O7b0zNt1m6Nwxzk3n2XsDgz0el7bc7j1w9
+ 0TnMn8vYkPwYNDUgZ3Z3+doqApdqDWXeyBd/PfwKlT0MQJuAAz3wcvL12h3Tz5aem5eN4BZGgKg
+ 1Dozbrfosgm4YxtR1rT4P0Qxk+j/FgUGvrDL4MHgB7VRRBhJZfVEVdvtBIIvU8zzxO6ptSmpYdQ
+ tMnBderDt36zfmQJDq/G6NDDiGSBkzQ+Cmc2aWRm2y8PjnC21ux2h7ngRCOD0lTXAIwEuRzLfsZ
+ CSwKOW9+IjkbwKvAnfD22RLqP2ShaalmLGTW81rhBalCN29M/IOXP6vCTE9BBTAOjBboJ4Spi76
+ tI6Hv21yPj7lO+JWlzxkHgXSSv+plbB9peR+W0AbJOF1bnizCT6vWJuWGqVObxhCdEpbo+3O7DZ
+ TR5n8NJ9ryaygAhG1VQ==
+X-Proofpoint-ORIG-GUID: H9DOVZWltojdWUkz84ANoFu5IftxYx8B
+X-Proofpoint-GUID: H9DOVZWltojdWUkz84ANoFu5IftxYx8B
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDE0NCBTYWx0ZWRfX0f4EMnXIWaIu
+ eXz0oiSTB0bqDcWvwHI2OMJRYwt/xOO3BpfTRoTnII99J0jgQtFk4uzxatrPzEMzGGZQteQJB5t
+ 9Di7wKwChgKIraV9DHOM5bD2r+g/rY4=
+X-Authority-Analysis: v=2.4 cv=SIRykuvH c=1 sm=1 tr=0 ts=6a5f7714 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=VwQbUJbxAAAA:8
+ a=x8C9OYS-9AN7LrXSNBgA:9 a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_02,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210144
 
-On Tuesday, 21 July 2026 11:10:43 Central European Summer Time sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Incorrect checksum validation range breaks 4-lane FRL error parsing.
-> - [High] Redefinition of `SCDC_CH_LOCK_MASK` breaks TMDS lock checking for HDMI 2.0 sinks.
-> - [Medium] Stale state leakage for `rs_corrections` across debugfs reads.
-> - [Medium] Reserved FRL rates cause debugfs read failures and unreachable dead code.
-> - [Medium] Concurrent debugfs reads cause a data race on `priv->state`.
+On Tue, Jul 21, 2026 at 12:40:05PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] A race condition between SMEM probing and `qcom_ubwc_config_get_data()` can cause the driver to bypass probe deferral, incorrectly fall back to default UBWC data, and return mismatched configurations to concurrent callers.
+> - [Low] Missing Kconfig dependency on QCOM_SMEM causes linker errors when QCOM_UBWC_CONFIG is selected but QCOM_SMEM is disabled or built as a module.
 > --
 > 
-> --- Patch [3]: [PATCH v7 3/5] drm/scdc-helper: Implement parsing and printing HDMI 2.1 fields ---
-> commit c31217f1c2c58d659c6532a48bf298ea495b08b1
-> Author: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-> 
-> drm/scdc-helper: Implement parsing and printing HDMI 2.1 fields
-> 
-> HDMI 2.1 redefines previously reserved fields in SCDC for various new uses.
-> Implement reading and outputting these fields over debugfs.
-> 
-> > diff --git a/drivers/gpu/drm/display/drm_scdc_helper.c b/drivers/gpu/drm/display/drm_scdc_helper.c
-> > index 5871fc101815d..7e17272d52f23 100644
-> > --- a/drivers/gpu/drm/display/drm_scdc_helper.c
-> > +++ b/drivers/gpu/drm/display/drm_scdc_helper.c
-> 
-> [ ... ]
-> 
-> > -static int drm_scdc_parse_error_counters(const u8 scdc[256], u16 counter[3])
-> > +static int drm_scdc_parse_error_counters(const u8 scdc[256], u16 counter[4],
-> > +					 unsigned int num_lanes)
-> >  {
-> > +	u8 end_reg;
-> >  	u8 sum = 0;
-> >  	int i;
-> >  
-> > -	for (i = SCDC_ERR_DET_0_L; i <= SCDC_ERR_DET_CHECKSUM ; i++)
-> > +	switch (num_lanes) {
-> > +	case 3:
-> > +		end_reg = SCDC_ERR_DET_CHECKSUM;
-> > +		break;
-> > +	case 4:
-> > +		end_reg = SCDC_ERR_DET_3_H;
-> > +		break;
-> > +	default:
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	for (i = SCDC_ERR_DET_0_L; i <= end_reg; i++)
-> >  		sum = wrapping_add(u8, sum, scdc[i]);
-> 
-> [Severity: High]
-> Does this break the checksum validation for 4-lane FRL links?
-> 
-> The standard HDMI checksum is designed to sum registers 0x50 through 0x56
-> (SCDC_ERR_DET_CHECKSUM) to zero.
-> 
-> By extending the loop's end_reg to SCDC_ERR_DET_3_H (0x58) for 4-lane mode,
-> won't this incorporate non-checksum data into the sum and incorrectly return
-> -EPROTO whenever Lane 3 has errors or its valid bit is set?
-> 
-> [ ... ]
-> 
-> > @@ -356,11 +423,26 @@ int drm_scdc_read_state(struct drm_connector *connector, struct drm_scdc_state *
-> >  
-> >  	state->scrambling_detected = buf[SCDC_SCRAMBLER_STATUS] & SCDC_SCRAMBLING_STATUS;
-> >  
-> > +	state->rate = FIELD_GET(SCDC_FRL_RATE, buf[SCDC_CONFIG_1]);
-> > +	num_lanes = drm_scdc_num_frl_lanes(state->rate);
-> > +	if (num_lanes < 0)
-> > +		return num_lanes;
-> 
-> [Severity: Medium]
-> If a sink reports a reserved FRL rate (between 7 and 15), does this cause
-> debugfs reads to fail entirely?
-> 
-> drm_scdc_num_frl_lanes() returns -EINVAL for these reserved rates, causing
-> drm_scdc_read_state() to immediately abort. This makes the reserved rate
-> strings in drm_scdc_frl_rate_str() unreachable dead code.
-> 
-> > +	if (!num_lanes)
-> > +		num_lanes = 3;
-> > +
-> > +	state->ffe_levels = FIELD_GET(SCDC_FFE_LEVELS, buf[SCDC_CONFIG_1]);
-> > +
-> >  	drm_scdc_parse_status0_flags(buf[SCDC_STATUS_FLAGS_0], &state->stf);
-> > -	ret = drm_scdc_parse_error_counters(buf, state->error_count);
-> > +	drm_scdc_parse_status1_2_flags(buf[SCDC_STATUS_FLAGS_1],
-> > +				       buf[SCDC_STATUS_FLAGS_2], &state->stf);
-> > +	ret = drm_scdc_parse_error_counters(buf, state->error_count, num_lanes);
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	if (num_lanes == 4 && (buf[SCDC_ERR_DET_RS_H] & SCDC_CHANNEL_VALID))
-> > +		state->rs_corrections = (buf[SCDC_ERR_DET_RS_H] & ~SCDC_CHANNEL_VALID) << 8 |
-> > +					buf[SCDC_ERR_DET_RS_L];
-> > +
-> >  	return 0;
-> >  }
-> 
-> [Severity: Medium]
-> Does this leak stale state across debugfs reads?
-> 
-> If a 4-lane link transitions to a state where the RS channel valid bit is
-> cleared, or if it drops to 3 lanes, the missing else branch here leaves the
-> old rs_corrections value intact.
-> 
-> Since the state struct is reused across reads, could this expose stale
-> correction counts to userspace?
-> 
-> [ ... ]
-> 
-> > @@ -406,6 +488,8 @@ static int scdc_status_show(struct seq_file *m, void *data)
-> >  {
-> >  	struct scdc_debugfs_priv *priv = m->private;
-> >  	struct drm_scdc_state *st = &priv->state;
-> >  	struct drm_connector *connector = priv->connector;
-> >  	struct drm_scdc *scdc = &connector->display_info.hdmi.scdc;
-> >  	int i, ret;
-> >  
-> >  	drm_connector_get(connector);
-> >  
-> >  	if (connector->status != connector_status_connected) {
-> >  		ret = -ENODEV;
-> >  		goto err_conn_put;
+> > @@ -178,9 +195,30 @@ const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
+> >  		return ERR_PTR(-EINVAL);
 > >  	}
 > >  
-> >  	if (scdc->supported) {
-> >  		ret = drm_scdc_read_state(connector, st);
-> 
-> [Severity: Medium]
-> Can concurrent debugfs reads cause a data race on the shared state structure?
-> 
-> Multiple threads reading the scdc_status debugfs file share the same private
-> context. Calling drm_scdc_read_state() mutates the shared I2C buffer
-> (state->scdc) and its bitfields directly without serialization, which could
-> corrupt I2C reads and mangle the debugfs output.
-> 
-> [ ... ]
-> 
-> > diff --git a/include/drm/display/drm_scdc.h b/include/drm/display/drm_scdc.h
-> > index 3d58f37e8ed8e..7f0b05b2f2800 100644
-> > --- a/include/drm/display/drm_scdc.h
-> > +++ b/include/drm/display/drm_scdc.h
-> > @@ -46,14 +48,25 @@
-> >  #define SCDC_CONFIG_0 0x30
-> >  #define  SCDC_READ_REQUEST_ENABLE (1 << 0)
-> >  
-> > +#define SCDC_CONFIG_1 0x31
-> > +#define  SCDC_FRL_RATE   0x0f
-> > +#define  SCDC_FFE_LEVELS 0xf0
-> > +
-> >  #define SCDC_STATUS_FLAGS_0 0x40
-> > +#define  SCDC_DSC_FAIL (1 << 7)
-> > +#define  SCDC_FLT_READY (1 << 6)
-> > +#define  SCDC_LN3_LOCK (1 << 4)
-> >  #define  SCDC_CH2_LOCK (1 << 3)
-> >  #define  SCDC_CH1_LOCK (1 << 2)
-> >  #define  SCDC_CH0_LOCK (1 << 1)
-> > -#define  SCDC_CH_LOCK_MASK (SCDC_CH2_LOCK | SCDC_CH1_LOCK | SCDC_CH0_LOCK)
-> > +#define  SCDC_CH_LOCK_MASK (SCDC_LN3_LOCK | SCDC_CH2_LOCK | SCDC_CH1_LOCK | \
-> > +			    SCDC_CH0_LOCK)
+> > -	return data;
+> > +	hbb = qcom_smem_dram_get_hbb();
 > 
 > [Severity: High]
-> Can this redefinition break TMDS lock checking for HDMI 2.0 sinks?
+> Can a race condition occur between SMEM probing and this function, causing
+> it to bypass probe deferral and use incorrect default data?
 > 
-> Since HDMI 2.0 sinks only have 3 lanes, the SCDC_LN3_LOCK bit will always
-> be 0. Existing drivers performing an equality check against this mask
-> will systematically fail to detect the lock.
+> In drivers/soc/qcom/smem.c:qcom_smem_probe(), the global __smem pointer is
+> published before the DRAM data is populated:
 > 
+> drivers/soc/qcom/smem.c:qcom_smem_probe() {
+>     ...
+>     __smem = smem;
+>     ...
+>     smem->debugfs_dir = smem_dram_parse(smem->dev);
+>     ...
+> }
 > 
+> If a driver calls qcom_ubwc_config_get_data() concurrently during this
+> window, qcom_smem_is_available() would return true, but
+> qcom_smem_dram_get_hbb() would return -ENODATA because __dram is not
+> populated yet.
 
-One of those (state race) is already in the previous patch's review,
-the rest are all delirious nonsense.
+I think this must be addressed, the DRAM data should be parsed before
+setting __semem pointer.
 
 
-
+-- 
+With best wishes
+Dmitry
