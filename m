@@ -1,87 +1,45 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9B143F4AF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 22:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CFC43B48C;
+	Tue, 21 Jul 2026 22:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673506; cv=none; b=QIK4LaBSX2GAmPz29JetHlpjHaLy7DU9It2WKUu1dunioHmbJds1AuFXewJaiY4AJAVyeDAiCOGmT9i87WCe4z0y/j6Mq0fWsbakAyd1tkDVH3XcLprClGtw7SIo/Ei+IldGs5a1PFjHxS0XktaRffuuGcO3pOGHVbZtrkah/AA=
+	t=1784674341; cv=none; b=U6AcyxJbnwhzCWRfdXQC5w2/irwEgA8pH4Tt/CsEk7TgAf4nCG/3hlyfWGbuCHSEMbv45OBezfUeS07LkGL1roex9Lr8murnxs6VnuBMasn+JqewXfzXqJ6xF9/V+nd8Hxs83kfBjMmWBB4LUqJADHf/OvpYkhyXy+i5V59bMe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673506; c=relaxed/simple;
-	bh=vYRv8k58w2CyhMVmSqDuCi/hXQhCUhaEV1xMDAbbB8g=;
+	s=arc-20240116; t=1784674341; c=relaxed/simple;
+	bh=swBlEhIct1eyRW2UnxNGQCb0fHppgwmR41rhWaSM9jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=He/ZRXoMHFxrhI/vjJ8y8370k0aFrqfY6D/vNbzJfb/UGg0hiGt1gHDFL8UMHf82F4DneGjx1Rsen1EszKvqG3Ny++/LgjzIBgKIDDIgf1PX9Q4ozIF6BUf70S/zXmDQk+o2J+W1V33Th2Ek/rBppEcH5DnqWakhI3e201XNnfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NOjOW5An; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version; b=mL82ISQuaZOH2iXGhMuL6y4ZXxAnH6p5JRivb5EMWTEIwOhQ+SNkONZ9EoP3Z+xXNZJgvfNSNsWPgyD9g4zu27CrDeLQ2S5bCTzR1iZMCrWUWxukA0gi/d1r1hGS2Zaleq1l50+9nZhUpdiaxzVx1RjY+ikP7aHUQx4JmaOaxpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKuYo1Ge; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NOjOW5An"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4954c0833b4so29886105e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 15:38:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784673493; x=1785278293; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=z0WJnnhXlTqHAzSRlQQl5c6vDIzceJyXSF5sIOHpwqM=;
-        b=NOjOW5Anx6RkVjavP06AQe7EV7x17MEQWoMNbapKElRYxBf8SETcQ2HLqidcuK5kHP
-         UMEWJiBFyLvdneLm20reQRHqvZUWajCONuIDpMlJIu/Fssg7AKQWVOcSO5XVHwt5dqu+
-         gI2Oq3Jw4iOhU9ZgQynQ23r/K/3WzWzfLAPa91xxo5PZhXJ6Cq+Pq7AOHrTOj7lBwVEd
-         PAl2k3ZnGmjNra+k6CPfPAwkkhK5pCsodIlEmBi0eMv5wVogn+gNszzU9xffX1pkFXg6
-         4d6Kt3ZvIernLCvxR8OsdDor6mTPEWu99dj49r53axosWQOF69FaNgxUeQ+T9pWVzR+j
-         PAvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784673493; x=1785278293;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=z0WJnnhXlTqHAzSRlQQl5c6vDIzceJyXSF5sIOHpwqM=;
-        b=TGuce0u3/QQoUZKc+NWCdjJ9su/3uBNjE/gJSGhGnWSD+K7fJCE4BjoHez7UK7Gx5j
-         d2BsA32xphBN2HaTN5S+U6t2isaOBH82v2/YMgqGMdgcIeblCl0uJtSk2ZlF2NGSYBqu
-         ZwkMr7hyj0ZieuH78xRegfFpEeiQXvkEkzqMssuwib7QI6w9ArnOw40rnpvPZS3reyRr
-         jNt9L0uqMeudM9Yz1+VvrPDZL85GEbj43qnmBwXyWtGVF0JOp9hMubA6H1+DxUtTKWXn
-         RLAY77iu3fFw8ZHkZQ1gMXhI69tdfwrl9r9Hr4lWoLJ5mOZh20FY9ReCIcNq70grbN+t
-         NW2A==
-X-Forwarded-Encrypted: i=1; AHgh+RoR5csbsp6/ygkHYKiRNnt5ZmGWY8gZkOJ3BMWdtsbuWk3LENKru0hSxCv2K/tXhWEmZCuqPY6mnxD0qay80Sk=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz5iGh5RinSlGpRHlcP5pbbfywVxczqMCHWS/DP425VfEtnGgC/
-	KJiiOXQDTQA4s25yeBA+OSOJT0lsDk6byo3Cn74LLhwrTMWKfzAUjOdZ
-X-Gm-Gg: AfdE7ckuFVKZPDM7/TW8JvbV+XJc/IGubv8OUnCGsd/0amxo6N+UZdpgD8RE5DdGnqn
-	3lMb+HbmU8ymf5/M0V2YsftlY4ot1udsuG48+YsEPEk1BDl5S05smwSR33uiR0PS+EnGzSaZ0hc
-	UD1N8WNt4jZkY4EqFuvvlCKZj6BGhDtJMCnFG2NHAJQ/mZmyYV4jiOhXXe2U7PZ/Ocj+ZX18Vph
-	1y3xKZGq1KXVUyU6tjnNKpx+lIwTAdgyGCD7xXGjgMoEFYFys5X9VV8cLpvLelRJAFThqYZlvvI
-	YiAe5XKSgntixMVDv7GXJfDXrYxh175KZYrJQ+sIzCv2FEOAlQn63ahD41+FobvApjFIFTksSq1
-	81duNGHrtIkaZFy6cD3rvW3q0KTN4VtO0HtvQ4ZKXfxviJkciaPIAg+4femBpEkqQ/8FQ6wk8OZ
-	A7ssQQLD//qBxt67Mqai2mcF0FeKd/9xfT9cpPGmLLwabHyikau5yLyygVZBkvQgImLVJfl2/sI
-	CDm
-X-Received: by 2002:a05:600c:1396:b0:493:b150:c607 with SMTP id 5b1f17b1804b1-4954a3f36a9mr223998835e9.12.1784673493285;
-        Tue, 21 Jul 2026 15:38:13 -0700 (PDT)
-Received: from localhost.localdomain (host86-153-201-25.range86-153.btcentralplus.com. [86.153.201.25])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653c9d99sm101290455e9.12.2026.07.21.15.38.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 15:38:12 -0700 (PDT)
-From: Nnamdi Onyeyiri <nnamdio@gmail.com>
-To: nnamdio@gmail.com
-Cc: bpf@vger.kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	horms@kernel.org,
-	jakub@cloudflare.com,
-	jiayuan.chen@linux.dev,
-	john.fastabend@gmail.com,
-	kuba@kernel.org,
-	kuniyu@google.com,
-	ncardwell@google.com,
-	netdev@vger.kernel.org,
-	pabeni@redhat.com,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKuYo1Ge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE7F1F000E9;
+	Tue, 21 Jul 2026 22:52:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784674339;
+	bh=xWveeECUA4n9D+k+jGi1xFtPPSl7nXPpHtU16DZvVZ4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=yKuYo1GeZdx/zyqYNsWiFRn8uqc7JMsBmhpYC3wInqTmKXTavOgNNF7uVNnoh7KsO
+	 IWxTdVEh0nrmWUFGWzbN0jjDV00iuXuieZrBMIKV06zun9giHvQJY8tGWv+768jZxu
+	 GLHSNYV3wqCtPQfZcqVQd4f4A/8wc0CdxpwqDIHg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
 	sashiko-reviews@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	emil@etsalapatis.com
-Subject: [PATCH v7 2/2] selftests/bpf: add sockmap recvfrom EAGAIN selftest
-Date: Tue, 21 Jul 2026 23:38:07 +0100
-Message-ID: <20260721223807.75101-3-nnamdio@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260721223807.75101-1-nnamdio@gmail.com>
-References: <20260721223807.75101-1-nnamdio@gmail.com>
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 505/699] can: bcm: add missing rcu list annotations and operations
+Date: Tue, 21 Jul 2026 17:24:24 +0200
+Message-ID: <20260721152407.087390506@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
+References: <20260721152355.667394603@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -90,171 +48,126 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-These selftests exercise the tcp_bpf_recvmsg() and tcp_bpf_recvmsg_parser()
-functions, to ensure that they are properly handling spurious wakeups in
-tcp_msg_wait_data().
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-The expected behaviour is that recvfrom() does not return an EAGAIN
-error.  If the spurious wakeups are incorrectly handled, this assertion
-will fail.
+------------------
 
-Signed-off-by: Nnamdi Onyeyiri <nnamdio@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
+
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/bpf/prog_tests/sockmap_basic.c  | 136 ++++++++++++++++++
- 1 file changed, 136 insertions(+)
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-index cb3229711f93..afda4d90e573 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-@@ -1373,6 +1373,138 @@ static void test_sockmap_multi_channels(int sotype)
- 	test_sockmap_pass_prog__destroy(skel);
- }
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
  
-+static void *test_sockmap_recvfrom_eagain_thread(void *arg)
-+{
-+	int fd = *(int *)arg;
-+	char buf[1024];
-+	void *result = NULL;
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
+ 			     HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
 +
-+	while (true) {
-+		ssize_t len = recvfrom(fd, buf, sizeof(buf), 0, NULL, NULL);
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
+ 
+@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 			     HRTIMER_MODE_REL_SOFT);
+ 		op->thrtimer.function = bcm_rx_thr_handler;
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
 +
-+		if (len == -1) {
-+			if (errno == EINTR)
-+				continue;
-+			result = (void *)1;
-+			break;
-+		}
-+
-+		if (!len || buf[len - 1] == 'e')
-+			break;
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
 +	}
-+
-+	send(fd, "test", 4, MSG_NOSIGNAL);
-+
-+	close(fd);
-+
-+	return result;
-+}
-+
-+static void test_sockmap_recvfrom_eagain(bool with_verdict)
-+{
-+	struct test_sockmap_pass_prog *skel = NULL;
-+	struct bpf_program *prog = NULL;
-+	char *buf = NULL;
-+	int map, err;
-+
-+	/*
-+	 * the size of the buffer to send.  completion of the sending can trigger a spurious wake
-+	 * up.  larger values make the issue more likely, but make successful test runs longer.
-+	 */
-+	const size_t buflen = 1024 * 1024 * 25;
-+
-+	/*
-+	 * maximum number of attempts to reproduce EAGAIN on spurious wake up.  more attempts
-+	 * increases the chances of triggering the issue, and the test ends as soon as we do.
-+	 * however, successful runs would take longer to complete.
-+	 */
-+	const int max_attempts = 300;
-+
-+	skel = test_sockmap_pass_prog__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "open_and_load"))
-+		return;
-+
-+	map = bpf_map__fd(skel->maps.sock_map_rx);
-+
-+	if (with_verdict) {
-+		prog = skel->progs.prog_skb_verdict;
-+		err = bpf_prog_attach(bpf_program__fd(prog), map, BPF_SK_SKB_STREAM_VERDICT, 0);
-+		if (!ASSERT_OK(err, "bpf_prog_attach verdict"))
-+			goto cleanup;
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
 +	}
-+
-+	buf = malloc(buflen);
-+	if (!ASSERT_OK_PTR(buf, "malloc buf"))
-+		goto cleanup;
-+	memset(buf, 0, buflen);
-+	buf[buflen - 1] = 'e';
-+
-+	for (int i = 0; i < max_attempts; ++i) {
-+		ssize_t len;
-+		char ignored[128];
-+		pthread_t thread;
-+		bool thread_created = false;
-+		size_t rem = buflen;
-+		int c = -1, p = -1, zero = 0;
-+		bool success = false;
-+
-+		err = create_pair(AF_INET, SOCK_STREAM, &c, &p);
-+		if (!ASSERT_OK(err, "create_pair"))
-+			goto end_attempt;
-+
-+		err = pthread_create(&thread, NULL, &test_sockmap_recvfrom_eagain_thread, &p);
-+		if (!ASSERT_OK(err, "pthread_create"))
-+			goto end_attempt;
-+		thread_created = true;
-+
-+		err = bpf_map_update_elem(map, &zero, &c, BPF_ANY);
-+		if (!ASSERT_OK(err, "bpf_map_update_elem"))
-+			goto end_attempt;
-+
-+		while (rem) {
-+			len = xsend(c, buf + (buflen - rem), rem, 0);
-+			if (len == -1)
-+				goto end_attempt;
-+			rem -= len;
-+		}
-+
-+		/* we cannot use recv_timeout(), otherwise EAGAIN would be an expected errno. */
-+		len = recvfrom(c, ignored, sizeof(ignored), 0, NULL, NULL);
-+
-+		/*
-+		 * we are checking for the invalid return of EAGAIN, any other return is considered
-+		 * successful for the purposes of this test.
-+		 */
-+		if (len < 0 && !ASSERT_NEQ(errno, EAGAIN, "recvfrom eagain"))
-+			goto end_attempt;
-+
-+		success = true;
-+
-+end_attempt:
-+		if (c >= 0)
-+			close(c);
-+
-+		if (thread_created) {
-+			void *retval = NULL;
-+
-+			pthread_join(thread, &retval);
-+			if (!ASSERT_NULL(retval, "retval"))
-+				success = false;
-+		}
-+
-+		if (!thread_created && p >= 0)
-+			close(p);
-+		if (!success)
-+			break;
-+	}
-+
-+cleanup:
-+	if (buf)
-+		free(buf);
-+
-+	test_sockmap_pass_prog__destroy(skel);
-+}
-+
- void test_sockmap_basic(void)
- {
- 	if (test__start_subtest("sockmap create_update_free"))
-@@ -1451,4 +1583,8 @@ void test_sockmap_basic(void)
- 		test_sockmap_multi_channels(SOCK_STREAM);
- 	if (test__start_subtest("sockmap udp multi channels"))
- 		test_sockmap_multi_channels(SOCK_DGRAM);
-+	if (test__start_subtest("sockmap recvfrom eagain"))
-+		test_sockmap_recvfrom_eagain(false);
-+	if (test__start_subtest("sockmap recvfrom eagain with verdict"))
-+		test_sockmap_recvfrom_eagain(true);
- }
--- 
-2.52.0
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
+
 
