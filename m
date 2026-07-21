@@ -1,212 +1,202 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D333E1E0E14
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 02:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784602314; cv=none; b=b/qrBQ4aNmOhHs0rQA7wUBJivL8cDxoAPPHU9PzS/BGaOktmkQTu2ppLWfXgnrwK5LgO3DmstTrucKecrlD9p1ueGkgr2FxvRLqZ/f24NBWYQ77FqGXOOZOT14duxiExgFzqltYIX1Rn2Xu3Phk1Xx/0CXWjd2w8gJSEA0JuqLk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784602314; c=relaxed/simple;
-	bh=YJsPImwprWYdEz+ZKXaVKQBIP8+D5IdSIcmr1UJr7mg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=cykbGd9nniU/haX3/ySIic2bigAtS7QJPMKwbI8QZSFPgs01tEOgFSVMLRSgA3O9Hw8t8JmliXA8Rf4DFOE37MjnxohDX6we5ZgA86PzuOZLrKF+iTpNQa2tNYL14KhDIDNmRdmFy5Xce0sMYdfMLzT5zUctgv3Z2+lzSEAOFos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexthop.ai; spf=pass smtp.mailfrom=nexthop.ai; dkim=pass (2048-bit key) header.d=nexthop.ai header.i=@nexthop.ai header.b=Bi8doPAr; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexthop.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexthop.ai
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7752FD1DA
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 03:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784603424; cv=pass; b=AvnGyfOdsRw7FjLknvczDaZEDkVvyGvcPKFe1Ji2+vqsTY6Ye5S4Cck2s06fsEQEb9cDWtXPtdb2P1FO6xgqzog7rQOK2xb8hyUODivQGW0pEma6g0Jm4BxaBrlGu7ZMXcWWwx6RKyAuA5gAguLjA0RbzolSWerN9K9gkd566BQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784603424; c=relaxed/simple;
+	bh=Ll0oXFaUVmJjuNd/liZj62ZGpCxxtgMatuhbXv24e9c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XcXY+QWP0OvZ5RP+UUb8Ky9vSnCvnY4dVuwinc0p+JxBbL9CfJVqkCvAv5QY4uYQyxSXBMxSCjBmBOEckABlZsSt8UtxESqT/ck3+xY6bRdOd0q9JFZmCrBKGjzB2gpHjGc3yLkQnfLa1XqyVuYKX+uz402eIAEFBYzFx/ZqSkM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ElxYxSlX; arc=pass smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexthop.ai header.i=@nexthop.ai header.b="Bi8doPAr"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c99eaa1f020so7450654a12.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 19:51:52 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ElxYxSlX"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-80a123ef90aso64506247b3.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 20 Jul 2026 20:10:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784603422; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fQK/Zdxu23o9DEyfY4873hNYn41e06iUE5P2h4nXMynBQTY88zwkjpJ4TyYkPs+oMR
+         y2PZ+E4P+wbqFCRhb3luOsK7deCpA68X2zMLd3R8kAZpQtoCi/poJ0fA7Di3X7fvQCts
+         B7VpNQHJTJHITxsdZH7hHQJVNJMikZgQjrqhh7S6eEZRnlTbrjow+/ZJ1fjGXGeHF+gO
+         chcfZW8LVlVaWAhkWQpOQlIZ8T9SvWPzwHX1kL9vbZYBK9OxkHYssbCINYcYH+2Wp5pz
+         82gjrkxfXBuCjKBU9UZ0dXNTzXVga5QcKLaAQiMvscgIjDTkxMiWZNRWhYlBVoxN1pke
+         mTJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=phLMwCnRovNBL2FCZmS9hb02QIovvFlxaoITzfa1zfE=;
+        fh=ZjoP3inPy0EcODIMaiQgZsErGHXdH6i47dh1g1UTqyg=;
+        b=j+w59irPU4rWSXK6XFVRQUJ14c0djowqxRrood0OPwItrIxvbKLdr/SzrS38Cx9bvK
+         P62ZFA3aQDvJK7rJboMn6JBUsPHTWAziJlrwP6J8hwBHIGnPUynPN2FlWhIuvhLh0Z4T
+         gfzH3Xsm+4hatWCl9n4qRdf43P3ag4C9c1+cuQMa7zi0FdodHp+lqxopTYnH1scXSm7p
+         SiAdNbOJJevZjzuDYGu1bVto2hJ95/pvgHgghUXKll33ZmAtycGBlhlR8oeryEVVSkj8
+         nGgEMYm4jb+pDft1u7YF4MiOoQUpjiMc+Io6FT0bBc8G/rBQ4MSqa+SzyJ/oaQCSVqXU
+         CtDw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexthop.ai; s=google; t=1784602312; x=1785207112; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=/+DBEPr4uWvMVbIBmyNdw6JZxEfO9MH/309T1HE5nyg=;
-        b=Bi8doPArf26vcK5Cs4JKJTg3YV1mlklD9vNttHWalm4dJIotdyzfPDx0vOPFHD6T6A
-         3ZXiTT8AE6zZ554ZHFHFg9rD/03u6WUhs5TW+/zhwg9TRVOSsSQt3fBGJnprZRurCHrS
-         cKQfzEPfwxdJ0bF+7XVSpC6A62S9NynOI9NQyMHbE/Z3KMtDpnvNV5i4cA92QSYQ4RR2
-         sV0AAO3PWd2jtKTOTlQfnaQLsNzyHd7b+yJK0NDfxLd2bVOJ5Kd9ILRRBgSQbPhj3U1Y
-         GmTFQZQ9eiHdik1/F2wS2S2F4Qh2s0MlCHZdVywU7QNALOPaKkttcuppQ/JYT785eWB2
-         kdKw==
+        d=chromium.org; s=google; t=1784603422; x=1785208222; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=phLMwCnRovNBL2FCZmS9hb02QIovvFlxaoITzfa1zfE=;
+        b=ElxYxSlX+X5WxrzkRunFb1HBvh4C5sWNfjWQl9dhPiJvzlD5ykqgaspLTKwLLbki93
+         ReBATGjjAs3tq8cgSD8VOAhEZ8LhjaUW2rVz9jfWQnzxPgoy0AmH8X/abChlwX1hrfQA
+         gS2q2zn0ngpm+dsAjMmH4QU++ls8MSdk3Ik54=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784602312; x=1785207112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1784603422; x=1785208222;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/+DBEPr4uWvMVbIBmyNdw6JZxEfO9MH/309T1HE5nyg=;
-        b=Y4nKzuVBax5xZZnTjrauyZ7LduqTBNHzktpIJxPp/kZmvN6d7ELJfFfvyeaE5HgGYv
-         RMfNSNBNSUiXPcXsrtQ/v4hKvrutAWHWcaCpKlLwDTn8X1bHCS4cGGGDdBDCi/nTbUVR
-         g+dzTX+YQANAkDMhJkk85QUTKqz3tJrk/4rEAo4wa85WFi+hbM+IeRkpaxvU+NfJ++ZH
-         eEu8uaiM1ND7JXxUIIp5bYG/ppYFZgRfXm6jRwWddvq2gl1AaSLSKHCrSN6ffQOdxhhg
-         d9mUaTOFdz6Gd878qn8CliKoaf/kLQcGa6vh/Zyc/eda0nHPGhbZsj4skenHXv1vPgSM
-         Uk8A==
-X-Gm-Message-State: AOJu0YxfBkzkDXK7FVSk6/X6508T+7ReZjsRJI+9ls3c/SUcY1dy7adi
-	A8r3wun5hoAIQU7UygWXCyj2qn2+AVuWdikz1fFMe+CUhqIGP/5+CpEhCy/1jd/IuHuuc8NpeAm
-	CQtNt9CQ=
-X-Gm-Gg: AfdE7cntaKTdROKy4IAdIVTgXBcD835MmFX7VOt3fD8pySetX+h42iC9Zqj9xakRxAP
-	SD4pCGt9I6ddyrgFsGmWK63HguB0Pid2RXg5flaK+KD31UzCaNSGnkLUWdF14Up7RAlQ6Pn+tOi
-	darLehwdiYjnRJamTtZKwNWmYd6/1TGK8glr6jJ+iRSasX1a7YpqaCFm9g1ZmgUBHvU4+42IdKp
-	7no1vR4xQWDVPIxqiLYO786IGwLBwLMdW69WmiZBLJgaRluZxIIFcDDMxmbRNSuE6ttxCF4bU8e
-	rh1deYUaxaQkRn8gKseBa/FJux2BuW5AnAJjjnrAJ+DT92YPBFWX87YzH27PMygF7tj+hYnRtIj
-	R6bhCIUTtuN7RtHHSd31V8gY8/IPT5v83IU+/EO0U0phHK93CBYixkO16DKMODc/4ldh2w2PvAs
-	XKoQ==
-X-Received: by 2002:a05:6a21:6e4c:b0:3c3:7cd0:fc2e with SMTP id adf61e73a8af0-3c3ad8ecc7amr18216306637.48.1784602312235;
-        Mon, 20 Jul 2026 19:51:52 -0700 (PDT)
-Received: from localhost ([50.145.100.174])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1bb77csm46116476eec.18.2026.07.20.19.51.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jul 2026 19:51:51 -0700 (PDT)
+        bh=phLMwCnRovNBL2FCZmS9hb02QIovvFlxaoITzfa1zfE=;
+        b=nCPPq2JzH42gdKj7kchodIfEapJu/StWmciAKfS5qBuEISjAql/mdNW+jwdam3nxNN
+         FYycmMpcdTLlflwBt5s6mfsnlMVsuKqnyT8py6wxToh55dcgSrmdOX0w0XJXKXMM0co0
+         eZo/rReJ9Tmr8k6ghbxAmxN5DSY+VFle6bLouCkQ83ZR/Nacr/M7/iNf1uSqIxKaP226
+         XR6Qhy0kNnCOQ8kYmOsdmR1zEG/vVTKwH4KzxJogXyL2l2SgiG+wfQvJPHDX5w/SHTVe
+         X7gXaw0UF+1EqF8/3rfL31q8tSPTBHhCdzlP66ia/yYWxeF6Z76/wu3akUliPgOGHR0W
+         ZPmg==
+X-Gm-Message-State: AOJu0YwUhvoeK2xVDxIiARF0PiKPQe5pnOk2DODeSpQoYtKvYgo+VWBp
+	gx33yJ7vZvAXANOMAefJAZSCBwrUPeA/Sw858IWZAhutrvI9FjTY3IreeaXmBxowqxmdokPQkw2
+	wm9pWDElHfJ8vyNEP5vut6xBXlAJMjXPq9d5Gmo8UV3WEavC/nTM=
+X-Gm-Gg: AR+sD13c38xAibJshB0im354sxKHwmeoZo9rKoQOaxDU8oVX8638Ch2V6n56AV2OCPH
+	R/qhF8GHJqIGrbn8SCb5YsGqaEv12HuKCqnuLsUnwnTOJHXsueKYV0gUWCKk9j1mvB5tH1h72A2
+	P9gnUn+gg72QloZf763SpYi55Ibf9WbKIohkUniDV2E86JfXA8A1ieq5xrrO/Tzfi4lKSmKy0bI
+	npIa4UFA4tyqBC9+h596yNmH9KKsPaNTgB5B3DFo5ewMLRs84hrgvzj5ucYwexEvQTYlUAr6HLm
+	aRsOq1d3NOx5GguL
+X-Received: by 2002:a05:690c:e1c3:10b0:81e:f57f:1f8f with SMTP id
+ 00721157ae682-81ef57f23cemr34445977b3.6.1784603422238; Mon, 20 Jul 2026
+ 20:10:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <cover.1784600387.git.daniel@makrotopia.org> <91b40322b07b967fcf286b3e4bd11e5f821bff1c.1784600387.git.daniel@makrotopia.org>
+ <20260721024147.2FEE71F000E9@smtp.kernel.org>
+In-Reply-To: <20260721024147.2FEE71F000E9@smtp.kernel.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Tue, 21 Jul 2026 11:10:11 +0800
+X-Gm-Features: AUfX_mx4qcPgLK3orBZOGVBUCGLkc4lvsRzCU905dlQI4f0WIMZbU3ENBGxGpF0
+Message-ID: <CAGXv+5HhSyr-q-T-JxOjPv013CsNh1wtf4QxPYxQbrf1XQcaXg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] drm/bridge: it6505: cancel outstanding work before
+ teardown in remove()
+To: Daniel Golle <daniel@makrotopia.org>
+Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org, 
+	"moderated list:ARM/Mediatek SoC support" <linux-mediatek@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 20 Jul 2026 19:51:51 -0700
-Message-Id: <DK3WPZU35H6J.10Q15VPVXDWNC@nexthop.ai>
-Cc: <conor+dt@kernel.org>, <robh@kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH RFC 4/4] of: unittest: cover /aliases updates from
- overlay apply/revert
-From: "Abdurrahman Hussain" <abdurrahman@nexthop.ai>
-To: <sashiko-reviews@lists.linux.dev>, "Abdurrahman Hussain"
- <abdurrahman@nexthop.ai>
-X-Mailer: aerc 0.21.0
-References: <20260720-nh-of-alias-overlay-v1-0-f1e5d9889b30@nexthop.ai>
- <20260720-nh-of-alias-overlay-v1-4-f1e5d9889b30@nexthop.ai>
- <20260720071020.4E1C61F000E9@smtp.kernel.org>
-In-Reply-To: <20260720071020.4E1C61F000E9@smtp.kernel.org>
 
-On Mon Jul 20, 2026 at 12:10 AM PDT, sashiko-bot wrote:
+Hi Daniel,
+
+On Tue, Jul 21, 2026 at 10:41=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] The test claims to exercise patch 2's logic but bypasses it by=
- passing NULL for target_base.
-> - [Medium] The test claims to exercise patch 3's logic but bypasses it by=
- using an absolute live-tree path.
+>
+> New issues:
+> - [Medium] Calling cancel_work_sync() on the potentially uninitialized ex=
+tcon_wq triggers a WARN_ON(!work->func) kernel splat.
+>
+> Pre-existing issues:
+> - [High] Canceling work items without first disabling their scheduling so=
+urces (IRQ and extcon notifier) leaves a race window where works can be req=
+ueued, leading to a use-after-free.
 > --
 >
-> --- Patch [4]: [PATCH RFC 4/4] of: unittest: cover /aliases updates from =
-overlay apply/revert ---
-> commit 1237920f0bd1d803a084dc2f03f9e63aaf5cd6a2
-> Author: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+> --- Patch [1]: [PATCH v3 1/4] drm/bridge: it6505: cancel outstanding work=
+ before teardown in remove() ---
+> commit 06b35e4209da852ce0af8e4b1dd2aec2e9e172b4
+> Author: Daniel Golle <daniel@makrotopia.org>
 >
-> of: unittest: cover /aliases updates from overlay apply/revert
+> drm/bridge: it6505: cancel outstanding work before teardown in remove()
 >
-> This commit adds an overlay and a test runner to verify alias creation an=
+> This commit adds calls to cancel_work_sync() and cancel_delayed_work_sync=
+()
+> in it6505_i2c_remove() to ensure background works do not dereference free=
 d
-> removal dynamically during device tree overlay apply and revert operation=
-s.
-> It asserts that the alias is correctly added and then removed.
+> memory after the device is unbound. It notes that extcon_wq might not be
+> initialized, but claims a zero-allocated work_struct is safe to cancel.
 >
->>     exercises all three functional patches earlier in this series
->>     together: patch 1's reconfig notifier is what mutates aliases_lookup
->>     on apply/revert, patch 2 is what lets target-path=3D"/aliases" resol=
-ve
->>     to the DT root when target_base is non-NULL, and patch 3 is what
->>     rewrites the fragment-internal path in the alias value so
->>     of_find_node_by_path() finds the live-tree target. Any one of the
->>     three missing turns the middle assertion (get_id -> 99) into
->>     -ENODEV.
+> > cancel_work_sync() on extcon_wq is safe even
+> > when it was never INIT_WORK()'d, since it6505 is zero-allocated and a
+> > zeroed work_struct is reported as not pending.
 >
 > [Severity: Medium]
-> Is this description of the test coverage accurate?
+> Is this description accurate?
 >
-> As detailed below, the test appears to bypass the logic for both patch 2 =
-and
-> patch 3. The overlay uses an absolute path instead of an intra-overlay
-> reference (bypassing patch 3), and overlay_data_apply() passes NULL for
-> target_base (bypassing patch 2).
+> Looking at __flush_work() in kernel/workqueue.c, the workqueue core asser=
+ts
+> WARN_ON(!work->func) when flushing a work item. If the DRM bridge was nev=
+er
+> attached, extcon_wq remains zero-allocated.
 >
->> diff --git a/drivers/of/unittest-data/overlay_alias.dtso b/drivers/of/un=
-ittest-data/overlay_alias.dtso
->> new file mode 100644
->> index 0000000000000..32532c80505a7
->> --- /dev/null
->> +++ b/drivers/of/unittest-data/overlay_alias.dtso
->> @@ -0,0 +1,9 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/dts-v1/;
->> +/plugin/;
->> +
->> +/* overlay_alias - declare an alias inside an overlay */
->> +
->> +&{/aliases} {
->> +	testcase-alias99 =3D "/testcase-data/overlay-node/test-bus/test-unitte=
-st100";
->
-> [Severity: Medium]
-> Does this overlay actually test the path rewrite logic from patch 3?
->
-> The testcase-alias99 property is defined using an absolute live-tree path
-> rather than an intra-overlay fragment reference. Because this is already =
-a
-> valid absolute path, it seems of_alias_create() will successfully resolve=
- it
-> via of_find_node_by_path() even if the rewrite logic from patch 3 is
-> missing.
->
->> +};
->> diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
->> index e255f54f4d760..a9f4a0bb30872 100644
->> --- a/drivers/of/unittest.c
->> +++ b/drivers/of/unittest.c
-> [ ... ]
->> @@ -3475,6 +3475,53 @@ static struct notifier_block of_nb =3D {
->>  	.notifier_call =3D of_notify,
->>  };
->> =20
->> +static void __init of_unittest_overlay_alias(void)
->> +{
->> +	const char *path =3D "/testcase-data/overlay-node/test-bus/test-unitte=
-st100";
->> +	struct device_node *np;
->> +	int ovcs_id =3D 0;
->> +	int id, ret;
->> +
->> +	np =3D of_find_node_by_path(path);
->> +	if (!np) {
->> +		unittest(0, "could not find %s for alias test\n", path);
->> +		return;
->> +	}
->> +
->> +	id =3D of_alias_get_id(np, "testcase-alias");
->> +	if (id !=3D -ENODEV) {
->> +		unittest(0,
->> +			 "of_alias_get_id() =3D %d before overlay, expected -ENODEV\n",
->> +			 id);
->> +		goto out;
->> +	}
->> +
->> +	ret =3D overlay_data_apply("overlay_alias", &ovcs_id);
->
-> [Severity: Medium]
-> Does this test actually exercise the target_base logic from patch 2?
->
-> Looking at overlay_data_apply(), it calls of_overlay_fdt_apply() with a
-> hardcoded NULL for target_base:
->
-> drivers/of/unittest.c:overlay_data_apply() {
->     ...
->     ret =3D of_overlay_fdt_apply(info->dtbo_begin, size, &info->ovcs_id,
->                                NULL);
->     ...
-> }
->
-> When target_base is NULL, the pre-patch-2 code already resolves
-> target-path=3D"/aliases" correctly via of_find_node_by_path(). This means=
- the
-> test might pass and bypass patch 2 entirely, missing the intended test
-> coverage.
->
->> +	if (!ret) {
->> +		unittest(0, "overlay_alias apply failed\n");
->> +		goto out;
->> +	}
-> [ ... ]
+> During module removal, calling cancel_work_sync(&it6505->extcon_wq) will
+> unconditionally call __flush_work(work, true), which immediately triggers
+> the WARN_ON because the work function is NULL. On systems with panic_on_w=
+arn,
+> this leads to a kernel panic.
 
-Will address in v2.
+Sashiko seems to be correct here. This is going to cause a very loud
+warning, which we likely don't want.
+
+ChenYu
+
+> > diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/brid=
+ge/ite-it6505.c
+> > index 8ecb43611dba8..2f349aefb7054 100644
+> > --- a/drivers/gpu/drm/bridge/ite-it6505.c
+> > +++ b/drivers/gpu/drm/bridge/ite-it6505.c
+> > @@ -3644,6 +3644,10 @@ static void it6505_i2c_remove(struct i2c_client =
+*client)
+> >  {
+> >       struct it6505 *it6505 =3D i2c_get_clientdata(client);
+> >
+> > +     cancel_work_sync(&it6505->link_works);
+> > +     cancel_work_sync(&it6505->hdcp_wait_ksv_list);
+> > +     cancel_delayed_work_sync(&it6505->hdcp_work);
+> > +     cancel_work_sync(&it6505->extcon_wq);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this leave a race window where the=
+se
+> work items could be requeued?
+>
+> The driver uses devres for the IRQ and extcon notifier, which remain acti=
+ve
+> during these cancel_work_sync() calls. Furthermore, the hardware interrup=
+t
+> is disabled after the works are cancelled.
+>
+> If we look further down in it6505_i2c_remove():
+>
+>         ...
+>         drm_bridge_remove(&it6505->bridge);
+>         drm_dp_aux_unregister(&it6505->aux);
+>         it6505_debugfs_remove(it6505);
+>         it6505_poweroff(it6505);
+>         ...
+>
+> The interrupt is only disabled inside it6505_poweroff(it6505). If an
+> interrupt or extcon event fires immediately after the work is cancelled b=
+ut
+> before it6505_poweroff() and devres cleanup, won't the handler run and
+> re-queue the work via schedule_work()?
+>
+> This could lead to a use-after-free when devres frees the it6505 structur=
+e
+> while the re-queued work is still pending.
+>
+> >       drm_bridge_remove(&it6505->bridge);
+> >       drm_dp_aux_unregister(&it6505->aux);
+> >       it6505_debugfs_remove(it6505);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1784600387.=
+git.daniel@makrotopia.org?part=3D1
