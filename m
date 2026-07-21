@@ -1,173 +1,229 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556893E49DD;
-	Tue, 21 Jul 2026 17:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654758; cv=none; b=aR3854QnJUeNN8R5UHD47Uxmyg1WJYoHHJnJXMXwTJxQd/u4oWl5rFDOX15RHRIhv6/HqeFtCAzXnL+61fi6XZLTTk8Ly+etx9dzZW+Zk7YgIkAOaWhVOvu9BGR0OnkiepJYCMyD5MkX4hBiq1KPM6ibkk1JPhQwWFEvJfVUgsQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654758; c=relaxed/simple;
-	bh=WGJw+pOsXB+7x+2QMmGR25NPA2vRlqGSyZODaz5nkA8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwjeUXHzmb7IcjVloPGcseCXV0mwtOkBY067B5UimJvCLZUmzWBcc6XeewYLSQEAsQd8zjivaPdREf/CHJFoIe5tvxjTUoKgE+NFF7XJ3Du6nnaUVmEqiy7OzJX5BGsxfCPXKBpU0ItjpK9y4wQk179e53OlUoRt8ntfeOS/caw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1isti5/d; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC580175A74
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 17:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784655491; cv=fail; b=FABO1HV7PM6+2Ep5uM5qd337Qp0+TYzpMYT4iuYcxZ2oM+r9y/jBfnp1ERAiGmaY1abutxZktbmofHqAQIb9+WMJgzDHRIKSmUwQFpTztxo5wRMtFp1+ks/9oXFiKatA7UkYHPYfsiFZqwaOMypbO7qrjAOvE6t/wib4Cf2zFsQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784655491; c=relaxed/simple;
+	bh=wD2HPxxdiW2/GvTF++ehU+foMubs/lqbr9pmQbpHVc4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=uRKSjwlBr37IhFfElWSDcJnCRmhbJW+2fXzrZFaf2uew04ZUtY1qnNqicx5m9CYqJUle4qIYJUqSgr2dBNUZ57hDwTr72ometrgYimqAwZ6KhUDM8V+VSDU01/6j+z+Ce1Fqyorb6AUMr7GaUYJ0aJ5vHzxbviF0QzAnaiL5OUw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mrkK3LH1; arc=fail smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1isti5/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE52A1F000E9;
-	Tue, 21 Jul 2026 17:25:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654757;
-	bh=pzUdAclsS51t8r2Raco9ugneGznnphKGctOB2VfY8GQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1isti5/dMRb3VDtJkd/76R9pmJ794a23GtRUi5VqECZOIFr8l08erFglJ2vfnNdg4
-	 dSYVCZuf0eqicoh99CQNLDWxBmob7/9Oq0YWYPKhs8lKo87Nf+v46z47BI5P1gKIO9
-	 G7Gnzopk76L+XbFDDl59a+2B1dMUaSzlsU0lgoSQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.1 1826/2077] can: bcm: add missing rcu list annotations and operations
-Date: Tue, 21 Jul 2026 17:24:59 +0200
-Message-ID: <20260721152635.813364070@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
-References: <20260721152552.646164743@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mrkK3LH1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1784655489; x=1816191489;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=wD2HPxxdiW2/GvTF++ehU+foMubs/lqbr9pmQbpHVc4=;
+  b=mrkK3LH1Q0qAXhIszNtulP5sDzHps8NRAQkehp9yt+lGf8BSAT3laPOJ
+   h3VvtwYMU3gfKFrZryCp1+i0j+pxZJ/PDK0mEeXFFN9Drv1al6LJAbO3Y
+   rRLdYC7TfiNwjcae1sROMzsh63WEX1bMgaWj06Isi18I5oCJ+N5Zi8kYe
+   rVQcy2MLFm0dhwUN+B2LbYN1Btr/za9CRFr/RjMBoQVLfuSNKuRMc3BvS
+   JC/KkHveBVttq7+e7SU3dgTK4TIgSTYo+Xj4osvKy3Ll95DYli1MgNXRo
+   ffMYabD6kAUDglRQt7aC2z055Nftjcj7A9g/I+aRHCRc2a+2hAKzpyGes
+   Q==;
+X-CSE-ConnectionGUID: Naa7pyZiQT2W833IHHqF7A==
+X-CSE-MsgGUID: BeExNOQSTt2OhYEOHQzPVQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11853"; a="85028864"
+X-IronPort-AV: E=Sophos;i="6.25,177,1779174000"; 
+   d="scan'208";a="85028864"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2026 10:38:06 -0700
+X-CSE-ConnectionGUID: KzFIhHBuTUeSrYIjLbyYVA==
+X-CSE-MsgGUID: 9ILdw3aOQSaZgZ7PcjWICg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,177,1779174000"; 
+   d="scan'208";a="281108996"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2026 10:38:05 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Tue, 21 Jul 2026 10:38:05 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43 via Frontend Transport; Tue, 21 Jul 2026 10:38:05 -0700
+Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.29) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Tue, 21 Jul 2026 10:38:04 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=shFrmy8vLWFCajv8I//qI2VjWCYmRgpOfJnkFIGDkovkYyjAh3r9HeCjhF2qdowJBYd+LTCVMUi5AHPFllIT+/AqZIQ5iduQwL/jXgzZxNvQaCx/VEtQq+bcfn6agrtJIaGDIqagax2853bw/wvNGClMXWlbI6OUw1HaL+6i/9M7LUe91sn75+grrqaAO6f89xPN97I/1IJEk1q2KattmPVlfDMFlz4KKK+YMm5MB3BZ5Ob57e4+2x8V11ZDeVh3zFKccuRL1WWTrgU38tKoMgHOjEqNdT0iq/+nHsOBTY9mHBAzkwWBvJCAXMWMHyS2f9S0LGwSqf5E+6H+b7VLkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9wr4+HMI7REutQccnYY5fFK1fcUBHSdYAbmx1C4DSY8=;
+ b=rdO9Dy2KrG0bHHNa8S6DXi6HWz0fYr24wBRzQTsRb8AWI3Iklelk5a1H3nIks86FNeL6Gb1u/lpIClr174pIu47whuJ4P0hX0O5V7PSi2iMcdlxepKHhA9ixZg3gV7ZGmL/44DGqcHpglarit98cKs51R6uheIfl5CtjQgVUIycnWCbJE5PomInTwbaTK2nWoRFzfBskk5y8CG3Y0lLZAf4oQo3EAya+AJ/S+BGSODFlV5pNiS/2BdOHeUMNzCcrSVGBBB6YSbeLqLmfufGNfoO0FL13D8NvjugThPfWMs4sej7Bx3HeNSleOoMeWUDDwLa610nj3umBl3PtOqAexw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB5073.namprd11.prod.outlook.com (2603:10b6:303:92::23)
+ by SJ0PR11MB6624.namprd11.prod.outlook.com (2603:10b6:a03:47a::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Tue, 21 Jul
+ 2026 17:38:00 +0000
+Received: from CO1PR11MB5073.namprd11.prod.outlook.com
+ ([fe80::a153:939c:df8c:f4fe]) by CO1PR11MB5073.namprd11.prod.outlook.com
+ ([fe80::a153:939c:df8c:f4fe%4]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
+ 17:38:00 +0000
+Date: Tue, 21 Jul 2026 13:37:56 -0400
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
+	<dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH v11 3/3] drm/xe: Handle PUNIT errors by requesting
+ cold-reset recovery
+Message-ID: <al-udBqjgYOGgzja@intel.com>
+References: <20260720101815.526813-5-mallesh.koujalagi@intel.com>
+ <20260720101815.526813-8-mallesh.koujalagi@intel.com>
+ <20260720104816.51BD11F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260720104816.51BD11F00A3A@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0284.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::19) To CO1PR11MB5073.namprd11.prod.outlook.com
+ (2603:10b6:303:92::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB5073:EE_|SJ0PR11MB6624:EE_
+X-MS-Office365-Filtering-Correlation-Id: 240d0ae5-7dac-4d70-a655-08dee74ecefe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: vRWSwiZIYMNTVHbuqyQeg2eEQpfUHUpr3j5wYGGrdVoFJy1TSivr43OOqKmNfuQEPMm+oJNU1hMpMIFGgZ5WDmHCH8ZU6Zc4aGPCzhPXmQhIV5qogLThYwrUG1pETk1fh0/tOUs6DGVqNVfOY0mYBTmMXMevtF/W/EWmvda/XmXA5r+92mEOSlngxwcE9uDAS7lHOZ8zEIo857163QuMGoGbQKm9tHmUUu+p5/wA7v0hbky29rwOmOtQN/yTxdtuN9UsMidABeMkmSqQHEuUI+s3p3PyfyD07j7bIUTMtMgp14XOIOLnZRAdKSk1b1bUiN7Ilv1KbHq0XVcXx0GNwHLptsetu5Vgrzk97ZmbRRRB4Sjr9TxsslKOykN2L/yV8ftm7vKDu5/evQ5dNUoN9GhY4o/nY9kj3PR+QPdnoFk4xGJQpridGQsVQ691NV9jGvzYUCmBjFPzSKiDTmCXcFL610C+Mw4rIJQIRUlSgqrtspmivzNIwFebTI0i/rCKOLle+gr7bkwzLnHZQrsnXCfmAd1wvf+mzOuasjIgWyn4KrTvikuf4yopSvzlsObNTOwhq7NwhF6lhVXynL6VWwc/tisTDQ8Wh41fadjYEIw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5073.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?kb7ibfZhvS44lltkDSDsDxPgf5wdAzCUirI/xv7k0xH/K/P0fSY6VMzftr?=
+ =?iso-8859-1?Q?hn+IFpLg2uVKMe+RMGvyTEzyaeHd3MRUMkAcwZFQnSMnK72133laRGJtEj?=
+ =?iso-8859-1?Q?i/De0+CkNmiD1CeZvFX8PmiZcJG8mpi0UBgwpOQHhJN+0CErvgqmEw6a0+?=
+ =?iso-8859-1?Q?67n6ey0IS5BSWRaY7McW99lyTTQ7Ag9zsw5YooF32EuM6MFqDKxVWzFRz1?=
+ =?iso-8859-1?Q?lkdw+uOBkd9eGaY1g9H27ThKyia21cKMQcQjEydtkUUzFs+NlsCTfq+YMo?=
+ =?iso-8859-1?Q?JCLixmJu2bYlhizrT7Ftxm2MFiNA+TzIzfMYEDQ/kpFtP+DUtpa/7+QLp8?=
+ =?iso-8859-1?Q?ng83+V/gez6H2XDbQQi2hYRa5KxE2kYI/om++asFhq85pJJAOkPfS66kvf?=
+ =?iso-8859-1?Q?tvvZ0ZVWyZQHOy95Qftzek/arwz6a0SzrgCcishunCuUbHYpQZtVqzFfIy?=
+ =?iso-8859-1?Q?gr9E47+2HSd8uxPtB/6AXr/e4HavcNIDoTJWwkI+rt+FQg6ZVqc5YGUFAn?=
+ =?iso-8859-1?Q?O8enS3PDKlnxnNrjuUoN2UwcOdEDx+hShtCO8LaFmoZj5fq+rIWzhpEvhA?=
+ =?iso-8859-1?Q?1dgUzvlElzDHmzs10GWI95+OASKQIsQDcG/7sK7Kd7fw+iFIjixepjubJp?=
+ =?iso-8859-1?Q?JE59r23cm3s9Mqm0KwIs/aT4EI8LpLWwwaTCgQYrn8iMUEQ3ikjRMeithr?=
+ =?iso-8859-1?Q?l/7kTzYPfDT6QX7VU0ozkDJkn94QboMBo+Dw2ShSP8EizdKCQia/mguZrH?=
+ =?iso-8859-1?Q?WTvwC1tYIZhiReBGbHC7trdcA1xbD7hwlNUv1SRD84FYSiO6ul9rdGwzf4?=
+ =?iso-8859-1?Q?LMipIsbL4WLbNwPRtI6ohrneyrSFAr920YoqgXNLleG7QtJT/sJnyyAScW?=
+ =?iso-8859-1?Q?NXpOIrLrRqEfmFiAOnwQtUZZFZzS678YyuM8nMZmYy0DNU13ZdxAQwAF+W?=
+ =?iso-8859-1?Q?Xe1wKojWDKJX1OIME94Jt/DYXj7B9Pxo/ea8knegZyYhFz1cKKE0A63kWx?=
+ =?iso-8859-1?Q?QQhuITkSXHY/Z9ffhOsH+M53VILQC1nlXfcAEmizVfkndbW9uEhLN9C/Od?=
+ =?iso-8859-1?Q?JzzhCLl+QSsz2yGnRlJvyMpkud1BrecBYxAyh8wgN8sTQi9yDU7EYWpjoR?=
+ =?iso-8859-1?Q?I8ZmB1pxlPx7KxyCrvgLkb+oKwMClZWSFslMZfSZ1G46PW88MLEVL6N0yl?=
+ =?iso-8859-1?Q?7fAVEWyKEDyyaVsFvlAkg3uTXu6V29mhyqLXAw5s5oUa4bJvLSZVMNeqyt?=
+ =?iso-8859-1?Q?WJZEvyV3Skn0Ht+Q/n7vpWeA6s7AlPhqOTFE7Yl78HKAsn3q5+yOMWGxmn?=
+ =?iso-8859-1?Q?gu78dpTbLuiItsUqIOdx2u+y5825q0RhbnpLjXgNwwD8SgrgJprHUa3vSh?=
+ =?iso-8859-1?Q?E/ux6KfxMmbMCLZn6uYMi45lH5V86SC8iJUBZk+IQxpocvooZWWux2ibR8?=
+ =?iso-8859-1?Q?RAQj/KdyM9vf/bybcdWtJvI9b0yL7QiB/WJPcA/Kw8nPzdf7KhowoWpAe1?=
+ =?iso-8859-1?Q?H8L1CHhl6FT0GeGQs8DYDskrodhJV03BlfveZDSEvVN9eVlFwqEZIUSDAy?=
+ =?iso-8859-1?Q?IxyIsvO8yDrCRuwZ/8XplYH+C9EyQUAMWgvseZtb/HWJLkFU0ks4maXMAJ?=
+ =?iso-8859-1?Q?uyxU4QBPjHJHo2fK0XJvvU77GaTmm3AtvxQNEdjDokm4Txw8b6dxhQLcGU?=
+ =?iso-8859-1?Q?ThtXgpbF1+YE5FiFw/Paqhng/eXv82F6TVS9lQRZ76X1FGHJJPVcc/Gfix?=
+ =?iso-8859-1?Q?Xq1bVtb4bpAItKKEzcGdYr+nuVfTCoQVJET5ufmGqJg9Am1ECLklGnmsim?=
+ =?iso-8859-1?Q?QrpuE2cYPw=3D=3D?=
+X-Exchange-RoutingPolicyChecked: mOzpB6mUCQcB83jxtzmZtJr5MgBlgwZYmyXBHNjTpimLIQCwOJr0AIYf48gdbkPl7nL4I5eOFDZsZppHfM2B2WkvC61H2DhPSfh52UM+a94ScwZZhRo3PhrM1BjChY8D740NLFqq3p+fXoN+SI+QfKkeTEvJaTJt0S15W959U8KrIrAt4AcNhiSzoeHyrFoRrNGne6gMKn796gLt0BMdQKtcrLsNCoMYYQB96IotTlz4HTS0SZN9mVhJjcHrUMy7nflxVfztgqSX81EQqishyNkak8XI0EqpS3gXAmMl1EtgOgh2AeQP4t4ICEv8P9jGfvFVXBC4mFsQEA2Q/pQCEQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 240d0ae5-7dac-4d70-a655-08dee74ecefe
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5073.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 17:38:00.1354
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iUJGYX/+ExF4IzFIC/jq+qGMBQV6AUqufr6vW42s5ChGdQJ2EC+bgylJY9+9dbiRgFiVAAd/S1ODcbZWFr0Opw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB6624
+X-OriginatorOrg: intel.com
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+On Mon, Jul 20, 2026 at 10:48:15AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Calling `xe_device_declare_wedged()` during early driver probe fails to notify userspace because the DRM device is not yet registered in sysfs.
+> --
+> 
+> --- Patch [3]: [PATCH v11 3/3] drm/xe: Handle PUNIT errors by requesting cold-reset recovery ---
+> commit e4801339581daca0be0db10f90d94f25e72cfa52
+> Author: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+> 
+> drm/xe: Handle PUNIT errors by requesting cold-reset recovery
+> 
+> When PUNIT (power management unit) errors are detected that persist across
+> warm resets, mark the device as wedged with DRM_WEDGE_RECOVERY_COLD_RESET
+> and notify userspace that a complete device power cycle is required to
+> restore normal operation.
+> 
+> > diff --git a/drivers/gpu/drm/xe/xe_ras.c b/drivers/gpu/drm/xe/xe_ras.c
+> > index a31e06b8aa67a..92b4181026cbe 100644
+> > --- a/drivers/gpu/drm/xe/xe_ras.c
+> > +++ b/drivers/gpu/drm/xe/xe_ras.c
+> [ ... ]
+> > @@ -236,6 +236,12 @@ static u8 handle_core_compute_errors(struct xe_ras_error_array *arr)
+> >  	return XE_RAS_RECOVERY_ACTION_RECOVERED;
+> >  }
+> >  
+> > +static void punit_error_handler(struct xe_device *xe)
+> > +{
+> > +	xe_device_set_wedged_method(xe, DRM_WEDGE_RECOVERY_COLD_RESET);
+> > +	xe_device_declare_wedged(xe);
+>         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 
+> [Severity: High]
+> Does calling xe_device_declare_wedged() here fail to notify userspace when
+> triggered during early driver probe?
+> 
+> If a PUNIT error is present at driver load, the call chain is:
+> 
+> xe_device_probe()
+>   xe_ras_init()
+>     xe_ras_process_errors()
+>       handle_soc_internal_errors()
+>         punit_error_handler()
+>           xe_device_declare_wedged()
+>             drm_dev_wedged_event()
+> 
+> Since drm_dev_register() has not yet been called at this stage of the probe
+> path, the sysfs directory for the DRM device does not exist, and the KOBJ_ADD
+> event has not been emitted.
+> 
+> Consequently, userspace (e.g., udev) will likely drop or ignore the KOBJ_CHANGE
+> uevent emitted by drm_dev_wedged_event().
+> 
+> Will this cause the device to finish probe successfully but leave userspace
+> unaware of the wedged state, breaking the automated cold reset recovery
+> mechanism?
 
-------------------
+Mallesh, could you please add a fault-inject test to this flow here and
+ensure that we are indeed getting the notification we are willing to get?
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+It looks that right now we are really never getting the uevent that we
+are willing to get.
 
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+Thanks,
+Rodrigo.
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
-
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
-
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -262,7 +262,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -994,6 +994,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1135,8 +1136,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1158,6 +1158,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op, NULL);
- 
-@@ -1350,9 +1354,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1426,10 +1427,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1763,8 +1766,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1795,8 +1800,10 @@ static int bcm_release(struct socket *so
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
-
-
+> 
+> > +}
+> > +
+> >  static u8 handle_soc_internal_errors(struct xe_device *xe, struct xe_ras_error_array *arr)
+> >  {
+> >  	struct xe_ras_soc_error *info = (void *)arr->details;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260720101815.526813-5-mallesh.koujalagi@intel.com?part=3
