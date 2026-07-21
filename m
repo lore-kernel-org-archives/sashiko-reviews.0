@@ -1,164 +1,108 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA26546D2A3
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:28:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C4C3242BC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 16:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784651329; cv=none; b=To67fRd8kvl2E+JNS3elpyjwnDKaPT87vF7O2eVP2ld04DRUvOw/1GqM9S28ZDu83M9deErKjhSZ8rOV3e2Dtwp/0IEd5Scqzqp8BaQYPEc55/+Rmj0kc8dI6WCmKO1ZTyzrYENOI92eDCBue0vuqmTeK5CHsYHOEynckXyo+PY=
+	t=1784651852; cv=none; b=Bx++PEfRf9yOXD5Xzn7JPIn+qyyhgZ7OESbFZGtfZdUzxB9nMGfoLJcNHWKZm7FMkGuSuOAVgCv1tpBCZIiYo8sC9W0aR0WeNTGp/7vrgjGktvw7Vk/PU1iT73ZKDYuDi3+IcAoTT5eJ5FlNw99kEFGyKzHwxQ4gZpVea2gs0VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784651329; c=relaxed/simple;
-	bh=UECWk/b4oqoiDuPX07RYGuSq3lLl8qDVbnQ2y0q3S5I=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=ac+sStJwb0obDgxLuHfibgW3QEWXnTVZTR2ni1IeRwauDMNtH3vwt8hEp8ZInIrcT/YXE++vLElBn38Yu3YjdnbUIaKO1qw7F4q4ykr+nywKi/WAsd/91QK2QApLEW2QGxh/vFExnRqerUXUhsqzLceUNpEo0aiHmz6+4Vq1DmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=ulQqVGF7; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1784651852; c=relaxed/simple;
+	bh=aVzR/ty4a/bVQF/s9l7ffmrbnU/SPOo7FIsD6OVmG+M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z3gwwb69K4N1zJ/ha8HrTCSIQAcl6OeQ5236JK9cnFNNFteoKs21JM0+sY3lQiLo/lo1aPxf35SPDhfUBdNfOmOKUcQ++4vToeVm5yCUYTCJDlAyhd7hVGH/icYdQXhx/uYNKSBkm8709OV1+Uo5qPcPGvo18Hvm0k5INZIo2qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JMC9fkdF; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="ulQqVGF7"
-Received: from mail.ideasonboard.com (unknown [IPv6:2401:4900:1c68:25d4:fa24:78d1:31:7a56])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8C0FA517;
-	Tue, 21 Jul 2026 18:27:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1784651267;
-	bh=UECWk/b4oqoiDuPX07RYGuSq3lLl8qDVbnQ2y0q3S5I=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=ulQqVGF7TevkXBCD8RIUVxCIrL53rL9yeKgw2vhNmP+Nc/GJf63AdwPEGDNI1dXmy
-	 hLkNOxSSOQ8/hQ/ofgIq6MfAL6SYtCBwPvgQ/3sO6HWw2Gf+Hq9iJYA0o+5+avCGLL
-	 K7D/6zuEjtymE/zS3Gs8oEFKs5nnvXC7t8/XSDs8=
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JMC9fkdF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784651850;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Iutbkgt++7YueaLk7npeqwZ+5objeIwiLgiciL5xn1c=;
+	b=JMC9fkdFeKPB4jPdW1gYxqx9GzkINVzzAPvLn8DMK/oknVUfq7lIpuNw4Kei8vOWiTWpX7
+	WbfWIHb1lQ/+CUMekrD5vT70m8HZdwqB2dM4lxX2VW5hB6yDCHpB8Miyk/R3KQJeGArabZ
+	x+Q0WiWZvItULc0Pu6e7yIomHAnR4H4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-385-iBVfN_tfPCG6iFJuncPm-Q-1; Tue, 21 Jul 2026 12:37:29 -0400
+X-MC-Unique: iBVfN_tfPCG6iFJuncPm-Q-1
+X-Mimecast-MFC-AGG-ID: iBVfN_tfPCG6iFJuncPm-Q_1784651848
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-4955ecd8a10so16659115e9.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:37:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784651848; x=1785256648;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Iutbkgt++7YueaLk7npeqwZ+5objeIwiLgiciL5xn1c=;
+        b=JWtzmEMqvH5OLYEbcphQS81sWHPfdDTuiin8ORJ7D+JeS2eh1NHRGx9q338OtwqY29
+         PqLET6ssnqidWaY+vArcSGWujs/dN65EzcTALqGcJYQ+HoPb0//7n0Nz1cn9JSgHN326
+         R1Mfc3VEEEXfSLgD1VyuCSysOqcF9GjiZpARNGnspYM5o20zUZkCqHvY9KlOF7VVu5R8
+         KSVlNigDITrMLE2dzuRG+sIgapsm/8PBcs317+/m2EcECLDYoXnV3Cd4xDt0OB1CrWfH
+         zuiXZhWjeJ6CvMk2JRDYRpIcR1Kd/30w50yLkQ9JOd+s2jkvy8ZH/yMyzHr6ZBuT8j8N
+         cWqQ==
+X-Gm-Message-State: AOJu0YzOiY/40pmbJE1iCg6MCfeR7+3GXrUds1A6Ht/UWqGYvYkru3A+
+	abU69I3cJMs9lTJ0UMTxyewnA5zioML2j5/FZlrOk/M1HViMgOPgsWcYl3uVp0d4z/RrWzovFOa
+	+SwlfqjqCtqGM3a4DEkBvVM7PuGiGL4m5uyA7vrTxyqRU5yUaY0FpiUf85yB0KzbeipxC7+0E5D
+	q2x8Uzrcw/uSSiAjRolOX0hg3gQSJcw4OmNaEKxUurtmPN
+X-Gm-Gg: AfdE7clUiRExOvkz+klLm6Neqi4AKLU3Ae9Lu08/BiG20gNQkebsckS4JbATBdpb7CW
+	mJVWlJaOx0qLhcsQdBjbVE2T+NYcYXAKosSuurayj0WydGyRdOiaauEXqIf/EOyI5ZUZUYgg672
+	C0HzKbv4o7X3GhBQbkMNAlOBpj8scfUFiA6dHr5uMXXjrrHXEm1QHGS5lRHdKjWKaW3T+DWxk0Z
+	ulwu18GSmJsSKBe39T1qJTn80cR2zdCTLPOWzQYX/QPu5qtAQGMmunRPbk=
+X-Received: by 2002:a05:600c:5850:b0:495:406f:dff6 with SMTP id 5b1f17b1804b1-4954a4106ddmr158406875e9.33.1784651847876;
+        Tue, 21 Jul 2026 09:37:27 -0700 (PDT)
+X-Received: by 2002:a05:600c:5850:b0:495:406f:dff6 with SMTP id
+ 5b1f17b1804b1-4954a4106ddmr158406685e9.33.1784651847465; Tue, 21 Jul 2026
+ 09:37:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260721102827.313208-1-pbonzini@redhat.com> <20260721104819.B5A101F00A3E@smtp.kernel.org>
+ <al-PSX0sOPdYdvIg@google.com> <CABgObfbL3t21yVeSwiLSjjOUER+rTYDPHYAH9YU4TWGRjx6XHg@mail.gmail.com>
+ <al-d7WPocYgEtgFU@google.com>
+In-Reply-To: <al-d7WPocYgEtgFU@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 21 Jul 2026 18:37:13 +0200
+X-Gm-Features: AUfX_my2pzIWT0klO9x4--we7SaT18jk2dGJ79eGAGyiguyCxBNpp9RUjAdC1qo
+Message-ID: <CABgObfa2C0fk4JTVPduZmcFnyyxsOvJfBS1s5Uzgf1K+LX-OEQ@mail.gmail.com>
+Subject: Re: [PATCH] KVM: nVMX: Hide shadow VMCS right after VMCLEAR
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: bmDJgputbb_O8qOCCD919exaeJioU72s5WI7XObkdNw_1784651848
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <al-VH7diL1arQLU6@zed>
-References: <20260721-mira220-v5-0-533b0ad1065e@ideasonboard.com> <20260721-mira220-v5-2-533b0ad1065e@ideasonboard.com> <20260721143615.68F5B1F000E9@smtp.kernel.org> <al-VH7diL1arQLU6@zed>
-Subject: Re: [PATCH v5 2/2] media: i2c: Add driver for AMSOSRMA Mira220
-From: Jai Luthra <jai.luthra@ideasonboard.com>
-Cc: Jacopo Mondi <jacopo.mondi@ideasonboard.com>, conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, media-ci@linuxtv.org, Philippe Baetens <philippebaetens@gmail.com>, kieran bingham <kieran.bingham@ideasonboard.com>
-To: Jacopo Mondi <jacopo.mondi@ideasonboard.com>, sashiko-reviews@lists.linux.dev
-Date: Tue, 21 Jul 2026 21:58:41 +0530
-Message-ID: <178465132119.3005206.14389356633093852393@freya>
-User-Agent: alot/0.13.dev35+g4a69c46ca
 
-Hi Jacopo,
+On Tue, Jul 21, 2026 at 6:27=E2=80=AFPM Sean Christopherson <seanjc@google.=
+com> wrote:
+> > That said, I am surprised that VMCLEAR/VMREAD/VMWRITE/VMPTRLD do not
+> > have a memory clobber, since they access internal processor registers
+> > and the compiler may reorder them without the clobber. Fixing that
+> > would also work around Sashiko's complaint, so I guess we should do it
+> > anyway?
+>
+> Ya, good point.  We should probably hardcode that into vmx_asm1() and vmx=
+_asm2()?
 
-Quoting Jacopo Mondi (2026-07-21 21:37:59)
-> Hi Sashiko
->=20
-> On Tue, Jul 21, 2026 at 02:36:14PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 11 potential i=
-ssue(s) to consider:
-> > - [High] Dereferencing `mira220->vblank` without checking for NULL in `=
-mira220_init_controls()`.
-> > - [High] Missing `v4l2_subdev_cleanup()` in the driver's remove functio=
-n causes an active state memory leak.
-> > - [Medium] The uninitialized stack variable `id` is evaluated and logge=
-d without checking if the I2C read succeeded.
-> > - [Medium] The active state format code is not updated when `V4L2_CID_H=
-FLIP` or `V4L2_CID_VFLIP` are modified.
-> > - [Medium] Exposure control maximum limit exceeds the 16-bit hardware r=
-egister width, leading to silent truncation.
-> > - [Medium] Hardware exposure register is not updated when `V4L2_CID_EXP=
-OSURE` is clamped due to a `V4L2_CID_VBLANK` change.
-> > - [Medium] `mira220_power_on()` discards the actual error code when `cl=
-k_prepare_enable()` fails.
-> > - [Medium] Missing runtime PM reference hold during probe exposes the d=
-evice to concurrent suspend.
-> > - [Medium] The error path in probe unconditionally powers off the devic=
-e without checking its runtime PM state.
-> > - [Medium] V4L2_CID_HBLANK reports an incorrect static value when using=
- a 1-lane MIPI CSI-2 configuration, breaking user-space framerate and expos=
-ure calculations.
-> > - [Low] Typo in user-facing control menu item: 'Vertial Gradient' inste=
-ad of 'Vertical Gradient'.
-> > --
+Definitely the easiest, even ignoring INVVPID/INVEPT...
 
-[...]
+> INVVPID and INVEPT also need the "memory" clobber, no?
 
-> > @@ -1936,6 +1936,6 @@ static int mira220_probe(struct i2c_client *clien=
-t)
-> > [ ... ]
-> > > +   /* Enable runtime PM and turn off the device */
-> > > +   pm_runtime_set_autosuspend_delay(dev, 1000);
-> > > +   pm_runtime_use_autosuspend(dev);
-> > > +   pm_runtime_set_active(dev);
-> > > +   pm_runtime_enable(dev);
-> > > +
-> > > +   ret =3D mira220_identify_module(mira220);
-> >
-> > [Severity: Medium]
-> > Is it possible for the device to be concurrently suspended while probe
-> > continues?
-> >
-> > The device is marked active with a usage count of 0 after pm_runtime_en=
-able().
-> > If the PM subsystem or userspace triggers a suspend (e.g. by setting
-> > autosuspend_delay_ms=3D0), the device could be powered down while probe=
- executes
-> > mira220_identify_module().
-> >
-> > This could lead to I2C timeouts or bus crashes. Taking a pm_runtime ref=
-erence
-> > hold could prevent this.
-> >
->=20
-> By calling pm_runtime_get_noresume() (as the device is powered up
-> already) ?
->=20
->=20
-> > @@ -1985,5 +1985,5 @@ static int mira220_probe(struct i2c_client *clien=
-t)
-> > [ ... ]
-> > > +error_power_off:
-> > > +   pm_runtime_disable(dev);
-> > > +   mira220_power_off(dev);
-> > > +   pm_runtime_set_suspended(dev);
-> > > +   return ret;
-> > > +}
-> >
-> > [Severity: Medium]
-> > Should this error path check the runtime PM state before unconditionally
-> > powering off the device?
-> >
-> > The PM core might have already suspended the device due to the zero usa=
-ge count.
-> >
-> > Calling mira220_power_off() unconditionally could redundantly disable c=
-locks
-> > and regulators that are already disabled, potentially causing double-di=
-sable
-> > warnings.
-> >
->=20
-> Only in the case some suspend went on during probe. Even if unlikely,
-> guarding the call with
->=20
->         if (!pm_runtime_status_suspended(&client->dev))
->                 mira220_power_off(&client->dev);
->=20
-> costs nothing
->=20
+... which strictly speaking do need the clobber, but in practice their
+effect is only visible to the next VMLAUNCH/VMRESUME so the risk of
+bad consequences from reordering is non-existent.
 
-For the above two issues it would be simpler to move the autosuspend just
-before you return from probe:
+Patch going out soon...
 
-    pm_runtime_set_active(dev)
-    pm_runtime_enable(dev)
+Paolo
 
-    ... rest of probe ..
-
-    pm_runtime_idle(dev)
-    pm_runtime_set_autosuspend_delay(dev, 1000);
-    pm_runtime_use_autosuspend(dev);
-
-    return 0;
-
-I saw this pattern in imx219/imx708 (sashiko was happy with this part in
-                                     the imx708 series I posted last week)
-
-Thanks,
-    Jai
