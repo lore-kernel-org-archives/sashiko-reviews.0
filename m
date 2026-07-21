@@ -1,200 +1,279 @@
-Received: from mail-wr2-f0.google.com (mail-wr2-f0.google.com [74.125.225.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from seahorse.cherry.relay.mailchannels.net (seahorse.cherry.relay.mailchannels.net [23.83.223.161])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6733ED3B2
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 19:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775FE42F71D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 19:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.223.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661849; cv=none; b=YmpIbSQmB+l08SNkBryp7gTZ7JnckKn7Lbgvn5ZEaqqMS+dwVYi+Y+RUY4z42coD8i0AS4VD/7Ixo37HeRh7BDbI1oahTVRFNw3qk1DPSu4iklnFfRC365mG348terBiyxYf54qIm9pbYWFf9GXdA9Bvx9IjUd7/Y570jmtfSGM=
+	t=1784662306; cv=none; b=BCrw4V4F9rNdxeZY+b0dfSmvCmDR75YvYaSbFtrvYnxokCdMKWGeWOv6/rz0IfF+fF2NJoS1edOzNP/qNhXV6lthqGJiHa1DMETZXNpNj5E48grJZGg6oja5ON3fNjD5JY0ULFV8HJ6zeNa4jCp/PZ/Y7B1OxcvxOUV9nRvE0G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661849; c=relaxed/simple;
-	bh=cORZVbqM3eFwRSKUS7EP2gVPo2dqxwN0ZywsfK6umOM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=oLKGoL9wIuX/e30sVjbpbd9sfR8Cr6M8gM2uQpqQzdknC8uWP83hoQ3SYpJUR2BdLYv2D3AYHp2lAoOCiYA6hrnyz5PLhqcJVy19kdCv6TIOM8kVl/kflwsVllFB4lx5dd6awpuwOuKTa+kBf/rR9qPgqRaRUmN6i+GXErZ+iR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sAhszH7n; arc=none smtp.client-ip=74.125.225.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784662306; c=relaxed/simple;
+	bh=nBBxizu71UDBDSfMdygy5bWmzACNt9QukQDTvTPRqEw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cFe258UDewuahlEUHctAfYA69Y/FRO6chLeq0MCknfEGiOdtkQkYUBKasHMCyzT3OusJW+nLw+oDGlACs5lW5/4oMMiarHLw2lGg8bBsQeeoiN7XEXGQrwamkux8BIsLe/BZKI9Mhe+TonMwgjYDnRCCEeu5GfBYwWnJ19o3e4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=IpOITv4F; arc=none smtp.client-ip=23.83.223.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sAhszH7n"
-Received: by mail-wr2-f0.google.com with SMTP id ffacd0b85a97d-47f6c54e841so1098508f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 12:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784661846; x=1785266646; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=hZgHks4ec8eMjqtz7edpvaA3KS3nyRCBHqNjcy/fc/U=;
-        b=sAhszH7nkOhA9SeWBw7PFGQzeSbxplNmbiz5TmEQB/zwGh/WQsdN/PxI18O6B2e4Xl
-         fDjdwuQtYtIAbmRsbDscsp5EG/lrnqahnTG1uJIB1A+fbhS9p98u248i39O7RS0i2Zq+
-         rE7dnyKVqr2Ylydtyi4oKxxXbyPGXeyeTjavL3Q2jFoyi2vb6cUtuOJKN5HE/c77eQ/r
-         VWKVtICwG7PIfeAliXrF0mwscFi/GO764iojAg3qyjVqOLQaDYo1zijtmOoB8Dgo5u7w
-         o1aFCTlL6/8MZ+Jlw5619GoUe1LnB/p61UWj1pzPxPavwXZlPgElW+qkDcoYrKaxIN4x
-         moug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784661846; x=1785266646;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hZgHks4ec8eMjqtz7edpvaA3KS3nyRCBHqNjcy/fc/U=;
-        b=oUjSapBbTSUzC5df8yqS2Sm1+8IkDtYt3iuOI7VfgrtFFd6QQrK6cjFqOvZfaGmM/6
-         Mng63m7MCS+OKTfe/geD/r+k6PuIPKQi56TbhsD1fGcKKE0AB+zCv5ZzDRtQQhTuyJ6O
-         QO6LxY5n6gwbfjUUxO8HX2zX32dFHbJqLQWnNbU8GbUVV1urYfbmXbJ2KIZHYyeJ2VFW
-         baDl37mn/Fj5xg67hGF0dsw+bto3pa2/s59dj51v5jAimfxyGgp3OkkLh9cfgly7n//F
-         hTPRrMH74W2fNVZo5Pt1YSzuWpeDK0Hj7lg6bi0o0aVp12DG4JsE4sA7Oc3PF3lzRf/9
-         XU/w==
-X-Gm-Message-State: AOJu0YzQPh1kQvuYud4RBGqoEMvhdwTkkWgoWqKaGa3pJBbY2Kjcvw78
-	jhbvulitgE2H2IA3XGz4eG/tQSeeVIVsg1cBrqY6VRrFeLMHNdd94jGfT3vFPWkJ
-X-Gm-Gg: AfdE7cm9aIGu48D0m+Fr6zlP/zllBFb1pp1i2gBvwQ3dWHzZUcEKaOlvPVV5OmKHO5k
-	I+EvRAH2U+cWUQYEzTYU6hkENILyR8YEdL8QPqwLSza3DPlx9w0+xk+bl0cNyQgcMlMfgSpTYef
-	cCDCes45SfkxoHPKjxXvSLAnFyNXFZb3cFuZHIo4wzPPiN3e0bnt+BkFHh4iL6aKf1weE2sytoJ
-	30oZ8R5eGzJupRB3InOt+VOYa1hFcVEjA9sqlleTAmk+dzlyIBmx/HJrLWyeOOdknML22COOQal
-	v2Tye9Qo9QMXHXJqwKLHJaHkJ7vxjVyVB1/BCkwJYmQ2LSYuONLMmIn5/H7UnbwU+liZlniGEsM
-	3ntXXQbyAGZAifqqROH0KkypF0KFCwqHX5ZrQ1x4Yu6WNTg4cX6krO5RRpdCsU3plchVIdWCSEt
-	tFxKzE5/CAXIfw2oNGBD8B/abzKrEbF5im+j+5m7KRvVCGyF2GjiJ5HXW0lZHxDEU9zZNnKFHOa
-	CVQMwA58OIz1CyEMJoypCBDz9jffovt6suNaG7Y71BtC1L8OCYHCNw=
-X-Received: by 2002:a05:600c:45d3:b0:495:4d00:2fda with SMTP id 5b1f17b1804b1-4955233b700mr171381265e9.2.1784661846199;
-        Tue, 21 Jul 2026 12:24:06 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63e51986sm46719237f8f.11.2026.07.21.12.24.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 12:24:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="IpOITv4F"
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id D43FD415EF;
+	Tue, 21 Jul 2026 18:13:33 +0000 (UTC)
+Received: from pdx1-sub0-mail-a207.dreamhost.com (trex-green-6.trex.outbound.svc.cluster.local [100.104.248.19])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 58400400EC;
+	Tue, 21 Jul 2026 18:13:33 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Turn-Tangy: 0effbd2a222a1b6a_1784657613672_4143679197
+X-MC-Loop-Signature: 1784657613672:3722288848
+X-MC-Ingress-Time: 1784657613672
+Received: from pdx1-sub0-mail-a207.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.104.248.19 (trex/8.0.2);
+	Tue, 21 Jul 2026 18:13:33 +0000
+Received: from offworld (unknown [76.167.199.67])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a207.dreamhost.com (Postfix) with ESMTPSA id 4h4QVh6vrLznR;
+	Tue, 21 Jul 2026 11:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1784657613;
+	bh=t8Rwsbw015Vz39S488orHNH7DGnTVlrAkwH7+pAXGYo=;
+	h=Date:From:To:Cc:Subject:Content-Type:Content-Transfer-Encoding;
+	b=IpOITv4FEyasBu1puIo2JHmFKvvQFgcFEY2/68rlw7vRatMZ1hrwn/CZnBktNeiWv
+	 nveG94CRWiSc4BQpuBC+djxJOY0CNSq1PbwODKVWMYl1+ABtNVYsWV2rlx8/w1E9TT
+	 EY1Lsmqfd5iw4bQILCX3EEmG7HeGFADDEk13sCwUxi9FSrRxSjh0tB+1iXfvZeVzXE
+	 w6m3RvF+tX8rlW/V/abIAg8j48Y5/PxTSPQtj+sqzMaV5UqfOIdK6ShQGA0x6jnyQG
+	 jOSZ63Fq0/2IZD6evTZQfdB/+f0JyDH+WQR/oeJLX0twGL9IHcENKkf59Uc9TTIpRB
+	 0XEuWOR5PGWbw==
+Date: Tue, 21 Jul 2026 11:13:29 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: sashiko-reviews@lists.linux.dev, dave.jiang@intel.com
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v5 4/5] cxl: Add HDM-DB region creation
+Message-ID: <20260721181329.qphcckacosncwzka@offworld>
+References: <20260615145529.13848-5-dave@stgolabs.net>
+ <20260615174123.73B721F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 21 Jul 2026 21:24:05 +0200
-Message-Id: <DK4HTPHX3NL8.2N1FK8D2N9521@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Jose Fernandez (Anthropic)"
- <jose.fernandez@linux.dev>, "Kuniyuki Iwashima" <kuniyu@google.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf v2] bpf: tcp: Fix use-after-free in
- bpf_iter_tcp_established_batch()
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260717-bpf-iter-tcp-refcnt-v2-1-8e81f0ac6f3e@linux.dev>
- <20260717025253.23EEB1F000E9@smtp.kernel.org>
-In-Reply-To: <20260717025253.23EEB1F000E9@smtp.kernel.org>
+In-Reply-To: <20260615174123.73B721F000E9@smtp.kernel.org>
+User-Agent: NeoMutt/20220429
 
-On Fri Jul 17, 2026 at 4:52 AM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
+On Mon, 15 Jun 2026, sashiko-bot@kernel.org wrote:
+
+>Thank you for your contribution! Sashiko AI review found 3 potential issue=
+(s) to consider:
+>- [High] Auto-discovered regions fail to inherit their coherency type from=
+ the root decoder, violating the design rule and potentially creating inval=
+id region configurations.
+
+False positive. As is already documented in the cover letter and patch 3,
+a decoder committed with the BI bit set is rejected at enumeration time.
+
+>- [Medium] Spurious `dev_WARN_ONCE` triggers in `cxl_rr_assign_decoder()` =
+when attaching an endpoint decoder with a stale `DEVMEM` target type to an =
+HDM-H (non-BI) region.
+
+Yes, I was able to trigger this at least on qemu with two windows:
+     https://github.com/davidlohr/cxl-bi-tests/blob/main/topos/t15-decoder-=
+reuse.sh
+
+See the fix below.
+
+>- [Medium] `bi_show` incorrectly reports that an auto-discovered endpoint =
+decoder is configured for HDM-DB (BI=3D1) when it is operating with BI=3D0 =
+in hardware.
+
+Yes. An auto-discovered HDM-D on BI device can make this show bogus
+1 afaict. Adding a check for the region's root decoder bi addresses
+this and also makes the check more robust: (&& cxl_root_decoder_is_bi()).
+
+Another alternative is to cache the BI bit upon committing, but imo this
+file should show 1 as soon as it is attached successfully.
+
+>--
 >
-> New issues:
-> - [Low] The patch introduces a multi-line comment that violates the BPF s=
-ubsystem comment style guidelines.
+>commit 913c2a59fed5b8381543ceb7345cd15ac2ea9d17
+>Author: Davidlohr Bueso <dave@stgolabs.net>
 >
-> Pre-existing issues:
-> - [High] Double-put and wild pointer dereference of batch sockets on the =
-first bpf_iter_tcp_realloc_batch failure path.
-> --
+>cxl: Add HDM-DB region creation
 >
-> --- Patch [1]: [PATCH bpf v2] bpf: tcp: Fix use-after-free in bpf_iter_tc=
-p_established_batch() ---
-> commit c52d637a13758169d9dce0d7c05be97965d399d3
-> Author: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+>A region inherits its coherency from the chosen root decoder: HDM-DB
+>if the root has CXL_DECODER_F_BI, otherwise HDM-H.
 >
-> bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()
+>[ ... ]
 >
-> This commit fixes a use-after-free issue in the TCP iterator caused by
-> request sockets being published to the ehash chain with a refcount of 0
-> before being updated. The fix uses refcount_inc_not_zero() to safely hand=
-le
-> these sockets during batch iteration. It also refactors the batch complet=
-ion
-> logic to rely on whether any sockets were left behind during the walk.
+>> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+>> index c5aacd7054f1d..71801dfd614b1 100644
+>> --- a/drivers/cxl/core/port.c
+>> +++ b/drivers/cxl/core/port.c
 >
-> Link: https://lore.kernel.org/bpf/20260620-bpf-iter-tcp-refcnt-v1-1-883bf=
-9e69495@linux.dev
+>[ ... ]
 >
->> --- a/net/ipv4/tcp_ipv4.c
->> +++ b/net/ipv4/tcp_ipv4.c
->> @@ -3073,24 +3073,24 @@ static unsigned int bpf_iter_tcp_established_bat=
-ch(struct seq_file *seq,
->
-> [ ... ]
->
->>  	sk_nulls_for_each_from(sk, node) {
->> -		if (seq_sk_match(seq, sk)) {
->> -			if (iter->end_sk < iter->max_sk) {
->> -				sock_hold(sk);
->> -				iter->batch[iter->end_sk++].sk =3D sk;
->> -			} else if (!*start_sk) {
->> -				/* Remember where we left off. */
->> -				*start_sk =3D sk;
->> -			}
->> -			expected++;
->> +		if (!seq_sk_match(seq, sk))
->> +			continue;
->> +		expected++;
->> +		if (iter->end_sk < iter->max_sk) {
->> +			/* reqsk_queue_hash_req() inserts with sk_refcnt =3D=3D 0
->> +			 * and refcount_set()s it after the bucket lock drops.
->> +			 */
->
-> [Severity: Low]
-> Does this multi-line comment follow the BPF subsystem comment style?
-> The BPF subsystem guide expects the opening block to be on its own line:
->
-> /*
->  * reqsk_queue_hash_req() inserts with sk_refcnt =3D=3D 0
->  ...
->
->> +			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
->> +				continue;
->
-> [ ... ]
->
->> @@ -3128,12 +3128,14 @@ static struct sock *bpf_iter_tcp_batch(struct se=
-q_file *seq)
->>  	struct sock *sk;
->>  	int err;
+>> @@ -233,6 +234,19 @@ static ssize_t mode_store(struct device *dev, struc=
+t device_attribute *attr,
+>>  }
+>>  static DEVICE_ATTR_RW(mode);
 >>
->> +again:
->>  	sk =3D bpf_iter_tcp_resume(seq);
->>  	if (!sk)
->>  		return NULL; /* Done */
+>> +static ssize_t bi_show(struct device *dev, struct device_attribute *att=
+r,
+>> +		       char *buf)
+>> +{
+>> +	struct cxl_endpoint_decoder *cxled =3D to_cxl_endpoint_decoder(dev);
+>> +	struct cxl_memdev *cxlmd =3D cxled_to_memdev(cxled);
+>> +	struct cxl_dev_state *cxlds =3D cxlmd->cxlds;
+>> +
+>> +	guard(rwsem_read)(&cxl_rwsem.region);
+>> +	return sysfs_emit(buf, "%d\n", cxlds->bi && cxled->cxld.region &&
+>> +			  cxled->cxld.target_type =3D=3D CXL_DECODER_DEVMEM);
+>> +}
+>
+>[Severity: Medium]
+>Will this attribute show '1' for an auto-discovered DEVMEM endpoint decoder
+>even if it operates with BI=3D0 in hardware?
+>
+>If Linux auto-discovers a DEVMEM decoder that intrinsically supports BI
+>(cxlds->bi is true), init_hdm_decoder() currently rejects it if the BI
+>control bit is set, so the hardware must be operating with BI=3D0. However,
+>this attribute seems to evaluate the state dynamically based on the device
+>capability rather than the hardware's actual BI configuration, contradicti=
+ng
+>the sysfs documentation that says it shows '1' when "currently configured".
+>
+>> +static DEVICE_ATTR_RO(bi);
+>
+>[ ... ]
+>
+>> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+>> index e50dc716d4e82..6eb852b514d3a 100644
+>> --- a/drivers/cxl/core/region.c
+>> +++ b/drivers/cxl/core/region.c
+>> @@ -1132,11 +1132,13 @@ static int cxl_rr_assign_decoder(struct cxl_port=
+ *port, struct cxl_region *cxlr,
+>>	/*
+>>	 * Endpoints should already match the region type, but backstop that
+>>	 * assumption with an assertion. Switch-decoders change mapping-type
+>> -	 * based on what is mapped when they are assigned to a region.
+>> +	 * based on what is mapped when they are assigned to a region. HDM-DB
+>> +	 * endpoint decoders inherit their type from cxlr->type below.
+>>	 */
+>>	dev_WARN_ONCE(&cxlr->dev,
+>>		      port =3D=3D cxled_to_port(cxled) &&
+>> -			      cxld->target_type !=3D cxlr->type,
+>> +			      cxld->target_type !=3D cxlr->type &&
+>> +			      !cxl_root_decoder_is_bi(cxlr->cxlrd),
+>>		      "%s:%s mismatch decoder type %d -> %d\n",
+>>		      dev_name(&cxled_to_memdev(cxled)->dev),
+>>		      dev_name(&cxld->dev), cxld->target_type, cxlr->type);
+>
+>[Severity: Medium]
+>Does this logic trigger a spurious dev_WARN_ONCE() when attaching an
+>endpoint decoder with a stale DEVMEM target type to an HDM-H region?
+>
+>When a region is dismantled, __cxl_decoder_detach() clears the decoder's
+>region assignment but doesn't reset its target_type, leaving it with a
+>stale DEVMEM target type. If it is later attached to an HDM-H (non-BI)
+>region, the check for cxld->target_type !=3D cxlr->type evaluates to true,
+>and the !cxl_root_decoder_is_bi(cxlr->cxlrd) check also evaluates to true.
+>
+>Could this generate a spurious warning stack trace in dmesg during valid
+>user reconfigurations, potentially causing a panic if panic_on_warn is set?
+
+I ended up introducing a default type helper:
+
++/*
++ * HDMs that advertise support for both coherency modes
++ * (CXL_HDM_DECODER_COHERENCY_BOTH) default to host-only; the region
++ * attach path switches target_type to device-coherent if the region's
++ * root decoder has the CFMWS BI bit set. Only HDMs that strictly
++ * support device-coherent mode default to HDM-DB.
++ */
++enum cxl_decoder_type cxled_default_type(struct cxl_endpoint_decoder *cxle=
+d)
++{
++       struct cxl_dev_state *cxlds =3D cxled_to_memdev(cxled)->cxlds;
++       struct cxl_port *port =3D cxled_to_port(cxled);
++       struct cxl_hdm *cxlhdm =3D dev_get_drvdata(&port->dev);
++
++       if (cxlds->type =3D=3D CXL_DEVTYPE_CLASSMEM &&
++           cxlhdm->supported_coherency !=3D CXL_HDM_DECODER_COHERENCY_DEV)
++               return CXL_DECODER_HOSTONLYMEM;
++
++       return CXL_DECODER_DEVMEM;
++}
+
+=2E.. then use it in both init_hdm_decoder() (which we do already) and
+__cxl_decoder_detach(), to reset.
+
+>
+>[ ... ]
+>
+>> @@ -2772,6 +2796,7 @@ static ssize_t create_region_store(struct device *=
+dev, const char *buf,
+>>				   size_t len, enum cxl_partition_mode mode)
+>>  {
+>>	struct cxl_root_decoder *cxlrd =3D to_cxl_root_decoder(dev);
+>> +	enum cxl_decoder_type target_type;
+>>	struct cxl_region *cxlr;
+>>	int rc, id;
 >>
->>  	expected =3D bpf_iter_fill_batch(seq, &sk);
->> -	if (likely(iter->end_sk =3D=3D expected))
->> +	/* sk carries the first socket that did not fit in the batch. */
->> +	if (likely(!sk))
->>  		goto done;
+>> @@ -2779,7 +2804,14 @@ static ssize_t create_region_store(struct device =
+*dev, const char *buf,
+>>	if (rc !=3D 1)
+>>		return -EINVAL;
+>>
+>> -	cxlr =3D __create_region(cxlrd, mode, id, CXL_DECODER_HOSTONLYMEM);
+>> +	/*
+>> +	 * The CFMWS dictates endpoint coherency: a BI-restricted Window
+>> +	 * produces an HDM-DB region; otherwise HDM-H.
+>> +	 */
+>> +	target_type =3D cxl_root_decoder_is_bi(cxlrd) ?
+>> +		CXL_DECODER_DEVMEM : CXL_DECODER_HOSTONLYMEM;
+>> +
+>> +	cxlr =3D __create_region(cxlrd, mode, id, target_type);
 >
-> [Severity: High]
-> This is a pre-existing issue, but I wanted to ask about the reallocation
-> failure path that occurs just after this block in bpf_iter_tcp_batch().
+>[Severity: High]
+>Does the auto-discovery path in construct_region() still blindly create
+>regions using the endpoint decoder's type?
 >
-> If bpf_iter_tcp_realloc_batch() fails, the function calls
-> bpf_iter_tcp_put_batch() and returns an error without clearing iter->end_=
-sk.
+>The commit message dictates a strict design rule that a region inherits its
+>coherency from the chosen root decoder. The sysfs creation path correctly
+>enforces this here, but construct_region() appears to miss this update:
 >
-> When this happens, bpf_iter_tcp_put_batch() overwrites item->sk with a
-> cookie:
+>drivers/cxl/core/region.c:construct_region() {
+>    ...
+>		cxlr =3D __create_region(cxlrd, cxlds->part[part].mode,
+>				       atomic_read(&cxlrd->region_id),
+>				       cxled->cxld.target_type);
+>    ...
+>}
 >
-> net/ipv4/tcp_ipv4.c:bpf_iter_tcp_put_batch() {
->     ...
->     while (cur_sk < iter->end_sk) {
->         ...
->         sock_gen_put(item->sk);
->         item->cookie =3D cookie;
->     }
-> }
+>If firmware incorrectly programs an endpoint decoder as DEVMEM under an HD=
+M-H
+>root decoder, could construct_region() create a DEVMEM region? Because both
+>the region and the endpoint have target_type =3D=3D DEVMEM, the mismatch w=
+arning
+>in cxl_rr_assign_decoder() would be bypassed, resulting in an invalid HDM-=
+DB
+>region under a root decoder that cannot generate Back-Invalidates.
 >
-> Because the seq framework subsequently calls bpf_iter_tcp_seq_stop(), it =
-sees
-> iter->cur_sk < iter->end_sk and calls bpf_iter_tcp_put_batch() a second t=
-ime.
+>>	if (IS_ERR(cxlr))
+>>		return PTR_ERR(cxlr);
 >
-> Could this lead to a wild pointer dereference when sock_gen_put() tries
-> to use the cookie as a socket pointer during the second pass?
-
-Hi Kuniyuki,
-Thoughts on the fix and Sashiko's concern? (The latter should be probably b=
-e
-fixed separately, if needed).
-
+>--
+>Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260615145529.13848-=
+1-dave@stgolabs.net?part=3D4
