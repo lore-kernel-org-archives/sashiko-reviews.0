@@ -1,275 +1,175 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010027.outbound.protection.outlook.com [52.101.46.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E2544607E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784626663; cv=none; b=Rhcw416VhPQ2c7XMMc8WaB13a7q46OgWCeRihyoJ9ouDcSOGqkLbwGeLqJ9/s5C+pCUeEWESSEDRTGEZoPtgbrIjcn24A54MI/kVn/BB11EUXXbkZdy4AGAMUEfdqa0qLnxD5e20I/ZSpeIrZ4dQZWHmk28L4kM29QkdhRX0Fkk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784626663; c=relaxed/simple;
-	bh=5aq9ZO8Ce92QZs0DYdVrTG6nvSi+ubFtXVVZGJSag7Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AdT3aYIV8JU6NLrnEn7ZoyTrGRr0DM7P/7gHfwA76Z7DS96FFrax+NmNtYEaBL6jNPBSNZedzqjj/V8HUEAzObpmFpl8aihZM9rLhuSqQwrtJqDpJEq88OLZM8OZzHgx/0ETPA6U4hERyABhyR367K2dYgSxPt2TwqzQMpEeBqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=BXImOHj5; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Yz8Aq8xm; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1sFRAtls; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QT//Jwo7; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9E3446059
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.27
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784626787; cv=fail; b=GNxRpnsOtqZA+4QuMGVxZQQINsh5Hbc+rUYxFIuzGHA5FkDJLg/7M9H1ZX4i8F/wBAOJvioNtRg8sXwd3B4NiIUJK1O6Nb/6Tw2qf6vkeLEeEnHdaQsMduWQ9nXfsnDRXreZguf3Oo4CkKVld0Vh+3mT44UII0q/L5PyUp2ogCY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784626787; c=relaxed/simple;
+	bh=yTTD2OgAbM5Qh2LZT/8bjTDyb+ITA6Olx2s3XjDEpUQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WYHe1WJ9n+FF2wAQ0GNWH+6n9q7PqNjJssisFC1HWkkbeW7bxj6UXcVHiSi8kDCl1oV40lVR0BfqTTwow8uHZNr4ME+3vDS4+cngK7dNoOknksdohsidCK3i8gMKO6CG96pm83YF8BpY3N01cuINJaPae/F0Jw7TOP/MHgtlXjI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tFAgHr1C reason="signature verification failed"; arc=fail smtp.client-ip=52.101.46.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BXImOHj5";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Yz8Aq8xm";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1sFRAtls";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QT//Jwo7"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id ADF1D3E21;
-	Tue, 21 Jul 2026 09:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784626653; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uy9d1tTCO74cqNqJ32EeQzoWOnEqOIPnaePrGZWXs4c=;
-	b=BXImOHj5qhlybr24beQykNR6GyjGGRFOEweSXbbA8ys7Tb1T2uKtZTuUl/frFVTm1JMrfl
-	2SEgy1olVC0wyfere82m7IUxgEZo8cehuXmuOFyMpqMqKa87UCSHPHr/Bl/8mcWciGlFYb
-	EzRUEJosUy4OfHMNqjBMI/ezYv/SLTE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784626653;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uy9d1tTCO74cqNqJ32EeQzoWOnEqOIPnaePrGZWXs4c=;
-	b=Yz8Aq8xm9kbNWEC2OHaQ5ItA0+WZzs+1nyXbu0FHfh8y2CL6R1YiHU2g0TQgzJ2wuAANdK
-	J0vcfsdXlBBhzkAw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1sFRAtls;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="QT//Jwo7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1784626652; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uy9d1tTCO74cqNqJ32EeQzoWOnEqOIPnaePrGZWXs4c=;
-	b=1sFRAtlsgKEMEFyQC6zaY4ubUorHGEssbWdHAzpYm3EqzX0HxSE2br/z5xQo7B/iiXrPzx
-	5AHKehjHXr9Q7+FbbAcTA7zL/kzVMwlU6kns+nF2YR0qWgSo1FyhuzbDvnazUETPUck5hW
-	KFXqg2XlqDci7BQPLdYQpMuE+JNBHgI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1784626652;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uy9d1tTCO74cqNqJ32EeQzoWOnEqOIPnaePrGZWXs4c=;
-	b=QT//Jwo7ojKboqa118qacBACW8cYOqMl1bQLXL+o6PNLPkVayv6kQoLWJjVnBDMNNu8mI+
-	iAHtJIfYuoib+vDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7E52F779AA;
-	Tue, 21 Jul 2026 09:37:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id NwxsHdw9X2owIQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 21 Jul 2026 09:37:32 +0000
-Message-ID: <b2896811-a784-41d9-a717-59e86d04b629@suse.de>
-Date: Tue, 21 Jul 2026 11:37:32 +0200
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tFAgHr1C"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KI4fJL+A+lqtgIKeY0oHSYaMrGIbaHuyyu0Eyp/hgUKrWq4KvlZG6VCrk6AfR2vMH2HVlUTQe93/mLglB1AdNzS39R/dxn4J4gsC+PAChu+MmcP9g5Qyt5V+0BfVEdbSEMkpz4yClCM2YIzSkd6i/adFG8P52bsDOrTB8GNjdoNhjIT8bRAjlFKiqq/NFLueFrIvCbZ4aVuMsgPxPhv4yv4b7AO3DEHVmUBdFqhqnGpWP0vp5ny9ep2Rl/qmjDaaiaWYZd3O9vmarwapRZplXc4S+JF7l2Mi8/xln8ixnQ5MKCUgPBn6Qe+fG+j3bEZ/3/2jx6rmcD+APJGJ67h+vQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tNe4uBYs7A0EwonS6wgJIyo2QJbhU8WcxvQOxIaHZX4=;
+ b=KSHY1KnYFX987xfJNjz8O5usQS+bxK4eOXVor/XRyTyz3HSEAB019ZOOd6O2ZlGjIl6TMcX24HN3Sl9W3Jtgkx/9V15b26qK4WMPIQlgqqZyPrvikDH6dZzDcycwUPzTgQ3EJQKzusGI8mnpiLZNskXA5bxm2DrXnYa+gncMD+iYWdzBfQ0h6Qp/juwqGUkS3bjHAQ0HFyrXeNHi3dx4XFrGJSSUF4H8IAbW+YNmc4qRQ9Ob06LN9dJafHiOLyUl25VQ++J90bncKBV4p4YRN+kX4PGJCfDjllYGunb8MXAVUeZe/9A6De/P02XDmbW2ZObVGU2jNSfwPmHNmL39Ww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tNe4uBYs7A0EwonS6wgJIyo2QJbhU8WcxvQOxIaHZX4=;
+ b=tFAgHr1C9RwumDaMR5rtD48sIm6MTPJ84+zIq7VGNpq+rRLHyH48jLFLV45I76WVy0fTbREOW5AAtzE3wOk3HCG0RoF+l3xj0kPwFC7S12gqUyJsgJluHLRkv9gA6xm5vV9tinlCwYJv8TriUla8cXrQu6Nq1IzMdXeG3ins78REnskxcyeER7L8ZHpk4tCmZz6Eofxj7Glwlowm2ibqOngC+/LPcTrjy7uhCcolhCXM37AYDJ+Z9To7LAahNiMW53s6u3hKRGzk9qgdXcp4ymdPjGUvpcKAwTzXiVVMQL/LTrYsDlVTpruDBcLTCbvH7kOLSTvSXkkSNDHgYaT8Rg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by SA0PR12MB4479.namprd12.prod.outlook.com (2603:10b6:806:95::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Tue, 21 Jul
+ 2026 09:39:42 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
+ 09:39:42 +0000
+Date: Tue, 21 Jul 2026 17:39:38 +0800
+From: Richard Cheng <icheng@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v7 1/2 RESEND] cxl/hdm: Allow zero sized HDM decoders
+Message-ID: <al8-QBjeHI515V6R@MWDK4CY14F>
+References: <20260721085715.39322-1-icheng@nvidia.com>
+ <20260721085715.39322-2-icheng@nvidia.com>
+ <20260721091624.9CDD61F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260721091624.9CDD61F00A3D@smtp.kernel.org>
+X-ClientProxiedBy: TP0P295CA0039.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:4::8)
+ To BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/imx: replace struct drm_simple_display_pipe with
- regular atomic helpers
-To: Maxime Ripard <mripard@redhat.com>
-Cc: Ze Huang <ze.huang@oss.qualcomm.com>, sashiko-reviews@lists.linux.dev,
- dri-devel@lists.freedesktop.org, Frank.Li@kernel.org, imx@lists.linux.dev
-References: <20260716-drm-simple-kms-removal-v2-1-7e4a6b8528e6@oss.qualcomm.com>
- <20260716091459.1D8101F000E9@smtp.kernel.org>
- <DK1XPK73QJHC.JWFUMTTLOD1D@oss.qualcomm.com>
- <63cca05a-ec83-430c-abcf-c2f0b508446f@suse.de>
- <20260720-bold-jasmine-goldfish-d979e5@penduick>
- <3749a60a-a8bb-45a0-a06e-a21017990c10@suse.de>
- <20260720-sly-tricky-elephant-c8afa1@penduick>
- <20260721-vagabond-lovely-loon-d126e7@penduick>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260721-vagabond-lovely-loon-d126e7@penduick>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: ADF1D3E21
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SA0PR12MB4479:EE_
+X-MS-Office365-Filtering-Correlation-Id: db4850d7-1bc0-467e-9943-08dee70bfdcc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|22082099003|18002099003|11063799006|56012099006|10067099003|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	5/Kcb1o1hiSe0jip/Q+BYu9TKQn1Xf8nPNE36apNzvi+fEJOnSRkOm2HYYbqrMF3vylFud9ipAmaVDUiaDSu2vfPoEHkMaZ4chE13YVmVx8O8oApteU10ZXi93fwS5YpFlZ+19cda4v0575WCRWC7GAr+nVXwdkzLYZCuY4J6xRn3bxANyYL86N0F05gkFEieneMHHAldu1rfmdpcEyqcKVy4knVEge0Z+JZcUwkJIO+eq7H4gNk8tmbF+FC8sqOEjgLkI8P+e+uY2RwRW1BRyOOdd8ftHfPvDY+BmxGY+rkkXhc96BtYtNFzzXJZMIaKMmS2zeyJtpaS6UXTZu45O08L7vbKGYHOYnUL7hfsLOD3MnplrLK/xwW9gaxhRBTO+RAbbNM01m6ofCFcSPA8+V413LdGe3f9HAtMa2kY3PT9bN+W01bckk05vpnr33qnoyl6F8XLtW7acPU7smC8LKnvfQhQ7d7SRKZcwXWg1iK7bOVjN1Ce/iNeTXE5ESQqe6/W1ihWR0bc7HEW2VzE2LOIDtjSzU3apYxc4cP7F1vi/cQyPR973iOtrwriopD1NKHHiWw2vD9izgynkVuNx0YuGsFZogvfPOloUqragx35MZgTaJpKeFnWsPlHAx1QZM5rhduK2xUw6+olwuiRIgrm6th21kkBCMakyC0miU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(22082099003)(18002099003)(11063799006)(56012099006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?yXh+Y9Zfk6giODoS7TXzzhfz+v+UDKYHf3OYQexcUsMgbqdI/bA5v8E9kQ?=
+ =?iso-8859-1?Q?fym9J3vvZ/xu72fArzt5WaJGl/cGu13J7xYrtShHC0xWT+zUOmhR0U+vUg?=
+ =?iso-8859-1?Q?EMCQIl7dbqolBOB+wtlaSHICRg3a5U2nFNximdHmWp5Xmwr4IbjkIY+rc1?=
+ =?iso-8859-1?Q?bmnpSKB9c0AgXl4wgLYI34QCV1uvLPprxHYmPP6ziawWbiqt6lx2PK45ez?=
+ =?iso-8859-1?Q?4ChtvV+nXjz9DRpldbbZ+AlCAF8GMo5j02tMpyZxfvrwNseLP0ERuryINV?=
+ =?iso-8859-1?Q?MrnVH1mS+QPitZGmuH7wUX3K8wwBhsWcXsVyEo8rMxCM0PuOTMkM6qqOr7?=
+ =?iso-8859-1?Q?KHtQobzYZ4YoM8J+TmmKhcLK59SuIh8NQhv8CjNYlmSSEMzOHzzMApZo1G?=
+ =?iso-8859-1?Q?vsKZ6lDemxqow+kQRekQUdQQR+ryc5gT93mnz6/UKfvvD7OZci8stm7Wj5?=
+ =?iso-8859-1?Q?ddyRTs2YuPOGC+O/onKyQl7glY0atml0actugB+jR48/ug/j20966d8hE+?=
+ =?iso-8859-1?Q?sBDzcNvsCESCY56nAP7YkjMd4YO0KcrAjaGqyn9OyBrvuZFqqwXB22v2CP?=
+ =?iso-8859-1?Q?VxpGt/ERUd3J+PGX9yCluipgAmpb8XKuIIlvUte+K+VSJne62/xIW0TmXY?=
+ =?iso-8859-1?Q?vje2jQ3vSMdl3yA4zjgb7QCfBHFeR5kkqcxAmRJAQraIzl4VZV0rseyS35?=
+ =?iso-8859-1?Q?G0AIPghxXtJQQ3F9GFEwnqDBUFM6ZBtVqSsjrtVgKvTloOO0BD2pKEL18A?=
+ =?iso-8859-1?Q?yGgpCcZWr92AznrXn2Gnf+Apkm8rms0b9qEwajHY7eziBhXhuPKIvmCob2?=
+ =?iso-8859-1?Q?/Zkvwd6PK+JncKA9stRWdH9WDEPvlJNshuCf3FLxPTbW/vB7DvGlHmphQY?=
+ =?iso-8859-1?Q?QOVMNrbyxsDL2f55VYtnHdhQWa/mT6TY/cDd9VRYaFJH/xZiksZH5FFmfQ?=
+ =?iso-8859-1?Q?jvbuHL5s2NQ5E95eSgbsxIvzAPDdNuPzfljHyJa9g6GWljtDfoPifFm7Db?=
+ =?iso-8859-1?Q?CgrReDoiHNnKtOTrR1vTIs5zJ/LhzfVQhpj+g02ICe+MPbemTqR1DQet5U?=
+ =?iso-8859-1?Q?wXRE7UrRe2iysRhO2VnwUNU+SAFe2o8AoXdETQ6uu8+8H8hzwQz/QtHs4Y?=
+ =?iso-8859-1?Q?/LSimLp5s3mTmIqjsPlyoBDjD6XgYDK16iTYnMRLtTkCPZ/aVYfvrYpE9V?=
+ =?iso-8859-1?Q?gnPZ6HUdmrMxG/LMCVTSF2V9tfYqWZuAYh/iCWoiLJXeD3rQ+uM+VaiFxs?=
+ =?iso-8859-1?Q?qojD/YMkcevPBKntzxm/rBMZ3xX1S4N5thElrW0E/5sPtNeN2IvvMFLe8h?=
+ =?iso-8859-1?Q?YaRs3BRIDNrYt3+PaRJqLGKJes+AcF3S9Jif2ROSeFoSUO5DbmZPSSLeNP?=
+ =?iso-8859-1?Q?a0FgDDX3qzjSziqI36yKFg1kIT+8cafkSivY3ZUcX7IfeMdBEG0cFf8Wad?=
+ =?iso-8859-1?Q?bu2wBedPM6b/5yVLCNI+WCNJYNnAoFcK78907XwK9vA52AgWjzIcBEmyAz?=
+ =?iso-8859-1?Q?C6nOq3GF1Awedz78L9peRSSRmrksEPSXAGrh4uEXy11HCxNuqg3I5kjoux?=
+ =?iso-8859-1?Q?uQWLHfSVXU3//jHqhJ0F1Q6Cqpeq/gn+FFCsgDd7/iHZ2dgqXqN3YI0dCQ?=
+ =?iso-8859-1?Q?T6L5GvZ2KpWf60aLYZQV6gingac1jE9WGV87zNPYsic0tq1rnL9T6bZ63b?=
+ =?iso-8859-1?Q?9UWEocQpVcl6N+RMH/tQSHLSIedxq/hjnKCmaaHcnbuDmKjyCLUZ9nwd26?=
+ =?iso-8859-1?Q?RGDy7d7sHf+ZQNSgsi565gh1EaWg98xMGOxIgr5iYhnHGA/pHC+dUdfYXD?=
+ =?iso-8859-1?Q?cRGFjNyPpQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: db4850d7-1bc0-467e-9943-08dee70bfdcc
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 09:39:42.4779
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8FCS1Hdf7BNS8cZctH1jwkj8Q4rYDJG1xqlZXlUSHoT3EcVEn48E1PyLeHIpjZR/rzSrkmJvf1xwYiUcUa/odA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4479
 
-Hi
-
-Am 21.07.26 um 11:28 schrieb Maxime Ripard:
-> On Mon, Jul 20, 2026 at 05:06:41PM +0200, Maxime Ripard wrote:
->> On Mon, Jul 20, 2026 at 04:38:26PM +0200, Thomas Zimmermann wrote:
->>> Am 20.07.26 um 16:08 schrieb Maxime Ripard:
->>>> On Mon, Jul 20, 2026 at 02:36:19PM +0200, Thomas Zimmermann wrote:
->>>>> Hi
->>>>>
->>>>> Am 18.07.26 um 21:12 schrieb Ze Huang:
->>>>> [...]
->>>>>>>> -	if (event) {
->>>>>>>> -		crtc->state->event = NULL;
->>>>>>>> +static int imx_lcdc_plane_helper_atomic_check(struct drm_plane *plane,
->>>>>>>> +					      struct drm_atomic_commit *commit)
->>>>>>>> +{
->>>>>>>> +	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(commit, plane);
->>>>>>>> +	struct drm_crtc *crtc = plane_state->crtc;
->>>>>>>> +	struct drm_crtc_state *crtc_state = NULL;
->>>>>>>> -		spin_lock_irq(&crtc->dev->event_lock);
->>>>>>>> +	if (crtc)
->>>>>>>> +		crtc_state = drm_atomic_get_new_crtc_state(commit, crtc);
->>>>>>>> -		if (crtc->state->active && drm_crtc_vblank_get(crtc) == 0)
->>>>>>>> -			drm_crtc_arm_vblank_event(crtc, event);
->>>>>>>> -		else
->>>>>>>> -			drm_crtc_send_vblank_event(crtc, event);
->>>>>>>> +	return drm_atomic_helper_check_plane_state(plane_state, crtc_state,
->>>>>>> [Severity: High]
->>>>>>> Can fetching the CRTC state this way cause a kernel panic in the core atomic
->>>>>>> helpers?
->>>>>>>
->>>>>>> If userspace submits a commit that modifies only plane properties without
->>>>>>> affecting the CRTC, the CRTC is not implicitly added to the atomic commit
->>>>>>> state.
->>>>>>>
->>>>>>> In this scenario, drm_atomic_get_new_crtc_state() returns NULL. Passing this
->>>>>>> NULL pointer directly to drm_atomic_helper_check_plane_state() causes a crash
->>>>>>> when it dereferences crtc_state->enable.
->>>>>>>
->>>>>>> Could this use drm_atomic_get_crtc_state() instead to ensure the state is
->>>>>>> brought into the commit if it is missing?
->>>>>> I think it is fine here; I'll just copy the pattern from [1].
->>>>>>
->>>>>> [1] https://elixir.bootlin.com/linux/v7.1.2/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L487
->>>>> It could be that there's a long standing problem in the overall logic. Not
->>>>> having a CRTC (and hence crtc_state) should also mean !fb, so we'd return at
->>>>> [1]. If we have a CRTC on the plane but pass a crtc_state of NULL, we could
->>>>> get a panic at [2], where it does crtc_state->crtc.  I'm not aware of any
->>>>> bug reports about this problem, but it's still an issue.
->>>>>
->>>>> A number of drivers get this wrong by using
->>>>> drm_atomic_helper_get_new_crtc_state(). The bot suggests to use
->>>>> drm_atomic_helper_get_crtc_state() instead.  This helper also returns the
->>>>> new state. But  if there's no new state, it duplicates the CRTC's existing
->>>>> state. That's a bit of an overhead, but probably not an issue.  Several
->>>>> drivers use this helper, but also get it wrong. They tend to return early in
->>>>> the case of !crtc or !fb without calling _check_plane_state(). See [3] and
->>>>> [4] for examples.
->>>>>
->>>>> I think, going with the bot's suggestion to use
->>>>> drm_atomic_helper_get_crtc_state() might be the best resolution for now. It
->>>>> still needs a crtc pointer, so the pattern is
->>>>>
->>>>> crtc_state = NULL
->>>>> if (plane_state->crtc)
->>>>>       crtc_state = drm_atomic_helper_get_crtc_state(plane_state->crtc)
->>>>>
->>>>> _check_plane_state(plane_state, crtc_state);
->>>>>
->>>>> And in this case, _check_plane_state() should work correctly. But you can
->>>>> only use _get_crtc_state() in the atomic_check helpers! In the
->>>>> atomic_update, atomic_enable, etc helpers, it's too late for the helper to
->>>>> copy the CRTC state.
->>>>>
->>>>> I think some other DRM dev should look over this as well. It's one of the
->>>>> trickier things in DRM to get right.
->>>> drm_atomic_helper_get_crtc_state is safe in atomic_check. It's
->>>> everything after that must use either get_new_crtc_state or
->>>> get_old_crtc_state, as the global state cannot be modified anymore.
->>> Thanks a lot for confirming.
->>>
->>> Wrt. the logic in plane atomic_check, we might have to fix a number of
->>> drivers. As I outlined above, some use _get_new_crtc_state(), some use
->>> _get_crtc_state() incorrectly. But that's for another series.
->> Sigh... I removed all of them a couple of years ago, I guess some crept
->> back in. Maybe we should warn loudly if it happens?
-> I started to look into it for drm_atomic_helper_get_crtc_state and I
-> cannot find an occurence of this in drm-misc-next. Do you have a
-> specific example in mind?
-
-It's called drm_atomic_get_crtc_state(). [1] :)    I've not evaluated 
-all calls, but there are cases like [2], which returns early from !fb 
-before running the whole drm_atomic_helper_check_plane_state() 
-machinery. It should have at least set plane_state->visible to false.  
-Better would be to call drm_atomic_helper_check_plane_state() in any case.
-[1] 
-https://elixir.bootlin.com/linux/v7.1.4/A/ident/drm_atomic_get_crtc_state
-[2] 
-https://elixir.bootlin.com/linux/v7.1.4/source/drivers/gpu/drm/mediatek/mtk_plane.c#L239
-
-Best regards
-Thomas
-
-
+On Tue, Jul 21, 2026 at 09:16:24AM +0800, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] cxl_dpa_free() returns early for zero-sized decoders, bypassing resource release, leaking the DPA reservation, and permanently breaking port LIFO teardown.
+> --
+> 
+> --- Patch [1]: [PATCH v7 1/2 RESEND] cxl/hdm: Allow zero sized HDM decoders ---
+> commit 69f9a310ab608be9b469a96819d45389f215c346
+> Author: Richard Cheng <icheng@nvidia.com>
+> 
+> cxl/hdm: Allow zero sized HDM decoders
+> 
+> This commit allows the CXL subsystem to accept zero-sized HDM decoders
+> instead of rejecting them during port enumeration. It treats empty decoders
+> as first-class by backing them with a kmalloc'd resource and keeping the
+> skip and hdm_end accounting intact.
+> 
+> > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> > --- a/drivers/cxl/core/hdm.c
+> > +++ b/drivers/cxl/core/hdm.c
+> 
+> [ ... ]
+> 
+> > @@ -545,7 +569,7 @@ int cxl_dpa_free(struct cxl_endpoint_decoder *cxled)
+> >  	struct device *dev = &cxled->cxld.dev;
+> >  
+> >  	guard(rwsem_write)(&cxl_rwsem.dpa);
+> > -	if (!cxled->dpa_res)
+> > +	if (cxled_empty(cxled))
+> 
+> [Severity: High]
+> Does this early return skip the necessary cleanup for zero-sized decoders?
+> 
+> When cxled_empty(cxled) evaluates to true for a zero-sized decoder that
+> has a valid dpa_res, returning 0 here skips devm_cxl_dpa_release().
+> Since the reservation is backed by a kmalloc'd resource from
+> cxl_dpa_request_region(), does this leak the dpa_res memory?
+> 
+> Additionally, skipping devm_cxl_dpa_release() means port->hdm_end is not
+> decremented. Because CXL DPA management strictly enforces LIFO teardown,
+> will this strand the hdm_end watermark and permanently break the ability
+> to free or reconfigure prior decoders on the same port?
+> 
+> >  		return 0;
+> >  	if (cxled->cxld.region) {
+> >  		dev_dbg(dev, "decoder assigned to: %s\n",
 >
-> Maxime
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, (HRB 36809, AG Nürnberg)
+Ignore this one as stated in v6
+https://lore.kernel.org/all/akYSpn_EyYTys6Fh@MWDK4CY14F/
 
-
+--Richard
+ 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260721085715.39322-1-icheng@nvidia.com?part=1
