@@ -1,229 +1,204 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC580175A74
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 17:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA1F3346A6
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 17:40:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655491; cv=fail; b=FABO1HV7PM6+2Ep5uM5qd337Qp0+TYzpMYT4iuYcxZ2oM+r9y/jBfnp1ERAiGmaY1abutxZktbmofHqAQIb9+WMJgzDHRIKSmUwQFpTztxo5wRMtFp1+ks/9oXFiKatA7UkYHPYfsiFZqwaOMypbO7qrjAOvE6t/wib4Cf2zFsQ=
+	t=1784655655; cv=pass; b=i/Nlyog4d1UDv66NJgMBn/sL8wrVPPi/wgB+5pDTF4LKldjvUMH7G2pMgcS9iflodgvAzmAW8zDCUJJFfMc5vrffrzVpYOe0Ykg4wjhZAPGWJHvksTYMdU+WqIof363Rw6RXPACv52z1APU5CUE8uGb3AOJnHr6sy5N8TMY9jiQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655491; c=relaxed/simple;
-	bh=wD2HPxxdiW2/GvTF++ehU+foMubs/lqbr9pmQbpHVc4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=uRKSjwlBr37IhFfElWSDcJnCRmhbJW+2fXzrZFaf2uew04ZUtY1qnNqicx5m9CYqJUle4qIYJUqSgr2dBNUZ57hDwTr72ometrgYimqAwZ6KhUDM8V+VSDU01/6j+z+Ce1Fqyorb6AUMr7GaUYJ0aJ5vHzxbviF0QzAnaiL5OUw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mrkK3LH1; arc=fail smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1784655655; c=relaxed/simple;
+	bh=jcij0a0bdJCJHImpik/mNjjxwB9JULp6Ljj+hpCdPzo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CBfVGDf+QVEe8zUCA9cHixO+AgKVkiLr7eOt5fyTkAMKS+6v2HdMJVPbE6J5rVl4iriL4KcDAwFkX8GAOzdCAbtohm72ZEAN9883bgeKl9JVr4Q+mtQywJamNgWyqR4Jo6S0GmpjOZ4cpb+k7B/D3upnta6AzsvkTLWFtP+elCo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j4+XlBAF; arc=pass smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mrkK3LH1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784655489; x=1816191489;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=wD2HPxxdiW2/GvTF++ehU+foMubs/lqbr9pmQbpHVc4=;
-  b=mrkK3LH1Q0qAXhIszNtulP5sDzHps8NRAQkehp9yt+lGf8BSAT3laPOJ
-   h3VvtwYMU3gfKFrZryCp1+i0j+pxZJ/PDK0mEeXFFN9Drv1al6LJAbO3Y
-   rRLdYC7TfiNwjcae1sROMzsh63WEX1bMgaWj06Isi18I5oCJ+N5Zi8kYe
-   rVQcy2MLFm0dhwUN+B2LbYN1Btr/za9CRFr/RjMBoQVLfuSNKuRMc3BvS
-   JC/KkHveBVttq7+e7SU3dgTK4TIgSTYo+Xj4osvKy3Ll95DYli1MgNXRo
-   ffMYabD6kAUDglRQt7aC2z055Nftjcj7A9g/I+aRHCRc2a+2hAKzpyGes
-   Q==;
-X-CSE-ConnectionGUID: Naa7pyZiQT2W833IHHqF7A==
-X-CSE-MsgGUID: BeExNOQSTt2OhYEOHQzPVQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11853"; a="85028864"
-X-IronPort-AV: E=Sophos;i="6.25,177,1779174000"; 
-   d="scan'208";a="85028864"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2026 10:38:06 -0700
-X-CSE-ConnectionGUID: KzFIhHBuTUeSrYIjLbyYVA==
-X-CSE-MsgGUID: 9ILdw3aOQSaZgZ7PcjWICg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,177,1779174000"; 
-   d="scan'208";a="281108996"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2026 10:38:05 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 21 Jul 2026 10:38:05 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Tue, 21 Jul 2026 10:38:05 -0700
-Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.29) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 21 Jul 2026 10:38:04 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=shFrmy8vLWFCajv8I//qI2VjWCYmRgpOfJnkFIGDkovkYyjAh3r9HeCjhF2qdowJBYd+LTCVMUi5AHPFllIT+/AqZIQ5iduQwL/jXgzZxNvQaCx/VEtQq+bcfn6agrtJIaGDIqagax2853bw/wvNGClMXWlbI6OUw1HaL+6i/9M7LUe91sn75+grrqaAO6f89xPN97I/1IJEk1q2KattmPVlfDMFlz4KKK+YMm5MB3BZ5Ob57e4+2x8V11ZDeVh3zFKccuRL1WWTrgU38tKoMgHOjEqNdT0iq/+nHsOBTY9mHBAzkwWBvJCAXMWMHyS2f9S0LGwSqf5E+6H+b7VLkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9wr4+HMI7REutQccnYY5fFK1fcUBHSdYAbmx1C4DSY8=;
- b=rdO9Dy2KrG0bHHNa8S6DXi6HWz0fYr24wBRzQTsRb8AWI3Iklelk5a1H3nIks86FNeL6Gb1u/lpIClr174pIu47whuJ4P0hX0O5V7PSi2iMcdlxepKHhA9ixZg3gV7ZGmL/44DGqcHpglarit98cKs51R6uheIfl5CtjQgVUIycnWCbJE5PomInTwbaTK2nWoRFzfBskk5y8CG3Y0lLZAf4oQo3EAya+AJ/S+BGSODFlV5pNiS/2BdOHeUMNzCcrSVGBBB6YSbeLqLmfufGNfoO0FL13D8NvjugThPfWMs4sej7Bx3HeNSleOoMeWUDDwLa610nj3umBl3PtOqAexw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5073.namprd11.prod.outlook.com (2603:10b6:303:92::23)
- by SJ0PR11MB6624.namprd11.prod.outlook.com (2603:10b6:a03:47a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Tue, 21 Jul
- 2026 17:38:00 +0000
-Received: from CO1PR11MB5073.namprd11.prod.outlook.com
- ([fe80::a153:939c:df8c:f4fe]) by CO1PR11MB5073.namprd11.prod.outlook.com
- ([fe80::a153:939c:df8c:f4fe%4]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
- 17:38:00 +0000
-Date: Tue, 21 Jul 2026 13:37:56 -0400
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
-	<dri-devel@lists.freedesktop.org>
-Subject: Re: [PATCH v11 3/3] drm/xe: Handle PUNIT errors by requesting
- cold-reset recovery
-Message-ID: <al-udBqjgYOGgzja@intel.com>
-References: <20260720101815.526813-5-mallesh.koujalagi@intel.com>
- <20260720101815.526813-8-mallesh.koujalagi@intel.com>
- <20260720104816.51BD11F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260720104816.51BD11F00A3A@smtp.kernel.org>
-X-ClientProxiedBy: SJ0PR03CA0284.namprd03.prod.outlook.com
- (2603:10b6:a03:39e::19) To CO1PR11MB5073.namprd11.prod.outlook.com
- (2603:10b6:303:92::23)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j4+XlBAF"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-668432d50b0so3721868d50.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 10:40:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784655652; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LpbSfKYArEkqaSpbpBwki6dd/ZjQjH4Un2I853euK7iCO9ljxE0LQ4DaLRh27iYeOC
+         OojN0yfoJA/FHP8o6CqGzSQs5oJCWXkS0oxxIezxlXjurGz676aVqgnBKrDYDWTGOW8D
+         0rjOX8O+zP3n4ZZCKfRGjnfTfRJnpZhnp/mTcduAI5uBG8YJWwRJS/aKyVhvZ/NnpjwM
+         EBroCLjl5YjzdyoO/9JJchU+sHx4z/ps0X8SKYosptcjGQ6UVzPPGQL8nUeGFTaFP3gb
+         ZKAYAchR0WZhpQsTdP132/seScgqsE6dD/3HuPI6QOK7RAEoak+Ofd4LG5cyooApcJYm
+         THgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9almTHjFbfDOI+RxAOp6GPttHl5pp39q475h1J3QeVo=;
+        fh=FAs+oqBvp4uRcgatxImXh00rwjhwEgInskW7+NhMwNA=;
+        b=NYNgBOokkaLO/+KPABPcz+zIqGTyThk/88b9Ef/sF2TPXCOAga1QIXUtb02Mp7u2jA
+         q/TaFENwzc7aThcZRRcOKqmUr2g8vXLtHorDtaDagiL5yb7BYR8oU5PBbalmWZJCGrXZ
+         3YAvuBflKDZDJWPkKLmIfDFb4HPRe073Zbih9vyMJlirQsy4Z2KZv/+61EFKLao30FR1
+         HEROlWqeVEoFXm3HTXhbpslH+CqKI8JYz7w5bety3vVowvuQ5asYeVrn6SyWFc9nGafm
+         FUZbIdfiuBkBTQ36rT4UlnnWwJdm/dZb4exjWFJI4LA/4GKsIkwsgSVPw4CnEkU2NdvW
+         OLIQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784655652; x=1785260452; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9almTHjFbfDOI+RxAOp6GPttHl5pp39q475h1J3QeVo=;
+        b=j4+XlBAF7MESQCh+FIY4Ug2qIjSYHA43+7/RmpSwF9Pw7xyDMw0zAXuHRxX39Q0FBz
+         c0YOFF5QfZorzEMqXYQD5PEuMnBPeHCAAfnRir4Sgkxzmah8bMkxfa0CAxrDAlHk2Zil
+         pp4+ia9mbq2weAsBtIDxzpbhH29CfDkYg96elc9BQ0z46DXAv5S+WKD2onG0uHQe4vdQ
+         MTfhQMqjh9NbA6TUprJjTtmJCIq+ZpN1ATKgdrWbaqptuVGRXGOMoP1gzHs/RsWEllxQ
+         qPZo5UkEt6VwBmyn91GLRsV5PUtMs61BzDeo0ZJTrGb29xIny4MgJQKIbuWW1tnTtUlW
+         s1EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784655652; x=1785260452;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9almTHjFbfDOI+RxAOp6GPttHl5pp39q475h1J3QeVo=;
+        b=ruUb3ZzPIvvKZtX7mUekO6Z4oMJi8JPlUhDVoMS2N0ZMmkuUfM0/VU/bN7UOfHleW7
+         ZrixYk0qBeVJLzLNthczFgxmc/0IyIuoBn8MLi7CL7m0hHk/ozVXUebffe6Jr9qLAxWX
+         Pu9UchKE5QbMNoz5wxw9+slGxns3GoeEvWVhB7XfhAAxfKUeR/r5pnxVcGkn8oSMuIqS
+         Hj6Sbj5/vbw0QcLt1EQ57GpvAz8PSIS2bh/1FrPsAGOhMqMslgkA/yWRgyENb3y/xEQ3
+         NmQLLXV5Ep4eWXTV4Xnlio/cbJGQirNgFjCKf/ZHb8Gh24qghMYrHaRUEkmYTavnSJ6P
+         KDTQ==
+X-Gm-Message-State: AOJu0YwyK7XWWQhfM6POX75zqDmYC8EazMaTx/24ZRPYVAkixA92UqRm
+	uruMQ3+gZYA3aogaeG42AcNu381W07+JUCALWh/02DXnJ0pWXyESsa4X1OTo4iuuQWQi72s6Xk5
+	vAWNQ0gU1WbI2Xq/p3rLSRmNLq5JnVqyvNRFa
+X-Gm-Gg: AR+sD13/NeAuBLjh1WgFDQOwfBcL1jvhBlRZhULlcIyDwROfca4Pig2llXj/PV5Ud3f
+	lGtvgdSx8yHk2wtjJCAhifNszZlGtYtXWpRUwDT7WiJbmWYSTjscQlX5wkDkFUESW9vOEC6+1BF
+	Hq2y9WHi8BhQteSWvsw0jPiHBadyAr3bNDTsjkReWuc4OHmOJFAG/rNC+6Q9doa1JOQYe6Dojga
+	3G0upTa8lkC3mZ2NIo4I4YE6ygP+ivaPOGMNESieXoW8qei2fNWtyGttWdlqUi2vGICfP/q
+X-Received: by 2002:a05:690c:4c0f:b0:81d:78e2:2a8b with SMTP id
+ 00721157ae682-81ef2736942mr63499637b3.7.1784655652574; Tue, 21 Jul 2026
+ 10:40:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5073:EE_|SJ0PR11MB6624:EE_
-X-MS-Office365-Filtering-Correlation-Id: 240d0ae5-7dac-4d70-a655-08dee74ecefe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: vRWSwiZIYMNTVHbuqyQeg2eEQpfUHUpr3j5wYGGrdVoFJy1TSivr43OOqKmNfuQEPMm+oJNU1hMpMIFGgZ5WDmHCH8ZU6Zc4aGPCzhPXmQhIV5qogLThYwrUG1pETk1fh0/tOUs6DGVqNVfOY0mYBTmMXMevtF/W/EWmvda/XmXA5r+92mEOSlngxwcE9uDAS7lHOZ8zEIo857163QuMGoGbQKm9tHmUUu+p5/wA7v0hbky29rwOmOtQN/yTxdtuN9UsMidABeMkmSqQHEuUI+s3p3PyfyD07j7bIUTMtMgp14XOIOLnZRAdKSk1b1bUiN7Ilv1KbHq0XVcXx0GNwHLptsetu5Vgrzk97ZmbRRRB4Sjr9TxsslKOykN2L/yV8ftm7vKDu5/evQ5dNUoN9GhY4o/nY9kj3PR+QPdnoFk4xGJQpridGQsVQ691NV9jGvzYUCmBjFPzSKiDTmCXcFL610C+Mw4rIJQIRUlSgqrtspmivzNIwFebTI0i/rCKOLle+gr7bkwzLnHZQrsnXCfmAd1wvf+mzOuasjIgWyn4KrTvikuf4yopSvzlsObNTOwhq7NwhF6lhVXynL6VWwc/tisTDQ8Wh41fadjYEIw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5073.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?kb7ibfZhvS44lltkDSDsDxPgf5wdAzCUirI/xv7k0xH/K/P0fSY6VMzftr?=
- =?iso-8859-1?Q?hn+IFpLg2uVKMe+RMGvyTEzyaeHd3MRUMkAcwZFQnSMnK72133laRGJtEj?=
- =?iso-8859-1?Q?i/De0+CkNmiD1CeZvFX8PmiZcJG8mpi0UBgwpOQHhJN+0CErvgqmEw6a0+?=
- =?iso-8859-1?Q?67n6ey0IS5BSWRaY7McW99lyTTQ7Ag9zsw5YooF32EuM6MFqDKxVWzFRz1?=
- =?iso-8859-1?Q?lkdw+uOBkd9eGaY1g9H27ThKyia21cKMQcQjEydtkUUzFs+NlsCTfq+YMo?=
- =?iso-8859-1?Q?JCLixmJu2bYlhizrT7Ftxm2MFiNA+TzIzfMYEDQ/kpFtP+DUtpa/7+QLp8?=
- =?iso-8859-1?Q?ng83+V/gez6H2XDbQQi2hYRa5KxE2kYI/om++asFhq85pJJAOkPfS66kvf?=
- =?iso-8859-1?Q?tvvZ0ZVWyZQHOy95Qftzek/arwz6a0SzrgCcishunCuUbHYpQZtVqzFfIy?=
- =?iso-8859-1?Q?gr9E47+2HSd8uxPtB/6AXr/e4HavcNIDoTJWwkI+rt+FQg6ZVqc5YGUFAn?=
- =?iso-8859-1?Q?O8enS3PDKlnxnNrjuUoN2UwcOdEDx+hShtCO8LaFmoZj5fq+rIWzhpEvhA?=
- =?iso-8859-1?Q?1dgUzvlElzDHmzs10GWI95+OASKQIsQDcG/7sK7Kd7fw+iFIjixepjubJp?=
- =?iso-8859-1?Q?JE59r23cm3s9Mqm0KwIs/aT4EI8LpLWwwaTCgQYrn8iMUEQ3ikjRMeithr?=
- =?iso-8859-1?Q?l/7kTzYPfDT6QX7VU0ozkDJkn94QboMBo+Dw2ShSP8EizdKCQia/mguZrH?=
- =?iso-8859-1?Q?WTvwC1tYIZhiReBGbHC7trdcA1xbD7hwlNUv1SRD84FYSiO6ul9rdGwzf4?=
- =?iso-8859-1?Q?LMipIsbL4WLbNwPRtI6ohrneyrSFAr920YoqgXNLleG7QtJT/sJnyyAScW?=
- =?iso-8859-1?Q?NXpOIrLrRqEfmFiAOnwQtUZZFZzS678YyuM8nMZmYy0DNU13ZdxAQwAF+W?=
- =?iso-8859-1?Q?Xe1wKojWDKJX1OIME94Jt/DYXj7B9Pxo/ea8knegZyYhFz1cKKE0A63kWx?=
- =?iso-8859-1?Q?QQhuITkSXHY/Z9ffhOsH+M53VILQC1nlXfcAEmizVfkndbW9uEhLN9C/Od?=
- =?iso-8859-1?Q?JzzhCLl+QSsz2yGnRlJvyMpkud1BrecBYxAyh8wgN8sTQi9yDU7EYWpjoR?=
- =?iso-8859-1?Q?I8ZmB1pxlPx7KxyCrvgLkb+oKwMClZWSFslMZfSZ1G46PW88MLEVL6N0yl?=
- =?iso-8859-1?Q?7fAVEWyKEDyyaVsFvlAkg3uTXu6V29mhyqLXAw5s5oUa4bJvLSZVMNeqyt?=
- =?iso-8859-1?Q?WJZEvyV3Skn0Ht+Q/n7vpWeA6s7AlPhqOTFE7Yl78HKAsn3q5+yOMWGxmn?=
- =?iso-8859-1?Q?gu78dpTbLuiItsUqIOdx2u+y5825q0RhbnpLjXgNwwD8SgrgJprHUa3vSh?=
- =?iso-8859-1?Q?E/ux6KfxMmbMCLZn6uYMi45lH5V86SC8iJUBZk+IQxpocvooZWWux2ibR8?=
- =?iso-8859-1?Q?RAQj/KdyM9vf/bybcdWtJvI9b0yL7QiB/WJPcA/Kw8nPzdf7KhowoWpAe1?=
- =?iso-8859-1?Q?H8L1CHhl6FT0GeGQs8DYDskrodhJV03BlfveZDSEvVN9eVlFwqEZIUSDAy?=
- =?iso-8859-1?Q?IxyIsvO8yDrCRuwZ/8XplYH+C9EyQUAMWgvseZtb/HWJLkFU0ks4maXMAJ?=
- =?iso-8859-1?Q?uyxU4QBPjHJHo2fK0XJvvU77GaTmm3AtvxQNEdjDokm4Txw8b6dxhQLcGU?=
- =?iso-8859-1?Q?ThtXgpbF1+YE5FiFw/Paqhng/eXv82F6TVS9lQRZ76X1FGHJJPVcc/Gfix?=
- =?iso-8859-1?Q?Xq1bVtb4bpAItKKEzcGdYr+nuVfTCoQVJET5ufmGqJg9Am1ECLklGnmsim?=
- =?iso-8859-1?Q?QrpuE2cYPw=3D=3D?=
-X-Exchange-RoutingPolicyChecked: mOzpB6mUCQcB83jxtzmZtJr5MgBlgwZYmyXBHNjTpimLIQCwOJr0AIYf48gdbkPl7nL4I5eOFDZsZppHfM2B2WkvC61H2DhPSfh52UM+a94ScwZZhRo3PhrM1BjChY8D740NLFqq3p+fXoN+SI+QfKkeTEvJaTJt0S15W959U8KrIrAt4AcNhiSzoeHyrFoRrNGne6gMKn796gLt0BMdQKtcrLsNCoMYYQB96IotTlz4HTS0SZN9mVhJjcHrUMy7nflxVfztgqSX81EQqishyNkak8XI0EqpS3gXAmMl1EtgOgh2AeQP4t4ICEv8P9jGfvFVXBC4mFsQEA2Q/pQCEQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 240d0ae5-7dac-4d70-a655-08dee74ecefe
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5073.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 17:38:00.1354
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iUJGYX/+ExF4IzFIC/jq+qGMBQV6AUqufr6vW42s5ChGdQJ2EC+bgylJY9+9dbiRgFiVAAd/S1ODcbZWFr0Opw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB6624
-X-OriginatorOrg: intel.com
+References: <20260721041048.1394085-1-pulehui@huaweicloud.com>
+ <20260721041048.1394085-3-pulehui@huaweicloud.com> <20260721042151.E6F941F000E9@smtp.kernel.org>
+ <723495f2-f4a0-4723-90a8-d4774e6dce05@huaweicloud.com>
+In-Reply-To: <723495f2-f4a0-4723-90a8-d4774e6dce05@huaweicloud.com>
+From: Amery Hung <ameryhung@gmail.com>
+Date: Tue, 21 Jul 2026 10:40:41 -0700
+X-Gm-Features: AUfX_myeOPuVGwDAlQRpaJu1g5jzmOaSvCbqogymasHlCTogZaZlynSes9d40bM
+Message-ID: <CAMB2axMocV3+cC8O5LEu-0bPcGvchwjASbjM_afx=Stc_8AvKw@mail.gmail.com>
+Subject: Re: [PATCH bpf v5 2/4] bpf: Fix UAF due to missing link type check in mprog
+To: Pu Lehui <pulehui@huaweicloud.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 20, 2026 at 10:48:15AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Calling `xe_device_declare_wedged()` during early driver probe fails to notify userspace because the DRM device is not yet registered in sysfs.
-> --
-> 
-> --- Patch [3]: [PATCH v11 3/3] drm/xe: Handle PUNIT errors by requesting cold-reset recovery ---
-> commit e4801339581daca0be0db10f90d94f25e72cfa52
-> Author: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
-> 
-> drm/xe: Handle PUNIT errors by requesting cold-reset recovery
-> 
-> When PUNIT (power management unit) errors are detected that persist across
-> warm resets, mark the device as wedged with DRM_WEDGE_RECOVERY_COLD_RESET
-> and notify userspace that a complete device power cycle is required to
-> restore normal operation.
-> 
-> > diff --git a/drivers/gpu/drm/xe/xe_ras.c b/drivers/gpu/drm/xe/xe_ras.c
-> > index a31e06b8aa67a..92b4181026cbe 100644
-> > --- a/drivers/gpu/drm/xe/xe_ras.c
-> > +++ b/drivers/gpu/drm/xe/xe_ras.c
-> [ ... ]
-> > @@ -236,6 +236,12 @@ static u8 handle_core_compute_errors(struct xe_ras_error_array *arr)
-> >  	return XE_RAS_RECOVERY_ACTION_RECOVERED;
-> >  }
-> >  
-> > +static void punit_error_handler(struct xe_device *xe)
-> > +{
-> > +	xe_device_set_wedged_method(xe, DRM_WEDGE_RECOVERY_COLD_RESET);
-> > +	xe_device_declare_wedged(xe);
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> [Severity: High]
-> Does calling xe_device_declare_wedged() here fail to notify userspace when
-> triggered during early driver probe?
-> 
-> If a PUNIT error is present at driver load, the call chain is:
-> 
-> xe_device_probe()
->   xe_ras_init()
->     xe_ras_process_errors()
->       handle_soc_internal_errors()
->         punit_error_handler()
->           xe_device_declare_wedged()
->             drm_dev_wedged_event()
-> 
-> Since drm_dev_register() has not yet been called at this stage of the probe
-> path, the sysfs directory for the DRM device does not exist, and the KOBJ_ADD
-> event has not been emitted.
-> 
-> Consequently, userspace (e.g., udev) will likely drop or ignore the KOBJ_CHANGE
-> uevent emitted by drm_dev_wedged_event().
-> 
-> Will this cause the device to finish probe successfully but leave userspace
-> unaware of the wedged state, breaking the automated cold reset recovery
-> mechanism?
+On Tue, Jul 21, 2026 at 2:18=E2=80=AFAM Pu Lehui <pulehui@huaweicloud.com> =
+wrote:
+>
+>
+> On 2026/7/21 12:21, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Medium] Anchor link type validation is bypassed when attaching or de=
+taching bare BPF programs, leading to wildcard insertions/deletions and dat=
+a races.
+> > --
+> >
+> > --- Patch [2]: [PATCH bpf v5 2/4] bpf: Fix UAF due to missing link type=
+ check in mprog ---
+> > commit 830a4e62ebb8e98cc45b0ce829c6686aacafabc4
+> > Author: Pu Lehui <pulehui@huawei.com>
+> > Subject: bpf: Fix UAF due to missing link type check in mprog
+> >
+> > This commit adds a link type validation in bpf_mprog_link() to prevent =
+a
+> > use-after-free when dereferencing link->prog for foreign anchors. It al=
+so
+> > adjusts bpf_mprog_attach() and bpf_mprog_detach() to pass down the expe=
+cted
+> > link type.
+> >
+> >> diff --git a/kernel/bpf/mprog.c b/kernel/bpf/mprog.c
+> >> index 1394168062e85..37ce91e0bcd21 100644
+> >> --- a/kernel/bpf/mprog.c
+> >> +++ b/kernel/bpf/mprog.c
+> >> @@ -17,7 +17,7 @@ static int bpf_mprog_link(struct bpf_tuple *tuple,
+> >>              link =3D bpf_link_get_from_fd(id_or_fd);
+> >>      if (IS_ERR(link))
+> >>              return PTR_ERR(link);
+> >> -    if (type && link->prog->type !=3D type) {
+> >> +    if (type && link->type !=3D type) {
+> >>              bpf_link_put(link);
+> >>              return -EINVAL;
+> >>      }
+> >
+> > [ ... ]
+> >
+> >> @@ -243,6 +244,7 @@ int bpf_mprog_attach(struct bpf_mprog_entry *entry=
+,
+> >>              return -EEXIST;
+> >>      ret =3D bpf_mprog_tuple_relative(&rtuple, id_or_fd,
+> >>                                     flags & ~BPF_F_REPLACE,
+> >> +                                   link ? link->type : BPF_LINK_TYPE_=
+UNSPEC,
+> >>                                     prog_new->type);
+> >>      if (ret)
+> >
+> > [Severity: Medium]
+> > When attaching a bare BPF program, link is NULL. This passes
+> > BPF_LINK_TYPE_UNSPEC (0) to bpf_mprog_tuple_relative() as the expected
+> > anchor link type.
+>
+> Ah, so when attaching a bare prog with a relative link, having the
+> BPF_F_LINK flag set means the relative id_or_fd is a link, not the
+> object being attached. Sorry, that definitely confused me.
+>
+> >
+> > In bpf_mprog_link() above, the validation check is:
+> >
+> >      if (type && link->type !=3D type) {
+> >
+> > Because type is 0, the validation is bypassed entirely.
+> >
+> > If a user passes a foreign link with a NULL prog (like struct_ops) as a=
+n
+> > anchor via id_or_fd, the positioning logic treats tuple->prog =3D=3D NU=
+LL as
+> > 'no anchor provided' instead of rejecting the invalid anchor with -EINV=
+AL.
+> >
+> > Does this allow wildcard insertions or deletions, and leave a benign da=
+ta
+> > race when reading link->prog locklessly? Should the expected link type =
+be
+> > explicitly provided when attaching bare programs?
 
-Mallesh, could you please add a fault-inject test to this flow here and
-ensure that we are indeed getting the notification we are willing to get?
+I also overlooked this. Make sense to pass the expected link type from
+callers of bpf_mprog_attach().
 
-It looks that right now we are really never getting the uevent that we
-are willing to get.
-
-Thanks,
-Rodrigo.
-
-> 
-> > +}
-> > +
-> >  static u8 handle_soc_internal_errors(struct xe_device *xe, struct xe_ras_error_array *arr)
-> >  {
-> >  	struct xe_ras_soc_error *info = (void *)arr->details;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260720101815.526813-5-mallesh.koujalagi@intel.com?part=3
+> >
+> > [ ... ]
+> >
+> >> @@ -343,6 +345,7 @@ int bpf_mprog_detach(struct bpf_mprog_entry *entry=
+,
+> >>      if (!bpf_mprog_total(entry))
+> >>              return -ENOENT;
+> >>      ret =3D bpf_mprog_tuple_relative(&rtuple, id_or_fd, flags,
+> >> +                                   link ? link->type : BPF_LINK_TYPE_=
+UNSPEC,
+> >>                                     prog ? prog->type :
+> >>                                     BPF_PROG_TYPE_UNSPEC);
+> >>      if (ret)
+> >
+> > [Severity: Medium]
+> > Similarly, when detaching a bare BPF program, link is NULL. This also
+> > passes BPF_LINK_TYPE_UNSPEC as the expected link type.
+> >
+> > Does this bypass the new validation and allow wildcard deletions when u=
+sing
+> > foreign anchors?
+> >
+>
+>
