@@ -1,279 +1,204 @@
-Received: from seahorse.cherry.relay.mailchannels.net (seahorse.cherry.relay.mailchannels.net [23.83.223.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775FE42F71D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 19:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.223.161
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662306; cv=none; b=BCrw4V4F9rNdxeZY+b0dfSmvCmDR75YvYaSbFtrvYnxokCdMKWGeWOv6/rz0IfF+fF2NJoS1edOzNP/qNhXV6lthqGJiHa1DMETZXNpNj5E48grJZGg6oja5ON3fNjD5JY0ULFV8HJ6zeNa4jCp/PZ/Y7B1OxcvxOUV9nRvE0G4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662306; c=relaxed/simple;
-	bh=nBBxizu71UDBDSfMdygy5bWmzACNt9QukQDTvTPRqEw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cFe258UDewuahlEUHctAfYA69Y/FRO6chLeq0MCknfEGiOdtkQkYUBKasHMCyzT3OusJW+nLw+oDGlACs5lW5/4oMMiarHLw2lGg8bBsQeeoiN7XEXGQrwamkux8BIsLe/BZKI9Mhe+TonMwgjYDnRCCEeu5GfBYwWnJ19o3e4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=IpOITv4F; arc=none smtp.client-ip=23.83.223.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0129471257
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 19:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784663020; cv=pass; b=IiVtCyKyJq2jFs2ThCqNQFGB9k1zPaZv5TOraaQZR7JK7LfD015m4O3ch/iKSLE9+nE8GypxJ8v5j2m+iuHNKYSKMvu5YNqYOsahR4bkqTaQKRiU19n2Tf5zUYKZstYQp+Xj+6JCXaqIn4RWCS8U/bZAySVKuqdfyLQtjWG/mac=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784663020; c=relaxed/simple;
+	bh=UWyB1slbr//2W4KTDkAmTzxAdMd8fmYMI4/ROQtFYbY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dpShZXilRr3N+LrNfRWVNczFBNbEQTWZvWdyQJG4QpUDYjVQtarZMKjQr78CFE/H7cK0UxPbFKRo5WtdmHV6hI0gxrZ7Z832yLjvLCNCRqhhlFP2wOspJk6nOdswDq8Id1mm8HMbtTAKodqUU1eS4QaUNrC9Ywz8WOSHtuLYTa8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHglTSzN; arc=pass smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="IpOITv4F"
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id D43FD415EF;
-	Tue, 21 Jul 2026 18:13:33 +0000 (UTC)
-Received: from pdx1-sub0-mail-a207.dreamhost.com (trex-green-6.trex.outbound.svc.cluster.local [100.104.248.19])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 58400400EC;
-	Tue, 21 Jul 2026 18:13:33 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Turn-Tangy: 0effbd2a222a1b6a_1784657613672_4143679197
-X-MC-Loop-Signature: 1784657613672:3722288848
-X-MC-Ingress-Time: 1784657613672
-Received: from pdx1-sub0-mail-a207.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.104.248.19 (trex/8.0.2);
-	Tue, 21 Jul 2026 18:13:33 +0000
-Received: from offworld (unknown [76.167.199.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a207.dreamhost.com (Postfix) with ESMTPSA id 4h4QVh6vrLznR;
-	Tue, 21 Jul 2026 11:13:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1784657613;
-	bh=t8Rwsbw015Vz39S488orHNH7DGnTVlrAkwH7+pAXGYo=;
-	h=Date:From:To:Cc:Subject:Content-Type:Content-Transfer-Encoding;
-	b=IpOITv4FEyasBu1puIo2JHmFKvvQFgcFEY2/68rlw7vRatMZ1hrwn/CZnBktNeiWv
-	 nveG94CRWiSc4BQpuBC+djxJOY0CNSq1PbwODKVWMYl1+ABtNVYsWV2rlx8/w1E9TT
-	 EY1Lsmqfd5iw4bQILCX3EEmG7HeGFADDEk13sCwUxi9FSrRxSjh0tB+1iXfvZeVzXE
-	 w6m3RvF+tX8rlW/V/abIAg8j48Y5/PxTSPQtj+sqzMaV5UqfOIdK6ShQGA0x6jnyQG
-	 jOSZ63Fq0/2IZD6evTZQfdB/+f0JyDH+WQR/oeJLX0twGL9IHcENKkf59Uc9TTIpRB
-	 0XEuWOR5PGWbw==
-Date: Tue, 21 Jul 2026 11:13:29 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: sashiko-reviews@lists.linux.dev, dave.jiang@intel.com
-Cc: linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v5 4/5] cxl: Add HDM-DB region creation
-Message-ID: <20260721181329.qphcckacosncwzka@offworld>
-References: <20260615145529.13848-5-dave@stgolabs.net>
- <20260615174123.73B721F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHglTSzN"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c1740c36c5cso634994966b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 12:43:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784663017; cv=none;
+        d=google.com; s=arc-20260327;
+        b=B+5ZGaDiKXIx3Mw0RAMsTvuIEJNtjb0Ysm5Wpyl1MBGrOUXDSlXs9BDDj+I9JcwbFc
+         /irPOXR7uVnkKvl1Gonlk5Ew0OTVoSOL70Yauv1fBSS5P+MrQBV0U+BEU/xsvQEW9BD+
+         7MzDoi5ZmMcumS+MQ4hkmUo6aOZoZ4nYG8D+9isQOwGm2srn3FQ0RNRBwEJ4cO/QUyTn
+         JHWDYEGbkFAtKfh1dIMjwQZm0LJESttz6EtC2VWk0K5EDSEcdvILcBTvHV2MCh4ksw83
+         Fjuw3F1mnOvaNYF3Rgl0t+kDszL1r8d1J5s6BPhy08EpC+mG5jNwVLWPthsXW7PMsGdR
+         ig8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=lkVJzKo6e4lzm7YdG6O+XIlFAoy5nL8becDKZSEK67I=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=C7C1u5ezxMUJ621KTVS7z2r5Obd3nIhHnfFuNBCiSUhVKngjCgaVs8WrGf3KhExPvK
+         w7WKst+OBHDB7ShPAULAJm9c3CQvDxaNz1TqD/Kk2qIFGtSx4f1qNmGpGotve8gjk22q
+         OrruDcLVPUCg1q6Fm6K0rUurq5wH91fz7RqxAG3tywgendnSEoXOmMPK0CI6eKnjMf20
+         pf/Qac5MtVShp26v/B3he5nd8NmlcZNTsBGWhCMx4CQLVlfCFE6c+XjaiX8p63ArOPgf
+         /M4vSz6ZcZenK2/li5S1M/Sc2EZ7JoKQfLqR9Sql7xrVc69QKwNmSRIw9hL3fGWYNtKG
+         UAnA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784663017; x=1785267817; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=lkVJzKo6e4lzm7YdG6O+XIlFAoy5nL8becDKZSEK67I=;
+        b=SHglTSzNBjG4VfQYxpZIc6OURFEbWBH3Nb+UfJrxewrZdp1y+fLi1NAMJ9fkId6nrd
+         XvuTFUnlDbC6nHLrz2CMMDgdbOcyPDGBpKpjCi/njdfuHsRksQG0W09tK3bXEAiv2WyM
+         HBQq7EdVn/VGIuh6uF2LYQE1NAPnks65dVvWSjp8WGlbibFGoknaQ/49bvb7Ri2zlMvM
+         yeo+pcT9kmeDXrWnLxkEwSUue9HpZMuwv2p6mCfJPUwz3eBp5peF8DJvGXBurCkCSJpQ
+         PEC0gSl90UOmBislcFeso/wB58YPb3ZFsjgOiiZhNXPcNI4teskrKN80BF7ljayfE2D6
+         5a0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784663017; x=1785267817;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lkVJzKo6e4lzm7YdG6O+XIlFAoy5nL8becDKZSEK67I=;
+        b=coJyThZziPKcPgHQS/GHtjHvQ3GytndFxCkiWODAzeOgCqt5OawvZKz/WCDkT6VMMj
+         6dnoWnb+9GLP+nm71nBD/RP9MGAveeKPb/7qm4zJED/h6iEFmR7D4AfsIqdSxaovzuSW
+         vV/Fo3QCMnwAAEoc3BH2W5K6Gfa2CK6wRLM13Kt90d7Xo2a5v4rcltzikaG4RTtgtju+
+         fUx+OFwOJQHxYBYNNTREpue18kmKBDW74UY3CYKAO0Mf+fyK5ZIE0xJg04OPZ6DGrld2
+         QwVwmdJ6XHAaAcZ+0cenk20yVMRUJ64992D3piq69/UYUP/8D2z9VWy0TJa7lqxu3ONZ
+         lVVw==
+X-Gm-Message-State: AOJu0YxDez9Ip/UO6t9P/Ontmm0zjbq2swWQBIeC0rvLh0ntJwsdKJUn
+	TTiEa4x27iXBOOCG6q6+hfvbFW+ylQPMPVhIWKBp9l5pmX8UfsJ+agfzy/AKR+PfKn3fOP1zuEo
+	MKAt3kFRXhQhTklZtHKi8i90mR6DLdxDoC38hkOk=
+X-Gm-Gg: AR+sD13ZwC2CNKgq+x9yPOd4S69RchIWwSviuRdsg+g9SyDdThncc4P0KFLWAPRoW6k
+	g6BBK4pesrW2SVVI5svOC9LGlbMwub+8xufdF8oibZF7kK+U8zBEF8WLRtlBjnB5Gn8J8PlPjiT
+	fOLutWTfITsqeOReEg8eOKEvqXTI43jJDrUuLiI7J2CHEwomCzPmIwkiIMMrL/0aBAuF0+16yFB
+	JSJerH7L/BAlZKNC21rX559UGkGjseDe4axiHggAUbtohndRxJ1+j/AO/XIwFbINwI0XX56lB/f
+	poqpFwmxQ9WLvtQDBQ==
+X-Received: by 2002:a17:907:1c2a:b0:bff:738c:7a64 with SMTP id
+ a640c23a62f3a-c16b487dce6mr752859066b.49.1784663016824; Tue, 21 Jul 2026
+ 12:43:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
+References: <20260721174909.8044-1-nickolay.lysenko@gmail.com>
+ <20260721174909.8044-4-nickolay.lysenko@gmail.com> <20260721175857.DCF371F00A3A@smtp.kernel.org>
+In-Reply-To: <20260721175857.DCF371F00A3A@smtp.kernel.org>
+From: Mykola Lysenko <nickolay.lysenko@gmail.com>
+Date: Tue, 21 Jul 2026 12:43:25 -0700
+X-Gm-Features: AUfX_mxhuEeA4v_KINJ9pbWdnV-urNiDaBK_p0OmJd5Inr2XGNjBXpCpig2uaug
+Message-ID: <CAMtxOX2Rw2PK6v+E07eE7n==CTJ_fn6iF+EyUOkyrJ=rUZPR5Q@mail.gmail.com>
+Subject: Re: [RFC PATCH bpf-next 3/3] selftests/bpf: build each test runner
+ instance in its own sub-make
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260615174123.73B721F000E9@smtp.kernel.org>
-User-Agent: NeoMutt/20220429
 
-On Mon, 15 Jun 2026, sashiko-bot@kernel.org wrote:
-
->Thank you for your contribution! Sashiko AI review found 3 potential issue=
-(s) to consider:
->- [High] Auto-discovered regions fail to inherit their coherency type from=
- the root decoder, violating the design rule and potentially creating inval=
-id region configurations.
-
-False positive. As is already documented in the cover letter and patch 3,
-a decoder committed with the BI bit set is rejected at enumeration time.
-
->- [Medium] Spurious `dev_WARN_ONCE` triggers in `cxl_rr_assign_decoder()` =
-when attaching an endpoint decoder with a stale `DEVMEM` target type to an =
-HDM-H (non-BI) region.
-
-Yes, I was able to trigger this at least on qemu with two windows:
-     https://github.com/davidlohr/cxl-bi-tests/blob/main/topos/t15-decoder-=
-reuse.sh
-
-See the fix below.
-
->- [Medium] `bi_show` incorrectly reports that an auto-discovered endpoint =
-decoder is configured for HDM-DB (BI=3D1) when it is operating with BI=3D0 =
-in hardware.
-
-Yes. An auto-discovered HDM-D on BI device can make this show bogus
-1 afaict. Adding a check for the region's root decoder bi addresses
-this and also makes the check more robust: (&& cxl_root_decoder_is_bi()).
-
-Another alternative is to cache the BI bit upon committing, but imo this
-file should show 1 as soon as it is attached successfully.
-
->--
+On Tue, Jul 21, 2026 at 10:58=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
->commit 913c2a59fed5b8381543ceb7345cd15ac2ea9d17
->Author: Davidlohr Bueso <dave@stgolabs.net>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Parallel build race on shared helper objects (`testing_helpers=
+.o`, `cgroup_helpers.o`) due to overlapping rules between the parent Makefi=
+le and `Makefile.runner` sub-makes.
+> --
 >
->cxl: Add HDM-DB region creation
+addressed in v2:
+https://lore.kernel.org/bpf/20260721194111.334795-1-nickolay.lysenko@gmail.=
+com/T/#u
+
+> --- Patch [3]: [RFC PATCH bpf-next 3/3] selftests/bpf: build each test ru=
+nner instance in its own sub-make ---
+> commit e06c43ef78e32188e09532ae20788ac48fd20702
+> Author: Mykola Lysenko <nickolay.lysenko@gmail.com>
+> selftests/bpf: build each test runner instance in its own sub-make
 >
->A region inherits its coherency from the chosen root decoder: HDM-DB
->if the root has CXL_DECODER_F_BI, otherwise HDM-H.
+> This patch refactors the BPF selftests build system by moving the
+> double-expansion DEFINE_TEST_RUNNER logic into independent sub-makes via =
+a
+> new Makefile.runner. Shared configurations and prebuilt toolchain element=
+s
+> are kept in the top-level Makefile.
 >
->[ ... ]
+> > diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selft=
+ests/bpf/Makefile
+> > index f5c0f81f61db7..a3ab525f7dfab 100644
+> > --- a/tools/testing/selftests/bpf/Makefile
+> > +++ b/tools/testing/selftests/bpf/Makefile
 >
->> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
->> index c5aacd7054f1d..71801dfd614b1 100644
->> --- a/drivers/cxl/core/port.c
->> +++ b/drivers/cxl/core/port.c
+> [ ... ]
 >
->[ ... ]
+> > +HELPER_OBJS :=3D $(addprefix $(OUTPUT)/,testing_helpers.o cgroup_helpe=
+rs.o \
+> > +            trace_helpers.o network_helpers.o json_writer.o          \
+> > +            cap_helpers.o unpriv_helpers.o usdt_1.o usdt_2.o xsk.o)
+> > +
+> > +# $(BPFTOOL) is a prerequisite because its sub-make is what installs
+> > +# libbpf's internal headers (bpf/hashmap.h, bpf/libbpf_internal.h) int=
+o
+> > +# $(INCLUDE_DIR); without it, helpers including those headers race the
+> > +# install and can silently pick up the source-tree copies instead.
+> > +$(HELPER_OBJS): flow_dissector_load.h ip_check_defrag_frags.h         =
+       \
+> > +             $(VERIFY_SIG_HDR) prog_tests/tests.h $(BPFOBJ) $(BPFTOOL)
 >
->> @@ -233,6 +234,19 @@ static ssize_t mode_store(struct device *dev, struc=
-t device_attribute *attr,
->>  }
->>  static DEVICE_ATTR_RW(mode);
->>
->> +static ssize_t bi_show(struct device *dev, struct device_attribute *att=
+> [ ... ]
+>
+> > diff --git a/tools/testing/selftests/bpf/Makefile.runner b/tools/testin=
+g/selftests/bpf/Makefile.runner
+> > new file mode 100644
+> > index 0000000000000..4c58cc51f2514
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/Makefile.runner
+>
+> [ ... ]
+>
+> > +ifeq ($(RUNNER),test_progs)
+> > +EXTRA_SOURCES :=3D test_progs.c cgroup_helpers.c trace_helpers.c      =
+         \
+> > +              network_helpers.c testing_helpers.c btf_helpers.c      \
+> > +              cap_helpers.c unpriv_helpers.c sysctl_helpers.c        \
+> > +              netlink_helpers.c jit_disasm_helpers.c io_helpers.c    \
+> > +              test_loader.c xsk.c disasm.c disasm_helpers.c          \
+> > +              json_writer.c bpftool_helpers.c usdt_1.c usdt_2.c
+>
+> [ ... ]
+>
+> > +EXTRA_OBJS :=3D $(patsubst %.c,$(RDIR)/%.o,$(filter %.c,$(EXTRA_SOURCE=
+S)))
+> > +LIB_OBJS   :=3D $(patsubst %.c,$(RDIR)/%.o,$(LIB_SOURCES))
+>
+> [ ... ]
+>
+> > +$(EXTRA_OBJS): $(RDIR)/%.o: %.c $(EXTRA_HDRS) $(TESTS_HDR) $(BPFOBJ) |=
+ $(RDIR)
+>
+> [Severity: Medium]
+> Could this cause a parallel build race on the shared helper objects?
+>
+> The top-level Makefile builds shared helpers like testing_helpers.o and
+> cgroup_helpers.o with a limited set of dependencies (shown above). Howeve=
 r,
->> +		       char *buf)
->> +{
->> +	struct cxl_endpoint_decoder *cxled =3D to_cxl_endpoint_decoder(dev);
->> +	struct cxl_memdev *cxlmd =3D cxled_to_memdev(cxled);
->> +	struct cxl_dev_state *cxlds =3D cxlmd->cxlds;
->> +
->> +	guard(rwsem_read)(&cxl_rwsem.region);
->> +	return sysfs_emit(buf, "%d\n", cxlds->bi && cxled->cxld.region &&
->> +			  cxled->cxld.target_type =3D=3D CXL_DECODER_DEVMEM);
->> +}
+> this EXTRA_OBJS rule inside the sub-makes encompasses those same helpers =
+and
+> declares broader dependencies, such as $(LIBARENA_SKEL) for test_progs an=
+d
+> map_tests/tests.h for test_maps.
 >
->[Severity: Medium]
->Will this attribute show '1' for an auto-discovered DEVMEM endpoint decoder
->even if it operates with BI=3D0 in hardware?
+> Because these broader dependencies are built in parallel by the top-level
+> make, they can end up with newer timestamps than the pre-built helpers. I=
+f
+> that happens, both the test_progs and test_maps sub-makes might evaluate
+> the helpers as out-of-date and concurrently recompile them.
 >
->If Linux auto-discovers a DEVMEM decoder that intrinsically supports BI
->(cxlds->bi is true), init_hdm_decoder() currently rejects it if the BI
->control bit is set, so the hardware must be operating with BI=3D0. However,
->this attribute seems to evaluate the state dynamically based on the device
->capability rather than the hardware's actual BI configuration, contradicti=
-ng
->the sysfs documentation that says it shows '1' when "currently configured".
+> Can this lead to intermittent "file truncated" or "file format not recogn=
+ized"
+> link errors when building with -j?
 >
->> +static DEVICE_ATTR_RO(bi);
+> > +     $(call msg,EXT-OBJ,$(BINARY),$@)
+> > +     $(Q)$(CC) $(CFLAGS) -c $< -o $@
 >
->[ ... ]
->
->> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
->> index e50dc716d4e82..6eb852b514d3a 100644
->> --- a/drivers/cxl/core/region.c
->> +++ b/drivers/cxl/core/region.c
->> @@ -1132,11 +1132,13 @@ static int cxl_rr_assign_decoder(struct cxl_port=
- *port, struct cxl_region *cxlr,
->>	/*
->>	 * Endpoints should already match the region type, but backstop that
->>	 * assumption with an assertion. Switch-decoders change mapping-type
->> -	 * based on what is mapped when they are assigned to a region.
->> +	 * based on what is mapped when they are assigned to a region. HDM-DB
->> +	 * endpoint decoders inherit their type from cxlr->type below.
->>	 */
->>	dev_WARN_ONCE(&cxlr->dev,
->>		      port =3D=3D cxled_to_port(cxled) &&
->> -			      cxld->target_type !=3D cxlr->type,
->> +			      cxld->target_type !=3D cxlr->type &&
->> +			      !cxl_root_decoder_is_bi(cxlr->cxlrd),
->>		      "%s:%s mismatch decoder type %d -> %d\n",
->>		      dev_name(&cxled_to_memdev(cxled)->dev),
->>		      dev_name(&cxld->dev), cxld->target_type, cxlr->type);
->
->[Severity: Medium]
->Does this logic trigger a spurious dev_WARN_ONCE() when attaching an
->endpoint decoder with a stale DEVMEM target type to an HDM-H region?
->
->When a region is dismantled, __cxl_decoder_detach() clears the decoder's
->region assignment but doesn't reset its target_type, leaving it with a
->stale DEVMEM target type. If it is later attached to an HDM-H (non-BI)
->region, the check for cxld->target_type !=3D cxlr->type evaluates to true,
->and the !cxl_root_decoder_is_bi(cxlr->cxlrd) check also evaluates to true.
->
->Could this generate a spurious warning stack trace in dmesg during valid
->user reconfigurations, potentially causing a panic if panic_on_warn is set?
-
-I ended up introducing a default type helper:
-
-+/*
-+ * HDMs that advertise support for both coherency modes
-+ * (CXL_HDM_DECODER_COHERENCY_BOTH) default to host-only; the region
-+ * attach path switches target_type to device-coherent if the region's
-+ * root decoder has the CFMWS BI bit set. Only HDMs that strictly
-+ * support device-coherent mode default to HDM-DB.
-+ */
-+enum cxl_decoder_type cxled_default_type(struct cxl_endpoint_decoder *cxle=
-d)
-+{
-+       struct cxl_dev_state *cxlds =3D cxled_to_memdev(cxled)->cxlds;
-+       struct cxl_port *port =3D cxled_to_port(cxled);
-+       struct cxl_hdm *cxlhdm =3D dev_get_drvdata(&port->dev);
-+
-+       if (cxlds->type =3D=3D CXL_DEVTYPE_CLASSMEM &&
-+           cxlhdm->supported_coherency !=3D CXL_HDM_DECODER_COHERENCY_DEV)
-+               return CXL_DECODER_HOSTONLYMEM;
-+
-+       return CXL_DECODER_DEVMEM;
-+}
-
-=2E.. then use it in both init_hdm_decoder() (which we do already) and
-__cxl_decoder_detach(), to reset.
-
->
->[ ... ]
->
->> @@ -2772,6 +2796,7 @@ static ssize_t create_region_store(struct device *=
-dev, const char *buf,
->>				   size_t len, enum cxl_partition_mode mode)
->>  {
->>	struct cxl_root_decoder *cxlrd =3D to_cxl_root_decoder(dev);
->> +	enum cxl_decoder_type target_type;
->>	struct cxl_region *cxlr;
->>	int rc, id;
->>
->> @@ -2779,7 +2804,14 @@ static ssize_t create_region_store(struct device =
-*dev, const char *buf,
->>	if (rc !=3D 1)
->>		return -EINVAL;
->>
->> -	cxlr =3D __create_region(cxlrd, mode, id, CXL_DECODER_HOSTONLYMEM);
->> +	/*
->> +	 * The CFMWS dictates endpoint coherency: a BI-restricted Window
->> +	 * produces an HDM-DB region; otherwise HDM-H.
->> +	 */
->> +	target_type =3D cxl_root_decoder_is_bi(cxlrd) ?
->> +		CXL_DECODER_DEVMEM : CXL_DECODER_HOSTONLYMEM;
->> +
->> +	cxlr =3D __create_region(cxlrd, mode, id, target_type);
->
->[Severity: High]
->Does the auto-discovery path in construct_region() still blindly create
->regions using the endpoint decoder's type?
->
->The commit message dictates a strict design rule that a region inherits its
->coherency from the chosen root decoder. The sysfs creation path correctly
->enforces this here, but construct_region() appears to miss this update:
->
->drivers/cxl/core/region.c:construct_region() {
->    ...
->		cxlr =3D __create_region(cxlrd, cxlds->part[part].mode,
->				       atomic_read(&cxlrd->region_id),
->				       cxled->cxld.target_type);
->    ...
->}
->
->If firmware incorrectly programs an endpoint decoder as DEVMEM under an HD=
-M-H
->root decoder, could construct_region() create a DEVMEM region? Because both
->the region and the endpoint have target_type =3D=3D DEVMEM, the mismatch w=
-arning
->in cxl_rr_assign_decoder() would be bypassed, resulting in an invalid HDM-=
-DB
->region under a root decoder that cannot generate Back-Invalidates.
->
->>	if (IS_ERR(cxlr))
->>		return PTR_ERR(cxlr);
->
->--
->Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260615145529.13848-=
-1-dave@stgolabs.net?part=3D4
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721174909.80=
+44-1-nickolay.lysenko@gmail.com?part=3D3
