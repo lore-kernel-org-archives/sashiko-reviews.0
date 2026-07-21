@@ -1,173 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EC0471250;
-	Tue, 21 Jul 2026 18:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B30429822
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 18:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658956; cv=none; b=pT5sivWX2c/HjmvN6v5OY5l6gWzbiAwKP9Kdui1bri3h8QM95mrUE7jFC/AS5QPd1ZWE0/9rwkXIPUPiblllQn0T+lHz1ln3tXIwdHHOh9BC370eC5iyKvODkCJHtnh/233PEmRDtOqsp6ti+t2PKbqhmvD2F+XHXZM8pR+JxVw=
+	t=1784659042; cv=none; b=QkJ4uMt9cGeDtIqn4MapEFFqizUw3SvRTGdGR21bMHHyPf6sLwBUromhF2HIRIM3dai2hGvVDUbbISJECZQnHvYeLMRPqCNV2wTa0sBRDW7XHm5+FyHA9rMA0fYsFYPnyYFEzd03YygDG7vSl3ti67CJ/E9aXA9yxdSeH0Conyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658956; c=relaxed/simple;
-	bh=YuhpRy213Dcz+n3oKcUkuIIhrS6wmJoZU3bcNxeVwmQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kU+mDRC/bmJZzn2g4JYbiLSUm2sfM9si2wTWi9A0eYALWZW35j+jx38oDFG/ZRJu1L/o9JH7a3BjZX3DiIymGAlTxGhmoeE/5z6Kw8J/LvTabCUbBTXiAyZqqe33Ap2nj2swpDvTuHoWrmNJrc1zb3TEyiDXwOPXgGmQAy79ORk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wd8oD+K5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784659042; c=relaxed/simple;
+	bh=LnpI7omOEC6ed3yh4sMYyXUnlgF+nBTRExdP6+eDN24=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XZQNbmNpdu1Zda3hcriaeNbfoq4k5WYxrlQEjTAItuZ3Gpsi7wQdmcMgJByZBMN5KCpctKGoQn1LhOziDdYuou/bFk9760BmVtbUKMTWSDd8qCyNp6/SLkj+PiyuusO8ZBaMg2S+6YOA8qPdm7c5KnIzzVXcIK6uibD5h9KNLOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkCGgycx; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wd8oD+K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190A51F000E9;
-	Tue, 21 Jul 2026 18:35:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658954;
-	bh=yYj/4y1ryBr8ecT+7DR7i9eP8DusOQl7WEJY1/ziHp8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wd8oD+K5HXrHfyMisWEPoQQCQkXPhSzvSxnPKdP0wVj/tWDz1R3x2ixu1auDTJma5
-	 6URtIXhZ8BbKxCTv1l7Pch4xg3OAwTSOW2EFF2x8eOje5gr9D00zq6CqaC9pK/0ePG
-	 qnPwuvgWb6NzKiafs9PHHXmItbx9R4g5bqwhdfUs=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 1337/1611] can: bcm: add missing rcu list annotations and operations
-Date: Tue, 21 Jul 2026 17:24:13 +0200
-Message-ID: <20260721152545.525710914@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
-References: <20260721152514.750365251@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkCGgycx"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-49554ebb87dso33090505e9.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 11:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784659039; x=1785263839; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=7Zpdvr4EUuwpLXzsAE7Bu6HGFDWU6M1piUgIe2pUnOU=;
+        b=VkCGgycxMN7gBxxNZUAqjCIqlO36MfKHrI6muXOQFjAITZ3QBTQMauMWZROkwQwpqQ
+         jygRUPlAt7riNsQhF3fzAM+pm8mVp2jJ1WRfSuou7xH8kj3s0SPozYPoAoltUpZRLrE7
+         43RDdWz2JMevaqi07cKspreY6YWeUZ/f3qyZecS7Lc94ZNJ2I/+h7vNSZSiv9r+xr/sz
+         0RedsnVFNjfGaHimrikB76SDrgtDd9UrladnC0wPmsyK5gUVRgorzhGryQycM2rhmNR4
+         mOUPVzDOE6j4RDhQPSgVFSRoUDhrhOkbzZ/GqjjWCaYhBfIoA+n8ezgWnL5vFAvkTXtA
+         Fa7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784659039; x=1785263839;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7Zpdvr4EUuwpLXzsAE7Bu6HGFDWU6M1piUgIe2pUnOU=;
+        b=U9QtRrT2i4QpmHOGHVldOUFVU2G3KGOCp5xiVphHhxsVq2jp3+NabjH20dWmDvcSYJ
+         IsTvGWvowijvYjuHVa0qX51Hnq3e6pFfImc1lpdKF3UpJcywz05hER7rOYRJkYMULcGD
+         oMYY7g5/WDqjAxDOzX51FOkkZkjHbhRUPulNLFjqRTVLuGuHJO+7EwrlVqO0mAr1u7UZ
+         mnTpt8J9Knh1rkebwfXd6y68rYKt5p12qoDO3agPmN/rnlbNA4AZwoYkCFWnEZalixGA
+         yYifgkGoYFs/2k0c2cu1m9oIvkjZuriAOxpvblrxAAMN+fyz/wAOSF4k7RnBi4FtgyZz
+         EhOg==
+X-Gm-Message-State: AOJu0YwmTSgqdGIh3j5Td4QTyU4D+EHSbVP4DkRJpOUHjHCd6fX9+z2T
+	XF+0wI5/VhkHbpLmG1W4PIAq1sOGfwHTHYcP+b5nN74E67TV60Gl2uyy
+X-Gm-Gg: AfdE7cnc84XBqObRd5e4eUnzNYwzguduJEo78FixZ66Ubz2/s+2NJgAoE8AzpUkxyNo
+	377DPCapc6cbwHnTic+kzz3jOjtJCXnjJQSzCqj+IjKKQHZX4TBl1+8UsG5lbNLQgBX8KaspdI0
+	1WOIsM8B3tDuLfJRehQHVtVi6B9dKhGu3SVrmwABsFzWYx34qtu8PoDjuaAV7TCw7ZV2p8fCH3d
+	qe7yLQKiaV8gxEJngFNhk2Wvw0/YXTKicatjssKle3yLXpnJQ69BiE0YhHCEf2aZ6S1EAgKMRSt
+	TX6YYFr5RvM+TFnpf76fELVESrGRSIV7T2+udgfEmqGtbz1CXo/hmqURp/wiwDRogi0SAqapzYx
+	B0q4zOmOPCL+3Lq87+cQ5JYRAKYsg1RTdWKvqfZuukrMHVp1S7taV6Hhnwz5SYlTeV0e8uE0zls
+	0DDmD2mSvhDSnHll13kOU3lpDbzlsJxKFNQIupHOKw5fqylC7pr7hMEGJAaNVJBohOhXH9BfNNj
+	lcLKR+c3oE83jClCxHIcKmpyjvkA3tDS4+foqZNTZPR46Ndtll9W5FtcvCdZqZQWxgCbIc6cyS+
+	RRrzlO0jkxD4zPEdBN6s443MLUWFcrJ7w2w/U3hBnMAPuV7OMVivnSgVya9HlTq39dhrU97wvuS
+	AMFk/t+Mdp68=
+X-Received: by 2002:a05:600c:3b88:b0:495:4d2d:82f2 with SMTP id 5b1f17b1804b1-4954d2d8335mr224381425e9.26.1784659039580;
+        Tue, 21 Jul 2026 11:37:19 -0700 (PDT)
+Received: from systembl0wer (ip-86-49-244-181.bb.vodafone.cz. [86.49.244.181])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653698bcsm79422215e9.2.2026.07.21.11.37.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2026 11:37:19 -0700 (PDT)
+Date: Tue, 21 Jul 2026 20:37:16 +0200
+From: Joshua Crofts <joshua.crofts1@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+ devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: iio: dac: add support for mcp47a1
+Message-ID: <20260721203716.0fc5313c@systembl0wer>
+In-Reply-To: <20260721183358.67E151F00A3D@smtp.kernel.org>
+References: <20260721-mcp47a1-add-support-v1-0-da045a2567e3@gmail.com>
+	<20260721-mcp47a1-add-support-v1-1-da045a2567e3@gmail.com>
+	<20260721183358.67E151F00A3D@smtp.kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+On Tue, 21 Jul 2026 18:33:58 +0000
+sashiko-bot@kernel.org wrote:
 
-------------------
+Clarifying Sashiko's comment:
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+> [Severity: Medium]
+> Does the MCP47A1 actually have a dedicated VREF pin? Standard Microchip I2C
+> DACs in this class (such as the 6-pin MCP4725) typically use VDD as their
+> voltage reference.
+> 
+> If there is no physical VREF pin on this hardware, requiring vref-supply
+> here forces device tree authors to define dummy regulators in their
+> device trees just to pass schema validation.
 
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+Yes, the MCP47A1 does have a physical VREF pin, as seen in the block diagram:
+https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/25154A.pdf
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
-
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
-
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -260,7 +260,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -946,6 +946,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1087,8 +1088,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1110,6 +1110,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op);
- 
-@@ -1250,9 +1254,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1331,10 +1332,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1664,8 +1667,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1696,8 +1701,10 @@ static int bcm_release(struct socket *so
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
-
-
+-- 
+Kind regards,
+Joshua Crofts
