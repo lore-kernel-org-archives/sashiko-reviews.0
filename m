@@ -1,156 +1,136 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E8B3C5DA1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:14:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784625258; cv=none; b=Lz0KxXASAqKYyjL5JBNBlAkawsczQDDnLaqYZ7KyYTR7rv+IOeDPTczLAxKTgn5ezvGSIxbEauKSRW3Pfp6fnLwJIheu1q8B/9TLM/spDgtTpCzvFmzwE3lBFWIzesQrfSowFf/RZJU/Mtwl6HZ9znKmNDQOPuva0x6cpazP5Xs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784625258; c=relaxed/simple;
-	bh=90LezclH39XFxSapEqzsa/UAxXIZmYzFAObAkt2Edf4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tQ690dv7Hm5piJWnnQnYGBfsvone2UhkVlvTybfc4bRsgBq03LM2ywRm1+JbNWdm+rMegyuJIKrHajmX4jjwmBHTMD3eN5uB2qes153X8qwM9hdItkaokjtaDVmhLO9MJYHQPnBGTIZZIH5NRk9QPGQMRRJRG/I5GdTbVJwlBMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h4BWr5BVBzYQttC
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 17:13:44 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id C3F9540592
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 17:14:11 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgC3nSljOF9qNWwTCA--.25971S2;
-	Tue, 21 Jul 2026 17:14:11 +0800 (CST)
-Message-ID: <9ca18f8e-73c1-4ced-a0bc-f515329b57eb@huaweicloud.com>
-Date: Tue, 21 Jul 2026 17:14:11 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696C13C6606
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 09:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784625269; cv=pass; b=RdtD+VSL8EimolVlafVI1ZvBVKdqSm5g0irPxEXNSxP/pfx/+I2zHsbRQl/8hEyZDrDkhvD1kD/Fc+Dozy9zQ7weUrDw9WG98HIi0wNJS5yrLl1MujB7BW8uhHuli3ky7LYeTJowXpZpN5AJYnxJUPj7tSpH2/hJ4q+mv8cWbnU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784625269; c=relaxed/simple;
+	bh=jxUJpaNgkxoxX1of+Vq0hIIqoyhWOdU80zDaUZJLUtg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B+LyaGa7GrRH6VmFYR3fh/HBqIXsQLGYa1pj21Miy5YyhjdOGEmdJ/oRGbpAYjOzaicIp/EnDDXtJVgZsQYRx5UXE0+pOSFeL9PUjzCwob9JqjYhItcC4b+5Wn54OmJ1RSX4JC/d8033FFHmAN/aUHr40M0eVgkcI9VybHNPrSQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aUcsKOXO; arc=pass smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aUcsKOXO"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c12614b81c9so1989878966b.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 02:14:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784625266; cv=none;
+        d=google.com; s=arc-20260327;
+        b=bA/omITY57TyzH/k3BRUNzo4bQ52vJK076OugGaF/gYHUfhINfEre9O4r7Is5u5d3B
+         dMXdKN5c4aiwsX24iSt3s8YeQNgbB0OxMxYP/6q30CZTXLWqV8wjwSncIDnPYJbNTDgJ
+         NEJqxVS1AAkIOuds/L/PWRzDNkBlpjC1OqBarfod/zRGcrV3tbuyF8slJt0dLW1r0+vq
+         1/IuYnfxQa1J3ZBwoe8LASYXCjthkSctOVBsqibwN0uiowL2+mebaWM3SKmn820CoaPE
+         /Oams2ICQmaT8RH9nqO7T5p+uzz7sPM0Yl3ACR0m1jbdyHTub6o/I+FFbLd3BJVjOvKL
+         1wJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=jxUJpaNgkxoxX1of+Vq0hIIqoyhWOdU80zDaUZJLUtg=;
+        fh=q2oa1ekct7KR5WHTVsuodzZeNY7MhQ5926J4NNvSleA=;
+        b=cDpisv5/Che1HvzdLDArdDo1Ncku+dPQOIw04aiOxASgExAx1UORituoQ+95fcBlAF
+         pedyH5nYXxlcrf2jAF7XPEW0ketsA4QHF8uy5ghz4QKsWAWMdkT4szet6Wszmkcz1t4i
+         rPMlIGrgI8of0VI17rINzRHfRL872p85CHNxdNbRvMJLNtkMWuzUaLvS2CJU2aWryRPK
+         yLf48IKa7SWL4cxmt3AV9g/f4x00zGO91naZ35bnmTHarP6ratDqUbgeaDfeJa89pacF
+         o68ajsDrjbdPAg6EbPQpBS1GwfCkiQXwVNOkZIZiXqSxjswJN+SujycUMqzhz0O0ukda
+         4EQA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784625266; x=1785230066; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=jxUJpaNgkxoxX1of+Vq0hIIqoyhWOdU80zDaUZJLUtg=;
+        b=aUcsKOXOb+nAbn+eBDLDt5GgyqzEiEIrSKEUyJgngWWc0UmhBnxcYYQQqv+ipDhB2P
+         a4IrIcuanrbrvtlSSdHsTOI3cSw3TrM8WNcXp4ewyEGxJBWE7AKdHuuL2hb3eYNx1WKP
+         hcwgFomaOV64rYtZ4UYYxBmsO+gOXyFnezr6C3rNFTsP7gDluB8dDkZfbvK1ZvZRhCqE
+         PyhCr+a9N2oNdB4R7vPQFisHODGen+fp7fWTUfwzgyn6gCmqlLKZYyxkLVqrayfGkq0H
+         ZUZXwCQESDnG8oFbKnxHwD8/2lozQgkFI7UvpkpgLSxgLNbarnpKl0hTAGAErtyIntsU
+         Rdng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784625266; x=1785230066;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=jxUJpaNgkxoxX1of+Vq0hIIqoyhWOdU80zDaUZJLUtg=;
+        b=BiUmO+Vfvmu/PtfBEYmXbdcgfdKJ491xmgqbRAXr+4z7F5c+FdmDsGYUjFRGJAUl86
+         t2/Bm8d5SH8vlsDUFKqx4RqQjSwBxexDk2wV4actRybH7638dy3AVsPG7AAIvUYqi0OH
+         RfLM4GTqn/JBSZzxjXHTepeSuU3vF25b041VJydfYXhI7tA3B5Is3d/JH5vtqDeaH9Mj
+         X8DUUM5cag8jdzdqV5c3uu5wcn4FX5mhhkuUow5hbqDDS8fkPSAzQnSeeuEKs423cFBQ
+         c3UrHAh93TK5Ju5upNOMNn0tpB+ZtQTY2TP78c3LI0a6sOzAIwJbQPHB+gT9HVzOdbZI
+         07mQ==
+X-Gm-Message-State: AOJu0YxPLc1ezzXhb8grN/Yutj35OvA7xjTAYpPm8TYFFqa7YJPyv6pb
+	F0s+pfVyP5iKCqO9bb2kQewgz1OIIfU2jPlox5O4wL3BYu8+3dqpcAo8KgA5hccQvs/74IK3h4o
+	1aNP01JnpJqGL8yfYBt7zyV0EskPQcV5IhLCK
+X-Gm-Gg: AfdE7cmK4zZ3N1rofPOOYI/tpQ8eds+OZ4L0amhX/4PywAMLLWHGUWRHftcd/zvIAtt
+	u06ibWVVS2FEfQ96aduzvOmgDvDverLhrqTo8BnOjSTWnpMuSaIE5mpopJp1BVwIavbEptd/Jxw
+	fPimOz67gAcQ+KnQm5C/irVgG/zmgK1yg3Up5ckbb6nWtsCnM6orOvu7GZCHX9dWpSAdLMNAd+q
+	QmNWnVgzNjOHr6O586qbr8pZqo+ycB+j8YDNh168dxLHq4o+WxvY62IEyGtkIGw49q8IbGOt1xp
+	XegQCQxz
+X-Received: by 2002:a17:907:9309:b0:c16:8cd0:c6b7 with SMTP id
+ a640c23a62f3a-c16b46e2994mr968783466b.14.1784625266368; Tue, 21 Jul 2026
+ 02:14:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v5 1/4] bpf: Fix potential UAF in
- bpf_netns_link_update_prog
-Content-Language: en-US
+References: <20260716173325.653164-1-a.shimko.dev@gmail.com>
+ <20260716173325.653164-3-a.shimko.dev@gmail.com> <20260717173344.81F261F00A3A@smtp.kernel.org>
+In-Reply-To: <20260717173344.81F261F00A3A@smtp.kernel.org>
+From: Artem Shimko <a.shimko.dev@gmail.com>
+Date: Tue, 21 Jul 2026 12:14:14 +0300
+X-Gm-Features: AUfX_my2iLa_MdkLxTrmaGRe3Cxwt7-lD70kzqKaGy7k8URbIw76tvXSuk8ebPk
+Message-ID: <CAOPX747aYkoi_aE+tkpsyRsd9BDeAE9LKyYPnE1tMkjeu7vhWw@mail.gmail.com>
+Subject: Re: [PATCH net-next v3 2/2] net: phy: add DAPU Telecom DAP8211R(I)
+ Gigabit Ethernet PHY driver
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260721041048.1394085-1-pulehui@huaweicloud.com>
- <20260721041048.1394085-2-pulehui@huaweicloud.com>
- <20260721042823.9901A1F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260721042823.9901A1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgC3nSljOF9qNWwTCA--.25971S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw4rtFykKr1kKw4xCrg_yoW5ZF13pa
-	y3JF1xAw4j9rsrur18ZF1kuFy8XF18WF1jkr1DZF1kAFyavFWFgFyUWrWfur9Y9F4kGa1I
-	vF1qqr1rt345ZFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1wL05UUUUU==
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
 
-On 2026/7/21 12:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Lockless access to `link->prog` in generic link VFS operations (`bpf_link_show_fdinfo`, `bpf_link_get_info_by_fd`, and `bpf_mprog_link`) can lead to Use-After-Free if `BPF_LINK_UPDATE` executes concurrently.
-> --
-> 
-> --- Patch [1]: [PATCH bpf v5 1/4] bpf: Fix potential UAF in bpf_netns_link_update_prog ---
-> commit 5e4c7fbc6ffdce928d3526471c4a856d31dd1aba
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> bpf: Fix potential UAF in bpf_netns_link_update_prog
-> 
-> This commit fixes a potential Use-After-Free (UAF) in
-> bpf_netns_link_update_prog by moving the checks for old_prog and
-> new_prog->type inside the netns_bpf_mutex lock. This prevents a race
-> condition when multiple threads concurrently execute BPF_LINK_UPDATE on
-> the same network namespace link.
-> 
->> diff --git a/kernel/bpf/net_namespace.c b/kernel/bpf/net_namespace.c
->> index 25f30f9edaefd..9fc62db1441c6 100644
->> --- a/kernel/bpf/net_namespace.c
->> +++ b/kernel/bpf/net_namespace.c
->> @@ -171,13 +171,17 @@ static int bpf_netns_link_update_prog(struct bpf_link *link,
->>   	struct net *net;
->>   	int idx, ret;
->>   
->> -	if (old_prog && old_prog != link->prog)
->> -		return -EPERM;
->> -	if (new_prog->type != link->prog->type)
->> -		return -EINVAL;
->> -
->>   	mutex_lock(&netns_bpf_mutex);
->>   
->> +	if (old_prog && old_prog != link->prog) {
->> +		ret = -EPERM;
->> +		goto out_unlock;
->> +	}
->> +	if (new_prog->type != link->prog->type) {
->> +		ret = -EINVAL;
->> +		goto out_unlock;
->> +	}
->> +
->>   	net = net_link->net;
->>   	if (!net || !check_net(net)) {
->>   		/* Link auto-detached or netns dying */
-> 
+On Fri, Jul 17, 2026 at 8:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+
 > [Severity: High]
-> This isn't a bug introduced by this patch, but it looks like other generic
-> link VFS operations might suffer from a similar concurrent update issue.
-> 
-> Functions like bpf_link_show_fdinfo() and bpf_link_get_info_by_fd() in
-> kernel/bpf/syscall.c, and bpf_mprog_link() in kernel/bpf/mprog.c read
-> link->prog locklessly without holding rcu_read_lock().
-> 
-> If a userspace thread calls bpf_link_get_info_by_fd():
-> 
-> kernel/bpf/syscall.c:bpf_link_get_info_by_fd() {
->      ...
->      info.prog_id = link->prog->aux->id;
->      ...
-> }
-> 
-> And a context switch occurs just before accessing link->prog->aux->id, could a
-> concurrent thread executing a BPF_LINK_UPDATE command on the same link replace
-> link->prog and call bpf_prog_put() on the old program?
-> 
-> If the RCU grace period expires before the preempted thread resumes, would this
-> result in a Use-After-Free when accessing prog->aux->id?
-> 
-> Similarly, in bpf_link_show_fdinfo(), could reading prog->tag and prog->aux->id
-> locklessly trigger the same race?
-> 
-> kernel/bpf/syscall.c:bpf_link_show_fdinfo() {
->      ...
->                 prog->aux->id);
->      ...
-> }
-> 
-> And in bpf_mprog_link(), could dereferencing link->prog->type locklessly
-> result in reading freed memory?
-> 
-> kernel/bpf/mprog.c:bpf_mprog_link() {
->      ...
->      if (type && link->prog->type != type) {
->      ...
-> }
-> 
+> Does declaring val as u16 truncate negative error codes returned by
+> dap8211r_read_ext() during polling?
+>
+> If dap8211r_read_ext() returns a negative error like -EIO, the truncated
+> value will still have its high bit set, which might cause the polling
+> loop below to exit early and falsely report success.
+Thank you, it will be fixed.
 
-This series already covers these scenarios.
+> [Severity: High]
+> If the rx-internal-delay-ps property is missing and the interface mode is
+> PHY_INTERFACE_MODE_RGMII_TXID, does this fallback logic incorrectly apply
+> the default delay (DAP8211R_DEFAULT_DEL_SEL) to the RX path?
+>
+> For RGMII_TXID, should the RX delay instead be 0?
 
+> [Severity: High]
+> Similarly, if tx-internal-delay-ps is missing and the interface mode is
+> PHY_INTERFACE_MODE_RGMII_RXID, will this incorrectly apply the default de=
+lay
+> to the TX path when it should be 0?
+Agree, both cases are my fail.
+
+> [Severity: High]
+> Is the RGMII configuration written to the PHY after the software reset
+> completes?
+Thank you for catching this. The RGMII configuration must be written
+before triggering the software reset so that the reset applies the new
+settings. I'll reorder it to:
+1. Write RGMII configuration
+2. Software reset
+3. Wait for reset self-clear
+--
+Best regards,
+Artem
