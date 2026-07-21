@@ -1,104 +1,197 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B30429822
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 18:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7882135AD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 18:40:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659042; cv=none; b=QkJ4uMt9cGeDtIqn4MapEFFqizUw3SvRTGdGR21bMHHyPf6sLwBUromhF2HIRIM3dai2hGvVDUbbISJECZQnHvYeLMRPqCNV2wTa0sBRDW7XHm5+FyHA9rMA0fYsFYPnyYFEzd03YygDG7vSl3ti67CJ/E9aXA9yxdSeH0Conyo=
+	t=1784659217; cv=none; b=ow/0FgM2UWY3aG4BQt+dXebFeui3N4UbMsRWKigdqTLTPGOIrc/ezDIIlYhHfH1hwLzQN/JP1f7DjhO7dJ1eJRiW0cckNUNGckVf1pjksIQLCbOMynJ9lpgGUak3uUd0HKl32RC+tPeriGNx89W8/n8X5pYgGB/W0i6wa/b00pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659042; c=relaxed/simple;
-	bh=LnpI7omOEC6ed3yh4sMYyXUnlgF+nBTRExdP6+eDN24=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XZQNbmNpdu1Zda3hcriaeNbfoq4k5WYxrlQEjTAItuZ3Gpsi7wQdmcMgJByZBMN5KCpctKGoQn1LhOziDdYuou/bFk9760BmVtbUKMTWSDd8qCyNp6/SLkj+PiyuusO8ZBaMg2S+6YOA8qPdm7c5KnIzzVXcIK6uibD5h9KNLOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkCGgycx; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784659217; c=relaxed/simple;
+	bh=CEHCZS1G5Y42WECDRP5LrS/sZ+WH6FFxldqOA5Qzf7I=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=MqoXqdg/5vpVHFGAB0O/RPz5BQSUoU9fclGo+fVJQqjgOeM2vgq/fw+ZQBw/mDHo0tXNzBmN98PRKse2hHEoTWfcIb5vajaWTxFYlOiNsnBd55U/gLbVMRPpsz0pd/cK2qxji1zLdgT6P0kklwjHp3b53b9EBUVQhgoXCdWxK9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=rQqi/Z9y; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkCGgycx"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-49554ebb87dso33090505e9.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 11:37:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="rQqi/Z9y"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c9cf07d2df6so7363513a12.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 11:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784659039; x=1785263839; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7Zpdvr4EUuwpLXzsAE7Bu6HGFDWU6M1piUgIe2pUnOU=;
-        b=VkCGgycxMN7gBxxNZUAqjCIqlO36MfKHrI6muXOQFjAITZ3QBTQMauMWZROkwQwpqQ
-         jygRUPlAt7riNsQhF3fzAM+pm8mVp2jJ1WRfSuou7xH8kj3s0SPozYPoAoltUpZRLrE7
-         43RDdWz2JMevaqi07cKspreY6YWeUZ/f3qyZecS7Lc94ZNJ2I/+h7vNSZSiv9r+xr/sz
-         0RedsnVFNjfGaHimrikB76SDrgtDd9UrladnC0wPmsyK5gUVRgorzhGryQycM2rhmNR4
-         mOUPVzDOE6j4RDhQPSgVFSRoUDhrhOkbzZ/GqjjWCaYhBfIoA+n8ezgWnL5vFAvkTXtA
-         Fa7w==
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1784659215; x=1785264015; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=cXucJmocQuo7Hb1xWA0bWNA+TKY00q86yxvGHTwRRPk=;
+        b=rQqi/Z9yJumkK37dchJKDYMvXr27aAAgKgh6ihlurHdyc1sFBVH+kAVzxfavbQgPDz
+         cOIHggo3A+ue9R7q059T9K2aJ9FTuX6Bv4lqvIiwF9EdJvcbnoR4PJt/VnM0vVIAXmZ6
+         J31p7wkDMWSm9R2cN4nLZNcBh1VdJhHjzo6CKngeKbSukv7eQ8f7BdYM9zFaXgYWe3Cp
+         BW4epq6jinhUcxMYTSCTEOs0ZkdQEhM83c4trCbJqUEiPnYgTNVP7+G7C+Sd3veF1OPh
+         7oOhBtVo5mTm4a5TpsW/O1W+bl4a6jL1WMZyIhaFPqo2dA1BCvBLMXhZcIunLGChanR7
+         dLRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784659039; x=1785263839;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1784659215; x=1785264015;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7Zpdvr4EUuwpLXzsAE7Bu6HGFDWU6M1piUgIe2pUnOU=;
-        b=U9QtRrT2i4QpmHOGHVldOUFVU2G3KGOCp5xiVphHhxsVq2jp3+NabjH20dWmDvcSYJ
-         IsTvGWvowijvYjuHVa0qX51Hnq3e6pFfImc1lpdKF3UpJcywz05hER7rOYRJkYMULcGD
-         oMYY7g5/WDqjAxDOzX51FOkkZkjHbhRUPulNLFjqRTVLuGuHJO+7EwrlVqO0mAr1u7UZ
-         mnTpt8J9Knh1rkebwfXd6y68rYKt5p12qoDO3agPmN/rnlbNA4AZwoYkCFWnEZalixGA
-         yYifgkGoYFs/2k0c2cu1m9oIvkjZuriAOxpvblrxAAMN+fyz/wAOSF4k7RnBi4FtgyZz
-         EhOg==
-X-Gm-Message-State: AOJu0YwmTSgqdGIh3j5Td4QTyU4D+EHSbVP4DkRJpOUHjHCd6fX9+z2T
-	XF+0wI5/VhkHbpLmG1W4PIAq1sOGfwHTHYcP+b5nN74E67TV60Gl2uyy
-X-Gm-Gg: AfdE7cnc84XBqObRd5e4eUnzNYwzguduJEo78FixZ66Ubz2/s+2NJgAoE8AzpUkxyNo
-	377DPCapc6cbwHnTic+kzz3jOjtJCXnjJQSzCqj+IjKKQHZX4TBl1+8UsG5lbNLQgBX8KaspdI0
-	1WOIsM8B3tDuLfJRehQHVtVi6B9dKhGu3SVrmwABsFzWYx34qtu8PoDjuaAV7TCw7ZV2p8fCH3d
-	qe7yLQKiaV8gxEJngFNhk2Wvw0/YXTKicatjssKle3yLXpnJQ69BiE0YhHCEf2aZ6S1EAgKMRSt
-	TX6YYFr5RvM+TFnpf76fELVESrGRSIV7T2+udgfEmqGtbz1CXo/hmqURp/wiwDRogi0SAqapzYx
-	B0q4zOmOPCL+3Lq87+cQ5JYRAKYsg1RTdWKvqfZuukrMHVp1S7taV6Hhnwz5SYlTeV0e8uE0zls
-	0DDmD2mSvhDSnHll13kOU3lpDbzlsJxKFNQIupHOKw5fqylC7pr7hMEGJAaNVJBohOhXH9BfNNj
-	lcLKR+c3oE83jClCxHIcKmpyjvkA3tDS4+foqZNTZPR46Ndtll9W5FtcvCdZqZQWxgCbIc6cyS+
-	RRrzlO0jkxD4zPEdBN6s443MLUWFcrJ7w2w/U3hBnMAPuV7OMVivnSgVya9HlTq39dhrU97wvuS
-	AMFk/t+Mdp68=
-X-Received: by 2002:a05:600c:3b88:b0:495:4d2d:82f2 with SMTP id 5b1f17b1804b1-4954d2d8335mr224381425e9.26.1784659039580;
-        Tue, 21 Jul 2026 11:37:19 -0700 (PDT)
-Received: from systembl0wer (ip-86-49-244-181.bb.vodafone.cz. [86.49.244.181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653698bcsm79422215e9.2.2026.07.21.11.37.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 11:37:19 -0700 (PDT)
-Date: Tue, 21 Jul 2026 20:37:16 +0200
-From: Joshua Crofts <joshua.crofts1@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: iio: dac: add support for mcp47a1
-Message-ID: <20260721203716.0fc5313c@systembl0wer>
-In-Reply-To: <20260721183358.67E151F00A3D@smtp.kernel.org>
-References: <20260721-mcp47a1-add-support-v1-0-da045a2567e3@gmail.com>
-	<20260721-mcp47a1-add-support-v1-1-da045a2567e3@gmail.com>
-	<20260721183358.67E151F00A3D@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+        bh=cXucJmocQuo7Hb1xWA0bWNA+TKY00q86yxvGHTwRRPk=;
+        b=lEaANUNTQ9w0vgpNGzbWEnSdOO6nBUcUmr2cUEWCTlU67dRNe9O59jADCfXDs+Lc9r
+         Dhgas9yxvTqlWKV18Cta8j1r4yH/77ihs1T1YmE5TeYKx87pSZ5RLyAWlyYo80RQjTaR
+         IA7B7+z3T4qbEJJEIC9d0+mzn0pEu2Xve3BQQVp7NYeUUX4ywhWQMFjB0cmwTwm0fxNs
+         6S4xnAwmhaNOJRTpgTxRG2HYHRPGx3Rw/SiDkYz/+R5wjXdMuWp960o+mL5hfGH16lmI
+         oCuom3YJLIbNTIjSlJSQGZ/ZOpoiMbhKgjWy22hFjFZhoUeb+gh85qvkbP4OyS5zq8mk
+         O3Qg==
+X-Gm-Message-State: AOJu0YyLc3JERrJN9QGXx28pQc7oBCTxEKrOrhZ6sJvim68vfgmAWB62
+	ZSXzOi7mL9nYKN70VjNEwx9chpErRyp6aQGcqm/P4VOiWbtK1yQD9NTjMvL9qS9O1k4=
+X-Gm-Gg: AR+sD12iEDVg27E2+zDbTyHIuQk+25EUm1iLVHtU8FA2sLY/3Z67wh0eey4CI7+y+7f
+	kwaxES40571cDHVNkmUJgswBVjGCIZitOvZ59+pVd6Sq8rN3aFqqdm+5Xq1TqipxhTOYf+Eg9j6
+	AMkzjNt+RapAQTJHVPsOwIm7W+72Nl0GnOTuIOdnCfu8sucKZANf/9Fx+JTAs3L12SSXbnhWhQ/
+	bPHP8qhS2bNOTHsLJlgvM9jjf8yyskZaLq2exCPrduvbgM9dofj0xuSjglzLMGE01W5yGEvNKZ5
+	6Z6u5xTOotE1+KrVDAGpdrpQ+tYBF20dckB6lvahAi18pd8e5Jqzp3N1xydGHL9g5Fx6raugap3
+	q/wjaBGcQlq2AR57qRFpqjq2j8fIYmLOcqbbHmw+ZdcgbaNtGawq90sy2uJk=
+X-Received: by 2002:a05:6a20:2583:b0:3c3:9595:57ef with SMTP id adf61e73a8af0-3c3ad7781b3mr18749954637.31.1784659215324;
+        Tue, 21 Jul 2026 11:40:15 -0700 (PDT)
+Received: from localhost ([2620:10d:c090:600::4a7b])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ce2a129f3sm39641494c88.7.2026.07.21.11.40.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 11:40:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 21 Jul 2026 14:40:13 -0400
+Message-Id: <DK4GW4BH8RPS.32N0A91SQGMOH@etsalapatis.com>
+Cc: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf v5 2/4] bpf: Fix UAF due to missing link type check
+ in mprog
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Amery Hung" <ameryhung@gmail.com>, "Pu Lehui" <pulehui@huaweicloud.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260721041048.1394085-1-pulehui@huaweicloud.com>
+ <20260721041048.1394085-3-pulehui@huaweicloud.com>
+ <20260721042151.E6F941F000E9@smtp.kernel.org>
+ <723495f2-f4a0-4723-90a8-d4774e6dce05@huaweicloud.com>
+ <CAMB2axMocV3+cC8O5LEu-0bPcGvchwjASbjM_afx=Stc_8AvKw@mail.gmail.com>
+In-Reply-To: <CAMB2axMocV3+cC8O5LEu-0bPcGvchwjASbjM_afx=Stc_8AvKw@mail.gmail.com>
 
-On Tue, 21 Jul 2026 18:33:58 +0000
-sashiko-bot@kernel.org wrote:
+On Tue Jul 21, 2026 at 1:40 PM EDT, Amery Hung wrote:
+> On Tue, Jul 21, 2026 at 2:18=E2=80=AFAM Pu Lehui <pulehui@huaweicloud.com=
+> wrote:
+>>
+>>
+>> On 2026/7/21 12:21, sashiko-bot@kernel.org wrote:
+>> > Thank you for your contribution! Sashiko AI review found 1 potential i=
+ssue(s) to consider:
+>> > - [Medium] Anchor link type validation is bypassed when attaching or d=
+etaching bare BPF programs, leading to wildcard insertions/deletions and da=
+ta races.
+>> > --
+>> >
+>> > --- Patch [2]: [PATCH bpf v5 2/4] bpf: Fix UAF due to missing link typ=
+e check in mprog ---
+>> > commit 830a4e62ebb8e98cc45b0ce829c6686aacafabc4
+>> > Author: Pu Lehui <pulehui@huawei.com>
+>> > Subject: bpf: Fix UAF due to missing link type check in mprog
+>> >
+>> > This commit adds a link type validation in bpf_mprog_link() to prevent=
+ a
+>> > use-after-free when dereferencing link->prog for foreign anchors. It a=
+lso
+>> > adjusts bpf_mprog_attach() and bpf_mprog_detach() to pass down the exp=
+ected
+>> > link type.
+>> >
+>> >> diff --git a/kernel/bpf/mprog.c b/kernel/bpf/mprog.c
+>> >> index 1394168062e85..37ce91e0bcd21 100644
+>> >> --- a/kernel/bpf/mprog.c
+>> >> +++ b/kernel/bpf/mprog.c
+>> >> @@ -17,7 +17,7 @@ static int bpf_mprog_link(struct bpf_tuple *tuple,
+>> >>              link =3D bpf_link_get_from_fd(id_or_fd);
+>> >>      if (IS_ERR(link))
+>> >>              return PTR_ERR(link);
+>> >> -    if (type && link->prog->type !=3D type) {
+>> >> +    if (type && link->type !=3D type) {
+>> >>              bpf_link_put(link);
+>> >>              return -EINVAL;
+>> >>      }
+>> >
+>> > [ ... ]
+>> >
+>> >> @@ -243,6 +244,7 @@ int bpf_mprog_attach(struct bpf_mprog_entry *entr=
+y,
+>> >>              return -EEXIST;
+>> >>      ret =3D bpf_mprog_tuple_relative(&rtuple, id_or_fd,
+>> >>                                     flags & ~BPF_F_REPLACE,
+>> >> +                                   link ? link->type : BPF_LINK_TYPE=
+_UNSPEC,
+>> >>                                     prog_new->type);
+>> >>      if (ret)
+>> >
+>> > [Severity: Medium]
+>> > When attaching a bare BPF program, link is NULL. This passes
+>> > BPF_LINK_TYPE_UNSPEC (0) to bpf_mprog_tuple_relative() as the expected
+>> > anchor link type.
+>>
+>> Ah, so when attaching a bare prog with a relative link, having the
+>> BPF_F_LINK flag set means the relative id_or_fd is a link, not the
+>> object being attached. Sorry, that definitely confused me.
+>>
+>> >
+>> > In bpf_mprog_link() above, the validation check is:
+>> >
+>> >      if (type && link->type !=3D type) {
+>> >
+>> > Because type is 0, the validation is bypassed entirely.
+>> >
+>> > If a user passes a foreign link with a NULL prog (like struct_ops) as =
+an
+>> > anchor via id_or_fd, the positioning logic treats tuple->prog =3D=3D N=
+ULL as
+>> > 'no anchor provided' instead of rejecting the invalid anchor with -EIN=
+VAL.
+>> >
+>> > Does this allow wildcard insertions or deletions, and leave a benign d=
+ata
+>> > race when reading link->prog locklessly? Should the expected link type=
+ be
+>> > explicitly provided when attaching bare programs?
+>
+> I also overlooked this. Make sense to pass the expected link type from
+> callers of bpf_mprog_attach().
 
-Clarifying Sashiko's comment:
++1 on this, and can we add a comment that ptype =3D=3D UNSPEC is because
+detach() uses this as a wildcard? UNSPEC is only valid in very few
+places in the subsystem.
 
-> [Severity: Medium]
-> Does the MCP47A1 actually have a dedicated VREF pin? Standard Microchip I2C
-> DACs in this class (such as the 6-pin MCP4725) typically use VDD as their
-> voltage reference.
-> 
-> If there is no physical VREF pin on this hardware, requiring vref-supply
-> here forces device tree authors to define dummy regulators in their
-> device trees just to pass schema validation.
+>
+>> >
+>> > [ ... ]
+>> >
+>> >> @@ -343,6 +345,7 @@ int bpf_mprog_detach(struct bpf_mprog_entry *entr=
+y,
+>> >>      if (!bpf_mprog_total(entry))
+>> >>              return -ENOENT;
+>> >>      ret =3D bpf_mprog_tuple_relative(&rtuple, id_or_fd, flags,
+>> >> +                                   link ? link->type : BPF_LINK_TYPE=
+_UNSPEC,
+>> >>                                     prog ? prog->type :
+>> >>                                     BPF_PROG_TYPE_UNSPEC);
+>> >>      if (ret)
+>> >
+>> > [Severity: Medium]
+>> > Similarly, when detaching a bare BPF program, link is NULL. This also
+>> > passes BPF_LINK_TYPE_UNSPEC as the expected link type.
+>> >
+>> > Does this bypass the new validation and allow wildcard deletions when =
+using
+>> > foreign anchors?
+>> >
+>>
+>>
 
-Yes, the MCP47A1 does have a physical VREF pin, as seen in the block diagram:
-https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/25154A.pdf
-
--- 
-Kind regards,
-Joshua Crofts
