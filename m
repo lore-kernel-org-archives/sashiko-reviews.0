@@ -1,227 +1,218 @@
-Received: from th8-b.mail-neoserv.si (th8-b.mail-neoserv.si [152.89.234.174])
+Received: from mx0a-00128a01.pphosted.com (mx0a-00128a01.pphosted.com [148.163.135.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9031432E74
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 07:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=152.89.234.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC6C11CBA
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 07:29:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.135.77
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784618103; cv=fail; b=uGQ7PeU93XGNo6JG6Rai/nT8xqAIHisCKNWMyz9cMznSd90LKLm3WlXxOVSTiovtGSdiYgYxmnRztE+/psnWYIiCMqnFjefiOZ0rdi1q2psEjz0arAwr/lnhxy4/mRpcdsxCPrcCmXCrQs1B5nmgEiVbXjfbTZMPiPUbz4KFUao=
+	t=1784618943; cv=fail; b=XEzRQv8DTTJhMemZh+xWivIHcRx8lTOelrxcIJ7Atm89ZP6osXkedUOkWBr4iIOED5qr/inCdODYAUg2IeWckucEt/6ICNyueBRwALIpCN68p94hsjFGbqisWhlTJChGFVsPjU9dN9aQ8BgerG3nCtOZ8z9Dg9jcfOj13KzlKjk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784618103; c=relaxed/simple;
-	bh=spvjjBURpSwPzn4lfTMPK6DZ6i2zK4dFA8f/iJY34CY=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=PYUwxieuyJNZpD1F72jjw3BNcOXVZJOLWuEJA+Rd2aj5k5/9DmIiXBJBftp0Jifg+P5SEzf5Sr6abj278hSGQ5TmUoI0MeYp4qWmZM8v/LO3FF0NkOGZ2vFSecspOhAaZak8qPYhU5iBkE/F+tJsHMZhyiRNXWIljIAswk4ek90=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kanardia.eu; spf=pass smtp.mailfrom=kanardia.eu; dkim=pass (2048-bit key) header.d=kanardia.eu header.i=@kanardia.eu header.b=M+9kL0Wu; arc=fail smtp.client-ip=152.89.234.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kanardia.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanardia.eu
+	s=arc-20240116; t=1784618943; c=relaxed/simple;
+	bh=EoKat2BQQbJbj9w91AOdnM5xRikKYNeqfapWD69icgc=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=sqco7dJ81Cov2CYJVEtzXzVdTa4M3CFqwgGMBwVT/nXi1dOOYhF8WyiwB7IlYCNmYD7idk3GIBBqJXkjuGziM83M/tdaexL+5HSs5Nl2QSmGb3o2SNLZvwnaR3VCKt0ny0X80IdECpwJ2YcR4lhNHldSKz42ZoJ4f3CeiofJ1v4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com; spf=pass smtp.mailfrom=analog.com; dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b=MgC3KcFy; arc=fail smtp.client-ip=148.163.135.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analog.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kanardia.eu header.i=@kanardia.eu header.b="M+9kL0Wu"
-ARC-Seal: i=1; cv=none; a=rsa-sha256; d=th8.neoserv.si; s=default;
-	 b=f+4kR4yo6jUf6v9SOHEGD9M8XEgZUV9p+czmITsw0Dp1mnM4ggfaih8T0PNiq8P8U9Pof/Kzgr
-	  M10NHliUFZoPrxIS7TmjZgNEFCQrrIXz4c/LuguRnW/Ul/kdFt0EuFxpvnAi28B5LoHWfT5hiN
-	  TYXShh7CzlX0QryVWm5v3Np0sr1F2IWUBKeHRRXk95JnBGwmxJ9l1xHtOsSsRtyBKYDkipeQr/
-	  C4B6xXp1Q92w9f6AmPkcUwqLk34ARwU7wfq5MVPdbeB62Sp8FRUw3QIXYo31XNIAF6+iwHhsDS
-	  u5ym1aqoFzvaombi3qL/WuV2MXufvkVBksUJjsIX3mf9aA==;
-ARC-Authentication-Results: i=1; th8.neoserv.si; smtp.remote-ip=::1;
-	iprev=fail smtp.remote-ip=::1;
-	auth=pass (LOGIN) smtp.auth=rok@kanardia.eu
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed; d=th8.neoserv.si; s=default;
-	bh=spvjjBURpSwPzn4lfTMPK6DZ6i2zK4dFA8f/iJY34CY=;
-	h=Content-Transfer-Encoding:Content-Type:Message-ID:References:In-Reply-To:
-	  Subject:Cc:To:From:Date:MIME-Version:DKIM-Signature;
-	b=RGEu9qt8QitTA5kNQ6slKMAoDYiRdg/CSbadec9lTLzX3sFU9InXjIeFaxwMBqmaj8jz2v4sD2
-	  31U4B0IHT7kJPmG5In+b1gNvlKD+qpeU6vFYphJYiau9FUo6FVjpK2erFObJwlihd2LnTmD+O9
-	  9UEIxznjfzhprhJTrRjrv/SZhY5xrmrCSb3F/NbtZfS1u7kaS4BxJ08Vpq37yU71EVm4kYL49u
-	  huDDM5FZLxve0Ou6FlkEN3Q0TC8NKw+dlQkVobOVQ67Pj++hOsbd8z9DfuYtIgfGkHG+UZ5Y2g
-	  5JcjjaIxT1wrnRyJTweWDaK2RJrzh/j9yJChbCooMQO2Dg==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kanardia.eu
-	; s=default; h=Content-Transfer-Encoding:Content-Type:Message-ID:References:
-	In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=BnH57+/CTddrJAAK24HEO58bPH5pRHF9mJT4Kj+dOkg=; b=M+9kL0WulPClX4Wro+BgtYt4x0
-	K4PPkknNYarSYAJ6/piJJ7z76VgnSlgMNNsNACXecVwLy+oLj2rJn1Ah96r27n+3GapERMr/yMLqh
-	BZ0oJ/T+yA94tD28uXm9UOs+XkCwqRXhuO3vB+e7YGqZi54xLB62Zz6Q1mjUHuQ8Y3q0/0qyYdQcr
-	P1xL3Mibla2XNWQiik2v1GUUk5QDaMc0OEwnOWthu18SpWt2SQWDwsycjW5bbiMjBMrEl4Vcd5ZYR
-	dLDIjHHZKnOAR7+17zMEScsc1Ncfy16Fdd4uGqXntC+My8JlB9cuLLyuSz2RSNpHBHMcg28LB8ogJ
-	QoCUIG7A==;
-Received: from [::1] (port=44518 helo=th8.neoserv.si)
-	by th8.neoserv.si with esmtpa (Exim 4.99.4)
-	(envelope-from <rok@kanardia.eu>)
-	id 1wm4go-000000004Bv-2pq4;
-	Tue, 21 Jul 2026 09:14:54 +0200
+	dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b="MgC3KcFy"
+Received: from pps.filterd (m0167089.ppops.net [127.0.0.1])
+	by mx0a-00128a01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66L4HO6d3081051;
+	Tue, 21 Jul 2026 03:29:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analog.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=DKIM; bh=EoKat
+	2BQQbJbj9w91AOdnM5xRikKYNeqfapWD69icgc=; b=MgC3KcFyKLy34oCS0j3P+
+	jUk4i1XY98nfkRxrYenCPoc4KUje4fVsavm0RAQYtzQFZ38ZnsfX6AUc25NJ+53L
+	t/Q7f1S7gJ4XJYjR3g33RZ5xTbFJFyv/Oq0PhqSnZodm8+eUeHy/NJCl4/NqlKPE
+	aFGPO+VMIXcR1OmgpX+wQRsCOp1u9Zy7r/61xbD0Otl8j37bDnKIQdf0KU2ZjvAF
+	Mdfe6zmWx3J3RFTVT03dKRL6mrblmmG5upUUIfCU64meOonj6amGtiG0mZOgT//P
+	yYZzGWJ4fl47qrBI5bEGOuoIFZArkyG52GobaJ4Bv7L3uMB62cw8j2oH9+0Zu0bF
+	g==
+Received: from sa9pr02cu001.outbound.protection.outlook.com (mail-southcentralusazon11013036.outbound.protection.outlook.com [40.93.196.36])
+	by mx0a-00128a01.pphosted.com (PPS) with ESMTPS id 4fg6d1jeax-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 21 Jul 2026 03:29:01 -0400 (EDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YVlT8V0JaOS7udrmCOkTq7ISp9SCawjUHrFkUDxE1aqftdJ+c7/MPY1VI7ds51jAYE03FedOwHxKsbdszQMdyrpZ94yNlK+4XD5GQUvrIksvN3/qWZhwyDHbn16JE+udYjuidzxfxzlqJxYUfBs887rCF049INONPDmJwBsL0rlqB7iR+sqAV2Nub/uB/a9gfkV4bgULC1hvlQPmuXMkqs1DQH1tmuhLGnmV7qvupZMRQqG848ZvqETP9l73QTy+p1hhuHnXBrv7TtFSWYiTpQAWYV8MijB0n+MUGF/P1coav07kbiGFi2LrD3ToX4lEJUZIjn8BI5MsKR0BEfZhlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EoKat2BQQbJbj9w91AOdnM5xRikKYNeqfapWD69icgc=;
+ b=F89VUFUL9ZnS3O7TcPpYQmskzkY3n20L3pQM3pvXLn/JrdQTgSebYR4v4+dvOW4zEq7oDleD8ukdQYmmJNEjDDJjHjhuinXynw+Wpo4iem85Cm+YS57zXJdH8PUjoZvygSNX7LEgKh4AJbZJxastlPTJchMj4Vt4ghOtD3/s87ojgf+FgulRJ55aJVYDvZrYIwjx3EKkESONnwVa0WKziiDASF79whC5eOZ4e0UwaXkX33DdfDwb+ElUs1djtgzeXN2NDdfAq+mdsTblu1SpJmpzMOM+KHE92VAnOJ4SjQ/3dABXuNF1eLkEe9W/6Y/klrSvLMtIYpHiAZ9lUybAaQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=analog.com; dmarc=pass action=none header.from=analog.com;
+ dkim=pass header.d=analog.com; arc=none
+Received: from PH0PR03MB6351.namprd03.prod.outlook.com (2603:10b6:510:ab::18)
+ by LV8PR03MB7448.namprd03.prod.outlook.com (2603:10b6:408:182::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Tue, 21 Jul
+ 2026 07:28:57 +0000
+Received: from PH0PR03MB6351.namprd03.prod.outlook.com
+ ([fe80::1578:4572:29b5:2442]) by PH0PR03MB6351.namprd03.prod.outlook.com
+ ([fe80::1578:4572:29b5:2442%4]) with mapi id 15.21.0223.017; Tue, 21 Jul 2026
+ 07:28:57 +0000
+From: "Torreno, Alexis Czezar" <AlexisCzezar.Torreno@analog.com>
+To: Guenter Roeck <linux@roeck-us.net>,
+        "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>
+Subject: RE: [PATCH 2/3] hwmon: (pmbus/max34440): add support for newer
+ version of max34451
+Thread-Topic: [PATCH 2/3] hwmon: (pmbus/max34440): add support for newer
+ version of max34451
+Thread-Index: AQHdFP0KHG1nLTwPxUSiOhrbWS5u6bZv0jOAgAUR3gCAALLXIIAAGG8AgAHpsgA=
+Date: Tue, 21 Jul 2026 07:28:57 +0000
+Message-ID:
+ <PH0PR03MB63514193F4A54535036B3A40F1C22@PH0PR03MB6351.namprd03.prod.outlook.com>
+References: <20260716-max34451_fixes-v1-0-a941b27eaecb@analog.com>
+ <20260716-max34451_fixes-v1-2-a941b27eaecb@analog.com>
+ <20260716083544.1B5B91F000E9@smtp.kernel.org>
+ <eecfb767-972a-4b21-a088-d7c7b68c29c5@roeck-us.net>
+ <PH0PR03MB6351C0B2AFC4CDD92F67AACBF1C32@PH0PR03MB6351.namprd03.prod.outlook.com>
+ <0b555e2e-f687-4ea2-8b7d-cd80342fdaf0@roeck-us.net>
+In-Reply-To: <0b555e2e-f687-4ea2-8b7d-cd80342fdaf0@roeck-us.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR03MB6351:EE_|LV8PR03MB7448:EE_
+x-ms-office365-filtering-correlation-id: d0ef6603-efde-45ee-27db-08dee6f9b9ce
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|11063799006|10067099003|4143699003|56012099006|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info:
+ Txmnuor1r0Pl6rxwUbyITr6sRKcib4bLVFJE+DetEWz6fyIYZ5awLZjNNJiUtG1Mke/i31zmj7cwg1ZXkW2oCM/YREVhkqQtCT7qKhDuMRzIPqI75kq3kstMpt1kUcZSKqy2FaZ7r1FssFLJRLjnT4yf8bjQTKzqShQtOxxECbCMF0ohxakZf0dA6oHKDNHR8Hr/hk27ClbpyZQzwy9n3Jsasbq8ArFka+DyGOTriXVs2qv7F8exxNA6wwXVF1GvrdCNGBcP3/4+6JNe+7JIW9qTo/nEoOq/kg8Y64OH5ucg0s2R39fkRdszzqC1MxHwXV3WoEo20YpnFOCA7o8y0/gH98LCyn1MGP4KXmT7m94GysrMawTz3QpMfSCW6rryNyqhXPaByfz5lVz8W7KkvImAOCEgmQZ5Hll3N+S6v6Ati/DPGEY1h+zmB4oJI1s6OXG0hAb/6ct7GZbZDjys/polq5xzQUR2B0/TKnaqiFZKtrjZF3RffcBYf6l1IMBhkx8858XhwrGim7QZbgmslSHlcSg6dbFNu4Dia89N5hRjpNR6G8wx97vfa3DEni4HtVVUVsQXCJstjtx2JbOoa9Aan6E8JUkwVXS3jUz0+dy/8S1RecnAbPouXrTH636VRqthWPj9GzkLg+pIXKmL4WqSNX3hOnXJVmryDQmmNcQSJjsvYuZ/1Eiznngj1EYZLKSX05qIN7VNXAgj/9NuPZfe10oSWWO0qwSZ7yyJuqs=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR03MB6351.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(11063799006)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?TH3JQjazb351jcV9njmIBMzimy/beWjuEnMmHb98hTYbLHORTTtZnSfP3Gna?=
+ =?us-ascii?Q?Qnsoc7CwFhX/0eluWGIt2DqYDlv1aUNq9MFmhR2Q/lQFjVL6iO94YTTs0+Hc?=
+ =?us-ascii?Q?n6bo96k/FJpmylzrMw7X+GS2TO2SM/Wy04PvCYSZ1XwIuebv/9ods7iSXtKX?=
+ =?us-ascii?Q?jVKm0nuV95KVP/UXd8b5W0HNBX1ij4D0z8w3wJpg4suGH9XNVCc2ZuQIoljm?=
+ =?us-ascii?Q?8NGFK1CAL+Key7xf55uqLlJ6R1X43NCwgbKW7Qrxo90a+kVRHxFbBUMOfw87?=
+ =?us-ascii?Q?c745Bj3+6mdxx8hA8O1bGhpHYOlJ8pTwPuA+3Om8+o1KdoyDyiNgVAIdbI6j?=
+ =?us-ascii?Q?yEczlOTxS/PH8nN8tk8T7wRZANmG9dL/eGT0RA/0SmG//yb9NpZ4y1Hg2U8n?=
+ =?us-ascii?Q?vpyN+6GwQ9btPa6xp/oWQ+j2VCid9rWbRIAVs8IXkXVWEw/lepLwPuDWB11l?=
+ =?us-ascii?Q?zTYL7wGGvd4Tqsz9Qjnl9Nu/yy9ImXVlSndqKOYhzehnyV/4f/No0IlwlcQW?=
+ =?us-ascii?Q?BRrM9Xq4NKz2mqX+4xYM5HjpvkFrwM+5dhCK6fE61E9Rs5TgWyPqrTlcfgTL?=
+ =?us-ascii?Q?REXD/f0stRopjHtpBd6BLQ8CTvNrbp75VO3AoBcmg8rOmVritRbarhK5Qpdw?=
+ =?us-ascii?Q?ieZNFCt+mItbCCf+Sc6j3XKZbFqeP7owWQWclgXYcrW576x5cp2ina2JwLmi?=
+ =?us-ascii?Q?LhSD6nYiWKAVngnbK+h82K/3YBvCY+perPw1TkVqc6Oyi5Q9RaSeqBoeX6qb?=
+ =?us-ascii?Q?MuJfZF06NRKrglihq3B8syDY/D0T+eRBbX3BTC2lgLYhSl84sgEk2lCsQLuK?=
+ =?us-ascii?Q?73+9r2wBbUb0ICUVqtaUi7IhdT7fAmOZr6ci0vot0e2N3I9pbVSLrE+hcU2t?=
+ =?us-ascii?Q?UaX5cVulgzl0+uSHgXDHlbRfIQN9YiaCv05hXFjCDfUcdrKZzkZlprNYSNmo?=
+ =?us-ascii?Q?cmGV36/EOaVevS9y/mWAS0XWtFOQ0jPrZAxaN/9RGPrfE75S95C0vMa9JIwz?=
+ =?us-ascii?Q?9soAN7Yw+cHLp4zMe0Ias1ZR+MK0DThAWnZ34gjZhQHKAbsc2D5cFwM2unYp?=
+ =?us-ascii?Q?hnfReUxFd+x+IjKEIwNrLPjreqPk16FnVNu7nVXyhDUzhtgnvC0vRJTwyYm+?=
+ =?us-ascii?Q?wmYDd3Uhw/Fw0a/PFvFh+3Lm5ZZAG+UOR5qHA6+i1y5MJ1sMZSTKyYVv3fEs?=
+ =?us-ascii?Q?bVoW2YxJTelyOe7AOl071kxaXU/2RvXfg7bwkd8oYAIiDR6JGvTfy/Kk2X32?=
+ =?us-ascii?Q?D12i06zypvdW6pVr8m77a7DWZ/XdqYSs+l7UdpDY2bQih1pxufgJ5ahTh/yS?=
+ =?us-ascii?Q?04iimpp/HiKomX8fKpy0oxz1fA7SLPnPfkwnndi8MKzo4S1rKfcugH91mjsz?=
+ =?us-ascii?Q?xrGhpwdKZ3AMEuCSCp2BYSIXsefr3HcyZkzOygPpGw+6ww0QbsfEXFkOcGt4?=
+ =?us-ascii?Q?OIWqzYtc9IThuHKv/Y1Zt1PE77o//aK9ept9+m8iQ0YNTrcbEqKXuYEXt92S?=
+ =?us-ascii?Q?dliselcN+3ldDGbcmuw5RjM5ROpQrO+axXlLmfxFauXo3d0BPT6VZE8jjDuf?=
+ =?us-ascii?Q?LSSHQIATiZ/6y94Uv7QPUoGMgymiyziUc6c4H7TIIx0G7S2ZB6KSeelhvPSH?=
+ =?us-ascii?Q?YRut13qET25AnoJyt+VGloeY6lvGv6nd+n8Uv9d/z88BVdnBaJ+0asVasVS8?=
+ =?us-ascii?Q?wyUcdZJdN9RsyZJOb64Lv1ALqfG4Tm/JuE6Pux0f53i8a+Ycp374C9y0lR8E?=
+ =?us-ascii?Q?cj/jZlbaIk96IuMXeMZZw/7gdolHWn4=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Tue, 21 Jul 2026 09:14:54 +0200
-From: =?UTF-8?Q?Rok_Markovi=C4=8D?= <rok@kanardia.eu>
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org
-Subject: Re: [PATCH 4/4] arm64: dts: rockchip: rk356x: add LVDS node
-In-Reply-To: <20260717121309.516801F00A3A@smtp.kernel.org>
-References: <20260717120005.2087386-1-rok@kanardia.eu>
- <20260717120005.2087386-5-rok@kanardia.eu>
- <20260717121309.516801F00A3A@smtp.kernel.org>
-User-Agent: Roundcube Webmail/1.6.17
-Message-ID: <6391bf976ade8fa7df217d0880ccdb88@kanardia.eu>
-X-Sender: rok@kanardia.eu
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: th8.neoserv.si;
-	iprev=fail smtp.remote-ip=::1;
-	auth=pass (LOGIN) smtp.auth=rok@kanardia.eu
-X-NEOSERV-MailScanner-Information: Please contact the ISP for more information
-X-NEOSERV-MailScanner-ID: 1wm4go-000000004Bv-2pq4
-X-NEOSERV-MailScanner: Found to be clean
-X-NEOSERV-MailScanner-SpamCheck: 
-X-NEOSERV-MailScanner-From: rok@kanardia.eu
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - th8.neoserv.si
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kanardia.eu
-X-Get-Message-Sender-Via: th8.neoserv.si: authenticated_id: rok@kanardia.eu
-X-Authenticated-Sender: th8.neoserv.si: rok@kanardia.eu
-
-17.7.2026 14:13, je sashiko-bot@kernel.org napisal
-> Thank you for your contribution! Sashiko AI review found 2 potential 
-> issue(s) to consider:
-> - [High] Missing Hardware Clock Initialization for RK3568 LVDS
-> - [Medium] Unbalanced Hardware Resource Teardown in Error Paths
-> --
-> 
-> --- Patch [4]: [PATCH 4/4] arm64: dts: rockchip: rk356x: add LVDS node 
-> ---
-> commit bfe12cef9ca639b004d58e050ef9175743345f7b
-> Author: Rok Markovic <rok@kanardia.eu>
-> 
-> arm64: dts: rockchip: rk356x: add LVDS node
-> 
-> This commit adds the LVDS transmitter node for the RK356x SoC, 
-> assigning
-> its clock, physical interface, and power domains. It is left disabled 
-> by
-> default, to be enabled by specific board files.
-> 
->> diff --git a/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi 
->> b/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi
->> index a5832895bd392..2b3beab5507b1 100644
->> --- a/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi
->> +++ b/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi
->> @@ -879,6 +879,31 @@ hdmi_out: port@1 {
->>  		};
->>  	};
->> 
->> +	lvds: lvds {
->> +		compatible = "rockchip,rk3568-lvds";
->> +		clocks = <&cru PCLK_DSITX_0>;
->> +		clock-names = "pclk_lvds";
-> 
-> [Severity: High]
-> Does the driver actually use this clock?
-> 
-> Looking at rk3568_lvds_probe() in 
-> drivers/gpu/drm/rockchip/rockchip_lvds.c,
-> it seems to completely omit fetching the required pclk_lvds clock from 
-> the
-> device tree:
-> 
-> drivers/gpu/drm/rockchip/rockchip_lvds.c:rk3568_lvds_probe() {
->     ...
->     lvds->dphy = devm_phy_get(&pdev->dev, "dphy");
->     if (IS_ERR(lvds->dphy))
->         return PTR_ERR(lvds->dphy);
-> 
->     return phy_init(lvds->dphy);
-> }
-> 
-> Because lvds->pclk is left NULL, the clk_enable() call in
-> rk3568_lvds_poweron() acts as a no-op:
-> 
-> drivers/gpu/drm/rockchip/rockchip_lvds.c:rk3568_lvds_poweron() {
->     ...
->     ret = clk_enable(lvds->pclk);
->     if (ret < 0) {
->     ...
-> }
-> 
-> Will this cause hardware registers to be accessed without a running 
-> clock,
-> potentially leading to system hangs on device probe or modeset?
-> 
->> +		phys = <&dsi_dphy0>;
->> +		phy-names = "dphy";
->> +		power-domains = <&power RK3568_PD_VO>;
->> +		rockchip,grf = <&grf>;
->> +		rockchip,output = "lvds";
->> +		status = "disabled";
->> +
->> +		ports {
-
-Fixed. Removed unused clock.
+X-Exchange-RoutingPolicyChecked:
+	lvbC6VfoAuYwQvVs97Q9RBMrkkM9cGgU6OYcdOGLNE0LXywIq92UywaHFwKhKIdGI21cEiPhbZR9POS7Ns0shSc1nYwTPLWSVbtlLqBSAv26UB4wc9+E5/nzenl71LlZ1tNfmHo3DUHoLyMKlVCN4bUK7hZ/AMz/7+09sOxT6hqz9qCweVKmGj3Faru3LuT5gS4KnB9rAG299TX0KXfnW5auiHkF9FXjAEqs+BXtP66Ef/TuboLMiEUMFPY+YAsvJtfZ+QUFRXUG/eyV6IVAOq9l+F46na7B46iNgKpIOF9bG0OfNkk+He2EJeylXB6sP/zIyvovKAQ65Bfqi/A4RA==
+X-OriginatorOrg: analog.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR03MB6351.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d0ef6603-efde-45ee-27db-08dee6f9b9ce
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jul 2026 07:28:57.1332
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kyDx9E8MchqI4uoAtnpVtBOPS4tRhnKqGjs+yz/0XV+uwhFjqNqpmvdJPi4NT0TtmiBrwddAInc+pZZ3bdz9vib+Wx7p4oFwWvvyTN845WE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR03MB7448
+X-Authority-Analysis: v=2.4 cv=ds/rzVg4 c=1 sm=1 tr=0 ts=6a5f1fbd cx=c_pps
+ a=vqIpJ22NDJOYTIB/W/KhXg==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=0sLvza09kfJOxVLZPwjg:22
+ a=Z0pTeXoby7EwIRygza74:22 a=0Weod8kiumk182yDBHoA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDA3NyBTYWx0ZWRfX7oMbKvATtpM1
+ a67bPQ7s2unnIr1z9Yci4ABrQCK8LjCXPU0qGogeLvYqvX4VqXm8Zgb8cFo54P7jKe+p6UdbCKO
+ 4FJzR6m4vvr4upy0LdU/CtjHKDQ0kRzfZKHBpWhhRx8B9y6nqmdl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDA3NyBTYWx0ZWRfXyIjlCfmVpWZ+
+ xeVOzMKp/Z/d4LdFm00sOsW64E4FOyRuiRvDj27yhSg0dkrLgx2zqDfaokIZHRDqFsvan2hChYT
+ iz680SAwHRCwomryKnN1j8/sSkKLUl0AiQB2/7MY3GQv4jbmflwLtrf8s+IwUlnWyVxMVh+aar3
+ dJBl4+2nU6JyiBx3L0/8F33oSXZJXCjiIE/Q0jAYUvsizgY2pMEpGrok2eEe6EH6JYj0zyFJBvB
+ MZt51vI5PXk4yX7yImQLCQyhs7hEbozjFnQ2ijFhcshA6Uk+72qYo3nY5Dcq/EgDCluAbYVCq+f
+ 2onZyTYbBkjpPVot8ZFf+5F8mVXFNC/qb9nXfhd48Ga/LkEr0MkqVDzoyiVSbtdu8O74Xnz+OMC
+ kl77CrqE0bF6EBmeFJwTevt4Mp/hXUD2ffysbj6aqOk/9SLgd4CD7pZDDsGcfr6Xyuj8dM9CNkV
+ knMVop5ZtgGumYWfldg==
+X-Proofpoint-GUID: Ag-NaGQT8Oe7enV2TgUV8sNJnDHpObLD
+X-Proofpoint-ORIG-GUID: Ag-NaGQT8Oe7enV2TgUV8sNJnDHpObLD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 malwarescore=0 clxscore=1015 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210077
 
 
-> 
-> [Severity: Medium]
-> Will enabling this hardware expose an unbalanced resource teardown in 
-> the
-> driver's error paths?
-> 
-> If intermediate steps like phy_set_mode() fail in
-> rk3568_lvds_encoder_enable(), the function returns early without 
-> rolling
-> back earlier successful calls:
-> 
-> drivers/gpu/drm/rockchip/rockchip_lvds.c:rk3568_lvds_encoder_enable() {
->     ...
->     ret = phy_set_mode(lvds->dphy, PHY_MODE_LVDS);
->     if (ret) {
->         DRM_DEV_ERROR(lvds->dev, "failed to set phy mode: %d\n", ret);
->         drm_panel_unprepare(lvds->panel);
->         return;
->     }
->     ...
-> }
-> 
-> Because .enable() returns void, the DRM core assumes it succeeded and 
-> will
-> later call .disable(). The rk3568_lvds_encoder_disable() function
-> unconditionally tears down all resources:
-> 
-> drivers/gpu/drm/rockchip/rockchip_lvds.c:rk3568_lvds_encoder_disable() 
-> {
->     struct rockchip_lvds *lvds = encoder_to_lvds(encoder);
-> 
->     drm_panel_disable(lvds->panel);
->     phy_power_off(lvds->dphy);
->     rk3568_lvds_poweroff(lvds);
->     drm_panel_unprepare(lvds->panel);
-> }
-> 
-> Could this cause refcount underflows for PHY, PM runtime, and clocks,
-> resulting in kernel warnings if they were never successfully enabled?
-> 
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			lvds_in: port@0 {
->> +				reg = <0>;
->> +			};
->> +
->> +			lvds_out: port@1 {
->> +				reg = <1>;
->> +			};
->> +		};
->> +	};
->> +
+> [External]
+>=20
+> On 7/19/26 17:42, Torreno, Alexis Czezar wrote:
+> >>>
+> >>> [Severity: Medium]
+> >>> Will this strict equality check cause issues with future hardware rev=
+isions?
+> >>>
+> >>> The commit message mentions adding support for the ETNA8+ version,
+> >>> but if a subsequent hardware revision probes with a manufacturer
+> >>> revision greater than MAX34451ETNA8_MFR_REV (e.g., 0x0015), the
+> >>> outer check rv
+> >>>> =3D MAX34451ETNA6_MFR_REV will evaluate to true, but this inner chec=
+k
+> >>> will fail.
+> >>>
+> >>> This causes the code to silently fall through to the else block,
+> >>> regressing to the older ETNA6 coefficients rather than retaining the
+> >>> newer
+> >> ETNA8 ones.
+> >>>
+> >>> Could this use >=3D instead of =3D=3D to maintain forward compatibili=
+ty,
+> >>> similar to how ETNA6 is checked on line 328?
+> >>>
+> >>
+> >> Please comment on Sashiko's feedback for this and the next patch of th=
+e
+> series.
+> >>
+> >
+> > Replied to Sashiko on both patches. As patch 1 got applied, will wait
+> > for it to appear in hwmon-next before sending the fixes. Thank you!
+>=20
+> That patch was a bug fix; I applied it to the hwmon branch. I plan to sen=
+d it
+> upstream in the upcoming week.
+>=20
 
+Hi Guenter,
 
-Fixed. Testing if lvds->enabled in disable.
+I forgot these patches 2 and 3 are dependent on patch 1 (the bug fix). How =
+do
+I send the revisions to hwmon-next? Should I rebase my patches to hwmon
+or wait for the upstream?
 
-Will post patchset v2.
+Thanks,
+Alexis
