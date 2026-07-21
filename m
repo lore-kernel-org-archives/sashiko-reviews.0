@@ -1,123 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709AC3976A9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 14:23:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EA0446BFC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 14:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784643830; cv=none; b=NrmrGU2/vpOQD85nPmBuYFckudQm/WrzMOtqYD0dkxt8eMyis1DO56/K+mnfhGo3WXLGyvOJX0ecSDeQ2Rh8vZC00avTumT9ZeCS5rfnuPZ/IjQcWhRccCB1NNan6fMvNQtNnZMpb4gC3tFMU9Q2kDXk0427xZLs1eyhLs0Pupo=
+	t=1784644968; cv=none; b=Ci8FrrZP/JQFJd4HTPQWEQF3CgG997nNLlP3D+d9lgmhzA+F/A/Jwf1sQRNUFFMsSU7yrsChZUZ5UOREjktJvYXLKorvl4gir8oDpE6y2QwMpdV9Ntfi9IdPM1jeY/Xk0pLDe2XJfGqHNYOTaPmRoldbu+pDmg0H4mOqY4KbS5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784643830; c=relaxed/simple;
-	bh=YbE3FIEf16hP8H+mbp4mAxHDf1jtRYXry1/q9zHuyWA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dCqvRcnsCXgaG8CL1fwzQzic8/qOFSQMkYc1upuPOyiXUqGYa7fhvS2Ao6G/dGihXHc8fmmsnjZVR/u+p37UrbLhHEeWJcvoCjfxo6xuXhjVt0h1rMFbFQCusgTr5sVjGuR7cr0cgShxc5I9xqe30aALTKa3Eznc/MXE22ij5I4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5SmH4BX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784644968; c=relaxed/simple;
+	bh=6gnOLqcKaT1b14yHGtbHzIkRInXXkAxSyjq/G02Jdqs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=qWBVi8rL3I9cNkiZ3bQn9C7i8N2J1otcRasrNzs03sDvXbFjP6z2Ex+4dM9i6dOfSxNH+KkPZwr86cVew0+Qh7KAR3WP9vZX8bFS3oY1Iykti+KMcAQtzpe6flOfUQrR2iO8kemmy5mu6CArGlhqThH8TUK41r6bdG2LMW+cktk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BVsQGVNS; arc=none smtp.client-ip=209.85.210.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5SmH4BX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382871F00A3F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 14:23:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784643829;
-	bh=W872MX1aaB+YZmKQrLunW/vuC3RmxtdDHd9xnW6ge+I=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=M5SmH4BXlce5RIkeR7JLaR+DYcExoVzvJZxY15mNd/86gVy+IIZEAbVLqrabl/fae
-	 dRHYHv0Rzwi/98UDdgLJ4BuqS1gyLzWIzptNDaFWK+Lqr4tQOvzEORiwGWoq9w42ON
-	 aLwhIFaccqMXjGqR+CeG2FDMEYGEJnC7OUawXHKrMFVq10lNdvdJB29+clOYAM/eWG
-	 HRxRXKMzncodK3Y/9VB2d14OTWMgXo5Noi6XuOoAa9VT77n5QlUeLZTQuwymB2aIwH
-	 sGfx9HEIW5GZ81KEJESowJn5MqU21Cc8ceB7Wq+0oZnNNhMx7cNaW7QJXIXuDNN12u
-	 XFcTxv8DBL0fQ==
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c166f1bbeaeso1191625966b.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 07:23:49 -0700 (PDT)
-X-Gm-Message-State: AOJu0YznlJ20uJ6QT4yn0t485gjgKLWA90wy8Be4sZzZorJATxS4rWOH
-	/HSF3H/Unaf3Es8JrTiBe3oqWwxcZiY0PPLE06GzEvZFwweiXdCIEs5diWAujJkxSUC6pwMC4w4
-	XAbJcnOK+VOc3RijPEMtP5S/ZALSPAA==
-X-Received: by 2002:a17:907:741:b0:c12:1dd4:13ea with SMTP id
- a640c23a62f3a-c16b4765b7amr761810866b.30.1784643827828; Tue, 21 Jul 2026
- 07:23:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BVsQGVNS"
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-84870e7f498so11915393b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 07:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784644966; x=1785249766; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LNFqq4/9miHE+hyKXsNlebDayPW56SZCH4SA/Bf1Nq4=;
+        b=BVsQGVNS2eO3ilEMmZfdk5oESea9j5E/AV/tmhQ6CICs093R3+lULy4/OSYqN5oO2o
+         BHIrOFxqIH70OkAo8opswW+grLbrvRolKonuW7nPpSODxHZIr1ZFXgaUcfwltxRvUkGa
+         J5okw128U4rQ+QJtR5yd3h/+y72mDBcvs2FQ6KdssAzulbLBfZQnqKe6LpPjAvW1IMcb
+         rodIfIV2mmtMrUbSkmLcRIGAUcNo/iaGkPbQG9rct8aXMnOgSc90LZUoba7dxgoACbNP
+         aiH7x7TDAfXOi7qpTr+RVVj52LVarkJobovmDeL2qpZrS1fJRwbSufjPX5xIynSMe64J
+         o/pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784644966; x=1785249766;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=LNFqq4/9miHE+hyKXsNlebDayPW56SZCH4SA/Bf1Nq4=;
+        b=NTctz+HLcZ7fHV6s2jf3MCX0XQzwrybZZ4OYcP9QobhZlj/d18yH3u/3HdA0Nx8qPb
+         5qsqdOfEzyDl7qlaNFRYQsK1e4YKFiCPH1Qvaw7jSaCK0An71rApwQDrIHH5x/vVM7Hk
+         K0rLPIG6bcfjpXtgpx+PKDMBkQb1AFRsEjzm9Z9/EZl9crk7Z11TzRUpprtoWD0G/6LN
+         olNOkRbSah/3gGI2OqginJC2xrhTP7IFU0BdSIpdjKcck0nn23H1njFjnr9LayZ8XgWf
+         D4wG4GMyLYQAQZ7J/G5k1g5S+MqD5p5SFdxTi/Y70h9Wv9wrEsEEuS/SYBxtK14AL5Us
+         8dRg==
+X-Gm-Message-State: AOJu0Yy8wksNdc5HzqkniuCv3q1bpR7j2pQUb0IUnVZMFNi8JO5lmupA
+	i/Z6NNBiJfAgE+w3SpMNYkZOeIlNeZYV30MfbgBELNhvpjKK03h8WqAW+SiL7vHeOvg+P537SwM
+	K46GXJcBryEtwdbUo480vTrXrCBrrCdxm/beNT9zNTqb9lCWFfEfKblCkzV61Awjr+jOBo7KL0V
+	bovdYiCQXC/QTtsnd4PKYyQervscYC0MjHBVeW6d0lXTICPkdD
+X-Received: from pfwp3.prod.google.com ([2002:a05:6a00:26c3:b0:848:478d:6efb])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:aa7:8490:0:b0:84e:23a:14ba
+ with SMTP id d2e1a72fcca58-84e023a1807mr3186376b3a.55.1784644965816; Tue, 21
+ Jul 2026 07:42:45 -0700 (PDT)
+Date: Tue, 21 Jul 2026 07:42:45 -0700
+In-Reply-To: <20260721062426.C4EB81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260701175330.1645927-1-ninadnaik07@gmail.com>
- <20260701180553.473121F000E9@smtp.kernel.org> <20260716173939.GB534222-robh@kernel.org>
- <2f1795b5-cab3-4241-b3f8-532a7fc4df9b@gmail.com>
-In-Reply-To: <2f1795b5-cab3-4241-b3f8-532a7fc4df9b@gmail.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 21 Jul 2026 09:23:35 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJEbkPU2oYB2p0vBsq=XdzkXurdDUzZdJDOM=MpENLbYQ@mail.gmail.com>
-X-Gm-Features: AUfX_mxEjh-9RPB6Ab6fyhpFd_zD5BN0wQFo33UhJrt5AZbs4HA5Micyu-a_32A
-Message-ID: <CAL_JsqJEbkPU2oYB2p0vBsq=XdzkXurdDUzZdJDOM=MpENLbYQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
-To: Ninad Naik <ninadnaik07@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org, 
-	devicetree@vger.kernel.org, lee@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <al8M4gCwsWXS_jMs@192.168.1.215> <20260721062426.C4EB81F000E9@smtp.kernel.org>
+Message-ID: <al-E7uwCqS6na41W@google.com>
+Subject: Re: [PATCH v2] KVM: x86: Mark nested RSM-created VM-Enter as untrusted
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Hao Zhang <hao_zhang_kdev@163.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Sat, Jul 18, 2026 at 3:15=E2=80=AFAM Ninad Naik <ninadnaik07@gmail.com> =
-wrote:
->
->
-> On 16/07/26 11:09 pm, Rob Herring wrote:
-> > On Wed, Jul 01, 2026 at 06:05:52PM +0000,sashiko-bot@kernel.org wrote:
-> >> Thank you for your contribution! Sashiko AI review found 1 potential i=
-ssue(s) to consider:
-> >> - [Low] The schema conversion incorrectly restricts LED child node nam=
-es to `^led(-[0-9a-z]+)?$`, which breaks `dtbs_check` validation for all ex=
-isting upstream device trees using this binding.
-> >> --
-> >>
-> >> commit 6c59295f22b17d02a2b26847db54458f820fa4f3
-> >> Author: Ninad Naik<ninadnaik07@gmail.com>
-> >>
-> >> dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
-> >>
-> >> Convert lacie,ns2-leds to DT schema.
-> >>
-> >>> diff --git a/Documentation/devicetree/bindings/leds/lacie,ns2-leds.ya=
-ml b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
-> >>> new file mode 100644
-> >>> index 0000000000000..679a618906d80
-> >>> --- /dev/null
-> >>> +++ b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
-> >>> @@ -0,0 +1,87 @@
-> >> [ ... ]
-> >>> +properties:
-> >>> +  compatible:
-> >>> +    const: lacie,ns2-leds
-> >>> +
-> >>> +patternProperties:
-> >>> +  "^led(-[0-9a-z]+)?$":
-> >> [Severity: Low]
-> >> Will this restrictive regex cause existing device trees to fail dtbs_c=
-heck?
-> >>
-> >> The old text binding example used a child node named blue-sata, which =
-does
-> >> not match this pattern. Since additionalProperties is set to false bel=
-ow,
-> >> nodes in existing device trees that don't start with led will be rejec=
-ted
-> >> during validation.
-> >>
-> >> Should this regex be relaxed to allow existing node names, or should t=
-hose
-> >> device tree files be updated alongside this conversion?
-> > While yes we prefer what you did, it's perhaps not worth changing these
-> > old .dts files to match the preference.
-> >
-> > Rob
->
-> I understand this. Should I relax the regex to allow any pattern so that
-> the existing as well
->
-> as new DTS files could be properly validated?
+On Tue, Jul 21, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+> > index 4d2bacd00ec4f..f54757bd83821 100644
+> > --- a/arch/x86/kvm/svm/svm.c
+> > +++ b/arch/x86/kvm/svm/svm.c
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+> > index cc75feec05daa..333072cc9bce4 100644
+> > --- a/arch/x86/kvm/vmx/vmx.c
+> > +++ b/arch/x86/kvm/vmx/vmx.c
+> > @@ -6720,7 +6720,8 @@ static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
+> >  	 * invalid guest state should never happen as that means KVM knowingly
+> >  	 * allowed a nested VM-Enter with an invalid vmcs12.  More below.
+> >  	 */
+> > -	if (KVM_BUG_ON(vcpu->arch.nested_run_pending, vcpu->kvm))
+> > +	if (KVM_BUG_ON(vcpu->arch.nested_run_pending == KVM_NESTED_RUN_PENDING,
+> > +		       vcpu->kvm))
+> >  		return -EIO;
+> 
+> [Severity: High]
+> Does this allow the KVM_NESTED_RUN_PENDING_UNTRUSTED flag to leak and lock up
+> the vCPU?
+> 
+> If a malicious L2 guest modifies SMRAM to create an invalid nested state, then
+> executes RSM, vmx_leave_smm() restores this state and sets nested_run_pending
+> to KVM_NESTED_RUN_PENDING_UNTRUSTED.
 
-I doubt there will be new DTS files here, so you could just list the
-node names in use. Or to just allow anything, you can do:
+LOL, that is an impressively convoluted hallucination from Sashiko.  SMI is an
+unconditional VM-Exit on Intel, and KVM doesn't support emulating parallel SMM,
+i.e. it's impossible for L2 to have access to "live" SMRAM.
 
-additionalProperties:
-  type: object
-  ...
+That said, leaving nested_run_pending set isn't good, and I missed that my
+suggested "fix" would require tweaking the above KVM_BUG_ON().  I'll respond to
+v3 with an alternative solution.
