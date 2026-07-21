@@ -1,33 +1,32 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7865140801E;
-	Tue, 21 Jul 2026 07:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net (zg8tmtyylji0my4xnjqumte4.icoremail.net [162.243.164.118])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49B604343F6
+	for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 07:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.164.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784619802; cv=none; b=uixg+AJdEbq+xENEEbiNOUNuUkSAr7P8bfRGhPW3PF9r+WKJH+QRl5wwpjnAF+cb1LHO8e3k9fNOBeVDylEN6nbWIZkRlCOf1twbTOSXNf8vlO1dHMevYlCMBxK2M1qdsm/hKKGYLrZUosP49Xp9KM0hrior1e1KSkgY14qDemI=
+	t=1784620088; cv=none; b=IRNjEjhBzYUqwHEnWAy29Rvf2s8OJBid1NaDOLuOmevLhMd/QHNPPDHXIvISdAVhBbAQa5TLmB56hN92nlUwmCLMBCUIctDJyVYnb/cAR0tGkrmTd3iPIukw6uSVbyR7g3Dcwp7/8HR6LWHjgf1NfZtaWXGh6aeEelNZ0uQGbBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784619802; c=relaxed/simple;
-	bh=ir+4WfbiAzotiJ1Wjs3iSJw0sPivkg57hAu2GpqjZZE=;
+	s=arc-20240116; t=1784620088; c=relaxed/simple;
+	bh=x1IfwcVqkfyOpOyA4DHLIUh0/8VZmvUDXiClmKl43L4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g5v7Q1P20Xh5Q7ZAtpqQqXSzjFRFWss2CIq5rsUe9HUnshS2AjjKNAh8HIfMiDbMVtVuO4y7xmyS5gp3wkfOa+MZrf0qHd++lOAh0v6PM2fWsU0cX36NkkR86I5H5L/I/wJp4TELMeNrK108JiMkB+N6gEgIRzkRAgU7DU+pajw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JR0x25fq; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=V3xChqqmAwURiwO+jGwuXtdm0gm2ddrqCqYw6TOy1bI7nuB6MiqOatdghR7F/4QAbtD+rJeyWr5m2XaGTwtms/k5VMKAOvBG2NcjNeM4i7y7X2w3qEjQPBlI7ii2XipSiFDO+PQ6jNkHvmM0WLlifPUOr7KenzYdm+flrTBXtDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stu.xidian.edu.cn; spf=pass smtp.mailfrom=stu.xidian.edu.cn; dkim=fail (0-bit key) header.d=stu.xidian.edu.cn header.i=@stu.xidian.edu.cn header.b=RSA7vHXF reason="key not found in DNS"; arc=none smtp.client-ip=162.243.164.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stu.xidian.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stu.xidian.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JR0x25fq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7A61F000E9;
-	Tue, 21 Jul 2026 07:43:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784619800;
-	bh=h3tOXkeBPviC75Xzqug+FxcB9x6aF4pEU5Z+9yTVlIw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=JR0x25fqiXNTl0ZypZVjnoNkYtUeKuZMLUb/uQ2J1yzupBijUCFgmANQDLgTTdYWL
-	 CPpFIZakriC5r2qRE78MQ6w9d2qP0Hpxf0jprw1aR0QmiPibsAUMKDQFJ4JVqAtKTs
-	 wcnaM3c8YlHZRymCCArM2XjZaAYjA4xJBgpy3xCfhdTr23vR6cj1uJsbuSZ/8Mo//U
-	 Pe402ohhGtZKS1XGvfELfXzzOo3ItvWv04SCdnCbZmYq1xghR+Sg+pS5U1ZOpGbf+Q
-	 /KK0FIHbLSnMKqx9IyeQRcDrojL43QFYyPIgbEKSLaKdZpFtELSkPPoINsXSyyikaO
-	 OxHUi8TTNUQWg==
-Message-ID: <64eb7729-6f7f-4a05-a471-2406c5e3ccfb@kernel.org>
-Date: Tue, 21 Jul 2026 16:43:17 +0900
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=stu.xidian.edu.cn header.i=@stu.xidian.edu.cn header.b="RSA7vHXF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=stu.xidian.edu.cn; s=dkim; h=Received:Message-ID:Date:
+	MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	In-Reply-To:Content-Type:Content-Transfer-Encoding; bh=x1IfwcVqk
+	fyOpOyA4DHLIUh0/8VZmvUDXiClmKl43L4=; b=RSA7vHXFX7TDb5y923TfOGAgA
+	+zoFTJgb0u62AF/aNa2fiSrhStWtK/dYqTFNvn3lPGlxKusIJmj5mr5SuKzHa8CD
+	pvDnmEpAl4JJsn2iIXmmGRNazhh1qCZlE2MW+5fl+UQkZXhIEto0W5veBk5UsqOQ
+	fWi5S1Vqf+Zh77DWUE=
+Received: from [192.168.1.109] (unknown [115.53.183.71])
+	by hzbj-edu-front-2.icoremail.net (Coremail) with SMTP id BLQMCkD2OjArJF9qr+lJAQ--.8878S3;
+	Tue, 21 Jul 2026 15:47:56 +0800 (CST)
+Message-ID: <c8f95a3c-7c4f-4ffd-8bb3-f50b1cad4502@stu.xidian.edu.cn>
+Date: Tue, 21 Jul 2026 15:47:52 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,81 +34,51 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/2] ata: libata-scsi: terminate deferred commands on
- time out
+Subject: Re: [PATCH v2] fbdev: core: Clamp total_size to smem_len in
+ read/write functions
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org, cassel@kernel.org, linux-ide@vger.kernel.org
-References: <20260721064027.2081195-1-dlemoal@kernel.org>
- <20260721064027.2081195-2-dlemoal@kernel.org>
- <20260721070030.8AC0F1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260721070030.8AC0F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: dri-devel@lists.freedesktop.org
+References: <20260721071522.106306-1-25181214217@stu.xidian.edu.cn>
+ <20260721073109.81A121F000E9@smtp.kernel.org>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+In-Reply-To: <20260721073109.81A121F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:BLQMCkD2OjArJF9qr+lJAQ--.8878S3
+X-Coremail-Antispam: 1UD129KBjvdXoWrZw13Wr45tFW3GF1UtF4Dtwb_yoW3XFb_W3
+	4rt3y2kF1UJr4Ivan5Ja1agrsI9F48ur18XryYyF43Jr98ZrW7JrZF9rnxWa4kA3ZxZ3Wr
+	Jwnxu3yUCw129jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbxAYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I
+	8E87Iv6xkF7I0E14v26r4UJVWxJr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8I
+	j28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr
+	4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY
+	02Avz4vE14v_GF4l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxV
+	Aqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y
+	6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6x
+	kF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AK
+	xVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07
+	jzYLkUUUUU=
+X-CM-SenderInfo: qsvrmiqsrujiux6v33wo0lvxldqovvfxof0/1tbiAQUAEWpeO+sJ8gADsJ
 
-On 7/21/26 16:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+
 > Pre-existing issues:
-> - [High] Missing call to ata_scsi_schedule_deferred_qc() in atapi_qc_complete() leads to starvation and timeouts of deferred commands.
+> - [High] Partial copy to user space in `fb_io_read` causes silent skipping of framebuffer data and loop state desynchronization, leading to out-of-bounds I/O reads.
+> - [High] Missing locking in fb_io and fb_sys operations allows concurrent mode switches to cause Use-After-Free and Out-Of-Bounds accesses.
 > --
-> 
-> --- Patch [1]: [PATCH v7 1/2] ata: libata-scsi: terminate deferred commands on time out ---
-> commit 3b26adffba8da435c70bdca03b617603f9f9ae76
-> Author: Damien Le Moal <dlemoal@kernel.org>
-> 
-> ata: libata-scsi: terminate deferred commands on time out
-> 
-> This commit avoids unnecessary SCSI EH task wake-ups by scheduling
-> a retry of all waiting deferred QCs using the new ata_scsi_eh_timed_out
-> operation. It also updates ata_scsi_requeue_deferred_qc to terminate
-> timed-out deferred commands directly and schedule libata EH to prevent
-> the block layer from re-issuing them immediately.
-> 
->> diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
->> index 5868526301a2b..c2f2f711fd987 100644
->> --- a/drivers/ata/libata-scsi.c
->> +++ b/drivers/ata/libata-scsi.c
-> 
-> [ ... ]
-> 
->> @@ -2936,7 +3014,15 @@ static void atapi_qc_complete(struct ata_queued_cmd *qc)
->>  		if (qc->cdb[0] == ALLOW_MEDIUM_REMOVAL && qc->dev->sdev)
->>  			qc->dev->sdev->locked = 0;
->>  
->> -		ata_scsi_qc_done(qc, true, SAM_STAT_CHECK_CONDITION);
->> +		if (cmd->result)
->> +			ata_scsi_qc_done(qc, false, 0);
->> +		else
->> +			ata_scsi_qc_done(qc, true, SAM_STAT_CHECK_CONDITION);
->> +		return;
->> +	}
->> +
->> +	if (cmd->result) {
->> +		ata_scsi_qc_done(qc, false, 0);
->>  		return;
->>  	}
->>  
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but should atapi_qc_complete()
-> be calling ata_scsi_schedule_deferred_qc(link) before returning?
-> 
-> Unlike ata_scsi_qc_complete() which kicks deferred commands,
-> atapi_qc_complete() misses this call on all of its exit paths, including
-> the ones modified here. If an ATAPI command is executing on a shared PATA
-> link and a concurrent command is issued to the other device, it gets
-> deferred by ata_std_qc_defer(). When the ATAPI command finishes, it
-> appears the deferred command will be trapped in link->deferred_qc and
-> never issued, eventually failing with DID_TIME_OUT and causing device hangs.
-> 
-> Could this function be missing a call to ata_scsi_schedule_deferred_qc()
-> to prevent starvation?
 
-Yes. Will send another patch for that.
 
--- 
-Damien Le Moal
-Western Digital Research
+Thank you for the review.  Both issues are pre-existing in the current
+code and are not introduced by this patch.  This patch only adds a
+clamp on total_size as a hardening measure to prevent OOB accesses
+caused by drivers that misreport screen_size.  It does not alter the
+existing copy loop or locking model.
+
+If desired, I can look into fixing the reported issues in separate
+patches.
+
+Thanks,
+Mingyu
+
