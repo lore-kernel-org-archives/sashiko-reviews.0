@@ -1,177 +1,160 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1365B2FFF89;
-	Wed, 22 Jul 2026 07:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B522D9797
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 07:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784703778; cv=none; b=YI1igOMJJQatEq0vw4nb79+Vjs753KptiDckkkfPkS4S1l2XPPLC/NwMQqKecRbMfvYVdTFMHnhIFJhpE/ZwbWP2vR2ztxDHm/gNJPtYmIujC4aiygeSLyCsEXexrk11/ZG9BOwBw+6/joYK62br9n9KOQEI1VnpVOK7oGfpPNE=
+	t=1784703944; cv=none; b=LabsH39/RW+Hm1oW45XBDVdqRNrZZFD4zfT4O7BXzSxsn41sTSTaNK/byFNK2SddQIXP4ygr14s7oP6akIqqyKCkJwg3OmOkH2RKHh4GAOzU9u19jcPLWCXwsbrsfEIuvlTlG3RQw+H9oKg0FBeVEDqeMaxi1NQgJMEsgthoTk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784703778; c=relaxed/simple;
-	bh=Dhxpyp5WxHO0+rnMTK966vwBcBFPaMwCoLRcDTolfcE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aUw/IBoxj3/6uEIvh2uSYQ9cyQsBAN/nBBRyXT0HScpquMBJyKY2FzGPl8OaiD+//TWaXz/+gaBIuWoD6JvfHG3rYLDE3htEasik7C3s56+Z8rL7PGKRDg/yzZTLbVqQzjxOxPhNLdOaEGtgWbwIPBat2kMTE7erQQ059LhDGHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLcnPq+o; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784703944; c=relaxed/simple;
+	bh=1HKJrI9brOrDkpZ3OqlLkp0yBZS6YTh4XnMm8scue9U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jiwj1kkFnM8kuu1n6mv9viqNcNtVSCjBXg4Eo+mfq8tYMsm14IZ93lHl2uMn5euHObOc6pFWScyNfWnTBHRRgunUm9o5e7ylPLKDRFndPY6B6lSBmdgv5hP6sKq0s4VCAEGuWE8AaZV0X24e9uQL0T44IKEQ7gzE5NOCG8ji4XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eo+xn6dF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLcnPq+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4FD1F000E9;
-	Wed, 22 Jul 2026 07:02:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eo+xn6dF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0148C1F000E9;
+	Wed, 22 Jul 2026 07:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784703776;
-	bh=8FpaDTxzOLlH/vfTaml0v7+h+U0X8a7uuWws5ZIBjq4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YLcnPq+oJeAUGwMjBWaJMrNrFs0MWh5P98fmBAB3O0SE7qYaP6yuDecdj4WGQ/rsA
-	 Ys10sqrnzZxB61ukk+JxiYPeORqgiXxw90Q+Y/uGlbiTVPyQ2clTvOFyc8tSIQpwRe
-	 SOlaoYEP0OpsvKs/20T3y12nhtPZrYvPSPaDrj47xncUXvcyQDQ+JdtydFofu2F5Jz
-	 dZKgv4uJsEjED8dge+hAbs30PhNOBehdToLZzg3pyhmoqN8ZBpCz9EZwCiNKmavRgi
-	 fuQr54pmneIEAxay7ZmTh9QTRJPKRW9TFaDxVxiMzpmvlmps837J4MBHwjgat5qvX5
-	 jOQAnbFQ3d/aA==
-Date: Wed, 22 Jul 2026 09:02:50 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5] PCI/ASPM: Mask ASPM states based on Devicetree
- properties
-Message-ID: <acmo2p23ivae7zwf2nyymzlx5flhgc6fbnmlc3rg5ugadzsnml@ipxycw7lb7cs>
-References: <20260721-aspm-v5-1-58860c48d0c7@oss.qualcomm.com>
- <20260721143945.86E7D1F000E9@smtp.kernel.org>
+	s=k20260515; t=1784703942;
+	bh=Y915cQZhE7GPpNp92gZc1Lxo3IQr04a2RYnCcUZU5QM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=eo+xn6dF6SUbj8/4ArCf+KImBZQWQgEsHw+ActywUjKgNaoPxJeNckV8sLrVvB7Ae
+	 dZkM5gtU8frMYhZLJ8k7Yx7NOr8e7xSPhhn92fkyVBUGClXdDqmTO+jQ3mTuoRNj33
+	 KfcqWf8Fs6ZiCicbwhPo+MBI+6OxrEUSRwjGY9RB7+uUqY5JCi3IVblUGExr7Y5ncf
+	 dRtCxw5XRxC28E2S6gXQiXvpzn7Cj9zqz/6Pp8uzkh1TVqOwPH2tTW0N6XkeukXYXP
+	 diIeF6ZrjkpJP8Fp9xzDgoRBFds1VroAZHyP9iU1xmog3aH++9yenhd5Kr3oaVwWAn
+	 UsgxGKO7uyfRA==
+Message-ID: <0a44675f-1371-49e9-b5cd-1053836c88f5@kernel.org>
+Date: Wed, 22 Jul 2026 09:05:39 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260721143945.86E7D1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/amd/display: use proper context for logging
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260722063210.1144266-1-jirislaby@kernel.org>
+ <20260722065145.EC2431F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260722065145.EC2431F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 21, 2026 at 02:39:45PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The ASPM state restoration loop unconditionally overwrites the entire PCI Express Link Control (PCI_EXP_LNKCTL) register of all downstream functions with the exact snapshot from function 0, corrupting function-specific configuration.
-> - [Medium] ASPM L1 is only temporarily disabled on function 0 before executing the Devicetree override that disables L1SS, leaving L1 enabled on other functions and creating an asymmetric configuration flow.
+On 22. 07. 26, 8:51, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] NULL pointer dereference when logging errors in `dce112_get_pix_clk_dividers` and `dcn3_get_pix_clk_dividers`.
 > --
 > 
-> --- Patch [1]: [PATCH v5] PCI/ASPM: Mask ASPM states based on Devicetree properties ---
-> commit 164cdaf6b21843e390d8074afc28fbe939d2fb44
-> Author: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> Subject: PCI/ASPM: Mask ASPM states based on Devicetree properties
+> --- Patch [1]: [PATCH] drm/amd/display: use proper context for logging ---
+> commit 67013b697b017867bb1c1e61f13b863b96364c5e
+> Author: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 > 
-> Some platforms require selectively disabling specific ASPM states on a
-> given PCIe link to avoid link instability or functional failures caused
-> by board-level connectivity constraints. Devicetree supports disabling ASPM
-> L0s, L1, and L1 PM Substates via the 'aspm-no-l0s', 'aspm-no-l1', and
-> 'aspm-no-l1ss' properties. This commit enables the ASPM driver to honor
-> these properties when initializing the default link state.
+> drm/amd/display: use proper context for logging
 > 
-> Link: https://github.com/devicetree-org/dt-schema/pull/188
-> Link: https://github.com/devicetree-org/dt-schema/pull/190
+> This commit fixes a NULL pointer dereference in get_ss_info_from_atombios()
+> by temporarily redefining DC_LOGGER to use clk_src->base.ctx->logger. The
+> calc_pll_cs->ctx context is uninitialized at that time since it is only set
+> later by calc_pll_max_vco_construct().
 > 
-> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > index 172783e7f519a..82041052747fc 100644
-> > --- a/drivers/pci/pcie/aspm.c
-> > +++ b/drivers/pci/pcie/aspm.c
+> Closes: https://bugzilla.suse.com/show_bug.cgi?id=1271175
+> Closes: https://lore.kernel.org/all/a9ee54e6-2413-4156-9bde-d528ae3c63a3@kernel.org/
+> Fixes: 1296423bf23c ("drm/amd/display: define DC_LOGGER for logger")
 > 
-> [ ... ]
-> 
-> > @@ -846,6 +889,36 @@ static void pcie_aspm_override_default_link_state(struct pcie_link_state *link)
-> >  
-> >  	/* For devicetree platforms, enable L0s and L1 by default */
-> >  	if (of_have_populated_dt()) {
-> > +		bool no_l0s = pcie_link_has_aspm_override(link, "aspm-no-l0s");
-> > +		bool no_l1 = pcie_link_has_aspm_override(link, "aspm-no-l1");
-> > +		bool no_l1ss = pcie_link_has_aspm_override(link, "aspm-no-l1ss");
-> > +
-> > +		if (no_l0s) {
-> > +			link->aspm_support &= ~PCIE_LINK_STATE_L0S;
-> > +			link->aspm_default &= ~PCIE_LINK_STATE_L0S;
-> > +			link->aspm_enabled &= ~PCIE_LINK_STATE_L0S;
-> > +		}
-> > +
-> > +		/*
-> > +		 * Clear L1SS in hardware before updating aspm_support. Once
-> > +		 * aspm_capable is derived from aspm_support, pcie_config_aspm_link()
-> > +		 * skips pcie_config_aspm_l1ss() entirely via the aspm_capable guard,
-> > +		 * leaving firmware-enabled L1SS substates active in hardware.
-> > +		 * This applies equally when disabling L1 (which implies L1SS).
-> > +		 */
-> > +		if ((no_l1 || no_l1ss) && (link->aspm_enabled & PCIE_LINK_STATE_L1SS))
-> > +			pcie_config_aspm_l1ss(link, 0);
-> 
-> [Severity: Medium]
-> Does this hardware write violate the PCIe specification precondition for L1 PM
-> Substates on multi-function devices?
-> 
-> The PCIe spec mandates disabling ASPM L1 across the entire link before
-> modifying L1SS. Before calling this override, pcie_aspm_cap_init() temporarily
-> disables L0s/L1, but it only clears the ASPM Control bits for the first child
-> function:
-> 
-> pcie_aspm_cap_init()
->     pcie_capability_write_word(child, PCI_EXP_LNKCTL,
->                                child_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
-> 
-> If L1 was enabled on functions > 0, they remain active when
-> pcie_config_aspm_l1ss(link, 0) is called here. Could this cause hardware
-> configuration faults or link instability since the precondition isn't fully met
-> across all functions?
-> 
-
-This is a valid concern. We should disable ASPM L1 of all functions of the child
-of the link and enable it later if required, like pcie_config_aspm_link().
-
-> > +
-> > +		if (no_l1) {
-> > +			link->aspm_support &= ~(PCIE_LINK_STATE_L1 | PCIE_LINK_STATE_L1SS);
-> 
-> [ ... ]
-> 
-> > @@ -924,18 +997,30 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
-> >  
-> >  	aspm_l1ss_init(link);
-> >  
-> >  	/* Save default state */
-> >  	link->aspm_default = link->aspm_enabled;
-> >  
-> >  	pcie_aspm_override_default_link_state(link);
-> >  
-> > +	/*
-> > +	 * Restore L0s/L1 if they were enabled, but don't restore any
-> > +	 * state a Devicetree override just disabled in aspm_support above.
-> > +	 */
-> > +	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
-> > +	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
-> > +		if (!(link->aspm_support & PCIE_LINK_STATE_L0S)) {
-> > +			child_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L0S;
-> > +			parent_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L0S;
-> > +		}
-> > +		if (!(link->aspm_support & PCIE_LINK_STATE_L1)) {
-> > +			child_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L1;
-> > +			parent_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L1;
-> > +		}
-> > +		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_lnkctl);
-> > +		list_for_each_entry(child, &linkbus->devices, bus_list)
-> > +			pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
+>> diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c b/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
+>> index ecb8493ec5233..d3f7aa853e3a6 100644
+>> --- a/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
+>> +++ b/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
+>> @@ -1513,6 +1513,10 @@ static const struct clock_source_funcs dce110_clk_src_funcs = {
+>>   	.get_dp_dto_frequency_100hz = get_dp_dto_frequency_100hz
+>>   };
+>>   
+>> +/* calc_pll_cs->ctx is set only after get_ss_info_from_atombios(), unlike clk_src->base */
+>> +#pragma push_macro("DC_LOGGER")
+>> +#undef DC_LOGGER
+>> +#define DC_LOGGER CTX->logger
 > 
 > [Severity: High]
-> Can this unconditional write corrupt function-specific configuration?
+> This is a pre-existing issue, but does a similar NULL pointer dereference
+> exist in dce112_get_pix_clk_dividers() and dcn3_get_pix_clk_dividers()
+> during their error paths?
 > 
-> The child_lnkctl variable is a complete snapshot of PCI_EXP_LNKCTL taken
-> exclusively from function 0. The PCI_EXP_LNKCTL register contains
-> function-specific fields, such as the Read Completion Boundary at bit 3.
+> It appears dce112_clk_src_construct() does not call
+> calc_pll_max_vco_construct(), leaving calc_pll_cs->ctx as NULL. If invalid
+> parameters are passed (like requested_pix_clk_100hz == 0), the error path
+> invokes DC_LOG_ERROR() which dereferences calc_pll_cs->ctx->logger:
 > 
-> Writing the full 16-bit word from function 0 to all other downstream
-> functions blindly overwrites their distinct state.
+> drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c:dce112_get_pix_clk_dividers() {
+>          DC_LOGGER_INIT();
 > 
-> Should this loop use a read-modify-write targeting only the
-> PCI_EXP_LNKCTL_ASPMC bits to safely restore the ASPM state across all
-> functions?
+>          if (pix_clk_params == NULL || pll_settings == NULL
+>                          || pix_clk_params->requested_pix_clk_100hz == 0) {
+>                  DC_LOG_ERROR(
+>                          "%s: Invalid parameters!!\n", __func__);
+>                  return (uint32_t)-1;
+>          }
+>          ...
+> }
 > 
+> A similar error path exists in dcn3_get_pix_clk_dividers().
+> 
+> Since DC_LOG_ERROR() relies on the same uninitialized context pointer,
+> could this trigger a crash similar to the one being fixed here if these
+> functions encounter invalid parameters?
 
-True. pcie_capability_clear_and_set_word() should be used here.
+Occurs likely to me. Someone involved in the driver has to look as the 
+logic is really intertwined.
 
-- Mani
-
+thanks,
 -- 
-மணிவண்ணன் சதாசிவம்
+js
+suse labs
