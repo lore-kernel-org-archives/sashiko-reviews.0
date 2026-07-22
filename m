@@ -1,41 +1,45 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3592F34041D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 19:25:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D72221F2F;
+	Wed, 22 Jul 2026 19:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784748315; cv=none; b=AwmZ/y0PKbUAx7Wc3M33a4CW5T4w33Okp3edGH9Gms1DQgODjTOhwsKsEhMGPeGNhaGLhMDXhuk4xqCeig4uKt7QXgwWuofYkcxJRnWtxWlIw8olG7jX/Pd++8wsDOsADmXsHSrj8X8blIW7k5YUf8LuarLfXnbOUFRxk/wttTA=
+	t=1784748653; cv=none; b=uIkIjmoXcFsRrt251DaPElyMZ9R3n1kdKRpYDq5FPnKMFaAo0lapAS2DyCl857kh0LOwrmRZZyM2i9RNCFmAqhoVom0NY4VvL75Y7Ba0LF7PTbnLUxJlHIv03UqaIhOLHAiiQXatknJZU59WAdCPxd8XAnDLKWvaPTd6InsI3qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784748315; c=relaxed/simple;
-	bh=CPuceKWfgGNJgqttWzDqUCDnco6cd7XDcQJGowdF+T8=;
+	s=arc-20240116; t=1784748653; c=relaxed/simple;
+	bh=/idLT7scQwmdyXjCVSHFUu+AYVUZ3b5bx1YYn4FvX+o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JTA/iqchSlPSNht05zf+QGDJZxDo8TDnKe2cIb1UOsfTchn2RcsSUiS+IfNfhh+HJMy4gku6RoXDV595sbX81bsY2c+cieRUUUJwLlGGOT+iJOhcq01/SHyxBiAB9ssstr2SXt5yrRKoNYMAoiISLY1VKVlrC4CNwacD4yUtW6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=rZ/C/d+I; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=VvehWEcd662amMPaE3LRL87dWq+8/MRXWEtcelYRIxyUADhL9yFwCUafo1cev04rd/JEEr9oa78/a+6UAooiaXO92mJPf5C7AWjR9fFkxnwREnWMvviKDcH3XS7RlojewJV+XARD+Pmo9uiUBrKmZzq8gbeUaGjQ6EMX12zmWNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MicShiMn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="rZ/C/d+I"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1910B1595;
-	Wed, 22 Jul 2026 12:25:07 -0700 (PDT)
-Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AA55C3F66F;
-	Wed, 22 Jul 2026 12:25:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784748311; bh=CPuceKWfgGNJgqttWzDqUCDnco6cd7XDcQJGowdF+T8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rZ/C/d+IbM/egFYM8mcJe3pPOKYTU+XQXOjD7snfwnAkKWr/CImXnUlytLtQx19fC
-	 u4Pk2DEgw7hdq3xrUfeqb3+uSAhwPHW07Dg1XoZ/rf9rPNKnPRLxlMCPUBkGILJGjq
-	 LjnVaqgLgJqTsKT9hsGzE8WpZuUY5tAuzUrITICI=
-Date: Wed, 22 Jul 2026 20:25:08 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH RFC v2 07/20] mm/pgtable: define
- (pgd|p4d|pud)_offset_lockless() for folded page tables
-Message-ID: <amEZFECJbtQfoXOo@e129823.arm.com>
-References: <20260722-dummy_ptxp3-v2-0-d9e4bad31e0a@arm.com>
- <20260722-dummy_ptxp3-v2-7-d9e4bad31e0a@arm.com>
- <20260722155849.85FF41F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MicShiMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73741F000E9;
+	Wed, 22 Jul 2026 19:30:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784748644;
+	bh=3j/QOD0vnHlFRoYcnlJW/d2NjKmuDjzpQav1pRPJ1d8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=MicShiMn+2IDzvdux8jhTGz4/VqiFUjE/WeK8ciYocW3H2uEFKlAS4cje53cwZJDQ
+	 LvHwD53wmBM4RHr84QBSX5uDz/w5DJxH6KmNCyPUYYumKol7NQ3FGcO8TVnxIgH2u5
+	 pTvCMQfuF6xnwrucRex5X/6yAU7ZIK0tg+bzTdx4/rUDAdcal89/m7fbrTpXFH3tOm
+	 mO7yR3N+EIZJWvoOYTpiDDkIy/vyYB2gxtrYXc7t2qMyjmyTDypH0DFoRDaoOIa1Ts
+	 d9WjuuaISZfpl+Ss10XQaHHRRjwloE0JNFI8fGwCbGrwa39UwJrf11ioD1ElxQLgVH
+	 L1kEcW2qgGN3A==
+Date: Wed, 22 Jul 2026 14:30:44 -0500
+From: Rob Herring <robh@kernel.org>
+To: Francesco Dolcini <francesco@dolcini.it>
+Cc: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev,
+	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	Frank.Li@kernel.org, conor+dt@kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH v1 1/4] dt-bindings: lcdif: Add interface pixel format
+Message-ID: <20260722193044.GA1489843-robh@kernel.org>
+References: <20260717121847.488148-1-francesco@dolcini.it>
+ <20260717121847.488148-2-francesco@dolcini.it>
+ <20260717122808.693211F000E9@smtp.kernel.org>
+ <alpQh0ASY1HgdNqE@SMW015318>
+ <20260717205754.GB512678@francesco-nb>
+ <20260717211344.GC512678@francesco-nb>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,83 +48,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260722155849.85FF41F00A3A@smtp.kernel.org>
+In-Reply-To: <20260717211344.GC512678@francesco-nb>
 
-On Wed, Jul 22, 2026 at 03:58:49PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Fri, Jul 17, 2026 at 11:13:44PM +0200, Francesco Dolcini wrote:
+> On Fri, Jul 17, 2026 at 10:57:54PM +0200, Francesco Dolcini wrote:
+> > On Fri, Jul 17, 2026 at 10:55:51AM -0500, Frank Li wrote:
+> > > On Fri, Jul 17, 2026 at 12:28:07PM +0000, sashiko-bot@kernel.org wrote:
+> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > > - [Low] Introduction of the legacy, non-standard `interface-pix-fmt` property for a standard hardware concept (parallel bus width), violating modern DT principles.
+> > > > --
+> > > >
+> > > > --- Patch [1]: [PATCH v1 1/4] dt-bindings: lcdif: Add interface pixel format ---
+> > > > commit 7225ea545d2ff50540972dd75d375b8ecea4f315
+> > > > Author: Francesco Dolcini <francesco.dolcini@toradex.com>
+> > > >
+> > > > dt-bindings: lcdif: Add interface pixel format
+> > > >
+> > > > This commit updates the fsl,lcdif device tree binding to support the
+> > > > interface-pix-fmt property. The property is used to describe the hardware's
+> > > > parallel data bus transfer width to match board wiring and prevent shifted
+> > > > colors.
+> > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/display/fsl,lcdif.yaml b/Documentation/devicetree/bindings/display/fsl,lcdif.yaml
+> > > > > index 2dd0411ec6516..209ee5a96e393 100644
+> > > > > --- a/Documentation/devicetree/bindings/display/fsl,lcdif.yaml
+> > > > > +++ b/Documentation/devicetree/bindings/display/fsl,lcdif.yaml
+> > > > > @@ -58,6 +58,13 @@ properties:
+> > > > >      items:
+> > > > >        - const: rx
+> > > > >
+> > > > > +  interface-pix-fmt:
+> > > > > +    $ref: /schemas/types.yaml#/definitions/string
+> > > > > +    enum:
+> > > > > +      - rgb24
+> > > > > +      - rgb565
+> > > > > +      - rgb666
+> > > >
+> > > > [Severity: Low]
+> > > > Is this introducing a legacy, non-standard property into the new schema ABI?
+> > > >
+> > > > Standard devicetree guidelines usually prefer endpoint properties like
+> > > > bus-width (defined in video-interfaces.yaml) to describe physical parallel
+> > > > data line configurations, such as setting bus-width = <18> for RGB666.
+> > > 
+> > > Make sense, can we use standard property?
+> > 
+> > video-interfaces.yaml is for video capture interfaces (cameras and the
+> > media/v4l subsystem). It does not apply here for DPI display interfaces.
 > 
-> Pre-existing issues:
-> - [Critical] Use-After-Free in GUP-fast on dynamically folded architectures (RISC-V SV39) due to flawed generic lockless page table offset macros.
-> --
-> 
-> --- Patch [7]: [PATCH RFC v2 07/20] mm/pgtable: define (pgd|p4d|pud)_offset_lockless() for folded page tables ---
-> commit 235a6b06e94a41ff4c56118e36e869516151cea9
-> Author: David Hildenbrand (Arm) <david@kernel.org>
-> 
-> mm/pgtable: define (pgd|p4d|pud)_offset_lockless() for folded page tables
-> 
-> The patch provides p4d_offset_lockless(), pmd_offset_lockless(), and
-> pud_offset_lockless() for static folded page tables to ignore the passed
-> value and return the pointer. This avoids returning a pointer to the stack
-> value like the default handlers do.
-> 
-> > diff --git a/include/asm-generic/pgtable-nopud.h b/include/asm-generic/pgtable-nopud.h
-> > index 6c9bca78047c4..5a2b0a81ae197 100644
-> > --- a/include/asm-generic/pgtable-nopud.h
-> > +++ b/include/asm-generic/pgtable-nopud.h
-> [ ... ]
-> > @@ -47,6 +47,13 @@ static inline pud_t *pud_offset(p4d_t *p4d, unsigned long address)
-> >  }
-> >  #define pud_offset pud_offset
-> >  
-> > +static inline pud_t *pud_offset_lockless(p4d_t *p4dp, p4d_t p4d,
-> > +		unsigned long address)
-> > +{
-> > +	return (pud_t *)p4dp;
-> > +}
-> > +#define pud_offset_lockless pud_offset_lockless
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this fix leave dynamically folded
-> architectures like RISC-V SV39 vulnerable to a use-after-free?
-> 
-> The generic fallback macro in include/linux/pgtable.h still passes the address
-> of a local stack variable:
-> 
-> #define pud_offset_lockless(p4dp, p4d, address) pud_offset(&(p4d), address)
-> 
-> On RISC-V SV39, PUD is folded dynamically in arch/riscv/mm/pgtable.c:
-> 
-> pud_t *pud_offset(p4d_t *p4d, unsigned long address)
-> {
-> 	if (pgtable_l4_enabled)
-> 		return p4d_pgtable(p4dp_get(p4d)) + pud_index(address);
-> 
-> 	return (pud_t *)p4d;
-> }
-> 
-> Since pgtable_l4_enabled is false on SV39, pud_offset() returns the pointer it
-> was passed, which is the stack pointer from the generic pud_offset_lockless()
-> macro.
-> 
-> When gup_fast_pud_leaf() in mm/gup.c executes its concurrent modification
-> check, it reads the stale stack variable instead of the actual page table:
-> 
-> 	if (unlikely(pud_val(orig) != pud_val(pudp_get(pudp)))) {
-> 		gup_put_folio(folio, refs, flags);
-> 		return 0;
-> 	}
-> 
-> Because it reads the isolated stack variable, the check trivially passes,
-> allowing GUP-fast to pin and return a concurrently freed 1GB huge page.
-> 
-> Could a similar lockless override be applied for dynamically folded
-> architectures to prevent this?
+> ok, looking at this closer, it seems this is a used property also in the
+> DRM subsystem. I'll appreciate a feedback from some DT maintainer before
+> reworking this patch accordingly.
 
-concurrent modification check doesn't lose the meaning since pudp is read
-again and compare with orig and isolated stack variable doesn't connect
-to trivially passes. So, this is ignorable.
+I reject any custom properties for describing the format of the parallel 
+interface. 
 
--- 
-Sincerely,
-Yeoreum Yun
+Rob
