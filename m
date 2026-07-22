@@ -1,156 +1,140 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED6333624DB
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 03:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0932D73B8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 06:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784691885; cv=none; b=GAzVxE3vOAqJq2DQrgqrHsCC5oXYeLArvPgpbco84yrUempcQOxtqm0h3G2Q2dxGQ4arNQaBSS6lAL3ORFuk8o2pZJXGzGuUC8yYKKb+cp1IsHc70k3nzNNi+xUyqZV95t3Ji5k+69fd5Q06irzR6lSg+gYh3RmENOFUOxKfeXo=
+	t=1784700936; cv=none; b=HO4yq6zpwskCaQMZU/zz88BBd86FGebaeb+cBx0LkvQn+0pVrP9oxkuPYMbzLjwvdZQXZouDoGfW0UQ0tEij9vrjq0sBwfDxJ3pQR26urSf7SYHVaXhkpdpE9vYwutT72oRjGoZJl07AizuT5Uz/sGHhpU6TacSQiLKUSzEwvnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784691885; c=relaxed/simple;
-	bh=SZnFaIx5YAgzpvznmAnX2fr1m30+Y87+ASv46q4G6wA=;
-	h=From:Subject:To:Cc:References:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=TlpwPFxAYAG0dnufVd5k241HgEfe6QbrB8CHvEKN68pHtAe7Dy36d7KQZdt0miubNzPTPKvUhWD4xgopMnlE2/M/1GIzpHIQ8Tjh080oSUieT6AEDJKIZGSYya41ZSLIHDc7VLGq3fcRNYoqfpCjFyRaVFUwMcldqM/RKOjmwfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.101])
-	by gateway (Coremail) with SMTP id _____8AxReqnPGBqSOEFAA--.21817S3;
-	Wed, 22 Jul 2026 11:44:39 +0800 (CST)
-Received: from [10.20.42.101] (unknown [10.20.42.101])
-	by front1 (Coremail) with SMTP id qMiowJAxDcWIPGBqRLIUAA--.21957S3;
-	Wed, 22 Jul 2026 11:44:38 +0800 (CST)
-From: Hongliang Wang <wanghongliang@loongson.cn>
-Subject: Re: [PATCH v8 2/2] i2c: ls2x: Add clocks property parsing and adjust
- bus speed
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260721122604.12717-1-wanghongliang@loongson.cn>
- <20260721122604.12717-3-wanghongliang@loongson.cn>
- <20260721123838.C79B81F000E9@smtp.kernel.org>
-Message-ID: <30d03259-54cc-0d78-fe86-7756c96352f6@loongson.cn>
-Date: Wed, 22 Jul 2026 11:41:55 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1784700936; c=relaxed/simple;
+	bh=qbmS55a4/XsEyhh0g0JM08u+BWNNaItpw+EELnt4P78=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Le6iPS5LfEqj3/Ce/vmeU3uJOE+GW13DkJVY40wB661Lc/OTpFpFHuxvHwV4/PsloAfaKhI16Av1jzAG06QK0jvy1zL//20mS9wVz0FypQhoovemFNiP39sG0c5V2L0y4zSqT0HyyciotBVCn4/JJa+rwCIICpsHrNoZewmtWUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zj0fP83T; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gnVYNGOo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zj0fP83T";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gnVYNGOo"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66M53jrU4045320
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 06:15:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qbmS55a4/XsEyhh0g0JM08u+BWNNaItpw+EELnt4P78=; b=Zj0fP83ThECWDScu
+	Splw+uXGIh8idRDBRA9dw42YzeadaO4GnZkXSnkjap48K85AFAxBYHNN1d9s5jBf
+	V5jm/zffmmzUvh4oLpPRjnwNlaX93OgRC9mBnrwLD98zRrc1r2sfoYhyPbcFcnvF
+	odQdssDozPseIO0lXYCeFrSvlRmu457oMzv0IJMkr9tahp6Psp67e6vugSqi77jc
+	yNKvVwelryZNV1vgP8jPHh8aDr3kp+FB3UVLAnJ5qTAF1Hi3f+FLRcKvB8gbANu8
+	nnUfIZTVBIPkyGRryNmqOms0NpzISGolYefA1HhlfLGCUwd+KrZuBNGFgOPYz1yD
+	f55/xg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjd6dajje-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 06:15:34 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-51c1a97644aso33577591cf.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 21 Jul 2026 23:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784700934; x=1785305734; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qbmS55a4/XsEyhh0g0JM08u+BWNNaItpw+EELnt4P78=;
+        b=gnVYNGOo/x59v/mFZNWQR0GO1eagMSf78a+Wud8/IQHguPeyOVwCgk8+PTyJAo+qtQ
+         qFXFXLFcipQwZGfOytaVm9zeDVo4+y0qT08fyxIMaL9CdDqY85zDlE78xOQxT0cnVGNc
+         CUIxyAIhrmmB+NIUFBWAqHbsYkmZvK7leC/NaUom6HYXOyh4VjZ0FmENZFEnYhEb9qj9
+         ZgsRlPQTQ9er0+zNXH59z13z2gzPoyWXHtFDx0kyrI/N4qqzyUbbvzxlDfYrQa8pLp/I
+         KTBI66Rhq+19eauR3fUMr/Y7VL+eKUEbsUy18SFjGEVJ0w5Kzi36oIBhMBEAKOVO6jAC
+         j6zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784700934; x=1785305734;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qbmS55a4/XsEyhh0g0JM08u+BWNNaItpw+EELnt4P78=;
+        b=CzVnTjJLbp/z8sKWC1ukPeU8UcXmYaQBKng4XtgY6J4YaEWhl5DGY78lfTJX+wxe5G
+         T1dxgWqcqXP6KLYt4IxPSAHnz6x1M7WGQGesXKgJIKPNQ/fCQfjgCNaAgZMuXrouvVKA
+         BWBhfHAiemo4whykFWcCZ5/FC0to8jimxVc4DX+LKVgXTXD0XFpfkISg33dyTP4Oy+/T
+         8kf4eYO0C9RJkmj20AvsO5YstStzdh6HiSWDJHsOdFKuiTV5LP8zSy12Y3t3+1O2DvWs
+         ntiRkwQm7Kp2ny4yUK2KFE6h8HOawaliAZzzKwsMhYmn5jjBhgT9TqZ6ZA9iPMsy1y/S
+         859g==
+X-Gm-Message-State: AOJu0Ywct3qmLFhnS083iEajQkPMYLaZ7Z2KVhlT1u6BCuGRwDXvvOhI
+	r+K/uYSJ5yPiMipSUdagyVjaNvKo19KppjlPN5+DRNL+y5Mv2jgcE/FyB72I9ejVsa/WnMax9dU
+	Y4Qo9U/TYOTbkQI+zXJjC3Eh4HwfKuX186dRKtKgL6SI7W56ZClYpyTLCZTnL4fMfTFO9hjxH0X
+	LpbNc=
+X-Gm-Gg: AR+sD10ZDmV6nhBDU8BKF+8hYw6uCNEh0Tl/O/pVanYBzxN15QyX+EUBQ+EBkHIHAx8
+	wza+INfu2sM+2gskvF7EGWubbqUiCJW37kGf3mQQFk57sAZUjQhc0lq4Fy+Orw9nxk9Y7Al4ulQ
+	odq/e54JyhD+SvMYl976+OJWoXRfEX2EfYKtKA3OtZkQDNyJ0spoFTpmB8FWjRFafIrioheA7Ac
+	eYff4jHWdFe/WbYIAPreUOcwHV3LniGC0KZ35YlUYuKnPKNem01vzejcLT65Za//FjRuo9GSRfu
+	T2x1UiHSWdflowJAPwkWTH7mmWZty8R1WBLHYMYzsKkzufHMwgXY3YkthG30QbVD169DAoFXQU9
+	y1twQc2FSPwQLPbiKn/fivAXLI3HlHw==
+X-Received: by 2002:a05:622a:e083:10b0:527:631:8d6 with SMTP id d75a77b69052e-52706310c66mr35464511cf.25.1784700933684;
+        Tue, 21 Jul 2026 23:15:33 -0700 (PDT)
+X-Received: by 2002:a05:622a:e083:10b0:527:631:8d6 with SMTP id d75a77b69052e-52706310c66mr35464491cf.25.1784700933258;
+        Tue, 21 Jul 2026 23:15:33 -0700 (PDT)
+Received: from [192.168.1.110] ([178.197.223.174])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653c9d99sm124219145e9.12.2026.07.21.23.15.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 23:15:32 -0700 (PDT)
+Message-ID: <898004b1-45dc-400c-99e1-7ba109e81265@oss.qualcomm.com>
+Date: Wed, 22 Jul 2026 08:15:31 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260721123838.C79B81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] dt-bindings: arm: qcom-soc: Include Eliza,
+ Kaanapali and others in SoC names
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+References: <20260721-dt-bindings-qcom-soc-naming-v3-0-8f275c9d3412@oss.qualcomm.com>
+ <20260721-dt-bindings-qcom-soc-naming-v3-1-8f275c9d3412@oss.qualcomm.com>
+ <20260721160317.67D1D1F00A3E@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Content-Language: en-US
-X-CM-TRANSID:qMiowJAxDcWIPGBqRLIUAA--.21957S3
-X-CM-SenderInfo: pzdqwxxrqjzxhdqjqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurWUWw4fGryUAryDKw1fKrX_yoWrXw17pF
-	WrKayrGr1DtFWvgwnFvr1UZFyjyws5JayjkF1UAF1xWF1rCr1kXFy3trWFg3y8Ar1IyayF
-	vas8WFn7CF1qvagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
-	Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
-	02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
-	wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
-	CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
-	67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
-	IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
-	14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
-	W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
-	UUUU=
+In-Reply-To: <20260721160317.67D1D1F00A3E@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDA1NSBTYWx0ZWRfXy3z2BI9G40uD
+ ynmXDKDZevZwUrIvWabYyqY8r5G6TafZ9ryY5cxXxYelN5lRlgtKcdhHNhglGu4K325HWTFfDF6
+ /GqgXQX4c14WfTxoOmbGMvZ1PQN1j6o=
+X-Authority-Analysis: v=2.4 cv=Ipsutr/g c=1 sm=1 tr=0 ts=6a606006 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=N6niishs+lR9UBL1FN3Qrw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=n0SlpFEdo9-6FWldBkQA:9 a=QEXdDO2ut3YA:10 a=arBHhYMabMMA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDA1NSBTYWx0ZWRfX5Twpu66Md8go
+ Bl+clc3z38Gt850GuimwUTj2IwrkuzZYYwc17NGPWrTQNMKlPH6GnZZHkyKq1wAJXPkjkrm7QJr
+ jo4CZAq7JROEAVBr7+iyU5fftofxCRBeq26VvuB1GHJHcytAcRcJLDFq7eHd6tF/VAhcZBpVULw
+ 4vgWFSAGZNc4JkLJ/MleL4CSEDyKZjQnQITHn1MdpVqckbkVyCd3WHcRhN4Im447rRsjGZIFpu9
+ s+My+avrRz3z3S7bBC06G0xVLEbygmW0c/2TujsK3IT4X/T77923wDyJG6CM/77AK/bkTMQ+6lf
+ 90aj2a898blnH7sifaO+lJ5/xPNv0iF/w/BZYYnZVceI2vpCGoQP7QlD/ItiQurDSeUbNX0It33
+ ISrmJe0J+AePhrD+ychWSJMGzJ+QGAh8R8EijLZu4PidFsPVfrmsDsOVGCi72MDX7ozPuaV2z3g
+ 0XlZ2NvmQhmmgE47x5g==
+X-Proofpoint-GUID: YHO2lBGoVCUSqyT0u8wc5wEriKa0l2bo
+X-Proofpoint-ORIG-GUID: YHO2lBGoVCUSqyT0u8wc5wEriKa0l2bo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-22_02,2026-07-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607220055
 
-Hi,
-
-On 2026/7/21 下午8:38, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] 32-bit arithmetic overflow in prescaler calculation can cause a divide-by-zero kernel panic.
-> - [High] Calculating the prescaler `val` can underflow to -1 and wrap to 65535, causing the I2C bus to stall.
-> - [Medium] Abuse of standard 'clocks' property name to pass an integer frequency in ACPI.
+On 21/07/2026 18:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Schema validation regression for existing legacy compatibles using new SoC codenames
 > --
->
-> --- Patch [2]: [PATCH v8 2/2] i2c: ls2x: Add clocks property parsing and adjust bus speed ---
-> commit 6ae7434ddbd04758b9a4e167725900c5fa4d51c1
-> Author: Hongliang Wang<wanghongliang@loongson.cn>
->
-> i2c: ls2x: Add clocks property parsing and adjust bus speed
->
-> The i2c-ls2x driver supports dts and acpi parameter passing.
-> In dts, uses clock framework, by parsing clocks property to
-> get i2c bus reference clock, and define the div of reference
-> clock by device data.
-> In acpi, by passing clocks property to describe i2c bus reference
-> clock and clock-div property to describe the div of reference clock.
->
->> diff --git a/drivers/i2c/busses/i2c-ls2x.c b/drivers/i2c/busses/i2c-ls2x.c
->> index b475dd27b7af9..25f8301ae14fe 100644
->> --- a/drivers/i2c/busses/i2c-ls2x.c
->> +++ b/drivers/i2c/busses/i2c-ls2x.c
-> [ ... ]
->
->> @@ -107,12 +116,13 @@ static void ls2x_i2c_adjust_bus_speed(struct ls2x_i2c_priv *priv)
->>   	else
->>   		t->bus_freq_hz = LS2X_I2C_FREQ_STD;
->>   
->> +	val = (priv->pclk * 10) / (priv->div * t->bus_freq_hz) - 1;
-> [Severity: High]
-> Can this calculation overflow using 32-bit arithmetic?
->
-> If the numerator (priv->pclk * 10) exceeds roughly 429.49 MHz, it will
-> overflow. Additionally, if an ACPI table specifies a clock-div and bus_freq_hz
-> such that (priv->div * t->bus_freq_hz) is exactly a multiple of 2^32, the
-> denominator could silently wrap to 0, resulting in a divide-by-zero panic.
->
-> [Severity: High]
-> Could this calculation also underflow to -1 if the requested bus frequency
-> is higher than what the reference clock supports?
->
-> If (priv->pclk * 10) is less than (priv->div * t->bus_freq_hz), the integer
-> division evaluates to 0. Subtracting 1 would underflow to -1, which then
-> wraps to 65535 when cast to the u16 val. This maximum prescaler value would
-> slow the i2c bus down to a crawl without returning an error.
-On LoongArch platform, under the right parameter passing, there will be no
-overflow and underflow, so I think this potential issue can be ignored.
-> [ ... ]
->
->> @@ -304,6 +315,29 @@ static int ls2x_i2c_probe(struct platform_device *pdev)
->>   	if (irq < 0)
->>   		return irq;
->>   
->> +	if (dev_of_node(dev)) {
->> +		clk = devm_clk_get_optional_enabled(dev, NULL);
->> +		if (IS_ERR(clk))
->> +			return PTR_ERR(clk);
->> +		if (clk)
->> +			priv->pclk = clk_get_rate(clk);
->> +		else
->> +			priv->pclk = LS2X_I2C_PCLK_FREQ;
->> +
->> +		priv->div = (unsigned long)device_get_match_data(dev);
->> +		if (!priv->div)
->> +			priv->div = LS2X_I2C_2K_CLOCK_DIV;
->> +	} else {
->> +		/* clocks and clock-div are only ACPI properties. */
->> +		ret = device_property_read_u32(dev, "clocks", &priv->pclk);
-> [Severity: Medium]
-> Does this abuse the standard clocks property name in ACPI?
->
-> The clocks property is typically reserved by devicetree and ACPI _DSD
-> bindings for an array of clock provider references (phandles). Overloading
-> it here to pass a raw 32-bit integer frequency breaks generic property
-> parsers and firmware validation tools.
->
-> Would it be better to use a vendor-specific property name like
-> loongson,clock-frequency when reading a raw integer?
-Does clocks property must to be replaced? If not, keep this usage to
-compatible for released firmware.
->> +		if (ret)
->> +			priv->pclk = LS2X_I2C_PCLK_FREQ;
->> +
->> +		ret = device_property_read_u32(dev, "clock-div", &priv->div);
->> +		if (ret || !priv->div)
->> +			priv->div = LS2X_I2C_7A_CLOCK_DIV;
->> +	}
-Best regards,
-Hongliang Wang
 
+Looks like false positive.
+
+Best regards,
+Krzysztof
