@@ -1,104 +1,309 @@
-Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFE337CD32;
-	Wed, 22 Jul 2026 15:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B623A35C6AC
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784733049; cv=none; b=SZnW2jfl0zDypgRodsZF1iVljr1hmOC1kj0cNl9YJFkOAl0ZTv/VRRnRZF2N3vLM6pe3Dvd/K6AhwU8zz+ka3BS/3puznppWx9FHB+NDFkBQx729THjURTayPu4/Q2xNavbIeeXB49cEAydLzuMyfl2y/Bqc2NzeyHnnrBaarnE=
+	t=1784733144; cv=none; b=KZcmUsJ3iPUkNeYBxWm6DpZmOMiFT9/wqpw4f1qBudT+A5eMahkoC8wcWemMTXUizLOqSuEZtJBTV/tlGPKknQr9LT0WDZrAiJZHo9WVzh+EZ5N18HtHIthXF9G+hxmHFiSrQgCY63jC+GSw0dVYJbWcMICgqV9YN1R5C336DAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784733049; c=relaxed/simple;
-	bh=9Kt69uHUA8PdypJnEXhP3EGUDdQCnL+eqIEGXoX+BM4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=NdhG56KwM31aznvv7sgfnDldyYihol3TanDbyRwk/fmsdugmMyi0HCIyQwA8ICEYIp7XALof1F/x9Ip3vCXUaLPQig3nGdmVKd10DLpv9az/J083NgJKMhjrYMwgG+POWgjONWpaafYVyIDP9AhWtQYFzjnss+F8xEK7RgS5b50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=p/5qa951; arc=none smtp.client-ip=198.37.111.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
+	s=arc-20240116; t=1784733144; c=relaxed/simple;
+	bh=gwL+7pw1dy+OP01p49q/MyWPmKcKJMcpY7Nwq/eqxik=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=prMyoKAEMIf+l7qHotcJrB8rvXqrCQQgdXYTrdVrPdL8Wbq16frtxjYiJrd9NCPTKGCbGkuLEb6vYgItU4HDN84EU4GX29lIVoTQ63Enf5pF8nTZCBGlCCD1qop7Lxv+D/RA4tE+KgMXe/ezj26u6tXBzqJwkpbk7HifQx/dSLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=X21agpX3; arc=none smtp.client-ip=209.85.210.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="p/5qa951"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1784733046;
-	bh=9Kt69uHUA8PdypJnEXhP3EGUDdQCnL+eqIEGXoX+BM4=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=p/5qa9510vRash8IyedgimfbupSMDafA16Hv1CH0cVsIJmEJvhBgFOk9O0BI6woa5
-	 l3IcsP9CNxGJxvpGI4HxMCmsI8tr8PEMJ0OpL5lC7z6pvYi6E9PQlIN1YlcS7TjdWm
-	 /hSS/myyfMW6e6m+bYhVm9AwGtyHkHnwLpOJSk2Q=
-Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4300:d341::8c71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 7E3F61C00A4;
-	Wed, 22 Jul 2026 11:10:46 -0400 (EDT)
-Message-ID: <8cb7a4a8a13bb003daa1d1413517e104955772d3.camel@HansenPartnership.com>
-Subject: Re: How to fix problems with the sashiko review model
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Guenter Roeck <linux@roeck-us.net>, Greg KH <gregkh@linuxfoundation.org>
-Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>, Roman
- Gushchin	 <roman.gushchin@linux.dev>, linux-scsi@vger.kernel.org,
- ksummit@lists.linux.dev
-Date: Wed, 22 Jul 2026 11:10:45 -0400
-In-Reply-To: <f2eb5423-b5e8-4b8a-9d28-974dc0eef892@roeck-us.net>
-References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
-	 <20260722042744.5C1B01F000E9@smtp.kernel.org>
-	 <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-	 <2026072224-moisture-gonad-409f@gregkh>
-	 <f2eb5423-b5e8-4b8a-9d28-974dc0eef892@roeck-us.net>
-Autocrypt: addr=James.Bottomley@HansenPartnership.com;
- keydata=mQENBE58FlABCADPM714lRLxGmba4JFjkocqpj1/6/Cx+IXezcS22azZetzCXDpm2MfNE
- lecY3qkFjfnoffQiw5rrOO0/oRSATOh8+2fmJ6el7naRbDuh+i8lVESfdlkoqX57H5R8h/UTIp6gn
- 1mpNlxjQv6QSZbl551zQ1nmkSVRbA5TbEp4br5GZeJ58esmYDCBwxuFTsSsdzbOBNthLcudWpJZHU
- RfMc0ew24By1nldL9F37AktNcCipKpC2U0NtGlJjYPNSVXrCd1izxKmO7te7BLP+7B4DNj1VRnaf8
- X9+VIApCi/l4Kdx+ZR3aLTqSuNsIMmXUJ3T8JRl+ag7kby/KBp+0OpotABEBAAG0N0phbWVzIEJvd
- HRvbWxleSA8SmFtZXMuQm90dG9tbGV5QEhhbnNlblBhcnRuZXJzaGlwLmNvbT6JAVgEEwEIAEICGw
- MGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAml2ZBI
- FCS3GUMIACgkQgUrkfCFIVNZKjQf/deRzlXZClKxTC/Ee2yEPqqS7mm/INUA49KdQQ5oIhSxkUBy0
- 9J4qjMIo5F8ZFkFTqikBqeL35LKu7O7rn8WETfX8Bxvos3HUsl3jHo34DES4MUFIpoQPgtiLRGwLb
- K0cVCAArR2u2qj4ABmTRrs1I1kvdjEw6gatOuXtEe/j5O2fvfzTq9GBr0Q3n2IAsFXi4hLlx6VPE8
- tyWUZ8BWJKtih3JAeUiXFvASL3McV0rV9RnU0VbjEQEhSE7PMYhWpnDC9AyBb0lXJllQRvC3NSkUB
- 8KVQgNNxRPss0WE/nBoZ4dFA42jTyzTz8lNylxZoAWV7WJb3QxVg4oCodRVrxxrQhSmFtZXMgQm90
- dG9tbGV5IDxqZWpiQGtlcm5lbC5vcmc+iQFVBBMBCAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeA
- QIXgBYhBNVgbnPItGJxvq2a34FK5HwhSFTWBQJgS5mYBQkbNYS9AAoJEIFK5HwhSFTWBpwIAL5Bk3
- 5FB34U6iHmDzzgdCbxLTs43T/YQyJpcGIvopBvnI/fDY8oSG6Df64/O6B+1R+A8TDp6ZG5ysUWnCC
- 6GuIaEHemBYkitMPglR6+sGCMQY7O0mlsPvdssvKK1KI9Bno4VU6ogaF2qVzefSqg1Djmf/DcsxWP
- rI/jdJ8FB5AYR2rjIdDFc+zRdAJuavo1/anyY2wgpFh/3R8IOYAEfWV9nGgYkf9+tA4EIn1sxE0I3
- L5oW2N3mbyRrkzuBwO8ztMCwqEPk7moWzhokcZqMXiAIahaZdkashJC+s2X2RZSGCy+g+pvY5NN4B
- BVG5XwLgVBqbHMTcxE0fbmPqz+q6O0LEphbWVzIEJvdHRvbWxleSA8amVqYkBoYW5zZW5wYXJ0bmV
- yc2hpcC5jb20+iQFXBBMBCABBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAmODZ5ACGwMFCRs1hL0F
- CwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQgUrkfCFIVNZu0Af/TzvL2/NdgAcw9uN3x60H8
- jc4QUq14VpxcFEFEMpcj1morkX/G93V+56HBBaXZj+yK8PhxIA/SIz+sU7C/0YvKuvzakP8ZX/7WJ
- e32SOUtjfr/VTaqjIBzNj6OxLvZpmNbBw7s6DwhhNpHOWqJ/1ml+PtDRDV71IB58yVqQjp1xlNKVl
- ZppcJ5908EJzsFnRIVjiQiDSKoppqB2BCibBbrWcln7CiWMyOC/cco6SIn6twH+f7+aivJ3xGcOE2
- a9gBKF5rNi9TBoX9oyPmshv/TDmnohsVrH7AYXlGYfZTk15SWEiROh1QX8/uD9wl/gcIv5EDUpT/F
- L2jzOsA5663bw==
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="X21agpX3"
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-84e04598adeso2028336b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 08:12:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784733141; x=1785337941; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=I7f9lZbSdhEgbSxr67hS2Jrj3sXRGAdvMtjr5VpXokM=;
+        b=X21agpX3wBRHZ5IU+Dz0dD029u2eI7VTyw0An6Bd2tFQqhIrer0+Tq/PqCOfzWM/rp
+         hq97xHzhRXbDaK5RW5/YVS9pKpgwKxOnyIumnZq5C426nxrpgiiBFwRxlQe+egkR0TOr
+         rTn9aAqq+xtP9ak/oqXFEI2l/Ju7MPVFZf4KfBi8nlXRzU10lOdNcBzUVgcgGSazUW1N
+         /aC3qBrb9W83bZYsTbh9qg/3bf51cNQ5bs+Z77BEn/cYp+AZGpWI9npVkgVFS6PQbhT9
+         XwTnKJ5R3MDIzcjYrRgMZXe5hAhCduRwWKVZRCbWblop3b2h0HY2k+uLFqWJZjywhXXu
+         Swxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784733141; x=1785337941;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=I7f9lZbSdhEgbSxr67hS2Jrj3sXRGAdvMtjr5VpXokM=;
+        b=pyj0YdJyDJLw8clsb967d4O2GQmlIuOf0lsnT2oseQLobO2tDICmJjiInOFHczCPyB
+         +SfF79eAIiACuYt8oZHhJUNKypQC1UruhSDkIY+4u7oijvlKVv5hnr0p/TUYl3kXP7PK
+         3V/UJu0hbrMebN1W3aKPKqkCJiXw2TvbZ6fjHzPT6ws4w4jxeNVH+Sp3GGWI4dfc+z5F
+         +YMyk/kIDz+iNR0UEO2bK3sMahZ9Q/c3M6VCr/SQeAY309OHlaW8WuDRrz3CVD/QwX4A
+         YSxn5QJ1UMmGQLJUhfJtPEz91Pu6duz1BPmSNzy+S7lBNIGhMMmyDrBMgzUhstpm3x5H
+         FlhA==
+X-Gm-Message-State: AOJu0YyQIwfwLXp60a5hQcGN4CzbmrFFZOUfSsXEyB5BspZiT/FCfYg6
+	DYGYDQacJofmOo/C17g7CPVeLcJ+gaqcs+gW3kEiFO9wENjOtT17DGp4XNlRiRqkIGo25TsVotG
+	FKaZXCw==
+X-Received: from pfkm8.prod.google.com ([2002:a05:6a00:808:b0:848:48a0:41e6])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:14d5:b0:848:6ef9:f5ca
+ with SMTP id d2e1a72fcca58-84c2954e130mr23069474b3a.63.1784733140595; Wed, 22
+ Jul 2026 08:12:20 -0700 (PDT)
+Date: Wed, 22 Jul 2026 08:12:20 -0700
+In-Reply-To: <1417841720b8435f8fb95ac0bd95be6e0e9390d4.camel@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+References: <20260718014500.2231262-1-rick.p.edgecombe@intel.com>
+ <20260718014500.2231262-9-rick.p.edgecombe@intel.com> <20260718061050.E17B01F000E9@smtp.kernel.org>
+ <1417841720b8435f8fb95ac0bd95be6e0e9390d4.camel@intel.com>
+Message-ID: <amDd1Ip3XTvKSTcb@google.com>
+Subject: Re: [PATCH v7 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping
+ private memory
+From: Sean Christopherson <seanjc@google.com>
+To: Rick P Edgecombe <rick.p.edgecombe@intel.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, Kai Huang <kai.huang@intel.com>, 
+	Dave Hansen <dave.hansen@intel.com>, Yan Y Zhao <yan.y.zhao@intel.com>, 
+	"tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>, Binbin Wu <binbin.wu@intel.com>, 
+	"kas@kernel.org" <kas@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>, 
+	"nik.borisov@suse.com" <nik.borisov@suse.com>, 
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, 
+	"tglx@kernel.org" <tglx@kernel.org>, Vishal Annapurve <vannapurve@google.com>, "bp@alien8.de" <bp@alien8.de>, 
+	Chao Gao <chao.gao@intel.com>, "x86@kernel.org" <x86@kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 
-On Wed, 2026-07-22 at 06:43 -0700, Guenter Roeck wrote:
-[...]
-> For Sashiko, fork and clone
-> https://github.com/sashiko-dev/sashiko.git,
-> submit your changes into the clone, and send a pull request. Or at
-> least that is how I do it.
->=20
-> In the Sashiko source, per-subsystem prompts are located in directory
-> third_party/prompts/kernel/subsystem.
+On Mon, Jul 20, 2026, Rick P Edgecombe wrote:
+> On Sat, 2026-07-18 at 06:10 +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] Infinite kernel loop in `kvm_tdp_mmu_map_private_pfn` due to permanent PAMT cache depletion on transient TDX module contention.
+> > --
+> 
+> Our internal Sashiko found this too. It's a false positive as a real bug.
+> 
+> Today kvm_tdp_mmu_map_private_pfn() is only called tdx_gmem_post_populate()
+> during TD setup. It holds the heavyweight tdx_vm_state_guard which grabs vm-
+> >lock, kvm->slots_lock, and all vcpu->mutex. So there should be no contention
+> possible.
+> 
+> Any potential confusion is not new either, because a similar thing could happen
+> with the external page tables.
+> 
+> But Yan and I were discussing that it would be a good cleanup to fix this anyway
+> because the reason it is not a functional issue is not clear from the code. For
+> improved readability (and quieter sashiko reports) the topup can happen inside
+> the retry loop. Either by moving the retry loop or moving the topup.
 
-OK, now I'm confused.  I thought
+Hmm, yeah, I think I agree.  Super duper technically, that's a fix for an existing
+flaw.  Because very, very, VERY theoretically, the cache of page table pages could
+be exhausted.  E.g. if some other task managed to free non-leaf page tables while
+mmu_lock was dropped, thus forcing kvm_tdp_mmu_map_private_pfn() to allocate from
+its cache over and over.  In practice, that's likely impossible thanks to holding
+slots_lock, but given that (a) retry should be rare and (b) kvm_mmu_topup_memory_cache()
+is basically free if no work needs to be done, I don't see any reason to do topup
+outside of the retry loop.
 
-https://github.com/masoncl/review-prompts
+The other thing we should address is the call to kvm_mmu_reload().  Like cache
+exhaustion, it *should* be impossible for the root to be invalidated/obsoleted,
+thanks to holding slots lock.  But as evidenced by the rash of recent shadow MMU
+bugs, we don't always get things perfect, and lack of defense-in-depth can be
+*extremely* painful.
 
-was the source of truth for this, but that project seems to have been
-copied into sashiko rather than pulled in as a module.  If you want to
-improve the review prompts do you now have to submit to both (which is
-getting to be a bit wasteful)?
+I don't think I want to just move kvm_mmu_reload() into the loop, because KVM
+should provide stronger guarantees with respect to the validity of the loop,
+versus the population of the caches.  I.e. I want to WARN if the root becomes
+obsolete after the initial reload.  And more importantly, KVM really should
+check the validity of the root after acquiring mmu_lock.
 
-Regards,
+We can't simply call is_page_fault_stale(), because mmu_invalidate_retry_gfn()
+is inherently fuzzy, i.e. could get false positives, even though the pfn provided
+by guest_memfd is guaranteed to be valid.  E.g. if shared gfns surrounding the
+to-be-mapped gfn are concurrently invalidated.
 
-James
+So, this?
+
+	r = kvm_mmu_reload(vcpu);
+	if (r)
+		return r;
+
+	do {
+		if (signal_pending(current))
+			return -EINTR;
+
+		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
+			return -EIO;
+
+		r = mmu_topup_memory_caches(vcpu, false);
+		if (r)
+			return r;
+
+		cond_resched();
+	
+		guard(read_lock)(&kvm->mmu_lock);
+
+		if (WARN_ON_ONCE(kvm_test_request(KVM_REQ_MMU_FREE_OBSOLETE_ROOTS, vcpu)))
+			return -EIO;
+
+		r = kvm_tdp_mmu_map(vcpu, &fault);
+	} while (r == RET_PF_RETRY);
+
+The other option would be to gracefully handle an obsolete root instead of WARNing,
+but as above, I think I prefer to WARN.
+
+	do {
+		if (signal_pending(current))
+			return -EINTR;
+
+		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
+			return -EIO;
+
+		r = kvm_mmu_reload(vcpu);
+		if (r)
+			return r;
+
+		r = mmu_topup_memory_caches(vcpu, false);
+		if (r)
+			return r;
+
+		cond_resched();
+	
+		guard(read_lock)(&kvm->mmu_lock);
+
+		fault.mmu_seq = vcpu->kvm->mmu_invalidate_seq;
+		if (is_page_fault_stale(vcpu, &fault))
+			continue;
+
+		r = kvm_tdp_mmu_map(vcpu, &fault);
+	} while (r == RET_PF_RETRY);
+
+My only hesitation with manually checking KVM_REQ_MMU_FREE_OBSOLETE_ROOTS is that
+if more checks/functionality were added to is_page_fault_stale() in the future,
+then we could end up missing kvm_tdp_mmu_map_private_pfn() and introduce a bug.
+
+Maybe we can have it both ways?  WARN if roots are unexpectedly made obsolete,
+but fully check is_page_fault_stale() and gracefully handle an obsolete root
+instead of effectively terminating the guest.
+
+	do {
+		if (signal_pending(current))
+			return -EINTR;
+
+		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
+			return -EIO;
+
+		r = kvm_mmu_reload(vcpu);
+		if (r)
+			return r;
+
+		r = mmu_topup_memory_caches(vcpu, false);
+		if (r)
+			return r;
+
+		cond_resched();
+	
+		guard(read_lock)(&kvm->mmu_lock);
+
+		WARN_ON_ONCE(kvm_test_request(KVM_REQ_MMU_FREE_OBSOLETE_ROOTS, vcpu));
+
+		/*
+		 * Snapshot the invalidation sequence counter after acquiring
+		 * mmu_lock, as guest_memfd guarantees the validity of the pfn,
+		 * i.e. any concurrent invalidations are guaranteed to be
+		 * irrelevant.
+		 */
+		fault.mmu_seq = vcpu->kvm->mmu_invalidate_seq;
+		if (is_page_fault_stale(vcpu, &fault))
+			continue;
+
+		r = kvm_tdp_mmu_map(vcpu, &fault);
+	} while (r == RET_PF_RETRY);
+
+
+> > --- Patch [8]: [PATCH v7 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping private memory ---
+> > commit 3474807f1c1bc4dedc75e2a756b65254c986a41d
+> > Author: Kiryl Shutsemau <kas@kernel.org>
+> > 
+> > KVM: TDX: Get/put PAMT pages when (un)mapping private memory
+> >     
+> > Add Dynamic PAMT support to KVM's S-EPT MMU by "getting" a PAMT page when
+> > adding guest memory (PAGE.ADD or PAGE.AUG), and "putting" the page when
+> > removing guest memory (PAGE.REMOVE).
+> > 
+> > > diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+> > > index 528ebb3cb0389..049da8559882b 100644
+> > > --- a/arch/x86/kvm/vmx/tdx.c
+> > > +++ b/arch/x86/kvm/vmx/tdx.c
+> > > @@ -1679,16 +1693,28 @@ static struct page *tdx_spte_to_sept_pt(struct kvm *kvm, gfn_t gfn,
+> > >  static int tdx_sept_map_nonleaf_spte(struct kvm *kvm, gfn_t gfn,
+> > >  				     enum pg_level level, u64 new_spte)
+> > >  {
+> > > +	struct kvm_vcpu *vcpu = kvm_get_running_vcpu();
+> > >  	gpa_t gpa = gfn_to_gpa(gfn);
+> > >  	u64 err, entry, level_state;
+> > >  	struct page *sept_pt;
+> > > +	int ret;
+> > > +
+> > > +	if (KVM_BUG_ON(!vcpu, kvm))
+> > > +		return -EIO;
+> > >  
+> > >  	sept_pt = tdx_spte_to_sept_pt(kvm, gfn, new_spte, level);
+> > >  	if (!sept_pt)
+> > >  		return -EIO;
+> > >  
+> > > +	ret = tdx_pamt_get(page_to_pfn(sept_pt), &to_tdx(vcpu)->pamt_cache);
+> > > +	if (ret)
+
+Shouldn't this be a KVM_BUG_ON()?  To Sashiko's point about this creating an
+infinite fault loop, that simply shouldn't happen.  The whole point of using
+caches for the paging assets is to guarantee success.
+
+> > > +		return ret;
+> > > +
+> > >  	err = tdh_mem_sept_add(&to_kvm_tdx(kvm)->td, gpa, level, sept_pt,
+> > >  			       &entry, &level_state);
+> > > +	if (err)
+> > > +		tdx_pamt_put(page_to_pfn(sept_pt));
+> > > +
+> > >  	if (unlikely(tdx_operand_busy(err)))
+> > >  		return -EBUSY;
+> > 
+> > [Severity: High]
+> > Does this error path risk causing an infinite loop if the TDX module
+> > contention leads to TDX_OPERAND_BUSY?
+> > 
+> > When tdh_mem_sept_add() returns TDX_OPERAND_BUSY, tdx_pamt_put() frees the
+> > PAMT pages directly back to the buddy allocator, not back into the vCPU's
+> > PAMT cache.
+> > 
+> > If this happens during VM initialization in a retry loop like
+> > kvm_tdp_mmu_map_private_pfn(), the vCPU memory caches are topped up outside
+> > of the loop:
+> > 
+> >     r = mmu_topup_memory_caches(vcpu, false);
+> >     if (r)
+> >         return r;
+> > 
+> >     do {
+> >         ...
+> >         r = kvm_tdp_mmu_map(vcpu, &fault);
+> >     } while (r == RET_PF_RETRY);
+> > 
+> > Since the PAMT pages are discarded rather than returned to the cache, a few
+> > busy retries will completely empty the vCPU's PAMT cache.
+> > 
+> > On the next retry, tdx_pamt_get() will return -ENOMEM because the cache is
+> > empty and it does not fall back to alloc_page() when a cache is provided.
+> > 
+> > The TDP MMU handles -ENOMEM by returning RET_PF_RETRY, but because the cache
+> > is never replenished inside the loop, the loop will infinitely fail and retry.
+> > 
+> > Could the PAMT pages be returned to the vCPU cache instead of the buddy
+> > allocator during transient failures, or should the cache top-up be moved
+> > inside the retry loop?
+> > 
+> 
