@@ -1,43 +1,43 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C44136D51F;
-	Wed, 22 Jul 2026 12:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D0A36D51F;
+	Wed, 22 Jul 2026 12:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784722235; cv=none; b=cYiQGEM37mLPpOonlI0ItNy2kd71BEy6iGIgkSQZLweMIDxEVBmDHRqiXEQ8h+UJ0wwyQxS2L/VQ2hkOF5BV/uUWcJCtgJ018VZJnPLZ70bIsnePxbqUL5BtUFxDVLqC5qH72hc1BHJdvhvT/p+VJhqKyW1uccp7wg7XTC46lqU=
+	t=1784722300; cv=none; b=GoRiKpc2/LwXnKyV7TDxH9E7b6yQ2LaaBfkpHuZxftKr99TspvgiiiTxUcFD6ey0ZUImCl7yJeIm9J5vADRQElkyzX1BwukJTxkD9wXqzeJAjqqXi5pVdjdemq/vl5C6SaG9KKyIkSs8q+CPJLn5VXr99F2lnfBMiIEIxMRZPDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784722235; c=relaxed/simple;
-	bh=4YHXgXYZtCZ25qiPtk9KT8lQ8+H3tNr5u7aXspfGqrY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aSNSm6cNjAqoJ3CQ12l8CdjWMdTXI563Krqlki0QHXrTkBsl59vn2X7U4x3QeNYo6G4/qD67y4TUUE02flchIzoMpBQ19qjjlzgPyu9Z3q9NDB8SN5JUpxCya4020cNh6NyaKE/bE/Hve97O5RnSqswC3hGzOckvkt9OmSfQMTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e/RG+UTK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784722300; c=relaxed/simple;
+	bh=OZFiJfGH+tCL4cL71/l+DTDw+bpYVgYJt1tADyjISdI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EeffvexJGMYegDCrv1RbF0E6zdRVBAB1wiz2t7sFwKytKdzO0NED4TsoUDkOgQ8fvT4OsD2c/a/YWWAcWybOBs1/MQKYOtGn7bDR9wfnqRn24nSV4GfCGfy0/gt4WFJ2wBbszZLaslBh2HgYd5wOZTWUIXeOK/EvkaWmAmSKhMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=S6EB5i1W; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e/RG+UTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2E81F000E9;
-	Wed, 22 Jul 2026 12:10:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784722233;
-	bh=fIe0wUrrDVszjvm6kkoTVaoHwx2WuyyXexPYM+RlgpQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=e/RG+UTKXTiJg+Z+keGVwljTspAcEtzFRMAmoOOR1Bec2THmY/Ooo9kmfHZJdQq4F
-	 slqd3LzpyCs7oQgY9vr9CMWFLYQmbikHC0rinNm0vivvL0nBiRmYm2DDIao1pIbMDw
-	 1UnUM3KcEfObN/Qogmn+FGKjFHxmEMqTuh8nQ4dfLc9UzpCGNsC70UwtQsSl56jlTQ
-	 o0Is8XpHKxdEfThynIYySlFh2tZywG/F2Us045oqJVJ5CUDc0t7G/3yIzQ0Iu2JQNm
-	 geet6TTwSEmaRyNZ1tKel7V428LF6hjcqOb2n3VRzKOCEJY9z/PL9oUd9pviTRNDA9
-	 yft0e6FRLxgJg==
-From: Mattijs Korpershoek <mkorpershoek@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, neil.armstrong@linaro.org, conor+dt@kernel.org,
- olteanv@gmail.com, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, vkoul@kernel.org
-Subject: Re: [PATCH v2 2/2] phy: qcom: qmp-usb: Add support for SA8255P
-In-Reply-To: <20260709150659.6E0301F000E9@smtp.kernel.org>
-References: <20260709-phy-qcom-qmp-usb-8255-v2-0-3b6c26a45788@kernel.org>
- <20260709-phy-qcom-qmp-usb-8255-v2-2-3b6c26a45788@kernel.org>
- <20260709150659.6E0301F000E9@smtp.kernel.org>
-Date: Wed, 22 Jul 2026 14:10:31 +0200
-Message-ID: <87bjbzi5s8.fsf@kernel.org>
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="S6EB5i1W"
+Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 5757C447;
+	Wed, 22 Jul 2026 14:10:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1784722236;
+	bh=OZFiJfGH+tCL4cL71/l+DTDw+bpYVgYJt1tADyjISdI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=S6EB5i1WUdaS+auWVNS9PuYRSJyqwxE2gwR8brupm7IjI0VYtfzJsPpY5zA8FlOdB
+	 i2zxCKM2jyGMXtFqZ4Wjdr1UNmTQVrRRvXSnu425vmnzy6HFgzJ+dT2R9qSzf8HLB+
+	 0E2BylewvudBmVD2gXs79dJjAAEByVBNxZ2ljiBY=
+Date: Wed, 22 Jul 2026 15:11:35 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	linux-scsi@vger.kernel.org, ksummit@lists.linux.dev,
+	workflows@vger.kernel.org
+Subject: Re: How to fix problems with the sashiko review model
+Message-ID: <20260722121135.GB629472@killaraus.ideasonboard.com>
+References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
+ <20260722042744.5C1B01F000E9@smtp.kernel.org>
+ <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,109 +45,64 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
 
-On Thu, Jul 09, 2026 at 15:06, sashiko-bot@kernel.org wrote:
+On Wed, Jul 22, 2026 at 07:58:48AM -0400, James Bottomley wrote:
+> There doesn't seem to be a Sashiko list, so I added ksummit as the most
+> likely one to catch attention.  We got this review in SCSI on this
+> thread:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Incorrect power domain sequencing during d0/d3 transitions risks=
- NoC errors and bus hangs.
-> --
->
-> --- Patch [2]: [PATCH v2 2/2] phy: qcom: qmp-usb: Add support for SA8255P=
- ---
-> commit c32bbfd817c3f9fca4d2982ea37be36354501cc7
-> Author: Sriram Dash <quic_sriramd@quicinc.com>
-> Subject: phy: qcom: qmp-usb: Add support for SA8255P
->
-> This commit adds support for the SA8255P SoC to the QMP USB PHY driver.=20
-> It introduces firmware-managed resources via SCMI using power protocols,
-> managing state transitions (d0, d1, d3) through the "usb_core" and
-> "usb_transfer" power domains.
->
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualc=
-omm/phy-qcom-qmp-usb.c
->> index c5507168e1354..d085c1ad7fb5c 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
->
-> [ ... ]
->
->> @@ -1865,6 +1890,77 @@ static const struct qmp_phy_cfg glymur_usb3_uniph=
-y_cfg =3D {
->>  	.regs			=3D qmp_v7_usb3phy_regs_layout,
->>  };
->
-> [ ... ]
->
->> +/* d3_to_d0 transition by turning on all the suppliers */
->> +static int qmp_usb_d3_to_d0(struct qmp_usb *qmp)
->> +{
->> +	int ret;
->> +
->> +	if (!qmp->pd_list)
->> +		return 0;
->> +
->> +	ret =3D pm_runtime_resume_and_get(qmp->pd_list->pd_devs[0]);
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret =3D pm_runtime_resume_and_get(qmp->pd_list->pd_devs[1]);
->> +	if (ret)
->> +		pm_runtime_put_sync(qmp->pd_list->pd_devs[0]);
->> +
->> +	return ret;
->> +}
->
-> [Severity: High]
-> Does this sequence power up the domains in the wrong order?
->
-> The commit message notes that "usb_core" (which maps to pd_devs[1] based =
-on=20
-> the qmp_usb_domain_attach order) controls the GDSC, while "usb_transfer"=
-=20
-> (pd_devs[0]) controls clocks and interconnects.
->
-> Enabling clocks before the GDSC foundational power domain is enabled typi=
-cally
-> results in unpowered register access on Qualcomm SoCs, which could trigge=
-r a
-> Network-on-Chip (NoC) error and bus hang. Should pd_devs[1] be resumed be=
-fore
-> pd_devs[0]?
+workflows@vger.kernel.org seems a good candidate for discussions about
+tooling. The mailing list was created to share workflows and tools
+between maintainers as far as I understand.
 
-I did not observe any bus errors during my testing. I tried to
-insert/remove the phy driver and also could detect a flash drive using a
-couple of more patches on other USB drivers.
+> https://lore.kernel.org/linux-scsi/20260722041257.1557-1-pengpeng@iscas.ac.cn/
+> 
+> But this part of the review
+> 
+> On Wed, 2026-07-22 at 04:27 +0000, sashiko-bot@kernel.org wrote:
+> [...]
+> > > +
+> > > +	reply_len = mpi_reply->MsgLength * 4;
+> > > +	if (reply_len < event_offset || reply_len > ioc->reply_sz)
+> > > +		return false;
+> > > +
+> > > +	event_data_len = le16_to_cpu(mpi_reply->EventDataLength) *
+> > > 4;
+> > 
+> > [Severity: High]
+> > Is there a Time-of-Check to Time-of-Use window here since mpi_reply
+> > is read directly from shared DMA memory?
+> > 
+> > The validation function reads bounds from mpi_reply, but after
+> > validation passes, mpt3sas_scsih_event_callback() re-reads fields
+> > like EventDataLength and NumEntries directly from the same DMA-backed
+> > memory.
+> > 
+> > Could a malicious device mutate these fields in the window between
+> > validation and use to bypass the checks introduced by this patch?
+> 
+> Is wrong.  Hardware may never be presumed to be malicious (well, except
+> if it's virtual hardware provided by an untrusted host to a
+> confidential guest, but that's a very small list of drivers or it's a
+> USB or thunderbolt device designed to attack or exfiltrate data from an
+> unattended system).  It may be buggy, but we never presume bugs until
+> someone finds a device exhibiting the bug in the field (so we don't
+> proactively fix them).
+> 
+> The bigger part of this is that I was looking into how to fix this
+> (which might interest a broader swathe of developers than just SCSI). 
+> I think the fault is in the review prompts:
+> 
+> https://github.com/masoncl/review-prompts
+> 
+> And what I need to do is to add an additional drivers.md file to
+> kernel/subsystems explaining this?  If that's right I can send a pull
+> request, but I thought I'd check here because the audience is much
+> bigger than if it were to get discussed in the github PR.
 
-So I'll keep it this way for v3.
+-- 
+Regards,
 
->
->> +
->> +/* d0_to_d3 transition by turning off all the suppliers */
->> +static void qmp_usb_d0_to_d3(struct qmp_usb *qmp)
->> +{
->> +	if (!qmp->pd_list)
->> +		return;
->> +
->> +	pm_runtime_put_sync(qmp->pd_list->pd_devs[1]);
->> +	pm_runtime_put_sync(qmp->pd_list->pd_devs[0]);
->> +}
->
-> [Severity: High]
-> Similarly, could this cause a bus hang during the d0 to d3 transition?
->
-> Putting "usb_core" (pd_devs[1]) before "usb_transfer" (pd_devs[0]) disabl=
-es=20
-> the GDSC before the clocks. Shouldn't the GDSC be disabled last to preven=
-t=20
-> unpowered hardware clock access?
-
-When running modprobe -r, I did not observe any bus hang on my board.
-I'll keep this way for v3.
-
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709-phy-qcom=
--qmp-usb-8255-v2-0-3b6c26a45788@kernel.org?part=3D2
+Laurent Pinchart
