@@ -1,98 +1,188 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C62320CBE
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 14:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2279B356762
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 14:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784729348; cv=none; b=HHIl2OA2wi6uejRhytXQQw8J+TQEG1TqiBSn5R5Y3QWdEu41IH4CxG+Up1zYrvMXx4JLCSDukFZZPRMFmO3zuOB/4Vh1u8p/U1dy2amrnwuvL21hlvlh+UNTTFM+ZYGuywaWiv/TBEc3teK3vMTo/gBOkWX7jBBBYBfGcUGQX2Q=
+	t=1784729474; cv=none; b=KG6IRDUWmqCjC6dMUJD1MRaBE+pa8+5wEpCo2YHN6c82QJMMXm58dLohlpxoXtl0VGa3YPt0GK1NKMMHqMP4MGJOvxP/5TSWjz/a/tubY+LKFRdf9CutUcu7KkRYscXxcVbDkDLypmJfFn54k8+4BvmXAoZUlReTjgISld8EfCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784729348; c=relaxed/simple;
-	bh=+Il7aPUChEdhFvAeoaNLs0rO35a5R2YkhDm+oIEKVWU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B2OhZsN1UDnAgSt3JYLCjzgWPNlCKEZDlFK11TmEjAVh1faIe+9Rz48sTexYd4PY8Htx03R/jjM8lDwZfKxKyFHuK/Tj6/VF1Ia0fjwfbvf3kawkKEK2QznbDPP5HaeUw529quUxX2TvXCeqW22401rZpOWz1zuhSanjzqZ260w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=gSNeLcdj; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+	s=arc-20240116; t=1784729474; c=relaxed/simple;
+	bh=muJt8+9v/EPu2HwARc18Gs7zWyvOS4hpDXKpljBuouI=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uQHEJZs/TPlA9wf0omFJDPInQnC8y8BFs2G7Kwg+ric6rVQT7Zosgex1GsToGq70ymzoQOLklelntfatf0dYkFBuBM4JSRQ7tE74mWWVrLJIv3I5O36LjJl1LNHS0QNIPJKBifQvfalsQwcv3SFAXxcFpboqv/SxTTUCsOlxwYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PNHbQd3w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="gSNeLcdj"
-Received: from macsyma.thunk.org ([104.135.218.88])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 66ME8nZp021174
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Jul 2026 10:08:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1784729332; bh=zDgIK2+O/87NoLwHMSMPGB+OQP4ARWVrKZ/oRxnG0N8=;
-	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
-	b=gSNeLcdjEmNLgFdC8P7qNfLiGlEXKUFEnc7LCld2Sfx4EksGZt8yOo8uE4SMCStX+
-	 VLIVIURd0LUjV5KLWuEAF2IdU6lYVacbnTA5lAAs2HapRiaLdE8l2YTwJeuW/PqviV
-	 A4WeoOtPB4aGfC1ymFiz7VC+8d8PPaGiWU/BCQXM8RRk3B93bKFj6TsPDMQXhDIg2w
-	 /X9uMMi27AAi8oO8PFnPYI83XTna5lRmhThZ6BmBzFQnSRsAdo3gEOj8SwEs3YJsho
-	 On4e7GVgLsKZsfPGhmnbTEj/+zyf1bJ4rBpOrgOUyvQavSK5yQmQyl78ilmB2zVDs/
-	 7vbslVeKDHrlg==
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
-	id 150F2BA381A; Wed, 22 Jul 2026 10:08:49 -0400 (EDT)
-Date: Wed, 22 Jul 2026 10:08:49 -0400
-From: "Theodore Tso" <tytso@mit.edu>
-To: James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>, sashiko-reviews@lists.linux.dev,
-        Chris Mason <clm@fb.com>, Roman Gushchin <roman.gushchin@linux.dev>,
-        linux-scsi@vger.kernel.org, ksummit@lists.linux.dev
-Subject: Re: How to fix problems with the sashiko review model
-Message-ID: <amDNVMsOjIPcXP2y@mit.edu>
-References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
- <20260722042744.5C1B01F000E9@smtp.kernel.org>
- <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
- <2026072224-moisture-gonad-409f@gregkh>
- <2026072205-unsealed-emcee-b243@gregkh>
- <ed0f74db3342ead9a36a0367b8a5cf694b0decf3.camel@HansenPartnership.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PNHbQd3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C255E1F01558
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 14:11:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784729472;
+	bh=1UFXFpEyhH0o78ophoiUhGPEsgEAqoMWoguEg8fSnYs=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=PNHbQd3wCysQOilyzyf57uvvUvTXdIe3dqHVrTK9ZwQaDmN5Ugr0j6eM+wx5FGTJY
+	 KUgNVDxxILlkUBmxXocTaXGlfGZaaUSWrWashzKR5xlA/DY/fkfKvU/B4VFOJt2ngB
+	 WNUIqP9hZYoNTaRiWgD0KE3fkAoeaVEoUe9XEo6AW0TWccT4zjfQVucok9TWIpo8uK
+	 y/Pxb06+SnbMIJWcGddvCvwvbuCTLuBwVm5+qFFOzWSPnCSW4q62YFzDXj4+Ah9oIt
+	 E7DrYgu6tIix84DdAG++2YZpl0yP+ILS2ooDJcNXGl3vDl4DX44NZyUZitemdxGD7i
+	 64XLOM5g2GcoQ==
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-39c9a3acd40so90224751fa.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 07:11:12 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Rp40uPxtmDZDb7g6C3ttXHUNQQbjuU1j75mwGim8qYo048dqzJprS2hD/cbgJiZ7MB8DVBUyl2296anDbpIZrU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywyx0D+u9MhcYawJ1ZLRdBVcLIZN84jS1EONUIgScMybzVZJQiU
+	8t2u+A1iCZinG+JcxJWXefY1srol5sqazo3qBpiF19K6Vy7F6Xgnk6VCCEg+qbQ4XyOZRrAL5HW
+	2eJLUvmypqZhqYyyppYV+5eezQ04mGryMUSO9Tt7KLQ==
+X-Received: by 2002:a05:651c:1989:b0:39d:560a:fd9 with SMTP id
+ 38308e7fff4ca-39eb27bfd05mr51615621fa.18.1784729471362; Wed, 22 Jul 2026
+ 07:11:11 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Jul 2026 07:11:10 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Jul 2026 07:11:10 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <amC7_M-HjVZ3sQuT@linaro.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ed0f74db3342ead9a36a0367b8a5cf694b0decf3.camel@HansenPartnership.com>
+References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
+ <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
+ <20260721134853.2B2401F000E9@smtp.kernel.org> <amCGXUUd4VmuQRGD@linaro.org>
+ <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com> <amC7_M-HjVZ3sQuT@linaro.org>
+Date: Wed, 22 Jul 2026 07:11:10 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
+X-Gm-Features: AUfX_mzDtm5YjAae_ksl_tQdx3fXsW-UWLgM9ZMbUilUXBQ6QQqNPU4983jvSLM
+Message-ID: <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
+Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, 
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>, Michal Simek <michal.simek@amd.com>, 
+	Frank Li <Frank.Li@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	sashiko-reviews@lists.linux.dev, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jul 22, 2026 at 09:45:48AM -0500, James Bottomley wrote:
-> So you're thinking of this file:
-> 
-> Documentation/process/threat-model.rst
-> 
-> ?  It's already mostly in there, it's just that sashiko doesn't seem to
-> be picking it up (otherwise it wouldn't have suggested the problem I
-> noted), which is why I was thinking it needed to be a direct prompt ...
-> unless the prompt should be to read that file?
+On Wed, 22 Jul 2026 14:47:56 +0200, Stephan Gerhold
+<stephan.gerhold@linaro.org> said:
+> On Wed, Jul 22, 2026 at 02:34:52AM -0700, Bartosz Golaszewski wrote:
+>> On Wed, 22 Jul 2026 10:59:09 +0200, Stephan Gerhold
+>> <stephan.gerhold@linaro.org> said:
+>> > On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
+>> >> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>> >> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
+>> >> - [High] Channel state corruption when `bam_slave_config` fails validation.
+>> >> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
+>> >> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
+>> >> - [Low] Unused assignment of `hdesc` in IRQ handler.
+>> >> --
+>> >>
+>> >> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
+>> >> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
+>> >> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+>> >>
+>> >> dmaengine: qcom: bam_dma: add support for BAM locking
+>> >>
+>> >> This commit adds support for BAM pipe locking by prepending and appending
+>> >> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
+>> >> channel. It uses a peripheral-local scratchpad address communicated via slave
+>> >> config for the dummy writes.
+>> >>
+>> >> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> >> > index f3e713a5259c2..411c60c4433e2 100644
+>> >> > --- a/drivers/dma/qcom/bam_dma.c
+>> >> > +++ b/drivers/dma/qcom/bam_dma.c
+>> [...]
+>> >> [ ... ]
+>> >> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+>> >> >
+>> >> >  	lockdep_assert_held(&bchan->vc.lock);
+>> >> >
+>> >> > +	vd = vchan_next_desc(&bchan->vc);
+>> >> >  	if (!vd)
+>> >> >  		return;
+>> >> >
+>> >> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
+>> >> >  		return;
+>> >> >
+>> >> >  	while (vd && !IS_BUSY(bchan)) {
+>> >> > +		/*
+>> >> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
+>> >> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
+>> >> > +		 * already have bam_locked set and must not trigger a second pair.
+>> >> > +		 */
+>> >> > +		if (!bchan->bam_locked) {
+>> >> > +			ret = bam_setup_pipe_lock(bchan);
+>> >> > +			if (ret) {
+>> >> > +				dev_err_ratelimited(bdev->dev,
+>> >> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
+>> >> > +					ret);
+>> >> > +				queue_work(system_bh_highpri_wq, &bdev->work);
+>> >> > +				break;
+>> >> > +			}
+>> >>
+>> >> [Severity: High]
+>> >> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
+>> >> starvation? Because system_bh_highpri_wq executes in softirq context,
+>> >> requeuing immediately without sleeping prevents the memory reclaim needed
+>> >> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
+>> >>
+>> >
+>> > It looks like my suggestion to queue_work() again in the error path of
+>> > bam_start_dma() wasn't great if we end up causing an infinite spin loop.
+>> > We do need to retry somehow or report an error though, I don't think
+>> > aborting and leaving the desccriptors completely unhandled is an option
+>> > either... :(
+>> >
+>> > One option would be to try to avoid the allocation and write the lock
+>> > descriptors directly into the FIFO, but this will probably get really
+>> > messy as well, since you would need to carefully modify the FIFO
+>> > management in several functions ...
+>> >
+>> > I don't have a good spontaenous idea how to solve this right now. :/
+>> >
+>>
+>> Pre-allocate the lock descriptors (if needed) in bam_prep_slave_sg()? As in:
+>> call bam_make_lock_desc() in bam_prep_slave_sg(), store the descriptors and
+>> make bam_setup_pipe_lock() return void as it will no longer be possible for it
+>> to fail? It would just grab the preallocated descriptors.
+>>
+>
+> I considered suggesting this, but how do you know which descriptor needs
+> it in bam_prep_slave_sg()? It's just the allocation, afaict it doesn't
+> tell you anything about the order in which they will be submitted. :/
+>
+> We could always allocate the extra lock descriptors and waste the extra
+> memory for the descriptors that won't need it. That should work, but is
+> also not great ...
+>
 
-The threat-model.md is relatively new (May 2026), and there are
-various security people who have asserted on linux-kernel that we need
-to be afraid of malicious hardware.
+Oh, I was thinking about having pointers to lock/unlock descriptors in struct
+bam_chan and to just grab them in bam_setup_pipe_lock() when needed and then
+next time we enter bam_slave_prep_sg(), we see we consumed them so let's
+re-allocate them. And of course: don't do it at all if pipe locking is not
+supported.
 
-I'll note that I and other file system developers have asserted that
-mounting malicious corrupted file system images is not in our threat
-model (and if you want it to be part of the threat model then fund the
-engineers; if it doesn't impact performances, patches gratefully
-accepted).  And it yet it took **years** to convince the Syzbot
-security folks that this was something We Didn't Care About and to
-please stop generating the noise.  (And even now, root can modify the
-loop device using loop the device ioctls, cause a kernel oops, and
-this gets reportred as a security issue.  Sigh...)  So this problem is
-not unique to LLM's.  Syzbot and oss-fuzz generates a huge amount of
-noise, and I've just learned to ignore it.
+Bartosz
 
-The bottom line is that there are differences of opinion of security
-people who like to opine that we need to adhere to the most expansive
-threat models --- but they don't actually fund the engineering work;
-they just like to dump work on the kernel development community.  And
-that opinion has probably infected Sashiko's training data.
-
-The approach is probably to adjust Sashiko's prompts to have it
-explicitly read our threat model, and to have that take precedence
-over its training data.
-
-Cheers,
-
-						- Ted
+> I was hammering at the code a bit earlier to try the "write the lock
+> descriptors directly into the FIFO" approach. It has some advantages,
+> but also makes the FIFO management quite a bit trickier, hard to get it
+> right without full concentration. :')
+>
+> I _think_ it could potentially work, but if you have a simpler idea I'm
+> also happy to throw away the mess I started. :-)
+>
+> Thanks,
+> Stephan
+>
