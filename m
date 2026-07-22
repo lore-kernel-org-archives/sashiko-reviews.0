@@ -1,134 +1,128 @@
-Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2485239934C;
-	Wed, 22 Jul 2026 15:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784733890; cv=none; b=DGu3eY0S5nqmLrARoQqH1cOij6D3Ie82VZejtpvAFyeGJYfHYCaG56HraSt3DAFnuAdCC3WxRFj2X6OrDSktPTWBUqrIQ11o1OIgTjKvlKAd3EAOMZND7IVOiP7kd7dTR2I4fPQ7ptOlQS8BPS/LFg+8zx17T5CN5+bePj1D/BI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784733890; c=relaxed/simple;
-	bh=uSkD0aMO/EM2F+9kpLTJGIt9x50Emb40hDSXo53AmVo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=r5sCbA3gFbibjXcW54ZIfuonT46TYAtt6W8ekQCpvRR/GglTKR2nQ4iYjqFCN4MSyC+Xlp8eDSxvMr2C8x4hWQV1rHjy/X4y5MOlrR/r7Maa39koPAVuhE0UMQ64fFa/6g9HTD8jXdGCoqKyTGrbY7VbqRgsMeDpH+yUV5PhHK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=tuysoPm1; arc=none smtp.client-ip=198.37.111.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E719B46C4AD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784734166; cv=pass; b=C/QB3M5AAmA3Q/ZEUvDV6cILSj80w2JH+/E6A6F7gS3ZhitkAM8FIPWJurOAC36rKdk/I+CD4MrwJBnILAfjR12q+uDkSpl4AwmssDhKB7e7CUUcFUr1EaCJUEsDGINNXqYS49PG5TXfVSWr1zM2LbQJctI/wJeMs9cWCsYFGnE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784734166; c=relaxed/simple;
+	bh=om92Vg1MT06YPtu4FZa6UsTxYYkEP2jooVYJUsl6Wn0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NCR2113i32rbpJvi79kc4zXN4yLBox/9ADp284jN29oqo5Jp3PB7dBAR1/tjQuP/ooF/ibSXBbxeWiTvittP5dngCNyB43/qJ/gsHczpsutUHYsK0cezx4U4LwmxwD3a/s/+FyoOyx4qKZkCVrGQsCN+FzO8sCBV76i4SESoKbw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l92BlLN7; arc=pass smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="tuysoPm1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1784733879;
-	bh=uSkD0aMO/EM2F+9kpLTJGIt9x50Emb40hDSXo53AmVo=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=tuysoPm1oVvhvoZIE5LGoDVkYkH6f4WqeQsCnOwGlwm08eF0y56Nltq9qMMv3puNy
-	 qRk/jqNSmA48I3UD8nj+SgF0S4zMKwNiy//RpkqgRtn3DIbEZlN+GXoeKsjNKU6HWg
-	 +F23Wphxj7SXR56nd/4rqB939Be+ddgWXBpu96EM=
-Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4300:d341::8c71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 9B8131C01E8;
-	Wed, 22 Jul 2026 11:24:39 -0400 (EDT)
-Message-ID: <a05e2ddea75895afdff63425d2fd47f90bdf65c8.camel@HansenPartnership.com>
-Subject: Re: How to fix problems with the sashiko review model
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Johannes Berg <johannes@sipsolutions.net>, Greg KH
-	 <gregkh@linuxfoundation.org>, sashiko-reviews@lists.linux.dev, Chris Mason
-	 <clm@fb.com>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	linux-scsi@vger.kernel.org, ksummit@lists.linux.dev
-Date: Wed, 22 Jul 2026 11:24:38 -0400
-In-Reply-To: <20260722170901.30bdae6a@localhost>
-References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
-		<20260722042744.5C1B01F000E9@smtp.kernel.org>
-		<dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-		<2026072224-moisture-gonad-409f@gregkh>
-		<e8f7c3614c15a86b335576074fec1768d95f3df4.camel@HansenPartnership.com>
-		<e30c8cebe5d0a6cfada18c633be0125774ef0c7f.camel@sipsolutions.net>
-		<5a2ce0b0eab27354d62450018f9843be83c72697.camel@HansenPartnership.com>
-	 <20260722170901.30bdae6a@localhost>
-Autocrypt: addr=James.Bottomley@HansenPartnership.com;
- keydata=mQENBE58FlABCADPM714lRLxGmba4JFjkocqpj1/6/Cx+IXezcS22azZetzCXDpm2MfNE
- lecY3qkFjfnoffQiw5rrOO0/oRSATOh8+2fmJ6el7naRbDuh+i8lVESfdlkoqX57H5R8h/UTIp6gn
- 1mpNlxjQv6QSZbl551zQ1nmkSVRbA5TbEp4br5GZeJ58esmYDCBwxuFTsSsdzbOBNthLcudWpJZHU
- RfMc0ew24By1nldL9F37AktNcCipKpC2U0NtGlJjYPNSVXrCd1izxKmO7te7BLP+7B4DNj1VRnaf8
- X9+VIApCi/l4Kdx+ZR3aLTqSuNsIMmXUJ3T8JRl+ag7kby/KBp+0OpotABEBAAG0N0phbWVzIEJvd
- HRvbWxleSA8SmFtZXMuQm90dG9tbGV5QEhhbnNlblBhcnRuZXJzaGlwLmNvbT6JAVgEEwEIAEICGw
- MGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAml2ZBI
- FCS3GUMIACgkQgUrkfCFIVNZKjQf/deRzlXZClKxTC/Ee2yEPqqS7mm/INUA49KdQQ5oIhSxkUBy0
- 9J4qjMIo5F8ZFkFTqikBqeL35LKu7O7rn8WETfX8Bxvos3HUsl3jHo34DES4MUFIpoQPgtiLRGwLb
- K0cVCAArR2u2qj4ABmTRrs1I1kvdjEw6gatOuXtEe/j5O2fvfzTq9GBr0Q3n2IAsFXi4hLlx6VPE8
- tyWUZ8BWJKtih3JAeUiXFvASL3McV0rV9RnU0VbjEQEhSE7PMYhWpnDC9AyBb0lXJllQRvC3NSkUB
- 8KVQgNNxRPss0WE/nBoZ4dFA42jTyzTz8lNylxZoAWV7WJb3QxVg4oCodRVrxxrQhSmFtZXMgQm90
- dG9tbGV5IDxqZWpiQGtlcm5lbC5vcmc+iQFVBBMBCAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeA
- QIXgBYhBNVgbnPItGJxvq2a34FK5HwhSFTWBQJgS5mYBQkbNYS9AAoJEIFK5HwhSFTWBpwIAL5Bk3
- 5FB34U6iHmDzzgdCbxLTs43T/YQyJpcGIvopBvnI/fDY8oSG6Df64/O6B+1R+A8TDp6ZG5ysUWnCC
- 6GuIaEHemBYkitMPglR6+sGCMQY7O0mlsPvdssvKK1KI9Bno4VU6ogaF2qVzefSqg1Djmf/DcsxWP
- rI/jdJ8FB5AYR2rjIdDFc+zRdAJuavo1/anyY2wgpFh/3R8IOYAEfWV9nGgYkf9+tA4EIn1sxE0I3
- L5oW2N3mbyRrkzuBwO8ztMCwqEPk7moWzhokcZqMXiAIahaZdkashJC+s2X2RZSGCy+g+pvY5NN4B
- BVG5XwLgVBqbHMTcxE0fbmPqz+q6O0LEphbWVzIEJvdHRvbWxleSA8amVqYkBoYW5zZW5wYXJ0bmV
- yc2hpcC5jb20+iQFXBBMBCABBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAmODZ5ACGwMFCRs1hL0F
- CwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQgUrkfCFIVNZu0Af/TzvL2/NdgAcw9uN3x60H8
- jc4QUq14VpxcFEFEMpcj1morkX/G93V+56HBBaXZj+yK8PhxIA/SIz+sU7C/0YvKuvzakP8ZX/7WJ
- e32SOUtjfr/VTaqjIBzNj6OxLvZpmNbBw7s6DwhhNpHOWqJ/1ml+PtDRDV71IB58yVqQjp1xlNKVl
- ZppcJ5908EJzsFnRIVjiQiDSKoppqB2BCibBbrWcln7CiWMyOC/cco6SIn6twH+f7+aivJ3xGcOE2
- a9gBKF5rNi9TBoX9oyPmshv/TDmnohsVrH7AYXlGYfZTk15SWEiROh1QX8/uD9wl/gcIv5EDUpT/F
- L2jzOsA5663bw==
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l92BlLN7"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3856d4015e0so2113048a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 08:29:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784734157; cv=none;
+        d=google.com; s=arc-20260327;
+        b=pUVcgH7ZV3EjZ0gs/xKSvgya0BiPSRU0DrAAjkTNsUMuoE4x5uECmHvoEHhsskPsbp
+         v1lexEcScRiBW3HlfBq9zuqvQY2AC/pX/nXkDtWe5IgySox7zTgP2X4srmjDLyW9lpTG
+         TCAH9O1IZek28Q5waQiBTdnuXuEr9JV1o5H/kXcNNk0dE+UzGall3SwKwKM1q6vHI9t+
+         j60bE9pXB6RSFZE6anXfJjBPaz9SRgTp9DEyEm/Os1eGQQbxZG2ikuBcILdO+3oxPVmo
+         QZDyILMjg+5pV/0Er7zgQordVsD0eKQLBF7jlSXQtS0r6dNVg01ijl6LfCsnl3Isb0ms
+         ODZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2Aoj5jAfbWafkO/PX+megQ9fW1pG8YJPAHZMTkiGVzA=;
+        fh=0fHHe6hyqTxr+2U4Mvy7dMhphiN2eoOFGiROZURMZEo=;
+        b=jzBDaZtMwnNIpJM7/xLgG8RH0V5C9iizFeAj0lWjsuVbhmQaPqODE64faN2GS6sf96
+         vKQ6a9XxGr9si1fiPnnWahsNERi1WKStSMkl5H4KuuSH9TAS7+ll+8vqO6h4cy1dbDdq
+         TIbNcaovlSNJXPPrDS0zimwM96QrbP7QRy991NjGZRfvCIg14MM6iQPFV6oW6OLot7ei
+         JA+Mg/Mm1A0zFDGwoMWn32Bw4kEw3gMttUx9wgzJvLqCnG3aMYcBttV69fcgLL5pKl2g
+         yPWQ4239cG23faFotT7ESWgNjgVI9O5KK8UnRx117id5AqrChs7TuPRUF74PtvLLh/YI
+         jX7A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784734157; x=1785338957; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=2Aoj5jAfbWafkO/PX+megQ9fW1pG8YJPAHZMTkiGVzA=;
+        b=l92BlLN75gougtWVe6FNnkZBSHG/XMPInkPa7scCmAQhbT6Y92WIr4OPkutK0/g+BS
+         UKckyP766YKMNYDdTHLe7+mrmolVBp7J5fi3zePXqAjF6ZmwUlP13SPA2BtIPizEzeXb
+         jEBRVZeo6VMGUSW9g57uT77PMdTeXVAZkZOUU6YhN/eCKLDqiwSLgPFqatqevJkBu1dB
+         KX8qECXDRWpcsami8V4sqLSQ2b8ilRBh+j5dslHbs3H5lnvezT1g105b2HDWHRH3uqU1
+         mxKTSdPTsO/097LrpHlO9x2QgYKpYWoOLahaNLZaa1YbyhP5nWqXGqjApZrIMm8B4ukC
+         cD3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784734157; x=1785338957;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2Aoj5jAfbWafkO/PX+megQ9fW1pG8YJPAHZMTkiGVzA=;
+        b=rCgI345KPUvEwa3m9LMmQocgLpqz6t71I94fx1qVm4hEw+htipxDCQLr2ZNakiG705
+         L/irGt44Vi6+WCOs/nm8YAMeezgckHtcjftoi6ZHwvArxJy7oP1ZCLDz1Y85qwi8/The
+         vJjM9sRopSZjQgB5UD2PSM9zC/lH89a0a3AmQn8wGoY7doqTQvux1jCv2VLgLPfWQIoS
+         k2bIK83+PrymJ6uk5Z8FeQTK8M2mQq9gDH5tNf8jq1mW/2L537CX8Co0umBF1ZmTsCDq
+         MVpcXKyl6AFX8/Cp9qproBEBOMTHeKyuYxNUDVmiPeIKVnySDgVpWel7pYFl8AvWqzX0
+         /rSA==
+X-Forwarded-Encrypted: i=1; AHgh+Rpuzt7adIukuUZtez5768xxIbJaiW9c1b02K4anZejMXExlf0lSFYZbg7nlvXspy67wAqTQgHfaNBsSqmYpHDs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxDWIZimu/L5EdgapvpAi+IlEdNger0Wp5xSaW2WSlAv682rFVx
+	QUkozyfELmIwvmc1IxjKLUKYlvS6BOjU3hlkjMOKQ+FkRFRb2c6SSy/k0aKywN2llvO7NdiKBOd
+	jwG1wiiEuiwQIGByriXRulGgdvJ8eBxo=
+X-Gm-Gg: AR+sD10SQyHdbnIJ7a2q0S3S19Mqo7uc78cGgQI7urYH3TpUs/NDg0xRlh76740SX+O
+	MAEkJPQl0YCyrOf3KtWxG19XMwYDhDJfKoTRtmzLa8phS5pxRPwHru1dY0mBty+rS64c5fz8N4V
+	MmXCvhBO1UUIdXjMiwrq8KkuksjbAbwLgu8U8QZE+THEVQceqd/Pxh7qa7lUJ+IAgXmhEzHIKWQ
+	OsEF58v1/HPhe+cirV4Kjg0hFACrUMmLtKg8TZOTSNBI//C0JyMCyCSz1a1iA76ADBw4ZdyCcSi
+	9YpKAaQB5JapScGBDxOj3MrjBu/6plvOikj9IQ2VqTa5iKi8TZz/4EUAdhF2EM3Ckxm/UsSDbCx
+	jmg==
+X-Received: by 2002:a17:90a:bf92:b0:38e:ab3f:2c99 with SMTP id
+ 98e67ed59e1d1-38eab3f38a0mr1422489a91.2.1784734156982; Wed, 22 Jul 2026
+ 08:29:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260722041257.1557-1-pengpeng@iscas.ac.cn> <20260722042744.5C1B01F000E9@smtp.kernel.org>
+ <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
+ <2026072224-moisture-gonad-409f@gregkh> <2026072205-unsealed-emcee-b243@gregkh>
+ <ed0f74db3342ead9a36a0367b8a5cf694b0decf3.camel@HansenPartnership.com>
+In-Reply-To: <ed0f74db3342ead9a36a0367b8a5cf694b0decf3.camel@HansenPartnership.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 22 Jul 2026 17:29:03 +0200
+X-Gm-Features: AUfX_mwHR2f5q7FTmXaAPXY0LSHFQ4XQZ-onxLdgL2t_w3ErYqbkA-y1dJ2vX8w
+Message-ID: <CANiq72m4XJcj+y-VnWYBwoMvJd+P8Xqs2dK3vaGEycFpqwAt_g@mail.gmail.com>
+Subject: Re: How to fix problems with the sashiko review model
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>, sashiko-reviews@lists.linux.dev, 
+	Chris Mason <clm@fb.com>, Roman Gushchin <roman.gushchin@linux.dev>, linux-scsi@vger.kernel.org, 
+	ksummit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2026-07-22 at 17:09 +0200, Mauro Carvalho Chehab wrote:
-> On Wed, 22 Jul 2026 10:17:40 -0400
-> James Bottomley <James.Bottomley@HansenPartnership.com> wrote:
->=20
-> > On Wed, 2026-07-22 at 16:00 +0200, Johannes Berg wrote:
-> > > On Wed, 2026-07-22 at 09:42 -0400, James Bottomley wrote:=C2=A0=20
-> > > >=20
-> > > > Well, I noted that in my reply above.=C2=A0 The way I was thinking
-> > > > of implementing it was to add a general instruction file for
-> > > > drivers which would make hardware trusted for pretty much
-> > > > everything and then instruct the AI to consult driver specific
-> > > > files for overrides to this so we could add the additional
-> > > > threat checks to usb.md and virt.md=C2=A0=20
-> > >=20
-> > > I guess it's a question which way around it should be - but I'll
-> > > note that generally for wifi customers tend to not trust the
-> > > "hardware" because it's mostly firmware, is generally buggy and
-> > > can be attacked over the air too...
-> > >=20
-> > > Personally (with that background) I'd tend to lean towards saying
-> > > the high-performance stuff that does want/need to trust the
-> > > device should opt out, it's harder to get that wrong. If we
-> > > generally opt out as you describe and then forgot to include
-> > > something, we might have issues.=C2=A0=20
-> >=20
-> > So this is just an efficiency thing.=C2=A0 There are 144 driver
-> > subsystems, so if most of the want to trust the hardware it makes
-> > more sense to have this as default but overriden by subsystems.=C2=A0
-> > However, if most of the 144 don't trust their hardware then
-> > absolutely, I agree, it should be per-subsystem opt in.=C2=A0 Part of
-> > the reason for the post was to gauge this ... and so far I count
-> > three opt outs.
->=20
-> I don't trust hardware/firmware. They can be buggy.=20
+On Wed, Jul 22, 2026 at 4:15=E2=80=AFPM James Bottomley
+<James.Bottomley@hansenpartnership.com> wrote:
+>
+> So you're thinking of this file:
+>
+> Documentation/process/threat-model.rst
+>
+> ?  It's already mostly in there, it's just that sashiko doesn't seem to
+> be picking it up (otherwise it wouldn't have suggested the problem I
+> noted), which is why I was thinking it needed to be a direct prompt ...
+> unless the prompt should be to read that file?
 
-Wait, buggy is different; we have potentially buggy in SCSI as well
-(rather a lot of it, in fact).  However, we don't fix theoretical
-hardware bugs, we require users to specify a device (which they could
-add to the code as comments to keep sashiko quiet).
+Yeah, I had the same question for the Rust subsystem -- I have some
+guidelines I want to add, which should be useful for both humans and
+LLMs (e.g. not too many tokens), but I am not sure what is the best
+practice here.
 
-The general tenor of my driver/ prompt would be that hardware may never
-be assumed to be malicious but could be buggy.  In the event that the
-fix is for buggy hardware, the submitter must state which hardware is
-buggy and confirm they've tested the fix on the actual hardware.
+I think mentioning it in the prompt is needed, but perhaps it is best
+to force it into the prompt `#includ`ing it somehow (ideally without
+actually copy-pasting it every once in a while).
 
-Regards,
+Either way, it would be nice to be consistent about this across
+subsystems both on the kernel and on the prompts repository.
 
-James
+Cheers,
+Miguel
