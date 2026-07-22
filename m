@@ -1,43 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73753E0B;
-	Wed, 22 Jul 2026 19:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 007773AE713
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 19:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784748940; cv=none; b=cuHPjQfDAGMVPizfGtz8xvvPDH50T4hxmL6YC207GgeuyxYe08+qsbkK56D4Ock4MA4BZb84dJmnImycNk6sHB+pm8EKCl4ZVeR91njiqxdLPLk4WnLXjq0a0iZzLBETbExT7HLnmjF0fO4wEHo3DwSL426pMVBsJz35qJORsBc=
+	t=1784749485; cv=none; b=a4EcAB8ltkZ4iUMe/oFvBaj5CcG7DSXUigKA1lVCrdAnntdBaGcwE704YY61FpMMGazaIiuT8uWjKdopIkGnvgEmN/WFj5IvTFryJHM0cZXfVZBJLw8PSwPRciVBUZUe19g8zrhjszVRLHC0AJEdZ9p+NEM03RBTcorNk28ns7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784748940; c=relaxed/simple;
-	bh=hP+UdXNtwxLs8RDfieVjnkDGwPDhxKk/ZIxEtUzzyuQ=;
+	s=arc-20240116; t=1784749485; c=relaxed/simple;
+	bh=uKJ12bVYQ+O4NPLYGEY1BXCSTRL8ak1VhXHr+h1r0g8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q95UKT2knT+irUASTq6JwWMGoTgm2iYMiWJ/eMUh43XszsujPgieXtwg1rQ5acO75RUTPuxXuyEaX7p+N9AMyfmOmTrW7L/3uyV5nJA6iR0PROe0LyPjurULU65QHQJixMJGvAPxO799iCh4OYtusiCXYu5vk7Mh7N8M54LgKag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6BirluH; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=B9xyDXNRqwVOlQL3B7gAQYIa32vA806JR96KGxHlyYuDIRtt3WQs/lkk7evgiqTOFlL2OpTbCrOGfOjBQrWN7vCK+6rYIRtjuAMcFUoxn1r+VAl6sWjmax2W1NXSQz0jNoM4iGPlhIZFIX3+iBUI/efuYhP85yzdzKA+OuJ125I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=E7hb3o47; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6BirluH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B311F000E9;
-	Wed, 22 Jul 2026 19:35:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784748938;
-	bh=xiER9WGvQg7w4rdURxGa1/D0vVTMjSAk3LEg2gjmRTQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=A6BirluH9Y/0MgNVwCWigbwqan7d9j5JiuafDgStNaUhWbOteYwStk8K2tfPqO3Vk
-	 KvEXbY4wTuu9faekX578vgFlqKLoDP0Mh4uG3I+27sACZOVYBwqqDPFQkO0PpyCSHU
-	 negKw/F4B6iha7++juyD6SUNpAF9YElEVFhe0lw63umer71SM9fEBDFDE8o6E6rsTw
-	 OzbhX7xJGcdrrGZAtH2ywaW8c2d34JjdvTyZXy/NHmhxvYRfU3PA/oK/MfWvfbjgqw
-	 1sWT/HUDCa9N/yXgBY/zjfCi8FY03Qp6VBR5yFoAD1kl87eOCGTusyAYCAELRmpTTc
-	 ckqqbja6/CzuQ==
-Date: Wed, 22 Jul 2026 14:35:38 -0500
-From: Rob Herring <robh@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="E7hb3o47"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3CC1D1595;
+	Wed, 22 Jul 2026 12:44:39 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE8C63F66F;
+	Wed, 22 Jul 2026 12:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1784749483; bh=uKJ12bVYQ+O4NPLYGEY1BXCSTRL8ak1VhXHr+h1r0g8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=E7hb3o47rR/X+8cgCVn9tqAMxd+VvBJ+6shL+xo966e5tFrDlrVsbaIXT4Y8cN0V1
+	 FvYiZCDXqnua3MskiG4UJzwx6QiUgzLjp3mA+XnIchc8sA0e1gq8UU17Va/E2ReWm2
+	 PFGb1WRYFYFOzm7gQiELIMU+821WaIiwH5O1Cwrs=
+Date: Wed, 22 Jul 2026 20:44:40 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@oss.nxp.com, devicetree@vger.kernel.org, Frank.Li@kernel.org,
-	imx@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v2 2/4] dt-bindings: soc: imx-iomuxc-gpr: allow bridge@18
- as child node
-Message-ID: <20260722193538.GA1541480-robh@kernel.org>
-References: <20260718-arm_dts_ldb-v2-0-f5669571aa2b@nxp.com>
- <20260718-arm_dts_ldb-v2-2-f5669571aa2b@nxp.com>
- <20260718145730.8D5831F000E9@smtp.kernel.org>
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH RFC v2 15/20] mm/pgtable: optimize pmdp_get() and friends
+ for folded pagetable levels
+Message-ID: <amEdqMxwlxOkzL1X@e129823.arm.com>
+References: <20260722-dummy_ptxp3-v2-0-d9e4bad31e0a@arm.com>
+ <20260722-dummy_ptxp3-v2-15-d9e4bad31e0a@arm.com>
+ <20260722161509.6CC951F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -46,57 +44,43 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260718145730.8D5831F000E9@smtp.kernel.org>
+In-Reply-To: <20260722161509.6CC951F000E9@smtp.kernel.org>
 
-On Sat, Jul 18, 2026 at 02:57:30PM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Jul 22, 2026 at 04:15:09PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Missing `ranges` property in `fsl,imx-iomuxc-gpr` schema will cause kernel WARN_ON at boot.
+> - [Low] Incorrect parameter name in the newly defined pgdp_get() function.
 > --
 > 
-> --- Patch [2]: [PATCH v2 2/4] dt-bindings: soc: imx-iomuxc-gpr: allow bridge@18 as child node ---
-> commit 5e999c2b583f7149956f10a90d92e24192451d5a
-> Author: Frank Li <Frank.Li@nxp.com>
+> --- Patch [15]: [PATCH RFC v2 15/20] mm/pgtable: optimize pmdp_get() and friends for folded pagetable levels ---
+> commit 2c4b6d6a43469a09eb2dcdd35ef29b1bda716b3a
+> Author: David Hildenbrand (Arm) <david@kernel.org>
 > 
-> dt-bindings: soc: imx-iomuxc-gpr: allow bridge@18 as child node
+> mm/pgtable: optimize pmdp_get() and friends for folded pagetable levels
 > 
-> The legacy i.MX6SX SoC imx-iomuxc-gpr contains one LDB_CTRL register.
-> This patch updates the dt-bindings to allow the LVDS Display Bridge (LDB)
-> child node under imx-iomuxc-gpr to resolve CHECK_DTBS warnings.
+> This commit optimizes pmdp_get() and related functions for configurations
+> with folded page tables. It avoids unnecessary memory reads by returning a
+> dummy value instead of forcing the compiler to read unused data.
 > 
-> > diff --git a/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml b/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml
-> > index 721a67e84c137..1879638918bab 100644
-> > --- a/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml
-> > +++ b/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml
-> > @@ -47,10 +47,21 @@ properties:
-> >    reg:
-> >      maxItems: 1
+> Link: https://lore.kernel.org/all/0019d675-ce3d-4a5c-89ed-f126c45145c9@kernel.org/
+> 
+> > diff --git a/include/asm-generic/pgtable-nop4d.h b/include/asm-generic/pgtable-nop4d.h
+> > index 019c3f074b771..ab4a826b34048 100644
+> > --- a/include/asm-generic/pgtable-nop4d.h
+> > +++ b/include/asm-generic/pgtable-nop4d.h
+> > @@ -34,6 +34,14 @@ static inline bool pgd_leaf(pgd_t pgd)		{ return false; }
+> >   */
+> >  #define set_pgd(pgdptr, pgdval)	set_p4d((p4d_t *)(pgdptr), (p4d_t) { pgdval })
 > >  
-> > +  '#address-cells':
-> > +    const: 1
-> > +
-> > +  '#size-cells':
-> > +    const: 1
-> > +
+> > +static inline pgd_t pgdp_get(pgd_t *p4dp)
 > 
-> [Severity: High]
-> Will this omission of ranges cause a kernel WARN_ON at boot?
-> 
-> Because the syscon node includes the simple-mfd compatible, the kernel
-> function of_platform_default_populate() will attempt to create platform
-> devices for its children. For the bridge@18 child, of_device_alloc()
-> attempts to parse its reg property.
-> 
-> Since the parent lacks a ranges property, of_translate_address() fails and
-> returns OF_BAD_ADDR. This causes of_address_to_resource() to return
-> -EINVAL, which is passed directly to a WARN_ON() in of_device_alloc().
-> 
-> Because additionalProperties is set to false in this schema, users are
-> actively prevented from adding a valid ranges property to their device trees
-> to fix this.
-> 
-> Should the ranges property be added to this schema and explicitly permitted
-> so that device trees can provide the required address translation mapping?
+> [Severity: Low]
+> This isn't a bug, but should the parameter for pgdp_get() here be named pgdp
+> instead of p4dp?
 
-You need ranges.
+Yes. I'll change it in next version.
 
-Rob
+Thanks!
+
+-- 
+Sincerely,
+Yeoreum Yun
