@@ -1,30 +1,30 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0202479884
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 07:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E469472F8C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 07:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784706336; cv=none; b=SL+3tXRxwr+d8GSVxMBl0OpHMVokIC6QaVajOAHdXDb+vUQoTw1bvFmhxlKZkG64A98Otm8SnKq/NWNvbDia0WdZPeos2GZ7fOpWV3t3rqISbYJfMDd/9u/7KxwofY3lNEnbIjbf9BaH3txZpBtMg8pjaVXP6cegjpY/8i+8WO0=
+	t=1784706544; cv=none; b=boXD7ad2NiXOgPEjhj7C4mZzwuyrWc+6qy/eRGtZa3pHRs/5OoH///+3trC1jzWulr73346XTSsie2Gc75g6Nkb4emNE6NLJq6I7h9UIbtA80HuAcvWAVgHGbc0RgaCsW1cKPFMul0VZSerZ4xo++ZJnv4s6aj1bwJkm9jABCf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784706336; c=relaxed/simple;
-	bh=tNRfhs7szQnX/DAu9O31dg2ZGOSy9ZUJxMOYibyUDt8=;
+	s=arc-20240116; t=1784706544; c=relaxed/simple;
+	bh=HJLE2eo85PmgYQQn5EeKe0b3NHkn/5qReU42v3xFLPU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ut6CXZgLqt+5kyKTlUKtFegJHTPBQpLeQutcKWT6tGN2gJ4lAbHnwq8KGjtANmWnFMlShvGTwcRNc4YhXbZ7T1d7lpWwmYEltHXtohY5sSUPKnGXYj8kHPt71qSZQjqiebGXLG0oDBH+TCvwqT974SjQxOYHSlqw1g75rCaSeZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+	 In-Reply-To:Content-Type; b=d6PJDAVlKBtmNgLlkB+jB7EXnbZEqevE/upHsfrJC4QvtyXxg61G1ounEixNppsLvr0QxtIsjkrgQ2oj5xF88DNOOleQxwRNSZK644T0Mn/5QG1v6VFfRDNylAZYDll+7YJDR/cIgVBeKYRZsseozKKoo3qt2iTksXH3okd2Ut8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
 Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h4mW20JGhzYQtk1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:45:02 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id B137A405C3
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:45:30 +0800 (CST)
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h4mZk58gFzKHMLm
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:48:14 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 14ABC40585
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:48:58 +0800 (CST)
 Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDXBlj+dGBq1N6JCA--.34309S3;
-	Wed, 22 Jul 2026 15:45:30 +0800 (CST)
-Message-ID: <1a5665f4-9781-4bd3-b7fb-1f98e1f94520@huaweicloud.com>
-Date: Wed, 22 Jul 2026 15:45:30 +0800
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgDnFyTpdWBqimOFCA--.51088S2;
+	Wed, 22 Jul 2026 15:48:58 +0800 (CST)
+Message-ID: <d1c272dd-9db3-4d93-806e-ba8b4dcc0e91@huaweicloud.com>
+Date: Wed, 22 Jul 2026 15:48:57 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,112 +32,116 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v6 1/4] bpf: Fix potential UAF in
- bpf_netns_link_update_prog
+Subject: Re: [PATCH bpf v6 4/4] bpf, cgroup: Fix storage null-ptr-deref after
+ replacing prog
 Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260722072326.1545677-1-pulehui@huaweicloud.com>
- <20260722072326.1545677-2-pulehui@huaweicloud.com>
- <20260722073624.CEAAC1F000E9@smtp.kernel.org>
+ <20260722072326.1545677-5-pulehui@huaweicloud.com>
+ <20260722073501.64ACE1F00A3A@smtp.kernel.org>
 From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260722073624.CEAAC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260722073501.64ACE1F00A3A@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgDXBlj+dGBq1N6JCA--.34309S3
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw45XF48Cryrtw4Dtwb_yoW5Gw4xpF
-	yfC3W7Cw1UKrnF9F10v3WkZFy8ZF18WF1jkr1DZ3W8uF9Ivr9agFyUurZ3ur909F1kC3WI
-	qr1jqw1Dtw1UZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGw
-	A2048vs2IY020Ec7CjxVAFwI0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7
-	M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JV
-	WxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl
-	6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6x
-	IIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_
-	Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
-	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
-	6r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
-	IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
-	67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43
-	ZEXa7IU1ItC7UUUUU==
+X-CM-TRANSID:Syh0CgDnFyTpdWBqimOFCA--.51088S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw45Xr1kWr15WryxuFg_yoW5Ar4xpF
+	4kZasrX3Z8Jr9Yvr1kt3929F48Aa10qr1Ykrs8Jw1rurW2gFWFgr97uFWY9Fy3JF1Du3Za
+	qF90vF1qkF10vFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UNvtZUUUUU=
 X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
 
-
-On 2026/7/22 15:36, sashiko-bot@kernel.org wrote:
+On 2026/7/22 15:35, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Preexisting Use-After-Free in generic bpf_link information retrieval and mprog attachment due to lockless access to link->prog.
+> - [High] Missing rollback of `pl->flags` on the error path in `__cgroup_bpf_attach` permanently corrupts the execution order of the replaced program.
 > --
 > 
-> --- Patch [1]: [PATCH bpf v6 1/4] bpf: Fix potential UAF in bpf_netns_link_update_prog ---
-> commit d5c566078955c1f4dfc1d9f1e23e9f6213c3dcfb
+> --- Patch [4]: [PATCH bpf v6 4/4] bpf, cgroup: Fix storage null-ptr-deref after replacing prog ---
+> commit f8726e124d0a4e72b87976830f0741e286d474df
 > Author: Pu Lehui <pulehui@huawei.com>
 > 
-> bpf: Fix potential UAF in bpf_netns_link_update_prog
+> bpf, cgroup: Fix storage null-ptr-deref after replacing prog
 > 
-> This commit fixes a potential use-after-free issue in
-> bpf_netns_link_update_prog() by moving the old_prog and prog->type checks
-> inside the netns_bpf_mutex critical section.
+> Syzkaller reported a storage null-ptr-deref issue after replacing a prog.
+> The issue is fixed by properly allocating the storage and comparing the old
+> and new storage pointers, falling back to an RCU-safe update if they change.
+> Additionally, proper rollbacks for storage and flags are added to the error
+> path in __cgroup_bpf_attach for code rigor.
 > 
->> diff --git a/kernel/bpf/net_namespace.c b/kernel/bpf/net_namespace.c
->> index 25f30f9edaefd..9fc62db1441c6 100644
->> --- a/kernel/bpf/net_namespace.c
->> +++ b/kernel/bpf/net_namespace.c
->> @@ -171,13 +171,17 @@ static int bpf_netns_link_update_prog(struct bpf_link *link,
->>   	struct net *net;
->>   	int idx, ret;
+>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>> --- a/kernel/bpf/cgroup.c
+>> +++ b/kernel/bpf/cgroup.c
+>> @@ -883,7 +885,10 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
+>>   	pl->prog = prog;
+>>   	pl->link = link;
+>>   	pl->flags = flags;
+>> +	if (old_prog)
+>> +		bpf_cgroup_storages_assign(old_storage, pl->storage);
+>>   	bpf_cgroup_storages_assign(pl->storage, storage);
+>> +	old_flags = cgrp->bpf.flags[atype];
+>>   	cgrp->bpf.flags[atype] = saved_flags;
 >>   
->> -	if (old_prog && old_prog != link->prog)
->> -		return -EPERM;
->> -	if (new_prog->type != link->prog->type)
->> -		return -EINVAL;
->> -
->>   	mutex_lock(&netns_bpf_mutex);
->>   
->> +	if (old_prog && old_prog != link->prog) {
->> +		ret = -EPERM;
->> +		goto out_unlock;
->> +	}
->> +	if (new_prog->type != link->prog->type) {
->> +		ret = -EINVAL;
->> +		goto out_unlock;
->> +	}
->> +
+>>   	if (type == BPF_LSM_CGROUP) {
+> 
+> [ ... ]
+> 
+>> @@ -915,12 +920,14 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
+>>   	if (old_prog) {
+>>   		pl->prog = old_prog;
+>>   		pl->link = NULL;
+>> +		bpf_cgroup_storages_assign(pl->storage, old_storage);
+>>   	}
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but while this change fixes the
-> concurrent update race in bpf_netns_link_update_prog(), could the subsequent
-> xchg() of link->prog cause a use-after-free regression in other functions
-> that read it locklessly?
-> 
-> If a user-space application concurrently calls bpf_obj_get_info_by_fd() or
-> reads fdinfo, the retrieval functions read link->prog locklessly without
-> holding rcu_read_lock(). If the reader thread is preempted immediately after
-> reading the pointer, and a concurrent link update replaces and frees the old
-> program, will the reader dereference freed memory?
-> 
-> This can happen in bpf_link_get_info_by_fd():
-> 
->      if (link->prog)
->          info.prog_id = link->prog->aux->id;
-> 
-> It also appears in bpf_link_show_fdinfo():
-> 
->      const struct bpf_prog *prog = link->prog;
->      ...
->      bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
-> 
-> And in bpf_mprog_link():
-> 
->      if (type && link->prog->type != type) {
+> This is a pre-existing issue, but since this patch tightens the error handling
+> and rollbacks in __cgroup_bpf_attach(), should we also restore the original
+> pl->flags here?
 
-patch 2 and patch 3 will cover these issue.
 
 > 
-> Do these lockless accesses need rcu_read_lock() protection to safely read
-> the program fields when updates can happen concurrently?
+> Earlier in the function, pl->flags is overwritten with the incoming flags:
+> 
+> 	pl->prog = prog;
+> 	pl->link = link;
+> 	pl->flags = flags;
+> 
+> If update_effective_progs() later fails (e.g., due to memory allocation
+
+It's hard to make update_effective_progs fail in __cgroup_bpf_attach, as 
+it will failed only when allocating failed:
+
+progs = bpf_prog_array_alloc(cnt, GFP_KERNEL);
+
+failed for the above alloc is not a high issue, as cnt max is no more 
+than BPF_CGROUP_MAX_PROGS.
+
+> failure), the error path restores pl->prog, pl->link, and pl->storage, but
+> misses pl->flags. If a user attempts to replace a program using BPF_F_REPLACE
+> with different BPF_F_PREORDER settings and the replacement fails, could this
+> leave the original program active but with its execution order silently
+> corrupted?
+> 
+>>   	bpf_cgroup_storages_free(new_storage);
+>>   	if (!old_prog) {
+>>   		hlist_del(&pl->node);
+>>   		kfree(pl);
+>>   	}
+>> +	cgrp->bpf.flags[atype] = old_flags;
+>>   	return err;
+>>   }
 > 
 
