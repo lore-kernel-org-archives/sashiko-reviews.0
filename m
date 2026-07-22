@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FB62F1FED;
-	Wed, 22 Jul 2026 06:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1365B2FFF89;
+	Wed, 22 Jul 2026 07:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784703446; cv=none; b=N7H6TU4XMhl2pjyuLIgeG0B1lkUp9SPtn1vZEgdB5xtOykMmM/wXLTQCnh5dt8azHQ6vcWcuxM7WNW9fD4/UBhHRHWJSv2mzb/ReZSOCBdwS0fKQ3OcndupXj0HTgXesFr9mEg5Kwr9JIzG31See/H9sarw9+ML3mtkkuUlyyJw=
+	t=1784703778; cv=none; b=YI1igOMJJQatEq0vw4nb79+Vjs753KptiDckkkfPkS4S1l2XPPLC/NwMQqKecRbMfvYVdTFMHnhIFJhpE/ZwbWP2vR2ztxDHm/gNJPtYmIujC4aiygeSLyCsEXexrk11/ZG9BOwBw+6/joYK62br9n9KOQEI1VnpVOK7oGfpPNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784703446; c=relaxed/simple;
-	bh=idOhC2kM0LA3x9rq6tHuZAwc4IkgFPSYYdw3KPz5+cg=;
+	s=arc-20240116; t=1784703778; c=relaxed/simple;
+	bh=Dhxpyp5WxHO0+rnMTK966vwBcBFPaMwCoLRcDTolfcE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YKvrKQVylKpWCAcXC7vy1HCcpYhDgzaMxZYchoDeSr2fxjDBu6jj9IUwtjMLdiYOC9q5BRqObvaNbxva0wztjqUguyyqbJY9yWDMWd6ka3yMiWgafsQ45p+ZaI3kaZlJIdknVQh7wbb6dHvvwQMFYURwtD0eaTlerd+mu/mjyHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nlSQL2yK; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=aUw/IBoxj3/6uEIvh2uSYQ9cyQsBAN/nBBRyXT0HScpquMBJyKY2FzGPl8OaiD+//TWaXz/+gaBIuWoD6JvfHG3rYLDE3htEasik7C3s56+Z8rL7PGKRDg/yzZTLbVqQzjxOxPhNLdOaEGtgWbwIPBat2kMTE7erQQ059LhDGHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLcnPq+o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nlSQL2yK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C5D1F000E9;
-	Wed, 22 Jul 2026 06:57:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLcnPq+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4FD1F000E9;
+	Wed, 22 Jul 2026 07:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784703444;
-	bh=uvLr2bIZaZ/P+7+C+WwwC26fvKhOnqIx1EOEaGVWkNY=;
+	s=k20260515; t=1784703776;
+	bh=8FpaDTxzOLlH/vfTaml0v7+h+U0X8a7uuWws5ZIBjq4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nlSQL2yKw4jECWYh/3q77D345kLAT5DZ+UYrepvcR3hrzRTtL0sML61oOGOs/pQmO
-	 bf2vG9lt/JYEy/X6l0WtEx0Qm6IoHGBZcdQn6a5iThZMXJBYRV300szKGiaRFOuptv
-	 OD8NVfztzhcNa++aDbqUg3M3o1uS+LEpiStEW9HKJJ1XZ2O7gtYe2XDnsmZDxzpkWJ
-	 Y9s8UnNyMVPV4x6kg0yzwO8N03ZoYRY+VTltsAkw+2kqiUe+iwESYSDLukJWReH5OW
-	 j3NRjqSMccWfVZvG8C2IRMbLNNDkOz4ohQENbGWObLs5GXGcGmgOX6Fq6Sp3LRzYHP
-	 HdX3PQTaRaSWg==
-Date: Wed, 22 Jul 2026 09:57:19 +0300
-From: Leon Romanovsky <leon@kernel.org>
+	b=YLcnPq+oJeAUGwMjBWaJMrNrFs0MWh5P98fmBAB3O0SE7qYaP6yuDecdj4WGQ/rsA
+	 Ys10sqrnzZxB61ukk+JxiYPeORqgiXxw90Q+Y/uGlbiTVPyQ2clTvOFyc8tSIQpwRe
+	 SOlaoYEP0OpsvKs/20T3y12nhtPZrYvPSPaDrj47xncUXvcyQDQ+JdtydFofu2F5Jz
+	 dZKgv4uJsEjED8dge+hAbs30PhNOBehdToLZzg3pyhmoqN8ZBpCz9EZwCiNKmavRgi
+	 fuQr54pmneIEAxay7ZmTh9QTRJPKRW9TFaDxVxiMzpmvlmps837J4MBHwjgat5qvX5
+	 jOQAnbFQ3d/aA==
+Date: Wed, 22 Jul 2026 09:02:50 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Subject: Re: [PATCH] scsi: target: Clear cmd_cnt when initial counter
- enrollment fails
-Message-ID: <20260722065719.GS110966@unreal>
-References: <20260722-reference-count-underflow-in-target-v1-1-63ab664f12fd@nvidia.com>
- <20260722064842.B67F41F000E9@smtp.kernel.org>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v5] PCI/ASPM: Mask ASPM states based on Devicetree
+ properties
+Message-ID: <acmo2p23ivae7zwf2nyymzlx5flhgc6fbnmlc3rg5ugadzsnml@ipxycw7lb7cs>
+References: <20260721-aspm-v5-1-58860c48d0c7@oss.qualcomm.com>
+ <20260721143945.86E7D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,122 +45,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260722064842.B67F41F000E9@smtp.kernel.org>
+In-Reply-To: <20260721143945.86E7D1F000E9@smtp.kernel.org>
 
-On Wed, Jul 22, 2026 at 06:48:42AM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Jul 21, 2026 at 02:39:45PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] iSCSI target ignores target_get_sess_cmd() failure, causing reference count underflow and use-after-free
-> - [High] qla2xxx target driver leaks cmd_cnt->refcnt references on every SRR processing event
-
-Interesting, I run clade review with Chris's prompts and got this
-verdict:
-
-False positives eliminated during analysis: (1) “fix belongs in target_get_sess_cmd()” — refuted by the qla2xxx SRR additional-reference case;
-(2) “iscsi/qla2xxx callers left unfixed” — refuted by iscsi teardown ordering and by qla2xxx/tcm_fc/efct using tag/pool free rather than target_release_cmd_kref.
-
-Thanks
-
+> - [High] The ASPM state restoration loop unconditionally overwrites the entire PCI Express Link Control (PCI_EXP_LNKCTL) register of all downstream functions with the exact snapshot from function 0, corrupting function-specific configuration.
+> - [Medium] ASPM L1 is only temporarily disabled on function 0 before executing the Devicetree override that disables L1SS, leaving L1 enabled on other functions and creating an asymmetric configuration flow.
 > --
 > 
-> --- Patch [1]: [PATCH] scsi: target: Clear cmd_cnt when initial counter enrollment fails ---
-> commit 91357eb9be8775486a1fba8ba21b9b933e790d5b
-> Author: Leon Romanovsky <leon@kernel.org>
+> --- Patch [1]: [PATCH v5] PCI/ASPM: Mask ASPM states based on Devicetree properties ---
+> commit 164cdaf6b21843e390d8074afc28fbe939d2fb44
+> Author: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Subject: PCI/ASPM: Mask ASPM states based on Devicetree properties
 > 
-> scsi: target: Clear cmd_cnt when initial counter enrollment fails
+> Some platforms require selectively disabling specific ASPM states on a
+> given PCIe link to avoid link instability or functional failures caused
+> by board-level connectivity constraints. Devicetree supports disabling ASPM
+> L0s, L1, and L1 PM Substates via the 'aspm-no-l0s', 'aspm-no-l1', and
+> 'aspm-no-l1ss' properties. This commit enables the ASPM driver to honor
+> these properties when initializing the default link state.
 > 
-> When target_get_sess_cmd() fails during session shutdown, the command keeps
-> the se_cmd->cmd_cnt pointer without owning a reference. Final release through
-> target_release_cmd_kref() then issues an unmatched percpu_ref_put(). This
-> commit clears se_cmd->cmd_cnt whenever the initial target_get_sess_cmd()
-> fails so release performs exactly one matching put per acquired reference.
+> Link: https://github.com/devicetree-org/dt-schema/pull/188
+> Link: https://github.com/devicetree-org/dt-schema/pull/190
 > 
-> > diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
-> > index fad03a15c969e..dcfe945949167 100644
-> > --- a/drivers/target/target_core_transport.c
-> > +++ b/drivers/target/target_core_transport.c
+> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > index 172783e7f519a..82041052747fc 100644
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
 > 
 > [ ... ]
 > 
-> > @@ -1763,7 +1764,11 @@ int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
-> >  	 * necessary for fabrics using TARGET_SCF_ACK_KREF that expect a second
-> >  	 * kref_put() to happen during fabric packet acknowledgement.
-> >  	 */
-> > -	return target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
-> > +	ret = target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
-> > +	if (ret)
-> > +		se_cmd->cmd_cnt = NULL;
+> > @@ -846,6 +889,36 @@ static void pcie_aspm_override_default_link_state(struct pcie_link_state *link)
+> >  
+> >  	/* For devicetree platforms, enable L0s and L1 by default */
+> >  	if (of_have_populated_dt()) {
+> > +		bool no_l0s = pcie_link_has_aspm_override(link, "aspm-no-l0s");
+> > +		bool no_l1 = pcie_link_has_aspm_override(link, "aspm-no-l1");
+> > +		bool no_l1ss = pcie_link_has_aspm_override(link, "aspm-no-l1ss");
 > > +
-> > +	return ret;
-> >  }
+> > +		if (no_l0s) {
+> > +			link->aspm_support &= ~PCIE_LINK_STATE_L0S;
+> > +			link->aspm_default &= ~PCIE_LINK_STATE_L0S;
+> > +			link->aspm_enabled &= ~PCIE_LINK_STATE_L0S;
+> > +		}
+> > +
+> > +		/*
+> > +		 * Clear L1SS in hardware before updating aspm_support. Once
+> > +		 * aspm_capable is derived from aspm_support, pcie_config_aspm_link()
+> > +		 * skips pcie_config_aspm_l1ss() entirely via the aspm_capable guard,
+> > +		 * leaving firmware-enabled L1SS substates active in hardware.
+> > +		 * This applies equally when disabling L1 (which implies L1SS).
+> > +		 */
+> > +		if ((no_l1 || no_l1ss) && (link->aspm_enabled & PCIE_LINK_STATE_L1SS))
+> > +			pcie_config_aspm_l1ss(link, 0);
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but I noticed the iSCSI target driver manually
-> calls target_get_sess_cmd() and ignores its return value.
+> [Severity: Medium]
+> Does this hardware write violate the PCIe specification precondition for L1 PM
+> Substates on multi-function devices?
 > 
-> If target_get_sess_cmd() fails (e.g. during session shutdown), it drops the
-> cmd_kref back down to 1. Since iscsit_setup_scsi_cmd() ignores this failure:
+> The PCIe spec mandates disabling ASPM L1 across the entire link before
+> modifying L1SS. Before calling this override, pcie_aspm_cap_init() temporarily
+> disables L0s/L1, but it only clears the ASPM Control bits for the first child
+> function:
 > 
-> drivers/target/iscsi/iscsi_target.c:iscsit_setup_scsi_cmd() {
->     ...
->     target_get_sess_cmd(&cmd->se_cmd, true);
->     ...
-> }
+> pcie_aspm_cap_init()
+>     pcie_capability_write_word(child, PCI_EXP_LNKCTL,
+>                                child_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
 > 
-> The same happens in the TMR path:
+> If L1 was enabled on functions > 0, they remain active when
+> pcie_config_aspm_l1ss(link, 0) is called here. Could this cause hardware
+> configuration faults or link instability since the precondition isn't fully met
+> across all functions?
 > 
-> drivers/target/iscsi/iscsi_target.c:iscsit_handle_task_mgt_cmd() {
->     ...
->     target_get_sess_cmd(&cmd->se_cmd, true);
->     ...
-> }
+
+This is a valid concern. We should disable ASPM L1 of all functions of the child
+of the link and enable it later if required, like pcie_config_aspm_link().
+
+> > +
+> > +		if (no_l1) {
+> > +			link->aspm_support &= ~(PCIE_LINK_STATE_L1 | PCIE_LINK_STATE_L1SS);
 > 
-> When the command completes, iscsit_send_status() calls target_put_sess_cmd(),
-> which drops the cmd_kref to 0 and prematurely frees the command. This triggers
-> an unmatched percpu_ref_put(&cmd_cnt->refcnt) and underflows the session
-> reference. Later, iscsit_free_cmd() causes a second target_put_sess_cmd() on
-> the freed command, resulting in a use-after-free.
+> [ ... ]
 > 
-> Can this be triggered by a remote unprivileged initiator sending commands
-> concurrently with session teardown?
-> 
+> > @@ -924,18 +997,30 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+> >  
+> >  	aspm_l1ss_init(link);
+> >  
+> >  	/* Save default state */
+> >  	link->aspm_default = link->aspm_enabled;
+> >  
+> >  	pcie_aspm_override_default_link_state(link);
+> >  
+> > +	/*
+> > +	 * Restore L0s/L1 if they were enabled, but don't restore any
+> > +	 * state a Devicetree override just disabled in aspm_support above.
+> > +	 */
+> > +	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
+> > +	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
+> > +		if (!(link->aspm_support & PCIE_LINK_STATE_L0S)) {
+> > +			child_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L0S;
+> > +			parent_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L0S;
+> > +		}
+> > +		if (!(link->aspm_support & PCIE_LINK_STATE_L1)) {
+> > +			child_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L1;
+> > +			parent_lnkctl &= ~PCI_EXP_LNKCTL_ASPM_L1;
+> > +		}
+> > +		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_lnkctl);
+> > +		list_for_each_entry(child, &linkbus->devices, bus_list)
+> > +			pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but looking at how the qla2xxx
-> driver uses target_get_sess_cmd(), could there be a reference leak during SRR
-> processing?
+> Can this unconditional write corrupt function-specific configuration?
 > 
-> The qla2xxx driver uses target_get_sess_cmd() to acquire an extra reference
-> for Sequence Retransmission Request (SRR) processing:
+> The child_lnkctl variable is a complete snapshot of PCI_EXP_LNKCTL taken
+> exclusively from function 0. The PCI_EXP_LNKCTL register contains
+> function-specific fields, such as the Read Completion Boundary at bit 3.
 > 
-> drivers/scsi/qla2xxx/tcm_qla2xxx.c:tcm_qla2xxx_get_cmd_ref() {
->     ...
->     return target_get_sess_cmd(&cmd->se_cmd, true);
-> }
+> Writing the full 16-bit word from function 0 to all other downstream
+> functions blindly overwrites their distinct state.
 > 
-> This increments both cmd_kref and cmd_cnt->refcnt:
+> Should this loop use a read-modify-write targeting only the
+> PCI_EXP_LNKCTL_ASPMC bits to safely restore the ASPM state across all
+> functions?
 > 
-> drivers/target/target_core_transport.c:target_get_sess_cmd() {
->     ...
->     if (se_cmd->cmd_cnt) {
->         if (!percpu_ref_tryget_live(&se_cmd->cmd_cnt->refcnt))
->     ...
-> }
-> 
-> However, when releasing the extra reference, the driver only drops cmd_kref:
-> 
-> drivers/scsi/qla2xxx/tcm_qla2xxx.c:tcm_qla2xxx_put_cmd_ref() {
->     ...
->     target_put_sess_cmd(&cmd->se_cmd);
-> }
-> 
-> The extra cmd_cnt->refcnt increment is never balanced because
-> target_release_cmd_kref() is only called once at the end of the command
-> lifecycle.
-> 
-> Does this permanently leak cmd_cnt->refcnt references and cause
-> target_wait_for_sess_cmds() to hang infinitely during session teardown?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-reference-count-underflow-in-target-v1-1-63ab664f12fd@nvidia.com?part=1
+
+True. pcie_capability_clear_and_set_word() should be used here.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
