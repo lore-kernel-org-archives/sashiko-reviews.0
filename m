@@ -1,41 +1,43 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 413C737FF46
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 19:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73753E0B;
+	Wed, 22 Jul 2026 19:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784748716; cv=none; b=Hn2uwKv9SK3DVCv3muZ4G+XkBxcQD7dv5sdFWgNUSux9iGDxURFnwYRpgoM5ifr0VomLlMeOXP9V6QC/aPkCGNXwILvRBYi5SPPdiLJVvjbC9uCW5S+J+aa9A3QhH63kj+r1sSu9qCTcvWdt3mPdRe2yCRWP07niDNJAPx/gqvo=
+	t=1784748940; cv=none; b=cuHPjQfDAGMVPizfGtz8xvvPDH50T4hxmL6YC207GgeuyxYe08+qsbkK56D4Ock4MA4BZb84dJmnImycNk6sHB+pm8EKCl4ZVeR91njiqxdLPLk4WnLXjq0a0iZzLBETbExT7HLnmjF0fO4wEHo3DwSL426pMVBsJz35qJORsBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784748716; c=relaxed/simple;
-	bh=mJ7xrKkarp10E7G5ES7Ha96ohxO1lRE1Ze2UX4reP38=;
+	s=arc-20240116; t=1784748940; c=relaxed/simple;
+	bh=hP+UdXNtwxLs8RDfieVjnkDGwPDhxKk/ZIxEtUzzyuQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uNd6dcM5pULiBUe9RLIvz+qD90GUqrtPSURCdrQjaDt0OrYvjC1kSY8LcePNcVE3ECqidLb6xK9gnAD6+3foOftBinlLFO511h/MigyOmcisW/aq2pyEFqmU18W4GpWk5SZp5lYGBFWoKFpRPjzVpqysWezy/mEYQNU3ibOvlCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=lSLHFvu1; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q95UKT2knT+irUASTq6JwWMGoTgm2iYMiWJ/eMUh43XszsujPgieXtwg1rQ5acO75RUTPuxXuyEaX7p+N9AMyfmOmTrW7L/3uyV5nJA6iR0PROe0LyPjurULU65QHQJixMJGvAPxO799iCh4OYtusiCXYu5vk7Mh7N8M54LgKag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6BirluH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="lSLHFvu1"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 024831595;
-	Wed, 22 Jul 2026 12:31:43 -0700 (PDT)
-Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A9DF53F66F;
-	Wed, 22 Jul 2026 12:31:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784748707; bh=mJ7xrKkarp10E7G5ES7Ha96ohxO1lRE1Ze2UX4reP38=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lSLHFvu1T09TDc8kk2rp+0Ue47Z7pNeDxpfOovqm55PUnVRIdBAD108Ned4cI16z8
-	 IusYpayQi8mfyCye+dLMrs7Fez68iFDtRzZEbePXydHQdI4PbN4iLgVcck+nBQNe+W
-	 8orot0yCJ/yEMkBYEJZlk/v6/pI/IYY4Jg0nwFxo=
-Date: Wed, 22 Jul 2026 20:31:44 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6BirluH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B311F000E9;
+	Wed, 22 Jul 2026 19:35:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784748938;
+	bh=xiER9WGvQg7w4rdURxGa1/D0vVTMjSAk3LEg2gjmRTQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=A6BirluH9Y/0MgNVwCWigbwqan7d9j5JiuafDgStNaUhWbOteYwStk8K2tfPqO3Vk
+	 KvEXbY4wTuu9faekX578vgFlqKLoDP0Mh4uG3I+27sACZOVYBwqqDPFQkO0PpyCSHU
+	 negKw/F4B6iha7++juyD6SUNpAF9YElEVFhe0lw63umer71SM9fEBDFDE8o6E6rsTw
+	 OzbhX7xJGcdrrGZAtH2ywaW8c2d34JjdvTyZXy/NHmhxvYRfU3PA/oK/MfWvfbjgqw
+	 1sWT/HUDCa9N/yXgBY/zjfCi8FY03Qp6VBR5yFoAD1kl87eOCGTusyAYCAELRmpTTc
+	 ckqqbja6/CzuQ==
+Date: Wed, 22 Jul 2026 14:35:38 -0500
+From: Rob Herring <robh@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH RFC v2 08/20] mm: vmscan: remove stack copy address of
- pud pass in wallk_pud_range()
-Message-ID: <amEaoDLZE5juUuD0@e129823.arm.com>
-References: <20260722-dummy_ptxp3-v2-0-d9e4bad31e0a@arm.com>
- <20260722-dummy_ptxp3-v2-8-d9e4bad31e0a@arm.com>
- <20260722155619.51D071F00A3A@smtp.kernel.org>
+Cc: Frank.Li@oss.nxp.com, devicetree@vger.kernel.org, Frank.Li@kernel.org,
+	imx@lists.linux.dev, dri-devel@lists.freedesktop.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: soc: imx-iomuxc-gpr: allow bridge@18
+ as child node
+Message-ID: <20260722193538.GA1541480-robh@kernel.org>
+References: <20260718-arm_dts_ldb-v2-0-f5669571aa2b@nxp.com>
+ <20260718-arm_dts_ldb-v2-2-f5669571aa2b@nxp.com>
+ <20260718145730.8D5831F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,56 +46,57 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260722155619.51D071F00A3A@smtp.kernel.org>
+In-Reply-To: <20260718145730.8D5831F000E9@smtp.kernel.org>
 
-On Wed, Jul 22, 2026 at 03:56:18PM +0000, sashiko-bot@kernel.org wrote:
+On Sat, Jul 18, 2026 at 02:57:30PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The `pmd_same` concurrency check in `walk_pte_range` is bypassed because it receives a pointer to a stack variable (`&val`) instead of the actual PMD entry.
+> - [High] Missing `ranges` property in `fsl,imx-iomuxc-gpr` schema will cause kernel WARN_ON at boot.
 > --
 > 
-> --- Patch [8]: [PATCH RFC v2 08/20] mm: vmscan: remove stack copy address of pud pass in wallk_pud_range() ---
-> commit 509a7a22f2cecb4a110a42ba30c39b2954f718fe
-> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> --- Patch [2]: [PATCH v2 2/4] dt-bindings: soc: imx-iomuxc-gpr: allow bridge@18 as child node ---
+> commit 5e999c2b583f7149956f10a90d92e24192451d5a
+> Author: Frank Li <Frank.Li@nxp.com>
 > 
-> mm: vmscan: remove stack copy address of pud pass in wallk_pud_range()
+> dt-bindings: soc: imx-iomuxc-gpr: allow bridge@18 as child node
 > 
-> This commit replaces passing the address of a stack copy of a pXd to
-> walk_pmd_range() with passing the pud pointer directly. This change prepares
-> the codebase for generic compile-time folded page tables.
+> The legacy i.MX6SX SoC imx-iomuxc-gpr contains one LDB_CTRL register.
+> This patch updates the dt-bindings to allow the LVDS Display Bridge (LDB)
+> child node under imx-iomuxc-gpr to resolve CHECK_DTBS warnings.
 > 
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> > @@ -3727,7 +3727,7 @@ static int walk_pud_range(p4d_t *p4d, unsigned long start, unsigned long end,
-> >  		if (!pud_present(val) || WARN_ON_ONCE(pud_leaf(val)))
-> >  			continue;
+> > diff --git a/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml b/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml
+> > index 721a67e84c137..1879638918bab 100644
+> > --- a/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml
+> > +++ b/Documentation/devicetree/bindings/soc/imx/fsl,imx-iomuxc-gpr.yaml
+> > @@ -47,10 +47,21 @@ properties:
+> >    reg:
+> >      maxItems: 1
 > >  
-> > -		walk_pmd_range(&val, addr, next, args);
-> > +		walk_pmd_range(pud + i, addr, next, args);
+> > +  '#address-cells':
+> > +    const: 1
+> > +
+> > +  '#size-cells':
+> > +    const: 1
+> > +
 > 
 > [Severity: High]
-> This is a pre-existing issue, but should walk_pmd_range() in mm/vmscan.c
-> also be updated to avoid passing a stack copy to walk_pte_range()?
+> Will this omission of ranges cause a kernel WARN_ON at boot?
 > 
-> In walk_pmd_range(), a stack copy of the PMD entry is created and its
-> address is passed to walk_pte_range():
+> Because the syscon node includes the simple-mfd compatible, the kernel
+> function of_platform_default_populate() will attempt to create platform
+> devices for its children. For the bridge@18 child, of_device_alloc()
+> attempts to parse its reg property.
 > 
->     if (!walk_pte_range(&val, addr, next, args))
+> Since the parent lacks a ranges property, of_translate_address() fails and
+> returns OF_BAD_ADDR. This causes of_address_to_resource() to return
+> -EINVAL, which is passed directly to a WARN_ON() in of_device_alloc().
 > 
-> Inside walk_pte_range(), this pointer is used for a concurrency check:
+> Because additionalProperties is set to false in this schema, users are
+> actively prevented from adding a valid ranges property to their device trees
+> to fix this.
 > 
->     if (unlikely(!pmd_same(pmdval, pmdp_get_lockless(pmd)))) {
-> 
-> Because pmd points to the unchanging stack variable, pmdp_get_lockless(pmd)
-> reads the frozen value, causing the pmd_same() check to always succeed.
+> Should the ranges property be added to this schema and explicitly permitted
+> so that device trees can provide the required address translation mapping?
 
-This is valid and need to be changed with pmd + i instead of &val.
-I'll send with another patch.
+You need ranges.
 
-Thanks.
-
--- 
-Sincerely,
-Yeoreum Yun
+Rob
