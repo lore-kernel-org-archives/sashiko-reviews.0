@@ -1,309 +1,241 @@
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B623A35C6AC
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.199
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784733144; cv=none; b=KZcmUsJ3iPUkNeYBxWm6DpZmOMiFT9/wqpw4f1qBudT+A5eMahkoC8wcWemMTXUizLOqSuEZtJBTV/tlGPKknQr9LT0WDZrAiJZHo9WVzh+EZ5N18HtHIthXF9G+hxmHFiSrQgCY63jC+GSw0dVYJbWcMICgqV9YN1R5C336DAI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784733144; c=relaxed/simple;
-	bh=gwL+7pw1dy+OP01p49q/MyWPmKcKJMcpY7Nwq/eqxik=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=prMyoKAEMIf+l7qHotcJrB8rvXqrCQQgdXYTrdVrPdL8Wbq16frtxjYiJrd9NCPTKGCbGkuLEb6vYgItU4HDN84EU4GX29lIVoTQ63Enf5pF8nTZCBGlCCD1qop7Lxv+D/RA4tE+KgMXe/ezj26u6tXBzqJwkpbk7HifQx/dSLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=X21agpX3; arc=none smtp.client-ip=209.85.210.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6CE35E1D4
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.7
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784733303; cv=fail; b=TgVYqUgugmIcLszvbf/OBPkUWZM99RUw7ocTRqaH1r3yc1V8uHrvdGgOUoSd4AgIpWWJwSjVqJ5C2WOAf6/MfOs40DqFvVnsp7E/QOrJX3kGEp9zmgbv41DZWhm4CvW9nY6wG3plEoLJc8l/F47zp0tGT6WWBam6encBp5IZ80M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784733303; c=relaxed/simple;
+	bh=0BxVIymQ4PeIMZxErwSWt/Zxd2gP+yZgwpEB6Jt/9G8=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=iFCsSvQeZaI7B5EBAboLDK0sSAqsgXuYWNyDVXFA0imoXN6cJPCBVVmDWQPuotuwgkwh/IIpSb9yY1AzTAyZGmvQ8XBRT4/pwuD+T+lyyajkS875dY0IVfwxaLrYepu8WcAESWnBbTaNap1+Vh1hQLi+9Y92gwgXeHN96iRvIDM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Qmfvh4zU; arc=fail smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="X21agpX3"
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-84e04598adeso2028336b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 08:12:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784733141; x=1785337941; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=I7f9lZbSdhEgbSxr67hS2Jrj3sXRGAdvMtjr5VpXokM=;
-        b=X21agpX3wBRHZ5IU+Dz0dD029u2eI7VTyw0An6Bd2tFQqhIrer0+Tq/PqCOfzWM/rp
-         hq97xHzhRXbDaK5RW5/YVS9pKpgwKxOnyIumnZq5C426nxrpgiiBFwRxlQe+egkR0TOr
-         rTn9aAqq+xtP9ak/oqXFEI2l/Ju7MPVFZf4KfBi8nlXRzU10lOdNcBzUVgcgGSazUW1N
-         /aC3qBrb9W83bZYsTbh9qg/3bf51cNQ5bs+Z77BEn/cYp+AZGpWI9npVkgVFS6PQbhT9
-         XwTnKJ5R3MDIzcjYrRgMZXe5hAhCduRwWKVZRCbWblop3b2h0HY2k+uLFqWJZjywhXXu
-         Swxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784733141; x=1785337941;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=I7f9lZbSdhEgbSxr67hS2Jrj3sXRGAdvMtjr5VpXokM=;
-        b=pyj0YdJyDJLw8clsb967d4O2GQmlIuOf0lsnT2oseQLobO2tDICmJjiInOFHczCPyB
-         +SfF79eAIiACuYt8oZHhJUNKypQC1UruhSDkIY+4u7oijvlKVv5hnr0p/TUYl3kXP7PK
-         3V/UJu0hbrMebN1W3aKPKqkCJiXw2TvbZ6fjHzPT6ws4w4jxeNVH+Sp3GGWI4dfc+z5F
-         +YMyk/kIDz+iNR0UEO2bK3sMahZ9Q/c3M6VCr/SQeAY309OHlaW8WuDRrz3CVD/QwX4A
-         YSxn5QJ1UMmGQLJUhfJtPEz91Pu6duz1BPmSNzy+S7lBNIGhMMmyDrBMgzUhstpm3x5H
-         FlhA==
-X-Gm-Message-State: AOJu0YyQIwfwLXp60a5hQcGN4CzbmrFFZOUfSsXEyB5BspZiT/FCfYg6
-	DYGYDQacJofmOo/C17g7CPVeLcJ+gaqcs+gW3kEiFO9wENjOtT17DGp4XNlRiRqkIGo25TsVotG
-	FKaZXCw==
-X-Received: from pfkm8.prod.google.com ([2002:a05:6a00:808:b0:848:48a0:41e6])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:14d5:b0:848:6ef9:f5ca
- with SMTP id d2e1a72fcca58-84c2954e130mr23069474b3a.63.1784733140595; Wed, 22
- Jul 2026 08:12:20 -0700 (PDT)
-Date: Wed, 22 Jul 2026 08:12:20 -0700
-In-Reply-To: <1417841720b8435f8fb95ac0bd95be6e0e9390d4.camel@intel.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Qmfvh4zU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1784733301; x=1816269301;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=0BxVIymQ4PeIMZxErwSWt/Zxd2gP+yZgwpEB6Jt/9G8=;
+  b=Qmfvh4zUSiwZdBKcCmqyF7/7lqWAEoKfghhtCAn7XsO1PP4jjhmleCQl
+   fXybxUY8VKlS5DVjVegVXeNUxGw9FesQaejz8J6IwKg3YJ8xYnX009G3P
+   Qaw8wfmrEHWZFZ/xhQTYZL10+tOHfltXOQx7KEUwPpCSyeNa8Ze8h7ejh
+   fMTeClfVc50nWgJJaE598mixJSnp7U20ffbC3T6PJwahNzSwrBlF96mjN
+   PcrrIPMDWhT2fupwnnZmvF6scEF/G4ZZEPfZrpCERvsYOyV0D5l6xd7Fa
+   b8QXYgL8NXrlRPCxgXFOvGg9qHwOEysmeqPtUEdrdwtIkN+3UMev9cbU9
+   w==;
+X-CSE-ConnectionGUID: WfnhmSBtThq/BBEg3pv4IQ==
+X-CSE-MsgGUID: MfSa4YbTQh2C14qponq6Vg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="110914305"
+X-IronPort-AV: E=Sophos;i="6.25,178,1779174000"; 
+   d="scan'208";a="110914305"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2026 08:15:01 -0700
+X-CSE-ConnectionGUID: lCBvHxZGQtajMh9ivycP6Q==
+X-CSE-MsgGUID: sG8yKTIRS/GZuvIuSjpnAw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,178,1779174000"; 
+   d="scan'208";a="296329886"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2026 08:15:01 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Wed, 22 Jul 2026 08:14:59 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43 via Frontend Transport; Wed, 22 Jul 2026 08:14:59 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.56) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Wed, 22 Jul 2026 08:14:59 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=o35PSTn+dEz+hIqHi6/OC+NLV0XGVf/ITKnZE/57HxH2i9EA7F8fofx4FRha3SWIyoTdIpMc82XPst3vlGorg8QgTnHgxkP2n+P/sirtZxLMwnCMphnPNnpTgUGpUyONTagOW4fP3A4DtMxjwV4KnmVGpT/hhEI0A8tEwX7A/Y80XPl7xlkNUTrq8OPXf0G89DKi90XFBFxTDDKmGu8uwly8jHZcYIYnyeXXm2aRfhyLiCIPHBClZbJ3E89lYTCR1n7bF4l4NQrGcXye5EypQNkTNmehGOzXepmhdQ6y3t/35TyeSBAiui8wBZy4l4YI38t+ezIHyphtqAODsAMR6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0BxVIymQ4PeIMZxErwSWt/Zxd2gP+yZgwpEB6Jt/9G8=;
+ b=WsiqvSiRwJ8gy/Qmez/484pfFgI2Yp9RbMSmroJ94xbygGf5icOSJODusU5Vbr4hO2zHuYqRR0xs/0ipkoGkaCvlrTYtdtXlQ0zcsHrEeid5dWqV8Ilc6E5CY7e93uJnb8Y+EhxYZ9PmJKj/+tCLNlRRp9Y4d1YL3GLgyQmVMlE5bONzQ4mKMlf3M1PkYL5nG8jBkhts5FOBk66OA7v1MFiCtvYCnWwamNk3v+V5w1rz5QQQntzRiClhedeycLimAgDiDxmWn3q1S9A04eQ1TRVlQXMkRm8D1ZHwTgAMCmKLQnn/AfWHnQhrsz+4x5X+vkkyRrRoWj6R6X7319EOKQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH0PR11MB7494.namprd11.prod.outlook.com (2603:10b6:510:283::18)
+ by SN7PR11MB7092.namprd11.prod.outlook.com (2603:10b6:806:29b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Wed, 22 Jul
+ 2026 15:14:48 +0000
+Received: from PH0PR11MB7494.namprd11.prod.outlook.com
+ ([fe80::e642:c73c:6d80:5083]) by PH0PR11MB7494.namprd11.prod.outlook.com
+ ([fe80::e642:c73c:6d80:5083%5]) with mapi id 15.21.0245.009; Wed, 22 Jul 2026
+ 15:14:47 +0000
+From: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>
+To: "helgaas@kernel.org" <helgaas@kernel.org>
+CC: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+Thread-Topic: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+Thread-Index: AQHdAUruh/HWEZwEC0iMA6tK8iUSn7ZImB0AgAAE6oCAMTTxAIAABOIA
+Date: Wed, 22 Jul 2026 15:14:47 +0000
+Message-ID: <62aee750dbabf3e10494e0e5b20f3ba30a7815a3.camel@intel.com>
+References: <20260621065451.21650-1-emmanuel.grumbach@intel.com>
+	 <20260621071242.B20F31F000E9@smtp.kernel.org>
+	 <29e347a8ed29e7fdc52ddba72c8ce9da80239993.camel@intel.com>
+	 <20260722145630.GA729605@bhelgaas>
+In-Reply-To: <20260722145630.GA729605@bhelgaas>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR11MB7494:EE_|SN7PR11MB7092:EE_
+x-ms-office365-filtering-correlation-id: e6d5b900-9861-424b-2f15-08dee803f828
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|11063799006|56012099006|38070700021|10067099003|4143699003|3023799007|6133799003|22082099003|18002099003;
+x-microsoft-antispam-message-info: oOoa1PkauDhciGCAoeuTfjVvnc4ZrNj4n/w3vZmDkaBB6Y5KsFm6KVNweesYN6b8PFE7qfiOAK1RleuAR/j6lQwDGWxOxjykNvEgIbxKNACWFqfpVxYH6mFh8LuUXMqRjKIhYl8/aIWXZUFXfImgJryPfeenBuySLc8CFK8WMQbZr0cSCeuQzTTTyvXnCQuqMwLgXZ+YMyxBcnwvP1510Hx4rbFsiaptDN1o63MjzHzkZ7SgzVL7H791e/fs1gLXazNX+Dt6H9GOx2QjbTdTk8HQlrOiqX8EGQw3B5TIljxk4TDHM2BlEpN3gkqCKInaKqKKdPfEv5yyVw/k7vVARB0jfRbP1X1Jp6RiyXUH5Io3p9xxLRzdd4AlUn/PJUJsvz95NUfbRAxHvym3Nh4GQONRZHMKJJcCOMLBj6RBHxReyn7pNS/vCcUhw7udfIlV1tEYZnOrIwJDhAkIPKZO6AnHx8lw3Z2wVkbHSFnIDlmwGBW4Z1uk129Ki+N8V0dAcrpdZRDKfgC/Hx9d6Py15h/YypdNdyLQFrYvV5zy13x2RaUNGDP4b7iuygFKiAFVxsyFtapO+6wY35z+PAWU8mpb1sIit+ytNI0N6H753+DIZw4n+5E0RcvcQtcLroPNVhFcCk6zTGPaHJQ9Lfsj9uwwXH333qWhvzZ6lhq/86cIQjyEmb/QRgxzO/HB8OTWXBh/Bx63Hv6OwQNNAqIUgGWOwPv5JQNIB6H7FCkrqY4=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB7494.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(11063799006)(56012099006)(38070700021)(10067099003)(4143699003)(3023799007)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UExEVndoSCswRFA3cUtXQlhLMG56cGJtcG0zWWpPa2NDNzBoTDlic254Q2NJ?=
+ =?utf-8?B?M2tYMnBaY3pUdHN3YWVZdGlrUWllcmp3ajQxc2VKM0pyRTJqdi9pcElESWlR?=
+ =?utf-8?B?RWpmelBEYVk0Y0hRMUpWR09TZzN1RE5rc1Q1UnZMSjgycXl4dTBINXNUSzhq?=
+ =?utf-8?B?K3NCTWhBcGFNY1BJVW5UVDVHMHB5Q1Z5cjBzY0N6ZWYyWVV1eFAyN1B1cjEw?=
+ =?utf-8?B?SFNobGhaU0VHOVI3dTNFRENmc2pwcVdlRFdITG9ucTljVXJJR2lscjBkYXlJ?=
+ =?utf-8?B?cmdVOFlLL2IxODd3UDcrV044ZXVEZWpoM0tTeWF4QlZjWlpibU1sNVFwRThE?=
+ =?utf-8?B?ODE3cWVUdFlWakEvV0F4TkxtYkc2eVZSRFdjRkpmN2wvYnlKWVVBczJyQmJm?=
+ =?utf-8?B?TWwvdEtDbzVwbzZWaGpFZEVld2doV3lrYnkrYTl4d29CVUYyRXlHZ0Rld2x1?=
+ =?utf-8?B?VzhZd3VDWllvYW53WDdMMnpCNjdIc28yeHlRdDNBWktNUHg1bFBDcSsxUURR?=
+ =?utf-8?B?ZnhZRlJpZnB5ejIwWjlVeTlyRzRYdERoMEROL2RsQTBrMm1mWTRiOTkwdXlo?=
+ =?utf-8?B?MC9leVJ6eXNpQjczcDcrbzJ2Sm1kL2luNWo2dnNEQ3R0Sy90NUJpeDlPK0NI?=
+ =?utf-8?B?ckdPTXAwTGpYUGd4bFF1dWNibndKcjhEblphZWx5dk1oOGZaRFdVZVVxOUhY?=
+ =?utf-8?B?OGFhUFhFcWxqQ1VQVmUyblozVGJqT2hqNUx2QUYwMHpuNEUxY2RlRnp2VUV2?=
+ =?utf-8?B?OXNqUmlMWitLNnlxWHd3NjdVTFlpY09kUlJFSnVmVnVYOVpOUDN0OVpCK1RM?=
+ =?utf-8?B?NHFQdUE5V1JkR2RNc0d2UmNMOVRYcEZpWXN6UXhRTUNsYThCSHoxU1VsMmEw?=
+ =?utf-8?B?Z3hNTzE2NDJNemVHM3dXQlFJYUZWS2RIM0NPTDFXb2xFcTNINHpuZ0QzMHNa?=
+ =?utf-8?B?bkFZeTlpV1VUaHRCOGt2S3cxekJiS0Jhc1NraGJCWXpTdVg3em5hQlE4M3Rn?=
+ =?utf-8?B?RlJPZ201Rm1vRkxqS3JURFVKZ3RlbUhDR0ptbG9WR0o2YTR0K2hVbDUrQlFr?=
+ =?utf-8?B?TFFYTi8xelNmMzJuZXFpaGw0QmdjcG9XNlJJWkFUK1RxQit3bGlUV05DNEs0?=
+ =?utf-8?B?dFVzS2dPQzhTcHdrQVBiZTc4N3RwODVRT2ZNdTdjaDk1NFd2ckIxMVR4eXVU?=
+ =?utf-8?B?QXZzSkhKT0djYWRwcWVOKzlOYWU5TkdQdHpQdGJvUVJXRGlGUUdEWUdXZkQ0?=
+ =?utf-8?B?a0RSNEZlZm9sV0Rwb04zNkdVRk5uYk9GZkJWSUZxRVd1Mk0rYTFTL2tEcDhT?=
+ =?utf-8?B?VzJYNzNSODVxZ2UrZkZ5OUtiblFvQXE5YVZyTDlkVUwyazZKcFRnTU94cG4r?=
+ =?utf-8?B?aEdJTGtYR2lxbHpzMC9KS3FWV0xmWHRmdnRodXhVSDI4ZC91YjlkNzVIT2t4?=
+ =?utf-8?B?RnVIanU4dkdWK0F2Vkx2SWxUZk9rRk4wUlFjRjdYK0QzTmR6eGRFSnVVVGJz?=
+ =?utf-8?B?OHVLbmhIN1o5VUMwNHNEUWtOSDVqTG9Yc2JOUVNCRnI2Q3l3ZUNwR2FFek9x?=
+ =?utf-8?B?VmU3QjQrLzRIMzBPdTZaR011eCtJMSszeWxnbTNWblN1eWRnakd3NlpmNmFV?=
+ =?utf-8?B?UktxbCtlcU14Q0JXUVRVOEszbWRIVnRSR0JSb0VsTy96WlIreHlGRWlEN25k?=
+ =?utf-8?B?d1B4SURycVI0TnpQcmNTUFI5Sk5TdnZIdUh1cTZUcUNLNi9zMXA1YnhWMnQx?=
+ =?utf-8?B?UDhOSEZyZ0gvRnVWQStZV1ZDRXUrQnI3TTZrcTIxak54dW9tcnlwTlFTcUVX?=
+ =?utf-8?B?QVV5WnZ6Njl2MWlFUWl1a3huUGNGV1d0c2U0dFdKcUthd1RIdE41MXpKLzU0?=
+ =?utf-8?B?TTJhbk9DUlFiUnBnWVBJWGZ1dmZ5Q2kvdGlhalB0MmpXZ2VGWmtsNkV1YjMw?=
+ =?utf-8?B?RUJwbjlIM1pCZ21DTnZsaXRKdVFMWWZXeFo4WU4vRERITXV3K01jMUxYY2dX?=
+ =?utf-8?B?UE43dzlkUzVXbEMxb0Q1Vkd3Zk5iWEwxekwyWXdGdDV1R0plQlg1amhpQ2M4?=
+ =?utf-8?B?UnY1ekdobFNtV3BhSVdTY0sxRTdpUXZQWThXVklERS9ZT1F1WWNuQm03TjE0?=
+ =?utf-8?B?UDFuTWtWbW1vWk1yNGVyTEl2cVREYXljeEV4M0hYVHByUEpSYkVyOTArWGRQ?=
+ =?utf-8?B?N1BEcXUxV0RQNitZaGVSN2xvWlVhUHFSS0tiNkpMTnJ5YWpCYW8rN3lsekE2?=
+ =?utf-8?B?ZjZKdll4SkI1MG5KYm0xeVNCekRtc1FMck5aOHdkVWJBbDhvbTF2NWpuQXl1?=
+ =?utf-8?B?OTNncTloNHRrSkpIUHBGZ0UxdTIyS1Z2eUZmMmRDaFhGSG9ueE9ESCthSzY4?=
+ =?utf-8?Q?1A0L9K9Mxh7S2v30=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <287621AAE10A114182990DCC64C92741@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260718014500.2231262-1-rick.p.edgecombe@intel.com>
- <20260718014500.2231262-9-rick.p.edgecombe@intel.com> <20260718061050.E17B01F000E9@smtp.kernel.org>
- <1417841720b8435f8fb95ac0bd95be6e0e9390d4.camel@intel.com>
-Message-ID: <amDd1Ip3XTvKSTcb@google.com>
-Subject: Re: [PATCH v7 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping
- private memory
-From: Sean Christopherson <seanjc@google.com>
-To: Rick P Edgecombe <rick.p.edgecombe@intel.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
-	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, Kai Huang <kai.huang@intel.com>, 
-	Dave Hansen <dave.hansen@intel.com>, Yan Y Zhao <yan.y.zhao@intel.com>, 
-	"tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>, Binbin Wu <binbin.wu@intel.com>, 
-	"kas@kernel.org" <kas@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>, 
-	"nik.borisov@suse.com" <nik.borisov@suse.com>, 
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, 
-	"tglx@kernel.org" <tglx@kernel.org>, Vishal Annapurve <vannapurve@google.com>, "bp@alien8.de" <bp@alien8.de>, 
-	Chao Gao <chao.gao@intel.com>, "x86@kernel.org" <x86@kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: Gp+ZRQnK7svI6r07zwBHa6fnI0mWIW3DFj7l+CogKrzRSwISA43efb12HsdwbEHPOt3dtTguhaBoLlv1xvY1Kd3OvehtWmH/DAfWK6nh39FgtatL4xKQVGc8Y3fLT7NPXxKSNKo7hmEuEHrmpmKSOFskIqLCMbHAtVU0VBr9PokntMhd0z4AfxGGwOxSElJ329+HCMCnqnMDhDzEp0J4egfRmkkAcFN/aiE1U4WrPcoKP0UKnAZsvKPSeOdzQcNg2pVaXGN+8CqLMB4oTtPQDnUTVcq3/cFceYkLYtPiOSaX8I/vWnpco9yBsAunzjw6Z2dBju04uluXAUZpT6Wu7Q==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB7494.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e6d5b900-9861-424b-2f15-08dee803f828
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jul 2026 15:14:47.9012
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9Z2xkesTR6RBveEz2lD7BdGiBYQW9Poetdn4geuECO53EYn7GJhJs3eSGDjyht1C/LkSWcLAJ4YzWkHwjs9RleLsc5WRMaWBptBoZidd67M=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7092
+X-OriginatorOrg: intel.com
 
-On Mon, Jul 20, 2026, Rick P Edgecombe wrote:
-> On Sat, 2026-07-18 at 06:10 +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] Infinite kernel loop in `kvm_tdp_mmu_map_private_pfn` due to permanent PAMT cache depletion on transient TDX module contention.
-> > --
-> 
-> Our internal Sashiko found this too. It's a false positive as a real bug.
-> 
-> Today kvm_tdp_mmu_map_private_pfn() is only called tdx_gmem_post_populate()
-> during TD setup. It holds the heavyweight tdx_vm_state_guard which grabs vm-
-> >lock, kvm->slots_lock, and all vcpu->mutex. So there should be no contention
-> possible.
-> 
-> Any potential confusion is not new either, because a similar thing could happen
-> with the external page tables.
-> 
-> But Yan and I were discussing that it would be a good cleanup to fix this anyway
-> because the reason it is not a functional issue is not clear from the code. For
-> improved readability (and quieter sashiko reports) the topup can happen inside
-> the retry loop. Either by moving the retry loop or moving the topup.
-
-Hmm, yeah, I think I agree.  Super duper technically, that's a fix for an existing
-flaw.  Because very, very, VERY theoretically, the cache of page table pages could
-be exhausted.  E.g. if some other task managed to free non-leaf page tables while
-mmu_lock was dropped, thus forcing kvm_tdp_mmu_map_private_pfn() to allocate from
-its cache over and over.  In practice, that's likely impossible thanks to holding
-slots_lock, but given that (a) retry should be rare and (b) kvm_mmu_topup_memory_cache()
-is basically free if no work needs to be done, I don't see any reason to do topup
-outside of the retry loop.
-
-The other thing we should address is the call to kvm_mmu_reload().  Like cache
-exhaustion, it *should* be impossible for the root to be invalidated/obsoleted,
-thanks to holding slots lock.  But as evidenced by the rash of recent shadow MMU
-bugs, we don't always get things perfect, and lack of defense-in-depth can be
-*extremely* painful.
-
-I don't think I want to just move kvm_mmu_reload() into the loop, because KVM
-should provide stronger guarantees with respect to the validity of the loop,
-versus the population of the caches.  I.e. I want to WARN if the root becomes
-obsolete after the initial reload.  And more importantly, KVM really should
-check the validity of the root after acquiring mmu_lock.
-
-We can't simply call is_page_fault_stale(), because mmu_invalidate_retry_gfn()
-is inherently fuzzy, i.e. could get false positives, even though the pfn provided
-by guest_memfd is guaranteed to be valid.  E.g. if shared gfns surrounding the
-to-be-mapped gfn are concurrently invalidated.
-
-So, this?
-
-	r = kvm_mmu_reload(vcpu);
-	if (r)
-		return r;
-
-	do {
-		if (signal_pending(current))
-			return -EINTR;
-
-		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
-			return -EIO;
-
-		r = mmu_topup_memory_caches(vcpu, false);
-		if (r)
-			return r;
-
-		cond_resched();
-	
-		guard(read_lock)(&kvm->mmu_lock);
-
-		if (WARN_ON_ONCE(kvm_test_request(KVM_REQ_MMU_FREE_OBSOLETE_ROOTS, vcpu)))
-			return -EIO;
-
-		r = kvm_tdp_mmu_map(vcpu, &fault);
-	} while (r == RET_PF_RETRY);
-
-The other option would be to gracefully handle an obsolete root instead of WARNing,
-but as above, I think I prefer to WARN.
-
-	do {
-		if (signal_pending(current))
-			return -EINTR;
-
-		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
-			return -EIO;
-
-		r = kvm_mmu_reload(vcpu);
-		if (r)
-			return r;
-
-		r = mmu_topup_memory_caches(vcpu, false);
-		if (r)
-			return r;
-
-		cond_resched();
-	
-		guard(read_lock)(&kvm->mmu_lock);
-
-		fault.mmu_seq = vcpu->kvm->mmu_invalidate_seq;
-		if (is_page_fault_stale(vcpu, &fault))
-			continue;
-
-		r = kvm_tdp_mmu_map(vcpu, &fault);
-	} while (r == RET_PF_RETRY);
-
-My only hesitation with manually checking KVM_REQ_MMU_FREE_OBSOLETE_ROOTS is that
-if more checks/functionality were added to is_page_fault_stale() in the future,
-then we could end up missing kvm_tdp_mmu_map_private_pfn() and introduce a bug.
-
-Maybe we can have it both ways?  WARN if roots are unexpectedly made obsolete,
-but fully check is_page_fault_stale() and gracefully handle an obsolete root
-instead of effectively terminating the guest.
-
-	do {
-		if (signal_pending(current))
-			return -EINTR;
-
-		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
-			return -EIO;
-
-		r = kvm_mmu_reload(vcpu);
-		if (r)
-			return r;
-
-		r = mmu_topup_memory_caches(vcpu, false);
-		if (r)
-			return r;
-
-		cond_resched();
-	
-		guard(read_lock)(&kvm->mmu_lock);
-
-		WARN_ON_ONCE(kvm_test_request(KVM_REQ_MMU_FREE_OBSOLETE_ROOTS, vcpu));
-
-		/*
-		 * Snapshot the invalidation sequence counter after acquiring
-		 * mmu_lock, as guest_memfd guarantees the validity of the pfn,
-		 * i.e. any concurrent invalidations are guaranteed to be
-		 * irrelevant.
-		 */
-		fault.mmu_seq = vcpu->kvm->mmu_invalidate_seq;
-		if (is_page_fault_stale(vcpu, &fault))
-			continue;
-
-		r = kvm_tdp_mmu_map(vcpu, &fault);
-	} while (r == RET_PF_RETRY);
-
-
-> > --- Patch [8]: [PATCH v7 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping private memory ---
-> > commit 3474807f1c1bc4dedc75e2a756b65254c986a41d
-> > Author: Kiryl Shutsemau <kas@kernel.org>
-> > 
-> > KVM: TDX: Get/put PAMT pages when (un)mapping private memory
-> >     
-> > Add Dynamic PAMT support to KVM's S-EPT MMU by "getting" a PAMT page when
-> > adding guest memory (PAGE.ADD or PAGE.AUG), and "putting" the page when
-> > removing guest memory (PAGE.REMOVE).
-> > 
-> > > diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-> > > index 528ebb3cb0389..049da8559882b 100644
-> > > --- a/arch/x86/kvm/vmx/tdx.c
-> > > +++ b/arch/x86/kvm/vmx/tdx.c
-> > > @@ -1679,16 +1693,28 @@ static struct page *tdx_spte_to_sept_pt(struct kvm *kvm, gfn_t gfn,
-> > >  static int tdx_sept_map_nonleaf_spte(struct kvm *kvm, gfn_t gfn,
-> > >  				     enum pg_level level, u64 new_spte)
-> > >  {
-> > > +	struct kvm_vcpu *vcpu = kvm_get_running_vcpu();
-> > >  	gpa_t gpa = gfn_to_gpa(gfn);
-> > >  	u64 err, entry, level_state;
-> > >  	struct page *sept_pt;
-> > > +	int ret;
-> > > +
-> > > +	if (KVM_BUG_ON(!vcpu, kvm))
-> > > +		return -EIO;
-> > >  
-> > >  	sept_pt = tdx_spte_to_sept_pt(kvm, gfn, new_spte, level);
-> > >  	if (!sept_pt)
-> > >  		return -EIO;
-> > >  
-> > > +	ret = tdx_pamt_get(page_to_pfn(sept_pt), &to_tdx(vcpu)->pamt_cache);
-> > > +	if (ret)
-
-Shouldn't this be a KVM_BUG_ON()?  To Sashiko's point about this creating an
-infinite fault loop, that simply shouldn't happen.  The whole point of using
-caches for the paging assets is to guarantee success.
-
-> > > +		return ret;
-> > > +
-> > >  	err = tdh_mem_sept_add(&to_kvm_tdx(kvm)->td, gpa, level, sept_pt,
-> > >  			       &entry, &level_state);
-> > > +	if (err)
-> > > +		tdx_pamt_put(page_to_pfn(sept_pt));
-> > > +
-> > >  	if (unlikely(tdx_operand_busy(err)))
-> > >  		return -EBUSY;
-> > 
-> > [Severity: High]
-> > Does this error path risk causing an infinite loop if the TDX module
-> > contention leads to TDX_OPERAND_BUSY?
-> > 
-> > When tdh_mem_sept_add() returns TDX_OPERAND_BUSY, tdx_pamt_put() frees the
-> > PAMT pages directly back to the buddy allocator, not back into the vCPU's
-> > PAMT cache.
-> > 
-> > If this happens during VM initialization in a retry loop like
-> > kvm_tdp_mmu_map_private_pfn(), the vCPU memory caches are topped up outside
-> > of the loop:
-> > 
-> >     r = mmu_topup_memory_caches(vcpu, false);
-> >     if (r)
-> >         return r;
-> > 
-> >     do {
-> >         ...
-> >         r = kvm_tdp_mmu_map(vcpu, &fault);
-> >     } while (r == RET_PF_RETRY);
-> > 
-> > Since the PAMT pages are discarded rather than returned to the cache, a few
-> > busy retries will completely empty the vCPU's PAMT cache.
-> > 
-> > On the next retry, tdx_pamt_get() will return -ENOMEM because the cache is
-> > empty and it does not fall back to alloc_page() when a cache is provided.
-> > 
-> > The TDP MMU handles -ENOMEM by returning RET_PF_RETRY, but because the cache
-> > is never replenished inside the loop, the loop will infinitely fail and retry.
-> > 
-> > Could the PAMT pages be returned to the vCPU cache instead of the buddy
-> > allocator during transient failures, or should the cache top-up be moved
-> > inside the retry loop?
-> > 
-> 
+SGkgQmpvcm4sDQoNCmxvbmcgdGltZSA6KQ0KDQpPbiBXZWQsIDIwMjYtMDctMjIgYXQgMDk6NTYg
+LTA1MDAsIEJqb3JuIEhlbGdhYXMgd3JvdGU6DQo+IE9uIFN1biwgSnVuIDIxLCAyMDI2IGF0IDA3
+OjMwOjI1QU0gKzAwMDAsIEdydW1iYWNoLCBFbW1hbnVlbCB3cm90ZToNCj4gPiBPbiBTdW4sIDIw
+MjYtMDYtMjEgYXQgMDc6MTIgKzAwMDAsIHNhc2hpa28tYm90QGtlcm5lbC5vcmfCoHdyb3RlOg0K
+PiA+ID4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcg
+Zm91bmQgMQ0KPiA+ID4gcG90ZW50aWFsDQo+ID4gPiBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4g
+PiA+IC0gW0hpZ2hdIE1pc3Npbmcgc3VzcGVuZC9yZXN1bWUgZml4dXAgaG9vayBmb3IgSW50ZWwg
+QkUyMDAgUENJZQ0KPiA+ID4gZXJyYXR1bSB3b3JrYXJvdW5kDQo+ID4gPiAtLQ0KPiA+ID4gDQo+
+ID4gPiBjb21taXQgZWJjZGFiNmQ2OGE5MmQyM2FhNmNmMTcxM2U4ZTcyZDg3ZjBlNjI3OQ0KPiA+
+ID4gQXV0aG9yOiBFbW1hbnVlbCBHcnVtYmFjaCA8ZW1tYW51ZWwuZ3J1bWJhY2hAaW50ZWwuY29t
+Pg0KPiA+ID4gDQo+ID4gPiBQQ0k6IERpc2FibGUgTm9Tbm9vcCBhbmQgUmVsYXhlZCBvcmRlcmlu
+ZyBmb3IgSW50ZWwgd2lyZWxlc3MNCj4gPiA+IEJFMjAwDQo+ID4gPiANCj4gPiA+IFRoaXMgY29t
+bWl0IGRpc2FibGVzIE5vU25vb3AgYW5kIFJlbGF4ZWQgb3JkZXJpbmcgb24gdGhlIHJvb3QNCj4g
+PiA+IHBvcnQNCj4gPiA+IGZvciB0aGUNCj4gPiA+IEludGVsIHdpcmVsZXNzIEJFMjAwIGRldmlj
+ZSBiZWNhdXNlIGl0IGZhaWxzIHRvIGNvcHkgVExQDQo+ID4gPiBBdHRyaWJ1dGVzDQo+ID4gPiBm
+cm9tIGENCj4gPiA+IFJlcXVlc3QgdG8gdGhlIENvbXBsZXRpb24uIA0KPiA+ID4gDQo+ID4gPiA+
+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3BjaS9xdWlya3MuYyBiL2RyaXZlcnMvcGNpL3F1aXJrcy5j
+DQo+ID4gPiA+IC0tLSBhL2RyaXZlcnMvcGNpL3F1aXJrcy5jDQo+ID4gPiA+ICsrKyBiL2RyaXZl
+cnMvcGNpL3F1aXJrcy5jDQo+ID4gPiA+IEBAIC00Njc0LDYgKzQ2NzQsMTMgQEAgc3RhdGljIHZv
+aWQNCj4gPiA+ID4gcXVpcmtfY2hlbHNpb19UNV9kaXNhYmxlX3Jvb3RfcG9ydF9hdHRyaWJ1dGVz
+KHN0cnVjdCBwY2lfZGV2DQo+ID4gPiA+ICpwZGV2KQ0KPiA+ID4gPiDCoERFQ0xBUkVfUENJX0ZJ
+WFVQX0hFQURFUihQQ0lfVkVORE9SX0lEX0NIRUxTSU8sIFBDSV9BTllfSUQsDQo+ID4gPiA+IMKg
+CQkJDQo+ID4gPiA+IHF1aXJrX2NoZWxzaW9fVDVfZGlzYWJsZV9yb290X3BvcnRfYXR0cmlidXRl
+cyk7DQo+ID4gPiA+IMKgDQo+ID4gPiA+ICsvKg0KPiA+ID4gPiArICogVGhlIEludGVsIHdpcmVs
+ZXNzIEJFMjAwIGZhaWxzIHRvIGNvcHkgVExQIEF0dHJpYnV0ZXMgZnJvbQ0KPiA+ID4gPiBhDQo+
+ID4gPiA+IFJlcXVlc3QgdG8gdGhlDQo+ID4gPiA+ICsgKiBDb21wbGV0aW9uIGl0IGdlbmVyYXRl
+cy4NCj4gPiA+ID4gKyAqLw0KPiA+ID4gPiArREVDTEFSRV9QQ0lfRklYVVBfSEVBREVSKFBDSV9W
+RU5ET1JfSURfSU5URUwsIDB4MjcyYiwNCj4gPiA+ID4gKwkJCSBxdWlya19kaXNhYmxlX3Jvb3Rf
+cG9ydF9hdHRyaWJ1dGVzKTsNCj4gPiA+IA0KPiA+ID4gW1NldmVyaXR5OiBIaWdoXQ0KPiA+ID4g
+V2lsbCB0aGlzIHdvcmthcm91bmQgc3Vydml2ZSBhIHN5c3RlbSBzdXNwZW5kIGFuZCByZXN1bWUg
+Y3ljbGU/DQo+ID4gPiANCj4gPiA+IFdoZW4gdGhlIEludGVsIEJFMjAwIGRldmljZSBpcyBob3Rw
+bHVnZ2VkLCB0aGUgdXBzdHJlYW0gUm9vdA0KPiA+ID4gUG9ydCdzDQo+ID4gPiBjb25maWd1cmF0
+aW9uIHN0YXRlIGlzIHNhdmVkIGF0IGJvb3QgdGltZSBieQ0KPiA+ID4gcGNpZV9wb3J0ZHJ2X3By
+b2JlKCksDQo+ID4gPiB3aGljaCBjYWxscyBwY2lfc2F2ZV9zdGF0ZSgpLiBUaGUgd29ya2Fyb3Vu
+ZCBtb2RpZmllcyB0aGUgUm9vdA0KPiA+ID4gUG9ydCdzDQo+ID4gPiBjdXJyZW50IGNvbmZpZ3Vy
+YXRpb24gdG8gZGlzYWJsZSBSZWxheGVkIE9yZGVyaW5nIGFuZCBObyBTbm9vcCwNCj4gPiA+IGJ1
+dCBpdA0KPiA+ID4gZG9lcyBub3QgdXBkYXRlIHRoZSBSb290IFBvcnQncyBzYXZlZCBzdGF0ZSBh
+cnJheS4NCj4gPiANCj4gPiBUaGF0J3MgYSBnb29kIHBvaW50LCBidXQgSSdtIG5vdCBzdXJlIHdl
+IHJlYWxseSB0ZXN0IHdlbGwNCj4gPiBob3RwbHVnLi4uDQo+IA0KPiBJdCBsb29rcyBsaWtlIEJF
+MjAwIGlzIG5vcm1hbGx5IGFuIE0uMiBmb3JtIGZhY3RvciwgYW5kIEkgZG9uJ3QgdGhpbmsNCj4g
+TS4yIGlzIGRlc2lnbmVkIHRvIHN1cHBvcnQgaG90cGx1Zy7CoCBJIGd1ZXNzIGl0IGNvdWxkIGJl
+IGRvbmUgd2l0aCBhbg0KPiBNLjItdG8tUENJZSBhZGFwdGVyLCBidXQgdGhhdCBzZWVtcyBhIGJp
+dCBlc290ZXJpYy4NCg0KSW5kZWVkLiBCRTIwMCBpcyBhbiBNLjIgZm9ybSBmYWN0b3IuDQoNCj4g
+DQo+ID4gPiBVcG9uIHN5c3RlbSBzdXNwZW5kLCB0aGUgUENJIGNvcmUgc2tpcHMgc2F2aW5nIHRo
+ZSBSb290IFBvcnQncw0KPiA+ID4gc3RhdGUNCj4gPiA+IGJlY2F1c2UgaXRzIHN0YXRlX3NhdmVk
+IGZsYWcgaXMgYWxyZWFkeSB0cnVlLiBEdXJpbmcgcmVzdW1lLA0KPiA+ID4gcGNpX3Jlc3RvcmVf
+c3RhdGUoKSByZXN0b3JlcyB0aGUgUm9vdCBQb3J0IHRvIGl0cyBvcmlnaW5hbCBib290LQ0KPiA+
+ID4gdGltZQ0KPiA+ID4gc3RhdGUsIHdoaWNoIHdvdWxkIHJlLWVuYWJsZSB0aGUgcHJvYmxlbWF0
+aWMgYXR0cmlidXRlcy4NCj4gPiA+IA0KPiA+ID4gU2hvdWxkIHRoZXJlIGFsc28gYmUgYSBERUNM
+QVJFX1BDSV9GSVhVUF9SRVNVTUVfRUFSTFkgaG9vaw0KPiA+ID4gcmVnaXN0ZXJlZA0KPiA+ID4g
+aGVyZSB0byBlbnN1cmUgdGhlIHdvcmthcm91bmQgaXMgcmUtYXBwbGllZCB3aGVuIHRoZSBkZXZp
+Y2UNCj4gPiA+IHJlc3VtZXM/DQo+IA0KPiBJJ20gcHJldHR5IHN1cmUgdGhlIGhlYWRlciBxdWly
+a3Mgd291bGQgYmUgcnVuIGJlZm9yZSBwb3J0ZHJ2IHByb2JlcywNCj4gc28gSQ0KPiBndWVzcyB0
+aGlzIGlzIHBhcnQgb2YgdGhlIHNhbWUgdGhlb3JldGljYWwgc2NlbmFyaW8sIHdoZXJlIHBvcnRk
+cnYNCj4gcHJvYmVzDQo+IGJlZm9yZSBhIEJFMjAwIGlzIGhvdC1hZGRlZC4NCj4gDQo+IENhbiB3
+ZSBpbmNsdWRlIGFueSByZWxldmFudCBkbWVzZyBvdXRwdXQsIGUuZy4sIEFFUiBlcnJvcnMgb3IN
+Cj4gd2hhdGV2ZXINCj4gbW90aXZhdGVkIHRoaXMgcXVpcmsgaW4gdGhlIGZpcnN0IHBsYWNlPw0K
+DQpUaGUgcHJvYmxlbSB3YXMgdGhhdCB3ZSBkaWRuJ3Qgc2hvdyB1cCBhdCBhbGwgaW4gdGhlIGVu
+dW1lcmF0aW9uLiBXZQ0Kc2VuZCBhIG1hbGZvcm1lZCBUTFAuIEknbSBub3QgcXVpdGUgYW4gZXhw
+ZXJ0IGF0IHRoaXMsIGJ1dCBvdXIgUENJZQ0KZXhwZXJ0cyBydW4gYSBQQ0kgYW5hbHl6ZXIgb24g
+dGhlIGVudW1lcmF0aW9uIG9uIHRoYXQgc3BlY2lmaWMgcGxhdGZvcm0NCmFuZCB0aGV5IHNhdyB0
+aGF0IHBsYXRmb3JtJ3MgUENJIGNvbnRyb2xsZXIgc2V0cyB0aGUgTm9Tbm9vcCBhbmQNClJlbGF4
+ZWQgb3JkZXJpbmcgYml0IGluIHRoZSBUTFAuIEFjY29yZGluZyB0byB0aGUgc3BlYyAod2hpY2gg
+SQ0KaWdub3JlKSwgdGhlIEJFMjAwIGlzIHN1cHBvc2VkIHRvIHJldHVybiB0aGUgVExQIGFzIHJl
+Y2VpdmVkLCBidXQgd2UNCnJlcGx5IHdpdGggMCBBdHRyaWJ1dGVzIGFuZCB0aGUgZW51bWVyYXRp
+b24gZG9lc24ndCBjb21wbGV0ZQ0Kc3VjY2Vzc2Z1bGx5Lg0KDQo+IA0KPiBjNTZkNDQ1MGViNjgg
+KCJQQ0k6IFR1cm4gb2ZmIFJlcXVlc3QgQXR0cmlidXRlcyB0byBhdm9pZCBDaGVsc2lvIFQ1DQo+
+IENvbXBsZXRpb24gZXJyYXR1bSIpIG1lbnRpb25zIE1hbGZvcm1lZCBUTFAgb3IgVW5leHBlY3Rl
+ZCBDb21wbGV0aW9uDQo+IGVycm9ycywgc28gSSBzdXBwb3NlIHRoaXMgaXMgc2ltaWxhcj8NCg0K
+UHJlY2lzZWx5Lg0K
