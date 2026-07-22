@@ -1,95 +1,76 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF5640F726
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0704A138B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:17:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784718458; cv=none; b=ZCqa0WHBBwQ3cexO65vUlZhoEpUzVreQ1/X8+K+iTc08CumkQYQq0YQ9h8rx+7+03tMlkmi4b4BUA54XgtDKnl5lXmytBGLf8YPmbQNhNJv6vEzkIIOwJ+kqL5o8wdoYAX0MOr5j/3kler7Y9j2XW0wHoiynLI4424JfGtW75UQ=
+	t=1784719071; cv=none; b=UdyTiIspE2z1zrwJ1LyvVD9a9uz81OLaI4/KkpcbG+7DYhs+Kr3iRRsOeIBl4aY2MpYVd4Dzpo536Dy+YOTnTmsLqf3leRrqmVQLwOsd62g8aW4Kcf0lS2W+16VqpELv6xcBDiw7UQVxWVrM0sDjzOho8q0VUvFqjEhBd/13AR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784718458; c=relaxed/simple;
-	bh=p4TfVNyRpP1YSf4mAYfUjW3PWGegiwFwtuVgtRbr44s=;
+	s=arc-20240116; t=1784719071; c=relaxed/simple;
+	bh=YZCF4nH65+6leZ972g2jHzva47IW7QotuP+bNf6aKt0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jyrzNOLTmXXHJ49HMgwcMC0AkdPWIXGL8vHLAEamED11ZSISCXwnT9jI48kZBP5ThSk9TYHwlSEMfZ+d0KZB5QvE0V4wEhjxl1ltqCLImYqZ46XkRxq90/pmDMWn9odbo+x3ohCgcOvXkUNUid7O6D1QzVun1TwUvsB8Tm9ACKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fYntDN3J; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BiEj0etz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=tF2yJ5AC54IJO2NZSTOk6sxe8gp0xMlK2neXzs+U0CnLA5VuOvPv/NuRw9Q3jx15Q9WmboiNZLiqj38rLtralkJDsGUzk5HVD3GqKOs+ylqVMb8gY1yYhpwDkZ8b30iFqeH4Ey/pLBLBeFQnlwviKmtQH34iraqVkQruT27DWKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b=PC7bzMWP; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=resnulli.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fYntDN3J";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BiEj0etz"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66M9DqiY049896
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:07:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=QBd0JTPVR+0Tps0UvyFMFdA4
-	n4QCSTyrgKj4/Bolkmw=; b=fYntDN3JARlIuVWURs+a/+iGZjuqxlF4p1b95d3R
-	LMvXGhbOfJYcF+YaVjI1VpWI2mbKsttflkex+VbYlKXvtoBSqW7E7mgVkzBOtINo
-	kFwj+QEZ1Akug31K6E/3gbNa7nieyYBZmlBV+fZzgMXU2mSCgoy5UkiJH2K1bcVd
-	+/2KZuR6ocOYnYA6m595rOhMjUgvH6PNMc3X/0qquerU366G0T65txqauOYH0b/b
-	tKvx0HAQ+mjOa6cJG3SFKbI/9PDxwNYpyuRX81r9PZmrJJ4A9VN82suyRL0So0XR
-	hcFPZx20Ao40hZQ77dTptDLExUYBrR7W62lcVDstPAU5mw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fju228epf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:07:36 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c0f0a0760so301039991cf.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 04:07:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=resnulli-us.20251104.gappssmtp.com header.i=@resnulli-us.20251104.gappssmtp.com header.b="PC7bzMWP"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-47f7444576cso2419995f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 04:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784718456; x=1785323256; darn=lists.linux.dev;
+        d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1784719067; x=1785323867; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=QBd0JTPVR+0Tps0UvyFMFdA4n4QCSTyrgKj4/Bolkmw=;
-        b=BiEj0etzc76Rr2A5aObxejg9BhY0c1k9+xrfKm32bdRrPHqr81nkpZjUamJTYYe7ZT
-         4OFtgdOHh/iHLCgN65NRM6bgNL0+6l+u7gO6wI3Xqklcw8VZdOzMhdU6ZHhZWSPqPh4c
-         +7NHjPZ/JJreLzJBIbrd1RlXcdTgvYTDORQmqZwwQKCEzRdPmt2QyLIju/1fTs6Gcsbj
-         vSkA1mI1uloBhRHcUpVGTvW9J6/NSKNjuzaJE43/ypJoDMGrQcfYi9MFR+tbPSsM6BCs
-         rWHU2bvqv9B6TMYhxBVkpNf5/5O31r4zq92+Tqj56Qfw2Kawnj0NiGQA6fbkYSvAItcj
-         u7SQ==
+        bh=oQzmdQrHHjzl2TIMLkjd9uZ5aaE+riwTncnOTTjJPBY=;
+        b=PC7bzMWPtPMs51VoO8YQjvdTQ1WL0WBkFwNVmy1Wjj2pOZOIER83utQnR9bDk2bzFR
+         1OV8e+MaJ6RhPVKIPZaK6uK7UOHIX5/mmRb3OdTU03qm+kHZfeapl8beXx27RuctLBfK
+         GbHI2XPdjd8of9Cda4V3JMvfHGM765KxiA+p3E51BzZZaI8Qmc48DSg9MUxM5B8UnUY3
+         y52shCvstYpjAa/Hbl+fK/HyFhM+gTiJkMDQ2x9j3QoC6R3dMi+GAv/NfXlkoKgmu5/0
+         6G87c2hb9dTrODPJiD+aA3JT+gotnoeTo26CEt1dQcPf//Go7XQ+kxN8oMj09dK7INej
+         vvJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784718456; x=1785323256;
+        d=1e100.net; s=20251104; t=1784719067; x=1785323867;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=QBd0JTPVR+0Tps0UvyFMFdA4n4QCSTyrgKj4/Bolkmw=;
-        b=qhaNtaC6XDluF/kGzIb7ZFWr2igZVxxAyzLL3NCN61i0zMfZg88zV6tnWJeuL2+M+N
-         QBajmALbYo9ocKKtaLewMfXeyoS8vTfupolTdXLvP7uhNMQ+gbJKoKD4gPkDl3yp0HIx
-         H/fy60n9ioXqN8aPyG0LVjqBd/xFKoIUZEdfQ6dIkKZf6DQwPBntlEmAzRa4rB7yoMF5
-         Xp7XXAOs6mjsrNaJa2xHZbwfGT695Z41tMNNHGp5ui9wczaSoStPGNUo3hjT8ebSTTAl
-         7K68dAu7zo2/X7M8VW4/mKNchB/6ULOH0J3PN3dI+TcaN9XnMp//Nr/IQcYk7k766eHT
-         ltIQ==
-X-Gm-Message-State: AOJu0Yynw0u9Y6EIPfNlHmKe3J5y7VOKHOWByEy2VoiSGiBTWd6XUAnB
-	eR+hjOXyA3rMTqmdCq+d+UnCZGq4A8QUxb50fnjg4Ok7b2n7YNlxpqnuaRf/GJg1waNuey8poo8
-	sESxYwhR1udtbtMJbJ5s90lhkzBV/GroHanX4aCkDOQP0w5qF9lUP3rMVD8PmdjKvtqx/FR0=
-X-Gm-Gg: AR+sD11FqKfebWmziVjct3QFdZKLq+H1cpUFy5TvziwnIKNfcXYomG3iRhd2xues+kM
-	OCAe5hw0iE1fKxZ1jPWfvgvn8TFJtr20PLMyhxskw/40RbNV6xtCdSLaOcAJA8X/8z5NTysStlV
-	l+C/M10HXBkLCh40IR41vcF8VeJStd6aO+doJRgUcyX0pAtK6VTTNYkLpfEE0sfAU9GNC5U/Pv7
-	jbm4h1REIppb3MaChTglFy9mMIDMkDQYQjH4GQ1zjb0H/PVeqwcxApB/j4k1VQxNwCeCqQDm/jJ
-	g0pK4giCTBH/mNRfwQoUDVQEQ3OECMYH+OTeqzgvLCoxwjD4huWNAQ03iwpGrYS7Bv/7V17vvQW
-	JD9Tu0QfRH2ARLxBghP865SMl6nb7BMwOViKETGKCL8RyEn6Vb+l8hu399YTQTwKwD1eFj6IO8X
-	D2jXPrdR9clrE/Cw==
-X-Received: by 2002:a05:622a:1344:b0:51c:1132:c7f7 with SMTP id d75a77b69052e-5213ced0617mr219980521cf.29.1784718455500;
-        Wed, 22 Jul 2026 04:07:35 -0700 (PDT)
-X-Received: by 2002:a05:622a:1344:b0:51c:1132:c7f7 with SMTP id d75a77b69052e-5213ced0617mr219980161cf.29.1784718454887;
-        Wed, 22 Jul 2026 04:07:34 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b2a9b8cd3fsm422120e87.1.2026.07.22.04.07.33
+        bh=oQzmdQrHHjzl2TIMLkjd9uZ5aaE+riwTncnOTTjJPBY=;
+        b=EQ8GjO1i5duVgVAyLPvgFmaNDeGxCXdOQIlUJyCYrVLfhUVXW8ox0H+8b4F1gkVEfX
+         V4UfWyvuM4cIsjT5JBhyUGf5K/9wkviUv5eRB32Mf5/lMaOnw4ulpqzhWY74sValxzep
+         /dqwx4ORpoTfgOQgDzKwZLfthESCNZMnSTVNfEo59F7ibH3dpOGRqYhXbyCHoc2THjQ6
+         wUfRsW3C9u8t+9qaMtFnYlFBio4txMQSZpKhydFQpuZklZZbdU9zL+ggWJloNYvi6YI9
+         +8Ker/mT9QuKMRt1SEbM/nfUZHeiT6Nhz1vnc6OqUBNl7GdeUGq/mfWXHtkNYtUepniY
+         bprQ==
+X-Gm-Message-State: AOJu0YzrTUozWL9AK5dRRoHs/bgOkU3vL2Gzc+39OkI5oSruiT+iCy84
+	tr9kFFrmx7tD5PrPTBhaYv5aFH2uHRVLE1KsilPHtZ7RFcjCa1MgZyGm5+1fvpzCt3Ly1DM3xft
+	Vl9/c
+X-Gm-Gg: AR+sD11be3ZEjMHKZJPkH0qg2rQVRAfo2ZgkmcA2F0UjgYBGBu9UFQd3YoNxwuNkvaF
+	QWfqyuNEV+igG7zEWxfdlBA5IWRp0cdO0YQ6Y7jqNL6rEQvb1h923a3laL04SlktWRlaijRvH/K
+	PmX0n23eDu5rhkyjk0YHECe6td4HnQnLt0fAhZbNc9XFK+5vsoqvhAOlbpgrELuctvr8nv/PiQC
+	H1emKLD1xq2tQ/sYQCUdHJSLrKZklO16GlDKXz59tRkEk+ggez3wcyZjYwrOwkmrW1zx4TMyVoV
+	UqSBOZuc7T6DBf+DxImJHJK8oOxn6DmLOLc8Gx0cKGJltdRG0qG2Cr6a1iatXhkxI34ZAllbBDq
+	xqjptuGu0sHOi6mh74yjGh5VALTdzczUl0L88l7rpGfsQ/3W8cclf3/x+OOZXbo2yIE88Vu8UWD
+	zUhGuQ65E7l+jlKoRN3a2I9w==
+X-Received: by 2002:a05:6000:4a19:b0:475:f100:3607 with SMTP id ffacd0b85a97d-47f623391c8mr25765066f8f.54.1784719067091;
+        Wed, 22 Jul 2026 04:17:47 -0700 (PDT)
+Received: from localhost ([140.209.217.211])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c6287csm5624448f8f.25.2026.07.22.04.17.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jul 2026 04:07:33 -0700 (PDT)
-Date: Wed, 22 Jul 2026 14:07:31 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, Konrad Dybcio <konradybcio@kernel.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] soc: qcom: ubwc: Get HBB from SMEM
-Message-ID: <xla2pmliksqzv3hww6rln2aool4js776uzmgkt5dsvggcuanbq@6k4vdkmmjlju>
-References: <20260721-topic-smem_dramc-v4-0-748f992278a3@oss.qualcomm.com>
- <20260721-topic-smem_dramc-v4-2-748f992278a3@oss.qualcomm.com>
- <20260721124005.E00041F00A3A@smtp.kernel.org>
- <6rmntcmouwenb3t5xk5rh2rijd3sc3re5m4aeuqive3wifn6ux@hauua7ltycvj>
- <b8f316f7-0036-4d10-987f-c43d60dae854@oss.qualcomm.com>
+        Wed, 22 Jul 2026 04:17:46 -0700 (PDT)
+Date: Wed, 22 Jul 2026 13:17:42 +0200
+From: Jiri Pirko <jiri@resnulli.us>
+To: sashiko-reviews@lists.linux.dev
+Cc: Vasily Gorbik <gor@linux.ibm.com>, tj@kernel.org, 
+	Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org, hannes@cmpxchg.org, 
+	Heiko Carstens <hca@linux.ibm.com>, mkoutny@suse.com
+Subject: Re: [PATCH rdma-next v3 04/14] RDMA/nldev: Report net namespace move
+ errors through extack
+Message-ID: <amCmyqEQaMgJrtg5@FV6GYCPJ69>
+References: <20260716132316.1495242-1-jiri@resnulli.us>
+ <20260716132316.1495242-5-jiri@resnulli.us>
+ <20260717132425.C9FBE1F00AC4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -98,85 +79,57 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b8f316f7-0036-4d10-987f-c43d60dae854@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=X4Bi7mTe c=1 sm=1 tr=0 ts=6a60a478 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=VwQbUJbxAAAA:8
- a=odn8cRm89JfC27xefy8A:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: aTiddlXSa0JFf6-3Ob_Wfzrc8ouy3Wwv
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDEwOCBTYWx0ZWRfX3NMHHB//meKm
- VmWB5E4cczPYQGxNyXnxPCaloCdNDeHOfZmyvMWT+TTpOQ5c48Jf2NK7oe9daDmtSZewY+PJmOn
- 2XDb10Tu37GwM4IY6I4XCKY8VbTjHqU=
-X-Proofpoint-ORIG-GUID: aTiddlXSa0JFf6-3Ob_Wfzrc8ouy3Wwv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDEwOCBTYWx0ZWRfXxM+t7s1kBtDi
- e0p1TrqIxeUgDQJNZWfgOr8nXl+ppAtK2/WALR3YOH0xGG9TSiT2EfZ23Nym7jtltfDa1fGaF5y
- QynP9NKYoH2Ek3uINUmKgP3zWSKw/OmUEz+VOhtxDmgBQeqykp/uS7sbzJgLbZZNrgGLRh3AWJk
- Dh2NYJSIYsdnLt+4HGjS09icncW6Hdv2ehe0S+q9s/zFurWPRr4+TzQHq2U4mFmDsXd72gtql3v
- Nql7UbhiqJfOnWEv51UTf3ewpy1KtlkeZsRegc8+L3brjmpESOx5KUtdPTgOTW/aNy+mgXJi835
- MVskclHONxeiOG5Etckf8zMAU5bkQqZJRxrlw10KMgKdzxWG84149qKVWwn6HT4gvXHiN44r/0M
- 9EUT26kKDll5ClbB3gQjCP4wqRNfQrwRqeA9GzkSZErohPyRjHt0icG1FZd5JIZ2KW2LgLpjgHN
- T4y/mPUdvSxdSr2yGNA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-22_03,2026-07-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0
- clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607220108
+In-Reply-To: <20260717132425.C9FBE1F00AC4@smtp.kernel.org>
 
-On Wed, Jul 22, 2026 at 11:26:59AM +0200, Konrad Dybcio wrote:
-> On 7/21/26 3:40 PM, Dmitry Baryshkov wrote:
-> > On Tue, Jul 21, 2026 at 12:40:05PM +0000, sashiko-bot@kernel.org wrote:
-> >> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> >> - [High] A race condition between SMEM probing and `qcom_ubwc_config_get_data()` can cause the driver to bypass probe deferral, incorrectly fall back to default UBWC data, and return mismatched configurations to concurrent callers.
-> >> - [Low] Missing Kconfig dependency on QCOM_SMEM causes linker errors when QCOM_UBWC_CONFIG is selected but QCOM_SMEM is disabled or built as a module.
-> >> --
-> >>
-> >>> @@ -178,9 +195,30 @@ const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
-> >>>  		return ERR_PTR(-EINVAL);
-> >>>  	}
-> >>>  
-> >>> -	return data;
-> >>> +	hbb = qcom_smem_dram_get_hbb();
-> >>
-> >> [Severity: High]
-> >> Can a race condition occur between SMEM probing and this function, causing
-> >> it to bypass probe deferral and use incorrect default data?
-> >>
-> >> In drivers/soc/qcom/smem.c:qcom_smem_probe(), the global __smem pointer is
-> >> published before the DRAM data is populated:
-> >>
-> >> drivers/soc/qcom/smem.c:qcom_smem_probe() {
-> >>     ...
-> >>     __smem = smem;
-> >>     ...
-> >>     smem->debugfs_dir = smem_dram_parse(smem->dev);
-> >>     ...
-> >> }
-> >>
-> >> If a driver calls qcom_ubwc_config_get_data() concurrently during this
-> >> window, qcom_smem_is_available() would return true, but
-> >> qcom_smem_dram_get_hbb() would return -ENODATA because __dram is not
-> >> populated yet.
-> > 
-> > I think this must be addressed, the DRAM data should be parsed before
-> > setting __semem pointer.
-> 
-> The DRAM parser uses qcom_smem_get(), which relies upon that global being
-> set. I suppose one way to fix it would be to initialize __dram to
-> PTR_ERR(-EPROBE_DEFER) and returning that if we need to, but then we
-> go further down the hole of needing to assure all these getters are only
-> called from defer-safe functions
+Fri, Jul 17, 2026 at 03:24:25PM +0200, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>- [High] The newly added feature to support renaming an RDMA device while moving its network namespace is inaccessible from userspace due to a logic flaw in the netlink handler. Additionally, providing both attributes silently aborts the namespace move.
+>--
+>
+>--- Patch [4]: [PATCH rdma-next v3 04/14] RDMA/nldev: Report net namespace move errors through extack ---
+>commit dd68e4a951ab0b58504bc034673213514633a1a1
+>Author: Jiri Pirko <jiri@resnulli.us>
+>
+>RDMA/nldev: Report net namespace move errors through extack
+>
+>Thread extack through the existing net namespace move helper and report the
+>main failure reasons from the core path. Keep the existing move UAPI shape
+>unchanged.
+>
+>> diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+>> index 77a7580801486..8648e95700bfa 100644
+>> --- a/drivers/infiniband/core/nldev.c
+>> +++ b/drivers/infiniband/core/nldev.c
+>> @@ -1195,10 +1195,8 @@ static int nldev_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+>>  		u32 ns_fd;
+>>  
+>>  		ns_fd = nla_get_u32(tb[RDMA_NLDEV_NET_NS_FD]);
+>> -		err = ib_device_set_netns_put(skb, device, ns_fd, NULL);
+>> -		if (err == -EEXIST)
+>> -			NL_SET_ERR_MSG(extack,
+>> -				       "Device name already exists in the target net namespace");
+>> +		err = ib_device_set_netns_put(skb, device, ns_fd, NULL,
+>> +					      extack);
+>
+>[Severity: High]
+>Does this logic prioritize the device rename and exit early, preventing the
+>namespace move from occurring if both attributes are present?
+>
+>Looking at nldev_set_doit(), if a user with CAP_NET_ADMIN provides both
+>RDMA_NLDEV_ATTR_DEV_NAME and RDMA_NLDEV_NET_NS_FD in a single message:
+>
+>    if (tb[RDMA_NLDEV_ATTR_DEV_NAME]) {
+>        /* ... */
+>        err = ib_device_rename(device, name);
+>        goto done;
+>    }
+>
+>won't the handler process the rename and hit a goto done; silently skipping
+>the namespace move? This could result in a success response while leaving the
+>device in the old namespace.
+>
+>Additionally, it unconditionally passes NULL as the name to
+>ib_device_set_netns_put() in the patched hunk above. Doesn't this render
+>the rename-on-move functionality completely inaccessible from userspace?
 
-I think DRAM parser should not use outer API to get smem.
-With this issue being present we can later face hard to debug occasional
-issues.
-
-> 
-> Konrad
-
--- 
-With best wishes
-Dmitry
+Both concerns are resolved by the follow-up patch.
