@@ -1,110 +1,98 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10B83E6394
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE35117C203
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 16:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784735772; cv=none; b=UycuYo2TFc6uQonPASq2TN4t9bmAiX2TZk9lJ496QfSFlueKjfm7EEDzTXsrCxNkPjspC1nB7salAhrWBDD86cHcYJfvnw52R4rNRciG3Uc1XALERod6kwU/zkC9mJ9u5iaHyoHVxOJwKa+XUgh1qIj21z9jkpkc7Kt8PQLK5u4=
+	t=1784737385; cv=none; b=ImF7fFLUTAjyCFAUAUPqie79KyQKgM8hg4JPI+edYlI70sAQTUSJC/0de3qFflgqul8x0V25JOuo01D6h+ME7hdbeLRgJNMAsocEYCN8S84mVE9v0Q2RisX+HB1HVCGRYyn46Fe3j214Le8Ap0KHz1Kj+E2A6eSXRhoPqiMhOW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784735772; c=relaxed/simple;
-	bh=lLa1D3HQSxq0apfhBHq9PSK9iirNjNQkuLmYZVYCHRg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cvQd0z9lGIZ93CEEE2AGr5JbUFDnUq+f1FL8NtcruQ877prPfXaxpIm6mJiC4DbuE/41PkOSRnGc+culOw2ntwqUFN7kmYO/jAq7H6kzQ9r98kDONKCBHEuFuwQYtZZiTuHCIV5qhXJ8TEPflKNXKorlOsen7ZU37/S9RYkhxpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=C/m4f3ZT; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1784737385; c=relaxed/simple;
+	bh=AJhbiUZm/1O78YEe8+J543JemHRMP9sVR8nKUhElCoo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uNQtjcWfpkka8JlK7TxUwYtoXJFpT7TEXZ+eMAfuO/A/sWumnuGMopiqDqUA0hv3FN/EE2emWVA1LLMl4BrJK34K49KRBZSoDZesue96YLcmQKewEYZeB/VCOJTaW4A1ER0g7PF2hD02/0xGpvzujM0sK6tfmIauzfGJkYc7KX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=kVOhJnXq; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="C/m4f3ZT"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1784735755;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aNC9hlPHsYhQt2/JTvX0yu4hFLcVsF38K0QULETCs1c=;
-	b=C/m4f3ZTr7p65uNBUJMvO7VSJIEmAA08Ry+waMRpeZsWrJy31UWMwQGkrOHhaERTyJreB/
-	H/k8Nssd3fRfkyKvheph0eWvhqbbTa7MQUzNKqP9NwxHU8o4SodPXB5YcGRqzphCqLc8zS
-	jD+ev8AH5QKj+jXkuXu1OXeJMK7yf8E=
-From: Roman Gushchin <roman.gushchin@linux.dev>
-To: James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: sashiko-reviews@lists.linux.dev,  Chris Mason <clm@fb.com>,
-  linux-scsi@vger.kernel.org,  ksummit@lists.linux.dev
-Subject: Re: How to fix problems with the sashiko review model
-In-Reply-To: <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-	(James Bottomley's message of "Wed, 22 Jul 2026 07:58:48 -0400")
-References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
-	<20260722042744.5C1B01F000E9@smtp.kernel.org>
-	<dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-Date: Wed, 22 Jul 2026 15:55:51 +0000
-Message-ID: <7ia45x27dnnc.fsf@castle.c.googlers.com>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="kVOhJnXq"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4450C1595;
+	Wed, 22 Jul 2026 09:22:59 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B6AAB3F59E;
+	Wed, 22 Jul 2026 09:23:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1784737383; bh=AJhbiUZm/1O78YEe8+J543JemHRMP9sVR8nKUhElCoo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kVOhJnXqtHxd1rrz4ZKve/DppKGjwElepQbvbVb7fu3d0cSOqZMsxTU9VtsQmu+9o
+	 oXZdpSqm82ASz1Ewo2HcYIKV+KJCbOhv8z9di/E3vQsTIzjw1nnTZ8VTjmy75ZrAxQ
+	 PjCYysuK5lGRhMe4D/adx3tFUAmQq8THdhVAsVv8=
+Date: Wed, 22 Jul 2026 17:23:00 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH RFC v2 13/20] x86: mm: carve out the generic compile-time
+ folded pgtable case in effective_prot()
+Message-ID: <amDuZCBulu56A9uw@e129823.arm.com>
+References: <20260722-dummy_ptxp3-v2-0-d9e4bad31e0a@arm.com>
+ <20260722-dummy_ptxp3-v2-13-d9e4bad31e0a@arm.com>
+ <20260722160753.C48291F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260722160753.C48291F000E9@smtp.kernel.org>
 
-James Bottomley <James.Bottomley@HansenPartnership.com> writes:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] `effective_prot()` incorrectly stores dummy values from folded page table entries instead of ignoring them, breaking protection inheritance and silently disabling W+X security checks.
+> --
+> 
+> --- Patch [13]: [PATCH RFC v2 13/20] x86: mm: carve out the generic compile-time folded pgtable case in effective_prot() ---
+> commit 11eb6cce58717a2c22f41583089bb3b0105af585
+> Author: David Hildenbrand (Arm) <david@kernel.org>
+> 
+> x86: mm: carve out the generic compile-time folded pgtable case in effective_prot()
+> 
+> This commit introduces ptdump_pt_level_first() to identify the first
+> real page-table level for compile-time folded page tables. It modifies
+> effective_prot() to skip updating higher_prot for folded or top-level
+> entries, aiming to ignore dummy values from folded page table levels.
+> 
+> > diff --git a/arch/x86/mm/dump_pagetables.c b/arch/x86/mm/dump_pagetables.c
+> > index 2afa7a23340e9..4e545988953a0 100644
+> > --- a/arch/x86/mm/dump_pagetables.c
+> > +++ b/arch/x86/mm/dump_pagetables.c
+> [ ... ]
+> > @@ -254,7 +255,7 @@ static void effective_prot(struct ptdump_state *pt_st, int level, u64 val)
+> >  	pgprotval_t prot = val & PTE_FLAGS_MASK;
+> >  	pgprotval_t effective;
+> >  
+> > -	if (level > 0) {
+> > +	if (level > st->first_level) {
+> >  		pgprotval_t higher_prot = st->prot_levels[level - 1];
+> >  
+> >  		effective = (higher_prot & prot & (_PAGE_USER | _PAGE_RW)) |
+> 
+> [Severity: High]
+> When dealing with a folded level (where level <= st->first_level), the code
+> falls through to the else branch (effective = prot). Since folded levels use
+> a dummy value, prot lacks _PAGE_RW.
+> 
+> When the walker reaches the first real intermediate level, higher_prot reads
+> this dummy value from st->prot_levels[level - 1]. Since it lacks _PAGE_RW,
+> won't the bitwise AND clear the _PAGE_RW bit for all subsequent levels?
+> 
+> Could this cause ptdump_check_wx() to evaluate all pages as read-only and
+> silently pass, hiding W+X security vulnerabilities?
 
-Hi James!
+This is not true. since the *real first level* will set the
+st->prot_level with the proper prot and st->prot_levels[level -1] only
+see the former level's one. IOW the folded entry wouldn't affect the
+next level prot.
 
-> There doesn't seem to be a Sashiko list, so I added ksummit as the most
-> likely one to catch attention.
-
-We actually have one: sashiko@lists.linux.dev 
-
-> We got this review in SCSI on this
-> thread:
->
-> https://lore.kernel.org/linux-scsi/20260722041257.1557-1-pengpeng@iscas.ac.cn/
->
-> But this part of the review
->
-> On Wed, 2026-07-22 at 04:27 +0000, sashiko-bot@kernel.org wrote:
-> [...]
->> > +
->> > +	reply_len = mpi_reply->MsgLength * 4;
->> > +	if (reply_len < event_offset || reply_len > ioc->reply_sz)
->> > +		return false;
->> > +
->> > +	event_data_len = le16_to_cpu(mpi_reply->EventDataLength) *
->> > 4;
->> 
->> [Severity: High]
->> Is there a Time-of-Check to Time-of-Use window here since mpi_reply
->> is read directly from shared DMA memory?
->> 
->> The validation function reads bounds from mpi_reply, but after
->> validation passes, mpt3sas_scsih_event_callback() re-reads fields
->> like EventDataLength and NumEntries directly from the same DMA-backed
->> memory.
->> 
->> Could a malicious device mutate these fields in the window between
->> validation and use to bypass the checks introduced by this patch?
->
-> Is wrong.  Hardware may never be presumed to be malicious (well, except
-> if it's virtual hardware provided by an untrusted host to a
-> confidential guest, but that's a very small list of drivers or it's a
-> USB or thunderbolt device designed to attack or exfiltrate data from an
-> unattended system).  It may be buggy, but we never presume bugs until
-> someone finds a device exhibiting the bug in the field (so we don't
-> proactively fix them).
->
-> The bigger part of this is that I was looking into how to fix this
-> (which might interest a broader swathe of developers than just SCSI). 
-> I think the fault is in the review prompts:
->
-> https://github.com/masoncl/review-prompts
->
-> And what I need to do is to add an additional drivers.md file to
-> kernel/subsystems explaining this?  If that's right I can send a pull
-> request, but I thought I'd check here because the audience is much
-> bigger than if it were to get discussed in the github PR.
-
-I like the idea to inject the security threat model document from the
-kernel source tree, I'll add it.
-
-Thanks
+-- 
+Sincerely,
+Yeoreum Yun
