@@ -1,98 +1,202 @@
-Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FCA1FFC48;
-	Wed, 22 Jul 2026 12:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A9381732
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 12:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784724178; cv=none; b=jm8YR+TDo/+W5/E+CA3klqE9+0ZmWCZDATp+RtgkMa1XN0CRgfLRtwkWp/kUFoT+ki4UIlL9+Z1aov/QZxOxz2Gp/hOz6d2YLJPFDyRcN7mokNyx/8h2zir3dqhqIvOPy7hVEdQMzBrz4r9zGXZ3tP6j9oWtEoCpySuhpobCLlw=
+	t=1784724493; cv=none; b=OA5xQi5Ubz1TNZlEK8XJH+YDDVCxFF9LIgSzPdF6dYTyP9KVmyVI0/kbKJq//rjgDTxrqtEaMu5J1m+ee+fQmIcCYx+SAzri5fqvob7sQThmmRWL7D6hDZKob0FvzwKdnNQOGcfSWybUi03LU2JVzQra99WwjeGnhugLIZSgbJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784724178; c=relaxed/simple;
-	bh=el10Bh8SZ/30LoF9AzTvO3XQJvujiOL+8AwnWkMK2fs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=nP0F6fPWbieWWEF3Y7ND9J6B304Q6k84GElWUwDDnB8F1Ywmu+lGiwgvP4/zcOV5PpcUEj6ObxKsOVGQftdohYPInlE/SVyUguTFSVhrQr/tJERkikCNxde2cg07xjhkNZy5Fra23eP/OojBUeSiW61IDLwwxi0xDVSXwPdXVHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=oLBF29XK; arc=none smtp.client-ip=198.37.111.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
+	s=arc-20240116; t=1784724493; c=relaxed/simple;
+	bh=LSan+qsl/PdUzA+3tf/f+0lljAi+xqioinYXzBQFQpM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LY1v6s6WL63bAQzcFH9OgLtwU65IrLJ8jyLERypPDOX3JBoviYSi1UtXWEUhue+Eedlm462AcgknTCo8BEhKPCpFIM4uuyD81gUfPacKuIjMguoDkdhuE9JyGwIV1C43APEm2AFO9YRAJWSw3RRGEy/T5SMNOZ6wo1NX5boefrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JwsnWPze; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="oLBF29XK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1784724176;
-	bh=el10Bh8SZ/30LoF9AzTvO3XQJvujiOL+8AwnWkMK2fs=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=oLBF29XK5dRRhjdxmKQeXMtHDhi1fR3FbVvhJkyik7HiuCna0TJWL31WkBlhn3jlC
-	 idi8nClP4KAkHDJbHt9BNC/YhCk+w0cHiwV0kZCwcFEJJ+2qS8B5mXzhmLGxpSSRI6
-	 7V6ZyrL7dxqsvDH2rjPNNFKsepbAMe1Np+HTI7/Y=
-Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4300:d341::8c71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 2DB001C00F9;
-	Wed, 22 Jul 2026 08:42:56 -0400 (EDT)
-Message-ID: <560cc442f7ff3dc1958da472f6a6ff2b357e2da2.camel@HansenPartnership.com>
-Subject: Re: How to fix problems with the sashiko review model
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>, Roman
- Gushchin	 <roman.gushchin@linux.dev>, linux-scsi@vger.kernel.org,
- ksummit@lists.linux.dev, 	workflows@vger.kernel.org
-Date: Wed, 22 Jul 2026 08:42:55 -0400
-In-Reply-To: <20260722121135.GB629472@killaraus.ideasonboard.com>
-References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
-	 <20260722042744.5C1B01F000E9@smtp.kernel.org>
-	 <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-	 <20260722121135.GB629472@killaraus.ideasonboard.com>
-Autocrypt: addr=James.Bottomley@HansenPartnership.com;
- keydata=mQENBE58FlABCADPM714lRLxGmba4JFjkocqpj1/6/Cx+IXezcS22azZetzCXDpm2MfNE
- lecY3qkFjfnoffQiw5rrOO0/oRSATOh8+2fmJ6el7naRbDuh+i8lVESfdlkoqX57H5R8h/UTIp6gn
- 1mpNlxjQv6QSZbl551zQ1nmkSVRbA5TbEp4br5GZeJ58esmYDCBwxuFTsSsdzbOBNthLcudWpJZHU
- RfMc0ew24By1nldL9F37AktNcCipKpC2U0NtGlJjYPNSVXrCd1izxKmO7te7BLP+7B4DNj1VRnaf8
- X9+VIApCi/l4Kdx+ZR3aLTqSuNsIMmXUJ3T8JRl+ag7kby/KBp+0OpotABEBAAG0N0phbWVzIEJvd
- HRvbWxleSA8SmFtZXMuQm90dG9tbGV5QEhhbnNlblBhcnRuZXJzaGlwLmNvbT6JAVgEEwEIAEICGw
- MGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAml2ZBI
- FCS3GUMIACgkQgUrkfCFIVNZKjQf/deRzlXZClKxTC/Ee2yEPqqS7mm/INUA49KdQQ5oIhSxkUBy0
- 9J4qjMIo5F8ZFkFTqikBqeL35LKu7O7rn8WETfX8Bxvos3HUsl3jHo34DES4MUFIpoQPgtiLRGwLb
- K0cVCAArR2u2qj4ABmTRrs1I1kvdjEw6gatOuXtEe/j5O2fvfzTq9GBr0Q3n2IAsFXi4hLlx6VPE8
- tyWUZ8BWJKtih3JAeUiXFvASL3McV0rV9RnU0VbjEQEhSE7PMYhWpnDC9AyBb0lXJllQRvC3NSkUB
- 8KVQgNNxRPss0WE/nBoZ4dFA42jTyzTz8lNylxZoAWV7WJb3QxVg4oCodRVrxxrQhSmFtZXMgQm90
- dG9tbGV5IDxqZWpiQGtlcm5lbC5vcmc+iQFVBBMBCAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeA
- QIXgBYhBNVgbnPItGJxvq2a34FK5HwhSFTWBQJgS5mYBQkbNYS9AAoJEIFK5HwhSFTWBpwIAL5Bk3
- 5FB34U6iHmDzzgdCbxLTs43T/YQyJpcGIvopBvnI/fDY8oSG6Df64/O6B+1R+A8TDp6ZG5ysUWnCC
- 6GuIaEHemBYkitMPglR6+sGCMQY7O0mlsPvdssvKK1KI9Bno4VU6ogaF2qVzefSqg1Djmf/DcsxWP
- rI/jdJ8FB5AYR2rjIdDFc+zRdAJuavo1/anyY2wgpFh/3R8IOYAEfWV9nGgYkf9+tA4EIn1sxE0I3
- L5oW2N3mbyRrkzuBwO8ztMCwqEPk7moWzhokcZqMXiAIahaZdkashJC+s2X2RZSGCy+g+pvY5NN4B
- BVG5XwLgVBqbHMTcxE0fbmPqz+q6O0LEphbWVzIEJvdHRvbWxleSA8amVqYkBoYW5zZW5wYXJ0bmV
- yc2hpcC5jb20+iQFXBBMBCABBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAmODZ5ACGwMFCRs1hL0F
- CwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQgUrkfCFIVNZu0Af/TzvL2/NdgAcw9uN3x60H8
- jc4QUq14VpxcFEFEMpcj1morkX/G93V+56HBBaXZj+yK8PhxIA/SIz+sU7C/0YvKuvzakP8ZX/7WJ
- e32SOUtjfr/VTaqjIBzNj6OxLvZpmNbBw7s6DwhhNpHOWqJ/1ml+PtDRDV71IB58yVqQjp1xlNKVl
- ZppcJ5908EJzsFnRIVjiQiDSKoppqB2BCibBbrWcln7CiWMyOC/cco6SIn6twH+f7+aivJ3xGcOE2
- a9gBKF5rNi9TBoX9oyPmshv/TDmnohsVrH7AYXlGYfZTk15SWEiROh1QX8/uD9wl/gcIv5EDUpT/F
- L2jzOsA5663bw==
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JwsnWPze"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49553515a8bso46933215e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 05:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1784724490; x=1785329290; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=3vll96HvxjohoJS+PNU+ieDa/RF4H+N4kRxOCCao22w=;
+        b=JwsnWPzeVlgN2PmIBxeppbxkxUj6EB2KQhzy3AKSj3CnmJs9lyfprtBF/4Y4+eNQQV
+         aZU8jZ0olrRTDsgOg2pX95US1gMhnqGA8daS6nMv9uqUdk9igbEGuX/bDJfuSxExBlQP
+         oCw5hXEQlAsLehdJVtorqKsIU2ncADdC7WGjpYDEUX+8eCT538IRrC/wA+iiTbMMM1hC
+         pmcgRWKEhxl+FFWWgDE01J4pepatjqOYJvt1t7A+vkvtqjR3f+FSPQw7dIe3QM0XGTCA
+         qOxzavXgNVWfPOaeg5TLf44SBV+iIcxxsDWJ+fng046c2+2aVIINPVTJIqCWnjHIRjiC
+         dDUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784724490; x=1785329290;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3vll96HvxjohoJS+PNU+ieDa/RF4H+N4kRxOCCao22w=;
+        b=mDotc3fIL/gNiH1aGlGan/Fpw5h8gHaSzxFCWg4zaNq4qWTQYwClZJc7TLwfgEtgR5
+         3foxOFwwnNWt0tYLE7getxq7pzWSTVqsQG7oYh+ffYORa9VQNBOMAc/rd6NvbVFyYUE1
+         af/JIK+oUVRjKCTISrQwbFA84kB/PjRyqPvF7OszNSPM2DB6jDzU947r4YlPQjqGYmwJ
+         w5Tf3+TcIsD35bxw7EfYIIa/awEbNkhVnL2/tdCwycGdwgTCdAggE7qBeUJA+w16TyI8
+         mtw/0Knm2jl4mhxFSSWT9d5YkP1QnNLkgmlgmVDQnikM5nLuxVx0+pD1kIQ0w65QLg4n
+         0Dfg==
+X-Forwarded-Encrypted: i=1; AHgh+Rrc+I2BEebXgEmO14UKmtevKAQcamW0hMuEVH2fYeYuQIJAEgEh3zdqbYri7VJni9gZVB/kD2848foYQ3YS3TM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzusuXOkHqnt+xpEWr1NNdb+j5yBMo99P5+TOVwbP2smqmfpn6h
+	mQk682acyUvQyKUsBjYmWAmQGFZNqd1U4k5A7PFGgN1tbTZ9yWD7HVQrhPjos03l/Ig=
+X-Gm-Gg: AR+sD12vdrxfSJA6D8RjjqLUtDBOIjKFaAUZSr6h9VIpOFBBodjY2C40xkOu/7/225D
+	KG+A579EkDVwfEaN8MQPJij5quV9yuiVrQD8u7NZIaICtamQZjLK+41fxsEViccZG44eyWI4uZn
+	7av3ysaQvoHNwgxAPv/AoGn8N5347oSAAdiVe2Zlz4uklAnExXoeQDCDTZSlkmXVDnCWq/mE71k
+	yv8ufg6YEKdXEXbFrxwPrJh76uqNCK96yv2zDFdym3TDSwGPXyKVRRQKx3I7uBX6HYb9a3b6nMT
+	zV9F51ZCCeKkxe5h5+pOzz44tudsEpuDQhkrQ/lHq7XYJMGTzMLBdtz5CpxSjPes1ESks+FlF7m
+	y/L6Fw5M4dJ76tmZQ/c30D5/l5oOT4iRUM8B0tXiT2NudLxjJtxzQZy85CVx4+RPcUUo0svnJ39
+	BCzRjo4939bmzH
+X-Received: by 2002:a05:600c:474e:b0:493:915b:dc4a with SMTP id 5b1f17b1804b1-4954a3d005amr297618495e9.8.1784724489524;
+        Wed, 22 Jul 2026 05:48:09 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff24:7210:7ae3:a857:e482:495])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653bffefsm131520645e9.9.2026.07.22.05.48.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2026 05:48:08 -0700 (PDT)
+Date: Wed, 22 Jul 2026 14:47:56 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	sashiko-reviews@lists.linux.dev,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM
+ locking
+Message-ID: <amC7_M-HjVZ3sQuT@linaro.org>
+References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
+ <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
+ <20260721134853.2B2401F000E9@smtp.kernel.org>
+ <amCGXUUd4VmuQRGD@linaro.org>
+ <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
 
-On Wed, 2026-07-22 at 15:11 +0300, Laurent Pinchart wrote:
-> On Wed, Jul 22, 2026 at 07:58:48AM -0400, James Bottomley wrote:
-> > There doesn't seem to be a Sashiko list, so I added ksummit as the
-> > most likely one to catch attention.=C2=A0 We got this review in SCSI on
-> > this thread:
->=20
-> workflows@vger.kernel.org=C2=A0seems a good candidate for discussions
-> about tooling. The mailing list was created to share workflows and
-> tools between maintainers as far as I understand.
+On Wed, Jul 22, 2026 at 02:34:52AM -0700, Bartosz Golaszewski wrote:
+> On Wed, 22 Jul 2026 10:59:09 +0200, Stephan Gerhold
+> <stephan.gerhold@linaro.org> said:
+> > On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
+> >> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> >> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
+> >> - [High] Channel state corruption when `bam_slave_config` fails validation.
+> >> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
+> >> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
+> >> - [Low] Unused assignment of `hdesc` in IRQ handler.
+> >> --
+> >>
+> >> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
+> >> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
+> >> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> >>
+> >> dmaengine: qcom: bam_dma: add support for BAM locking
+> >>
+> >> This commit adds support for BAM pipe locking by prepending and appending
+> >> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
+> >> channel. It uses a peripheral-local scratchpad address communicated via slave
+> >> config for the dummy writes.
+> >>
+> >> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> >> > index f3e713a5259c2..411c60c4433e2 100644
+> >> > --- a/drivers/dma/qcom/bam_dma.c
+> >> > +++ b/drivers/dma/qcom/bam_dma.c
+> [...]
+> >> [ ... ]
+> >> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >> >
+> >> >  	lockdep_assert_held(&bchan->vc.lock);
+> >> >
+> >> > +	vd = vchan_next_desc(&bchan->vc);
+> >> >  	if (!vd)
+> >> >  		return;
+> >> >
+> >> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >> >  		return;
+> >> >
+> >> >  	while (vd && !IS_BUSY(bchan)) {
+> >> > +		/*
+> >> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
+> >> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
+> >> > +		 * already have bam_locked set and must not trigger a second pair.
+> >> > +		 */
+> >> > +		if (!bchan->bam_locked) {
+> >> > +			ret = bam_setup_pipe_lock(bchan);
+> >> > +			if (ret) {
+> >> > +				dev_err_ratelimited(bdev->dev,
+> >> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
+> >> > +					ret);
+> >> > +				queue_work(system_bh_highpri_wq, &bdev->work);
+> >> > +				break;
+> >> > +			}
+> >>
+> >> [Severity: High]
+> >> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
+> >> starvation? Because system_bh_highpri_wq executes in softirq context,
+> >> requeuing immediately without sleeping prevents the memory reclaim needed
+> >> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
+> >>
+> >
+> > It looks like my suggestion to queue_work() again in the error path of
+> > bam_start_dma() wasn't great if we end up causing an infinite spin loop.
+> > We do need to retry somehow or report an error though, I don't think
+> > aborting and leaving the desccriptors completely unhandled is an option
+> > either... :(
+> >
+> > One option would be to try to avoid the allocation and write the lock
+> > descriptors directly into the FIFO, but this will probably get really
+> > messy as well, since you would need to carefully modify the FIFO
+> > management in several functions ...
+> >
+> > I don't have a good spontaenous idea how to solve this right now. :/
+> >
+> 
+> Pre-allocate the lock descriptors (if needed) in bam_prep_slave_sg()? As in:
+> call bam_make_lock_desc() in bam_prep_slave_sg(), store the descriptors and
+> make bam_setup_pipe_lock() return void as it will no longer be possible for it
+> to fail? It would just grab the preallocated descriptors.
+> 
 
-Happy to keep this list cc'd, but I note I'm not on it so I'm not sure
-how many other maintainers would be and the object is to engage driver
-maintainer feedback on the proposal.
+I considered suggesting this, but how do you know which descriptor needs
+it in bam_prep_slave_sg()? It's just the allocation, afaict it doesn't
+tell you anything about the order in which they will be submitted. :/
 
-Regards,
+We could always allocate the extra lock descriptors and waste the extra
+memory for the descriptors that won't need it. That should work, but is
+also not great ...
 
-James
+I was hammering at the code a bit earlier to try the "write the lock
+descriptors directly into the FIFO" approach. It has some advantages,
+but also makes the FIFO management quite a bit trickier, hard to get it
+right without full concentration. :')
+
+I _think_ it could potentially work, but if you have a simpler idea I'm
+also happy to throw away the mess I started. :-)
+
+Thanks,
+Stephan
