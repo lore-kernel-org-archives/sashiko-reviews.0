@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001E1470134;
-	Wed, 22 Jul 2026 09:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065BA30C60F;
+	Wed, 22 Jul 2026 09:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784711115; cv=none; b=VhWGAekEFj6PJIln4AVBMV7i3MKBN6cNmuY3bSrQodHceXoADelyCK0N1qQq7Z04MlalKBQQn7pNZbTkqGjha6+UKu/9l8nLURkP2uQjSr5+G5C6gI9ZZFRIk08Mqri5dhBE15urN2rEp/mq048OuktUmXI6dEeBkOuH9C/mJ+A=
+	t=1784711309; cv=none; b=JF/LDG6dy1JuEmL+JMdTnlKGWAFPGmdaahABNQlZVWZpD8Bs+xzyBXu6MdlAXs8soKtWArLqTQilhnNFgFu0fHR1CrMlG97hAfNvwB1MyiZu7KVkGA8b6ugbllHZLIOqjwlunzLGLnhyQL6frMP2X0sQGfFW0BN4eKiJ1cqQzfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784711115; c=relaxed/simple;
-	bh=g4EehAGhkaA7mxSFDPJMjHyXyAuNgWE3SoGDLRds2nk=;
+	s=arc-20240116; t=1784711309; c=relaxed/simple;
+	bh=QYaQhD6zLRBBxuE4ZMPcFWxAURGe0Rl6jUSbMdmmHCA=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YumDDByU70WcyZ+Tc6o7+SkjF91C93rZ1QgL09naLvdTY5I4Pn/GAw9ruIGh54aSHuVu/Vg/LpjyrNe50hbFQu7lQqAfTAjSrse6utdEYGML2MvvsJ5mr93/lEgz7VDFtrg3ldVxVXu4DE5PYE0iGRBRG7YF16OVXkEcFYybi8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z54zeUoP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VPb+PlYK4dO3K3DxID0TEIYOP3ZSFXPyCGMg4yo/dUL/p5rorSygcavTx/ngO9gsW1/RIyp2pTIiGI0Eq73Tqh7qUAfysvWTBUJqvAW8/9pDocovIW98vJBZQvR8IFjbMaLCrLEXQ1Jvp6xg1JDkOS8Cq+/6DSxw9xcRYepMT28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h0kacujz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z54zeUoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF321F000E9;
-	Wed, 22 Jul 2026 09:05:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0kacujz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15FF1F000E9;
+	Wed, 22 Jul 2026 09:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784711107;
-	bh=7+938SHrSkS/IMKvkGbn+TX1qb2GP9wvh5xjsmdmplM=;
+	s=k20260515; t=1784711307;
+	bh=nZ7L7tg6aIklyvYt5v1nGiVqcZeCgmW6hy/BN4iSq3k=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Z54zeUoPETmC1o8MVkObgbqqh+kApHSJcXAzFi16lhSGEWkYPqV7mlPGXapq2Jzr7
-	 iJRU2i8sQ9uYXYVDyBb3TfvaMXWftF78bgekfnMO5Fpe6QAO2MP4ldyzMMpzvbzMLy
-	 f2ksv99KcFe0qMbxdmw25Yg6Nz/ueQYi+WcP16NdMJyqwrxIWkQKrRAom1Ixj4crEe
-	 2aDlqq3r2E9lBVKnjtaQ4WoEOqQ1xHidfIbQ08gRM+CfaAHgP4zBndZexdjrrXVy+y
-	 5JEv8NCZ0XtQzSk3mPwqVZZwDROkVus6u8k5ovCmXaMX2AWNvmE4lrgUfK8qScnnAa
-	 LLZDlDfXH56pA==
+	b=h0kacujz9ZbA6CxjvtnkgVxVJk1oZJFVzCqK1grJHNqy8tX01fnUmZfg4Pd5+fcUZ
+	 OZNDcMxdv532iGcYPt0fJ3RayGr2plN+gz04PPFobRPDoeM//a6wEVtJD/CyipFHRc
+	 AMdJLp+qVlwnrMwrHh87pwj5ARXqEsfW9rtawwconMDNagIp50+gz4lXl0nXvXigLD
+	 hvEsZ6/eLQlOjFGj3uT7zLKapf6JPhVJid6qTmnkHv9Gs1ZjAkfvUKM9dmgCuMGbu2
+	 Eq1Lh0SM7/2QOqK89Ca0Rg5CTj/8WxNG5xjKzAF1/JP7XFw65LIjYSeX2skKXYo6aL
+	 zJplmiRBWIFkw==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
 	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <maz@kernel.org>)
-	id 1wmSsz-00000007Y6T-1st4;
-	Wed, 22 Jul 2026 09:05:05 +0000
-Date: Wed, 22 Jul 2026 10:05:05 +0100
-Message-ID: <86jyqne6ny.wl-maz@kernel.org>
+	id 1wmSwD-00000007YCh-49bi;
+	Wed, 22 Jul 2026 09:08:26 +0000
+Date: Wed, 22 Jul 2026 10:08:25 +0100
+Message-ID: <86ik67e6ie.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org,
+Cc: kvmarm@lists.linux.dev,
 	"Oliver Upton" <oupton@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v3 01/28] arm64: sysreg: Emit RESx/UNKN values for Mapping/Fields definitions
-In-Reply-To: <20260722075554.137B11F00A3A@smtp.kernel.org>
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v3 16/28] KVM: arm64: Split NV-specific exit fixups from the non-NV handling
+In-Reply-To: <20260722082303.B4E821F000E9@smtp.kernel.org>
 References: <20260722074234.3330999-1-maz@kernel.org>
-	<20260722074234.3330999-2-maz@kernel.org>
-	<20260722075554.137B11F00A3A@smtp.kernel.org>
+	<20260722074234.3330999-17-maz@kernel.org>
+	<20260722082303.B4E821F000E9@smtp.kernel.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
  (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -55,47 +55,88 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 Content-Type: text/plain; charset=US-ASCII
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, oupton@kernel.org, kvm@vger.kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Wed, 22 Jul 2026 08:55:53 +0100,
+On Wed, 22 Jul 2026 09:23:03 +0100,
 sashiko-bot@kernel.org wrote:
 > 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The updated comment explicitly claims '"Mapping" does emit the RESx/UNKN definitions', which misleadingly omits the fact that the 'Fields' qualifier also emits these definitions.
+> - [High] Removing `inline` from `fixup_guest_exit()` and breaking out `fixup_nv_guest_exit()` exposes them to kprobes, which will cause a fatal host panic if probed.
 > --
 > 
-> --- Patch [1]: [PATCH v3 01/28] arm64: sysreg: Emit RESx/UNKN values for Mapping/Fields definitions ---
-> commit ed28be9bab17b360a9e12769aa91d7ac6b649b8d
+> --- Patch [16]: [PATCH v3 16/28] KVM: arm64: Split NV-specific exit fixups from the non-NV handling ---
+> commit 54c98942c16b88b656ffdb68540aac18e6fe4d3f
 > Author: Marc Zyngier <maz@kernel.org>
+> KVM: arm64: Split NV-specific exit fixups from the non-NV handling
 > 
-> arm64: sysreg: Emit RESx/UNKN values for Mapping/Fields definitions
+> This commit moves the nested virtualization (NV) handling of early fixups 
+> into its own helper function. This simplifies parsing and prepares the code
+> for further changes.
 > 
-> This commit relaxes the rule that skips emitting definitions for Mapping
-> and Fields qualifiers. It updates gen-sysreg.awk to emit RESx and UNKN
-> values for both of these qualifiers.
-> 
-> > diff --git a/arch/arm64/tools/gen-sysreg.awk b/arch/arm64/tools/gen-sysreg.awk
-> > index 86860ab672dc7..e099f7d3b2833 100755
-> > --- a/arch/arm64/tools/gen-sysreg.awk
-> > +++ b/arch/arm64/tools/gen-sysreg.awk
-> > @@ -228,7 +228,7 @@ $1 == "EndSysreg" && block_current() == "Sysreg" {
-> >  }
+> > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+> > index a8da40568a048..53af19212895d 100644
+> > --- a/arch/arm64/kvm/hyp/vhe/switch.c
+> > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
+> > @@ -539,18 +539,15 @@ static const exit_handler_fn hyp_exit_handlers[] = {
+> >  	[0x3F]				= kvm_hyp_handle_impdef,
+> >  };
 > >  
-> >  # Currently this is effectivey a comment, in future we may want to emit
-> > -# defines for the fields.
-> > +# defines for the fields. "Mapping" does emit the RESx/UNKN definitions.
+> > -static inline bool fixup_guest_exit(struct kvm_vcpu *vcpu, u64 *exit_code)
+> > +static void fixup_nv_guest_exit(struct kvm_vcpu *vcpu)
 > 
-> [Severity: Low]
-> This isn't a bug, but does this comment incorrectly imply that only "Mapping"
-> emits the definitions? 
+> [Severity: High]
+> Does extracting this function without a NOKPROBE_SYMBOL() annotation expose
+> it to kprobes?
 > 
-> The condition on the next line applies identically to both "Fields" and
-> "Mapping", and the commit message notes that both qualifiers are being updated
-> to emit the RESx/UNKN values.
+> Since this executes on the VM exit path while the KVM hypervisor vectors are
+> still loaded, placing a kprobe here would trigger a BRK instruction that traps
+> to __kvm_hyp_vector. This cannot handle kprobes and would unconditionally
+> call hyp_panic(), crashing the host.
+> 
+> Should we add NOKPROBE_SYMBOL(fixup_nv_guest_exit) to prevent this?
 
-Fixed.
+Maybe, but this is out of scope for this series.
+
+> 
+> >  {
+> > -	synchronize_vcpu_pstate(vcpu);
+> > -
+> >  	/*
+> >  	 * If we were in HYP context on entry, adjust the PSTATE view
+> >  	 * so that the usual helpers work correctly. This enforces our
+> >  	 * invariant that the guest's HYP context status is preserved
+> >  	 * across a run.
+> >  	 */
+> > -	if (vcpu_has_nv(vcpu) &&
+> > -	    unlikely(host_data_test_flag(VCPU_IN_HYP_CONTEXT))) {
+> > +	if (unlikely(host_data_test_flag(VCPU_IN_HYP_CONTEXT))) {
+> 
+> [ ... ]
+> 
+> > @@ -567,8 +564,15 @@ static inline bool fixup_guest_exit(struct kvm_vcpu *vcpu, u64 *exit_code)
+> >  	}
+> >  
+> >  	/* Apply extreme paranoia! */
+> > -	BUG_ON(vcpu_has_nv(vcpu) &&
+> > -	       !!host_data_test_flag(VCPU_IN_HYP_CONTEXT) != is_hyp_ctxt(vcpu));
+> > +	BUG_ON(!!host_data_test_flag(VCPU_IN_HYP_CONTEXT) != is_hyp_ctxt(vcpu));
+> > +}
+> > +
+> > +static bool fixup_guest_exit(struct kvm_vcpu *vcpu, u64 *exit_code)
+> 
+> [Severity: High]
+> By removing the inline keyword here, doesn't this also expose
+> fixup_guest_exit() to kprobes if the compiler chooses not to inline it?
+
+Marking something inline doesn't guarantee inlining either.
+
+>
+> Should this function also receive a NOKPROBE_SYMBOL() annotation to avoid the
+> same host panic hazard?
+
+See above.
 
 	M.
 
