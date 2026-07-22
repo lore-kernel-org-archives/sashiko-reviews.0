@@ -1,103 +1,78 @@
-Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0D925F984;
-	Wed, 22 Jul 2026 13:45:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DAA33B951;
+	Wed, 22 Jul 2026 14:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784727951; cv=none; b=RHudYc7VGeJ3hbpmGVV1108MSh8SQtMjbG/ToSrxQjfnQx9ONsSenQyLfj+8X9h9mOvws/TKU20TdH+++mp/o+0x//O5iqPtU0/USl2ZSeH68JSkTYagAmZYf672Ilrw6rwcBSrwg2+2PflkEVOwZJIe8zEuaMR1zwzkt2lmb3w=
+	t=1784728828; cv=none; b=fK0RGH4+uamEN0faduAfCJDgq79HPaT8msIN5AqU4Zdb451bEU+jkaVV6Qmcl509d3m58hwnVGlGAavhU7KjmD8drkuezQifHPjZUYDsyn15OwC7IEQe4i36/TvVyJpsewaBHSqX4dHF6O8sPgb99MzyRLR5SshNg76lSNYansY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784727951; c=relaxed/simple;
-	bh=RrZkIAM6Ee0UsXpXx6jb+NffBbkQ7K/rJMagTsPRvrQ=;
+	s=arc-20240116; t=1784728828; c=relaxed/simple;
+	bh=bjdtU0qURpQUixi6R0Jjk5sdGK9ApGV+3+mAC//psFA=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=flYekxigWxd76ksM9lYvpj5eL+EB9UjfpMlEP2Hy2YcS+y+s/h3SN9Rva2NxjnLdVYqpSU3hbg49sWR36ax4gmdgx0UCvpry2kL11+VqY+DLLLAwxCCDLLJyUjvEL1Qc+QlD765avTP3clt3BlT3NEW5j6CCx2O0/PVflIOCgqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=BztDcbly; arc=none smtp.client-ip=198.37.111.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
+	 Content-Type:MIME-Version; b=GNQ7wfq8gBe6JX7JSk4Ab9WHZZzzgpgUVCcoQjiXyh6d0TzKWH6kxTjgEbbCa0SxK1pFTlx7EgOohjAe4G2ZFwCHso6pm2sMPCasGOM2lkUvM46DQhpcvwQO2qlM/i418kxNIMFb4CXeyxSoenBhMEp06TlJFS6affBBzbE2fLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=none smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=uq4zRlf/; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="BztDcbly"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1784727949;
-	bh=RrZkIAM6Ee0UsXpXx6jb+NffBbkQ7K/rJMagTsPRvrQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=BztDcblyYXp97+ZFqh3VRkJZjMd/tXdVtkiOo5HZBf+Pvc33ixMr3mo/EA6xcYjyn
-	 ZSvDGadMcs6/ONBB1DSoEMtOjTf56aQcIq8+8G+rvn9gbe6MG4RUOVdpWxgQjVCuXA
-	 CR/RJHA4AykiPpGoQSyPk5SrbN7UPDonarRZYhao=
-Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4300:d341::8c71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 441C51C00CB;
-	Wed, 22 Jul 2026 09:45:49 -0400 (EDT)
-Message-ID: <ed0f74db3342ead9a36a0367b8a5cf694b0decf3.camel@HansenPartnership.com>
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="uq4zRlf/"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=HpDOG/u1a0nOd4GgQOk7svGj4fcu1XMWhxK7aAAj/tk=;
+	t=1784728827; x=1785938427; b=uq4zRlf/6prQ7h9LgXvyUslxQXaD4aTIzghcEjwobvsbfbC
+	Q9MBTpWFz1wS6Ca6k+HWLsy6TBHHD9pNvdLSa+raaD+q1a53MFAcJU6PP2U6LWJB3+O+v5vR/0jSe
+	Xe05ZxYiHVBGapm1oaOBLaJhlV3SywvSS4XEO3LyPyQn5pNHZU4qxR7YiogO5+K0mGcon2DetB5H2
+	m+0qOnTWcHCdE1KFiVK633pVDt86hNOunhcLMP8dpmBWEV5WrjZuSchSOGIHczJFjjEWaWQIunYbw
+	QbjlkZUwDogbGuwU+90PIiaM4lkvLp0pCtmNdwFsD87bkhxu3oPgEG/iqshyj2eQ==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
+	(Exim 4.98.2)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1wmXUe-00000004nVi-2mh5;
+	Wed, 22 Jul 2026 16:00:16 +0200
+Message-ID: <e30c8cebe5d0a6cfada18c633be0125774ef0c7f.camel@sipsolutions.net>
 Subject: Re: How to fix problems with the sashiko review model
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: Greg KH <gregkh@linuxfoundation.org>
+From: Johannes Berg <johannes@sipsolutions.net>
+To: James Bottomley <James.Bottomley@HansenPartnership.com>, Greg KH
+	 <gregkh@linuxfoundation.org>
 Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>, Roman
  Gushchin	 <roman.gushchin@linux.dev>, linux-scsi@vger.kernel.org,
  ksummit@lists.linux.dev
-Date: Wed, 22 Jul 2026 09:45:48 -0400
-In-Reply-To: <2026072205-unsealed-emcee-b243@gregkh>
+Date: Wed, 22 Jul 2026 16:00:15 +0200
+In-Reply-To: <e8f7c3614c15a86b335576074fec1768d95f3df4.camel@HansenPartnership.com>
 References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
-	 <20260722042744.5C1B01F000E9@smtp.kernel.org>
-	 <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-	 <2026072224-moisture-gonad-409f@gregkh>
-	 <2026072205-unsealed-emcee-b243@gregkh>
-Autocrypt: addr=James.Bottomley@HansenPartnership.com;
- keydata=mQENBE58FlABCADPM714lRLxGmba4JFjkocqpj1/6/Cx+IXezcS22azZetzCXDpm2MfNE
- lecY3qkFjfnoffQiw5rrOO0/oRSATOh8+2fmJ6el7naRbDuh+i8lVESfdlkoqX57H5R8h/UTIp6gn
- 1mpNlxjQv6QSZbl551zQ1nmkSVRbA5TbEp4br5GZeJ58esmYDCBwxuFTsSsdzbOBNthLcudWpJZHU
- RfMc0ew24By1nldL9F37AktNcCipKpC2U0NtGlJjYPNSVXrCd1izxKmO7te7BLP+7B4DNj1VRnaf8
- X9+VIApCi/l4Kdx+ZR3aLTqSuNsIMmXUJ3T8JRl+ag7kby/KBp+0OpotABEBAAG0N0phbWVzIEJvd
- HRvbWxleSA8SmFtZXMuQm90dG9tbGV5QEhhbnNlblBhcnRuZXJzaGlwLmNvbT6JAVgEEwEIAEICGw
- MGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAml2ZBI
- FCS3GUMIACgkQgUrkfCFIVNZKjQf/deRzlXZClKxTC/Ee2yEPqqS7mm/INUA49KdQQ5oIhSxkUBy0
- 9J4qjMIo5F8ZFkFTqikBqeL35LKu7O7rn8WETfX8Bxvos3HUsl3jHo34DES4MUFIpoQPgtiLRGwLb
- K0cVCAArR2u2qj4ABmTRrs1I1kvdjEw6gatOuXtEe/j5O2fvfzTq9GBr0Q3n2IAsFXi4hLlx6VPE8
- tyWUZ8BWJKtih3JAeUiXFvASL3McV0rV9RnU0VbjEQEhSE7PMYhWpnDC9AyBb0lXJllQRvC3NSkUB
- 8KVQgNNxRPss0WE/nBoZ4dFA42jTyzTz8lNylxZoAWV7WJb3QxVg4oCodRVrxxrQhSmFtZXMgQm90
- dG9tbGV5IDxqZWpiQGtlcm5lbC5vcmc+iQFVBBMBCAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeA
- QIXgBYhBNVgbnPItGJxvq2a34FK5HwhSFTWBQJgS5mYBQkbNYS9AAoJEIFK5HwhSFTWBpwIAL5Bk3
- 5FB34U6iHmDzzgdCbxLTs43T/YQyJpcGIvopBvnI/fDY8oSG6Df64/O6B+1R+A8TDp6ZG5ysUWnCC
- 6GuIaEHemBYkitMPglR6+sGCMQY7O0mlsPvdssvKK1KI9Bno4VU6ogaF2qVzefSqg1Djmf/DcsxWP
- rI/jdJ8FB5AYR2rjIdDFc+zRdAJuavo1/anyY2wgpFh/3R8IOYAEfWV9nGgYkf9+tA4EIn1sxE0I3
- L5oW2N3mbyRrkzuBwO8ztMCwqEPk7moWzhokcZqMXiAIahaZdkashJC+s2X2RZSGCy+g+pvY5NN4B
- BVG5XwLgVBqbHMTcxE0fbmPqz+q6O0LEphbWVzIEJvdHRvbWxleSA8amVqYkBoYW5zZW5wYXJ0bmV
- yc2hpcC5jb20+iQFXBBMBCABBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAmODZ5ACGwMFCRs1hL0F
- CwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQgUrkfCFIVNZu0Af/TzvL2/NdgAcw9uN3x60H8
- jc4QUq14VpxcFEFEMpcj1morkX/G93V+56HBBaXZj+yK8PhxIA/SIz+sU7C/0YvKuvzakP8ZX/7WJ
- e32SOUtjfr/VTaqjIBzNj6OxLvZpmNbBw7s6DwhhNpHOWqJ/1ml+PtDRDV71IB58yVqQjp1xlNKVl
- ZppcJ5908EJzsFnRIVjiQiDSKoppqB2BCibBbrWcln7CiWMyOC/cco6SIn6twH+f7+aivJ3xGcOE2
- a9gBKF5rNi9TBoX9oyPmshv/TDmnohsVrH7AYXlGYfZTk15SWEiROh1QX8/uD9wl/gcIv5EDUpT/F
- L2jzOsA5663bw==
+		 <20260722042744.5C1B01F000E9@smtp.kernel.org>
+		 <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
+		 <2026072224-moisture-gonad-409f@gregkh>
+	 <e8f7c3614c15a86b335576074fec1768d95f3df4.camel@HansenPartnership.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-malware-bazaar: not-scanned
 
-On Wed, 2026-07-22 at 15:10 +0200, Greg KH wrote:
-[...]
-> Also, this should be in the in-kernel documentation so the LLMs in
-> general don't start sending us "fixes" for things that we don't want
-> declared as a security issue. We've done this already for some things
-> in the "threat model" file, so perhaps put it there?=C2=A0=C2=A0 Then the=
-re's
-> no need to add it to the github repo.
+On Wed, 2026-07-22 at 09:42 -0400, James Bottomley wrote:
+>=20
+> Well, I noted that in my reply above.  The way I was thinking of
+> implementing it was to add a general instruction file for drivers which
+> would make hardware trusted for pretty much everything and then
+> instruct the AI to consult driver specific files for overrides to this
+> so we could add the additional threat checks to usb.md and virt.md
 
-So you're thinking of this file:
+I guess it's a question which way around it should be - but I'll note
+that generally for wifi customers tend to not trust the "hardware"
+because it's mostly firmware, is generally buggy and can be attacked
+over the air too...
 
-Documentation/process/threat-model.rst
+Personally (with that background) I'd tend to lean towards saying the
+high-performance stuff that does want/need to trust the device should
+opt out, it's harder to get that wrong. If we generally opt out as you
+describe and then forgot to include something, we might have issues.
 
-?  It's already mostly in there, it's just that sashiko doesn't seem to
-be picking it up (otherwise it wouldn't have suggested the problem I
-noted), which is why I was thinking it needed to be a direct prompt ...
-unless the prompt should be to read that file?
-
-Regards,
-
-James
+johannes
