@@ -1,165 +1,131 @@
-Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
+Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2EA46EC71
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:38:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784720337; cv=pass; b=YQ1dJ5c3vhdVWwnDnkOXkJyl830EbwGAsi3dU66AiNhBnnY1hg48CM2adkEkrENe9rGCL0ccny3Zd8x0UqE/KUHOOyfB59mMD+a42D6oCmJJWTW90oS0vOvV8SslInrjvPBCc5n/ihgpPy7lx9udrR2pwgEiynL/24syx+ZbgEQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784720337; c=relaxed/simple;
-	bh=aRXDWAWvtF/fIl6E80i0CBl3OfG6oTLQugiLEqsYTNY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lhq54uSQH1NtdPnvpajyK0bT6Ep3Bnq7iRhuJJQB7HArexPWJhlVKzOsrY+k2rr9ye0BvQlzX4LClfAcf0627Rm6we0X1bt/YnZK9QSD1vhMzD/S4YDbl5WLy+sDo6OR2FjVhVpEqKzgw3NhpzyXeni618tSl0865oKTVm1n9PY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=robert.mader@collabora.com header.b=J+DZbE81; arc=pass smtp.client-ip=136.143.188.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636A74D90D5;
+	Wed, 22 Jul 2026 11:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784721534; cv=none; b=SSeOjX5oZXVj9bczdwwb4J5nxnBvCagjMv2REsFtejnMXnm2M/aaFINaT0lnUz3y7wg/x9+j+nkfiFBvGiBnAvvksPSNtg7CyhSAw9ZpGiZnWjQuSkgOlyhiDa2N9QZhRYsEkr2SMlpy/emAnk8eVRvv6VUbs8SxARyMhS57i3c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784721534; c=relaxed/simple;
+	bh=BWYUY9Key7HPP5r4svsN8btVziZiGlu4ExBNuBFrNEI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=KMhtwUAU6LM3G+8fTJ+/PcuZczFpCPuuOcpTZwU4VzK2Ukrh7JZQGSxlgyE/XVtVrRKFd5IkHpRa47hRslb12NNaJv6gz9Nv1bzyNgd07/fOVejxJlbkKvfR9YTSyL6UBfKFgVySwEjVz1FiLZIpitRmLseHebgTMyIA4yCwZgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=Q79qWP9Z; arc=none smtp.client-ip=198.37.111.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=robert.mader@collabora.com header.b="J+DZbE81"
-ARC-Seal: i=1; a=rsa-sha256; t=1784720326; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=kQNjROSiA81iYSeW3M9mzLeFw/xx+3M0SqqcDeF1Met2wIeW8aXCBD02UUda61H9Biu90UyH/mbG9B5OUYSpIcM3eeCYWUBD8jy/A1Wjrm1sEOrx9mtCW74dBu6DAxxiExxvX7IUAnptNq+0YLW99tu2njCLnPORvUueV/hQon8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1784720326; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=tyz+1ZlIAnOEc0Va4DFA0J1+YpDdP0XRHzxDkISRxzQ=; 
-	b=hSkZbqhU//LZ/glA0abh1uHghJNCuZVpzb1Tk1OfA8xCZIrHJNk+Ljjxtr03gVaS4goA3zvf8Z3sbRxafMtG45ScxyFj4XImHHUl+5DEPRC7LYbAdQktlBGZaTjEfVrw5+bsn2qhOG2RsCX4ZFVlN3iaKZbG6QTzvOsbOsxH95E=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=robert.mader@collabora.com;
-	dmarc=pass header.from=<robert.mader@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784720326;
-	s=zohomail; d=collabora.com; i=robert.mader@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=tyz+1ZlIAnOEc0Va4DFA0J1+YpDdP0XRHzxDkISRxzQ=;
-	b=J+DZbE81w9jCKLckYpMLiURNEpIsW8lqixln+Olh+FG6LQ5mIF2xAiDdM7KbAWEc
-	56k3MPiU1H6OVHS2oLmKZQ92DaLVI0RLL0MKq+ponOMmoU6VHNNK4zqTLoFr1J13NdM
-	kRMtOUKZIoHfIqVG4x+dA+ODf+/OhvJwsRXcAwk4=
-Received: by mx.zohomail.com with SMTPS id 1784720324799660.8652285687484;
-	Wed, 22 Jul 2026 04:38:44 -0700 (PDT)
-Message-ID: <28536b3e-1c19-473f-b46a-425eb13ba0e3@collabora.com>
-Date: Wed, 22 Jul 2026 13:38:41 +0200
+	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="Q79qWP9Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=hansenpartnership.com; s=20151216; t=1784721529;
+	bh=BWYUY9Key7HPP5r4svsN8btVziZiGlu4ExBNuBFrNEI=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
+	b=Q79qWP9ZaNhXa9aXOOpeu3HFkNd4iLms/AND7r7NF2dwNtMA+FCX2rjx+fw/DEPWR
+	 woczLvV60aGNgPe0H51erKslbJXjAmUY4ifP5gf4do3bp/ZrYRPku3T8D9JBaqC4v7
+	 nxBYdA17RVfW1blucw5CdTD/fKDIsHCHuB8OY+mA=
+Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4300:d341::8c71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 314651C02BE;
+	Wed, 22 Jul 2026 07:58:49 -0400 (EDT)
+Message-ID: <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
+Subject: How to fix problems with the sashiko review model
+From: James Bottomley <James.Bottomley@HansenPartnership.com>
+To: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>, Roman
+ Gushchin	 <roman.gushchin@linux.dev>
+Cc: linux-scsi@vger.kernel.org, ksummit@lists.linux.dev
+Date: Wed, 22 Jul 2026 07:58:48 -0400
+In-Reply-To: <20260722042744.5C1B01F000E9@smtp.kernel.org>
+References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
+	 <20260722042744.5C1B01F000E9@smtp.kernel.org>
+Autocrypt: addr=James.Bottomley@HansenPartnership.com;
+ keydata=mQENBE58FlABCADPM714lRLxGmba4JFjkocqpj1/6/Cx+IXezcS22azZetzCXDpm2MfNE
+ lecY3qkFjfnoffQiw5rrOO0/oRSATOh8+2fmJ6el7naRbDuh+i8lVESfdlkoqX57H5R8h/UTIp6gn
+ 1mpNlxjQv6QSZbl551zQ1nmkSVRbA5TbEp4br5GZeJ58esmYDCBwxuFTsSsdzbOBNthLcudWpJZHU
+ RfMc0ew24By1nldL9F37AktNcCipKpC2U0NtGlJjYPNSVXrCd1izxKmO7te7BLP+7B4DNj1VRnaf8
+ X9+VIApCi/l4Kdx+ZR3aLTqSuNsIMmXUJ3T8JRl+ag7kby/KBp+0OpotABEBAAG0N0phbWVzIEJvd
+ HRvbWxleSA8SmFtZXMuQm90dG9tbGV5QEhhbnNlblBhcnRuZXJzaGlwLmNvbT6JAVgEEwEIAEICGw
+ MGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAml2ZBI
+ FCS3GUMIACgkQgUrkfCFIVNZKjQf/deRzlXZClKxTC/Ee2yEPqqS7mm/INUA49KdQQ5oIhSxkUBy0
+ 9J4qjMIo5F8ZFkFTqikBqeL35LKu7O7rn8WETfX8Bxvos3HUsl3jHo34DES4MUFIpoQPgtiLRGwLb
+ K0cVCAArR2u2qj4ABmTRrs1I1kvdjEw6gatOuXtEe/j5O2fvfzTq9GBr0Q3n2IAsFXi4hLlx6VPE8
+ tyWUZ8BWJKtih3JAeUiXFvASL3McV0rV9RnU0VbjEQEhSE7PMYhWpnDC9AyBb0lXJllQRvC3NSkUB
+ 8KVQgNNxRPss0WE/nBoZ4dFA42jTyzTz8lNylxZoAWV7WJb3QxVg4oCodRVrxxrQhSmFtZXMgQm90
+ dG9tbGV5IDxqZWpiQGtlcm5lbC5vcmc+iQFVBBMBCAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeA
+ QIXgBYhBNVgbnPItGJxvq2a34FK5HwhSFTWBQJgS5mYBQkbNYS9AAoJEIFK5HwhSFTWBpwIAL5Bk3
+ 5FB34U6iHmDzzgdCbxLTs43T/YQyJpcGIvopBvnI/fDY8oSG6Df64/O6B+1R+A8TDp6ZG5ysUWnCC
+ 6GuIaEHemBYkitMPglR6+sGCMQY7O0mlsPvdssvKK1KI9Bno4VU6ogaF2qVzefSqg1Djmf/DcsxWP
+ rI/jdJ8FB5AYR2rjIdDFc+zRdAJuavo1/anyY2wgpFh/3R8IOYAEfWV9nGgYkf9+tA4EIn1sxE0I3
+ L5oW2N3mbyRrkzuBwO8ztMCwqEPk7moWzhokcZqMXiAIahaZdkashJC+s2X2RZSGCy+g+pvY5NN4B
+ BVG5XwLgVBqbHMTcxE0fbmPqz+q6O0LEphbWVzIEJvdHRvbWxleSA8amVqYkBoYW5zZW5wYXJ0bmV
+ yc2hpcC5jb20+iQFXBBMBCABBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAmODZ5ACGwMFCRs1hL0F
+ CwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQgUrkfCFIVNZu0Af/TzvL2/NdgAcw9uN3x60H8
+ jc4QUq14VpxcFEFEMpcj1morkX/G93V+56HBBaXZj+yK8PhxIA/SIz+sU7C/0YvKuvzakP8ZX/7WJ
+ e32SOUtjfr/VTaqjIBzNj6OxLvZpmNbBw7s6DwhhNpHOWqJ/1ml+PtDRDV71IB58yVqQjp1xlNKVl
+ ZppcJ5908EJzsFnRIVjiQiDSKoppqB2BCibBbrWcln7CiWMyOC/cco6SIn6twH+f7+aivJ3xGcOE2
+ a9gBKF5rNi9TBoX9oyPmshv/TDmnohsVrH7AYXlGYfZTk15SWEiROh1QX8/uD9wl/gcIv5EDUpT/F
+ L2jzOsA5663bw==
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dma-buf/udmabuf: Disable the size limit by default
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-References: <20260722110145.36641-1-robert.mader@collabora.com>
- <20260722112708.5CD131F000E9@smtp.kernel.org>
-Content-Language: en-US, de-DE
-From: Robert Mader <robert.mader@collabora.com>
-In-Reply-To: <20260722112708.5CD131F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Responding to the report just for the record:
+There doesn't seem to be a Sashiko list, so I added ksummit as the most
+likely one to catch attention.  We got this review in SCSI on this
+thread:
 
-On 22.07.26 13:27, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] Removing the dmabuf size limit (by setting `size_limit_mb` to `INT_MAX`) allows an unprivileged user to request a massive buffer size (up to ~2.2 TB). This forces the kernel to attempt massive unbounded vmalloc allocations for the internal tracking arrays, rapidly exhausting system memory and triggering the OOM killer.
->
-> Pre-existing issues:
-> - [High] Setting `size_limit_mb` to `INT_MAX` allows unprivileged users to create udmabufs of 4GB or larger. On 32-bit architectures, this triggers an integer overflow when converting the page count back to bytes (`ubuf->pagecount << PAGE_SHIFT`), resulting in a size of 0 or a severely truncated value.
-> --
->
-> --- Patch [1]: [PATCH v2] dma-buf/udmabuf: Disable the size limit by default ---
-> commit f1c9db60e57729e9743c42b43759bab6d0eafb5d
-> Author: Robert Mader <robert.mader@collabora.com>
->
-> dma-buf/udmabuf: Disable the size limit by default
->
-> This commit disables the default 64MB size limit for udmabuf by setting it
-> to INT_MAX. It aims to support users who need larger buffers for high
-> resolution video formats. The change assumes the per-buffer size limit does
-> not provide sufficient protection on its own.
->
-> Link: https://lore.kernel.org/dri-devel/20260711144814.8205-1-robert.mader@collabora.com/
-> Link: https://lore.kernel.org/dri-devel/6764ca6f-b4d8-4baa-9d27-2ca867ac2d41@amd.com/
->
->> diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
->> index bced421c0d658..639e937049242 100644
->> --- a/drivers/dma-buf/udmabuf.c
->> +++ b/drivers/dma-buf/udmabuf.c
->> @@ -20,9 +20,9 @@ static int list_limit = 1024;
->>   module_param(list_limit, int, 0644);
->>   MODULE_PARM_DESC(list_limit, "udmabuf_create_list->count limit. Default is 1024.");
->>   
->> -static int size_limit_mb = 64;
->> +static int size_limit_mb = INT_MAX;
+https://lore.kernel.org/linux-scsi/20260722041257.1557-1-pengpeng@iscas.ac.=
+cn/
+
+But this part of the review
+
+On Wed, 2026-07-22 at 04:27 +0000, sashiko-bot@kernel.org wrote:
+[...]
+> > +
+> > +	reply_len =3D mpi_reply->MsgLength * 4;
+> > +	if (reply_len < event_offset || reply_len > ioc->reply_sz)
+> > +		return false;
+> > +
+> > +	event_data_len =3D le16_to_cpu(mpi_reply->EventDataLength) *
+> > 4;
+>=20
 > [Severity: High]
-> Does this change allow an unprivileged user to exhaust kernel memory?
->
-> Because the size limit is effectively removed, an unprivileged user can
-> request an extremely large buffer size via /dev/udmabuf.
->
-> Looking at udmabuf_create() and init_udmabuf(), the internal tracking
-> arrays are allocated based on this requested size:
->
-> drivers/dma-buf/udmabuf.c:udmabuf_create() {
->      ...
->      folios = kvmalloc_array(max_nr_folios, sizeof(*folios), GFP_KERNEL);
->      ...
-> }
->
-> drivers/dma-buf/udmabuf.c:init_udmabuf() {
->      ...
->      ubuf->pages = kvmalloc_objs(*ubuf->pages, pgcnt);
->      ...
-> }
->
-> Since these allocations use GFP_KERNEL without __GFP_ACCOUNT, they bypass
-> memory cgroups. Could a large request trigger unbounded vmalloc allocations
-> that consume gigabytes of memory per ioctl call, leading to an OOM condition?
-As mentioned in the commit message and as discussed in the mentioned 
-links, this is a pre-existing issue as users could just allocate 
-multiple buffer, having the same effect as allocating a single big one.
-> [Severity: High]
-> This is a pre-existing issue, but does removing the size limit expose a
-> page count overflow on 32-bit architectures?
->
-> When a user requests a size of 4GB or larger, the pagecount exceeds
-> 1048576. In export_udmabuf() and get_sg_table(), the size is calculated by
-> shifting the page count:
-The udmabuf interface works on pre-allocated system memory. On a 32-bit 
-architecture users can't allocate more than 4GB of memory - so the 
-described request should be impossible.
->
-> drivers/dma-buf/udmabuf.c:export_udmabuf() {
->      ...
->      exp_info.size = ubuf->pagecount << PAGE_SHIFT;
->      ...
-> }
->
-> drivers/dma-buf/udmabuf.c:get_sg_table() {
->      ...
->      ret = sg_alloc_table_from_pages(sg, ubuf->pages, ubuf->pagecount, 0,
->                                      ubuf->pagecount << PAGE_SHIFT,
->                                      GFP_KERNEL);
->      ...
-> }
->
-> On 32-bit architectures, this 32-bit arithmetic wraps around to 0. Can
-> this result in a truncated dma-buf size or an invalid SG table with
-> 0-length elements, potentially causing a panic in IOMMU drivers?
->
->>   module_param(size_limit_mb, int, 0644);
->> -MODULE_PARM_DESC(size_limit_mb, "Max size of a dmabuf, in megabytes. Default is 64.");
->> +MODULE_PARM_DESC(size_limit_mb, "Max size of a dmabuf, in megabytes. Default is INT_MAX.");
->>   
->>   struct udmabuf {
->>   	pgoff_t pagecount;
+> Is there a Time-of-Check to Time-of-Use window here since mpi_reply
+> is read directly from shared DMA memory?
+>=20
+> The validation function reads bounds from mpi_reply, but after
+> validation passes, mpt3sas_scsih_event_callback() re-reads fields
+> like EventDataLength and NumEntries directly from the same DMA-backed
+> memory.
+>=20
+> Could a malicious device mutate these fields in the window between
+> validation and use to bypass the checks introduced by this patch?
 
--- 
-Robert Mader
-Consultant Software Developer
+Is wrong.  Hardware may never be presumed to be malicious (well, except
+if it's virtual hardware provided by an untrusted host to a
+confidential guest, but that's a very small list of drivers or it's a
+USB or thunderbolt device designed to attack or exfiltrate data from an
+unattended system).  It may be buggy, but we never presume bugs until
+someone finds a device exhibiting the bug in the field (so we don't
+proactively fix them).
 
-Collabora Ltd.
-Platinum Building, St John's Innovation Park, Cambridge CB4 0DS, UK
-Registered in England & Wales, no. 5513718
+The bigger part of this is that I was looking into how to fix this
+(which might interest a broader swathe of developers than just SCSI).=20
+I think the fault is in the review prompts:
 
+https://github.com/masoncl/review-prompts
+
+And what I need to do is to add an additional drivers.md file to
+kernel/subsystems explaining this?  If that's right I can send a pull
+request, but I thought I'd check here because the audience is much
+bigger than if it were to get discussed in the github PR.
+
+Regards,
+
+James
