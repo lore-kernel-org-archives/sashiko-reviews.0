@@ -1,33 +1,30 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B522D9797
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 07:05:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE133BCD05
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 07:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784703944; cv=none; b=LabsH39/RW+Hm1oW45XBDVdqRNrZZFD4zfT4O7BXzSxsn41sTSTaNK/byFNK2SddQIXP4ygr14s7oP6akIqqyKCkJwg3OmOkH2RKHh4GAOzU9u19jcPLWCXwsbrsfEIuvlTlG3RQw+H9oKg0FBeVEDqeMaxi1NQgJMEsgthoTk8=
+	t=1784704519; cv=none; b=h6u18Xf1zgZsSvG+PQ7c+MqNugTmjdRyGcAxbRCLx4Z/NRzzpgl6Zw0vcL4IIiCC+puwesM2M2hUVbgjGzGE6UE6DwjJjmLZivxTQ5udvl8N5SAQV4f2sF+MbytFiuh8BM91CTc9b01sxl4nSxUhplLmhEwOK+ytJK7rminUxPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784703944; c=relaxed/simple;
-	bh=1HKJrI9brOrDkpZ3OqlLkp0yBZS6YTh4XnMm8scue9U=;
+	s=arc-20240116; t=1784704519; c=relaxed/simple;
+	bh=hZ9qu5PaDa1DgkrG9mGkifxxDGPOsqE3xCRNrHfqidc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jiwj1kkFnM8kuu1n6mv9viqNcNtVSCjBXg4Eo+mfq8tYMsm14IZ93lHl2uMn5euHObOc6pFWScyNfWnTBHRRgunUm9o5e7ylPLKDRFndPY6B6lSBmdgv5hP6sKq0s4VCAEGuWE8AaZV0X24e9uQL0T44IKEQ7gzE5NOCG8ji4XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eo+xn6dF; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eo+xn6dF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0148C1F000E9;
-	Wed, 22 Jul 2026 07:05:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784703942;
-	bh=Y915cQZhE7GPpNp92gZc1Lxo3IQr04a2RYnCcUZU5QM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=eo+xn6dF6SUbj8/4ArCf+KImBZQWQgEsHw+ActywUjKgNaoPxJeNckV8sLrVvB7Ae
-	 dZkM5gtU8frMYhZLJ8k7Yx7NOr8e7xSPhhn92fkyVBUGClXdDqmTO+jQ3mTuoRNj33
-	 KfcqWf8Fs6ZiCicbwhPo+MBI+6OxrEUSRwjGY9RB7+uUqY5JCi3IVblUGExr7Y5ncf
-	 dRtCxw5XRxC28E2S6gXQiXvpzn7Cj9zqz/6Pp8uzkh1TVqOwPH2tTW0N6XkeukXYXP
-	 diIeF6ZrjkpJP8Fp9xzDgoRBFds1VroAZHyP9iU1xmog3aH++9yenhd5Kr3oaVwWAn
-	 UsgxGKO7uyfRA==
-Message-ID: <0a44675f-1371-49e9-b5cd-1053836c88f5@kernel.org>
-Date: Wed, 22 Jul 2026 09:05:39 +0200
+	 In-Reply-To:Content-Type; b=ojshe79gcUCffIvBhPmid9HLwlFT1RAw0GgSyJZRzaqKMumWftW9hXT4muYYJkQGEY7KWZqJCB00CKJeyGuGq57CX2gX8UGxcHF87qEaVL4PzYGo/HJOblDGYmY6+GPxIAGno4gs29PUmSNfTtuhvFonce3eSRVq4ZIoFW/F94k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h4lqn4NfxzKHMPj
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:14:29 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id E59DB408FD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 15:15:12 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP1 (Coremail) with UTF8SMTPA id cCh0CgAXJ3P_bWBqJ8B+CA--.19569S2;
+	Wed, 22 Jul 2026 15:15:12 +0800 (CST)
+Message-ID: <bdccaa6e-cf8c-438d-ba05-98652e9ce988@huaweicloud.com>
+Date: Wed, 22 Jul 2026 15:15:11 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,126 +32,138 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/amd/display: use proper context for logging
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260722063210.1144266-1-jirislaby@kernel.org>
- <20260722065145.EC2431F000E9@smtp.kernel.org>
+Subject: Re: [PATCH bpf v5 2/4] bpf: Fix UAF due to missing link type check in
+ mprog
 Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20260722065145.EC2431F000E9@smtp.kernel.org>
+To: Amery Hung <ameryhung@gmail.com>, Emil Tsalapatis <emil@etsalapatis.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+References: <20260721041048.1394085-1-pulehui@huaweicloud.com>
+ <20260721041048.1394085-3-pulehui@huaweicloud.com>
+ <20260721042151.E6F941F000E9@smtp.kernel.org>
+ <723495f2-f4a0-4723-90a8-d4774e6dce05@huaweicloud.com>
+ <CAMB2axMocV3+cC8O5LEu-0bPcGvchwjASbjM_afx=Stc_8AvKw@mail.gmail.com>
+ <DK4GW4BH8RPS.32N0A91SQGMOH@etsalapatis.com>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <DK4GW4BH8RPS.32N0A91SQGMOH@etsalapatis.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:cCh0CgAXJ3P_bWBqJ8B+CA--.19569S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxAFWxZr43JF48Cr13ArWkZwb_yoWrXr1xpF
+	Z7JF1vyFWUXry2qr1jq3Z5AryjgF4kJr1UXrn5Xw1jyFn09F1IqF1UKr4ruw1Syr4DJw4v
+	vw1jqF9xZ34DAa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7
+	CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
+	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
+	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-On 22. 07. 26, 8:51, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] NULL pointer dereference when logging errors in `dce112_get_pix_clk_dividers` and `dcn3_get_pix_clk_dividers`.
-> --
-> 
-> --- Patch [1]: [PATCH] drm/amd/display: use proper context for logging ---
-> commit 67013b697b017867bb1c1e61f13b863b96364c5e
-> Author: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-> 
-> drm/amd/display: use proper context for logging
-> 
-> This commit fixes a NULL pointer dereference in get_ss_info_from_atombios()
-> by temporarily redefining DC_LOGGER to use clk_src->base.ctx->logger. The
-> calc_pll_cs->ctx context is uninitialized at that time since it is only set
-> later by calc_pll_max_vco_construct().
-> 
-> Closes: https://bugzilla.suse.com/show_bug.cgi?id=1271175
-> Closes: https://lore.kernel.org/all/a9ee54e6-2413-4156-9bde-d528ae3c63a3@kernel.org/
-> Fixes: 1296423bf23c ("drm/amd/display: define DC_LOGGER for logger")
-> 
->> diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c b/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
->> index ecb8493ec5233..d3f7aa853e3a6 100644
->> --- a/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
->> +++ b/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
->> @@ -1513,6 +1513,10 @@ static const struct clock_source_funcs dce110_clk_src_funcs = {
->>   	.get_dp_dto_frequency_100hz = get_dp_dto_frequency_100hz
->>   };
->>   
->> +/* calc_pll_cs->ctx is set only after get_ss_info_from_atombios(), unlike clk_src->base */
->> +#pragma push_macro("DC_LOGGER")
->> +#undef DC_LOGGER
->> +#define DC_LOGGER CTX->logger
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does a similar NULL pointer dereference
-> exist in dce112_get_pix_clk_dividers() and dcn3_get_pix_clk_dividers()
-> during their error paths?
-> 
-> It appears dce112_clk_src_construct() does not call
-> calc_pll_max_vco_construct(), leaving calc_pll_cs->ctx as NULL. If invalid
-> parameters are passed (like requested_pix_clk_100hz == 0), the error path
-> invokes DC_LOG_ERROR() which dereferences calc_pll_cs->ctx->logger:
-> 
-> drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c:dce112_get_pix_clk_dividers() {
->          DC_LOGGER_INIT();
-> 
->          if (pix_clk_params == NULL || pll_settings == NULL
->                          || pix_clk_params->requested_pix_clk_100hz == 0) {
->                  DC_LOG_ERROR(
->                          "%s: Invalid parameters!!\n", __func__);
->                  return (uint32_t)-1;
->          }
->          ...
-> }
-> 
-> A similar error path exists in dcn3_get_pix_clk_dividers().
-> 
-> Since DC_LOG_ERROR() relies on the same uninitialized context pointer,
-> could this trigger a crash similar to the one being fixed here if these
-> functions encounter invalid parameters?
 
-Occurs likely to me. Someone involved in the driver has to look as the 
-logic is really intertwined.
+On 2026/7/22 2:40, Emil Tsalapatis wrote:
+> On Tue Jul 21, 2026 at 1:40 PM EDT, Amery Hung wrote:
+>> On Tue, Jul 21, 2026 at 2:18 AM Pu Lehui <pulehui@huaweicloud.com> wrote:
+>>>
+>>>
+>>> On 2026/7/21 12:21, sashiko-bot@kernel.org wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>> - [Medium] Anchor link type validation is bypassed when attaching or detaching bare BPF programs, leading to wildcard insertions/deletions and data races.
+>>>> --
+>>>>
+>>>> --- Patch [2]: [PATCH bpf v5 2/4] bpf: Fix UAF due to missing link type check in mprog ---
+>>>> commit 830a4e62ebb8e98cc45b0ce829c6686aacafabc4
+>>>> Author: Pu Lehui <pulehui@huawei.com>
+>>>> Subject: bpf: Fix UAF due to missing link type check in mprog
+>>>>
+>>>> This commit adds a link type validation in bpf_mprog_link() to prevent a
+>>>> use-after-free when dereferencing link->prog for foreign anchors. It also
+>>>> adjusts bpf_mprog_attach() and bpf_mprog_detach() to pass down the expected
+>>>> link type.
+>>>>
+>>>>> diff --git a/kernel/bpf/mprog.c b/kernel/bpf/mprog.c
+>>>>> index 1394168062e85..37ce91e0bcd21 100644
+>>>>> --- a/kernel/bpf/mprog.c
+>>>>> +++ b/kernel/bpf/mprog.c
+>>>>> @@ -17,7 +17,7 @@ static int bpf_mprog_link(struct bpf_tuple *tuple,
+>>>>>               link = bpf_link_get_from_fd(id_or_fd);
+>>>>>       if (IS_ERR(link))
+>>>>>               return PTR_ERR(link);
+>>>>> -    if (type && link->prog->type != type) {
+>>>>> +    if (type && link->type != type) {
+>>>>>               bpf_link_put(link);
+>>>>>               return -EINVAL;
+>>>>>       }
+>>>>
+>>>> [ ... ]
+>>>>
+>>>>> @@ -243,6 +244,7 @@ int bpf_mprog_attach(struct bpf_mprog_entry *entry,
+>>>>>               return -EEXIST;
+>>>>>       ret = bpf_mprog_tuple_relative(&rtuple, id_or_fd,
+>>>>>                                      flags & ~BPF_F_REPLACE,
+>>>>> +                                   link ? link->type : BPF_LINK_TYPE_UNSPEC,
+>>>>>                                      prog_new->type);
+>>>>>       if (ret)
+>>>>
+>>>> [Severity: Medium]
+>>>> When attaching a bare BPF program, link is NULL. This passes
+>>>> BPF_LINK_TYPE_UNSPEC (0) to bpf_mprog_tuple_relative() as the expected
+>>>> anchor link type.
+>>>
+>>> Ah, so when attaching a bare prog with a relative link, having the
+>>> BPF_F_LINK flag set means the relative id_or_fd is a link, not the
+>>> object being attached. Sorry, that definitely confused me.
+>>>
+>>>>
+>>>> In bpf_mprog_link() above, the validation check is:
+>>>>
+>>>>       if (type && link->type != type) {
+>>>>
+>>>> Because type is 0, the validation is bypassed entirely.
+>>>>
+>>>> If a user passes a foreign link with a NULL prog (like struct_ops) as an
+>>>> anchor via id_or_fd, the positioning logic treats tuple->prog == NULL as
+>>>> 'no anchor provided' instead of rejecting the invalid anchor with -EINVAL.
+>>>>
+>>>> Does this allow wildcard insertions or deletions, and leave a benign data
+>>>> race when reading link->prog locklessly? Should the expected link type be
+>>>> explicitly provided when attaching bare programs?
+>>
+>> I also overlooked this. Make sense to pass the expected link type from
+>> callers of bpf_mprog_attach().
+> 
+> +1 on this, and can we add a comment that ptype == UNSPEC is because
+> detach() uses this as a wildcard? UNSPEC is only valid in very few
+> places in the subsystem.
 
-thanks,
--- 
-js
-suse labs
+both ack, thanks
+
+> 
+>>
+>>>>
+>>>> [ ... ]
+>>>>
+>>>>> @@ -343,6 +345,7 @@ int bpf_mprog_detach(struct bpf_mprog_entry *entry,
+>>>>>       if (!bpf_mprog_total(entry))
+>>>>>               return -ENOENT;
+>>>>>       ret = bpf_mprog_tuple_relative(&rtuple, id_or_fd, flags,
+>>>>> +                                   link ? link->type : BPF_LINK_TYPE_UNSPEC,
+>>>>>                                      prog ? prog->type :
+>>>>>                                      BPF_PROG_TYPE_UNSPEC);
+>>>>>       if (ret)
+>>>>
+>>>> [Severity: Medium]
+>>>> Similarly, when detaching a bare BPF program, link is NULL. This also
+>>>> passes BPF_LINK_TYPE_UNSPEC as the expected link type.
+>>>>
+>>>> Does this bypass the new validation and allow wildcard deletions when using
+>>>> foreign anchors?
+>>>>
+>>>
+>>>
+
