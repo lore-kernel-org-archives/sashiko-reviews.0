@@ -1,131 +1,153 @@
-Received: from lamorak.hansenpartnership.com (lamorak.hansenpartnership.com [198.37.111.173])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636A74D90D5;
-	Wed, 22 Jul 2026 11:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.37.111.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C44136D51F;
+	Wed, 22 Jul 2026 12:10:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784721534; cv=none; b=SSeOjX5oZXVj9bczdwwb4J5nxnBvCagjMv2REsFtejnMXnm2M/aaFINaT0lnUz3y7wg/x9+j+nkfiFBvGiBnAvvksPSNtg7CyhSAw9ZpGiZnWjQuSkgOlyhiDa2N9QZhRYsEkr2SMlpy/emAnk8eVRvv6VUbs8SxARyMhS57i3c=
+	t=1784722235; cv=none; b=cYiQGEM37mLPpOonlI0ItNy2kd71BEy6iGIgkSQZLweMIDxEVBmDHRqiXEQ8h+UJ0wwyQxS2L/VQ2hkOF5BV/uUWcJCtgJ018VZJnPLZ70bIsnePxbqUL5BtUFxDVLqC5qH72hc1BHJdvhvT/p+VJhqKyW1uccp7wg7XTC46lqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784721534; c=relaxed/simple;
-	bh=BWYUY9Key7HPP5r4svsN8btVziZiGlu4ExBNuBFrNEI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=KMhtwUAU6LM3G+8fTJ+/PcuZczFpCPuuOcpTZwU4VzK2Ukrh7JZQGSxlgyE/XVtVrRKFd5IkHpRa47hRslb12NNaJv6gz9Nv1bzyNgd07/fOVejxJlbkKvfR9YTSyL6UBfKFgVySwEjVz1FiLZIpitRmLseHebgTMyIA4yCwZgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com; spf=pass smtp.mailfrom=HansenPartnership.com; dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b=Q79qWP9Z; arc=none smtp.client-ip=198.37.111.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=HansenPartnership.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=HansenPartnership.com
+	s=arc-20240116; t=1784722235; c=relaxed/simple;
+	bh=4YHXgXYZtCZ25qiPtk9KT8lQ8+H3tNr5u7aXspfGqrY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aSNSm6cNjAqoJ3CQ12l8CdjWMdTXI563Krqlki0QHXrTkBsl59vn2X7U4x3QeNYo6G4/qD67y4TUUE02flchIzoMpBQ19qjjlzgPyu9Z3q9NDB8SN5JUpxCya4020cNh6NyaKE/bE/Hve97O5RnSqswC3hGzOckvkt9OmSfQMTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e/RG+UTK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=hansenpartnership.com header.i=@hansenpartnership.com header.b="Q79qWP9Z"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=hansenpartnership.com; s=20151216; t=1784721529;
-	bh=BWYUY9Key7HPP5r4svsN8btVziZiGlu4ExBNuBFrNEI=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-	b=Q79qWP9ZaNhXa9aXOOpeu3HFkNd4iLms/AND7r7NF2dwNtMA+FCX2rjx+fw/DEPWR
-	 woczLvV60aGNgPe0H51erKslbJXjAmUY4ifP5gf4do3bp/ZrYRPku3T8D9JBaqC4v7
-	 nxBYdA17RVfW1blucw5CdTD/fKDIsHCHuB8OY+mA=
-Received: from lingrow.int.hansenpartnership.com (unknown [IPv6:2601:5c4:4300:d341::8c71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lamorak.hansenpartnership.com (Postfix) with ESMTPSA id 314651C02BE;
-	Wed, 22 Jul 2026 07:58:49 -0400 (EDT)
-Message-ID: <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
-Subject: How to fix problems with the sashiko review model
-From: James Bottomley <James.Bottomley@HansenPartnership.com>
-To: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>, Roman
- Gushchin	 <roman.gushchin@linux.dev>
-Cc: linux-scsi@vger.kernel.org, ksummit@lists.linux.dev
-Date: Wed, 22 Jul 2026 07:58:48 -0400
-In-Reply-To: <20260722042744.5C1B01F000E9@smtp.kernel.org>
-References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
-	 <20260722042744.5C1B01F000E9@smtp.kernel.org>
-Autocrypt: addr=James.Bottomley@HansenPartnership.com;
- keydata=mQENBE58FlABCADPM714lRLxGmba4JFjkocqpj1/6/Cx+IXezcS22azZetzCXDpm2MfNE
- lecY3qkFjfnoffQiw5rrOO0/oRSATOh8+2fmJ6el7naRbDuh+i8lVESfdlkoqX57H5R8h/UTIp6gn
- 1mpNlxjQv6QSZbl551zQ1nmkSVRbA5TbEp4br5GZeJ58esmYDCBwxuFTsSsdzbOBNthLcudWpJZHU
- RfMc0ew24By1nldL9F37AktNcCipKpC2U0NtGlJjYPNSVXrCd1izxKmO7te7BLP+7B4DNj1VRnaf8
- X9+VIApCi/l4Kdx+ZR3aLTqSuNsIMmXUJ3T8JRl+ag7kby/KBp+0OpotABEBAAG0N0phbWVzIEJvd
- HRvbWxleSA8SmFtZXMuQm90dG9tbGV5QEhhbnNlblBhcnRuZXJzaGlwLmNvbT6JAVgEEwEIAEICGw
- MGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAml2ZBI
- FCS3GUMIACgkQgUrkfCFIVNZKjQf/deRzlXZClKxTC/Ee2yEPqqS7mm/INUA49KdQQ5oIhSxkUBy0
- 9J4qjMIo5F8ZFkFTqikBqeL35LKu7O7rn8WETfX8Bxvos3HUsl3jHo34DES4MUFIpoQPgtiLRGwLb
- K0cVCAArR2u2qj4ABmTRrs1I1kvdjEw6gatOuXtEe/j5O2fvfzTq9GBr0Q3n2IAsFXi4hLlx6VPE8
- tyWUZ8BWJKtih3JAeUiXFvASL3McV0rV9RnU0VbjEQEhSE7PMYhWpnDC9AyBb0lXJllQRvC3NSkUB
- 8KVQgNNxRPss0WE/nBoZ4dFA42jTyzTz8lNylxZoAWV7WJb3QxVg4oCodRVrxxrQhSmFtZXMgQm90
- dG9tbGV5IDxqZWpiQGtlcm5lbC5vcmc+iQFVBBMBCAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeA
- QIXgBYhBNVgbnPItGJxvq2a34FK5HwhSFTWBQJgS5mYBQkbNYS9AAoJEIFK5HwhSFTWBpwIAL5Bk3
- 5FB34U6iHmDzzgdCbxLTs43T/YQyJpcGIvopBvnI/fDY8oSG6Df64/O6B+1R+A8TDp6ZG5ysUWnCC
- 6GuIaEHemBYkitMPglR6+sGCMQY7O0mlsPvdssvKK1KI9Bno4VU6ogaF2qVzefSqg1Djmf/DcsxWP
- rI/jdJ8FB5AYR2rjIdDFc+zRdAJuavo1/anyY2wgpFh/3R8IOYAEfWV9nGgYkf9+tA4EIn1sxE0I3
- L5oW2N3mbyRrkzuBwO8ztMCwqEPk7moWzhokcZqMXiAIahaZdkashJC+s2X2RZSGCy+g+pvY5NN4B
- BVG5XwLgVBqbHMTcxE0fbmPqz+q6O0LEphbWVzIEJvdHRvbWxleSA8amVqYkBoYW5zZW5wYXJ0bmV
- yc2hpcC5jb20+iQFXBBMBCABBFiEE1WBuc8i0YnG+rZrfgUrkfCFIVNYFAmODZ5ACGwMFCRs1hL0F
- CwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQgUrkfCFIVNZu0Af/TzvL2/NdgAcw9uN3x60H8
- jc4QUq14VpxcFEFEMpcj1morkX/G93V+56HBBaXZj+yK8PhxIA/SIz+sU7C/0YvKuvzakP8ZX/7WJ
- e32SOUtjfr/VTaqjIBzNj6OxLvZpmNbBw7s6DwhhNpHOWqJ/1ml+PtDRDV71IB58yVqQjp1xlNKVl
- ZppcJ5908EJzsFnRIVjiQiDSKoppqB2BCibBbrWcln7CiWMyOC/cco6SIn6twH+f7+aivJ3xGcOE2
- a9gBKF5rNi9TBoX9oyPmshv/TDmnohsVrH7AYXlGYfZTk15SWEiROh1QX8/uD9wl/gcIv5EDUpT/F
- L2jzOsA5663bw==
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e/RG+UTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2E81F000E9;
+	Wed, 22 Jul 2026 12:10:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784722233;
+	bh=fIe0wUrrDVszjvm6kkoTVaoHwx2WuyyXexPYM+RlgpQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=e/RG+UTKXTiJg+Z+keGVwljTspAcEtzFRMAmoOOR1Bec2THmY/Ooo9kmfHZJdQq4F
+	 slqd3LzpyCs7oQgY9vr9CMWFLYQmbikHC0rinNm0vivvL0nBiRmYm2DDIao1pIbMDw
+	 1UnUM3KcEfObN/Qogmn+FGKjFHxmEMqTuh8nQ4dfLc9UzpCGNsC70UwtQsSl56jlTQ
+	 o0Is8XpHKxdEfThynIYySlFh2tZywG/F2Us045oqJVJ5CUDc0t7G/3yIzQ0Iu2JQNm
+	 geet6TTwSEmaRyNZ1tKel7V428LF6hjcqOb2n3VRzKOCEJY9z/PL9oUd9pviTRNDA9
+	 yft0e6FRLxgJg==
+From: Mattijs Korpershoek <mkorpershoek@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, neil.armstrong@linaro.org, conor+dt@kernel.org,
+ olteanv@gmail.com, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, vkoul@kernel.org
+Subject: Re: [PATCH v2 2/2] phy: qcom: qmp-usb: Add support for SA8255P
+In-Reply-To: <20260709150659.6E0301F000E9@smtp.kernel.org>
+References: <20260709-phy-qcom-qmp-usb-8255-v2-0-3b6c26a45788@kernel.org>
+ <20260709-phy-qcom-qmp-usb-8255-v2-2-3b6c26a45788@kernel.org>
+ <20260709150659.6E0301F000E9@smtp.kernel.org>
+Date: Wed, 22 Jul 2026 14:10:31 +0200
+Message-ID: <87bjbzi5s8.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-There doesn't seem to be a Sashiko list, so I added ksummit as the most
-likely one to catch attention.  We got this review in SCSI on this
-thread:
+On Thu, Jul 09, 2026 at 15:06, sashiko-bot@kernel.org wrote:
 
-https://lore.kernel.org/linux-scsi/20260722041257.1557-1-pengpeng@iscas.ac.=
-cn/
-
-But this part of the review
-
-On Wed, 2026-07-22 at 04:27 +0000, sashiko-bot@kernel.org wrote:
-[...]
-> > +
-> > +	reply_len =3D mpi_reply->MsgLength * 4;
-> > +	if (reply_len < event_offset || reply_len > ioc->reply_sz)
-> > +		return false;
-> > +
-> > +	event_data_len =3D le16_to_cpu(mpi_reply->EventDataLength) *
-> > 4;
->=20
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Incorrect power domain sequencing during d0/d3 transitions risks=
+ NoC errors and bus hangs.
+> --
+>
+> --- Patch [2]: [PATCH v2 2/2] phy: qcom: qmp-usb: Add support for SA8255P=
+ ---
+> commit c32bbfd817c3f9fca4d2982ea37be36354501cc7
+> Author: Sriram Dash <quic_sriramd@quicinc.com>
+> Subject: phy: qcom: qmp-usb: Add support for SA8255P
+>
+> This commit adds support for the SA8255P SoC to the QMP USB PHY driver.=20
+> It introduces firmware-managed resources via SCMI using power protocols,
+> managing state transitions (d0, d1, d3) through the "usb_core" and
+> "usb_transfer" power domains.
+>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualc=
+omm/phy-qcom-qmp-usb.c
+>> index c5507168e1354..d085c1ad7fb5c 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+>
+> [ ... ]
+>
+>> @@ -1865,6 +1890,77 @@ static const struct qmp_phy_cfg glymur_usb3_uniph=
+y_cfg =3D {
+>>  	.regs			=3D qmp_v7_usb3phy_regs_layout,
+>>  };
+>
+> [ ... ]
+>
+>> +/* d3_to_d0 transition by turning on all the suppliers */
+>> +static int qmp_usb_d3_to_d0(struct qmp_usb *qmp)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!qmp->pd_list)
+>> +		return 0;
+>> +
+>> +	ret =3D pm_runtime_resume_and_get(qmp->pd_list->pd_devs[0]);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret =3D pm_runtime_resume_and_get(qmp->pd_list->pd_devs[1]);
+>> +	if (ret)
+>> +		pm_runtime_put_sync(qmp->pd_list->pd_devs[0]);
+>> +
+>> +	return ret;
+>> +}
+>
 > [Severity: High]
-> Is there a Time-of-Check to Time-of-Use window here since mpi_reply
-> is read directly from shared DMA memory?
->=20
-> The validation function reads bounds from mpi_reply, but after
-> validation passes, mpt3sas_scsih_event_callback() re-reads fields
-> like EventDataLength and NumEntries directly from the same DMA-backed
-> memory.
->=20
-> Could a malicious device mutate these fields in the window between
-> validation and use to bypass the checks introduced by this patch?
+> Does this sequence power up the domains in the wrong order?
+>
+> The commit message notes that "usb_core" (which maps to pd_devs[1] based =
+on=20
+> the qmp_usb_domain_attach order) controls the GDSC, while "usb_transfer"=
+=20
+> (pd_devs[0]) controls clocks and interconnects.
+>
+> Enabling clocks before the GDSC foundational power domain is enabled typi=
+cally
+> results in unpowered register access on Qualcomm SoCs, which could trigge=
+r a
+> Network-on-Chip (NoC) error and bus hang. Should pd_devs[1] be resumed be=
+fore
+> pd_devs[0]?
 
-Is wrong.  Hardware may never be presumed to be malicious (well, except
-if it's virtual hardware provided by an untrusted host to a
-confidential guest, but that's a very small list of drivers or it's a
-USB or thunderbolt device designed to attack or exfiltrate data from an
-unattended system).  It may be buggy, but we never presume bugs until
-someone finds a device exhibiting the bug in the field (so we don't
-proactively fix them).
+I did not observe any bus errors during my testing. I tried to
+insert/remove the phy driver and also could detect a flash drive using a
+couple of more patches on other USB drivers.
 
-The bigger part of this is that I was looking into how to fix this
-(which might interest a broader swathe of developers than just SCSI).=20
-I think the fault is in the review prompts:
+So I'll keep it this way for v3.
 
-https://github.com/masoncl/review-prompts
+>
+>> +
+>> +/* d0_to_d3 transition by turning off all the suppliers */
+>> +static void qmp_usb_d0_to_d3(struct qmp_usb *qmp)
+>> +{
+>> +	if (!qmp->pd_list)
+>> +		return;
+>> +
+>> +	pm_runtime_put_sync(qmp->pd_list->pd_devs[1]);
+>> +	pm_runtime_put_sync(qmp->pd_list->pd_devs[0]);
+>> +}
+>
+> [Severity: High]
+> Similarly, could this cause a bus hang during the d0 to d3 transition?
+>
+> Putting "usb_core" (pd_devs[1]) before "usb_transfer" (pd_devs[0]) disabl=
+es=20
+> the GDSC before the clocks. Shouldn't the GDSC be disabled last to preven=
+t=20
+> unpowered hardware clock access?
 
-And what I need to do is to add an additional drivers.md file to
-kernel/subsystems explaining this?  If that's right I can send a pull
-request, but I thought I'd check here because the audience is much
-bigger than if it were to get discussed in the github PR.
+When running modprobe -r, I did not observe any bus hang on my board.
+I'll keep this way for v3.
 
-Regards,
-
-James
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709-phy-qcom=
+-qmp-usb-8255-v2-0-3b6c26a45788@kernel.org?part=3D2
