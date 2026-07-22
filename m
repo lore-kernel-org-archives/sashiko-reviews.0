@@ -1,118 +1,125 @@
-Received: from out28-122.mail.aliyun.com (out28-122.mail.aliyun.com [115.124.28.122])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFB6353A9B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 13:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EC934CFC3;
+	Wed, 22 Jul 2026 13:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784727259; cv=none; b=u/M7GfKwqaaHN6a+VTy4wobHLJVxsntb2fgFnBbfcNFso5ArmWIiVPr1F9v/yGsvb+gx6HiM8HWJYr3px1Jr6QA68P4vs1XQv81kcsGYE+FhecWhBik2TPPK0pNbmwHZ7QMRz36vzkueIuNPO0zG6cA9f4ghA4dJVDXb9YOa5k0=
+	t=1784727451; cv=none; b=N5OgTUtoq9r+UlA0VJBBfifjXytpij7DPLHfyJ66qjqb/htxCst53mT+VGp4MN7FwtFtrtK0UqpYDT4+XVqr5wvs4wAnLQhNuWARtF4IOy5XXMdjy/kHBeNx785fTQXOqVhJUeMUCBzeR+KVSlV81ImDm9jCQS042xdXmhZ93wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784727259; c=relaxed/simple;
-	bh=qL1w7N4RktuU9IJF16NjAmubV1t14JvjYacjyT6EkBE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fX6K40bEpCfRdEhX7Zom0MGyujcw/qJCekbhNn4wIOJ2cQ7CLJ/5zIA7fYjydPNVH3T48oXTvjFTpU0AQaIoe6xz4UO8tD3Qwke7xwRdcndvQFFOQumjn0UG5g3vajvOXrccrosXBxWnk7d/109sQK7FROs17dGmcpjpbDYVliw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net; spf=pass smtp.mailfrom=open-hieco.net; arc=none smtp.client-ip=115.124.28.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=open-hieco.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=open-hieco.net
-X-Alimail-AntiSpam:AC=CONTINUE;BC=0.09736873|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0312854-0.002808-0.965907;FP=497998581993670323|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam033037006180;MF=zhang_wei@open-hieco.net;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.iSA1Prm_1784725387;
-Received: from 192.168.124.3(mailfrom:zhang_wei@open-hieco.net fp:SMTPD_---.iSA1Prm_1784725387 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Wed, 22 Jul 2026 21:03:07 +0800
-Message-ID: <c30591dd-845a-4b8d-961e-73e3e2e5ab2d@open-hieco.net>
-Date: Wed, 22 Jul 2026 21:03:05 +0800
+	s=arc-20240116; t=1784727451; c=relaxed/simple;
+	bh=r3VC1GSygiRSXu0beX5TP6n8xrX+7egHQdEPWcNoAwA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DW/As0YG/B0PK874swqzY6vHmOEb0WA+F3nzDg3tBGA6LJobrBO8PmVQjfw/B0iiRBUbhI6glNx7M5QlK58Z/9VeUnBUKiauxVXije1bV12OcPF9LVjypvjTZ6oK5+LG7KRPHIc5Gk4EBLr0wgBq/5JGFSCKf7etDCkSzz32cnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZjWvqyuM; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZjWvqyuM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9391F000E9;
+	Wed, 22 Jul 2026 13:37:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784727450;
+	bh=V6hTSTk75S8dOLUKHL7MYuvzuR3G2u+R/z+/rMPW3PI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZjWvqyuMFE5v0Jc4S8c2rvwHNMoYZw7UBdD7bT9Twrtq1dbUtFWjodYqIaj2+q8Wu
+	 PN2s4p60AAdznLpyDRGpXZNjCv7/fcxeVyGS0/AJDjYu4D/dn0PZXOcGbUu1DFdd9s
+	 jUe/X7sVjqBJqdbk8iE4U4PbUa3pP+ikTOiVbCCEl97TUeeEgiYsBO62fBuARmIt4X
+	 A6kS7gTAjzqO5GSDPYWZbBnw7dCOJOsB2IeYgyLEgWFzOButrHHBdcqDXLLDL3jERQ
+	 NkX/WS65xCrPQlFkrCNvSfMWxJVp4dWardVFFcX4+GEqyatBl3JivPAYBxgGyHOIX1
+	 KujJpw/aABwsw==
+Date: Wed, 22 Jul 2026 08:37:29 -0500
+From: Rob Herring <robh@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ninad Naik <ninadnaik07@gmail.com>, conor+dt@kernel.org,
+	linux-leds@vger.kernel.org, lee@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: leds: lacie,ns2-leds: Convert to DT
+ schema
+Message-ID: <20260722133729.GA389001-robh@kernel.org>
+References: <20260721192754.46344-1-ninadnaik07@gmail.com>
+ <20260721193849.D2B0F1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] KVM: nSVM: Synthesize DecodeAssists EXITINFO for
- emulated intercepts
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <cover.1783999988.git.zhang_wei@open-hieco.net>
- <f794550ecf8a78ce7095d699a7508bc8cc955679.1783999988.git.zhang_wei@open-hieco.net>
- <20260714053140.5813C1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Tina Zhang <zhang_wei@open-hieco.net>
-In-Reply-To: <20260714053140.5813C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260721193849.D2B0F1F00A3D@smtp.kernel.org>
 
-
-
-On 7/14/2026 1:31 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Unconditionally setting bit 63 in EXITINFO1 for CR read intercepts.
+On Tue, Jul 21, 2026 at 07:38:49PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] Using `additionalProperties` at the root level to define child nodes incorrectly restricts standard properties on the parent node, breaking device tree validation.
+> - [Low] The schema omits the `num-modes` property, causing `dtbs_check` failures for existing in-tree device trees.
 > --
 > 
-> --- Patch [2]: [PATCH v2 2/8] KVM: nSVM: Synthesize DecodeAssists EXITINFO for emulated intercepts ---
-> commit 12fdeb07951db9a20a07afc60e302f9b9e4fcaca
-> Author: Tina Zhang <zhang_wei@open-hieco.net>
+> --- Patch [1]: [PATCH v2] dt-bindings: leds: lacie,ns2-leds: Convert to DT schema ---
+> commit d6e2084ac319cdcc30d00614f66ec071bc9c5c1a
+> Author: Ninad Naik <ninadnaik07@gmail.com>
 > 
-> KVM: nSVM: Synthesize DecodeAssists EXITINFO for emulated intercepts
+> dt-bindings: leds: lacie,ns2-leds: Convert to DT schema
 > 
-> This commit populates the architectural EXITINFO fields when DecodeAssists is
-> exposed to L1 and an emulated intercept occurs. It generates EXITINFO1
-> depending on the intercept type, such as CR/DR accesses and INTn.
+> Convert the lacie,ns2-leds binding text document to a DT schema.
 > 
->> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
->> index e02a38da5296e..cc35afb59623f 100644
->> --- a/arch/x86/kvm/svm/svm.c
->> +++ b/arch/x86/kvm/svm/svm.c
+> > diff --git a/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
+> > new file mode 100644
+> > index 0000000000000..1976669d2218c
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/leds/lacie,ns2-leds.yaml
+> 
 > [ ... ]
->> @@ -4754,6 +4754,52 @@ static const struct __x86_intercept {
->>   #undef POST_EX
->>   #undef POST_MEM
->>   
->> +static void svm_prepare_decode_assist_exit_info(struct kvm_vcpu *vcpu,
->> +						const struct x86_instruction_info *info)
->> +{
->> +	struct vmcb *vmcb = to_svm(vcpu)->vmcb;
->> +	u64 exit_info_1;
->> +
->> +	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_DECODEASSISTS))
->> +		return;
->> +
->> +	switch (info->intercept) {
->> +	case x86_intercept_cr_read:
->> +	case x86_intercept_cr_write:
->> +		/* MOV CRx: bit 63 set, GPR number in bits 3:0. */
->> +		exit_info_1 = BIT_ULL(63) | (info->modrm_rm & 0xf);
->                  ^^^^^^^^^^^
-> [Severity: High]
-> Does this code incorrectly set bit 63 of EXITINFO1 for CR reads?
 > 
-> According to the AMD Architecture Programmer's Manual (APM), bit 63 of
-> EXITINFO1 for a CR intercept indicates the operation type, where 1 means a
-> write to the CR and 0 means a read from the CR. By unconditionally setting
-> BIT_ULL(63) for both x86_intercept_cr_read and x86_intercept_cr_write,
-> wouldn't KVM report CR reads as CR writes to the L1 hypervisor?
+> > +properties:
+> > +  compatible:
+> > +    const: lacie,ns2-leds
+> > +
+> > +additionalProperties:
+> > +  type: object
+> > +  $ref: common.yaml#
+> > +  unevaluatedProperties: false
 > 
-> If an L2 guest executes a MOV from CR instruction, this could cause the L1
-> hypervisor to corrupt its shadow CPU state or misbehave, because it will
-> be provided a malformed EXITINFO1 and handle the event as a write operation
-> rather than a read.
-Thanks for the report, but bit 63 is not the CR access direction.
+> [Severity: Low]
+> Does setting additionalProperties to type: object at the root level break
+> standard parent device tree properties like status = "okay" or pinctrl-names?
+> 
+> By enforcing that any unlisted top-level property must be an object, standard
+> properties (which are strings or arrays) will fail validation with type
+> mismatch errors during make dtbs_check.
+> 
+> Is it better to use patternProperties: "^led(-[0-9a-f]+)?$": for the child
+> nodes and set additionalProperties: false at the root instead?
 
-According to the APM, EXITINFO1[63] indicates that the intercepted
-instruction was a MOV CRx instruction, and EXITINFO1[3:0] contains the
-GPR number.  The MOV-from-CR0 special case also explicitly states that
-bit 63 is set for MOV-from-CR.
-
-The read/write direction is encoded in EXITCODE, i.e.
-SVM_EXIT_READ_CRx versus SVM_EXIT_WRITE_CRx.  KVM's existing CR
-intercept handler likewise treats bit 63 as CR_VALID and derives the
-access direction from EXITCODE.
-
-Therefore, setting bit 63 for both x86_intercept_cr_read and
-x86_intercept_cr_write is intentional.
-
-Thanks,
-Tina
+No.
 
 > 
->> +		break;
+> > +
+> > +  description: Each child node represents a single LED
+> > +
+> > +  properties:
+> > +    cmd-gpio:
+> > +      maxItems: 1
+> > +      description: GPIO connected to the command LED output
 > 
+> [Severity: Low]
+> Will this schema omission cause dtbs_check failures for existing in-tree
+> device trees?
+> 
+> The new schema strictly allows only documented properties via
+> unevaluatedProperties: false on the child nodes. However, existing in-tree
+> device trees contain an undocumented num-modes property:
+> 
+> arch/arm/boot/dts/armada-370-seagate-nas-4bay.dts:white-sata2 {
+>         ...
+>         slow-gpio = <&pca9554 2 GPIO_ACTIVE_HIGH>;
+>         num-modes = <4>;
+>         modes-map = <NS_V2_LED_SATA 0 0
+>         ...
+> }
+> 
+> Since num-modes is omitted from this new schema, validation will fail when
+> checking those boards. Should num-modes be added to the schema (perhaps with
+> deprecated: true), or removed from the DTS files as part of this patch series?
 
+This should be fixed.
+
+Rob
