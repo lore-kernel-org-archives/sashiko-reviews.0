@@ -1,120 +1,165 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FA94CA298
-	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784719719; cv=none; b=aKa+P3THjFpXnT3lIKioUrp6motiXQxbmUkCC8xQbEBTUnNHrV/j86ZAvc9HeBFrxVsOADhImhVqadza+0yuqWcbE00Sf4V1+YL7MvdweFEvnZ3ytrwjD54r+62ds0wapa23tdb8fB01Oq9FfjPydgpUvW46Dv3u7jAJAQPTzI8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784719719; c=relaxed/simple;
-	bh=hOkzl25QMkR31KWjR8NOxhwtgyg0bzm7KtlMeuS5bG4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=V+NBtFYTARMGyEApPLQh8GkF6XoERL2rh3I6e4+/+yANOwUFMW9DcPYvhRrLXTsuhMdMnzpPE6kGYkDnBVNztAjQQH+RvAE9r+R9kx8SCFOzhpZHY2zsVSHwJLXK6UuXdxba1MbOAsAnky3qLN+ArerkxaVRKzx+hnkxvZZOOzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=jMoYXCMg; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2EA46EC71
+	for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 11:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784720337; cv=pass; b=YQ1dJ5c3vhdVWwnDnkOXkJyl830EbwGAsi3dU66AiNhBnnY1hg48CM2adkEkrENe9rGCL0ccny3Zd8x0UqE/KUHOOyfB59mMD+a42D6oCmJJWTW90oS0vOvV8SslInrjvPBCc5n/ihgpPy7lx9udrR2pwgEiynL/24syx+ZbgEQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784720337; c=relaxed/simple;
+	bh=aRXDWAWvtF/fIl6E80i0CBl3OfG6oTLQugiLEqsYTNY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Lhq54uSQH1NtdPnvpajyK0bT6Ep3Bnq7iRhuJJQB7HArexPWJhlVKzOsrY+k2rr9ye0BvQlzX4LClfAcf0627Rm6we0X1bt/YnZK9QSD1vhMzD/S4YDbl5WLy+sDo6OR2FjVhVpEqKzgw3NhpzyXeni618tSl0865oKTVm1n9PY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=robert.mader@collabora.com header.b=J+DZbE81; arc=pass smtp.client-ip=136.143.188.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="jMoYXCMg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1784719709;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hOkzl25QMkR31KWjR8NOxhwtgyg0bzm7KtlMeuS5bG4=;
-	b=jMoYXCMgIeSufjNLWXGWZIbLQHBtOegEooSndiDUwHWnSTTADwKDuYosU41xA36JoGIj5A
-	ssyixqhdZpBwO2MpBefXtK+lU1PhV1aGZWS9xy1Ttn0IS5tzNmyVD6egZJMpXUBKwTohZy
-	1t9c9cleoy/lag60aObqJGLWeAKyeNM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-Uzggo0ZANlGaYbji_F0fhQ-1; Wed,
- 22 Jul 2026 07:28:23 -0400
-X-MC-Unique: Uzggo0ZANlGaYbji_F0fhQ-1
-X-Mimecast-MFC-AGG-ID: Uzggo0ZANlGaYbji_F0fhQ_1784719701
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id BA896191DFEB;
-	Wed, 22 Jul 2026 11:28:20 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.48.27])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id C8B96195423C;
-	Wed, 22 Jul 2026 11:28:14 +0000 (UTC)
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-To: bhelgaas@google.com,
-	alex@shazbot.org,
-	mani@kernel.org
-Cc: jtornosm@redhat.com,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	jjohnson@kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath11k@lists.infradead.org,
-	ath12k@lists.infradead.org,
-	mhi@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v13] PCI: Add device-specific reset for Qualcomm devices
-Date: Wed, 22 Jul 2026 13:28:13 +0200
-Message-ID: <20260722112813.33153-1-jtornosm@redhat.com>
-In-Reply-To: <20260721082933.7B5A41F000E9@smtp.kernel.org>
-References: <20260721082933.7B5A41F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=robert.mader@collabora.com header.b="J+DZbE81"
+ARC-Seal: i=1; a=rsa-sha256; t=1784720326; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=kQNjROSiA81iYSeW3M9mzLeFw/xx+3M0SqqcDeF1Met2wIeW8aXCBD02UUda61H9Biu90UyH/mbG9B5OUYSpIcM3eeCYWUBD8jy/A1Wjrm1sEOrx9mtCW74dBu6DAxxiExxvX7IUAnptNq+0YLW99tu2njCLnPORvUueV/hQon8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1784720326; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=tyz+1ZlIAnOEc0Va4DFA0J1+YpDdP0XRHzxDkISRxzQ=; 
+	b=hSkZbqhU//LZ/glA0abh1uHghJNCuZVpzb1Tk1OfA8xCZIrHJNk+Ljjxtr03gVaS4goA3zvf8Z3sbRxafMtG45ScxyFj4XImHHUl+5DEPRC7LYbAdQktlBGZaTjEfVrw5+bsn2qhOG2RsCX4ZFVlN3iaKZbG6QTzvOsbOsxH95E=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=robert.mader@collabora.com;
+	dmarc=pass header.from=<robert.mader@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784720326;
+	s=zohomail; d=collabora.com; i=robert.mader@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=tyz+1ZlIAnOEc0Va4DFA0J1+YpDdP0XRHzxDkISRxzQ=;
+	b=J+DZbE81w9jCKLckYpMLiURNEpIsW8lqixln+Olh+FG6LQ5mIF2xAiDdM7KbAWEc
+	56k3MPiU1H6OVHS2oLmKZQ92DaLVI0RLL0MKq+ponOMmoU6VHNNK4zqTLoFr1J13NdM
+	kRMtOUKZIoHfIqVG4x+dA+ODf+/OhvJwsRXcAwk4=
+Received: by mx.zohomail.com with SMTPS id 1784720324799660.8652285687484;
+	Wed, 22 Jul 2026 04:38:44 -0700 (PDT)
+Message-ID: <28536b3e-1c19-473f-b46a-425eb13ba0e3@collabora.com>
+Date: Wed, 22 Jul 2026 13:38:41 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-X-Mimecast-MFC-PROC-ID: XWdF2kcG1kqTUyfcYNtAzroGYWQPy6o5qK1_QfSVUW4_1784719701
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dma-buf/udmabuf: Disable the size limit by default
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
+References: <20260722110145.36641-1-robert.mader@collabora.com>
+ <20260722112708.5CD131F000E9@smtp.kernel.org>
+Content-Language: en-US, de-DE
+From: Robert Mader <robert.mader@collabora.com>
+In-Reply-To: <20260722112708.5CD131F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Responding to the report just for the record:
+
+On 22.07.26 13:27, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [High] Removing the dmabuf size limit (by setting `size_limit_mb` to `INT_MAX`) allows an unprivileged user to request a massive buffer size (up to ~2.2 TB). This forces the kernel to attempt massive unbounded vmalloc allocations for the internal tracking arrays, rapidly exhausting system memory and triggering the OOM killer.
+>
+> Pre-existing issues:
+> - [High] Setting `size_limit_mb` to `INT_MAX` allows unprivileged users to create udmabufs of 4GB or larger. On 32-bit architectures, this triggers an integer overflow when converting the page count back to bytes (`ubuf->pagecount << PAGE_SHIFT`), resulting in a size of 0 or a severely truncated value.
+> --
+>
+> --- Patch [1]: [PATCH v2] dma-buf/udmabuf: Disable the size limit by default ---
+> commit f1c9db60e57729e9743c42b43759bab6d0eafb5d
+> Author: Robert Mader <robert.mader@collabora.com>
+>
+> dma-buf/udmabuf: Disable the size limit by default
+>
+> This commit disables the default 64MB size limit for udmabuf by setting it
+> to INT_MAX. It aims to support users who need larger buffers for high
+> resolution video formats. The change assumes the per-buffer size limit does
+> not provide sufficient protection on its own.
+>
+> Link: https://lore.kernel.org/dri-devel/20260711144814.8205-1-robert.mader@collabora.com/
+> Link: https://lore.kernel.org/dri-devel/6764ca6f-b4d8-4baa-9d27-2ca867ac2d41@amd.com/
+>
+>> diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+>> index bced421c0d658..639e937049242 100644
+>> --- a/drivers/dma-buf/udmabuf.c
+>> +++ b/drivers/dma-buf/udmabuf.c
+>> @@ -20,9 +20,9 @@ static int list_limit = 1024;
+>>   module_param(list_limit, int, 0644);
+>>   MODULE_PARM_DESC(list_limit, "udmabuf_create_list->count limit. Default is 1024.");
+>>   
+>> -static int size_limit_mb = 64;
+>> +static int size_limit_mb = INT_MAX;
 > [Severity: High]
-> Will this sequence of ioread32 flush reads and
-> read_poll_timeout trigger Master Aborts on architectures
-> with strict error handling?
+> Does this change allow an unprivileged user to exhaust kernel memory?
 >
-> The SoC global reset explicitly drops the device PCIe link.
-> Performing ioread32 flush reads immediately after asserting
-> the reset, and then actively polling the disconnected MMIO
-> space with read_poll_timeout while the link recovers, can
-> result in Unsupported Request errors.
+> Because the size limit is effectively removed, an unprivileged user can
+> request an extremely large buffer size via /dev/udmabuf.
 >
-> On strict platforms like ARM64 or x86 servers with APEI/GHES
-> Firmware First error handling, these can escalate to fatal
-> Uncorrectable Errors and cause a host kernel panic when a
-> guest VM exits.
+> Looking at udmabuf_create() and init_udmabuf(), the internal tracking
+> arrays are allocated based on this requested size:
 >
-> Should this avoid MMIO flush reads during these reset
-> sequences and instead use fixed delays to safely bridge the
-> link-down period?
-
-The SoC global reset at 0x3008 does not immediately drop the
-PCIe link. The flush reads execute while the device is still
-responsive - the actual reset takes effect during the
-subsequent msleep. The ath11k/ath12k drivers perform the same
-register accesses during this reset sequence, including on
-ARM64 Qualcomm platforms, without issues.
-
-The read_poll_timeout polling for link recovery follows the
-same pattern used elsewhere in the PCI subsystem for waiting
-on device responses after reset.
-
-Tested over 100+ VM crash/reset cycles on x86 with VFIO
-passthrough without errors.
-
+> drivers/dma-buf/udmabuf.c:udmabuf_create() {
+>      ...
+>      folios = kvmalloc_array(max_nr_folios, sizeof(*folios), GFP_KERNEL);
+>      ...
+> }
+>
+> drivers/dma-buf/udmabuf.c:init_udmabuf() {
+>      ...
+>      ubuf->pages = kvmalloc_objs(*ubuf->pages, pgcnt);
+>      ...
+> }
+>
+> Since these allocations use GFP_KERNEL without __GFP_ACCOUNT, they bypass
+> memory cgroups. Could a large request trigger unbounded vmalloc allocations
+> that consume gigabytes of memory per ioctl call, leading to an OOM condition?
+As mentioned in the commit message and as discussed in the mentioned 
+links, this is a pre-existing issue as users could just allocate 
+multiple buffer, having the same effect as allocating a single big one.
 > [Severity: High]
-> Could this immediate ioread32 flush read also trigger a
-> fatal Master Abort if the link drops instantly after writing
-> the MHI SoC reset request?
+> This is a pre-existing issue, but does removing the size limit expose a
+> page count overflow on 32-bit architectures?
+>
+> When a user requests a size of 4GB or larger, the pagecount exceeds
+> 1048576. In export_udmabuf() and get_sg_table(), the size is calculated by
+> shifting the page count:
+The udmabuf interface works on pre-allocated system memory. On a 32-bit 
+architecture users can't allocate more than 4GB of memory - so the 
+described request should be impossible.
+>
+> drivers/dma-buf/udmabuf.c:export_udmabuf() {
+>      ...
+>      exp_info.size = ubuf->pagecount << PAGE_SHIFT;
+>      ...
+> }
+>
+> drivers/dma-buf/udmabuf.c:get_sg_table() {
+>      ...
+>      ret = sg_alloc_table_from_pages(sg, ubuf->pages, ubuf->pagecount, 0,
+>                                      ubuf->pagecount << PAGE_SHIFT,
+>                                      GFP_KERNEL);
+>      ...
+> }
+>
+> On 32-bit architectures, this 32-bit arithmetic wraps around to 0. Can
+> this result in a truncated dma-buf size or an invalid SG table with
+> 0-length elements, potentially causing a panic in IOMMU drivers?
+>
+>>   module_param(size_limit_mb, int, 0644);
+>> -MODULE_PARM_DESC(size_limit_mb, "Max size of a dmabuf, in megabytes. Default is 64.");
+>> +MODULE_PARM_DESC(size_limit_mb, "Max size of a dmabuf, in megabytes. Default is INT_MAX.");
+>>   
+>>   struct udmabuf {
+>>   	pgoff_t pagecount;
 
-Same as above - the MHI SoC reset does not instantly drop the
-PCIe link. The flush read completes before the reset takes
-effect, and the 2-second delay covers the actual reset period.
-This replicates the MHI driver behavior
-(mhi_pci_reset_prepare()).
+-- 
+Robert Mader
+Consultant Software Developer
+
+Collabora Ltd.
+Platinum Building, St John's Innovation Park, Cambridge CB4 0DS, UK
+Registered in England & Wales, no. 5513718
 
