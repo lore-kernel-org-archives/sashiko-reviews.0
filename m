@@ -1,115 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71698149DF1;
-	Wed, 22 Jul 2026 12:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CF52236F7;
+	Wed, 22 Jul 2026 13:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784724742; cv=none; b=g7/rEvSlMRChp4ZBXGOO1Net1ZXhVDQkAZMeE/VHQesWdbp3lY55JM7swimJWhPVPm1MKG6RlNrnS9OEqhzP5Y1OekvTCJDnCJBgfUiuzSnTClpZpLc3zpZ1TkrkPP6cdQjBdjLp/JnAbpbEAu5bAnpnxTaarqOD3XcHm4UAE/4=
+	t=1784725735; cv=none; b=r4zYQ8geyeDe4y9nN46ubVGVUBOSBQszXTIvgxsqKUtQr9/FooptJfr5NgcamL+Vn2zXkOYPHuuDwpZGRM26psHUuyBgzxwFn3qqWmkJv6YVTmbi/HZpxU52IoaCeu/iEIJU6lEggTv7BSrACbFv1cJPYe2hrL51+SQ0a24vffw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784724742; c=relaxed/simple;
-	bh=WopNwOAMk11gwarrL/7/TaqO5H2xN2gVAnlRJb7wAOs=;
+	s=arc-20240116; t=1784725735; c=relaxed/simple;
+	bh=3gSD1hOZU42lj52sk+8oIlGlwBvURDsKRZs3kZoclWU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WZ0xt7gQUBT5mqspR2BALKzel5x8bu6fmjcx3Uitql4M/v9kyaz47lnv6wold88BRPfaJKzW4W9roRdWqvwUXvDb5c6FOmVsM9DXlQXdXKMcvDvxxNWyJIeGyrW6FGgMAlFCQ601FoGReN2Fj78fK0AtV56+HDSEavNVKgoJQ2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c2aL4jeG; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=F/9neYQmyWRklAeyZw1bxx7HBgd1wgHBFutuA8TIuz8aRreALo5GUS4+dIAImnifu7QSZrzqSUkw9p2PPmx0W83BbCZZjX1l1W6jiFUh0GMkWo1m9B1mNIBETWqd9JVMETKozSBpmfnT7Els1xlYi/qIPmF338pbdHnUk3vSpWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aj9osxRS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c2aL4jeG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F841F000E9;
-	Wed, 22 Jul 2026 12:52:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784724741;
-	bh=7bpjXwSQ7nvMtwqEfdQ1aGjqnHSfXs7DM2lWFG7w/Bc=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj9osxRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D971F000E9;
+	Wed, 22 Jul 2026 13:08:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784725733;
+	bh=H+Qi617eo3zUgYds5z521wJuB64qpF7zXKkxOz66ms4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=c2aL4jeGVEXeNI2FNLh2itNlU4ijobGl+r+DipPdgwH7QKSzuCN5LrVhGmunG+u6g
-	 Yhj4wbAqfe3k3fRhpDbMBuVrio1uFo16xhsT24166wdKAkFQsNqI+ndpxS4xYxVeBR
-	 3C1tI/kIdvxgZ1gZ3IbYE+/U5N4n5i+S4M0U1zjw7IlqJjNGMu78CGuNCFkJrLoaQb
-	 u/drO/5IUSdre2bA7mUW4QY6Acp51odz8Qvdxh/dvWNYmbxAt2Jcal3F1zyAPXVdyy
-	 /YihCBpf36FeGcUPYeZ5ZysjgFHcjd0rX9lo/cWLfuMvAEA3i77xaITrYCeU/aKS38
-	 XTbkbe/l9PcQg==
-Date: Wed, 22 Jul 2026 13:52:17 +0100
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kr494167@gmail.com, linux-leds@vger.kernel.org
-Subject: Re: [PATCH 1/2] leds: rgb: s2m: wire up of_match_table in platform
- driver
-Message-ID: <20260722125217.GC11805@google.com>
-References: <20260721054846.34318-1-kr494167@gmail.com>
- <20260721054846.34318-2-kr494167@gmail.com>
- <20260721055807.A673C1F000E9@smtp.kernel.org>
+	b=Aj9osxRSzFsqEtzDC0cumxQAnvyoe0mj6gU20GeYVJ8C3EFfEnr6Yqbs47vJU7fzW
+	 /v0RbK4gPBnGxJUW11IIkI9nFijKT4+ilYhQi8jK22XOk8OlTGr9XPLiF0F49yM8kO
+	 1r7rb0K2YYL+sDdCOq6z1V6MxO6DVjtRfHm6Gaw4=
+Date: Wed, 22 Jul 2026 15:08:44 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
+Cc: sashiko-reviews@lists.linux.dev, Chris Mason <clm@fb.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	linux-scsi@vger.kernel.org, ksummit@lists.linux.dev
+Subject: Re: How to fix problems with the sashiko review model
+Message-ID: <2026072224-moisture-gonad-409f@gregkh>
+References: <20260722041257.1557-1-pengpeng@iscas.ac.cn>
+ <20260722042744.5C1B01F000E9@smtp.kernel.org>
+ <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260721055807.A673C1F000E9@smtp.kernel.org>
+In-Reply-To: <dcadf40a07a616de931c484bbe68f4b3f1f83b80.camel@HansenPartnership.com>
 
-On Tue, 21 Jul 2026, sashiko-bot@kernel.org wrote:
+On Wed, Jul 22, 2026 at 07:58:48AM -0400, James Bottomley wrote:
+> There doesn't seem to be a Sashiko list, so I added ksummit as the most
+> likely one to catch attention.  We got this review in SCSI on this
+> thread:
+> 
+> https://lore.kernel.org/linux-scsi/20260722041257.1557-1-pengpeng@iscas.ac.cn/
+> 
+> But this part of the review
+> 
+> On Wed, 2026-07-22 at 04:27 +0000, sashiko-bot@kernel.org wrote:
+> [...]
+> > > +
+> > > +	reply_len = mpi_reply->MsgLength * 4;
+> > > +	if (reply_len < event_offset || reply_len > ioc->reply_sz)
+> > > +		return false;
+> > > +
+> > > +	event_data_len = le16_to_cpu(mpi_reply->EventDataLength) *
+> > > 4;
+> > 
+> > [Severity: High]
+> > Is there a Time-of-Check to Time-of-Use window here since mpi_reply
+> > is read directly from shared DMA memory?
+> > 
+> > The validation function reads bounds from mpi_reply, but after
+> > validation passes, mpt3sas_scsih_event_callback() re-reads fields
+> > like EventDataLength and NumEntries directly from the same DMA-backed
+> > memory.
+> > 
+> > Could a malicious device mutate these fields in the window between
+> > validation and use to bypass the checks introduced by this patch?
+> 
+> Is wrong.  Hardware may never be presumed to be malicious (well, except
+> if it's virtual hardware provided by an untrusted host to a
+> confidential guest, but that's a very small list of drivers or it's a
+> USB or thunderbolt device designed to attack or exfiltrate data from an
+> unattended system).  It may be buggy, but we never presume bugs until
+> someone finds a device exhibiting the bug in the field (so we don't
+> proactively fix them).
+> 
+> The bigger part of this is that I was looking into how to fix this
+> (which might interest a broader swathe of developers than just SCSI). 
+> I think the fault is in the review prompts:
+> 
+> https://github.com/masoncl/review-prompts
+> 
+> And what I need to do is to add an additional drivers.md file to
+> kernel/subsystems explaining this?  If that's right I can send a pull
+> request, but I thought I'd check here because the audience is much
+> bigger than if it were to get discussed in the github PR.
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Wiring up `.of_match_table` without validating `dev->parent` allows arbitrary device tree instantiation, leading to a NULL pointer dereference or type confusion.
-> - [Low] The commit message description after the subsystem prefix is not capitalized, violating the LED subsystem guidelines.
-> --
-> 
-> --- Patch [1]: [PATCH 1/2] leds: rgb: s2m: wire up of_match_table in platform driver ---
-> commit b11896849c3c9816b4973c7b324b0ca877cb4766
-> Author: surendra <kr494167@gmail.com>
+Please make this per-subsystem, as your description above doesn't hold
+for all types of devices or busses.  See this thread where I describe
+what we do for USB and asking for much the same type of description for
+the virtio drivers:
+	https://lore.kernel.org/all/2026072036-outburst-rebel-c71b@gregkh/
 
-Please use your full name.
+thanks,
 
-> leds: rgb: s2m: wire up of_match_table in platform driver
-> 
-> This commit wires up the of_match_table in the s2m-rgb platform driver.
-> This enables device tree based probing and module auto-loading, fixing an
-> issue where the MODULE_DEVICE_TABLE entry was dead code.
-> 
-> > leds: rgb: s2m: wire up of_match_table in platform driver
-> 
-> [Severity: Low]
-> This isn't a bug, but the commit description after the subsystem prefix
-> should be capitalized according to LED subsystem guidelines.
-> 
-> > diff --git a/drivers/leds/rgb/leds-s2m-rgb.c b/drivers/leds/rgb/leds-s2m-rgb.c
-> > index d239f54eee901..28964de6920ca 100644
-> > --- a/drivers/leds/rgb/leds-s2m-rgb.c
-> > +++ b/drivers/leds/rgb/leds-s2m-rgb.c
-> > @@ -415,6 +415,7 @@ MODULE_DEVICE_TABLE(of, s2m_rgb_of_match_table);
-> >  static struct platform_driver s2m_rgb_driver = {
-> >  	.driver = {
-> >  		.name = "s2m-rgb",
-> > +		.of_match_table = s2m_rgb_of_match_table,
-> 
-> [Severity: High]
-> Does wiring up the of_match_table here allow the driver to be probed via
-> an arbitrary device tree node?
-> 
-> If the driver is instantiated via a standalone DT node instead of through
-> the expected MFD parent, dev->parent might not contain the expected driver
-> data.
-> 
-> In s2m_rgb_probe(), the driver relies on the parent's drvdata:
-> 
-> drivers/leds/rgb/leds-s2m-rgb.c:s2m_rgb_probe() {
-> 	...
-> 	struct sec_pmic_dev *pmic_drvdata = dev_get_drvdata(dev->parent);
-> 	...
-> 	rgb->regmap = pmic_drvdata->regmap_pmic;
-> 	...
-> }
-> 
-> Could this result in a NULL pointer dereference or type confusion if
-> pmic_drvdata is NULL or points to an unrelated structure?
-> 
-> >  	},
-> >  	.probe = s2m_rgb_probe,
-> >  	.id_table = s2m_rgb_id_table,
-> >  };
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260721054846.34318-1-kr494167@gmail.com?part=1
-
--- 
-Lee Jones
+greg k-h
