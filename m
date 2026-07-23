@@ -1,140 +1,126 @@
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3156818859B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 00:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2C51DA0E1
+	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 00:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784767595; cv=none; b=EKxDV7siEsPVknY2M2XiIT0U7Oyz3QOp3uKmcoMqxR3N2g4xPl1D65f+EyZOMuCCMj1Ew4qL8w60jnnHkClx3OiPAcJ4EqqyREMPUlbQbRwQXQsC4NhjpPQlr3lRJM56m3ur/VxHViSI6Nx/7WrLUCw4cq6RLtyjTFAJzm/3+Zc=
+	t=1784767832; cv=none; b=Dw96RV/yPwFkpasl5Mu1uFY1gnVNf9JXVIYwAQ2a5aKkn/CR3Qpfz9kX+4SGhP5nOC0UYx2GC4GLuCXDWGug7etAahiFGTHAqa/zM6/HWcUMHlLICUx1HJxkh97qO9eTWZ+zR/xhOLKg7FyHh3O6NJq+YgkxlqU/06+bU8VtyJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784767595; c=relaxed/simple;
-	bh=mJhDJ4wuqKOqnygiiCPKcSW2lydIlEwMcX960VTrxGs=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=JXDJe+jVzXJL0qYwCu4isNtKWtYHts92z+DQKdHoSg/Llhn0DvB/zRDWYuhzu+bXKrz4WJVvvBdRYAEc++Wyqvc39msAKahlZAfsya88a9qOl6uLMDIbKI6KaP7pMv5zMqWzIg1PbLel+XPIHxfuZ6K3fvBT+tLPmTWPLm7UmyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vGlA6FSy; arc=none smtp.client-ip=209.85.214.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1784767832; c=relaxed/simple;
+	bh=qrcVV5NuQDIXgcvhV8X73prtKA5K5yPjsBqgtrCTqY0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p7kcEiDZZ/cHvGZOgM2zgD2xWT1ZYHDioF4Qbii2WzK6xABUTF88mzfvi4dug2gPv/ZIQvl6LW4aYv1tpF3h8FPtKs20VIWvgTxA4mx8FthAMxH2LjGH2uYWpDq3qzpwzTjc/sXsg0Mgzj7iEoIqlV3yKOF270hQoN40yCkLPvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=iFPB0e1h; arc=none smtp.client-ip=95.215.58.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vGlA6FSy"
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2cfa4e4684bso2989005ad.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 22 Jul 2026 17:46:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784767592; x=1785372392; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=iZ0hpTloGG/G9ddHfgB5VGCnW/abthdzeJrDqZKbAcA=;
-        b=vGlA6FSyRvaAQJmIN51nZDrxJWi6zTtmfBT0mlpr6L3hoHomydz7lD4qWvwjPsfH7l
-         jQgVxq/AGP7Ck1zKN9jVI/2sSMOxkyTrn7VxTemaOsDLB/iU1m1/84V+XofQ6w2HqUxM
-         ecDpRIu6HOcYh5Koln6kS8ySqdOa8fw0UYIHNu6+e5u8/TcS26yk0mUoke2gUPPaX5f0
-         qfuChb8QKeA8fRuo2+V4L/BU54w0VtKcI2AWEroTz7Dlo9G1hsROHeMWgfpZgyWRh9A3
-         T7d5YfIDuxKuSbqQ3NWEbqEDwYJx5Zh7RAso02ZTydaoMQz+vkuS71BK+BhA9AyZ9C7f
-         FUlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784767592; x=1785372392;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iZ0hpTloGG/G9ddHfgB5VGCnW/abthdzeJrDqZKbAcA=;
-        b=JGRR7FaFVrp5KbVvgHPiJGgm10eNOUWL3P4LA/J89b17K596JN9JBaX2D4UdpZwyjR
-         JDRM1S1GNhzMcU327cyyEfJkHBurzAVHNpxvgspenWcQhE2CgwhOcsB5n7+iE4CzOUR3
-         BhnOZ9gNCcEygOvlA5HAvciumGfMCncLqkFw2Ot5Nmg3E3bc+9YQRdZRY/gpEmkjFQ5V
-         l1rc+rrxzrL0OqsGbyB9aSFSM4lUTNY+JCP8Zg4b35OjXBw21YyTXUX6fSKKibk8Hhbf
-         AVw6wlsjP69XYoOYXD50uqPkXGfOIFQf1Vp1vTDTfGY+eWIXlBLhyRX6U5LF4cbtxsaV
-         dqTg==
-X-Gm-Message-State: AOJu0YySobC5ei17nq60KU14OqCi1p2QSFAr/94ylF0A8VldqIkQ2mkn
-	0iNITqFlQCJJnOE6QA3NUD9OAO24K+jEXPST7KAKujuuQgEYQh/zKUubPmLv2ponLZjMpho0lz4
-	kerl6wg==
-X-Received: from plbji11.prod.google.com ([2002:a17:903:324b:b0:2cc:b904:3254])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:26c6:b0:2ca:a03a:29b2
- with SMTP id d9443c01a7336-2cfa71b761amr12107325ad.8.1784767592187; Wed, 22
- Jul 2026 17:46:32 -0700 (PDT)
-Date: Wed, 22 Jul 2026 17:46:31 -0700
-In-Reply-To: <CAO9r8zPSEw0snypASanWEdaaTnqf-ZvzRgZpEc=M+sPjELQbSA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="iFPB0e1h"
+Message-ID: <96de438b-2637-4d42-b65d-7ec8a37e89a8@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784767828;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=v6cZUZnkdCx64NXcrSiMNf/3VHLEYUKEG9qRg6czPsA=;
+	b=iFPB0e1hOWxlKFnpH1GzZcVcHD+ufOsiVCG+93mVaQUO4N29ovkzoH4IioEqEMP5Lc3D8x
+	T1I12yCNrfTWk54rfeN/yNaSClSClo0PI5dq4FZVnDdFuk53R1igYmGoWdmCsTAd8CRtwH
+	xOqWB4FFZvdDGrFDgp+vhfI4N9sQ0bQ=
+Date: Wed, 22 Jul 2026 17:50:08 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260616004155.1435766-18-yosry@kernel.org> <20260616012056.669B91F000E9@smtp.kernel.org>
- <CAO9r8zPRmcwKAtHch995Gm5EKxv07-3f90+H71g+w=iZ+VZfiQ@mail.gmail.com> <CAO9r8zPSEw0snypASanWEdaaTnqf-ZvzRgZpEc=M+sPjELQbSA@mail.gmail.com>
-Message-ID: <amFkZwsaoPvuNWDA@google.com>
-Subject: Re: [RFC PATCH v2 17/25] KVM: nSVM: Service local TLB flushes before
- nested transitions
-From: Sean Christopherson <seanjc@google.com>
-To: Yosry Ahmed <yosry@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next v1 1/8] resolve_btfids: Implement generic
+ ensure_mem() to grow arrays
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, bpf@vger.kernel.org,
+ dmitry.torokhov@gmail.com
+References: <20260722233518.778854-1-ihor.solodrai@linux.dev>
+ <20260722233518.778854-2-ihor.solodrai@linux.dev>
+ <20260722234842.68B271F000E9@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20260722234842.68B271F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Jun 16, 2026, Yosry Ahmed wrote:
-> On Tue, Jun 16, 2026 at 11:06=E2=80=AFAM Yosry Ahmed <yosry@kernel.org> w=
-rote:
-> > > > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-> > > > index 234724d8b4c54..7b19191e0e43f 100644
-> > > > --- a/arch/x86/kvm/svm/nested.c
-> > > > +++ b/arch/x86/kvm/svm/nested.c
-> > > > @@ -717,9 +717,16 @@ static void svm_switch_vmcb(struct vcpu_svm *s=
-vm, struct kvm_vmcb_info *target_v
-> > > >  {
-> > > >       struct kvm_vcpu *vcpu =3D &svm->vcpu;
-> > > >
-> > > > +     /*
-> > > > +      * TLB flushes are applied to the VMCB, so apply any pending =
-TLB flushes
-> > > > +      * on the current VMCB before switching to a new one..
-> > > > +      */
-> > > > +     kvm_service_local_tlb_flush_requests(vcpu);
-> > >
-> > > [Severity: High]
-> > > Does this clear global TLB flush requests (like KVM_REQ_TLB_FLUSH_GUE=
-ST)
-> > > while applying them only to the outgoing VMCB?
-> > >
-> > > If a host-initiated flush occurs (e.g., from page reclaim), the reque=
-st
-> > > bit will be consumed and applied to the outgoing VMCB, leaving the in=
-coming
-> > > VMCB to miss the flush and run with a stale TLB.
-> >
-> > Yeah it is intentional to apply the flushes to the
-> > current/old/outgoing context. If there are flushes needed in the new
-> > context, they are queued by nested_svm_{entry/exit}_tlb_flush().
-> > That's similar to what VMX does.
-> >
-> > >
-> > > Also, is there a context mismatch here during nested VM-Exit?
-> > >
-> > > In nested_svm_vmexit(), leave_guest_mode(vcpu) is called before
-> > > svm_switch_vmcb(svm, &svm->vmcb01).
-> > >
-> > > Because of this, kvm_service_local_tlb_flush_requests() will see
-> > > is_guest_mode(vcpu) as false. If Hyper-V is enabled, this means
-> > > kvm_hv_purge_tlb_flush_fifo() will incorrectly target L1's FIFO while=
- the
-> > > hardware flushes are actually being applied to L2's vmcb02.
-> >
-> > Ugh.. yes. This is annoying. kvm_service_local_tlb_flush_requests()
-> > needs to be called on both the current/old/outgoing VMCB *and* guest
-> > mode. So we'll need to open-code the call in a bunch of places before
-> > svm_switch_vmcb() and {enter/leave}_guest_mode(). I really liked
-> > putting it in svm_switch_vmcb() together with
-> > nested_svm_{entry/exit}_tlb_flush() so that all the TLB flushing logic
-> > for nested transitions live in one place and the ordering needs to be
-> > handled in one place.
->=20
-> Maybe we can just re-order the code to always call svm_switch_vmcb()
-> before {enter/leave}_guest_mode(). We already do that on the entry
-> side, and seems to be straightforward on the exit side.
+On 7/22/26 4:48 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Strict aliasing violation via `void **` casting leading to potential Use-After-Free.
+> --
+> 
+> --- Patch [1]: [PATCH bpf-next v1 1/8] resolve_btfids: Implement generic ensure_mem() to grow arrays ---
+> commit b5970d9bf6b1262c4ad812706df67f4a14ee5411
+> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
+> 
+> resolve_btfids: Implement generic ensure_mem() to grow arrays
+> 
+> This commit factors out array growth logic from push_*() helpers into a
+> generic ensure_mem() macro and function. It uses a void ** cast to update
+> the array pointer upon reallocation.
+> 
+>> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+>> index f8a91fa7584f4..183466ddc5f97 100644
+>> --- a/tools/bpf/resolve_btfids/main.c
+>> +++ b/tools/bpf/resolve_btfids/main.c
+>> @@ -201,6 +201,35 @@ static int eprintf(int level, int var, const char *fmt, ...)
+>>  #define pr_info(fmt, ...) \
+>>  	eprintf(0, verbose, pr_fmt(fmt), ##__VA_ARGS__)
+>>  
+>> +/*
+>> + * Grow *data so it can hold at least cnt elements of elem_sz bytes each.
+>> + * *cap is the capacity in elements and is updated on growth.
+>> + */
+>> +static int __ensure_mem(void **data, u32 *cap, u32 cnt, size_t elem_sz)
+>> +{
+>> +	u32 new_cap, old_cap = *cap;
+>> +	void *arr;
+>> +
+>> +	if (cnt <= old_cap)
+>> +		return 0;
+>> +
+>> +	new_cap = max(old_cap + 256, old_cap * 2);
+>> +	if (new_cap < cnt)
+>> +		new_cap = cnt;
+>> +
+>> +	arr = realloc(*data, elem_sz * new_cap);
+>> +	if (!arr)
+>> +		return -ENOMEM;
+>> +
+>> +	*data = arr;
+> 
+> [Severity: Medium]
+> Will this assignment violate strict aliasing rules? Because void * and u32 *
+> are incompatible types, modifying the pointer through a void ** pointer
+> violates C strict aliasing.
+> 
+> While core kernel code is compiled with -fno-strict-aliasing, programs under
+> tools/ are compiled with standard optimizations including -fstrict-aliasing.
+> If __ensure_mem() is inlined, could the compiler assume that this assignment
+> does not modify the original typed pointer?
 
-As stated earlier, I'd prefer to explicitly do flushing stuff where it fits=
- from
-an architectural perspective.
+ensure_mem() is modeled on libbpf's own libbpf_ensure_mem(), which is
+called exactly this way throughout libbpf with typed pointers cast to
+(void **), built under the same tools/ flags.
 
-> With that, we can keep kvm_service_local_tlb_flush_requests() and
-> nested_svm_{entry/exit}_tlb_flush() inside svm_switch_vmcb(). We can
-> add a WARNING to kvm_service_local_tlb_flush_requests() to make sure
-> the calls remains in the correct context (i.e. VMCB matches guest
-> mode).
+The pattern is long-established and hasn't caused issues in practice.
+Callers re-read the struct member after the call. Wontfix.
+
+> 
+>> +	*cap = new_cap;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +#define ensure_mem(arr_ptr, cap_ptr, cnt) \
+>> +	__ensure_mem((void **)(arr_ptr), (cap_ptr), (cnt), sizeof(**(arr_ptr)))
+> 
+> [...]
+> 
+
