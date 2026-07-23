@@ -1,223 +1,142 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99CE360EC6
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 09:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784798505; cv=pass; b=XUKEetoftcCJ8Qcwlhy/dXrfv2VZt6Ssif2ep0zKa/xuhFFJZ+R/FHpjRlA4GD31VbITD/Hb07CbEtN8pf1ymvIxo/C991QSvnCeQQ7PiChK1jeg5dQMl02t3FGbw1Tz8TS01KAQaBFwlZ4AE5XBEVZ9fmQp0YdM9/JEJy3zoxI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784798505; c=relaxed/simple;
-	bh=Fp+R410qkEY1IMIQt5CDyM30oNbGYLRrPsG4ZVSu1Ug=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uowTmxCiYAslbVDdTw54R93X3u7xCzmaG8YqeX76xfvOMQpXNLvBA7S9hBne2lqpKwBfndw707bl9GscsGJ2sdNSEsFyByVLZCFAxmQgEbI7oyETUbDDsuV7ekG580aM91uC788kiec4cQLDNAsGaMbA+i/MKIw8qJRlpHDq68A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=frame.work; spf=pass smtp.mailfrom=frame.work; dkim=pass (2048-bit key) header.d=frame.work header.i=@frame.work header.b=i++eYKeK; arc=pass smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=frame.work
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=frame.work
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF142BC56;
+	Thu, 23 Jul 2026 09:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784799974; cv=none; b=a5LnstnXTJwziqPP9ozi+aO5RtqfDIW4tSkyc0xceROQ6bs9L2DKV8Xa0n+/yLFURoelc7IIaszISwrWQAumaO5Gf12c6NTxqgRM2B7JNP60XKVdtI+aX0HYg/iKaq/xdpUon1EH4F0jU63Yi1mueEq1KbllrXbNF98HE9p8gZw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784799974; c=relaxed/simple;
+	bh=NitLufdE/4i0EaywdulcGJUyybW1WobriDxx0kW0zuw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aWCtqND6MYdYJU5O6xOgtC8PI+EIjX5zXM+oTBo29RMMiiNuHPIezvxDkdNS3uFnYXyQ99ceJVeIkeh31sCnQfUr+T8hzNV4GyyLrNsaQhEJMxUcFRmcQrZOKKRW3+UUVBlfN3MgZ0eJpAxeGFqfWckE18YgDqqbRUahICPsLlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a8lBic8b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=frame.work header.i=@frame.work header.b="i++eYKeK"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-81e6f2ee60bso1544287b3.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 02:21:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784798501; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ficSnC+wCbddYF4R1Zrn5+pEJrGnbTD6hwWhgoTgBaff75jNE158ENNM4K+avd8bGJ
-         FbrfZDCKGMuJmbLtM5RvBWZtEEaRcAvp69Ll77FPmohEsmgcK5zNmQ2aw9jt9tL79bNN
-         qqw8ZJ4gv8wgAtHosPKXzdFJ8wm9szx9E+KD2cf0DIubiLql65ZVkxtAYRu8oGWpmLNy
-         V89iNktpjKetsQL+crnj0/YxMsTFyC+zSJdZq1TLuQaNgATWAJywN5cAZmzI27WbQwy5
-         Yd7GAA+NG6mgMwnNz/i//Jd4CsiFNyWSIA6yYn8rMmtLpkjZ96REUygM9Mm7K5/37F0S
-         T03g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RSnKA2zo95wHPVbfGKIeKc74qvgW7zPdNGfr3Ifw5gc=;
-        fh=dfvPRi+t5KvUF1qpgNVmacxvd83mvku6fE8K+/2kbH8=;
-        b=GHRphaMuj5+xRTPuN+y1WYlJkZgvU1l+V/j7XKyQbvxpVHnOH8giuSlKISpA1/dJa9
-         ce6G4Y3Qx5+qZoZXpKtnr7giV6dJYRTItSArL+QD1MoJ4VaB98huIGUrT/tMf31wfguj
-         lsTHPmuCv+FqgWCg6RDxLMXaZsoQS7Ej0t/gEhZ9ecNfGX5ZeH4wJTyIHOa4ueaaJpEQ
-         Sz+I5dtTTwEWjv8OwQgJ2CJ1XC7GzBgwrFL5sMXvpz9gvSW+0rUbDiwMUl3YseqFdbrP
-         N5VExKRVlxw0jYJS1PQGUdiasp0dLoQAXEoeibLNdiYnSU7IuMAkrQCSF4/E3pgzxxRQ
-         4H3Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=frame.work; s=google; t=1784798501; x=1785403301; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=RSnKA2zo95wHPVbfGKIeKc74qvgW7zPdNGfr3Ifw5gc=;
-        b=i++eYKeKerzYIIfYPcfwHaz088oCUlUyyrgCetFsOFqfZbmMcNyucuR/unSXuMQC7b
-         Rktvx9aaEq/y33mb8rirQMHoaKB/gYg8DkFWnK9/JJHHcr5owcdEO9e0KjZIuu5jf8Pl
-         3bsSf0QFe4d+3SbDBtGPq+77AsTE5S3PRmXCfYFXboXE8SFMyO6j3stn9dH8kQZcrGDh
-         rfJ3x2g+gxXcEnM2+jWJ5YnLH/3ygPjqG3j03Mf52ZcII+q0O4FHU/vV0F4hZEat6Jh+
-         kZaem1eiXu9z10rs5c1TTEozYLTH22gZTTgWQ137PXJpeJbZ8kmFQOKGLG9hndmXnuvl
-         VBgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784798501; x=1785403301;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RSnKA2zo95wHPVbfGKIeKc74qvgW7zPdNGfr3Ifw5gc=;
-        b=TFd/eRTLo/pFaLQiJcNvAjVB2yyT7ASqdaipWriD/JmcmIt7PD/RxN4HUaibcChePA
-         ANIpy1qhVAs411fsBRKisBTORkklAy3oUpaPM+QlXjTBKZOylNs/vhAZZA/BxJGtuTUd
-         17VzqC7ATEp7VzaJQMpDIebahSeVn2ePT3aK8NKx35YaVeyhPHYcPa1FbxL4lAGmrlKs
-         b1LeqWur1G0SaEiP6bJf8FFPeRqJkORD7s+WQNaKLBSR1g+2ipf6yNYiK3s4dBcDPCb2
-         JlIgpNzyIpw4wb/FufbLlYxtpfRcbmmDf5ou5D60kOVebj6luPdyzzlm7ZebHgj2lNAS
-         dnbg==
-X-Gm-Message-State: AOJu0YwL3oyOcqKFdm8Lmq2FeZANgK7Lp0LILZjAB3V4+pt7O3xaugCY
-	qvOTXfI1ChSLlFkggU5LWm3qmi5r5Vx2t3I1JFMuyeW+6iqFc9VeX2djY0X4mVy3zpR0GdZ3i+n
-	t8vlSnwP2cMTorOxAHwZDWrEPr2gRN6myM8SRrgNs+70kRkCgpKqDr9nxCBer
-X-Gm-Gg: AR+sD1113ZGM3GJSN2pEaxLDUIic/vbiuy0xEXBGrWEy6ssPT5AHt5Jqcv6OX47xKAh
-	k5vIGTb8khKXzRbu1+z1Y7jA9ueYWkcQ03TcWhSfQO+oWCMBIKXQJkx4lO/duNu6khj8opUoD9y
-	vpPuVk5N/5BYQGJcqfzaXx1LU0MnF6M7RBMSf3TW6e+y5OYgGg+z+UfWgkchDmeXP8oGD3jv6ed
-	jr68mb+H5QHpfNsE049WQLRBtVaEeP/1NkWBD+JRPM2xtKwQajmWgix4/1iW5JsyJ14c2n4vJUr
-	V6EfLraYqosSvyAqa3dXyrHJKVJGGJdhL/zJX9c6cAnUi1Q=
-X-Received: by 2002:a05:690c:9988:b0:81e:a56f:844d with SMTP id
- 00721157ae682-81f4d674777mr4408207b3.34.1784798501559; Thu, 23 Jul 2026
- 02:21:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a8lBic8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928321F000E9;
+	Thu, 23 Jul 2026 09:46:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784799971;
+	bh=aQoLo96zw0hxxBrNcRicMtUhLwVl+yi3CsLLfhJfpPY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=a8lBic8br0xTW38lbZuPJ1DFrHJ8Y8LS6+VHPO0N36kvB/eF5J14iY2vjWqpj+Daf
+	 gYHlVlYLJ7kXnczCN0bXXoGs5as9D7H3Sqb6jQxicxySwAlbFvY0vmJoFtdNLY0D1o
+	 RvphI1iVHFattz/PKtKSHR4jtKRorsH2ODMNLLsUg7/dRIH7fcGl4tYudyFmT0WiqJ
+	 GLOheMJRIrOi3zM1pH+xTgIx3AbNzQ8IJ1307cIFEU2dDpkKmTQVLO0olOpus/cmO6
+	 plcsQ3lU426dgBkTclS3U6r1GAc+O/IzzS4H3ihJBWCwr9TVSo2S6AsveSrExeCpzx
+	 nAy5I/c6mkhhA==
+Message-ID: <a8dc9a6b-a08c-426a-9a92-30a4014e2446@kernel.org>
+Date: Thu, 23 Jul 2026 11:46:08 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260723-chromaticity-v1-1-5ef5746ace2a@frame.work> <20260722173529.7BAA31F00ACA@smtp.kernel.org>
-In-Reply-To: <20260722173529.7BAA31F00ACA@smtp.kernel.org>
-From: Daniel Schaefer <dhs@frame.work>
-Date: Thu, 23 Jul 2026 17:21:05 +0800
-X-Gm-Features: AUfX_mxcKxylLeNZW3a59aaejdAdEzO2nyAJHcWYwC8eSH3yVQwwMFUuOy8lQmc
-Message-ID: <CAAjcXz4K6vmATfobBQxqCtj2MgzX7omNbFQjkzY8_xXPkNOgXw@mail.gmail.com>
-Subject: Re: [PATCH] iio: hid-sensor: als: scale each channel individually
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH slab/for-next v4 5/8] mm/slab: allow kfree_rcu_sheaf() on
+ PREEMPT_RT
+Content-Language: en-US
+To: Harry Yoo <harry@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, linux-rt-devel@lists.linux.dev,
+ linux-kernel@vger.kernel.org, hao.li@linux.dev
+References: <20260720-kfree_rcu_nolock-v4-0-964e03c41a4e@kernel.org>
+ <20260720-kfree_rcu_nolock-v4-5-964e03c41a4e@kernel.org>
+ <20260720125637.129D01F00A3A@smtp.kernel.org>
+ <1c7ce106-c5b0-4689-8c24-b32a0966eb02@kernel.org>
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Autocrypt: addr=vbabka@kernel.org; keydata=
+ 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
+In-Reply-To: <1c7ce106-c5b0-4689-8c24-b32a0966eb02@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
->  Does the info_mask_shared_by_type for these channels need to be changed =
-to
-info_mask_separate so userspace can read the newly added scale for
-CHROMATICITY_Y?
+On 7/23/26 07:39, Harry Yoo wrote:
+> On 7/20/26 9:56 PM, sashiko-bot@kernel.org wrote:
+>> 
+>>> diff --git a/mm/slub.c b/mm/slub.c
+>>> index 8afa6b47b1f2b..deac315d0f23e 100644
+>>> --- a/mm/slub.c
+>>> +++ b/mm/slub.c
+>> [ ... ]
+>>> @@ -6080,10 +6081,10 @@ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj, unsigned int free_flags)
+>>>  	struct slab_sheaf *rcu_sheaf;
+>>>  	bool allow_spin = free_flags_allow_spinning(free_flags);
+>>>  
+>>> -	if (WARN_ON_ONCE(IS_ENABLED(CONFIG_PREEMPT_RT)))
+>>> -		return false;
+>>> +	VM_WARN_ON_ONCE(IS_ENABLED(CONFIG_PREEMPT_RT) && allow_spin);
+>>>  
+>>> -	lock_map_acquire_try(&kfree_rcu_sheaf_map);
+>>> +	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
+>>> +		lock_map_acquire_try(&kfree_rcu_sheaf_map);
+>>>  
+>>>  	if (!local_trylock(&s->cpu_sheaves->lock))
+>>              ^^^^^^^^^^^^^
+>> [Severity: High]
+>> This is a pre-existing issue, but since we are enabling this path for
+>> PREEMPT_RT, does the use of GFP_NOWAIT later in this function cause
+>> lock recursion deadlocks?
+>> 
+>> When the fast path fails, __kfree_rcu_sheaf() calls:
+>> 
+>>     empty = alloc_empty_sheaf(s, GFP_NOWAIT, alloc_flags);
+>> 
+>> GFP_NOWAIT includes __GFP_KSWAPD_RECLAIM, which invokes wakeup_kswapd().
+>> The wake-up path enters the scheduler via try_to_wake_up() and attempts to
+>> acquire scheduler locks like pi_lock and the runqueue lock.
+> 
+> This indeed looks like a real issue as kfree_rcu() can be called under
+> scheduler locks,
 
-Yes, that's a good idea. Will send v2 after I tested it.
+Are there any paths that actually do that?
 
+> but not sure how it's been undiscovered for this long?
 
-On Thu, Jul 23, 2026 at 1:35=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [Medium] The patch fails to expose the individual scale for the CHROMAT=
-ICITY_Y channel because it still uses `info_mask_shared_by_type`.
->
-> Pre-existing issues:
-> - [High] The driver's IIO buffer layout uses a fixed structure, but `avai=
-lable_scan_masks` is dynamically populated, causing misaligned buffer reads=
- and data corruption.
-> --
->
-> --- Patch [1]: [PATCH] iio: hid-sensor: als: scale each channel individua=
-lly ---
-> commit 6d49cfd4cf380845a584116e06dcf23fc8c25ad6
-> Author: Daniel Schaefer <dhs@frame.work>
->
-> iio: hid-sensor: als: scale each channel individually
->
-> This commit updates the hid-sensor-als driver to support individual scali=
-ng
-> factors for each channel, instead of using a single global scale. It stor=
-es
-> the scale attributes in arrays indexed by channel.
->
-> Link: https://gitlab.freedesktop.org/hadess/iio-sensor-proxy/-/merge_requ=
-ests/413
->
-> > diff --git a/drivers/iio/light/hid-sensor-als.c b/drivers/iio/light/hid=
--sensor-als.c
-> > index 384572844162c..232cb58e0a9ff 100644
-> > --- a/drivers/iio/light/hid-sensor-als.c
-> > +++ b/drivers/iio/light/hid-sensor-als.c
-> > @@ -33,9 +33,9 @@ struct als_state {
-> >               u32 illum[CHANNEL_SCAN_INDEX_MAX];
-> >               aligned_s64 timestamp;
-> >       } scan;
->
-> [Severity: High]
-> This is a pre-existing issue, but does this fixed struct buffer layout
-> cause data corruption?
->
-> The driver captures samples in als_capture_sample() into a static sparse
-> array (als_state->scan.illum) based on fixed channel indices. However,
-> indio_dev->available_scan_masks is dynamically constructed based on the
-> attributes present on the sensor.
->
-> The IIO core calculates scan_bytes and channel offsets assuming the buffe=
-r is
-> tightly packed.
->
-> When iio_push_to_buffers_with_ts() is called in als_proc_event(), it writ=
-es
-> the timestamp at the end of the tightly packed length, which overwrites v=
-alid
-> channel data in the sparse array.
->
-> The IIO demuxer then reads from incorrect offsets, scrambling the data se=
-nt to
-> userspace.
->
-> Should the driver pack the samples sequentially instead of using fixed in=
-dex
-> offsets?
->
-> > -     int scale_pre_decml;
-> > -     int scale_post_decml;
-> > -     int scale_precision;
-> > +     int scale_pre_decml[CHANNEL_SCAN_INDEX_MAX];
-> > +     int scale_post_decml[CHANNEL_SCAN_INDEX_MAX];
-> > +     int scale_precision[CHANNEL_SCAN_INDEX_MAX];
-> >       int value_offset;
-> >       int num_channels;
-> >       s64 timestamp;
->
-> [ ... ]
->
-> > @@ -186,9 +186,11 @@ static int als_read_raw(struct iio_dev *indio_dev,
-> >               ret_type =3D IIO_VAL_INT;
-> >               break;
-> >       case IIO_CHAN_INFO_SCALE:
-> > -             *val =3D als_state->scale_pre_decml;
-> > -             *val2 =3D als_state->scale_post_decml;
-> > -             ret_type =3D als_state->scale_precision;
-> > +             if (chan->scan_index >=3D CHANNEL_SCAN_INDEX_MAX)
-> > +                     return -EINVAL;
-> > +             *val =3D als_state->scale_pre_decml[chan->scan_index];
-> > +             *val2 =3D als_state->scale_post_decml[chan->scan_index];
-> > +             ret_type =3D als_state->scale_precision[chan->scan_index]=
-;
-> >               break;
->
-> [Severity: Medium]
-> Since the patch introduces per-channel scaling factors, can userspace act=
-ually
-> read the scale for the CHROMATICITY_Y channel?
->
-> The als_channels array defines both CHANNEL_SCAN_INDEX_CHROMATICITY_X and=
- Y
-> with .info_mask_shared_by_type =3D BIT(IIO_CHAN_INFO_SCALE).
->
-> Because of this, the IIO core will create a single in_chromaticity_scale =
-sysfs
-> attribute for both.
->
-> When read, IIO queries the first registered channel of that type (X), lea=
-ving
-> the Y scale factor completely inaccessible.
->
-> Does the info_mask_shared_by_type for these channels need to be changed t=
-o
-> info_mask_separate so userspace can read the newly added scale for
-> CHROMATICITY_Y?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260723-chromati=
-city-v1-1-5ef5746ace2a@frame.work?part=3D1
+With kfree_rcu_sheaf_map we prevent the raw spinlock nesting detection in
+general. But I guess if there was an actual kfree_rcu() call under any
+scheduler lock involved in wakeup_kswapd(), lockdep would still trigger, right?
+
+>> If kvfree_call_rcu() was called while the CPU already holds these scheduler
+>> locks, will this wake-up attempt cause a lock recursion self-deadlock?
+>> 
+> 
+
