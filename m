@@ -1,199 +1,223 @@
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F01048094A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 15:34:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC93416841
+	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 15:43:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784820863; cv=none; b=I04ONhZT65dVX1snVbdYivvs2oGbFBRBRPw/NnEqGzm/u8VDLlFW4/ytk1U3vKQbgYEek+TQaH8Jdop/iS411Eq4/etc4I6ATdPvKqmFg4u6ea4GRDtvueLPQFwrXp4ALZJ3G1v8BOrEdlj0O21egd442glrmO5Z+0WLMCU9QiI=
+	t=1784821440; cv=none; b=rEmkF4M/aJXmb+H4NE4///jgjUuNG80BZqf1x0p6d1uMrieeN231MksPYcMeCJfjBJYQt6ZSQDblh1ZLZp85AGybq4gKaF1Qn6NnHgB/EE89zskRv8ukXCZV6xdXVruxiaNSpNorBdqjaP12F/QBNQw+JXLZEavAxCDvQ9tbigY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784820863; c=relaxed/simple;
-	bh=YI4hWPAbOT7YNSJ2UWdM5AZsQqEJ5zOz1vYHoT320k0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=bIKdjtpqbefBut3HLOtN/Bxwc7HBPT6fMXKp+90d/kSQcyUWqDxbP9gQVTYspr+rgrjdck9l2l+K0kdfdXB5N2lPTDBgXab9jYq48/Vu0BdyDSV14VWjjuKbYzkX/6Et/9G9ufsPxD7m9CEmV/sqOuUv2x0RjaDBiehfaqcdl24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pXVRdF+g; arc=none smtp.client-ip=209.85.215.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1784821440; c=relaxed/simple;
+	bh=cNa9g8IbxlINQn71x0nJxZmvr4n3/R5gi2Ef4pJH2Ao=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=o34imYzJfk1RIosJwiYPeRGZtKJ96iWwx2ZgbTHiw/r2HrnqH3Yu1ETtiAXYKcmUFy4mi9hkXunJH6y/jnB27W5ROcvnHm55VwKR8rSRLtAJGCrg3rrj7X+Gfuq2RZ3AWmRbdQHHu3NnxDNxZ+5ACj3Skk9H+qp1O5ufDlzwqvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=K9vEonxC; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pXVRdF+g"
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c85798977dcso1460493a12.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 08:34:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784820858; x=1785425658; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8jXOS2yBFB2hrfcZtfpqLJLsuAeRSevvHeZliLjBRJk=;
-        b=pXVRdF+gexIaJ4ccoePbCPGzOhZdbX/SbsCO+y3uBpglDmp77x0hdSq+LoOix8GEKg
-         hTOWw37xSDIJhWZa/ffyBaBsjlFA+yXZDqVHcwf+R7dp1//RPNLaKDUyNo9zTe5x3RIp
-         Co5zkyHM/KmKsxJGNx8eAp/mc/r/hFmXziYQ0AH9O4y5+p+gu0tpn83DhD3JFi21Chm0
-         FAXwFJfqtPVBZ267D7OzYVjfdgbiAOIxIzyb3MD7rvXprwAKlzF9AKqmsT21ky1J/xJ+
-         /ojNHLOIMlu/h7aikNZbhRLBonQcvMGPvMRoqcZCTbhPBzsKcf0QXmvXDS5DcuazEXXj
-         TfyQ==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="K9vEonxC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784821433;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cNa9g8IbxlINQn71x0nJxZmvr4n3/R5gi2Ef4pJH2Ao=;
+	b=K9vEonxCJF8NyQNB6FB5RY6EW3W/HIFJg7hu99eQkHOqyh+wuUH8Anr1E3tifpqIaVfOGj
+	pAHndYjuDgjwQdW4J5g37RiFAf5qUU8dVLEP4Whi7nlrn0BbyqDq5s5AscvQXmKIeXJnd3
+	umI6Lbxr0C2b0H1Iqn68w4YMeL8pNoc=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-552-oDLUORiHNF2QGl3N2ErZLw-1; Thu, 23 Jul 2026 11:43:52 -0400
+X-MC-Unique: oDLUORiHNF2QGl3N2ErZLw-1
+X-Mimecast-MFC-AGG-ID: oDLUORiHNF2QGl3N2ErZLw_1784821431
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-92e5fc4c7e9so100605985a.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 08:43:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784820858; x=1785425658;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=8jXOS2yBFB2hrfcZtfpqLJLsuAeRSevvHeZliLjBRJk=;
-        b=fMSNTKfCsAy30HVc4BJssAXbQ9bD9+FDRx6Tx7GFkuvA1qE1fcsgbCVW13adlP08a0
-         XX0fIpZP/vx/bLCnqNeP45g1mXVkI3cYRbtec8fwSDtljwA9pgh314iPKl0Ky6Ph1O4R
-         1pBPbhAr2tDojkU1gA8EntkaoCDY/9Ve2gk+im0CxFcO3j+nOqDMGUTKK8LRAX6qPPO4
-         Kx8X3M1vfXdoWIF0NVYSrujY5sXyzVsf9Thdr7C02SWbe7Yo43ScdSuWOQE+tCo8LCXL
-         5BDgBVweqYuEGs4I1YoJc90fDVLA3xFltMxIwrsi2o1qqRtCLsfzZFal3yNAu6KOgrTV
-         gFsA==
-X-Forwarded-Encrypted: i=1; AHgh+RqCvQWdFTmVO0rAScnsxK5mFvXJbfSLMeLg+8F6za/BAoVPiO3mmAVZeqOf3T+biAx33DaD5tn4y6OGD86oqdE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzpKU9JFHSWxMqlzAaP6gEHFBoYsiuJUoTHLPx/wX7+YA6dPgT9
-	5aqCa44xBqdHPSzvtiW8CNeGj7y9u4YinthulqjxZEyUNKlELbIHsYrdkv7ZI7zSYsSwhK3pikG
-	IG8ijiA==
-X-Received: from pgcv17.prod.google.com ([2002:a05:6a02:5311:b0:c93:59ff:8d6d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:a04:b0:3c4:3321:5009
- with SMTP id adf61e73a8af0-3c44b044febmr4264727637.29.1784820858096; Thu, 23
- Jul 2026 08:34:18 -0700 (PDT)
-Date: Thu, 23 Jul 2026 08:34:17 -0700
-In-Reply-To: <amG2rkuE5WqldZxM@yzhao56-desk.sh.intel.com>
+        d=1e100.net; s=20251104; t=1784821431; x=1785426231;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a0f5FCY8RFaoWJvszTpojKDVKtO+UBE2lORQW5KPgAk=;
+        b=aVdLBkEGjB70VDwQRLAud5ZmlF53ar/suPBhJU6EgxLfzEy+jWBfFddRN8dXZ6cZYT
+         gv7CgN7FjCQm6MlvCpj35PgvsJ7XSak0hbZPUNpmzsciPqRsfCTj7eOyvPIGwnh5ou+S
+         NIuIs5O2s0pAEmlIEB0fPhq3X+c8pVDj7Ln//rtw/GMobwt+nMQjya1RZHnJ7ef1LCsV
+         b9xhsubqBtnmydCiEjWSTrugH3v2U2NLwq11lh6MEo6N2HBWVGpVyAvZQyZbamJbpEJ1
+         uajn2bjZHXaTgLAjZhzXG571EZlyBMXcmQLDcHOeOrejODsQf9puEsTGUHZxxjq5FQN7
+         I33A==
+X-Gm-Message-State: AOJu0YzogkbOSEVOM5SnuTdPbdroEFbksUoP3iaMwvmWi1Rq93zshhqq
+	/nvYuJHf10Cb0t+0H+ZY1W2wK6BCsIDoPtFn6eyjvKRJWvH/jlKaBXAm9oRlUJRiFNb5CGZU8XD
+	AWcGSf6PUPp9S/baZHYD0Mv3DMldhDwp0ncm3rOrwr++aLY9RO4ZIlz2yYdQisDZ/CRllPRJZDe
+	zrpfvBEyzzxg1x/e7xSf/Qg5wTMFR7T2MVzz7ccUiWTnQIS/n4aKGe7w==
+X-Gm-Gg: AR+sD122zKLZUD+UhIpiCelsN6eutAQ1+GXjkJyanMsGaj+cedt0yfZNWZtdtbuL8RA
+	/RIRfem4y0+pHkyMj52nVsy9tN2hkW9QIue3aUjk+a5H1qGit3c9hJ9pQVZFe3DKewWJzdQALb9
+	im5cI6gqZGRQ/fKAvbqZL2IGfIBYbl6BriSR/i/I/gnw40eVgjEhA4H9CI7+VrqZ3fBoGd8Ww7g
+	FgADmCey6xsuHOx5qHQQCuLYFJAXDAFaOnKebuf/FSxZc3b7UZkcou2PV4GTCZeknbzWVuRAhAK
+	ix2IXaL5wWOykEcvEyWuzKIU+vA5CNSOZEIvLeys8btPZ1JTamH4P5OgPUiCo+tgRTx+TizqNUB
+	OVQrFXlwtIyzCqI8FH+8jOaSbMk8M8fZIKQPr
+X-Received: by 2002:a05:620a:2259:10b0:92e:b17d:3bd5 with SMTP id af79cd13be357-93103631f53mr275826185a.37.1784821431348;
+        Thu, 23 Jul 2026 08:43:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:2259:10b0:92e:b17d:3bd5 with SMTP id af79cd13be357-93103631f53mr275822385a.37.1784821430477;
+        Thu, 23 Jul 2026 08:43:50 -0700 (PDT)
+Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:dbb1:97f1:a6e6:766b])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930f687acdasm441727685a.1.2026.07.23.08.43.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jul 2026 08:43:49 -0700 (PDT)
+Message-ID: <a95878ba0518d010ba4ca8243b82754f7755f7e8.camel@redhat.com>
+Subject: Re: [PATCH] scsi: storvsc: Support manual scans for all Hyper-V
+ targets
+From: Laurence Oberman <loberman@redhat.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org, linux-hyperv@vger.kernel.org
+Date: Thu, 23 Jul 2026 11:43:48 -0400
+In-Reply-To: <20260723153101.13F911F00A3A@smtp.kernel.org>
+References: <20260723151458.872265-1-loberman@redhat.com>
+	 <20260723153101.13F911F00A3A@smtp.kernel.org>
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260718014500.2231262-1-rick.p.edgecombe@intel.com>
- <20260718014500.2231262-9-rick.p.edgecombe@intel.com> <20260718061050.E17B01F000E9@smtp.kernel.org>
- <1417841720b8435f8fb95ac0bd95be6e0e9390d4.camel@intel.com>
- <amDd1Ip3XTvKSTcb@google.com> <amG2rkuE5WqldZxM@yzhao56-desk.sh.intel.com>
-Message-ID: <amI0eRK2Jq6HOroD@google.com>
-Subject: Re: [PATCH v7 08/11] KVM: TDX: Get/put PAMT pages when (un)mapping
- private memory
-From: Sean Christopherson <seanjc@google.com>
-To: Yan Zhao <yan.y.zhao@intel.com>
-Cc: Rick P Edgecombe <rick.p.edgecombe@intel.com>, 
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
-	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, Kai Huang <kai.huang@intel.com>, 
-	Dave Hansen <dave.hansen@intel.com>, 
-	"tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>, Binbin Wu <binbin.wu@intel.com>, 
-	"kas@kernel.org" <kas@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>, 
-	"nik.borisov@suse.com" <nik.borisov@suse.com>, 
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, 
-	"tglx@kernel.org" <tglx@kernel.org>, Vishal Annapurve <vannapurve@google.com>, "bp@alien8.de" <bp@alien8.de>, 
-	Chao Gao <chao.gao@intel.com>, "x86@kernel.org" <x86@kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: EkfyRE1jSU0Ks2cMmqSzdNH6OVOPlX2LOCJeVSnMuT0_1784821431
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 23, 2026, Yan Zhao wrote:
-> On Wed, Jul 22, 2026 at 08:12:20AM -0700, Sean Christopherson wrote:
-> > On Mon, Jul 20, 2026, Rick P Edgecombe wrote:
-> > > On Sat, 2026-07-18 at 06:10 +0000, sashiko-bot@kernel.org wrote:
-> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > > - [High] Infinite kernel loop in `kvm_tdp_mmu_map_private_pfn` due to permanent PAMT cache depletion on transient TDX module contention.
-> > > > --
-> > > 
-> > > Our internal Sashiko found this too. It's a false positive as a real bug.
-> > > 
-> > > Today kvm_tdp_mmu_map_private_pfn() is only called tdx_gmem_post_populate()
-> > > during TD setup. It holds the heavyweight tdx_vm_state_guard which grabs vm-
-> > > >lock, kvm->slots_lock, and all vcpu->mutex. So there should be no contention
-> > > possible.
-> > > 
-> > > Any potential confusion is not new either, because a similar thing could happen
-> > > with the external page tables.
-> > > 
-> > > But Yan and I were discussing that it would be a good cleanup to fix this anyway
-> > > because the reason it is not a functional issue is not clear from the code. For
-> > > improved readability (and quieter sashiko reports) the topup can happen inside
-> > > the retry loop. Either by moving the retry loop or moving the topup.
-> > 
-> > Hmm, yeah, I think I agree.  Super duper technically, that's a fix for an existing
-> > flaw.  Because very, very, VERY theoretically, the cache of page table pages could
-> > be exhausted.  E.g. if some other task managed to free non-leaf page tables while
-> > mmu_lock was dropped, thus forcing kvm_tdp_mmu_map_private_pfn() to allocate from
-> > its cache over and over.  In practice, that's likely impossible thanks to holding
-> > slots_lock, but given that (a) retry should be rare and (b) kvm_mmu_topup_memory_cache()
-> > is basically free if no work needs to be done, I don't see any reason to do topup
-> > outside of the retry loop.
-> > 
-> > The other thing we should address is the call to kvm_mmu_reload().  Like cache
-> > exhaustion, it *should* be impossible for the root to be invalidated/obsoleted,
-> > thanks to holding slots lock.  But as evidenced by the rash of recent shadow MMU
-> > bugs, we don't always get things perfect, and lack of defense-in-depth can be
-> > *extremely* painful.
-> > 
-> > I don't think I want to just move kvm_mmu_reload() into the loop, because KVM
-> > should provide stronger guarantees with respect to the validity of the loop,
-> > versus the population of the caches.  I.e. I want to WARN if the root becomes
-> > obsolete after the initial reload.  And more importantly, KVM really should
-> > check the validity of the root after acquiring mmu_lock.
-> > 
-> > We can't simply call is_page_fault_stale(), because mmu_invalidate_retry_gfn()
-> > is inherently fuzzy, i.e. could get false positives, even though the pfn provided
-> > by guest_memfd is guaranteed to be valid.  E.g. if shared gfns surrounding the
-> > to-be-mapped gfn are concurrently invalidated.
-> Past you said "No" to checking is_page_fault_stale() [*] :)
-> [*] https://lore.kernel.org/all/aPken0s-0MfdSd5o@google.com/
+On Thu, 2026-07-23 at 15:30 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issue(s) to consider:
+>=20
+> New issues:
+> - [Low] The patch calls the unexported internal midlayer function
+> `scsi_scan_host_selected()` and includes the private header
+> `"scsi_priv.h"` from a hardware driver, which will break module
+> builds.
+>=20
+> Pre-existing issues:
+> - [High] Timeouts on targets scanned without an `fc_rport` parent
+> will cause a NULL pointer dereference in the FC transport error
+> handler.
+> --
+>=20
+> --- Patch [1]: [PATCH] scsi: storvsc: Support manual scans for all
+> Hyper-V targets ---
+> commit ce267d7e85b7a51757a8afe1188939d3c5146d27
+> Author: Laurence Oberman <loberman@redhat.com>
+>=20
+> scsi: storvsc: Support manual scans for all Hyper-V targets
+>=20
+> This patch provides a storvsc-specific user_scan callback that
+> directly
+> invokes scsi_scan_host_selected(). This bypasses the single-rport
+> lookup
+> in fc_user_scan() to allow userspace to explicitly scan any target
+> supported by storvsc. The goal is to avoid requiring storvsc to
+> create
+> and manage synthetic fc_rports for every Hyper-V target.
+>=20
+> > diff --git a/drivers/scsi/storvsc_drv.c
+> > b/drivers/scsi/storvsc_drv.c
+> > index f03dc03a42c35..eb40473a8aad6 100644
+> > --- a/drivers/scsi/storvsc_drv.c
+> > +++ b/drivers/scsi/storvsc_drv.c
+> > @@ -43,6 +43,7 @@
+> > =C2=A0#include <scsi/scsi_dbg.h>
+> > =C2=A0#include <scsi/scsi_transport_fc.h>
+> > =C2=A0#include <scsi/scsi_transport.h>
+> > +#include "scsi_priv.h"
+>=20
+> [Severity: Low]
+> Will this cause an architectural layering violation? Including a
+> private
+> midlayer header like scsi_priv.h from a low-level hardware driver
+> normally
+> breaks subsystem encapsulation.
+>=20
+> [ ... ]
+>=20
+> > @@ -550,6 +551,17 @@ static void storvsc_host_scan(struct
+> > work_struct *work)
+> > =C2=A0=09scsi_scan_host(host);
+> > =C2=A0}
+> > =C2=A0
+> > +#if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
+> > +static int storvsc_user_scan(struct Scsi_Host *host,
+> > +=09=09=09=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int channel,
+> > +=09=09=09=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int id,
+> > +=09=09=09=C2=A0=C2=A0=C2=A0=C2=A0 u64 lun)
+> > +{
+> > +=09return scsi_scan_host_selected(host, channel, id, lun,
+> > +=09=09=09=09=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SCSI_SCAN_MANUAL);
+> > +}
+>=20
+> [Severity: Low]
+> Does this cause a module build failure during the modpost link stage?
+>=20
+> The function scsi_scan_host_selected() in drivers/scsi/scsi_scan.c
+> lacks an
+> EXPORT_SYMBOL directive. If the kernel is configured to build storvsc
+> as a
+> module (CONFIG_HYPERV_STORAGE=3Dm), it seems it will fail to link.
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but does creating a topology without an
+> fc_rport parent lead to a NULL pointer dereference during error
+> handling?
+>=20
+> If a SCSI command times out on a target scanned directly under the
+> SCSI host
+> (which this manual scan facilitates), storvsc_eh_timed_out()
+> delegates to
+> the FC transport's fc_eh_timed_out(). Because the target was scanned
+> under
+> the host device instead of an fc_rport, starget_to_rport() evaluates
+> to NULL.
+>=20
+> This NULL pointer is then unconditionally dereferenced in
+> drivers/scsi/scsi_transport_fc.c:fc_eh_timed_out():
+>=20
+> fc_eh_timed_out()
+> {
+> =C2=A0=C2=A0=C2=A0 ...
+> =C2=A0=C2=A0=C2=A0 struct fc_rport *rport =3D starget_to_rport(scsi_targe=
+t(scmd-
+> >device));
+>=20
+> =C2=A0=C2=A0=C2=A0 if (rport->port_state =3D=3D FC_PORTSTATE_BLOCKED)
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> Can timeouts under hardware or network load on these targets trigger
+> a
+> kernel panic?
+>=20
+> > +#endif
+> > +
+>=20
+> [ ... ]
+Thanks for the review.
 
-And my reasoning there still stands: there will be false positives, and avoiding
-constant false positives requries a weird mmu_seq snapshot.  To be very clear, I
-still find the code to be gross, but unfortunately, the onslaught of recent bugs
-in scenarios we _thought_ were impossible has made it abundantly clear that, at
-least when it's not completely insane, KVM needs to effectively "fail close"
-when the impossible happens.  I.e. take action to ensure a bad assumption in KVM
-can't be abused to esclate into a DoS or UAF.
+The module-build observation is correct. scsi_scan_host_selected() is
+an internal SCSI midlayer helper and is not exported for use by a
+modular storvsc driver. The successful built-in kernel build did not
+expose that problem so I never caught it.
 
-> > My only hesitation with manually checking KVM_REQ_MMU_FREE_OBSOLETE_ROOTS is that
-> > if more checks/functionality were added to is_page_fault_stale() in the future,
-> > then we could end up missing kvm_tdp_mmu_map_private_pfn() and introduce a bug.
-> > 
-> > Maybe we can have it both ways?  WARN if roots are unexpectedly made obsolete,
-> > but fully check is_page_fault_stale() and gracefully handle an obsolete root
-> > instead of effectively terminating the guest.
-> > 
-> > 	do {
-> > 		if (signal_pending(current))
-> > 			return -EINTR;
-> > 
-> > 		if (kvm_test_request(KVM_REQ_VM_DEAD, vcpu))
-> > 			return -EIO;
-> > 
-> > 		r = kvm_mmu_reload(vcpu);
-> > 		if (r)
-> > 			return r;
-> > 
-> > 		r = mmu_topup_memory_caches(vcpu, false);
-> > 		if (r)
-> > 			return r;
-> > 
-> > 		cond_resched();
-> > 	
-> > 		guard(read_lock)(&kvm->mmu_lock);
-> > 
-> > 		WARN_ON_ONCE(kvm_test_request(KVM_REQ_MMU_FREE_OBSOLETE_ROOTS, vcpu));
-> > 
-> > 		/*
-> > 		 * Snapshot the invalidation sequence counter after acquiring
-> > 		 * mmu_lock, as guest_memfd guarantees the validity of the pfn,
-> > 		 * i.e. any concurrent invalidations are guaranteed to be
-> > 		 * irrelevant.
-> > 		 */
-> > 		fault.mmu_seq = vcpu->kvm->mmu_invalidate_seq;
-> > 		if (is_page_fault_stale(vcpu, &fault))
-> > 			continue;
-> > 
-> > 		r = kvm_tdp_mmu_map(vcpu, &fault);
-> > 	} while (r == RET_PF_RETRY);
-> > 
-> BTW, since kvm_tdp_mmu_map_private_pfn() is currently solely invoked by TDX
-> during the TD built phase, and was introduced to avoid redundant
-> kvm_gmem_get_pfn() calls in the gmem population path, are there any foreseeable
-> future users of kvm_tdp_mmu_map_private_pfn()?
+The callback should instead use the exported scsi_scan_target()
+interface and should not include scsi_priv.h.
 
-Nope, not that I know of.
+I am also reviewing the FC error-handler concern before posting a
+revised patch. Devices discovered directly below the SCSI host do not
+have an fc_rport parent, while the storvsc timeout path delegates to
+fc_eh_timed_out(). A revised patch must ensure that this topology
+cannot lead to a NULL rport dereference.
 
-> If not, could we simply drop the RETRY loop, given that the locks in the TDX
-> path already guarantee that a RETRY error will never occur?"
+I will address both points in v2.
 
-We could, but I don't think that buys us much, because we still need the
-is_page_fault_stale() check, or an equivalent.  At that point, removing the
-retry loop is probably a net negative, because it could be the difference between
-a race resulting in a WARN but an otherwise usable VM, and an unintentional guest
-DoS.
+Thanks,
+Laurence
+
