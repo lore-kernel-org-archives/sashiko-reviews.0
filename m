@@ -1,86 +1,105 @@
-Received: from mailout1.hostsharing.net (mailout1.hostsharing.net [83.223.95.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9A635675F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 06:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.204
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.76.78.106])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F26F63E317C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 07:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.76.78.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784789271; cv=none; b=ePwNOWTixrn3YV75nQh3pA12lv1aETaoeOaAtaxIPZpsOOjFW3Kxo8/VcJHYHE4n1EtQY8MCK30OQw0t4TueTS+aYc/aVLXfDXzBK5/q6OLw1s7XKOIlZrdEa/kZjWJUposDI42RXQxzsDNaK3T4qMRpIgV9boGTqRig3AzY/PM=
+	t=1784791148; cv=none; b=N1x0sPXi71yOsGKSOsT/8Jzv5KD9DawOepd6zcg13FxA/qvP6frrQjoFYa/9861GwH11mQFj2KuCCz3iZXnAoJksCNK+drznrGD4Xf42uuL48Oymw1q7h6snxwN11l37I9bkaiOrD1mEk/8spbeitIwitiCurkGM8QJ62IZnYVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784789271; c=relaxed/simple;
-	bh=5++wbDKdSaBgQjroYtMbLSUHP26lkDMvR3CouD6Z+Vg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G5LoVYa1NT8eFNkZzhvXpFVOgegVrcylONHawaBwRAR10iQvWBTg2g3V7N3XBSF/GrDnp1gkBq+Hh+M9UJ4YuvP5GBV/wrQYvLTv1Wl29FFIb2DKk4TMPJv8xue548c3CMKub6hRfYoeHzb8iZfU+mbp7UD7dPe91dU33EBU0Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=pass smtp.mailfrom=wunner.de; arc=none smtp.client-ip=83.223.95.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
-Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature ECDSA (secp384r1) client-digest SHA384)
-	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
-	by mailout1.hostsharing.net (Postfix) with ESMTPS id A0C4539C;
-	Thu, 23 Jul 2026 08:47:40 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 8ABA7606F523; Thu, 23 Jul 2026 08:47:40 +0200 (CEST)
-Date: Thu, 23 Jul 2026 08:47:40 +0200
-From: Lukas Wunner <lukas@wunner.de>
+	s=arc-20240116; t=1784791148; c=relaxed/simple;
+	bh=dMAdzToKFPGD/OmPpVg55Al3PdlH1mGRE5jm6xVqqvM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=GAWG+otzN7evc3oyUhvanSv7k51aq/+KE6Kq4f33z7HfUziB65I5+AtkraRC8D2l8Ch+OE6Tw8wWlVZDNYAiwZg9UkJs4BkFRyhUomTZHcM/yJHu9eFBTG6xakOZCzkXm3yrfFHPJwASyeii3sLN7REJfZC8p2PkC0AZ9n4Uo7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=13.76.78.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from dongxuyang$eswincomputing.com ( [10.12.96.41] ) by
+ ajax-webmail-app2 (Coremail) ; Thu, 23 Jul 2026 15:18:31 +0800 (GMT+08:00)
+Date: Thu, 23 Jul 2026 15:18:31 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Xuyang Dong" <dongxuyang@eswincomputing.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
- wireless BE200
-Message-ID: <amG5DN8sEetoZtvS@wunner.de>
-References: <20260621065451.21650-1-emmanuel.grumbach@intel.com>
- <20260621071242.B20F31F000E9@smtp.kernel.org>
+Cc: ukleinek@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, ben-linux@fluff.org, ben.dooks@codethink.co.uk,
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, p.zabel@pengutronix.de,
+	daniel.lezcano@kernel.org, tglx@kernel.org,
+	ningyu@eswincomputing.com, linmin@eswincomputing.com,
+	xuxiang@eswincomputing.com, wangguosheng@eswincomputing.com,
+	pinkesh.vaghela@einfochips.com,
+	"Xuyang Dong" <dongxuyang@eswincomputing.com>
+Subject: Re: Re: [PATCH v12 4/4] dt-bindings: timer: dwc: Update resets
+ property items
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260721122141.D3A9C1F00A3D@smtp.kernel.org>
+References: <20260721120757.1134-1-dongxuyang@eswincomputing.com>
+ <20260721120935.1359-1-dongxuyang@eswincomputing.com>
+ <20260721122141.D3A9C1F00A3D@smtp.kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260621071242.B20F31F000E9@smtp.kernel.org>
+Message-ID: <26588538.89e6.19f8dd71564.Coremail.dongxuyang@eswincomputing.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:TQJkCgAnPJ9HwGFq+6w2AA--.7857W
+X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/1tbiAgERAmpg8RwXw
+	QAAsh
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On Sun, Jun 21, 2026 at 07:12:42AM +0000, sashiko-bot@kernel.org wrote:
-> > +++ b/drivers/pci/quirks.c
-> > @@ -4674,6 +4674,13 @@ static void quirk_chelsio_T5_disable_root_port_attributes(struct pci_dev *pdev)
-> >  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID,
-> >  			 quirk_chelsio_T5_disable_root_port_attributes);
-> >  
-> > +/*
-> > + * The Intel wireless BE200 fails to copy TLP Attributes from a Request to the
-> > + * Completion it generates.
-> > + */
-> > +DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x272b,
-> > +			 quirk_disable_root_port_attributes);
-> 
-> [Severity: High]
-> Will this workaround survive a system suspend and resume cycle?
-> 
-> When the Intel BE200 device is hotplugged, the upstream Root Port's
-> configuration state is saved at boot time by pcie_portdrv_probe(), which calls
-> pci_save_state(). The workaround modifies the Root Port's current
-> configuration to disable Relaxed Ordering and No Snoop, but it does not update
-> the Root Port's saved state array.
-> 
-> Upon system suspend, the PCI core skips saving the Root Port's state because
-> its state_saved flag is already true. During resume, pci_restore_state()
-> restores the Root Port to its original boot-time state, which would re-enable
-> the problematic attributes.
-
-Hallucination.  pci_pm_suspend() resets the state_saved flag to false.
-
-Usage of the state_saved flag was recently changed by 894f475f88e0 and
-a2f1e22390ac.  Perhaps the LLM used by sashiko was trained with an older
-version of the kernel source tree and is thus oblivious to those changes.
-
-> Should there also be a DECLARE_PCI_FIXUP_RESUME_EARLY hook registered here to
-> ensure the workaround is re-applied when the device resumes?
-
-No.
-
-Thanks,
-
-Lukas
+PiAKPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBm
+b3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPiAtIFtIaWdoXSBUaGUgdGlt
+ZXIgZHJpdmVyIGlnbm9yZXMgdGhlIG5ld2x5IGRvY3VtZW50ZWQgQVBCIGludGVyZmFjZSByZXNl
+dCAoYHByZXNldG5gKSwgbGVhZGluZyB0byBzeXN0ZW0gaGFuZ3MgaWYgc3BlY2lmaWVkLgo+IC0t
+Cj4gCj4gLS0tIFBhdGNoIFs0XTogW1BBVENIIHYxMiA0LzRdIGR0LWJpbmRpbmdzOiB0aW1lcjog
+ZHdjOiBVcGRhdGUgcmVzZXRzIHByb3BlcnR5IGl0ZW1zIC0tLQo+IGNvbW1pdCAwMjk4YWZjYzA4
+ZmNlZGM4OTk5NjE5MzU2ZTAwMDE3ZmY0NTAyMDNkCj4gQXV0aG9yOiBYdXlhbmcgRG9uZyA8ZG9u
+Z3h1eWFuZ0Blc3dpbmNvbXB1dGluZy5jb20+Cj4gCj4gZHQtYmluZGluZ3M6IHRpbWVyOiBkd2M6
+IFVwZGF0ZSByZXNldHMgcHJvcGVydHkgaXRlbXMKPiAKPiBUaGlzIGNvbW1pdCB1cGRhdGVzIHRo
+ZSBzbnBzLGR3LWFwYi10aW1lciBiaW5kaW5nIHRvIGFsbG93IHVwIHRvIHR3byByZXNldAo+IGxp
+bmVzLiBJdCBzcGVjaWZpY2FsbHkgZG9jdW1lbnRzIHRoZSB0aW1lcl9OX3Jlc2V0biBhbmQgcHJl
+c2V0biByZXNldCBpbnB1dHMKPiB0byBtYXRjaCB0aGUgaGFyZHdhcmUgY2FwYWJpbGl0aWVzIG9m
+IHRoZSBEZXNpZ25XYXJlIElQIGZhbWlseS4KPiAKPiA+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0
+aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdGltZXIvc25wcyxkdy1hcGItdGltZXIueWFtbCBiL0Rv
+Y3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy90aW1lci9zbnBzLGR3LWFwYi10aW1lci55
+YW1sCj4gPiBpbmRleCBkMzNjOTIwNWE5MDkzLi40ZDMwY2QwMWFjNjVmIDEwMDY0NAo+ID4gLS0t
+IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3RpbWVyL3NucHMsZHctYXBiLXRp
+bWVyLnlhbWwKPiA+ICsrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy90aW1l
+ci9zbnBzLGR3LWFwYi10aW1lci55YW1sCj4gPiBAQCAtMjUsNyArMjUsMTAgQEAgcHJvcGVydGll
+czoKPiA+ICAgICAgbWF4SXRlbXM6IDEKPiA+ICAKPiA+ICAgIHJlc2V0czoKPiA+IC0gICAgbWF4
+SXRlbXM6IDEKPiA+ICsgICAgbWluSXRlbXM6IDEKPiA+ICsgICAgaXRlbXM6Cj4gPiArICAgICAg
+LSBkZXNjcmlwdGlvbjogVGltZXIgdGlja3MgcmVmZXJlbmNlICh0aW1lcl9OX3Jlc2V0bikgcmVz
+ZXQKPiA+ICsgICAgICAtIGRlc2NyaXB0aW9uOiBBUEIgaW50ZXJmYWNlIChwcmVzZXRuKSByZXNl
+dAo+IAo+IFtTZXZlcml0eTogSGlnaF0KPiBXaWxsIHRoaXMgY2F1c2UgYSBzeXN0ZW0gYnVzIGhh
+bmcgaWYgYSBkZXZpY2UgdHJlZSBpcyB1cGRhdGVkIHRvIHNwZWNpZnkKPiBib3RoIHJlc2V0cz8K
+PiAKPiBMb29raW5nIGF0IHRpbWVyX2dldF9iYXNlX2FuZF9yYXRlKCkgaW4KPiBkcml2ZXJzL2Ns
+b2Nrc291cmNlL2R3X2FwYl90aW1lcl9vZi5jLCB0aGUgZHJpdmVyIHVuY29uZGl0aW9uYWxseSBm
+ZXRjaGVzCj4gYW5kIGRlYXNzZXJ0cyBvbmx5IHRoZSBmaXJzdCByZXNldCBieSBwYXNzaW5nIE5V
+TEwgYXMgdGhlIGlkOgo+IAo+IGRyaXZlcnMvY2xvY2tzb3VyY2UvZHdfYXBiX3RpbWVyX29mLmM6
+dGltZXJfZ2V0X2Jhc2VfYW5kX3JhdGUoKSB7Cj4gICAgIC4uLgo+IAkvKgo+IAkgKiBSZXNldCB0
+aGUgdGltZXIgaWYgdGhlIHJlc2V0IGNvbnRyb2wgaXMgYXZhaWxhYmxlLCB3aXBpbmcKPiAJICog
+b3V0IHRoZSBzdGF0ZSB0aGUgZmlybXdhcmUgbWF5IGhhdmUgbGVmdCBpdAo+IAkgKi8KPiAJcnN0
+YyA9IG9mX3Jlc2V0X2NvbnRyb2xfZ2V0KG5wLCBOVUxMKTsKPiAJaWYgKCFJU19FUlIocnN0Yykp
+IHsKPiAJCXJlc2V0X2NvbnRyb2xfYXNzZXJ0KHJzdGMpOwo+IAkJcmVzZXRfY29udHJvbF9kZWFz
+c2VydChyc3RjKTsKPiAJfQo+ICAgICAuLi4KPiB9Cj4gCj4gSWYgdGhlIGRldmljZSB0cmVlIHNw
+ZWNpZmllcyBib3RoIHJlc2V0cyB0byBtYXRjaCB0aGlzIG5ld2x5IGFkZGVkIHNjaGVtYQo+IGNh
+cGFiaWxpdHksIHRoZSBzZWNvbmQgcmVzZXQgKHByZXNldG4sIHdoaWNoIGNvbnRyb2xzIHRoZSBB
+UEIgYnVzIGludGVyZmFjZSkKPiB3aWxsIGJlIGNvbXBsZXRlbHkgaWdub3JlZCBhbmQgbGVmdCBh
+c3NlcnRlZC4KPiAKPiBTaG91bGQgdGhlIGRyaXZlciBiZSB1cGRhdGVkIHRvIGV4cGxpY2l0bHkg
+ZmV0Y2ggYW5kIGRlYXNzZXJ0IGJvdGggcmVzZXRzCj4gKGUuZy4sIHZpYSByZXNldF9jb250cm9s
+X2J1bGtfZ2V0KSBiZWZvcmUgZXh0ZW5kaW5nIHRoZSBiaW5kaW5nLCB0byBhdm9pZAo+IHN5c3Rl
+bSBoYW5ncyB3aGVuIG1lbW9yeS1tYXBwZWQgcmVnaXN0ZXJzIGFyZSBhY2Nlc3NlZD8KPiAKCkhp
+IFNhc2hpa28sCgpJbiB0aGUgbmV4dCB2ZXJzaW9uLCByZXBsYWNlIG9mX3Jlc2V0X2NvbnRyb2xf
+Z2V0KCkgd2l0aMKgCm9mX3Jlc2V0X2NvbnRyb2xfYXJyYXlfZ2V0X29wdGlvbmFsX2V4Y2x1c2l2
+ZSgpIHRvIGVuc3VyZSBhbGwgcmVzZXRzwqAKY2FuIGJlIGRlYXNzZXJ0ZWQuCgpCZXN0IHJlZ2Fy
+ZHMsClh1eWFuZyBEb25nCgo+ID4gIAo+ID4gICAgY2xvY2tzOgo+ID4gICAgICBtaW5JdGVtczog
+MQo+IAo+IC0tIAo+IFNhc2hpa28gQUkgcmV2aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9w
+YXRjaHNldC8yMDI2MDcyMTEyMDc1Ny4xMTM0LTEtZG9uZ3h1eWFuZ0Blc3dpbmNvbXB1dGluZy5j
+b20/cGFydD00Cg==
