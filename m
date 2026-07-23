@@ -1,82 +1,183 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEEF345ECA
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 16:32:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDF3345EA9;
+	Thu, 23 Jul 2026 16:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784824364; cv=none; b=V8+QyN//HeDViAD9fkanYkK/+X9AkbJXB6wqJJIWEq7B79FSBRPHDKb7kxjKrzsYLo4fQpsoxZk8wG4XGncu+Yt4/dBID+/LFm6wphBjwhKGiAln9woRCl+5etrI3BJQQUN4sz+B2iwwhQsMuB+A+EBsOt+EnzEY8WbnX0fOsIs=
+	t=1784824620; cv=none; b=qzfBnyCvUocbp776dLxGG6dW/x/HW8SivnL9QYYZR+U6qddcxcdeH5JxECzl2VtHkH3Dv77kNXIl3qUPdneE8NUKuX9JMI8ZsEtDVfW1XdEoqPs0nvQiRw9n8dK6if8bZe+5tX7mx1u6yN/17cSk5UYe2E7BopjtraHDdVeTTyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784824364; c=relaxed/simple;
-	bh=3xA9+ZNTl/sGF6rclOxo8DYl8KQFuO75/Ryo2nEQudM=;
+	s=arc-20240116; t=1784824620; c=relaxed/simple;
+	bh=6jI0ftHgEIa4QOfa+aPb2/P+102XLq9gL5sGL+M/8w8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RsJBE7SvqNL22ESiZa0Yp8gkjVyaXeGuFXSGvUOiFikEQ4ihpeOzrZtjxL4Eoqcy0+7CwP9g8IrfyjxH5DNOUvQUVSZ6LJEzL1yzkx8sjbaZMNe/ZZNGh7SdzMXuOOmBNp/2rpP9ttNVRjv3m1Utwh0MebiL0CcBjCcIogEh8Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=fail smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=IM15lyrg; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=mit.edu
+	 Content-Type:Content-Disposition:In-Reply-To; b=BYQo/Kzby2pwV6Tql3BJ0E/wqkCZsnzXtTPJ4Ez6jEzCKtmCg6Y4sB0z5YYh1uafb3zMLZ/8HcXCZStaTwLu1b6f4jBiGhkLREJ1l31K/OeKLitsXm0rWuHuKg2wRyK3xKKn/AHhXhQkzi3ZeUU7B5QkWSVpJxzQWaXztQQ7B/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kEMj4Wd/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="IM15lyrg"
-Received: from macsyma.thunk.org (pool-108-26-156-127.bstnma.fios.verizon.net [108.26.156.127])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 66NGWRBT017547
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jul 2026 12:32:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1784824352; bh=/l6uPPIeu1aaSxdjQO/YdwZkUrIbBDnoj5rcVkxHBxE=;
-	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
-	b=IM15lyrgH4GQsfQizlcpILDqNXlcY2IHkSWlJYbFKI2X26vKg/LB0MAHoef5yKPIa
-	 CK4q2vKgwRg6i173SnebFRlP3gKC5fkIT0PdDtwtGKNNH4n+MZ3NWn1Jbyhbvc3lp8
-	 8ndhd+R6tLTBtM+RdGYuPq/RO7jcF2ODGtLm3ui5zWNTvWu5jee5PD3edlSKYjY4mx
-	 a5IqWGhRRBYa43dGyUPYMMZYBXidKilwHdtEWBFw3apYLazQZ+mQQ+zNF9RVDLrWuU
-	 gy3SU5o2N+6eu8uFNkyllGRlvXFav38BdfKygJVZaj5yuzswhRV5peHLzZaTkt5r52
-	 Ew6Ipk3Ep3PlQ==
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
-	id C3F01BD259D; Thu, 23 Jul 2026 12:31:26 -0400 (EDT)
-Date: Thu, 23 Jul 2026 12:31:26 -0400
-From: "Theodore Tso" <tytso@mit.edu>
-To: Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-ext4@vger.kernel.org
-Subject: Re: [PATCH v4 9/9] ext4: protect WRITE_ZEROES written extents with
- orphan list
-Message-ID: <amJAxFjWXiSzjNd7@mit.edu>
-References: <20260714080044.4038124-1-yi.zhang@huaweicloud.com>
- <20260714080044.4038124-10-yi.zhang@huaweicloud.com>
- <20260714084203.971381F000E9@smtp.kernel.org>
- <amD3fZPiCKwUqhGd@mit.edu>
- <6213263f-27e4-4d2a-b6ef-f63093f89e69@huaweicloud.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kEMj4Wd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6909E1F000E9;
+	Thu, 23 Jul 2026 16:36:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784824618;
+	bh=4wJRwgPZ4AI7SWe4QB67LiniTR58MRIskUEiQ1zUBE8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kEMj4Wd/lfr3ve62GnSJ7LOnIdXKVhD/jkdJGfhM2kZaqSyYc676weklICmzyb0IG
+	 DyJxBZAHZ38qNuQLIbqnsEKIlVP+j6Y/j0kk9L5y4SPUyojBwpOLKlMVyB8CuE+v5l
+	 kgeJUP5Ds8/JJLfSc3EEZpL83DqmESHJrKP0BITIawyum2NI8u6OIg29n6H3BEiOZj
+	 57p/6pBbuYZxAoU+muC8R7FsTNM3UyZ9JjAxlkixMzdGEUPdd77Mq0ueggCnQ0keYz
+	 N8wK/4mILUyRGkhBMfSDCskcjJtCQJvruJeqhwB28ZUTGpEP+73UBkQQg9R0vCAEpO
+	 4p4KPD1bpZ6Mw==
+Date: Thu, 23 Jul 2026 17:36:54 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ariana Lazar <ariana.lazar@microchip.com>, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: iio: dac: add support for MCP48FEB02 SPI
+Message-ID: <20260723-tinkling-apple-9cdac4921218@spud>
+References: <20260723-mcp47feb02_refactor-v1-0-ee59e63672bc@microchip.com>
+ <20260723-mcp47feb02_refactor-v1-2-ee59e63672bc@microchip.com>
+ <20260723135115.2AF451F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gO3PmxjrUfw3GFuH"
 Content-Disposition: inline
-In-Reply-To: <6213263f-27e4-4d2a-b6ef-f63093f89e69@huaweicloud.com>
+In-Reply-To: <20260723135115.2AF451F00A3D@smtp.kernel.org>
 
-On Thu, Jul 23, 2026 at 11:29:44AM -0500, Zhang Yi wrote:
-> Therefore, I think the correct approach is to modify
-> ext4_convert_unwritten_extents() so that it returns the actual
-> conversion length, and only returns an error code when no conversion has
-> taken place at all. This way, ext4_alloc_file_blocks() can use the
-> returned conversion length to decide whether to add the orphan list
-> (within the same handle as the conversion operation).
-> 
-> What do you think?
+--gO3PmxjrUfw3GFuH
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, that makes sense.
+On Thu, Jul 23, 2026 at 01:50:59PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] The schema retains `additionalProperties: false` at the root l=
+evel while introducing a conditional `$ref` to `spi-peripheral-props.yaml` =
+in the `allOf` block. This breaks schema validation for standard SPI proper=
+ties.
+> - [Low] The newly added SPI device tree example uses an inappropriate SPI=
+ chip select value (`0x60`), copied from the I2C device address example.
+> --
+>=20
+> --- Patch [2]: [PATCH 2/3] dt-bindings: iio: dac: add support for MCP48FE=
+B02 SPI ---
+> commit a357ffde05c7807cd64bca71103d780d8dde416b
+> Author: Ariana Lazar <ariana.lazar@microchip.com>
+>=20
+> dt-bindings: iio: dac: add support for MCP48FEB02 SPI
+>=20
+> This commit adds SPI support for the MCP48FxBy1/2/4/8 DAC families to the
+> existing MCP47FEB02 device tree binding. It introduces the new compatible
+> strings, the spi-max-frequency property, and a devicetree example for SPI.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/iio/dac/microchip,mcp47f=
+eb02.yaml b/Documentation/devicetree/bindings/iio/dac/microchip,mcp47feb02.=
+yaml
+> > index d131f136bd151..d25c763241a4f 100644
+> > --- a/Documentation/devicetree/bindings/iio/dac/microchip,mcp47feb02.ya=
+ml
+> > +++ b/Documentation/devicetree/bindings/iio/dac/microchip,mcp47feb02.ya=
+ml
+> > @@ -178,6 +239,13 @@ required:
+> >    - vdd-supply
+> > =20
+> >  allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            pattern: "^microchip,mcp48f[ev]b[0-2][1248]$"
+> > +    then:
+> > +      $ref: /schemas/spi/spi-peripheral-props.yaml#
+>=20
+> [ ... ]
+>=20
+> > +    then:
+> > +      properties:
+> > +        spi-max-frequency: false
+> > +
+> >  additionalProperties: false
+>=20
+> [Severity: Medium]
+> Since this schema now includes a conditional $ref to spi-peripheral-props=
+=2Eyaml
+> in the allOf block, should this be changed to unevaluatedProperties: fals=
+e?
+>=20
+> JSON Schema limits additionalProperties: false to only evaluating propert=
+ies
+> explicitly declared in the root properties or patternProperties. Any stan=
+dard
+> SPI properties pulled in via the conditional $ref will be incorrectly rej=
+ected
+> by dt_binding_check.
 
-I've checked the challers of ext4_alloc_file_blocks(), and at the
-moment, in the case where there is a partial allocation, we return the
-error, not the number of partially allocated files.  But given that
-the callers are doing fallocate() that seems to be fine.
+This trips up Sashiko a lot.
+This additionalProperties is fine if spi-max-frequency is the only
+property from that binding that this device uses.
 
-I'd suggest we should explicit about documenting how
-ext4_alloc_file_blocks() will handle partial allocations before it
-runs into an problem, so it's helpful for future people who are making
-changes here.
+>=20
+> >  examples:
+> > @@ -299,4 +424,29 @@ examples:
+> >              };
+> >          };
+> >      };
+> > +  - |
+> > +    spi {
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <0>;
+> > +
+> > +        dac@60 {
+> > +          compatible =3D "microchip,mcp48feb02";
+> > +          reg =3D <0x60>;
+>=20
+> [Severity: Low]
+> Is 0x60 intended to be used as an SPI chip select here, or was this copied
+> from the I2C example?
+>=20
+> Typically, an SPI chip select would be 0 or 1, and the node would be named
+> dac@0 with reg =3D <0>.
 
-Thanks,
+It's an example, so it doesn't matter. But yes, looks like a copy-paste
+mistake.
 
-						- Ted
+>=20
+> > +          vdd-supply =3D <&vdac_vdd>;
+> > +          vref-supply =3D <&vref_reg>;
+> > +          spi-max-frequency =3D <10000000>;
+> > +
+> > +          #address-cells =3D <1>;
+> > +          #size-cells =3D <0>;
+> > +          channel@0 {
+> > +            reg =3D <0>;
+> > +            label =3D "Adjustable_voltage_ch0";
+> > +          };
+> > +
+> > +          channel@1 {
+> > +            reg =3D <0x1>;
+> > +            label =3D "Adjustable_voltage_ch1";
+> > +          };
+> > +        };
+> > +    };
+> >  ...
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260723-mcp47feb02_=
+refactor-v1-0-ee59e63672bc@microchip.com?part=3D2
+
+--gO3PmxjrUfw3GFuH
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCamJDJgAKCRB4tDGHoIJi
+0qdSAQCyvH4tH2zk8ZjftTMXyjvrVt3MH+Z/o5Vg9ky5FJKqmAEA4e9dYGtSfbp3
+gVL/YmYj9j8o/YWFEb0q+FlYHX2LTQs=
+=PKMa
+-----END PGP SIGNATURE-----
+
+--gO3PmxjrUfw3GFuH--
