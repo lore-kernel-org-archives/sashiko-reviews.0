@@ -1,21 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BBA3ED10F;
-	Thu, 23 Jul 2026 07:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC90E3F58CC
+	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 07:51:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784792602; cv=none; b=HYnbDNZRVVhfjqPCl5oPT6/kZtPt+0i58NWAyhtpqE4KZKdAy2OIshO1TU+Bq8uT7IBPnVtPlg7l2e8mT6LIiwbNDfSOGwg4dXbs36NNAcWNDerlKC0dkKtvx4Ey+oF5rIKgxAj6D7bD0q31f88fSTfsRRXnRiTaREb1sjzxf38=
+	t=1784793090; cv=none; b=q9dK1LJQhO/ccoq92c2rMZGYF3d+pL+VRlkwVv5At8ofF6WT50dpXSz5F4dWz7+NM2RzFA37+ynSGoRbdpEGmqWgHkqcDoS41I+8veTjcDnIDjY6VOqthKxBNibwy1tJSNF9VtTzpI3MRuL4J/0soY9cBNF+HWI31C6JIdXYvPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784792602; c=relaxed/simple;
-	bh=YfiVjQuylJOLR8xVQg8VGMf9Q+qNRdsO5mgJLm8O3Og=;
+	s=arc-20240116; t=1784793090; c=relaxed/simple;
+	bh=SNsUozUZWFKiCkN7Jy0qN4XIwMvqhfqRrgc2sGc6wkk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NqqT0j/SVSQ8NbcgrikYXfrJBfMbEg4t5jB2ppFSyxSrA0bzMf34G59C0SsWG1SIYWlZX+h3HwpwYutWnvjcFdxYrVp3SUaWBs3rvG0uHqwOnzkzTXfizH+qVbZcry8HbkdNzn2rxSAi5n97uOgaCrcNhTlFfKLGJXKSniQRaN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA7C1F000E9;
-	Thu, 23 Jul 2026 07:43:18 +0000 (UTC)
-Message-ID: <7b5fd9c6-28b3-43d0-9d4b-14203d7c57d9@kernel.org>
-Date: Thu, 23 Jul 2026 16:43:16 +0900
+	 In-Reply-To:Content-Type; b=pZh6lJczDJUZ+3gWfeGrjKD2OttaWkSKyQC8as6tUIaRPedYpYFaVN2mlQUrsHx+67d9PYOIp4D39ZDoxSkCzTkBgj28iwqXWC0ldIqmYAfPSNrI/wO+k3Pd0r3Ca6smTDjOsJUDN9ipXTc4LDaZmVvYWFx9WnJyzOyEmDA4qyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MB/eVKfC; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MB/eVKfC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784793087;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Sqak6NzeK3N9HwY2qRwknbGUvJUZRzXhr8+SM9jOMpE=;
+	b=MB/eVKfCqk4ouMn4NoLBGjOSGXoOHBm7orXRaygsnW5f37DwbSudhLHWZE2sJtC+M2Idex
+	1KbV+ZQ0DMr1IPO8L/voLeUAkh0WEno9OYt/XYhmEKQWftoB1hfiI4Ha9pZm9jabJA9rWF
+	wIMKmn0o2J2IB9aQsUl9o3w1VbTDnSY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-NoUHEy9vNwSPDhy_9qDXFQ-1; Thu, 23 Jul 2026 03:51:26 -0400
+X-MC-Unique: NoUHEy9vNwSPDhy_9qDXFQ-1
+X-Mimecast-MFC-AGG-ID: NoUHEy9vNwSPDhy_9qDXFQ_1784793085
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-47f90dbaf84so257828f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 00:51:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784793085; x=1785397885;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Sqak6NzeK3N9HwY2qRwknbGUvJUZRzXhr8+SM9jOMpE=;
+        b=Ne4fmat4VgV/IVdIRT2FUJNFHQxgTKtHirJx45ecaHYLmHvyQ0Ds0lPqQJ0HaVcEny
+         MO+lxs/2xL5uCLKUQWRgZJZpGA5cufyzzrnTJPwmsjw9kv9NOePRZXfqFhGqKvExQ6wi
+         iT1k2Uxr/RMG9Zw5WeMxayeUEE8AcYRIgREMc+/4AoSj9oQQj6nXOrQkrX3ZPU70VcY/
+         cHvBlIww9Q3G+Fe+hV7QIMcuBMW6+WtmLcXGuxsGgsMWUfl9zIxwVuugEDJ+/UUOCBF9
+         gu7LJHP+bULfUzBhIKJdNm2f+Bk4k76xFGv7z6XHYQXnJeS+bXbHvTnU4/VPMc3piAkM
+         00sQ==
+X-Gm-Message-State: AOJu0Yx6nYWyxBmjQhUz2HE0xYhaf53y3KiAb/Q8gGCju6QceKoWGIBI
+	/GlTo9iDXWUELNQ5VPCLyYZyuLJUnzA2SzxP+gCc6Rg5W9MFsHXhSLzDzgGwpT6vy0hkTSfPhR9
+	1WcJlExzhFm5Bz9nqLxgWrPbWLEd6hEy+w0wBfQWT+wxqJ2QsYq3FnDKRYE0HIP90n/LCEZeWN+
+	hvgmUneNBATo4BaHovsTJ6wmt/9lH636W4sm4mz5bzTawPTcDK6ec=
+X-Gm-Gg: AR+sD11757ruZ3icQLhLpSpSOtWcz9VF5kjrSvg0Cno2BqOiW5e1DrWKj2U2JKjUZLg
+	b+kxYHZHhUv/gsJEYJ02J3/qkc20NDQt5C8RQdMXJBNfuyPb8WvOvW8akrIol4WPkKR5lk96/rQ
+	i+aYblpMjlphyayhsYhAsl0NkMIJozHTQxr8Np4Lt+Qee38adS1AgypEt13ofRav9kvNbM8G2fl
+	7cpsoi09iVODGII49IqNBHlwCf0SqeCyz9BWnsLcIn2wIUcVjztB83EUu/eP8s/axP13g+qlHOp
+	iwr7+/BEW8WTIEXWP1+piNLHGDHZH7Rulvb5f6nCQ3dOzbkQoHNWbKYLsanjawzwVBNYnRRMHBf
+	8FZSZ5amu2pMLd0JxJUCzOOw4ZZke/ZmbOvBXL/1jOanRYxPWgcxFL4BBxeBoGoBBi5Nufic6Ev
+	PPaQ==
+X-Received: by 2002:a05:6000:1ac9:b0:47f:3e80:7c3b with SMTP id ffacd0b85a97d-47f8d76ae47mr2447063f8f.48.1784793085293;
+        Thu, 23 Jul 2026 00:51:25 -0700 (PDT)
+X-Received: by 2002:a05:6000:1ac9:b0:47f:3e80:7c3b with SMTP id ffacd0b85a97d-47f8d76ae47mr2447020f8f.48.1784793084810;
+        Thu, 23 Jul 2026 00:51:24 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:5521:6b10:58fd:68f:7756:389d? ([2a0d:3344:5521:6b10:58fd:68f:7756:389d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c6e9a2sm13269952f8f.35.2026.07.23.00.51.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jul 2026 00:51:24 -0700 (PDT)
+Message-ID: <3678f78e-f2e7-4520-84fb-d78b10dc00c5@redhat.com>
+Date: Thu, 23 Jul 2026 09:51:23 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -23,104 +75,60 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHv2] ata: pata_ep93xx: add missing "cc" clobber to inline
- asm
-To: sashiko-reviews@lists.linux.dev, Rosen Penev <rosenp@gmail.com>
-Cc: linux-ide@vger.kernel.org, cassel@kernel.org
-References: <20260720235952.1334318-1-rosenp@gmail.com>
- <20260721001238.8CD4B1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH net-next 2/2] net: atlantic: convert RX path to page_pool
+To: sashiko-reviews@lists.linux.dev, Yangyu Chen <cyy@cyyself.name>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <tencent_7DB01BE7F8FA056BB5F11D3570CF636C4309@qq.com>
+ <tencent_164779DC8B18AB10B9C636BE23C178ED5907@qq.com>
+ <20260710173815.DE08B1F00A3A@smtp.kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <20260710173815.DE08B1F00A3A@smtp.kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: DqALVhPqLYlyltMOJumj8bKKMCm8UB4Idz1m_45Q4Wo_1784793085
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260721001238.8CD4B1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7/21/26 09:12, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Trailing byte transfers in `ep93xx_pata_data_xfer()` silently corrupt data on big-endian systems due to incorrect endian swapping and variable truncation. For READ, the code assigns the 16-bit swapped result of `cpu_to_le16(ep93xx_pata_read_data(...))` to `*pad`, which is an 8-bit `unsigned char`. This truncates the 16-bit value. On big-endian systems, `cpu_to_le16()` swaps the bytes, so this truncation discards the lower byte (the correct data from the bus) and saves the upper byte to the buffer. For WRITE, `le16_to_cpu(*pad)` promotes the 8-bit byte to an integer before swapping it, resulting in a shifted 16-bit value, which causes the device to receive corrupted data on the wrong data lines.
-> - [High] The inline assembly delay loop `ep93xx_pata_delay()` lacks a `"memory"` clobber, permitting the compiler to reorder it with respect to I/O accesses, which violates ATA PIO timing requirements. On older ARM architectures like ARMv4T (used in EP93xx) where `CONFIG_ARM_DMA_MEM_BUFFERABLE` is not selected, the standard I/O macros (`__iormb()` and `__iowmb()`) evaluate to empty, meaning `writel()` and `readl()` provide no compiler memory barriers at all. Because `__raw_readl()` and `__raw_writel()` are implemented using `asm volatile` without `"memory"` clobbers, GCC's instruction scheduler is completely free to reorder these volatile I/O accesses across the `ep93xx_pata_delay()` loop. Even if memory barriers were present after the read or before the write, the `asm volatile` instructions themselves lack dependencies and can be swapped.
-> --
-> 
-> --- Patch [1]: [PATCHv2] ata: pata_ep93xx: add missing "cc" clobber to inline asm ---
-> commit e8afdf774c87485ee82a0fe97b982fc47fc827bc
-> Author: Rosen Penev <rosenp@gmail.com>
-> 
-> ata: pata_ep93xx: add missing "cc" clobber to inline asm
-> 
-> This commit adds a missing cc clobber to the inline assembly in
-> ep93xx_pata_delay() to prevent the compiler from reordering flag-dependent
-> instructions.
-> 
->> diff --git a/drivers/ata/pata_ep93xx.c b/drivers/ata/pata_ep93xx.c
->> index 42a24dc51d26b..0bb748a86ac6e 100644
->> --- a/drivers/ata/pata_ep93xx.c
->> +++ b/drivers/ata/pata_ep93xx.c
->> @@ -211,6 +211,7 @@ static void ep93xx_pata_delay(unsigned long count)
->>  		"bge 0b\n"
->>  		: "=r" (count)
->>  		: "0" (count)
->> +		: "cc"
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but since you are updating the
-> clobbers in ep93xx_pata_delay(), should this inline assembly also include a
-> "memory" clobber?
-
-Rosen,
-
-Can you look into this please and fix it in this same patch ?
-The other critical problem can be fixed in a different patch.
-
-
-> 
-> On older ARM architectures like ARMv4T used in EP93xx, standard I/O macros
-> can evaluate to empty, providing no compiler memory barriers. 
-> 
-> Without a memory clobber here, the compiler optimizer might be free to
-> reorder independent I/O accesses across this delay loop, which could violate
-> ATA PIO timing requirements.
-> 
->>  	);
->>  #else
->>  	while (count--)
-> 
-> [ ... ]
+On 7/10/26 7:38 PM, sashiko-bot@kernel.org wrote:
+>> +		return -ENOMEM;
+>> +	}
+>>  
+>> -	if (!rxbuf->rxdata.page) {
+>> -		ret = aq_alloc_rxpages(&rxbuf->rxdata, self);
+>> -		if (ret) {
+>> -			u64_stats_update_begin(&self->stats.rx.syncp);
+>> -			self->stats.rx.alloc_fails++;
+>> -			u64_stats_update_end(&self->stats.rx.syncp);
+>> -		}
+>> -		return ret;
+>> -	}
+>> +	rxbuf->rxdata.page = page;
+>> +	rxbuf->rxdata.daddr = page_pool_get_dma_addr(page);
+>> +	rxbuf->rxdata.pg_off = pg_off + self->page_offset;
 > 
 > [Severity: Critical]
-> This is a pre-existing issue in the same file, but could the trailing byte
-> transfers in ep93xx_pata_data_xfer() silently corrupt data on big-endian
-> systems due to truncation?
+> Can this cause severe DMA memory corruption during RX buffer refill?
 > 
-> For READ transfers, the code assigns a swapped value to an 8-bit variable:
+> The initialization of buff->pa appears to be missing or was removed here,
+> but the hardware callback still executes immediately after and
+> unconditionally overwrites the descriptor's physical address:
 > 
-> drivers/ata/pata_ep93xx.c:ep93xx_pata_data_xfer() {
+> hw_atl_b0_hw_ring_rx_fill() {
 >     ...
->     *pad = cpu_to_le16(ep93xx_pata_read_data(drv_data, IDECTRL_ADDR_DATA));
->     ...
-> }
-> 
-> Since pad is an unsigned char pointer, this truncates the 16-bit swapped
-> result. On big-endian systems, cpu_to_le16() swaps the bytes, so truncating
-> it to 8 bits discards the lower byte containing the correct data and saves
-> the upper byte instead.
-> 
-> Similarly for WRITE transfers:
-> 
-> drivers/ata/pata_ep93xx.c:ep93xx_pata_data_xfer() {
->     ...
->     ep93xx_pata_write_data(drv_data, le16_to_cpu(*pad), IDECTRL_ADDR_DATA);
+>     rxd->buf_addr = buff->pa;
+>     rxd->hdr_addr = 0U;
 >     ...
 > }
-> 
-> Promoting the 8-bit pad value to an integer before swapping it on a
-> big-endian system seems to shift the byte to the wrong data lines, sending
-> corrupted data to the device.
-> 
 
+FTR, AFAICS the above is AI sloop (and quite an unexpected one!) as
+buff->pa is actually always initialized by:
 
--- 
-Damien Le Moal
-Western Digital Research
+	buff->pa = aq_buf_daddr(&buff->rxdata);
+
+that comes after the aq_get_rxpages() call. All other issues are
+pre-existing ones.
+
+/P
+
