@@ -1,195 +1,182 @@
-Received: from fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com (fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com [63.178.132.221])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3C5481652
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 12:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=63.178.132.221
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784808284; cv=fail; b=XhKiD7QFB0ItVl8g3Olyx7NneWnBk9jP8ckvCJV7ghVc0NDu/AW1na/b0x58813X4pX8gp6F+J1X8vI5OKp/Owf5t+wS5MYKxvT7zEfCF+drKuJmK9JLxJL6w9GLWmA6ZBTjekAwU9LcALa3dqXCyTcAz9fSo9rCxdAxZk1hMH0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784808284; c=relaxed/simple;
-	bh=40lB/ZpSqNB2mUgLc/G1Z9FbdvS9ltMEBnM30UJdMpw=;
-	h=Subject:From:To:CC:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=P0wouNqA3CqN+hmSDgtF7qxykChUBBBNbnRi6QjO7F1JiNCokEiD8i+VSyiw7AP+P3fcirGOMTRJ7DB/4NkCB115IcBv+/5y5jCRk2wasauK8mk2aWgg4Ne03TM5/wpUribtxOaO/AOiDrhtK7pgrs1WKFdZv9vGxVIgQG7OZdo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de; spf=pass smtp.mailfrom=amazon.de; dkim=pass (2048-bit key) header.d=amazon.de header.i=@amazon.de header.b=QZ3Wdx9r; arc=fail smtp.client-ip=63.178.132.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D83439F8B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 13:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.200
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784813660; cv=none; b=p5j9Q2QpL0zXaAC4tZ1yQFj1Lt4INpEmRNrUA+jgGwWIQvNMzInmajc5iatIHN6nmXjG2DHMExgdpOjnQLT/9Bf+neYDFkNFxP6TOkmcGl9Wc1qUl+2MOPkLnNzPKOJiTjDo7eb0VjZGrnpD03M+vAPcPe4Oy/tLMtF99J9oYvw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784813660; c=relaxed/simple;
+	bh=++YBs9wp6CI7gyM/wrBl8SMkwdnQIkxPBDPZiQgE/g4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Q9pL1HU3EVlQFaCek7fDYF+k/AXir5E9KpF3kSzBz20R6M4/W78WIZKCkAvX3frg07zhSJLnI28XgxDrdJPX4l7EQ7dsyWN5QULaDcaM+kcnNvkjUEmstMixB/uPttw5Rc2DoWN7v9SfRlfXW3wwZT//sehZRC+4MiDpAkmWCW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YAogE0kA; arc=none smtp.client-ip=209.85.215.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.de header.i=@amazon.de header.b="QZ3Wdx9r"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YAogE0kA"
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c89704da8c7so1033019a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 06:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazoncorp2;
-  t=1784808283; x=1816344283;
-  h=from:to:cc:date:message-id:references:in-reply-to:
-   content-id:content-transfer-encoding:mime-version:subject;
-  bh=40lB/ZpSqNB2mUgLc/G1Z9FbdvS9ltMEBnM30UJdMpw=;
-  b=QZ3Wdx9rNzULpdDNJPxrGbTJUZpXBcxSgPHx4p+H3wi5RVJ2mPf/gQEx
-   IVIfJTuk3dr4p0ZOv19V9lwagk2EyG6/+6xlBBppWslbEgzujz4QTb3x3
-   pR4w7fjA9xyhMUaRhGBy4lIYyPg4i4efrKLqGARxxpWbl8OLKXT+MgVkx
-   aalfPr7tJjw+Gw2S1fS/7OdTgUsa8doK6hK7u6ejgUFStaUlMGVO6/yOf
-   P0Uc0REGlUvCP4D5BAEVEjCzqTFjI/DmSSWxak3sBjddRpSc49AyVA69Z
-   VsWq43T4ix8lajPj7RrLNnSux2sOUeXoKE/SmxIw9potYey8gSM39spzG
-   w==;
-X-CSE-ConnectionGUID: vsbi98LmTPiwG/Y9mrmzcw==
-X-CSE-MsgGUID: 9Io6pDMeQlWlHtbpoWI/nQ==
-X-IronPort-AV: E=Sophos;i="6.25,180,1779148800"; 
-   d="scan'208";a="16728723"
-Subject: Re: [PATCH v2] KVM: x86/pmu: Add module param to batch emulated-instruction
- reprograms
-Thread-Topic: [PATCH v2] KVM: x86/pmu: Add module param to batch emulated-instruction
- reprograms
-Received: from ip-10-6-11-83.eu-central-1.compute.internal (HELO smtpout.naws.eu-central-1.prod.farcaster.email.amazon.dev) ([10.6.11.83])
-  by internal-fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2026 12:04:38 +0000
-Received: from EX19MTAEUA002.ant.amazon.com [54.240.197.232:14174]
- by smtpin.naws.eu-central-1.prod.farcaster.email.amazon.dev [10.0.4.185:2525] with esmtp (Farcaster)
- id 33b0d446-fc08-4b45-bd5c-c525ecfa9fe9; Thu, 23 Jul 2026 12:04:38 +0000 (UTC)
-X-Farcaster-Flow-ID: 33b0d446-fc08-4b45-bd5c-c525ecfa9fe9
-Received: from EX19EXOEUB002.ant.amazon.com (10.252.51.83) by
- EX19MTAEUA002.ant.amazon.com (10.252.50.126) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Thu, 23 Jul 2026 12:04:38 +0000
-Received: from EX19EXOEUB001.ant.amazon.com (10.252.51.80) by
- EX19EXOEUB002.ant.amazon.com (10.252.51.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Thu, 23 Jul 2026 12:04:36 +0000
-Received: from FR6P281CU001.outbound.protection.outlook.com (10.252.50.44) by
- EX19EXOEUB001.ant.amazon.com (10.252.51.80) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43
- via Frontend Transport; Thu, 23 Jul 2026 12:04:36 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Gk70PqhudK3vjeZK68Os9OsQVt6YwtAqi0pW/pZ9v5piWA7zAlGCnnM01L0+6Vh/q+BVmrX3z9jRaBjPkl+AVWLKBWNm02cvA4xF5dfLoYbTViC3YWsJd5Wa/52/sy6FDP0Bbb1MGR85SYcufC0WeMNnrRY5Q8AXJlUZL3eMmcwvKQgJwoDBpQZQpaeLrepDxjLW+ubWmeBjuoN9U3XZ/0PyOvMMEKjE10iHDHYmQwzybY93VVhprJ/SHQ2wErZtSVo++nPit1VSUomhpUq+zUpfLO22UFAYkLz0BaN+KG2WGacH//x4JgXbyCNOX51Z0A7if/WP0Ix+HgZSU+ZRWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=40lB/ZpSqNB2mUgLc/G1Z9FbdvS9ltMEBnM30UJdMpw=;
- b=He4jMjuURspS3oebr/Y/ObtRKYAWQ69wAb15NTGnHxeR9UTT46QR8xnEUO0YS1sxsCIVgtsMwgPegHunS3aJp1DddQepsw6dJBcZG1AhvkWp1RYgQHgIYugaKMJXuQkOzlUJ5KdDI0hxB40yEM4XiNZaYMDZJnUzSWqZmi4CMx7JcMyB9RpEag830EdpIdNtxouY9maqnSzRExO/55phvTOVcLoyeFalV1xBDyZYwFNYJgOsj2oD2o0boWfGveolswDGSyOcd7LLursXkmWXn97ePrxX/mmsieVA02kMz9ccJpdlPIf+e3zAbYmYbu1Mj8MQoGIK6y7cDr6wu0yo2w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amazon.de; dmarc=pass action=none header.from=amazon.de;
- dkim=pass header.d=amazon.de; arc=none
-Received: from FR6P281MB5787.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:1bf::23)
- by BE3P281MB6369.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:126::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Thu, 23 Jul
- 2026 12:04:34 +0000
-Received: from FR6P281MB5787.DEUP281.PROD.OUTLOOK.COM
- ([fe80::1c27:e30e:1c73:ccd8]) by FR6P281MB5787.DEUP281.PROD.OUTLOOK.COM
- ([fe80::1c27:e30e:1c73:ccd8%4]) with mapi id 15.21.0245.009; Thu, 23 Jul 2026
- 12:04:34 +0000
-From: "Absandze, Luka" <absandze@amazon.de>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-Thread-Index: AQHdGpGOlknDX2R+5EaHaarTphCaY7Z69NwAgAAM2gA=
-Date: Thu, 23 Jul 2026 12:04:34 +0000
-Message-ID: <amH7Ncv35GsM1P0A@dev-dsk-absandze-1c-663c31a8.eu-west-1.amazon.com>
-References: <20260723105309.12145-1-absandze@amazon.de>
- <20260723111839.1385D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260723111839.1385D1F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amazon.de;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: FR6P281MB5787:EE_|BE3P281MB6369:EE_
-x-ms-office365-filtering-correlation-id: ea832154-374e-45e0-67b4-08dee8b28fcc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|56012099006|11063799006|10067099003|4143699003|18002099003|22082099003|3023799007|38070700021;
-x-microsoft-antispam-message-info: naf8Fj7c8/N3Y48IjlHQ4OKCbU5jRmN3s3SgN6+n/47oHZi5JSr9s6xr06JgajRLoLfHDxKYJFvH8M1lID3CzYUNQGaF5O8V6PXmEPZtF8drAwPDPvebEfIPrUsc6kn+/oyOSD004JX2FUfZJK4ulxYVZ+LMNyw0WzBQbdUX/9JHsZkqnISC1rMTB2WBcdE/Ys5azKlJlwGDDN69Awuco8IIelv0tx64zGOPlOLeau1Vs0qIIoIFGe6I6YXQOww5gsxtHBEoeixWAjiceSUOt/wKOOkb1IoIy6k8nZkqyQc+Q19T3n/Jv9hndZ8j4F7ZRZ7KfdkIV7debNSaR9BESMrqyGruwnlczt8zOfJLfqhG3t4d+ohZrCDq2XscMbqyzqa7xVyrADBN78vOoZ0VhSrm0ebVMVaGYGZ1ITbBVO+pzsiZ8hJFBdeUFj/HbScvMFGTL3zvTE/fz3+5Sr1fQ1ap0ykfh36TJaSHGD2h9IrOk90iTyhcOvXjGYeE8hiSUTZOv4qzGlg2U7+9FZVmF3uCZROyPyv7ofGkNghSAqfu+DIUJfAWtXiFVh0SjPenqeIpJoYkKlEEWTwjvgpVFuvMZBXkW7Mb+qHpplH8mSa8+L2eP/zfNFpgXqT63u/vYfCJ+ccPo2bErFdhgo5DMMK1UnfRME7FT0FQb5/KCn8g4NuaCfxbkb/dpddtEkOk/Q2ZwX2nx6mia27fbTCbWzMY/vVhdQDk322CXysJqSo=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR6P281MB5787.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(56012099006)(11063799006)(10067099003)(4143699003)(18002099003)(22082099003)(3023799007)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bEc3QjM3RFhtRGhib1p4OUR6eUlrbXRMcmpINUlnRTgxTUZqanZ4OU5pVUNB?=
- =?utf-8?B?OW9hTklyWmFocE85S3pXU3ozQUFXYXpPSkdHWXF0QU9QOG1NMEZVcVFEeFA3?=
- =?utf-8?B?OWNDVlhDV1V3aTVodTlQUU04VVNKRkpCLzAwSU1hOUxTei83cWNqQUNDdDBw?=
- =?utf-8?B?Q2RzY281ZVRCUkYvakRPanFhVCt0QmlRM2ZoTVVjVzBFVmhTblNzV0RUNjZP?=
- =?utf-8?B?Q0k0TUxxa2wxZEFXeWVES3FRQXBhWG5rU0t3RTU0L3pZakNXQStpOGN2S3BG?=
- =?utf-8?B?WEVEU1ZMaHYzRTViZnhqQmJMSzVQQ1EwVFo5RmREWTZMa09tWDJ3dFBJRUE2?=
- =?utf-8?B?bW9IanVMTFUxaDV5NFhSajRQejRFeEZ0WnVack5EeWhJWk9pWmhuc1B4a2ZQ?=
- =?utf-8?B?ZElDc2lwWVh4Q0I3OStZUFVLTFVjci85alNTKzlMUG1IVWtUTzY5c2prRXRQ?=
- =?utf-8?B?WWhEcXUrbEpGZk9MamdJYm9CVUJVb3lCMDRrcE4vV2dlbEN3dTY4UFVqbHJp?=
- =?utf-8?B?MkM4LzFpVEVoZWN4VkRXb3RjR0tvMWZSMHB4TEhYSXpGbk1mNHl2Rjk1eUZv?=
- =?utf-8?B?VERQNG5naFlVdUFoYlNSREM0dTd3SnhsWFVHaHladVZuL0pGQnpFdzNuN2tl?=
- =?utf-8?B?bmhQeERNazAzcHIveHdTT2Z4Y1FGTUdkWjZ6M0NNT2pVS29XUDVxbU5Bc0JJ?=
- =?utf-8?B?T3hVRytFQ2grU1Z5QnhJUlRhcDBjMnU5WVlySkRHTXBTWUovOWFGZTNuR1lZ?=
- =?utf-8?B?STIzY1cwYmI2ZHJjMnhkSFV2Y3dOeXVHbWQ1ODNPK1BOQVMzVEk5SDRBbW54?=
- =?utf-8?B?d2plY1RXaGptb0N4anZObUtsa2dVbVRCLzBkTWZZVmdjQzRFSmErWVBjM1JQ?=
- =?utf-8?B?WEdsQ3FoWnMzSEFIaXloOHoyeWw1WVNMU2RvaG5nVW12N2ZPM0xiTGFMcGw1?=
- =?utf-8?B?QS9nY2M3aUNNdkp0bmNRWmR3Mk9MTWkvbVJUcVlqSDVzWkFmQXpVdmpwZjln?=
- =?utf-8?B?RkRzQmN2Yk9oakgvc3R5RHpFelN2d2V5T0M0dm1UOEFYb1BNS24rN3N1M0w5?=
- =?utf-8?B?S3Jya283cytjWlR6NS93L1pWL01aQWdnb09laGVGQklWQTFBbXRtOVYyQ1Mz?=
- =?utf-8?B?Rk9ZR2JTUGhpZ3hXSUkxQU8zVGtnVDFJZ1Z6SFhMdGtLQzdWVVNRaDdyVkhi?=
- =?utf-8?B?RkRaNFdjSHlodTNEaWs1U2hPY2c4SVlrYVQyWThwKzhyOXhSSmUvVGpwSUF4?=
- =?utf-8?B?amRQS05iTmJwVjlvSUZnQVRxSXQzcnIxeUYzSU1XbE5hSjlqMXNNb0p4R2ZS?=
- =?utf-8?B?VGpHT3FFN3BCdmRBQlR2Zm8xaEZhbXFmV1lkandZbmZvVVkxZzczdlBNWFBw?=
- =?utf-8?B?V0lib0NFK1hhVUYwcUVjeE94V2V1ektnbm0vTUNyRmRYYU1hSG9NR0VVVlVm?=
- =?utf-8?B?ZVUwNDY1YmFXMFhreklDZ3F6cWFJSkFQM0p2K1Nwd2VjQitSQVdzRlNUUkFy?=
- =?utf-8?B?Q1h5YkV0YnB5b3BqazZrU0FxTnJ0bmxMUGl4OUJzRk5kTWxjVWp2a29hOE5w?=
- =?utf-8?B?Ty91M1Z6cy95Tk9lMWRXTUtTc1dUeHdORk85T2JPZllLbGJwdWM5MEN5OGw4?=
- =?utf-8?B?L1dWZ0VLRitQTHplY0lHb016YkhWZnE1ckJGL1pCUDc2TWFmRHh3NG9vY2RI?=
- =?utf-8?B?RTN3UzZmUGxTa0c1azlnNW1hMzRBdzhLVjd4cFZKdTVqSzV6NVg1YVRTT3lr?=
- =?utf-8?B?S0R5SzNWQ000RllUV1FxeUxsclgxc09xZE9ySkUraWdyTWQybjdCVHJBK0Jo?=
- =?utf-8?B?Q0FYWEk5MFVCZm1rbTI2RExxZ1RUNG4vaEsxM3R5SEsrdmhXT1V5WFFnSjZH?=
- =?utf-8?B?UlowT1pMRnBjdEhnc3hrUGlwVC9RVDZwSzNzREVGblFGQzJqckpNbjBYc1Bu?=
- =?utf-8?B?K0t0c052YTJzY1V4M0RZTlRmNGlGeVBBRGRmMkFST3BQNEdPSHMwemoxNk8r?=
- =?utf-8?B?c3g2aWdvWDJQRndFem94Q1pNYmwxcWpFQWVnK29VRlhEOW5uZTQ2NFVDWnBT?=
- =?utf-8?B?bFh5emdBQmg4eFpCOW1EdjlHaEtKdVpHUG1FNVlHWEtrenV0Z09iSFkzTmRP?=
- =?utf-8?B?N2dRT3M0c0d6ZURBaWVRNHZwVktJQmpOK0hibExESGlnNm9wNjZ1UXVWL1kz?=
- =?utf-8?B?L25PbUdsYWRjdFM4OWg5eVhIeFFKRGRBVTRVT3VHUnZLVUN4K0VPSytsL1pv?=
- =?utf-8?B?ZXFEUzBvZnAyMXFZRFJSMGlrcklwTnpUK0VjSTBGQjg2VERHZUlpK2RVanhM?=
- =?utf-8?Q?KOfhzzyhdDrzwENJOU?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <35635536830F6A428C5C3E1BE5F02A42@DEUP281.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+        d=google.com; s=20251104; t=1784813657; x=1785418457; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=P9w3oZFu/DbnCQZ5YZF6ebjs1fSL024dBaof78/i83o=;
+        b=YAogE0kAOt/7tHvyZDRXA0LCyq02VVkkfWsRRbHUTUyDQFCRyFAAn4CJANl5CczwKP
+         NbjCnBCK5FeSgHnkiNlzvmB4WIgg9tencatopH2ohTzVpujAiZPZmEin5VmyZCRxbwgs
+         ewTpmHWUVq81J/X0KpNUAs4+LfMzZ56kriN9+b72cVXRlB3b+d0U4vDHge/oFxsadfWg
+         27ZmowYUgtHZJolY9MfKCoMlvWeKUVm+F431lDtfxNIdVedQpdWXzC7FkHZokpq0eUtf
+         A/L19N0xl9upxfXmkDSBgAM2g7PVLfd/evpbZ8EocDbDYCBBfYMOhgdR/aMPyGFMgLH7
+         AeLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784813657; x=1785418457;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=P9w3oZFu/DbnCQZ5YZF6ebjs1fSL024dBaof78/i83o=;
+        b=rqXJHsYP022EGXVc1CdyLt1j7knIt4jAy/T3NA4clZQm+0fp96tvU9lamtTQ+NVlfE
+         QON3pskwWFtt24hxZPLelj1Ka5Xht4p2pe7sfvFItQTHJYAq5o/5mZX4MLYiujDs10jd
+         IR7APTWPVNJgKVHvb2gMAksmSbZ3QppP9zmlN48dT0iKGk9uScMEEJKoCb1Y6aIkzShs
+         n70wcKNsnoSdzY+EBDCvpjghUEkDJzJPzsTC14zI155GH8k/7s+ic/iIcm9C1CtJjx5T
+         xUUUeMyhMgHfOF6ef+KLSU+Pq12Bch9ADBPGclj1o0fEvFbWhe6BsE9OMUFlO5Jy2EjJ
+         eS1Q==
+X-Gm-Message-State: AOJu0Yy522IIw+eAuCBFDokFk6avt2634ffnJaywwi+UueM2Lg8ueFbd
+	nA1lmvAEROax130EG764Jf+3f7nvF9MiV7obo3uzFzK7JQCXpA02MfXgZTKyHuPks8GvsBQAaWG
+	x7XQzGA==
+X-Received: from pgax6.prod.google.com ([2002:a05:6a02:2e46:b0:c9e:2db2:a2d1])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:d38f:b0:3c3:64cc:311a
+ with SMTP id adf61e73a8af0-3c44aff9b7cmr3490887637.22.1784813657250; Thu, 23
+ Jul 2026 06:34:17 -0700 (PDT)
+Date: Thu, 23 Jul 2026 06:34:16 -0700
+In-Reply-To: <amGg6WjP7P-xjpLQ@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: r6ofvo0l7NfjsDv7ULuHl8F7ahKU29JIb+iJRZI5SjCghsbYeEOd+7/fKeq0JSyG7uJ6MR0KcYYe6I6PehdgWVvzOWDtENlrZitcGmNEuW2Ejclr5zuc7VYVr3LPhhbmKqWKkDF8G33c3FTZ55loJTSv2o0+ja4gC7iRPlCe/CfTRi98w4HmiyJD8MbQj17ER4E4fG+KrFXfa9tOCv6ZQfUY+AQfhmkaetqlzfRvP2ayue/0Z6Jqs0F2X8IJcC0eU6sWCo1QUxJD/ve42mciSB858lz9lynnRBp1t0HY1nugOCMEdrfD02EswKOzU9uOb8Ngc48UbAG/91keq8sclw==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: FR6P281MB5787.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea832154-374e-45e0-67b4-08dee8b28fcc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jul 2026 12:04:34.6536
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5280104a-472d-4538-9ccf-1e1d0efe8b1b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: a49AewkDPe+eSsNnEXu4iDliaFuGugeJSK8uMihs3vUuiXMRzxg3UOD0gnKymc9heN4bpYo0jGhMN8hizXyikA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BE3P281MB6369
-X-OriginatorOrg: amazon.de
+Mime-Version: 1.0
+References: <20260616004155.1435766-18-yosry@kernel.org> <20260616012056.669B91F000E9@smtp.kernel.org>
+ <CAO9r8zPRmcwKAtHch995Gm5EKxv07-3f90+H71g+w=iZ+VZfiQ@mail.gmail.com>
+ <CAO9r8zPSEw0snypASanWEdaaTnqf-ZvzRgZpEc=M+sPjELQbSA@mail.gmail.com>
+ <amFkZwsaoPvuNWDA@google.com> <amGg6WjP7P-xjpLQ@google.com>
+Message-ID: <amIYWOgQw9z3zedA@google.com>
+Subject: Re: [RFC PATCH v2 17/25] KVM: nSVM: Service local TLB flushes before
+ nested transitions
+From: Sean Christopherson <seanjc@google.com>
+To: Yosry Ahmed <yosry@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-T24gMjAyNi0wNy0yMyAxMToxOCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gVXNp
-bmcgUkVBRF9PTkNFKCkgd2hlbiBhY2Nlc3NpbmcgdGhpcyBzaGFyZWQgbXV0YWJsZSBzdGF0ZSBt
-aWdodCBwcmV2ZW50DQo+IHBvdGVudGlhbCBjb21waWxlciBvcHRpbWl6YXRpb24gaXNzdWVzLg0K
-DQpGYWlyLg0KDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gRG9lcyB0aGlzIGJhdGNoaW5nIGxvZ2lj
-IHJpc2sgcGVybWFuZW50bHkgZGVsYXlpbmcgb3IgZHJvcHBpbmcgb3ZlcmZsb3cNCj4gZGV0ZWN0
-aW9uIGFuZCBQTUkgaW5qZWN0aW9uPw0KPiANCj4gS1ZNIHJlbGllcyBvbiBwbWNfcGF1c2VfY291
-bnRlcigpIGR1cmluZyBhIHJlcXVlc3RlZCByZXByb2dyYW0gdG8gZGV0ZWN0DQo+IG92ZXJmbG93
-cyBhbmQgaW5qZWN0IFBNSXMuIEJ5IGRlZmVycmluZyB0aGUgcmVwcm9ncmFtIHVudGlsIHRoZSBh
-Y2N1bXVsYXRlZA0KPiBlbXVsYXRlZCBjb3VudCBleGNlZWRzIHRoZSB0b2xlcmFuY2UsIHRoZSBs
-b2dpY2FsIGNvdW50ZXIgdmFsdWUgYmVjb21lcw0KPiBkZWNvdXBsZWQgZnJvbSBpdHMgb3ZlcmZs
-b3cgc3RhdGUuDQo+IA0KPiBJZiB0aGUgZ3Vlc3Qgc3RvcHMgZXhlY3V0aW5nIHRoZSBzcGVjaWZp
-YyBpbnN0cnVjdGlvbiBiZWZvcmUgdGhlIHRvbGVyYW5jZQ0KPiBpcyByZWFjaGVkLCB0aGUgcmVw
-cm9ncmFtIGlzIG5ldmVyIHJlcXVlc3RlZCBhbmQgdGhlIFBNSSBtaWdodCBiZSBwZXJtYW5lbnRs
-eQ0KPiBsb3N0Lg0KDQpUaGlzIGlzIHdoYXQgd2UndmUgYmVlbiBkaXNjdXNzaW5nLiBQTUlzIHdp
-bGwgYmUgZGVsYXllZCBieSB1cCB0bw0KdG9sZXJhbmNlLiBJZiB0aGUgZ3Vlc3Qgc3RvcHMgZXhl
-Y3V0aW5nIGluc3RydWN0aW9ucyBhdCB0aGlzIHBvaW50LCB0aGVuDQpzbyBiZSBpdC4NCg0KPiBB
-ZGRpdGlvbmFsbHksIGR1cmluZyBsaXZlIG1pZ3JhdGlvbiwgS1ZNX0dFVF9NU1JTIHNhdmVzIHRo
-ZSBjb21iaW5lZCBjb3VudGVyDQo+IHZhbHVlIGJ1dCB0aGUgdW5tb2RpZmllZCBHTE9CQUxfU1RB
-VFVTLiBDb3VsZCB0aGUgdGFyZ2V0IFZNIHJlc3RvcmUgdGhlDQo+IGNvdW50ZXIgd2l0aCBlbXVs
-YXRlZF9jb3VudGVyIGltcGxpY2l0bHkgemVyb2VkLCBjb21wbGV0ZWx5IGxvc2luZyB0aGUNCj4g
-cGVuZGluZyBvdmVyZmxvdz8NCg0KVGhpcyBpcyB0cnVlLiBXZSBmb2xkIGluIHRoZSBlbXVsYXRl
-ZCBjb3VudGVyIHdpdGhvdXQgY2hlY2tpbmcgZm9yIGENCnBvdGVudGlhbCBvdmVyZmxvdy4gU28g
-eWVzLCB3ZSBjb3VsZCBsb3NlIG9uZSBOTUkgYWNyb3NzIG1pZ3JhdGlvbg0KaG93ZXZlciB0aGlz
-IGRvZXMgbm90IHNlZW0gdG8gYmUgbmV3LiBUaGUgc2FtZSBzY2VuYXJpbyBjb3VsZCBoYXBwZW4N
-CnRvZGF5IHdpdGggYSB2Q1BVIHRoYXQgdGFrZXMgYSBWTUVYSVQgYW5kIGdldHMgbWlncmF0ZWQg
-d2l0aCB0aGUNCmVtdWxhdGVkIGNvdW50ZXIgbm90IHlldCByZWZsZWN0ZWQgaW4gaGFyZHdhcmUu
-DQoNCj4gW1NldmVyaXR5OiBNZWRpdW1dDQo+IENhbiBkZWZlcnJpbmcgdGhlIHJlcHJvZ3JhbSBj
-cmVhdGUgYW4gaXNzdWUgd2l0aCB0aGUgc2luZ2xlLXdyYXAgb3ZlcmZsb3cNCj4gZGV0ZWN0aW9u
-Pw0KDQpJIHN1cHBvc2Ugd2Ugc2hvdWxkIGRvIHNvbWV0aGluZyBsaWtlOg0KDQogIHU2NCB0b2xl
-cmFuY2UgPSBtaW5fdCh1NjQsDQogICAgICAgICAgICAgICAgICAgICAgICBSRUFEX09OQ0UoZW11
-bGF0ZWRfY291bnRlcl9yZXByb2dyYW1fdG9sZXJhbmNlKSwNCiAgICAgICAgICAgICAgICAgICAg
-ICAgIHBtY19iaXRtYXNrKHBtYykpOw0KDQogIGlmIChwbWMtPmVtdWxhdGVkX2NvdW50ZXIgPiB0
-b2xlcmFuY2UpDQogICAgICAgICAga3ZtX3BtdV9yZXF1ZXN0X2NvdW50ZXJfcmVwcm9ncmFtKHBt
-Yyk7DQo=
+On Thu, Jul 23, 2026, Yosry Ahmed wrote:
+> On Wed, Jul 22, 2026 at 05:46:31PM -0700, Sean Christopherson wrote:
+> > On Tue, Jun 16, 2026, Yosry Ahmed wrote:
+> > > On Tue, Jun 16, 2026 at 11:06=E2=80=AFAM Yosry Ahmed <yosry@kernel.or=
+g> wrote:
+> > > > > > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/neste=
+d.c
+> > > > > > index 234724d8b4c54..7b19191e0e43f 100644
+> > > > > > --- a/arch/x86/kvm/svm/nested.c
+> > > > > > +++ b/arch/x86/kvm/svm/nested.c
+> > > > > > @@ -717,9 +717,16 @@ static void svm_switch_vmcb(struct vcpu_sv=
+m *svm, struct kvm_vmcb_info *target_v
+> > > > > >  {
+> > > > > >       struct kvm_vcpu *vcpu =3D &svm->vcpu;
+> > > > > >
+> > > > > > +     /*
+> > > > > > +      * TLB flushes are applied to the VMCB, so apply any pend=
+ing TLB flushes
+> > > > > > +      * on the current VMCB before switching to a new one..
+> > > > > > +      */
+> > > > > > +     kvm_service_local_tlb_flush_requests(vcpu);
+> > > > >
+> > > > > [Severity: High]
+> > > > > Does this clear global TLB flush requests (like KVM_REQ_TLB_FLUSH=
+_GUEST)
+> > > > > while applying them only to the outgoing VMCB?
+> > > > >
+> > > > > If a host-initiated flush occurs (e.g., from page reclaim), the r=
+equest
+> > > > > bit will be consumed and applied to the outgoing VMCB, leaving th=
+e incoming
+> > > > > VMCB to miss the flush and run with a stale TLB.
+> > > >
+> > > > Yeah it is intentional to apply the flushes to the
+> > > > current/old/outgoing context. If there are flushes needed in the ne=
+w
+> > > > context, they are queued by nested_svm_{entry/exit}_tlb_flush().
+> > > > That's similar to what VMX does.
+> > > >
+> > > > >
+> > > > > Also, is there a context mismatch here during nested VM-Exit?
+> > > > >
+> > > > > In nested_svm_vmexit(), leave_guest_mode(vcpu) is called before
+> > > > > svm_switch_vmcb(svm, &svm->vmcb01).
+> > > > >
+> > > > > Because of this, kvm_service_local_tlb_flush_requests() will see
+> > > > > is_guest_mode(vcpu) as false. If Hyper-V is enabled, this means
+> > > > > kvm_hv_purge_tlb_flush_fifo() will incorrectly target L1's FIFO w=
+hile the
+> > > > > hardware flushes are actually being applied to L2's vmcb02.
+> > > >
+> > > > Ugh.. yes. This is annoying. kvm_service_local_tlb_flush_requests()
+> > > > needs to be called on both the current/old/outgoing VMCB *and* gues=
+t
+> > > > mode. So we'll need to open-code the call in a bunch of places befo=
+re
+> > > > svm_switch_vmcb() and {enter/leave}_guest_mode(). I really liked
+> > > > putting it in svm_switch_vmcb() together with
+> > > > nested_svm_{entry/exit}_tlb_flush() so that all the TLB flushing lo=
+gic
+> > > > for nested transitions live in one place and the ordering needs to =
+be
+> > > > handled in one place.
+> > >=20
+> > > Maybe we can just re-order the code to always call svm_switch_vmcb()
+> > > before {enter/leave}_guest_mode(). We already do that on the entry
+> > > side, and seems to be straightforward on the exit side.
+> >=20
+> > As stated earlier, I'd prefer to explicitly do flushing stuff where it =
+fits from
+> > an architectural perspective.
+>=20
+> I did it this way because (as you also stated) it's more robust, and it
+> also documents the ordering requirements:
+> - We need to service local flushes before switching to the new VMCB.
+
+No, that's not the requirement.  The requirement is that KVM faithlyfully e=
+mulates
+the SVM architecture.  For KVM's implementation, that _mostly_ aligns with
+switching between vmcb01 and vmcb02, but that's not a hard guarantee.  Unli=
+ke VMX,
+SVM doesn't force KVM doesn't need to switch the active VMCB in order to ma=
+ke
+changes to a VMCB, so nSVM may never end up with as many switches as nVMX t=
+hat
+don't need to trigger a TLB flush, but conceptually it's still inaccurate.
+
+And regarding robustness, the flaw Sashiko pointed out regarding servicing =
+pending
+flushes after leave_guest_mode(vcpu) highlights that burying architectural =
+behaviors
+in what are effectively utility functions can be dangerous.  The counter-ar=
+gument is
+that we ended up with a similar bug in nVMX where KVM straight up forgot to=
+ service
+the flushes, but my point is that handling this in svm_switch_vmcb() isn't =
+a silver
+bullet.  And I really don't like adding an arbitrary constraint that the "n=
+ew" VMCB
+needs to "match" the current L1 vs. L2 mode.
+
+> - We need to queue new flushes after servicing local flushes.
+>=20
+> I like that it's all in one place. All that being said, I did go
+> back-and-forth on this so I am not opposed to open-coding it. Let me know=
+ if
+> the above argument swayed you or if you still prefer open-coding.
+
+I still prefer open-coding the calls to perform/request/serivce flushes.
