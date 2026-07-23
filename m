@@ -1,183 +1,355 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0203F3290
-	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 10:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6C343BDB7
+	for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 10:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784800982; cv=none; b=KHYeL1lBxvH6XNnwyn/Fp7iuHOBzj9jgulj+zrFwuNWin6qMNqSzeR50p9OU0Cb+r/9Z1cF8Q4pja8aeIFpRMqE88DpukEZL+8iVUtP2F7UJtugPscsdBZioM1pMsBha+g8gije+XVWE6ATh3Pp4VC/VehRGuPPBB8PVU+OJwXk=
+	t=1784801054; cv=none; b=K/W0V5Sy/p+QF/FN3iaUsy3oJw79q7DwYKRczK0NKig4pgsap3iT/Awb5GtWx8Le1bajmlaUiE01bHuDSilvAeHpfFjida7O1V4Or65s1ltNNMLY6VnsXP8efPPeqSB9hVkgPbRt3pUg7KhHHAufkYQoQBs/et81E1eOTLJFNTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784800982; c=relaxed/simple;
-	bh=QowNg1ICKmR00ZMLfP8DwQg+7z7WOn8M28TVgCrVnVk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lAQHdGdFF9lqki7tW9WY/FSnhSrkAI+2Ixyi+S34m1QcHq5OhHeYFiXN1QRCC+qexZ06yyDbvJ0iwWxPGWeB/KknFv7XLQ8JlepcpFw8lohH+10pof/1iBoesHXoYk6nMSTmC4zfQthJeSFW0B86AGxSm8FilXPooVrGCQ9CbrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=RDh7jmjL; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1784801054; c=relaxed/simple;
+	bh=2dhM80U1cYegL8kQzdGZRETcOdITYFIBHOvcR3V3XQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YGRatINfapNDGQllbAS5w/60eOnvTHyd54xUyRh5LobMAVMR9H6L0wv6rSZ8WlVc/p13jVPiZShVmqqcKE2YMejuphvyxVOYKmj+i5S1kZAj94WekeAUyHjdYDV+40FagzbbP2SRnfqMsy9/2d/NLnhwuNSmX2BmCEgk90W0+iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g6PbBAmF; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="RDh7jmjL"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id B218F1A11A5;
-	Thu, 23 Jul 2026 10:02:50 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 86151602B8;
-	Thu, 23 Jul 2026 10:02:50 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id D5CFD11C10330;
-	Thu, 23 Jul 2026 12:02:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1784800970; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=PUgVr3xoru84whxS4+qfYYSdvhcNRo2BGQ0ueQFurr4=;
-	b=RDh7jmjLz//6vilz+TPdxwKpSpmULC1wyXsKIo8s58UDJRlBjial0BbpkcDcFZjXMYF/WJ
-	SjnxCHxRcZ6G0F/9aRjdPm8dfq6TsxdOerzq3N/DZwGw/oDRBToKTx9yVsrZxpAntcHbn1
-	yNAlpm+oK3w0sMi+BfwXzOMPLf9AafjqzRbxA8Vq+V2mEwcAKnczPIMBFl3j81M4YutB/w
-	KoMilsauvm+tLwh9VxdpHFy9aYVqlQ1530MpSBQjT+utYRwQRvI78Y63UkDzlw+rGXD4GJ
-	V0+MKYp0ESGff8pujDhqtPgAeJAksPphp2iAOUUpho9n3mtGfBSZo384Zib8dw==
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject:
- Re: [PATCH v3 1/2] drm/logicvc: Avoid use-after-free with devm_kzalloc()
-Date: Thu, 23 Jul 2026 09:53:49 +0200
-Message-ID: <cV8thpNMTuqGECHamaJsPw@bootlin.com>
-In-Reply-To: <20260722100029.27C861F000E9@smtp.kernel.org>
-References:
- <20260722-logicvc-uaf-v3-0-f3b2319d58a6@bootlin.com>
- <20260722-logicvc-uaf-v3-1-f3b2319d58a6@bootlin.com>
- <20260722100029.27C861F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g6PbBAmF"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4954dff6536so3767695e9.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 03:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1784801049; x=1785405849; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=X576UWvhah+076nL20oR1HfA0CMQ64GrY/hawzbdJ8w=;
+        b=g6PbBAmFuMhboiNSnHQOjtHqpuy8FSwnQJ4ih2/F2/VNOA3y8/BCFrKL+L0kTqvvtA
+         IOLwlctOtQ79fi6TllSH4fPIwMOPpEqjpTHQNvywjH+xVIQ13m+M6+ZCIktbLRTXOwlz
+         yJUMGMYcKie6odXqPU0RsLvLqK8OzET1900Mg2frIUTCPUzADk3hnzHu0z0GHudOxP/4
+         e1+Pik+O0dFc754s18E4NJ2jXnSYoriBtyE9OENpIUV6K05HqfiHf84X/63m1oxS3aAF
+         TT+/I3R8zf+Ij2kz1ikgH23V30VZq5XWRkG0uQTxb0JusQChmmclHS6Qw1X5YnsVgNyw
+         oHcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784801049; x=1785405849;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=X576UWvhah+076nL20oR1HfA0CMQ64GrY/hawzbdJ8w=;
+        b=X4oJsu45npmdUwbEGnuui84QgBmKegYMy+0wyCCKksagj7PLm1gi3vkpKPpoL+6RF+
+         yZlVSlwCTl3SVjj3xR+TROCTAjB8dmbgxl5sQbbyMPNIJWY+kHNko2RzuEVJQbgi5BdJ
+         QYNELWh92pdYAc5vhRv7YzA55pCaGvRB52PElQys3dym1v8VE6ijjUZAceFUee21Jdch
+         gaM6+5uyeHBOqSb4j/y164pa6CJe3l873zNoY5j5QV/bTirqFpRCeCCDTA1ZeUTeZCaY
+         oyVlOKCMgq4jgGWd0Q7pEWKXhylRG9ZOOKNLdPN8RdMhbriHKROi44tf9T5ytcr+MUIF
+         jwuQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqmK9KHP0sKU3/fh6uFw4FjuK02Hl6hcRvUwsJsp22I0VfDCJ8nGG2LSePuv1GK7XKKxcgD8z1MCFFvoYDvG8g=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxrXIMfNuKfsGwM51EcO412Xcp9uZvNVt9vQkcXXyJ8msOiYD8X
+	GHunmkgW7DZGRnXeLhvyw4P+9lOkF+VrEmu1vSb0s3qzBiDCLIQcgJAKi9NiISGwM8s=
+X-Gm-Gg: AR+sD11vfkyNr4iLo2A42cFglRhqVDe7mWjJ6bpDy/38XTgnEVCR3hz1BYOM8bS/uMe
+	JWTxoheRgE8oGmvPZtHeyxTOGhaFC+QIlv2Rb1eupHs485/a0/9fjqd/qGbv7vT/K9XheRzqjJI
+	BaDgpQK3bY8hZO8xWi56USTC85ElWdVnh30haErGDcaBKWwSEBoN2rg1s+ukyGlpYdlcfhMyYbX
+	98xhwoS4GzfP+1lGpUHKcuXd1XzwwYwJOe0BqgCdnGb2UddAnpbSin0tsaqooACISJCButuIxsb
+	ax296l6mSxGHWuriKDcI5NnGiyrvP4BTqjcFMvXcDTPT7BGJqEh2wKVgGG22LtccZBVxf2Ie+y7
+	q6edd8jZJBkEiTlKdbQuH0yng2abR5fp17I3mu0CpnbVFi8JDQKyYeIfFw/i8gjPC1m1CbMSx3K
+	TvnYNuR0mdoGXJRshj02QsRT7Z
+X-Received: by 2002:a05:600c:46ca:b0:493:e97c:216e with SMTP id 5b1f17b1804b1-49573d26d00mr23083765e9.39.1784801049098;
+        Thu, 23 Jul 2026 03:04:09 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff24:7210:d666:8fbf:10dc:76d2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653c9d99sm212564285e9.12.2026.07.23.03.04.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jul 2026 03:04:08 -0700 (PDT)
+Date: Thu, 23 Jul 2026 12:04:04 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	sashiko-reviews@lists.linux.dev,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM
+ locking
+Message-ID: <amHnFL7IC80Id2V7@linaro.org>
+References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
+ <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
+ <20260721134853.2B2401F000E9@smtp.kernel.org>
+ <amCGXUUd4VmuQRGD@linaro.org>
+ <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
+ <amC7_M-HjVZ3sQuT@linaro.org>
+ <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
+ <amDRxPkdvbA-iVer@linaro.org>
+ <CAMRc=Me523xQbfJvML9taJ-fR128SJurJS4eX9N9E9WtHF5W5Q@mail.gmail.com>
+ <amDuqoRBg5qGafi2@linaro.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPartL3BGsdYcRdmZW2Iw6n2zNw";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <amDuqoRBg5qGafi2@linaro.org>
 
---nextPartL3BGsdYcRdmZW2Iw6n2zNw
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Date: Thu, 23 Jul 2026 09:53:49 +0200
-Message-ID: <cV8thpNMTuqGECHamaJsPw@bootlin.com>
-In-Reply-To: <20260722100029.27C861F000E9@smtp.kernel.org>
-MIME-Version: 1.0
+On Wed, Jul 22, 2026 at 06:24:10PM +0200, Stephan Gerhold wrote:
+> On Wed, Jul 22, 2026 at 08:37:19AM -0700, Bartosz Golaszewski wrote:
+> > On Wed, 22 Jul 2026 16:20:52 +0200, Stephan Gerhold
+> > <stephan.gerhold@linaro.org> said:
+> > > On Wed, Jul 22, 2026 at 07:11:10AM -0700, Bartosz Golaszewski wrote:
+> > >> On Wed, 22 Jul 2026 14:47:56 +0200, Stephan Gerhold
+> > >> <stephan.gerhold@linaro.org> said:
+> > >> > On Wed, Jul 22, 2026 at 02:34:52AM -0700, Bartosz Golaszewski wrote:
+> > >> >> On Wed, 22 Jul 2026 10:59:09 +0200, Stephan Gerhold
+> > >> >> <stephan.gerhold@linaro.org> said:
+> > >> >> > On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
+> > >> >> >> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> > >> >> >> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
+> > >> >> >> - [High] Channel state corruption when `bam_slave_config` fails validation.
+> > >> >> >> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
+> > >> >> >> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
+> > >> >> >> - [Low] Unused assignment of `hdesc` in IRQ handler.
+> > >> >> >> --
+> > >> >> >>
+> > >> >> >> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
+> > >> >> >> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
+> > >> >> >> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> > >> >> >>
+> > >> >> >> dmaengine: qcom: bam_dma: add support for BAM locking
+> > >> >> >>
+> > >> >> >> This commit adds support for BAM pipe locking by prepending and appending
+> > >> >> >> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
+> > >> >> >> channel. It uses a peripheral-local scratchpad address communicated via slave
+> > >> >> >> config for the dummy writes.
+> > >> >> >>
+> > >> >> >> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> > >> >> >> > index f3e713a5259c2..411c60c4433e2 100644
+> > >> >> >> > --- a/drivers/dma/qcom/bam_dma.c
+> > >> >> >> > +++ b/drivers/dma/qcom/bam_dma.c
+> > >> >> [...]
+> > >> >> >> [ ... ]
+> > >> >> >> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+> > >> >> >> >
+> > >> >> >> >  	lockdep_assert_held(&bchan->vc.lock);
+> > >> >> >> >
+> > >> >> >> > +	vd = vchan_next_desc(&bchan->vc);
+> > >> >> >> >  	if (!vd)
+> > >> >> >> >  		return;
+> > >> >> >> >
+> > >> >> >> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
+> > >> >> >> >  		return;
+> > >> >> >> >
+> > >> >> >> >  	while (vd && !IS_BUSY(bchan)) {
+> > >> >> >> > +		/*
+> > >> >> >> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
+> > >> >> >> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
+> > >> >> >> > +		 * already have bam_locked set and must not trigger a second pair.
+> > >> >> >> > +		 */
+> > >> >> >> > +		if (!bchan->bam_locked) {
+> > >> >> >> > +			ret = bam_setup_pipe_lock(bchan);
+> > >> >> >> > +			if (ret) {
+> > >> >> >> > +				dev_err_ratelimited(bdev->dev,
+> > >> >> >> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
+> > >> >> >> > +					ret);
+> > >> >> >> > +				queue_work(system_bh_highpri_wq, &bdev->work);
+> > >> >> >> > +				break;
+> > >> >> >> > +			}
+> > >> >> >>
+> > >> >> >> [Severity: High]
+> > >> >> >> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
+> > >> >> >> starvation? Because system_bh_highpri_wq executes in softirq context,
+> > >> >> >> requeuing immediately without sleeping prevents the memory reclaim needed
+> > >> >> >> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
+> > >> >> >>
+> > >> >> >
+> > >> >> > It looks like my suggestion to queue_work() again in the error path of
+> > >> >> > bam_start_dma() wasn't great if we end up causing an infinite spin loop.
+> > >> >> > We do need to retry somehow or report an error though, I don't think
+> > >> >> > aborting and leaving the desccriptors completely unhandled is an option
+> > >> >> > either... :(
+> > >> >> >
+> > >> >> > One option would be to try to avoid the allocation and write the lock
+> > >> >> > descriptors directly into the FIFO, but this will probably get really
+> > >> >> > messy as well, since you would need to carefully modify the FIFO
+> > >> >> > management in several functions ...
+> > >> >> >
+> [...]
+> 
+> FWIW, I couldn't stop myself trying to finish my "write lock descriptors
+> directly into FIFO" idea, once I started I was curious how it would turn
+> out. I think it's actually quite elegant, the loop in bam_start_dma() is
+> wrapped with LOCK and UNLOCK, later process_channel_irqs() looks at the
+> FIFO again and just skips over these descriptors. lock_ce is allocated
+> once at channel creation time, no other allocations are needed. (Could
+> probably move lock_ce allocation to slave_config() so it's allocated
+> only when locking is configured for a channel).
+> 
+> See diff below. It doesn't crash badly in a quick test, but didn't check
+> in detail if the locking is actually working correctly. :')
+> 
+> I'm okay with whatever is "free of known races" and works with the use
+> cases we have, so use/adapt whatever you like best.
+> 
+> If you want to use this, feel free to add
+> Co-developed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> 
+> Good luck! :D
+> 
+> Thanks,
+> Stephan
+> 
+> ---
+>  drivers/dma/qcom/bam_dma.c       | 94 ++++++++++++++++++++++++++++++--
+>  include/linux/dma/qcom_bam_dma.h | 15 +++++
+>  2 files changed, 104 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index f3e713a5259c..864531dca2a6 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> [...]
+> @@ -607,6 +620,17 @@ static int bam_alloc_chan(struct dma_chan *chan)
+>  		return -ENOMEM;
+>  	}
+>  
+> +	if (bdev->dev_data->pipe_lock_supported) {
+> +		bchan->lock_ce = dma_alloc_wc(bdev->dev, sizeof(*bchan->lock_ce),
+> +					      &bchan->lock_ce_phys, GFP_KERNEL);
+> +		if (!bchan->lock_ce) {
+> +			dev_err(bdev->dev, "Failed to allocate lock CE\n");
+> +			dma_free_wc(bdev->dev, BAM_DESC_FIFO_SIZE, bchan->fifo_virt, bchan->fifo_phys);
+> +			bchan->fifo_virt = NULL;
+> +			return -ENOMEM;
+> +		}
+> +	}
 
-On Wednesday, 22 July 2026 12:00:28 CEST sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider: - [High] The local variable `bridge` is passed to
-> `drm_of_find_panel_or_bridge()` without initialization, leading to a crash
-> when the function returns an error without setting it. --
-> 
-> --- Patch [1]: [PATCH v3 1/2] drm/logicvc: Avoid use-after-free with
-> devm_kzalloc() --- commit 95ef468f51e9bfed648e230bd616663ec7bac106
-> Author: Romain Gantois <romain.gantois@bootlin.com>
-> 
-> drm/logicvc: Avoid use-after-free with devm_kzalloc()
-> 
-> This commit transitions the panel, CRTC, and encoder objects to DRM-managed
-> allocations. It removes devm_kzalloc usages in order to fix a use-after-free
-> bug.
-> 
-> > diff --git a/drivers/gpu/drm/logicvc/logicvc_interface.c
-> > b/drivers/gpu/drm/logicvc/logicvc_interface.c ---
-> > a/drivers/gpu/drm/logicvc/logicvc_interface.c
-> > +++ b/drivers/gpu/drm/logicvc/logicvc_interface.c
-> > @@ -147,36 +143,35 @@ int logicvc_interface_init(struct logicvc_drm
-> > *logicvc)>
-> > 
-> >  	int encoder_type = logicvc_interface_encoder_type(logicvc);
-> >  	int connector_type = logicvc_interface_connector_type(logicvc);
-> >  	bool native_connector = logicvc_interface_native_connector(logicvc);
-> > 
-> > +	struct drm_bridge *bridge;
-> > +	struct drm_panel *panel;
-> > 
-> >  	int ret;
-> > 
-> > -	interface = devm_kzalloc(dev, sizeof(*interface), GFP_KERNEL);
-> > -	if (!interface) {
-> > -		ret = -ENOMEM;
-> > -		goto error_early;
-> > -	}
-> > -
-> > -	ret = drm_of_find_panel_or_bridge(of_node, 0, 0, &interface-
->drm_panel,
-> > -					  &interface->drm_bridge);
-> > +	ret = drm_of_find_panel_or_bridge(of_node, 0, 0, &panel,
-> > +					  &bridge);
-> > 
-> >  	if (ret == -EPROBE_DEFER)
-> > 
-> > -		goto error_early;
-> 
-> [Severity: High]
-> Are panel and bridge guaranteed to be initialized if this call fails?
-> 
-> When drm_of_find_panel_or_bridge() returns an error like -ENODEV (which
-> is valid for native DVI connectors without an OF graph), it might not
-> initialize these variables. Previously, interface was allocated with
-> devm_kzalloc(), so they were safely initialized to NULL. Now, they are
-> uninitialized stack variables.
-> 
-> > -	ret = drm_encoder_init(drm_dev, &interface->drm_encoder,
-> > -			       &logicvc_encoder_funcs, encoder_type, NULL);
-> > -	if (ret) {
-> > +	interface = drmm_encoder_alloc(drm_dev, struct logicvc_interface,
-> > drm_encoder, +				       NULL, encoder_type, 
-NULL);
-> > +	if (IS_ERR(interface)) {
-> > 
-> >  		drm_err(drm_dev, "Failed to initialize encoder\n");
-> > 
-> > -		goto error_early;
-> > +		return PTR_ERR(interface);
-> > 
-> >  	}
-> > 
-> > +	interface->drm_panel = panel;
-> > +	interface->drm_bridge = bridge;
-> 
-> [Severity: High]
-> Could this assignment cause a crash later during driver initialization?
-> 
-> If drm_of_find_panel_or_bridge() returned -ENODEV, bridge will contain
-> stack garbage. Later in logicvc_interface_init(), the code evaluates
-> if (interface->drm_bridge) and calls drm_bridge_attach(), which would
-> dereference this uninitialized pointer and trigger a kernel panic.
+Nitpicking on my own diff: This is kind of meh, since this will
+typically allocate a full page just for the 16 bytes lock command
+element for all channels on BAMs that support locking (which is most BAM
+instances nowadays). Barely anything will use locking though (likely
+just QCE and NAND, if available). With 32+ channels in the BAM on some
+SoCs with 16K page size or more that's a lot of wasted space.
 
-Indeed, these two stack variables need to be initialized to NULL.
+Probably best to go back to what you had in your patch and use
+dma_map_single() / dma_sync_single_for_device(), see below (on top of
+what I sent already).
 
+Thanks,
+Stephan
+
+---
+ drivers/dma/qcom/bam_dma.c | 53 +++++++++++++++++++++++---------------
+ 1 file changed, 32 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 864531dca2a6..93ce99125879 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -433,7 +433,7 @@ struct bam_chan {
+ 	struct list_head node;
+ 
+ 	/* BAM locking infrastructure */
+-	struct bam_cmd_element *lock_ce;
++	struct bam_cmd_element lock_ce;
+ 	dma_addr_t lock_ce_phys;
+ 	bool locking_enabled;
+ 	bool bam_locked;
+@@ -620,17 +620,6 @@ static int bam_alloc_chan(struct dma_chan *chan)
+ 		return -ENOMEM;
+ 	}
+ 
+-	if (bdev->dev_data->pipe_lock_supported) {
+-		bchan->lock_ce = dma_alloc_wc(bdev->dev, sizeof(*bchan->lock_ce),
+-					      &bchan->lock_ce_phys, GFP_KERNEL);
+-		if (!bchan->lock_ce) {
+-			dev_err(bdev->dev, "Failed to allocate lock CE\n");
+-			dma_free_wc(bdev->dev, BAM_DESC_FIFO_SIZE, bchan->fifo_virt, bchan->fifo_phys);
+-			bchan->fifo_virt = NULL;
+-			return -ENOMEM;
+-		}
+-	}
+-
+ 	if (bdev->active_channels++ == 0 && bdev->powered_remotely)
+ 		bam_reset(bdev);
+ 
+@@ -665,13 +654,15 @@ static void bam_free_chan(struct dma_chan *chan)
+ 	scoped_guard(spinlock_irqsave, &bchan->vc.lock)
+ 		bam_reset_channel(bchan);
+ 
++	if (bchan->lock_ce_phys) {
++		dma_unmap_single(bdev->dev, bchan->lock_ce_phys,
++				 sizeof(bchan->lock_ce), DMA_TO_DEVICE);
++		bchan->lock_ce_phys = 0;
++	}
++
+ 	dma_free_wc(bdev->dev, BAM_DESC_FIFO_SIZE, bchan->fifo_virt,
+ 		    bchan->fifo_phys);
+ 	bchan->fifo_virt = NULL;
+-	if (bchan->lock_ce) {
+-		dma_free_wc(bdev->dev, sizeof(*bchan->lock_ce), bchan->lock_ce, bchan->lock_ce_phys);
+-		bchan->lock_ce = NULL;
+-	}
+ 
+ 	/* mask irq for pipe/channel */
+ 	val = readl_relaxed(bam_addr(bdev, 0, BAM_IRQ_SRCS_MSK_EE));
+@@ -693,6 +684,24 @@ static void bam_free_chan(struct dma_chan *chan)
+ 	pm_runtime_put_autosuspend(bdev->dev);
+ }
+ 
++static bool bam_map_lock_ce(struct bam_chan *bchan)
++{
++	if (bchan->lock_ce_phys) {
++		dma_sync_single_for_device(bchan->bdev->dev, bchan->lock_ce_phys,
++					   sizeof(bchan->lock_ce), DMA_TO_DEVICE);
++		return true;
++	}
++
++	bchan->lock_ce_phys = dma_map_single(bchan->bdev->dev, &bchan->lock_ce,
++					     sizeof(bchan->lock_ce), DMA_TO_DEVICE);
++	if (dma_mapping_error(bchan->bdev->dev, bchan->lock_ce_phys)) {
++		bchan->lock_ce_phys = 0;
++		return false;
++	}
++
++	return true;
++}
++
+ /**
+  * bam_slave_config - set slave configuration for channel
+  * @chan: dma channel
+@@ -717,11 +726,13 @@ static int bam_slave_config(struct dma_chan *chan,
+ 		if (cfg->direction != DMA_MEM_TO_DEV)
+ 			return -EINVAL;
+ 
+-		if (bchan->lock_ce) {
+-			bam_prep_ce_le32(bchan->lock_ce, peripheral_cfg->lock_scratchpad_addr,
+-					 BAM_WRITE_COMMAND, 0);
+-			bchan->locking_enabled = true;
+-		}
++		bam_prep_ce_le32(&bchan->lock_ce, peripheral_cfg->lock_scratchpad_addr,
++				 BAM_WRITE_COMMAND, 0);
++
++		if (!bam_map_lock_ce(bchan))
++			return -ENOMEM;
++
++		bchan->locking_enabled = true;
+ 	} else {
+ 		/* Don't touch lock_ce here, it might still be used by issued descriptors */
+ 		bchan->locking_enabled = false;
 -- 
-Romain Gantois, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
---nextPartL3BGsdYcRdmZW2Iw6n2zNw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEETFOGm0tqZfYwVxBymGofZEoxB4MFAmphyI0ACgkQmGofZEox
-B4O0hQ/9GIq1yFYGDRWcAHes/JCkM4TcBm0noQYQkwd9CUQaPMGNJPjYfbmbTquY
-da3Ab3Cq9E7VPJK9m+M5mXJT1OmDoTuzge38h6lxzoDT00qtlqWxxDKG51C96YPO
-m9K67qKwQvPFFkC6Zo7ZoAlNM087HFLhS6bg8hx0ls2OyayLtJnenm+Twv9te3aG
-sz3iqI85z2ff77wPVzSYBPhvAPIC0djjbTvQ6n5uG6cGS0P+lhGWf+1aGc0JMN4e
-5X30+b1AS8vTISswmEOafAyDFxNaxg2v//lQHPDporpzFsHuNpOvz6ZYhbudGgKE
-rLk0pucfspcLeHalfghacWK9UAh2n6H1X0M1ggmbsuVnJK2nBxYw+SvLWmF73G+T
-WX+UA9NRAES2wMpM19HOlr3FKSQutKAksnGlhVg7lFWBFmEm9pqQntyh4S+rjx1O
-UQWus4SYkSPBQNVaEPfYWInL5pNvOZMsPEDvvsIOa0CtA+xv7XD0q9Fyw51jXCso
-SokFPx0h3YDobfnOCpt6TcYtu81VT8h2lC5qOu8Z6z5652Ji59whkfNw3glZCqqD
-vqKFMSvlvMqRtOeNZLERcrzjjGFJSKu6STnt3lgG3RT9rdbrPmiA7CKph9FMb5oN
-5jCy2h9RjSEtrGj+Cx93fzpDgZBTKyapxHIPAw6KQs/P/OIQ2Po=
-=t1LC
------END PGP SIGNATURE-----
-
---nextPartL3BGsdYcRdmZW2Iw6n2zNw--
-
+2.54.0
 
 
