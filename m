@@ -1,205 +1,158 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5C63ADB97
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 22:27:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784932022; cv=pass; b=Cs1nxtl5zaqRbLpDHvALddS5qrawCm9ie4dsm6vP74kARo7gWhsNXefxm/hFOD+j16cotui2S0VmkhHmqMkHkzF8hu8dS32lhTfokXTjQ/RDtXQ0IpJZCxtcnphu9fu3+I+F5tx5CGwD5yXOdtar7hg49iG4Fuj3+zBSEvbqX6k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784932022; c=relaxed/simple;
-	bh=l8gsbB4MNN06wOKbHuGu34rbQhV1QvndhFbTSBKkm+w=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XYn6pf39dj9pSkZTrm1nvCCK6VGn5Vjc4aY+MeVb8jqqXImuL4OjDCzfTb8KX0jmz4wCx8wPyP9FlslXrIbUt/loMZNh2CmoWVe6K2WV5EW9g5PdN8JuIQRoZPTwAaannxBBKXEAwUmeGSNzmCryrK317ulXVWW3PLIpxuOQci0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wjyEID/L; arc=pass smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5314E442B35;
+	Fri, 24 Jul 2026 22:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784932046; cv=none; b=Bf6x46/IRUKISDmoM5m/htdqe5Fo7UnuAwBARfxE8MT3/zMK4mur6Xb55RZHbwbw3lvTpmxvKrXvgt7yvSpk/9H6ypoz7jUGUKYNTGahqXxHn0AYiGzhfX2lglb0Bjz6ZXpB11o8kP+fzl0BCh5msl5AZLd9f6uqBVtKOuv5xDs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784932046; c=relaxed/simple;
+	bh=UuqU/vOe5f69DRnvyGp3IF2i9crp4bBpEIwxm12+1SA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uy3LT5ecdRlY4SFR5u3bdMAwoY/oBhNrWldXMuFmMxOEY4p54ddKRCTxrTryJUPy5U+1aDY78hghaJlegkk5CD6xAzlwt5NVnUIRSuJDIK+s2u9KClVucHAWCyHbNNlB9L4NnPTlESgENkn9ieOa6UA2nhoD8X0TOqwLSpbYVxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMcp3Hmx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wjyEID/L"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38dd55ad76cso894938a91.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 15:27:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784932021; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rO+9QMlNjeYP2g3Lqyolo2jZd41nCSa7W9BmgOYtYru2N8umBI8gXT3Joak1os5ZtD
-         MUTlfnkJvN4fdlHASsoblAyz4dVsIb2rcBx7mR7l+oI94Fm8tmpOnndcwC5vYS5ayS6W
-         GKMdeyCpRwc6mKyaOKZCss7PpiMTmL2bIiPChapFWNthi2pymvr9cCPB8kUnFoQnrU8P
-         5F+5iPpJ8RjjJhxZKIKEUetCa0XH3RSBhWHfVRlg2wzTj7Q3hnCL5VMcoUADBR42Oqmr
-         A1/BxBWTownfMZOMLwKPIs9+Fij5xKTk7M+RX7hV0pS77mFLdvwj28W/TOUpDBaYFsy8
-         hYnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=MetIniAEDCZS1PteAG9tZMTckOLASLfoWHNvNGHv2oM=;
-        fh=ZkUHwcsok+pvY4ZVwsraH01EmmUB/wObUl/NNpED8OE=;
-        b=APHw9Yl0QRdxH1RLtXIt+BoywXplKREL9aqlWXfYdVNwjh1+VmXxWBT/2r3oZLrWiD
-         lGLFPbBPvyKd+vZh8PBVLPB9DNuolKIL8bcsrnt80xILAK74q4o2D/ue8XT2M4+cPcYz
-         8egCCIqxvCb4dSUhjpndqZZ9/nfxbjZP89X0ZP4yaIvhvtvDOkxGTYkZuzJzI21O6TkX
-         ZPr3hy2gTUL/3JzrX2HGqek5kHX8JYX1eEdAQZk5bKJtNO/ZDh7Yko+lHnFKFxfsca9d
-         KqkCayDT5ROUogZ0TjTnfMjaRYmEbk4Hg/2QLf6MTYXskHkkkdR+2v4l8GW2arvWHiSG
-         1Kmw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784932021; x=1785536821; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:mime-version:references:in-reply-to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MetIniAEDCZS1PteAG9tZMTckOLASLfoWHNvNGHv2oM=;
-        b=wjyEID/L5iPj3+nLmByEtsa3OHIir0VxKXOiGbHwofzY/II6xnyCCo7gjr6NHHoUk2
-         myj1zoZzI8tKVQu0WPBs8hkURij2EzwiOmH5GPRJERZSFpL6UCEwryhSlA83KdIquq5Z
-         kdUmlyVbl6zeXkTfF6R4x6DtFYIEpU9cXLWrRsUaF6Krjttq8Pul3YSoEyAEMCMKdJCN
-         meoUXwzkfvsIAxeQKDIW00SZxt9zrjAj449tmQvUxzYCzxowFRXU9D+UgiOC5g/XGSF3
-         yQIpFAPx4FCMfK/nybX6AzVsk3Zb8tb8aWCorouzMob1g9ocI/7qz+mzmI4YGmWUE2oM
-         MCvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784932021; x=1785536821;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:mime-version:references:in-reply-to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MetIniAEDCZS1PteAG9tZMTckOLASLfoWHNvNGHv2oM=;
-        b=N47VtMqgdLC16ZCBYipygfroxKdsU7watXf1Z+9L7/Sy5rezRCDv3jv1W5CqpbRZ4J
-         ZcCNiXiTaJkDXZ/A0OlHnBRxPjLYFBLnvQ3zwyfORwQU0bczP9K4fesvHzfvDzE3QFKC
-         nSEXhdxNjTZswDrHRxuKBW5yanNdwztvE2DXckqSrUPfZU5MacXLsi0KSNGG+rx9cxoE
-         oPco+hOFYDwvgGlfAHcmNLaOa5/yxth6sZCNsrnyHALmEfVimmIl74+aSpf9TMuaHoU0
-         p6igD2h+Zsn5lCfaghUrQEjAQtU0EO1C03+BeD8ICtx/jDbYooi1i7DRNW8qCAAuV5MY
-         AEGQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqsqHU5z883/0TKcMl2iyk2OWZlmhZLOGyCaJ94Rs0P/eRhJQu2KR1k+P0wgpUKD35bYeist+qKRG/AhcROj4g=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzoEHWRoL/qsQ6g2u1bDz4Kpk9cxYOAf+E6gqeI/FRwxbHwIQ2G
-	JmhZkqKd5Hdi6PFEYTYLuIxphgAPGRdc+FsH5xTDHYnPbCHOdQ7kBHWIeKSV14EsYEVYg4Dj5yw
-	nBRiK7FWn0Oiv+bW6BbMZVlu2j/vTrATd8D6YZ7E6
-X-Gm-Gg: AR+sD111zlQSVLnDkY6LLrl57wHaCwKCCM0jsJjK6XjtQ14Ap6E1j0W+Rc3Iaj1qAwo
-	h2pgDK+gd6M4g4pho9cvX2CqW7JCPceR0U2B5bbKziNYexkd49A91cVTxvn+mRoIowPSI+DVPhj
-	HKrU7Q1WCmRTn9WYUTYgTNOgZ0PnfTcMeTJwCFNYI5/CQmPLn0kDqJw46hxA0069RhYpOloTa5n
-	6/berdq8rnljHlZWE80SpZYuSaL2Fluis8GyHAq3UpF8xVkfEDZEsyPuEya/i7WRZAPJINnHbJU
-	RDE+IYY6LnwJsu1UKRPmcNUpnz8rpi956TYWspOeh60djjkoi2jbf/kecQ==
-X-Received: by 2002:a17:90b:53c4:b0:38f:a81:15b1 with SMTP id
- 98e67ed59e1d1-38f1f121dfdmr2263760a91.19.1784932020101; Fri, 24 Jul 2026
- 15:27:00 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 24 Jul 2026 15:26:59 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 24 Jul 2026 15:26:59 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <affe09f7-31bd-4d86-906c-9c6f92eb903a@intel.com>
-References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
- <20260618-gmem-inplace-conversion-v8-24-9d2959357853@google.com>
- <20260619005856.09DD81F000E9@smtp.kernel.org> <CAEvNRgE6iKBhMYM64rgvuVEOvAFyNoryzpjTtSQRf5TcrLTepA@mail.gmail.com>
- <affe09f7-31bd-4d86-906c-9c6f92eb903a@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMcp3Hmx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7E11F000E9;
+	Fri, 24 Jul 2026 22:27:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784932045;
+	bh=R2NBLL2p08rYPu2xP1Qh0B0LQZIwnYpKvzyluU3hlGM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=YMcp3HmxyKZH1+XmUU8pasfOW0ceLyu8hqq4I02Tn5OoFAYChua7+X+FBkRs/LijM
+	 EsPh174xA5mR7YPl8MGt8q7vWgyqYmjnbnxOh5h4HXVbPt6HbDpfiPLfquoFnJqZbu
+	 KN1InJBE9RKyjA+GjPchTyGlTGeIm0ci4E2JlbzMJkDNMvpf5mR58Jwf5PzVUR1IhI
+	 A5HFbGPivhd+tnd+X6dElVdiknvVTWLmtQwuLucE08547IsB1RidelKobAu2jpSJhP
+	 93W3JiqgX22VvB4is3nsTkKa+7r2QNdbr9XTBjHuTL0mThAbLMaqhAfzpV5m4PTL4P
+	 7DLncZY3/rOtA==
+Date: Fri, 24 Jul 2026 22:27:23 +0000
+From: Yosry Ahmed <yosry@kernel.org>
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Subject: Re: [RFC PATCH v2 17/25] KVM: nSVM: Service local TLB flushes before
+ nested transitions
+Message-ID: <amPmtfdm69hw_CM3@google.com>
+References: <20260616004155.1435766-18-yosry@kernel.org>
+ <20260616012056.669B91F000E9@smtp.kernel.org>
+ <CAO9r8zPRmcwKAtHch995Gm5EKxv07-3f90+H71g+w=iZ+VZfiQ@mail.gmail.com>
+ <CAO9r8zPSEw0snypASanWEdaaTnqf-ZvzRgZpEc=M+sPjELQbSA@mail.gmail.com>
+ <amFkZwsaoPvuNWDA@google.com>
+ <amGg6WjP7P-xjpLQ@google.com>
+ <amIYWOgQw9z3zedA@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Fri, 24 Jul 2026 15:26:59 -0700
-X-Gm-Features: AUfX_mzvttvkeqF-juQumTmgnDd1Lckidkf3twfrA-bvzjcL5NrRUSAmvOW-w8Y
-Message-ID: <CAEvNRgEapm67HO3VvK7ZkXy7JFrs06A6SbJGPua-nDO7pScNfw@mail.gmail.com>
-Subject: Re: [PATCH v8 24/46] KVM: guest_memfd: Make in-place conversion the default
-To: Xiaoyao Li <xiaoyao.li@intel.com>, sashiko-reviews@lists.linux.dev, 
-	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <amIYWOgQw9z3zedA@google.com>
 
-Xiaoyao Li <xiaoyao.li@intel.com> writes:
+On Thu, Jul 23, 2026 at 06:34:16AM -0700, Sean Christopherson wrote:
+> On Thu, Jul 23, 2026, Yosry Ahmed wrote:
+> > On Wed, Jul 22, 2026 at 05:46:31PM -0700, Sean Christopherson wrote:
+> > > On Tue, Jun 16, 2026, Yosry Ahmed wrote:
+> > > > On Tue, Jun 16, 2026 at 11:06 AM Yosry Ahmed <yosry@kernel.org> wrote:
+> > > > > > > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+> > > > > > > index 234724d8b4c54..7b19191e0e43f 100644
+> > > > > > > --- a/arch/x86/kvm/svm/nested.c
+> > > > > > > +++ b/arch/x86/kvm/svm/nested.c
+> > > > > > > @@ -717,9 +717,16 @@ static void svm_switch_vmcb(struct vcpu_svm *svm, struct kvm_vmcb_info *target_v
+> > > > > > >  {
+> > > > > > >       struct kvm_vcpu *vcpu = &svm->vcpu;
+> > > > > > >
+> > > > > > > +     /*
+> > > > > > > +      * TLB flushes are applied to the VMCB, so apply any pending TLB flushes
+> > > > > > > +      * on the current VMCB before switching to a new one..
+> > > > > > > +      */
+> > > > > > > +     kvm_service_local_tlb_flush_requests(vcpu);
+> > > > > >
+> > > > > > [Severity: High]
+> > > > > > Does this clear global TLB flush requests (like KVM_REQ_TLB_FLUSH_GUEST)
+> > > > > > while applying them only to the outgoing VMCB?
+> > > > > >
+> > > > > > If a host-initiated flush occurs (e.g., from page reclaim), the request
+> > > > > > bit will be consumed and applied to the outgoing VMCB, leaving the incoming
+> > > > > > VMCB to miss the flush and run with a stale TLB.
+> > > > >
+> > > > > Yeah it is intentional to apply the flushes to the
+> > > > > current/old/outgoing context. If there are flushes needed in the new
+> > > > > context, they are queued by nested_svm_{entry/exit}_tlb_flush().
+> > > > > That's similar to what VMX does.
+> > > > >
+> > > > > >
+> > > > > > Also, is there a context mismatch here during nested VM-Exit?
+> > > > > >
+> > > > > > In nested_svm_vmexit(), leave_guest_mode(vcpu) is called before
+> > > > > > svm_switch_vmcb(svm, &svm->vmcb01).
+> > > > > >
+> > > > > > Because of this, kvm_service_local_tlb_flush_requests() will see
+> > > > > > is_guest_mode(vcpu) as false. If Hyper-V is enabled, this means
+> > > > > > kvm_hv_purge_tlb_flush_fifo() will incorrectly target L1's FIFO while the
+> > > > > > hardware flushes are actually being applied to L2's vmcb02.
+> > > > >
+> > > > > Ugh.. yes. This is annoying. kvm_service_local_tlb_flush_requests()
+> > > > > needs to be called on both the current/old/outgoing VMCB *and* guest
+> > > > > mode. So we'll need to open-code the call in a bunch of places before
+> > > > > svm_switch_vmcb() and {enter/leave}_guest_mode(). I really liked
+> > > > > putting it in svm_switch_vmcb() together with
+> > > > > nested_svm_{entry/exit}_tlb_flush() so that all the TLB flushing logic
+> > > > > for nested transitions live in one place and the ordering needs to be
+> > > > > handled in one place.
+> > > > 
+> > > > Maybe we can just re-order the code to always call svm_switch_vmcb()
+> > > > before {enter/leave}_guest_mode(). We already do that on the entry
+> > > > side, and seems to be straightforward on the exit side.
+> > > 
+> > > As stated earlier, I'd prefer to explicitly do flushing stuff where it fits from
+> > > an architectural perspective.
+> > 
+> > I did it this way because (as you also stated) it's more robust, and it
+> > also documents the ordering requirements:
+> > - We need to service local flushes before switching to the new VMCB.
+> 
+> No, that's not the requirement.  The requirement is that KVM faithlyfully emulates
+> the SVM architecture.  For KVM's implementation, that _mostly_ aligns with
+> switching between vmcb01 and vmcb02, but that's not a hard guarantee.  Unlike VMX,
+> SVM doesn't force KVM doesn't need to switch the active VMCB in order to make
+> changes to a VMCB, so nSVM may never end up with as many switches as nVMX that
+> don't need to trigger a TLB flush, but conceptually it's still inaccurate.
+> 
+> And regarding robustness, the flaw Sashiko pointed out regarding servicing pending
+> flushes after leave_guest_mode(vcpu) highlights that burying architectural behaviors
+> in what are effectively utility functions can be dangerous.  The counter-argument is
+> that we ended up with a similar bug in nVMX where KVM straight up forgot to service
+> the flushes, but my point is that handling this in svm_switch_vmcb() isn't a silver
+> bullet.  And I really don't like adding an arbitrary constraint that the "new" VMCB
+> needs to "match" the current L1 vs. L2 mode.
+> 
+> > - We need to queue new flushes after servicing local flushes.
+> > 
+> > I like that it's all in one place. All that being said, I did go
+> > back-and-forth on this so I am not opposed to open-coding it. Let me know if
+> > the above argument swayed you or if you still prefer open-coding.
+> 
+> I still prefer open-coding the calls to perform/request/serivce flushes.
 
-> On 6/25/2026 7:47 AM, Ackerley Tng wrote:
->> sashiko-bot@kernel.org writes:
->>
->>> Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
->>> - [Medium] Unprivileged userspace can trigger a WARN_ON_ONCE if the hos=
-t administrator misconfigures a module parameter.
->>> --
->>>
->>> commit bf8cb04a544d7b8235d73034e0febf195ab335c3
->>> Author: Ackerley Tng <ackerleytng@google.com>
->>>
->>> KVM: guest_memfd: Make in-place conversion the default
->>>
->>> This commit makes in-place conversion the default when the architecture
->>> supports private memory. It introduces a module parameter to override t=
-he
->>> default and adds a warning in the CoCo VM memory population path if in-=
-place
->>> conversion is disabled without enabling per-VM memory attributes.
->>>
->>>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->>>> index 86c9f5b0863cb..5cb73543c03c8 100644
->>>> --- a/virt/kvm/guest_memfd.c
->>>> +++ b/virt/kvm/guest_memfd.c
->>>> @@ -1193,10 +1193,15 @@ static bool kvm_gmem_range_is_private(struct f=
-ile *file, pgoff_t index,
->>>>   {
->>>>   	struct maple_tree *mt =3D &GMEM_I(file_inode(file))->attributes;
->>>>
->>>> +#ifdef CONFIG_KVM_VM_MEMORY_ATTRIBUTES
->>>>   	if (!gmem_in_place_conversion)
->>>>   		return kvm_range_has_vm_memory_attributes(kvm, gfn, gfn + nr_pages=
-,
->>>>   							  KVM_MEMORY_ATTRIBUTE_PRIVATE,
->>>>   							  KVM_MEMORY_ATTRIBUTE_PRIVATE);
->>>> +#else
->>>> +	if (WARN_ON_ONCE(!gmem_in_place_conversion))
->>>> +		return false;
->>>> +#endif
->>>
->>> [Severity: Medium]
->>> Could this WARN_ON_ONCE() be triggered by unprivileged userspace if the
->>> administrator misconfigures the module parameter?
->>>
->>> If the system administrator sets kvm.gmem_in_place_conversion=3D0 on a =
-kernel
->>> compiled without CONFIG_KVM_VM_MEMORY_ATTRIBUTES, it appears this warni=
-ng can
->>> be reached from an unprivileged ioctl path calling kvm_gmem_populate().
->>>
->>> Since an unprivileged user creating a CoCo VM can intentionally trigger=
- this
->>> warning, could this act as a host-side denial of service on systems con=
-figured
->>> with panic_on_warn=3D1?
->>>
->>> Would it be better to convert this to a pr_warn_once()
->>
->> Sean, what do you think of using pr_warn_once()?
->
-> How about don't expose the module param when
-> CONFIG_KVM_VM_MEMORY_ATTRIBUTES=3Dn? something like:
->
-> --- a/virt/kvm/kvm_main.c
-> +++ b/virt/kvm/kvm_main.c
-> @@ -103,7 +103,9 @@ module_param(allow_unsafe_mappings, bool, 0444);
->
->   #ifdef kvm_arch_has_private_mem
->   bool __ro_after_init gmem_in_place_conversion =3D
-> !IS_ENABLED(CONFIG_KVM_VM_MEMORY_ATTRIBUTES);
-> +#ifdef CONFIG_KVM_VM_MEMORY_ATTRIBUTES
->   module_param(gmem_in_place_conversion, bool, 0444);
-> +#endif
->   EXPORT_SYMBOL_FOR_KVM_INTERNAL(gmem_in_place_conversion);
->   #endif
->
+For the record, I had locally added a warning to svm_switch_vmcb() to
+make sure that guest_mode and the active VMCB are consistent when
+kvm_service_local_tlb_flush_requests() is called. Given that we are
+going with open coding the calls, I will add a wrapper for the
+warn+call:
 
-I think this is a great idea, please check for this in v9!
+static void nested_svm_service_local_tlb_flushes(struct vcpu *vcpu)
+{
+        struct vcpu_svm *svm = to_svm(vcpu);
 
->
->>> or perhaps validate the
->>> module parameter at initialization time?
->>
->> I thought about this too, but didn't want to move it to initialization
->> time because this (populate) is probably the first time the kernel
->> knows for sure something is used weirdly.
->>
->> Like, perhaps the admin did compile without
->> CONFIG_KVM_VM_MEMORY_ATTRIBUTES and also set gmem_in_place_conversion=3D=
-0
->> but wants to use the host only for non-CoCo VMs and hence doesn't need a
->> warning, idk.
->>
->>>
->>> --
->>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618-gmem-i=
-nplace-conversion-v8-0-9d2959357853@google.com?part=3D24
->>
+        /*
+         * TLB flushes are applied to the VMCB, so apply any pending TLB flushes
+         * on the outgoing VMCB before switching to a new one. A TLB flush could
+         * purge the relevant HV TLB flush FIFO depending on guest_mode, so make
+         * sure the VMCB and guest_mode context is consistent.
+         */
+        WARN_ON_ONCE(is_guest_mode(vcpu) != (svm->vmcb == svm->nested.vmcb02.ptr));
+        kvm_service_local_tlb_flush_requests(vcpu);
+}
