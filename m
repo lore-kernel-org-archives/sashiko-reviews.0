@@ -1,181 +1,229 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2563D45D5
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 08:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8A731AF24;
+	Fri, 24 Jul 2026 08:40:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784881067; cv=none; b=PRArH7qfS4KZ63DnlSIrUbl9G2ymK2XbxA5g5JcvqhRG9vcESW862XQJkDfUXsOYwJcYSyz9XDcA92r2vurfoRPMO2IV1+IcueXyqeBFHHW/4HEmUBojZiW1qhrPBSAig8IBygDceCpi+8ROXnQJKUccXMMalapQHu+a34c9Hfc=
+	t=1784882433; cv=none; b=n2NX92wQCGGcU5D+p1pKJ6h48BKeeMC7g8xV5jEt9P0PFZI3WZMjv3NInKbzLr5rLJJrVMKjG27C/OdHquZMoqUkwMiQxVVM+zcpEz/aRB2QUPVzmxE0JxXj+PDxv7CrxPmAkqx8/Gz3viHPl+YTvB62664tKAx7Cvqlpyowo8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784881067; c=relaxed/simple;
-	bh=elWNjQXtC8thy3ti0vlFZsZxvG3tpc6l8oAx685pjj4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S8OhqWvQGmGDobI6vjjJBOsdzDKSOXb9apqjRoayvWrbglKKgzOSxq9BhIcELAtHTRit/IvcSvnhlarisQoz66vEE/xzxQVzUufmxTOG23cBb0TKODwfrPImgYAQd2OJ+nyOy87waJQ3d8Aj2AXQhTkl0JmSi5Z+7tUAUXTmZys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LVRpaD34; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1784882433; c=relaxed/simple;
+	bh=M23a556lhjGEqPR1JiIdAz2y21O1sGRd3NIVW/6RWDo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QX1laOZuBTBpA+TjNeh4HcaEvxe7Y6TuYZitZjsYV1jPk0kdHdceIPjt7H47N16uqEA2yD9h7M6jQ0qFFX1Oq40GA4vdIY03rlu5MhczqZJIUcERFTmV+jbquVqD7y9jtrdtPejCf5sLN9OjGuZUMs/iQt3SZu0lmD2FKyMyH+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=NNKWjGLx; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LVRpaD34"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4954d5d814fso21925e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 01:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784881063; x=1785485863; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Oa7Uf24Ye3cJcbIbf3Yse8wlIIcJzJaytnCT20m/GIQ=;
-        b=LVRpaD34cAKtrw2XD5l6NABHrlDun6xGAFosLkH9jQWPvy3S8PGEKvtS+3fLCl1XDs
-         8qIpJ59KNiZkuHEXbRJvhgpZq2c4A6rwT2bI7HJE4HPGswy7kigeubQ+ryqNb9YyFdpq
-         z7USDe4FpEDkxX1I2rwCowuVVqnArMyqEiJSaD+Cg/zxAlqz8+EEhlfndVq+1swIxQht
-         hFLdCc+1ojm/Ehr8MUHZfkOcCOEcVruK2nAqClggaQzqI6UDFxkZpqzrYRmZ5BET/N68
-         51oLrMAOgmsqMlUwWkKwqBUUMyt6W4CZKVWpI5CQNKfqfyBc20GejZWbU+/EpaquOSBd
-         PL5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784881063; x=1785485863;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Oa7Uf24Ye3cJcbIbf3Yse8wlIIcJzJaytnCT20m/GIQ=;
-        b=dfrmfjXaCdzUQtgFR+p8+OeePnPXvY6oefHj+O+pL3abSZWA3mq5lOCqNLwjfvJDI1
-         tzPFVsf4NNsbQZ2isZdWdbN19Ekr2UHxRqYlEkrhQYg0on2dH2qcClhsaE6fm7drInrv
-         Ra9QjWXW33H9rI/9xSEAXF0KZgZ1jnYfybc+0rh+P0x9t+r1O/1s94H5w+q6pUilKulG
-         +z5aEEDdTZBXTMgwTSz+u15Q+TZqH8h6MCsIoGaDddYdEozDsoGsse4H1qqwBzG7Sfex
-         jCG52ZBYAw+DgJ7FKS9FSRe4OzacuR+Zu01gr9UXtiZWPiHDBsez0NLLd7r+B+BYU+0C
-         R4kQ==
-X-Gm-Message-State: AOJu0Yy9GRV89peZ98dJd28I9wzYfPkmHiUMg9nsHlfyyVxcQ1BodvHq
-	F23r2HGSJRuny/HtPwW+sitiikzikg4ow2XedLPxzOgcq3lXZQzTN2bFSA6U51zxb8lHm4HzXNz
-	Cbw803w==
-X-Gm-Gg: AR+sD12P1c+sxLMVtMEtshaHfhr50nEVAd4EGEjJCPcUYKjbdrpSwCQBnDoZXWpAVbh
-	0ECKm8nmjQbr/eowp934znPr7ZAQA2x6wUc+SH6V+I4qIN5oCX3v+CZN4Bg4VelIR10DXiucliU
-	aBm3b5QusJsN1pmFrF8zhF16iatv1Eb8Tbxn7H6IdHIkjkp36v5MPEz88KfMkzw+FIPiLOCcuVM
-	FD601SQ2h52JwiykAb6yfJac/A91W4HANWt177JQsDL3DoTUfq5AH5sW978xcblXOdIzXJSJLWe
-	lRkzlcNoXkoodaanEeuIKef3f6TyLR9gtat16dvX3GLf+NQBfXWhVGDP8A4dwyzGkpO2IRrCXJn
-	WzTk4RnU/xVsHvS2dwEKhtnx4G+vkzj2qHqTrj9+Wb5rtupPJ9HS1V1GmnjzF8VMqgUn5p4Xuom
-	RLKa1/68U0hgY/2lueOT7HGNsk5mtivaXTItBCyA==
-X-Received: by 2002:a05:600c:2e96:b0:495:7a0b:3b4a with SMTP id 5b1f17b1804b1-4957d7907ccmr541285e9.7.1784881062421;
-        Fri, 24 Jul 2026 01:17:42 -0700 (PDT)
-Received: from google.com (220.60.76.34.bc.googleusercontent.com. [34.76.60.220])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957af786e4sm50771715e9.8.2026.07.24.01.17.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 01:17:41 -0700 (PDT)
-Date: Fri, 24 Jul 2026 08:17:37 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [RFC PATCH v2 2/2] KVM: arm64: Support BBM level 3
-Message-ID: <amMfoWWEBI17jdIj@google.com>
-References: <20260723182140.4025575-1-smostafa@google.com>
- <20260723182140.4025575-3-smostafa@google.com>
- <20260723184346.CAE8F1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="NNKWjGLx"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66O5CBK2827098;
+	Fri, 24 Jul 2026 08:40:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=ft4aYZ
+	V3G4t54yd6e6naTXVwTlhGz6U2GSS2i/UtgME=; b=NNKWjGLxfKsNz52YN9ZTwl
+	d2Sm8lW0CRCRYk2JnZAu93J/zdnqA9SblD6vMLKQ8FFz7BLLOm9uaBUmCfa6GuD4
+	uJzyFuXd4j0SnzOBqRCk7NZmYM5x1ZIb+Iwj2oS0Qh6kdfz1dLBPZUN6hNWajV41
+	FOqpDVE+vo5Jm+yFH+d02y6/q+KAO4ZxtO5LCQALTA5YdjgBAcPkHDkiL4JD4dRH
+	wrS6cbNcwaQGqBJpf6CWpMWgK+YYvxgzH9DWIloqyBOgB0B/vmT2aGpV8rAhKAkO
+	Kv2gofhWyNkw/seIeczPvaFBslMdo+QpgdljNpYTa87T9KVYOsmuoV00ftA7pRVQ
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg77kk797-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jul 2026 08:40:27 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66O8YapT014393;
+	Fri, 24 Jul 2026 08:40:27 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgm6wg7q7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jul 2026 08:40:27 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
+	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66O8ePXD56295724
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 24 Jul 2026 08:40:26 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CB52358056;
+	Fri, 24 Jul 2026 08:40:25 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B84CF58052;
+	Fri, 24 Jul 2026 08:40:22 +0000 (GMT)
+Received: from [9.124.221.69] (unknown [9.124.221.69])
+	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 24 Jul 2026 08:40:22 +0000 (GMT)
+Message-ID: <38deb2cd-c770-4018-8dc0-4da6124d8937@linux.ibm.com>
+Date: Fri, 24 Jul 2026 14:10:21 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260723184346.CAE8F1F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] perf trace-event: Fix integer truncation in
+ do_read() and skip()
+To: sashiko-reviews@lists.linux.dev,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Namhyung Kim <namhyung@kernel.org>, Ian Rogers <irogers@google.com>
+Cc: linux-perf-users@vger.kernel.org,
+        Madhavan Srinivasan <maddy@linux.ibm.com>, hbathini@linux.ibm.com,
+        atrajeev@linux.ibm.com
+References: <20260723093958.416650-3-tshah@linux.ibm.com>
+ <20260723093958.416650-6-tshah@linux.ibm.com>
+ <20260723101054.09ABE1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tanushree Shah <tshah@linux.ibm.com>
+In-Reply-To: <20260723101054.09ABE1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=HJXz0Itv c=1 sm=1 tr=0 ts=6a6324fc cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=5-z-NcgFbdBiZNMltKoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA3MyBTYWx0ZWRfX9nzmZnXbICqY
+ Wdd7AHKcO3OSE7wIR2JFnRIrY9q+lDPr4+PnBcHUocHnlI1BPKS+Ze8nRNtMSKT6xGo9HhcJtrr
+ zvDW3axzr/bl+3ezgEm5JY0dKg5ZQXihrDYpqRtooySMeKXnSAlwOk+Pvu2G43sRgJKt/JDQ5/5
+ 3PwIGo6x5aYVL3xlOcJy+nISRgLCSFhmlq9pf+GbQlB9SFUKX+bywvcNmaO5A2UrNZM0oUmPnIT
+ AhYow+04iqjmExKW1FLjD1hYAoajnzCk4ekz78E6YXdIh2lFkcVsP3Gveo7VNqxfzb7Pzr3T0jn
+ qtQV/my0WQEjwc4JCryxbQLRu7HWHEb1ofrut1/a+ly502H6b3ywYvzMfwK7S0EtQfyWoAw+6/T
+ ognPVYpxEnt3fAMZHpqmszL7iYBwPaZAndVNkMrSFGlj49QucYHvvSMxr5I8uWEGKOScnGsiW/u
+ gv525ONWJJb4mnZmy2Q==
+X-Proofpoint-ORIG-GUID: f1NomfSIuzE2fO9y_DOFh-ZqFDhYfnzZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA3MyBTYWx0ZWRfX6KcImtQUlSaM
+ feqi3i/lSBG4qvX6jZitbCL4fEDDgxEFIx4aI6BrOHcNWQY4uvgKW6hFsiYvn6Ukr3kJunwf+wJ
+ 4o+rZJ/4/skGXZ//eXt7de9jmaYZ/ig=
+X-Proofpoint-GUID: E-G7f0TBjNf16yDSnURBTIQJrLOOWDyx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607240073
 
-On Thu, Jul 23, 2026 at 06:43:45PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Missing DSB between MTE tag stores and the stage-2 PTE update.
+Thank you for the review.
+
+On 23/07/26 15:40, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Heap buffer overflow in `read_ftrace_printk` unmasked by `size_t` conversion.
+> - [High] Infinite loop in `skip()` leading to Denial of Service.
 > --
 > 
-> --- Patch [2]: [RFC PATCH v2 2/2] KVM: arm64: Support BBM level 3 ---
-> commit be481f0e17bfc16626c7f5b1b8b652be3ec92909
-> Author: Mostafa Saleh <smostafa@google.com>
+> --- Patch [2]: [PATCH v2 2/2] perf trace-event: Fix integer truncation in do_read() and skip() ---
+> commit b30cf605f4d2ba7957c47c5106a821726355dd7e
+> Author: Tanushree Shah <tshah@linux.ibm.com>
 > 
-> KVM: arm64: Support BBM level 3
+> perf trace-event: Fix integer truncation in do_read() and skip()
 > 
-> If the system supports hardware Break-Before-Make (BBM) level 3, use it
-> to replace stage-2 PTEs directly. Otherwise, fall back to the software
-> BBM sequence.
+> This commit modifies do_read(), __do_read(), and skip() to use size_t and
+> ssize_t instead of int for sizes and return values. This addresses integer
+> truncation of 64-bit sizes, fixing uninitialized memory dumps and out-of-bounds
+> reads in the perf tools.
 > 
-> > diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-> > index 127b7f9541b16..5e16ed7e9b909 100644
-> > --- a/arch/arm64/kvm/hyp/pgtable.c
-> > +++ b/arch/arm64/kvm/hyp/pgtable.c
+>> diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
+>> index afd458cf1387d..52ed496d92c3b 100644
+>> --- a/tools/perf/util/trace-event-read.c
+>> +++ b/tools/perf/util/trace-event-read.c
+>> @@ -51,13 +51,13 @@ static int __do_read(int fd, void *buf, int size)
+>>   	return rsize;
+>>   }
+>>   
+>> -static int do_read(void *data, int size)
+>> +static ssize_t do_read(void *data, size_t size)
+> 
+> [Severity: Critical]
+> Does changing the size parameter to size_t unmask a heap buffer overflow in
+> read_ftrace_printk()?
+> 
+> If a crafted file supplies 0xFFFFFFFF, it triggers an overflow in
+> read_ftrace_printk():
+> 
+> read_ftrace_printk() {
+>          size = read4(pevent);
+>          ...
+>          buf = malloc(size + 1);
+>          if (buf == NULL)
+>                  return -1;
+> 
+>          if (do_read(buf, size) < 0) {
+>          ...
+> }
+> 
+> Because size + 1 overflows to 0, malloc(0) returns a minimal heap chunk.
+> 
+> Previously, passing 0xFFFFFFFF to do_read() truncated the size parameter
+> to -1. When this -1 was passed to the read() syscall on 64-bit systems,
+> it became ULLONG_MAX. This failed boundary checks against TASK_SIZE_MAX,
+> causing the kernel to immediately return -EFAULT and preventing the read.
+> 
+> With size now being size_t, 0xFFFFFFFF is passed directly to the read()
+> syscall as 4294967295ULL. Because this is below the 64-bit TASK_SIZE_MAX
+> limit, the kernel will read up to MAX_RW_COUNT of file data into the tiny
+> allocated buffer.
+> 
+> Could this be prevented by adding a bounds check before the allocation?
+
+Thanks for catching this. yes, this is a real heap overflow.
+
+size is attacker-controlled, and size + 1 can overflow to 0,
+causing a tiny buffer to be allocated while a huge read is still
+performed into it.
+
+Fix: reject, size == UINT_MAX before it's used, so the overflow
+can't happen. Will include this in v3.
+> 
+>>   {
+>> -	int r;
+>> +	ssize_t r;
+>>   
+>>   	r = __do_read(input_fd, data, size);
 > 
 > [ ... ]
 > 
-> > @@ -873,16 +891,35 @@ static bool stage2_try_break_pte(const struct kvm_pgtable_visit_ctx *ctx,
-> >  	return true;
-> >  }
-> >  
-> > -static void stage2_make_pte(const struct kvm_pgtable_visit_ctx *ctx, kvm_pte_t new)
-> > +static bool stage2_make_pte(const struct kvm_pgtable_visit_ctx *ctx, struct kvm_s2_mmu *mmu,
-> > +			    kvm_pte_t new)
-> >  {
-> >  	struct kvm_pgtable_mm_ops *mm_ops = ctx->mm_ops;
-> >  
-> > -	WARN_ON(!stage2_pte_is_locked(*ctx->ptep));
-> > -
-> >  	if (stage2_pte_is_counted(new))
-> >  		mm_ops->get_page(ctx->ptep);
-> >  
-> > +	if (stage2_use_bbml3() && kvm_pte_valid(ctx->old)) {
-> > +		/*
-> > +		 * Barrier is required because stage2_try_set_pte() uses
-> > +		 * WRITE_ONCE for non-shared walks, lacking release semantics
-> > +		 * used in the software BBM case.
-> > +		 */
-> > +		smp_wmb();
-> > +		if (!stage2_try_set_pte(ctx, new)) {
-> > +			/* Raced with another core. */
-> > +			if (stage2_pte_is_counted(new))
-> > +				mm_ops->put_page(ctx->ptep);
-> > +			return false;
-> > +		}
-> > +
-> > +		stage2_clean_old_pte(ctx, mmu);
-> > +		return true;
-> > +	}
-> > +
-> > +	WARN_ON(!stage2_pte_is_locked(*ctx->ptep));
-> >  	smp_store_release(ctx->ptep, new);
-> > +	return true;
-> >  }
+>>   /* If it fails, the next read will report it */
+>> -static void skip(int size)
+>> +static void skip(size_t size)
+>>   {
+>>   	char buf[BUFSIZ];
+>> -	int r;
+>> +	size_t r;
+>>   
+>>   	while (size) {
+>>   		r = size > BUFSIZ ? BUFSIZ : size;
+>>   		do_read(buf, r);
+>>   		size -= r;
+>>   	}
+>>   }
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this sequence lack a required
-> synchronization barrier for MTE tag stores?
+> Does this change introduce an infinite loop when a maliciously crafted
+> perf.data file provides a massive 64-bit size?
 > 
-> When KVM maps a page with MTE enabled, it clears the tags using STGM:
+> Before the patch, passing ULLONG_MAX was implicitly truncated to -1.
+> In the first loop iteration, r = size > BUFSIZ ? BUFSIZ : size evaluated
+> -1 > 8192 as false, setting r = -1. Then size -= r set size to 0,
+> terminating the loop immediately.
 > 
-> arch/arm64/kvm/mmu.c:kvm_s2_fault_map() {
->         ...
->         if (!perm_fault_granule && !s2vi->map_non_cacheable && kvm_has_mte(kvm))
->                 sanitise_mte_tags(kvm, pfn, mapping_size);
->         ...
-> }
+> Now that size is widened to size_t, skip() will continuously subtract
+> BUFSIZ from ULLONG_MAX. Because skip() ignores the return value of
+> do_read(), does this cause the perf process to spin endlessly even
+> after reaching EOF?
 > 
-> The PTE is then updated here in stage2_make_pte(), which uses either
-> smp_wmb() + cmpxchg() (mapping to DMB ISHST + CASAL) for BBML3, or
-> smp_store_release() (mapping to STLR) for the software BBM case. Neither
-> of these provides the architecturally mandated DSB semantics required
-> after MTE tag stores.
-> 
-> Without a DSB between sanitise_mte_tags() and the stage-2 PTE update, is
-> it possible for the hardware page table walker to observe the new PTE
-> before the explicit tag stores are globally visible? Could this result in
-> the guest observing uninitialized MTE tags, leading to memory permission
-> corruption or spurious tag check faults?
+Yes, its right that widening size to size_t removes the accidental 
+truncation that was previously capping the loop early on bogus input, 
+and the missing check on do_read()'s return value turns that into a real 
+infinite loop  on a malicious size
 
-I do not know much about MTE, but AFAIU, STLR wouldn’t order against
-page table walks. So there is a window between the STGM and the DSB at
-the end of the map where another core can observe a valid PTE and not
-a the new tag. My guess we need a DSB at the end of
-sanitise_mte_tags()
+Fix: Check do_read()'s return value and break out on failure/EOF instead 
+of blindly subtracting the requested length. Will include this in v3.
 
-Thanks,
-Mostafa
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260723182140.4025575-1-smostafa@google.com?part=2
+Thanks
+Tanushree Shah
