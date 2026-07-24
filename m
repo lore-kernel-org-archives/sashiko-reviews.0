@@ -1,208 +1,164 @@
-Received: from mail-wm2-f2.google.com (mail-wm2-f2.google.com [74.125.225.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40F13B42D0
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 21:30:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.130
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784928602; cv=none; b=ePv7qUjjzWDcfJgXKiyur31b2+XGIzK/KeEGs6c6YbBFBtzM8Y+pTLPjgsm8oGtCz79bLwJr2ONe6pkqFlB2JivTmcQ8vTn240GbT13wTZWeFLg1sPliml4mCZGzr8ceo0T8lHj0ZZBd/+OHAZBRaxTZ9EbxZj58yvetL6lsq1o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784928602; c=relaxed/simple;
-	bh=zMBmgg/RBhSAgDWS7HX1nOGrgYSD0b1YbDOMXyaJheg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=aZr/0/hQQ9n/QLFbm9Koo3+3INV5ira96prDnVTuMBSn94U1mASvHSojTMTex5wNkDVIvZSkZ1bXZIg9Todujm02PhrDNv8/in7rmTbVIodv0JlxaeT4RQptWXLGh3w/EtzD/UcvXhm3cWVT9LoykGC5RPsCNLMfBAlK6FMFvts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=drfZRvEM; arc=none smtp.client-ip=74.125.225.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD023B19BC
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 21:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784929263; cv=fail; b=cxIKn5NqmS8d572HdgaoUaNIyDSYmm0FI4w7ZedCj8994d+M0baLH84jgktaQcetq5Toy2eMe15Nzq5OPaiRNil1i2fKp5fiSd8yPIEjfsnno074rwq7NylSnEAmjqSA3iDl/lZAVpKHLyc0FRDZp9tMXzRcsBIuaiz3Np230VE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784929263; c=relaxed/simple;
+	bh=uA/gvPNAwEZDQBIFHMVPy3f1Yah0ne9+YpNWNv36p7c=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=cYKj6L7e5DAPuuGOoY0FiIqnPlOEgJEGbvyieDCyHUqWsPYiJErzNRCgaTqaz2AvQIUgWHQs6DyFaMTQcZIjxBcCKwX38ugvbx00hQzJHd6pkrdZn+ZvIzDqKHt4GqgPYDXLqK/YuWGLMEIKmcow+/rw9eO8kuWytN3GX/3cnrA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b8ibO0IC; arc=fail smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="drfZRvEM"
-Received: by mail-wm2-f2.google.com with SMTP id 5b1f17b1804b1-493b9643ab5so2231365e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784928599; x=1785533399; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=vxFBFm2O/i4oFd59BqOJqDt/u+w3rUv+XhurUQThtEo=;
-        b=drfZRvEM+rkL2agT3jb1GvNDhU8zVOHpEKZjOcCq6uk4hyCHHW9ychyHMMShShOVEX
-         yRSNX2ztIrYyttl0p7JXgBOBDmWQiYViQlNvD2rWeS4+8HHTMEyiGbw69H5/km06c0yk
-         KoZpMoqL8IXAgPDLLR1ee/F8glM0F485qrCNWBaZGwanzYu+HJEVStLwz3ZLysEX7UD2
-         tqkXokk8iA6utJ0vk0QvindTGImRCxjjnc7nINXurE4sZ9vDpwrl2V01l7aqVD9okzNH
-         tBjiS2ygzCNONJr5iISfKx/U9W+oj6GBDu26qk9Bu3Z7Ybmt7nP5OUmMD8h3Eop6Hk/8
-         GbmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784928599; x=1785533399;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vxFBFm2O/i4oFd59BqOJqDt/u+w3rUv+XhurUQThtEo=;
-        b=L+ZX7F7q6Aw4A/h4WxOMGSPCWQu09pX+do2GQjos6pOmoTDGagVQcO9GQ7fSPH1Zke
-         CKxfxL3R8Oj86PGwh12U/L3+f62P2wRejLogapq8sQQLF/qTBJB4YtENYsCfREQ2Rsn1
-         40bqXB//1YwTEpIxklvqatveXrqppihFfwhAnvJAJHV33XpibNTcLKnEl9RRU4PmXgfQ
-         mkkWj84vxNhsxVkxAnfF6KDaLGNjN54R9tIi7/wG7xqCK9ktQy7XUwuA31zhOxWxArwh
-         6nYvEkRdfvz7aKP3PGjWwnqIVc65wM10Kc6rp96pJaJmwvAhZjcrOrGcpTYFZ8GKWmz1
-         5evw==
-X-Forwarded-Encrypted: i=1; AHgh+Rr+KerROJWXczUsqsEDP2jUBStkCuaofGPcQMI0Ae/fP30DfIN/PwPGbHOT0T4a5WVRlsbGYwlDlOXZgl7BlUU=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy2Uj2cRbbK1DEkuiI7tG/7/Bz5GnCaZjp+NBqTLSE8VPAJKSOx
-	B9kpDxqzX1CISJw8y1wlzLQBATYkTp1+cjmYmX0hLGhVGyeH9d0Kw0/xJ980Rwfz
-X-Gm-Gg: AR+sD13ZbXpTkZQUyLK/hd7/8UMziFBg5AhiK7D7I0cvU//r2DXX7XSKUqlY5tt9yY3
-	Jp1GSZnwel9WXJ9X8LKdgUmq5om55J7KtX5lsPExw6Qqdqlk/gxZv3BIGLPj6lsBgchqMaY/ARh
-	AJG5EqY7/d/dLBLDa7xuam498EZhxNEYbpHnZ+puioz3ijVTvSleG8oUEh/dqrXfsZT/oYbnf7V
-	aVMXnrz6umdNU+pPKTaiBsyHcw5zKgtkMzYADB4nxokvUpN9EZrZ9BmgSeIwq6c01ZHqqQmblRF
-	qt8c+l99BXfFQDbrbTNFSV9LnhoAirgRxPAfXIDm/sEAV2iQwPEj+/HRsJpiPID6W7+r430ztyu
-	MnTzcaqoc9Y3xMzaVMir2hMyU1V5S519x/J7vfHj69kt3VpbBpim6WRwdtyTMcyZqHSuKRj2Q8Y
-	u720s/nDMPwRIkthVb8uGMPQ7kEcuVsuhDZ/DAV+EJuIb32MEFAyE/lnWbg4Q73VQTRCXGq4gW7
-	9yMgotmQK9+fILj3rx0t2GlFSB3aieqqcabeJ8QawXk
-X-Received: by 2002:a05:600c:500d:b0:493:e583:7053 with SMTP id 5b1f17b1804b1-496b5728b27mr236365e9.35.1784928598853;
-        Fri, 24 Jul 2026 14:29:58 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-496b4f33b73sm12707905e9.14.2026.07.24.14.29.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 14:29:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b8ibO0IC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1784929262; x=1816465262;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=uA/gvPNAwEZDQBIFHMVPy3f1Yah0ne9+YpNWNv36p7c=;
+  b=b8ibO0ICDRa7Ij3jq/exy1VegG7r3EBREo98oRsTnG8BRd0m3Vm9fOrW
+   KldFa/lPECxbrtQsrBYekopnSC7vuEdoOGtOyd/hzAjBhDhrNjvXSa+dv
+   QnZls67nqTINcAl/NO4dXfSWJfMO/9YMecdj/VnLZg1r/6185UBoCkk0S
+   R1tLA4PBqYMPjpO4Ksn8VOnfRnc+RamJFMvGTJaiUJdvC0ulaPRTMyJOm
+   ZQNr5RVlcnkeRRe3+phHYnSKoxSlq9KLg2fqz7zs778K9ZFIh71uK7oG2
+   9nsAXJzy8lOdh14u8k7CdfDUnJVDXb13je4P7T438cE6xhsLO+rgIZ+au
+   w==;
+X-CSE-ConnectionGUID: Ql6L4wU/SeizQydymRw5Xw==
+X-CSE-MsgGUID: Z9to46rySZ2f3MwX/qAnCg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11855"; a="96752237"
+X-IronPort-AV: E=Sophos;i="6.25,183,1779174000"; 
+   d="scan'208";a="96752237"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2026 14:41:02 -0700
+X-CSE-ConnectionGUID: rNiOFHB/RGCeKrw1qj3d4w==
+X-CSE-MsgGUID: L5xQtVDQSO6lNPoE0rDq1g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,183,1779174000"; 
+   d="scan'208";a="257049086"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2026 14:41:02 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Fri, 24 Jul 2026 14:40:55 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43 via Frontend Transport; Fri, 24 Jul 2026 14:40:55 -0700
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.40)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Fri, 24 Jul 2026 14:40:55 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jCPs28bWPFPYpUjPLK8UEW27nJdKPLTH8sIDFCRUeEk/tA9jqtDOAROViG6jeaHtpdThRvACbPHL/3/je3P7ggco0s/Xg04Gjwon4qE9GM0g/0IMbEL7CsHUxS74SnFhkl1AobqMRn904k0/TKWmxhuEtObDQl2sJwgcS147smVmMYF0agHuAgFGPGiC6S1yhJ9vrjlTDd8f9Vp3Ta+M5mwO5gaaGqyUSyUdkXD9RCVF5/UOVDRMRRcQMv2rPuSYdThYaP7lvzr05EJaS9s22J8rRiCKDjeeQYm5WcdXwqa6WNxeKJw/vv1TsiL2eU0vBA6yiFgGBooV14dTdelihA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lpVgdUBjKgIYWFbRUOWxpBbnOQ97fuDe9eB47yQhs5k=;
+ b=fVJRxL2zPAfZHn1gzQ+c4pXHDeu9uVkQ4LvQHDBnGCo3c/CfNQfYEZMvN5KSZYA2pF5UpRHS/s+0WPxL2J3LR5yhwCEr8qhTGd1W+LkVjLyLKUgInaZW6DChFtyzCDqIecQOmz6phtbysT2lRDXwdOlP4Q5zHrY/oSR0aMUBvnZuscpnzLfd0gJ3cNPAEnq4+dqZ6f1EK6+En/FgWl58MIGtBk88NPKiq0li7N2CyWQ0L9VmUV/XCD6fsTJbkut9QxkjpYJ4UWu/43QBgopo6ss5oqUv57RbsC971u+r78lEH2vx874b5JQxESGqZ2q/PoxJHg/K1zMQccMWg0yzpA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
+ by DM4PR11MB8090.namprd11.prod.outlook.com (2603:10b6:8:188::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Fri, 24 Jul
+ 2026 21:40:53 +0000
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::e721:90d7:9214:2d53]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::e721:90d7:9214:2d53%6]) with mapi id 15.21.0245.010; Fri, 24 Jul 2026
+ 21:40:53 +0000
+Date: Fri, 24 Jul 2026 14:40:50 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] cxl/region: Fix use-after-free in
+ find_pos_and_ways() error path
+Message-ID: <amPb4js0Vf9-gK_E@aschofie-mobl2.lan>
+References: <3a36953b5c665cb9544ba61dafbea0b0fa508c77.1784654628.git.alison.schofield@intel.com>
+ <20260721175033.0B0D41F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260721175033.0B0D41F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0077.namprd03.prod.outlook.com
+ (2603:10b6:a03:331::22) To DS4PPF0BAC23327.namprd11.prod.outlook.com
+ (2603:10b6:f:fc02::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 24 Jul 2026 23:29:58 +0200
-Message-Id: <DK74DPZIPH5I.2ZST2KB0Y63PY@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 02/18] bpf: Unify const map ptr argument
- checking for helpers and kfuncs
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: "Amery Hung" <ameryhung@gmail.com>, <sashiko-reviews@lists.linux.dev>
-X-Mailer: aerc 0.21.0
-References: <20260724190813.1458271-1-ameryhung@gmail.com>
- <20260724190813.1458271-3-ameryhung@gmail.com>
- <20260724192840.1BB2D1F000E9@smtp.kernel.org>
- <CAMB2axPaPthdQ-pVG0PV21Wzw=dgWnFdPqi5FuJ1EeAEde-P1w@mail.gmail.com>
-In-Reply-To: <CAMB2axPaPthdQ-pVG0PV21Wzw=dgWnFdPqi5FuJ1EeAEde-P1w@mail.gmail.com>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|DM4PR11MB8090:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0a77db5d-d809-44f8-227d-08dee9cc3c7e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|18002099003|22082099003|4143699003|56012099006|11063799006|10067099003;
+X-Microsoft-Antispam-Message-Info: 89xt2ph8X2FikUdZyS5Rw8/U2B/mEiyVig+SBWPqyDxobcRh41TdLBJcfF9P00UeBu1+sZ9KEb+mlTZS8hU0AgXQPclVDa3ATPcDnn8aiujcj+I8OU+UCXRKZLUWXr97rv/bOuoFQHPcz00XPMWC7HqFAoAxkB5GLfwU6BsThOwqS1HVT6uqJknW+YK9Wcq/t3BHsorJlPeXVREm+vD/XUz786hDEW/Gn7P72QuzvbFAHGg61Ghv/vQXXmTcmujDRky1ioCEf5OB3eL8qIxW/LwCcr2Q24qBIemgPoqdJQHJqylWg0EnHBtgtL/533u7cicI+fRP5PWJXo6trxDatnPrQFs0we7NvsKnQPKEJV/f6DaxN5fMn0GLCnTGFDf7fg5lFvzJxHKVGrDP+b9gvRFsJV0nZULyHSEjTazqqHsRNjisw+4ggJ3cme/0n+vX8li+F+mKdDuaRHVhaMfPYYLEeUhjFMFPYaYiljt9qhqhJoMXMv01nZ6wUTlEvhiAwpDd2tXPjrvK5mU5abjeXSSlWvm5mpuR/hBfxOXaRPw1/Gf4klAFTqf58gp+al5d+bKvhZi2Y2DRVFRToVFjjGkvC2FZ/oXNe4JtuVNnQHhjjesavZpanRQaRK1B9xsJ
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(18002099003)(22082099003)(4143699003)(56012099006)(11063799006)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?x4N+dsHbHRUxNqWd3c8n8rLfmG5dQRWa6zXpPb5SGForsCIMpJV557hsg7+/?=
+ =?us-ascii?Q?8RxWoVmyVbrhptVlMqvPKbwTUxzI/67d+IAqYXPqOX8uPdJ+5ZIkTU+gONLD?=
+ =?us-ascii?Q?o/XJewgyK+rs4yr5aLES9Zc+KZ8NrqmdRrzrJcJINXmhGcY0SBa17vsqrj7Y?=
+ =?us-ascii?Q?QB+rGMXl15OOg9Fu+w4XGBCx54uouNH7iKYY47s1eSQptbX1SMBSyqHUW/c3?=
+ =?us-ascii?Q?1Ua4DAGA1E4FWV7T6BFKDWnZqt2+fdO4darxnimEbr2kU27OffX/eeyyswXd?=
+ =?us-ascii?Q?w9Z7iDqW63Zf398GE0ZiQgvp8W0uNPXyNzv5iw+lpKmb+L3zQ6AFhq0UoINy?=
+ =?us-ascii?Q?hVGMPdufDb1ONle0Cr/4e9zENA+CmoBj3a9K8srwyXvdIP9EpW06T/wjLzuA?=
+ =?us-ascii?Q?0Avc0CtS6RwqOePIRZ8aCleDlIyZNmqwrXIIRNfXufe2uUScnCwMJnKKZNfY?=
+ =?us-ascii?Q?lIfJrbxllSQihqqN9Uj7b5elhVyPyyf818yYmXWuA3Nw6t8EgWyhbRqkrVX3?=
+ =?us-ascii?Q?lRDhPnzN3z2NAPWS+y+orNcLObtHi8GVeMleq0NrSveMsnG5NSEN2KsIIubF?=
+ =?us-ascii?Q?i2LZHkMvUaO41JCS52uV5F9XRIOoLR0E6DTsIYUOmIK/6Uh+ekaPV+nYNru1?=
+ =?us-ascii?Q?bGHZsUFHmv4uZ6eZ5aDqKo6GEDtuWjeLc+8DAHmxQGpoFVTVH5ufJmYVxpiT?=
+ =?us-ascii?Q?Y1lFNBSnrUYmCjqViS6PkQ+YbswPlB5YQvuNCIJBRnFAkDo5AIxNwsR9PDfX?=
+ =?us-ascii?Q?LC84Ff12z0n+Hi5J/LREaYJrd2D4DyIXsQm7vP79k5diLTU2gjsikpKCJXZq?=
+ =?us-ascii?Q?68JYeORl1rKKR/L3xGtCLahiI66CTigrOe3pwAUQpKID4RV9O6UiI9+m3wUc?=
+ =?us-ascii?Q?C3rO2D9Mgfkg3R/osF7vEvRPiUR67Bg5RUri+B2i5X8AXtUc3q6j+x6DE2fY?=
+ =?us-ascii?Q?IMd98K6j1gjBVjj2JNRXlhxP5yEiDrhBBMSvDEa/bntMnfuK62CS9qM5XN+7?=
+ =?us-ascii?Q?AYu+GVcxiUU59C4tfzcSe519lVjM2U0A6FDrDDtw/gAHjMm7u1VgZZ52S/dI?=
+ =?us-ascii?Q?BBpJFJtN9A7n3gBzCZk1LdiFNgY6f7eo60LyepGMX7Z9eG4Lh9hecauBFbz0?=
+ =?us-ascii?Q?FUEWXmso2zewEutNQVfbGwAo453ssG38cIWO0uxxPbeJuxb5yRdugETvUsuu?=
+ =?us-ascii?Q?qGyllfTz6ELO547VEFdxBzbrhGQ94WU3tCGZ2ZBMT43d1l8R1JJvdbARLMSK?=
+ =?us-ascii?Q?QCO67D98788Qj52fESJzHSREpoyHhsN8LYqUwFCsydc8zd/t7HcqsDr72iI9?=
+ =?us-ascii?Q?fkxnxydymHAL45LPlfHwMF31/yD8+ciPOzONMzZxGaKx8ORUyetLXyht3vSS?=
+ =?us-ascii?Q?HaDnPnE59rqufTp6WBdsG124Vokx01qS/jo+vJse/AQgDokrDxTIGQS6Txzd?=
+ =?us-ascii?Q?UdXOpr6OCc5sdJU5r42/d5HvjJz5e1x5brly+Axf9SXWHiwikZ0gNK2mc2AF?=
+ =?us-ascii?Q?FQJswxxugZzaRlxftYaWrxQBn3oKzVjBLEg8XW17qX/VVgjCGieep0dwnafT?=
+ =?us-ascii?Q?BNBZMwFXFRnCKzWuVQX72vO5Uu7qQH9b3aJqvxhE9QDqOS5BELG8+OfPXWAP?=
+ =?us-ascii?Q?jXAph+0ESDdK7Us2M8SF138T2DrqLbVDXYK9ehMbl1EX3pZzAYgyNubnE5Yq?=
+ =?us-ascii?Q?zptoSz4XxryOersyi2FOxfcVMe2PFTqXEkWS7HyCe1kXfVq8DkMnzMLHwdX/?=
+ =?us-ascii?Q?c52dcQDTP4DsUc/Q9aWjf2I3NpblLd4=3D?=
+X-Exchange-RoutingPolicyChecked: SBMVMl8EFfZHCCI292H3TKR5G6yzqp08UYWlMmSGqAjH1Ax/9xdknxpZ/Buo5J2lFBw19jqxT1NayVJDMnHvB2jWyL+gk+6k7OJJAz2gkOVz4l6DLkVPZib+AAbg4UxLtyzqGS4eoIwY4Z3OWr7O/F9rZ/gOU+PX71CPAAAVRqzIbZe2+cBBHDJKicqmm1Gl292ez8gjJ2xC+ksobZFINBDv+999qjzq3jfr491Bl1k2hbAB4sT2DcUEPgj9tlKJCi557XnrbKcaZ/oYKhZfwGWLGXmIsMi4EFm7nuHF/mO4B7zdhZEbOe1i8gMut+x4K9H0yznVGGF/W9C9jag4+Q==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a77db5d-d809-44f8-227d-08dee9cc3c7e
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 21:40:53.5093
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZzYUvRs0ykWkJZT14dHovP8xzHVOn/q7RTa7Ncd3KocdgGMDK72ADR81WWwQ2j/uA1EciPzStKhvg0azuQz5H8FNmXxE9EJid/pexaXPs9Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB8090
+X-OriginatorOrg: intel.com
 
-On Fri Jul 24, 2026 at 10:49 PM CEST, Amery Hung wrote:
-> On Fri, Jul 24, 2026 at 12:28=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->>
->> Thank you for your contribution! Sashiko AI review found 3 potential iss=
-ue(s) to consider:
->>
->> New issues:
->> - [Low] Multi-line comment does not follow the required BPF subsystem co=
-mment style.
->>
->> Pre-existing issues:
->> - [Critical] Pre-existing verifier panic when an array map is passed to =
-kfuncs like `bpf_wq_init`.
->> - [High] Pre-existing logic bug allows mismatching maps to bypass safety=
- checks in kfuncs.
->> --
->>
->> --- Patch [2]: [PATCH bpf-next v2 02/18] bpf: Unify const map ptr argume=
-nt checking for helpers and kfuncs ---
->> commit 08bfe87a36be7126ec3db2d3ab4783e72b62e453
->> Author: Amery Hung <ameryhung@gmail.com>
->>
->> bpf: Unify const map ptr argument checking for helpers and kfuncs
->>
->> Both the helper ARG_CONST_MAP_PTR and the kfunc KF_ARG_PTR_TO_MAP
->> recorded the map pointer in meta->map and, when a map was already
->> bound by a preceding timer/workqueue/task_work argument, rejected a
->> mismatching map. This logic is factored into a single process_map_ptr_ar=
-g()
->> used by both paths.
->>
->> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> > index e8c76abbf76a2..a3429610b426e 100644
->> > --- a/kernel/bpf/verifier.c
->> > +++ b/kernel/bpf/verifier.c
->> > @@ -8274,6 +8274,44 @@ static int get_constant_map_key(struct bpf_veri=
-fier_env *env,
->> >
->> >  static bool can_elide_value_nullness(const struct bpf_map *map);
->> >
->> > +static int process_map_ptr_arg(struct bpf_verifier_env *env, struct b=
-pf_reg_state *reg,
->> > +                            argno_t argno, struct bpf_call_arg_meta *=
-meta)
->> > +{
->> > +     /* Use map_uid (which is unique id of inner map) to reject:
->>
->> [Severity: Low]
->> This isn't a bug, but does this multi-line comment follow the preferred =
-BPF
->> subsystem formatting?
->>
->> According to the subsystem guidelines, multi-line comments should have t=
-he
->> opening /* on its own line:
->>
->> /*
->>  * Use map_uid (which is unique id of inner map) to reject:
->>  * ...
->>  */
->>
->> [ ... ]
->>
->> > @@ -12122,36 +12140,9 @@ static int check_kfunc_args(struct bpf_verifi=
-er_env *env, struct bpf_call_arg_me
->> >                                       reg_arg_name(env, argno));
->> >                               return -EINVAL;
->> >                       }
->> > -                     if (meta->map.ptr && (reg->map_ptr->record->wq_o=
-ff >=3D 0 ||
->> > -                                           reg->map_ptr->record->task=
-_work_off >=3D 0)) {
->>
->> [Severity: Critical]
->> This is a pre-existing issue that was not introduced by this patch (in f=
-act,
->> the patch appears to fix it!), but could the old code crash the verifier=
- here
->> if a BPF program called bpf_wq_init(wq, map, 0) and passed an array map
->> without BTF for the map argument?
->>
->> Since an array map without BTF has a NULL record, evaluating
->> reg->map_ptr->record->wq_off would result in an unconditional NULL point=
-er
->> dereference, leading to a panic. This could be triggered by any user wit=
-h
->> privileges to load BPF programs.
->
-> [...]
->
->>
->> [Severity: High]
->> This is also a pre-existing issue that was not introduced by this patch,=
- but
->> did this original condition allow mismatching maps to bypass safety chec=
-ks?
->>
->> If a BPF program called bpf_wq_init(wq, map, 0) with a valid workqueue b=
-ut
->> passed a mismatched map (like a map containing only a bpf_timer), the
->> mismatched map would lack both wq_off and task_work_off. This would make=
- the
->> condition evaluate to false, bypassing the mismatch rejection and potent=
-ially
->> leading to type confusion or memory corruption during runtime callbacks.
->>
->> > -                             /* Use map_uid (which is unique id of in=
-ner map) to reject:
->> > -                              * inner_map1 =3D bpf_map_lookup_elem(ou=
-ter_map, key1)
->
-> Yes and that is why this patch use meta->map.ptr->record that is
-> already verified. I can also separate it into a standalone fix
-> targeting bpf if needed.
->
+On Tue, Jul 21, 2026 at 05:50:32PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Hardware-provided interleave ways can exceed switch decoder target count, causing out-of-bounds heap writes.
+> --
 
-I think keeping it in your set is fine. Since this is not reported I doubt
-anyone hit this in practice, though I agree it's worth fixing.
+This is being worked in a series w other Sashiko issues called
+'Harden HDM decoder enumeration'
 
->>
->> --
->> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724190813.1=
-458271-1-ameryhung@gmail.com?part=3D2
+https://lore.kernel.org/linux-cxl/cover.1784595445.git.alison.schofield@intel.com/
+
 
