@@ -1,179 +1,171 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46CA4399EF
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 21:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784927473; cv=pass; b=mXPgUw3yw339/FE3XhK7soBv4LcF6yd0BrPrO8qBHWwkXpXs9aWpEYgdBvLDyIj1EBPdgEmo1zbDDbX1LyVxScxzMeVB4PRUVA3THBgiSpQU+pKj+2XYmHbkN9KQw/AkTARQoDooTcj92WcqdL3Pux+CWISVmKZK7NSw517oQA0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784927473; c=relaxed/simple;
-	bh=401H7/3zainmi+ZS8WgSGXF+YfZu57AK9VZDf3Al6M0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a0qlDM1ifzoBOsJYH4qSxCrqFKybcS97FWjZdnrWDd4S7M5UZFzYBAn5wBEEXVHk+C87o8ERk404jJmzFe8pbTQJJIkwMWDsVw6ITgmKIm704cWvXIQ5uj1s/Eiiyt1dYJIoWqSu3B5ggCsi5CA7CV7AUr6pPG5B1krVQFwBkeE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S/X1Zf7S; arc=pass smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40E13B47DC
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 21:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784928381; cv=none; b=ZZ7/ICGiKCoHVYSGo03dJfpuPqqiwARe2yrqRbjwsme4//8h0yCYLQdFL0No+b/RHjAgv8FBkdDK9rqoFcS6HMgqG0eQeq/XgZZERyABkJ4Qsv218NoYaPFH+BSyLBoqS03fVBjax8QE7UJ1zUMv0wpzZStpgDfqloy4b3DMlOI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784928381; c=relaxed/simple;
+	bh=gYSOMnId41DNAy7PEjHCIybNWNyLtILhmaV953Bi6fs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Og0E3TPo/P+7lOKVNB9nz4K+xTPzg2Vwmcb3znTSH3U+gbPlmImEuvctpObRHBMrbIHjfZAzTD+Lmk8UmPYc+KNF0gG8uCwVxxNccDxeXUX8DDS3y2WyTMmEL5Hter4UyxxMT25UEJKhAfq+4khBR1OeE6Ku9qV7k9BKh6hq9XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=j56e5YdY; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=Igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S/X1Zf7S"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-8143daf89c7so8331297b3.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:11:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784927469; cv=none;
-        d=google.com; s=arc-20260327;
-        b=HjdC8c2JVdS+Bydin4S8/n+v4csgFdGJJ9a+u66Q/kGzGjVc3XSqWnOExGs0EmvRam
-         A4m4FIf2vPbGu9hSJYxiarSy0/CByoeAQdwZOEoBm5sbK5SOXxo42WHqi1IolURBAut1
-         R2SLFnhaNT8w4rXRheEKZcwj2183VR+Scyfgppc5dqBz3z8/ITmst7i1ptaBLBOVwojO
-         dlSF3gsl/irruNB78jP2LcL8Ze/4JkfBn7VMTt8QnwaW+OppsY4C4b5U5q6yQZtNLvnx
-         3/RukgP2G8kgpgtKyzwLSMCmqk8noIFiG5da84N7Zq7csb6CYtXMlLJBB6cII+soNYC2
-         /XtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hWOgufAJLgySWXsH9Y29OSjWhJiYTY778NK68l79LHw=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=PAZntPeJiW0f1PxDr/ZXVRjcFrNAygQW4eTw0jhxlWP3p3QtNrWTPknz4+deNooQhy
-         1O/vYzwHiqL8P4a/1rxbw7WPxtbKH9zu3vpyeM/FpEOk7e6+86xuTf0Li6ek08SzSojM
-         6ASWH4FO9v/EFtuNfpbzS2hcHPCYf8DuMv75xVLF3OhBbzXz8M3LBTiKv5wW1Bzv6pa6
-         yStUF+xYYmb9S2786AW9aAKsNhl5vrwZcqjin4ocpDes36fATi/B1813tL9LoA9f3BY1
-         Lw+0jLQVh+mvbFSolMu5aoh/v3zQ5C/MqQTPabwIpo8Pq8Od/vfkLBI1yNt9rfxDYza5
-         97/Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784927469; x=1785532269; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=hWOgufAJLgySWXsH9Y29OSjWhJiYTY778NK68l79LHw=;
-        b=S/X1Zf7SmYJDFkMXTacpW+w9HTvH334uMziAjqE0nUKG6SeAgiJLEI8AyXibQC3ilw
-         gLJdFl5B/KsldDepHT5E+Ltkz1AMDlFE9N69UoLWxhp8G62yTifDzssN/2v/Lg8S6Fpe
-         i8Ic57w3n2IQ/FI36kRQCsoD3tI6l9rc9eLXPrxA3PqJ3Rzk2y1EyqVZI3qXrhPsIobR
-         Unya5FOSiBTSyBReB01RyV7d4JarGYal0km2fP7sAPs5q0YMSq4mVKM+lD8BuR+/bk+A
-         B8omkdpaPm7ZfyByxSeP8+dDS8gT9a1CTHoh1ocWBX0j6L95iToJ++dnJr9ra0r/TZwr
-         ccDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784927469; x=1785532269;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hWOgufAJLgySWXsH9Y29OSjWhJiYTY778NK68l79LHw=;
-        b=ENT3Uz2Q+b41b4xJeSleouQPxuZ3nhCSNL8TT9w30g/vImwCjG23L5HqIE8lw02mqI
-         fns8fT3xM+UX7TYHHwJC0pzWfTM/xHYctCrSdR7cgider4pcqdt6uM6dqauBEMf+qt42
-         MbtFCf9tcqP6s+u0nEjwm6OorZ6+/C63nMkvWV14kjZ1+jujUaw0fPaO4TMqb/9tmVoc
-         9nlM/wCpxeNR82zGkJzy8cmJNrOFrwWHS18Q21wRIK9om7WlmiPTEROBbfO7e+Ah0RiC
-         l7KdQhNyGKd96Mp5PB2ziuR171lDOdzXGLufqnZjEyWidRYbG0U2nZMuxmrWgI3xqIgh
-         IuQA==
-X-Gm-Message-State: AOJu0YxwuwUoHgcZbyfgIc1ST3weBQiHZPRXf9UXe+65yONGSDVKl7NH
-	D+hTMzpQWtIv2CDjBqV6xe2EN2yY54WF6pMu7aYNOCX/6as8/uMcyQ0fg6lHs8HeNlMKLyyA/L/
-	BxniD1dcSvWntxOlpuvvj+59ocQYqUPleH2/w
-X-Gm-Gg: AR+sD12Fl2CqH2l8/qeOMR1bPY8NW8TF66VzLwRmAGoYRtkNFfpHeYMyj0qJR+3rqCe
-	MtawJ7yYydUHtzU/d4jHKvTv64/o1FgsoiDuhfLU5yC4jQ423R65gdmIkmenvyEtVJkgUqGD8ss
-	ZkWHbXwMpS32Om8GDmVvSljL2NedavbYISJ2s+XKiYTc1FNgc7SbJtnQcsz3LKyi2G6boHtDLpW
-	ZHQFKoLvNwQM9/SD12m+ytakGqMmUCZXXRurluLJo+fAeCch+iYkmsbT1u9Tw==
-X-Received: by 2002:a05:690c:9c09:b0:81e:2b86:d75a with SMTP id
- 00721157ae682-81f69e69fdcmr336957b3.55.1784927469575; Fri, 24 Jul 2026
- 14:11:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="j56e5YdY"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
+	MIME-Version:Date:Message-ID:From:Reply-To;
+	bh=VKPr7vt+/ZwyDQp920dmlLEI+tbeADMcslQoDZaKawA=; b=j56e5YdYvT7826UljtTaiBw8Ah
+	pIysMN0gWd+XV30RwwsxCBP88ljLT6uvgE8fiW8ac4k1rjwUsnV+HMPQr6zT/8J3K+yboVokhlx2s
+	mEXxf+iPO1l9zr8WSMytt7Z9IWM4x8Du+QsG5vnzComhkw+FURyvNTb8ZxHKkO2PicbR7ZTKNjuiZ
+	+q6fLldOeq+Y3lcz51Yj0fbvu9q7844JT0ZDHu+wF3Vr3dxlWVGf6CzCs8NEjqdxLk0/H9uVG9aF8
+	zCxDKLSUd3pAUxqDdEIxaOXMg2vadHgNO6Pin/eomuZi/CYGXxER2J2trCwa/kjt42uBvvR6tvyJP
+	Q4fPYsCw==;
+Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wnNPK-00597v-9P; Fri, 24 Jul 2026 23:26:14 +0200
+Message-ID: <c05bed0f-81aa-4e55-820a-cc72c1715c43@Igalia.com>
+Date: Fri, 24 Jul 2026 14:26:09 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260724190813.1458271-1-ameryhung@gmail.com> <20260724190813.1458271-15-ameryhung@gmail.com>
- <20260724194706.0F79D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260724194706.0F79D1F000E9@smtp.kernel.org>
-From: Amery Hung <ameryhung@gmail.com>
-Date: Fri, 24 Jul 2026 14:10:58 -0700
-X-Gm-Features: AUfX_myzcCIwPNHoteUh9JcCBK-hOI9tnWJaFUCV6LfHXBrDjbT2vBuwQy2nK-0
-Message-ID: <CAMB2axO+hMUNyk5WeOc78K3Xchf-5jOGSMJjAFUMBWXhX7YAhg@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v2 14/18] bpf: Check helper mem+size in
- ARG_PTR_TO_MEM case
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/8] drm/amd/display: use
+ drmm_writeback_connector_init()
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: dri-devel@lists.freedesktop.org
+References: <20260723003205.330362-1-John.Harrison@Igalia.com>
+ <20260723003205.330362-4-John.Harrison@Igalia.com>
+ <20260723005320.BE8621F000E9@smtp.kernel.org>
+Content-Language: en-GB
+From: John Harrison <John.Harrison@Igalia.com>
+In-Reply-To: <20260723005320.BE8621F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 24, 2026 at 12:47=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On 7/22/26 17:53, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Calling check_mem_size_reg() on the size register before validat=
-ing its type allows an unprivileged user to trigger a kernel warning (WARN_=
-ONCE) and potential panic, leading to a local Denial of Service.
+> New issues:
+> - [Medium] Mismatched object lifetimes in KUnit test causes Use-After-Free when DRM device is torn down.
+>
+> Pre-existing issues:
+> - [High] The struct dc_writeback_info allocated dynamically in dm_set_writeback() is leaked on every successful writeback job setup.
 > --
 >
-> --- Patch [14]: [PATCH bpf-next v2 14/18] bpf: Check helper mem+size in A=
-RG_PTR_TO_MEM case ---
-> commit 49ede5ce4d16f1df74560df7eef17176d13cb3e1
-> Author: Amery Hung <ameryhung@gmail.com>
+> --- Patch [3]: [PATCH v8 3/8] drm/amd/display: use drmm_writeback_connector_init() ---
+> commit 4cc9223584993bb5748e535854c7b5fb0eba8f0d
+> Author: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 >
-> bpf: Check helper mem+size in ARG_PTR_TO_MEM case
+> drm/amd/display: use drmm_writeback_connector_init()
 >
-> This commit modifies the BPF verifier to check variable-size memory argum=
-ents
-> and their associated size registers simultaneously during the ARG_PTR_TO_=
-MEM
-> case, rather than waiting for the ARG_MEM_SIZE argument. It looks ahead t=
-o
-> regno + 1 to process the size register.
+> The driver uses drmm_writeback_connector_init() to ensure proper job queue
+> cleanup. It also allocates a simple encoder using drmm_plain_encoder_alloc()
+> for the writeback connector.
 >
-> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> > index 144c2d8aa4922..2326b12a15313 100644
-> > --- a/kernel/bpf/verifier.c
-> > +++ b/kernel/bpf/verifier.c
->
-> [ ... ]
->
-> > @@ -8515,14 +8512,15 @@ static int check_func_arg(struct bpf_verifier_e=
-nv *env, u32 arg,
-> >                               return err;
-> >                       if (arg_type & MEM_ALIGNED)
-> >                               err =3D check_ptr_alignment(env, reg, 0, =
-fn->arg_size[arg], true);
-> > +             } else {
-> > +                     struct bpf_reg_state *size_reg =3D reg_state(env,=
- regno + 1);
-> > +
-> > +                     err =3D check_mem_size_reg(env, reg, size_reg, ar=
-gno,
-> > +                                              argno_from_reg(regno + 1=
-),
-> > +                                              arg_type & MEM_WRITE ? B=
-PF_WRITE : BPF_READ,
-> > +                                              fn->arg_type[arg + 1] & =
-SCALAR_MAYBE_ZERO, meta);
->
+>> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>> index 289da9d00b056..ff7b21830fce9 100644
+>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>> @@ -5048,7 +5048,7 @@ static void dm_set_writeback(struct amdgpu_display_manager *dm,
+>>   		return;
+>>   	}
+>>   
+>> -	acrtc = to_amdgpu_crtc(wb_conn->encoder.crtc);
+>> +	acrtc = to_amdgpu_crtc(crtc_state->base.crtc);
+>>   	if (!acrtc) {
+>>   		drm_err(adev_to_drm(adev), "no amdgpu_crtc found\n");
+>>   		kfree(wb_info);
 > [Severity: High]
-> Could this call to check_mem_size_reg() process a non-scalar register?
+> This isn't a bug introduced by this patch, but does dm_set_writeback() leak
+> the dynamically allocated wb_info struct on success?
 >
-> By looking ahead and processing size_reg at regno + 1 here, it seems this=
- is
-> happening before the size register's type is validated in the next loop
-> iteration of check_func_arg().
+> When userspace configures a writeback job, wb_info is allocated dynamically
+> using kzalloc_obj(). It is then passed to dc_stream_add_writeback():
 >
-
-This is a real issue.
-
-I will drop patch 15, not moving helper check_mem_size_reg(). Then for
-kfunc, defer check_mem_size_reg() in KF_ARG_MEM_SIZE and
-KF_ARG_CONST_MEM_SIZE similar to helper.
-
-> If a BPF program passes a pointer (like PTR_TO_MAP_VALUE with var_off=3D0=
-)
-> instead of a scalar for the size argument, it appears it would bypass the
-> scalar bounds checks. When check_mem_size_reg() subsequently calls
-> mark_chain_precision() on that non-scalar register, could this trigger a
-> verifier_bug() and BPF_WARN_ONCE()?
+> 	dc_stream_add_writeback(dm->dc, crtc_state->stream, wb_info);
 >
-> On systems with panic_on_warn enabled, this might lead to a local denial
-> of service.
+> 	acrtc->wb_conn = wb_conn;
+> 	drm_writeback_queue_job(wb_conn, new_con_state);
 >
-> >               }
-> >               break;
+> However, dc_stream_add_writeback() copies the contents by value into an array
+> (stream->writeback_info[...] = *wb_info) but does not take ownership of the
+> pointer.
 >
+> The function then returns without ever calling kfree(wb_info) on the success
+> path, which seems to result in a memory leak on every successful writeback
+> job setup.
+>
+>> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
+>> index 9e7bad4d6ed0c..2bb86218e80b0 100644
+>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
+>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
 > [ ... ]
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724190813.14=
-58271-1-ameryhung@gmail.com?part=3D14
+>> @@ -197,17 +196,26 @@ int amdgpu_dm_wb_connector_init(struct amdgpu_display_manager *dm,
+>>   	struct dc *dc = dm->dc;
+>>   	struct dc_link *link = dc_get_link_at_index(dc, link_index);
+>>   	int res;
+>> +	struct drm_encoder *encoder;
+>> +
+>> +	encoder = drmm_plain_encoder_alloc(&dm->adev->ddev, NULL,
+>> +					   DRM_MODE_ENCODER_VIRTUAL, NULL);
+>> +	if (IS_ERR(encoder))
+>> +		return PTR_ERR(encoder);
+>> +
+>> +	drm_encoder_helper_add(encoder, &amdgpu_dm_wb_encoder_helper_funcs);
+>> +
+>> +	encoder->possible_crtcs = amdgpu_dm_get_encoder_crtc_mask(dm->adev);
+>>   
+>>   	wbcon->link = link;
+>>   
+>>   	drm_connector_helper_add(&wbcon->base.base, &amdgpu_dm_wb_conn_helper_funcs);
+>>   
+>> -	res = drm_writeback_connector_init(&dm->adev->ddev, &wbcon->base,
+>> +	res = drmm_writeback_connector_init(&dm->adev->ddev, &wbcon->base,
+>>   					    &amdgpu_dm_wb_connector_funcs,
+>> -					    &amdgpu_dm_wb_encoder_helper_funcs,
+>> +					    encoder,
+>>   					    amdgpu_dm_wb_formats,
+>> -					    ARRAY_SIZE(amdgpu_dm_wb_formats),
+>> -					    amdgpu_dm_get_encoder_crtc_mask(dm->adev));
+>> +					    ARRAY_SIZE(amdgpu_dm_wb_formats));
+> [Severity: Medium]
+> Can this conversion to drmm_writeback_connector_init() cause a use-after-free
+> in the KUnit tests during DRM device teardown?
+>
+> In the KUnit test dm_test_wb_connector_init_success(), the mock DRM device is
+> allocated via dm_kunit_alloc_adev() (which registers a KUnit cleanup action).
+> The test object wbcon is then allocated using kunit_kzalloc():
+>
+> 	wbcon = kunit_kzalloc(test, sizeof(*wbcon), GFP_KERNEL);
+> 	KUNIT_ASSERT_NOT_NULL(test, wbcon);
+>
+> 	ret = amdgpu_dm_wb_connector_init(dm, wbcon, 0);
+>
+> Because KUnit cleanup actions run in LIFO order, when the test completes, it
+> first frees wbcon via kfree(), and then tears down the mock DRM device.
+>
+> The device teardown triggers the drmm cleanup action registered by this patch
+> (drm_writeback_connector_cleanup), which will dereference the already-freed
+> wbcon to lock job_lock and iterate job_queue.
+The KUnit issue is actually not something introduced by this patch. It 
+is pre-existing and is broken for many tests. The above change is 
+actually required in order to fix the writeback specific issue (together 
+with a change to the KUnit test code). See 
+https://patchwork.freedesktop.org/series/171029/ for the general KUnit 
+fixes. The writeback specific one will be fixed with yet another rev of 
+this patch set.
+
+John.
+
+>
+
