@@ -1,144 +1,178 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DFD2E736B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 03:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784862980; cv=none; b=aXPVDKRDxTi/R+g1bfT3CN108rAXOXZHNWMYGyC2vO609xXNSp45df8mS26J2ys3cSFFg9sjLOGKqT4WwFPfUkmKE2GjewMtha+NAim1lKFF+lQSvzRN4icveiq8RS8FSUf89rKm4/PzDgIaIXszcnQNg9y2YO0nN7Sq8vQdRGE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784862980; c=relaxed/simple;
-	bh=1RnLhP3iUsnE5myKEdKyfGGZ48B3gZvFFvxx33OEAR4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ECF5rb+nws9jlK41t9/mRf87y1/XKcNekiE/qmK5KQZtpPxVpyTotGQAOcuzysnpZgTeoyLYjDX45P9SNOcxaZu1l05025jw6gStMdr24BxBvMiv+D/XhpW16TAk0JzMnOhPJIzYbCmta1q9oWR0rRBL4AJ9/2dFzG39KkIFJus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h5tQx1lkNzKHMNQ
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 11:15:21 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 87FE54056F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 11:16:07 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgAX_Sj32GJqPj9hCQ--.22423S2;
-	Fri, 24 Jul 2026 11:16:07 +0800 (CST)
-Message-ID: <100c4981-cc61-44d4-928b-e6f5c29f9570@huaweicloud.com>
-Date: Fri, 24 Jul 2026 11:16:07 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CE3EEC3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 04:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784867291; cv=pass; b=V9R7xFI/dvQDLxecp5s1CBBXYoX9r8lvxfFIE5j4n4x4z4BHdOhXufJ0IlNDw48/6ecusS5JLYdknb06urnfyr6KnW932CYIO8J+6I1hL5uWVJrniC8qdshPpxrzIJeIpWgU7O3uYe4JjX/b8acAr8TKTkeH0xMI890vl2KYgbM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784867291; c=relaxed/simple;
+	bh=hjlFGHq2VYPYfj3lPmOr/26/QmhORDjiRk0e1q6TIzk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G3a2l8rQxEl1Fo03FHKFsvJYV9MF2+/MR+5THv/Q9qQ1bL9psb3t6UWflCMFrF+AfBoc6oCF+fnYVrKO2SyEDDCJSnA2oDX0jl/utPMqtYD05Le/5XL4oe0YDrWaOpVrlc1fEv2Zy9zxthlOLaYlVuBOUYUVH+DAO0RFyGWI7F0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pSn1j0cg; arc=pass smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pSn1j0cg"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c1740c36c5cso2309466b.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 21:28:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784867288; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EMAv9QNEPhZ2nQDngSJbZqEXhkMe4iFgOp4krc0f1vvFtm6eRWxeSjO0a47Gq6YKhF
+         wYktmzxMVix6cqRlq8rDY/9Dq5u7XOB48O/0fgAwK7AF/KMSe37/lRQo4BEXPr8QSWQ3
+         iP1BZlil8b5ZX2rGrCEM9GOcJNfPE1On+paVfux75zOL4zgIrVhrsPOZStk3W8bq+R1A
+         Uhda7MRVW5VQ1LCRQQgZaIUNKZ53HCh2iLDx6VYRRyQgP8dLSbEoEfRlv5oAnvKyNHKO
+         JMtfSDlBzc7r78g6huV6GVXONWm/pmOm6JJLJzxUFtspV2TqQZ6kRmPDwZu9tij84S9+
+         +G1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=c9+3Kex2RPCKiUUu1M2ayq7cE1n3GCcPXXxPBF2HtgE=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=tCyxlN4fRBQmVQLWEjcuuqPJqBaioDlYJBuJRDqPD4K1nf/hxuF3OIZCaHLe8T8ngA
+         PVmEF/JFGABqFDWGWQfM5POehgAAnCWPxIZKRN2bWSYvVZSpsaWdlT170BlPvoAqn3oo
+         ksMlHiqFH2HjUPAu2do1geNiVuc0lZzJ3TD/p2n/RxlCNiNcmkVrVlip/sUFb11+beHS
+         yP/sN2gP+/RRb6zeneUCGeGcdzeiPdIz4rbrlkrkiCfFasmuKhSSzX3XeICkbo2lUJ9u
+         nbKOIKhtUAQ9KBEM21OooAg8BqDiiILvEtfTZ8hoYxjnpMpsvaRSVaZXzNsZ7eU/iiJl
+         +5uw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784867288; x=1785472088; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=c9+3Kex2RPCKiUUu1M2ayq7cE1n3GCcPXXxPBF2HtgE=;
+        b=pSn1j0cgDMh0XzyYQCz+Yj0MDCyb6GhIXPV4kOEniES0mcRmZXdvAuykNl4JN8OX41
+         1ru/RsjjeAjvdzejhf1ZmluKdcaT/Y8F9L6RKtgXdSNEB4cmfNPAigmc1eo9HmME4Dl5
+         d/kPOqFoYhTbbXbhg3BAJTzBqeYqhaWWZmaYLyeahCiAQQXy5c4bY13jc0I9fzj8bQ7b
+         A/H/d4nT3M0+MZcLwwf6dEc1h4Vbi7tWudqq90VNvx3J7cMJuezL1SgVtBIutnY7ksTK
+         HMzSsVnlcsPP7rxhlTX0Z4LSzQBs2m04jgD3EO+wGxt/SNIt5+rxADcawvVfcQzwaw1G
+         7/Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784867288; x=1785472088;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=c9+3Kex2RPCKiUUu1M2ayq7cE1n3GCcPXXxPBF2HtgE=;
+        b=gK7RlEmN/7q0n6VUJp2lZQIbhPCjfigW0nruFOYS7gUuC3IaSavo3vwbkxMkiXoj0H
+         1CfyRwVi1yNurxrGsI4DIyliNIuTzeR0qxVkWfZV7ku1VVOA6bW7+UQqXqMEy+V6hU6I
+         vozoYehSznhWTWzm1oVd0ngNau39hk0smj+WpAHDgkFu8gKixJ1MeK/DbEr9nR9Thf94
+         ZjWbkincv2DraDgOgCYs0gOA8yvOFozIZcod7TJh1R1yhYZphfiFE8XJZ+vBOXg3whPJ
+         8XzOGtBdXHTgSrB/Yu9z97PasSu+dqsctMxjNZ1rek6DdmKot+/87vfR99pix2ZQbwKA
+         t9eg==
+X-Gm-Message-State: AOJu0Yz30yCsbtpQq4YNVcg3dvx62jEnozULJ88NrqQnc+3rV33tXzvw
+	uVOc4CIHvWizkkFHqrtGhSuP9NzutFTU70TgNqCkL7piCUtuczbUPjDJakWgyYQ9hWiz2LP0Na0
+	4TN91DsUjcqf0pVSByo0eEwGBHkAhEj+wRVMTgA0=
+X-Gm-Gg: AR+sD129BVZ1COItx210XOgBrKzFgNlt8+51IHkB//UHyKT8V9Hy6sy6qHmV5bRN1Q0
+	KCLXb17BleHgG/IKcFJbGZoB4nTZN5NJlLgEJ3X/KTM6i0lQZOjv9SSGFI1fTXmAovskCwr4cv7
+	06vcZVVqmQuzRDDcCsYldfN7bDv05lTEKyg1dQjYiV5DjMg7bECIZcVNNUFJrt/y6qw4dukTSuz
+	nt5/6osm2JomlWX+aIPu6PCvcQT04qp2fjnzc7f5nBwUlb9rlDM4j7l5ol7PzsBlrWGLiB/hHI9
+	MC8kcpL5KEhFFgqOO9OXPTuuzLohPA==
+X-Received: by 2002:a17:907:971f:b0:c16:589d:c965 with SMTP id
+ a640c23a62f3a-c1c5096678dmr277726866b.46.1784867287874; Thu, 23 Jul 2026
+ 21:28:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 2/4] LoongArch: BPF: Fix memory leak in
- bpf_jit_free
-Content-Language: en-US
+References: <20260721194111.334795-1-nickolay.lysenko@gmail.com>
+ <20260721194111.334795-3-nickolay.lysenko@gmail.com> <20260721195216.712FC1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260721195216.712FC1F00A3A@smtp.kernel.org>
+From: Mykola Lysenko <nickolay.lysenko@gmail.com>
+Date: Thu, 23 Jul 2026 21:27:55 -0700
+X-Gm-Features: AUfX_mzXoE2FJPFlVSc0CQI2QYirmr_NCdU04ciEYdOBL58QDaLwTEjGBLAhwxk
+Message-ID: <CAMtxOX3VgWQPzi9FPZxarbOjsMvHAXM6vVYnyfpg1BN6dg2Srg@mail.gmail.com>
+Subject: Re: [RFC PATCH bpf-next v2 2/3] selftests/bpf: move shared build
+ definitions into Makefile.buildvars
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-References: <20260722112754.1615201-1-pulehui@huaweicloud.com>
- <20260722112754.1615201-3-pulehui@huaweicloud.com>
- <20260722113556.63A971F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260722113556.63A971F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgAX_Sj32GJqPj9hCQ--.22423S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxCw43ur48CF1kCry5Aw1DWrg_yoW5WrykpF
-	98Zr13CrWqg392gFsrJw48WF4UJw43W3WjgF1Y9r4xuF15WrykWFyak3yrWa90yry8Jw40
-	qFWjgr9xJa4kAa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1wL05UUUUU==
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+addressed in https://lore.kernel.org/bpf/20260724042600.175440-1-nickolay.l=
+ysenko@gmail.com/
 
-On 2026/7/22 19:35, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The patch series correctly fixes a memory leak of `prog->aux->jit_data` on JIT subprogram failure in `arm64` and `loongarch`, but misses the identical architectural flaw in `s390`, `parisc`, and `sparc64`.
+On Tue, Jul 21, 2026 at 12:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The variables TEST_KMODS and BPF_GCC are duplicated in both Ma=
+kefile and Makefile.buildvars, creating a brittle maintenance hazard.
 > --
-> 
-> --- Patch [2]: [PATCH bpf-next 2/4] LoongArch: BPF: Fix memory leak in bpf_jit_free ---
-> commit cacb56acd5af4ef394049dd1560a358cf9a04bae
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> LoongArch: BPF: Fix memory leak in bpf_jit_free
-> 
-> This commit fixes a memory leak in the LoongArch BPF JIT compiler. When
-> bpf_int_jit_compile() returns early for subprograms, it leaves ctx->offset
-> allocated, which bpf_jit_free() previously failed to clean up on abort.
-> 
->> diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
->> index 2738b4db11653..3d3ed1677d018 100644
->> --- a/arch/loongarch/net/bpf_jit.c
->> +++ b/arch/loongarch/net/bpf_jit.c
->> @@ -2361,6 +2361,7 @@ void bpf_jit_free(struct bpf_prog *prog)
->>   		 */
->>   		if (jit_data) {
->>   			bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
->> +			kvfree(jit_data->ctx.offset);
->>   			kfree(jit_data);
->>   		}
-> 
-> [Severity: High]
-> This is a pre-existing issue, but while this patch correctly fixes the memory
-> leak of the JIT context arrays for LoongArch, do we have the exact same leak
-> occurring in s390, parisc, and sparc64?
-ok, will take a look for the ctx.offset.
-
-> 
-> Looking at s390, parisc, and sparc64, they also return early for subprograms
-> and leave memory attached to prog->aux->jit_data. For example, in s390:
-> 
-> arch/s390/net/bpf_jit_comp.c:bpf_int_jit_compile() {
->      ...
->      } else {
->          jit_data->header = header;
->          jit_data->ctx = jit;
->          jit_data->pass = pass;
->      }
->      ...
->      if (!fp->is_func || extra_pass) {
->          ...
->          kvfree(jit.addrs);
->          kfree(jit_data);
->          fp->aux->jit_data = NULL;
->      }
-> }
-> 
-> However, these architectures do not have a custom bpf_jit_free() implementation
-> and rely on the weak generic bpf_jit_free() function instead:
-> 
-> kernel/bpf/core.c:bpf_jit_free() {
->      if (fp->jited) {
->          struct bpf_binary_header *hdr = bpf_jit_binary_hdr(fp);
-> 
->          bpf_jit_binary_free(hdr);
->          WARN_ON_ONCE(!bpf_prog_kallsyms_verify_off(fp));
->      }
-> 
->      bpf_prog_unlock_free(fp);
-> }
-> 
-> The generic bpf_jit_free() does not check or free prog->aux->jit_data. If JIT
-> compilation fails for a later subprogram, the BPF core aborts and calls
-> bpf_jit_free() on all previously JITed subprograms.
-> 
-> Does this mean s390, parisc, and sparc64 will still leak their jit_data and
-> offset arrays on this failure path?
-> 
->>   		hdr = bpf_jit_binary_pack_hdr(prog);
-> 
-
+>
+> --- Patch [2]: [RFC PATCH bpf-next v2 2/3] selftests/bpf: move shared bui=
+ld definitions into Makefile.buildvars ---
+> commit 609eb873658507425701a592c055f112cedbb6b8
+> Author: Mykola Lysenko <nickolay.lysenko@gmail.com>
+>
+> selftests/bpf: move shared build definitions into Makefile.buildvars
+>
+> This commit moves toolchain, path, flag, and probe definitions from the m=
+ain
+> Makefile into a new Makefile.buildvars file. This allows these definition=
+s
+> to be included by multiple makefiles for running test instances in sub-ma=
+kes.
+>
+> > diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selft=
+ests/bpf/Makefile
+> > index 09e5be201afb5..2ddcb812dc85c 100644
+> > --- a/tools/testing/selftests/bpf/Makefile
+> > +++ b/tools/testing/selftests/bpf/Makefile
+> [ ... ]
+> > +# These probes gate the flavor list, which must be final before lib.mk=
+ is
+> > +# included; keep values consistent with Makefile.buildvars.
+> > +ifeq ($(origin BPF_GCC),undefined)
+> > +BPF_GCC :=3D $(shell command -v bpf-gcc;)
+> >  endif
+> [ ... ]
+> > -TEST_KMODS :=3D bpf_testmod.ko bpf_test_no_cfi.ko bpf_test_modorder_x.=
+ko \
+> > +TEST_KMODS ?=3D bpf_testmod.ko bpf_test_no_cfi.ko bpf_test_modorder_x.=
+ko \
+> >       bpf_test_modorder_y.ko bpf_test_rqspinlock.ko
+> [ ... ]
+> > diff --git a/tools/testing/selftests/bpf/Makefile.buildvars b/tools/tes=
+ting/selftests/bpf/Makefile.buildvars
+> > new file mode 100644
+> > index 0000000000000..2a7efe6d1c795
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/Makefile.buildvars
+> [ ... ]
+> > +# Immediate (with an override-preserving guard): a plain ?=3D stays
+> > +# recursively expanded and would re-run 'command -v' on every expansio=
+n.
+> > +ifeq ($(origin BPF_GCC),undefined)
+> > +BPF_GCC              :=3D $(shell command -v bpf-gcc;)
+> > +endif
+> [ ... ]
+> > +# Kernel test modules; TEST_KMODS=3D on the command line disables them=
+.
+> > +TEST_KMODS ?=3D bpf_testmod.ko bpf_test_no_cfi.ko bpf_test_modorder_x.=
+ko \
+> > +     bpf_test_modorder_y.ko bpf_test_rqspinlock.ko
+>
+> [Severity: Medium]
+> Does keeping duplicate definitions of TEST_KMODS and BPF_GCC in both Make=
+file
+> and Makefile.buildvars create a maintenance hazard?
+>
+> Since Makefile defines TEST_KMODS with "?=3D" before including
+> Makefile.buildvars, if a developer adds a new test module to
+> Makefile.buildvars but forgets to update Makefile, the new module won't
+> be built because the Makefile definition takes precedence and ignores the
+> update.
+>
+> Could these definitions be consolidated into a single location to prevent
+> silent build failures from desynchronized lists?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721194111.33=
+4795-1-nickolay.lysenko@gmail.com?part=3D2
