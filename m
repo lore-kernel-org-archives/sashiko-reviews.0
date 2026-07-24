@@ -1,138 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F2043B4AA;
-	Fri, 24 Jul 2026 15:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036C744C64B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 15:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784905330; cv=none; b=BrtA4jGdA7MOlGSnjIny1kHpJTpKzHGpv2rzWq196ZcTLPQPrEboxdj1HyN88e0mDQExd10cx7sMvvCv6D/GqpCXGTNwOqPfI3oMpTT9XQmDmenh8uChfpqL/hqUdWs+FCipG6uRlYgljdzu2RApyH0oU/hN9DhNr4qJSzMaInw=
+	t=1784906027; cv=none; b=SG3AFUn8yn8GDB372d2mG1WZxiM7xIC83Z2Rs6aSFJbhuJqEwPPZRzq0pLzanr4bQJlLKIRFCYFUdywePv88fdT5wGNFMhJWXFEdIlRbV8U/N/MdGDRN54rRK/7tj8HsSPUYKL9jPJfLJpHYd6lkqXJBy29fGdv271Aj9WSgORA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784905330; c=relaxed/simple;
-	bh=o66we11P5gChNne594fX9fgEFp6Z5SXk1WPkO+PAMic=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7VGrw6xPy827NexV2zkZ7q2d8LKV2CH2tkxTskfkaB/EuFh8WIXAxwpPg5oEKiYXUrPtjKrrKqE6IyjYlRAkTBL/6Y2Y+B+U8TNFz/Tw04OI9+wwS3Z51cORO4xPUmrocgv6pidphnm/Xtnoi0GQ+xWhL+6tTMol/dEG7Rdtek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AZvSvSxe; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784906027; c=relaxed/simple;
+	bh=fbK7gbwmYpruVS9HOopPXASVqJUk88CJW+fUf/SbSdE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ox1b+QRaK4kRD77cRIv6ZPFrYooCJ1oaQ8MV/tVfmhjADFykTeZ5YiEbF27QIgYIsxc5wvpoDwcuL6Tpsz4fM3ZVD+2h4Lwz/oyxpvKYMFoXIlDbm7LYky0zYqoy+QmlrEgXzj4LzF23w6iTThpVnx9e1TtpkYxZ3h5At2KYO1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=SAASzZfC; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZvSvSxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D661F000E9;
-	Fri, 24 Jul 2026 15:02:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784905329;
-	bh=z/mggxsbNrpvroZn7mZ9QBDirWOmig2wFSQsn9S6HIQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AZvSvSxeAOjerPg1OxVPnSyJcngvZYxKDPdUu43XJNruR1KSzsMktbCuod3qcq0F0
-	 wBo2FAaG03IdWPBXC1TMKb5EpE/AH3XBdUTiscgs01HdlV0W7R72JtDjo43AOkRnNS
-	 RBKCdkHcW1a8jzjKtFajPCM2Vh+bVKhR+yiMJt/O8jh8fR16DQegRIowO28mu5ulug
-	 81jLCwg7Z4lSAs97LnV+ExZtBH4p4s48kF5e3JXyXLifKkJ0rwhBCkpGp4Nr1Mb4f0
-	 dVJzlLOOc0nzirAQNkoJ+ckg1lcbdld2yHeXRv3enK8ZddeGQ9BbMJ9ftp9y86Ujhh
-	 E20zLs2LD2l+w==
-Date: Fri, 24 Jul 2026 17:02:03 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: 
-	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v8 3/5] PCI: host-common: Add link down handling for Root
- Ports
-Message-ID: <mcdce4u2alwsobdsapnnwjwxofhwrd6gypdu45m3i5wzswhp65@lhrv5tvsvjs7>
-References: <20260518-pci-port-reset-v8-3-eb5a7d331dfc@oss.qualcomm.com>
- <20260518170537.357DDC2BCB7@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="SAASzZfC"
+Message-ID: <bf20e32c-3753-4fa8-a825-c9fb24c821b6@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784906020;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0HR6+rJuQhXK8lSuL+MOWredCCVtvuTH8EDprV/plxc=;
+	b=SAASzZfC+klWBAe4Jo/RD7xpddGui8N2tNhdGxAvWUnLzi483uCb9TtXxa7h5odCOAD8W+
+	ZEjyCWiDKjHD/fZJiHlGaNpQh+EwKrmsaL0xoPPAhlqELoKdVSY+0zeiUaG+gMVh9tnG8R
+	yvUmz+bGsV4iVSandnvfS8toIJjNfpM=
+Date: Fri, 24 Jul 2026 23:13:33 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260518170537.357DDC2BCB7@smtp.kernel.org>
+Subject: Re: [PATCH bpf-next 2/2] selftests/bpf: Verify rejection of sleepable
+ tracing prog
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260724141422.10463-1-leon.hwang@linux.dev>
+ <20260724141422.10463-3-leon.hwang@linux.dev>
+ <20260724142418.B7E191F00A3D@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260724142418.B7E191F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, May 18, 2026 at 05:05:30PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Hardware state desynchronization when CONFIG_PCIEAER is disabled.
-> - [Medium] Commit message claims error_detected() callback is triggered for the bridge, but the implementation skips it.
+On 2026/7/24 22:24, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The test incorrectly handles the expected failure of `fentry_sleepable__load()`, leading to dead code on patched kernels and an intentional kernel BUG on unpatched kernels.
 > --
 > 
-> commit f07cf37e729701c6c67b90c92f65dd76b53b9fec
-> Author: Manivannan Sadhasivam <mani@kernel.org>
+> --- Patch [2]: [PATCH bpf-next 2/2] selftests/bpf: Verify rejection of sleepable tracing prog ---
+> commit 21867bb1ed07f00930e4aa9f252967deb7c142a2
+> Author: Leon Hwang <leon.hwang@linux.dev>
 > 
-> PCI: host-common: Add link down handling for Root Ports
+> selftests/bpf: Verify rejection of sleepable tracing prog
 > 
-> This commit introduces a new API, pci_host_handle_link_down(), for host
-> bridge drivers to recover a specific Root Port when a link down event is
-> observed. It utilizes pcie_do_recovery() with AER handling if enabled, or
-> falls back to pci_bus_error_reset() otherwise.
+> This commit adds a BPF selftest to verify that a sleepable tracing program
+> cannot attach to a '__x64_sys' prefix program target.
 > 
-> > First, the AER error_detected() callback will be triggered for the bridge and then for the downstream devices.
-> 
-> Is this description accurate regarding the bridge receiving the callback?
-> 
-> Looking at pcie_do_recovery(), it uses pci_walk_bridge() to trigger the
-> recovery callbacks. However, pci_walk_bridge() handles bridges with
-> subordinate buses by iterating over devices on the subordinate bus.
-> 
-> Consequently, the Root Port (the bridge itself) appears to be excluded from
-> the callback walk and might not receive the error_detected() callback.
-> 
-
-This seems to be a valid concern. portdrv registers the pci_error_handlers() as
-well. So we should be calling them.
-
-> > diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
-> > --- a/drivers/pci/controller/pci-host-common.c
-> > +++ b/drivers/pci/controller/pci-host-common.c
-> 
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c b/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
+>> --- a/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
+>> +++ b/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
 > [ ... ]
+>> @@ -576,6 +577,60 @@ static void test_func_replace_progmap(void)
+> [ ... ]
+>> +	err = fentry_sleepable__load(skel);
+>> +	ASSERT_ERR(err, "fentry_sleepable__load");
+>> +	if (err)
+>> +		goto out;
+>> +
+>> +	skel->links.fentry_xdp = bpf_program__attach_trace(skel->progs.fentry_xdp);
+>> +	if (!ASSERT_OK_PTR(skel->links.fentry_xdp, "bpf_program__attach_trace"))
+>> +		goto out;
+>> +
+>> +	skel_xdp->links.__x64_sys_nop = bpf_program__attach_xdp(skel_xdp->progs.__x64_sys_nop,
+>> +								ifindex);
+>> +	if (!ASSERT_OK_PTR(skel_xdp->links.__x64_sys_nop, "bpf_program__attach_xdp"))
+>> +		goto out;
+>> +
+>> +	err = system("ping -q -c 1 -W 1 127.0.0.1 > /dev/null");
+>> +	ASSERT_OK(err, "ping");
+>> +	ASSERT_ERR(skel->bss->retval, "retval");
 > 
-> > @@ -106,5 +108,38 @@ void pci_host_common_remove(struct platform_device *pdev)
-> >  }
-> >  EXPORT_SYMBOL_GPL(pci_host_common_remove);
-> >  
-> > +static pci_ers_result_t pci_host_reset_root_port(struct pci_dev *dev)
-> > +{
-> > +	int ret;
-> > +
-> > +	pci_lock_rescan_remove();
-> > +	ret = pci_bus_error_reset(dev);
-> > +	pci_unlock_rescan_remove();
-> > +	if (ret) {
-> > +		pci_err(dev, "Failed to reset Root Port: %d\n", ret);
-> > +		return PCI_ERS_RESULT_DISCONNECT;
-> > +	}
-> > +
-> > +	pci_info(dev, "Root Port has been reset\n");
-> > +
-> > +	return PCI_ERS_RESULT_RECOVERED;
-> > +}
-> > +
-> > +static void pci_host_recover_root_port(struct pci_dev *port)
-> > +{
-> > +#if IS_ENABLED(CONFIG_PCIEAER)
-> > +	pcie_do_recovery(port, pci_channel_io_frozen, pci_host_reset_root_port);
-> > +#else
-> > +	pci_host_reset_root_port(port);
+> [Severity: Medium]
+> Is it intended that the attach and ping logic only executes on unpatched
+> kernels?
+
+
+Yes. It is intentional.
+
 > 
-> If CONFIG_PCIEAER is disabled, this directly calls pci_host_reset_root_port()
-> which performs a bus reset using PCI_RESET_NO_RESTORE via
-> pci_bus_error_reset().
+> When run on a patched kernel, fentry_sleepable__load() fails as expected
+> (err != 0). The ASSERT_ERR(err) check passes, but the if (err) block then
+> causes the test to jump to 'out', making the remaining attach and ping code
+> unreachable.
 > 
-> Since pcie_do_recovery() is skipped, downstream device drivers are never
-> notified via their error_detected(), slot_reset(), or resume() callbacks.
+> When run on an unpatched kernel, the load succeeds (err == 0). The
+> ASSERT_ERR(err) check fails, but because err is 0, the test proceeds past
+> the if (err) check. It then attaches the program and triggers it via ping,
+> which intentionally crashes the system with a kernel BUG (as noted in the
+> commit message) instead of failing gracefully.
 > 
-> Does this leave the hardware configuration space of these devices wiped while
-> the bound drivers remain active and unaware?
-> 
-> If subsequent MMIO accesses by these drivers hit unmapped space and DMA
-> fails, could this lead to device lockups or data corruption? Would it be
-> safer to hot-remove and rescan the devices instead of blindly resetting the
-> bus when AER is unavailable?
+> Could this be resolved by either removing the unreachable attach and ping
+> code entirely, or by changing the check to if (!err) to prevent the test
+> from crashing unpatched kernels?
 > 
 
-That's a design limitation. If CONFIG_PCIEAER is not selected, then
-pcie_do_recovery() do not exist. We can call the individual err_handlers()
-though, but that will end up somewhat mimicking AER driver.
+The ping is to prove the issue: there was a true BUG caused by the
+sleepable tracing prog with bpf prog target.
 
-- Mani
+If remove the attach and ping code entirely, it can only confirm that
+there was a potential BUG caused by the sleepable tracing prog with bpf
+prog target. But, what was the potential BUG?
 
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Leon
+
