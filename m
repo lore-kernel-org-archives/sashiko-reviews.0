@@ -1,321 +1,242 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010039.outbound.protection.outlook.com [52.101.46.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725DB427F85
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 10:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784890431; cv=none; b=GyOd6Sisg98ADN2Pfh3HQex6lEUYWCBxWhF2X+gsXho0E59U7MODu5bAxOovQdgRDcTZxHocL/1rdlzWDFlk1Hy4k/utTBNv/LyF1RyT5UVu2JlnTuYBJenJSE1+RBNyuim3vQub8/Yb7hZ2mWEmCyL6GzhH7yvZFOXrsrM29uI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784890431; c=relaxed/simple;
-	bh=2Id8Lf7l9nSqlQQ3kJj2nmTWJEwu65vgbgq0B4au8sw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=scTmvzrAhqg32juJMv14YqCWsxElPFhlY7Xyk0UAT48+zeVBQCDtsUBwRN8S76eKOdCtk+0miysuNUpamYoWkMe6r353tQdBOp7vKcihWb5qc65Y1j1U7GvH8cQXlvnchm5LIoFn/UNLylOrYSJsHipZT1F4wuho05T0MC4Sss4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JdHQ3b1B; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF230426427
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 10:54:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.39
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784890471; cv=fail; b=j00CJH+EB69INtqDYHY//2KM9SbbYKeU9+HKCAFSmINVcxR+tY5lfSSyKpEuDMIAoGEhpI7OyLaQSOcKD1ZR1iiKZspQ0ZbjeT/a/coHSbv6roP879Y61d82QXmBYiHkxh81LYxKdRH+Z4r2Ce5KtNCUtSButIkASPrUGciQ/7Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784890471; c=relaxed/simple;
+	bh=Y1/1FhVpTQP+xpBrMs3Glv0B5ySF8XB8ByKEBFcAEjQ=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=lTSNeeuQxpZN3zdadREPJvbyYTkVIK6m2DkhQmfRtaZew6/x9/rlV3meX3scRbL3ywWJbtHXD0ZjjqVUXX5968twV4obgNG9BawFn5LugPlEKAGstelrwH3Z+b2HU2YiKXAttUbV0L2yrhEtVegXlAntjaEREYDSYffHSL50BGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tefZRjDD; arc=fail smtp.client-ip=52.101.46.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JdHQ3b1B"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47df43bfb07so94744f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 03:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784890428; x=1785495228; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9qGNYqgu45iCzPUDN1sRc/iOGDzLiyCE7X0FhGMvUzY=;
-        b=JdHQ3b1BghTEZGssYtbNE47w9s9bzax1Jztrr5IDggWKE48CvqDDxcE8UryNgncYyP
-         6kgjkMpkrlIRrjwnq/Guq6FGptkTesVl+2u57tv/PcI2A/UUR9LjSGhoXWRHMsfllrCS
-         LJd/KSKQSupy5UGWqkl5cFY4AQMrgLiZQ00SI70Wa5QTWBSIF6hOBsvbmAaJyD0YLFmV
-         WBj74Q8GyE7MZD1jkGlQG0KGUloavjeYqJcCmvQv38kXKgkgdPXPEbXTRsPEpj35Cgdw
-         f5zky2CA6fLTdU1blV2yHqg1zCGhtQX7JqgYVxisS2nBxbYoQo9RAyF3+0X66giy6iIE
-         Xz6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784890428; x=1785495228;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9qGNYqgu45iCzPUDN1sRc/iOGDzLiyCE7X0FhGMvUzY=;
-        b=OC8JZ4DaQYgxDGIuBTvf2KMFvPk8oPIUaqdzOo4+iAxe9J8nwJOswGRsb4ipeVxfeW
-         3P3xIGYQgq3nYEy+tQL9iF9wbNc1tiTo/cXZa+VsRKVpBmhiLzsX2mFk1iZGxmsfF0Ct
-         QDM3WUr8ZyBcy8NMfU62gI2ks0M04748nCNEuyRjq/9D46hHe4oDhpMW3gkHB+IeGL9f
-         FOlxCDw5khi0b5SRm6HEfqDvlF4dkIb8q0evGXYDpAOfyYFqIhK1wpV96xUWQET+NpmF
-         /ivN78YBFK8VJ0dER3H+05FDXpkRusxkeFDB91BnuL5XaT9sjPbeu2HqwOKX4Uyml670
-         tJIA==
-X-Forwarded-Encrypted: i=1; AHgh+Rqe7OHRe6TFDZy+7dcPhhEyP5kJLeHpsZZsGyGgXF/3nPA6K0gPCQFrgXxp4j0FhbrZtQcmdqAKWhSXdBB9LnE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxtoGnNg5XZVS5EDK+lF4dQf8sRJ6L5vWIlRldRoPY3qB33UrZA
-	u9ZNcfpCjwt5SIh7sfNczjxLjCCpQw4j+x73qJFC9PCIuxLx52cowX3LIVsl80sI3QY=
-X-Gm-Gg: AR+sD13PuJnwl7Hw5N0rJGOfmRFqYblRHtd+HR/XdXh/T2gLUFfTC7pdF6kfQS4tHmZ
-	VQcQ0vgwmsvHTwdOWF9uXQqefHN9kmcUoiYYqNe2SdJLIxRSHKnAzHlFPVHmNSSEAjeSGYxDEtb
-	1OD5pR/zPowSD6fXNcg3K1ekltvJa2dHQhpCP2AaOEkatTdrQTs28eha7eVRcZ+QqimmDZlxW9Y
-	a9x3ro06am/trU5WsRp3UkuWFUdHbKC4f66htRmbJCR9vwKy7lD1XXpM5zZGLSU5lnN8o+te+fT
-	0Knb3+LJ8pyL68ZwkgQgA2CqRJtm2vnMPsI8tPhvoasQ/VdnWhU/ceOYUyTXrp/Cx0fMGSiAVmr
-	MwYOABtOrf/XLbAlAr8bsK4Z0so1xE7+omn0ArTP5FlRlwic+FXyC+b5YYZhiOS2SIJTkewy2Ok
-	wn+IZ1cvUkGjwgdQ==
-X-Received: by 2002:a05:6000:2489:b0:460:3233:beed with SMTP id ffacd0b85a97d-47f8d75ec77mr9286973f8f.41.1784890427609;
-        Fri, 24 Jul 2026 03:53:47 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff24:7210:d8e1:da6c:62ef:6ff9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb5127sm22309568f8f.10.2026.07.24.03.53.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 03:53:47 -0700 (PDT)
-Date: Fri, 24 Jul 2026 12:53:36 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, brgl@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <amNEMK4k54l655ku@linaro.org>
-References: <20260723-qcom-qce-cmd-descr-v24-0-4f87bb4d9938@oss.qualcomm.com>
- <20260723-qcom-qce-cmd-descr-v24-6-4f87bb4d9938@oss.qualcomm.com>
- <20260723172814.661591F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tefZRjDD"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YEyM2bXArKWpyO+quhcA5WeKTJstk7F6bwTzct01z0K1q9IPE2/tN/PJStHEEraqw4TnN28FHpo3mmu/9mTh8xlP7j74Ou9sQsS1L5n2EcZ8azJnfycp/eilN5aVThg4Ane4C8xArKwmDVMcmFLjiTnQ1+EHdhkpngXt2zH0XiJzoo6tYkkjIJSMO2yxK6j1IpW/3NUvO3xV6NkSeiTg2x7QvYxe6i0UF+gH+iQA7gnQREuBjTumR/j7KUkE4vj4a1wkrgOXrepVCzhbaZykGuvHkRb52xX54ESvsq5PdE+/nysx/ritwVE/YbSRcv8I/I7tnl73PwF8lFpjN+e0AQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EuQnASDcq/B0Zt/b5V29avyPtS0cTevMSZs/Mk1+neg=;
+ b=J8v3pWW481pWoW2YTuU/UQkd/65EcF/wWniCSV0eCiGGWLPsyQdHbHNXEI2whqV6xXlU2V1DM3w+RcBmV9Ol6mi+00JUeTtgKQw5ynfrvMGaNP6zDwXMaBJ+XTu0GE0i8uZbqOB0fKneEAA5NFHcUSWzGn+pkqrw11kxYwN0/A+LYLUsR9xJ2umxPBewUWFwGkM2iMqn/wJG9Ivtczv+98FaAfAdsEh/zHXurSVDGhakE5sZP71V7VhjbtS/V8/qJgRFjAF2hi4eftsu3GZTYbqx2A5Q4B7VAEWIwFrQ5zuION1vfrzgyHNaxOSygaTYEBtM7ZTjd5TDHDzND/28jQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EuQnASDcq/B0Zt/b5V29avyPtS0cTevMSZs/Mk1+neg=;
+ b=tefZRjDD3pw/5gnon4N6qLg68/gwpLk17emrZHRvQUO7Hm/camgIa3kzNf3aF7pYdcYC9D2RuwBiWa0hoUasnN0KQiXw+w1hT/aCbfzOOZGumadBIwnlqqydSNfe61J5GCxmbXKK0Qc0lVvFJGIZ7hqKKHNq2tcvjmQhcFwUXnk98na19x8LBbpJ6lnLwHtrKvOXHsgNpWJckiJ2/uX/g2AWXJhhF2UWZF3bDlNn703M3yLmhWhMoAQhjn83MVWquHbqhrNRMncVs0PtJrPMK8+7lsdN2Sq6BMOiOzaQ7QL3LVWamwmhZ43+FpbTHEaT/dbUeY0Be4ifObiQQVSTFQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS0PR12MB8245.namprd12.prod.outlook.com (2603:10b6:8:f2::16) by
+ DS3PR12MB999216.namprd12.prod.outlook.com (2603:10b6:8:38d::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.245.10; Fri, 24 Jul 2026 10:54:23 +0000
+Received: from DS0PR12MB8245.namprd12.prod.outlook.com
+ ([fe80::e7c5:cfca:a597:7fa4]) by DS0PR12MB8245.namprd12.prod.outlook.com
+ ([fe80::e7c5:cfca:a597:7fa4%4]) with mapi id 15.21.0245.010; Fri, 24 Jul 2026
+ 10:54:23 +0000
+Message-ID: <61780da8-9590-4278-9794-0836eb39cf84@nvidia.com>
+Date: Fri, 24 Jul 2026 16:24:15 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+To: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>,
+ "lukas@wunner.de" <lukas@wunner.de>,
+ "thierry.reding@kernel.org" <thierry.reding@kernel.org>,
+ "helgaas@kernel.org" <helgaas@kernel.org>,
+ "Korenblit, Miriam Rachel" <miriam.rachel.korenblit@intel.com>,
+ "treding@nvidia.com" <treding@nvidia.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+ "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+References: <20260722170438.GA735886@bhelgaas>
+ <204d9dab-96de-45fb-867d-20defc0b79e6@nvidia.com>
+ <534363f87b37ba6f1449d0524400bcfd7fdf5b3e.camel@intel.com>
+Content-Language: en-US
+X-Nvconfidentiality: public
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+In-Reply-To: <534363f87b37ba6f1449d0524400bcfd7fdf5b3e.camel@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN3PR01CA0043.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:98::19) To DS0PR12MB8245.namprd12.prod.outlook.com
+ (2603:10b6:8:f2::16)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723172814.661591F000E9@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR12MB8245:EE_|DS3PR12MB999216:EE_
+X-MS-Office365-Filtering-Correlation-Id: f17c59c5-0061-45f0-f722-08dee971eb8f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|4143699003|10067099003|11063799006|6133799003|56012099006|3023799007|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	CzfaFZnXipbxgTgKmKF0deayIHZXzc2fSFadRZS6VxPrpaJNhPvaMR0JeFnQfeK1XFZXE1m4lEd+kebfIkcOu8oGgTf7mVWpIbUNVr47r4V4OQTPwCvIfTPVzoasHnourVk5rHiXpjdRe5Vt8UnZS+1F1E42/P4F80tBsdaD8h1wKAhUPws8UCb5oBQcXIgW3EAOOrsUynMJ0qVkp9pW7VSe05mUJrrMmGTXgb5kfVfMxlBqukH0ohdLmPjQDMlYqnC/Zqdt/RO6zKBAwYw7HGrpibiZgbYZsP29zXKhOX6RhWXITd0vXoW0tKxAWe+GOI2tZ2gdWTIwdTDRdD5Uoeq8LOhQX5mOu5bpwme2mLniC0VJpQq35aM3doWjKKm8H9ONlyaZ+qeg+mxDsPW/WFXOmXL7bkIVgrX+rinulnLkJ5ZDG0mAAxnRJrgqnLdFxLl5KVOa7EQx09OzDd4v4zERj4ylgaEMkQ4ghLWf6UZXDSWrILp0fE+ELkF7WkeIb70zWiUII0EtDyGvFpwFXPSMsSbbX7BnWyknWABMJ3PyRJyHRs784yw2iYaHtdxCBu6oqzVQl+uCmOa9AhbYIUftaVO3FCe1/rN51a9KYQ1GRElvkTZGrsMOAa87d+HyrM1+jr1+dBok4rAI1Baj/cp6tbXs6zUWxo2n4bvwicM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB8245.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(4143699003)(10067099003)(11063799006)(6133799003)(56012099006)(3023799007)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MDZFYnF4alExWFUxQ0pwOUJsdEdLTGVRNmNjb0liRFBpeGxHQ2J2T2VWMnlz?=
+ =?utf-8?B?OE9sMlJaTmdLSWIvRERBS1RKMFdSM1pVTEhQL2szRkhqQVJSbHR2N2xyS2dJ?=
+ =?utf-8?B?OGlJcGcrTUROQnlYaks1UldVYTgxME1IR0Q3YXZTeEY4Q0xIUGVvVWtDRndr?=
+ =?utf-8?B?TnpraC9keFI5d1lnWWgrMDBFbkZ2WmxnTHdzSlIvVWVJNW1weUhiOU01L0NU?=
+ =?utf-8?B?dXJVZy95NEgxVi9yemtJSlZWdVNkRHN4b2k2SjkzaG4ybmI3cXpUTEU3SFVB?=
+ =?utf-8?B?cWVycFhkd21QRTFxMFJocHVTZTJPNW8yVzVTTmlxNkcrZlhVTnRTZEFUZWF6?=
+ =?utf-8?B?ajR2ZUExdXdBKzIwNHJFZVNadUZjVDRUSkpGejBNalkrZEFVa0VEQnFYNk8z?=
+ =?utf-8?B?K1pjMjJSczEwdzZTT25UaTYyWUx5SWpSbzlSck8vZU5wZndPRlVFd1B4RE5P?=
+ =?utf-8?B?eS9DODVPQys2ZlVPdGtQaGdWT1hudm5YSjRZTW5nUWRuSUM3WkZyVm9DdU5J?=
+ =?utf-8?B?Y3VKN2NpcmpQQ1lxN2dyd0syd2xLU0hXTExKQm1jNkE3WHB0dVpiMmpSeHV6?=
+ =?utf-8?B?N2hueUwvWnlWd0hzcWFMZFRMWVEwNHFEandIV21SOHIwWG1xR0lscTVGYVpZ?=
+ =?utf-8?B?b3RoVGJoVU5kN3RrOThkVkdwdnYzQXdSejl5bW1acGl0NnJRa1lINWI2S0do?=
+ =?utf-8?B?ajVCOE9ObGNZaUltK1RiUUJoUnZqUytEb2NxV3dYRG80VWk5cE5pL3R6amE5?=
+ =?utf-8?B?eVdjS05xcC9acURRVm13SXhZaVA5RzI4bU5kTWRxQjZCczRTVDRySFo1K29k?=
+ =?utf-8?B?czh0dGxlTVV3U3gyeXVMckNISW5NczFKbzJBaUx3bXByWnpIN2xEbU1VWEoz?=
+ =?utf-8?B?ZkYxc1FtTUY2Z2VOU1pnMzA1R3VHa3FhUlRpQTFkeXJlUThPNlZ0MFhIMW5K?=
+ =?utf-8?B?ZkJ3RzhQVW9ITUlHVlUvMGI0VnJBdWNjK0I0eEIxUDdNb3JhbGpWK1MrUDF5?=
+ =?utf-8?B?dzRMejQrY3dxenY3R0dtUzFTS3NOYk5oc2ZFdFdlOVQyaEh1VE1XVUJWMFBp?=
+ =?utf-8?B?ZFIxeFFUcWVIanZaQnAyeU5aUkFvUFNONU9YRjlNK0V2dVpkeWxIRmZqcS9X?=
+ =?utf-8?B?SGoyL0p3dGpHN2l1THhPN1lvMmJ5SDNkeEJteHA5V3A0Ulh1aUNFd3FZQlg0?=
+ =?utf-8?B?WUl5aksxNzhPSmg3Qm54N3A5dUk4WnFSWDBQdkMxZzhhWnlQTzM4aEllV0RM?=
+ =?utf-8?B?a1FnTERXbnVWNll6L0ZCdVZiV290R3hPYk1Nd1dDYk4xQUxZaGs4STR2bWhR?=
+ =?utf-8?B?bXpsOHU3NG81ZFlIaVVxK1lpNDhDWWR0MWFjZDcxbytRRGNaWk43UitrVlAv?=
+ =?utf-8?B?N3cwaC96RXhMYThLcUtEbTk1Mzk5WWd0STFzSWhBaDUxcXhTRFFxVmxGOWVh?=
+ =?utf-8?B?aXJYenJyWHI1Y2JLazR2T3ZWa1ZjZngxZDREVDRGcHhDVEhMS2VSbGswZTFX?=
+ =?utf-8?B?bFdwN2hQUFBqTEJTcmpRSmFkbGl3Nkp3aXZIUWZ1bDBZQzgyZTNYa2hQdW5J?=
+ =?utf-8?B?ZFBLNGNvZlJOTTl1S3hQUG40YUh3dGRPWXhkNEY1eGtMNDNYYjhrdGpPeTVr?=
+ =?utf-8?B?a21hMVFTaHk1S2ovS2F5R0JMaDlSVFdZaXB3Z095NWJ5bHFPakEzdUo5bjAx?=
+ =?utf-8?B?YUtmQkR1Y3IyMlJrV2poTGh6dFIyQU96Q09IZEZLWi9QNXBzZFhYZ0Y3TXNF?=
+ =?utf-8?B?K1Nyc1poejlsTEZqcUJHaSswd3Q3MzV6Y054S0hyRk5KdFlGRGljTWZIZXVM?=
+ =?utf-8?B?WmlPR3cxdG5VcW8wTWZvUDF2blplaHdqNHczUUZXOXR1ZThVSEFlUnFrQm9a?=
+ =?utf-8?B?eGhrRktlS296MGZqbGEyejcvTnk4RGZ0VERLRkltdVRNckJvM0tDaEdRelU5?=
+ =?utf-8?B?emt3cmNPZG9mOEVFenRsclZJU2h2VjJGdWZxOFdhaVNMekNqVjJNRFdmbHhH?=
+ =?utf-8?B?S1RVMDJiT1dmMEF2L2NSbFhwVjZWQzJsOEZvMG1zM1ZzL3hDaVd1Qlo4amdR?=
+ =?utf-8?B?MjNRd2RoM3RuRWVTaHA3Y25XMDAwK3lnZXp6YnJlSDluK05wNnZlaHVSRUxP?=
+ =?utf-8?B?UC9zRjY4bTNkWXd5aWFJdXF6L3JaWXU3dGF6VzYzWnd2dWh4Z3ZRZWx0ekI3?=
+ =?utf-8?B?Q3NBRmZXbmVHUmJuV3EwdzhIWlcxd2poTTRJVEVkYTZnRXZkV3RNYVFKaC9Q?=
+ =?utf-8?B?S05oN2ZFdnB4VHYySkN1bFBkcXhuL25qTnZpbFpOamhXT3Bxb1FSb2JERGZo?=
+ =?utf-8?B?V0Y1YlJSZ2Zabk8yaVVxT1pBcFJZVTFvYlcwR3hHZTNoTU52aEV1YnMvLys3?=
+ =?utf-8?Q?RqfBcQGlUasW6T2c=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f17c59c5-0061-45f0-f722-08dee971eb8f
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB8245.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 10:54:22.9530
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /udSXeouu/eEuqGF0xSw8aWQl4dmVv3PIu7ES9gV9toS2UBsBf/xlS6kSUb1baNtLIBKiI9D/r4OYXiENbEX6A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS3PR12MB999216
 
-On Thu, Jul 23, 2026 at 05:28:13PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Calling `queue_work()` inside `bam_start_dma()` when there is exactly 1 slot available creates an infinite busy-loop in softirq context (softlockup).
-> - [High] The transaction completion callback fires before the hardware pipe is actually unlocked, violating the mutual exclusion requirement.
-> - [High] The driver clears the software lock state prematurely, allowing concurrent configuration changes to corrupt in-flight hardware execution.
-> - [Medium] The 'reserved' field of the lock command element is left uninitialized before being synced to the device.
-> 
-> Pre-existing issues:
-> - [Critical] Mismatch between FIFO wrapping modulo and CIRC_SPACE size leads to silent descriptor overwrites and data corruption.
-> --
-> 
-> --- Patch [6]: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
-> commit bf87fb2cf384d859e1e0efff5d0a48f0cb3ccea2
-> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> 
-> dmaengine: qcom: bam_dma: add support for BAM locking
-> 
-> Add support for BAM pipe locking. To that end: when starting DMA on a TX
-> channel (DMA_MEM_TO_DEV) - prepend the existing queue of issued
-> descriptors with an additional "dummy" command descriptor with the LOCK
-> bit set. Once the transaction is done (no more issued descriptors),
-> issue one more dummy descriptor with the UNLOCK bit.
-> 
-> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > --- a/drivers/dma/qcom/bam_dma.c
-> > +++ b/drivers/dma/qcom/bam_dma.c
-> 
-> [ ... ]
-> 
-> > @@ -676,10 +697,51 @@ static void bam_free_chan(struct dma_chan *chan)
-> >  static int bam_slave_config(struct dma_chan *chan,
-> >  			    struct dma_slave_config *cfg)
-> >  {
-> > +	struct bam_config *peripheral_cfg = cfg->peripheral_config;
-> >  	struct bam_chan *bchan = to_bam_chan(chan);
-> > +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
-> > +
-> > +	if (peripheral_cfg && cfg->peripheral_size != sizeof(*peripheral_cfg))
-> > +		return -EINVAL;
-> >  
-> >  	guard(spinlock_irqsave)(&bchan->vc.lock);
-> >  
-> > +	/*
-> > +	 * This is required to setup the pipe locking and must be done even
-> > +	 * before the first call to bam_start_dma().
-> > +	 */
-> > +	if (bdata->pipe_lock_supported && peripheral_cfg) {
-> > +		if (cfg->direction != DMA_MEM_TO_DEV)
-> > +			return -EINVAL;
-> > +
-> > +		if (bchan->bam_locked)
-> > +			return -EBUSY;
-> > +
-> > +		if (!bchan->lock_ce) {
-> > +			bchan->lock_ce = kmalloc_obj(*bchan->lock_ce, GFP_ATOMIC);
-> 
-> [Severity: Medium]
-> Will this leave the reserved field of the command element uninitialized?
-> 
-> Looking at how this is initialized in include/linux/dma/qcom_bam_dma.h:
-> 
-> static inline void
-> bam_prep_ce_le32(struct bam_cmd_element *bam_ce, u32 addr,
->                  enum bam_command_type cmd, __le32 data)
-> {
->         bam_ce->cmd_and_addr =
->                 cpu_to_le32((addr & 0xffffff) | ((cmd & 0xff) << 24));
->         bam_ce->data = data;
->         bam_ce->mask = cpu_to_le32(0xffffffff);
-> }
-> 
-> The reserved field is not set here, and kmalloc_obj() does not zero the
-> memory. Could this map and sync uninitialized kernel heap memory to the DMA
-> hardware?
-> 
 
-kzalloc_obj()? This is your bug. :-)
 
-> [ ... ]
+On 23/07/26 5:05 pm, Grumbach, Emmanuel wrote:
+> On Thu, 2026-07-23 at 15:19 +0530, Manikanta Maddireddy wrote:
+>>
+>>
+>> On 22/07/26 10:34 pm, Bjorn Helgaas wrote:
+>>>> The problem was that we didn't show up at all in the enumeration.
+>>>> We
+>>>> send a malformed TLP. I'm not quite an expert at this, but our
+>>>> PCIe
+>>>> experts run a PCI analyzer on the enumeration on that specific
+>>>> platform and they saw that platform's PCI controller sets the
+>>>> NoSnoop and Relaxed ordering bit in the TLP. According to the
+>>>> spec
+>>>> (which I ignore), the BE200 is supposed to return the TLP as
+>>>> received, but we reply with 0 Attributes and the enumeration
+>>>> doesn't
+>>>> complete successfully.
+>>> I'm curious about the details of this enumeration failure.  Do you
+>>> know which TLPs had No Snoop and Relaxed Ordering set?  Per the
+>>> PCIe
+>>> spec, they shouldn't be set for the config requests used for PCI
+>>> core
+>>> enumeration.
+>>>
+>>> At least*some* config reads to the BE200 must work; otherwise, we
+>>> wouldn't know the Vendor or Device ID, which we need to apply the
+>>> quirk.  So I think you should see something like this in dmesg, and
+>>> BE200 would probably appear in lspci output:
+>>>
+>>>     pci 0000:04:00.0: [8086:272b] type 00 class ...
+>>>
+>>> Is the failure that iwl_pci_probe() itself fails somehow?
+>>>
+>>> You mentioned that this happens on Jetson Thor, but I'm not sure
+>>> what
+>>> PCIe controller that is.  My guess is it might be Tegra264 [1],
+>>> which
+>>> doesn't look like it's merged yet.
+>>>
+>>> Thierry, Manikanta, do you have any insight into this?  Does this
+>>> PCIe
+>>> controller set No Snoop and Relaxed Ordering for some reason?  I
+>>> don't
+>>> think endpoint drivers are expecting that.
+>>>
+>>> [1]https://lore.kernel.org/linux-pci/20260716-tegra264-pcie-
+>>> v8-0-23e51589229b@nvidia.com/
+>>
+>> Hi,
+>>
+>> Jetson Thor(Tegra264) is not setting NoSnoop and RlxdOrd bits in
+>> config
+>> read TLP.
+>>
+>> I made sure that both these bits are set in RP's DevCtl
+>>
+>>                   DevCtl: CorrErr+ NonFatalErr+ FatalErr+ UnsupReq+
+>>                           RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+>>
+>> and dumped TLP header for a config read towards BDF 0x100 with offset
+>> 0x24.
+>>      0x04000001      0x0000000f      0x01000024      0x00000000
+>>
+>> I think dmesg and AER log with header information might help with
+>> this
+>> particular issue.
 > 
-> > @@ -1064,22 +1145,34 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >  
-> >  	lockdep_assert_held(&bchan->vc.lock);
-> >  
-> > -	if (!vd)
-> > +	vd = vchan_next_desc(&bchan->vc);
-> > +	if (IS_BUSY(bchan) || (!vd && !bchan->bam_locked))
-> >  		return;
-> >  
-> >  	ret = pm_runtime_get_sync(bdev->dev);
-> >  	if (ret < 0)
-> >  		return;
-> >  
-> > +	if (!bchan->initialized)
-> > +		bam_chan_init_hw(bchan, container_of(vd, struct bam_async_desc, vd)->dir);
-> > +
-> > +	if (bchan->locking_enabled && !bchan->bam_locked) {
-> > +		/* Defer locking until we also have space for a data descriptor */
-> > +		avail = CIRC_SPACE(bchan->tail, bchan->head, MAX_DESCRIPTORS + 1);
+> Ok, so I checked again the logs and I was wrong.
+> We do see the device in the enumeration, it does show up in lspci.
+> Problems start when we want to access our registers.
+> I attached the full dmesg output. In that log we try to load iwlwifi
+> twice.
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but does CIRC_SPACE() calculate the correct
-> available space when bchan->tail wraps at 4095?
+> I'm adding here the snippet of the first load:
 > 
-> MAX_DESCRIPTORS is 4095. Down below in bam_start_dma(), the pointers wrap
-> via:
+> [   15.275887] iwlwifi 0001:01:00.0: Adding to iommu group 53
+> [   15.279737] iwlwifi 0001:01:00.0: enabling device (0100 -> 0102)
+> [   15.280047] iwlwifi 0001:01:00.0: HW_REV=0xFFFFFFFF, PCI issues?  \\ **
+> [   15.280070] iwlwifi: probe of 0001:01:00.0 failed with error -5  \\ **
+> [   15.280087] pcieport 0001:00:00.0: AER: Correctable error message received from 0001:00:00.0
+> [   15.280104] pcieport 0001:00:00.0: DPC: containment event, status:0x3f01 source:0x0000
+> [   15.280110] pcieport 0001:00:00.0: DPC: unmasked uncorrectable error detected
+> [   15.280127] pcieport 0001:00:00.0: AER: found no error details for 0001:00:00.0
+> [   15.280154] pcieport 0001:00:00.0: PCIe Bus Error: severity=Uncorrectable (Fatal), type=Transaction Layer, (Receiver ID)
+> [   15.280157] pcieport 0001:00:00.0:   device [10de:22d8] error status/mask=00040000/04400000
+> [   15.280160] pcieport 0001:00:00.0:    [18] MalfTLP                (First)
+> [   15.280163] pcieport 0001:00:00.0: AER:   TLP Header: 4a008001 01000004 00000028 72040000
+> [   15.280274] pci 0001:01:00.0: AER: can't recover (no error_detected callback)
 > 
->     bchan->tail += async_desc->xfer_len;
->     bchan->tail %= MAX_DESCRIPTORS;
-> 
-> Since bchan->tail wraps to 0 after 4094, it never reaches 4095. However,
-> CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096). Because
-> CIRC_SPACE() assumes the pointers wrap at the provided power-of-2 size, when
-> the buffer is full (tail == head), won't it incorrectly evaluate the space as
-> 4095 and cause a massive buffer overrun?
-> 
-
-Ooof, this seems correct to me but we can/should fix this separately
-probably...
-
-> > +		if (avail < 2) {
-> > +			queue_work(system_bh_highpri_wq, &bdev->work);
-> > +			goto out;
-> > +		}
-> 
-> [Severity: High]
-> Can this early return cause an infinite busy-loop softlockup?
-> 
-> If exactly one slot is available (avail == 1), queue_work() is called and
-> we return. The worker executes bam_dma_work():
-> 
->     if ((!list_empty(&bchan->vc.desc_issued) || bchan->bam_locked) &&
->         !IS_BUSY(bchan))
->         bam_start_dma(bchan);
-> 
-> Since IS_BUSY() only tests for avail == 0, the check passes and
-> bam_start_dma() is immediately called again. It sees avail < 2 again,
-> queues the work again, and returns. Could this loop indefinitely in softirq
-> context until a hardware interrupt eventually fires?
-> 
-
-Yes, the queue_work() doesn't make sense here. We need to wait for the
-BAM to finish processing some descriptors. Once it has notified us about
-that, the IRQ handler will queue_work() it anyway, so you can just drop
-this.
-
-Technically, the avail < 2 check isn't even needed. We could start
-writing the LOCK descriptor and then wait for the BAM to make further
-room for the data descriptors. I just thought it's a bit weird to queue
-LOCK without also adding some data descriptors at the same time.
-
-> [ ... ]
-> 
-> > @@ -1135,11 +1228,24 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >  		if (((avail <= async_desc->xfer_len) || !vd ||
-> >  		     dmaengine_desc_callback_valid(&cb)) &&
-> >  		    !(async_desc->flags & DESC_FLAG_EOT))
-> >  			desc[async_desc->xfer_len - 1].flags |=
-> >  				cpu_to_le16(DESC_FLAG_INT);
-> 
-> [Severity: High]
-> Does this cause the transaction completion callback to fire before the
-> hardware pipe is actually unlocked?
-> 
-> DESC_FLAG_INT is set on the data descriptor here, regardless of whether an
-> UNLOCK descriptor will immediately follow. When the data descriptor completes,
-> an interrupt is generated and process_channel_irqs() completes the cookie:
-> 
->     if (!async_desc->num_desc)
->         vchan_cookie_complete(&async_desc->vd);
-> 
-> Could this notify client drivers of transaction completion while the UNLOCK
-> descriptor is still pending in the hardware FIFO, allowing clients to modify
-> state or power down the device prematurely?
+> Does that help?
 > 
 
-Yes, but the client driver should be only concerned about the completion
-of its own data operations, the lock handling is transparent and
-internal to the BAM driver IMO. "Works as intended."
+Yes, this is completion with data TLP. It matches with the 
+quirk_disable_root_port_attributes().
+>>
+>> Thanks,
+>> Manikanta
 
-> [ ... ]
-> 
-> > +	/*
-> > +	 * Close the bracket once there is no more client work queued. The
-> > +	 * UNLOCK is flagged for an interrupt so process_channel_irqs() is
-> > +	 * guaranteed to observe its completion and retire it from the FIFO
-> > +	 * promptly, instead of leaving bchan->head to lag until a later
-> > +	 * bracket's skip-loop catches up with it.
-> > +	 */
-> > +	if (bchan->bam_locked && !vd && !IS_BUSY(bchan)) {
-> > +		bam_fifo_write_lock(bchan, DESC_FLAG_UNLOCK | DESC_FLAG_INT);
-> > +		bchan->bam_locked = false;
-> > +	}
-> 
-> [Severity: High]
-> Is the software lock state cleared too early here?
-> 
-> We synchronously set bchan->bam_locked to false immediately after placing the
-> UNLOCK descriptor into the software FIFO, before the hardware has actually
-> completed the transaction. 
-> 
-> If a client then calls bam_slave_config(), the -EBUSY check for
-> bchan->bam_locked will pass, and the driver might overwrite bchan->lock_ce
-> or configuration registers while the hardware is still busy processing
-> in-flight descriptors. Does this violate the mutual exclusion requirement?
+-- 
+nvpublic
 
-It's true, but I think this can be ignored. That's why I didn't even
-have the -EBUSY check in my diff. bam_start_dma() already re-configures
-the channel in the middle of a transaction (if bchan->reconfigure is
-set), so that one will already make changes to in-progress descriptors
-anyway. It's a bit problematic though that we don't provide a way for
-clients to wait until the unlocking has been completed, so they don't
-have any chance to avoid affecting ongoing unlock operations from their
-side.
-
-Or you just disallow changing the lock_scratchpad_addr once it has been
-set. Whatever. I don't think anyone will ever use multiple different
-addresses there.
-
-Thanks,
-Stephan
