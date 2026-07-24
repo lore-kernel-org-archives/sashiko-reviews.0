@@ -1,30 +1,54 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from send77.i.mail.ru (send77.i.mail.ru [89.221.237.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19992931FE
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 01:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DB74908C9
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 01:41:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784857257; cv=none; b=sH/+xc2NsfRyFuXyBD7nrQyl6itPPJDMSrLnrhF2SIm135we3sULEyQyXNs1zaGayjHZIJqVfrwdc8QRZ8R8UfYSQH+lDfXk6Q89bINjr+ddbwyRsL5Fq53JRQMJ7nfNL+cqHlkkebjfzYlGa3z/qiT7yslUHpGVrttJ1gSmbfQ=
+	t=1784857321; cv=none; b=WUdU/1gKDuM/6TIzHIe3JGa8SLnqFdHrNqZUbWj8R15hBNhceEZ0KC29kgKqEKc95CmwvmcqnU9LpJ+tbWYtAjeN0Lb6C2w/tPYim6AnopVRJYy5RYZJTEdchOswlLhP8kc6fS2G5Y/Gp1n3ZmO7pmA7N3vG7gTPotnWDNOXHEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784857257; c=relaxed/simple;
-	bh=sR7SlHhGAvn2qNpSSJg51t+g91muCwDUDu1pKmcwbrg=;
+	s=arc-20240116; t=1784857321; c=relaxed/simple;
+	bh=ZTZuczL7bR6ZaabTmYfEZFlCA7qMCcVZfZ3sEnigjLc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nMj7kB8nwTicFa5OarXhXIYBhQG8J0y+JDprOyG04DvSBYM0zvX3dogfHqRsrs2YHiMsgARv9btaUXNZD88ZstrnGe1U4mO9xy6xkDV8MpLy/OxWA0sAB0EhEmNBS6B+zJ2Nye2SfbvXSu+3a74D9DtflX9Od1kgCKVvrZZe06w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h5rKJ2qYrzYQtmh
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 09:40:20 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 0D6CD40590
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 09:40:52 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBXiVqjwmJqkxleCQ--.28046S2;
-	Fri, 24 Jul 2026 09:40:52 +0800 (CST)
-Message-ID: <7b6811a6-c4b4-4eab-b121-bffe2af350cd@huaweicloud.com>
-Date: Fri, 24 Jul 2026 09:40:51 +0800
+	 In-Reply-To:Content-Type; b=GIrma1rNIT6znWCcME3f/EW0C6HZp9EGcWkEYm3eOeVSAGcIZljlwHaAfbDJlu4oygo4o9qTHcFBRG/hHlncneLeyI0wAmLhNQVqDrjgWOSZD59l1fTaGUmZ/uc/Ry7GcTHo2eQx7P5t4RvyvjUq3O5OLmZA/W8etNWPZ3yBErU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=Pa9UvHGq; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=l0aW8sU5; arc=none smtp.client-ip=89.221.237.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="Pa9UvHGq";
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="l0aW8sU5"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References
+	:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=j+rTBjvvJbBmTAgdLYH8bPZosoB3irkIFNFBNf7jX0A=; t=1784857307; x=1784947307; 
+	b=Pa9UvHGqzKSPRTDrW0yqtGMZmR++yyiqwIizIgwZ+EZQmYRlX2AAUPt8GpyQE4UWII/Mc68m/VQ
+	nWH8C/g/IZvcTERRhoDxmmuCx0FhYToQvkHySqQlC+9L3BhnfDiJTvok8yCydsMcpbJY0vEPhgJGq
+	Ot8hjtq1a5djGNIi1ljGG1QdP+d8lnvMzpFXPPL4Uq4AHTKtP0YYzk/0sKwsUspVmXSFV7lfzJBDf
+	CLYJ99aXhvwqXIrTZzz9dKLoBHcZJJcy9GHU4HuUQOjtSODkWZ0pvEE8CA4j50rouIGheH4vc6fs9
+	M5x8AGjWMor4ffm2ouQpNrSdo5A8Wyz5f8ZQ==;
+Received: from [10.112.225.91] (port=36286 helo=send126.i.mail.ru)
+	by exim-fallback-5cf4fc9bf6-6664b with esmtp (envelope-from <listdansp@mail.ru>)
+	id 1wn4gN-00000000JND-2L3b; Fri, 24 Jul 2026 04:26:35 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+	Disposition-Notification-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids:
+	Disposition-Notification-To; bh=j+rTBjvvJbBmTAgdLYH8bPZosoB3irkIFNFBNf7jX0A=;
+	t=1784856395; x=1784946395; b=l0aW8sU5IIeNbSzV98sfoL0HyJTKLjRh5GDGs5RcPsBLUrF
+	PD2/6bGiOfdgub0p8y8RWKmDdd2Lq64i+Mwx+HpAXqIwSQw1ZfdiodPyiEGzh58hPUr0Z8OOY4fDo
+	CuGTjAmIr+o1Gw6OQX+m+u6imAQTtr1nZYNXbJbMJwfbaSShCyHWCAq4N5cT2BuiJjVKMdHp1CRL4
+	hfExWKzKhORA2Ynz1kiO++MreomuBazSgaPhGDgbYD7mOtrFMrfWver5LOy+fDuzB1tolhc7DwIFP
+	znJ7Qb9ksJU6QJDlB90MKkoyRdWRa+V1c83etsb9QN2XXZXxD2Xqi1wVU/EBQfhA==;
+Received: by exim-smtp-6c76488b9f-v4n2g with esmtpa (envelope-from <listdansp@mail.ru>)
+	id 1wn4gE-00000000Cxm-1HGT; Fri, 24 Jul 2026 04:26:26 +0300
+Message-ID: <ad3d5028-bd40-4003-859b-104eb12f0292@mail.ru>
+Date: Fri, 24 Jul 2026 04:26:25 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,141 +56,115 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 3/4] riscv, bpf: Adjust bpf_func to account for
- CFI offset in bpf_jit_free
-Content-Language: en-US
+Subject: Re: [PATCH] video: fbdev: kyro: Validate overlay viewport coordinates
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260722112754.1615201-1-pulehui@huaweicloud.com>
- <20260722112754.1615201-4-pulehui@huaweicloud.com>
- <20260722113814.40F971F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260722113814.40F971F000E9@smtp.kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+References: <20260724004245.86764-1-listdansp@mail.ru>
+ <20260724005423.86F621F000E9@smtp.kernel.org>
+From: listdansp <listdansp@mail.ru>
+Content-Language: en-US
+In-Reply-To: <20260724005423.86F621F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgBXiVqjwmJqkxleCQ--.28046S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw48uFWDtw1Dtry7Wrg_yoW5Kw15pF
-	n8Jryak3yqgw1xKF4qqr18KF1xJw4xW3W7Gry8urZ2g3ZxWr92gF9ak3y8WrZ8JrWUAw10
-	qFZ5WF17Ca4kX3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1QVy3UUUUU==
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD93ED3C6BF6FFA701F0B3D367FDA022B560160F5E35392B611182A05F538085040A52A1D80DEFEC40A3DE06ABAFEAF6705ABCD3C3B00A6A8428391D7A76C0DDF7159F445DFCDA6A35E
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE720D3C300AFAD2243C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6759CC434672EE6371C2A783ECEC0211ADC4224003CC836476D5A39DEEDB180909611E41BBFE2FEB2B425B3C7DD974D21E5E1F8FF95E2FD3B9ED1E5CAC265509CA534BCE5480F527A50C819B32DFABC24A725E5C173C3A84C3C06EB4A85EF71DCC117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC3A703B70628EAD7BA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD1828451B159A507268D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE1E561CDFBCA1751F1B780A39BCC1DD35D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE386A7C529F68B8E5C302FCEF25BFAB345C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F790063755F431A9070C6492EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A58915208F695EC02C5002B1117B3ED696B41D1B265706B7FB484B8D70797403F6823CB91A9FED034534781492E4B8EEAD0942DC5495D0595EBDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659BD2DE12799FD87AD81FB97722110473B1737BFF5F8541112407CC042BEC098F3A7FA443BDB71D33AB8341EE9D5BE9A0A8D72C03768569D62BB30523EDBFDB6A99613692593E06B5E8CD93680B12512CF4C41F94D744909CE04437D853D7CD20871FE3B1D98EC473624A389F0E278DBF4
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVWmxowtcrDwU1EZWE20ilR4=
+X-Mailru-Sender: 4CE1109FD677D277C46683902DBBBB3CD47F6A1C8DA1D5D03DE06ABAFEAF6705ABCD3C3B00A6A842977EED7048DEDC7C8A08967417F2D5E3FB559BB5D741EB96C31AF20DAA089319D7A14DD9E34ECE7467EA787935ED9F1B
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B486472E5A48B460E48232B7BA1535077BF331AF1FE98FC1A6049FFFDB7839CE9E426FEB9BE7554530CCD57DFE5C6D5DDACBEF06E8C94DC2A399E8AE2CC53E203EF1DB84A0EC7C93B9
+X-7FA49CB5: 0D63561A33F958A54B97C676AD7294855002B1117B3ED6969C43858CBE0D4DA4518C0FB0186044C402ED4CEA229C1FA827C277FBC8AE2E8B3A00E10D64C8961C
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZS7ynJiCIcBVY/KWOxlKa9g==
+X-Mailru-MI: 20000000020000000000000800
+X-Mras: Ok
 
-
-On 2026/7/22 19:38, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On 24/07/2026 03:54, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Error path in `bpf_jit_free()` ignores the return value of `bpf_jit_binary_pack_finalize()`, leading to a use-after-free and double-free of the `ro_header`.
-> - [High] The BPF JIT module memory charge is permanently leaked when `bpf_jit_binary_pack_finalize()` fails.
+> - [High] Missing validation for ulHeight == 1 causes a division by zero panic in SetOverlayViewPort.
 > --
 > 
-> --- Patch [3]: [PATCH bpf-next 3/4] riscv, bpf: Adjust bpf_func to account for CFI offset in bpf_jit_free ---
-> commit 2c7946882741f9c426f80073ff738910e58599f5
-> Author: Pu Lehui <pulehui@huawei.com>
+> --- Patch [1]: [PATCH] video: fbdev: kyro: Validate overlay viewport coordinates ---
+> commit eccd0fc9ac01567bf3583eb92ff9c8b899a5e6b3
+> Author: Danila Chernetsov <listdansp@mail.ru>
 > 
-> riscv, bpf: Adjust bpf_func to account for CFI offset in bpf_jit_free
+> video: fbdev: kyro: Validate overlay viewport coordinates
 > 
-> Adjusts the BPF program entry point in bpf_jit_free() by subtracting the CFI
-> offset. This correctly restores the original JITed allocation address before
-> freeing it.
+> This commit adds coordinate validation in kyro_dev_overlay_viewport_set to
+> prevent 32-bit wraparound before passing the values to SetOverlayViewPort.
+> It explicitly checks for overflows when adding dimensions and restricts the
+> adjusted coordinates to fit into 16-bit register fields.
 > 
->> diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
->> index cbfcd287ea166..059db1adeaf8d 100644
->> --- a/arch/riscv/net/bpf_jit_core.c
->> +++ b/arch/riscv/net/bpf_jit_core.c
->> @@ -237,6 +237,7 @@ void bpf_jit_free(struct bpf_prog *prog)
->>   			kvfree(jit_data->ctx.offset);
->>   			kfree(jit_data);
->>   		}
->> +		prog->bpf_func = (void *)prog->bpf_func - cfi_get_offset();
->>   		hdr = bpf_jit_binary_pack_hdr(prog);
->>   		bpf_jit_binary_pack_free(hdr, NULL);
+>> diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
+>> --- a/drivers/video/fbdev/kyro/fbdev.c
+>> +++ b/drivers/video/fbdev/kyro/fbdev.c
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does bpf_jit_free() ignore the return value
-> of bpf_jit_binary_pack_finalize() and risk a use-after-free and double-free?
+> [ ... ]
 > 
-> When bpf_jit_binary_pack_finalize() fails, it frees the ro_header internally:
-> 
-> kernel/bpf/core.c:bpf_jit_binary_pack_finalize() {
->      ...
-> 	if (IS_ERR(ptr)) {
-> 		bpf_prog_pack_free(ro_header, ro_header->size);
-> 		return PTR_ERR(ptr);
-> 	}
->      ...
-> }
-> 
-> But here in bpf_jit_free(), the error is ignored, and bpf_jit_binary_pack_free()
-> is called with the same header:
-> 
-> arch/riscv/net/bpf_jit_core.c:bpf_jit_free() {
->      ...
-> 		hdr = bpf_jit_binary_pack_hdr(prog);
-> 		bpf_jit_binary_pack_free(hdr, NULL);
->      ...
-> }
-> 
-> kernel/bpf/core.c:bpf_jit_binary_pack_free() {
->      ...
-> 	u32 size = ro_header->size;
-> 
-> 	bpf_prog_pack_free(ro_header, size);
->      ...
-> }
-> 
-> If finalization fails, could this lead to a use-after-free read of
-> ro_header->size, followed by a double-free of the ro_header?
+>> @@ -378,11 +381,30 @@ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight
+>>   	    (x < 2 && ulWidth + 2 == 0))
+>>   		return -EINVAL;
+>>   
+>> +	/*
+>> +	 * SetOverlayViewPort() adjusts X coordinates by +2 (left) and +1
+>> +	 * (right) before packing them into 16-bit register fields.
+>> +	 */
+>> +	if (x > U16_MAX - 2 || y > U16_MAX)
+>> +		return -EINVAL;
+>> +
+>> +	right = x + ulWidth;
+>> +	bottom = y + ulHeight;
+>> +
+>> +	if (right < x || bottom < y)
+>> +		return -EINVAL;
+>> +
+>> +	right--;
+>> +	bottom--;
+>> +
+>> +	if (right > U16_MAX - 1 || bottom > U16_MAX)
+>> +		return -EINVAL;
+>> +
 > 
 > [Severity: High]
-> This is also a pre-existing issue, but does the error path of
-> bpf_jit_binary_pack_finalize() permanently leak the BPF JIT module memory
-> charge?
+> This is a pre-existing issue, but does this validation block still allow a
+> divide-by-zero panic if ulHeight is 1?
 > 
-> When bpf_jit_binary_pack_finalize() fails and frees ro_header, it does not
-> uncharge the memory:
+> If a user passes ySize = 1 via the KYRO_IOCTL_OVERLAY_VIEWPORT_SET ioctl,
+> ulHeight will be 1. The code calculates bottom = y + ulHeight, then
+> bottom--, which results in bottom == y.
 > 
-> kernel/bpf/core.c:bpf_jit_binary_pack_finalize() {
+> When these values are passed to SetOverlayViewPort(), it calculates ulDest
+> as the difference between the y coordinates (bottom - top). Since they are
+> equal, ulDest evaluates to 0:
+> 
+> drivers/video/fbdev/kyro/STG4000OverlayDevice.c:SetOverlayViewPort() {
 >      ...
-> 	if (IS_ERR(ptr)) {
-> 		bpf_prog_pack_free(ro_header, ro_header->size);
-> 		return PTR_ERR(ptr);
-> 	}
+>      ulDest = srcDest.lDstY2 - srcDest.lDstY1;
 >      ...
-> }
-> 
-> In other places like bpf_int_jit_compile(), a finalization failure results in
-> the pointers being set to NULL and bypassing bpf_jit_binary_pack_free(), which
-> would normally uncharge the memory:
-> 
-> arch/riscv/net/bpf_jit_core.c:bpf_int_jit_compile() {
+>      ulFxScale = (ulDest << 11) / ulSrc;
 >      ...
-> 		if (WARN_ON(bpf_jit_binary_pack_finalize(...))) {
-> 			/* ro_header has been freed */
-> 			jit_data->ro_header = NULL;
-> 			jit_data->header = NULL;
-> 			goto out_free_hdr;
-> 		}
+>      ulSrcBottom = ulSrcBottom - (ulFxOffset / ulFxScale);
 >      ...
 > }
 > 
-> Could repeated failures exhaust the JIT memory limit, resulting in a local DoS
-> by preventing further BPF program loading?
+> Because ulDest is 0, ulFxScale evaluates to 0. The subsequent division by
+> ulFxScale then causes a kernel panic.
 > 
->>   		WARN_ON_ONCE(!bpf_prog_kallsyms_verify_off(prog));
->>   	}
+> Should ulHeight == 1 be rejected alongside the ulHeight == 0 check earlier
+> in kyro_dev_overlay_viewport_set()?
 > 
 
-patch 4 have been covered this two issues.
+Thanks for the review. The reported division-by-zero issue is pre-existing
+in the codebase and is completely unrelated to my changes. This patch does
+not introduce, touch, or modify this logic.
 
+I request the maintainers to review my patch as is.
+
+Best regards,
+Danila Chernetsov
