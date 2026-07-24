@@ -1,205 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from 011.lax.mailroute.net (011.lax.mailroute.net [199.89.1.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C65233926;
-	Fri, 24 Jul 2026 19:50:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18608279DB6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 20:15:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784922639; cv=none; b=oBsfqryV6jy2JB6O3Fut0CPl4bUarcTTfXRDX490PEkIADBsz0kEQc2shf6XWkVNgK0S/oucUY0nZJVLSnGIVoMrdWBTrt5OjieWCnffyl696veV3814YRZ+OBsDoJxO28S33rJxoHbNRpWEPU4SBZKqExq3lovedjPKfDtelwI=
+	t=1784924152; cv=none; b=Q9fe4DmG1pLbuaJd6s5x6HT9GjzdBPrjoUOHHuIU0Q3mbbfQBy53z+SJ5A/po/+faYpN0nyTLO1RtWGMxSqwTR4M/LRpVYvTyo6896u8exyMWs+0oPQxdd/RVLB1hp4Xh+9s4PNkoNEDbAv6W2gpsZilneQJr91Ah3cwJGUmnGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784922639; c=relaxed/simple;
-	bh=NoE+xy0UkbhTAXqkSxv2IuMHsApWUps4QQDy0yXorHU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LbTTwQ7RdndXUTLXUOpyIszsmYEx5kc0FGN5NPBuQF1KS0RGr9u6ZCwHamTVA/zaHtE4uF/zSxYc4bKqqPFj4YhZLu0yhGmO9+y3RiVQPkWM/FNQvPT3vqKy2RTRp0NCmmLPG4bJT7mU8P9dOTvH7YDvF3IgSe6c8C44s8PazdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BtYv7zqd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784924152; c=relaxed/simple;
+	bh=kKHuHJXhj6htLAxyHt4jlvisrHJxA2Ixg1rE1ca/iHw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qkYlwPPITPvkT02WwKt5eylKd+YuyM9upHv/OZaN6hWU8TBi6K9LT1mzjECgsvVXEVy0/cHamsc29XQD9050Ix4m+g5N3S7eVChByXAEq6r2K5lkpSOLlHbDIHqxP7wxA8INKPbrmTr1gas53ikxh3T6OuUQtouy38k/JQS3kek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=JW1BOx88; arc=none smtp.client-ip=199.89.1.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BtYv7zqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D67C1F000E9;
-	Fri, 24 Jul 2026 19:50:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784922637;
-	bh=uYZYJpTXfDcHeTDqTQZMaqHJlAmMBAVkn93HWhktHe0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BtYv7zqddpucBXaaJwMzAyxzhsc9MJMRfHJFF5SqL5QEGqEUXUGuu7IPOHWq/tZxV
-	 LwBmCOdkdB+JaC8madHMT6EVUv9zBdLXy6bxjjSG6c5XaRw1MZE+SQdQV5WqEej35A
-	 kLqYD14gFOIW4jszjfZ+3z/yFT2thi8JUgnDRR5bJREoaLfW5UF+hM8nyv1nF8Mc8j
-	 xRoE/PGRsR2v3AF7Ei9vOFpE+CBy5Gf0wxVjpoJxNgY20TilndiOCtfq8C7R04P9YD
-	 +2kmJhPSQ/JPxxVuBTRs4TiUCg0w45n+JfaG0N4KbJivpNwpbuIGOLO/EiP4Ns1cQL
-	 ONn50oT6sRcrQ==
-Date: Fri, 24 Jul 2026 12:50:34 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Yafang Shao <laoar.shao@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org,
-	linux-kbuild@vger.kernel.org, Nicolas Schier <nsc@kernel.org>
-Subject: Re: [PATCH v2] kbuild: rpm-pkg: Preserve .BTF section in kernel
- modules during debuginfo stripping
-Message-ID: <20260724195034.GB1461047@ax162>
-References: <20260716025342.42628-1-laoar.shao@gmail.com>
- <20260716030116.C613E1F000E9@smtp.kernel.org>
- <CALOAHbBQhAsTMHMMZH5Sen0cDYg8GREZMmQcT4Njc9VW_WHe4Q@mail.gmail.com>
- <20260724000015.GA2803569@ax162>
- <CALOAHbCaKNF2=Q0qCHbQttP4+LOwOdnxHKbdLeiJi0+2JKkvNQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="JW1BOx88"
+Received: from localhost (localhost [127.0.0.1])
+	by 011.lax.mailroute.net (Postfix) with ESMTP id 4h6K4D5J4Qz1XM4Tn;
+	Fri, 24 Jul 2026 20:15:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1784924138; x=1787516139; bh=6ihtli0dB4IFTanZA8ZCsng8
+	fXisU1fFhJaDQxyoAng=; b=JW1BOx88e3Zl2qvS0KRkupzPLBOxz14+Mek3JCHK
+	hk8zP60ZIHQUP6+Is0X2o71lqc7qnFza61DKiJ2DD5GFhZwp5xtuMmHQpgH+iton
+	SrZr/dy25hdNZkiWlbih89SFvHBYCmXkBrIaRqb7137hEnzjJqBUp/Q2gaofKy1m
+	8BPdeWL2spfWPyLGpMUG94WmDSDiL2FbNcNxy27F/iKHY3B45A1fBN47DLa0fNau
+	KcpH4XQOu8M+Ch3eaAYK7qjaLAwQ2gwPF0Aj03mScJZSKPHKFcITmTI0PwWX0Hss
+	0+WZSiYXKyCmkFkw+9Ar9sm413xqL4K8XaKAVGgic9M7nw==
+X-Virus-Scanned: by MailRoute
+Received: from 011.lax.mailroute.net ([127.0.0.1])
+ by localhost (011.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id CiUs2TW1z14V; Fri, 24 Jul 2026 20:15:38 +0000 (UTC)
+Received: from [100.119.48.131] (unknown [104.135.180.219])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 011.lax.mailroute.net (Postfix) with ESMTPSA id 4h6K4B1350z1XM4Tl;
+	Fri, 24 Jul 2026 20:15:37 +0000 (UTC)
+Message-ID: <3c4fd73f-61c0-46d7-b36b-da33ab0c97cb@acm.org>
+Date: Fri, 24 Jul 2026 13:15:36 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALOAHbCaKNF2=Q0qCHbQttP4+LOwOdnxHKbdLeiJi0+2JKkvNQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] scsi: ufs: Add support for the aggregated read
+ query opcode
+To: sashiko-reviews@lists.linux.dev,
+ Hyeoncheol Jeong <hyenc.jeong@samsung.com>
+Cc: linux-scsi@vger.kernel.org
+References: <20260724030812epcms2p4eb2c77cb4dcd5fd51ca9c3eaa5ea4bfa@epcms2p4>
+ <CGME20260724030812epcms2p4eb2c77cb4dcd5fd51ca9c3eaa5ea4bfa@epcms2p4>
+ <20260724031215epcms2p4d3f734cacf21104ef1396e893edd141d@epcms2p4>
+ <20260724032754.E5D281F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20260724032754.E5D281F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 24, 2026 at 10:49:24AM +0800, Yafang Shao wrote:
-> On Fri, Jul 24, 2026 at 8:00 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > On Thu, Jul 16, 2026 at 05:11:05PM +0800, Yafang Shao wrote:
-> > > On Thu, Jul 16, 2026 at 11:01 AM <sashiko-bot@kernel.org> wrote:
-> > > >
-> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > > - [Medium] The check for `find-debuginfo.sh` capabilities in `mkspec` hardcodes host properties into `kernel.spec`, breaking SRPM portability across distributions and failing silently when the tool is not in `$PATH`.
-> > > > --
-> > > >
-> > > > --- Patch [1]: [PATCH v2] kbuild: rpm-pkg: Preserve .BTF section in kernel modules during debuginfo stripping ---
-> > > > commit 99202060a54c32638e01a2bfdc4d23b190f3f77c
-> > > > Author: Yafang Shao <laoar.shao@gmail.com>
-> > > >
-> > > > kbuild: rpm-pkg: Preserve .BTF section in kernel modules during debuginfo stripping
-> > > >
-> > > > This commit updates the RPM packaging scripts to pass --keep-section .BTF
-> > > > to find-debuginfo.sh. This ensures that BTF information is preserved when
-> > > > debuginfo is stripped from kernel modules.
-> > > >
-> > > > > diff --git a/scripts/package/mkspec b/scripts/package/mkspec
-> > > > > index c604f8c174e2c..00acef348ba84 100755
-> > > > > --- a/scripts/package/mkspec
-> > > > > +++ b/scripts/package/mkspec
-> > > > [ ... ]
-> > > > > @@ -65,6 +65,11 @@ fi
-> > > > >  echo "%define with_debuginfo_manual $with_debuginfo_manual"
-> > > > >  echo "%define with_debuginfo_rpm $with_debuginfo_rpm"
-> > > > >
-> > > > > +# Detect if find-debuginfo.sh supports --keep-section (RHEL 9+)
-> > > > > +if find-debuginfo.sh --help 2>&1 | grep -q keep-section; then
-> > > > > +     echo "%global with_keep_section 1"
-> > > > > +fi
-> > > >
-> > > > [Severity: Medium]
-> > > > Is it safe to assume find-debuginfo.sh is in the standard user $PATH?
-> > > >
-> > > > On many systems, this script resides in /usr/lib/rpm/, which isn't typically
-> > > > in the $PATH. This could cause the check to silently fail and strip the .BTF
-> > > > section during a local make rpm-pkg build.
-> > > >
-> > > > Also, since mkspec runs during SRPM generation (make srcrpm-pkg), doesn't
-> > > > this statically bake the generation host's capabilities into the resulting
-> > > > kernel.spec file?
-> > > >
-> > > > If the SRPM is rebuilt on an older distribution, rpmbuild might fail because
-> > > > the older script rejects the --keep-section argument. If generated on an
-> > > > older host and built on a newer one, BTF info would be silently stripped.
-> > > > Could we dynamically query the target host's capabilities using something
-> > > > like %(__find_debuginfo) inside the spec file itself?
-> > > >
-> > > > --
-> > > > Sashiko AI review · https://sashiko.dev/#/patchset/20260716025342.42628-1-laoar.shao@gmail.com?part=1
-> > >
-> > > I believe we could use the builtin _rpmconfigdir to locate
-> > > find-debuginfo.sh reliably. This avoids relying on $PATH.
-> > > What do you think about the following change?
-> >
-> > Just an FYI, this was not sent to anyone with authority to comment on
-> > said change, as the Kbuild folks were not included in the AI review
-> > thread. I just happened to find this when browsing the archives.
-> 
-> My apologies, I failed to notice that the linux-kbuild mailing list
-> was excluded from Sashiko's reply.
+On 7/23/26 8:27 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider: - [High] The patch introduces a dedicated DMA
+> allocation for the device management command descriptor
+> (`devman_ucd_base_addr`) and restricts its Physical Region
+> Descriptor Table (PRDT) size to only 2 entries
+> (`UFSHCD_DEVMAN_SG_ENTRIES`). However, Advanced RPMB requests
+> originating from userspace via the block layer's BSG interface are
+> mapped into scatter-gather lists without enforcing this 2-entry
+> limit. Because userspace can submit highly fragmented I/O vectors
+> (or even a contiguous 4KB buffer that spans across three memory
+> pages), the block layer can generate an `sg_cnt` greater than 2. The
+> driver blindly passes this `sg_cnt` to `ufshcd_sgl_to_prdt()`, which
+> iterates over the scatterlist and writes beyond the bounds of the 2-
+> entry `prd_table`. This results in a silent out-of-bounds write that
+> corrupts adjacent DMA-coherent memory.
+I think this comment should be addressed. How about addressing this by 
+checking payload->sg_cnt in ufs_bsg.c before calling dma_map()?
 
-No problem at all, I just wanted to make it obvious why you may not have
-gotten a response to your suggestion and for this issue to get lost.
+Thanks,
 
-> > > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-> > > index c732415662ef..4335e99f2aca 100644
-> > > --- a/scripts/package/kernel.spec
-> > > +++ b/scripts/package/kernel.spec
-> > > @@ -67,7 +67,21 @@ This package provides debug information for the
-> > > kernel image and modules from th
-> > >  %undefine _unique_debug_srcs
-> > >  %undefine _debugsource_packages
-> > >  %undefine _debuginfo_subpackages
-> > > +
-> > > +# Preserve .BTF section in kernel modules during debuginfo stripping
-> > > +# find-debuginfo.sh (from debugedit) uses eu-strip which removes
-> > > +# non-allocated ELF sections like .BTF by default.
-> > > +# --keep-section .BTF preserves BPF Type Format information.
-> > > +#
-> > > +# Uses _rpmconfigdir for reliable script location instead of relying on $PATH.
-> > > +%{!?with_keep_section:%global __fd %{_rpmconfigdir}/find-debuginfo.sh}
-> > > +%{!?with_keep_section:%global with_keep_section %(%{__fd} --help 2>&1
-> > > | grep -c keep-section)}
-> > > +%if %{with_keep_section}
-> > > +%global _find_debuginfo_opts -r --keep-section .BTF
-> > > +%else
-> > >  %global _find_debuginfo_opts -r
-> > > +%endif
-> > > +
-> > >  %global _missing_build_ids_terminate_build 1
-> > >  %global _no_recompute_build_ids 1
-> > >  %{debug_package}
-> > >
-> > > Please let me know if this approach works or if there are any concerns.
-> >
-> > /usr/lib/rpm/find-debuginfo.sh might not exist on certain distributions
-> > that can build .rpm packages like Arch Linux:
-> >
-> >   $ ls -l /usr/lib/rpm/find-debuginfo.sh
-> >   "/usr/lib/rpm/find-debuginfo.sh": No such file or directory (os error 2)
-> >
-> > Even on modern Fedora, this is a symlink:
-> >
-> >   $ ls -l /usr/lib/rpm/find-debuginfo.sh
-> >   lrwxrwxrwx@ - root 19 Jul 17:00 /usr/lib/rpm/find-debuginfo.sh -> ../../bin/find-debuginfo
-> >
-> > I think we would be better off just using the __find_debuginfo rpm
-> > macro:
-> >
-> >   $ rg -m 1 find-debuginfo /usr/lib/rpm/macros
-> >   69:%__find_debuginfo    /usr/bin/find-debuginfo
-> >
-> > This appears to work for me, it would be good if you can confirm this
-> > works for you as well.
-> >
-> > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-> > index c732415662ef..590b5b2e1b40 100644
-> > --- a/scripts/package/kernel.spec
-> > +++ b/scripts/package/kernel.spec
-> > @@ -67,7 +67,18 @@ This package provides debug information for the kernel image and modules from th
-> >  %undefine _unique_debug_srcs
-> >  %undefine _debugsource_packages
-> >  %undefine _debuginfo_subpackages
-> > +
-> > +# Preserve .BTF section in kernel modules during debuginfo stripping
-> > +# find-debuginfo.sh (from debugedit) uses eu-strip which removes
-> > +# non-allocated ELF sections like .BTF by default.
-> > +%global with_keep_section %(%{__find_debuginfo} --help 2>&1 | grep -c keep-section)
-> > +%if %{with_keep_section}
-> > +%global _find_debuginfo_opts -r --keep-section .BTF
-> > +%else
-> >  %global _find_debuginfo_opts -r
-> > +%endif
-> > +
-> >  %global _missing_build_ids_terminate_build 1
-> >  %global _no_recompute_build_ids 1
-> >  %{debug_package}
-> 
-> This works for me, thanks for the improvement.
-> Do you plan to send the official patch, or would you like me to send a
-> new version?
-
-You can send a new version, as your message makes it clear what is going
-on here. If you feel so inclined, you can add a Suggested-by tag but I
-don't think this is substantially different from what you suggested.
-
--- 
-Cheers,
-Nathan
+Bart.
