@@ -1,221 +1,321 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF9741F5F9;
-	Fri, 24 Jul 2026 10:18:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725DB427F85
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 10:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784888314; cv=none; b=YPr0VDOM4JfxRBEu8g+lnzs7fyqPVPntB8kikVa69gnK7jGpFXldj6j8FsMMzBQExtAKHV3+eBYhh7WBOM/3P4QG6HCD9JISEABXEbLhwvu8jyMUHhVxVs/zQXETEc9jmYX7TNX7IC3ec3HnmTjlTesElFmAloEx8hAau19K1Uw=
+	t=1784890431; cv=none; b=GyOd6Sisg98ADN2Pfh3HQex6lEUYWCBxWhF2X+gsXho0E59U7MODu5bAxOovQdgRDcTZxHocL/1rdlzWDFlk1Hy4k/utTBNv/LyF1RyT5UVu2JlnTuYBJenJSE1+RBNyuim3vQub8/Yb7hZ2mWEmCyL6GzhH7yvZFOXrsrM29uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784888314; c=relaxed/simple;
-	bh=aor8XH4UMnmAUyatRH2EkbaawyXON09I1vLZ62w171c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pxcqQ8ik32QnFXJhq0RJsN288d/RR5blrh45a+8Thk9wcRNAHinySyknojmSyKcUcwY4BVAhPwFyF2IJh8PxsCP9ZSaHo6VuDWM/HVQ1XNCyaCrk8QHV7w29VTDSRTAkOn4Svx8Gz9zuSwCWIpzn2UWC7K4mDXNTqHBlrpUMbpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=kUcZXnE/; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1784890431; c=relaxed/simple;
+	bh=2Id8Lf7l9nSqlQQ3kJj2nmTWJEwu65vgbgq0B4au8sw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=scTmvzrAhqg32juJMv14YqCWsxElPFhlY7Xyk0UAT48+zeVBQCDtsUBwRN8S76eKOdCtk+0miysuNUpamYoWkMe6r353tQdBOp7vKcihWb5qc65Y1j1U7GvH8cQXlvnchm5LIoFn/UNLylOrYSJsHipZT1F4wuho05T0MC4Sss4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JdHQ3b1B; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="kUcZXnE/"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66OADYIJ3851937;
-	Fri, 24 Jul 2026 10:18:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=uoyBC8
-	hR/w64dLY47L6pyZOZTyV5q2j/53rRZdNSMnc=; b=kUcZXnE/Y/e2KeGh5f7M6S
-	HdANbd2SFgRaaQpxzM/zqu7J/kQrSHoo1rGMkBdRn+feLYTwZuNbsguapGTnT7os
-	oHWWMB1ujPR3vahU2pZfr8FrXjA1z54cdI09QndmI9iWSdQWBLeWQq7oCWBCSjPA
-	df7UXeBMuKwVBsZCxWsN+y+IVdWFmsE6YgZL/AwYlYQjzPz2OKPB9oEX/JstsxIj
-	Vt07BxeIRhrWX05NZt0XI4kbPho6mcrrl++ZYszNKkfr8sUBdXQJSvmdsM2+YNdp
-	brQ9vPT7zzQvJK8QYKPBzD84sxIYwQ4cW8nKt6sVUvE3uSwXxqMgwCaH98K32Elw
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg77av5rt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jul 2026 10:18:21 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OA4cG5017087;
-	Fri, 24 Jul 2026 10:18:20 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgnahgd0n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jul 2026 10:18:20 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66OAIIJn28443328
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 24 Jul 2026 10:18:18 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8A0BC5805C;
-	Fri, 24 Jul 2026 10:18:18 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 40DB058059;
-	Fri, 24 Jul 2026 10:18:15 +0000 (GMT)
-Received: from [9.39.22.211] (unknown [9.39.22.211])
-	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 24 Jul 2026 10:18:14 +0000 (GMT)
-Message-ID: <d8931a48-4652-4026-a9ca-a0d91abc6913@linux.ibm.com>
-Date: Fri, 24 Jul 2026 15:48:13 +0530
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JdHQ3b1B"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47df43bfb07so94744f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 03:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1784890428; x=1785495228; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9qGNYqgu45iCzPUDN1sRc/iOGDzLiyCE7X0FhGMvUzY=;
+        b=JdHQ3b1BghTEZGssYtbNE47w9s9bzax1Jztrr5IDggWKE48CvqDDxcE8UryNgncYyP
+         6kgjkMpkrlIRrjwnq/Guq6FGptkTesVl+2u57tv/PcI2A/UUR9LjSGhoXWRHMsfllrCS
+         LJd/KSKQSupy5UGWqkl5cFY4AQMrgLiZQ00SI70Wa5QTWBSIF6hOBsvbmAaJyD0YLFmV
+         WBj74Q8GyE7MZD1jkGlQG0KGUloavjeYqJcCmvQv38kXKgkgdPXPEbXTRsPEpj35Cgdw
+         f5zky2CA6fLTdU1blV2yHqg1zCGhtQX7JqgYVxisS2nBxbYoQo9RAyF3+0X66giy6iIE
+         Xz6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784890428; x=1785495228;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9qGNYqgu45iCzPUDN1sRc/iOGDzLiyCE7X0FhGMvUzY=;
+        b=OC8JZ4DaQYgxDGIuBTvf2KMFvPk8oPIUaqdzOo4+iAxe9J8nwJOswGRsb4ipeVxfeW
+         3P3xIGYQgq3nYEy+tQL9iF9wbNc1tiTo/cXZa+VsRKVpBmhiLzsX2mFk1iZGxmsfF0Ct
+         QDM3WUr8ZyBcy8NMfU62gI2ks0M04748nCNEuyRjq/9D46hHe4oDhpMW3gkHB+IeGL9f
+         FOlxCDw5khi0b5SRm6HEfqDvlF4dkIb8q0evGXYDpAOfyYFqIhK1wpV96xUWQET+NpmF
+         /ivN78YBFK8VJ0dER3H+05FDXpkRusxkeFDB91BnuL5XaT9sjPbeu2HqwOKX4Uyml670
+         tJIA==
+X-Forwarded-Encrypted: i=1; AHgh+Rqe7OHRe6TFDZy+7dcPhhEyP5kJLeHpsZZsGyGgXF/3nPA6K0gPCQFrgXxp4j0FhbrZtQcmdqAKWhSXdBB9LnE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxtoGnNg5XZVS5EDK+lF4dQf8sRJ6L5vWIlRldRoPY3qB33UrZA
+	u9ZNcfpCjwt5SIh7sfNczjxLjCCpQw4j+x73qJFC9PCIuxLx52cowX3LIVsl80sI3QY=
+X-Gm-Gg: AR+sD13PuJnwl7Hw5N0rJGOfmRFqYblRHtd+HR/XdXh/T2gLUFfTC7pdF6kfQS4tHmZ
+	VQcQ0vgwmsvHTwdOWF9uXQqefHN9kmcUoiYYqNe2SdJLIxRSHKnAzHlFPVHmNSSEAjeSGYxDEtb
+	1OD5pR/zPowSD6fXNcg3K1ekltvJa2dHQhpCP2AaOEkatTdrQTs28eha7eVRcZ+QqimmDZlxW9Y
+	a9x3ro06am/trU5WsRp3UkuWFUdHbKC4f66htRmbJCR9vwKy7lD1XXpM5zZGLSU5lnN8o+te+fT
+	0Knb3+LJ8pyL68ZwkgQgA2CqRJtm2vnMPsI8tPhvoasQ/VdnWhU/ceOYUyTXrp/Cx0fMGSiAVmr
+	MwYOABtOrf/XLbAlAr8bsK4Z0so1xE7+omn0ArTP5FlRlwic+FXyC+b5YYZhiOS2SIJTkewy2Ok
+	wn+IZ1cvUkGjwgdQ==
+X-Received: by 2002:a05:6000:2489:b0:460:3233:beed with SMTP id ffacd0b85a97d-47f8d75ec77mr9286973f8f.41.1784890427609;
+        Fri, 24 Jul 2026 03:53:47 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff24:7210:d8e1:da6c:62ef:6ff9])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb5127sm22309568f8f.10.2026.07.24.03.53.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 03:53:47 -0700 (PDT)
+Date: Fri, 24 Jul 2026 12:53:36 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, brgl@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM
+ locking
+Message-ID: <amNEMK4k54l655ku@linaro.org>
+References: <20260723-qcom-qce-cmd-descr-v24-0-4f87bb4d9938@oss.qualcomm.com>
+ <20260723-qcom-qce-cmd-descr-v24-6-4f87bb4d9938@oss.qualcomm.com>
+ <20260723172814.661591F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] perf trace-event: Fix buffer overflow in
- read_string()
-To: sashiko-reviews@lists.linux.dev,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Ian Rogers <irogers@google.com>, Namhyung Kim <namhyung@kernel.org>
-Cc: linux-perf-users@vger.kernel.org, atrajeev@linux.ibm.com,
-        Madhavan Srinivasan <maddy@linux.ibm.com>, hbathini@linux.ibm.com
-References: <20260723093958.416650-3-tshah@linux.ibm.com>
- <20260723093958.416650-5-tshah@linux.ibm.com>
- <20260723095827.659211F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Tanushree Shah <tshah@linux.ibm.com>
-In-Reply-To: <20260723095827.659211F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 3OgqbkFmZnA7PemLCGnBsC5Mq33ydJKX
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA5MyBTYWx0ZWRfX34hsiBt6okqS
- k0THveXe/zxueXQ9W3hjfn9Fd6+F0VbIQ0omG+mPpRRBqGIkfmGEisvoVrHXLPvg/R94KDmHQiD
- KeU1fSRApxjQHUQfDaO1b09V3ovBGow=
-X-Proofpoint-GUID: Eppr17wOPVT702bTUo0ejT1ZkTmhg4Mi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA5MyBTYWx0ZWRfX08/Kq/L45m2K
- DLbY+9ydYd4hdOucaaNypgt7aQZUozgOAov69kT2a216OJzO+y+PiUzuJhMv/PCWMqM6kWln0RL
- gNUUnxN56xrQfZTtntzK39nfJe7K+59bzFT4micgydcbamhfjOJ9nZjUI81K8t/0VkQnJxMF9Hl
- bJXAFQ6k4os+ESqEcqO0q6cS40yRyopc/Y6JJQaw5flaNKX2Xa8JfSMMCleCsFYECcNbunumHCb
- 1a5MBYnuCrmg0wHVyrLyvL5LQm+yCydRFDsJyFWmK983wYk0u3sy3NIaWu758E4XAMSNv+FyG5P
- 0NgIAfYIWLQ3/CvCzTaCHXRyHQ1ykb/QkM+dkpGX/C84U67tnvjeyaA6USbby5XF4bEY7jDtwoY
- ZzR4TUYffgixgW9APPthlqu2zw0c9N7z9y5QMBK3n+x5mlb3dbsKMYiWhdsHbC/n9zWtyzwN46o
- YFBQLIAp9FPfJbxVUlQ==
-X-Authority-Analysis: v=2.4 cv=K7AS2SWI c=1 sm=1 tr=0 ts=6a633bed cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=VhAqebHHZSCiwM_HGQYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_02,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240093
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260723172814.661591F000E9@smtp.kernel.org>
 
-
-
-On 23/07/26 15:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Thu, Jul 23, 2026 at 05:28:13PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Calling `queue_work()` inside `bam_start_dma()` when there is exactly 1 slot available creates an infinite busy-loop in softirq context (softlockup).
+> - [High] The transaction completion callback fires before the hardware pipe is actually unlocked, violating the mutual exclusion requirement.
+> - [High] The driver clears the software lock state prematurely, allowing concurrent configuration changes to corrupt in-flight hardware execution.
+> - [Medium] The 'reserved' field of the lock command element is left uninitialized before being synced to the device.
 > 
 > Pre-existing issues:
-> - [High] Error path in trace_report() leads to a double free of tevent->pevent when session initialization fails.
-> - [High] Integer truncation in do_read() allows a malicious trace file to cause the parser to process uninitialized heap memory.
+> - [Critical] Mismatch between FIFO wrapping modulo and CIRC_SPACE size leads to silent descriptor overwrites and data corruption.
 > --
 > 
-> --- Patch [1]: [PATCH v2 1/2] perf trace-event: Fix buffer overflow in read_string() ---
-> commit fca4f0cc3071265252215647838a7b30c9c0baaf
-> Author: Tanushree Shah <tshah@linux.ibm.com>
+> --- Patch [6]: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
+> commit bf87fb2cf384d859e1e0efff5d0a48f0cb3ccea2
+> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 > 
-> perf trace-event: Fix buffer overflow in read_string()
+> dmaengine: qcom: bam_dma: add support for BAM locking
 > 
-> This patch fixes a potential stack buffer overflow in read_string() by
-> adding a bounds check before writing each byte into the buffer. If the
-> string exceeds the buffer size, it logs a debug message and returns NULL,
-> matching other error handling paths.
+> Add support for BAM pipe locking. To that end: when starting DMA on a TX
+> channel (DMA_MEM_TO_DEV) - prepend the existing queue of issued
+> descriptors with an additional "dummy" command descriptor with the LOCK
+> bit set. Once the transaction is done (no more issued descriptors),
+> issue one more dummy descriptor with the UNLOCK bit.
 > 
->> diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
->> index ecbbb93f01853..afd458cf1387d 100644
->> --- a/tools/perf/util/trace-event-read.c
->> +++ b/tools/perf/util/trace-event-read.c
->> @@ -127,6 +127,11 @@ static char *read_string(void)
->>   			}
->>   		}
->>   
->> +		if (size >= (int)sizeof(buf) - 1) {
->> +			pr_debug("string too long (max %zu bytes)", sizeof(buf) - 1);
->> +			goto out;
+> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> > --- a/drivers/dma/qcom/bam_dma.c
+> > +++ b/drivers/dma/qcom/bam_dma.c
+> 
+> [ ... ]
+> 
+> > @@ -676,10 +697,51 @@ static void bam_free_chan(struct dma_chan *chan)
+> >  static int bam_slave_config(struct dma_chan *chan,
+> >  			    struct dma_slave_config *cfg)
+> >  {
+> > +	struct bam_config *peripheral_cfg = cfg->peripheral_config;
+> >  	struct bam_chan *bchan = to_bam_chan(chan);
+> > +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
+> > +
+> > +	if (peripheral_cfg && cfg->peripheral_size != sizeof(*peripheral_cfg))
+> > +		return -EINVAL;
+> >  
+> >  	guard(spinlock_irqsave)(&bchan->vc.lock);
+> >  
+> > +	/*
+> > +	 * This is required to setup the pipe locking and must be done even
+> > +	 * before the first call to bam_start_dma().
+> > +	 */
+> > +	if (bdata->pipe_lock_supported && peripheral_cfg) {
+> > +		if (cfg->direction != DMA_MEM_TO_DEV)
+> > +			return -EINVAL;
+> > +
+> > +		if (bchan->bam_locked)
+> > +			return -EBUSY;
+> > +
+> > +		if (!bchan->lock_ce) {
+> > +			bchan->lock_ce = kmalloc_obj(*bchan->lock_ce, GFP_ATOMIC);
+> 
+> [Severity: Medium]
+> Will this leave the reserved field of the command element uninitialized?
+> 
+> Looking at how this is initialized in include/linux/dma/qcom_bam_dma.h:
+> 
+> static inline void
+> bam_prep_ce_le32(struct bam_cmd_element *bam_ce, u32 addr,
+>                  enum bam_command_type cmd, __le32 data)
+> {
+>         bam_ce->cmd_and_addr =
+>                 cpu_to_le32((addr & 0xffffff) | ((cmd & 0xff) << 24));
+>         bam_ce->data = data;
+>         bam_ce->mask = cpu_to_le32(0xffffffff);
+> }
+> 
+> The reserved field is not set here, and kmalloc_obj() does not zero the
+> memory. Could this map and sync uninitialized kernel heap memory to the DMA
+> hardware?
+> 
+
+kzalloc_obj()? This is your bug. :-)
+
+> [ ... ]
+> 
+> > @@ -1064,22 +1145,34 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >  
+> >  	lockdep_assert_held(&bchan->vc.lock);
+> >  
+> > -	if (!vd)
+> > +	vd = vchan_next_desc(&bchan->vc);
+> > +	if (IS_BUSY(bchan) || (!vd && !bchan->bam_locked))
+> >  		return;
+> >  
+> >  	ret = pm_runtime_get_sync(bdev->dev);
+> >  	if (ret < 0)
+> >  		return;
+> >  
+> > +	if (!bchan->initialized)
+> > +		bam_chan_init_hw(bchan, container_of(vd, struct bam_async_desc, vd)->dir);
+> > +
+> > +	if (bchan->locking_enabled && !bchan->bam_locked) {
+> > +		/* Defer locking until we also have space for a data descriptor */
+> > +		avail = CIRC_SPACE(bchan->tail, bchan->head, MAX_DESCRIPTORS + 1);
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does CIRC_SPACE() calculate the correct
+> available space when bchan->tail wraps at 4095?
+> 
+> MAX_DESCRIPTORS is 4095. Down below in bam_start_dma(), the pointers wrap
+> via:
+> 
+>     bchan->tail += async_desc->xfer_len;
+>     bchan->tail %= MAX_DESCRIPTORS;
+> 
+> Since bchan->tail wraps to 0 after 4094, it never reaches 4095. However,
+> CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096). Because
+> CIRC_SPACE() assumes the pointers wrap at the provided power-of-2 size, when
+> the buffer is full (tail == head), won't it incorrectly evaluate the space as
+> 4095 and cause a massive buffer overrun?
+> 
+
+Ooof, this seems correct to me but we can/should fix this separately
+probably...
+
+> > +		if (avail < 2) {
+> > +			queue_work(system_bh_highpri_wq, &bdev->work);
+> > +			goto out;
+> > +		}
 > 
 > [Severity: High]
-> This is a pre-existing issue, but could this error path trigger a double free
-> of tevent->pevent?
+> Can this early return cause an infinite busy-loop softlockup?
 > 
-> If read_string() returns NULL due to the bounds check, the error propagates
-> and trace_report() jumps to its error path:
+> If exactly one slot is available (avail == 1), queue_work() is called and
+> we return. The worker executes bam_dma_work():
 > 
-> tools/perf/util/trace-event-read.c:trace_report() {
->      ...
-> out:
-> 	if (pevent)
-> 		trace_event__cleanup(tevent);
->      ...
-> }
+>     if ((!list_empty(&bchan->vc.desc_issued) || bchan->bam_locked) &&
+>         !IS_BUSY(bchan))
+>         bam_start_dma(bchan);
 > 
-> trace_event__cleanup() frees t->pevent but leaves the pointer dangling:
+> Since IS_BUSY() only tests for avail == 0, the check passes and
+> bam_start_dma() is immediately called again. It sees avail < 2 again,
+> queues the work again, and returns. Could this loop indefinitely in softirq
+> context until a hardware interrupt eventually fires?
 > 
-> tools/perf/util/trace-event.c:trace_event__cleanup() {
->      ...
-> 	tep_free(t->pevent);
->      ...
-> }
-> 
-> Later, during session teardown, perf_session__delete() unconditionally calls
-> trace_event__cleanup(&session->tevent), which will attempt to free the same
-> pointer again.
 
-Thanks for catching this. trace_report()'s error path and 
-perf_session__delete() can both call trace_event__cleanup() on the same 
-tevent, with nothing preventing a double-free.
+Yes, the queue_work() doesn't make sense here. We need to wait for the
+BAM to finish processing some descriptors. Once it has notified us about
+that, the IRQ handler will queue_work() it anyway, so you can just drop
+this.
 
-Fix: clear t->pevent to NULL after cleanup, and guard the function to 
-no-op if it is already NULL, so a second call is safe.
+Technically, the avail < 2 check isn't even needed. We could start
+writing the LOCK descriptor and then wait for the BAM to make further
+room for the data descriptors. I just thought it's a bit weird to queue
+LOCK without also adding some data descriptors at the same time.
+
+> [ ... ]
+> 
+> > @@ -1135,11 +1228,24 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >  		if (((avail <= async_desc->xfer_len) || !vd ||
+> >  		     dmaengine_desc_callback_valid(&cb)) &&
+> >  		    !(async_desc->flags & DESC_FLAG_EOT))
+> >  			desc[async_desc->xfer_len - 1].flags |=
+> >  				cpu_to_le16(DESC_FLAG_INT);
 > 
 > [Severity: High]
-> This is also a pre-existing issue, but does do_read() suffer from an integer
-> truncation issue?
+> Does this cause the transaction completion callback to fire before the
+> hardware pipe is actually unlocked?
 > 
-> Functions like read_event_file() allocate memory based on a 64-bit size:
+> DESC_FLAG_INT is set on the data descriptor here, regardless of whether an
+> UNLOCK descriptor will immediately follow. When the data descriptor completes,
+> an interrupt is generated and process_channel_irqs() completes the cookie:
 > 
-> tools/perf/util/trace-event-read.c:read_event_file() {
->      ...
-> 	ret = do_read(buf, size);
-> 	if (ret < 0)
-> 		goto out;
+>     if (!async_desc->num_desc)
+>         vchan_cookie_complete(&async_desc->vd);
 > 
-> 	ret = parse_event_file(pevent, buf, size, sys);
->      ...
-> }
-> 
-> But do_read() takes size as an int:
-> 
-> tools/perf/util/trace-event-read.c:do_read() {
-> static int do_read(void *data, int size)
-> ...
-> }
-> 
-> If a maliciously crafted perf.data provides a size larger than 32 bits, the
-> size is truncated when passed to do_read(), causing it to read fewer bytes.
-> Since read_event_file() only checks if ret < 0 rather than verifying
-> ret == size, it will pass the large, mostly uninitialized buffer to
-> parse_event_file().
-> 
->> +		}
->> +
->>   		buf[size++] = c;
->>   
->>   		if (!c)
+> Could this notify client drivers of transaction completion while the UNLOCK
+> descriptor is still pending in the hardware FIFO, allowing clients to modify
+> state or power down the device prematurely?
 > 
 
-Thanks: this is exactly what patch 2 fixes. Widening do_read()'s
-size to size_t removes the truncation, so it reads (or fails on)
-the full 64-bit size.
+Yes, but the client driver should be only concerned about the completion
+of its own data operations, the lock handling is transparent and
+internal to the BAM driver IMO. "Works as intended."
 
-do_read() either reads everything or returns -1, so callers only need to 
-check ret < 0, no ret == size check needed.
+> [ ... ]
+> 
+> > +	/*
+> > +	 * Close the bracket once there is no more client work queued. The
+> > +	 * UNLOCK is flagged for an interrupt so process_channel_irqs() is
+> > +	 * guaranteed to observe its completion and retire it from the FIFO
+> > +	 * promptly, instead of leaving bchan->head to lag until a later
+> > +	 * bracket's skip-loop catches up with it.
+> > +	 */
+> > +	if (bchan->bam_locked && !vd && !IS_BUSY(bchan)) {
+> > +		bam_fifo_write_lock(bchan, DESC_FLAG_UNLOCK | DESC_FLAG_INT);
+> > +		bchan->bam_locked = false;
+> > +	}
+> 
+> [Severity: High]
+> Is the software lock state cleared too early here?
+> 
+> We synchronously set bchan->bam_locked to false immediately after placing the
+> UNLOCK descriptor into the software FIFO, before the hardware has actually
+> completed the transaction. 
+> 
+> If a client then calls bam_slave_config(), the -EBUSY check for
+> bchan->bam_locked will pass, and the driver might overwrite bchan->lock_ce
+> or configuration registers while the hardware is still busy processing
+> in-flight descriptors. Does this violate the mutual exclusion requirement?
 
-Thanks
-Tanushree Shah
+It's true, but I think this can be ignored. That's why I didn't even
+have the -EBUSY check in my diff. bam_start_dma() already re-configures
+the channel in the middle of a transaction (if bchan->reconfigure is
+set), so that one will already make changes to in-progress descriptors
+anyway. It's a bit problematic though that we don't provide a way for
+clients to wait until the unlocking has been completed, so they don't
+have any chance to avoid affecting ongoing unlock operations from their
+side.
+
+Or you just disallow changing the lock_scratchpad_addr once it has been
+set. Whatever. I don't think anyone will ever use multiple different
+addresses there.
+
+Thanks,
+Stephan
