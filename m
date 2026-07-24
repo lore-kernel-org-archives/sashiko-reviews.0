@@ -1,54 +1,67 @@
-Received: from send77.i.mail.ru (send77.i.mail.ru [89.221.237.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DB74908C9
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 01:41:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917DD2E7365
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 02:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784857321; cv=none; b=WUdU/1gKDuM/6TIzHIe3JGa8SLnqFdHrNqZUbWj8R15hBNhceEZ0KC29kgKqEKc95CmwvmcqnU9LpJ+tbWYtAjeN0Lb6C2w/tPYim6AnopVRJYy5RYZJTEdchOswlLhP8kc6fS2G5Y/Gp1n3ZmO7pmA7N3vG7gTPotnWDNOXHEA=
+	t=1784858844; cv=none; b=g0d4XZxjudjJCihq+MXJjm7r1yxdInPv46/El7aU3aQobDqI5UE6a5jPK/VrlpbIY5Bjr2mWYN7rPWt4GpacSYefg3q+nXhVV2ttAd8h8vG12C6TnIOav7ghMo5eWuQpgLryuY5FBKx9gxU+aeEWVMVdYCIX+L5615fLY6UhUCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784857321; c=relaxed/simple;
-	bh=ZTZuczL7bR6ZaabTmYfEZFlCA7qMCcVZfZ3sEnigjLc=;
+	s=arc-20240116; t=1784858844; c=relaxed/simple;
+	bh=zcIh3xhJPfZul3vgF+1M9u53SutSZDLGPVP9Rpe9+8M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GIrma1rNIT6znWCcME3f/EW0C6HZp9EGcWkEYm3eOeVSAGcIZljlwHaAfbDJlu4oygo4o9qTHcFBRG/hHlncneLeyI0wAmLhNQVqDrjgWOSZD59l1fTaGUmZ/uc/Ry7GcTHo2eQx7P5t4RvyvjUq3O5OLmZA/W8etNWPZ3yBErU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=Pa9UvHGq; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=l0aW8sU5; arc=none smtp.client-ip=89.221.237.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	 In-Reply-To:Content-Type; b=EN7pZlbetcpgJ2smzuf8pbcdhWNEq/N87cgkZhHyun3OL+xBgfRgfNPZ+nn2Pgzlbw4nsCvs/1rV7OYipUO1+vMY9TS1uPKx9KHGAbRXEHsh+uFvFr2MeteIZMhGSa9J29LjE9GnzFmcC2FGE1OM2ryBPXW1YGfnKOYHlgzEaoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4KgeO8E; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="Pa9UvHGq";
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="l0aW8sU5"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References
-	:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=j+rTBjvvJbBmTAgdLYH8bPZosoB3irkIFNFBNf7jX0A=; t=1784857307; x=1784947307; 
-	b=Pa9UvHGqzKSPRTDrW0yqtGMZmR++yyiqwIizIgwZ+EZQmYRlX2AAUPt8GpyQE4UWII/Mc68m/VQ
-	nWH8C/g/IZvcTERRhoDxmmuCx0FhYToQvkHySqQlC+9L3BhnfDiJTvok8yCydsMcpbJY0vEPhgJGq
-	Ot8hjtq1a5djGNIi1ljGG1QdP+d8lnvMzpFXPPL4Uq4AHTKtP0YYzk/0sKwsUspVmXSFV7lfzJBDf
-	CLYJ99aXhvwqXIrTZzz9dKLoBHcZJJcy9GHU4HuUQOjtSODkWZ0pvEE8CA4j50rouIGheH4vc6fs9
-	M5x8AGjWMor4ffm2ouQpNrSdo5A8Wyz5f8ZQ==;
-Received: from [10.112.225.91] (port=36286 helo=send126.i.mail.ru)
-	by exim-fallback-5cf4fc9bf6-6664b with esmtp (envelope-from <listdansp@mail.ru>)
-	id 1wn4gN-00000000JND-2L3b; Fri, 24 Jul 2026 04:26:35 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
-	Disposition-Notification-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids:
-	Disposition-Notification-To; bh=j+rTBjvvJbBmTAgdLYH8bPZosoB3irkIFNFBNf7jX0A=;
-	t=1784856395; x=1784946395; b=l0aW8sU5IIeNbSzV98sfoL0HyJTKLjRh5GDGs5RcPsBLUrF
-	PD2/6bGiOfdgub0p8y8RWKmDdd2Lq64i+Mwx+HpAXqIwSQw1ZfdiodPyiEGzh58hPUr0Z8OOY4fDo
-	CuGTjAmIr+o1Gw6OQX+m+u6imAQTtr1nZYNXbJbMJwfbaSShCyHWCAq4N5cT2BuiJjVKMdHp1CRL4
-	hfExWKzKhORA2Ynz1kiO++MreomuBazSgaPhGDgbYD7mOtrFMrfWver5LOy+fDuzB1tolhc7DwIFP
-	znJ7Qb9ksJU6QJDlB90MKkoyRdWRa+V1c83etsb9QN2XXZXxD2Xqi1wVU/EBQfhA==;
-Received: by exim-smtp-6c76488b9f-v4n2g with esmtpa (envelope-from <listdansp@mail.ru>)
-	id 1wn4gE-00000000Cxm-1HGT; Fri, 24 Jul 2026 04:26:26 +0300
-Message-ID: <ad3d5028-bd40-4003-859b-104eb12f0292@mail.ru>
-Date: Fri, 24 Jul 2026 04:26:25 +0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4KgeO8E"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso1725444a91.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 19:07:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784858842; x=1785463642; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Dl8tyxT4KPIKqu864RkA+VQDYik03yogsDeWzT/nylM=;
+        b=l4KgeO8E0s0X1Qo7sX0bA+JJDJw0R0jLucH+2LodK/dUgm94W+/aQoSnIEiuCZu+wv
+         q4Qt3Rb+LVBRSZI0s1Jl8ERRBnqPSGGhuVQCwfR5yicie3iuDPxcJa0KqTjl/i3hR2+I
+         8AWZuJ/EzR8dqjCC7SZkcDFlIPTlpGYDNZxKfJxLkxUkMpQ7mbIVHoGbe5otsTMez+G5
+         YVuTG0FsUGOdIYP8+hUy/+izBEQlmhZfXNVqIQbIQcHpizKemhIj1CnLQ5Ni3gmncZkm
+         aR+VJnfwz+VIKeyr5tcs7Giil5MbfL6bFAsyq5faD4p6/+HsCPtrXFc7mttCGiiNckPn
+         9Gcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784858842; x=1785463642;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Dl8tyxT4KPIKqu864RkA+VQDYik03yogsDeWzT/nylM=;
+        b=OMro3JX6ZXYFqnh0e1/QDs6ASt0tOWjbMVLfoYywDn6XlSAtq5GAzW0Y83yvZX+7Uu
+         5rgFw5TtT4JLMfKFppymYm6GgaeewwFZwOmusFsy8n3RbGHKRizMcOdUWir5/HwCJxd9
+         37zNMDd263KINTXcIGX3+r5++OGa+dQOpNIaiA1JdfJZeVFw7iFkC/5XVoWaHGv92GH9
+         iKqiWFzQKr8vu1HmTjCEkKNAn9dR3iNlmL4oAdbS6MNBX6anlLqN2qdxw4wlM9RscZw0
+         GRi6CSvejChcoNRM8WN7JhEkqbKg42q1b0iMeRwDAqBMO+CYNxzXvJbrGDN4R6A8XCe4
+         ZWMg==
+X-Gm-Message-State: AOJu0YxZ/1ZPsaYe33B+kBkmP+BfUy+BIzV+eJhKkIQG/W8mG+uNH3sj
+	LXr4l+hg6bpREWNn4E+SDaelA9F0dhLzbNv4N4ZQ7LQjKUR4X3x1Kkgkv9hjpQ==
+X-Gm-Gg: AR+sD10FAZPArFQurJAdHrKlpZbzNtNa2dQxaImN+RfdASetLgWyVJX3XI8e1V7jFsM
+	I1sHj2nkD1hvMku7A1lVm8pyfhntUv3uncaJnlwJLags/nnKbUqIvdWguhbhO2r1CqBDIW1Gw8m
+	varTFzKx8Avfsyb9g6p9HyKqoNOg8IgzV7ksH7SAkl91ZSVt9u30YBy6vdKl9AAAVqV1/V5mHyV
+	PPB2gPI4sDDgrOh32KHnPj1uEYXq//Mdajcj3lYIUabIP3Dq52nlLQ4WGNYVi+A0DtSD+FePNsQ
+	0KJ/zkrPE9tPa3oSJowvnaISESZobytwuU8dVYNO6C3cAlOtCWUxL9pRkq65YDqaOvqPk0uDkYs
+	2NG4SClEHk/kbW9bnEwo915my1CUG3vEIOfEpzAUEdibnsliFLx2o92sswm+IZW0KSKlkDQsmLY
+	s3IxXNSwiPgsEpx+87FgfwQXC6lElTu6aHQbwVG+uIXC8evH7cN/A=
+X-Received: by 2002:a17:90b:4c12:b0:37f:c2a8:ce45 with SMTP id 98e67ed59e1d1-38ec6539535mr5383662a91.4.1784858841861;
+        Thu, 23 Jul 2026 19:07:21 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf9bfbf725sm33637515ad.36.2026.07.23.19.07.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jul 2026 19:07:21 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <b5c0741a-b9da-4a3a-81ae-33368e6dd756@roeck-us.net>
+Date: Thu, 23 Jul 2026 19:07:20 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -56,115 +69,121 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] video: fbdev: kyro: Validate overlay viewport coordinates
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260724004245.86764-1-listdansp@mail.ru>
- <20260724005423.86F621F000E9@smtp.kernel.org>
-From: listdansp <listdansp@mail.ru>
+Subject: Re: [PATCH v5 3/3] hwmon: pmbus: add MPQ8646 driver
+To: sashiko-reviews@lists.linux.dev, Vincent Jardin <vjardin@free.fr>
+Cc: linux-hwmon@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260724-mpq8646_v0-v5-0-5915b5ae9aa2@free.fr>
+ <20260724-mpq8646_v0-v5-3-5915b5ae9aa2@free.fr>
+ <20260724000643.E60C81F000E9@smtp.kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260724005423.86F621F000E9@smtp.kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260724000643.E60C81F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD93ED3C6BF6FFA701F0B3D367FDA022B560160F5E35392B611182A05F538085040A52A1D80DEFEC40A3DE06ABAFEAF6705ABCD3C3B00A6A8428391D7A76C0DDF7159F445DFCDA6A35E
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE720D3C300AFAD2243C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6759CC434672EE6371C2A783ECEC0211ADC4224003CC836476D5A39DEEDB180909611E41BBFE2FEB2B425B3C7DD974D21E5E1F8FF95E2FD3B9ED1E5CAC265509CA534BCE5480F527A50C819B32DFABC24A725E5C173C3A84C3C06EB4A85EF71DCC117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC3A703B70628EAD7BA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD1828451B159A507268D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE1E561CDFBCA1751F1B780A39BCC1DD35D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE386A7C529F68B8E5C302FCEF25BFAB345C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F790063755F431A9070C6492EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-C1DE0DAB: 0D63561A33F958A58915208F695EC02C5002B1117B3ED696B41D1B265706B7FB484B8D70797403F6823CB91A9FED034534781492E4B8EEAD0942DC5495D0595EBDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659BD2DE12799FD87AD81FB97722110473B1737BFF5F8541112407CC042BEC098F3A7FA443BDB71D33AB8341EE9D5BE9A0A8D72C03768569D62BB30523EDBFDB6A99613692593E06B5E8CD93680B12512CF4C41F94D744909CE04437D853D7CD20871FE3B1D98EC473624A389F0E278DBF4
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVWmxowtcrDwU1EZWE20ilR4=
-X-Mailru-Sender: 4CE1109FD677D277C46683902DBBBB3CD47F6A1C8DA1D5D03DE06ABAFEAF6705ABCD3C3B00A6A842977EED7048DEDC7C8A08967417F2D5E3FB559BB5D741EB96C31AF20DAA089319D7A14DD9E34ECE7467EA787935ED9F1B
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B486472E5A48B460E48232B7BA1535077BF331AF1FE98FC1A6049FFFDB7839CE9E426FEB9BE7554530CCD57DFE5C6D5DDACBEF06E8C94DC2A399E8AE2CC53E203EF1DB84A0EC7C93B9
-X-7FA49CB5: 0D63561A33F958A54B97C676AD7294855002B1117B3ED6969C43858CBE0D4DA4518C0FB0186044C402ED4CEA229C1FA827C277FBC8AE2E8B3A00E10D64C8961C
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZS7ynJiCIcBVY/KWOxlKa9g==
-X-Mailru-MI: 20000000020000000000000800
-X-Mras: Ok
 
-On 24/07/2026 03:54, sashiko-bot@kernel.org wrote:
+On 7/23/26 17:06, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Missing validation for ulHeight == 1 causes a division by zero panic in SetOverlayViewPort.
+> - [High] Stack variables passed to i2c_transfer() can cause memory corruption or panics with CONFIG_VMAP_STACK.
 > --
 > 
-> --- Patch [1]: [PATCH] video: fbdev: kyro: Validate overlay viewport coordinates ---
-> commit eccd0fc9ac01567bf3583eb92ff9c8b899a5e6b3
-> Author: Danila Chernetsov <listdansp@mail.ru>
+> --- Patch [3]: [PATCH v5 3/3] hwmon: pmbus: add MPQ8646 driver ---
+> commit 1098fecfca1c29b33a174b200465134bc5be4be8
+> Author: Vincent Jardin <vjardin@free.fr>
 > 
-> video: fbdev: kyro: Validate overlay viewport coordinates
+> hwmon: pmbus: add MPQ8646 driver
 > 
-> This commit adds coordinate validation in kyro_dev_overlay_viewport_set to
-> prevent 32-bit wraparound before passing the values to SetOverlayViewPort.
-> It explicitly checks for overflows when adding dimensions and restricts the
-> adjusted coordinates to fit into 16-bit register fields.
+> Add a new single-chip driver for the MPS MPQ8646 that is a PMBus device.
+> The driver adds extended bits decode, alarm acknowledge, gate-close retry,
+> and an in-driver alarm-poll fallback.
 > 
->> diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
->> --- a/drivers/video/fbdev/kyro/fbdev.c
->> +++ b/drivers/video/fbdev/kyro/fbdev.c
-> 
+>> diff --git a/drivers/hwmon/pmbus/mpq8646.c b/drivers/hwmon/pmbus/mpq8646.c
+>> index 0000000000000..f8dfabef09df3 100644
+>> --- /dev/null
+>> +++ b/drivers/hwmon/pmbus/mpq8646.c
 > [ ... ]
-> 
->> @@ -378,11 +381,30 @@ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight
->>   	    (x < 2 && ulWidth + 2 == 0))
->>   		return -EINVAL;
+>> @@ -187,24 +187,24 @@ static inline struct mpq8646_priv *mpq8646_priv_from_client(struct i2c_client *c
+>>   static int mpq8646_raw_xfer_rword(struct i2c_client *client, u8 reg)
+>>   {
+>>   	u8 cmd = reg;
+>>   	__le16 data = 0;
+>>   	struct i2c_msg msg[] = {
+>>   		{
+>>   			.addr = client->addr,
+>>   			.flags = 0,
+>>   			.len = sizeof(cmd),
+>>   			.buf = &cmd,
+>>   		},
+>>   		{
+>>   			.addr = client->addr,
+>>   			.flags = I2C_M_RD,
+>>   			.len = sizeof(data),
+>>   			.buf = (u8 *)&data,
+>>   		},
+>>   	};
+>>   	int rc;
 >>   
->> +	/*
->> +	 * SetOverlayViewPort() adjusts X coordinates by +2 (left) and +1
->> +	 * (right) before packing them into 16-bit register fields.
->> +	 */
->> +	if (x > U16_MAX - 2 || y > U16_MAX)
->> +		return -EINVAL;
->> +
->> +	right = x + ulWidth;
->> +	bottom = y + ulHeight;
->> +
->> +	if (right < x || bottom < y)
->> +		return -EINVAL;
->> +
->> +	right--;
->> +	bottom--;
->> +
->> +	if (right > U16_MAX - 1 || bottom > U16_MAX)
->> +		return -EINVAL;
->> +
+>>   	rc = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this validation block still allow a
-> divide-by-zero panic if ulHeight is 1?
+> Can this cause memory corruption or a kernel panic?
 > 
-> If a user passes ySize = 1 via the KYRO_IOCTL_OVERLAY_VIEWPORT_SET ioctl,
-> ulHeight will be 1. The code calculates bottom = y + ulHeight, then
-> bottom--, which results in bottom == y.
+> I2C adapter drivers often use DMA for transfers. When CONFIG_VMAP_STACK is
+> enabled, the kernel stack is not guaranteed to be physically contiguous.
+> Passing stack-allocated buffers like cmd and data to DMA-capable APIs
+> like i2c_transfer() will cause dma_map_single() to map incorrect physical
+> memory.
 > 
-> When these values are passed to SetOverlayViewPort(), it calculates ulDest
-> as the difference between the y coordinates (bottom - top). Since they are
-> equal, ulDest evaluates to 0:
-> 
-> drivers/video/fbdev/kyro/STG4000OverlayDevice.c:SetOverlayViewPort() {
->      ...
->      ulDest = srcDest.lDstY2 - srcDest.lDstY1;
->      ...
->      ulFxScale = (ulDest << 11) / ulSrc;
->      ...
->      ulSrcBottom = ulSrcBottom - (ulFxOffset / ulFxScale);
->      ...
-> }
-> 
-> Because ulDest is 0, ulFxScale evaluates to 0. The subsequent division by
-> ulFxScale then causes a kernel panic.
-> 
-> Should ulHeight == 1 be rejected alongside the ulHeight == 0 check earlier
-> in kyro_dev_overlay_viewport_set()?
+> Although this is triggered via debugfs, executing it on a DMA-capable I2C bus
+> could reliably crash or corrupt the system. Should these buffers be dynamically
+> allocated instead?
 > 
 
-Thanks for the review. The reported division-by-zero issue is pre-existing
-in the codebase and is completely unrelated to my changes. This patch does
-not introduce, touch, or modify this logic.
+Do not address. This is a false positive. Sashiko's I2C subsystem prompts
+need to be updated.
 
-I request the maintainers to review my patch as is.
+Guenter
 
-Best regards,
-Danila Chernetsov
