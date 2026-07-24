@@ -1,118 +1,94 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E456D43B48C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7C333A708;
+	Fri, 24 Jul 2026 14:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784902670; cv=none; b=MaKvZTDPIoIhdGYe1ehsVRE/vIRhfp3UdCQMVu1uXbEh5PqdTwmuW4BtSTrBggCL8vdOodQgglBUM4in2Ik76ZBYjcuBma9nUpVYoU1/xEiHa8BQy+4no5Gu1AQm2bbyZirQMXG/YqwuLjPCOT1YrtT5q9s0oQt14g6WT4FrQYw=
+	t=1784904523; cv=none; b=Ocn31U+GsvxYAE+vMoxIUM603CYCgrGDd1YiEyAY9mMo7T7RDWu8yF6WM77hASxc6VR5gPs7JyG3k+hiS7fPdxRlb0/Sv5pbteUZqul8GR/GtovLi83LO6eEef70XAoqCeScCX3ZCGs159+dwTgvoCP4mAZVvg+0k+SZMYckh+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784902670; c=relaxed/simple;
-	bh=T1dEe887YGwkSGBYCL8OCm1bYB3uZYn2VnNicEm6I3Y=;
+	s=arc-20240116; t=1784904523; c=relaxed/simple;
+	bh=BtLEnFxDeCfVkq6UHh61G86yZqBZ6PpOtZ2/vLvllTI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TkjJpYkaGJ6BaOOxaAn2uGHVYZ2RRMj2YdKl71rCD1lJkGziJaES9IGvI4TnbNNsjmEMj0L3EdI7V6AyGCwcQE2h0WsJ4PiPgDca2fu5rWwFlDzan2ncnb3N6qGxzUex8gNNLmwS3hZAPhot7h93mtwzXiU1nGqOsH6pdKTPoTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ZOBNC/Ob; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=UNr62YHpz3Sk/9b3k6NUA7kfRz5+siZD9ku9ln1q6S+r60VSHOvpSBkStj0bFlbAqF70ewPFqHs15byFDik6GeXL0Bxz2oCH5RBfUH9LPBtH7MGNMmgJQ4ED5Voz5Mb/rr2p3vHUYRSfBsQNJw8PnY0qRknXzOqojSNY9wFTxwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fDjj/cz/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ZOBNC/Ob"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 24FD44E40F2F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:17:46 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id EDB2560395;
-	Fri, 24 Jul 2026 14:17:45 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0E4F711C125CC;
-	Fri, 24 Jul 2026 16:17:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1784902665; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=Dpad6KFFOxb0OhI/jcF0z2hVpKmWQo/vxob+Tyqda9c=;
-	b=ZOBNC/ObA6F+BduV6KBAiIbq+vmmktfQwkXfKRLXpnJaz82FcA4S4P5vYmazR0Y4h20tgO
-	6IbKKSr3Rj1mcU6/7Gf7PrnVT+VC8fQDqLS6ixI7UWgXAVu7xzqdwYBjyX+MhV1Cjx2HNU
-	LPE6htxK3uzvCt3DLrOOENOF/VIxzw2ZqVvCRfaa2vFUJDmQnebLrvKRxbZ6NBtIiMPMLG
-	4mO0Bud/axsuHzpkJwFWbjMDlpmK++LYyHAMo4I9ugiHUTeIhAomN4ccUwysfW3QFS8YTa
-	fiZBvWf1FLq8AOWqSdAdIhwB4Z2E+XnBU3+243pVlM0/JFUpmkIzzyPCLWvN4A==
-Date: Fri, 24 Jul 2026 16:17:44 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fDjj/cz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFC21F000E9;
+	Fri, 24 Jul 2026 14:48:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784904521;
+	bh=HZ+iuQadXt8foEnd9zgclkwjEUMJTFr3yvCZwnccZJs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fDjj/cz/6IxzX+OYExNr02LzrhqzOWPj19th7ol4wFoTtdl7WUqSLTVTkz04jivI9
+	 U+FlSPeKN4kpEO1j5OqS5K6uWuYZOU3t+LIQ/X3nAUE09m5ZxUyMep1xggX1+Uz5zV
+	 yP9lXOQuHHID0SwWNV6YKRvo+h9TT4aNvQJnZJrnW+YkUJbFuZFA3iMseIa2Eneb3r
+	 9ULwzJ0eeU46v/ucMowM+X8VYaojbj3YsMxRW7NN6rd7G4sVukZkTykbawn+3G9O/9
+	 QQ1eACW0MYkWHKAJokvq2m26Mi+83hvQGFsfvHsZ9qaFrnHrqY6Q8rkux4PHuVXbjM
+	 MRALJU8h5o09g==
+Date: Fri, 24 Jul 2026 16:48:34 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: kr494167@gmail.com, linux-rtc@vger.kernel.org
-Subject: Re: [PATCH v2] rtc: spacemit: handle regmap_test_bits() error return
-Message-ID: <202607241417442690eba3@mail.local>
-References: <20260724135803.81223-1-kr494167@gmail.com>
- <20260724140633.8FED41F000E9@smtp.kernel.org>
+Cc: 
+	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v8 1/5] PCI: dwc: ep: Clear MSI iATU mapping in
+ dw_pcie_ep_cleanup()
+Message-ID: <mvqftbpuuchbv7ovwkqt4ff4zaav2gdmbpkshlfrj6cg7kcrut@e5c3fezk3nvc>
+References: <20260518-pci-port-reset-v8-1-eb5a7d331dfc@oss.qualcomm.com>
+ <20260518160413.E8BCEC2BCC7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260724140633.8FED41F000E9@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260518160413.E8BCEC2BCC7@smtp.kernel.org>
 
-On 24/07/2026 14:06:33+0000, sashiko-bot@kernel.org wrote:
+On Mon, May 18, 2026 at 04:04:13PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The RTC time read retry loop in `p1_rtc_read_time` is vulnerable to a torn read (time corruption) if a time roll-over occurs during the register read.
+> - [High] dw_pcie_ep_cleanup() modifies the MSI iATU mapping without holding ep->epc->lock, introducing a critical race condition with concurrent EPF interrupt requests.
 > --
 > 
-> --- Patch [1]: [PATCH v2] rtc: spacemit: handle regmap_test_bits() error return ---
-> commit a044092d776fab1e96ae2f8b48ace64aa0ab2325
-> Author: Surendra Singh Chouhan <kr494167@gmail.com>
+> commit f01add14b7c42730aa5b71bb56cc8682eb2fa21a
+> Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > 
-> rtc: spacemit: handle regmap_test_bits() error return
+> PCI: dwc: ep: Clear MSI iATU mapping in dw_pcie_ep_cleanup()
 > 
-> p1_rtc_read_time() called if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
-> to check if the RTC was enabled. This evaluates negative error codes as
-> boolean false, causing read failures to be ignored. Fix this by capturing
-> the return value of regmap_test_bits() and returning the error code.
+> This commit clears the MSI iATU mapping in dw_pcie_ep_cleanup() to avoid
+> retaining a stale MSI iATU mapping after a fundamental reset triggered by
+> PERST# assert/deassert.
 > 
-> > diff --git a/drivers/rtc/rtc-spacemit-p1.c b/drivers/rtc/rtc-spacemit-p1.c
-> > index 43ab62494bb4b..1de7bd995d296 100644
-> > --- a/drivers/rtc/rtc-spacemit-p1.c
-> > +++ b/drivers/rtc/rtc-spacemit-p1.c
-> > @@ -57,8 +57,9 @@ static int p1_rtc_read_time(struct device *dev, struct rtc_time *t)
-> >  	u8 time[6];
-> >  	int ret;
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > index d4dc3b24da607..4ae0e1b55f390 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > @@ -1035,6 +1035,11 @@ void dw_pcie_ep_cleanup(struct dw_pcie_ep *ep)
+> >  {
+> >  	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
 > >  
-> > -	if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
-> > -		return -EINVAL;		/* RTC is disabled */
-> > +	ret = regmap_test_bits(regmap, RTC_CTRL, RTC_EN);
-> > +	if (ret <= 0)
-> > +		return ret ?: -EINVAL;	/* RTC is disabled or error */
-> >  
-> >  	ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
-> >  	if (ret)
-> >  		return ret;
-> >  
-> >  	do {
-> >  		seconds = time[0];
-> >  		ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
-> >  		if (ret)
-> >  			return ret;
-> >  	} while (time[0] != seconds && --count);
+> > +	if (ep->msi_iatu_mapped) {
+> > +		dw_pcie_ep_unmap_addr(ep->epc, 0, 0, ep->msi_mem_phys);
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does this loop correctly detect time
-> roll-overs that happen during the read?
+> Is it safe to modify the MSI iATU mapping without holding ep->epc->lock here?
 > 
-> If a time roll-over occurs during the second regmap_bulk_read() in
-> p1_rtc_read_time(), specifically after reading time[0] (seconds) but before
-> reading higher units, time[0] will match the seconds from the previous read.
+> dw_pcie_ep_cleanup() can be invoked asynchronously from reset/link-down
+> threaded IRQ handlers (e.g., qcom_pcie_perst_irq_thread() calling
+> qcom_pcie_perst_deassert()) which might not hold the endpoint controller lock.
 > 
-> This would cause the loop to terminate early and accept the newly read time
-> array.
-> 
-> Could this return a torn time from the RTC (for example, 14:00:59 instead of
-> 13:59:59 or 14:00:00)?
+> Concurrently, an endpoint function driver can attempt to raise an MSI
+> interrupt via pci_epc_raise_irq(), which acquires ep->epc->lock and invokes
+> dw_pcie_ep_raise_msi_irq().
 > 
 
-While this is a valid concern, I guess this RTC latches the registers
+False positive. Before dw_pcie_ep_cleanup(), both threaded IRQ handlers are
+calling pci_epc_deinit_notify(), which should ensure that all EPF drivers are
+quiesced as it happens for both epf-mhi and epf-test. So there is no way the
+EPF drivers are going to raise MSI to the host triggering race.
 
+- Mani
 
 -- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+மணிவண்ணன் சதாசிவம்
