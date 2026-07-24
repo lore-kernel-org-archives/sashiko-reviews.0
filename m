@@ -1,67 +1,30 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6546F3515C3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 03:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDFD35201A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 03:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784862157; cv=none; b=bVdhneKryjSO7/BlF8h5sph+Ww7GV0Nf1PQjb+Qgizjz8TNnNikdTqdSfoUuSBtwBMizGOL0pAkgsP7dS2JnVTex78xoke/GTGPbX9b89X/b7EPqCJYsjbIpR/kuxKtQAJcc0cONs9WPd3B0mMNTY51w+ixCPJMSoNsJeDVGqUg=
+	t=1784862905; cv=none; b=qSF7eqylyxFSC2FcjKSK/qJphPuqqMbg0+9le1wkz/niShFe06a7kcd59nrYGPI96mde92md+lUET0R6SOdSyYu5sES4F3g0KpU3KRWM+iOSGw/LL6Wvk2UW0wqJGh5WwtafdTH89IQYVxh47ZuDvXu069oLB5MozGpxVocCpMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784862157; c=relaxed/simple;
-	bh=smtf8VNOiQMzPOx2DVjKWqX6awaP+z2c9Z6pSOrWk4U=;
+	s=arc-20240116; t=1784862905; c=relaxed/simple;
+	bh=/zzxxtBz/YcFxzyJw0I8LJiPVv+Tc7Dzp9NULhkpg88=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HowZoO+ukvkOc3iLV18C9/FpA+T6KvVoAbz1BlAB4LIKBZ6zRo/tnnUUDxE/BHMu3KzRiRfuewgZ1Flb4rkqkY9MQvrzUpImMKoM6nZQhrpBA4fYI3iBuUUAa1hHKwBOVm2eY/uGjGYLOJlAHUKIY1NqThcqvBDq6R0J4k7qAZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EchuSECt; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EchuSECt"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so1346872a91.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 23 Jul 2026 20:02:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784862156; x=1785466956; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UhdrzuAFVWOLh5OB3PTlI2JCVV55wYF4HPgrAV9GcOo=;
-        b=EchuSECtl4eRCLlYj6L/gF+zFv+n8bF+1YrziIoFrzlKme+y3CV4HJdep3rINUJ2wj
-         yfSJoHUctsUt1zxk9kxO8zoumpa7Cn6W5sxrBTop6vqAeSi26UDwymNLzZvp0Ozs5NW4
-         Y1KdNPKAwpwh8dA9QbABkftVI7s4lEyv5NlFGRQPvivdgrJH/+zWi0v1IwtgMtF5z4fO
-         T8jir0JyCCSREiR5ikbInFciOH2ZnZAhxgNi+WY6hyZdmm7pvvnnpPgEL81KBqHYeZjj
-         75PaFB7zH6hzG531arwUY5JjxYkJ/NIzYowd6wm0l2tooYWql7tnabruhy0tY4VCgmMr
-         65EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784862156; x=1785466956;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=UhdrzuAFVWOLh5OB3PTlI2JCVV55wYF4HPgrAV9GcOo=;
-        b=fLoST32cIyfZH40o7WTzUgkvzdzDjbWnGi2ZaknrVd5SfjVUzUeI7r+HJj+gCUM8sR
-         f2zcwdrMIdIjP2gxbsZRBgtPArOSOiip9Yep2KRcspXZTxpGj5GF3SuM//0W8X3Wp3Pr
-         Z4OVH6H4JAsftuQJxeZ4bJC1IlMHoznfWYSzuD89hwKs5VdHw4QQcQShXO96hn8w+vot
-         WOB+vlvI0qs8Km5gMsI9g12sXjOaykNSmeFasgxmkBKn3v+OzbtDrc81joB3IjZr9e4e
-         CjM8Ct1TW94UrdAm8lUQZnYTdxie3EH4uRjqTI2MH0Jt1cS2X0hYuXxkISZd2fZCmt48
-         cWYw==
-X-Forwarded-Encrypted: i=1; AHgh+RrzDwNkvuTrkEyqg1IK3Yl9hRjW4HQRfB5fDRkaKvb8xt7hLYMAE3zFBSI90VSl8UDDvdAjRexGLMxzmGdwpYA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxEWWOuPbspU+2xeb4ebe0qED69Is5vpylde9YInSdz+43F3vje
-	31EqIA2Ax7ZZNYL+FrUGX7oEUzIGczmboROtgU9LChIvcbvdqTMAnzg2
-X-Gm-Gg: AR+sD10bKgKBLeCPm5OBmqR1bBYDqasc3yoPqJXzOtw07OkAy/LuG5cM+j29bqtSnBE
-	nVg5g5Szl+y/nsGq5ge2WgLp52J03gWIyxUzM4isl5TdSsNxm2jiTSzH1y6MzPa1woPkfj43txl
-	bykW/stLOcYqE3L5GHnPGlCbgTKdrYkZ8S9HrjHhkr7hJESx9Glkj668PT7bI1yauuX9emeSBF1
-	rS9IzesHE6yrvJiQYvzYvVcuHuREY2CmFd1GRiBtRX3Dcuv8YNQgq1we2yF3HfB514b+fQGjECS
-	2Pn7Zlw5WpdxjsOKIohHkCr2glHJJ05bCcsZN5JW9rQFnWzti3JPhWnqq24SA1DMIanX6/qxLmW
-	26mJ03fusRjNudmq6NUU/coT2za5/KCoY0Jag9q+THinTUHT/r5nBgFZ5MoZwqntlEnSe3ERBf8
-	CNiBU7vWAAdC2SpCXqVg5En/jvmh9VZdfJ82Mzph//guAEi3gEay/8ZFCrAjaX
-X-Received: by 2002:a17:90b:3d43:b0:389:8f6c:4d58 with SMTP id 98e67ed59e1d1-38ec6618585mr6340998a91.34.1784862155701;
-        Thu, 23 Jul 2026 20:02:35 -0700 (PDT)
-Received: from [172.19.1.48] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f03b0f591sm731078a91.7.2026.07.23.20.02.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jul 2026 20:02:35 -0700 (PDT)
-Message-ID: <041218b1-4d7f-4fbe-ba0d-5d97bf0df6b5@gmail.com>
-Date: Fri, 24 Jul 2026 11:02:32 +0800
+	 In-Reply-To:Content-Type; b=AD3mqyYlmmW1wA+lBD+WFX67Gvvz4mhMr2U1oyUQOdD0zUoI7In+IUpBz4EGxphuV4bA/p4NVyP4GVLEWvRuYL6QRiqlJAzCBu9ohYiqsvQB6HFzydN6vr38f9R1rP50+hYYrSmkbuQGz9XwalYb9OwPA+zqeleDhx4ffiTNFSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h5tPv0NtHzYQtGV
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 11:14:27 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id CC12A40592
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 11:14:58 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBHdlex2GJq7iBmCQ--.5168S2;
+	Fri, 24 Jul 2026 11:14:58 +0800 (CST)
+Message-ID: <50542597-a7b3-40db-a680-fcca0f8b98cd@huaweicloud.com>
+Date: Fri, 24 Jul 2026 11:14:57 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,67 +32,119 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] watchdog: Add Nuvoton MA35D1 watchdog driver support
-To: Guenter Roeck <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- conor+dt@kernel.org, robh@kernel.org
-References: <20260723060755.1596858-1-zychennvt@gmail.com>
- <20260723060755.1596858-3-zychennvt@gmail.com>
- <20260723062030.B20F41F000E9@smtp.kernel.org>
- <a04cc256-4c60-4e92-b196-47aeed1d5453@roeck-us.net>
+Subject: Re: [PATCH bpf-next 4/4] bpf: Fix double-free RO header in
+ bpf_jit_free
 Content-Language: en-US
-From: zychen <zychennvt@gmail.com>
-In-Reply-To: <a04cc256-4c60-4e92-b196-47aeed1d5453@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260722112754.1615201-1-pulehui@huaweicloud.com>
+ <20260722112754.1615201-5-pulehui@huaweicloud.com>
+ <20260722113354.503391F00A3A@smtp.kernel.org>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <20260722113354.503391F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:gCh0CgBHdlex2GJq7iBmCQ--.5168S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw4UGr48JFW5GFy3Arb_yoW5tryUpF
+	1UCa4Yyw4qqw43K397tw18CF45Xw48J3WUuayrCrW7KFn09r92gFySk3y8WFW5Jr4UCw4F
+	qFyqgr13Ca4kXaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-Apologies for the broken formatting in my previous email due to a mail client configuration issue. Resending with proper inline formatting:
 
-Guenter Roeck 於 2026/7/23 下午 10:07 寫道:
-> On 7/22/26 23:20, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 9 potential issue(s) to consider:
->> - [High] The `ma35d1_wdt->dev` pointer is never initialized, leading to NULL pointer dereferences in logging functions.
-
-Fix in v2. Switched to using wdt_dev->parent and direct device pointers for logging functions.Remove redundant ma35d1_wdt->dev.
-
->> - [High] Read-modify-write operations on REG_WDT_CTL inadvertently clear W1C (write-one-to-clear) status flags.
-
-Not real.The W1C flags (IF/WKF) are only utilized by PM callbacks during the suspend/resume window for wake-up event handling. During runtime, clearing these flags via RMW in set_timeout causes no functional side-effects. Furthermore, RSTF is already consumed and cleared during probe().
-
->> - [High] Missing clock domain synchronization (`ma35d1_wdt_wait_sync`) after writes to `REG_WDT_CTL` can lead to dropped register writes.
-
-Fix in v2.Add ma35d1_wdt_wait_sync() after writing WDTEN to REG_WDT_CTL in ma35d1_wdt_start().
-
->> - [High] Driver overwrites `wdt_dev->timeout`, breaking the software heartbeat extension.
-
-Fix in v2
-
->> - [High] Missing cleanup for wake IRQ allocated by dev_pm_set_wake_irq(), leading to a memory leak and permanent device unbind/bind failures.
-
-Fix in v2.switch to devm_pm_set_wake_irq() in v2.
-
->> - [High] The driver fails to check if the watchdog was already enabled by the bootloader, causing unexpected system reboots during boot.
-
-Fix in v2.Added a check to set WDOG_HW_RUNNING when necessary.
-
->> - [Medium] Unsigned integer comparison against zero renders IRQ error handling dead code.
-
-Fix in v2.Change the IRQ variable type to int in v2 to properly handle negative error codes.
-
->> - [Medium] Integer overflow in `target_ticks` calculation triggers unexpected system resets for large timeouts.
-
-Fix in v2.Add a check to skip calculation for large timeouts.
-
->> - [Low] Unnecessary dependency: selects `MFD_SYSCON` without using it.
-
-Fix in v2.remove select MFD_SYSCON.
-
+On 2026/7/22 19:33, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> Please fix or explain why the issues reported by Sashiko are not real.
+> Pre-existing issues:
+> - [Critical] When `bpf_jit_binary_pack_finalize` fails, `bpf_jit_binary_pack_free` reads an uninitialized/garbage `size` from `ro_header->size`, leading to a kernel panic in `vfree()` and module memory uncharge counter corruption.
+> --
 > 
-> Thanks,
-> Guenter
+> --- Patch [4]: [PATCH bpf-next 4/4] bpf: Fix double-free RO header in bpf_jit_free ---
+> commit 4586888c771a3a31208f8ce31608697cc4147140
+> Author: Pu Lehui <pulehui@huawei.com>
+> 
+> bpf: Fix double-free RO header in bpf_jit_free
+> 
+> This commit modifies bpf_jit_binary_pack_finalize() to drop the implicit free
+> of ro_header on failure. Architectures are updated to explicitly call
+> bpf_jit_binary_pack_free() in their error paths instead.
+> 
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index de7515ea1beae..d017bb0397b88 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
+>> @@ -3988,7 +3988,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_verifier_env *env, struct bpf_pr
+>>   			 * Both cases are serious bugs and justify WARN_ON.
+>>   			 */
+>>   			if (WARN_ON(bpf_jit_binary_pack_finalize(header, rw_header))) {
+>> -				/* header has been freed */
+>> +				bpf_jit_binary_pack_free(header, NULL);
+>>   				header = NULL;
+>>   				goto out_image;
+>>   			}
+> 
+> [ ... ]
+> 
+>> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+>> index 47fe047ad30b8..77195911a3b37 100644
+>> --- a/kernel/bpf/core.c
+>> +++ b/kernel/bpf/core.c
+>> @@ -1237,10 +1237,9 @@ int bpf_jit_binary_pack_finalize(struct bpf_binary_header *ro_header,
+>>   
+>>   	kvfree(rw_header);
+>>   
+>> -	if (IS_ERR(ptr)) {
+>> -		bpf_prog_pack_free(ro_header, ro_header->size);
+>> +	if (IS_ERR(ptr))
+>>   		return PTR_ERR(ptr);
+>> -	}
+>> +
+>>   	return 0;
+>>   }
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does reading ro_header->size cause a panic
+> when bpf_arch_text_copy() fails?
+> 
+> If bpf_arch_text_copy() returns an error, the RO memory was not written, so
+> ro_header->size contains uninitialized garbage or illegal instructions. Because
+
+I think we should use bpf_arch_text_copy to initialize ro_header->size 
+when ro_header is successfully allocated.
+
+> kvfree(rw_header) is called unconditionally just before this check, the only
+> header holding the correct allocation size is destroyed before the caller can
+> properly free the resource.
+> 
+> When the architecture fallback explicitly calls bpf_jit_binary_pack_free()
+> (or previously when this function called bpf_prog_pack_free directly), it
+> reads the garbage size from ro_header->size:
+> 
+> kernel/bpf/core.c:bpf_jit_binary_pack_free() {
+>      u32 size = ro_header->size;
+>      bpf_prog_pack_free(ro_header, size);
+>      ...
+>      bpf_jit_uncharge_modmem(size);
+> }
+> 
+> Since this garbage size typically exceeds BPF_PROG_PACK_SIZE, the allocator
+> falls back to vfree(ro_header). As ro_header is a pointer to the interior of
+> a vmalloc'd pack, vfree() will trigger a kernel panic. Additionally,
+> bpf_jit_uncharge_modmem() drastically underflows the module memory tracking
+> counter.
+> 
+> Could the size be preserved or passed differently to avoid reading from the
+> uninitialized RO header during the error path?
 > 
 
-Regards,
-Zi-Yu Chen
