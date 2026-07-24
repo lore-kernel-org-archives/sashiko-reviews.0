@@ -1,151 +1,118 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAC026B755
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:13:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E456D43B48C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784902397; cv=none; b=dSOAp20jI1WuICPkHc2mmJAk74wvN7BHiuRzNfwqX0AZkaB+hJ9+SNbrT7czL/cqRUI9s3CVIJhU/GMRGuXs3p/esmz4bYR7nVTwefpGYx8CUR4ZnsfGfFAKuZi3QvP4/AKShDcvtyn34TsURcbU0V16rYLam0kIANKnSRTM458=
+	t=1784902670; cv=none; b=MaKvZTDPIoIhdGYe1ehsVRE/vIRhfp3UdCQMVu1uXbEh5PqdTwmuW4BtSTrBggCL8vdOodQgglBUM4in2Ik76ZBYjcuBma9nUpVYoU1/xEiHa8BQy+4no5Gu1AQm2bbyZirQMXG/YqwuLjPCOT1YrtT5q9s0oQt14g6WT4FrQYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784902397; c=relaxed/simple;
-	bh=riq1Gkad55t9ps5gwc29K6tLrNUvJeC1Hr5UhZ+UF+Y=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L1i6GS8pYQ4vGDK9dphtkkFni/l1g3F4oZFfxXV9UX4+FCw8+/B3TR5Pa1BjIerLH/MuEBIrrsIoooxZu8UqAV0q3MSQcOBBglQDilz1PokeVsdTZJIaHOUjlPe43qW1KbbBS5FE0Lg8OB1+AeyiyvopUeFeSsbDp4eHAHptQAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=AqfjZNAQ; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1784902670; c=relaxed/simple;
+	bh=T1dEe887YGwkSGBYCL8OCm1bYB3uZYn2VnNicEm6I3Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TkjJpYkaGJ6BaOOxaAn2uGHVYZ2RRMj2YdKl71rCD1lJkGziJaES9IGvI4TnbNNsjmEMj0L3EdI7V6AyGCwcQE2h0WsJ4PiPgDca2fu5rWwFlDzan2ncnb3N6qGxzUex8gNNLmwS3hZAPhot7h93mtwzXiU1nGqOsH6pdKTPoTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ZOBNC/Ob; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="AqfjZNAQ"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-47f81a3ccf9so381637f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1784902394; x=1785507194; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NopB2zcAoE2W1rfx+y/nPylIKkaB6dYctYVWOaoLAo8=;
-        b=AqfjZNAQ78hc7X7oqJhQJfpa0HX7mUxbyccCKWqst11De5HI5Ky8wBCD61A7TIumjL
-         l/aNNpvWNgRV3+gBNBI5Y4SSMkqnH6IrtYEbGW87dDsl112URHkDRbZKxlQF195JK6Ql
-         q9RRSwxImgHCy1CwnRia3DsyhPI5XiGMCuXBMbG02ONiHD2AwDWdm4GoItXllAhNE7fL
-         cuL0TMzdzs+zVfjqeqwcJwDDnnKd8UJt9vUX1hireSkdaMUjdnt8374vWWxWxyzmnhWL
-         i1ayl5Jd3PlGc9Ge7HML5qNOu47sg2yMz+Ht0mYdoC19ErxTtKMaa4VaPidb8gC0/3cq
-         udCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784902394; x=1785507194;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=NopB2zcAoE2W1rfx+y/nPylIKkaB6dYctYVWOaoLAo8=;
-        b=Y1QRKwBySkFsr+cSthVqby6BaA+vImitzhiasH9CW2ey0xK+5CYAadcQz5ltKZxi4Q
-         F8cP3Wa4Quo67e163nwqjKwGTAwG5iMv940fxmBEiKorg/Aq+IK0I5R/NrPA9BU5Nf2z
-         v9WqFnHZ3tkfdFyj9oEOX6O+uYe0mHoyyp+aDjEFAQNE2RGQo8wpbWLLI+6KCZPCYfLf
-         aA9VGdsu74CBTC/vDqEmcgdP/svjdiHTiPxHknBGPt/d7OXJ3rXmEqQd1woC/iKyAqYc
-         ooEaumvgNHspJ+w/XbUp9AwEC0ZYtpuzW9YNiinaGYuNFrlFDhWhEgqkIUxAhVrX8CYF
-         /qjg==
-X-Gm-Message-State: AOJu0YwlR3kjeeombO0cU8ikrqSgHfiIjlL1zzo+7URnrC2fWeA902hO
-	wGidVJ9ZU6UK6Iv3XmCXKT+Ahzf+oNPXam/nKSTPQY2H3BdnYH5/uQ+IJYCTjnA8jGs6tgeLfbu
-	XiJ7WFi0=
-X-Gm-Gg: AR+sD10zXBDbycyX/MV7fzd4kpobJFCjtKLfAH4IihXeaqFQH2oB91NJ8oWKFCqTfA1
-	zssuK27LgtjBrsxiL9IG+qks3ZdU7kXZ6bvqeqfC9JEwQognwQ7IqK4fqZaK4LQyGYCigjg2hso
-	R12jiicHR3A8tBnn2T84HjrvywqYLXu18gLNIjrGQWq2u195kqpWaiKhUJwc9izCO2IGzMdJv3p
-	4QXAZ903mvR+uzTYZrrKRmYAbPAZZnspa62UbfFu+bibD1L1LUIO/dSnArAJtJwRDtaG4XT4T4G
-	T/Yw17WJ00U7sWvBg4v4dDaG95vq/aStufWNZV+NazhbmtLx0Y7y24iVy6tSc/8C+VH+eebqXlc
-	h1SiQ9+4XWiv0bwFa1scPT0BLQ4EdkHYYtZf27HJ656beSL+CW40n3fd0QiwI0BooVs2c7sDdeo
-	3v
-X-Received: by 2002:a5d:5d0f:0:b0:47d:eee2:e19f with SMTP id ffacd0b85a97d-47f8d756adbmr9271223f8f.33.1784902394468;
-        Fri, 24 Jul 2026 07:13:14 -0700 (PDT)
-Received: from localhost ([195.94.145.62])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb5a46sm23693173f8f.9.2026.07.24.07.13.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 07:13:14 -0700 (PDT)
-From: Andrea della Porta <andrea.porta@suse.com>
-X-Google-Original-From: Andrea della Porta <aporta@suse.de>
-Date: Fri, 24 Jul 2026 16:16:43 +0200
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ZOBNC/Ob"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 24FD44E40F2F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 14:17:46 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id EDB2560395;
+	Fri, 24 Jul 2026 14:17:45 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0E4F711C125CC;
+	Fri, 24 Jul 2026 16:17:44 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1784902665; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=Dpad6KFFOxb0OhI/jcF0z2hVpKmWQo/vxob+Tyqda9c=;
+	b=ZOBNC/ObA6F+BduV6KBAiIbq+vmmktfQwkXfKRLXpnJaz82FcA4S4P5vYmazR0Y4h20tgO
+	6IbKKSr3Rj1mcU6/7Gf7PrnVT+VC8fQDqLS6ixI7UWgXAVu7xzqdwYBjyX+MhV1Cjx2HNU
+	LPE6htxK3uzvCt3DLrOOENOF/VIxzw2ZqVvCRfaa2vFUJDmQnebLrvKRxbZ6NBtIiMPMLG
+	4mO0Bud/axsuHzpkJwFWbjMDlpmK++LYyHAMo4I9ugiHUTeIhAomN4ccUwysfW3QFS8YTa
+	fiZBvWf1FLq8AOWqSdAdIhwB4Z2E+XnBU3+243pVlM0/JFUpmkIzzyPCLWvN4A==
+Date: Fri, 24 Jul 2026 16:17:44 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Andrea della Porta <andrea.porta@suse.com>, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org, ukleinek@kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH v7 1/3] dt-bindings: pwm: Add Raspberry Pi RP1 PWM
- controller
-Message-ID: <amNzy0jqWAvh-cBk@apocalypse>
-References: <cover.1784539788.git.andrea.porta@suse.com>
- <67d51a7210f0d7410dbe34e3d93813db1fecd622.1784539788.git.andrea.porta@suse.com>
- <20260720095027.B76CC1F000E9@smtp.kernel.org>
+Cc: kr494167@gmail.com, linux-rtc@vger.kernel.org
+Subject: Re: [PATCH v2] rtc: spacemit: handle regmap_test_bits() error return
+Message-ID: <202607241417442690eba3@mail.local>
+References: <20260724135803.81223-1-kr494167@gmail.com>
+ <20260724140633.8FED41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260720095027.B76CC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260724140633.8FED41F000E9@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-Hi,
-
-On 09:50 Mon 20 Jul     , sashiko-bot@kernel.org wrote:
+On 24/07/2026 14:06:33+0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The binding description states the device acts as a syscon provider for shared registers, but the schema prohibits the use of the "syscon" compatible string.
+> 
+> Pre-existing issues:
+> - [High] The RTC time read retry loop in `p1_rtc_read_time` is vulnerable to a torn read (time corruption) if a time roll-over occurs during the register read.
 > --
 > 
-> --- Patch [1]: [PATCH v7 1/3] dt-bindings: pwm: Add Raspberry Pi RP1 PWM controller ---
-> commit 06ebdbe78362ab02ea5e88d503ad7c179855b48a
-> Author: Naushir Patuck <naush@raspberrypi.com>
+> --- Patch [1]: [PATCH v2] rtc: spacemit: handle regmap_test_bits() error return ---
+> commit a044092d776fab1e96ae2f8b48ace64aa0ab2325
+> Author: Surendra Singh Chouhan <kr494167@gmail.com>
 > 
-> dt-bindings: pwm: Add Raspberry Pi RP1 PWM controller
+> rtc: spacemit: handle regmap_test_bits() error return
 > 
-> This commit adds the devicetree binding documentation for the PWM controller
-> found in the Raspberry Pi RP1 chipset.
+> p1_rtc_read_time() called if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
+> to check if the RTC was enabled. This evaluates negative error codes as
+> boolean false, causing read failures to be ignored. Fix this by capturing
+> the return value of regmap_test_bits() and returning the error code.
 > 
-> > diff --git a/Documentation/devicetree/bindings/pwm/raspberrypi,rp1-pwm.yaml b/Documentation/devicetree/bindings/pwm/raspberrypi,rp1-pwm.yaml
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pwm/raspberrypi,rp1-pwm.yaml
-> > @@ -0,0 +1,66 @@
+> > diff --git a/drivers/rtc/rtc-spacemit-p1.c b/drivers/rtc/rtc-spacemit-p1.c
+> > index 43ab62494bb4b..1de7bd995d296 100644
+> > --- a/drivers/rtc/rtc-spacemit-p1.c
+> > +++ b/drivers/rtc/rtc-spacemit-p1.c
+> > @@ -57,8 +57,9 @@ static int p1_rtc_read_time(struct device *dev, struct rtc_time *t)
+> >  	u8 time[6];
+> >  	int ret;
+> >  
+> > -	if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
+> > -		return -EINVAL;		/* RTC is disabled */
+> > +	ret = regmap_test_bits(regmap, RTC_CTRL, RTC_EN);
+> > +	if (ret <= 0)
+> > +		return ret ?: -EINVAL;	/* RTC is disabled or error */
+> >  
+> >  	ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
+> >  	if (ret)
+> >  		return ret;
+> >  
+> >  	do {
+> >  		seconds = time[0];
+> >  		ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
+> >  		if (ret)
+> >  			return ret;
+> >  	} while (time[0] != seconds && --count);
 > 
-> [ ... ]
+> [Severity: High]
+> This is a pre-existing issue, but does this loop correctly detect time
+> roll-overs that happen during the read?
 > 
-> > +description: |
-> > +  The PWM peripheral is a flexible waveform generator with a
-> > +  variety of operational modes. It has the following features:
-> > +   - four independent output channels
-> > +   - 32-bit counter widths
-> > +   - Seven output generation modes
-> > +   - Optional per-channel output inversion
-> > +   - Optional duty-cycle data FIFO with DMA support
-> > +   - Optional sigma-delta noise shaping engine
-> > +  Serves as a fan speed provider to other nodes for a PWM-connected
-> > +  fan using shared registers (syscon).
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: raspberrypi,rp1-pwm
+> If a time roll-over occurs during the second regmap_bulk_read() in
+> p1_rtc_read_time(), specifically after reading time[0] (seconds) but before
+> reading higher units, time[0] will match the seconds from the previous read.
 > 
-> [Severity: Medium]
-> The description states this device acts as a syscon provider for shared
-> registers, but the compatible property is restricted to a single string.
+> This would cause the loop to terminate early and accept the newly read time
+> array.
 > 
-> Will device tree validation fail if a user includes the "syscon" string 
-> normally required for standard kernel syscon lookup APIs alongside the
-> "raspberrypi,rp1-pwm" compatible string?
+> Could this return a torn time from the RTC (for example, 14:00:59 instead of
+> 13:59:59 or 14:00:00)?
+> 
 
-I deliberately chose not to include 'syscon' in the 'compatible' property
-to retain the flexibility to constrain the regmap exported through syscon
-in the future.
-Including 'syscon' in the producer's compatible string causes the syscon
-framework to register the entire 'reg' property range, whereas the driver
-uses of_syscon_register_regmap(), which could restrict the regmap later on.
+While this is a valid concern, I guess this RTC latches the registers
 
-Additionally, the fact that a specific register is used as a tachometer
-depends solely on the firmware; if this changes in the future, the syscon
-requirement might go away. Therefore, we might not want 'syscon' in the
-compatible string at all.
 
-Thanks,
-Andrea
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1784539788.git.andrea.porta@suse.com?part=1
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
