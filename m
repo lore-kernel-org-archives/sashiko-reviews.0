@@ -1,170 +1,279 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE41C2D3A7C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF63A8732;
+	Fri, 24 Jul 2026 07:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784877765; cv=none; b=PpIqlu6eZkGFAm16LszbgMR7RJ//8BS7VPLth+Rinwv/hF0BF4V1apy0m8ClobpjX8ht8RboToZlM6S6MdDDpDU5Kqi9/YhhDknMw3xGEjwWnTH31w+gqCNY4eVrGhxJ3E0REhzvnu/Mq9j2oN8+eXGoqq/4vKgOomo0iM4eJlY=
+	t=1784878125; cv=none; b=N8bdSycGGzVwbXMPkBElc5t+j4frIBchtGnte5nHtgzc+UUEgYQvsorDfXBH7pigtdsZ6cRUwn/LpQ4Ap5jo3Ag2W/VsL14aO0qp8Itkk4KkwirwF3bX7trS1VECGpt0MqKb3iVOW7C7EDcwPDGbKRTpqVpWYKfflA00wQ6GenI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784877765; c=relaxed/simple;
-	bh=UQQnIXob+/s9OIPRi5J6ofr2XzDcFk5vQvTsKvxzwto=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xk7XWh2mrlUN8yyFdX3DpsRuswbhUP1a+Uc7Q4rXiuGPuTb90KdBaVTQR92zE8m6o3fawPfdC0pvLxY2574dCeWJZXKJYAjBGwzo0Zg9SrMhldHcS1HsvRTb1ph5TLquZs0s4rsI2Nk5dni+pmsL7hPb0+/pMKf2jSUehLmSXog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kghG/e5S; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KGn75ZCy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1784878125; c=relaxed/simple;
+	bh=av/KYhFYVpXyoEb9wH6Dlb6szNRCwxdpci4r+aq24rU=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=lAxf/W2TCxxapVAI9PPhLGGlFsX+ikesXLSRLKADV2HRqBCEM2G3dJktlGk35BbRUy3IPFBzzfzPpJvADrmn9m22+Yp+A9/EH+wsKCIAtjO+WrVIXifcEicOkWlgF5YVr9trCDsbvgExWVRoBBvFvVHr3K4bDSTPjVxcoYA0uKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=U2ESk0mG; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kghG/e5S";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KGn75ZCy"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66O4lXbe2125263
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:22:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=bRAFAPrhzs0JZ7CR2lh8wcue
-	7nCkmX7RC3NoU8zQrJQ=; b=kghG/e5SU4AD9C2HfL4jDQv7v/9tIEbNjAppzd0U
-	tbp1Q2ylthfiqQldkbKbo5kdDkG28GbQeiqZfUgzZFVvUAhBqU3dP1feYiYmGK5R
-	9Q1MerJG0ruxgB8OH2ac3WQZ+i/TFgfxa/pQ45CYTKlmnkJfAZVc7yp6ATCILTgZ
-	Vy7DmVAmci1KVGENtI3k009d5XyTjPfv9/zGh88DzUqhBzdO3i4G7oA9a4n+EXSF
-	RKak++w7LAJScMWOnOuntPJpfhtvbtZQq9k59PFY8UArxoKMLc3yiCF1Xw49nAUQ
-	bR/hru0m6tVBrunhT99tIEnXTiDtHUMDFeBbU+CPETgpIg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkqamtjqf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:22:42 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c1eb52e1fso2527631cf.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 00:22:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784877762; x=1785482562; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bRAFAPrhzs0JZ7CR2lh8wcue7nCkmX7RC3NoU8zQrJQ=;
-        b=KGn75ZCyPcnofGmst+dRjFGZQNso+wkJnR3lgqINOU4aXNgWZ+CUJ7WYUVFV6rOgSF
-         6vo6sb9Rffv98Gm45dhrBAvJDLDOzQjZ5GDtAci4i4XPp2isJiq8esYCiMEILWBU4Vvr
-         v3puY5x0RSdn6eM4VCXMikG3X90jjpGFifxsp9Myk40noLs3+1ELl8G5kVCFR46ieYIZ
-         LHyAFD6Cx5WCxKBKgRu2li8TOdjZqpyIL/JtnZ+TyO8stnoaX5psL2VoNcZa1veZdhuq
-         yznW6ARqexlhLOC1jutfFCkuQCRzjqIfxu2WtW5mtioa3M9t+xCowauz/pTy/rXeusnP
-         z/EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784877762; x=1785482562;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bRAFAPrhzs0JZ7CR2lh8wcue7nCkmX7RC3NoU8zQrJQ=;
-        b=tNXVaTfFXElpumWoAukMADg1+H5yUwoZ6/ys6kPTm22xiM0ZJ0G3AVsalVteX5Lcv8
-         lx7COn59ViYI6SDJu7ObcuzfozNwEQD78rpzx6vah2yvZnXgHf9S13HcFzh9L45lXAbK
-         Jtt4ZI7LHBZEsF2fqHrI0kctu+AJLnuIkY7eeEWUMfCoJlDa4AzzPCsaWsLwXkOcBC6H
-         96prluNn5dfX5uAXCd1lxbmcyENtIttqV+DvDhWkMBuub6x+d6ZWVIrYAnN5urLbt+dQ
-         RByKmycc1PfN80WUoRJNF8nFFTwnCFyEQ57zxL9K1u4ETwNm3nvbK37V1ERh2T5dT3Jo
-         qHWA==
-X-Gm-Message-State: AOJu0Yw75jlBilel+ikZh/snlMLaM5BWE9plbM8pqJw40zv4upAayds+
-	SAxVlPtDxzNElsp40+bCDGegffZ8WcBJDu/usnO7CWF1ee3TKoTxySv0LxbeVfD1k+pF/6QyYGD
-	18BnTGj7W9mHDdd8jFJr2uaUNpY/LQUlq1dz+O6QgyY2Ajfpqq44gVhr4gLpSwe3mb2jms9MfXq
-	aotkI=
-X-Gm-Gg: AR+sD12LxihBTkbFGawpjU5tHYelL0O/ZywFJLuHT3UTkGt5S0gwucDeTqjdRpGWCrt
-	IKj5IwzuOF8sXBBNz3vqtHVj5FcWicEmFvU84cA9zZTCshtXscRLIVRex9CtdP7ikC9+speGNwS
-	Xb3celEu5pNulAcIwm+ScEzg+VGfTpAljEKAenf1cSyb+m883+0/WGxJ0Q3AEYfSrTI0o0UeGjl
-	GB0OVbWlqNpcbgIdBUQgr4+QLQO/p7W+OVaKWgsFU0fpUusesZ7D6wR2+MsHHrTBsN77lImw1iC
-	fpxWYpNKxU4s1drgdfQmJL8KTo3bVMkxyphFNHxPD5kqy5F3sN8QQO5n856eJYovOe/lHBp0mqB
-	frxhIWK5tPKnt3S8=
-X-Received: by 2002:a05:622a:30a:b0:51c:d1c:474d with SMTP id d75a77b69052e-5283de1aa43mr55597801cf.19.1784877761942;
-        Fri, 24 Jul 2026 00:22:41 -0700 (PDT)
-X-Received: by 2002:a05:622a:30a:b0:51c:d1c:474d with SMTP id d75a77b69052e-5283de1aa43mr55597721cf.19.1784877761413;
-        Fri, 24 Jul 2026 00:22:41 -0700 (PDT)
-Received: from oss.qualcomm.com ([86.121.163.114])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957af5d4e4sm55457655e9.2.2026.07.24.00.22.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 00:22:40 -0700 (PDT)
-Date: Fri, 24 Jul 2026 10:22:38 +0300
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: eliza: Describe the CDSP
- remoteproc
-Message-ID: <7bwizu72b46456esrly4um7y3hbda4cxmmvfjvqbqjtsaynmqo@ps5e5mcevarh>
-References: <20260723-dts-qcom-eliza-add-cdsp-v3-0-b535200996ed@oss.qualcomm.com>
- <20260723-dts-qcom-eliza-add-cdsp-v3-1-b535200996ed@oss.qualcomm.com>
- <20260723125953.8F87F1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="U2ESk0mG"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66O5Bet73220091;
+	Fri, 24 Jul 2026 07:28:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=j/Yw90
+	MH+LcShjfR7wPxnbm0c+fDbs0ruEtbjm5VE7M=; b=U2ESk0mGeczQJt27KhKroG
+	RLHWDhP30LRu7qSkjBHSIyOSLDpUboQavKc61RQ1pkTxvEZKxbwreny6xaJCmii0
+	GztqB8CCzoTFqBHA/Ve+h9OD25yMnBSOnLx4q0Ba3Re/ZWvmTDnJX9kTZpf4km2l
+	f5JLe7tFM4O0JfJ/31JvKYLIzOaIxnjc9i5q3q9k/quv8tSOfif0nlBQP6y9FEaj
+	mqNWKnEn56jxjcXWDA9HUDyF7wp+zIzRaUFBXE3oiOgex53Ant+/ZHO1mxKZUtgz
+	aWZmwi6qvyI/p3Gx/afcnmbjwTm2uKfDsax5+uYEW4aexCVgAC09doiE+mnuYmeQ
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg77auj7a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jul 2026 07:28:41 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66O74ltw017639;
+	Fri, 24 Jul 2026 07:28:40 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgp1gqqap-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jul 2026 07:28:40 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66O7SchT47579440
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 24 Jul 2026 07:28:38 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DBABB201B4;
+	Fri, 24 Jul 2026 07:02:21 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 478CA201AE;
+	Fri, 24 Jul 2026 07:02:21 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.124.222.110])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 24 Jul 2026 07:02:21 +0000 (GMT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723125953.8F87F1F000E9@smtp.kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA2NSBTYWx0ZWRfX/rsaMPtUCOQp
- r0kXobHGO49z9OOOU19fEQZudpnDCDQZLie5m8q0Ii7tuoIaaPfLCQvkMrvb89VWz7FCxtWv6qw
- kaW/UF9V++1gV+RzniPZCvO1meclvjcJyAXKApxUtt6wvBS6SYHaF4Zb5y+9XbWaPtkf183O4EA
- a/n2WzZy1WibW/HIEf+UK2uuk08vbKMWlALEzZ9P/bgqGcPiGQdVw8fdhPV4/RQ91JAgNebk/nH
- Ks8Z4nY6CxrJn/dPSIBKHrbPQijsy9U1uZElPHwhIthRom/7p4Rz94h4UrA1B4V+GpzgwnVN4ap
- 0MIynrepdKPtAQz18ZGxP/MSQPQwp/9fBKCnQ7qG+TrjgE8naEKXbD6R53/MqsJ1xN2A1TrcMMC
- GABBRsf1+JyY1Bt+q2txyx9vzB6hshDR5LukUu/9G0n+Jcfr0klOh/32YO4o84cKW/i56DjzpqI
- F4EUpc+q+UYOytnyJ2A==
-X-Proofpoint-GUID: yMePB97xZYHJ73QbS17V9VK2OabSbeON
-X-Authority-Analysis: v=2.4 cv=DfAnbPtW c=1 sm=1 tr=0 ts=6a6312c2 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=6dw9+iwJWV8PcCi9M4lOBg==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=57vlxwFmncND1kVs3ZwA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA2NSBTYWx0ZWRfX56O1EOkiZwN5
- Bj5/WuBYsVbCl6zldlyBsAD/fZa8LdKadkfzelc6Qrfcz8vgZ2PoFjfEnES5DLnB3Fa4BmvGjUy
- f7TRcKrOyoUFEGJrWpoSIXYuqEhKqPk=
-X-Proofpoint-ORIG-GUID: yMePB97xZYHJ73QbS17V9VK2OabSbeON
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH V2 4/6] powerpc/perf: Capture the HTM memory configuration
+ as part of perf data
+From: Athira Rajeev <atrajeev@linux.ibm.com>
+In-Reply-To: <20260720110957.C5D761F00A3D@smtp.kernel.org>
+Date: Fri, 24 Jul 2026 12:32:09 +0530
+Cc: linux-perf-users@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D483892A-EB2B-46FD-8110-BBD849AFDEAE@linux.ibm.com>
+References: <20260720104447.11843-1-atrajeev@linux.ibm.com>
+ <20260720104447.11843-5-atrajeev@linux.ibm.com>
+ <20260720110957.C5D761F00A3D@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: wTWmUgXZcm3n_Pg9KStAD-NX0vf3JPP7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA2NCBTYWx0ZWRfX8M25HfkL/doR
+ sPJS1V4XLmSKww/0nITZGfshtmDkA/LByOZOpLitSEAqdAz6zQCyGJ88Jk3sIyAOT+vFLUQslns
+ NFT+uRaGcJ5Vwyk+67+XDVZaufd4aeg=
+X-Proofpoint-GUID: wTWmUgXZcm3n_Pg9KStAD-NX0vf3JPP7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA2NCBTYWx0ZWRfX6TKoBUQD/YHv
+ Lc4k0/9i9k/P0YWthd2sDEGRf/pFYifyJqOiBdORVfLzM5SR768wAmt3OZBg1JaB8MHIGWAlDVq
+ kAOQ82Fz1KgvPALhjRlXmMR4MFkW/zVvUUW4p2YGbc7MgHgpr6XhMOZ3OIfQzjkgDEUDL/5PSvi
+ 7H5/Q/V/Iz3/Q7A81vakgLPr+hbJ/3Om1qiQZeO3Knk/P2pWMcdt1L0hX3yPT+5c2thcc6+s3jZ
+ Vy2yz3kwmU3PHPwgHF8tDHA6Ej3PuxmHtugduAxvhIvt4fltZSPnw7tWnacPbvaQ6nGkSGSFKvP
+ 7/e0xdGytofq1WugsUjRXmIfyygruTbFxJ4qd8ZpMjQQvhhIGACRoaiIdgEH0ak9cz/WT5uZtY6
+ KbM702VmMdbV6zuV3VExg59gKk2TPfbgYYEfdAkU9ZklFe4ccoD2GG8JfjveqtFfTsmavn1kUaN
+ VeuiW6Fo43EHpSzcjkw==
+X-Authority-Analysis: v=2.4 cv=K7AS2SWI c=1 sm=1 tr=0 ts=6a631429 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=XbSfs4UG2olPpgAHPvAA:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 adultscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240065
+ definitions=main-2607240064
 
-On 26-07-23 12:59:52, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The devicetree node adds an undocumented and unmatched compatible string without a fallback.
+
+
+> On 20 Jul 2026, at 4:39=E2=80=AFPM, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 3 potential =
+issue(s) to consider:
+> - [Critical] The staging buffer `htm_mem_buf` is allocated as =
+`PAGE_SIZE` but the hypervisor is instructed to write up to =
+`HTM_MEM_BUF_SIZE` (64448 bytes) into it, causing a physical memory =
+overflow on 4K page configurations.
+> - [High] Uninitialized `struct pt_regs regs` allocated on the stack is =
+passed directly to `perf_event_overflow()`, leading to a kernel stack =
+memory leak.
+> - [Medium] The memory configuration iterator `mem_start` is not =
+advanced when `perf_event_overflow` returns a non-zero (throttled) =
+value, causing data duplication.
 > --
-> 
-> --- Patch [1]: [PATCH v3 1/3] arm64: dts: qcom: eliza: Describe the CDSP remoteproc ---
-> commit 5421ef4d61bf1a4a8c2f57dab436568cc9538d95
-> Author: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: eliza: Describe the CDSP remoteproc
-> 
-> This commit describes the CDSP remoteproc node along with the glink-edge
-> subnode and the related SMP2P.
-> 
-> > diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
-> > index 357e8066c1768..e38a1d94fbe23 100644
-> > --- a/arch/arm64/boot/dts/qcom/eliza.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
+>=20
+> --- Patch [4]: [PATCH V2 4/6] powerpc/perf: Capture the HTM memory =
+configuration as part of perf data ---
+> commit 5929e601ef9335650c92ad97d9999f8482e8f648
+> Author: Athira Rajeev <atrajeev@linux.ibm.com>
+>=20
+> powerpc/perf: Capture the HTM memory configuration as part of perf =
+data
+>=20
+> This commit captures HTM system memory configuration during tracing by
+> retrieving it via a hypercall. The records are emitted as raw perf =
+sample
+> data after the AUX trace dump completes.
+>=20
+>> diff --git a/arch/powerpc/perf/htm-perf.c =
+b/arch/powerpc/perf/htm-perf.c
+>> index b4020a6e8f30b..0fda0f552b4e1 100644
+>> --- a/arch/powerpc/perf/htm-perf.c
+>> +++ b/arch/powerpc/perf/htm-perf.c
 > [ ... ]
-> > @@ -3737,6 +3761,57 @@ nsp_noc: interconnect@320c0000 {
-> >  			qcom,bcm-voters = <&apps_bcm_voter>;
-> >  			#interconnect-cells = <2>;
-> >  		};
-> > +
-> > +		remoteproc_cdsp: remoteproc@32300000 {
-> > +			compatible = "qcom,eliza-cdsp-pas";
-> 
-> [Severity: Low]
-> Will this compatible string trigger a dtbs_check warning because it is
-> currently missing from the device tree bindings schema?
-> 
-> Since there is no generic fallback provided (such as "qcom,sm8550-cdsp-pas"
-> or similar), it appears the remoteproc driver will fail to probe because the
-> string is not yet matched in drivers/remoteproc/qcom_q6v5_pas.c. 
-> 
-> Should a fallback compatible string be included, or bindings and driver
-> support added alongside this change?
+>> @@ -173,6 +177,99 @@ static ssize_t htm_return_check(int rc)
+>> #define HTM_TRACING_ACTIVE 1
+>> #define HTM_TRACING_INACTIVE 0
+>>=20
+>> +#define HTM_MEM_MAX_ENTRIES 2013U
+>> +#define HTM_MEM_BUF_SIZE (32 + HTM_MEM_MAX_ENTRIES * 32)
+>> +
+>> +static int htm_collect_memory_config(struct perf_event *event,
+>> +      struct htm_pmu_buf *aux_buf)
+>> +{
+>> + struct perf_sample_data data;
+>> + struct perf_raw_record raw;
+>> + struct pt_regs regs;
+>        ^^^^^^^^^^^^^^^^^^^^
+>=20
+> [Severity: High]
+> Does this leak kernel stack memory to userspace?
+>=20
+> The regs struct is allocated on the stack but never zeroed or =
+initialized.
+> If userspace configures the perf event with PERF_SAMPLE_REGS_INTR or
+> PERF_SAMPLE_CALLCHAIN, the core perf framework will read these
+> uninitialized bytes in perf_event_overflow() and write them to the =
+ring
+> buffer.
+>=20
+> Should regs be initialized, for example via =
+perf_fetch_caller_regs(&regs)
+> or memset(&regs, 0, sizeof(regs))?
 
-Binding of this compatible is documented by a separate patchset,
-mentioned in the cover.
+Thanks for catching this. Will send a V3 addressing this
 
-No fallback fits this CDSP.
+>=20
+>> + u8 *htm_mem_buf =3D aux_buf->htm_mem_buf;
+>> + __be64 *num_entries;
+>> + u64 next_start;
+>> + u64 to_copy;
+> [ ... ]
+>> + memcpy(emit_buf, aux_buf->htm_mem_buf, to_copy);
+>> +
+>> + perf_sample_data_init(&data, 0, event->hw.last_period);
+>> + memset(&raw, 0, sizeof(raw));
+>> + raw.frag.data =3D emit_buf;
+>> + raw.frag.size =3D to_copy;
+>> + perf_sample_save_raw_data(&data, event, &raw);
+>> +
+>> + if (perf_event_overflow(event, &data, &regs)) {
+>> + ret =3D 0;
+>> + break;
+>> + }
+>                ^^^^^
+>=20
+> [Severity: Medium]
+> If perf_event_overflow() throttles the event and returns a non-zero =
+value,
+> we break out of the loop before advancing the iterator.
+>=20
+> When tracing resumes and htm_collect_memory_config() is called again,
+> it will start with the stale aux_buf->mem_start value and repeatedly =
+ask
+> the hypervisor for the same configuration block. Will this emit =
+duplicate
+> records into the perf stream?
+
+Clarified the perf_event_overflow() throttle path: when the event is
+  throttled, mem_start is intentionally not advanced (the same block =
+will
+  be retried on the next drain pass once unthrottled).  Added a comment =
+in V3
+  making this explicit and distinguishing it from the error/EOF paths
+  that clear collect_htm_mem.
+
+
+>=20
+>> +
+>> + /* Record written: advance next read iterator */
+>> + aux_buf->mem_start =3D next_start;
+>> + emitted =3D 1;
+>> +
+>> + if (!next_start) {
+>> + aux_buf->collect_htm_mem =3D 0;
+>> + break;
+>> + }
+>> + }
+> [ ... ]
+>> @@ -568,7 +672,23 @@ static void *htm_setup_aux(struct perf_event =
+*event, void **pages,
+>> return NULL;
+>> }
+>>=20
+>> + buf->htm_mem_buf =3D kmalloc_node(PAGE_SIZE, GFP_KERNEL, =
+cpu_to_node(cpu));
+>        =
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>=20
+> [Severity: Critical]
+> Can this corrupt physical memory on systems with 4K pages?
+>=20
+> buf->htm_mem_buf is allocated using PAGE_SIZE, which is 4096 bytes if
+> CONFIG_PPC_4K_PAGES is enabled.
+>=20
+> However, in htm_collect_memory_config(), the hypervisor is instructed =
+that
+> the buffer length is HTM_MEM_BUF_SIZE:
+>=20
+> arch/powerpc/perf/htm-perf.c:htm_collect_memory_config() {
+> ...
+> rc =3D htm_hcall_wrapper(htmflags, 0, 0, 0,
+>       0, H_HTM_OP_DUMP_SYSMEM_CONF,
+>       virt_to_phys(aux_buf->htm_mem_buf),
+>       HTM_MEM_BUF_SIZE, aux_buf->mem_start);
+> ...
+> }
+>=20
+> Since HTM_MEM_BUF_SIZE is defined as 32 + 2013 * 32 =3D 64448, the =
+hypervisor
+> will assume it can write 64448 bytes, silently overwriting up to ~60KB =
+of
+> contiguous physical kernel memory past the 4KB allocation.
+>=20
+> Should this allocate HTM_MEM_BUF_SIZE bytes instead of PAGE_SIZE?
+
+Sure, will fix this using HTM_MEM_BUF_SIZE in V3
+>=20
+>=20
+>> + if (!buf->htm_mem_buf) {
+>> + kfree(buf);
+>> + return NULL;
+>> + }
+>> +
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260720104447.11843-1-atrajeev@linux.ibm.c=
+om?part=3D4
+
