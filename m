@@ -1,184 +1,181 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8B93ADBA4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:45:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2563D45D5
+	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 08:17:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784879119; cv=none; b=nSrYfl5Arbe2R8bmobuoKSHAerGlbzayO/J85Gf0TFViUCuJIFnuX9ob0GF1ldSj3qBA6rTAPYhKOSdbwjcogcSmJWQ75sPl8Vuc7NTMSLPXn6LdgCeJoTa3Crxqt07U/x50GUx3Dv197kHa7mZy65wRFl/vcUA1fgrLu8gIY/0=
+	t=1784881067; cv=none; b=PRArH7qfS4KZ63DnlSIrUbl9G2ymK2XbxA5g5JcvqhRG9vcESW862XQJkDfUXsOYwJcYSyz9XDcA92r2vurfoRPMO2IV1+IcueXyqeBFHHW/4HEmUBojZiW1qhrPBSAig8IBygDceCpi+8ROXnQJKUccXMMalapQHu+a34c9Hfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784879119; c=relaxed/simple;
-	bh=ANJtyJ6P389yvOKckJ7iYgYvw5On+QBy6J9HkDUwMwE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XT6LwcXbuhmmeYJfXzH8Uj7r3ToO4qnI14/eaCmZb8BcNVNTtS9D9BUFjSwb36D01+El8o4tQD6TXqS3y21rCixB2P1crUZcbnA91Y7QmHfP8UmtclGuTsXfUH7HZk0gISlurzEBNiefNDzeCbl3lVBoSUIhtlyXYKaQ+mhw6LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Bqd7H5+w; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JZWu9dmm; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1784881067; c=relaxed/simple;
+	bh=elWNjQXtC8thy3ti0vlFZsZxvG3tpc6l8oAx685pjj4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S8OhqWvQGmGDobI6vjjJBOsdzDKSOXb9apqjRoayvWrbglKKgzOSxq9BhIcELAtHTRit/IvcSvnhlarisQoz66vEE/xzxQVzUufmxTOG23cBb0TKODwfrPImgYAQd2OJ+nyOy87waJQ3d8Aj2AXQhTkl0JmSi5Z+7tUAUXTmZys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LVRpaD34; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Bqd7H5+w";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JZWu9dmm"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66O4lDLN2275977
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:45:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6/Ic+pdSq/qAyvDsmYaWaFDv8wMS/iilvzlwA+yIGdg=; b=Bqd7H5+wpb86jWit
-	nz2VkXT1LmgWhv3AVVdCQq5YhOTLv6vzmzuxq1AceUPr5ob4x/47iVctxURYYiiS
-	l4EE0igY7dArg/GW2I8uvumBi4anySVO9YkeglxFC+xr7mEGt9hWPWKZrsUFMf+D
-	nK8WUReWdtPcWnPdBFTLGY4DdujVlUWJ4Eobrv5AP0juBAWKN55yEKkYn2tfCky1
-	1Y8UGeyOfm0Zyar3QJbpzUdpIJYiRgLHM7QO/6nVKZzVEY6ZoPUIRvGEKaSJfC9B
-	AOU7m5Ak2wmiMTJHYeboJjk48dTPT//aiE20Jn7aXSJjOrsNYprT4FU/zbH6wRE8
-	WnoRlg==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkqa0apb8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 07:45:17 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8486ffba174so229449b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 00:45:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LVRpaD34"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4954d5d814fso21925e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 24 Jul 2026 01:17:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784879116; x=1785483916; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6/Ic+pdSq/qAyvDsmYaWaFDv8wMS/iilvzlwA+yIGdg=;
-        b=JZWu9dmmYF+JedtFqEdM/UzXbiUgPZYxJd9jlGLnB+sBqbYmb6lYnUijSl3esiS0M7
-         L/MzKbFBdyng8v1mMK67z1l5owuW91hNMGzCPTlMlD2ZZgoAoJIaIWci28vQyWAhHWYA
-         NUb5REYrC/wV6fSEn2j+O35F5jZQOQaokLuesIkGT3NahiCE4u7swIrClQodlJFHJIts
-         DiDsDrTWVTxd/Ok1KLPAjpCFKVZK9fATANoP0VRnnJkzcVsKRpthdDK5CNQ+Lk2B32qJ
-         swzACMSJ2fJuzhR6uOH1OaxqT0TBf8eKpOLzcQJTNFUJtUTKz2PFenLTEQYYef1Tcfs2
-         LPcQ==
+        d=google.com; s=20251104; t=1784881063; x=1785485863; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Oa7Uf24Ye3cJcbIbf3Yse8wlIIcJzJaytnCT20m/GIQ=;
+        b=LVRpaD34cAKtrw2XD5l6NABHrlDun6xGAFosLkH9jQWPvy3S8PGEKvtS+3fLCl1XDs
+         8qIpJ59KNiZkuHEXbRJvhgpZq2c4A6rwT2bI7HJE4HPGswy7kigeubQ+ryqNb9YyFdpq
+         z7USDe4FpEDkxX1I2rwCowuVVqnArMyqEiJSaD+Cg/zxAlqz8+EEhlfndVq+1swIxQht
+         hFLdCc+1ojm/Ehr8MUHZfkOcCOEcVruK2nAqClggaQzqI6UDFxkZpqzrYRmZ5BET/N68
+         51oLrMAOgmsqMlUwWkKwqBUUMyt6W4CZKVWpI5CQNKfqfyBc20GejZWbU+/EpaquOSBd
+         PL5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784879116; x=1785483916;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6/Ic+pdSq/qAyvDsmYaWaFDv8wMS/iilvzlwA+yIGdg=;
-        b=k88ETC7CKLTnHmEGeVQY1hi0tb+Kv1n4cbqoVQLaLmN9IpFU+RKXopB/A/ALKsqOwZ
-         bXUWEnT9mEBqfT1WQqMh43K1h9lrnfgisilbkzuHbPmGAL30kZAQzZkdvvJom4yCXD5I
-         uAbDq/CMa+hI2DLRTBfjWxQ1BCjrGg3awmzqepdS2A4nhaUepJOkG5cDpkQHbZyiTa6i
-         qCBEgdJMPn0utbdaql6iO5lFgDIbUKQsw9HRTmveW7PLLcUVF9ZALWUcYOk4WHFuwOaw
-         EPiLufU8ueNP6H1pvytGGcX3hIC23kCZUpWbiZtHobnTO9m1CaCbAlTvY0XePt20tVpx
-         gNnQ==
-X-Gm-Message-State: AOJu0Yw9AxaHDs0UXm47OZ9kiT2I25sOOMZJmSeCyIP1np9XyNl610PW
-	nXBBIMbpdRyR03KTD5ps+Z388FxZJ+OkDECqm5KNPPChUXZR3aItSpp9rZNEELOV+J0JSyIV0yy
-	lD3uqcGDtaqnBTV3uQ3plT2f/n0hySuvCaIkdFisCbb8XKmBxJBYjeMHCmxdp/sIaq3U1Ps3mHl
-	c08ok=
-X-Gm-Gg: AR+sD11TiYtqq/Ca8WWaC/u2i1xqMO+d45uQUAUNGElKX3ziQ7TJAFdBJfb9t+TB0Lz
-	ZlPikeUCvVefzcpOxI+vPWPQIOSgopUEOf7RjzS84q63b3zTnfeuuhCsuDUCD6JcbRDzmVjAf8Y
-	+/1Noo6cujU7THBrvuNnvPfFigJsVgOl4RyQ+uJNtTYnqVwR43rmLsdorZ/cd7Al1KmODN2Jda4
-	ocmLLGWUrUOviPrB/v171tHTo2YnlJLnY3rQHxPYIYlqM4oFoNuIxBNjpA1svK3C+j7daAMMi+K
-	U6bbYu9vGzPMrjdRmOv/DkNnydRgXC0QvmYu3UtYJSDHKK/ccAksMqp0Th0kTsAeQ93fqKmR3WM
-	yA8Ok8dxmuFsZbxAo3jrkV70biE0=
-X-Received: by 2002:a05:6a00:1f1a:b0:847:8971:87bb with SMTP id d2e1a72fcca58-84e2b8688b1mr7264418b3a.21.1784879116421;
-        Fri, 24 Jul 2026 00:45:16 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1f1a:b0:847:8971:87bb with SMTP id d2e1a72fcca58-84e2b8688b1mr7264390b3a.21.1784879116032;
-        Fri, 24 Jul 2026 00:45:16 -0700 (PDT)
-Received: from [10.218.5.114] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e17285662sm4224262b3a.20.2026.07.24.00.45.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jul 2026 00:45:15 -0700 (PDT)
-Message-ID: <cfa3e3a1-38d8-4a6b-a641-4c51a1de89e3@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 13:15:12 +0530
+        d=1e100.net; s=20251104; t=1784881063; x=1785485863;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Oa7Uf24Ye3cJcbIbf3Yse8wlIIcJzJaytnCT20m/GIQ=;
+        b=dfrmfjXaCdzUQtgFR+p8+OeePnPXvY6oefHj+O+pL3abSZWA3mq5lOCqNLwjfvJDI1
+         tzPFVsf4NNsbQZ2isZdWdbN19Ekr2UHxRqYlEkrhQYg0on2dH2qcClhsaE6fm7drInrv
+         Ra9QjWXW33H9rI/9xSEAXF0KZgZ1jnYfybc+0rh+P0x9t+r1O/1s94H5w+q6pUilKulG
+         +z5aEEDdTZBXTMgwTSz+u15Q+TZqH8h6MCsIoGaDddYdEozDsoGsse4H1qqwBzG7Sfex
+         jCG52ZBYAw+DgJ7FKS9FSRe4OzacuR+Zu01gr9UXtiZWPiHDBsez0NLLd7r+B+BYU+0C
+         R4kQ==
+X-Gm-Message-State: AOJu0Yy9GRV89peZ98dJd28I9wzYfPkmHiUMg9nsHlfyyVxcQ1BodvHq
+	F23r2HGSJRuny/HtPwW+sitiikzikg4ow2XedLPxzOgcq3lXZQzTN2bFSA6U51zxb8lHm4HzXNz
+	Cbw803w==
+X-Gm-Gg: AR+sD12P1c+sxLMVtMEtshaHfhr50nEVAd4EGEjJCPcUYKjbdrpSwCQBnDoZXWpAVbh
+	0ECKm8nmjQbr/eowp934znPr7ZAQA2x6wUc+SH6V+I4qIN5oCX3v+CZN4Bg4VelIR10DXiucliU
+	aBm3b5QusJsN1pmFrF8zhF16iatv1Eb8Tbxn7H6IdHIkjkp36v5MPEz88KfMkzw+FIPiLOCcuVM
+	FD601SQ2h52JwiykAb6yfJac/A91W4HANWt177JQsDL3DoTUfq5AH5sW978xcblXOdIzXJSJLWe
+	lRkzlcNoXkoodaanEeuIKef3f6TyLR9gtat16dvX3GLf+NQBfXWhVGDP8A4dwyzGkpO2IRrCXJn
+	WzTk4RnU/xVsHvS2dwEKhtnx4G+vkzj2qHqTrj9+Wb5rtupPJ9HS1V1GmnjzF8VMqgUn5p4Xuom
+	RLKa1/68U0hgY/2lueOT7HGNsk5mtivaXTItBCyA==
+X-Received: by 2002:a05:600c:2e96:b0:495:7a0b:3b4a with SMTP id 5b1f17b1804b1-4957d7907ccmr541285e9.7.1784881062421;
+        Fri, 24 Jul 2026 01:17:42 -0700 (PDT)
+Received: from google.com (220.60.76.34.bc.googleusercontent.com. [34.76.60.220])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957af786e4sm50771715e9.8.2026.07.24.01.17.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 01:17:41 -0700 (PDT)
+Date: Fri, 24 Jul 2026 08:17:37 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH v2 2/2] KVM: arm64: Support BBM level 3
+Message-ID: <amMfoWWEBI17jdIj@google.com>
+References: <20260723182140.4025575-1-smostafa@google.com>
+ <20260723182140.4025575-3-smostafa@google.com>
+ <20260723184346.CAE8F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] clk: qcom: Add Audio Core clock controller support
- on Qualcomm Shikra SoC
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260723-shikra-audiocorecc-v3-0-90b878ae0d4e@oss.qualcomm.com>
- <20260723-shikra-audiocorecc-v3-3-90b878ae0d4e@oss.qualcomm.com>
- <20260723161435.C5C891F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Imran Shaik <imran.shaik@oss.qualcomm.com>
-In-Reply-To: <20260723161435.C5C891F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: vODcDaHbGIJfzQrm03ftTD-i7Vp-OwFF
-X-Proofpoint-GUID: vODcDaHbGIJfzQrm03ftTD-i7Vp-OwFF
-X-Authority-Analysis: v=2.4 cv=e/k2j6p/ c=1 sm=1 tr=0 ts=6a63180d cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=j0hzxEU4WLZdmYHecckA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA2OSBTYWx0ZWRfX38vpj6bVwqRF
- Sdn8JJeu1nYwhtdyIn8gFNCXi7PbislGH5UkulQ7Js0p9x1EUd/uuh6jzMwrGjnwSjghHlf8/6F
- Ye3ZQALQtyUfAz+dkjAmfDjCivSc9hCo7hamHhrNYCisFYptFz4Kcd4x4u2zkoGGulnPfBXF5uT
- zBCgMgvb8G1DNxUSSCZ/reyprw6bHG9BpBYYGmgU0zF8z6CNYqQTBHPlBCJOJIkivwlGRhkaQLY
- xRqj1A2fQxoHb+hNt3e4/vyqVJbWDiTqbuEsYt2aefEcLbbQbywoW5ypvs/rZJGr+BlqDWiVDCc
- vLAboV/zzPWtfK8hWQoBjKV/2oMShGEdbQYkdHJE1jYr51ampNLKoKk7g/GCNtwfZObB9Y1o/TA
- 2bKVVpSUBHjylGPaadU0BUEBXCuJRnydvZON9BIN+R5YJY2UyFILmYtZVEJNl08q0+VdBSElYiS
- H5tIG4915gci0VXSDtQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA2OSBTYWx0ZWRfX2EGpaHvNw2Vm
- FBRMpJI7lGahNyQAynnawvA/GK/Y3d+x0jQdlPxriJMnRoqNaehhVOYuTt1X2yupupW5a7z4+A7
- qJNgLAKoyXR3N/q9qz4cfcH7chqFliQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- malwarescore=0 clxscore=1015 spamscore=0 phishscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240069
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260723184346.CAE8F1F000E9@smtp.kernel.org>
 
-
-
-On 23-07-2026 09:44 pm, sashiko-bot@kernel.org wrote:
+On Thu, Jul 23, 2026 at 06:43:45PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The `audio_core_cc_shikra_probe` function does not validate the return value of `device_get_match_data()`, leading to a NULL pointer dereference.
+> 
+> Pre-existing issues:
+> - [High] Missing DSB between MTE tag stores and the stage-2 PTE update.
 > --
 > 
-> --- Patch [3]: [PATCH v3 3/4] clk: qcom: Add Audio Core clock controller support on Qualcomm Shikra SoC ---
-> commit de62912fa52410c163e6ab3071a5cbf9cc2887aa
-> Author: Imran Shaik <imran.shaik@oss.qualcomm.com>
+> --- Patch [2]: [RFC PATCH v2 2/2] KVM: arm64: Support BBM level 3 ---
+> commit be481f0e17bfc16626c7f5b1b8b652be3ec92909
+> Author: Mostafa Saleh <smostafa@google.com>
 > 
-> clk: qcom: Add Audio Core clock controller support on Qualcomm Shikra SoC
+> KVM: arm64: Support BBM level 3
 > 
-> This commit adds support for the Audio Core Clock Controller (AUDIOCORECC)
-> and Audio Core CSR resets on the Qualcomm Shikra SoC.
+> If the system supports hardware Break-Before-Make (BBM) level 3, use it
+> to replace stage-2 PTEs directly. Otherwise, fall back to the software
+> BBM sequence.
 > 
->> diff --git a/drivers/clk/qcom/audiocorecc-shikra.c b/drivers/clk/qcom/audiocorecc-shikra.c
->> new file mode 100644
->> index 0000000000000..76017240f7684
->> --- /dev/null
->> +++ b/drivers/clk/qcom/audiocorecc-shikra.c
+> > diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
+> > index 127b7f9541b16..5e16ed7e9b909 100644
+> > --- a/arch/arm64/kvm/hyp/pgtable.c
+> > +++ b/arch/arm64/kvm/hyp/pgtable.c
+> 
 > [ ... ]
->> +static int audio_core_cc_shikra_probe(struct platform_device *pdev)
->> +{
->> +	const struct qcom_cc_desc *desc;
->> +
->> +	desc = device_get_match_data(&pdev->dev);
->> +
->> +	return qcom_cc_probe(pdev, desc);
+> 
+> > @@ -873,16 +891,35 @@ static bool stage2_try_break_pte(const struct kvm_pgtable_visit_ctx *ctx,
+> >  	return true;
+> >  }
+> >  
+> > -static void stage2_make_pte(const struct kvm_pgtable_visit_ctx *ctx, kvm_pte_t new)
+> > +static bool stage2_make_pte(const struct kvm_pgtable_visit_ctx *ctx, struct kvm_s2_mmu *mmu,
+> > +			    kvm_pte_t new)
+> >  {
+> >  	struct kvm_pgtable_mm_ops *mm_ops = ctx->mm_ops;
+> >  
+> > -	WARN_ON(!stage2_pte_is_locked(*ctx->ptep));
+> > -
+> >  	if (stage2_pte_is_counted(new))
+> >  		mm_ops->get_page(ctx->ptep);
+> >  
+> > +	if (stage2_use_bbml3() && kvm_pte_valid(ctx->old)) {
+> > +		/*
+> > +		 * Barrier is required because stage2_try_set_pte() uses
+> > +		 * WRITE_ONCE for non-shared walks, lacking release semantics
+> > +		 * used in the software BBM case.
+> > +		 */
+> > +		smp_wmb();
+> > +		if (!stage2_try_set_pte(ctx, new)) {
+> > +			/* Raced with another core. */
+> > +			if (stage2_pte_is_counted(new))
+> > +				mm_ops->put_page(ctx->ptep);
+> > +			return false;
+> > +		}
+> > +
+> > +		stage2_clean_old_pte(ctx, mmu);
+> > +		return true;
+> > +	}
+> > +
+> > +	WARN_ON(!stage2_pte_is_locked(*ctx->ptep));
+> >  	smp_store_release(ctx->ptep, new);
+> > +	return true;
+> >  }
 > 
 > [Severity: High]
-> Can this result in a NULL pointer dereference? If the driver is bound to a
-> device via the driver_override sysfs attribute, device_get_match_data()
-> will return NULL because the OF match fails.
+> This is a pre-existing issue, but does this sequence lack a required
+> synchronization barrier for MTE tag stores?
 > 
-> The NULL desc pointer is then passed unchecked to qcom_cc_probe(), which
-> calls qcom_cc_map(pdev, desc), leading to a dereference of desc->config.
+> When KVM maps a page with MTE enabled, it clears the tags using STGM:
 > 
-> Should there be a NULL check for desc before passing it to qcom_cc_probe()?
+> arch/arm64/kvm/mmu.c:kvm_s2_fault_map() {
+>         ...
+>         if (!perm_fault_granule && !s2vi->map_non_cacheable && kvm_has_mte(kvm))
+>                 sanitise_mte_tags(kvm, pfn, mapping_size);
+>         ...
+> }
 > 
+> The PTE is then updated here in stage2_make_pte(), which uses either
+> smp_wmb() + cmpxchg() (mapping to DMB ISHST + CASAL) for BBML3, or
+> smp_store_release() (mapping to STLR) for the software BBM case. Neither
+> of these provides the architecturally mandated DSB semantics required
+> after MTE tag stores.
+> 
+> Without a DSB between sanitise_mte_tags() and the stage-2 PTE update, is
+> it possible for the hardware page table walker to observe the new PTE
+> before the explicit tag stores are globally visible? Could this result in
+> the guest observing uninitialized MTE tags, leading to memory permission
+> corruption or spurious tag check faults?
 
-Yes, will add NULL check to handle this.
+I do not know much about MTE, but AFAIU, STLR wouldn’t order against
+page table walks. So there is a window between the STGM and the DSB at
+the end of the map where another core can observe a valid PTE and not
+a the new tag. My guess we need a DSB at the end of
+sanitise_mte_tags()
 
 Thanks,
-Imran
+Mostafa
 
->> +}
->> +
->> +static struct platform_driver audio_core_cc_shikra_driver = {
-> [ ... ]
 > 
-
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260723182140.4025575-1-smostafa@google.com?part=2
