@@ -1,98 +1,204 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D193128A3;
-	Sat, 25 Jul 2026 10:08:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784974131; cv=none; b=AK4lRIUoezShFW7Qvwe2mEWvAOPinnACDGBh9v9SxSLCIkomQ2rIo8aqKDJWNLqP6ak5y0PMJR9vBqbzYUVyv5IJspwI/ygU4pWt5o9xIlFxQNeNVBTSo5hs8ZaCz5gZnE+GR854FDHQ1USIhlmGMvA85uDXCRRk2Jq+HZ0AivY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784974131; c=relaxed/simple;
-	bh=DNo7YYiksm5xQgyxKtSkHLThO3DpWNYsXp3qguT9n10=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O4XQWBFqOd84Ayo2DRVWVjkPWFxuHib6BFKrSRMqOeuMDLRWme/eLEzDVZgYjV8vpjLZd92Zsm5sJ4BwYZwBtUlqvImNkh90w6gynhYUnXydnxluAYq/LqgM8hoESxfKXO8DN9P6bPJbF5Ek+fXhgeK/iEHX/alj0hsi1wPjJnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l/iUzCqm; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DA43515CD
+	for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 11:04:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784977454; cv=pass; b=C+OXxZu3pSzP4QXdI6buiwo7b9IYlaQIqNMmwWPMqFTxpHFqQifEI+1bp8IDdqg9rq3nYSyGBCa66ZSqssWkjS4paWdabYj3O2CM3mjRQwjtct3oqoglMHQ1MnJ+KPysS63B0K/DQFREj7DC3/cfId8+U1cL//UKpeA/ZtBRQns=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784977454; c=relaxed/simple;
+	bh=wcjDIyZ1mnJ8cH/GZH1fTS6gxU6s/wkKmDJziA1q9FY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N/wxfqCw4kpDzUGaTy4qVJujxUC7a6bjaqIBiTyY3pkCpd6QMEbnaBnpjCZYOO29fBryFyj2+GFtKGCp9+oV1PMUKK/a04c7WFSSC16Ow0EvyIlDmUMzPYpH3TC02X9vbUfGZWmVsSKanIKaNDf6+xVfc5J8CSdUQJAjcPk/m2I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SveqZ8Li; arc=pass smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l/iUzCqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DC21F000E9;
-	Sat, 25 Jul 2026 10:08:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784974130;
-	bh=hbbCxrJpdE1rZ8FisrKyokswVjUeaAjwPhFCCGTVdb0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=l/iUzCqmgi7W2s8UhG5d5VMsH3Mi1xqPK29+qogUOVH7jfAtew+zYEjqB4laMn0UB
-	 fXfcSG0R0uU+9TTpsWGyYVY949+VZtH+Hxx4k9vxUwatsfuA9Y2venNAml3geaFCnr
-	 y8R67FnlgsQnIgnRbl3r8fP2XComJv1UT319ByuEXoTFuNdY+b8YfLW/AKheFgvkfZ
-	 CVA62Jt9jHBvUu4TARiQdX0dSAST6IciM/FXB40XC0yZW3AaHBIlzQZD6cIpPdHdxh
-	 kML8gemyoMv9b9wu6ra1YvvJMJT+yYeBm+eslX3/t+jvKoI5U1azlW4nOniWNv9KAP
-	 gwMhJs6E1S3uQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wnZJI-00000008jE7-2OL5;
-	Sat, 25 Jul 2026 10:08:48 +0000
-Date: Sat, 25 Jul 2026 11:10:12 +0100
-Message-ID: <871pcrqt17.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Sascha Bischoff" <Sascha.Bischoff@arm.com>,
-	kvm@vger.kernel.org,
-	"Oliver Upton" <oupton@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v4 06/48] arm64/sysreg: Update ICC_CR0_EL1 with LINK and LINK_IDLE fields
-In-Reply-To: <20260724111405.63DD51F01833@smtp.kernel.org>
-References: <20260724104819.1296803-1-sascha.bischoff@arm.com>
-	<20260724104819.1296803-7-sascha.bischoff@arm.com>
-	<20260724111405.63DD51F01833@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SveqZ8Li"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-668296d0ff3so1326407d50.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 04:04:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784977451; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UsgiQhwzLnj0KdtuQCfAWxuuLAz00twhFyG8IHSBKVY2/7dYOiV96Z+JSwJNAoQXgB
+         ieKap9qCAcVJXciSoYyS/nZwoyEsb/NQYUAKIEJ6BZmM3Akco/FylvgJ2cL0wcR7ZNwR
+         yiNDtEFt7yZwxPQwPO8SE9zAIoM/vqQfWcl99P2UAVoGeBUDg239tsfSOamYWbsceKuM
+         EXBMjoWvZP40fpeOMZJsvrLZa8QsrR8iBwhCcAqqmbQnmpVwY7txMCJEnwa7b+NtQ1FO
+         pVZbjKFM2KnGufLZfAyQAdLQBd28omkKYAo1tGxVIN2IN6514qGakWrc1GszeNyIf3KN
+         1vlw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=srA1KnFMtAkfLylpBOd38/AYtNBjKS4SQUhSrptcxzE=;
+        fh=BtRFuWxQ0Jq0SdPet/iN8ngoqrXWSjOp5I6xE65jI9w=;
+        b=der1kmJ/7nacBoDJOmrn3Gb5qdQKo4y6dx0qYC8sBzxaF6miYLYeSF4ET7Q/2VHtNV
+         RDwGE42hRyHBb/X7hT4fNYOy4FZAy9U5ktNMljIe/3eyxrjvAPmWFMgiQuxhrSMWv1UR
+         3MT80PNSJ5OX1ojEyzdSa0QyniA3e/dyLYgANFXNoouYTgUMddnXdUfpOMg/6+1zOCVC
+         SbJHYFd284YgrNIRU4hwH8qgSVS+vxDvyKDcxjItDaYvjpUYNI9tlXcU4flghP5gjG1A
+         DYNLMZuTnguLY3CUZYRSU2oz5kTj3pjcMdrYLH6On298dABb6TnKl2XPJJz9TBeFxUOR
+         6DHg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784977451; x=1785582251; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=srA1KnFMtAkfLylpBOd38/AYtNBjKS4SQUhSrptcxzE=;
+        b=SveqZ8LinVo3K/oHZP+HOkfMFJLnbAGBkrvkHthht3CcKXkfgOSB4GlGvnOvOhmtJQ
+         XIu2bOC7btn/rNV+uBeA3U37Q2xkVlHfK2Fv3GSCDgMrAn7CqLVpmCl2EpfCq/7/XFCJ
+         wh2cOvmPO1ZoFc0VtlsAhjsuH3puUNF6+mM0RDvGWIE2fbEFLO8OE4fygDSdMuo9cYPn
+         ifKWl4m+XoZlrOhbUXIYtOKuo7F1DrF6vERwh5Mez3HtIRW1NINyslkqp11XeEhtEbbo
+         UF26QMEhRb8/5PJD4tBKQ+w+db8IvFCHUnHaow5In30eugprFCEXg7uPAPFWmKgsJC/B
+         A+AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784977451; x=1785582251;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=srA1KnFMtAkfLylpBOd38/AYtNBjKS4SQUhSrptcxzE=;
+        b=XJeqfQfPCdwYp5ioqsPGov9/KMGXL8PMQFgsh0wkar2gmG8c7D0fFUn2lf8wHpHa43
+         +MgjjwdcbyhLN1t0E3ZyJHOQL7QG/pdvqjNX35w2x/tRxERxMhhuBp6HP4S1kr6TRGHx
+         bMBJMaZdSDiCxa/QZSTC1YzWCK0+3qHiOKVJd/eSqpfvil5/qUcnlnrnJtj2TcHbuGMH
+         zUimzWOBBuOLixKNQUyrz0nSUxhuLJniXRwRR7Y4qdj354U/ygcWcmSbvQV8thrIqk76
+         q+mtW/fjEoPMqAaq0Si3aZXG+1LirkOug55CZDptmsmC/aGeysx941sCNzbQ45BlCDTa
+         ewsQ==
+X-Gm-Message-State: AOJu0YwlszbDFBMHq6l7HqmmLjuiBhq0Nc2PdlVBsaeUPXgb7R+RSZSh
+	NJZuunKhUoi/m74Ev9WyoRNyLViae1X1rIZ9zAC/IQlMPz5GG0Ir8HlmDhlPd2csriwU0X16xDD
+	Uefa4fekDf4Xx+PVntqSyRXrl0YN1b5M=
+X-Gm-Gg: AR+sD10yfUju5vT1+Or2d4SOtKFC48tuodyGGwKixYtiCBlpD+yk61/A5o1z5YE/RnG
+	W9ZzoF/uuABspfuj0bLgi+md9aC33SOW41+Zdza98F/6VB0n0HnaoSN9kpQ4Fvg+CU6zd35+3ag
+	KoYwXmM5/ja7SeDhhbISA9h9DhoUC4Unhr86NjYpHeXzvqp16w0O7GaOcic2GZSltiXxcx068Qu
+	jgERHjTjZLosALxpDf6TILlaS9filM8PPuSmlk4MHKjEspc7iQUxUEKTFyGPA==
+X-Received: by 2002:a05:690e:408b:b0:668:9ea4:7752 with SMTP id
+ 956f58d0204a3-668c7cc6459mr701858d50.109.1784977451490; Sat, 25 Jul 2026
+ 04:04:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, Sascha.Bischoff@arm.com, kvm@vger.kernel.org, oupton@kernel.org, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20260722123243.341346-1-challauday369@gmail.com>
+ <20260722124415.63DD11F000E9@smtp.kernel.org> <20260722232109.GA2760962-robh@kernel.org>
+In-Reply-To: <20260722232109.GA2760962-robh@kernel.org>
+From: Uday Kiran <challauday369@gmail.com>
+Date: Sat, 25 Jul 2026 16:33:58 +0530
+X-Gm-Features: AUfX_mxoYq1Nw4WTzKfbaV0jD0Ve86ial1pv1PtAGx0_6Mj1lk7duKXcz1N3sSY
+Message-ID: <CAAj-GB=AP0m71Mm-+arX6kYEo8w8Eyah_aZp9c0e=4KQuc2r_w@mail.gmail.com>
+Subject: Re: [PATCH v4] dt-bindings: pinctrl: microchip,pic32mzda-pinctrl:
+ Convert to DT schema
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
+	conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 24 Jul 2026 12:14:04 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Missing Context Synchronization Event (`isb()`) immediately following writes to `ICC_*_EL1` control registers.
-> - [High] CONSTRAINED UNPREDICTABLE behavior risk in `GIC CDEOI` system instruction encoding.
-> --
+> > > diff --git a/Documentation/devicetree/bindings/pinctrl/microchip,pic32mzda-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/microchip,pic32mzda-pinctrl.yaml
+> > > new file mode 100644
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/pinctrl/microchip,pic32mzda-pinctrl.yaml
+> > > @@ -0,0 +1,107 @@
+> > [ ... ]
+> > > +properties:
+> > > +  compatible:
+> > > +    const: microchip,pic32mzda-pinctrl
+> > > +
+> > > +  reg:
+> > > +    maxItems: 1
+> >
+> > [Severity: Low]
+> > Even though the changelog mentions removing #address-cells and #size-cells
+> > from the schema, aren't these properties still present in the
+> > pinctrl@1f801400 node in arch/mips/boot/dts/pic32/pic32mzda.dtsi?
+> >
+> > Will their removal from the schema cause dtbs_check warnings for the
+> > existing in-tree device tree?
+>
+> Yes, but warning is correct.
 
-[...]
+This means #address-cells and #size-cells should be removed from
+pic32mzda.dtsi too, which will be a separate patch. Does my understanding is
+correct Rob?
 
 >
-> [Severity: High]
-> This is a pre-existing issue, but while reviewing the GICv5 interactions,
-> does the CDEOI instruction encoding rely on compiler constraints instead of
-> hardcoding the required register?
-> 
-> In drivers/irqchip/irq-gic-v5.c:gicv5_handle_irq(), the instruction is
-> emitted using:
-> 
-> drivers/irqchip/irq-gic-v5.c:gicv5_handle_irq() {
-> 	gic_insn(0, CDEOI);
-> }
-> 
-> If the compiler allocates a general-purpose register containing 0 instead of
-> explicitly using XZR (register 31), could this lead to a misencoded system
-> instruction and CONSTRAINED UNPREDICTABLE behavior?
+> >
+> > > +
+> > > +  clocks:
+> > > +    maxItems: 1
+> > > +
+> > > +$defs:
+> > > +  pin-node:
+> > > +    type: object
+> > > +    $ref: /schemas/pinctrl/pinmux-node.yaml#
+> > > +
+> > > +    properties:
+> > > +      pins:
+> > > +        description: List of pins to which the configuration applies.
+> > > +        items:
+> > > +          type: string
+> > > +        minItems: 1
+> > > +
+> > > +      function: true
+> > > +
+> > > +      bias-pull-up: true
+> > > +      bias-pull-down: true
+> > > +      input-enable: true
+> > > +      output-low: true
+> > > +      output-high: true
+> >
+> > [Severity: Medium]
+> > Does this bypass type and constraint checking for the generic pin
+> > configuration properties?
+> >
+> > By assigning these generic properties to true without also including a
+> > $ref: /schemas/pinctrl/pincfg-node.yaml#, it looks like the schema
+> > validator might silently accept any value or type for them, missing
+> > mutually exclusive constraints like having both output-low and
+> > output-high present.
+>
+> This should be addressed.
 
-and I thought AI was good at digging a bit deeper... What a nonsense
-(see write_sysreg_s()).
+Taken care.
 
-	M.
+>
+> >
+> > > +
+> > > +      microchip,digital:
+> > > +        description: Enable digital I/O.
+> > > +        type: boolean
+> > > +
+> > [ ... ]
+> > > +    required:
+> > > +      - pins
+> > > +
+> > > +    unevaluatedProperties: false
+> > > +
+> > > +additionalProperties:
+> > > +  oneOf:
+> > > +    - additionalProperties:
+> > > +        $ref: '#/$defs/pin-node'
+> > > +    - $ref: '#/$defs/pin-node'
+> >
+> > [Severity: High]
+> > Will this oneOf construct silently accept undefined scalar properties?
+> >
+> > Because the first branch lacks a type: object constraint, a typoed
+> > scalar property might trivially pass the first branch and satisfy the
+> > oneOf.
+>
+> The $ref has a 'type: object' so we should be fine.
+>
+> >
+> > Also, for valid child container nodes referenced via a phandle, the
+> > devicetree compiler automatically injects a phandle property. Since
+> > that injected phandle is not an object, won't it fail the $ref type
+> > check here and cause spurious dtbs_check errors for perfectly valid
+> > hardware configurations?
+>
+> I think the $defs should get fixed up with 'phandle', etc. added. You
+> can check the generated processed-schemas.yaml.
 
--- 
-Jazz isn't dead. It just smells funny.
+Yes, it is automatically handled by dt-schema.
+
+Regards,
+Udaya Kiran Challa
