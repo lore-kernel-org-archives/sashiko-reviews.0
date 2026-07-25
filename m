@@ -1,252 +1,234 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011066.outbound.protection.outlook.com [40.107.130.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4255C331EAF
-	for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 01:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E502931FF;
+	Sat, 25 Jul 2026 06:22:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.66
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784943736; cv=fail; b=a90qFl3sPzNUbfVYlAPWtyLMVJxXrQq7lq4R/LiNjHgePHn0uNerJerswYgbMf3HdEdFbEqYSA1hKqZLmIsC37+FgPTxWX88N/7FC7jzu1k8VqO7WnegyoLQH/XHc2ZGQGLgPJ2r8pZy6fRJ3qMjsIsReHACXHFCYlv3deXOmyY=
+	t=1784960546; cv=fail; b=lEfMAeQI+w0L4CxzOjPs4kwiPhgGfyp6vVFL8kORk5MnoOBm69fMiwN5hPRuPy1ldmYjnHCTaDGNCEQa6+iz5ls17UBUbKAh8qWcyS8d3BMKnXo/1PRoFwpklcLxwPTalkBHpToZ7p4z8pxGXpzxaXHM7cFGPRrN5dr7AtcjCRc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784943736; c=relaxed/simple;
-	bh=sqlPb8VVEFoxwQvEnuIbpk8m05u3CZyxNc5ZpD5bp2w=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cvYrJSO/fLbEom+mNkWqi41X9XmMvimlmIqZba1Gf9MGo5ed2BN3qJseLrLyU/opjH0Zb8neyuGlXoYiaFTLHQ9V++XoYSZ4gxfN99G06bHjVcxSduyxXrtKC0okd8QHX+w3yV2biPIXfghrnT9Hub5JiGKkoZQ/jXmNmAMyXAs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eUJQ8ais; arc=fail smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1784960546; c=relaxed/simple;
+	bh=O7D32Yrq9Bl8ulSr46gKQSzOCTxa+LoNPMMh61EQkcM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=h9bk2cccC1bby3+iGTCt8QniGqfqA8MDEawXAHqXFMdafk2FuoUd+eTEx9Hb4UtoBiG0cAH7EtQMa0y40wb9vLSZsumIrGv710j7/SzHpoR5tcINGDkNhunToUlHulFbBJey95MjtrrM9PT1mTU9mBYcsTIl+AM4TQQ04WLFAUg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=BBCoebCx; arc=fail smtp.client-ip=40.107.130.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eUJQ8ais"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784943734; x=1816479734;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=sqlPb8VVEFoxwQvEnuIbpk8m05u3CZyxNc5ZpD5bp2w=;
-  b=eUJQ8aiscksRdsDyJ2hSCQ/sLwt0LjAtqTs2D0yxe29M5u/qxzI2G4HU
-   lfDuR6CYdIgUBWyvb2yO7NMlx+Q4VPsdAhcYSrwUqPcly3k+WZkluIbvh
-   CrIYB+goACr1eW8tm5KigBA15FcdV4HYwdLctAJ3zDJVEifRZkMlS6vpE
-   KJn94EKoyf4Q+/QAPE3m+cMOH/4dFT+lCOW8WdHSeg7nYlHGUeUZbLCKf
-   dsK8DW+7vdJETxJfg0HGV3WrN1AUNLzCjR/ONzhwpxWuSWGUF+8cALQYr
-   AxYd4dxUlBl80a1euY+lyYod/A/kg8kFZr2DmZonF1oG83TZqg0OueUDp
-   w==;
-X-CSE-ConnectionGUID: emlQePI6QCyzyq7K7vZ5LQ==
-X-CSE-MsgGUID: mJJSFF/NQB2ZuVvFIq7WHQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11855"; a="85657050"
-X-IronPort-AV: E=Sophos;i="6.25,183,1779174000"; 
-   d="scan'208";a="85657050"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2026 18:42:14 -0700
-X-CSE-ConnectionGUID: xoAM5k26R5G4cI9EIqBS3A==
-X-CSE-MsgGUID: BS7clY3lR/mxM3cK95xXzQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,183,1779174000"; 
-   d="scan'208";a="259511680"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2026 18:42:12 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Fri, 24 Jul 2026 18:42:11 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Fri, 24 Jul 2026 18:42:11 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.25) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Fri, 24 Jul 2026 18:42:11 -0700
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="BBCoebCx"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=u1emxFf5Gs8/GtYWl5ZUXlWkNTs5h5M1SZsGG2EFWNVYYRCUoszcFU5eJlpKz4hOPpqAv2dNj6BRUlM1gMLyo4/9r+ipyFuPHqENqsMkOmCjeIdtIhSkYnU7ViHueB6D88AxLehBMHMiCbrR4JVLe1g2JgFXqBrWk61vx2Oi6LNxJi14bFIGVNP9Os0j3B4MwKlU6mcf/Z7pRhrOlrpAdEAD84x6MndEYIfS1JfnIe5rKBh6jeujdXOkVJ40lfjUNEbn1fl/8OqMqiy8JsVi5ZO6WAze/KYP92bo/8SUhKEDWIc8v80nFgdqniiJ16Ie7f1sD97mnAuNjTbepwjJTQ==
+ b=AthU9XS8sf1QqmMdGvMWBhuiyp92KegfZiyqSVLPcPlYvH3QB33EMzmicNfn7/LU4QjIqxV4J5vjysJI8Tkir+ZtM6Fli4AiIQe6yh1WFO0b8WbShXNs6nYfnLlww+lnnC1o0CVQkDgJGnZ2f3iuljVRZlB02zNQlXGuXGZx++uCcvOSlt3G0G+jvKtkNYtm36fJZcg3Ec9MZu/N0iqGVTZTOYsem2BlnVrmtxlKoVvB5DimQlUW+P06SmGBQxBLmI11G6DulEzjzipcxrYAA4IyqOk2u2XBDGTF0Z2hRsQNFQMIumUlExksr6svOreaGaWquhscQrrf8TxTV3qAnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oVkGAJja0P5hmnSjzN2z93Inw4sPV2xjd7Z4ymb7F0M=;
- b=k8xOJr77ChFdSDbCE3S1+oCmrTDNAyoLK660gwkpIq8IY3Cn3ZDnWZJzTrC0wUOUGY2p9K7zaLwq5c4cfBsNw7Gu6HmCZ417oyLHRPoLQYrnjjUOBp8XlSTAcSJpSzaF+jIiPWXR4pA/UsEblGnIFf+46dYFmVyinBe0qIxtGpM5uxlpeKF1wda5Uxda9uYjNYa7SjfR3MlAonY3njaNUmZSQ4wsmaldIAS3u/fYBtSV11fB0oVgz110sHR0xPgwPLfip2ypXFTkVcXeTYUvPBUEQgLGNWKCw7yX7nBVQeyQv6UMWKqyJRbfw3f3ErdMSClCiawhBoRGBcULcaZuiQ==
+ bh=Rt/teTvSgaiSf9/kxly8NrVSTuYzNEHC702ozJI1Cq4=;
+ b=nD09f0c5yGMMlti6zeVOooEw4a3+4oFsTbCTdtSN4/7NAWts1BBBmmql7NXgm+x/XFOveB1NtSy9MirBdczYo78iPkXRVi9er43Fb+plWeXS6Cd0J1oumUju6/9w1EMfCLq5uoRfAMfmOd+JwUpl0dWdbWYJKdudgb/iJs0fmaG2BHsRyeZQKJScBLkE1SD3xbhhu5hSple8t4q0GWddgZ2/yXrL7B6UJOSIPUmbRi+D668K69w1hMEVQ8QrCSyHdQfU5BCZBFxf4DW/jJByt3cowS82HBzuvC/iwJXjLUMIzFhVSNHBBUpcVxj372K5M87Z9CK+/U815vSFIp6lzQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by BL3PR11MB6315.namprd11.prod.outlook.com (2603:10b6:208:3b2::12) with
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Rt/teTvSgaiSf9/kxly8NrVSTuYzNEHC702ozJI1Cq4=;
+ b=BBCoebCxKroagYIwYZYqpDQ0qCHd4P3aydsRChgRfrVlY2KH1LPAvabrje/+tLSrUzOev0MgyCtrkOIPDe5F5ac7jwvRfzQP9WqFbu7hmwn7R8jNQE6qK+hqcLitbpWUI2cn3Tsbd/rtkUmc3XyVcI0td249SjqZKfiOpSAEe9vcTWVuXntXnnakIFwAa/6e4qhmTYptF/5f6rwHoVq2ec39k8M2pkXHQUgFDKVHfyiaUZkVrn1srTR9de3d+rMtoBYVBUPmK9EAMvt0eY6kV9lbJc3KqtJfdXSBUue+ROm/fLduMVMvE+enQPRT8oFCDjOQoAr9Cmn68ZIeJf32zA==
+Received: from AS8PR04MB9080.eurprd04.prod.outlook.com (2603:10a6:20b:447::16)
+ by GV1PR04MB10797.eurprd04.prod.outlook.com (2603:10a6:150:20d::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Sat, 25 Jul
- 2026 01:42:03 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::e721:90d7:9214:2d53]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::e721:90d7:9214:2d53%6]) with mapi id 15.21.0245.012; Sat, 25 Jul 2026
- 01:42:03 +0000
-Date: Fri, 24 Jul 2026 18:42:00 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v3 1/2] cxl/region: Allow passthrough decoders with >16K
- granularity
-Message-ID: <amQUaL-OmYrTWZZ2@aschofie-mobl2.lan>
-References: <cover.1784940306.git.alison.schofield@intel.com>
- <5b1f9970140ad1ea5924de06b7e6879e3b9deea1.1784940306.git.alison.schofield@intel.com>
- <20260725012637.F34231F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260725012637.F34231F00AC4@smtp.kernel.org>
-X-ClientProxiedBy: SJ0PR13CA0031.namprd13.prod.outlook.com
- (2603:10b6:a03:2c2::6) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Sat, 25 Jul
+ 2026 06:22:16 +0000
+Received: from AS8PR04MB9080.eurprd04.prod.outlook.com
+ ([fe80::92c2:2e03:bf99:68eb]) by AS8PR04MB9080.eurprd04.prod.outlook.com
+ ([fe80::92c2:2e03:bf99:68eb%6]) with mapi id 15.21.0245.012; Sat, 25 Jul 2026
+ 06:22:16 +0000
+From: "G.N. Zhou (OSS)" <guoniu.zhou@oss.nxp.com>
+To: "Frank Li (OSS)" <frank.li@oss.nxp.com>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: "G.N. Zhou (OSS)" <guoniu.zhou@oss.nxp.com>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
+	"media-ci@linuxtv.org" <media-ci@linuxtv.org>
+Subject: RE: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional 32-bit RGB
+ format support
+Thread-Topic: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional 32-bit RGB
+ format support
+Thread-Index: AQHdG0D8PSwCpr6b00msBzkFKhwzq7Z8T2AAgAB81gCAAPgKsA==
+Date: Sat, 25 Jul 2026 06:22:16 +0000
+Message-ID:
+ <AS8PR04MB9080E95D676915F8DAF9A710FACE2@AS8PR04MB9080.eurprd04.prod.outlook.com>
+References: <20260724-isi-v4-0-27df7b5f6060@oss.nxp.com>
+ <20260724-isi-v4-3-27df7b5f6060@oss.nxp.com>
+ <20260724080342.998CE1F000E9@smtp.kernel.org> <amOFFm253o4lwhs1@SMW015318>
+In-Reply-To: <amOFFm253o4lwhs1@SMW015318>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR04MB9080:EE_|GV1PR04MB10797:EE_
+x-ms-office365-filtering-correlation-id: 7acb46bf-ce3a-4d91-243c-08deea1512a2
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|376014|366016|19092799006|1800799024|38070700021|6133799003|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
+x-microsoft-antispam-message-info:
+ 5WHsHtE+LeslQsmtM1X/fWaGaaXqyIIYKf3yEM19KGasD9FqZ9JtPo1/5WAKlun0aaJsGf6NfY/GEFnCbX1jsz6Ahw9it4HFYHW6KVabDovKKoch3kuvCQwXX1qqmIgx41KOSPvOYh54wl5mj0dJHspifYP5eVOmpHL8ZrizcnvsTxFBl25bE1qfP/i34Wtd8WV4AASyZ3tVU+su1RWXZjMtTkIAwqkbAP0lQ43xhp1V17ujd/t7Kwcb6HNwv5pby8POfXFX0Y83h2bU0VVgDzQvMMbcyCX1piC7KCoOxki/lpl1YRFsHnQ5NvSctctBI+EO89J5zPkIFtHzcFnrBdTNZz94yIPEwjq/8qO8l5LvysUTZCwHAsiVMywk27gqB2LxHxqdUzjvKj78wJE8N10z1Paaw/In/fCbe94IcsFIrDh1llAPF2XZd+Rys7eeiyRL/kSfsMF+mfCI5vTXveswXDlHNffZa2jxduQ7iTZ5QdcmV7KOWeGx2dGKVBhLm3vV9m+MXtvPQ2DeNG9J3GjhhhFfE2ZPQNCvkgVoNjR6SwWm6MUiQ8qh1tumBH72hfRT/PeHUtzoDzF1bUO9YjItdQyucQxJQhgqal3/EsF5SaAei+J2fkoT1vW09p0EFpReAjMuRqP+TZo+8NFN11plsjAAQAWe/haCTryXLlw=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9080.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(19092799006)(1800799024)(38070700021)(6133799003)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?PSaTPwD+v0tN6p/J/hxXOAWB7zItRqLB4MNuLR2daYY4VTV/n+fqy9JtTgND?=
+ =?us-ascii?Q?70TlH9N5t67FaN6zqiC6ILNzSM+KaHWO1UeF7KgDY7qPPikyXlg6HLZxy0nA?=
+ =?us-ascii?Q?irnTCQcCzGxdtZqdVr6hRFkTBmPjs/4RwXfN/xFtQbdBDPnY52hLF5v0PmhA?=
+ =?us-ascii?Q?wJM01WWWewgcAUdjKxEMl3JDgUBp9uvzX1jLx4bybKk6YLTVzUKU7YHBplQA?=
+ =?us-ascii?Q?5GPufII8OF8Vtk0lnNup/s2vN0L8FcnPVaVcxBmVFvmPoo4yDkP/XlKHkKE5?=
+ =?us-ascii?Q?vCIMWNLNlTeMK4y4cfR1mx6GqBa6WzCHiqhL0WiwKXSVeKY6D72GF0XtwsmL?=
+ =?us-ascii?Q?A0eAVuqgPfkDmsf+xGPkDQCghq/Se49kZxrvPQvgvh+i3xqT/dK1TL1sMLG2?=
+ =?us-ascii?Q?GtsVDcGgk5BeKp41/jHGMe6xV8JZowZSdQdv4WHmGDjJZysgP9jM6iwb0YwK?=
+ =?us-ascii?Q?+UO3PJdGOdsYpxI4VAOClANWEV9PA91uIWS6goYTXAGg8e0xkvOZBqp4K7uq?=
+ =?us-ascii?Q?7j2/y54WYnIJQxukVv4nyO8habq7/yKCn8TSoPZMQlOR0blr2YWPBHeSqZ/m?=
+ =?us-ascii?Q?6wbgWlqZKTt/9bIm5NEqvcrZHoQm9fBCXsMypOH06bD7GUoi2A+VcnXG7/JF?=
+ =?us-ascii?Q?f7Z4JCzpIZe6suRUcXcvznlfCT8eIFqXx/x5ut9NOru3jHp2aWPWyt5gptVW?=
+ =?us-ascii?Q?DHbYeGCEq3cx46PEkb66akyJ9IxAoeJ3uu6tJH8PKig3AfTE39timmGVDsy5?=
+ =?us-ascii?Q?sZpOFwD1KQhmlhdVZ52XnmCONux1GCvuyertggrZsq4NMetVyme8loeFKu5N?=
+ =?us-ascii?Q?Y3iTknNy5/t/r6tMcJ4AMhVCt4bB9/sC7uUeQ98aVzEfowBG8TdT/ZRml+zJ?=
+ =?us-ascii?Q?gyubBdGfbnYeyl03yzzxvcK+PPGtskfPSlYxJsrdXGfPaiUci2Al6LdqelFb?=
+ =?us-ascii?Q?Gf5JJzTtPQkg7TYczPaUIiCNn1RqXC4XFoIVN2zOk3KHgXlqg8/7M97kmate?=
+ =?us-ascii?Q?vmATeK07WGtr+NF6axUR4WhgF75+apYaOy8vUlUiR/U8mJct7ht8WNUC3jgd?=
+ =?us-ascii?Q?RKmFDmOlBKMc+WZA92s72vUAC2UwUYQF1PrFpRaEOm1NX9QTPbXZNQeookgN?=
+ =?us-ascii?Q?L90CuRd0kBBbL4juV2tuHti+A6q1NKafG2qS/JKz06ZDb0pioZq2JBVX4m/3?=
+ =?us-ascii?Q?p78oPLwbGwN7HSbManjTdfuu+De0geF225vmkQhCzXvkVt5PUMhnKl+vu1i8?=
+ =?us-ascii?Q?G2BYnhpSZXYNxvHOIZ8AFtsNSREOOYrtiWc5D5NacGUAz+12crIKMWccg5CJ?=
+ =?us-ascii?Q?XXcKTqpxtaU5lkULOZbLONzgxsTHj2yzGokI3jO66gwPU5e+YYTbt8Gpa28Y?=
+ =?us-ascii?Q?Zt85ZIrerqiH8/cNcwGAYv+QqbUzjSGz5ALKVhpMtK6kziPO7pXoug5aSnyB?=
+ =?us-ascii?Q?sgTLtzIvT5UWt9M2sFaDbftxOcDMcs6bYGc/2Bvt1+VxWsZ5HGr7AqDtANGY?=
+ =?us-ascii?Q?zQKvyvxEdPpYD8Fr7wEjG4Hru4oXf3m8k8oPcZnqqiLoyoLtFyBIlvI0GJRo?=
+ =?us-ascii?Q?yBJ1O4xaG37UOx2Hvlv/INauMunUIZmsu+oBQTwjtlTLrPE2CErHOdO/hY36?=
+ =?us-ascii?Q?Z8zy1V9h9nj0BZylkmEo0Zx4xFq5/JuiCeHFdi70amoeZXIKx2bBDBCDah9J?=
+ =?us-ascii?Q?XaAHFnq83QMpb+bLCj/KwTT6m0HmFOhcql7deyESFMiMifLH?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|BL3PR11MB6315:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5cc57b1b-48d8-4e28-2889-08dee9eded5f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|6133799003|18002099003|22082099003|11063799006|56012099006|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info: diOyzVZY82R/n+4tDxpwSwZ7hHPyvk5EH59bsI1+6pOQ0zeTqc3EewVs6z3agOaPHlyLN7CN9SoXwzyk0l5vz28CTG2XcDUnHid1RPq+KTsxdccvb9GNwqUbQyjjNAWi9YpO50+SLt6tTAQKRf9N0FXhRnvnqGk/C4+eY1i+7lLrZT3CnpSKYUz04XGB8to1WWMbKjf8Qb02Crss0kT2ka0/PoXz1gKVPtTNpR++X2YXpFzAURu4f02nzOShfgOf0S60bftXNFVlmFdwEl2FsuQayYugo2HDkjYIdCR3gBcHkM7uIkRxFftijBUPbimGiECsUsu2CbI6N3S4tCAWJGc81LPDSHyEOo5IxcHENth4gTCXXvovtJrtU5ozXSeCp/Xadc4A2Kd3e1MPIXRw0fBWRScIKNxkn3GLHM58FYYp8qPkcwOcZNXdBY5WljDUAsfP9ieQxyRKIpg3b0yz8NQXtcynIOy7Fk2coZNztbuBtkfzpiZ9SEaJ9m46h/J+hhaHep8WknluOtjDxG7BWY1Mj9szxxceHLyoFFgYILMwczgp9Prk5cl5tKhxqW9Yo2vmhGaiKyiADsAhqLx0+92jBZNMS815fC4UIrMVEBk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?ARC/n24knxRE3dX8EfFYHHlo4ZZ9skdF/hnku/N/W8LmkInEjyJE+eUgj3?=
- =?iso-8859-1?Q?gZANLYt76x7K8taQgurzvWU2OaaP9XeTw8sH0QLKPYvp5+CD+fZ0UyjArT?=
- =?iso-8859-1?Q?DPwjpJxjzoKTNxkASqT/r6pTp1iC3ELUpmVmrlotjvtGbOM3NI+W7vOdCp?=
- =?iso-8859-1?Q?TOh/+Lq5A/CATDK/HMCp1r0TtpAny4CEA8v9JMQEaYq62bT4yP7lfxwhn7?=
- =?iso-8859-1?Q?Wkj/mN4JBmf3r09upuqLIEHd2IX/BM1vlHfztxyx3t0fZloawY+vSjh+aT?=
- =?iso-8859-1?Q?Sf1LsKhXDB7S4EndUXcDUyIUqMjpNH/OO1E73x2X/a0w+X+mzKIQnPchxG?=
- =?iso-8859-1?Q?LvW72qiwWN/ryNobE6f36bQHVgL8GU/OOwHEcXDCvNVGgKscO3wJmEUqmh?=
- =?iso-8859-1?Q?Uedce8ZzeUZg2KU+EQqBF8GC53PLOOQUQZtdKejIDKOpr2l4INO23I2x3y?=
- =?iso-8859-1?Q?yhshlxfedQc7QP8Tu4NLdRsOLodydiYa2FwtAGdhR+AY2EXMJDA4nBS7Hb?=
- =?iso-8859-1?Q?SM/ELTuRLOASpVLczCYJOCYUJUTWgkOSr2xHOMpzh24FU+1FokzmE99sx7?=
- =?iso-8859-1?Q?wODvh3NxUOK26YEN6OwvHTvrXIyZ5n/ilKe0j8K9nznHtooCOUJPQMpyKp?=
- =?iso-8859-1?Q?eVjnvY2spT2983wxglpUdfNG2BPUrfh/efTGTVnai+8PyqCaCkAPMV+wcY?=
- =?iso-8859-1?Q?LnEpRq/6lytrJY8ohsnqWEo5MCS/BlGq+Qy1j3TfkeG/RUlL3RQN8dMJiB?=
- =?iso-8859-1?Q?SKtpZbQnRNmjQFHz7YL8Kr1NKJmL7BVci57k7kxUbhbrx//EmI9WH5KuEx?=
- =?iso-8859-1?Q?1er77pqNqy30YC9OElfBLh6cuO+dz5yGsr6v4Xm5God4X4RHHCSFtQYF5R?=
- =?iso-8859-1?Q?qO4Y4/OlsbbHjFdmkgssKA+kywKLMAVpUDIGEU5zJQvJPwnsnfuSgQFxor?=
- =?iso-8859-1?Q?96j41MuZCTAzfwD7eKKGUgL1pawZZpTIOv+BqVx2TKB8nLY38quE8ng+9O?=
- =?iso-8859-1?Q?m2e8AxaQlX07Yqy3QFCVPuWeVfrNHknVfwO5zH5pY2p9pSRq0PFLqDS+iW?=
- =?iso-8859-1?Q?1AFFeQhthzoUzHOVQgTwkV3Imp4xA7KOFN/w6PR2cRQg5k6nobzceEncsh?=
- =?iso-8859-1?Q?q5DSn42OMUB/Ja1uHK4HNXCQ55yP5PW7n/DkwrX08qWWgIIWy0V0SEAoc5?=
- =?iso-8859-1?Q?zBzyFgHioyaogQlpWyV2vsn+PFuQndHTXRd3irrKts3xOCANir7SS1WkRB?=
- =?iso-8859-1?Q?yzX004uzX9MjJXMmdraN6tCO7hurR1OOd9VXvbm8LB7wF1JRi+R/yKfKLr?=
- =?iso-8859-1?Q?WIgMJLtg/7mQq3HHQ6cTxf54nx6i3inx3JNV0UvT64fEZzSIHI+vhoauYy?=
- =?iso-8859-1?Q?8FHA+HzZSeBP1GJ4cwM/K9hdnZe5syWrfTLrW0F8cuECNXO95iDIpXtg3v?=
- =?iso-8859-1?Q?4K7U6h4xl3YlkGjLOVRC8UksfpFX+k1+nICR1l2DtPRMd6dFY+xxgXyiY/?=
- =?iso-8859-1?Q?pOwnINEDNpXqvRN2bRSE4+wSj3/9wiDLZ7vgKuSNnT2/Ry71w6xuQrxEAC?=
- =?iso-8859-1?Q?dP6wPOTwn97A6n8Ojsq07/M9PiE+FVbqS7WoyGMhLcDVlgxqMb6yzszXSg?=
- =?iso-8859-1?Q?sQTlzdmzxV/gayemPT/B8UvOqkibUzoOiGZkulzlEb+fNzpK/BjdoFyUGI?=
- =?iso-8859-1?Q?pVitfTjtqiM529Q3BGjnX/RVZZEJsZosE16PTdqnRuhJuvYH/BM3ZVWFsM?=
- =?iso-8859-1?Q?qGGYRvHODvIjL2WHa2lPgdW37szt9cbRS2Fb7pqs8M7YZE9thi7NZ+jKk5?=
- =?iso-8859-1?Q?qKRhQdBr2V2ZZISCakNb48dzTVuvyIE=3D?=
-X-Exchange-RoutingPolicyChecked: lhUGyCbtYCBJJ7nhVs4ZQ+aPh0EIMCkJWCzSlWeidF2BLRmQeGmrQNZ6HOm9hz8Gn2PCnX2F2rnW/7yQXsswrZ/Jq3oj+PAFMAecb//R5xPxBYZeP3JtGrz0NdL0hRZZsanZ003F2C/aYeOrQZh30Iwm2T12wZUNBGcRwbSBfnMQdh0oHlLIFha1QCkY2w3VTe8XQquvFzEjtmtXuu4e+2FuxIhPDNRmxlqOfKcVyr1H+5UqfM1sMSu6jD5FTr90H7bsJwpudaqfdxqO+ypY8quLmy83wTCWd/ALr+fF9fXwPsUOelSZhzRM6lKxkumUXfwHQuFw5iGO+YJgt2faFA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5cc57b1b-48d8-4e28-2889-08dee9eded5f
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-OriginatorOrg: oss.nxp.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2026 01:42:03.5069
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB9080.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7acb46bf-ce3a-4d91-243c-08deea1512a2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jul 2026 06:22:16.0380
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ebywEhmzswxWWIsfFsHXi5vxVRY24kfiX0aZuB0+vC+v/wrYbvHQTLR+DQVCsE/clASjvXlojGnYf2oJ43rm9xyMa8igLKtwI5Nn9yPDPaE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR11MB6315
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: P8Aty8MrY+z4VdiI0z0O7sBq8GkqiXn64edhYwMNe+TjUsYGiP+uuUsIzO0nZxPl1ASY9MCvqaEkaBy14c8gOw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10797
 
-On Sat, Jul 25, 2026 at 01:26:37AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] During region auto-discovery, a passthrough decoder's interleave granularity is not updated to its correct topological value, causing valid interleaving descendants to fail auto-discovery.
+Hi Frank,
 
-Same NO as in v1[1] (and in v2).
-Gratuitously updating the field is not the right thing to do.
+> -----Original Message-----
+> From: Frank Li (OSS) <frank.li@oss.nxp.com>
+> Sent: Friday, July 24, 2026 11:31 PM
+> To: sashiko-reviews@lists.linux.dev
+> Cc: G.N. Zhou (OSS) <guoniu.zhou@oss.nxp.com>; imx@lists.linux.dev;
+> Frank.Li@kernel.org; media-ci@linuxtv.org
+> Subject: Re: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional 32-bit R=
+GB
+> format support
+>=20
+> On Fri, Jul 24, 2026 at 08:03:42AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to
+> consider:
+> > - [High] V4L2_PIX_FMT_RGBX32 and V4L2_PIX_FMT_XBGR32 share the same
+> isi_in_format, which will result in swapped color channels during M2M rea=
+ds.
+> > --
+> >
+> > --- Patch [3]: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional
+> > 32-bit RGB format support --- commit
+> > 60dac66057b0040d017034c0952f79ec30cec366
+> > Author: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+> >
+> > media: nxp: imx8-isi: Add additional 32-bit RGB format support
+> >
+> > This commit adds support for additional 32-bit RGB pixel formats
+> > (BGRA32, RGBA32, BGRX32, RGBX32, ARGB2101010) to the i.MX8 ISI driver.
+> > Formats with an alpha channel only support capture, as the ISI ignores
+> > alpha bits when reading from memory.
+> >
+> > > diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+> > > b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+> > > --- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+> > > +++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+> > > @@ -166,6 +166,57 @@ static const struct mxc_isi_format_info
+> > > mxc_isi_formats[] =3D {
+> >
+> > [ ... ]
+> >
+> > > +	}, {
+> > > +		.mbus_code	=3D MEDIA_BUS_FMT_RGB888_1X24,
+> > > +		.fourcc		=3D V4L2_PIX_FMT_RGBX32,
+> > > +		.type		=3D MXC_ISI_VIDEO_CAP |
+> MXC_ISI_VIDEO_M2M_OUT
+> > > +				| MXC_ISI_VIDEO_M2M_CAP,
+> > > +		.isi_in_format	=3D CHNL_MEM_RD_CTRL_IMG_TYPE_XBGR8,
+> >
+> > [Severity: High]
+> > Does this mapping for V4L2_PIX_FMT_RGBX32 swap the red and blue
+> > channels during M2M reads?
+> >
+> > The newly added V4L2_PIX_FMT_RGBX32 format (memory layout R,G,B,X)
+> > maps to
+> > CHNL_MEM_RD_CTRL_IMG_TYPE_XBGR8 for DMA reads.
+> >
+> > However, earlier in mxc_isi_formats[], the pre-existing
+> > V4L2_PIX_FMT_XBGR32 format (memory layout B,G,R,X) uses this exact same
+> configuration:
+>=20
+>=20
+> Is this true?
 
+No, there is patch to fix the earlier incorrect mapping.
+https://lore.kernel.org/linux-media/20260720-isi-v2-5-45845bc5d4fa@oss.nxp.=
+com/
 
-[1] https://lore.kernel.org/linux-cxl/alKP8OP4DNT2nJnu@aschofie-mobl2.lan/#r
-No. A downstream decoder can't inherit an unecodable value into a failing
-check. A >16K granularity only appears below a wide interleave, and
-everything below that inherits an equal-or-larger value that an interleaving
-decoder couldn't encode. So every descendant is necessarily passthrough and
-never validates granularity. There is no path where updating the F_AUTO
-value would prevent a failure because the failure cannot happen.
+Best Regards
+G.N Zhou
 
-
-
-
-
-
-
-
-
-
-> --
-> 
-> --- Patch [1]: [PATCH v3 1/2] cxl/region: Allow passthrough decoders with >16K granularity ---
-> commit d213bad3e4cb8647e64aafb5eacaa82258aa533b
-> Author: Alison Schofield <alison.schofield@intel.com>
-> 
-> cxl/region: Allow passthrough decoders with >16K granularity
-> 
-> This commit allows passthrough decoders to have computed granularities larger
-> than 16K by treating the interleave granularity as a don't-care value for
-> non-interleaving decoders. It updates the region configuration to skip
-> validation and hardware encodability checks for these granularities, while
-> keeping the computed value to seed descendant decoder setup.
-> 
-> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> > --- a/drivers/cxl/core/region.c
-> > +++ b/drivers/cxl/core/region.c
-> [ ... ]
-> > @@ -1549,20 +1557,21 @@ static int cxl_port_setup_targets(struct cxl_port *port,
-> [ ... ]
-> > +	ig = parent_ig * parent_iw;
-> >  
-> > -	rc = eig_to_granularity(eig, &ig);
-> > -	if (rc) {
-> > -		dev_dbg(&cxlr->dev, "%s:%s: invalid interleave: %d\n",
-> > -			dev_name(port->uport_dev), dev_name(&port->dev),
-> > -			256 << eig);
-> > -		return rc;
-> > +	/*
-> > +	 * Keep the computed granularity for descendant setup. Only
-> > +	 * interleaving decoders require an encodable granularity.
-> > +	 */
-> > +	if (iw > 1) {
-> > +		rc = granularity_to_eig(ig, &eig);
-> > +		if (rc) {
-> > +			dev_dbg(&cxlr->dev,
-> > +				"%s: invalid granularity calculation (%d * %d)\n",
-> > +				dev_name(&parent_port->dev), parent_ig,
-> > +				parent_iw);
-> > +			return rc;
-> > +		}
-> >  	}
-> >  
-> >  	if (iw > 8 || iw > cxlsd->nr_targets) {
-> 
-> [Severity: High]
-> When auto-discovering a region with a passthrough decoder (iw == 1), does this
-> skip updating the decoder's interleave granularity to the computed 'ig'?
-> 
-> Looking at cxl_port_setup_targets(), the auto-discovery path handles
-> non-interleaving decoders by bypassing the granularity mismatch check:
-> 
->     if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
->             if (cxld->interleave_ways != iw ||
->                 (iw > 1 && cxld->interleave_granularity != ig) || ...
-> 
-> However, because cxld->interleave_granularity is never updated to 'ig' for
-> auto-discovered passthrough decoders, won't it retain its stale hardware
-> value (which could be a don't-care value like 0)?
-> 
-> If so, when descendant decoders load their parent's interleave granularity
-> earlier in cxl_port_setup_targets():
-> 
->     parent_rr = cxl_rr_load(parent_port, cxlr);
->     parent_cxld = parent_rr->decoder;
->     parent_ig = parent_cxld->interleave_granularity;
-> 
-> won't they inherit this stale hardware don't-care value? This appears to
-> cause their own expected 'ig' calculation to fail validation during
-> auto-discovery, resulting in the region being rejected.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1784940306.git.alison.schofield@intel.com?part=1
+>=20
+> Frank
+> >
+> > 	{
+> > 		.mbus_code	=3D MEDIA_BUS_FMT_RGB888_1X24,
+> > 		.fourcc		=3D V4L2_PIX_FMT_XBGR32,
+> > 		.type		=3D MXC_ISI_VIDEO_CAP |
+> MXC_ISI_VIDEO_M2M_OUT
+> > 				| MXC_ISI_VIDEO_M2M_CAP,
+> > 		.isi_in_format	=3D CHNL_MEM_RD_CTRL_IMG_TYPE_XBGR8,
+> >         ...
+> > 	}
+> >
+> > Since these two formats have opposite red and blue channel locations
+> > in memory, can the hardware DMA controller correctly interpret both
+> > layouts using the identical input format configuration?
+> >
+> > It looks like this could result in corrupted color conversions for one
+> > of these formats during M2M operations.
+> >
+> > > +		.isi_out_format	=3D CHNL_IMG_CTRL_FORMAT_XBGR888,
+> > > +		.mem_planes	=3D 1,
+> > > +		.color_planes	=3D 1,
+> > > +		.depth		=3D { 32 },
+> > > +		.encoding	=3D MXC_ISI_ENC_RGB,
+> >
+> > [ ... ]
+> >
+> > --
+> > Sashiko AI review *
+> > https://sashiko.dev/#/patchset/20260724-isi-v4-0-27df7b5f6060@oss.nxp.
+> > com?part=3D3
