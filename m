@@ -1,234 +1,195 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011066.outbound.protection.outlook.com [40.107.130.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E502931FF;
-	Sat, 25 Jul 2026 06:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1128E258EF3
+	for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 08:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784960546; cv=fail; b=lEfMAeQI+w0L4CxzOjPs4kwiPhgGfyp6vVFL8kORk5MnoOBm69fMiwN5hPRuPy1ldmYjnHCTaDGNCEQa6+iz5ls17UBUbKAh8qWcyS8d3BMKnXo/1PRoFwpklcLxwPTalkBHpToZ7p4z8pxGXpzxaXHM7cFGPRrN5dr7AtcjCRc=
+	t=1784968101; cv=pass; b=DLSTHf0fw/DRKCeLI6P8qiXjmF92SgzDaefCbitN/s4Bq2i8Co/Imn5JKfnJl9Lp0MYgQwu3kA9h0BIRUgmZ4DXuTPpzNt9iOuQHDaIVDhLVKaosVHUNOQrvxbZ3Xy3iFFdEdA102cDExsybO9Vs1EkQLgzvviX4676y9SDDvoU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784960546; c=relaxed/simple;
-	bh=O7D32Yrq9Bl8ulSr46gKQSzOCTxa+LoNPMMh61EQkcM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=h9bk2cccC1bby3+iGTCt8QniGqfqA8MDEawXAHqXFMdafk2FuoUd+eTEx9Hb4UtoBiG0cAH7EtQMa0y40wb9vLSZsumIrGv710j7/SzHpoR5tcINGDkNhunToUlHulFbBJey95MjtrrM9PT1mTU9mBYcsTIl+AM4TQQ04WLFAUg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=BBCoebCx; arc=fail smtp.client-ip=40.107.130.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1784968101; c=relaxed/simple;
+	bh=8h0g0m95UWMrdfOEm7SeeirxjnSOEFAGony6F3rR36w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=soy/Qr8ckOkXZlnNQlGRDIVPfCGcB9UOB9u8d35zJfbdY4TQaBU37Oi3lg0d6UUsYrR/Gvf5ZKxYPgiw7m655ZVXsXtHzROcd0Lm/Qty0ohd2lmYbVZ/Z9Zz+kdBVi99BrQZP//ogVknnqfQqIeYFtXc6OMePOwR7erOsoKk7rQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Df2A0uxv; arc=pass smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="BBCoebCx"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AthU9XS8sf1QqmMdGvMWBhuiyp92KegfZiyqSVLPcPlYvH3QB33EMzmicNfn7/LU4QjIqxV4J5vjysJI8Tkir+ZtM6Fli4AiIQe6yh1WFO0b8WbShXNs6nYfnLlww+lnnC1o0CVQkDgJGnZ2f3iuljVRZlB02zNQlXGuXGZx++uCcvOSlt3G0G+jvKtkNYtm36fJZcg3Ec9MZu/N0iqGVTZTOYsem2BlnVrmtxlKoVvB5DimQlUW+P06SmGBQxBLmI11G6DulEzjzipcxrYAA4IyqOk2u2XBDGTF0Z2hRsQNFQMIumUlExksr6svOreaGaWquhscQrrf8TxTV3qAnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Rt/teTvSgaiSf9/kxly8NrVSTuYzNEHC702ozJI1Cq4=;
- b=nD09f0c5yGMMlti6zeVOooEw4a3+4oFsTbCTdtSN4/7NAWts1BBBmmql7NXgm+x/XFOveB1NtSy9MirBdczYo78iPkXRVi9er43Fb+plWeXS6Cd0J1oumUju6/9w1EMfCLq5uoRfAMfmOd+JwUpl0dWdbWYJKdudgb/iJs0fmaG2BHsRyeZQKJScBLkE1SD3xbhhu5hSple8t4q0GWddgZ2/yXrL7B6UJOSIPUmbRi+D668K69w1hMEVQ8QrCSyHdQfU5BCZBFxf4DW/jJByt3cowS82HBzuvC/iwJXjLUMIzFhVSNHBBUpcVxj372K5M87Z9CK+/U815vSFIp6lzQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Rt/teTvSgaiSf9/kxly8NrVSTuYzNEHC702ozJI1Cq4=;
- b=BBCoebCxKroagYIwYZYqpDQ0qCHd4P3aydsRChgRfrVlY2KH1LPAvabrje/+tLSrUzOev0MgyCtrkOIPDe5F5ac7jwvRfzQP9WqFbu7hmwn7R8jNQE6qK+hqcLitbpWUI2cn3Tsbd/rtkUmc3XyVcI0td249SjqZKfiOpSAEe9vcTWVuXntXnnakIFwAa/6e4qhmTYptF/5f6rwHoVq2ec39k8M2pkXHQUgFDKVHfyiaUZkVrn1srTR9de3d+rMtoBYVBUPmK9EAMvt0eY6kV9lbJc3KqtJfdXSBUue+ROm/fLduMVMvE+enQPRT8oFCDjOQoAr9Cmn68ZIeJf32zA==
-Received: from AS8PR04MB9080.eurprd04.prod.outlook.com (2603:10a6:20b:447::16)
- by GV1PR04MB10797.eurprd04.prod.outlook.com (2603:10a6:150:20d::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Sat, 25 Jul
- 2026 06:22:16 +0000
-Received: from AS8PR04MB9080.eurprd04.prod.outlook.com
- ([fe80::92c2:2e03:bf99:68eb]) by AS8PR04MB9080.eurprd04.prod.outlook.com
- ([fe80::92c2:2e03:bf99:68eb%6]) with mapi id 15.21.0245.012; Sat, 25 Jul 2026
- 06:22:16 +0000
-From: "G.N. Zhou (OSS)" <guoniu.zhou@oss.nxp.com>
-To: "Frank Li (OSS)" <frank.li@oss.nxp.com>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>
-CC: "G.N. Zhou (OSS)" <guoniu.zhou@oss.nxp.com>, "imx@lists.linux.dev"
-	<imx@lists.linux.dev>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
-	"media-ci@linuxtv.org" <media-ci@linuxtv.org>
-Subject: RE: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional 32-bit RGB
- format support
-Thread-Topic: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional 32-bit RGB
- format support
-Thread-Index: AQHdG0D8PSwCpr6b00msBzkFKhwzq7Z8T2AAgAB81gCAAPgKsA==
-Date: Sat, 25 Jul 2026 06:22:16 +0000
-Message-ID:
- <AS8PR04MB9080E95D676915F8DAF9A710FACE2@AS8PR04MB9080.eurprd04.prod.outlook.com>
-References: <20260724-isi-v4-0-27df7b5f6060@oss.nxp.com>
- <20260724-isi-v4-3-27df7b5f6060@oss.nxp.com>
- <20260724080342.998CE1F000E9@smtp.kernel.org> <amOFFm253o4lwhs1@SMW015318>
-In-Reply-To: <amOFFm253o4lwhs1@SMW015318>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS8PR04MB9080:EE_|GV1PR04MB10797:EE_
-x-ms-office365-filtering-correlation-id: 7acb46bf-ce3a-4d91-243c-08deea1512a2
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|376014|366016|19092799006|1800799024|38070700021|6133799003|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
-x-microsoft-antispam-message-info:
- 5WHsHtE+LeslQsmtM1X/fWaGaaXqyIIYKf3yEM19KGasD9FqZ9JtPo1/5WAKlun0aaJsGf6NfY/GEFnCbX1jsz6Ahw9it4HFYHW6KVabDovKKoch3kuvCQwXX1qqmIgx41KOSPvOYh54wl5mj0dJHspifYP5eVOmpHL8ZrizcnvsTxFBl25bE1qfP/i34Wtd8WV4AASyZ3tVU+su1RWXZjMtTkIAwqkbAP0lQ43xhp1V17ujd/t7Kwcb6HNwv5pby8POfXFX0Y83h2bU0VVgDzQvMMbcyCX1piC7KCoOxki/lpl1YRFsHnQ5NvSctctBI+EO89J5zPkIFtHzcFnrBdTNZz94yIPEwjq/8qO8l5LvysUTZCwHAsiVMywk27gqB2LxHxqdUzjvKj78wJE8N10z1Paaw/In/fCbe94IcsFIrDh1llAPF2XZd+Rys7eeiyRL/kSfsMF+mfCI5vTXveswXDlHNffZa2jxduQ7iTZ5QdcmV7KOWeGx2dGKVBhLm3vV9m+MXtvPQ2DeNG9J3GjhhhFfE2ZPQNCvkgVoNjR6SwWm6MUiQ8qh1tumBH72hfRT/PeHUtzoDzF1bUO9YjItdQyucQxJQhgqal3/EsF5SaAei+J2fkoT1vW09p0EFpReAjMuRqP+TZo+8NFN11plsjAAQAWe/haCTryXLlw=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9080.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(19092799006)(1800799024)(38070700021)(6133799003)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?PSaTPwD+v0tN6p/J/hxXOAWB7zItRqLB4MNuLR2daYY4VTV/n+fqy9JtTgND?=
- =?us-ascii?Q?70TlH9N5t67FaN6zqiC6ILNzSM+KaHWO1UeF7KgDY7qPPikyXlg6HLZxy0nA?=
- =?us-ascii?Q?irnTCQcCzGxdtZqdVr6hRFkTBmPjs/4RwXfN/xFtQbdBDPnY52hLF5v0PmhA?=
- =?us-ascii?Q?wJM01WWWewgcAUdjKxEMl3JDgUBp9uvzX1jLx4bybKk6YLTVzUKU7YHBplQA?=
- =?us-ascii?Q?5GPufII8OF8Vtk0lnNup/s2vN0L8FcnPVaVcxBmVFvmPoo4yDkP/XlKHkKE5?=
- =?us-ascii?Q?vCIMWNLNlTeMK4y4cfR1mx6GqBa6WzCHiqhL0WiwKXSVeKY6D72GF0XtwsmL?=
- =?us-ascii?Q?A0eAVuqgPfkDmsf+xGPkDQCghq/Se49kZxrvPQvgvh+i3xqT/dK1TL1sMLG2?=
- =?us-ascii?Q?GtsVDcGgk5BeKp41/jHGMe6xV8JZowZSdQdv4WHmGDjJZysgP9jM6iwb0YwK?=
- =?us-ascii?Q?+UO3PJdGOdsYpxI4VAOClANWEV9PA91uIWS6goYTXAGg8e0xkvOZBqp4K7uq?=
- =?us-ascii?Q?7j2/y54WYnIJQxukVv4nyO8habq7/yKCn8TSoPZMQlOR0blr2YWPBHeSqZ/m?=
- =?us-ascii?Q?6wbgWlqZKTt/9bIm5NEqvcrZHoQm9fBCXsMypOH06bD7GUoi2A+VcnXG7/JF?=
- =?us-ascii?Q?f7Z4JCzpIZe6suRUcXcvznlfCT8eIFqXx/x5ut9NOru3jHp2aWPWyt5gptVW?=
- =?us-ascii?Q?DHbYeGCEq3cx46PEkb66akyJ9IxAoeJ3uu6tJH8PKig3AfTE39timmGVDsy5?=
- =?us-ascii?Q?sZpOFwD1KQhmlhdVZ52XnmCONux1GCvuyertggrZsq4NMetVyme8loeFKu5N?=
- =?us-ascii?Q?Y3iTknNy5/t/r6tMcJ4AMhVCt4bB9/sC7uUeQ98aVzEfowBG8TdT/ZRml+zJ?=
- =?us-ascii?Q?gyubBdGfbnYeyl03yzzxvcK+PPGtskfPSlYxJsrdXGfPaiUci2Al6LdqelFb?=
- =?us-ascii?Q?Gf5JJzTtPQkg7TYczPaUIiCNn1RqXC4XFoIVN2zOk3KHgXlqg8/7M97kmate?=
- =?us-ascii?Q?vmATeK07WGtr+NF6axUR4WhgF75+apYaOy8vUlUiR/U8mJct7ht8WNUC3jgd?=
- =?us-ascii?Q?RKmFDmOlBKMc+WZA92s72vUAC2UwUYQF1PrFpRaEOm1NX9QTPbXZNQeookgN?=
- =?us-ascii?Q?L90CuRd0kBBbL4juV2tuHti+A6q1NKafG2qS/JKz06ZDb0pioZq2JBVX4m/3?=
- =?us-ascii?Q?p78oPLwbGwN7HSbManjTdfuu+De0geF225vmkQhCzXvkVt5PUMhnKl+vu1i8?=
- =?us-ascii?Q?G2BYnhpSZXYNxvHOIZ8AFtsNSREOOYrtiWc5D5NacGUAz+12crIKMWccg5CJ?=
- =?us-ascii?Q?XXcKTqpxtaU5lkULOZbLONzgxsTHj2yzGokI3jO66gwPU5e+YYTbt8Gpa28Y?=
- =?us-ascii?Q?Zt85ZIrerqiH8/cNcwGAYv+QqbUzjSGz5ALKVhpMtK6kziPO7pXoug5aSnyB?=
- =?us-ascii?Q?sgTLtzIvT5UWt9M2sFaDbftxOcDMcs6bYGc/2Bvt1+VxWsZ5HGr7AqDtANGY?=
- =?us-ascii?Q?zQKvyvxEdPpYD8Fr7wEjG4Hru4oXf3m8k8oPcZnqqiLoyoLtFyBIlvI0GJRo?=
- =?us-ascii?Q?yBJ1O4xaG37UOx2Hvlv/INauMunUIZmsu+oBQTwjtlTLrPE2CErHOdO/hY36?=
- =?us-ascii?Q?Z8zy1V9h9nj0BZylkmEo0Zx4xFq5/JuiCeHFdi70amoeZXIKx2bBDBCDah9J?=
- =?us-ascii?Q?XaAHFnq83QMpb+bLCj/KwTT6m0HmFOhcql7deyESFMiMifLH?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Df2A0uxv"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-497e6956acfso815658b6e.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 01:28:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784968099; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gRMYSaVJjuSl6dUvic+LQ06b/pR9m1Wv3p00oioaUukggWupWf8g6RnVK5z5/HfGDQ
+         UMyhfHb1JkWzTKjz9Qwjuqds0JlF6BTydX/N5JvKGvnXFkR68tEk/V5550Ookk0t1MMc
+         Ikho0qLy/PJeWwWWmQKgdvyPcFJXGob09+JWDbI4omlSU71/rbTK/JTcyGYAEBRBoYfX
+         sCpXessZCd/5DUeuPuhHw4vEVpfm4x1VENPHkpEG+REwwYTyZ3V2UojVtWDGtKTFUxt+
+         jTR1wvTopHr364XAvMr1Rw9KHMW3B6YgzseRYww6Ky8nygUNOF0loANgkI34ip2/33cz
+         pLiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tONE5Dm+YKr705QWohkzx3UlWr/5BV4hU/VR8deTz7k=;
+        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
+        b=X5Dnz/aGHJceX0Pu/lQ7pWHtvg0SQ6JPQvt3ddnzT0Tjp9V+WRvIKh2HTZodb51Vik
+         ZMESvrdx8ZTIfnoLMwxjrh6YwJTNkI1lM71NcfF5va8H4JPjicV3v5P26a29+XaRr3VD
+         mogTb2QE0o4xLtDuEpQJ7jeqPwE1y7WRJini9Gig6eI5xb1WZws/Y42a3VKTwDfpNw0o
+         SvfW4pmk3obr9qLoFvX8e4jQ16g1YHjlCoV1DofHjB3U4D3CFQtnDafYxC3Kktbfn8rN
+         9cHAlGbqtte5LIjwwBN99V8HxypWMfZIsgDe7jmP1y99bBOcBW2xoAkucwYAm2Bz9YhW
+         ibnQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784968099; x=1785572899; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tONE5Dm+YKr705QWohkzx3UlWr/5BV4hU/VR8deTz7k=;
+        b=Df2A0uxvEWh+WQC9meEdaeJTyCFK/nJ7mlhB1vNycvax98IbFHQ7CnWWvojhbDCVFi
+         oi3e8ATMR6QBEt6EIpa2ev0D5mdnTLmaq2JxkZ1A2OYmSqUkLblDBIiz+L7T5EUiQMst
+         HbkWY/XsNc/cI2kAyAxzuaGgtBS+JwgfMyUWE/ismVXcHmhVgsWq2K0rDLYOMLiE9ZC3
+         Ktv8ardNaw6NpMeUYgXlQoaHQB22QHt60tEKCf9MUbhs7nTzEu97GQaLfbJlp+mMivPi
+         lx78dzZFBlAS7KpSaAjo/cqqgqhYskO4LxYAVoKoFXuv2+RAgRL3g2Np3HTaAKwTtFfO
+         HrUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784968099; x=1785572899;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=tONE5Dm+YKr705QWohkzx3UlWr/5BV4hU/VR8deTz7k=;
+        b=YA9xr4J0gi3M+egfNhmZEqebC0isKtw+mG6NOgZYbSSTEsi4BQ5tZk96kovpfgxYPp
+         RQwCcNhPm94p52lpDA6sGpeBCni/B7uY5/KJ+07IFvpVLV0NF0BGmOPZqV2XANyOAVWa
+         8D2UT4twBBZLl0oQYzu1O2iVXruAb0T/TExjvX1Ibc/FSS0F5XuWVKEszvq4+M5pz4aV
+         qBWdJrqWHjN4BR/As/8iPDgQNJ3e1ydaRvGOzmmEVuhyDdHSXNXiVWbbJ27d91PKtB8d
+         Ic9LWqSH+p/42n0e+nSgfe3T/bLL6NrnAFoMgFuUFBE1UBUE8Psj/innd+3NOOWwWbHh
+         Hwsg==
+X-Gm-Message-State: AOJu0Yy+xCECfNx2HX4IMtv9NHRYBng9yvgGPMnQcZOioiWscAQ8yeND
+	ngg+liCoohbTexz0p1H8Lv2ms5CtDitD4/yU9N7ZqcKe89Qu0QuA2749yjzkpYE3Lr3gY/KArWy
+	5ACk0EV8Sc6Ylq7yQMRGsToJD8R3rR4RNYQ==
+X-Gm-Gg: AR+sD13sutwqBeyEMs5LWco5rpdqIOfjo4FnMQHgm6YAhXNNW/64tsIIQpXfTDJHcyV
+	MBeejHKQEDRGFqxYKCVJWrhtmvrZkPREq1HK7nCerk6egJ3b+VXcKh8CUNmOgtE0yi5gInpdZHk
+	DsSxlBAm+e9G+rmTD1XeBg7DXVRXCirMTlDxRA29KXNljbD8hKUI1cX9y6WcgusxpuCpC6tv9Ei
+	Ok4b8aOV6R304ucf63j5sYZM47gw2bbJ6gAGCC5FlRX9aTvM610gQvf4taTOUf1xpQqnOSPZ46A
+	BsViulSsAMOI065tBQ==
+X-Received: by 2002:a05:6808:c3ec:b0:4a4:933:dc11 with SMTP id
+ 5614622812f47-4ab5e50e4d1mr2951836b6e.20.1784968098575; Sat, 25 Jul 2026
+ 01:28:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB9080.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7acb46bf-ce3a-4d91-243c-08deea1512a2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jul 2026 06:22:16.0380
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: P8Aty8MrY+z4VdiI0z0O7sBq8GkqiXn64edhYwMNe+TjUsYGiP+uuUsIzO0nZxPl1ASY9MCvqaEkaBy14c8gOw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10797
+References: <20260723164612.3146-1-arun07172003@gmail.com> <20260723165651.8E6501F00A3A@smtp.kernel.org>
+In-Reply-To: <20260723165651.8E6501F00A3A@smtp.kernel.org>
+From: Arunachalam T <arun07172003@gmail.com>
+Date: Sat, 25 Jul 2026 13:58:06 +0530
+X-Gm-Features: AUfX_mwIedfCh5RwppGaQE7cxxF1bdosGLyXndWq8tZpyP6oMNxIL0Otxvgo2LU
+Message-ID: <CAB72pr2mQXigAzpNiPj6YQAREGnmcu-qBo1++3OnJJOfZfiwXg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] leds: cobalt-raq: add missing MODULE_DESCRIPTION
+To: sashiko-reviews@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Frank,
+Thanks for the review.
 
-> -----Original Message-----
-> From: Frank Li (OSS) <frank.li@oss.nxp.com>
-> Sent: Friday, July 24, 2026 11:31 PM
-> To: sashiko-reviews@lists.linux.dev
-> Cc: G.N. Zhou (OSS) <guoniu.zhou@oss.nxp.com>; imx@lists.linux.dev;
-> Frank.Li@kernel.org; media-ci@linuxtv.org
-> Subject: Re: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional 32-bit R=
-GB
-> format support
->=20
-> On Fri, Jul 24, 2026 at 08:03:42AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to
-> consider:
-> > - [High] V4L2_PIX_FMT_RGBX32 and V4L2_PIX_FMT_XBGR32 share the same
-> isi_in_format, which will result in swapped color channels during M2M rea=
-ds.
-> > --
-> >
-> > --- Patch [3]: [PATCH v4 3/3] media: nxp: imx8-isi: Add additional
-> > 32-bit RGB format support --- commit
-> > 60dac66057b0040d017034c0952f79ec30cec366
-> > Author: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
-> >
-> > media: nxp: imx8-isi: Add additional 32-bit RGB format support
-> >
-> > This commit adds support for additional 32-bit RGB pixel formats
-> > (BGRA32, RGBA32, BGRX32, RGBX32, ARGB2101010) to the i.MX8 ISI driver.
-> > Formats with an alpha channel only support capture, as the ISI ignores
-> > alpha bits when reading from memory.
-> >
-> > > diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-> > > b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-> > > --- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-> > > +++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-> > > @@ -166,6 +166,57 @@ static const struct mxc_isi_format_info
-> > > mxc_isi_formats[] =3D {
-> >
-> > [ ... ]
-> >
-> > > +	}, {
-> > > +		.mbus_code	=3D MEDIA_BUS_FMT_RGB888_1X24,
-> > > +		.fourcc		=3D V4L2_PIX_FMT_RGBX32,
-> > > +		.type		=3D MXC_ISI_VIDEO_CAP |
-> MXC_ISI_VIDEO_M2M_OUT
-> > > +				| MXC_ISI_VIDEO_M2M_CAP,
-> > > +		.isi_in_format	=3D CHNL_MEM_RD_CTRL_IMG_TYPE_XBGR8,
-> >
-> > [Severity: High]
-> > Does this mapping for V4L2_PIX_FMT_RGBX32 swap the red and blue
-> > channels during M2M reads?
-> >
-> > The newly added V4L2_PIX_FMT_RGBX32 format (memory layout R,G,B,X)
-> > maps to
-> > CHNL_MEM_RD_CTRL_IMG_TYPE_XBGR8 for DMA reads.
-> >
-> > However, earlier in mxc_isi_formats[], the pre-existing
-> > V4L2_PIX_FMT_XBGR32 format (memory layout B,G,R,X) uses this exact same
-> configuration:
->=20
->=20
-> Is this true?
+I'll fix the capitalization in v3.
 
-No, there is patch to fix the earlier incorrect mapping.
-https://lore.kernel.org/linux-media/20260720-isi-v2-5-45845bc5d4fa@oss.nxp.=
-com/
+On the global default_led_config issue =E2=80=94 agreed this looks like a r=
+eal
+problem: default_led_config is a static file-scope struct, so cfg is
+a pointer to the same shared memory across every call/device, meaning
+values written for one device would persist and leak into a later
+device that has no pdata of its own.
 
-Best Regards
-G.N Zhou
+I'd like to fix this properly rather than guess, but I'm not sure of
+the intended behavior in the multi-instance case. Is it safe to assume
+each probe should always start from the original hardcoded defaults
+(scale=3D100mA, num=3DISINK_3, iout=3D0) unless its own pdata overrides the=
+m,
+regardless of what a previous call did? If so, I can send a follow-up
+patch that makes cfg a local copy instead of a pointer to the shared
+global. Let me know if there's other context I should be aware of
+(e.g. whether multiple LP8788 LED instances are realistic on real
+hardware).
 
->=20
-> Frank
-> >
-> > 	{
-> > 		.mbus_code	=3D MEDIA_BUS_FMT_RGB888_1X24,
-> > 		.fourcc		=3D V4L2_PIX_FMT_XBGR32,
-> > 		.type		=3D MXC_ISI_VIDEO_CAP |
-> MXC_ISI_VIDEO_M2M_OUT
-> > 				| MXC_ISI_VIDEO_M2M_CAP,
-> > 		.isi_in_format	=3D CHNL_MEM_RD_CTRL_IMG_TYPE_XBGR8,
-> >         ...
-> > 	}
-> >
-> > Since these two formats have opposite red and blue channel locations
-> > in memory, can the hardware DMA controller correctly interpret both
-> > layouts using the identical input format configuration?
-> >
-> > It looks like this could result in corrupted color conversions for one
-> > of these formats during M2M operations.
-> >
-> > > +		.isi_out_format	=3D CHNL_IMG_CTRL_FORMAT_XBGR888,
-> > > +		.mem_planes	=3D 1,
-> > > +		.color_planes	=3D 1,
-> > > +		.depth		=3D { 32 },
-> > > +		.encoding	=3D MXC_ISI_ENC_RGB,
-> >
-> > [ ... ]
-> >
-> > --
-> > Sashiko AI review *
-> > https://sashiko.dev/#/patchset/20260724-isi-v4-0-27df7b5f6060@oss.nxp.
-> > com?part=3D3
+I'll leave this pre-existing issue out of the current series and send
+it as a separate patch once confirmed, to keep this series focused on
+the dev_err_probe() conversion.
+
+
+On Thu, Jul 23, 2026 at 10:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Low] The commit message claims MODULE_DESCRIPTION is required by modpo=
+st for this driver, but the driver is unconditionally built-in.
+> - [Low] The commit message description is not capitalized, violating subs=
+ystem guidelines.
+>
+> Pre-existing issues:
+> - [High] Unmanaged LED registration combined with managed memory mapping =
+without a `.remove` callback leads to a use-after-free on device unbind.
+> --
+>
+> --- Patch [1]: [PATCH v2 1/4] leds: cobalt-raq: add missing MODULE_DESCRI=
+PTION ---
+> commit f1b0026d062cbcf0e980882e66d901b8eb8e018f
+> Author: Arunachalam <arun07172003@gmail.com>
+>
+> leds: cobalt-raq: add missing MODULE_DESCRIPTION
+>
+> Add the missing MODULE_DESCRIPTION() macro, which is required by
+> modpost and was missing from this driver.
+>
+> > leds: cobalt-raq: add missing MODULE_DESCRIPTION
+>
+> [Severity: Low]
+> This isn't a bug, but the subsystem guidelines request capitalizing the
+> description after the prefix. Should this be "Add missing MODULE_DESCRIPT=
+ION"?
+>
+> > Add the missing MODULE_DESCRIPTION() macro, which is required by
+> > modpost and was missing from this driver.
+>
+> [Severity: Low]
+> Is this description accurate? This driver is defined as a bool in Kconfig=
+,
+> meaning it can only be built-in. Modpost only checks for MODULE_DESCRIPTI=
+ON
+> in loadable modules, so is this macro actually required here?
+>
+> > diff --git a/drivers/leds/leds-cobalt-raq.c b/drivers/leds/leds-cobalt-=
+raq.c
+> > index 045c239c7328e..5b5acaa8c3215 100644
+> > --- a/drivers/leds/leds-cobalt-raq.c
+> > +++ b/drivers/leds/leds-cobalt-raq.c
+> > @@ -101,5 +101,5 @@ static struct platform_driver cobalt_raq_led_driver=
+ =3D {
+> >               .name   =3D "cobalt-raq-leds",
+> >       },
+> >  };
+>
+> [Severity: High]
+> This is a pre-existing issue, but does the lack of a .remove callback her=
+e
+> leave a use-after-free window?
+>
+> If a privileged user unbinds the driver via sysfs, the driver core will
+> automatically release devm resources, unmapping led_port. Since the LEDs =
+were
+> registered with led_classdev_register() in cobalt_raq_led_probe() without
+> using the managed API, they remain registered.
+>
+> Would a subsequent write to the LED's brightness file trigger
+> raq_web_led_set() and write to the now-unmapped led_port?
+>
+> > -
+> > +MODULE_DESCRIPTION("LEDs driver for the Cobalt Raq series");
+> >  builtin_platform_driver(cobalt_raq_led_driver);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260723164612.31=
+46-1-arun07172003@gmail.com?part=3D1
