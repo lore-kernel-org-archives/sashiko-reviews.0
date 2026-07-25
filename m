@@ -1,181 +1,167 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B745039;
-	Sat, 25 Jul 2026 17:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785001893; cv=none; b=ZOwZ/R0OjjcyAwOAB58fbZuOQBGz/BT6CuFEfgtskJH1nOTlBn4mouejr/ig979aiFD5Tpi3Ow+6WbCYiA02Y84b2/d1mOlj8eXka6RjAzpSosTeMkfvt/FHag9UfanNGXvyVZhOoOJBfEa7JAw1Ed50QeOQPAOYonfUki/jRqo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785001893; c=relaxed/simple;
-	bh=do61F/kKDzjTtvAWKAEQbxwn+QmJ7jsHC4k7lNz8Gc4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kj08VgCq39+lm/3kXK+PSvQ+TreDN9YnHIiSsGg51w4m4CA6W6YbjRO2uu33QKtR+QKvbkJEtY8eas/ItuQtZJgwsJJhhJF6dFMveCqgTM+T67cisLxcnd5Ibt0cS+0yL/dH+221wmMwZoMe6S3DwhCuWDRWECVP4tDIUNr0hsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=k8vNA/Z5; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1EB39099E
+	for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 17:55:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785002131; cv=pass; b=X0W0AMpa5HtIMS57m2ueMfiYZbkaHTvtw7hEaj+u5AKb8TsneEdqHF7GstTGSmj9FjASUgziE1XD2FkMqA8MM+255NAZQOSoj3fbSog8OO8kcaR1dp5HwzciQ+m0hv9CPReCmOCnfMAg7y02OWfvE5RO7fdupbZsr3v+x8iHJD8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785002131; c=relaxed/simple;
+	bh=b9kifEXDkgdbLZHjZehLYSHr/pku1ziKm51x7inSn10=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MO4DT+e9a90vgs1ykTtyx/VcMKto/pJQ9pqO85Ro/04zwwBgND/hNVGoPxVc8mn3y9w9/xsARnYy6vttAkzIvWnXcT4NjKdLH0WPm7lwLEH4ENNguZgfDAiQeJC0CMf63NHIyw7lm5+vr/gwj9+cPd5VGt4IjeXNRbDs5mj3W20=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=axwCHE+z; arc=pass smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="k8vNA/Z5"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66PHI4bO1238949;
-	Sat, 25 Jul 2026 17:51:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=FkfapE
-	O/+i9Cz+Qc3Tv7mMoZfpvG57Ypp4Dh96Uy4vY=; b=k8vNA/Z52jp0Bn3ZDQMC31
-	Uj1Evbb5AG0+eidkOQq4MQbCM8bMQ/Iw2Enc7y95pnyokqTvM6DBpnEbCKA2dhPv
-	Xnv+lMRdvdcMbyZL/8Y8rlMlvnEBHbPz3Y08FNQaVSjxTBE1kU4oEMNNn9NJkKZl
-	z6rJDXQMWbb3hUXZv3IR3M374HX9BZV9Ufz7TstdwP0APUhq9XonLIlz5aa1Mx4H
-	wzRFaZYsaJPcjIDp66bHHlsHENxDTmSjrjcpexRkpoqqt4IsZbbm2+nq4vLD7IEW
-	Mq7MdJYXoerbzsBiOxUZBEhR/f1eTPOuX1UN8PSTCgUSc1PEmAYOso5us1ppWOrQ
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwcgwkx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 25 Jul 2026 17:51:22 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66PHfM6U006300;
-	Sat, 25 Jul 2026 17:51:21 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fmn33223m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 25 Jul 2026 17:51:21 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66PHpK8t26608172
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 25 Jul 2026 17:51:20 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4A56458050;
-	Sat, 25 Jul 2026 17:51:20 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0337D58045;
-	Sat, 25 Jul 2026 17:51:17 +0000 (GMT)
-Received: from [9.39.22.45] (unknown [9.39.22.45])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Sat, 25 Jul 2026 17:51:16 +0000 (GMT)
-Message-ID: <7148147b-c2b0-4d97-bf22-b4bdb50e768b@linux.ibm.com>
-Date: Sat, 25 Jul 2026 23:21:15 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="axwCHE+z"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5b2960ea2fbso153571e87.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 10:55:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785002128; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QTiFy7kTRwsa48G+7wvE6eyNWv4vyBJRDtR617wvObMj++TnuywT9BSS5Wflj4v8F9
+         +1HLNyerYeEtDIPRSwv9vW7Shq/PhSX2dP6eyUOH3aRiSq5xv438jhZoMmAxyJwqnxM1
+         y6dTDJ1s7tiKLLMZzjF0SwAPMYhMxmUhSTTGzyDk+X19tV/CsDDR3LI/CVmT+O2+xJX9
+         1RSX0hXIAlQbF3ZTMXDSvzggmHr3mbwDr/nhaf3o9PfNrYoSlW1pFuFiaaHD33Cus5Qj
+         nxRXmJvRfoQRYrMDWv3+hb1ebtVdU4pDEpKco8pLXSkeGAiCmW3qZbh7aEm6VcUZga5G
+         epyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=yteFUPwKHiROMdXXI9GsH3+4d/0le9UOI6hRzkgiAG0=;
+        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
+        b=l/WnV1Nki+dGVUMKyvQfyxv1d5f/AuQCd69ixLcfGOQC9pEdUm7CRmy5dblD6qtCuu
+         x15TQe6U5CEG6nr5sldbT3NUMDLkekDaYlH0TgQi57ZJpagYHNpHfZfZm9BQrlMzm/Rd
+         KmuY+uTikPbm5ZNWCu/Scb/YpmleOHb3jkgjJhrbvrpYdSonqQT5D8HPDCPtz8184mok
+         5R2ipwlF7QluHHqfAnsjknB7X+Fgur3hTODUPhFB+uDg54c6GsdiQoYFPoz7LZvIyI9G
+         DDvjU8+JnGsUp/jadlKFE3ZkZ33Vx5wlaK+P7lBAKc9bZ5Cb2PcSPafCvcWaL3ikTTiD
+         lwTQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785002128; x=1785606928; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=yteFUPwKHiROMdXXI9GsH3+4d/0le9UOI6hRzkgiAG0=;
+        b=axwCHE+zoHcYx3c3tlDBt5CzJtiV3b+S/aG9trfv+YBce0I7qUCU2sPIis72GZ9ptM
+         pB19hDT0q+34U6raXPohvXU+QC/X7LySjY2HxD5azGWqTsCVJQaZwFTlaS/CFKsd/+Oa
+         N/MAPW5DnZUs4Pu3ut3Av+zQwv14gfOITdIn9FhOjIWYfNRd05yElQTODzhMsZwc0pRm
+         Krv6W9ijnS8wY+fN6GtfKR8zG/9KZAR+SvGFDVl22ZuM7Qs/Pb8u7yA2Y1pbx2SySrmF
+         nwEIb4ixIkS5Y96OAkDp9FooLCE4cJdL0zVvna4zgiKyUDFcVJR6ghORqaT9E4Vj02h+
+         I5fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785002128; x=1785606928;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yteFUPwKHiROMdXXI9GsH3+4d/0le9UOI6hRzkgiAG0=;
+        b=tM54I+ph+d6a0ehE+6sWmJRj11ouAlIPQRSitkoVUa01bpMPhU43iWE9bt9vi0JJ53
+         r4uLXNfhQbOuVlKO5IcVs8gdPR3ExhfNsyj8FicwhkQilS6OTKiJF06ONb8maJsw5NYS
+         VLFWi7FnREM1uQLI2gD27v1zPS4uES3R+nFEFiwKKOlW8Gn0T1RwJi/nQLbrx1VDFaBL
+         +WR2ITBmlbh4rfb7349CiOZuZr1uMkAhUAEouOIP7QAxs6mzZLqtHHVg8SP44c+qh61B
+         wwgzz/uPxA8D4dCyJG7yA8mQeoC5qNoh7X6hTKwwznWkFj0+wOJKZ69BJtBglV6Ec7Mg
+         buiA==
+X-Gm-Message-State: AOJu0YxIJlP0GO9S3XvEC4dhPC/X99/rpjkTxlQjRpyFY2+UuEpZVBUl
+	16bkTCbSQwC4Hz707vC1hgeVKSQ+uAmiU+bbaaKfmzzN+IAENDuQO0j36KpdEhbyYXNO5WGAoEI
+	ygvBzUJLabQQdiWPnfRSqbWDgSNjE2Xf14cEs
+X-Gm-Gg: AR+sD11/teoAVYWjBMh75zgWS29o4YW/J2L9C8yaUqye1k7zCY8YqN4kArKv2m6p5vH
+	ISIKoUZ5lpX28jtSc11RADzYX667ocg8GP/7F/zZEolXHdSozyAsFee4nmTWD/Ar9HmSW8kzAzR
+	r1Jm8DT8TvTQuhE0n+lS/0JGPJA3VDtxjlekipxetHnnVXCwNJlBBrKSG9XqwwjBM1zCMrEUEwI
+	YeMf5XyR1RWKwlJELYdAzzhnzW4vMu/K/8E9qF8fmTk/C/LnV6vGpsrSslXecxif7FlPSYddj+R
+	s/5TbY/qSDgih/4/dbc4cDy0rFC8ZHb0nAbA7EksWUNuznPx473yhUjDIIeEB/SItFXhg/wdhtb
+	Z/qJTgMYliKk=
+X-Received: by 2002:a05:6512:2520:b0:5b0:6aea:cdb5 with SMTP id
+ 2adb3069b0e04-5b2c1af7abemr344844e87.1.1785002127934; Sat, 25 Jul 2026
+ 10:55:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] perf trace-event: Fix integer truncation in
- do_read() and skip()
-To: sashiko-reviews@lists.linux.dev,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Namhyung Kim <namhyung@kernel.org>, Ian Rogers <irogers@google.com>
-Cc: linux-perf-users@vger.kernel.org,
-        Madhavan Srinivasan <maddy@linux.ibm.com>, hbathini@linux.ibm.com,
-        atrajeev@linux.ibm.com
-References: <20260724141316.99507-1-tshah@linux.ibm.com>
- <20260724141316.99507-3-tshah@linux.ibm.com>
- <20260724144741.5D8FE1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Tanushree Shah <tshah@linux.ibm.com>
-In-Reply-To: <20260724144741.5D8FE1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: OwBmTsuiC-t70IxqJcHgE9qk3YGSG1EN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI1MDE2OSBTYWx0ZWRfX9UFl9zd8R0px
- ScI124CzQABxjj958OYArpf4dN3+MTpf+oprvFyvsNq6i/lXYn6ob5g5xK+GAVAwWzBVN8EzbBg
- PVYArPkSjBtkRIaYC1NLxtDQXAGadDE=
-X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a64f79a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=q3s4UKAsdI4kwQSyZB4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI1MDE2OSBTYWx0ZWRfX8j31prQaU1zW
- YalQJAkn/mMEQlUgHTgNIVzjOTfFotWtuoKsBeDwQdvqXxNuIsrWBF9WODCas8GhCoOOJ11ja4Z
- GSWnrLsE3fcjx+1b3uIR2NYb9cqlStgbZZDSbUVYw7QfN0tlE/6UWSwjHG522JEFIdPon4qTmwk
- i/MUk59F7mPH6/K2c6r2xRpyZ+NqsvCwyn4DORHP4neGdLJVRI5/cNHKPnPROcMUr79GQld/VWL
- oq8lMrf0Nl5rlx7pfPzHjHQEm5WZggx+SrHJi+7vqSc0Xd7PkjvS8JI6xjOUU4Yk7omO/L8LUr3
- aQROCm8XABI9/Z5o7HGysR8EwQxZpW11fSpaVR+3CxY/YEzUdSbiVM2yVJKqY8mRAYBbyOGXvnh
- dTLIUUrXdBOFX7u1ht7R6qo5X0whVhW89JxcnIlNo3WdvB0Xl5EyrrUNZjoWAu8U2E+8txvJ81c
- eHFJ22JzJrRGweVkGkg==
-X-Proofpoint-GUID: yOPdKC0Dp_K_sTehRMy3zh5eHqVnGxfx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-25_05,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607250169
+References: <20260721233452.112204-1-chenyou910331@gmail.com>
+ <20260721233452.112204-4-chenyou910331@gmail.com> <20260721234526.4300B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260721234526.4300B1F000E9@smtp.kernel.org>
+From: =?UTF-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>
+Date: Sun, 26 Jul 2026 01:55:15 +0800
+X-Gm-Features: AUfX_mwO0exdk6xo--FQSz6O3-k6E9IELUmukLCixnAOZrpUBTapZU86C2pRIFs
+Message-ID: <CAKspUhJnvEb-W+a8UEFxUKN=T=dyTpBSA5su7NrC1nszBuGsGg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] riscv: dts: sophgo: Add Milk-V Duo 256M board support
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the review
+Confirmed, this was a real bug. The address was carried over from the
+64M Duo. The 256M board's firmware reserves the top 2MB instead --
+the vendor device tree declares memory as <0x80000000 0x0fe00000> --
+so the region is 0x8fe00000/0x200000, matching cv1812h-huashan-pi.
+Fixed in v5.
 
-On 24/07/26 20:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Integer overflow in read_saved_cmdline() leads to massive heap buffer overflow
+Chen-Yu
+
+<sashiko-bot@kernel.org> =E6=96=BC 2026=E5=B9=B47=E6=9C=8822=E6=97=A5=E9=80=
+=B1=E4=B8=89 =E4=B8=8A=E5=8D=887:45=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Potentially incorrect coprocessor RTOS memory region address c=
+ausing memory fragmentation and risking memory corruption.
 > --
-> 
-> --- Patch [2]: [PATCH v3 2/5] perf trace-event: Fix integer truncation in do_read() and skip() ---
-> commit 907c8b1b7591be61f25cc72141dbcdba5822dfa4
-> Author: Tanushree Shah <tshah@linux.ibm.com>
-> 
-> perf trace-event: Fix integer truncation in do_read() and skip()
-> 
-> The do_read() and skip() functions use 'int' for size parameters,
-> truncating 64-bit sizes from callers. This causes two issues:
-> 
-> 1. Uninitialized memory dump: do_read() reads fewer bytes than
->     allocated, leaving uninitialized heap memory that gets written
->     to output files.
-> 
-> 2. Out-of-bounds read: Parsing functions process the full 64-bit
->     size while only partial data was read into the buffer.
-> 
-> Change do_read(), __do_read(), and skip() to use size_t for size
-> parameters and ssize_t for return values (where applicable), matching
-> read()/write() system calls.
-> Update callers to use ssize_t for storing return values.
-> 
->> diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
->> index afd458cf1387d..52ed496d92c3b 100644
->> --- a/tools/perf/util/trace-event-read.c
->> +++ b/tools/perf/util/trace-event-read.c
-> 
+>
+> --- Patch [3]: [PATCH v4 3/3] riscv: dts: sophgo: Add Milk-V Duo 256M boa=
+rd support ---
+> commit 0fb7e443f556963d48319d1228e77903653e11bc
+> Author: Chen-Yu Yeh <chenyou910331@gmail.com>
+>
+> riscv: dts: sophgo: Add Milk-V Duo 256M board support
+>
+> This commit adds basic device tree support for the Milk-V Duo 256M board
+> based on the Sophgo SG2002 SoC. It includes configurations for UART, SD/M=
+MC,
+> USB host, and the onboard status LED.
+>
+> > diff --git a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts b/arch=
+/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+> > new file mode 100644
+> > index 0000000000000..21ef6ed9f0d21
+> > --- /dev/null
+> > +++ b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+>
 > [ ... ]
-> 
->> @@ -350,7 +350,7 @@ static int read_saved_cmdline(struct tep_handle *pevent)
->>   {
->>   	unsigned long long size;
->>   	char *buf;
->> -	int ret;
->> +	ssize_t ret;
->>   
->>   	/* it can have 0 size */
->>   	size = read8(pevent);
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but can this lead to a massive heap buffer
-> overflow?
-> 
-> In read_saved_cmdline(), size is an 8-byte value read directly from the
-> untrusted file:
-> 
-> 	size = read8(pevent);
-> 	if (!size)
-> 		return 0;
-> 
-> 	buf = malloc(size + 1);
-> 	if (buf == NULL)
-> 		return -1;
-> 
-> 	ret = do_read(buf, size);
-> 
-> If the size read from the file is ULLONG_MAX (or UINT_MAX on 32-bit systems),
-> the size + 1 expression will wrap to 0.
-> 
-> The malloc(0) call will then succeed and return a small heap chunk, but the
-> original unwrapped massive size is passed to do_read(), which will loop and
-> read an enormous amount of data directly into the tiny buffer.
-> 
-Confirmed. will send a v4 with a fix for this.
+>
+> > +     reserved-memory {
+> > +             #address-cells =3D <1>;
+> > +             #size-cells =3D <1>;
+> > +             ranges;
+> > +
+> > +             coprocessor_rtos: region@83f40000 {
+> > +                     reg =3D <0x83f40000 0xc0000>;
+> > +                     no-map;
+> > +             };
+>
+> [Severity: Medium]
+> Is this reserved memory address correct for the 256M board?
+>
+> This address (0x83f40000) is at the top of the 64MB boundary, which match=
+es
+> the 64MB Milk-V Duo. Since the Milk-V Duo 256M has 256MB of RAM, would th=
+e
+> RTOS usually be placed near the top of the 256MB space instead?
+>
+> If the bootloader places the RTOS at the top of memory but the device tre=
+e
+> reserves this lower address, could Linux inadvertently overwrite the actu=
+al
+> RTOS memory during allocation? This might also artificially fragment the
+> contiguous Linux memory pool around the 64MB mark.
+>
+> > +     };
+> > +};
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721233452.11=
+2204-1-chenyou910331@gmail.com?part=3D3
