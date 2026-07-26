@@ -1,203 +1,193 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-wr2-f1.google.com (mail-wr2-f1.google.com [74.125.225.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF984A33
-	for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 00:02:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785024149; cv=pass; b=QDN1fGThB6M/Y2PSs1FDyIrgwx0nEolqGmyMeWJNy276AqnGyxJPamr/KbZXzEOPYMF76+JWED5ynJZVjrmzOJNnj2kaJhMk/djDSWLgojjFL5bFN68rh/lEdLPMOWAAfTp/6BajjNeOp7SDKe6v19/IVUf2IFvMV+DLd+azgDI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785024149; c=relaxed/simple;
-	bh=hGMDwQQLThygxY83szVLHDeO1j19/dPpyXJ0IV8ZMk4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BWC7uYV2nJ33H0JTcIc6c0PLhzddrEYnvNxYF74wC+nSJkN3j/yGhklF4suPCv60GaH4/281ZKX+VQ1uFXHMghROZZgAX5xYbxDJ6AjPw4hNYJ91OG/AXjacDxXIY3Z4NOH+m+44EIosM0AnuNQjlePnZYJXJUVv/gB20h8Ur5c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gMb+5/TS; arc=pass smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3E824A076
+	for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 02:02:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.65
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785031323; cv=none; b=mVfRMvzWqrJDH9PNaTKZ/UmtzEq5orr1W2Ft5AVVX11eN3TqecfuTcWxCznIbyjogGs2hOOxOiKmVcy4bmpPXdA65ZnJG2TWiQcUMQG3DpHEsIZ1gvBvX+Z5LX/gRm7/mPSlQxlZ5gO56c1MSrL+EpTyddXHa1GibMhUbcKOBu8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785031323; c=relaxed/simple;
+	bh=LzTG6H3sflel7BZtGJ95D3gkKtDDlMTm1VHq+AiAU/k=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=MtwY0G/5embvTC1fZLe25ory2cyK/cnURRNDSqdbaezDe/P2WHm/VgbNDYRc7uKgToM/6f5y0Z4uFdmRpsj0O/niFcLhRqJDe8elyPuBq4Mpg5zHGVANnrC7Mnm4lsPBBNo+BXroNh3rL3NlkPCsJ4KFsYh7vdz7W+Zh62hjthI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J4uKk2J7; arc=none smtp.client-ip=74.125.225.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gMb+5/TS"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-698ae09e356so1846091a12.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 17:02:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785024146; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WiULW9owchomlvoKGuJ6XL46j8LusClJE7SkCQs5PzHVO/C3xCiOvpfaQ97Ra3p5kH
-         +joTYOXF/ewyD03fDtI7QiXF2KCv6k2h+mjXBXzIXl2HExuzYRNmN70gdEjVxBNYAbfx
-         L5cSi/QXNKxSMXgubdyFFAjjA4dxqsOgxO8QJ5p6DhZSV91AUTA5nGfAmsgAu0Ztt+DX
-         WzuGHttmREpHElTcSWlIpiHqQ/wT8WZIfYKnP1lgIc1e7J9FRjhImZ+MiSsVfVEL5rEr
-         NIbZpqAAPrP5UzK1K64kpuMoi3V+gRedGHV7qTTxSfr6pi2woeYQzuGneYTRrllBpC2a
-         bWtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1OFM/TCyOucQ/FV/J6qU4TAWprxb53QsM1x2T+kKVBU=;
-        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
-        b=b/XIu2g3vrvAshV/CMtdGtPhNs3jGUwUQien1cfFa2vKFDRWnfbeEnCJ2WywPscztE
-         +iWcCo9IeIg5uyQrH0lop6YGHers9pAr7O0QbcHKjjx3PbLwV4OEb4QAaN+lr/BeAfa6
-         ykExX8trZCfRrquSjKEBuKQFEpkQjV4ZiLcsckrQN1W5mZgfHyzzdO5sNPsjDh4Zzdkn
-         1xmEOvUzap4QtwRzoMrPpDSteksu8JkxAdXKIAnrOVG+MrncEJHZuxttM60FcklbZmrn
-         wTG/+PPtfuFp6E8oXh1KSyBZc5jiXDilvopZdLMXEoSwsBSo/u6G+SnN38TI47Q7hSjt
-         jH0g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J4uKk2J7"
+Received: by mail-wr2-f1.google.com with SMTP id ffacd0b85a97d-47f9c6bc99eso546339f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 19:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785024146; x=1785628946; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=1OFM/TCyOucQ/FV/J6qU4TAWprxb53QsM1x2T+kKVBU=;
-        b=gMb+5/TSnnr6+i00+ZlzJRQtlCXcx+VXpjCrWFIogg4LuEJbwLR1E+QTa3Le62q8Sk
-         VlRyVUmxKEhPHpEmeMKGxfHDOCO/CRsgmROsVKPefqwK2QpUai4xr6GDAe71uHViVLBF
-         BWQyX6v4ntXVGR5b3UjgbfZ9Hpi/q3SU9VFDd+UigF3LQX35cXkiZJERm321a9Ir95ye
-         EBagosnKc5n2crpQ9tCu0drW84zI/9NhLpbtmfCqTll4I2KLwT+hSzgeCHL3y/tcuqUB
-         tfHnIYvL9pfZwjQRQwh3Vl6m99oUjqg/Tz4a4RbQhCAeMLXEibGLvzSC1dQW+U1izbv1
-         QUbg==
+        d=gmail.com; s=20251104; t=1785031320; x=1785636120; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Icq5OMx0iLqWZS2dmdktmdTaUjitNjJ7m6dxMi93PFw=;
+        b=J4uKk2J73KjKCLvzrJqKBVcZquM4qROInznlaVaeKZ+AiHvOvUhVef05dS+Lq2EyaE
+         PeND3Q+Pn/kz4UQnoVILTrpAab3SfpyqgKn2yucP8eM8lzq6DGYUlamn29VNyQBFoSv7
+         WJgYj/73DeTI4qDNyyYoIVW2rv8kFhRVvtP0gQmkvohZz5Ib7Mh3JdDCBR/iQ8i/HICR
+         sA3N91b1sZACcP8z32VjWCGXRjEFsz1W1cCIpUURWu4hvDgWgm7NnvLxVJBBdRuNa+ox
+         hj1BnrMC+Krqyj5Ldr3SINC++VSjTGww9CQ3F71YfVxr/I2PecmS7699i+d1+6IHRU8R
+         u5Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785024146; x=1785628946;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1785031320; x=1785636120;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1OFM/TCyOucQ/FV/J6qU4TAWprxb53QsM1x2T+kKVBU=;
-        b=EMCAsladl2+miU333DrtifkAmiNLmmQOjYnMcDCX1Q9G1golsMfrSy91WXa5REjgca
-         p0GQ51Ssr10NHLGOY6cnQ9b2Wum7IErq8NBiZxH775fkKrcYEb1zrv3Ko/Ww/A3P7tar
-         gOw8L4VnuuwX6bG+MClqBfuSf4DckuIXAShHf+3n9r+0CqpAUyBDvkPGCeRNX55FagTe
-         CCA/WNYf+LSvLJsZhh3yEXOvOoM1vJnlZWg2rM6utFryE6k2KnuztGiQ/fz5eKQex/k+
-         4IGbFgJUAVpHUtmj0QOQK1V1rFVNzHbyfSkTGpw9q1c86TVdDor3f0aoWB9Qy5FfXChn
-         xMpQ==
-X-Gm-Message-State: AOJu0YxEOTTIPhC1WIj1xXjIvZ8K16t55grmiGcp/o35cxy8zwOtl+/3
-	pFsxzFK1IZN6f8k4zFoNrbs3L+ekOPj0V6BSWXqAXapZSe5dpdPi85WJf7ik99Sqg0kIFgEDrmU
-	skB1dMPLQ/gX7qZS8uW8t4L5JaIAQzdHmCQ==
-X-Gm-Gg: AR+sD11JAa8QLB8gReioMQFCa0XtoIZHRiWPOptC49ho83uebKhPJDpMxMQIp5zEUF5
-	PC2pw++9nS+cdweqBhL3TcTv+5nQ7wc33d5qc4/3a1ESXzgH0FOtmNVLvGKpC89S+Bb9CKhLYGa
-	ODa3o+P44t95zZU1fp5bVQdZUsucJRw+JY+TP3isSAJJfjYzj6gJpg2UCX+3JtPIsXsE4dNQIza
-	I5uvs9msLRJzFcN1IPgIc49WvUZ8eMdGG047W34z+mdlaZo14f+dh4MSQClfWQcpY+VvvIiNyam
-	VtHN41H86OZfOddpMEfNcsJiE54xG9ivGZnOAbrVXjYmc7Htx56TxzgjB+p082RhwkF5UfqDdbE
-	ef05moi5PLYMP+zZjyCS+c9g6m4J21lmo2FcmyyCTfzpxg6KT2MfegV+WLkvP+bJICxUF/S2W
-X-Received: by 2002:a05:6402:2693:b0:698:3b7c:7e52 with SMTP id
- 4fb4d7f45d1cf-69fc118cd72mr1268009a12.40.1785024145825; Sat, 25 Jul 2026
- 17:02:25 -0700 (PDT)
+        bh=Icq5OMx0iLqWZS2dmdktmdTaUjitNjJ7m6dxMi93PFw=;
+        b=n3lwvkgxKdUtShzNNGCfQ7lydoN7BPDX7kQbYVRVm6QRwVhW4NrBOcW2AedFPZFAwh
+         Mrp3qgli/N43dPwFLxtV31PGNK7HhuYONsNhWFgSrHYApLIRLRMHBjr7LrvKkOjlwEOh
+         Qb8IgUxpJ0dd1OKmMbi7dogWzR/D1Pv9OZoXGAi1bhL5mSQm2WFRyCLCEkJwVOJLnFUD
+         luSLC47Sf9BfESO7t+J5GL6YvxaBhiBda0XGeS8gmwNyWFLnaqs+fy43F8EVyrGMeTwA
+         sRDYOrjiDxo2Qb4TJ6rIQm1tDHmNrLoqamwQ22AT43gu4E8W+pbRKJ+eFy5I46DPAEba
+         yutQ==
+X-Gm-Message-State: AOJu0Yw+j+d/jt/fthlbk4EAH5A+hqXMWYYXgydZBEnQq9onrzFlW/J9
+	Und4aykMY6H/otyuHpB3kLQvQKOQwOMo/t7mIC7Gx+gDbMrpheBzEE1PoJn27YiF
+X-Gm-Gg: AR+sD13XDmcYRDwHJwwLNCcDyFu9qTs5AfPtwG31hT3z1twHjM+JfMDX/5hWch8X0TX
+	eNt6ma8Brm8V9YmWNbvCbLJCnzjOauySnevBpAV2QKb9n/TP7L1O84ZutbAq5nJONAVRb5QtU64
+	KrqyMxZHer8jCRAwEb6zoiLmbfyUVwNTofTMfSIP3Zkj9VPX2tcDKNbe/Rxl44CqmJ8rYyuERfz
+	lfXD2wJPuE3Mn9NC4xJ1i607nj6pSkNK57HGJGsjHwNnlf+f5DvPkGol6PIfmC77s09Zvmfbwbe
+	Ed03MPorE745RTQzR4XFoUoinsS0Typ/mmgPqIpDtkD8xdtclj/chydZIg9RS99OdtWeBRxM9Tz
+	ZTHRkP+cr4BBL9q7vQ2TWOhQT2NfR9rBLAxn2+8h6jWGMn4qn+us1/qCrKXa07RjBuobawYB/JD
+	s4DIoMTSG25IqxBIzhSw2H8lbDOhTqBb+pxXaSjsq1sTavN43u4rUJG7rxE3+5cPtBgBygoZcqn
+	wBk9eCs5XHjiHug8ivvXIQOeuz1S6mmHp+wP0dy5UCA
+X-Received: by 2002:a05:600c:4f56:b0:495:4c62:9d43 with SMTP id 5b1f17b1804b1-496b747487bmr39215725e9.34.1785031320118;
+        Sat, 25 Jul 2026 19:02:00 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c6dc25sm36021351f8f.33.2026.07.25.19.01.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Jul 2026 19:01:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260628231049.1248899-1-rosenp@gmail.com> <20260628232120.0511A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260628232120.0511A1F000E9@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Sat, 25 Jul 2026 17:02:13 -0700
-X-Gm-Features: AUfX_mzkRY6Z8kZjUsSyDR6zqqIZ31wwydK7R2vmJU3Bx1SrmlOEVAvbSgYCMTQ
-Message-ID: <CAKxU2N9EvtEGzaowAr4J0+0F9iFsd5j8jmL7JTAqBWDPfanoaw@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: BCM5301X: EA9200: fix nvram size
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 26 Jul 2026 04:01:59 +0200
+Message-Id: <DK84SJFF77GL.1VGZ5Q21VUPXC@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v2 1/9] bpf: Support __arena and
+ __arena_nullable kfunc argument suffixes
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0
+References: <20260726013105.3689867-1-memxor@gmail.com>
+ <20260726013105.3689867-2-memxor@gmail.com>
+ <20260726014755.2DA7D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260726014755.2DA7D1F000E9@smtp.kernel.org>
 
-On Sun, Jun 28, 2026 at 4:21=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+On Sun Jul 26, 2026 at 3:47 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Heap out-of-bounds read and write in `brcm_nvram_add_cells` =
-due to mismatched logical length validation.
-> - [High] Fatal page fault due to `ZERO_SIZE_PTR` dereference if the NVRAM=
- partition contains only padding bytes.
-These issues were fixed separately.
+> - [High] The `__arena_nullable` kfunc argument design uses a 32-bit trunc=
+ated value of 0 as a sentinel for NULL, which collides with valid memory al=
+locations from `bpf_arena_alloc_pages()`.
 > --
 >
-> commit f8d0bb1af13fdcf08114311cb9160479fcd6bdb5
-> Author: Rosen Penev <rosenp@gmail.com>
+> --- Patch [1]: [PATCH bpf-next v2 1/9] bpf: Support __arena and __arena_n=
+ullable kfunc argument suffixes ---
+> commit fb759ca6f84030ccde9ee83f1e83634342bdae0d
+> Author: Tejun Heo <tj@kernel.org>
 >
-> ARM: dts: BCM5301X: EA9200: fix nvram size
+> bpf: Support __arena and __arena_nullable kfunc argument suffixes
 >
-> Fixes:
+> This patch adds support for passing BPF arena pointers to kfuncs by intro=
+ducing
+> __arena and __arena_nullable argument suffixes. The verifier processes th=
+ese
+> suffixes and allows JITs to handle the translation (rebasing) at the call=
+ site.
+> __arena rebases unconditionally, while __arena_nullable preserves NULL by=
+ skipping
+> the rebase when the arena offset is zero.
 >
-> [ 0.182121] WARNING: CPU: 0 PID: 1 at drivers/nvmem/brcm_nvram.c:85 brcm_=
-nvram_probe+0x400/0x480
-> [ 0.182159] Unexpected (big) NVRAM size: 1056112 B
->
-> Signed-off-by: Rosen Penev <rosenp@gmail.com>
->
-> > diff --git a/arch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts b/ar=
-ch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts
-> > index 5bbc2ba0f9598..87569408bb695 100644
-> > --- a/arch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts
-> > +++ b/arch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts
-> > @@ -26,7 +26,7 @@ memory@0 {
-> >
-> >       nvram@1c080000 {
-> >               compatible =3D "brcm,nvram";
-> > -             reg =3D <0x1c080000 0x180000>;
-> > +             reg =3D <0x1c080000 0x100000>;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but I noticed a potential out-of-bounds hea=
-p
-> read and write in drivers/nvmem/brcm_nvram.c when parsing NVRAM partition=
-s.
->
-> In brcm_nvram_parse(), the length check validates the logical length defi=
-ned
-> in the header against the total partition size rather than the allocated =
-data
-> length:
->
-> drivers/nvmem/brcm_nvram.c:brcm_nvram_parse() {
->     ...
->     if (len > priv->nvmem_size) {
->     ...
-> }
->
-> If the flash data defines a header->len larger than the non-padding data
-> size but smaller than the total partition size (priv->nvmem_size), the dr=
-iver
-> calls brcm_nvram_add_cells() with a len larger than the allocation:
->
-> drivers/nvmem/brcm_nvram.c:brcm_nvram_add_cells() {
->     ...
->     tmp =3D priv->data[len - 1];
->     priv->data[len - 1] =3D '\0';
->     ...
-> }
->
-> Can this lead to memory corruption if reading from a malformed flash
-> partition?
+>> diff --git a/Documentation/bpf/kfuncs.rst b/Documentation/bpf/kfuncs.rst
+>> index c801a330aece0..9809680bee43e 100644
+>> --- a/Documentation/bpf/kfuncs.rst
+>> +++ b/Documentation/bpf/kfuncs.rst
+> [ ... ]
+>> @@ -250,6 +250,33 @@ Or::
+>>                  ...
+>>          }
+>>
+>> +2.3.7 __arena and __arena_nullable Annotations
+>> +----------------------------------------------
+>> +
+>> +Both annotations indicate that the pointer argument points into the
+>> +calling program's arena. The JIT rebases the value at the call site so
+>> +the kfunc receives a directly dereferenceable kernel address, subject t=
+o
+>> +the access rules described in :ref:`BPF_kfunc_arena_access` (at most
+>> +``GUARD_SZ / 2``, 32 KiB, past the pointer in a single unchecked access=
+).
+>> +
+>> +With ``__arena`` the rebase is unconditional and the argument is never
+>> +NULL: a value whose lower 32 bits are zero arrives as the arena base
+>> +address (arena offset 0). The kfunc must not check the argument for NUL=
+L.
+>> +With ``__arena_nullable`` such a value arrives as NULL instead and the
+>> +kfunc must check before dereferencing.
 >
 > [Severity: High]
-> This is a pre-existing issue, but I also noticed a potential page fault
-> if the NVRAM partition is completely empty.
+> Does this __arena_nullable design cause a collision with valid allocation=
+s?
 >
-> In drivers/nvmem/brcm_nvram.c:brcm_nvram_copy_data(), if the partition on=
-ly
-> contains padding bytes, priv->data_len becomes 0. devm_kzalloc() will ret=
-urn
-> the ZERO_SIZE_PTR token (0x10) which bypasses the NULL check:
+> If an arena is mapped at a 4GB-aligned boundary, the user_vm_start addres=
+s will
+> have its lower 32 bits as 0. When bpf_arena_alloc_pages() returns the fir=
+st
+> free page at offset 0, the resulting user pointer also has its lower 32 b=
+its
+> equal to 0.
 >
-> drivers/nvmem/brcm_nvram.c:brcm_nvram_copy_data() {
->     ...
->     priv->data =3D devm_kzalloc(priv->dev, priv->data_len, GFP_KERNEL);
->     if (!priv->data)
->         return -ENOMEM;
->     ...
-> }
+> If a BPF program passes this valid pointer to an __arena_nullable kfunc, =
+won't
+> the JIT see the 0 value in the lower 32 bits and incorrectly pass NULL to=
+ the
+> kfunc instead of the valid arena base address?
+
+Yes, but it is intentional. Referencing the first page is equivalent to NUL=
+L, or
+start of the arena "address space".
+
 >
-> The ZERO_SIZE_PTR is then cast and dereferenced in brcm_nvram_parse():
+>> +
+>> +An example is given below::
+> [ ... ]
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 641c3c62c1ecf..f3e6190f639e4 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>> @@ -12056,6 +12066,35 @@ static int check_kfunc_args(struct bpf_verifier=
+_env *env, struct bpf_call_arg_me
+>>
+>>  		t =3D btf_type_skip_modifiers(btf, args[i].type, NULL);
+>>
+>> +		if (is_kfunc_arg_arena(btf, &args[i]) || is_kfunc_arg_arena_nullable(=
+btf, &args[i])) {
 >
-> drivers/nvmem/brcm_nvram.c:brcm_nvram_parse() {
->     ...
->     if (memcmp(header->magic, NVRAM_MAGIC, 4)) {
->     ...
-> }
+> [Severity: High]
+> Should check_kfunc_args() or the arena allocator ensure that offset 0 is
+> reserved?
 >
-> Could this cause a kernel panic due to dereferencing address 0x10 when
-> probing an erased flash partition?
+> If offset 0 is not reserved, the verifier will allow programs to pass a v=
+alid
+> offset 0 allocation to __arena_nullable arguments. The JIT will then sile=
+ntly
+> translate this to NULL, causing unexpected behavior in the kfunc since it=
+ will
+> assume the optional argument was not provided.
+
+It will always be left unmapped in practice.
+
 >
-> >
-> >               et2macaddr: et2macaddr {
-> >                       #nvmem-cell-cells =3D <1>;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260628231049.12=
-48899-1-rosenp@gmail.com?part=3D1
+>> +			if (verifier_bug_if(!btf_type_is_ptr(t), env,
+>> +					    "kfunc %s arg#%d has __arena tag on non-pointer",
+>> +					    func_name, i))
+>> +				return -EFAULT;
+
