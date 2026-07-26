@@ -1,184 +1,171 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4292F231A21
-	for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 14:53:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785077619; cv=pass; b=eVnmJAzoaGSXOq7l48wkf4gHHTPy0jc285H4sl42Y0LmrBHt6V4WWWOApOXzCnDgq78saa1kArYwN15qvkzrUvdJUYsivxSmQ9cSthg0BhJuPnXOdAYKnEfQ9xlO+UrhJO+gLQLZ5GECoCp0Ev/WFq/YGxc1SmnU6Qiii9nFv68=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785077619; c=relaxed/simple;
-	bh=R9f/pVZc43NS1ELRvBxRZnxLsiBqbijHMdSlyhcCN0c=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E626863B9
+	for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 14:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785077930; cv=none; b=UQV1e4FYpFADiJfwJ8E8WYfiBxwgJkljbSY5oPDQQ/BHCZTCZhkljCxFzgH1OKuzXXt1l6r3BXC9W0z76GQsf0JpKwsx9VZ557h9kTeiSdgvZhzqD5w5x7besJmQNw6AJAUfih2+HOfmIcwgBzwt0HrDagNn6uwn2Gq65FY7hw8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785077930; c=relaxed/simple;
+	bh=o5ZOFt8icxcpB4FvUherYm9klLewhVqBNx9wjiOnIv4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KkJCP31A+xELhPkWfaNpErpNoYBJ5m9qLYLI1am0iQPhSYTXEXmPXSgZstDM4KQw72tC2uipN5N6lQqX1PNiQRqL32e0h1q5lOUhW4IVlyk2kyOscl+tDZtbTYp7Jyzlq4VicrHzSW+y2jQSS9QPyTjJ9SkGYiNUgvhcrZ2DTyw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IMGw9Y4t; arc=pass smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=hP5A38CgUmLM7YgO8amhx8gXQjD/MOXoYnZcsG6iuReVA7it2HnKik/AEF61TWNgwe72aBN5EQBdR3bgxNfQPT+tgHq0uTo0faROVDbAY2LkyI50ulSLcw24PAZNan+WE4vg5G2cuIp9U6d3/8NkI7F0ThkI6sl71kjavj0D3lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=W6QUHlz1; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IMGw9Y4t"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-69c3044e4b2so291777a12.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 07:53:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785077616; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ck80URhs6Nsa2/HY8SauioaCFHfgD1hCMqJHa+9mdd6+e1aIOyuLvb70RxW/zzWXvY
-         Ite+e497EiMrv+Y2bZKLE9+2E0SWsfJPRcqt48iBW9tVdogsdqweGk54ElfrEcojB3ts
-         9zORJDxtvC1M5Xr5tO3Dj9EgY586QFj8sL0r0ZkAX1XmlCRI5YxrWiUXIS+NhaKXs5Sp
-         otKS6Kju2W7n/jHhwKzkBofReIhMl3xTzvmCXSxKEhlC0Pdd5Hlh/JRVWotLYwEYjsZp
-         J/ZTFrU2KQBye3AIWR5cPD8klSV6Sz5TElpd+K2USArUhKwEjWkmkneZ0QyN3EDmHHt7
-         XXyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=2SqHyyBA+Ia1q8kRP2fi5yiAfiuE7PWnVjVyGMbBz8E=;
-        fh=o9tesHJqpAboKLnI8f4pDTFFw62D4/egZePQM0kvGzg=;
-        b=lPw9Cvs0HaqXEoxFo5UbUypR8XOXmKdKIag6vY7EgyYj4AUe/PKwU7x1p9O1ObD8hc
-         71aM9uiv698K1J3d94YSYMj+gip/3sM7qD04rZUWfdaqz7uRsroY3Mfbh9bjpZurV+6D
-         G4sl0qQrMDmsFomzjvOUmukT1ejL7dHH4pjoltFMNrO0AoviC49lj90XDyHrcjeA8aZL
-         /Lhj3LkPIp9P4OyV/56auq3qowl1T35x+gmWM/GpAu3zouAIa/guaQk7VxZSk4jD+XIv
-         4VWbboVMw9j6h3DAnmVv1pkxsIqX40rgrXMWv1kBMasTO3Xm6egpuvmUY8K5ksCO6E4N
-         06NQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785077616; x=1785682416; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=2SqHyyBA+Ia1q8kRP2fi5yiAfiuE7PWnVjVyGMbBz8E=;
-        b=IMGw9Y4t7XEkia/5AvCs4iQsGlH+cBbqBj9R3NEPKlNNu/yshSDNGvOuppj1ySKWlH
-         nnuWqSSz7127KH1TpRZsLhqCCe5mR+beLEZ9Ql2Aij5JluRtHCrvQ/Q1VdV5PrTa96tC
-         JWQFzIrnf/K6O4cxlEsAyELqoy3vSvEhrIcMgu2S5xNi+xUNHw5jmWAEK1qKr32R3fkt
-         EDz1hv6SaWSMorExo5wpDgytuldkShHPyCkiLPkrpQ/Y4ysOyMyF9xfciMphkoMHuFcg
-         BX5xbwlcWLfzzOKCOQEjohoh/J2B/U/p3q0It9L/VNmvuX4nBBqaHCkYobMeQw39rzJB
-         UHgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785077616; x=1785682416;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2SqHyyBA+Ia1q8kRP2fi5yiAfiuE7PWnVjVyGMbBz8E=;
-        b=R3C91RXo3cXJ5DdnN9hssBBoTllUbYK0HVMSft+olsVLj7Xwu7LGDBtjS6JcTvWc/W
-         T5LbbnNP0mlIaLP3SfLnTQQ5KDobrJkUBm9UmA7I+9IQbiOyi/4frEA1FPxxxRcUo7eC
-         zeQM0dCBCFWc4saozwK27lcpYsP2WJmSkZGruhb7iDlvvA1d6K37PahRWQx4mDyepimi
-         4NSLhbhcGQY/G+Y3hToSkh2CKf4RpdqoDGNhhL/ue4kTc9ev5LH2/tY1ZY4HPWvPAMB6
-         sMH66Z0FBgUQT9aA2E6hTVSy6++LmcUXRKnPR6XFOTzqkHHr0B71e0Rn5qTz0lb8Nffc
-         zsjg==
-X-Gm-Message-State: AOJu0Yy8VMDg7/rlynthjNMLV0hEPslqQM39Mij7G6iKQ8QBPV9Roegr
-	ffRhE3SSOl7oEOIJX/o1pYmIHoEtl2MKKO8Hsf/HRKC+0+hqE0zN0xluXCcDPyowpGbqSGQ6lig
-	FOf1oIOraL/Ip+/mBx37Lx9DV5tamkUYaRT1s
-X-Gm-Gg: AR+sD11zBigUO5yLkGG6swucbrFuq7l1RgKrPu6W84IqpsMz+cHDWxZAXKp3lySh+sg
-	fnQnzVTfZCeZcVeaa7yd2mK87KNIciOWhLfMIT5wTJxezyUoTBX4l+8YqYwH3xKTfDcG5s5fSWB
-	jpj/MF2UPsNBwAZoW490e7FAxreyObVCX3scj2y0GU3MR9Dsu/Ip6ecBgJyKDFKxJgs9yFZTtlz
-	JGKt3iFHGzVq3VO3vJ5sXt7XNsUmux8mV617zAZzsI2xp9nQaWwEqv3ZaY1Z+mYDGMw4C1rS3Q2
-	D65dw2c=
-X-Received: by 2002:a05:6402:51c7:b0:69c:7a3f:9fb5 with SMTP id
- 4fb4d7f45d1cf-69fc117f84dmr1172000a12.7.1785077616017; Sun, 26 Jul 2026
- 07:53:36 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="W6QUHlz1"
+X-Gm-Message-State: AOJu0YwPwqoNHbjmpjAXAyMQx9W+eSwm7DgkZshyhIzS7LdlKZjfwQbV
+	85WnfwWvXxWZONn3DBUUyh0Eizdc2ZqgZz49wzNbju7gmnPoNVTo3dmJc9SIyPiTeFbbS/cgNMI
+	Vsc1NwpRRtSMLFBRx0hRhPr77SrjhhYNjLZf8SqoN
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785077924;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/aTk4jmlnNg1KClaqxP9X6gm3x68hTtCrq/OstIgSfw=;
+	b=W6QUHlz18uPvi3GiEveBYpb0oJghtUrTKeV/ctb8ZU2CWrxHIYPTwJ5mTlY0TgxCBdjjvH
+	EJ5ik06Y9yh0kWrb3Qgxy+zGPe4+PvReS+2YiHYZSCnmYSK4Tmp3bWr3ux1j1O/j6tN+50
+	Pt+w2k37jOV8NJf7fy1Ik0gf3UWPl8w=
+X-Received: by 2002:a05:622a:1f85:b0:50e:5eba:cadd with SMTP id
+ d75a77b69052e-529a5db6ae5mr25121551cf.2.1785077921474; Sun, 26 Jul 2026
+ 07:58:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260721-dcphy-rx-v1-v1-0-4fc83c0ccac9@gmail.com>
- <20260721-dcphy-rx-v1-v1-3-4fc83c0ccac9@gmail.com> <20260721104456.0695D1F01560@smtp.kernel.org>
-In-Reply-To: <20260721104456.0695D1F01560@smtp.kernel.org>
-From: =?UTF-8?B?5qWK5pm65oiQ?= <jason98166@gmail.com>
-Date: Sun, 26 Jul 2026 22:54:10 +0800
-X-Gm-Features: AUfX_mzTjOOwIggGzm-aEH5bYG0UISvchkAs7LjBaVST0b3wi1zvFpg_5iayiDI
-Message-ID: <CAPwA33Kin3jRGmUCCUt86n64C+q5N0E4a+afsWZPyFypDAW3Og@mail.gmail.com>
-Subject: Re: [PATCH 3/4] phy: rockchip-samsung-dcphy: model TX and RX as
- separate PHYs
+References: <20260726143643.303456-1-fuad.tabba@linux.dev> <20260726143643.303456-2-fuad.tabba@linux.dev>
+ <20260726145440.2D4CA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260726145440.2D4CA1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Sun, 26 Jul 2026 15:58:04 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTxbNeqZBmQmy2Uvzu6soUWH8b0daoT6oEY1dG2-SH6COA@mail.gmail.com>
+X-Gm-Features: AUfX_mzBuzVRlQMIvhRVAd2ElE2NZpEtPxojuWYcyAhDmlxSK2JE607otqXsl6k
+Message-ID: <CA+EHjTxbNeqZBmQmy2Uvzu6soUWH8b0daoT6oEY1dG2-SH6COA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] KVM: arm64: Flush external_mdscr_el1 to the pKVM hyp vCPU
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com, 
-	vkoul@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
-	linux-phy@lists.infradead.org
+Cc: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-> Does this code modify the shared samsung->lanes state before checking if
-> the direction is supported?
-
-Yes, this is a valid finding - and the shared lane count turned out to
-be a real problem beyond the ordering. It reproduces on hardware: with
-the receiver configured for one data lane, powering the transmitter
-off afterwards disables only one of its two lanes and leaves the
-second still enabled, which the per-lane GNR_CON0 registers confirm.
-
-In v2 both the lane count and the receiver link rate become
-per-direction state, so a configure() call can no longer clobber the
-other direction, and the peer power_count check is replaced by a
-powered flag kept under the provider mutex. With those changes the
-same sequence disables both lanes cleanly on the same hardware.
-
-Thanks,
-Jason
-
-<sashiko-bot@kernel.org> =E6=96=BC 2026=E5=B9=B47=E6=9C=8821=E6=97=A5=E9=80=
-=B1=E4=BA=8C =E4=B8=8B=E5=8D=886:44=E5=AF=AB=E9=81=93=EF=BC=9A
+On Sun, 26 Jul 2026 at 15:54, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] Concurrent or unsupported PHY configuration clobbers the shared =
-`samsung->lanes` driver state before verifying the direction is supported.
+>
+> New issues:
+> - [Critical] The patch breaks pKVM guest isolation by allowing the host t=
+o arm hardware debug exceptions against a protected VM.
+>
+> Pre-existing issues:
+> - [Critical] The hypervisor unconditionally copies trap configurations an=
+d debug states between the untrusted host and the protected VM on every ent=
+ry and exit, violating pKVM state isolation and confidentiality.
+
+For both issues, protected VM state isolation is WIP upstream [1],
+coming soon (fingers crossed).
+
+/fuad
+
+[1] https://lore.kernel.org/all/20260715081238.1891918-1-fuad.tabba@linux.d=
+ev/
+
 > --
 >
-> --- Patch [3]: [PATCH 3/4] phy: rockchip-samsung-dcphy: model TX and RX a=
-s separate PHYs ---
-> commit 242b9435d09e0133de4658156f3cc224aa2f84c9
-> Author: Jason Yang <jason98166@gmail.com>
+> --- Patch [1]: [PATCH 1/2] KVM: arm64: Flush external_mdscr_el1 to the pK=
+VM hyp vCPU ---
+> commit 11c3469e00f567f8f8ae658ca753847976608a5d
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
 >
-> phy: rockchip-samsung-dcphy: model TX and RX as separate PHYs
+> KVM: arm64: Flush external_mdscr_el1 to the pKVM hyp vCPU
 >
-> This commit models the MIPI DSI transmitter and MIPI CSI receiver as sepa=
-rate
-> PHYs that share the same hardware block. It registers one struct phy per
-> direction and adds a per-provider mutex to serialize access to the shared
-> state.
+> This commit propagates the external_mdscr_el1 register state to the pKVM
+> hyp vCPU during flush_debug_state(). This ensures that a non-protected gu=
+est
+> runs with the correct hardware flags set by the host.
 >
-> > diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c b/driver=
-s/phy/rockchip/phy-rockchip-samsung-dcphy.c
-> > --- a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-> > +++ b/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
->
-> [ ... ]
->
-> > @@ -1488,11 +1521,15 @@ samsung_mipi_dcphy_pll_calc_rate(struct samsung=
-_mipi_dcphy *samsung,
-> >  static int samsung_mipi_dcphy_configure(struct phy *phy,
-> >                                       union phy_configure_opts *opts)
-> >  {
-> > -     struct samsung_mipi_dcphy *samsung =3D phy_get_drvdata(phy);
-> > +     struct samsung_mipi_dcphy_dir *pd =3D phy_get_drvdata(phy);
-> > +     struct samsung_mipi_dcphy *samsung =3D pd->parent;
-> >       unsigned long long target_rate =3D opts->mipi_dphy.hs_clk_rate;
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > @@ -108,10 +108,16 @@ static void flush_debug_state(struct pkvm_hyp_vcp=
+u *hyp_vcpu)
 > >
-> >       samsung->lanes =3D opts->mipi_dphy.lanes > 4 ? 4 : opts->mipi_dph=
-y.lanes;
-> >
-> > +     if (pd->dir =3D=3D RK_DCPHY_DIR_RX)
-> > +             return -EOPNOTSUPP;
-> > +
+> >       hyp_vcpu->vcpu.arch.debug_owner =3D host_vcpu->arch.debug_owner;
 >
-> [Severity: High]
-> Does this code modify the shared samsung->lanes state before checking if
-> the direction is supported?
+> [Severity: Critical]
+> This is a pre-existing issue, but does this allow the host to hijack debu=
+g
+> ownership for a protected VM?
 >
-> Since this is done without holding samsung->lock, can a consumer
-> configuring the RX PHY clobber the active TX PHY's lane count?
+> The hypervisor unconditionally copies the untrusted host's debug_owner he=
+re
+> on every guest entry.
 >
-> If the lane count is corrupted, it looks like it could lead to incorrect =
-lane
-> power-down sequences when the TX PHY is disabled later, potentially leavi=
-ng
-> MIPI lanes actively driven.
+> Additionally, similar unconditional copying occurs for trap configuration=
+s
+> and debug states from the host structure:
 >
-> Should the pd->dir check and the lock acquisition happen before updating
-> samsung->lanes?
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:flush_hyp_vcpu() {
+>     ...
+>     hyp_vcpu->vcpu.arch.mdcr_el2 =3D host_vcpu->arch.mdcr_el2;
+>     ...
+> }
 >
-> [ ... ]
+> And on guest exit, state is copied back out to the host:
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:sync_debug_state() {
+>     ...
+>     if (kvm_guest_owns_debug_regs(&hyp_vcpu->vcpu))
+>         host_vcpu->arch.vcpu_debug_state =3D hyp_vcpu->vcpu.arch.vcpu_deb=
+ug_state;
+>     ...
+> }
+>
+> Could this allow the host to reconfigure the protected guest's execution
+> environment via mdcr_el2, and leak private hardware debug register state
+> back to the untrusted host?
+>
+> > -     if (kvm_guest_owns_debug_regs(&hyp_vcpu->vcpu))
+> > +     if (kvm_guest_owns_debug_regs(&hyp_vcpu->vcpu)) {
+> >               hyp_vcpu->vcpu.arch.vcpu_debug_state =3D host_vcpu->arch.=
+vcpu_debug_state;
+> > -     else if (kvm_host_owns_debug_regs(&hyp_vcpu->vcpu))
+> > +     } else if (kvm_host_owns_debug_regs(&hyp_vcpu->vcpu)) {
+> >               hyp_vcpu->vcpu.arch.external_debug_state =3D host_vcpu->a=
+rch.external_debug_state;
+> > +             /*
+> > +              * The world switch loads MDSCR_EL1 from external_mdscr_e=
+l1
+> > +              * (ctxt_mdscr_el1()).
+> > +              */
+> > +             hyp_vcpu->vcpu.arch.external_mdscr_el1 =3D host_vcpu->arc=
+h.external_mdscr_el1;
+>
+> [Severity: Critical]
+> Is this a regression that breaks pKVM guest isolation by allowing the hos=
+t to
+> arm hardware debug exceptions against a protected VM?
+>
+> By copying external_mdscr_el1 from the untrusted host to the EL2 private
+> state unconditionally, a malicious host could populate external_mdscr_el1
+> with debug flags (e.g., MDE=3D1 and SS=3D1) prior to KVM_RUN.
+>
+> The world switch would then load these host-controlled values directly in=
+to
+> the hardware MDSCR_EL1 register. Under the pKVM threat model, could this
+> allow the host to intercept execution, extract register state, and modify
+> control flow of a protected VM?
+>
+> > +     }
+> >  }
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721-dcphy-rx=
--v1-v1-0-4fc83c0ccac9@gmail.com?part=3D3
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260726143643.30=
+3456-1-fuad.tabba@linux.dev?part=3D1
