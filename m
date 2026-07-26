@@ -1,115 +1,203 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3873326ED33
-	for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 22:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785020159; cv=none; b=dn+iqoYILIy5whlwXpU67ebmreT42HAC9um+s6xQ93+d/DNJ39ByNugBjiBcOtoz3tEFw8L5h9SnN4nZHq/Q3lQ1n2z02PA75WlqUKPB5IEdcBC8XpoWis3Rjqhg5ROIgcPd9WQNKpr2Mw9yuiJQ1QpnVyH7RkJIrjgDQmIKjrw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785020159; c=relaxed/simple;
-	bh=B9NCKoUoJU/1EAbzc0PbyaPxgauAvRu340M6DlCKfW4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XYVpwL61M5rq1HH9pFd960D3AUFwUTfGXalbioU1Xr+WD7UnqxjEw/lV52+EUcmFDKL4kFzOJ1uoHjwC78qdlAJ8hyjQSDWwNEGpzJI3H8N8nHrHUof1vvOwfG6Ur6v0UU7fiulvsSj2jdenQlDonNDZEgj8sLfHN/Do+toFvQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=DA1E0E3f; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF984A33
+	for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 00:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785024149; cv=pass; b=QDN1fGThB6M/Y2PSs1FDyIrgwx0nEolqGmyMeWJNy276AqnGyxJPamr/KbZXzEOPYMF76+JWED5ynJZVjrmzOJNnj2kaJhMk/djDSWLgojjFL5bFN68rh/lEdLPMOWAAfTp/6BajjNeOp7SDKe6v19/IVUf2IFvMV+DLd+azgDI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785024149; c=relaxed/simple;
+	bh=hGMDwQQLThygxY83szVLHDeO1j19/dPpyXJ0IV8ZMk4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BWC7uYV2nJ33H0JTcIc6c0PLhzddrEYnvNxYF74wC+nSJkN3j/yGhklF4suPCv60GaH4/281ZKX+VQ1uFXHMghROZZgAX5xYbxDJ6AjPw4hNYJ91OG/AXjacDxXIY3Z4NOH+m+44EIosM0AnuNQjlePnZYJXJUVv/gB20h8Ur5c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gMb+5/TS; arc=pass smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="DA1E0E3f"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 0596D4E40F60;
-	Sat, 25 Jul 2026 22:55:48 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id AEF7E6039A;
-	Sat, 25 Jul 2026 22:55:47 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id F368711C10784;
-	Sun, 26 Jul 2026 00:55:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1785020147; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=P9/nVjd3fMouCVIy5ky/jRRRBoNzhhxohToy1vtH9N0=;
-	b=DA1E0E3fz5DjOzLSHget2aL34+lLHc0UySgVqkGrXY9dWBt9mGsMGfsaCCY7D4fVdYsN/B
-	wnKkdV44g2GjBypPsauiweg1Cw28HU5NLgxE/S1+Axna1E4izSoNCGckXx1WkWLwBGshTB
-	DBozggAdfya1EGiIgBBzfpvplXvuconGzZ/8Oqq2W+VrrZLJGkEpKg1mO+qGpdDAGdMlrY
-	3xMa1pehoeeSaabU6ou7guTGpPFqh90UcQ0i8NTf/XWpsdpzvmyrx2WhWn1IWifPPG7E7R
-	ySPGva/kk9TCO16L78sR1M3FnvHEBkVHiXh0bu1xhF3x8dc3Iyk2mDQOoG/0EA==
-Date: Sun, 26 Jul 2026 00:55:45 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Antoni Pokusinski <apokusinski01@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
-	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH v2 2/8] rtc: abx80x: move part autodetection before
- RV1805 configuration
-Message-ID: <20260725225545942a7df7@mail.local>
-References: <20260725145718.14733-1-apokusinski01@gmail.com>
- <20260725145718.14733-3-apokusinski01@gmail.com>
- <20260725150753.325271F000E9@smtp.kernel.org>
- <amUI6JY3BFTrbdqp@antoniarch>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gMb+5/TS"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-698ae09e356so1846091a12.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 17:02:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785024146; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WiULW9owchomlvoKGuJ6XL46j8LusClJE7SkCQs5PzHVO/C3xCiOvpfaQ97Ra3p5kH
+         +joTYOXF/ewyD03fDtI7QiXF2KCv6k2h+mjXBXzIXl2HExuzYRNmN70gdEjVxBNYAbfx
+         L5cSi/QXNKxSMXgubdyFFAjjA4dxqsOgxO8QJ5p6DhZSV91AUTA5nGfAmsgAu0Ztt+DX
+         WzuGHttmREpHElTcSWlIpiHqQ/wT8WZIfYKnP1lgIc1e7J9FRjhImZ+MiSsVfVEL5rEr
+         NIbZpqAAPrP5UzK1K64kpuMoi3V+gRedGHV7qTTxSfr6pi2woeYQzuGneYTRrllBpC2a
+         bWtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1OFM/TCyOucQ/FV/J6qU4TAWprxb53QsM1x2T+kKVBU=;
+        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
+        b=b/XIu2g3vrvAshV/CMtdGtPhNs3jGUwUQien1cfFa2vKFDRWnfbeEnCJ2WywPscztE
+         +iWcCo9IeIg5uyQrH0lop6YGHers9pAr7O0QbcHKjjx3PbLwV4OEb4QAaN+lr/BeAfa6
+         ykExX8trZCfRrquSjKEBuKQFEpkQjV4ZiLcsckrQN1W5mZgfHyzzdO5sNPsjDh4Zzdkn
+         1xmEOvUzap4QtwRzoMrPpDSteksu8JkxAdXKIAnrOVG+MrncEJHZuxttM60FcklbZmrn
+         wTG/+PPtfuFp6E8oXh1KSyBZc5jiXDilvopZdLMXEoSwsBSo/u6G+SnN38TI47Q7hSjt
+         jH0g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785024146; x=1785628946; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1OFM/TCyOucQ/FV/J6qU4TAWprxb53QsM1x2T+kKVBU=;
+        b=gMb+5/TSnnr6+i00+ZlzJRQtlCXcx+VXpjCrWFIogg4LuEJbwLR1E+QTa3Le62q8Sk
+         VlRyVUmxKEhPHpEmeMKGxfHDOCO/CRsgmROsVKPefqwK2QpUai4xr6GDAe71uHViVLBF
+         BWQyX6v4ntXVGR5b3UjgbfZ9Hpi/q3SU9VFDd+UigF3LQX35cXkiZJERm321a9Ir95ye
+         EBagosnKc5n2crpQ9tCu0drW84zI/9NhLpbtmfCqTll4I2KLwT+hSzgeCHL3y/tcuqUB
+         tfHnIYvL9pfZwjQRQwh3Vl6m99oUjqg/Tz4a4RbQhCAeMLXEibGLvzSC1dQW+U1izbv1
+         QUbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785024146; x=1785628946;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1OFM/TCyOucQ/FV/J6qU4TAWprxb53QsM1x2T+kKVBU=;
+        b=EMCAsladl2+miU333DrtifkAmiNLmmQOjYnMcDCX1Q9G1golsMfrSy91WXa5REjgca
+         p0GQ51Ssr10NHLGOY6cnQ9b2Wum7IErq8NBiZxH775fkKrcYEb1zrv3Ko/Ww/A3P7tar
+         gOw8L4VnuuwX6bG+MClqBfuSf4DckuIXAShHf+3n9r+0CqpAUyBDvkPGCeRNX55FagTe
+         CCA/WNYf+LSvLJsZhh3yEXOvOoM1vJnlZWg2rM6utFryE6k2KnuztGiQ/fz5eKQex/k+
+         4IGbFgJUAVpHUtmj0QOQK1V1rFVNzHbyfSkTGpw9q1c86TVdDor3f0aoWB9Qy5FfXChn
+         xMpQ==
+X-Gm-Message-State: AOJu0YxEOTTIPhC1WIj1xXjIvZ8K16t55grmiGcp/o35cxy8zwOtl+/3
+	pFsxzFK1IZN6f8k4zFoNrbs3L+ekOPj0V6BSWXqAXapZSe5dpdPi85WJf7ik99Sqg0kIFgEDrmU
+	skB1dMPLQ/gX7qZS8uW8t4L5JaIAQzdHmCQ==
+X-Gm-Gg: AR+sD11JAa8QLB8gReioMQFCa0XtoIZHRiWPOptC49ho83uebKhPJDpMxMQIp5zEUF5
+	PC2pw++9nS+cdweqBhL3TcTv+5nQ7wc33d5qc4/3a1ESXzgH0FOtmNVLvGKpC89S+Bb9CKhLYGa
+	ODa3o+P44t95zZU1fp5bVQdZUsucJRw+JY+TP3isSAJJfjYzj6gJpg2UCX+3JtPIsXsE4dNQIza
+	I5uvs9msLRJzFcN1IPgIc49WvUZ8eMdGG047W34z+mdlaZo14f+dh4MSQClfWQcpY+VvvIiNyam
+	VtHN41H86OZfOddpMEfNcsJiE54xG9ivGZnOAbrVXjYmc7Htx56TxzgjB+p082RhwkF5UfqDdbE
+	ef05moi5PLYMP+zZjyCS+c9g6m4J21lmo2FcmyyCTfzpxg6KT2MfegV+WLkvP+bJICxUF/S2W
+X-Received: by 2002:a05:6402:2693:b0:698:3b7c:7e52 with SMTP id
+ 4fb4d7f45d1cf-69fc118cd72mr1268009a12.40.1785024145825; Sat, 25 Jul 2026
+ 17:02:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <amUI6JY3BFTrbdqp@antoniarch>
-X-Last-TLS-Session-Version: TLSv1.3
+References: <20260628231049.1248899-1-rosenp@gmail.com> <20260628232120.0511A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260628232120.0511A1F000E9@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Sat, 25 Jul 2026 17:02:13 -0700
+X-Gm-Features: AUfX_mzkRY6Z8kZjUsSyDR6zqqIZ31wwydK7R2vmJU3Bx1SrmlOEVAvbSgYCMTQ
+Message-ID: <CAKxU2N9EvtEGzaowAr4J0+0F9iFsd5j8jmL7JTAqBWDPfanoaw@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: BCM5301X: EA9200: fix nvram size
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/07/2026 21:19:36+0200, Antoni Pokusinski wrote:
-> On Sat, Jul 25, 2026 at 03:07:52PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] The patch fails to resolve the issue it describes because part autodetection for the RV1805 incorrectly resolves to AB1805.
-> > --
-> > 
-> > --- Patch [2]: [PATCH v2 2/8] rtc: abx80x: move part autodetection before RV1805 configuration ---
-> > commit e37ea6c1257442ff3423e6bacb742916beb85bbb
-> > Author: Antoni Pokusinski <apokusinski01@gmail.com>
-> > 
-> > rtc: abx80x: move part autodetection before RV1805 configuration
-> > 
-> > This commit moves the part autodetection logic before the RV1805
-> > configuration block. The intention is to ensure the RV1805 specifics are
-> > applied even when the driver is bound using a generic compatible string.
-> > 
-> > > diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-> > > index 5486d9d0b1e5d..ca3af91c29977 100644
-> > > --- a/drivers/rtc/rtc-abx80x.c
-> > > +++ b/drivers/rtc/rtc-abx80x.c
-> > > @@ -814,6 +814,25 @@ static int abx80x_probe(struct i2c_client *client)
-> > >  		return -EIO;
-> > >  	}
-> > >  
-> > > +	/* part autodetection */
-> > > +	if (part == ABX80X) {
-> > > +		for (i = 0; abx80x_caps[i].pn; i++)
-> > > +			if (partnumber == abx80x_caps[i].pn)
-> > > +				break;
-> > 
-> > [Severity: Medium]
-> > Does this code introduce a regression by preventing the RV1805 configuration
-> > from running during autodetection?
-> > 
-> > Since AB1805 and RV1805 share the same part number (0x1805), and AB1805
-> > appears earlier in the abx80x_caps array, it appears this loop will always
-> > match AB1805 first.
-> > 
-> > If the driver is bound using the generic abracon,abx80x compatible string,
-> > part will be set to AB1805 instead of RV1805.
-> > 
-> Ok so I missed the fact that "AB1805 and RV1805 share the same part number".
-> Hence, I see no way to make the driver run the RV1805 configuration when
-> it is bound using the generic ABX80X, because it may happen that the
-> detected part is RV1805 even though the real one is AB1805 or the
-> reverse (depending on the order that we define in `abx80x_caps[]`).
-> Therefore, I'll drop this patch in v3 and leave things as they were
-> (i.e. autodetecton after the `if (part == RV1805)` ).
-
-Yes, don't bother. Autodetection was a bad idea anyway and will never be
-used with an rv1805.
-
-
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+On Sun, Jun 28, 2026 at 4:21=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Heap out-of-bounds read and write in `brcm_nvram_add_cells` =
+due to mismatched logical length validation.
+> - [High] Fatal page fault due to `ZERO_SIZE_PTR` dereference if the NVRAM=
+ partition contains only padding bytes.
+These issues were fixed separately.
+> --
+>
+> commit f8d0bb1af13fdcf08114311cb9160479fcd6bdb5
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> ARM: dts: BCM5301X: EA9200: fix nvram size
+>
+> Fixes:
+>
+> [ 0.182121] WARNING: CPU: 0 PID: 1 at drivers/nvmem/brcm_nvram.c:85 brcm_=
+nvram_probe+0x400/0x480
+> [ 0.182159] Unexpected (big) NVRAM size: 1056112 B
+>
+> Signed-off-by: Rosen Penev <rosenp@gmail.com>
+>
+> > diff --git a/arch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts b/ar=
+ch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts
+> > index 5bbc2ba0f9598..87569408bb695 100644
+> > --- a/arch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts
+> > +++ b/arch/arm/boot/dts/broadcom/bcm4709-linksys-ea9200.dts
+> > @@ -26,7 +26,7 @@ memory@0 {
+> >
+> >       nvram@1c080000 {
+> >               compatible =3D "brcm,nvram";
+> > -             reg =3D <0x1c080000 0x180000>;
+> > +             reg =3D <0x1c080000 0x100000>;
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but I noticed a potential out-of-bounds hea=
+p
+> read and write in drivers/nvmem/brcm_nvram.c when parsing NVRAM partition=
+s.
+>
+> In brcm_nvram_parse(), the length check validates the logical length defi=
+ned
+> in the header against the total partition size rather than the allocated =
+data
+> length:
+>
+> drivers/nvmem/brcm_nvram.c:brcm_nvram_parse() {
+>     ...
+>     if (len > priv->nvmem_size) {
+>     ...
+> }
+>
+> If the flash data defines a header->len larger than the non-padding data
+> size but smaller than the total partition size (priv->nvmem_size), the dr=
+iver
+> calls brcm_nvram_add_cells() with a len larger than the allocation:
+>
+> drivers/nvmem/brcm_nvram.c:brcm_nvram_add_cells() {
+>     ...
+>     tmp =3D priv->data[len - 1];
+>     priv->data[len - 1] =3D '\0';
+>     ...
+> }
+>
+> Can this lead to memory corruption if reading from a malformed flash
+> partition?
+>
+> [Severity: High]
+> This is a pre-existing issue, but I also noticed a potential page fault
+> if the NVRAM partition is completely empty.
+>
+> In drivers/nvmem/brcm_nvram.c:brcm_nvram_copy_data(), if the partition on=
+ly
+> contains padding bytes, priv->data_len becomes 0. devm_kzalloc() will ret=
+urn
+> the ZERO_SIZE_PTR token (0x10) which bypasses the NULL check:
+>
+> drivers/nvmem/brcm_nvram.c:brcm_nvram_copy_data() {
+>     ...
+>     priv->data =3D devm_kzalloc(priv->dev, priv->data_len, GFP_KERNEL);
+>     if (!priv->data)
+>         return -ENOMEM;
+>     ...
+> }
+>
+> The ZERO_SIZE_PTR is then cast and dereferenced in brcm_nvram_parse():
+>
+> drivers/nvmem/brcm_nvram.c:brcm_nvram_parse() {
+>     ...
+>     if (memcmp(header->magic, NVRAM_MAGIC, 4)) {
+>     ...
+> }
+>
+> Could this cause a kernel panic due to dereferencing address 0x10 when
+> probing an erased flash partition?
+>
+> >
+> >               et2macaddr: et2macaddr {
+> >                       #nvmem-cell-cells =3D <1>;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260628231049.12=
+48899-1-rosenp@gmail.com?part=3D1
