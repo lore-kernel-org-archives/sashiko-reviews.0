@@ -1,161 +1,220 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5E2346AC2
-	for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 03:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785037063; cv=pass; b=LyArohcrR/L3JPCUcSB0UlNqslpbqYcPd2dYY2SePBeHXsODLmGvHfdu/ALbv/Z6/tRvuJ19ypHvZWkyAXe02UJOh2gbU8dHDdYoR81/0wrQwTSjZ8lU93u5MFllt2CRT9YGqS/fz0cox7Dm5YJCPUwhfA0TNsWQYHvIqgvPOic=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785037063; c=relaxed/simple;
-	bh=fTfaM/m5eth5+/adQosBlmcjroxc67yWQ+mOFZi9wBQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OpEkdmN4IonQlGnPJ5/2+pcdLyc1XT3TT/uSt6sH5uTdM0umD5Y4HP6kjnNJhtpICun/02mreujbxqyCeTUToJapasFivN+A0sjR1UGuy4dSo34HWCni2SUbsNQ1dq/WWU/iOOFANyqLNBdHEUHNgr6J2onTsM1PnsBJ4NriFoY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gNtipMP2; arc=pass smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33481A9F85;
+	Sun, 26 Jul 2026 06:31:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785047478; cv=none; b=VcTdy1MXQ59bJVxrGUk9R2tA5HEOLyA+K2RMK7a9kyEwikJTAvS392Nk1gYM5fujzuCfCUW4JuPqJKZxotPNWgGFxM2OC2bHV0iD/QQYuR2MmZLe7SKgPP+LuXVt+L3MlWAbVRDdWDgF6hT7SRfCyNyPJgJAEyNmt3WtBAgjPBs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785047478; c=relaxed/simple;
+	bh=Q2X9CVbPfBQVrZc5kSjc9LCszkvp+X2FyxRFTbpKmzQ=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=mFpNziIMaRCNdlrV0IMAw4ARLB6K41wYKvMOWiZQ4dK5ZkS/jtfHMQBEDEQnISK2aRkAkap/nwPy8+7IIzu9GIWtD31zNFPX0MxNibwBC/he8iaF4UXxhdmnqf32lRnFSiSjvSKvT8fOQ9u2s8CtIF/NnedWXTQx1+L2O/KF2fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=DSeiGcM1; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gNtipMP2"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-81062fdeaf5so28161917b3.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 25 Jul 2026 20:37:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785037061; cv=none;
-        d=google.com; s=arc-20260327;
-        b=d7VcqGS8dZNSCDhfe0eV9doaxo+06iiXCsIw2mP+T2hGFbI9Hv2qfk04pTyHGLm9Qs
-         OBMnW6VNk5eerJHNes+y2+D/7kKqSdiHJG3v4h2CXBgWQvQv1GzzhLZLCltXpyDqchaw
-         Pobmr5dS9qPgK1vmfthkxku8q4SgbbmtTWJk7U6TsalmsvSD2f4F2rtLggkeSxx06D9r
-         1Nu41wyq39QFflt1EuSZld6ZOUw2pLyFkYnlb35YavAayMy/NGgbHwRTJMFP0XZxkRIm
-         x7LFHZ/c4zwhbgzbiZVwkivvYERUb/VObTMNR3g7oiVE1iXq+OFGLAckht5KlIXGRbqT
-         3cdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=CxEX9l/T7AwZAVrm4P1IE7GYezPpkQz92l8M6dbRYJE=;
-        fh=d4lZQzJj86GOXE2uBZ63/YnMA/QksEVfIk9QnceyrRg=;
-        b=gkbD9svgHlVdIHhO0YtO0xz5fq8tI7j1Pe97UmMFk1AbFhHNyFi6Y7HxndG80JGc96
-         epJ9hO0VN5dh4S3XbkrNhKSzg3gnLuRjfSiKyK/W6JNeD9OnHq2Jp9sqyuWo++JUKJ1b
-         P4Bhme4zJyFRPP4GNa4nAYGuWLgbyjt2x9393o3fEjmICkolohf/zVSS6c0EOFynKsMU
-         ey45an6y+PaDRouM8XM4/6jj/G4Giz0XJvxcWR21zDKniGA0R4RirSz8yNlupTpZ/L7e
-         9/q7QOX4KnHQvgppHKQSK0B21rfsCngyMW6xv8aPxzZLdzDEOMgBLFSWJDEujw+rcMx6
-         9kIg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785037061; x=1785641861; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CxEX9l/T7AwZAVrm4P1IE7GYezPpkQz92l8M6dbRYJE=;
-        b=gNtipMP2j8JAwPIx1Vleha0kSqUCnvHOjWcVz2NRbD9byMCdW82ReJOJ0nf/rzHlcS
-         IzrOSnSgg323Vi4sep1kYpVtY8ygxvAMBpPfEs7YuPVh5btEjvXZxVgsSHhz2L3bsNzZ
-         98969KkGJ+DXIWYZWENFbGynyXbo6ZK2bNkHKQBfRy9/G3LjiS/U4AY7Z2CmU3OlqLz0
-         v0XLC3Griav5zak7AntTk/azqIBEJprH7bWP0VoOvhCtaPw7rKUZ4vqrQL438MIvdacN
-         yA314oS2KsbSXzt3B1zaSJDw/8gecB8pj/ocAS9DTMtLii5BAtwvks6aUF3VgqG7CVCS
-         wH3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785037061; x=1785641861;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CxEX9l/T7AwZAVrm4P1IE7GYezPpkQz92l8M6dbRYJE=;
-        b=bVDkzAXFmybCE69PIaZshy8PU67CvQz3xXo6J78hBkd2QV5rOny8J1L45kPYggUbQK
-         c9XMZ/QLWq/Bvg2TV6BrsmFWAh+6FecVKBVhXk7ZdFr0/4X4upS1J40Y1KWYCyWYQsdK
-         +i4s2o9jy4tCViq9NrTznTVhqaSk5EEOgaERr4GtDxq+EsJHEGgSaUSvFkNXmi7Q/sWT
-         nusg3JSgu/2DWKhYbD9B6uCNuKAJ/miJt10WSXBx3B2MmStJeze/UcXxeikpb4TCcw+r
-         rx3a9P/EMRji4SxNbVcuFwKqtN9zC1wL3Bjf1iNpQzcoDDETkw/Mly8+v0Ag41ArILe3
-         YsfQ==
-X-Gm-Message-State: AOJu0Yz2efG6d3MavJKU9GOT/3NOILmkVOBUNtCrWZSTQ9ZoXw0h37Ar
-	ZsLlOqPYIehHbeGyQIHlJ5KTjvXQg95Dfg/fJl+Ip7yIDBzFlkpJBJYxiyBHpJBqR0pc0jbzRM3
-	dtkIQIHqP8CA5rFXPQQu2UqF0kVo9r17Gl6CDmyc=
-X-Gm-Gg: AR+sD10ZQE4m8kWDMAziXjEpLgaBTVSTw4QPVvvqLyeaMGMSDhZUjqk4fCO62LPA+L9
-	Lx5xUCrKhl2DdLOMEVqV94MJsLhpurm9hXh1VH4WCHSAdn4dvmRUXTjpcVTv0dMQQRW08k4k9/i
-	71wBHPAJp1wt1ftBA0DjIYwoUFNzsCmCMI9M7mRte81eXgJwwFMjlLT5uMQ0etxm984SN81sWsZ
-	0ehVJah6xwxvd/y49RUHe5ukzaeMpDtDXr8dHkefxvWSifnptslcAcqHgaKYE7et6P7+DpLv30o
-	A40W1NCcB+D/CkYCpyg=
-X-Received: by 2002:a05:690c:348a:b0:81e:a373:47ad with SMTP id
- 00721157ae682-81f63a35b07mr18584747b3.2.1785037060800; Sat, 25 Jul 2026
- 20:37:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="DSeiGcM1"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66Q5ltA82700409;
+	Sun, 26 Jul 2026 06:31:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=SLddse
+	37STl3izopJEIds+yiud3qSM3jxGrQZ9FUCNs=; b=DSeiGcM1ehHjeimCoE3zlg
+	j7DSRfAUYSV8UYMVp49VuzpUk/jh2QDz3ch6OAPsZLvIpt28/RKVL7Pq+D6Ouxs6
+	yug7p3GJDLcjXePSNUlHhflSgcNgKXLooKw24NW7AWxa3BmmkPEH89mFYAInBACO
+	0FcJBoLJ+LNSxvIFp/Ho40HTUULU4iN2Hk0xOKsYRvw+PZJi9jsTGTGYk2sjebgG
+	r0x7JlQFhfliqsoqUTYNnLNZmfXwAqai+dnsd+kPp9WwdACrXyWuWwTIKwligzqk
+	nAhvhCXHbKuPU/Q9GE8L2Ja+c17fgRbk+W57MecliSI35vXI3jLfpYXbHvdo9cnQ
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwcjk83-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 26 Jul 2026 06:31:15 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66Q6QOBu011607;
+	Sun, 26 Jul 2026 06:31:14 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yh0mgb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 26 Jul 2026 06:31:14 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66Q6VCbT15729112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Sun, 26 Jul 2026 06:31:12 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A0D1E2014F;
+	Sun, 26 Jul 2026 06:31:12 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 023A42014D;
+	Sun, 26 Jul 2026 06:31:12 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.124.223.95])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Sun, 26 Jul 2026 06:31:11 +0000 (GMT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260726025242.42245-1-laoar.shao@gmail.com> <20260726030312.DF6191F000E9@smtp.kernel.org>
-In-Reply-To: <20260726030312.DF6191F000E9@smtp.kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Sun, 26 Jul 2026 11:37:04 +0800
-X-Gm-Features: AUfX_mwt8E90lNcOVfM9z4AERgcnP9BvBrSTgl0T4KAQiDtTFQf9Yy2WrE4eLIA
-Message-ID: <CALOAHbB0w+eK6Bxd+Lsb51Z5QVtnNv=4Srbb7KWcm6zAxgkTwA@mail.gmail.com>
-Subject: Re: [PATCH v3] kbuild: rpm-pkg: Preserve .BTF section in kernel
- modules during debuginfo stripping
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH V3 5/6] tools/perf: Add powerpc HTM auxtrace event
+ processing support
+From: Athira Rajeev <atrajeev@linux.ibm.com>
+In-Reply-To: <20260725072144.E67CE1F000E9@smtp.kernel.org>
+Date: Sun, 26 Jul 2026 12:00:59 +0530
+Cc: linux-perf-users@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <DA35A5B4-3A86-4CB8-95CA-9D140F943044@linux.ibm.com>
+References: <20260725070747.81435-1-atrajeev@linux.ibm.com>
+ <20260725070747.81435-6-atrajeev@linux.ibm.com>
+ <20260725072144.E67CE1F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: lOakcFlnVg-RPKAwRiaUwYwvQhGTUAZ2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI2MDA1OSBTYWx0ZWRfX+RVGLXplHZ+v
+ SUqong17vnMKDWEZKBx+AEW3Qaj6Cl9X+xNI1fiqIiuyMiKcTrvA9fiDFbi5xbJt/D+Z3hnloBU
+ lSpGGFOoJxYQYmiylbs5hgX2m3B6Yvc=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a65a9b3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=JjqluoYiYjL13acjXBUA:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI2MDA1OSBTYWx0ZWRfX1aVsmzxkl2Rn
+ yYuPJViFrn3IOxqf7toJbtZfR4j/sJFUULB4i/iMC9WuorsoMNGKhghLqqTayDynkLT/sg+hqkO
+ 3m2mD4oLVqCmOMX5csediB2K93JL3grRv7sXPfHfINHhfGLCrZaAV/0RUPUP132goOqD6kcf5rh
+ /zsjd/6BPWhSSlZXBQspoaV8Va5f+nVL/s2oXqLqWbi0ailahC7RofRTkwA5LSjAs1eSfIBRpAx
+ GISdYz2+Wc/UwlC6kSe8kGJpTgYm4nR7gaWDO0m7ZXeaXVbwVG4LKPnHsj7HrMwICwu5prz1uTS
+ TxSy25WqYjTOXzEEsz/ng26v9kfna1eaSucwAf4bPirLOpdqD95PLW4L1tmPl7eeOPWQhK86Ytn
+ sai0+2SDGrSoUAx2XrbtACUaufmVadOaFtXolZRd2tBmyIyIxtDmPNIxLyCDvN1fc5HW25QqhuC
+ jIhuXXIdm8ne5q/WpOw==
+X-Proofpoint-GUID: lOakcFlnVg-RPKAwRiaUwYwvQhGTUAZ2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-26_01,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607260059
 
-On Sun, Jul 26, 2026 at 11:03=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The patch preserves the `.BTF` section during debuginfo strippin=
-g but fails to also preserve the `.BTF.base` section, causing module BTF va=
-lidation to fail.
+
+
+> On 25 Jul 2026, at 12:51=E2=80=AFPM, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> - [High] The file `powerpc-htm.c` calls `zalloc()` but fails to =
+include `<linux/zalloc.h>`, resulting in an implicit function =
+declaration.
+> - [Low] The file `powerpc-htm.c` embeds `struct auxtrace_queues` and =
+calls its API but fails to directly include `"auxtrace.h"`, relying on =
+brittle implicit inclusion.
 > --
->
-> --- Patch [1]: [PATCH v3] kbuild: rpm-pkg: Preserve .BTF section in kerne=
-l modules during debuginfo stripping ---
-> commit cd09ed46074d0224c00066939452278fca769e51
-> Author: Yafang Shao <laoar.shao@gmail.com>
-> kbuild: rpm-pkg: Preserve .BTF section in kernel modules during debuginfo=
- stripping
->
-> This commit updates the RPM build scripts to pass --keep-section .BTF to
-> find-debuginfo.sh. This prevents eu-strip from dropping the .BTF section
-> from kernel modules during debuginfo extraction.
->
-> > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-> > index c732415662ef2..1032f337a71cd 100644
-> > --- a/scripts/package/kernel.spec
-> > +++ b/scripts/package/kernel.spec
->
+>=20
+> --- Patch [5]: [PATCH V3 5/6] tools/perf: Add powerpc HTM auxtrace =
+event processing support ---
+> commit 306ea78646ef6e5fe95dbad9977aff1241d1027a
+> Author: Athira Rajeev <atrajeev@linux.ibm.com>
+>=20
+> tools/perf: Add powerpc HTM auxtrace event processing support
+>=20
+> This commit adds the powerpc-htm.c decode stub for powerpc HTM =
+auxtrace.
+> It wires the dispatch in perf_event__process_auxtrace_info() to call
+> powerpc_htm_process_auxtrace_info().
+>=20
+>> diff --git a/tools/perf/util/powerpc-htm.c =
+b/tools/perf/util/powerpc-htm.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/tools/perf/util/powerpc-htm.c
+>> @@ -0,0 +1,116 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +#include <stdio.h>
+>> +#include <stdlib.h>
+>> +#include <inttypes.h>
+>> +#include <fcntl.h>
+>> +#include <unistd.h>
+>> +#include <string.h>
+>> +#include <errno.h>
+>> +#include <endian.h>
+>> +#include "util/evsel.h"
+>> +#include "util/evlist.h"
+>> +#include "util/session.h"
+>> +#include "color.h"
+>> +#include "powerpc-htm.h"
+>> +#include "debug.h"
+>> +#include "sample.h"
+>> +
+>> +struct powerpc_htm {
+>> + struct auxtrace auxtrace;
+>> + struct auxtrace_queues queues;
+>=20
+> [Severity: Low]
+> Should this file explicitly include "auxtrace.h"?
+>=20
+> The code embeds struct auxtrace_queues here, and later calls
+> auxtrace_queues__init(), both of which are defined in "auxtrace.h". =
+Relying
+> on implicit inclusion (for example, through "util/evlist.h") currently =
+works
+> but could break the build if intermediate headers are refactored in =
+the
+> future.
+>=20
 > [ ... ]
->
-> > @@ -67,7 +67,17 @@ This package provides debug information for the kern=
-el image and modules from th
-> >  %undefine _unique_debug_srcs
-> >  %undefine _debugsource_packages
-> >  %undefine _debuginfo_subpackages
-> > +
-> > +# Preserve .BTF section in kernel modules during debuginfo stripping
-> > +# find-debuginfo.sh (from debugedit) uses eu-strip which removes
-> > +# non-allocated ELF sections like .BTF by default.
-> > +%global with_keep_section %(%{__find_debuginfo} --help 2>&1 | grep -c =
-keep-section)
-> > +%if %{with_keep_section}
-> > +%global _find_debuginfo_opts -r --keep-section .BTF
->
+>=20
+>> +int powerpc_htm_process_auxtrace_info(union perf_event *event,
+>> +      struct perf_session *session)
+>> +{
+>> + struct perf_record_auxtrace_info *auxtrace_info =3D =
+&event->auxtrace_info;
+>> + struct powerpc_htm *htm;
+>> + int err;
+>> +
+>> + if (auxtrace_info->header.size < sizeof(struct =
+perf_record_auxtrace_info) +
+>> + HTM_AUXTRACE_PRIV_FIXED)
+>> + return -EINVAL;
+>> +
+>> + htm =3D zalloc(sizeof(struct powerpc_htm));
+>=20
 > [Severity: High]
-> Does this also need to preserve the .BTF.base section?
->
-> When modules are built with BTF distillation (which is standard on recent
-> kernels), both .BTF and .BTF.base sections are generated. If .BTF.base is
-> stripped, btf_parse_module() in kernel/bpf/btf.c falls back to using the
-> vmlinux_btf.
->
-> This fallback causes type ID mismatches during btf_check_all_metas() beca=
-use
-> the module's .BTF was built with distilled IDs, ultimately resulting in t=
-he
-> module's BTF being rejected entirely.
->
-> Could we add --keep-section .BTF.base here as well to ensure distilled BT=
-F
-> validation succeeds?
+> Does this implicit function declaration cause a build failure or =
+pointer
+> truncation?
+>=20
+> The function zalloc() is used here, but <linux/zalloc.h> is not =
+included in
+> this file. Because the kernel build system uses -Werror, this missing =
+header
+> could trigger a build failure.
+>=20
+> If -Werror were disabled, the compiler would assume zalloc() returns a =
+32-bit
+> integer. On 64-bit architectures like PowerPC, this truncates the =
+64-bit
+> pointer. When extended back to 64 bits during assignment, the higher =
+bits are
+> lost, which could result in a segmentation fault upon dereference.
+>=20
+> Should <linux/zalloc.h> be included to ensure the return type is =
+properly
+> defined?
 
-You're right. .BTF.base should also be preserved. I'll update it.
+Sure, V4 will have changes to add zalloc.h and auxtrace.h
 
---=20
-Regards
-Yafang
+Thanks
+Athira
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260725070747.81435-1-atrajeev@linux.ibm.c=
+om?part=3D5
+
