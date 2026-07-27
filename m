@@ -1,184 +1,173 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011065.outbound.protection.outlook.com [40.93.194.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A20941B8C7
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:42:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217E9418A5A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163378; cv=fail; b=aY5WsD9HCpaxYYHwC76I8OPBUHGv+yE7upKTfa2T2UZ1su7u+t6TnPTyDfrsa7v2xbrD1JB8V359n8sJpU/P3kT2PfZAma6KTcOVhMZ9J6YSdUCwlK8LmQZg0CJ59LzCWbKqECaqXUi7BtqPjEQxBr98un/bh+rDvV5TVZ6j83s=
+	t=1785163414; cv=pass; b=ZDCmCVuR0k66u4vLxN5aqTY2b7kl8G/OApsyjMFDNoi3kTs38RluM/s3yk6OYIlX88P+ka8FkDDg1nENmPTNgSZcpXudnwhvKFTg0geK8+Itahyj9NVdom1YcYrodaeGS1rLVlzsS9GKHT40uvPiqP2vOWUfhRTO8AS+rGw72lQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785163378; c=relaxed/simple;
-	bh=gpwYWHYPf/6OWGaJ381BdXdgPSyw54x7rTqFRKprDCY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CSVB+t2zZUal7OUHYAtndsV2Jh6eJFIUMnSmmqPy3ABCTOkxTnzPC2L7fmVlw5lgmwisNedvvPUrOig3L7tsgoZB0POx7EAQqmELyIcYPcYqA32cZyDkJS0oD0/oVOhFA1WVp+3vRlsGh5A2OEe6oh29O5vs6/c0Qdt4stGVnY8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=avdovCvi; arc=fail smtp.client-ip=40.93.194.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1785163414; c=relaxed/simple;
+	bh=ilVF5rfbNsMKsrWNYd1qKt+Z0Gad44vws8Zb1fqpjSE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TDKv85G3HXfldcJ9o4feMcOSNuwbfI4mko39nvFapqlER6OS9sf74FR34KwZ5nN9kY7u1Dnh8Zt5xQi4zyB4/eB1aFCwwMrku2TuVjM9GZ7SVuRikKSNYIJLp+9ihhm8Vui3C+9TcdbpZ2FvdOyIlsobu7CssmEgLpyLrWrh6lQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OjRgYDkT; arc=pass smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="avdovCvi"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aZqvkZCuO8bo3bK5C3N85ID2xxsCnZ9GeXaJUP1LfcdamowOm9VXaLRAILmSvqZD6lNTvBdvFAh8OYCB8EhKLajeaG+lW4WHKYSzDkkc3H0fcOEvAhZ0cmYs5v+AZAuWooINZshs+Cfz0dvYc6l4qPZvvj/Xu0iSAyylcg81NRtvpmlG6msEk4CFLWFl+CYOlfiOO6GjMS5shyksGG8s3AwmWR/Oru7nCOz8ug+G+cmidHfGIjib8JIOEwidLQLTqzQ7++VIm4Nte+fYLPcy9yEwCaRKcwFYEoFyvvL8jCE3bRmN6/x+sgwjwG1oKDKW/YuS+vWJszmnYqQ52YiwTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GT/42Jla8tWncep2y4VhajVDXQx4+LobZ1oKoyoYGqM=;
- b=mE7Yg/EEmr77ETOn3W/i9ttms9vAETg4arkmW4x0R2hanGumTuewdz24OVH1S7AwldcX1xmaLnrfBwcGhrLnG3d25pgDUbBFp7Xm0Hybpwdo1knVpXU7BbfYxbExFYgOUZdrlujKcJRIM3pMcY1BdroPeHCz6/UxyAjW8DTDNXhHo1k6bsdmM0NYVwvXbjSYZK72i/KpBnGpR8rCk2XIpBoqqIEDVhxSo5J/Jag4nrwchjzD0WC6+6guytCJP/OF2lxfkLm3G9K9OVl1+FlEWJotLugCp4CL4MvBh/DsDMTOAbS7R0nSGvjYoijv9NglWHwUactxnbFMTcblVrb+sA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GT/42Jla8tWncep2y4VhajVDXQx4+LobZ1oKoyoYGqM=;
- b=avdovCviMdz2wKisNZW6/NWQlyIqIFVQaPZS91WCQBqSprKG+55Oai1g8BPuX+ezqbAZMZlBAMTz21N/P4Jn3t16nOZZsEBP2Z+xAlpV1HKWtDOWv5+DGnTZ0N1BbEOXH4L1I7+6bCSGeinKOUT6dosMeDwPYQpPYF8hxCThIIaV80h/2LcSysAbV1uakRO2kT6YcQYfjb0FZHFVKJts6WwhupClRAjIJD+FpaL4AQJxCzH+3YBGMPm/U7iUF6hWBo6V6hiSIQSz27Kb6akIuDVCx+avt+R3MJ5RXKKC4i07HPlmsib02m10Vr4RrmEKWZkbMKcPiDpmddEquOSw2w==
-Received: from SJ0PR03CA0051.namprd03.prod.outlook.com (2603:10b6:a03:33e::26)
- by MW4PR12MB6921.namprd12.prod.outlook.com (2603:10b6:303:208::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 14:42:46 +0000
-Received: from CO1PEPF00012E81.namprd03.prod.outlook.com
- (2603:10b6:a03:33e:cafe::73) by SJ0PR03CA0051.outlook.office365.com
- (2603:10b6:a03:33e::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.13 via Frontend Transport; Mon,
- 27 Jul 2026 14:42:46 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CO1PEPF00012E81.mail.protection.outlook.com (10.167.249.56) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.270.5 via Frontend Transport; Mon, 27 Jul 2026 14:42:46 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 27 Jul
- 2026 07:42:24 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 27 Jul
- 2026 07:42:23 -0700
-Received: from build-akhilrajeev-noble-20260602.internal (10.127.8.11) by
- mail.nvidia.com (10.129.68.7) with Microsoft SMTP Server id 15.2.2562.20 via
- Frontend Transport; Mon, 27 Jul 2026 07:42:20 -0700
-From: Akhil R <akhilrajeev@nvidia.com>
-To: <sashiko-bot@kernel.org>
-CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>,
-	<alexandre.belloni@bootlin.com>, <conor+dt@kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-hwmon@vger.kernel.org>,
-	<linux-i3c@lists.infradead.org>, <robh@kernel.org>,
-	<sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH v6 09/12] i3c: dw-i3c-master: Add ACPI ID for Tegra410
-Date: Mon, 27 Jul 2026 14:42:19 +0000
-Message-ID: <20260727144219.177646-1-akhilrajeev@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260721042259.80FA81F000E9@smtp.kernel.org>
-References: <20260721042259.80FA81F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OjRgYDkT"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-66899fe9077so4234126d50.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 07:43:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785163406; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ZE4UEiFlASXewdEMgx4QL2y2WisKTpCeYnISQqy4bE6MqUgOYhdoYQURqBzfQmtLy9
+         2b61JBOCwf6fWEUIze5g5ut4WkF5hxbIR10Yh1afqElFNwkDb6VZ48fK66wUsWy9PQSG
+         vWdj3eu6nLu96xdTadczNzgJAqyLshU2yqduB9Qc52S4upHlnhmTZGtr76O0YxjETgqM
+         ddIjUxitJpXkYmvmdsIkOgDrKpxVJU8ta700Cdi+6ZVIEKOcEVCIJaZUFyOw6Bdc7uCv
+         ZPKfS9poaUd59gCDltoqGoT1CVDUyS2htAAj/EbS8fMo4Zjy7myCZJ0779HZbeAvzRJF
+         fLng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=6U7gZm8FAQizXF59ec3aCvJxmKtlXRIVGknWn54r/mg=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=QEZfPFWQxQxlgdmZiQ0zEFIQcq2oGPy5IEYmTpnbC2UbcdJo2Dr6TUagpKqa9NpvQu
+         pSNB0JACnAcDao9d3MPGtQcFeXHSmFc4oCPTIievdYpmgq5fb1FwzRSaa+YbiVqJfpeP
+         G+UgwHKQTRZ4nVenm2JNJU1pdI99wAbHljQMisXa/W84IcXCbQZy007Sy79EFVwkzt7e
+         WQ5Ex7jroKd8ROGJMZaLtWWRCq5HetNbIUOk3cP302WuueV6w2JM83ywUqv1QyVLns52
+         1jUUPTzjpy9HHYEtrLx6+16v9Zs88jrOJLQXYRvGc/y912zGa9rBtr0TkK7A10lANMvS
+         fnRQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785163406; x=1785768206; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=6U7gZm8FAQizXF59ec3aCvJxmKtlXRIVGknWn54r/mg=;
+        b=OjRgYDkTV7VC84ZlRiVgqhQTsOPOLEZUvomxu996ceB5tujrIj/fYWbn/gPvYjRkn+
+         F9enlOA2nqiTLCA5vp7AGJftbdopyuWibB+ibnxPqKM42z4RSSBf82pOQvN5RbQfI0L3
+         lIa8N4SAmoiiYvy/Dt/L3zSvrCBvduOk+q8WDzKoo5aIQ2Rb0+739ZT/NYzNBDzYGTwS
+         /ZSGMQqThOpqsCOD1S8ik9u9P5iwgGqsJ0LK5ZfqvBo3ufbSBJURJUE+mDqiIT1anUCB
+         XCJB6DbvSBZDVA7eoMJxCepoOQ3VoX11BgI+pR6+bgRqc+nruH5SuweVGEnkWOuTnzGk
+         j4JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785163406; x=1785768206;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6U7gZm8FAQizXF59ec3aCvJxmKtlXRIVGknWn54r/mg=;
+        b=boxtY5+nKN17GMY+Ewo0evHSaU6Tz8zieqiF/IPTAyk/+t84J6MQ7/9sLEgW/h7QTv
+         DBm/PhWymBu6nLG2Gig12aU/VLQt3fiwZsv89oSneMeJV6SC8ZD48B72Bvv5ldNrdLUs
+         UmnKDayR/D7St1fsz494LQxrDOMlZB80zS/vZKztO1QJeuqGs5at0B6sIYltr+eUMoyQ
+         a1c2F8tPnsiZt+bcRuA9jBHxT9gMvY5eUYTIabDYoFa3+57VdgjOxR6TVXSleNDoXA9M
+         ud+gSedvYSpwOsxgUq/NCOP1aI6kM5fo3zt1QV5Pd2rz5w6ksOFPrwWBr9GEPJkWn9+v
+         CXhw==
+X-Gm-Message-State: AOJu0YxEC7qUvC5Bkna4zJ9oQRzk5f52FF1E32lJ91wJqns0S3D6Y6Gf
+	WLolY2MxIWvdHSYdITfu3xCSVwqzkcMyPrio7Yol7VU/N6+B/UL3NqQjjcvwfnf0abBO/yM1g+k
+	LBptOB0DIqhXIkUmd5tOql3kEbFVEZ8tC5w==
+X-Gm-Gg: AR+sD13VJMJn+tcUxcMpnJvLqeH+0wb/ChI0mq7VrC49Xj3MJdOLaHBdL7OO9umW1ut
+	Hw0fI5QY7Q36UPyWsvcKnwiMqXkakeQso9kmX998oTryczj4K1X6ZpBU57iFtKhL//WPlHvNKN6
+	SxFg4DvjitfH9AtSAMBCrfzxLuYj94vR9RDTnQ0+REF+N8qGKbiNWyiByYPCw1noUKFGJMzs+YJ
+	mUPA7e+Mu5cEkJ/5X+KnA3BghxO6FQzbwOxB5rw8EZewqYeH9BZ3datQSY6geE=
+X-Received: by 2002:a05:690e:4419:b0:668:8dfa:e6bd with SMTP id
+ 956f58d0204a3-668c79ece45mr1846117d50.28.1785163406381; Mon, 27 Jul 2026
+ 07:43:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E81:EE_|MW4PR12MB6921:EE_
-X-MS-Office365-Filtering-Correlation-Id: 811c90a5-65d3-4213-ce53-08deebed52bd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|36860700016|82310400026|10067099003|11063799006|56012099006|5023799004|6133799003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	TmdCboCmw5kxWKqD0NEbLaD9IAKs2TxB5lfH2oxLhlh6GKrw+Php6hoP/Sv9v0PMpnFheKE6nD5wu0sZW8qJarSJStX1OjPMvmm9CGnS5OUdMSZhZxtNsRYAA2PlvffvyMrtIVC44ZmE/Nf3QzuARNKX3Pc4qiaZqjFK1kPfBpFCIkf71f+US2z9e7WpWR0VOiiwC4HI8ZXHpJzNAOvg5PZWaoKupPaFhXV6cgmlu4POQE3bY5Ax8tVCkri3IkrGB8gmyixVAuBMiL8UwbNtUicvnlBwgqSAQojoNr76T2O9RapeIId6zcLMcV+4nnEedhk08VgDCxdd9u/kONjokhDcrPeHyHDTenVReN5hudElbx37yC0UI6dJkt3nMEFS9J72ma1ExWhRmUWmyL1Hdw0H/JwOzIgg0mQBwywhLuqmfzx9zq+aPv5zciOJ31G7qVaa0tj/xhoWRuAv/hqzLHFx2jI1o+zqwlaJIEx4OwLRmr/WBjo6jD74yS/pSArsYY6W9Swzv27qqPxBPzZ9CR1ct4av4UeFHdqTWnV3v3lJ1D/HN9Y9abFSwlnDLmO1sOxdB1hKvwLJbSC/ymCxcVYoIG/RWw5RcpTSbqVEaIZxPexsJ74Yvf+kUM3TPc0S6jz6LMxvMBmLvTmoxPSf7IaeoMqYXH4efnKElcoVafd2pnD7kjtU43GPdCsJXfZX8S9kPzy0JRje0nxZICCyJA==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(36860700016)(82310400026)(10067099003)(11063799006)(56012099006)(5023799004)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	X1aHNLSQT/+hPnBlb8GfF+UZqkEQy+KwQkAlvkV7lBSzNhCna5uU+S71X8NmRKXycoowNMvEXIG3LwFnw/GyVyPtUXkapTIjO8215pRu7x7Cfg201EdJ9GKiaX6sdKz54IHOFhMGxwmyfwSOCgDR0mWo1Pmy3n8c8ygwa1Mcp3GCDypqqLP24Eny8mOKka18IjKbl6EPqrKXx8Rn6L4Gmu7qGh6OjQoqmcFKb3TJy+xPRv3bSApNuIE0LTwTVg6DR9i/LkOcMccpMtQUk6rfkIQ1pS1lq3R+a4+RdaBNYMpPtz/W8NvtGIbgqotYeQZ+IIDNX6yQ+bhO8i7ESk8Cyndh+O2WvdqwiJn9193nctoZqSvhDjS1e3UhOiPCnHXlDLvok6Ybc7XR6tFrOPLkT9BWw4mQyHjIK+L0fEv6UhVQzGbSKFWTXhzxr5+GtDqk
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 14:42:46.0233
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 811c90a5-65d3-4213-ce53-08deebed52bd
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CO1PEPF00012E81.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6921
+References: <20260708165929.2233934-1-tmaimon77@gmail.com> <20260708165929.2233934-5-tmaimon77@gmail.com>
+ <20260708171328.164201F000E9@smtp.kernel.org>
+In-Reply-To: <20260708171328.164201F000E9@smtp.kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 27 Jul 2026 17:43:15 +0300
+X-Gm-Features: AUfX_mxss1gpTVx_iG-EcKgHYOCAVOJbPuT60yTahARgEf9JOKsw8XHtR5OWKn4
+Message-ID: <CAP6Zq1hNePS_kPWiTmUvyerv9E9F5QNRwsfkzp1XC5oedt7JyA@mail.gmail.com>
+Subject: Re: [PATCH v8 4/4] arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 21 Jul 2026 04:22:59 +0000, Sashiko AI review <sashiko-bot@kernel.org> wrote:
-> commit bf82e9c156c66763c855e5549bd1a91bafc5fdf3
-> Author: Akhil R <akhilrajeev@nvidia.com>
+On Wed, 8 Jul 2026 at 20:13, <sashiko-bot@kernel.org> wrote:
 >
-> i3c: dw-i3c-master: Add ACPI ID for Tegra410
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The device tree aliases for the SPI FIU controllers `fiu1` and=
+ `fiu3` are incorrectly swapped.
+> --
 >
-> Update variable names to generic names and add Tegra410 ACPI ID to
-> support the I3C controller in Tegra410, which is a DesignWare I3C host
-> controller.
+> --- Patch [4]: [PATCH v8 4/4] arm64: dts: nuvoton: npcm845-evb: Add perip=
+heral nodes ---
+> commit 58cedbdc9355efee860c7d605886caa4e600ea8c
+> Author: Tomer Maimon <tmaimon77@gmail.com>
 >
-> > diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-> > index 3ec3ab1c13b4c..efe37f5224c71 100644
-> > --- a/drivers/i3c/master/dw-i3c-master.c
-> > +++ b/drivers/i3c/master/dw-i3c-master.c
-> > @@ -1860,11 +1860,12 @@ static const struct of_device_id dw_i3c_master_of_match[] = {
-> >  };
-> >  MODULE_DEVICE_TABLE(of, dw_i3c_master_of_match);
-> >  
-> > -static const struct acpi_device_id amd_i3c_device_match[] = {
-> > +static const struct acpi_device_id dw_i3c_master_acpi_match[] = {
-> >  	{ "AMDI0015", AMD_I3C_OD_PP_TIMING },
-> > +	{ "NVDA2018", DW_I3C_ACPI_SKIP_CLK_RST },
+> arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
 >
-> [Severity: High]
-> This isn't a bug introduced by this patch, but adding a new ACPI ID brings
-> attention to a pre-existing issue when handling ACPI bindings.
+> Enable peripheral support for the NPCM845 evaluation board by wiring up
+> the SoC controller nodes to the board design. Add board aliases, GPIO-bac=
+ked
+> MDIO buses, flash partitions, and enable various peripheral interfaces.
 >
-> Does this driver safely handle ACPI PRP0001 bindings?
+> > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/arch=
+/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+> > index 5edf5d13342da..7717c3a8f76d2 100644
+> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+> > @@ -10,6 +10,42 @@ / {
+> >
+> >       aliases {
+> >               serial0 =3D &serial0;
+> > +             ethernet1 =3D &gmac1;
+> > +             ethernet2 =3D &gmac2;
+> > +             ethernet3 =3D &gmac3;
+> > +             mdio-gpio0 =3D &mdio0;
+> > +             mdio-gpio1 =3D &mdio1;
+> > +             fiu0 =3D &fiu0;
+> > +             fiu1 =3D &fiu3;
+> > +             fiu2 =3D &fiux;
+> > +             fiu3 =3D &fiu1;
 >
-> In dw_i3c_common_probe(), if an ACPI companion is present, the match data is
-> cast to an integer bitmask:
+> [Severity: Medium]
+> Are the aliases for the SPI FIU controllers intentionally swapped here?
 >
-> 	if (has_acpi_companion(&pdev->dev)) {
-> 		quirks = (unsigned long)device_get_match_data(&pdev->dev);
-> 	} else if (pdev->dev.of_node) {
+Yes, it is explained in the document. Since the FIU1 module is added
+in the new SoC generation, we should add it at the end of the
+structure
+> Mapping fiu1 to &fiu3 and fiu3 to &fiu1 assigns logical SPI bus spi1 to t=
+he
+> &fiu3 hardware controller and spi3 to the &fiu1 hardware controller.
 >
-> When an ACPI device binds using the PRP0001 mechanism, it utilizes the OF
-> compatible strings and the OF match table. In this scenario,
-> device_get_match_data() returns the .data pointer from the of_device_id
-> table (e.g. &altr_agilex5_drvdata), rather than an integer quirk bitmask
-> from the acpi_device_id table.
+> This contradicts the partition labels defined further down in this patch =
+for
+> these nodes, which expect spi1 to be fiu1 and spi3 to be fiu3:
 >
-> Because of the unconditional cast, won't this store a kernel memory address
-> into master->quirks instead of a valid bitmask, thereby activating random
-> driver quirks?
+> &fiu1 {
+>         ...
+>         partition@0 {
+>                 label =3D "spi1-system1";
 >
-> [Severity: High]
-> This is also a pre-existing issue, but does dw_i3c_common_remove() correctly
-> handle devres clock cleanup when the device is in runtime suspend?
+> &fiu3 {
+>         ...
+>         partition@0 {
+>                 label =3D "spi3-system1";
 >
-> The probe function acquires and enables the core and pclk clocks using
-> devm_clk_get_optional_enabled(). These clocks are explicitly disabled in
-> dw_i3c_master_runtime_suspend().
+> Could this mismatch break userspace and boot scripts relying on the logic=
+al
+> device IDs to find system partitions?
+No, this is the way we use it, and it is only an example in the EVB;
+the user can choose the label name according to the board's needs.
 >
-> If dw_i3c_common_remove() is invoked while the device is in runtime suspend,
-> the clocks are already disabled. Since dw_i3c_common_remove() does not wake
-> the device (e.g., via pm_runtime_get_sync()), won't the devres cleanup
-> routine run clk_disable_unprepare() again on already disabled clocks,
-> leading to a negative clock enable count?
+> [ ... ]
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708165929.22=
+33934-1-tmaimon77@gmail.com?part=3D4
 
-Both are pre-existing behaviours not introduced by adding the Tegra410
-ACPI ID; they are better handled separately.
+Thanks,
 
-> >  	{ }
-> >  };
-> > -MODULE_DEVICE_TABLE(acpi, amd_i3c_device_match);
-> > +MODULE_DEVICE_TABLE(acpi, dw_i3c_master_acpi_match);
-
-Best Regards,
-Akhil
+Tomer
