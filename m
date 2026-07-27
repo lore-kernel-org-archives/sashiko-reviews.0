@@ -1,86 +1,86 @@
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8B513E41A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4343313E41A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785127526; cv=none; b=F6eR7I9nOFqxyM2/L8uZCbDgsOw9+olaClXkiarHuRcr/pb5EH3gzlIsa9uV9uqFpC49T0fAEFazWNhmmQ2dpQB0syWsJ34q+M56fxYR76ycdiMPWhLZK71QoZVbTTx2vP8cUY9O1qPveCDL6xZofNPB2dk9upCkFgfls5wMrwo=
+	t=1785127542; cv=none; b=coB7oeE2GSJGsDDQCPW3EFUl4gYVt0dEkxbmgfv1wvOF5wqH+BEbm2vZztDf9BAiLLf8+qbE98vvhpjtDy1iKj2ZkdC2Zb9VYm8q5Qu4FUiFl8rGapbOfNTqVv+igfbRuoPlJak83kAxS/BFKytKUK93WVOHtyWiTKFeCYGL8YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785127526; c=relaxed/simple;
-	bh=IxcDo9OPXVf2fP8ZallIA8YFo/sVVzixzWAtojbnx2M=;
+	s=arc-20240116; t=1785127542; c=relaxed/simple;
+	bh=OkW+cX+gS0kBDcV6nDeljLGq0m/6QdKnrEVj81G78Cw=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LXdOlVgo22tG2zPfWcmN4WXmkPHwbjmUIbW018/kNnrD+UD3p74j/2XeKhxsQVQ4KzYkmNwQoH9c7XdIwFGiYhNfpx883hkoVU49fuyzadT2ZvZSNWOLfdCF8EfJyWZ3vaEnOVyF/4825U8JzZ7mQ9mYCZe/boMN8c9rPRPvgvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nVnz3yw4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TZ5df/JV; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=gGmDTqppbyehM99JZI9XZvVGvcBP3bdN7DAq8P4c0KSNdz0AdBGqazA9wVSHok7FTTXRLKDOka/b6RUAFbOxqSaE9ACo065vMtGpxJKlPQ2fNEsJYukDS+qcO2qcjlGu81OYh4M6sxSczPYqNqxcY33CCEjgg/72AlFmNsXeetE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EEEknjCN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e9FO4+wM; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nVnz3yw4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TZ5df/JV"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66R1fvbf2572062
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:45:24 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EEEknjCN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e9FO4+wM"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66R1fgnF2175552
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:45:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wRxgyFNsXaEhoTYYcOEXH+pg+XAnAmR420t9dgNEeYg=; b=nVnz3yw4+Dn1DORn
-	ptlBUctdgXjqMuxnN+tMW5TvnWiL+y5oDAku2f/rnPLEdOgL7HkxewMvOI5XdbKO
-	pHRcOAZhtU0TWoTHIZrZbsEftg0KxExd3dfVOgXD+zdAOQFRi0pecrjlBUPf/opF
-	9jkudf9ohiz16s+dSNrN7VhoJOdYMyDto2ZaLa1VEZOGZSoh1b36RuSBAGnUBFx9
-	4bzbFKCIp1JvL/O3OFve1UjmpcSf3PZqVIBwbJmn+CVrs5dVuMyumdoGnoLxU1LS
-	DhVHfFw8qrDUOPqkxSrgN6s+HmP1N0SQu3/EybivMeHfywo8ZErQj3Smo67XWY0W
-	JS5Z7A==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmm3scjx9-1
+	Nq5K/HQyci9JZnB+A0dArWLShtBEpz2XoUszBdMr7Vs=; b=EEEknjCNQqV3VNQ9
+	rie+BNjaOSG7NCX0SAP0TSquEgSJqe6iRJRH8JtMt7Ihv2033JEDkxb1Xb/g7ZE7
+	d6IWV62w9OsWNObB4K4Ot3mg4pJOju4SQExmVX6M9mIj1yM8NyrbFSNoHZxyYeg2
+	vX7Tamrb+1DHdegm5NLL93ggO2kztrN6sYAMNIh2kgpwVaGRAf5X2r0PhBObRkZ2
+	MrFz4pInwMxNm1yAVIfKWDuyqxmh/kHBQXYHrmUZ3i5Pnrir+0DPf/oLS5mvvLKd
+	43VNjyHYQSLU1OoSeKmhI9YwbjFxJerOJuaAi3XIsh3QsrvObYd9336v0WyOvdyV
+	GxToQA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmnwevc0s-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:45:23 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2cc8bde6318so47335375ad.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 21:45:23 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:45:40 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ccd1958e8fso31520685ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 21:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1785127523; x=1785732323; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1785127540; x=1785732340; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wRxgyFNsXaEhoTYYcOEXH+pg+XAnAmR420t9dgNEeYg=;
-        b=TZ5df/JVIFbnSpPb0T1hdb4D2FmrApT8bmILtMQDWNYkDjCSvPVB158QdLftfjSpJS
-         X6kv/pOxSUGWC3dROeeN8hIcOW0Z2S3/0IclRHaMWoaf2JWqNuauHwfo/ZUJFaANgh+D
-         bJ6u3rKdV9TR4ZIlxo7HyokjkYWbZGTTdtP4JfWOGO7m9Uv8UdOVIFk6X3FAvF9KUv+N
-         hFs4EDanIkxr5fiqOygkOIyU9xoju2BCCnj42YTg9w5EfOFH0gzoLzD9ErMGDvpnZaF+
-         eB6zgYbI1VlB6KpiVU0lI3Y8oxF9mjvoMbs7nOkw8lVD9K4VviMoDTwd1MALt+u5w5ty
-         KJJQ==
+        bh=Nq5K/HQyci9JZnB+A0dArWLShtBEpz2XoUszBdMr7Vs=;
+        b=e9FO4+wMLQGelOslXyJqYhrM6i9GTbOfqTeW3unXRSvMrF+z/5DQBI8IsWNq7FDNcm
+         y8zcLC7nW8Ny1r9lOPs3QEiRxvrkK1q+KnETyreof3mh+XTcOnhqJkphVfmH2Vsqa94O
+         piJjTvpYfiuEXjT4wIxQYUt4Y7GQGTaKp03leLpP6fVIYKIz5TiOLDRlBMVbKrtkZVHm
+         A+E3BmP0czIPT4s0YlprBXcxdo7OJLFSt1YlfELxOEsURSUuvvlMxEd1xYUJ7VUPpjqy
+         piB6JB0J02EPgFYm9ksWyFCfTF/Bklh4i9gsofAplj4U8UtHP8PUfiDmGoCxZkoCP0vm
+         1GIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785127523; x=1785732323;
+        d=1e100.net; s=20251104; t=1785127540; x=1785732340;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wRxgyFNsXaEhoTYYcOEXH+pg+XAnAmR420t9dgNEeYg=;
-        b=hwiRQsv1QxMq+q0LXyB/qNIYEdWc5NwgdJO9x21Yi21O55/g4KmEHK1nN1ccRTuZHT
-         U9Lgt1G6PpRIBpNbRJOz4sW+ebZ99IePtBxaN1UX+PP5uCAc1HuYzAmMpQuoRiVWaa2N
-         FLWHVyguppp00Rrual8zD2Cv1q8gDb2AeuCOOgJ8ip1Z0EtuUVbDC/onesf5Kz9LWlx6
-         C2h91nqs/Roj/VEvVd3Y36PXJCptWtQ94+uRoEA8SLraak1dYugXBiRY4FyqL2MVCOnP
-         jsZHHNvii3cWhzCrrKWNl6vxu2UP15Ox5I9FT+j+qk5vDTKj73jAFEWb0/X7+/cD9e0A
-         Uc1g==
-X-Gm-Message-State: AOJu0Ywhg8ByydGnp5lZg1d/f6x0rE4ZC29/2VXOHkhr6a3XzjAFF7CR
-	ity/5oIuvPdtN+558GTnJO4krPi6tfdUjWIRsAeJMrVUfkzO31OJ8V5I+0Rr5B/ASVZ/0iJRC10
-	uHZE3kYqASfo7YaxOLz6hh4elrA9qnPIz6uUpFDAtyT9zzs3zTwiOk5JJX3YtoLf1a0Q6/wDsdu
-	JFucw=
-X-Gm-Gg: AR+sD10kZiHV7/eQC5QCc3hXCFoQLzHkl0qbrshGAT8czNBIOuBn1rFCMgXsxfjvMSd
-	aMn5Z2mp7si/3dseHTWyYfQtbkMKdWRJih68Wp2PyxCnz2dHMvBFlE8LH/M8zJyIdteTEfO1KZv
-	NVbjc+b/SA+MtQEI/ucr81eTbqIF4YC7D8Cwtt8a6ckbEqmPj7PhUz5pgezSDr2kgH/zshYKINS
-	yEagVgXef7YrgoWhKvugjopCkncERSJub+M863OE/ZnUg6VO0hMb+qDk/TpQBgphJKe4iD4GjFt
-	Cu6Kb/QnKEZUZCyr6aFh/uu/31JD3XWzAYS/fLzwsfciyv24q/GvdngS7qrZyOEmlD+b+i6BAM0
-	9JjqPfZVD+dGQ7PlmmJPiBeM4IH71zTW5
-X-Received: by 2002:a05:6a21:ec0d:10b0:3c3:a08d:5b44 with SMTP id adf61e73a8af0-3c67dd8a2c4mr5145407637.23.1785127523185;
-        Sun, 26 Jul 2026 21:45:23 -0700 (PDT)
-X-Received: by 2002:a05:6a21:ec0d:10b0:3c3:a08d:5b44 with SMTP id adf61e73a8af0-3c67dd8a2c4mr5145388637.23.1785127522628;
-        Sun, 26 Jul 2026 21:45:22 -0700 (PDT)
+        bh=Nq5K/HQyci9JZnB+A0dArWLShtBEpz2XoUszBdMr7Vs=;
+        b=LojAkeD0hhgcAalrleQ5YIThiUxDaA+kTbVm527xFPIfNjNutfsiTjj7QrodgSsqOs
+         IG2cO9bLkpOSZ5n30pCJQPJkC6w8m48Ny5J9E/JuTUoOhxlkyFHdpc47BPJbJki50dJj
+         UqnLE8G0hKPP9vji2cIFnPfriihEVLxUZczM6Guurh6XLT0bOKMlCBQ6fi0sjFZGFCCH
+         QutjEJB8kTe3DUBVgUr3oddK/rWlK/5CCeztWtxzM+L3iadyruREtms8NwBptOAWyKgI
+         8tr1F3kUOsXM4dT1fsJgVwN4nIBsnzBXYE3RxuTuoOnTbyCWRmyVBSc425Rlpe0zoFgS
+         U1tg==
+X-Gm-Message-State: AOJu0YyxYKDF3uSs+MJ6foB4CmSsMYTwhGZ2sMKM8tLOIwJvwln2gGBN
+	+mEi0j6uXhhbW6aZ3OAVB8zy1tGxeb2gXZ3Qe76oQKTjcu0bY+PpDRle7Bad2gTkIwC/mNU9PTP
+	hy+YgyzYxmOvkjEOAbrlZKV4hpUC0r2B2v3M5aL7qvP/kMILYgU+zP96pJ0oiwTDS2CMXcVV1ab
+	WTTlw=
+X-Gm-Gg: AR+sD120p6XiNlu4OI4CylTs5X2Yr94ZA0BrjnZsodgp11/L4ENIQfrM1pDyFvLVLkU
+	5Ah87RJsIRcAY1+UFRgii76O/cqIyXhRyFMPy9eLNwjTblBKo9TGDacRDDaDiRuM46RJqV5DuIT
+	lZZTOhRkRTYORmDsQHNcGFWc8gMxBu8hvRnSRuVcUfbQFkXHMox9Kb1vrjD2zegxqmQoRegEwRr
+	yqMGcriJn8kM1vkqfw7qIvfBUniQdsKMDYoSDv2lGKPSWUgx98T1cgr+MVgNO6cDRlD3/X22GrH
+	+r8/G3UY+KCl5yayb/QNZGwHf68TcChVS/9N8wN6aQa3WYBKpORBIjGkRqPR55S8Y1X8BiOOXcW
+	UvRa7iLrsVsL7Zmic+I6rQAMPsz4I5gj7
+X-Received: by 2002:a17:903:234e:b0:2c8:f34c:82c0 with SMTP id d9443c01a7336-2cfde683786mr66091055ad.2.1785127539683;
+        Sun, 26 Jul 2026 21:45:39 -0700 (PDT)
+X-Received: by 2002:a17:903:234e:b0:2c8:f34c:82c0 with SMTP id d9443c01a7336-2cfde683786mr66090915ad.2.1785127539254;
+        Sun, 26 Jul 2026 21:45:39 -0700 (PDT)
 Received: from [10.206.101.140] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc593b57sm37991130eec.25.2026.07.26.21.45.20
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc419e3asm26441512eec.11.2026.07.26.21.45.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Jul 2026 21:45:22 -0700 (PDT)
-Message-ID: <c4f53c07-2a3a-bff1-80f7-adff8cc40ed4@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 10:15:18 +0530
+        Sun, 26 Jul 2026 21:45:38 -0700 (PDT)
+Message-ID: <04ec7e69-3225-1a5a-e19d-561e6f74f643@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 10:15:34 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -90,208 +90,138 @@ MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Subject: Re: [PATCH v10 05/14] media: iris: Skip DMA mask setting to core
- device when IOMMU is not mapped
+Subject: Re: [PATCH v10 06/14] media: iris: Enable Secure PAS support with
+ IOMMU managed by Linux
 To: sashiko-reviews@lists.linux.dev
-Cc: media-ci@linuxtv.org, conor+dt@kernel.org, robh@kernel.org,
-        devicetree@vger.kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+        media-ci@linuxtv.org
 References: <20260726-glymur-v10-0-de451559e88b@oss.qualcomm.com>
- <20260726-glymur-v10-5-de451559e88b@oss.qualcomm.com>
- <20260726060542.712191F000E9@smtp.kernel.org>
+ <20260726-glymur-v10-6-de451559e88b@oss.qualcomm.com>
+ <20260726060844.53A711F000E9@smtp.kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260726060542.712191F000E9@smtp.kernel.org>
+In-Reply-To: <20260726060844.53A711F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX1Wf3KtDKVgXy
- QgztIvKGutfcoy2Ta/D2N9Q/BDJVYYqL0IBQC14VeIG055ujtcKm4qr383mTDJ1D9Y+8vbNJ6Vv
- byTG8BzjTLyJWF31ANcBGSUuUhI7vArwjeR28LqbCErd78y+R8f5bPo4JAFny/9lJ9y55NKV5LI
- vmz4A8TQtF2CxfqrIcb3eUBkty0bK6YIXfD9yJCBGhWYdIWAUzxT7dAsArzixQ5l3BQ40tSHigb
- 6FTPcD+hGBQhI9UxW7v0E8A6GQ5e5965oSbU7CyOitWlaRw5P71gxlpuKw+hzDIGEKtKPziaTnm
- s05pAuqQSAXShHKSgTQacAyJvP8htWo2dbCsQbBYEWNZRpuF8HXlL1ywDhLwF9/YQhX9vIJ24kd
- n0N40R0p9ucO4GNLqWaCg3svToUSYJK1VNvgrDqK8HN1eFdvmtd4oZ6uMuvUxkoCzRQrw8+rlIP
- 2YEpEIputDCmNWgkKFQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX02/HodCGSVFR
- EeDrSTtymWO0a1Az5OA7zYf6IdC0qDj1PvZfkM8qiJ2GpnI7klavY3/Do3rYzVXvM5CV+BfsjcN
- MePbBHxPPXu/Co3Z4+XOH64qblRQleE=
-X-Proofpoint-ORIG-GUID: joMVSMvhItTalqIB2C1XBpxshAiK8Ldh
-X-Proofpoint-GUID: joMVSMvhItTalqIB2C1XBpxshAiK8Ldh
-X-Authority-Analysis: v=2.4 cv=KanidwYD c=1 sm=1 tr=0 ts=6a66e263 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX1+phI0NgEXw/
+ KinwfHG5NK4OXKJ1rY2DSnb0u0BkjcAY3gUY4iv5OxnN8tCiWaycM8nRrxdV8TVLAkAmTuy/SoI
+ YTQhrAdxzd4upSRnBrto1NSHqc0xIAkr6OxFXrfj4wvqREVzj8XoFlu7YA6lglwGndCLvihorJd
+ 19D2Xvk9U8Rw+QxVmFJiwFg9sH5wsEtOQxasWNS3wu6QyPD2ybG+qAHvDOfKtfVE8fl6x/z9Pvy
+ 9z3D4pLg3XDpnu8YvILCLmuakWZN0dy2NhUYpVl7+9e5aUFvNlJ/F5p19Wp41mihvFQvYC7OC9P
+ lAg6GIevi8Mu55ba8E6Ry+ncX7xAgcjbw4yELQn5CY+1CYmEC5QpImnZgsjjdfsRfbruJgKyF/K
+ a/QNMXcUoswAgXHbQskJp0Boyvwlh+A4wQTLN0ZtqtmGZ1EX7AKJ0GVPQD1pVCIB1U7mqzswZ+n
+ kjZ+UzSQeapWX9dp0rQ==
+X-Proofpoint-GUID: HgAqpcpmLpWJr_5oRUYhlqmlBtUWvtkb
+X-Authority-Analysis: v=2.4 cv=S77pBosP c=1 sm=1 tr=0 ts=6a66e274 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=W3MtZutHX8kjaUvpCmEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Y12TZTguZad93lnPc3EA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: HgAqpcpmLpWJr_5oRUYhlqmlBtUWvtkb
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX0ebYiU5CyxFM
+ B+O7CKbSZ0ee6Bp6SglTkMV0SMcL7+Z9pVncP9zbp9dkNBU0ZoMDewbcVwipqTGSkMtjlU1xAVz
+ XjDfY38zWGYmUk6rgaRQUyBo/ADbVvg=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- bulkscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270042
 
 
-On 7/26/2026 11:35 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->
-> New issues:
-> - [High] Incorrect DMA mask configuration on legacy platforms when IOMMU is missing or disabled, leading to DMA allocations outside hardware limits.
->
-> Pre-existing issues:
-> - [High] Use-After-Free in delayed work `sys_error_handler` due to missing cancellation during device removal.
-> - [High] Use-After-Free and locking freed memory in V4L2 file operations due to `core` context being tied to `devres` instead of being reference-counted.
-> - [High] Race condition exposing video device nodes before drvdata and critical setup are complete, leading to NULL pointer dereferences or Use-After-Free.
+On 7/26/2026 11:38 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Incomplete Implementation / Dead Code: `core->fw_dev` is never assigned, rendering the direct IOMMU mapping feature entirely dead code.
+> - [Medium] Potential NULL pointer dereference of `core->pas_ctx` in `iris_fw_iommu_unmap` during asynchronous error cleanup.
 > --
 >
-> --- Patch [5]: [PATCH v10 05/14] media: iris: Skip DMA mask setting to core device when IOMMU is not mapped ---
-> commit 618ea537a61c437b82cec491d04d1126e0ba8f26
-> Author: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> Subject: media: iris: Skip DMA mask setting to core device when IOMMU is not mapped
+> --- Patch [6]: [PATCH v10 06/14] media: iris: Enable Secure PAS support with IOMMU managed by Linux ---
+> commit 4079c73feb157bb490aaa33ca1d6e4970df1c4f7
+> Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 >
-> This patch modifies the probe function to only set the DMA mask on the core
-> device if an IOMMU is mapped. It aims to avoid unnecessary DMA mask setup when
-> IOMMU streams are handled by subnodes rather than the parent device.
+> media: iris: Enable Secure PAS support with IOMMU managed by Linux
 >
->> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
->> index 2594f5a67378a..c40c4ec44e83e 100644
->> --- a/drivers/media/platform/qcom/iris/iris_probe.c
->> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
->> @@ -310,9 +310,11 @@ static int iris_probe(struct platform_device *pdev)
+> On platforms without a hypervisor, Linux handles the SMC mapping and brings up
+> the co-processor directly. This patch adds support to the Iris driver to
+> manage the firmware context device and IOMMU mapping directly when the
+> firmware device SID is present.
+>
+> Link: https://lore.kernel.org/lkml/20260105-kvmrprocv10-v10-0-022e96815380@oss.qualcomm.com/
+>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
+>> --- a/drivers/media/platform/qcom/iris/iris_core.h
+>> +++ b/drivers/media/platform/qcom/iris/iris_core.h
+>> @@ -85,6 +87,8 @@ struct iris_core {
+>>  	struct device				*dev;
+>>  	struct device				*np_dev;
+>>  	struct device				*p_dev;
+>> +	struct device				*fw_dev;
+>> +	struct qcom_pas_context			*pas_ctx;
+>>  	void __iomem				*reg_base;
+> [ ... ]
+>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+>> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> [ ... ]
+>
+>> @@ -53,9 +65,23 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+>>  		goto err_release_fw;
+>>  	}
 >>  
->>  	dma_mask = core->iris_platform_data->dma_mask;
->>  
->> -	ret = dma_set_mask_and_coherent(dev, dma_mask);
->> -	if (ret)
->> -		goto err_vdev_unreg_enc;
->> +	if (device_iommu_mapped(dev)) {
->> +		ret = dma_set_mask_and_coherent(dev, dma_mask);
->> +		if (ret)
->> +			goto err_vdev_unreg_enc;
->> +	}
+>> -	ret = qcom_mdt_load(dev, firmware, fw_name,
+>> -			    IRIS_PAS_ID, mem_virt, mem_phys, res_size, NULL);
+>> +	core->pas_ctx->use_tzmem = !!core->fw_dev;
 > [Severity: High]
-> Does this skip the DMA mask configuration on legacy platforms if the IOMMU is
-> simply disabled or missing (e.g., via the iommu=off kernel parameter)?
+> Is core->fw_dev ever assigned a value in the driver?
 >
-> If device_iommu_mapped() is false, the required hardware DMA mask is skipped.
-> However, on legacy platforms, core->np_dev is NULL, so core->dev is still
-> used as a fallback for DMA allocations:
->
-> drivers/media/platform/qcom/iris/iris_hfi_queue.c:iris_hfi_queues_init() {
->     ...
-> 	struct device *dev = core->np_dev ? core->np_dev : core->dev;
-> 	...
-> 	core->iface_q_table_vaddr = dma_alloc_attrs(dev, queue_size,
->     ...
-> }
+> It appears to be declared in struct iris_core, which is zero-initialized,
+> but I don't see any logic populating it anywhere in the codebase. Because it
+> remains NULL, !!core->fw_dev will always be false. Does this unintentionally
+> make the subsequent direct IOMMU mapping logic unreachable dead code?
 
-On valid DT, either subnodes with iommus or a top-level iommus property
-will be present. If neither exists, the DT itself is invalid per the
-schema — that is a DT error, not a driver issue.
+core->fw_dev will initialized in iris_vpu3x_init_cb_devs function before
+reaching here. It's there in patch-11.
 
-> Without the mask being set, dma_alloc_attrs() will use the platform's default
-> 32-bit mask. Can this allow allocations in physical memory regions the
-> hardware cannot address, leading to DMA corruption or hardware faults?
+>> +	ret = qcom_mdt_pas_load(core->pas_ctx, firmware, fw_name, mem_virt, NULL);
+>> +	if (ret)
+>> +		goto err_mem_unmap;
+>> +
+>> +	if (core->pas_ctx->use_tzmem) {
+>> +		domain = iommu_get_domain_for_dev(fw_dev);
+> [ ... ]
 >
->>  
->>  	dma_set_max_seg_size(&pdev->dev, DMA_BIT_MASK(32));
->>  	dma_set_seg_boundary(&pdev->dev, DMA_BIT_MASK(32));
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does iris_remove() fail to 
-> cancel the sys_error_handler delayed work?
+>> +static void iris_fw_iommu_unmap(struct iris_core *core)
+>> +{
+>> +	struct iommu_domain *domain;
+>> +
+>> +	if (!core->fw_dev)
+>> +		return;
+>> +
+>> +	domain = iommu_get_domain_for_dev(core->fw_dev);
+>> +	if (domain)
+>> +		iommu_unmap(domain, IRIS_FW_START_ADDR, core->pas_ctx->mem_size);
+> [Severity: Medium]
+> Could this lead to a NULL pointer dereference on core->pas_ctx if
+> core->fw_dev is properly initialized in the future?
 >
-> drivers/media/platform/qcom/iris/iris_probe.c:iris_remove() {
-> 	...
-> 	iris_core_deinit(core);
+> If an early failure occurs during iris_load_fw_to_memory (for instance, if
+> of_reserved_mem_region_to_resource fails), core->pas_ctx is never allocated.
+> If a hardware watchdog or spurious interrupt fires concurrently,
+> iris_hfi_isr_handler could overwrite the state to IRIS_CORE_ERROR and
+> schedule iris_sys_error_handler. The error handler calls iris_core_deinit()
+> followed by iris_fw_unload(), which invokes this function.
 >
-> 	video_unregister_device(core->vdev_dec);
-> 	video_unregister_device(core->vdev_enc);
->
-> 	v4l2_device_unregister(&core->v4l2_dev);
->
-> 	iris_deinit_cb_devs(core);
->
-> 	mutex_destroy(&core->lock);
-> }
->
-> The driver initializes a delayed work sys_error_handler which can be scheduled
-> dynamically. During device unbind, iris_remove() is called but does not
-> explicitly cancel this work.
->
-> Because the iris_core structure is allocated with devm_kzalloc(), it is
-> automatically freed by devres when iris_remove() returns.
->
-> If the delayed work fires after the device is unbound, it accesses the freed
-> core structure:
->
-> drivers/media/platform/qcom/iris/iris_probe.c:iris_sys_error_handler() {
-> 	struct iris_core *core =
-> 			container_of(work, struct iris_core, sys_error_handler.work);
->
-> 	iris_core_deinit(core);
-> 	...
-> }
->
-> Can this lead to a Use-After-Free if hardware errors race with unbind events?
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is the driver context
-> vulnerable to a Use-After-Free during V4L2 file release?
->
-> Because core is allocated via devm_kzalloc() in probe, its lifetime is tied
-> to the device bind cycle. If a userspace process holds the file descriptor
-> open and the driver is unbound, iris_remove() returns and devres frees the
-> core structure.
->
-> When the user later closes the file, the VFS calls iris_close():
->
-> drivers/media/platform/qcom/iris/iris_vidc.c:iris_close() {
->     ...
-> 	iris_remove_session(inst);
->     ...
-> }
->
-> Which in turn accesses the lock inside the freed core structure:
->
-> drivers/media/platform/qcom/iris/iris_vidc.c:iris_remove_session() {
-> 	struct iris_core *core = inst->core;
-> 	...
-> 	mutex_lock(&core->lock);
-> 	...
-> }
->
-> Should the core structure be reference-counted rather than tied to devres to
-> prevent this from being triggered by unprivileged userspace holding an open
-> file descriptor?
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does
-> iris_register_video_device() expose the video device node to userspace before
-> drvdata is fully initialized?
->
-> drivers/media/platform/qcom/iris/iris_probe.c:iris_register_video_device() {
->     ...
-> 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
-> 	if (ret)
-> 		goto err_vdev_release;
->
-> 	video_set_drvdata(vdev, core);
->     ...
-> }
->
-> video_register_device() immediately exposes the /dev/videoX node to userspace.
-> If a concurrent open() wins the race, it will read a NULL core:
->
-> drivers/media/platform/qcom/iris/iris_vidc.c:iris_open() {
-> 	struct iris_core *core = video_drvdata(filp);
->     ...
-> 	ret = pm_runtime_resume_and_get(core->dev);
->     ...
-> }
->
-> Can this lead to a NULL pointer dereference?
->
-> Additionally, since iris_probe() continues with fallible setup operations
-> (like setting the DMA mask) after registering the video device, if probe fails
-> later, a successful concurrent open() will retain a reference to the freed
-> core, leading to a Use-After-Free.
->
+> Should there be a check to ensure core->pas_ctx is non-NULL before
+> accessing core->pas_ctx->mem_size?
+
+If iris_load_fw_to_memory() fails for any reason — including pas_ctx
+allocation failure — the caller does not invoke iris_fw_iommu_unmap(),
+so core->pas_ctx will never be NULL here.
+
+>> +}
+>> +
+>>  int iris_fw_load(struct iris_core *core)
+>>  {
