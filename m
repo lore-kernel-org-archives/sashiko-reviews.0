@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5607B33A9F8
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 23:16:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A90736C5AE
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 23:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785194212; cv=none; b=uffP4nbEpCcntIzp+wPz4y/N6O895jHhDsXrVitG1w20ng3PgRAcc+nIJrMgirfBkOEQCehSyTCnYWv3LE2mK0GrGNHbFpq+ja34DvxCCGN8apGZzQ7dDS7VQzxX4Q2p9aqO2xTVYnr9PBTJC2QwFoUzoPvYK7uPxQ9+bDUn7bg=
+	t=1785196531; cv=none; b=QhBYnRQdOgKuMUeJ/o/hZ2lBXs1XF7NazfeKvgLkOz/yDnIdRad7kbydYc3XodZrNCRuM6QzM6HIDtoGeOy/4XvVQzNsl31SvbU2nSnPgg0kVSdiDruVY+6UKdl8VE8yMuYksDlz9kUbZO+AoHlIGCyKnx4hcsKqPvM/msnzW6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785194212; c=relaxed/simple;
-	bh=C85A++KuUYqiv6lPWfg2CoF8YvF8NaICP8JNtTWmuVM=;
+	s=arc-20240116; t=1785196531; c=relaxed/simple;
+	bh=lJmuZY0S7QDv4ckH6M3o6VxfiVoT5kOQyRqJ20K45eo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K5qoCDFQ9e/QmwWSny4z+ClaqUEdMBIkMHeh1efK6PCPnw163+UuvFZC7dAoQXtCZvVwNnjPFKqh8HRncCj24uuUW/s3qnhyM4NmSFfZpLqqJOEnCVFHR2IRu48Ra+Dr6OM6m9GcP1RowYHUchz5Ar/nO5mzPWwmNSkuB18hkzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YcLbNGfW; arc=none smtp.client-ip=198.175.65.14
+	 In-Reply-To:Content-Type; b=qVKKRxjFZB98wVqFtn39u9BYDEUWLqEJ5bdl54MH9OTr55fm5a+TlmtsydVNBQGKmxXzdM+4uM2pagPCXeKRur9xsuLmMfDxNRYGVzB+fNugAYZTlqKBkMPnwnjPN7Ystam7Is/NrFHSRFaEzuUK1x7qMdMv68skzWn5Re92BhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S3Nha77U; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YcLbNGfW"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S3Nha77U"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785194211; x=1816730211;
+  t=1785196530; x=1816732530;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=C85A++KuUYqiv6lPWfg2CoF8YvF8NaICP8JNtTWmuVM=;
-  b=YcLbNGfWNDTRIuJm//6JIcxqITXrF9wk0TJ3F7dk4X3YMsSV0L3B3Mq7
-   1inAKiv/4Aq1oJd83p9wW/aGwe7ZbV1gLcqK/GGI0chzRgisb4783xmhs
-   RV3Sno/nESSPufy4eOIk05zj0LiUuDcDBYKWh+qWTLmnAwwTanzDa4YqC
-   EVPnlFdcH4DC+J7LPViWwyLawc7CLUNgiW7xQ5EnNjdLENxFEw9Cwii+p
-   G9o417vQkKxQuGYKCKpsGGEdJGhOn5nMkP7V5MMsmd7Z0UByV9of3RgeT
-   K50gQaksIZuMBDBfy9wig0NbL7/gcIWoV+y4mKKV87PJIywUAuT0vD8zJ
-   A==;
-X-CSE-ConnectionGUID: 1gfow6A8RlSZGkFfIYPGHQ==
-X-CSE-MsgGUID: GVWJ4ZvyQSWpCEHSZ1up1w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11858"; a="89662451"
+  bh=lJmuZY0S7QDv4ckH6M3o6VxfiVoT5kOQyRqJ20K45eo=;
+  b=S3Nha77U0o1qOzSK1BSwM85JOjovb1snuvyJMKzptT6x8PmGFSO2AAgx
+   ed1Hv1s9Owv0xXuVZ6g5QmzT51aAQq8LtHLjrEdURLPXu2z4jhzdwtNAi
+   rr8le3BH0qlnBWv1X5MWxQhkJKBAA1728hMUGX0kLt3jNaZRH5Ha5mmqf
+   QrwbJMcCk6+2Kp6LaZF7zJ+X7aHeGGTqw8ylGr06O4FgEoDmjvyu0Eqcr
+   YfIWFFI6pL8X+pF10YNo5Emta9zAniebKsEe2Pi4HTp2eu84F625khi9Z
+   XompCOS/Te5/BMEyw54HhwO3BtJDtsuBJTToYV4rwH3u/HhE9ZlUL3xeq
+   w==;
+X-CSE-ConnectionGUID: eJfcE6u0ReaSbYDf0zDErQ==
+X-CSE-MsgGUID: XxHPjmLpQE2ijAlwHmnoyw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11858"; a="85538831"
 X-IronPort-AV: E=Sophos;i="6.25,189,1779174000"; 
-   d="scan'208";a="89662451"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 16:16:51 -0700
-X-CSE-ConnectionGUID: bjJGES+LQPOuK5wS7KufLg==
-X-CSE-MsgGUID: YgvBlmFaSEqo+FTJ75SsHA==
+   d="scan'208";a="85538831"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 16:55:29 -0700
+X-CSE-ConnectionGUID: p9DI3qnjSUa4Fn00ElArog==
+X-CSE-MsgGUID: wVd+uPkYQAKAk/lH1WGkwQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,189,1779174000"; 
-   d="scan'208";a="259598215"
+   d="scan'208";a="263036384"
 Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 16:16:51 -0700
-Message-ID: <f2a2588e-b198-4895-98f3-e907071a243a@intel.com>
-Date: Mon, 27 Jul 2026 18:16:49 -0500
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 16:55:28 -0700
+Message-ID: <b5294274-3db1-43c7-afdb-e85db4d17404@intel.com>
+Date: Mon, 27 Jul 2026 18:55:27 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,91 +52,104 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/9] KVM: x86/pmu: Snapshot host IA32_PERF_CAPABILITIES
- in kvm_host
+Subject: Re: [PATCH v7 5/9] KVM: x86/pmu: Support PERF_METRICS MSR in mediated
+ vPMU
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 References: <20260727192131.582105-1-zide.chen@intel.com>
- <20260727192131.582105-5-zide.chen@intel.com>
- <20260727194448.CD47F1F000E9@smtp.kernel.org>
+ <20260727192131.582105-6-zide.chen@intel.com>
+ <20260727195009.4851A1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260727194448.CD47F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260727195009.4851A1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 7/27/2026 2:44 PM, sashiko-bot@kernel.org wrote:
+On 7/27/2026 2:50 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Incomplete replacement of raw MSR_IA32_PERF_CAPABILITIES read leaves KVM vulnerable to kernel panics during module initialization.
+> - [High] Guest PMU state in MSR_PERF_METRICS is leaked to the host and other VMs because KVM fails to clear it on PMU context switch when the guest is configured without the PERF_CAP_PERF_METRICS feature.
 > --
 > 
-> --- Patch [4]: [PATCH v7 4/9] KVM: x86/pmu: Snapshot host IA32_PERF_CAPABILITIES in kvm_host ---
-> commit 6a6d946c1225761f83ef8a8498aa4ccab5425b72
-> Author: Mingwei Zhang <mizhang@google.com>
+> --- Patch [5]: [PATCH v7 5/9] KVM: x86/pmu: Support PERF_METRICS MSR in mediated vPMU ---
+> commit 2933f2f58fa948287c388e166de23d159332fdf8
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 > 
-> KVM: x86/pmu: Snapshot host IA32_PERF_CAPABILITIES in kvm_host
->     
-> Cache the unadulterated snapshot of perf_capabilities so that KVM can
-> compare guest vPMU capabilities against raw hardware capabilities.
+> KVM: x86/pmu: Support PERF_METRICS MSR in mediated vPMU
 > 
->> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
->> index 0626e835e9eb7..e0114f248a9ef 100644
->> --- a/arch/x86/kvm/x86.c
->> +++ b/arch/x86/kvm/x86.c
+> This commit exposes the IA32_PERF_METRICS MSR to guests when mediated
+> vPMU is enabled. It handles passthrough of the MSR and saves or restores
+> its state during PMU context switches to prevent clobbering or leaking
+> state.
+> 
+>> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+>> --- a/arch/x86/kvm/vmx/pmu_intel.c
+>> +++ b/arch/x86/kvm/vmx/pmu_intel.c
+> 
 > [ ... ]
->> @@ -7033,6 +7033,10 @@ int kvm_x86_vendor_init(struct kvm_x86_init_ops *ops)
->>  	if (boot_cpu_has(X86_FEATURE_ARCH_CAPABILITIES))
->>  		rdmsrq(MSR_IA32_ARCH_CAPABILITIES, kvm_host.arch_capabilities);
->>  
->> +	if (boot_cpu_has(X86_FEATURE_PDCM))
->> +		rdmsrq_safe(MSR_IA32_PERF_CAPABILITIES,
->> +			    &kvm_host.perf_capabilities);
+> 
+>> @@ -831,6 +852,19 @@ static void intel_mediated_pmu_put(struct kvm_vcpu *vcpu)
+>>  	 */
+>>  	if (pmu->fixed_ctr_ctrl_hw)
+>>  		wrmsrq(MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
 >> +
+>> +	if (kvm_vcpu_has_perf_metrics(vcpu)) {
+>         ^^^^
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but there is an incomplete
-> replacement of a raw MSR_IA32_PERF_CAPABILITIES read elsewhere that leaves
-> KVM vulnerable to kernel panics during module initialization.
+> Could this leak guest PMU state to the host or other VMs?
 > 
-> If a nested hypervisor exposes CPUID.PDCM but faults on the MSR access, the
-> raw rdmsrq() in intel_pmu_is_mediated_pmu_supported() can trigger a #GP and
-> panic the kernel:
+> In intel_mediated_pmu_put(), this checks if the guest has the
+> PERF_CAP_PERF_METRICS capability before clearing MSR_PERF_METRICS.
+> However, if the physical CPU supports this feature but the guest is
+> configured without it, could the guest still activate it?
+> 
+> If KVM configures MSR_CORE_PERF_GLOBAL_CTRL for passthrough (which happens
+> when counter counts match, as kvm_need_perf_global_ctrl_intercept() only
+> checks counter counts), the guest can write to bit 48 of
+> MSR_CORE_PERF_GLOBAL_CTRL. The hardware PMU would then start updating
+> MSR_PERF_METRICS.
 
-I don't think KVM needs to handle that case. In
-intel_pmu_is_mediated_pmu_supported(), If CPUID.1:ECX.PDCM is advertised
-in an Intel platform but reading IA32_PERF_CAPABILITIES causes a #GP,
-that's a bug in the underlying hypervisor.
+Good catch. It's a basic yet important issue and something I should have
+thought of earlier.
 
-The reason I used rdmsrq_safe() here is that this code lives in common
-x86 code. In theory, a non-Intel architecture could potentially
-implement CPUID.1:ECX[15] without supporting IA32_PERF_CAPABILITIES.
+If the host supports PerfMetrics but it is not exposed to the guest,
+MSR_CORE_PERF_GLOBAL_CTRL must be intercepted so the guest cannot enable
+bit 48.
 
-rdmsrq_safe() is a defensive safeguard.
+With the following code, the guest cannot activate MSR_PERF_METRICS, and
+the leak concern goes away.
 
-> arch/x86/kvm/vmx/pmu_intel.c:intel_pmu_is_mediated_pmu_supported() {
->     ...
->     rdmsrq(MSR_IA32_PERF_CAPABILITIES, host_perf_cap);
->     ...
-> }
+diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+index 9292407f0353..474207c6413d 100644
+--- a/arch/x86/kvm/pmu.c
++++ b/arch/x86/kvm/pmu.c
+@@ -819,6 +819,7 @@ static bool kvm_need_any_pmc_intercept(struct
+kvm_vcpu *vcpu)
+ bool kvm_need_perf_global_ctrl_intercept(struct kvm_vcpu *vcpu)
+ {
+        return kvm_need_any_pmc_intercept(vcpu) ||
++              kvm_need_perf_metrics_intercept(vcpu) ||
+               !kvm_pmu_has_perf_global_ctrl(vcpu_to_pmu(vcpu));
+ }
+ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_need_perf_global_ctrl_intercept);
+
+> Since kvm_vcpu_has_perf_metrics() returns false in this scenario, this path
+> would skip clearing the physical MSR_PERF_METRICS on VM-exit, leaving guest
+> state in the hardware register for the next VM or host to read.
 > 
-> While this patch safely caches the MSR using rdmsrq_safe() here in
-> kvm_x86_vendor_init(), this snapshot is populated after
-> kvm_init_pmu_capability() has already run.
-> 
-> Because of this ordering, intel_pmu_is_mediated_pmu_supported() cannot
-> currently use this safely cached value, as it would incorrectly read 0.
-> 
-> Would it make sense to reorder the initialization so the snapshot is
-> populated before kvm_init_pmu_capability() runs, and then update
-> intel_pmu_is_mediated_pmu_supported() to use kvm_host.perf_capabilities
-> to avoid the #GP risk?
-> 
->>  	WARN_ON_ONCE(kvm_nr_uret_msrs);
->>  
->>  	r = ops->hardware_setup();
+>> +		pmu->perf_metrics = rdpmc(INTEL_PMC_FIXED_RDPMC_METRICS);
+>> +		/*
+>> +		 * The SDM requires restoring fixed counter 3 before
+>> +		 * PERF_METRICS. However, this path writes 0 to PERF_METRICS
+>> +		 * before fixed counter 3. For this all-zero case, the
+>> +		 * resulting hardware state is therefore the same regardless
+>> +		 * of write order.
+>> +		 */
+>> +		if (pmu->perf_metrics)
+>> +			wrmsrq(MSR_PERF_METRICS, 0);
+>> +	}
+>>  }
 > 
 
