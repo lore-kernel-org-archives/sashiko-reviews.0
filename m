@@ -1,196 +1,246 @@
-Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830F835E1B7
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 11:04:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB7F188713;
+	Mon, 27 Jul 2026 11:16:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785150301; cv=none; b=qSMAPv0qHCWtmUyQXE0IWgvYQ+BeIbMN0kOaAfHNMv6yTL1x5l2S475IcfmYWLSEcACZbAd9DjJWvFqDhphR9YSwsBs9zTph5qcjQ6NeOZVvQvNabvh7u5FgTSJcaYipLjTVjm6n7pnfkWFWNH+XonmtxUsVaEjuXOLm8hOO2cw=
+	t=1785150975; cv=none; b=Ivmx3VDbj0ofqGXXA74D7ArhYUuut3a7PjR4HvY+aiIj2drdhGq9iCa+pzN/fJy81ttbp5Olsason/uq47aeyQseBF5poWfd7WbFhIdp+DQPx2ZZ5iLiycjQgFdIsxyZrE6CGsXfmrWVEqIkWPMLgAJ4XyElQSYIWC9J1jADI4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785150301; c=relaxed/simple;
-	bh=xKTo3Nec+pj52L6yrojEcbysD2JrhxNHrJK2sZp1ssk=;
+	s=arc-20240116; t=1785150975; c=relaxed/simple;
+	bh=/+itlBm7r0v4QqIDP9l1rzX4iGLSmwtHVsUq25eU1x8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QcG9wV1rcrRuc0IHGBGrFFSjnieLbUS8aroQwRhlR9jFPeC7z3uhqReFC1ozDd3Kh05WRo+NaRVEJTLDrmwrlujF+IkUhquMRzAGzfPBhbqcCmOtCOIuYnJkqUNQ2i33+/Uwd/IM4gu7Xkm/002Cdkmyq6d3zAvnbFod5yB/Nm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Cfdt6Sfy; arc=none smtp.client-ip=91.218.175.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=ny3qaGZDhxSdeUIpOr1bDd3RhLF74SHELA9FjT87Jnt5b51N8svHwtpPmKstVA/ULiWHxAhH7m8LJZan/YaM3qncHZQOt+lBBXyLo8pHN0rT7Pd1TDMDGYIwDXD3VhZZGeUDdh91OZZRPt/WlGQlX97F7oBttEZI4iNu+MMZgEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qp0BHyey; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Cfdt6Sfy"
-Message-ID: <ca868252-8643-48de-81db-a6f6505397a6@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785150287;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sU/EA2UJXc22ZXfuwye3gfRjPgT+tpcOl8bz1cl04W0=;
-	b=Cfdt6SfyqnbCYVTeFucLmXg50LS30IT5+jiTd+NSeDOp2RckJKE1LGv4pzT9LlqP2Xav8L
-	8ysoYKQwPxVBF6FSOguVrE51+o9OOZ7XeyiP2X19lmRgqoeJKGSupoSvIjj4xcIBNZSFX/
-	bYUWay5mAfjKpCH4tedaAm9950b2oM0=
-Date: Mon, 27 Jul 2026 19:04:32 +0800
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qp0BHyey"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66RAJIph1923915;
+	Mon, 27 Jul 2026 11:16:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=8S1cLg
+	QcvXjYWpfjurcLn7t0WBOdgSCbMmbSNFjBi9I=; b=qp0BHyeym9EU/v97LxR/Hq
+	KzWD3OGPrH+7BR1DkaZlsOn4kaXJR+55PKHhPXP+0ftDt0zmie6qV39s+SSNa9ii
+	8SKSIVzyDzmlO6Jm5Zdl474zxMXsJnd4I3ebh1o74HXxV9WFWExsCp50vOMN+AGj
+	Lw8k2QIubu+Ega2cGzI2xhCWBKx0n26OguMr4nMDsoInr1s8Erh9bZb4IcrItGHF
+	ifDmbP8tluVK/ly2nFR7f7bzmLCBxCOSmQAOaKYXkyazr4/oGJDJsY5L7nr736Kn
+	ThFa0n/t2p/xKkR2GemFzcEZ2a62WLzNZgc1PIqXe6Nx/0KdOyfzlDaMDTIyw2Uw
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw77ns8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jul 2026 11:16:12 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RBBFSJ003475;
+	Mon, 27 Jul 2026 11:16:11 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yh51pp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jul 2026 11:16:11 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66RBG7hw36897202
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 27 Jul 2026 11:16:07 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7AF0720090;
+	Mon, 27 Jul 2026 11:16:07 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 64DDA20093;
+	Mon, 27 Jul 2026 11:16:07 +0000 (GMT)
+Received: from [9.224.77.173] (unknown [9.224.77.173])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 27 Jul 2026 11:16:07 +0000 (GMT)
+Message-ID: <a59c038d-a735-4a8e-a76f-60ffbeb6992b@linux.ibm.com>
+Date: Mon, 27 Jul 2026 13:15:59 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with
- per-range regions
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL 2/7] KVM: s390: pci: Fix memory accounting for
+ pinned/unpinned pages
 To: sashiko-reviews@lists.linux.dev
-Cc: damon@lists.linux.dev
-References: <20260727095429.143527-1-jiayuan.chen@linux.dev>
- <20260727100731.BC8B01F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260727100731.BC8B01F000E9@smtp.kernel.org>
+Cc: linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev
+ <agordeev@linux.ibm.com>, kvm@vger.kernel.org
+References: <20260727095720.9150-1-borntraeger@linux.ibm.com>
+ <20260727095720.9150-3-borntraeger@linux.ibm.com>
+ <20260727101121.C86F61F00AC4@smtp.kernel.org>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20260727101121.C86F61F00AC4@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: jxCCxUMGY3Ic_i2w-VQNgY77Jjpu4MRx
+X-Proofpoint-ORIG-GUID: jxCCxUMGY3Ic_i2w-VQNgY77Jjpu4MRx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDEwNSBTYWx0ZWRfX1kzTMQ8KyOVn
+ pz06+Yeou4JeSdwwMsY7yjMmNPZxHAITKIsFt5kq9MVKhKI7FP7JoWgYmuKcdAs2P+uCVsg98Nn
+ NIR9sq11A0Fzief6rHynGUJkasoZ52DQujHUA4EqDM2SbK5tkecMoe2xKQWWFDSyB6882q2YE5i
+ tiwMK7RwGXZmcYBTnY1404CT5frl4LEeJz1e+IZJqch9TB3sppZ9JHVyNZ/BIzhUwXrZNb2jeFU
+ MHZC0P6qC78hE7JfOrdEdw4ZP+4s36+ngML2ts7nN/Ps6kUPZMzHu5+HzJzySIRaliMzs9xnxQt
+ yCLbDNvHeTLgpUp6dtUKW1tu0XJDNwpSSJacAR0I3FEn9L7wtqW7EmJnYf3GPGmKeYPETHUoeeB
+ W+rYJPFwSKId4dHDWYXdgUfbyoxuJxTzOwAGOhNnQMqNEC5fjFueukMmZZnEDHko5G8YD2/Cv7Q
+ FLw3h5L0lwmtPLRBASA==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a673dfc cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=rpbQ5iLBezYDpLgtt8IA:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDEwNSBTYWx0ZWRfX+PTddQKEGrZr
+ 0CFRhryvsZYR9Iie9BebPoZ3rcGlrBByoh7hekZVFpETUv5g0rQwNdAVzaxPLyY9/sBSYtGqV6y
+ 3c+Eea9JLcBDB6lIul//824auyBQ7XY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270105
+
+Am 27.07.26 um 12:11 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] The patch introduces `mm_struct` and `user_struct` reference count leaks on the `airq_iv_alloc_bit()` error path.
+
+For some reason sashiko failed to apply patch3, which fixes this exact problem.
+
+> - [High] Calling the `KVM_S390_ZPCIOP_REG_AEN` ioctl multiple times sequentially overwrites `kzdev->mm_account` and `kzdev->user_account`, permanently leaking the previously acquired kernel object references.
+
+same here. Looks like sashiko applied this series to a wrong tree.
+
+All PCI fixes have been reviewed before here:
+
+https://sashiko.dev/#/patchset/20260723221409.5874-1-alifm%40linux.ibm.com
 
 
-On 7/27/26 6:07 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Time-of-check to time-of-use (TOCTOU) race condition in `damon_find_system_rams()` leads to a heap out-of-bounds write during concurrent memory hotplug.
-> - [High] DAMON initialization fails with `-EINVAL` on systems with sub-page System RAM gaps due to alignment overlap in `damon_set_regions()`.
+> 
+> Pre-existing issues:
+> - [High] Missing NULL check for `airq_iv_create()` return value causes a guaranteed NULL pointer dereference.
 > --
->
-> --- Patch [1]: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with per-range regions ---
-> commit 20fb01bf6e8e4cefc6016dfc073fb77c95ca3511
-> Author: Jiayuan Chen <jiayuan.chen@shopee.com>
->
-> mm/damon/core: cover discrete System RAM areas with per-range regions
->
-> This commit changes how DAMON sets default monitoring regions for System RAM.
-> Instead of a single region covering all RAM (and the holes between), it now
-> creates separate regions for each discrete System RAM area. This excludes
-> large memory holes from being monitored.
->
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 644daf5a16560..365c43271c0c6 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
+> 
+> --- Patch [1]: [GIT PULL 2/7] KVM: s390: pci: Fix memory accounting for pinned/unpinned pages ---
+> commit c8a84dcb0557ca0ba1070398f64a0a7a9a08e82b
+> Author: Farhan Ali <alifm@linux.ibm.com>
+> Date:   Mon Jul 27 09:57:15 2026 +0000
+> 
+>      KVM: s390: pci: Fix memory accounting for pinned/unpinned pages
+> 
+> This patch stores the pinning process user_struct and mm_struct when
+> accounting for pinned pages. It subsequently frees these resources when the
+> pages are unpinned to resolve context issues.
+> 
+>> diff --git a/arch/s390/kvm/pci.c b/arch/s390/kvm/pci.c
+>> index 5b075c38998e3..c2f5085a0f5f1 100644
+>> --- a/arch/s390/kvm/pci.c
+>> +++ b/arch/s390/kvm/pci.c
 > [ ... ]
->
->> +static int damon_find_system_rams(struct damon_addr_range **ranges_out,
->> +				  unsigned long addr_unit)
->> +{
->> +	struct damon_system_ram_range_walk_arg arg = { .addr_unit = addr_unit };
->> +	struct damon_addr_range *ranges;
->>   
->> +	/* First pass: count the coalesced ranges. */
->>   	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
->> -	if (!arg.walked)
->> -		return false;
->> -	*start = damon_res_to_core_addr(arg.res.start, addr_unit);
->> -	*end = damon_res_to_core_addr(arg.res.end + 1, addr_unit);
->> -	if (*end <= *start)
->> -		return false;
->> -	return true;
->> +	if (!arg.nr_ranges)
->> +		return 0;
->> +	ranges = kvmalloc_objs(*ranges, arg.nr_ranges, GFP_KERNEL);
->> +	if (!ranges)
->> +		return -ENOMEM;
->> +	/* Second pass: fill in the coalesced ranges. */
->> +	arg.ranges = ranges;
->> +	arg.nr_ranges = 0;
->> +	arg.has_prev = false;
->> +	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
-> [Severity: High]
-> Can this race with memory hotplug events and cause an out-of-bounds write?
->
-> walk_system_ram_res() is called twice without holding memory hotplug locks.
-> If a new System RAM region is hotplugged between or during the second pass,
-> the number of visited regions could exceed the allocated buffer size.
->
-> If that happens, damon_system_ram_walk_fn() would write past the end of the
-> kvmalloc-allocated buffer:
->
-> mm/damon/core.c:damon_system_ram_walk_fn() {
-> 	...
-> 	if (a->ranges) {
-> 		a->ranges[a->nr_ranges].start = start;
-> 		a->ranges[a->nr_ranges].end = end;
-> 	}
-> 	a->nr_ranges++;
-> 	...
-> }
-
-You're right. The two walk_system_ram_res() calls should be wrapped with
-
-get_online_mems()/put_online_mems() so the resource set cannot change
-
-between the counting and filling passes.
-
-
-
->> +	*ranges_out = ranges;
->> +	return arg.nr_ranges;
->>   }
+>> @@ -190,33 +190,54 @@ static int kvm_zpci_clear_airq(struct zpci_dev *zdev)
 > [ ... ]
->
->> @@ -3984,14 +4021,25 @@ int damon_set_region_system_rams_default(struct damon_target *t,
->>   			unsigned long addr_unit, unsigned long min_region_sz)
+>> -static inline int account_mem(unsigned long nr_pages)
+>> +static inline int account_mem(struct kvm_zdev *kzdev, unsigned long nr_pages)
 >>   {
->>   	struct damon_addr_range addr_range;
->> +	struct damon_addr_range *ranges;
->> +	int nr_ranges, err;
+>>   	struct user_struct *user = get_uid(current_user());
+>>   	unsigned long page_limit, cur_pages, new_pages;
+>> +	int rc = 0;
 >>   
->> -	if (!*start && !*end &&
->> -		!damon_find_system_rams_range(start, end, addr_unit))
->> -		return -EINVAL;
->> +	if (*start || *end) {
->> +		addr_range.start = *start;
->> +		addr_range.end = *end;
->> +		return damon_set_regions(t, &addr_range, 1, min_region_sz);
+>>   	page_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
+>>   
+>>   	cur_pages = atomic_long_read(&user->locked_vm);
+>>   	do {
+>>   		new_pages = cur_pages + nr_pages;
+>> -		if (new_pages > page_limit)
+>> -			return -ENOMEM;
+>> +		if (new_pages > page_limit) {
+>> +			rc = -ENOMEM;
+>> +			goto out;
+>> +		}
+>>   	} while (!atomic_long_try_cmpxchg(&user->locked_vm, &cur_pages, new_pages));
+>>   
+>> -	atomic64_add(nr_pages, &current->mm->pinned_vm);
+>> +	if (current->mm) {
+>> +		mmgrab(current->mm);
+>> +		atomic64_add(nr_pages, &current->mm->pinned_vm);
 >> +	}
->>   
->> -	addr_range.start = *start;
->> -	addr_range.end = *end;
->> -	return damon_set_regions(t, &addr_range, 1, min_region_sz);
->> +	nr_ranges = damon_find_system_rams(&ranges, addr_unit);
->> +	if (nr_ranges < 0)
->> +		return nr_ranges;
->> +	if (!nr_ranges)
->> +		return -EINVAL;
->> +	*start = ranges[0].start;
->> +	*end = ranges[nr_ranges - 1].end;
->> +	err = damon_set_regions(t, ranges, nr_ranges, min_region_sz);
+>> +
+>> +	kzdev->user_account = user;
+>> +	kzdev->mm_account = current->mm;
+> 
 > [Severity: High]
-> Could this fail with -EINVAL during initialization on systems with sub-page
-> memory gaps?
->
-> If the system has System RAM fragmented by small non-RAM holes (like sub-page
-> BIOS or EFI reserved regions), damon_system_ram_walk_fn() will create separate
-> discrete regions.
->
-> When these regions are passed to damon_set_regions(), it aligns the boundaries
-> to min_region_sz (typically PAGE_SIZE):
->
-> mm/damon/core.c:damon_set_regions() {
-> 	for (i = 0; i < nr_ranges; i++) {
-> 		...
-> 		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
-> 		end = ALIGN(ranges[i].end, min_region_sz);
-> 		if (start >= end)
-> 			return -EINVAL;
-> 		if (i > 0 && last_end > start)
-> 			return -EINVAL;
-> 		last_end = end;
-> 	}
-> 	...
-> }
->
-> If the gap between two RAM areas is smaller than PAGE_SIZE, the ALIGN of the
-> first region's end will evaluate to a higher address than the ALIGN_DOWN of
-> the second region's start. Does this cause the strictly-ascending overlap
-> check (last_end > start) to trigger and reject valid configurations?
-
-
-this is a real issue. I overlooked the case where System RAM boundaries 
-are not page-size aligned
-
-
->> +	kvfree(ranges);
->> +	return err;
+> If the KVM_S390_ZPCIOP_REG_AEN ioctl invokes kvm_s390_pci_aif_enable()
+> multiple times sequentially, will this unconditionally overwrite
+> kzdev->user_account and kzdev->mm_account?
+> 
+> It appears that if the device is already enabled, the previously acquired
+> references would be permanently leaked since unaccount_mem() isn't called
+> before assigning the new pointers here.
+> 
+>>   
+>>   	return 0;
+>> +
+>> +out:
+>> +	free_uid(user);
+>> +	return rc;
 >>   }
+>>   
+>>   static int kvm_s390_pci_aif_enable(struct zpci_dev *zdev, struct zpci_fib *fib,
+>> @@ -275,7 +296,7 @@ static int kvm_s390_pci_aif_enable(struct zpci_dev *zdev, struct zpci_fib *fib,
+>>   	}
+>>   
+>>   	/* Account for pinned pages, roll back on failure */
+>> -	if (account_mem(pcount))
+>> +	if (account_mem(zdev->kzdev, pcount))
+>>   		goto unpin2;
+>>   
+>>   	/* AISB must be allocated before we can fill in GAITE */
+> 
+> [Severity: High]
+> If airq_iv_alloc_bit() fails later in this function, the error path
+> jumps to the unlock and unpin labels:
+> 
+> kvm_s390_pci_aif_enable() {
+>          ...
+>          bit = airq_iv_alloc_bit(aift->sbv);
+>          if (bit == -1UL)
+>                  goto unlock;
+>          ...
+> unlock:
+>          mutex_unlock(&aift->aift_lock);
+> unpin2:
+>          if (fib->fmt0.sum == 1)
+>                  unpin_user_page(aisb_page);
+>          ...
+> }
+> 
+> Does this error path need to call unaccount_mem() to prevent leaking the
+> mm_struct and user_struct references acquired by account_mem() earlier?
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is it possible for airq_iv_create() to
+> return NULL under memory pressure?
+> 
+> If it fails, zdev->aibv is assigned NULL a bit later in
+> kvm_s390_pci_aif_enable():
+> 
+> kvm_s390_pci_aif_enable() {
+>          ...
+>          zdev->aibv = airq_iv_create(...);
+>          ...
+>          rc = kvm_zpci_set_airq(zdev);
+>          ...
+> }
+> 
+> Could this lead to a NULL pointer dereference when kvm_zpci_set_airq()
+> attempts to access airq_iv_end(zdev->aibv)?
+> 
+
