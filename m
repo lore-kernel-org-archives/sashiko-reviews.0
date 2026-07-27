@@ -1,132 +1,129 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56ED22A4EE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4294A360EE9;
+	Mon, 27 Jul 2026 02:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785118606; cv=none; b=jnXBLkweQI8boZY19LeEkZ0R0vv9C31q6YoYTRaAK9bW0lVAOiN/XITquCW+AmvgL32GPmiCfcowtg3+pSJ71HOPsJ6EnD5uGDQz7ctTDUT9e0PSUCZAzJWZR2FpTgoNpcjAVjNi0pgZUxq0Ifo05iVjVBi5eVCueTzCgWTmQQw=
+	t=1785119381; cv=none; b=mgOwBDX1yxdfscGOjvRskPhCiYvjb85w1LBiH9DgH5vtoj8vIgc5lHqqTzl9i+zS3rna55iz5Ecuu/foE7pge0TmrajMnZi+JzB07Io95RvvMaA5o7cBgsM3/yjT6vtqaziIZcjMhuQPBYe2528M+SmCn0zgrC/25m+c+HpsKfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785118606; c=relaxed/simple;
-	bh=xzbmg4Ol+zkQBpFqdxehI+797KgrzmXMCCWs50WMrXw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZZI4DX9Eg7wyiQ1KODNzKPJTDEqyRC2R9DFTYhAegfCOlRwLaht4TzsvuYbLlA1IZopKy8n4UV8hBcXHokWEoKqduHionLSA4HjEVmrbR6BndTbHvtQCb63Arsm2eTJUY8w37hvBvjU33c20hqPkonazESw20Vq6U1WG97OkbBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h7hyt1dNszKHLtW
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 10:15:50 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 4FE2B4058C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 10:16:41 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgB34Iduv2ZqmyBZAA--.3224S3;
-	Mon, 27 Jul 2026 10:16:41 +0800 (CST)
-Message-ID: <b3ba4b33-f1e5-40a3-a112-7d35ecb33840@huaweicloud.com>
-Date: Mon, 27 Jul 2026 10:16:41 +0800
+	s=arc-20240116; t=1785119381; c=relaxed/simple;
+	bh=RHKiLBJnNsuba5Z4tK73StKXHmCjpFp2chkkd2ZfHbM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=J+P0kOgvzSCTCRQOH5kMpCHkpHpa/pOMKKwG8l7GQ6JpJbb1n35Vcc3ZJVrAGwUfqpoP+Xq/Zz5b4Y7GK6RZxqKBac8ulu0QIij4SIcrTF9Jbsob3x2lcWy411OYZbvZXppypMJzBtkGqqh0pgn/EcCxD4wZGfMMEopr+1VulQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 3/9] parisc: Fix memory leak in bpf_jit_free
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260725154915.2488611-1-pulehui@huaweicloud.com>
- <20260725154915.2488611-4-pulehui@huaweicloud.com>
- <20260725155419.4B7DC1F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260725155419.4B7DC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgB34Iduv2ZqmyBZAA--.3224S3
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5Gw4DAr15Cry7XF45GFg_yoW8uFWDpF
-	Z5Gry5uF9Y9rWvgr4kJw18CFW5twsrGa4UGFyUu3yfuF90gw1DGFWak395Wa98Ar18ua18
-	trWFgryfurykJaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGw
-	A2048vs2IY020Ec7CjxVAFwI0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7
-	M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JV
-	WxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F4U
-	JVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7V
-	C0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j
-	6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI
-	8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AK
-	xVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI
-	8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280
-	aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyT
-	uYvjxUzWrWUUUUU
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 27 Jul 2026 10:29:22 +0800
+Message-Id: <DK9001Z5AWUJ.1ABF188YEUKGC@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/8] drm/aspeed: replace struct
+ drm_simple_display_pipe with regular atomic helpers
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Ze Huang" <ze.huang@oss.qualcomm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
+ <ze.huang@oss.qualcomm.com>
+Cc: <dri-devel@lists.freedesktop.org>, <Frank.Li@kernel.org>,
+ <imx@lists.linux.dev>
+References: <20260727-drm-simple-kms-removal-v3-0-cd5dc89858c6@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-2-cd5dc89858c6@oss.qualcomm.com> <20260726195914.12FD21F000E9@smtp.kernel.org>
+In-Reply-To: <20260726195914.12FD21F000E9@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-
-
-On 2026/7/25 23:54, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+On Mon Jul 27, 2026 at 3:59 AM CST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
 > Pre-existing issues:
-> - [High] Pre-existing memory leak of the allocated JIT image (`jit_data->header`) in `bpf_int_jit_compile()` if `build_body()` fails during an iteration after the image is allocated.
+> - [High] The driver fails to trigger a CRTC modeset when the primary plan=
+e's framebuffer pixel format changes, causing the hardware to incorrectly i=
+nterpret pixels.
 > --
-> 
-> --- Patch [3]: [PATCH bpf-next v3 3/9] parisc: Fix memory leak in bpf_jit_free ---
-> commit 91fdce2769b7bfc645bd4e9356cd152dd1568159
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> parisc: Fix memory leak in bpf_jit_free
-> 
-> If a subprogram fails to JIT in jit_subprogs(), previously JITed
-> subprograms are freed. However, the generic bpf_jit_free() fails to
-> free their leftover jit_data, causing a memory leak.
-> 
->> diff --git a/arch/parisc/net/bpf_jit_core.c b/arch/parisc/net/bpf_jit_core.c
->> index 172770132440d..ef63c38bdf151 100644
->> --- a/arch/parisc/net/bpf_jit_core.c
->> +++ b/arch/parisc/net/bpf_jit_core.c
->> @@ -178,6 +178,25 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_verifier_env *env, struct bpf_pr
->>   	goto out_offset;
->>   }
-> 
+>
+> --- Patch [2]: [PATCH v3 2/8] drm/aspeed: replace struct drm_simple_displ=
+ay_pipe with regular atomic helpers ---
+> Note: The format of this report has been altered to use a free-form summa=
+ry
+> due to code recitation restrictions. No inline code quoting is used.
+>
+> commit 82b41ef8182b1e0fe64dd5371b72b906d9c02892
+> Author: Ze Huang <ze.huang@oss.qualcomm.com>
+> Subject: drm/aspeed: replace struct drm_simple_display_pipe with regular =
+atomic helpers
+>
+> This commit replaces the simple display pipe with explicit plane, CRTC, a=
+nd
+> encoder objects. It moves callbacks to plane and CRTC helpers, wires vbla=
+nk
+> handling through drm_crtc_funcs, and uses commit-local state for programm=
+ing.
+>
 > [Severity: High]
-> This is a pre-existing issue, but does bpf_int_jit_compile() leak
-> jit_data->header on some error paths?
-> 
-> Looking at bpf_int_jit_compile(), if build_body() fails during an iteration
-> after the image is allocated:
-> 
-> 	for (i = 0; i < NR_JIT_ITERATIONS; i++) {
-> 		...
-> 		if (build_body(ctx, extra_pass, ctx->offset))
-> 			goto out_err;
-> 		...
-> 		if (ctx->ninsns == prev_ninsns) {
-> 			if (jit_data->header)
-> 				break;
-> 			...
-> 			jit_data->header = bpf_jit_binary_alloc(...);
-> 
-> The code jumps to out_err, which falls through to out_offset (seen above):
-> 
-> out_err:
-> 	if (extra_pass) {
-> 		...
-> 	}
-> 	goto out_offset;
-> 
-> However, the out_offset cleanup block only frees ctx->offset and jit_data,
-> and skips freeing the already allocated jit_data->header:
-> 
-> out_offset:
-> 		kfree(ctx->offset);
-> 		kfree(jit_data);
-> 		prog->aux->jit_data = NULL;
-> 
-> Could this lead to a memory leak of the JIT image buffer?
-> 
-> [ ... ]
-> 
+> This is a pre-existing issue, but does the driver fail to trigger a CRTC
+> modeset when the primary plane's framebuffer pixel format changes?
+>
+> Looking at aspeed_gfx_plane_helper_atomic_check() in=20
+> drivers/gpu/drm/aspeed/aspeed_gfx_crtc.c, there doesn't seem to be a chec=
+k=20
+> to see if the pixel format has changed between the old and new plane stat=
+es.
+>
+> Since the hardware registers for the format (CRT_CTRL1) are only programm=
+ed=20
+> during the atomic_enable() path, which requires a full modeset, a format=
+=20
+> change during a simple plane update will only update the DMA address in=
+=20
+> aspeed_gfx_plane_helper_atomic_update(). The format configuration in the=
+=20
+> hardware will remain stale.
+>
+> Could this lead to corrupted rendering if userspace changes the framebuff=
+er=20
+> format (e.g., from RGB565 to XRGB8888) without changing the display mode?=
+=20
+> Should aspeed_gfx_plane_helper_atomic_check() explicitly set=20
+> crtc_state->mode_changed =3D true if the new format differs from the old =
+one=20
+> to enforce a full modeset?
 
-will fix if have new version, or will send new patch
+We can force a modeset when the primary framebuffer format changes:
 
+	if (old_fb && old_fb->format !=3D fb->format)
+		crtc_state->mode_changed =3D true;
+
+With drm_atomic_helper_check(), this also needs a second
+drm_atomic_helper_check_modeset() call, because modeset checks run before
+plane checks, similar to [1]
+
+    static int foo_atomic_check(struct drm_device *drm,
+                                struct drm_atomic_commit *commit)
+    {
+        int ret;
+
+        ret =3D drm_atomic_helper_check(drm, commit);
+        if (ret)
+            return ret;
+
+        return drm_atomic_helper_check_modeset(drm, commit);
+    }
+
+However, I would prefer not to mix too much unrelated fixes into this
+simple-KMS conversion series. The old simple-pipe code did not force a
+modeset on framebuffer format changes either, so keeping that behavior
+seems fine for this conversion.
+
+If needed, we can fix it later in a separate patch.
+
+Also, ARCPGU may only support programming the pixel format during CRTC
+enable/modeset, not during a flicker-free plane-only update. If so,
+changing the plane update path would not help.
+
+[1] https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/imx/ipuv=
+3/imx-drm-core.c#L40
