@@ -1,168 +1,208 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E94A3EF650
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 09:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965BF3F44F2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 10:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785145598; cv=pass; b=RtoUqhohwzqZ4Y7hKSWnQ9O8nrVSLanCOCMpAYYHkWO5x5rfgi1ZVXVSr41NWVJqcTpEGcgn6L3uvCkR46TIAF//bKxt6WgshtydDr6ZBYZOcEVarAbZcOU000LPWNO9iqTCCV7ULXi4Bz86K4je6oVIPipXwx+JExNjtsiHYfA=
+	t=1785147237; cv=fail; b=XluvsDhlJOFYqX17m4rqIxa7+xxm1x9ykZTsMpmHmPi7/UxuOw+xvMkUDDiEAIeyGg7M20NHZb+ArYIpA0H4xUhMFB71vpUxCG9AvJeYN4DMRgGb22/Tc3f3iHThj6JYvjkr3/cgHPga/uomKh09GmmtvXtYeH17HMoHedfyRyM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785145598; c=relaxed/simple;
-	bh=JIsVCCi8V6pXUaxHFE2htTqwKO/SzOg08RdktddYlhg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kCSu1Cv6XOnBAYCSLECiHnLnvjl3ReTO0Tcsy7+0sE7RJE+TRmv6ip2diC4iB5iQP499AnmBsYDHPEg0PNOl+vZzVgU8VL0+KY70S9vkm5SPpUgAYj2zwJoEtip84TUPFYxyKJlk9tpQWrnLRfVolOEO+xjjjstbkRZJXho+Mjs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=HkNmfU/t; arc=pass smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1785147237; c=relaxed/simple;
+	bh=/9P5r0hBJYzvnEr5hgsQBmUAiZRu7fWsT9whoxw87qM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lxwBtKk3VK/TYmQuqk7TT4QEHOZmIOrvhGTTd0brOC2CPONllAIiXoDy7fyqv3iszlNq4c13mZ0G+INDf8wKYH3ZHfbS4VjLdYo+EcpHh/k4IVOVaw2GEgXq36vXd5iK6J4QjlH9vqc/QiS7SLHF5PCv7wB7rzQBynw+5HLm5Zc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NuB8pOWI; arc=fail smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="HkNmfU/t"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8114a4542b2so33541327b3.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:46:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785145595; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Y/D30Rnt9VxH11TrP8UD7+guC2eCAZbIX28k1goMyjfYYaWXMRDohWsd4Z4BFYcEk2
-         3VTNT3Y3RNq4VKUD0noEwrT/ZMHCo1qhhWqN3LSjpCFnaKiKL8bU3EuI2NGkAPSach6y
-         37g1B59n9igToj94vwoDVH9ulZBrsXymuOREYFaiRVfcu5MSAh37JACXIQCeJPH0hOMn
-         4qNhWCqjqIKLS15odsrhCCqDuQQb85XKq89eJNxId7XcvzligE78ig49OsQuZwef7Gdc
-         DG4JrGBOyRf2a2wa8M+KCd/IBYrqRPpfdVantncPr7LCYuBO2b5jLgXK5DJDv0bnwn26
-         PNVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=5xG1nDaySHmAHB2DEV/3BuD9VMX1Zk/iy2QTvLRNOc0=;
-        fh=yNLOa350lHl8yGZx3ANMkyZhsmmxw10/C9f4wM6ZUPc=;
-        b=gtgN1xgDwRTBaKpZ0JjpiJF1b61TiZG2vM0p+iG4+BqT+JrVOBUugxGja3Fx0F2vqi
-         phczn39cpRbsspRRfubKKtMqiA2P30G+ty00IwCq1940HLb7ILXyu70xt1WDGPhBWcNQ
-         zDMV5eXmjot7RDs3TOIRe8q5GQL6jzyEKQPblcmQKwQVVKQZcZeP8Xocdf+lxxvfIG6d
-         hY9/AUr8GtDM2TW3vwvVuscGdc6nGMkhi4DJlmF453vV8nTpRMusUNUCLhhCKJ6Mfl9M
-         MrLuH/LzA6s8pSJPBvmQjte8j96yEbFTg+KLGL4uTegCSNPl69TKUpQi/iezbmrWPjrA
-         Z8Xw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1785145595; x=1785750395; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=5xG1nDaySHmAHB2DEV/3BuD9VMX1Zk/iy2QTvLRNOc0=;
-        b=HkNmfU/tkiL+k+noNduWIqbRaQ2dRDfNpYddU2OfxOgG/D8t6kPheHmXGTvkGAJJQB
-         RK07jyBzaud+JNod+Hrki52mV9kgsBNAF4TRAceROW8eHDE1ehZcVT+C9Q/St3s7bxBL
-         beOdwlEqr+tPVNAqfQFR2hGPVt7PCFk2Xf6a0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785145595; x=1785750395;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5xG1nDaySHmAHB2DEV/3BuD9VMX1Zk/iy2QTvLRNOc0=;
-        b=TFcXtdKNfV1R6Liz2/RO+RRTYmT5H8ij3GWw+ymUB9r+zwBJOe1h5uQKfdIahNvFys
-         wqqq1bhAQdkASWt/2/v//G8+CHSbfgHuDyz+pgdHisTPNmjPUHLeqPjlO7LGj46W8E09
-         NnblICEApVVSlPKoXhiYwnyghrnbkSTlZJyVjBrgrA8zYCvuqLwl5SGTqimJs84wCf77
-         J2dDeCy6Alz4a+awpqD5HXvWK2DZdwzm0WVnlu587FFbnElhPn0Qkqg9hEbQ6xy2dm3G
-         pcFOqHtHUnaHWmIAT1bnItawKz2avpJWzyAhE1+T15DjKr0UviyIxZr7loMkY8LYNR37
-         7Lsw==
-X-Gm-Message-State: AOJu0Yw2A+T/nlyJn/OaVn5I79DczsWP8Ix3x5IVMwUBqxcKJzixGg0j
-	+5zt5+YKFiNTGvMyq+BSx656J9X9WyoB4qaFiN1EqtN0d+7RD+AHz1+Vfj+ncCfHxbM4Kx50Eeu
-	vi9BjpVY+yc/iMN2TKZUAHKk65d4hoVQmM9nK+OuMl/F+vMeOPbdw/w==
-X-Gm-Gg: AR+sD12HdM5PR6cYmFwjJDDSMC4I92SseGwi80fZMJaZYlKZlB2L1fyPzczDEFIT4ab
-	JXJnb+tkOAMsFL0t1gU0YH3WVZX3nwiWkBXwr/AF+viG8gEgwz6ES2f34J2PGDOA8TQLq/89z9o
-	OCY6R2BEBlmSQCBNVlCJv1eQzkIh2b2JTzs+W5ZK78SGV0EA6TIUb/RuVdFsdL68Kse35ogzrI0
-	3nc6Rh0hzdS+6GsbtKXntFdKyihzIM1AtMhf0OEXsyuaIUkLtPYlUeCWtfUEwMsWHJT0pz1oSo9
-	GM9kWOeP92DQCMi9cL6DA2RkyQ==
-X-Received: by 2002:a05:690c:6181:b0:80c:85e5:875f with SMTP id
- 00721157ae682-81f69eba0edmr24598547b3.72.1785145595033; Mon, 27 Jul 2026
- 02:46:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NuB8pOWI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785147236; x=1816683236;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=/9P5r0hBJYzvnEr5hgsQBmUAiZRu7fWsT9whoxw87qM=;
+  b=NuB8pOWIGItwd8HQwElJVYG+1SKueSLkvjJcoCza2qQbDcDP7TQHlhEv
+   1vMFRVXWEx28cgeWpZnggUflgLfp406uNB7IFw4Xlb3qqXk/mzd5lqR2V
+   vWqRvtZLBKwuII++3oLuta4xMNUpjTdzGPkbZ00aav1q/t9xcdbs9Vvqm
+   bH5dyPSnjLV2VfdoU1Of4ROMAMCAkpypf3Ub3K3aNFx7CeAXTkQsegOsO
+   5tm75hA/bnohFFNcKiFF7C2L77RPLMHtE83ezXBcEH8+apsxMPgVTQl/n
+   KVtphRuA6NJPDT6jug3AmVx048tBgBcfPqqutKJvZzHxYQo2Ux0qSeXu4
+   g==;
+X-CSE-ConnectionGUID: LnWzLuNZT4mmxyIgPwKcUg==
+X-CSE-MsgGUID: UL09ABVeR4WY0CkPk6WxJQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11857"; a="84688254"
+X-IronPort-AV: E=Sophos;i="6.25,188,1779174000"; 
+   d="scan'208";a="84688254"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 03:13:55 -0700
+X-CSE-ConnectionGUID: 8qEQufhfS1euZvIQSttS1Q==
+X-CSE-MsgGUID: wuxJ+Mf6QcSXOLwZz/EqNw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,188,1779174000"; 
+   d="scan'208";a="257588246"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 03:13:54 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Mon, 27 Jul 2026 03:13:54 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43 via Frontend Transport; Mon, 27 Jul 2026 03:13:54 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.40) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Mon, 27 Jul 2026 03:13:54 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=g+ZqUrmsxEH/A+uuxGs6CjyH4T8eLd+QW0FzhdIIhVvLi1AITRq6PHTP+B94lBf24l3+9+pMBBPbAE1OR5/7ZT2sqrEJpv/WMp7DOe+GEGKROALTZe4QACqp+nWhQNXbPiscEuXvjwLn1OtbCjN81RdTnHnf8H1627Ebxzfgh9ujj2Htd8Y3j2XHE3s476rQuDO25ZFahgf4oLobSelY1fv2M5LCA/eOH20blpragHIMq+4voNeof9oHDjpnMcsbPD1OqRBDcxja3cjWEfbOAUUOSUxbtbKGnehTmo7nUY6dNujoLDjOTOA+VogFpgmIl7PdllZetu7S41Uf5CoY0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mPujGedG0wpaIS60iUHhXcdMe5PE1EalSCL+0OKdOBg=;
+ b=gyhF0hzfhx9C3lnlkv5i06/XDUPJQUmEqnG1n477xmc8RD88NsThSSFVVq+n3UcVvFdXETTJY0qP2fhDn1cF2uYbLCLm0MmCNoShhpCqdeP4vOG7CA8e3R3Vc4HmuB2ihF3AIi2OUfNP3MB4mL225I0cg0EFvsMLawaYaiLUs70qX+eJlbe0kzjgO8ODYfSFLFJCMGxYIGapH4vb8MQ5Y3eeycDs6jilaICJNbdSS4RdW3oqcxQmqvac6tdid6asxDuAkY0mckhaCvpqcJIDeSphtl0Hba0jKYnhViG0MxruJl3EL74qCPIgvuDA90pl3JlzGFLIc4Xd7tb9mFvyrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ0PR11MB5645.namprd11.prod.outlook.com (2603:10b6:a03:3b9::19)
+ by CO1PR11MB5058.namprd11.prod.outlook.com (2603:10b6:303:99::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 10:13:52 +0000
+Received: from SJ0PR11MB5645.namprd11.prod.outlook.com
+ ([fe80::fb19:f933:8bb3:b42e]) by SJ0PR11MB5645.namprd11.prod.outlook.com
+ ([fe80::fb19:f933:8bb3:b42e%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 10:13:52 +0000
+Date: Mon, 27 Jul 2026 03:13:50 -0700
+From: Peter Fang <peter.fang@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] virt: tdx-guest: Allocate Quote buffer dynamically
+Message-ID: <20260727101350.GB482062@pedri>
+References: <20260717214349.4075994-1-peter.fang@intel.com>
+ <20260717214349.4075994-3-peter.fang@intel.com>
+ <20260717215520.76C261F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260717215520.76C261F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0335.namprd03.prod.outlook.com
+ (2603:10b6:a03:39c::10) To SJ0PR11MB5645.namprd11.prod.outlook.com
+ (2603:10b6:a03:3b9::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260727091555.1023910-1-wenst@chromium.org> <20260727091555.1023910-4-wenst@chromium.org>
- <20260727092643.DC90B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260727092643.DC90B1F000E9@smtp.kernel.org>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Mon, 27 Jul 2026 17:46:22 +0800
-X-Gm-Features: AUfX_mzT23G-wjGIUddVGsL0RVNkRttwnekF_vtMZP2gVoUR7kldAOLqEdVKh0k
-Message-ID: <CAGXv+5H6U0ojv5c4P4CgOjJNCNNYvn1Xdrmjb_TyZ1-nKagYrA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] dt-bindings: gpu: powervr-rogue: Add MediaTek
- MT8173 GPU
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB5645:EE_|CO1PR11MB5058:EE_
+X-MS-Office365-Filtering-Correlation-Id: 22014e05-65af-4129-16f2-08deebc7c1d4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|6133799003|56012099006|18002099003|22082099003|10067099003|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info: eUZNrIUBsljqLwjYEu7MHzTS9plSabSKNwFYPKQsm9iIbpfaOMVCicednm/qnDQlLRCXTN4PNh5L2Tei3BqNXN0+Iaf+VXDNEX9xArWH/1j9wfZ6hVr8z2rCXGDAvVXx2BJOE6dH15EhZJ6s9S3PQSfUDeqJl5R67WUStlv4OIkRuP5yJbLgsRe4fPziJVdqPJcMCk04EG28BhMk69E/oyNGq1RzWUolGg1pcss0qMVI04zOzdO3b1a+lPAHjqE2YRFVENbK0R56zk+D49hGbaNPkNKs1uQGW3+SVEovoaOew62UoQ/K3Yg2te2xeFHwPBcbhBw2/xuA8phO+GJop8i2zW48ZPjntp/lur6LjN2+mJtmHmKGqPju9PiGZAywbreFKkScAmUV6GjClg8mji0WPBAX+cAUBzGofvy2Q8dx2vLXzdw8+xeT1j6AnZyiBvAqvKxIrhoCl6LfJu2tx+dqcOS7nYtMpzmYIIeu0attz0SzCuBT/DVbM/U0QIPNzpo7Dzw8jc9JHiiq18o7s6+Q+wyMAsRRKc/ji4qKvxuwwn7UXP6IVUmawkoeIghaZnsBJOCYyBWHvppsgrnL8Ks1UrEN4jiYy+EHWnTWFaI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR11MB5645.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(6133799003)(56012099006)(18002099003)(22082099003)(10067099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QzBteVU4Zi9WbllUR1IvWTMzVFV5YTJ1LzhwWVFDVGRuSXY2UTN4c0syZi95?=
+ =?utf-8?B?Y1R2WHNVMGFoRGpuQnZRWExDVlM4YzJBbUh3dERoNEMybmcrV2d4dGw0cExL?=
+ =?utf-8?B?UzYxdkRhMnV1bWxFS1VpMnNrQnY2UHZjMFMyOG5mMCtDLzMzamZsaTErRU5o?=
+ =?utf-8?B?SEdheXVzV1cwSlI5RzgwTHowM0d2QjA2bVl3QkJhRmExQWF1VWo5Ym52NTJ6?=
+ =?utf-8?B?QmdNeTVrd0w5ZHZLYm1iUDRGT0tYRVdMUXlXZTh1NVN5SUsxRitVZndHeVo5?=
+ =?utf-8?B?WDdmS1k1Y2tab3ZMck0vVE12K2NMa0NCOTNia1h0aDkxam5IOFVGa29VQW9n?=
+ =?utf-8?B?YjlQaEt2Qk4rS29hUHFzU3krOEhsUm5Va1R6Zk9xaW1ueGJVU1czaStnRE5q?=
+ =?utf-8?B?QjVoazVvMnFjWGtJNXJqd0VNTGMzTFEwU1ZTN1R2ZitPczJCb0t4azZUZGM1?=
+ =?utf-8?B?Wkk4OXFCYUFJajBqbERlMGtKb3hCVXFpbzVQeE4zUGVyVnBWRzZuTnRnVFRr?=
+ =?utf-8?B?VWFqL0Z6V0xoUnFmRzlTdzRBbW1QaWRoUWFxWW43clJxTERqUHhJbk5Dd21P?=
+ =?utf-8?B?MDVsOUU4Nm90cTBHVVhwWlVMSHUrbjVSY2hMbGk0K3JFaU9HZWFiNE10YnNh?=
+ =?utf-8?B?bmJ4MDhFNXp5L3pTUmJZSmFhd0RqY2w4ZCtDOTQwbk5XWllXRDk2bUJHTU5K?=
+ =?utf-8?B?WEMzejJIYVJ3U1hUcHRqSjFYb0dsT2NCeDhNdzVFdFArVEZnK09PRno2ZHA4?=
+ =?utf-8?B?S1cySGxDcmFmdndKSDE4WjMxNUZnVEZCNWpkY3pDQWlBdStuaXJEbFhNQVRj?=
+ =?utf-8?B?OE5Pb2l5RXRhbWMvTjE2eVMxU2NHQ3NaSFBHK0RiWE53NUs3WEd6UFBQL2ww?=
+ =?utf-8?B?K2UrcWw4QXZQeEVJZXM5bjM3N245VWY3ZENob21aSkJUcTFGM0w5dld2ZlMx?=
+ =?utf-8?B?NnAzMEZOeis3UWxjWkx6U2FWSDN0bkJYVktzc3BkVWgvK1FaZ1JlT1RBUThx?=
+ =?utf-8?B?UzJtMTFhMy9HNUs1NHFFNXUyeVNVL01sTGJoS21VM3pPcVdLQWhnTExCOWJk?=
+ =?utf-8?B?WjNiQkxLVTRHdG01RGdFcmtXMVUxQy8rN0orSDNubzhvK2lDR0oxVTYvdTFa?=
+ =?utf-8?B?TThvSGpVS0ZkRU8zdUhZQjNtam9BSDJQSnp5LzEyeXJHOHovM29aTDcreFM1?=
+ =?utf-8?B?SXNFMlRIZGdqeVoyS2gwR3FVT3FJTVl2ODFVQW1wS2ZpcWI4ZTJERURSaklY?=
+ =?utf-8?B?ZkhCWnVUM3F6eGYxYUliQnNrczQ1WFFURXZibGdnY1JTMit6aDhaaWZSVXlK?=
+ =?utf-8?B?bjR2TGc4WGY4b1B3SHJpVVR3anIzSWlMNFJXWGZwKzhtR3A2WjQyaitua2FB?=
+ =?utf-8?B?b1krYWxyMzlBOEZKc2ZPVjFiblFRMlVMblpCOG9LRTFBMzh4SmhtRmR3QkxY?=
+ =?utf-8?B?eE5YV2V3VEV6WHcwdjFwRGxjc1lWQ2ZtUUxjOW5lWTlhTWxVOHRCZE03QjFw?=
+ =?utf-8?B?cVdXRjF0eFhEM2p6djRvN1RaWjNxdFVWL2JIVVdWaU9CVThPby9Oc2FDUHlJ?=
+ =?utf-8?B?Vm9EQWgxMmlHOVZQSkI5ZWZDQjBBL0ltTTdTeVRhOEF1dDQvQlFaY0RMZWhB?=
+ =?utf-8?B?YlFpb3FvU2tteTBiVkNBUS94dUV3NmRqL1ZhckE2Sm9sM3BObVdJYUxaYzJW?=
+ =?utf-8?B?SXRCNlMvUU96UFdlY05XM0U0VlFQMXhJSGRNMWkwK1lkSXZTL1VCMnRCTS9K?=
+ =?utf-8?B?N2gyMnZiYURvSVBOamlESThoMFowU0xicmFTTzIyNE1HRXU5alVZbVpoenEx?=
+ =?utf-8?B?RlV5UmtJMElFeVppMUVyLzQ3MWxGOVR2TzBvbG1uY0hoek01MHZMeWp2Y1BK?=
+ =?utf-8?B?U3VBQ2g0bWNhT1kwQzJoQ3N5aDAyU2NDMUw1Uk82aTRDWkV6aHFZcEZtTEZB?=
+ =?utf-8?B?ek5RbERjaFQ2NXpkaHFqYmVjWUxiRFQxdzZGeHVGRVRZakFpMkkvNlNqQ2ZI?=
+ =?utf-8?B?djhIbGVIajJOclB5QzR4c2Q4K2IwamF0aFNuZ0d1VW96NzBRVUFZMWE0QlV0?=
+ =?utf-8?B?a2NZS2s2b28rcm5uNUNCOGllRUxtaEFNcnRqcm9jSDBFUzljTWxtVnJOTzRl?=
+ =?utf-8?B?VCtwdjNHM0dWdjMwcytDYndVTUZwV1FDZXBkNjVPTXI4RGxQOHRORSt4bFB6?=
+ =?utf-8?B?QmxjVzNuWnd5YzFRdk1RYUdhcysranQ4ZFpVdnJnTzdxZ2puQmdGSFJ1UC9w?=
+ =?utf-8?B?c0tnejBzYXRvKzlYNVRBaXRESU1uT09pRk5zcDBMcGdqYkFScWRZbm5MSmRX?=
+ =?utf-8?B?eTBjbTlwQXJKQTlvRXRudUdnejZyd2VWV0dzRndQa3p4Wm0xMXl0QT09?=
+X-Exchange-RoutingPolicyChecked: XQj9e5orvFQ7bnFFDgK4M/Q7aJZoVM6YB2zSNeu0e8CYaareLKbUKmNZ7AU5SdUoDfFq52BBQ9ZGHZfl05hZKsEVwJ93On8yukWysaV2yR7lQ2COe/iGUFbMgQ43FiF/dREtI8zdRAe+pg7jTSMHcvgHAw88jCZG1cDIg1lAAT72Iy+Ju3bbZKKBSpVZaJJ9JWS1P78M6/4KN85dRNZ0ieIZ80SayDBBYtFo6Fkqk2YhhB08TciSdGpIwP0g8iekGos/ywdxJ2lPtGLsCIp6mIxzWD7DLsEnz7QH6nOd1fRdbl4zgrgK0DwB/pE6w1AeNIwaErdrEKe2RTCGjZ/UnA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 22014e05-65af-4129-16f2-08deebc7c1d4
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB5645.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 10:13:51.9796
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: j+T6adATdgEmATseJWB7vKQj11ianBeEx6/cp9go2GEKeVRGgiLM/DDj5edL8feEubr2wX6QE9xi6cfUDuJs9Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB5058
+X-OriginatorOrg: intel.com
 
-On Mon, Jul 27, 2026 at 5:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Schema validation failure for MT8173 GPU due to inherited powe=
-r-domain constraints
+On Fri, Jul 17, 2026 at 09:55:19PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Premature exposure of the misc device allows a Use-After-Free (UAF) on the module initialization error path if `alloc_quote_buf()` fails.
 > --
->
-> --- Patch [3]: [PATCH v3 3/5] dt-bindings: gpu: powervr-rogue: Add MediaT=
-ek MT8173 GPU ---
-> commit 560e4cee0c5fbc6b0c5d09c24c260e205ca79e47
-> Author: Chen-Yu Tsai <wenst@chromium.org>
->
-> dt-bindings: gpu: powervr-rogue: Add MediaTek MT8173 GPU
->
-> The MediaTek MT8173 comes with a PowerVR Rogue GX6250, which is one
-> of the Series6XT GPUs, another sub-family of the Rogue family.
->
-> [1] https://lore.kernel.org/dri-devel/6eeccb26e09aad67fb30ffcd523c793a43c=
-79c2a.camel@imgtec.com/
->
-> > diff --git a/Documentation/devicetree/bindings/gpu/img,powervr-rogue.ya=
-ml b/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml
-> > index a1f54dbae3f31..53131cd4cc2a3 100644
-> > --- a/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml
-> > +++ b/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml
-> > @@ -15,6 +15,7 @@ properties:
-> >      oneOf:
-> >        - items:
-> >            - enum:
-> > +              - mediatek,mt8173-gpu
->
-> [Severity: Medium]
-> Will this cause schema validation failures for the MT8173 GPU node?
->
-> By using img,img-gx6250 as the fallback compatible string here, it seems =
-this
-> will trigger the allOf conditional block lower in the file:
->
->   - if:
->       properties:
->         compatible:
->           contains:
->             enum:
->               - img,img-bxs-4-64
->               - img,img-ge7800
->               - img,img-gx6250
->     then:
->       properties:
->         power-domains:
->           minItems: 2
->         power-domain-names:
->           minItems: 2
->
-> Since mediatek,mt8173-mfgtop only provides a single power domain, wouldn'=
-t
-> forcing minItems: 2 cause valid device trees to fail dt_binding_check? Sh=
-ould
-> the conditional block be updated to exclude mediatek,mt8173-gpu?
+> 
+> > @@ -417,7 +442,7 @@ static int __init tdx_guest_init(void)
+> >  	if (ret)
+> >  		goto deinit_mr;
+> >  
+> > -	quote_data = alloc_quote_buf();
+> > +	quote_data = alloc_quote_buf(&quote_data_len);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but this patch makes it significantly more
+> likely to trigger by introducing a large contiguous memory allocation (up to
+> 4MB) that can easily fail on fragmented systems.
+> 
+> Can this lead to a Use-After-Free on the initialization error path?
+> 
+> If misc_register(&tdx_misc_dev) (called just before this hunk) succeeds, 
+> the /dev/tdx_guest device is immediately exposed to userspace. A userspace 
+> process can open it and call ioctl(TDX_CMD_GET_REPORT0), entering
+> tdx_do_report() which uses tdx_report_buf.
+> 
+> If alloc_quote_buf() then fails, the error path calls misc_deregister() and 
+> tdx_mr_deinit(). 
+>     
+> tdx_mr_deinit() executes:
+> 
+>     kfree(tdx_report_buf);
+>     
+> This freeing happens without acquiring mr_lock, meaning it can race with the 
+> ongoing ioctl. Could the concurrent ioctl in tdx_do_report() then access the 
+> freed tdx_report_buf?
+> 
+> Should misc_register() be moved to the end of tdx_guest_init() after all
+> resource allocations succeed?
 
-Yeah, and we just assign the same power domain to both. The bot clearly
-didn't look at the dts patch.
+Good catch... I think this race could happen. /dev/tdx_guest is
+considered a legacy interface now but this needs to be fixed. I'll add
+it to the cleanup list.
 
-
-ChenYu
-
-> >                - renesas,r8a7796-gpu
-> >                - renesas,r8a77961-gpu
-> >            - const: img,img-gx6250
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727091555.10=
-23910-1-wenst@chromium.org?part=3D3
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260717214349.4075994-1-peter.fang@intel.com?part=2
