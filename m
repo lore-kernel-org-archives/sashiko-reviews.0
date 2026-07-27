@@ -1,17 +1,17 @@
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9196B3939A3
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:55:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FBC3D47DE
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 03:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785120930; cv=none; b=dIqKBLK2xNpXRMrJ4PIIs1JqS9iCyzQ1U9HCBwudeTsOOwvHUH0bUlEtosAP6WvPX2CXVHi4/XxNwXfZoj5AzqPQ8a3DP3DLT3fOzdmdy6lhvaCfvIzk5cO4PIYzd8R/6CUUTxSYcFt5y7VC5n6Y0XAf2xB8fEIHptJcwS1CBxU=
+	t=1785122985; cv=none; b=n47Yqb+lETkzCfkO1EQgyxE6DXOiuvKAYzxos5nf49k4Y3bvsLvvy43yITWmc7P66xBdLmvTVXEPzY5cMSSFPpOLkI7FXEt2F/Im6AH9t60mrhzTsUBPd4lTGj1kfxpOgwhP5aT/ZwnKF5DdVL5W1e+xLmbUt18P8UUcZKAOw2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785120930; c=relaxed/simple;
-	bh=Hs5XCOVnLLoZebaVnZ1YGkfnAnC6CwUqsdxjOjK2gPc=;
+	s=arc-20240116; t=1785122985; c=relaxed/simple;
+	bh=edfUi1XRL9EqFtGiXFQABcK5cWkr0J2U5UnhWTWcyDs=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=O7PxY3KfZL8hSNa1I23y5t8Wyz0FAsw7JxHmhMk7RZOwe+nEVc3x35Exz2EwYyF1IPVqIOx0muGopAXpf1H42v2SF7b83pBaJ39jiL0cSJmBDEqlc6z3ySSKI0N9to7pUVdgjBdOYu+7RBHZmwKfQxX6Cx3QDeUS7UtXAITfDwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=95.215.58.177
+	 References:In-Reply-To; b=r3nq8eiXZZdJl9yMhb+YUrVFgW1EWl+hahA6WgnNSpofKgDQCRAmz/FDJg3YDqYECNNCU9ENY6fWSu/TIw9jyNef9BodxzcyHaTPETMfxdR7CIzcjfnlE66ps+mORJMMfhAnTgYZSFqSdqmGz2Qoftn82Od2oy5epCR3wvjad8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=95.215.58.189
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Precedence: bulk
@@ -22,156 +22,186 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 27 Jul 2026 10:55:10 +0800
-Message-Id: <DK90JT5FE5UR.1AGN06O8YZ371@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 11:29:21 +0800
+Message-Id: <DK919ZEODP4R.1E7TNMAFUYD7M@oss.qualcomm.com>
 Cc: <dri-devel@lists.freedesktop.org>, <Frank.Li@kernel.org>,
  <imx@lists.linux.dev>
-Subject: Re: [PATCH v3 7/8] drm/tve200: replace struct
+Subject: Re: [PATCH v3 5/8] drm/gm12u320: replace struct
  drm_simple_display_pipe with regular atomic helpers
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: "Ze Huang" <ze.huang@oss.qualcomm.com>
 To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
  <ze.huang@oss.qualcomm.com>
-References: <20260727-drm-simple-kms-removal-v3-0-cd5dc89858c6@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-7-cd5dc89858c6@oss.qualcomm.com> <20260726200006.687F21F00A3A@smtp.kernel.org>
-In-Reply-To: <20260726200006.687F21F00A3A@smtp.kernel.org>
+References: <20260727-drm-simple-kms-removal-v3-0-cd5dc89858c6@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-5-cd5dc89858c6@oss.qualcomm.com> <20260726201340.DA5601F000E9@smtp.kernel.org>
+In-Reply-To: <20260726201340.DA5601F000E9@smtp.kernel.org>
 X-Migadu-Flow: FLOW_OUT
 
-On Mon Jul 27, 2026 at 4:00 AM CST, sashiko-bot wrote:
+On Mon Jul 27, 2026 at 4:13 AM CST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Calling sleeping functions from CRTC atomic enable and disable c=
-allbacks violates atomic context constraints.
-> - [High] Setting `cstate->mode_changed =3D true` inside the plane's `atom=
-ic_check` callback bypasses downstream modeset routing, leaving bridges act=
-ive during CRTC resets.
+> - [High] The driver will crash in `gm12u320_stop_fb_update` due to a NULL=
+ pointer dereference when dropping a framebuffer reference. The asynchronou=
+s worker `gm12u320_fb_update_work` drops its reference to the framebuffer a=
+nd sets `gm12u320->fb_update.fb =3D NULL` after copying the first frame. Wh=
+en the CRTC is later disabled (e.g., via device unplug or KMS disable), `gm=
+12u320_stop_fb_update` reads this NULL pointer into `old_fb` and unconditio=
+nally calls `drm_framebuffer_put(old_fb)`. Because `drm_framebuffer_put` co=
+mputes the address of `&fb->base` before passing it to `drm_mode_object_put=
+()`, a NULL `fb` results in a non-NULL offset pointer, bypassing any potent=
+ial NULL checks in the core and causing a fatal page fault when dereference=
+d.
+> - [High] The driver calls sleeping functions (`mutex_lock` and `cancel_de=
+layed_work_sync`) from atomic context paths, violating DRM subsystem archit=
+ectural guidelines. The patch converts the driver to use standard CRTC and =
+plane atomic helpers (`gm12u320_crtc_helper_atomic_enable`, `gm12u320_crtc_=
+helper_atomic_disable`, and `gm12u320_plane_helper_atomic_update`). These c=
+allbacks are explicitly classified by DRM guidelines as atomic context wher=
+e sleeping is forbidden, yet they call functions that block.
 > --
 >
-> --- Patch [7]: [PATCH v3 7/8] drm/tve200: replace struct drm_simple_displ=
-ay_pipe with regular atomic helpers ---
-> commit c9e2ab55e3b69f124e64f349a1ced762885b2aea
+> --- Patch [5]: [PATCH v3 5/8] drm/gm12u320: replace struct drm_simple_dis=
+play_pipe with regular atomic helpers ---
+> commit 0dd628ecb0a7395ec2d8faaa3a751862640afcb7
 > Author: Ze Huang <ze.huang@oss.qualcomm.com>
-> Subject: drm/tve200: replace struct drm_simple_display_pipe with regular =
-atomic helpers
 >
-> Convert TVE200 to explicit plane, CRTC and encoder objects. Keep generic
-> plane-state validation before TVE200-specific mode, alignment, pitch and
-> format-change checks.
+> drm/gm12u320: replace struct drm_simple_display_pipe with regular atomic =
+helpers
+>    =20
+> Convert gm12u320 to direct primary plane, CRTC and encoder setup.
+>    =20
+> Keep shadow-plane helper state, framebuffer access helpers and
+> no-scaling plane-state check from simple-KMS path.
 >
->> diff --git a/drivers/gpu/drm/tve200/tve200_display.c b/drivers/gpu/drm/t=
-ve200/tve200_display.c
->> index 26b6c65ef6fd0..beb3a5a63b5d5 100644
->> --- a/drivers/gpu/drm/tve200/tve200_display.c
->> +++ b/drivers/gpu/drm/tve200/tve200_display.c
+>> diff --git a/drivers/gpu/drm/tiny/gm12u320.c b/drivers/gpu/drm/tiny/gm12=
+u320.c
+>> index 4ad074337af07..754617722a0db 100644
+>> --- a/drivers/gpu/drm/tiny/gm12u320.c
+>> +++ b/drivers/gpu/drm/tiny/gm12u320.c
+>
 > [ ... ]
->> @@ -69,13 +71,34 @@ irqreturn_t tve200_irq(int irq, void *data)
->>  	return IRQ_HANDLED;
+>
+>> @@ -555,43 +560,106 @@ static int gm12u320_conn_init(struct gm12u320_dev=
+ice *gm12u320)
 >>  }
 >> =20
->> -static int tve200_display_check(struct drm_simple_display_pipe *pipe,
->> -			       struct drm_plane_state *pstate,
->> -			       struct drm_crtc_state *cstate)
->> +static int tve200_plane_helper_atomic_check(struct drm_plane *plane,
->> +					    struct drm_atomic_commit *commit)
+>>  /* ------------------------------------------------------------------ *=
+/
+>> -/* gm12u320 (simple) display pipe				      */
+>> +/* gm12u320 display pipe					      */
+>> =20
+>> -static void gm12u320_pipe_enable(struct drm_simple_display_pipe *pipe,
+>> -				 struct drm_crtc_state *crtc_state,
+>> -				 struct drm_plane_state *plane_state)
+>> +static void gm12u320_crtc_helper_atomic_enable(struct drm_crtc *crtc,
+>> +					       struct drm_atomic_commit *commit)
 >>  {
+>>  	struct drm_rect rect =3D { 0, 0, GM12U320_USER_WIDTH, GM12U320_HEIGHT =
+};
+>> -	struct gm12u320_device *gm12u320 =3D to_gm12u320(pipe->crtc.dev);
+>> -	struct drm_shadow_plane_state *shadow_plane_state =3D to_drm_shadow_pl=
+ane_state(plane_state);
+>> +	struct gm12u320_device *gm12u320 =3D to_gm12u320(crtc->dev);
+>> +	struct drm_plane_state *pstate =3D drm_atomic_get_new_plane_state(comm=
+it, &gm12u320->plane);
+>> +	struct drm_shadow_plane_state *shadow_plane_state =3D to_drm_shadow_pl=
+ane_state(pstate);
+>> =20
+>>  	gm12u320->fb_update.draw_status_timeout =3D FIRST_FRAME_TIMEOUT;
+>> -	gm12u320_fb_mark_dirty(plane_state->fb, &shadow_plane_state->data[0], =
+&rect);
+>> +	gm12u320_fb_mark_dirty(pstate->fb, &shadow_plane_state->data[0], &rect=
+);
+>>  }
 >
 > [Severity: High]
-> This is a pre-existing issue, but does setting cstate->mode_changed =3D t=
-rue
-> inside the plane check hook bypass downstream modeset routing?
+> This isn't a bug introduced by this patch, but does calling
+> gm12u320_fb_mark_dirty() here violate DRM subsystem architectural guideli=
+nes by
+> sleeping in an atomic context?
 >
-> In tve200_plane_helper_atomic_check(), the code raises a mode change if t=
-he
-> framebuffer format changes:
+> gm12u320_crtc_helper_atomic_enable() runs in an atomic context during
+> non-blocking commits where sleeping is forbidden. However,
+> gm12u320_fb_mark_dirty() unconditionally acquires a mutex:
 >
->     if (old_fb && old_fb->format !=3D fb->format)
->             cstate->mode_changed =3D true;
+> 	mutex_lock(&gm12u320->fb_update.lock);
 >
-> In the default DRM state check sequence, plane checks are executed after =
+> Could this lead to kernel warnings like 'scheduling while atomic' or dead=
+locks
+> during display modesets? (The same applies to
+> gm12u320_plane_helper_atomic_update below).
+
+False positive
+
+>
+>> -static void gm12u320_pipe_disable(struct drm_simple_display_pipe *pipe)
+>> +static void gm12u320_crtc_helper_atomic_disable(struct drm_crtc *crtc,
+>> +						struct drm_atomic_commit *commit)
+>>  {
+>> -	struct gm12u320_device *gm12u320 =3D to_gm12u320(pipe->crtc.dev);
+>> +	struct gm12u320_device *gm12u320 =3D to_gm12u320(crtc->dev);
+>> =20
+>>  	gm12u320_stop_fb_update(gm12u320);
+>>  }
+>
+> [Severity: High]
+> This is also a pre-existing issue, but does gm12u320_stop_fb_update() sle=
+ep in
+> an atomic context, and could it cause a NULL pointer dereference?
+>
+> First, like the enable path above, gm12u320_crtc_helper_atomic_disable() =
+runs
+> in an atomic context where sleeping is forbidden. But gm12u320_stop_fb_up=
+date()
+> calls cancel_delayed_work_sync() and acquires a mutex.
+
+False positive
+
+>
+> Second, can old_fb be NULL when passed to drm_framebuffer_put() inside
+> gm12u320_stop_fb_update()?
+>
+> The asynchronous worker gm12u320_fb_update_work() drops its reference to =
 the
-> modeset checks. Because mode_changed is raised late and the driver does n=
-ot
-> explicitly loop back to recalculate modeset routing, the downstream
-> encoders and bridges may miss their disable/enable hooks. Could this leav=
+> framebuffer and sets gm12u320->fb_update.fb =3D NULL after copying the fi=
+rst
+> frame. If the CRTC is later disabled (e.g., via device unplug or KMS disa=
+ble),
+> gm12u320_stop_fb_update() reads this NULL pointer into old_fb and passes =
+it to
+> drm_framebuffer_put(old_fb):
+
+Good catch. If the CRTC is disabled after gm12u320_fb_update_work()
+has consumed the pending framebuffer, old_fb will be NULL. The current
+disable path then calls drm_framebuffer_put(old_fb) with a NULL pointer.
+
+We can guard it the same way as gm12u320_fb_mark_dirty() [1]:
+
+	if (old_fb)
+		drm_framebuffer_put(old_fb);
+
+Maybe we can fix this in a following patch.
+
+[1] https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/tiny/gm1=
+2u320.c#L432
+
+>
+> static void gm12u320_stop_fb_update(struct gm12u320_device *gm12u320)
+> {
+> 	struct drm_framebuffer *old_fb;
+> 	...
+> 	old_fb =3D gm12u320->fb_update.fb;
+> 	...
+> 	drm_framebuffer_put(old_fb);
+> }
+>
+> Because drm_framebuffer_put() computes the address of &fb->base before pa=
+ssing
+> it to drm_mode_object_put(), passing a NULL fb results in a non-NULL offs=
+et
+> pointer. This bypasses any NULL checks in the core and causes a fatal pag=
 e
-> bridges active during a CRTC reset?
+> fault when dereferenced.
 
-Yes, the DRM helper path does use mode_changed to drive modeset
-routing and the bridge/encoder/CRTC modeset hooks.
 
-As mentioned for patch 2, I would prefer not to mix too much fixes into
-this simple-KMS conversion series. If we want to make this stricter, the
-driver can grow a custom .atomic_check wrapper and rerun
-drm_atomic_helper_check_modeset() after plane checks, but that should be
-a separate follow-up/preparatory patch.
-
->
-> [ ... ]
->> @@ -119,16 +142,72 @@ static int tve200_display_check(struct drm_simple_=
-display_pipe *pipe,
->>  	return 0;
->>  }
->> =20
-> [ ... ]
->> +static void tve200_crtc_helper_atomic_enable(struct drm_crtc *crtc,
->> +					     struct drm_atomic_commit *commit)
->>  {
->> -	struct drm_crtc *crtc =3D &pipe->crtc;
->> -	struct drm_plane *plane =3D &pipe->plane;
->>  	struct drm_device *drm =3D crtc->dev;
->>  	struct tve200_drm_dev_private *priv =3D drm->dev_private;
->> +	struct drm_crtc_state *cstate =3D drm_atomic_get_new_crtc_state(commit=
-, crtc);
->>  	const struct drm_display_mode *mode =3D &cstate->mode;
->
-> [Severity: High]
-> This is a pre-existing issue, but does this code sleep in atomic context?
->
-> The DRM core invokes CRTC atomic enable callbacks during display commits,
-> which run in atomic context. However, tve200_crtc_helper_atomic_enable()
-> calls sleeping functions:
->
->     clk_prepare_enable(priv->clk);
->     ...
->     usleep_range(30000, 50000);
->
-> I see this logic was carried over directly from the old
-> drm_simple_display_pipe hooks. Since sleeping in atomic context can cause
-> kernel warnings and potential deadlocks, is there a safe way to handle th=
-is
-> enable sequence?
-
-False positive
-
->
-> [ ... ]
->> @@ -240,9 +319,9 @@ static void tve200_display_enable(struct drm_simple_=
-display_pipe *pipe,
->>  	drm_crtc_vblank_on(crtc);
->>  }
->> =20
->> -static void tve200_display_disable(struct drm_simple_display_pipe *pipe=
-)
->> +static void tve200_crtc_helper_atomic_disable(struct drm_crtc *crtc,
->> +					      struct drm_atomic_commit *commit)
->>  {
->> -	struct drm_crtc *crtc =3D &pipe->crtc;
->>  	struct drm_device *drm =3D crtc->dev;
->>  	struct tve200_drm_dev_private *priv =3D drm->dev_private;
->
-> [Severity: High]
-> This is a pre-existing issue, but similar to the enable path above, does =
-the
-> disable callback also sleep in atomic context?
->
-> tve200_crtc_helper_atomic_disable() eventually calls clk_disable_unprepar=
-e(),
-> which can sleep:
->
->     clk_disable_unprepare(priv->clk);
->
-> Since this runs in the atomic disable path, could this lead to a deadlock=
-?
-
-False positive
