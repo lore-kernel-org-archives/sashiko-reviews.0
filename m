@@ -1,105 +1,137 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE443DDDC4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 07:53:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DBD3DEFE2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 08:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785138838; cv=none; b=oneDtjfN4L6qz1rKZ+4l8HuUXT4TnfYUaZwhUjNpustvjjJsRLsi2g0g+icYVmMqt8loyH6/nAxoYLLQISoB1Ng0A4ZdIKxcGaFk1uWiPG52GTEwyQcRwUpZTYpgtJGT2iK/Mj6wE/mIxTUBFPsWM318AXfRT+N3ZGHmRIVaHkY=
+	t=1785139266; cv=none; b=qlillOuomB/85nz1gdap+cn3Q5SN+QIddq8s7kNIog5i+QhiSQIdcBMsaMMBcYllXfl2e7oRQfGT2Ap/9V+6JwJsRzdfRLmHW0cdgB5jc4+Bkz7inQo+sOnyaRa6l+3OaI2DHCc67Wiq9K/2eckrHuadhpynmaa4m7YvgW3DDtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785138838; c=relaxed/simple;
-	bh=jZc5EfIVdHQBId5RYiFeAw8/NeXVTNysM3ugtxQA/EM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=KtPOtIdcuCwhpUjf8/bNogmVu0aYJqpsc2QlpopJ+mW3BXl0uM4E5qy5cM85VOqwvwQDi8jbRIrLJuMBhsXQLAb2oxcqG9xqAQXvHgpjiMh0Z9N7F7CXE1iFwe96xykeWdDHjcdEeXyb511e4GW2b+L6fXq0X3RzrB52YXnH5nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=OHGywFU6; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1785139266; c=relaxed/simple;
+	bh=BFO10sMHX81uroVNFUc1FnB5adRwpZpKF4tLCFZQf5Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U/FmkB/TztSns+QoW5CIv2eShC1ygKFwy33FROGXkS6ZHn45FudNOETeHJQiYDHXlPU4UmDjkHb7W5oMlEYZG1CWSKM8b/0PZy8Y21G5NnpYPjSMS5PP1iaZzxRJBgaaLK45ITNUIu7cMVoqF3tAnqbd53orK6OXhHG33N1Wx4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=namaSkB1; arc=none smtp.client-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="OHGywFU6"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4953e04ef16so26949105e9.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 00:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1785138834; x=1785743634; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=jZc5EfIVdHQBId5RYiFeAw8/NeXVTNysM3ugtxQA/EM=;
-        b=OHGywFU67E3np7rWNifsr1lOPMC612erLMP4cvWuu101VXECgPr3AL9q2a4eBBhrfZ
-         0oyrbPHvgH5F/Q7YpIF8MwT19bwqsfcuvC2woHErC8SLrcOa4oPNNDggf916TG8tK0hS
-         xkQczj92RqUcoD2OhoMQXZ16696DImkYIHCn7RrwY1LrsQIWdXaijG/FORM+v9eR6M4c
-         t2WJfukWVpnfMVcoQDrGcSgxUCLSX2kan1Jayi0+KfFP8sQ1qPMRYTezfqazIDSDkc2k
-         RZmjc8tPeEzbsfaB7xbNUlKxoJFu9EVA5v7AexMNp0xpIkyUMeTtp2BnefufsABb/Yom
-         UODQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785138834; x=1785743634;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jZc5EfIVdHQBId5RYiFeAw8/NeXVTNysM3ugtxQA/EM=;
-        b=GhiFW4pOpVAKkXYhKVtmCVydT+sbAB8bRsMyfVhEmsWqZRMkYgmMnOzidBrILhkP+n
-         1+3cuiDEsJmhFq6wj+touepRuUo6i8X8Q7G1qVwi8DEe2H2g+y8nP8DyZFYDQx5VHXYo
-         Prnze/aIip8FO8EkKmecNeUlxXB49lLd+ehL+eqqcYb6koEbkSRpipidYPwSrUfl+0p/
-         I2nkhr7Kz0uImw7JAAczuu9J9CiWpNsxZHQQZfye6asedhOlbye6GTw5bMci15GT4GiA
-         D4ut2nOHCnRhkowsFspPP1IcgRs5oO6l8RHE+lFapK3ypDztV3yzWnXlgGN88DOY0bly
-         nhBg==
-X-Gm-Message-State: AOJu0YynVJlF300NfYO2vNtVIrsMGiYRc+20gHhZRIuqPkexFWHJGtWp
-	QBMmSnyDxoMcGeqkk6EU9z66apg6/gDjP9qN7EsqSZFWbYvLfoxurfBNJ3XoolRNRW6CvtxxaHP
-	qUMkWiyGQ/A==
-X-Gm-Gg: AR+sD10KKZBxffVE4XDerf5F25U03OIKHAsIzOsMAziqjfWzAwRTeddfn5SDsJMGZFM
-	xSTIZNX0i6TgIazxYt8CPqv37qbHZ9x6RnebQgLgO8MK8ngAgAAgOqQzox/Gyyl4L5ErL/VZ0p6
-	rBmQ9eUqBE4sfUVIx+QFcXK9bmOo53ceed0uNmagEawoMWG0Tp82TUb069cKVTvohzVqOMM/iUk
-	yzRv5H0Bj0fbfntANioAvOZ7Payx7KCGP3fSqNQMqYa0F3CyNlIcCjGRKyJMf0taybtiaKc9yKh
-	cxdal9fRMxT/ICAI3A1nnE7t4CgOb2kytTL8jOX+kiNQlFXEYBlMFLNsCA3Cqu7uLfKCu2ukHh6
-	9JeG0Z4iZwP/P/uJjRDbfp3wZsLkwV0makq1O599fxpIhZxWeC2EzT0LaY+uhWkM2dPq/f+/Dhb
-	nArm0eqn5zJldHEMBm/mubEZ01bglimiOLtoaaY3SCb1wKV6skmzQZpgX8
-X-Received: by 2002:a05:600c:a086:b0:495:7a04:b006 with SMTP id 5b1f17b1804b1-496b56e6e44mr97968375e9.8.1785138834002;
-        Mon, 27 Jul 2026 00:53:54 -0700 (PDT)
-Received: from localhost (host-87-0-90-136.retail.telecomitalia.it. [87.0.90.136])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-496b4f24a93sm229193555e9.11.2026.07.27.00.53.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jul 2026 00:53:53 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="namaSkB1"
+Message-ID: <9a961b42-d095-4052-a749-dfabb9a45bf3@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785139252;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dtpjon/BpvDyzvwfWw7MZxTAVhL5AfZXQA29No/Azgg=;
+	b=namaSkB15KmGyr/imjdjaj6uTynOCo7i7aJkHOuhXOuageGT6Uqp7CLSV0KZJvdCPLjtFH
+	h6uCOUpHv9IJJ7/AccFOOeXkPr7ktjSCRhM53myKoFgwXnVPFsq3LgzH8Ly0fXN/qyWlFa
+	KgfUrEO84d/bVVjcb0nQF5iXmhXYsnY=
+Date: Mon, 27 Jul 2026 16:00:24 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 27 Jul 2026 09:53:52 +0200
-Message-Id: <DK96WIHYRFSG.1E1TNF8OW6SU0@baylibre.com>
-Subject: Re: [PATCH v2 2/2] serial: 8250_mtk: honor DT serial aliases
-Cc: <devicetree@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>
-To: <sashiko-reviews@lists.linux.dev>, "Carlo Caione" <ccaione@baylibre.com>
-From: "Carlo Caione" <ccaione@baylibre.com>
-X-Mailer: aerc 0.21.0
-References: <20260727-ccaione-genio-serial-aliases-v2-0-0f2ae41a8e89@baylibre.com> <20260727-ccaione-genio-serial-aliases-v2-2-0f2ae41a8e89@baylibre.com> <20260727075153.4F9111F000E9@smtp.kernel.org>
-In-Reply-To: <20260727075153.4F9111F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next 2/3] bpf: arena: allocate the fault-in page
+ outside the lock
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rt-devel@lists.linux.dev, bpf@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260727062521.376231-1-jiayuan.chen@linux.dev>
+ <20260727062521.376231-3-jiayuan.chen@linux.dev>
+ <20260727064257.01BD81F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260727064257.01BD81F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon Jul 27, 2026 at 9:51 AM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
+
+On 7/27/26 2:42 PM, sashiko-bot@kernel.org wrote:
+[...]
+>> @@ -489,55 +490,97 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
+>>   	kbase = bpf_arena_get_kern_vm_start(arena);
+>>   	kaddr = kbase + (u32)(vmf->address);
+>>   
+>> -	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
+>> +	page = vmalloc_to_page((void *)kaddr);
+>> +	if (!page) {
+>> +		/*
+>> +		 * Preallocate outside the lock so the allocation can sleep and go
+>> +		 * through reclaim (both memcg and global), the way do_anonymous_page()
+>> +		 * does. Under arena->spinlock only the non-blocking allocator is
+>> +		 * available, which never reclaims.
+>> +		 *
+>> +		 * This has to be the sleepable variant: VM_FAULT_OOM below is only
+>> +		 * meaningful if the OOM machinery was actually engaged. A failure
+>> +		 * from the non-blocking allocator engages nothing, so the fault
+>> +		 * would be retried forever.
+>> +		 */
+>> +		bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
+>> +		new_page = bpf_map_alloc_page_sleepable(map, NUMA_NO_NODE);
+> [Severity: High]
+> Is there a potential Denial of Service vector when BPF_F_SEGV_ON_FAULT is set?
 >
-> Pre-existing issues:
-> - [High] The driver registers the 8250 port before enabling runtime PM, v=
-iolating TTY subsystem guidelines and causing circular dependencies during =
-probe.
-> - [High] An integer overflow in baud rate calculation can cause a divide-=
-by-zero kernel panic and incorrect fractional divisor calculations.
+> This unconditionally preallocates a page using
+> bpf_map_alloc_page_sleepable() before checking the BPF_F_SEGV_ON_FAULT
+> flag later in the function.
+>
+> This allocation can block, trigger direct memory reclaim, and invoke the
+> OOM killer. Only after this expensive allocation does the code lock, check
+> the flag, return VM_FAULT_SIGSEGV, and discard the page.
+>
+> Could this allow an unprivileged user to force severe memory pressure by
+> repeatedly triggering page faults on unallocated addresses?
 
-[...]
+Once VM_FAULT_SIGSEGV is returned, the process gets a SIGSEGV and by 
+default is killed,
+so this isn't a realistic DoS.
+
+But, I think it's worth moving the "arena->map.map_flags & 
+BPF_F_SEGV_ON_FAULT" check before the allocation.
+
+
+>> +		bpf_map_memcg_exit(old_memcg, new_memcg);
+>> +		if (!new_page)
+>> +			return VM_FAULT_OOM;
+>> +	}
+>> +
+>> +	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags)) {
+>>   		/* Make a reasonable effort to address impossible case */
+>> -		return VM_FAULT_RETRY;
+>> +		fault_ret = VM_FAULT_RETRY;
+>> +		goto out_err;
+>> +	}
 > [Severity: High]
-> This is a pre-existing issue, but while looking at mtk8250_probe(), I not=
-iced
+> This is a pre-existing issue, but does returning VM_FAULT_RETRY here
+> without releasing the fault lock cause a lock leak?
+>
+> The memory management subsystem strictly assumes the lock was released
+> if VM_FAULT_RETRY is returned. Retrying the fault will leak the read lock
+> reference, and if any thread subsequently attempts to acquire the mmap_lock
+> for writing, the system could permanently deadlock.
 
-[...]
-> [Severity: High]
-> This is another pre-existing issue, but I noticed a potential integer ove=
-rflow
 
-This is annoying. I'm NOT fixing pre-existing issue. There will always
-be pre-existing issue.
+Yes, it's true. arena_vm_fault() never touches mmap_lock, so returning 
+VM_FAULT_RETRY violates the contract.
 
---
-Carlo Caione
+'''
+do_user_addr_fault()
+{
+     fault = handle_mm_fault(...);          // call arena_vm_fault
+     ...
+     if (unlikely(fault & VM_FAULT_RETRY)) {
+         flags |= FAULT_FLAG_TRIED;
+         goto retry;                    // lock_mm_and_find_vma() will 
+call mmap_read_lock again !
+     }
+     mmap_read_unlock(mm);
+}
+'''
+
+I think I should fix it as a separate patch with high priority ?
+
+
