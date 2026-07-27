@@ -1,103 +1,117 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2254C1624DF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 05:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785129037; cv=pass; b=laCu3/XsLx06hzvQSQmsZVx3TSTz6m1LSFAzJdkkt1VHaPZF5gqv1keZNWuvyD3nU4I4YZiPYnaCVCJ3Bkysk/JNNRY1yMDso9aPRSRYezwE1Q9xXLVZ/qhY0I/3N4QM7CveX9IycRtblIw2hri6HFBMLXIIT1E2/y1JSviLKb4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785129037; c=relaxed/simple;
-	bh=F9u/zbnemk1aAhVaCDytyIi+xMq+94ZFyWfvI3P9AOE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cvtB+ND3keY58yML6FkCtq7hLXeziiSamhdtPKGXa0hdU6XRqp+5oMQdZOVwhS8vl21VeF7RdJIeNp1r/RCmaNW0sr3pbzdWcFdRN1ZicpXWhfD2Si474pH9xUfIJGK0bG9liiWoSr71pmed02YnMkW0oYQRHyW4KCgi1Vuk6Xo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZURFBXUA; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZURFBXUA"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c1c50c1e29bso337442766b.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 22:10:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785129034; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Gvpd5xfY/XP4+0/V5ivVNSPY8tgUFeo+HtcPK8WVYuYxK9ecccZElpYsUeJ3wwauFd
-         KFNt25Q8nfXDZENTnI1gubzFx/gVmFR3CtwSSsN9sKN6cMR8U3xaYToCHDRtUwG2fJGI
-         GK0DxH005q1WTDj5pxWfiU/KVrS6d6oD6avG48XOhhpoMtrGhKhTTR61USjQ0sZgHDly
-         fcETHZglmQbbQgkf7p/SNt79Qd16MDIPa0D75UhvoV27p57Dsy2JA60kEB5DFDyJcHrQ
-         nisuRszfooWNH3SvKz/68kjuTAJ0JKJuf6RHMEuHezks0Y5S3M4MJHvps7/g9vTYs0uP
-         YNFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=F9u/zbnemk1aAhVaCDytyIi+xMq+94ZFyWfvI3P9AOE=;
-        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
-        b=Nmb4nHQnIFwjVf08INTNNp8VmRYte4K6UDIfg3KdXwQexSlNXnY+q9nY2lJMdKTvQV
-         AQCK7JkDskrnCEbwpsKNmj5vvJgxmkFBtxWHX8VwSeJIZFwyuNNS1EyU6l0EMmVcNCvA
-         v1GHCs5jIsRnNpf49+lgDVyd8wLv/XSKjsbmv1jkXNxSnSVHRN25fdPKCB1NC6f9faJl
-         v1tphHb9bJfRd5rWvPDKkyd1F5SPuh7RUTR5EKv0yLGe2qOsWqQ0Sz6pmhvvBMuj7KfM
-         ggKG+/41SjDrpMg4i+xesvCf9K7BUBrdaBZk+QThuiIzvEt70cjTKmZFUczU1Xt47fFp
-         RXxw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785129034; x=1785733834; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=F9u/zbnemk1aAhVaCDytyIi+xMq+94ZFyWfvI3P9AOE=;
-        b=ZURFBXUA/kKuNdKK23LbXqd/29rwUSN+Hk2EPYMXAn3i3dawo9y1BooBewjCrBZRw0
-         UxxZyFsSbNWpwbPdR4/RFRLd58hAuUBFmnYIme7nc1xNnknfvjz4uDt7CEfzxc2QxXj/
-         KkfY6GGGQPGuqqpdFIviF7YC2MjXKc4y9Tc57oP/yXl/RU44DLL7W3svLVkoSyqu4m6S
-         Eo70bU8RuIlfhxlwwA9foCBer8Vz9o6kBirMWz5SoxBR/TapzxqehpcEmwxEQ7I/JqBc
-         7mZBX7UfIZqcj1+GBP4G0kCsYCaaEWIXJ42mhrsWFgWX2+Y3N9tyvot05nthd38rpGwF
-         f3mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785129034; x=1785733834;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=F9u/zbnemk1aAhVaCDytyIi+xMq+94ZFyWfvI3P9AOE=;
-        b=W4QfvJtaQss8woemDAXwEgiMP/rz9mGOqWyIZBXUkYMKeQxIpLg+KUtosQAefuUBP/
-         +CUIC0RcBUY+0Zw/9y5vAXjpjVG9qM6Cge590fTeXH4tAnzpMWGGTtsGLj74Hd345DLt
-         xvDTkKg2cD9jiDVBh/vsGNEzJ0gKPA2DBLfjgSCPeglwf7410ssim0IgBEAl3St3HvGP
-         ImcJMGPpcu1I1bdEDKmTkX4jwmlljkcnYTpS1jeOT+9gEqvnNP8S+yct0YUUo5hp4tox
-         9wcO3FDDSks4IkroroyAqT4LdyQJBXewQpleP4NM2UjtitXkUisYGxeuHYBC79IIopCS
-         IYeQ==
-X-Gm-Message-State: AOJu0YzJyEc13m6rIpmtxseEXv1Gi0H4cg495LQ4a7wpHqXk8PpM+3wI
-	DB2L14rXj8ShT+ZOeXvPDDvRzgHxInvwZIZIY4LVwOaIQmTL02CaeBWq0WQyMBEavt8u4sjDXWn
-	M7yTyWf2C+pLjlYLjzwKv9j3ZjemRh7XqPz/y
-X-Gm-Gg: AR+sD126HIL5yKbX6NCnw17s8muIshH5Qj26b/Q3CG3hsvwAtm5JbBHhiXSgBWAWnYw
-	g2sU2e3/fkFckU1VqnE3eAMaTHb1KNASU8HMYsfESjucmMnSRoufulkM0bz+KAKatlLaMfCvROT
-	WYltGnUPgKd4Bu8uCG7kY/Zq6tnyDhP71bOUA2RzWTau9OJ2AsOFFRlH2Qg6rfBExpvFRfK1Dp8
-	ZymDfyu0YPqNsbqM6gKqJCC8g4F5d8+oFcIHDRo7GDNJDV/QS7gt1VQBwycRGBIgtjvtW5mXBUo
-	4JekL70Ej+7yBP2macM=
-X-Received: by 2002:a17:907:1c08:b0:c15:bea2:d209 with SMTP id
- a640c23a62f3a-c1f1ea074cemr282302466b.4.1785129034195; Sun, 26 Jul 2026
- 22:10:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9C3769EA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 05:39:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785130766; cv=none; b=ay9GY0Iq/IfQUm2JZZ5Amq0JIRAUeDa0unHulowi+cVCeA07pMaJMll5vh0NTTXN2ZNct+etfYkSPiCujaHO9pG50MQ4fWl4E5WRJAk0V5EHHs+L+VSf2YbVxjMS//jGgEPgMSa4Kq/dFKflJBcXPSzEzGrEcgyMYWdtQOjvtYQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785130766; c=relaxed/simple;
+	bh=THJbpLdpCtlMxS6tSaJy/cUGEJqtKPxSNpq0bYYSPzc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=EmS6Oz2vexyjxPmHWGWSrWF7KxV9KBIKzcEYIo7Rlfpz6qz6a49uwPzMtdib7DUXEZqbk7clzx0u8xd7oNxQWmsoLv+Ztys+XOJ5LdTi+gRS9sHXn9N/yO7i8kLSvh74YV8wvRfjj/L4JyJY01fXVDaj6MROA/NOfJ/QsLdVJV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260727-adt7470_thermalzone-v3-0-21424d550c3d@gmail.com>
- <20260727-adt7470_thermalzone-v3-6-21424d550c3d@gmail.com> <20260727034502.94A5D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260727034502.94A5D1F000E9@smtp.kernel.org>
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Date: Mon, 27 Jul 2026 02:10:22 -0300
-X-Gm-Features: AUfX_myLEiBJLLwKOv1xZ7uhmd3Jn_mkcnvtI6X82WndotEiSgOFdU_bkNoDXQE
-Message-ID: <CAJq09z71XqApV8hWQ1bniEgNZ9nJfJwJ7p-CRu1D_MZwOOYiJA@mail.gmail.com>
-Subject: Re: [hwmon PATCH v3 6/6] hwmon: (adt7470) Use cached PWM frequency value
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 27 Jul 2026 13:39:06 +0800
+Message-Id: <DK941BNOQOI4.1Z9J0Z5O60MS0@oss.qualcomm.com>
+Cc: <imx@lists.linux.dev>, <dri-devel@lists.freedesktop.org>,
+ <Frank.Li@kernel.org>
+Subject: Re: [PATCH v3 8/8] drm/xen: replace struct drm_simple_display_pipe
+ with regular atomic helpers
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Ze Huang" <ze.huang@oss.qualcomm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
+ <ze.huang@oss.qualcomm.com>
+References: <20260727-drm-simple-kms-removal-v3-0-cd5dc89858c6@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-8-cd5dc89858c6@oss.qualcomm.com> <20260726195657.4C5221F000E9@smtp.kernel.org>
+In-Reply-To: <20260726195657.4C5221F000E9@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-> By using this modified index to update data->pwm_freq, does the driver end
-> up caching 11Hz or 15Hz (indexes 0 and 1) instead of the requested high
-> frequency?
+On Mon Jul 27, 2026 at 3:56 AM CST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Incorrect coordinates passed to xen_drm_front_mode_set: uses des=
+tination screen coordinates instead of source framebuffer offsets.
+> --
+>
+> --- Patch [8]: [PATCH v3 8/8] drm/xen: replace struct drm_simple_display_=
+pipe with regular atomic helpers ---
+> commit c7c607527ef2df6f1f1c3266167b6754066820c2
+> Author: Ze Huang <ze.huang@oss.qualcomm.com>
+>
+> drm/xen: replace struct drm_simple_display_pipe with regular atomic helpe=
+rs
+>
+> This commit replaces the Xen frontend simple display pipe with explicit
+> plane, CRTC, and encoder objects. It retains generic plane-state validati=
+on
+> and uses commit-local plane state in the CRTC enable path.
+>
+>> diff --git a/drivers/gpu/drm/xen/xen_drm_front_kms.c b/drivers/gpu/drm/x=
+en/xen_drm_front_kms.c
+>> index 48772b5fe71cf..9896ea35b7439 100644
+>> --- a/drivers/gpu/drm/xen/xen_drm_front_kms.c
+>> +++ b/drivers/gpu/drm/xen/xen_drm_front_kms.c
+>
+> [ ... ]
+>
+>> -static void display_enable(struct drm_simple_display_pipe *pipe,
+>> -			   struct drm_crtc_state *crtc_state,
+>> -			   struct drm_plane_state *plane_state)
+>> +static void xen_drm_crtc_helper_atomic_enable(struct drm_crtc *crtc,
+>> +					      struct drm_atomic_commit *commit)
+>>  {
+>> -	struct xen_drm_front_drm_pipeline *pipeline =3D
+>> -			to_xen_drm_pipeline(pipe);
+>> -	struct drm_crtc *crtc =3D &pipe->crtc;
+>> -	struct drm_framebuffer *fb =3D plane_state->fb;
+>> +	struct xen_drm_front_drm_pipeline *pipeline =3D xen_drm_pipeline_from_=
+crtc(crtc);
+>> +	struct drm_plane_state *pstate =3D drm_atomic_get_new_plane_state(comm=
+it, &pipeline->plane);
+>> +	struct drm_framebuffer *fb =3D pstate->fb;
+>>  	int ret, idx;
+>> =20
+>> -	if (!drm_dev_enter(pipe->crtc.dev, &idx))
+>> +	if (!drm_dev_enter(crtc->dev, &idx))
+>>  		return;
+>> =20
+>> -	ret =3D xen_drm_front_mode_set(pipeline, crtc->x, crtc->y,
+>> +	ret =3D xen_drm_front_mode_set(pipeline, pstate->crtc_x, pstate->crtc_=
+y,
+>>  				     fb->width, fb->height,
+>>  				     fb->format->cpp[0] * 8,
+>>  				     xen_drm_front_fb_to_cookie(fb));
+>
+> [Severity: High]
+> The commit message mentions passing the new plane source position, but do=
+es=20
+> this pass the destination screen coordinates instead?=20
+>
+> It looks like pstate->crtc_x and pstate->crtc_y represent the destination
+> coordinates on the CRTC. Should this use the source coordinates instead=
+=20
+> (e.g., from pstate->src) to prevent breaking viewport offsets or causing=
+=20
+> out-of-bounds framebuffer reads by the backend?
 
-Yes. I'll fix it.
+I think using pstate->crtc_x/y is the intended replacement here.
 
-Regards,
+The old code used crtc->x/y. The drm_crtc documentation [1] says these
+legacy fields should not be used by atomic drivers, and atomic drivers
+should use the primary plane's drm_plane_state.crtc_x/y instead.
 
-Luiz
+Xen has only one primary plane, so taking crtc_x/y from that plane keeps
+the same semantics while avoiding direct legacy CRTC state access.
+
+[1] https://elixir.bootlin.com/linux/v7.1.3/source/include/drm/drm_crtc.h#L=
+1067
