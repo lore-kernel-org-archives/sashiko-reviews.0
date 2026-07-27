@@ -1,132 +1,144 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373B0346FB5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 01:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4304F2D97B9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 01:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785116961; cv=none; b=JmOhFDik7Ffb1osI7YtY2cyF9CyRRVtPhNfRFzlxbsgP7QUAQsDTXFG5Z+F+fnOsJ7+DnPdkyO+gxi5QdpRUAkK9l0nbIMwie7Y8HjKILt7OwHOIQfv8wRMqxkPQ2gkGt8nug1FZ4A0NEJl2bTrd/2LVJsjNHcXX5ElIFAFEnfU=
+	t=1785117280; cv=none; b=Ze1ReJBu2JAwayOKkhdoEVqWnoAc7CV2TeZyw1ystypKJEhehcuENZ19uCTK5J7U2neaUBl84Lkg6CY/Xp7G8G5CFVhDaMJyjmVQErYFmvwFBEIhPgGDHnJ2Lym56fNJfnvfF56Dvjs/pUR4eYcwpjZr7Ebk9ERmielsd38yCp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785116961; c=relaxed/simple;
-	bh=386xT8si3MAf5gIsAeAzfgva4234ycPNg7EDcK6TFp0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IAK6nxZOZ0awkt59zTr/6+Xcg7ipXkcn/9kjk2uvB9ql5r15/VxObUsaF8zlRPeyjvedle7Vx7tPaVuseFhT+ObvHMi/K1LDUXN/pTUV6WXMvktFVp7TD9TMp7BxgP4Hesag1ReIqxynjQNk7u82tKkg7mQmBMegSaToMioP6jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h7hMD6kx0zKHMPc
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 09:48:24 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id 08F1A40C33
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 09:49:16 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP1 (Coremail) with UTF8SMTPA id cCh0CgAnFtIbuWZqg2ZWAA--.38780S2;
-	Mon, 27 Jul 2026 09:49:15 +0800 (CST)
-Message-ID: <183096a4-a348-44d8-9fec-8afea10e8345@huaweicloud.com>
-Date: Mon, 27 Jul 2026 09:49:15 +0800
+	s=arc-20240116; t=1785117280; c=relaxed/simple;
+	bh=1ffPUiYpIPDDgQJs0WpGdBTtfIrrCstVSHGNad8eaxs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=coGAjyT4Cfm7YECEpxCTnMp/M3M6R6h9nUSHh0i9H+EbMTEaIEG9kD985yiYT0o4u6b7ekcebUO0AYP1GSSivw1GIio6ySOKEzm87itl4gZCV8H3RPHD1ixg5QeRAVqbLqWTRqqp82KtbGKUom/n6Q8t42L9Fj1kEuI7ArmY31k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 8/9] riscv, bpf: Adjust bpf_func to account
- for CFI offset in bpf_jit_free
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260725154915.2488611-1-pulehui@huaweicloud.com>
- <20260725154915.2488611-9-pulehui@huaweicloud.com>
- <20260725155706.54C5C1F000E9@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260725155706.54C5C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:cCh0CgAnFtIbuWZqg2ZWAA--.38780S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5Xr1UXw45ZF4xZF48tFb_yoW5JFy3pF
-	n8Gryak3yqgrs7KFsFqw18KFy8Jw48W3WrGryj9ry0gFnxuryIgFna93y8WFZ8GryUJw18
-	XF4DWFy3Ca4rJrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgGb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6x
-	kF7I0E14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAq
-	x4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6x
-	CaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCj
-	c4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
-	CE17CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
-	MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
-	4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnI
-	WIevJa73UjIFyTuYvjxUrNtxDUUUU
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 27 Jul 2026 09:53:59 +0800
+Message-Id: <DK8Z8YNNRDM9.14DU5Q5M0J0CL@oss.qualcomm.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Ze Huang" <ze.huang@oss.qualcomm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
+ <ze.huang@oss.qualcomm.com>
+Cc: <Frank.Li@kernel.org>, <imx@lists.linux.dev>,
+ <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH v3 2/2] drm/imx: replace struct drm_simple_display_pipe
+ with regular atomic helpers
+References: <20260727-drm-simple-kms-removal-v3-0-de36e534f7a1@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-2-de36e534f7a1@oss.qualcomm.com> <20260726195505.7A7B21F000E9@smtp.kernel.org>
+In-Reply-To: <20260726195505.7A7B21F000E9@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-
-
-On 2026/7/25 23:57, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+On Mon Jul 27, 2026 at 3:55 AM CST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Critical] NULL pointer dereference in `imx_lcdc_crtc_helper_atomic_ena=
+ble` and `imx_lcdc_update_hw_registers` when the primary plane has no frame=
+buffer.
+>
 > Pre-existing issues:
-> - [High] bpf_jit_free() ignores the error return value of bpf_jit_binary_pack_finalize(), leading to a Use-After-Free and Double Free of the JIT ro_header.
+> - [High] Sleeping in atomic context by calling clock manipulation functio=
+ns from the plane `atomic_update` callback.
 > --
-> 
-> --- Patch [8]: [PATCH bpf-next v3 8/9] riscv, bpf: Adjust bpf_func to account for CFI offset in bpf_jit_free ---
-> commit a0a806deebfc4afdceb1a23fa093826ade44c8cf
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> riscv, bpf: Adjust bpf_func to account for CFI offset in bpf_jit_free
-> 
-> When CFI is enabled, the actual BPF program entry point is shifted forward
-> by a CFI preamble. This commit subtracts the CFI offset from prog->bpf_func
-> in bpf_jit_free() to restore the original JITed allocation address before
-> freeing it, preventing an invalid memory free.
-> 
->> diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
->> index cbfcd287ea166..059db1adeaf8d 100644
->> --- a/arch/riscv/net/bpf_jit_core.c
->> +++ b/arch/riscv/net/bpf_jit_core.c
->> @@ -237,6 +237,7 @@ void bpf_jit_free(struct bpf_prog *prog)
->>   			kvfree(jit_data->ctx.offset);
->>   			kfree(jit_data);
->>   		}
->> +		prog->bpf_func = (void *)prog->bpf_func - cfi_get_offset();
->>   		hdr = bpf_jit_binary_pack_hdr(prog);
->>   		bpf_jit_binary_pack_free(hdr, NULL);
-> 
+>
+> --- Patch [2]: [PATCH v3 2/2] drm/imx: replace struct drm_simple_display_=
+pipe with regular atomic helpers ---
+> commit e5bb94188c05e612166e809c2f562025fecbb70c
+> Author: Ze Huang <ze.huang@oss.qualcomm.com>
+>
+> drm/imx: replace struct drm_simple_display_pipe with regular atomic helpe=
+rs
+>
+> Convert i.MX LCDC to explicit primary plane, CRTC and encoder objects. Ke=
+ep
+> no-scaling plane check and GEM framebuffer prepare callback from simple-K=
+MS
+> path.
+>
+>> diff --git a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c b/drivers/gpu/drm/imx/l=
+cdc/imx-lcdc.c
+>> index e00e52c1c46ec..e0784ce0125b7 100644
+>> --- a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
+>> +++ b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
+> [ ... ]
+>> @@ -206,7 +211,7 @@ static void imx_lcdc_pipe_enable(struct drm_simple_d=
+isplay_pipe *pipe,
+>> =20
+>>  	clk_div =3D DIV_ROUND_CLOSEST_ULL(clk_get_rate(lcdc->clk_per),
+>>  					mode->clock * 1000);
+>> -	bpp =3D imx_lcdc_get_format(plane_state->fb->format->format);
+>> +	bpp =3D imx_lcdc_get_format(pstate->fb->format->format);
+>
+> [Severity: Critical]
+> Can this dereference a NULL pointer if the primary plane has no framebuff=
+er?
+
+It could not be possible.
+
+If the plane was attached to crtc, the fb would be checked [1] in the
+atomic check phase (before crtc atomic enable):
+
+    /* either *both* CRTC and FB must be set, or neither */
+    if (crtc && !fb) {
+        drm_dbg_atomic(plane->dev, "[PLANE:%d:%s] CRTC set but no FB\n",
+                       plane->base.id, plane->name);
+        return -EINVAL;
+
+[1] https://elixir.bootlin.com/linux/v7.1.3/source/drivers/gpu/drm/drm_atom=
+ic.c#L715
+
+>
+> If a userspace process issues an atomic modeset commit that enables the C=
+RTC
+> but leaves the primary plane with no framebuffer, pstate->fb would be NUL=
+L.
+> The drm_atomic_helper_check_crtc_primary_plane() helper checks if the
+> primary plane is attached, but doesn't guarantee a visible framebuffer.
+>
+> Could this lead to a crash when querying the format here, or when passing
+> the fb to drm_fb_dma_get_gem_addr() inside imx_lcdc_update_hw_registers()
+> just below?
+>
+> [ ... ]
+>> @@ -272,66 +283,151 @@ static void imx_lcdc_pipe_disable(struct drm_simp=
+le_display_pipe *pipe)
+> [ ... ]
+>> +	if (old_fb && old_fb->format !=3D fb->format)
+>> +		mode_changed =3D true;
+>> +	else if (old_crtc !=3D crtc)
+>> +		mode_changed =3D true;
+>> +
+>> -	if (!drm_atomic_crtc_needs_modeset(crtc->state))
+>> -		imx_lcdc_update_hw_registers(pipe, old_state, mode_changed);
+>> +	if (!drm_atomic_crtc_needs_modeset(new_crtc_state))
+>> +		imx_lcdc_update_hw_registers(crtc, old_crtc_state, new_crtc_state,
+>> +					     new_state, mode_changed);
+>
 > [Severity: High]
-> This is a pre-existing issue, but does ignoring the return value of
-> bpf_jit_binary_pack_finalize() (called just prior to this diff snippet)
-> lead to a use-after-free and double free?
+> This is a pre-existing issue, but does this sleep in an atomic context?
+>
+> When userspace requests a plane update that changes the pixel format but
+> does not alter the display resolution, drm_atomic_crtc_needs_modeset()
+> evaluates to false, but mode_changed is set to true.=20
+>
+> This causes imx_lcdc_update_hw_registers() to be called with mode_set=3Dt=
+rue:
+>
+> imx_lcdc_plane_helper_atomic_update()
+>   imx_lcdc_update_hw_registers(..., mode_changed);
+>     clk_disable_unprepare(lcdc->clk_per);
+>
+> Since clk_disable_unprepare() acquires a mutex and sleeps, is it safe to
+> call this from the plane's atomic_update callback, which executes in
+> atomic context where sleeping is forbidden?
 
-patch 9 has been covered this.
-
-> 
-> If bpf_jit_binary_pack_finalize() fails, it frees ro_header internally:
-> 
-> kernel/bpf/core.c:bpf_jit_binary_pack_finalize() {
->      ...
->      if (IS_ERR(ptr)) {
->          bpf_prog_pack_free(ro_header, ro_header->size);
->          return PTR_ERR(ptr);
->      }
->      ...
-> }
-> 
-> Back in bpf_jit_free(), we ignore this failure, extract the same freed
-> header via bpf_jit_binary_pack_hdr(), and call bpf_jit_binary_pack_free()
-> which dereferences ro_header->size and frees it again:
-> 
-> kernel/bpf/core.c:bpf_jit_binary_pack_free() {
->      u32 size = ro_header->size;
-> 
->      bpf_prog_pack_free(ro_header, size);
->      ...
-> }
-> 
-> Should bpf_jit_free() check if bpf_jit_binary_pack_finalize() returned
-> an error before attempting to extract and free the header again?
-> 
->>   		WARN_ON_ONCE(!bpf_prog_kallsyms_verify_off(prog));
-> 
-
+False positive
