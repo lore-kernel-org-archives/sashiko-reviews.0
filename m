@@ -1,87 +1,177 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27DE140E5F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9196B3939A3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785120302; cv=none; b=pf7EAB13nbaaDJJyDTe0Z1/kggYovB35ZzEmwnLUQ+h7K5C6PkfgxFfd5wtKzdry97Mcr3DPEiYouzXvmlAIcCFiNSIuTrGEhhX6WYGfk7hSp3OVra03TgFXOKPpbXfOr6wVPno8qyrizP3XJhENA09j1pCVl4DCYWlf3B8SDcM=
+	t=1785120930; cv=none; b=dIqKBLK2xNpXRMrJ4PIIs1JqS9iCyzQ1U9HCBwudeTsOOwvHUH0bUlEtosAP6WvPX2CXVHi4/XxNwXfZoj5AzqPQ8a3DP3DLT3fOzdmdy6lhvaCfvIzk5cO4PIYzd8R/6CUUTxSYcFt5y7VC5n6Y0XAf2xB8fEIHptJcwS1CBxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785120302; c=relaxed/simple;
-	bh=fID5X1Rlt0gJdWicRbYWAwRqvT0svu8PSHmpBC4hhJQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IMXvpPM8wr7TQepdSGtM/0/qf1IXr/d/xQAfW0l1sNVm8ENA4EXo8TFJJmYF+8A/wJ6PtKwJUiqi8o3Z5vVtNARv5mjHHrn9RDFOs94+hkZ1PfXjBySdsGSxVokS+lWaRtuw66qjNRJ9zbdRZvGPdhSjCfKR/Jc3BMHR4HxvOUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=kWKyxZGG; arc=none smtp.client-ip=220.197.31.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="kWKyxZGG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version:
-	Content-Type; bh=fID5X1Rlt0gJdWicRbYWAwRqvT0svu8PSHmpBC4hhJQ=;
-	b=kWKyxZGGXMLF2Ljjb602gZ6Yt7bBnRPfXCV9HA749Vl6L0NzGhb+vE5/S5NHnq
-	K0qYZQHNwYaPL1Foe+l38p/u7m7wmB7ts7lOvNH1HSeX2ni04c0cypUTjqaVvL6o
-	xEK9OBq7kmsv33LN3dYXh+OkiKol5uPeNKS/HVqLOiGYg=
-Received: from localhost.localdomain (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wDX3RccxmZqpLJ2Lw--.60073S2;
-	Mon, 27 Jul 2026 10:44:45 +0800 (CST)
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
-To: sashiko-bot@kernel.org
-Cc: linux-scsi@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 2/2] scsi: bsg: map io_uring user buffers with GFP_KERNEL
-Date: Mon, 27 Jul 2026 10:44:44 +0800
-Message-Id: <20260727024444.1917979-1-yangxiuwei@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260727015542.D929B1F000E9@smtp.kernel.org>
-References: <20260727015542.D929B1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1785120930; c=relaxed/simple;
+	bh=Hs5XCOVnLLoZebaVnZ1YGkfnAnC6CwUqsdxjOjK2gPc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=O7PxY3KfZL8hSNa1I23y5t8Wyz0FAsw7JxHmhMk7RZOwe+nEVc3x35Exz2EwYyF1IPVqIOx0muGopAXpf1H42v2SF7b83pBaJ39jiL0cSJmBDEqlc6z3ySSKI0N9to7pUVdgjBdOYu+7RBHZmwKfQxX6Cx3QDeUS7UtXAITfDwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDX3RccxmZqpLJ2Lw--.60073S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7uFykKry3tw4xXr45XFyfCrg_yoW8Gw1DpF
-	s5K3Z7GFWUGF1SqF9rWFsrWr10kw4xAa45GF4rXr45Zrn8Xw1Ikr4agFW09FW5Zw1fCFWj
-	qF40gF97Ar1UAa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRVWlPUUUUU=
-Sender: yangxiuwei2025@163.com
-X-CM-SenderInfo: p1dqw55lxzvxisqskqqrwthudrp/xtbCwR3sfWpmxh0tCQAA3+
+Date: Mon, 27 Jul 2026 10:55:10 +0800
+Message-Id: <DK90JT5FE5UR.1AGN06O8YZ371@oss.qualcomm.com>
+Cc: <dri-devel@lists.freedesktop.org>, <Frank.Li@kernel.org>,
+ <imx@lists.linux.dev>
+Subject: Re: [PATCH v3 7/8] drm/tve200: replace struct
+ drm_simple_display_pipe with regular atomic helpers
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Ze Huang" <ze.huang@oss.qualcomm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
+ <ze.huang@oss.qualcomm.com>
+References: <20260727-drm-simple-kms-removal-v3-0-cd5dc89858c6@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-7-cd5dc89858c6@oss.qualcomm.com> <20260726200006.687F21F00A3A@smtp.kernel.org>
+In-Reply-To: <20260726200006.687F21F00A3A@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Jul 27, 2026 at 01:55:42AM +0000, sashiko-bot wrote:
+On Mon Jul 27, 2026 at 4:00 AM CST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Calling sleeping functions from CRTC atomic enable and disable c=
+allbacks violates atomic context constraints.
+> - [High] Setting `cstate->mode_changed =3D true` inside the plane's `atom=
+ic_check` callback bypasses downstream modeset routing, leaving bridges act=
+ive during CRTC resets.
+> --
+>
+> --- Patch [7]: [PATCH v3 7/8] drm/tve200: replace struct drm_simple_displ=
+ay_pipe with regular atomic helpers ---
+> commit c9e2ab55e3b69f124e64f349a1ced762885b2aea
+> Author: Ze Huang <ze.huang@oss.qualcomm.com>
+> Subject: drm/tve200: replace struct drm_simple_display_pipe with regular =
+atomic helpers
+>
+> Convert TVE200 to explicit plane, CRTC and encoder objects. Keep generic
+> plane-state validation before TVE200-specific mode, alignment, pitch and
+> format-change checks.
+>
+>> diff --git a/drivers/gpu/drm/tve200/tve200_display.c b/drivers/gpu/drm/t=
+ve200/tve200_display.c
+>> index 26b6c65ef6fd0..beb3a5a63b5d5 100644
+>> --- a/drivers/gpu/drm/tve200/tve200_display.c
+>> +++ b/drivers/gpu/drm/tve200/tve200_display.c
+> [ ... ]
+>> @@ -69,13 +71,34 @@ irqreturn_t tve200_irq(int irq, void *data)
+>>  	return IRQ_HANDLED;
+>>  }
+>> =20
+>> -static int tve200_display_check(struct drm_simple_display_pipe *pipe,
+>> -			       struct drm_plane_state *pstate,
+>> -			       struct drm_crtc_state *cstate)
+>> +static int tve200_plane_helper_atomic_check(struct drm_plane *plane,
+>> +					    struct drm_atomic_commit *commit)
+>>  {
+>
 > [Severity: High]
-> This is a pre-existing issue, but does using GFP_KERNEL here cause a tag
-> exhaustion deadlock?
+> This is a pre-existing issue, but does setting cstate->mode_changed =3D t=
+rue
+> inside the plane check hook bypass downstream modeset routing?
 >
-> Prior to this call, scsi_alloc_request() consumes a hardware tag. If
-> GFP_KERNEL enters direct reclaim and needs to write dirty pages back to the
-> same block device, the filesystem will attempt to allocate another tag.
+> In tve200_plane_helper_atomic_check(), the code raises a mode change if t=
+he
+> framebuffer format changes:
 >
-> If all tags are currently held by blocked BSG tasks, won't the system deadlock?
+>     if (old_fb && old_fb->format !=3D fb->format)
+>             cstate->mode_changed =3D true;
+>
+> In the default DRM state check sequence, plane checks are executed after =
+the
+> modeset checks. Because mode_changed is raised late and the driver does n=
+ot
+> explicitly loop back to recalculate modeset routing, the downstream
+> encoders and bridges may miss their disable/enable hooks. Could this leav=
+e
+> bridges active during a CRTC reset?
 
-This is not introduced by this patch.
+Yes, the DRM helper path does use mode_changed to drive modeset
+routing and the bridge/encoder/CRTC modeset hooks.
 
+As mentioned for patch 2, I would prefer not to mix too much fixes into
+this simple-KMS conversion series. If we want to make this stricter, the
+driver can grow a custom .atomic_check wrapper and rerun
+drm_atomic_helper_check_modeset() after plane checks, but that should be
+a separate follow-up/preparatory patch.
+
+>
+> [ ... ]
+>> @@ -119,16 +142,72 @@ static int tve200_display_check(struct drm_simple_=
+display_pipe *pipe,
+>>  	return 0;
+>>  }
+>> =20
+> [ ... ]
+>> +static void tve200_crtc_helper_atomic_enable(struct drm_crtc *crtc,
+>> +					     struct drm_atomic_commit *commit)
+>>  {
+>> -	struct drm_crtc *crtc =3D &pipe->crtc;
+>> -	struct drm_plane *plane =3D &pipe->plane;
+>>  	struct drm_device *drm =3D crtc->dev;
+>>  	struct tve200_drm_dev_private *priv =3D drm->dev_private;
+>> +	struct drm_crtc_state *cstate =3D drm_atomic_get_new_crtc_state(commit=
+, crtc);
+>>  	const struct drm_display_mode *mode =3D &cstate->mode;
+>
 > [Severity: High]
-> Does removing the GFP_NOWAIT fallback for the non-blocking io_uring issue
-> path introduce a permanent task_work deadlock?
+> This is a pre-existing issue, but does this code sleep in atomic context?
 >
-> If a user submits more than 256 IORING_OP_URING_CMD operations in a single
-> batch, the bio allocations will exhaust the fs_bio_set mempool. By passing
-> GFP_KERNEL to blk_rq_map_user_iov(), mempool_alloc() will put the submitter
-> thread to sleep waiting for a bio to be freed.
+> The DRM core invokes CRTC atomic enable callbacks during display commits,
+> which run in atomic context. However, tve200_crtc_helper_atomic_enable()
+> calls sleeping functions:
 >
-> Since these bios are freed when their completions run via task_work
-> (scsi_bsg_uring_task_cb), which must be executed by the very submitter thread
-> now permanently blocked in mempool_alloc(), does this create an unresolvable
-> circular dependency?
+>     clk_prepare_enable(priv->clk);
+>     ...
+>     usleep_range(30000, 50000);
+>
+> I see this logic was carried over directly from the old
+> drm_simple_display_pipe hooks. Since sleeping in atomic context can cause
+> kernel warnings and potential deadlocks, is there a safe way to handle th=
+is
+> enable sequence?
 
-No. A large submit batch alone does not force mempool wait, and fs_bio_set
-is shared — progress does not depend only on this task's task_work. This
-matches the nvme io_uring passthrough path.
+False positive
 
-Thanks,
-Yang Xiuwei
+>
+> [ ... ]
+>> @@ -240,9 +319,9 @@ static void tve200_display_enable(struct drm_simple_=
+display_pipe *pipe,
+>>  	drm_crtc_vblank_on(crtc);
+>>  }
+>> =20
+>> -static void tve200_display_disable(struct drm_simple_display_pipe *pipe=
+)
+>> +static void tve200_crtc_helper_atomic_disable(struct drm_crtc *crtc,
+>> +					      struct drm_atomic_commit *commit)
+>>  {
+>> -	struct drm_crtc *crtc =3D &pipe->crtc;
+>>  	struct drm_device *drm =3D crtc->dev;
+>>  	struct tve200_drm_dev_private *priv =3D drm->dev_private;
+>
+> [Severity: High]
+> This is a pre-existing issue, but similar to the enable path above, does =
+the
+> disable callback also sleep in atomic context?
+>
+> tve200_crtc_helper_atomic_disable() eventually calls clk_disable_unprepar=
+e(),
+> which can sleep:
+>
+>     clk_disable_unprepare(priv->clk);
+>
+> Since this runs in the atomic disable path, could this lead to a deadlock=
+?
 
+False positive
