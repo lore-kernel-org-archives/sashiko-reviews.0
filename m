@@ -1,114 +1,196 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105533F8234
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 10:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830F835E1B7
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 11:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785147891; cv=none; b=G72duJCT5kiOwQlvfw9wB4SLHVeKYQnu7Z3GFgdTvjWedKAVUlKTe5Ag+4AHeKt2FNiov41X+O07lKoKCAgH8f8vXlRy5553WREB9VoBOQUJ1yiLC5cYXROtyZUvOP4r93PPAylAgj0Uj+eYCzcxuNFO/inYEWB0LcQONHJGtuA=
+	t=1785150301; cv=none; b=qSMAPv0qHCWtmUyQXE0IWgvYQ+BeIbMN0kOaAfHNMv6yTL1x5l2S475IcfmYWLSEcACZbAd9DjJWvFqDhphR9YSwsBs9zTph5qcjQ6NeOZVvQvNabvh7u5FgTSJcaYipLjTVjm6n7pnfkWFWNH+XonmtxUsVaEjuXOLm8hOO2cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785147891; c=relaxed/simple;
-	bh=QHZkYOCLI3MmD2TcDsqKhL+BwwiIv9+8j8ch+TNHBEo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X1F92LwL6iW5L6xu4VC+kdmaeRnC0Mgw4vdCgWJysH1pNF2Hfc96XoBlQAIUqeRWDjEfZ/K7eC/h02EG3xUovnVmqtrUPfEN2+nDZWIWIMeFaQhmctqAqMpralac5fbo9U4afALnxpWtLz1GaqpjTx2bPNxzPFn64ZZXf6clYn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=ratatoskr.pengutronix.de)
-	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
-	(envelope-from <s.trumtrar@pengutronix.de>)
-	id 1woIVV-0001va-3k; Mon, 27 Jul 2026 12:24:25 +0200
-From: Steffen Trumtrar <s.trumtrar@pengutronix.de>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  Frank.Li@kernel.org,
-  devicetree@vger.kernel.org,  imx@lists.linux.dev,  conor+dt@kernel.org,
-  robh@kernel.org
-Subject: Re: [PATCH v6 5/5] arm64: dts: imx8mp-skov: support new 7inch panel
- board
-In-Reply-To: <20260727101553.8867E1F00A3A@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 27 Jul 2026 10:15:53
-	+0000")
-References: <20260727-v7-0-topic-imx8mp-skov-dts-jutouch-7inch-v6-0-fa8f71dfc56f@pengutronix.de>
-	<20260727-v7-0-topic-imx8mp-skov-dts-jutouch-7inch-v6-5-fa8f71dfc56f@pengutronix.de>
-	<20260727101553.8867E1F00A3A@smtp.kernel.org>
-User-Agent: mu4e 1.14.2; emacs 30.2
-Date: Mon, 27 Jul 2026 12:24:24 +0200
-Message-ID: <874ihkenmv.fsf@pengutronix.de>
+	s=arc-20240116; t=1785150301; c=relaxed/simple;
+	bh=xKTo3Nec+pj52L6yrojEcbysD2JrhxNHrJK2sZp1ssk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QcG9wV1rcrRuc0IHGBGrFFSjnieLbUS8aroQwRhlR9jFPeC7z3uhqReFC1ozDd3Kh05WRo+NaRVEJTLDrmwrlujF+IkUhquMRzAGzfPBhbqcCmOtCOIuYnJkqUNQ2i33+/Uwd/IM4gu7Xkm/002Cdkmyq6d3zAvnbFod5yB/Nm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Cfdt6Sfy; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Cfdt6Sfy"
+Message-ID: <ca868252-8643-48de-81db-a6f6505397a6@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785150287;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sU/EA2UJXc22ZXfuwye3gfRjPgT+tpcOl8bz1cl04W0=;
+	b=Cfdt6SfyqnbCYVTeFucLmXg50LS30IT5+jiTd+NSeDOp2RckJKE1LGv4pzT9LlqP2Xav8L
+	8ysoYKQwPxVBF6FSOguVrE51+o9OOZ7XeyiP2X19lmRgqoeJKGSupoSvIjj4xcIBNZSFX/
+	bYUWay5mAfjKpCH4tedaAm9950b2oM0=
+Date: Mon, 27 Jul 2026 19:04:32 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
-X-SA-Exim-Mail-From: s.trumtrar@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with
+ per-range regions
+To: sashiko-reviews@lists.linux.dev
+Cc: damon@lists.linux.dev
+References: <20260727095429.143527-1-jiayuan.chen@linux.dev>
+ <20260727100731.BC8B01F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260727100731.BC8B01F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On 2026-07-27 at 10:15 GMT, sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing touch controller node in the device tree overlay.
-
-Meh, missed this while converting. I'll wait before sending the next version before I start spamming.
-
+On 7/27/26 6:07 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Time-of-check to time-of-use (TOCTOU) race condition in `damon_find_system_rams()` leads to a heap out-of-bounds write during concurrent memory hotplug.
+> - [High] DAMON initialization fails with `-EINVAL` on systems with sub-page System RAM gaps due to alignment overlap in `damon_set_regions()`.
 > --
-> 
-> --- Patch [5]: [PATCH v6 5/5] arm64: dts: imx8mp-skov: support new 7inch panel board ---
-> commit bd24f58ff22bbd1df246534579e3ab608027e17c
-> Author: Steffen Trumtrar <s.trumtrar@pengutronix.de>
-> 
-> arm64: dts: imx8mp-skov: support new 7inch panel board
-> 
-> This commit adds a device tree overlay for the SKOV IMX8MP CPU revC board
-> paired with a 7-inch JuTouch JT070TM041 panel. It also updates the Makefile
-> to compile the new overlay and device tree binaries.
-> 
+>
+> --- Patch [1]: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with per-range regions ---
+> commit 20fb01bf6e8e4cefc6016dfc073fb77c95ca3511
+> Author: Jiayuan Chen <jiayuan.chen@shopee.com>
+>
+> mm/damon/core: cover discrete System RAM areas with per-range regions
+>
+> This commit changes how DAMON sets default monitoring regions for System RAM.
+> Instead of a single region covering all RAM (and the holes between), it now
+> creates separate regions for each discrete System RAM area. This excludes
+> large memory holes from being monitored.
+>
+>> diff --git a/mm/damon/core.c b/mm/damon/core.c
+>> index 644daf5a16560..365c43271c0c6 100644
+>> --- a/mm/damon/core.c
+>> +++ b/mm/damon/core.c
 > [ ... ]
-> 
-> > diff --git
-> > a/arch/arm64/boot/dts/freescale/imx8mp-skov-revc-jutouch-jt070tm041.dtso
-> > b/arch/arm64/boot/dts/freescale/imx8mp-skov-revc-jutouch-jt070tm041.dtso
-> > new file mode 100644
-> > index 0000000000000..20e987b36c53a
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-skov-revc-jutouch-jt070tm041.dtso
-> > @@ -0,0 +1,39 @@
-> > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> > +
-> > +/dts-v1/;
-> > +/plugin/;
-> > +
-> > +&{/} {
-> > +	model = "SKOV IMX8MP CPU revC - JuTouch JT070TM041";
-> > +	compatible = "skov,imx8mp-skov-revc-jutouch-jt070tm041", "fsl,imx8mp";
-> > +
-> > +	panel {
-> > +		compatible = "jutouch,jt070tm041";
-> > +		backlight = <&backlight>;
-> > +		power-supply = <&reg_tft_vcom>;
-> > +
-> > +		port {
-> > +			in_lvds0: endpoint {
-> > +				remote-endpoint = <&ldb_lvds_ch0>;
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> 
-> [Severity: Medium]
-> The commit message mentions that this board uses a different 7-inch panel
-> with a different touch controller. However, there doesn't appear to be a node
-> configuring the touch controller itself in this overlay. 
-> 
-> Is the touch controller hardware configuration missing from this file, or is
-> the touchscreen initialization handled outside of this device tree overlay?
-> 
-> [ ... ]
+>
+>> +static int damon_find_system_rams(struct damon_addr_range **ranges_out,
+>> +				  unsigned long addr_unit)
+>> +{
+>> +	struct damon_system_ram_range_walk_arg arg = { .addr_unit = addr_unit };
+>> +	struct damon_addr_range *ranges;
+>>   
+>> +	/* First pass: count the coalesced ranges. */
+>>   	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
+>> -	if (!arg.walked)
+>> -		return false;
+>> -	*start = damon_res_to_core_addr(arg.res.start, addr_unit);
+>> -	*end = damon_res_to_core_addr(arg.res.end + 1, addr_unit);
+>> -	if (*end <= *start)
+>> -		return false;
+>> -	return true;
+>> +	if (!arg.nr_ranges)
+>> +		return 0;
+>> +	ranges = kvmalloc_objs(*ranges, arg.nr_ranges, GFP_KERNEL);
+>> +	if (!ranges)
+>> +		return -ENOMEM;
+>> +	/* Second pass: fill in the coalesced ranges. */
+>> +	arg.ranges = ranges;
+>> +	arg.nr_ranges = 0;
+>> +	arg.has_prev = false;
+>> +	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
+> [Severity: High]
+> Can this race with memory hotplug events and cause an out-of-bounds write?
+>
+> walk_system_ram_res() is called twice without holding memory hotplug locks.
+> If a new System RAM region is hotplugged between or during the second pass,
+> the number of visited regions could exceed the allocated buffer size.
+>
+> If that happens, damon_system_ram_walk_fn() would write past the end of the
+> kvmalloc-allocated buffer:
+>
+> mm/damon/core.c:damon_system_ram_walk_fn() {
+> 	...
+> 	if (a->ranges) {
+> 		a->ranges[a->nr_ranges].start = start;
+> 		a->ranges[a->nr_ranges].end = end;
+> 	}
+> 	a->nr_ranges++;
+> 	...
+> }
 
--- 
-Pengutronix e.K.                | Dipl.-Inform. Steffen Trumtrar |
-Steuerwalder Str. 21            | https://www.pengutronix.de/    |
-31137 Hildesheim, Germany       | Phone: +49-5121-206917-0       |
-Amtsgericht Hildesheim, HRA 2686| Fax:   +49-5121-206917-5555    |
+You're right. The two walk_system_ram_res() calls should be wrapped with
+
+get_online_mems()/put_online_mems() so the resource set cannot change
+
+between the counting and filling passes.
+
+
+
+>> +	*ranges_out = ranges;
+>> +	return arg.nr_ranges;
+>>   }
+> [ ... ]
+>
+>> @@ -3984,14 +4021,25 @@ int damon_set_region_system_rams_default(struct damon_target *t,
+>>   			unsigned long addr_unit, unsigned long min_region_sz)
+>>   {
+>>   	struct damon_addr_range addr_range;
+>> +	struct damon_addr_range *ranges;
+>> +	int nr_ranges, err;
+>>   
+>> -	if (!*start && !*end &&
+>> -		!damon_find_system_rams_range(start, end, addr_unit))
+>> -		return -EINVAL;
+>> +	if (*start || *end) {
+>> +		addr_range.start = *start;
+>> +		addr_range.end = *end;
+>> +		return damon_set_regions(t, &addr_range, 1, min_region_sz);
+>> +	}
+>>   
+>> -	addr_range.start = *start;
+>> -	addr_range.end = *end;
+>> -	return damon_set_regions(t, &addr_range, 1, min_region_sz);
+>> +	nr_ranges = damon_find_system_rams(&ranges, addr_unit);
+>> +	if (nr_ranges < 0)
+>> +		return nr_ranges;
+>> +	if (!nr_ranges)
+>> +		return -EINVAL;
+>> +	*start = ranges[0].start;
+>> +	*end = ranges[nr_ranges - 1].end;
+>> +	err = damon_set_regions(t, ranges, nr_ranges, min_region_sz);
+> [Severity: High]
+> Could this fail with -EINVAL during initialization on systems with sub-page
+> memory gaps?
+>
+> If the system has System RAM fragmented by small non-RAM holes (like sub-page
+> BIOS or EFI reserved regions), damon_system_ram_walk_fn() will create separate
+> discrete regions.
+>
+> When these regions are passed to damon_set_regions(), it aligns the boundaries
+> to min_region_sz (typically PAGE_SIZE):
+>
+> mm/damon/core.c:damon_set_regions() {
+> 	for (i = 0; i < nr_ranges; i++) {
+> 		...
+> 		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
+> 		end = ALIGN(ranges[i].end, min_region_sz);
+> 		if (start >= end)
+> 			return -EINVAL;
+> 		if (i > 0 && last_end > start)
+> 			return -EINVAL;
+> 		last_end = end;
+> 	}
+> 	...
+> }
+>
+> If the gap between two RAM areas is smaller than PAGE_SIZE, the ALIGN of the
+> first region's end will evaluate to a higher address than the ALIGN_DOWN of
+> the second region's start. Does this cause the strictly-ascending overlap
+> check (last_end > start) to trigger and reject valid configurations?
+
+
+this is a real issue. I overlooked the case where System RAM boundaries 
+are not page-size aligned
+
+
+>> +	kvfree(ranges);
+>> +	return err;
+>>   }
