@@ -1,90 +1,97 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345B61A8F97
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 05:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18AD347BD9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 06:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785131607; cv=none; b=N5zD5sG2g97l3gNOAaIQPg0Wg9QFUx5A/K84GutBjsYtG488hs5RQ3arxR7pw0ZA4EIqFamawevP5z5iqyryED0GgJ2Gv7+5YMeCYyBAUf/SqJsPae0rJgNe7X6tOdxXdb3ikHbdOhlJJB0Y6Z6nh3JVyyssMO6foqqrqvOPuek=
+	t=1785132610; cv=none; b=K45IVSEzCjZWneOPrt7zx/qT7TnixRQGnOwk+YGBXfwZZqG7RmbKHyiUVvZb2LB4uQyL8a+e3KiuSHa4AWTRqmiPjC2xFwhrwunrCRHzTV8FbQ/H5p7TfMZt2CRYQ3lW8Yf9cWVLbYDX37T9+1vcQkJfcsvsw0KX7ykjRQHQXfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785131607; c=relaxed/simple;
-	bh=3GPnECwUini/fW6UPtLPQ73isYYZIZv5Vl224arhez8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uReC2uw7DkgD/RUHSYzYvPQZI6iGKZcVzwaQl+sN0HgIm8edAG3WDSLZkv2jm5ExNe2k/GMBGNFL1KTVkch6uWkbHJot5h1f8+4f++G896cjRONJ8fr0Jvvrh2Pib/lpIXVXZYa/iY5Fc5o/dand4sfzdN6lLnDQAI+p67BOhSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mPyAYpcA; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mPyAYpcA"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2caed617615so22970385ad.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 22:53:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785131605; x=1785736405; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GtILubvuVEhDDQkeVMqZri30kt9R/z63vZzws5i+nR4=;
-        b=mPyAYpcAwDBQ05GFbvPIE+KUcpBebdJb0u50NFJrKE9eVqIOYXiuCYAQG9XFnLiNxY
-         lYbN3ys95+JEdIg30nDEqNfqH9/LrxUbG6C2U7/p/fNCxSwG9kQBBOoj3dBTVHAmuYsl
-         AJyx3VmXWprK0RrGYKdIZzBgJtoVdDvFAgphVwhU7qyR7aHAwqEfxWFykBhPOoicVwXW
-         c921ILEUXx9hKwzdd3YzwJ+ZavnetpiZcEuHy5nrFTuUvREWLynGV43mrR75G2zJ+DXk
-         ven4AH2vJFo0qfZ5BGFJbzS7bvO2Hk0htsfAcd8I0U86RFtppOcifpjD1eRxCfI/xwv7
-         ZLZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785131605; x=1785736405;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GtILubvuVEhDDQkeVMqZri30kt9R/z63vZzws5i+nR4=;
-        b=OEIBSKNk6GgbB4W2jgoUeGk2smKrY5NckSEylWD3ykYBmp/b8MqDGv1pUf8y3KGCIL
-         QD4IB+r/G6UJ1IykNrb3cREqDEw1hJnQhUyiwNkdqlW1ty8XWx6rzEx0WIJ0/IWvwuiI
-         aC0fhIML8CCAnbv0wrrxv4szkZw+S5Wm/W0E5Gg4aDzHKrO/GlMwS4eNQc0LA173yuwv
-         mR7xPYx1n69N5xHSkZRx4HGjhjA6AZgRdMN7spMalF6OXDMk92D08ZPL8OKsCa7APOGj
-         mzTsruE8UocZJG5L7nP4ESW1dI8nFH39JxPvozJqIr6K5W5o8lP9vS5U9ztikMaxjqkQ
-         NK8Q==
-X-Gm-Message-State: AOJu0YzTAFm7vAKR3Kos0dAdq/DvK8VtSEsdtxewODcmdpWQH2wZHZjY
-	AtEOa75Wf3e7umso0uHUY8jic8rfLeKvrnQ8Xl2YA4VyNE4qwuj6rr5XDlms2A==
-X-Gm-Gg: AR+sD13quZruSoBhOEXoDetBSOEMqzrKGrvE3DyLt01xK4T4fqIld29LHlC447Hjopx
-	39xj05RfQ5uRhQ3hu1ip8RpXwvRi6rrRZZCP+W92CP8eoM3m1023uHzN3tqGOA/oZBqYtbpRZIA
-	9vTd7t1p/yjkCxabKM55diKThBeyiRSV5LWBGo8DBRPRhSvrDfE63VHbRW247NfSIRoiOVikbhT
-	beUKRsIPmY4a0XYmPcuR4BUQSKPD1bsq5y4aV9mOQJnVtE5B9CSar14vo2wDzeFTrPpu5WL70Qt
-	ZD2YZFPhpIl2HRG4QKq6BvLJmUh8jTO4wLt9kycKPrjGxcxiVK0jMIwuS2cdFyk3Vp52d7F3gQk
-	ogHVv2JivwD+xGGNadQEkCg9PyEvhkqubZCKzkI8XLC/GF3sLKnmE8ute9mDsNK47UCffvhBfng
-	ncj7mVUnjediFfou2ioZQPg3I7+J4b+ABxEASSbt2gqWI=
-X-Received: by 2002:a05:6a20:d4c:b0:3bf:5539:f8f with SMTP id adf61e73a8af0-3c67ddebb22mr6626802637.37.1785131605311;
-        Sun, 26 Jul 2026 22:53:25 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:fc2f:1878:e714:ef41])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc3e127asm44638825eec.2.2026.07.26.22.53.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 22:53:21 -0700 (PDT)
-Date: Sun, 26 Jul 2026 22:53:18 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org
-Subject: Re: [PATCH 1/4] Input: psmouse - fix use-after-free during protocol
- disconnect
-Message-ID: <ambyOdepIOfn9KHH@google.com>
-References: <20260727050803.1269941-1-dmitry.torokhov@gmail.com>
- <20260727053809.030801F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1785132610; c=relaxed/simple;
+	bh=PpUktY2NKWWxihik00aO4fnJENz3hIRZ0QSD3aWKrLA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SZsUYY0Jo8pHx+fg0BX3cGSG7qy+jCQczrSlE3+7jlgr3v5azEJhvxlZ72dzNCGLQJ2qlvVT6VuRk0GhHiga4Eo9SwNc4U9xEB5sZ9+Z6Ga8m0qRfKRpRhqs/QqiHhKQyP7OUEplln7WE369x0+nwTljP3HB51O6uhSnCmdI9kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4h7p894BcZzKHMMC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:09:13 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id EA44140539
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:10:04 +0800 (CST)
+Received: from [10.174.178.253] (unknown [10.174.178.253])
+	by APP3 (Coremail) with UTF8SMTPSA id _Ch0CgAXBUQ79mZqDUdsAA--.18868S3;
+	Mon, 27 Jul 2026 14:10:04 +0800 (CST)
+Message-ID: <1d1ea032-8725-4abb-8b25-cf3e631d3879@huaweicloud.com>
+Date: Mon, 27 Jul 2026 14:10:03 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260727053809.030801F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 9/9] ext4: protect WRITE_ZEROES written extents with
+ orphan list
+To: Theodore Tso <tytso@mit.edu>
+Cc: sashiko-reviews@lists.linux.dev, linux-ext4@vger.kernel.org
+References: <20260714080044.4038124-1-yi.zhang@huaweicloud.com>
+ <20260714080044.4038124-10-yi.zhang@huaweicloud.com>
+ <20260714084203.971381F000E9@smtp.kernel.org> <amD3fZPiCKwUqhGd@mit.edu>
+ <6213263f-27e4-4d2a-b6ef-f63093f89e69@huaweicloud.com>
+ <amJAxFjWXiSzjNd7@mit.edu>
+Content-Language: en-US
+From: Zhang Yi <yi.zhang@huaweicloud.com>
+In-Reply-To: <amJAxFjWXiSzjNd7@mit.edu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_Ch0CgAXBUQ79mZqDUdsAA--.18868S3
+X-Coremail-Antispam: 1UD129KBjvdXoW7Wr13XFyDWF4kXF48Kry7Awb_yoWkJrg_WF
+	n0qa1vyw1kXFn3Ja1vkr9rAFZ2va15GryUGrn5Jw17J34rtrZ8ur1qyrZ3u3y8KF48Arn8
+	WFZ7ZFyxu34aqjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbOxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20E
+	Y4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwV
+	A0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x02
+	67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
+	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVj
+	vjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: d1lo6xhdqjqx5xdzvxpfor3voofrz/
 
-On Mon, Jul 27, 2026 at 05:38:08AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch introduces an unbounded increment of `psmouse->pktcnt` leading to a heap buffer overflow in the `psmouse->packet` array when stray bytes are received during protocol disconnect.
-> --
+On 7/24/2026 12:31 AM, Theodore Tso wrote:
+> On Thu, Jul 23, 2026 at 11:29:44AM -0500, Zhang Yi wrote:
+>> Therefore, I think the correct approach is to modify
+>> ext4_convert_unwritten_extents() so that it returns the actual
+>> conversion length, and only returns an error code when no conversion has
+>> taken place at all. This way, ext4_alloc_file_blocks() can use the
+>> returned conversion length to decide whether to add the orphan list
+>> (within the same handle as the conversion operation).
+>>
+>> What do you think?
+> 
+> Yes, that makes sense.
+> 
+> I've checked the challers of ext4_alloc_file_blocks(), and at the
+> moment, in the case where there is a partial allocation, we return the
+> error, not the number of partially allocated files.  But given that
+> the callers are doing fallocate() that seems to be fine.
+> 
+> I'd suggest we should explicit about documenting how
+> ext4_alloc_file_blocks() will handle partial allocations before it
+> runs into an problem, so it's helpful for future people who are making
+> changes here.
+> 
 
-Fair, I'll fix this up.
+Sure, I'll add this document as well.
 
-Thanks.
+Thanks,
+Yi.
 
--- 
-Dmitry
+
+
