@@ -1,66 +1,107 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013007.outbound.protection.outlook.com [52.101.72.7])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013059.outbound.protection.outlook.com [40.93.196.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B393D6479
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 20:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6563CFF6F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 20:50:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.59
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785185270; cv=fail; b=acn+tpajmY9pUfRSm8QhPIadEYJ2G7mnFoU+uFb1d6lpqICUAU7SQFbfFLvp/mvOBxkMW59QnMDyvnVUpA/EO1c2lb0d5UADx13kFK8+XOeIwK6ic3kK6qhiVm4AzrugTIh/cG73PGk//NSJ4WmPuHt5b+J2iAZvDRz7gADzFX4=
+	t=1785185404; cv=fail; b=c1oc8vvXYhE4lNYRG8lRnF/G0G4izUbF66svIj+/Kgf8B1ui65FuXgscc2Ovr6oscq2W32BOP67weKl615VqmIxFUGJmtdKCc/zF1PQ+nDSGcDWjxEOsIoe6K7egQEl6wSWLtitwJUtq2AGC19XDCjkTG0a3IoMQAfLXZlpN6D4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785185270; c=relaxed/simple;
-	bh=WsnDukbUq1XGpjO4N2yqOG0jfW5PVCGYpzfegEMV5Is=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=CZJDkOOAFvQYY4wY7kckyWWu3Nbk+BXu7x5oTh+UuVsNrJzx5b6/1dYA5UQCXLwxd13Gn1Vjmg5k5IKNoBgEHC1SuazqwvivYJojm0DHq2EcwDE6srx/pMa7UgjzRUY49sxPT6sKK7Lb4qGIKSK1pusIkg0StbgmTIJrUXHw7Io=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=MRPHw72W reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1785185404; c=relaxed/simple;
+	bh=E6Zh7ZLKeRnnAU6VyPfaibe7zJgYcIEfOYhSQflt0I8=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=iV1p8GRBxxCKTKMdNXP61BWI9kpowsjoRwplAGcBc8RIpP0R4C+PxXY71fvh1Za24we+LcJoEcwReZwZ+5JTnRjrYsr9NjHa4iIkBTYmutj7BsAIf0cWyT/RmxURjImJYT7lbQjDSav/xn2iBJ6rqiwGOZo+t12zQLBtB87uccY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=xpBa4mC1; arc=fail smtp.client-ip=40.93.196.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="MRPHw72W"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="xpBa4mC1"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pTrDEemwbB1SzArA/p+JNIRi24LXPn+kjDpRPlkd2ZcF7ByZelXSt2YL9Gmft2/IoL0tf0vAHaIoyEMrehbSwIaJivhq98AQ2jh8h2yNOtsHYI1YXM1p7UBjZdnzrfXQX2VZVGe+vpImL2SiGsqRbsm2fQ2DFpn4NYs6a4brxYABgsD4YRwUsaNxyZ1Js22iZlkZRamJnocbDCTFSeEnTHFIZecz+h6Vk78L9Bo5wUjyAUkgJJqeKQEQ8UbU6jqJ9u+c52DlhVW6zSG+fOHDnyM/ApFQ9al/vjq9cWlAov4ZO+EbmE77dsO+KV2NqwQYrwLrQNyX+dqm4wxEHdLOGQ==
+ b=wTmTOaE3VUXk7bMjch45wcSYJuNByG1BfSoLGFU3+GsPzS+bYtdFmwKvNjnfa8wUWUaw5o7pkuFEnP37GpUxmbrn44AZm3ukmGqGTRycEJZDIH337ZdjFv+d9gh032iPPQDXKMiHRZOrz9x0jA14RAiTeONu8TX7QAnWESWkGEWDdEiJOD27bCx57PCeT9XHmMbMGVtCTh9IHJmQE2OrAEw+cjvkxCvFnH0wPf0pJuX92gIsqgacLNF6ij37iqpwc5Uf8jXqXTRM9gzaRFj/3tWeRiwj7q85cDJEwPYkVxTXZUj+iCLVF8mAO11S9Ekw83Zodn303lLEPBtAfqW7ng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iIJK5XbI4Z6LEp3XDXfO3GjKBRyB70PfIKVZ3hV/wAI=;
- b=Z3/8W4in1nXaJKt/g1Rv323MqzoyBYD83+wI+GWNveNgelZX8sXgYKRzDEHTGQE5NFbruXtrDl2/2sTm6LgCz3Dl1/WYbNLGWNCW6FAj5WL8ijYxuvy2Ui8e9a0fzx60VXYcs4j7hSu7Sj6FubJH6pMMdmiEJp3AC0IgExpxqYVw4ehUrCLJhCRrlxNYvEea58x0SDTmN2pIIVRCYG7N+K4i/rxUaCCoPuL5gJ5DHNTFfSrtjNWMm9k3MNpZdP3gG4GuYCzX1F1Ffv18seEhEgEcEv1Zgha/LDgklao5s4he8sbQG3LG1Yvf0EcH1n+AsAY/GwGr7dFFliiyf15OYQ==
+ bh=w/d978wjXCs/3yUU4dTEAH6GGWFWC9zTRErZOwtNJaE=;
+ b=E1KoSPRjGq4/4VYV7pHceLldw2vPci9Yt6Z3x7FfKiiyFNLCa73nEm9QN69uwdI40X8WQJEDu78mT+sJ1YgI4lwMVy6Odyrc3snIq3oivWsKAy4u3gn9OJMqgkgtTZvd8e9+9Y+tHQHKM0tXgylhVnzrW75nFOiG0w2DfpVbwN3xJL4s9sysrBwsWX9pu2hIpM0kqtpnAJU7VPCh/kAsYrcyUdwlCmO/fnlrS5n6m9cnj7e7+ql+j19TsuwS/I3HaIPiUWvqBPNa+RofENCfnDszZ159itKqby/87PaHLwPaR9wqGMw7vJh31iy4Qit1q+nYrstOxzNUmlaLmMB3TQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iIJK5XbI4Z6LEp3XDXfO3GjKBRyB70PfIKVZ3hV/wAI=;
- b=MRPHw72W/uCePClgCixeJxZbrXKkc7NKATBvScPiZ95sjwVEdc0OiOtMCacelH6wyfxCr6Ae2z3h8e3bG29gu3poLfWye5Ok8vVOqCtj9ouDNztFbqipry2Z5O912j9P0PTJ0Pqw5vMsk1mMBFtHkr9BdGLPSC0W+Ll0f8vMytBBnQx+oOiGoWLnMnRoZQVA9Jepu+g+3JDdmOl0O6YHFY9YBreFbngXeInzku7QZTGLRmqJAes5wJ89Isjvv7iEOZ6g6U5er6l9q2bCnMCtBlm8HW/Mx7jXiD7f5YAnfdLK+YwLc4Shq52aXx5RZ1t0aWyOoHNeQzwOEbOC+wdcEQ==
+ bh=w/d978wjXCs/3yUU4dTEAH6GGWFWC9zTRErZOwtNJaE=;
+ b=xpBa4mC1Klw9W8+2B/m69ARkkFdf0/G9iv5T9m5Sy715m0Rk6dZFa1Xm4ZDP2eRiO3CwOUoH1LmNyCJLEPqojGRpa246s5GqtnlEz8YqNGNyIQvDzcKEQlzi1tgLisVEK1ggndgKtUEFdP1kpyEdsQd0178F75MYiCMH180774I=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DU4PR04MB10459.eurprd04.prod.outlook.com (2603:10a6:10:56b::14) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com (2603:10b6:208:3b8::21)
+ by DS0PR12MB6629.namprd12.prod.outlook.com (2603:10b6:8:d3::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 20:47:45 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 20:47:45 +0000
-Date: Mon, 27 Jul 2026 16:47:39 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
+ 2026 20:49:58 +0000
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad]) by BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad%7]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 20:49:58 +0000
+Message-ID: <c6c912b1-7727-4aa7-9412-8f09793d9c18@amd.com>
+Date: Mon, 27 Jul 2026 15:49:56 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 4/6] x86/sev: Add support to perform RMP optimizations
+ asynchronously
 To: sashiko-reviews@lists.linux.dev
-Cc: Logan Gunthorpe <logang@deltatee.com>, vkoul@kernel.org,
-	Frank.Li@kernel.org, linux-pci@vger.kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 03/11] dmaengine: switchtec-dma: halt channel on
- alloc_chan_resources error
-Message-ID: <amfD6-xlqll-Md2Z@lizhi-Precision-Tower-5810>
-References: <20260727181526.9672-1-logang@deltatee.com>
- <20260727181526.9672-4-logang@deltatee.com>
- <20260727185101.D221C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Cc: kvm@vger.kernel.org
+References: <cover.1784844080.git.ashish.kalra@amd.com>
+ <7f582569acea933c3045be604a81975e29b5ee2b.1784844080.git.ashish.kalra@amd.com>
+ <20260727192256.7EAD31F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Kalra, Ashish" <ashish.kalra@amd.com>
+Autocrypt: addr=ashish.kalra@amd.com; keydata=
+ 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
+In-Reply-To: <20260727192256.7EAD31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260727185101.D221C1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SA1P222CA0049.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:2d0::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+X-ClientProxiedBy: CH5PR04CA0017.namprd04.prod.outlook.com
+ (2603:10b6:610:1f4::17) To BL3PR12MB9049.namprd12.prod.outlook.com
+ (2603:10b6:208:3b8::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,196 +109,181 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DU4PR04MB10459:EE_
-X-MS-Office365-Filtering-Correlation-Id: 38fd0d98-37b3-497a-3f66-08deec204f63
+X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|DS0PR12MB6629:EE_
+X-MS-Office365-Filtering-Correlation-Id: b2d84c39-2193-4483-b8bd-08deec209ece
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|376014|366016|23010399003|1800799024|6133799003|56012099006|5023799004|4143699003|11063799006|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|4143699003|10067099003|11063799006|56012099006|6133799003|22082099003|18002099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	coULx548vtF5c2K0YmNt6qOtMjRfWiJ9vD3N+L+OuRmqSO72wYEC7nguTb42YewsZpQK/abT4Z9vGqMvdrYYj23qsoIFr0ncx7q6qdhlirP1KNAS3JBILCDiLgQaFAm45OM4c+iEYlSonCfUyBhXKYb8rWoPr98/EL1IuZwWh0mwsRDnSP3L9PK//kly/7nSSZ+sDpgdBXMO3I1r2R096KZ7LY4GgENlkYnj/igCAx8QzMsD5Z7l2X7rQAWEQ1kQU8a+uOfSwnOg0erYBm4rwA7GOmpme4EGkUZbw0BBfvWsv5zzDUu2uBHO4CDjJKKbNNzc+dmzcoEZuHnab1O8YPgEH+6R7qYt6RwP7ICbSAB/TnkWt/CRF2zreOUJ9y0Adze0bAc3Htg5xIQaNt+gZzQG8OQS9Ha4H4Zo0ArGa6o1RZtkXb8wkfFKidxpgSt5YQQ8VuuOUE14vPjUthlMGXepyz6LwVVbzQ95risK0G1SKigaGsDxLF6StcsbiY/ECz2zZGu/tl6yBckBOeeJW5gH31gClzqbI6KiTcXYdtwyM8UEgYDA4VM4j+HaHB0lTElgt4LvBaqzDrnx0YFA5hrXF86Cj8vtCWeinUazsLo=
+	fbjRAQaaBnNnFJ6aXckYSOUrgdxDOQ/7hHMw3FRQcgEJwXmS1/fsIpQRv222osdTjaX7FkKQlYaQ3RQf6CWNIgT78mLtwIajmHweEvgkmQTehLe/6XIeoLCOiC061JZ9znxt6l+j6hTlLpyV8qnYHbP0CDvF46Nsr+fvkkpHKJa1Pbmb8CySRdKVu7nUgLyQILgTYNBNs1oU1/L2rtBvfwJ37w/Buuuq/AZZsGNRpwLw09ju7UAXjSdSKvyfL/t7qRX8ooUXzW9QtmPApEzpXpp8bG66sNfsR6Y1nmeKoGgEH0kupCMOgO6y4naQVPwnlRDDqVRc3XTxyfOIhodnJJ5rxnLBhZim3qR2iXYYxWPnn3pChUohUIDXzdu1W0SxbelNC4EJ/7SlZWxWQpZV2Nq6ZrmRrwJFUvP7ZDVOV+RLb7buQhDo3JkK3WbNGVifrfDBiT1yC9r9MtNqAFyxWEejPXWlaAZIe7kGodA/GdKIgLz6LIoSsO5t1h08gFBPsqG8bEic/Bvbs1Nc1st9QA5gbshY/ESc03u1iMiqyt5BjaFpAkfZkXPknPkJnLDtwDXzTVSApXBx5Ai/EoAeZkE5CvaS4YNitmk1QtwXRoLwFPCzZFslIrDOGwHIbK+rQRWagIHeZRvX+XS9XV9nE42G5V4FivAzWYb6ogtpZ4o=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(5023799004)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(4143699003)(10067099003)(11063799006)(56012099006)(6133799003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?6joNBXNTPdYXKl5EnpOKkYFDngDl58mO009e7lOB0YxV4Hnrx7KZ32HSlM?=
- =?iso-8859-1?Q?2T2ujSCmvGW/moDnTSY2J7aDgeVnX91eKsqTh81t9pUcMQWV1cVTmwdGCm?=
- =?iso-8859-1?Q?GbkXH9E3Rk9ECGT/neu3Sv045ZVRr5Rl4wt3u48QdMvB1Uo6GTCS3N6GaQ?=
- =?iso-8859-1?Q?gexpAaegLBerI0q+02RIObBwDvtdqdUaAKfQzMCh6ZHyNAZop2D/iiHhkn?=
- =?iso-8859-1?Q?pD4UdwXwB/HEmzyHy2fIPlLKJMC9FdWbM7CLZuCPo0rpL2axnDna0TqVlv?=
- =?iso-8859-1?Q?qWQ4JVHiiH116vpS4c3/NEookBDNGfWTu2Ty0yW+gYnM/h2mjYaXErOOGM?=
- =?iso-8859-1?Q?y3TXoVfgE4wYMENVNmZxCY3ykS+NEIj7WR40P5JwznovlJrWSsoo8KTwct?=
- =?iso-8859-1?Q?lxICa0YU+d9L++ecmUbzsHvdeYE5IGOn2Vwy5dZzQY7zxJqcBHmcxljdGQ?=
- =?iso-8859-1?Q?807FvbuA/52QP9LFIwJezN7ddbJdZzRwogTE4lI2+9fuzMJwHEPkYy5t2a?=
- =?iso-8859-1?Q?RgX01e88Z8KmA5FiPUvr9y17xyhyYg+EacP0jb7fIoBYl4rvpbQq+Xh3kG?=
- =?iso-8859-1?Q?XWv184G4/0UZwTTU1oK8hvzuyWHpnxrFH/FxbWBlRUalF6a/m1KAvpkCnI?=
- =?iso-8859-1?Q?TXOlHI8yMopYB/h9pV7vI2oil3LAbxHFbej7lHNia+Vb1LdG8BsfQTTYVN?=
- =?iso-8859-1?Q?yah3+WYdjj4wBzi4Aj1Y8So0mZBkitwXvR/UWC2qS5U0ZdovaxD2SrK4XM?=
- =?iso-8859-1?Q?IrdAGYtTDtyw0K6LFAUzoP+509QJPKccmgh8lZ0FvLJrIyqyJYKCnjT7YZ?=
- =?iso-8859-1?Q?JpgP16oAHkJ0Am2YvJlmlErLFJbW+wxU43gDTiHr7tX73ssfa45Bjjnz0Z?=
- =?iso-8859-1?Q?dJ9UFL04dZ96tipjVpUUmB7TjA6tExgMQeHgg5zBzitcwhVl8plB4XCKh0?=
- =?iso-8859-1?Q?NxpvzaBtu4xTVJ57mZJizLftdBC7jWhXlxP6l4iJtr5NJlFvwcqtaWS2Im?=
- =?iso-8859-1?Q?sqHNQwtHUUYGIYmUe1LHYfzULgjWFWWiQukiLaEIDXG7pQllLwqyg55p0U?=
- =?iso-8859-1?Q?8v/zySNudAHrzblE2XP/V2iosvfUC2Mv9/ao6dart137uA60lMaF7gOW/m?=
- =?iso-8859-1?Q?oOn2awIMOqnhjB9WPKUcsRoSYh++ohAEjruY0SdGgHg2M8Jc+ddOd3Uz/z?=
- =?iso-8859-1?Q?/TV9kj/mksKZJU7iWSHiKr+m8OPisi6u3AX7AFy1rw6Vu+OYN+Iw/TmpR9?=
- =?iso-8859-1?Q?TFmQAeQl/gsSzucz4SH3Fc5FWfbWGpTQq+/TOq21bzwVqT0idHUTaWoOUI?=
- =?iso-8859-1?Q?WnK4fc1BuzOC4ta1CkRkgb5qmsxyEEBVV0GM9uEAmE365F9Cworf11HhDP?=
- =?iso-8859-1?Q?5AGRDLzSPJrurQHPBX85JPFWoqvIgkeR1HHh9o9zBWeWUhppXZK0h3VgEK?=
- =?iso-8859-1?Q?vl4D/DErP/vVzDnhFmrF9Ze+tCnK+5lx1kSt8Db1tm0gCxHz8b4eBiBmxh?=
- =?iso-8859-1?Q?nX+IvBKl1Ahsp1EIOo/P1Hk5gW7TJB+NlciIGCFrNtiMWTNQp6uHZ208f5?=
- =?iso-8859-1?Q?2Cf9wbR5NyftO9GtBj5L2NnR0Ccx/f7Oz3jQ5aVC3rbOnkQ2y86g33ByZe?=
- =?iso-8859-1?Q?Qe+YTD4bdbaMA4JmDzJkIE7uchvlFFOJRuX2eIMgJr+vN6qw9lPSUMVLrz?=
- =?iso-8859-1?Q?AMaNsDW94o4eHWLmQTpr7WifQIIhgk/yqGXbrmFIb06roP/6dP9kxlSjX3?=
- =?iso-8859-1?Q?RF9nbu9DRPQTFollvz2qJTcyqLblMMzv1l+R5g4ULGTTLAwp2+2ZTMaBf6?=
- =?iso-8859-1?Q?yINApF3Y94FCxI1YqeCsDLMbtchsDWIJNhxujDlchoVv1KenC9Lw?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 38fd0d98-37b3-497a-3f66-08deec204f63
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+	=?utf-8?B?QnNMVUk1RkUzbi9tdU9oV1p6eU5QOExTZlV6SnRLTzZscXJ5YXA0ZzU1bFVm?=
+ =?utf-8?B?L0QwVmptMk1rVDJCOEdKQUdwNjJIN3JyT3YzQnRwUFhLYlNycnVXRU9iUHhJ?=
+ =?utf-8?B?NHoxb1hZOXNCVXBmKzd1S3Y1clFrUFY0emF3Z2V0SUMzSkljNFhxNHcrSjh6?=
+ =?utf-8?B?bklFcnlWNk5JeER1L2pEcjBGM3pWcHBZdUdtRmQ0MmVrdlRPcVNCdkRnc3Qy?=
+ =?utf-8?B?d2V4czVHY0prOUl0SCthRE03U3o1U2ZiOEFVeVBncVdSUERnWWUyN3Rxa0FW?=
+ =?utf-8?B?YVlaRUdjSmYxWFlEZDZGZDJYK1F2SXQzWW5nMWs1Wjd3eEFEdmZzNURzWHhG?=
+ =?utf-8?B?UGRQYytwc0RvMlZSdUNlbG04UXdWK256VjJ4a0phcGdKOUx2dWVJTzRxZnEr?=
+ =?utf-8?B?UkY0R2p5OEVPYlVkRWJtWWFTZGZ5TTd6U2tDMndvTkdvVFZ3MW9XYVJ5aDdU?=
+ =?utf-8?B?YnBqeEc3SEhZSFVYZVliWmJnK2VISm4zWFVkM2VRdldtemV1ZEl5YTlta3Zq?=
+ =?utf-8?B?dFg4Q1l4eTNtK2R2YkZieTlIeHo5UGc3WC9mMXZ1WU5ySG9EMTFGbnZjdDk3?=
+ =?utf-8?B?TXBkOWJNQjVxamc4c0RiMFhMb1krU1lYSWwyRHVFT0hpWkRmOHFkSDNiV2R6?=
+ =?utf-8?B?L0ZDNlQvRnh3d2hRbStERk5lWWFzSE5vUmI2cDl5OWtteENEb0V5bzBrNWlS?=
+ =?utf-8?B?MERPQnpyMElac2JUa0NhSzZURktyTXp4dDZsNUZFdWJHcTN5cENMV2tFT1RT?=
+ =?utf-8?B?aldnYzRodmJFNjM1NUNRUUtNVFRqZU1tNjAxek1jdFBYb1gxRWRBWEdJQkM3?=
+ =?utf-8?B?d1lzRkVUWFVaS1gvU1VKaEFZSm54L0hOWFBsbDFDN0t6cDdIUEhmd2E1RC9p?=
+ =?utf-8?B?VWk4RU1TL0tyU0dlZDNqYkdVWFZQcFN6NUUvNG1qNm91MXVFR0tTR0MzZFpv?=
+ =?utf-8?B?Y3dxbGVXRSt5eEhuN3JLbzJBaTBQd0ZkNWZoWnZ3OW0yUllUekZLVFJldHBI?=
+ =?utf-8?B?SnRnVnJNckZUamdlS2R4VTBZUlpyMDRtbXUzajBJeWxNSllwVnlhMzRnVm55?=
+ =?utf-8?B?NkJjOG5XLzViZCtCU0RnWDE0Y1pSTEJVQnpYQks3dUxJNUdqL0JjSnBGbGpk?=
+ =?utf-8?B?ajRMMVZuaGhRNG5Sc3QrSmc2a3owQi81MjYwYXVqYTRtZjBtM3lvZ2gvNWl2?=
+ =?utf-8?B?bEY0SnNMZ2oxaDMrNGNuaU5uakhQMHVvMmtiYVFKaVhFTE90b0FyYTJMUDBD?=
+ =?utf-8?B?RG5ZbjZjcGFPRmtRelh1by9hUGlRVmUva0NqMU9DTFh4a2dnVCtUczkyRVVr?=
+ =?utf-8?B?WWJUcTBWdE1idzlPbmMxQkpiQnFERFRLcmsrSW5uOTlVZEpkSU1JQ29GcVRR?=
+ =?utf-8?B?TDVpZXVMOHVxYm1ld1ZQRUtXNW5BQkk4b1AyWitJM0d3cGZQc0VvVmZIaU1E?=
+ =?utf-8?B?QUl2K3FpcXd1ZDN4NUFDK05tZ1B5eU1Sa1h1UGFVK1VuRW1NWlpiVWZBb1Jz?=
+ =?utf-8?B?TEpaM1IyRXdLcHExbC9QR09zSjQxdVFYUWhJdzBtUXZySnVTTjQ5aThDcWRy?=
+ =?utf-8?B?R0ljbmE1TlM2RU9DTXJWTDJGSEg1c1g4b0pDa0N2L2FHN0dZdFpDZnd4UlE4?=
+ =?utf-8?B?NEhuV21LenZjUDZrb2d0MjVBaUU3aUs0VFdPUHJzUmNvekN3M3VQcTFhYnRJ?=
+ =?utf-8?B?aStHeno3RjZBWkNtL1hSZm9hWTJCeFJVYXFaNm9ZM09idndjQXdXUkNUd2pD?=
+ =?utf-8?B?Ymh0UENtSUJ0aHRDUFVGNmtTVGNGMU9YK1dKcXhRdktoSkduOWlocDRzdzE5?=
+ =?utf-8?B?b1JpZm9NSEpFc1R4NkR5SWdiOStwb0x6U2Iwa0JCWjVHQ1dPUUZqVnEzeXJ1?=
+ =?utf-8?B?ZisxYndoUXdHdi9Tc3k5YjlRYmJURDNBN09HcnAwZ3dHWmVJQ3VCTFVFSlU4?=
+ =?utf-8?B?NTRnL3E5VUl5U3lWSW1IajJyRVlhTWNiQU5wclR1VXU3eXhlWW5lc0xIcDBh?=
+ =?utf-8?B?bFdreHZ2RUE5ZzRMbnBhSTdXOVJ6YkJNaHNHV2o2ZmQ0cGxrOEtNNmFyRDgy?=
+ =?utf-8?B?S2o0YWtIK2pSSVBXa0ZCeHhISU9WWFlNYnBpSUhkUWpzN2p0TmhWYlA5dno2?=
+ =?utf-8?B?YkZYYVltMCtMZTNTSXV4RDdwRi9MOUdIa3ljT3dpVlE0WFFOdTZ3WVJDc1Nq?=
+ =?utf-8?B?ZTZua3gwMDJPWFpHTWpzbUNMSmJNZnZzTnNIN2YyVGh4U0EwWTlqWEorcldV?=
+ =?utf-8?B?dkFRZDFGQzBjaGxmV2JsTUR6enkxK2t1dUthalovTXYzNjVKcWRlcEpGWUJh?=
+ =?utf-8?Q?B5TTlK1KYn7Owz0ujM?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b2d84c39-2193-4483-b8bd-08deec209ece
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB9049.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 20:47:44.9312
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 20:49:58.1881
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6lryY5aw2lxpYSoRQVZiDITUHL+IC1+7D60x3vxLx/H9d3dkLFzueqb3zXtabA6gADjra6NRZJVZoi5GCEpRutDcSdZ6BfN7LARamlfUW8hTodqHK1ADncZK/oxU7pD0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB10459
+X-MS-Exchange-CrossTenant-UserPrincipalName: Agrok505WY5JOdoAL8JVwMsm0vqskko/QpukT8WsEaXjRyamXRGinfkldKLIY3lrEUsfFDjxEczhDavSkDkHJg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6629
 
-On Mon, Jul 27, 2026 at 06:51:00PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->
-> New issues:
-> - [High] Incomplete fix / DMA Use-After-Free due to early return in switchtec_dma_chan_stop() on halt timeout.
->
 
-Is it true?
-
-Frank
-> Pre-existing issues:
-> - [High] Soft lockup and severe latency spikes due to 100ms atomic busy-waiting under a spinlock.
-> - [High] Extreme allocation brittleness due to requesting 32,768 descriptors with GFP_NOWAIT.
-> - [High] DMA Use-After-Free in switchtec_dma_free_chan_resources() due to incorrect teardown ordering.
-> - [High] Massive Use-After-Free of swdma_dev during driver removal.
+On 7/27/2026 2:22 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Inline assembly for __rmpopt fails to specify EAX/RAX as a clobbered or output register, risking an infinite loop.
+> - [High] Missing CPU yield in long-running RMP optimization loops leads to soft lockups on non-preemptible kernels.
 > --
->
-> --- Patch [3]: [PATCH v3 03/11] dmaengine: switchtec-dma: halt channel on alloc_chan_resources error ---
-> commit 647e1927ea58080fcbb88ef03dd8a74aa7555178
-> Author: Logan Gunthorpe <logang@deltatee.com>
->
-> dmaengine: switchtec-dma: halt channel on alloc_chan_resources error
->
-> The commit adds a call to switchtec_dma_chan_stop() on the error-unwind
-> path of switchtec_dma_alloc_chan_resources(). This aims to synchronously
-> halt the channel and clear DMA base registers before freeing the
-> descriptors, preventing a potential use-after-free if the hardware
-> continues accessing the rings.
->
-> Link: https://lore.kernel.org/dmaengine/20260717223647.F0A051F000E9@smtp.kernel.org
->
-> > diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> > index f77da31aeb65e..107769cca772f 100644
-> > --- a/drivers/dma/switchtec_dma.c
-> > +++ b/drivers/dma/switchtec_dma.c
-> > @@ -1040,6 +1040,7 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
-> >  	swdma_chan->comp_ring_active = false;
-> >  	spin_unlock_bh(&swdma_chan->complete_lock);
-> >  err_disable_channel:
-> > +	switchtec_dma_chan_stop(swdma_chan);
-> >  	disable_channel(swdma_chan);
-> >  err_free_desc:
-> >  	switchtec_dma_free_desc(swdma_chan);
->
+> 
+> --- Patch [4]: [PATCH v11 4/6] x86/sev: Add support to perform RMP optimizations asynchronously ---
+> commit 9b1e0ac7d870b3ba02472132010185afc997e02d
+> Author: Ashish Kalra <ashish.kalra@amd.com>
+> 
+> x86/sev: Add support to perform RMP optimizations asynchronously
+> 
+> This commit adds support for performing RMP optimizations asynchronously using
+> a dedicated workqueue. It introduces a new RMPOPT instruction to skip RMP checks
+> for 1GB regions not containing SEV-SNP guest memory. Optimizations are enabled
+> for up to 2TB of system RAM starting at RMP initialization time.
+> 
+>> diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+>> index 8bfd802848361..04b19e64f8329 100644
+>> --- a/arch/x86/virt/svm/sev.c
+>> +++ b/arch/x86/virt/svm/sev.c
+> 
+> [ ... ]
+> 
+>> +static inline bool __rmpopt(u64 pa_start, u64 op_type)
+>> +{
+>> +	bool optimized;
+>> +
+>> +	asm volatile(".byte 0xf2, 0x0f, 0x01, 0xfc"
+>> +		     : "=@ccc" (optimized)
+>> +		     : "a" (pa_start), "c" (op_type)
+>> +		     : "memory", "cc");
+> 
 > [Severity: High]
-> Does this completely resolve the use-after-free if the hardware is
-> unresponsive?
->
-> Looking at switchtec_dma_chan_stop(), if halt_channel() times out, the
-> function returns early without clearing the DMA base registers:
->
-> drivers/dma/switchtec_dma.c:switchtec_dma_chan_stop() {
->         rc = halt_channel(swdma_chan);
->         if (rc)
->                 return;
->         ...
->         writel(0, &swdma_chan->mmio_chan_fw->sq_base_lo);
->         ...
-> }
->
-> If that happens, execution continues to disable_channel() which does an
-> unflushed write, and then switchtec_dma_free_desc() unconditionally frees
-> the descriptors while the hardware might still be accessing them.
->
->
+> Does this inline assembly need to specify EAX/RAX as a clobbered or output
+> register?
+> 
+> If the RMPOPT instruction modifies RAX (as AMD SEV-SNP instructions like
+> RMPUPDATE typically return an execution status code in EAX/RAX), the current
+> specification of RAX as input-only ("a" (pa_start)) could allow the compiler
+> to optimize the loop counter into RAX and silently overwrite it.
+> 
+> This could lead to an infinite loop during rmpopt_work_handler() execution.
+> 
+
+RMPOPT's only output is RFLAGS.CF; it does not modify RAX. RAX is not modified and cannot be clobbered and
+so the loop counter can't be corrupted. (RMPUPDATE differs: it returns a status in RAX, hence "=a".)
+
+>> +
+>> +	return optimized;
+>> +}
+> 
+> [ ... ]
+> 
+>> +static void rmpopt_work_handler(struct work_struct *work)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	migrate_disable();
+>> +	this_cpu = smp_processor_id();
+>> +
+>> +	cpumask_andnot(follower_mask, rmpopt_cpumask,
+>> +		       topology_sibling_cpumask(this_cpu));
+>> +
+>> +	for (pa = rmpopt_pa_start; pa < rmpopt_pa_end; pa += SZ_1G)
+>> +		rmpopt(pa);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but can this lead to soft lockups or severe
-> latency spikes?
->
-> In halt_channel(), wait_for_chan_status() is called while holding a spinlock:
->
-> drivers/dma/switchtec_dma.c:halt_channel() {
->         spin_lock(&swdma_chan->hw_ctrl_lock);
->         writeb(SWITCHTEC_CHAN_CTRL_HALT, &chan_hw->ctrl);
->         ret = wait_for_chan_status(chan_hw, SWITCHTEC_CHAN_STS_HALTED, true);
->         spin_unlock(&swdma_chan->hw_ctrl_lock);
->         ...
-> }
->
-> wait_for_chan_status() uses readl_poll_timeout_atomic() with a 100ms timeout.
-> Is it safe to block preemption for up to 100 milliseconds if the hardware
-> is slow to respond?
->
->
+> Does this loop need a cond_resched() to yield the CPU?
+> 
+> This loops up to 2048 times doing an expensive hardware scan inside a
+> migrate_disable() block. On kernels with CONFIG_PREEMPT_NONE or
+> PREEMPT_VOLUNTARY, preemption is not implicit.
+> 
+> Without explicitly yielding the CPU, this could cause severe scheduling latency
+> spikes or trigger a soft lockup watchdog panic.
+> 
+
+Dropped intentionally: since commit 7dadeaa6e851 x86 has no non-preemptible model (PREEMPT_VOLUNTARY/PREEMPT_NONE aren't selectable), 
+so cond_resched() is a no-op and the loops are already preemptible — migrate_disable() pins the CPU but doesn't disable preemption.
+No soft-lockup risk.
+
+>> +
+>> +	migrate_enable();
+>> +
+>> +	/*
+>> +	 * Followers: run RMPOPT on the remaining cores.  cpus_read_lock() is
+>> +	 * intentionally not held here: CPU hotplug is disabled for the entire
+>> +	 * time SNP is active (see snp_prepare()), and this work only runs while
+>> +	 * SNP is active, so the follower set stays valid across the whole scan.
+>> +	 */
+>> +	for (pa = rmpopt_pa_start; pa < rmpopt_pa_end; pa += SZ_1G)
+>> +		on_each_cpu_mask(follower_mask, rmpopt_smp, (void *)pa, true);
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this allocation strategy
-> cause issues under memory pressure?
->
-> drivers/dma/switchtec_dma.c:switchtec_dma_alloc_desc() {
->         for (i = 0; i < SWITCHTEC_DMA_RING_SIZE; i++) {
->                 desc = kzalloc_obj(*desc, GFP_NOWAIT);
->                 if (!desc) {
->         ...
-> }
->
-> SWITCHTEC_DMA_RING_SIZE is 32,768. Iteratively requesting 32,768 allocations
-> with GFP_NOWAIT forbids sleeping and memory reclaim. Could this rapidly
-> drain atomic memory pools and fail on slightly fragmented systems?
->
->
-> [Severity: High]
-> This is a pre-existing issue, but could this teardown ordering result in
-> a use-after-free?
->
-> drivers/dma/switchtec_dma.c:switchtec_dma_free_chan_resources() {
->         switchtec_dma_chan_stop(swdma_chan);
->         switchtec_dma_abort_desc(swdma_chan, 0);
->         switchtec_dma_free_desc(swdma_chan);
->
->         disable_channel(swdma_chan);
->         ...
-> }
->
-> If switchtec_dma_chan_stop() times out and fails to halt the channel,
-> the descriptors are freed by switchtec_dma_free_desc() before the
-> channel enable bit is cleared by disable_channel(). Could the active
-> hardware continue executing and corrupt the freed descriptor memory?
->
->
-> [Severity: High]
-> This is a pre-existing issue, but does this sequence cause a use-after-free
-> of swdma_dev?
->
-> drivers/dma/switchtec_dma.c:switchtec_dma_remove() {
->         ...
->         dma_async_device_unregister(&swdma_dev->dma_dev);
->
->         iounmap(swdma_dev->bar);
->         ...
-> }
->
-> If dma_async_device_unregister() drops the last reference to the DMA device,
-> it synchronously invokes the release callback, switchtec_dma_release(),
-> which frees swdma_dev. Does this mean iounmap(swdma_dev->bar) will
-> dereference the freed swdma_dev pointer?
->
-> --
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260727181526.9672-1-logang@deltatee.com?part=3
+> Could this secondary follower loop also need a cond_resched() to prevent
+> CPU monopolization?
+> 
+> This loop iterates up to 2048 times broadcasting IPIs via on_each_cpu_mask().
+> Similar to the first loop, without a yield, this could lead to soft lockups on
+> non-preemptible kernels.
+> 
+
+Dropped intentionally: since commit 7dadeaa6e851 x86 has no non-preemptible model (PREEMPT_VOLUNTARY/PREEMPT_NONE aren't selectable), 
+so cond_resched() is a no-op and the loops are already preemptible — No soft-lockup risk.
+
+Thanks,
+Ashish
+
+>> +
+>> +	free_cpumask_var(follower_mask);
+>> +}
+> 
