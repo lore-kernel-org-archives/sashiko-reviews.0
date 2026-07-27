@@ -1,86 +1,86 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED47E175A60
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75818175A60
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785127577; cv=none; b=VV0N4/b4DybRjUDfHB8VX67QexCOmYTiENgEC0/SllLB+ZmzmQD5PuhEhLEhzQsNBbbIO3i+oEQJ2VGptgBoc+HPc1BxHsBB6eWRFTgOOevILK7IfO4g84hwmbHx2/kcFGj5//FIC0ElUBEWLYs6MezLs6bz4Vmq7qFQD1FreOI=
+	t=1785127600; cv=none; b=efxFwE7iEIoxnVF1xLt/jF/fnIIBPBY/BECPUBkE52AS6XAwIbr4V5BGhqbmapuX8vGE4zocCcJt6s47xl2TVoY4hciK9xlDeaO3ykE3CQUEMl9ojEfKotJ2yazXVtjaSaOQ5blj54sm7uZh/pKXjSHxhuTY5mrVTBTb0hTCOM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785127577; c=relaxed/simple;
-	bh=Ha/zBwZL4wQkuF4EAgg19Ivwv3Kp78CeujEdT7elYwo=;
+	s=arc-20240116; t=1785127600; c=relaxed/simple;
+	bh=JaF/YXIAzejQKRXQjr+CL68SEZiMX62BCOhQjG3bHSA=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qi4lHpz71HODo8haKpQl8ttEBEAGQpZytz24lNw4pTRSqibNzGAQB/g/+zypJwVhJrfROWGt4k4yDNyPkAKGtPbMP7p3pHjsyW/4S8N5Nup671nveyeBS4jSw87YpTV385I3qxK0s87iA1easFbXXtDTPy7YeAJPg3xnbTzaicE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=juqom7jR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KruCW8b4; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Hvotyr7lq25r2hU9uBWXoWh20FarMFmPjWstYp2bPnqs891BO+bjj9atUwZ6YNobQZ8laxURzDbo9ZXrM+u654ECp3/n0FYrPjbTlMurm+BWMgIpirrZSQUpdOsgGWJkVAhEHek/Pp+sydkfVTCqYFN4zIIB2ZiIUVGOQdAvH5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fzGzcvpV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HjFtZzG9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="juqom7jR";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KruCW8b4"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66R1fqk02004242
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:46:15 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fzGzcvpV";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HjFtZzG9"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66R1fwU02417162
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:46:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9ad7crtSP8Pbhq5RgxCkjCnjMpEkKStU/1+R1thT/yY=; b=juqom7jRlSCOIkoe
-	waTGJPMUml16PFfK0vULYddZDRCaYugnRQdEylzdNZ/yCrzt/ujW+xc1rLq0K4ip
-	e9v4kz1EKSRPblX3yXQDtivEu9VD2wJOPjcfz43S4vIoVYaDk66HKB72llM8fz/6
-	dlx4oli4mbhEJPHXbTkAbt15PGbu9R/C3mdHy5uI6mCnRbN4K5mc84duR4fcZNBs
-	LPqtQLXR33sFgeDjG9S1eej9sEDnM6KC4+lcyO3ltUrzD4dI2Sdyny7AEbObpt5i
-	vrvfpEShPawIgwF2dTcDiV22PbqSnauk2PZr5Tq1nCWfiEx5k2afvm+Za0PMcb0F
-	wiaIPQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmpeecbhq-1
+	C3lY/jyvs336vWLAbR75IPEPMdm0ZegC/konam6GC2M=; b=fzGzcvpVmQVg/n2M
+	4YrXzBUdzFTpKlBtfigt9fZjKO1KPOw+5AI8SbEkl4yAKphy6iBD6IJMqPwKP9Dm
+	HMuWceSJV9cMBkl8fYdogd1JVq+cFi8NTVvt4s9bxsbaF+8Yv5YC5uCUnVDpJbf2
+	WP7oj1GEF6hGlvkYeroqljOqPep7U2ZJszfGkl6bpf/mhOEaVN2zN4UDwyFuNY01
+	ExQegxi+du6IDht2JPqmJGflr6JOCKuwnNtNf3NjduYxZ9A/dXHXvu8oi5OtmoQ4
+	AZEGyGIMHckwQtkaYARFjlRoHWH9JWJZ1mx9jk6DDHh2w8T8aTYMGO9hYRWG5tcr
+	AcAkuQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmmqycj9e-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:46:15 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38e7b87ce77so5795003a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 21:46:15 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 04:46:36 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cfa4e4684bso66466335ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 21:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1785127574; x=1785732374; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1785127595; x=1785732395; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=9ad7crtSP8Pbhq5RgxCkjCnjMpEkKStU/1+R1thT/yY=;
-        b=KruCW8b4qy3rESqLabMI+GVv9CC5iAIi2OwNFrEIJJoT7zd1Fp2orPnNU6HANk2dYN
-         cJjEKSKnBG5U4pAWRNwnCARbl6AzbvRTONvlccSHjGF3vj/KNbk7FyKg8FMHzx9TGEuP
-         jiH//BvX/gvOQPryNojDvoW8DQQHJ00L4vW2UrBsMx4zzNjWfy/775GZQhFopoMzOHuS
-         iF/ZvjH1epMm6/L1+xcEg9bEok5zRsQRZsCMlAB/tqIfIlonm0+09aiVhKndjdQYtJkN
-         1euWkI8/+nkuapKiyEP/D9i/m+3Ppf3FFPEnOkuvBYLzyd33BQTc+e25NybmErVt7sAN
-         SMMA==
+        bh=C3lY/jyvs336vWLAbR75IPEPMdm0ZegC/konam6GC2M=;
+        b=HjFtZzG9IaMP5oxUOSVQmIqKFWxvLjM2028U1eYAWiOHpWRluL6JhEohEAWZ4oDq1y
+         RZTdis2VVIEtWwnFzbWJjezyzojVXzRrOVrA8FKNVwH8P7i3DAFsEBOqq906rZhhxlnA
+         OnwZgg9/Uf7jYudR6C0WG/Z7W753m3l2txKD6SD3ss0x7FZdUGdt8AlTI7RrH7+ZPolG
+         pW2VhsI4SIJHfRuyeJKLB1u276/Yv6j+sQyzj2qA9S6dEgmMubwgp7Bzn5Vth/jFc5Mq
+         9mSNTVsFjzkIKWCb5Pq7B++h+YHxbqOl6CTYxn2Xs8p5Bhgxy+CKQBP6qLCxZuIxsYIM
+         5UAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785127574; x=1785732374;
+        d=1e100.net; s=20251104; t=1785127595; x=1785732395;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=9ad7crtSP8Pbhq5RgxCkjCnjMpEkKStU/1+R1thT/yY=;
-        b=CwbhQhR9Mos+j+gE2fUTxW1qTlFs7Inh6VUSNbftFaacvZWGzqeorqyEjOlk3e3gX2
-         xZ2MCU2DbOpmR1+W+aUHPJX50GLL8mjx8ZYQCCLbYbGrfa644FSAuptr3ivqInwcnQLV
-         90DDj1UJyGhkMSIR5oUVpi30CBbRoAiDkoEuUO3M1SwILoKCDB5/7Th6zyb6OWEfXZ3U
-         GWs98hsNK0coEz509vtihvERHLguxgSRlKkHdxWCesBncLAA1WPt8+cHX/smCpFvJLXp
-         iUCA3ZIQ0as/5JI9jr8S8R3uRAD2DYcd51sxhnS+56Ay4kpsmjcctSr/SdnMdJObPh3C
-         J+RQ==
-X-Gm-Message-State: AOJu0Yz4Ot3D2fhBF80WjACwhN7difFJhgVkVGVcD4Xh05lc+ovjeywP
-	eAEpujbCAf+IN9zKuSyhT+/XG+kI0U5J+Lps9oDFBDxZCXjhWScVXAj+7P/GAOMAoc1pfbF1j5m
-	ltaW1Wt4oC/VJ5wdLM7VUMcRmp01cVQQnjAYS/qKcdiR2IzWgZMeMs1EoxE/s+EAiDI9Tnqy021
-	iCOCg=
-X-Gm-Gg: AR+sD11OeT0rIkXfliRz3lbFlCVbCOq2v1KKJB/M+w4AOpqtKIRlStNoz7lAInnM/yr
-	+D2bWJ+eDsYGyfqLxwdMhMTMfOHGk+RWwHDdp4lD4lYYFoU2f3moxP8lAzRNrpf1GW5a49F9BUQ
-	LIpMnHFeN087dYLr9c7G5dbuh7t8MjxreEPgp3bOiwNfBmjJ7n3cHG9Ugn24GHm7IvHkwhoDGJw
-	9KUMw38GTt7vI2Ywu8+qAtZzv9HIp8QDZ912387GryNBJw8p5ZcCv68PJDDeA/hAso4/m8DsWV4
-	ExnYHSQDBGYvAHxHnrFgMFegaeYGS51n2N1Yfufwywy9hkNSIyJNvSEhQsZeUG+VLEhG28rfA/Z
-	ExEUsx52sp/D+cYjiKw63heF60KLwyKnH
-X-Received: by 2002:a17:90b:4b09:b0:38e:120d:df09 with SMTP id 98e67ed59e1d1-38f296554e1mr7048263a91.25.1785127574525;
-        Sun, 26 Jul 2026 21:46:14 -0700 (PDT)
-X-Received: by 2002:a17:90b:4b09:b0:38e:120d:df09 with SMTP id 98e67ed59e1d1-38f296554e1mr7048246a91.25.1785127573988;
-        Sun, 26 Jul 2026 21:46:13 -0700 (PDT)
+        bh=C3lY/jyvs336vWLAbR75IPEPMdm0ZegC/konam6GC2M=;
+        b=q49C2T5T/ny4wXkBez76VUNjxJeTx34XWc0GDQWMDsaZlxdUkFdrfdXb9fjX7r055u
+         zhNopmlEh5cAbvxYBbkSnnxykB/G3bvEE1ZhVMrnGuGvjwIacPDhtE0a5zn5/PmO/3iV
+         Lw9rlo15/8uynXI1sjmVtFmyFX5ssBF7Vm9g7ashcEYUCzqTxXnEIvpIGjUPll4ef4pc
+         jyueYT4RfmeLCngUAQ8F8PzbR30e7eb1zn//t98KiB9GQNrlUZ8vg/spFdF6nfwEm+ux
+         pVwavdXX2t4myAPe/FFh3kXx2Rbphxm5vpOxG9O04iUXYKJMmzKIeQJSvOC8JssXNvVt
+         ifaQ==
+X-Gm-Message-State: AOJu0Yy3+5UYLIrOLliSkBjQ4dS6Evxai2sW823pdXp/WbFPOUPY0V8v
+	7sXyeuWRwDqwylEd8aCetCXLmUygbJXzLGtA6nHdRkNIS8C6FgrNF30uLrsFvQE1cpeMP0CehOV
+	bZCxjlVssgMsUcTnrZ+fwyeRbQ07hnlkNSKEF1t7YN6MXB8jK1o/39WRIjHuK7BhQmUM7nxcmfb
+	YcXrQ=
+X-Gm-Gg: AR+sD13mNStl7iYPPkPZY3a571gpPEhk7m73dxf3Z2YQxj9o7qyb2EcxxdKkItAOp0H
+	MroJJVlNZmYGuKHuFbtoLkAuMXQ1fSI1n09TIXjrRstTxFhEgtNBpR5cOmQrSo7uBrrh4SUB6R0
+	h+8N5xUo4tJHbGErSjF1GhKUxl+0TzljGBun/YZXhg2LvkJQ5oSWpRrYkggRgLfqGO0KPboo86I
+	Z/fa1lffdMC/NoEmddnmn06gOblk0AjoNtBscIsRQg5EE/T37Sry40F8YKNIn93KEAdnihqCb4P
+	CiewIMTk2WQ+5XiQ69jD9w9+vKjkA7FfF34Ot3I8FX4a9VzDZIwdBFi3VorIvIpSCZ1cdY0BW2j
+	QM7tJx8y+VzN/LpJ6za9MHZFzH/qfLf0Q
+X-Received: by 2002:a17:903:1b06:b0:2cf:84bb:1ebc with SMTP id d9443c01a7336-2cfde7b086amr67795965ad.15.1785127595137;
+        Sun, 26 Jul 2026 21:46:35 -0700 (PDT)
+X-Received: by 2002:a17:903:1b06:b0:2cf:84bb:1ebc with SMTP id d9443c01a7336-2cfde7b086amr67795785ad.15.1785127594713;
+        Sun, 26 Jul 2026 21:46:34 -0700 (PDT)
 Received: from [10.206.101.140] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc413766sm27798309eec.8.2026.07.26.21.46.11
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc3e261fsm29774567eec.6.2026.07.26.21.46.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Jul 2026 21:46:13 -0700 (PDT)
-Message-ID: <05ef095a-62e7-7393-79cb-2ee4839a1a79@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 10:16:09 +0530
+        Sun, 26 Jul 2026 21:46:34 -0700 (PDT)
+Message-ID: <c37f55fc-731d-30da-b7d0-141e7ddefbba@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 10:16:30 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -90,117 +90,183 @@ MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Subject: Re: [PATCH v10 09/14] media: iris: Handle CPU_CS_SCIACMDARG3 register
- write via program bootup registers hook
+Subject: Re: [PATCH v10 11/14] media: iris: Add hooks for pixel and non-pixel
+ context banks
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, media-ci@linuxtv.org,
-        conor+dt@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, media-ci@linuxtv.org,
+        devicetree@vger.kernel.org
 References: <20260726-glymur-v10-0-de451559e88b@oss.qualcomm.com>
- <20260726-glymur-v10-9-de451559e88b@oss.qualcomm.com>
- <20260726060329.24B6A1F000E9@smtp.kernel.org>
+ <20260726-glymur-v10-11-de451559e88b@oss.qualcomm.com>
+ <20260726060345.01C021F000E9@smtp.kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260726060329.24B6A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260726060345.01C021F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Jr3Bas4C c=1 sm=1 tr=0 ts=6a66e297 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-ORIG-GUID: vl1LNXpZ6cE5h22czBZkeOVGnwsqrRDf
+X-Authority-Analysis: v=2.4 cv=drbrzVg4 c=1 sm=1 tr=0 ts=6a66e2ac cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=8c_RYdDnr-vbwd5-3K4A:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX/fTwSrzX0NQG
- mykEhwSCr1zSalRyQw3tjiB/Fz3dvl3RRWf071UDHlhhBlNqfq/fLL6z/h5i0Crta8a8oYfnqcc
- GPxMmsZAMynTFBqDkWQuNhMlveM3F6w=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX7Ewrl1FfiT6K
- F0XRw7ePnOxd6zFdLgNeRHXimVm+liPnCnhjWJVDO7z32At8QQhVd+igAfg/dgCyUhzOm5RElyz
- antwznCVQxqZrX8+UrWCCe1a207X32geBzocGHe8dv/sfAm0fSMQMjfFLTKuVwzEKU+HrFxIETl
- pdLfb+idovcNw0DXiknIzk5Mh5ObnHFKQi3cWGmb3YsFP3AiTqfAWlqoies29qse+oSzTOWdGum
- 0AsIrG4D4r4MQX4F64PkbwhblRrckdRscv2gNjHgR5CeIfYIBijBjFhVVWsTBJJJ9OGzxySV7bS
- wAIejkc03jOt74qUTRXE394IbvAJ+dZ3S4tLSKLfK0E1Pw20LsF22nwyIRxQ44DqJ+XygY1udmD
- 5QN6XTKrzR9Tc6dOP1OZ9/q1hi1+GsYbyY46acUoTmI2nmTDM2I8g8gBvCbeu7OVQQt19LpbJpb
- e+jJpiEE4yxO/HXeg9w==
-X-Proofpoint-ORIG-GUID: ufn8SFwAimjQZEG5N9UvNgY_7CFyz0EB
-X-Proofpoint-GUID: ufn8SFwAimjQZEG5N9UvNgY_7CFyz0EB
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=uuqggVgKC9gQnuY2d9IA:9
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-GUID: vl1LNXpZ6cE5h22czBZkeOVGnwsqrRDf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfXxhlyBXJ9EFA1
+ auQ+HFhWJwJBt9R4bflscgpAO7jdL+G3DnYym15KqRlN+Ew/69Rhykyou+0RiYImP/ab4Brle7n
+ MsL/gH0QTegadbqXLGCGthSjYiKNl1pUDtrLpozMEpnyfKrsj28+8NyWv3jh2+gxLz95hLjmuxu
+ yZPzS4bmZYL5lQLZzfYcfEdg3nSb3PhfX1jdnkUFVEIzKtTc7Jop56PAp9UWWOGu/zA7TyOwsoV
+ 6BytwbToMImL4gPaQH7bs7QXnUbB9x8zWYnwZAcrPM101i+c7pLzuyc2WqArInCPjSjbi8tmMML
+ yCu2HUzkYpGe6pSDko0j73Th94W9rt7N/M4dk0cSkEnr2KptDqtf+FrWdVJEHHK5SLf39FHkYo7
+ c+5OtNmTP0FGEJIwqir2KjnZueFidZRw42A8A1ELDO4Y5ZOPRipfqJotjrk3snQ/yUY1amAXN5j
+ hVytaUQJLIisDfqkMNg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA0MiBTYWx0ZWRfX1wDdi6mE8OV+
+ BaYIs9NrbW9iqqJ6rbNz0tAT9gNGA36X3jzcOGDVnPtbPR7k9j9Z3q/PUw8Gnl7NTAzyGZ3KPp9
+ 115as+TdnrUNcv/Lql69/r40HbUNDzU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 malwarescore=0 spamscore=0 adultscore=0
- impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270042
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270042
 
 
 On 7/26/2026 11:33 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The newly added `iris_vpu36_ops` structure, which contains the fix for the Glymur platform, is never assigned to any platform data.
-> - [Low] Bootup register programming is improperly placed inside a memory map setup function, creating an awkward double-write pattern.
+>
+> New issues:
+> - [High] Dangling pointer in `vb2_queue->dev` due to synchronous unregistration of context-bank platform devices.
+>
+> Pre-existing issues:
+> - [High] Missing cancel_delayed_work_sync() for sys_error_handler in iris_remove() leads to use-after-free.
 > --
 >
-> --- Patch [9]: [PATCH v10 09/14] media: iris: Handle CPU_CS_SCIACMDARG3 register write via program bootup registers hook ---
-> commit 5b1dcdb0f86534dd18f11d0f09a2cbbcb73f7014
-> Author: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> --- Patch [11]: [PATCH v10 11/14] media: iris: Add hooks for pixel and non-pixel context banks ---
+> commit 1f1fdc377aea1a90f259a986e4bc14be351b3bc0
+> Author: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 >
-> media: iris: Handle CPU_CS_SCIACMDARG3 register write via program bootup registers hook
->
-> This commit adds a platform-specific hook to handle the CPU_CS_SCIACMDARG3
-> register during boot. It aims to fix the VM count on the Glymur platform by
-> writing 0x0 instead of the default 0x1.
->
+> media: iris: Add hooks for pixel and non-pixel context banks
+>     
+> Iris platforms use separate context-bank devices for the pixel, non-pixel
+> firmware domains. Add platform hooks to create and destroy those
+> subdevices, providing a interface for their lifecycle management across
+> platforms.
+>     
 >> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
->> index 1b08461ee4d70..5212f7d4e606c 100644
+>> index ec35ad4f86102..bc95be22ed96d 100644
 >> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
 >> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> [ ... ]
->> @@ -361,6 +366,7 @@ const struct vpu_ops iris_vpu36_ops = {
->>  	.power_on_hw = iris_vpu36_power_on_hw,
->>  	.power_off_controller = iris_vpu35_vpu4x_power_off_controller,
->>  	.power_on_controller = iris_vpu35_vpu4x_power_on_controller,
->> +	.program_bootup_registers = iris_vpu36_program_bootup_registers,
->>  	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
->>  	.set_hwmode = iris_vpu36_set_hwmode,
->>  };
-> [Severity: High]
-> Is iris_vpu36_ops assigned to any platform data?
->
-> Looking through the driver, it appears this new vpu_ops structure is
-> never referenced, nor is the Glymur platform added to the driver's
-> of_match_table in this patch series.
->
-> Does this mean the promised firmware boot fix for the Glymur platform
-> is currently unreachable dead code?
-
-iris_vpu36_ops is assigned to glymur_data as .vpu_ops = &iris_vpu36_ops in
-patch-10. The Glymur platform data and of_match_table entry are added there,
-so this is not dead code.
-
->> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
->> index e690c566c8751..72eb8f6240b70 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> [ ... ]
->> @@ -67,6 +66,8 @@ static void iris_vpu_setup_ucregion_memory_map(struct iris_core *core)
->>  		writel(value, core->reg_base + SFR_ADDR);
->>  	}
->>  
->> +	writel(0x1, core->reg_base + CPU_CS_SCIACMDARG3);
->> +
->>  	if (vpu_ops->program_bootup_registers)
->>  		vpu_ops->program_bootup_registers(core);
+>> @@ -397,6 +397,52 @@ static u64 iris_vpu36_get_required_freq(struct iris_inst *inst)
+>>  	return max(vcodec0_freq, vcodec1_freq);
 >>  }
-> [Severity: Low]
-> Does this create an unnecessary double-write pattern?
+>>  
+>> +static int iris_vpu3x_init_cb_devs(struct iris_core *core)
+>> +{
+>> +	struct device *dev;
+>> +
+>> +	dev = iris_create_cb_dev(core, "non-pixel");
+>> +	if (IS_ERR(dev))
+>> +		return PTR_ERR(dev);
+>> +
+>> +	core->np_dev = dev;
+>> +
+>> +	dev = iris_create_cb_dev(core, "pixel");
+>> +	if (IS_ERR(dev))
+>> +		goto unreg_np_dev;
+>> +
+>> +	core->p_dev = dev;
+>> +
+>> +	dev = iris_create_cb_dev(core, "video-firmware");
+>> +	if (IS_ERR(dev))
+>> +		goto unreg_p_dev;
+>> +
+>> +	core->fw_dev = dev;
+>> +
+>> +	return 0;
+>> +
+>> +unreg_p_dev:
+>> +	if (core->p_dev)
+>> +		platform_device_unregister(to_platform_device(core->p_dev));
+>> +	core->p_dev = NULL;
+>> +unreg_np_dev:
+>> +	if (core->np_dev)
+>> +		platform_device_unregister(to_platform_device(core->np_dev));
+>> +	core->np_dev = NULL;
+>> +
+>> +	return PTR_ERR(dev);
+>> +}
+>> +
+>> +static void iris_vpu3x_deinit_cb_devs(struct iris_core *core)
+>> +{
+>> +	if (core->fw_dev)
+>> +		platform_device_unregister(to_platform_device(core->fw_dev));
+>> +	if (core->p_dev)
+>> +		platform_device_unregister(to_platform_device(core->p_dev));
+>> +	if (core->np_dev)
+>> +		platform_device_unregister(to_platform_device(core->np_dev));
+>> +}
+> [Severity: High]
+> Does this code synchronously free the context-bank platform devices without
+> waiting for userspace V4L2 file descriptors to close?
 >
-> By placing this inside iris_vpu_setup_ucregion_memory_map(), the code first
-> writes a default 0x1 to CPU_CS_SCIACMDARG3 (which is a boot argument
-> unrelated to memory mapping), and then immediately calls the hook.
->
-> On platforms using the workaround, this means writing 0x1 and then
-> immediately overwriting it with 0x0 before the firmware has started.
->
-> Could the default write and the hook be moved out of the memory map setup
-> and organized to avoid writing to this register twice?
+> If a userspace application holds a video device file descriptor open during
+> driver unbind, this function will unregister and free the context-bank
+> platform devices.
 
-Platforms that require 0x0 simply override it via program_bootup_registers.
-The overwrite is harmless since firmware hasn't started yet at this point.
+Remove callback cannot execute if driver module->refcnt, ref-counted
+during open, and not decremented with corresponding close call.
 
+> However, in iris_m2m_queue_init(), the context-bank devices are assigned to
+> vb2_queue->dev:
+>
+> drivers/media/platform/qcom/iris/iris_vidc.c:iris_m2m_queue_init() {
+>     ...
+> 	src_vq->dev = iris_get_cb_dev(inst, BUF_INPUT);
+>     ...
+> 	dst_vq->dev = iris_get_cb_dev(inst, BUF_OUTPUT);
+>     ...
+> }
+>
+> Because the V4L2 core does not hold a reference to q->dev during videobuf2
+> queue initialization, won't this result in a use-after-free when userspace
+> finally closes the file descriptor and v4l2_m2m_ctx_release() triggers
+> vb2_queue_release() to unmap DMA buffers?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does iris_remove() fail to cancel the
+> sys_error_handler delayed work before returning?
+
+This is addressed here
+
+https://lore.kernel.org/all/20260604054708.42426-1-dennylin0707@gmail.com
+
+> drivers/media/platform/qcom/iris/iris_probe.c:iris_remove() {
+>     ...
+> 	iris_core_deinit(core);
+>
+> 	video_unregister_device(core->vdev_dec);
+> 	video_unregister_device(core->vdev_enc);
+>
+> 	v4l2_device_unregister(&core->v4l2_dev);
+>
+> 	iris_deinit_cb_devs(core);
+>
+> 	mutex_destroy(&core->lock);
+> }
+>
+> If a system fatal error triggers an interrupt just before or during module
+> removal, the sys_error_handler delayed work could be scheduled.
+>
+> Since iris_remove() doesn't explicitly cancel this work before returning,
+> could the handler execute after the devm_kzalloc-managed core structure is
+> freed?
+>
+> drivers/media/platform/qcom/iris/iris_probe.c:iris_sys_error_handler() {
+> 	struct iris_core *core =
+> 			container_of(work, struct iris_core, sys_error_handler.work);
+>
+> 	iris_core_deinit(core);
+> 	iris_core_init(core);
+> }
+>
