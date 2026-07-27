@@ -1,117 +1,93 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9C3769EA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 05:39:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB05175A60
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 05:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785130766; cv=none; b=ay9GY0Iq/IfQUm2JZZ5Amq0JIRAUeDa0unHulowi+cVCeA07pMaJMll5vh0NTTXN2ZNct+etfYkSPiCujaHO9pG50MQ4fWl4E5WRJAk0V5EHHs+L+VSf2YbVxjMS//jGgEPgMSa4Kq/dFKflJBcXPSzEzGrEcgyMYWdtQOjvtYQ=
+	t=1785131570; cv=none; b=fo+P5qAVsg0IYHOIsFIT6wPmxif7knHNMHz/XN9Bd+D5fUxEi/5QvT4djXoMIo80X+KwYRi8jtLm3KQ668FRwfrWySNVQqLeY1RCZxxnvokuJh7lVuYToYQZkHS9M0JwNIIqAZsAXAXFuA9BceoCMmFbv36Alf9SBUtVWxqYwk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785130766; c=relaxed/simple;
-	bh=THJbpLdpCtlMxS6tSaJy/cUGEJqtKPxSNpq0bYYSPzc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=EmS6Oz2vexyjxPmHWGWSrWF7KxV9KBIKzcEYIo7Rlfpz6qz6a49uwPzMtdib7DUXEZqbk7clzx0u8xd7oNxQWmsoLv+Ztys+XOJ5LdTi+gRS9sHXn9N/yO7i8kLSvh74YV8wvRfjj/L4JyJY01fXVDaj6MROA/NOfJ/QsLdVJV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1785131570; c=relaxed/simple;
+	bh=/qBjlPleAnxJ6DejuLJXEvSFMsQQfMBH7TLOv7r3uz4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YR90mMYPFXyWdWt2e1OOfBBq2H02BiUZRLAelL4Tbq15IoTiylxrpD5GhvCS9+/2B+T2a+yWjFVOHigN6cpC2bwO/6zVX2kuRZhgKxxbD37gswgfSbXJf4/lBmd8/5O2nY9aQMQGVJ5eV+eH9SgEo/JSpyIIGFIau8c1AZtdnUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ytw72ttQ; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ytw72ttQ"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cce6a0c9c3so24406675ad.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 22:52:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785131569; x=1785736369; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=hh+bRoGI9pU3WBcFYDGV8CJsvXt3xxUVeBerNliMbOY=;
+        b=Ytw72ttQ2DwgsTgz3sTy6L9IPCDLnQwkF6udy7fsIBpibQrppbv31QdoYlstYhMehl
+         5n6ClgkFBrYSy05dTZsIn1VOM2VqMP1Hl6LjP3wml1MDh/bhFoOtVNkV1wJhikELEHNv
+         HUcaq+wSf5ZYaPAN5opirj+l8i2o86od5uxFeEKOKE7S3zseuXco+J5o88IU34/ZMMAg
+         h8hiH3xOdS23zEqyCrTtpAtjFTGdh7O/tSx3xlhJ1br7GsyLlUMNF4P8rSdzkzhCVHCw
+         q97eoRnDBvGSPi/I+okkp6Y2gKIc8vtsnVTX06ddPEPBdTE0IKSc1mDai45ZdkBTUmaU
+         41kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785131569; x=1785736369;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hh+bRoGI9pU3WBcFYDGV8CJsvXt3xxUVeBerNliMbOY=;
+        b=snEhl13A9Q+OyYD9IfLUHJcM6yvkIBS7qujBDpagNwhXu64Qobc54NRCD1dTyM3uCr
+         AZQdGIvgg5YiGsyakju3i9iNOSUT76HKARVhejdfAXcN0dLNfNUmhkCzVbonrzx7AH98
+         4jEgU7mvYPtl9LqSxhdtOHnctZRy/MGPhB7hMZ8Qt/FVFnUqljaP1NBDqSdSeMhQDSkK
+         prT1x1DczJv5EMLUyIc2/6yv4wlYzLrD26gOj5e1+QpKWH160Vv8vgTXKda+C/n1vhS2
+         rfwFMzLdisT8HWPasAKbxLLx255O+YUzlGrCYrUrTaNQ0Co4b3TnGwJ26f4juoY1uTSK
+         Un+Q==
+X-Gm-Message-State: AOJu0YzfftPTdnyWmPR2gcUOojNYpzzMhA/Nj63RJXyDrjbMwNIAacLp
+	/AOGZOKkCqJh29jG8OJdkjHVwJnUYq1VxJz2EGClfIRanay0Zaj9juQkUUupvA==
+X-Gm-Gg: AR+sD12szDJb5DhGh73XcY5zwZ6Dikyj6L5QoL7iEaB9vFGLuSzL8NUffw4pt1VFxVp
+	dLZMdncF784+U9TNPrOYZRymk5EXRUTPsWB6A5fAwMnKw2iYD+GFI5bF2CtcAut8on2DlkvYn9q
+	1zL6lpo2ox107cV4yv41OyST9aTqbhgwJlkDUooDKlWyFTRA9BKRvIK3xDD8rEQhAQW6wCbluQ6
+	Afyrr06PqNJ0qNVCf/YFoJ8TAdr0tPYNnmd9StkpO/TgoeRtJ62/xU+x4V9aDjJu6xv8pEkPTVV
+	E4AH8Y2DLOPTN5Q8sK/oXt3rKphFP1lr9Dd9Qx6NW5fYO3A4//rpE/pqBJ3i1POlBdXAOivCWbp
+	zefZUubZrvWi5i4NK09I71QumC/wgENis/+B1OXdRfDKfTf5YWSj6w45bDGqqRc15OYxAB418Sb
+	tPlioZ5Uwf2uCXbWywBMBnQ/Pna/txdj8Yhg2KELew0PI=
+X-Received: by 2002:a17:903:244c:b0:2cf:477f:57c5 with SMTP id d9443c01a7336-2cfde67c4d2mr67692215ad.1.1785131568658;
+        Sun, 26 Jul 2026 22:52:48 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:fc2f:1878:e714:ef41])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc548efesm28720960eec.14.2026.07.26.22.52.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jul 2026 22:52:47 -0700 (PDT)
+Date: Sun, 26 Jul 2026 22:52:44 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org
+Subject: Re: [PATCH 2/4] Input: psmouse - clean up locking around
+ disable_work_sync()
+Message-ID: <ambxqW5K6ZfnYaBu@google.com>
+References: <20260727050803.1269941-1-dmitry.torokhov@gmail.com>
+ <20260727050803.1269941-2-dmitry.torokhov@gmail.com>
+ <20260727053254.EE6B71F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 27 Jul 2026 13:39:06 +0800
-Message-Id: <DK941BNOQOI4.1Z9J0Z5O60MS0@oss.qualcomm.com>
-Cc: <imx@lists.linux.dev>, <dri-devel@lists.freedesktop.org>,
- <Frank.Li@kernel.org>
-Subject: Re: [PATCH v3 8/8] drm/xen: replace struct drm_simple_display_pipe
- with regular atomic helpers
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Ze Huang" <ze.huang@oss.qualcomm.com>
-To: <sashiko-reviews@lists.linux.dev>, "Ze Huang"
- <ze.huang@oss.qualcomm.com>
-References: <20260727-drm-simple-kms-removal-v3-0-cd5dc89858c6@oss.qualcomm.com> <20260727-drm-simple-kms-removal-v3-8-cd5dc89858c6@oss.qualcomm.com> <20260726195657.4C5221F000E9@smtp.kernel.org>
-In-Reply-To: <20260726195657.4C5221F000E9@smtp.kernel.org>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260727053254.EE6B71F000E9@smtp.kernel.org>
 
-On Mon Jul 27, 2026 at 3:56 AM CST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Incorrect coordinates passed to xen_drm_front_mode_set: uses des=
-tination screen coordinates instead of source framebuffer offsets.
+On Mon, Jul 27, 2026 at 05:32:54AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Moving disable_work_sync() to the top of psmouse_disconnect() breaks the early-abort synchronization in psmouse_resync(), causing delays and queuing stray reconnect events.
 > --
->
-> --- Patch [8]: [PATCH v3 8/8] drm/xen: replace struct drm_simple_display_=
-pipe with regular atomic helpers ---
-> commit c7c607527ef2df6f1f1c3266167b6754066820c2
-> Author: Ze Huang <ze.huang@oss.qualcomm.com>
->
-> drm/xen: replace struct drm_simple_display_pipe with regular atomic helpe=
-rs
->
-> This commit replaces the Xen frontend simple display pipe with explicit
-> plane, CRTC, and encoder objects. It retains generic plane-state validati=
-on
-> and uses commit-local plane state in the CRTC enable path.
->
->> diff --git a/drivers/gpu/drm/xen/xen_drm_front_kms.c b/drivers/gpu/drm/x=
-en/xen_drm_front_kms.c
->> index 48772b5fe71cf..9896ea35b7439 100644
->> --- a/drivers/gpu/drm/xen/xen_drm_front_kms.c
->> +++ b/drivers/gpu/drm/xen/xen_drm_front_kms.c
->
-> [ ... ]
->
->> -static void display_enable(struct drm_simple_display_pipe *pipe,
->> -			   struct drm_crtc_state *crtc_state,
->> -			   struct drm_plane_state *plane_state)
->> +static void xen_drm_crtc_helper_atomic_enable(struct drm_crtc *crtc,
->> +					      struct drm_atomic_commit *commit)
->>  {
->> -	struct xen_drm_front_drm_pipeline *pipeline =3D
->> -			to_xen_drm_pipeline(pipe);
->> -	struct drm_crtc *crtc =3D &pipe->crtc;
->> -	struct drm_framebuffer *fb =3D plane_state->fb;
->> +	struct xen_drm_front_drm_pipeline *pipeline =3D xen_drm_pipeline_from_=
-crtc(crtc);
->> +	struct drm_plane_state *pstate =3D drm_atomic_get_new_plane_state(comm=
-it, &pipeline->plane);
->> +	struct drm_framebuffer *fb =3D pstate->fb;
->>  	int ret, idx;
->> =20
->> -	if (!drm_dev_enter(pipe->crtc.dev, &idx))
->> +	if (!drm_dev_enter(crtc->dev, &idx))
->>  		return;
->> =20
->> -	ret =3D xen_drm_front_mode_set(pipeline, crtc->x, crtc->y,
->> +	ret =3D xen_drm_front_mode_set(pipeline, pstate->crtc_x, pstate->crtc_=
-y,
->>  				     fb->width, fb->height,
->>  				     fb->format->cpp[0] * 8,
->>  				     xen_drm_front_fb_to_cookie(fb));
->
-> [Severity: High]
-> The commit message mentions passing the new plane source position, but do=
-es=20
-> this pass the destination screen coordinates instead?=20
->
-> It looks like pstate->crtc_x and pstate->crtc_y represent the destination
-> coordinates on the CRTC. Should this use the source coordinates instead=
-=20
-> (e.g., from pstate->src) to prevent breaking viewport offsets or causing=
-=20
-> out-of-bounds framebuffer reads by the backend?
 
-I think using pstate->crtc_x/y is the intended replacement here.
+This is incorrect analysis. Disconnect may happen a millisecond earlier
+or millisecond later, and setting PSMOUSE_CMD_MODE first would not
+change anything. We just have to deal with such scenario.
 
-The old code used crtc->x/y. The drm_crtc documentation [1] says these
-legacy fields should not be used by atomic drivers, and atomic drivers
-should use the primary plane's drm_plane_state.crtc_x/y instead.
+Thanks.
 
-Xen has only one primary plane, so taking crtc_x/y from that plane keeps
-the same semantics while avoiding direct legacy CRTC state access.
-
-[1] https://elixir.bootlin.com/linux/v7.1.3/source/include/drm/drm_crtc.h#L=
-1067
+-- 
+Dmitry
