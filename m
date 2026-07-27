@@ -1,137 +1,224 @@
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DBD3DEFE2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 08:01:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481063DCD8D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 08:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785139266; cv=none; b=qlillOuomB/85nz1gdap+cn3Q5SN+QIddq8s7kNIog5i+QhiSQIdcBMsaMMBcYllXfl2e7oRQfGT2Ap/9V+6JwJsRzdfRLmHW0cdgB5jc4+Bkz7inQo+sOnyaRa6l+3OaI2DHCc67Wiq9K/2eckrHuadhpynmaa4m7YvgW3DDtA=
+	t=1785140595; cv=none; b=KIIBcqY4WldRkquMVFbL/wdE9EAa8aLrkdNUagQxwgiO700Ma2kC+jFZp9+XbG096LLIQhWW7KBWqVoN2QiYWJLxRjmWiOKkObz83w/QBBqKYTt7ftaacHUuh9kPBy+/UT8kG+7lSn3NDJTq/8FUIb1K+lvMFkiVEFUwcj5Opzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785139266; c=relaxed/simple;
-	bh=BFO10sMHX81uroVNFUc1FnB5adRwpZpKF4tLCFZQf5Y=;
+	s=arc-20240116; t=1785140595; c=relaxed/simple;
+	bh=nTAeuKeafdW0HJu/jJ8SEVDWxhTb6oLujYBvpoqBspk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U/FmkB/TztSns+QoW5CIv2eShC1ygKFwy33FROGXkS6ZHn45FudNOETeHJQiYDHXlPU4UmDjkHb7W5oMlEYZG1CWSKM8b/0PZy8Y21G5NnpYPjSMS5PP1iaZzxRJBgaaLK45ITNUIu7cMVoqF3tAnqbd53orK6OXhHG33N1Wx4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=namaSkB1; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=E48DQ9hDqBxnvgQPMStdXtCV5+OgqZzjvBf3tlLdkRru9BbPnr6f0WPF6kRtjNYFuSDgtzVhrqgNC9jNiZ38OjXMOQanCdOlQJjw63hqtEVLKvyESdxUHL6vnlXJlo74FY3e4Yqw3t9FE0iB2yW0trRmKtdUIsuk5uXgHZEPnSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NjDLIROc; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="namaSkB1"
-Message-ID: <9a961b42-d095-4052-a749-dfabb9a45bf3@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785139252;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dtpjon/BpvDyzvwfWw7MZxTAVhL5AfZXQA29No/Azgg=;
-	b=namaSkB15KmGyr/imjdjaj6uTynOCo7i7aJkHOuhXOuageGT6Uqp7CLSV0KZJvdCPLjtFH
-	h6uCOUpHv9IJJ7/AccFOOeXkPr7ktjSCRhM53myKoFgwXnVPFsq3LgzH8Ly0fXN/qyWlFa
-	KgfUrEO84d/bVVjcb0nQF5iXmhXYsnY=
-Date: Mon, 27 Jul 2026 16:00:24 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NjDLIROc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785140593; x=1816676593;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=nTAeuKeafdW0HJu/jJ8SEVDWxhTb6oLujYBvpoqBspk=;
+  b=NjDLIROcKf00s266Wv/BBYEMts02zCUoa+QKa3kN4G+hZhvxQa07VItG
+   RfXTv3hfICvNuuzWlW+6tkGQbWCxJgDGQCkyWRX7/hpLv5ojN3zT573kS
+   1jpYQRCp0B++NWzlS04CI+6S9D5/J3FjQsP5U+7PRbnGj/Fe8+JqNIBWt
+   vaHu+ehGVGIXqAIdDa0PQMc5eQuc7ZN58g/equ+EJg+fjUvjUPNGjB6w2
+   XdS48IQmZzd/lAuUlwoDIKNm9i22Gtl06+a1CIIVn+kD0zgJTuAakWh/Y
+   4BJ35o0ptEMAskyFCktuNSYmWzmvS0eKPpOipRIrKnO96+npRZnxBqg3P
+   Q==;
+X-CSE-ConnectionGUID: 1tHjg0BkTSOEZn1rp119pw==
+X-CSE-MsgGUID: Zh/T7qxUQGGFIpPkpfSw+Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11857"; a="85747081"
+X-IronPort-AV: E=Sophos;i="6.25,188,1779174000"; 
+   d="scan'208";a="85747081"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 01:23:12 -0700
+X-CSE-ConnectionGUID: hG6sP2n2Tyak6bGJMm0m8w==
+X-CSE-MsgGUID: h5ccNoC1QYSdrVcbwevcyQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,188,1779174000"; 
+   d="scan'208";a="255031713"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.238.208.132]) ([10.238.208.132])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 01:23:06 -0700
+Message-ID: <0d101660-8398-45f8-b732-8bfc37e4c257@intel.com>
+Date: Mon, 27 Jul 2026 16:23:03 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next 2/3] bpf: arena: allocate the fault-in page
- outside the lock
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, bpf@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260727062521.376231-1-jiayuan.chen@linux.dev>
- <20260727062521.376231-3-jiayuan.chen@linux.dev>
- <20260727064257.01BD81F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260727064257.01BD81F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/17] x86/virt/tdx: Make TDX module initialize the
+ extensions
+To: Xu Yilun <yilun.xu@linux.intel.com>, sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, djbw@kernel.org, kas@kernel.org,
+ rick.p.edgecombe@intel.com, yilun.xu@intel.com, sohil.mehta@intel.com,
+ adrian.hunter@intel.com, kishen.maloor@intel.com,
+ tony.lindgren@linux.intel.com, peter.fang@intel.com, dave.hansen@intel.com,
+ dave.hansen@linux.intel.com, chao.gao@intel.com
+References: <20260618081355.3253581-1-yilun.xu@linux.intel.com>
+ <20260618081355.3253581-6-yilun.xu@linux.intel.com>
+ <20260618085431.B83541F000E9@smtp.kernel.org>
+ <ajq8RFjv2YFghvQp@yilunxu-OptiPlex-7050>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <ajq8RFjv2YFghvQp@yilunxu-OptiPlex-7050>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 7bit
 
+On 6/24/2026 1:03 AM, Xu Yilun wrote:
+>>> +/* Initialize TDX module extensions for extension SEAMCALLs */
+>>> +static __init int tdx_ext_init(void)
+>>> +{
+>>> +	struct tdx_module_args args = {};
+>>> +	u64 r;
+>>> +
+>>> +	do {
+>>> +		r = seamcall(TDH_EXT_INIT, &args);
+>>> +	} while (r == TDX_INTERRUPTED_RESUMABLE);
+>>> +
+>>> +	if (r != TDX_SUCCESS)
+>>> +		return -EFAULT;
 
-On 7/27/26 2:42 PM, sashiko-bot@kernel.org wrote:
-[...]
->> @@ -489,55 +490,97 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
->>   	kbase = bpf_arena_get_kern_vm_start(arena);
->>   	kaddr = kbase + (u32)(vmf->address);
->>   
->> -	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
->> +	page = vmalloc_to_page((void *)kaddr);
->> +	if (!page) {
->> +		/*
->> +		 * Preallocate outside the lock so the allocation can sleep and go
->> +		 * through reclaim (both memcg and global), the way do_anonymous_page()
->> +		 * does. Under arena->spinlock only the non-blocking allocator is
->> +		 * available, which never reclaims.
->> +		 *
->> +		 * This has to be the sleepable variant: VM_FAULT_OOM below is only
->> +		 * meaningful if the OOM machinery was actually engaged. A failure
->> +		 * from the non-blocking allocator engages nothing, so the fault
->> +		 * would be retried forever.
->> +		 */
->> +		bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
->> +		new_page = bpf_map_alloc_page_sleepable(map, NUMA_NO_NODE);
-> [Severity: High]
-> Is there a potential Denial of Service vector when BPF_F_SEGV_ON_FAULT is set?
->
-> This unconditionally preallocates a page using
-> bpf_map_alloc_page_sleepable() before checking the BPF_F_SEGV_ON_FAULT
-> flag later in the function.
->
-> This allocation can block, trigger direct memory reclaim, and invoke the
-> OOM killer. Only after this expensive allocation does the code lock, check
-> the flag, return VM_FAULT_SIGSEGV, and discard the page.
->
-> Could this allow an unprivileged user to force severe memory pressure by
-> repeatedly triggering page faults on unallocated addresses?
+As Chao caught in patch 04, we need to return -EIO here for consistence.
 
-Once VM_FAULT_SIGSEGV is returned, the process gets a SIGSEGV and by 
-default is killed,
-so this isn't a realistic DoS.
+>>
+>> [Severity: Medium]
+>> Does this code silently discard the 64-bit hardware error code?
+>>
+>> When TDH_EXT_INIT fails, replacing the return value with -EFAULT means
+>> the caller only logs a generic initialization failure without details.
+>> Other TDX initialization functions use seamcall_prerr_ret() to preserve
+>> and log the hardware error.
+>>
+>> Could this be updated to use seamcall_prerr_ret() to ensure the exact
+>> firmware failure reason is logged?
+> 
+> No, it can't use seamcall_prerr_ret() directly. TDX_INTERRUPTED_RESUMABLE
+> can't be handled in a unified way for all SEAMCALLs so can't embed in
+> fundamental seamcall wrappers. I see 2 conventions:
+> 
+>    1. Host should set a resume=1 parameter on retry, such as,
+>       TDH_PHYMEM_CACHE_WB, and several migration SEAMCALLs,
+>       TDH.EXPORT.MEM, TDH.EXPORT.STATE.XXX
+> 
+>    2. Host just refills the previous args (may have been modified by seamcall
+>       output) on retry. Much more examples, TDH_EXT_INIT, TDH_EXT_MEM_ADD,
+>       TDH_QUOTE_INIT, TDH_QUOTE_GET...
+> 
+> So I think there is a need the callers have to:
+> 
+>    1. call seamcall() or seamcall wrappers (tdh_xxx)
+>    2. specific handling of raw SEAMCALL return code
+>    3. do a standard TDX error logging and Linux errno conversion.
+> 
+> seamcall_prerr_ret() does 1 & 2 & 3, but can't customize step 2.
+> 
+> I tried to add some TDX error logging & errno conversion helpers, most of
+> the code are abstracted from seamcall_prerr_ret(), see below.
+> 
+> But I'm not sure if it worths the churn.
 
-But, I think it's worth moving the "arena->map.map_flags & 
-BPF_F_SEGV_ON_FAULT" check before the allocation.
+Though I have some comment, below refactor doesn't look so bad.
 
+The only risk is existing SEAMCALL warppers is a mess and people may not 
+want to add any more before re-work them. So the conservative option 
+would to just add an ad-hoc pr_err() for !TDX_SUCCESS case?
 
->> +		bpf_map_memcg_exit(old_memcg, new_memcg);
->> +		if (!new_page)
->> +			return VM_FAULT_OOM;
->> +	}
->> +
->> +	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags)) {
->>   		/* Make a reasonable effort to address impossible case */
->> -		return VM_FAULT_RETRY;
->> +		fault_ret = VM_FAULT_RETRY;
->> +		goto out_err;
->> +	}
-> [Severity: High]
-> This is a pre-existing issue, but does returning VM_FAULT_RETRY here
-> without releasing the fault lock cause a lock leak?
->
-> The memory management subsystem strictly assumes the lock was released
-> if VM_FAULT_RETRY is returned. Retrying the fault will leak the read lock
-> reference, and if any thread subsequently attempts to acquire the mmap_lock
-> for writing, the system could permanently deadlock.
+> ----8<----
+> 
+> 
+> diff --git a/arch/x86/virt/vmx/tdx/seamcall_internal.h b/arch/x86/virt/vmx/tdx/seamcall_internal.h
+> index be5f446467df..f838715c9446 100644
+> --- a/arch/x86/virt/vmx/tdx/seamcall_internal.h
+> +++ b/arch/x86/virt/vmx/tdx/seamcall_internal.h
+> @@ -78,12 +78,10 @@ static inline void seamcall_err_ret(u64 fn, u64 err,
+>                          args->r9, args->r10, args->r11);
+>   }
+> 
+> -static __always_inline int sc_retry_prerr(sc_func_t func,
+> -                                         sc_err_func_t err_func,
+> -                                         u64 fn, struct tdx_module_args *args)
+> +static inline int sc_errno_prerr(sc_err_func_t err_func,
+> +                                u64 fn, u64 sret,
+> +                                struct tdx_module_args *args)
+>   {
+> -       u64 sret = sc_retry(func, fn, args);
+> -
+>          if (sret == TDX_SUCCESS)
+>                  return 0;
+> 
+> @@ -100,10 +98,25 @@ static __always_inline int sc_retry_prerr(sc_func_t func,
+>          return -EIO;
+>   }
+> 
+> +static __always_inline int sc_retry_prerr(sc_func_t func,
+> +                                         sc_err_func_t err_func,
+> +                                         u64 fn, struct tdx_module_args *args)
+> +{
+> +       u64 sret = sc_retry(func, fn, args);
+> +
+> +       return sc_errno_prerr(err_func, fn, sret, args);
+> +}
+> +
+>   #define seamcall_prerr(__fn, __args)                                           \
+>          sc_retry_prerr(__seamcall, seamcall_err, (__fn), (__args))
+> 
+>   #define seamcall_prerr_ret(__fn, __args)                                       \
+>          sc_retry_prerr(__seamcall_ret, seamcall_err_ret, (__fn), (__args))
+> 
+> +#define seamcall_errno_prerr(__fn, __sret, __args)                             \
+> +       sc_errno_prerr(seamcall_err, (__fn), (__sret), (__args))
+> +
+> +#define seamcall_errno_prerr_ret(__fn, __sret, __args)                         \
+> +       sc_errno_prerr(seamcall_err_ret, (__fn), (__sret), (__args))
 
+We don't need these two wrappers.
 
-Yes, it's true. arena_vm_fault() never touches mmap_lock, so returning 
-VM_FAULT_RETRY violates the contract.
+The existing seamcall_prerr() and seamcall_prerr_ret() do two things:
+1. call SEAMCALL;
+2. handling the return code of SEAMCALL;
 
-'''
-do_user_addr_fault()
-{
-     fault = handle_mm_fault(...);          // call arena_vm_fault
-     ...
-     if (unlikely(fault & VM_FAULT_RETRY)) {
-         flags |= FAULT_FLAG_TRIED;
-         goto retry;                    // lock_mm_and_find_vma() will 
-call mmap_read_lock again !
-     }
-     mmap_read_unlock(mm);
-}
-'''
+But the 2 new wrappers only do setp 2. So we can just call 
+sc_errno_prerr() in the following cases ...
 
-I think I should fix it as a separate patch with high priority ?
+>   #endif /* _X86_VIRT_SEAMCALL_INTERNAL_H */
+> diff --git a/arch/x86/virt/vmx/tdx/tdx.c b/arch/x86/virt/vmx/tdx/tdx.c
+> index 826504fbcdc7..637ff01ed0f1 100644
+> --- a/arch/x86/virt/vmx/tdx/tdx.c
+> +++ b/arch/x86/virt/vmx/tdx/tdx.c
+> @@ -1403,10 +1403,7 @@ static int tdx_ext_init(void)
+>                  r = seamcall(TDH_EXT_INIT, &args);
+>          } while (r == TDX_INTERRUPTED_RESUMABLE);
+> 
+> -       if (r != TDX_SUCCESS)
+> -               return -EFAULT;
+> -
+> -       return 0;
+> +       return seamcall_errno_prerr(TDH_EXT_INIT, r, &args);
 
+... return sc_errno_prerr(seamcall_err, TDH_EXT_INIT, r, &args);
+
+and
+
+>   }
+> 
+>   #define HPA_LIST_INFO_FIRST_ENTRY      GENMASK_U64(11, 3)
+> @@ -1438,10 +1435,7 @@ static __init int tdx_ext_mem_add(struct page *hpa_list_page,
+>                  r = seamcall_ret(TDH_EXT_MEM_ADD, &args);
+>          } while (r == TDX_INTERRUPTED_RESUMABLE);
+> 
+> -       if (r != TDX_SUCCESS)
+> -               return -EFAULT;
+> -
+> -       return 0;
+> +       return seamcall_errno_prerr_ret(TDH_EXT_MEM_ADD, r, &args);
+
+... return sc_errno_prerr(seamcall_err_ret, TDH_EXT_MEM_ADD, r, &args);
+
+>   }
 
