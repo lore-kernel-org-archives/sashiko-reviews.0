@@ -1,214 +1,215 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013013.outbound.protection.outlook.com [40.93.196.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C5D3FD129
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 13:58:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11996303A07
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:12:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.13
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785160716; cv=pass; b=nGfomzBLjcJzVkm3nA014u5gnoPujjOG/nrW8WBMafI/mswFqprHcZL3QJYZPweqKSmaQs4qZK6f0HGG35IjXY4Ly+WCFOOBAPUjdnus84JhBtt5u+oJIckQIY/m3/9wzsTZGswrEO1slLWrXt66nz+y12w2TcsHMJVZnczpNpM=
+	t=1785161557; cv=fail; b=XS+FNW/3UySniAcrr/B0McLKyPTFwPZdSpzDWJqZEOAerBy3qfB3aHs98MvpJI2s2IH9MoqZ1CSSQOvoZWJ2W1MuvGTSt1PcEGXgbFD9eE1YqQ+urUws+yow9rPw/DUjTFH48cf3OvJiQ/WSr/k3TxKDGp5VNCwKbTyABYnAAlk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785160716; c=relaxed/simple;
-	bh=uXBvOYhNzMxJ364+Ekr1qMbFo2iz6uQJjghwa4/XU5w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DIA+tHKYZnFgY999PTEo8IU23utGH7MmYuyOkMUSWoZMuhj0+GRenJBNzakAWa1P+w3hqmBTQGzrah1lpC2LXqLqIsySVj+Ql6qcBHfY9MxsDbnhlVaXAbrWjBSxKUBh5bSh38Hu2HPn6fDfeah1eFPsqQKtjgzYJ7hwGpNDaMQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nmF5Qnt/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DQkq5q2M; arc=pass smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1785161557; c=relaxed/simple;
+	bh=aLfAokYwZ5Sy7K+kesaw9/G/Ns5Q/5fpRWhRsD+3XUA=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nMCdslF+g5ehmYJXVGI6UV3mugVvZleQ6p7Y3oRFYLNXlro3vu6HNn1vNDpjenBJUzoKfdoibpYT6o6dYAXTc+pj11AV1W2BFQYx2o3YTJD7IykNYY2Y8hwcAfOxjn2fT3kRZ+vWuL3mRn6JO7JKNirGgk7cr2rKMjumU5jyQ9U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=EtPmqqyy; arc=fail smtp.client-ip=40.93.196.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nmF5Qnt/";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DQkq5q2M"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66RDlijh4061167
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 13:58:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=2/I64L8gyijxS5bc44vT2Qmn8mMzYmRevPaSpuer7AY=; b=nm
-	F5Qnt/+sbg12NOJAH11tzzZ4+3r6wCrzT0Ag+8iOBtWfWYAA7gqKio0snDQCsfk+
-	aaZZmCdN1XsWGDFn3MdiuoSTQB5XSoWEABjBuIJxLQSjX6ANaelItxzbaI8At96O
-	mg/NWJwmzfBU4P27m6yQfM7+FEYIEf5W9hXxszhlS8AnFrZY7ypBvy1kguUdADL+
-	AnaNjhNK2zbNWqv1srGHYrPYYzqIOmmlalo0cC+YYvU5yhGwtA+DE9cFm2Sahvri
-	DBbBMqpcGMQFdncXxfD29EP+ApoFxtDSBjP3kkQmRW3OzS68WDJvCkeXScT2f+cn
-	EOAkA5ov1N1MzWCQopYg==
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com [209.85.160.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fp4mq11bw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 13:58:33 +0000 (GMT)
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-44899f99756so3140041fac.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 06:58:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785160713; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KGKiwjl5ZRSDUm6qI4hyLA7L73Mv3jmCG/uXqwDUXfs2zNSQpYQYWlc4hu8CGddL5l
-         auC8vST8nMgmNZNBgyk1/ILu1eyoa/sMrfD7qN6TTEDcSy1xGP93WMfwVJHsYkx2AVMm
-         FPrbUIMRjnaE4PX2JQ15F7+YMIZCqkoLFblfANUBAdq2KJ32Yv5z0ow6zkx/QU5LAW6E
-         y8UR+r3aX0pTnoRQPraun8HkYQyuuFXnc/xqBjV4Wyky2UQzS78t209qMETAWNBRpv73
-         ngaf/3acf1VGYx9kt4ayj0qMPBoMHgYOhCc0w1ZROikcaONKt5Vp/fIhmUJznce/ng2c
-         eh/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=2/I64L8gyijxS5bc44vT2Qmn8mMzYmRevPaSpuer7AY=;
-        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
-        b=qB2sMzWCGbHhD66489CMy5RzEMfSlmV/DUru/lPG3C3X6jb4kVlFZAQ16+6CCDQJxZ
-         MzjmhV6+LiZEf3kWFBhsynD9heR6pc7BtppilCS36/BqV6tJnfmWRwOIVPqs4okg8H+9
-         9knVoAK1BDn5MSBZpJi5qNvH+J8l2nZrXLg9+y0DZPE7ypXc7uogQFmNmXYMoYbiL8vi
-         ZYawbb/QQpZwVKjdxYJMgLC6Tw0pzN/SPy9n+NNTY9nXsaX8LtsaC745OTHVQJ7BRBqu
-         1NsnsYJnWPhVmOXimRx2gY0p02s/UXPsy+BBece8ZZ5KiSyG2dARLf+L61fs17y58XsV
-         j8QA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1785160713; x=1785765513; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=2/I64L8gyijxS5bc44vT2Qmn8mMzYmRevPaSpuer7AY=;
-        b=DQkq5q2MrB/q+oGwWdtFDgmj4LSTg+QB6DJUwaHHAnVtvtSbYC3+UGJglqDvWrxwuF
-         W+ERezn/y5AqxdBQ4MSJ/BFfPd/QwRK3CgRQtIKmPIxbjzrhNrfmxEEAm0ogJJrmbOBB
-         OIWGDvk7OutrU1yQMpY3iWhxoTgr/maaO+2lbMzqeEnawSwrl6OWLoadfprrxsgfojD2
-         cbUuj8+YXdJmfMFTyxDcPb14ejXaIbSgM08tYnQ1A7o6cwc4l3PwJ9lWoyxqNgvyBLl5
-         TZodiPbb5OzKtQjxPcMNl/OYviUCx3p1oOsj/m5mh7KGLmLEQ1O/trxpRmFdHM3V041+
-         OrlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785160713; x=1785765513;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2/I64L8gyijxS5bc44vT2Qmn8mMzYmRevPaSpuer7AY=;
-        b=MOIVNA78pRS5RbCEPx0s2LnkGIUqlOxsDSI5kS3Lvo0IPgc15cacpY8o/KK0vKekqK
-         doaT8JdSRGq0FOg+NHc94gHy6CCUxUWsoG0oWioi7aGl3CDeUaFYMLkdK4LK3AN+VfFR
-         d8/dw5xMfDf0hvETbJJmkoTtRYOy+efZqa8trmmZUEx1Z2mBhBAunuh3FR5Raooc+VBH
-         PlVru+I8PX5jFpn3O1sIFpFD3gXOh7boz5E4X0rnDUH8X+4iDArv99nlw3eFlP798sZk
-         yame2MMA/Ep8PfIezVoj/r7gKBZssjM6cBVh7i6NR339rWp7Iy8297qRBg7c0W/FB7Gh
-         xD8g==
-X-Gm-Message-State: AOJu0YzUPbyoXMveJwb3urLMTBHI96k17hJJbIe7vG9zAV/Wdd6hZZlc
-	g3NkFgPx4D/Y5ZEykvwv06hx/3OlEwwWM9DjhqdBPzVhkw+SCGIjtjLa2/HmlDe/CezcRannpPC
-	rztoDrKQsZ97OVKnup7+XZnTlH/jYCw0Zc7o0ta/N628PxBlTpN+Fgedvv+Y7OC9QpnYi7BRfXk
-	BWgp054Mp9PzvccZ1MUWvzbcWpV72nM+JhCMYB8E2TzfjOfInCcrBt0A==
-X-Gm-Gg: AR+sD13YykzEXlwRQzdsUDhDN0Jthk1hdZaCk0FSlnOivu9gx6mhGurDBwO/ggsH2C/
-	KvSyV9DoSKrQpeTqlLNviuwfMMBkOIyc+7AoHmoG53g89VOAPPwJIGhH5IcabxQH1ImdG1YtPic
-	ZPnq2cMD7T98OcdVzAs3ng7cgWyOuxF2NT9gKI5kYK2qDedJLbxLGuvuUK
-X-Received: by 2002:a05:6870:8555:b0:455:d1ed:221b with SMTP id 586e51a60fabf-457f281f022mr6445979fac.37.1785160713134;
-        Mon, 27 Jul 2026 06:58:33 -0700 (PDT)
-X-Received: by 2002:a05:6870:8555:b0:455:d1ed:221b with SMTP id
- 586e51a60fabf-457f281f022mr6445968fac.37.1785160712776; Mon, 27 Jul 2026
- 06:58:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="EtPmqqyy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BeEybnZpXu3gTNFuWC5NBSw6Oz/PnO4eu41+/eM+ab0TnhYpPMpY7feqjl6yUTZAKazcdiDovTGSVa7oM14R4bOrh1QD6CZh8P2+bPkDDrYocI4isOHyHRte1jp+cyu3aFeFuo6vvjS8NSuzrFZ6IiyYC3CjupG9bhdyjZWhuGv8iAPTVxW5NVrFuhdTfVEhYffrG+y0iqGa0q7DWdmGZulQF062pKJUGJpGqiCTSzTk8ZGwC3URmBlqr5bBGpsTMLYKKLWZx2Z4S4spfGg2PLg2I5dp/PWAjRqtbwl4PjS9ostUbQa4nzspqA2JTImPuDFFSY3n6QKhk4LjVQrKqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S60XBqFr76tzZWXzTso9h5tbDGUZngHBG4f/C1S/l2w=;
+ b=AoOG/RBibzkt6zDBWA9SitJp1O5/qg5EBD11LcVAUL50R7OA7ZIEwwglLEmwuXq/pnrO0KRhxEajhUjd2P27iHRhBeqbI4Y9lPT8zXyvay29md3ZaFkkLm8Cq+mAzhXY3FFGVGBcyYI/a5J99jc7NYi2TbcvSVvwjycUQBD8DZOp0kcMoO+EZ5Ik8QFrH4QWophRKvxgP4/uC9zwI3K1EBo1XcRlOFVShKpHABdplldu5ZNHwq2BBx1an84eOAIhU2z1N/cJJZU/bVxK/K3hjiD9D48bNuA/qd/pxLyodPecavEfSqec9Aw275a/SwXF0g732K1apgbN0Vo+ZRXrFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=S60XBqFr76tzZWXzTso9h5tbDGUZngHBG4f/C1S/l2w=;
+ b=EtPmqqyy/4x6lyU9kpuWa2ooUp2RrHjC+zBNET7Rci6w9RexrQgETGNidYTXNrLihsniXHtARc6QIalvWv2xHpGi8EA4gSCHQ6fmBJw0hjze2tsbpJLH8mDome6ES2CaYAlQV4gR152m4z6oEyse0l6LWo+G9RJ8n23+qDZcGFoA41S3h96gRAUgGLozQHVmBPfsv8OCuJa0HdbcBssFkj/TZip3zJP0agKyH5e1lTW5ybuJ/KaC1i3hcu5SBWMPOhblAFz5lFCG53kZ/+O34nKwwTLb6bH3ny2+CXqb4GjBYpkvGk7PpYp9gk+3NRLRJza4Vc1S5xGP7ueoIoZe0w==
+Received: from BN9P223CA0007.NAMP223.PROD.OUTLOOK.COM (2603:10b6:408:10b::12)
+ by SJ2PR12MB9164.namprd12.prod.outlook.com (2603:10b6:a03:556::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 14:12:30 +0000
+Received: from BN1PEPF00005FFF.namprd05.prod.outlook.com
+ (2603:10b6:408:10b:cafe::71) by BN9P223CA0007.outlook.office365.com
+ (2603:10b6:408:10b::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.13 via Frontend Transport; Mon,
+ 27 Jul 2026 14:12:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN1PEPF00005FFF.mail.protection.outlook.com (10.167.243.231) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.270.5 via Frontend Transport; Mon, 27 Jul 2026 14:12:29 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 27 Jul
+ 2026 07:12:04 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 27 Jul
+ 2026 07:12:04 -0700
+Received: from build-akhilrajeev-noble-20260602.internal (10.127.8.11) by
+ mail.nvidia.com (10.129.68.10) with Microsoft SMTP Server id 15.2.2562.20 via
+ Frontend Transport; Mon, 27 Jul 2026 07:12:01 -0700
+From: Akhil R <akhilrajeev@nvidia.com>
+To: <sashiko-bot@kernel.org>
+CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>,
+	<alexandre.belloni@bootlin.com>, <conor+dt@kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-hwmon@vger.kernel.org>,
+	<linux-i3c@lists.infradead.org>, <robh@kernel.org>,
+	<sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH v6 05/12] i3c: master: Add support for devices without PID
+Date: Mon, 27 Jul 2026 14:12:00 +0000
+Message-ID: <20260727141200.171715-1-akhilrajeev@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260721042604.87E791F00A3A@smtp.kernel.org>
+References: <20260721042604.87E791F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260726174215.30010-1-robin.clark@oss.qualcomm.com> <20260726175737.407241F000E9@smtp.kernel.org>
-In-Reply-To: <20260726175737.407241F000E9@smtp.kernel.org>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 06:58:21 -0700
-X-Gm-Features: AUfX_mzjX5Oe7EwHSY1PGT2PCj3gUKS-CcVwTXWCey8klABS0TwYWJpECrVMSmQ
-Message-ID: <CACSVV025Ss2=z1gwnPpn0w7=9AWE=z+9zVpjc_-TwLPWp-5c=g@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Preemption timeout should be greater than hangcheck
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDEzMyBTYWx0ZWRfX6IPQDub129nY
- QaU+KwfPOWsfWUIpK/Yow/EccJ+OFJn/pIH3wTIIZtLXodo+SpyG4KyEHoXRFPty/zV5/bBWeUk
- VYGkvfSmJPrwt6UYs1ywBaFzoJt0H4k=
-X-Proofpoint-ORIG-GUID: fODt-Ykt7LJ6CHEENCqEpCfiXLw6IXRc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDEzMyBTYWx0ZWRfXyFsilCLOlcne
- +6aeF0ZkfYe4j/8abWKVplxtXMU280HVhj7PW4JdzX1/gX8zBsxESqILwugy7SYylBHDc//TplS
- /PIIhdvpLmZJJMNvVm33S5fGKd7fKUWRx+4OJjAELA4fYITjYCRLQF0oCS5wFXtWR4VLH7/M/kr
- b/N5TmKu+FZBWN0EzRMoVMyTePV4P01p0m6Sz+mV9Vren12X+JP78em1qsSEMDlNIZkARIqA29b
- EVseudFEgDLUJ/VHnZofwfQ4+F4RZTrKdOHmwjwOeHqEu/C7PEZjB+ZHxxqSLjtFKhdmL4y7RgZ
- eqAPYRd/+ZuadCZwWGrXiFxNnnms2yO9NiBFRzflMRjjfQ/wG9JA1Wr4nmKrrSgLT1r/52xxezi
- a5DZjj6QBY2ucC++gVmcpkBWvybjeJs9ictn0HC/4WmBVK8V4E9IBcImzn0aVqsQH1YtftDh6an
- oGSoiF/c9QafhibKGwQ==
-X-Proofpoint-GUID: fODt-Ykt7LJ6CHEENCqEpCfiXLw6IXRc
-X-Authority-Analysis: v=2.4 cv=TemmcxQh c=1 sm=1 tr=0 ts=6a676409 cx=c_pps
- a=nSjmGuzVYOmhOUYzIAhsAg==:117 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=3WHJM1ZQz_JShphwDgj5:22 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=qWa5M4ji-oYYbHf_jLQA:9 a=QEXdDO2ut3YA:10 a=1zu1i0D7hVQfj8NKfPKu:22
- a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1011 impostorscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270133
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFF:EE_|SJ2PR12MB9164:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1bdfaca1-b6ae-400a-ccf7-08deebe917e3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|36860700016|82310400026|10067099003|22082099003|18002099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	w8z2Z0lwWhiyu4OrR8vPZhJ/SJ3zMVh79HUCBbp728STvGBXMQGsOtnQdPyTtSG27AQPMLp1VfNCP6CIqN2/v3HaG8kW2bjWFdEQ4+lYwKivKQS2fdLoLEHo6Enteg4IRufI5viSRYnCV9EEiYxiohNetysk379RINVrxL6/tNRhOhOF18H2iDPhAjgFTmsvpXLtQVvWk5Pt4paqfO5EFK84f7ImzAtl9R5NLZcc9HwcuPOz+XWsHM3+PL7JBnt9p2PmEjVVVSlC6RNu6VVpDa+ldh5P0qXet/aY6hmFKzYdXuekSZcG90QfjyrEeKCaCDgVybpZT/8K5im5shthlQLMqeoM1evGRTnId5rZaBIxXFbRyiEbILIrf00n0b2/4bfOv88lYNddJg1U2HqCE+rahv/GbO8yiVXVqyw/tyoker2m0RZXDCgn8NxVbt693tBDnFuj0TWwmWTL2oOlGE1bU6kVE4K8juZkUo7KSHurjt6sSoe336DkjI5cPv/e9Yvb1+PaHBNqKWVhSA7VscrERRlrQSBNbHHQe9/k/xPfDNu5AX6U00dtnC3MmFIOAfzH8nxS12zOI4ohTcX/Bp/Ax41JmjvPOc1RCMJesuD2lOWLl78xplCaG3/RNCsy9BPMwLrJ/+d9/aaryXH62C5t4UdDKCFx4iaNLIMjXNGbA/r/+xOK+EZQaYUnIZssLoVAyumydFdgVi7r4+6Klg==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(36860700016)(82310400026)(10067099003)(22082099003)(18002099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	NZiFZDfeMUn4dmQuDAy4Vm7I5Q2gk0VC8Jx3Cex8Ok6f5ttNTkoqXMex29P5U9ealCWa0lPqaIdsHA0SBWFqdZh2p2hcskBiOGli60N0A9ROcmUzeg1hk+EN6p0OpceMHSNNuSVqjIdL3mOrNww3DjePBjTNAPtn8LqiV4G1P9zz9e3Y/5CeM/OlDZcDqBdF0ODm8/nQic4EMdjRmzt2uqxBoipZ/GPLX1nFN56/wmdItq6y6TlyfGbF6hbsVpIO/ClsLopxJJxW3hjJBvQS3u1T4Vb7e1UmqK+lkIJeoc3ISJHOlDHmclgrd7K+HpvuMMkjmbtGZfTwM330ab8ihDOwjVTvE4R+JB+henskyWLxFO/P3uCmolkiVGuj7gbaqUtwDiYTGs20LonbIJHkk3lKPUoyioIkP86NBDXoP+YVieD0GxP8B3L4sAu9lK+N
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 14:12:29.2015
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1bdfaca1-b6ae-400a-ccf7-08deebe917e3
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN1PEPF00005FFF.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9164
 
-On Sun, Jul 26, 2026 at 10:57=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Tue, 21 Jul 2026 04:26:04 +0000, Sashiko AI review <sashiko-bot@kernel.org> wrote:
+> commit 671c3fae66002e874a13051a9c956e9987d76674
+> Author: Akhil R <akhilrajeev@nvidia.com>
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The preemption timeout calculation fails to account for the ha=
-ngcheck progress multiplier, causing premature job termination for long-run=
-ning jobs.
-> --
+> i3c: master: Add support for devices without PID
 >
-> --- Patch [1]: [PATCH] drm/msm: Preemption timeout should be greater than=
- hangcheck ---
-> commit 5454ddf4018869efeec2d7c8f2767056ad2612d9
-> Author: Rob Clark <robin.clark@oss.qualcomm.com>
+> Devices using SETAASA for address assignment are not required to have
+> a 48-bit PID according to the I3C specification. Allow such devices to
+> register and use the static address where PID was required.
 >
-> drm/msm: Preemption timeout should be greater than hangcheck
+> > diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+> > index b18dda89c4737..7b2f819bf4437 100644
+> > --- a/drivers/i3c/master.c
+> > +++ b/drivers/i3c/master.c
 >
-> This commit changes the preemption timeout from a hard-coded 10 seconds t=
-o
-> the maximum of 10 seconds and the configured hangcheck period. This is
-> intended to prevent the preemption timer from prematurely killing
-> long-running jobs that are otherwise compliant with the hangcheck timeout=
-.
+> [ ... ]
 >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.h b/drivers/gpu/dr=
-m/msm/adreno/a6xx_preempt.h
-> > index df36c945b836b..178017aad26e6 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.h
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.h
-> > @@ -35,6 +35,14 @@ static inline void set_preempt_state(struct a6xx_gpu=
- *gpu,
-> >       smp_mb__after_atomic();
-> >  }
-> >
-> > +static inline void set_preempt_timer(struct a6xx_gpu *gpu)
-> > +{
-> > +     struct msm_drm_private *priv =3D gpu->base.base.dev->dev_private;
-> > +     unsigned t =3D max(10000, priv->hangcheck_period);
+> > @@ -2389,8 +2398,18 @@ static void i3c_master_attach_boardinfo(struct i3c_dev_desc *i3cdev)
+> >  	struct i3c_dev_boardinfo *i3cboardinfo;
+> >  
+> >  	list_for_each_entry(i3cboardinfo, &master->boardinfo.i3c, node) {
+> > -		if (i3cdev->info.pid != i3cboardinfo->pid)
+> > -			continue;
+> > +		if (i3cboardinfo->pid) {
+> > +			if (i3cdev->info.pid != i3cboardinfo->pid)
+> > +				continue;
+> > +		} else {
+> > +			if (!i3cboardinfo->static_addr ||
+> > +			    i3cdev->info.static_addr != i3cboardinfo->static_addr)
+> > +				continue;
+> > +		}
 >
 > [Severity: Medium]
-> Will this under-calculate the true hangcheck timeout when progress detect=
-ion
-> is enabled?
+> Will this static address matching logic ever evaluate to false?
 >
-> According to msm_ringbuffer.h, when progress detection is enabled, the
-> hangcheck timer duration is halved and allows up to
-> DRM_MSM_HANGCHECK_PROGRESS_RETRIES extra cycles.
+> Since i3c_master_attach_boardinfo() is only called during the dynamic
+> address assignment (ENTDAA) phase, i3cdev->info.static_addr is inherently 0
+> in this context.
 >
-> If a user sets a large hangcheck period via debugfs to allow for long
-> compute shaders, wouldn't using priv->hangcheck_period directly here resu=
-lt
-> in a preemption timeout that is shorter than the actual allowed hangcheck
-> time, potentially still killing the job prematurely?
+> Because i3cboardinfo->static_addr is validated to be non-zero at creation,
+> the condition i3cdev->info.static_addr != i3cboardinfo->static_addr will
+> evaluate to 0 != non-zero, which is always true.
 >
+> This means the loop will always continue, making this branch effectively
+> dead code that fails to perform the intended matching.
 
-yes, but the progress detection is based on detecting that the CP
-advanced, which won't be the case for long running compute shaders
+This branch is harmless and does not affect functionality. It is kept for
+symmetry/clarity and can be cleaned up if preferred.
 
-BR,
--R
-
-> > +
-> > +     mod_timer(&gpu->preempt_timer, jiffies + msecs_to_jiffies(t));
-> > +}
-> > +
-> >  /* Write the most recent wptr for the given ring into the hardware */
-> >  static inline void update_wptr(struct a6xx_gpu *a6xx_gpu, struct msm_r=
-ingbuffer *ring)
-> >  {
+> > 
+> >  		i3cdev->boardinfo = i3cboardinfo;
+> >  		i3cdev->info.static_addr = i3cboardinfo->static_addr;
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260726174215.30=
-010-1-robin.clark@oss.qualcomm.com?part=3D1
+> [ ... ]
+>
+> > @@ -2848,9 +2871,16 @@ i3c_master_add_i3c_boardinfo(struct i3c_master_controller *master,
+> >  
+> >  	boardinfo->pid = ((u64)reg[1] << 32) | reg[2];
+> >  
+> > -	if ((boardinfo->pid & GENMASK_ULL(63, 48)) ||
+> > -	    I3C_PID_RND_LOWER_32BITS(boardinfo->pid))
+> > -		return -EINVAL;
+> > +	/* For SETAASA devices, validate the static address instead of PID */
+> > +	if (boardinfo->static_addr_method & I3C_ADDR_METHOD_SETAASA) {
+> > +		if (!boardinfo->static_addr)
+> > +			return -EINVAL;
+> > +	} else {
+> > +		if (!boardinfo->pid ||
+> > +		    (boardinfo->pid & GENMASK_ULL(63, 48)) ||
+> > +		    I3C_PID_RND_LOWER_32BITS(boardinfo->pid))
+> > +			return -EINVAL;
+> > +	}
+>
+> [ ... ]
+>
+> > @@ -2873,10 +2903,10 @@ static int i3c_master_add_of_dev(struct i3c_master_controller *master,
+> > -	if (!reg[1])
+> > +	if (!reg[1] && !fwnode_property_present(fwnode, "mipi-i3c-static-method"))
+> >  		ret = i3c_master_add_i2c_boardinfo(master, fwnode, reg);
+> >  	else
+> >  		ret = i3c_master_add_i3c_boardinfo(master, fwnode, reg);
+>
+> [Severity: Medium]
+> Could this change allow devices requiring a PID to be registered with an
+> invalid Manufacturer ID of 0?
+>
+> By permitting reg[1] == 0 when mipi-i3c-static-method is present in
+> i3c_master_add_of_dev(), it appears we can bypass the strict Manufacturer ID
+> validation in i3c_master_add_i3c_boardinfo().
+>
+> If the method is SETDASA, which still requires a PID, boardinfo->pid is set
+> to ((u64)0 << 32) | reg[2].  If reg[2] is non-zero, !boardinfo->pid is false.
+>
+> Would this result in successfully registering the device despite the zero
+> Manufacturer ID, violating the MIPI I3C specification?
+
+This is only if the reg property is intentionally malformed. If needed,
+'!boardinfo->pid' can be replaced with !I3C_PID_MANUF_ID(pid) to fix this.
+
+Best Regards,
+Akhil
