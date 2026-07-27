@@ -1,65 +1,106 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013039.outbound.protection.outlook.com [52.101.72.39])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010006.outbound.protection.outlook.com [52.101.85.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443843CCFC4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 19:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD29B42BC48
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 20:44:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.6
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785179708; cv=fail; b=j0Ez5yZWYRt5KmMnCkkC68I5iqh+Ivyj0ZTg7Xjr5KlO6sGjGUaX/3eghezIFx8HvQWORFBWbVG9g6KNR5goXLzOVF9OR86/AO5XR8rI2FbYn+jf0OXoSLUZVMnlC3XysrYXwuhsbub0l0ogb2yjkotexNyFhxhQN1ThcjqKhSM=
+	t=1785185053; cv=fail; b=SzylOUreegT70bO6odI7rANFStoviVQ/n1q1QP0svuUdlb+GDX6P+CTEiCzETzOBVsabXqXaF7tkC5QtUBse49dikyZHnzXZmrh9iSBhLMVrPqKnUNQuI6uAERYTdHo3MBf9qttHyI8FAdFZLcSufU5A//rgPteCipXmqGKSINo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785179708; c=relaxed/simple;
-	bh=+1LALkV2/vQehLJP3mKUHYgJxfVKT7F1ug+H0ie83Ic=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=RAyy19gpxWfzNf4mQMeXFeNbZ+HxfBM6S2acNuWR1ewrIALvV92LXEzyBbs/eL+4IeR0oiokhn4BD8EGY1ZJ4Sy7Ng50Ye93WU/r+zwkceB3MQmmwanBSVM51x+iQlnTS4Plj39HN4+qbRd+cZv6yLNCbIH5FdAvz9XeRws5FkI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Ewfm/zIS reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1785185053; c=relaxed/simple;
+	bh=70QAUoh5qlIFFJL8633WhfVWqD5seRdvbzleynZPlMc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=INAteo0ORW9VA3Dk3OZjsi1JVKzlahF8A/O0ApapaZISWdGKHgXKBJ6d+bSkPtQ9CnAeyBsjoqhn2vwP+/VqfIKeB+WuJ+o15xfAJb9P/9azicHVdT2ftKlJsDraAn+BEUo6XXzdwr4M1Kb/QaE/VAZZLp/Y2P+j0rDOtAp/Wu0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=il2n2cKt; arc=fail smtp.client-ip=52.101.85.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Ewfm/zIS"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="il2n2cKt"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Qhek5D5lansDyGD5bC/jg6Ud3/W/FlcGBT7rkCgunDPncCC6bhNoPMxRQuNzte1+kJ6/nqTkIkY81kDwGEQnGVYm6n71j+0VTZBiVL7TWsi8ywlmorQimRm/dx41DN4Q/1AUh3lUVLblAWPIAjKMW00FQP7hbxA4Fs+zMBSvkuoZDtuNS75elZzmBQiC6g7KcmmDnYq16QLw0uSn5hA6oNJAH9HjZTEP1DzYzQiNKg3AgYCtYt8jMjB/CR3d/n0RR3msqPffj3NP2+iz27C0YK3tbj0i8wBkvXRgfmOvHuRf+v+p3KxDPSPPTNNJN6N7mDUFBfyrJAw1hjPw+l32sw==
+ b=wkZxPqyn+gQM308gsIenGLtPm2E3XVu9gEezd5CxheddjrGb+PqUfRJ18gHBgN5khu2O2Ku/DRWg6lEnCuivIQJ+QbytKFo+v9pxmOVelwxAgn6YZKwFzAwdEuo7SyLA/cxgpio01byY5xZrQf32C+XQrJrQn5ppHAfIacbFVu70erti2hadh8t+MLgOsPDRn/0w8tDxQ9YF+J6MCkc5TGX9n8GZdJMoX5MDz8emTIAzok64HSuvNzqw7hyEOHS49Pa8SE/76GzGwepdZzQbl6VCDZ18XEPMgdMWfuffeOEWIlGL0WVKzVDWS8VKs9o4kL1mKitJ6KAaF6yPH7PJSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Hc3UlCiYNMJ8OpXNpz4RQg3CVdxb+pGdSq4HXBaPZ+c=;
- b=TeQuALEfVg0jKqO6tRda50e2Hi9J4n6jzFqUXmM2GMeG8hpvjsc4OtwLKXlTARNdQdDF1eT/mdCXOf37aXWOQHH3UiNd9ycX4Rms6H9vmASwjNr9IUedKpEKxFiLQ7WwkColh7n41tKgOOdUOOkr7scejFmKORWPCjyeQWAuJsBBrQV3C0bakYJkxTM4dQiERhuAC5gQVqq4qqEdF6ZnDk3E9KKTeZsFtqTXdqgMlp1v6YznUEo9oOzwwf0qXPe0CDwBSdAl2zcQeyduRauHWp4lAzWiykT+xFQNY5zUA6BrNI7ldfV5zy5esG+FCpDNV+Kg2wsd7Hjm9KBdiAaIZA==
+ bh=pFitPCOZm8+fn6cR3fFPV7viu8es24RZUru0nqg5FPg=;
+ b=hF6P36aCC90YeECrb9pGE/ZobqtnsqjHaH2h685sl7wKV40aOPkXSGQ/LwZcyMma+Cp/rWginUZ0uMeTq9JZm1+eknWkArIr8TW3UC7tNwo0rGjtxzYUW8Du37tVLSWSwzbujs8Cdb7fiBJ3aGitmcht9YgnmRILj6u/Bnx55aFw2ZJxNDp+USaFuZOxmXgRv5ITI1ZymvO3xfePIS90Rx1lGVQ/wGli8CSN1tTvA43l+zVOBxIdchXVTWanWRXcaRGrun6UEak7kpo+wUIhkoSm/MwiII9XmSLBKc5HhQeT29YRgUL8dhQJicr3z4a4AqAVGRbrkTx4y5w/++xE+w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Hc3UlCiYNMJ8OpXNpz4RQg3CVdxb+pGdSq4HXBaPZ+c=;
- b=Ewfm/zISYGwqdA+1ZTH8D0iMtcA8QPrSveqfavecJWSHrTtA4ReeLi/iFH6H9uYvL2gYNPpSyotRVhhFG/AEpNKDUUzBCDn3LSjRdxEgw6MDW2DyKHJkDrWc1RUMOesHHfNh7847OCMdvmN230Y/EIbeDOMTnej5GbqWwblzCNTfs82HF9mEPhAPf8KpoN3KrNoc1U1xmBETE2kGd8vQDzFSJRvQCIPoZhDZFPEyGp3UMsnLSVWpSlAweWKeIpt2Ol5FxyQxoJ6IFv4K3phLg+YKpr2gJMI8hTSk84droJHrMiqertbGtlyMWptCYUXsufxzFBvmd3wF55+j57+32w==
+ bh=pFitPCOZm8+fn6cR3fFPV7viu8es24RZUru0nqg5FPg=;
+ b=il2n2cKtI8o6qOFmitdWUmZhHwhF6NOYH4G8qnEkyX230wwTcn90VD55oP1F1nOlirx/kCEjAd9AnawkyH79T008DaMe4JQAAP3I3/ap7fGsu52z/ArgYLuX/0VSe194+IsEIp9DI2AUk/uwm/fIBNSk+EZfXaHBXxODVwO8b5M=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA4PR04MB7885.eurprd04.prod.outlook.com (2603:10a6:102:ce::14) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com (2603:10b6:208:3b8::21)
+ by SJ2PR12MB8034.namprd12.prod.outlook.com (2603:10b6:a03:4cb::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Mon, 27 Jul
- 2026 19:15:04 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 19:15:04 +0000
-Date: Mon, 27 Jul 2026 15:14:57 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 20:44:03 +0000
+Received: from BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad]) by BL3PR12MB9049.namprd12.prod.outlook.com
+ ([fe80::ae6a:9bdd:af5b:e9ad%7]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 20:44:02 +0000
+Message-ID: <8aaf5794-e052-4a19-ad28-b3c75752dfa1@amd.com>
+Date: Mon, 27 Jul 2026 15:44:00 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 2/6] x86/sev: Disable CPU hotplug while SNP is active
 To: sashiko-reviews@lists.linux.dev
-Cc: Koichiro Den <den@valinux.co.jp>, vkoul@kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 07/24] dmaengine: dw-edma: Centralize LL doorbell
- decisions
-Message-ID: <ameuMbdF6wSvDunJ@lizhi-Precision-Tower-5810>
-References: <20260727170323.2321369-1-den@valinux.co.jp>
- <20260727170323.2321369-8-den@valinux.co.jp>
- <20260727172326.2C5C81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260727172326.2C5C81F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH7P222CA0025.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:33a::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+Cc: kvm@vger.kernel.org
+References: <cover.1784844080.git.ashish.kalra@amd.com>
+ <e1631971b3862bcd6043199feba3df51f3ba336c.1784844080.git.ashish.kalra@amd.com>
+ <20260727193729.7D8E21F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Kalra, Ashish" <ashish.kalra@amd.com>
+Autocrypt: addr=ashish.kalra@amd.com; keydata=
+ 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
+In-Reply-To: <20260727193729.7D8E21F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DS1PR04CA0015.namprd04.prod.outlook.com
+ (2603:10b6:8:243::12) To BL3PR12MB9049.namprd12.prod.outlook.com
+ (2603:10b6:208:3b8::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,126 +108,127 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB7885:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb624946-de45-47a5-0ac7-08deec135cf9
+X-MS-TrafficTypeDiagnostic: BL3PR12MB9049:EE_|SJ2PR12MB8034:EE_
+X-MS-Office365-Filtering-Correlation-Id: 832d9677-59fb-4b9c-af09-08deec1fcad2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|19092799006|23010399003|4143699003|56012099006|10067099003|18002099003|22082099003|11063799006;
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|56012099006|4143699003|10067099003|11063799006|6133799003|5023799004|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	OSayBMEFeWuqz80KjzxjY8/VPZMgbz2opCMvsdOg1vXHpZ0gKR39pSIsJdJhv1BjzWcrkgy2aYgeAGryI64/1W/EyYOvGecx35fRAjf3UaaZQLoZ5A/7VCN7wollcjjQS5mBmszzn5vfEV0r6qfKSg30JaZhjK0c35t/rRizB+VMm4ahc8E5iLmTnnIs52Bx75CHU5oRrqmqaHP+hIDcMCpPPmD6hPkXXxFoKDfEkg/ZJLmojbWrs7l0ER6ocYjm55zgvoBiYXTVtddzMx7Z3bpQ9k+EZeukGU5awdqtbSHv8yxmD6lSEIsAjC1ufaTcf5Cv/UG2rE4N/MObY/fo3oxufezKOzicrsW+xMXKOCIj1OPGF1YhZj9hNl7qnKeV7VTkRdQ9gN5daYw91u7hmpMNr6Xs/N8xxhE3INJBPMKEIUDt/QGaW64NMWgg92Sqqqbx2yBm6GkWBZ/qHxI6/DC9rOoKhSHmxrBpyIVsX2LWp9WdqLcqqjxT5uTN4EVdusNjUMS5Guox44jjdH4gTmSwle2ddFWdoc/z6/jPAIR3BI+04ZPj6HjDGpyMCBhuqQU7tayUXhfG9xChaxsq3iiFplpYav0X2uHmwxMDi9E=
+	kel8zh5yQeACgwIRAcPaVky0p2x3tC0OZJcSlmWaeX3iNHrSEDDSd5oibbjHzxJ9inZWU5kkOWVhjI+I7J+Ql9FUElXW2RU08SwAmwT5SJL7FNsG/a0zb/MmD/R3qyxMwgRwrKRia8kQekwvHQxsiZhs8Tn9yha31JTWR+jN+1ccLlkcdhfKkZqd84uCF0zg0Rsja09ZEkn/hVdzljxKYQUEUmxUuPhvlsPCPcTQKNzDHG5iGocNYIh2X8bYQA3YNvulkHDB+lNweIEoKkpZxMODyjpkIh+VQTgnHB9o0DmhcCDPJBNo3Mj6PaT5BFVGkZmB+vgqRKRkIFvFEoCZj+8YzUxTRix6yQ8LBBNUxuQiWC9+q4DFWdNTQE9Q5piSTYJAAI1fkXQn6kJTKlcByGqDw6LTdbvH+S/2BWg0fGi/I9nyQ70iYKWhg74Z2IjcMXpsHu2iDRsgZQPnRLQ5vPnZ9zIuciAiTIR6UZjfvivrunef0yDLCUdYbyMUjA2vnT/Hz7epc8f86fCsJiOVH7Ny9JD6hgf1CB7tHJPGb+YvmXLk79NzISmXw+bVDLgQOdFQwvNsSlE4308L3rKvf5IWMAK457rmDs0Ill1pFdyWtmM/eqqvhMzsue5m0TtfS3Mo2Pu1LZH8ZbbtGm9tLAxQhXfrIsbsfftKfIcYp8Y=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(19092799006)(23010399003)(4143699003)(56012099006)(10067099003)(18002099003)(22082099003)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB9049.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(56012099006)(4143699003)(10067099003)(11063799006)(6133799003)(5023799004)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?FdFb6VKJCSU8bLZTY7J4zhY08KnGjV5NMXzDyNWENhY+mcSmU+QNFa1QtE?=
- =?iso-8859-1?Q?EiYgcyMnhGDXHy6Bu9UlPjal1YSjfqYFRfUlkfN+AGhFzhoRXVnMU6hX0N?=
- =?iso-8859-1?Q?EbJaaqmCrg7+MXg7UIzME71Uu10tEXTijrhetUKP7/FX/hyIpTZgFzyvlY?=
- =?iso-8859-1?Q?+ivuC4apwLtiNhodwahVPW4IOWgGRm/ZeYgP3Ht+uqgjQmMs9JRRWPD2el?=
- =?iso-8859-1?Q?vV8BCTrhLToX37A/4OTebQmmVkOUJP9LCMOLsYXq+kmiBVwlRhszuRUnBm?=
- =?iso-8859-1?Q?anwPzwtyuFYhXPN1zkyK+3QanSJfvY4yOYiccu5y/K6JFisJK8q1fTcCdm?=
- =?iso-8859-1?Q?zD1RsIStTLUSdDMwzP9iroZNnxDjzRYd17XNT4bVnVspzO75R3mWvboI1M?=
- =?iso-8859-1?Q?UxiYHBUTAZZVzK5sAa6lfV+HpG94wnYAzzErvc3ToUN/L7W/rUHfLYq25E?=
- =?iso-8859-1?Q?nloyNdoH83VuDWxu+9M+kELOdxCFM+2JiKvJJ5p3N29EGPKG8BLC44Up8h?=
- =?iso-8859-1?Q?1P7dwIidoRxthPBmMqffQSF6EJZ9qgIq1jXgw9SFhi+2C0iSS1Fgm08DXS?=
- =?iso-8859-1?Q?0G7GZwqqc+dkb2kCOMYrDN+zNNp2lE3zDABtiyEWIpszsumRSxKtkd00k4?=
- =?iso-8859-1?Q?/k5fdzjgCPPTbfd0AG171nzu+OlC6pR0J1yeTckGvrFWMGbQOXirzIQWt/?=
- =?iso-8859-1?Q?Ju36Ald63lWmC+1meFTz5oNxI144X19gcIMaJVaSsUraZ4ENPh6sgIfhJU?=
- =?iso-8859-1?Q?LavDm0GEs7X0siJWmYElUDI44if9dPHY/uOIWikcMIDrMY2d+sEoaMRitJ?=
- =?iso-8859-1?Q?vzz/Ilslb8pbWwUZYgsE0DmpNKjgOfmet+h+HkhTv0vSlgFVkMJn6f+qdy?=
- =?iso-8859-1?Q?8r9A9hoVKx9TRKQQA/dr96f1zRZunEhoe4Qbl4OeetwrSeHvrAs+d7zRVi?=
- =?iso-8859-1?Q?VTPYSnkzOD6S5j+q4Jee8tWtRHLOh/Apz+4X1WWN24OLB0LxkNhrtJ9K0e?=
- =?iso-8859-1?Q?ZeOqBanMjIHjgng+7v9aMcL+DI7OLUm/gqDoWbFskm8qKOY1E/9Hf8TlHf?=
- =?iso-8859-1?Q?sASwBGLBwKFHpkHIiRGKH8VU+HxYLC+JyRDPJaOXUppsy9PeLcFKlqFFnT?=
- =?iso-8859-1?Q?rLEcNJGdouyJ2aP69jjhh9pzvV4Gd/Xuxg7joYOis9u7ecDTaIm1pVMk6X?=
- =?iso-8859-1?Q?yk9ewRi2j62D8xstD3quikBDmY3WfecLC5fYeLubAmmuItGINeJJ5q0tbQ?=
- =?iso-8859-1?Q?UdUoh4rcU2qDa5PmnJ06FJ1UDhz84SZZ1ZOEkGan3nhhbYQ7CuLZITRFrG?=
- =?iso-8859-1?Q?MggHyCxPZQhXhetQRSLA4JI2ElgoIctiP8mVVlyoq0EmVI3baHn5bujR73?=
- =?iso-8859-1?Q?BGteil4V3Faw0oOgFSGftQdSwQPa0Lum8auY9+Y48kIN0wHvJgncURHL6R?=
- =?iso-8859-1?Q?UrmJOoj6EOfctskRvzWh8dAm0i3onpF+hkcrps2MtQq7xMh1ALxA69mwIA?=
- =?iso-8859-1?Q?mtb05thNXXs78zNcxSVPwDU6SxL8xcjCheUubD9ymUHvvtj4l/8+c9ufSO?=
- =?iso-8859-1?Q?ggWwJYq80Px3JRrdTJpmLXshx9FwL0OOa+7sZYTCwe2Hh9DgkECEyKf0+n?=
- =?iso-8859-1?Q?M4IoWlqvHg0mHHY1gvFlcA/Aersntf9O4MZ7x/kANq211lIdgPd+37YPRV?=
- =?iso-8859-1?Q?AfW3JQmvEv/N0KNPCOQJbZubshb+8Eqm4SEALJ1R0so/ozLKoAeRl7iOGe?=
- =?iso-8859-1?Q?i8eKyXtMpinS69zfEscPhGHevwEgPEOO9lRpkN3bDH/1IY3oVptT6wD4/t?=
- =?iso-8859-1?Q?UhSBP9qh0MGEO8kWJ6KSE7jRcIO7i+YdReFOmHdI8dPUoVrfN1FP?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb624946-de45-47a5-0ac7-08deec135cf9
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+	=?utf-8?B?ZFNGZmZ6NVE5OHFRV3pBbWkzcHUyVWorb3ZTRC81aW9OM0VSbktubzIzeFpx?=
+ =?utf-8?B?bHZVUkcvbHJvdlpRYlBkNTBGelozQ1hMaWRsRk9mLzg3d25haHNkY20yWFlP?=
+ =?utf-8?B?VzBIUGlFc1dsTUpic2lScDBIUXVoTXdxQ0lQeSs4VFdxYUFhaU9iaXhiWVdK?=
+ =?utf-8?B?MmI1Qk5RZC9LYzFzOE82TlVyNDJYajdwb2Nkem5iOTJFa0h5NGRuMUZPamRr?=
+ =?utf-8?B?TEN6U00rMGQ2RnVqVDVYcE1NNG9ONlRYWmRFcXlSb0h6ZnJjdTdlYWNiNlIw?=
+ =?utf-8?B?bWdMNlBOV0FLY0pVVlBiNmZjUUtRajZBMHJydTI3cG54K0ZVK2lxZ1hXSUVz?=
+ =?utf-8?B?Z04xU21qMWJENnpOeWsvN0RJczNzaWdVaC9Jak15MDdFb3k2RU4yMkgzTXJO?=
+ =?utf-8?B?bG9iQ1JjeVppbXRLUitEWGF3bHBuN0tuNVZMVFlsejV5ZG5zbzZ3a0NpeFB3?=
+ =?utf-8?B?VGxqcUhmbE1kQ1hZdWphU1p6QldiVitLREFIVHcvdGtiMjFjUnZLNEdDcko3?=
+ =?utf-8?B?SWtYWXBIcGljYTZXK2t2VTNaUWN4OVdBaUxobXhLaHpEZUhFRktoQy9vQXpz?=
+ =?utf-8?B?empUazY3TFNHY3JLazQ5cWt2OCthdmZrSFFQTUhUYzgzNG1BbTVRMkoxdXRV?=
+ =?utf-8?B?TktHbHhmbnJZUlNlVDlKUU9JSVBpN05oMDdodm5tSnZUNGlmUlR6bmEySDFT?=
+ =?utf-8?B?cy9iVHQ1RHE4OUR1aGhmNXRUcXV6aFYvWU5mNWhFVTJ2b0JIbXYrelF6Rjg3?=
+ =?utf-8?B?aUErQlhML0piZHV1M2k5RlZzVXBrQkxLVGEwYmZqekhLNHk2bENNMXlmQ0JL?=
+ =?utf-8?B?d21jNTlQaDI2S3dQYXRQUW5ia1E2UW50Y01ERlBxTVBudnhuU1RZQ2tkUExX?=
+ =?utf-8?B?THdlbEwxK21iSUpGeWFFVThRVkVzclJBWUZJak1pWkVSUnIxbkRkYnovdnFX?=
+ =?utf-8?B?ZDk0MExFWU01cmdsblZTZlVTLzhZUE5zYXBlSFFJdGxDRjVZaU9DdmtDOFIx?=
+ =?utf-8?B?amQxbDlhYUp2V1ZLWkM1QnZTd1VnQ1dhN2Nib0JZc0JXLzArcVMwRVJ0bm9O?=
+ =?utf-8?B?YVhiSTZ1TFUyeGlmN1QzUzJZREtieC9rZU40TFVvdGowT1NqdDg5djRPbEcx?=
+ =?utf-8?B?bTl2SmdDWnJGWExuaUpMRFJOY3JYQXFsQWR2a2wweUF6Uy84dXJ3OTRhUHVJ?=
+ =?utf-8?B?aCsydUlYMVhQTnNnOEVTMWJJZDVpa09TT01MZlNTY0w2MnlYdjNCSHRBVFg1?=
+ =?utf-8?B?SEpNRjJlbWFnNTEwZm95eTFBWjVaYTJXZkVxVHNtZWxsSGN1VHhQSGl6Vmxz?=
+ =?utf-8?B?dk55ckRjNjZJQmxUeDJyZ2hxUmQrekZkTmIyRVJZVVNtRUFZRnBTVk9DbFQ0?=
+ =?utf-8?B?LzYrSEErY3lJL3ZxeW9lNWdYNGhCaGFKYkZzUThIQjRtemhwY21PcFFqQ0pZ?=
+ =?utf-8?B?b3VpTUcwd1E4UUF3WFZiWmNMOVpXTjcvYVN0NUtkVVR4QVYwS3Bjekp6SEZ6?=
+ =?utf-8?B?NGJydnJtQk90cEZhcnVRVXhUTVg4ZjkvVEJVSE9HS0RJdVQ0M2kvNTlxbGI3?=
+ =?utf-8?B?Z2U5NzRZRlJLTm9PTDRKMlhBU2o0ZXpRSE8veFhyU0dLaCtFaktua0tRUkwy?=
+ =?utf-8?B?Y3JyT3ZadWRZa1ZoajF5SzFkOXhwSEU5bEUvR0FlRGo5Vks3MTFnZjZ2VzVw?=
+ =?utf-8?B?YXNQaXFkNWJ0dDZmSS94Skh3a3lYQUgrdFdwODR3N1JGU2JDZE9qcnZjSXBL?=
+ =?utf-8?B?SFMvVkJhaVgzNnZFeVFLbzJoOFlLUC9FSWU5ZERrcVNCb2lUdGt2dHRJWlFW?=
+ =?utf-8?B?NkhKdDBiakxVNEd0RkZKOVRSQ1VwSWVhVEY2VnVyUEtvMkw2NjJCQVFyOGRv?=
+ =?utf-8?B?YW9YdjIxaFlxREI0OW5kaEVkZWwwbGg2WU9tRjVYdkloTFFwM3IwSzRSNVVp?=
+ =?utf-8?B?WjRydXBBMDRFemFPNzhTLys4RUhpeWhSY3ZlR3BYdUpaeGFKUkpGNk03dHZC?=
+ =?utf-8?B?YnAydzZOWlZVc0I0K0I0ZlA4VDh1c2JqOVk5Y2hCRnBaUVhHd0Z3SVNHYWov?=
+ =?utf-8?B?aDJtaEpkYndGZFphWkptUGJ5bnVJdkE3cFN0WGN3V0MvdVVqNU9SMXlRMWpv?=
+ =?utf-8?B?OG5vVDY3QzkyK2ZaenE1a0Y0aStlQ2VkVSs3MFNPa3dkcnczV1l1MHdaVDBU?=
+ =?utf-8?B?Z0tMVis5dW1WQ1lXQzJFUFZZejUrUmJzUnc2UDh5RmJPVWVuZnh3WGoxMSt5?=
+ =?utf-8?B?S1A1allQdS8wdHZ2dGJlVlBxKzZkVzU2Z0Ywa0xyWnhydXNDVk4wQkpnSCtv?=
+ =?utf-8?Q?0hiANHfi+Eo0VMwFL1?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 832d9677-59fb-4b9c-af09-08deec1fcad2
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB9049.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 19:15:04.2908
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 20:44:02.6324
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iumbfvPzGgRaOkgas2g+m8VXg5/p2MK0CtmcQihapokYZlwIdXvKrsjOzoA0LdZ5Q7fWDVRcg2ZJ7cWCZGlHRksOb4rfkulxJTFcmBn9BNTTfI/w64TFIIFkX41a/6jD
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7885
+X-MS-Exchange-CrossTenant-UserPrincipalName: JLh12lN7AvA5hAA+tMa2W4L+8IxNrMdJpG/26l3jTJjPgVfyWbMRGSCWBoLvwx6x5McukzjJ/di/LSb/tfsMVw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8034
 
-On Mon, Jul 27, 2026 at 05:23:25PM +0000, sashiko-bot@kernel.org wrote:
+
+On 7/27/2026 2:37 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The DONE interrupt handler fails to clear EDMA_REQ_STOP and EDMA_REQ_PAUSE if the descriptor list is empty, contradicting the commit message's stated intent to prepare for LL progress reclamation.
+> 
+> Pre-existing issues:
+> - [High] System suspend/resume bypasses `cpu_hotplug_disable()`, causing secondary CPUs to come online without the `SnpEn` bit set.
 > --
->
-> --- Patch [7]: [PATCH v3 07/24] dmaengine: dw-edma: Centralize LL doorbell decisions ---
-> commit ee61354242533ea66a01a91592b3314e404a95eb
-> Author: Koichiro Den <den@valinux.co.jp>
->
-> dmaengine: dw-edma: Centralize LL doorbell decisions
->
-> LL fill currently rings the doorbell every time. This patch moves that decision
-> to dw_edma_core_ch_maybe_doorbell(), which rings only for a BUSY LL channel with
-> pending entries. This centralization prevents EDMA_REQ_STOP completion from
-> restarting terminated work.
->
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index b419ff2becf9e..c036510dabcb3 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
->
+> 
+> --- Patch [2]: [PATCH v11 2/6] x86/sev: Disable CPU hotplug while SNP is active ---
+> commit 2ca360619d15fed203ba00f43d20453130503df3
+> Author: Ashish Kalra <ashish.kalra@amd.com>
+> 
+> x86/sev: Disable CPU hotplug while SNP is active
+> 
+> This commit replaces cpus_read_lock() with cpu_hotplug_disable() in
+> snp_prepare() to prevent CPU hotplug while SEV-SNP is being enabled. It
+> additionally keeps hotplug disabled as long as SNP is active to ensure OS CPU
+> hotplug does not diverge from firmware expectations.
+> 
+>> diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+>> index cff285d8ad8e3..e2f69fba09389 100644
+>> --- a/arch/x86/virt/svm/sev.c
+>> +++ b/arch/x86/virt/svm/sev.c
+> 
 > [ ... ]
->
-> > @@ -733,6 +743,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
-> >  	default:
-> >  		break;
-> >  	}
->
-> [Severity: Medium]
-> Will this lead to a permanent channel hang when LL progress reclamation is
-> introduced?
->
-> Looking at dw_edma_done_interrupt() just above this change, the DONE interrupt
-> handler fails to clear EDMA_REQ_STOP and EDMA_REQ_PAUSE if the descriptor list
-> is empty:
->
-> drivers/dma/dw-edma/dw-edma-core.c:dw_edma_done_interrupt()
-> 	case EDMA_REQ_STOP:
-> 		vd = vchan_next_desc(&chan->vc);
-> 		if (!vd)
-> 			break;
->
-> 		dw_edma_finish_termination(chan);
-> 		break;
->
-> The commit "Dispatch DONE interrupts by channel request" explicitly claims to
-> restructure the code so that STOP and PAUSE still have state to update even
-> when no descriptor remains.
->
-> However, the implementation adds if (!vd) break; which completely skips the
-> state updates when no descriptor remains.
->
-> If a future patch asynchronously removes the last descriptor before the DONE
-> interrupt handles an EDMA_REQ_STOP, won't the channel remain permanently
-> stuck in EDMA_REQ_STOP without completing termination, leading to an infinite
-> loop in dw_edma_wait_termination?
+> 
+>> @@ -526,14 +525,21 @@ int snp_prepare(void)
+>>  
+>>  	clear_rmp();
+>>  
+>> -	cpus_read_lock();
+>> +	/*
+>> +	 * Disable CPU hotplug before enabling SNP: no CPU may come online
+>> +	 * without SnpEn while SNP is active, and none may go offline during
+>> +	 * enable.  This keeps cpu_online_mask stable for the check and the
+>> +	 * on_each_cpu() calls below, so cpus_read_lock() is not needed.  It is
+>> +	 * re-enabled in snp_shutdown() once the firmware disables SNP.
+>> +	 */
+>> +	cpu_hotplug_disable();
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does cpu_hotplug_disable() reliably
+> prevent secondary CPUs from coming online without the SnpEn bit set?
+> 
+> System suspend and resume transitions bypass the sysfs hotplug locks. During a
+> suspend and resume cycle, freeze_secondary_cpus() and thaw_secondary_cpus()
+> directly invoke internal routines that offline and online CPUs, respectively.
+> 
+> Because snp_enable() is not registered in a CPU hotplug callback, if a
+> secondary CPU is thawed, it appears it would wake up and come online without
+> the MSR_AMD64_SYSCFG_SNP_EN bit set. Would this leave the system vulnerable
+> by allowing arbitrary host access to SEV-SNP guest memory, since no RMP
+> checks would be performed by those CPUs?
+> 
 
-Is it true?
+Pre-existing base SNP-host behaviour, not introduced here (as tagged). An SNP host doesn't support suspend/resume: 
+SnpEn is set on all CPUs once at boot, immediately followed by SNP_INIT, and that state can't be rebuilt on resume without a full re-init.
+So a CPU coming back online without SnpEn can't occur in a working config.
 
-Frank
->
-> > +	dw_edma_core_ch_maybe_doorbell(chan);
-> > +
-> >  	spin_unlock_irqrestore(&chan->vc.lock, flags);
-> >  }
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260727170323.2321369-1-den@valinux.co.jp?part=7
+Thanks,
+Ashish
