@@ -1,160 +1,172 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7258142253F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:44:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163457; cv=none; b=c+wexhZHuPTl1fiS2juDd10q3PLtnVu3hDJMuICGig3Qugoac1x3j3w9HogU1mjG0GbWWm1oTA16fdIqz6gvGXQ1VxcFJd0Uc+5n6GNDS724im9eFLclG9FSws7khHJchS1NPoXgRTEvUD3rRfwiTyP1eYDIO6klWk8mU7ckpAQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785163457; c=relaxed/simple;
-	bh=8hGJ1B+UPyTExZ68UQ3ehgB1l97/eam7gk5uPxJ09sQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=JImpIxMn2vg1+DePby11he56el7OUl2PB9V8u7z/6bOolwLC9MfL3ay6u8K7uKDQKL9hlxriisaBxOVXCNpU3Z2L9H7vaPu9yDEw8TzNO1KlF1Os3b56QXP7E3T6y4Bt9RO1noZV1FlcEqMoh86esaD6ml17MsQ9POUSurqkizk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id BA741202058;
-	Mon, 27 Jul 2026 16:44:01 +0200 (CEST)
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1woMYj-001ZQY-2A;
-	Mon, 27 Jul 2026 16:44:01 +0200
-Received: from pza by lupine with local (Exim 4.98.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1woMYj-00000000Jvu-2PF1;
-	Mon, 27 Jul 2026 16:44:01 +0200
-Message-ID: <331adad68e3913cae30d8b1c5764177affabf60f.camel@pengutronix.de>
-Subject: Re: Re: [PATCH v13 5/5] clocksource: dw_apb_timer: Use reset array
- API to handle all resets
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Xuyang Dong <dongxuyang@eswincomputing.com>, 
-	sashiko-reviews@lists.linux.dev
-Cc: ukleinek@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, 	ben-linux@fluff.org, ben.dooks@codethink.co.uk,
- linux-pwm@vger.kernel.org, 	devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, 	daniel.lezcano@kernel.org, tglx@kernel.org,
- ningyu@eswincomputing.com, 	linmin@eswincomputing.com,
- xuxiang@eswincomputing.com, 	wangguosheng@eswincomputing.com,
- pinkesh.vaghela@einfochips.com
-Date: Mon, 27 Jul 2026 16:44:01 +0200
-In-Reply-To: <63b2ba86.8bcf.19fa2e572f4.Coremail.dongxuyang@eswincomputing.com>
-References: <20260724084153.1473-1-dongxuyang@eswincomputing.com>
-	 <20260724084437.1850-1-dongxuyang@eswincomputing.com>
-	 <20260724085527.D31BC1F000E9@smtp.kernel.org>
-	 <63b2ba86.8bcf.19fa2e572f4.Coremail.dongxuyang@eswincomputing.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E2B37F8CB
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 14:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785163789; cv=pass; b=GaN159g2RW/cjPUAJDlgd/xO2nYFZ02biEi28wCV+8q4m2RvGGduhbL4oM1jKo2ft/EmkXn5sEYQrT7UhpCoW6QvUK/xqQAtnEzjPmeCktscoMOyHrNxmQyUHWqVRuLWbqMZAkeeRxFOYY5S23LMv3vkZHmv32Gu83vgXZpZr+Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785163789; c=relaxed/simple;
+	bh=EZ6N7WwUNzDpEf8ny3J1wHBY1ffRCSNErHzD1BJrUp0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u/MsMiW6hlKavL7SmBHSHbckG5HhTYbdLFL45N5Wpi5gATaviC6qd/1QtL4/2nV//q36YZBr98fOAPFAw8ZQLE8T9vc2DkUnSQ3LvUcpu7nNRIuo1ia1mZsW3MCh60A7Zy7Imaz7Slcl3j/BI8SHxyXyNeJWZk/xJJDwWNkfMsg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UnJOnb0V; arc=pass smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UnJOnb0V"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-667971437d6so3193654d50.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 07:49:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785163786; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UwPpQMpbZa8CzNkn82p3F4qE/sImS1Lia40h1xUENqB1rmWo2ndeIWmR2VLuMATRxs
+         ZYw+d46az6WP202BcG6/HcSDtbgWCcYBOJmGvCNlfYQTs8wTucJc3Ng3J/d2R/RQD0EM
+         Viepg9DoSTPB0V1Yz1h75LCwxXm0P8HxFKA/91w375+FWideUsHtFqCZivDEbmPjLO8M
+         WDDtAVgiLWbnXF2ZjE4s/850OBm3JfkBZ1vLAPLd4FI8zAq7dvptk4o4Jp+V8nf5Rxga
+         kk2o5TH3igLdBgn0I28HLT6qySdg3gtFUNwIl7h44/lsMxlWYjiGKXo3u0VAxQDDg4tS
+         X7Dg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kYEa2s2zvLJSrqj5at2d+sAEkPq5+tUouTZICeurIS0=;
+        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
+        b=qXLdh9FHAjiglL0CODJ5PxBn23zCHqm6uZSi+kzqTWhHT4DS1hdzSTg/zkGgxZNWQL
+         oOLYkbZgxkCoZlKSS+Pz3LtRS/+ovJBOPwz4M4FgKxBsukGwaLOYJd4cnrYBqf3PGQYb
+         kj0hrObBgy6FSZZPoexRSHfnrIqaIZIEx2tUTJgs1s1Q2SogbtmVw+d9VWtioT5av9HH
+         io+hOca66nVManRHGMUYE/i6gSwXU2rosAWviFbYNtNZcQUF2sr0RUaX3UEzme7P961z
+         iFV2AU97XrbeqLLs9sEPN9VL/zX/dtJgIgL5zskwGzFXuygZb8C6gaeWIfbUsMjLnELb
+         +IaQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785163786; x=1785768586; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kYEa2s2zvLJSrqj5at2d+sAEkPq5+tUouTZICeurIS0=;
+        b=UnJOnb0VOWRwpjZBlc5BXte0J0LuneTkM9+6sp0Kw1+89ghxBnH9oRcNXruME5QPqX
+         5MAr77fJpkSR38KGY7svLDj8Tsna8LRlRIT1Yi1XbfGClfXDs2ljvNbQY3Gr5Ba09xOm
+         h9is737tGWzYZttCx8MSuc4Ge0HHnq9whx9cyR3lOPaVzSRWWjP4SN9uAL4mTTUWa0hL
+         3Ybdn4beJOeR0QDVLRtG6yIlHJA9SZIEx0MF9xpZ6U9qfgnE9+7LIEoQHsVveP9bKr4q
+         tvpJWwXVSJlbxjdKAbuvd3nlKHYpR35JBw3Sds/O31r0wdpmI1vg264Q41uELZ7EfjNU
+         y23Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785163786; x=1785768586;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kYEa2s2zvLJSrqj5at2d+sAEkPq5+tUouTZICeurIS0=;
+        b=Ksa5HDmGf3H/BDwYGHK6Mb9oiiP65BuuoUVmoK2i45T/NTqmsxOu+W1fVNbkCOhjeB
+         tbuKnddbxLV9URkazhh5d40GfozNSXJq+dVxkBsbfdYAiAQlhZudjnw1vkPbFEnLAIrb
+         KVOd1pc51pP0153I6jZXk5+IsJ0Ofx1o/RH8AGSbyJ4XbVpDol4xVGPvFckPYDjkx58I
+         YBwJDhYw03Jk4eXDnVmMjWmPSq3MGWc51KOyM6/g9gT6lnEd30lrYWlWNufn/8lc2U9N
+         QDlTpuCZdqAomn+QLWlVYPWou9aBOdAzC3DPDAQU2Bv/8VyPl9SrxYjkrAffGxVcNDzu
+         W/Hw==
+X-Gm-Message-State: AOJu0Yzzvx6W9kIYS/WhAyslawOpMkaTQ3NFli9vbBKaa1zITYejqmYg
+	K8ceBt7Q1tgpLIuXrALwsCaeKsyOKHsZ/eHdn5Io6O9XO/qyLeWOwJSt16vXB4zltkeqVI4OPUT
+	OT+8KfQv3GiFA89EAX8T2P6610SiUPaf6hg==
+X-Gm-Gg: AR+sD124bgkAVk78VgYXN8vS+PyhxTX1ELB/H3OA8b+/MFGu8t1ttvD7Ofa6nxpuWTz
+	sLeUrtmBIeU/w2S5Ru7uFsgvXkFscbTagLk8aLUutQd+AnlTQ3lkeP3LAIlJzNQUVYYA6Ra7blR
+	ukpqV8yfPkGZow/UngyLxNiDr4VSfRLXpBR0mYsmy88qupVgAOeHInHT5Z7lwVgs8vEZoBTMvSS
+	j/3D3PpP6IY44Gn1HxjWCJxjOvAaXBAmn3bQuLjMiWS99QrM08rFcSA8GPv9OM=
+X-Received: by 2002:a05:690e:140b:b0:666:2274:f9f5 with SMTP id
+ 956f58d0204a3-668c78dce2bmr2427658d50.37.1785163785046; Mon, 27 Jul 2026
+ 07:49:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260708165929.2233934-1-tmaimon77@gmail.com> <20260708165929.2233934-4-tmaimon77@gmail.com>
+ <20260708171530.F04951F000E9@smtp.kernel.org>
+In-Reply-To: <20260708171530.F04951F000E9@smtp.kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 27 Jul 2026 17:49:34 +0300
+X-Gm-Features: AUfX_mximjZZDLW93j8ibsSrwKTowh1hhbqibaBu2LPs1RvNrBb_F3SNPEJGJJ8
+Message-ID: <CAP6Zq1hFxLD_ajVs0oaWi0Qg_G9O7yi1d_2kV0LqFbS9wm1L7g@mail.gmail.com>
+Subject: Re: [PATCH v8 3/4] arm64: dts: nuvoton: npcm845: Add peripheral nodes
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mo, 2026-07-27 at 17:26 +0800, Xuyang Dong wrote:
-> >=20
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [High] The patch dynamically allocates an exclusive reset control arr=
-ay using the unmanaged `of_` API but fails to free it, permanently locking =
-shared APB resets and deadlocking other devices.
-> > --
-> >=20
-> > --- Patch [5]: [PATCH v13 5/5] clocksource: dw_apb_timer: Use reset arr=
-ay API to handle all resets ---
-> > commit 015418d722b66a454000fd7a9c2606bea3f7e18b
-> > Author: Xuyang Dong <dongxuyang@eswincomputing.com>
-> >=20
-> > clocksource: dw_apb_timer: Use reset array API to handle all resets
-> >=20
-> > This patch updates the timer initialization to fetch and pulse all rese=
-t lines
-> > specified in the device tree by switching to the reset array API.
-> >=20
-> > > Replace it with devm_reset_control_array_get_optional_exclusive() to
-> > > fetch and control all reset lines listed in the device tree, ensuring
-> > > every line is properly asserted and deasserted rather than only the f=
-irst.
-> >=20
-> > [Severity: Low]
-> > This isn't a bug, but the commit message mentions using the managed
-> > devm_reset_control_array_get_optional_exclusive function, while the cod=
-e
-> > below actually uses the unmanaged of_reset_control_array_get_optional_e=
-xclusive
-> > function.
-> >=20
-> > > diff --git a/drivers/clocksource/dw_apb_timer_of.c b/drivers/clocksou=
-rce/dw_apb_timer_of.c
-> > > --- a/drivers/clocksource/dw_apb_timer_of.c
-> > > +++ b/drivers/clocksource/dw_apb_timer_of.c
-> > [ ... ]
-> > > @@ -29,9 +29,11 @@ static int __init timer_get_base_and_rate(struct d=
-evice_node *np,
-> > > =C2=A0	/*
-> > > =C2=A0	 * Reset the timer if the reset control is available, wiping
-> > > -	 * out the state the firmware may have left it
-> > > +	 * out the state the firmware may have left it.
-> > > +	 * Use array variant to handle multiple resets (e.g., timer
-> > > +	 * and APB interface resets) if specified in the device tree.
-> > > =C2=A0	 */
-> > > -	rstc =3D of_reset_control_get(np, NULL);
-> > > +	rstc =3D of_reset_control_array_get_optional_exclusive(np);
-> > > =C2=A0	if (!IS_ERR(rstc)) {
-> > > =C2=A0		reset_control_assert(rstc);
-> > > =C2=A0		reset_control_deassert(rstc);
-> > > =C2=A0	}
-> >=20
-> > [Severity: High]
-> > Does this code leak the exclusive reset control array?
-> >=20
-> > Since of_reset_control_array_get_optional_exclusive is used instead of =
-the
-> > managed devm variant, the returned rstc needs to be manually freed.
-> >=20
-> > Because this API acquires exclusive references to the resets (which the
-> > comment notes might include shared APB interface resets), exiting
+On Wed, 8 Jul 2026 at 20:15, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Missing required DT aliases for the FIU nodes, which will cause =
+the FIU SPI driver to fail to probe.
+> - [Medium] The `fiu0`, `fiu1`, and `fiu3` SPI controller nodes are missin=
+g the required `memory` register region.
+> --
+>
+> --- Patch [3]: [PATCH v8 3/4] arm64: dts: nuvoton: npcm845: Add periphera=
+l nodes ---
+> commit 206c681ed8ed3430aac99224e79975aed3d5da1b
+> Author: Tomer Maimon <tmaimon77@gmail.com>
+>
+> arm64: dts: nuvoton: npcm845: Add peripheral nodes
+>
+> Extend the NPCM845 SoC DTSI with the peripheral controller nodes needed
+> by the evaluation board and downstream platforms.
+>
+> > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/=
+arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+>
+> [ ... ]
+>
+> > +             fiu0: spi@fb000000 {
+>
+> [Severity: High]
+> Will the FIU SPI driver fail to probe due to missing device tree aliases?
+>
+> During driver initialization, spi-npcm-fiu.c calls
+> of_alias_get_id(dev->of_node, "fiu") to determine the controller index.
+> Since the fiu0, fiu1, fiu3, and fiux nodes do not have corresponding alia=
+ses
+> defined, this lookup will return a negative error code.
+>
+> This causes the driver to return -EINVAL and fail to probe. The
+> nuvoton,npcm-fiu binding also mandates that all FIU controllers be
+> represented in the aliases node.
+>
+> > +                     compatible =3D "nuvoton,npcm845-fiu";
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +                     reg =3D <0x0 0xfb000000 0x0 0x1000>;
+> > +                     reg-names =3D "control";
+>
+Yes, and it is defined in the DTS file and explained in dt-binding.
+> [Severity: Medium]
+> Will this cause a fallback to slower indirect PIO reads?
+Without setting the memory reg, the driver will use UMA commands to do
+the read operation instead of direct reads.
+>
+> The fiu0, fiu1, and fiu3 SPI controller nodes omit the second 'memory'
+> register region and its corresponding 'memory' reg-name.
+>
+> When the SPI controller probes, it looks up the memory region using:
+> platform_get_resource_byname(pdev, IORESOURCE_MEM, "memory")
+>
+> If it fails to find the memory resource, the driver sets desc->nodirmap =
+=3D true
+> which disables direct memory-mapped reads. The dt binding for nuvoton,npc=
+m-fiu
+> requires both 'control' and 'memory' regions to be specified.
+>
+> > +                     clocks =3D  <&clk NPCM8XX_CLK_SPI0>;
+> > +                     status =3D "disabled";
+> > +             };
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708165929.22=
+33934-1-tmaimon77@gmail.com?part=3D3
 
-Is this true? Do multiple timers share the same bus reset?
+Thansk,
 
-> > timer_get_base_and_rate without calling reset_control_put(rstc) leaves
-> > these resets permanently locked.
-> >=20
-> > Could this prevent other devices on the bus from acquiring their shared
-> > resets during probe by returning -EBUSY?
->=20
-> Hi Sashiko,
->=20
-> Will change devm_reset_control_array_get_optional_exclusive() to
-> of_reset_control_array_get_optional_exclusive() in commit message.
->=20
-> Add reset_control_put(rstc) after deassert. The next version will be=C2=
-=A0
-> updated with the following changes.=C2=A0
->=20
-> -	rstc =3D of_reset_control_get(np, NULL);
-> +	rstc =3D of_reset_control_array_get_optional_exclusive(np);
-> =C2=A0	if (!IS_ERR(rstc)) {
-> =C2=A0		reset_control_assert(rstc);
-> =C2=A0		reset_control_deassert(rstc);
-> +		reset_control_put(rstc);
-> +		rstc =3D NULL;
-> =C2=A0	}
->=20
-> Do you think this change is correct?
-
-It does allows multiple timers to repeatedly assert/deassert the same
-bus reset. Is this what you need?
-
-Semantically, it is wrong, though. By releasing the reset controls, the
-driver states that it doesn't care about the state of the reset lines
-anymore.
-
-regards
-Philipp
+Tomer
