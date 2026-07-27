@@ -1,88 +1,66 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011040.outbound.protection.outlook.com [52.101.70.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C732B12F;
-	Mon, 27 Jul 2026 16:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16E741D62D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 16:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.40
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785168453; cv=fail; b=iMHW8puzu81OnevjT4u+bQ4LWkmba93bCXmJgerlhLYIN+N4eM96eXALRYgs3Nh5sy3NTX8VBai28AfOIHk1UhznMayv7ejI146pmCAkh8Vn1mExhhvR4nm6DjNW1rpSO6RJ9yR/b+pkt0TPzlEVGW2Ut6qfx7ti1+y31sj4QXA=
+	t=1785168788; cv=fail; b=Sd4yExM0FIW9gmKO3OTkpwCkwq2MNskH9QjYkSYDkPZPIIGRc8U4NmYQrdpRNdrgipvfunB1bIVy80RDnuBUsPIEoajzdb7vse1J39ScsM9Z5GYOSl3pFvpGqTXASKNMq/Bma/VZcpTAJiKGJQjDwk2artgeRDtiVY8zEDJXPYQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785168453; c=relaxed/simple;
-	bh=lHO6wwZDoFMxQMrQ1bsgAbg1+LZUYVkIeOEUiYqU3ZA=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gs7Hryl4r5CTxuMWYlbfRJTHk7+9BM+moZkytS4mRDu53qIF20INyTbaVzppwhSpSmLtH3+mbhIsP9sRcsjsiOIbeD0eX72FZj5HCJl/TzZTmC0PCSc3MldGMnYzKOtKYHe/CPJ0OYSEEGod3qoTE9GF3idISQrNf5pIa6V4bMU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=SG8KMA2O; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=m273frP5; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	s=arc-20240116; t=1785168788; c=relaxed/simple;
+	bh=nS5HKpb/M0b7pcZJjTH097Yk4CAjpG+ht50wVvvZ0GA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=KCfyLnq5/RnOVoiEyaxpltfQ2k9RDAI/EBS15q01dctY9wmXAdEvPYYokhUYbZvY1PDWtiPaVqWPXZa78wRyxUSwTtHvWKjMLMSEwDocOkAjjuFc4ZX4fF517Z/YKtaXReqZUL1OU5+mRLZ+2mch+MLFujcTbpv/mTByITvnMYk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=oXbBgHN0; arc=fail smtp.client-ip=52.101.70.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="SG8KMA2O";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="m273frP5"
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66RFtVsn2610532;
-	Mon, 27 Jul 2026 16:07:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=kmV/RVDsZBcaLnhSdMqtR1EHroeDP0i4/Jpov4XlFiI=; b=
-	SG8KMA2O9GmeQXXpCUNal8fCutHDSU8mmwzJSmlYV5HRcpj2G0XjPgF2+SnV/dJN
-	4KQTrrol05/iYtt4gPUxM8dq+Q8VKIuobLqCEYsUPQXe9dpJ+kwqnMI29pbHH9qe
-	OvLQ/sjxwIRr91RC7twaIOTas5QZMcq5MlIMEqJLauoGjTZWVrUXo7uAHz1VbtF2
-	4KWvtg3OoxPOOBwTcxD/LMSS22r+WHyYhmiTkRrLNLC2if/QWRk6uwrXvrm/+uHF
-	pRIDPTx5/eHJdKm6AV7AnB3/H0cc7v7LZA+yuaJBNordnKcriK2BxG1/P0ja2rvy
-	YW5v8P+oJlfsUovWpBHl/g==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fmr3pj3w3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 27 Jul 2026 16:07:30 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 66RG588g024269;
-	Mon, 27 Jul 2026 16:07:30 GMT
-Received: from sn4pr0501cu005.outbound.protection.outlook.com (mail-southcentralusazon11011070.outbound.protection.outlook.com [40.93.194.70])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4fnh85vmnp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Mon, 27 Jul 2026 16:07:29 +0000 (GMT)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="oXbBgHN0"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dC3ZWpHrMQznHCFBtZWx7JeRrw7y8hQDp6aqR+CGBulE9HpTV0yTvGWMBKD65EfEbKopTmFZHmXRst7nnahlDqUJdVLn2VB4v7L9Ju8tQbzyGVMn+QKRakU7O9p08fKshHxMRyIe42vV5Qyy6jsyfDPOnkM5wScG8T82/+WqvgRmB74BF28vDXD33+OIAdOopXXW5/9nq+WJ8Yu4XgBNIHj3X5SHpTnA0E9bfcYbOJppd1/kiNio1gfJBL8Km8ctgieyuOSx+MdZaHpKJxueTGECZP2w+n2CqznyRbRoFG6DeI1Jh0H2U92qPIX34ghsAjBigBtyqpf7o2tE0jXwFw==
+ b=HdaTtQ+CCbUWR1946wZTJnmLGjf1zv9GtL4euVurW+0hLToj8BqD9MXyukp4nG9SQnkezQDrR0ALSxJTg2PQoRzMjNblEfIBug8612CEoHBShDrEgAUZeS/wOOPOfC/jsBSCLp8YUJCswa1nsBCGZgkv2v7wk4R62IJ0VrbD/w0+edayM+V2DLQTuG0L73QUoELz6J9hH4Jmi8QmZJSdIh6HYEaSsypnm7pNaFavG6+Pt6/Xq5my8aoCvMwgK+LPH3iggbendnsribDFsyLPW0F0TkOspkeBPzY+5tBaQzwBgxd7U6diK9soAVx4NkPjDqMNAFCE3JdPLJkyrOrCXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kmV/RVDsZBcaLnhSdMqtR1EHroeDP0i4/Jpov4XlFiI=;
- b=CcaDi8ODfjhax3+knP5+nl2d1FqIzz+e2gpbyVl0JZZNP1qM8jPvVYCf457zbCEO6eygmu97ARJOuyCs0wiiLE3uoUTBxI3o9i66MN2ZVbZPw3EJhvN0BQ/V0uk6MJQJxgOZKqJZrWXZhXS1BrNIPLX+Hmy39oNgq4ZJkgTJq3cd3Z3xEUNXF/U2kxVYEW9bjS/dDkhSFav9+9sfDjECQQo6gzSpRHxAVYT1fpD8t/YX0DnHlT/gQOz4lEkhuUjsziw4SA9FnuVHjyR1GpfVwu/ajizrb5r0ea7/E1/ulwa0GPMGFlSr9HBYE3V2vdRcuLaqqOtuVt8/gS4+Vie1Aw==
+ bh=C01HlJ31ej6g7wOqEHvqgwL6P32EG8YXzEs9QTwqsbU=;
+ b=smMCDXg0o6M63im0OXWHhdPqh2GqrZhAJ35NpQOvzduOneotQ3VnIdzLjWof8uiFM+bcjFDbqmzc/y1mDyfxdySgb8TPXyie5WDWoc2zPePZADgK223wSfbxKxmPewyv5Us542KqdAS23BALkHZKyN4GF4rqDpxcE9QKFk4xK7DuvpZxbzz6oEIvBZR1Su6jkEeYlU5znaFtgaCr6je9BXfJZtja5d39E2IHoulABqWZRkCSvmR0K5GRYfH5fAUEY6fe7yald2+o5iBoggwUgcCS8eX0upbNASsdlPEfTSbYaisCX2dKT1AahbcR6DltWsDj082xtDRSywFo4gqFEw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kmV/RVDsZBcaLnhSdMqtR1EHroeDP0i4/Jpov4XlFiI=;
- b=m273frP5YcBP8SiUUuAQTywgRT3pAYMDeECiV4Yj26KXoq/b/gOoFnv6+TUCz2UBqy65bAJVaVOcVgHzEIXuqbmrwecOzUSk4/pvwxWk0xgZGQQDOpS5d7is2ahHv5Zlkc15GfMEHiI1nqOpxNXHJhHaFUfrq/uMXw7vxbzOL+o=
-Received: from DM4PR10MB6229.namprd10.prod.outlook.com (2603:10b6:8:8c::12) by
- LVUPR10MB997810.namprd10.prod.outlook.com (2603:10b6:408:39e::16) with
+ bh=C01HlJ31ej6g7wOqEHvqgwL6P32EG8YXzEs9QTwqsbU=;
+ b=oXbBgHN0A7LWHXhKenPAklRkH0TPfk4F91xa/vewaE9E0Dk8qz9s5Tb257u7lPoMaBUw9hMdyYOxslqIRiE6iKJS2bpaC+eAb8AjNafLfA50uGhYph2IH9Z2H7DvfnG/xOVTZNiXtEkSeCQkE+0kntZUSFHRLr0mOhVE2lDW5lQ435+GMaY+Ay0D5wmwioNbDWisTMl+Q11w7rwd1H6OWKCQn7SSp9/bsy3RYUea3HKkllzyivPtJL++pyKkAiOBgsEkYKg61GiFFXavQzILUdGX6qwbKDG2NuX3o3pAc8arifoHRpMWjwJ1SKANc7gAx7YAgLeTaR9zt05JfUyW3Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by VE1PR04MB7311.eurprd04.prod.outlook.com (2603:10a6:800:1ae::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 16:07:17 +0000
-Received: from DM4PR10MB6229.namprd10.prod.outlook.com
- ([fe80::867:63e7:13fa:fa7d]) by DM4PR10MB6229.namprd10.prod.outlook.com
- ([fe80::867:63e7:13fa:fa7d%6]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 16:07:17 +0000
-Message-ID: <ae7e6c1d-bd37-4d7b-84d6-d37949d842c3@oracle.com>
-Date: Mon, 27 Jul 2026 17:07:11 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 19/27] scsi-multipath: provide callbacks for path state
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-References: <20260727144234.3802948-1-john.g.garry@oracle.com>
- <20260727144234.3802948-20-john.g.garry@oracle.com>
- <20260727152429.526281F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.g.garry@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <20260727152429.526281F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DX0P273CA0104.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:5c::18) To DM4PR10MB6229.namprd10.prod.outlook.com
- (2603:10b6:8:8c::12)
+ 2026 16:12:58 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 16:12:58 +0000
+Date: Mon, 27 Jul 2026 12:12:50 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Akhil R <akhilrajeev@nvidia.com>
+Cc: sashiko-bot@kernel.org, Frank.Li@kernel.org,
+	alexandre.belloni@bootlin.com, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org,
+	linux-i3c@lists.infradead.org, robh@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v6 04/12] i3c: master: Add support for devices using
+ SETAASA
+Message-ID: <ameDgqvp2pAKDEsE@lizhi-Precision-Tower-5810>
+References: <20260721043058.C02B31F000E9@smtp.kernel.org>
+ <20260727125745.157384-1-akhilrajeev@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260727125745.157384-1-akhilrajeev@nvidia.com>
+X-ClientProxiedBy: PH0PR07CA0113.namprd07.prod.outlook.com
+ (2603:10b6:510:4::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -90,196 +68,215 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR10MB6229:EE_|LVUPR10MB997810:EE_
-X-MS-Office365-Filtering-Correlation-Id: f016c6c9-0d49-482e-e7e2-08deebf92117
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VE1PR04MB7311:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3eab62d2-7f53-4910-82f5-08deebf9ecb8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|6133799003|5023799004|4143699003|56012099006|10067099003|18002099003|22082099003;
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|19092799006|7416014|376014|3023799007|11063799006|10067099003|56012099006|4143699003|6133799003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	BeiFpBF0WOIA9Neko1LmFsFpPtaPC6VEcgy5NfcFBlaoqIqKDGzyh4tnsH759ONzGjmcNQQyfLmYX6kFmRDz3gpiEZlWGF8xEYFRnS+3WOX8WohMXkmDdputhVeC6ensiGtGlABcHt71UYYcYJV3RMV+BHPSgYyI5UQAbp+U8M5LpAk/0BLJYg3PmvyP8Al1WZiVx3Go2siYpswTdhdIsqYUWOTz8CC15alKYqtCMfv1BrrfVgqhDCNqHfIxwznsZ3nYl6ya6yr/QOecqpSVxoshop5blgawUfu9rGLRWSNOcopcdXUXTePfmf4CmRvYNY2hjvz7mughy5696nEBnocyaXn8x97KgXXzNpriyzTcKCNgzB6pwFxUzOuL6Sr93I1vtDW+D4gUKYrZYYE5rvDiIrAuDKYWDeUOC3trQHqktc7WWLg19hN67s1P0xXJxHdfwAmJCf8hYLKdf9dw/vxp2RvowNRXukRRHrcHK934444zJwQdrXdYYyq2x5g7ZLY8hYGndRd5Y9+TNlKeCFJzKAZtTXuJeDuPtxoHaQOijgF+1BAOggqFmhvAcQbiXJbnCOQTdh7yQ20h5KbcJ7ZvJYJmqeEcD6GlGlIfBCxfyMX3WdzmbRvS208Ph2to3VM8P2BTj8gSInS+uvOTVFFAI+nj4fOByJN1+R6IqhI=
+	vRdE5CHhbcbWSDPj9uvPQtJwnMgbPr3CMCnH0qNRxZYPa5MfJF/TLtOmKiQWMAB2a/vNmdpH4PNs/rMMAaVwE52h43x/ZX2sgp8nvNcXYxHHkGJy3fG5rmOZJfDTTtLZS0PEArcm2xlYk429xZ2gZY5gfdlxVpKtu5grhgwXWPkz9+33eFQwikAyFDD799KytXIG4/2LzL8WWoD4LIwsvwFEKIYM6ROwm4Ztn4muyWswg+sJKAxEw5rEnIazu94P5SaIqktoAGtCiBnttw6CYNwGMZROhwGHiwS2eAFUnX+xvGKtnLzMqp4ghE8T/aTdXyqxYLDiDat4WVQc8yI7QfANkcXeXt5UbDaGoNJVv2wN+M1wa8Wj9AeA8mCyBn3bS+/3HmnL1uYHLb/kDsZPcyoUsyZ290pUwvoLpYeXQY+Tzy+o5shajh+BwdivWD8OtlDQN57uPQNqhOsjXArj7xXG7kXb+wsWO3ejWpRQCvy8XJfl7CLpdzdnT77iHPoSObNXTw/2Bfv1cItqXNcy2BOa2plDy/iEf9fH84+tai7chqS+CC2tSTwFd5ptauz3E2B+ZuhqG9n6WAJ6hpPrDRpIpbcDXJfcPOiE2M5RbaIuy28Z+ncM9BCcl9ijR97o5BvbWvyAPYmN+5G0MRaxBv7hQSjcuggPKTH5fgXIsZs=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB6229.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(5023799004)(4143699003)(56012099006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(19092799006)(7416014)(376014)(3023799007)(11063799006)(10067099003)(56012099006)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?d1hnMDBUU2dwZ3BTMFhVc1ZRdUhVejdnNnhsbnhVUjU0TGcybWlOOHE0Vzda?=
- =?utf-8?B?enZKK2c2a3ROdnBBZGFNbGZUWDhXbjl5dXFVcHdQeEEwWkx6SjV1aWVrMTlC?=
- =?utf-8?B?eGVFNFdVa1FabEs4WVpoVFBhd29ZeUxKUHdpaW1BNm1CWlN1ZUVONHJXeGR5?=
- =?utf-8?B?cklPVC9RV0NZZkJzUUMxVW5iazNCdE1JTVUwZG1abk9pdmRWV3hUTkhvNGZ1?=
- =?utf-8?B?MXMrL2QrdUFyazgwYmZYeXU3aFNaM0U0YXM4NW1TZGtlNDJVMDVQMHFLV0Fj?=
- =?utf-8?B?ZjJuT1g2SXdPME9od2JtazRKck1MZnpjbVBoWkRxTS8xNmV1NGJjVlBNbVRn?=
- =?utf-8?B?VmJIdlRQMGE1VHZGdUlsa0NRM2tFRW1NSTdhazdoV0NpUVVKTElnTHhUUFhE?=
- =?utf-8?B?WHNaR2ZGWVI0OXhudU5peHAzNkpmd29RbzJNVitRR1ZjLzhnQzhRMXllYVJJ?=
- =?utf-8?B?bXdra1ZsSjM1c2NBRnh6eUR6TFRhVGFmR3UwTnA1cWF6dGlUb1duQUFUOW8v?=
- =?utf-8?B?em1uejJvN1JyVGI2WUNFN2lPTkxYTXJQVlE2ZmRUOXhMUGMzVlBGTVlSZWNu?=
- =?utf-8?B?MlJ3Q2kwOXdTangzTW10cGhwWmpUTnJDZmowTFg0RXREbDN2blhBTGRpZkMz?=
- =?utf-8?B?OUZRMXliMUtVeHF3TTdSdTJaT0NodlllNWRyTmxmeWRSd0Rab3JMaXFxK2hw?=
- =?utf-8?B?YjQzOGRFU1lLb2JNVmErVzd1Y3lKYUp6elJuNkR1WEJUdjNBZUxJUTVkTnpv?=
- =?utf-8?B?WGdVQnJsd1dVRlR6MFpJVmxKOVFGL3dKaUdyVlQvZ2J3cnlBY1ZmZ2NUVXZM?=
- =?utf-8?B?K3FVY3AreVpNdWZtSTZFd0tvK2dOc01INEhyUG5XSDVoa2ZZTFp6ckl0dHFL?=
- =?utf-8?B?SDRici9Yd2RCeDVGclJYMER4SkJwMllQbThHWnZxZHU2YTJsRWNac2xsT1Mr?=
- =?utf-8?B?aldHSW1ZYUt2Rm9Yd0JxV0c0d3ZUa1hVM2RBM3JYbXJtNTEyb2NlMmJiMDFB?=
- =?utf-8?B?V2YwbFg4anlVcnpOT3RyYjhTSDFDWjZNUzJZeHhacVdCZnpKNlN2bW51eGlP?=
- =?utf-8?B?ZndsRFEvVEZESWFCWFRKOFpFVjNnQlhJdE9rckVmeHV6UzAyUWh2OTgzbjlJ?=
- =?utf-8?B?UXFVT2xoWnRIVWxvRXBOZmdNZVZKdkdGOCszWExmZDdXZEx6eHE4UXhabTJP?=
- =?utf-8?B?WEpKTFJhclo5cE1kbmhZM3VUYXJNeGZyVmNPSEtsK1Z5SGROVVJhVFZwTFdY?=
- =?utf-8?B?THdadUNLVnNlZDRSTUNaTFlNRUtWSlZFdTJjbG15VW5PMjd2MTEwb0FQS21B?=
- =?utf-8?B?TURQODE4cG4rcm9kRURVWkExOVU2dEk3ZDY2eEFKcWVCdTdvRW9kckNoNG0r?=
- =?utf-8?B?YUJkRG1vbHk2aXdWK0tZdndOblA3RUJVTUgra2NMSmtBazlmNG1SVnBRaFFB?=
- =?utf-8?B?RmJ5cHhuTzRYcW9GNkZ3eG1WVDZrdytYUUlPV2NnamV2dGZlY2lSTnhMVlF4?=
- =?utf-8?B?RjNpZGZOQ2JLWEpaVTJCV3ZtV3dpeGdPTFFQZVZSaXVqb045bmY5bTNjNjVG?=
- =?utf-8?B?M3JER3I3OXF2QmxzWnNhWWFIdDBKb2pEemVVMXY3TWpXM2ZKaERzbzA0WVMw?=
- =?utf-8?B?aG56dlc1NDJPNHlSK0FBU21VQ3pjcUU4V1A2QWJTUmJnb0VWMHV3VEhuK3dQ?=
- =?utf-8?B?MlZlMnZIQTFaR3ZiQjRPNzE2dXlnUWZvRUY0N3FtL2JkZXdYSFpDeGRFeUJH?=
- =?utf-8?B?UDdXSTZRa0kyWDVUZmpna0tqbkdwMFJYWXo5cXBJTW05NGV6UzNkYWhkVkEz?=
- =?utf-8?B?bTduTzA0WkRSckFJWDdHelhVY0ZxOVh3RW95KzBCNXN1Qm9OM3FrK1MyVzZ5?=
- =?utf-8?B?dDdFcHZBcnVqc1RXdS9qN1dhM2h1ak5IZ3h3QXd2WldwRmJMRlVORExDWjFh?=
- =?utf-8?B?ZzRXbUpNTkFMLzF2UXpzOWxOSlpMajEyUFcwcDErRG5yQ1J1T1lScVoyT1VC?=
- =?utf-8?B?TEptTWNYSjlzZ3lRTHBkRW9aeHBZYVUxRVZNVjB0ZFlmZmJjd3Blc0tXSWt6?=
- =?utf-8?B?MjhrR3dOdzluREhBMkw4T3JzcEJ3aGY2MlpFbFBJblFBSnV5allnUTloaDE0?=
- =?utf-8?B?UG02ZGh1R0E1amtrMUk4a3ZjeFJ4VkdwT3A4QTdWSUw1dFQzSk1lV0w2Q3Jv?=
- =?utf-8?B?K2hEU2l0d0g1SENCRldVUSsvWXlEQXZrcVltc1dUTHdtaE12NnpnT3hPWDhH?=
- =?utf-8?B?UzA2TFlUWGpja3hUR1czaW5NTDlMay84eWxDVDd0RmtOQ1pWdVQ4Q01TVTZM?=
- =?utf-8?B?bWVQQnArcXVoY0IrVVdybExRcUxwZHViYU5CUDc2NlFOdUg2NEc2bjBpL3cw?=
- =?utf-8?Q?TxwmDedo/ZL332n0=3D?=
-X-Exchange-RoutingPolicyChecked:
-	jBPszWJmfMdQeCy7nqUNDPgnPMgTvZAailsJ54OFP4lS0DRT3RIaRYlFl1ShX+/7YHdg5IXHcumnWQ4CKv/do8QcMiEdDm2xotak4P3bwed+B9wSMx8KZxuEpLywr5PA3EMT0LhETdxAwZkjCYOyGvrhevRFCoUrPtubWQJ2mYO7bwC0ehDyfE1Eboo7cYop/t/KohCCtowE1Ncn+taxVeR8ig8r6XZDzj2M6XEjp/LPKm0OKNv7tRED4HWbjHZ+pLBxu8eKdnYsvo2dFRplYU1q1N8I0bGptfBAqSjpF2SZLlozYWNGrCu6Upc6k2rXciSo/OdKnAHTscx4IfuR2A==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	w5/1ly1XN+RQ50jGrxESCpnP1IUoTqGcbhDoXZya3Bc8VHSuBHUMcPoTYdlvePotg7/Xiv2mDkCGNEwc1KUW7F3vvVlbJniePwINrhEYB8iDB8JOafVZQibpwbZpkSos+hQhXdu9JTg+zkHlZE0Kv5zPQb1la7UKCD9rVPtxS8qdKRF34S/uX7QJ20EVVDVjrDQn90mYCNehYU/LUZgUsnzlrU4KXLJn6+513uqZ5llvnwX83FFhBPB4B3di+1cWlqyRMxUTPyOvKsCC7FqlYtwMS4MVBVwH0M9Pf1396G5OXFzUkveLgdCpVfPSgpGKqDoKjXxrBRVcaJwGR4haF4tt4Rf8tNstEZIlw0/XfrTec6hAs+KIauyRuIEKDsuqTp1F9Tva8GDpUBhR9ShcnYGktKcaXg24/QtwkyPKy8XHuAJ44GOEgk+UScaN+/OH6mF2p6mHeJzf3O17lAeMULAK5r7n2C/j/c1GGXHesoEKoglXA3Too/PRlM3Xu+LVvedlXYlNwG8toFglVQOY/weJrzPa9nE3BnpS6USIYEb6QH5cu1D637ZJO4jHxF34r610YwRIKrdMqL6YTG83kRrP8tYmA0gjmCW10eAhVpc=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f016c6c9-0d49-482e-e7e2-08deebf92117
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB6229.namprd10.prod.outlook.com
+	=?us-ascii?Q?A6OUuVa1JiqyQuk1TELxYcVeCZBNhrFHSN5820g0vXVOfC5I51CmCR7Y8d3C?=
+ =?us-ascii?Q?2wGHNnl7YYaR1WpTs35hWKFAffsbjLnWZrNJWBxSzbmI0kk9y/xuaZF7wW1q?=
+ =?us-ascii?Q?QisVYAPRGzGHow+Dla2APPlzkHnEekVbhtNo1guQMs+Ey3gwqQSZOv7GIrwp?=
+ =?us-ascii?Q?EoNSCFnMLf74mJnrYLse+Ou5PSqlkpB/OBoyroGUHFnQWYlLo5pkE11Zbt0e?=
+ =?us-ascii?Q?poOU+zvcjCsmchXKhNHGtdBL3l7EjvVlvgeo0c1QTYq61jUkdIdfYbtmMUUr?=
+ =?us-ascii?Q?awv1SwXI2UBnxqAoWaxoD8AZSHW9q3666zSpslVnN6lGRuBawAVFSpi1E/cv?=
+ =?us-ascii?Q?8Hy7+6mnp/jd4ui3PbsgOp4STqmf6SuSVasUJA0HfMRefOSa2rB+VYNmyxcL?=
+ =?us-ascii?Q?vlxQx+CN1KoAPa0E8lwqqKb60WPxaIhhMC9gTPaVkMJHPycQCkXtkI5g5YoZ?=
+ =?us-ascii?Q?cI4ukTCkv1ZF+Tx9USWq6V/i71TlNniiLomy98VmlvgTX94/XSRw+ltSM9KK?=
+ =?us-ascii?Q?WsIDXQcvMk15LnDEdPevK16JpcSef31WxJZa9y2GkCAlGk026/Am7Fxo7+6X?=
+ =?us-ascii?Q?LmjMlkA69T9yHdbGMMhciGCUL6jlUUAm5ztcghKJb/6qMZhqNzb2KZ7hSeJz?=
+ =?us-ascii?Q?9RfHPhiDk4ZwFq5qMYLwr/aYBu1KqGn3Y0ckUiZHavU2mUXvlkWGbdFLS5Q4?=
+ =?us-ascii?Q?jznIRetou8fKgm9ZSfPvv6Nw+lagmtWY2VElMNPDKRP5u5gh/7I9jA4BujU5?=
+ =?us-ascii?Q?hOqBxHPNFoRQzNi833z6zHHwGZWLGjwMI3BYv83ZgRST/rh69RTm9Jbrh04v?=
+ =?us-ascii?Q?cnmnGprP951Kvdh6i9uYEc8uxr+E2GLMM8yIjCab/QswfUnqL9XbjF8+kKAp?=
+ =?us-ascii?Q?fppglJPCjrfkaDmRZarUqLbpI1qGTUPmrA4J6JYOiPH3YsXzjhDmqPojXBOu?=
+ =?us-ascii?Q?y++WBI12fnz9QJnBYOqYryIFcYSzX07RevnmDVJVnhJ01DOMyVpOdNR/Pc8V?=
+ =?us-ascii?Q?7HK32LQFSS17xyhpPcxcGpTgWaqDKL0sqF1iAL8qUtDx7qeO5ErgT0OLGXXU?=
+ =?us-ascii?Q?62SzRW6ql8hudCR4oLgRn5SZQ0NaZQE1TEd8Sjilkm53HhhI3D1Ta73Nd5DH?=
+ =?us-ascii?Q?2aRanWj08foOd43203dQgNbE+bAqJ6vSStBAmzqGFFU0BZ3fjFbjcDhsLVP1?=
+ =?us-ascii?Q?ysFyAS5OFGr7782kuAGmiFtGTcW1NG8wNudtbLPr6mKbiHB4eyrKmFL4Elnh?=
+ =?us-ascii?Q?m7OiDXv+8L0auX6qnf8uuIB+y2IdYIT8CE25EoAhFrlcEmK0trTWwSFrprSA?=
+ =?us-ascii?Q?Yegb3n0+kGGo5FyJp98dMTNjkD6lwe3PleEpqApa5fYNFtJLBAr4PxhOyVPT?=
+ =?us-ascii?Q?AHUdEgPfPrx12neKqv4H7fgqrOql1xMlSZ+J2KhwkWTiNh2pE4GA4NxqNPwD?=
+ =?us-ascii?Q?CRWi0vUVUGx/soWJdwGqXWKRaGh9fnlBxCjKsuFjJo2dht+yJi+t3GqG2ItB?=
+ =?us-ascii?Q?5Z/nGCC4ojzHSfhyStRPFDoP/0LppgRl7ehRUEFjX8Mby5/4YSlnafbr5lTH?=
+ =?us-ascii?Q?Q6hJrBX8cwCEqLHUJFEQhFBrDuIDwcWVt3xX5lf5+SoinnEeyzuucj1g04dq?=
+ =?us-ascii?Q?Oq1C37tt6oKt/SCcm0qPojDtYle9gUoIT8GbyzoU/R3vL6kl/f/S0jBvVKy8?=
+ =?us-ascii?Q?Y96A53+yleEvD2zDr4jon9qD/lzOQIpeHVuIvmx85Fi0I/PCVcgGRVgxtP7M?=
+ =?us-ascii?Q?Wtz4YcW6HjtZiPZgYzmA2noV9WeS8RwIakVu8zJKZ53S5YQCt+Eg?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3eab62d2-7f53-4910-82f5-08deebf9ecb8
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 16:07:17.1593
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 16:12:58.5830
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lYdt4vS4QPIeXR18juA5ST9YBSAaaaC69NNHmOWZImJ+fAe+FPdVvuwFTPbVb+rGvdoOVWsOr2+4Bs922JmEfA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LVUPR10MB997810
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
- bulkscore=0 phishscore=0 spamscore=0 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2607270150
-X-Proofpoint-GUID: Hl0UTUY4BCJWXYqVkqHToi3QkUhowxJg
-X-Proofpoint-ORIG-GUID: Hl0UTUY4BCJWXYqVkqHToi3QkUhowxJg
-X-Authority-Analysis: v=2.4 cv=RKWD2Yi+ c=1 sm=1 tr=0 ts=6a678242 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=EIcjfB9IiI4px24ztqRk:22 a=VwQbUJbxAAAA:8
- a=yPCof4ZbAAAA:8 a=q23SzqnpkpqsztcQhNIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE1MCBTYWx0ZWRfX6tVAvP4DN/Dg
- gRrKmdAfXjkW3a7oW4Yl0g/BzSelqVl8B/RYsQnT2ts/GjG7rDmdKqNy6ei++UIaZZ8r3DQ54Pc
- nUtW6J57ulRFEVQo/lruaa5HMo9m9rnF32oEsWnizTbgFUmdj7erEUyb937/qp3kSd4uTZwSz88
- c3l/sgA8YwO2C/SK5lZ603jQ3Bjx5jpnKbGDI4Sy87z7yh2JUH9Nme1oob7K2eeypyjR0Kn+6Nh
- cHczsFvecUX4oLABkCxz99w0HKxhnNFAfYRhg5jLjGQHGGAD9aEQeKkaIkU4AVvrqdeB2HJdzHL
- qpq8n9Hm0GogvFzyLrBiem4daD/lVSjGKNG0amESuh5WBp4hXzCaBg1k5ZHurFwY+GTAUv8YO0N
- /TrOWVOO0URaRbETtw7hD6QS+aDPaRXUykGVpBS39jBC60OgAWYmxSY1mwAqlAtsMKIgJqeUw00
- dDliqCiMpeZ71pQXCuA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE1MCBTYWx0ZWRfX6NcxZNURykyK
- Qhmuby8mm+bTcDbWbfH5/LyF9d4ueFebqHaMBlqCf048odQ4Rgq/26dYeSlWUkavOedV98amMg5
- TqJiuDk7z5MT9j1C7sj3OhfG5mWmwjN+JqHtER14e5uzh4N3qNC3
+X-MS-Exchange-CrossTenant-UserPrincipalName: kkUlCUGpF5kkFItTXjkL1fcWupAmX/gk0ldubhQdX9JfgGC13MQx/5wddoDjbfiWPaixQNKX3C4+RBGumpD5PY/UoaNhOkptBQP+1605aDjrykXybhys8asHx4Z9EZJL
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR04MB7311
 
-On 27/07/2026 16:24, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] scsi-multipath fails to kick the multipath head's requeue list when underlying paths transition back to a usable state, causing pending I/Os to hang indefinitely.
-> - [High] Core path selectors ignore the newly added `.is_optimized` callback, breaking ALUA priorities for round-robin and queue-depth I/O policies.
-> - [High] LBA-dependent ALUA paths are incorrectly treated as disabled, leading to complete I/O failure for LBA-dependent arrays.
-> --
-> 
-> --- Patch [19]: [PATCH v5 19/27] scsi-multipath: provide callbacks for path state ---
-> commit c99fff5c406ddb30334df26d8cb6dcc7c86e7a13
-> Author: John Garry <john.g.garry@oracle.com>
-> 
-> scsi-multipath: provide callbacks for path state
-> 
-> Provide callbacks for .is_disabled, .is_optimized, and .available_path.
-> These all use scsi_device.sdev_state and scsi_device.access_state.
-> Member scsi_device.access_state will be driven by ALUA.
-> 
->> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> index ec611f26d7960..d79e1b7b90051 100644
->> --- a/drivers/scsi/scsi_multipath.c
->> +++ b/drivers/scsi/scsi_multipath.c
->> @@ -314,7 +314,56 @@ static struct bio *scsi_mpath_clone_bio(struct bio *bio)
-> 
-> [ ... ]
-> 
->> +static bool scsi_mpath_is_disabled(struct mpath_device *mpath_device)
->> +{
->> +	struct scsi_mpath_device *scsi_mpath_dev =
->> +				to_scsi_mpath_device(mpath_device);
->> +	struct scsi_device *sdev = scsi_mpath_dev->sdev;
->> +	unsigned char access_state = READ_ONCE(sdev->access_state) &
->> +					SCSI_ACCESS_STATE_MASK;
->> +
->> +	if (READ_ONCE(sdev->sdev_state) != SDEV_RUNNING)
->> +		return true;
->> +
->> +	if (access_state == SCSI_ACCESS_STATE_OPTIMAL ||
->> +	    access_state == SCSI_ACCESS_STATE_ACTIVE)
->> +		return false;
-> 
-> [Severity: High]
-> Does this code inadvertently exclude SCSI_ACCESS_STATE_LBA?
-> 
-> If a path is in SCSI_ACCESS_STATE_LBA, it is considered a valid, usable active
-> path by ALUA. By returning true for any state other than OPTIMAL or ACTIVE,
-> won't this cause complete I/O failure if all available paths are
-> LBA-dependent?
+On Mon, Jul 27, 2026 at 12:57:45PM +0000, Akhil R wrote:
+> On Tue, 21 Jul 2026 04:30:58 +0000, Sashiko AI review <sashiko-bot@kernel.org> wrote:
+> > commit e158b576a9f733695d868ee16f34bacdb43285b3
+> > Author: Akhil R <akhilrajeev@nvidia.com>
+> >
+> > i3c: master: Add support for devices using SETAASA
+> >
+> > This commit adds support for discovering I3C devices using the SETAASA
+> > procedure, such as SPD5118 and SPD5108 attached to DDR5 memory modules. It
+> > adds the SETAASA and SETHID CCC commands and updates the discovery logic.
+> >
+> > Link: https://www.mipi.org/mipi-disco-for-i3c-download
+> >
+> > > diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+> > > index 623c6b2247d9f..b18dda89c4737 100644
+> > > --- a/drivers/i3c/master.c
+> > > +++ b/drivers/i3c/master.c
+> >
+> > [ ... ]
+> >
+> > > @@ -1102,6 +1103,51 @@ static int i3c_master_rstdaa_locked(struct i3c_master_controller *master,
+> > >  	return ret;
+> > >  }
+> > >
+> > > +static int i3c_master_setaasa_locked(struct i3c_master_controller *master)
+> > > +{
+> > > +	struct i3c_ccc_cmd_dest dest;
+> > > +	struct i3c_ccc_cmd cmd;
+> > > +	int ret;
+> > > +
+> > > +	i3c_ccc_cmd_dest_init(&dest, I3C_BROADCAST_ADDR, 0);
+> > > +	i3c_ccc_cmd_init(&cmd, false, I3C_CCC_VENDOR(0, true), &dest, 1);
+> > > +	ret = i3c_master_send_ccc_cmd_locked(master, &cmd);
+> >
+> > [Severity: High]
+> > Will this fail on most existing I3C master controllers?
+> >
+> > Looking at i3c_master_send_ccc_cmd_locked(), it calls
+> > master->ops->supports_ccc_cmd() before sending. Many core controller drivers
+> > (like dw-i3c-master.c) have strict switch-statement whitelists for supported
+> > CCC IDs that do not include these new SETAASA (0x29) and SETHID (0x61)
+> > commands.
+> >
+> > Would this result in returning -EOPNOTSUPP and aborting the entire bus
+> > initialization on systems with these controllers?
+>
+> SETAASA/SETHID are only issued when a device opts in to the SETAASA method
+> (i3c_master_setaasa_locked() is called solely when addr_method has
+> I3C_ADDR_METHOD_SETAASA, and SETHID is sent from within it). Existing
+> drivers are unaffected because SETAASA is a new capability they do not yet
+> advertise; they can whitelist these CCCs when they add SETAASA support,
+> which will have to be updated in the individual drivers. This patchset
+> does that for the DesignWare contoller driver.
+>
+> > [ ... ]
+> >
+> > > @@ -1878,6 +1924,22 @@ static int i3c_master_early_i3c_dev_add(struct i3c_master_controller *master,
+> > >  	if (ret)
+> > >  		goto err_free_dev;
+> > >
+> > > +	if (i3cdev->boardinfo->static_addr_method & I3C_ADDR_METHOD_SETAASA) {
+> > > +		i3cdev->info.dyn_addr = i3cdev->boardinfo->static_addr;
+> > > +		ret = i3c_master_reattach_i3c_dev_locked(i3cdev, 0);
+> > > +		if (ret)
+> > > +			goto err_rstdaa;
+> >
+> > [Severity: High]
+> > If i3c_master_reattach_i3c_dev_locked() fails here, we jump to err_rstdaa
+> > and eventually free the device structure. However, i3c_master_bus_init()
+> > later unconditionally broadcasts SETAASA to the bus.
+> >
+> > Won't the physical device claim this static address during the broadcast,
+> > even though the controller software no longer tracks it? This could lead to
+> > a bus collision when the software later tries to dynamically assign this
+> > "free" address slot to a different device.
+>
+> Address conflicts between statically-addressed devices are rejected up
+> front in i3c_master_get_i3c_addrs(), so it should not cause any address
+> collision with other devices on the bus unless the same address is being
+> assigned through ENTDAA. If this is a concern, we can avoid freeing the
+> static address for SETAASA devices even if software attachment fails.
+>
+> Let me know if this needs to be done.
 
-We don't fully support ALUA yet
+Try it.
 
-> 
->> +
->> +	return true;
->> +}
-> 
-> [Severity: High]
-> If a path's state changes to become usable again (for example, transitioning
-> from SDEV_QUIESCE back to SDEV_RUNNING in scsi_device_resume(), or when the
-> ALUA state changes to SCSI_ACCESS_STATE_OPTIMAL asynchronously), how is the
-> multipath head notified?
-> 
-> Without a corresponding transition hook in the SCSI core or ALUA handlers
-> to invoke mpath_schedule_requeue_work(), won't pending I/Os on the
-> requeue_list hang indefinitely instead of being retried?
-> 
->> +
->> +static bool scsi_mpath_is_optimized(struct mpath_device *mpath_device)
->> +{
->> +	struct scsi_mpath_device *scsi_mpath_dev =
->> +				to_scsi_mpath_device(mpath_device);
->> +	struct scsi_device *sdev = scsi_mpath_dev->sdev;
->> +	unsigned char access_state = READ_ONCE(sdev->access_state) &
->> +					SCSI_ACCESS_STATE_MASK;
->> +
->> +	if (READ_ONCE(sdev->sdev_state) != SDEV_RUNNING)
->> +		return false;
->> +
->> +	return access_state == SCSI_ACCESS_STATE_OPTIMAL;
->> +}
-> 
-> [Severity: High]
-> Are core path selectors actually invoking this new callback?
+>
+> > [Severity: High]
+> > This is a pre-existing issue, but does jumping to err_rstdaa correctly reset
+> > the hardware if reattachment fails during SETDASA or SETAASA?
+> >
+> > If i3c_master_reattach_i3c_dev_locked() fails, its internal error path calls
+> > i3c_master_put_i3c_addrs(), which marks the slot as I3C_ADDR_SLOT_FREE.
+> >
+> > When we reach the err_rstdaa path:
+> >
+> > err_rstdaa:
+> >     i3c_master_rstdaa_locked(master, i3cdev->boardinfo->init_dyn_addr);
+> >
+> > i3c_master_rstdaa_locked() checks i3c_bus_get_addr_slot_status(). Because the
+> > slot is already marked FREE, it returns -EINVAL and silently aborts without
+> > sending the RSTDAA command to the hardware.
+> >
+> > Does this leave the physical device holding the address while the software
+> > considers it free?
+>
+> Pre-existing; not introduced by this patch. Better addressed separately.
+>
+> > > +
+> > > +		return 0;
+> > > +	}
+> > > +
+> > >  	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
+> > >  					i3cdev->boardinfo->init_dyn_addr);
+> >
+> > [ ... ]
+> >
+> > > @@ -2741,7 +2816,19 @@ i3c_master_add_i3c_boardinfo(struct i3c_master_controller *master,
+> > > +	if (boardinfo->static_addr_method & I3C_ADDR_METHOD_SETAASA) {
+> > > +		/* For SETAASA, static address is taken as the dynamic address. */
+> > > +		init_dyn_addr = boardinfo->static_addr;
+> > > +	}
+> > > +
+> > > +	/* Update the address methods required for device discovery */
+> > > +	master->addr_method |= boardinfo->static_addr_method;
+> > > +
+> > >  	boardinfo->pid = ((u64)reg[1] << 32) | reg[2];
+> > >
+> > >  	if ((boardinfo->pid & GENMASK_ULL(63, 48)) ||
+> >
+> > [Severity: High]
+> > By relaxing the PID validation for SETAASA devices in this function, pid can
+> > default to 0. If a system configures multiple SETAASA devices (like DDR5
+> > SPDs) without PIDs, will this cause a kobject name collision?
+> >
+> > During registration, i3c_master_register_new_i3c_devs() names the device
+> > using its bus ID and PID:
+> >
+> > dev_set_name(&desc->dev->dev, "%d-%llx", master->bus.id, desc->info.pid);
+> >
+> > If multiple devices have pid=0, they would all be named "0-0", causing
+> > device_register() to fail with -EEXIST for subsequent devices and preventing
+> > them from functioning.
+>
+> Static addressing requires each device to have a distinct static address on
+> the bus,
 
-It's ok as we will make it work properly when ALUA is supported
+Any check and report error if two devices have the same address?
 
-> 
-> Looking at the core selection algorithms in lib/multipath.c, such as
-> __mpath_find_path() or mpath_round_robin_path(), it appears they check the
-> static field mpath_device->access_state instead of invoking the
-> is_optimized() callback.
-> 
-> Because scsi_multipath_sdev_init() hardcodes mpath_device->access_state to
-> MPATH_STATE_OPTIMIZED, won't all SCSI paths be incorrectly treated as optimized
-> by the core logic, bypassing ALUA path weighting for round-robin and
-> queue-depth policies?
-> 
+Frank
 
+> and PID-less devices are named from that unique static address
+> ("%d-%02x"). The bus address-slot management also prevents two live devices
+> from occupying the same address. So a collision would require a malformed
+> description with duplicate static addresses, which is not a valid bus.
+>
+> Best Regards,
+> Akhil
