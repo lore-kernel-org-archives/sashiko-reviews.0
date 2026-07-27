@@ -1,244 +1,129 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BD1221F0C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785117677; cv=pass; b=DTcyzSgABHV2rwcDGdmapZSRJAmhRJq+3tVbTVHdshh6BVMfYEgxB8jimBFnivHnboEkncD4yvBzyIWqZpDHco48/mGW8q9RVCyNGqnA4C7SAUOcwj4ouZIhQSWZIIeXPQrFZV8UNc8+R5ekU9diD8RObIljuGk9YYlFXiT3J80=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785117677; c=relaxed/simple;
-	bh=Cgbgb/97B5pbnCy8IhzLU2oyYhrh12Il+I37KXS84To=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=duoy3TFkTzSBLmvQKvwkYxrvyg7PE/NCEC89LffVEifI/r2kCAHbtsAF4nANajVXAL4e3XkVBxD3rhmp5IvVcf/nABt9wAUHasX7cap4qkqIzCU8JmKthpIzuz/MutJLAbVnmxtqUyqww0iCHV5FEQ4q/rTVx9QVtKPrlwBpfgg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dw1RYKXY; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dw1RYKXY"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69a33fb0031so353555a12.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 26 Jul 2026 19:01:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785117674; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fdpYkP6Xkx5AziosSFQOSZb/MOcd4T6VBcd78b7FpZDcAs9pBAa4UzW/H4+VhnGd0A
-         g5ucyrxRqWdF3dkFDGuXg78rdRh9wT6I6ZCGwITmtlr+sIrH6VGzZYJ4p0Rm/7UFq2T/
-         08iORHTOatJiUGhRYF2FazQfgONpe8QzhXsGaGAXcFFSjLYzjSpEn/zFIjs40YZQ9Tv9
-         vyA9C8xiDxT8wQ/WlQ2nQZ5jXzOZ9uth5W4F4F01sKzddYEao7i0uRrkuyNYS00ito4L
-         J19WOl8NRv/5F49bXyAz7Q7BNLaYRVye577TH4Htyn86inUb/ZalnFbjLWnRjKHxcbum
-         qjFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=5+/AHWCEducqpwF8K7BV+G/0gvvxyPh5lYi8bnFbPfA=;
-        fh=HPXTtJLJxKVrj9M3SSTlrGVUwD4+tiliYxLiqpIhSGs=;
-        b=hMiLVFPirRJUfDKUbzbxRjSUlv/wQW302H5+aHwc+Z9cJVzrS4Nm47d680ymyRvJ4w
-         OU2rqud1T3khwtqAk2r6IZfb/odohticfxVeYdQTs0WD9N8IP8XRnCXbgcvw6R7+2x5X
-         xLbc+BhRfCavd8r95tAWGTLzg1GhYnllNEnuVBNegQvhRVRWwAPDMdP1IMEUTB8JQXtz
-         H3Zx8GH4nmbCV57TDAjtrM10yPPfUGeNOEKFHXh1cxyPU6r7HR60nKtJKvRZ2xKpvlls
-         /PSiDpfeaLy5EyuSp5jqV7y0fPec3het2DoTo0wG6iIF3vSiQatCVFwM3C1XNO93sdqD
-         wtvg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785117674; x=1785722474; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=5+/AHWCEducqpwF8K7BV+G/0gvvxyPh5lYi8bnFbPfA=;
-        b=Dw1RYKXY7iaH3zWOCSMoSxNnBaNEUICcCIfkP/C/gYZMTGT96ARsLph4swn3yutA6D
-         FJ7VC3c0rj1EVxVQbQ5ZGysYnL9DAAtUOs7KhnN2kpUODQbvABk6YNVnFB2tXI3CnOoB
-         rgg9tRR+cpCQGYit901Cjwz3gKU21zPQ79bt5y3X59HPmyR1rLGxg/WryhJGXG7Rpj5o
-         NKWbmRcJ94LEudW4SR//AzsGLHYpOSfFuZzTM/H05jIfCbolNmsTnBcuX7hC/l+R42pW
-         5FZEToZkT2jy2h+XRYWCZXuzVldjzyvDMRwKElWn5ng8U3yS/p0aiJeEVKKrl6ijeUzL
-         xFLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785117674; x=1785722474;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5+/AHWCEducqpwF8K7BV+G/0gvvxyPh5lYi8bnFbPfA=;
-        b=oHFsUBzKwhEs50p0xXndAsUwYWL1v/BpnliMnjGs5J5uR1EXJSmOONJrDshqZ+4tEK
-         sPfW1zL0K38WOxYAvGMari0JvbaHhJsrG32b1jZNxT5MGHUfPq6XUSY51OMK/vp2qV/v
-         p3j33Pp2gLd4EwvFasdRmoHnbAFjM1i6GOVA6zojTGovLtMLHWcD+jKX5ccAO6pAV3jd
-         h+og8cKBnj/YcvPAHLStNtbI53046q1WitFlY21aJRACQUyeQmpEc/KxO41t3C1c6DYn
-         fs/zCMzONX51EJTFoqHfXOL03agLZue6Bwl5XT4ouvvSXWY5ykGD9l/dYwd3LEa63fkc
-         KaYQ==
-X-Gm-Message-State: AOJu0YwVCCgWUj72rkNiwfIRDi8l7U+9XN6zTquO+ar0qV9TVJ6UZgGh
-	FUL7hrzBda6hhTiL4v1TUE3GCq5MlxLPOPX9lM0rZVxU0uRYyTXyWGU4YFsv1pZbIrxIWZ6gOoT
-	NOJAXOWS/LB3aw1Bl3oksuysGuac1FLvgt8yKvxI=
-X-Gm-Gg: AR+sD10xzbD8Q1OSTSUCZLH0uY3nUNfGdfmh02jRee4JrgVO637sh6YBCN8TH+hTQTz
-	BGmeAvIkt3D7qYxZ4qVepqz6Ay6vbsZ6PYngHaTS53RL+KqihYYSUJ6Tnzu6q+yuqzWpBwnLZgy
-	U+79huhh6mMYgNRVxHS89URuJShiAi1Z1W0TcQ05X/rozd9US7GpVkQiy70wkqz4+bzxM8t5Bu3
-	gNRLB+kncfHhvnCp9ruOc45u1IHkcCiwvPnr8H/a9KkhKPlCQAYwgMqi/XI+mgWRCWYLQs=
-X-Received: by 2002:a05:6402:234f:b0:698:81d7:b812 with SMTP id
- 4fb4d7f45d1cf-69fc1160318mr1644222a12.3.1785117673656; Sun, 26 Jul 2026
- 19:01:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CFC3515D9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 02:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785118582; cv=none; b=aFv/X+CG5u1FXhQ+nMVhJN9i2QCF8iiCbS4V75EzL8pKag4ADDo/TzVObllXLLBjw8t07bry8obSa2bz7fCRZ6aHfrRy+uDf4ftMpIhs8mSfepuIjzkUcEOjOM3Ayrpd3O55OTAicV7AKs2ow5v5y/tnRxD5rKkPyhOlnSGNJ7s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785118582; c=relaxed/simple;
+	bh=jn+Q7yCOhIaVwpeesR9ro/EvK9yIjbO8ItSL4uRWVAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IlbnSq9Z4jsS1HYe3JeV9LzC5JJgAmBUZvZwHiBa54YjyEoAqi9887cmhIX4wRH8zim+lmqTLoU5ITxeoRXQIVVvd3F9ztK7RKGLPl2cioAmymL4HKxGND2awD4aPjllGfgAqs5YPAXIHJ1Qlhfgf2sFHAHh/Nt1ozSHd5Emt+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h7hyf5hV7zYQtk7
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 10:15:38 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id A3A4A405A8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 10:16:15 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgB34Iduv2ZqmyBZAA--.3224S2;
+	Mon, 27 Jul 2026 10:16:15 +0800 (CST)
+Message-ID: <d00c1124-92bf-42f5-a817-c5a4755ffa59@huaweicloud.com>
+Date: Mon, 27 Jul 2026 10:16:14 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260726-dcphy-rx-v1-v2-0-cf9cc34a412a@gmail.com>
- <20260726-dcphy-rx-v1-v2-4-cf9cc34a412a@gmail.com> <20260726150717.05D3F1F000E9@smtp.kernel.org>
-In-Reply-To: <20260726150717.05D3F1F000E9@smtp.kernel.org>
-From: =?UTF-8?B?5qWK5pm65oiQ?= <jason98166@gmail.com>
-Date: Mon, 27 Jul 2026 10:01:01 +0800
-X-Gm-Features: AUfX_mxPeRAwfMB1LW6SbwIcSwcwD6Ov9zJ0Sq5EDYBErYupCAq0i7GTmKZBjAA
-Message-ID: <CAPwA33K1oxnyzPgFOSTGyjCX2RLE8BEupUHe6XOn5A6UWSPKfw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] phy: rockchip-samsung-dcphy: add MIPI D-PHY
- receiver support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v3 7/9] bpf, arm64: Fix private stack leak when
+ JIT failed
+Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, olteanv@gmail.com, conor+dt@kernel.org, 
-	vkoul@kernel.org, linux-phy@lists.infradead.org, robh@kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-> Does this code poll for PHY_READY while the PHY is still held in reset?
-
-Yes, and that is the sequence the TRM specifies: the RK3588 TRM
-start-up sequence (figure 22-8) asserts S_RESETN, programs the settle
-registers, enables the lanes, waits for PHY_READY to go high, and only
-then deasserts S_RESETN. The poll does succeed on real hardware -
-every capture listed in the cover's Testing section went through this
-exact path.
-
-> Without this in the RX path, could the shared APB bus interface and BIAS
-> block remain in an uninitialized state from the bootloader?
-
-This one came up on v1 as well; summarizing the disposition: the
-vendor BSP's RX bring-up does not touch the APB reset either, the TRM
-does not require it for the receiver, and the CSI-only configuration -
-where the receiver is the only direction ever powered - captures
-frames on real hardware without the APB reset ever being issued. The
-BIAS block is programmed explicitly by whichever direction powers on
-first, so nothing relies on bootloader state.
-
-Happy to revisit if either assessment looks wrong.
-
-Thanks,
-Jason
+Cc: bpf@vger.kernel.org
+References: <20260725154915.2488611-1-pulehui@huaweicloud.com>
+ <20260725154915.2488611-8-pulehui@huaweicloud.com>
+ <20260725155535.0398E1F000E9@smtp.kernel.org>
+From: Pu Lehui <pulehui@huaweicloud.com>
+In-Reply-To: <20260725155535.0398E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgB34Iduv2ZqmyBZAA--.3224S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFW5Gw4xGF1xZF1xuF45Wrg_yoW8Kry5pw
+	n3uFnxCr4DWr4kKFWvq3WkJF17Xws7KFy5KFW5C3yj93ZI93s7tFyakayUCFW5ArW0qw4Y
+	vryDKrZxC3WkX3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
+	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
+	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
 
-<sashiko-bot@kernel.org> =E6=96=BC 2026=E5=B9=B47=E6=9C=8826=E6=97=A5=E9=80=
-=B1=E6=97=A5 =E4=B8=8B=E5=8D=8811:07=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The RX power-on sequence fails to toggle the shared APB reset (`=
-apb_rst`) when it is the first PHY direction to power on, potentially leavi=
-ng shared PHY state uninitialized.
-> - [High] The RX lane enable function polls for `PHY_READY` while the PHY =
-is still held in reset, guaranteeing a timeout failure.
+
+On 2026/7/25 23:55, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Medium] Memory leak of the BPF private stack in the PowerPC JIT compiler upon JIT failure.
 > --
->
-> --- Patch [4]: [PATCH v2 4/4] phy: rockchip-samsung-dcphy: add MIPI D-PHY=
- receiver support ---
-> commit 8b1f5adbd06df56ad03e2b8d081a6587be5fe71d
-> Author: Jason Yang <jason98166@gmail.com>
->
-> phy: rockchip-samsung-dcphy: add MIPI D-PHY receiver support
->
-> This patch implements the receiver (CSI) direction of the D-PHY for the
-> Rockchip Samsung driver. It adds the RX register layout, HS-frequency set=
-tle
-> table, and hooks the receiver bring-up and teardown into the per-directio=
-n
-> power paths. The PLL sequence is also skipped for the receive path as the
-> sensor supplies the link clock.
->
-> > diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c b/driver=
-s/phy/rockchip/phy-rockchip-samsung-dcphy.c
-> > index 95eb1200cab48..f6d112935c016 100644
-> > --- a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-> > +++ b/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-> [ ... ]
-> > @@ -988,6 +1046,228 @@ struct samsung_mipi_dphy_timing samsung_mipi_dph=
-y_timing_table[] =3D {
-> [ ... ]
-> > +static int samsung_mipi_dphy_rx_lane_enable(struct samsung_mipi_dcphy =
-*samsung)
-> > +{
-> > +     struct samsung_mipi_dcphy_dir *pd =3D &samsung->phys[RK_DCPHY_DIR=
-_RX];
-> > +     u32 sts;
-> > +     int ret, i;
-> > +
-> > +     regmap_update_bits(samsung->regmap, DPHY_SC_GNR_CON0, PHY_ENABLE,=
- PHY_ENABLE);
-> > +     for (i =3D 0; i < pd->lanes; i++)
-> > +             regmap_update_bits(samsung->regmap, rx_data_lane_gnr_con0=
-[i],
-> > +                                PHY_ENABLE, PHY_ENABLE);
-> > +
-> > +     ret =3D regmap_read_poll_timeout(samsung->regmap, DPHY_SC_GNR_CON=
-0,
-> > +                                    sts, sts & PHY_READY, 200, 4000);
->
-> [Severity: High]
-> Does this code poll for PHY_READY while the PHY is still held in reset?
->
-> Looking at samsung_mipi_dphy_rx_power_on(), samsung->s_phy_rst is asserte=
-d,
-> then samsung_mipi_dphy_rx_lane_enable() is called, and only after that is
-> s_phy_rst deasserted.
->
-> Will this cause the PHY_READY poll to always timeout?
->
-> > +     if (ret) {
-> > +             dev_err(samsung->dev, "RX clock lane not ready\n");
-> > +             goto err_lane_disable;
-> > +     }
-> [ ... ]
-> > @@ -1004,6 +1284,44 @@ static void samsung_mipi_dcphy_bias_block_enable=
-(struct samsung_mipi_dcphy *sams
-> [ ... ]
-> > +static int samsung_mipi_dphy_rx_power_on(struct samsung_mipi_dcphy *sa=
-msung)
-> > +{
-> > +     bool first =3D !samsung->phys[RK_DCPHY_DIR_TX].powered;
-> > +     int ret;
-> > +
-> > +     if (!samsung->phys[RK_DCPHY_DIR_RX].hs_clk_rate)
-> > +             return -EINVAL;
-> > +
-> > +     reset_control_assert(samsung->s_phy_rst);
-> > +
-> > +     if (first)
-> > +             samsung_mipi_dcphy_bias_block_enable(samsung);
->
-> [Severity: High]
-> If the RX direction is powered on first, does it need to toggle the share=
-d APB
-> reset (apb_rst) before enabling the bias block?
->
-> In samsung_mipi_dphy_tx_power_on(), when first is true, it does:
->
->         if (first) {
->                 reset_control_assert(samsung->apb_rst);
->                 udelay(1);
->                 reset_control_deassert(samsung->apb_rst);
->         }
->
-> Without this in the RX path, could the shared APB bus interface and BIAS
-> block remain in an uninitialized state from the bootloader?
->
-> > +     samsung_mipi_dphy_rx_config_common(samsung);
-> > +
-> > +     ret =3D samsung_mipi_dphy_rx_config_settle(samsung);
-> > +     if (ret)
-> > +             goto out_deassert;
-> > +
-> > +     ret =3D samsung_mipi_dphy_rx_lane_enable(samsung);
-> > +
-> > +out_deassert:
-> > +     reset_control_deassert(samsung->s_phy_rst);
-> > +
-> > +     return ret;
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260726-dcphy-rx=
--v1-v2-0-cf9cc34a412a@gmail.com?part=3D4
+> 
+> --- Patch [7]: [PATCH bpf-next v3 7/9] bpf, arm64: Fix private stack leak when JIT failed ---
+> commit 8de8b0f7fc232dba7540d3099301a4c55f3544c0
+> Author: Pu Lehui <pulehui@huawei.com>
+> 
+> bpf, arm64: Fix private stack leak when JIT failed
+> 
+> This patch fixes a memory leak in the ARM64 BPF JIT compiler. When JIT
+> compilation fails, the private stack percpu memory was being leaked because
+> the cleanup check evaluated to false after a pointer was left dangling. The
+> fix sets the pointer to NULL to ensure proper cleanup.
+> 
+>> diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+>> index f4e4d4578e38a..6e036acf80d8b 100644
+>> --- a/arch/arm64/net/bpf_jit_comp.c
+>> +++ b/arch/arm64/net/bpf_jit_comp.c
+>> @@ -2311,6 +2311,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_verifier_env *env, struct bpf_pr
+>>   		bpf_arch_text_copy(&ro_header->size, &header->size,
+>>   				   sizeof(header->size));
+>>   		bpf_jit_binary_pack_free(ro_header, header);
+>> +		ro_header = NULL;
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but while fixing this memory leak for arm64,
+> it appears that the PowerPC JIT compiler has the exact same problem.
+> 
+> In arch/powerpc/net/bpf_jit_comp.c:bpf_int_jit_compile():
+> 
+> 		if (bpf_jit_build_body(fp, code_base, fcode_base, &cgctx, addrs, pass,
+> 				       extra_pass)) {
+> 			bpf_arch_text_copy(&fhdr->size, &hdr->size, sizeof(hdr->size));
+> 			bpf_jit_binary_pack_free(fhdr, hdr);
+> 			goto out_err;
+> 		}
+> 
+> When jumping to the error cleanup path, the JIT binary is freed but the image
+> pointer remains non-NULL.
+> 
+> Then in the cleanup path:
+> 
+> out_addrs:
+> 		if (!image && priv_stack_ptr) {
+> 			fp->aux->priv_stack_ptr = NULL;
+> 			free_percpu(priv_stack_ptr);
+> 		}
+> 
+> Because the image pointer is still non-NULL, this check evaluates to false.
+> Can this also cause the private stack percpu memory to be leaked in the
+> PowerPC JIT? Should a similar fix be applied there?
+> 
+>>   	}
+>>   	goto out_off;
+>>   }
+> 
+
+will fix if have new version, or will send new patch
+
