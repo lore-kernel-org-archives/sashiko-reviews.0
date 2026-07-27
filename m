@@ -1,38 +1,50 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE48D429CE8;
-	Mon, 27 Jul 2026 21:28:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0762042D747
+	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 21:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187715; cv=none; b=fGdQ+WmBNrB846oowRqEw02nOZ6VBQ/YVkJsHaG3eAq4Gip+eTi3QVFLQeyFrItndStTU5ah06KjB7CJeCv+rZRVWQk9HYDFQdymYASLCShKxtmMk2zuBnIUMwqyOKQjNhCQwC1kvbHvOlnledEoz1IqNK9WgJe4Bo9WpyzMMk4=
+	t=1785188516; cv=none; b=gVqu7ACvtSG5oNzdhg94DVpCpbGH0H6x7fJ+U3N8913Ez+EQgLIxQzfMxwEPjGDvOa7LoUJYQs6rvSg/utfhVUH1omrkG1GiqrRPj6vcHy9dLekmX4YqphKNauOQj6b2s4NRnmr8o2qY/am/wawQRZeYUirZgDLZh/7oPYQiPeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187715; c=relaxed/simple;
-	bh=ALS7vBn18SgtIKVfwkA4e5c3d8MN8XZhRBQ1VttH5b4=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Subject; b=TPKFFaBjRZBK3uPRClc1+QEpf65w8tgzlkqI6J9XqEtgx8wIUhik6YjDvl8FVxcCYk53eXGE/XYNrDmqYX0Ut+VilcRMvUx3KxwivCn8vYHEDRjxMdlZN2Q2utgFCFL5L3d9G57XxRpv2GpC4bqJihtKstX2EmMzZ3NFFfAU6Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=scf1WQ75; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1785188516; c=relaxed/simple;
+	bh=XKmK9/p35tHUTZToQ8HCs8ywYWngxbztdmnF0M51okM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uniwk6/U5c2R1+8Dsg0wXkvemfA7/GE8NE1ONnjtIXibD7ukJQ96JxbPoOCcbZkPx4CIwUjSH0gL4PiujW49rpKfu830hrCkk5UJMC3zFHqknM66HCCcVsCjg7Vps+f3Ayy9Nvby53uejOH1JCl0JV0A4Xq8PZJqQt7vhS1oR6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZobinLBn; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="scf1WQ75"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
-	MIME-Version:Date:Message-ID:content-disposition;
-	bh=+opPWdgRV1BTzzbL0B1+NApg/PpxSyqVyqLAI3aZ+rQ=; b=scf1WQ75XwqpiqH1lcRPvXcErI
-	AluBNJdQDWUJ67/DabYparV9DhszI2RNlym3XNsSUdGd671mj+RH8TCztrPsl4LZHzqygsjsAJ+x8
-	Mwk4P49pa1gaxAsRHPNzG+08t6WXx9VZB1Lwf0lVFkcwpV5fArEoPIherb1ti5Lx/M3gcRuW45lRT
-	50I69q/apldN1U+UxzEXLA5wTA2986ivAyiYMlFGLW6UrWMnTFsjKM9SGGSbQ7toloj/fVyLuGJcJ
-	QKYKFDRL0odTAQZx1bY/zE6vKagd8o8P6xB0wUzodxh7j42v+TOCqBTG54p+T+NrSQhyB2sQvpCkz
-	rFMni09Q==;
-Received: from guinness.priv.deltatee.com ([172.16.1.162])
-	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <logang@deltatee.com>)
-	id 1woSsC-000000007Dq-2UMN;
-	Mon, 27 Jul 2026 15:28:33 -0600
-Message-ID: <03ebef77-d53d-491d-ad32-b9a766fa9fc2@deltatee.com>
-Date: Mon, 27 Jul 2026 15:28:31 -0600
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZobinLBn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785188514; x=1816724514;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=XKmK9/p35tHUTZToQ8HCs8ywYWngxbztdmnF0M51okM=;
+  b=ZobinLBnubTc+ECzgwuHvHjOSKTVoZQ0rOHbKTey2lAutNcDsrKefGpS
+   bwGOYWqg53CEVP+8ZbH9rw+6V856UGXjdl/XormKyEXvcDKU9gbncQsvc
+   JdVeTHXwo0eIuEVXbpuHHjMJ1gOvjp7c6+A/jqiuMUMjanHykTTpGjjpv
+   +I9jZio9ClSLiNnXF3pyd7w+JbLwllV/l0mhxKEMCGL/A2Mxc8G5QkgvW
+   aOag8Ka04j5+mBDGOYrSWJsdEUZSN0wSVE85bBldO4D/JJYairZZfwIyb
+   T1l2aseQjqJOVYDX1VVWPsz2M/m6bCqQmVJeaeWdcOV5y4b3jM4VPUcVV
+   A==;
+X-CSE-ConnectionGUID: fRECQ/5wQQije8BPDoRunQ==
+X-CSE-MsgGUID: WvuX+3RiQm6/LdMD1OJDAA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11858"; a="89435757"
+X-IronPort-AV: E=Sophos;i="6.25,189,1779174000"; 
+   d="scan'208";a="89435757"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 14:41:54 -0700
+X-CSE-ConnectionGUID: ZnThHMWOQe2BrPBwitKM5w==
+X-CSE-MsgGUID: ZQggLLmMQYSbewtlW9/M6w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,189,1779174000"; 
+   d="scan'208";a="263304612"
+Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 14:41:54 -0700
+Message-ID: <b6da139a-55de-4e18-8688-9ee1cb2ec508@intel.com>
+Date: Mon, 27 Jul 2026 16:41:52 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -40,41 +52,67 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, linux-pci@vger.kernel.org,
- dmaengine@vger.kernel.org
-References: <20260727181526.9672-1-logang@deltatee.com>
- <20260727181526.9672-4-logang@deltatee.com>
- <20260727185101.D221C1F000E9@smtp.kernel.org>
- <amfD6-xlqll-Md2Z@lizhi-Precision-Tower-5810>
-Content-Language: en-CA
-From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <amfD6-xlqll-Md2Z@lizhi-Precision-Tower-5810>
+Subject: Re: [PATCH v7 7/9] KVM: x86/pmu: Restrict RDPMC passthrough to known
+ CPUs
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <20260727192131.582105-1-zide.chen@intel.com>
+ <20260727192131.582105-8-zide.chen@intel.com>
+ <20260727194104.16BB81F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20260727194104.16BB81F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: Frank.li@oss.nxp.com, sashiko-reviews@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Level: 
-Subject: Re: [PATCH v3 03/11] dmaengine: switchtec-dma: halt channel on
- alloc_chan_resources error
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
 
 
-On 2026-07-27 14:47, Frank Li wrote:
-> On Mon, Jul 27, 2026 at 06:51:00PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->>
->> New issues:
->> - [High] Incomplete fix / DMA Use-After-Free due to early return in switchtec_dma_chan_stop() on halt timeout.
->>
+On 7/27/2026 2:41 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Compilation failure due to undeclared identifier `INTEL_PANTHERLAKE_R`.
+> --
 > 
-> Is it true?
+> --- Patch [7]: [PATCH v7 7/9] KVM: x86/pmu: Restrict RDPMC passthrough to known CPUs ---
+> commit 4eba5efe34005f159dabad1f08138db5ccbe910e
+> Author: Zide Chen <zide.chen@intel.com>
+> 
+> KVM: x86/pmu: Restrict RDPMC passthrough to known CPUs
+> 
+> This commit restricts KVM RDPMC passthrough to a known list of CPUs with
+> audited RDPMC encodings to prevent host PMU information leaks to the guest.
+> It explicitly requires RDPMC interception for unknown CPUs.
+> 
+>> diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+>> index b983030fb910e..444a66ca33240 100644
+>> --- a/arch/x86/kvm/pmu.c
+>> +++ b/arch/x86/kvm/pmu.c
+>> @@ -77,6 +77,21 @@ static const struct x86_cpu_id vmx_pebs_pdist_cpu[] = {
+>>  	{}
+>>  };
+>>  
+>> +/*
+>> + * CPUs whose RDPMC encodings have been audited for KVM RDPMC
+>> + * passthrough support.
+>> + */
+>> +static const struct x86_cpu_id kvm_rdpmc_known_cpus[] = {
+>> +	X86_MATCH_VFM(INTEL_ATOM_DARKMONT_X, NULL),
+>> +	X86_MATCH_VFM(INTEL_LUNARLAKE_M, NULL),
+>> +	X86_MATCH_VFM(INTEL_NOVALAKE, NULL),
+>> +	X86_MATCH_VFM(INTEL_NOVALAKE_L, NULL),
+>> +	X86_MATCH_VFM(INTEL_PANTHERLAKE_L, NULL),
+>> +	X86_MATCH_VFM(INTEL_PANTHERLAKE_R, NULL),
+> 
+> [Severity: Low]
+> Does this code build correctly on x86? It appears that INTEL_PANTHERLAKE_R
+> is an undeclared macro, which could cause a compilation failure when building
+> arch/x86/kvm/pmu.c.
 
-Yes, unfortunately. I'm working on v4 now that fixes this and maybe the
-issue Sashiko pointed out in patch 4 as well, but I haven't dug into
-that one yet.
+Yes, it builds, INTEL_PANTHERLAKE_R is already in the master branch.
 
-Logan
+> 
+>> +	X86_MATCH_VFM(INTEL_WILDCATLAKE_L, NULL),
+>> +	{}
+>> +};
+>> +
+> 
+
