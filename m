@@ -1,114 +1,114 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DCCA13AF2
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 00:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13BF1A681E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 00:30:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785197288; cv=none; b=sQ2kksxX21mT0Q7/NZSU2K1tuPoIJRmIxC91GAqnxS/DgiPWOIR1JtzLMpnI39KWnhWyTbyW+lguGUDQ8+fHxcVZxLd53mvrVMaoD3BaVWrmeGbl2IkKBT2SqKPDORnUboHGop0O7A91VLM3a5YNnjZKJCpPbAIj433h8RwNmTw=
+	t=1785198608; cv=none; b=KYV0pPY71hK+8EBobysqgDweelbYyZ/g04L0FQp7gh39o2MgLTJZzqSWj+bQ1ohG5QFIlaxdTUdXzZWZ3S1IVuJPWdvhktEDrt9k58om4TCqT3ZARhQvjhJIfj2gHi0LPisUkfHmsw1cRCX39izW0vAdiFYfQG0VGzc0qR1Mia0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785197288; c=relaxed/simple;
-	bh=nDDyFVMwgmSswFEWYhHOA4bnKI5cR1vOFgKBgpucE08=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BlBqUDqZLUwiRZ+oKsDhVtiOmZ5ckgaRcaJJyGK6IYfOxb7IqyuikV+51E7eGsO0r9jGuTKBBZY/ixEwe9UrUik7AEjfnx35QRM7XJ8u+3UujkQi5mr3AEL1WZHYuOvrWJNCvzJL+HcXWpWQTHQtpXLwWplHhg0NX1+9Iqb60C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Dg61kxOK; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1785198608; c=relaxed/simple;
+	bh=wA1BoqjYaaixH548+AR+9SISsUtb4p6xmrtcnIlDEuo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kOaTwTMSpppspVo18fmtQkAH4HCxeOijfzd0kFZeJoQvv+6N7kzSlNFeItszkGmRkvH04c6L1yWbTu/PVYCAf/f6oBI2kITf6e+Bsl6qMh0Y4bPa1rNcbBoq4cdDqsr57K0JtbK43LehhchkJeOkDXeQQpy/26FVeglBswW3xVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RP+iISKU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Dg61kxOK"
-Received: from [192.168.0.88] (192-184-212-33.fiber.dynamic.sonic.net [192.184.212.33])
-	by linux.microsoft.com (Postfix) with ESMTPSA id C78A520B7166;
-	Mon, 27 Jul 2026 17:07:50 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C78A520B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1785197270;
-	bh=vzvfcpVxDsuVawwit4pR/t2LHBXcGZwsJw8S4ksNCBs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Dg61kxOKdsAHTBmUVS3VuUpz/c+oMZgDos0sQdoOVeyv5pn0Ft6/0iSzes9cCm3zN
-	 GuHbgFF3icfQd/b1Hv2BZO76EXZIkHNvx6v+Fz+YlHYuG78WdkoJAs62qxLKZKh8RF
-	 3lLqKnBCXPbY540SvbEyQeqxFhjV1UU6LM8TTQEU=
-Message-ID: <7dc1af73-f1e4-9bb9-2a2e-57cc3945dfe1@linux.microsoft.com>
-Date: Mon, 27 Jul 2026 17:08:05 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RP+iISKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708A21F00A3A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 00:30:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785198607;
+	bh=x0q1Ph/Yp4ZJIoFFIv+J0F7VP+1tona2KKai49zosks=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=RP+iISKUP6KYAVZ53B4vHtVLYt3HRFpwX3j2mYjwcL0v5eDZOP+tiKcoVKcz3OWxU
+	 w4HHSdeDHHtqYVki+KCN3mJ+efXNWe6BrUxu96pantcQyOHUQ1ngLIxajw7S9pHMgD
+	 cUoHxcVUP6rDL849zw7C0oDjq+ab4cEMMYI/5jzY/SqdnfXV3dOFaqD51Dl6R5magr
+	 CuY2gnHIrEhDAZNlaMrJJbe2JGVeDXiDIHkitUAgNa3ajWiqfDDttrcT5LcWIoNYe/
+	 hIWiCcH7MU9e+3QWdMZOHR/0sHSJeKvHt0roUOygxSEfp+WvApmckFLR/ran6bHPbb
+	 mrVTTN6Q/kDtQ==
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c15b33f7b23so525071166b.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 17:30:07 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yx2ivQYsRwEeLWwYlyByJ0uQ16CdKtTySuuh25OGXnj3vcuPyuB
+	xibkM9pd3mR6Li3pZ6S5sF4sb4YKK7HgF0s05i2fI/Yw8XH7k9RME7tnVeklfIjZnXYxFqY7A2p
+	LbU67vnWjVHljeVCU/d6cKUFnbLPDOMQ=
+X-Received: by 2002:a17:907:980f:b0:c15:df42:952c with SMTP id
+ a640c23a62f3a-c1f721720ebmr4546566b.28.1785198606390; Mon, 27 Jul 2026
+ 17:30:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH V4 5/9] mshv: Import data structs around device passthru
- from hyperv headers
-Content-Language: en-US
+References: <20260727235228.1007324-1-yosry@kernel.org> <20260727235228.1007324-3-yosry@kernel.org>
+ <20260728000733.987911F000E9@smtp.kernel.org>
+In-Reply-To: <20260728000733.987911F000E9@smtp.kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Mon, 27 Jul 2026 17:29:54 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zNYSxvQDQmvvCiu373yMn5W-tsX6Y6Jqeyb3m041xo8Dg@mail.gmail.com>
+X-Gm-Features: AUfX_my2CdgM9Wrr6tQLY64RgnIY9mPtSW_i98X72n9k1SSCN6bV1mYT8FoGzfQ
+Message-ID: <CAO9r8zNYSxvQDQmvvCiu373yMn5W-tsX6Y6Jqeyb3m041xo8Dg@mail.gmail.com>
+Subject: Re: [PATCH v4 02/12] KVM: selftests: Fix RAX and RFLAGS VMCB offsets
+ when running L2
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, linux-pci@vger.kernel.org
-References: <20260718021949.926306-1-mrathor@linux.microsoft.com>
- <20260718021949.926306-6-mrathor@linux.microsoft.com>
- <20260718023047.E8EC51F000E9@smtp.kernel.org>
-From: Mukesh R <mrathor@linux.microsoft.com>
-In-Reply-To: <20260718023047.E8EC51F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/17/26 19:30, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The memory layout of `union hv_device_domain_id` is inverted compared to the expected Hyper-V ABI, resulting in corrupted device domain IDs being passed to the hypervisor.
+On Mon, Jul 27, 2026 at 5:07=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The hardcoded offsets in `LOAD_GPR_C` and `SAVE_GPR_C` are misal=
+igned with `struct gpr64_regs` by 8 bytes, causing out-of-bounds memory cor=
+ruption and shifting L1/L2 registers to incorrect offsets.
 > --
-> 
-> --- Patch [5]: [PATCH V4 5/9] mshv: Import data structs around device passthru from hyperv headers ---
-> commit 02ed2cd292e85f0b6e754b6a29df473f95394315
-> Author: Mukesh R <mrathor@linux.microsoft.com>
-> 
-> mshv: Import data structs around device passthru from hyperv headers
-> 
-> This commit copies and imports definitions and declarations from Hyper-V
-> public headers. These additions are related to creating domains in the
-> hypervisor and attaching devices to them.
-> 
->> diff --git a/include/hyperv/hvhdk_mini.h b/include/hyperv/hvhdk_mini.h
->> index b4cb2fa26e9bc..90497635c3cbd 100644
->> --- a/include/hyperv/hvhdk_mini.h
->> +++ b/include/hyperv/hvhdk_mini.h
-> 
-> [ ... ]
-> 
->> +/* 3 domain types: stage 1, stage 2, and SOC */
->> +#define HV_DEVICE_DOMAIN_TYPE_S2  0 /* HV_DEVICE_DOMAIN_ID_TYPE_S2 */
->> +#define HV_DEVICE_DOMAIN_TYPE_S1  1 /* HV_DEVICE_DOMAIN_ID_TYPE_S1 */
->> +#define HV_DEVICE_DOMAIN_TYPE_SOC 2 /* HV_DEVICE_DOMAIN_ID_TYPE_SOC */
->> +
->> +/* ID for stage 2 default domain and NULL domain */
->> +#define HV_DEVICE_DOMAIN_ID_S2_DEFAULT 0
->> +#define HV_DEVICE_DOMAIN_ID_S2_NULL    0xFFFFFFFFULL
->> +
->> +union hv_device_domain_id {
->> +	u64 as_uint64;
->> +	struct {
->> +		u32 type : 4;
->> +		u32 reserved : 28;
->> +		u32 id;
->> +	};
->> +} __packed;
-> 
+>
+> --- Patch [2]: [PATCH v4 02/12] KVM: selftests: Fix RAX and RFLAGS VMCB o=
+ffsets when running L2 ---
+> commit 828b231275dca6c618d4ec1f5e43abd20a4b5e54
+> Author: Yosry Ahmed <yosry@kernel.org>
+>
+> KVM: selftests: Fix RAX and RFLAGS VMCB offsets when running L2
+>
+> This commit fixes incorrect vmcb_save_area offsets by using vmcb->save.ra=
+x
+> and vmcb->save.rflags as parameters to the assembly block. This avoids
+> hardcoding offsets completely and also directly uses guest_regs.rax inste=
+ad
+> of assuming it is at offset 0.
+>
+> Link: https://lore.kernel.org/all/20260521092311.86030-1-pbonzini@redhat.=
+com/
+> Closes: https://sashiko.dev/#/patchset/20260518202514.2037078-1-yosry%40k=
+ernel.org?part=3D1
+>
+> > diff --git a/tools/testing/selftests/kvm/lib/x86/svm.c b/tools/testing/=
+selftests/kvm/lib/x86/svm.c
+> > index 1445b890986fd..766d15f1d534a 100644
+> > --- a/tools/testing/selftests/kvm/lib/x86/svm.c
+> > +++ b/tools/testing/selftests/kvm/lib/x86/svm.c
+> > @@ -164,19 +164,22 @@ void run_guest(struct vmcb *vmcb, u64 vmcb_gpa)
+> >  {
+> >       asm volatile (
+> >               "vmload %[vmcb_gpa]\n\t"
+> > -             "mov rflags, %%r15\n\t" // rflags
+> > -             "mov %%r15, 0x170(%[vmcb])\n\t"
+> > -             "mov guest_regs, %%r15\n\t"     // rax
+> > -             "mov %%r15, 0x1f8(%[vmcb])\n\t"
+> > +             "mov rflags, %%r15\n\t"
+> > +             "mov %%r15, %[vmcb_rflags]\n\t"
+> > +             "mov %[guest_regs_rax], %%r15\n\t"
+> > +             "mov %%r15, %[vmcb_rax]\n\t"
+> >               LOAD_GPR_C
+> >               "vmrun %[vmcb_gpa]\n\t"
+> >               SAVE_GPR_C
+>
 > [Severity: High]
-> Is the memory layout of union hv_device_domain_id inverted compared to the
-> expected Hyper-V ABI?
+> This isn't a bug introduced by this patch, but do the hardcoded memory
+> offsets in LOAD_GPR_C and SAVE_GPR_C cause an out-of-bounds memory access=
+?
 
-No.
-
-> The macro HV_DEVICE_DOMAIN_ID_S2_NULL is defined as 0xFFFFFFFFULL, which
-> places 0xFFFFFFFF in the lower 32 bits and 0 in the upper 32 bits. Given
-> that Stage 2 (S2) domains have a type of 0, this macro implies that the id
-> should be in the lower 32 bits and the type should be in the upper 32 bits.
-
-HV_DEVICE_DOMAIN_ID_S2_NULL is never assigned to any data struct of
-type "union hv_device_domain_id".
-
-
-> However, union hv_device_domain_id defines type as the first bitfield
-> (occupying the lower 32 bits) and id as the second (occupying the upper 32
-> bits).
-> 
-> Under this layout, casting 0xFFFFFFFFULL evaluates to type = 15 and id = 0,
-> instead of the expected type = 0 and id = 0xFFFFFFFF. Could this cause
-> malformed domain IDs to be sent to the hypervisor?
-> 
-
+Yes, this is fixed in following patches.
