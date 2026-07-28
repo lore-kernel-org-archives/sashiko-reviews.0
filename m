@@ -1,155 +1,114 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A90736C5AE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 23:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DCCA13AF2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 00:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785196531; cv=none; b=QhBYnRQdOgKuMUeJ/o/hZ2lBXs1XF7NazfeKvgLkOz/yDnIdRad7kbydYc3XodZrNCRuM6QzM6HIDtoGeOy/4XvVQzNsl31SvbU2nSnPgg0kVSdiDruVY+6UKdl8VE8yMuYksDlz9kUbZO+AoHlIGCyKnx4hcsKqPvM/msnzW6k=
+	t=1785197288; cv=none; b=sQ2kksxX21mT0Q7/NZSU2K1tuPoIJRmIxC91GAqnxS/DgiPWOIR1JtzLMpnI39KWnhWyTbyW+lguGUDQ8+fHxcVZxLd53mvrVMaoD3BaVWrmeGbl2IkKBT2SqKPDORnUboHGop0O7A91VLM3a5YNnjZKJCpPbAIj433h8RwNmTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785196531; c=relaxed/simple;
-	bh=lJmuZY0S7QDv4ckH6M3o6VxfiVoT5kOQyRqJ20K45eo=;
+	s=arc-20240116; t=1785197288; c=relaxed/simple;
+	bh=nDDyFVMwgmSswFEWYhHOA4bnKI5cR1vOFgKBgpucE08=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qVKKRxjFZB98wVqFtn39u9BYDEUWLqEJ5bdl54MH9OTr55fm5a+TlmtsydVNBQGKmxXzdM+4uM2pagPCXeKRur9xsuLmMfDxNRYGVzB+fNugAYZTlqKBkMPnwnjPN7Ystam7Is/NrFHSRFaEzuUK1x7qMdMv68skzWn5Re92BhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S3Nha77U; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 In-Reply-To:Content-Type; b=BlBqUDqZLUwiRZ+oKsDhVtiOmZ5ckgaRcaJJyGK6IYfOxb7IqyuikV+51E7eGsO0r9jGuTKBBZY/ixEwe9UrUik7AEjfnx35QRM7XJ8u+3UujkQi5mr3AEL1WZHYuOvrWJNCvzJL+HcXWpWQTHQtpXLwWplHhg0NX1+9Iqb60C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Dg61kxOK; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S3Nha77U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785196530; x=1816732530;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=lJmuZY0S7QDv4ckH6M3o6VxfiVoT5kOQyRqJ20K45eo=;
-  b=S3Nha77U0o1qOzSK1BSwM85JOjovb1snuvyJMKzptT6x8PmGFSO2AAgx
-   ed1Hv1s9Owv0xXuVZ6g5QmzT51aAQq8LtHLjrEdURLPXu2z4jhzdwtNAi
-   rr8le3BH0qlnBWv1X5MWxQhkJKBAA1728hMUGX0kLt3jNaZRH5Ha5mmqf
-   QrwbJMcCk6+2Kp6LaZF7zJ+X7aHeGGTqw8ylGr06O4FgEoDmjvyu0Eqcr
-   YfIWFFI6pL8X+pF10YNo5Emta9zAniebKsEe2Pi4HTp2eu84F625khi9Z
-   XompCOS/Te5/BMEyw54HhwO3BtJDtsuBJTToYV4rwH3u/HhE9ZlUL3xeq
-   w==;
-X-CSE-ConnectionGUID: eJfcE6u0ReaSbYDf0zDErQ==
-X-CSE-MsgGUID: XxHPjmLpQE2ijAlwHmnoyw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11858"; a="85538831"
-X-IronPort-AV: E=Sophos;i="6.25,189,1779174000"; 
-   d="scan'208";a="85538831"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 16:55:29 -0700
-X-CSE-ConnectionGUID: p9DI3qnjSUa4Fn00ElArog==
-X-CSE-MsgGUID: wVd+uPkYQAKAk/lH1WGkwQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,189,1779174000"; 
-   d="scan'208";a="263036384"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2026 16:55:28 -0700
-Message-ID: <b5294274-3db1-43c7-afdb-e85db4d17404@intel.com>
-Date: Mon, 27 Jul 2026 18:55:27 -0500
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Dg61kxOK"
+Received: from [192.168.0.88] (192-184-212-33.fiber.dynamic.sonic.net [192.184.212.33])
+	by linux.microsoft.com (Postfix) with ESMTPSA id C78A520B7166;
+	Mon, 27 Jul 2026 17:07:50 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C78A520B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1785197270;
+	bh=vzvfcpVxDsuVawwit4pR/t2LHBXcGZwsJw8S4ksNCBs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Dg61kxOKdsAHTBmUVS3VuUpz/c+oMZgDos0sQdoOVeyv5pn0Ft6/0iSzes9cCm3zN
+	 GuHbgFF3icfQd/b1Hv2BZO76EXZIkHNvx6v+Fz+YlHYuG78WdkoJAs62qxLKZKh8RF
+	 3lLqKnBCXPbY540SvbEyQeqxFhjV1UU6LM8TTQEU=
+Message-ID: <7dc1af73-f1e4-9bb9-2a2e-57cc3945dfe1@linux.microsoft.com>
+Date: Mon, 27 Jul 2026 17:08:05 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 5/9] KVM: x86/pmu: Support PERF_METRICS MSR in mediated
- vPMU
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260727192131.582105-1-zide.chen@intel.com>
- <20260727192131.582105-6-zide.chen@intel.com>
- <20260727195009.4851A1F000E9@smtp.kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH V4 5/9] mshv: Import data structs around device passthru
+ from hyperv headers
 Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260727195009.4851A1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org, linux-pci@vger.kernel.org
+References: <20260718021949.926306-1-mrathor@linux.microsoft.com>
+ <20260718021949.926306-6-mrathor@linux.microsoft.com>
+ <20260718023047.E8EC51F000E9@smtp.kernel.org>
+From: Mukesh R <mrathor@linux.microsoft.com>
+In-Reply-To: <20260718023047.E8EC51F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 7/27/2026 2:50 PM, sashiko-bot@kernel.org wrote:
+On 7/17/26 19:30, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Guest PMU state in MSR_PERF_METRICS is leaked to the host and other VMs because KVM fails to clear it on PMU context switch when the guest is configured without the PERF_CAP_PERF_METRICS feature.
+> - [High] The memory layout of `union hv_device_domain_id` is inverted compared to the expected Hyper-V ABI, resulting in corrupted device domain IDs being passed to the hypervisor.
 > --
 > 
-> --- Patch [5]: [PATCH v7 5/9] KVM: x86/pmu: Support PERF_METRICS MSR in mediated vPMU ---
-> commit 2933f2f58fa948287c388e166de23d159332fdf8
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> --- Patch [5]: [PATCH V4 5/9] mshv: Import data structs around device passthru from hyperv headers ---
+> commit 02ed2cd292e85f0b6e754b6a29df473f95394315
+> Author: Mukesh R <mrathor@linux.microsoft.com>
 > 
-> KVM: x86/pmu: Support PERF_METRICS MSR in mediated vPMU
+> mshv: Import data structs around device passthru from hyperv headers
 > 
-> This commit exposes the IA32_PERF_METRICS MSR to guests when mediated
-> vPMU is enabled. It handles passthrough of the MSR and saves or restores
-> its state during PMU context switches to prevent clobbering or leaking
-> state.
+> This commit copies and imports definitions and declarations from Hyper-V
+> public headers. These additions are related to creating domains in the
+> hypervisor and attaching devices to them.
 > 
->> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
->> --- a/arch/x86/kvm/vmx/pmu_intel.c
->> +++ b/arch/x86/kvm/vmx/pmu_intel.c
+>> diff --git a/include/hyperv/hvhdk_mini.h b/include/hyperv/hvhdk_mini.h
+>> index b4cb2fa26e9bc..90497635c3cbd 100644
+>> --- a/include/hyperv/hvhdk_mini.h
+>> +++ b/include/hyperv/hvhdk_mini.h
 > 
 > [ ... ]
 > 
->> @@ -831,6 +852,19 @@ static void intel_mediated_pmu_put(struct kvm_vcpu *vcpu)
->>  	 */
->>  	if (pmu->fixed_ctr_ctrl_hw)
->>  		wrmsrq(MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+>> +/* 3 domain types: stage 1, stage 2, and SOC */
+>> +#define HV_DEVICE_DOMAIN_TYPE_S2  0 /* HV_DEVICE_DOMAIN_ID_TYPE_S2 */
+>> +#define HV_DEVICE_DOMAIN_TYPE_S1  1 /* HV_DEVICE_DOMAIN_ID_TYPE_S1 */
+>> +#define HV_DEVICE_DOMAIN_TYPE_SOC 2 /* HV_DEVICE_DOMAIN_ID_TYPE_SOC */
 >> +
->> +	if (kvm_vcpu_has_perf_metrics(vcpu)) {
->         ^^^^
+>> +/* ID for stage 2 default domain and NULL domain */
+>> +#define HV_DEVICE_DOMAIN_ID_S2_DEFAULT 0
+>> +#define HV_DEVICE_DOMAIN_ID_S2_NULL    0xFFFFFFFFULL
+>> +
+>> +union hv_device_domain_id {
+>> +	u64 as_uint64;
+>> +	struct {
+>> +		u32 type : 4;
+>> +		u32 reserved : 28;
+>> +		u32 id;
+>> +	};
+>> +} __packed;
 > 
 > [Severity: High]
-> Could this leak guest PMU state to the host or other VMs?
+> Is the memory layout of union hv_device_domain_id inverted compared to the
+> expected Hyper-V ABI?
+
+No.
+
+> The macro HV_DEVICE_DOMAIN_ID_S2_NULL is defined as 0xFFFFFFFFULL, which
+> places 0xFFFFFFFF in the lower 32 bits and 0 in the upper 32 bits. Given
+> that Stage 2 (S2) domains have a type of 0, this macro implies that the id
+> should be in the lower 32 bits and the type should be in the upper 32 bits.
+
+HV_DEVICE_DOMAIN_ID_S2_NULL is never assigned to any data struct of
+type "union hv_device_domain_id".
+
+
+> However, union hv_device_domain_id defines type as the first bitfield
+> (occupying the lower 32 bits) and id as the second (occupying the upper 32
+> bits).
 > 
-> In intel_mediated_pmu_put(), this checks if the guest has the
-> PERF_CAP_PERF_METRICS capability before clearing MSR_PERF_METRICS.
-> However, if the physical CPU supports this feature but the guest is
-> configured without it, could the guest still activate it?
-> 
-> If KVM configures MSR_CORE_PERF_GLOBAL_CTRL for passthrough (which happens
-> when counter counts match, as kvm_need_perf_global_ctrl_intercept() only
-> checks counter counts), the guest can write to bit 48 of
-> MSR_CORE_PERF_GLOBAL_CTRL. The hardware PMU would then start updating
-> MSR_PERF_METRICS.
-
-Good catch. It's a basic yet important issue and something I should have
-thought of earlier.
-
-If the host supports PerfMetrics but it is not exposed to the guest,
-MSR_CORE_PERF_GLOBAL_CTRL must be intercepted so the guest cannot enable
-bit 48.
-
-With the following code, the guest cannot activate MSR_PERF_METRICS, and
-the leak concern goes away.
-
-diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
-index 9292407f0353..474207c6413d 100644
---- a/arch/x86/kvm/pmu.c
-+++ b/arch/x86/kvm/pmu.c
-@@ -819,6 +819,7 @@ static bool kvm_need_any_pmc_intercept(struct
-kvm_vcpu *vcpu)
- bool kvm_need_perf_global_ctrl_intercept(struct kvm_vcpu *vcpu)
- {
-        return kvm_need_any_pmc_intercept(vcpu) ||
-+              kvm_need_perf_metrics_intercept(vcpu) ||
-               !kvm_pmu_has_perf_global_ctrl(vcpu_to_pmu(vcpu));
- }
- EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_need_perf_global_ctrl_intercept);
-
-> Since kvm_vcpu_has_perf_metrics() returns false in this scenario, this path
-> would skip clearing the physical MSR_PERF_METRICS on VM-exit, leaving guest
-> state in the hardware register for the next VM or host to read.
-> 
->> +		pmu->perf_metrics = rdpmc(INTEL_PMC_FIXED_RDPMC_METRICS);
->> +		/*
->> +		 * The SDM requires restoring fixed counter 3 before
->> +		 * PERF_METRICS. However, this path writes 0 to PERF_METRICS
->> +		 * before fixed counter 3. For this all-zero case, the
->> +		 * resulting hardware state is therefore the same regardless
->> +		 * of write order.
->> +		 */
->> +		if (pmu->perf_metrics)
->> +			wrmsrq(MSR_PERF_METRICS, 0);
->> +	}
->>  }
+> Under this layout, casting 0xFFFFFFFFULL evaluates to type = 15 and id = 0,
+> instead of the expected type = 0 and id = 0xFFFFFFFF. Could this cause
+> malformed domain IDs to be sent to the hypervisor?
 > 
 
