@@ -1,138 +1,177 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367BF282F14
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 13:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229413B0AE2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 13:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785244566; cv=none; b=OqoFLUQ19CDOnwu0IuVZJkN2kfi6dhgJMYJjvDjgJk7vmhvU6nGukI8hTLF0Zp8mevXZCCN/txuzbSiMdV2txoFtiqaVX/1lz2IMotVbLvd0z+ah4tBKlyL9U40eWsZCeeTGu1C3jybF+G2FeMl4Ir5DCtyAnGDXbFA7n9NfY2c=
+	t=1785244648; cv=none; b=GZojeQ1A0/ep7+FnQN3Q0050MobzeFJsYECcmHgXkzrzxSGbDtsNPoGF9vQwraVYNAJiDOUzlg59xP/ejXREAXyenywc27IxLbVfEZQD88B2baVwo5q/tVHce3f/P9LjOvplBcWv707tKcti4Lr1MxC31oT1FD3eRjhoZwxTrME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785244566; c=relaxed/simple;
-	bh=cLH93zo8+5LFvseU1ydD9VGz5QwjgSRbVRGQwkX1r9U=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eIGAO9y6rbyhpAyNi+YoE11P6PxO13UoiX8ScYprpPeT32Le9e376AF7ahuTMCEk+GEMcu31YA9gZYTAcnHyNZBdDJMy2PwT4Rz5FUQb9vmuvOZUW9s3aN3e6Jo0tVGSnMErlkusHbUesMnbOo2q+aoIHEtpFFWHUdI8i9fBM5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ll7JLAUg; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ll7JLAUg"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49548e01d02so19413035e9.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 06:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785244562; x=1785849362; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=NJ8Sz4jZn4MiZdWgUS+toUmyc9X4AmjEUEaGs5iVrDk=;
-        b=ll7JLAUgRCLzxRqCVf9G2OzK4rbA2a/ztJreTP0oUfq5Gw/owpkGhwAALxo8VC2x0d
-         uDt+eTYdLEbNanzzVCR2MkYdb+P9Jlh3o5G4BEMOAmcENUqYP8BEOq4qWGu4UZc54wR/
-         bafk9VAGAKjC2jZhIhNBcuBFa+MRyT/9rAzUmomCz2p8erORCHqD4bvwA4Wl19V2Y029
-         A0F+PXIeBH4kVKdAD+dgajZe500O0AVsJyTApct9pAbojH5pcDJ9njR1VmBnJx6qvtqc
-         kFFE6g0gT0KkJElXfRP3uW/BrHidJaW1YY7WQolZ/8mFQNr6WDFee210CPb/DOd+gD3h
-         6tjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785244562; x=1785849362;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NJ8Sz4jZn4MiZdWgUS+toUmyc9X4AmjEUEaGs5iVrDk=;
-        b=eQ3ZuhdrWscpCsQwD6hSIhcCGjvgwK9A4lMm/utHWtyiGRmxdxmCtZyTPDDHbrigcm
-         Daji/zgNNDtX+FnYsiyWeTbkgk4hc2d6982WV3xqrvtArlLbvyrm1DiB9q/3N0rZxcZz
-         AM6ZcIZYJwkwpinMkfXZFmKBR0V7khuyltivgaJj3nWz6Kb+pw37wzjY5zqF48FbuthK
-         T3thGDODGziHNuE+BuN8OFWVimC8uDDDpxR3sjMdL92c3Em+LBiK5GUOUQ9prGYM+uMC
-         5CPdSSO3xRIY0vf2lQ9T56VC4yXH/fsZYN/yhQk7f6DUVnVg/Vfir2LbtDXVIaR34PZP
-         8K1A==
-X-Gm-Message-State: AOJu0YxDokLV7WzXTe/Tx+O48HfhQCpeKQbibaVvVB22SSZxHuAj+aY5
-	chkSOkpc9Bjexx8RTMA6C6AlwEgAMCYg7gxp7quir2/2wK1mHPodT2pC
-X-Gm-Gg: AR+sD10SLJJyN7J3xJjmitoOO36CC1IEiQv/YC0B1w7cCQeW6A0cqEp1gHKIidZtjb2
-	OWHo42fY39IojdsRVZqxn6nlvHCJT4X6yqdr3KBl2ysxNLykOIkoQ7xrZeXzSJkwTV7FLGSS4hY
-	csAUtzCnfFkg9Ms6C5W7DOuDM6TuDSZFCgFLkgwALI5ZOl3jxk1315r/0Aua8JPVnSAlD0tQB3B
-	r8jSqt4zPOTWsDSc3KprycNQj9ktAkhxtxw+u/dGehyRyAt4U7IZCdEO6MHpHSS3C/u+WwRtt3I
-	29p8ZM4SBo2VLkJDJ6t5Cd+Ilruj5DA5yaFb0B7RQNz+6VRZVXRsWg0nFvTK9+uXYmLkpVZ2ge3
-	i8ldvrIQzqvqnsPZ3wwx07BiRU8Sdm39jaIHwZ5DIzx20Exyf5mw5eZKnS1+CIqe5HnOwlKSifJ
-	V0DmQtCAnOMZTsm1SWtJFC09nXdHNK/a4SorjJxSmv4Ya7KclFAs5nKf0/pDPxxYXhxScSb/O1k
-	pHYLB52YVuAAxXmHFaHzQlPBrya7+TzkXM37zlQXgg0nH2eSlbX6PUs9C0jPbNst8q0WnrvL+ZQ
-	Z26CIOdGdK/1YtSxBcRYDwM+rXkQzd1BWNeeMmoJArJ6MeiHiUDGeBFRvQwSjFTe37jZLyzw+rE
-	t2/sWr21qHQKI
-X-Received: by 2002:a05:600c:1d04:b0:495:4e12:6ae5 with SMTP id 5b1f17b1804b1-496c6571d21mr26130575e9.26.1785244562007;
-        Tue, 28 Jul 2026 06:16:02 -0700 (PDT)
-Received: from localhost (90-182-112-124.rcp.o2.cz. [90.182.112.124])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-496c44af19bsm74777785e9.3.2026.07.28.06.16.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 06:16:01 -0700 (PDT)
-Date: Tue, 28 Jul 2026 15:15:59 +0200
-From: Joshua Crofts <joshua.crofts1@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
- conor+dt@kernel.org, robh@kernel.org, linux-iio@vger.kernel.org,
- jic23@kernel.org, andy@kernel.org, nuno.sa@analog.com,
- dlechner@baylibre.com
-Subject: Re: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device
-Message-ID: <20260728151559.000067ef@gmail.com>
-In-Reply-To: <20260727184226.DFC1E1F000E9@smtp.kernel.org>
-References: <20260727-mcp47a1-add-support-v2-0-d4591a2ce69e@gmail.com>
-	<20260727-mcp47a1-add-support-v2-2-d4591a2ce69e@gmail.com>
-	<20260727184226.DFC1E1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.51; x86_64-w64-mingw32)
+	s=arc-20240116; t=1785244648; c=relaxed/simple;
+	bh=FsRkVSS3IGfUI2qQz/EWgl1svRHONwonEcMTFZgJxSM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Kaub5OGVfCcJ1XXbHuI4cEUDJKMHFEOixpencnATRW2PAwqWMr1NCHDnhADHkRyKBRcWMfFPoCtOct5NQkZkx2DxVlLdTNUzZU56uVUQCGyNXhKGiTfnjym4rB2PAgwwmBrFs4k3cF/zIbUo7d5lrig/b//lce5aoCmw/a+6phM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4h8bZx6PrlzYQv8S
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 21:16:41 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id 4615040592
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 21:17:21 +0800 (CST)
+Received: from [10.67.110.68] (unknown [10.67.110.68])
+	by APP1 (Coremail) with UTF8SMTPA id cCh0CgCXhtLgq2hq6IQJAQ--.19023S2;
+	Tue, 28 Jul 2026 21:17:21 +0800 (CST)
+Message-ID: <a092ae94-ccd2-4dfa-a1d6-2f4d33005fb3@huaweicloud.com>
+Date: Tue, 28 Jul 2026 21:17:19 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf v6 4/4] bpf, cgroup: Fix storage null-ptr-deref after
+ replacing prog
+Content-Language: en-US
+From: Pu Lehui <pulehui@huaweicloud.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260722072326.1545677-1-pulehui@huaweicloud.com>
+ <20260722072326.1545677-5-pulehui@huaweicloud.com>
+ <20260722073501.64ACE1F00A3A@smtp.kernel.org>
+ <d1c272dd-9db3-4d93-806e-ba8b4dcc0e91@huaweicloud.com>
+In-Reply-To: <d1c272dd-9db3-4d93-806e-ba8b4dcc0e91@huaweicloud.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:cCh0CgCXhtLgq2hq6IQJAQ--.19023S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxGr48GF18GF1DJr43WF1DGFg_yoWrWrWfpF
+	1kJFyDJas8Gr9Yvr1vq34qvFW8Aw48X3Z8Krn8J3W8GFW7tr1Fgr4xurZ09Fy3Jr4kZ3WI
+	qr1YvrsruF1jvFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
 
-On Mon, 27 Jul 2026 18:42:26 +0000
-sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Potential off-by-one in DAC scale calculation denominator.
-> --
-
-Responding to Sashiko's comment.
-
-> --- Patch [2]: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device ---
-> commit 38bec2fbb020c3f749c52a26e5cc3e78e72eeaf5
-> Author: Joshua Crofts <joshua.crofts1@gmail.com>
+On 2026/7/22 15:48, Pu Lehui wrote:
 > 
-> iio: dac: mcp47a1: add support for new device
+> On 2026/7/22 15:35, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>>
+>> Pre-existing issues:
+>> - [High] Missing rollback of `pl->flags` on the error path in 
+>> `__cgroup_bpf_attach` permanently corrupts the execution order of the 
+>> replaced program.
+>> -- 
+>>
+>> --- Patch [4]: [PATCH bpf v6 4/4] bpf, cgroup: Fix storage 
+>> null-ptr-deref after replacing prog ---
+>> commit f8726e124d0a4e72b87976830f0741e286d474df
+>> Author: Pu Lehui <pulehui@huawei.com>
+>>
+>> bpf, cgroup: Fix storage null-ptr-deref after replacing prog
+>>
+>> Syzkaller reported a storage null-ptr-deref issue after replacing a prog.
+>> The issue is fixed by properly allocating the storage and comparing 
+>> the old
+>> and new storage pointers, falling back to an RCU-safe update if they 
+>> change.
+>> Additionally, proper rollbacks for storage and flags are added to the 
+>> error
+>> path in __cgroup_bpf_attach for code rigor.
+>>
+>>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>>> --- a/kernel/bpf/cgroup.c
+>>> +++ b/kernel/bpf/cgroup.c
+>>> @@ -883,7 +885,10 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
+>>>       pl->prog = prog;
+>>>       pl->link = link;
+>>>       pl->flags = flags;
+>>> +    if (old_prog)
+>>> +        bpf_cgroup_storages_assign(old_storage, pl->storage);
+>>>       bpf_cgroup_storages_assign(pl->storage, storage);
+>>> +    old_flags = cgrp->bpf.flags[atype];
+>>>       cgrp->bpf.flags[atype] = saved_flags;
+>>>       if (type == BPF_LSM_CGROUP) {
+>>
+>> [ ... ]
+>>
+>>> @@ -915,12 +920,14 @@ static int __cgroup_bpf_attach(struct cgroup 
+>>> *cgrp,
+>>>       if (old_prog) {
+>>>           pl->prog = old_prog;
+>>>           pl->link = NULL;
+>>> +        bpf_cgroup_storages_assign(pl->storage, old_storage);
+>>>       }
+>>
+>> [Severity: High]
+>> This is a pre-existing issue, but since this patch tightens the error 
+>> handling
+>> and rollbacks in __cgroup_bpf_attach(), should we also restore the 
+>> original
+>> pl->flags here?
 > 
-> The Microchip MCP47A1 is a 6-bit volatile Digital-to-Analog converter
-> which communicates via I2C.
 > 
-> > diff --git a/drivers/iio/dac/mcp47a1.c b/drivers/iio/dac/mcp47a1.c
-> > new file mode 100644
-> > index 0000000000000..140e93ff2ba01
-> > --- /dev/null
-> > +++ b/drivers/iio/dac/mcp47a1.c  
-> [ ... ]
-> > +static int mcp47a1_read(struct iio_dev *indio_dev,
-> > +			struct iio_chan_spec const *chan,
-> > +			int *val, int *val2, long mask)
-> > +{
-> > +	struct mcp47a1_data *data = iio_priv(indio_dev);
-> > +	int ret;
-> > +
-> > +	switch (mask) {  
-> [ ... ]
-> > +	case IIO_CHAN_INFO_SCALE:
-> > +		*val = data->vref_mV;
-> > +		*val2 = MCP47A1_MAX_STEP;  
-> 
-> [Severity: Medium]
-> Does this code use the correct denominator for the scale calculation?
-> 
-> Since this is a 6-bit DAC, shouldn't the scale denominator be 64 (2^6)
-> instead of the maximum step value of 63? Using MCP47A1_MAX_STEP (63) here
-> introduces an off-by-one error that could cause userspace to calculate
-> output voltages with a ~1.5% LSB scaling error when reading the sysfs
-> attribute.
+>>
+>> Earlier in the function, pl->flags is overwritten with the incoming 
+>> flags:
+>>
+>>     pl->prog = prog;
+>>     pl->link = link;
+>>     pl->flags = flags;
+>>
+>> If update_effective_progs() later fails (e.g., due to memory allocation
 
-Yes, the max amount of steps is 64, which should be passed here. I'll
-add a separate macro for this in v3.
+update_effective_progs() is unlikely to fail, whereas 
+bpf_trampoline_link_cgroup_shim() can fail.
 
--- 
-Kind regards,
-Joshua Crofts
+In __cgroup_bpf_attach(), when replacing an existing bpf_link in a 
+single-attach scenario, old_prog is NULL while old_link holds the active 
+link. If attachment fails mid-way during 
+bpf_trampoline_link_cgroup_shim() or update_effective_progs(), the 
+cleanup path checks if (!old_prog). This incorrectly identifies the 
+existing pl entry as newly allocated and wrongly frees it via kfree(), 
+triggering a Use-After-Free (UAF) bug.
+
+To resolve this cleanly, I will split this into two individual patches.
+
+> 
+> It's hard to make update_effective_progs fail in __cgroup_bpf_attach, as 
+> it will failed only when allocating failed:
+> 
+> progs = bpf_prog_array_alloc(cnt, GFP_KERNEL);
+> 
+> failed for the above alloc is not a high issue, as cnt max is no more 
+> than BPF_CGROUP_MAX_PROGS.
+> 
+>> failure), the error path restores pl->prog, pl->link, and pl->storage, 
+>> but
+>> misses pl->flags. If a user attempts to replace a program using 
+>> BPF_F_REPLACE
+>> with different BPF_F_PREORDER settings and the replacement fails, 
+>> could this
+>> leave the original program active but with its execution order silently
+>> corrupted?
+>>
+>>>       bpf_cgroup_storages_free(new_storage);
+>>>       if (!old_prog) {
+>>>           hlist_del(&pl->node);
+>>>           kfree(pl);
+>>>       }
+>>> +    cgrp->bpf.flags[atype] = old_flags;
+>>>       return err;
+>>>   }
+>>
+
