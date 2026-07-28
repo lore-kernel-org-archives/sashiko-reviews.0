@@ -1,227 +1,208 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010068.outbound.protection.outlook.com [52.101.201.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68AE3BFE3B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 19:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785268676; cv=none; b=p+v17+5FTjjzuRsXHRb3Qb/9t1uPIn4vb47fDXMECfCen7biT2PU+Ib4irmh0IRbVMVRmMPGLsaisK2Vyss6X4So8O0ihlpjXKf2427FzbdpJZAZl7eUzbuEYsvZJrYfktH11kUGtttR8x1MqFl8dcb473USCE1MH3vRB2J0yn0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785268676; c=relaxed/simple;
-	bh=KkTfY/42vsrVbYxROJVVYJC9I/KPtAayGu2PUiTwD24=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hrcsOLFATYbCfAwQvdJ7IZ6S62AiGmmHyIQB8iylKgAKBMMM9QIMg07otV5EesPvx+ySKqNeIpA89hB7DxHq578P/rxCxMctvYJ0ygxP0WOkYVcyN2SWLMkMbRnd4Jv2JTzDSpGtE3pg/xg5oW+7nsrOz4XtSJniLDK03rHiw8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=bCC2wm/4; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D5F3CE099
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 20:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.68
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785268821; cv=fail; b=t+QYSWcDKQCKiJR7/De26AbRlfhAf2Chz+PoCLVkOg0d2JvACvzRbuTqvWiQOMyGYtyFvkUMZ3mItIYCHa55gGYOAnZAUMJP+O6YPZXfkRD+fiInZV7bJ8qBeSYnFPI7Px+66Gl95HJwULCejiC5IVCcicRUQtT20raVd04Z+OE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785268821; c=relaxed/simple;
+	bh=UL0PCXAdK4Ihxval4BGk/16aNHXa3FntNDvJLYqs5Tg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=VUqVuet8fl7u4a9HsUiuOeDKEiHwg4STe8KRe7nDY31jjOfeS8/i/OUTsvgbfN0JVEeZjFBzpijWe9f+EjqxX8s9iC2tEmlJO1jIlSZjb0xGRUGmZJlhgXUpKFVz87jT2g+weJLVfsdDHDHVDMeb0TPeFbHqWDIvsTiWzjVhEKo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=0TkEkcE1; arc=fail smtp.client-ip=52.101.201.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="bCC2wm/4"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66SIHiqX1927464;
-	Tue, 28 Jul 2026 19:57:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=A7mCQD
-	KxUZh1dwhP+29h6eeyjx7dhm8+poSfpUgDJyg=; b=bCC2wm/4J9FlcBtaRdBVQT
-	Y9iOzUNfOaGjNN2pPFvNE+1tEJWOOIjWqqyGujnWaHuloyK9ADTpKgqekoBkqHwd
-	Yf0pWP6X7TYNeGcWCytM9tng5AGbOfp1eD5HE34tUgYyKFn3fACBQSaDmJhujs6g
-	hf8tDFuHbFfP7FDyhnSavj5GSKinfTYjWEjU2kXHe2Dg3C1oGNdpsGsdhWbbumBD
-	MxYk48X/+QL2CclZjY9eWsrtgOKRIy2ABUVLi+zgos684hWJBtra7p0zHUZN9519
-	2JIipmJwuKonP3VDVtarLzyugmYWmnrxIJZJDx3+wtYP+PhoLNVjO9izI/AIu2DQ
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7fa5a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jul 2026 19:57:53 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SJfFGX016036;
-	Tue, 28 Jul 2026 19:57:52 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fqbv4c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jul 2026 19:57:52 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66SJvpQm27656884
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 28 Jul 2026 19:57:52 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 94BCB58059;
-	Tue, 28 Jul 2026 19:57:51 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 3A69358043;
-	Tue, 28 Jul 2026 19:57:50 +0000 (GMT)
-Received: from [9.61.138.160] (unknown [9.61.138.160])
-	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 28 Jul 2026 19:57:50 +0000 (GMT)
-Message-ID: <60015999-697e-495d-981d-1ac010b81367@linux.ibm.com>
-Date: Tue, 28 Jul 2026 15:57:49 -0400
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="0TkEkcE1"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ReC0JNVI5ndj0NDLgh2dD6K+hdnafPlBdLzwjsKix4WGrlbOOQqrB9kBuH74UisncEivpqD3SM+LpL3/mjTJk/oRKC21++pbnc4zMLmt2Bxm1BugOB65WTcj4M49ig555N+HqdAovWFXRuT8TFB9T+znbAhRIKBdkD2gL1WX9Is8z2513HmxMXv+UQ50lBHOfX7/dkN5F9ZtdUTtdNWmuJrfJSr3gAOvDtUJzX4Wr/erhQQxeWMad7QLGubZYXj7CfLTw7SGi5YGrnRT4U647j/OeLCESGfc68GAovla2Y0tCVSttDTUPmlM0QEkFNY50qVI4DRJ6W2OlgHzwqieZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=67ORwT0+c+C50AdVCnZBRk+0DvFJAmkZ5fDn7lGSrtk=;
+ b=FSVSHndd7MJQldYMhmKCmVWGFW+N74cUdQWOHuyVvvWBZNzmeifkweN4DTkfjB5fCOMv2Nynr1Q5dKT/nqIubYcOi3gVHm+Z5YZHY6uzSM8D2ciSG1ZElvdbol72JLQ5iVEcARUpw5WaJS+8m1p1NRkwGQYGiu+lzTMTOUianlf/aWVeHA4vz5MKOC/+VLEniRFOdfEB3Hao/EZnuk72mE4/OLdlc58R+KU2DrS7cN6YeQaG68zvapzqTlFWSZe7k3SE1X08ifG4bp+J8hXddrKaYuPO3/VEoJUEYv1OKsdY5oOZBgS8wxNqtLq0vkt5i+Bdt5cmR3pASsY8NyVvJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=67ORwT0+c+C50AdVCnZBRk+0DvFJAmkZ5fDn7lGSrtk=;
+ b=0TkEkcE1o3QZpDBVu3agyCLPX1Hz4Yt71lq6MQcD5XskWSXND953epZ4S7zBDA6fmJ6PqEl1spfJYZohZqHv8+TBI/W3gohRwoHQsajy5yO5Qx/0z01/NP6d5FQNIgAUa2ckURS6xHPKrKuLg7jrF0yZyEx18r5XoY263wexMPg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW6PR12MB9020.namprd12.prod.outlook.com (2603:10b6:303:240::6)
+ by CH1PPF9C964DBFE.namprd12.prod.outlook.com (2603:10b6:61f:fc00::61e) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Tue, 28 Jul
+ 2026 20:00:13 +0000
+Received: from MW6PR12MB9020.namprd12.prod.outlook.com
+ ([fe80::879c:bf22:f7a0:e8c8]) by MW6PR12MB9020.namprd12.prod.outlook.com
+ ([fe80::879c:bf22:f7a0:e8c8%5]) with mapi id 15.21.0245.012; Tue, 28 Jul 2026
+ 20:00:11 +0000
+Message-ID: <6efbe8c2-4c90-432a-9cf8-4b9d1498d2e1@amd.com>
+Date: Tue, 28 Jul 2026 15:00:09 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dmaengine: dmatest: Don't forcibly terminate channel
+ in polled mode
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
+ <20260722-dmatest-fixes-and-fatal-errors-v1-1-8287709987ea@amd.com>
+ <20260722155751.289771F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Lynch, Nathan" <nathan.lynch@amd.com>
+In-Reply-To: <20260722155751.289771F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CH0P223CA0011.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:610:116::26) To MW6PR12MB9020.namprd12.prod.outlook.com
+ (2603:10b6:303:240::6)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] s390/vfio-ap: fix stale pqap_hook pointer on error in
- vfio_ap_mdev_set_kvm()
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>, kvm@vger.kernel.org,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Halil Pasic <pasic@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
-        Kirti Wankhede <kwankhede@nvidia.com>,
-        Heiko Carstens <hca@linux.ibm.com>, stable@vger.kernel.org
-References: <20260728162705.2631004-1-akrowiak@linux.ibm.com>
- <20260728164105.4AAC01F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260728164105.4AAC01F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DH591GxPmtgzxV6ldX0JrsM-Cd0Rshk_
-X-Proofpoint-ORIG-GUID: DH591GxPmtgzxV6ldX0JrsM-Cd0Rshk_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE3MCBTYWx0ZWRfXww/lsYs0OthL
- m/0Adxl9tLdvB055GWVJ/OcNxPG/ZbmGX48r6CYiHaTVfook6xcBzk/NEL7kdm0V/YidzHYryF6
- TDeA4FQpHnLRS/Wa3GLMq/ZYQjVK3ZW5cDIhIoolDX3urPHLmQw+B6OsGemii2HZN+mRp1sLF8t
- 1KP+kuXeiWYsKtJzgjjQwiz4F3ONKOL12czsRZM+xl60R8lWBshSFENAraLGdf0jIS0oFmAdvtX
- zo6NM8q5/8ZJmm69oivB12oGwLCi/oHmZUDyFiZjsSnk8R4grhl7dMmaYZw3pyhPwpdR/D8zD0N
- EDdtYlBUSD8RjEU+laLPjMv8EkorVn+LmMIgQxFFb0m2E9WahKNuAByvTjv8k7kS74vpFapiPK3
- TSwiRV/0Cw3zxfxKFZy745qHHX+ZCM0lchi7B/RrJaObQMFDd9bfPFs2vs11K5KIMOzOp+cjTZf
- +bvZ0yoXcPuYNBqh+vg==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6909c1 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=SnmR3V4DJBMBAkIxd3wA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE3MCBTYWx0ZWRfX6+8rNVjxaCbI
- 5UBuu+zJukJIfeoZCAPXoztC9YBRFTbUr/nB+cGYuTL0D8bdM3KdJW5PqmnhYCmC3luziI1mbpm
- pp6poeB8PFRVx0/NCevUR6/lgZ2SJ/s=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-28_05,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607280170
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW6PR12MB9020:EE_|CH1PPF9C964DBFE:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3a6354c0-1d6d-44e9-394e-08deece2d512
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|6133799003|56012099006|11063799006|4143699003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	BVwny2hrIVaypdTtP3MBeA8w3Id5pa/KitknczgR4A/Y46LQ+TfPC9Ds4rFByEm2cjsOPo+59yf+HDzORb2MXU3GxlpWJvFz/GohrmzHBZHGyE3XtCoWj9/Lp0t48hzli+WZ6R68LSb4+21TmhoqUOnDEjzTM3J3J5fyc0/sd6Q+f22A3jK/54K0F0v58k7RKO7YFywVvkRRKLIIdTFjDCk/fnYjuUIpRkuZT/8mHqpP/5TGixomS5xLcyRTVjVKxpDivRQYw17TjDB1/9/erQlpoZBezlDOGLC1He0KikoMWXFEuu5vasMKNJEouO16q4r/yAUFHzzIQpFAo9SbJeYaX9bwWNod9H3XK7IBWCbCeBGVcYWb58/ipVBgwJ+k+E4Jc65kL2p/gGGmFQroLom+VPyQ4yRkhoqejttliQ72PQgPPHl4aUkVnyeU0Le44WrkWEGacwYEJsrNuUNKkMqKFNdJAjNT0L9g9FpRSkl2LbJrOibOiVTa2o4CevmVrtL1bLGAYfzhcolKHbPopj0pE+9kSZe7LB2WiWo8NmyVYeaiUwvDw6+D5+4VcoHwwSEhDQHEHIzuipJFg6CyFhC9BNR0FThU7gnnHCzw0mc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW6PR12MB9020.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(11063799006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?N0pvaVI4OC9HVEJwQWJzcGhCQXBJM2EwRHovcC9hZGkydzl2cEZaVGFRTE1i?=
+ =?utf-8?B?YktWYTJKdFY4dDJ6c2lKaFJOc3hnaklVVU02RUtMdkhzd2JMdkxseWxSb01n?=
+ =?utf-8?B?K2hjWEZOZEYrYmtId1VLU2JlQjkyQ3YrQ3ZiN0ZkaVhEVk9FUmlqcnRSZDFy?=
+ =?utf-8?B?TUFZSjFDOEEwWldRN1lBYmJwY1JsYXZsQ1p1dTVld1ZMZ3dRMlhoNW5XTGNm?=
+ =?utf-8?B?R0E1MWdTL29GbjEyWDRidTdMQ005Z0NBUXloNGd4RnFzRXBSRzdLQkhGVlVO?=
+ =?utf-8?B?TlRHZFVReFVNTmRoVlU0L0Z0RFI3SXBnWENwcW90Q3RVSmdiUy9TR1pGUy9O?=
+ =?utf-8?B?WG9uODdQcSt3c0U3dkZFaWxRU2ZEMy9BWGtBVWVkN2d6QkRCa25jc2NJbGdS?=
+ =?utf-8?B?V1Jwc28rWnF0c3hrQ3MzQmh5NG40YTdHYnNpbkZKRDVpRGE2b0o1dUFWeFZY?=
+ =?utf-8?B?OHFvM1k0WVJGMnlhUUwvRGhjR0xzVTNOK3M1M3dEdCtPNkhWdTNmM0JIWGVs?=
+ =?utf-8?B?TUJ5Sy93ajhCeTFZdUxPSVBSU1VsWnpiZCtya3RvUTEyZjErSGIvOXN6U1dj?=
+ =?utf-8?B?NUdHUUtHU1BQRWh3TE13RzlRaGtsN21wZzIzNkhLeGpaZ3YxcUowTkxrSjVa?=
+ =?utf-8?B?V2RYVDBadkFHcDdkWGtpWEJSMEpMekliM0poWlVvTk4wMkVKLzBlN3JPU04w?=
+ =?utf-8?B?V1BjNWpxT05YZjRGbGFCemo2N0owOFIydnluWnhvSWRYNkRnU2VLZHhpWWdX?=
+ =?utf-8?B?NCtFanVTKzlSTEZkeHNGUHdwUWZuaFVsZmFqY0toVEJvYWMzbFNvSE44a20x?=
+ =?utf-8?B?NGFHeGFFUUk4ZkdGQklhM0NpWXFzY05TeWNFQkFGWkFISmd2L05lenZmUE1l?=
+ =?utf-8?B?NnVuRmJZSGdKS0JtUHh3TlBmZDFXNFRJanBpaDFydjlDZGJvd2xzY1pRRmFR?=
+ =?utf-8?B?K2hoZ2FZblF0b2N0RzZCY3ZqeTlvVUd4MURQT0RHZTYrN3Zuby9EWkhJMVFt?=
+ =?utf-8?B?L1B6VmhCWTRybG1VRHNyWXJ4WjA4UG1CZEZwN1lNdDdSZCtBUkFuQkFUNnZO?=
+ =?utf-8?B?UzhUTmlUUFN6cXBDbjY5K3JJR2tBNWo5bCtSbHNjNFV3Y216MWhvZ2xuMlMr?=
+ =?utf-8?B?U05KRGhRemhtR1BBejNKd2lRTFRqcXIrcWhabEpDbmdiVGNaS1NPZm5ISUJO?=
+ =?utf-8?B?V243VEo3eHZ4dkwzQWZ4N3pjM1pLRFY5eE9oc20xdy9mQTRTUXhpN28rTWx0?=
+ =?utf-8?B?T09IZkVSRmdGZG81QkpQMlRvSEpZSnFVdDRuZm1rZC83K29QaTMvWWR1dk1I?=
+ =?utf-8?B?S0hiMDc2YjZORHh2UDVqVXdrVjdlVmM0M2NrV1ZQMmV0NkE5RW1DZ0dGZHp2?=
+ =?utf-8?B?V1lhU2g4NzE1UUZSMndqRmdaVjk0ejAwbEtUNTRIaVdmTE5nVlhGbHh1S1Ew?=
+ =?utf-8?B?eUhQUGg4Yll4ZXRmQU9DM3VUSXltcStVdVJPdUhORk1Jd2NFUzBsTnE1YVll?=
+ =?utf-8?B?M2NaSk5walkrUk82OFFtc2pkVXlQcTVJckFyT1FrVFIrbll3OUpzU0puUnRJ?=
+ =?utf-8?B?Rm5YM3B3WjI2YnR4U1V2K0ZJWFpNSEIrZ09kM3l2UG1xMS84dDlwUW1yeEJ2?=
+ =?utf-8?B?RlUza2JZaVZmempPaXExQlROcnVzNTZ2OU9HMnhGcTVEa256c2E5RWQ4aDFx?=
+ =?utf-8?B?bDF5NGIyTGE4Sm9PaHlIdGxSdlRvYVVBaGtQNUE2cDVEVmpmTXhPNFhLTTNB?=
+ =?utf-8?B?RlV3dmpIdFkyWURLSSsrMWdQUE45bzJFdXhkOG9ocHNmMVhFTVVaZEFxa3VP?=
+ =?utf-8?B?bkRIYm9PbnJWTzhoU0RuU0JGQklubGlna2ZoVlNNMHZJRFlYaEhEMkdqNDBC?=
+ =?utf-8?B?dEF0STB0TkdZTXJmY3RIeEFDckFFRmxUWFBsVllvMnRjVW5iVGN0ZEVJMFEr?=
+ =?utf-8?B?ditZVTZud1NOZGJDR1doUkZPZXN0UjYybmIwVFRMS2d0OVBBMld2ZGo1RU5I?=
+ =?utf-8?B?bDgrNGFGMm5DWTZZRUVUQTd1ZzIvQndoL2ZtQ0tTN0FZRUJPOXBrUXVCZ1Nq?=
+ =?utf-8?B?NTRrWDdYQXh2RndUYVVYVlIvQld1aTl0M0lYZHVsQk04YVlyRHV4YU13MkZi?=
+ =?utf-8?B?WVk0ODcxaVNYLzU0cmRiREoyRjQwK1lHcmgrc0M4Yk9kaGNuWWVQNTk3R09O?=
+ =?utf-8?B?TE5oNlJxR25lTlpjZ0RiRUsxRFNOQnhPYzFyNGd1OVg0RFltWjkrS05tTmIr?=
+ =?utf-8?B?OVJHVkFqNGp6ZkNrd1dBNm4wQ29VZWFnS0YzWUpqUXR5R2MyNUdxQllISGtZ?=
+ =?utf-8?Q?WMcfmn6PCKQETg59lz?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a6354c0-1d6d-44e9-394e-08deece2d512
+X-MS-Exchange-CrossTenant-AuthSource: MW6PR12MB9020.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 20:00:11.6076
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hQmK04mZZhTGy8J/cq+r4IAVY/bpKQqvhXImiajOw5x87ETl8jQ5CssaWrasyKuXpKCZGNs4myh+/ZmVET8GKg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPF9C964DBFE
 
-
-
-On 7/28/26 12:41 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Removing the `mdev_list` iteration from within the `update_locks` critical section introduces a Time-Of-Check to Time-Of-Use (TOCTOU) race condition between `vfio_ap_mdev_set_kvm()` and `vfio_ap_mdev_unset_kvm()` that silently clobbers KVM APCB masks for a newly attached mdev.
+On 7/22/2026 10:57 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Removing dmaengine_terminate_sync(chan) from the polled mode path causes the test to unmap DMA buffers while the hardware might still be actively processing the queued descriptor.
+> 
+> Pre-existing issues:
+> - [High] Test data buffers are freed before pending DMA transfers are terminated at the end of the test thread, creating a race window where active DMA hardware can corrupt freed slab memory.
 > --
->
-> --- Patch [1]: [PATCH v2] s390/vfio-ap: fix stale pqap_hook pointer on error in vfio_ap_mdev_set_kvm() ---
-> commit 0834fa20c3fb715cac9e1ff09376e43784d44814
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> s390/vfio-ap: fix stale pqap_hook pointer on error in vfio_ap_mdev_set_kvm()
->
-> This commit changes vfio_ap_mdev_set_kvm() to use pqap_hook to detect
-> conflicting assignments instead of iterating mdev_list under the update locks,
-> resolving a potential stale pointer dereference.
->
-> Fixes: 86956e70761b3 ("s390/vfio-ap: replace open coded locks for VFIO_GROUP_NOTIFY_SET_KVM notification")
-> Cc: stable@vger.kernel.org
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 44b3a1dcc1b36..b0a038faa93ac 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->> @@ -1821,26 +1821,25 @@ static const struct attribute_group *vfio_ap_mdev_attr_groups[] = {
->>   static int vfio_ap_mdev_set_kvm(struct ap_matrix_mdev *matrix_mdev,
->>   				struct kvm *kvm)
->>   {
->> -	struct ap_matrix_mdev *m;
->> -
->>   	if (kvm->arch.crypto.crycbd) {
->> +		/*
->> +		 * Taking the kvm->arch.crypto.pqap_hook_rwsem lock while
->> +		 * holding the update locks (below) could result in a
->> +		 * deadlock condition, so let's hold the rwsem here while we
->> +		 * check and update the pqap_hook.
->> +		 */
->>   		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
->> +		if (kvm->arch.crypto.pqap_hook) {
->> +			up_write(&kvm->arch.crypto.pqap_hook_rwsem);
->> +			return -EPERM;
->> +		}
->>   		kvm->arch.crypto.pqap_hook = &matrix_mdev->pqap_hook;
->>   		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
->>   
->>   		get_update_locks_for_kvm(kvm);
-> [Severity: High]
-> Can this introduce a race with vfio_ap_mdev_unset_kvm()?
->
-> By moving the conflict check outside of the update_locks critical section,
-> is it possible for the following sequence to occur during concurrent
-> hot-plug/unplug operations?
->
-> Thread 1 (in vfio_ap_mdev_unset_kvm):
->      down_write(&kvm->arch.crypto.pqap_hook_rwsem);
->      kvm->arch.crypto.pqap_hook = NULL;
->      up_write(&kvm->arch.crypto.pqap_hook_rwsem);
->
-> Thread 2 (in vfio_ap_mdev_set_kvm):
->      down_write(&kvm->arch.crypto.pqap_hook_rwsem);
->      // Sees pqap_hook is NULL
->      kvm->arch.crypto.pqap_hook = &matrix_mdev->pqap_hook;
->      up_write(&kvm->arch.crypto.pqap_hook_rwsem);
->      get_update_locks_for_kvm(kvm);
->      vfio_ap_mdev_update_guest_apcb(matrix_mdev);
->      release_update_locks_for_kvm(kvm);
->
-> Thread 1 (continuing in vfio_ap_mdev_unset_kvm):
->      get_update_locks_for_kvm(kvm);
->      kvm_arch_crypto_clear_masks(kvm);
->
-> If Thread 1 interleaves after Thread 2 sets the guest masks but before Thread
-> 1 clears them, would this result in Thread 1 unconditionally clearing the KVM
-> APCB masks that Thread 2 just successfully configured, leaving the newly
-> attached mdev with inaccessible queues?
-
-This scenario requires Thread 1 (unset_kvm) to be tearing down the same
-matrix_mdev that Thread 2 (set_kvm) is attaching. But look at the entry
-conditions:
-
-* vfio_ap_mdev_unset_kvm is called from vfio_ap_mdev_close_device
-* vfio_ap_mdev_set_kvm is called from vfio_ap_mdev_open_device
-
-open_device and close_device on the same vfio_device are serialized by the
-vfio core under dev_set->lock; you cannot have both executing concurrently
-for the same mdev.
-
-Furthermore, vfio_ap_mdev_unset_kvm reads matrix_mdev->kvm which is only
-set to a non-NULL value inside vfio_ap_mdev_set_kvm. For Thread 1's
-unset_kvm to operate on the same kvm as Thread 2's set_kvm, Thread 1's
-matrix_mdev would have to have already gone through a complete set_kvm
-cycle and have ->kvm set; in other words, it is a different matrix_mdev
-that previously attached to the same KVM.
-
-This fix prevents that: the pqap_hook != NULL check blocks Thread 2 from
-attaching to a KVM that already has an owner. So Thread 1 and Thread 2 can
-never legitimately be racing over the same kvm in the scenario described.
-
->
->> -
->> -		list_for_each_entry(m, &matrix_dev->mdev_list, node) {
->> -			if (m != matrix_mdev && m->kvm == kvm) {
->> -				release_update_locks_for_kvm(kvm);
->> -				return -EPERM;
->> -			}
->> -		}
->> -
->>   		kvm_get_kvm(kvm);
->>   		matrix_mdev->kvm = kvm;
->>   		vfio_ap_mdev_update_guest_apcb(matrix_mdev);
->> -
->>   		release_update_locks_for_kvm(kvm);
->>   	}
+> 
+> --- Patch [1]: [PATCH 1/4] dmaengine: dmatest: Don't forcibly terminate channel in polled mode ---
+> commit ff3488aa5c4eb22b5aa3631448708f7560e37c84
+> Author: Nathan Lynch <nathan.lynch@amd.com>
+> 
+> dmaengine: dmatest: Don't forcibly terminate channel in polled mode
+> 
+> This commit removes the call to dmaengine_terminate_sync() from the
+> main thread loop for polled transfers. This prevents disruptive
+> terminations when multiple threads are concurrently submitting descriptors.
+> 
+>> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+>> index 2ae3469397f37..60bc448f42eeb 100644
+>> --- a/drivers/dma/dmatest.c
+>> +++ b/drivers/dma/dmatest.c
+>> @@ -837,7 +837,6 @@ static int dmatest_func(void *data)
 >>
+>>               if (params->polled) {
+>>                       status = dma_sync_wait(chan, cookie);
+>> -                     dmaengine_terminate_sync(chan);
+>>                       if (status == DMA_COMPLETE)
+> 
+> [Severity: High]
+> By removing the termination here, does this code leave the hardware running
+> if dma_sync_wait() times out?
+> 
+> If dma_sync_wait() returns DMA_ERROR on a timeout, done->done remains false.
+> The loop then eventually branches to error_unmap_continue without terminating
+> the pending transfer.
+> 
+> This error path calls dmaengine_unmap_put(), unmapping the buffers while the
+> hardware might still be actively processing the queued descriptor. Could this
+> lead to active DMA memory corruption?
+
+Yes, but this change simply makes the synchronous path through the test
+loop consistent with the async path. dmatest treats the buffers
+associated with timed-out transactions as safe to release. Perhaps that
+should change, but it's out of scope.
+
+
+> [Severity: High]
+> This is a pre-existing issue, but does dmatest_func() free test buffers
+> before terminating pending DMA transfers during thread cleanup?
+> 
+> Looking at the error handling and exit path at the end of the test thread:
+> 
+> dmatest_func() {
+>     ...
+>     err_dst:
+>         dmatest_free_test_data(dst);
+>     err_src:
+>         dmatest_free_test_data(src);
+>     ...
+>     err_thread_type:
+>         dmaengine_terminate_sync(chan);
+>     ...
+> }
+> 
+> If a transfer had timed out and was left running, could the DMA hardware
+> execute the pending descriptor in the window between freeing the slab
+> memory and terminating the channel?
+
+Yes, but see above.
+
+> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com?part=1
 
