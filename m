@@ -1,72 +1,67 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592A41B8F8
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 09:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785231232; cv=pass; b=f95JpNJA15VjOUX9CUQo0yJSYZ7PUuFaUe7d55k1F/IRTGA4v9H4rYCE8Xr36kVOSRbhYFoFhMSktvFDCoG/ekh1tqbmhPeL03wkA437p+fl5vXE3Xq2WX1Tomhe9sj3SbWJmSQb0jdaIPdPgauwtrHSFB1ISYL9KgqiLhsM2Ic=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785231232; c=relaxed/simple;
-	bh=3nPu7GA4VDAdbYK1fhB91miWBo4gyx0aNbjSVvZ4pSY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IyBzNhvBP8PGWaENHbkP4c3h0PgEwbhiq4/f8lVhJ2vdJypfnL2LgdJutzXaLkXPHXdmIFDG6jCSz7vaTYTwBzT/TjbiN1co2EHlgIhf/oB0FQJ2DJk5IX3pjOPVC/EyYe+jtpWwM6Kc2jIS0G5UKh3Kf03zU6jxuQlCKUn0X4c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=V2QdBcAm; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=RXoEyNXb; arc=pass smtp.client-ip=81.169.146.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A553FB077
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 09:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785231258; cv=none; b=D5KXQr/HB0ExQzx/BIPMU+ZVZNtBH4T3Gao3izTjSdafGclZ/kM9VPf7IgF4SF39dE8rEZS+ezzazZicHXuPQI548yjYpt5vxBdIEsmZ5roYrR5T5ZXUGVNC0yx9DLzcD+Pv5aUZvivrP7PzQZdpx3cJrXJIkdoHN82fVej7Jeg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785231258; c=relaxed/simple;
+	bh=tZ4Yg1HegaN2pq+z0IhzGrN7w3n/Zd/VQkqqVw3Pjxc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IfDzPFyjvd13fefPJjlHZdL3ZGkgDrR3kd6l5xqm9xTxx+7N4N4Li3RntN+fUswpsyqUd68orxYFTxZ71SsdYGjWzBacSOlTeSNoT9qh924NfKOTknmMjWmDGzP0vkVtjjizddBP9+OlyYId0GY+nogMVycw6BAV93lojqV5oi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mShsLDBN; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="V2QdBcAm";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="RXoEyNXb"
-ARC-Seal: i=1; a=rsa-sha256; t=1785231190; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=J9yLpjJKMsdVvhhr7XyrC7su+IAQiACv5u9Yh+ESK7KyCwEjzJlGqPfo0OXBQMmJsL
-    Xan6U3CVoxDTE6OG10yPgSN66fLG0Vafwf5twNzuZ6eRc5tOwFizMaOEmErxgGWRcSBh
-    N7d7/Hw+8lXu+5yfXEdAyLLAVQaNln4fjbp4P4CW+VmoC+As2eXlLaoD+K5cPAk2sSqq
-    RRVA9m67m6L5rVXA5usCZCBdUbWlCUVU7zuzyD3fgzxBpoJU2nAxbcRtqaRKBYb5mxRx
-    ScXknySRpRobFD9rGZU25b6ZKZ/0gSv47lSJbAi+F83rR2J2+hrJ+A4ZreLHGJGHBN8M
-    ugGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1785231190;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Q2CAZeSMQU2bF5QQ8Hvs0h4+csE+728wrITaolRe0nE=;
-    b=odd+NzaA7mKxyByrITTt/WPG5vs5C2LlretZIX3ZPoQf96zyGOnNGlx9uqvEIoKLYL
-    o2tPbZjIgg8WD4yk6Us+FJx12ny3VNrhhwJbp3Ptb0+hsRAyX8doZ5gvDnHJKtZhIo8G
-    9rtB9+7RiEEq1jMyeIhcaWE6uDLy83nS60KSerTH0pP1BG9DFKnU7D9gcbD4VB7TiMMI
-    F4r/htGE6ZHkO6+1XdkQhmS7sOeNITSaxdUfTGeFT/HXvhD96VM/DFITvrNBgyJJZ1f9
-    iih/C/MprGCeeb+wVRQPxc0IcQCfenx/l0UaF6VcVby41SYwy31gKSbWMGKiGzl2jO4i
-    lZkA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1785231190;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Q2CAZeSMQU2bF5QQ8Hvs0h4+csE+728wrITaolRe0nE=;
-    b=V2QdBcAm19ntY2VD09LGo3iI42cw3LIdJH9Plovim9PqkmnwfG/2Yb4q7rzDnXiN3/
-    A06VCSaR3Knm8K/DmnOc52frqfU9YiZ8vyf/vVHi4lE+N+jteyZYTVKS6VaeQXFbj59M
-    SFPVKSIiXMMbzKVh99y8JjApcEEJRnHzrc6dr++/tPh7I+Yw491yu3v7gzHcAUi19xtf
-    IM1r+eTrQNEFrZCTaZIYpNm5CaAJAY//5mSw3sS0UTma3toE+Ofs2K2vN0iLlXab4ZQx
-    X8o7mHYPLh2FbKDNpTB0nqkuUybsLSSesKfH80onrmbFETfE5WGulglKQcYvEiJKutGN
-    SuBw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1785231190;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Q2CAZeSMQU2bF5QQ8Hvs0h4+csE+728wrITaolRe0nE=;
-    b=RXoEyNXbI5beJXxpQwnYtIlpmmov+2z0SwKmJuO7hu+we1cKl+BMtMHvN1khnhLK5A
-    vIKdiY6fhNnSX5HB/0BQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
-Received: from [192.168.20.231]
-    by smtp.strato.de (RZmta 55.5.6 SBL|AUTH)
-    with ESMTPSA id K5281926S9XAIpy
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 28 Jul 2026 11:33:10 +0200 (CEST)
-Message-ID: <6b4b69b1-ae54-4a20-b33a-cd1dea622445@hartkopp.net>
-Date: Tue, 28 Jul 2026 11:33:05 +0200
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mShsLDBN"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-47c6e9a694bso2158580f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 02:34:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1785231256; x=1785836056; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ffVq5ZMWzgMfNyQ+b9r3wPaLIUviL+QwJh6c6WWDLzk=;
+        b=mShsLDBNvC3tJl3g2INRP30kjtB3xwQ9/uJD4dRJvqVV1nx/B8N4wC+A8FrXnLGsg9
+         Bscvr1b3gP0Yc/tpq3P2loN65SoIwR2tfhpLhnD/JdcTugG1BPHQmf6rH2RCuP2716Iq
+         eVNpBO9JiXQ7hNiJLGD8iBirMKi4HbSOwzJB34sCp+ZbkUwGwVeemL76TbPAQ1Ll6JWs
+         R0CwgBocTZYCnmJi3tnMri8exCqmfRgQkZ/lDbxy/UcdSXqIQdLFu6ZVh0JjCcioQD/O
+         TKMmbJvQG9/ZQ04FCKBCTj2JG4P/x+PSH758ExvYwmtnDmH1fDSV0J+wiaTJbunmSyVP
+         /Zng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785231256; x=1785836056;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ffVq5ZMWzgMfNyQ+b9r3wPaLIUviL+QwJh6c6WWDLzk=;
+        b=BuBQVGTNnyyw3CmqiDS7dkvqgfhReOTmqETM04rHOYYFEBXnJdIY6g9GugI8TFWopG
+         6/UXcGWbgKSS3PiX4owC1CZPZzXWKkryAnZwfetlo3+SBx/9ayFNx+TYeqNvx6lN+Sq6
+         Dwij7aSEh0E61ZWfFHOQF4Lsf0Prdjzi+Bwf9eTO8RXV7oAix2Y7P3C1KKgT8d57NvkI
+         efPEnpbJQkzLldO3owgGJ5pEJeHEF+nRaTuSQbNoIx2rcPMUIp5vDkLbeV/ciRwDgJf/
+         7Ik4/oyugk4nv18OEb4TL6Pd4q+fYfLSVJ9EP95srItWmwf5dyilyub6NYm07bAmoqYU
+         sUhw==
+X-Gm-Message-State: AOJu0YwZngyMHlwTGvZ7LSAsZd0nILsh27ZKn7IdyVB5tBYrFRqjlTXg
+	Sugob1Cf8MJJTU7w1GmG0NFiMORao8PUEPORlPhVfG5MGfcnZPH6eRnNdR7Y3/xHrPG3lkZSdnR
+	FdeIv
+X-Gm-Gg: AR+sD131P40fsF58AwmTQ1Be2dKfAaJWcFjLAIDb0hwSsuiy4uwFCaIe1SM6s8oiM8P
+	JoQpKfgLcIq40lBjJ1bW4+U4spkS4rNqFJjcAJFuhLee3Xu66Wylu0DX71wII0qUPy0AFLQeHga
+	9SGnX7wrk4hE05SpShvGwbFYo/RoGhj5mfpXlZZUhJbbezz0oulWSZUhz6BQQd87/deLwkMUFLl
+	HN8QY70pxeDbTYxsO/DBZEZZtYwmdpTSuSmG/3UNUf2eTc/XCkGtNbrNXGUUFFXyLxIOMHXkpr5
+	7ja1yH67MbxwnoFKloyXiIvGrbIpV2ffsU4I1sVU5mztpMSa7ZzUSttDz2cZdIyF5iofr26+A/c
+	R4hsZ51bQ+5Iw4IZEW4GX7aHJp4c4XUkEK9yBQw6E9Gbpz0cQaWNBX7Ysfa+TgmITh0LSE/dj3p
+	b7jrH7nl6cSkoFDTIX3d+zZ10caq3Uj2MPhtjN4bIRA0Km9kdisiKArJIA3w==
+X-Received: by 2002:a5d:5847:0:b0:47f:81af:1a3b with SMTP id ffacd0b85a97d-47fb1e926b2mr1898134f8f.22.1785231255438;
+        Tue, 28 Jul 2026 02:34:15 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:5788:c4e1:cf35:7211? ([2a01:e0a:106d:1080:5788:c4e1:cf35:7211])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c52fa9sm58636338f8f.20.2026.07.28.02.34.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jul 2026 02:34:15 -0700 (PDT)
+Message-ID: <c548b640-9ed0-4c18-a217-54905fa62022@linaro.org>
+Date: Tue, 28 Jul 2026 11:34:14 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,92 +69,123 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] can: isotp: check register_netdevice_notifier() error
- in module init
-To: sashiko-reviews@lists.linux.dev, Minhong He <heminhong@kylinos.cn>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
- Vincent Mailhol <mailhol@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20260728031038.76524-1-heminhong@kylinos.cn>
- <20260728032011.CF7241F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260728032011.CF7241F000E9@smtp.kernel.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260728-topic-sm8x50-next-hdk-i2s-v1-0-2393a0fe4aa9@linaro.org>
+ <20260728-topic-sm8x50-next-hdk-i2s-v1-2-2393a0fe4aa9@linaro.org>
+ <20260728091012.419DA1F000E9@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260728091012.419DA1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hello Minhong He,
-
-thanks for your improvement - but sashiko-bot is right too.
-
-Currently isotp.c is the only CAN module that misses the error handling 
-and the rule of thumb to expose the userspace visibility as a last step.
-
-bcm.c and raw.c are already correct in this matter.
-
-Please send a V2 which also references the bcm.c/raw.c init functions:
-
-"Align isotp_module_init() with the reordering already done for raw.c 
-(commit …) and bcm.c (commit …)."
-
-Best regards,
-Oliver
-
-On 28.07.26 05:20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Registering the CAN protocol before completing all fallible initialization steps creates a race window leading to a Use-After-Free crash if initialization fails.
+On 7/28/26 11:10, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Device Tree Misconfiguration - Pinctrl for SoC I2S interface is incorrectly assigned to the external HDMI bridge node.
+> - [Low] DT Schema Violation - Invalid clock-names order for dai@16.
 > --
 > 
-> --- Patch [1]: [PATCH net] can: isotp: check register_netdevice_notifier() error in module init ---
-> commit 5f2f7a58360e9a2c18b5d6a9a724f468f79227d1
-> Author: Minhong He <heminhong@kylinos.cn>
+> --- Patch [2]: [PATCH 2/4] arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI ---
+> commit bf4f513e744f0c756ca7054358cd98929fb84150
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> can: isotp: check register_netdevice_notifier() error in module init
+> arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI
 > 
-> This commit adds a check for the return value of register_netdevice_notifier()
-> in the isotp module initialization. If the notifier registration fails, it
-> now unregisters the CAN protocol and returns the error.
+> This commit adds the necessary device tree nodes and configurations to enable
+> the I2S interface for HDMI audio output on the SM8450-HDK board. It configures
+> the pinctrl for I2S, sets up the q6apmbedai DAI, and adds the primary MI2S DAI
+> link.
 > 
->> diff --git a/net/can/isotp.c b/net/can/isotp.c
->> index 54becaf6898f1..65e890cafd7a9 100644
->> --- a/net/can/isotp.c
->> +++ b/net/can/isotp.c
->> @@ -1908,12 +1908,18 @@ static __init int isotp_module_init(void)
->>   	pr_info("can: isotp protocol (max_pdu_size %d)\n", max_pdu_size);
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> index b37998cd9a2c3..6a6d8346046bd 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> @@ -665,7 +665,12 @@ lt9611_codec: hdmi-bridge@2b {
+>>   		vcc-supply = <&lt9611_3v3>;
 >>   
->>   	err = can_proto_register(&isotp_can_proto);
->> -	if (err < 0)
->> +	if (err < 0) {
->>   		pr_err("can: registration of isotp protocol failed %pe\n", ERR_PTR(err));
->> -	else
->> -		register_netdevice_notifier(&canisotp_notifier);
->> +		return err;
->> +	}
+>>   		pinctrl-names = "default";
+>> -		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
+>> +		pinctrl-0 = <&lt9611_irq_pin>,
+>> +			    <&lt9611_rst_pin>,
+>> +			    <&i2s0_default_state>,
+>> +			    <&audio_mclk0_default_state>;
+> 
+> [Severity: Medium]
+> Should the SoC I2S and MCLK pin states be assigned to the sound node or CPU
+> DAI instead of the external HDMI bridge node?
+> 
+> By assigning these to the lt9611_codec node, the SoC's audio pin multiplexing
+> is tied to the lifecycle of the external display bridge. If the HDMI bridge
+> driver defers or unloads, the SoC I2S pins will revert to their unconfigured
+> state, which breaks the hardware description paradigm and might cause runtime
+> audio issues.
+
+No since the HDMI bridge is the effective user of the pins.
+
+> 
+>> +
+>> +		#sound-dai-cells = <1>;
 >>   
->> -	return err;
->> +	err = register_netdevice_notifier(&canisotp_notifier);
->> +	if (err) {
->> +		can_proto_unregister(&isotp_can_proto);
->> +		return err;
->> +	}
+>>   		ports {
+>>   			#address-cells = <1>;
 > 
-> [Severity: High]
-> Does this error path introduce a use-after-free risk if userspace creates a
-> socket before the module initialization completes?
+> [ ... ]
 > 
-> If can_proto_register() succeeds, the protocol is immediately exposed to
-> userspace. If a concurrent thread creates an ISOTP socket before
-> register_netdevice_notifier() fails, the socket will hold pointers to the
-> module's protocol operations.
+>> @@ -947,6 +952,19 @@ channel@44b {
+>>   	};
+>>   };
+>>   
+>> +&q6apmbedai {
+>> +	#address-cells = <1>;
+>> +	#size-cells = <0>;
+>> +
+>> +	dai@16 {
+>> +		reg = <PRIMARY_MI2S_RX>;
+>> +		clocks = <&q6prmcc LPASS_CLK_ID_MCLK_1 LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>> +			 <&q6prmcc LPASS_CLK_ID_PRI_MI2S_IBIT LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>> +		clock-names = "mclk",
+>> +			      "bclk";
 > 
-> When the module initialization aborts and returns an error, the kernel will
-> free the module memory. While can_proto_unregister() removes the protocol
-> from the registry, it does not revoke already-created sockets. As a result,
-> any subsequent operations on the existing socket will dereference freed
-> module memory.
+> [Severity: Low]
+> Is this clock-names order correct according to the schema?
 > 
-> Would it be safer to move the fallible register_netdevice_notifier() before
-> can_proto_register() to avoid exposing the protocol before initialization
-> is guaranteed to succeed?
+> The qcom,q6apm-lpass-dais.yaml schema requires that if two clocks are
+> provided, they must be ordered such that index 1 is mclk. Here, bclk is at
+> index 1, which will cause make dtbs_check validation to fail.
+
+Good point, I'll fix this
+
+> 
+>> +	};
+>> +};
+>> +
 > 
 
