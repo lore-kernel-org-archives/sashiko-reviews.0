@@ -1,187 +1,181 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1529E1A6811
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 00:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46DC280325
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 01:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785199890; cv=none; b=tL5lDLAdcokj6gLPHb9xBi6bhnsn7vdYaDQ6Rost0hY8C+XOq/Y6AGkR6kTtcvRMNZEdyB+70ZCkcTjoCusi16mkbYA8UtbcNnK4zFo8gCl5cS67bJVLSBwpX6mCBm2GR0zwKUbjntfgLbxlJjpqHxEh8yyJ8++axrS8GXhbxY0=
+	t=1785200459; cv=none; b=AYIHEfJJT8fKrNUQbGcqTUXGvp+Orf7UBfT3hQyxMfJY5zQ3fEjCfXPAv6Nf+bRYmx8zc1/UB/ZqKIrYnJh2/+86+9KBA8SlHV6S7VR7+xGfTckMe4CHZEavHAJ7vovOJHdRIUm7qHO2Pz8AFwjbmKpGx9oJMnrYtZEUNtDmfPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785199890; c=relaxed/simple;
-	bh=b1Ivrwj22FHzLcJZebe6x3otpghXibwnvFRqYvxUB3Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lCnRT5EIq3hRrRT5zClf43eeGffVcLKL7Cjm1mkrID1HF0Ch0QuqJJhWyoZCY74u66II2E9l2bsmZmApn//sP02NfLC/+Vg45YNLaRpXK6KUTATn6oJIHfeazAEbNhBLA8H36coUQ56BC53Eu65c7O5Yx1dUS14o6DjXri16nlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c36ldcVx; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785200459; c=relaxed/simple;
+	bh=Rv4a/ZwuMlprBGTkGl25aJZb/pq+nkMSU8+X4N67UUY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=R0l/bR3QWuUmELlRX7kxp6XlvvNA5oHwReRIWF4KdHWcbh24IHf9tfCKmr96YKbj2OtkftOabk19J4C+cPWs1kyLIaqo8hJllFPxTLT6gNvobrLMlW/vqX17NKs1hFpA2Wim8rdk8eiFBkeZrMnePmxbJ+lm9pKQ3H1GzFm6tnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=E1y4KqP7; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c36ldcVx"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cacb8416a1so31243545ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 17:51:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="E1y4KqP7"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84a4d8fd6ecso3365569b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 18:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785199888; x=1785804688; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Nam8l6axy2h78CqVoqZCfhqM8wwxiLPgIAvV15KVPWo=;
-        b=c36ldcVxERVM1Me/Pu7FuP3DwSgripzZnI4RgdKlFaaY9krNQWvt4U+CjBAeMZ1fL6
-         yqyEjRh2BvpI0m+6b7zHzldCFTACB+6VYbO4B71oQH4C3FzC2iFwA+QNhgNZOykyMbEd
-         wcy9JaT4x0AY9Uo091FEyEvRBb6HkRm40bYQ0hNVzgfakGSngh3o4nfRF1PU4DTiHmrh
-         pgaGqOZOdfmT0p+AdMcMRP+WZA5jKQATb8/d9OcmGBe8Tzwrf1KAH1bjg8XryOa3Xram
-         H9BzFb1mrK3qQeikJNN3s8dpTgPul697cXhEwyjPiBLjOB5dUybHlue+Xb71LwFtffX2
-         kQwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785199888; x=1785804688;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1785200457; x=1785805257; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Nam8l6axy2h78CqVoqZCfhqM8wwxiLPgIAvV15KVPWo=;
-        b=i9FpTt3B4enxVAiOc2VB8aPR0fYvmkXvocg2tMzLNlYQie0r8ueYTulkABf+TYE22N
-         q+bjG0kZFB5/jYYLoKx+3XgbREpn+D+omzPZHN4U8uxW1JSiLXtDlHNjZ7tyDbNsZdn1
-         wuTlFkz0V4p/Ui4FTfVtgJVsj9Igw23CXMCShTqg2WnQndfaFnY2jWg3BoEnCE9C4qs9
-         RofHIezjqnn4ltJSsxH8PRItrG478FFAE3sIUUVNazwJyhrA8CVo5ZnJNUgGnI1gVvei
-         EUKwevUjbrNZAjnY14HIzk3RYtdXUpeXGBLo+kdDZ8ZpJmoHzipraIvoo3lmtthBEz6Y
-         ZGww==
-X-Gm-Message-State: AOJu0YwU6U5bdREM0SjUG1EhqlqD3s4T+mPN09M+MX17elq/nc6Ilr0q
-	FM2+hnzpMEi5jo9W1nh+gxJoS7mQYW3HtBBOPlOP7gTVp46kJR5km4yOg3rD9Q==
-X-Gm-Gg: AR+sD123cnHbanvMI/5sLZlhwwImmFXRrK5tqa9+49k+s3bpe6KY9ZX+KbXM7oAhAsq
-	8d5UTcFw0cuC33gdmnsfg75oEXuaU+EKgzWwTcPzRNeBT/6SDgR6NiI0HNOpsmTpawJV/bvNUXZ
-	dua5g17JfNsn+JRINg2PGkEbjCKs5tYqcdwMPFJmB0sOTFPzU3nP0RCiNuagD7OunBU5V25FE/k
-	flYB4iyWcQdt0iM7yD8IcTgEB5xXaZc4/gPC0crqS/GQPAJuSFdjuayP6+3oaUCxFx9gctC87uP
-	hOihjSmKQ3XfnOFqfXMS8xyNSoFPFJBvUp9R+d5JOqYUYaV5PkCxoh1EM/+rYKWXEn1TKR6iXSp
-	UZjWFh9ntQ2CNjiEgCHV3Gx/jFK6A8KX7Z2Pi0qa4fj0CIxxql+59Zf66/EhMckUmEJMAY7FQSf
-	NKxUNKrsciWLdvd76LeJQWPTDW4F1SjvHrCXfulgWBkatC1xptW9sESughd0wqLQyStRvjYDMUo
-	FCuBpzR0ONcJzFhUx3EDax/C9USJfY/BXb1hA==
-X-Received: by 2002:a17:903:3b8e:b0:2bf:7b62:a038 with SMTP id d9443c01a7336-2d015ac543dmr2437515ad.9.1785199888270;
-        Mon, 27 Jul 2026 17:51:28 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde7bbda1sm42349005ad.53.2026.07.27.17.51.27
+        bh=SvwuWo6QBd0znbzB9xca22veiRMAvnRdnxWbmn1rCUk=;
+        b=E1y4KqP7Txa7PzuMrJLtK+flOBu7ZA4cKmbX57Aa/O/9kiniVeB100kVY+ljz7q3Mf
+         jsiwclfPl/nZvoF0bFmlnAJ2U0d85aRkkgk8MDgHcotzZVKUH7WWg9oa6iSW3Owpycd1
+         ybYzv1WV1futtHJa5eQpFubJcF6V9QT2+Vkt4u+kkZnAH8MMCWU3sUVXHZX1/Y3K9Grl
+         kYwAm1N+os+hwX2hJbdBzBcKYwQudsgAz87jAyWt4zJmKYFIqvGjYRLCofuYa5EQqc4b
+         WkTU78Us0btlfNHePmAUEzCeW63oJ+auIG2Wc+i6OUcCpsFpNTKe+7RigbUjhkGaJRDy
+         rSSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785200457; x=1785805257;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=SvwuWo6QBd0znbzB9xca22veiRMAvnRdnxWbmn1rCUk=;
+        b=iW2p7IqWKGqmaxZCG+7WtsO3xPYDIUbUXGkkkHXz9tc7HU71tpQesT4NtB/YZk1ab7
+         Hk8kgYmbYUc8QNhFfp+h4hdbl+GHmTvby/3B/MDUetp88taX4BXQCLVYiHAXarrwFkDC
+         vkW11FHNCEHLspAr3jI09VRHiY/PIi80WkSlhOvTjxt+pUP2D40XdeyA55+s6PPKnuIz
+         mmLHHB8xG4Au1KczWF1tINI3wWd6mvov+3h1WlKjmqkm+IRcj+9vTz4SlWsqlCTKOO1v
+         xrGS2oXv7QgOVN6xFzVEaGOuNpRTNciGWZpX5SxqZoBmX0ia5PIFqwFtaFZ03IFbSBR6
+         flow==
+X-Forwarded-Encrypted: i=1; AHgh+RplCYrGJKGfGwdOXCCS8Licwce9BzuoVsmV8s4GoGKWPwjo4sLyQH8xyTZzAuqgbqsn5TT6CQPypRvuGAb3+SA=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywo+2uKrHERaoRIsAyqvGeqcFmrlxmCU55+2NN/Qweje+u6jSCe
+	YvamUEDqJYHkWRzfLHOIPjUNvjBDuzk4FmNwmZMhBtkibdzw4X9RGGRxPiZdyEgVQR8=
+X-Gm-Gg: AR+sD13dlyn1Spvg9YdXFlDQMe8XciZA853rwHu6mtS1l9GQXZnFP/JAXLUC0dBJ18m
+	FD2K1Umk2B/REoKeFE7o4O1IkJVXM6DawENKHo/7SV3Vc1ajpzHSaz1F4vvvKaFFiVu6PcU7Zb1
+	xwhZwaF4paOzQFHQe53N4fRvE7olLF4mRvmY5wE4/kihyizyV+kyAsTOu/Ca2+PHbXUEUEKozGL
+	OsevDmTil6rCtoRlR4tW13X67zrAvoJDeITVfBfHWDsw4Yu61r1qbpSewq6eevIQvoYNh+vMNQr
+	S+SeiZQ/ga5lpYIM9iugHneAidDTzBV8vbnmKMU5+OzEavrYUqiMXR5gjIecGPvhL6AYicdCQ9q
+	om46WiofB/tSlTklqWSfY46bDA8uQfe83BfOrqXKJKpwuaj0ijGjIB+jhi/oiYvrV4IQ4MToSTE
+	pwtadmEzLAzFQTfLZ6A+I5VZNMEGW2XXk=
+X-Received: by 2002:a05:6a00:1486:b0:845:c662:2be with SMTP id d2e1a72fcca58-84e932ee091mr202766b3a.42.1785200457053;
+        Mon, 27 Jul 2026 18:00:57 -0700 (PDT)
+Received: from localhost (107-190-31-17.cpe.teksavvy.com. [107.190.31.17])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e53258428sm3756444b3a.12.2026.07.27.18.00.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jul 2026 17:51:27 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <206f2070-35d8-4b77-96ef-3e9c4edd582d@roeck-us.net>
-Date: Mon, 27 Jul 2026 17:51:26 -0700
+        Mon, 27 Jul 2026 18:00:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [hwmon PATCH v2 6/8] hwmon: (adt7470) Use cached PWM frequency
- value
-To: sashiko-reviews@lists.linux.dev,
- Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260727-adt7470_fixes-v2-0-598e38a46ba6@gmail.com>
- <20260727-adt7470_fixes-v2-6-598e38a46ba6@gmail.com>
- <20260728003605.958621F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260728003605.958621F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 27 Jul 2026 21:00:55 -0400
+Message-Id: <DK9SQVLBF4SG.2FDO076LD2E0M@etsalapatis.com>
+Cc: <linux-rt-devel@lists.linux.dev>, <bpf@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH bpf-next 2/3] bpf: arena: allocate the fault-in page
+ outside the lock
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Jiayuan Chen" <jiayuan.chen@linux.dev>,
+ <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260727062521.376231-1-jiayuan.chen@linux.dev>
+ <20260727062521.376231-3-jiayuan.chen@linux.dev>
+ <20260727064257.01BD81F000E9@smtp.kernel.org>
+ <9a961b42-d095-4052-a749-dfabb9a45bf3@linux.dev>
+In-Reply-To: <9a961b42-d095-4052-a749-dfabb9a45bf3@linux.dev>
 
-On 7/27/26 17:36, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] A partial register write failure in pwm1_freq_set leaves the cached pwm_freq permanently out of sync with the actual hardware state.
-> --
-> 
+On Mon Jul 27, 2026 at 4:00 AM EDT, Jiayuan Chen wrote:
+>
+> On 7/27/26 2:42 PM, sashiko-bot@kernel.org wrote:
+> [...]
+>>> @@ -489,55 +490,97 @@ static vm_fault_t arena_vm_fault(struct vm_fault =
+*vmf)
+>>>   	kbase =3D bpf_arena_get_kern_vm_start(arena);
+>>>   	kaddr =3D kbase + (u32)(vmf->address);
+>>>  =20
+>>> -	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
+>>> +	page =3D vmalloc_to_page((void *)kaddr);
+>>> +	if (!page) {
+>>> +		/*
+>>> +		 * Preallocate outside the lock so the allocation can sleep and go
+>>> +		 * through reclaim (both memcg and global), the way do_anonymous_pag=
+e()
+>>> +		 * does. Under arena->spinlock only the non-blocking allocator is
+>>> +		 * available, which never reclaims.
+>>> +		 *
+>>> +		 * This has to be the sleepable variant: VM_FAULT_OOM below is only
+>>> +		 * meaningful if the OOM machinery was actually engaged. A failure
+>>> +		 * from the non-blocking allocator engages nothing, so the fault
+>>> +		 * would be retried forever.
+>>> +		 */
+>>> +		bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
+>>> +		new_page =3D bpf_map_alloc_page_sleepable(map, NUMA_NO_NODE);
+>> [Severity: High]
+>> Is there a potential Denial of Service vector when BPF_F_SEGV_ON_FAULT i=
+s set?
+>>
+>> This unconditionally preallocates a page using
+>> bpf_map_alloc_page_sleepable() before checking the BPF_F_SEGV_ON_FAULT
+>> flag later in the function.
+>>
+>> This allocation can block, trigger direct memory reclaim, and invoke the
+>> OOM killer. Only after this expensive allocation does the code lock, che=
+ck
+>> the flag, return VM_FAULT_SIGSEGV, and discard the page.
+>>
+>> Could this allow an unprivileged user to force severe memory pressure by
+>> repeatedly triggering page faults on unallocated addresses?
+>
+> Once VM_FAULT_SIGSEGV is returned, the process gets a SIGSEGV and by=20
+> default is killed,
+> so this isn't a realistic DoS.
+>
+> But, I think it's worth moving the "arena->map.map_flags &=20
+> BPF_F_SEGV_ON_FAULT" check before the allocation.
+>
+>
+>>> +		bpf_map_memcg_exit(old_memcg, new_memcg);
+>>> +		if (!new_page)
+>>> +			return VM_FAULT_OOM;
+>>> +	}
+>>> +
+>>> +	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags)) {
+>>>   		/* Make a reasonable effort to address impossible case */
+>>> -		return VM_FAULT_RETRY;
+>>> +		fault_ret =3D VM_FAULT_RETRY;
+>>> +		goto out_err;
+>>> +	}
+>> [Severity: High]
+>> This is a pre-existing issue, but does returning VM_FAULT_RETRY here
+>> without releasing the fault lock cause a lock leak?
+>>
+>> The memory management subsystem strictly assumes the lock was released
+>> if VM_FAULT_RETRY is returned. Retrying the fault will leak the read loc=
+k
+>> reference, and if any thread subsequently attempts to acquire the mmap_l=
+ock
+>> for writing, the system could permanently deadlock.
+>
+>
+> Yes, it's true. arena_vm_fault() never touches mmap_lock, so returning=20
+> VM_FAULT_RETRY violates the contract.
+>
+> '''
+> do_user_addr_fault()
+> {
+>  =C2=A0 =C2=A0 fault =3D handle_mm_fault(...);=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 // call arena_vm_fault
+>  =C2=A0 =C2=A0 ...
+>  =C2=A0 =C2=A0 if (unlikely(fault & VM_FAULT_RETRY)) {
+>  =C2=A0 =C2=A0 =C2=A0 =C2=A0 flags |=3D FAULT_FLAG_TRIED;
+>  =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto retry;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 // lock_mm_and_find_vma() will=20
+> call mmap_read_lock again !
+>  =C2=A0 =C2=A0 }
+>  =C2=A0 =C2=A0 mmap_read_unlock(mm);
+> }
+> '''
+>
+> I think I should fix it as a separate patch with high priority ?
 
-I don't know a good way of fixing this. If this error condition really
-happens, the chip is in bad shape either case. Trying to write the old
-value into the first register might fail as well, and then what ?
-
-Ok to leave it alone.
-
-Guenter
-
-> --- Patch [6]: [hwmon PATCH v2 6/8] hwmon: (adt7470) Use cached PWM frequency value ---
-> commit 3b9b6b91fb202f2983f66278540c1017bb53f4e6
-> Author: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-> 
-> hwmon: (adt7470) Use cached PWM frequency value
-> 
-> This commit updates the ADT7470 driver to use a cached PWM frequency
-> value instead of querying the hardware on each read. The cache is
-> initialized during probe and updated after a successful write operation
-> to prevent exposing negative error codes through sysfs if a read fails.
-> 
->> diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
->> index c6fc7d38d698c..1fbca4869b7b6 100644
->> --- a/drivers/hwmon/adt7470.c
->> +++ b/drivers/hwmon/adt7470.c
-> 
-> [ ... ]
-> 
->> @@ -832,6 +835,10 @@ static int pwm1_freq_set(struct device *dev, long freq)
->>   	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG_2,
->>   				 ADT7470_FREQ_MASK,
->>   				 index << ADT7470_FREQ_SHIFT);
->> +	if (err < 0)
->> +		goto out;
->> +
->> +	data->pwm_freq = closest_freq;
->>   out:
->>   	mutex_unlock(&data->lock);
-> 
-> [Severity: Medium]
-> Does this leave the cached pwm_freq out of sync with the hardware if the
-> second register write fails?
-> 
-> If regmap_update_bits() fails for ADT7470_REG_CFG_2, the function aborts
-> and jumps to out without updating data->pwm_freq. However, the first
-> register (ADT7470_REG_CFG) may have already been updated successfully right
-> above this snippet.
-> 
-> Because adt7470_pwm_read() now relies solely on this cache instead of
-> reading the hardware, sysfs reads will permanently return the old frequency
-> value even though the hardware might be operating in a mixed frequency
-> state.
-> 
-
+Please do, I think it makes sense as a separate patch targeting the
+bpf tree while this patchset can keep targeting bpf-next.
