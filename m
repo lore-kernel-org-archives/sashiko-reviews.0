@@ -1,68 +1,60 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34E447D45A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 21:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7753AB277
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 22:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785274211; cv=none; b=XqNAhhHWP2lNbLIPTZB5v+Vcj0NWCxe582ykcxmLhrHcKrpp+xD6y6cXA5e2HyxZ302i1srhzRHY6wV6UvH04oy3SPeG67/VcJLJcY6CBLzJpjeMFrWSxCDpE0WzLVJRBF/nCvM+bT1PUJ4dIMSLetWAR0GNA1QcIcURn0QtMD4=
+	t=1785277785; cv=none; b=KsxMDCc7fGLlYNQX8DFBX+PcJhaXLj0WaJAQX08W1nvn5vqYk36nH+V60deW1X9Mk976DHU+Ge6kztT+AOvXNXotJJtUpGPWVBo5RnFZyLLPGuo+ybTn8wcEAjsSp5FOMnc7dsK97tBWaw4ATe/usSkBrpPynwKGHrxq5pN5GTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785274211; c=relaxed/simple;
-	bh=flxSn8FESRA6yR/pkFS3yn3W7beGhz3kdAfMImKpK9Q=;
+	s=arc-20240116; t=1785277785; c=relaxed/simple;
+	bh=F3TITQDsu/hD1ZoV5NLJy1EP/YsBTs/hPyttHKUn0o4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a5m8cfA2Z3KKR18dJonCzxsUIOK/7E2elnlTa9unf/5QpHPappeqkCL21JMI+yrNY+FkB6KeGIGfo/k0BH+nnrWd5G0n/OZo7kzMjo0d9Jjre9BZqGWctGe7TYBgtNGiZbj/tzg/1QxtTRWZwGFN/4HiP0OJYGBn25z25Gqav4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=KDPYCVxh; arc=none smtp.client-ip=209.85.167.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	 In-Reply-To:Content-Type; b=TZ3SfhCEFhIOtaGo+5d+0o7ctdZmohTNyw0kbl1Uhe2qYv0We2h96z+3vKlrF1I1+YLw7GEt1P5mAzwgM95VcFubnPo7VfjoQ7volWlV0xsF2+OBiB9E4EwU776jzRznUamloeAePqUAZcG/UyOgf++Fw/m9R+r4TJNzoMNph3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=UpkGeA5U; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="KDPYCVxh"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-497d3e4460aso1351719b6e.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 14:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1785274205; x=1785879005; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EfIIhN61OmpJAg95pfveNaV+liLi2NycTn3RfRjueFs=;
-        b=KDPYCVxhR7lMdJi36MuWJu5FLtDl1/Mcz+WoL81gpPTpoNUhH2YUXG/GUZvmKSiROX
-         aodTKJLhkeJHkJsz07jPnMxCR1+E9eoEgm1os5vT4zZ77amg7AgWBPod7i9Q2DFeGuH5
-         FbokPgf3AyygjgA59SDr/di7ff+OPwayq0py+lVc5zRUrMIUguub2NGtYk5hBOiO8898
-         M4D5d5/S7/WIkEfmjvwGBP0W7n0EhoSvJ214bQDMEcYMRYWvBkaJt/b8kO8VPYOt04z/
-         xELKkQqhx75nyXd5G8kXEyUEQZ5v7WTDEFSlIa9SG9+rd5UHxBN+efgohb3rEuaZhPnx
-         wX9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785274205; x=1785879005;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EfIIhN61OmpJAg95pfveNaV+liLi2NycTn3RfRjueFs=;
-        b=nmBbZ3Cr4I0RBEsinenMphyDyuyXO+O6RhHdl4hvwllQ7Z/vIKGvpcRmkz7M2xT+b7
-         JZMRn6KMk6lO+4ZZDQQBVb3HT5iIoclpfUAu5INPpDBFeA81LskRqVgcFtuAYizIxef8
-         fjEsv+NhQdlCtcyKovFfonDG0z29Qzr+7a2Ss71htLVQdN+ciovTjz0Y27log7CmRADx
-         HN7VCqe81ICvbNyimoI4aRjD/HA+mYuUsTuib/5SVWsQMILpKuoTdgGUKCqbTUjORPE0
-         qzHH5zGDfq9O0d44LEpWBhSkVkb2Nn+Q5H/2RmEIuRt/891D4xcZRXdYnVoLaCBgaOZ7
-         /P8Q==
-X-Gm-Message-State: AOJu0YwBBbG1dLnOpZZw09fojiahfFpGRenwQiy9zsS7JZfzI1Jm2ONQ
-	409fDyGaAAp0svw9IIs7XjNx8AghZvKsubqmzyNjKmlH+8M6/N+vSXdOuemPj/k/OrUcKy0cOWP
-	S4kZG
-X-Gm-Gg: AR+sD12usSMfUH2KN+7vvgCmh19wy037+W8aUPfbxNmRiN6h9Yvx5cLvjxYDBiMRP8s
-	mTaiBxl9nHO5qyLSkLCqHjH2lfk6uke5ccGzNxdB7TwXcywkx8UwxNWqsc8DqwNsAlckXhBu54T
-	xp+NrP+ZZAgX4apbM6lne/nBHp0h0aqnx11MvobkVTtvswAldviidGH5Mybe8YA8s2Iy4ESP1Ze
-	NERaARMRTBSgUH3Yn696B0V03r42bTFW8r/iUA8VQacxXAX1/apyWV0E3IvN2Hvapc7TdCtHUUL
-	G5nX2FWRVrUPi2TnaMJkDgWheko3UBrYEy7SKJjd49PVikrm4hhn8hGyC+o0B1XgyaaX1g6NAU1
-	VTQ8SOlkj+fUfViU2Qczq0RlxcEqk29pS8Mpb3UTGWdsOz6QO70/50L5FPF+AKZL/aexJsAFlHy
-	UcNoiMomFsAkbqsfL8tQcvlHB05+fI14zhbEBBF56Og30G6ZbZ6bFRK4rSy8YAMYioUJ2VQ6E64
-	qSYXqv9gqTX/Qy+YuZiMfdV2SNgVVxUQOP/MR9oWnhmHXXP/g==
-X-Received: by 2002:a05:6808:e82:b0:4a4:c95a:38d1 with SMTP id 5614622812f47-4ad5b794abdmr2108852b6e.4.1785274205564;
-        Tue, 28 Jul 2026 14:30:05 -0700 (PDT)
-Received: from ?IPV6:2600:8803:e7e4:500:3096:ee5f:6f57:afe1? ([2600:8803:e7e4:500:3096:ee5f:6f57:afe1])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4ad6ed2bc54sm235967b6e.5.2026.07.28.14.30.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jul 2026 14:30:04 -0700 (PDT)
-Message-ID: <df107a87-b63d-4818-82bb-3488f4d461f3@baylibre.com>
-Date: Tue, 28 Jul 2026 16:30:03 -0500
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="UpkGeA5U"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66SLHevC2314612;
+	Tue, 28 Jul 2026 22:29:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=C7d6B4
+	CPQNyVb+Dz8olwvmKAWGV8erneiKXzZxWPgIg=; b=UpkGeA5U6vP1WX11x3qfqF
+	dlKjfLOXUyjSHGhqRg5790kKKvcdlKwNGLogOETNLCUTjmLF/VG0RNjgr8XVwSRo
+	91ipbAJrFiFIyQdQgARURRF/xcvdx49Q7Ka86jHJYxDu00Aa2vAzR083XnB6yLhJ
+	r3Ua6f+qiO859c+E3pO2rBxF27PEBJqUhhLd+JGStxxK8jHafu1yDs1OQ1ufKbOV
+	SnEE0WQvQ7n0EW3hCWxuWi+Wx5hcT2NZYrteAKH55ySyx2wm62yXS7wRPIib5Ja8
+	DKlUcpOoqIdqlqMdZjjct0bgE4pAJrpBak7HPoYDZwNku7pHRCRThO/TiRDr4YUQ
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7fuuf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jul 2026 22:29:42 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SMQHh0015728;
+	Tue, 28 Jul 2026 22:29:41 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uw4avy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jul 2026 22:29:41 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66SMTeTs31064592
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 28 Jul 2026 22:29:40 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1AB4558053;
+	Tue, 28 Jul 2026 22:29:40 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 799A658043;
+	Tue, 28 Jul 2026 22:29:38 +0000 (GMT)
+Received: from [9.61.138.160] (unknown [9.61.138.160])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 28 Jul 2026 22:29:38 +0000 (GMT)
+Message-ID: <41149777-2df1-4225-ac68-c9038302aee4@linux.ibm.com>
+Date: Tue, 28 Jul 2026 18:29:37 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,149 +62,174 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: ti: k3-am67a-beagley-ai: Add gpio ranges
-To: sashiko-reviews@lists.linux.dev, Tony Lindgren <tony@atomide.com>,
- Haojian Zhuang <haojian.zhuang@linaro.org>
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- "moderated list:ARM PORT" <linux-arm-kernel@lists.infradead.org>,
- Linux OMAP Mailing List <linux-omap@vger.kernel.org>,
- Nishanth Menon <nm@ti.com>, Vignesh Raghavendra <vigneshr@ti.com>,
- Tero Kristo <kristo@kernel.org>, Robert Nelson <robertcnelson@gmail.com>
-References: <20260728-arm-dts-beagleyai-gpio-info-v1-0-783ec90d54da@baylibre.com>
- <20260728-arm-dts-beagleyai-gpio-info-v1-1-783ec90d54da@baylibre.com>
- <20260728195706.3D5C41F00A3A@smtp.kernel.org>
+Subject: Re: [PATCH v6 08/15] s390/vfio-ap: Transition device migration state
+ from STOP to RESUMING
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Alex Williamson <alex@shazbot.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Halil Pasic <pasic@linux.ibm.com>,
+        Kirti Wankhede <kwankhede@nvidia.com>,
+        Paolo Bonzini <pbonzini@redhat.com>,
+        Janosch Frank <frankja@linux.ibm.com>,
+        Claudio Imbrenda <imbrenda@linux.ibm.com>
+References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
+ <20260727173239.2420754-9-akrowiak@linux.ibm.com>
+ <20260727181408.805861F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: David Lechner <dlechner@baylibre.com>
-In-Reply-To: <20260728195706.3D5C41F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260727181408.805861F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: oLcJUbYsYFkCJirNB54JCkZFm17nPQYR
+X-Proofpoint-ORIG-GUID: oLcJUbYsYFkCJirNB54JCkZFm17nPQYR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE5MCBTYWx0ZWRfX08o3/FXB2zDA
+ nFJwtbB1f1G7NIl2mJQeEA8jTGsOcGV2jN3FF9H/9PR7HsN851mB5QhXqRJ8scDM/6GhyVvjUfV
+ 8MbhS0E4Fpa6db/K/ysW2B0P3spFSCAl2htgfXL9dkL1OzL4tjyIjYEmWRORoF0w00korOdcg+R
+ 0bs9NozuuP5Hq0DnmoXwZGUd1RfBk8YLkryK4sHtDXqZZIlUBNUfp1QGA1wbnX70HCseW+56kdY
+ Hlj8djhfUY+czfa6mMaAB5+mBkWGk3QgHb90uG7AgItkskr4vQefpAhZadQTOZJSNXUgghJDb8d
+ nbH6Fn0lt7dpdxIWIf331+ECkBkbo2evsb54zjWBVj5dtQojPnazGTYVozzKT4Jmt1w8wNFltms
+ M6OxsUCUh4k+I2/aNCsv2O3ZxEqV98OCWXBsL8+izpo/bqo6bb6DENjnlmPA6ZF2Dh7Bcdewj+i
+ QhGfsXIfMWtB1tRc0Kg==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a692d56 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=4G_R_3pfNkNP-tWYsqoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE5MCBTYWx0ZWRfX7Xk0hXl9o2kE
+ mX7EJvSPIXnESFmWUv31DXLITplSzsv+YqJ/atOe4oChuGfQ8ezZISlsN5dH2zkL6A8Q9xXY26/
+ RHSmggowgQeV0rf+mXU4go7gbD/RUwA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_06,2026-07-28_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607280190
 
-Hi Tony,
-
-Mostly a question for you since you are the pinctrl-single dt-bindings
-maintainer.
 
 
-On 7/28/26 2:57 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Adding `pinctrl-single,gpio-range` on K3 platforms causes dynamic GPIO requests to silently overwrite the entire pad configuration register, destroying previously applied board-specific settings like pull-ups and drive strengths.
+On 7/27/26 2:14 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Use-After-Free in `vfio_ap_stop_copy_read` leading to kernel memory leak to userspace.
+> - [Low] The `.release` callback logic for cleaning up the resuming and stop-copy file states is completely unreachable dead code.
 > --
-> 
-> --- Patch [1]: [PATCH 1/2] arm64: dts: ti: k3-am67a-beagley-ai: Add gpio ranges ---
-> commit c5d1a1cd5d0bb91d0c680ae90328952c44500103
-> Author: David Lechner (TI) <dlechner@baylibre.com>
-> 
-> arm64: dts: ti: k3-am67a-beagley-ai: Add gpio ranges
-> 
-> Add pinctrl-single,gpio-range properties to the BeagleY-AI .dts so that
-> GPIOs get the correct pin mux when requested.
-> 
->> diff --git a/arch/arm64/boot/dts/ti/k3-am67a-beagley-ai.dts b/arch/arm64/boot/dts/ti/k3-am67a-beagley-ai.dts
->> index 5255e04b9ac76..599d576f694f6 100644
->> --- a/arch/arm64/boot/dts/ti/k3-am67a-beagley-ai.dts
->> +++ b/arch/arm64/boot/dts/ti/k3-am67a-beagley-ai.dts
->> @@ -149,6 +149,19 @@ led-1 {
->>  };
->>  
->>  &main_pmx0 {
->> +	pinctrl-single,gpio-range =
->> +		<&main_pmx0_range 0 32 PIN_GPIO_RANGE_IOPAD>,
->> +		<&main_pmx0_range 33 38 PIN_GPIO_RANGE_IOPAD>,
-> 
-> [Severity: High]
-> Does adding pinctrl-single,gpio-range here cause dynamic GPIO requests to
-> silently overwrite the entire pad configuration register?
-> 
-> On K3 platforms, the pinctrl-single,function-mask is typically <0xffffffff>,
-
-Is pinctrl-single,function-mask supposed to just contain the mask for the
-mux bits (function) rather than all config bits?
-
-The DT binding description is vague:
-
-	Mask of the allowed register bits
-
-Does it mean all bits in the register even not related to function or all
-bits related only to function?
-
-Looking at the code, it seems like it should just be the mux bits (function)
-since pinctrl-single,function-mask is stored in pcs->fmask and pcs->fmask is
-only used by pcs_set_mux() and pcs_request_gpio().
-
-
-> meaning the pad electrical properties and mux mode share the same register.
-> When a GPIO in these ranges is requested via gpiod_get(), the gpiolib path
-> calls the pinctrl driver's pcs_request_gpio().
-> 
-> Since the function mask is 0xffffffff, pcs_request_gpio() will execute:
-> 
->     data &= ~pcs->fmask;
->     data |= frange->gpiofunc;
-> 
-> Could this completely erase any previously applied board-specific settings
-> like pull-ups or drive strengths from a device's pinctrl-0 property, and
-> replace them with PIN_GPIO_RANGE_IOPAD (which includes PULL_DISABLE)?
-> 
+>
+> --- Patch [8]: [PATCH v6 08/15] s390/vfio-ap: Transition device migration state from STOP to RESUMING ---
+> commit 798f82863e85b4d37fd3594dc855fe7caaaaf7f5
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: Transition device migration state from STOP to RESUMING
+>
+> Transitioning from VFIO_DEVICE_STATE_STOP to VFIO_DEVICE_STATE_RESUMING
+> starts a process of restoring the device state of the vfio device on the
+> target system. To prepare for restoring the device state, open a file
+> stream to receive the guest's AP configuration saved when the device state
+> on the source system transitioned from VFIO_DEVICE_STATE_STOP to
+> VFIO_DEVICE_STATE_STOP_COPY.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index e4bc67b1eb842..c7fecad0b6769 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
 > [ ... ]
-> 
->> @@ -267,6 +280,15 @@ &main_uart0 {
->>  };
->>  
->>  &mcu_pmx0 {
->> +	pinctrl-single,gpio-range =
->> +		<&mcu_pmx_range 0 21 PIN_GPIO_RANGE_IOPAD>,
->> +		<&mcu_pmx_range 23 1 PIN_GPIO_RANGE_IOPAD>,
-> 
-> [Severity: High]
-> Will this have the same pad configuration overwrite issue for the MCU domain
-> GPIOs when requested?
-> 
+>
+>> @@ -99,6 +108,8 @@ static int vfio_ap_release_mig_file(struct inode *file_inode, struct file *filp)
+>>   
+>>   	if (filp == matrix_mdev->mig_data->stop_copy_mig_file.filp)
+>>   		vfio_ap_release_stop_copy_file(matrix_mdev->mig_data);
+>> +	else if (filp == matrix_mdev->mig_data->resuming_mig_file.filp)
+>> +		vfio_ap_release_resuming_file(matrix_mdev->mig_data);
+> [Severity: Low]
+> Is this conditional branch actually reachable?
+>
+> During vfio_ap_open_file_stream(), the driver takes an internal reference to
+> the file via get_file(). This means the VFS .release callback is only invoked
+> after the driver explicitly drops its reference by calling fput().
+>
+> If fput() is called in vfio_ap_release_mig_files(), which first sets
+> mig_data->resuming_mig_file.filp = NULL, won't filp inside mig_data always
+> be NULL by the time this .release callback executes?
+>
+> Consequently, will this check always evaluate to false, leaving
+> vfio_ap_release_resuming_file() as unused dead code?
 
-So in order for pinctrl-single,gpio-range to actually work correctly, we would
-need to make this fix first.
+This is correct; those branches are unreachable. The root cause is
+that vfio_ap_release_mig_files() calls fput() on the stored filp and then
+immediately sets it to NULL, before the deferred .release callback can
+fire. Since fput() always defers __fput() via task_work or a workqueue
+(it never calls .release synchronously while a mutex is held), the .release
+callback always arrives after the pointer is already NULL — making both
+else if branches dead code.
 
----
-diff --git a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
-index f130c7cb998d..cae21cf92ca7 100644
---- a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
-@@ -280,7 +280,7 @@ main_pmx0: pinctrl@f4000 {
- 		reg = <0x00 0xf4000 0x00 0x2b0>;
- 		#pinctrl-cells = <1>;
- 		pinctrl-single,register-width = <32>;
--		pinctrl-single,function-mask = <0xffffffff>;
-+		pinctrl-single,function-mask = <0xf>;
- 		bootph-all;
- 	};
- 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-mcu.dtsi b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-mcu.dtsi
-index 5288c959f3c1..1aa73526bba4 100644
---- a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-mcu.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-mcu.dtsi
-@@ -11,7 +11,7 @@ mcu_pmx0: pinctrl@4084000 {
- 		reg = <0x00 0x04084000 0x00 0x88>;
- 		#pinctrl-cells = <1>;
- 		pinctrl-single,register-width = <32>;
--		pinctrl-single,function-mask = <0xffffffff>;
-+		pinctrl-single,function-mask = <0xf>;
- 		bootph-all;
- 	};
----
+The design will be reworked.
 
-And then we would want this change as well...
+>
+> [ ... ]
+>
+>> @@ -400,6 +411,26 @@ static struct file *vfio_ap_open_file_stream(struct ap_matrix_mdev *matrix_mdev,
+>>   	return filp;
+>>   }
+>>   
+>> +static ssize_t vfio_ap_resuming_write(struct file *filp, const char __user *buf,
+>> +				      size_t len, loff_t *pos)
+>> +{
+>> +	/* TODO */
+>> +	return -EOPNOTSUPP;
+>> +}
+>> +
+>> +static const struct file_operations vfio_ap_resume_fops = {
+>> +	.owner = THIS_MODULE,
+>> +	.write = vfio_ap_resuming_write,
+>> +	.release = vfio_ap_release_mig_file,
+>> +};
+> [Severity: Critical]
+> Could the migration file stream logic be vulnerable to a use-after-free when
+> the device file descriptor is concurrently closed?
+>
+> Looking at the related vfio_ap_stop_copy_read() stream implementation, it
+> drops mdevs_lock before calling copy_to_user():
+>
+> drivers/s390/crypto/vfio_ap_migration.c:vfio_ap_stop_copy_read() {
+>      ...
+>      mutex_unlock(&matrix_dev->mdevs_lock);
+>
+>      if (copy_to_user(buf, (char *)mig_file->ap_config + read_pos, len))
+>          return -EFAULT;
+>      ...
+> }
+>
+> If the device file descriptor is concurrently closed, vfio_ap_mdev_release()
+> could invoke vfio_ap_release_migration_data(), which acquires mdevs_lock and
+> frees the mig_data structure.
+>
+> When vfio_ap_stop_copy_read() resumes, will it dereference the freed mig_data
+> structure via mig_file->ap_config and leak kernel memory to userspace?
 
----
-diff --git a/arch/arm64/boot/dts/ti/k3-pinctrl.h b/arch/arm64/boot/dts/ti/k3-pinctrl.h
-index 4491898d8294..29e401f16bc9 100644
---- a/arch/arm64/boot/dts/ti/k3-pinctrl.h
-+++ b/arch/arm64/boot/dts/ti/k3-pinctrl.h
-@@ -112,7 +112,7 @@
- #define PIN_WKUP_EN			(WKUP_ENABLE | WKUP_ON_EDGE)
- 
- /* Default mux configuration for gpio-ranges to use with pinctrl */
--#define PIN_GPIO_RANGE_IOPAD	(PIN_INPUT | 7)
-+#define PIN_GPIO_RANGE_IOPAD	(7)
- 
- #define AM62AX_IOPAD(pa, val, muxmode)		(((pa) & 0x1fff)) ((val) | (muxmode))
- #define AM62AX_MCU_IOPAD(pa, val, muxmode)	(((pa) & 0x1fff)) ((val) | (muxmode))
----
+The use-after-free described is not present. The safety relies on two
+invariants:
+
+1. matrix_mdev (and therefore mig_data) cannot be freed while the migration
+    FD is open. vfio_ap_open_file_stream() calls
+    vfio_device_try_get_registration() which pins matrix_mdev until
+    vfio_ap_release_mig_file() drops it. Device teardown
+    (vfio_ap_mdev_close_device()) can free mig_data independently, but
+    matrix_mdev itself remains valid.
+
+2. mig_file->ap_config is allocated once in vfio_ap_get_config() and freed
+    only in vfio_ap_release_stop_copy_file(), which requires mdevs_lock.
+    Since vfio_ap_stop_copy_read() advances *pos and snapshots read_pos
+    before dropping the lock, any concurrent path that acquires the lock and
+    frees ap_config can only do so after the position has already been
+    committed — and copy_to_user() only touches the buffer contents, not the
+    pointer itself.
+
+>
+
