@@ -1,67 +1,67 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A553FB077
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 09:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B2741F34B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 09:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785231258; cv=none; b=D5KXQr/HB0ExQzx/BIPMU+ZVZNtBH4T3Gao3izTjSdafGclZ/kM9VPf7IgF4SF39dE8rEZS+ezzazZicHXuPQI548yjYpt5vxBdIEsmZ5roYrR5T5ZXUGVNC0yx9DLzcD+Pv5aUZvivrP7PzQZdpx3cJrXJIkdoHN82fVej7Jeg=
+	t=1785232017; cv=none; b=K4EqwtSQAskld46kVoMdACkhs3vuOGiC3JuNNyEb7p0IKqnmUUQOG7JMpeLpGWTVMT5+zcaRf/iCOHnnLs1CajY8oz1up51Xq1zS/ZT2zTCz/6I6mahAr4ufd6k54+UVxaTl+jdqeqfSIX2XwWAs8hn2iADuPrpnILzHetUxWOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785231258; c=relaxed/simple;
-	bh=tZ4Yg1HegaN2pq+z0IhzGrN7w3n/Zd/VQkqqVw3Pjxc=;
+	s=arc-20240116; t=1785232017; c=relaxed/simple;
+	bh=kwcjZyJIeB0p6AfBxqzzsJchLPKNWiD9kFR1gcEueoM=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=IfDzPFyjvd13fefPJjlHZdL3ZGkgDrR3kd6l5xqm9xTxx+7N4N4Li3RntN+fUswpsyqUd68orxYFTxZ71SsdYGjWzBacSOlTeSNoT9qh924NfKOTknmMjWmDGzP0vkVtjjizddBP9+OlyYId0GY+nogMVycw6BAV93lojqV5oi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mShsLDBN; arc=none smtp.client-ip=209.85.221.44
+	 In-Reply-To:Content-Type; b=n1wgZ36wXgz6UKFKkGwEvqLUjVdp0s/+F1sUr0XpknwhkieIRy4MCofBXbc2ZbgPoG6ZzjmqUwterzwaQcPRxAOEwBMYCPKUGiQf+4N384GRDQMhtp2fJ8n9SHnXdiLaFiaDV+ZwvPonqWh46nEG6Buh72uIq7F2NbT5Xou2S+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y7P+In2q; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mShsLDBN"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-47c6e9a694bso2158580f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 02:34:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y7P+In2q"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-495635a85d2so29968625e9.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 02:46:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1785231256; x=1785836056; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1785232013; x=1785836813; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:organization
          :autocrypt:content-language:references:cc:to:subject:reply-to:from
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ffVq5ZMWzgMfNyQ+b9r3wPaLIUviL+QwJh6c6WWDLzk=;
-        b=mShsLDBNvC3tJl3g2INRP30kjtB3xwQ9/uJD4dRJvqVV1nx/B8N4wC+A8FrXnLGsg9
-         Bscvr1b3gP0Yc/tpq3P2loN65SoIwR2tfhpLhnD/JdcTugG1BPHQmf6rH2RCuP2716Iq
-         eVNpBO9JiXQ7hNiJLGD8iBirMKi4HbSOwzJB34sCp+ZbkUwGwVeemL76TbPAQ1Ll6JWs
-         R0CwgBocTZYCnmJi3tnMri8exCqmfRgQkZ/lDbxy/UcdSXqIQdLFu6ZVh0JjCcioQD/O
-         TKMmbJvQG9/ZQ04FCKBCTj2JG4P/x+PSH758ExvYwmtnDmH1fDSV0J+wiaTJbunmSyVP
-         /Zng==
+        bh=rKpYcUd0bLsWfXRy27XLggsB62Hy65MOJiITGQfMwYQ=;
+        b=Y7P+In2q260l7bG/DTlSU0nEn5s0aQzmCncWAj7ETNzJ7XL3WSH/Xpx4ETkII0jqxc
+         SEQEvu1i3BhmZSCvijVdw2B3n40c7HNxLcRRSYg/t4VX2n+U0jo3/0HP6qMDAqb4A4oC
+         ODKXzW+0qa30DVXBPV8Eh2cUkBYHt1jta5Vt/pEakjb6V+DUyLl7Ial7AMhj8D1XhRH7
+         3rpIH+4dRlBut5DkBWCERsaChWVbjil4iq7N1Faey25vfwCC+i/L9r8T2P8iqlZXw5XI
+         xzBHZw+X3YL8TUCEFiNHzdC81o7sm7K2ueoDi7ZRrxfm4xOErvsKdTpbVm7tmUkbNN4r
+         lL9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785231256; x=1785836056;
+        d=1e100.net; s=20251104; t=1785232013; x=1785836813;
         h=content-transfer-encoding:content-type:in-reply-to:organization
          :autocrypt:content-language:references:cc:to:subject:reply-to:from
          :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ffVq5ZMWzgMfNyQ+b9r3wPaLIUviL+QwJh6c6WWDLzk=;
-        b=BuBQVGTNnyyw3CmqiDS7dkvqgfhReOTmqETM04rHOYYFEBXnJdIY6g9GugI8TFWopG
-         6/UXcGWbgKSS3PiX4owC1CZPZzXWKkryAnZwfetlo3+SBx/9ayFNx+TYeqNvx6lN+Sq6
-         Dwij7aSEh0E61ZWfFHOQF4Lsf0Prdjzi+Bwf9eTO8RXV7oAix2Y7P3C1KKgT8d57NvkI
-         efPEnpbJQkzLldO3owgGJ5pEJeHEF+nRaTuSQbNoIx2rcPMUIp5vDkLbeV/ciRwDgJf/
-         7Ik4/oyugk4nv18OEb4TL6Pd4q+fYfLSVJ9EP95srItWmwf5dyilyub6NYm07bAmoqYU
-         sUhw==
-X-Gm-Message-State: AOJu0YwZngyMHlwTGvZ7LSAsZd0nILsh27ZKn7IdyVB5tBYrFRqjlTXg
-	Sugob1Cf8MJJTU7w1GmG0NFiMORao8PUEPORlPhVfG5MGfcnZPH6eRnNdR7Y3/xHrPG3lkZSdnR
-	FdeIv
-X-Gm-Gg: AR+sD131P40fsF58AwmTQ1Be2dKfAaJWcFjLAIDb0hwSsuiy4uwFCaIe1SM6s8oiM8P
-	JoQpKfgLcIq40lBjJ1bW4+U4spkS4rNqFJjcAJFuhLee3Xu66Wylu0DX71wII0qUPy0AFLQeHga
-	9SGnX7wrk4hE05SpShvGwbFYo/RoGhj5mfpXlZZUhJbbezz0oulWSZUhz6BQQd87/deLwkMUFLl
-	HN8QY70pxeDbTYxsO/DBZEZZtYwmdpTSuSmG/3UNUf2eTc/XCkGtNbrNXGUUFFXyLxIOMHXkpr5
-	7ja1yH67MbxwnoFKloyXiIvGrbIpV2ffsU4I1sVU5mztpMSa7ZzUSttDz2cZdIyF5iofr26+A/c
-	R4hsZ51bQ+5Iw4IZEW4GX7aHJp4c4XUkEK9yBQw6E9Gbpz0cQaWNBX7Ysfa+TgmITh0LSE/dj3p
-	b7jrH7nl6cSkoFDTIX3d+zZ10caq3Uj2MPhtjN4bIRA0Km9kdisiKArJIA3w==
-X-Received: by 2002:a5d:5847:0:b0:47f:81af:1a3b with SMTP id ffacd0b85a97d-47fb1e926b2mr1898134f8f.22.1785231255438;
-        Tue, 28 Jul 2026 02:34:15 -0700 (PDT)
+        bh=rKpYcUd0bLsWfXRy27XLggsB62Hy65MOJiITGQfMwYQ=;
+        b=B89/bpvNYkC59I5jVJyXtOvOIsQu2+qnk2fgpayb8VGGikOCpGqt69xyoBAm3RV5US
+         on6l2wcjr35V3XjmbG1e+3KjOC3lncXmNICwA2enMftsr0dqTikrlDp3wdwUK2pR19m5
+         /tWkvDaRSh8WCKln9qfskgJsVIyn//P+XJZjm9Z5zzXnPmMBOq7Z+SzF04SH8WRB0kal
+         lD0UIGsM7dFz0vtO5LsXewinTmLap8vXRQDHtTYLxTG9PZpaXrunorYsC0amuUiYZ4A3
+         E/bbBhUPCYA4hQa/uEZLzz8qR3+cIA15tpQ2qZyOjPXfNe+QysjRY+X+drPlOsKPtXuk
+         mCYQ==
+X-Gm-Message-State: AOJu0Yxp2WbSPM7j9DVMwlw+IKIBJWcgiTZ7ztEjbzjOfN3C7RUgHhsv
+	YQk06pldzZ3s4DQWg6ldqcnxxdDDQ3pzdyh9Qjdv6KfWi0NKMQR2hIsPhhnVBGYDAmnkDSsOGM+
+	6tULJ
+X-Gm-Gg: AR+sD13hKynl7er2ppLDMOj5Z26QApmyBSpxg5Wb8w53b2Fu8zUidaY4pmkhrazDFq8
+	PhWk/HjdOGnxqLMl6P3zOSdKDDGSlfg8Q27Kpsx1XPO3qYdRzn+UTfjnW4H1QTZgl6bwage4+B6
+	fSKZq8mMuPJGCqdcsAHef7o0kn1/Ba9yZDOJDENkVgBq4AA5tHSWEmb4tnvccxVhJDrcIFtFQNP
+	TqsCS1J44D726dQ7dvV6ZoMREMOupR3uOG0N56fac3fdOiHJwYbyVZtwQy5X4GO8rqIO0cmNR7/
+	IyqJTredJ+NrGVlKgE+60oC35Cl9yHH1pbN3OURhFRMpyRqICGz6xCOMaC4cfuzROnqYCdzDCFn
+	EGmG3ELBE5Fenn/Lcec90IimUZHuvkxJ4ihW18Qd6ReyQ3Zee33gsq93iiOBNxHkP6tGQJGp6hC
+	L29rDkDBh/ON9uWd+aBSEwIIMu1G/Qf6FFyaKRAsezI1uvhYCHLIKrxEne7w==
+X-Received: by 2002:a05:600c:19ca:b0:495:67b8:d97e with SMTP id 5b1f17b1804b1-496c6575b9fmr16541375e9.30.1785232013466;
+        Tue, 28 Jul 2026 02:46:53 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:106d:1080:5788:c4e1:cf35:7211? ([2a01:e0a:106d:1080:5788:c4e1:cf35:7211])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c52fa9sm58636338f8f.20.2026.07.28.02.34.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957bfd1a60sm291066435e9.2.2026.07.28.02.46.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jul 2026 02:34:15 -0700 (PDT)
-Message-ID: <c548b640-9ed0-4c18-a217-54905fa62022@linaro.org>
-Date: Tue, 28 Jul 2026 11:34:14 +0200
+        Tue, 28 Jul 2026 02:46:53 -0700 (PDT)
+Message-ID: <94110280-c818-4bce-9856-f1e7ec8da055@linaro.org>
+Date: Tue, 28 Jul 2026 11:46:52 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -71,12 +71,13 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI
+Subject: Re: [PATCH v3 1/3] ASoC: qcom: audioreach: compute active channel
+ maps from channel_map
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260728-topic-sm8x50-next-hdk-i2s-v1-0-2393a0fe4aa9@linaro.org>
- <20260728-topic-sm8x50-next-hdk-i2s-v1-2-2393a0fe4aa9@linaro.org>
- <20260728091012.419DA1F000E9@smtp.kernel.org>
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+References: <20260728-topic-sm8650-ayaneo-pocket-s2-wsa2-fix-v3-0-b29f44720178@linaro.org>
+ <20260728-topic-sm8650-ayaneo-pocket-s2-wsa2-fix-v3-1-b29f44720178@linaro.org>
+ <20260728090325.518421F000E9@smtp.kernel.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -103,89 +104,115 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20260728091012.419DA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260728090325.518421F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/28/26 11:10, sashiko-bot@kernel.org wrote:
+On 7/28/26 11:03, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Device Tree Misconfiguration - Pinctrl for SoC I2S interface is incorrectly assigned to the external HDMI bridge node.
-> - [Low] DT Schema Violation - Invalid clock-names order for dai@16.
+> 
+> New issues:
+> - [High] The new `active_channels_mask` computation in `audioreach_codec_dma_set_media_format` introduces regressions by unconditionally iterating over all `AR_PCM_MAX_NUM_CHANNEL` elements.
+> 
+> Pre-existing issues:
+> - [High] Kernel stack memory is leaked to the DSP and evaluated in control logic because `cfg.channel_map` is not zero-initialized.
 > --
 > 
-> --- Patch [2]: [PATCH 2/4] arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI ---
-> commit bf4f513e744f0c756ca7054358cd98929fb84150
+> --- Patch [1]: [PATCH v3 1/3] ASoC: qcom: audioreach: compute active channel maps from channel_map ---
+> commit 893598480a0705f69c55eefe5bf4e2b969edc6d8
 > Author: Neil Armstrong <neil.armstrong@linaro.org>
+> Subject: ASoC: qcom: audioreach: compute active channel maps from channel_map
 > 
-> arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI
+> This patch updates the Audioreach DSP code to compute the active channel
+> mask and logical channel mappings using the physical channel mapping array
+> (channel_map) rather than a simple bitmask derived from the channel count.
+> This enables WSA2 speaker usage on specific hardware by correctly setting
+> only the upper bits of the channel mask.
 > 
-> This commit adds the necessary device tree nodes and configurations to enable
-> the I2S interface for HDMI audio output on the SM8450-HDK board. It configures
-> the pinctrl for I2S, sets up the q6apmbedai DAI, and adds the primary MI2S DAI
-> link.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
->> index b37998cd9a2c3..6a6d8346046bd 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
->> @@ -665,7 +665,12 @@ lt9611_codec: hdmi-bridge@2b {
->>   		vcc-supply = <&lt9611_3v3>;
+>> diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
+>> index e6e9eb2e85aa1..0cc840aca69dd 100644
+>> --- a/sound/soc/qcom/qdsp6/audioreach.c
+>> +++ b/sound/soc/qcom/qdsp6/audioreach.c
+>> @@ -741,7 +742,12 @@ static int audioreach_codec_dma_set_media_format(struct q6apm_graph *graph,
 >>   
->>   		pinctrl-names = "default";
->> -		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
->> +		pinctrl-0 = <&lt9611_irq_pin>,
->> +			    <&lt9611_rst_pin>,
->> +			    <&i2s0_default_state>,
->> +			    <&audio_mclk0_default_state>;
-> 
-> [Severity: Medium]
-> Should the SoC I2S and MCLK pin states be assigned to the sound node or CPU
-> DAI instead of the external HDMI bridge node?
-> 
-> By assigning these to the lt9611_codec node, the SoC's audio pin multiplexing
-> is tied to the lifecycle of the external display bridge. If the HDMI bridge
-> driver defers or unloads, the SoC I2S pins will revert to their unconfigured
-> state, which breaks the hardware description paradigm and might cause runtime
-> audio issues.
-
-No since the HDMI bridge is the effective user of the pins.
-
-> 
+>>   	intf_cfg->cfg.lpaif_type = module->hw_interface_type;
+>>   	intf_cfg->cfg.intf_index = module->hw_interface_idx;
+>> -	intf_cfg->cfg.active_channels_mask = (1 << cfg->num_channels) - 1;
+>> +	intf_cfg->cfg.active_channels_mask = 0;
+>> +	/* Convert the physical channel mapping into a bit field */
+>> +	for (i = 0; i < AR_PCM_MAX_NUM_CHANNEL; i++)
+>> +		if (cfg->channel_map[i])
+>> +			intf_cfg->cfg.active_channels_mask |= BIT(i);
 >> +
->> +		#sound-dai-cells = <1>;
+> 
+> [Severity: High]
+> If a stream is configured with 4 channels and later reconfigured to 2
+> channels, audioreach_set_default_channel_mapping() in q6dma_hw_params() only
+> overwrites the first 2 entries, leaving the remaining entries intact.
+
+This is a valid issue, will fix.
+
+> 
+> Since this loop iterates unconditionally up to AR_PCM_MAX_NUM_CHANNEL, could
+> it pick up those stale entries and activate unintended channels in the DSP?
+> 
+> Additionally, for channel counts greater than 4 (like 6 or 8),
+> audioreach_set_default_channel_mapping() can leave the map as all zeros. Could
+> this result in an active_channels_mask of 0 and break the DMA configuration?
+
+Yes, the old shift should be kept if the result mask is 0
+
+> 
+> [Severity: High]
+> This is a pre-existing issue, but struct audioreach_module_config cfg is
+> allocated on the stack in q6apm_dai_prepare() without being initialized:
+> 
+> q6apm_dai_prepare() {
+>      ...
+>      struct audioreach_module_config cfg;
+>      ...
+> }
+> 
+> When an unsupported channel count is used,
+> audioreach_set_default_channel_mapping() leaves the array untouched,
+> containing stack garbage.
+> 
+> While the previous code copied this memory blindly, the new loop here branches
+> on this uninitialized stack memory to construct the channel mask. Could this
+> result in unpredictable DSP configurations and leak stack contents in the IPC
+> payload?
+
+Yep the mapping array should be set to 0 in audioreach_set_default_channel_mapping() whatever the channel count
+
+> 
+>>   	p += ic_sz;
 >>   
->>   		ports {
->>   			#address-cells = <1>;
+>>   	pm_cfg = p;
 > 
 > [ ... ]
 > 
->> @@ -947,6 +952,19 @@ channel@44b {
->>   	};
->>   };
+>> @@ -1113,7 +1124,12 @@ static int audioreach_pcm_set_media_format(struct q6apm_graph *graph,
+>>   	media_cfg->num_channels = mcfg->num_channels;
+>>   	media_cfg->q_factor = mcfg->bit_width - 1;
+>>   	media_cfg->bits_per_sample = mcfg->bit_width;
+>> -	memcpy(media_cfg->channel_mapping, mcfg->channel_map, mcfg->num_channels);
+>> +	/* Convert the physical mapping to a logical mapping of the channels */
+>> +	for (i = 0, j = 0; i < AR_PCM_MAX_NUM_CHANNEL && j < mcfg->num_channels; i++) {
+>> +		if (!mcfg->channel_map[i])
+>> +			continue;
+>> +		media_cfg->channel_mapping[j++] = mcfg->channel_map[i];
+>> +	}
+> 
+> [Severity: High]
+> This is a pre-existing issue, but similar to the above concern, could this
+> loop branch on uninitialized stack memory if mcfg->channel_map was left
+> uninitialized in q6apm_dai_prepare()?
+> 
+> This would cause the code to evaluate stack garbage in its control flow and
+> copy it into the DSP IPC payload.
+> 
 >>   
->> +&q6apmbedai {
->> +	#address-cells = <1>;
->> +	#size-cells = <0>;
->> +
->> +	dai@16 {
->> +		reg = <PRIMARY_MI2S_RX>;
->> +		clocks = <&q6prmcc LPASS_CLK_ID_MCLK_1 LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +			 <&q6prmcc LPASS_CLK_ID_PRI_MI2S_IBIT LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->> +		clock-names = "mclk",
->> +			      "bclk";
-> 
-> [Severity: Low]
-> Is this clock-names order correct according to the schema?
-> 
-> The qcom,q6apm-lpass-dais.yaml schema requires that if two clocks are
-> provided, they must be ordered such that index 1 is mclk. Here, bclk is at
-> index 1, which will cause make dtbs_check validation to fail.
-
-Good point, I'll fix this
-
-> 
->> +	};
->> +};
->> +
+>>   	return q6apm_send_cmd_sync(graph->apm, pkt, 0);
+>>   }
 > 
 
