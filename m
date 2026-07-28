@@ -1,67 +1,67 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FFB351C2F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 03:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6035E372661
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 04:34:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785210082; cv=none; b=kL/x2l0higO04ceNHqXA+QycMcmu8z17nv4pg80RXK0MUUc9PLgioFS8TtEYVxilvkRi+likdowerRRlYuSNLCR3KarT2Rr8g1qGALQ5StiOJz4w37BuL04OtXgSZtn+dymQ/A5ASDZSCWWFdZv5G8C3dVA0PCuilLPGTOdoz/A=
+	t=1785213267; cv=none; b=Cpe9SMsB25N+6iLjL+fBdquxLKSxxsyEe2kCwa0pRCj8glyX4Koh6wq8y28oTzDDJLZosRa+yfXQ7PD0/IQF+oDxR7koal78I+KQYCWSWBuVEB1kLgL84kpIQc8LRNvbeL0c3nYkmleY0lu7oAFg8GTQczbDp6HKPVWOyqNeOc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785210082; c=relaxed/simple;
-	bh=tGl/xAq94VuJIjn/stN27Le7fgNAMSWc0TQsUovSkw0=;
+	s=arc-20240116; t=1785213267; c=relaxed/simple;
+	bh=uyawnA8JzmPstrkoM+DBDNOWOHPLgRXU9HmSBbtzOPU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=haMicNBdIDEedxantDUtL5nkD1r3ZhmZQxxnqcRfejAz/9YHiKjM4Dn33cNmOc7zkXGyrW1D7HwBYd+oUjBODltJ/9YrIOOE38YiWo2NdtKVIPFCFXNdM0/Wjix0g/M7PO4fdKU8/oq9Bm0HGMHsd4uqO0vXN2qlc/QcYSiglsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kZzcbOM1; arc=none smtp.client-ip=209.85.215.180
+	 In-Reply-To:Content-Type; b=IxpeFmbKSFGA9Cf9qpbXt3ojzx3alt+e7RNf3o5UGUd9wczSzqW2EdLcM2AOsdp9Cy6XhmbrtSv+jwA5n5UiLgwkb0LECnnGdCKYPJYr4Sv9xtOkujSeiuZe7/KcIuRXqDaESB6JkZ7nw0G4cuCgqwQQe1xNTGoD+3sqIz8WELA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aRfAt64s; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kZzcbOM1"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c96c92c0980so1984161a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 20:41:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aRfAt64s"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cfbbdfa60bso31408675ad.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 21:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785210080; x=1785814880; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785213266; x=1785818066; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1s3vhEoW1xwEExespEZ3ODHzHep+GF28+Zno2CEI4sk=;
-        b=kZzcbOM10j3S5bZWnsrK3PW72bc3Me7C4Ltu49N2A9luyEIqemXSAOeHVNAagY7NWA
-         RvD2juwy9eVkqXKa4mKhGcbGbV2Mbdi0g4k9SjEmk91/tfWCxm9ho8zo+WoPwCAxbIuG
-         yaggDc3oYe9B0v0OYPY3j+pUWxY+XyGCqkK1BmLvGWj8aCqs60RdnOwJV77/5ufTbU4c
-         ZGHxm7h/+zPy8b7A1qPpIWjqLqDu7YPy+6k35ViclIfSi0TsOnYucFy4nA+FsyVEz0tr
-         N40nuDEMjYKJRohlSkG93rQMP3g3KN4Q2EEcHaOKUbDac9sFSaAyqhRs3awgnuR3l6V0
-         YAcQ==
+        bh=HbpEiYESyYcbPpVXAmf0MuFPaZ33OeP2HIx7dfPBaM4=;
+        b=aRfAt64sN0RILu8Zmw7uxJ9g33PPvYkI7lwuz4h8WfPRzgIUeAb03+too2xIZyATia
+         gHWRtmxc2Osv6taeKoQEPAMMuIZQBQ3YbBLHW2PD+u61QLoZzsIJkpWQ9TfxwTTAhUrj
+         s4pAhPBHa8PQkb/vxjBde0SE3KYaaO7qfCULmMq/KqIb1gj/+1JOhkuco2GT+Z4Oh5d2
+         BEruBK/7O7yyb25kDDNdnIemAOB/TmJU9Kq2R1QgurWzYDOp4M+TYFRYggEcRgXOY+GY
+         HiDQv1s5r48e/M8m/4LlojHNo/rXqlqAqNf/Hw7Qgc0Cf8kBQysmzXOwMS27+GKc6Odj
+         oP8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785210080; x=1785814880;
+        d=1e100.net; s=20251104; t=1785213266; x=1785818066;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=1s3vhEoW1xwEExespEZ3ODHzHep+GF28+Zno2CEI4sk=;
-        b=BcDIgkT7+HgVONUChz577F1wxluvxuXuDXPHpTxISl8MaG2jfrzqjo7Wjo5znRYza5
-         UIX51eBVyBbSUt+ByVdKomJAKcS9AeG7toTQ4vQKc5s1oaLhbYfyqOPWxzpW+F3XE2ft
-         Xqw9opDloJuMuj0vYditUY36c48wjWM4xo7dDzQD5tmhRJgl6JHR+K+oy2gsGtLXvN5V
-         uuTRBb60gD7/pH9tRXPtoqmwMWrIInypzyqUjt7dVTOkNP8fxZ1lz/8ZM+MZ9lffi1fA
-         ow6gxVr+2nyhMdLZ6nnHNB3tD4shf6qgK25YAUNxutSAFWD1BQtUSXBZSrVXZQm+J+7I
-         9THw==
-X-Gm-Message-State: AOJu0YxJ1vtNQ/kPt/oeabcG5UU35KSibSss4rTBTa+1NDe09wtwuBg8
-	sc2IYn9DPVIeXZHwsDEKTwhpZx6adQMNXUzt6SG6xstuK3gbH9FwPcH64UaWRg==
-X-Gm-Gg: AR+sD13Dmeak3fTL678cw0izkraLnaLJFa7lfGAgTEFGGxBB7Ll6xH/D9yS5GImqTny
-	6+/VjyTyIkxJmMCrhnJU3ljwA5PdzuQTx+T79Ywd7I5ilYEza1tenNnmEU9WA46WJLIf4vbE4gy
-	hZFqWHA/y+IskXJjYSjyo3iLUlyBSWMoeoqdMfmAiR8B4Km6ljcEYtycC1cGHHfnA5VzBAMS6dc
-	rv/+N2X2dWlAxi2E0XP2nvhFIANCog5IbEh8VPzLOZgiG6WhuIZkuGhbh1WdjyifBr2nx9Hf/6n
-	z7VOOAitzyIW+Rf80SGmLHjET8sYk2N016ZIsyFPcHrOJBKXPe3T7fA/9ppCN9ljODMAieqVaD4
-	79cq8IYIyGb3E7O936mej1DobBmgNTrDBnK5pgQTl8WCiaB1KbkgofhXLXv7CH/w6gPmbUf52tt
-	XpibFFSXIzwf8e3vB2BxnwFPGSONgTCRBSoozaqqKfYIEHCyOMYWA=
-X-Received: by 2002:a05:6a20:939a:b0:3b5:489c:7bb5 with SMTP id adf61e73a8af0-3c8b88ae6demr881297637.28.1785210080388;
-        Mon, 27 Jul 2026 20:41:20 -0700 (PDT)
+        bh=HbpEiYESyYcbPpVXAmf0MuFPaZ33OeP2HIx7dfPBaM4=;
+        b=G8wFcueYZ+ZeFyWiHxLfaDf93ZVcQQnStVk4AJcDrc/qfekZNo9neSnx2C8CWhLD4i
+         Hz/0aUciRl9abs8TSCqnr5WCLkMNKvi3rQdJ0axt8rTAHLUDEj1mxobPARJXgcggLmhG
+         IPUSS1cncXPNRqn2IpHZM9JZt2s1cHheonNtDtnMElMELoc+PpcxjpdUawznGXU4Yqja
+         ZtLjwRsX0cWwIdHLWJ5F4P8l5B7O596RWnO96clbMXyza4oXJHCviqFx5XMpbRjXn7Sl
+         UAaMnQYXZYlNwWLu3ToXxd4LWCFS1oKaZpGZXgxg2asHvsZ3TGPdsUHTiTGyb6RXc/9b
+         caWg==
+X-Gm-Message-State: AOJu0YynOINLeL0d+U8r3WSqYitGELdFu6Oqc8yeDWq+GP3kU2IJcxZL
+	cbicxlJDgaEh0Lww84Thb3B2KTgm2MK1943+Wa33G480q7MVgKBcyu3Ry7ycYg==
+X-Gm-Gg: AR+sD10AWcfL5LzDICKvjskXdokzhGyqe+SxmHSQZNdcZ5KYdLSGfqa2LAf//N5AjSK
+	6n/L6d3cOaE6X/HnAKS9hcY+MrJT9Ugw26+L1H63xkZKXx6HCs+4Utn1Yh3/ausR+J8Z0BNaZ4o
+	TSNxIuaOF8sM+/aYyKCpnRwg4OVeUpvJaxLTsLoH6jaJUBkuY9P5kUAeudhWKX6mK9IKaWola2Q
+	xAhAJ33mqxdh4e0Heij7P6usBf7fwfMhuwBR3mpztymaNVNuAAsd2SnlWnlHR9gcU6zeU0ApKjZ
+	U184THKOpeTFklf2ODxTCPz1zXzjyfFV4fmlQJG9kXBv/nfgloB8mMpKSnrhTSVwb9Yw8SW3BcC
+	1cMsxeGJ/zUxPjKmnzvRg3l34N8NwtTzrb0C+yLCm4wBASaufRcqEZUpeU8tbC43pK8PNORLkmf
+	6dXSM1l41h8Rd9vUjfASJqDi0pY70UK21URg6PC3Z7kZWLf7sy7VKZok+1XcD22A==
+X-Received: by 2002:a17:903:1904:b0:2cf:b23a:3e39 with SMTP id d9443c01a7336-2d015d8f422mr8372255ad.43.1785213265610;
+        Mon, 27 Jul 2026 21:34:25 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc419c52sm37480125eec.10.2026.07.27.20.41.19
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde7bc4f4sm44562095ad.39.2026.07.27.21.34.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jul 2026 20:41:19 -0700 (PDT)
+        Mon, 27 Jul 2026 21:34:25 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <18773444-febb-4e8a-a76e-2536d55d7cb1@roeck-us.net>
-Date: Mon, 27 Jul 2026 20:41:18 -0700
+Message-ID: <69a7e430-e7a7-4b84-aa1e-f0f07393b9e0@roeck-us.net>
+Date: Mon, 27 Jul 2026 21:34:23 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,14 +69,15 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/3] hwmon: (pmbus/tps25990): Rework driver for
- multi-device support
-To: sashiko-reviews@lists.linux.dev, Stoyan Bogdanov <sbogdanov@baylibre.com>
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
- linux-hwmon@vger.kernel.org
-References: <20260728015857.193890-1-sbogdanov@baylibre.com>
- <20260728015857.193890-2-sbogdanov@baylibre.com>
- <20260728020703.EFC111F00AC4@smtp.kernel.org>
+Subject: Re: [PATCH v4 2/4] hwmon: (pmbus/max20830): add VOUT feedback
+ resistor scaling support
+To: sashiko-reviews@lists.linux.dev,
+ Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+Cc: devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20260728-dev-max20830c-v4-0-cec034298535@analog.com>
+ <20260728-dev-max20830c-v4-2-cec034298535@analog.com>
+ <20260728034543.3F7BB1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -122,71 +123,95 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260728020703.EFC111F00AC4@smtp.kernel.org>
+In-Reply-To: <20260728034543.3F7BB1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/27/26 19:07, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The static array `tps25990_base_info` is missing the `const` qualifier, placing it in mutable `.data` memory instead of read-only `.rodata`.
-> - [Low] The `tps25990_i2c_id` array uses positional initializers, which violates the I2C subsystem's coding guidelines.
-
-Both reported issues are valid. Please fix.
-
-Thasnks,
-Guenter
-
+On 7/27/26 20:45, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Incomplete VOUT scaling introduces UAPI inconsistency and dangerous hardware limit writes.
 > --
 > 
-> --- Patch [1]: [PATCH v5 1/3] hwmon: (pmbus/tps25990): Rework driver for multi-device support ---
-> commit 7c6d03feb4ad36395a77df5021ef6a8c6f2df2a8
-> Author: Stoyan Bogdanov <sbogdanov@baylibre.com>
+> --- Patch [2]: [PATCH v4 2/4] hwmon: (pmbus/max20830): add VOUT feedback resistor scaling support ---
+> commit 4d1fa3c4cb8d1f4bfe3ca16a79ad028a0dd9bfee
+> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
 > 
-> hwmon: (pmbus/tps25990): Rework driver for multi-device support
+> hwmon: (pmbus/max20830): add VOUT feedback resistor scaling support
 > 
-> This commit reworks the tps25990 driver to allow adding support for new
-> devices. It introduces a chip enumeration and a data structure to hold
-> per-device measurement coefficients.
+> This commit adds support for external voltage divider scaling using the
+> adi,vout-rfb1-ohms and adi,vout-rfb2-ohms device tree properties. It reads
+> these properties and scales the feedback voltage for PMBUS_READ_VOUT.
 > 
->> diff --git a/drivers/hwmon/pmbus/tps25990.c b/drivers/hwmon/pmbus/tps25990.c
->> index 9d318e6509abf..490dcd2a5fa51 100644
->> --- a/drivers/hwmon/pmbus/tps25990.c
->> +++ b/drivers/hwmon/pmbus/tps25990.c
+>> diff --git a/drivers/hwmon/pmbus/max20830.c b/drivers/hwmon/pmbus/max20830.c
+>> index cb2c23672166d..7c1e94c43ac4e 100644
+>> --- a/drivers/hwmon/pmbus/max20830.c
+>> +++ b/drivers/hwmon/pmbus/max20830.c
 > [ ... ]
->> -static const struct pmbus_driver_info tps25990_base_info = {
->> -	.pages = 1,
+>> @@ -14,6 +15,51 @@
 > [ ... ]
->> -#if IS_ENABLED(CONFIG_SENSORS_TPS25990_REGULATOR)
->> -	.reg_desc = tps25990_reg_desc,
->> -	.num_regulators = ARRAY_SIZE(tps25990_reg_desc),
->> -#endif
->> -};
->> -
->> +static struct pmbus_driver_info tps25990_base_info[] = {
->> +	[tps25990] = {
->> +		.pages = 1,
+>> +static int max20830_read_word_data(struct i2c_client *client, int page,
+>> +				   int phase, int reg)
+>> +{
+>> +	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
+>> +	const struct max20830_data *data = container_of(info, struct max20830_data, info);
+>> +	int ret;
+>> +	u64 temp;
+>> +
+>> +	switch (reg) {
+>> +	case PMBUS_READ_VOUT:
+>> +		ret = pmbus_read_word_data(client, page, phase, reg);
+>> +		if (ret < 0)
+>> +			return ret;
+>> +
+>> +		/* Apply voltage divider scaling if resistors are non-zero */
+>> +		if (data->vout_rfb1 && data->vout_rfb2) {
+>> +			temp = (u64)data->vout_rfb1 + (u64)data->vout_rfb2;
+>> +			temp = DIV_ROUND_CLOSEST_ULL((u64)ret * temp, data->vout_rfb2);
+>> +			ret = clamp_val(temp, 0, 0xFFFF);
+>> +		}
+>> +		return ret;
+>> +	default:
+>> +		return -ENODATA;
+>> +	}
+>> +}
 > 
-> [Severity: Medium]
-> Should this array be declared const?
+> [Severity: High]
+> Does this code introduce a UAPI inconsistency by only scaling PMBUS_READ_VOUT?
 > 
-> The previous single structure was const, but the new array drops the const
-> qualifier. Leaving tps25990_base_info mutable places the struct's function
-> pointers in mutable .data memory instead of read-only .rodata.
+> When in1_input is read, it returns the scaled output voltage.
 > 
-> [ ... ]
->>   static const struct i2c_device_id tps25990_i2c_id[] = {
->> -	{ .name = "tps25990" },
->> -	{ }
->> +	{ "tps25990", tps25990 },
->> +	{}
+> However, because this switch returns -ENODATA for limits (like
+> PMBUS_VOUT_OV_WARN_LIMIT or PMBUS_VOUT_OV_FAULT_LIMIT), reading limits like
+> in1_max will return the unscaled feedback voltage directly from the chip.
+> 
+
+I would suggest to add a comment explaining that this series does not support
+any limit registers. That should "address" the issues raised by Sashiko, and also
+help future readers understand why the limit registers are not scaled.
+
+Thanks,
+Guenter
+
+>> +
+>>   static struct pmbus_driver_info max20830_info = {
+>>   	.pages = 1,
+>>   	.format[PSC_VOLTAGE_IN] = linear,
+>> @@ -24,13 +70,25 @@ static struct pmbus_driver_info max20830_info = {
+>>   		PMBUS_HAVE_TEMP |
+>>   		PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+>>   		PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP,
+>> +	.read_word_data = max20830_read_word_data,
 >>   };
->>   MODULE_DEVICE_TABLE(i2c, tps25990_i2c_id);
 > 
-> [Severity: Low]
-> Does this code run counter to the I2C subsystem coding guidelines?
+> [Severity: High]
+> Should there be a matching write_word_data callback here to reverse the
+> scaling for limit registers?
 > 
-> The guidelines specify that initialized arrays of type struct i2c_device_id
-> must use named initializers, but this patch changes the initialization to
-> use positional initializers instead.
+> Since there is no write_word_data callback, if a user writes a new limit using
+> the scaled unit, the core will write it directly to the hardware without
+> reverse-scaling.
+> 
+> The chip treats this as a feedback limit, which could drastically raise the
+> physical overvoltage trip point and bypass hardware protection.
 > 
 
