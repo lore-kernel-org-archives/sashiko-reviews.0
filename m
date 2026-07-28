@@ -1,65 +1,63 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013067.outbound.protection.outlook.com [40.107.162.67])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013057.outbound.protection.outlook.com [40.107.159.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AE027A907;
-	Tue, 28 Jul 2026 15:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACD8200110;
+	Tue, 28 Jul 2026 15:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.57
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785251532; cv=fail; b=SCcruHgl/XZUR/FTR3+9Oy1r2sIUstp8ohrAmfGvnKA+1Xrr5u0w4FPsn2kUkiPmy62YhKBF2plXZq8GhdEHiGMY2RzErJI+JarnWloVerhSgnNAKkM4uVX0a8EznYCGHum5209nmx0HUYM2fnzgKZMppbXkBYVE/xQ3rGYA+PA=
+	t=1785251868; cv=fail; b=IQ7SBMBLqoZXgRJEFtSMA+9zn+cstM0L61qDsGGxnGZOo73Kd+eN1TiYDtct0BR8SMxQ9vHpnQG+WfJnAIvO8v439u/1rpbpmSkOz/u4/YpEiDscSoLNZuVhdBq4ICQsB4qY4cc2W8ZYEsWy3vdEk2ts0upc5y7KmnWdj3EwqFA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785251532; c=relaxed/simple;
-	bh=6eKGM8Je7m/IUiPE3AwHv8qTl8QGj3bNLG5x5buEcRI=;
+	s=arc-20240116; t=1785251868; c=relaxed/simple;
+	bh=hyMd6NI6gErZea8fjP2ZKqARFcR7yuhHzXGKV/MjQF8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=czbEW+dCvaCWHieQXMAshjNTZ0hfsh81zpZp8dP6gwNCkRzA2Kin/U5wXRODKbDqkrrkm1UiDYDYFBytG15k4ci5DnB9HdW0bt8d43tnKLD7ZfDYENUI//NkSj/OkYDMSANbDZ/TLNPiE2q2OW9sxxEmGcnlHpw6a0shKWLoyJI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=cf4tBCv4 reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.67
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Imt+LNQNx0zcKoYCMF3oJppZpmhAbqGskn6rHut4Mz5bXMkxdK1dvZl8K3AtpcS2odyLc3aiS5g5+5z/M6SvBsEqrA4af/XGguvcqcmx7Tw0X3B1FqmLqz1C+Ywp5LE0mprbl5iWacZg+CDNS/DFL1StlKLiqzqBXs/57Dd53z8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=P25gQu/u reason="signature verification failed"; arc=fail smtp.client-ip=40.107.159.57
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="cf4tBCv4"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="P25gQu/u"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nK4bcZUCm2xmLyLhmaoq6Kg6cd0QqZDiSRADNcXSs9cS2qJw70Sf6sYqDV2o8Tpt37mPZ316goNO0QopEohdAx9yjsYQnxLwYcq2zGORbu4dueT+UWcq+m9kW9nSFQUal4zdLA+mS9k728rVaUTBvuHys05fVjFEYqDUGkkCop0vIToURfMR9yR9UPJwb1XwIR2dFhftvEHzztLjAcT/B/Ve+9+cFDKDZwmYHnQcAS5QFLRbh/SMhz008wOFyTentwYY+VoInWbBSlq/56Z4eWO5AvqzRCvPY1Fmo3dWaPq3c+PHggab6kH0gvM7iPGiagQ/w2AKbQ5meu1AaMoQDA==
+ b=jB2B1CgIrgPwMG2FHdYBK0ybE2iYP3mgoUbKcKFLMcHrfOIoJzatPPUeDZnVWj3tV22BoWgBUd4Sxy3M0eEu1Ln54JOwcuF9rN0h2dX6Ne+Fq6zDvxYWe91moxcVfW6hjeV6XeV2qun0l7zPNZ1sar32OqzqqkndO3KDPfd7aY17v5ITNoy67jbOtzuLca95ZWghqXNhXAGuBQmlIcU6xpEvDfnAkRYUTZ+qduVE9I9BXjOBuvwvlnLY3X395qBmPe1VnU+xylq72HttCu8tdNGaJ9bnmmDp+Ubv6AnBY9bmMzyqjoiqAcTW1DzL/BjaeNorNTypsY6R/h2A5bRodg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aLBi8S4YX+rglfHwFQ0n/wU582NcUQt2aOxIsyJa+D4=;
- b=bQRSZ1m7o2TbbQOSRrr40zlKzawY2dGrbF1KTvEvcTEi2A+UYfVv421ric9rRvyOfrmbQsv8sQj9OX6KTL2ehLntX7cUyuv5B/PQf3sUO1xQn3TXyuIvjWVsmreRpygqLHKe4RaJl/CljgbBVfjq82hPdoG7EYf2UHfkBcoW8l7gudRos6RaS9nJGK4NGaIRpbgQqovgaIu53yiguIErGo7DIxZxHzuezTKZTGRKvdUKCW66dF5jH6/Br7u964tCMNV99mQu/aaqiUh9BirnitvmjrJadwTXYPYm2tE9lR+3rMixCtLGSREiPUwam0HtAROJWtWPEeaVNuj/HmPO6A==
+ bh=R6BO5ZobG43EU4zN4VsRVWjyY8z47lz74c7EDUvV/aU=;
+ b=ja0q7vQnPCy0z2W/d+ak8b15fC74+h9rPeK2ZGYnf+tna/eX9lM8Ebri7lQmy/b4Dyi7XUINIMhyfv0M8LelWtgF+Hm/ZsFbX2TAUxe7165SQd/vtiuHyYjr/bM8laTbtM1QDQ2L+omKHLFDmZKLfqXetpawC/a/0bkZMeP/kbFwCRW2Sq7v129yiTaK02MR0kXn6mypSzf1hWpSira2jvoW4OAUToWoZPh9QRYQbeUymdQIvty4zrDL0H3eeIIGYJSLdJg6hdcQkq2/r8uH70V+Kme+F9C8JRRbIrTAUZdrfmiNvWbjv2AOQ0RB76QQIHbYQQOap47EiR+klqozdA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aLBi8S4YX+rglfHwFQ0n/wU582NcUQt2aOxIsyJa+D4=;
- b=cf4tBCv4devoVqSi8CNpKQwoc3xsBvXpMGkyDPMTGcWJjbYWs80ePToPqGVP86aTjexvyFXwd/MALBBDHHdu/jD4NZ6ox+jawk6s3mKOWkO915VX1m/zKGp45jgoNDVky9d4UWjsvho8KOsRznsAxtj+6/hZEgrldkARJMpll1z9nTWUb+YC2Tg5tJHCPgJN3bLvXb+rlAIkQG2/RPVJ/oiR17MBfIUV9qtBpIECfe7vSNGtV32nv8oleejWMtByu+QIYGAe7ilPwTz5eCbMLH1ZvlQzgasG8dnxaTHB1J8m/+zmTsvYAWjoGBmA9tWBunxoJ4riyvtyPD3UnvO8rA==
+ bh=R6BO5ZobG43EU4zN4VsRVWjyY8z47lz74c7EDUvV/aU=;
+ b=P25gQu/uXJxLJjQp66lT8IX549l93+bDnufTVlYh5rBks6KTOQiis68ss5OtOAFarfJrkN9oE+sNnlCJXCPI62/yIdiBOQWXUMRdMWswRZ46AhAChLhc0O3vl6VPgkL6kG/PMGsTZElhVusV0o67usClr2XG/DB6YAaMfsVsUVcvGUEBgeVTPq2WJg1rW5uLiCaCkC9HL7iH7ryanApYCEa0ntx2iPTdykOnexbUCAMr8Wsz4fuLnVW2Qywbi0CRAOTQV0JVz37BRFttqlW7oy+GDBTpD1REC1wUMCkwLlMMzpeX1tmPESQb+MtYT4INIY5Z8hpkT6ni3VcUDOHH/A==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by VI0PR04MB12640.eurprd04.prod.outlook.com (2603:10a6:800:345::11) with
+ by VI1PR04MB7184.eurprd04.prod.outlook.com (2603:10a6:800:125::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 15:12:08 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Tue, 28 Jul
+ 2026 15:17:43 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0270.009; Tue, 28 Jul 2026
- 15:12:07 +0000
-Date: Tue, 28 Jul 2026 10:12:00 -0500
+ 15:17:43 +0000
+Date: Tue, 28 Jul 2026 10:17:36 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
-	imx@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] dmaengine: fsl-edma: Support dynamic
- scatter/gather chaining
-Message-ID: <amjGwBcvweTwkvZu@SMW015318>
-References: <20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com>
- <20260728-fsl-edma-dyn-sg-v7-2-10dffb4167c2@bootlin.com>
- <20260728142110.A103D1F000E9@smtp.kernel.org>
+Cc: haibo.chen@oss.nxp.com, imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH v2 3/3] spi: spi-nxp-fspi: propagate clock reconfig
+ failures in nxp_fspi_select_mem()
+Message-ID: <amjIEO7FSrJqyX9a@SMW015318>
+References: <20260728-fspi-clock-v2-0-dbe786a4a6eb@nxp.com>
+ <20260728-fspi-clock-v2-3-dbe786a4a6eb@nxp.com>
+ <20260728102831.B55621F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260728142110.A103D1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SA9PR13CA0062.namprd13.prod.outlook.com
- (2603:10b6:806:23::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260728102831.B55621F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SN7PR04CA0222.namprd04.prod.outlook.com
+ (2603:10b6:806:127::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -68,167 +66,205 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB12640:EE_
-X-MS-Office365-Filtering-Correlation-Id: 239d6d11-d1f6-42d1-61f7-08deecba9703
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI1PR04MB7184:EE_
+X-MS-Office365-Filtering-Correlation-Id: b89c38ef-b021-442c-4e55-08deecbb5efc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|19092799006|6133799003|11063799006|56012099006|4143699003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|19092799006|6133799003|56012099006|11063799006|4143699003|10067099003|3023799007|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	YhNGxhmzqLijJy3u1Lozhw5iyScNoN7cbgIdLFIWyZo+oIE4Qsy+ClHxSeD8RxKLdW/xYy3rzrg0mwj33v6HB4nRsiJFUVt9Bcc4nvhl4lzOk52zppcQyDziLS4SegNJ5NXpUMm9c7FE1BYzu9LbRSKGvp52EdTRGLH1sZW3cs5+rFNAOvqdhI4eShEqGSM/C9Oh4bLcF+443K1RSJRaRgKL/C+mzPmH0h/M7FjK1Ku4aKZKZPF830+3rteLyOCj5kBesmjUI1JV7k2oyF/KIKSARz9zzdpB4pg1/tD0FxbIbD98YnvtjyXJJmjwZdA0lFOfwh87nrwrCXdqRmhEYaOLM8tN9lWxysJvZp/tCisweGAL3wa07GmsGdwK+HlO4/GMG6xMynxLUw7qa2uvtQy0HkhMUJCRCKvBgmM445ZFuqzbdtX1DaGssk8+GmW6cpQnn3Y8ElztuG0sQ4NBwmZ2VrZrsPirOdRpuhY8TE8zMGTYMXtj81faIO8YoorjUr1sc8UPUQV1CRo1FjqlicsBQTtRwtQb9nUVhNkRqsWc7bN/6gykQ1xgYALjvK+GnaQnu6bCNcJq670JWFvnwmo3Q688Yyx9UaO9fj/LUqg=
+	sxMT1vZQk+jKKfFLLbtAvZyAz5ThQubRBgUAOcWq2rv+tgxrTO4HcfkA3H6BPSjonjgR3aETB0gOyIbn7G7B4okXPsUdZIIWCrC/BSLGp9fe5vhzQKltrSSI3KFQdhDnu8tyjF3NsD80ONj9d7KkvPBa4moiDz4l2M7cbw6WwVoH5+4k8i0cB+gTOp/tCTHDhlozl0z8c71Kn5c+Y9/94hs/s7yWy6L9S58zoHV86Yiv+V/iRqc4ppUxGjdblwyRNt4oNMWdlNpoZPbmZn5bH8ztXzPopfATet0SkSMzo0YQuKSHnC6/cOXbE+1F8qdulMKjMV/u9CgcJbDYilzVpO9dyoZTKV79Uy0B20dmLiWcMyITwHUASq+GGudFzW+XK8juS3d7foeoPzoAJl0G0aCAo9SqloRbki+E2iHyQ3iYSMX5bCB36w7TTqoOsMs4ADTmvex1yQvVhj6zwJSopO2bnRQVUOHVg+ZuaEkG9BXcWE1AtxEP5r5NUKBjhWNxUXDHS/OzxsAmEvknIpCLi7sT7yiyeTSaLvRoXpFhg5FvEJoUdhB8X1Qiep/aCGstm3VN/oOE0bmJfpKUMtBuPcirym5rFvHWwbTGElUaR00=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(19092799006)(6133799003)(11063799006)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(19092799006)(6133799003)(56012099006)(11063799006)(4143699003)(10067099003)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?qNLgs44pRJAkVE1g7ORlLb6bv1rXEs/4LuRsMO/2zN4VbHGTNwHCqTed9A?=
- =?iso-8859-1?Q?scGS0nofy2sSUd30tE0ytLvE4foXUZqzmlIxuilG8BkhtsJxs9mQd22G8g?=
- =?iso-8859-1?Q?843KWC6dD9bFrNRaX4S3/zOOfLiLCdPw9gsnxefsdWUB0LpGtLm1xLQh5a?=
- =?iso-8859-1?Q?pSTtcDogW3P7Q11WahUYnscA+d9ONU2KnSuQ61Of9NLoQb/n7F3lqn6aoJ?=
- =?iso-8859-1?Q?HzWqKmw9J9eCMHn2evnw9wvWrS+6FQlOM9uQT+HE9XbAQgRSgogZxJ7Xg2?=
- =?iso-8859-1?Q?QjKqZhuhWZ5wVPn1CjmVMSsmbm5idywiHrv5/Dg7q9PirKJ89AbRBInSdv?=
- =?iso-8859-1?Q?YJzXBYj0pdxtWLBhJ0yXbgiCOamcD/d3bnGCzcnIb/KUvqg+SgDMNPVwOt?=
- =?iso-8859-1?Q?7fg/F7PL6svC1h5lbi88YGDUtsiUyY/EJThq8ZZCq9nyzkyKZB0GuAcR/e?=
- =?iso-8859-1?Q?aT0UIPQTrIdggeQj5GDGzlbvv1J/ScDfBmsc1WBiipbJoLU89wkUre1GFc?=
- =?iso-8859-1?Q?7tM9FmZ/iprTfTNtzrgM05SR/8ZeDmOFc2A2akdClg2f4fyVkGK7h1q7+F?=
- =?iso-8859-1?Q?HhRP3AYQYHN15UX82BeQFX8m6jle+HpqSIfeBRWJnr+yJSkJfMZMqx/Cef?=
- =?iso-8859-1?Q?vWalvdsUy8SjdOMK888tT1jngtZi5uDvjfL8uLfccNF3FdfY4hKeFR/UNz?=
- =?iso-8859-1?Q?afmqHaQZJ+NJ0WZV57u6xSWK/qk/1KBR2zQTEJB7QyuWGTD22kwjPchFG5?=
- =?iso-8859-1?Q?jsPC3/Cq3+5quMGoQnmrfGBolsHL0JuiFDqC91ksJM1sXH3q9JvfIeViyL?=
- =?iso-8859-1?Q?N3Dn9ygKsB8v4WQD1L3vBgfu/MamipXaOBvhIXF9iQ915tmyZknz8YL4ZW?=
- =?iso-8859-1?Q?RL4kQW6uRX8cyAmYbPW7kaVlAWXUnx1VTjsh2nWO3PmWIdAELp6DaTSjST?=
- =?iso-8859-1?Q?gb1JXDvMA4wiZ1wzjuTXv0gVVlGQeDA67U01SMeUt3x0BnxVi/2L7phZab?=
- =?iso-8859-1?Q?y8FZabV7yvxMRN9Q26IGtsmro7RtkJugOhUDCuMAbddah+h0/CuHbXDQKk?=
- =?iso-8859-1?Q?hPUggSspNpGDoTe+4YcRKezaOEELnVEkB7DJsrn0K5JYkyiuLC/c3zV5jp?=
- =?iso-8859-1?Q?KJi+pGGAXEYgUS2flEHc1pbvU7xeVVNrbOHJAShFz5yc96YmKOpv6h+Wla?=
- =?iso-8859-1?Q?tFnvEfhoBBRcKgJlqw8W2ZvwRl11N1E0YG2zCqL4T+xRIYPPbCHRlXRSsW?=
- =?iso-8859-1?Q?QieeMoJlXv5w6+xGpDITR0bBQW4/zcO5k9VdVID1p/ikLANPhukLBzi/Ty?=
- =?iso-8859-1?Q?Njbu7bELgEULog1xQYoeBPLPJ4kJyeHodmW06B2FBMJmj2t6TiKg2wCNhz?=
- =?iso-8859-1?Q?b7OxNiMk8tw3Z3XDmJbS9wX4wIirbEoM9J46DX5m2mUdm/UC8Zu9Q2tQa8?=
- =?iso-8859-1?Q?1+BZtdYPq0genCcRiiyumI00t4t4U0jHjc0Dc6pAWuCcB3b5oWlDqobDBt?=
- =?iso-8859-1?Q?DQ5tyIO/LFmj44WxWjRe4erGLywvYxEO12Y7AXaM/A68Gjivn5x+jNP9ED?=
- =?iso-8859-1?Q?X2S5NLbqsr4DEba4SMhphXGQx99l/evq5CD/jgEQYaqA/7j7IMu42OO3dD?=
- =?iso-8859-1?Q?Vq/DIq4G7tNP9ygQls7w4psVjeP59MxMZGg0DOqCUXsFq1f9SCDGEY5lzx?=
- =?iso-8859-1?Q?NiF2w9vCl+xJuiT98FUrP2SyUm8v0V5rvARqJXuy9AHBmfuP2OKu2m8QzU?=
- =?iso-8859-1?Q?QcE3xtZ7rETatO6BNgBu2UKujifzmyNL/MxAB9lg6MOfJ4Tg8BZ86iKr1R?=
- =?iso-8859-1?Q?qo1qVEodOTEyVdkzpGfs/Tf4WNQdS4P1e4ScvduM+dTIjlsnqNbA?=
+	=?iso-8859-1?Q?rz8bZFvT5lAINqrwCWXFTR4oKUxdF/dt6nN5wfw7NVTcbPfrzpBhNLA0YJ?=
+ =?iso-8859-1?Q?RwA6OpH8HU6wj4zvVNejjnYM9E6xzD6gQaMAkxpk+GqFsOSXI9al3+Sg2j?=
+ =?iso-8859-1?Q?Du+c6rKHUSPoCmiqSaC9NMipk9yFYQ6bKEDyLhoFgCELkqn2Gr91RJIlcT?=
+ =?iso-8859-1?Q?rVC9+DnzdDk1gXCcqV6GgyF1E57gXrnVaSHcgZb+A2BfAkKjlK7jMO4v1M?=
+ =?iso-8859-1?Q?I0VVL+TtJEuKBeUDBaQEmmjDc/5FDXedCmVmInFGYuV5/geussEz/Qrunx?=
+ =?iso-8859-1?Q?LtvjIlh+fJO+1vllWDhtgSsPAa5SGjTQNrCreXRjsLR6aCXGuMA/+WZ/4S?=
+ =?iso-8859-1?Q?GzI308o+/lruJyebLo+Bc4StARSNqy6gQ6U78edXWVt4zB5ZDSz/FPmCie?=
+ =?iso-8859-1?Q?tz1fwpSot133elsOmttu4b+EgndFaCfSMSg7zXL0nCqvQJk61rWDVwqrun?=
+ =?iso-8859-1?Q?RBz3Dd4MBguuafOoYoOe7yppkTGT04gZpT3+odfQtGueX19jLhtbLffZ/e?=
+ =?iso-8859-1?Q?5cI/jFO/NNW8CdMey9s/XhdebsVuKsaWZ5xyh/V8Ldseo5r9O4ltBFxO87?=
+ =?iso-8859-1?Q?PouVs0PsRRzmjOFNpcqxfBYQJCoSsIQygOJpbMWIFId4aIKPsZA3IXuoKo?=
+ =?iso-8859-1?Q?bVP1FLwHbDWX8UHoPfueKiRsIbf8ygr+X13z3k/sQbVmnKYjumwbT3CUNn?=
+ =?iso-8859-1?Q?YNMmxILOd9Eej/4oK2s0FDs0Iij98fJ4nlTdkLlXPFbJ4Hl1d4sRFQFzEM?=
+ =?iso-8859-1?Q?ZtDuvrUsfRKdC0EtioSkAVJDHwkKvFhnEh6L3rvTTzwGNYOmrK/4x3DIXj?=
+ =?iso-8859-1?Q?OJ+wyZGYoJC4pwCoKJ66e6glj5ZbFKBeFdkNT35ja1h8c1RyZX7LvLuLfJ?=
+ =?iso-8859-1?Q?q12bSFHeUnvyUCNulxns15Tru84uWoqphvce8FhvQDPJ+2QR/J1T97Hhns?=
+ =?iso-8859-1?Q?LlisbtrwmE5BSxhvStD82PolwsORBpjefqJod2c1uPcdHuMf2fh68nlSPs?=
+ =?iso-8859-1?Q?zj+2gZzqPHXqkpKYmbUvZpiCCR6qubrHtg1jrDFO6eW0OrwzeA3KWVxKH+?=
+ =?iso-8859-1?Q?Lu05a042DRIFEn0iquaXaFV9p5wYQPEXzHV1olCJyaUf4D0pjZkyeaQVgc?=
+ =?iso-8859-1?Q?zqWxoRoLFkZ2sxyXfQCb80neiKASJMWXDPlFtEGdXSudAp3eUMapr0/yY4?=
+ =?iso-8859-1?Q?vAhhxY6PgZoLzvil9q6u4ki9AqUpLFO+lr0RIsCPjuXLnuwj9JXdt+hvZ5?=
+ =?iso-8859-1?Q?c9H5+VM8IY4G7wKI7JZKbpiGb5uC8Jk2E04MfW8Y2XSj0HcHr8IfC5QkzH?=
+ =?iso-8859-1?Q?aGEhvK3L9+PCx0RN/6Hyv17Ydr8xsccpelw0zISHf/1QmaCv9ZgtalUKyD?=
+ =?iso-8859-1?Q?xY6A27zp2ot/h2WOgyiYngoVna9gLF2WYl3ObGK16CPhUuqxltgTA1JTMT?=
+ =?iso-8859-1?Q?s7EFLWbOt3yXIFydOZu759J7/eQNaLIVy9B/InaV7bUaTAN3wdrLWVnH42?=
+ =?iso-8859-1?Q?iDsiHuO13bpW73bNHuO1TAb4ArDZ5in8uqukEwRxPFy+hXAOaAKxyPmVxR?=
+ =?iso-8859-1?Q?cQAkP4W78/OFVTg3ss3f9x3HMhJiiaJDjBEYCs3UE2fuDzsyEhHhMvu3L4?=
+ =?iso-8859-1?Q?5tLQ0Lgfj3oQ3ywvwJUgui82q4xjSYqT+j5I1zfifiCdNQOzYZyp/jaIac?=
+ =?iso-8859-1?Q?gKZ12G6BOTY0baTqnheRfNLBOhTe596NBO6uCsyaBITMSq2f0P/iH6ovy0?=
+ =?iso-8859-1?Q?2J2QNB9pPM3qF38aZLRSUrWL47rhPiGI4dEirKfBnRPV3asmHo3MQXEzqL?=
+ =?iso-8859-1?Q?nX0l9kYjuXS+Xo0YdRXwU5YAcvklERs2piUcGIaiKl0flt3sW2gC?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 239d6d11-d1f6-42d1-61f7-08deecba9703
+X-MS-Exchange-CrossTenant-Network-Message-Id: b89c38ef-b021-442c-4e55-08deecbb5efc
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:12:07.8147
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:17:43.2411
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cdT2lQa8XKD/IpSJRHS9ANP8oVtV70VAor5xmTwyiH3s2q+VKNmYhXtB47K4XnR2TPD5fpvat9f9nfCudJorqJyJrxfXChSN1tASB+dMBc/wyrN7yHz/IYSyb6et1fBA
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB12640
+X-MS-Exchange-CrossTenant-UserPrincipalName: yY0p8WbPcKVHR2IZmbz1Dgdd5W/+AoDqkrWtEzkhvcEPXDXTzWlPSxJ0d7IgLjt7XreShpp4rd2aJXVwQNvftCGNxuRknluJlXbcKVMsC/eAX//3ixkOsfpaH/EJrX1V
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB7184
 
-On Tue, Jul 28, 2026 at 02:21:10PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] A completed dynamically linked scatter/gather descriptor will be erroneously re-issued for execution if its interrupt is delayed, leading to double-execution and memory corruption.
-> - [High] Descriptors can be erroneously marked as completed without execution if channel linking (E_LINK) is configured.
+On Tue, Jul 28, 2026 at 10:28:31AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>
+> New issues:
+> - [Critical] Incomplete state rollback on `nxp_fspi_select_mem()` failure leaves cached flags out of sync and the controller permanently stuck in Stop mode.
+> - [High] Error handling in `nxp_fspi_select_mem()` leaves hardware clocks disabled while PM runtime remains active, leading to deferred synchronous external aborts and unbalanced clock disables.
+>
+> Pre-existing issues:
+> - [High] Missing `pm_runtime_put_noidle()` when `pm_runtime_get_sync()` fails, leaking the PM runtime usage counter.
+> - [High] The return value of `nxp_fspi_default_setup()` is completely ignored, masking initialization and clock setup failures.
+> - [High] The timeout error from polling the controller status is completely discarded in `nxp_fspi_exec_op()`.
 > --
+>
+> --- Patch [3]: [PATCH v2 3/3] spi: spi-nxp-fspi: propagate clock reconfig failures in nxp_fspi_select_mem() ---
+> commit dbeb737d74251745ba44e92f371ba23d08069151
+> Author: Haibo Chen <haibo.chen@nxp.com>
+>
+> spi: spi-nxp-fspi: propagate clock reconfig failures in nxp_fspi_select_mem()
+>
+> This commit modifies nxp_fspi_select_mem() to return an error code if
+> clk_set_rate() or clock enabling fails. It also updates nxp_fspi_exec_op()
+> to check this return value and bail out to prevent accessing registers while
+> the clock is gated off.
+>
+> > diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+> > --- a/drivers/spi/spi-nxp-fspi.c
+> > +++ b/drivers/spi/spi-nxp-fspi.c
+> > @@ -922,12 +922,19 @@ static void nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
+> >  	nxp_fspi_clk_disable_unprep(f);
+> >
+> >  	ret = clk_set_rate(f->clk, rate);
+> > -	if (ret)
+> > -		return;
+> > +	if (ret) {
+> > +		/*
+> > +		 * clk_set_rate() failed with the clocks already disabled.
+> > +		 * Re-enable them so the enable count matches what the caller's
+> > +		 * pm_runtime_put() (runtime_suspend) will drop.
+> > +		 */
+> > +		nxp_fspi_clk_prep_enable(f);
+> > +		return ret;
+>
+> [Severity: Critical]
+> If clk_set_rate() fails and we return early here, does this leave the
+> controller permanently in stop mode?
+>
+> Earlier in nxp_fspi_select_mem(), the controller is placed into stop mode:
+>
+>     reg = fspi_readl(f, f->iobase + FSPI_MCR0);
+>     fspi_writel(f, reg | FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
+>
+> Since the early return bypasses the exit from stop mode at the end of the
+> function, the controller remains stopped. Additionally, f->flags might have
+> been updated with FSPI_DTR_MODE. If a subsequent SPI operation matches the
+> fast-path check at the beginning of nxp_fspi_select_mem(), it would bypass
+> reconfiguration and attempt to execute commands on a stopped controller,
+> resulting in a hang.
 
-please double check above two issues
+Is it true?
 
 Frank
-
 >
-> --- Patch [2]: [PATCH v7 2/2] dmaengine: fsl-edma: Support dynamic scatter/gather chaining ---
-> commit b8502bf27e9fa2ac70190840a26c1603f5640651
-> Author: Benoît Monin <benoit.monin@bootlin.com>
->
-> dmaengine: fsl-edma: Support dynamic scatter/gather chaining
->
-> Implement dynamic linking of scatter/gather transfers to enable
-> chaining multiple DMA descriptors without stopping the channel.
->
-> > diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-> > --- a/drivers/dma/fsl-edma-common.c
-> > +++ b/drivers/dma/fsl-edma-common.c
 > [ ... ]
-> > @@ -55,10 +55,29 @@ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
-> >  	}
+>
+> > @@ -1132,7 +1141,16 @@ static int nxp_fspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+> >  				   FSPI_STS0_ARB_IDLE, 1, POLL_TOUT, true);
+> >  	WARN_ON(err);
 > >
-> >  	if (!fsl_chan->edesc->iscyclic) {
-> > -		list_del(&fsl_chan->edesc->vdesc.node);
-> > -		vchan_cookie_complete(&fsl_chan->edesc->vdesc);
-> > +		u8 link_sg_id = FIELD_GET(EDMA_TCD_CSR_LINKCH, edma_read_tcdreg(fsl_chan, csr));
+> > -	nxp_fspi_select_mem(f, mem->spi, op);
+> > +	err = nxp_fspi_select_mem(f, mem->spi, op);
 >
 > [Severity: High]
-> Will this misinterpret a hardware channel link ID as a software SG ID if
-> channel linking (EDMA_TCD_CSR_E_LINK) is configured?
+> This is a pre-existing issue, but does assigning to err here discard the
+> timeout error from fspi_readl_poll_tout() immediately above?
 >
-> If a transfer uses EDMA_TCD_CSR_E_LINK to link to a non-zero channel, the
-> handler appears to unconditionally extract link_sg_id from the CSR. This
-> channel number would be read as the link_sg_id, causing id_match to be false
-> for all pending descriptors (which have link_sg_id == 0).
+> If fspi_readl_poll_tout() times out, it returns -ETIMEDOUT to err, which is
+> flagged by WARN_ON(), but the function does not abort. Instead, err is
+> immediately overwritten by nxp_fspi_select_mem(), causing subsequent
+> operations to execute on a busy controller.
 >
-> Does this cause the handler to iterate through the entire desc_issued list,
-> prematurely deleting and completing every queued descriptor without them ever
-> executing?
->
-> > +		struct virt_dma_desc *vdesc, *tmp;
-> > +
-> > +		list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_issued, node) {
-> > +			struct fsl_edma_desc *fsl_desc = to_fsl_edma_desc(vdesc);
-> > +			bool id_match = (link_sg_id == fsl_desc->link_sg_id);
-> > +
-> > +			if (id_match && fsl_desc != fsl_chan->edesc)
-> > +				break;
+> > +	if (err) {
+> > +		/*
+> > +		 * On failure the FlexSPI clock may be left disabled, so avoid
+> > +		 * any further register access (which would trigger a synchronous
+> > +		 * external abort) and bail out.
+> > +		 */
+> > +		pm_runtime_put_autosuspend(f->dev);
 >
 > [Severity: High]
-> If multiple dynamically linked descriptors finish before the interrupt handler
-> processes them (e.g., due to system load or interrupt latency), could a
-> completed descriptor be stranded in the queue?
+> If nxp_fspi_select_mem() fails and leaves the clocks physically disabled, does
+> calling pm_runtime_put_autosuspend() leave the PM runtime state out of sync?
 >
-> When the hardware stops on a later descriptor and sets the DONE flag, this
-> loop will break early when it matches the link_sg_id of the finished
-> descriptor, assuming it is still running because fsl_desc != fsl_chan->edesc.
+> pm_runtime_put_autosuspend() maintains the RPM_ACTIVE state until the
+> autosuspend timer expires. If a subsequent SPI operation begins before the
+> timer fires, pm_runtime_get_sync() will succeed without re-enabling the
+> clocks. nxp_fspi_exec_op() will then attempt register access while the clock
+> is gated off, triggering a synchronous external abort.
 >
-> > +
-> > +			list_del(&vdesc->node);
-> > +			vchan_cookie_complete(vdesc);
-> > +
-> > +			if (id_match)
-> > +				break;
-> > +		}
-> > +
-> >  		fsl_chan->edesc = NULL;
-> > -		fsl_chan->status = DMA_COMPLETE;
-> > +
-> > +		if (!(fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_SPLIT_REG) ||
-> > +		    (edma_readl_chreg(fsl_chan, ch_csr) & EDMA_V3_CH_CSR_DONE)) {
-> > +			fsl_chan->status = DMA_COMPLETE;
-> > +		}
-> >  	} else {
-> >  		vchan_cyclic_callback(&fsl_chan->edesc->vdesc);
-> >  	}
-> [ ... ]
-> > @@ -931,14 +950,87 @@ void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan)
-> >  	if (!vdesc)
-> >  		return;
-> >  	fsl_chan->edesc = to_fsl_edma_desc(vdesc);
-> > -	fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
-> > -	fsl_edma_enable_request(fsl_chan);
-> > -	fsl_chan->status = DMA_IN_PROGRESS;
-> > +
-> > +	if (fsl_chan->status != DMA_IN_PROGRESS) {
-> > +		fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
-> > +		fsl_edma_enable_request(fsl_chan);
-> > +		fsl_chan->status = DMA_IN_PROGRESS;
+> If no operation occurs, the timer fires and runtime_suspend will disable
+> the already-gated clocks, potentially causing an enable count underflow.
+>
+> > +		return err;
 > > +	}
-> > +}
+> >
+> >  	nxp_fspi_prepare_lut(f, op);
+>
+> [ ... ]
+>
+> For pre-existing issues not directly modified by this patch, there are a few
+> other observations in this file:
 >
 > [Severity: High]
-> Because the channel status was updated to DMA_COMPLETE in
-> fsl_edma_tx_chan_handler() above, will fsl_edma_xfer_desc() then fetch the
-> stranded descriptor from the queue and erroneously reprogram it to the
-> hardware?
+> This is a pre-existing issue, but does nxp_fspi_exec_op() leak the PM
+> runtime usage counter if pm_runtime_get_sync() fails?
 >
-> This seems like it would cause the hardware to re-execute a DMA transfer that
-> has already finished, potentially leading to data corruption for I/O devices
-> (such as duplicated writes or dropped reads).
+> drivers/spi/spi-nxp-fspi.c:nxp_fspi_exec_op() {
+>     ...
+>     err = pm_runtime_get_sync(f->dev);
+>     if (err < 0) {
+>         dev_err(f->dev, "Failed to enable clock %d\n", __LINE__);
+>         return err;
+>     }
+>     ...
+> }
+>
+> If pm_runtime_get_sync() returns a negative error code, the usage counter
+> remains incremented. Returning immediately without calling
+> pm_runtime_put_noidle() permanently prevents the device from runtime
+> suspending again.
+>
+> [Severity: High]
+> This is a pre-existing issue, but are initialization and clock setup failures
+> being masked during probe and resume?
+>
+> drivers/spi/spi-nxp-fspi.c:nxp_fspi_probe() {
+>     ...
+>     nxp_fspi_default_setup(f);
+>     ...
+> }
+>
+> The return value of nxp_fspi_default_setup() is completely ignored in both
+> nxp_fspi_probe() and nxp_fspi_runtime_resume(). If clk_set_rate() or clock
+> enabling fails inside setup, the driver proceeds as if the hardware is
+> fully initialized, which could lead to silent failures.
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260728-fspi-clock-v2-0-dbe786a4a6eb@nxp.com?part=3
