@@ -1,125 +1,123 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C7F2DB78B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 01:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C50D246BCD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 02:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785202439; cv=none; b=HnZp2J0B81H2sGuEUnFhyV/e2dcjPJIO4wL8nx9pZ+aDph8NuIG1Of+mgNwbvp3i+FBe/0iTOhiH9uRS2x2xc4hS+Z5Hz9BswXsSoRUKeiuCnaIS22xjn+mf5t4a2W0PrEDMPM5dpcz0l4Y7cWV6FBQKV88hLQxBhYTytjPmdHA=
+	t=1785205182; cv=none; b=oXvjqh8CKqRGMfJvh0JAtAx1FQT63Y/rWO8gc581v9E0ywFT//jg4odKxQJlsdAoMxBSZ5jtuXbCop+vDb8YeUWhne21zfJE47VULPZaHiB09Ihc8DfMIdjLFj13ymzZ85/A3GG2kKYcg3w7x42fVbxEmDsMMwHCe8BVVvVlz5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785202439; c=relaxed/simple;
-	bh=AQ9TWGh1fqb6Ql7Fb1eNWMc0KI4p/ZClc4/hGwZ0Yfs=;
+	s=arc-20240116; t=1785205182; c=relaxed/simple;
+	bh=SqPMjaZjQxPhXKxMaC/bSfCPOqdvBNF/nkhnYbm/wbk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UGDLIeDNcnLUAj9BeSgM2MBWwoztlxQnUQaFrj1Th4qjlKEN9PX9iA+twoJjtcuiSmDQM89ikpbk7Feq36DzrZOrcE+CpWZAOwu2OwvVaOza1uaQpS4kIhIA+HiwxVqckjhHUjny8K+wj+aWu40DHWo/Sylm1CRm8CULEOFd0jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=arvVJfOz; arc=none smtp.client-ip=95.215.58.176
+	 In-Reply-To:Content-Type; b=dZasiLpc/KtgAjzjWcjqH3gzAbQ9p7NpOjx99FoyVABqeddtjVwIt5r47IClM7Xcrvp8oYTkCcJ9gld3XHHjzfkZxwW18dbKIG72ddtSrps52kH4ldStUY0XLFcYRHJGDJtt3Tp9Z9sjgTlOjpjp8TVFG4lymy5IiIie2ylh8Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Lb23ISHv; arc=none smtp.client-ip=95.215.58.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="arvVJfOz"
-Message-ID: <82dea78e-7930-4380-bf57-4123f48d86b6@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Lb23ISHv"
+Message-ID: <be7399e2-06ac-4e6f-bea7-8c51738a1e4d@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785202435;
+	t=1785205177;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=WD94w5wcckP1xGyG4NSw/YaiLcRaOIaQYBLlhFeTXrE=;
-	b=arvVJfOzm9TtxYfTKVg4H6rHsZc7tsBknSgUdi9FxQAmMizDMTKkPV/03UN0k8blqf1lI9
-	A9xejJVfs2vueMC7GV5NSvlcUMGFBpPoTMjQLtEol+jt7pDONH3TobKtYxyuFNh0gaGZ5X
-	U9ZJO6bPkSCr3Gn8/oJ44AACko5cig4=
-Date: Tue, 28 Jul 2026 09:33:43 +0800
+	bh=N/fwzA7fSyb/Nifu3Y4hk0eZnK5LbJCKzCKIOs7RjH0=;
+	b=Lb23ISHvLFfeiRdQzbf/ICoG1IaeV6TTnu90XAuLS7Kpv73wJgwS/mpdP3tLSYL86sEZaR
+	kS5Myh3fpnHCV2kgmaoBYOv8zEgc/VHRhr7AReBZtFklFukPqnL8aUQGKTWxzBh8v4TwKp
+	Bt3om28rsnxTLYO2M1yQa1RIZfVTZPM=
+Date: Tue, 28 Jul 2026 10:19:22 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v2 2/2] selftests/bpf: Verify rejection of
- sleepable tracing prog
-To: sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 1/2] arm64: ftrace: enable single ftrace_ops for direct
+ calls
+To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@goodmis.org>,
+ Masami Hiramatsu <mhiramat@kernel.org>
 Cc: bpf@vger.kernel.org
-References: <20260725132624.78373-1-leon.hwang@linux.dev>
- <20260725132624.78373-3-leon.hwang@linux.dev>
- <20260725133309.B66B31F00A3A@smtp.kernel.org>
+References: <20260727142844.21212-1-leon.hwang@linux.dev>
+ <20260727142844.21212-2-leon.hwang@linux.dev>
+ <20260727145217.72B9C1F000E9@smtp.kernel.org>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260725133309.B66B31F00A3A@smtp.kernel.org>
+In-Reply-To: <20260727145217.72B9C1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
-On 25/7/26 21:33, sashiko-bot@kernel.org wrote:
+On 27/7/26 22:52, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The test contains dead code after the expected failure of `fentry_sleepable__load()`. If this code executes on an unfixed kernel, it intentionally triggers a kernel BUG and crashes the test environment.
+> 
+> Pre-existing issues:
+> - [High] Missing RCU read barrier (`rcu_dereference()`) when accessing `direct_functions`.
 > --
 > 
-> --- Patch [2]: [PATCH bpf-next v2 2/2] selftests/bpf: Verify rejection of sleepable tracing prog ---
-> commit 44292a230f0467503b72b0ecb8c6c25244de310b
+> --- Patch [1]: [PATCH 1/2] arm64: ftrace: enable single ftrace_ops for direct calls ---
+> commit 738274783fa707248af104af5e45da296f7e4d84
 > Author: Leon Hwang <leon.hwang@linux.dev>
 > 
-> selftests/bpf: Verify rejection of sleepable tracing prog
+> arm64: ftrace: enable single ftrace_ops for direct calls
 > 
-> This commit adds a selftest to verify that a sleepable tracing program
-> cannot attach to a '__x64_sys' prefix program target. The test attempts
-> to load the program and expects the load to fail, avoiding a kernel BUG
-> on unpatched kernels.
+> The BPF tracing multi link updates several direct-call sites through one
+> ftrace_ops. This commit selects HAVE_SINGLE_FTRACE_DIRECT_OPS on arm64 when
+> DYNAMIC_FTRACE_WITH_DIRECT_CALLS is enabled. It also generalizes the
+> unreachable-trampoline comment.
 > 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c b/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
->> --- a/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
->> +++ b/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
-> [ ... ]
->> @@ -576,6 +577,60 @@ static void test_func_replace_progmap(void)
-> [ ... ]
->> +static void test_sleepable_fentry_to_xdp(void)
->> +{
-> [ ... ]
->> +	err = fentry_sleepable__load(skel);
->> +	ASSERT_ERR(err, "fentry_sleepable__load");
->> +	if (err)
->> +		goto out;
->> +
->> +	skel->links.fentry_xdp = bpf_program__attach_trace(skel->progs.fentry_xdp);
->> +	if (!ASSERT_OK_PTR(skel->links.fentry_xdp, "bpf_program__attach_trace"))
->> +		goto out;
->> +
->> +	skel_xdp->links.__x64_sys_nop = bpf_program__attach_xdp(skel_xdp->progs.__x64_sys_nop,
->> +								ifindex);
->> +	if (!ASSERT_OK_PTR(skel_xdp->links.__x64_sys_nop, "bpf_program__attach_xdp"))
->> +		goto out;
->> +
->> +	err = system("ping -q -c 1 -W 1 127.0.0.1 > /dev/null");
->> +	ASSERT_OK(err, "ping");
->> +	ASSERT_ERR(skel->bss->retval, "retval");
->> +
->> +out:
->> +	fentry_sleepable__destroy(skel);
->> +	xdp_dummy__destroy(skel_xdp);
->> +}
+>> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+>> index 39eba438dad43..94fa6e72c2867 100644
+>> --- a/arch/arm64/Kconfig
+>> +++ b/arch/arm64/Kconfig
+>> @@ -188,6 +188,8 @@ config ARM64
+>>  		    CLANG_SUPPORTS_DYNAMIC_FTRACE_WITH_ARGS)
+>>  	select HAVE_DYNAMIC_FTRACE_WITH_DIRECT_CALLS \
+>>  		if DYNAMIC_FTRACE_WITH_ARGS
+>> +	select HAVE_SINGLE_FTRACE_DIRECT_OPS \
+>> +		if DYNAMIC_FTRACE_WITH_DIRECT_CALLS
 > 
-> [Severity: Medium]
-> Since the test expects fentry_sleepable__load() to fail (meaning err < 0),
-> won't the "if (err) goto out;" statement cause the test to immediately branch
-> to out?
-
-Correct.
-
-When err, no need to create the links.
-
+> [Severity: High]
+> This is a pre-existing issue, but by enabling HAVE_SINGLE_FTRACE_DIRECT_OPS
+> on arm64, does this expose the architecture to a missing RCU read barrier
+> in the ftrace code?
 > 
-> If this code behaves as expected, it appears all the subsequent logic for
-> bpf_program__attach_trace(), bpf_program__attach_xdp(), and the ping command
-> becomes unreachable dead code.
+> When HAVE_SINGLE_FTRACE_DIRECT_OPS is selected, call_direct_funcs() switches
+> from using READ_ONCE(ops->direct_call) to using ftrace_find_rec_direct():
 > 
-> Conversely, if the test runs on an unpatched kernel where the load
-> unexpectedly succeeds (err == 0), the test would fall through to the attach
-> and ping logic. Could executing this sequence on an unpatched kernel trigger
-> the exact kernel BUG mentioned in the commit message, potentially crashing
-> the test environment instead of gracefully failing the test?
+> kernel/trace/ftrace.c:call_direct_funcs() {
+> ...
+> #ifdef CONFIG_HAVE_SINGLE_FTRACE_DIRECT_OPS
+> 	addr = ftrace_find_rec_direct(ip);
+> #else
+> ...
+> }
+> 
+> Looking at ftrace_find_rec_direct(), it accesses the __rcu pointer
+> direct_functions directly without an rcu_dereference():
+> 
+> kernel/trace/ftrace.c:ftrace_find_rec_direct() {
+> 	struct ftrace_func_entry *entry;
+> 
+> 	entry = __ftrace_lookup_ip(direct_functions, ip);
+> ...
+> }
+> 
+> Without the READ_ONCE() provided by rcu_dereference(), the compiler might
+> reload the pointer between computing the hash key and accessing the bucket
+> array inside __ftrace_lookup_ip().
+> 
+> If a concurrent writer substitutes a new hash table with a different size
+> between these reloads, could the computed key exceed the new bucket array
+> bounds and lead to an out-of-bounds dereference?
 > 
 
-Yes. But why do users run latest selftests on unpatched kernel? I guess
-they are planning to patch the kernel.
+
+Hi Steve, Masami,
+
+Could you take a look at this issue? The issue looks legitimate.
 
 Thanks,
 Leon
