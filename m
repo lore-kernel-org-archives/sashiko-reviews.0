@@ -1,125 +1,126 @@
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5522690EC
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 01:01:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C7F2DB78B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 01:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785200465; cv=none; b=P/sHJwP4SuYfYCs3mCYV+QPv40Zy5s11ZFX2YLPE1RY1sEZdoYL8WMbGI3GB7VNx0vB/esq+b12QE2FWF/UI3ocSifGI2z8qFXc5EoaHFPwsrutbItz0I/enjOFpnLSUyM6UI7AC4wWXCZle4WCrsCjv4OOeLBLX6iiWsfgC4ZU=
+	t=1785202439; cv=none; b=HnZp2J0B81H2sGuEUnFhyV/e2dcjPJIO4wL8nx9pZ+aDph8NuIG1Of+mgNwbvp3i+FBe/0iTOhiH9uRS2x2xc4hS+Z5Hz9BswXsSoRUKeiuCnaIS22xjn+mf5t4a2W0PrEDMPM5dpcz0l4Y7cWV6FBQKV88hLQxBhYTytjPmdHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785200465; c=relaxed/simple;
-	bh=PimpcPnu/HCiRsRLYqpWDsqSbgXlOYJZFEqNFHLBIfY=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Tq7DZ/IkjJ/DGAihaUWEu+gq8Dat3B79iwszb93gcZZ5uxthOue2du152ann7DETh7XgFkRwTFJQL2H7MI7iCgiAekp9fB8lJSIeKpdI2AX6EgNtY1ijwBr6S1MDC2RYqPN9FY+vHKRCs5YRqA/SV8f9+B1adYc3gqjE6U5QnBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HoucnuNM; arc=none smtp.client-ip=209.85.215.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1785202439; c=relaxed/simple;
+	bh=AQ9TWGh1fqb6Ql7Fb1eNWMc0KI4p/ZClc4/hGwZ0Yfs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UGDLIeDNcnLUAj9BeSgM2MBWwoztlxQnUQaFrj1Th4qjlKEN9PX9iA+twoJjtcuiSmDQM89ikpbk7Feq36DzrZOrcE+CpWZAOwu2OwvVaOza1uaQpS4kIhIA+HiwxVqckjhHUjny8K+wj+aWu40DHWo/Sylm1CRm8CULEOFd0jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=arvVJfOz; arc=none smtp.client-ip=95.215.58.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HoucnuNM"
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cb5cc1e139bso2104198a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 18:01:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785200463; x=1785805263; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3MQ2ppBxGdOC/Mg9PkZYye2SrWSAeiiRLHe45A5wceI=;
-        b=HoucnuNMEBnzps9B908wdNbFeo9zk+qJoXUG2b84J0dFxdi0lP/kpZltLgPPP6YvGK
-         AjmEMymZEyXJH3snBA2pZ//TJpHVmhgyrLZKseXLVgfaEWPkBMVlCNSIyJbHObd7H5sZ
-         Ou8FTpZ4BaPt3lV3Bpx1AIXwT6A+6rCaPOWZNULXIFzDT0pnlidDNmVrb1KIzskAM0NQ
-         rOtczp46vN6yw0aI/xgX2X1YeSlHFLTxRqBMEU7bmJ6axPnstgMhb3zYy+e1BH15vWoB
-         7ULqmasK3hqwo4suSlROwNPSGMp3608QtjNQGPqmPKwBhR447+vYThe7V/P1ewaqKxP7
-         +rBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785200463; x=1785805263;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3MQ2ppBxGdOC/Mg9PkZYye2SrWSAeiiRLHe45A5wceI=;
-        b=ljLhr71jh46w4Q3ChJqBky1PtTCl6R3cyY56PbHOfCDioSXuNXQtXRqLMKA77H5WxA
-         7sdHmQ+ELyqXQcvd4im+NJYBcvaxE71B1vf5qrXSPdYJpOxpw/p2OV/2RGFs7zL/OyvS
-         ItFOeiiAFmnSYfBKXfeZOxMnNcP9UeLe553KFMnR5zqfh3b6x0gB+5umyY2n/asc6A88
-         +qc75TyJRQB9WRwU5K0qrZx8k7zn68OByM1DCgVOrPdjBmS07qynmwXRsEMXeXwHL/pz
-         cRlO2Jac8sRU+AUKRtiMatO7V9xIBM7WgK32c1r/FgHUpcv0Pl8YqiiZNZ6wUpR37hX5
-         OmpQ==
-X-Gm-Message-State: AOJu0YxJPb1jPElkJbSATSDyKXsJKw0txg3vxKUcTKRbJTD55As+bio7
-	/VId6s24NQIS5m8MY7eTHB2ibY7qvI7eIrkZ9D0uPrHHlIBSdzTecU3h7VjFJT2h/5w2wtNQGyy
-	Q9WFJwK9FNCEqzd6HUKxu6aDjauzs/lyOAK33s5CsmrCYmkX4WiogV0SrIAydUlpOQpFfNmA1gQ
-	z2OYADiORRTaDJfU/oQBYcqUfGqusRrtxdmw9MEerzc2jG9g71
-X-Received: from plnl15.prod.google.com ([2002:a17:902:fd8f:b0:2cc:2c68:b71b])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ec8a:b0:2ca:bf68:2a54
- with SMTP id d9443c01a7336-2d015d238a7mr1997475ad.22.1785200463091; Mon, 27
- Jul 2026 18:01:03 -0700 (PDT)
-Date: Mon, 27 Jul 2026 18:01:02 -0700
-In-Reply-To: <20260728005847.6EF2F1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="arvVJfOz"
+Message-ID: <82dea78e-7930-4380-bf57-4123f48d86b6@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785202435;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WD94w5wcckP1xGyG4NSw/YaiLcRaOIaQYBLlhFeTXrE=;
+	b=arvVJfOzm9TtxYfTKVg4H6rHsZc7tsBknSgUdi9FxQAmMizDMTKkPV/03UN0k8blqf1lI9
+	A9xejJVfs2vueMC7GV5NSvlcUMGFBpPoTMjQLtEol+jt7pDONH3TobKtYxyuFNh0gaGZ5X
+	U9ZJO6bPkSCr3Gn8/oJ44AACko5cig4=
+Date: Tue, 28 Jul 2026 09:33:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260728004351.887076-1-seanjc@google.com> <20260728004351.887076-2-seanjc@google.com>
- <20260728005847.6EF2F1F000E9@smtp.kernel.org>
-Message-ID: <amf_TkUA-etGt_CX@google.com>
-Subject: Re: [PATCH v4 1/6] KVM: x86: Extract VMX's unhandleable emulation
- check to common x86
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next v2 2/2] selftests/bpf: Verify rejection of
+ sleepable tracing prog
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: bpf@vger.kernel.org
+References: <20260725132624.78373-1-leon.hwang@linux.dev>
+ <20260725132624.78373-3-leon.hwang@linux.dev>
+ <20260725133309.B66B31F00A3A@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260725133309.B66B31F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Jul 28, 2026, sashiko-bot@kernel.org wrote:
+On 25/7/26 21:33, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > diff --git a/arch/x86/kvm/vmx/main.c b/arch/x86/kvm/vmx/main.c
-> > index 04f986e3d439a..924a629c21e2f 100644
-> > --- a/arch/x86/kvm/vmx/main.c
-> > +++ b/arch/x86/kvm/vmx/main.c
+> - [Medium] The test contains dead code after the expected failure of `fentry_sleepable__load()`. If this code executes on an unfixed kernel, it intentionally triggers a kernel BUG and crashes the test environment.
+> --
+> 
+> --- Patch [2]: [PATCH bpf-next v2 2/2] selftests/bpf: Verify rejection of sleepable tracing prog ---
+> commit 44292a230f0467503b72b0ecb8c6c25244de310b
+> Author: Leon Hwang <leon.hwang@linux.dev>
+> 
+> selftests/bpf: Verify rejection of sleepable tracing prog
+> 
+> This commit adds a selftest to verify that a sleepable tracing program
+> cannot attach to a '__x64_sys' prefix program target. The test attempts
+> to load the program and expects the load to fail, avoiding a kernel BUG
+> on unpatched kernels.
+> 
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c b/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
+>> --- a/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
+>> +++ b/tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
 > [ ... ]
-> > @@ -939,11 +949,12 @@ struct kvm_x86_ops vt_x86_ops __initdata = {
-> >  	.flush_tlb_gva = vt_op(flush_tlb_gva),
-> >  	.flush_tlb_guest = vt_op(flush_tlb_guest),
-> >  
-> > -	.vcpu_pre_run = vt_op(vcpu_pre_run),
-> > +	.vcpu_pre_run = vt_op_tdx_only(vcpu_pre_run),
-> 
-> [Severity: High]
-> Does this conditionally assigned NULL pointer cause a module load warning on
-> systems without CONFIG_KVM_INTEL_TDX enabled?
-> 
-> Since vcpu_pre_run is declared as a mandatory hook (KVM_X86_OP(vcpu_pre_run))
-> in arch/x86/include/asm/kvm-x86-ops.h, setting it to NULL when TDX is
-> disabled will trigger a WARN in kvm_ops_update().
-> 
+>> @@ -576,6 +577,60 @@ static void test_func_replace_progmap(void)
 > [ ... ]
+>> +static void test_sleepable_fentry_to_xdp(void)
+>> +{
+> [ ... ]
+>> +	err = fentry_sleepable__load(skel);
+>> +	ASSERT_ERR(err, "fentry_sleepable__load");
+>> +	if (err)
+>> +		goto out;
+>> +
+>> +	skel->links.fentry_xdp = bpf_program__attach_trace(skel->progs.fentry_xdp);
+>> +	if (!ASSERT_OK_PTR(skel->links.fentry_xdp, "bpf_program__attach_trace"))
+>> +		goto out;
+>> +
+>> +	skel_xdp->links.__x64_sys_nop = bpf_program__attach_xdp(skel_xdp->progs.__x64_sys_nop,
+>> +								ifindex);
+>> +	if (!ASSERT_OK_PTR(skel_xdp->links.__x64_sys_nop, "bpf_program__attach_xdp"))
+>> +		goto out;
+>> +
+>> +	err = system("ping -q -c 1 -W 1 127.0.0.1 > /dev/null");
+>> +	ASSERT_OK(err, "ping");
+>> +	ASSERT_ERR(skel->bss->retval, "retval");
+>> +
+>> +out:
+>> +	fentry_sleepable__destroy(skel);
+>> +	xdp_dummy__destroy(skel_xdp);
+>> +}
 > 
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index 960ff7fcd8dba..8c3efc1be1fa4 100644
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> > @@ -8867,6 +8867,11 @@ static int kvm_x86_vcpu_pre_run(struct kvm_vcpu *vcpu)
-> >  	    !kvm_apic_init_sipi_allowed(vcpu))
-> >  		return -EINVAL;
-> >  
-> > +	if (kvm_x86_call(unhandleable_emulation_required)(vcpu)) {
-> > +		kvm_prepare_emulation_failure_exit(vcpu);
-> > +		return 0;
-> > +	}
-> > +
-> >  	return kvm_x86_call(vcpu_pre_run)(vcpu);
-> 
-> [Severity: High]
-> Could this break KVM_RUN by returning an uninitialized register value when TDX
-> is disabled?
-> 
-> When kvm_x86_vcpu_pre_run() calls this static call with a NULL target, the
-> static call machinery will patch the call site with a NOP or RET. The CPU will
-> execute the NOP and fall through, leaving the return value in the RAX register
-> unmodified.
-> 
-> Since the preceding call to unhandleable_emulation_required() is a boolean
-> function that typically returns false (setting AL=0), the uninitialized RAX
-> will evaluate as <= 0. This would cause kvm_arch_vcpu_ioctl_run() to
-> immediately exit to userspace instead of entering the guest.
+> [Severity: Medium]
+> Since the test expects fentry_sleepable__load() to fail (meaning err < 0),
+> won't the "if (err) goto out;" statement cause the test to immediately branch
+> to out?
 
-Gah, that's what I get for splitting the diff just before posting.  I'll fix
-both of these in v2, and make sure to test patch 1 in isolation.
+Correct.
+
+When err, no need to create the links.
+
+> 
+> If this code behaves as expected, it appears all the subsequent logic for
+> bpf_program__attach_trace(), bpf_program__attach_xdp(), and the ping command
+> becomes unreachable dead code.
+> 
+> Conversely, if the test runs on an unpatched kernel where the load
+> unexpectedly succeeds (err == 0), the test would fall through to the attach
+> and ping logic. Could executing this sequence on an unpatched kernel trigger
+> the exact kernel BUG mentioned in the commit message, potentially crashing
+> the test environment instead of gracefully failing the test?
+> 
+
+Yes. But why do users run latest selftests on unpatched kernel? I guess
+they are planning to patch the kernel.
+
+Thanks,
+Leon
+
