@@ -1,107 +1,227 @@
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E23444E64C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 22:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC26284B4F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 23:02:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785279582; cv=none; b=YkHOjnMadRCs7LF1BGcDhfVrxRZi1G/nXlaFqDco5XaZ0QHTF1otOQXo9XglAhgDxprqA+NbmXylTX66SWopF7xPTVy4AdgxiVUNzi9Aj78+R3IqkO8bKq0rKiDfeO07hSBqk86RvowPyvaA4lpaeUaFh8QW7tbU8Iupvo2jdd0=
+	t=1785279759; cv=none; b=Xf7vGVQnqUrIN+ual8duTzapuB1XSBB+gKIMpg4Svt1+QqGDvCzEZTQeW4W22+A9Y+ecwdqJGWuJnj4uug8X3Xunc0I7LZW33defx+8d6jCcLIM7D8oVxE1SkvjQNZu19uNb6euSK7UKpa4uV0a1RKLQDi7vvuQQdwg4m/AH6mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785279582; c=relaxed/simple;
-	bh=WdXcIMczcDRNI6LiAVIZUBxe+k0lENaof1A6LN4ltQ4=;
+	s=arc-20240116; t=1785279759; c=relaxed/simple;
+	bh=xMnrzk1LQYBwnBKbjf9OW8PBEYsOhsuT5RKQZqm7/HY=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=SBrUSHfxS7pzD79dQCscFw1V9Pmhd9BuF6loioZTZcpQFX23E0KrMEgs5+0oVRSRlCQhO+HeEhAJQjPjMeJHt5fUcNK7XTM0VK/H1IrDupHAv/qwIcOSRQcEw24Or37y8dINeTTwZSWuIH/h6pP868od6dyCBg3NQGtPaAJcslk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gj6KQ+m8; arc=none smtp.client-ip=209.85.210.199
+	 To:Cc:Content-Type; b=shMBosk9aXQPLE4I1QE+WE/HSJWpgg+/YCbTVpok98gRaJk0wveI5Bh8XeCwDd99cY1J3JOHPRJYuNUtB/BclfQse7jyonKWy77J3w05KtmT6J/j9ecOYS1LEYCqY3nqI6XGuJ2CzWkiAON1OS3gv8ob6R0VSU/rGXrY6WXKoTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eQDtGI/U; arc=none smtp.client-ip=209.85.215.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gj6KQ+m8"
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-84885a4fcabso330807b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 15:59:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eQDtGI/U"
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cb4bd11ddf8so298740a12.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 16:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785279581; x=1785884381; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=thdOOm/K4pddHQDmKddowM1+LABgvbQslWGfyXrJceQ=;
-        b=gj6KQ+m8Ks6wto9AyvD7YeVUaIyRXUjQZ06M6bERVNNEQA49C7+mUQDSTOgLgUUD6p
-         HBF7UNNXaArzLuqHIYcSnB7lK+n+vgn6aO083w0N2gLq1MXaiH0kFXFNC9Mi9zv84lIy
-         UfF2RNuyyLUZ7vRGM9M4/2wJqomq3CGwSh80Gd5akbmPmrWU/7hcnro7m0GgyL3dWZhd
-         P8QKx98TAkJb9eYMmbCBM4EPq5fO6XT9fcIzpkZ6/OYLt8wWqbGhQSKYk4+1wqrxbSwu
-         GKQM6a+S4ZgBr6nq7r+HeEY1iT4KyptfACKBXy5D+3kmFAEPMKtlLMd49wz09/F8YTK+
-         BfKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785279581; x=1785884381;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1785279757; x=1785884557; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=thdOOm/K4pddHQDmKddowM1+LABgvbQslWGfyXrJceQ=;
-        b=TeieLn8/oOy23z4hEUHHfENf14B7mQshh0LQddst9qa9O0nARlvAfDEdIfRFiwfyMQ
-         VRXsBzyDLPMZPastEF7tSXzgKKhk6/4XHE8yBZSqsXYvKa71ip1qmCCLP7x7TkH3Umoa
-         zvbPdlW3XtmjJ48KKCw6L2rl/H7uPqygww8qFAT+hnzU9nqLUWJEc3Bxi/ps6xQpdcc3
-         +zebUU7eIczh7cLU43ZzecNtLICn2b8a9xZ7R+HIFQ0JzrielGRyZBHrHrguY6CgT48s
-         2ecRxexRNdZwgGUZ9TYmM6QBhk4hGI2ddZEhLHamwCyC6iM34MRo+iPZoqr1BCy91s7z
-         aJ6Q==
-X-Gm-Message-State: AOJu0Yzd6o7BacttTzzUietT9wfapoNNgF8Qc8woJER3pG5a7dmIBV3x
-	CsPJLqEK86M5IB/2mRzJeUYi2emr5Dd+13sF3P7TsuVIs8hflpJuo2S2Ww1P4uWbn/fkReg35eq
-	ifOfV9Q9+FFrMey3/65Fdt9NM2vqaHs10bH/7AkKo8w3y13ZTJhYunYMDjxXL1RL7T1/3juRSjP
-	zNCu7Ow5AbkiYHNmmZRBUWkZXHUzR1TOgEPOUu3+07RSiWDr9D
-X-Received: from pgbl4.prod.google.com ([2002:a63:5704:0:b0:c99:5634:7551])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:ac89:b0:848:2eac:bfb2
- with SMTP id d2e1a72fcca58-84e93107604mr4560309b3a.13.1785279580732; Tue, 28
- Jul 2026 15:59:40 -0700 (PDT)
-Date: Tue, 28 Jul 2026 15:59:40 -0700
-In-Reply-To: <20260728152156.A48831F000E9@smtp.kernel.org>
+        bh=kPvY+6bN8WcKGck+zbxkmEYx8w80GVrHMYTrnyPGblw=;
+        b=eQDtGI/U36xPSmObi5QCAcxOB3GoCIeq64LadmaBHZzFtfOPGTeunVME/u9VNgyYqA
+         cICI3BknuZfKxsyxj7Esxmn0jUtmG9joO0D1Uk5NQTruBuJYSPwWgZCH2K1nFeLQTuY5
+         oQluiauqaRyIjGAMbm6INkcaCNSqJLIOXg5X6j/RvTuM3jzoSzVWJC6j2uhVnBR7YwSB
+         F+vawt8NvQnU2n7/0qQKou2aYzhdeUztJK8qxCvCk3VPlNIXdP5Tv+nOkLbGrREPQWCq
+         tjdlNUB5XIe/ivfsTw78vq6HbDTXp1XyMRscZwjaclrt/ovDfxUmqYOjRqTuefE/PN83
+         j3vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785279757; x=1785884557;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kPvY+6bN8WcKGck+zbxkmEYx8w80GVrHMYTrnyPGblw=;
+        b=f/E417Iwp1X0vSp+Lsmqj8k3/6zHpNUST669ck4YRUVOA1BIPgqi+B1WZdMSsmmcCO
+         krsZCUPuwwPwc8EJLAOrwZA4m47N77cDse7cMe5KS0b6x8Dj+RagMFBJEK4RAjrVWus3
+         7EfqF79vybXB9KaPXFQdiWbdEKG/6Zg6zNOS8QTrlGxvS7KzkFCxQBx+je+Fu3V7ta3W
+         GItDaHY1YEuKEUsEAaAs/4AEBxFu2rBFmnqHPqHJCvH5wb/S+mgSEMaMDzrH38fOUUMD
+         ccmleHjBDqXhJgdD2AzBjGalP61f22htcaJ8dQkFMDb4VzsFXljJ7eS8NB100CkL0/4d
+         pulQ==
+X-Gm-Message-State: AOJu0YykPEj/ddpxESIdbghRNIEnyYnjQE1TYKp1g4W42jkP//5ZN3Pj
+	hGoy4mT1HWWvolTk0qA5iI03yZsjj2qd0maXzRU4nInpEoeEcjq2dPIhrEzy3Y6ateHcxkdUbuI
+	tfyj9PbANWf5r5u7T6k1rJSGbLUCHkcf+2iuo24EDjjhxM6XdJA/ydd3NXMTdtfUVx/oT2w3BDN
+	ZBHrB/7/jAOQ34XGTQof1kqN3q1SGnoWJ+wjqhzcE+jUz5u6M/
+X-Received: from pgbcf14.prod.google.com ([2002:a05:6a02:84e:b0:c99:aff5:7092])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:44c8:b0:3c0:fab7:bee0
+ with SMTP id adf61e73a8af0-3c8ba627b22mr5336104637.62.1785279756967; Tue, 28
+ Jul 2026 16:02:36 -0700 (PDT)
+Date: Tue, 28 Jul 2026 16:02:36 -0700
+In-Reply-To: <20260728151120.EC0931F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260728144954.355376-1-dwmw2@infradead.org> <20260728144954.355376-25-dwmw2@infradead.org>
- <20260728152156.A48831F000E9@smtp.kernel.org>
-Message-ID: <amk0XODzenVy3D1g@google.com>
-Subject: Re: [PATCH v7 24/36] KVM: x86: Use ktime_get_snapshot_id() for master clock
+References: <20260728144954.355376-1-dwmw2@infradead.org> <20260728144954.355376-8-dwmw2@infradead.org>
+ <20260728151120.EC0931F000E9@smtp.kernel.org>
+Message-ID: <amk1DH-Z1opxVDJS@google.com>
+Subject: Re: [PATCH v7 07/36] KVM: x86: Restructure get_kvmclock()
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: David Woodhouse <dwmw2@infradead.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
 
 On Tue, Jul 28, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issu=
-e(s) to consider:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Removal of `get_cpu()` reintroduces a race condition between `rdtsc` and `cpu_tsc_khz`, and triggers a kernel warning for preemptible `__this_cpu_read`.
+> --
+> 
+> --- Patch [7]: [PATCH v7 07/36] KVM: x86: Restructure get_kvmclock() ---
+> commit c5c131ac2510f7641714a694b1cf0192a9da9749
+> Author: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> KVM: x86: Restructure get_kvmclock()
+> 
+> This commit wraps the use_master_clock block in an ifdef for CONFIG_X86_64
+> to resolve 32-bit build issues with unused variables and host_tsc_clocksource.
+> It also refactors the master-clock success path to use continue, allowing
+> the fallback computation to become the common tail.
+> 
 > > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index 57494812cc839..45a768fd7cb35 100644
+> > index ee115dc6df6e1..d68d00cdbea73 100644
 > > --- a/arch/x86/kvm/x86.c
 > > +++ b/arch/x86/kvm/x86.c
->=20
 > [ ... ]
->=20
-> > @@ -1580,14 +1581,39 @@ static int do_realtime(struct timespec64 *ts, u=
-64 *tsc_timestamp)
->=20
-> [Severity: Low]
-> The commit message mentions replacing do_kvmclock_base, do_monotonic,=20
-> do_realtime, and vgettsc. Were these functions meant to be removed in thi=
-s=20
-> patch? Leaving them defined as static helper functions without any caller=
-s=20
-> will break builds compiled with -Werror=3Dunused-function.
+> > @@ -1636,34 +1636,38 @@ static unsigned long get_cpu_tsc_khz(void)
+> >  static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+> >  {
+> >  	struct kvm_arch *ka = &kvm->arch;
+> > -	struct pvclock_vcpu_time_info hv_clock;
+> >  	unsigned int seq;
+> >  
+> >  	do {
+> >  		seq = read_seqcount_begin(&ka->pvclock_sc);
+> >  
+> >  		data->flags = 0;
+> > -		if (ka->use_master_clock) {
+> >  #ifdef CONFIG_X86_64
+> > +		if (ka->use_master_clock) {
+> > +			struct pvclock_vcpu_time_info hv_clock;
+> >  			struct timespec64 ts;
+> >  
+> >  			if (kvm_get_walltime_and_clockread(&ts, &data->host_tsc)) {
+> >  				data->realtime = ts.tv_nsec + NSEC_PER_SEC * ts.tv_sec;
+> > -				data->flags |= KVM_CLOCK_REALTIME | KVM_CLOCK_HOST_TSC;
+> > -			} else
+> > -#endif
+> > -			data->host_tsc = rdtsc();
+> > -
+> > -			data->flags |= KVM_CLOCK_TSC_STABLE;
+> > -			hv_clock.tsc_timestamp = ka->master_cycle_now;
+> > -			hv_clock.system_time = ka->master_kernel_ns + ka->kvmclock_offset;
+> > -			kvm_get_time_scale(NSEC_PER_SEC, get_cpu_tsc_khz() * 1000LL,
+> > -					   &hv_clock.tsc_shift,
+> > -					   &hv_clock.tsc_to_system_mul);
+> > +				data->flags |= KVM_CLOCK_REALTIME | KVM_CLOCK_HOST_TSC | KVM_CLOCK_TSC_STABLE;
+> > +
+> > +				hv_clock.tsc_timestamp = ka->master_cycle_now;
+> > +				hv_clock.system_time = ka->master_kernel_ns + ka->kvmclock_offset;
+> > +				kvm_get_time_scale(NSEC_PER_SEC, get_cpu_tsc_khz() * 1000LL,
+> > +						   &hv_clock.tsc_shift,
+> > +						   &hv_clock.tsc_to_system_mul);
+> 
+> [Severity: High]
+> Does this code trigger a preemptible __this_cpu_read() warning?
 
-Sashiko's "low" is my "high" :-)
+Yes.  And my suggestion to isolate the change was "bad", but also "good".  "Bad"
+in the sense that we can't simply drop the pinning, "good" in that it forced me
+to dig into why the code is the way it is.
 
-arch/x86/kvm/x86.c:1575:12: error: =E2=80=98do_realtime=E2=80=99 defined bu=
-t not used [-Werror=3Dunused-function]
- 1575 | static int do_realtime(struct timespec64 *ts, u64 *tsc_timestamp)
-      |            ^~~~~~~~~~~
-arch/x86/kvm/x86.c:1556:12: error: =E2=80=98do_monotonic=E2=80=99 defined b=
-ut not used [-Werror=3Dunused-function]
- 1556 | static int do_monotonic(s64 *t, u64 *tsc_timestamp)
-      |            ^~~~~~~~~~~~
-arch/x86/kvm/x86.c:1533:12: error: =E2=80=98do_kvmclock_base=E2=80=99 defin=
-ed but not used [-Werror=3Dunused-function]
- 1533 | static int do_kvmclock_base(s64 *t, u64 *tsc_timestamp)
-      |            ^~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+Happily, I ended up with this, which segues very well into "KVM: x86: Fix KVM clock
+precision in get_kvmclock() with TSC scaling".
+
+---
+From: Sean Christopherson <seanjc@google.com>
+Date: Tue, 28 Jul 2026 14:57:58 -0700
+Subject: [PATCH] KVM: x86: Drop unnecessary CPU pinning when computing/getting
+ kvmclock
+
+When computing the current kvmclock value, don't pin the task to the
+current CPU for the entire duration of the master clock path, as the
+CPU pinning was never about ensuring rdtsc() and cpu_tsc_khz would
+agree.  As pointed out by David, ka->use_master_clock can only be true
+when the host clocksource is TSC based, which in turn requires a stable,
+constant and synchronised TSC across all CPUs.
+
+The CPU pinning was added in commit e2c2206a1899 ("KVM: x86: Fix potential
+preemption when get the current kvmclock timestamp") purely in response to
+a CONFIG_DEBUG_PREEMPT=y bug due.  Despite what the comment would suggest,
+including rdtsc() in the {get,put}_cpu() section was opportunistic.  In
+fact, Paolo even said exactly that when suggesting that KVM guarantee the
+rdtsc() would execute on the same CPU[*].
+
+ : Also, rdtsc() should really be on the same CPU as __this_cpu_read.  We
+ : know it's not really really necessary because the master clock is
+ : active, but since we need a get_cpu/put_cpu pair, better be clean.
+
+Nothing has changed in the last ~9 years, i.e. the rdtsc() still *should*
+be on the same CPU, but super strictly speaking, all will be fine if the
+task is migrated between grabbing the frequency and doing rdtsc().
+Dropping the CPU pinning will allow dropping the rdtsc() entirely without
+having to resort to a large "rewrite get_kvmclock()" patch.
+
+Opportunistically add a comment to explain why KVM needs to snapshot the
+frequency, because that _is_ a hard requirement to avoid reintroducing the
+bug fixed by commit e70b57a6ce4e ("KVM: X86: Fix softlockup when get the
+current kvmclock")
+
+Link: https://lore.kernel.org/all/ae8de642-8f14-a70a-1fab-57e2c4093cd5@redhat.com [*]
+
+Suggested-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+---
+ arch/x86/kvm/x86.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index d5a05acf20ad..f64726e08f00 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -1638,13 +1638,18 @@ static void __get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+ {
+ 	struct kvm_arch *ka = &kvm->arch;
+ 	struct pvclock_vcpu_time_info hv_clock;
++	u64 tsc_hz;
+ 
+-	/* both __this_cpu_read() and rdtsc() should be on the same cpu */
++	/*
++	 * Snapshot and validate the TSC frequency as kvmclock_cpu_down_prep()
++	 * zeros the per-CPU value when a CPU is going offline.
++	 */
+ 	get_cpu();
++	tsc_hz = (u64)get_cpu_tsc_khz() * HZ_PER_KHZ;
++	put_cpu();
+ 
+ 	data->flags = 0;
+-	if (ka->use_master_clock &&
+-	    (static_cpu_has(X86_FEATURE_CONSTANT_TSC) || __this_cpu_read(cpu_tsc_khz))) {
++	if (ka->use_master_clock && tsc_hz) {
+ #ifdef CONFIG_X86_64
+ 		struct timespec64 ts;
+ 
+@@ -1658,15 +1663,13 @@ static void __get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+ 		data->flags |= KVM_CLOCK_TSC_STABLE;
+ 		hv_clock.tsc_timestamp = ka->master_cycle_now;
+ 		hv_clock.system_time = ka->master_kernel_ns + ka->kvmclock_offset;
+-		kvm_get_time_scale(NSEC_PER_SEC, get_cpu_tsc_khz() * 1000LL,
++		kvm_get_time_scale(NSEC_PER_SEC,  tsc_hz,
+ 				   &hv_clock.tsc_shift,
+ 				   &hv_clock.tsc_to_system_mul);
+ 		data->clock = __pvclock_read_cycles(&hv_clock, data->host_tsc);
+ 	} else {
+ 		data->clock = get_kvmclock_base_ns() + ka->kvmclock_offset;
+ 	}
+-
+-	put_cpu();
+ }
+ 
+ static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+
+base-commit: c9ed17959337edfc904f59e7ed1f569918f260ca
+--
