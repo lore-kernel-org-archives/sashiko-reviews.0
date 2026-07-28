@@ -1,87 +1,165 @@
-Received: from akranes.kaiser.cx (akranes.kaiser.cx [152.53.16.207])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93973D6CC6;
-	Tue, 28 Jul 2026 08:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=152.53.16.207
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785226981; cv=none; b=tfJB854/eejbrp/G+quTU1vnG7rfjiwAxBKMmuyrCNafiQBfKyPZHg+0avPw59ckCWfmBcMqA+ZHuKNctYxIyMBPavkxhIH4mE5zDZnFdt8RS01Ynv1/QuPLe4G8XI9+KZpIUFYzClGuAFV6KpDKk8SCIt5/aBadnD8u/Ube/5Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785226981; c=relaxed/simple;
-	bh=cZMHdLFb3zBcPfF2egyYyUkiIkSscJ+bKGQoAeQzUQM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hq1Eog2TQRhuxyP7ZyN9eLphbGdRkj9LoaXRohX5UKULzBtdDeI0i/j0JX98h56ykIUKwmWtrWj1EqRRokNeULxZHhSeKiC5WVC2YWE4fBGkvnqbqcizFgbA9LI7ugCtOKRaQPQz/X3QBQsTWREfjCgIYNmQvodcvMPXzOqb1Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kaiser.cx; spf=pass smtp.mailfrom=kaiser.cx; arc=none smtp.client-ip=152.53.16.207
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kaiser.cx
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kaiser.cx
-Received: from ipservice-092-209-184-216.092.209.pools.vodafone-ip.de ([92.209.184.216] helo=nb282.user.codasip.com)
-	by akranes.kaiser.cx with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <martin@kaiser.cx>)
-	id 1wod5U-00000001A80-3EU6;
-	Tue, 28 Jul 2026 10:22:56 +0200
-Date: Tue, 28 Jul 2026 10:22:56 +0200
-From: Martin Kaiser <martin@kaiser.cx>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH] libbpf: don't preserve ownership during install
-Message-ID: <amhm4G33dMpLJx/k@nb282.user.codasip.com>
-References: <20260728071516.2706695-1-martin@kaiser.cx>
- <20260728072519.118D11F000E9@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592A41B8F8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 09:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785231232; cv=pass; b=f95JpNJA15VjOUX9CUQo0yJSYZ7PUuFaUe7d55k1F/IRTGA4v9H4rYCE8Xr36kVOSRbhYFoFhMSktvFDCoG/ekh1tqbmhPeL03wkA437p+fl5vXE3Xq2WX1Tomhe9sj3SbWJmSQb0jdaIPdPgauwtrHSFB1ISYL9KgqiLhsM2Ic=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785231232; c=relaxed/simple;
+	bh=3nPu7GA4VDAdbYK1fhB91miWBo4gyx0aNbjSVvZ4pSY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IyBzNhvBP8PGWaENHbkP4c3h0PgEwbhiq4/f8lVhJ2vdJypfnL2LgdJutzXaLkXPHXdmIFDG6jCSz7vaTYTwBzT/TjbiN1co2EHlgIhf/oB0FQJ2DJk5IX3pjOPVC/EyYe+jtpWwM6Kc2jIS0G5UKh3Kf03zU6jxuQlCKUn0X4c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=V2QdBcAm; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=RXoEyNXb; arc=pass smtp.client-ip=81.169.146.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="V2QdBcAm";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="RXoEyNXb"
+ARC-Seal: i=1; a=rsa-sha256; t=1785231190; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=J9yLpjJKMsdVvhhr7XyrC7su+IAQiACv5u9Yh+ESK7KyCwEjzJlGqPfo0OXBQMmJsL
+    Xan6U3CVoxDTE6OG10yPgSN66fLG0Vafwf5twNzuZ6eRc5tOwFizMaOEmErxgGWRcSBh
+    N7d7/Hw+8lXu+5yfXEdAyLLAVQaNln4fjbp4P4CW+VmoC+As2eXlLaoD+K5cPAk2sSqq
+    RRVA9m67m6L5rVXA5usCZCBdUbWlCUVU7zuzyD3fgzxBpoJU2nAxbcRtqaRKBYb5mxRx
+    ScXknySRpRobFD9rGZU25b6ZKZ/0gSv47lSJbAi+F83rR2J2+hrJ+A4ZreLHGJGHBN8M
+    ugGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1785231190;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=Q2CAZeSMQU2bF5QQ8Hvs0h4+csE+728wrITaolRe0nE=;
+    b=odd+NzaA7mKxyByrITTt/WPG5vs5C2LlretZIX3ZPoQf96zyGOnNGlx9uqvEIoKLYL
+    o2tPbZjIgg8WD4yk6Us+FJx12ny3VNrhhwJbp3Ptb0+hsRAyX8doZ5gvDnHJKtZhIo8G
+    9rtB9+7RiEEq1jMyeIhcaWE6uDLy83nS60KSerTH0pP1BG9DFKnU7D9gcbD4VB7TiMMI
+    F4r/htGE6ZHkO6+1XdkQhmS7sOeNITSaxdUfTGeFT/HXvhD96VM/DFITvrNBgyJJZ1f9
+    iih/C/MprGCeeb+wVRQPxc0IcQCfenx/l0UaF6VcVby41SYwy31gKSbWMGKiGzl2jO4i
+    lZkA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1785231190;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=Q2CAZeSMQU2bF5QQ8Hvs0h4+csE+728wrITaolRe0nE=;
+    b=V2QdBcAm19ntY2VD09LGo3iI42cw3LIdJH9Plovim9PqkmnwfG/2Yb4q7rzDnXiN3/
+    A06VCSaR3Knm8K/DmnOc52frqfU9YiZ8vyf/vVHi4lE+N+jteyZYTVKS6VaeQXFbj59M
+    SFPVKSIiXMMbzKVh99y8JjApcEEJRnHzrc6dr++/tPh7I+Yw491yu3v7gzHcAUi19xtf
+    IM1r+eTrQNEFrZCTaZIYpNm5CaAJAY//5mSw3sS0UTma3toE+Ofs2K2vN0iLlXab4ZQx
+    X8o7mHYPLh2FbKDNpTB0nqkuUybsLSSesKfH80onrmbFETfE5WGulglKQcYvEiJKutGN
+    SuBw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1785231190;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=Q2CAZeSMQU2bF5QQ8Hvs0h4+csE+728wrITaolRe0nE=;
+    b=RXoEyNXbI5beJXxpQwnYtIlpmmov+2z0SwKmJuO7hu+we1cKl+BMtMHvN1khnhLK5A
+    vIKdiY6fhNnSX5HB/0BQ==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
+Received: from [192.168.20.231]
+    by smtp.strato.de (RZmta 55.5.6 SBL|AUTH)
+    with ESMTPSA id K5281926S9XAIpy
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 28 Jul 2026 11:33:10 +0200 (CEST)
+Message-ID: <6b4b69b1-ae54-4a20-b33a-cd1dea622445@hartkopp.net>
+Date: Tue, 28 Jul 2026 11:33:05 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260728072519.118D11F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] can: isotp: check register_netdevice_notifier() error
+ in module init
+To: sashiko-reviews@lists.linux.dev, Minhong He <heminhong@kylinos.cn>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20260728031038.76524-1-heminhong@kylinos.cn>
+ <20260728032011.CF7241F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20260728032011.CF7241F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Thus wrote sashiko-bot@kernel.org (sashiko-bot@kernel.org):
+Hello Minhong He,
 
+thanks for your improvement - but sashiko-bot is right too.
+
+Currently isotp.c is the only CAN module that misses the error handling 
+and the rule of thumb to expose the userspace visibility as a last step.
+
+bcm.c and raw.c are already correct in this matter.
+
+Please send a V2 which also references the bcm.c/raw.c init functions:
+
+"Align isotp_module_init() with the reordering already done for raw.c 
+(commit …) and bcm.c (commit …)."
+
+Best regards,
+Oliver
+
+On 28.07.26 05:20, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The use of the GNU-specific `cp --preserve` extension breaks `make install` on platforms with BSD or BusyBox `cp` implementations (e.g., macOS, FreeBSD, Alpine).
+> - [High] Registering the CAN protocol before completing all fallible initialization steps creates a race window leading to a Use-After-Free crash if initialization fails.
 > --
+> 
+> --- Patch [1]: [PATCH net] can: isotp: check register_netdevice_notifier() error in module init ---
+> commit 5f2f7a58360e9a2c18b5d6a9a724f468f79227d1
+> Author: Minhong He <heminhong@kylinos.cn>
+> 
+> can: isotp: check register_netdevice_notifier() error in module init
+> 
+> This commit adds a check for the return value of register_netdevice_notifier()
+> in the isotp module initialization. If the notifier registration fails, it
+> now unregisters the CAN protocol and returns the error.
+> 
+>> diff --git a/net/can/isotp.c b/net/can/isotp.c
+>> index 54becaf6898f1..65e890cafd7a9 100644
+>> --- a/net/can/isotp.c
+>> +++ b/net/can/isotp.c
+>> @@ -1908,12 +1908,18 @@ static __init int isotp_module_init(void)
+>>   	pr_info("can: isotp protocol (max_pdu_size %d)\n", max_pdu_size);
+>>   
+>>   	err = can_proto_register(&isotp_can_proto);
+>> -	if (err < 0)
+>> +	if (err < 0) {
+>>   		pr_err("can: registration of isotp protocol failed %pe\n", ERR_PTR(err));
+>> -	else
+>> -		register_netdevice_notifier(&canisotp_notifier);
+>> +		return err;
+>> +	}
+>>   
+>> -	return err;
+>> +	err = register_netdevice_notifier(&canisotp_notifier);
+>> +	if (err) {
+>> +		can_proto_unregister(&isotp_can_proto);
+>> +		return err;
+>> +	}
+> 
+> [Severity: High]
+> Does this error path introduce a use-after-free risk if userspace creates a
+> socket before the module initialization completes?
+> 
+> If can_proto_register() succeeds, the protocol is immediately exposed to
+> userspace. If a concurrent thread creates an ISOTP socket before
+> register_netdevice_notifier() fails, the socket will hold pointers to the
+> module's protocol operations.
+> 
+> When the module initialization aborts and returns an error, the kernel will
+> free the module memory. While can_proto_unregister() removes the protocol
+> from the registry, it does not revoke already-created sockets. As a result,
+> any subsequent operations on the existing socket will dereference freed
+> module memory.
+> 
+> Would it be safer to move the fallible register_netdevice_notifier() before
+> can_proto_register() to avoid exposing the protocol before initialization
+> is guaranteed to succeed?
+> 
 
-> --- Patch [1]: [PATCH] libbpf: don't preserve ownership during install ---
-> commit 20b6f948388a1067581300a57d47fc33d1950c11
-> Author: Martin Kaiser <martin@kaiser.cx>
-
-> libbpf: don't preserve ownership during install
-
-> This commit modifies the libbpf install_lib target in the Makefile to
-> prevent leaking the source tree owner's UID into the root filesystem. It
-> replaces the cp -p flag with the --preserve=mode,timestamps flag to only
-> preserve specific file attributes during installation.
-
-> > diff --git a/tools/lib/bpf/Makefile b/tools/lib/bpf/Makefile
-> > --- a/tools/lib/bpf/Makefile
-> > +++ b/tools/lib/bpf/Makefile
-> > @@ -231,7 +231,7 @@ endef
-> >  install_lib: all_cmd
-> >  	$(call QUIET_INSTALL, $(LIB_TARGET)) \
-> >  		$(call do_install_mkdir,$(libdir_SQ)); \
-> > -		cp -fpR $(LIB_FILE) $(DESTDIR)$(libdir_SQ)
-> > +		cp -fR --preserve=mode,timestamps $(LIB_FILE) $(DESTDIR)$(libdir_SQ)
-
-> [Severity: Medium]
-> Will this break the installation process on platforms that do not use GNU
-> coreutils?
-
-> The --preserve argument is a GNU-specific extension. It appears this might
-> cause the make install target to fail with an unrecognized option error on
-> systems relying on BSD or BusyBox implementations of cp, such as macOS,
-> FreeBSD, or Alpine Linux.
-
-
-commit 1375152bb02a ("tools: lib: thermal: don't preserve owner in install")
-makes a similar change for tools/lib/thermal/Makefile.
-
-I'd assume that it's reasonable to require coreutils for kernel compilation.
-
-AFAICS, kernel builds on Alpine linux require the alpine-sdk package which
-contains coreutils.
-
-Thanks,
-Martin
