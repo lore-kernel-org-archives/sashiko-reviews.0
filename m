@@ -1,66 +1,66 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1453FC5AA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 10:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C130641D625
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 10:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785232895; cv=none; b=FnXRealgc9a221YyY8SsKvSIbJwYjPg5voYFJGd/UwrCiJZEDvutBO5QHpE3umfaJutNHfBwk/uWtMaJqV+UJ4WrFZ26W5XiyKmt/mOjin9XHMYtLdSgd0iruD4URkOl8VRsW1Ec2nMYOe2hWeTfEcjN3EtBOw1oFQMAR/DUIxU=
+	t=1785233166; cv=none; b=GXty1t2vVhJM+3jFjUhBrLBSfCNIGwQtNPo5/kaZ39ReD4A6QzpN8Qp1UO/4apObBo0KozuOGsFynDGWKymVAnRQOAaZIMWTOxkqzYayJi3YgY2L3vLw/BCiNYth6J02wBFa7fEAn/d+MKxfGLit94MfLiKJQBpuTtL1T3qFxGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785232895; c=relaxed/simple;
-	bh=bKkaqAxKDslyY5tu1jBchfNPLRe2q1WdVkhkvOhTNs0=;
+	s=arc-20240116; t=1785233166; c=relaxed/simple;
+	bh=Rp6+uTMCabzqwWh7spwIBUTlBYjHvNxnWsIheA7Ukxo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hWEmHbgqPpX6S7xQg6LI6k+E1IdES//VWlC/mmk3MG422xAF1o0yMkFohbtWkwzUX+mpT1+aAWoAVaJbHu8PQ8uvjfADd1DeLxveNGs1JhPCDtWxQGrS90Og2t+a+xPcjMj7sZqmShxbakHl80W4E81vhCFX1r8z+P7WRaekrYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AJe6TQ5y; arc=none smtp.client-ip=209.85.208.54
+	 In-Reply-To:Content-Type; b=bmezek1uAJ9m2JBzB0xJkozhGm8Ir6vbA/thEdFWK+phyjLCSF/YhGpm4ko3dGod5Uqv0RfAxEHGZpz9/U8DOjh0w3F8G0bl1amQCW+yEuby/02SlZy0AkhTfI3qjjX8U1HaWumc6kTbsrUM0HIxGaUoWR8adApy9ixTVE8+Tz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uFToWEnD; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AJe6TQ5y"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-698aa7ba3e6so5935841a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 03:01:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uFToWEnD"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c15d3cd51b2so465424866b.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 03:06:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1785232892; x=1785837692; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1785233163; x=1785837963; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=AEeoUs3PfQSMgYTm929Uz2Dor8kEgnImRfKTABiu/ws=;
-        b=AJe6TQ5ysVtEs+1VHDYNKLseQY7i1BBgB/sb7rQ6N6cJqznlcS18x0qRUfWhyniOyM
-         mYGP7NAYA9y9Pw/J7i2qxjAl1IIxLmc5vm7Tez8apZ0o+0U2fKAV5wkEPlik0UxClW9N
-         TkwuwwFAb4/zkTXHzOixrg8ufAyz8o7EowFPWty7LPujcpwtHUAdQliaDZLwEWj4tYfr
-         xUe6PpXs62XET/QUL5qG9uYOrMXLk05gIltbfSmmVpyg9++TD7erZaEHZikqwLez46Jh
-         WvdyAafb9NDWXAEbkTrrooJlxDuhbDvQRtE3MuCqy3Lz4/3CGP2Sjs8YXcExMWMEUCZk
-         Ld2Q==
+        bh=9YUhY2kLHKMkStru04ihqtiLZEbioAB+gFNR7L1P5RY=;
+        b=uFToWEnDuFoMR6vE2rRSSweS/l6bfVq+I4SKYsW93xyyD6zFdLxVCWRhbZuM1zYDFF
+         RvS1en9ML7Z7JVUNhhFL5mVpyHNx97JDaZwOjynKO07vmr8Vb9TKZtqfehaS9b2kd7z9
+         EdzlGIVhzwPyG9r8DdhPA+ziqiPguW5KubhGOO2KePp0sm58bhKuNstZRcVF4JF1Cxk3
+         5aQ11lrVPFY/gzn7QzeEqJwnvv6irfqZTRZbxD5Pp0/XooIdBZ+s2yONAU+HZIl8dPQL
+         XtkSfcPc30/V3XV5sa5ZZ7XupvTzERI3DH1VJlmZM+Z5YLpM/XZ66aYm4/rnKuzBQ2EC
+         NjLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785232892; x=1785837692;
+        d=1e100.net; s=20251104; t=1785233163; x=1785837963;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=AEeoUs3PfQSMgYTm929Uz2Dor8kEgnImRfKTABiu/ws=;
-        b=lsPK9cppwMLo1H/OLt2iNVsmPEAfHt6d3UrjtqdrcCGJZFm5GObTSHXa8quXSSIdCt
-         JUbo6GD2lLGiwGevlZWBENKGTsJsefDzl2x6PUJli9Ml14vh/V3v9lnmOQjQvAZ8ETsk
-         5sFrLtXLzsPZtkdKYfTY0/bLyE6q88oPXso0Wm8KsqIiKhZ1tS2VSWosLoCadOC582WM
-         BOebTtXsUqiwpMMfpTkTZEEckUar9Hc4W4TLwt6lW0x3V3/01zXzveOPxjpzftYtIzwc
-         23RKX3PK1xunylFGfUKUB+yiqRlkXaBgQyEQ3PUsNJkNydLZjgHwWq3OVlD3htITyVlG
-         0yAg==
-X-Gm-Message-State: AOJu0YwkZ5h2N41KLokS5eCAy+OcI46CJ/nYOOlAEXUrYWQ26NmE9Bub
-	FydfL4/9rZWpd1CESdzgAUy1WdnnWWBZumL1aUFToo6sMLDXDz3ImRelqJJ51+9RZOK7KNTT11W
-	ivsTVhnQ=
-X-Gm-Gg: AR+sD12IJh935aMK7YLdMdNiJFVOQh7E57LrNBP2C3y9KolnNfSjek9p9iXSTe4JdqW
-	KAammh+NS8LmX4OshM3Kq/tVK7+LSUwyYeNKOrFlZBz6okZqknAOBa8q7Y3uuE2ZI8XREP4qp36
-	u/TA2zkGrPRWd8HP4U0isUZu1ZyKcTaCSz85dLHGQ5Bes9wCmg53tXkqL5f9OaprHCFg6AfHNTp
-	G+OrBKRcPDc+z0lqpJKlW4WebPwOCB38bhGDdnxzScNJ6wILpkrMnNAOJ3hkQ9YNCe5oZshqIuv
-	3BAX2HX/RgXl0uZQBIKGcmfWW24gJqvZRkTHcMDOZmwEeWCIhSDiAeJuKaOmvbdMYaONqRvfsFO
-	SV8yno28Uvz3VXu7yznY3Yk+2VdtJsxk9uEt29FWbBG3ktU8vZsFPKcoTBQ9j5b/QPpCn65RV/z
-	VEK+e+n0E/d6pmBw==
-X-Received: by 2002:a05:6402:5114:b0:6a0:33f6:13c2 with SMTP id 4fb4d7f45d1cf-6a034a5efc0mr809800a12.24.1785232892204;
-        Tue, 28 Jul 2026 03:01:32 -0700 (PDT)
+        bh=9YUhY2kLHKMkStru04ihqtiLZEbioAB+gFNR7L1P5RY=;
+        b=rueMgynb33JSgeSS+q+zmE6s+uYuIWsgPD/gkAMRv9DnayLom0Yv/LMnC5IdSt3rhW
+         gyC4joXIMnRuNdRgl6F3AnH1QlXlDg6k3LBRYCLpqS9+/34fZsQafIg/BUWNEpa1N4fF
+         xeKeLVqOczPax0hbxmOjRtkpMCSpoXhFTek/JaAcXRVzIqQBCMdCjEncwjQwg0HzA9ic
+         AaMArf7lAfDrCE3CO6nX17WHLYgCjoRQ0lfBIPqUcmRX6jYvXMb6RA01UUB15gmegrY3
+         A6PhIVS2MtB5MRwbPnsMqbsR80rkj2QTMSZ1wKvqhfTayMdVa+2zSGMhTwjyoGJ/LnKl
+         uUdQ==
+X-Gm-Message-State: AOJu0YwVbur8adopQp+fFDATR5m9avfSGasRuy/hjk/FwCYpmBwUjBeQ
+	C2XMfUwa40FmVYAVMRIhGjeoWHFCoSX9kxRUuXDrMvwxGt7GcZZTPmpUu+M/G5fivyTJ9DN/0IT
+	2Gn0lxmY=
+X-Gm-Gg: AR+sD117yF6oNUUIRFc7OMq15tud/bNWhH72uMkMaumJdoa2T37XLLgPAc0mGZsJIC5
+	92gRRk/sgHeY7r40xyX8BFaQtFkchhlBwpRMN3YrLn74jPzSX/Ud4SzATqkGw0B0Yc0Dqun7V5B
+	qferiiXP6QkJNbS6bJ0+74PEN8p8hCW/h9Q02N2Bk0N3RrlXx7RiEeitxKIom+JqDdtQHoGXtmY
+	RGshUFzeLHeX+39aBRNSLDPhQUPQWWE4vRY17UtGRDTwo/UOIO56rKU2WzEAeHTh81Bap5uHKT8
+	7DSl49vwidukfmGX/Bo3A7CFvDSIBN9DFRBgw+V/T+7Q9yHlDtDvbwYoAXsRIGSMfYpIhkkXSeu
+	/bVjGaoLLRHI+YQ3f4dFOSk1J0sLuhQ3adtlzoTU7KaBYncWtONaAknp3ETIxYG+PpsFSxu5Fcz
+	QdbXS+AnWkCD7m7A==
+X-Received: by 2002:a17:906:fe4e:b0:c16:677b:4d1f with SMTP id a640c23a62f3a-c1f72489d85mr86000166b.54.1785233162679;
+        Tue, 28 Jul 2026 03:06:02 -0700 (PDT)
 Received: from [192.168.0.101] ([109.77.204.94])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69fb50bd467sm3697785a12.1.2026.07.28.03.01.30
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1c32ac9d79sm725854666b.21.2026.07.28.03.06.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jul 2026 03:01:31 -0700 (PDT)
-Message-ID: <328f2c30-b43e-4ae4-b926-7375f5edd5a5@linaro.org>
-Date: Tue, 28 Jul 2026 11:01:28 +0100
+        Tue, 28 Jul 2026 03:06:02 -0700 (PDT)
+Message-ID: <a9eb7475-2682-4b9a-b401-6178282d34aa@linaro.org>
+Date: Tue, 28 Jul 2026 11:06:01 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,32 +68,46 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 1/5] phy: core: Add phy_get_by_of_node()
+Subject: Re: [PATCH v13 5/5] dt-bindings: media: qcom,x1e80100-camss: Make
+ vdd-csiphy supplies optional
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, olteanv@gmail.com, devicetree@vger.kernel.org,
- media-ci@linuxtv.org, linux-phy@lists.infradead.org,
- neil.armstrong@linaro.org, conor+dt@kernel.org, vkoul@kernel.org
+Cc: media-ci@linuxtv.org, neil.armstrong@linaro.org, robh@kernel.org,
+ devicetree@vger.kernel.org, olteanv@gmail.com, vkoul@kernel.org,
+ conor+dt@kernel.org, linux-phy@lists.infradead.org
 References: <20260728-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v13-0-ae811e2f0799@linaro.org>
- <20260728-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v13-1-ae811e2f0799@linaro.org>
- <20260728094619.830C91F00A3A@smtp.kernel.org>
+ <20260728-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v13-5-ae811e2f0799@linaro.org>
+ <20260728094212.0F6511F000E9@smtp.kernel.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-GB
-In-Reply-To: <20260728094619.830C91F00A3A@smtp.kernel.org>
+In-Reply-To: <20260728094212.0F6511F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 28/07/2026 10:46, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> If a caller uses the new phy_get_by_of_node() API on a device node compatible
-> with "usb-nop-xceiv", will it bypass this check?
+On 28/07/2026 10:42, sashiko-bot@kernel.org wrote:
+> [Severity: Medium]
+> Since the CSIPHY nodes are being moved out to peer nodes, do other properties
+> in this schema also need to be updated to prevent validation regressions?
+> 
+> For example, the reg-names, clock-names, and interrupt-names in this schema
+> are currently defined as strict, fixed-order arrays that expect csiphy elements
+> at specific indices. If those elements are removed from the CAMSS node to avoid
+> resource conflicts, won't the remaining elements shift and cause
+> dt_binding_check to fail?
+> 
+> Additionally, the ports schema mandates data-lanes on the CAMSS endpoints.
+> Is this requirement still correct for internal links between the CAMSS core
+> and a peer PHY, rather than physical lanes to the sensor?
 
-No it won't but, it is not _supposed_ to.
+A good guess but, no - illustrative of how LLMs "understand" stuff but 
+actually don't understand stuff.
 
-Literally just doing functional decomposition here. If someone misuses 
-that decomp, that's on them, not part of this patch.
+If the graph lookup and probe succeeds then the legacy regs/clocks are 
+never mapped by camss - if that lookup _fails_ then you absolutely need 
+the legacy stuff.
 
-I don't see much point in moving that specific workaround into a 
-lower-level boiler-plate but, its up to the PHY maintainers to decide.
+"Dr Chandra will I dream" ?
+
+"I don't know"
 
 ---
 bod
