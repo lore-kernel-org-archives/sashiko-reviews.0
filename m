@@ -1,230 +1,234 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010058.outbound.protection.outlook.com [52.101.84.58])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013067.outbound.protection.outlook.com [40.107.162.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736622EEE85;
-	Tue, 28 Jul 2026 14:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.58
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785250185; cv=fail; b=cu2rdq6V3kTf6R023B0sV2fDPgmMJFHpeabY+sMSerqDqC81ACOvYEbWeTVsiGKtEzyMC5JHZleQENAsMWAZ6UIwSFTch2GAFVplwNjGdCc7LnRpYMW+fsqp3rD/WzzShWbZW5vKo9uM1DxP1nKA47u5Cr3SLK/TqUgBuxmbAmI=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785250185; c=relaxed/simple;
-	bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
-	h=Message-ID:Date:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=l+MgWXmf8ahSFHutoLzSCdLzur4QoVL8Z9x85+Ho0LvbpythnRz9W/ab6Y9qHgPCPLDwoidyOZdds8CcnYNrGUP5PfBuJkHn7Koi1iv3ooa40hcA6sSxqcfDR0++bUU/Jl03888CKS/0+aJVURCNYidDfBdBNRLd5J3Gwq22WPo=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=muYOoUmt; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=muYOoUmt; arc=fail smtp.client-ip=52.101.84.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AE027A907;
+	Tue, 28 Jul 2026 15:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785251532; cv=fail; b=SCcruHgl/XZUR/FTR3+9Oy1r2sIUstp8ohrAmfGvnKA+1Xrr5u0w4FPsn2kUkiPmy62YhKBF2plXZq8GhdEHiGMY2RzErJI+JarnWloVerhSgnNAKkM4uVX0a8EznYCGHum5209nmx0HUYM2fnzgKZMppbXkBYVE/xQ3rGYA+PA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785251532; c=relaxed/simple;
+	bh=6eKGM8Je7m/IUiPE3AwHv8qTl8QGj3bNLG5x5buEcRI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=czbEW+dCvaCWHieQXMAshjNTZ0hfsh81zpZp8dP6gwNCkRzA2Kin/U5wXRODKbDqkrrkm1UiDYDYFBytG15k4ci5DnB9HdW0bt8d43tnKLD7ZfDYENUI//NkSj/OkYDMSANbDZ/TLNPiE2q2OW9sxxEmGcnlHpw6a0shKWLoyJI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=cf4tBCv4 reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="muYOoUmt";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="muYOoUmt"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=AphV2D8541+ujH7YDX50KK1BMCErKTma1yfFy3e/rqlfI0kPTWRoruYznUOfljb4HkzdmZum7Z3Leh2exWP74SpR62vzDahWka7IhN/oUwhR+gHsmoCiP/mN+0lkwzW+zPHaUN7Tox9DGAypu4ALR31LGie9E8EYThA41gEECL7J765qayk0Qd3lQ9D4gMN6wdODHBonjaiK4kkPtFPB1PzydYbFhxlMY61e09bonGr0UTs95ndQZEe08xuPOHAcdNkREhNxpzVafoMOz9nJ1WjezQvFJ89LpN0DLHvmlu75wkrSFmop8wWwHCIXLH0S8UvNZWSZ5PFo971V90bi/Q==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=GCEYn6sRVpMpu30td8Mg2fU/npcaXACiR7rr7J3odHBBk6iOvMe5ifaktNIaN3IsENG4lwafovnC0WnZBqLJKOppWpzS0T3Dbl9nEb6ijK+FlNxKBWC97U5xLucKaUGEpJtO90odnw7sd8rA+NUciSXFNyD1kvCoWeVx488W893I0f5RWtVtotfcaHpOSLW0rlHQolGz1Bqz1oPeBDPuO4Q5NCaLj5vdwqVCS25565aphcH+fUg1PZRWPASM43MbTPZyDlz+hxDAAMLaOyCpvg0qTTVNjiOAHhv0zGamSYK0eYDh9cVz8SiPyjqyAJ3GxSr3tX1C5ih610aqLL1Drg==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=arm.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
- dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=muYOoUmtwEgIEobaSZTH8bFbYPAo2jA8vFuhUiIzHa3y6WoeQ64PdFEICntkakzznWcQX9bdAUyo9KR0vbmppGV7+3eWBAKva9PqaeDcs5fa42PpdISYkhgkLC3GxidvkJvtEK1020VBFgs3GRHLLylcLfl69zbE2NpNmSjWWm8=
-Received: from DUZP191CA0030.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:4f8::19)
- by AM9PR08MB5905.eurprd08.prod.outlook.com (2603:10a6:20b:282::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 14:49:38 +0000
-Received: from DU2PEPF00028D0E.eurprd03.prod.outlook.com
- (2603:10a6:10:4f8:cafe::6e) by DUZP191CA0030.outlook.office365.com
- (2603:10a6:10:4f8::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.270.12 via Frontend Transport; Tue,
- 28 Jul 2026 14:49:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- DU2PEPF00028D0E.mail.protection.outlook.com (10.167.242.22) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.5
- via Frontend Transport; Tue, 28 Jul 2026 14:49:37 +0000
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="cf4tBCv4"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WMWGh34TvTVwYCslMJ0kKm7lIWOgadltNHgsZyCQF2G7YhNfRgP2JUezzmFywZcPAViK3NNLn5CewEI7LaEMxgQ9hTa2OV9KELhPE1J/rxrb/oaogsroyQBz2kHMIQ/GoRbZzCaMW/EEySjCl/PNDM/FuiDA9cCfcyuk29BmHPNl63XWbrpbCcEW0+qhnYzqDC+YfrewjKK+abh/+G+P+3GIivE+zdOZOcODRFCKeKVX6+SqPAjmj/iQaZV37x+2TB55qV4N57hnPcpSmyfrBuzbk2HD74F48c4FLnyQilLMsub4cKrS3UChdgx4kJzdLDsPNbAqGi32ugVg1Nc4Uw==
+ b=nK4bcZUCm2xmLyLhmaoq6Kg6cd0QqZDiSRADNcXSs9cS2qJw70Sf6sYqDV2o8Tpt37mPZ316goNO0QopEohdAx9yjsYQnxLwYcq2zGORbu4dueT+UWcq+m9kW9nSFQUal4zdLA+mS9k728rVaUTBvuHys05fVjFEYqDUGkkCop0vIToURfMR9yR9UPJwb1XwIR2dFhftvEHzztLjAcT/B/Ve+9+cFDKDZwmYHnQcAS5QFLRbh/SMhz008wOFyTentwYY+VoInWbBSlq/56Z4eWO5AvqzRCvPY1Fmo3dWaPq3c+PHggab6kH0gvM7iPGiagQ/w2AKbQ5meu1AaMoQDA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=Zf+4PJdWXEftXJLlDZFD9mtLh/HmRk0rkiPBKYK7D8z9ouB3r81lOQq+SAbky2SBQ6KxSrpqqfOhdVTFzDM5XhIOuxN1j8IS7PCSzSBjjUb3M7W+573jaxdz8kY7ChdL+AcU/3Ryrn5mXAbGOLebhY2SX6csoTmlxxu/FuWNxn6YlGbhdKRSoFNgp2ReJWIyrhl8hmZcyzKD0zO/7ksNz6P4dxzX+I9uu1Z8ta9Ww29Upy77J+YrSVQPUemlBlNyPblhijjVqtcQ3Uucsg1+yrMIbL/Q173yuhtyuQZqybjEyZr2qqQkqugdsva/Dreg3W/+dt5aUPJPOJNgYyd3Aw==
+ bh=aLBi8S4YX+rglfHwFQ0n/wU582NcUQt2aOxIsyJa+D4=;
+ b=bQRSZ1m7o2TbbQOSRrr40zlKzawY2dGrbF1KTvEvcTEi2A+UYfVv421ric9rRvyOfrmbQsv8sQj9OX6KTL2ehLntX7cUyuv5B/PQf3sUO1xQn3TXyuIvjWVsmreRpygqLHKe4RaJl/CljgbBVfjq82hPdoG7EYf2UHfkBcoW8l7gudRos6RaS9nJGK4NGaIRpbgQqovgaIu53yiguIErGo7DIxZxHzuezTKZTGRKvdUKCW66dF5jH6/Br7u964tCMNV99mQu/aaqiUh9BirnitvmjrJadwTXYPYm2tE9lR+3rMixCtLGSREiPUwam0HtAROJWtWPEeaVNuj/HmPO6A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=muYOoUmtwEgIEobaSZTH8bFbYPAo2jA8vFuhUiIzHa3y6WoeQ64PdFEICntkakzznWcQX9bdAUyo9KR0vbmppGV7+3eWBAKva9PqaeDcs5fa42PpdISYkhgkLC3GxidvkJvtEK1020VBFgs3GRHLLylcLfl69zbE2NpNmSjWWm8=
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-Received: from VI1PR08MB3421.eurprd08.prod.outlook.com (2603:10a6:803:80::16)
- by AM9PR08MB5908.eurprd08.prod.outlook.com (2603:10a6:20b:283::12) with
+ bh=aLBi8S4YX+rglfHwFQ0n/wU582NcUQt2aOxIsyJa+D4=;
+ b=cf4tBCv4devoVqSi8CNpKQwoc3xsBvXpMGkyDPMTGcWJjbYWs80ePToPqGVP86aTjexvyFXwd/MALBBDHHdu/jD4NZ6ox+jawk6s3mKOWkO915VX1m/zKGp45jgoNDVky9d4UWjsvho8KOsRznsAxtj+6/hZEgrldkARJMpll1z9nTWUb+YC2Tg5tJHCPgJN3bLvXb+rlAIkQG2/RPVJ/oiR17MBfIUV9qtBpIECfe7vSNGtV32nv8oleejWMtByu+QIYGAe7ilPwTz5eCbMLH1ZvlQzgasG8dnxaTHB1J8m/+zmTsvYAWjoGBmA9tWBunxoJ4riyvtyPD3UnvO8rA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by VI0PR04MB12640.eurprd04.prod.outlook.com (2603:10a6:800:345::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 14:48:35 +0000
-Received: from VI1PR08MB3421.eurprd08.prod.outlook.com
- ([fe80::e079:6bd:fbe0:89b4]) by VI1PR08MB3421.eurprd08.prod.outlook.com
- ([fe80::e079:6bd:fbe0:89b4%3]) with mapi id 15.21.0245.012; Tue, 28 Jul 2026
- 14:48:35 +0000
-Message-ID: <eb7e1543-1599-4d58-875c-ec2b2bff778f@arm.com>
-Date: Tue, 28 Jul 2026 15:48:34 +0100
-User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@arm.com, linux-perf-users@vger.kernel.org,
- damon@lists.linux.dev, bpf@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH RFC 01/11] mm: introduce hw_pte_t for PTE table storage
+ 2026 15:12:08 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0270.009; Tue, 28 Jul 2026
+ 15:12:07 +0000
+Date: Tue, 28 Jul 2026 10:12:00 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-References: <20260727164715.2866609-1-usama.anjum@arm.com>
- <20260727164715.2866609-2-usama.anjum@arm.com>
- <20260727165824.0377C1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
-In-Reply-To: <20260727165824.0377C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: LO4P123CA0615.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:314::17) To VI1PR08MB3421.eurprd08.prod.outlook.com
- (2603:10a6:803:80::16)
+Cc: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
+	imx@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v7 2/2] dmaengine: fsl-edma: Support dynamic
+ scatter/gather chaining
+Message-ID: <amjGwBcvweTwkvZu@SMW015318>
+References: <20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com>
+ <20260728-fsl-edma-dyn-sg-v7-2-10dffb4167c2@bootlin.com>
+ <20260728142110.A103D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260728142110.A103D1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA9PR13CA0062.namprd13.prod.outlook.com
+ (2603:10b6:806:23::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic:
-	VI1PR08MB3421:EE_|AM9PR08MB5908:EE_|DU2PEPF00028D0E:EE_|AM9PR08MB5905:EE_
-X-MS-Office365-Filtering-Correlation-Id: c196e69d-e428-4ba1-f1be-08deecb77298
-x-checkrecipientrouted: true
-NoDisclaimer: true
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB12640:EE_
+X-MS-Office365-Filtering-Correlation-Id: 239d6d11-d1f6-42d1-61f7-08deecba9703
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|10067099003|11063799006|4143699003|6133799003|56012099006|3023799007|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info-Original:
- sV3zbvLaqjqG6dom3Gp91uoha3PwtCEthywwPY2iDwBbMVF/A58V5nGsW17bRW8kfMFUE4ROoVg90YSvX/Z+/sKcgzQNNFfULLrDt8W+eXywSC8w9yIWJF3BRpKdInDInHroC866Kbv6CVTYBw5c6W6s103C6Nt82JgnRluQsy7T97uDqSXnfd4g9keBYsT4wgFo+CP7rbPclQr6yEjb845MtWB5tJarATzAAMhXGYajzGIFzp6BI4KLaAS3vTBjF8ojVmbmEMYDKb2LKc7b+VnY8lqvGIsmnOZmK2S7nQF/R4sVGqd8HoL6Va+WDgpF1H5PnPLd0ehjWu4SQXQfd74Q8O0xpgcmaBi8mxMfx7Dwu5UJLWou7JSdYfCQvhLPp+BE7hmHdyz+Vc7JwkiBK8WtUM9VVDlUJvEWaXvisCmWTcp96IsfGGyb0u/TEVma+SVTTVjQJ/DVkqz+b7eIenHL8vRn/FlTgnQl70sToblZTV1GhKqMww+NS7DZ5vv0X6NQEv5clWUeBANLqoHLLxBoTp3eqTElA75hG+fZBnRQY5bZWlsZucDqVa7sTt+C6cfDx+id9su9eQ2nvaZCMW0P18UMg3+BKUe6MLqoh6/5357a0NwtqTHyCqm1C26BvZD7b/BaRUj+rMW6xtgpp5lgm3oCHqx2GB9m27+xcTQ=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR08MB3421.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(10067099003)(11063799006)(4143699003)(6133799003)(56012099006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-Exchange-RoutingPolicyChecked:
- G2QCW6D28HW5CuPmUza9hmT7FjGE/P8L2zLpAkpxKIpRYHb0QYyo0J9XS/j+JTMNxBQeXzFw/dMyr1fFVJ9ujMSCm4+NV3TVVdDB9BITHG5zh9WTjmumByNIMvu8koRt8bXmWp4/e4gZBzb2dRBKD+hUYD5hsPwMrMkgvxf1yx2hpDCenY7WPGiMStdkSGbZPN76nfb57Slv2reyGWfaGcAf0xIPQt7+r4Jl5UUIr3/4Vd7sgPx2okyKoh10G0a47MF31PZNRdj5EaE4dobQQN201fWJaxxJVdaQLEQnMiRMlefjbLEHAZwzBqQRYSXaRVahBLOHQuFC8ocwRZmV2w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB5908
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- DU2PEPF00028D0E.eurprd03.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	217ee18f-0aab-4363-5fa9-08deecb74d78
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|35042699022|1800799024|14060799003|36860700016|82310400026|376014|10067099003|11063799006|4143699003|6133799003|56012099006|3023799007|22082099003|18002099003;
+	BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|19092799006|6133799003|11063799006|56012099006|4143699003|10067099003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	1uoT26N9FuSGLXTYmXSjYu2xc28ja5I7hln57wwCnkd6CZWgQl50B/fBiXtTyQQMYsLkqjtjt3lnLfc3bzbhsHI1n+EpNibOCGuyQ90Oq6wpatkO78oOQPuscEWvpxmCv01nNAl1p5iYnOEXwkT9rdVET2uaw9gOqPuqZ3lDBX0AY+PiKQSlBo5unZKyGYLKkcV2SiHLc4yK9SAOis2ga8qHe7yNBjHwViIcC8/Hx/7nkVLjEtjucesLyldsL9Vrls5GRprDIUq0OfEfqRH8k1YR0tk3VXqI1VgKDNscITE9Ns5AiDVzzYUxnyaE6nVj1exNfUKvBWW44wry/glIOwaeTbor2bD9omtXRkHgkba499M8i7+mED2MDu/6O4t7GuSDpOp08wenm6dt7guB+4aW9+0FXV/PzBdP1YvHR2CZJ3+UzE/uSzkuks71bOCQLrzKFkF7mJiU04VcK9crPOz5kSvpLKyQojFIkUhWWLmq2xpXKSwLj+9NJ8scVh8imUU6K6MlF9i8SeevcZ9Br92vuctMl2UoeHLfsNIpLnHYr83ALwhu2CWM0gQOzt8bU7eK1twJRY0xkPhYbsasWaMorh3ZrXwXIlC4W3C+ehzkumuq9NRECSMs1KA9BaHG/uFWOH5PD6YTWhJTIVRKGvDLG2fQAiFp9cV+b97Wr5oTjRaY3wb411IYxgv1YS6qKJosF0WZMmI8itT/E28NlQ==
+	YhNGxhmzqLijJy3u1Lozhw5iyScNoN7cbgIdLFIWyZo+oIE4Qsy+ClHxSeD8RxKLdW/xYy3rzrg0mwj33v6HB4nRsiJFUVt9Bcc4nvhl4lzOk52zppcQyDziLS4SegNJ5NXpUMm9c7FE1BYzu9LbRSKGvp52EdTRGLH1sZW3cs5+rFNAOvqdhI4eShEqGSM/C9Oh4bLcF+443K1RSJRaRgKL/C+mzPmH0h/M7FjK1Ku4aKZKZPF830+3rteLyOCj5kBesmjUI1JV7k2oyF/KIKSARz9zzdpB4pg1/tD0FxbIbD98YnvtjyXJJmjwZdA0lFOfwh87nrwrCXdqRmhEYaOLM8tN9lWxysJvZp/tCisweGAL3wa07GmsGdwK+HlO4/GMG6xMynxLUw7qa2uvtQy0HkhMUJCRCKvBgmM445ZFuqzbdtX1DaGssk8+GmW6cpQnn3Y8ElztuG0sQ4NBwmZ2VrZrsPirOdRpuhY8TE8zMGTYMXtj81faIO8YoorjUr1sc8UPUQV1CRo1FjqlicsBQTtRwtQb9nUVhNkRqsWc7bN/6gykQ1xgYALjvK+GnaQnu6bCNcJq670JWFvnwmo3Q688Yyx9UaO9fj/LUqg=
 X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(35042699022)(1800799024)(14060799003)(36860700016)(82310400026)(376014)(10067099003)(11063799006)(4143699003)(6133799003)(56012099006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(19092799006)(6133799003)(11063799006)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	4vg/3N5zhqH5RfRS8PyQZ00MONmlhr4NujHibeMjCXHAXZEdi49+mcriabCC7x5Lba5f/i+2IxO9vZq58N55yFUjiz1oJ2GHqyhjli9TsMdA2mnGXBuN4WAUrdoRQARmIIRNv7MMYsRZnT7Gog6nXWWugQvWaSMwv9NGq0lref+5hZUy59hq7FzUSBWt8s4SFT7UOUei1AT1sd5Tq02+8ejEYUoeK3JTGmOofG/cPy9fZ/KY83AGY1FAZBZHkZajA+QcWgD5+17tnzbHpssFmA7b/eiypnAhsejpu+04rKuAhhwzIZHzbl8Z2spyJIr/+YQCyflHLw0aY9eLQgr9XancdzN/duECI8EX3MP+vKnBiO2x1HBu6SeSC5uF3V0nozf+rVfRHuhBz7JdrE9Dq/o7mRdpe6KnZlnOKB641TDL0R/rv/UdcQLWQtB0HSjM
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 14:49:37.7998
+	=?iso-8859-1?Q?qNLgs44pRJAkVE1g7ORlLb6bv1rXEs/4LuRsMO/2zN4VbHGTNwHCqTed9A?=
+ =?iso-8859-1?Q?scGS0nofy2sSUd30tE0ytLvE4foXUZqzmlIxuilG8BkhtsJxs9mQd22G8g?=
+ =?iso-8859-1?Q?843KWC6dD9bFrNRaX4S3/zOOfLiLCdPw9gsnxefsdWUB0LpGtLm1xLQh5a?=
+ =?iso-8859-1?Q?pSTtcDogW3P7Q11WahUYnscA+d9ONU2KnSuQ61Of9NLoQb/n7F3lqn6aoJ?=
+ =?iso-8859-1?Q?HzWqKmw9J9eCMHn2evnw9wvWrS+6FQlOM9uQT+HE9XbAQgRSgogZxJ7Xg2?=
+ =?iso-8859-1?Q?QjKqZhuhWZ5wVPn1CjmVMSsmbm5idywiHrv5/Dg7q9PirKJ89AbRBInSdv?=
+ =?iso-8859-1?Q?YJzXBYj0pdxtWLBhJ0yXbgiCOamcD/d3bnGCzcnIb/KUvqg+SgDMNPVwOt?=
+ =?iso-8859-1?Q?7fg/F7PL6svC1h5lbi88YGDUtsiUyY/EJThq8ZZCq9nyzkyKZB0GuAcR/e?=
+ =?iso-8859-1?Q?aT0UIPQTrIdggeQj5GDGzlbvv1J/ScDfBmsc1WBiipbJoLU89wkUre1GFc?=
+ =?iso-8859-1?Q?7tM9FmZ/iprTfTNtzrgM05SR/8ZeDmOFc2A2akdClg2f4fyVkGK7h1q7+F?=
+ =?iso-8859-1?Q?HhRP3AYQYHN15UX82BeQFX8m6jle+HpqSIfeBRWJnr+yJSkJfMZMqx/Cef?=
+ =?iso-8859-1?Q?vWalvdsUy8SjdOMK888tT1jngtZi5uDvjfL8uLfccNF3FdfY4hKeFR/UNz?=
+ =?iso-8859-1?Q?afmqHaQZJ+NJ0WZV57u6xSWK/qk/1KBR2zQTEJB7QyuWGTD22kwjPchFG5?=
+ =?iso-8859-1?Q?jsPC3/Cq3+5quMGoQnmrfGBolsHL0JuiFDqC91ksJM1sXH3q9JvfIeViyL?=
+ =?iso-8859-1?Q?N3Dn9ygKsB8v4WQD1L3vBgfu/MamipXaOBvhIXF9iQ915tmyZknz8YL4ZW?=
+ =?iso-8859-1?Q?RL4kQW6uRX8cyAmYbPW7kaVlAWXUnx1VTjsh2nWO3PmWIdAELp6DaTSjST?=
+ =?iso-8859-1?Q?gb1JXDvMA4wiZ1wzjuTXv0gVVlGQeDA67U01SMeUt3x0BnxVi/2L7phZab?=
+ =?iso-8859-1?Q?y8FZabV7yvxMRN9Q26IGtsmro7RtkJugOhUDCuMAbddah+h0/CuHbXDQKk?=
+ =?iso-8859-1?Q?hPUggSspNpGDoTe+4YcRKezaOEELnVEkB7DJsrn0K5JYkyiuLC/c3zV5jp?=
+ =?iso-8859-1?Q?KJi+pGGAXEYgUS2flEHc1pbvU7xeVVNrbOHJAShFz5yc96YmKOpv6h+Wla?=
+ =?iso-8859-1?Q?tFnvEfhoBBRcKgJlqw8W2ZvwRl11N1E0YG2zCqL4T+xRIYPPbCHRlXRSsW?=
+ =?iso-8859-1?Q?QieeMoJlXv5w6+xGpDITR0bBQW4/zcO5k9VdVID1p/ikLANPhukLBzi/Ty?=
+ =?iso-8859-1?Q?Njbu7bELgEULog1xQYoeBPLPJ4kJyeHodmW06B2FBMJmj2t6TiKg2wCNhz?=
+ =?iso-8859-1?Q?b7OxNiMk8tw3Z3XDmJbS9wX4wIirbEoM9J46DX5m2mUdm/UC8Zu9Q2tQa8?=
+ =?iso-8859-1?Q?1+BZtdYPq0genCcRiiyumI00t4t4U0jHjc0Dc6pAWuCcB3b5oWlDqobDBt?=
+ =?iso-8859-1?Q?DQ5tyIO/LFmj44WxWjRe4erGLywvYxEO12Y7AXaM/A68Gjivn5x+jNP9ED?=
+ =?iso-8859-1?Q?X2S5NLbqsr4DEba4SMhphXGQx99l/evq5CD/jgEQYaqA/7j7IMu42OO3dD?=
+ =?iso-8859-1?Q?Vq/DIq4G7tNP9ygQls7w4psVjeP59MxMZGg0DOqCUXsFq1f9SCDGEY5lzx?=
+ =?iso-8859-1?Q?NiF2w9vCl+xJuiT98FUrP2SyUm8v0V5rvARqJXuy9AHBmfuP2OKu2m8QzU?=
+ =?iso-8859-1?Q?QcE3xtZ7rETatO6BNgBu2UKujifzmyNL/MxAB9lg6MOfJ4Tg8BZ86iKr1R?=
+ =?iso-8859-1?Q?qo1qVEodOTEyVdkzpGfs/Tf4WNQdS4P1e4ScvduM+dTIjlsnqNbA?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 239d6d11-d1f6-42d1-61f7-08deecba9703
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:12:07.8147
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c196e69d-e428-4ba1-f1be-08deecb77298
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DU2PEPF00028D0E.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB5905
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: cdT2lQa8XKD/IpSJRHS9ANP8oVtV70VAor5xmTwyiH3s2q+VKNmYhXtB47K4XnR2TPD5fpvat9f9nfCudJorqJyJrxfXChSN1tASB+dMBc/wyrN7yHz/IYSyb6et1fBA
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB12640
 
-On 27/07/2026 5:58 pm, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The header `<linux/pgtable_types.h>` incorrectly assumes `<asm=
-/page.h>` universally defines `pte_t` and architecture opt-ins, leading to =
-missing types on x86 and a structural inclusion hazard for opting in.
+On Tue, Jul 28, 2026 at 02:21:10PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] A completed dynamically linked scatter/gather descriptor will be erroneously re-issued for execution if its interrupt is delayed, leading to double-execution and memory corruption.
+> - [High] Descriptors can be erroneously marked as completed without execution if channel linking (E_LINK) is configured.
 > --
->
-> --- Patch [1]: [PATCH RFC 01/11] mm: introduce hw_pte_t for PTE table sto=
-rage ---
-> commit de503ea03294c1c9976ce045b5e820dbc0f34eba
-> Author: Muhammad Usama Anjum <usama.anjum@arm.com>
->
-> mm: introduce hw_pte_t for PTE table storage
->
-> This commit introduces hw_pte_t as a generic name for a PTE table element=
-.
-> It defines it as an alias of pte_t by default, allowing architectures to
-> retain their existing representation until they opt in to a distinct type=
-.
->
->> diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types=
-.h
->> new file mode 100644
->> index 0000000000000..ed5dba42a4f8c
->> --- /dev/null
->> +++ b/include/linux/pgtable_types.h
->> @@ -0,0 +1,11 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->> +#ifndef _LINUX_PGTABLE_TYPES_H
->> +#define _LINUX_PGTABLE_TYPES_H
->> +
->> +#include <asm/page.h>
->> +
->> +#ifndef __HAVE_ARCH_HW_PTE_T
->> +#define hw_pte_t pte_t
->> +#endif
->
-> [Severity: Medium]
-> Is <asm/page.h> guaranteed to define pte_t on all architectures before it=
- is
-> used here?
->
-> On x86, pte_t is defined in <asm/pgtable_types.h>, which is not included =
-by
-> <asm/page.h>. This means pte_t might not be defined when the default hw_p=
-te_t
-> alias is created.
-No. The commit message was imprecise here. hw_pte_t is defined as a macro a=
-lias.
-pte_t does not need to be defined when this macro is defined; it only needs=
- to
-be defined where hw_pte_t is expanded. The current x86 consumers make pte_t
-visible through <asm/pgtable_types.h> before expanding hw_pte_t.
+
+please double check above two issues
+
+Frank
 
 >
-> Could this also create an inclusion hazard for architectures opting in?
+> --- Patch [2]: [PATCH v7 2/2] dmaengine: fsl-edma: Support dynamic scatter/gather chaining ---
+> commit b8502bf27e9fa2ac70190840a26c1603f5640651
+> Author: Benoît Monin <benoit.monin@bootlin.com>
 >
-> If x86 were to opt into hw_pte_t by defining __HAVE_ARCH_HW_PTE_T in
-> <asm/pgtable_types.h>, any files including <linux/pgtable_types.h> first =
-would
-> incorrectly alias hw_pte_t to pte_t. When <asm/pgtable_types.h> is
-> subsequently included, its explicit definition of hw_pte_t would macro-ex=
-pand
-> to a conflicting redefinition of pte_t, breaking the build.
-An architecture opting in must make both __HAVE_ARCH_HW_PTE_T and hw_pte_t =
-visible
-before the generic fallback is processed. Arm64 does this through asm/page.=
-h which
-includes asm/pgtable-types.h. A future x86 conversion would have to establi=
-sh the
-same ordering.
-
---
-Thanks,
-Usama
-
-IMPORTANT NOTICE: The contents of this email and any attachments are confid=
-ential and may also be privileged. If you are not the intended recipient, p=
-lease notify the sender immediately and do not disclose the contents to any=
- other person, use it for any purpose, or store or copy the information in =
-any medium. Thank you.
+> dmaengine: fsl-edma: Support dynamic scatter/gather chaining
+>
+> Implement dynamic linking of scatter/gather transfers to enable
+> chaining multiple DMA descriptors without stopping the channel.
+>
+> > diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+> > --- a/drivers/dma/fsl-edma-common.c
+> > +++ b/drivers/dma/fsl-edma-common.c
+> [ ... ]
+> > @@ -55,10 +55,29 @@ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
+> >  	}
+> >
+> >  	if (!fsl_chan->edesc->iscyclic) {
+> > -		list_del(&fsl_chan->edesc->vdesc.node);
+> > -		vchan_cookie_complete(&fsl_chan->edesc->vdesc);
+> > +		u8 link_sg_id = FIELD_GET(EDMA_TCD_CSR_LINKCH, edma_read_tcdreg(fsl_chan, csr));
+>
+> [Severity: High]
+> Will this misinterpret a hardware channel link ID as a software SG ID if
+> channel linking (EDMA_TCD_CSR_E_LINK) is configured?
+>
+> If a transfer uses EDMA_TCD_CSR_E_LINK to link to a non-zero channel, the
+> handler appears to unconditionally extract link_sg_id from the CSR. This
+> channel number would be read as the link_sg_id, causing id_match to be false
+> for all pending descriptors (which have link_sg_id == 0).
+>
+> Does this cause the handler to iterate through the entire desc_issued list,
+> prematurely deleting and completing every queued descriptor without them ever
+> executing?
+>
+> > +		struct virt_dma_desc *vdesc, *tmp;
+> > +
+> > +		list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_issued, node) {
+> > +			struct fsl_edma_desc *fsl_desc = to_fsl_edma_desc(vdesc);
+> > +			bool id_match = (link_sg_id == fsl_desc->link_sg_id);
+> > +
+> > +			if (id_match && fsl_desc != fsl_chan->edesc)
+> > +				break;
+>
+> [Severity: High]
+> If multiple dynamically linked descriptors finish before the interrupt handler
+> processes them (e.g., due to system load or interrupt latency), could a
+> completed descriptor be stranded in the queue?
+>
+> When the hardware stops on a later descriptor and sets the DONE flag, this
+> loop will break early when it matches the link_sg_id of the finished
+> descriptor, assuming it is still running because fsl_desc != fsl_chan->edesc.
+>
+> > +
+> > +			list_del(&vdesc->node);
+> > +			vchan_cookie_complete(vdesc);
+> > +
+> > +			if (id_match)
+> > +				break;
+> > +		}
+> > +
+> >  		fsl_chan->edesc = NULL;
+> > -		fsl_chan->status = DMA_COMPLETE;
+> > +
+> > +		if (!(fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_SPLIT_REG) ||
+> > +		    (edma_readl_chreg(fsl_chan, ch_csr) & EDMA_V3_CH_CSR_DONE)) {
+> > +			fsl_chan->status = DMA_COMPLETE;
+> > +		}
+> >  	} else {
+> >  		vchan_cyclic_callback(&fsl_chan->edesc->vdesc);
+> >  	}
+> [ ... ]
+> > @@ -931,14 +950,87 @@ void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan)
+> >  	if (!vdesc)
+> >  		return;
+> >  	fsl_chan->edesc = to_fsl_edma_desc(vdesc);
+> > -	fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
+> > -	fsl_edma_enable_request(fsl_chan);
+> > -	fsl_chan->status = DMA_IN_PROGRESS;
+> > +
+> > +	if (fsl_chan->status != DMA_IN_PROGRESS) {
+> > +		fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
+> > +		fsl_edma_enable_request(fsl_chan);
+> > +		fsl_chan->status = DMA_IN_PROGRESS;
+> > +	}
+> > +}
+>
+> [Severity: High]
+> Because the channel status was updated to DMA_COMPLETE in
+> fsl_edma_tx_chan_handler() above, will fsl_edma_xfer_desc() then fetch the
+> stranded descriptor from the queue and erroneously reprogram it to the
+> hardware?
+>
+> This seems like it would cause the hardware to re-execute a DMA transfer that
+> has already finished, potentially leading to data corruption for I/O devices
+> (such as duplicated writes or dropped reads).
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com?part=2
