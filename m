@@ -1,324 +1,220 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010002.outbound.protection.outlook.com [52.101.69.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CA73546D6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 06:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C303CDBAA;
+	Tue, 28 Jul 2026 07:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.2
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785220653; cv=pass; b=bXXLBnrXoF+LuBxE+4iPyz+qho0vIwSkqlmpYed68Q/9YusmtC+w0wcTGiGwMq5XPPrsleXQd7gkSXnL0a18Z9QkpI8yPURmOqw0Ki2XoA9hjjAVu9SNWW1HFKFsabZcGmsTPUfE9c67aVQL126yOtFAqj2Au624UsjP771d608=
+	t=1785223307; cv=fail; b=D2JwL9ZizxJ0cAfat1uEPIFtygs3SjS1pw+Den5kItS/V7TYV5LSlheSAC7Oc2m1tBGXjPyJPg7MdNBSH5m2oSPdsH894pyYvcM9sQohgihxS0D7yv6BDd+YYHJMRfXOUN1oQc93sJvAanTu7fm9v0/0fk+yro3XVuT+epECzPs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785220653; c=relaxed/simple;
-	bh=lCKDh8AP5fu9kSsr57zVH9DxBDmciOXIS6XuXzdyeoY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oh9AAJxoM7QARxLIm3dOG1h7UDw3wluweLdIA/mh3ekTppBt0kodVILwN5xVtuvAqZMEqrIwfbcU2MxPIJ7fpFOcAoBY1oQ3+XLfrq7KhnYBf+BmKcVOVtqgSCxv6TqwT9BRvvyFDCOs8rQzv+QJWD41FTmp17hdD4deKIlKspA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aRfQPrGE; arc=pass smtp.client-ip=74.125.224.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1785223307; c=relaxed/simple;
+	bh=eyL/hfKSB2Q7UE8+kqBg08f/n4em6ocaSFQLBZzmR/U=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Cq2o0XKQMf875LRyropnD/1wOW52gi7Z2nckkKJzrVCvRU21Cokzno2egLuX8YLAhuQ2Oo50criH/69Gd5+H6T5Z2YDCF+ET4ebd2n+e1PHzNSIsH6pJutF6ZtnXKO1bT8ELydFT/L0av4oPiX03cgIGYoLqbVnfBgqOfuwbG1g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=aaQOmUVy; arc=fail smtp.client-ip=52.101.69.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aRfQPrGE"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6611669cd16so4593057d50.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 27 Jul 2026 23:37:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785220650; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Z43LXXInSMQlq8VSIm4grnpXGhRFOlfjpv55yXMxvSFGccJDVkT1ULR0/JxJJP+q1E
-         WKiuc3hj8PZ3e47OYH9qrC7aNt+IxulMQnMzSVpyNeUBqYrF4kY9k/zdwLZ+5CQWPwwA
-         xOehf/8p2tU7F8fIBRPYmehafvoTb1qsGzMLiFztiu5rh5yHlc1usRGr4goaXG5XPWQm
-         3iQekIZQlw19ovuew0OucZNfLzidn72MlpMLsfiZ3tiXDue4vlj4yLKL7PLArXQWnqMX
-         KWit70crBd+zqurFQn7DC9lwyjLiw6hlBIpumMYuhTtRsR4TgICKgkRt9rYO6ScSdkB0
-         nxiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=mk5KhGYTlO9SDZQRF1URMyQmuKRxWDOHbudIP8iEbWc=;
-        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
-        b=ZjQfrSZ5xDV3xRZw4uJS7QhOuyxU/slygd44H0MiXEwqjVn9aINYs9WJ4Kq7UywhoK
-         WI+6VhZHcitdzxczmlHpjjNL/TN1bAHYNQvusMI0S1lIHRyEW/yUD1TYm6bsAHoCo5i0
-         WcAh9m927EyXLehw5dgVnDV43ELy0D9XJnnM0QYtvKaUEvAtXV2nJ9R4pt1/2E79qFIu
-         14OnucbZ09Zd9Q/0u1Eve78JXsNNIZBSB6GTDUI58uudUenu9Cjof3nfLcZciZaaxMVw
-         dsODUVqKVhNLL/b6vu9wX2wvuKr6Wbpd1cUZ9/sEqk+xPjnDR1DaIwhBWmz133vX2bDI
-         gHWg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1785220650; x=1785825450; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=mk5KhGYTlO9SDZQRF1URMyQmuKRxWDOHbudIP8iEbWc=;
-        b=aRfQPrGEkhHyMXNVsBxNev/rfUBWe6r86tkXXUcEbcmoetn6GVCqis/D7ASRufDUhB
-         bvEYn3mP17uNtE9oSf/HbPvI/vuckW0Imy56rh9k1nz3jXV0/F/zKiQ3veYROGiq3VNm
-         2bCMQADW4JM4+EK+gJuOmyiy+ZiKHb+L8VydKrWTRIot7YVMjeBoqKtXnSvEpokBLqkP
-         MltEiX3fRrJeBXGvot30EAEWWhWmzSJaUwdhziKel5bqDmy/83MjRepuO6kPXFHV1gqT
-         8RZo3/cAeUe10zb/LyLTdo34zBklKPfWbWHsie38+SLqNJcfEGwV6ryePj0mE9X+Ym5x
-         pYtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785220650; x=1785825450;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mk5KhGYTlO9SDZQRF1URMyQmuKRxWDOHbudIP8iEbWc=;
-        b=s/8imiU+wa5r2+pKM4GMlk2St0FwxOMF6WrWmfQT2cXUil24/45BLaEC23taybsqwb
-         +peYfNG6MvPICH9jV//8OgcNT/B/esnRjlzKl3DK+nakkMZi+WZVUwHq3HUhMkvoPN9E
-         VJAaxMYhiGKrwuVgtVKHH4kzIUIf6vyyiuj/IWVQQgE9/EVtIZa4WPUlEjy1mIMHzmVK
-         1d5mh2FrCgli2qu3JqxOs0XdBiPSNBMaFlDBlBDOTv8iPle2hG0lfE5xY3BPl8RIkLaM
-         bJVbigst5IAA9/NSvFXLKa2jWRe6XV1pk9wYQkJzpBwiaH3kyMh//SchfH/c7GtG5AY6
-         NcOw==
-X-Gm-Message-State: AOJu0YyDosSBEpaZes3Sz25VoZf6ukJsC8XazAbpOnaVVe4dje5xzeiW
-	bw9f7FHT2UQhBQ9lUgeIvzZLwjXDBRXvXHFfUCt0l/mCpQiOnZcH7UBZsakJmlVEQgDvK3rEO2H
-	ljD7QGm58LTooycQSJbENEWox6mwHr8K9HpOu0GgCXpgl478JeSiIbcFOeJ0L
-X-Gm-Gg: AR+sD13yRyCuQ5w7lh7rT+s/Rp1aYNJnJjl9mTH8WtKdJwHBTJtTZ6NpqOaHVg0CUYf
-	4wDGOTP6yXHK7buG7odV4CkMCtbyoRqypEeYelKVBlHXtbS6CGQAXoPha4EKnVi96cDwUlBRNME
-	JHvYb/p+nuAHhwI+TE19mOaC35qkOYrXFZAi/gXX4UlRPXPq2E6GSjw39h+qko1IxL9L4MVmk0Z
-	KgP2o1xjfQB1Pjy1mhyWbGGyVQqXtLGWQtKA1ldUC1kLfmq4e+On2EsxFVECDsbtzON9jpoaBWf
-	boAz6/Dmgfh5ZjyMG9W76HqKE4U5HPlOqlFWnsTOwE6vgaNcdqSj9EOw0w==
-X-Received: by 2002:a05:690e:4399:b0:667:bc49:373d with SMTP id
- 956f58d0204a3-669056d0cf1mr334752d50.33.1785220650016; Mon, 27 Jul 2026
- 23:37:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="aaQOmUVy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ypozL6sMFunUiATWChn63b6DViOWBK40mVkmENL75odnoqCDvdcyq7tMWMyKFC2sCVBz24KNmGUFHsAIjuPgn/j1BfVhHzFgj8dPg8reiYZ3rQyGom85YdSBA+AzQDw0+BCBDx9aBKy+MwkigLAYwhcrfzt97trEQSkr3YWUKsHyLk1eiVD9cjFMFgXLSyuZmIkqsb98AryAWOu6F9iRhD/jf5mn9nBaGrog0mxKYbVlcgzdAGDxSbNF9p5nsa9FFGR7EavCTX9hotmGBb1S2tPbaWzciF0OFdLw/uLJORE0SwLD2gxO4QuwaalZazSOHwBQApFNXU6BICcmn9rq2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eyL/hfKSB2Q7UE8+kqBg08f/n4em6ocaSFQLBZzmR/U=;
+ b=f/YG46glgCMc9hLYhCRAK0dw9W/Rlr1E2kY14uMR3Z22TCpj5KIMQVHFUapetQ4KLDHqzg4St7fvyBIM2+uaiM5SHCdaeVn0g2UdbDGzDAJIqCfDniGGHm/MLYIR/zXiUoywexaggofM85exNxb/KoZ5wu6IQV6fyhzwvG4nzahaXLWQcATmZcbsLyaNuHPDVGPnNWXzGxsf240UOHFPdurjakQR/i3vm2QuFjzXhmvHR0Yloyg8kZMlqvgaSf2Jw/CKFYfKE0stiQZ276pphRn0foT3qE2lJ5XepT5fH5IkT2MGY3UwqzGLcjxi6Ifbp3LdhdoQ1oqorfsp3Ji9xg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eyL/hfKSB2Q7UE8+kqBg08f/n4em6ocaSFQLBZzmR/U=;
+ b=aaQOmUVyjMPNImN42wS0YB9q39I4MnGntBstoTjqalScBkev0PVWIbM551VXxwAsFSkRYInEjxEYxglwyWQV9JwQKzMrGx2vZ4c6KuTKfbos5u6x6JS0tGbd0YveLvHadLXhNHhYKFJWcfCspELWGYGPiaB8FuHfFyWoMoeySof9Z2d9lw2ERwG/0hDpjcNzYEw/ai9Ps3zAERNYADDA6IWRckokMR+5acnWDMHEHy4O46brFMRhJlUJiP2KziUU7VVUY4ElZ2OEPb4gS3ZKmCxaUmqowlhULWErbcFc2qP3AbPJUzLKI5G2A1RSLM3kNt0iPLHcPHbzRcBeZ5fe7g==
+Received: from DU2PR04MB8677.eurprd04.prod.outlook.com (2603:10a6:10:2dc::14)
+ by MIYPR04MB12575.eurprd04.prod.outlook.com (2603:10a6:290:7b::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
+ 2026 07:21:42 +0000
+Received: from DU2PR04MB8677.eurprd04.prod.outlook.com
+ ([fe80::9cc3:2ef9:9259:e963]) by DU2PR04MB8677.eurprd04.prod.outlook.com
+ ([fe80::9cc3:2ef9:9259:e963%4]) with mapi id 15.21.0245.012; Tue, 28 Jul 2026
+ 07:21:42 +0000
+From: Bough Chen <haibo.chen@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"Bough Chen (OSS)" <haibo.chen@oss.nxp.com>
+CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>
+Subject: RE: [PATCH] spi: spi-nxp-fspi: add per-SoC SDR/DTR clock rate limits
+ for all supported SoCs
+Thread-Topic: [PATCH] spi: spi-nxp-fspi: add per-SoC SDR/DTR clock rate limits
+ for all supported SoCs
+Thread-Index: AQHdHacVm0HSuDJt+EuMcK6qXNRw37aBFgYAgAFxDIA=
+Date: Tue, 28 Jul 2026 07:21:41 +0000
+Message-ID:
+ <DU2PR04MB86772A9846DC36908514DFED90CB2@DU2PR04MB8677.eurprd04.prod.outlook.com>
+References: <20260727-fspi-clock-v1-1-f4f3be6c366d@nxp.com>
+ <20260727091655.888821F000E9@smtp.kernel.org>
+In-Reply-To: <20260727091655.888821F000E9@smtp.kernel.org>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU2PR04MB8677:EE_|MIYPR04MB12575:EE_
+x-ms-office365-filtering-correlation-id: c2d95fa2-6502-4449-15f3-08deec78df4e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|19092799006|1800799024|366016|376014|38070700021|56012099006|11063799006|10067099003|4143699003|22082099003|18002099003|3023799007|4133799003;
+x-microsoft-antispam-message-info:
+ wvfeU5wEY+zHYvdDH7fWocywOzmgUs+ci69dsl9f85o5ZnXpZwyZPKz69zonUF4ymrpWqRpH63A3Eq36FTxdxyji0DPNIOvGB/20tykKXwALuSPWhMJ7DENOL0UMc+IakFToNIeDAnHZY94wpibXyeqR2pJFdnmCLxm5aym4UwJfL0BlfvZDgzpPPQtiv82B2hDRfhLkIqvAaGFoGgwI1sNBenIoAXCBUr/n5gTOLMQ1bBulZXLYnuGQgH16Y39eU871Squ7Ju1acFIk4wL3vWzkoxgsVq6vwxMB4q8CVmTnvp4m6ffKPwrz8JU9JgyxP2ixH90sVlTb3Lf/HMz8M6hQCYFExPRwvMVR8KR7/bKIlMMqsC86zUXdAIAKMhKPtkslwC/nqHIUjMU5QZopGngqYtsnbaMkiaNes1qvjy4Kg+rWUfx+Gz6SKiLy1aLhaqlIWJbtTr0Sd4BYGb9hyHOqcq2Ax9sGETaRvtXbZa2FAJ0hGmAcPlwYIQtuZU4ues4fjzbk7/XDQbqcOzzG+jzZclzLmVRlgoYm7rctiBurmGrthgEziCFvn3NGpUnJ4cM4X9O0GBvEYh355phEL34CwKqxyUv5+ByPTAT1qLzymP5+4HsyxGHqo5gN73c8Aau+MgIS6XD3Xp/G7slApzQdhGKxNcl1LAjwPBSQTEU=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8677.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(19092799006)(1800799024)(366016)(376014)(38070700021)(56012099006)(11063799006)(10067099003)(4143699003)(22082099003)(18002099003)(3023799007)(4133799003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?gb2312?B?aXMyemduR2t1R2ZwSGkwcE1xK2pCVUhjQ3laUWxYZFVtZWplZktjQnhHVkdT?=
+ =?gb2312?B?YlEvZTFVK0Y3MEhjRGtBc0J2WFZuRG9Iby9NSFlqYjl4QmhjQWRqQ2hPeTY1?=
+ =?gb2312?B?UFlaZXdyMmV2VGJNTzl1ejUzdVFscWo2OVppYzlhYjB4K0J0ejBYY1pJU2VC?=
+ =?gb2312?B?cGFCYnhiTUt2WVBWeTdiZ2UvNU1MYXFVTjg5bld4RUt0OEc1K0RmSkJGVWlR?=
+ =?gb2312?B?UzFXNHpRa1RPTW9vN3VQb0VaTmhmRlB0V0hiN3EzMm91blZBVFZkd3NDRElt?=
+ =?gb2312?B?MzFDRTY5MEhkcWt0SFZDY1ZHdWN5c1Q4MTlsZUszNXYwQ3huaUFpRXZ5WHFO?=
+ =?gb2312?B?eWxTemhFdDFWWjNOdDZ2ajR0QUhyU2NZN1pzSENVazREQTQ4Vm5sVFRDeVhn?=
+ =?gb2312?B?ZHg5MWFnVjF1aWhMS3JNOWJscUpmc3l3dkNpYTdzaFllZWF0ZlA1Tm9XVm0v?=
+ =?gb2312?B?eHp1dmtZbnFBbTlyRFB0SWFoSjVpTkl6YmcwU2d4ZFhOY1RSRkgzU2M1MXdH?=
+ =?gb2312?B?MlBHc3cxbUdFY2ZIQjFHWkVvMXZ0VTJTNVhQak1QVGs1KzhPMmJvSk5GV25R?=
+ =?gb2312?B?SVBiQkF2dFNqaFFHT1gzOFpGS2Z4NSttaHFNakdXbERra0M5djdHRGVGcXp1?=
+ =?gb2312?B?OGJEdHZMemFReG1EelJJS1lneG5tUW1WT2xwM0dQRWRkTGRzbE1hRWJWdjNh?=
+ =?gb2312?B?c3M1aHJTOWwxZnBtRXNKeEM2Y20ybXloOHNYaUx1Ymt6aVFZbnNGTHZUcWd0?=
+ =?gb2312?B?eDhMaC9jOE9BSUNVSUlwSTNiMHVEdlM4cmRoS241b0pTd2VhQ1lzczBBUkFU?=
+ =?gb2312?B?cnY1eVFZeXJ0bWRnd2hycFdXNTVRRG5oQk5aNjJzNmNMZjZCbWhGY29uZHBM?=
+ =?gb2312?B?QjhsN1JVdU5NT2ljbkVxN3dzKzhDVGMxcVNYb040SGRUQ2pQNVJkZ0ZaQ3Ru?=
+ =?gb2312?B?SlhGZWxpbGhkVFVUUXpjWmZsWEo3QXE2N3ZqYUhtNWJwUUxPb2hWYW1ud3pt?=
+ =?gb2312?B?NmFhWlZQLy9lWDJRN2V2amVKdFM1Q0ErUGVaY25zcGZlUlhLa0dVMnpIcFRX?=
+ =?gb2312?B?ZlBpeEE1d0U4WXNTQkNzb0JTV1NhalUwMFJQYytUSTJDWjdhV1FCT2tYcjFn?=
+ =?gb2312?B?a3pGcUNtRGVoaXc5K05FNUZ2TWJvaUV4a0IzN1BLNEpOTSttMCtxSEJCcjlC?=
+ =?gb2312?B?WUc0QWN0a2g2b3MrVXlJbWFXNUdGVE8rbnBjeGRnNFF2N1I3RWUvVGlvREFT?=
+ =?gb2312?B?M1lmY01iQTV1ZzBCWGU5d29TZkNDY01NZHpuVDJLTWVRQU9tKzdiQnEvbk9C?=
+ =?gb2312?B?eXFkWE9BMDFQcFJDbW1OQWpaWW5nWkVJMG1LQ0t6ZDV0TlhVdDlHNngxZndh?=
+ =?gb2312?B?eFgvMzFibUZEVXFKTmU3YkIzaDRSNHM1K0M3TUNtQzdlTm55YnFmYk8vSUJC?=
+ =?gb2312?B?M0N0R05jdElEYTRXT3lyRXUxZGs1bkxCcXZNZFNzV2JhRk4yRWs4bGRPKzdL?=
+ =?gb2312?B?ZVB5dG51WjNqQTVJaFl5YzgraXlnU2VsY1ZmWFNGa3k0cG43U0xDcUx0bUNX?=
+ =?gb2312?B?emRnRmdYMHpKRFJwZVZKVUVtQzBISkY2ZkVuM2pMSUwzZWMxbndYdjRVNFV1?=
+ =?gb2312?B?eWN3THFZMEJxa1hndW9EZm5BT3U5ZnM3cUxqWkV0eDZzT21YNk9mbDY2cU9J?=
+ =?gb2312?B?MFN5amJUU2puNVUxcStPOUFpVkltTzNkVGVXaFlrYUo1UkZTVkdMTUhudG9G?=
+ =?gb2312?B?VmUwaDJQbkVZVkdQVEpRMEFyUkdNR1hmbzR0OXNxdDZJL3FyKzlrQ2k1RkNx?=
+ =?gb2312?B?YWZZMjRUYnMxN2NXVU9pK0hJS05yL0hiZ1ErY1Qrb0JNNExkZXluT2pXZ1lp?=
+ =?gb2312?B?YzFPdUk1Y1NtV3hrcmRMUUxuQlo5S25aVEpYSDdlM01sdDdCZVdhUzZiVktE?=
+ =?gb2312?B?NkF3STJCOWxVTzhqTVBESWdYbUhKTWlZS1ZjRzQwWkQ2ejlMbEVENjJ0VW5F?=
+ =?gb2312?B?cEllNlRGd3pOV1BBLzBaTWdBeG56elVnN29qRGpSdnB5ZWRKcTBDU2pqNG1j?=
+ =?gb2312?B?V0JnWXREeU5QK040a1JSUHVSTWFubzlWbzQvd2hqK3M0Lzc3SmdFUWxkNW1j?=
+ =?gb2312?B?MTRKVTBmSFBrcGdRaFB6VDR1b002QTVwMk03bGtaUTlSOVAyNXJBRFI3bW9H?=
+ =?gb2312?B?cUprSFBGUmt4VmExYkFQTmZFUUczN1NtZ0tpNEdNTmtwRldrckk1aUpGTk85?=
+ =?gb2312?B?Nk5LSVYyT2hFcGQ0bW5RTGxYRi9FY0ZzaVBJNWtmN0VZbGs2d3NIeE9Zb0Z2?=
+ =?gb2312?Q?Rw/+DVY/7fWdHx9b/q?=
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260727-msm-next-quad-pipe-split-v21-1-965dfa5b669e@linaro.org> <20260727095508.AFE0B1F00A3A@smtp.kernel.org>
-In-Reply-To: <20260727095508.AFE0B1F00A3A@smtp.kernel.org>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Tue, 28 Jul 2026 14:37:18 +0800
-X-Gm-Features: AUfX_mxx-inJEI6IbUDD3Rqk6HOiXBBAdRSlUJRhQEKqDucg-a4vSYyIbI9dTFw
-Message-ID: <CABymUCPWn8qz7pg8VOtA+N15yHG8id7L87fpkMMsTV=2SovM1g@mail.gmail.com>
-Subject: Re: [PATCH v21] drm/msm/dpu: Enable quad-pipe for DSC and dual-DSI case
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8677.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c2d95fa2-6502-4449-15f3-08deec78df4e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jul 2026 07:21:41.9442
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IdaNu2PrthBizC5afKAiaIdLJvFsyXPoJrw681asC/l/Rv4fa8WE5aTy54yhmIGGIKLs8GBJBW0xfBb/pDgpAw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIYPR04MB12575
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B47=E6=9C=8827=E6=97=A5=E5=91=
-=A8=E4=B8=80 17:55=E5=86=99=E9=81=93=EF=BC=9A
-
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Unused pipe configurations are not cleared when transitioning fr=
-om quad-pipe to fewer pipes, leading to underflows, stale pointer dereferen=
-ces, and hardware corruption.
-> - [High] Missing VSYNC source configuration for the second physical encod=
-er in quad-pipe configurations.
->
-> Pre-existing issues:
-> - [High] `dpu_crtc_get_lm_crc` and `dpu_crtc_get_encoder_crc` leak uninit=
-ialized kernel stack memory to userspace.
-> --
->
-> --- Patch [1]: [PATCH v21] drm/msm/dpu: Enable quad-pipe for DSC and dual=
--DSI case ---
-> commit f34d7a5a3191bc6943da26710d69eaffa718ab5d
-> Author: Jun Nie <jun.nie@linaro.org>
-> Subject: drm/msm/dpu: Enable quad-pipe for DSC and dual-DSI case
->
-> This commit expands the pipe array size to 4 to support quad-pipe topolog=
-ies.
-> It requests 4 mixers and 4 DSCs for high-resolution scenarios where dual
-> interfaces are enabled for virtual planes. Additional pipes enable parall=
-el
-> data processing to stay within width constraints and MDP clock rates.
->
-> Link: https://lore.kernel.org/r/20250918-v6-16-rc2-quad-pipe-upstream-4-v=
-16-10-ff6232e3472f@linaro.org
->
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm=
-/msm/disp/dpu1/dpu_crtc.c
-> > index 42d0a529b4d51..1c6d65ca561fd 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > @@ -200,7 +200,7 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crt=
-c,
-> >               struct dpu_crtc_state *crtc_state)
-> >  {
-> >       struct dpu_crtc_mixer *m;
-> > -     u32 crcs[CRTC_DUAL_MIXERS];
-> > +     u32 crcs[CRTC_QUAD_MIXERS];
->
-> [Severity: High]
-> This is a pre-existing issue, but does expanding this array to 4 increase=
- the
-> amount of uninitialized kernel stack memory leaked to userspace?
->
-> When populating the array in dpu_crtc_get_lm_crc(), if a layer mixer is
-> unassigned or lacks the collect_misr operation, the loop skips initializa=
-tion
-> for that element. Also, if num_mixers dynamically decreases after CRC
-> generation is enabled, drm_crtc_add_crc_entry() still copies values_cnt
-> elements, which can read past the initialized elements.
->
-> Can this same uninitialized stack memory leak occur in
-> dpu_crtc_get_encoder_crc() with crcs[INTF_MAX]?
-
-Increasing the array size here does not mean leaking stack to user space. T=
-he
-crc data is copied to user space with necessary length that's from the
-calculation
-of  dpu_encoder_get_crc_values_cnt().
->
-> [ ... ]
->
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
-drm/msm/disp/dpu1/dpu_encoder.c
-> > index 778e231d49677..90d44c4777fd0 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -55,7 +55,7 @@
-> >  #define MAX_PHYS_ENCODERS_PER_VIRTUAL \
-> >       (MAX_H_TILES_PER_DISPLAY * NUM_PHYS_ENCODER_TYPES)
-> >
-> > -#define MAX_CHANNELS_PER_ENC 2
-> > +#define MAX_CHANNELS_PER_ENC 4
->
-> [Severity: High]
-> Does this quad-pipe configuration leave the second interface without a va=
-lid
-> VSYNC source?
->
-> In a quad-pipe dual-interface configuration, the mapping between physical
-> encoders and pingpong blocks uses a stride of 2 (the first uses hw_pp[0] =
-and
-> the second uses hw_pp[2]).
->
-> However, _dpu_encoder_update_vsync_source() appears to assign VSYNC sourc=
-es
-> using sequential indices:
->
-> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:_dpu_encoder_update_vsync_sou=
-rce() {
->     ...
->     for (i =3D 0; i < dpu_enc->num_phys_encs; i++)
->         vsync_cfg.ppnumber[i] =3D dpu_enc->hw_pp[i]->idx;
->     ...
-> }
->
-> Will this configure hw_pp[0] and hw_pp[1] instead of the intended hw_pp[0=
-]
-> and hw_pp[2], potentially causing TE timeouts and visual tearing?
-
-_dpu_encoder_update_vsync_source is used only for cmd mode DSI panel. While=
- only
-video mode panel is supported for dual panel currently. And the VSYNC
-source should
-be aligned in timing, due to the 2 panel are modeled as single logic
-panel in CRTC level.
-So there is only 1 VSYNC source in high level DRM framework.
->
-> [ ... ]
->
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/=
-drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > index 0e65bf5ddc4a6..fd1f3e7982062 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > @@ -34,7 +34,7 @@
-> >  #define DPU_MAX_PLANES                       4
-> >  #endif
-> >
-> > -#define STAGES_PER_PLANE             1
-> > +#define STAGES_PER_PLANE             2
->
-> [Severity: High]
-> Can increasing STAGES_PER_PLANE to 2 lead to a stale pointer dereference =
-or
-> hardware corruption when transitioning to fewer pipes?
->
-> When transitioning from a quad-pipe topology (4 mixers, 2 stages) to a si=
-ngle
-> or dual-pipe topology (1 stage), the duplicated pipe_cfg array retains st=
-ale
-> rectangle configurations because dpu_plane_split() only clears up to the =
-new
-> num_stages:
->
-> drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:dpu_plane_split() {
->     ...
->     for (stage_id =3D 0; stage_id < num_stages; stage_id++) {
->     ...
-> }
->
-> Later, dpu_plane_virtual_assign_resources() iterates up to STAGES_PER_PLA=
-NE
-> and allocates an SSPP for the stale configuration.
->
-> During the atomic commit, if cstate->num_mixers shrinks to 1, the calcula=
-tion
-> in _dpu_crtc_blend_setup_mixer() underflows:
->
-> drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:_dpu_crtc_blend_setup_mixer() {
->     ...
->     lms_in_pair =3D min(cstate->num_mixers - (stage * PIPES_PER_STAGE),
->                       PIPES_PER_STAGE);
->     ...
-> }
->
-> This causes min(4294967295U, 2U) to evaluate to 2.
->
-> Will _dpu_crtc_blend_setup_pipe() then attempt to program lms_in_pair =3D=
- 2
-> mixers using a pointer starting at mixer[2]? Since num_mixers =3D=3D 1, c=
-ould
-> accessing mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(...) cause =
-a
-> NULL pointer dereference?
-
-No. It will not happen, because pipe and pipe_cfg is allocated and zeroed f=
-or
-every plane preparation in dpu_crtc_assign_planes. If num_mixers is reset, =
-the
-pipe_cfg is reconfigured, sspp will not be allocated for unused pipe_cfg. T=
-hus
-below check in _dpu_crtc_blend_setup_mixer() will avoid accessing to unused
- mixer[lm_idx]
-
-if (!pstate->pipe[pipe_idx].sspp)
-   continue;
-
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -883,6 +883,8 @@ static int dpu_plane_split(struct drm_plane *plane,
-        u32 num_lm;
-        int stage_id, num_stages;
-
-+       memset(&pstate->pipe[0], PIPES_PER_PLANE * sizeof(struct dpu_sw_pip=
-e));
-+       memset(&pstate->pipe_cfg[0], PIPES_PER_PLANE * sizeof(struct
-dpu_sw_pipe_cfg));
-        max_linewidth =3D pdpu->catalog->caps->max_linewidth;
-
-        /* In non-virtual plane case, one mixer pair is always needed. */
-@@ -936,11 +938,8 @@ static int dpu_plane_split(struct drm_plane *plane,
-                 */
-                if (!drm_rect_clip_scaled(&pipe_cfg->src_rect,
-                                          &pipe_cfg->dst_rect,
--                                         &mixer_rect)) {
--                       memset(pipe_cfg, 0, 2 * sizeof(struct dpu_sw_pipe_c=
-fg));
--
-+                                         &mixer_rect))
-                        continue;
--               }
-
-                pipe_cfg->dst_rect.x1 -=3D mixer_rect.x1;
-                pipe_cfg->dst_rect.x2 -=3D mixer_rect.x1;
-@@ -967,8 +966,6 @@ static int dpu_plane_split(struct drm_plane *plane,
-                                        DRM_RECT_FMT " and " DRM_RECT_FMT "=
-\n",
-                                        DRM_RECT_ARG(&pipe_cfg->src_rect),
-                                        DRM_RECT_ARG(&r_pipe_cfg->src_rect)=
-);
--               } else {
--                       memset(r_pipe_cfg, 0, sizeof(struct dpu_sw_pipe_cfg=
-));
-                }
-
-
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727-msm-next=
--quad-pipe-split-v21-1-965dfa5b669e@linaro.org?part=3D1
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJuZWwu
+b3JnIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPg0KPiBTZW50OiAyMDI2xOo31MIyN8jVIDE3OjE3
+DQo+IFRvOiBCb3VnaCBDaGVuIChPU1MpIDxoYWliby5jaGVuQG9zcy5ueHAuY29tPg0KPiBDYzog
+aW14QGxpc3RzLmxpbnV4LmRldjsgRnJhbmsuTGlAa2VybmVsLm9yZw0KPiBTdWJqZWN0OiBSZTog
+W1BBVENIXSBzcGk6IHNwaS1ueHAtZnNwaTogYWRkIHBlci1Tb0MgU0RSL0RUUiBjbG9jayByYXRl
+IGxpbWl0cw0KPiBmb3IgYWxsIHN1cHBvcnRlZCBTb0NzDQo+IA0KPiBUaGFuayB5b3UgZm9yIHlv
+dXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAzIHBvdGVudGlhbCBpc3N1
+ZShzKQ0KPiB0byBjb25zaWRlcjoNCj4gDQo+IFByZS1leGlzdGluZyBpc3N1ZXM6DQo+IC0gW0hp
+Z2hdIE1pc3NpbmcgY2xvY2sgcmUtZW5hYmxlIG9uIGVycm9yIHBhdGggaW4gYG54cF9mc3BpX3Nl
+bGVjdF9tZW1gIGxlYWRzDQo+IHRvIHN5bmNocm9ub3VzIGFib3J0cy4NCj4gLSBbSGlnaF0gRmxl
+eFNQSSBgTUNSMGAgcmVnaXN0ZXIgaXMgbW9kaWZpZWQgd2hpbGUgdGhlIG1vZHVsZSBpcyBlbmFi
+bGVkLg0KPiAtIFtIaWdoXSBGbGF3ZWQgZGV0ZWN0aW9uIG9mIERUUiBtb2RlIGZvciBvcGVyYXRp
+b25zIG1pc3Npbmcgb3B0aW9uYWwgcGhhc2VzDQo+IChlLmcuLCBjb21tYW5kcyB3aXRoIG5vIGRh
+dGEpLg0KPiAtLQ0KPiANCj4gLS0tIFBhdGNoIFsxXTogW1BBVENIXSBzcGk6IHNwaS1ueHAtZnNw
+aTogYWRkIHBlci1Tb0MgU0RSL0RUUiBjbG9jayByYXRlIGxpbWl0cw0KPiBmb3IgYWxsIHN1cHBv
+cnRlZCBTb0NzIC0tLSBjb21taXQNCj4gNDVmZDdkZWYwMTliZTJiNGZiNWVjNzljNTdjZmU5Y2Zk
+OTNkY2ZiNA0KPiBBdXRob3I6IEhhaWJvIENoZW4gPGhhaWJvLmNoZW5AbnhwLmNvbT4NCj4gDQo+
+IHNwaTogc3BpLW54cC1mc3BpOiBhZGQgcGVyLVNvQyBTRFIvRFRSIGNsb2NrIHJhdGUgbGltaXRz
+IGZvciBhbGwgc3VwcG9ydGVkIFNvQ3MNCj4gDQo+IFRoaXMgcGF0Y2ggaW50cm9kdWNlcyBwZXIt
+U29DIGNsb2NrIHJhdGUgbGltaXRzIGZvciBib3RoIFNEUiBhbmQgRFRSIG1vZGVzDQo+IGJ5IGFk
+ZGluZyBtYXhfc2RyX3JhdGUgYW5kIG1heF9kdHJfcmF0ZSB0byBueHBfZnNwaV9kZXZ0eXBlX2Rh
+dGEuIEl0DQo+IHVwZGF0ZXMNCj4gbnhwX2ZzcGlfc2VsZWN0X3J4X3NhbXBsZV9jbGtfc291cmNl
+KCkgdG8gdXNlIHRoZXNlIFNvQy1zcGVjaWZpYyBsaW1pdHMNCj4gaW5zdGVhZCBvZiBhIGdsb2Jh
+bCAxNjZNSHogY2FwLg0KPiANCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9zcGkvc3BpLW54cC1m
+c3BpLmMgYi9kcml2ZXJzL3NwaS9zcGktbnhwLWZzcGkuYw0KPiA+IGluZGV4IGQ5NGEyYTdiOThk
+NDQuLjExNTlmNWZjOGEzYTYgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9zcGkvc3BpLW54cC1m
+c3BpLmMNCj4gPiArKysgYi9kcml2ZXJzL3NwaS9zcGktbnhwLWZzcGkuYw0KPiANCj4gWyAuLi4g
+XQ0KPiANCj4gPiBAQCAtNjkxLDEwICs3NTUsMjAgQEAgc3RhdGljIHZvaWQNCj4gbnhwX2ZzcGlf
+c2VsZWN0X3J4X3NhbXBsZV9jbGtfc291cmNlKHN0cnVjdCBueHBfZnNwaSAqZiwNCj4gPiAgCXJl
+ZyA9IGZzcGlfcmVhZGwoZiwgZi0+aW9iYXNlICsgRlNQSV9NQ1IwKTsNCj4gPiAgCWlmIChvcF9p
+c19kdHIpIHsNCj4gPiAgCQlyZWcgfD0gRlNQSV9NQ1IwX1JYQ0xLU1JDKDMpOw0KPiANCj4gW1Nl
+dmVyaXR5OiBIaWdoXQ0KPiBUaGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLCBidXQgbW9kaWZ5
+aW5nIHRoZSBGbGV4U1BJIE1DUjAgcmVnaXN0ZXIgd2hpbGUgdGhlDQo+IG1vZHVsZSBpcyBlbmFi
+bGVkIGNhbiBsZWFkIHRvIHVucHJlZGljdGFibGUgSVAgYmVoYXZpb3IuDQo+IA0KPiBEb2VzIHRo
+aXMgY29kZSBuZWVkIHRvIGFzc2VydCB0aGUgTURJUyBiaXQgKGRpc2FibGUgdGhlIG1vZHVsZSkg
+YmVmb3JlDQo+IG1vZGlmeWluZyBNQ1IwLCBhcyBoYXJkd2FyZSBzdGF0ZSBtYWNoaW5lcyBtaWdo
+dCBpZ25vcmUgcmVnaXN0ZXIgd3JpdGVzIG9yDQo+IGNvcnJ1cHQgdGhlaXIgaW50ZXJuYWwgc3Rh
+dGUgaWYgY2hhbmdlZCBvbiB0aGUgZmx5Pw0KDQpZZXMsIGNvcnJlY3QsIHRoaXMgc2hvdWxkIG1h
+a2UgdGhlIGNvZGUgbW9yZSBzdHJvbmcsIEkgd2lsbCBmaXggaXQgaW4gYW5vdGhlciBwYXRjaC4N
+Cg0KPiANCj4gPiAtCQlmLT5tYXhfcmF0ZSA9IDE2NjAwMDAwMDsNCj4gPiArCQkvKg0KPiA+ICsJ
+CSAqIFVzZSB0aGUgU29DLXNwZWNpZmljIERUUiBtYXggcmF0ZSBpZiBwcm92aWRlZCwgb3RoZXJ3
+aXNlDQo+ID4gKwkJICogZmFsbCBiYWNrIHRvIDE2Nk1IeiAobGltaXQgZnJvbSBJTVg4TU4gZGF0
+YXNoZWV0IKHsMy45LjkpLg0KPiA+ICsJCSAqLw0KPiA+ICsJCWYtPm1heF9yYXRlID0gZi0+ZGV2
+dHlwZV9kYXRhLT5tYXhfZHRyX3JhdGUgPw0KPiA+ICsJCQkgICAgICBmLT5kZXZ0eXBlX2RhdGEt
+Pm1heF9kdHJfcmF0ZSA6IDE2NjAwMDAwMDsNCj4gPiAgCX0gZWxzZSB7CS8qc2VsZWN0IG1vZGUg
+MCAqLw0KPiANCj4gWyAuLi4gXQ0KPiANCj4gDQo+IFdoaWxlIHJldmlld2luZyB0aGlzIHBhdGNo
+LCBJIG5vdGljZWQgYSBjb3VwbGUgb2Ygb3RoZXIgcHJlLWV4aXN0aW5nIGlzc3VlcyBpbg0KPiBu
+eHBfZnNwaV9zZWxlY3RfbWVtKCkgd2l0aGluIHRoZSBzYW1lIGZpbGU6DQo+IA0KPiBkcml2ZXJz
+L3NwaS9zcGktbnhwLWZzcGkuYzpueHBfZnNwaV9zZWxlY3RfbWVtKCkgew0KPiAgICAgLi4uDQo+
+IAkvKiBmbGV4c3BpIG9ubHkgc3VwcG9ydCBvbmUgRFRSIG1vZGU6IDhELThELThEICovDQo+IAli
+b29sIG9wX2lzX2R0ciA9IG9wLT5jbWQuZHRyICYmIG9wLT5hZGRyLmR0ciAmJiBvcC0+ZHVtbXku
+ZHRyICYmDQo+IG9wLT5kYXRhLmR0cjsNCj4gICAgIC4uLg0KPiB9DQo+IA0KPiBbU2V2ZXJpdHk6
+IEhpZ2hdDQo+IFRoaXMgaXMgYSBwcmUtZXhpc3RpbmcgaXNzdWUsIGJ1dCBkb2VzIHRoaXMgYm9v
+bGVhbiBjaGVjayBzdHJpY3RseSByZXF1aXJlIGFsbCBmb3VyDQo+IHBoYXNlcyB0byBoYXZlIHRo
+ZSBEVFIgZmxhZyBzZXQ/DQo+IA0KPiBGb3IgYW4gOEQtOEQtOEQgY29tbWFuZCBtaXNzaW5nIGFu
+IG9wdGlvbmFsIHBoYXNlIChlLmcuLCBSZWFkIFN0YXR1cw0KPiBSZWdpc3RlciBtaXNzaW5nIGFu
+IGFkZHJlc3MgcGhhc2UpLCBzcGktbWVtIHNldHMgbmJ5dGVzPTAgYW5kIGR0cj0wIGZvcg0KPiB0
+aGF0IHBoYXNlLg0KPiBUaGlzIHdvdWxkIGV2YWx1YXRlIHRvIGZhbHNlLCBjYXVzaW5nIHZhbGlk
+IERUUiBvcGVyYXRpb25zIHRvIGZhbGwgYmFjayB0byBTRFINCj4gc2FtcGxlIGNsb2NrIGFuZCBo
+YWxmIHRoZSB0YXJnZXQgZnJlcXVlbmN5Lg0KDQpUaGlzIGlzIGZhbHNlIHBvc2l0aXZlLCBNVEQg
+bGF5ZXIgYWxyZWFkeSBndWFyYW50ZWUgdGhlc2UgZm91ciBmbGFncyBhbGwgYmUgdHVyZSBmb3Ig
+OEQtOEQtOEQuDQoNCg0KPiANCj4gZHJpdmVycy9zcGkvc3BpLW54cC1mc3BpLmM6bnhwX2ZzcGlf
+c2VsZWN0X21lbSgpIHsNCj4gICAgIC4uLg0KPiAJbnhwX2ZzcGlfY2xrX2Rpc2FibGVfdW5wcmVw
+KGYpOw0KPiANCj4gCXJldCA9IGNsa19zZXRfcmF0ZShmLT5jbGssIHJhdGUpOw0KPiAJaWYgKHJl
+dCkNCj4gCQlyZXR1cm47DQo+IA0KPiAJcmV0ID0gbnhwX2ZzcGlfY2xrX3ByZXBfZW5hYmxlKGYp
+Ow0KPiAJaWYgKHJldCkNCj4gCQlyZXR1cm47DQo+ICAgICAuLi4NCj4gfQ0KPiANCj4gW1NldmVy
+aXR5OiBIaWdoXQ0KPiBUaGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLCBidXQgZG9lcyB0aGlz
+IGNvZGUgbGVhdmUgdGhlIEZsZXhTUEkgY2xvY2sgZGlzYWJsZWQNCj4gb24gdGhlIGVycm9yIHBh
+dGg/DQo+IA0KPiBJZiBjbGtfc2V0X3JhdGUoKSBvciBueHBfZnNwaV9jbGtfcHJlcF9lbmFibGUo
+KSBmYWlscywgdGhlIGZ1bmN0aW9uIHJldHVybnMgZWFybHkNCj4gd2l0aG91dCByZXN0b3Jpbmcg
+dGhlIGNsb2NrLg0KPiANCj4gU2luY2UgaXQgcmV0dXJucyB2b2lkLCB0aGUgY2FsbGVyIGlzIHVu
+YXdhcmUgb2YgdGhlIGZhaWx1cmUgYW5kIG1pZ2h0DQo+IGltbWVkaWF0ZWx5IGFjY2VzcyBoYXJk
+d2FyZSByZWdpc3RlcnMsIHdoaWNoIGNvdWxkIGxlYWQgdG8gc3luY2hyb25vdXMNCj4gZXh0ZXJu
+YWwgYWJvcnRzLg0KDQpZZXMsIHNob3VsZCBiZSBhbiBpc3N1ZSBoZXJlLCB3aWxsIGZpeCBpdCBp
+biBhbm90aGVyIHBhdGNoLg0KDQpSZWdhcmRzDQpIYWlibyBDaGVuDQo+IA0KPiAtLQ0KPiBTYXNo
+aWtvIEFJDQo+IHJldmlldyChpCBodHRwczovL2V1cjAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91
+dGxvb2suY29tLz91cmw9aHR0cHMlM0ElMkYNCj4gJTJGc2FzaGlrby5kZXYlMkYlMjMlMkZwYXRj
+aHNldCUyRjIwMjYwNzI3LWZzcGktY2xvY2stdjEtMS1mNGYzYmU2YzMNCj4gNjZkJTQwbnhwLmNv
+bSUzRnBhcnQlM0QxJmRhdGE9MDUlN0MwMiU3Q2hhaWJvLmNoZW4lNDBueHAuY29tJQ0KPiA3Q2Vi
+NTAyNDRiNmY1MDRiZjcyNjBmMDhkZWViYzAyOTJkJTdDNjg2ZWExZDNiYzJiNGM2ZmE5MmNkOTlj
+NWMNCj4gMzAxNjM1JTdDMCU3QzAlN0M2MzkyMDc0MDc3MTA3NzQzNzQlN0NVbmtub3duJTdDVFdG
+cGJHWnNiDQo+IDNkOGV5SkZiWEIwZVUxaGNHa2lPblJ5ZFdVc0lsWWlPaUl3TGpBdU1EQXdNQ0lz
+SWxBaU9pSlhhVzR6TWlJc0lrDQo+IEZPSWpvaVRXRnBiQ0lzSWxkVUlqb3lmUSUzRCUzRCU3QzAl
+N0MlN0MlN0Mmc2RhdGE9V1k2VUl0cFh2azZ5DQo+IHdGOXJmUWdGZWJ0NGUlMkJzSXBjcUt0MjYx
+ZHlHWGlpWSUzRCZyZXNlcnZlZD0wDQoNCg==
