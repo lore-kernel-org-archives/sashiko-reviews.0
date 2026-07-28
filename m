@@ -1,146 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBB93B5821;
-	Tue, 28 Jul 2026 12:37:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFF2439004
+	for <sashiko-reviews@lists.linux.dev>; Tue, 28 Jul 2026 13:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785242272; cv=none; b=ZstPP0UsZns7zu9HUvT83mQ+03f8ONesSBv3UDKpnB5b98nPXlfCu5Ud5odzGkg7k2A/t6+unsVprEI5c3QHiQWshWPeR+DHGCfw3ES6taIbkTWKsrUzfilHZH82GY4XYSSkqykd1KStXcFof1ofNqDRNP0QpiDrjwmXOD4+oUI=
+	t=1785243992; cv=none; b=rZoGVPAVMNCr2Fd8+Eeuc+JAWV+RKCQbE5LG33bOSF/j0/uMJ22Y646eOO9xgB6Pcsuyjy/P635NvOM+ZNk0StToVjmkP735XHKzi491tiLhdQg4Ryx22VadZI/RFNr+y3gG5DRsXua8GzC9bkHlvwoL5+SmSxoQrF8tx9en684=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785242272; c=relaxed/simple;
-	bh=DX637y4KDCFEN1cOsV5Z70OhhhXzj8mo0h3cR/A3V+M=;
+	s=arc-20240116; t=1785243992; c=relaxed/simple;
+	bh=q5/mIDzzWiyKLYNcj8FB/fEEAWtgq+fxrHFY/wntuLE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rnYWUw1GBizJFhM46lh5PmK4zUkemBDnTpXP5XrRGvZFLHVKa9Pc/toz4DyhJQK4T/btlONSlMQjOsK64UmGuPl+ghaWP6kwiXOE05OMMRVU0FFUJS3yHWUOVgHqxjffqEHMgte0CsQOWwng2FVWUYAeHt9Jg6YnDRc35lS489c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FVoRoJ2z; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FVoRoJ2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987531F000E9;
-	Tue, 28 Jul 2026 12:37:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785242270;
-	bh=UiXW4rbegDHRy0YBZonSLv4tj6oDq4B0rezonfp4rvY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FVoRoJ2zxneGsNJhQOI9ChRmxvo95TsmmH+bvQm4EGCNs8wSOvYSXSUcKQu/xgwVj
-	 3TS2gOPVGbZjAsqJeH5QHR2wNVEAonmDKHL1qhLYJPyELsxa+9MDxDpM5ISZqCE6Sy
-	 yYGrZGY+b5IZsqJrer5VLPgjCKJQAlK/dfOr2YSKAxRohzwKxJPTQIGkss4OOiPhlt
-	 3MWDiTiqCUEyDnxR95DAeLfoBlPh/w4m+mPHCSfJlGMSQyvelbUivp2VhWII5rbSPS
-	 5A9ntbDk1oYQtCYsaeFXEOijiZFwZTs1CQ0zWTVBNBG1ga1KLW47RpHQQvDkzsVDyL
-	 ZNBkN4ctIB6Ew==
-Date: Tue, 28 Jul 2026 14:37:47 +0200
-From: Niklas Cassel <cassel@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ETtIBfctyaAlBjpPBo0KL+ldlZgpgKzpEIojHHDPYyEB+jK7WclpGEtwr2nug9F4a0owP65Nq9H9jTCRSA9ir8HQmxBOjZqDhztTqFd+9oESOlStp1doDks+bqvMFvNuB0B3sTkNCaug7pjxKfYsw4tuJGDC1mkq3vXv/5gf3xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 7E4602029DD;
+	Tue, 28 Jul 2026 15:06:24 +0200 (CEST)
+Received: from pty.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::c5])
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ore@pengutronix.de>)
+	id 1wohVo-001ivV-1O;
+	Tue, 28 Jul 2026 15:06:24 +0200
+Received: from ore by pty.whiteo.stw.pengutronix.de with local (Exim 4.98.2)
+	(envelope-from <ore@pengutronix.de>)
+	id 1wohVo-00000009qr6-1Nua;
+	Tue, 28 Jul 2026 15:06:24 +0200
+Date: Tue, 28 Jul 2026 15:06:24 +0200
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 To: sashiko-reviews@lists.linux.dev
-Cc: dlemoal@kernel.org, linux-ide@vger.kernel.org
-Subject: Re: [PATCH] ata: libata-sata: fix ata_scsi_lpm_supported() iteration
-Message-ID: <amiim2eAvrpsTAvp@ryzen>
-References: <20260728113841.727256-2-cassel@kernel.org>
- <20260728115336.9B4861F00A3D@smtp.kernel.org>
- <amidnlBAeJOks4cw@ryzen>
+Cc: Vincent Mailhol <mailhol@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>, linux-can@vger.kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: Re: [PATCH can v1 1/2] can: j1939: use netdevice_tracker for
+ j1939_{priv,session,ecu} tracking
+Message-ID: <amipUDANStLdpEYW@pengutronix.de>
+References: <20260728055835.1151785-1-o.rempel@pengutronix.de>
+ <20260728055835.1151785-2-o.rempel@pengutronix.de>
+ <20260728061338.9A6711F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <amidnlBAeJOks4cw@ryzen>
+In-Reply-To: <20260728061338.9A6711F000E9@smtp.kernel.org>
+X-Sent-From: Pengutronix Hildesheim
+X-URL: http://www.pengutronix.de/
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
 
-On Tue, Jul 28, 2026 at 02:16:30PM +0200, Niklas Cassel wrote:
-> On Tue, Jul 28, 2026 at 11:53:36AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] ata_scsi_lpm_supported() skips checking devices on the slave link because it uses the ATA_LITER_EDGE iterator. This allows userspace to enable Link Power Management (LPM) on a port where the slave device does not support it (has ATA_QUIRK_NOLPM).
-> > --
-> > 
-> > --- Patch [1]: [PATCH] ata: libata-sata: fix ata_scsi_lpm_supported() iteration ---
-> > commit 32bd728de2e1b6025504205f3ade16813231e703
-> > Author: Niklas Cassel <cassel@kernel.org>
-> > 
-> > ata: libata-sata: fix ata_scsi_lpm_supported() iteration
-> > 
-> > This commit fixes the inner loop of ata_scsi_lpm_supported() to iterate
-> > over the specific link being evaluated rather than always using the host
-> > link. This prevents the LPM policy from being incorrectly applied or denied.
-> > 
-> > Link: https://lore.kernel.org/linux-ide/20260728112200.B99F21F000E9@smtp.kernel.org/
-> > 
-> > > diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-> > > index b0706c30da052..ad40f516c6d43 100644
-> > > --- a/drivers/ata/libata-sata.c
-> > > +++ b/drivers/ata/libata-sata.c
-> > > @@ -913,7 +913,7 @@ static bool ata_scsi_lpm_supported(struct ata_port *ap)
-> > >  		return false;
-> > >  
-> > >  	ata_for_each_link(link, ap, EDGE) {
-> > > -		ata_for_each_dev(dev, &ap->link, ENABLED) {
-> > > +		ata_for_each_dev(dev, link, ENABLED) {
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does using the ATA_LITER_EDGE iterator
-> > here in ata_scsi_lpm_supported() skip checking devices on the slave link?
-> > 
-> > Since the EDGE iterator skips ap->slave_link, it appears this loop misses
-> > devices on the slave link that might have the ATA_QUIRK_NOLPM quirk.
+On Tue, Jul 28, 2026 at 06:13:38AM +0000, sashiko-bot@kernel.org wrote:
+> --- Patch [1]: [PATCH can v1 1/2] can: j1939: use netdevice_tracker for j1939_{priv,session,ecu} tracking ---
+> commit fa6ae711cbc8e468a294fc1a54de5efa19c0b5b3
+> Author: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 > 
-> Well,
+> can: j1939: use netdevice_tracker for j1939_{priv,session,ecu} tracking
+>     
+> This patch enables netdevice_tracker for j1939_priv, j1939_session, and
+> j1939_ecu structures. It aims to help identify the source of refcount
+> leaks reported by syzbot during unregister_netdevice().
 > 
-> 1) slave_link is only for PATA.
+> > diff --git a/net/can/j1939/bus.c b/net/can/j1939/bus.c
+> > index dc374286eeb6e..cdc3c0a719379 100644
+> > --- a/net/can/j1939/bus.c
+> > +++ b/net/can/j1939/bus.c
+> > @@ -20,6 +20,7 @@ static void __j1939_ecu_release(struct kref *kref)
+> >  	struct j1939_priv *priv = ecu->priv;
+> >  
+> >  	list_del(&ecu->list);
 > 
-> Yes, I know that two sata drivers abuse this:
-> drivers/ata/sata_sis.c:                 rc = ata_slave_link_init(ap);
-> drivers/ata/sata_via.c:         ata_slave_link_init(host->ports[i]);
+> [Severity: High]
+> This is a pre-existing issue, but is it safe to modify priv->ecus here without
+> holding priv->lock?
 > 
-> 
-> 2) The call to ata_eh_link_set_lpm() is protected by:
-> 
-> libata-eh.c:ata_eh_recover()
-> 
-> if (link->lpm_policy != ap->target_lpm_policy) {
-> 	rc = ata_eh_link_set_lpm(link, ap->target_lpm_policy, &dev);
-> }
-> 
-> And the only driver that sets ap->target_lpm_policy is AHCI.
-> 
-> So, I don't think we need to care about the slave link in this case.
+> If a process unbinds a socket and drops its ECU reference concurrently with the
+> network receive path processing a packet:
 
-I guess theoretically, if someone uses a:
+Ack - we will keep it mind. This is not blocker for current patch set.
 
-sata_sis or sata_via, and forces LPM enabled via sysfs, even though it is
-not supported/initialized by any driver other than AHCI... I guess the
-drive might become unresponsive.
-
-But, looking at these drivers, they don't provide a .set_lpm() callback,
-so I don't see how that could actually happen.
-
-
-There is another driver however, that does have a slave_link:
-drivers/ata/ata_piix.c:                 rc = ata_slave_link_init(ap);
-
-And which does have a .set_lpm() callback:
-drivers/ata/ata_piix.c: .set_lpm                = piix_sidpr_set_lpm,
-
-
-So I guess perhaps this problem could happen on ata_piix - which seems to
-be a driver for Intel PATA/SATA controllers.
-
-From a quick look, it seems like
-ata_piix.c calls ata_slave_link_init() only if:
-
-if (ap->flags & ATA_FLAG_SLAVE_POSS) {
-	rc = ata_slave_link_init(ap);
-}
-
-
-
-And:
-PIIX_PATA_FLAGS         = ATA_FLAG_SLAVE_POSS,
-PIIX_SATA_FLAGS         = ATA_FLAG_SATA | PIIX_FLAG_CHECKINTR,
-
-
-And all board definitions using PIIX_PATA_FLAGS seems to have pata_* in
-their name, so I still think we can ignore this Sashiko comment.
-
-
-Kind regards,
-Niklas
+Best Regards,
+Oleksij
+-- 
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
