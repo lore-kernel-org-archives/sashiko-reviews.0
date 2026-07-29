@@ -1,164 +1,191 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A372FC00D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 13:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785332724; cv=none; b=lN7+oTVyBdTI/UxHBY9gzo1LACVy484g56gf8VA8RIkbmKDWpm8DZRMgQJjzHMZout5YfFY7YQvS4DFdgIr6c2ohL5RchgCFJsW3sQmFTidg2AC8rV9YoY3bLf/Cr1SLkoviErIND/bUndL3oEAy7CYDk887MfTG79fV0c7tGrA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785332724; c=relaxed/simple;
-	bh=MM8urWYQILEO8KYnwhxkBDOCBTvPnqCx3vrYzCLLSps=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC6A470448
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 13:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785332741; cv=pass; b=BYNodnn0/8bRJG7XQg5ey6QTT8ck6GDtIe9GdukNV3xsKzijlKmTfJ9tT8o/hHeiGpkDbtCaD+mZSgbs5UVyCPwrnh1+uAZw9EOhx24BQqn3SxFwWfiHMyGs9XUjW8s2FWo5eeHRMpeick+ZNX2ZuqmBvpC7WFYwS+9cjxo0cOI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785332741; c=relaxed/simple;
+	bh=UZAhy5157NkSAMSWJcdNZefOEQdqg3ZnXPVybrWCqrM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=on9te5lKrZ8u8N7T0eCowNxOOW9+O1/7jEyX4fs6JHY05+bXra5ruhL7JjVRYEbv69kklt/SeYfe2u/FDyuuJfrtkt4Xu6cwTyLwbsJ/LSdElW0coGGyl2Y03a3LAn/S++xh0yLQ/MjExOTq/wIH0Qbb/QucvkLdrJyPYCL0hVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=a/MrGmuZ; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 To:Cc:Content-Type; b=aj0gOsgUUeuOC6K8FEpwrzbFqssBN4vs1KMhe/H4g+iN9Q1FVuhXWSoMATh8Cm7cjUx4U8GW7IsHm6KylihVnLOMdrEv9/5X+yBotLfX+r32qav6Anr9wg0P3JP9oHwmr4f0kSagt+XipLj7QeZ4sY32ad8Jgu1urLIRRD3Pekg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o+Dp3koE; arc=pass smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="a/MrGmuZ"
-X-Gm-Message-State: AOJu0YwfPzXBm9B+4fUnYzGNLzzJrsDvB+PdjCIcvHPWSYwLsEbsiIsK
-	50QgWhvc1fuIsw3IQxuUr/NLKRuEVt8v2ReTf0MDZ2gSuoJE6WsuYuXcN4N6vORlFsAzFmrdDni
-	PJZnIf/rDGA8aIdXX33vMVq99ZMnRWI8dbc0Umpv9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785332719;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wj6IB87otqR0ZGNUVqx/U0Bak0+2XxP9cfbv6FFIQt0=;
-	b=a/MrGmuZk89ws4MtJS6oo4jmSlE3Q/9gKwlZdFh2uxniKBsrdRJEWpG4g1Vf0wEVulBG2d
-	92x9KUnJCeICNwfn8JtlsDK6XQ/4tp45hlSTcpk5sv8AKeXdqE4gPibu7+TBlblsEX867S
-	pJihZU1qUw7hagsvwT9cKqZPNI3s8tY=
-X-Received: by 2002:a05:622a:4cc5:b0:517:6dc0:698d with SMTP id
- d75a77b69052e-52b2b15be98mr11678831cf.0.1785332715601; Wed, 29 Jul 2026
- 06:45:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o+Dp3koE"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-81ed000b507so10449317b3.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 06:45:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785332739; cv=none;
+        d=google.com; s=arc-20260327;
+        b=RUglJi2pjUL5D2N1K2v/1yrfmAyjGdJjYyxRNNVE5OMGeQ7cVOiTF9ZHbnNejyHVEu
+         aVBpCZp1+FS81Ox1rCs6vZxS9MpvNbAhlArcC2WRp+qIFH6KQCoWJg7FyvK5ySJ+ahIN
+         FSrzKqslUpYTvNv+dbQScvoYVnOWK/gX8bs5o3H5nsjgfwvIPGRlODqobL0Ot98OHBJo
+         kdQNx9/VOW2vwju5rPwqYaYQmZzwq0MezVaQwhYFvdFZEtdhIRgKHIq/ilNdOq1EA6F7
+         NvNFagEmORO27rYtcY5heik3cUPZQPxF7WLWt/CcjjEJxUvdFtOkD4zDib8SOYoi2sOL
+         q+Tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=SHtZAPYn3Wc91D71uLVL563MpKOhtIJrqDFEQxe1/jE=;
+        fh=l7ViLnppvkkSQ+LRUx3Qov8iJmCPcv0PVZg4trlzbMc=;
+        b=k4ssJthbC0dkWikjMOHnhRzbJDlE/shomAT/u4TK9cdiWJ/Ym6eCYd/XpM2Ops/fqM
+         X/rr+7t5M5enOeyBdv4GzlYZrElkISRTuLK27Ym0UvjrWdad3GTe5biR/kf3N3GTaKDW
+         5DWEv6t9c1Mq2N6cCR03ZL3UrT4BStna1ECQnkRvAIYExlqK7334cgXxi+VdAFmTujek
+         im7UNkjAzvZzfoJRmg4JyYlh3rg0ACXDFWsA7tHcxJDF3MxRCQ3EQqS+S7D25QBQ5ZRN
+         B5PeVchH53LNxO5vYMd3/tArOVPnI47nMFfMm/wX5ScR/QxETvtWBu7CSRGsQFruiybm
+         BSCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785332739; x=1785937539; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=SHtZAPYn3Wc91D71uLVL563MpKOhtIJrqDFEQxe1/jE=;
+        b=o+Dp3koEx+L6Hbg0cOEOAi9mGNTyBMN3kegb+bXtAlaE7MfczWm+x5c7mxkIJgT/3t
+         swwuIvNx9zD0QNSue0vg/DzHXGoBng9WP40X06j/EiFWuqyyg3zBFvpZlOuAxwJZvEys
+         sK4Yuor50qGl9dOYfx298VcWdhB7svGGu+9lGM5URr57tKX9WZxPQ2TTq4a96Igrnc93
+         /Oq4zj0dD3ND/xE29iKGepbW0jySUJGpV4BdFSOVg1+Q1wh2vUxpO2PswEbSk0/PAvNS
+         65SKN3iaRYbsR0zcAkocso6Hc/DRIh17Gen/qt+Sj4BlqlAhWtlTvd9tD/Nh2iw/tIWO
+         AOlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785332739; x=1785937539;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=SHtZAPYn3Wc91D71uLVL563MpKOhtIJrqDFEQxe1/jE=;
+        b=k3SSjze71o1MJQxtFp0VDZTuLJHQQLTS9OR5hy08uMCHuveDB54iTAZVa/cckX6jJg
+         qX7+sozhtvKC25GcXLCfF+LJMYjuiJrrgOAkOdobT+XpcuMtfjMryP9Bp/6r5K5QMnTO
+         QFBQuuCEJ6nig6wgh3XNDU6o2SwRdM54FXp23TniXHwGnq562GPToFouqy87RrBiQI3K
+         SSpCqqy1pM8jDvR/pmfgGpPpTPggvf0j8hsmqzC4E+SzXrJ/VJ2l/BvUCf2U8WixM/pj
+         LCYoamhZOLgVkL6J5qDEDgH7a1RvX3Ur+yaiIVePkgLMu17TWZif0/8n8raPA0WVfyPq
+         4/kQ==
+X-Gm-Message-State: AOJu0YxW9XAolq2PQ3Uura8pYvPOTGE42+uf3xUi13CNLFmwSEgGM0vR
+	jI+TUlOTgzZdre+XraE7lBUZ0DFotSGZWpEL4dHjzxAaRxu8cfxOeGame4A5+py1pBJZmiVwXKD
+	caUlDKr6T5g7eCxMYSuXYQOXwh1KBLrTs9w==
+X-Gm-Gg: AR+sD1303Nx2325hozm1VSB0+WXlGW+FWGdi/CYnsfsxhwAkQEyWfdAFnxFbDyG+aXm
+	hDZhb0KtMkGxsQkroMgbZAP4rcw0ix2Z8morwiiwIKKLCnNWeN3bZ0QxQ25G/om94cGaKBesAep
+	nBaGs+hMcpmqFg6eCvGaQ8f/baI0dg5hCY8fl0+5z5sWLl8n/qzvY6AbmgvDsEPAxdfKUqH/W0r
+	r6Gw4dCiCi0cQeDthV+WaJ+shGZtQ4jpXEw1EjzNWN7ZRRX5z8PwByuf2dBEb07xYtKoekxsMY5
+	I3z83yhfjk8QfKG3t5w3YrqDCRz/s3luzs8vpKUe2l8=
+X-Received: by 2002:a05:690c:6c01:b0:81e:1437:5763 with SMTP id
+ 00721157ae682-81f99247c84mr32859177b3.62.1785332739192; Wed, 29 Jul 2026
+ 06:45:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260729131823.2021516-1-fuad.tabba@linux.dev>
- <20260729131823.2021516-7-fuad.tabba@linux.dev> <20260729133929.CFE191F00A3D@smtp.kernel.org>
-In-Reply-To: <20260729133929.CFE191F00A3D@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Wed, 29 Jul 2026 14:44:38 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTw-2ot0mJinAhi4FaOYXv8oLwg_US=uwG-qgQ+BJ-_x4A@mail.gmail.com>
-X-Gm-Features: AUfX_myJb88jCPKXBErkJT6ISspfYJq89Mwqef8UPdgq4c1gp7AtNl5lctDDCVc
-Message-ID: <CA+EHjTw-2ot0mJinAhi4FaOYXv8oLwg_US=uwG-qgQ+BJ-_x4A@mail.gmail.com>
-Subject: Re: [PATCH v7 6/8] KVM: arm64: Minimise EL2's exposure of host VGIC
- state during world switch
+References: <20260716230411.2767394-1-tarunsahu@google.com>
+ <20260716230411.2767394-4-tarunsahu@google.com> <20260717024938.128D91F000E9@smtp.kernel.org>
+In-Reply-To: <20260717024938.128D91F000E9@smtp.kernel.org>
+From: David Jeffery <dhjeffery@gmail.com>
+Date: Wed, 29 Jul 2026 09:45:27 -0400
+X-Gm-Features: AUfX_myRPaVDt58yJr6A2eZEJEygxGVewYG3ucJaoFeFR_lLDJKTrjk92Ni0vOU
+Message-ID: <CANghDUVJNULztJ+-8G=PD9eXjdBF=QuHyXhYszzZO5rtzyj5ag@mail.gmail.com>
+Subject: Re: [PATCH v19 3/7] driver core: separate function to shutdown one device
 To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
-	Marc Zyngier <maz@kernel.org>
+Cc: Tarun Sahu <tarunsahu@google.com>, linux-pci@vger.kernel.org, 
+	linux-scsi@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
 
-On Wed, 29 Jul 2026 at 14:39, <sashiko-bot@kernel.org> wrote:
+On Thu, Jul 16, 2026 at 10:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] The patch fixes an arbitrary host pointer dereference in GIC=
-v3 hypercalls but completely misses the identical vulnerabilities in GICv5 =
-hypercalls (`handle___vgic_v5_save_apr` and `handle___vgic_v5_restore_vmcr_=
-apr`).
-> - [Critical] Unvalidated host pointer dereference in `handle___kvm_adjust=
-_pc` allows arbitrary memory modification in EL2.
+> - [High] The refactored `device_shutdown` discards the parent device poin=
+ter returned by `get_device(dev->parent)` and re-reads `dev->parent` inside=
+ `shutdown_one_device()`, creating a TOCTOU race condition that can lead to=
+ reference leaks and use-after-free.
 
-https://lore.kernel.org/all/CA+EHjTyGULmVCgyoya3bXG4gRj0OYFE1gnJLhNE6kvCrZF=
-tXyQ@mail.gmail.com/
-
-/fuad
+This gets cleaned up in the next patch, but I'll rework it so that
+this patch has no functional code changes and is only a code move into
+a separate function.
 
 > --
 >
-> --- Patch [6]: [PATCH v7 6/8] KVM: arm64: Minimise EL2's exposure of host=
- VGIC state during world switch ---
-> commit def324be61872b6056efce4e3eb9ff57eb9a9e10
-> Author: Marc Zyngier <maz@kernel.org>
-> Subject: KVM: arm64: Minimise EL2's exposure of host VGIC state during wo=
-rld switch
+> --- Patch [3]: [PATCH v19 3/7] driver core: separate function to shutdown=
+ one device ---
+> commit c3cdb15ac9b6efba6077cade25c652c124eaa9c7
+> Author: David Jeffery <djeffery@redhat.com>
 >
-> This commit restricts EL2's exposure to host VGIC state by recovering the
-> host vCPU securely rather than directly dereferencing the host-provided
-> vgic_v3_cpu_if pointer in __vgic_v3_save_aprs and
-> __vgic_v3_restore_vmcr_aprs. It introduces a helper to fetch the host
-> vCPU using container_of() and copies only the necessary state.
+> driver core: separate function to shutdown one device
 >
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index 45d717889f6ea..f3233ee343a39 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> This commit refactors device_shutdown() by extracting the shutdown logic =
+for a
+> single device into a new separate function, shutdown_one_device(). This c=
+hange
+> is intended as a preparatory step for supporting asynchronous device shut=
+down.
 >
-> [ ... ]
->
-> > @@ -508,16 +520,63 @@ static void handle___vgic_v3_save_aprs(struct kvm=
-_cpu_context *host_ctxt)
-> >  {
-> > -     DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
-> > +     struct pkvm_hyp_vcpu *hyp_vcpu;
-> > +     struct kvm_vcpu *host_vcpu;
+> > diff --git a/drivers/base/core.c b/drivers/base/core.c
+> > index 78b90326addb6..82a7af1f3ba2e 100644
+> > --- a/drivers/base/core.c
+> > +++ b/drivers/base/core.c
+> > @@ -4898,12 +4898,48 @@ int device_change_owner(struct device *dev, kui=
+d_t kuid, kgid_t kgid)
+> >       return error;
+> >  }
 > >
-> > -     __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
-> > +     host_vcpu =3D get_host_hyp_vcpus_from_vgic_v3_cpu_if(host_ctxt, 1=
-,
-> > +                                                        &hyp_vcpu);
+> > +static void shutdown_one_device(struct device *dev)
+> > +{
+> > +     struct device *parent =3D dev->parent;
+>
+> [Severity: High]
+> Does this lockless read of dev->parent introduce a race condition?
+>
+> In the old code, the parent device pointer was captured and pinned in
+> device_shutdown() using parent =3D get_device(dev->parent).
+>
+> With this refactoring, dev->parent is re-read here. If the parent changes
+> concurrently (for example, via device_move()), could we end up operating =
+on a
+> parent device that we do not hold a reference to?
+>
+> > +
+> > +     /* hold lock to avoid race with probe/release */
+> > +     if (parent)
+> > +             device_lock(parent);
 >
 > [ ... ]
 >
-> [Severity: Critical]
-> This is a pre-existing issue, but does the same regression exist for the
-> GICv5 hypercalls?
+> > @@ -4925,7 +4961,7 @@ void device_shutdown(void)
+> >                * prevent it from being freed because parent's
+> >                * lock is to be held
+> >                */
+> > -             parent =3D get_device(dev->parent);
+> > +             get_device(dev->parent);
 >
-> The patch replaces the direct kern_hyp_va() dereference with a secure loo=
-kup
-> for GICv3. However, it appears the same pattern remains in
-> handle___vgic_v5_save_apr() and handle___vgic_v5_restore_vmcr_apr():
+> [Severity: High]
+> Is there a reference leak here since the return value of get_device() is =
+now
+> discarded?
 >
-> handle___vgic_v5_save_apr()
->     __vgic_v5_save_apr(kern_hyp_va(cpu_if));
+> If dev->parent changes right after this call, the original parent's refer=
+ence
+> will be leaked. Later, shutdown_one_device() will lock and drop a referen=
+ce
+> to the new parent instead, potentially leading to unbalanced reference co=
+unts
+> and use-after-free.
 >
-> Can a compromised host pass an arbitrary physical address here, causing
-> __vgic_v5_save_apr() to write the hardware value of SYS_ICH_APR_EL2 to th=
-at
-> chosen address, breaking EL2 isolation?
+> Should we pass the pinned parent device pointer into shutdown_one_device(=
+)
+> as an argument to ensure we lock and release the exact same device we too=
+k a
+> reference to?
 >
-> [Severity: Critical]
-> This is also a pre-existing issue, but does handle___kvm_adjust_pc() have=
- a
-> similar unvalidated host pointer dereference?
->
-> In arch/arm64/kvm/hyp/nvhe/hyp-main.c:
->
-> static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
-> {
->         DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
->
->         __kvm_adjust_pc(kern_hyp_va(vcpu));
-> }
->
-> If the host kernel passes a crafted vcpu pointer, could it point to an
-> arbitrary memory region where the iflags offset has the INCREMENT_PC bit =
-set?
->
-> This would cause the hypervisor to execute:
->
-> arch/arm64/kvm/hyp/exception.c:__kvm_adjust_pc() {
->     ...
->     } else if (vcpu_get_flag(vcpu, INCREMENT_PC)) {
->         kvm_skip_instr(vcpu);
->         ...
-> }
->
-> Could this allow an attacker to increment arbitrary EL2 memory by adding =
-4 to
-> the value at the regs.pc offset?
+> >               get_device(dev);
+> >               /*
+> >                * Make sure the device is off the kset list, in the
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729131823.20=
-21516-1-fuad.tabba@linux.dev?part=3D6
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716230411.27=
+67394-1-tarunsahu@google.com?part=3D3
+>
