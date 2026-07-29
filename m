@@ -1,211 +1,160 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020079.outbound.protection.outlook.com [52.101.229.79])
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57626391E74
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 06:24:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.79
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785306270; cv=fail; b=Ao+b2KpO49niiQ3gmV04emhrLFpgl4pKX9ZsWRp1CZyXrRSInIhuaCZILCIH18HsZ1BgBAe7DTG1YQa1dPUZcs2GIPeuYSH+Rj0KAfMvrTAWLbxMzefaMFG2qczZ/KWjwbkWLSZhwp8zIN75H35C1Oh6t9pdb7cE98aYJb5P5wU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785306270; c=relaxed/simple;
-	bh=QKwXcFmEOsJJVDRV8tGzrVzDr1O3a6qZFDu5So1Er2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=BAdI7rxvVGi5KqahqGQs9tbJ7SpYJTzQa46EwIF9SScRDZomISwM2dtW6cy0zwkKU8MvRSJPKJIKCoWHEouH+GzctOlTPmUsnT3XJzZOuJMx59f9xH2lJJbmKPEV5MtM25lPISxkLYyIzZqzFx/usApNQYPkhZxyg09fJYtl8L4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=q2lFGwSa reason="signature verification failed"; arc=fail smtp.client-ip=52.101.229.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80553101A5
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 06:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785306484; cv=none; b=MsNX6UtjyVhcXX5Y3sZfdHG6lgfFC5a06eK1XqG3dXzLUkh0b4z0lBlTIxojIQ/6+g7fNRSm/AnrdxnnH+j3RhgftZgbY1vkbUlMTKzPdZB4TWVZgxB12hxt4P0lJWlpqXEg5woUZuK3uuh1g7g5Pj7wOSuNMspo37LdVbUHyGc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785306484; c=relaxed/simple;
+	bh=/waf0XQvjk0H10MjZ4QUZRMk5ieelEf0YGayWnrzenI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CWxSKXe4aTWnTVsW6F9L7IpUB0fqp38vkCAhrxSpO5kW5mXH1nkQQySG/bBEdL3svai02hSnD/Iay6QBmX/s5QpytmFPRTnQqeeb+EMeOrmQ7M2fIpmeAYgUlTzbH5h1+TuKkGJx6yG8HsmEFT54000KzuPgPGiWCivdMxp+9LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lwZWQPhp; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="q2lFGwSa"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IWQp8JFOI21PpW+C4iOOCgiNcwTby6/cubEayyBwxJYM65zuAf5iPrbK/aE+ENfGAqrXWsNpxie3crmpJ/JEeGn6g3N2bE86e1Txz4ToeiGm8yfo5qoae8F94/NHS1JRmRniGaGLuzEj6aTKYRmxJkFGQqhoyIZVe/e/KlCfjTXvGcrJjxVkXSlISa+Hp4frjgf+PvWVdnErG5C7Noa5fn+4R4heo1FC4BDVEoh9OLuey2dxcxPgaYVMyJzgJk1CxZDZTNbhz/99KNM0KIeAeP2B7/Uvhp//DsQlCj+1wK3fzYg9juQ9SooiKT8BF+vzg7wWHyVb5GYN+/kY9TIk+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pTk5/nSor6csHd8UANGwemu7FGjAG+zxVJTvP51NCuM=;
- b=Ug804SWVrjinCCp6ICob5Am8uIv9GHMA935HFXuApGGRZjHJiTQSJ6a669BGLxLmvtnSFLd8BDCQNB1m7MhXHvBVLXtwyfIN3mLCFaaq3lCMAO6BaJdNajktculg0uclUAA9rjB/j0kmEwEA/5pJ7mjgUyzr5jeBuB8/ZstslWirT6/p0dNxME2oGds1U2y9dYlIRbn6Taaud3GOYyBiR5r53vYLrxjH6Zd4x87HLafcibYDNE80DxWI8awaPHM2Wfoo2k//8iHjlC5KJgCTsgcaNzIttcuY/25Pv1DOmp16DEDpZIa2M4JjvR7I0gRo7/XydaMPp0UaIXT7WvTZhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pTk5/nSor6csHd8UANGwemu7FGjAG+zxVJTvP51NCuM=;
- b=q2lFGwSaolrYiQi65sEbfRB8a2+83jB0GbXjhJcdRBSNsUBLH/QfrzIdaPdJqR/K578mls12RQ5ic7OOr4m7RCjePlY84gwu2hdOFqFt3OjLhU7ZSJbWGVuQ/8DvU3HvoDXKr1oBXxWCXbwfIGAs5DDlEg08xSqgeAIOlCncgD8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by OS9P286MB4189.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:2c6::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Wed, 29 Jul
- 2026 06:24:24 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.009; Wed, 29 Jul 2026
- 06:24:24 +0000
-Date: Wed, 29 Jul 2026 15:24:23 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org, 
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 07/24] dmaengine: dw-edma: Centralize LL doorbell
- decisions
-Message-ID: <n3khjzubqdowh5sjkkdb67aoulkrnausmcchv2ksnzzbfefrdo@zqieb4a2caq6>
-References: <20260727170323.2321369-1-den@valinux.co.jp>
- <20260727170323.2321369-8-den@valinux.co.jp>
- <20260727172326.2C5C81F000E9@smtp.kernel.org>
- <ameuMbdF6wSvDunJ@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ameuMbdF6wSvDunJ@lizhi-Precision-Tower-5810>
-X-ClientProxiedBy: TY6P301CA0039.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:3ba::18) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lwZWQPhp"
+Message-ID: <c25b272d-5975-4fd1-be3f-6b5a0522cbee@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785306479;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NTKMOzyJT3XVDunTQT4HsxFCad0Svgvht0V0qG/fe6o=;
+	b=lwZWQPhpVCVxyyBLH1gbsTw6+orejMpom+wCp+OYkEg904a1gUajsX5d472e+U0FPGL2Qu
+	HnHtWjskt7FcdzfRyMZiSZrvgddCEBc1wd8C5FMIRiTn8CskN92cF7WC41KlbESpN2XrhJ
+	cprF/ip5GoY/qZaxdOu3guXg6TNQ/H0=
+Date: Wed, 29 Jul 2026 14:27:48 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS9P286MB4189:EE_
-X-MS-Office365-Filtering-Correlation-Id: af2343f4-a2e8-45e9-e4bf-08deed3a08a5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|376014|366016|23010399003|1800799024|10067099003|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	ziGlj3K/vYTi4a3yV5onglEfHcTu63e9HGuq7Od6kBzSdKPBeUjdMwgg3bmBTek0DVXQhbT1Dil5K9nmf5sxCpg+SzLQHLize/tCrBAfjIm2Jn1edyzz/qHzqNmN5D7jouNHywTPQasEscX5p5E3P/NuK2yy5JL+EkpP6Ssf5cWHXf+5f1/051fF2F1BKci1q2/dZeNyxzNq41mqq4Okfo65pYlbz1SPNpSPB1XxvUNgiW3GAAk1ueqUAWQOdcYs/7Jrmh5KFAhKolINomXNsWplsW25A04iU2/Q+u80zBcf0OmZUQwCJ8+sRkj7NBfo2XHhGzi3ajYWKQ4iFm4TY8NtX0C80rEn8V4/sKAoRhI0p/xMOG27LA5b/hClmQbfnUcHk5zjDS86/yaPvc0yavubS9UJwx8F47z8kl7Vc428bdZjq15XbDy95r5hQnv1D71gsXgBSTKjyQyPKvawsUQxx3CltSoZISzgtKeBsnLc9axfWuLtWfiGZDNVXc+apqALTdkn8SN/CJSdowW2+Ji9m2syvFyFUiZu1CQG5iF8I1eRWVE9mRgm897Mxi4etGkLH/klfr+06+1gBWflwgvUR9LLjwntzWmuuPGHzTo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(376014)(366016)(23010399003)(1800799024)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?qn6lWMkeXhOMkJ8OQ8IzWNFuP7Ii35M5bUbleJmDmeEVK/CJg8P80M336H?=
- =?iso-8859-1?Q?jq2aShVajJlXTFYFdPeHsHGA9jIqbiHOFSgPTw0JDIFoLyLmoCyT9uHaQG?=
- =?iso-8859-1?Q?voEbLt++1GZodI4kR+frThx0Z4UAejGUq+uzGnYfGffkV9SXXME9EzVC3r?=
- =?iso-8859-1?Q?9CoJBDIgwt4BJKBnTGgyjb6Xva7CtDcJcbPTZ1MmRrDubu7jVU//eTkddE?=
- =?iso-8859-1?Q?Itv3JVQn9kE0FeMB4ElOIQ2D2smUUTeTjbiycdkTbVb0WUSow1CNoreMhT?=
- =?iso-8859-1?Q?ypCAN4hdxqoQaNF6J8NOjiJWruo40Foy0tHxx5OkB/IMq0HpPhfykMo+pd?=
- =?iso-8859-1?Q?sJDe4Q1tIJ54plC0Jqq7IyvWFk6918jiHR2KRMO5dUDquZAemVgrPNKnIX?=
- =?iso-8859-1?Q?n6GqCqEOZhq51/6FSugealmQNTdcS7ta9bPremmDrw0fWK3K1i/DI8mtCu?=
- =?iso-8859-1?Q?ZJgCtRB+OhpQiKJHbp3zpXcYRbKq37hxZ2UJT/uBje6IqcizYpZv9ygGUb?=
- =?iso-8859-1?Q?GUvFXG3erITYUpxW75kfYnYg76zLvBymtx2c7EP7I2Y+8HiKpiLe5tfbUo?=
- =?iso-8859-1?Q?64RzlV1v7EtZnFN2s/C62YVp84hW0ktKgv2UXrDB1r9gql9o1137UrhrsY?=
- =?iso-8859-1?Q?6q0CnawyEuK/xjDVikYfXZ3miN/kN55ra5FWGRf5ZR7+WM8mpRJGmfBesj?=
- =?iso-8859-1?Q?eP6Srv6fhYr5VxMuq2oCjYqIgozmaYV5KSywm9W/cTXPsm8IZErjB0V/Gm?=
- =?iso-8859-1?Q?JmSmgzvum7GVGp29Ppe3J37EFgAs658KF1eNEpNgXb94zswP2JKkkkZvfI?=
- =?iso-8859-1?Q?FP/0qXsja3JlfCsHvMSqwq4HzF791I4P53v+mmx24d6fz/DYENfh25L0j4?=
- =?iso-8859-1?Q?MPnyGr6kmq5IsoWZiwQIjNM+7L18rmzf/VvvqtXNB4BaWgxY1cOazTzba9?=
- =?iso-8859-1?Q?xJVqexckWB20FlXcbHniyKJZ7gYNmFpuTfLz4rEXFZHn2Hrl6zGu7Q26Eo?=
- =?iso-8859-1?Q?o+V+hzcEDre6Rsbe2jKosBBl4qCD8ukFHPwOsnZ7w6Q3Qc7WnUmFXVS9Z1?=
- =?iso-8859-1?Q?DtG/4ugn1YAPBA/D4kbTujcIffL3WJ9EcPQghRaIuVzZSJZYJXLCyrYTL7?=
- =?iso-8859-1?Q?/PzekGUEgL8pnNvSuudU8HhHPxu4+jbAs8eR8NfacYVMaDJzP+eglwKW2P?=
- =?iso-8859-1?Q?yQW9o8/Uf7XSQlBTvpyarChmrjXOtOjSz67cIb/n8LlNhQ5P+GodlfmvtJ?=
- =?iso-8859-1?Q?abCzaHBmVT9YBDIIZD5Yj/54fKI6o1W1SQLELhLPnbCM/gbyBUKwXfAKpe?=
- =?iso-8859-1?Q?VzXSbXWUhTHcahZJaB/1RCCkCK1kAc6K+t0XkO1tENU5V+1AN6KM+f2doR?=
- =?iso-8859-1?Q?MFHG2RtZOF00ry+4F7vecijl7qM7B964xtfXPENJNzWbjpx5g3rIwsxe6e?=
- =?iso-8859-1?Q?y6IZxpF+jMUXSAcYJhCpUInFH5WWPHwViui7A3lUa8N2P/eTWwUbmc5ZyZ?=
- =?iso-8859-1?Q?nmgW7voldodZWwghXIafIJrf6SBD5LjmAftEpbAlYZvPd8poYFfukG3teE?=
- =?iso-8859-1?Q?jKqtjJDJaUAJHCp50rY9zXMYdm99/5E3QQGyi03JGRD0lf0nKV2VUYuRRB?=
- =?iso-8859-1?Q?e6AeU/c9kP1v8je+LcNNt0MBkndzMs/50CvBENrQh124MEJPca94mwQ7tm?=
- =?iso-8859-1?Q?vqzoku9nGlQEcKn/9HQZ362i8jGqiUtvcse20U5EHMSIfHVfDj4MApMJuA?=
- =?iso-8859-1?Q?vvVuMGwdVS2Mnpr9C2LcCbWklr7me0VnjPO5mGEo+OIqx19Q59aBHsjZCF?=
- =?iso-8859-1?Q?+p042SnOXeC4rYGpGc3qUGh9KOjo4JaEc66tFU6Iug0gQYZcGFsk?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: af2343f4-a2e8-45e9-e4bf-08deed3a08a5
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2026 06:24:24.3700
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2TCRuugV32ipxnhkA6y/uzMC6DPv9/aBofnK9Pm9BoYlLZM+66eBmTdKkux1kUjcQwOD9Cv9X+a/kN96sXdgKw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB4189
+Subject: Re: [PATCH 1/2] arm64: ftrace: enable single ftrace_ops for direct
+ calls
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: sashiko-reviews@lists.linux.dev, Masami Hiramatsu <mhiramat@kernel.org>,
+ bpf@vger.kernel.org
+References: <20260727142844.21212-1-leon.hwang@linux.dev>
+ <20260727142844.21212-2-leon.hwang@linux.dev>
+ <20260727145217.72B9C1F000E9@smtp.kernel.org>
+ <be7399e2-06ac-4e6f-bea7-8c51738a1e4d@linux.dev>
+ <20260728114602.62e8852a@gandalf.local.home>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260728114602.62e8852a@gandalf.local.home>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Jul 27, 2026 at 03:14:57PM -0400, Frank Li wrote:
-> On Mon, Jul 27, 2026 at 05:23:25PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] The DONE interrupt handler fails to clear EDMA_REQ_STOP and EDMA_REQ_PAUSE if the descriptor list is empty, contradicting the commit message's stated intent to prepare for LL progress reclamation.
-> > --
-> >
-> > --- Patch [7]: [PATCH v3 07/24] dmaengine: dw-edma: Centralize LL doorbell decisions ---
-> > commit ee61354242533ea66a01a91592b3314e404a95eb
-> > Author: Koichiro Den <den@valinux.co.jp>
-> >
-> > dmaengine: dw-edma: Centralize LL doorbell decisions
-> >
-> > LL fill currently rings the doorbell every time. This patch moves that decision
-> > to dw_edma_core_ch_maybe_doorbell(), which rings only for a BUSY LL channel with
-> > pending entries. This centralization prevents EDMA_REQ_STOP completion from
-> > restarting terminated work.
-> >
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > > index b419ff2becf9e..c036510dabcb3 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> >
-> > [ ... ]
-> >
-> > > @@ -733,6 +743,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
-> > >  	default:
-> > >  		break;
-> > >  	}
-> >
-> > [Severity: Medium]
-> > Will this lead to a permanent channel hang when LL progress reclamation is
-> > introduced?
-> >
-> > Looking at dw_edma_done_interrupt() just above this change, the DONE interrupt
-> > handler fails to clear EDMA_REQ_STOP and EDMA_REQ_PAUSE if the descriptor list
-> > is empty:
-> >
-> > drivers/dma/dw-edma/dw-edma-core.c:dw_edma_done_interrupt()
-> > 	case EDMA_REQ_STOP:
-> > 		vd = vchan_next_desc(&chan->vc);
-> > 		if (!vd)
-> > 			break;
-> >
-> > 		dw_edma_finish_termination(chan);
-> > 		break;
-> >
-> > The commit "Dispatch DONE interrupts by channel request" explicitly claims to
-> > restructure the code so that STOP and PAUSE still have state to update even
-> > when no descriptor remains.
-> >
-> > However, the implementation adds if (!vd) break; which completely skips the
-> > state updates when no descriptor remains.
-> >
-> > If a future patch asynchronously removes the last descriptor before the DONE
-> > interrupt handles an EDMA_REQ_STOP, won't the channel remain permanently
-> > stuck in EDMA_REQ_STOP without completing termination, leading to an infinite
-> > loop in dw_edma_wait_termination?
+On 28/7/26 23:46, Steven Rostedt wrote:
+> On Tue, 28 Jul 2026 10:19:22 +0800
+> Leon Hwang <leon.hwang@linux.dev> wrote:
 > 
-> Is it true?
+>> On 27/7/26 22:52, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>>
+>>> Pre-existing issues:
+>>> - [High] Missing RCU read barrier (`rcu_dereference()`) when accessing `direct_functions`.
+>>> --
+>>>
+>>> --- Patch [1]: [PATCH 1/2] arm64: ftrace: enable single ftrace_ops for direct calls ---
+>>> commit 738274783fa707248af104af5e45da296f7e4d84
+>>> Author: Leon Hwang <leon.hwang@linux.dev>
+>>>
+>>> arm64: ftrace: enable single ftrace_ops for direct calls
+>>>
+>>> The BPF tracing multi link updates several direct-call sites through one
+>>> ftrace_ops. This commit selects HAVE_SINGLE_FTRACE_DIRECT_OPS on arm64 when
+>>> DYNAMIC_FTRACE_WITH_DIRECT_CALLS is enabled. It also generalizes the
+>>> unreachable-trampoline comment.
+>>>   
+>>>> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+>>>> index 39eba438dad43..94fa6e72c2867 100644
+>>>> --- a/arch/arm64/Kconfig
+>>>> +++ b/arch/arm64/Kconfig
+>>>> @@ -188,6 +188,8 @@ config ARM64
+>>>>  		    CLANG_SUPPORTS_DYNAMIC_FTRACE_WITH_ARGS)
+>>>>  	select HAVE_DYNAMIC_FTRACE_WITH_DIRECT_CALLS \
+>>>>  		if DYNAMIC_FTRACE_WITH_ARGS
+>>>> +	select HAVE_SINGLE_FTRACE_DIRECT_OPS \
+>>>> +		if DYNAMIC_FTRACE_WITH_DIRECT_CALLS  
+>>>
+>>> [Severity: High]
+>>> This is a pre-existing issue, but by enabling HAVE_SINGLE_FTRACE_DIRECT_OPS
+>>> on arm64, does this expose the architecture to a missing RCU read barrier
+>>> in the ftrace code?
+>>>
+>>> When HAVE_SINGLE_FTRACE_DIRECT_OPS is selected, call_direct_funcs() switches
+>>> from using READ_ONCE(ops->direct_call) to using ftrace_find_rec_direct():
+>>>
+>>> kernel/trace/ftrace.c:call_direct_funcs() {
+>>> ...
+>>> #ifdef CONFIG_HAVE_SINGLE_FTRACE_DIRECT_OPS
+>>> 	addr = ftrace_find_rec_direct(ip);
+>>> #else
+>>> ...
+>>> }
+>>>
+>>> Looking at ftrace_find_rec_direct(), it accesses the __rcu pointer
+>>> direct_functions directly without an rcu_dereference():
+>>>
+>>> kernel/trace/ftrace.c:ftrace_find_rec_direct() {
+>>> 	struct ftrace_func_entry *entry;
+>>>
+>>> 	entry = __ftrace_lookup_ip(direct_functions, ip);
+>>> ...
+>>> }
+>>>
+>>> Without the READ_ONCE() provided by rcu_dereference(), the compiler might
+>>> reload the pointer between computing the hash key and accessing the bucket
+>>> array inside __ftrace_lookup_ip().
+>>>
+>>> If a concurrent writer substitutes a new hash table with a different size
+>>> between these reloads, could the computed key exceed the new bucket array
+>>> bounds and lead to an out-of-bounds dereference?
+>>>   
+>>
+>>
+>> Hi Steve, Masami,
+>>
+>> Could you take a look at this issue? The issue looks legitimate.
+> 
+> Yeah, it's possible (but unlikely) for the compiler to do that. But there's
+> nothing harming the code to do:
 
-Sorry, I missed replying to this.
 
-I don't think so.
+Good to know it's unlikely in practice.
 
-The preceding patch 6 has a misleading commit message, which seems to have led
-to this false positive. This is not a bisectability issue either. The later
-patch adds both progress reclamation and vd-independent STOP/PAUSE handling. At
-this point, patch 6 is just a non-functional change. I likely forgot to update
-the message while rearranging the series for bisectability issue which Sashiko
-had pointed out on the previous revision.
+If you don't mind, I'll send a separate patch for the fix based on the
+diff below. It compiles and works fine in my testing.
 
-In short, I think the code is fine, but patch 6's commit message needs fixing.
-
-Best regards,
-Koichiro
+Thanks,
+Leon
 
 > 
-> Frank
-> >
-> > > +	dw_edma_core_ch_maybe_doorbell(chan);
-> > > +
-> > >  	spin_unlock_irqrestore(&chan->vc.lock, flags);
-> > >  }
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260727170323.2321369-1-den@valinux.co.jp?part=7
+> ( Untested and not even compiled )
+> 
+> diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+> index f93e34dd2328..5ec494790312 100644
+> --- a/kernel/trace/ftrace.c
+> +++ b/kernel/trace/ftrace.c
+> @@ -2639,7 +2639,8 @@ unsigned long ftrace_find_rec_direct(unsigned long ip)
+>  {
+>  	struct ftrace_func_entry *entry;
+>  
+> -	entry = __ftrace_lookup_ip(direct_functions, ip);
+> +	guard(preempt_notrace)();
+> +	entry = __ftrace_lookup_ip(rcu_dereference_sched(direct_functions), ip);
+>  	if (!entry)
+>  		return 0;
+>  
+> 
+> -- Steve
+> 
+
