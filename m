@@ -1,72 +1,73 @@
-Received: from mail-pj2-f3.google.com (mail-pj2-f3.google.com [74.125.227.131])
+Received: from mail-pj2-f1.google.com (mail-pj2-f1.google.com [74.125.227.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1A045C70C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 16:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61A431F990
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 16:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785341328; cv=none; b=S/zWGy+gB8Eenoniuy19uDbEbRC4WNN/gM0LCCLizUb5j3oGzX1Y+H6xyChPNYKdRwcVg9lan6aUYYYDMPCDPn9+JOHnV+Bmisb3r8g8dQ27bChLpkD+Z4aWf1sA6Hl5E6i6XzQYY7TYdVVFEXyl8xrrTHIpmaim9khiSffa5Qo=
+	t=1785341330; cv=none; b=WvCmmVZFAayUP+JR7q320lNtBvLBYCja8ZtA8gobVDKSx3KgwZ4vJ7qotLHz1HokIEuzdBQwZRRNNTtysX765DB+CTQnIUpUglo+Zms/K+w+L/KzLtiYMJQtqDKI4nCTYY7azlyapl3QneKZPUj2C6BCLp4/4zS6XA/YLLtj2jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785341328; c=relaxed/simple;
-	bh=xz3GfScgjQn6YWdU113ZIQs64S4ynT5uCuPT+HFsPSU=;
+	s=arc-20240116; t=1785341330; c=relaxed/simple;
+	bh=hkbCUFGpd78t80fmDHxeHaGDNL1O544ta/CmN8MXza8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sxzqLWl0yOzsao1YAKU+TkvtXa8VWDNwKOeVtKOttP+WztKEq52lD7X5cvx9h7bYa0M78shOG34H4+OwkouvfcoyzdXeRLCDIVD7fGqbxUGBSIag0Qr/IFkZhWiIWzcJTYlQ6rBPKB8Ty2WC+W0gWvMtfBEETAP/v5n9zMhBKEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fNXOe+Xq; arc=none smtp.client-ip=74.125.227.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=Og7H4uP9Q0OTKwsti23f4RIowQArtPiG7j9Rc07rX4JOjGYGKpz/bDt3b/bFoJN1qQ/RSGNuWBij34eiQmz+SEYFcBxWd4/G2KAiQwrFJjZLTR84UetGvYL74rzL1J2c7rEPA/ZDdDo5MMwg2tTSx6Z2xu+HmrdqvMzvvE/MF8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L9pF94VG; arc=none smtp.client-ip=74.125.227.129
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fNXOe+Xq"
-Received: by mail-pj2-f3.google.com with SMTP id d9443c01a7336-2ccbff2e6a7so5912995ad.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L9pF94VG"
+Received: by mail-pj2-f1.google.com with SMTP id d9443c01a7336-2cabfb70501so3921265ad.1
         for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 09:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785341322; x=1785946122; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785341321; x=1785946121; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=eoTOybwELG8BsdulcXSV9k7fS3IZ3nIiKDfqyFmy64o=;
-        b=fNXOe+XqXyRsdUXoF5phO34zpHcPjMda06qHgt1GkbgEzsXehZayed7UtC94ihc7Jw
-         vc4DpuinIq980Y9X0C65ZOQ0UFMsv5rmCRUyj+C5cAaLQgll1B5P0zwtlVssESRsXf8s
-         e+nPSBiWzrEO4k7D0jCAjlaOvDjbWtzmN5qy3X1co+s6dTCNaT39kaK45nMGIHCHS8ag
-         T4M0MPiLI+U5hvWwbAI1K64JeFSUtik8eqjfxIAhnPaVVCQBmbeTrN2Zdmf9jr33T2Ne
-         sXLy2QXu8aWEfaobE7SobibiBpgISzSsbaAd7hEwNKt2R8W3+vV6gWHy5LjcyWNiHJ8T
-         mJyw==
+        bh=I1J2W2Ej9t2c8E57diK+j6vjVNEsyRnKT5FgUYUw3BY=;
+        b=L9pF94VGikTu82vNr0elbswyWNVbeN9VXq60m/Ipf+Z+KjgP4nfeHBCr7LTK4fR9oB
+         5xsj1TO/PGP6xnjXQ0cJ2vsdsxLreVg9MCkUhyrx6+hkjFPl80EhxUXL7HY/Q+vqvFrE
+         D1IXwFAhOaOz4Ewhf6EYrcCF8Qp2DqmLZVEFARJIjnyVIiZfmfAuBuoRIHZr6yrRBrla
+         RyfQ6Ma8EbmyjgwYvYcXiudaQqDsRp51s9+lPxUUdi/AzCDC2Oh0lfBUuUo7aIHXA0nZ
+         5Kutbdy+pKkQd3/USwZ1yRVOn+XSf1PWKB/r2jcaEo+mcvLebc8wXuPES4g9nAH9QyLX
+         WW2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785341322; x=1785946122;
+        d=1e100.net; s=20251104; t=1785341321; x=1785946121;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=eoTOybwELG8BsdulcXSV9k7fS3IZ3nIiKDfqyFmy64o=;
-        b=Y6Rqgkf/S26sC2pxWLkI3f4KiGiD3FKd/b4MBpVCVjvwLLZCeBMmeIgcavlVYxG8TW
-         eSOlaYKwaU9gWgvRqTL/wH+qEgnvnf9ylxu6bSA/Z+7OblaVZ6yndRMJXFQ68v/hnit9
-         Bj68G9e9dNG9lbexNOSx5psPmsMUlAGXbsZ/CwktJlUuXrFKYc8VYAxt6E4bGOgs1i5U
-         Xx4hkojNh/lBLXA6fZ77uwq8Lo1SYowBKsu/N44rbMu98HTO8ZuaYWB8xmRzsUG2kkIu
-         7v4an3YPlHAWXuzqSbVZvL/NwnWXp8H0iJ6oDzODv1KAkmJ9PgPWJt4GnT4mqBVSqgJ/
-         bh7Q==
-X-Gm-Message-State: AOJu0YztMU9I00Js03VNgfXH9MjLRRVv4m5RJj3Pb0HUvTOeV3Kz3onO
-	gYUG/WLKfM+NxQXV4gtrtOXgp7OiGHvD3rDVKBmvKsFBVmq4m0ROQf4mSJvVg5+4doY=
-X-Gm-Gg: AR+sD10R+1jZI5BqQgcxrxyg3DZMBv9ZGJeiHxtYlw/6QEZRLfcHeCkQM2dYR4RbiE+
-	rfwZTs2i4IPD7A8fzysytJn4AC5RXQCks7N6UUwDmzThK+kiBkFh/+xJRfohQqjp8jArnztWVNN
-	3fdHnaXFXn0zNkpRfSbP9DA11MhFFtaU07TujQYR34m3wF4Y41rMPOqR+Tnvn1GOd+sGxY7aWZe
-	LYI4RiEULOVNSlwVjgPaFymXrqoth8lG91qy9m5QNxUHEHGBUhJ0GVVcc9LWdejpqHEMMQB8yis
-	F1en0JBWtPO8QguTTW2zamKdj4nhHSaf/sA7Q+9yUgPm3nyui6we9G0kF2ILOAhrxXGfhS+Skah
-	OLTj805xiUcb3ctXk9Nw7f5xRekOpDDpiA42qQJ1FBdI9fIWsF7JC5dtvKCmNakQg9dyAflsDdS
-	8fZj1jFdCpX80yhMpsE4b8dxVluEYF1dKpobiAOPhXP0y2Fd4b7JnLPQ==
-X-Received: by 2002:a17:903:1a85:b0:2ca:ea56:7a58 with SMTP id d9443c01a7336-2d015d95234mr81144815ad.37.1785341322345;
-        Wed, 29 Jul 2026 09:08:42 -0700 (PDT)
-Received: from localhost ([2a03:2880:2ff:41::])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022a4596esm13695435ad.23.2026.07.29.09.08.41
+        bh=I1J2W2Ej9t2c8E57diK+j6vjVNEsyRnKT5FgUYUw3BY=;
+        b=AP4qOA6kp93A+iVYMDouretiXt30ZLsPoBjJUNX7i2vkME3gW5zn/IvA/pVdTgUuRo
+         U/JRv0IgwWnuozLhMgVkRjLDt2xwwqa/RG6+eHBGmNGezPTTY5bxuh9s9EDWkwVG/ZxO
+         W5Jq6MFwxTKIKQGU5cdGhcmTXVUQbxgCTJg/yjgDLD6CR23EF4glczU0zVPqku8ZZ7XG
+         rR6vPjdtuGC6sH+VZGOMODWm4LagUbSX1ABZutRwWo8YQNrAQRiGpLFhxfAJx5YyEwxT
+         hEuf6yjq+DGL+elZjRND0oSG2fh5uwLx64vIuCOelfcq0XagnPEqGkNoA+czC4xmdEWF
+         b7ng==
+X-Gm-Message-State: AOJu0YyFPiPjnQFwccqFvvWhwbJXoGgVjPtHrEYruCFCpYa1znbKUtXo
+	xl7wKLtiEnAk6fRF9seLCsQ/oUTwOcB3Nbfz4EfjH9st33qAcT0GqCsv5O8YV6niy1E=
+X-Gm-Gg: AR+sD10b9GYm/bl/Giq/xlZgGIVlVaWhp6jQJEtcrk3OsPSoGk7nISQCAnsKnwoDxcH
+	tlBjDs4iwrxIsSv1l09Rhhd+5rBt2p/7iVXuKwOTMqm9eKndznKieaMbI8HFnXBRi0UndAiU2sf
+	sdtWHCwueqUbBBp73u/z2IxiZP/tooHyjgmZsyNOY1wGMc+4UUjIATFmSSTVtbnwfSDsS7vwTPZ
+	fUBh6kvfvHcBNG3rpG7BkkgVXiZE5AgSgqd1kHGkDIoWJ3VmsstOfULL/MtERCFmtO/+DPAdCsg
+	xkJjSQ1Tb4swM4dGYRAiMaGPZ7KaE9LouSzNV6POtf/zOSPlqqgtMynDjou27n0mMBmHGlm5259
+	llHdxB2E9jL8IQsreYeNLl8z8ufw45awKbC5bvraxjtsiFqcQ0UfsG6kbnDNvYpIG6d0Lf80l0c
+	KcftXwHzAZnkRkuN0hJwozISW27mA12Un88LJ1GZFPs6Ku/r8YUXHA
+X-Received: by 2002:a17:902:d4cf:b0:2c9:97a7:b1eb with SMTP id d9443c01a7336-2d015db933amr79219805ad.42.1785341320867;
+        Wed, 29 Jul 2026 09:08:40 -0700 (PDT)
+Received: from localhost ([2a03:2880:2ff:5::])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022bc9bd4sm13696275ad.48.2026.07.29.09.08.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2026 09:08:41 -0700 (PDT)
-Date: Wed, 29 Jul 2026 09:06:25 -0700
+        Wed, 29 Jul 2026 09:08:40 -0700 (PDT)
+Date: Wed, 29 Jul 2026 09:03:51 -0700
 From: Stanislav Fomichev <sdf.kernel@gmail.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH net 4/6] xsk: validate launch-time metadata size
-Message-ID: <amokauk_mQRaBg_w@devvm7509.cco0.facebook.com>
+Subject: Re: [PATCH net 3/6] xsk: clear metadata pointer when no timestamp is
+ requested
+Message-ID: <amojqDqhN1v3p2ky@devvm7509.cco0.facebook.com>
 References: <20260727161959.885642-1-sdf@fomichev.me>
- <20260727161959.885642-5-sdf@fomichev.me>
- <20260728162039.4E6A21F000E9@smtp.kernel.org>
+ <20260727161959.885642-4-sdf@fomichev.me>
+ <20260728162040.7805A1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -75,147 +76,68 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260728162039.4E6A21F000E9@smtp.kernel.org>
+In-Reply-To: <20260728162040.7805A1F00A3A@smtp.kernel.org>
 
 On 07/28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Time-of-Check to Time-of-Use (TOCTOU) race condition in zero-copy TX metadata validation.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Critical] struct xsk_tx_metadata has a layout mismatch between 32-bit and 64-bit architectures, breaking 32-bit userspace compatibility.
-> - [High] Calling `skb_checksum_help()` on an empty or fragmented SKB in AF_XDP zero-copy path drops packets.
+> - [High] Integer overflow in `xsk_skb_metadata` when calculating `skb->csum_start`, leading to a potential kernel warning and panic (DoS).
 > --
 > 
-> --- Patch [4]: [PATCH net 4/6] xsk: validate launch-time metadata size ---
-> commit 812dce9383d33c01b8fe81b1fbbcc8371998ca62
+> --- Patch [3]: [PATCH net 3/6] xsk: clear metadata pointer when no timestamp is requested ---
+> commit 814027e56069dbb5716ac5b9f7f38aebab332dd6
 > Author: Stanislav Fomichev <sdf.kernel@gmail.com>
 > 
-> xsk: validate launch-time metadata size
+> xsk: clear metadata pointer when no timestamp is requested
 > 
-> This commit validates the launch-time metadata size by rejecting requests
-> when the registered metadata area does not contain the complete field. It
-> also snapshots the validated flags for the generic transmit path to avoid
-> inconsistent decisions if user space changes the flags concurrently.
+> User space can change metadata flags after request processing. Rereading
+> them during completion can therefore make the kernel write a timestamp
+> that was not requested when the packet was submitted. Clear the metadata
+> pointer during request processing unless timestamp completion is requested.
 > 
-> > diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-> > index 46797645a0c24..68a7876013572 100644
-> > --- a/include/net/xdp_sock_drv.h
-> > +++ b/include/net/xdp_sock_drv.h
+> > diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+> > --- a/net/xdp/xsk.c
+> > +++ b/net/xdp/xsk.c
+> 
 > [ ... ]
-> > @@ -260,21 +260,28 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
-> >  	0)
+> 
+> > @@ -998,6 +998,8 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
 > >  
-> >  static inline bool
-> > -xsk_buff_valid_tx_metadata(const struct xsk_tx_metadata *meta)
-> > +xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
-> > +			   const struct xsk_tx_metadata *meta, u64 *flags)
-> >  {
-> > -	return !(meta->flags & ~XDP_TXMD_FLAGS_VALID);
-> > +	*flags = READ_ONCE(meta->flags);
-> > +	if (*flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
-> > +		if (pool->tx_metadata_len <
-> > +		    offsetofend(struct xsk_tx_metadata, request.launch_time))
-> > +			return false;
+> >  	if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+> >  		skb->skb_mstamp_ns = meta->request.launch_time;
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but the UAPI struct definition in
-> include/uapi/linux/if_xdp.h has two __u16 fields followed by a __u64 field
-> without explicit padding.
+> [Severity: High]
+> This is a pre-existing issue, but can the checksum offset calculation
+> earlier in this function cause an integer overflow?
 > 
-> 64-bit kernels will read launch_time from offset 16, while 32-bit userspace
-> writes it to offset 12.
+> When handling XDP_TXMD_FLAGS_CHECKSUM, the code does:
 > 
-> This newly added validation explicitly expects the 64-bit structure size,
-> which solidifies the layout incompatibility.
+>     skb->csum_start = hr + csum_start;
 > 
-> Does struct xsk_tx_metadata have a layout mismatch between 32-bit and 64-bit
-> architectures that prevents 32-bit userspace compatibility?
-
-Same as the other email, yes, adding padding here is probably a good idea,
-will send separately.
-
-> > +	return !(*flags & ~XDP_TXMD_FLAGS_VALID);
-> >  }
-> >  
-> >  static inline struct xsk_tx_metadata *
-> >  __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
-> >  {
-> >  	struct xsk_tx_metadata *meta;
-> > +	u64 flags;
-> >  
-> >  	if (!pool->tx_metadata_len)
-> >  		return NULL;
-> >  
-> >  	meta = data - pool->tx_metadata_len;
-> > -	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
-> > +	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
-> >  		return NULL; /* no way to signal the error to the user */
-> >  
-> >  	return meta;
+> On architectures with 64KB pages, csum_start can be large enough that
+> adding hr wraps the u16 skb->csum_start. This would result in
+> skb->csum_start being smaller than the headroom.
 > 
-> [Severity: Medium]
-> The snapshotted flags are validated for size compliance in
-> xsk_buff_valid_tx_metadata() but then discarded, returning the
-> un-snapshotted user memory pointer (meta) to the driver.
+> If pool->tx_sw_csum is true, this then calls skb_checksum_help(). Inside
+> skb_checksum_help(), the offset is calculated by subtracting headroom from
+> skb->csum_start, which yields a negative integer due to the wrap-around.
 > 
-> Later in the zero-copy driver path, xsk_tx_metadata_request() re-reads
-> meta->flags directly from user memory:
+> When this negative offset is compared against skb_headlen() (which is
+> unsigned), it is implicitly cast to a huge unsigned value:
 > 
-> include/net/xdp_sock.h:xsk_tx_metadata_request() {
+> net/core/dev.c:skb_checksum_help() {
 >     ...
->     if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
->         ops->tmo_request_launch_time(meta->request.launch_time, priv);
+>     offset = skb_checksum_start_offset(skb);
+>     ...
+>     if (unlikely(offset >= skb_headlen(skb))) {
+>         DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
+>         WARN_ONCE(true, "offset (%d) >= skb_headlen() (%u)\n", ...);
 >     ...
 > }
 > 
-> Does this create a Time-of-Check to Time-of-Use (TOCTOU) race condition in
-> the zero-copy TX metadata validation where userspace can concurrently enable
-> launch time after the size validation?
+> Could this allow an unprivileged user to trigger a kernel warning and
+> potentially panic the system if panic_on_warn is set?
 
-It is explained in the commit message:
-
-  Note that only xsk_skb_metadata is properly using the flags,
-  __xsk_buff_get_metadata ignores them. Next commits address that.
-
-> >  }
-> [ ... ]
-> > diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-> > index fcc6f17f35760..7855ee09c4b64 100644
-> > --- a/net/xdp/xsk.c
-> > +++ b/net/xdp/xsk.c
-> > @@ -967,15 +967,16 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
-> >  {
-> >  	struct xsk_tx_metadata *meta = NULL;
-> >  	u16 csum_start, csum_offset;
-> > +	u64 flags;
-> >  
-> >  	if (unlikely(pool->tx_metadata_len == 0))
-> >  		return -EINVAL;
-> >  
-> >  	meta = buffer - pool->tx_metadata_len;
-> > -	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
-> > +	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
-> >  		return -EINVAL;
-> >  
-> > -	if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
-> > +	if (flags & XDP_TXMD_FLAGS_CHECKSUM) {
-> >  		csum_start = READ_ONCE(meta->request.csum_start);
-> >  		csum_offset = READ_ONCE(meta->request.csum_offset);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but for zero-copy SKB
-> construction (xsk_build_skb_zerocopy), the payload is populated strictly in
-> fragments, leaving skb_headlen(skb) == 0.
-> 
-> When a user requests XDP TX metadata with checksum offload on a device
-> that uses software checksum fallback (pool->tx_sw_csum),
-> skb_checksum_help() fails immediately on such fragmented SKBs by returning
-> -EINVAL, which drops the packet.
-> 
-> Does calling skb_checksum_help() later in this checksum block incorrectly
-> assume the SKB has a linearized payload?
-
-We treat skb path as a mostly test-fallback, so I think it is ok.
-I'll add a headlen check just to give the users better signals..
+I guess.. We can do a similar size check before calling skb_checksum_help
+to avoid WARN_ONCE.
