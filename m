@@ -1,89 +1,136 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C00374E4C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB53C7DE1
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 09:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785314750; cv=none; b=HCzaolRRqx5MM39V+2jipbyIW1v6PROz/xE74VA1BSpHGpQnB+EkFX/n1qpuCyWsGDiHt59WvfTSRHVzBQuVk/kLZskIPeDf4VAsoS6PPqAlni3PCXaMcZsk1LeQ1tJ9rDOwyB6xJA81tvyZRiyFa81eHrWY51b4OTN/4A/n9IU=
+	t=1785317324; cv=none; b=FBxTNmwE8eAK6QiZ5qwYxnVBfVO0kXa7ZGCX/uIdkcDc6kC/UNTQiGeE1ge4fV5FUktLjhTr1lWWZoLNb88XRp1P1VPOAz3N2lErDvrmERB0fY/JazimwirSERLXZhfufCgcuhlHGdjDjrh8RCQRv8nu+D7+89jgDfxthGYv/bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785314750; c=relaxed/simple;
-	bh=Uem0BCTQG+LFAr0n9rYxTIFcsrX39QrrrrkVdgpsJn0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kvIaonZYrT7RPVtglVlwu+V1Ivpj6yacTsGTIB86HqM7R0qMGCbbwXhxu8V1YR8QQ60JIaCxpseDIquDAl5fxmDF0zQPNZyL3ajNy9huixwBlYPdjIhtuySXuX+JDS0LkFJRkXNUcs6Yc0369HA+No8aG0zfGD1zqHiQozpw3SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=yfWc11bO; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1785317324; c=relaxed/simple;
+	bh=D0AwLkB+ib5XChJALQ4tU8f6c9S6XTW4YEt9TV5JdTc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vDIp+lN6UCxk1BX2vLWo83uTwHsIxljAzuEfdFtQ0929Y9YA83WkOXZRngsEM1u8GbmGHWLWeFWHWnnYHJCBuLFFooA+2ww+V/mq0ktdMqdiAZkNSEm3s3NuWAqQVsuotVJvW1z/IDec/9MD+p/xW95yL+1M8XKnLpF7rXxtvOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=IKLLuiqd; arc=none smtp.client-ip=91.218.175.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="yfWc11bO"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 3E29E4E40FD9;
-	Wed, 29 Jul 2026 08:45:46 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 061A16039A;
-	Wed, 29 Jul 2026 08:45:46 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 06BAA11C11FDA;
-	Wed, 29 Jul 2026 10:45:39 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1785314741; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=Uem0BCTQG+LFAr0n9rYxTIFcsrX39QrrrrkVdgpsJn0=;
-	b=yfWc11bOPX9DS6oVz3wVHzXAZYLOKldzTwc5ox7bVJ3aWyMLfnePszDAAzZMINh9m6Q5VY
-	Za8SnYVD+h9nY0YNws5+R/GjzLhPznYpzbkUh5oymaS0pkU3iZnNF9016hM3XrjHSGctv2
-	l4uqPKKh5UZQBRQWcZW1YiIq2QM6WMIMHwewaVRfvi8NYmEqf1SN/GPemiu68w9Qkk+q3O
-	oYLllgf5z/baoYscM/tNfRD/ZwQiSLNpA3Hm5NdSdS9TAcfP0lety1CJE0qXB7ooVPwnG/
-	NRH1ddXWGEPD35U7x9WlyABZzOIHkah4FQom7s1gymCOuf1AcZOR2kDEkPj6Cg==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Santhosh Kumar K" <s-k6@ti.com>,  sashiko-reviews@lists.linux.dev,
-  "Pratyush Yadav" <pratyush@kernel.org>,  devicetree@vger.kernel.org,
-  "Takahiro Kuwano" <takahiro.kuwano@infineon.com>,  conor+dt@kernel.org,
-  "Vignesh Raghavendra" <vigneshr@ti.com>,  robh@kernel.org,  "Richard
- Weinberger" <richard@nod.at>,  "Michael Walle" <mwalle@kernel.org>
-Subject: Re: [PATCH v6 15/17] mtd: spinand: negotiate optimal controller
- operating point before dirmap creation
-In-Reply-To: <20260723120247.8E1BD1F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Thu, 23 Jul 2026 12:02:23
-	+0000")
-References: <20260723110219.3180747-1-s-k6@ti.com>
-	<20260723110219.3180747-16-s-k6@ti.com>
-	<20260723120247.8E1BD1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Wed, 29 Jul 2026 10:45:39 +0200
-Message-ID: <87fr12mbf0.fsf@bootlin.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="IKLLuiqd"
+X-Gm-Message-State: AOJu0YxnsLRjd5FE9f6eb/SNbtfguqW8zczvVuThxi2bCDOK5JVik0Rr
+	dSMH/x8YMrDwxu0dZKLpBnCVn7yag76JDad+s4+TAOYzEBPd5ZwKr2WIubFFFcegMsZcCWKd6b3
+	2HTuune+FCn1R1UGlBUQLQ7XLbtRtnN9lrDggRWIO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785317320;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zFsPMEXZU81BZFPzI7zqvW1XcTW3Du/Pb7Xb48Wyri8=;
+	b=IKLLuiqdcnNEKbdvG8PEchFv5QS0/KKOm80OU3Hyf98y3RcFZ0mIWVMu2rqSdxVCMFg2oU
+	yMTwUYu/ATP7jP1zmIFPiQMUJT4hWMAJqo3T2Wzogb2WJpyoCR9tDbsFnlCNZDpXKjk6Lb
+	GHfEaTMIaG0VCEAVQqhI4FBfJAv4qZY=
+X-Received: by 2002:a05:622a:514a:b0:51c:935d:8d74 with SMTP id
+ d75a77b69052e-52b2cc85692mr5455941cf.9.1785317310847; Wed, 29 Jul 2026
+ 02:28:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260722202702.4165917-1-congkai@amazon.com> <20260722202702.4165917-2-congkai@amazon.com>
+ <20260722204759.1582A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260722204759.1582A1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Wed, 29 Jul 2026 10:27:53 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzeVnqvgZ_Am+6huiZ+8MwJqQyCOxbJxf2xkxeJvAz6fQ@mail.gmail.com>
+X-Gm-Features: AUfX_myVRObTEUj-itgLtxZQ6z_edRtdlBLQt5Xi5VdUYIKOMZceBmhDdSH-fSM
+Message-ID: <CA+EHjTzeVnqvgZ_Am+6huiZ+8MwJqQyCOxbJxf2xkxeJvAz6fQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] KVM: arm64: Expose PMMIR_EL1.SLOTS under strict
+ PMUv3 UAPI
+To: sashiko-reviews@lists.linux.dev
+Cc: Congkai Tan <congkai@amazon.com>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>, kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+X-Migadu-Flow: FLOW_OUT
 
-Hi Santhosh,
-
-On 23/07/2026 at 12:02:23 GMT, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+On Wed, 22 Jul 2026 at 21:50, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Ranked controller optimization downgrades the read variant on tu=
-ning failure but fails to update or disable continuous read, leading to pot=
-ential controller lockups and data corruption.
-> - [High] The SPI NAND chip is unconditionally restored to ODTR mode upon =
-system resume, even if controller optimization dynamically fell back to SSD=
-R mode at probe time, breaking statically configured dirmaps.
-> - [High] SPI controller PHY tuning state is lost across suspend/resume cy=
-cles.
-> - [Medium] `spinand->max_write_op` is not reset between iterations in
-> `spinand_try_ranked_variant()`, leaking `max_freq` modifications
-> across tuning attempts.
+> - [High] The implementation of `KVM_ARM_VCPU_PMU_V3_STRICT` introduces tw=
+o logic errors that completely break the new feature and its API contract:
+> 1. `KVM_VCPU_MAX_FEATURES` was not increased from 9 to 10 to accommodate =
+the new flag (which is defined as 9). As a result, `KVM_VCPU_VALID_FEATURES=
+` excludes bit 9, causing `kvm_vcpu_init_check_features()` to unconditional=
+ly reject `KVM_ARM_VCPU_INIT` ioctls with `-ENOENT` when this feature is re=
+quested.
+> 2. Even if the feature validation were fixed, the code fails to enforce t=
+he documented 'No default PMU creation' behavior. `kvm_setup_vcpu()` uncond=
+itionally calls `kvm_arm_set_default_pmu()` if `kvm_vcpu_has_pmu()` is true=
+, without checking if the strict flag is set. Thus, KVM will always assign =
+a default PMU on initialization, defeating the stated purpose of the flag.
 
-The four reports seem legitimate. Some are easy to fix, the one about
-continuous reads is a real concern I also had during my previous review
-but forgot about it, and it is going to be slightly more challenging
-than the others to handle properly. Of course we want both features to
-work together, ideally.
+Both are done in patch 4: it bumps KVM_VCPU_MAX_FEATURES to 10 and
+adds the !kvm_vcpu_has_pmuv3_strict() check in kvm_setup_vcpu(). Until
+then the flag stays unsettable by design (INIT rejects bit 9 with
+-ENOENT), so patches 1-3 are inert and there is no half-enabled state.
 
-Thanks,
-Miqu=C3=A8l
+/fuad
+
+> --
+>
+> --- Patch [1]: [PATCH v3 1/4] KVM: arm64: Expose PMMIR_EL1.SLOTS under st=
+rict PMUv3 UAPI ---
+> commit 5883b44965f93aed147ca4ed5fb390ae481daa37
+> Author: Congkai Tan <congkai@amazon.com>
+>
+> KVM: arm64: Expose PMMIR_EL1.SLOTS under strict PMUv3 UAPI
+>
+> This commit introduces a new VCPU feature flag KVM_ARM_VCPU_PMU_V3_STRICT
+> to prevent KVM from automatically creating a default PMU, and exposes
+> the PMMIR_EL1.SLOTS value to the guest when a PMU is explicitly selected.
+>
+> > diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uap=
+i/asm/kvm.h
+> > index 1c13bfa2d38aa..019e5e3d892e6 100644
+> > --- a/arch/arm64/include/uapi/asm/kvm.h
+> > +++ b/arch/arm64/include/uapi/asm/kvm.h
+> > @@ -106,6 +106,7 @@ struct kvm_regs {
+> >  #define KVM_ARM_VCPU_PTRAUTH_GENERIC 6 /* VCPU uses generic authentica=
+tion */
+> >  #define KVM_ARM_VCPU_HAS_EL2         7 /* Support nested virtualizatio=
+n */
+> >  #define KVM_ARM_VCPU_HAS_EL2_E2H0    8 /* Limit NV support to E2H RES0=
+ */
+> > +#define KVM_ARM_VCPU_PMU_V3_STRICT   9 /* No default PMU creation */
+>
+> [Severity: High]
+> Does KVM_VCPU_MAX_FEATURES need to be updated to 10 to support this new f=
+lag?
+>
+> Currently, KVM_VCPU_MAX_FEATURES in arch/arm64/include/asm/kvm_host.h is =
+9,
+> so KVM_VCPU_VALID_FEATURES (BIT(KVM_VCPU_MAX_FEATURES) - 1) only covers b=
+its
+> 0 through 8. When userspace attempts to use this new flag (bit 9),
+> kvm_vcpu_init_check_features() will reject it with -ENOENT.
+>
+> Additionally, does this patch actually prevent default PMU creation?
+>
+> Looking at kvm_setup_vcpu() in arch/arm64/kvm/arm.c:
+>
+>         if (kvm_vcpu_has_pmu(vcpu) && !kvm->arch.arm_pmu)
+>                 ret =3D kvm_arm_set_default_pmu(kvm);
+>
+> It appears that kvm_arm_set_default_pmu() will still be called on
+> initialization even if the strict flag is set, since there is no check fo=
+r
+> kvm_vcpu_has_pmuv3_strict(vcpu) here.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260722202702.41=
+65917-1-congkai@amazon.com?part=3D1
+>
