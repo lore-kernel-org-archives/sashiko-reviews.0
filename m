@@ -1,117 +1,160 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB0238B140
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 18:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785348405; cv=none; b=HPMFrO++Ex/DV5je/qMu3dcv6GJUlwcOo1yS57Vo0QJpucPNlmDKxkGGhrDDN4ZGwxY/hZiURct1WYwu525GJnbVTTYW8hRAC0Cm/dxXmsHvFnT+nZP9HHiI+8FTuOkcaCSwNpYGdZj1FNKnjZpylra/7qa0IQLXGf14pnjy0Wo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785348405; c=relaxed/simple;
-	bh=awd77f5bif/dIgyPxCs6KSL0oviQPYlUuXl3UA5EPtQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FMichkz7Ki3f3bZIWdyYJKywg7QLJBMT8NjHlw9uBhKHriGxP+G7i4u1CUoDlRShifFL4CHxE3vIhx2fq4VIqPp7JfK0XdruqgkHf411tGuldIIgcAQyT0hzZ9XeH3LrISDXGNN0IjK7nhrCVVbeqyMYyhe9igm1Uw5Do8ndE/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=PjpWGm+t; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AED93A71B6
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 18:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785348804; cv=pass; b=hjCUGO0If1d4lOr3Mynif5vumsgNUtd16YCD+v6E8q59GBauD06iwy2fTZSBtkDkMEmrtSmKzapvf6UGa7okjDYkIJtkK9APwwQX4fgxYJ0iAy0tz23SiX3eZQfBoX4FdoyfTh4cEN1GvYVCjf02xcHCyOZ9yl5Iq7wCVwg8mHY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785348804; c=relaxed/simple;
+	bh=l9Uk7VyAGhBOCH47wMyEDvu7VOuPXGyeXwTOqqtrNwQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eSssj6mlyle8vDFEXHxdzEt4YdNTDt2y0lsPdWmV7pu3nQEtR+ocxYTkjdhCnC7SI88CwJ3xfJhN7L3Wtbr+x/yOahKSmNCJArPfI7bB3lzaPx4NIK3Jsla8acyo1aipW1WCFUiBFTy0Jtb6byntzqnVptLBjeZxR4noJBXVTTU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mty2jN94; arc=pass smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="PjpWGm+t"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-4728c12ba97so868204f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 11:06:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mty2jN94"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6984169c126so2105841a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 11:13:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785348801; cv=none;
+        d=google.com; s=arc-20260327;
+        b=B1i+eFVrZj2cVUq8qfglWKIz4ggHff3t+mvTdguXl1WMfCCyurhAEuVVNOZ/LCFuZi
+         0fDTLY/J+ELvdYBMyUA1qj3PC8H1IAMZtqMX2WSMnZZmxu/cNeuGxZbXz3Ph1N/Pj/eP
+         QiVaKQ92gtLvGbz2Iy7FNRpIAYgT/vWyC/9X8DvxOFLzmJvgkRpYtUBmm53CLk0geucg
+         2PzUqio8xwfFhv+b9c0y3C+MQ/PiP+i6Kvuzd6nqodMXaDsSX4BbSZo8BZXpLtaIepa4
+         0zhMnPOMLGtVCR0E0c9VU+nFUZ2Uzu+8T2ziuotv+kuxcKZi0wKBsBhgQ8KwGcdz+sou
+         lhmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=w1z/xndzybZ5D+AlRgPZw9qYMQrcZbDchb7urQIjmOM=;
+        fh=09d0alT2vWugDAMCzpgQpl3/7WoRUt39xgQGbwqyPYU=;
+        b=ZinR5Quqq2uh9wBByZdcX4vsHLGHEIyCL9owajUYvwSxSGEwso5uVOpgmp7HKoetoA
+         +SOwM0i1FqriPvOAT6SPK7YoGgKieL11jc+TNg422l9qheiJRTIKpFOreL+rTqb0nKjo
+         1f7LxRf+sVwjejCEDajjWv5qcTss/1euhk+3HvccGaYzFp+QVylEs/IEAyyRWHpV8G7L
+         zQhgTzz6/eHHAfYWRk4y1QZfWn/93J99wubbtfoFJ4hMPzJB3ItvnehfVf049KJ4DpXn
+         FDpldSC9dtywEjwL3EN6dbFl4mu7VI9yl3bw+pm5W5z5HV/OgcRlZpTUmWwHcPUEyinz
+         4M7Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1785348394; x=1785953194; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+yaJ1hCjUBCmis82b4ussWNf6EXlhg+aBQ8DtTvotq0=;
-        b=PjpWGm+t9FBo5o2OVyKjLVs7HRXNB/2qvvF2WJ+vwfNgOexAlXjxSenWpYsM9g3+Pr
-         4xH29UIpXvyiBMudOYQmCXjqe/rTSzj5tswOsT6sAsRm06abcgGcViwMxoJSbIRfw6iH
-         E5tNJZImy0HQ3t3ZIPtmR6FRu+Khe9wMUiY+4=
+        d=gmail.com; s=20251104; t=1785348801; x=1785953601; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=w1z/xndzybZ5D+AlRgPZw9qYMQrcZbDchb7urQIjmOM=;
+        b=mty2jN94AyqrtlZrIaqL7EquB6l27HFg6XIecwJZoglOOvDSBJ0WiedINO1MoUveIV
+         484raimzYhRRZLe3xnk4TjGQzsPlW6GhuuUjsHW+scwwEZZccwSFSZjfwe3zXFEEBDxq
+         bHpy1a/8IGCHOuIPqEesiYMNIhbHACPANBx0wGv61QGTuLyfIU88/wKcf5fWXTIXF1xe
+         9lFfucCTE3tCn41eFTfSt4tm3Jq7yVvtlk+2866besbIhyEJuMc5uuoV/0IAKToeSTcR
+         wSbwHkAAHSeQTAlsVrrv2/di4QubsIVUo6CqHaLjOW6ZczpciGJdj73l6cIkqpog7NWu
+         M1Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785348394; x=1785953194;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=+yaJ1hCjUBCmis82b4ussWNf6EXlhg+aBQ8DtTvotq0=;
-        b=mtE7qCbRh3IEbSROcE0X7xIYHtIHQ4v8R+EYP1IB3oS8rF6tVv1EeD/kYij+blLJ/F
-         6Xn6hK/gS0EfkHN/hw7ka9tFTsqhu6vVLfqGAnNksGwkuMvRBtnuIdZX7x/zIty7m+RV
-         rW//2/q3LVcutNpKqdog+MpTcUzXh0unG00/zXBVNWn5Qv3yy2VJjpDO3ChprEtJNRE5
-         FI7aOyu8aqbaTbaSeJR+i24kxYdc1fuIjodcmS2Qmzf2SeHOeRM/C0Tjjixs8ZPq4pik
-         bVX09qsDCQzKlxPmPxGGlMjFOHP9vWO3SgVu/Qgl595CXN4bRU3/NuajZeB/A9V6f89a
-         6Tzg==
-X-Gm-Message-State: AOJu0YxMQchgC6DZ+tfrjK3NQtaBEw4j3iUCi5cxI4DcS6b/+9TefvfK
-	PCusGDOWLdQxG2MjEIlSNyz1wD9vFccgZTrbytyVEA8dCg05/r5G6wldwt+V0I512mIqncQmaa5
-	+yavkBw==
-X-Gm-Gg: AR+sD11yIKZV/i3abYK9BV07mle/cCYapoFYc35vp+/XfGUXOI+ZDtBd4/GxxMTAilU
-	ICzpInSZf2YOvfcnb1d8opejFXtt7y92N5GNY3bk+yocvCpnicUuUzo149qphATQUD81pBudFla
-	8CMNtV5AK9qEAO66w2ImYBWaqqmxSEjMqjUZ9ijJRZ9ixJLcB7A9USs4LNfO8nuVnLvin2BsKbB
-	RtAj+SiwaL/Ly7iyOdY8MKvAcTNpHrvK8HO2qB3hSgIQUvZ465G3SXyJjowAZGc+P/kUEGuimeb
-	nxKo1wnRgbu/iaqr7IZJEAT6XIosq0HbkuOdoGPQSHz37krB3zSLLLkOV1oDaUw2MGRlIWmx5yn
-	iOls4OScV3nXH/R5K40mt/pJtrLQ+jprsyg6NKN6B1tfWhIml0Toc1wq77XDwTt3VOTMvQA+Ujr
-	T+LuDl4ZtspQbDTwFyb+/QVPVVChZ5A569Tqwr4BhuPkpnx/0pLURwAEzert0DHiSrcPerX0H0H
-	mhRpfI5WaZ/6yF6kgUX2w==
-X-Received: by 2002:a05:6000:430c:b0:47f:9201:6409 with SMTP id ffacd0b85a97d-47fb1f17008mr8860822f8f.40.1785348394087;
-        Wed, 29 Jul 2026 11:06:34 -0700 (PDT)
-Received: from google.com ([2a00:79e0:285b:8:6f8:f7bd:339a:29ca])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fb6b0f039sm10526768f8f.18.2026.07.29.11.06.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2026 11:06:33 -0700 (PDT)
-Date: Wed, 29 Jul 2026 20:06:30 +0200
-From: Dmytro Maluka <dmaluka@chromium.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] KVM: VMX: Fix stale PID-pointer table entry left
- after vCPU free
-Message-ID: <ampBJrSSas_XISim@google.com>
-References: <20260729170621.308809-1-dmaluka@chromium.org>
- <20260729170621.308809-3-dmaluka@chromium.org>
- <20260729172831.5BDE71F00A3A@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1785348801; x=1785953601;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=w1z/xndzybZ5D+AlRgPZw9qYMQrcZbDchb7urQIjmOM=;
+        b=l4jJP3VsGzX6jWx6w2ckIBdKN2WJsqJKrHt4H3X2J+P7dxsEI1L7LKXdXt1wxx+QjV
+         fCmkf0IF58/Bw7ptoiF1wLMtx/hXBsd6nuQeVzqhqyBqpUciAjXuvy6ibTb3hfUOE+8N
+         HhFtRi17A3jIT3PsBkHWMfwVOnstQXHlbTqrgvOwWn+dwtEPgRBJuAL3YUP2jqGCQSLd
+         L3oQlr6Dmm9A6KJ1MS4eTKduI5utfR7ZHj6zfGWQ2rJ5NoBWZCDjOZ/JhyS3XxazXpY+
+         RFa78KPfWdmsSQcxpNDW+gUX4A+TVq1Fwajz1ALpuxFErPKR3V7Zh1RyMc97dv8f7AqC
+         6YWQ==
+X-Gm-Message-State: AOJu0Yxh0gkQDFKOXDEr4TI5piSnluSb5QkpGweYPR9WpMW2mlgkw+Yu
+	6mgISyB29M7hi6HyErybdR1gxDCK5jL4FuEvJHU5RVmt2FwJtOf3j8buOuj76OIzMCfBjHUwrMy
+	XN6CgOPITS8pOiBFudCuvYBlmoF/ZXe4=
+X-Gm-Gg: AR+sD12Tdz3yC5nIuIlUBhpRrOsJEg76wbdH9qlSfZMlbiX4y5Lb+R6WOaJicXTMGa1
+	3H5renZ0ImR9gKSx4BKnw/v2QtnokHNQh/kic6yYV9sPsjq1n3flYhtsxmzABRZDwvF7l1fgjwR
+	qJ4K79TJ7Ue29OZBdoSAAocPRcnwZlhh4msk6fCP3OAIShyKgZonczjgrICtT9AAMPWUbaqKLft
+	WDsHYhbVpTH0mDRjbWrOvfaeJ9wSjOykUWTZwUklLiix6g031BxgfTrB6UqvLoCIy1P8XqcMd0/
+	6hwK0a7Ix5G8gFmaOvnEiVZqsNXTVqNVWELQETxKbVT57WiIB5YZC9J/R2EK9ISKAcbbvzxGD3k
+	xH2SNU9DHftxMaj3gRcDyVASSkB+ibwG7RTEO/rLbVTaXBqD71AVftzG7Ze1f+GQNiXiezV7N4Y
+	On6IAVxLz7Sie+ZjRTltNvLCrqg40nun4TATqi6dCtUzaroUlailsgZELPoZA6uLntCbM=
+X-Received: by 2002:a05:6402:3899:b0:698:5610:76de with SMTP id
+ 4fb4d7f45d1cf-6a034a0b14amr4298664a12.4.1785348800634; Wed, 29 Jul 2026
+ 11:13:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729172831.5BDE71F00A3A@smtp.kernel.org>
+References: <20260628231156.1254012-1-rosenp@gmail.com> <20260628232714.BD9581F000E9@smtp.kernel.org>
+ <CAKxU2N-3zVUM6A-fQnYWud4O7M55Ghc-wnTCG+8DD6_nh2827g@mail.gmail.com> <ba56ee70-9702-4b11-ad04-d63322ab60b4@app.fastmail.com>
+In-Reply-To: <ba56ee70-9702-4b11-ad04-d63322ab60b4@app.fastmail.com>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Wed, 29 Jul 2026 11:13:09 -0700
+X-Gm-Features: AUfX_mxsWPdeWCTjyGu9bwG4Ft-f7FWsPOq11UXIaV9_Yv9Ny3dg6AFlEw2whJY
+Message-ID: <CAKxU2N9Nt+HF-4TzB3+_5ta=28wb0xCCLuUVO6Bm=LW3ZnNmHw@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: BCM5301X: drop extra AXI bus ranges that break PCIe
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
+	Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 29, 2026 at 05:28:30PM +0000, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-> > index 6b96f7aea20bd..ebf26ea84a50b 100644
-> > --- a/arch/x86/kvm/vmx/vmx.c
-> > +++ b/arch/x86/kvm/vmx/vmx.c
-> > @@ -7572,6 +7572,9 @@ void vmx_vcpu_free(struct kvm_vcpu *vcpu)
-> >  	nested_vmx_free_vcpu(vcpu);
-> >  	free_loaded_vmcs(vmx->loaded_vmcs);
-> >  	free_page((unsigned long)vmx->ve_info);
-> > +
-> > +	if (vmx_can_use_ipiv(vcpu))
-> > +		WRITE_ONCE(to_kvm_vmx(vcpu->kvm)->pid_table[vcpu->vcpu_id], 0);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does clearing the pid_table
-> entry alone prevent hardware from writing to the freed pi_desc?
-> 
-> According to the Intel SDM (Section 29.1.5), the processor caches PID-pointer
-> table entries in the VPID.
+On Wed, Jul 29, 2026 at 8:40=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wrote=
+:
+>
+> I saw this in the fixes pull request, and the descriptions
+> below don't make much sense to me. I'll hold off on the pull
+> request until someone can come up with a fix that they
+> can accurately describe.
+>
+> On Sat, Jul 4, 2026, at 00:17, Rosen Penev wrote:
+> > On Sun, Jun 28, 2026 at 4:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> >>
+> >> Thank you for your contribution! Sashiko AI review found 1 potential i=
+ssue(s) to consider:
+> >> - [High] Removing the PCI memory ranges from the parent `axi@18000000`=
+ bus breaks outbound PCIe memory mapping because the child `pcie` nodes can=
+ no longer translate their addresses to CPU physical addresses.
+>
+> This makes sense to me, but doesn't explain what caused
+> the observed bug
+>
+> >> commit 4f061464281d4964ce46dab60d36a09328f14862
+> >> Author: Rosen Penev <rosenp@gmail.com>
+> >>
+> >> ARM: dts: BCM5301X: drop extra AXI bus ranges that break PCIe
+This patch can be dropped.
 
-I can't find this statement in the SDM, and I'm not sure what it has to
-do with VPID, apart from the acronym similarity.
+https://lore.kernel.org/all/20260727140939.389-1-strst.gs@gmail.com/
 
-> Because KVM immediately frees the vcpu memory into kvm_vcpu_cache after
-> kvm_arch_vcpu_destroy() without issuing a cross-vCPU flush (e.g., via
-> kvm_make_all_cpus_request(kvm, KVM_REQ_TLB_FLUSH)) to invalidate the VPID
-> caches of other running vCPUs and synchronize with in-flight IPI deliveries,
-> can other vCPUs still send hardware IPIs using the cached pi_desc pointer?
-> 
-> Could this result in the IPI hardware writing to the freed vcpu memory and
-> corrupting another newly created vCPU when the memory is reused from
-> kvm_vcpu_cache?
-> 
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260729170621.308809-1-dmaluka@chromium.org?part=2
+is the proper solution to the problem.
+> >>
+> >> This commit removes extra AXI bus ranges that overlap with DRAM on
+> >> BCM5301X/BCM470X SoCs. The intention is to restore the original
+> >> single-entry mapping and fix PCIe routing issues.
+>
+> The DRAM ranges on this chip are at 0x00000000 and 0x88000000
+> and don't overlap with the axi bus ranges at
+> 0x18000000/0x08000000/0x20000000/0x28000000, so the initial
+> analysis is wrong.
+>
+> > With need_ob_cfg =3D false (no brcm,pcie-ob in bcm-ns.dtsi),
+> > iproc_pcie_map_ranges() is never called. The bootloader has already
+> > configured the PCIe controller's outbound windows correctly. By
+> > removing the extra AXI bus ranges, of_translate_address() fails, those
+> > bogus resources are skipped (the OF_BAD_ADDR check at
+> > drivers/pci/of.c:377), and the kernel stops registering DRAM addresses
+> > as PCI MMIO windows. The hardware continues working with its
+> > pre-configured outbound windows.
+>
+> This sounds like the bootloader configured ranges don't
+> match the ones in the devicetree description, which would
+> leave three options:
+>
+> - change the bootloader to match the dts
+> - change the dts to match the bootloader
+> - change the driver to reconfigure the windows according to DT
+>
+> Can you check how the OB windows are actually configured
+> by the bootloader on your board?
+>
+>       Arnd
