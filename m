@@ -1,145 +1,188 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A343A436BDD
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BBA3E7145
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785314438; cv=none; b=twZHwz10DJrX7Vaf1m2g5gNeFXlXruBurKXvSdR9O3iSk2SwtaFK863m9Gh3+JdFiDJSxF+oiaZfy5g3F2BltcFt5Ulti915tvdAfJO4OEaSQpSIhmn1B75Vezp/9Dyh5pYAAYupsIPaoE/JsyXBAutl338PjkrWmMKoxbhlPS0=
+	t=1785314470; cv=none; b=lz3C4hhpR8OuX0PKCLWosuUv1L5jDphoHRFOuxAgn+2KqyaKivvUMfijx5tSMzOHvxCCP5TwMw7+OcamcMUlwZoo+tcuIJnYJ8Tfc85ry4Spg36+ffL/12pUwpb8ce+aiAI/EXiQfD+jw1LUsqRtvDoAjNId3dHsOIBFnPbOLDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785314438; c=relaxed/simple;
-	bh=6L+2HhKKl5Dj/xnqKaKM7XXym8YRbHwjxboMTP88nYU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ODqWSourMTAOzavb9pI661Kfi8iW0lPzXR3c3PqK4PkHMjQp+QgZzxleQfNOfXSpvNaTvGPQDo+Zb53JRMoc5YRr018dTQnQXuG9IQjSccKhbr9UkjM9V10vX/dintJQXYxVlggqnGzIV00WCu73gfM7LE+egUVtefY7KhkdaFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=z17o4+6h; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1785314470; c=relaxed/simple;
+	bh=AoaCHVUlogiTnFufxBVUpWVGN0xOur8l/4UX/MML0K8=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R0mXAojmLaAkHRoLu4+To9/51UyElXgrQSLVN30ZNSi/M6nZwzCjRRzes2lggHEojGXGA89Pm7U7ow+btLdtMBWtxcuJ6Dasy7QKFVHlbrqiOcXxiGaQjIzLJzF1aUM/yvnzDZwSnhklxrlFez0hmRAIN2TQRDCfGkwyeyVHip4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=edF4Kv0v; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="z17o4+6h"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id D6BAB4E40FD9;
-	Wed, 29 Jul 2026 08:40:34 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id A2BA06039A;
-	Wed, 29 Jul 2026 08:40:34 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CED4311C11F9A;
-	Wed, 29 Jul 2026 10:40:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1785314433; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=bzEbbuYZWZc50WIZy1HsrIgMjUCihehMfow+qFrkT9U=;
-	b=z17o4+6hvpHbmMlt4xKjB03wUr84tz0k7nRjkOFLsbnwd8ilbYkRsPgtUmfpNEg8VSlzCQ
-	hk4hwumwjKOxqvCG0gk3YINdY53mtehfHcw6MzY5tTkP/+YyxYPWGf1t/G3fks4O+lJx4S
-	V1aq+CPWv0xsIchJB9RRIHobngsOIV3Bg4JdQ73KrTSaUBXg/dXwRRJm7XX6Pelz3CtV/a
-	24w9tvyhM1In8Nq1Dh6VIb7rh1Q0ZKCS1S4vgJ4Fn1q9W3fCq68CfwKwDuPWed86sqIIZT
-	jJ0eGQRjmLTWNVoouamVT2Tv86coIhL3rGqSk7xleeIESnQdXOxjJ2eLWtstXQ==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Santhosh Kumar K" <s-k6@ti.com>,  sashiko-reviews@lists.linux.dev,
-  "Vignesh Raghavendra" <vigneshr@ti.com>,  "Michael Walle"
- <mwalle@kernel.org>,  devicetree@vger.kernel.org,  "Pratyush Yadav"
- <pratyush@kernel.org>,  "Takahiro Kuwano" <takahiro.kuwano@infineon.com>,
-  conor+dt@kernel.org,  robh@kernel.org,  "Richard Weinberger"
- <richard@nod.at>
-Subject: Re: [PATCH v6 04/17] spi: spi-mem: teach spi_mem_adjust_op_freq()
- about post-config ops
-In-Reply-To: <20260723113443.06C2D1F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Thu, 23 Jul 2026 11:34:42
-	+0000")
-References: <20260723110219.3180747-1-s-k6@ti.com>
-	<20260723110219.3180747-5-s-k6@ti.com>
-	<20260723113443.06C2D1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Wed, 29 Jul 2026 10:40:31 +0200
-Message-ID: <87ldaumbnk.fsf@bootlin.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="edF4Kv0v"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cab973140bso10165985ad.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 01:41:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785314468; x=1785919268; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=JYTx72Rn0uzNL9+eoqaoZGN5MRd0NWcXqTetb/qXnzw=;
+        b=edF4Kv0vNkuRxwRwZKsiDTsh+OeeQynFs3kO4H/fSfEk8OIOLwP200JgT/rUAxboym
+         uXpzmtBKqVWvKW2IHv0e6nNJ+bo1PZQEgzDN4z+hu0vVXT8/LY6OOiDbM2QeZ0pd5h71
+         Qnx/GQqPZpwW9xmdw0PKASnMmGYJNcy1TVI9cYVTotwhYyyfiVU0oE3/609oAEprVucp
+         QnphaW1g47fmIO2xznVlBMCo/6kOElenF39dOW9tV9sYj3Ww6fgqj3wLpFLDCopGbzmD
+         VFORL4VNbUUSXVcCit3iOOg12oNajkyH8oqhtRER85dOy6DvgNg24XAnzrgjJvzAjN1k
+         vU5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785314468; x=1785919268;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=JYTx72Rn0uzNL9+eoqaoZGN5MRd0NWcXqTetb/qXnzw=;
+        b=Rk5v2QJWXJC22BJW26hIM2wkjGg9iaXTGpAh4Rrg+Lq6hKr1gt9/XWMR6j6eIbTzHg
+         b80a7ee3b/unZPCaMRC99AcNlfdPUG6vQAM4q8BqdwJJC1qhKBFC1QWAPenEZ5wxjQGS
+         pndUKFF+VisrFXupTDweLD9mdcC0fATtBD2hhxiH+mqEz7pi5S0WhbmK2Vnce4ltY4Ia
+         G+s6vwuvg0tmsBpiR8PZyQhvITSXLjrOSv75YXN2GLQ0GbpLlfWNKXvOhX+dfwj+8cAT
+         0/Pwg0GlXMsaq5GHybKtGkZMwgHhAEeOAZ2QZqDd7DeCZHOU8ceVG9A5oj/SBqH4mH+j
+         FKqg==
+X-Gm-Message-State: AOJu0YzVlOs3DvKJMe8bSfi5fLL6pbRmxhPsdTHAMrGtNn3WaQg86uZC
+	5XieNWVEeXzXsiZe9QapRk9g0GBFY9aJkvM4bVlkdFlQzwJsBVIPIbXvoZgG9A==
+X-Gm-Gg: AR+sD12SAheIdYOL1+l2H1LdbmjzH+UwPqWLCHV22Rb7KltK0vxqrpGY6Nv0hSHuHyH
+	qcODzFoaG5NXr5clzIsqCnIbDo1VTkoNsCNYON0Q3Lbjax7h2tnYToOnpLXIUoit4JusqPLSPLX
+	3biigcwnIpuzFcP1FI/AnokcHtPUnVJpDU9S9ASc02Dp1a+Mvn2PxPY8jd5LYSnOvQOMXnG2gP4
+	FnY9illuvWW6g/wH/xUYOdi0vuSmMU0AZI7Uw2UDfigatdjHTaSiPk6+Iokzl4gYaWW7pt3QJy4
+	WEPii7vyNZ947v7WB00hgyE8Kwv94V+hCUJpwvrLq/JZnJ6mMd972KmoqJ5L8e15odZrJydAVjl
+	uDtzbjUnfH9lP67q/TEfneRZ5C0M9G50afg/Cxbvk2oYoLL8E3qgxphOBBx/mtccdTZvS4J9HYx
+	CKtIug7px5G0kNtK5pbIZGdfO/Y0C/r/W4deMz+7oKAT4c7VwGSuRUmcF6szSOmBcq1wVkq1Ivn
+	3fBSGLJ3OTZ/6TELjja2bFQMdahrwLwVBX0J9qr/fi9
+X-Received: by 2002:a17:903:1b24:b0:2cc:d6de:d597 with SMTP id d9443c01a7336-2d015c92ce3mr65710025ad.7.1785314468117;
+        Wed, 29 Jul 2026 01:41:08 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022a465f7sm7962085ad.24.2026.07.29.01.41.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2026 01:41:07 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 29 Jul 2026 01:41:06 -0700
+To: sashiko-reviews@lists.linux.dev
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v11 17/31] cxl/mem: Enforce tag-group semantics
+Message-ID: <amm8ovfX2d9p3ijj@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-18-anisa.su@samsung.com>
+ <20260625182418.E9F8E1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260625182418.E9F8E1F00A3A@smtp.kernel.org>
 
-Hello Santhosh,
+On Thu, Jun 25, 2026 at 06:24:18PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Untagged extents spanning different DC partitions and DAX regions are incorrectly coalesced and assigned to the same region.
 
-On 23/07/2026 at 11:34:42 GMT, sashiko-bot@kernel.org wrote:
+Fixed in patch 12. extract_tag_group() originally put all untagged
+extents into the same tag_group. This has been fixed to put each
+untagged extent into its own tag_group so they are not coalesced and
+assigned to the same region.
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Using strict equality `op->max_freq =3D=3D post_config_max_speed=
-_hz` as a sentinel is brittle, breaks high-speed modes, and can inappropria=
-tely elevate frequencies of un-tuned operations.
-> - [High] Ops running at the post-configuration frequency bypass the `per_=
-op_freq` capability check, potentially causing unsupported controller behav=
-ior.
+> - [High] Fully duplicate extent groups are incorrectly rejected and omitted from the device response.
+
+Duplicate false positive from patch 14 and 16.
 > --
->
-> --- Patch [4]: [PATCH v6 04/17] spi: spi-mem: teach spi_mem_adjust_op_fre=
-q() about post-config ops ---
-> commit 929442442d981a80e44b25e60b6fa3ecd9dc8a62
-> Author: Santhosh Kumar K <s-k6@ti.com>
->
-> spi: spi-mem: teach spi_mem_adjust_op_freq() about post-config ops
->
-> This commit extends spi_mem_adjust_op_freq() with a bypass for post-confi=
-g=20
-> operations. If an operation's maximum frequency matches the configured
-> post-configuration maximum speed, it remains uncapped, while all other
-> operations are capped to the base maximum speed.
->
->> diff --git a/drivers/spi/spi-mem.c b/drivers/spi/spi-mem.c
->> index a88b9f0383564..e20eca1b82457 100644
->> --- a/drivers/spi/spi-mem.c
->> +++ b/drivers/spi/spi-mem.c
->> @@ -591,9 +591,18 @@ EXPORT_SYMBOL_GPL(spi_mem_adjust_op_size);
+> 
+> commit c2cf18ae81b1c32953f39b06aeaa9e153f4ac609
+> Author: Anisa Su <anisa.su887@gmail.com>
+> 
+> cxl/mem: Enforce tag-group semantics
+> 
+> This commit completes tag-group validation. It adds sequence integrity
+> checks to verify that sharable partitions have dense shared_extn_seq
+> values, and verifies that tagged allocations do not span DC partitions.
+> 
+> > diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+> > index 14ba263044f08..7967b0db2c512 100644
+> > --- a/drivers/cxl/core/mbox.c
+> > +++ b/drivers/cxl/core/mbox.c
+> 
 > [ ... ]
->>  void spi_mem_adjust_op_freq(struct spi_mem *mem, struct spi_mem_op *op)
->>  {
->> +	if (mem->spi->post_config_max_speed_hz &&
->> +	    op->max_freq =3D=3D mem->spi->post_config_max_speed_hz)
->> +		return;
->
+> 
+> > +static int cxl_check_group_partition(struct cxl_memdev_state *mds,
+> > +				     const uuid_t *tag,
+> > +				     const struct list_head *group)
+> > +{
+> > +	struct device *dev = mds->cxlds.dev;
+> > +	const struct cxl_dpa_partition *first_part = NULL;
+> > +	u64 first_dpa = 0;
+> > +	struct cxl_extent_list_node *pos;
+> > +
+> > +	if (uuid_is_null(tag) || list_empty(group))
+> > +		return 0;
+> 
 > [Severity: High]
-> Does this strict equality check reliably identify post-configuration ops?
->
-> If a hardware-defined operation limit exceeds the board's tuned rate, the
-> exact equality check will fail, demoting the operation to the untuned base
-> rate and wasting the PHY tuning.
->
-> Conversely, if an untuned operation happens to have a datasheet limit that
-> is identical to the tuned board limit, could it bypass the base rate cap
-> and execute at an unsafe elevated frequency?
-
-I am not sure this issue is relevant.
-
+> This is a pre-existing issue, but does this explicit bypass for untagged
+> extents allow them to span different DC partitions?
+> 
+> If a device sends multiple untagged DC add capacity events spanning
+> different partitions, cxl_add_pending() appears to extract them all into a
+> single group.
+> 
+> Since this check returns 0 for null UUIDs, cxl_realize_group() processes them
+> together. Would cxlr_add_extent() then register them all under the DAX region
+> of the first extent, effectively merging extents from different partitions into
+> the same region's resource tree?
+> 
+> [ ... ]
+> 
+> >  static int cxl_realize_group(struct cxl_memdev_state *mds, const uuid_t *tag,
+> > -			     struct list_head *group, bool existing)
+> > +			     struct list_head *group, bool shareable,
+> > +			     bool existing)
+> >  {
+> >  	struct device *dev = mds->cxlds.dev;
+> >  	struct cxl_extent_list_node *pos, *tmp;
+> >  	struct cxl_dc_tag_group *tag_group;
+> >  	int group_cnt = 0;
+> > +	u16 seq_num;
+> >  	int rc;
+> >  
+> > +	seq_num = -1;
+> >  	list_for_each_entry_safe(pos, tmp, group, list) {
+> > -		/*
+> > -		 * Pass the device-stamped 0-based shared_extn_seq through
+> > -		 * unchanged as the dax-side @seq_num (0..n-1).
+> > -		 */
+> > -		u16 seq = le16_to_cpu(pos->extent->shared_extn_seq);
+> > +		if (shareable)
+> > +			seq_num = le16_to_cpu(pos->extent->shared_extn_seq);
+> > +		else
+> > +			seq_num++;
+> >  
+> > -		if (cxl_add_extent(mds, pos->extent, seq) < 0) {
+> > +		if (cxl_add_extent(mds, pos->extent, seq_num) < 0) {
+> 
 > [Severity: High]
-> Additionally, does bypassing the cap for post-configuration speeds break =
-the
-> frequency capability check in spi_mem_default_supports_op()?
->
-> In spi_mem_default_supports_op(), the capability check is guarded by:
->
-> 	if (op->max_freq &&
-> 	    op->max_freq < mem->spi->max_speed_hz) {
-> 		if (!spi_mem_controller_is_capable(ctlr, per_op_freq))
-> 			return false;
-> 	}
->
-> Because post-config speeds are typically greater than max_speed_hz, the c=
-heck
-> op->max_freq < mem->spi->max_speed_hz evaluates to false.
->
-> Does this cause controllers that lack per-operation frequency switching t=
-o skip
-> the verification entirely and incorrectly accept operations requiring dyn=
-amic
-> clock rates?
-
-However this one is plausible. Could you please verify? You can just
-drop the boolean enabling the multi frequency capability in the spi
-controller driver and you'll see how it behaves.
-
-Thanks,
-Miqu=C3=A8l
+> This is a pre-existing issue, but what happens if a device resends a tag group
+> where all extents have already been accepted?
+> 
+> If cxl_add_extent() detects a duplicate, it returns 0 without calling
+> cxlr_add_extent(). If this happens for every extent in the group,
+> mds->add_ctx.group is never allocated and remains NULL.
+> 
+> Does this cause the subsequent if (!tag_group) check in this function to drop
+> the group and return -ENXIO instead of returning group_cnt to acknowledge
+> the extents back to the device?
+> 
+> >  			dev_dbg(dev,
+> >  				"Tag %pUb: failed to add extent DPA:%#llx LEN:%#llx\n",
+> >  				tag,
+> > @@ -1412,15 +1532,22 @@ static int cxl_realize_group(struct cxl_memdev_state *mds, const uuid_t *tag,
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=17
