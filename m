@@ -1,345 +1,179 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20A2426430
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 21:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785361249; cv=none; b=gU1Y2IIZ4scjxf84VftwtPszZFvB3KDYWgWyWpZjsB7gzcU1x+1B/zS4/y3K1ZGQDBO+E35D3u5s3qSpd7m/nBDB1PrjVxRjF3FnHZF38Ov+u3ftT7s7NT4gplnu9nSZ4aPaDvV1zFzlYpMj6K9nPts7fKug3Bxz2mYmQ96Ya+4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785361249; c=relaxed/simple;
-	bh=JNEQ7rR1WM8PzoXdoNbQgKMHlFDVjglI0tzJrq2Jnp8=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QHtHFRyYiVoDm5ztW4a+Khr60s7rpQcnkJ69Z99g8a+As7SlP+yr0dBu0E5trQ++/WaEgdvfKCIxifUGmiAhLnPxD/xw4Of7f/vj+V3kkfMUX9SX7J5Df1C++p6H6kiat+NQeY6AuYoftPJewNsaKw6JT20mBTLWKrT5iFA9n0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GnjNIGmR; arc=none smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111563BF66D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 22:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785362775; cv=fail; b=WXIT2lCvZM1VpSLrRKlTmbrbsft6V/X51tC9cBWHK6m5WhvGpXEJ+rGMng2eg7Jx7VTlOHCIwGxxuWa4+5AhfKbwMiBfH0rju19Q2gbnfieGcS5J2aAe/BEJjkU6TRLDimlbNdmBAtaRGIE6ikzuy005/1peZiPrBGUrg7LSo0Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785362775; c=relaxed/simple;
+	bh=tOrMWAvxl+Tgr2SSPTMip/tm2B4yl5V+fC6LPToJtJM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=GbmShqgGyCK/J7LpoZTc51XAicPpSdJ85grQS7EhWRFxZBavmpzRxsar7VIw47mv33UD3byKhRVLbLfeUORoLR1lNZ5H64VMdkBsD2z3I2+ZZiV8JdSUPSmgbmnAle2Bk62RT+D4AyqlOaIds28cUxcXv7hkGixhxtc+9kO8Luw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=m2DjU7qp; arc=fail smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GnjNIGmR"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6682259cb3dso223906d50.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 14:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785361247; x=1785966047; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Z+DgA4zG6AwsPezIGSHy64caLYuuPCqGKZCNKn+wt8Q=;
-        b=GnjNIGmR7bgPLoKpZ60ihqU5muZwdBW6eWP1/4A4+puunRLeBCtCfXmcoIwRMZ4b8w
-         ZAQiMTN1RXG4Eabuc1PtDFKaJfoQy/duqtG693EA4R5yiS6R3WYziND+ZCKkr/sIYGco
-         6LkNU+agMeSbbLKEUdGai0YenoVsP+JoET+cojIb+eGKjVaWdf3xZtCUqY3El97u+3ms
-         RUpKrowzYK5I1hR9LZFCP3hYHqgBubP/pXCObQrGBLJ4a8TkAEAqH3QdmyttSJBSy/IP
-         qXDhBBTk/6/4Ry5p0xrsXMu8IQ5CINzwFYhjquudYSeJGsIO0aZ0I2/wPzZGxKZR7VYf
-         xLAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785361247; x=1785966047;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Z+DgA4zG6AwsPezIGSHy64caLYuuPCqGKZCNKn+wt8Q=;
-        b=aerwxVUnnKKC2zdSlMc9/tQ0TvrVb7VAV1/C5u643u59Z5zcoVIbylqEo+vAcQUO8q
-         +U7ygsAeS0LPxn1SV0DQd7WGUv7j6VNtcURC2un1ZG1pfT0U7gQL1k0B0dW5PMPOElZB
-         a1WlfJW3pIJc0AhGTstCF83Bo9tqJKaHAmsGF/3GC989Uz9UZMa9eP2GsJ4D7ZPCJ7cW
-         Zon2Mxp+86D/sUVG2w8SP3wzaCXY/LaLpl+9yBKa4/wRyIis2Yh3tMDC4zZ0PWSw26pz
-         ovHzx8R9xkvRvJv9pf+AdVTuyql0w0mBh8AUymXNQ7+OlXX1SE9F7NHATQGA299lEncK
-         LnLQ==
-X-Gm-Message-State: AOJu0YzofG7zSViTLaVeTFAOFqWlRxXLR3Nj/PK4fmO1TZrs7tik8rwF
-	LFLh6SSnylOZs1xt98Gi8q1hNkYi1qC/liuYkiSzmW1UtrDZGD81vHAZlJWPWA==
-X-Gm-Gg: AR+sD13dxIu8M4+TJqPKn+Zb3asWo2O4Z3uXaF4YR31GmRzlf12D4D2zl3KGBw/wUyk
-	oS2hihEW6xNHrAbStiDrgWLffXvjGqVwz1OkUBn5mMd/E03wVSAtSieWu4Q4fVUXvEoWePXHQg9
-	Xf130STiT/BUTWG+T01HItfofKygTZgu4sLYCIFs8aFLefbesuz+v3AAGQsTOTEKdR01rgLSQlX
-	tV6fnGjAm4gdeOcZTIRrAidyDSmAKoc3d74hTyywNITqOX1KAI15nxP83fDW/Gj70KwXL6IqHUI
-	azAvPsn6kl+poIB3QOxG9mg9f2cT9GhsAU+b5aLBrUcZJZmSdeX7z8vMRdL3gUcm2y5DKSFCMG0
-	w0LRPKSpYn+ybYyf43M4nkCmfMTqY4RZyKLQ3rPR4FQBIZ+yzDKpKisQL62sMicmW+ara4R339o
-	MF47REng8fzbJJhGNyzifaj3N/IzdJojgBhayd6fa1vH3Lj/hDn+5raY2TBNZuLdQFvQ0knFKD3
-	g/Gi2g1RRz3Lxk3pA==
-X-Received: by 2002:a05:690e:4147:b0:668:14a7:d00d with SMTP id 956f58d0204a3-6692cc954cbmr44749d50.2.1785361246686;
-        Wed, 29 Jul 2026 14:40:46 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6692c7479c9sm66816d50.7.2026.07.29.14.40.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2026 14:40:46 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Wed, 29 Jul 2026 14:40:44 -0700
-To: sashiko-reviews@lists.linux.dev
-Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
-	linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v11 18/31] cxl/extent: Handle DC Release Capacity events
-Message-ID: <ampzXMtmkiQAHVzU@4470NRD-ASU.ssi.samsung.com>
-References: <20260625112638.550691-1-anisa.su@samsung.com>
- <20260625112638.550691-19-anisa.su@samsung.com>
- <20260625182339.95A1F1F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m2DjU7qp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785362767; x=1816898767;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=tOrMWAvxl+Tgr2SSPTMip/tm2B4yl5V+fC6LPToJtJM=;
+  b=m2DjU7qp3ggB/mJ1Znpq1WxScc81XCLrJKxVkqxeK1JrTcDl5jnfVkf+
+   rWbMiZ13hfEFyiBPG27Wu4xK2uEHpYQPV0QcTm8CATlq2tP2YCN3eQmJZ
+   DmcswEf2WZSnLaSl48dHmVcr0vDM4m/v8hEHtTH1u21y7TMxBrLPBaeXl
+   JRIo3CNSPE8p+V44r797pZ8jwvmMX5HhtzmXivm5NX0knESjIoxLkq/k0
+   U/XdlLm74pXNlaxzQA4bTLduYJUfaLJoyDKDeZpurIoH5b6Y5TFMyJxIc
+   k7ylruri9ePD0TPVb8TzOs0jaiV2G6kdkHFt2yN5dqyfL9a9Eh69cwgYd
+   Q==;
+X-CSE-ConnectionGUID: CgcsT24rTpyxUOyKxB4qZg==
+X-CSE-MsgGUID: Cpt0yOLFT8euIV2ocrnkAw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="85742715"
+X-IronPort-AV: E=Sophos;i="6.25,193,1779174000"; 
+   d="scan'208";a="85742715"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 15:06:03 -0700
+X-CSE-ConnectionGUID: 3Djr8hvsQ7+hAgwOEjWzmQ==
+X-CSE-MsgGUID: w3Nq7QhmRamg6iJ2lpTLXA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,193,1779174000"; 
+   d="scan'208";a="257450789"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 15:06:02 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 29 Jul 2026 15:06:02 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Wed, 29 Jul 2026 15:06:02 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.30) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 29 Jul 2026 15:06:02 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oS27HPY/iz0CW4lTRfPJlWTxM+L7XFe/1mnNG5rYYjv4hzt4yd0F2bPqPcv72A/lfBgt6RPzDaQwfpVba25Ze2Pb23D6LPE3784Ui+ZrbU+hQT29nYA6Wg4sVLfpstoy7gyG3v7OdtvxVAwn3o2MENKOaLtoSHJTZuDZr7HnWub+4jJ91bsBiEJe9N7VmphHWB9WCJh1WclmGvxsZ2tHpDIqvd6ZEML+CrR/PbxQNawE8YfxUjFymx2owpSkpTuXXEcXxHyfKTd6PRMksmljV162qADd88/W8kcr5laBUFs04WZ+nCIfo/b86GtL6HSboecgAfdcAOfWVUPJekXIxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tOrMWAvxl+Tgr2SSPTMip/tm2B4yl5V+fC6LPToJtJM=;
+ b=Bdl6bQEsJLocRZoKjYSuMsJHi8LpywcLjtHB6gazEMJDVCHk8jG8i95PUhTiFNs1VdwqU2VpQrWqAf5I+XHt/UhwLe7rQ+Z+bXTb3gctSK/4OmV1SozcGy9k0GELlvE7rwzDKsdgZmXeVrgd7KcMY1P8AFrbCxnVW/e448Ul3dVhkzKPO/YPXAOJvlvlVPLxm4scmMHL9WifanZWkqAHSlAAc/6o9dYEXs3xxAwKZ7wso9JHHhxXVHlkCyVWNRkpuYzLV43XlDKZR6zqqq7lPUfJmCBm7nrJkPxVWKdbROi0Fzs+wtA6zGm57/TS9TzM0gKxPhUa3S2GcS44FB+tYg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH7PR11MB6771.namprd11.prod.outlook.com (2603:10b6:510:1b5::20)
+ by PH7PR11MB7146.namprd11.prod.outlook.com (2603:10b6:510:1ed::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Wed, 29 Jul
+ 2026 22:05:59 +0000
+Received: from PH7PR11MB6771.namprd11.prod.outlook.com
+ ([fe80::effa:162e:c9c9:a1b4]) by PH7PR11MB6771.namprd11.prod.outlook.com
+ ([fe80::effa:162e:c9c9:a1b4%4]) with mapi id 15.21.0270.012; Wed, 29 Jul 2026
+ 22:05:59 +0000
+From: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Subject: Re: [PATCH v8 06/11] KVM: TDX: Allocate PAMT memory for TD and vCPU
+ control structures
+Thread-Topic: [PATCH v8 06/11] KVM: TDX: Allocate PAMT memory for TD and vCPU
+ control structures
+Thread-Index: AQHdG8vQ2q7LFT/3E0m7neUbbCFMIrZ9Y14AgAex6YA=
+Date: Wed, 29 Jul 2026 22:05:59 +0000
+Message-ID: <7bd02e4c440302ececb86f6a3b875efafd977c16.camel@intel.com>
+References: <20260725002302.3337017-1-rick.p.edgecombe@intel.com>
+	 <20260725002302.3337017-7-rick.p.edgecombe@intel.com>
+	 <20260725003525.5A10B1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260725003525.5A10B1F00A3A@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.44.4-0ubuntu2.1 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR11MB6771:EE_|PH7PR11MB7146:EE_
+x-ms-office365-filtering-correlation-id: e5fc866b-8be6-46a1-35a5-08deedbd9285
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|38070700021|11063799006|56012099006|10067099003|4143699003|18002099003|22082099003;
+x-microsoft-antispam-message-info: 2nx3QXEikL+vbfEZ1xtANS2VlsEMxZmKRTcRmgVagqb5bAV5HFRodfjUlGmTrOQkv7jfOdPfUOkmJCragQwrcbEts0njuEawROfH00D2fSb6gTGliNgN9P9pKh4DAJ1RotMHrVzT0iV21KLeiA/LtgFuokHfV/y5ccgApFMuUOmEFwQ7NiWbTC+Q6y852tPwpxfNTLnkmY42uG6o7BoGDx4xJBjHt4CvAnCXLA0uYO4UxJyb+bYtLDbsXbmqF0ArKDX+rQwXIHddMQMaWfBb1agQawAnD450aYIyrPuja3maC3nyTspWEL8PFWINiC/xTpY1xPUki8uoz8zamIFquqvLXjNMR+I7ybMM8Zpnqkqo7XC1+dKTT8A3yI+GmBG43hcTrP6Q59+eUzu/30xNNNxjGRRwjxqFA5JhwN6WhcfhKha4JIqHyZH6VXs65oNA3uPnNMekIuBdyxmD/MFoDFPF7SuZ8IQVQYFKt6flEPMRQ8cbQuAXF1wUjYzwMYmAIrkX9e1ozpMADXyIMbUBaGWzAMM4W/FH9s3fFuFmBSHiRbqZAYsmAdyzciM9HfoJdmSKxQwibxWM8eIg4fP2SweKPz0jUIv17jpPSN9gVnFseBATGTu/euJyPmYUDl5ir6p4UTbKs0yaV2zWA+UGdOB/NonukvOuv7vr2Nyg/qY=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6771.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(38070700021)(11063799006)(56012099006)(10067099003)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?U0pidjFRSWkzOEsya0FZUlBVSDMwYS9KdnVDc0xLVFB3SFpMNjF1VVVOOVNs?=
+ =?utf-8?B?WnJORXZrcnVVbHNPbVA4ZWVMS2c2QjZOcTBwYStYT1BGdXJrNFlnZ0hoK3Zx?=
+ =?utf-8?B?c3lPUlQwZXJ4YWx5dXpGYjR5bUlLdElwaWRiUlBxSmhRMk8rMHJDUjhWM2JJ?=
+ =?utf-8?B?VkZqbG1MdzFiNVhGWmdheUpiSHRmREkreG9JcE9vdVBHeVFQSFRUSi9maXF1?=
+ =?utf-8?B?YytVQWMwU1dDMVh6RmRKOTZMaDIxbVBxZFJJZHZFdnpuQmNGYzVveFVVSVZ2?=
+ =?utf-8?B?VWFyLzVML2ZxaUVXRmxmY3lwVVdueGoxaERnRC9LaDRGM3NOM2YvYTFZNWZP?=
+ =?utf-8?B?cWhselhBVlFqMWFHbks3QjlhY2psSDU2RlNnb1pIc2NLc25PRUhJNGphRFNF?=
+ =?utf-8?B?NDBwN243ODk3MGZlVGZNdnp1Q0padnRMc3RtWEZ6MlllTGVuSjBXQm9IcklI?=
+ =?utf-8?B?ZXNkNzlTTE5lUW42UkQ1UVptcjFNdGptRWdaWkd5ZXl2dlZQemZaNVl4QzZl?=
+ =?utf-8?B?cnBRMlpRcklLTG1pa21kenF4VDhrUlN4QVZ5bDluN2xnZGV1b2RVS1ZXM0FP?=
+ =?utf-8?B?UXQydHlXYit6bXpreGxEeVNqRWVxYjcwbmhUbG9GdGxxUXlUU216VkJlZTZ0?=
+ =?utf-8?B?dHJlbmxCQWs5ZGhkSWNvaEl2aTBnT3dkeDcyeE1ubXlEOCtLMjkrVzRXSHE0?=
+ =?utf-8?B?TVRNVnA3MHdoaCt1MDFJRTJ6V3JJclAxckJEaFJZS1RzUzJHQm1YamxZWXFa?=
+ =?utf-8?B?OXZlZjBXME9vakczVUdDcmJteGF3YnhqbEgyZ25EY3h0ZWlUS3J3ZlBPWlN2?=
+ =?utf-8?B?WGhKSFdHNUV0aytGTjhVRWtPa1NQZDMxQ0tOamxmQk9wUHFpelR5SkwvMTV2?=
+ =?utf-8?B?OVZOS0hETzRtZG85MlZETmdhSWVCVnQ3eFJvWHZqejZMZElsaXBUNE5lSG4w?=
+ =?utf-8?B?RjU4dE96Mm5xMnhuWm9SZDIyNUpUdndvZFFOQ0lsaUsveUhkaVZENG5mZTI0?=
+ =?utf-8?B?TGRrSnp4MWw5Zi9md3haOGdCZzI5SjVlVFNWT3QzNmJFMFJsbFFzaVFCWW5S?=
+ =?utf-8?B?MWVzWjNXN1I4QzdqV00vOStrL015OUZkTm5GeFp6RHhFcUZ3SmE2ZGQrOFoy?=
+ =?utf-8?B?QUtiSW96NFBmbHdaTjZFZ295WXlvVVZMMy8wZTl0MU5zZ2R5emlhaTdsQllS?=
+ =?utf-8?B?RmZ5N2xVbzBKNVo3b2V2bHZzVW5hVE9ia2RlSlcrcXpoQy9peUI1RHcvTlMx?=
+ =?utf-8?B?TUs1ZmF1NDNmakdEekZBWlZyck5qYXhhN0hoUW4xdk9rem9ObWd1N1I2S2Qy?=
+ =?utf-8?B?UDVOK0F1Tkl2N1FjMHNzWloyR0FZa3E2eHZSemtHa0d1b2JDUm9yM2U5RXp4?=
+ =?utf-8?B?QXl5QlZjaEJURWJJS0I0dVZDMHJESmhXVkpVSE9JYnlMb2NZUk92N0RKWERz?=
+ =?utf-8?B?NTRhbXFTa0lhUDduQVRDKy9ZU09yMEcydnJFdHRXdlA1djA2dHNmVEtMSmVw?=
+ =?utf-8?B?VFJidkE3Y3RnY2gwMzEzUXFITGtPeGR1K1JobkNsNFp5MDN4YlY0eENhbkNk?=
+ =?utf-8?B?QjhNS2Zsa1NEKzB4VGk2dDcxd3VDVmsvd1ovWElKWXAyTTZvQ3JPODVyRUJ4?=
+ =?utf-8?B?R2R2Rk83ZjU4R29xckY0RytiYkFiZGxVVHRzTTRSREFkcVJxWDg0ajBORElL?=
+ =?utf-8?B?TC9PZVQrV2FTUUViK3MrTGpsK1BXaW5lOUtXaDRaNEhkTDJjY1NKTGxseTIv?=
+ =?utf-8?B?bHVZK2xOcTJHUTFsY0NLM2YyNWFkaGh0Vy9taXhtQ2lkMmVxSy9zMlFtTE95?=
+ =?utf-8?B?c2hLbElHVWIxZHlmMkNjckhwelZaeHBOS25aMXJRVWV3c2NJZWFGYkJ1UjFq?=
+ =?utf-8?B?WXNhZ1htUFgyNEN0NEIwbTYwbThBakdMaHhYVzBDaHZSZXJrUHI0ME1Jblgy?=
+ =?utf-8?B?K3MrUzNCZVN2aW5wdXE1TXBRMy85SXFMQjRJWXhUM2FPOHJqSUJiUkZEOGgx?=
+ =?utf-8?B?MGJ2ZzhiWGR4ZU8rclZTQjE3VGIzVitMWkgwcEdqY2RReGczNEJqeThlNlFM?=
+ =?utf-8?B?YU5aRXR2QW9JZjM3VnQzL3FtTGdva1Y2UmlSZ05oQ1puRVFmSms1ZkR2MTl5?=
+ =?utf-8?B?ZzZIS0dDQjNKbU40YWQrTk1XUUJ4d2F4OGpDTlJMQ092b3JHa0o1MjRnbmd0?=
+ =?utf-8?B?SlhqK3pjcjAxZUJENGVzMGVHT1RCeW5QWm9XM3hPK2ZhVW9QYkoyWFkxYVhF?=
+ =?utf-8?B?Sy9najdKTG9zVzdjRUIwSGs0U2xvbGJrNnJoU0pFUEhXcG9PUWhpR0dRcDZD?=
+ =?utf-8?B?amprU0w1WDlIZDh2bEhVOFRPdzVCM2JhRFB0NW1XU2V3VHIxY0dKaVhMOXRs?=
+ =?utf-8?Q?nfJrV52ZBi9kVrBs=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B4FEBDD3C1593548AD0CC6C549F9DE9E@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260625182339.95A1F1F00A3A@smtp.kernel.org>
+X-Exchange-RoutingPolicyChecked: BhX7Cd0OyaOVuK6D852Qziiq9+8+9YicLR7d+AxAZtBa+dge/OQaKlSON/yi2JnWWIRlpcweM66/N+CRB40poywQTWJs345UPN9btNncdZj5B9c3Jlh4lgc/z+wyKAcPTzjRrK7pGoFSm5RORS6NRXHPM7icRxAaBE/8ZdfL35n2wwvUGckSZGO+DOcrPBFuB2d5ejQMZoJ1sOb2TdXaLTaN7aJvXhCXcc1b8JmPNPgWrgJ4zak4asHO+NYbg6jqgueJxL+/j/bmVsR4RcloGmPi97pvMd88nOoPT090Iebq7JbH4wyWotcAmBdrFbTin67FqCBjJRn+pE553HUl7A==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6771.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5fc866b-8be6-46a1-35a5-08deedbd9285
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2026 22:05:59.5519
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4GlE+v2WA5vv2VbOK0Kz6ytuh65FCD1wJRFhKw0yQluA5QRgc9ncLb2SyECGcDuz+iyKignEgifJ0Btj9kd3ASv1LgNzuxv70Txx6Ljgl9A=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7146
+X-OriginatorOrg: intel.com
 
-On Thu, Jun 25, 2026 at 06:23:38PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Lockless iteration over the shared `cxlr_dax->dc_extents` xarray leads to Use-After-Free.
-
-Fixed -- same bug reported in patch 14. The fix is split across both patches by
-making the free rcu deferred and calling guard(rcu) appropriately.
-
-> - [High] Unsynchronized non-atomic modifications to `group->nr_extents` lead to lost decrements and tag group leak.
-
-Duplicate false positive reported in patch 14 and 16.
-A single tag group/s extents are never released concurrently.
-
-> - [High] Multi-extent tag group releases incorrectly tear down the entire group on the first chunk, causing spurious errors and WARN_ON stack traces on subsequent chunks.
-
-Partial False Positive -- The WARN_ON case is not reachable (see below)
-
-RFC for the spurious error case:
-
-Currently extents are eagerly released. If a release event record
-contains a full tag group of 3 extents, upon processing the first extent, if
-no extents in the group are in use, the entire group is released.
-
-This way, partial release requests from a faulty or naive FM are handled
-by releasing the entire group anyway and we don't hold onto unused capacity.
-It's also less code.
-
-It does cause the kernel to emit the following dev_err logs for the next extent
-if it belonged to the same tag group.
-Specifically in cxl_rm_extent: 
-dev_err(&cxlr_dax->dev,                                         
-	"release DPA %pra (%pU) matches no dc_extent\n", &dpa_range, &tag);    
-
-Then cxl_rm_extent returns -ENXIO to the caller cxl_handle_dcd_event_records(), 
-which will print:
-
-if (rc)
-	dev_err_ratelimited(dev, "dcd event failed: %d\n", rc);
-
-This is misleading, but the current greedy release policy can't distinguish between this
-spurious case and an actually bogus extent that was never provisioned to us or
-accepted in the first place.
-
-If we want to distinguish between the 2 scenarios, then release needs
-to follow a similar path as add:
-- hold extents in a pending_release context
-- 20 second timeout for end of "More" chain
-- when chain closes (More=0):
-	- loop over pending release list
-	- extract tag groups
-	- check if the tag matches any currently tracked tag groups
-	- check that each extent 100% matches extents in the tracked group
-		- same number of extents in the group
-		- each extent has the same start_dpa and length as its tracked
-		  counterpart
-		- tracked extent is unused
-	- if there is a mismatch:
-		- err and hold onto the tag group?
-			- IMO doesn't make sense to hold onto unused capacity
-		- err and release the tag group anyway?
-			- this is the same as the current behavior and the
-			  only gain is that err msgs are not printed in
-			  the success case
-	- else (no mismatch):
-		- release the group (no err msg)
-
-Estimated + ~150 LOC to implement.
-
-Proposed change:
-downgrade dev_err to dev_dbg.
-ack the release to tell the device we're not using the capacity (similar to the
-other 2 cases in which !cxlr or !cxlr_dax) and return 0 from cxl_rm_extent
-
-(see below)
-
-> --
-> 
-> commit 277b0b7ee1e3ee9199ddbac19db51d5566770cbb
-> Author: Ira Weiny <iweiny@kernel.org>
-> 
-> cxl/extent: Handle DC Release Capacity events
->     
-> This commit replaces the no-op ack stub for cxl_rm_extent() with the real
-> teardown logic. It resolves the released DPA range to its region and endpoint
-> decoder, locates the matching dc_extent, and tears down the entire containing
-> tag group atomically.
-> 
-> > diff --git a/drivers/cxl/core/extent.c b/drivers/cxl/core/extent.c
-> > index 0ebb581ca8335..a590a89f35802 100644
-> > --- a/drivers/cxl/core/extent.c
-> > +++ b/drivers/cxl/core/extent.c
-> [ ... ]
-> > +static void rm_tag_group(struct cxl_dc_tag_group *group)
-> > +{
-> > +	struct device *region_dev = &group->cxlr_dax->dev;
-> > +	struct dc_extent *dc_extent;
-> > +	unsigned long index;
-> > +
-> > +	/*
-> > +	 * Pin @group across the walk: each devm_release_action runs the
-> > +	 * dc_extent_unregister action synchronously, which drops the last
-> > +	 * reference on the dc_extent device and fires dc_extent_release.
-> > +	 * The release decrements group->nr_extents and, on the final
-> > +	 * decrement, frees @group.  Without the pin the next iteration's
-> > +	 * xa_find_after() dereferences a freed xarray.
-> > +	 */
-> > +	group->nr_extents++;
-> > +	xa_for_each(&group->dc_extents, index, dc_extent)
-> > +		devm_release_action(region_dev, dc_extent_unregister, dc_extent);
-> 
-> [Severity: High]
-> What happens if a device releases a multi-extent tag group by sending multiple
-> DCD release events (one per chunk)?
-> 
-> When the host processes the first event, cxl_rm_extent() resolves the group
-> and calls rm_tag_group(), which atomically unregisters all extents. If the
-> sysfs reference is > 0 (e.g. userspace has a file open), the extents remain
-> in the xarray.
-> 
-> When subsequent release events for the remaining chunks are processed,
-> cxl_rm_extent() finds the same group and calls rm_tag_group() again. Will
-> invoking devm_release_action() on already-removed actions trigger a
-> WARN_ON(!devres) stack trace?
-> 
-Not reachable. While extents are in use, cxlr_notify_extent() returns -EBUSY
-and cxl_rm_extent() returns 0 without calling rm_tag_group() at all; and once
-a group is torn down its extents are erased from dc_extents, so a later event
-can't re-select them to double-release. There is no double devm_release_action,
-so no WARN.
-
-> > +	group->nr_extents--;
-> > +	if (!group->nr_extents)
-> > +		free_tag_group(group);
-> 
-> [Severity: High]
-> Can this result in lost decrements and a tag group leak?
-> 
-> Since group->nr_extents is a plain unsigned int, a lockless decrement here
-> in rm_tag_group() could race with dc_extent_release(). If userspace holds
-> references to multiple extents in the same tag group via sysfs and closes
-> them concurrently, dc_extent_release() will run on multiple CPUs
-> simultaneously.
-> 
-> This would race with the decrement here, preventing the counter from reaching
-> zero and permanently leaking the cxl_dc_tag_group and its UUID.
-> 
-> > +}
-> > +
-> > +int cxl_rm_extent(struct cxl_memdev_state *mds, struct cxl_extent *extent)
-> > +{
-> [ ... ]
-> > +	/*
-> > +	 * Find the dc_extent whose DPA range covers the released range and
-> > +	 * whose tag matches.  The release targets the entire containing
-> > +	 * tag group atomically; partial release is not supported.
-> > +	 */
-> > +	group = NULL;
-> > +	xa_for_each(&cxlr_dax->dc_extents, idx, dc_extent) {
-> > +		if (dc_extent->cxled != cxled)
-> 
-> [Severity: High]
-> Is it safe to iterate the shared cxlr_dax->dc_extents xarray without RCU
-> protection or a write lock here?
-> 
-> cxl_rm_extent() and cxlr_dax_classify_extent() iterate over the shared
-> xarray using xa_for_each() while holding cxl_rwsem.region only for read. If
-> concurrent DCD events from different memdevs in the same interleaved region
-> trigger rm_tag_group() or a failed cxl_add_extent(), dc_extent objects can be
-> removed and synchronously freed via kfree() in dc_extent_release() by another
-> thread.
-> 
-> Since xa_for_each() drops the internal RCU lock during the loop body, could
-> the iterating thread dereference a freed dc_extent pointer here?
-> 
-The xa_for_each is put inside scoped__guard(rcu){} block, since
-cxlr_notify_extent() is called afterwards, which takes dax_region_rwsem via
-down_write() and can sleep.
-
-> > +			continue;
-> > +		if (!range_contains(&dc_extent->dpa_range, &dpa_range))
-> > +			continue;
-> > +		if (!uuid_equal(&dc_extent->group->uuid, &tag))
-> > +			continue;
-> > +		group = dc_extent->group;
-> > +		break;
-> > +	}
-> > +	if (!group) {
-> > +		dev_err(&cxlr_dax->dev,
-> > +			"release DPA %pra (%pU) matches no dc_extent\n",
-> > +			&dpa_range, &tag);
-> 
-> [Severity: High]
-> Could this error path be triggered spuriously on multi-chunk releases?
-> 
-> If a device sends multiple DCD release events for a multi-extent tag group,
-> the first chunk will cause rm_tag_group() to unregister all extents. If sysfs
-> references are zero, the extents are freed immediately.
-> 
-> When subsequent release events for the remaining chunks are processed, they
-> will fail to find the group here and print this spurious "matches no dc_extent"
-> error.
-Proposed change:
-
-Re-ack the release here with memdev_release_extent() to let the device know
-we're not using the capacity. This is consistent with how null cxlr and
-cxlr_dax are handled (earlier in the function, snipped in sashiko's response):
-
-guard(rwsem_read)(&cxl_rwsem.region);
-	cxlr = cxl_dpa_to_region(cxlmd, start_dpa, &cxled);
-	if (!cxlr) {
-		/*
-		 * No region can happen here for a few reasons:
-		 *
-		 * 1) Extents were accepted and the host crashed/rebooted
-		 *    leaving them in an accepted state.  On reboot the host
-		 *    has not yet created a region to own them.
-		 *
-		 * 2) Region destruction won the race with the device releasing
-		 *    all the extents.  Here the release will be a duplicate of
-		 *    the one sent via region destruction.
-		 *
-		 * 3) The device is confused and releasing extents for which no
-		 *    region ever existed.
-		 *
-		 * In all these cases make sure the device knows we are not
-		 * using this extent.
-		 */
-		memdev_release_extent(mds, &dpa_range);
-		return -ENXIO;
-	}
-cxlr_dax = cxlr->cxlr_dax;
-	if (!cxlr_dax) {
-		/*
-		 * The region exists but its dax region is not set up, so the
-		 * host is not tracking this extent.  Tell the device it is not
-		 * in use, as in the no-region case above.
-		 */
-		memdev_release_extent(mds, &dpa_range);
-		return -ENXIO;
-	}
-
-Downgrade the above dev_err to dev_dbg.
-
-And instead of returning -ENXIO, return 0. The caller
-cxl_handle_dcd_event_records() only uses rc to determine if it should print:
-
-if (rc)
-		dev_err_ratelimited(dev, "dcd event failed: %d\n", rc);
-
-cxl_handle_dcd_event_records() is a void function and does not propagate rc.
-The drawback is that this line is ommitted for a genuinely bogus
-release extent.
-
-Or return -ENXIO, consistent with the null cxlr and cxlr_dax case and print
-the dcd event failed line, even for the spurious case.
-
-- Anisa
-> 
-> > +		return -EINVAL;
-> > +	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=18
+T24gU2F0LCAyMDI2LTA3LTI1IGF0IDAwOjM1ICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
+IHdyb3RlOg0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IFRoaXMgaXMgYSBwcmUtZXhpc3RpbmcgaXNz
+dWUsIGJ1dCBkb2VzIHRha2luZyBjcHVzX3JlYWRfbG9jaygpIGluc2lkZSB0aGlzDQo+IGZ1bmN0
+aW9uIGNyZWF0ZSBhbiBBQkJBIGRlYWRsb2NrIHJpc2s/DQo+IA0KPiBMb29raW5nIGF0IF9fdGR4
+X3RkX2luaXQoKSwganVzdCBhIGZldyBsaW5lcyBiZWxvdyB0aGlzIGFsbG9jYXRpb24gbG9vcCwg
+dGhlDQo+IGNvZGUgY2FsbHMgY3B1c19yZWFkX2xvY2soKToNCg0KQXMgU2FzaGlrbyBzYXlzLCB0
+aGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLiBCdXQgYWxzbyBhbHJlYWR5IGRpc2N1c3NlZCBo
+ZXJlOg0KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcva3ZtL2FrNUwyY3NJVHlpMXRHcDBAZ29vZ2xl
+LmNvbS8NCg0KSXQgbWFrZXMgbWUgd29uZGVyIHdoYXQgd2hhdCB3ZSBjYW4gZG8gYWJvdXQgcmVw
+ZWF0ZWQgU2FzaGlrbyBmYWxzZSBwb3NpdGl2ZXMuDQo=
