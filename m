@@ -1,207 +1,186 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0606E3AFCE5;
-	Wed, 29 Jul 2026 15:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785337901; cv=none; b=YhjxL2i6cuz5y+JvMg+qjwMWoi1lbn15IfZCVL+ckhCIY51IBS55UT5WETwWmO59AsiutVTW16TpkxQRRjKdcK71Ok0T/KhJTNrYkhpEtgOiTeefG+MHMN7ygS04PJne6J55YAlHL46O65izl55h4nvS/fjMl8dnUkY2wuq9sTc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785337901; c=relaxed/simple;
-	bh=aSFx05asRMwwMg31IFLVO1WNz9Zjdi6CqC3bFPc1lOo=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=RLAhbJ9OpzG6LieX4MZYvyHxr+iNGhWbjzuwoMbuYbdl+VstV5CDbeSmrStUrfdPAUnLFhgEFkcyFP3YCeLfIJAE2D64wMcjYSczeUYFWd9tuSdoBf8VFYjIJzazfQR2qnefZXUTRQTmk67SranEo1Eiq89SxjiRREbkDSOP/Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=hNlW6CzP; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0A13B05A7
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 15:23:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785338633; cv=pass; b=Jk0SZhxnj4Dl3l9Gjm47rBwGTmM3V7HysCxM0zTKvbjIiv3Y1O4yi4QPLwTFN1Ks9ornxww+Z5jznw2yHMpagJ8FpJvhcLSfhti933xCPbWyI2N/nBmC/leRRQoeevmJgPHr9uAZ4KS11R0JZIMA/EF7y6hJouvd+LeCIjVmNRQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785338633; c=relaxed/simple;
+	bh=KvR+cddFigOMJS06ugQoH4iVC4ve1rtPkVOdtPRomp0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nR1QAiCxd1DuYShKxrq0omHhy01xVsNW0rRXeSEkpleIYB4gHfrEf1clDW/L1IgBOqxOnL3FJ+E8/xctP7/D2S2kb/mkXtmD2Z6/s5HATE1F7bTy9AIXEdLlSylt+i1JPD1LoIEk9hHWVIa+qE6o/IvQxqMhLqbf/+oa0CdxoZ0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fy/M0fE2; arc=pass smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="hNlW6CzP"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66TEmP0m336962;
-	Wed, 29 Jul 2026 15:11:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=pp1;
-	 bh=373/aIRgLxFlW4EDOZMGwhaQ89y8XqDaCY/y+j7WCH0=; b=hNlW6CzPQ1vX
-	VEmf8W0AhyUounH79BgpsDgfATfu99md3wCtkW0Ge8HGVXirC4aPYOpFkOVBAweJ
-	z9l3MflJgGmW+nBLZQvEGj8pi4Jb29zchG8CHqoINiu0vb54bh1PR2C0bKb9N/LM
-	p2pCQDi5gIMMf9hmz77NQRHWI7ZBkMveb2TS5XCKq69aMrDUDJ0EGc6aC2niTjZ/
-	NijQT6u1bF3L72MvXIaCpvBah9oKXmrB7ugUX8DZ7Y+9gvAWvgrCpPwvUTnSyr33
-	C9YNwIIcenoAOycriqc0TqT3Kydh6qHd/UnzWmSBDVfCiIbu9XOLgnR8wRCmLuL+
-	P2OrxAzq3A==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwd2jkt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jul 2026 15:11:38 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TFBb0l020370;
-	Wed, 29 Jul 2026 15:11:37 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pgf1kp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jul 2026 15:11:37 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66TFBaOY32244274
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 29 Jul 2026 15:11:36 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F19D758063;
-	Wed, 29 Jul 2026 15:11:35 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8062A58058;
-	Wed, 29 Jul 2026 15:11:35 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 29 Jul 2026 15:11:35 +0000 (GMT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fy/M0fE2"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-51c10ed63c0so314981cf.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:23:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785338631; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hqSK5MJewCAklYFaJxMLfBeE5twd92kjlZF7jg//1JQCO7jcQja2bTwr30v3aNzMJ+
+         wVtyRZqhwGIj+u3x2lCLstiSWpjamozYeDGETeTCoE3weh3Cc978CqTmg0uTWqoVLGse
+         OPRv/xSec1P+CsAdYu/96eJmwNdxB4kNpnQ9rNfpWynyW2QDbBbppk1DlNgQcilTqPmW
+         6/HFsyEm0uuuVQe8DuqLxzQC2AV18H+AJ5lqWSrDiLN7sH01qog14TJBtCrsEFNHjRGD
+         ITlUcqGGLImNWGXCozv4NKhPEchcut0sa19cH/io/OQfoTU0JEkagkKzsFIZCalBC9pY
+         kSaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=751kHf3xuWyu+wd3aooaxL29DUmLoKaYZairhF8FZOo=;
+        fh=Pb8zIKWhmpDsxN9iAEBXY19EIsGCExdE93RVDRzQh/k=;
+        b=YlD47En6qWFgkSw8yy7If+yRPelyt57C5QmhcTdkkMCYX+NsWlU27yrfiiQkitbW5/
+         unioKLYG3S++o4CzC9LUebNqGGdognEo5ZB8xZ1FvdteRm9w2omEHCaqHASTisrbPwSX
+         bHgEBf4gQxVQszyU7G3ETXLoTJQt5JFyno+Y4p+yF2py9gg/xZnxg5h+EyfFsTNj/IFc
+         X0DnRPOZbuEKhqmZetmsrqRQeaOcuCPsIsCX8otrVCfWxyd7/kGmZ25tGdl/4M+HNHVa
+         suEZVhxrlFH+DhU9BR54B4p+NsLv2t9JCeDi5+N+zMFIx5vvYr++qpHOwpcAs22nBrgr
+         FVjw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1785338631; x=1785943431; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=751kHf3xuWyu+wd3aooaxL29DUmLoKaYZairhF8FZOo=;
+        b=fy/M0fE2WM28k+ZrwXLBn9SOVPdv7Xn1brVu7ZTF4RAcxDxpujYoCHvxiSRRzhRnM6
+         GYRLGMck7H+mrCQc0EzgXCP3Xu1iNuB9lHIBjzFJkJSYgd4+rnHoZfL7B2MriJ+HFXDR
+         TStaEdCOvxnH0X2ShFabs8IVC24zqObfZQiDsj5QEmVHjb/CxwnlcHWcGkxeLlsZtu8E
+         /5qVppu7g9lLxcjSMIngRiwUFOuwFc4+YMNGPXdDWJZ177448P0gP+gu6vwPn97SZ90j
+         WYz4QdMgAjONXkaCAYwVLi9woEZ2M7hD/0sSCR5JITqWZLSyDNgobv/ygY6RAnVT6Wbg
+         YCUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785338631; x=1785943431;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=751kHf3xuWyu+wd3aooaxL29DUmLoKaYZairhF8FZOo=;
+        b=lbBfij3ecUqRUBPvVo23ijNRmsBdhFL8ZlifFvgGXZt/7PjtE4NObMhjif5SAXkWnT
+         PXw11BZ6tMKJkjBKJc3/I5EimTCdOmrgbwS5W9cH/mjwg99sgwjvqNEkVTwKg9FUBZTL
+         MxtV9DKWwhuTTrYiVKQWmc/s+8CvkJQ63RJr/9xVUUiVaAmmzn+pJgkhxSESb+S3gHTf
+         mnOThspb+cnciUHOdhQ124GSGVdOO4z9i2qCgyAhMFhNMADSjNSGjzUo4kGUYvl80WQE
+         6N99R9iHhcilbqLhg9TRGF07oZYLUpDq7IB13uelawdTJd63kagUeQlYLnwQdk2w+AyK
+         LMjg==
+X-Gm-Message-State: AOJu0Yyn/tqhDTsUX5zaKRHa7hCmw4z1RzU7SplVJgZbnNhFcVD5FJW2
+	jV/Y/V2ZVSDBstmV7oNQvYHYYUfNihsBoFtyJWxVLn20KwaPtR5Fs/TKMnAag0uqO/4X0cF3cYg
+	qfZND2Ut5fUWfweu79T3+9NoA1olJL6Yo734BgMJdOMHI90Otw5FComnyrJw=
+X-Gm-Gg: AR+sD11uOyCxBmbg4CThVQMQDD0r73KezwqUPJ7lfOOutCIHg4GAatb3sU1/ibOUs8y
+	wFCFZLVCLX3DmTc+MnVG9U2AhmX0dCldr3XrVJ1Z5Vexk9uY4enQfndZO1pRGr5QzqVFui3JT/d
+	6ZyXuFSPQko/jnQ36Nuz9PAtaLaKMBKeOSWYmhWSqDLuoE9F/D9a/MxjJUUecd8bmvsIU7N1lWH
+	Y+aMZEIpWHHQHoeGa3wPNGZp8AGbxrECrub6UfFRPS20RPw9L5jmUYeSwF6pbkE919J95ObdBh3
+	fT96LDjjTcLOgOcUDue596ZsV0kauO9c9iDTSqeHzmFNZNq5b639t2IyyOZ2BC6lK9ZxO8TYn0U
+	=
+X-Received: by 2002:a05:622a:2610:b0:517:6dc0:698d with SMTP id
+ d75a77b69052e-52b34ce6830mr1188171cf.0.1785338630160; Wed, 29 Jul 2026
+ 08:23:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 29 Jul 2026 17:11:35 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
+References: <20260720-hybrid-v9-0-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp>
+ <20260720-hybrid-v9-4-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp> <20260720060858.5AEB11F00A3E@smtp.kernel.org>
+In-Reply-To: <20260720060858.5AEB11F00A3E@smtp.kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 29 Jul 2026 16:23:13 +0100
+X-Gm-Features: AUfX_myAm_s5RN5CqoGtHGgWFh1C3i89D3rZXWu2TLWc1vxbN2Jerqq4ksz8e38
+Message-ID: <CA+EHjTxsm6LorPDR9irVHL0gtmsUG6zUKQLBA2=8Ruy+V4UmBw@mail.gmail.com>
+Subject: Re: [PATCH v9 04/16] KVM: arm64: selftests: Test SET_NR_COUNTERS
+ after first run
 To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>
-Subject: Re: [PATCH v8 2/5] s390/zcrypt: Improve CCA CPRB length and overflow
- checks
-Reply-To: freude@linux.ibm.com
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <20260729145924.BBDF91F000E9@smtp.kernel.org>
-References: <20260729143928.191969-1-freude@linux.ibm.com>
- <20260729143928.191969-3-freude@linux.ibm.com>
- <20260729145924.BBDF91F000E9@smtp.kernel.org>
-Message-ID: <227ca82e444932ff0d203ae4073595b5@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 92mLEgzajS4nhMlFwMK0wO6H1up8DVq2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDEyMCBTYWx0ZWRfX1pm60f1jw5ea
- B4V4Jgqnawsrf9RDzeR2Hgt8V12MKEjSHHBe5nTvy2lUXW4UjIjvi3CYaop3olLIglf0dxKv1OM
- UKD70mMQCYv7IeJ8pNXih4G9CJJx5+M=
-X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6a182a cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=Ycwy5HyKQbdaXcLRr6oA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDEyMCBTYWx0ZWRfXxOmefdKwHxff
- WE8PyE1VMprOPJEZRkUAFWCiXExpdS601rPLzt1siD1sINuqELjGt1/x1t868VUWBWIlHzpqw+2
- dDW8RZ2Q/gII1dpPRQ7Yt7cdJUwdG9T42KZmQHnZochkXICMmM6ZCDY56rGFzz8QJxFbVN956B2
- Ai2z0vMIZayWYUNxGHvLR4bJXYGjcNk719Lb6Z0bwJ35l51JMv/5Gi62xzy9mLUEOlwUt+elUVt
- XoEsZpKyF9CSY2EZ+6nNY+rbXUsBTi/0X2Cl9GEVpxwrkDb4Dfy34hPv2pD5GhWw7wcsnSneRDS
- IG42fMBcBWsdsgePDu5XOo5KDoxEuzh6cJqR6flZOdPEYbQ2D4CPt4xuusUTNzlPCR82D4xGVcK
- NiciX50/L5JcJkUwi6YiTzbuOgLda5OeZem1iaeGXlcs19uNfrOaPS0BJSDO/PUVpC2EfvZZi1y
- pU4m/gjxAcUN+H6wBfA==
-X-Proofpoint-GUID: 92mLEgzajS4nhMlFwMK0wO6H1up8DVq2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-29_06,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290120
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, kvm@vger.kernel.org, 
+	kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026-07-29 16:59, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] An integer overflow in the length calculation of EP11
-> requests bypasses the AP message buffer bounds check, leading to a
-> massive heap buffer overflow or immediate kernel panic during the
-> `copy_from_user` operation.
-> - [High] The `xcrb_msg_to_type6_ep11cprb_msgx()` function does not
-> verify that the user-provided `xcrb->req_len` is sufficiently large
-> (e.g., at least `sizeof(struct ep11_cprb)`) before copying from
-> userspace, allowing undersized requests to leave critical message
-> fields populated with uninitialized kernel memory.
+On Mon, 20 Jul 2026 at 07:09, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The test ignores the guest's exit state and `ucall` status aft=
+er executing `vcpu_run()`.
+
+vcpu_run() does the check.
+
+/fuad
+
 > --
-> 
-> --- Patch [2]: [PATCH v8 2/5] s390/zcrypt: Improve CCA CPRB length and
-> overflow checks ---
-> commit 9af37e5b015a5cc6a88563feffcb032b0b3d9669
-> Author: Harald Freudenberger <freude@linux.ibm.com>
-> 
-> s390/zcrypt: Improve CCA CPRB length and overflow checks
-> 
-> The commit fixes integer overflows and missing length checks in
-> xcrb_msg_to_type6cprb_msgx() by validating input lengths and checking 
-> for
-> addition overflows.
-> 
->> diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c 
->> b/drivers/s390/crypto/zcrypt_msgtype6.c
->> index 40f72cdf284d3..fb37e28c82424 100644
->> --- a/drivers/s390/crypto/zcrypt_msgtype6.c
->> +++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-> 
+>
+> --- Patch [4]: [PATCH v9 04/16] KVM: arm64: selftests: Test SET_NR_COUNTE=
+RS after first run ---
+> commit 0382d3a32df9349f988ca69c7b11c92e61c3d384
+> Author: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+> KVM: arm64: selftests: Test SET_NR_COUNTERS after first run
+>
+> This commit adds a regression test that runs one vCPU and then tries to c=
+hange
+> the VM-scoped PMU counter count through an idle sibling to verify that
+> SET_NR_COUNTERS fails with EBUSY once any vCPU has run.
+>
+> > diff --git a/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c b/=
+tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+> > index 22223395969e0..3b5bb421f401b 100644
+> > --- a/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+> > +++ b/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+>
 > [ ... ]
-> 
->> @@ -437,10 +428,13 @@ static int xcrb_msg_to_type6cprb_msgx(bool 
->> userspace, struct ap_message *ap_msg,
->>  	}
->> 
->>  	/* copy data block */
->> -	if (xcrb->request_data_length &&
->> -	    z_copy_from_user(userspace, req_data, 
->> xcrb->request_data_address,
->> -			     xcrb->request_data_length))
->> -		return -EFAULT;
->> +	if (xcrb->request_data_length) {
->> +		req_data = ap_msg->msg + sizeof(struct type6_hdr) + req_cblen;
->> +		if (z_copy_from_user(userspace, req_data,
->> +				     xcrb->request_data_address,
->> +				     xcrb->request_data_length))
->> +			return -EFAULT;
->> +	}
->> 
->>  	return 0;
->>  }
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking further down in 
-> the
-> same file, xcrb_msg_to_type6_ep11cprb_msgx() seems to have the same 
-> missing
-> minimum size validation that this patch fixes for CCA CPRB.
-> 
-> In 
-> drivers/s390/crypto/zcrypt_msgtype6.c:xcrb_msg_to_type6_ep11cprb_msgx():
-> 
-> 	/* Import CPRB data from the ioctl input parameter */
-> 	if (z_copy_from_user(userspace, msg->userdata,
-> 			     (char __force __user *)xcrb->req, xcrb->req_len)) {
-> 
-> If the user-provided xcrb->req_len is smaller than sizeof(struct 
-> ep11_cprb),
-> the rest of the message header could remain uninitialized. Could this 
-> result
-> in uninitialized kernel memory dictating control flow or being used to 
-> route
-> requests?
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but xcrb_msg_to_type6_ep11cprb_msgx() 
-> also
-> appears to suffer from the same integer overflow issue:
-> 
-> In 
-> drivers/s390/crypto/zcrypt_msgtype6.c:xcrb_msg_to_type6_ep11cprb_msgx():
-> 
-> 	/* length checks */
-> 	ap_msg->len = sizeof(struct type6_hdr) + CEIL4(xcrb->req_len);
-> 	if (ap_msg->len > ap_msg->bufsize)
-> 		return -EINVAL;
-> 
-> If a user provides a large 64-bit xcrb->req_len like 
-> 0xFFFFFFFFFFFFFFB0,
-> could CEIL4(xcrb->req_len) wrap around, bypassing the ap_msg->bufsize
-> check, and resulting in a huge buffer overflow or kernel panic during 
-> the
-> subsequent z_copy_from_user()?
-
-And these both are fixed with the next patch in the series !!!
+>
+> > @@ -622,6 +627,37 @@ static bool kvm_supports_nr_counters_attr(void)
+> >       return supported;
+> >  }
+> >
+> > +static void test_set_nr_counters_after_vcpu_run(void)
+> > +{
+> > +     struct kvm_vcpu *running_vcpu, *stopped_vcpu;
+> > +     unsigned int nr_counters =3D 0;
+> > +     struct kvm_vcpu_init init;
+> > +     struct kvm_vm *vm;
+> > +     int ret;
+> > +     u64 irq =3D 23;
+> > +
+> > +     vm =3D vm_create(2);
+> > +     vm_ioctl(vm, KVM_ARM_PREFERRED_TARGET, &init);
+> > +     init.features[0] |=3D BIT(KVM_ARM_VCPU_PMU_V3);
+> > +     running_vcpu =3D aarch64_vcpu_add(vm, 0, &init, guest_code_done);
+> > +     stopped_vcpu =3D aarch64_vcpu_add(vm, 1, &init, guest_code_done);
+> > +     kvm_arch_vm_finalize_vcpus(vm);
+> > +
+> > +     vcpu_device_attr_set(running_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+> > +                          KVM_ARM_VCPU_PMU_V3_IRQ, &irq);
+> > +     vcpu_device_attr_set(running_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+> > +                          KVM_ARM_VCPU_PMU_V3_INIT, NULL);
+> > +     vcpu_run(running_vcpu);
+>
+> [Severity: Medium]
+> Does this code need to check the guest's exit state and ucall payload?
+>
+> If the guest payload crashes or hits an unexpected exception, this will s=
+ilently
+> ignore the failure and proceed. Since the test only checks for an EBUSY e=
+rror on
+> the subsequent ioctl (which will still be returned because the vCPU has b=
+een
+> run), the test will pass despite the guest crash, potentially masking
+> virtualization bugs.
+>
+> > +
+> > +     ret =3D __vcpu_device_attr_set(stopped_vcpu, KVM_ARM_VCPU_PMU_V3_=
+CTRL,
+> > +                                  KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTERS,
+> > +                                  &nr_counters);
+> > +     TEST_ASSERT(ret =3D=3D -1 && errno =3D=3D EBUSY,
+> > +                 KVM_IOCTL_ERROR(KVM_SET_DEVICE_ATTR, ret));
+> > +
+> > +     kvm_vm_free(vm);
+> > +}
+> > +
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720-hybrid-v=
+9-0-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp?part=3D4
+>
