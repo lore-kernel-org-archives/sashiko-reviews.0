@@ -1,43 +1,75 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838453BB122
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 07:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148212609C5
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 07:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785308587; cv=none; b=SqSABTm5ZkzgqYbwTfX9eJzVDmbekl6HLmRUQvumPHEq0Jo3yjs0vK9XNR6fT2d+6lk+I66oVgdIkLPnebQLObqC5vXWhdUmqF5xD1FLHr0txSjuOZwPENdfMNPF0EPuf1vJzmcYd+3DOjWf0vt7q7MAQLWyhkTwodhgMGe6dZE=
+	t=1785311066; cv=none; b=Eksb8q2ZG7oua4Lp75UFIe1XmGKH/jGKhjkC4Yhj7E1EBZtQgFMkaxYCoRp/FqWA1ABfwbGRQfddz/K4z+b6IR37N0fgSV4sJaiA80C1Wxrh0DF9FYeWrRLS/N+GtXux1XAj4Hm0Zycs9m8Hi7Pjbqj3NunXY65u3Qm3uzYGQUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785308587; c=relaxed/simple;
-	bh=m+Op77YEKvI3wHpV3WvQB9l9ZhrPGJ43SJNNa2897kk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qcL5KZ3prdE0+VHL81JtP2rfMNoQCnmPlOuhGpT/lbW87KpR/quwmZjYMTJovwcK/j1vJcwz2SL+zRlFp1pp4tC7bOnDJFpi9V270CcDpw9qakm/rp9q13bpvxiNGcyqlXpxXiqLBIzpYDxoad5zZPTZeKk0HEhC790KSAOLuZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=plpf8FMk; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1785311066; c=relaxed/simple;
+	bh=rYeLgXCdhfnNNeVJns9MlpVDy5pFD2GcZyCG1B9V20g=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EdyskgSspbVF56ODeTMOBh0alVNzb7YfzqRF/VIztAPVeilTHuG7Pa6fNdCy6F2iXfEJojYvm/57EIltRUM4ezHlm0KyjOGhsa8PQq53q91ZAWDxP816XVAHGFxqvn5e0/0FspWpNct0yzaR88IUe2vE0ddkaNfSWfKgIovoQmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jyPTQRaD; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="plpf8FMk"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
-	Subject:Cc:To:From:Date:From:Reply-To;
-	bh=gvjHHJ/cdGYoYlkkCwDIsHSmQaqCyqzXpRK4eerB6+s=; b=plpf8FMkpcgr34jqe7uzvn8Clo
-	I0e6L4sjMxnVo8R5FAy/9A9quSJhDkUH6SUrgTDHs7eV/COKNlV/oyWYp8iRESNyYUN8lQFnOp15X
-	jjPnxLdwtmTr7DNniGvPqqytswT2UenHqPARrIvN7H3LyEoH1vAXBuwDhNDR97S4Dg2I37I5Haucz
-	yDRbpFxhMPGWnaDQUnFlfKV7GYNyq1q5QPUx2nb+ylOv5MnJPWEquyOLW95n05nkU+Ka0LZZkQvvf
-	5sFTWOYam1FaKDhqSmIvGQUPs3DrTXWwV7zyaip5Lu+H80P6/Z9bOZAcpPicrcWsV52nFqM+Jz+aF
-	ghOWjWGg==;
-Received: from 179-125-64-236-dinamico.pombonet.net.br ([179.125.64.236] helo=quatroqueijos.cascardo.eti.br)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1woyJf-007N2s-S3; Wed, 29 Jul 2026 09:03:00 +0200
-Date: Wed, 29 Jul 2026 04:02:57 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jyPTQRaD"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2caf228a910so5621215ad.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 00:44:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785311053; x=1785915853; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GFo23DlEukdy9lN+LbcVlWdhG+g8KVl+rLHto+ZpnsA=;
+        b=jyPTQRaDClt/kUpdMhdOpTwhSa5PLyEe3mCNUXaLaiWLTOjDSYZJB7EiNQQbmVWoLz
+         iUoBkcuazlnkfuj1xDtU3LTdZINi+Rmn/2V/yO+XVC+ztpQnDV+DLQXP3Y+2Ha1T7JWY
+         X0GgF3qtb7MdOb+b5LCo51YWzliQl/3kdTOl0gl1bvtWQvokLf/Qg0pAGqVC9xGvwlQ/
+         mcMFUCruLe8kEasrFsKe0W/RorqGjlki13FOV4NbvrSX48bDEO8UMJBWX7mm+kbypOnS
+         mWeU2//lDzgHz4oJM27XxatrxfHupMKOLCs97zsc2Va5tgvCPrfIzwVYUEUSGGN4ZSg0
+         1JtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785311053; x=1785915853;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=GFo23DlEukdy9lN+LbcVlWdhG+g8KVl+rLHto+ZpnsA=;
+        b=rIu6CHYjamfXTlC+yfoj3AMEtXTLX9m4gfQ4UVaRG9KGcwroPhT3J4NXFPwbV0I1hJ
+         283k9nRcf3Stz3u/WiViHgOIBDPuEO+p3AdfHFAFajJC6aAncrxGTM2hfjco+F5fp+vj
+         lbGkGpwtty6YGowYmUC/TvjQ9PyNQmG7ken/dLfUUDvI/NiMGxx/yj8hpBXaD09qxuaX
+         hgwQZrNxmDDZnwZgfN7b9yCPxDhBRBLPhUaIZnzXdJERzkBLyfOlKafmk45xYpvOyfFg
+         KhR5NeSWAA1mpE1VTu+McI+YDIhNIOCtUCbd84hdg0haGOp5vZC/YCOexBMEEIJtzKNz
+         fXIg==
+X-Gm-Message-State: AOJu0Yz2uSlv9ZEEjDr2W4DzVcZwGjCDZu5L8Rq5GaDJ1xpuO4nBU7uT
+	Qo46FToefy2LJaUN1mSTkASW87teh5Wg0rd8GzeDIum1UnZ1R9T4B9ArBVR1Ig==
+X-Gm-Gg: AR+sD10AMT/RadPN71ojH3SXi8OaLSL5/8bURw6QoN27IWp1kPawc27a80/eFZQy2ag
+	ni64zWugxGaQbtSioq2vCkHWrSwgAoaBJzAnIW22NVqg5QnbMjW1ogf/R9bFzc80hWunXajlT/W
+	ZFLShU6J2ZozvmmyO5PiNUwVyqOIde9CoF0aeRdQjLXfLE3baCq9IbnsLgN1yKYXfgQJIzL5ra3
+	VXWVoaYOJaq82aECSH9i6031aOw68W5B0I0SV5jiR1O3m3/GH1EOqaB5NjNhVQRYRxSwl/FkD9a
+	sRAniorogh/cQHc3f063hlnQlk1uFUaLWVCWOnI+JlkqJ38XlPzcTq/ARHjtaviN8q0V1ZvV8C5
+	RFMlp1GwhA27f88EGyquzQvweF89t78d7jvO0X+0rAuQtnRdgVk19CECPylvz7IkM7wMEBRSXt2
+	LmlBT4zLYE4L8THO6Eq2pplTc8ZtRbOAOmzzwVTPugTpmJsbQNLhaBZvKhBSEfvtPYrFKJzD4qC
+	Rq1039GIAgQyG/PPriR4NJRGe27/4KrgD5mNgeZKpQu
+X-Received: by 2002:a17:903:b90:b0:2cc:76fd:6537 with SMTP id d9443c01a7336-2d015c92f0bmr65800605ad.2.1785311053170;
+        Wed, 29 Jul 2026 00:44:13 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022a15199sm7241925ad.17.2026.07.29.00.44.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2026 00:44:12 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 29 Jul 2026 00:44:10 -0700
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v2] drm: Fix drm_pending_vblank_event leak in error path
- for out_fence_ptr
-Message-ID: <ammlofcycoqMLlgk@quatroqueijos.cascardo.eti.br>
-References: <20260729-drm_pending_vblank_event_leak-v2-1-a5074aae07df@igalia.com>
- <20260729062342.E449A1F000E9@smtp.kernel.org>
+Cc: Anisa Su <anisa.su887@gmail.com>, linux-cxl@vger.kernel.org,
+	nvdimm@lists.linux.dev
+Subject: Re: [PATCH v11 14/31] cxl/extent: Handle DC Add Capacity events
+Message-ID: <ammvSl_vKiz7swo2@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-15-anisa.su@samsung.com>
+ <20260625181636.208D41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,103 +79,390 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729062342.E449A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260625181636.208D41F000E9@smtp.kernel.org>
 
-On Wed, Jul 29, 2026 at 06:23:42AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Medium] API Contract Violation: out_fence_ptr is not set to -1 on certain error paths
+On Thu, Jun 25, 2026 at 06:16:35PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
+> - [High] Use-after-free in `cxlr_dax_classify_extent` due to lockless XArray iteration.
+Real -- fixed with RCU-deferred free + rcu_read_lock()
+
+> - [High] Fully duplicate Add-Capacity groups are erroneously dropped without sending an Add-DC-Response.
+False Positive -- 1 response is always sent for each chain even if
+empty.
+
+> - [High] Failed extents unconditionally send Release DC commands on error paths, violating the skip_device_release protocol.
+Real -- fixed with a minor caveat.
+
+> - [High] Manual `xa_erase()` before `put_device()` creates a race condition that clobbers re-allocated IDs.
+Real -- drop redundant manual xa_erase().
+
+> - [High] Concurrent teardown causes a data race on `group->nr_extents`, leading to a permanent resource leak.
+False Positive -- teardown is never concurrent. group->nr_extents only
+released serially.
+
+> - [High] Recovered extents are permanently leaked to the device if their individual tracking allocation fails.
+False Positive -- Rcovered extents ARE released to device on failure.
+
+> - [High] Tag groups spanning multiple DAX regions are silently grouped under the first region, corrupting HPA ranges.
+False Positive -- subsequent patches robustify partition and tag-group
+semantics; tag groups spanning multiple partitions are rejected by
+cxl_check_group_partition().
+
 > --
 > 
-> --- Patch [1]: [PATCH v2] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr ---
-> commit ee648481e8c7946df39aedd0d40de2f6f6522bf2
-> Author: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+> commit c1287602ad57e47bb90d02808a1f908fcb287a89
+> Author: Ira Weiny <iweiny@kernel.org>
+> Subject: cxl/extent: Handle DC Add Capacity events
 > 
-> drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
+> Replace the empty-response stub in handle_add_event() with the real
+> add pipeline. This commit fills in the logic for processing the pending list
+> and adds basic validation for extents before they are added to the
+> device model as a child of the cxlr_dax region.
 > 
-> This commit fixes a memory leak in the error path of prepare_signaling when
-> DRM_MODE_PAGE_FLIP_EVENT is not set but an out_fence_ptr is provided. It
-> ensures the pending vblank event is properly released and the crtc state
-> event pointer is cleared on allocation or fence creation failures.
+> > diff --git a/drivers/cxl/core/extent.c b/drivers/cxl/core/extent.c
+> > new file mode 100644
+> > index 0000000000000..6e67e787d14de
+> > --- /dev/null
+> > +++ b/drivers/cxl/core/extent.c
+> > @@ -0,0 +1,411 @@
+> [ ... ]
+> > +static void dc_extent_release(struct device *dev)
+> > +{
+> > +	struct dc_extent *dc_extent = to_dc_extent(dev);
+> > +	struct cxl_dc_tag_group *group;
+> > +
+> > +	if (!dc_extent)
+> > +		return;
+> > +
+> > +	group = dc_extent->group;
+> > +	cxled_release_extent(dc_extent->cxled, dc_extent);
+> > +	xa_erase(&group->cxlr_dax->dc_extents, dc_extent->dev.id);
+> > +	xa_erase(&group->dc_extents, dc_extent->seq_num);
+> > +	group->nr_extents--;
+> > +	if (!group->nr_extents)
+> > +		free_tag_group(group);
 > 
-> Link: https://patch.msgid.link/20260728-drm_pending_vblank_event_leak-v1-1-08429b920b16@igalia.com
+> [Severity: High]
+> Is it safe to decrement group->nr_extents without a lock? Since multiple
+> extents in the same group can be released concurrently, couldn't this
+> non-atomic decrement cause a data race, leading to a permanent memory leak
+> of the cxl_dc_tag_group and its pinned cxlr_dax->dev reference?
 > 
-> > diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-> > index 1050dddadb17e..aed6040182eb6 100644
-> > --- a/drivers/gpu/drm/drm_atomic_uapi.c
-> > +++ b/drivers/gpu/drm/drm_atomic_uapi.c
-> > @@ -1464,11 +1464,15 @@ static int prepare_signaling(struct drm_device *dev,
-> >  		if (fence_ptr) {
-> >  			struct dma_fence *fence;
-> >  			struct drm_out_fence_state *f;
-> > +			struct drm_pending_vblank_event *e = crtc_state->event;
-> >  
-> >  			f = krealloc(*fence_state, sizeof(**fence_state) *
-> >  				     (*num_fences + 1), GFP_KERNEL);
-> > -			if (!f)
-> > +			if (!f) {
-> > +				drm_event_cancel_free(dev, &e->base);
-> > +				crtc_state->event = NULL;
-> >  				return -ENOMEM;
-> > +			}
-> 
-> [Severity: Medium]
-> This is a pre-existing issue, but I noticed a potential UAPI contract
-> violation here.
-> 
-> If krealloc fails, we return -ENOMEM before out_fence_ptr is added
-> to the fence_state array or num_fences is incremented.
-> 
-> Does this mean complete_signaling() will skip this element and fail to write
-> -1 back to the userspace out_fence_ptr, leaving userspace with an
-> uninitialized or stale fd value?
-> 
+A tag group is torn down by a single memdev's event
+thread so the tag group's extents are released serially: either through
+the release event or during teardown under cxl_rwsem.region held for
+write.
 
-This is set to -1 at drm_atomic_crtc_set_property().
-
-> >  
-> >  			memset(&f[*num_fences], 0, sizeof(*f));
-> >  
-> > @@ -1476,12 +1480,17 @@ static int prepare_signaling(struct drm_device *dev,
-> >  			*fence_state = f;
-> >  
-> >  			fence = drm_crtc_create_fence(crtc);
-> > -			if (!fence)
-> > +			if (!fence) {
-> > +				drm_event_cancel_free(dev, &e->base);
-> > +				crtc_state->event = NULL;
-> >  				return -ENOMEM;
-> > +			}
+> > +	kfree(dc_extent);
+> > +}
+> [ ... ]
+> > +static enum cxl_extent_class
+> > +cxlr_dax_classify_extent(struct cxl_dax_region *cxlr_dax,
+> > +			 struct cxl_endpoint_decoder *cxled,
+> > +			 const struct range *ext_range)
+> > +{
+> > +	struct dc_extent *entry;
+> > +	unsigned long i;
+> > +
+> > +	xa_for_each(&cxlr_dax->dc_extents, i, entry) {
+> > +		if (entry->cxled != cxled)
 > 
-> [Severity: Medium]
-> This is also a pre-existing issue, but similarly, if drm_crtc_create_fence
-> fails, out_fence_ptr is written to the array but num_fences is not
-> incremented.
+> [Severity: High]
+> Is this iteration safe against concurrent teardown? xa_for_each drops the
+> internal RCU read lock between iterations, leaving the returned entry
+> unprotected. If online_tag_group fails concurrently or there is a
+> parallel release, couldn't accessing entry->cxled trigger a use-after-free?
 > 
-> Will the cleanup routine skip this pointer and fail to write -1 to userspace?
+Correct. cxlr_dax->dc_extents is per-region and shared across
+memdevs, whereas log_lock is per-memdev, so two memdevs' event threads can
+walk and free the xarray concurrently while each holds only cxl_rwsem.region
+for read. Note that this only applies to interleaved regions spanning >=
+2 memdevs. Single memdev regions were protected by the memdev's
+log_lock.
+
+The fix is to make the free RCU-deferred.
+- rcu_head is added to struct dc_extent
+- we call kfree_rcu() in dc_extent_release()
+- guard(rcu) called before xa_for_each() in this function
+- Patch 18 introduces cxl_rm_extent(), which also walks
+  cxlr_dax->dc_extents to find the right extent to release. This also
+  needs guard(rcu)
+  	- specifically, it calls scoped_guard(rcu){} to unlock before
+	the call to cxl_region_invalidate_memregion() which can sleep. 
+
+> > +			continue;
+> > +		if (range_contains(&entry->dpa_range, ext_range))
+> > +			return CXL_EXT_DUPLICATE;
+> [ ... ]
+> > +static int cxlr_add_extent(struct cxl_memdev_state *mds,
+> > +			   struct cxl_dax_region *cxlr_dax,
+> > +			   struct dc_extent *dc_extent)
+> > +{
+> > +	struct cxl_dc_tag_group **group = &mds->add_ctx.group;
+> > +	int rc;
+> > +
+> > +	if (*group && !uuid_equal(&(*group)->uuid, &dc_extent->uuid)) {
+> > +		kfree(dc_extent);
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	if (!*group) {
+> > +		dev_dbg(&cxlr_dax->dev, "Alloc new tag group\n");
+> > +		*group = alloc_tag_group(cxlr_dax, &dc_extent->uuid);
+> > +		if (IS_ERR(*group)) {
+> > +			rc = PTR_ERR(*group);
+> > +			*group = NULL;
+> > +			kfree(dc_extent);
+> > +			return rc;
+> > +		}
+> > +	} else {
+> > +		dev_dbg(&cxlr_dax->dev, "Append dc_extent to tag group\n");
+> > +	}
+> > +
+> > +	dc_extent->group = *group;
 > 
-
-Same as above.
-
-> It looks like this same pattern also exists in the connector loop later in
-> prepare_signaling() when drm_writeback_get_out_fence() fails.
+> [Severity: High]
+> What happens if extents in the same tag group (sharing a UUID) map to
+> different endpoint decoders and thus different DAX regions? This logic
+> appears to allocate the tag group using the cxlr_dax of the first extent
+> and blindly links subsequent extents to it. Could this cause cross-region
+> extents to be parented to the wrong region and corrupt their HPA mapping
+> offsets?
 > 
+False Positive.
 
-Same for set_out_fence_for_connector(). As for the connector loop, I don't
-see such potential leaks there.
+Subsequent patches "cxl/mem: Enforce tag-group semantics" and
+"cxl/extent: Validate DC extent partition", reject a tagged group
+spanning multiple partitions via cxl_check_group_partition()
 
-Regards.
-Cascardo.
+> > +
+> > +	/*
+> [ ... ]
+> > +int online_tag_group(struct cxl_dc_tag_group *group, bool skip_release)
+> > +{
+> [ ... ]
+> > +		rc = dev_set_name(dev, "extent%d.%d", cxlr_dax->cxlr->id,
+> > +				  dev->id);
+> > +		if (rc) {
+> > +			xa_erase(&cxlr_dax->dc_extents, dev->id);
+> > +			put_device(dev);
+> > +			break;
+> > +		}
+> > +
+> > +		rc = device_add(dev);
+> > +		if (rc) {
+> > +			xa_erase(&cxlr_dax->dc_extents, dev->id);
+> > +			put_device(dev);
+> > +			break;
+> > +		}
+> 
+> [Severity: High]
+> Does the manual xa_erase() before put_device() create a double-erase race
+> condition?
+> 
+> put_device(dev) synchronously calls dc_extent_release(), which performs a
+> second xa_erase() for the same ID. If a concurrent thread allocates an ID
+> between the first and second erase, wouldn't the second erase silently
+> clobber the new valid allocation?
+> 
+Yes, for regions interleaved across >= memdevs, so it can possibly
+have 2 event threads handling a DC add event concurrently.
 
-> >  
-> >  			ret = setup_out_fence(&f[(*num_fences)++], fence);
-> >  			if (ret) {
-> >  				dma_fence_put(fence);
-> > +				drm_event_cancel_free(dev, &e->base);
-> > +				crtc_state->event = NULL;
-> >  				return ret;
-> >  			}
+The manual xa_erase in both error paths here are deleted.
+
+> [Severity: High]
+> Additionally, does this error path violate the skip_device_release protocol?
+> At this point, group->skip_device_release has not been set yet. Because it
+> is false, won't dc_extent_release() unconditionally send a Release DC command
+> to the hardware for capacity the host never formally accepted?
+> 
+Fixed.
+
+Setting/clearing skip_device_release is managed by the caller --
+cxl_realize_group().
+
+So in cxl_realize_group():
+
+tag_group->skip_device_release = !existing;   // (1) set before onlining
+rc = online_tag_group(tag_group);	// err paths honor flag
+  ...
+rc = cxlr_notify_extent(...DCD_ADD_CAPACITY...); 
+if (rc) { rm_tag_group(tag_group); return rc; }    // honors flag
+
+tag_group->skip_device_release = false;       // (2) clear after notifying dax layer
+
+
+Since skip_device_release is managed by the caller, remove the skip_release
+param from this function.
+
+
+Caveat: in cxl_add_pending(): cxl_realize_group() is called right before
+cxl_send_dc_response(), but the fully "correct" behavior would be to set
+it only after cxl_send_dc_response() returns 0.
+
+cxl_add_pending(...) {
+	while(pending_list !empty) {
+		extract_tag_group()
+
+		cnt = cxl_realize_group(tag_group) <--- set/clear skip_device_release
+		if (cnt < 0) {
+			drop_extent_group(&group);
+			continue;
+		}
+
+		list_splice_tail_init(&group, &accepted);
+		total_accepted += cnt;
+	}
+
+	list_splice(&accepted, pending);
+
+	/*
+	 * Recovered (already-accepted) extents must not be re-reported in an
+	 * Add-DC-Response: the device rejects a DPA range already added by a
+	 * previous response (CXL r4.0 8.2.10.9.9.3, Invalid Physical Address).
+	 */
+	if (existing)
+		return 0;
+
+	return cxl_send_dc_response(mds, CXL_MBOX_OP_ADD_DC_RESPONSE,
+				    pending, total_accepted);
+}
+
+This is a best-effort fix. Outside of the while loop, we don't have a
+reference to the tag_groups, and would need to re-extract every tag
+group in order to set the flag after cxl_send_dc_response. Additionally, nothing between
+cxl_realize_group() and cxl_send_dc_response() affects the
+skip_device_release flag, so the gap is small. The device also simply
+rejects spurious Release responses with Invalid Physical Address, which
+is benign.
+
+
+The "true" fix would be to modify cxl_send_dc_response to extract
+all tag_groups from the extent list (pending).
+
+Then in each error scenario:
+
+1. Fail to alloc response:
+
+struct cxl_mbox_dc_response *response __free(kfree) =
+						kzalloc(pl_size, GFP_KERNEL);
+if (!response) {
+
+	*** set each tag group's skip_device_release = true ***
+
+	/* Refuse all extents rather than stall the device. */
+	struct cxl_mbox_dc_response empty = { };
+
+	return send_one_response(cxl_mbox, &empty, opcode, 0, 0);
+}
+
+2. If the extent list is too long and must be split across multiple
+responses, we further have to track which tag groups were successfully
+accepted or even partially accepted, since the response orders extents
+in arrival order, and are not necessarily grouped by tag.
+
+IMO the additional complexity to handle these edge cases is not
+justifiable.
+
+
+> > +
+> > +		dev_dbg(dev, "dc_extent HPA %pra (%pU)\n",
+> [ ... ]
+> > diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+> > index 4e887b5cdc3ed..08f51b8807c06 100644
+> > --- a/drivers/cxl/core/mbox.c
+> > +++ b/drivers/cxl/core/mbox.c
+> [ ... ]
+> > +static int cxl_realize_group(struct cxl_memdev_state *mds, const uuid_t *tag,
+> > +			     struct list_head *group, bool existing)
+> > +{
+> > +	struct device *dev = mds->cxlds.dev;
+> > +	struct cxl_extent_list_node *pos, *tmp;
+> > +	struct cxl_dc_tag_group *tag_group;
+> > +	int group_cnt = 0;
+> > +	int rc;
+> > +
+> > +	list_for_each_entry_safe(pos, tmp, group, list) {
+> > +		/*
+> > +		 * Pass the device-stamped 0-based shared_extn_seq through
+> > +		 * unchanged as the dax-side @seq_num (0..n-1).
+> > +		 */
+> > +		u16 seq = le16_to_cpu(pos->extent->shared_extn_seq);
+> > +
+> > +		if (cxl_add_extent(mds, pos->extent, seq) < 0) {
+> > +			dev_dbg(dev,
+> > +				"Tag %pUb: failed to add extent DPA:%#llx LEN:%#llx\n",
+> > +				tag,
+> > +				le64_to_cpu(pos->extent->start_dpa),
+> > +				le64_to_cpu(pos->extent->length));
+> > +			delete_extent_node(pos);
+> > +			continue;
+> > +		}
+> 
+> [Severity: High]
+> If cxl_add_extent() fails during initialization of existing extents
+> (e.g., under memory pressure), we simply delete the node and continue.
+> Because the extent is never added to a tag group, the teardown error path
+> cannot see it. Does this permanently strand the capacity on the device since
+> no Release DC command is sent?
+> 
+False Positive.
+Existing extents never set skip_device_release so on failure, they are
+released back to the device.
+
+The skip_device_release flags and logic only applies to fresh extents.
+> > +		group_cnt++;
+> > +	}
+> > +
+> > +	tag_group = mds->add_ctx.group;
+> > +	mds->add_ctx.group = NULL;
+> > +	if (!tag_group)
+> > +		return -ENXIO;
+> 
+> [Severity: High]
+> If an Add Capacity event contains only extents that the host has already
+> accepted (duplicates), cxl_add_extent() succeeds but returns 0, and
+> mds->add_ctx.group is never allocated. Does this erroneously fail the
+> entire group with -ENXIO, causing cxl_add_pending() to drop it without
+> sending an Add-DC-Response, thereby stalling the device?
+> 
+False Positive. 
+
+cxl_add_pending() unconditionally calls cxl_send_dc_response() at the
+end. If every extent in a group is a duplicate, an empty response is
+sent.
+
+-ENXIO is returned here and in cxl_add_pending():
+
+while(!list_empty(pending)){
+
+	cnt = cxl_realize_group(mds, &tag, &group, shareable, existing);
+	if (cnt < 0) {
+		drop_extent_group(&group);
+		continue;
+	}
+		list_splice_tail_init(&group, &accepted);
+
+	total_accepted += cnt;
+}
+list_splice(&accepted, pending);
+
+/*
+ * Recovered (already-accepted) extents must not be re-reported in an
+ * Add-DC-Response: the device rejects a DPA range already added by a
+ * previous response (CXL r4.0 8.2.10.9.9.3, Invalid Physical Address).
+ */
+if (existing)
+	return 0;
+
+return cxl_send_dc_response(mds, CXL_MBOX_OP_ADD_DC_RESPONSE,
+				    pending, total_accepted);
+
+
+^total_accepted is never incremented so the response is empty.
+
+> > +
+> > +	rc = online_tag_group(tag_group, !existing);
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260729-drm_pending_vblank_event_leak-v2-1-a5074aae07df@igalia.com?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=14
