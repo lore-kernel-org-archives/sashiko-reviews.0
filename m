@@ -1,231 +1,145 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013009.outbound.protection.outlook.com [52.101.72.9])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CD325B086;
-	Wed, 29 Jul 2026 08:35:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785314141; cv=fail; b=P4ZDM7HXGY4+T5ulzhztq672bgdT9+D5+aepZUkj0XB16dfTEM+DACuSL3L2jq6aiSYm5hOZF/xk5/az+KO5SfUeuOFUAWPYayGd5P7fkeN3Ew+KdhUyLIlk4edsrlmq9H4mtYHpAoUD2u0MR9aoOTHWifbxzJT4ajX42Cstk5o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785314141; c=relaxed/simple;
-	bh=Yz9YaBLOpPKk92Z+Jhm54HK5qgKcirRmLhDlKD54QCQ=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=OMug+0pvi5eqTEjBuZ1w/HeBG0auiYBeNaI8jFzqfgq/+XlltBK0KoQfoBs8JbeX/B4ApojfHduRExv9mZXpd6Ib7ky2EzbY0SAhOoSkOkhQoLm/d1/zczBYSu6qCBG+SlMymPio1XQUMl9xR+A830tgbybYP2s8fhpIWtdPfM4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=AZLKT3Bl; arc=fail smtp.client-ip=52.101.72.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A343A436BDD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:40:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785314438; cv=none; b=twZHwz10DJrX7Vaf1m2g5gNeFXlXruBurKXvSdR9O3iSk2SwtaFK863m9Gh3+JdFiDJSxF+oiaZfy5g3F2BltcFt5Ulti915tvdAfJO4OEaSQpSIhmn1B75Vezp/9Dyh5pYAAYupsIPaoE/JsyXBAutl338PjkrWmMKoxbhlPS0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785314438; c=relaxed/simple;
+	bh=6L+2HhKKl5Dj/xnqKaKM7XXym8YRbHwjxboMTP88nYU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ODqWSourMTAOzavb9pI661Kfi8iW0lPzXR3c3PqK4PkHMjQp+QgZzxleQfNOfXSpvNaTvGPQDo+Zb53JRMoc5YRr018dTQnQXuG9IQjSccKhbr9UkjM9V10vX/dintJQXYxVlggqnGzIV00WCu73gfM7LE+egUVtefY7KhkdaFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=z17o4+6h; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="AZLKT3Bl"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UICDTAPBcSxgIywHAy1EbZjtmR1gjk9yW4XRros73Rxm99lDmiG3LZ4QinZYhhUqXtBvPHYWds2Wp9eR3Ad8LOlUJcEuk7s27g6TV+WjnR2rhFGkKPY/l6NbFw4FwSouHw7JSCMToiHkWfBS0IAofyoNgzuZsIs9BsaQ1+YE/aFLP10nCZEhxwEnRakIdErSkejPNNMOrLWg0etRJ/Aip2i8V5x2JzvG0VxFUeCZ4lLDHt9+5wCWcscB21O4VmGpmnNHqVLwjqDaTqjcywGD9GAIDezAN5sPDt39/gGUv4fhdlPAtOaEd0Kiuii0dgmuFbelMNWPaQmwsq9hUTIGDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Yz9YaBLOpPKk92Z+Jhm54HK5qgKcirRmLhDlKD54QCQ=;
- b=ho7iRAeP3xXVOcEhjl4Zh63ugRzLQvl8CsowwUmTEYBKbbZJW9Q8I+M3k7f3MknoIEGgbWgsX/AJNih0mboBoeFjBzS5LSZ7MVuPBAZ3I/fugwSz6UTcxSQWrRdGwI1u3rG727g6n4Pf0xhmEdZ/KMJbNlv5GD1zwzzqOAt5c0c+ZS0QS+TZzOrzKTxzFn3Me2946zhbIKet51fGyDrultM3MF0+IRM8UsTQDEIgGsskWRJqILkZ0C8PHBSwXzYJYAkQyyBxJlu/Ks+sxRbI9dXdRxmdmjM59wyFf3YC8x5DOwdLUXnmRU7njL/wbMF41IC1NQjgILqjQgYsBnjUcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Yz9YaBLOpPKk92Z+Jhm54HK5qgKcirRmLhDlKD54QCQ=;
- b=AZLKT3Bl+wMSERoklrLJ6s36mUUdILEwVGBb+egQf9k/JWZMXj4ySvDyAwDYaEpyFkKHYM4+qtDGgNuVfslsm1C/rvM/W8B8Y8HQDjGR55Zk6OyHQ3dGskpIbCRqFI3Tfe9QrDCMFXvi6kjb5AoBSZZDKQpJHGjIrd2Pdu5DCvMizo2ovMhEL6c/CZhBG4Qb1gdhfzDIY0WnCNUlKCvIYWEhhl3YTpFNWTtyAnk0L1F7Ajhhl5i6lia4SnNQBBcfT4xHH9VpPfUW3TEfcrQOndaqSvfiGNTGUDBu8t75D8EudOPPqvN+4wR9oHYHnE/1Ze07F2o+GupjhJ3XbqrlaQ==
-Received: from DU2PR04MB8677.eurprd04.prod.outlook.com (2603:10a6:10:2dc::14)
- by PAXPR04MB8473.eurprd04.prod.outlook.com (2603:10a6:102:1dc::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Wed, 29 Jul
- 2026 08:35:33 +0000
-Received: from DU2PR04MB8677.eurprd04.prod.outlook.com
- ([fe80::9cc3:2ef9:9259:e963]) by DU2PR04MB8677.eurprd04.prod.outlook.com
- ([fe80::9cc3:2ef9:9259:e963%4]) with mapi id 15.21.0245.012; Wed, 29 Jul 2026
- 08:35:33 +0000
-From: Bough Chen <haibo.chen@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	Jiawen Liu <1298662399@qq.com>
-CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
-	<imx@lists.linux.dev>
-Subject: RE: [PATCH v2 2/3] spi: nxp-fspi: propagate default setup failures
-Thread-Topic: [PATCH v2 2/3] spi: nxp-fspi: propagate default setup failures
-Thread-Index: AQHdHmfSBS8tE+edf0KI4ISA+VFqy7aClomAgAGWFyA=
-Date: Wed, 29 Jul 2026 08:35:33 +0000
-Message-ID:
- <DU2PR04MB8677C4C6FFA7DE68BE7640F990CA2@DU2PR04MB8677.eurprd04.prod.outlook.com>
-References: <20260728080443.153827-1-1298662399@qq.com>
- <tencent_F25742D45315ED400AEA2E39210242FCFE0A@qq.com>
- <20260728081832.91EBA1F000E9@smtp.kernel.org>
-In-Reply-To: <20260728081832.91EBA1F000E9@smtp.kernel.org>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU2PR04MB8677:EE_|PAXPR04MB8473:EE_
-x-ms-office365-filtering-correlation-id: 7f1d9fae-ec55-4b3a-c69d-08deed4c5b07
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|23010399003|19092799006|366016|1800799024|38070700021|6133799003|56012099006|10067099003|11063799006|5023799004|4143699003|22082099003|18002099003|4133799003|3023799007;
-x-microsoft-antispam-message-info:
- EdTfNZvbg3e7Eo2GpitCvT4EYVeoctUV27S4qhiT6KnaZ1GVyVNkA25FVmJ0uNnmSZE8mUfrTQXdz/H6aHzGXyO5W0rCNvUQ2oJhHPaJKI5IskIxxasxQthMM+8JSKGY9wzHr1mWn2WxYYGjO2RTk3RqkTso1cctng5iWrI9LXY6Cbx+SlpUu4oees8eGNjJ2ATTRm5sr4d5eeU5AqbbmT/GIB3hZIjbNEVb80+sjVovRd2PSHghe2iLyeZK3L3+Jd/64UXdYUzY5CTstP/JKtntbl/pvLy8oGa/EnHT19gYw3bs1/yr85OPW0FM/bRvR6w63BKLD0KzdIeNskiQ4arawsJNNs40quTAj/TibGiUCQONOxgjts/WeszWLkOFG/VZehYZW+5bJ/ZFxdX7YntMQlhgGpYGPaAglGy102/oGttdaGRGXgjz/cH0wk5hEf+k9Te/wkp5JK0DhQXy0XfK/8tby5Vk3uFFpg9LebzvPPdDK2Hlwyr7YT7Xhj0r1vwxLD46oEvzFDa9WnT8K30X4zADzw8vkXtZIfC2l/cIao5HModmlRBYRYBbXJVhJLmhz0RkpmQfYq1s9cOSjNYmu/mE2AUyRwyYsQ/C4azN90rpBV7BKN20RMDsrbYAXWH9XSBnXH/1h5hlXZ0Xz4YOZdP14fAORFHiE3aZFB0=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8677.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(19092799006)(366016)(1800799024)(38070700021)(6133799003)(56012099006)(10067099003)(11063799006)(5023799004)(4143699003)(22082099003)(18002099003)(4133799003)(3023799007);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?gb2312?B?a1NYTDdhOEtkWlJXckVoeTRwdGJXanZPUUljYUhlS082L2Zla05vdEhyK2JG?=
- =?gb2312?B?MXNZakJyYzZqeUNESEU0c1Y4TzlpWkNwNkNaNjQ2TFltb2Rna2N4VUVpRCtr?=
- =?gb2312?B?KzlVOEFnbzdVNVRGaW45a2wyRi9qcGNYWGdxb3ErV2ZCZVFJeGJoWWxiRmxG?=
- =?gb2312?B?TXNEbEt0eWtNeXRMWlhHRkRnclhpZVZvbEJ3UHVIL1N0WEo2MEViODRJN2Zi?=
- =?gb2312?B?NThrTW9iRG83ZFdpaTN4dHhLSUhnaFVtMUtycU82NVlvekFoM1lJU1ppeGVP?=
- =?gb2312?B?MFlZeG5tYTlWbnRZU20zd0hYZFcvQndqNTllQVBUZTExamFmR0M0UEVhS3dh?=
- =?gb2312?B?bGVXZ0h0Skh5UlF5N3lIeGFmeU9jaThoRG4xUkQvaVgxZmR5TWFHS1R4QVlh?=
- =?gb2312?B?UGIrSkw0R1crZVRsRFR0QmRva05lVkRjVWtvd05MZ1IzLzdsd0M4djFIekZh?=
- =?gb2312?B?WHl6TWR0ejZKK2JhWjROdjRCNVY5azBEUXJIQUhYcXo1SFJKTE1adm5Kd0R3?=
- =?gb2312?B?amsyalhIbFQxcUIyRnQyNVlxRVpvZGpHbVFLUXArQWUyN3hmZ0ZPN2lHRnE4?=
- =?gb2312?B?TzFTTy9peExSejlKM1gzQkdBRDJhbFk3Kys2dStyZXRNM2ZJeERUUHAyVTdr?=
- =?gb2312?B?eXh2TFdqWElkNmc0WHlQUG9BKzk0SS94SjlEa2Zac0h4ZUhNQU9Ra2NiMjZz?=
- =?gb2312?B?RnZjc2VDb0tQUmhBaDU2THViVGlEN0pRWDJLN3Z3UmY5QmpCMG5YTkhmYUlR?=
- =?gb2312?B?UWphamhac2tNWTc1STZWQzZnVUg3eFpERzk3RlMvR0ZQbkY2ODRqSFRKMUJj?=
- =?gb2312?B?dEs3N0lWRkswVUVtNEZsSndEOThrbnpjZm8yNjlUeCtGbkFjU2REZVFzd0g3?=
- =?gb2312?B?NVYyNEtMVnNWY0tiaW14MjN0OHYxUHNnQ1RCUFBIcVlwQzRYenExczZ5NFdo?=
- =?gb2312?B?M3ZsOHVOZVhSb0RMY21PcTF1ZHJvUk5PQ2Qzd1I1S3RCWkRVcENzZ1JwL3lO?=
- =?gb2312?B?MUpIb1RGdm5Md0czS1NDQnNJaXpBOXJsVDh2SnFXY1dOYk9STlhaeHJZSGV2?=
- =?gb2312?B?bnVONlludVA5R3dyTEM3MndQU0RENXVvRDdnMEduMlBqTUdnVEdTWWpPNzMx?=
- =?gb2312?B?bVVZcmFZUVp0WCtwSHovWVhrMlBVVjZDSHJQNVFSUGl1OURRY094RnVyMXlh?=
- =?gb2312?B?SXBWM2NoMTVVYmpxN3dUQi96bnJUZ04zYTdsaEEvcVNLdnFGUkllOHJDTWlD?=
- =?gb2312?B?TjZkNjZxMHNFTnRrc3lreEQzM3ljN3c4R0pNMlhrUzk3UUN0dnpVd0FkRDFn?=
- =?gb2312?B?OUpoNG02V2lnTFJCMzZTM1NhdFh2Ykw2SUFxVEdpK21QR001MjlQKzdSWjhC?=
- =?gb2312?B?RzVFaU5kUm11UGgwWU9idXVSVnA4MDBaNDhXY0tyTWJFRjZqZTN6cklLcysx?=
- =?gb2312?B?Ti9RWTArUmRmQUMybjQ5YmJPeE1LbU5rcmdmQVJUdDVFZUhhNGtZdUxpUU1T?=
- =?gb2312?B?L2lWNHlsR0xRcDhEWnlrMGF2NEtzUUZHQ2tyRXdOV1M4NVhaY0c0M0JJKzY1?=
- =?gb2312?B?S3J5S1A1SnlrOGI0eTRqWmJtdWppQVNNUE9JZUcwenJXUzBwM0liT3FnbnVX?=
- =?gb2312?B?RjdYekFXai9qQktUbE1rOEFDbUVSOUF2TitxYzAwaHJRQjRpSUZHL2tFMWZl?=
- =?gb2312?B?Nmk0Qk0xNThDZ09DNjFFUGxuRGIzMmJ5clZGckc2M25CNEhnT1pzSW5KK2kz?=
- =?gb2312?B?a3hhZVE3elZVcVl4OFU3VGhmdFpjWFRubElOZUVONVNFaDRHTVVqeUhMTmtC?=
- =?gb2312?B?aitSTVBKL2NOUGhqVVl0NWN2Ny9oSUhmbHZyd1FaYXZvVnFXRysyNHIyalhk?=
- =?gb2312?B?VzZWeDR5Mlk3ZHEwR3A4ZkNxeWM4YnJTbGRaNWJYSHVLdEVUTkp2a1pTN3Yr?=
- =?gb2312?B?cFgvTzR4MEJoVFplKzZkQ2RETGxHOTBTc1U3bmJlYlVHd0QyNGJnV0wrRy81?=
- =?gb2312?B?anoxMUtHNjBzd0xBYUhWM0hrNDgwMVVaU1FsYVhBb2FsRXMvVFRvckZNNncr?=
- =?gb2312?B?enNrRlFqZ3YzRUJhc3F4YlhCVTREMzVzZ094cDFtbGg4aTNybjA5ODJXenIx?=
- =?gb2312?B?UWJWZmJSWjBFQVBiVjRmSDR2dENReXJTUDhGbHBxczF4SU90L1NvV2VzZ0hS?=
- =?gb2312?B?NFl2Vmh6bkRiSTFhVTJwWi9objg4a05GOFg5aWJKeVpJc0d5UUorZFpqRk5Z?=
- =?gb2312?B?LzRlMnJqMFNqU05ycTV0U29qUFpZWjlPSTJrUDNNYnd2T04vaVJPbzNXdENT?=
- =?gb2312?Q?uBzwxZCK6G0wABp0v/?=
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="z17o4+6h"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id D6BAB4E40FD9;
+	Wed, 29 Jul 2026 08:40:34 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id A2BA06039A;
+	Wed, 29 Jul 2026 08:40:34 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CED4311C11F9A;
+	Wed, 29 Jul 2026 10:40:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1785314433; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=bzEbbuYZWZc50WIZy1HsrIgMjUCihehMfow+qFrkT9U=;
+	b=z17o4+6hvpHbmMlt4xKjB03wUr84tz0k7nRjkOFLsbnwd8ilbYkRsPgtUmfpNEg8VSlzCQ
+	hk4hwumwjKOxqvCG0gk3YINdY53mtehfHcw6MzY5tTkP/+YyxYPWGf1t/G3fks4O+lJx4S
+	V1aq+CPWv0xsIchJB9RRIHobngsOIV3Bg4JdQ73KrTSaUBXg/dXwRRJm7XX6Pelz3CtV/a
+	24w9tvyhM1In8Nq1Dh6VIb7rh1Q0ZKCS1S4vgJ4Fn1q9W3fCq68CfwKwDuPWed86sqIIZT
+	jJ0eGQRjmLTWNVoouamVT2Tv86coIhL3rGqSk7xleeIESnQdXOxjJ2eLWtstXQ==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: "Santhosh Kumar K" <s-k6@ti.com>,  sashiko-reviews@lists.linux.dev,
+  "Vignesh Raghavendra" <vigneshr@ti.com>,  "Michael Walle"
+ <mwalle@kernel.org>,  devicetree@vger.kernel.org,  "Pratyush Yadav"
+ <pratyush@kernel.org>,  "Takahiro Kuwano" <takahiro.kuwano@infineon.com>,
+  conor+dt@kernel.org,  robh@kernel.org,  "Richard Weinberger"
+ <richard@nod.at>
+Subject: Re: [PATCH v6 04/17] spi: spi-mem: teach spi_mem_adjust_op_freq()
+ about post-config ops
+In-Reply-To: <20260723113443.06C2D1F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Thu, 23 Jul 2026 11:34:42
+	+0000")
+References: <20260723110219.3180747-1-s-k6@ti.com>
+	<20260723110219.3180747-5-s-k6@ti.com>
+	<20260723113443.06C2D1F000E9@smtp.kernel.org>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Wed, 29 Jul 2026 10:40:31 +0200
+Message-ID: <87ldaumbnk.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8677.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7f1d9fae-ec55-4b3a-c69d-08deed4c5b07
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2026 08:35:33.3615
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: A7JkDvNYviTHexLSzq+pI75JOEEHw2h5zbcOVvntUpnl+efyhNY7vdbNzrkL6Xpqti+NHA2sa+BPJIgZTRPUhA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8473
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJuZWwu
-b3JnIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPg0KPiBTZW50OiAyMDI2xOo31MIyOMjVIDE2OjE5
-DQo+IFRvOiBKaWF3ZW4gTGl1IDwxMjk4NjYyMzk5QHFxLmNvbT4NCj4gQ2M6IEZyYW5rLkxpQGtl
-cm5lbC5vcmc7IGlteEBsaXN0cy5saW51eC5kZXYNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAy
-LzNdIHNwaTogbnhwLWZzcGk6IHByb3BhZ2F0ZSBkZWZhdWx0IHNldHVwIGZhaWx1cmVzDQo+IA0K
-PiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3Vu
-ZCA0IHBvdGVudGlhbCBpc3N1ZShzKQ0KPiB0byBjb25zaWRlcjoNCj4gDQo+IE5ldyBpc3N1ZXM6
-DQo+IC0gW0hpZ2hdIEZhaWx1cmUgaW4gYG54cF9mc3BpX2RlZmF1bHRfc2V0dXAoKWAgZHVyaW5n
-IHJ1bnRpbWUgcmVzdW1lIGxlYWtzIHRoZQ0KPiBoYXJkd2FyZSBjbG9ja3MuDQo+IA0KPiBQcmUt
-ZXhpc3RpbmcgaXNzdWVzOg0KPiAtIFtIaWdoXSBQcm9iZSBlcnJvciBwYXRocyBmb2xsb3dpbmcg
-UE0gcnVudGltZSBhdXRvLXN1c3BlbmQgZ3VhcmQNCj4gYWNxdWlzaXRpb24gY2FuY2VsIHRoZSBw
-ZW5kaW5nIHN1c3BlbmQsIGxlYXZpbmcgY2xvY2tzIHBlcm1hbmVudGx5IGVuYWJsZWQuDQo+IC0g
-W0hpZ2hdIFRoZSBQTSBydW50aW1lIHVzYWdlIGNvdW50ZXIgaXMgbGVha2VkIGluIGBueHBfZnNw
-aV9leGVjX29wKClgIGlmDQo+IGBwbV9ydW50aW1lX2dldF9zeW5jKClgIGZhaWxzLg0KPiAtIFtI
-aWdoXSBNaXNzaW5nIGVycm9yIGNoZWNrIGZvciBgcG1fcnVudGltZV9nZXRfc3luYygpYCBpbg0K
-PiBgbnhwX2ZzcGlfY2xlYW51cCgpYCBjYW4gY2F1c2UgYSBzeXN0ZW0gY3Jhc2ggYW5kIHVuYmFs
-YW5jZWQgY2xvY2sgZGlzYWJsZXMuDQoNClRoZXNlIGFyZSBhbGwgcHJlLWV4aXN0aW5nIGlzc3Vl
-cy4gVG8ga2VlcCB0aGluZ3Mgc2ltcGxlLCBJJ2xsIHNlbmQgYW5vdGhlciBwYXRjaCBzZXQgdG8g
-YWRkcmVzcyB0aGVtLg0KDQpSZWdhcmRzDQpIYWlibyBDaGVuDQo+IC0tDQo+IA0KPiAtLS0gUGF0
-Y2ggWzJdOiBbUEFUQ0ggdjIgMi8zXSBzcGk6IG54cC1mc3BpOiBwcm9wYWdhdGUgZGVmYXVsdCBz
-ZXR1cCBmYWlsdXJlcyAtLS0NCj4gY29tbWl0IGFlYTcwMTFlYTJkMTEzMzdhNWQ2ZjIxNjY5MjMz
-YzVkYmQ0YmYyOWINCj4gQXV0aG9yOiBKaWF3ZW4gTGl1IDwxMjk4NjYyMzk5QHFxLmNvbT4NCj4g
-U3ViamVjdDogc3BpOiBueHAtZnNwaTogcHJvcGFnYXRlIGRlZmF1bHQgc2V0dXAgZmFpbHVyZXMN
-Cj4gDQo+IG54cF9mc3BpX2RlZmF1bHRfc2V0dXAoKSBtYXkgZmFpbCB3aGlsZSBzZXR0aW5nIHRo
-ZSBjb250cm9sbGVyIGNsb2NrIHJhdGUgb3INCj4gd2hpbGUgcHJlcGFyaW5nIGFuZCBlbmFibGlu
-ZyB0aGUgY2xvY2suIFRoZSBwcm9iZSBhbmQgcnVudGltZS1yZXN1bWUgcGF0aHMNCj4gY3VycmVu
-dGx5IGlnbm9yZSB0aGF0IHJldHVybiB2YWx1ZSBhbmQgY29udGludWUgYXMgaWYgdGhlIGNvbnRy
-b2xsZXIgd2FzDQo+IHVzYWJsZS4NCj4gDQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvc3BpL3Nw
-aS1ueHAtZnNwaS5jIGIvZHJpdmVycy9zcGkvc3BpLW54cC1mc3BpLmMNCj4gPiBpbmRleCA2YmU3
-ODcxMmI1MzQzLi4zZjFjM2VkNzQ4ZWJhIDEwMDY0NA0KPiA+IC0tLSBhL2RyaXZlcnMvc3BpL3Nw
-aS1ueHAtZnNwaS5jDQo+ID4gKysrIGIvZHJpdmVycy9zcGkvc3BpLW54cC1mc3BpLmMNCj4gPiBA
-QCAtMTM2MSw3ICsxMzYxLDkgQEAgc3RhdGljIGludCBueHBfZnNwaV9wcm9iZShzdHJ1Y3QgcGxh
-dGZvcm1fZGV2aWNlDQo+ICpwZGV2KQ0KPiA+ICAJaWYgKHJlZykNCj4gPiAgCQlmc3BpX3dyaXRl
-bChmLCByZWcsIGYtPmlvYmFzZSArIEZTUElfSU5UUik7DQo+ID4NCj4gPiAtCW54cF9mc3BpX2Rl
-ZmF1bHRfc2V0dXAoZik7DQo+ID4gKwlyZXQgPSBueHBfZnNwaV9kZWZhdWx0X3NldHVwKGYpOw0K
-PiA+ICsJaWYgKHJldCkNCj4gPiArCQlyZXR1cm4gZGV2X2Vycl9wcm9iZShkZXYsIHJldCwgIkZh
-aWxlZCB0byBzZXR1cCBjb250cm9sbGVyIik7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IFRo
-aXMgaXNuJ3QgYSBidWcgaW50cm9kdWNlZCBieSB0aGlzIHBhdGNoLCBidXQgZG9lcyByZXR1cm5p
-bmcgYW4gZXJyb3IgaGVyZQ0KPiBsZWFrIHRoZSBoYXJkd2FyZSBjbG9ja3M/DQo+IA0KPiBFYXJs
-aWVyIGluIG54cF9mc3BpX3Byb2JlKCksIHRoZSBQTSBndWFyZCBpcyBhY3F1aXJlZDoNCj4gDQo+
-IAlQTV9SVU5USU1FX0FDUVVJUkVfQVVUT1NVU1BFTkQoZGV2LCBwbSk7DQo+IA0KPiBJZiBwcm9i
-ZSBmYWlscyBhbmQgd2UgcmV0dXJuIGFuIGVycm9yLCB0aGUgZ3VhcmQgZ29lcyBvdXQgb2Ygc2Nv
-cGUgYW5kIHF1ZXVlcw0KPiBhbiBhc3luY2hyb25vdXMgc3VzcGVuZC4NCj4gDQo+IERldnJlcyB0
-aGVuIHVud2luZHMgZGV2bV9wbV9ydW50aW1lX2VuYWJsZSgpLCB3aGljaCBjYWxscw0KPiBwbV9y
-dW50aW1lX2Rpc2FibGUoKS4NCj4gDQo+IEFjY29yZGluZyB0byBQTSBzdWJzeXN0ZW0gZ3VpZGVs
-aW5lcywgcG1fcnVudGltZV9kaXNhYmxlKCkgY2FuY2VscyBhbnkNCj4gcGVuZGluZyBhc3luYyBz
-dXNwZW5kIHJlcXVlc3RzLCB3aGljaCBtaWdodCBsZWF2ZSB0aGUgZGV2aWNlIHBvd2VyZWQgb24N
-Cj4gaW5kZWZpbml0ZWx5Lg0KPiANCj4gPiAgCWluaXRfY29tcGxldGlvbigmZi0+Yyk7DQo+ID4g
-IAlyZXQgPSBkZXZtX3JlcXVlc3RfaXJxKGRldiwgaXJxLA0KPiANCj4gWyAuLi4gXQ0KPiANCj4g
-PiBAQCAtMTQwOCw3ICsxNDEwLDEwIEBAIHN0YXRpYyBpbnQgbnhwX2ZzcGlfcnVudGltZV9yZXN1
-bWUoc3RydWN0DQo+IGRldmljZSAqZGV2KQ0KPiA+ICAJCXJldHVybiByZXQ7DQo+ID4NCj4gPiAg
-CWlmIChmLT5mbGFncyAmIEZTUElfTkVFRF9JTklUKSB7DQo+ID4gLQkJbnhwX2ZzcGlfZGVmYXVs
-dF9zZXR1cChmKTsNCj4gPiArCQlyZXQgPSBueHBfZnNwaV9kZWZhdWx0X3NldHVwKGYpOw0KPiA+
-ICsJCWlmIChyZXQpDQo+ID4gKwkJCXJldHVybiByZXQ7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hd
-DQo+IElmIG54cF9mc3BpX2RlZmF1bHRfc2V0dXAoKSBmYWlscyBoZXJlLCBkb2VzIHRoaXMgcmVn
-cmVzc2lvbiBsZWF2ZSB0aGUgaGFyZHdhcmUNCj4gY2xvY2tzIGVuYWJsZWQgcGVybWFuZW50bHk/
-DQo+IA0KPiBueHBfZnNwaV9jbGtfcHJlcF9lbmFibGUoZikgd2FzIGNhbGxlZCBlYXJsaWVyIGlu
-IG54cF9mc3BpX3J1bnRpbWVfcmVzdW1lKCkNCj4gdG8gZW5hYmxlIHRoZSBjbG9ja3MuDQo+IA0K
-PiBJZiB0aGlzIHJldHVybnMgYW4gZXJyb3IsIHRoZSBQTSBjb3JlIGFib3J0cyB0aGUgcmVzdW1l
-IGFuZCB0aGUgZGV2aWNlIHN0YXlzIGluDQo+IHRoZSBSUE1fU1VTUEVOREVEIHN0YXRlLCBidXQg
-aXQgZG9lc24ndCBsb29rIGxpa2UNCj4gbnhwX2ZzcGlfY2xrX2Rpc2FibGVfdW5wcmVwKCkgaXMg
-Y2FsbGVkIHRvIGRpc2FibGUgdGhlIGNsb2NrcyBiZWZvcmUgcmV0dXJuaW5nLg0KPiANCj4gDQo+
-IFtTZXZlcml0eTogSGlnaF0NCj4gVGhpcyBpcyBhIHByZS1leGlzdGluZyBpc3N1ZSwgYnV0IEkg
-bm90aWNlZCBhIHBvdGVudGlhbCBsZWFrIG9mIHRoZSBQTSBydW50aW1lDQo+IHVzYWdlIGNvdW50
-ZXIgaW4gbnhwX2ZzcGlfZXhlY19vcCgpIHdoZW4gcG1fcnVudGltZV9nZXRfc3luYygpIGZhaWxz
-Og0KPiANCj4gZHJpdmVycy9zcGkvc3BpLW54cC1mc3BpLmM6bnhwX2ZzcGlfZXhlY19vcCgpIHsN
-Cj4gICAgIC4uLg0KPiAJZXJyID0gcG1fcnVudGltZV9nZXRfc3luYyhmLT5kZXYpOw0KPiAJaWYg
-KGVyciA8IDApIHsNCj4gCQlkZXZfZXJyKGYtPmRldiwgIkZhaWxlZCB0byBlbmFibGUgY2xvY2sg
-JWRcbiIsIF9fTElORV9fKTsNCj4gCQlyZXR1cm4gZXJyOw0KPiAJfQ0KPiAgICAgLi4uDQo+IH0N
-Cj4gDQo+IEJlY2F1c2UgcG1fcnVudGltZV9nZXRfc3luYygpIGluY3JlbWVudHMgdGhlIHVzYWdl
-IGNvdW50ZXIgcmVnYXJkbGVzcyBvZg0KPiBzdWNjZXNzLCByZXR1cm5pbmcgZGlyZWN0bHkgb24g
-ZmFpbHVyZSB3aXRob3V0IGNhbGxpbmcgcG1fcnVudGltZV9wdXRfbm9pZGxlKCkNCj4gbWlnaHQg
-cGVybWFuZW50bHkgbGVhayB0aGUgY291bnRlciBhbmQgcHJldmVudCB0aGUgZGV2aWNlIGZyb20g
-ZW50ZXJpbmcNCj4gcnVudGltZSBzdXNwZW5kIGFnYWluLg0KPiANCj4gQ291bGQgdGhpcyBwcmV2
-ZW50IHRoZSBkZXZpY2UgZnJvbSBzdXNwZW5kaW5nIGluIHRoZSBmdXR1cmU/DQo+IA0KPiANCj4g
-W1NldmVyaXR5OiBIaWdoXQ0KPiBUaGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLCBidXQgaXMg
-aXQgc2FmZSB0byBwcm9jZWVkIHdpdGhvdXQgY2hlY2tpbmcgdGhlDQo+IHJldHVybiB2YWx1ZSBv
-ZiBwbV9ydW50aW1lX2dldF9zeW5jKCkgaW4gbnhwX2ZzcGlfY2xlYW51cCgpPw0KPiANCj4gZHJp
-dmVycy9zcGkvc3BpLW54cC1mc3BpLmM6bnhwX2ZzcGlfY2xlYW51cCgpIHsNCj4gICAgIC4uLg0K
-PiAJcG1fcnVudGltZV9nZXRfc3luYyhmLT5kZXYpOw0KPiANCj4gCS8qIGRpc2FibGUgdGhlIGhh
-cmR3YXJlICovDQo+IAlmc3BpX3dyaXRlbChmLCBGU1BJX01DUjBfTURJUywgZi0+aW9iYXNlICsg
-RlNQSV9NQ1IwKTsNCj4gICAgIC4uLg0KPiB9DQo+IA0KPiBJZiBwbV9ydW50aW1lX2dldF9zeW5j
-KCkgZmFpbHMgdG8gcmVzdW1lIHRoZSBkZXZpY2UgYW5kIGVuYWJsZSBjbG9ja3MsIHRoZQ0KPiBk
-cml2ZXIgaW1tZWRpYXRlbHkgd3JpdGVzIHRvIHRoZSBGU1BJX01DUjAgcmVnaXN0ZXIgb24gdW5w
-b3dlcmVkDQo+IGhhcmR3YXJlLg0KPiANCj4gQ291bGQgdGhpcyBjYXVzZSBhIHN5bmNocm9ub3Vz
-IGV4dGVybmFsIGFib3J0IG9uIEFSTSBTb0NzLCBhbmQNCj4gc3Vic2VxdWVudGx5IGNhdXNlIHVu
-YmFsYW5jZWQgY2xvY2sgZGlzYWJsZXMgd2hlbg0KPiBueHBfZnNwaV9jbGtfZGlzYWJsZV91bnBy
-ZXAoKSBpcyBjYWxsZWQ/DQo+IA0KPiAtLQ0KPiBTYXNoaWtvIEFJDQo+IHJldmlldyChpCBodHRw
-czovL2V1cjAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0El
-MkYNCj4gJTJGc2FzaGlrby5kZXYlMkYlMjMlMkZwYXRjaHNldCUyRjIwMjYwNzI4MDgwNDQzLjE1
-MzgyNy0xLTEyOTg2DQo+IDYyMzk5JTQwcXEuY29tJTNGcGFydCUzRDImZGF0YT0wNSU3QzAyJTdD
-aGFpYm8uY2hlbiU0MG54cC5jb20NCj4gJTdDZDlkYzNlYjY3MDFmNDk0YWE2YmMwOGRlZWM4MWJi
-MDglN0M2ODZlYTFkM2JjMmI0YzZmYTkyY2Q5OWMNCj4gNWMzMDE2MzUlN0MwJTdDMCU3QzYzOTIw
-ODIzOTEwNDM5NDU1NyU3Q1Vua25vd24lN0NUV0ZwYkdaDQo+IHNiM2Q4ZXlKRmJYQjBlVTFoY0dr
-aU9uUnlkV1VzSWxZaU9pSXdMakF1TURBd01DSXNJbEFpT2lKWGFXNHpNaUlzDQo+IElrRk9Jam9p
-VFdGcGJDSXNJbGRVSWpveWZRJTNEJTNEJTdDMCU3QyU3QyU3QyZzZGF0YT1nb2piRkdIVG0ybA0K
-PiBMcURyQkFIN2NsJTJGRHRvSEhzQVR5c1l2ZSUyQnNUeG9UTGslM0QmcmVzZXJ2ZWQ9MA0KDQo=
+Hello Santhosh,
+
+On 23/07/2026 at 11:34:42 GMT, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Using strict equality `op->max_freq =3D=3D post_config_max_speed=
+_hz` as a sentinel is brittle, breaks high-speed modes, and can inappropria=
+tely elevate frequencies of un-tuned operations.
+> - [High] Ops running at the post-configuration frequency bypass the `per_=
+op_freq` capability check, potentially causing unsupported controller behav=
+ior.
+> --
+>
+> --- Patch [4]: [PATCH v6 04/17] spi: spi-mem: teach spi_mem_adjust_op_fre=
+q() about post-config ops ---
+> commit 929442442d981a80e44b25e60b6fa3ecd9dc8a62
+> Author: Santhosh Kumar K <s-k6@ti.com>
+>
+> spi: spi-mem: teach spi_mem_adjust_op_freq() about post-config ops
+>
+> This commit extends spi_mem_adjust_op_freq() with a bypass for post-confi=
+g=20
+> operations. If an operation's maximum frequency matches the configured
+> post-configuration maximum speed, it remains uncapped, while all other
+> operations are capped to the base maximum speed.
+>
+>> diff --git a/drivers/spi/spi-mem.c b/drivers/spi/spi-mem.c
+>> index a88b9f0383564..e20eca1b82457 100644
+>> --- a/drivers/spi/spi-mem.c
+>> +++ b/drivers/spi/spi-mem.c
+>> @@ -591,9 +591,18 @@ EXPORT_SYMBOL_GPL(spi_mem_adjust_op_size);
+> [ ... ]
+>>  void spi_mem_adjust_op_freq(struct spi_mem *mem, struct spi_mem_op *op)
+>>  {
+>> +	if (mem->spi->post_config_max_speed_hz &&
+>> +	    op->max_freq =3D=3D mem->spi->post_config_max_speed_hz)
+>> +		return;
+>
+> [Severity: High]
+> Does this strict equality check reliably identify post-configuration ops?
+>
+> If a hardware-defined operation limit exceeds the board's tuned rate, the
+> exact equality check will fail, demoting the operation to the untuned base
+> rate and wasting the PHY tuning.
+>
+> Conversely, if an untuned operation happens to have a datasheet limit that
+> is identical to the tuned board limit, could it bypass the base rate cap
+> and execute at an unsafe elevated frequency?
+
+I am not sure this issue is relevant.
+
+> [Severity: High]
+> Additionally, does bypassing the cap for post-configuration speeds break =
+the
+> frequency capability check in spi_mem_default_supports_op()?
+>
+> In spi_mem_default_supports_op(), the capability check is guarded by:
+>
+> 	if (op->max_freq &&
+> 	    op->max_freq < mem->spi->max_speed_hz) {
+> 		if (!spi_mem_controller_is_capable(ctlr, per_op_freq))
+> 			return false;
+> 	}
+>
+> Because post-config speeds are typically greater than max_speed_hz, the c=
+heck
+> op->max_freq < mem->spi->max_speed_hz evaluates to false.
+>
+> Does this cause controllers that lack per-operation frequency switching t=
+o skip
+> the verification entirely and incorrectly accept operations requiring dyn=
+amic
+> clock rates?
+
+However this one is plausible. Could you please verify? You can just
+drop the boolean enabling the multi frequency capability in the spi
+controller driver and you'll see how it behaves.
+
+Thanks,
+Miqu=C3=A8l
