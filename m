@@ -1,206 +1,207 @@
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011061.outbound.protection.outlook.com [52.101.65.61])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640A844E64E;
-	Wed, 29 Jul 2026 11:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.61
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785323205; cv=fail; b=ZDdNTOok2YYLDD8p5AXge/iyUjF8uc5do0saYKkb6dqNWA9IOMY4++UV6XJJWQiz8pk0oaArRb1ngtBBmlrQXZfPUbYMMa12oUxhRnfhFUikIQrld/ewPwXF0Wq597Z8nvM3szBJXEYq7gbmrSUlrft7GlBAflayV66dH/C6HGk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785323205; c=relaxed/simple;
-	bh=WuqBtR5LjG9US7O8ecQBof5LfytsTewYklQSPQ6jB7s=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=JdkuH3N0tE8/U36ken8MOzhDW06u1qusQO5Hx8SGehvT4j/lwROUxMYT2ipXtiLyWNPbIbUqFIzvNjduas5PodpJ+hjoo5i3QmZuTNWSfWhx+rQ4PQ/KhcdFbywQtb8FmA329njp8fyiZJhrtwquQJpgdndKP5Pz+ZBQohx+ors=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=LwlQez8B; arc=fail smtp.client-ip=52.101.65.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98781471CF9;
+	Wed, 29 Jul 2026 11:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785324132; cv=none; b=Gawypas3/klLAzQ1dM7mA4AXQERhIYvecFwPUZwvfyYKjmN4ohNw15EQb3M/gcVewB5I83DDBeBjhLC67sq10GVu1oXVgsc7EZHTSAWXJmJtdSEGO2mnhO2+V5N1cBSur3dcSxm8rzpqGwC+Xuf1M8Rp2TmbJQxTYcQOmH6PO5I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785324132; c=relaxed/simple;
+	bh=j96oaOgPTVV94hypkqd8Bk55BQjdQH8Kyvgp/syPBOY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ozI6RLjMLKQjqSRaIn+92YfB3ETa/niY2CGyEySdNviobMW7BrO/rINiepRa7gDqtj94rehds38A9Wm8Gj0+IMGzA+XrCgd0kRS1mf21L1YxWyC1ZYRGUcqL24dmEcvsOyt7VxcPIiOymw7k57yqRBDXk+NNrBt23rDkG2pKZCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=m4uu9nJX; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="LwlQez8B"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PnOKqjWU+6bu9jVK6hngaiObtgERcrGI4c+iC0YOBeDSXLAxyYorvfxCqjp6yDtVWTqAn4HW0TnKCdZ5VUsqHLd/K36yQqPOT2uNxNNwvZypMYrHOzhQRW/e6WyK7ATnnegGq+D6/3B1YFHJ9epYysWFbr9q+1dXD/TYgUx0/7A8Y1drQ6KIwmwEzQg0vI7lqEGEVwSudo/P7A04z5v/+4kcgREuz12pvuoPTnhSLXQp0dh8LeWBGDo/FO1Q5jzE7kos9woY/i/7KYc/xuAUSWxLZZfur94sGuo989cM9vPsxTp2oFGAvfM7ZtTQQglpWCdMTVDzKNt6tyK+YJTQXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WuqBtR5LjG9US7O8ecQBof5LfytsTewYklQSPQ6jB7s=;
- b=MOBGgVJT3kGoVzxOQrRyW99E1D+B63M0Os4y2AXmG7NNe3TIl3hzq1INjeSvi4gPIN0cbn9+/xl3rfcIlCtJveziPAeKfT+lu0KNksFcWNR2Wrj01VVF+mkrrXtZx87xJBWHu8SKrAJh44Yj6VKLCh4/JtMR7L8vHNoU44UnfMtVSDwBf2GiHIlhLEeViHsIqaaAN8lr9n9V3S3Ev8+pO/YjuqErUHNkd+iUuY7Dgn9hgTxmxCVmj/vpWwpshdm4EETkl3x/2CAMKbQaHPN/tjONg49EAettIszCQvPYjyiQidzY+ThXVraIuVlIs2s3Ume1Y8EFbQ6/eijqTcnxkQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WuqBtR5LjG9US7O8ecQBof5LfytsTewYklQSPQ6jB7s=;
- b=LwlQez8BVEdALDfcPKEBb4Q7OMJ2mXnjMNRKFzH1vNM8tujifczy+GBcNH79qB2grEi73w81sXabaNbym6mH1OMHf5P5hFQ2ASIaaF9wlcZI313rckjLsP3xKYzDIn43Amh+CaB+6MWEe8jyXSP6MXKAJvSM3iRqru9x0J0ygzMoQE5wQM++Zs9g8vuKQA80cmsxUeGPnbgkqP0dUkhx8ZPoyZ5udqw5RSWFDRSxNOqnvM7L0o/HTDahU+WTfc/IIupeyyKv1vnAIs+9FNItt2OVd5Rk3KLMirXCeXrRbFaOTls3etDIxCWagUpM6TczX5bcaKMnW4l4nfgb2+AXBQ==
-Received: from DU2PR04MB8677.eurprd04.prod.outlook.com (2603:10a6:10:2dc::14)
- by VI2PR04MB10836.eurprd04.prod.outlook.com (2603:10a6:800:276::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Wed, 29 Jul
- 2026 11:06:39 +0000
-Received: from DU2PR04MB8677.eurprd04.prod.outlook.com
- ([fe80::9cc3:2ef9:9259:e963]) by DU2PR04MB8677.eurprd04.prod.outlook.com
- ([fe80::9cc3:2ef9:9259:e963%4]) with mapi id 15.21.0245.012; Wed, 29 Jul 2026
- 11:06:39 +0000
-From: Bough Chen <haibo.chen@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"Bough Chen (OSS)" <haibo.chen@oss.nxp.com>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>
-Subject: RE: [PATCH v2 2/3] spi: spi-nxp-fspi: enter stop mode before
- reconfiguring MCR0 and DLL
-Thread-Topic: [PATCH v2 2/3] spi: spi-nxp-fspi: enter stop mode before
- reconfiguring MCR0 and DLL
-Thread-Index: AQHdHnn8mtV/xpfGAUqE7UZWq2EG2raCuUGAgAGeQSA=
-Date: Wed, 29 Jul 2026 11:06:39 +0000
-Message-ID:
- <DU2PR04MB867754D5DDA9867511732A5490CA2@DU2PR04MB8677.eurprd04.prod.outlook.com>
-References: <20260728-fspi-clock-v2-0-dbe786a4a6eb@nxp.com>
- <20260728-fspi-clock-v2-2-dbe786a4a6eb@nxp.com>
- <20260728102317.E11301F000E9@smtp.kernel.org>
-In-Reply-To: <20260728102317.E11301F000E9@smtp.kernel.org>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU2PR04MB8677:EE_|VI2PR04MB10836:EE_
-x-ms-office365-filtering-correlation-id: b8217398-eab8-4500-fb95-08deed6176d4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|19092799006|376014|23010399003|22082099003|18002099003|4143699003|56012099006|11063799006|3023799007|4133799003|38070700021|6133799003|10067099003;
-x-microsoft-antispam-message-info:
- kV8tCDPeQi8OvR2iSFz7LZjwMvLHHWzYFUNkXMFqf1twIqYbbrtXMaJdY5V/mQfctnVlvdLdN/IW4L6TU/ixg63W5x9Qx5meBA/U8f4UMJsWrbszH/7DFiHmlqCGjzekRY4cLxXnaLe1ceRIblr3mrCR/xUHP+CSg3LEM6GC2Pdf1NnwhoEBj1JTx9hTo39ji3Dr3NnQZDsiiKwPMw1TDghD+HRUUcP/ZDDVAN9G5IcOOPmLts5ykqSAN/1+TnbLOabbumlZ/4TA3qTN3UOX0v317kwhULRg1c6xFB6/9mDBjV4daPkeKeRpiylhxqAMZLD+/STWfDJ1C68LuJ5V3VTtsgxR2+WBQMLWBqgCj0216rqjr6uPUD2Ruy5cL0v1gDzqXCgWw59OvI+k/KvDOx4/6mLw0ovC+WExQrrneFXlXFNlk7LJutGypa1/ll7UaR4/L53Pl8u3E8xLW0cbq1/Y5Sqg1PWegwvng5zv00gJ3995TTy8Dyz7lTqJZt4hrrykHQvVMseT7Pr2vSkkGg8zJSPPTpBQQtqh7fJ0di1MYASbgo0ttSrKvfeXqR3pKKMAGvpVMj7wYndVBPw5eKzhJy8tT+/94BvSi9sdWbIfm15e34GRQbr5OlZMlROydiDDK0CveQKrluxf+1P4K7P2C3SLa40XGz+akTckRmQ=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8677.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(376014)(23010399003)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006)(3023799007)(4133799003)(38070700021)(6133799003)(10067099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?gb2312?B?ZkRSRnFjYXhOZnYxcEl2UDk1UzRiamRscTkvQ3VnQnlraW1DSWsya0VXYzhh?=
- =?gb2312?B?YVA5ME9XRzlRQzJqOXBVOHZIVTdUQkpFUHJRWlMwdXF1bC9DRSs3ZWZlNHho?=
- =?gb2312?B?OE1mTVlEVUtRK1VmMVVoaHBubzJNbG9rRW01ZXpheGhjUUIyMTQwUEVURS90?=
- =?gb2312?B?NTFiQ21EUjJCV0ZjLzBHUU1CMUdrdFBRanU4UnBtSUQ4YlBha1JmZ0ZnWks2?=
- =?gb2312?B?bk1UVmxvTlcyWHFEWUF4TTgxTm8xSzc4a0pFLzNIMzBwUmd0UXcvQ2hiOTlo?=
- =?gb2312?B?L081TnRuQ0J3M3ZPcnlQTG9WZEdZT091S2FrN0JSY2pTRVE5WFdZeHJFdmdF?=
- =?gb2312?B?ZEN0UlZpN1g3SWlzaVI1UkUvZ2FmUFdWci9wZkMwd0N0VjcxTWM2c3daNTZD?=
- =?gb2312?B?YzJ0NE1TUnhqSm1BS0ZVVTM5T2lLOGVnbmI4Rit2OEpoVS9MOE5iRGhYN2cw?=
- =?gb2312?B?azgzZXN2ZE1meGpIcWZ6eUY4SmRUbUlJT0t3dzZkbW9TcnNxSzNnNk9QN3RT?=
- =?gb2312?B?NHQ2WUZ6bHRpSjl1NDU3aGhkQ1lvdWtRby9JVnZuaGRhbloyWVBOeWdaRWp4?=
- =?gb2312?B?cGxaMUsvUTRkYldjQTlFc1M4bDN6Y3ZndndhUkYwZ2oxREhDVWZtWWR2V1R3?=
- =?gb2312?B?K0VHVlNrMlZCcTdkU0dTRmJwajVSTHljS3ljVUFkd00vYzdqTTA1eXVBL3VL?=
- =?gb2312?B?V0ExLzVBSXc5MmRiN0hkaGZhUUdjZHU1Z2FtQWp6aEptbmpqcVNqT3hVVHJ0?=
- =?gb2312?B?WmR1dUs5enJoU3FYek90ZEFSeG1JdDdZeTI2UVpIeUlYaUl0T29HeExkSDN4?=
- =?gb2312?B?ZnQ5akpqWHVCbmlqWEY1d2wyMTBwNzJXZy9zZ3VXY1FxeWRmTCtoNW1hSVFF?=
- =?gb2312?B?RjB6em9BY1k1TDFlbFpUK0J0NnlvWVIxRGJjWEI5blpxUElvdWRkZ0NkY3pE?=
- =?gb2312?B?QTZrT09LRy9NTWhpYytiMUpCZGFnVkJOMVd0M2dnZzBZRGxucGxnRFpvTWpL?=
- =?gb2312?B?Q1JxK0JzQjNrTU9uakpzcjFxK0xRV2s0M0tNajJSbHVoTGZwcEU2MjhEOUgv?=
- =?gb2312?B?OG5EU2liU3VSMFdxeEx3aVF4NUx5bUF1VW5ZU3IvaUpBZElnN0RlVC9ueVNs?=
- =?gb2312?B?Yko2TTh3WjFjeDRuNUhvYUYxRTZDVXplaVNXYjg4TGZnbU50amErK3RiQVpH?=
- =?gb2312?B?Z21wamtLV0ZYTkcvQmRkOHBPOU9XRENnYktkaThSbTVqWmtrU3VDRnZ3WTdJ?=
- =?gb2312?B?OHRpTURYM09FQUw0SnAra2xHZUpMczdib2FPbjlEYXkrbWtHS2ZkVmhZNzc3?=
- =?gb2312?B?L3NwdTBKZG1tc2dLYTV2VE9BbWw5TmRmYVA5RmJUd0NUanhrUmVWUytGVk9X?=
- =?gb2312?B?V0RrMHJNNXJKUnhDQjBJbjZTR2xSSHovL3ZtZzI5WEpLaUU4cm1sTUR0cXNl?=
- =?gb2312?B?UnJBUzdGdkN0bm51ZUI3VG5WU2pVTGg3MW5uYzZhT1dQM2FIYVdrNFM4ZDhO?=
- =?gb2312?B?Y0dqOUVsbi9KMzc0blNzbkVRdlhaN2gveG9sb0tkZ0E1dVZRSWxUZnZVcGhO?=
- =?gb2312?B?NzJNUFpTQVpMcnk1V2hOdjhFYWw2QTdVeEFQMFdpL0RmL2M1R0ZQdXZRRlNQ?=
- =?gb2312?B?bHdGUjhxRU1WL3Z3UjBpOEw4SGt2S2g3ekZKM1ZXMjNnQ240R3RYVlQzYVhT?=
- =?gb2312?B?bGhvZWhqSkxEVjBYazQwdmxGMkJSdlY1cnBzRVpkdmpCVis5eWMya3BUUVJD?=
- =?gb2312?B?UytrN0tQYldJSkJNNzVGc2FZSVB3Q00rTDZEdXIzZEltYlU3MHVLR08wK2dx?=
- =?gb2312?B?RjVORk5BYWVkbFRqc21ra0MzdGFpc2dQWkhXQTVzdjlOaHVqeXB6REVjSW5h?=
- =?gb2312?B?c1JtNU9ZajdQYTAwR2tBYkhySjRXRlo2VEx1RlR2TmF5MVEvaUgzZ3BEVFA5?=
- =?gb2312?B?cjRzRTdEWjFNbzUwTFlRazdsbVBTZXhYU013SW9pNlhyTWdvRFhYWnBUWEp1?=
- =?gb2312?B?Wm1MTll2dDB5Tk9wcVE1VkV3N21ZSUR3dktKOHE0dEZMZkNQd1hHT3c5VkZQ?=
- =?gb2312?B?cll2Nkh3OVIveXAzZ1FZWktMZ29tUkNLSFFkQXc4U0UySVJFK3FFbW92b0Jm?=
- =?gb2312?B?bGdKdEhNTzMvUFJnN1pKQ0ZFWFdvVitFcjNnS016cWJBRTNBOU00RGpoQ1JJ?=
- =?gb2312?B?WUVjR1FaeWx1YnRXcCtQU3VnNHVtaEtMVlZ6T0pzUFlTcktMZ0RlemFEUXBT?=
- =?gb2312?B?blhwNHdrSHpPMHc0YU5ScGVTY3kwQW5aUFEzcXBiS0piRUtPdDVpYU90MGYw?=
- =?gb2312?Q?tp98j1hgq44BJAL92U?=
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="m4uu9nJX"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66TBHak54030026;
+	Wed, 29 Jul 2026 11:22:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=+KB3MD
+	QpNoiG0yS7JE8kHjadgUTX8LXYJbFgWZoSg5s=; b=m4uu9nJXp/PA0DENc8XABq
+	yJYrbnzZ9Rpp7e/jO0bz0vIA4t3JVF4wV2o8AfZSUP/7oWv6wNM9T43oL8aK9KE+
+	HP6N0tgkx5YRrOW4MV+JGOvv6SA1eD1pkFVhqc7tg6qSQ7CD/LwTsJ9WM3bO8cKY
+	9xZU9T4XPxkqsghqxOJi5mtj34gZcXRzgGCUKl/0yrEDWRMycoxlRzXXvyOHXpc2
+	7L87TbSAhmaaRC+wT5v1c/aLnqACbbRGYiFgB0CUtSYTk6vyRnNvCLSi+CRe//0m
+	rl4ji91uNHfNdoH2sccrE+mLrqp4A9US7mXELn+v4R7PLCsfTir+3LEAp3DRsTKQ
+	==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7jbev-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jul 2026 11:22:09 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TBBdNH020864;
+	Wed, 29 Jul 2026 11:22:08 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y65gr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jul 2026 11:22:08 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66TBM53L47317352
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 29 Jul 2026 11:22:05 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EA90920043;
+	Wed, 29 Jul 2026 11:22:04 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BC45320040;
+	Wed, 29 Jul 2026 11:22:04 +0000 (GMT)
+Received: from [9.224.91.220] (unknown [9.224.91.220])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 29 Jul 2026 11:22:04 +0000 (GMT)
+Message-ID: <498b23ec-ab49-4cdc-95c1-ffb62fd03eb8@linux.ibm.com>
+Date: Wed, 29 Jul 2026 13:22:04 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8677.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b8217398-eab8-4500-fb95-08deed6176d4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2026 11:06:39.3929
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: JvObDXWGDSzOeqLlkZ07Ltrhk8IHCwo0ddO8U8RfKjXx8nlP1zR4Tu+isxmUXTVCIbx/mXGFZ8QiJeqZWS1t2Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI2PR04MB10836
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/2] s390/zcrypt: Validate length for CCA ECC private
+ key requests
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>
+References: <20260729093616.4184642-1-dengler@linux.ibm.com>
+ <20260729093616.4184642-3-dengler@linux.ibm.com>
+ <20260729101612.0D4A11F00A3E@smtp.kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
+Content-Language: en-US, de-DE
+In-Reply-To: <20260729101612.0D4A11F00A3E@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: i-GUmTBGqKVxc9RgOwnMhdW7VDvaRtzL
+X-Proofpoint-ORIG-GUID: i-GUmTBGqKVxc9RgOwnMhdW7VDvaRtzL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDA5MyBTYWx0ZWRfX/nSkexQjhnMI
+ IErdL/F4cDwdP3EoHu7m/zMZSRbHUiJ93eFplnl6pENr+Pb0sNJLQEIgPmcgzUNNH944nZPlV91
+ 7BFw04KOPJ2W9gxQv+5FImgeS5ezfnJU2SyXgUqo/QDDizQ2xAzdpdqacSdVQsujh8X1PoEoM/t
+ 9vjET3FLJQi2qf3Az7zLAfES1LfxjELfFpULCF6ela5vPOi9zZw/qm1wo96Tyc0mHN2dNPio+ae
+ 5TK9GY+x4YtHj5sfcW54VJFhs431mgsetPUEvggp4tS9ObCf2TtfdFR4I7vG2tHKxSDVqpIYk4q
+ OUNqmL/t1xGQrcUI5V6Hdlww62xuiJpnerpxZdkO9Kmvg8vAsEz2AbmhbzXF1RfX3RtROSR6r/r
+ IaCJT4dHWbJqxO7Y3gTCHaBU7qNTRA/nFE74Jol5bkkuUpO5l6uOGc5VVc0a4Qh4zldbq02r8AD
+ Pi28ozOAKWbFc3ENnig==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a69e261 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=AospXY2Czllo1zpkj0MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDA5MyBTYWx0ZWRfX4iaIoZGgboiu
+ OxHfCPDTuPvFO41MbaLMhSHIu8Ya7rTUZfKUXr5+f+HxDzdfS4BIzpTWAtIgHm3aLE4PJ4NLRoC
+ IuON+aFOd4Po1r2Bmm3OrKQHPV0BynI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-29_04,2026-07-28_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607290093
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJuZWwu
-b3JnIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPg0KPiBTZW50OiAyMDI2xOo31MIyOMjVIDE4OjIz
-DQo+IFRvOiBCb3VnaCBDaGVuIChPU1MpIDxoYWliby5jaGVuQG9zcy5ueHAuY29tPg0KPiBDYzog
-aW14QGxpc3RzLmxpbnV4LmRldjsgRnJhbmsuTGlAa2VybmVsLm9yZw0KPiBTdWJqZWN0OiBSZTog
-W1BBVENIIHYyIDIvM10gc3BpOiBzcGktbnhwLWZzcGk6IGVudGVyIHN0b3AgbW9kZSBiZWZvcmUN
-Cj4gcmVjb25maWd1cmluZyBNQ1IwIGFuZCBETEwNCj4gDQo+IFRoYW5rIHlvdSBmb3IgeW91ciBj
-b250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDEgcG90ZW50aWFsIGlzc3VlKHMp
-DQo+IHRvIGNvbnNpZGVyOg0KPiAtIFtIaWdoXSBFcnJvciBwYXRocyBpbiBueHBfZnNwaV9zZWxl
-Y3RfbWVtKCkgbGVhdmUgdGhlIEZsZXhTUEkgbW9kdWxlDQo+IHBlcm1hbmVudGx5IGluIHN0b3Ag
-bW9kZS4NCj4gLS0NCj4gDQo+IC0tLSBQYXRjaCBbMl06IFtQQVRDSCB2MiAyLzNdIHNwaTogc3Bp
-LW54cC1mc3BpOiBlbnRlciBzdG9wIG1vZGUgYmVmb3JlDQo+IHJlY29uZmlndXJpbmcgTUNSMCBh
-bmQgRExMIC0tLSBjb21taXQNCj4gNDM5MWNjYjdjNzNjMDQ4OWFjMGI2ZjcxNGE3MDczYmIyYjA4
-YjNjMQ0KPiBBdXRob3I6IEhhaWJvIENoZW4gPGhhaWJvLmNoZW5AbnhwLmNvbT4NCj4gDQo+IHNw
-aTogc3BpLW54cC1mc3BpOiBlbnRlciBzdG9wIG1vZGUgYmVmb3JlIHJlY29uZmlndXJpbmcgTUNS
-MCBhbmQgRExMDQo+IA0KPiBUaGlzIHBhdGNoIG1vZGlmaWVzIG54cF9mc3BpX3NlbGVjdF9tZW0o
-KSB0byBlbnRlciBzdG9wIG1vZGUgYnkgc2V0dGluZw0KPiBNQ1IwW01ESVNdIGJlZm9yZSByZWNv
-bmZpZ3VyaW5nIHRoZSBSWCBzYW1wbGUgY2xvY2sgc291cmNlIGFuZCBETEwgY29udHJvbA0KPiBy
-ZWdpc3RlcnMuIEl0IHRoZW4gZXhpdHMgc3RvcCBtb2RlIG9uY2UgdGhlIHJlY29uZmlndXJhdGlv
-biBpcyBjb21wbGV0ZQ0KPiBhY2NvcmRpbmcgdG8gdGhlIHJlZmVyZW5jZSBtYW51YWwuDQo+IA0K
-PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3NwaS9zcGktbnhwLWZzcGkuYyBiL2RyaXZlcnMvc3Bp
-L3NwaS1ueHAtZnNwaS5jDQo+ID4gaW5kZXggNmRlNmQ0MzJjZGNiMi4uYTQyNmI4ZDkyMTkzYSAx
-MDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL3NwaS9zcGktbnhwLWZzcGkuYw0KPiA+ICsrKyBiL2Ry
-aXZlcnMvc3BpL3NwaS1ueHAtZnNwaS5jDQo+IFsgLi4uIF0NCj4gPiBAQCAtODk2LDYgKzg5Nywx
-NSBAQCBzdGF0aWMgdm9pZCBueHBfZnNwaV9zZWxlY3RfbWVtKHN0cnVjdCBueHBfZnNwaQ0KPiA+
-ICpmLCBzdHJ1Y3Qgc3BpX2RldmljZSAqc3BpLA0KPiA+DQo+ID4gIAlkZXZfZGJnKGYtPmRldiwg
-IlRhcmdldCBkZXZpY2UgW0NTOiV4XSBzZWxlY3RlZFxuIiwNCj4gPiBzcGlfZ2V0X2NoaXBzZWxl
-Y3Qoc3BpLCAwKSk7DQo+ID4NCj4gPiArCS8qDQo+ID4gKwkgKiBQZXIgdGhlIEZsZXhTUEkgcmVm
-ZXJlbmNlIG1hbnVhbCAoaW5pdGlhbGl6YXRpb24gc2VxdWVuY2UpLCBNQ1IwIGFuZA0KPiA+ICsJ
-ICogdGhlIERMTCBjb250cm9sIHJlZ2lzdGVycyBzaG91bGQgYmUgY29uZmlndXJlZCB3aGlsZSB0
-aGUgbW9kdWxlIGlzIGluDQo+ID4gKwkgKiBzdG9wIG1vZGUgKE1DUjBbTURJU10gPSAxKS4gRW50
-ZXIgc3RvcCBtb2RlIGJlZm9yZSByZWNvbmZpZ3VyaW5nDQo+IHRoZQ0KPiA+ICsJICogUlggc2Ft
-cGxlIGNsb2NrIHNvdXJjZSBhbmQgdGhlIERMTCwgdGhlbiBleGl0IHN0b3AgbW9kZSBhZnRlcndh
-cmRzLg0KPiA+ICsJICovDQo+ID4gKwlyZWcgPSBmc3BpX3JlYWRsKGYsIGYtPmlvYmFzZSArIEZT
-UElfTUNSMCk7DQo+ID4gKwlmc3BpX3dyaXRlbChmLCByZWcgfCBGU1BJX01DUjBfTURJUywgZi0+
-aW9iYXNlICsgRlNQSV9NQ1IwKTsNCj4gPiArDQo+ID4gIAlueHBfZnNwaV9zZWxlY3Rfcnhfc2Ft
-cGxlX2Nsa19zb3VyY2UoZiwgb3BfaXNfZHRyKTsNCj4gPiAgCXJhdGUgPSBtaW4oZi0+bWF4X3Jh
-dGUsIG9wLT5tYXhfZnJlcSk7DQo+ID4NCj4gWyAuLi4gXQ0KPiA+IEBAIC05MjgsNiArOTM4LDEw
-IEBAIHN0YXRpYyB2b2lkIG54cF9mc3BpX3NlbGVjdF9tZW0oc3RydWN0IG54cF9mc3BpICpmLA0K
-PiBzdHJ1Y3Qgc3BpX2RldmljZSAqc3BpLA0KPiA+ICAJZWxzZQ0KPiA+ICAJCW54cF9mc3BpX2Rs
-bF9vdmVycmlkZShmKTsNCj4gPg0KPiA+ICsJLyogRXhpdCBzdG9wIG1vZGUgbm93IHRoYXQgTUNS
-MCBhbmQgdGhlIERMTCBoYXZlIGJlZW4gcmVjb25maWd1cmVkLg0KPiAqLw0KPiA+ICsJcmVnID0g
-ZnNwaV9yZWFkbChmLCBmLT5pb2Jhc2UgKyBGU1BJX01DUjApOw0KPiA+ICsJZnNwaV93cml0ZWwo
-ZiwgcmVnICYgfkZTUElfTUNSMF9NRElTLCBmLT5pb2Jhc2UgKyBGU1BJX01DUjApOw0KPiA+ICsN
-Cj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gRG9lcyB0aGlzIGxlYXZlIHRoZSBGbGV4U1BJIG1v
-ZHVsZSBwZXJtYW5lbnRseSBpbiBzdG9wIG1vZGUgaWYgdGhlIGNsb2NrDQo+IGNvbmZpZ3VyYXRp
-b24gZmFpbHMgZWFybGllciBpbiB0aGlzIGZ1bmN0aW9uPw0KPiANCj4gSWYgY2xrX3NldF9yYXRl
-KCkgb3IgbnhwX2ZzcGlfY2xrX3ByZXBfZW5hYmxlKCkgZmFpbHMsIHRoZSBjb2RlIHJldHVybnMg
-ZWFybHkNCj4gd2l0aG91dCBleGVjdXRpbmcgdGhpcyBleGl0IGJsb2NrOg0KPiANCj4gICAgICAg
-ICByZXQgPSBjbGtfc2V0X3JhdGUoZi0+Y2xrLCByYXRlKTsNCj4gICAgICAgICBpZiAocmV0KSB7
-DQo+ICAgICAgICAgICAgICAgICAvKiAuLi4gKi8NCj4gICAgICAgICAgICAgICAgIG54cF9mc3Bp
-X2Nsa19wcmVwX2VuYWJsZShmKTsNCj4gICAgICAgICAgICAgICAgIHJldHVybiByZXQ7DQo+ICAg
-ICAgICAgfQ0KPiANCj4gQmVjYXVzZSB0aGUgZWFybHkgcmV0dXJucyBoYXBwZW4gYmVmb3JlIHRo
-ZSBzdG9wIG1vZGUgaXMgY2xlYXJlZCwgdGhlDQo+IGhhcmR3YXJlIG1vZHVsZSBpcyBsZWZ0IGRp
-c2FibGVkIHNpbmNlIEZTUElfTUNSMF9NRElTIHJlbWFpbnMgc2V0Lg0KPiANCj4gSWYgdGhpcyBl
-cnJvciBvY2N1cnMsIGEgc3Vic2VxdWVudCBTUEkgdHJhbnNmZXIgbWF0Y2hpbmcgdGhlIHByZXZp
-b3VzDQo+IHN1Y2Nlc3NmdWwgc3RhdGUgY291bGQgaGl0IHRoZSBlYXJseS1yZXR1cm4gZmFzdCBw
-YXRoIGF0IHRoZSB0b3Agb2YNCj4gbnhwX2ZzcGlfc2VsZWN0X21lbSgpLCBza2lwIHRoZSBoYXJk
-d2FyZSByZWNvbmZpZ3VyYXRpb24sIGFuZCBhdHRlbXB0IHRvDQo+IGV4ZWN1dGUgYSB0cmFuc2Zl
-ciB3aGlsZSB0aGUgaGFyZHdhcmUgaXMgc3RpbGwgZGlzYWJsZWQuDQoNClJlYXNvbmFibGUsIHdp
-bGwgZml4IGluIG5leHQgdmVyc2lvbi4NCg0KUmVnYXJkcw0KSGFpYm8gQ2hlbg0KPiANCj4gLS0N
-Cj4gU2FzaGlrbyBBSQ0KPiByZXZpZXcgoaQgaHR0cHM6Ly9ldXIwMS5zYWZlbGlua3MucHJvdGVj
-dGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGDQo+ICUyRnNhc2hpa28uZGV2JTJGJTIz
-JTJGcGF0Y2hzZXQlMkYyMDI2MDcyOC1mc3BpLWNsb2NrLXYyLTAtZGJlNzg2YTQNCj4gYTZlYiU0
-MG54cC5jb20lM0ZwYXJ0JTNEMiZkYXRhPTA1JTdDMDIlN0NoYWliby5jaGVuJTQwbnhwLmNvbQ0K
-PiAlN0MyMzg1MDczZTFjZmU0M2YwZDU0ZTA4ZGVlYzk1MTA3MyU3QzY4NmVhMWQzYmMyYjRjNmZh
-OTJjZDk5Yw0KPiA1YzMwMTYzNSU3QzAlN0MwJTdDNjM5MjA4MzIyMTQ5MDk2MTQ5JTdDVW5rbm93
-biU3Q1RXRnBiR1oNCj4gc2IzZDhleUpGYlhCMGVVMWhjR2tpT25SeWRXVXNJbFlpT2lJd0xqQXVN
-REF3TUNJc0lsQWlPaUpYYVc0ek1pSXMNCj4gSWtGT0lqb2lUV0ZwYkNJc0lsZFVJam95ZlElM0Ql
-M0QlN0MwJTdDJTdDJTdDJnNkYXRhPXkxbnRGWVdOTmoNCj4gd2N2S2RIYUp1SVNkclpZNWExcWpt
-MFgyaVFLYiUyQmVmSnclM0QmcmVzZXJ2ZWQ9MA0KDQo=
+The findings will be covered in a separate series.
+
+On 7/29/26 12:16, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Missing bounds validation on user-provided keys leads to Slab Out-of-Bounds Reads.
+> - [High] Unvalidated token length from hardware reply causes Heap Buffer Overflow and Out-of-Bounds Read.
+> --
+> 
+> --- Patch [2]: [PATCH v1 2/2] s390/zcrypt: Validate length for CCA ECC private key requests ---
+> commit dd9e9a635152d7bae8edba05dc9b9aad02d9a1e9
+> Author: Holger Dengler <dengler@linux.ibm.com>
+> 
+> s390/zcrypt: Validate length for CCA ECC private key requests
+> 
+> This patch adds a length validation check for CCA ECC private key requests in
+> cca_ecc2protkey(). It ensures the key token length does not exceed the
+> available space in the parameter block before proceeding with CPRB memory
+> allocation.
+> 
+>> diff --git a/drivers/s390/crypto/zcrypt_ccamisc.c b/drivers/s390/crypto/zcrypt_ccamisc.c
+>> index db6a4211a97e0..322677a8d3200 100644
+>> --- a/drivers/s390/crypto/zcrypt_ccamisc.c
+>> +++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+>> @@ -1428,6 +1428,9 @@ int cca_ecc2protkey(u16 cardnr, u16 domain, const u8 *key,
+>>  	} __packed * prepparm;
+>>  	int keylen = ((struct eccprivkeytoken *)key)->len;
+>>  
+>> +	if (keylen > PARMBSIZE - sizeof(struct aureqparm))
+>> +		return -EINVAL;
+>> +
+>>  	/* get already prepared memory for 2 cprbs with param block each */
+>>  	rc = alloc_and_prep_cprbmem(PARMBSIZE, &mem,
+>>  				    &preqcblk, &prepcblk, xflags);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but since we are adding length validations in 
+> this subsystem, is it possible for unprivileged users to trigger slab 
+> out-of-bounds reads in other functions like cca_apqns4key(), 
+> cca_verifykey(), and cca_key2protkey() in drivers/s390/crypto/pkey_cca.c?
+> 
+> If a user triggers an ioctl like PKEY_APQNS4K with an 8-byte buffer and sets 
+> keylen=8, _copy_key_from_user() will allocate exactly 8 bytes. The code only 
+> verifies that keylen is at least 8 bytes, but then casts the buffer to 
+> larger structures.
+> 
+> In drivers/s390/crypto/pkey_cca.c:cca_apqns4key():
+> 
+>     if (flags & PKEY_FLAGS_MATCH_CUR_MKVP)
+>         ptr_cur_mkvp = t->mkvp;
+> 
+> Could this access t->mkvp well beyond the 8-byte allocation?
+> 
+> Similarly, in drivers/s390/crypto/pkey_cca.c:cca_key2protkey():
+> 
+>     if (cca_check_secaescipherkey(pkey_dbf_info,
+>                   3, key, 0, 1))
+> 
+> Does this pass the key buffer to a function that reads up to 60 bytes, 
+> without verifying the key is actually large enough (since checking against 
+> hdr->len could be bypassed if the user sets hdr->len = 8)?
+> 
+> And in drivers/s390/crypto/pkey_cca.c:cca_verifykey():
+> 
+>     *keybitsize = t->bitsize;
+> 
+> Does this access t->bitsize at offset 56 directly after only verifying the 
+> 8-byte header?
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but I noticed there might be another spot 
+> in zcrypt_ccamisc.c where we trust token lengths without sufficient bounds 
+> checking. 
+> 
+> If a malfunctioning or compromised APQN crypto device returns a CPRB hardware 
+> reply with a large t->len value, could this lead to an out-of-bounds read or 
+> heap buffer overflow?
+> 
+> In drivers/s390/crypto/zcrypt_ccamisc.c:_ip_cprb_helper():
+> 
+>     memcpy(key_token, t, t->len);
+> 
+> Does this trust the t->len value from the hardware response blindly, 
+> potentially causing an unbounded write to the destination buffer?
+> 
+> Also, in drivers/s390/crypto/zcrypt_ccamisc.c:cca_gencipherkey():
+> 
+>     if (*keybufsize >= t->len)
+>         memcpy(keybuf, t, t->len);
+> 
+> Since *keybufsize is user-controlled (up to 8192) but the CPRB parameter 
+> block backing t is strictly allocated to PARMBSIZE (512 bytes), could an 
+> oversized t->len bypass this check? Would this cause memcpy() to read 
+> beyond the 512-byte allocation and leak kernel memory back to userspace?
+> 
+
+-- 
+Mit freundlichen Grüßen / Kind regards
+Holger Dengler
+
