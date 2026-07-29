@@ -1,136 +1,138 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB53C7DE1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 09:28:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F5C2DF126;
+	Wed, 29 Jul 2026 09:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785317324; cv=none; b=FBxTNmwE8eAK6QiZ5qwYxnVBfVO0kXa7ZGCX/uIdkcDc6kC/UNTQiGeE1ge4fV5FUktLjhTr1lWWZoLNb88XRp1P1VPOAz3N2lErDvrmERB0fY/JazimwirSERLXZhfufCgcuhlHGdjDjrh8RCQRv8nu+D7+89jgDfxthGYv/bo=
+	t=1785317818; cv=none; b=sscPwsBeIYllvEr2eyiFtPbyoVYGVwdE68xOLKSi12iD/1irfSwSYZtmnE87fbQf5glVLN/omL/NfmiOojG6G0yLuNu1fFK5qs2UIWEXT0KWsJ4gLSOeA6uMRpNZF8GGmY5DxVPR+evp/EYg+rlmzulCKYxIOzZ8Xl49cNQd+Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785317324; c=relaxed/simple;
-	bh=D0AwLkB+ib5XChJALQ4tU8f6c9S6XTW4YEt9TV5JdTc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vDIp+lN6UCxk1BX2vLWo83uTwHsIxljAzuEfdFtQ0929Y9YA83WkOXZRngsEM1u8GbmGHWLWeFWHWnnYHJCBuLFFooA+2ww+V/mq0ktdMqdiAZkNSEm3s3NuWAqQVsuotVJvW1z/IDec/9MD+p/xW95yL+1M8XKnLpF7rXxtvOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=IKLLuiqd; arc=none smtp.client-ip=91.218.175.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1785317818; c=relaxed/simple;
+	bh=z57oH0Cq5ytPel7s/Wplhq9hNm3CFrE/JDFEjRyzREE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u569flTf5CQU2OmQjGik5+4RfbSmJkdHLcZiZIRXqxkg1PaVg/f5EscgZEBJ2mH2lxdq2R3GGpY2sml5E0llX1Lpyjc4niR7qQ+b9orheUF8h5a4q4isyF32+0k8g0UV6I5bHJX3ChKSuWh3KPOSyHidpYDFfrnccBil9OmgcgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=c+DCOdb7; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="IKLLuiqd"
-X-Gm-Message-State: AOJu0YxnsLRjd5FE9f6eb/SNbtfguqW8zczvVuThxi2bCDOK5JVik0Rr
-	dSMH/x8YMrDwxu0dZKLpBnCVn7yag76JDad+s4+TAOYzEBPd5ZwKr2WIubFFFcegMsZcCWKd6b3
-	2HTuune+FCn1R1UGlBUQLQ7XLbtRtnN9lrDggRWIO
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785317320;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zFsPMEXZU81BZFPzI7zqvW1XcTW3Du/Pb7Xb48Wyri8=;
-	b=IKLLuiqdcnNEKbdvG8PEchFv5QS0/KKOm80OU3Hyf98y3RcFZ0mIWVMu2rqSdxVCMFg2oU
-	yMTwUYu/ATP7jP1zmIFPiQMUJT4hWMAJqo3T2Wzogb2WJpyoCR9tDbsFnlCNZDpXKjk6Lb
-	GHfEaTMIaG0VCEAVQqhI4FBfJAv4qZY=
-X-Received: by 2002:a05:622a:514a:b0:51c:935d:8d74 with SMTP id
- d75a77b69052e-52b2cc85692mr5455941cf.9.1785317310847; Wed, 29 Jul 2026
- 02:28:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="c+DCOdb7"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=FLs1G4iS1Ks3TbB/7uB4YNhqsER4mXB13kHE1/rgnOA=; b=c+DCOdb7OvX9sEyBxqr6mI/v6N
+	mHPGLZnQRpKw0k1ZT8iSycAzjkamuT4y0OsVnHEsU2Gvlo6ldPQzwpvwiY8uXcQIXz2jTytFvHoZd
+	8oSpairzAzcbU4yr5f0VWlQ0eZn+PYjoq5PAxoNewKGNmAoI/WJRPljdds73/eYwzb6t+6Qoje46P
+	r7oIZmv64yJqsI/XDHIHUBKCmHsWBLqvC1hU2s8aEu9+VhbSmuop4p0TDPFU9qPaQrvRZS1fU2ynb
+	7dJle0KB8aheRvETEhKe3tbIj4WR8a+zuD1CG2NxpKUeXwNZpmd25HV5RccIyaDJprJp+Qntr9uUF
+	cUfma6qw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wp0ib-00000002Jkq-1lu9;
+	Wed, 29 Jul 2026 11:36:53 +0200
+Date: Wed, 29 Jul 2026 11:36:48 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: sashiko-reviews@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Shuwei Wu <shuwei.wu@mailbox.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH 1/3] riscv: dts: spacemit: Add cpu scaling for Milk-V
+ Jupiter
+Message-ID: <amnJsOiWSfuBR1ps@aurel32.net>
+Mail-Followup-To: sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Shuwei Wu <shuwei.wu@mailbox.org>,
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+References: <20260728211020.1248676-1-aurelien@aurel32.net>
+ <20260728211020.1248676-2-aurelien@aurel32.net>
+ <20260728211959.4174F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260722202702.4165917-1-congkai@amazon.com> <20260722202702.4165917-2-congkai@amazon.com>
- <20260722204759.1582A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260722204759.1582A1F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Wed, 29 Jul 2026 10:27:53 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTzeVnqvgZ_Am+6huiZ+8MwJqQyCOxbJxf2xkxeJvAz6fQ@mail.gmail.com>
-X-Gm-Features: AUfX_myVRObTEUj-itgLtxZQ6z_edRtdlBLQt5Xi5VdUYIKOMZceBmhDdSH-fSM
-Message-ID: <CA+EHjTzeVnqvgZ_Am+6huiZ+8MwJqQyCOxbJxf2xkxeJvAz6fQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] KVM: arm64: Expose PMMIR_EL1.SLOTS under strict
- PMUv3 UAPI
-To: sashiko-reviews@lists.linux.dev
-Cc: Congkai Tan <congkai@amazon.com>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>, kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260728211959.4174F1F000E9@smtp.kernel.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Wed, 22 Jul 2026 at 21:50, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The implementation of `KVM_ARM_VCPU_PMU_V3_STRICT` introduces tw=
-o logic errors that completely break the new feature and its API contract:
-> 1. `KVM_VCPU_MAX_FEATURES` was not increased from 9 to 10 to accommodate =
-the new flag (which is defined as 9). As a result, `KVM_VCPU_VALID_FEATURES=
-` excludes bit 9, causing `kvm_vcpu_init_check_features()` to unconditional=
-ly reject `KVM_ARM_VCPU_INIT` ioctls with `-ENOENT` when this feature is re=
-quested.
-> 2. Even if the feature validation were fixed, the code fails to enforce t=
-he documented 'No default PMU creation' behavior. `kvm_setup_vcpu()` uncond=
-itionally calls `kvm_arm_set_default_pmu()` if `kvm_vcpu_has_pmu()` is true=
-, without checking if the strict flag is set. Thus, KVM will always assign =
-a default PMU on initialization, defeating the stated purpose of the flag.
+Hi,
 
-Both are done in patch 4: it bumps KVM_VCPU_MAX_FEATURES to 10 and
-adds the !kvm_vcpu_has_pmuv3_strict() check in kvm_setup_vcpu(). Until
-then the flag stays unsettable by design (INIT rejects bit 9 with
--ENOENT), so patches 1-3 are inert and there is no half-enabled state.
-
-/fuad
-
+On 2026-07-28 21:19, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] This problem wasn't introduced by this patch, but wiring it up to cpufreq makes it a serious hardware safety risk: the CPU supply regulator (`buck1_0v9`) has an overly permissive maximum voltage constraint of 3.45V, which could physically damage the CPU.
 > --
->
-> --- Patch [1]: [PATCH v3 1/4] KVM: arm64: Expose PMMIR_EL1.SLOTS under st=
-rict PMUv3 UAPI ---
-> commit 5883b44965f93aed147ca4ed5fb390ae481daa37
-> Author: Congkai Tan <congkai@amazon.com>
->
-> KVM: arm64: Expose PMMIR_EL1.SLOTS under strict PMUv3 UAPI
->
-> This commit introduces a new VCPU feature flag KVM_ARM_VCPU_PMU_V3_STRICT
-> to prevent KVM from automatically creating a default PMU, and exposes
-> the PMMIR_EL1.SLOTS value to the guest when a PMU is explicitly selected.
->
-> > diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uap=
-i/asm/kvm.h
-> > index 1c13bfa2d38aa..019e5e3d892e6 100644
-> > --- a/arch/arm64/include/uapi/asm/kvm.h
-> > +++ b/arch/arm64/include/uapi/asm/kvm.h
-> > @@ -106,6 +106,7 @@ struct kvm_regs {
-> >  #define KVM_ARM_VCPU_PTRAUTH_GENERIC 6 /* VCPU uses generic authentica=
-tion */
-> >  #define KVM_ARM_VCPU_HAS_EL2         7 /* Support nested virtualizatio=
-n */
-> >  #define KVM_ARM_VCPU_HAS_EL2_E2H0    8 /* Limit NV support to E2H RES0=
- */
-> > +#define KVM_ARM_VCPU_PMU_V3_STRICT   9 /* No default PMU creation */
->
+> 
+> --- Patch [1]: [PATCH 1/3] riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter ---
+> commit 4e25fb96470d1ad37415e03a27de699ef1f0da26
+> Author: Aurelien Jarno <aurelien@aurel32.net>
+> 
+> riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
+> 
+> This commit enables CPU DVFS on the Milk-V Jupiter board by including the OPP
+> tables and wiring the CPU nodes to the CPU regulator supply.
+> 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> > index b61f5995ec771..3c16d0c20050e 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> [ ... ]
+> > @@ -107,6 +108,38 @@ &combo_phy {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&cpu_0 {
+> > +	cpu-supply = <&buck1_0v9>;
+> > +};
+> [ ... ]
+> > @@ -209,7 +242,7 @@ pmic@41 {
+> >  		dldoin2-supply = <&buck5>;
+> >  
+> >  		regulators {
+> > -			buck1 {
+> > +			buck1_0v9: buck1 {
+> >  				regulator-min-microvolt = <500000>;
+> >  				regulator-max-microvolt = <3450000>;
+> 
 > [Severity: High]
-> Does KVM_VCPU_MAX_FEATURES need to be updated to 10 to support this new f=
-lag?
->
-> Currently, KVM_VCPU_MAX_FEATURES in arch/arm64/include/asm/kvm_host.h is =
-9,
-> so KVM_VCPU_VALID_FEATURES (BIT(KVM_VCPU_MAX_FEATURES) - 1) only covers b=
-its
-> 0 through 8. When userspace attempts to use this new flag (bit 9),
-> kvm_vcpu_init_check_features() will reject it with -ENOENT.
->
-> Additionally, does this patch actually prevent default PMU creation?
->
-> Looking at kvm_setup_vcpu() in arch/arm64/kvm/arm.c:
->
->         if (kvm_vcpu_has_pmu(vcpu) && !kvm->arch.arm_pmu)
->                 ret =3D kvm_arm_set_default_pmu(kvm);
->
-> It appears that kvm_arm_set_default_pmu() will still be called on
-> initialization even if the strict flag is set, since there is no check fo=
-r
-> kvm_vcpu_has_pmuv3_strict(vcpu) here.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260722202702.41=
-65917-1-congkai@amazon.com?part=3D1
->
+> This is a pre-existing issue, but by wiring up the CPU supply for cpufreq in 
+> this patch, does it introduce a severe hardware safety risk?
+> 
+> The buck1_0v9 regulator retains a very permissive maximum voltage constraint 
+> of 3.45V. Because the safe physical limit for the CPU is 1.05V (as defined in 
+> k1-opp.dtsi), could this permanently damage the hardware if a kernel bug, opp 
+> misconfiguration, or privileged userspace requests a higher voltage up to the 
+> board-defined maximum?
+> 
+> Should the board-level constraint be clamped to the safe physical limits of 
+> the CPU (e.g., 1050000 microvolts) to prevent the regulator from supplying a 
+> destructive voltage?
+
+This looks like a valid point. Yixun, I believe the commit a5d7000e1a17 
+("riscv: dts: spacemit: Add cpu scaling for K1 SoC") should be drop from 
+your tree until this is fixed, or at least it should not be pushed to 
+v7.3 if the regulator issue is not fixed.
+
+I'll try to submit a patchset fixing that.
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
