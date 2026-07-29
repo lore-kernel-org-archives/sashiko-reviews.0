@@ -1,124 +1,214 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C5328CF5D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DA943E492
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 08:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785312810; cv=none; b=JwF/G1sn5/HXzAyK4kxMuqqJAAeQ1+V9jaXd6IuhWQCzJPbgYr0/MFct5UTanFfwjb8uaD4zr1Ihq8OFASsK6xed144zyFrYABHkETls8wRk05zh+Y9JA0LFvJGA6h83bbYxxgm9MbjMX0ZOEJsMCz0iovtgrhLOl0DG1RYTdNo=
+	t=1785314092; cv=none; b=JAN8+SnvyfvSGKlwWuk/zmJfs3Wzj3gizYWnXHUIZVovWKEkfGmrOWRTjdX5hhzUGPuoMvWZg8d1glBf9L+YodYdiD7iFt78UOomQCuFeIPlgnj0xgNBBFd8OgZWmMm6Ml8sJXwQzILTNG/8HumXlU6kLB54bT/0SnNRS7vJEH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785312810; c=relaxed/simple;
-	bh=OQDgoww7LY7VnpDoMZITZxxb4cm7CiRcV/xROjSIX5I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EUpkKnxkPLRmW10HVIoPHXB3spmWrxruXMN73RLFwmeTAnTL+bDlPkoTJ+DVfb9LuXhHCtrROh0u0hXuaNoRUb3WBshzPGfmCqZpaCR5b79zXLC/iZC2qkXN343osFsz2LF5+Q7qyhzOktjfoFxxgKc047gUAJUZTD1N8c2awRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=mZVEhmJF; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1785314092; c=relaxed/simple;
+	bh=VBWe4z6lpdhgWWhgi9ZL4hf+LSw7oDXHex0pW15bWNM=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UTdpANrxSFvnhGgbzRWmQi0AWcig4YfBY0ltL/nyPsbuCyhHV5HSK1jGxv6AgA8itLf+gA5+65/ikTXQwcEmcATWi0kmzZvnkOiMzYl5OOjZWN6lqthe2nMx5DxOln8ACrPMw1YfUM0KDyPN1mH45gVNbXTDHsaOrqpAuv0rUQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gmYunmGf; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="mZVEhmJF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
-	Subject:Cc:To:From:Date:From:Reply-To;
-	bh=ehifnGP1xxe4G+Ord5mtlFwP15sja0qQDZhYLeGG87U=; b=mZVEhmJF94IDP1TWOGdm0aO/hR
-	aQm+X+jfZ6PNnxLhfMi+KaUnVeUL8OJY1O6oCZf9at9Y6CQwJ1H38vBlOqW93G7G0U5zcqZOPqHEu
-	Rqx3Rm/Ydv37kuD8ijNJDNyt9h/IRI5lVrnQCYZNlJ3P13W7kwRjJg8/9BqkB+j7pnqevUvtwfwjh
-	YBsF/Mtcq3SatqPqmbavAVGnGsX/UH5qI5PgPumAYFmlmSpKJsThz3r2z2orLd0Hm+hyXdS+A5uPD
-	Ac0xkyOz3QGnFrE76gY7cdewmvbOiBKI7rfFdD8u62NCX9oFu0RDknp2csSZiyW12CwlfXSqceL1o
-	+c/8WhJQ==;
-Received: from 179-125-64-236-dinamico.pombonet.net.br ([179.125.64.236] helo=quatroqueijos.cascardo.eti.br)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wozPk-007OrN-VR; Wed, 29 Jul 2026 10:13:21 +0200
-Date: Wed, 29 Jul 2026 05:13:17 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gmYunmGf"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ce98cb8165so7136615ad.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 01:34:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785314082; x=1785918882; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=y8VVG7c5rynDfSnOxDa5w1W+bUds2tSk8XMQSsCkTs4=;
+        b=gmYunmGfthxJ+xY7MM7gn1KmqGxCdTeJQ3H0icBCtUVLwFncoJj0tQZyjCIdxwAID6
+         XQrmihHTn2a2wJ0wqpjHvuzNIyoaMcbFAFN7BpxNZ7bDaIISKlAURBEvIXE6Zkkh1/UC
+         Z2HUAGPOf88c+6gqpc+LXLsgSU5G5IESGeD+tz74M8tpF4aJ3wGSLXZ40o3BcesQXh11
+         sUr9Q/UCERcIqDLi4aL5aKYDM4POES0EfAnQrLHzbXcyXtowuBBXAZn/tylLVugqNqmf
+         vwrosydmgMsVO5oOsCSoJodQHIsn7JRC8QjT9bnJWpKF7T/0DNUBK5bMCUTYuIwq+cTk
+         aiHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785314082; x=1785918882;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=y8VVG7c5rynDfSnOxDa5w1W+bUds2tSk8XMQSsCkTs4=;
+        b=ryvIIrIsgsWXKZPy5lF4kjI+HuJM71adZCRpZGCEZkVNu3hHF5zvUFBXRUBtvFe26F
+         VeogpgLYEK6FBCUvHwo44hBt5Wl/uabJin1R7cHQJwPA2jeAQUnYfw9un/f7LXWmkvjC
+         YpMIoqR2qcH4pag65EjAySB0KsNHRwKv2potZGbf1DOFmBwt/D+HjLZ/tbGy16kwSiwk
+         SZnoKBpw/rDwVuA5Ecsbban3rzz5wJpfCaMB+T2dXvyt+e+t7urGzY4o+8ll6VWahlxt
+         spFgQ/64W7qxZviroaloyL/Poij0SZiDyAw213EDPB6sQGv2tzKK1Hr86oLK4RPE+ALX
+         w3WQ==
+X-Gm-Message-State: AOJu0Yy4ahKAnnkZU7/tTp3sUz+622IAtq0BF45l7r1L0nCLCp5sGIgf
+	5uXZzM9zODFkmLrcHrPJIHXTt3/IZsPjpkORWR+56z8UGBs2joH2E1gOWxQjcQ==
+X-Gm-Gg: AR+sD13ySJFlckJyXhpDXxKsuqFiv1J3dgfH+UakOGZg/vQ4Juhtg6BhF+pBSe0uNw8
+	OpJApXjDcQfW+wuJb5PoX0t3JnvHfWUW8MTr4do8WUdQIMRsqIYvdlyth4umdrMyyuU41/tm+WA
+	tIVd365mTQNxFcP+bQQbcaRa/gPm7f5lP0W/L2q48kG40wHY/eweX3FSCLNx1KPl8ESvq9t1rWm
+	23E5OnIxKDkpAdHZPdp24vSH71i1OWUQsIdcrgB6/ci/vAueEuJ1Xc5UygKBFwW8IxtNwzqvgTp
+	UKglj6FtDtzMjdLzz3/KYMNN0ERDmbVBN3sHAXOgDbWTBy8EQOqxUPuFAVw91CrVnM41A6Ed3h/
+	qtUChLoGG8939zirs6nULk64ke4aZcExrr/0em6uO4emDMiK4yJXjJICyM+zoJKf3TZRY+fTaSO
+	p2qQLXaJ6QqgnOZDo7E6zsDC2bWMIw6QEwzVrowz60G1hm1tUaIC/MyS72Srwo70y+HtSTje+j8
+	jNWwqulaUndD/KlEGjtplq0BOckRgMlIA7r+ixW/JpT
+X-Received: by 2002:a17:903:2c04:b0:2ca:12aa:a390 with SMTP id d9443c01a7336-2d02625525dmr14066595ad.0.1785314081788;
+        Wed, 29 Jul 2026 01:34:41 -0700 (PDT)
+Received: from AnisaLaptop.localdomain (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022bf888csm7779935ad.64.2026.07.29.01.34.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2026 01:34:41 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 29 Jul 2026 01:34:40 -0700
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/atomic: remove bogus check for file_priv
-Message-ID: <amm2HXpT4Hnqth3A@quatroqueijos.cascardo.eti.br>
-References: <20260729-drm_atomic_bogus_check-v1-1-a4d5bd4ae4c8@igalia.com>
- <20260729080458.496221F000E9@smtp.kernel.org>
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v11 16/31] cxl/extent: Validate DC extent partition
+Message-ID: <amm7IJgMdlMpb7dd@AnisaLaptop.localdomain>
+References: <20260625112638.550691-1-anisa.su@samsung.com>
+ <20260625112638.550691-17-anisa.su@samsung.com>
+ <20260625182052.07E301F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729080458.496221F000E9@smtp.kernel.org>
+In-Reply-To: <20260625182052.07E301F000E9@smtp.kernel.org>
 
-On Wed, Jul 29, 2026 at 08:04:57AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Thu, Jun 25, 2026 at 06:20:51PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Memory leak of `struct drm_pending_vblank_event` in `prepare_signaling()` error paths when `OUT_FENCE_PTR` is requested without `DRM_MODE_PAGE_FLIP_EVENT`.
+> - [High] Entirely duplicate tag groups are rejected and dropped instead of replying success to the device.
+True but benign. And also unlikely. Even if an entirely duplicate tag
+group is ommitted from the DC add response, since the capacity was
+previously added, it's still provisioned to the host until a release
+event.
+
+> - [High] Concurrent access to `group->nr_extents` without locks causes a memory leak and pins the DAX region device indefinitely.
+False Positive.
+
 > --
 > 
-> --- Patch [1]: [PATCH] drm/atomic: remove bogus check for file_priv ---
-> commit 005f3f9bbee21ecd8f3b8b2687c9b0a8040286cc
-> Author: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+> commit b3bfb6df5d2f0f0f9e2b022064279f74742afa2e
+> Author: Ira Weiny <iweiny@kernel.org>
 > 
-> drm/atomic: remove bogus check for file_priv
+> cxl/extent: Validate DC extent partition
+>     
+> Extend cxl_validate_extent() — the per-extent check of the add pipeline
+> to check partition membership. Resolves an extent's DPA to its containing
+> DC partition. Sharability is a property of the partition (part->shareable),
+> taken from its CDAT DSMAS entry.
 > 
-> This commit removes a file_priv check in prepare_signaling(), since
-> drm_mode_atomic_ioctl() guarantees it is never NULL. Skipping the block
-> here would cause a memory leak of drm_pending_vblank_event.
+> > diff --git a/drivers/cxl/core/extent.c b/drivers/cxl/core/extent.c
+> > index 6e67e787d14de..2e770c5279c23 100644
+> > --- a/drivers/cxl/core/extent.c
+> > +++ b/drivers/cxl/core/extent.c
 > 
-> > diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-> > --- a/drivers/gpu/drm/drm_atomic_uapi.c
-> > +++ b/drivers/gpu/drm/drm_atomic_uapi.c
-> > @@ -1445,9 +1445,6 @@ static int prepare_signaling(struct drm_device *dev,
-> >  		if (arg->flags & DRM_MODE_PAGE_FLIP_EVENT) {
-> >  			struct drm_pending_vblank_event *e = crtc_state->event;
+> [ ... ]
+> 
+> > @@ -101,6 +159,27 @@ static int cxl_validate_extent(struct cxl_memdev_state *mds,
+> >  		.end = start_dpa + le64_to_cpu(extent->length) - 1,
+> >  	};
+> >  	struct range ed_range;
+> > +	uuid_t uuid;
+> > +
+> > +	import_uuid(&uuid, extent->uuid);
+> > +
+> > +	part = cxl_extent_dc_partition(mds, extent, &ext_range);
+> > +	if (!part)
+> > +		return -ENXIO;
+> > +
+> > +	if (part->shareable) {
+> > +		if (uuid_is_null(&uuid)) {
+> > +			dev_err_ratelimited(dev,
+> > +				"DC extent DPA %pra: sharable-partition extent has null tag (firmware bug)\n",
+> > +				&ext_range);
+> > +			return -ENXIO;
+> > +		}
+> > +	} else if (le16_to_cpu(extent->shared_extn_seq)) {
+> > +		dev_err_ratelimited(dev,
+> > +			"DC extent DPA %pra (%pU): non-sharable partition but shared_extn_seq=%u (firmware bug)\n",
+> > +			&ext_range, &uuid, le16_to_cpu(extent->shared_extn_seq));
+> > +		return -ENXIO;
+> > +	}
 > >  
-> > -			if (!file_priv)
-> > -				continue;
-> > -
-> >  			ret = drm_event_reserve_init(dev, file_priv, &e->base,
-> >  						     &e->event.base);
-> >  			if (ret) {
+> >  	cxlr = cxl_dpa_to_region(cxlmd, start_dpa, &cxled);
+> >  	if (!cxlr || !cxlr->cxlr_dax)
 > 
 > [Severity: High]
-> This is a pre-existing issue, but can this function leak the
-> drm_pending_vblank_event if an OUT_FENCE_PTR is requested without a
-> DRM_MODE_PAGE_FLIP_EVENT?
+> This is a pre-existing issue, but I noticed a potential race condition in
+> drivers/cxl/core/extent.c:dc_extent_release() that might lead to a leak:
 > 
-> If a user submits an atomic commit that requests an out-fence but does not
-> request a page flip event, prepare_signaling() allocates an event:
+> 	group->nr_extents--;
+> 	if (!group->nr_extents)
+> 		free_tag_group(group);
 > 
->     if (arg->flags & DRM_MODE_PAGE_FLIP_EVENT || fence_ptr) {
->         ...
->         e = create_vblank_event(crtc, arg->user_data);
->         ...
->         crtc_state->event = e;
->     }
+> Could concurrent access to group->nr_extents without locks cause a lost
+> decrement?
 > 
-> If the subsequent setup_out_fence() fails (e.g. from FD exhaustion), the
-> function returns an error before setting event->base.fence:
+A tag group's extents are never concurrently torn down.
+
+> When userspace closes sysfs files for multiple extents of the same tag group
+> concurrently, their kobject refcounts can drop to 0 simultaneously, causing
+> dc_extent_release() to run on multiple CPUs in parallel.
+>
+??? An open sysfs fd does not pin the device's kobject, and closing it
+does not trigger the device's release. sysfs files are backed by kernfs,
+and kernfs uses active references that are taken only for the duration
+of an individual read/write, then dropped — not held across an idle open
+fd. The device's own kref comes from device_add() and is dropped by
+device_del()/put_device() in the driver-core teardown path, not by
+userspace opening or closing sysfs files.
+
+
+> If group->nr_extents never reaches 0, does this permanently pin the DAX
+> region device (since the reference isn't dropped) and leak the
+> cxl_dc_tag_group structure?
 > 
->     ret = setup_out_fence(&f[(*num_fences)++], fence);
->     if (ret) {
->         dma_fence_put(fence);
->         return ret;
->     }
->     
->     crtc_state->event->base.fence = fence;
+
+Well that never happens because there is no lost decrement race.
+
+> [Severity: High]
+> This isn't a bug introduced by this patch, but I have a question about how
+> duplicate tag groups are handled between drivers/cxl/core/extent.c and
+> drivers/cxl/core/mbox.c.
 > 
-> In the cleanup path, complete_signaling() relies on event->base.fence or
-> event->base.file_priv being set to free the event:
+> In drivers/cxl/core/extent.c:cxl_add_extent(), duplicate extents return 0
+> without allocating or assigning mds->add_ctx.group:
 > 
->     if (event && (event->base.fence || event->base.file_priv)) {
->         drm_event_cancel_free(dev, &event->base);
->         crtc_state->event = NULL;
->     }
+> 	case CXL_EXT_DUPLICATE:
+> 		/*
+> 		 * Idempotent accept simplifies the dax-side scan for existing
+> 		 * extents on region creation; reply success without duplicating.
+> 		 */
+> 		dev_warn_ratelimited(&cxled->cxld.dev,
+> 				     "Extent %pra exists; accept again\n",
+> 				     &ext_range);
+> 		return 0;
 > 
-> Since both fields are NULL, does the event get permanently leaked on this
-> error path?
+> If all extents in a group are duplicates, cxl_realize_group() in
+> drivers/cxl/core/mbox.c finishes its loop with group_cnt > 0 but
+> mds->add_ctx.group remains NULL. It then returns -ENXIO:
 > 
+> 	tag_group = mds->add_ctx.group;
+> 	mds->add_ctx.group = NULL;
+> 	if (!tag_group)
+> 		return -ENXIO;
+> 
+> Since this causes the caller cxl_add_pending() to treat the group as an error
+> and drop the extents instead of adding them to the accepted list, does this
+> leave the device hanging without an ADD_DC_RESPONSE if it resends an
+> unacknowledged extent group?
+> 
+No. cxl_add_pending() always sends a response, even if it's empty. We
+simply omit fully duplicate extents from the response.
+
 > -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260729-drm_atomic_bogus_check-v1-1-a4d5bd4ae4c8@igalia.com?part=1
-
-Fixed by https://lore.kernel.org/all/20260729-drm_pending_vblank_event_leak-v2-1-a5074aae07df@igalia.com/.
-
-Cascardo.
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260625112638.550691-1-anisa.su@samsung.com?part=16
