@@ -1,132 +1,219 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6270935292A;
-	Wed, 29 Jul 2026 09:41:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A663411F82;
+	Wed, 29 Jul 2026 09:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785318067; cv=none; b=XH75zVuMuU/WHKZrvD+HTax8Q9MlGMClc5BO428ISMl6b84wXn6FM8FW9HuTwRALviPWJllS5YyBF4YVUCKQVpAuTHwcVExbXAt5627yvYv+MkQ0DRBbwDw0SfnfZi0Tspu+AF+R2yi0Bvj9KoCLzdpD3SPskZxFZ4dqBUt5eWI=
+	t=1785318760; cv=none; b=djUC3gZiVH0C8vUX0FiAokUwNGW6QzdwV+F1L8io4E/X/qnZDpOSirNXlL13yXMcEB1kDJ+++0CdR0oNfOtNXRsldCAjKAgY+aXyxih6LB8U8lZI0Mo+pVsPC30YZ8cLOaaIDauyiyGodX8Lp59twrFgO8ULAe+Cv9u1mqm4QAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785318067; c=relaxed/simple;
-	bh=28PEkWt4RMljGHu1GrTk/miZPLjirv1MgiZ6RPcVhHo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WbiLzIMkjtVqZIDHsEtyc9t2DvIQGMz4rq721yJLTJoG+rPETU4HxiroI9PzHT2VfJ0Ig6gPF4RUaexBxXgPj5jrBU89VQ/FoIeffSVNvgMyXDWb32HJk6PhYSuwJ+YyVH/XRnVInRBrX2zWlSNPgN6G+K41e2MrPowjNjbCkq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=j7BY7TdB; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1785318760; c=relaxed/simple;
+	bh=Bob2JxnygWzwQ89bYs/Dmnyge5v1EzKKBhSvsq/g8CI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lpO7n4p8tl0mU67WsQArfEZHdy/NuuZtHHLPNUhCQzmL8GedzjrC23EUjRGljX/NZ0lMRBnlqhr70VmNN97JUO6xkyPpPBvGyPpa9V6CH1Q/lplLSIE61hTiTDU5aUU0pga4gTLq29uEdWghd4WJTSTckrI1xCxG3bYpG7JTCRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=nc673izy; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="j7BY7TdB"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=hL/qldDJTl+VvmHT8jGl8j0M57hUFNJ7M6uiPTcU7cI=; b=j7BY7TdBVyhXWeD6//D97vLAOu
-	s21Rh2ezwWSJWJAuigc0nhKOuAJz9+i9C9qJnXP+Yq2kR22nZCBOmfDZC4fc7r3lOxaRb9L8TZWAj
-	oPp8LuD/zeGPwNnqVQoqZKmIzKCY9b0+k4uVikJo4bN5n5ALMAUO8bVfZDoaOJr6lZczBG+BAEIZ7
-	exTqGMCU4PRwJIQ1bqqA01ub7fk6Q2M8N4ZdThurNARpM/7WKOpCsJb3yTFxJumhfI9HpD2x8Pk8p
-	yqZJcz27MqRxrOmz7OVUCuvnqf41jjlQy7MS/HPVEJ9JMLY1fcItb5P4clMcQ/3sbn8XE1aQpcOCA
-	flBBtR9A==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1wp0mc-00000002K2v-2Hr1;
-	Wed, 29 Jul 2026 11:41:02 +0200
-Date: Wed, 29 Jul 2026 11:40:57 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: sashiko-reviews@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 3/3] riscv: dts: spacemit: Add Milk-V Jupiter board (M1)
-Message-ID: <amnKqQ1POSlVQnxb@aurel32.net>
-Mail-Followup-To: sashiko-reviews@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20260728211020.1248676-1-aurelien@aurel32.net>
- <20260728211020.1248676-4-aurelien@aurel32.net>
- <20260728212841.4C3E41F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="nc673izy"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66T7nqPC3637205;
+	Wed, 29 Jul 2026 09:52:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=e38CGn
+	AMEp0658iQGWFoUm8dD8+MyreHW3OPlFjg03I=; b=nc673izypbj/CIefnDVqk9
+	KllbL2N951z6WunWn3X8fUn2tJQtTgYttfG8YoQlE71QXtsyA2o4n655hCoASFgr
+	2ug3vGYrezA7MNlcO6WP+jgPll93ZOZbKUF3BKI3J4oU5rwB9sVFKCjV1t7k+z8R
+	ibbqnmr1fA9ukaPz4SBkgL04c0wcxG2MaF5yT+vEDPkpJvUUGpxGzUfHKeZoVdpX
+	e4af0ejXvi1ZQtHemp+t0ABRFzizB9LVo2cRFo1TqNdLCkW50ihgG7Q59AV5pYCQ
+	J8bIpOhIcwliuJJ61x8DDqRRTo6GRwCbRHhzTs4rU8ASVePllSzIBf34kmfdD9TA
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwd19b8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jul 2026 09:52:37 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66T9fP0E011053;
+	Wed, 29 Jul 2026 09:52:36 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhe1uf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jul 2026 09:52:36 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66T9qZD934013852
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 29 Jul 2026 09:52:35 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A03975804B;
+	Wed, 29 Jul 2026 09:52:35 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 41CCF58065;
+	Wed, 29 Jul 2026 09:52:32 +0000 (GMT)
+Received: from [9.124.223.153] (unknown [9.124.223.153])
+	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 29 Jul 2026 09:52:30 +0000 (GMT)
+Message-ID: <946d6009-dab5-4581-8ad7-baff337f1d15@linux.ibm.com>
+Date: Wed, 29 Jul 2026 15:22:29 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260728212841.4C3E41F000E9@smtp.kernel.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] dibs: fix use-after-free of dmb_node in loopback
+ attach/detach/unregister
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>
+References: <20260727093530.968834-1-hidayath@linux.ibm.com>
+ <20260728093547.8AEA41F01561@smtp.kernel.org>
+Content-Language: en-GB
+From: Hidayathulla Khan I <hidayath@linux.ibm.com>
+In-Reply-To: <20260728093547.8AEA41F01561@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: UGobaOME6i73RTQS7lY0YS5_6R2SztgJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDA4MCBTYWx0ZWRfX67n4gTVVWpuj
+ wFqB64GFQ6ZcXGpMen7JgF5rbs/IOZ4CcNyuEsWts7y92twlh78g2hGM3JtvsHfKPtCtLux/gBx
+ Cuu8tFonkssA7zSH60caoBpG1ZkOdhM=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a69cd65 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=yzPgnIC9g52e3d9k8P0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDA4MCBTYWx0ZWRfXzdQMU/2YGZp8
+ REy2FxWs8u0VSlxz//VykAZu6mTo9ja70LlUTmdIjAZcwaaYUY1RNr2kxGSp5zK+Qwb0Ox9bGv5
+ OzeYrjR0KC9Ri5c5zcRKdScuj2jMmwUmw3/8vSyVJ7DsOf+hgyoK32mPVuCHs5+wIw01MIZ5FR4
+ ZKl4UCaz4goISfyYRtrgKmSr2dkzmB4yZptWuG6KLeWzVKiAsKgoIJvUcuS1KwRsVgnsvUY2OAV
+ rEi9YiKuIdkPPI/8kuFr9B0zsKSpIgBuEXpBKBsD37NidrR/3WSNy/rB+B4y7JKKbimIWvB+1tG
+ 8bjoVYK+jQ0rL+p9BvlS61mFT3kdsnOmjrcn6SEZbHBwdzDwP954Hlf1JVcPpA0TCnbSP/8gAWO
+ T/w/jWoPUVSjlEZQ3d3oUesMcwry+e3SmRq9yVCIrgyNsT/4wOtcTqAdtWZ0Y0Vgmsf0PjCWOM1
+ lyk4KJLAs9TZC9iVRoA==
+X-Proofpoint-GUID: UGobaOME6i73RTQS7lY0YS5_6R2SztgJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-29_03,2026-07-28_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1011 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290080
 
-On 2026-07-28 21:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing unique board-specific `compatible` string for the M1 Jupiter board variant, which inherits the identical compatible string as the K1 variant and breaks DTB matching.
+Thanks for the Sashiko AI review.
+
+On 28/07/26 3:05 pm, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] dibs_lo_detach_dmb() fails to clear dibs->dmb_clientid_arr when dropping the final reference, leading to permanent client resource leaks.
+> - [High] Double free of dibs->dmb_clientid_arr in dibs_lo_dev_probe() error path.
+Confirmed as a real double-free. The patch for this is already in the 
+internal review.
+> - [High] Race condition in dibs_lo_move_data() routes spurious interrupts to wrong clients.
 > --
-> 
-> --- Patch [3]: [PATCH 3/3] riscv: dts: spacemit: Add Milk-V Jupiter board (M1) ---
-> commit 2d54397a3a4baaa8a2eee569d6fe3f912a3c7661
-> Author: Aurelien Jarno <aurelien@aurel32.net>
-> 
-> riscv: dts: spacemit: Add Milk-V Jupiter board (M1)
->     
-> This commit adds support for the Milk-V Jupiter board with the M1 CPU.
-> The M1 is similar to the K1 but allows running at up to 1.8 GHz, adding
-> a new device tree and an OPP table for this higher frequency.
-> 
-> > diff --git a/arch/riscv/boot/dts/spacemit/m1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/m1-milkv-jupiter.dts
-> > new file mode 100644
-> > index 0000000000000..32e1468385ca0
-> > --- /dev/null
-> > +++ b/arch/riscv/boot/dts/spacemit/m1-milkv-jupiter.dts
-> > @@ -0,0 +1,11 @@
-> > +// SPDX-License-Identifier: GPL-2.0 OR MIT
-> > +/*
-> > + * Copyright (C) 2026 Aurelien Jarno <aurelien@aurel32.net>
-> > + */
-> > +
-> > +#include "k1-milkv-jupiter-common.dtsi"
-> > +#include "m1-opp.dtsi"
-> > +
-> > +/ {
-> > +	model = "Milk-V Jupiter (M1)";
-> 
-> [Severity: Medium]
-> Since m1-milkv-jupiter.dts includes k1-milkv-jupiter-common.dtsi, does this
-> board inherit the identical root compatible string as the K1 variant?
-> 
-> If a bootloader like U-Boot uses a FIT image containing both DTBs, it relies
-> on the root compatible string to select the correct one. If they are
-> identical, could the bootloader mistakenly apply this M1 DTB to a K1 board?
-> 
-> If that happens, would the K1 board be allowed to run at the 1.8 GHz
-> operating point defined here, potentially causing instability or hardware
-> damage since it is only rated for 1.6 GHz? 
-> 
-> Should a unique board-specific compatible string be added to this root node
-> to uniquely identify the M1 board hardware?
-> 
-> > +};
-
-That's a valid point, I'll fix that in the next version. I believe we 
-want to keep the spacemit,k1 compatible even with the m1, as the 
-difference is rather a property of the board and not the SoC.
-
-What could be the compatible for the board? "milkv,jupiter-m1"? Maybe 
-the existing board should have been called "milkv,jupiter-k1"...
-
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+>
+> --- Patch [1]: [PATCH net] dibs: fix use-after-free of dmb_node in loopback attach/detach/unregister ---
+> commit 90d8ce044f1442abf2a546d5baabbf36276d4b45
+> Author: Hidayath Khan <hidayath@linux.ibm.com>
+>
+> dibs: fix use-after-free of dmb_node in loopback attach/detach/unregister
+>
+> This commit fixes a use-after-free race condition in the DMB loopback
+> operations. It closes the race by making the hash table membership and refcount
+> transitions atomic with respect to each other under the write lock. Freeing the
+> node is now handled safely after the lock is dropped.
+>
+>> diff --git a/drivers/dibs/dibs_loopback.c b/drivers/dibs/dibs_loopback.c
+>> index 0f2e093111526..fd5caf1e19a8f 100644
+>> --- a/drivers/dibs/dibs_loopback.c
+>> +++ b/drivers/dibs/dibs_loopback.c
+> [ ... ]
+>> @@ -209,11 +205,12 @@ static int dibs_lo_detach_dmb(struct dibs_dev *dibs, u64 token)
+>>   {
+> [ ... ]
+>> +	last = refcount_dec_and_test(&dmb_node->refcnt);
+>> +	if (last)
+>> +		hash_del(&dmb_node->list);
+>> +	write_unlock_bh(&ldev->dmb_ht_lock);
+>> +
+>> +	if (last)
+>> +		dibs_lo_free_dmb(ldev, dmb_node);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this code fail to clear
+> the client ID array when dropping the final reference?
+>
+> When an owner unregisters a DMB that still has active attachers (refcount > 1),
+> dibs_lo_unregister_dmb() does not clear the array because last == false.
+>
+> When the final attacher detaches, dibs_lo_detach_dmb() drops the refcount to 0,
+> frees the node and the sba_idx, but structurally fails to clear
+> dibs->dmb_clientid_arr[sba_idx].
+>
+> Could this leave a stale client ID in dmb_clientid_arr indefinitely, causing
+> future unregistration to fail with -EBUSY and permanently leaking the client
+> resource?
+>
+>>   
+>> -	if (refcount_dec_and_test(&dmb_node->refcnt))
+>> -		__dibs_lo_unregister_dmb(ldev, dmb_node);
+>>   	return 0;
+>>   }
+> [Severity: High]
+> This is a pre-existing issue, but is there a double free of
+> dibs->dmb_clientid_arr in the dibs_lo_dev_probe() error path?
+>
+> If dibs_dev_add() fails internally, it frees the array without nullifying it:
+>
+> drivers/dibs/dibs_main.c:dibs_dev_add() {
+>      ...
+> free_client_arr:
+> 	kfree(dibs->dmb_clientid_arr);
+> 	return ret;
+> }
+>
+> The caller receives the error and unconditionally frees the already-freed array
+> again:
+>
+> drivers/dibs/dibs_loopback.c:dibs_lo_dev_probe() {
+>      ...
+> err_reg:
+> 	kfree(dibs->dmb_clientid_arr);
+>      ...
+> }
+>
+> Could this double-free cause slab allocator corruption?
+>
+> [Severity: High]
+> This is a pre-existing issue, but is there a race condition in
+> dibs_lo_move_data() that routes spurious interrupts to wrong clients?
+>
+> The target sba_idx is cached and the protection lock is dropped:
+>
+> drivers/dibs/dibs_loopback.c:dibs_lo_move_data() {
+>      ...
+> 	sba_idx = rmb_node->sba_idx;
+> 	read_unlock_bh(&ldev->dmb_ht_lock);
+>      ...
+> }
+>
+> Before it acquires the lock to trigger the IRQ, another CPU could drop the
+> final reference to the DMB, free the node, and clear its sba_idx.
+>
+> If a completely different client then immediately registers a new DMB and
+> reallocates the same sba_idx, will the IRQ be routed to the wrong client when
+> the code continues?
+>
+> drivers/dibs/dibs_loopback.c:dibs_lo_move_data() {
+>      ...
+> 	spin_lock(&dibs->lock);
+> 	client_id = dibs->dmb_clientid_arr[sba_idx];
+> 	s_mask = ror16(0x1000, idx);
+> 	if (likely(client_id != NO_DIBS_CLIENT && dibs->subs[client_id]))
+> 		dibs->subs[client_id]->ops->handle_irq(dibs, sba_idx, s_mask);
+>      ...
+> }
+>
