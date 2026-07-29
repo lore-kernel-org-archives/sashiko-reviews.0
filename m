@@ -1,72 +1,72 @@
-Received: from mail-pj2-f3.google.com (mail-pj2-f3.google.com [74.125.227.131])
+Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9AD4052BE
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 16:08:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EBE45C712
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 16:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785341323; cv=none; b=A+fPy8MWLIkMTsEFLPuG5YxD8xKGiY9AHb301q60q1I9TIgZ6pk6WPlciuQUzkN0AcvSTVoTxAMq12vkvosNWEi0YxeMw8bOOQTDIK9lLcazR6uUq87PjwGoUHJK97i4jRfsZjhiQ+946OtfdZXSfS+jizq/SLs8n9BLh00MZv0=
+	t=1785341324; cv=none; b=r8113uareSxnzO9v2XNRZdtmGdB7p1KagJT0Hu72+SIK8S6W76SIWVO4D8Ch4ME7wIZrUug0reWcziEXTUaYDksu48mCGboHsp2tLXDq+iu8MC93aKLtjrdwncE3Bpzqd0Is6qsUckK069D7nTCzzXwn1o/OfZ+VxieyYCnETgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785341323; c=relaxed/simple;
-	bh=RuGK7GoIYQg1A1vvn5oTwJjNqdkv+nRmqviNxsgVaX8=;
+	s=arc-20240116; t=1785341324; c=relaxed/simple;
+	bh=1dxnh5weyzKa6ZVbZ5SNKVN4SnUmIaO9yzv2LW8wPTA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G7orymuaMA5QHbl3GaY5Gft2Oi9Ucp4/ue2yB5y/LRBjebK51hbyWxbK0od0Dkej8Fa9sJvDf+2ftw9J5wXVv6LoXfWXdSsDUQ2Yr1oohkuPbXXe/fTGQS0gvb4Sg30By82OEb0twr36sfxwZOvRv5rCdWnAVXDH+YBqUI3YUSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D+cdyufW; arc=none smtp.client-ip=74.125.227.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=DJJsPBuHg6P3ZvCZwlpgZdArx6OYi5qagI5+zsHFPz6CVpqfZZLgCHw06CIQY0clwG8Bkze0ctgpexqLlebNwuBGwL86qLXU/SijxOpcTDrcHY/1sJlR8TXPS28LotuYuUxIeRmOdXlLJiRvIuxKzJ17AchU0fXIY99o/PDNTxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XEqfW0Wg; arc=none smtp.client-ip=74.125.227.132
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D+cdyufW"
-Received: by mail-pj2-f3.google.com with SMTP id d9443c01a7336-2ca4f02483cso1812725ad.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XEqfW0Wg"
+Received: by mail-pj2-f4.google.com with SMTP id 98e67ed59e1d1-38111ea8a88so702146a91.1
         for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 09:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785341317; x=1785946117; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785341318; x=1785946118; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Tx1LHO52ziNj3TMGJJTE8eQcLC2MzAr77iy3lm/1Tq4=;
-        b=D+cdyufWZUP62x1xx2USfY+wnugxXYqHFYJFLeLwHw+7Iul+ihhoMwtll7lu8teFXg
-         PPFc+QSdu7RKFR97rrb1zLcT/NVEA8LL2cHY/h2XVEH4WzWFOe+EL8UW5cHoO4Tou+pW
-         ysnhq8AmLfO+Qec/zcSEKEKsS3XtMqSxYCwYLT5sVFWSeuy+5IzHyUs6BWdsNHUhNeNz
-         6+OnqPrRZjhUDAeibn4wYmCOX5ao73LrpTxYzBMD+G0ElNBPq8KiXVv5rSd3sdaKhPSL
-         l+pMYYIHvlihJJa0zrOM/cl6G5ep5CfzUhJWqwhpPnvMbTnkjZjUc1KXAtw4+xD/Yu0d
-         q2Jw==
+        bh=EHJt5WwndMaD+8Zf6CWvma38RBnM0mlbcCQKAC4U0Kg=;
+        b=XEqfW0Wgsn+yE7AK95TMm2W04821NXXwUbVRxpPsXP/2sPhCDauU8wejJcKumx/hN3
+         HWJPvjkzeyThEQTC464ycAvrk9p2+51tivhTmHjxWduyDQcnPH1cYwEV5md1kBTeNWw4
+         B3SQnXCMlFfOzZQRUkMQ8JBN3JliWBdUc6W4YSfdel8WOMeRrnD+/WE7jHRhhgPd16JR
+         Eg75MuHX2ZaXMeS0sddELTwvgeMwulZRO2FUcB0HQIOHvMIbq/8aooJ2HVv4d/Bfm5M1
+         baV6M10R9YeqFMj+Oz4owPyxdY9uyNxv208Kim94sY+PZVIvuzEMlBCez1kEZXFIw/3A
+         VM/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785341317; x=1785946117;
+        d=1e100.net; s=20251104; t=1785341318; x=1785946118;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Tx1LHO52ziNj3TMGJJTE8eQcLC2MzAr77iy3lm/1Tq4=;
-        b=HIvhIB3Evz2Vaqkprn8UKlBlyDirqlvYoJjUqcmsDrpOQ0RF4wUrYTBoNRG2fpIpQk
-         0n6zA9pVDjNv92XBwgukSaML0SGxT+1Y/OnethBL+KruhUtZdKYnZBY2evD4M5DTgtwD
-         mDgKJh58k+joAAekv2WXMKunDp6Zt7BpZ/IslJepNzg/lzoNCy/cXsO9mmAbd7tmQeLs
-         7C/U6qRHoJQVW4OlPijF/Cuw4zyVLuE9r2bwEb39t5syYSY3m8r8xzwifse5ZHoiRqML
-         otGGZSD3UTmlKOgGte2aLZNh9glTq5D2GdyNs6Mdy7ZnM7ZLujkH/j04sX27q/Laeo+S
-         LkAQ==
-X-Gm-Message-State: AOJu0YwhSm+38YbncM+m4S0acH7+nirQdzQc8owAjKM7CLVPL1I1nrlt
-	u+5W8sakILdInbQl1OzgaVb+hkjT4XYsaFLG71I4mmwNFbfqIuv2EXOdIE5SKsB5rZk=
-X-Gm-Gg: AR+sD11htjGomEA7nqM6cbVpblzlCKFndF6J+dGj+kDEZOCFn+KArtqvpcvGOFvIwKp
-	o6FGmWF3FeBsgBBRj2Peebmg5XKGZRsDM+FfI0UX+92WQXiwB4YhcHiVoza2wTE9DCcaRSw3rex
-	Bm6pVxQ0QbEHmvN5FjGXhwBs6w2KCZTm99kMPjeb3ZfTw46LmRlswgX7kEYHUubpw0SC+XBiRKT
-	rQRkKRiwsOu4GKCZUg7V0WrDq7bfYpkEj0+x68R6rlHtAdi1GOJT+pAGDoaz6RVEvhcbEBTHQ9J
-	5c2v8nehetjsZXk5B79mS2C2SLMLsG5Weev/2iIJdEbP9NgM+eHhZz9NWsCG5B/9wNTpJ4Ym9Hf
-	LQarSe5PoPPdtikoBHE+t2nqGkXYiVLSFn4RfFSOKuC2ZDfApfLmhcCJTsJkXxjgRn4n9aAn3U5
-	zDSum/73qjZuPceG7k1wtjf88ePvaxi5w/E75N2p+fsvJu5gYMbcMokFU+hNibOAS9
-X-Received: by 2002:a17:903:1b07:b0:2ce:b43e:44da with SMTP id d9443c01a7336-2d02672bacbmr29921865ad.17.1785341317273;
-        Wed, 29 Jul 2026 09:08:37 -0700 (PDT)
-Received: from localhost ([2a03:2880:2ff:5f::])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022a167b5sm13688205ad.7.2026.07.29.09.08.35
+        bh=EHJt5WwndMaD+8Zf6CWvma38RBnM0mlbcCQKAC4U0Kg=;
+        b=ZOjuHbPi1L6gjT1S8x2FhBmenW7YrdxWk4qerLqFLnA0F05SUADbPJX+MDN6LzSXCS
+         gFoYOZU0mamIUYlQpH5h9Jjs+wk42sJRnqujUmRM2WxfGJyyvISBGmAEpJm54H3ppHmA
+         W3kwTHHqP7Xc4tsU/OWuoON3cdsb3tA32iLoL5FC8gbb+VXIduEnbdlbPj9UqkKseb8K
+         D3nttMaQMvu8/g5EjvnPEjrIdKVe5z4Dn6GOJ7iUkoWIxvnh0OS+TMNBC7uzxSJFdAdz
+         P6VTZfuMfSVVzvtU2p6iwcWFUdYVCn9RG+FkQxMXqJuIh2550jj0zwXvvjfzhaJ0XzpJ
+         hzXw==
+X-Gm-Message-State: AOJu0Yz5Hi1ZkQk/5d6RGhJugLOWKSftQejFPrr25cwYeECbxCZtHMGK
+	lRrXJ5qdV0KxQpcSPucPk1ZzexuTLFtnkB94sy/yQ1PAilJaHrug2mDfsLSjTe7UOQc=
+X-Gm-Gg: AR+sD10idu/byV9y+B/qqfqD3LeS1LDkuJtJdWpkJy+w/Gx2lMx4lsPwxf8pyNCf2l2
+	QSqAZ66pUZVh/rD9JhC1IUguAwqDKVUXj4dVpEGRmTVJA49QzsjstB2UfjyGJ8D0j9XCiiek0fJ
+	XJvmWyhsbWme4xOPVdcxB1udxFUc3yC8SsG2NNS5LNVeaLltqTSrOMGW7MW1LR0glJ49jquOht1
+	iZ+mlyyvgTVX0gePbcodg1I7OeF+SG5/JL97vBKg+oW71Fww/ooRQxgRKM4TKFNQ2ASDv90AArC
+	cK+arMoo1xsic2K0XXccO1RQVHygsLksr3HLBJEmF3JbHSKXzHHakcLkt9XL7kXfqJHb2aW65o8
+	ESnwsayOUfeuiv/9AKmx6cvQ1hROzAFnCJKbt0oojnN1wO4aa/2sKYxV+YUtjyD7l9OTc8XZjr2
+	DZnmh0ji4NEPpzGqYngz0d61KPQUnWDdFzbbYFFqmQwof1l5Y4V8BzCw==
+X-Received: by 2002:a17:90b:56cf:b0:38d:c0f9:30be with SMTP id 98e67ed59e1d1-38f6a480100mr7074408a91.38.1785341318384;
+        Wed, 29 Jul 2026 09:08:38 -0700 (PDT)
+Received: from localhost ([2a03:2880:2ff:51::])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f642e342esm2990713a91.15.2026.07.29.09.08.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2026 09:08:36 -0700 (PDT)
-Date: Wed, 29 Jul 2026 08:54:58 -0700
+        Wed, 29 Jul 2026 09:08:37 -0700 (PDT)
+Date: Wed, 29 Jul 2026 08:58:57 -0700
 From: Stanislav Fomichev <sdf.kernel@gmail.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH net 1/6] xsk: require at least 16 bytes of TX metadata
-Message-ID: <amohnC9dwEkquF1z@devvm7509.cco0.facebook.com>
+Subject: Re: [PATCH net 6/6] xsk: validate metadata when processing requests
+Message-ID: <amoilMU-WhjXVRNG@devvm7509.cco0.facebook.com>
 References: <20260727161959.885642-1-sdf@fomichev.me>
- <20260727161959.885642-2-sdf@fomichev.me>
- <20260728162044.1D70B1F000E9@smtp.kernel.org>
+ <20260727161959.885642-7-sdf@fomichev.me>
+ <20260728162044.B2D9F1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -75,93 +75,98 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260728162044.1D70B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260728162044.B2D9F1F00A3A@smtp.kernel.org>
 
 On 07/28, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Critical] Incomplete Fix / Out-of-Bounds Memory Read in TX Metadata
-> - [High] UAPI ABI Incompatibility between 32-bit and 64-bit architectures
+> - [High] Zero-copy drivers unconditionally parse XDP TX metadata ignoring the XDP_TX_METADATA option flag.
+> - [High] The stmmac driver drops AF_XDP TX frames without generating completions when the frame length exceeds max_sdu, causing the AF_XDP completion queue (CQ) to permanently desynchronize.
 > --
 > 
-> --- Patch [1]: [PATCH net 1/6] xsk: require at least 16 bytes of TX metadata ---
-> commit 8f587b21f2b30dd32c9e63e0817476297538dfb0
+> --- Patch [6]: [PATCH net 6/6] xsk: validate metadata when processing requests ---
+> commit 8967b4032038ba439c0a13ce2dc4cab303b87c2e
 > Author: Stanislav Fomichev <sdf.kernel@gmail.com>
-> xsk: require at least 16 bytes of TX metadata
 > 
-> AF_XDP accepts a TX metadata length as small as eight bytes. This commit
-> requires a minimum of 16 bytes of TX metadata to preserve compatibility with
-> applications that do not use launch-time metadata while addressing
-> out-of-bounds reads.
+> xsk: validate metadata when processing requests
+>     
+> The zero-copy path validates TX metadata while obtaining the descriptor
+> context, then reads it again later when preparing the hardware request.
+> Validate the metadata in xsk_tx_metadata_request() and use the resulting
+> flags snapshot for every feature check.
 > 
-> Link: https://lore.kernel.org/netdev/20260720155210.34229-1-blbllhy@gmail.com/
+> > diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+> > index 5a18d00deb4f4..7b6cdc037c00f 100644
+> > --- a/drivers/net/ethernet/intel/igc/igc_main.c
+> > +++ b/drivers/net/ethernet/intel/igc/igc_main.c
+> > @@ -3082,7 +3082,7 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
+> >  		meta_req.tx_buffer = bi;
+> >  		meta_req.meta = meta;
+> >  		meta_req.used_desc = 0;
+> > -		xsk_tx_metadata_request(&meta, &igc_xsk_tx_metadata_ops,
+> > +		xsk_tx_metadata_request(pool, &meta, &igc_xsk_tx_metadata_ops,
+> >  					&meta_req);
 > 
-> > diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
-> > index 58da2f4f4397a..cd8643360eb3a 100644
-> > --- a/net/xdp/xdp_umem.c
-> > +++ b/net/xdp/xdp_umem.c
-> > @@ -210,6 +210,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
-> >  	if (mr->flags & XDP_UMEM_TX_METADATA_LEN) {
-> >  		if (mr->tx_metadata_len >= 256 || mr->tx_metadata_len % 8)
-> >  			return -EINVAL;
-> > +		if (mr->tx_metadata_len < 16)
-> > +			return -EINVAL;
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but is a 16-byte minimum sufficient when the
-> launch_time flag is requested?
-> 
-> If a userspace application sets XDP_TXMD_FLAGS_LAUNCH_TIME in the metadata
-> flags and provides a tx_metadata_len of 16, it appears we can still read out
-> of bounds. In include/net/xdp_sock.h:xsk_tx_metadata_request(), the code
-> reads the 8-byte launch_time field at offset 16 when the flag is set:
-> 
-> include/net/xdp_sock.h:xsk_tx_metadata_request() {
->     ...
->     ops->tmo_request_launch_time(meta->request.launch_time, priv);
->     ...
-> }
-> 
-> If the descriptor addr is placed at the very end of the registered umem (for
-> example, desc->addr = umem_size - 1 with len = 1), reading 8 bytes at offset
-> 16 extends beyond the umem bounds. Since xp_aligned_validate_desc() validates
-> based on the chunk, does this allow reading into potentially unmapped memory
-> if the launch_time flag is set?
-
-Lanuch time is handled separately later in the series:
-
-- [PATCH net 4/6] xsk: validate launch-time metadata size
-
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this tx_metadata_len
-> validation correctly handle 32-bit applications running on a 64-bit kernel?
+> This is a pre-existing issue, but do the zero-copy drivers unconditionally
+> parse XDP TX metadata while ignoring the XDP_TX_METADATA option flag?
 > 
-> Looking at struct xsk_tx_metadata in include/uapi/linux/if_xdp.h, there is no
-> explicit padding between csum_offset and launch_time:
+> Looking at igc_xdp_xmit_zc() (and similarly in mlx5e_xsk_tx() and
+> stmmac_xdp_xmit_zc()), the zero-copy path reads metadata directly without
+> checking xdp_desc.options:
 > 
-> include/uapi/linux/if_xdp.h:struct xsk_tx_metadata {
->     __u64 flags;
->     union {
->         struct {
->             __u16 csum_start;
->             __u16 csum_offset;
->             __u64 launch_time;
->         } request;
->         ...
->     };
-> };
+>     meta = xsk_buff_get_metadata(pool, xdp_desc.addr);
 > 
-> On 32-bit x86, __u64 has a 4-byte alignment, which places launch_time at
-> offset 12 and makes the total structure size 20 bytes. On a 64-bit kernel,
-> __u64 is 8-byte aligned, placing launch_time at offset 16 with a 24-byte
-> structure size.
+> If an application sends a standard AF_XDP packet without requesting metadata
+> (by clearing the XDP_TX_METADATA flag), the driver ignores desc->options and
+> unconditionally reads the metadata memory. Since the memory might contain
+> stale data, meta->flags could contain valid but bogus bits.
 > 
-> If a 32-bit application registers a 20-byte length, it would be rejected by
-> the tx_metadata_len % 8 check above. If it registers 24 bytes but populates
-> launch_time at its native offset 12, would the 64-bit kernel read unexpected
-> data from offset 16?
+> Could this trigger unintended hardware offloads, causing data corruption
+> (bogus checksum offsets) or TX queue stalls (bogus launch times)?
 
-Noted, I don't think we test 32 bit arches, the sensible thing is to
-probably add some padding (potentially breaking existing, if any, 32
-bit apps). Will put it on the todo.
+That seems like a valid pre-existing issue, will address separately.
+ 
+> [ ... ]
+> 
+> > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > index 3f5111969c414..eb666b0bcdd22 100644
+> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > @@ -2747,8 +2747,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+> >  		meta_req.set_ic = &set_ic;
+> >  		meta_req.tbs = tx_q->tbs;
+> >  		meta_req.edesc = &tx_q->dma_entx[entry];
+> > -		xsk_tx_metadata_request(&meta, &stmmac_xsk_tx_metadata_ops,
+> > -					&meta_req);
+> > +		xsk_tx_metadata_request(pool, &meta,
+> > +					&stmmac_xsk_tx_metadata_ops, &meta_req);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does stmmac_xdp_xmit_zc()
+> permanently desynchronize the AF_XDP completion queue when dropping oversized
+> frames?
+> 
+> Earlier in stmmac_xdp_xmit_zc(), if the frame length exceeds max_sdu, the
+> descriptor is dropped via continue without issuing an XSK completion or
+> posting a dummy hardware descriptor:
+> 
+>     if (priv->est && priv->est->enable &&
+>         priv->est->max_sdu[queue] &&
+>         xdp_desc.len > priv->est->max_sdu[queue]) {
+>         priv->xstats.max_sdu_txq_drop[queue]++;
+>         continue;
+>     }
+> 
+> Since xsk_tx_peek_desc() reserves a slot in the AF_XDP completion queue (CQ),
+> dropping the frame skips the hardware descriptor setup, and no completion
+> interrupt is generated for this packet.
+> 
+> When a subsequent packet completes, xsk_tx_completed() will advance the CQ
+> producer. Because CQ entries are positional, would user space receive the
+> address of the dropped packet as a completion instead of the actually
+> completed packet, permanently leaking descriptors?
+
+Hmm, good point, will send a patch separately to reorder xsk_tx_peek_desc
+and max_sdu check.
