@@ -1,236 +1,157 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011034.outbound.protection.outlook.com [40.107.208.34])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E97C3AAF7D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 15:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.34
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785340018; cv=fail; b=o+ZqFSwYd5bgTSE8ppCRJJI/hCsjeeiEySU1qiAEWgGGSrVVY0B8aUeEtmfivQGxnKl1WqEkLs8ZLYo3QnNiZ8nOwDX0invMGAOvaEhRu9TCrGmNwy0RR8LJI51CicYwBjEa9tkkMUS7TZdzm5Bw63Yy2h4VIszbhDj/wedeZKk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785340018; c=relaxed/simple;
-	bh=KmTdBItS9PwjQbffHclazoFzlfYvXKEG3lYGlIu9sVs=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=oKE/YBa6aAxxjLYxrcPAt3rRRncO9MbVVVzrnWwIjkyhgrPBF035GWCSHFfsisixaQqG4BZXk+HQQICneFQ05fitv4ekhz2KIgBzKJ3Ng7+TPi0iK34+FjsKgDGT3s67qnJrndzmsraDehlWp93bDX8VffcfxYT4f/zzR7udrww=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=O6qxhTi1; arc=fail smtp.client-ip=40.107.208.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345353B0584
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 15:51:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785340276; cv=none; b=tjJmooRGjO7Mc4jjj998nk4eVLdLZmPkPCvis0xliI2EKo/rTQOzNFHsjrc2xS7nVNyStmrC988UhNURzSwD0biuBlJygd9JaGWZZ06GelKs2W5jELoCLQYOOmD8qurCVb6DimmEgobru7NtBvvOrp46SvhH1Mh3n6gBkgLotq0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785340276; c=relaxed/simple;
+	bh=PFYS+vQPfiFQeDUa1KgTnTeG8ROhjor1xALOuf+wUr8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=plgcd6kc2OAbUlq382dTg5+8VT12fD9lXkVMnr67pUH0+yGyvIGnW36FlcEmRUE+LMkCz9kgW+rEWMpzDjAqpXhgVvmr7QbtpucFEcHNzv3tUI79i9qhWj7r4Xjidn3BtuD3LOaQLkLXZwObYcsgMaQg1ClrMv2dNWJ38QHzOYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=rf9LfqOZ; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="O6qxhTi1"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NKxt8m2dtwXJLMgYJcV3iqMqWwTBwEhlE0w7JuXpaBUkD9g5Q5DWvdmtNTCm6cp9czix5R78TXhwSmOXz5E+wfrm/mJWccTTMESWl6XCb6qDLzOMvt9pSNVe7UwD+VUVFssdQUsAAEIuZtD2jn0r++BQPp3SrOGBGxWxN+8GXCKrYdbB6FqIDSVNvhkZE+RIKz+T2kXAPmZeOY7yCNAhdsBdWYzpjzEkPYR6wB7QtTHfvq/WAKRwNPGamCWnnqSh7JtZQAxO6Lv6BH/VcTvb7JZIAjlAzIZEiQKITca7KxKjHZd0Lk1PqbjuUWjHDjzCYAbj+z7bgXGXZaZ0ehHTgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+QXN8waYKgNpw926+8SAbZpQ66qe/JU7hqffTKP7hD0=;
- b=ZLexsySPEd1zf27cjhllmXY48UvIoajq0eugDwHB3xxnaO4ADsTdvhfHUm90aTGWPg7k+MeK2EaipsHCpOylJV+y+q1KQLvJZLko/JqEovmnWTe+rSPLEqZrnlQZjSSn4b1zoQ5JrF7gSoV9RtN6f58XVmCa9xg+7HSH5Ykima7Tn5yfbyKBcqsNtq9jfOIHwD/+LZkljGLTwg9EQhulrXJRmmnZqnXAf9sdx/40kt8La+qicIJuDuarFz+N7jjTA+/Ha2rBOfejAJELlxvjkGhKlQgbxBwsLLctroxZ+lhAE/R4iXSmP2npV9RqLUmMSZbD+bE3uDycfQ57l5n4IQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+QXN8waYKgNpw926+8SAbZpQ66qe/JU7hqffTKP7hD0=;
- b=O6qxhTi19KJmkfUX/7QU1IJBs37kIYgMixOndp0LVaX2jb8Ohq4eLOr/UD3sLTRyh1TdtAtHDEwD9F0l5IQU/QQxla6SgCCmai1TsRiwOJnMIWtwpDqYEhHLWTdfkUgXjH8z5nd4W+qCd6agMEo85heA19yNjpN+p33gfDMT8HU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from LV5PR12MB9828.namprd12.prod.outlook.com (2603:10b6:408:304::19)
- by DS4PR12MB9820.namprd12.prod.outlook.com (2603:10b6:8:2a7::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Wed, 29 Jul
- 2026 15:46:52 +0000
-Received: from LV5PR12MB9828.namprd12.prod.outlook.com
- ([fe80::f132:7e75:fd38:8685]) by LV5PR12MB9828.namprd12.prod.outlook.com
- ([fe80::f132:7e75:fd38:8685%5]) with mapi id 15.21.0270.009; Wed, 29 Jul 2026
- 15:46:51 +0000
-Message-ID: <f30b3b94-b6e9-42a9-a780-d680916eef4d@amd.com>
-Date: Wed, 29 Jul 2026 21:16:47 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] clk: clocking-wizard: Do not map the memory for
- static-config
-To: sashiko-reviews@lists.linux.dev,
- Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260709111403.1579159-1-shubhrajyoti.datta@amd.com>
- <20260709111403.1579159-3-shubhrajyoti.datta@amd.com>
- <20260709112803.424C81F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Datta, Shubhrajyoti" <shubhraj@amd.com>
-In-Reply-To: <20260709112803.424C81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PN4P287CA0076.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:26b::7) To LV5PR12MB9828.namprd12.prod.outlook.com
- (2603:10b6:408:304::19)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="rf9LfqOZ"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66TFI4xd357356;
+	Wed, 29 Jul 2026 15:51:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=bnPPyV
+	/qBI3V/luwaekwNji/9sQof77Dnds9fONgT/o=; b=rf9LfqOZ/ntRPvFyTxzd0F
+	NOWS4qLkHapK1yvitua8qNLVRRQ8VBIlEZoaL2O2BzYVqq5gque0tIytQrer7kWL
+	J3Okb48Rr+/MpxBqIeBjumNhM+tuFPGcqs9axcToYMRClNRqmiJLu91Pu0oxTU8Z
+	fb855PC6BGbwA5e7eySfZbNpNg91pDuMXMtZGJsimg06RQ/2J/YhnXJZqxM3gDkt
+	6VJgWfKMLcHehDkNZScYSeUapMXqSszPim4Aq4jSJkNxuYSDZ+bNg/Wz/zf60o+K
+	3KE8HM8LksST+MgS5UVi0BEWosEtmv5l5FnUqnmVexxpudeibHqL9Xlq4gBFLiGA
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7kg0w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jul 2026 15:51:08 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TFfIAw013753;
+	Wed, 29 Jul 2026 15:51:06 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhf8fu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jul 2026 15:51:06 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66TFp2el29819486
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 29 Jul 2026 15:51:02 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 888BD20043;
+	Wed, 29 Jul 2026 15:51:02 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 09BDA20040;
+	Wed, 29 Jul 2026 15:51:02 +0000 (GMT)
+Received: from localhost (unknown [9.87.133.185])
+	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Wed, 29 Jul 2026 15:51:01 +0000 (GMT)
+Date: Wed, 29 Jul 2026 17:51:00 +0200
+From: Vasily Gorbik <gor@linux.ibm.com>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Paul Murphy <paumurph@redhat.com>, Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
+        Paul Murphy <murp@redhat.com>, ojeda@kernel.org,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-trace-kernel@vger.kernel.org, Jan Polensky <japo@linux.ibm.com>,
+        Eddy Stefes <eddy@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: Re: [PATCH] rust: enable fentry support
+Message-ID: <ttiy1d0@ub.hpns>
+References: <20260724170132.3783816-1-murp@redhat.com>
+ <20260724172024.0648C1F000E9@smtp.kernel.org>
+ <CALYDSrQhUbKDHsPnQqp0K4WMe2iZC-G1nGrLT6eQ9doCqdVXKQ@mail.gmail.com>
+ <CANiq72nJ=7TAjtArF2VzDZqwKDcuMFjeisD25R2GuA0NiJwk-Q@mail.gmail.com>
+ <ttiwqgc@ub.hpns>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV5PR12MB9828:EE_|DS4PR12MB9820:EE_
-X-MS-Office365-Filtering-Correlation-Id: e8098ac5-9ee3-4ee1-b583-08deed889bc7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|11063799006|4143699003|56012099006|10067099003|22082099003|3023799007|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	A/0BlbC4T4QuEv+lQ9G4etx1Xqf1On8vpS9KlQMcIv51SW0m5YOqZOdkKdPOSY7fSv5jLZ+lvQABCWiDbh/F5euJUSe1au1BpPtqzgaE47zRNLJbn8Tknk1gnkurk7aZMhgTu+70KTIf3w61GZuERiPgu44WCLgfTStcu+RN6lq7kQW1Zu9NOKG0eseH07rCcGCNX8KeTZfzbSeotRAq2kM9IPkmFEAAbJho5BNf283NntBONhuhY/9PAqWgrTo/zcsAm+tCvwx69E/1FDxxYUQhYwegdLWkvm0i5KWWNAPC181MT69dMXBNt6HG0zuKkf6DuNNeewGaNQT6qNTkZ4yt1Ia3GmoSyB6qz59dk4lHay/PQGr1I1aooKY5fvAZOf9cWTyUizMlYmlPQripnJ3Cd9AnjE8gfhPkPSGT7it7tLw+BNNQ5N/TSxjZTfCREWLrxZIVz4pbH/dBhf2sAxYYxKCUrTzl3upS4qTIyIbN4gsaw42/26uekysTFUWiJprIt85YA/BNn9DleBLt2yWAhun2By430FD+cSinIu6CyUGCEZEQqyvt1T7VCXXhkJH8vfJ65nqwdE7jPjx7d6G6U3311DZ5sMQ7Qza32XM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV5PR12MB9828.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(11063799006)(4143699003)(56012099006)(10067099003)(22082099003)(3023799007)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WUVtTVM0VmpzdjlSMUVzWjB1OGpmaHpMU3V5MHIrRVR6N2wzcWFMM0dSemZr?=
- =?utf-8?B?UG02VlBZZFloV1krMm9Cdi9Dd2dZR01DcFR1UGJLRmtESm93Y1VESDdZT3Zk?=
- =?utf-8?B?VmdGSVBxckJHTzBuWkRFSm91V1J3UkpZWnFqY293ajRra2ZZS0RJYUJjMlNz?=
- =?utf-8?B?aXNPYmkxaE5LNG8xb2tJYm1od0hYLzF6YTJwVElzQ1BVWHVxaWdhd0lVT2hs?=
- =?utf-8?B?dDdEdFJsZ2FGOFhhbUpxNlUxeW5XN2huQlQ1dUNhUVo4KytYMFBLSzBUMXRl?=
- =?utf-8?B?YmE4WGJUZGZ6MG0xd2JUTk81ZjZ3cHJJYlNyWGZJNExibTd4SlNoUXZXa1lk?=
- =?utf-8?B?MnpNUHVHUm9rSzBwTitQa0lLS0pCNVRUbld4VHV2SWpBVEhScFVwa0dSdHFm?=
- =?utf-8?B?a21kZGMvTFZSUUM5V2pJdkhxSDdrQXdQTkVGL0NzSGVBU0lZRVZGcmR2VnpF?=
- =?utf-8?B?NEFaYzJHUlkyMjB6SHVrTFhJZmlSSlpXOGdST0pOS1RHNXIzWlg5bm10TlNo?=
- =?utf-8?B?akJ5RkU0WmxGVURmQW9ibDV3VGt1a1lKU3k5NkkyQzkvNFg0Y2ZrMC91a2Zx?=
- =?utf-8?B?bWZROHYxZHZsRlZrTjZIVFg1LzEvL2J5MytCMWFGeGVyVDl0RGczMEY3a3Jv?=
- =?utf-8?B?Yk1Jc1k4U21GdHdFa0hlK2FKWWJwTGpGRUNDd2FUYTNIQUk4d2lPajN5dmM3?=
- =?utf-8?B?V0VhdzNjQ25lNXR1V1daM1NZTEg5ZkdJbUxxTDQ3aWJVT2s0SXRnRkVEWW93?=
- =?utf-8?B?dU1STEZHYjJUdEhJSUsrcDQzQ2tuWGtrQmtTNDdxRGRic2RyWTNlVlJZUjVX?=
- =?utf-8?B?UVVjenk3VEdjbHhmVUpkYkFTd3JLTmpnTWNaUXNXUTdCUFVJUjM5MnlsNTRm?=
- =?utf-8?B?eWlZTWFQYnNyQXNvQUFCMVl6d3U3Q3k3b1ZLZnFxbC9ETFFsU24xaUxmZTFS?=
- =?utf-8?B?aDRGYzNLNzJBd0d4MjZGRHdhelY5MXZOdC82UXlwTUQ3Z25sMXV5UmhycWFi?=
- =?utf-8?B?YSsvdURXRFV4QkxyUHZENEtGbFVKdmlJUHh1Sk9XOEUreVlpMkhRT2tzQUZN?=
- =?utf-8?B?djV5V2xxMlpRbUhJTC9hVCtPRjljTVhKcUdYbTlidzljam40aFQ0V3YyQXNp?=
- =?utf-8?B?Tkc5dHF2ZDRxSDQvZjhoY3N2VWZ1bzdnUkliWnJZUGxSMTN1SlFQVnJSN08z?=
- =?utf-8?B?N0tuVkFlQzNJMzU4cEE0YktrV2NNb01tOHp0a3hnOUc1NWx5RktuT25PYS9M?=
- =?utf-8?B?NmdKN1ZKNUhZdnlReVhxQkNjMXdENlhTU2ljUE5xTGJYcTk5QWJKK2hOWXB4?=
- =?utf-8?B?Y0sxazFaeEh0TWRzWHo0SDhtYmZzN0tIbG9jOVkwejI2cUpKamNXL3BKWXl1?=
- =?utf-8?B?bXRNQjZJWktINjZrNy82eHdHV20vbFI1M2trMk44L0t4eU9tVVFYZHgwQWM3?=
- =?utf-8?B?VWYzS0MwR0p4bWtrOVJkZ2RMaUpSNTVaYTkwNkZwdFNkQjRXYzNqejBKd3Ay?=
- =?utf-8?B?dlBGSnJtejhpN2VFUWgrZ1FjVGwwZitHVDY0Q3FxckZUSjFPVTV0OW5QWlR2?=
- =?utf-8?B?eXM3RmR0NmsxaGRvSG8wZlljamgzQzA4T0ExMDlZSHlLQlZHZzNkMmkwLzVM?=
- =?utf-8?B?eHpPVkROVER2MVVXK0paTVROVS8yTlNNNWNVbExFcVR4cHBENGd1akhveGxu?=
- =?utf-8?B?YzJ6eTVZZnk3SDBabXFwcHNiQzhYQTVlbCtMSExhNk9nOXE3MG1XMitEYzRr?=
- =?utf-8?B?N0JnTWx5dUJWY2NOY1hxRHcrMC9TTHVzNlJ1bCtObDB6RWtadFpxRlZ6VDk4?=
- =?utf-8?B?d1YwODFkeE9qamlSYnppOHlZalMxZGZzb1R0eTJ0VDR4TUpDOFN6ekJMb0Zq?=
- =?utf-8?B?REs5aWtyNE4rQy9RNkZpMXprdWN4SjRCNFpacjg0MVZKeWRxSHlzSnBhekhw?=
- =?utf-8?B?SjFwdVpXNTZobFRaTk5QbnN1N3lkcE9JYnNwcHVHYTdJUmdyejEvTEczUzYz?=
- =?utf-8?B?eitvaGh4QnlBNXhKemt4NFdXdysxK0QyRExTY2k4a0lLMWRiK09ZcldYc2w0?=
- =?utf-8?B?TXVQQnh0OGRSem9waFZKMHRDSkpsNHNZd1Q2UktJOXUvNkc1bVk1WnVUeHRX?=
- =?utf-8?B?Mm16TmF5QkxIQmpVRXIrV1FvbUphdHcycGtYZHFzMSs3WHB2cnZWckNwaFMy?=
- =?utf-8?B?bVRFWWdnYVRhN0ZDTW4xU3RCL21OYzZDcjMxaWZPL2h3TW0rajQrc2F1Qk82?=
- =?utf-8?B?WW14bXhLVHJOVStxMCt1Nmd1c1lDaWZLdVk2K1VkVzkrZzMzc01MWVduQnRo?=
- =?utf-8?B?aWxvekt0RlJWYXQ3Vlk2NlhGc3ZiWWtuVUtoTHJuS3hKN1RDZGNKdz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8098ac5-9ee3-4ee1-b583-08deed889bc7
-X-MS-Exchange-CrossTenant-AuthSource: LV5PR12MB9828.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2026 15:46:51.8969
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6TSipG7JAMbCy/0uZKST1ZX/9Je4r8UjSY5umMUQuMMpvNBnppojDr8snUm2pqC/MFZh8UOrciSkuhkcRPcDqg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9820
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ttiwqgc@ub.hpns>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: _D4GtPgdzIvyQhGVsZe-LXKz_tq7PaQH
+X-Proofpoint-ORIG-GUID: dJ2IKBnaJJSCzgqPBfGq7jqk4KipHYiA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDEyNiBTYWx0ZWRfXxNwAWl+OZQm1
+ LRuus+5Rr+tvTrj0Uq0QWywC3gLOgYpystXS9y0QQTS1Iov7zTz6502OKBRSk2mYGZvpd7u+vb4
+ lc5L1X9gNmzEtrVltP0DynxPekR5pasPFtWGkIsRFqq2CYSugX6vZlVOCelSAmg9vPPcbAllpEu
+ plxfTfQY7BEIgcAtVr9+J4G9O5mxjx5XZq2zW6HYLgecRerhSEma8PB88/nIeaBKB0VWYGosmaf
+ 6Jzv6v1MFAYMuljtWa7YGWknGHsapV0Voyu2pqrh+LgMlglxP7X/djqBqGuleHM/zhcxSDYDcca
+ Tkkfcc7ldUQVVy+eD55fNxZWCdXXAnBnXu1Mns5hRYhi8bGpOiju8qMhcmisZeYHSDt65exGn7A
+ +g3ZuK0D/R0Ca45DrHXPKTQrpQ/pFBc9uFHsMpcSL9eBCZROoWAuRnAzfwkShHg9eRlMsFG3ovW
+ HGVslkH65wN1LTnD5Xw==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6a216c cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
+ a=AWlmS-Qe9MXJau6VXO8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDEyNiBTYWx0ZWRfXxjG5hN7x9aIL
+ IfUFXlVEBtek7+EWxPU8XVH4vHwnbcimWxWVhmmTvx4VAJUC5ldhZ2xi7z3RnLjyrWW3v6mpSx1
+ 5soh3zACftV/abvKxaW+Acs2fXDw4nQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-29_06,2026-07-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607290126
 
+On Wed, Jul 29, 2026 at 12:57:48AM +0200, Vasily Gorbik wrote:
+> On Mon, Jul 27, 2026 at 08:33:35PM +0200, Miguel Ojeda wrote:
+> > On Mon, Jul 27, 2026 at 7:18 PM Paul Murphy <paumurph@redhat.com> wrote:
+> > >
+> > > Hrm, s390x has more nuanced usage. It still uses -mrecord-mcount and
+> > > -mnop-mcount. The x86 configurations I've looked at use the kernel's
+> > > tooling to nop and record as needed. Is there any reason s390x cannot
+> > > use those, or should rustc support those (for s390x only)?
 
+> So I do not think -mrecord-mcount Rust support is only needed for
+> s390. The Rust build path needs an equivalent of -mrecord-mcount when
+> FTRACE_MCOUNT_USE_CC is selected. And additionally an equivalent of
+> -mnop-mcount for s390 (this is debatable, we could check if this brings
+> us much or we could drop it).
 
-On 7/9/2026 4:58 PM, sashiko-bot@kernel.org wrote:
-> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
->
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Unconditional fetch of `s_axi_aclk` causes probe failure in static-config mode.
-> - [High] The driver completely skips clock and provider registration in static-config mode.
-> - [High] Notifier chain linked list corruption due to registering the same `struct notifier_block` twice.
-> --
->
-> --- Patch [2]: [PATCH v2 2/8] clk: clocking-wizard: Do not map the memory for static-config ---
-> commit 0264def41bcae176c3fa735b3a9b2da6412f451c
-> Author: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
->
-> clk: clocking-wizard: Do not map the memory for static-config
->
-> With xlnx,static-config the MMCM/PLL topology is fixed at synthesis time
-> and no register programming is performed; only the dynamic path needs
-> the AXI register block. Move devm_platform_ioremap_resource() under the
-> non-static-config branch.
->
->> diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
->> index 4a0136349f71a..e082051221bef 100644
->> --- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
->> +++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
->> @@ -1168,10 +1168,6 @@ static int clk_wzrd_probe(struct platform_device *pdev)
->>                return -ENOMEM;
->>        platform_set_drvdata(pdev, clk_wzrd);
->>
->> -     clk_wzrd->base = devm_platform_ioremap_resource(pdev, 0);
->> -     if (IS_ERR(clk_wzrd->base))
->> -             return PTR_ERR(clk_wzrd->base);
->> -
->>        clk_wzrd->axi_clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
->>        if (IS_ERR(clk_wzrd->axi_clk))
->>                return dev_err_probe(&pdev->dev, PTR_ERR(clk_wzrd->axi_clk),
-> [Severity: High]
-> This isn't a bug introduced by this patch, but since the static-config device
-> tree bindings explicitly make the s_axi_aclk clock optional (because the bus
-> interface is unused), doesn't this unconditional call to devm_clk_get_enabled()
-> cause the probe to fail with -ENOENT if the clock is legitimately missing?
-This is fixed in later in the series
+Ok, I refreshed my memory on why exactly we stick to using -mnop-mcount:
+it is not just an optimization that saves us a few milliseconds on the
+initial NOP conversion.
 
-[PATCH v2 5/8] clk: clocking-wizard: Skip s_axi_aclk for static-config - 
-Shubhrajyoti Datta <https://lore.kernel.org/all/20260709111403.1579159-6-shubhrajyoti.datta@amd.com/>
+s390 deliberately uses the same six-byte disabled function prologue for
+both supported compiler paths:
 
+  older compilers using -mhotpatch=0,3:
+    brcl 0,0
 
->
->> @@ -1183,6 +1179,10 @@ static int clk_wzrd_probe(struct platform_device *pdev)
->>        }
->>
->>        if (!of_property_present(np, "xlnx,static-config")) {
->> +             clk_wzrd->base = devm_platform_ioremap_resource(pdev, 0);
->> +             if (IS_ERR(clk_wzrd->base))
->> +                     return PTR_ERR(clk_wzrd->base);
->> +
-> [Severity: High]
-> This is a pre-existing issue, but by putting all the provider registration logic
-> inside this non-static-config block, doesn't the driver completely bypass
-> registering any output clocks when in static-config mode?
->
-> If clk_wzrd_register_output_clocks() and devm_of_clk_add_hw_provider() are
-> skipped entirely, won't consumer devices depending on this provider hang
-> indefinitely with -EPROBE_DEFER?
-[PATCH v2 4/8] clk: clocking-wizard: Add static-config clock provider 
-support - Shubhrajyoti Datta 
-<https://lore.kernel.org/all/20260709111403.1579159-5-shubhrajyoti.datta@amd.com/>
-Will address it later in the series
->
-> [ ... ]
->
->>                if (clk_wzrd->speed_grade) {
->>                        clk_wzrd->nb.notifier_call = clk_wzrd_clk_notifier;
->>
->>                        ret = devm_clk_notifier_register(&pdev->dev, clk_wzrd->clk_in1,
->>                                                         &clk_wzrd->nb);
->>                        if (ret)
->>                                dev_warn(&pdev->dev,
->>                                         "unable to register clock notifier\n");
->>
->>                        ret = devm_clk_notifier_register(&pdev->dev, clk_wzrd->axi_clk,
->>                                                         &clk_wzrd->nb);
-> [Severity: High]
-> This is a pre-existing issue, but does calling devm_clk_notifier_register() for
-> both clk_in1 and axi_clk using the exact same struct notifier_block instance
-> (&clk_wzrd->nb) cause notifier chain corruption?
->
-> Since the notifier_block contains a next pointer that gets overwritten when
-> linked into a second chain, won't this splice the clk_in1 and axi_clk notifier
-> chains together and cause list corruption or use-after-free during clock rate
-> changes?
-Tried to fix it
-[PATCH v2 8/8] clk: clocking-wizard: Use separate notifier_block for 
-each clock - Shubhrajyoti Datta 
-<https://lore.kernel.org/all/20260709111403.1579159-9-shubhrajyoti.datta@amd.com/>
+  newer compilers using -mfentry -mnop-mcount:
+    brcl 0,0
 
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260709111403.1579159-1-shubhrajyoti.datta@amd.com?part=2
+Without -mnop-mcount, the newer path would instead emit:
 
+    brasl %r0,__fentry__
+
+s390 would then need to support multiple initial prologue formats,
+provide and export a no-op __fentry__ implementation, handle its module
+relocations and PLTs, and distinguish fentry calls from hotpatch-generated
+NOPs during initialization. -mnop-mcount avoids this and keeps the old
+hotpatch path and the newer fentry path binary-compatible.
+
+Since LLVM's SystemZ backend already implements the "mrecord-mcount" and
+"mnop-mcount", teaching rustc to request those existing backend operations
+appears considerably cleaner than reintroducing multiple s390 prologue
+formats and startup conversion.
