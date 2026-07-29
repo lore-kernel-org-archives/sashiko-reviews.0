@@ -1,37 +1,37 @@
-Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C1A48A2AC
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 13:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A372FC00D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 13:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785332502; cv=none; b=YTeo7TBKxMTKe88hiY1NoKvvwMwSRgA+w2h3700Fi9Wge+4KdqcRY9kETd4DTvDp5oYH7P9PYVKDZQJZVBVeSPcY58MaKugatsqO1PksDQJpgTAE0wBRmufXkL/Q8JJKzTwje4N6Mw5/57I7XDLoudem60ixeRK9yIgfrrgBOMg=
+	t=1785332724; cv=none; b=lN7+oTVyBdTI/UxHBY9gzo1LACVy484g56gf8VA8RIkbmKDWpm8DZRMgQJjzHMZout5YfFY7YQvS4DFdgIr6c2ohL5RchgCFJsW3sQmFTidg2AC8rV9YoY3bLf/Cr1SLkoviErIND/bUndL3oEAy7CYDk887MfTG79fV0c7tGrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785332502; c=relaxed/simple;
-	bh=Kg42fHqL294PSP2icdDW5mIzpKB/nQB/6qB2WFRmg7c=;
+	s=arc-20240116; t=1785332724; c=relaxed/simple;
+	bh=MM8urWYQILEO8KYnwhxkBDOCBTvPnqCx3vrYzCLLSps=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KdrUE8lN3y1goAOjWfziIm+zlmE4fY+qzObAIT3V6qcYoH/hGDk03sAvfBVsEl/8LkrTDl4VY/ACxGSL5e9FprKDSX3r/6Yy5e0lGv+MTz4riK/wpUmRyod8yDuRRh50QqmZhWlR0VMWnwowt5BixkY/7T3FMXDU7IgHryNW6nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=jM8XGxHX; arc=none smtp.client-ip=91.218.175.183
+	 To:Cc:Content-Type; b=on9te5lKrZ8u8N7T0eCowNxOOW9+O1/7jEyX4fs6JHY05+bXra5ruhL7JjVRYEbv69kklt/SeYfe2u/FDyuuJfrtkt4Xu6cwTyLwbsJ/LSdElW0coGGyl2Y03a3LAn/S++xh0yLQ/MjExOTq/wIH0Qbb/QucvkLdrJyPYCL0hVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=a/MrGmuZ; arc=none smtp.client-ip=91.218.175.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="jM8XGxHX"
-X-Gm-Message-State: AOJu0Yxvs9XQKaFaA5fExo+losCOyB7eNjiyGEH6q5sJb8YMqj0L5rcj
-	1IyWtZOPXQvCK/8oOoDXPUJKeC6vGQ/J5cRbzHjsoIdAmmbYmJ0X05KXGlYzwqUuZJXlxZwXz2C
-	Ru8OOzAB6Yv03NKdULPjVIIXR8s29B5dquojJI3Dx
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="a/MrGmuZ"
+X-Gm-Message-State: AOJu0YwfPzXBm9B+4fUnYzGNLzzJrsDvB+PdjCIcvHPWSYwLsEbsiIsK
+	50QgWhvc1fuIsw3IQxuUr/NLKRuEVt8v2ReTf0MDZ2gSuoJE6WsuYuXcN4N6vORlFsAzFmrdDni
+	PJZnIf/rDGA8aIdXX33vMVq99ZMnRWI8dbc0Umpv9
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785332498;
+	t=1785332719;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=TlpoDjaUiwDhEUS7H/6UoO0K/9RhPT3BmhhNeUQ64Fc=;
-	b=jM8XGxHXGFiKWvNmfXQOFKfLkhmJjaQJMmyJ1PYBuMcnEmrShYkKNaiNH3qPer45+Uz1RB
-	eMO4nyqZ3gOHFU+kC45Fek5+SBdsuMxVToPzVkS54TljEltHke4YZRgMejOHdD/CxTrDZv
-	TiJNdBEh3FvpudNKYXEgBQXiRlUqQ/k=
-X-Received: by 2002:a05:622a:2287:b0:519:b82d:fe62 with SMTP id
- d75a77b69052e-52b2cb626ecmr9306911cf.7.1785332489713; Wed, 29 Jul 2026
- 06:41:29 -0700 (PDT)
+	bh=wj6IB87otqR0ZGNUVqx/U0Bak0+2XxP9cfbv6FFIQt0=;
+	b=a/MrGmuZk89ws4MtJS6oo4jmSlE3Q/9gKwlZdFh2uxniKBsrdRJEWpG4g1Vf0wEVulBG2d
+	92x9KUnJCeICNwfn8JtlsDK6XQ/4tp45hlSTcpk5sv8AKeXdqE4gPibu7+TBlblsEX867S
+	pJihZU1qUw7hagsvwT9cKqZPNI3s8tY=
+X-Received: by 2002:a05:622a:4cc5:b0:517:6dc0:698d with SMTP id
+ d75a77b69052e-52b2b15be98mr11678831cf.0.1785332715601; Wed, 29 Jul 2026
+ 06:45:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -39,116 +39,126 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260729131823.2021516-1-fuad.tabba@linux.dev>
- <20260729131823.2021516-3-fuad.tabba@linux.dev> <20260729133403.C4DC51F000E9@smtp.kernel.org>
-In-Reply-To: <20260729133403.C4DC51F000E9@smtp.kernel.org>
+ <20260729131823.2021516-7-fuad.tabba@linux.dev> <20260729133929.CFE191F00A3D@smtp.kernel.org>
+In-Reply-To: <20260729133929.CFE191F00A3D@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Wed, 29 Jul 2026 14:40:52 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyHm8L9rFFBd5fYPzpCxiFg=0DgGWrA9PAVdgNOFCt9yw@mail.gmail.com>
-X-Gm-Features: AUfX_my_sBsJlNTklZvnGDHSn893IG6Nuhr4fFcHF1n_mLMryz3BFEwiS9JMmT0
-Message-ID: <CA+EHjTyHm8L9rFFBd5fYPzpCxiFg=0DgGWrA9PAVdgNOFCt9yw@mail.gmail.com>
-Subject: Re: [PATCH v7 2/8] KVM: arm64: Make vcpu_{read,write}_sys_reg
- available to HYP code
+Date: Wed, 29 Jul 2026 14:44:38 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTw-2ot0mJinAhi4FaOYXv8oLwg_US=uwG-qgQ+BJ-_x4A@mail.gmail.com>
+X-Gm-Features: AUfX_myJb88jCPKXBErkJT6ISspfYJq89Mwqef8UPdgq4c1gp7AtNl5lctDDCVc
+Message-ID: <CA+EHjTw-2ot0mJinAhi4FaOYXv8oLwg_US=uwG-qgQ+BJ-_x4A@mail.gmail.com>
+Subject: Re: [PATCH v7 6/8] KVM: arm64: Minimise EL2's exposure of host VGIC
+ state during world switch
 To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
+	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Migadu-Flow: FLOW_OUT
 
-On Wed, 29 Jul 2026 at 14:34, <sashiko-bot@kernel.org> wrote:
+On Wed, 29 Jul 2026 at 14:39, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Pre-existing bug: `enter_exception64` reads stale `SCTLR_EL1` du=
-ring early trap handling in nVHE/pKVM.
+> - [Critical] The patch fixes an arbitrary host pointer dereference in GIC=
+v3 hypercalls but completely misses the identical vulnerabilities in GICv5 =
+hypercalls (`handle___vgic_v5_save_apr` and `handle___vgic_v5_restore_vmcr_=
+apr`).
+> - [Critical] Unvalidated host pointer dereference in `handle___kvm_adjust=
+_pc` allows arbitrary memory modification in EL2.
 
-Already fixed:
-https://lore.kernel.org/all/20260612102347.914994-1-tabba@google.com/.
-
+https://lore.kernel.org/all/CA+EHjTyGULmVCgyoya3bXG4gRj0OYFE1gnJLhNE6kvCrZF=
+tXyQ@mail.gmail.com/
 
 /fuad
 
 > --
 >
-> --- Patch [2]: [PATCH v7 2/8] KVM: arm64: Make vcpu_{read,write}_sys_reg =
-available to HYP code ---
-> commit e62bbea08d3143161297d701776a47e619a76db1
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
+> --- Patch [6]: [PATCH v7 6/8] KVM: arm64: Minimise EL2's exposure of host=
+ VGIC state during world switch ---
+> commit def324be61872b6056efce4e3eb9ff57eb9a9e10
+> Author: Marc Zyngier <maz@kernel.org>
+> Subject: KVM: arm64: Minimise EL2's exposure of host VGIC state during wo=
+rld switch
 >
-> KVM: arm64: Make vcpu_{read,write}_sys_reg available to HYP code
+> This commit restricts EL2's exposure to host VGIC state by recovering the
+> host vCPU securely rather than directly dereferencing the host-provided
+> vgic_v3_cpu_if pointer in __vgic_v3_save_aprs and
+> __vgic_v3_restore_vmcr_aprs. It introduces a helper to fetch the host
+> vCPU using container_of() and copies only the necessary state.
 >
-> This commit replaces the locally open-coded __vcpu_read_sys_reg and
-> __vcpu_write_sys_reg wrappers in exception.c with the canonical
-> vcpu_{read,write}_sys_reg accessors. For nVHE builds, it maps these
-> accessors directly to the raw in-memory context accessors, allowing HYP
-> code to reuse helpers without function duplication.
->
-> > diff --git a/arch/arm64/kvm/hyp/exception.c b/arch/arm64/kvm/hyp/except=
-ion.c
-> > index bef40ddb16dbc..754e2dc1df54a 100644
-> > --- a/arch/arm64/kvm/hyp/exception.c
-> > +++ b/arch/arm64/kvm/hyp/exception.c
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > index 45d717889f6ea..f3233ee343a39 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
 >
 > [ ... ]
 >
-> > @@ -101,14 +85,14 @@ static void enter_exception64(struct kvm_vcpu *vcp=
-u, unsigned long target_mode,
+> > @@ -508,16 +520,63 @@ static void handle___vgic_v3_save_aprs(struct kvm=
+_cpu_context *host_ctxt)
+> >  {
+> > -     DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+> > +     struct pkvm_hyp_vcpu *hyp_vcpu;
+> > +     struct kvm_vcpu *host_vcpu;
 > >
-> >       switch (target_mode) {
-> >       case PSR_MODE_EL1h:
-> > -             vbar =3D __vcpu_read_sys_reg(vcpu, VBAR_EL1);
-> > -             sctlr =3D __vcpu_read_sys_reg(vcpu, SCTLR_EL1);
-> > -             __vcpu_write_sys_reg(vcpu, *vcpu_pc(vcpu), ELR_EL1);
-> > +             vbar =3D vcpu_read_sys_reg(vcpu, VBAR_EL1);
-> > +             sctlr =3D vcpu_read_sys_reg(vcpu, SCTLR_EL1);
+> > -     __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
+> > +     host_vcpu =3D get_host_hyp_vcpus_from_vgic_v3_cpu_if(host_ctxt, 1=
+,
+> > +                                                        &hyp_vcpu);
 >
-> [Severity: High]
-> This is a pre-existing issue, but does enter_exception64() read a stale
-> SCTLR_EL1 value from the in-memory context here?
+> [ ... ]
 >
-> When a protected VM triggers an early EL2 trap, the hypervisor handles it
-> via the kvm_handle_pvm_sysreg() -> inject_undef64() -> inject_sync64() ca=
-ll
-> chain. At that point, the guest's system registers aren't fully saved to =
-the
-> in-memory vcpu->arch.ctxt.
+> [Severity: Critical]
+> This is a pre-existing issue, but does the same regression exist for the
+> GICv5 hypercalls?
 >
-> While inject_sync64() explicitly synchronizes VBAR_EL1 from hardware to m=
-emory:
+> The patch replaces the direct kern_hyp_va() dereference with a secure loo=
+kup
+> for GICv3. However, it appears the same pattern remains in
+> handle___vgic_v5_save_apr() and handle___vgic_v5_restore_vmcr_apr():
 >
-> arch/arm64/kvm/hyp/nvhe/sys_regs.c:inject_sync64() {
->     ...
->     __vcpu_assign_sys_reg(vcpu, VBAR_EL1, read_sysreg_el1(SYS_VBAR));
->     ...
+> handle___vgic_v5_save_apr()
+>     __vgic_v5_save_apr(kern_hyp_va(cpu_if));
+>
+> Can a compromised host pass an arbitrary physical address here, causing
+> __vgic_v5_save_apr() to write the hardware value of SYS_ICH_APR_EL2 to th=
+at
+> chosen address, breaking EL2 isolation?
+>
+> [Severity: Critical]
+> This is also a pre-existing issue, but does handle___kvm_adjust_pc() have=
+ a
+> similar unvalidated host pointer dereference?
+>
+> In arch/arm64/kvm/hyp/nvhe/hyp-main.c:
+>
+> static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
+> {
+>         DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
+>
+>         __kvm_adjust_pc(kern_hyp_va(vcpu));
 > }
 >
-> It doesn't appear to synchronize SCTLR_EL1 before triggering exception
-> injection.
+> If the host kernel passes a crafted vcpu pointer, could it point to an
+> arbitrary memory region where the iflags offset has the INCREMENT_PC bit =
+set?
 >
-> Since nVHE builds map vcpu_read_sys_reg() directly to the memory context,
-> enter_exception64() seems to use a stale SCTLR_EL1 value to calculate the
-> PSR_PAN_BIT and PSR_SSBS_BIT for the exception's PSTATE.
+> This would cause the hypervisor to execute:
 >
-> This corrupted PSTATE is then written directly to the hardware SYS_SPSR_E=
-L2
-> by inject_sync64(), potentially poisoning the guest's state upon ERET.
+> arch/arm64/kvm/hyp/exception.c:__kvm_adjust_pc() {
+>     ...
+>     } else if (vcpu_get_flag(vcpu, INCREMENT_PC)) {
+>         kvm_skip_instr(vcpu);
+>         ...
+> }
 >
-> Should SCTLR_EL1 also be synchronized from hardware before injection?
->
-> > +             vcpu_write_sys_reg(vcpu, *vcpu_pc(vcpu), ELR_EL1);
-> >               break;
-> >       case PSR_MODE_EL2h:
-> > -             vbar =3D __vcpu_read_sys_reg(vcpu, VBAR_EL2);
-> > -             sctlr =3D __vcpu_read_sys_reg(vcpu, SCTLR_EL2);
-> > -             __vcpu_write_sys_reg(vcpu, *vcpu_pc(vcpu), ELR_EL2);
-> > +             vbar =3D vcpu_read_sys_reg(vcpu, VBAR_EL2);
-> > +             sctlr =3D vcpu_read_sys_reg(vcpu, SCTLR_EL2);
-> > +             vcpu_write_sys_reg(vcpu, *vcpu_pc(vcpu), ELR_EL2);
-> >               break;
-> >       default:
+> Could this allow an attacker to increment arbitrary EL2 memory by adding =
+4 to
+> the value at the regs.pc offset?
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729131823.20=
-21516-1-fuad.tabba@linux.dev?part=3D2
+21516-1-fuad.tabba@linux.dev?part=3D6
