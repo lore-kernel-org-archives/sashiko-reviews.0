@@ -1,288 +1,167 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4FB47F2F7;
-	Wed, 29 Jul 2026 14:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785335151; cv=fail; b=YTk+1CsQt2uAMab9crrgDk7O3w86rRDzVpvCLJ7MYFsFWYRJO2TUozalwmtzBx6nP8Av9IcIeHtvxXXI9slug4ZxxbWxobrcqjFIXSQfbeMbiVuO8NnC+QHbFd2hzzhPK9Ni/q+5Chto24JP2ta4peNoS8i54RyBt0nGgHYDn1E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785335151; c=relaxed/simple;
-	bh=9iVSHy729N25+Gcz5QEPzNtnJ4QjVPRsq1C7EjtSXaE=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=GfOJwG35AIpvxgLU3/Ir68v3IurIhgcOLUjNmxX5GOUIig5tHzpaGEypOmfaA2muwKfWsoYhkNcHmAfdDgBkVyFUdYf4JMNXqvojOVSIVm0ZTbP5NGsVpG+ZfajQHzwExxFvHGHS1SzBss8RxHSw/s6ntdpJqxmX7KUNDefUJMA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=bY9MVwd3; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=AMoYyOpk; arc=fail smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8948453A34
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 14:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785335708; cv=none; b=lHasZ6R4TAVnUehz1nvnCuPunky0VVV0y+TZLjqoMagDmNjzwxi3X/m7ZsrGI53e3usN3nGKrd7s28lwshIOvkEsHIyYaqMxwUutbLia/1CZzLpZ2B61m/9NY2blTME4v7qojOGnNmZ+2DSDcievPGeASwP6am5LMAM6i74vXIo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785335708; c=relaxed/simple;
+	bh=SlZlOtiUOQpo9MMuW+eMoQMK5d2TR+4KRpZxX0D10wY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=eTbq6nZLo0yB15hNHEwX3U1wQLiVV5bdC8ztKB+BKYhz9LglR2ArpuS9ofnjnPITmR2SSdlTOdPtGEJAO9nzmAeUCGVF154d5r/9H1e/rMrUrIiU3Pa0CtFN3mPsOvqIb5vvqo3t4IZR0zF1Bx+Cv3eA78GwQDXomRLV2FxlKXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=NOkro5pg; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="bY9MVwd3";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="AMoYyOpk"
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66TDTKF93035331;
-	Wed, 29 Jul 2026 14:25:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=TobZKZFgsAltKWBlO9kQqc3B+ywEgUUGlpHSyXv/Xas=; b=
-	bY9MVwd3F5hdCHw++D3Lxrp68Rjt0Jb2MLXT11/QLOEhsy7xmMYIeSQC0tJT+vsP
-	Pq3ELg5k7QnGAeoqRy2IY6flr62c7uZ5pjML+PC+iNFo4W/y0vVoxgWR0WU2QPzv
-	NCA7e9jAI8wf40aHqlI/RRrYVxlXH92gXcGKy551AB8GSpj3KwvAr31KTW3BDycj
-	8wZeDeOkuYvRZYf8STTaApphC6CKXGtI2tcbt9ktILTsOFVIBp0yN90hfn+HXgAE
-	LHSLvAUoqC7AxKZEyKzANXvpZI7WiRA0AdGjB5ZmGdNwF49F4GT5txNj90WFz2Hu
-	k6GNpCaTsLFpidsu+9IN3Q==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fmr5np0my-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 29 Jul 2026 14:25:48 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 66TEKUpJ012551;
-	Wed, 29 Jul 2026 14:25:47 GMT
-Received: from sn4pr2101cu001.outbound.protection.outlook.com (mail-southcentralusazon11012013.outbound.protection.outlook.com [40.93.195.13])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4fnhem055w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Wed, 29 Jul 2026 14:25:47 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=odGTk4lExl7qaSnh/pWi8nJ0WxKRbwb9I2b0Fy0+QDCquYsmVRdkmBcgnPlL5SMl2QSKrNAPc/w9rMHKe6EeaQUw1vtHZEs6IgOpdifOQJpvLWAScaRC7oz+84lA0PhWvVvBCIRWh+NdwYq7LGslkdlGFIyFCxpQO8vt3SWisZTD/wXlEWL8stBusEH1g4KZ8Llvy4qNQ9beh63MqHJcEm6orEiSDWIsSCOndreGpyMs+Zy8NJ72JKlFVLj4oSSIyiINnaKAGR88MhoQI3RTY/eS6ODnJKgwVwBCkwQUAFCLDLY+RuXTexUyry2DCH85dCuJMZVo7z6XObiD4ukAxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TobZKZFgsAltKWBlO9kQqc3B+ywEgUUGlpHSyXv/Xas=;
- b=zG53A6CPpbEJCFyfvjco0mOoAimI5gXBdQ/uyZqpfOF6nRe5iR6fQq5uKV0r09ZW4iHjbUZJNRLcxuEUxMgl71oe3D2cnmVN3rhnU1UjpSdE2Cey8/Vw84EnJTmVSAS7nGlNb66CtrzQg6SfqDwHK57nTtjwKVYRYoaRNrV19vpCrYd/ELmBwnT8bAhXqRyn/EsIPnPDGlJGKwv/5Ql3u0ThzOVOgWnQyolA7eFK6MI+YrpH+0WMI0GwcvXI2b5cdwXtDgWw6oZaqpP/Gsc6RPTw2OGhty9iLi0jXxvKHx7icFGKe8nWtQtbD9rrIR6CVBn8o8aahy3hGuNrncftig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TobZKZFgsAltKWBlO9kQqc3B+ywEgUUGlpHSyXv/Xas=;
- b=AMoYyOpk21tigq3z0cJ7gwT68P+djOy3u7y8aFbWAQaWgMca1xj4FhJazItWQro/h6YR4etEFjPKRahguJ1MqZuKkxOO0mlRiH9jh1IUQSqLJV0sZkzI42entSnpH3NHePI6xxurZhjL0l+noiP4qKSRi7H/FfZRK7hORFpDtkA=
-Received: from DM4PR10MB6229.namprd10.prod.outlook.com (2603:10b6:8:8c::12) by
- DS0PR10MB7522.namprd10.prod.outlook.com (2603:10b6:8:15e::16) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.270.12; Wed, 29 Jul 2026 14:25:41 +0000
-Received: from DM4PR10MB6229.namprd10.prod.outlook.com
- ([fe80::867:63e7:13fa:fa7d]) by DM4PR10MB6229.namprd10.prod.outlook.com
- ([fe80::867:63e7:13fa:fa7d%6]) with mapi id 15.21.0270.009; Wed, 29 Jul 2026
- 14:25:41 +0000
-Message-ID: <4d8144e3-7686-47f2-a19e-60b910d81bb9@oracle.com>
-Date: Wed, 29 Jul 2026 15:25:37 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 15/27] scsi-multipath: clone each bio
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="NOkro5pg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1785335705;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TBurJzX00gU8Pu9J5xt+dnrFDqgGyoXEsd3dJoQPNZY=;
+	b=NOkro5pg4X5p/K5y2DtqzgQVP2Gq7Y7WEnM2wrcUip4u9pqnB4VCYhBFi9ukeYowd4B4JB
+	Ltv25bS2YOKk7FeGkGhtVeGP8o4eVDtGnJs8qfmRF6ElUjsj080WHbECNVEI9w6mBLH0Jx
+	YXm+bO/NOL932cYJfQr7icjraKS6f7M=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-93-5x4H2i7VOT6lh1He0LHLGw-1; Wed, 29 Jul 2026 10:35:03 -0400
+X-MC-Unique: 5x4H2i7VOT6lh1He0LHLGw-1
+X-Mimecast-MFC-AGG-ID: 5x4H2i7VOT6lh1He0LHLGw_1785335703
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-47407691804so748696f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 07:35:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785335702; x=1785940502;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=TBurJzX00gU8Pu9J5xt+dnrFDqgGyoXEsd3dJoQPNZY=;
+        b=E4zsWP05KxHQnamaaV7/32u3uur/aeC74AzuBMaiCYdn8jFhmxxZmbui67g/s25OpK
+         0pUweevz1rpx1duLSqbYlULWBTMiBjWnS2NaLsrKIZIJhegvMrFdaRV/GVujVZtHvyUE
+         LJxDYJSkQpw4iyV5hxqTWwXa/d43OTfZkQGfbIN7Bvl3zN794m6lsDToylDMOgYCXaqf
+         7Yals60fogCRWiS1o3gBzQVuyAKj4dKyfBddq4e5ISnGjVuee8773P+Dk5JKA25rANt1
+         3wps5jGovdXAjtCtRr9oRkl0U+EAUFQ2RjXZK1qTl7rM2ofj1dRyEQklxH8P/F7CeEi/
+         X2yQ==
+X-Gm-Message-State: AOJu0Yyv4/t/O6JpLsgErZc0UESJ0DkoFim83Y3yEBSLIm5SJklGWdPG
+	OnnIeeI0Jvgz8zzgoOUdgBq2uQEShnx0pOt8OX68kg3n+F90V0beeq0iGdQQmEfwLLTw3ExeZvz
+	XAnQ9HSxQDkY5e0vRFZGN2y08jxcNE7slso3dyzxoYQeDFqwDWSB6/ihHeI2u+jOVXSn25lLaDm
+	onoYwgMtfs9krWUwP35S+LnazYJ11t9bL7n0XFvam/3ljENT1U00ObtA==
+X-Gm-Gg: AR+sD11+vIOMg4O5FHL6sWk6RzyvJ6Qe+DVb4G/v59dt16unxE5pHpQsntYq8Wm5TVi
+	uPD4nHg3XDuGXg9Gu0n/Flo6XTGmRSUU+okXe9hPYdhzvt8Hv8UMWM+1/3vJCQsfVyeST3Xp63P
+	rhk9zgUkA5LSkSZS7jadXaXmxuogjN+s2hFF1o0hS+FLhS1MA8BMW5VZi6nEQLUfjw6Wtpc8+tF
+	9iGHTSKQuKNasdNaiTD1+mcagsA2XgekogxSKkiXgGkekN1DdD8M0qn8z1T/WwwpJVnrC0IaSUG
+	YLpj2zSfzxh+ajk5sU7sCDeUwhNNM+8wMG0u40oyMOjzO+zyZk96uBZVrhEj/fKKQbYkmL7Pir0
+	xqzKzXkPXVx49pm+6tYvskFECu/lAUgQe30m+29+T2fw=
+X-Received: by 2002:a05:600c:820a:b0:495:409e:bc80 with SMTP id 5b1f17b1804b1-496c6586d21mr75447745e9.37.1785335702416;
+        Wed, 29 Jul 2026 07:35:02 -0700 (PDT)
+X-Received: by 2002:a05:600c:820a:b0:495:409e:bc80 with SMTP id 5b1f17b1804b1-496c6586d21mr75447205e9.37.1785335701766;
+        Wed, 29 Jul 2026 07:35:01 -0700 (PDT)
+Received: from sgarzare-redhat (ip139-137-192-82.pool-bba.aruba.it. [82.192.137.139])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-496c4443396sm176233775e9.0.2026.07.29.07.35.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2026 07:35:01 -0700 (PDT)
+Date: Wed, 29 Jul 2026 16:34:55 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-References: <20260729105107.255712-1-john.g.garry@oracle.com>
- <20260729105107.255712-16-john.g.garry@oracle.com>
- <20260729142321.5ADAB1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: John Garry <john.g.garry@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <20260729142321.5ADAB1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P302CA0044.GBRP302.PROD.OUTLOOK.COM
- (2603:10a6:600:317::10) To DM4PR10MB6229.namprd10.prod.outlook.com
- (2603:10b6:8:8c::12)
+Cc: Weiming Shi <bestswngs@gmail.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH] vsock/virtio: prevent workers from using deleted
+ virtqueues
+Message-ID: <amoNWGhKa78r3Kzo@sgarzare-redhat>
+References: <20260727035804.1860862-1-bestswngs@gmail.com>
+ <20260728035823.AFC051F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR10MB6229:EE_|DS0PR10MB7522:EE_
-X-MS-Office365-Filtering-Correlation-Id: 602e07a1-cd69-4a25-d601-08deed7d44c0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|6133799003|22082099003|18002099003|5023799004|56012099006|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	G2/ZrZGssnfeR8kC5iXlHm5Ioenld51yftUvDc1YONF78728GdPg4d3RXn4AYzwPIffJ76VK7DgbJH8tbwC/VfroxsGQBS1j4tjCQaS0J2MKrq4heSDtzqVryQ3FIGybzR/8egjUOw7icBb/biUnLTnMQ6+ASCQPWnhbIx+olN5uuod78DicOZ+ChTWVFOjSzv8IrNCuatAR1Nc5ASZ1n79xbCJCK4Dlx31Feag7+R1OWjCMRYn2agSdR9Hh2YL44C8boLGMbzuy8+iWY8/8CxmyxBFpA42qyNubQ2Eji7q3wGpWEjvKWUWnubP58hkat8+0HIy4Lr52V/KViqRZAUKsZ+AbyXSo2ab7qn7/pcmiNCKHYpH95e4FUx+UidUUNFMfMirl7nY8flar8mr7IKKP8MtSoYRXYeZebGA/zOTYZRfXjsjWJixY/kGJEB/KTDlBT4HRwf2WBw2Mbd7PAdtW8sKJzwJhZqqo8QeBI29hNdFCTQQ54BiFzb+m/q5jrU6n7BxX6VoDNjl/S/La6GeeW3eoy/5z8PEnNkxwI8+fsafvqj6euwC+MhS2n5WYITvxHnvxUAjT6RfC9yG1zO/mhs5JuIl8Awnj2VRL9h1nrm+tPfUsutCnQnD6/hy2Cn/Eec2Y5BVX1tihbHB7L3JLACfHmOdevGaI2aRJ8j4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB6229.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(6133799003)(22082099003)(18002099003)(5023799004)(56012099006)(4143699003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OHdHSk82WjhYWDByZmVNM3ExZ3FMZ1g1U0ZBVWlKU2c4ODJ4MUloZ1FoT1ZC?=
- =?utf-8?B?TkI2YU1LeTlvQnIxY3YwWUVzNUV1YXBNQVgvTk1ibjR6QkFvaW1mNm9WOXV5?=
- =?utf-8?B?Vm9xUkFrTzZtS21rWCs1ajgxZEFzenZBMHN5L0hteXhkeTJpVEF0bU1YQ0Vk?=
- =?utf-8?B?WlVuVXdUZUluV2VGRWNUeElvQzdwK0M5R0hHNmtFdkYrMXZ6U1V2LysxemNF?=
- =?utf-8?B?RUVYVGNPS2w0YW5CcjRUNjVXU3pBb0hIZktwbnprYWwzWUVIOC9veUF6eHdu?=
- =?utf-8?B?S3dvVXdEczNLZGtpSFRoN1hYRnVZUE10cSs0bXVsRDdvOE9HWkoyejRpK3l5?=
- =?utf-8?B?UUIyZ0xaZ2J4VWxzVUxhTVZaNzFzL2s3Slh1MUQ2RHF6cFY1UWRoOTFUNXpr?=
- =?utf-8?B?eDRVTHlWRDRDN0wvT1crQ2twVFdUazQ0T2VrZTUrejR1WEtrU25SVkRwdHUw?=
- =?utf-8?B?VEdmcmloZFQxdVpsdkhwWE1VSUlPQ05XZ2RBL0g5MW5IZlB5RDVqcDV4ajBP?=
- =?utf-8?B?QnZmK3hUMnZRWERFOVBBQUhvcGw0UkdxcnNkY2EvM0UycExpYmlaclkxSGto?=
- =?utf-8?B?a2lvT0YwN21OdEY4cEpSSy9ZZDRrQ0NYYzI0L2Q0ZWZYWldlOHFpdGF5Y0Nx?=
- =?utf-8?B?RGVhV3pIcjNSdHJSeDUvMVFpbExONlhqNXd4SE5oSzIvd3l3NDVhbnJJa05v?=
- =?utf-8?B?RWdIR29sOFZSZ2E0Z3B2elhsSEphTjMydWVlZnpjR1kvSW0yVG81N0xhWFV3?=
- =?utf-8?B?dkFIQ01DUXd4ZjBwWC85NFdya3AyYmtZMGhXM0hvMHl4a0hJSWIya2I2blE4?=
- =?utf-8?B?dnVsTVlRdG5JTXlFaXFaeUNOaERyV1lwNWVSbHQxbzNFUXZjdDZLVTl6anh6?=
- =?utf-8?B?Snc1TUxuNGYvZk5KSkxJL1o0cDVYTk85VnJhY1NrWHc3ZmFSbGJLWFliWUY5?=
- =?utf-8?B?eldvbXJ6eDlLTnpRUC9Na3ovODJsZHFZYmFtVWxWWkRoK1RieXJZem8yWUhm?=
- =?utf-8?B?alJ5czBXTUVWUE54bGIvM2s2ajZZZ1B1T3MvOFdoY1ZHOGFzeVZ5RjJMT05G?=
- =?utf-8?B?OXpCWGRrazFHaEUyNlRxSCtmVUdTeVBKSUtyWFI2dWRZZTlIY2FObkpvaFZU?=
- =?utf-8?B?MjNCQ1NVRFR6Skt2Ty9xeTJwMmM3bGdQY3ZlRjJ6VWFDdmZKbjRNUm92cE11?=
- =?utf-8?B?VmdVdGFXMkhlOTE5TlpUbmVQMzViRmQwTnBmLzFub1VOb0ZzeFlSWVJNWWNS?=
- =?utf-8?B?MEFRTjY1L01XMzh0anY3cEFyVERJWjd5Tzl2NXBFM1YyUTY5Nlk2TGlPTVpP?=
- =?utf-8?B?RG5TdGJWWEFPbk5WM3N4U2hlV1dZMTN4RzdZeTdrRDVVSDV2Tzc3em90NlNY?=
- =?utf-8?B?bE9TZThyTndsYi80Um1yZDhBN1lvdjlxcFBTVmtQL1VCcnBXalhhR3pBZGtX?=
- =?utf-8?B?dWFNTUp1cTBjQllCallDTTlHOWpqYzk4Q0VCRkZRRklrNm9TTFBlczBDSTY3?=
- =?utf-8?B?bXhYZmpVUEpDVnZMdWRVa2IyUDNZeWcwNlljUWtPWWtFZ2pjZEs4RGd4amx1?=
- =?utf-8?B?UXU0dWl4VDFna0g3ZVpTNGRMVnVtbEl0TmhxejJIendxTEdER04xVTllT20w?=
- =?utf-8?B?SFIyeG1WSms1Zng3YnVvL1ZFUmpzamJBQm91anFYMVZ3UUJ2VEdObUxRaUVW?=
- =?utf-8?B?Y0NGS3RpUml1eEtNa3NaNFpXNHNOZkxENW9mWmxOMHpPZCtiaDYyeWYzMHdE?=
- =?utf-8?B?eDNoRVpKbC9Nb3hUdDZaTEhLdlh2K3JieGc1MVRoQ0tUd0JYU0NiTDlEQlgz?=
- =?utf-8?B?WXB3OGkrUHFBQ0NFdytYU1ZVNGpNYXdQZWtXQlpRQzlMakNYbWcycytORFdq?=
- =?utf-8?B?N0tFTnRydFRxNkN5cTBqb2ovL3pOem1YZEFaKzNpZ0ttZi96Y3FTdkd2YWg1?=
- =?utf-8?B?S3pVYkFvL1NBRVZEbFhHM1RaNnU1VytmUmZPMS9vNUhXUGh5UE95TFRNM2Zn?=
- =?utf-8?B?RmYrWWFyMTE4Q0xTQ2t5OFlOMUYxbkNpSnM1Y09sVmFHcjJoS0UyK2djdkJG?=
- =?utf-8?B?dFIvaUJXRmd3ZXExb0kwNTFDMzVSTlZtazhTc25QUW1hZ09ZOUNxNUg0NWpC?=
- =?utf-8?B?WENwYzJrbWQ4UGZLcUFWS0JzN0FMVVR0MXRsamJVdTJsYTMrZEpQRk92MlIv?=
- =?utf-8?B?NWpsUUpxam9zMWZLNW84ZCt4S0RlbkNEc2FtMmhYSVAzQWpQMldoT1FlSFIw?=
- =?utf-8?B?ZFNRam0zcFRBRktBbkp3SXd5MTFJRzFWS3NVckFKYzlVZkllbjFZemJ3d2FW?=
- =?utf-8?B?dlhxRHdMa2JLVWFiREI4NklTaExNeDNqTmg2amVYdDNIS3NqOXhWdWwyK05J?=
- =?utf-8?Q?GO6q6akgB4KC8KhM=3D?=
-X-Exchange-RoutingPolicyChecked:
-	DCSCsL/X66We1COv9qBXTXxa+Qd6iU47ocodH+iLXoPBcRlILtiCK7ujXgBI4Pi+3AuS3qgc498X/som3meAo/QKNwoqRc8NLeGoCRdPlGo2ywu6EqDuI22x7RVBJlXyl1xdPCiLPdzMnWdHsV8dr30Yp4scI+7q8T72k6kGGGXnMmMPIQ6fHRDbiSiz2CPJ//b1OTzB9HlM75TFchd+tLnrWomRRqKKJCw0gqgNQlH8BQLQqZ8dVDp4gHt3l4qOkFx1PM9ZfldikJHfuYezSt9cLkiTD766ACssPMemsixxXUN/PhRuzRP4ESTnxTxeqUtOv8batJUbCLelVypkhA==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	zhImwJAxG60VZrLK84S0QiTSrE4mfZzRrRF3OkwgOrjEGYfQavaN1LxuVG/FKJr/2YsWN4JZcBBK9yHYiQzZhFxe4E35fUAzEXQhZgl2mkjncvgqhN8lG/F1twJzqR4xKknEDfGNpJ9CI99rKh3gt8SnXeIhKAJic84KrJLdp1nbIMaxAbB7rq7Z2HJrkD9ulnjmt/+oo0LiLAbcr9n0KVTSwez1oX0lCJWWrODZyaSUJIYc0+pkJmgpRrOO0npXNTbtXdYhbBcqfQMFTrWgGKbaJh9i/PNwrF26s+X7DMt1dGyylFzizXCw20jMnbGJDomi8Qsk02GY00Wyn+PO5l1lYFq5uha88P4+i2UOybBRcMV0r/4Kvebfa5+2tMfSv63lsxhGQ9Kc+x+cRLFT0hONGtFtsF9JI4QjuKIOxKRCVRYVH1O+/We/D53+Sep9knASWuc/pJ2imVHBuN1K4Duxr06qQo505P+bmm7Kv8YFXYmEnuKaIdN6MhlH3TvU5xlRg1ctGfEGy5Qv1JOk42UOSROJSjZR5BEjnoUhmFO9/nulANjwM5J0Av6CIBR5F8+hCvGk1/mQhPKWtzVR/kzf/HMOyLNS2xXOyneirQA=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 602e07a1-cd69-4a25-d601-08deed7d44c0
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB6229.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2026 14:25:41.5583
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Q5J1LOWcjhSLwrOjfY8MH5oT4HxOH01IP88PDSPfu5iEfFkWDqPT+Y5yqkKsLmN2RMUYvR4snVmSMAx0AAwwww==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7522
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-29_06,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- spamscore=0 adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2607290117
-X-Authority-Analysis: v=2.4 cv=OPsXGyaB c=1 sm=1 tr=0 ts=6a6a0d6c cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=o5oIOnhZENCTenyL_yNV:22 a=VwQbUJbxAAAA:8
- a=BiRJoDMCrcOmvMzpfPAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: _lDxKj31fYTVaZ0YpFXmMW2j2XQsG8uM
-X-Proofpoint-GUID: _lDxKj31fYTVaZ0YpFXmMW2j2XQsG8uM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDExNyBTYWx0ZWRfXyiopRCUpRXob
- BdBh00wMVgs8vjvo14+zN3+xvE7g5yS28RsgWRV53JMfhSLMMzjmuCuQRwYzhxy3thOKohVxEoW
- fZUjjmqo0CpgjTFTPL1qIRvc4LoQcHQVWKDIS0DIfIBCrXdkrC9l
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDExNyBTYWx0ZWRfX7FUbtdnUcbzc
- SDOJD9belPUCI+qQIOUtLhMbqF+QXwzc5MVEcLzoBwPTIp8/m0K4xkjlfxizk5zIhOuDcY50He6
- 1lAAJw9hgTZsHSRxHpFRRYdtx0SWS4MM+/pbsBWMc+tJUIxOktGDcV78/DF0Pf7CXKr7rEYFhm1
- TrPXi2O6f3vnYVM4Yw0DN6gU55iuQnRzg/OpG02sfvbVMMQLwKl5bl5ewd7DwA7h33jpxNGzO+d
- SYmPVAHWR0mppQUhLm9UCJifaWOrg8SOw83NlARZsm0hBBAuOLQagIas5XlfiOyeFCSEOuWpv7/
- 1LMtlwl25JLdyYLFtcQ2buz03Z0F5ihr61do7PBqix7Re6AuF07qRIaqr7U/a5aTiIkw8M7tj9e
- pJvhQ1Th0kfCk7aOwDu4+O5dvhk2d+la8UEG8EUm4c4qGzhtAC2B3p4K42PtjAbOvgCCWkmg4j9
- iZM4P3pD/m/lkrOZfBw==
+In-Reply-To: <20260728035823.AFC051F000E9@smtp.kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 9PAoPVaQ6ebKs5FK8IdBGSmrfe27zhkpz4TTqsuE2FM_1785335703
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On 29/07/2026 15:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] The `smpdt` structure fails to implement mandatory `mpath_head_template` callbacks, leading to a NULL pointer dereference.
-> - [High] The clone completion callback entirely lacks the failover resubmission logic claimed in the commit message, breaking failover handling.
-> - [High] The `bio_pool` mempool is destroyed before waiting for active users to drain, leading to a use-after-free when in-flight cloned bios complete.
-> --
-> 
-> --- Patch [15]: [PATCH v6 15/27] scsi-multipath: clone each bio ---
-> commit ea53159f3e5b8959582afd4b035267bb7a201a6d
-> Author: John Garry <john.garry@linux.dev>
-> 
-> scsi-multipath: clone each bio
-> 
-> For failover handling, we will take the approach to resubmit each
-> bio.
-> 
-> However, unlike NVMe, for SCSI there is no guarantee that any bio submitted
-> is either all or none completed.
-> 
-> As such, for SCSI, for failover handling we will take the approach to
-> just re-submit the original bio. For this, clone and submit each bio.
-> 
->> diff --git a/drivers/scsi/scsi_multipath.c b/drivers/scsi/scsi_multipath.c
->> index 593f94aac70e9..0d439cac6447a 100644
->> --- a/drivers/scsi/scsi_multipath.c
->> +++ b/drivers/scsi/scsi_multipath.c
->> @@ -99,6 +99,7 @@ static void scsi_mpath_head_release(struct device *dev)
->>   		container_of(dev, struct scsi_mpath_head, dev);
->>   	struct mpath_head *mpath_head = &scsi_mpath_head->mpath_head;
->>   
->> +	bioset_exit(&scsi_mpath_head->bio_pool);
->>   	ida_free(&scsi_multipath_dev_ida, scsi_mpath_head->index);
->>   	ida_destroy(&scsi_mpath_head->ida);
->>   	mpath_head_uninit(mpath_head);
-> 
-> [Severity: High]
-> Does this code destroy the mempool before all users have drained?
+On Tue, Jul 28, 2026 at 03:58:23AM +0000, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+>Pre-existing issues:
+>- [High] Incorrect flush_work() ordering in virtio_vsock_remove() allows rx_work to be queued by a delayed send_pkt_work after rx_work has already been flushed, leading to a use-after-free when vsock is destroyed.
+>--
+>
+>--- Patch [1]: [PATCH] vsock/virtio: prevent workers from using deleted virtqueues ---
+>commit fac9b600b273994b7593c604a6d3d0352d8dbee3
+>Author: Weiming Shi <bestswngs@gmail.com>
+>
+>vsock/virtio: prevent workers from using deleted virtqueues
+>
+>The RX, TX and event workers read their virtqueue pointers before taking
+>the mutex that protects the queue and its run flag. This patch reads each
+>worker's virtqueue under its mutex after confirming the queue is running,
+>preventing use-after-free of deleted virtqueues.
+>
+>Cc: stable@vger.kernel.org
+>
+>> diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
+>> index 57f2d6ec3ffc6..79cf19f589439 100644
+>> --- a/net/vmw_vsock/virtio_transport.c
+>> +++ b/net/vmw_vsock/virtio_transport.c
+>[ ... ]
+>> @@ -689,7 +690,8 @@ static void virtio_transport_rx_work(struct work_struct *work)
+>>  	} while (!virtqueue_enable_cb(vq));
+>>
+>>  out:
+>> -	if (vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)
+>> +	if (vsock->rx_run &&
+>> +	    vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)
+>>  		virtio_vsock_rx_fill(vsock);
+>>  	mutex_unlock(&vsock->rx_lock);
+>>  }
+>
+>[Severity: High]
+>This is a pre-existing issue, but is there a use-after-free risk in
+>virtio_vsock_remove() due to the flush_work() ordering?
+>
+>In virtio_vsock_remove(), the flush sequence drains rx_work before
+>send_pkt_work:
+>
+>    flush_work(&vsock->rx_work);
+>    flush_work(&vsock->tx_work);
+>    flush_work(&vsock->event_work);
+>    flush_work(&vsock->send_pkt_work);
+>    ...
+>    kfree(vsock);
+>
+>Meanwhile, virtio_transport_send_pkt_work() can queue rx_work outside
+>the tx_lock:
+>
+>out:
+>    mutex_unlock(&vsock->tx_lock);
+>
+>    if (restart_rx)
+>        queue_work(virtio_vsock_workqueue, &vsock->rx_work);
+>
+>If virtio_vsock_remove() flushes rx_work (which returns immediately if it
+>has not been queued yet), and then blocks waiting on send_pkt_work to finish,
+>could send_pkt_work queue rx_work just before completing?
+>
+>This would leave rx_work pending in the workqueue after virtio_vsock_remove()
+>frees the vsock object, leading to memory corruption when the work executes.
 
-Yes, all bios should be finished at this stage
+This seems a real issue, would you like to fix it?
+In a separate patch, since it's pre-existing.
 
-> 
-> When the last SCSI path is removed, scsi_mpath_head_release() calls
-> bioset_exit() immediately. It then calls mpath_head_uninit(), which
-> synchronously waits for all users to release their references.
-> 
-> If there are in-flight cloned bios completing, or if the block device is
-> still open and receives new I/O while waiting, they could access the
-> already-freed bio_pool via bio_put() or bio_alloc_clone().
-> 
-> Can this result in a use-after-free on the destroyed mempool?
-> 
-> [ ... ]
-> 
->> @@ -237,7 +238,34 @@ static int scsi_multipath_sdev_init(struct scsi_device *sdev)
->>   	return 0;
->>   }
->>   
->> +static void scsi_mpath_clone_end_io(struct bio *clone)
->> +{
->> +	struct bio *master_bio = clone->bi_private;
->> +
->> +	master_bio->bi_status = clone->bi_status;
->> +	bio_put(clone);
->> +	bio_endio(master_bio);
->> +}
-> 
-> [Severity: High]
-> Does this callback omit the failover resubmission logic mentioned in the
-> commit message?
-> 
-> When an underlying SCSI path fails an I/O, this function unconditionally
-> copies the error to master_bio and calls bio_endio().
-> 
-> Since the commit message states the approach is to re-submit the original
-> bio for failover handling, shouldn't there be code here to intercept the
-> error and requeue it, rather than immediately returning the error to the
-> issuer?
-> 
+Thanks,
+Stefano
 
-this is done in a later patch
+>
+>-- 
+>Sashiko AI review · https://sashiko.dev/#/patchset/20260727035804.1860862-1-bestswngs@gmail.com?part=1
+>
 
-> [ ... ]
-> 
->>   static struct mpath_head_template smpdt = {
->> +	.clone_bio = scsi_mpath_clone_bio,
->>   };
-> 
-> [Severity: High]
-> Is this struct missing mandatory mpath_head_template callbacks?
-> 
-> Any I/O submission to the multipath block device invokes mpath_find_path(),
-> which unconditionally calls mpath_head->mpdt->is_disabled(mpath_device).
-> 
-> Because smpdt only initializes .clone_bio, functions like is_disabled,
-> is_optimized, and available_path will be NULL.
-> 
-> Will this cause an immediate kernel panic due to a NULL pointer dereference
-> when an I/O is issued?
-> 
-
-they are added later
