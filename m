@@ -1,191 +1,187 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC6A470448
-	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 13:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785332741; cv=pass; b=BYNodnn0/8bRJG7XQg5ey6QTT8ck6GDtIe9GdukNV3xsKzijlKmTfJ9tT8o/hHeiGpkDbtCaD+mZSgbs5UVyCPwrnh1+uAZw9EOhx24BQqn3SxFwWfiHMyGs9XUjW8s2FWo5eeHRMpeick+ZNX2ZuqmBvpC7WFYwS+9cjxo0cOI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785332741; c=relaxed/simple;
-	bh=UZAhy5157NkSAMSWJcdNZefOEQdqg3ZnXPVybrWCqrM=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44B42DEA75
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 13:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785332854; cv=none; b=N1hBdv+Mhi3+8YOmjul2XenadgLghXnk2Cvqtwb3th9L02XGt9VlIzJK6RKe8eMA7wFixyiiuRclJCw3Bqki9RxYanf+2J7lEcQBuIfrTZDkV2c41x7oK8xOEuvh9FSCRDxebzh/gs3Sb+Sgs3j2K8ldy0rYvITUFyQUN9sMbNo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785332854; c=relaxed/simple;
+	bh=uLPT3qPDw6PyRFoDxxyAxWqaBZfCeUSz64TubquYANA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aj0gOsgUUeuOC6K8FEpwrzbFqssBN4vs1KMhe/H4g+iN9Q1FVuhXWSoMATh8Cm7cjUx4U8GW7IsHm6KylihVnLOMdrEv9/5X+yBotLfX+r32qav6Anr9wg0P3JP9oHwmr4f0kSagt+XipLj7QeZ4sY32ad8Jgu1urLIRRD3Pekg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o+Dp3koE; arc=pass smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=cGPSkhaUlorhyqWMWpWQQ/TJAicN6Z3w6t6W6wFCs3Al4gDX3nrPUdMX3XZcWHpjpBxfpBtwTcInKTGwcJ5ZWtLBUCDLsxXxqwx0k966fbxzUi8NdSbISLKrhNwBn0pFbVCih/tYVedPvGRRVDUDtwbpjaVRtalwEl1Xbz/idAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Rry+QiGx; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o+Dp3koE"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-81ed000b507so10449317b3.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 06:45:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785332739; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RUglJi2pjUL5D2N1K2v/1yrfmAyjGdJjYyxRNNVE5OMGeQ7cVOiTF9ZHbnNejyHVEu
-         aVBpCZp1+FS81Ox1rCs6vZxS9MpvNbAhlArcC2WRp+qIFH6KQCoWJg7FyvK5ySJ+ahIN
-         FSrzKqslUpYTvNv+dbQScvoYVnOWK/gX8bs5o3H5nsjgfwvIPGRlODqobL0Ot98OHBJo
-         kdQNx9/VOW2vwju5rPwqYaYQmZzwq0MezVaQwhYFvdFZEtdhIRgKHIq/ilNdOq1EA6F7
-         NvNFagEmORO27rYtcY5heik3cUPZQPxF7WLWt/CcjjEJxUvdFtOkD4zDib8SOYoi2sOL
-         q+Tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SHtZAPYn3Wc91D71uLVL563MpKOhtIJrqDFEQxe1/jE=;
-        fh=l7ViLnppvkkSQ+LRUx3Qov8iJmCPcv0PVZg4trlzbMc=;
-        b=k4ssJthbC0dkWikjMOHnhRzbJDlE/shomAT/u4TK9cdiWJ/Ym6eCYd/XpM2Ops/fqM
-         X/rr+7t5M5enOeyBdv4GzlYZrElkISRTuLK27Ym0UvjrWdad3GTe5biR/kf3N3GTaKDW
-         5DWEv6t9c1Mq2N6cCR03ZL3UrT4BStna1ECQnkRvAIYExlqK7334cgXxi+VdAFmTujek
-         im7UNkjAzvZzfoJRmg4JyYlh3rg0ACXDFWsA7tHcxJDF3MxRCQ3EQqS+S7D25QBQ5ZRN
-         B5PeVchH53LNxO5vYMd3/tArOVPnI47nMFfMm/wX5ScR/QxETvtWBu7CSRGsQFruiybm
-         BSCg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785332739; x=1785937539; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=SHtZAPYn3Wc91D71uLVL563MpKOhtIJrqDFEQxe1/jE=;
-        b=o+Dp3koEx+L6Hbg0cOEOAi9mGNTyBMN3kegb+bXtAlaE7MfczWm+x5c7mxkIJgT/3t
-         swwuIvNx9zD0QNSue0vg/DzHXGoBng9WP40X06j/EiFWuqyyg3zBFvpZlOuAxwJZvEys
-         sK4Yuor50qGl9dOYfx298VcWdhB7svGGu+9lGM5URr57tKX9WZxPQ2TTq4a96Igrnc93
-         /Oq4zj0dD3ND/xE29iKGepbW0jySUJGpV4BdFSOVg1+Q1wh2vUxpO2PswEbSk0/PAvNS
-         65SKN3iaRYbsR0zcAkocso6Hc/DRIh17Gen/qt+Sj4BlqlAhWtlTvd9tD/Nh2iw/tIWO
-         AOlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785332739; x=1785937539;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SHtZAPYn3Wc91D71uLVL563MpKOhtIJrqDFEQxe1/jE=;
-        b=k3SSjze71o1MJQxtFp0VDZTuLJHQQLTS9OR5hy08uMCHuveDB54iTAZVa/cckX6jJg
-         qX7+sozhtvKC25GcXLCfF+LJMYjuiJrrgOAkOdobT+XpcuMtfjMryP9Bp/6r5K5QMnTO
-         QFBQuuCEJ6nig6wgh3XNDU6o2SwRdM54FXp23TniXHwGnq562GPToFouqy87RrBiQI3K
-         SSpCqqy1pM8jDvR/pmfgGpPpTPggvf0j8hsmqzC4E+SzXrJ/VJ2l/BvUCf2U8WixM/pj
-         LCYoamhZOLgVkL6J5qDEDgH7a1RvX3Ur+yaiIVePkgLMu17TWZif0/8n8raPA0WVfyPq
-         4/kQ==
-X-Gm-Message-State: AOJu0YxW9XAolq2PQ3Uura8pYvPOTGE42+uf3xUi13CNLFmwSEgGM0vR
-	jI+TUlOTgzZdre+XraE7lBUZ0DFotSGZWpEL4dHjzxAaRxu8cfxOeGame4A5+py1pBJZmiVwXKD
-	caUlDKr6T5g7eCxMYSuXYQOXwh1KBLrTs9w==
-X-Gm-Gg: AR+sD1303Nx2325hozm1VSB0+WXlGW+FWGdi/CYnsfsxhwAkQEyWfdAFnxFbDyG+aXm
-	hDZhb0KtMkGxsQkroMgbZAP4rcw0ix2Z8morwiiwIKKLCnNWeN3bZ0QxQ25G/om94cGaKBesAep
-	nBaGs+hMcpmqFg6eCvGaQ8f/baI0dg5hCY8fl0+5z5sWLl8n/qzvY6AbmgvDsEPAxdfKUqH/W0r
-	r6Gw4dCiCi0cQeDthV+WaJ+shGZtQ4jpXEw1EjzNWN7ZRRX5z8PwByuf2dBEb07xYtKoekxsMY5
-	I3z83yhfjk8QfKG3t5w3YrqDCRz/s3luzs8vpKUe2l8=
-X-Received: by 2002:a05:690c:6c01:b0:81e:1437:5763 with SMTP id
- 00721157ae682-81f99247c84mr32859177b3.62.1785332739192; Wed, 29 Jul 2026
- 06:45:39 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Rry+QiGx"
+X-Gm-Message-State: AOJu0Yx+DewmAxzQ+2wnDK4pMoYS0Rt7+GVmC852gMxuvp4XQLQR/7GP
+	RKyj//u5FTaBLDj3xeEZBAXXhp3Gm0GTjJ2Qh4z/Qv5ajWmDBQpqRruuyCJFw+z07/F5H35RPrV
+	CAcpgB8aSyFGfdk6y9yEf5hu687IwUEkTnEFOLSf9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785332851;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ObLTe4j5+GIry/KA4AvGwNTy0S0bPjoV/ugF789jLJM=;
+	b=Rry+QiGx28iH7m2W2P5r/Tyt/rI0WioiOa0ODE+gayz7t2Q24/8Lljz+tIgjT5HgIpi+hp
+	KcWvEzgsZ46gnEmeNyyXTZxcaEIVc32EWwkVwy/BOZz/dM8fUbNBl9JYdTKDCFeD1D8BdU
+	jzSAgl5GqSPx9p7/+qnPLeoa/KrgjU0=
+X-Received: by 2002:a05:622a:514a:b0:51c:935d:8d74 with SMTP id
+ d75a77b69052e-52b2cc85692mr9349041cf.9.1785332844512; Wed, 29 Jul 2026
+ 06:47:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260716230411.2767394-1-tarunsahu@google.com>
- <20260716230411.2767394-4-tarunsahu@google.com> <20260717024938.128D91F000E9@smtp.kernel.org>
-In-Reply-To: <20260717024938.128D91F000E9@smtp.kernel.org>
-From: David Jeffery <dhjeffery@gmail.com>
-Date: Wed, 29 Jul 2026 09:45:27 -0400
-X-Gm-Features: AUfX_myRPaVDt58yJr6A2eZEJEygxGVewYG3ucJaoFeFR_lLDJKTrjk92Ni0vOU
-Message-ID: <CANghDUVJNULztJ+-8G=PD9eXjdBF=QuHyXhYszzZO5rtzyj5ag@mail.gmail.com>
-Subject: Re: [PATCH v19 3/7] driver core: separate function to shutdown one device
+References: <20260729131823.2021516-1-fuad.tabba@linux.dev>
+ <20260729131823.2021516-9-fuad.tabba@linux.dev> <20260729133600.ABD741F000E9@smtp.kernel.org>
+In-Reply-To: <20260729133600.ABD741F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Wed, 29 Jul 2026 14:46:47 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTxCuAgBdRkACw26=F2-k98BrDxzwaLyhyT5uGN+-4-ZKQ@mail.gmail.com>
+X-Gm-Features: AUfX_mw-VKzX9ky4UGdBykDDFy1qEMOQhp9w5ae93rayF3NMCo2lEeXnhpzdnA4
+Message-ID: <CA+EHjTxCuAgBdRkACw26=F2-k98BrDxzwaLyhyT5uGN+-4-ZKQ@mail.gmail.com>
+Subject: Re: [PATCH v7 8/8] KVM: arm64: Implement lazy vCPU state sync for
+ non-protected guests
 To: sashiko-reviews@lists.linux.dev
-Cc: Tarun Sahu <tarunsahu@google.com>, linux-pci@vger.kernel.org, 
-	linux-scsi@vger.kernel.org
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, Jul 16, 2026 at 10:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Wed, 29 Jul 2026 at 14:36, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] The refactored `device_shutdown` discards the parent device poin=
-ter returned by `get_device(dev->parent)` and re-reads `dev->parent` inside=
- `shutdown_one_device()`, creating a TOCTOU race condition that can lead to=
- reference leaks and use-after-free.
+> - [High] Missing HCR_EL2 state synchronization breaks virtual SError inje=
+ction, causing an infinite exception loop.
+> - [High] Lazy state sync fails to flush context after KVM_REQ_VCPU_RESET,=
+ causing vCPU resets (e.g., PSCI CPU_ON) to be ignored.
 
-This gets cleaned up in the next patch, but I'll rework it so that
-this patch has no functional code changes and is only a code move into
-a separate function.
+I think this covers it:
+
+https://lore.kernel.org/all/CA+EHjTxiyUSJqRcadSCOmR+tELSsBiGaTYH9xxXh-g-xyu=
+HZdA@mail.gmail.com/
+
+/fuad
 
 > --
 >
-> --- Patch [3]: [PATCH v19 3/7] driver core: separate function to shutdown=
- one device ---
-> commit c3cdb15ac9b6efba6077cade25c652c124eaa9c7
-> Author: David Jeffery <djeffery@redhat.com>
+> --- Patch [8]: [PATCH v7 8/8] KVM: arm64: Implement lazy vCPU state sync =
+for non-protected guests ---
+> commit 80df5c4ca2cca0a1726813fa129b353353482892
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
 >
-> driver core: separate function to shutdown one device
+> KVM: arm64: Implement lazy vCPU state sync for non-protected guests
 >
-> This commit refactors device_shutdown() by extracting the shutdown logic =
-for a
-> single device into a new separate function, shutdown_one_device(). This c=
-hange
-> is intended as a preparatory step for supporting asynchronous device shut=
-down.
+> This commit optimizes world switches for non-protected guests by deferrin=
+g
+> the copy of the vCPU register context between the host and hypervisor.
+> State is now only synced on entry if marked dirty, and on exit only when
+> explicitly needed by the host.
 >
-> > diff --git a/drivers/base/core.c b/drivers/base/core.c
-> > index 78b90326addb6..82a7af1f3ba2e 100644
-> > --- a/drivers/base/core.c
-> > +++ b/drivers/base/core.c
-> > @@ -4898,12 +4898,48 @@ int device_change_owner(struct device *dev, kui=
-d_t kuid, kgid_t kgid)
-> >       return error;
+> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
+c
+> > --- a/arch/arm64/kvm/handle_exit.c
+> > +++ b/arch/arm64/kvm/handle_exit.c
+> > @@ -486,9 +486,32 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
+on_index)
+> >       }
 > >  }
 > >
-> > +static void shutdown_one_device(struct device *dev)
+> > +static void handle_exit_pkvm_state(struct kvm_vcpu *vcpu, int exceptio=
+n_index)
 > > +{
-> > +     struct device *parent =3D dev->parent;
+> > +     int exception_code =3D ARM_EXCEPTION_CODE(exception_index);
+> > +
+> > +     if (!is_protected_kvm_enabled() || kvm_vm_is_protected(vcpu->kvm)=
+)
+> > +             return;
+> > +
+> > +     /*
+> > +      * Sync the context back when the host will read (trap) or write
+> > +      * (SError) it. Preempt-off here, so the loaded hyp vCPU is stabl=
+e.
+> > +      */
+> > +     if (exception_code =3D=3D ARM_EXCEPTION_TRAP ||
+> > +         exception_code =3D=3D ARM_EXCEPTION_EL1_SERROR ||
+> > +         ARM_SERROR_PENDING(exception_index)) {
+> > +             kvm_call_hyp_nvhe(__pkvm_vcpu_sync_state);
+> > +             vcpu_set_flag(vcpu, PKVM_HOST_STATE_DIRTY);
+> > +     } else {
+> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
 >
 > [Severity: High]
-> Does this lockless read of dev->parent introduce a race condition?
+> Is it possible for KVM_REQ_VCPU_RESET updates to be ignored due to this
+> cleared flag?
 >
-> In the old code, the parent device pointer was captured and pinned in
-> device_shutdown() using parent =3D get_device(dev->parent).
+> If a secondary vCPU is powered on (for example, via PSCI CPU_ON), it
+> receives KVM_REQ_VCPU_RESET and gets kicked, leading to an exit with an
+> IRQ. Since that exit takes this else branch and clears the dirty flag,
+> and the reset request is processed afterward in kvm_vcpu_check_requests()
+> which modifies the host-side vCPU context, wouldn't flush_hyp_vcpu() skip
+> syncing this updated reset state because the flag remains cleared?
 >
-> With this refactoring, dev->parent is re-read here. If the parent changes
-> concurrently (for example, via device_move()), could we end up operating =
-on a
-> parent device that we do not hold a reference to?
+> This could result in the target vCPU resuming with its pre-IRQ stale
+> context, eventually overwriting the new reset state on the next exit.
 >
+> > +     }
+> > +}
 > > +
-> > +     /* hold lock to avoid race with probe/release */
-> > +     if (parent)
-> > +             device_lock(parent);
 >
 > [ ... ]
 >
-> > @@ -4925,7 +4961,7 @@ void device_shutdown(void)
-> >                * prevent it from being freed because parent's
-> >                * lock is to be held
-> >                */
-> > -             parent =3D get_device(dev->parent);
-> > +             get_device(dev->parent);
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > @@ -203,9 +255,16 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
+p_vcpu)
+> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
+> >       sync_debug_state(hyp_vcpu);
+> >
+> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
+> > -
+> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
 >
 > [Severity: High]
-> Is there a reference leak here since the return value of get_device() is =
-now
-> discarded?
+> Does removing this HCR_EL2 assignment break virtual SError injection and
+> cause an infinite exception loop?
 >
-> If dev->parent changes right after this call, the original parent's refer=
-ence
-> will be leaked. Later, shutdown_one_device() will lock and drop a referen=
-ce
-> to the new parent instead, potentially leading to unbalanced reference co=
-unts
-> and use-after-free.
+> When the host injects a virtual SError into a non-protected guest under
+> pKVM by setting HCR_VSE in the host-side vcpu->arch.hcr_el2, the hardware
+> automatically clears the VSE bit in the physical HCR_EL2 register once th=
+e
+> guest takes the exception.
 >
-> Should we pass the pinned parent device pointer into shutdown_one_device(=
-)
-> as an argument to ensure we lock and release the exact same device we too=
-k a
-> reference to?
+> Without syncing this hardware-cleared state back to the host here, the
+> host's HCR_VSE bit remains set. On the next entry, flush_hyp_vcpu() will
+> repeatedly re-inject the stale HCR_VSE bit from the host into the hyp vCP=
+U,
+> locking up the guest.
 >
-> >               get_device(dev);
-> >               /*
-> >                * Make sure the device is off the kset list, in the
+> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
+> > +             host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
+> > +     } else {
+> > +             /*
+> > +              * PC feeds trace_kvm_exit(), PSTATE.SS the host software=
+-step
+> > +              * machine, and both run before the next on-demand ctxt s=
+ync.
+> > +              */
+> > +             host_vcpu->arch.ctxt.regs.pc =3D hyp_vcpu->vcpu.arch.ctxt=
+.regs.pc;
+> > +             host_vcpu->arch.ctxt.regs.pstate =3D hyp_vcpu->vcpu.arch.=
+ctxt.regs.pstate;
+> > +     }
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716230411.27=
-67394-1-tarunsahu@google.com?part=3D3
->
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729131823.20=
+21516-1-fuad.tabba@linux.dev?part=3D8
