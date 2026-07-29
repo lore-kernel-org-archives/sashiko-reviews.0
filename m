@@ -1,176 +1,149 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011021.outbound.protection.outlook.com [40.107.130.21])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71863B42F3;
-	Wed, 29 Jul 2026 07:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.21
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785308421; cv=fail; b=O37N8jWS9r1BoFvkfupMRNkYXmoe94y9IE6qCfTUWI+DIkhvz+wga0ANJEIHBX/btAu4QtnbtC5RbptShfZv6cPP1sFbDp7R+uhp4hqd68JtLFvX4E2Fg1SGULYnlQHoiWUkmT6kBfGYMa188KzaqhaH6na1Kf1UgAtDIKL1N1E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785308421; c=relaxed/simple;
-	bh=E4Zlv/QugfYXRED5nD6S6PXEWP+p1lvH06ep1jGbKgc=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=AuOTLCoLyxT9+uMmJ+26FUWlEvFdyG6ykZxnM7YC6rlztMust4Vn8sv44VI85tC5kp1eLU+tABuaR/QmE20gYWY9uGvsJm3EGSnN2cDfutQhRuyHVU1qhbFX5wWBJpA7pprhD2uqLSl4R+8oC8GpF/7Zyxfm5WAtDyGh1nlBY/k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=wsf31T4o; arc=fail smtp.client-ip=40.107.130.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838453BB122
+	for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 07:03:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785308587; cv=none; b=SqSABTm5ZkzgqYbwTfX9eJzVDmbekl6HLmRUQvumPHEq0Jo3yjs0vK9XNR6fT2d+6lk+I66oVgdIkLPnebQLObqC5vXWhdUmqF5xD1FLHr0txSjuOZwPENdfMNPF0EPuf1vJzmcYd+3DOjWf0vt7q7MAQLWyhkTwodhgMGe6dZE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785308587; c=relaxed/simple;
+	bh=m+Op77YEKvI3wHpV3WvQB9l9ZhrPGJ43SJNNa2897kk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qcL5KZ3prdE0+VHL81JtP2rfMNoQCnmPlOuhGpT/lbW87KpR/quwmZjYMTJovwcK/j1vJcwz2SL+zRlFp1pp4tC7bOnDJFpi9V270CcDpw9qakm/rp9q13bpvxiNGcyqlXpxXiqLBIzpYDxoad5zZPTZeKk0HEhC790KSAOLuZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=plpf8FMk; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="wsf31T4o"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VR6ZP1Ug9slrW42nEdbvZh1gBK6fDwCTHXTq4o401rsfCWF98/1A8YbWhMqgO7JvWvbk/L0LzVjHLN3+rRhb/pSs8ta0iVlBO0L0lebvzalM14CF4IwsFxWTg3iW/AUDr4mRPMdStaGxUiPBwRbS1c+wAN4Waa1Bg2cAwuCR275N67wk3mhcXUKNp9k3r+3DwW0H9waX4whoVJG+v2gTsoUiIXah2ho2DqCTxDWtj7iamb/QbhrhDQeJV+ozSaobBwzFXUBurdbXauT5PRJy34+4epcdJXuDGMOQGx59TQEUahQbcXWjgfU79/AcOSRddxDKMU3ySsZCdDsbDD2x6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E4Zlv/QugfYXRED5nD6S6PXEWP+p1lvH06ep1jGbKgc=;
- b=JIav4jLlT7jiGFTcS1Ny+OABUKfn68HbPgOJy2iRtNbCSAJwz5aB/JcXb5g9mQvM7vpwZwTcpnzT5OTz/lrukCHU5H4NeRyyPG8Slg7dCLz3SvY4LES+oP1NM46mM2YzyFAly8Koy3j/ykN7MEhZJHytGuVtXiqAK6Wsh4mnOpDABVH/oLRPcl6NpKapf4D4xVQA6dhGysw9KUyDA1UB5rMaLxckVYBKfQAaICT+isjnv8mbsvqYujgXwwtrkDpCjs40mIZLURvG0Y2A7l1el/DsDHJTZyojUfxf8XiJSnuCllV9pH9s6r4X8zlUv76YFY8fqXpIOXKhDvwoO7AGPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E4Zlv/QugfYXRED5nD6S6PXEWP+p1lvH06ep1jGbKgc=;
- b=wsf31T4ottfYwH90sGk3u/G+OZX/vNJRm1N3HTzmWZsuVvGrYBfPrPuqp1kY4TMzQLVk28SKnUZ5BKoOu4ItwU/LplUsGN8pOxYeWoydjpq9o3f+Zw5a/ANu7fdzj2g4XcnbJe/NXcy+i5LQpi3hqQmOcjqoYk8+UFS9C7eB+fdKjdkwhaK4+Di358v3tYESdqO8zYyHPWVzOuWSAX78aDqkqkLEwE5nRuKVrUQF+h4a7PFYUYdT304xt7bD6euZgm34R3fPhMXQlXIvJwsPRgwIox3Z+m66erBwuEE5kASvdSt/nHWvrsS7kUIBTOdUqSVNersHBW5HMfwlU/7bSQ==
-Received: from GV2PR04MB11739.eurprd04.prod.outlook.com
- (2603:10a6:150:2fc::18) by PA1PR04MB11264.eurprd04.prod.outlook.com
- (2603:10a6:102:4eb::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Wed, 29 Jul
- 2026 07:00:15 +0000
-Received: from GV2PR04MB11739.eurprd04.prod.outlook.com
- ([fe80::71c2:937b:d466:174a]) by GV2PR04MB11739.eurprd04.prod.outlook.com
- ([fe80::71c2:937b:d466:174a%6]) with mapi id 15.21.0270.009; Wed, 29 Jul 2026
- 07:00:14 +0000
-From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
-	<imx@lists.linux.dev>, network dev <netdev@vger.kernel.org>
-Subject: RE: [PATCH net 1/2] net: enetc: restore RX ring congestion mode after
- ring reconfiguration
-Thread-Topic: [PATCH net 1/2] net: enetc: restore RX ring congestion mode
- after ring reconfiguration
-Thread-Index: AQHdHjjb4ftyiuw6qkiy2MgovCsT/raDx6gAgABLssA=
-Date: Wed, 29 Jul 2026 07:00:14 +0000
-Message-ID:
- <GV2PR04MB117396AD7EB61A3BDDE4E5DE488CA2@GV2PR04MB11739.eurprd04.prod.outlook.com>
-References: <20260728023217.2499420-1-wei.fang@oss.nxp.com>
- <20260728023217.2499420-2-wei.fang@oss.nxp.com>
- <20260729022917.395E21F00A3A@smtp.kernel.org>
-In-Reply-To: <20260729022917.395E21F00A3A@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR04MB11739:EE_|PA1PR04MB11264:EE_
-x-ms-office365-filtering-correlation-id: c3cbc142-6b1c-46e0-963d-08deed3f0a84
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|19092799006|366016|23010399003|1800799024|376014|6133799003|38070700021|56012099006|4143699003|11063799006|10067099003|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- UmZz7GcAeiym2Kh94JvD+U1fWW1xgvrJOCJUNowoFg2p5PJ9f6pG4Z051DEBmVGJhK72WlM9msByynfMpa50bTmkIQwi8r1GPwGSrmXDYQBRRXswkJ5Ep2tIjhOQ+/kId0EgGY8kLOqBLEuF4trHJ2VAovUIWkoTJRDWoBNXA8ckMMbUWPuwDnw9xQXIZYau5GnXtwH5rMYP4ZqOUSb/avesCw0hfBChU+/eLUSDSAcNvT0FxM4zFjvYNvehjCFj5bU1W30u68cad9zqi9XhIdjTkSaVWgogvW9xU38wIBy7+JoGwcvTxTGUcjH0a3vmV5qnW758ZGK81nrFNiW2sH4vFTRemCjzHRlmgAxPwpPl+yBIePUluPSnSUaAwr1WyPM9x4lWk+0zjXPCUApC9kJ7ZLxZjtfd1pRkx79tJKHv/2zQOl42K+I0VBCiDOjWLc6DyDAR2nhVkq/4gFL51zoWSnc4jP6l4PiYgmJqvgxekumxJ7xcF4ZrXBxk/4c9p09Tn4z8GpKRsRM5TVJKz9NTH8PGc8CnEutyBq0y9mf7P/vNrJfiUkzMrXcJKU6+pika0eN24zBuKt9RzCPLe6R121cm5Uk5R3OIM1ENQEA9XppAh0huRdIfWE7wKAH8cQTwYhEYMG6RvcuLgawXvkJj0le3XxqOXNue4oEUVYuVOj8oyTGExc5d8gHNFwIzCDAl1FoX+gU1US6QM8Si+gqWa2iMyipsDcOD5T0TJlM=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11739.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(1800799024)(376014)(6133799003)(38070700021)(56012099006)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?YTg4NjE5SWlVWThBSmlDaUszMVpUZXZCZFJoYktiZWZ3OW5PMEo3d21mZk9y?=
- =?utf-8?B?YzFVeDZDU0puV1JtdlptdXVaY0toNHFMQjZkUmZpVXVhUkMyWVljQlVub055?=
- =?utf-8?B?VTNBbG9DTDJhVWpPdVdDd2tqRnBNZHJ5V2dXNDFFZ2d5S21MWkQ4TkE1WXp6?=
- =?utf-8?B?d0NIZnplVWxubFpIUjVGc2c4Mi9yekx4SGFYbHhNNU8xWWRzeVBYdzB0OHNm?=
- =?utf-8?B?UlpHQVg2eHJhV0RJbVllZCsyRnRDS29Sc010ejBESllrV1ROTzArNU85RzVF?=
- =?utf-8?B?d21qdHhXSlVyQjdHSWZ1Y1puM0hvZ3Bka0NCbGFVZC90QzFQRFM2VnBEbkJl?=
- =?utf-8?B?VkxBMzQyUTZreWxJaXFadHozVmtPTnpKYWcxdEVrU0UvS291R1NXTE1qQ2kr?=
- =?utf-8?B?eVcxQTRiNVVTZXBEUmVoSlhiOU8zOERMUnhoYXJ0VDAzK3ZEYm4xakp2OWF4?=
- =?utf-8?B?Y0NLeEhidDB5VDlaUEkrTmYybVlicmJndzN0YVk2RmR6b3prbm5xQ2t0cXFO?=
- =?utf-8?B?TE9YcFoxNEpHSjhuNC9iQklOOWI3YW53M2craTdYWWJrMTY1NDBUakdqT3o4?=
- =?utf-8?B?VCt3Qy8vV3hLSjRnR2NlRUtFaEhSdWR5VUNxMTNIMFN0ZHZnZFVTV3pnYjdk?=
- =?utf-8?B?WUpKamJmVTIzMVhrNFY5YndEZW1sREthcXZBQlFMMnhERndiR1FYSkZIUHox?=
- =?utf-8?B?Z2NZSjMzeHN1Qk5vVktvVGFiNkJ1eEFHQXdIOVhNR1VYRjd3QmRnQ2RqUEdP?=
- =?utf-8?B?TzVaelFJT09YUkZJSng2M3UyVTdDblY4YVBQdXByVTdzbGJMNnc2YWZ6UDVH?=
- =?utf-8?B?VHV0b2V4U2hQTWJndDlMUFFydUJGakNyVjdKSUhVSm84ZTloTDNnQlJZME84?=
- =?utf-8?B?OTU2OU1pZFA5SDBYSm1ZTU5nbi9aS0pLQ3JMOVJoaFptNDF1TkJhMWdKQTZL?=
- =?utf-8?B?REMwOGRvNXZteGs0OGl4T3VGMnBDWERraG1BV0ROc1lrN01BSVA4dXR2S1lq?=
- =?utf-8?B?aVhRcUc3U3V5TE1EKzdmVnZCWkNjd3ovTFZ4MUxUUkttM0NFOXBrR0FDRmI3?=
- =?utf-8?B?Tk9Gb2hhNDJURXFtVEFWczU3cmYvQ0lKc2Y0eE9ib0Urbm9KRlMxT04rK0d3?=
- =?utf-8?B?d3VIUWg5YW91YkR0UlZHS29Nd2hMUWNXNHhtTVFzelU0cXIxWW9mTzRzMFFh?=
- =?utf-8?B?Vmg2VUtpQmxsdWhUbjZacjRhY2N4aVpiby9uN1lsbnNIMkcra3dLcmtpSW55?=
- =?utf-8?B?cjZ3KzFxRkljTXhBRVVzdDdLRzVORWVLcGRSN0cwYlhrSFYvZzV1WFd0QWxx?=
- =?utf-8?B?cFczZDkxelZnUUwwUjI3YldFVFR0bjRoZ1hLN0RUWWlkU3VrZFdxQkE5cC9m?=
- =?utf-8?B?d09ZNjNwMFlGMWgyWkdnRGdTTFd3Q0ZCbzJ3ZUFEaTJpVFIrVFZTbWxLMU1I?=
- =?utf-8?B?NFh5MHVBa2dqd21LZ2xUMytqZ2Jwcm8rdTZRcnZ6R0V2QWhoSkxGdmNnQm1O?=
- =?utf-8?B?SDJwbzlqeEIwL0ZLNGk5cVVvckhaRTlzSDV2MDhkR3dPR1MrUVNHTGdmVGU3?=
- =?utf-8?B?K0tVNW9HQVRQUE9ETlRFNkpZZHBkUUxZVHJBSkVacHpuNmVsQlZLdkhObFVa?=
- =?utf-8?B?VS9kakV3MFprQ1ZYdHZKVCtlU2EzWUhqOFNJZ09UQ3Fsek80eUlxQTFJaHJu?=
- =?utf-8?B?MXNvYWRSWk1XQnlZYTV6QWxxL0RxVkxlVDhQUWlvZHdXWEtseTVGZC9MeEh6?=
- =?utf-8?B?SHZ3dFlJNUM4akdqQlRmc2VBNEN1RzVNbFQ2dXVmNkxvdTVseFFIcHc2U1dl?=
- =?utf-8?B?S1hUaEdMaS9GZ0xOcU1icmsxUWh6akVQemgxVzl5T3cyMC9BZDlDQ3luSElx?=
- =?utf-8?B?WmdocmdqS0JSYWVZNzhDNXZDWFRJREprV3I4dTNsUmVaZHhhMjVCVGdZdW5T?=
- =?utf-8?B?L3Q3OGdpcS9sbElnVzk2MGlWNXRhYVd6bWVOaW9pRG1tTC94ZTA1U1JSS0ky?=
- =?utf-8?B?bmh1VjY5VEV4Z01PR28ra3B1ZkowNms3cHEwckt1amJGbmtmb2lnazU5ZHFO?=
- =?utf-8?B?TjlHeFhLaitlOS91UWlJaXhkL3E0MnVJQWxtZ3d4aHo2R1VPNGZEM2IwRUdh?=
- =?utf-8?B?WGZmRnowRUhqcmNINmozRFMzSXNtRk1KdWQ0dEpwdW1zTEJVWkxVekQwckI3?=
- =?utf-8?B?RC9VL2lzL2x3SDJjc0diZWVRYmkxRlBCQ1pjSW10OXAwdnBSa1B5WGcyWWJz?=
- =?utf-8?B?cWU4UFhZYWpkclVhRllwcWZsOXpCQ2V4M2xPVnRPVXYyUUY5c0JBemd4REdn?=
- =?utf-8?Q?VKoz4TM/B1BIelDxIX?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="plpf8FMk"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
+	Subject:Cc:To:From:Date:From:Reply-To;
+	bh=gvjHHJ/cdGYoYlkkCwDIsHSmQaqCyqzXpRK4eerB6+s=; b=plpf8FMkpcgr34jqe7uzvn8Clo
+	I0e6L4sjMxnVo8R5FAy/9A9quSJhDkUH6SUrgTDHs7eV/COKNlV/oyWYp8iRESNyYUN8lQFnOp15X
+	jjPnxLdwtmTr7DNniGvPqqytswT2UenHqPARrIvN7H3LyEoH1vAXBuwDhNDR97S4Dg2I37I5Haucz
+	yDRbpFxhMPGWnaDQUnFlfKV7GYNyq1q5QPUx2nb+ylOv5MnJPWEquyOLW95n05nkU+Ka0LZZkQvvf
+	5sFTWOYam1FaKDhqSmIvGQUPs3DrTXWwV7zyaip5Lu+H80P6/Z9bOZAcpPicrcWsV52nFqM+Jz+aF
+	ghOWjWGg==;
+Received: from 179-125-64-236-dinamico.pombonet.net.br ([179.125.64.236] helo=quatroqueijos.cascardo.eti.br)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1woyJf-007N2s-S3; Wed, 29 Jul 2026 09:03:00 +0200
+Date: Wed, 29 Jul 2026 04:02:57 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v2] drm: Fix drm_pending_vblank_event leak in error path
+ for out_fence_ptr
+Message-ID: <ammlofcycoqMLlgk@quatroqueijos.cascardo.eti.br>
+References: <20260729-drm_pending_vblank_event_leak-v2-1-a5074aae07df@igalia.com>
+ <20260729062342.E449A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11739.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c3cbc142-6b1c-46e0-963d-08deed3f0a84
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2026 07:00:14.7874
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xLug+BJkDZyXagOo+pKIrdT60ZhMsJeeVy7Z/QVfZkHVpGYc1WsqX0DM/4AkHNdOeEIe3scA0OyNFPZlGI+ycw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB11264
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260729062342.E449A1F000E9@smtp.kernel.org>
 
-PiA+IC0tLSBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZyZWVzY2FsZS9lbmV0Yy9lbmV0Y19wZi5j
-DQo+ID4gKysrIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX3Bm
-LmMNCj4gPiBAQCAtNjMzLDYgKzYzMyw4IEBAIHN0YXRpYyB2b2lkIGVuZXRjX3BsX21hY19saW5r
-X3VwKHN0cnVjdA0KPiBwaHlsaW5rX2NvbmZpZyAqY29uZmlnLA0KPiA+ICAJfQ0KPiA+DQo+ID4g
-IAlpZiAodHhfcGF1c2UpIHsNCj4gPiArCQlzZXRfYml0KEVORVRDX1JYQkRSX0NNLCAmcHJpdi0+
-ZmxhZ3MpOw0KPiA+ICsNCj4gDQo+IFtTZXZlcml0eTogQ3JpdGljYWxdDQo+IFRoaXMgaXMgYSBw
-cmUtZXhpc3RpbmcgaXNzdWUsIGJ1dCBjYW4gdGhpcyBsb2NrbGVzcyByZWFkLW1vZGlmeS13cml0
-ZSBvbg0KPiB0aGUgRU5FVENfUkJNUiByZWdpc3RlciByYWNlIHdpdGggZHJpdmVyIHJlY29uZmln
-dXJhdGlvbj8NCj4gDQo+IExvb2tpbmcgYXQgZW5ldGNfcGxfbWFjX2xpbmtfdXAoKSBpbiBlbmV0
-Y19wZi5jLCB0aGVyZSBpcyBhbiB1bnN5bmNocm9uaXplZA0KPiByZWFkLW1vZGlmeS13cml0ZSBs
-b29wIG9uIEVORVRDX1JCTVIganVzdCBiZWZvcmUgdGhpcyBmbGFnIHVwZGF0ZToNCj4gDQo+IAlm
-b3IgKGlkeCA9IDA7IGlkeCA8IHByaXYtPm51bV9yeF9yaW5nczsgaWR4KyspIHsNCj4gCQlyYm1y
-ID0gZW5ldGNfcnhiZHJfcmQoaHcsIGlkeCwgRU5FVENfUkJNUik7DQo+IAkJLi4uDQo+IAkJZW5l
-dGNfcnhiZHJfd3IoaHcsIGlkeCwgRU5FVENfUkJNUiwgcmJtcik7DQo+IAl9DQo+IA0KPiBJZiBw
-aHlsaW5rJ3MgbWFjX2xpbmtfdXAgZXhlY3V0ZXMgYXN5bmNocm9ub3VzbHkgaW4gdGhlIHBoeWxp
-bmtfcmVzb2x2ZQ0KPiB3b3JrcXVldWUsIGNvdWxkIGl0IHJ1biBjb25jdXJyZW50bHkgd2l0aCBh
-IHVzZXIgdHJpZ2dlcmluZyBhIGRyaXZlcg0KPiByZWNvbmZpZ3VyYXRpb24gdW5kZXIgcnRubF9s
-b2NrIChsaWtlIGF0dGFjaGluZyBhbiBYRFAgcHJvZ3JhbSk/DQo+IA0KPiBJZiBzbywgZW5ldGNf
-cmVjb25maWd1cmUoKSBtaWdodCBjYWxsIGVuZXRjX2Rpc2FibGVfcnhiZHIoKSwgd2hpY2ggY2xl
-YXJzDQo+IHRoZSBFTkVUQ19SQk1SIHJlZ2lzdGVyIHRvIGRpc2FibGUgdGhlIHJpbmc6DQo+IA0K
-PiAJLyogZGlzYWJsZSBFTiBiaXQgb24gcmluZyAqLw0KPiAJZW5ldGNfcnhiZHJfd3IoaHcsIGlk
-eCwgRU5FVENfUkJNUiwgMCk7DQo+IA0KPiBJZiBtYWNfbGlua191cCgpIHJlYWRzIHRoZSBFTkVU
-Q19SQk1SIHJlZ2lzdGVyIGJlZm9yZSBpdCBpcyBjbGVhcmVkIGJ5DQo+IHJlY29uZmlndXJhdGlv
-biwgYW5kIHdyaXRlcyBpdCBiYWNrIGFmdGVyIGl0IGlzIGNsZWFyZWQsIGl0IHdpbGwgd3JpdGUN
-Cj4gYmFjayB0aGUgc3RhbGUgRU5FVENfUkJNUl9FTiAoZW5hYmxlKSBiaXQuDQo+IA0KPiBTaW5j
-ZSBlbmV0Y19yZWNvbmZpZ3VyZSgpIHByb2NlZWRzIHRvIGNhbGwgZW5ldGNfZnJlZV9yeHR4X3Jp
-bmdzKCkgdG8gZnJlZQ0KPiB0aGUgRE1BIG1lbW9yeSwgcmUtZW5hYmxpbmcgdGhlIGhhcmR3YXJl
-IFJYIHJpbmcgYXQgdGhpcyBtb21lbnQgd291bGQNCj4gY2F1c2UNCj4gdGhlIGhhcmR3YXJlIHRv
-IERNQSBpbmNvbWluZyBuZXR3b3JrIHBhY2tldHMgaW50byBmcmVlZCBrZXJuZWwgbWVtb3J5Lg0K
-PiANCj4gQWRkaXRpb25hbGx5LCBiZWNhdXNlIHRoZSBuZXcgRU5FVENfUlhCRFJfQ00gc29mdHdh
-cmUgZmxhZyBpcyBzZXQgaGVyZSBhZnRlcg0KPiB0aGUgaGFyZHdhcmUgcmVhZC1tb2RpZnktd3Jp
-dGUgbG9vcCwgY29uY3VycmVudCByZWFkZXJzIGxpa2UNCj4gZW5ldGNfc2V0dXBfcnhiZHIoKSBj
-b3VsZCBvYnNlcnZlIGEgc3RhbGUgZmxhZyBzdGF0ZSBhbmQgcGVybWFuZW50bHkgbG9zZQ0KPiBm
-bG93IGNvbnRyb2wuDQo+IA0KPiA+ICAJCS8qIFdoZW4gdGhlIHBvcnQgZmlyc3QgZW50ZXJzIGNv
-bmdlc3Rpb24sIHNlbmQgYSBQQVVTRSByZXF1ZXN0DQo+ID4gIAkJICogd2l0aCB0aGUgbWF4aW11
-bSBudW1iZXIgb2YgcXVhbnRhLiBXaGVuIHRoZSBwb3J0IGV4aXRzDQo+IFsgLi4uIF0NCg0KSSB3
-aWxsIGltcHJvdmUgdGhpcyBwYXRjaCBzZXQgdG8gc29sdmUgdGhlIHByZS1leGlzdGluZyBpc3N1
-ZS4NCg0KLS0NCnB3LWJvdDogY3INCg0K
+On Wed, Jul 29, 2026 at 06:23:42AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Medium] API Contract Violation: out_fence_ptr is not set to -1 on certain error paths
+> --
+> 
+> --- Patch [1]: [PATCH v2] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr ---
+> commit ee648481e8c7946df39aedd0d40de2f6f6522bf2
+> Author: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+> 
+> drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
+> 
+> This commit fixes a memory leak in the error path of prepare_signaling when
+> DRM_MODE_PAGE_FLIP_EVENT is not set but an out_fence_ptr is provided. It
+> ensures the pending vblank event is properly released and the crtc state
+> event pointer is cleared on allocation or fence creation failures.
+> 
+> Link: https://patch.msgid.link/20260728-drm_pending_vblank_event_leak-v1-1-08429b920b16@igalia.com
+> 
+> > diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+> > index 1050dddadb17e..aed6040182eb6 100644
+> > --- a/drivers/gpu/drm/drm_atomic_uapi.c
+> > +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+> > @@ -1464,11 +1464,15 @@ static int prepare_signaling(struct drm_device *dev,
+> >  		if (fence_ptr) {
+> >  			struct dma_fence *fence;
+> >  			struct drm_out_fence_state *f;
+> > +			struct drm_pending_vblank_event *e = crtc_state->event;
+> >  
+> >  			f = krealloc(*fence_state, sizeof(**fence_state) *
+> >  				     (*num_fences + 1), GFP_KERNEL);
+> > -			if (!f)
+> > +			if (!f) {
+> > +				drm_event_cancel_free(dev, &e->base);
+> > +				crtc_state->event = NULL;
+> >  				return -ENOMEM;
+> > +			}
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but I noticed a potential UAPI contract
+> violation here.
+> 
+> If krealloc fails, we return -ENOMEM before out_fence_ptr is added
+> to the fence_state array or num_fences is incremented.
+> 
+> Does this mean complete_signaling() will skip this element and fail to write
+> -1 back to the userspace out_fence_ptr, leaving userspace with an
+> uninitialized or stale fd value?
+> 
+
+This is set to -1 at drm_atomic_crtc_set_property().
+
+> >  
+> >  			memset(&f[*num_fences], 0, sizeof(*f));
+> >  
+> > @@ -1476,12 +1480,17 @@ static int prepare_signaling(struct drm_device *dev,
+> >  			*fence_state = f;
+> >  
+> >  			fence = drm_crtc_create_fence(crtc);
+> > -			if (!fence)
+> > +			if (!fence) {
+> > +				drm_event_cancel_free(dev, &e->base);
+> > +				crtc_state->event = NULL;
+> >  				return -ENOMEM;
+> > +			}
+> 
+> [Severity: Medium]
+> This is also a pre-existing issue, but similarly, if drm_crtc_create_fence
+> fails, out_fence_ptr is written to the array but num_fences is not
+> incremented.
+> 
+> Will the cleanup routine skip this pointer and fail to write -1 to userspace?
+> 
+
+Same as above.
+
+> It looks like this same pattern also exists in the connector loop later in
+> prepare_signaling() when drm_writeback_get_out_fence() fails.
+> 
+
+Same for set_out_fence_for_connector(). As for the connector loop, I don't
+see such potential leaks there.
+
+Regards.
+Cascardo.
+
+> >  
+> >  			ret = setup_out_fence(&f[(*num_fences)++], fence);
+> >  			if (ret) {
+> >  				dma_fence_put(fence);
+> > +				drm_event_cancel_free(dev, &e->base);
+> > +				crtc_state->event = NULL;
+> >  				return ret;
+> >  			}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260729-drm_pending_vblank_event_leak-v2-1-a5074aae07df@igalia.com?part=1
