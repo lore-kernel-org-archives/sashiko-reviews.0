@@ -1,279 +1,191 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010020.outbound.protection.outlook.com [52.101.85.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C493392822
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 04:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785384880; cv=none; b=aflGDe+hxFPQ9eDgZmuUwzAh7vYGIPOCjh43fU7EEBhvh6aVFe52M8O2ZOcb0IYCjD07+M/B6XYVPyDkL19Kgh478kV3xSM26vEY4eJ7NPIYokm88Z8CtPt0AvNujhizCaDv+w+p7zqiwI36z3sqPGsLtirpM1fllfxJaTljRu8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785384880; c=relaxed/simple;
-	bh=0Q8fQ7ih08tbw4lzBOTN5MiSutzmizbN15Ync8bM+X0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HFsHZDdv0IfsUMFaz6H5qi/S44akoA9HTyyv03POEk1K0OittX2+DBCMn8B9RYPOp4lR9b2YGyhyHe7eV8aFwRL686ZfO6m9qhY6JGJpxvBhWb2mhUbUbN8Sd2dr2Gx2GOf2mzagOqUWSricfyEYXjMQKCvcMxYf4KKi/3ePUAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VHFlkuDz; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786B239E6EB
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 04:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785387080; cv=fail; b=GQ1wfeMRtv0kxRNXj2UXv8fIrHlADSvS4FReAO0kWq9LGZLClJX4qqx60TeWW9u2f84m+xFlIfoHh9oLKEvVKAys+bXDYbITS1m/CmaTRcL6ePFFhyE1V9Xr8wSXd5AT9/d2ecMWqp2jf3yc/pVCoAI8oEJF8MSRoHEwNA2bLXw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785387080; c=relaxed/simple;
+	bh=O3b+DY3dYkuaNtbbXNcl5svwGWdEGtCx9muFF/eyz+w=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=aUCDFyjaE0CpIitihnFQFTWhAoWWVgBOo5WHaCWwQsUpzqiam71dczBzFT3v3WI7UObYV86JS+C0+tysWhukLjnOELW0gcyDBfelDo2eVeuRP00UkwUkK2VK2AOyiG6Wg/b2KfBP+Ou8IJ2ehhKf0VNPcFyFuCGw/qqnRjki8Ls=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jPojNjep; arc=fail smtp.client-ip=52.101.85.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHFlkuDz"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8423f236418so1339314b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 21:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785384878; x=1785989678; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vtrD6B8jP+hl6az+0jgCn+3wLAQryXG9np2Gsxpe3Z0=;
-        b=VHFlkuDzHLEEyOnZfiCIOrWvWJ7vath9+eDEMZnCzzsfPrNuanIDM0m4Hl6Yj58eIG
-         kaIBCFbZNCKhK2+LnpMRKapGW99b1q5QcAGCXlJswR2Nt71rvA9QemOMUvsK7xIxhshZ
-         /NapQT0PY4giLHMsLw9HNK/BQjCxJ0BX5xjZB6cfO/2JGwb4GoP+C53eF21/DtHTgmUA
-         /CFBFh0aJC4DXkaHWXCUBbRd1f/9jokREswwKTBWWneQXmsFgJ+ZBESjE7mEQXaQg2/W
-         G4ylsMLLqCCQhFgnZOQcAtzJ083A4/S8yGsqdZZI/cIRY30recDoufL6evWtuZQD+Ql1
-         g1rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785384878; x=1785989678;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=vtrD6B8jP+hl6az+0jgCn+3wLAQryXG9np2Gsxpe3Z0=;
-        b=HiNWdq5QMiUhqx0fEThfQ/yYl6NYxLh9rHtShVHmkkzzvbUZQYp+q8QL/ns8tOvDZ4
-         q1XV8J9EdYu+ergvyB6UlYh918hsDTdsmeS6rNusKG8O0ujAuKtR+uFP2izs7uuOViCd
-         Ci1NKSCJZCtx7f1SNR7B2ekbOghLaHclJHGSgoXCaa7/EhQHR6UgT51/c3hHQt64ecfu
-         yAJa/O92FDyNOtvDEEaYpOE8wAhjJe3jU99NaDYNWhTn+bUT/46N3ZX/2snGlERDDMx/
-         zQD2kErQDZnEfwVKb7UyDZLMVQQuzh1QjZeI5N8a3U4SjZx++ucxf5wROQiCFz8K1a1w
-         +bbQ==
-X-Gm-Message-State: AOJu0YyMu3W36U1a1TlDVeDaSsI53cxqlInpJKQguLLX802udX5OjQIF
-	CavudE/ngdyNrynInKWgb+4tiLFRc/EnF/6mYYahpAineyDl5hUajuB5aIrY7Q==
-X-Gm-Gg: AR+sD11mv0+U/3BFADLTgjxtvN8zvheBDmxcQagu5QoOColRR6Ef6l/d9JOjtC+tsjh
-	WMeV5FIMoFy18EG9GSQrejFfMZ93f6mk12qGcABpyfBUyze1aSs5lgnNo01aVGekN3/9q7uPp0D
-	vdG7jAlzta1Uqa8IZ5Gqscob3A8N1w67iXkgHIHcBd2evaOnuRA4DLaQRQvI9zEozoysx1nSmAS
-	kGfdjS/YOBH/Uh09qQAsUgAPtgeifAPy/SMA/sNXdbboZ7x4J/dYiikixHN/IaDdzKMO4uPykAe
-	g9BzRD9RZtGZ+Hz51eiUCPitKdStH5MMOXvkTHSdvdtHS0MHls6W4EfMSj3ySGbgSsq0uVDuV1r
-	fL/wZLUkvhpad8fRP2WWbk6rYjm23evUYEYNQaChfSQedC5DgWD+T85WXYWw6HPWM7eu+ghpP7U
-	0Jg1zIYNpvgiZz2xgqr1b3abKi1Qq6oCsNE2KRncEpwIuq9aeBOUjqxeT3wqI2QdvTS/n/JVJ+s
-	cn0jT8ljD1D8b6ZdiKNHpl5xehkrowgWhJLh37UgQhaJb/R
-X-Received: by 2002:a05:6a00:4c98:b0:848:6447:e0a6 with SMTP id d2e1a72fcca58-84ebc1fd269mr1163841b3a.9.1785384878141;
-        Wed, 29 Jul 2026 21:14:38 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea02fc6afsm2241052b3a.36.2026.07.29.21.14.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 21:14:37 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <148bb518-a4a2-44a4-b796-aeb5aa6f459d@roeck-us.net>
-Date: Wed, 29 Jul 2026 21:14:36 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jPojNjep"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sIqt00itxS2/BmsmhbCCfzr1ao+beNyRz8SgUrFMKk+AaH660XCO138mkTUPUaqyBFDQhb86siXk6tfT0ItUnmFkcclEjQvgHZUXgDEAEEU0SuiuqiLcsB9C+7kTURU6HZQ9mE4qwcPaq2jG/LDllYAv7kH7vlruMnOQPP9BMuSSKBneZiQEx0MaSxSL+JAqxyDmKEJLA45ZVRS2vT0LlUYo/2ga7XgLvGnlEkHsTXJX5QScLU4TPZoRCc848pOQYyAnnWAns9BtyWVvlCUT4EYgfIBwWorRf2TlH0AUbNpaTqKPgAASZjPoqGUanhKO98LWirK3CCNJMoveJ02pWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rVoajFwXPkQWNm6pNwggHUtJWeigxxI5nJe0BJJ+nvo=;
+ b=i3j18YJCuYCEOO4jx5dsoz1U38dMCYla/I5WAdIo0CfKBmoJcPt28L/cZzUv6psAljC+fb24VLi6mucjRxf8GTtNtPfgxN4YMk4QQaFPs86lAH1rYv0Zi7hjsTkkF/UvVzXtKIG+CaVVjSeOBkSyyL9Gk6Q23aLtWRtWx0Fb8GDR6xeT7ZCPNnEAYJ2meISNkKAgPs9nBUBqx1C8EFJNNHVFSeZ6CcaI9tta4u/ukf/5QOky2qMpngSoLwFO33rOu6foWYk4L1QXiky7AC/27MnMvvld/huY1weoeCtjstOOLZdezv25HvDTiLizdo9Q91ccebZ60Fj/pvOQ7m6k5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rVoajFwXPkQWNm6pNwggHUtJWeigxxI5nJe0BJJ+nvo=;
+ b=jPojNjep2MLHxtK7imo2lGuGaSJ67g+u+Y84NtohFDBnCq+0iCH3WZ6siQDa/BrfOMZd/0krKSks+HmJI5cXjlBvfZBzUhfO6fBPxHmZTR9c19iR2+FuifQQu22pManWolOeK3zWuGtPfJ1zuIT4EAbMfW6beAY3/3UXNa59Lx1ANzHJf7mDn3Dwhgx6u7HCzdAMFOl5pzjpurI93DMm840Rhry2BitPgjMPLDOWw75PiTVkCo6oJ9jkzH5lWAaGtjiUxjbKiOHYccMzjCc78fIByRXZ0m+cmzD0XXqQnW2jlD7QfHwSmjcRtqtdKvWH31t9Vc/Lz8bvg1aqjjQzfQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS0PR12MB8245.namprd12.prod.outlook.com (2603:10b6:8:f2::16) by
+ MN0PR12MB6246.namprd12.prod.outlook.com (2603:10b6:208:3c2::9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.270.12; Thu, 30 Jul 2026 04:51:15 +0000
+Received: from DS0PR12MB8245.namprd12.prod.outlook.com
+ ([fe80::e7c5:cfca:a597:7fa4]) by DS0PR12MB8245.namprd12.prod.outlook.com
+ ([fe80::e7c5:cfca:a597:7fa4%4]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
+ 04:51:15 +0000
+Message-ID: <dfa1eb50-6f8e-4f76-8d73-ed3a3276f363@nvidia.com>
+Date: Thu, 30 Jul 2026 10:21:06 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+To: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>,
+ "helgaas@kernel.org" <helgaas@kernel.org>
+Cc: "thierry.reding@kernel.org" <thierry.reding@kernel.org>,
+ "lukas@wunner.de" <lukas@wunner.de>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+ "Korenblit, Miriam Rachel" <miriam.rachel.korenblit@intel.com>,
+ "treding@nvidia.com" <treding@nvidia.com>,
+ "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+References: <20260728201821.GA1394074@bhelgaas>
+ <af2c883e07d1e4eb327aaea78cc9fd0c95b04387.camel@intel.com>
+Content-Language: en-US
+X-Nvconfidentiality: public
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+In-Reply-To: <af2c883e07d1e4eb327aaea78cc9fd0c95b04387.camel@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN1PEPF000067EB.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c04::27) To DS0PR12MB8245.namprd12.prod.outlook.com
+ (2603:10b6:8:f2::16)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] hwmon: pmbus: mpq8646: gate the writes
-To: sashiko-reviews@lists.linux.dev, Vincent Jardin <vjardin@free.fr>
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
- linux-hwmon@vger.kernel.org
-References: <20260729-mpq8646_v0-v6-0-98848151cdb4@free.fr>
- <20260729-mpq8646_v0-v6-4-98848151cdb4@free.fr>
- <20260729220705.978B61F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260729220705.978B61F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR12MB8245:EE_|MN0PR12MB6246:EE_
+X-MS-Office365-Filtering-Correlation-Id: d55147a3-b72f-4f30-7058-08deedf62f59
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|6133799003|11063799006|4143699003|56012099006|10067099003|22082099003|3023799007|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	pLzXtP/IzGfs4JQWc6cm246oJ37ON/FY5Gpd8u/Wa8kwdlisaTWHFGzAfTzTJrCp3qKBYkW64ov6i/c5sMX5CdAaPuthf4OxVdBdlVvF4LLBB5+1UDrmZElji3rCfMwTeaAucPiqPPqTucBM8PN/kXSNAR9GizR/yrgiJbTlbfsoNmrAH2W2JXJiJHv7hYT5LpoP41VydV1ohZDDtfrxF/RiCOhCnPXGV0TIOlSBc+ypvaVeUhl5x+pUwb4eyBL80DWbICplxarp2f85RXX1n+78wqj6z0qnqlOHF0fUmEqy4w+BXk2fLO2XY9HL1c7jKML4cf/iDPuFeRHmv9HQXZ5ZGIM5heY2ERweqtSzLX3ufVQO6Of3Z8Pqpu/eJyfF2U52tEkqnH4+L5xO4awU7FtTFrA57ZPS7Wf5ZCL+bHlTdZvjMpoSU1A7CRdsMwfHdQU6LeU0A7R09GY6kjDakLcBONrNnveHMCuBPZUWp0hgLFs4occvva1ZYFPL5Ig4vZSmseRAv0yH7nh+rVfhJgoCLPn8XSuUK487XCqqmfhTkq2y5KXSyMqHddNUmta8X3SJB4hK9zEwRmOXlJdUg6uukpL6ygyTD4QL6KP3sp/H9o6GGtbkV6w8ITikwZye9UDLTU6Hwo+QkHsB7Ke1OJn0qwewOubsubgd6R1fqxA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB8245.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(6133799003)(11063799006)(4143699003)(56012099006)(10067099003)(22082099003)(3023799007)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?RzlxRTVvQVpXa1NjeVlqQ2tzeDJVUnU4bkZBeEZXaXB4SkduZ1UvdjZGSWly?=
+ =?utf-8?B?TFV6TlE1Vzh4Y29iMFJlYitxUjE0VzI5ZnJVQmRpaFlveTI3dTZhU0JVY1B2?=
+ =?utf-8?B?VmFIYUZiam41U1BjTENZSDBEZHY3SGgyS3puNUFqalhERTVOWFp0ejFITXBh?=
+ =?utf-8?B?cStvV1YyOVJoT3h4QTlJeFI3aDFOZEZGWk1FblUwZnJhYitFcWVnWU1TSTB6?=
+ =?utf-8?B?MUJpaW9CaEVxVHRUTVJjSCtZNkFvakYxZW9YMEdQL3NVNG04MzlhL3k3TjI0?=
+ =?utf-8?B?Q0NsQlRPei8zZ0NtUFFDMXRzSUxRcE83cXlTSmxtNHpOdHVRQTNTbjBWamNM?=
+ =?utf-8?B?TEcrSkVhd2FBaDBJUjV3UzFRaWtxRUNuNUw1Rkl5ejlPN1V5WG4wQ1kxTkdF?=
+ =?utf-8?B?bnEwMjB1ZHgrclN4V0Z0cXlpOUVqNUY5ajM5UmVtbUJjTVpXaHl6VnpOaTI5?=
+ =?utf-8?B?aFAyTktpckVlR3dHb0F0dFNGdDFtMFVuKy9WTEpKc21sNDdha2V5dUU3WG5N?=
+ =?utf-8?B?Z2pkZ2NjRkFickhLeWUzditnOWFCdkNjYXRMYlFoOC9OYmlsWkJ4MlNqQkhx?=
+ =?utf-8?B?bW9FcHg1ZXlQOWtxNzk4bzNCdEVsM0szd2pBSzdWdzllOE5JYk9FbHFSdmVE?=
+ =?utf-8?B?S0N1QzVRS2RHdFlNQ1UxMzNHRnVRbnBMUmd0SXJFdmxEc1dvOTg4amYxTnpy?=
+ =?utf-8?B?b0pSMWJwaENYdUxvSFk3MVNZNVJ3dE1qMGI2ZWhIYTV0V0NkQmNFV3pJVUtl?=
+ =?utf-8?B?RXhXamw4RWtVR1NKRUtzQTRna0JzTE9yVUVoSHlxMUljcG1sYnk2ZTBuMi9m?=
+ =?utf-8?B?MjdTd21qSitGRFQyTGprcXJ6NVUrZFdGeEZLcDc5eGg3TEt3Z3Bmb2hDWTFG?=
+ =?utf-8?B?OFNHZjdxeDdteEJzb1FBaDVpTHIvUFBXL1VxVGgySDZBTFZMc3pVNXVhOUY3?=
+ =?utf-8?B?K2hYNVYraUZhZDkxYWpXRzRTOHFES2NaU0ZOUGtCUlpQYTMraEI4UUhpeTR3?=
+ =?utf-8?B?NVhiM1ZqRy95YTFURHExL1JPdFVVWElKdW5xYWE3L1J4Y3BVd2x1OXEwNWtK?=
+ =?utf-8?B?cEg0S3A1U1BMc0hXQjhoUFlpSzVhSVY0WmE1REt1S1hiU3oxb3JabFpEV296?=
+ =?utf-8?B?c2I4WGNBcTY0d2V1cmhMZGtkWkJ6L21wTHhmcUliME81K1doQ0JjWTViS2ly?=
+ =?utf-8?B?Sm9PeXRmZzNrMFBMRkNLcTk1M254dlR3bHg3UUorNHZja3VKcXM5VzV4UEtP?=
+ =?utf-8?B?M2kvNmJIQXhsR25GeVNaZ3ZRMTJCMDhCTXZuOW9HMmJNKzhuWWZlQkdiTzBI?=
+ =?utf-8?B?YU1FM2FFV2wyMGVLaEVKYVF4UTBhdWVpMFpkR3RMOVpzZVRaZjRWZ0Y3Y2NX?=
+ =?utf-8?B?VEdTZm51elIrTlg5SFN4U3B1ZWdVNk5DdytqSlpLVTdDZEU3Y0hzQTBjazBI?=
+ =?utf-8?B?dC9Yc2JUT053ck5GcmRZVlp2QldYNnpjYm01K1dqdHI3S3lqQ1V4a3VSWmwv?=
+ =?utf-8?B?cWpVQ1plWG1YZ3lQS1l5eVNkWTNhd0hEM01yN3pUangraEI5ZklWSnMyN3Ev?=
+ =?utf-8?B?ZzNnSkZCRUN6c1VkbTN3MXY1akhmRDM1NldkMVprblVDeHp6SUNuWkNBOFRq?=
+ =?utf-8?B?blJqQnJhU2QxOWFsZW13Mkp4azJIOXpWYThxWC8wUmFySWJyYnBRa0gvS3ZS?=
+ =?utf-8?B?anN6dlQ0M05OZWFHUmRIQ1QrZmJtb3VqVkVsRlpVRjZ3SVFVSTFsMTR1Q3VX?=
+ =?utf-8?B?WHI3VHozU2NsazF4cEE5Q2wyVEU4a1ZNR3VOWVAyeHZyaWpMdE84Qk4xSkVr?=
+ =?utf-8?B?UHN1L0ljTmFOSEw5anc4Z0RqV3IyYnZUQWQ3OERCUS9UZURDcTdLTUh2dDlG?=
+ =?utf-8?B?Tk1OWHljRmNQaTc3Ulo4ejhjK3Q2NWd4SDRRTXN6dUVBcVBkYTVzRWZWR2ov?=
+ =?utf-8?B?dlM5Uld2MmFKbWJ0TFk2cVFmWnU3ditic0t1djNZS05aRGRpcStkU2xvbWxp?=
+ =?utf-8?B?QkUxQ0pDTnJ3WHdMYm9vYTd5VExyWlR0MWJ1NGl5RXV0bHQrTkpoT1NLUFRl?=
+ =?utf-8?B?VUtmQTE3eWJpRStNNURtdnFrQTdsYmpUMTRhOHhlTE53ZTJobkJhZDVEMTAv?=
+ =?utf-8?B?OHNlc3dObzZUNlFicjV4WGZIN2UxRklYOTlLV0hiNEFGRm5Sa0hHTi9RTWhm?=
+ =?utf-8?B?R1Y3RzdYSnMwWWhPR3l5ODVMV1A1N2ZPK3FLSXYxMklYdE5GamxrY3ZSMjNx?=
+ =?utf-8?B?TUV1emp1TTJQMlF0UEduZzR6UHJ4SFhzWTZUbHI1Ylc1MUdtbkR2bm5rMGhq?=
+ =?utf-8?B?MThpK1d1dFMra1U3RjZObzF6aUo3VGJpdXkxNTVsa0VnOHFlQ0ZPQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d55147a3-b72f-4f30-7058-08deedf62f59
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB8245.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 04:51:14.9305
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 76ZUOrxpWnn0l82MzhL3m/t4JWxc60QPwJsNYBiMjcPbXnjPatEl2EQTXJvC4b00HP7QdwbxOfMFtwlmSaEKAw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6246
 
-On 7/29/26 15:07, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Debugfs attributes perform I2C accesses without acquiring necessary locks, risking race conditions and bypassing hardware write protection.
-> - [Medium] Mixing goto-based error handling with guard() declarations in the same function.
-> - [Medium] Debugfs write functions mask negative error codes by returning 0 (success) on hardware failure.
-> --
+
+
+On 29/07/26 12:19 pm, Grumbach, Emmanuel wrote:
+> On Tue, 2026-07-28 at 15:18 -0500, Bjorn Helgaas wrote:
+>> On Tue, Jul 28, 2026 at 07:47:04PM +0000, Grumbach, Emmanuel wrote:
+>>> On Tue, 2026-07-28 at 14:24 -0500, Bjorn Helgaas wrote:
+>>>> On Tue, Jul 28, 2026 at 06:21:23PM +0000, Grumbach, Emmanuel
+>>>> wrote:
+>>>>> On Tue, 2026-07-28 at 13:03 -0500, Bjorn Helgaas wrote:
+>>>>> ...
+>>>>
+>>>>>> AFAICS we still don't know why Tegra264 would set NoSnoop
+>>>>>> and/or RlxdOrd in the MMIO read.
+>>>>>
+>>>>> Me neither but... I can't comment on that. And de-facto, once
+>>>>> it
+>>>>> does that, the BE200 replies with the NoSnoop and RlxOrd clear
+>>>>> in the TLP which is then considered as a malformed TLP.
+>>>>>
+>>>>>> Unless iwlwifi asked for NoSnoop and/or RlxdOrd to be set, I
+>>>>>> think it's a potential problem for drivers if Tegra264 sets
+>>>>>> them.
+>>>>>
+>>>>> I ... don't think we would do that. The driver would certainly
+>>>>> not do that... Regarding the hardware itself, I can't comment,
+>>>>> but I can check internally.
+>>>>
+>>>> Forgot to ask, can you collect the output of "sudo lspci -vv", at
+>>>> least for the RP and the BE200?
+>>>>
+>>>> And maybe the dmesg log when booted with "log_buf_len=16M
+>>>> pci=earlydump" as well, so we can see if attributes were enabled
+>>>> by a
+>>>> bootloader?
+>>>
+>>> I assume you want all this without the quirk, right?
+>>
+>> Right.
+> 
+> Attached.
+> Note that we used an out-of-tree driver in those attempts so the kernel
+> is tainted, but this does not impact the issue we're discussing here.
 > 
 
-Feedback seems valid. Please address.
+PCI_EXP_DEVCTL_RELAX_EN and PCI_EXP_DEVCTL_NOSNOOP_EN are set by HW 
+default value, this is inline with PCIe spec. It says "the default value 
+of this bit is 1b" in both cases.
 
 Thanks,
-Guenter
+Manikanta
 
-> --- Patch [4]: [PATCH v6 4/4] hwmon: pmbus: mpq8646: gate the writes ---
-> commit ec4599677b214a57f0796000d18d9f3b6e5d4fb5
-> Author: Vincent Jardin <vjardin@free.fr>
-> 
-> hwmon: pmbus: mpq8646: gate the writes
-> 
-> This commit adds unsafe debugfs provisioning and benchmarking helpers
-> to write specific registers. These operations are restricted due to the
-> risk of browning out the board or persisting bad setpoints.
-> 
->> diff --git a/drivers/hwmon/pmbus/mpq8646.c b/drivers/hwmon/pmbus/mpq8646.c
->> index 1fd41d89e5bef..0034cf5919345 100644
->> --- a/drivers/hwmon/pmbus/mpq8646.c
->> +++ b/drivers/hwmon/pmbus/mpq8646.c
-> [ ... ]
->> +static int mpq8646_dbg_clear_protection_last(void *data, u64 val)
->> +{
-> [ ... ]
->> +	scoped_guard(mutex, &priv->mps_lock)
->> +		rc = i2c_smbus_write_byte(priv->client, MPS_CLEAR_LAST_FAULT);
->> +	if (rc < 0)
->> +		dev_warn(&priv->client->dev,
->> +			 "clear_protection_last: CLEAR_LAST_FAULT write failed (%d)\n",
->> +			 rc);
->> +	return 0;
->> +}
-> 
-> [Severity: Medium]
-> Should this propagate the negative error code from rc instead of returning 0?
-> Returning 0 masks hardware faults and might lead userspace provisioning
-> scripts to assume the write succeeded.
-> 
-> [ ... ]
->> +static int mpq8646_dbg_clear_protection_last_force(void *data, u64 val)
->> +{
-> [ ... ]
->> +	guard(pmbus_lock)(priv->client);
->> +	guard(mutex)(&priv->mps_lock);
->> +
->> +	wp_orig = i2c_smbus_read_byte_data(priv->client, PMBUS_WRITE_PROTECT);
->> +	if (wp_orig < 0) {
->> +		dev_warn(&priv->client->dev,
->> +			 "clear_protection_last_force: WRITE_PROTECT read failed (%d), aborting\n",
->> +			 wp_orig);
->> +		return 0;
->> +	}
-> 
-> [Severity: Medium]
-> Like above, should this return the negative error code in wp_orig so the I2C
-> read failure is reported to the caller?
-> 
-> [ ... ]
->> +	rc = i2c_smbus_write_word_data(priv->client, MPS_MFR_CFG_EXT,
->> +				       (u16)cfg_orig | MPS_MFR_CFG_EXT_CLR_LAST_EN);
->> +	if (rc < 0) {
->> +		dev_warn(&priv->client->dev,
->> +			 "clear_protection_last_force: gate open failed (%d)\n",
->> +			 rc);
->> +		goto restore_wp;
->> +	}
-> 
-> [Severity: Medium]
-> Does this mix goto-based error handling with guard() declarations in the
-> same function?
-> 
-> The cleanup guidelines specify that functions should either use scope-based
-> cleanup exclusively or not at all, to avoid confusing ownership semantics.
-> 
-> [ ... ]
->> +static int mpq8646_dbg_store_all(void *data, u64 val)
->> +{
-> [ ... ]
->> +	mpq8646_unsafe_warn_once(priv);
->> +	scoped_guard(mutex, &priv->mps_lock)
->> +		rc = i2c_smbus_write_byte(priv->client, PMBUS_STORE_USER_ALL);
-> 
-> [Severity: High]
-> Should this also acquire the global pmbus_lock?
-> 
-> Issuing STORE_USER_ALL without the pmbus_lock might expose an unprotected
-> NVM-busy window to PMBus core background polling.
-> 
->> +	if (rc < 0)
->> +		dev_warn(&priv->client->dev,
->> +			 "store_all: STORE_USER_ALL (0x15) write failed (%d)\n",
->> +			 rc);
->> +	return 0;
->> +}
-> 
-> [Severity: Medium]
-> Does this need to return the negative error code in rc instead of 0 on
-> failure?
-> 
-> [ ... ]
->> +static int mpq8646_dbg_restore_all(void *data, u64 val)
->> +{
-> [ ... ]
->> +	mpq8646_unsafe_warn_once(priv);
->> +	scoped_guard(mutex, &priv->mps_lock)
->> +		rc = i2c_smbus_write_byte(priv->client, PMBUS_RESTORE_USER_ALL);
-> 
-> [Severity: High]
-> As with mpq8646_dbg_store_all(), should this also hold pmbus_lock to
-> prevent NVM-busy window races?
-> 
->> +	if (rc < 0)
->> +		dev_warn(&priv->client->dev,
->> +			 "restore_all: RESTORE_USER_ALL (0x16) write failed (%d)\n",
->> +			 rc);
->> +	return 0;
->> +}
-> 
-> [Severity: Medium]
-> Should this return the negative error code in rc?
-> 
-> [ ... ]
->> +static int mpq8646_dbg_reg_set(void *data, u64 val)
->> +{
->> +	struct mpq8646_dbg_reg_ctx *ctx = data;
->> +	int rc;
->> +
->> +	mpq8646_unsafe_warn_once(ctx->priv);
->> +	if (ctx->desc->is_word)
->> +		rc = i2c_smbus_write_word_data(ctx->priv->client,
->> +					       ctx->desc->reg, (u16)val);
->> +	else
->> +		rc = i2c_smbus_write_byte_data(ctx->priv->client,
->> +					       ctx->desc->reg, (u8)val);
-> 
-> [Severity: High]
-> Does this need to acquire pmbus_lock or mps_lock before performing the I2C
-> write?
-> 
-> If another thread concurrently calls mpq8646_dbg_clear_protection_last_force()
-> which temporarily lowers the PMBUS_WRITE_PROTECT register, could a direct
-> write here slip through and bypass the hardware write protection?
-> 
+-- 
+nvpublic
 
