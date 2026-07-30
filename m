@@ -1,181 +1,279 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012057.outbound.protection.outlook.com [52.101.66.57])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA62392831
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 15:11:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424266; cv=none; b=cITxlsXjYNoyfGdOV1edWODl4qxJpCbOkVeOUF3tgRkiDGw63j3UtWbT7qJhP2WYncDpu0C3DK+kkaRcYJG8WD1oBfUMhTDDcAqQ4o1BnxG0qgQbkNLNq2hlgE9KnxLfc33utaPtJABzdw+gNlmXq+T5Wx2x2x8b/IFRfgID2K0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424266; c=relaxed/simple;
-	bh=F5cDlmmaU5YiEDLodaR019jRhp+mbsp9hYQy41TO3cI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tMFaJyEC0IY+/fYZPYX1OayMtlt/GWXuA33wLKpC16TlqWE8c1v6WhW1VMDXBDmtoxmn+Bczj1e1AWxAV4Vnciw55858vZInempE2nIUW7Ynk3vB3BY+Dd4sWdC4InUirA/OvsKHUvMZ81WsaGabEigJj0Bg2T3p+QEor3pb9VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GWWrGSaw; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1FC32B116;
+	Thu, 30 Jul 2026 15:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785424645; cv=fail; b=B5EZdWC6gKl6HkiVnKvIZIBhNtiLHF/W6OzO11QEjPI5NumhRjRu3DZZfSBHLbMUxrNTedLE9qxsG+LlfnXN9mSXFMjye6y4bJsbbO3H5aniJ/y6T/lYPHobBodepqJvId+atCBswEi+8hv1Kb8l9fxYx7BIJEwY+V6ctg3ltQc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785424645; c=relaxed/simple;
+	bh=zAWS99A2E7Qw923z0LADnvwllimPhm+XvjKr7naUTVs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=KuOwvazgB6ofZvTNxxlSO75G7GqRiIyExbX9X8Fc7uRuPu5bGuhF3gYnIhmncTI/vxu8KLAzPY98RA3ekQ1tBCcaTcBVOomFBh4Ud7oWHGKdNTvz6OxLkP2Tb3ILMO6PlvD3WxEMFUbj0iTBVBJ+m62D1clsRFZpSrXIpqhlXVU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NY2FzB7W reason="signature verification failed"; arc=fail smtp.client-ip=52.101.66.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GWWrGSaw"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c966b9ee9cbso1245103a12.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 08:11:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785424260; x=1786029060; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=n3AtAeMvB7ZMtK3nRoTe2cnXsW8WPJwBbelRG5gH7yw=;
-        b=GWWrGSawnq6OBGJmMaouNmtkwPtjKh/4yn/Wfws38LJ67+Is9/Opf8xrHNsG0/IK7J
-         dMNx19oHdvmIBiPu4fCPWdp6LQPRIAdX3urT4QeCXEJQR9X5QQ/Krs+MLU/+x01AaZtj
-         sbC2yiw2qWuD15NCoxm6b6xmRokNOF+RvuxGTxnBak5oDUt0xzkj14Dj8QfOA2yrZdOB
-         IPJ2umvTI/irZui23CCqB4lwfStviz6TgIgsbodMD95h+gP1yvSILLUk/IecZv0PsxUU
-         W+vKbolKy6nJYUl+86KLIehklGNuympfiA1CosVROOq3W1kwTOHtaoB8VhleBfBPiXU+
-         38Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785424260; x=1786029060;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=n3AtAeMvB7ZMtK3nRoTe2cnXsW8WPJwBbelRG5gH7yw=;
-        b=o9VOPLlEARRPeeF2DDRmN/RnSS1Jd+cBn5EZ285szXPr6KGlycV3OuAIUsUjKUXhF4
-         wLpa4+hjwi5Lg9i6hfObn26EQ4qtYDOFxePprxLwYTum8yUULBneWmOqr7BknwsQRJpe
-         boePiNpRbTbsv575R/tRTvAtOwqvr/fYzA5l2ejoN6SS6mo/sJBY8O0kUmbrMedy1S7X
-         s9g+esser2tiQwAk8Iz44+50kw6JaSC4UTWdaVSIAfpbqQFzyZVibW314bBLqSUFrduw
-         30n9/XtnJrNh4saSxfemxggeuuyg0YUOQCyDEhr7nOMRXz1rUyfOjkre+6AWzuqu5owN
-         GoQw==
-X-Gm-Message-State: AOJu0YyJcmvww/aw51io3fQ3Hlrl1Ez2mbXEjh9dSDuJgEPOWCc+FJoT
-	QJnMalBhbp4o0szohD2ToaU+trQyGrBPvAY5Hp27iRFtSudkcZhL8PyQATNVvw==
-X-Gm-Gg: AR+sD13xerKNeHMBGXzof7tiXvuSz3FbVy4SW/25zgSbgvZOLTYkiFrOLlwzAkn6nDP
-	F5ObSN6yZOkUbod97e3dq79TQWZrKvTZe3OLP0FErU/sMytq1w+wLQSvFoGuR0+tcAv0dQPu8BB
-	cpvQCwLTEt2aJ0OOL0U4ZU7+v4VEEkp1epuSsggddYjyuYFVP6HLU5pJ1lCAiTI2UX/6TuvsyXL
-	K/wCRW0yS7NvQzcEPdL1CAGK/TkOGR6nEyx/U8DADHqQKBXI4ZsV7HkqY7t5U3XsLnGMg/WD7V/
-	N9LlQEJfUe3o2Gp7zZsR6WluceTphTA05siMnaSLVkCDDWYARbk6Voeej2hK2Oa3bqDV2KV5Mx5
-	PagA5DFKCfAtdoCUPl2Gqn6xy/172P1G3B7v0DsvSBNhrfKPY4s2nQ8AIXzOM3YEBEaHqjurL/A
-	66yNRQo0k/JLzFZH6kWPYhB1t2BEotTjk63kIFg9R4QJWRo9pwFXkhpdvNgQA9R8kJP/yspfO9m
-	mw5X64CQDljJP19uTNILlfAi6gvxuBSPX0Q+g==
-X-Received: by 2002:a05:6a21:7106:b0:3bf:76d5:4cf2 with SMTP id adf61e73a8af0-3c9008abc85mr2649509637.40.1785424260100;
-        Thu, 30 Jul 2026 08:11:00 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31504927a7bsm24202861eec.0.2026.07.30.08.10.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jul 2026 08:10:59 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <ca894ac0-7c6c-45bd-935c-660cc6c16aef@roeck-us.net>
-Date: Thu, 30 Jul 2026 08:10:58 -0700
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NY2FzB7W"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WBh55filxUcOSOsZWrrJOiBVhaZNPDzHN9nkhvXmqo+JTDyqQXP7mj3kxgIVZWERyuO0IuAuYGKd4UGOkqb8D54yvI4TXndslymd/fxkRumU35Wai0LJBVr2qDePOcd029m+gyeraw1JLWKIWkQpHDTTE4vwA8LTTnGFsTxPgqs/KN8nlKPfdpo0y5Xlxk8DxvoJcm0pcZ9wSuXbVg/l3asKkNPxJb7l6fPVVaBSje0bjoiRGTtioYaVwhnWMAguPJZHYGrfqBoOO5MtYPptx10i1BDX4GJPMYrbUwEnwCjbxEEYgRR0eoxiKd5ngqBwxWBeXktd4Iy9gTdhNg0Iqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YytIxRgjvS4fN9e14K0N2tOL6yi1VuZfLPZePPR+KQQ=;
+ b=fxFtWlZfJQ6pNdZRzj+bXKHlWVj9WEKDeDIWKZBueyqVoihE6AvfvrOc4En95SLgD7xbe39uxZP6Ntn3UZXRMqX40KwI3BRxRiW3KuvGx65OLed2UP5tYaDCJdtWXYNZLGwNw8IPHTwFUfZ1BY9lSifywnsDXkOZ8IeXUPKzCoqK7IdsjE37sprhnihZSRLrJeI5NewgpkKcdL0AHoB5TzHEgcLjWF/7fzUP64Q5oCnb7fp/7o2Gi1XE63HW+T7ZUzgaQecu35jc7JSscF5hRy7pc3jkU0knb44k3rJTuCo2ZzxSyaiV51XUe1duQzyohPc9h0WQLrpe2+BXtzJB7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YytIxRgjvS4fN9e14K0N2tOL6yi1VuZfLPZePPR+KQQ=;
+ b=NY2FzB7W52YQxBZi0T9rtvaWSoKqhjS1StsmWJ8n10Vqbp7Q/+CQnRDjX4iij8jZ3fZJ3ilFFmX9UqtVpmyAEiyE+NG9XRjC96WspoN8xs4/97K+zwnrqstdL3u3y1BZxz67rjTTgP4jMmhIL2cQh27kHy5+BaDru401ElF090IdkoP6ezmezZ/m4QFJaQf9FaNXlQeSvCPDzwOh236mu9s/lj3JHaF1VQFwt4xJE+R/OuLDr9FGvqu8yw+H3156L0NN73qW/Ilx3yO5MqxrNGTxYZppsTtrslREIvMp38kLt9bLP1+z0gFP75yWoR9MUP5hrLZeZ1ie7/KTrop/aQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AM9PR04MB7634.eurprd04.prod.outlook.com (2603:10a6:20b:2d5::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.15; Thu, 30 Jul
+ 2026 15:17:20 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
+ 15:17:20 +0000
+Date: Thu, 30 Jul 2026 10:17:13 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marek Vasut <marex@nabladev.com>, Frank.Li@kernel.org,
+	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v7 7/7] arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs
+ for Data Modul i.MX8M Mini and Plus eDM SBC
+Message-ID: <amtq-Ukw_dyvavxJ@SMW015318>
+References: <20260729214723.557461-1-marex@nabladev.com>
+ <20260729214723.557461-7-marex@nabladev.com>
+ <20260729221033.3CDB41F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260729221033.3CDB41F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8PR20CA0015.namprd20.prod.outlook.com
+ (2603:10b6:510:23c::8) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hwmon: (lm90) Switch channel parsing to fwnode APIs
-To: sashiko-reviews@lists.linux.dev, Flaviu Nistor <flaviu.nistor@gmail.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260730091409.10544-1-flaviu.nistor@gmail.com>
- <20260730094350.95BDF1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260730094350.95BDF1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB7634:EE_
+X-MS-Office365-Filtering-Correlation-Id: c68b2b61-6323-4491-199b-08deee4da611
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|19092799006|366016|376014|23010399003|10067099003|4143699003|11063799006|6133799003|56012099006|3023799007|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	/607XjbKbYiTH2BPV9CDlANNjzlPIi2sCduTvqcKutRgeARMv5sOEWDwgXqNKHpBoBYY9av1kEF1FrGaYvnilE9x7mmQCiokjomBd1wjAiKmJ8Z9pyD+I+zToaPaqr/CEPb8xw848a4+DMEeLnvzQwlq3WcYgbLOJH2KoqbSeY8een7XFn/HEQ/nvPOXp1cFKyZPbxqQi5rSGJMUmpge3zvPiJOWhGh/uh9I/+xca7F1/DVnDGcp90s/N+GxWarCUEC+Ou2BW2a4DVos0YQCxjLXJ+bDhEJBhnzj15pBcwDitkZt1trITN5vNBa3Gu3pmpj3MGQ7xSfY71A2ZpjmgoDU5inTuLPet0sLIz240/OQWfrzNBna3IwtJL0UzYp3SFnGSPGpHbVDd6D+RP2gF09AF8PgaHJ1wphrGcftHnBuOu2brYZTtogEZocWj7mQD5F53Vy3iJR0K5tMeCkO1YNUnRJqVk7c/P6TpdIgV+p0VaU6hLiT5Jnr8eqlP6dvv15XOuxbyl2hD9cvThNwU4JPEwmsxJc0i1FqwQXpbjFyiU6hSqaN9ao/E5opCrYNzzXY86UKnvAWtAXumgGmiutxerYTJGABMReMMKno8NQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(366016)(376014)(23010399003)(10067099003)(4143699003)(11063799006)(6133799003)(56012099006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?TKOVftDtZ7u82ug1x70b9+ULdvbJv180FqsqP/13NWLBJh5eE5qT3ugUdy?=
+ =?iso-8859-1?Q?t4SBpKrEBpjavr+1zxzT4HQCyOasXcY1un6j6QbBob9TD18P5KBSzRf9NF?=
+ =?iso-8859-1?Q?dxnb9fHQLt4tmS5+Qor1/Ppa+CiE8JrwerdAV3VzqoYSUhDfZre5Aoa2yp?=
+ =?iso-8859-1?Q?Pwo/uebzq6tGo51L23vk2XtuVtW4MTUDubEOOpQ5TMvMNEabhfB9Gm2NI0?=
+ =?iso-8859-1?Q?j3hM3iSAMbwlLXZv4TR3KB1UirvnxssLZO2nbN9ag4OSwLY4euCQ2rcaQM?=
+ =?iso-8859-1?Q?CltRZU9dNDrn2jO66PItUq3RAQG7QphtoPhqmOtM8X23qa/SS1ivG82UvX?=
+ =?iso-8859-1?Q?ihNKsYFaDivYfu+XvMA1HJeTFigLF10iiTWh21wBZtU1+eO0gZYF1HzGaK?=
+ =?iso-8859-1?Q?xJZMskZzfk447Hm2Bv7lPg75jzgqbT0jFfXLxptoilAdCmC+qycZ1j2w5C?=
+ =?iso-8859-1?Q?Z/M14jzLgXJo5g3mG1+41WzzCPgJqKwfULwMcOQKJBRO4LFmY4jEc14H0W?=
+ =?iso-8859-1?Q?CftnKr0jMx34tPg8uynRInaGIrgVHXMxXakgQMArSux3dcGia+fcQum6Fd?=
+ =?iso-8859-1?Q?birdmE2ziWgg6xWUfO+IhVp8/wJ3XAj+OJz+Fovx6WM31F877inXY3tjan?=
+ =?iso-8859-1?Q?jN81h3fwzt9/rZmsQxRNN0R1IvrYxxqgzEp9AabzO11x0gJt9eeDsZbWQu?=
+ =?iso-8859-1?Q?pSJf3T9X9BhuEUrhcSOw6oXM3CoplfrABxFtOqAuv7QHF8ONLG2j89AmwB?=
+ =?iso-8859-1?Q?4cmudy+VAnfQpSSC5L2zjYg3V1N13Q5kVOLN9gQ44IqbI//TxXawFEWJfp?=
+ =?iso-8859-1?Q?2fp9DEikVaQU1x91fB/oD9Wg5X1Cn6FDtNTfyyS1B7QLGYp3uD7EHKSDjg?=
+ =?iso-8859-1?Q?PbhAC/KqhKdX+CUemzYKf840Z7NhyjM1Hu3zaKtCzx1ZvACykovD7ZEpCa?=
+ =?iso-8859-1?Q?QUPKxiF2v/Qc8R2VU1mLuV7KJpyFgbK+rVUvReYAE7xX0mtQ/DyHHMuLR7?=
+ =?iso-8859-1?Q?iymUxgoB2N0Qx9jFaUnoeRh3z2xLcvSqNoMsC2ZQSeeemwvTfgGzjC0vxn?=
+ =?iso-8859-1?Q?l2AeyGM8y6MQ+yotq4coz9dK01O+lWZ8E9zzLI0VE5t1Bzq7X5Er7EjDAj?=
+ =?iso-8859-1?Q?vvE59gcqIdFd3CNN0GxsdNjDVLBWDsQHDGzq8oAdZaNsLSOGG2o32Y1gVs?=
+ =?iso-8859-1?Q?TRRfbpvkcSy1C4bfgjoTnIRkkAiTGOEf2c7fWdcFiIEp0ent/A4dzjYtti?=
+ =?iso-8859-1?Q?Ve2h9u3jRgIbdeu/mRPgBQlSGl4TgAsLzHqV2GUYPuGwVZIrQXX++M+sCT?=
+ =?iso-8859-1?Q?ZWO2MVWSD8sql6XYPwq98jedSiYocKwovNvnnlc4pfduBBS+6zPsmfa6Ky?=
+ =?iso-8859-1?Q?su2MwTcK6ZgXF+Lg43fyEMobjFKwpkBZZcgTMDICplXa8ES0H2yrsMossJ?=
+ =?iso-8859-1?Q?wEjR/Tl1pUYnWPtTp6aSoRLIsdVD+mzJYju7t1VdejoSlb60flU+RVvwLP?=
+ =?iso-8859-1?Q?H+fCVuDXgjYIMCiCUyE0r3qLOCp653F8kyC7Ute+4LUhJ187ZjzynLlx+C?=
+ =?iso-8859-1?Q?Z1uvwl6uAm1iRaZkC4n9o4hj3ksEptguOlslLQ6VxHyuzqLiP4QZubPpaY?=
+ =?iso-8859-1?Q?3TnJP2ZkXWEOXUInEzraZVokL2aalEHb+aG7cXre5AZXS8S1yrmxrUDlRT?=
+ =?iso-8859-1?Q?yzx8m5+GAozrAfpvwyU0Acjl5Q7GQK8l3ysk2wjeQAoR8gLilByZti2lCg?=
+ =?iso-8859-1?Q?9nxwIjYDWGln4AiqcBJFjeH0fDrUCYP51HdXGIf7D7KVRYTPlJvs860RLF?=
+ =?iso-8859-1?Q?Ts8iwtSawkKwN3OJ9sBetCBGLoC0EcmBEjsYlH+s9Ljx5o6or5PW?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c68b2b61-6323-4491-199b-08deee4da611
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 15:17:20.2539
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zk0LeV8KWlXBiMfCZIytux7bA2ABXb+hplChYtivYPdUG0MhvCfzsELHcZDiC+0XQdFxeEhjZE1TqIdFbg6yD1JJJX/2TFqxd15J2o0Gpz34nca/4zKy+pxtyC/BwpZ3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7634
 
-On 7/30/26 02:43, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Switching to `device_for_each_child_node_scoped()` exposes a critical pre-existing bug in the core `fwnode_get_next_child_node()` which causes an infinite loop and double-frees if a device has both OF and secondary firmware nodes.
+On Wed, Jul 29, 2026 at 10:10:32PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [High] Hardware Interrupt Routing Mismatch causes PCA9554 GPIO expander to conflict with CAN1 on i.MX8MP.
+> - [High] The `fsl,sai-asynchronous` property breaks audio capture (and playback) on both i.MX8MM and i.MX8MP due to missing clock routing.
+> - [High] The i.MX8MP overlay fails to configure the clock parent and rate for `sai5clk`, resulting in an invalid MCLK for the SGTL5000 codec.
+> - [High] Duplicate `unique_unit_address` causes devres memory region conflict between `sai5clk` and `sai5` drivers.
+> - [High] The shared `.dtsi` unconditionally disables `uart4`, breaking onboard Bluetooth on the i.MX8MP SBC.
+> - [Low] Commit message inaccurately claims the overlay provides a "PWM Beeper" and "additional UARTs".
 > --
-> 
-> --- Patch [1]: [PATCH v3] hwmon: (lm90) Switch channel parsing to fwnode APIs ---
-> commit 39e5cdd2d72333fe0fa7b34c25ad27651948158c
-> Author: Flaviu Nistor <flaviu.nistor@gmail.com>
-> 
-> hwmon: (lm90) Switch channel parsing to fwnode APIs
-> 
-> Replace OF property handling with fwnode in the probe function to read
-> the channels properties, improving the driver compatibility since this
-> method is not limited to Device Tree only.
-> Add also the needed headers for explicit include and clean up related
-> function naming.
-> 
->> diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
->> index 4b9c0ccdf2609..03779c1a251a2 100644
->> --- a/drivers/hwmon/lm90.c
->> +++ b/drivers/hwmon/lm90.c
-> 
+>
+> --- Patch [7]: [PATCH v7 7/7] arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs for Data Modul i.MX8M Mini and Plus eDM SBC ---
+> commit 43246870359af0cd7d3d40f8db5eaaff8fad43a1
+> Author: Marek Vasut <marex@nabladev.com>
+>
+> arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs for Data Modul i.MX8M Mini and Plus eDM SBC
+>
+> Add DT overlay for feature connector expansion module eDM-MOD-iMX8Mm-FIO1-Audio
+> providing additional UARTs, CAN, PWM Beeper, I2C, SPI, GPIO breakout and
+> SGTL5000 codec. This adapter can be optionally populated onto the eDM SBC.
+>
+> > Add DT overlay for feature connector expansion module eDM-MOD-iMX8Mm-FIO1-Audio
+> > providing additional UARTs, CAN, PWM Beeper, I2C, SPI, GPIO breakout and
+> > SGTL5000 codec.
+>
+> [Severity: Low]
+> Is this description accurate? The commit message mentions a PWM Beeper and
+> additional UARTs, but the code below disables uart4 and repurposes the
+> SPDIF_TX pin used for the beeper as a GPIO instead.
+>
 > [ ... ]
-> 
->> @@ -2739,18 +2744,17 @@ static int lm90_probe_channel_from_dt(struct i2c_client *client,
->>   	return 0;
->>   }
->>   
->> -static int lm90_parse_dt_channel_info(struct i2c_client *client,
->> -				      struct lm90_data *data)
->> +static int lm90_parse_channel_info(struct i2c_client *client,
->> +				   struct lm90_data *data)
->>   {
->>   	int err;
->>   	struct device *dev = &client->dev;
->> -	const struct device_node *np = dev->of_node;
->>   
->> -	for_each_child_of_node_scoped(np, child) {
->> -		if (strcmp(child->name, "channel"))
->> +	device_for_each_child_node_scoped(dev, child) {
->> +		if (!fwnode_name_eq(child, "channel"))
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but switching to
-> device_for_each_child_node_scoped() exposes this driver to a regression
-> in the core fwnode_get_next_child_node() framework.
-> 
+>
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
+> > new file mode 100644
+> > index 0000000000000..01cf5c89dbff4
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
+> [ ... ]
+> > +	gpio_feature: io-expander@20 {
+> > +		compatible = "nxp,pca9554";
+> > +		reg = <0x20>;
+> > +		#gpio-cells = <2>;
+> > +		gpio-controller;
+> > +		#interrupt-cells = <2>;
+> > +		interrupt-controller;
+> > +		interrupt-parent = <&gpio5>;
+> > +		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+>
+> [Severity: High]
+> Does this interrupt routing conflict on the i.MX8MP baseboard?
+>
+> The shared overlay hardcodes the PCA9554 interrupt to GPIO5_IO04, which is
+> correct for i.MX8MM. However, on i.MX8MP, this pad (SPDIF_RX) is physically
+> routed and configured for CAN1_RX.
+>
+> Could this cause the GPIO expander interrupts to fail and CAN traffic to
+> trigger spurious GPIO interrupts when loaded on the i.MX8MP? Would it be
+> better to override this interrupt in the i.MX8MP overlay?
 
-Interesting report, and quite possibly valid, but not caused
-by this driver.
+Yes, I check flexcan1 use this pad at i.MX8MP. you need disable flexcan1
+at i.mx8mp's dtso file.
 
-Guenter
+>
+> [ ... ]
+> > +&sai2 {
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&pinctrl_sai2>;
+> > +	assigned-clock-rates = <24576000>;
+> > +	fsl,sai-asynchronous;
+>
+> [Severity: High]
+> Could this fsl,sai-asynchronous property break audio capture?
+>
+> It forces the SAI block to use independent clocks for TX and RX. However, the
+> pinmux routing on i.MX8MM only provides RX_BCLK and TX_SYNC, meaning RX
+> lacks a SYNC clock. On i.MX8MP, only TX clocks are routed, leaving RX without
+> both BCLK and SYNC clocks.
+>
+> [ ... ]
+> > +/* UART4 is blocked by RDC and used as CM4 console UART */
+> > +&uart4 {	/* UART to 1-Wire J5 */
+> > +	status = "disabled";
+> > +};
+>
+> [Severity: High]
+> Will disabling uart4 here break the onboard Bluetooth on the i.MX8MP SBC?
+>
+> This file is shared between the i.MX8MM and i.MX8MP overlays, but on the
+> i.MX8MP SBC, uart4 is actively used for the infineon,cyw55572-bt module.
+>
+> [ ... ]
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
+> > new file mode 100644
+> > index 0000000000000..4a02bd026ac16
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
+> [ ... ]
+> > +	sai5clk: clock-controller@30050000 {	/* SAI5 */
+> > +		compatible = "fsl,imx8mm-sai-clock", "fsl,imx8mq-sai-clock";
+> > +		reg = <0x30050000 0x10000>;
+>
+> [Severity: High]
+> Can this cause a devres memory region conflict during driver probe?
+>
+> This overlay adds a new clock-controller node with the exact same unit address
+> and register range as the existing sai@30050000 audio node.
+>
+> Since both drivers will use devm_platform_ioremap_resource() to request the
+> region exclusively, whichever probes second might receive -EBUSY and fail.
 
+at imx8mm.dts, 30050000 is SAI5, here you change to to use clock-controller
+
+Suppose address here is wrong.
+
+Frank
+
+>
+> [ ... ]
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
+> > new file mode 100644
+> > index 0000000000000..90c2dd1e67248
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
+> [ ... ]
+> > +	sai5clk: clock-controller@30c50000 {
+> > +		compatible = "fsl,imx8mp-sai-clock", "fsl,imx8mq-sai-clock";
+> > +		reg = <0x30c50000 0x10000>;
+>
+> [Severity: High]
+> Similar to the i.MX8MM overlay, can this cause a memory region conflict with
+> the existing sai@30c50000 audio node?
+>
+> [ ... ]
+> > +		#clock-cells = <1>;
+> > +		clocks = <&audio_blk_ctrl IMX8MP_CLK_AUDIOMIX_SAI5_IPG>,
+> > +			 <&audio_blk_ctrl IMX8MP_CLK_AUDIOMIX_SAI5_MCLK1>;
+> > +		clock-names = "bus", "mclk1";
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&pinctrl_codec_mclk>;
+> > +		status = "okay";
+> > +	};
+> > +};
+>
+> [Severity: High]
+> Does this node also need assigned-clocks and assigned-clock-rates configured?
+>
+> Unlike the i.MX8MM variant, this node leaves the MCLK unconfigured. The
+> SGTL5000 driver and simple-audio-card do not dynamically set this clock rate
+> via clk_set_rate() unless mclk-fs is defined.
+>
+> Could this leave the clock at 0 Hz and prevent the codec from functioning on
+> the i.MX8MP?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260729214723.557461-1-marex@nabladev.com?part=7
