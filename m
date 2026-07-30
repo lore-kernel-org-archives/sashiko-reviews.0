@@ -1,204 +1,146 @@
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021123.outbound.protection.outlook.com [40.107.74.123])
+Received: from www3579.sakura.ne.jp (www3579.sakura.ne.jp [49.212.243.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB6A39CD15
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 05:14:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.123
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785388488; cv=fail; b=DuBwqdDV4Hk/V6Kc6lxG6krXSm1vpJW5SdISq2Q3oijVxHkXIwwlWl56lE+Q4uA0qSPFv3Zw1alw4mrfZFlMX6OwUzCIUfFuFQ9eG6ZzjNgcsgoSexeEwFwd2heNfD+G57kFDHuPXbFM6BOR8OAWnqh5qAMEirXrKs+XecO3ojI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785388488; c=relaxed/simple;
-	bh=Z/iG9FBYcNjUAyFHiFgjUYn2ZC+CBcl5jYAvHJl4Pq0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QIG7PAeY17TCeJCxdNGpIH4HT1lg+5iX1nl4v9W+xb7NyJqJI/XGEcga/NfEYMdgmj1qVvZkuHuM9UPLr/uKAERK79bvgiEJnko9G9PLXN87K8Xx0y9shHYhQpqJVXUUs9q5o+krbB4PE0KpSsFrBufPvB0Dn0QQSuL8ydLemNU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=lvagCFv5 reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EBB33ADB1;
+	Thu, 30 Jul 2026 05:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.212.243.89
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785390288; cv=none; b=ewY/EyOquiJmcUbyRIwZKHZFRvGRZJsJOipI/E1MA6h/iS+rWj0BUr2T9zrFNq+0BIQQzLA8iGcf6SMd9vHxncTzKa+LBHb3shFjR4U2pIgk6mbhgGYrh/nqFS1g3DJARTq42mOkyHfbml6Bs8bUYdktA6wH36LrhX8NxbedzsI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785390288; c=relaxed/simple;
+	bh=rrQQyBE83GwPGeDrkZvblGGfFFUvzbKS9u6s3bZBzrM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q1w/FBJL1xdRcefXRys9p0tx93NSWDV+rpLQnheUBdLOxmQcPOkxseqCt0uZplAQrtpM+p7o0h6x9YFA/9Q3HQP8YSE5o1+CAfFaoSFe2FB9OoojMfept3lb8wbN+AABGI3wxn5PXwjnuMUC3hvYUezJcrRqpCnkouDoTcvtkkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rsg.ci.i.u-tokyo.ac.jp; spf=pass smtp.mailfrom=rsg.ci.i.u-tokyo.ac.jp; dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.b=C4z79NUP; arc=none smtp.client-ip=49.212.243.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rsg.ci.i.u-tokyo.ac.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rsg.ci.i.u-tokyo.ac.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="lvagCFv5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vyh0hXepgFn76ms3BBayJejD69Y2o3GrDgIbVN3tDlhHoXnvA41wP9K1mhWtF6OULZtTyeb33n1pwNK6f8KV50kQzrYNEumAqB/p9E31RhrUU46GZcjU2hC9ogTePfM6Uerlf79BlavWDaIp7AStwAzJcPdWNrPGnACcMElonJ4cUA+xnfz8y1sgTIj9yfnoEyE2RmrhDCNCyPySK0mh+9whqN+UZl4nZfyv8/IG0vUHII6qGbLGmJwB7snZ2daFKNunv0y+ySCASNLO7Cedrh/2iKvceq9YRMPHT9hso+fm3Wrb9829MJPNprSkSUAxhmWKUdScuFN+JCaM2yclGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2b7dV2G+BOlcLwDi/A9GanuUkmZ1kaxqKHx2RpXokyU=;
- b=X/I7d0DqIBnAe1iY03unZuCJ4Rdj6fqd1V9gwT6rzxd4P7Ru4uftAxcC1wMBSOQEkxKHTfbv61bvVj8J4iwFHpObj4cLF29l9dGDHfybFIBmRNENfsFU7efyWQJPb9ORSfS5TYxe8Y5Y6zMCZcMYuJ3N4ZxmKsLToj68A10cQZ4BDm+80Dt/gF53kCreopUiBCil4QyleJhZpCX2434fDlLrp7gClADXEA1CgcSzA206dtKyhZvlzlYst3124CpZoy9nBEjmtpQL1agP/lX4zYZij59MBZrb2QN2XZfOqPELqWRaoZfFPy2Jh/jGhBbyDSQ+tlFHs1BH20PouWKqZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2b7dV2G+BOlcLwDi/A9GanuUkmZ1kaxqKHx2RpXokyU=;
- b=lvagCFv5yE8R0pmbHwwvVY+Jv2LhU301DNtEIQ1x9v3PZ+aHdUbOVRbDry5SuLrUKmU4Rv+Z3hEtpGkLK5eP3pCyR+laEz+uGbQo3jnRHepcMJhpna2MbzQ5Jb2P7Wos52X1gDBwI329U8appJxW/NEULyenGwhx0z3IyomZErc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TY4P286MB7101.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:341::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.14; Thu, 30 Jul
- 2026 05:14:43 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
- 05:14:43 +0000
-Date: Thu, 30 Jul 2026 14:14:41 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture
- with channel kicks
-Message-ID: <keuoh456azgwropu5qvenj2md3fxcmqs4xibc36gs6ix6hxx3q@chcplu4rrrd7>
-References: <20260729143036.3087722-1-den@valinux.co.jp>
- <20260729143036.3087722-12-den@valinux.co.jp>
- <20260729145108.CFE281F00A3E@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729145108.CFE281F00A3E@smtp.kernel.org>
-X-ClientProxiedBy: TYCPR01CA0195.jpnprd01.prod.outlook.com
- (2603:1096:400:2b0::17) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.b="C4z79NUP"
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+	(authenticated bits=0)
+	by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66U5iNhO025790
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 30 Jul 2026 14:44:24 +0900 (JST)
+	(envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=d/qF0/RsV01j9A8e8wMikayfr+DKzRnr+HTkRP0uC7w=;
+        c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+        h=From:Message-ID:To:Subject:Date;
+        s=rs20250326; t=1785390264; v=1;
+        b=C4z79NUPx6C3ByN5VCeKenVyEaTH0QwMPDH+PKHmjlaomh80gYN/kg334cQSO+G9
+         yl2o9CeEhWSfHBorEzVNXu/LbWTwlVyov4jJ4DH5pgX3453btM9VbbpIkaVBhAgy
+         A5lg0b8fbNGFmw2hdCHzCzTxAfiBPuS94OEd7PRvxC1PrEMPmZAPj01ll3OHkTf1
+         /X6xyPNzHL1UNxrb/0wOs0cM6gnLYFtDNiqLVVb87GZDNIzr7MNASgGU9NzvK2cw
+         E/LqmAUBKk7jegq0lAmjjppH6ELzXRplL54P1K7SPOIC6BmXLLNtqDwxh3cqbK1n
+         hOGX056s06TXrr6z4gqYCQ==
+Message-ID: <1e5e1a1f-51ce-4c0c-8690-b5472cc7bd2e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 30 Jul 2026 14:44:22 +0900
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB7101:EE_
-X-MS-Office365-Filtering-Correlation-Id: b5dc6ad6-3dd5-4183-70b0-08deedf976cb
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|10070799003|366016|23010399003|1800799024|6133799003|56012099006|4143699003|10067099003|55112099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	L1omqkxut3/+U31oLcYwiw8d4mz8iKAdwEmKQR8GEP4MjM1zMWTJ89ePZZpwfw3TB5RZwiJnqMswFKj+RZcAHbHiGdQ3gwZVUsd8g8we/Lcdpapf45U4a3oAOzgR8FKWdRLASzpvJPPR3qyRO1161sU1ZZ9t08IRUZZKyadO3swXJ+1W+veL2VTrKu4sLwpBLn/zMR3pLihZOKzaue/yXbi8eoCiLJD2ouI4wKw2hjXXODlut8qDd4uaHq1yQA31nghQV2C9FAee/G5dOhf59y6Cx1XQcBsuSVfG77Wzp1VU6GA4JMXTn3LWhmeVmaumf+aLGNbEduRyurvyv/bXDjpEF2t0U2aMW3+C4bqn5nxOlmv0naB6ul5/b55kQ/UVwOs5aXcZxVY56sGofn4cX1q1mUILQEC5uALq7+9F5K8jciLg6vYf2/mSx8Sno2um+iQT9JxRLEYGBxpMsz12kgORCjjTJbZPot1GDCnc7RGosyfNJuyRlVZpVCcvTu+ZYVYK+WTcgiyp9DHj3ebOaoffpM1SB4uJw6H8/VJ0neuC00Ce+gsSNOVPI+x025UHKP88U/1nN5awYH5Eu/jxUWqtRUAWatgEoesRj36cz0A=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(4143699003)(10067099003)(55112099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?T29/uzdyCOoMlkPOD0p9c83pADvYA9zuM+fUC9KVlY3sZ9T/7ysATfsXur?=
- =?iso-8859-1?Q?tTlnt2K9QGuEI8WYukGpa/4ejI2hOzUmt3y9Tl2yf1FK13uAvGPW/nYSr6?=
- =?iso-8859-1?Q?xCrdKYa4CrYYFzpDDUWjDoRrv3yScbmbZOhz12nLZA8ytIiHo6EkaiZs7J?=
- =?iso-8859-1?Q?HMf+eM1nYOcnpe5945g0qx2/ZUub90uLKKjgarWU4nCp8NHXfAQiBG/o33?=
- =?iso-8859-1?Q?4xjD9TqruH/amVqoWCiz9g71lPmeotGn3turPqa3fudcaBd7MGSDuxw6YU?=
- =?iso-8859-1?Q?XNbdrB/+RvBZC8uddq7ZT0oIQ4gzH0hjpqMUWFq/c4wyB6bZTaWjqMQbkr?=
- =?iso-8859-1?Q?aVVJWifhA9ByKSM0+Z9TB7z3hskuwfXA+a69wylFlXy6xzP8dZ2CkvL2Mf?=
- =?iso-8859-1?Q?xTypqAmsDjvMDqlbmPY/9b8heoBn/k7rqOT3jIxrSvbKLhCEH8LRmQZuAB?=
- =?iso-8859-1?Q?+e4GqNS6T2w11LFX4kQAElS/93y/ECren6NlUmBW07T/h7ZL002A40ttpx?=
- =?iso-8859-1?Q?rCAn6IthvY5c6WT/nsdtVX8BZVp49kuzvNf4ywa1iLLhB2dR7jAMHMF6zK?=
- =?iso-8859-1?Q?2SguKyfi5FoyQXuf39qkYAAinneQMsE8pd4fByBQ0W/G6gUNVZMQCwj69x?=
- =?iso-8859-1?Q?eCsoAwRD/a+831xC3iqjI8/whWHugMwwBk1By2zWVUX31FFHJPIjdaqRQ/?=
- =?iso-8859-1?Q?WA2JGdn1g9xKo0QzetyWgd2YMwGA4pIgeB/ZepdvyDY5UN6kJ6H6YdniRB?=
- =?iso-8859-1?Q?kBHuTJMfdXUtilfHlujkgpQAssb8smmMDWsBVU7kzgHXN1nqVmrIjS4MyG?=
- =?iso-8859-1?Q?H8s0QqjeadUgr/Y0JledLhE/AeApGhNhIONOT5j7+zlrrbp6Sgm+rN7LNF?=
- =?iso-8859-1?Q?nCXugSVDtjsxJHQZ1aAyoCysRBXz2LUqegahZpUC0rIal/m16pY8QWxyh9?=
- =?iso-8859-1?Q?4Fns03oL1jeaUkT2JQ4E944CgOeWNszb4a12mcy6DBbEuTQg9uNWOz7BDa?=
- =?iso-8859-1?Q?/7Cx9D7cbFflbemZ/fjZYSXeldpJSALa1kPmNUx0G23Oj8l8Eym3qzkYDF?=
- =?iso-8859-1?Q?oQsDnUM+FOCaTmEkJW2x/Yy7p6q2EDCoNoJgxB30inxtzXiwxw4MkxG2jt?=
- =?iso-8859-1?Q?yE+XdBDbSpzIKGUP+1R+pxrMn4OZNLt1cemwB2lw5fsDIeh1QnY7wN0mte?=
- =?iso-8859-1?Q?M4ZZDdMrAzkk/Ros6081DiN7LrH5S9MjklHizf+iXjdLnHouuuZ8fOSli6?=
- =?iso-8859-1?Q?smppGD0jzCUyCKBaIFdez00T6EYsLI0AhKJMhjzJkbnBN0LYS2xARuJDFR?=
- =?iso-8859-1?Q?esYAn5R9gFf8SZpKUmOt9/3t0fB9U/MNQoiYgcunTbsFf+3WoC+rstDE2k?=
- =?iso-8859-1?Q?UQZ1EzaduMidYDTG6wgVJKyHEZz3znVBtbn7uBAK5kKpJlSx6Vc4496cCi?=
- =?iso-8859-1?Q?0W3fr3ng7EJbQX5e1+/i3vLN0CsQnXB/UMyDafnkGg3NmlEZNMHBuaajVW?=
- =?iso-8859-1?Q?M5IH/rhjYft+hSZhjJXZBMWn0RNf5sGNNSKMzV4/Xm+hhY2adYLKTBqTuV?=
- =?iso-8859-1?Q?tg9i82FqP3sKdhjCsBK853k/kGaa6fFDWH0DfeKdJev0dz/zjljR95wLpG?=
- =?iso-8859-1?Q?8+p+bNmSNF3vvDWiU6CxxatZeJ1IGj+lQ0zPDoC+lY61ZQrBqxHjz+Xo4J?=
- =?iso-8859-1?Q?8yzCyXETGVfA6m3SGyyO+0sXqZxZe63pXVPOBjqYxTqOmvgqNDQv4+Xr0A?=
- =?iso-8859-1?Q?2CmaeTmiuVFEAbRXBXkn61g63wEco2pEF5nfUyfHSbJh0GABCCR4XV8tNF?=
- =?iso-8859-1?Q?ANDiH4Q+oqYCWHa4QRQXnwJ3W1F+JIXaGVJCqxMhatAEa/nB6a9O?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5dc6ad6-3dd5-4183-70b0-08deedf976cb
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 05:14:42.9893
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: x6bAIUYAEvKCFZpn58v8kvb+oid+HGnl4kB5jC2AR9+qCl5VPMqvOweokksCx+ALFYVB56u3muWUjXGDE2n5Dg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB7101
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 04/16] KVM: arm64: selftests: Test SET_NR_COUNTERS
+ after first run
+To: Fuad Tabba <tabba@google.com>, sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, kvmarm@lists.linux.dev,
+        Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20260720-hybrid-v9-0-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp>
+ <20260720-hybrid-v9-4-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp>
+ <20260720060858.5AEB11F00A3E@smtp.kernel.org>
+ <CA+EHjTxsm6LorPDR9irVHL0gtmsUG6zUKQLBA2=8Ruy+V4UmBw@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CA+EHjTxsm6LorPDR9irVHL0gtmsUG6zUKQLBA2=8Ruy+V4UmBw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 29, 2026 at 02:51:08PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Ringing the doorbell can race with a hardware interrupt, clearing and permanently losing a pending DMA completion event.
-> --
+On 2026/07/30 0:23, Fuad Tabba wrote:
+> On Mon, 20 Jul 2026 at 07:09, <sashiko-bot@kernel.org> wrote:
+>>
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] The test ignores the guest's exit state and `ucall` status after executing `vcpu_run()`.
 > 
-> --- Patch [11]: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture with channel kicks ---
-> commit 56231794b3b46dd52a7c7f61f0def40f1fed9890
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> dmaengine: dw-edma: Serialize LL event capture with channel kicks
->     
-> This commit introduces an event lock to serialize interrupt status reads,
-> clears, snapshot recording, and LL doorbell writes. It aims to prevent a
-> deferred handler from applying an event from a previous hardware run when a
-> doorbell starts a new run in between.
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> 
-> [ ... ]
-> 
-> > @@ -269,6 +317,17 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
-> >  static void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
-> >  {
-> >  	dw_edma_core_ll_sync(chan);
-> > +
-> > +	guard(spinlock_irqsave)(dw_edma_event_lock(chan));
-> > +
-> > +	/*
-> > +	 * A recorded event belongs to the current ring and must be consumed
-> > +	 * before starting another hardware run.
-> > +	 */
-> > +	if (chan->ll_irq.event != DW_EDMA_LL_EVENT_NONE)
-> > +		return;
-> > +
-> > +	dw_edma_ll_event_discard_locked(chan);
-> 
-> [Severity: High]
-> Can this race with a hardware interrupt and permanently lose a completion event?
-> 
-> If dw_edma_core_ch_doorbell() is called (for example, when appending
-> descriptors to a running channel) exactly when the hardware finishes a burst
-> and asserts an interrupt, but before the hardirq handler can run,
-> chan->ll_irq.event will still be DW_EDMA_LL_EVENT_NONE.
-> 
-> The code will bypass the early return and unconditionally call
-> dw_edma_ll_event_discard_locked(), which clears the hardware interrupt
-> status.
-> 
-> Does this result in the interrupt being completely lost? If so, the software
-> state will permanently trail the hardware, which would cause the DMA channel
-> to stall indefinitely.
+> vcpu_run() does the check.
 
-Thanks for catching this.
+vcpu_run() itself doesn't. run_vcpu() calls vcpu_run() and then performs 
+the check (their names are so confusing here), but the new test bypasses 
+run_vcpu() and therefore does not perform the check. I'm planning to 
+rework the test to use run_vcpu() with the next version.
 
-That exact race cannot occur at this point (= patch 11), because dynamic append
-is not yet enabled.
-
-In the final tree, however, the race window seems real. The pending DONE status
-can be cleared before the hard IRQ records it. It does not leave the channel
-**permanently** stuck, though, because patch 15 adds a delayed stopped-tail
-recheck which samples the channel state and LLP again.
-
-A hardware STOP transition, including DONE status and interrupt assertion, can
-land between the status check and the status clear performed by software. And
-the check and clear cannot be made atomic. So the cleanest fix I see is to
-permit the initial kick after an LL reset, then at most one kick after each STOP
-boundary that software has confirmed as STOP. A quick test showed no obvious
-regression. I'm planning to rework it that way for the next revision.
-
-Best regards,
-Koichiro
+Regards,
+Akihiko Odaki
 
 > 
-> >  	dw_edma_core_do_ch_doorbell(chan);
-> >  }
+> /fuad
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260729143036.3087722-1-den@valinux.co.jp?part=11
+>> --
+>>
+>> --- Patch [4]: [PATCH v9 04/16] KVM: arm64: selftests: Test SET_NR_COUNTERS after first run ---
+>> commit 0382d3a32df9349f988ca69c7b11c92e61c3d384
+>> Author: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+>> KVM: arm64: selftests: Test SET_NR_COUNTERS after first run
+>>
+>> This commit adds a regression test that runs one vCPU and then tries to change
+>> the VM-scoped PMU counter count through an idle sibling to verify that
+>> SET_NR_COUNTERS fails with EBUSY once any vCPU has run.
+>>
+>>> diff --git a/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c b/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+>>> index 22223395969e0..3b5bb421f401b 100644
+>>> --- a/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+>>> +++ b/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+>>
+>> [ ... ]
+>>
+>>> @@ -622,6 +627,37 @@ static bool kvm_supports_nr_counters_attr(void)
+>>>        return supported;
+>>>   }
+>>>
+>>> +static void test_set_nr_counters_after_vcpu_run(void)
+>>> +{
+>>> +     struct kvm_vcpu *running_vcpu, *stopped_vcpu;
+>>> +     unsigned int nr_counters = 0;
+>>> +     struct kvm_vcpu_init init;
+>>> +     struct kvm_vm *vm;
+>>> +     int ret;
+>>> +     u64 irq = 23;
+>>> +
+>>> +     vm = vm_create(2);
+>>> +     vm_ioctl(vm, KVM_ARM_PREFERRED_TARGET, &init);
+>>> +     init.features[0] |= BIT(KVM_ARM_VCPU_PMU_V3);
+>>> +     running_vcpu = aarch64_vcpu_add(vm, 0, &init, guest_code_done);
+>>> +     stopped_vcpu = aarch64_vcpu_add(vm, 1, &init, guest_code_done);
+>>> +     kvm_arch_vm_finalize_vcpus(vm);
+>>> +
+>>> +     vcpu_device_attr_set(running_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+>>> +                          KVM_ARM_VCPU_PMU_V3_IRQ, &irq);
+>>> +     vcpu_device_attr_set(running_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+>>> +                          KVM_ARM_VCPU_PMU_V3_INIT, NULL);
+>>> +     vcpu_run(running_vcpu);
+>>
+>> [Severity: Medium]
+>> Does this code need to check the guest's exit state and ucall payload?
+>>
+>> If the guest payload crashes or hits an unexpected exception, this will silently
+>> ignore the failure and proceed. Since the test only checks for an EBUSY error on
+>> the subsequent ioctl (which will still be returned because the vCPU has been
+>> run), the test will pass despite the guest crash, potentially masking
+>> virtualization bugs.
+>>
+>>> +
+>>> +     ret = __vcpu_device_attr_set(stopped_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+>>> +                                  KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTERS,
+>>> +                                  &nr_counters);
+>>> +     TEST_ASSERT(ret == -1 && errno == EBUSY,
+>>> +                 KVM_IOCTL_ERROR(KVM_SET_DEVICE_ATTR, ret));
+>>> +
+>>> +     kvm_vm_free(vm);
+>>> +}
+>>> +
+>>
+>> --
+>> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260720-hybrid-v9-0-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp?part=4
+>>
+
