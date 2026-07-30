@@ -1,60 +1,32 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA06B3AFD00
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 11:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 139B540FDAC
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 11:26:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785410775; cv=none; b=hNNVNRY7icC4+wm4MF0EjoyVz2pGIm60V7kqkufvq4wkB2KYSkeWIhXzwXSiMBquwKHR4jvCGtjTaG2kmbba2YlGNqh6Wr8TrxFoLkqF2q/p2/+IPp8aA2k3Jm/HRE2MDD1ykEkmMCx9ORgakcrLG3RTGGDGrNX61jW2VYeANeI=
+	t=1785410793; cv=none; b=JfuAVwcECly9ljD/iq6znYd+R1H+fagdiRXuoh+/IzuaYXCXtE/xpKRzvNjtJiDtTAlPVa4lXlMmNbZyAzjkSSB2nQTT1kZNkMFSRmwKkF6XzY77Wp6UIehae7r2aeAnABomn7cHpm73KmlsDQ5eR1DfvzqgSsISR9V742vXNvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785410775; c=relaxed/simple;
-	bh=VwsJo+dyG5xGCwHpGacQjBXpVL3UJu2vpgHddIUaPK0=;
+	s=arc-20240116; t=1785410793; c=relaxed/simple;
+	bh=YBS5CAPrY6XCRXGO24rFetMnYeFYoU1tOAvyI4TL2CU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iQ0kTlEj9o/Fb+tke7gsghKNGlMtCXyUHk/bcUaTqUZk5dRSg7zmliwmsKzUvfilZ3lR0pUi6Q8L1jSwdGllF3tLAa8MiLrASdCIyt7PhfhNmo+SOMmDVvQhWuHkD74gLiwB1wU1X1O9logqAIM7LJm4n/zHaFRaY/jkRU7BSBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=eipaESMq; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=HwDNVd4JLVpOcO1elvTGpjj+97jte/buPXfdT3lrE9kPK/oDYYf0KZheheRVbtPqnWDe973TuWpnW4cDfQn1BHJofqrbn9hYiY+gvtIab8A3RE58XFAhPaR4+cTUgnz3rd6wy5d1kqCRRoIQ2ucDHiDJxLHD3Mpt0lOYaGyTO6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=iDxCbLF3; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="eipaESMq"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66UAI4BW2639922;
-	Thu, 30 Jul 2026 11:26:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=8DlZ8p
-	ofFYVSLAClCazett30FZ/G+yCHYXXXON/xBqQ=; b=eipaESMqU2Nx5DN9/xunNN
-	QucSE1YMtbhKl9nOQYr4jyqWSlWkaCc+4JiSJ5fAyupFUfXGXJ1aqNQMlLfNA0Wd
-	Ka3i8tV+CC9Y+4g6e0WhpdTYCDfeX7tEwPdBaxaCtspXOWigkQAzcGPEj7r3cNV5
-	H/swToQqdfsEzdkH6UmjwfnHqLPELc5NkI0QaDCAqexsLvEEIEe1Z/2orlGtUn4s
-	TjwJSW0XqSqJhEeSux0VE+0blUPK7cP3O2zaSByhgKsVzQ+q1ACLNb9hL8nacD08
-	yOCxc5F49f9W/pXfSmgHf9dKUUPsBw4C9bPnZrKtjuflj6rN9mVzy3DvC0uuaU0Q
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nxh5a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Jul 2026 11:26:12 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UBBNKf022774;
-	Thu, 30 Jul 2026 11:26:11 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uwb676-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Jul 2026 11:26:11 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66UBQ9G18717016
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 30 Jul 2026 11:26:10 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BB40E5805A;
-	Thu, 30 Jul 2026 11:26:09 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C0BA458064;
-	Thu, 30 Jul 2026 11:26:08 +0000 (GMT)
-Received: from [9.61.176.239] (unknown [9.61.176.239])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 30 Jul 2026 11:26:08 +0000 (GMT)
-Message-ID: <3a54b8bf-94ec-4069-b654-9f9b5d77839c@linux.ibm.com>
-Date: Thu, 30 Jul 2026 07:26:08 -0400
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="iDxCbLF3"
+Received: from [192.168.0.105] (unknown [4.194.122.136])
+	by linux.microsoft.com (Postfix) with ESMTPSA id CD33220B7166;
+	Thu, 30 Jul 2026 04:26:12 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CD33220B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1785410774;
+	bh=nEtBSGQcZxkgP2yOsZrtiYPwJcVN3ZOuyTNRUYzYGkM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iDxCbLF3u9BwvqAxSZ0/CBKQOyLeiA99SkiHnfqSfc/hL/kRp3yE+gLcbBrTLuKna
+	 2zj23nDi2EsUrw/1MPi1sa+SktvJsaCopuNeMAENLOzkSdR9BH+CJQTzFd2W5n+vN2
+	 dhRHdS7ZnSo+OzzcRO384FGNWKqpFdfelnvICAn4=
+Message-ID: <2e798fad-fa8a-46b4-b874-7a178fd123dd@linux.microsoft.com>
+Date: Thu, 30 Jul 2026 16:56:25 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,108 +34,93 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/15] s390/vfio-ap: Callback to get the size of data
- to be migrated during guest migration
+Subject: Re: [PATCH 2/3] x86/irq: Use irq_chip_retrigger_hierarchy() in
+ fixup_irqs()
 To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, Jason Herne <jjherne@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Halil Pasic <pasic@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Kirti Wankhede <kwankhede@nvidia.com>, frankja@linux.ibm.com
-References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
- <20260727173239.2420754-14-akrowiak@linux.ibm.com>
- <20260727181947.66E251F000E9@smtp.kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-hyperv@vger.kernel.org
+References: <20260728135117.2888175-1-namjain@linux.microsoft.com>
+ <20260728135117.2888175-3-namjain@linux.microsoft.com>
+ <20260728140324.690D11F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260727181947.66E251F000E9@smtp.kernel.org>
+From: Naman Jain <namjain@linux.microsoft.com>
+In-Reply-To: <20260728140324.690D11F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDA4NCBTYWx0ZWRfX6hvfbJhCubJU
- muukH47pFuVtuK7KuRVMPgvepxZcdPOuqFe91juiapDxt1reQt/ZdGqa8zm5hTsKjYh2NaYJkw2
- nKETK9VqCsMemUsc5vALzWYmbYF1czY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDA4NCBTYWx0ZWRfX932R6F7p6JjI
- wuPwZuQ3vBfDzjlmFIT8k66ZD5+xWGnoHqhBuFfjYtCUnZ1+SBdWQY68DP/N4oX+GA/fm4jO/p8
- x3NHABk/ob9DG1rV/u0hT4X6nNQZAKsX0u8miHHzanbC7gDWtLsnVk4uN1JoZDMzZoA0iaeeuI6
- Y6pxi3yhCf7HFPXyHhDgMzke+3/8TRf7p9f1VrDVI6/tnriCYAWHlommPgslR+zYrB8dIBctPgP
- Zev/DDiX+QfG5X8CdYyvZvKT0tU90avqe8cyoY5YmuMq5FEFogHisSYfHO5ccWwcEiZkjqwdL/U
- ccozqCKvQDoXhkR5fxoinb51sg4BA9A52d0qyjPwmJguWMNGKaaCU06NvaARv0+BigBI0rXPewM
- HXI034dNRpfQijsGFz9CdBuxPGYCeIee7ivAI5yojYo8zfoNZ6PF5F09ygpRFF3IvRL7rTaghnQ
- 02GRDVP5o8T4iWXa3jA==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a6b34d4 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=vZ-Ft76KQvoWVpZ_:21 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=vmaoYyxeFlKKWzEfrrgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: BPQEqKNozr45mQ0jwd_egNSMpnQiNhj4
-X-Proofpoint-ORIG-GUID: BPQEqKNozr45mQ0jwd_egNSMpnQiNhj4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-30_03,2026-07-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300084
 
 
 
-On 7/27/26 2:19 PM, sashiko-bot@kernel.org wrote:
+On 7/28/2026 7:33 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Logic duplication for calculating the configuration size.
+> - [High] The patch replaces the direct invocation of the outermost chip's irq_retrigger() callback with irq_chip_retrigger_hierarchy(). However, irq_chip_retrigger_hierarchy() initializes its loop with `data = data->parent_data`, completely skipping the outermost chip. This breaks interrupt retriggering for flat domains (like native lapic_controller) and any hierarchical domain where the outermost chip directly implements the retrigger callback.
 > --
->
-> --- Patch [13]: [PATCH v6 13/15] s390/vfio-ap: Callback to get the size of data to be migrated during guest migration ---
-> commit f0e78a002713b19ca67967cef71fbd73dea59ee7
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Callback to get the size of data to be migrated during guest migration
->
-> This commit adds the mandatory migration_get_data_size callback for VFIO
-> migration support on the s390 vfio_ap driver. The callback calculates the
-> estimated data length required to migrate the device's internal state.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index 1c385908fc39b..8379cf8bbce89 100644
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
->> @@ -1392,7 +1392,18 @@ static int vfio_ap_get_state(struct vfio_device *vdev,
->>   static int vfio_ap_get_data_size(struct vfio_device *vdev,
->>   				 unsigned long *stop_copy_length)
->>   {
->> -	return -EOPNOTSUPP;
->> +	struct ap_matrix_mdev *matrix_mdev;
->> +	size_t qinfo_sz;
->> +	int num_queues;
+> 
+> --- Patch [2]: [PATCH 2/3] x86/irq: Use irq_chip_retrigger_hierarchy() in fixup_irqs() ---
+> commit f97e883de2f6626561de48c426194caa41c3e062
+> Author: Naman Jain <namjain@linux.microsoft.com>
+> x86/irq: Use irq_chip_retrigger_hierarchy() in fixup_irqs()
+> 
+> This commit modifies fixup_irqs() to use irq_chip_retrigger_hierarchy()
+> instead of invoking the outermost domain chip's irq_retrigger() callback
+> directly. It also refactors the loop to use scoped guards for the irq
+> descriptor lock.
+> 
+>> diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
+>> index 30122f0b3af96..ef1bdd3c4659a 100644
+>> --- a/arch/x86/kernel/irq.c
+>> +++ b/arch/x86/kernel/irq.c
+> [ ... ]
+>> @@ -489,22 +484,18 @@ void fixup_irqs(void)
+> [ ... ]
+>> -	for (vector = FIRST_EXTERNAL_VECTOR; vector < NR_VECTORS; vector++) {
+>> -		if (IS_ERR_OR_NULL(__this_cpu_read(vector_irq[vector])))
+>> +	for (unsigned int vector = FIRST_EXTERNAL_VECTOR; vector < NR_VECTORS; vector++) {
+>> +		struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
 >> +
->> +	mutex_lock(&matrix_dev->mdevs_lock);
->> +	matrix_mdev = container_of(vdev, struct ap_matrix_mdev, vdev);
->> +	num_queues = vfio_ap_mdev_get_num_queues(&matrix_mdev->shadow_apcb);
->> +	qinfo_sz = num_queues * sizeof(struct vfio_ap_queue_info);
->> +	*stop_copy_length = qinfo_sz + sizeof(struct vfio_ap_config);
-> [Severity: Low]
-> Does this code manually duplicate the size calculation logic already present
-> in the existing static helper vfio_ap_config_size() within this same file?
+>> +		if (IS_ERR_OR_NULL(desc))
+>>   			continue;
+>>   
+>>   		if (is_vector_pending(vector)) {
+>> -			desc = __this_cpu_read(vector_irq[vector]);
+>> -
+>> -			raw_spin_lock(&desc->lock);
+>> -			data = irq_desc_get_irq_data(desc);
+>> -			chip = irq_data_get_irq_chip(data);
+>> -			if (chip->irq_retrigger) {
+>> -				chip->irq_retrigger(data);
+>> +			guard(raw_spinlock)(&desc->lock);
+>> +			if (irq_chip_retrigger_hierarchy(&desc->irq_data))
+> [Severity: High]
+> Will this skip the outermost chip and cause a regression for flat domains?
+> 
+> Looking at kernel/irq/chip.c:irq_chip_retrigger_hierarchy(), the loop
+> initializes by immediately moving to the parent_data:
+> 
+>      int irq_chip_retrigger_hierarchy(struct irq_data *data)
+>      {
+>          for (data = data->parent_data; data; data = data->parent_data)
+>              if (data->chip && data->chip->irq_retrigger)
+>                  return data->chip->irq_retrigger(data);
+> 
+>          return 0;
+>      }
+> 
+> By passing &desc->irq_data directly to this function, it seems any retrigger
+> callback on the outermost chip itself will be bypassed.
+> 
+> Could this lead to dropped hardware interrupts during CPU hot-unplug for
+> flat domains (like native lapic_controller) or any hierarchical domain where
+> the outermost chip implements the retrigger callback?
+> 
+>>   				__this_cpu_write(vector_irq[vector], VECTOR_RETRIGGERED);
+>> -			}
+>> -			raw_spin_unlock(&desc->lock);
+>>   		}
+> 
 
-Yes, it does. The vfio_ap_get_data_size function will be modified to 
-call the
-vfio_ap_config_size function to set *stop_copy_length.
+I think this is a false positive, considering we are not changing the 
+behavior for any of the existing chip->irq_retrigger(data) which come in 
+this path (irq_chip_retrigger_hierarchy()).
 
->
-> Additionally, since struct vfio_ap_config uses a trailing flexible array
-> member for qinfo, would it be better to use the standard struct_size() macro
-> to compute the total length instead of manual multiplication and addition?
-
-struct_size(p, member, count) expects a pointer to the structure for which
-the size is to be calculated, so this can not be used; however, I think the
-struct_size_t
-
->
->> +	mutex_unlock(&matrix_dev->mdevs_lock);
->> +
->> +	return 0;
->>   }
+Regards,
+Naman
 
