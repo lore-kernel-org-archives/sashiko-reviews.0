@@ -1,354 +1,189 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022110.outbound.protection.outlook.com [52.101.126.110])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5B036A03F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 08:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B811B3D5676
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 08:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.110
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785401041; cv=pass; b=SplIr6BxRfK8jzJZsP1RbiWW9xzI38w6tjFou9NYU670SH4vYpx8IPeWfjgxa+1gqWt5tLrjBo0cWZefzOblZmyYBbAczwaoZVGLXRsSySn/vheknzWYp9+MI4051SGqUKiSYv8lbp01RYtj3LyBMXDP8mALs6Wcp6STYj26kdg=
+	t=1785401065; cv=fail; b=qFEEXEMifSh/gm2z+WluH1RJceR9CtJDPcPHEIIl+Rb9Oyhw0Br7GzUaQzIVyq82S5CXTIJ5cLM3kz71txY0Q5x92Ek2EI+VKzEsDRXufSlC1l/5YQMCYybvuqPBPa1OdAbEW6YhnNiZ287/UhZ4Lmk8y38UMhep2ZP1czpqk2E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785401041; c=relaxed/simple;
-	bh=Ru71+WFlJWFBpbdTm3eIOQ17TUmrQj82u/YmVjINnrU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P8hmznYIrmsCwC7UQTtt+eI1jwze9tkdJXFcTU7LZRtYZ/P6mV/6JO4e0K5ElPEnJ86bgiVPhJEq8b+HuxJ4ilFZYsIS70eju/hWoHSPoerMcbNthgZ8AeJk6vJG529zd25IhP2mR/pTBS5jdpF96eEqvBPBLgbonrBstwG63QU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l6+sbLTD; arc=pass smtp.client-ip=74.125.224.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1785401065; c=relaxed/simple;
+	bh=PS0TwEixTpe3JfIRQYRVS0PU+Hhbo6chZ0Fe5flPjjQ=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=G20oZAno/W1nRmcANHGHnWr85YFJgBh5QugjIULygrHXKR+xPIEoPDe3qPHHs5pBdO5lUF0soIn7ywC26BHbA2jz9VQ/jH0hhMqp3IdiZgBD0++19ZqN8U6carU2zIbVDz9i9AW1Ook6siltpnDVIToqtQRscbYbt6W0Qs6n84M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=H+D6a6Bg; arc=fail smtp.client-ip=52.101.126.110
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l6+sbLTD"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-667f1390f58so2582756d50.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 01:43:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785401038; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XuF4cukowepFSnbyy9aSjDQeehYcaEXbBMEBz8aK0iODSjulfoKW9vyS1o89e3nFyM
-         ufLw0o/A6ODyCcGq/R5oMSqwPxFuoDS/uVClZHWbxLaTv5QjbwscUmm2qO7O3b3mr1iF
-         pu+zArmMcAbDwwTtbg4I2bQGvvzQUxb4y053V7E8KtsEdjIg/Fzxk4/Ddsq6mZ9x3J7W
-         1v+0KWsaxDI5tTDmJvrgliFvAqyz1u4J18fGCFbbqGjTgu3w6/1OOeSGTTbKlubWpwC4
-         NvWfAJgXDjwNBXeSj/ulV53yfGb62nqhcc1h5t6tISvHFyTTbLdDQhEfCH/byhJY21fP
-         ljVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=yaKFxfR0fzpkcksdwy+w8qcnKI4eQ3ef3ipK09UpHVA=;
-        fh=byHgOfYmdgGkLqTOu/xRGCGzOl8NHjvEMDUZO9gl7rY=;
-        b=jAXdgUA8ibU+XQPrwXW3S61jz1phizVbMDjiVbuz51K/qFe4syCuDFdCkoDBtHgfd4
-         rXJXG8Y/ZrA5NOMdV+ZdCQCEcphVTUAC3SS2hVhDcpsAy/uwID0j6QrSzHGhydjT/j0u
-         ONRUdjulHYuGRsb/ZnJgrTVUHxad7D0n5evSvLSx/8ffCI7nxI25MYNGdzyWi6gj7eFE
-         JOjnxjIzAPNOjinWLlecsYFnItktq9k03zx7/GgxYp/h5EkqPK85ilDsH3VzO3Om27Rg
-         o8eRqANa9bjKyQ63wx47ShNp918Uc0pkz9NpKmLgREWdXJ7RKTITNtXtz/09reayYwxj
-         I5YA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1785401038; x=1786005838; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=yaKFxfR0fzpkcksdwy+w8qcnKI4eQ3ef3ipK09UpHVA=;
-        b=l6+sbLTDRhHneztxdoxSsFzfPo0PpZDGauJ244+nCdj7wtBREYFqEWMjz7D5NHf06H
-         9MqztD15cYi1OGT3mLg6sMx5ahnms9Pbsl7x7Iu83ZRprNDqrFXSH6LrJMzHIaA7SrYD
-         xQ7QmvZuZNrECBaYyYFItk9dcHEK1epLdb2jkkzvL+H1naC4LREVqFIj7W1x0Kzf3nLE
-         ypGiOpcI0jNBrhgPqNmAxoqyRak3F55bJEzobIrPwxyQaPZ6pWDLKkypn+E/kxzeQem+
-         NhhNoz2Iw1nC6WrOkiT9GVXyiM7ZegeKjPTVledH8LdpExH+shReukJvfcFnNyfSNoQ8
-         xnGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785401038; x=1786005838;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yaKFxfR0fzpkcksdwy+w8qcnKI4eQ3ef3ipK09UpHVA=;
-        b=ArHAfzxSxeoCknjk1nXD3H2EL9glYg1xbJ2pUEOA+dHKIIuT7Bin8HGFbQ+sk8s45E
-         OquJ6qHXBf9nEOINa0YLZFiLSxJTBr7TM4UINOe22Q6Q4Hwbh7frhtG82G20ZDJE55gE
-         m0JwCbJ2nGOImpU1iLve+p70iSrmJi7WJ0OTYueZDWxQWFCV2orM/PxH4FQDdIpSr3kN
-         4pPZtcay3OdzgmBSfzCaB31RaKKI7CkM60Cm9dAeWrKcduinLMYEVDC0yKFx1yiodA+5
-         nOFVpCQy5nc/Aj1gG/fjEuGd+cPdlhSujKJX/FjVCoWYhjNaWskqr/fRlmIlfKqNjb8G
-         YTeA==
-X-Gm-Message-State: AOJu0YzO+ezbJIVeYP57WYrh3WpMmxDBoZhlY0VAKVKmF8+7T39yfbu6
-	Od9NU653eJE+n9Hs4YqG83d9ksOwWgQ7Q5+Tk/TnhgrcCAROnuOY8Vt+GnYJPJGF4NvpIMhyHXs
-	mg68T3KDvTpOaYINb2msJMA+pEcu007FQNBK9hDBz6NOOptDt+67aZluP1Q==
-X-Gm-Gg: AR+sD11Zx53uNyvwqipDta/vgBBM08nD/hWB3WAB0h4b9JwsKM4YDwDguOlShmjr8lg
-	WkeKYsWSoKqDuMKXheXWqwV3Jzm4s1PnCEQ06g+Ng7yYUCRo3a4ecThje8wee8lm3/0GilsBSJX
-	AIkGHldc+Me9pjeDvPP2Z9x138MMq1WQmXpt0Fi7TWfuS+QYu3Vyu6jJSGLjYPAATBfiIWt7DaA
-	9GeJ39y/vP8hsoOF743fGuBVyKhr1hB9dDVJfonhOQvigApQfn8ByukNbwj/VQE/tmhQZOLfzT8
-	nBStAkYaLQpqo5QRgLt/M8REVDjJoXi/yE+HZfSSAKdrEVHA
-X-Received: by 2002:a05:690e:e83:b0:668:15d6:8fd9 with SMTP id
- 956f58d0204a3-6692f4a9ed7mr1128538d50.24.1785401037357; Thu, 30 Jul 2026
- 01:43:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="H+D6a6Bg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jV61fowzJfGidxHphiDoQrec6L9gSYo5eb0XC7c3gyFpI+jVscbzuK6gqXRC486DTQ/X1hyhOcxfoRN1jLDlPl6t7zPaw+LBnl1nGrPU+duI7okjVlSRp/YyAtc4+IHlhhpAjZaIRp7bE6AhtJGm7FHLT8qnYsev+XJF4TNotIXMXs9T7H8X3V+WGRNybeiIOHpvH9NAjMPSHQ8rC/b26ZTVTrBpLfw+mhQcboF4zMnXqumIRDkrH/FyTIS5Z83ynZfVlRZ1jkF6xSeipx7w0/CKiD6OF6auxYjhs64zCN6gXjnNTZsbasjTpBuyAsNV+bno88EgC70+PyRL2YxNOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OIYONSwOdeVPwMlSpNF0W21+ewW93qKMUd2hEavZNrk=;
+ b=s28oVpPw7EylyyfnJ2cR+LGh6twx9BwYCWgnq+zZRf0k48bVjADXMX2bs76iiNh4EgLFxQhXrGrW8g1RM31VlJZRp5cuacjXtiUMo1fiGb3cOmmdv9ncPpbE/bwEcqLazp2APAi/UoU/TAJggAPx5ZcfCIiVzINchjg8opwlzpkzthFqp25H7WlAlsp1lsLwd3OF1coGUtXceH+5o4n1NRCtr0FQk4EC1Y4nHJo++a+MBh8yx4F87uWeHcMEzm+uIASvdlRhKKkw+1H39d9NHqo6w+9j2Rfa4sAQJ27rGas3bj+7EWF8RAVYuReXKqyrslYenRl/u2ZLFBqX8d8ASA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
+ dkim=pass header.d=amlogic.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OIYONSwOdeVPwMlSpNF0W21+ewW93qKMUd2hEavZNrk=;
+ b=H+D6a6BgItWq+O7FMjhjkZePQJZI2PnaNR8Z29JV42wRc4sYMEMts199xwGKB0sRXlKBWpA42EAky44qDDAjJBTkiwijpSwNeR10KfqukDfk/maSSyvdQ8Ps2t96IZptXsUH2z8QcFLIFqAjYwzgXLZ46STn3kJfgNL77e2xFbkkUhv4Ei/gzvGM3G5uLztog7P7tZtOH3p5JKp9HLV5eZ1ShuJ6fUtn2bKuZkew4P9ehmYbQ9A43F1W51LNHhyx7e/ljyxmpNJ6zP43CXpeGDh1Rj4nb/apXzJgGH3wie5Ew65zsD2XK/9vQ7H8tpgXCVpVwzEC7UXNexJpGFrVMQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amlogic.com;
+Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
+ by KL1PR03MB8259.apcprd03.prod.outlook.com (2603:1096:820:113::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.14; Thu, 30 Jul
+ 2026 08:44:18 +0000
+Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
+ ([fe80::78d4:9dee:2e32:d1e4]) by TYZPR03MB6896.apcprd03.prod.outlook.com
+ ([fe80::78d4:9dee:2e32:d1e4%5]) with mapi id 15.21.0270.009; Thu, 30 Jul 2026
+ 08:44:18 +0000
+Message-ID: <9dcfcb6f-ecbd-43f9-976b-d28f942d0bd3@amlogic.com>
+Date: Thu, 30 Jul 2026 16:44:15 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: thermal: amlogic: Add A9 thermal
+ bindings
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
+References: <20260730-a9-thermal-v1-0-d786d37cba58@amlogic.com>
+ <20260730-a9-thermal-v1-1-d786d37cba58@amlogic.com>
+ <20260730083949.AE0351F000E9@smtp.kernel.org>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+In-Reply-To: <20260730083949.AE0351F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SL2P216CA0164.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:1b::8) To TYZPR03MB6896.apcprd03.prod.outlook.com
+ (2603:1096:400:289::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260727-sm8650-7-1-bonded-dsi-v5-0-c042266b9eeb@linaro.org>
- <20260727-sm8650-7-1-bonded-dsi-v5-6-c042266b9eeb@linaro.org> <20260727082018.2E7221F000E9@smtp.kernel.org>
-In-Reply-To: <20260727082018.2E7221F000E9@smtp.kernel.org>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Thu, 30 Jul 2026 16:43:45 +0800
-X-Gm-Features: AUfX_mzmu9T7jWwyxv5TKXdZNOp5IckU0GRtjEnl3MBaxtLZhEgB4Ber3zbb-JE
-Message-ID: <CABymUCN9Dft18JZW9NtP_pu_UxEWWpdr-cLhgAN=_3f4AY8A7Q@mail.gmail.com>
-Subject: Re: [PATCH v5 6/6] drm/panel: Add driver for Synaptics R63455 DSI panel
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR03MB6896:EE_|KL1PR03MB8259:EE_
+X-MS-Office365-Filtering-Correlation-Id: b8b48a80-fa6f-4347-d0c3-08deee16be34
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|4143699003|11063799006|10067099003|56012099006|3023799007|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	2D2QIRwQCjMtqd2kcXa5X2y4/KRE7SjK5R1GP82zavunKAn9tZsE4xzuRkn1JNqT0BEARVKBOtdotDJyPrhctoODg6sBIu22gPzP3Mk3KM3QUJPhSv0R/TxAb87iyc+Lrv7ATPG8wbwgSo1FdivcrW6nYVLglaDRwEpxRiEDGZ/YX/QG9adwye+p57s+95WfsQYXulWM218kQa69VIw7mL2V8IDN+Ka3h9GDs/HjWfwibYfeGAxlXxu52ENTVVJtA3Qqv5X6ojyj/5G3W7WvUZ8Z2gjd8670wZywwefIpNoSJQu+dXr9KBt1jBbvZNLoh8lygZK1iUcQ/8rlPNE86MkqLJnaxME+STVjiiuGm//MUNGZgcvQQCRG6ahq8OUfCQw/sSGoksMiiaUY7BlV63NTqsmi64ybugmHt5Do2HFh3rKF3R+deNeH7PSz+SAVrtKqXLlhfgzspG/XZyPgGN0AW0OnHWm9GyGsPPLlvxrmhztIrcNSCCxn+C+0YbASs8Yg6zGa9zCqfHbO+wn6rkUeTqaeeq1icrEznZMUy8ZV5eosHK56t3szy6UNS0F+F0DmWNWiLRLa40E+1ENefAtoUcBbKJw4T4nQPc4Vw/g=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB6896.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(4143699003)(11063799006)(10067099003)(56012099006)(3023799007)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?N3pRTjRqdHNzQmNnb2F3VDhiZmgwZUpRN0JWbVJHNjhHbVZvajVjMnZmUzJu?=
+ =?utf-8?B?Rm5rakFvZ0JSbytSMkxHZ0p5M2dNVjhoLzZzZ0JWSmZSS094RkZ6YjhyNDVL?=
+ =?utf-8?B?MXFKWVVYRGI3U2FCa093WVFHN2pLbXZCeGpzT1ZnTVhWbHVLVDA2Zlo5SkdB?=
+ =?utf-8?B?M3g2S2NHajFsSTByOWVUYVljdzNHVXpUNWxhWGlmU2R2K3UrUEY0N05QdWdk?=
+ =?utf-8?B?RXBsS0NqTmxpYk1CWXl5R2ZzdW5rdU5wN3g0Z0xQSjJ0TG1GZUU1OUU2Tnhy?=
+ =?utf-8?B?RkhwZ2p5bUYweGxSaG5FcDcwamlZZEFUTWl5SWpSYzNMVzk2aHlnWkQyQUJV?=
+ =?utf-8?B?cElaY0RvN1FlTFY0MTFBbjZkQmxTcW5tVUFyaXlKTUZJTktaeEhtMmlzV3Fs?=
+ =?utf-8?B?WXlSbk9NUm8vQy8yNGkraGpkQTdDK09ScmtIVzkwd2o1TWxSOHNFUmFtNDda?=
+ =?utf-8?B?WkRsY0JrbCtDemY2dWl0QUtLbW1nTlg0T0FiTUJQZzR6SEFPVU9TM1dHTUVE?=
+ =?utf-8?B?dW5EMnlwL0djbFAxYWhKenNseW1ubmQ3Vksrc0swRmlkUEFsaExmazJXcHlW?=
+ =?utf-8?B?bG45ZG5CdTl1VDd3b0M3RXlmVk84bVI3ZzJTRGtLOEZnN2trcG5qWThjd1lG?=
+ =?utf-8?B?OWM5bGVSZzJzUXZWdFRiUlYxaW9ob25wa1pFbU5zODVWMUd4SCtrY2drQlFL?=
+ =?utf-8?B?UnlGT0xCK0NpVlE1alEvak1iYWhyN01QbG1JRTdUd2MrV0tIbDJjc2FoWmxy?=
+ =?utf-8?B?V3lydTRtWWVHdnJ6RGxCRlVCalM1MUhOenZaWXBTQ3NwYlpMZVJXc3JUTzhQ?=
+ =?utf-8?B?QUd5U0V1MnNYc2o0d2FhY3VNN3BtaEt6eDJxenJ2Wlo0UTQ4aTRJMGkzNS9N?=
+ =?utf-8?B?bXlKY1RpQUhWdFNzQWtVSE5EQTA0QTZWMzRYVVl3SEJtMzErQVY5SU5qRzVy?=
+ =?utf-8?B?NWR3VitwQ2lUVXorWEF4QjlkcitsNmQ1SVZ1YVJJVGhGYU9CTENQSlJKVTE2?=
+ =?utf-8?B?MzF1RW5VRHZRdW11Ky9IS2w2QUp1Z2phcXVvaklYWjYvVU1za2lnT1JTbXRp?=
+ =?utf-8?B?ZHNzR2ZxcWNXU0FERkYvVnd0aEk5Wlc4S2NDOFpHY3dGZlZIMVlqN0ZUS0g2?=
+ =?utf-8?B?QjAwZ1ExQnRSY1ZVM2R2VnVPLytIRGltTTZvQ2xmNjdiY2RYZnF4cnh2VjZa?=
+ =?utf-8?B?bGRES3QrZnpPU0VSSUJCZHl5Y3NIZDlOVWtmRlB1RnBoZ2d2Ly9Xa0pjamVp?=
+ =?utf-8?B?SDMzcVJTRS9PcmY4Nisvemd0UUpQK0tkajFLYVNIeThFcEZqRFh4dUp3TVk0?=
+ =?utf-8?B?M2N4d0pJTURDbVlkSTRIclNDWHdXaDFEY2NhNnBiQ01aNzBLWVIwUXBJdEFr?=
+ =?utf-8?B?b0dHSEo0NFlrZS85aWE0N1Q4cUpWSmZtbTJ1NGpjdUl6V3dRZ2ZRYWRrS1lX?=
+ =?utf-8?B?V2xmVE5iMk10ckdUOWgrQzE4cVRUK0EwMklKRzdOZXdETXkzSlhGeVUwV3RR?=
+ =?utf-8?B?UDZJYk1LeU4xNDBaSHdvTzVnUFp2RnNVMjFiWG8wd0QwU0xqRzFaUWhjMWp6?=
+ =?utf-8?B?UG5nRGUveWNwWTBZeEtvVVhSQWVxZzRWR1RhNFZ2b09MVEphTnJuMGowbnN1?=
+ =?utf-8?B?OG5kdXBtNTlsUUFZTlRwVXhTS1pBZEloM2F5YThwR2pTdEFpQTU1Sjh6M3VQ?=
+ =?utf-8?B?dWtZYzJUR1prRUhmWjg5ZG80MEYzS2tYNUJRNzlwSGZJZ0lZWTFtN2ZoUnZx?=
+ =?utf-8?B?WFlGbkZ6V3g2QlVLdDBua3hjYUdrZ2ptN1czcENHNjdtVUZHem9SNU9CMm1E?=
+ =?utf-8?B?WEtxL2hZdlE4TC9FUXBocXhDVTZzZUVJdTEyWVhEQjdxbEhkb0FNWW1tSHl0?=
+ =?utf-8?B?dlJ5UUxHOVZTdjRqRjlUMkZBbTFJYTV2WVg3R24rNlBjT1hVeWlmSktGaDZ1?=
+ =?utf-8?B?aXBQMjQ3NXhqZkZCcVcvVXJXL2xhUDFHaUJpTjlZVlZDREduMmFBZDhLZ0FG?=
+ =?utf-8?B?SERwdXJrb3NJeTh0WnN2OC9GM1M1TVNHekdDN0tpS013OVliaU9YSU83VnlZ?=
+ =?utf-8?B?ODFBaXVxSlNMd0FsNWRpY24yZ09mRWRWekFQUWVsbll5WVVJTms0R29UWmlw?=
+ =?utf-8?B?SXJEV21WdjJGRUZ4dDYzbExBUzA5VDZBaExSNWJIMnlPR2NNSmxsYU9HTnVR?=
+ =?utf-8?B?blZjTGNHMUNkRFNiVnFQaDRrSWpkcjFTdGJ0bVFxak54WWtBdnZiSXJ1Yzk2?=
+ =?utf-8?B?Wkx6VTBCUTV3citlbThkS1hiUXRmdE12OG05VXY1eGVtODFqUk5YN3VpcjNh?=
+ =?utf-8?B?eVc2cEZEZGdDTXRpSTNYNTczbDJITC9UY08zYml6NkVuT1huWmw2MlhYa0Vk?=
+ =?utf-8?Q?dvPfxZ4ezxTze/uo=3D?=
+X-OriginatorOrg: amlogic.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8b48a80-fa6f-4347-d0c3-08deee16be34
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 08:44:18.2393
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1t5Q9ezOnOxOByjsUjB116+LVnNpRRz1EivvbdAHvLis3o2xonz7JiOP1gUnexZxJkQQy78J80gYNvDKzaGx2ZJU6NpY4U3WIcd8K+vA0s8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR03MB8259
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B47=E6=9C=8827=E6=97=A5=E5=91=
-=A8=E4=B8=80 16:20=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 8 potential issu=
-e(s) to consider:
-> - [High] A copy-paste error in the BOE panel initialization sequence dupl=
-icates command bytes, corrupting the DSI payload.
-> - [High] Concurrent non-atomic read-modify-write operations on DSI `mode_=
-flags` can corrupt the transmission mode state.
-> - [High] Missing IS_ERR() check on the return value of devm_drm_panel_all=
-oc() leads to an immediate dereference of an error pointer.
-> - [High] The backlight sysfs interface is exposed to userspace before the=
- DSI device is fully configured and attached.
-> - [Medium] The macros LE16_BYTE0/1 and BE16_BYTE0/1 use endianness conver=
-sion functions before bitwise masking, causing incorrect byte order on Big =
-Endian architectures.
-> - [Medium] Returning PTR_ERR() on a valid pointer when the GPIO array siz=
-e is incorrect leaks a kernel heap address and produces a positive error co=
-de.
-> - [Medium] The backlight update_status callback blindly sends DCS command=
-s without checking the panel's power state.
-> - [Low] An early return in the panel disable path on DSI command failure =
-skips disabling the backlight.
+
+
+On 2026/7/30 16:39, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Typo in the YAML schema `else` block: `clocks-names: false` instead of `clock-names: false` fails to forbid the property for non-A9 devices.
 > --
->
-> --- Patch [6]: [PATCH v5 6/6] drm/panel: Add driver for Synaptics R63455 =
-DSI panel ---
-> commit 89f5e4df3241a9188e302ee5028a24a7b0bc9542
-> Author: Jun Nie <jun.nie@linaro.org>
-> Subject: drm/panel: Add driver for Synaptics R63455 DSI panel
->
-> This commit adds support for the Synaptics R63455 DSI panel used in virtu=
-al
-> reality devices. It exposes a dual-panel configuration as a single logica=
-l
-> panel to the DRM framework.
->
-> > --- a/drivers/gpu/drm/panel/panel-synaptics-r63455.c
-> > +++ b/drivers/gpu/drm/panel/panel-synaptics-r63455.c
+> 
+> --- Patch [1]: [PATCH 1/2] dt-bindings: thermal: amlogic: Add A9 thermal bindings ---
+> commit 3a3c5b1f7b65f4d86068deda76be1b7141170b8c
+> Author: Xianwei Zhao<xianwei.zhao@amlogic.com>
+> 
+> dt-bindings: thermal: amlogic: Add A9 thermal bindings
+> 
+> This commit documents the thermal controller compatibles for the Amlogic
+> A9 SoC. It describes the core and pclk clocks, adds a hardware reset
+> temperature property, and updates schema constraints.
+> 
+>> diff --git a/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+>> index 8cfa44dcda58c..5f5dc6f12851d 100644
+>> --- a/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+>> +++ b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
 > [ ... ]
-> > +/*
-> > + * Extract the low byte and high byte of the 16bit number converted
-> > + * to the cpu endianness.
-> > + */
-> > +#define LE16_BYTE0(val) (le16_to_cpu(val) & 0xff)
-> > +#define LE16_BYTE1(val) ((le16_to_cpu(val) >> 8) & 0xff)
-> > +#define BE16_BYTE0(val) (be16_to_cpu(val) & 0xff)
-> > +#define BE16_BYTE1(val) ((be16_to_cpu(val) >> 8) & 0xff)
->
-> [Severity: Medium]
-> Will this generate the correct byte order on Big Endian architectures?
->
-> Since be16_to_cpu is a no-op on Big Endian systems, applying the bitwise
-> shift and mask afterward will extract the bytes in Little Endian order
-> rather than Big Endian. This will cause the panel initialization sequence=
- to
-> receive payload bytes in reversed order.
->
-> Could we directly shift and mask without the endian conversion macros to
-> safely serialize CPU-native integers across all architectures?
-
-From Neil:
-No we extract the low byte and high byte of the 16bit number converted
-to the cpu endianness,
-so it's the right code here.
-
->
-> [ ... ]
-> > +static int r63455_panel_on_boe_vs026c4m_n52_26000(struct drm_panel *pa=
-nel)
-> > +{
-> [ ... ]
-> > +     r63455_dsi_write_seq(ctx, dsi_ctx, R63455_GEN_OUTPIN_SET,
-> > +                          0xf, 0xe4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0=
-0,
-> > +                          0xf, 0xb2,
-> > +                          0xf, 0xb2, 0x00, 0x64);
->
-> [Severity: High]
-> Does this sequence intentionally send the 0xf, 0xb2 bytes twice for the B=
-OE
-> panel initialization?
->
-> This looks like it could be a copy-paste error that sends 14 bytes instea=
-d
-> of the expected 12 bytes. Could this transmit malformed configuration dat=
-a
-> to the display controller and cause initialization failures?
-
-Yes, the sequence is send twice intentionally. As there are 2 panel control=
-lers
-as 1 logic panel in DRM high level system.
->
-> [ ... ]
-> > +static int r63455_set_brightness(struct r63455_ctx *ctx, u16 brightnes=
-s,
-> > +                               u16 pulse_offset_rows)
-> > +{
-> [ ... ]
-> > +     ctx->dsi[0]->mode_flags &=3D ~MIPI_DSI_MODE_LPM;
-> > +     ctx->dsi[1]->mode_flags &=3D ~MIPI_DSI_MODE_LPM;
->
-> [Severity: High]
-> Are these bitwise operations on mode_flags safe from race conditions?
->
-> Since r63455_set_brightness executes under the backlight sysfs lock, it c=
-an
-> run concurrently with DRM atomic commit handlers like r63455_enable or
-> r63455_disable which use independent locks.
->
-> Could a concurrent read-modify-write here corrupt the transmission mode s=
-tate,
-> such as unintentionally dropping the MIPI_DSI_MODE_VIDEO flag?
-
-It's very improbable this happens, panel cmds and backlight are called
-at very different times.
->
-> [ ... ]
-> > +static int r63455_disable(struct drm_panel *panel)
-> > +{
-> [ ... ]
-> > +     r63455_dsi_write_seq(ctx, dsi_ctx, MIPI_DCS_ENTER_SLEEP_MODE);
-> > +
-> > +     mipi_dsi_msleep(&dsi_ctx, 200);
-> > +
-> > +     if (dsi_ctx.accum_err)
-> > +             return dsi_ctx.accum_err;
-> > +
-> > +     /* required by hardware to be after MIPI_DCS_ENTER_SLEEP_MODE */
-> > +     return backlight_disable(ctx->backlight);
->
+> 
+>> @@ -73,6 +84,22 @@ allOf:
+>>         required:
+>>           - amlogic,secure-monitor
+>>
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - amlogic,a9-thermal
+>> +    then:
+>> +      required:
+>> +        - clock-names
+>> +    else:
+>> +      properties:
+>> +        clocks:
+>> +          maxItems: 1
+>> +        clocks-names: false
 > [Severity: Low]
-> Does returning early here leave the backlight subsystem in an active stat=
-e?
->
-> If the DSI ENTER_SLEEP_MODE sequence fails, the driver skips calling
-> backlight_disable. While the physical regulators are disabled later in
-> r63455_unprepare, could this leave the backlight framework out of sync?
-
-Technically yes, but practically it is an unrecoverable hardware state. So =
-it is
-a low risk issue and can be ignored.
-
->
-> [ ... ]
-> > +static int r63455_bl_update_status(struct backlight_device *bl)
-> > +{
-> > +     struct mipi_dsi_device *dsi =3D bl_get_data(bl);
-> > +     struct r63455_ctx *r63455_ctx =3D mipi_dsi_get_drvdata(dsi);
-> > +
-> > +     return r63455_set_brightness(r63455_ctx, bl->props.brightness,
-> > +                                  bl->props.pulse_offset_rows);
-> > +}
->
-> [Severity: Medium]
-> Does this function need to verify the panel power state before sending DC=
-S
-> commands?
->
-> Userspace can modify the brightness via sysfs while the DRM display is
-> disabled. If this occurs, it might trigger MIPI DSI transmissions to a
-> powered-off panel or unclocked DSI host.
->
-> Could this lead to hardware lockups or DSI timeouts?
-
-Yes, I will add below logic in next version.
-
-+++ b/drivers/gpu/drm/panel/panel-synaptics-r63455.c
-@@ -456,6 +456,9 @@ static int r63455_bl_update_status(struct
-backlight_device *bl)
-        struct mipi_dsi_device *dsi =3D bl_get_data(bl);
-        struct r63455_ctx *r63455_ctx =3D mipi_dsi_get_drvdata(dsi);
-
-+       if (!r63455_ctx->panel.enabled)
-+               return 0;
-+
-
->
-> [ ... ]
-> > +static int r63455_panel_add(struct r63455_ctx *ctx)
-> > +{
-> [ ... ]
-> > +     ctx->reset_gpios =3D devm_gpiod_get_array(dev, "reset", GPIOD_OUT=
-_LOW);
-> > +     if (IS_ERR(ctx->reset_gpios) || ctx->reset_gpios->ndescs !=3D 2)
-> > +             return PTR_ERR(ctx->reset_gpios);
->
-> [Severity: Medium]
-> If the GPIO array has a count other than 2, will this return a positive v=
-alue
-> derived from a valid heap pointer?
->
-> When devm_gpiod_get_array succeeds but returns an unexpected number of
-> descriptors, ctx->reset_gpios is a valid pointer rather than an error poi=
-nter.
->
-> Could we return an explicit error code like -EINVAL here instead of leaki=
-ng
-> the pointer address through PTR_ERR?
-
-Right, -EINVAL is proper value to return.
->
-> [ ... ]
-> > +static int r63455_probe(struct mipi_dsi_device *dsi)
-> > +{
-> [ ... ]
-> > +     ctx =3D devm_drm_panel_alloc(&dsi->dev, __typeof(*ctx), panel,
-> > +                                &r63455_drm_funcs, DRM_MODE_CONNECTOR_=
-DSI);
-> > +
-> > +     ctx->dsi_init_seq =3D of_device_get_match_data(dev);
->
-> [Severity: High]
-> Should we check the return value of devm_drm_panel_alloc for an error poi=
-nter?
->
-> If memory allocation fails during driver probe, devm_drm_panel_alloc retu=
-rns
-> ERR_PTR(-ENOMEM). Dereferencing ctx on the very next line to assign
-> dsi_init_seq will result in a kernel panic.
->
-Right, a check shall be added in next version.
-
-> [ ... ]
-> > +     ret =3D r63455_panel_add(ctx);
-> > +     if (ret) {
-> > +             DRM_DEV_ERROR(dev, "failed to add panel %d\n", ret);
-> > +             return ret;
-> > +     }
-> > +
-> > +     for (i =3D 0; i < 2; i++) {
-> > +             dsi_dev =3D ctx->dsi[i];
-> > +             dsi_dev->lanes =3D 3;
-> > +             dsi_dev->format =3D MIPI_DSI_FMT_RGB888;
-> > +             dsi_dev->mode_flags =3D MIPI_DSI_MODE_VIDEO | MIPI_DSI_MO=
-DE_LPM |
-> > +                     MIPI_DSI_CLOCK_NON_CONTINUOUS;
-> > +             ret =3D devm_mipi_dsi_attach(dev, dsi_dev);
->
-> [Severity: High]
-> Is it safe to register the backlight device before the DSI host is config=
-ured
-> and attached?
->
-> Calling r63455_panel_add exposes the backlight sysfs interface to userspa=
-ce.
-> However, the lanes, format, mode_flags, and devm_mipi_dsi_attach are not
-> set up until the loop that follows.
->
-> If a udev rule writes to the brightness node during this window, could it
-> trigger DSI transmissions on an unattached device and lock up the host?
-
-It is OK per Neil's answer.
->
+> Does this code intend to restrict the clock-names property here? It appears
+> there is a typo in the property name (clocks-names instead of clock-names).
+> Could this typo allow non-A9 variants to define the clock-names property
+> without failing schema validation?
+> 
+Will fix it.
+>> +        amlogic,hw-reset-temp: false
+>> +
+>>   unevaluatedProperties: false
+>>
+>>   examples:
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727-sm8650-7=
--1-bonded-dsi-v5-0-c042266b9eeb@linaro.org?part=3D6
+> Sashiko AI review ·https://sashiko.dev/#/patchset/20260730-a9-thermal-v1-0-d786d37cba58@amlogic.com?part=1
