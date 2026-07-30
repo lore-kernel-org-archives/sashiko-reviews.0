@@ -1,129 +1,142 @@
-Received: from va-2-54.ptr.blmpb.com (va-2-54.ptr.blmpb.com [209.127.231.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC600340402
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 20:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFCB340402;
+	Thu, 30 Jul 2026 20:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785441775; cv=none; b=qqkMUGSFZYI5zhaY03UtWSMbSHmL80j0FQSyrgezcCTPl4+jI25qy+Kk+PABCFvO1kQpXapJyaDWYhHwobiP+qwgMYk6VfRg7riOiuOJ+dyvuk70WJIL/rKpjxQcFENH4sgumZnJhe+JIIGDzH+TPpHYriveyOQmRkjdXBSywK0=
+	t=1785442102; cv=none; b=S8Ek5OoBMz+ouJB1DkDJI0Cqpf1XRieI+tNJKs3HLkbB2PLf4zWG2Q5EA8BzhdzI3pwAQt7GTuVWjughcViCgxGhCiYdNahlMYQ2Io5aggE9CvhApCzEHWL7eFl3V+UIB+CO9e/cc4EkNf48iqCS49Am0mVrW6ttrK6xedJLQMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785441775; c=relaxed/simple;
-	bh=p8h4DmUfcqZszTFCaMcEisgt/6+IGvOqY85EQwlg0sg=;
-	h=Content-Type:In-Reply-To:Mime-Version:Date:To:Subject:References:
-	 From:Message-Id:Cc; b=gSUTFNXJW877hCCG9JwfJjDEQhRaIq18MpBQbBwdvPj2/XLr1UmBpMVivTOibHF8C2pV5ZYP3ekzdXczO255JRNhNoLdZOv30l0CcdqlTTMQ9TvHCpxDMwnszsKIy+po3XnyuufsIrbd6RvpwLJ+WIt7cYwhR0TqsspB+Hwe2aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=WAyODMsk; arc=none smtp.client-ip=209.127.231.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
+	s=arc-20240116; t=1785442102; c=relaxed/simple;
+	bh=HOjIAp4Cn+n9NqP6wnN6nF1bOK/yQblloSgw9j4x+CM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Ao7J/dGhtX0/ZK74R1zx9aLqTwMNSu1asjGZ21sImQ+hI9t2K9Fx9ZZuLV5hzKK3aTd0JvrSPyEjwtxfDsrqz5vOdWRCT2jcDgmpMPaSu7E1p6VnWECcWopem3JEwf4Xypxpq+DjeOqYzaMCZ3L07g2KaN7C+HNx4u8IA8EMk9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CEOg3PMd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="WAyODMsk"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1785441768;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=Tk3sB2hpJ9ZwidwOR2mz/E9yu5Xc7t091/qV5f+s5cM=;
- b=WAyODMska91uUjRz2Uq3+pWLS6HnaGPTT+S4n3BDtNx/EW46yxKG58HmN51vYa9OCCaTXv
- 4y2pHjSDCB25EJou33AhsoNCpWebk++OI0vndrXwKbYL2SnryFbUUN1EbiSqayfqkN/NFL
- ViGD9FqQId8Wot79op4rzZPXyZj3zoFFPM9+o3ki1l6l0ymRoPyLseQnWuQzYPnXMJ9rDS
- ZDk9+Tn3fZvWDoiBPHfzx8BLsnMFJfaOY8OBHLpSQHF54PfRHC7+tiI63WpXWyoIj66ofS
- C4EOBoxN83rK07iYgKQdp/rGSspjmLhsoQZbX8joS9/Ivp7tZ57rKqiDEc2+BA==
-Content-Type: text/plain; charset=UTF-8
-In-Reply-To: <20260710133601.099961F000E9@smtp.kernel.org>
-X-Lms-Return-Path: <lba+26a6bade7+173006+lists.linux.dev+yukuai@fygo.io>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CEOg3PMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0231F00A3A;
+	Thu, 30 Jul 2026 20:08:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785442100;
+	bh=NcznJuISkuKI5c0p8DuER5WeRjiK2U8XmaNgW6aTB2Q=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=CEOg3PMddQaSotNCYdGCsjzz8i0KstZCeCNcUrqVFHR8m7gc7Q87xxhlqjcyVjiVg
+	 80hypKyhMQqBMwqV90HT6hzOKqUDEVOuJ5X3B+aKrM5MX477yrJ2jhH0NEsuyKhNtd
+	 HkUHQc97/hCmUYy3Qhf4dWMc9yeOtueSiHUpyP21osv/Yu1V4jhMBrWjDRx5na5GGW
+	 JYhb3XLTnTs8TWjG6E++zInuldDd6VG1e5NXXZjDzwjDZSV34G2Jf+y9IYJQAgmXx0
+	 KrzT6sy7okE1Wjp5mqwZARpGDAOFpfZDLENRNxy6XT7Dxt3ShaZ3ndqUTM1fpwGRKR
+	 AyQlFTfBMUtDQ==
+Date: Thu, 30 Jul 2026 15:08:19 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>
+Cc: "mmaddireddy@nvidia.com" <mmaddireddy@nvidia.com>,
+	"thierry.reding@kernel.org" <thierry.reding@kernel.org>,
+	"lukas@wunner.de" <lukas@wunner.de>,
+	"Korenblit, Miriam Rachel" <miriam.rachel.korenblit@intel.com>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"treding@nvidia.com" <treding@nvidia.com>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+Message-ID: <20260730200819.GA1520846@bhelgaas>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Received: from [192.168.1.104] ([39.182.0.181]) by smtp.larksuite.com with ESMTPS; Thu, 30 Jul 2026 20:02:46 +0000
-Date: Fri, 31 Jul 2026 04:02:44 +0800
-X-Original-From: yu kuai <yukuai@fygo.io>
-User-Agent: Mozilla Thunderbird
-To: <sashiko-reviews@lists.linux.dev>, 
-	"Hiroshi Nishida" <nishidafmly@gmail.com>
-Subject: Re: [PATCH 1/2] md/raid5: submit a window of stripes during resync/recovery
-References: <20260710132339.7284-1-nishidafmly@gmail.com> <20260710132339.7284-2-nishidafmly@gmail.com> <20260710133601.099961F000E9@smtp.kernel.org>
-From: "yu kuai" <yukuai@fygo.io>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6a38d4fe-f8f6-4a0e-9054-9678f99537b1@fygo.io>
-Reply-To: yukuai@fygo.io
-Cc: <linux-raid@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fe27839dfc8c33104ea215912cb7d33c85435fe6.camel@intel.com>
 
-Hi,
+On Thu, Jul 30, 2026 at 06:45:29PM +0000, Grumbach, Emmanuel wrote:
+> On Thu, 2026-07-30 at 12:28 -0500, Bjorn Helgaas wrote:
+> > On Thu, Jul 30, 2026 at 10:21:06AM +0530, Manikanta Maddireddy wrote:
+> > > On 29/07/26 12:19 pm, Grumbach, Emmanuel wrote:
+> > > > On Tue, 2026-07-28 at 15:18 -0500, Bjorn Helgaas wrote:
+> > > > > On Tue, Jul 28, 2026 at 07:47:04PM +0000, Grumbach, Emmanuel
+> > > > > wrote:
+> > > > > > On Tue, 2026-07-28 at 14:24 -0500, Bjorn Helgaas wrote:
+> > > > > > > On Tue, Jul 28, 2026 at 06:21:23PM +0000, Grumbach,
+> > > > > > > Emmanuel
+> > > > > > > wrote:
+> > > > > > > > On Tue, 2026-07-28 at 13:03 -0500, Bjorn Helgaas wrote:
+> > > > > > > > ...
+> > > > > > > 
+> > > > > > > > > AFAICS we still don't know why Tegra264 would set
+> > > > > > > > > NoSnoop and/or RlxdOrd in the MMIO read.
+> > > > > > > > 
+> > > > > > > > Me neither but... I can't comment on that. And de-facto,
+> > > > > > > > once it does that, the BE200 replies with the NoSnoop and
+> > > > > > > > RlxOrd clear in the TLP which is then considered as a
+> > > > > > > > malformed TLP.
+> > > > > > > > 
+> > > > > > > > > Unless iwlwifi asked for NoSnoop and/or RlxdOrd to be
+> > > > > > > > > set, I think it's a potential problem for drivers if
+> > > > > > > > > Tegra264 sets them.
+> > > > > > > > 
+> > > > > > > > I ... don't think we would do that. The driver would
+> > > > > > > > certainly not do that... Regarding the hardware itself, I
+> > > > > > > > can't comment, but I can check internally.
+> > > > > > > 
+> > > > > > > Forgot to ask, can you collect the output of "sudo lspci
+> > > > > > > -vv", at least for the RP and the BE200?
+> > > > > > > 
+> > > > > > > And maybe the dmesg log when booted with "log_buf_len=16M
+> > > > > > > pci=earlydump" as well, so we can see if attributes were
+> > > > > > > enabled by a bootloader?
+> > > > > > 
+> > > > > > I assume you want all this without the quirk, right?
+> > > > > 
+> > > > > Right.
+> > > > 
+> > > > Attached.
+> > > > Note that we used an out-of-tree driver in those attempts so the
+> > > > kernel is tainted, but this does not impact the issue we're
+> > > > discussing here.
+> > > 
+> > > PCI_EXP_DEVCTL_RELAX_EN and PCI_EXP_DEVCTL_NOSNOOP_EN are set by HW
+> > > default value, this is inline with PCIe spec. It says "the default
+> > > value of this bit is 1b" in both cases.
+> > 
+> > Huh, you're right.  I was assuming 0b was the default, but indeed 1b
+> > is the default unless they're hardwired to 0.  And they're both set
+> > to
+> > 1b on my x86 (AMD) Root Ports as well.  
+> 
+> Not on my Intel Root port:
+> 
+> 00:1d.0 PCI bridge: Intel Corporation Alder Lake PCI Express Root Port 
+> 
+> <Snip>
+> 
+>         Capabilities: [40] Express (v2) Root Port (Slot+), IntMsgNum 0
+>                 DevCap: MaxPayload 256 bytes, PhantFunc 0
+>                         ExtTag- RBE+ TEE-IO-
+>                 DevCtl: CorrErr- NonFatalErr- FatalErr- UnsupReq-
+>                         RlxdOrd- ExtTag- PhantFunc- AuxPwr- NoSnoop-
+>                         MaxPayload 128 bytes, MaxReadReq 128 bytes
 
-=E5=9C=A8 2026/7/10 21:36, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The batched sync loop can greedily drain the stripe cache withou=
-t yielding, causing severe latency spikes and potentially starving user I/O=
-.
-> --
->
-> --- Patch [1]: [PATCH 1/2] md/raid5: submit a window of stripes during re=
-sync/recovery ---
-> commit 2b3cdb45d82bdea6112cba5dad14b59ec3acb23a
-> Author: Hiroshi Nishida <nishidafmly@gmail.com>
->
-> md/raid5: submit a window of stripes during resync/recovery
->
-> This patch updates the RAID5 sync path to dispatch a batch of up to 32
-> stripes per call instead of just one. It throttles only on the first stri=
-pe,
-> allowing subsequent stripes to be submitted without blocking to improve
-> resync performance.
->
->> diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
->> index 0c5c9fb0606ee..574880e4f23fe 100644
->> --- a/drivers/md/raid5.c
->> +++ b/drivers/md/raid5.c
-> [ ... ]
->> @@ -6640,13 +6632,42 @@ static inline sector_t raid5_sync_request(struct=
- mddev *mddev, sector_t sector_n
-> [ ... ]
->> +	/* Submit remaining stripes in the window non-blocking.  Stop early
->> +	 * if the stripe cache is full: the disk queue is already saturated.
->> +	 * Bound by resync_max so a user- or cluster-imposed sync ceiling is
->> +	 * not overshot.
->> +	 */
->> +	win_sector =3D sector_nr + RAID5_STRIPE_SECTORS(conf);
->> +	for (submitted =3D 1;
->> +	     submitted < RAID5_SYNC_WINDOW && win_sector < max_sector &&
->> +	     win_sector < mddev->resync_max;
->> +	     submitted++, win_sector +=3D RAID5_STRIPE_SECTORS(conf)) {
->> +		sh =3D raid5_get_active_stripe(conf, NULL, win_sector,
->> +					     R5_GAS_NOBLOCK);
->> +		if (!sh)
->> +			break;
-> [Severity: High]
-> Can this batched sync loop greedily drain the stripe cache without yieldi=
-ng to
-> user I/O?
->
-> During array resync or recovery, this loop acquires up to 32 free stripes
-> sequentially. Could this starve user I/O threads that are blocked on the
-> conf->wait_for_stripe waitqueue, since it doesn't check if user I/O is wa=
-iting
-> (e.g., via waitqueue_active(&conf->wait_for_stripe)) before getting the n=
-ext
-> stripe?
+Super interesting.
 
-This make sense, always submit 32 stripes at a time will against the thrott=
-ling rules
-from sync_io_depth. Please check this in sync_io_within_limit(), and do not=
- exceed
-the limit.
+I guess Alder Lake isn't one of the RPs affected by
+quirk_relaxedordering_disable()?  I think 87e09cdec4da ("PCI: Disable
+Relaxed Ordering for some Intel processors") added all the existing
+uses of that quirk for Intel RPs, and the commit log only mentions
+Broadwell and Haswell.
 
->
->> +		md_bitmap_start_sync(mddev, win_sector, &sync_blocks,
->> +				     still_degraded);
->> +		set_bit(STRIPE_SYNC_REQUESTED, &sh->state);
->> +		set_bit(STRIPE_HANDLE, &sh->state);
->> +		raid5_release_stripe(sh);
->> +	}
->> +
->> +	return submitted * RAID5_STRIPE_SECTORS(conf);
->>   }
+I wonder if the PCI core should disable RO and NoSnoop on Root Ports
+across the board?
 
---=20
-Thanks,
-Kuai
+I think this would mainly affect MMIO accesses performed by drivers,
+and I suspect drivers expect those writes to be performed in order,
+e.g., if the driver writes DMA descriptors to the device followed by a
+write to a doorbell, those should stay in order.  If the RP has RO
+enabled, those writes may be reordered.
+
+> > So I would think we'd see this Malformed TLP error on pretty much
+> > every system with BE200 in it.
+> 
+> I guess that BE200 is almost only plugged into Intel systems which is
+> why this bug went unnoticed until now..
