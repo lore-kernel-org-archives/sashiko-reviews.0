@@ -1,66 +1,67 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010033.outbound.protection.outlook.com [52.101.84.33])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012043.outbound.protection.outlook.com [40.93.195.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF24B443AAB;
-	Thu, 30 Jul 2026 15:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10CB382F01
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 15:47:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425487; cv=fail; b=jOc0XE4EZWvIKRZdVsdjtJl3fTncLRpHqcWYOtoY2o8wy5aJEE1fcRmmMAAI/KwAjjQ6SeLsmtH5GrkJ7O3wKH/YznJ3FsqL7fGGPZ0Vpxesf8rX1sjktqK2v4EH3w0M2SbwXJYFGb6u/gc9i94K+ohPyLDe0Ozh21BG8O3ZP3o=
+	t=1785426475; cv=fail; b=ozg3PYD3g+Cn6kQNi9+y7ARMcoQJvhvzgRkGdpNz3mtXokqYMme8LvXMBpOiBVAveks1oVVpRMaBprj1E0Stmo971r+XXcZ7iU/3cJ4UFQ4ZLXOat8ItZjUiCC0T6DFAZ9lO9AsS6e7Tbh+AxLFo4iKE49AwVhfowmCQypfmHtA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425487; c=relaxed/simple;
-	bh=fEx2JaRGllFj9cyXR3/tzEi3Gm9sVIgJgYkQC8fynjk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ZttetQ2FRGGCGdB5fVwAG1uM5qjakFGX1HJbPXtg66970pC99czTMDQOCwpdjCzEq3rXMlNk5g/6pIcHWuRkqpdqrSpOaafohXleuu1mPLXP1Cl2bN0csrFaLCAL4AQXjUfVgKrishEI2CCXz9ilttZTFw1xMzhkZwDkLSqy3yE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=GnXDpn5E reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1785426475; c=relaxed/simple;
+	bh=NCmq1Mkl9Mu5yaE3JlhzcPsIyWIjb9K1HHSbfSjpc1k=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=BEvsHQNR8/8x9cliTrcRvL3shrvLc9k8+ZcEs3vN2nvIPrTLOBR6wwj6G888CiugdxfcJTPnFXn319F7TTSAPhaapmvlBmll/vyolLTSoORPy8dW2bYDgv8KyDM15Te0NhGhQyU1rWfoq8pTYvpHFbMPnn7TgcP4f2T9Nkub8Jg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=rpyJadvK; arc=fail smtp.client-ip=40.93.195.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="GnXDpn5E"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="rpyJadvK"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Mytenpye7YzpbQQZwnSp+dyNuaDhGxjZl3MdDzeK8t51sBkvJanC99QWdXEac6vHLD+h+2Z1OsXnBnXUSU+NITA5/SvMlEOYrwLiq4wlHC9tpcoiFiNSOvovxfSZVVV8ZaGrgsppYoZuU65eso3VkIfv5RQX7nqLnZ/AwgPMbFLPilALdVPHhjNfgHL6bDAaPPs6qME/b79DrIaLCysPng/IwK66fOEtD5zwsu1o2Q8lqTII7BysHbFZTH3997blcFJqzQQmfjOzsodyNEOyWCnhzEpcJclCQTLIwXy6MRym9c56S6PwYD4vRcnwITViDuxiH2EYWHdcSauKmaq0dQ==
+ b=CF221FpJ8UQobuI4Lm2gCkSrt8/1QGu0ok4RN9uMtVFt9FSipVlEOAxPtIkqjjBv0+VMbBkwmwQk4tRcXxC6oKVo2RWeDkEXYN1t3H4kdGl1bahL9HJvYO8wWwI6gmYl7fXrgLNmIGsMqU7/4YRi4ohAR4D+ICc+KJOy/DHtM88SmcFh9jXd+F77G+JtvCkEadprBig5yTorXGPqdz9/+2+oUK715c6JVfqZKEFWolKhQF6lZIgOCDUwEoHAaqW2gOkioqwVV8U3lCoMQhaR+3GBcBioyGbkB1ARM0Dt6RagGoW3PI191VMyzxA9gUonC3zlFlapyrV9p2poR+e1zA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h9dP32/8zOEaORB8bGE162NGm8SWvDhggDvPTm12irY=;
- b=m9V1eDmAKyYs9WcVXkJEptDGv48t1Vgiim1je8y0uxeco02O27fjiRlW4GvzWEXzeaIIF40ojQJjLaiLqMAOMGW2baC1aOhlPFrAOrLuZRQ6LT2p8+sOr+LJNZHW4TlKIiF9vwokFQEcB0Lp9OmCXQnutZsplcOtfSynZPBFRhDbFsJfAHx4kjo91tnUK6iMASMkT/HRURMj8siYmcBe8q5O2AIXLVmbfP4n3BgRpImz02VD9Bg9yq0WzTppWZO8qXWQ6K/zoIy27Hwi2dNVGfLBcNVCDoltF8l0/5YLjzPpbQIx28gHsN9RrfMDMYpRlcRyUwouKSYi2Vjjdc2VBg==
+ bh=qrESVmZUnUcl8+KMjSIPT1iIaQl9wwslvKafnthjKZ0=;
+ b=C0BqkCZ2ZekEe08ooO2DfGTzjbQRpZs2boXW0T2TqvY4YK+RofKUFVTmR+XoOL3Y12sQ4rVkDzeXMbN9Zp0BRos8GAM2sedMtsc4mdi7ngowA3DxCKNqtcTA7beboRoxVzJ3zCwzEPTmgbAuo7C57LMvajfT22Yx8dvh8reQ651cz7qkwr3o9xebEE1bnudcGMUwsgsOCbKG4tZuA8PDU4rHuBEEKIt5EyyVHml5qsDqf2Q9Vknzba76TO7eyHyBN2zuJCVHE8yIP6Ll0ex4d0xyiOSljn/3SrpKiFJGEceGICO909iU2LJeW0MvKAHAhnY21rPh05O29W36Q5LqJQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h9dP32/8zOEaORB8bGE162NGm8SWvDhggDvPTm12irY=;
- b=GnXDpn5EyNxWnw8iwLt6LC5Nd/n1ILh0oxnBNXsp0llK5VUR7YArRlXjGeJ7MATOiiLzjBvLx1hjehLpfsK9y7+xVLrvpmFKWd2hBggoSFHnd19aVugKqH16GLjopa/rxY2yjW0HJLwjNUGPwdFf8t8fmxgy82U7YPp/dF36bRsVdpNMcg7B6GE4Mp9J++tYKiUHQf4iaTIfJdAkTp2HvYYtFSyRYHUGicMn0YFJOgSNR1dDYDYDlqkHHJmzhEQZYRvuJoaTDVoqBaguOxL0t/4Ht4E4JAkeB3XBMOH7/rYWMtYrRuyAbJ42Bj7PylZRZ1hYCTzkh373Aee4AD3Z5w==
+ bh=qrESVmZUnUcl8+KMjSIPT1iIaQl9wwslvKafnthjKZ0=;
+ b=rpyJadvKxG/Kd2/yWT5p2ieFLlxcZ0SK1SDSsyDijJdhKK4T9JVmwkCTrrCvobaY0O5j9wl9dOCkw+vg6arOlwIFQ7yBbJuDeQle5rvJJChGHh6RjF2Rjn+FjSZkTUmE2SI/pfDIlMjQAuK0WnQ+QrNvipYjtC2bUvrn9HkrFYc=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM9PR04MB8508.eurprd04.prod.outlook.com (2603:10a6:20b:433::23) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH8PR12MB9766.namprd12.prod.outlook.com (2603:10b6:610:2b6::10)
+ by SA1PR12MB8945.namprd12.prod.outlook.com (2603:10b6:806:375::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.15; Thu, 30 Jul
- 2026 15:31:22 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
- 15:31:22 +0000
-Date: Thu, 30 Jul 2026 10:31:13 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marek Vasut <marex@nabladev.com>, Frank.Li@kernel.org,
-	imx@lists.linux.dev, devicetree@vger.kernel.org, robh@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v7 2/7] arm64: dts: imx8mm: imx8mp: Add LVDS DTOs for
- Data Modul i.MX8M Mini and Plus eDM SBC
-Message-ID: <amtuQUa0aPGdlRCT@SMW015318>
-References: <20260729214723.557461-1-marex@nabladev.com>
- <20260729214723.557461-2-marex@nabladev.com>
- <20260729220634.9AEC31F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729220634.9AEC31F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH7P221CA0036.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:33c::6) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.14; Thu, 30 Jul
+ 2026 15:47:49 +0000
+Received: from CH8PR12MB9766.namprd12.prod.outlook.com
+ ([fe80::be0f:431f:5f27:96d9]) by CH8PR12MB9766.namprd12.prod.outlook.com
+ ([fe80::be0f:431f:5f27:96d9%5]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
+ 15:47:49 +0000
+Message-ID: <69c78f52-9860-4250-9dc8-73ce033cf04d@amd.com>
+Date: Thu, 30 Jul 2026 10:47:46 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 07/13] PCI/CXL: Add RCH support to CXL handlers
+To: Richard Cheng <icheng@nvidia.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org,
+ linux-pci@vger.kernel.org,
+ "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>
+References: <20260717222706.3540281-1-terry.bowman@amd.com>
+ <20260717222706.3540281-8-terry.bowman@amd.com>
+ <20260717224321.1BB411F000E9@smtp.kernel.org>
+ <3ed4793a-b1a6-4459-b1ca-03979ae8af3e@amd.com> <amGWvnoT5XNIBMMb@MWDK4CY14F>
+Content-Language: en-US
+From: "Bowman, Terry" <terry.bowman@amd.com>
+In-Reply-To: <amGWvnoT5XNIBMMb@MWDK4CY14F>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR03CA0398.namprd03.prod.outlook.com
+ (2603:10b6:610:11b::29) To CH8PR12MB9766.namprd12.prod.outlook.com
+ (2603:10b6:610:2b6::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,173 +69,264 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB8508:EE_
-X-MS-Office365-Filtering-Correlation-Id: d910bde5-3fb3-49df-ff24-08deee4f9be0
+X-MS-TrafficTypeDiagnostic: CH8PR12MB9766:EE_|SA1PR12MB8945:EE_
+X-MS-Office365-Filtering-Correlation-Id: ee3c30d8-741c-453d-61ab-08deee51e896
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|1800799024|23010399003|376014|22082099003|18002099003|11063799006|4143699003|56012099006|3023799007|6133799003|10067099003;
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|56012099006|10067099003|18002099003|22082099003|6133799003|11063799006|5023799004|4143699003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	efzuEgfLaFzaPow2o0IdnWDXLVBYXzDHsDVRJ+EPn06Bjf5d6Zd1EmpQXEktdbMh75oql+FsbpALxAjx/BOaTAy7RfRyREFKF30phpa1sIQDnQBT1U88K87OPH3TVnUGxf/A/JCPskBFN0zppuNFKAF56ml6DGepfNYjFl8YGie/rS7GPNj1hJxIDT5zDFngV34I1VaeTjzTfU3OfqtNOfQ2zm38LqpOWqhNNmWKOH4gROio5ifYftARDnrKNgA7dIOL2W2u/TQit0pPQWli+DSJB/4PzMbo6sLn6lih+tpxyI7sA7RD7xZhN4tK6yvxzjcMnXw4X7RQINX+VgZ+ROGj6+3VQIS+koNGtFfgjexCHmgu6wDwxZfiSI1hmDikmjg2mJIddY5zQSCFU4kcjvsC0DCknbbWnJxvQStGMgyv1vvAt5q1zAHnAHuIDCel3se3mzO8XyNhcMq71ROlpKdSG9/87aV0nn2Sa5KeQxo/Td6HFLAyZvz2shntPkag/WhPCOfKAu2gNnA6qm0LU+uhHaRP9Mkgapj9c47UhySLWI7WiE1yXAzH6qPxgHLDdeGPgq8FYbMGATTEJp6OI30FY7mjbpJONaYw0wsqEHw=
+	h6ZuzaTaoUHqW/5TTE7oXMSbhXBeWYDLARd0vwYPcBg7GYgck0wuodDjru/8VhKPw1Wrj0Dgo3fJCE99fsfEkC2OjBE2jN87awhCiSMwts9+imwm0PhqMg20u9htArQbZgeEOlIMg+YWMz6fwg/6WwYThuEz0QP/qt8wmId7otYKEn4RrFMt1UidOPfjDPXtt5ojCv3CB8SHUvLyPLYiXvnRW/2wEGuk4HnKTBQgY7LgmydsjbWqbfP7u3D2XqbMgZut8s7miYpgreOnXuconagYyJfowdkzGk4LusO0I40GlGlCxlDyaB4U7QhLzf92XJXdfy4eZFd6tfsvlbnf+SR6T8CuEClg0n7qgtPpQysshmKUFGFU7+SV40KzFkdPWBA1YGOPkOLf7gcDQPKcWPmSFKP1GOl3ByMEcqwhWo0CHlRtdHHnN70uU89N265NnuTbCFhBNhUJDvb4KZyDPjLiTzaQR4+GhQI3cES/01l7z4DnqVd961XFyAq6ltd+NoC8sp25cpfks95rfdUWEglKeVsIxbjXqQFSH/hERAkiNgTMaWQNPYmh+oFK6jkGRs46epazSf/chzhvM4qlGn8+GLfqPqX4SFgeM/hEq6+IJePymuO4DYUJNh1aoTwTS+CqI611Dq9PyANMH4WDqNJW0O7B5pIsnyj3ADtwjQw=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(3023799007)(6133799003)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR12MB9766.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(56012099006)(10067099003)(18002099003)(22082099003)(6133799003)(11063799006)(5023799004)(4143699003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?birJfBDOzuJBL0wpdsDKrAQlM/XP6ME8QhXFduTiJ6Vceph8Yt0lrCm/MT?=
- =?iso-8859-1?Q?Aol3GGqfxRfhUZ4x1y8wVQov7luh2PLXwS5ndFQkjiFtL4SKxtNgX6JRCd?=
- =?iso-8859-1?Q?bJa39ixEOXsXlmCIr5EUX1WQs7GmEC+Xc2RMmFN9DSfuArACk0wOlmt47w?=
- =?iso-8859-1?Q?MQsaJ8DHw9AyCyhgLP9dbJQrUgQGOvts99wabkNdcBO3TxiewW10VvxeUt?=
- =?iso-8859-1?Q?8kw4NlDe9sCcSuGZx/rp2hR5bj1oe5v8krvbGA+I+LiA0rFQTsf09P96w2?=
- =?iso-8859-1?Q?HVkCvICuS+9I13jA37QRXiDGWPJGZFuOlvhCMGvD0doPWiABD0Rbv+iCT9?=
- =?iso-8859-1?Q?IrU2HahB6pWEdnDvxbWw7bv5sQNSy7AmVaj8ajlaxCO8mOz/25OKfeyZ9g?=
- =?iso-8859-1?Q?qQAdzRtFh6MVPE/XZX208SgkeFXWnYRoGkO6tdV9n2USN94kxdHtdblYVw?=
- =?iso-8859-1?Q?O48VCnWQooSfY5S/eGgaTS55Uoe5eIctO3JpVNINEKxNjb0/avbWpV/VZV?=
- =?iso-8859-1?Q?k9C/02vIt5PxGeFrg920BccNyV1KBOX4xnomF/WgRUAwaiB8Y9AoPsghy2?=
- =?iso-8859-1?Q?NHVGornPbXHRyTIby21U987+cH3QcMGBzJgoHoyrCLrjv32jdglt8qwR01?=
- =?iso-8859-1?Q?QzaEhU3xWzopvKsYmEnC2w3X+mlUrPgLBxPz3G3jJn7TTmpJIMPieoISZJ?=
- =?iso-8859-1?Q?D/1Y104KtZkuLNBt6PS1RAXrggJ5Yfxzaq+se9B6TXATCOquspZulnNIjJ?=
- =?iso-8859-1?Q?UOJ8RJbRbTEDVS/YVQdZ8quUmVhYS5QBJeBxBp2ErWNjl+jymLlALjCYFe?=
- =?iso-8859-1?Q?oz4MmcJVNP4eFTV1v461te/aJn8GNsJESFo6S+Mc8sWPnkwHIXcR4G/lvR?=
- =?iso-8859-1?Q?/WWGaQZ/IS9CCoUl4rzBPvB8461xmgcAounPzdcFZTmMO01tJSKmjKilMB?=
- =?iso-8859-1?Q?pKLctuqBO+qmaO2id5+HyFvVPJY/y7JBqLISBlulsul6vWcEKbAEnOcuoY?=
- =?iso-8859-1?Q?MzKidsc7lsy4VarYLuK0hS38jsoA+eC9DPWx4G6/KicZk2vWuQgtAo09Ud?=
- =?iso-8859-1?Q?E1nHq0EJe6IpM0IL0ebS+ynp6K9/1HudBIeKEJnaEthcYiMCSZTcK0fntk?=
- =?iso-8859-1?Q?tz5oklkRlvhDqo5baLCDXzkI3KTMe4Nx01d4N8eilE97jtgqfAVielY5Qi?=
- =?iso-8859-1?Q?JT5moX/wIbJcxO6xIBmORScwUFjrVvR8zXuN3Cv2SjjVDOjosNG03uNnY5?=
- =?iso-8859-1?Q?ZnYcsNMndb0Y0iP+h2xDYrQbeztMmzdQzqyQPELxHYfM/5JsbEKPD/EmpX?=
- =?iso-8859-1?Q?kvNJ0RBuLDW/ErJjV82s2zO1S4yIjzlaBS/JU0ulEYXQqr8CQ4bgmJYKt/?=
- =?iso-8859-1?Q?gmV6f5OBalzwXU48jiVKmc25FkBgSFq7YfxVF6sGpaW1AhMUrmbDCX6H8V?=
- =?iso-8859-1?Q?gX44ccLm2lqVHtf44L4xILbMJV+xEwYEWOAVp+i0bQhVC1GCH4bgXM+ftn?=
- =?iso-8859-1?Q?VZkycT1h64jIa5ERZC4DvDp1C+oMxNirTq3zs/xbDkSy6l10ZFakhA80kA?=
- =?iso-8859-1?Q?10saGVf8rO0BbXON+LWCdcFkcWX/K8vbeKRPGxa+cpnAvbmFEh3bB3W8Ho?=
- =?iso-8859-1?Q?NZ0cM/nVcL+/LObGKSJJ4h3SH+WxOG5xNnz3ajbtcxq+zFq3suBxfrrPJa?=
- =?iso-8859-1?Q?szYzQSsdVlne7M4upAX73xtQn9JpDls+O3ldlpPC1qXXzTZ76Cba0GmSO2?=
- =?iso-8859-1?Q?iRItZC5huJpyixVxo9mw72GurlhguuyTjop4uZoqCZGvZSJOJov7UVxykP?=
- =?iso-8859-1?Q?B75LsFFbq0fbkP7GQn0X86Vr8Xuc4/nbQ9TV8ax0d09SXvNkwDiG?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d910bde5-3fb3-49df-ff24-08deee4f9be0
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+	=?utf-8?B?YmZJUXozSlN3cXhCWEJqTkZSeDl2Vi9kRjRyQnNodTQzUWdOSEE3Z2owMXEy?=
+ =?utf-8?B?VW9SakFBdnNtOG4rTzArUkd3elByZEx6amVPRUFYQWVhcHdxRVpuY3RFcUZh?=
+ =?utf-8?B?b25JbE1wdUw5VjQ5SUQ5aTFVTEdhMUgzZGRtQnU4cUg0WmloRTVuc1Vxd0R5?=
+ =?utf-8?B?QWFUd01UTTV3MXJBMDNhSGk4d1ZzdkIwWmhzcTFaRXZ6aENONHdJUXo1L2Ns?=
+ =?utf-8?B?VS8zRitsdHlvVERyZ1d4QXZrTlJOTmR0aEN2a2NQaHFLaFNPcVpxekhSaGxs?=
+ =?utf-8?B?U0pKN2RmZ0YwQTJuQUcvS3p3N2QrQk1Rck5yN0pFVDdGaThCdXU3RUlMMXNi?=
+ =?utf-8?B?RldZekdVRVkrZm5TZ1I1dGkzSER2MzJTSHlWbUt2VzZiRnYzcmVpUU5kRkdR?=
+ =?utf-8?B?UFoybmtkaG1GOFFzZWZyZVFDaE81U0Z6WkhkL3ZwWkpQelUyQU5tYStPSFJZ?=
+ =?utf-8?B?Z1NvRG5DWFhTeTNmZjEyV0IwQTl3d1hjRG5BT3VDZUo5QXM0aHVCSnBPTGFS?=
+ =?utf-8?B?N3BBZC9TU0thR3FNNk1kMjFKdUp0Q2tqQ0VUOFM4M3R2cmZJWkVBaG9nTWs0?=
+ =?utf-8?B?WXlTL0FQOStHQmowRSt5R2tWTVY3VFhKVUd3eVcvSTlYTllzNFRpcEUyVXoz?=
+ =?utf-8?B?N3UrS3lvZFRFZ3V5TFpIM3d5T05iVUE1eWFFU0ZkUTdWZkgwUXh3WjFOSm9S?=
+ =?utf-8?B?UEsxOW1rSXpEMHpFclVLUEJuVnhIRllIMlphWXA5ME5tbGUzclZxQUVXYTZi?=
+ =?utf-8?B?b0xVQUhrQVAvZlkyRmV4SXRqOXNuRDBxaWZHN0JoRWtHaVJsdmEvWVhZWFFo?=
+ =?utf-8?B?aUpvS3ZYUFhuVjZneGdNbVpIeDFwd2V1MlZOTFlqOXMvUC9ZSEJaMm45eUFG?=
+ =?utf-8?B?ekMxMThQU1dOZlRzQ2tuZnJ6c1VyOHlOdnJFTm9FeHlOeTN1MURiWTVFbzJO?=
+ =?utf-8?B?V0p4Q0hpRVJwQkJpdzQ5YnNLcTNjU0N5RC9Bay82VlhwRDQ5ZTF5Y2pTZU9C?=
+ =?utf-8?B?QWt4WXNPUkNNMVZIS2tZM3RRdkFBS004T2ZwdkdEelF4UVBXMjFmTldwbGg0?=
+ =?utf-8?B?VUtvaTlqVXVpaWNTZUdSNVIwNkJYN3pSN0FxQjA2UGt1OTdFZVBtRG1uNmtX?=
+ =?utf-8?B?NkVXWWs3MVhMdHRkQmlObXE2T0FyL0dLMHNLM1JGcU5mWTNXd1JMRi92VTUx?=
+ =?utf-8?B?L3hwZU5lQ2pTTG5DUVE2ZVFsWmREU0pPYjQwcFRGOTluRnpsejZtUlVsZmVR?=
+ =?utf-8?B?UnVsT3RER2plblQyMWZpYnBMT054aHZHbkJDcmpqa0swUWFjZnRuU0xUMFJI?=
+ =?utf-8?B?RHhaTTF2SENmcEVUa0ZDOUJBMUFyR25kR1RtNDBvVWcvdUlPc1pEVFVzcHNx?=
+ =?utf-8?B?RWpNUXBSRC9lbmNwaTNhRmtLZUNkdjN4UVJERnFVd3JFbkc0ZklPNHVNVzVI?=
+ =?utf-8?B?ckpvY0huVHZudm9OTjVNZE1VdUU0ZzBWVEtSY29lN1crZ2RNVlRJV3A0ZWlv?=
+ =?utf-8?B?b2UxMEhlUTdFU25TSkRMd3MxMW0zMjVqNzJIWjJJck1MSEEvM24zbHdKR2Fy?=
+ =?utf-8?B?TzFPelVLbkp0SEFSWFg3Ti8xYWpFc2MvQThMR20xa3VwQkN2aU40RW9xTTRk?=
+ =?utf-8?B?U0xUTlIvT1JZbGFoRE16UWhSWEZBampIamNuUU5kWlNPdEJNcXFyMGxDdW1y?=
+ =?utf-8?B?dThFSE92MVJWaFBKdDBFcklwRDRMZmpsT2tHeC9GakdSVHByeGtpY1hoenpi?=
+ =?utf-8?B?Yk9NVk1JRmVyazBjeDllQW41TTFkcTJQcm5FYThQWTVjM1A0R1ZMdlg2Q3A4?=
+ =?utf-8?B?SHV5c1QvbnYvODFYZ1NORVFtWW9kcUUxNUNYMTRXZFlnOGY0NjZseCtwdWYw?=
+ =?utf-8?B?a3lLWFlqaVdDTTA1ZTdpSzVkODEybkc2QW1JUldWcGk2ZEdoenpnclhKY3E4?=
+ =?utf-8?B?Tk80YWdxcTdtQkh6dEpOT0VSVC9JMHl0d1I5QzNiQWVDTFFPRzVVd0lOT1la?=
+ =?utf-8?B?WEsrRjlhNWxHNUlqbEFjSW1QcVJOUlVRcUdCMDBkY3B6WndZVzlOc0hpdXNM?=
+ =?utf-8?B?cUhocVFxQVFGbjEzdFRiQ3RYT1kzcjlaU0R4dG5hYXBnWWluTkg4RjQxQUZs?=
+ =?utf-8?B?NzVoN3hnYkhpM1A3cW9RSTdDTDJUc3VlUms1Z1dxRjBCUkpIM2gveHp6N1dK?=
+ =?utf-8?B?akwrcy8yNjdGcDY0Y0pyTkhlUFNGaVhYRkwxMlRzUGpvUDF2QWo5WGlEeG5H?=
+ =?utf-8?B?TEIzUDlBUWdDV2UrZkxvVG9lYzNjTGN3WVZ1ZkExTXk1L25kWlpWcXpDaFBF?=
+ =?utf-8?Q?1upYXv/nAYsPkKl/Rf?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee3c30d8-741c-453d-61ab-08deee51e896
+X-MS-Exchange-CrossTenant-AuthSource: CH8PR12MB9766.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 15:31:22.2500
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 15:47:49.6680
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: b4KVOGFMzaH40GX56bARUP/4mZPKay+5SjkQ3sYOVlGVquRAJpG9jsQxlQjOguS2WmInQTQuH5bwPxwDSowUrnML/koHZdQ90YWLBh6HNBMV1V+Jqwtlpd94XrgIgwSs
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8508
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ms+aRMX1pMb7OGO6P6VywAih83hZSsthQEC0kgqlJHlwQgDllFG58NHScTJw21QKF7gdkmuyQh9S0/B2ERuaJg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8945
 
-On Wed, Jul 29, 2026 at 10:06:34PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Incorrect backlight enable GPIO and pinctrl applied for the g215hvn011 panel on the native i.MX8MP LVDS interface.
-> - [Medium] The `assigned-clock-rates` property in `&media_blk_ctrl` lacks the required `assigned-clocks` property, causing the LVDS panel clock configuration to be silently ignored.
-> --
->
-> --- Patch [2]: [PATCH v7 2/7] arm64: dts: imx8mm: imx8mp: Add LVDS DTOs for Data Modul i.MX8M Mini and Plus eDM SBC ---
-> commit 57ce2b382e55c1c98951209e8e0a8f4ea3f2c65c
-> Author: Marek Vasut <marex@nabladev.com>
->
-> arm64: dts: imx8mm: imx8mp: Add LVDS DTOs for Data Modul i.MX8M Mini and Plus eDM SBC
->
-> This patch adds DT overlays for the DSI-to-LVDS adapter populated with a
-> Lontium LT9211 bridge on Data Modul i.MX8M Mini and Plus eDM SBCs. It
-> supports multiple panels for both the bridge and native i.MX8MP LVDS
-> interfaces.
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-lvds-g215hvn011.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-lvds-g215hvn011.dtsi
-> > new file mode 100644
-> > index 0000000000000..3585170bd59dd
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-lvds-g215hvn011.dtsi
-> > @@ -0,0 +1,30 @@
-> [ ... ]
-> > +&backlight {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pinctrl_panel_backlight>;
-> > +	enable-gpios = <&gpio3 0 GPIO_ACTIVE_HIGH>;
-> > +	/* 6.5 POWER ON/OFF SEQUENCE, T6 >= 10 ms */
->
-> [ ... ]
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-sbc-imx8mp-lvds-g215hvn011.dtso b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-sbc-imx8mp-lvds-g215hvn011.dtso
-> > new file mode 100644
-> > index 0000000000000..a6d13c3609796
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-sbc-imx8mp-lvds-g215hvn011.dtso
-> > @@ -0,0 +1,36 @@
-> [ ... ]
-> > +&backlight {
-> > +	power-supply = <&reg_panel_bl_supply>;
-> > +};
->
-> [Severity: Medium]
-> Will this result in the wrong GPIO being toggled for the native i.MX8MP LVDS
-> interface?
->
-> The shared imx8mm-data-modul-edm-sbc-overlay-lvds-g215hvn011.dtsi file hardcodes
-> enable-gpios to &gpio3 0 and defines a pinctrl. However, the native i.MX8MP
-> LVDS interface uses the IO expander's &gpiowifi 0 (via reg_panel_bl in
-> edm-sbc-imx8mp-lvds.dtsi).
->
-> Since this overlay only overrides power-supply and does not remove the
-> inapplicable pinctrl or override enable-gpios, won't the backlight driver
-> toggle the incorrect baseboard adapter GPIO pin instead of the intended one?
+On 7/23/2026 12:35 AM, Richard Cheng wrote:
+> On Mon, Jul 20, 2026 at 10:06:34AM +0800, Bowman, Terry wrote:
+>> On 7/17/2026 5:43 PM, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>>>
+>>> New issues:
+>>> - [High] Removal of explicit PCI error handler forwarding for RCH devices leaves RCDs bound after a fatal PCI error.
+>> This is a false positive. device_release_driver() is called in cxl_pci_error_detected() 
+>>
+>>>
+>>> Pre-existing issues:
+>>> - [High] Preexisting lockless dereference of `dport` returned by `cxl_pci_find_port()` and `cxl_mem_find_port()` leading to Use-After-Free.
+>> This is existing issue and is not planned to be fixed in this series.
+>>
+>>> --
+>>>
+>>> --- Patch [7]: [PATCH v18 07/13] PCI/CXL: Add RCH support to CXL handlers ---
+>>> commit 6a99c70b18865d01d350aa367342e701ebe6dde2
+>>> Author: Terry Bowman <terry.bowman@amd.com>
+>>>
+>>> PCI/CXL: Add RCH support to CXL handlers
+>>>
+>>> Restricted CXL Host (RCH) error handling is folded into the new CXL Port
+>>> error handling flow. RCH protocol errors are forwarded through the AER-CXL
+>>> kfifo, and the manual CXL.mem error handler invocation is removed.
+>>>
+>>>> diff --git a/drivers/cxl/core/ras_rch.c b/drivers/cxl/core/ras_rch.c
+>>>> --- a/drivers/cxl/core/ras_rch.c
+>>>> +++ b/drivers/cxl/core/ras_rch.c
+>>>> @@ -96,18 +95,21 @@ static bool cxl_rch_get_aer_severity(struct aer_capability_regs *aer_regs,
+>>>>  	return false;
+>>>>  }
+>>>>  
+>>>> -void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds)
+>>>> +void cxl_handle_rdport_errors(struct pci_dev *pdev)
+>>>>  {
+>>>> -	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
+>>>>  	struct aer_capability_regs aer_regs;
+>>>>  	struct cxl_dport *dport;
+>>>>  	int severity;
+>>>>  
+>>>> -	struct cxl_port *port __free(put_cxl_port) =
+>>>> -		cxl_pci_find_port(pdev, &dport);
+>>>> +	struct cxl_port *port __free(put_cxl_port) = cxl_pci_find_port(pdev, NULL);
+>>>>  	if (!port)
+>>>>  		return;
+>>>>  
+>>>> +	guard(device)(&port->dev);
+>>>> +	dport = cxl_find_dport_by_dev(port, pdev->dev.parent);
+>>>
+>>> [Severity: High]
+>>> This is a pre-existing issue, but while this change correctly closes a
+>>> lockless Use-After-Free window for dport here, does the same vulnerability
+>>> still exist in cxl_pci_setup_regs() and rcd_pcie_cap_emit()?
+>>>
+>>> In cxl_pci_setup_regs(), cxl_rcrb_get_comp_regs() dereferences the dport
+>>> returned by cxl_pci_find_port() before any lock is taken.
+>>>
+>>> Similarly, in rcd_pcie_cap_emit(), dport->regs.rcd_pcie_cap is dereferenced
+>>> entirely locklessly, and then the function takes guard(device)(root_dev)
+>>> instead of the required &root->dev lock.
+>>>
+>>> Since rcd_pcie_cap_emit() is reachable via sysfs attributes, could an
+>>> unprivileged local user trigger a Use-After-Free by reading sysfs during a
+>>> concurrent device hot-unplug?
+>>>
+>>> [ ... ]
+>>>
+>>
+>> This is existing issue and is not planned to be fixed in this series.
+>>
+>>>> diff --git a/drivers/pci/pcie/aer_cxl_rch.c b/drivers/pci/pcie/aer_cxl_rch.c
+>>>> --- a/drivers/pci/pcie/aer_cxl_rch.c
+>>>> +++ b/drivers/pci/pcie/aer_cxl_rch.c
+>>>> @@ -34,42 +34,37 @@ static bool cxl_error_is_native(struct pci_dev *dev)
+>>>>  	return (pcie_ports_native || host->native_aer);
+>>>>  }
+>>>>  
+>>>> +struct cxl_rch_error_ctx {
+>>>> +	struct aer_err_info *info;
+>>>> +	bool enqueued;
+>>>> +};
+>>>> +
+>>>>  static int cxl_rch_handle_error_iter(struct pci_dev *dev, void *data)
+>>>>  {
+>>>> -	struct aer_err_info *info = (struct aer_err_info *)data;
+>>>> -	const struct pci_error_handlers *err_handler;
+>>>> +	struct cxl_rch_error_ctx *ctx = data;
+>>>>  
+>>>>  	if (!is_cxl_mem_dev(dev) || !cxl_error_is_native(dev))
+>>>>  		return 0;
+>>>>  
+>>>> -	guard(device)(&dev->dev);
+>>>> -
+>>>> -	err_handler = dev->driver ? dev->driver->err_handler : NULL;
+>>>> -	if (!err_handler)
+>>>> -		return 0;
+>>>> -
+>>>> -	if (info->severity == AER_CORRECTABLE) {
+>>>> -		if (err_handler->cor_error_detected)
+>>>> -			err_handler->cor_error_detected(dev);
+>>>> -	} else if (err_handler->error_detected) {
+>>>> -		if (info->severity == AER_NONFATAL)
+>>>> -			err_handler->error_detected(dev, pci_channel_io_normal);
+>>>> -		else if (info->severity == AER_FATAL)
+>>>> -			err_handler->error_detected(dev, pci_channel_io_frozen);
+>>>> -	}
+>>>> +	if (cxl_forward_error(dev, ctx->info))
+>>>> +		ctx->enqueued = true;
+>>>
+>>> [Severity: High]
+>>> Does removing the explicit invocation of the err_handler leave RCDs bound
+>>> after a fatal PCI error?
+>>>
+>>> The standard pcie_do_recovery() on an RCEC does not iterate over its
+>>> associated RC_END (RCD) devices, so this manual invocation used to handle the
+>>> CXL.mem driver fallback. Now that errors are routed solely through the CXL
+>>> protocol error work queue (__cxl_proto_err_work_fn()), the work queue only
+>>> panics on uncorrectable cachemem errors.
+>>>
+>>> Does the work queue replicate the PCI recovery state machine's fallback
+>>> behavior, such as calling device_release_driver() to unbind the CXL.mem
+>>> driver on frozen channel states?
+>>>
+>>>>  	return 0;
+>>>>  }
+>>>
+>>
+>> The change to forward CXL errors through Kfifo using schedulable work is 
+>> intentional. This series does not exactly *replicate* the PCI handling.
+>>
+>> The device_release_driver() is called in cxl_pci_error_detected() for 
+>> pci_channel_io_frozen. cxl_pci_error_detected() serves as the PCIe error 
+>> handler for Endpoints, including RCDs.
+>>
+>> Terry
+>>
+> 
+> Hi Terry,
+> 
+> I agree with you on this part, but what I can't find after this patch is the
+> path that invokees it for an associated RCD.
+> 
+> you replace all error_detected() for associated RCD with cxl_forward_error()
+> and queue CXL RAS work, what if a fatal case where it finds no RAS UCE?
+> 
+> It'll return normal and RCD driver will remain bound won't it ?
+> 
+> --Richard
+>  
 
-I am not sure what's bad impact to wrong toggle enable-gpios. need check
-this,
+Hi Richard,
 
-change exist ones to keep consistenet, all use enable-gpios or power-supply.
+Rereading your question, let me give a fuller explanation of the Endpoint UCE
+paths.
 
+CXL Endpoint UCEs (both VH and RCD) are handled by the AER handlers, including
+pcie_do_recovery() calling cxl_pci_error_detected(), for both severities - so
+the Endpoint is not left bound. The two severities take different
+call paths:
 
->
-> [ ... ]
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-sbc-imx8mp-lvds-g101ice-l01.dtso b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-sbc-imx8mp-lvds-g101ice-l01.dtso
-> > new file mode 100644
-> > index 0000000000000..817d4ec62d0e8
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-edm-sbc-imx8mp-lvds-g101ice-l01.dtso
-> > @@ -0,0 +1,24 @@
-> [ ... ]
-> > +&media_blk_ctrl {
-> > +	/*
-> > +	 * The G101ICE-L01 panel requires 71.1 MHz LVDS clock.
-> > +	 * Set IMX8MP_VIDEO_PLL1 to 497.7 MHz , since 497.7 MHz / 7 = 71.1 MHz .
-> > +	 */
-> > +	assigned-clock-rates = <500000000>, <200000000>,
-> > +			       <0>, <0>, <500000000>, <497700000>;
-> > +};
->
-> [Severity: Medium]
-> Will this clock configuration be silently ignored by the clock framework?
->
-> This overlay (and several others for the native LVDS interface) defines
-> assigned-clock-rates without providing or inheriting an accompanying
-> assigned-clocks array.
->
-> The base board file imx8mp-data-modul-edm-sbc.dts does not include
-> imx8mp-nominal.dtsi, where the assigned-clocks array is typically defined.
->
-> When assigned-clocks is missing, of_parse_phandle_with_args() returns -ENOENT,
-> and __set_clk_rates() silently skips setting the rates. Should assigned-clocks
-> be explicitly defined here so the panel clock frequency is correctly set
+UCE non-fatal
+=============
+The AER status is readable, so the event is classified as CXL and forwarded to
+the kfifo. Below is the UCE fatal AER path:
 
-This is most like false alarm. But for better read purpose, suggest
-write whole group property
+handle_error_source()
+   cxl_forward_error()            [enqueue kfifo]
+   cxl_proto_err_wait_for_empty() [drain]
+      cxl_do_recovery() -> cxl_handle_ras()
+   pci_aer_handle_error()
+      pcie_do_recovery(io_normal)
+         cxl_pci_error_detected() -> cxl_handle_ras()
+            return CAN_RECOVER        [normal -> recoverable, driver stays bound]
 
-assign-clocks
-assign-clock-parents
-assign-clock-rates
+UCE fatal
+=========
+The uplink is unstable, so the AER core cannot read the source's AER status.
+is_cxl_error() cannot classify the event as CXL, so it is handled as a PCIe
+error (not forwarded to the kfifo). It still reaches cxl_pci_error_detected()
+via pcie_do_recovery(), which releases the CXL.mem driver on the frozen
+channel. Below is the UCE non-fatal path:
 
-Incase some change order in soc dtsi and forget update here and cause
-wrong.
+handle_error_source()
+   pci_aer_handle_error()
+      pcie_do_recovery(io_frozen)
+         cxl_pci_error_detected() -> cxl_handle_ras()
+            device_release_driver()   [frozen -> unbind CXL.mem]
 
-I met similar issue before.
+So the Endpoint is not left bound after a fatal (frozen) error.
 
-the similar case is clocks and clock-names, should appear in pair at
-every where.
+The non-fatal case does call the RAS handler twice (kfifo + AER path), but this
+is benign since the CXL RAS status is W1C.
 
-Frank
+Thanks for the careful review.
 
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260729214723.557461-1-marex@nabladev.com?part=2
+Terry  
+
