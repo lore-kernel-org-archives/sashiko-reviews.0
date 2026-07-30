@@ -1,68 +1,68 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3C21F3BAC
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 04:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC4B368D55
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 04:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785384728; cv=none; b=cLsKrOYOJ0EUd4l1YgDnaIyT68WF0iyE2N4qavQm3DZ7eXbxSMGz/LorIyqoIUXjg3HLK+h7a6TcXBiMxJTkdyfGyJqWGDyz2q4lE6dCh4BXHPk0NiL7CDXV13VAVVBBwPDy+UIbMy2eJ5OwGmisC5nesul76+wFqC1ahYQxrTs=
+	t=1785384770; cv=none; b=mHWeKHub/XxGUbpg40DahpUe2U6GAEe2QRd8rXUcKqAq3kDtV30iaTiDst4dV1l58YY984pQUllH0IYCg6NIYPwAE70fBRKJfZXla6t01hwI91E6OrhiMoJT0Wk5OqjEKixRNBBHYs/WG938kGNBpxqoj/e1qwbLJfCh8K7R6bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785384728; c=relaxed/simple;
-	bh=LAu2sW5l3IiFBj/Rjq06BIicVSjU9eqoVk3guL9bz/E=;
+	s=arc-20240116; t=1785384770; c=relaxed/simple;
+	bh=S05elIAgEDFPxffm6US5XwDiLG3j89Gks0C3PBMYf1s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K4iP7W0KEzAiAdjjmEutEQI9ymi16261TcVmkzYFuVN2QczfvkjtjShufCU8IV6vwY5/kGakGXuSacmFjELTgw7Sw2qjaygjyLakTClMaQUK8MF4GWCeJ4v6GfgBXTEHQxerlaMmkHpCeU9BhjJh7PWJFu0/xeka53bxsaeWQZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CZde8zbg; arc=none smtp.client-ip=209.85.214.174
+	 In-Reply-To:Content-Type; b=W2n2qS11XdDGKgTBGDApGiQNJEjFYRzXpZDRVlb6YmYfKhbGTGx9WzIEe5gTX28amTUT+SF+achmefvhfDSUjYuOJOG0GYz4Yzw6asnQm9YcJWBi5ZA6iyF1llIpFVVblWSA6BVy+z4ReiTVSG/Jujk49OjUEDcXqjGrctqB4ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OrDuidMO; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CZde8zbg"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2cf452def93so2658205ad.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 21:12:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OrDuidMO"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8487088510aso1753838b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 21:12:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785384727; x=1785989527; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785384768; x=1785989568; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GJL6cS6g6CqvOf4rn75EuWDitpA19wttRxq8V4yVCks=;
-        b=CZde8zbg3EHiJSlOQjXCuV23vvAOTbinc/+uV5TtyEop5tVyinrJUxIBv7Xc4fFlyk
-         T9e/Z9z4PW0oPUmtz5rI/KBQJuGPzVXWecQr2aekRsVveJAvtLFFRpgoiPTwaa7TuOCG
-         VP87zecwE1p/XzHKCMkVbHokPiP8floOVYJGQv4ia9c7M6hdStDptPfjTv6k9b9iSsXa
-         tCmwPSuM2NOMc5e/Zo1VP7JrVjlLxDiHtWNtfc7WgKSgExPWTWRUAwkb2sbYuO7SK7J1
-         5lWJdYxWd+2xWiitP89pPwlh57o8sFqmEDOXdkLJolL2c1/q1IbF2LORKFJSloOuU00Q
-         K2Xw==
+        bh=yrUKv4UtSvyZWLjf9iBBjhJjTZlyrezq04V3SN/NPFU=;
+        b=OrDuidMONTtpY5fXlTn6Gkj25TyH6hl+nbalOpCSz6RHFT6f/swqt5RC6GWlNaQAYy
+         b5IxrpioUIQoJfuy8Sr1sHlARtJXSMvxbBHGWGm/3OJEtCusHwbkA07CgcdFyU9cidh6
+         jlGDbJmHu6hVcqx0z9nZLwXzOiQ5Dh7VtkiSRAHOQ/ktcyf8504zYq2hfs9sV9AtW1IA
+         WrUQ/Nzk7MjeF/do8z3Ov3uBc6FJndTeDnTIFw1MYYikhFF91xmuphK4L64e3KTo0M50
+         H91ycgoLLpXwyPZNzlTZwICx5YCFkYpvyEnuzphGgf6ZG25rDt0QUzXdI4ZWM53AV8Id
+         2Xtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785384727; x=1785989527;
+        d=1e100.net; s=20251104; t=1785384768; x=1785989568;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=GJL6cS6g6CqvOf4rn75EuWDitpA19wttRxq8V4yVCks=;
-        b=hIdI5df30L6BoZwoLQtTShmAFM45HDJVJoy1bfsAEYf3mBx3nwhj+JswWuSfAa8Uq0
-         wJXRWoJjUvhMuKYwJoSdxHAdmY+GlBP4dBm7lk41GLH3cN3xAn+iOguQVehcUhsqpUl9
-         bhOTifhXfSyU8+6iw/Ldf2lD9I63djvM2XPzy/69L+NuQu9AO4Ve+hOtYJ4uO5gs2tjy
-         aLlQPe3axhwi421BgZ4TPb/2r6o6cQwNiU/eWn5WWrTXfBmHWADzsvOtsF+BwlWi4qWL
-         2MuWhznEBuW5c+4ZP/EhCWWHc2ykPTCLcbJzsMVeepyLDJs2sVCbDUxEWAFIbSvUagCD
-         mCkQ==
-X-Gm-Message-State: AOJu0YxpdFPNJNvcs473BdMwUxWtfne5sM9ISZzfJedVTzZiVZzVOrbJ
-	DWNhy3wZa8ErCit1KTXf8roCG51H9cUWAtJTQc6xKFrr8qY9PpC3qVSI06GTeA==
-X-Gm-Gg: AR+sD13iG+1z8PP2gp0bI67EtIHuOe5WtbwXHO+pVQKf1MvJsQ32inwdgE7wSr8DOl2
-	7ssflEpQzizWX4RvanojZo4P9fvXD6dwZH6zfKgUVi4nD+BEJCcTQWD0LowfjjVR6J709uAewXD
-	RmAVImdSaWiUNx6BuKLFuvzNhq8rzrTBWZIuOTjjTlnnQOAQvBjmq6N+CsoRTjX8uvq3Aw9zXiB
-	maOEGvg5rOH27aPum6IsZoeTJZlmGJlHOYaMwoGfpVWeoXn8jrWekkNndnD5ZFEdfeaFQq+xmPp
-	ZJM9BPZ4BCeF1HpmW+twbCnXjdQbor+WUb8ngR5dDn/5jMX+iIUuiYpI5nKzdxBzLwPgbTvs87s
-	UqaRJTRM+74GxGIB2/1WQAIM5tTLtQTqEX5AOeENsYvdeNJXvZhjEJ32wGlD1cvWTXgBktzAaDX
-	cMHc/UMM1NLew5ITsuYNlfUJbgkMQi4LrdCvNvybAkruevLuhJbHxr88VtU0tFKbqmKAskGzLbz
-	fUlrl8MWHqELShP8GDE9SZaxAVyBoXair6iZA==
-X-Received: by 2002:a17:903:1ac3:b0:2cc:80d6:b72 with SMTP id d9443c01a7336-2d036fb0f54mr6657595ad.20.1785384727063;
-        Wed, 29 Jul 2026 21:12:07 -0700 (PDT)
+        bh=yrUKv4UtSvyZWLjf9iBBjhJjTZlyrezq04V3SN/NPFU=;
+        b=luohj1bf6C2nlMxOkM8Fzrxok/rGFpMZWGTMob+9F0kcZRQ2OOykoHt34hXsUQPzMI
+         jQaNL7vEKjxVVFy285sg1nq5v9ZhDtQyigoUQ2v+4kALHztv//Xi1hReUuY3xILK6AVI
+         VhBCn3h44s/fUV7ksiDkTGJa4q5zluz8FdunFQU6NscavJcBLeSoSHg5xtzEzFA0E9hl
+         uA/nRYjHx/OATcCuZQmRQCdAIwVNzH9dUdWukGqfk4zCSby4tGwx8OvDYJolDVrsPDB5
+         ZUzaDkW/a+7KLm3MJCJxmG2+fUsdIe9Ua07U01f+ClXFdq7/OaEQA+YrNGMycJU1De5N
+         VFYQ==
+X-Gm-Message-State: AOJu0YyPhcggCgmeOtTBR/SiUFIwK5VLFc5eT7mQDHj2HG25EZqliUVf
+	x5coTpzfRBC94mtZoEmHiOPLGajf/Pn7pnx3OwJY+LibbY04BLBtjaLmi4tUsQ==
+X-Gm-Gg: AR+sD12tQoDHUjV9SUihigSa3hkexIdPt/7A89h9kIu6oWAmYNBqUiq5+HlUqiV9osN
+	5bKajeoeWfsNtpGQz66DgojkZLXd13yeN6vcCbj8DZBrdCV9oegRr7eZ9zta92TFgYrUNebq6po
+	Dm94Gxw+I7xprJG1ZCNxlxNtwjZhtx3OoMbhZfISLc5HhEsq9zudDzL15o5LNsB1Ch3JSeEF68K
+	zj4oMzX+0ZOE7gTKMzL0QcPJsQqxsXqRXHVyYMwqxFHRtKrEGlscov92tVBiZn8LHP4zoJDn1bC
+	5dEJLmsZPdkZ8Csk6AQSMqc9jSIXmp9hoAr4ASodoX1EKrNhsFvdN8bc7XEoqbmvMU7De9RMY5Y
+	U0Hy7TZbtfSyOA2Bq75NgsXDQ0rvvHg5ZFbobmkGt1Xqlkf2LNClQ8dSXVt0St0CzjRKAuk7uIN
+	TllAl5e7pXJam1dXeYO6pSZgGvBQt9S5mLCuX2dnVmPk9oyofkR0pvZnbaSqupcXzqKkKcDc2Eh
+	e1yw/RzVBJCrjf1++JRBvAvWJ9xt8rL6zY5MdW3yZi6qUxo
+X-Received: by 2002:a05:6a00:909a:b0:848:6c1c:17c0 with SMTP id d2e1a72fcca58-84ebc213480mr1074576b3a.19.1785384768343;
+        Wed, 29 Jul 2026 21:12:48 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022c3721esm19709085ad.77.2026.07.29.21.12.05
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea0378b18sm2219894b3a.48.2026.07.29.21.12.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 21:12:06 -0700 (PDT)
+        Wed, 29 Jul 2026 21:12:47 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <e8107a53-6d77-48a8-bb4f-24e9aff9c27c@roeck-us.net>
-Date: Wed, 29 Jul 2026 21:12:05 -0700
+Message-ID: <53527fab-620d-49c1-a65a-5253a9b65011@roeck-us.net>
+Date: Wed, 29 Jul 2026 21:12:46 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,13 +70,13 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/4] dt-bindings: hwmon: pmbus: add MPS MPQ8646
+Subject: Re: [PATCH v6 3/4] hwmon: pmbus: add MPQ8646 driver
 To: sashiko-reviews@lists.linux.dev, Vincent Jardin <vjardin@free.fr>
-Cc: robh@kernel.org, conor+dt@kernel.org, linux-hwmon@vger.kernel.org,
+Cc: conor+dt@kernel.org, robh@kernel.org, linux-hwmon@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20260729-mpq8646_v0-v6-0-98848151cdb4@free.fr>
- <20260729-mpq8646_v0-v6-2-98848151cdb4@free.fr>
- <20260729220154.3B6021F000E9@smtp.kernel.org>
+ <20260729-mpq8646_v0-v6-3-98848151cdb4@free.fr>
+ <20260729220547.C24321F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -122,62 +122,45 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260729220154.3B6021F000E9@smtp.kernel.org>
+In-Reply-To: <20260729220547.C24321F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/29/26 15:01, sashiko-bot@kernel.org wrote:
+On 7/29/26 15:05, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added compatible string 'mps,mpq8646' lacks driver support in the mpq8785 PMBus driver.
+> - [Low] Missing named initializers in `struct i2c_device_id` array.
 > --
 > 
-> --- Patch [2]: [PATCH v6 2/4] dt-bindings: hwmon: pmbus: add MPS MPQ8646 ---
-> commit 341628a3dba9f658492690f20d45d96084eb12d5
+> --- Patch [3]: [PATCH v6 3/4] hwmon: pmbus: add MPQ8646 driver ---
+> commit 63fabec4213f8ada1bf01d09967620e66fc9f459
 > Author: Vincent Jardin <vjardin@free.fr>
 > 
-> dt-bindings: hwmon: pmbus: add MPS MPQ8646
+> hwmon: pmbus: add MPQ8646 driver
 > 
-> This commit adds the mps,mpq8646 compatible string to the existing MPQ8785
-> device tree schema. The MPQ8646 step-down converter shares the same
-> constraints for the mps,vout-fb-divider-ratio-permille property as the
-> mpq8785.
+> This commit adds a new driver for the MPS MPQ8646 PMBus device. It provides
+> basic PMBus telemetry, alarm acknowledgement, STATUS_WORD extended bit
+> decoding, NVM-backed post-mortem data, and an in-driver alarm-poll fallback.
 > 
->> diff --git a/Documentation/devicetree/bindings/hwmon/pmbus/mps,mpq8785.yaml b/Documentation/devicetree/bindings/hwmon/pmbus/mps,mpq8785.yaml
->> index 90970a0433e95..d7a32fb3b7af6 100644
->> --- a/Documentation/devicetree/bindings/hwmon/pmbus/mps,mpq8785.yaml
->> +++ b/Documentation/devicetree/bindings/hwmon/pmbus/mps,mpq8785.yaml
->> @@ -18,6 +18,7 @@ properties:
->>         - mps,mpm3695
->>         - mps,mpm3695-25
->>         - mps,mpm82504
->> +      - mps,mpq8646
+>> diff --git a/drivers/hwmon/pmbus/mpq8646.c b/drivers/hwmon/pmbus/mpq8646.c
+>> new file mode 100644
+>> index 0000000000000..1fd41d89e5bef
+>> --- /dev/null
+>> +++ b/drivers/hwmon/pmbus/mpq8646.c
+> [ ... ]
+>> +static const struct i2c_device_id mpq8646_id[] = {
+>> +	{ "mpq8646", 0 },
+>> +	{ },
+>> +};
 > 
-> [Severity: Medium]
-> Should the corresponding driver (drivers/hwmon/pmbus/mpq8785.c) also be
-> updated to match this new compatible string?
-> 
-> Because the DT schema specifies the compatible string as an enum rather than
-> allowing a fallback (e.g. to "mps,mpq8785"), it appears the MPQ8646 device
-> will fail to probe. The OF match table in mpq8785_of_match currently lacks
-> an entry for this new hardware:
-> 
-> static const struct of_device_id __maybe_unused mpq8785_of_match[] = {
-> 	{ .compatible = "mps,mpm3695", .data = (void *)mpm3695 },
-> 	{ .compatible = "mps,mpm3695-25", .data = (void *)mpm3695_25 },
-> 	{ .compatible = "mps,mpm82504", .data = (void *)mpm82504 },
-> 	{ .compatible = "mps,mpq8785", .data = (void *)mpq8785 },
-> 	{ }
-> };
-> 
-> The I2C ID table in mpq8785_id is similarly missing an "mpq8646" entry.
-> Without these additions, will a device instantiated via this new standalone
-> compatible string be completely ignored by the driver?
-> 
->>         - mps,mpq8785
+> [Severity: Low]
+> This isn't a bug, but should this array use named initializers? The I2C
+> subsystem guidelines specify that initialized arrays of type struct
+> i2c_device_id must use named initializers, such as:
+> 	{ .name = "mpq8646", .driver_data = 0 },
 > 
 
-Sashiko for sure doesn't understand that the same bindings file is used for multiple
-drivers. For DT maintainers - is there some common guidance for situations like this ?
+Yes, this needs to be a named initializer.
 
+Thanks,
 Guenter
 
