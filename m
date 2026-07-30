@@ -1,119 +1,211 @@
-Received: from out162-62-57-64.mail.qq.com (out162-62-57-64.mail.qq.com [162.62.57.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097883672AE
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 07:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.64
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785395074; cv=none; b=L/zxP6yYPhF7GbC63KFa3iy+RMvO9hQi+JSJjUpG8zWX2gyCS2rXfMPNR3BEv6I229rFnVy9XS2lqDhucdzORGsYwmp744/ykto5kNR0BZc1T6yYDr9mMv3WR8ohGfQiGg/3liRBDo5BH/lZ6t8a2QZj2KwgCbqHfRfQE7ojb4Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785395074; c=relaxed/simple;
-	bh=HiO/PBOOwNp/oSvnT9r3yr375HQt7/lQIdPhFCs/79I=;
-	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
-	 References:In-Reply-To; b=VoCMKz7Rn56k9dAJHoay69AgB3LCk1KH6eEpMkgGby5JGUqFBTEuWDAJO/g+BzkFwPUe/hsOAfxQruNkPhI717ecHsT8HaOgGPwItg4Yh2jvr14wAgYJ0/GKaBOWNQX87NLbCYk11naonYFtqNqR5ISC5z9kuhD17jS5AxVcZaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=EMEEzq2+; arc=none smtp.client-ip=162.62.57.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D553B995D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 07:15:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785395748; cv=pass; b=qhZK8VEsRegiwLzXheMB4t1hhXU9wx0VtjPJGCYX8EhNMj6NqxwkiXYpHHZkMb+KXpMziAIQ5J/bMVUvBqCjRjtKAlXAHZX2YOF8I+7vZB4APDvUESTnaiXdLKN1P1BqJU1tM+E271eUL67IhGxIbrgwip7OUE+C9YDTqR59kAE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785395748; c=relaxed/simple;
+	bh=gTs2P4GzAID4bhAr2SIwiMP+u1/EHGaiVI3xg2u1e54=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UVVte4k31dfONYwGWtbTzWUs/iPTcnRkQe2Mb12dekDZzmrZ4/YO2HEtjLZMqjlSiby8surCqXKww12ocuCpY4nvNVSdI+ptI7kFC3KZ+YrrwD3eb2lBImwzPQmwkOhVODxycE49Ye7cxsqf47h9SmwnSUGjHzMqeVWOkSgEMt0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mgZflpnc; arc=pass smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="EMEEzq2+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1785395054; bh=HiO/PBOOwNp/oSvnT9r3yr375HQt7/lQIdPhFCs/79I=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=EMEEzq2+Gc50qAU2FQVVuh+5oePFlbgrOriPzmShEjdpvBNx6lcF38fDxhJ8Zje6Q
-	 XjvO7rpscvTTRLxPZdiC+1YmNjIs9dAukBcEZ8yTHo3gdWvEbjQTbK3usMXeLYVyG0
-	 k0osbNHvieQcVcjSJbClCG/mASxvrONg2BPUFT6A=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-XMAILINFO: MiMbQr1sY9IHdrNTOHvcz87HItx5NRH96sMqie5EVsJ87R6ykdmxOP1vwXuoK4
-	 o1wsQtfEm1Y50HGwK9e+YdCzIwyACLF2h/xmLaJpmMVGdo/pauA2mKx1bIzMw4kIPEcT9t05KZyAx
-	 3hXbJQslkSKos8UHMKgFKO3wULXIZJBwRcuivTTSGkEqX6uEhqHp+gidtOtmI/wp0XQMBIU/zMnbY
-	 nl4WGTPPlONtC46cXv4V1mwa6SEh/q5fJQu3p9nHdsVBqpnq/TB3f00RePumWCsNGu3ebkmSfh2KV
-	 eQUEeyTBhOa1CWqrug4ao9/CZlAUKydGKXWpIynjjxOJOk0lVwa5Q/HoFppijL5p2abYLCQ/7ZSt7
-	 xwMsgBDpA8ZFi3N1PQBm523OVwTx7tE+9EuwFjsC0NCDkSTAEKTjXGhM3nkoEWnQivPjOrd0plYR+
-	 Ea1HjtwvIkBQKYqpDKJxCHFN/FY8dR/qr/tbs8GQ0YeJXJq6vjPvu7TiG1/ujg/DRyolYfgLOjMV7
-	 9f6dDVtMiMtIL+FjIT4cLP9/oiaK9GEDGfu9QTDPpVkLyRmP3Uo++xdNz87LSAsL2zUx9Mux1hM1k
-	 RNgJQZC4RffQms+hOAhk7Z2SXXoAkIvp29UbEs5Sv2wK8oFywKdkKxThoZIltx9uvoTwuoMJT7aOH
-	 gaTPRl4erA5NLILQuqQAlA+nbKfzNmM2esk9yp3SN9zt7wIZIianJ2PdSp8+g28PMB2d4m6b1Ex81
-	 8NH7GRo1GjvyPHmWCa5THybxRLS0c61EW02dMpWR+ZyMWQyd1qc9M/dVMzl0Lr5Cug5rOPT4hBsxD
-	 Wz9FJatFLThEzA8ZrlCNGPA4txeLunVIS9N4Es6IokaqURUW33Tqt5bOKLx9fuGhVa7I0GIrNAztW
-	 SKi3y5fb4epojre28qmcxtZJIginJKsy+HNhXtU/TC+BPALXYZjq0NkiM9H11hnVsf9eioaomye2b
-	 haG1KFXQMehb3RJ5kCYTYc6cV7RvnZwwPF0xbZmJY4Edab4/M8Gyrl31AIH1PgSXw8vUfoNzhKhd6
-	 6e40zQ5JkldDxV+0UXRj3a5jwxg==
-From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>
-Subject: Re: [PATCH 1/3] can: rockchip_canfd: prevent TX stall on echo skb failure
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mgZflpnc"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51c10e86e52so132661cf.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 00:15:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785395743; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SnfjI4BVaD4G7d7YZlm0GDU54Eh77V6kj4fBOKGKX33I2btxqaqasMdCOEpppoMey+
+         qyKLPB/bBd9Rpa0cpSEP2+3nmwGWmj546JgyhVoAI3xDwA3lqaMtwqgtT5yOSEsgiaf0
+         Tm+PMGB09AcNI7NCBtQyvZZ9DDWy41oGhH7UXdwLixtOVDg3U0QWZCgx/CjPCElrnRMF
+         uOE7QXcyLiE03G9E6ivL0juvEaibUwN+WGHwoc07IpCo0Ewej4K7AmMSMBFDttRrK2LI
+         me55Hf/echqBlaNB1ixCviM30gEiC8D2CIUI8kJ1oOf/9KG28cikULqw5jO40h+ljMjD
+         euVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=rN9nZSu2sgF646io/oXLJaUoy1kgyKi5JGZhp0Svd0s=;
+        fh=s14lKS+XMA4hKnGOZzcUxbtsTZ4Q2cL2nTNaOc+Y1/Q=;
+        b=S0mSqbbc2BI08cmsqs9pzM8qGCtnK+EEOn9bWGd7jH28nTDFNnWu9/EqZd4HwyVl1K
+         sq8hrm96dYaePJse50W+KZIaL//0VwwrTQmW7St7L2pbMoQA0k29xzFquJKi1pkQPywZ
+         AaQtYzcnXNFrjWYChUVM+zQdoJ8/xIrLOWL4BacRfbP0rZuQz6KOPFSKgPyWN6jhHdtS
+         6TE6YTSVzRUzuRSmPcJas7yqgp/wLyHfBbD4Z5/+Iqqyim0wmCd5UbcCrYMwW/97Mp/E
+         CkHlQPJkN05I9rYP8FH2soa0WKTmKFPgZ2OgNXX9Q3PTcRRJKug4yRFb2GjNgQMvloTF
+         VXDQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1785395743; x=1786000543; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=rN9nZSu2sgF646io/oXLJaUoy1kgyKi5JGZhp0Svd0s=;
+        b=mgZflpnc54mr6ghkP2FIWcMguheThCIOyYn7b4JcYvdddQ5mpa+uNfExqMfh6Z4CY6
+         KQ4duwqzupefsUDCMfDneJR9ULi+3DfL7UUU7ZFbS/2+OcFr63C/70uvtuMOodKJ3vLH
+         +eWbSJcl/NhlYmvN0k9H6VscTLK7ZVEF1qcAM6ClZz5UGgpbTVHKOAtJdNQLVDc9Zq8a
+         RYAPXMqtfpY7L4N8BHZVB5Wau1382bZHv/gaBMwI7VorcM+M4vq/knNs249Lh+Gwufb1
+         8CgZxh0KiuXS9vshR8kTsCVWR3Aq6yb1P3UcqC3NVgGNM9KQ93N+KJD2r2PIyRNJEBrG
+         Yk2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785395743; x=1786000543;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rN9nZSu2sgF646io/oXLJaUoy1kgyKi5JGZhp0Svd0s=;
+        b=P5X4eyTex98C8z3gvCWKTSPzVu06MXOXiDgjNYEm0GVWUIHAhCHb+7batqpHwzsNNA
+         JiI2KAkIOIO7EcAhHeWwVgTOvEM+XUdXN0j5XUzdYPu5baxCqIA+jMJcu67HAjrEG/0D
+         AlBzUU+3avrsk4D0d5nPygiPqfakXIYd2BRHQsW3naf8sJv6BqHJZ5gemokyqw6z2Nrd
+         qHNhaxqaOOuimH9aFfl43Z74DR/ttOXRgzImklZ4qOoeo+LDBHXuY8VbwXwp0EPrZcl5
+         fXmT06BGXWHNiDJGx6Fo2xHxKCj18qKrgH3llhfChEiHLrkHuUeG+A32RhnkjHJmZUTP
+         /81Q==
+X-Gm-Message-State: AOJu0YxnTHBMv5vdjuLSoFzDadsbXZjD6Erz6JtnvB6dG/QlX82BhQw6
+	CwCx0n22XsYl5VhU9RXxKO7hPUY+sVJPO2SgAT6CL/6cAMZOJi5lXBguuA8g+SXsx7gYQUR+4yF
+	/CgvVCrJseLN4AutzhKZB0jLy1Tk0YPyu/hPEN3jJZxg7TS7bf+4TDtFF
+X-Gm-Gg: AR+sD11ZIzg1ZFSjsHGstnDXbn7YQucM98k9jtDPpra2Nmy5TUkzMdGg+LSrd4qroBX
+	JvCmTHLzIP9GFakPJYchtk8+1dYtpAkNy1aWdwaRw4TjCZJnP+VCwxGnIxGnaQuydsZA6uM/dhn
+	ePY24NGgeL/6hZMtUeWCsaUMPOEXkxEfyoese5F50ju2xzzR86XPZ3YZPl+oJAjrqC4G0dh3NHc
+	57erKH07WYix6SiJtRC1UeSm1eYNsOJtd7QDeynhQsdo7/pza0QJC1wp4Meg9KuaatAZt4pc//9
+	FfUJ8xgzjg4Bz0pOw18buLIpQmsikBJfk8dSVZukyqvZ
+X-Received: by 2002:a05:622a:4c0f:b0:50f:af60:3496 with SMTP id
+ d75a77b69052e-52b394ab403mr10203301cf.1.1785395742273; Thu, 30 Jul 2026
+ 00:15:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Thu, 30 Jul 2026 15:04:12 +0800
-X-Priority: 3
-Message-ID: <tencent_F699A504CB11E2803BC41ABF9F262F9A7F07@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <20260730-master-v1-0-6945fdd4f0ff@qq.com>
- <tencent_D2D30ECD988C5C82D18863401362835F7606@qq.com>
-	<20260730062555.D32E31F000E9@smtp.kernel.org>
-In-Reply-To: <20260730062555.D32E31F000E9@smtp.kernel.org>
-X-QQ-mid: xmsezb41-0t1785395052ta8gbpfjx
+MIME-Version: 1.0
+References: <20260720-hybrid-v9-0-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp>
+ <20260720-hybrid-v9-4-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp>
+ <20260720060858.5AEB11F00A3E@smtp.kernel.org> <CA+EHjTxsm6LorPDR9irVHL0gtmsUG6zUKQLBA2=8Ruy+V4UmBw@mail.gmail.com>
+ <1e5e1a1f-51ce-4c0c-8690-b5472cc7bd2e@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <1e5e1a1f-51ce-4c0c-8690-b5472cc7bd2e@rsg.ci.i.u-tokyo.ac.jp>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 30 Jul 2026 08:15:05 +0100
+X-Gm-Features: AUfX_mzT91a3nV9pfht0OxPLB6AnFlkwl7Cs0rin5LW0Nvy9x0kjFieO4FqmSfQ
+Message-ID: <CA+EHjTyhOqMti7q+OB8S7K-F48iMr9_FntAmW-jvfZmOC5JEHA@mail.gmail.com>
+Subject: Re: [PATCH v9 04/16] KVM: arm64: selftests: Test SET_NR_COUNTERS
+ after first run
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
+	kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SGksCgpUaGFuayB5b3UgZm9yIHRoZSByZXZpZXcuCgo+ID7CoGRpZmbCoC0tZ2l0wqBhL2Ry
-aXZlcnMvbmV0L2Nhbi9yb2NrY2hpcC9yb2NrY2hpcF9jYW5mZC10eC5jwqBiL2RyaXZlcnMv
-bmV0L2Nhbi9yb2NrY2hpcC9yb2NrY2hpcF9jYW5mZC10eC5jCj4gPsKgaW5kZXjCoDEyMjAw
-ZGNmZDMzODkuLmQyY2JlMjVjNDZkNmPCoDEwMDY0NAo+ID7CoC0tLcKgYS9kcml2ZXJzL25l
-dC9jYW4vcm9ja2NoaXAvcm9ja2NoaXBfY2FuZmQtdHguYwo+ID7CoCsrK8KgYi9kcml2ZXJz
-L25ldC9jYW4vcm9ja2NoaXAvcm9ja2NoaXBfY2FuZmQtdHguYwo+ID7CoEBAwqAtMTI1LDjC
-oCsxMjUsMTjCoEBAwqBuZXRkZXZfdHhfdMKgcmtjYW5mZF9zdGFydF94bWl0KHN0cnVjdMKg
-c2tfYnVmZsKgKnNrYizCoHN0cnVjdMKgbmV0X2RldmljZcKgKm5kZXYpCj4gPsKgwqAKPiA+
-wqDCoCBmcmFtZV9sZW7CoD3CoGNhbl9za2JfZ2V0X2ZyYW1lX2xlbihza2IpOwo+ID7CoMKg
-IGVycsKgPcKgY2FuX3B1dF9lY2hvX3NrYihza2IswqBuZGV2LMKgdHhfaGVhZCzCoGZyYW1l
-X2xlbik7Cj4gPsKgLSBpZsKgKCFlcnIpCj4gPsKgLSBuZXRkZXZfc2VudF9xdWV1ZShwcml2
-LT5uZGV2LMKgZnJhbWVfbGVuKTsKPiA+wqArIGlmwqAoZXJyKcKgewo+ID7CoCsgaWbCoChl
-cnLCoD09wqAtRUlOVkFMKQo+ID7CoCsgZGV2X2tmcmVlX3NrYl9hbnkoc2tiKTsKPiA+wqAr
-Cj4gPsKgKyBuZGV2LT5zdGF0cy50eF9kcm9wcGVkKys7Cj4gPsKgKyBpZsKgKG5ldF9yYXRl
-bGltaXQoKSkKPiA+wqArIG5ldGRldl9lcnIobmRldizCoCIlczrCoGZhaWxlZMKgdG/CoHB1
-dMKgZWNob8Kgc2tiOsKgJXBlXG4iLAo+ID7CoCsgwqDCoMKgX19mdW5jX18swqBFUlJfUFRS
-KGVycikpOwo+ID7CoCsKPiA+wqArIHJldHVybsKgTkVUREVWX1RYX09LOwo+ID7CoCsgfQo+
-ID7CoCsgbmV0ZGV2X3NlbnRfcXVldWUocHJpdi0+bmRldizCoGZyYW1lX2xlbik7Cj4gCj4g
-W1NldmVyaXR5OsKgSGlnaF0KPiBUaGlzwqBpc8KgYcKgcHJlLWV4aXN0aW5nwqBpc3N1ZSzC
-oGJ1dMKgScKgbm90aWNlZMKgYcKgcG90ZW50aWFswqB1c2UtYWZ0ZXItZnJlZQo+IHJlbGF0
-ZWTCoHRvwqBlY2hvX3NrYsKgYWNjZXNzZXPCoGluwqBya2NhbmZkX3R4X3RhaWxfaXNfZWZm
-KCnCoHdoZW7CoGNhbGxlZMKgZnJvbQo+IHJrY2FuZmRfc3RhcnRfeG1pdCgpwqB2aWHCoHJr
-Y2FuZmRfZ2V0X2VmZmVjdGl2ZV90eF9mcmVlKCkuCj4gCj4gRG9lc8KgcmtjYW5mZF90eF90
-YWlsX2lzX2VmZigpwqBuZWVkwqBsb2NraW5nwqB0b8Kgc2FmZWx5wqBhY2Nlc3PCoGVjaG9f
-c2tiPwo+IAo+IGRyaXZlcnMvbmV0L2Nhbi9yb2NrY2hpcC9yb2NrY2hpcF9jYW5mZC10eC5j
-OnJrY2FuZmRfdHhfdGFpbF9pc19lZmYoKcKgewo+IMKgwqDCoMKgLi4uCj4gdHhfdGFpbMKg
-PcKgcmtjYW5mZF9nZXRfdHhfdGFpbChwcml2KTsKPiBza2LCoD3CoHByaXYtPmNhbi5lY2hv
-X3NrYlt0eF90YWlsXTsKPiBpZsKgKCFza2IpwqB7Cj4gwqDCoMKgwqDCoMKgwqDCoC4uLgo+
-IH0KPiAKPiBjZmTCoD3CoChzdHJ1Y3TCoGNhbmZkX2ZyYW1lwqAqKXNrYi0+ZGF0YTsKPiDC
-oMKgwqDCoC4uLgo+IH0KPiAKPiBJZsKgYcKgY29uY3VycmVudMKgVFjCoGNvbXBsZXRpb27C
-oGludGVycnVwdMKgb27CoGFub3RoZXLCoENQVcKgZXhlY3V0ZXMKPiBya2NhbmZkX3J4c3R4
-X2ZpbHRlcigpwqBhbmTCoHJrY2FuZmRfaGFuZGxlX3R4X2RvbmVfb25lKCkswqB3b3VsZG4n
-dMKgaXQKPiBjb25zdW1lwqB0aGlzwqBzYW1lwqBTS0LCoGFuZMKgc2V0wqBlY2hvX3NrYlt0
-eF90YWlsXcKgdG/CoE5VTEw/Cj4gCj4gSWbCoHRoZcKgU0tCwqBpc8KgdGhlbsKgcXVldWVk
-wqB0b8KgdGhlwqBOQVBJwqBvZmZsb2FkwqBzdWJzeXN0ZW3CoGFuZMKgaW1tZWRpYXRlbHkK
-PiBwcm9jZXNzZWTCoGFuZMKgZnJlZWTCoG9uwqB0aGXCoHJlbW90ZcKgQ1BVLMKgY291bGTC
-oHRoZcKgb3JpZ2luYWzCoHRocmVhZMKgY29udGludWUKPiBhbmTCoGRlcmVmZXJlbmNlwqB0
-aGXCoG5vdy1mcmVlZMKgU0tCwqB3aGVuwqBhY2Nlc3NpbmfCoHNrYi0+ZGF0YT8KClllcywg
-dGhpcyBpcyBhIHJlYWwgcHJlLWV4aXN0aW5nIHJhY2UuIFRoZSBUWCBjb21wbGV0aW9uIHBh
-dGggcmVtb3ZlcyB0aGUKZWNobyBza2IgZnJvbSBgY2FuLmVjaG9fc2tiW11gIGFuZCBxdWV1
-ZXMgaXQgdG8gdGhlIFJYIG9mZmxvYWQgcGF0aCwgd2hpbGUKYHJrY2FuZmRfdHhfdGFpbF9p
-c19lZmYoKWAgY2FuIGNvbmN1cnJlbnRseSByZXRhaW4gdGhlIG9sZCBwb2ludGVyIGFuZApk
-ZXJlZmVyZW5jZSBgc2tiLT5kYXRhYC4gSXQgY2FuIHRoZXJlZm9yZSBvYnNlcnZlIGluY29u
-c2lzdGVudCBUWCBzdGF0ZSBvcgphY2Nlc3MgYW4gc2tiIGFmdGVyIGl0IGhhcyBiZWVuIGNv
-bnN1bWVkIGJ5IHRoZSBjb21wbGV0aW9uIHBhdGguCgpUaGlzIGlzIGFkZHJlc3NlZCBieSBQ
-QVRDSCAzLzMuIEl0IGFkZHMgYHR4X2xvY2tgIGFuZCB1c2VzCmBzcGluX2xvY2tfaXJxc2F2
-ZSgpYCB0byBwcm90ZWN0IGB0eF9oZWFkYCwgYHR4X3RhaWxgLCBhbmQgdGhlIGVjaG8gc2ti
-IHJpbmcgYXMKb25lIHN0YXRlLiBCb3RoIHRoZSBsb29rdXAgYW5kIGRlcmVmZXJlbmNlIGlu
-CmBya2NhbmZkX3R4X3RhaWxfaXNfZWZmKClgIGFuZCB0aGUgZWNobyByZW1vdmFsIHBsdXMg
-YHR4X3RhaWxgIHVwZGF0ZSBpbiB0aGUKY29tcGxldGlvbiBwYXRoIGFyZSBwZXJmb3JtZWQg
-d2hpbGUgaG9sZGluZyB0aGlzIGxvY2suCgpJIHdpbGwgbWFrZSB0aGlzIHJlbGF0aW9uc2hp
-cCBjbGVhcmVyIGluIHRoZSB2MiBjb3ZlciBsZXR0ZXIgYW5kIFBBVENIIDMvMwpkZXNjcmlw
-dGlvbi4KClJlZ2FyZHMsCkN1bmhhbwoK
+On Thu, 30 Jul 2026 at 06:44, Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/07/30 0:23, Fuad Tabba wrote:
+> > On Mon, 20 Jul 2026 at 07:09, <sashiko-bot@kernel.org> wrote:
+> >>
+> >> Thank you for your contribution! Sashiko AI review found 1 potential i=
+ssue(s) to consider:
+> >> - [Medium] The test ignores the guest's exit state and `ucall` status =
+after executing `vcpu_run()`.
+> >
+> > vcpu_run() does the check.
+>
+> vcpu_run() itself doesn't. run_vcpu() calls vcpu_run() and then performs
+> the check (their names are so confusing here), but the new test bypasses
+> run_vcpu() and therefore does not perform the check. I'm planning to
+> rework the test to use run_vcpu() with the next version.
 
+So Sashiko was right :) Fixing this would be good, thanks for pointing it o=
+ut.
+
+Cheers,
+/fuad
+
+>
+> Regards,
+> Akihiko Odaki
+>
+> >
+> > /fuad
+> >
+> >> --
+> >>
+> >> --- Patch [4]: [PATCH v9 04/16] KVM: arm64: selftests: Test SET_NR_COU=
+NTERS after first run ---
+> >> commit 0382d3a32df9349f988ca69c7b11c92e61c3d384
+> >> Author: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>
+> >> KVM: arm64: selftests: Test SET_NR_COUNTERS after first run
+> >>
+> >> This commit adds a regression test that runs one vCPU and then tries t=
+o change
+> >> the VM-scoped PMU counter count through an idle sibling to verify that
+> >> SET_NR_COUNTERS fails with EBUSY once any vCPU has run.
+> >>
+> >>> diff --git a/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c =
+b/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+> >>> index 22223395969e0..3b5bb421f401b 100644
+> >>> --- a/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+> >>> +++ b/tools/testing/selftests/kvm/arm64/vpmu_counter_access.c
+> >>
+> >> [ ... ]
+> >>
+> >>> @@ -622,6 +627,37 @@ static bool kvm_supports_nr_counters_attr(void)
+> >>>        return supported;
+> >>>   }
+> >>>
+> >>> +static void test_set_nr_counters_after_vcpu_run(void)
+> >>> +{
+> >>> +     struct kvm_vcpu *running_vcpu, *stopped_vcpu;
+> >>> +     unsigned int nr_counters =3D 0;
+> >>> +     struct kvm_vcpu_init init;
+> >>> +     struct kvm_vm *vm;
+> >>> +     int ret;
+> >>> +     u64 irq =3D 23;
+> >>> +
+> >>> +     vm =3D vm_create(2);
+> >>> +     vm_ioctl(vm, KVM_ARM_PREFERRED_TARGET, &init);
+> >>> +     init.features[0] |=3D BIT(KVM_ARM_VCPU_PMU_V3);
+> >>> +     running_vcpu =3D aarch64_vcpu_add(vm, 0, &init, guest_code_done=
+);
+> >>> +     stopped_vcpu =3D aarch64_vcpu_add(vm, 1, &init, guest_code_done=
+);
+> >>> +     kvm_arch_vm_finalize_vcpus(vm);
+> >>> +
+> >>> +     vcpu_device_attr_set(running_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+> >>> +                          KVM_ARM_VCPU_PMU_V3_IRQ, &irq);
+> >>> +     vcpu_device_attr_set(running_vcpu, KVM_ARM_VCPU_PMU_V3_CTRL,
+> >>> +                          KVM_ARM_VCPU_PMU_V3_INIT, NULL);
+> >>> +     vcpu_run(running_vcpu);
+> >>
+> >> [Severity: Medium]
+> >> Does this code need to check the guest's exit state and ucall payload?
+> >>
+> >> If the guest payload crashes or hits an unexpected exception, this wil=
+l silently
+> >> ignore the failure and proceed. Since the test only checks for an EBUS=
+Y error on
+> >> the subsequent ioctl (which will still be returned because the vCPU ha=
+s been
+> >> run), the test will pass despite the guest crash, potentially masking
+> >> virtualization bugs.
+> >>
+> >>> +
+> >>> +     ret =3D __vcpu_device_attr_set(stopped_vcpu, KVM_ARM_VCPU_PMU_V=
+3_CTRL,
+> >>> +                                  KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTER=
+S,
+> >>> +                                  &nr_counters);
+> >>> +     TEST_ASSERT(ret =3D=3D -1 && errno =3D=3D EBUSY,
+> >>> +                 KVM_IOCTL_ERROR(KVM_SET_DEVICE_ATTR, ret));
+> >>> +
+> >>> +     kvm_vm_free(vm);
+> >>> +}
+> >>> +
+> >>
+> >> --
+> >> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720-hybri=
+d-v9-0-2b713ca1b5dc@rsg.ci.i.u-tokyo.ac.jp?part=3D4
+> >>
+>
