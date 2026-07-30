@@ -1,70 +1,64 @@
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010020.outbound.protection.outlook.com [52.101.85.20])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021123.outbound.protection.outlook.com [40.107.74.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786B239E6EB
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 04:51:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB6A39CD15
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 05:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.123
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785387080; cv=fail; b=GQ1wfeMRtv0kxRNXj2UXv8fIrHlADSvS4FReAO0kWq9LGZLClJX4qqx60TeWW9u2f84m+xFlIfoHh9oLKEvVKAys+bXDYbITS1m/CmaTRcL6ePFFhyE1V9Xr8wSXd5AT9/d2ecMWqp2jf3yc/pVCoAI8oEJF8MSRoHEwNA2bLXw=
+	t=1785388488; cv=fail; b=DuBwqdDV4Hk/V6Kc6lxG6krXSm1vpJW5SdISq2Q3oijVxHkXIwwlWl56lE+Q4uA0qSPFv3Zw1alw4mrfZFlMX6OwUzCIUfFuFQ9eG6ZzjNgcsgoSexeEwFwd2heNfD+G57kFDHuPXbFM6BOR8OAWnqh5qAMEirXrKs+XecO3ojI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785387080; c=relaxed/simple;
-	bh=O3b+DY3dYkuaNtbbXNcl5svwGWdEGtCx9muFF/eyz+w=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=aUCDFyjaE0CpIitihnFQFTWhAoWWVgBOo5WHaCWwQsUpzqiam71dczBzFT3v3WI7UObYV86JS+C0+tysWhukLjnOELW0gcyDBfelDo2eVeuRP00UkwUkK2VK2AOyiG6Wg/b2KfBP+Ou8IJ2ehhKf0VNPcFyFuCGw/qqnRjki8Ls=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jPojNjep; arc=fail smtp.client-ip=52.101.85.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1785388488; c=relaxed/simple;
+	bh=Z/iG9FBYcNjUAyFHiFgjUYn2ZC+CBcl5jYAvHJl4Pq0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=QIG7PAeY17TCeJCxdNGpIH4HT1lg+5iX1nl4v9W+xb7NyJqJI/XGEcga/NfEYMdgmj1qVvZkuHuM9UPLr/uKAERK79bvgiEJnko9G9PLXN87K8Xx0y9shHYhQpqJVXUUs9q5o+krbB4PE0KpSsFrBufPvB0Dn0QQSuL8ydLemNU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=lvagCFv5 reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jPojNjep"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="lvagCFv5"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sIqt00itxS2/BmsmhbCCfzr1ao+beNyRz8SgUrFMKk+AaH660XCO138mkTUPUaqyBFDQhb86siXk6tfT0ItUnmFkcclEjQvgHZUXgDEAEEU0SuiuqiLcsB9C+7kTURU6HZQ9mE4qwcPaq2jG/LDllYAv7kH7vlruMnOQPP9BMuSSKBneZiQEx0MaSxSL+JAqxyDmKEJLA45ZVRS2vT0LlUYo/2ga7XgLvGnlEkHsTXJX5QScLU4TPZoRCc848pOQYyAnnWAns9BtyWVvlCUT4EYgfIBwWorRf2TlH0AUbNpaTqKPgAASZjPoqGUanhKO98LWirK3CCNJMoveJ02pWw==
+ b=vyh0hXepgFn76ms3BBayJejD69Y2o3GrDgIbVN3tDlhHoXnvA41wP9K1mhWtF6OULZtTyeb33n1pwNK6f8KV50kQzrYNEumAqB/p9E31RhrUU46GZcjU2hC9ogTePfM6Uerlf79BlavWDaIp7AStwAzJcPdWNrPGnACcMElonJ4cUA+xnfz8y1sgTIj9yfnoEyE2RmrhDCNCyPySK0mh+9whqN+UZl4nZfyv8/IG0vUHII6qGbLGmJwB7snZ2daFKNunv0y+ySCASNLO7Cedrh/2iKvceq9YRMPHT9hso+fm3Wrb9829MJPNprSkSUAxhmWKUdScuFN+JCaM2yclGA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rVoajFwXPkQWNm6pNwggHUtJWeigxxI5nJe0BJJ+nvo=;
- b=i3j18YJCuYCEOO4jx5dsoz1U38dMCYla/I5WAdIo0CfKBmoJcPt28L/cZzUv6psAljC+fb24VLi6mucjRxf8GTtNtPfgxN4YMk4QQaFPs86lAH1rYv0Zi7hjsTkkF/UvVzXtKIG+CaVVjSeOBkSyyL9Gk6Q23aLtWRtWx0Fb8GDR6xeT7ZCPNnEAYJ2meISNkKAgPs9nBUBqx1C8EFJNNHVFSeZ6CcaI9tta4u/ukf/5QOky2qMpngSoLwFO33rOu6foWYk4L1QXiky7AC/27MnMvvld/huY1weoeCtjstOOLZdezv25HvDTiLizdo9Q91ccebZ60Fj/pvOQ7m6k5A==
+ bh=2b7dV2G+BOlcLwDi/A9GanuUkmZ1kaxqKHx2RpXokyU=;
+ b=X/I7d0DqIBnAe1iY03unZuCJ4Rdj6fqd1V9gwT6rzxd4P7Ru4uftAxcC1wMBSOQEkxKHTfbv61bvVj8J4iwFHpObj4cLF29l9dGDHfybFIBmRNENfsFU7efyWQJPb9ORSfS5TYxe8Y5Y6zMCZcMYuJ3N4ZxmKsLToj68A10cQZ4BDm+80Dt/gF53kCreopUiBCil4QyleJhZpCX2434fDlLrp7gClADXEA1CgcSzA206dtKyhZvlzlYst3124CpZoy9nBEjmtpQL1agP/lX4zYZij59MBZrb2QN2XZfOqPELqWRaoZfFPy2Jh/jGhBbyDSQ+tlFHs1BH20PouWKqZw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rVoajFwXPkQWNm6pNwggHUtJWeigxxI5nJe0BJJ+nvo=;
- b=jPojNjep2MLHxtK7imo2lGuGaSJ67g+u+Y84NtohFDBnCq+0iCH3WZ6siQDa/BrfOMZd/0krKSks+HmJI5cXjlBvfZBzUhfO6fBPxHmZTR9c19iR2+FuifQQu22pManWolOeK3zWuGtPfJ1zuIT4EAbMfW6beAY3/3UXNa59Lx1ANzHJf7mDn3Dwhgx6u7HCzdAMFOl5pzjpurI93DMm840Rhry2BitPgjMPLDOWw75PiTVkCo6oJ9jkzH5lWAaGtjiUxjbKiOHYccMzjCc78fIByRXZ0m+cmzD0XXqQnW2jlD7QfHwSmjcRtqtdKvWH31t9Vc/Lz8bvg1aqjjQzfQ==
+ bh=2b7dV2G+BOlcLwDi/A9GanuUkmZ1kaxqKHx2RpXokyU=;
+ b=lvagCFv5yE8R0pmbHwwvVY+Jv2LhU301DNtEIQ1x9v3PZ+aHdUbOVRbDry5SuLrUKmU4Rv+Z3hEtpGkLK5eP3pCyR+laEz+uGbQo3jnRHepcMJhpna2MbzQ5Jb2P7Wos52X1gDBwI329U8appJxW/NEULyenGwhx0z3IyomZErc=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DS0PR12MB8245.namprd12.prod.outlook.com (2603:10b6:8:f2::16) by
- MN0PR12MB6246.namprd12.prod.outlook.com (2603:10b6:208:3c2::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.270.12; Thu, 30 Jul 2026 04:51:15 +0000
-Received: from DS0PR12MB8245.namprd12.prod.outlook.com
- ([fe80::e7c5:cfca:a597:7fa4]) by DS0PR12MB8245.namprd12.prod.outlook.com
- ([fe80::e7c5:cfca:a597:7fa4%4]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
- 04:51:15 +0000
-Message-ID: <dfa1eb50-6f8e-4f76-8d73-ed3a3276f363@nvidia.com>
-Date: Thu, 30 Jul 2026 10:21:06 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
- wireless BE200
-To: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>,
- "helgaas@kernel.org" <helgaas@kernel.org>
-Cc: "thierry.reding@kernel.org" <thierry.reding@kernel.org>,
- "lukas@wunner.de" <lukas@wunner.de>,
- "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
- "Korenblit, Miriam Rachel" <miriam.rachel.korenblit@intel.com>,
- "treding@nvidia.com" <treding@nvidia.com>,
- "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
-References: <20260728201821.GA1394074@bhelgaas>
- <af2c883e07d1e4eb327aaea78cc9fd0c95b04387.camel@intel.com>
-Content-Language: en-US
-X-Nvconfidentiality: public
-From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-In-Reply-To: <af2c883e07d1e4eb327aaea78cc9fd0c95b04387.camel@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN1PEPF000067EB.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c04::27) To DS0PR12MB8245.namprd12.prod.outlook.com
- (2603:10b6:8:f2::16)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY4P286MB7101.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:341::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.14; Thu, 30 Jul
+ 2026 05:14:43 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
+ 05:14:43 +0000
+Date: Thu, 30 Jul 2026 14:14:41 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture
+ with channel kicks
+Message-ID: <keuoh456azgwropu5qvenj2md3fxcmqs4xibc36gs6ix6hxx3q@chcplu4rrrd7>
+References: <20260729143036.3087722-1-den@valinux.co.jp>
+ <20260729143036.3087722-12-den@valinux.co.jp>
+ <20260729145108.CFE281F00A3E@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260729145108.CFE281F00A3E@smtp.kernel.org>
+X-ClientProxiedBy: TYCPR01CA0195.jpnprd01.prod.outlook.com
+ (2603:1096:400:2b0::17) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -72,120 +66,139 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR12MB8245:EE_|MN0PR12MB6246:EE_
-X-MS-Office365-Filtering-Correlation-Id: d55147a3-b72f-4f30-7058-08deedf62f59
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB7101:EE_
+X-MS-Office365-Filtering-Correlation-Id: b5dc6ad6-3dd5-4183-70b0-08deedf976cb
+X-MS-Exchange-AtpMessageProperties: SA
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|6133799003|11063799006|4143699003|56012099006|10067099003|22082099003|3023799007|18002099003;
+	BCL:0;ARA:13230040|376014|10070799003|366016|23010399003|1800799024|6133799003|56012099006|4143699003|10067099003|55112099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	pLzXtP/IzGfs4JQWc6cm246oJ37ON/FY5Gpd8u/Wa8kwdlisaTWHFGzAfTzTJrCp3qKBYkW64ov6i/c5sMX5CdAaPuthf4OxVdBdlVvF4LLBB5+1UDrmZElji3rCfMwTeaAucPiqPPqTucBM8PN/kXSNAR9GizR/yrgiJbTlbfsoNmrAH2W2JXJiJHv7hYT5LpoP41VydV1ohZDDtfrxF/RiCOhCnPXGV0TIOlSBc+ypvaVeUhl5x+pUwb4eyBL80DWbICplxarp2f85RXX1n+78wqj6z0qnqlOHF0fUmEqy4w+BXk2fLO2XY9HL1c7jKML4cf/iDPuFeRHmv9HQXZ5ZGIM5heY2ERweqtSzLX3ufVQO6Of3Z8Pqpu/eJyfF2U52tEkqnH4+L5xO4awU7FtTFrA57ZPS7Wf5ZCL+bHlTdZvjMpoSU1A7CRdsMwfHdQU6LeU0A7R09GY6kjDakLcBONrNnveHMCuBPZUWp0hgLFs4occvva1ZYFPL5Ig4vZSmseRAv0yH7nh+rVfhJgoCLPn8XSuUK487XCqqmfhTkq2y5KXSyMqHddNUmta8X3SJB4hK9zEwRmOXlJdUg6uukpL6ygyTD4QL6KP3sp/H9o6GGtbkV6w8ITikwZye9UDLTU6Hwo+QkHsB7Ke1OJn0qwewOubsubgd6R1fqxA=
+	L1omqkxut3/+U31oLcYwiw8d4mz8iKAdwEmKQR8GEP4MjM1zMWTJ89ePZZpwfw3TB5RZwiJnqMswFKj+RZcAHbHiGdQ3gwZVUsd8g8we/Lcdpapf45U4a3oAOzgR8FKWdRLASzpvJPPR3qyRO1161sU1ZZ9t08IRUZZKyadO3swXJ+1W+veL2VTrKu4sLwpBLn/zMR3pLihZOKzaue/yXbi8eoCiLJD2ouI4wKw2hjXXODlut8qDd4uaHq1yQA31nghQV2C9FAee/G5dOhf59y6Cx1XQcBsuSVfG77Wzp1VU6GA4JMXTn3LWhmeVmaumf+aLGNbEduRyurvyv/bXDjpEF2t0U2aMW3+C4bqn5nxOlmv0naB6ul5/b55kQ/UVwOs5aXcZxVY56sGofn4cX1q1mUILQEC5uALq7+9F5K8jciLg6vYf2/mSx8Sno2um+iQT9JxRLEYGBxpMsz12kgORCjjTJbZPot1GDCnc7RGosyfNJuyRlVZpVCcvTu+ZYVYK+WTcgiyp9DHj3ebOaoffpM1SB4uJw6H8/VJ0neuC00Ce+gsSNOVPI+x025UHKP88U/1nN5awYH5Eu/jxUWqtRUAWatgEoesRj36cz0A=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB8245.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(6133799003)(11063799006)(4143699003)(56012099006)(10067099003)(22082099003)(3023799007)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(4143699003)(10067099003)(55112099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RzlxRTVvQVpXa1NjeVlqQ2tzeDJVUnU4bkZBeEZXaXB4SkduZ1UvdjZGSWly?=
- =?utf-8?B?TFV6TlE1Vzh4Y29iMFJlYitxUjE0VzI5ZnJVQmRpaFlveTI3dTZhU0JVY1B2?=
- =?utf-8?B?VmFIYUZiam41U1BjTENZSDBEZHY3SGgyS3puNUFqalhERTVOWFp0ejFITXBh?=
- =?utf-8?B?cStvV1YyOVJoT3h4QTlJeFI3aDFOZEZGWk1FblUwZnJhYitFcWVnWU1TSTB6?=
- =?utf-8?B?MUJpaW9CaEVxVHRUTVJjSCtZNkFvakYxZW9YMEdQL3NVNG04MzlhL3k3TjI0?=
- =?utf-8?B?Q0NsQlRPei8zZ0NtUFFDMXRzSUxRcE83cXlTSmxtNHpOdHVRQTNTbjBWamNM?=
- =?utf-8?B?TEcrSkVhd2FBaDBJUjV3UzFRaWtxRUNuNUw1Rkl5ejlPN1V5WG4wQ1kxTkdF?=
- =?utf-8?B?bnEwMjB1ZHgrclN4V0Z0cXlpOUVqNUY5ajM5UmVtbUJjTVpXaHl6VnpOaTI5?=
- =?utf-8?B?aFAyTktpckVlR3dHb0F0dFNGdDFtMFVuKy9WTEpKc21sNDdha2V5dUU3WG5N?=
- =?utf-8?B?Z2pkZ2NjRkFickhLeWUzditnOWFCdkNjYXRMYlFoOC9OYmlsWkJ4MlNqQkhx?=
- =?utf-8?B?bW9FcHg1ZXlQOWtxNzk4bzNCdEVsM0szd2pBSzdWdzllOE5JYk9FbHFSdmVE?=
- =?utf-8?B?S0N1QzVRS2RHdFlNQ1UxMzNHRnVRbnBMUmd0SXJFdmxEc1dvOTg4amYxTnpy?=
- =?utf-8?B?b0pSMWJwaENYdUxvSFk3MVNZNVJ3dE1qMGI2ZWhIYTV0V0NkQmNFV3pJVUtl?=
- =?utf-8?B?RXhXamw4RWtVR1NKRUtzQTRna0JzTE9yVUVoSHlxMUljcG1sYnk2ZTBuMi9m?=
- =?utf-8?B?MjdTd21qSitGRFQyTGprcXJ6NVUrZFdGeEZLcDc5eGg3TEt3Z3Bmb2hDWTFG?=
- =?utf-8?B?OFNHZjdxeDdteEJzb1FBaDVpTHIvUFBXL1VxVGgySDZBTFZMc3pVNXVhOUY3?=
- =?utf-8?B?K2hYNVYraUZhZDkxYWpXRzRTOHFES2NaU0ZOUGtCUlpQYTMraEI4UUhpeTR3?=
- =?utf-8?B?NVhiM1ZqRy95YTFURHExL1JPdFVVWElKdW5xYWE3L1J4Y3BVd2x1OXEwNWtK?=
- =?utf-8?B?cEg0S3A1U1BMc0hXQjhoUFlpSzVhSVY0WmE1REt1S1hiU3oxb3JabFpEV296?=
- =?utf-8?B?c2I4WGNBcTY0d2V1cmhMZGtkWkJ6L21wTHhmcUliME81K1doQ0JjWTViS2ly?=
- =?utf-8?B?Sm9PeXRmZzNrMFBMRkNLcTk1M254dlR3bHg3UUorNHZja3VKcXM5VzV4UEtP?=
- =?utf-8?B?M2kvNmJIQXhsR25GeVNaZ3ZRMTJCMDhCTXZuOW9HMmJNKzhuWWZlQkdiTzBI?=
- =?utf-8?B?YU1FM2FFV2wyMGVLaEVKYVF4UTBhdWVpMFpkR3RMOVpzZVRaZjRWZ0Y3Y2NX?=
- =?utf-8?B?VEdTZm51elIrTlg5SFN4U3B1ZWdVNk5DdytqSlpLVTdDZEU3Y0hzQTBjazBI?=
- =?utf-8?B?dC9Yc2JUT053ck5GcmRZVlp2QldYNnpjYm01K1dqdHI3S3lqQ1V4a3VSWmwv?=
- =?utf-8?B?cWpVQ1plWG1YZ3lQS1l5eVNkWTNhd0hEM01yN3pUangraEI5ZklWSnMyN3Ev?=
- =?utf-8?B?ZzNnSkZCRUN6c1VkbTN3MXY1akhmRDM1NldkMVprblVDeHp6SUNuWkNBOFRq?=
- =?utf-8?B?blJqQnJhU2QxOWFsZW13Mkp4azJIOXpWYThxWC8wUmFySWJyYnBRa0gvS3ZS?=
- =?utf-8?B?anN6dlQ0M05OZWFHUmRIQ1QrZmJtb3VqVkVsRlpVRjZ3SVFVSTFsMTR1Q3VX?=
- =?utf-8?B?WHI3VHozU2NsazF4cEE5Q2wyVEU4a1ZNR3VOWVAyeHZyaWpMdE84Qk4xSkVr?=
- =?utf-8?B?UHN1L0ljTmFOSEw5anc4Z0RqV3IyYnZUQWQ3OERCUS9UZURDcTdLTUh2dDlG?=
- =?utf-8?B?Tk1OWHljRmNQaTc3Ulo4ejhjK3Q2NWd4SDRRTXN6dUVBcVBkYTVzRWZWR2ov?=
- =?utf-8?B?dlM5Uld2MmFKbWJ0TFk2cVFmWnU3ditic0t1djNZS05aRGRpcStkU2xvbWxp?=
- =?utf-8?B?QkUxQ0pDTnJ3WHdMYm9vYTd5VExyWlR0MWJ1NGl5RXV0bHQrTkpoT1NLUFRl?=
- =?utf-8?B?VUtmQTE3eWJpRStNNURtdnFrQTdsYmpUMTRhOHhlTE53ZTJobkJhZDVEMTAv?=
- =?utf-8?B?OHNlc3dObzZUNlFicjV4WGZIN2UxRklYOTlLV0hiNEFGRm5Sa0hHTi9RTWhm?=
- =?utf-8?B?R1Y3RzdYSnMwWWhPR3l5ODVMV1A1N2ZPK3FLSXYxMklYdE5GamxrY3ZSMjNx?=
- =?utf-8?B?TUV1emp1TTJQMlF0UEduZzR6UHJ4SFhzWTZUbHI1Ylc1MUdtbkR2bm5rMGhq?=
- =?utf-8?B?MThpK1d1dFMra1U3RjZObzF6aUo3VGJpdXkxNTVsa0VnOHFlQ0ZPQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d55147a3-b72f-4f30-7058-08deedf62f59
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB8245.namprd12.prod.outlook.com
+	=?iso-8859-1?Q?T29/uzdyCOoMlkPOD0p9c83pADvYA9zuM+fUC9KVlY3sZ9T/7ysATfsXur?=
+ =?iso-8859-1?Q?tTlnt2K9QGuEI8WYukGpa/4ejI2hOzUmt3y9Tl2yf1FK13uAvGPW/nYSr6?=
+ =?iso-8859-1?Q?xCrdKYa4CrYYFzpDDUWjDoRrv3yScbmbZOhz12nLZA8ytIiHo6EkaiZs7J?=
+ =?iso-8859-1?Q?HMf+eM1nYOcnpe5945g0qx2/ZUub90uLKKjgarWU4nCp8NHXfAQiBG/o33?=
+ =?iso-8859-1?Q?4xjD9TqruH/amVqoWCiz9g71lPmeotGn3turPqa3fudcaBd7MGSDuxw6YU?=
+ =?iso-8859-1?Q?XNbdrB/+RvBZC8uddq7ZT0oIQ4gzH0hjpqMUWFq/c4wyB6bZTaWjqMQbkr?=
+ =?iso-8859-1?Q?aVVJWifhA9ByKSM0+Z9TB7z3hskuwfXA+a69wylFlXy6xzP8dZ2CkvL2Mf?=
+ =?iso-8859-1?Q?xTypqAmsDjvMDqlbmPY/9b8heoBn/k7rqOT3jIxrSvbKLhCEH8LRmQZuAB?=
+ =?iso-8859-1?Q?+e4GqNS6T2w11LFX4kQAElS/93y/ECren6NlUmBW07T/h7ZL002A40ttpx?=
+ =?iso-8859-1?Q?rCAn6IthvY5c6WT/nsdtVX8BZVp49kuzvNf4ywa1iLLhB2dR7jAMHMF6zK?=
+ =?iso-8859-1?Q?2SguKyfi5FoyQXuf39qkYAAinneQMsE8pd4fByBQ0W/G6gUNVZMQCwj69x?=
+ =?iso-8859-1?Q?eCsoAwRD/a+831xC3iqjI8/whWHugMwwBk1By2zWVUX31FFHJPIjdaqRQ/?=
+ =?iso-8859-1?Q?WA2JGdn1g9xKo0QzetyWgd2YMwGA4pIgeB/ZepdvyDY5UN6kJ6H6YdniRB?=
+ =?iso-8859-1?Q?kBHuTJMfdXUtilfHlujkgpQAssb8smmMDWsBVU7kzgHXN1nqVmrIjS4MyG?=
+ =?iso-8859-1?Q?H8s0QqjeadUgr/Y0JledLhE/AeApGhNhIONOT5j7+zlrrbp6Sgm+rN7LNF?=
+ =?iso-8859-1?Q?nCXugSVDtjsxJHQZ1aAyoCysRBXz2LUqegahZpUC0rIal/m16pY8QWxyh9?=
+ =?iso-8859-1?Q?4Fns03oL1jeaUkT2JQ4E944CgOeWNszb4a12mcy6DBbEuTQg9uNWOz7BDa?=
+ =?iso-8859-1?Q?/7Cx9D7cbFflbemZ/fjZYSXeldpJSALa1kPmNUx0G23Oj8l8Eym3qzkYDF?=
+ =?iso-8859-1?Q?oQsDnUM+FOCaTmEkJW2x/Yy7p6q2EDCoNoJgxB30inxtzXiwxw4MkxG2jt?=
+ =?iso-8859-1?Q?yE+XdBDbSpzIKGUP+1R+pxrMn4OZNLt1cemwB2lw5fsDIeh1QnY7wN0mte?=
+ =?iso-8859-1?Q?M4ZZDdMrAzkk/Ros6081DiN7LrH5S9MjklHizf+iXjdLnHouuuZ8fOSli6?=
+ =?iso-8859-1?Q?smppGD0jzCUyCKBaIFdez00T6EYsLI0AhKJMhjzJkbnBN0LYS2xARuJDFR?=
+ =?iso-8859-1?Q?esYAn5R9gFf8SZpKUmOt9/3t0fB9U/MNQoiYgcunTbsFf+3WoC+rstDE2k?=
+ =?iso-8859-1?Q?UQZ1EzaduMidYDTG6wgVJKyHEZz3znVBtbn7uBAK5kKpJlSx6Vc4496cCi?=
+ =?iso-8859-1?Q?0W3fr3ng7EJbQX5e1+/i3vLN0CsQnXB/UMyDafnkGg3NmlEZNMHBuaajVW?=
+ =?iso-8859-1?Q?M5IH/rhjYft+hSZhjJXZBMWn0RNf5sGNNSKMzV4/Xm+hhY2adYLKTBqTuV?=
+ =?iso-8859-1?Q?tg9i82FqP3sKdhjCsBK853k/kGaa6fFDWH0DfeKdJev0dz/zjljR95wLpG?=
+ =?iso-8859-1?Q?8+p+bNmSNF3vvDWiU6CxxatZeJ1IGj+lQ0zPDoC+lY61ZQrBqxHjz+Xo4J?=
+ =?iso-8859-1?Q?8yzCyXETGVfA6m3SGyyO+0sXqZxZe63pXVPOBjqYxTqOmvgqNDQv4+Xr0A?=
+ =?iso-8859-1?Q?2CmaeTmiuVFEAbRXBXkn61g63wEco2pEF5nfUyfHSbJh0GABCCR4XV8tNF?=
+ =?iso-8859-1?Q?ANDiH4Q+oqYCWHa4QRQXnwJ3W1F+JIXaGVJCqxMhatAEa/nB6a9O?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: b5dc6ad6-3dd5-4183-70b0-08deedf976cb
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 04:51:14.9305
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 05:14:42.9893
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 76ZUOrxpWnn0l82MzhL3m/t4JWxc60QPwJsNYBiMjcPbXnjPatEl2EQTXJvC4b00HP7QdwbxOfMFtwlmSaEKAw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6246
+X-MS-Exchange-CrossTenant-UserPrincipalName: x6bAIUYAEvKCFZpn58v8kvb+oid+HGnl4kB5jC2AR9+qCl5VPMqvOweokksCx+ALFYVB56u3muWUjXGDE2n5Dg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB7101
 
-
-
-On 29/07/26 12:19 pm, Grumbach, Emmanuel wrote:
-> On Tue, 2026-07-28 at 15:18 -0500, Bjorn Helgaas wrote:
->> On Tue, Jul 28, 2026 at 07:47:04PM +0000, Grumbach, Emmanuel wrote:
->>> On Tue, 2026-07-28 at 14:24 -0500, Bjorn Helgaas wrote:
->>>> On Tue, Jul 28, 2026 at 06:21:23PM +0000, Grumbach, Emmanuel
->>>> wrote:
->>>>> On Tue, 2026-07-28 at 13:03 -0500, Bjorn Helgaas wrote:
->>>>> ...
->>>>
->>>>>> AFAICS we still don't know why Tegra264 would set NoSnoop
->>>>>> and/or RlxdOrd in the MMIO read.
->>>>>
->>>>> Me neither but... I can't comment on that. And de-facto, once
->>>>> it
->>>>> does that, the BE200 replies with the NoSnoop and RlxOrd clear
->>>>> in the TLP which is then considered as a malformed TLP.
->>>>>
->>>>>> Unless iwlwifi asked for NoSnoop and/or RlxdOrd to be set, I
->>>>>> think it's a potential problem for drivers if Tegra264 sets
->>>>>> them.
->>>>>
->>>>> I ... don't think we would do that. The driver would certainly
->>>>> not do that... Regarding the hardware itself, I can't comment,
->>>>> but I can check internally.
->>>>
->>>> Forgot to ask, can you collect the output of "sudo lspci -vv", at
->>>> least for the RP and the BE200?
->>>>
->>>> And maybe the dmesg log when booted with "log_buf_len=16M
->>>> pci=earlydump" as well, so we can see if attributes were enabled
->>>> by a
->>>> bootloader?
->>>
->>> I assume you want all this without the quirk, right?
->>
->> Right.
+On Wed, Jul 29, 2026 at 02:51:08PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Ringing the doorbell can race with a hardware interrupt, clearing and permanently losing a pending DMA completion event.
+> --
 > 
-> Attached.
-> Note that we used an out-of-tree driver in those attempts so the kernel
-> is tainted, but this does not impact the issue we're discussing here.
+> --- Patch [11]: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture with channel kicks ---
+> commit 56231794b3b46dd52a7c7f61f0def40f1fed9890
+> Author: Koichiro Den <den@valinux.co.jp>
 > 
+> dmaengine: dw-edma: Serialize LL event capture with channel kicks
+>     
+> This commit introduces an event lock to serialize interrupt status reads,
+> clears, snapshot recording, and LL doorbell writes. It aims to prevent a
+> deferred handler from applying an event from a previous hardware run when a
+> doorbell starts a new run in between.
+> 
+> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> 
+> [ ... ]
+> 
+> > @@ -269,6 +317,17 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
+> >  static void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
+> >  {
+> >  	dw_edma_core_ll_sync(chan);
+> > +
+> > +	guard(spinlock_irqsave)(dw_edma_event_lock(chan));
+> > +
+> > +	/*
+> > +	 * A recorded event belongs to the current ring and must be consumed
+> > +	 * before starting another hardware run.
+> > +	 */
+> > +	if (chan->ll_irq.event != DW_EDMA_LL_EVENT_NONE)
+> > +		return;
+> > +
+> > +	dw_edma_ll_event_discard_locked(chan);
+> 
+> [Severity: High]
+> Can this race with a hardware interrupt and permanently lose a completion event?
+> 
+> If dw_edma_core_ch_doorbell() is called (for example, when appending
+> descriptors to a running channel) exactly when the hardware finishes a burst
+> and asserts an interrupt, but before the hardirq handler can run,
+> chan->ll_irq.event will still be DW_EDMA_LL_EVENT_NONE.
+> 
+> The code will bypass the early return and unconditionally call
+> dw_edma_ll_event_discard_locked(), which clears the hardware interrupt
+> status.
+> 
+> Does this result in the interrupt being completely lost? If so, the software
+> state will permanently trail the hardware, which would cause the DMA channel
+> to stall indefinitely.
 
-PCI_EXP_DEVCTL_RELAX_EN and PCI_EXP_DEVCTL_NOSNOOP_EN are set by HW 
-default value, this is inline with PCIe spec. It says "the default value 
-of this bit is 1b" in both cases.
+Thanks for catching this.
 
-Thanks,
-Manikanta
+That exact race cannot occur at this point (= patch 11), because dynamic append
+is not yet enabled.
 
--- 
-nvpublic
+In the final tree, however, the race window seems real. The pending DONE status
+can be cleared before the hard IRQ records it. It does not leave the channel
+**permanently** stuck, though, because patch 15 adds a delayed stopped-tail
+recheck which samples the channel state and LLP again.
 
+A hardware STOP transition, including DONE status and interrupt assertion, can
+land between the status check and the status clear performed by software. And
+the check and clear cannot be made atomic. So the cleanest fix I see is to
+permit the initial kick after an LL reset, then at most one kick after each STOP
+boundary that software has confirmed as STOP. A quick test showed no obvious
+regression. I'm planning to rework it that way for the next revision.
+
+Best regards,
+Koichiro
+
+> 
+> >  	dw_edma_core_do_ch_doorbell(chan);
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260729143036.3087722-1-den@valinux.co.jp?part=11
