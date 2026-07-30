@@ -1,185 +1,118 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E752235C694
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 02:35:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026938DC5D;
+	Thu, 30 Jul 2026 03:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785378933; cv=none; b=F/2QHWbep6fhYcecDxs+V+PhXHKXiE1K5VLkTp7jq8/3B0K9udAiCSIB/9JAtdCYPYzBB/ViJRJGek1x/GoEFs0MvEvW+Z9t4wCz1vcUp+2VxGMX3Czv4pmqOG9WfXMorLrVIwBkPGD1lxGlGtm5+V+lZShzTgSDq360mfirWvU=
+	t=1785382597; cv=none; b=WmsdEVxEUuplokF+hmYt/OexIyHmi0ryFqEhVH3PHHJwbIXYzREiX0QlQxh4gwFbSeHfQTTIgiLzWikJAvuzH3y0Tkwy/q/brlnhAeo5d1RfR6viMRF5H7HpF2WpnWLaJhFjdzFdM2Bd2BV3omf8LSYs2PEDlHG1k6FwMgnvOQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785378933; c=relaxed/simple;
-	bh=6Y48ZIdMNNpL4QVK2z7qD+SFM1e++4Aj0Ygca+6+vKA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DxGLv7sDv4jcW8Q1bSUZevAWxND6MrL4XLQFM6wl2ytt/juL9IaFSgPvEO+lYRuMOzJepqum2QRapdnXK0GakZpNemgZmCLGestb7fJ3RP/1ap5MVxShavXPzaslvR/j3uywX+hhOkJyGBEkIu9dTDzuM+sHSO0o8FaDt2dBAyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WJ+NfBm0; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785382597; c=relaxed/simple;
+	bh=Brq2O2NUj020BWdizA1Qra/clwlZgf9+GiHIfOtO7AQ=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=RuUNxQMxqA8Brtuhr82qexLhx6NLlsm7ZLxjCPXHROW7V0fPmyXVlxvvxqeKUZgy4zU2FP6cjzq/tP7RrpXaPak1fklAMRIxvv/pKhPj2N2kX40aTpZYN10bR08ykdWtsrtT/4ycBHHXWFCVQIHIXyyIz+uottBCJSEpNntTIkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ABD13DBr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJ+NfBm0"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c9aea40d799so896728a12.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 29 Jul 2026 19:35:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785378929; x=1785983729; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/2rmqyOk2dYLKOaM5sRcp1NgPLaXmeuvz/kFO5pY5/A=;
-        b=WJ+NfBm0ejMt1npPmRf8ta+mEqi9hrUDQG0HdUS+h8EfT33RzF4Ql+dgvaTCsytgrr
-         +LHs9cWIvJyJZVXigJlLjUQCE8ne9ZHjCbdFb9TY79sNDVcgk9qSjv4Q4TjEc7V+EsSN
-         SN6oi50fOgqDsfoyQ/QR2krIj/AelWTsctHQ6f//xo7aC6HK12jNvgTKyVN/1cZFxzs2
-         Lbg2I2cj2O5byWHfNeEvMBDOaDC7PwvQNV/4P0kFjGUssRacTfGDmeWC+j94lNkW9m5B
-         UYXwxF40ypi9m9Do3UHDaL/thqjkxI7LCENYAatQScF5t5QgUe6GhoEqKZaiGS6CiA13
-         haBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785378929; x=1785983729;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=/2rmqyOk2dYLKOaM5sRcp1NgPLaXmeuvz/kFO5pY5/A=;
-        b=R7GLtvIBL3HxEuTiwq8mgraaa9Yhyw4/bw2HzkyN8RTx/Q/QsnHratYNRvsfhoGYMy
-         BykqGn+bdkJ+HMt/lB9Y+1zC24k9ajssAdyuQzKM2rklUBvx3ldKGUgjNIf8Myi7PUpX
-         b0iyJqyYQdS+zYLuzyYjng2q0C/DS1KKB7DCYxcRAGflXrTR+fjDpaTsaGDdB1f4Sjs2
-         NbAM/5vccw0CkjPRddPbbV7RYPm8eg4Nu3ziTLaH0yes9WC/azk0wxV54v48skTASeCB
-         wOpPeO04rx5s4/z605TH8AvDo/Dkd9s/1JdqoRgc1NY8FgHEJQBuIjl3n54LKJS0C/CL
-         ey0Q==
-X-Gm-Message-State: AOJu0Yxeb4MtKfPGhF67m0oL4VtBD2GoFenYIBs6Jhwz0MirfVSASKGT
-	zdN1rv7m1cB97GMgc+hCgCyA1VtKouqTsFZBKw6bUn2kfWAxrYBYSOe24uPeGQ==
-X-Gm-Gg: AR+sD106iFUJE/mEN+tQbckVcAmSR19AykmQ9OfAVyTZA1YbPWrafen5YMUAe4uScPM
-	vC9cjFEqwsMJXdrjwqlpbqc0ME/kTgb9FsSpc7ztDMUk6tnm6p0Jfbu7h8GlwCvP2mOuZhycgSB
-	OeoN+ZRQXCfh7vbdq3aA/aPb8x00BfSJD3wkTCpqjAXYxmEBkrALODKNo7hJe8AMEC8CYSzBktu
-	5/7xYC++rSpRQq4JyHljfjthNWnowfPihx41a7cUZIjxisHLU4c03LN0G+K7XLqR7AtYoxczVLR
-	YuuoscpzQyDSMIYKV+1qVuEB3gTcj6cfG1l9RfBjY5xLnEp9pBJqbqB3kjc97HX5zXkzdHJYYHe
-	wgZwgoICDQPqFcU4MGw58vrFvm+qm4TvC7V0IAmBJG8I1tpxc043qrEtZp6g8+yRiHynBtVIUKO
-	9bQKgSRDeYCCOqyCGWiNtFMYDPDNtfoIcdEcA0qBlIr/NZQfLcxB+Rn8EkJoexttpUSiMItA1tS
-	EozrpZkA+eXsqSAczt6e1keX4G/exQXsu5oGNNRR1xD5RGr
-X-Received: by 2002:a05:6a21:2291:b0:3c3:824d:5200 with SMTP id adf61e73a8af0-3c90085cf49mr662407637.41.1785378929470;
-        Wed, 29 Jul 2026 19:35:29 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13f9a041e36sm2433441c88.7.2026.07.29.19.35.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 19:35:28 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <07433bfc-95d0-4de6-b4d0-b2ca70623776@roeck-us.net>
-Date: Wed, 29 Jul 2026 19:35:28 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ABD13DBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5690F1F000E9;
+	Thu, 30 Jul 2026 03:36:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785382594;
+	bh=/F8NTVlBDU8BWWwofVpJEhV+ebxXNRLNpFOKVh13JaY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=ABD13DBr4Q7DY/MQkAi0/YOOzVJHdAj0jV8UgPzWpT1UDMDSquLjCjXpDKwVWExLf
+	 HA1vK5VSZse2IQ6xRMxCqptH//NixFj4t+xQHuGUG8avNB+Z2hvI5ksvvB4qXWF0+g
+	 xFlJvgwuxolComBVDBzZI2LrwjJ3In8uRmshmelBaOjANk3xiSAW4Xb8wO0QEM/4BA
+	 qlI3IXeAxHJjyM7HwvEpcqJejooXZ7rxHxAdBGpInilZf9wk07gd8tbPfG39hBtXcX
+	 szv+xzZz3OV0XOkqJf6RhpfQFNinm8/qVWBtx8HHL2jM5AzQXBxGe11xYl6ILJOHhA
+	 grv5+sVrBGtYw==
+Date: Thu, 30 Jul 2026 12:36:30 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH] uprobes: Remove redundant guard(rcu) in
+ find_active_uprobe_speculative()
+Message-Id: <20260730123630.5cdccc5334a0d9fa04a54f34@kernel.org>
+In-Reply-To: <20260730015947.ECA9A1F000E9@smtp.kernel.org>
+References: <178537593930.153254.1296986092000402239.stgit@devnote2>
+	<20260730015947.ECA9A1F000E9@smtp.kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/4] hwmon: (pmbus/max20830): add support for max20830c
- and max20840c
-To: sashiko-reviews@lists.linux.dev,
- Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
-Cc: robh@kernel.org, conor+dt@kernel.org, linux-hwmon@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20260730-dev-max20830c-v5-0-a7553f84ee74@analog.com>
- <20260730-dev-max20830c-v5-4-a7553f84ee74@analog.com>
- <20260730011406.A6B871F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260730011406.A6B871F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 7/29/26 18:14, sashiko-bot@kernel.org wrote:
+On Thu, 30 Jul 2026 01:59:47 +0000
+sashiko-bot@kernel.org wrote:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch adds support for MAX20830C and MAX20840C devices but fails to add their corresponding compatible strings and I2C IDs to the driver's match tables.
+> - [High] Removing `guard(rcu)()` from `find_active_uprobe_speculative()` eliminates standard RCU protection, exposing lockless VMA and file accesses to Use-After-Free and page faults.
 > --
 > 
-> --- Patch [4]: [PATCH v5 4/4] hwmon: (pmbus/max20830): add support for max20830c and max20840c ---
-> commit f53870a8f52f5aa8dbc791f9a7e148eeab915f24
-> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+> --- Patch [1]: [PATCH] uprobes: Remove redundant guard(rcu) in find_active_uprobe_speculative() ---
+> commit 008639a39e6344f6f057b7d120c62792b7cd6ddf
+> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 > 
-> hwmon: (pmbus/max20830): add support for max20830c and max20840c
+> uprobes: Remove redundant guard(rcu) in find_active_uprobe_speculative()
 > 
-> Add support for MAX20830C and MAX20840 step-down DC-DC switching regulator
-> with PMBus interface. MAX20830C is a different packaging for MAX20830, and
-> MAX20840C supports 40A regulation compared to MAX20830 that is only 30A.
+> This commit removes the guard(rcu)() from find_active_uprobe_speculative()
+> and adds a lockdep assertion for RCU Tasks Trace, assuming Tasks Trace RCU
+> protection provided by the caller is sufficient.
 > 
->> diff --git a/drivers/hwmon/pmbus/max20830.c b/drivers/hwmon/pmbus/max20830.c
->> index ddead72a8db5d..94433deda0113 100644
->> --- a/drivers/hwmon/pmbus/max20830.c
->> +++ b/drivers/hwmon/pmbus/max20830.c
->> @@ -21,6 +21,12 @@ struct max20830_data {
->>   	u32 vout_rfb2;
->>   };
->>   
->> +static const char * const supported_chip_ids[] = {
->> +	"MAX20830",
->> +	"MAX20830C",
->> +	"MAX20840C",
->> +};
+> > diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+> > index 07f69dd3093d5..52833db53b25c 100644
+> > --- a/kernel/events/uprobes.c
+> > +++ b/kernel/events/uprobes.c
+> > @@ -2416,6 +2416,7 @@ static int is_trap_at_addr(struct mm_struct *mm, unsigned long vaddr)
+> >  	return is_trap_insn(&opcode);
+> >  }
+> >  
+> > +/* assumes being inside RCU Tasks Trace protected region */
+> >  static struct uprobe *find_active_uprobe_speculative(unsigned long bp_vaddr)
+> >  {
+> >  	struct mm_struct *mm = current->mm;
+> > @@ -2425,7 +2426,7 @@ static struct uprobe *find_active_uprobe_speculative(unsigned long bp_vaddr)
+> >  	loff_t offset;
+> >  	unsigned int seq;
+> >  
+> > -	guard(rcu)();
+> > +	lockdep_assert(rcu_read_lock_trace_held());
+> >  
+> >  	if (!mmap_lock_speculate_try_begin(mm, &seq))
+> >  		return NULL;
 > 
 > [Severity: High]
-> While the new chips are added to the internal string matching list here, does
-> the driver also need to add these to max20830_id and max20830_of_match?
-> 
-> Without the new compatible strings in these tables, won't the devices fail
-> to bind to the driver when instantiated via Device Tree?
-> 
-> For reference, the existing tables at the bottom of the driver only have
-> entries for the original chip:
+> Does removing the standard RCU protection here expose the subsequent VMA and
+> file accesses to use-after-free and page faults?
 > 
 
-Sashiko is getting a bit confused. Patch is ok as-is.
+Oops, this guard() is for protecting VMA. OK, please ignore this.
 
-Guenter
+Thanks,
 
-> static const struct i2c_device_id max20830_id[] = {
-> 	{"max20830"},
-> 	{ }
-> };
+> The VMA and file objects are allocated from SLAB_TYPESAFE_BY_RCU caches,
+> meaning their underlying slab pages can be returned to the page allocator
+> after a standard RCU grace period. RCU Tasks Trace does not block standard
+> RCU grace periods.
 > 
-> static const struct of_device_id max20830_of_match[] = {
-> 	{ .compatible = "adi,max20830" },
-> 	{ }
-> };
+> The subsequent call to vma_lookup() briefly takes standard RCU to safely walk
+> the Maple Tree, but drops it before returning the VMA pointer. If the thread
+> is preempted after this point, and another thread unmaps the VMA and closes
+> the file, a standard RCU grace period could complete, freeing the VMA and file
+> slab pages.
 > 
+> When the thread wakes up and dereferences vma->vm_file or vm_file->f_inode on
+> a freed page, could it cause a fatal page fault? The code relies on the VMA
+> and file not being freed from under it, which appears to require standard RCU
+> protection.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/178537593930.153254.1296986092000402239.stgit@devnote2?part=1
 
+
+-- 
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
