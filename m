@@ -1,102 +1,102 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAE844605D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 17:43:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE783AAF6B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 18:06:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785433430; cv=pass; b=EsQnmImKVXQF3UCuhdrtZgOgJUv8ialN0yj57Idmx/HEtcIr0r1+6EpUHNcuFwpWbs0dVo/a6oEva3NHrOMxMLQnoo7wtFp/D0Eg4tUjIa/Ca2TQd6frXtT0e5xTu1RkHJ+cj1w4l206X+ETeSx++mXLUGT3nNFeG6BQoqdZOpA=
+	t=1785434819; cv=pass; b=btjhqBXwqeZWbmzVfPtYlKlqI2zZvEsOrxYYrVxDVGsLt0GCkY+SNPZQFuwC8gMc505He9/DhyO57sH+0btglvoGXLwN/OPDDiWewuW35ZdcjIelxiYjDftqdFFHAqijq0ZZfwjtny7gLvYQ08oo4KzI+JasGrkq9Jd1o8UtPrM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785433430; c=relaxed/simple;
-	bh=OlBwlhKOiCMRiIdYne4F/M0ahn6Xw3rouRdmpnSET1s=;
+	s=arc-20240116; t=1785434819; c=relaxed/simple;
+	bh=dEihRTHtQ5+rqzTB5gZENLrIKf/vdVkf+94K6FYyTic=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XWskRcU/P6KR0Zp7YDA64HQz59ALuG+WlJjejIUWMpfie6WK1S/0ho6P2bQ/p5YXFdqbQVappOcYq5OH5NO0kWA/d+2CeNDRtzvlWaH60BFWy9Aue/CQ6GviyoD1SFaMOBD+Wujk7gkkVhLTzsK8Qrw7lFcnPY7XkfCOHmK5LVc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=flZkQY2N; arc=pass smtp.client-ip=209.85.216.46
+	 To:Cc:Content-Type; b=fWc5sF0qy4GeS8rKd1gH9evTVpWI03DASnXGamkvJ1I3FlLDcY9UE/ehUfGWljvaiBk6OnLP8Tyruak8QX8CsuoAV3NrsEarJNcpHKewPMgyk+WQ4bdFC51xpSaHYo/Ci4cnLe5kKh1yrJfANV9mGwD3ZIsQyyQY8tU2ywXG654=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pAnY8WxG; arc=pass smtp.client-ip=209.85.216.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="flZkQY2N"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38ec1402b05so126998a91.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 10:43:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785433427; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pAnY8WxG"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-38e347638adso273226a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 11:06:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785434817; cv=none;
         d=google.com; s=arc-20260327;
-        b=AXxML7r+jtLWU1V4UGzDg2wXm/hxsP1Zpr/f5Oz++zv3GoqYvN8EuKlyh2z1OVkb+3
-         5UPRfdmUKKjq/NM3evzFqFCzReCtVnQmD4GZG0rkkdMQO0g4ZhrZo/C6Tvw9l7sLjjee
-         Pt3tqiAYGsTolFcc6YV9qNs9JhWI29dfG5Fv/EerhaMVAoLIYC1XdYX7uSXe2Z89hpHO
-         NwQP1zDTSOrBXl/ehwYPt0rrq2rt0vL6jE+s7GHgpsZAbILkK1VkESHGEC8mhhnivBgR
-         nvQ4JUm4i9vrxy2N16HnSQ3k+ek0vZfDfWX4M8q7iyqKfsctcF1Z6z3khlTBTjK7xbhx
-         Z0vw==
+        b=heT3nMSdY+O64lmzq5HbYcoKZOJKpj7rvRoS5Xx1/jWPHUBZTjZ2JqzcaO8SWN7YSN
+         9xzzMYPSipUBnY8+k9yCkGQbLUr7KEovz51Hyhq1d8MFuv7thHFApHKyle7F15mlfFv7
+         j6+eUOu64QYSj6ofHq/alCOE+UN2+wBqwrVSA6MLdA+frww5LYw0+iQINzUTpw//v81R
+         lU349e9lY8RXnWplgE+aDvPb14nP4OlsF6dEpUQYUBg9ajsaC7dwwivFhqZDmT9KUcTd
+         EqcUB4sBSeWkTHB9RiOMYhz2F7mOXXf052SWtN1LEoD/Ng3Bu5LIo5dVvHI+99P1Rr2m
+         RPKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date
          :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=63PGhmBtUzf4vUZbWnyFr9JI9DJZU2NrWkZa1qKZ4cY=;
-        fh=UovrO0TvLiqRHU1kp7Fq/+U56YUYq5jh58TPdqHXeG0=;
-        b=RyMl2VXsR6VUT1G/McN6lzdklLDtPgaa+7uJ9csmj7bRIIRGztw5d35nH+QMt/jfLK
-         +c8utQcQVhuW1Qo4b1Au5SCCakaAgb9HHl92g5i0qODdhk40qbpqZcLo5IUAriV7QS1J
-         zA83u7gYLEq5u1HeSwKR5Sdt8y3o8UzTTEYAHrs/3nup4WKVBCn7u3GjtNl8UzB3+t86
-         iR5ZPn1uJrBeI+mplhKKvhH0LiRspitIA0zhvbnloPl+c8kHanPu+pNcXiM0bsAQ697+
-         gp+5cOUpi+d5v61LSlHBmjS+PYb5Pgq+koheczql4myBVvCAjPhsVEWvWg+S4di5ON0g
-         eK8A==;
+        bh=ksA4Cb+zc98xgjMVnrwp9nVxjWZKE5S3Fc2xP42UsGM=;
+        fh=tiz2sWbDPPsLahhiZ1KQAdEMgPLocV7jB1S8kZKnHXo=;
+        b=WWkCq8bYK7RDvtMLxioDVGiL3l7N/S1uVrTRCMeesklRgdtUSwNvuor0yNVhnSSAJk
+         XAxu8knm3Ow/NDn1u+upTqchp2fweWw9WkzrGT8qnmUyfW7tl3hd8IbYp1Ci0y94QwIJ
+         /IFyAwjA+PU2CBhxXX+gWTGjFiydS78+RBgsDkDhQb/YhQnbqaOeGKRe21fKKEHqI4YV
+         v5CZLrAgtVrmA+fkxnR+/v6hOayd+VysCF6TBypyKSCBeyeqFrFuQzbtAWvR90tnn8T2
+         QE9/zUvinvqVI6GRljSaHCpF8iaj1h0AaOSKmSmXN9IGow4PzHT9zK7z+qkQr7Y8PTfy
+         pdkA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785433427; x=1786038227; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1785434817; x=1786039617; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:mime-version:references:in-reply-to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=63PGhmBtUzf4vUZbWnyFr9JI9DJZU2NrWkZa1qKZ4cY=;
-        b=flZkQY2NWYDrXrtXEspRyWNlUfPcF3jhZSn39uLUaC8n87ZQocw4NVAlWQXGLBZ7aE
-         KKfDWKfu44CLqkV/7pgFza2Vt5RloXCR8IR7DrwhZWeqyXWIBMRDvIk9qItpqDmo+E5I
-         GlF7WUWhMl5BMHeX4RxDVkl4Lk3UOPekgk4Chnzqx2+DXlwmHUnHE4rd4CTuCYQeSW1W
-         VGxnNnQb0dhEAwZakWUUpeQbFbQgDdIbr8KW5yTcAnCtrEizFVpW+ybTNk+MeQBdKR9g
-         wrP5TliBq7IIMVSZArln2aMn0WVYOwfoyOHFd2nzWez3+8/EaPhWY9+PsLK25rObb2iO
-         jXJg==
+        bh=ksA4Cb+zc98xgjMVnrwp9nVxjWZKE5S3Fc2xP42UsGM=;
+        b=pAnY8WxGfvG6N1h613bd88k/mfYc1GXrzS58NWBzY05pphx/nQsMPuKMMFnnNsu/wi
+         Q/V4yeF08sea8ivyO89YcdUvY6fghdOvGO5nZizS1E+HMqrUk17I1MBd//KGYFubahoq
+         +upRjTjrvgBteV6AiaFG3BSfdhQMv96fb3yCZeH8arUTH9UJas11UenUpWvAvN4eUg4b
+         93UZSgKPFV4B8QYQP4BbvrjZTJS+NuRYtn9v5t03uJqbv0MNs3PlGcZqt4Qo6LtJUPZ3
+         YGV3SjLOZji4wP79aDy02CL34roT7X5ziYrOe7bbQeXIc+eCfqI+mz9lGr/p5t24v3Hz
+         /ELA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785433427; x=1786038227;
+        d=1e100.net; s=20251104; t=1785434817; x=1786039617;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:mime-version:references:in-reply-to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=63PGhmBtUzf4vUZbWnyFr9JI9DJZU2NrWkZa1qKZ4cY=;
-        b=CPE+0/aV/etZEEPmOdb5Q0jvoTWd/EPnnvw2OQwOSEeVuv1ngg85OG2WIaAyexuE0r
-         v3BPUUwZlWY2b3lEgRPSbam41mETg2A9ZInCG3h2YkFEiY+rTONyFb3kOR9ksi9AuBUd
-         B7jmSZ0uiK0mXJKz6EtlK5d3fYuhvT8UPcX0lET02CgAsqC3743/tJ/N3ieLkICwV1FC
-         WbH/aF9DbGYhazVUN7FIoRpGitCw85mg8ZkIxrpBxHGdiGJGvf2ub8JIhAGUHfnJrQoF
-         GvmBqkfnX4tS9Y3/ujVQampi3WC20xn7+a/9geQMv4McqTi3vI2vShPdep2CJMRArQb8
-         X0uA==
-X-Gm-Message-State: AOJu0YyoMZJRShJvaoKRVUMdIuC6kr84XpqAHk0BVr+q4WnEPfgNReWa
-	Cgct3QKRzSgFoo/En+LAv8LT18oQgr9amM9eoot7Sx/HXtV4ckVp2SYhcLhYfxB7PYcOFLjP4iD
-	0ZkQRGYqz3jZ6IwrCLIauyzgzrxFGa09IolXvziej2cCU4GXtup+Wv0/Y
-X-Gm-Gg: AR+sD13SZsfEKO/Jfh0YZUQ+Syvrx6n4sm2/1qmfLHBh4q/1zxFtisFdcGuLDmsbdGS
-	HHKeq6hJ4Tpp+2jb04ZpWMa6gUDFIsZ5fBKDOXOMbFmZKqf+D2FDcKTe4U06WC1HV88z4DSGXHy
-	2sWVAxn2PdnJf77UML89mlOSB+6tCY25rP22pZXptT/3o7ze8XZt5pETDKvNe8/YWzeJQMKcj+Z
-	lmn50Bumo6TGRXDZcgQYi50ODLp+uU/nYAWMz1jCkm1luviTcx8iUSzZeQtgFBA1CmrJCqd1fLF
-	xFHU0dIf3iRfuCb7ryOElsf3gMD+RpBvquBiWfSXWdlepd1OtJNxbbyYD3qP00Vz8UxZjwi/CSl
-	UNQjgOYUHlrktWLXaG6pOrmKrETMVocthi8/xSedxlgEL2A==
-X-Received: by 2002:a17:90b:1dc7:b0:38f:240d:b857 with SMTP id
- 98e67ed59e1d1-38f9bda5d44mr2890773a91.2.1785433426437; Thu, 30 Jul 2026
- 10:43:46 -0700 (PDT)
+        bh=ksA4Cb+zc98xgjMVnrwp9nVxjWZKE5S3Fc2xP42UsGM=;
+        b=tIX7WAbQTcb2cSBl0bKI8ZgUsYKW8OEFLGnB5cLbja7keKAo/c1tn3DWoGZBNIG/uT
+         pmja5GliEjlLe3jOHFwWYNuouExFpSenek19FiHdRWuAAvVB1FQigUShGQbYErM9E1qD
+         ANPfINr9mpNFt69iln+YmdT2crZzd+vaEu6XzB5b1NR7rzIv7O1V94mvN/9nFqDVZLNp
+         BP5ktWltrvvuwtIArHjQd5xRVbxiyDFE161ASORuEbL61vaRIt4OlJx0dkcAqLRt9qZN
+         DHU3B1M+AGTf+kaGaaWIw14GpOldDDhYf45V/YEOQxrXJFEVgd5VprlAO3Qp5GZbbplq
+         W3Qg==
+X-Gm-Message-State: AOJu0YwlAy6KucGK+MPDABO+PAqcPADC+0fV0gmMySvy3hsgkBBrifzc
+	eDVMQWEGkPATcHye2dZefTA08/IlOBjeihAAu6W1X8vcX7y6OievroZ80oPlzFzhzcD6VS6p8O1
+	8N5CoSo0U1emvl/U+Bi7EnQjoy5WnyLNPvZRvLpvpn0dwF3icxDXyX+Aw
+X-Gm-Gg: AR+sD12KWvg3fPgI65UVo31YY9+E/e6Etcun/XQCYpHh54oLiGTGeNy9DFbNGqr6KKw
+	zl7KFG8NTHFpDM9SwIeWoUf8yockhiBQGVAdCifZ8J5qJoi4sThNF2pX+FtVzFZj0CdnDqIEunx
+	7PMrsK9Qrw88NbHHRRkvMTDntg8NnaTHfneDRPuecG/Nd4ioqybr9T8Vnmq31WKa4oovSL6bISZ
+	PR9k6aLCeMbDfIP8dVxY3Pq4TcDJtuD4So3VGm/nPb7hcTK1cXcvUzepFUmx/W82jQ83JGsTiEi
+	TvTepki1USQJjE4MwAtI1k9VVZZBMi+HgmGvdJ98gccrY4F+KKRcWiW4PIJAdcv7ZuyPUMu5/sr
+	KGAqVDPuhiMuRa+3O4GmMTdDkrJfRR0j82IUSmaCfTXHH
+X-Received: by 2002:a17:90b:4424:b0:38e:2517:5d1f with SMTP id
+ 98e67ed59e1d1-38f9bd3e096mr2908488a91.9.1785434816901; Thu, 30 Jul 2026
+ 11:06:56 -0700 (PDT)
 Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 30 Jul 2026 10:43:45 -0700
+ HTTPREST; Thu, 30 Jul 2026 11:06:56 -0700
 Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 30 Jul 2026 10:43:45 -0700
+ HTTPREST; Thu, 30 Jul 2026 11:06:56 -0700
 From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260728122655.17C791F00A3A@smtp.kernel.org>
+In-Reply-To: <20260728122245.AA83D1F000E9@smtp.kernel.org>
 References: <20260728121138.1103610-1-tarunsahu@google.com>
- <20260728121138.1103610-4-tarunsahu@google.com> <20260728122655.17C791F00A3A@smtp.kernel.org>
+ <20260728121138.1103610-2-tarunsahu@google.com> <20260728122245.AA83D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 30 Jul 2026 10:43:45 -0700
-X-Gm-Features: AUfX_myKuoszqFvWeEwTloNt1W9Hm9CCDiUlXfsqzDGDzLiGRc2fM4YKO_l1eUo
-Message-ID: <CAEvNRgGDhcu2LUqhwVtGJSUo4uXQHrGOYRDaM2qzPTO4LX=jKQ@mail.gmail.com>
-Subject: Re: [PATCH v4 03/11] KVM: Export kvm_uevent_notify_vm_create()
+Date: Thu, 30 Jul 2026 11:06:56 -0700
+X-Gm-Features: AUfX_mxg8N6Cgn4jHI_wA550VSPb-h9Q0N7SiD0v3YCrbcFHGVvI1NAH9Wyaw3c
+Message-ID: <CAEvNRgGHuiXG1KZ24+kX-ZgTS_rqGPFqJMjoJhqf6GpZh4xN3g@mail.gmail.com>
+Subject: Re: [PATCH v4 01/11] liveupdate: Add LIVEUPDATE_GUEST_MEMFD config option
 To: sashiko-reviews@lists.linux.dev, Tarun Sahu <tarunsahu@google.com>
-Cc: kvm@vger.kernel.org, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -104,56 +104,66 @@ sashiko-bot@kernel.org writes:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] The patch claims to export `kvm_uevent_notify_vm_create()` but fa=
-ils to include the `EXPORT_SYMBOL_GPL()` or `EXPORT_SYMBOL_FOR_KVM_INTERNAL=
-()` macro.
+> - [Medium] The patch introduces the `LIVEUPDATE_GUEST_MEMFD` Kconfig opti=
+on claiming to enable a new feature, but there is no actual implementation =
+provided.
 > --
 >
-> --- Patch [3]: [PATCH v4 03/11] KVM: Export kvm_uevent_notify_vm_create()=
- ---
-> commit 5e642ea16f0d267e622a352de60bfe397ecf79df
+> --- Patch [1]: [PATCH v4 01/11] liveupdate: Add LIVEUPDATE_GUEST_MEMFD co=
+nfig option ---
+> commit e0c3fde657d56c548cd9a7467d2143f0f42c5242
 > Author: Tarun Sahu <tarunsahu@google.com>
 >
-> KVM: Export kvm_uevent_notify_vm_create()
+> liveupdate: Add LIVEUPDATE_GUEST_MEMFD config option
 >
-> This commit exposes the kvm_uevent_notify_vm_create function to allow
-> triggering KVM event notifications during VM creation.
+> This commit introduces the LIVEUPDATE_GUEST_MEMFD Kconfig option, which a=
+ims
+> to enable live update support for KVM guest_memfd files.
 >
-> [ ... ]
->
->> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
->> --- a/virt/kvm/kvm_main.c
->> +++ b/virt/kvm/kvm_main.c
->> @@ -6348,6 +6348,11 @@ static void kvm_uevent_notify_change(unsigned int=
- type, struct kvm *kvm)
->>  	kfree(env);
->>  }
+>> diff --git a/kernel/liveupdate/Kconfig b/kernel/liveupdate/Kconfig
+>> index 1a8513f16ef7c..0bbc4037192e9 100644
+>> --- a/kernel/liveupdate/Kconfig
+>> +++ b/kernel/liveupdate/Kconfig
+>> @@ -88,4 +88,19 @@ config LIVEUPDATE_MEMFD
 >>
->> +void kvm_uevent_notify_vm_create(struct kvm *kvm)
->> +{
->> +	kvm_uevent_notify_change(KVM_EVENT_CREATE_VM, kvm);
->> +}
+>>  	  If unsure, say N.
+>>
+>> +config LIVEUPDATE_GUEST_MEMFD
+>> +	bool "Live update support for guest_memfd"
+>> +	depends on LIVEUPDATE
+>> +	depends on KVM_GUEST_MEMFD
+>> +	default LIVEUPDATE
 >
-> [Severity: Low]
-> The commit message mentions exporting this function, but is it missing an
-> EXPORT_SYMBOL_GPL or EXPORT_SYMBOL_FOR_KVM_INTERNAL declaration?
+> [Severity: Medium]
+> Is the implementation for this feature missing from this patch?
 >
-> Without the macro, won't dynamically loaded architecture-specific modules
-> like kvm-intel.ko hit undefined symbol linking errors when they try to
-> call it?
+> The commit message notes that this patch enables live update support for =
+KVM
+> guest_memfd files, but the newly added LIVEUPDATE_GUEST_MEMFD symbol appe=
+ars
+> to be unreferenced in the tree. Since there are no Makefiles, C files, or
+> preprocessor checks that use it, this currently acts as dead code.
+>
+> Could the implementation be missing, or was this intended to be introduce=
+d as
+> part of a larger series where the symbol is used in a subsequent patch?
 >
 
-I'm not 100% sure about the use of EXPORT_SYMBOL... here but usually I
-compile kvm as a module to try and catch these types of linking
-issues. Maybe Sean will have a better method/explanation for this.
+Sashiko is right here, I think this patch should be squashed with the
+first usage.
 
-This brings about another question I have though. How does luo work if
-the new kernel's deserialization of the persisted data structures
-depends on a module? Like in this case, KVM is a module, if KVM isn't
-loaded in the new kernel, do the data structures stick around until KVM
-is loaded? Or is KVM required to be loaded as a module in the new
-kernel?
-
+>> +	help
+>> +	  Enable live update support for KVM guest_memfd files. This allows
+>> +	  preserving VM Memory backed by guest_memfd file across kernel live
+>> +	  updates.
+>> +
+>> +	  This can only be used for the guest_memfd that are fully-shared
+>> +	  and pre-faulted.
+>> +
+>> +	  If unsure, say N.
+>> +
+>>  endmenu
+>
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728121138.11=
-03610-1-tarunsahu@google.com?part=3D3
+03610-1-tarunsahu@google.com?part=3D1
