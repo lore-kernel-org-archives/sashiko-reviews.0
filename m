@@ -1,35 +1,35 @@
 Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68E426D4CA;
-	Thu, 30 Jul 2026 20:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D16A1DFFD;
+	Thu, 30 Jul 2026 20:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785443566; cv=none; b=dcKzSWqAZvdMXlS0EdTR204GS+hSWEWHmOt1KlLFIdsfxzqoqY7m4LY9ZGJVK6Klr6EwJ/C80nuWtDX072cWSUJlDVm444H1RTvSKKVSx60UM4natshyATRdmOzd6sk6fIvxuVVMDs7ZG9xQu0+uE5gNrYFcVhHMYCS8JAjEbdE=
+	t=1785443570; cv=none; b=UqAM4lqp/WJ4RbVeKA3cX0GmauZQAPEMOc/u36gAmmjNYTN5x4EM+pod/wq4KTCB1XBFs5bfbnnUSdj2tHrrhigwRPpISWqjKtOBBXvzlIBFrMv8UAWwhF7Hi2v0QzgcuJcDdWL/QGZ0afGaN9Vxku/khuObS/tyN9Dwl/WyPXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785443566; c=relaxed/simple;
-	bh=G6OoLDIpfTYhM7nnmdyNfnz//0GpK0BbPJwedNT0xSY=;
+	s=arc-20240116; t=1785443570; c=relaxed/simple;
+	bh=ssZHAlsxyvQuC8OhjIkUoOHqzKXaknTXbYFj5hoAWak=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O69OkiZyjhdIDw7R3bOVE6+B7I2vQXWzJhgmMMyTxPI0Fb4sQyLsS/5YAwh7/kHjhXW4XMUcz83sqfywsHVqbAfOWF2GHjRrxPIUrqKRwSmSVYlloWvhCrKMgarlTLXepd/jOXp3CehiSZLIwJyx6E7+BPqkJm3vGFSpRVwO0GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=fN2Tm7kv; arc=none smtp.client-ip=178.251.229.89
+	 In-Reply-To:Content-Type; b=RbTAXtlvYQIfe+n246jUTqmZUR+dy9tuBi/FMqJbcOOG7TgQ7fyh5uhPLeZ1Zo9+8UXw5EfKvhPCr87K6eykRQf0oKVAbeyC4BMVgtSyQSaTOnzafcfhBG7tcwIHVvt+KBNQUfHQHr+YLbv0QuRwDRPNyzh094BNRSBajHRfa9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=Rez1aG3F; arc=none smtp.client-ip=178.251.229.89
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="fN2Tm7kv"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id BD92D11B93D;
-	Thu, 30 Jul 2026 22:32:27 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="Rez1aG3F"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7AA5411B93C;
+	Thu, 30 Jul 2026 22:32:38 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1785443548;
+	s=dkim; t=1785443558;
 	h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=s5YXXXOIgXGXU8drugZtHBphjWURHJXpVj68T2X7UAU=;
-	b=fN2Tm7kvpTvIMD8pFOnd74Xv0zd1ZVEzuXYAPHA0kxhQCFhQ1CJiyphd5FwRd6nBGGteFW
-	631B8wJ5nyMNB6iY2AaTdCIt+MscgPxaQzMY3+HCJl9OogEo5mYi7QpoXZfxq3SPan7gRa
-	laHLKzyl5slyaBIKuJ1nz0oKeMV0suR8ax0PdMWwOkS41wSIgbiZk3pQsBua9o/T1wDX2I
-	Ex+o1A1spHYoJlu/mikncxlctzXt40vcVm0Yr8R41Qusho/xl/48aDVt7Qnhf4/YVrWpbl
-	blmjgpixer6RzHbQeVLe3B310f3kXVNlDPW4lQ4ZzI9nD60n35Cw+O++UqvPFQ==
-Message-ID: <9ee6dba5-1733-49f6-b6a6-18dcef62ed2f@nabladev.com>
-Date: Thu, 30 Jul 2026 21:14:39 +0200
+	bh=8XbmfUF0rihk8kxhDWiWMPqWi56oby+o5/c++7iMamc=;
+	b=Rez1aG3F3ibFdrHs3m2tM7fc5sMJLogDidXcJje6OCzd6COP29GiLND8wVmq+Am75epPmM
+	0tGxmqfsFQIP5AXiGjDMoJFm1zPh6m+vDFlBJUmMqTxaRkpO5KECTcbQISdxwdz0IqV+9X
+	SB9b6bTxEH7kh/GZlYe8fceVt82GeuIj21BrBgOXWIVt6iC40daZNlv/5UsjtsGcEK9DWw
+	aMzdNqS4BbpPFmC2c9Ep1yOlDgg6+jI8XW3PXOrg38vqCMroxOJ4UyYuGdZCoYysY40Q8G
+	vidisfidonIjuxp0yqp/5k5N8xYq34rlocr19yGPKH3wTyMTk8u9QyGvufQ3BA==
+Message-ID: <e4f9ef42-d752-4563-a86b-4c62f47e43ac@nabladev.com>
+Date: Thu, 30 Jul 2026 21:34:43 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -37,78 +37,74 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/7] arm64: dts: imx8mm: imx8mp: Add LVDS DTOs for Data
- Modul i.MX8M Mini and Plus eDM SBC
+Subject: Re: [PATCH v7 7/7] arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs
+ for Data Modul i.MX8M Mini and Plus eDM SBC
 To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev, robh@kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org
 References: <20260729214723.557461-1-marex@nabladev.com>
- <20260729214723.557461-2-marex@nabladev.com>
- <20260729220634.9AEC31F000E9@smtp.kernel.org> <amtuQUa0aPGdlRCT@SMW015318>
+ <20260729214723.557461-7-marex@nabladev.com>
+ <20260729221033.3CDB41F000E9@smtp.kernel.org> <amtq-Ukw_dyvavxJ@SMW015318>
 Content-Language: en-US
 From: Marek Vasut <marex@nabladev.com>
-In-Reply-To: <amtuQUa0aPGdlRCT@SMW015318>
+In-Reply-To: <amtq-Ukw_dyvavxJ@SMW015318>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-On 7/30/26 5:31 PM, Frank Li wrote:
+On 7/30/26 5:17 PM, Frank Li wrote:
 
 Hello Frank,
 
->>> +&backlight {
->>> +	power-supply = <&reg_panel_bl_supply>;
->>> +};
+>>> +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtsi
+>> [ ... ]
+>>> +	gpio_feature: io-expander@20 {
+>>> +		compatible = "nxp,pca9554";
+>>> +		reg = <0x20>;
+>>> +		#gpio-cells = <2>;
+>>> +		gpio-controller;
+>>> +		#interrupt-cells = <2>;
+>>> +		interrupt-controller;
+>>> +		interrupt-parent = <&gpio5>;
+>>> +		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
 >>
->> [Severity: Medium]
->> Will this result in the wrong GPIO being toggled for the native i.MX8MP LVDS
->> interface?
+>> [Severity: High]
+>> Does this interrupt routing conflict on the i.MX8MP baseboard?
 >>
->> The shared imx8mm-data-modul-edm-sbc-overlay-lvds-g215hvn011.dtsi file hardcodes
->> enable-gpios to &gpio3 0 and defines a pinctrl. However, the native i.MX8MP
->> LVDS interface uses the IO expander's &gpiowifi 0 (via reg_panel_bl in
->> edm-sbc-imx8mp-lvds.dtsi).
+>> The shared overlay hardcodes the PCA9554 interrupt to GPIO5_IO04, which is
+>> correct for i.MX8MM. However, on i.MX8MP, this pad (SPDIF_RX) is physically
+>> routed and configured for CAN1_RX.
 >>
->> Since this overlay only overrides power-supply and does not remove the
->> inapplicable pinctrl or override enable-gpios, won't the backlight driver
->> toggle the incorrect baseboard adapter GPIO pin instead of the intended one?
+>> Could this cause the GPIO expander interrupts to fail and CAN traffic to
+>> trigger spurious GPIO interrupts when loaded on the i.MX8MP? Would it be
+>> better to override this interrupt in the i.MX8MP overlay?
 > 
-> I am not sure what's bad impact to wrong toggle enable-gpios. need check
-> this,
-> 
-> change exist ones to keep consistenet, all use enable-gpios or power-supply.
+> Yes, I check flexcan1 use this pad at i.MX8MP. you need disable flexcan1
+> at i.mx8mp's dtso file.
 
-Maybe the AI is confused, that display works, I have it locally.
+I'll fix that in V8.
 
 [...]
 
->> [Severity: Medium]
->> Will this clock configuration be silently ignored by the clock framework?
+>>> +++ b/arch/arm64/boot/dts/freescale/imx8mm-data-modul-edm-sbc-overlay-edm-mod-imx8mm-fio1-audio.dtso
+>> [ ... ]
+>>> +	sai5clk: clock-controller@30050000 {	/* SAI5 */
+>>> +		compatible = "fsl,imx8mm-sai-clock", "fsl,imx8mq-sai-clock";
+>>> +		reg = <0x30050000 0x10000>;
 >>
->> This overlay (and several others for the native LVDS interface) defines
->> assigned-clock-rates without providing or inheriting an accompanying
->> assigned-clocks array.
+>> [Severity: High]
+>> Can this cause a devres memory region conflict during driver probe?
 >>
->> The base board file imx8mp-data-modul-edm-sbc.dts does not include
->> imx8mp-nominal.dtsi, where the assigned-clocks array is typically defined.
+>> This overlay adds a new clock-controller node with the exact same unit address
+>> and register range as the existing sai@30050000 audio node.
 >>
->> When assigned-clocks is missing, of_parse_phandle_with_args() returns -ENOENT,
->> and __set_clk_rates() silently skips setting the rates. Should assigned-clocks
->> be explicitly defined here so the panel clock frequency is correctly set
+>> Since both drivers will use devm_platform_ioremap_resource() to request the
+>> region exclusively, whichever probes second might receive -EBUSY and fail.
 > 
-> This is most like false alarm. But for better read purpose, suggest
-> write whole group property
+> at imx8mm.dts, 30050000 is SAI5, here you change to to use clock-controller
 > 
-> assign-clocks
-> assign-clock-parents
-> assign-clock-rates
-> 
-> Incase some change order in soc dtsi and forget update here and cause
-> wrong.
-> 
-> I met similar issue before.
-> 
-> the similar case is clocks and clock-names, should appear in pair at
-> every where.
-This is the result of deduplication that was requested in V1->V2. I 
-think it is fine to keep it deduplicated.
+> Suppose address here is wrong.
+This is correct and we already discussed this in V4, the SAI here is not 
+used as an audio controller (not using sound/soc/fsl/fsl_sai.c driver), 
+but as a clock controller (yes using drivers/clk/clk-fsl-sai.c driver), 
+the bindings differ, hence this node.
