@@ -1,177 +1,121 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23259426D16
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 18:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF1B3B6BFA;
+	Fri, 31 Jul 2026 19:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785521495; cv=none; b=pKCoyZP66V01F9gv5CZu120qMzOq6yzjzODqkmsQHy2yfsiQsdhOiaUu83LoT9alk+0ag4UI2LXojj7N6YJqZPxzXiF4o6HDXMKXtLyMWLRZ/FlGpmqyZbRVYGHizEwOrWm/YRgxd19Cyv0KrpOySt4IBjkFbxuLRFyEnZf1ZTM=
+	t=1785524729; cv=none; b=ipChOZblWs4ukaFXOkxWAq7+yomIxeOaU+KKw5/PY0Kk+EQLWuJgDEPvKsWdI7MDKyuhpteLG8MFA1zre0JzaKnOvf0Xi4OaN4DG3JnulVoIWpKwnFJX/0dP8CTbCQPxWlAnXB2DqTue/8VHyMxPCvSGUyBhGptuUcDUkzthH08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785521495; c=relaxed/simple;
-	bh=1wqT6fgguWPW4M9eF0kbyBrjvDXIuS6oN5OqwiNNiOA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YBN076/kZ7a3HAG9dU6p6GOI+N5zBRSifw/7n0iYAI9qzE+awHdoZ0xgrBDYgVGnKYgfA/JbylqEO9axTYJCGwZT/75oUgNa34iyVNIplZRFeLBnow7SMzhTKyt3cvHNzS8E7rFhXsugdN6yqrZletTJF7Tc1sJ1UgzpvX2yBpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=VqOljwuE; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1785524729; c=relaxed/simple;
+	bh=Lx054CG9dIzBqszzJAHgFm0MywIatCpgMOlKkkTlTnI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FZuhn5BY6qEuwzU0Z5nAhJLsufpcI/bChMRSjn/HfWKgqOltsnk9Pg9YMK0cfBob9VHwVNHljjWvfCR2S/IZxv7XEaQ9OUp1Ogbs0AHkHmpoVqY2uvRXpphR9QqsuOxV8W40MtYVak8xgnEzGBW8yq9lfKWuruwcYGj+B1uefIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLcEbxJO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VqOljwuE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1785521488;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1wqT6fgguWPW4M9eF0kbyBrjvDXIuS6oN5OqwiNNiOA=;
-	b=VqOljwuEhtV5CAFM2lsY3QNhUI5BXG4ITTZ7Zj5mqghCUHz/a5cuMb5KZi2WmsbavwI8nm
-	7RakAXCP4QKeloMN3GCcUyvo3CFWw18dtqji2jwtBIs6BoiKkj9OEpqSEZKczV1alDiyzp
-	eXGg6ix2rmyryDFN/3EXl8eHBZBVUpo=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-QeYuueICP26HbjDtcmHWpA-1; Fri, 31 Jul 2026 14:11:27 -0400
-X-MC-Unique: QeYuueICP26HbjDtcmHWpA-1
-X-Mimecast-MFC-AGG-ID: QeYuueICP26HbjDtcmHWpA_1785521487
-Received: by mail-yx1-f69.google.com with SMTP id 956f58d0204a3-667c0eadf4aso3427624d50.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 11:11:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785521487; x=1786126287;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=1wqT6fgguWPW4M9eF0kbyBrjvDXIuS6oN5OqwiNNiOA=;
-        b=Fi4G4GwVT+fa2igJytNxm8pLEPek0tUCKsR2Y1u2K5TFiEh4H+qZcPlqpdvm0M/Fa8
-         E3RWBJ44qWUO6Pe31BJz96e6tNwvIvSaX+2xZUs5PRZG4GsNzzYKSClgyNzBnnsk5ADw
-         rU+c8UY5QfFEQ0/kgThvkadd5hIgSXpychMkPnXey/PU4j7Zh53fbTGnCqMDME3nVWJW
-         Jva3xl1bZ5yQZa6KpZUGjXjY/NrVGMDYescUo7hZML1zeJIE2a1M9YMKQbl/zvI4pF1b
-         vLK1q/5R8nk0jbhe4IF1cskxYKpoMhUitS9+NPCnS2a0fOho8bFzcwKSDrOcwoJcfx7Q
-         82cw==
-X-Gm-Message-State: AOJu0YwiEHhye/Sgh31ExCKBJODW7uBeHRCuEzUSZSmGJ2yzgtzicUuM
-	DnnzbSZJwmAD5UIn+nFGONXCyrb/OzPKtNSUivcRvI0UskZVL6hdOgDi657g1So6SIrA0VC8C4J
-	IjT0kM0U405XxlCjui968aM7z+uWHtI5OqbPUa4LVMUMTVqEnpzAGGKabrViThr9eDStzbud5XN
-	+R/SujnWYCuAU3G27nqeixGjxMTl4Z+MjosLXssoA8FD+n5RrFsQTW+A==
-X-Gm-Gg: AR+sD13+uMZLKIc99/suXGPiMHF9gxE8MEy8WJ7ehWFuNTgNDuupEEclPA1wi9RXOJw
-	1781RAevO92Z3NzQ6fNPYea6vI+CQLsZpCd8mIe/KzXVRZHOAbOD/HUkYUcKBPnoaPdMzTgdKek
-	b5RG8MhfA7LC7TXLgPQQzpiAw/dztC6RsjRg5INb/6QKNWB8CmBq6xGPrBqD73ELaeDeazv/koy
-	VdWpE7fWA+d6brLJ9sc2iOjyPxfGgoWaWfE+mMjvu05b7NBNrZf1AK362IdneLN6pOcMvfjbwY1
-	8Ny3U5Eg8I2Bzw1/ogGg8vDOhYnhhyGD7i30hFAFU4gQ9GRhQ/eMFXiRcukJqgWdFB26/Gg3L/3
-	AQYXLdXiq8htAtCKA7PORAD82aYcWmOHprnEf
-X-Received: by 2002:a53:a692:0:b0:668:9230:e271 with SMTP id 956f58d0204a3-6694f05de2amr854657d50.19.1785521486657;
-        Fri, 31 Jul 2026 11:11:26 -0700 (PDT)
-X-Received: by 2002:a53:a692:0:b0:668:9230:e271 with SMTP id 956f58d0204a3-6694f05de2amr854635d50.19.1785521486115;
-        Fri, 31 Jul 2026 11:11:26 -0700 (PDT)
-Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:dbb1:97f1:a6e6:766b])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66948e49c3csm1056816d50.7.2026.07.31.11.11.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 11:11:25 -0700 (PDT)
-Message-ID: <80785a3bccc6505c28c71271b004e0b5f3fd3b3f.camel@redhat.com>
-Subject: Re: [PATCH v2] scsi: storvsc: Support manual scans for all Hyper-V
- targets
-From: Laurence Oberman <loberman@redhat.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, linux-scsi@vger.kernel.org
-Date: Fri, 31 Jul 2026 14:11:24 -0400
-In-Reply-To: <20260723165134.618071F000E9@smtp.kernel.org>
-References: <20260723163743.1274830-1-loberman@redhat.com>
-	 <20260723165134.618071F000E9@smtp.kernel.org>
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLcEbxJO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E750F1F00AC4;
+	Fri, 31 Jul 2026 19:05:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785524728;
+	bh=xTvdhsBpOd7JIOK6/OSC6kWUmgECXFbgK/UrghGZEEY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=NLcEbxJOl8MNq7AhCfiQ210nRKnVN/YTK5UryuGbAQcZPT0hwLXmp/NY+B1/w5uwK
+	 xhSMoC+VVwYojs70W/tkka/7RXEH7ilbPIsdwj8rHBH57xoTNtXYT6BbMw15wDv3tD
+	 HoWs76ecUsUOVon7rXZ5sARUs3x87GtR/DhkaqVcJE8lYtvS+2de4QzFs31TTDx+DG
+	 uQz/T51qsfrrlPT38G2YZ5Z+jOf1ae8BeJJCKAs1DUS3LwpYgYe5ZO84mYEdXTpmP6
+	 ByttCZOzg7IXABrWnuwtXhO2SuqqUcNbHKwqpxpFv+ebTOOiAn8USvc4QoixGxQRbm
+	 /wZ5/B6/c7eAw==
+Date: Fri, 31 Jul 2026 12:05:26 -0700
+From: Oliver Upton <oupton@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Fuad Tabba <fuad.tabba@linux.dev>, sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH v5 3/7] KVM: arm64: Top up stage-2 memcache for dirty
+ logging faults
+Message-ID: <amzx9rqqU58QZBMU@kernel.org>
+References: <20260717130317.1953574-1-fuad.tabba@linux.dev>
+ <20260717130317.1953574-4-fuad.tabba@linux.dev>
+ <20260717131537.71F531F000E9@smtp.kernel.org>
+ <CA+EHjTzZxa7Yb2GJhbJdtnTgGoiPTmSAotWTF7S7acq6M_trwg@mail.gmail.com>
+ <87cxwkr8k0.wl-maz@kernel.org>
+ <amxKgJ1cCHO97trp@kernel.org>
+ <86cxw3d0ts.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: tYZOi5f-MYJ3dPuLa7vtK5ZousCXvv_VY6VYoUEffAA_1785521487
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86cxw3d0ts.wl-maz@kernel.org>
 
-On Thu, 2026-07-23 at 16:51 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issue(s) to consider:
->=20
-> Pre-existing issues:
-> - [High] Kernel panic in fc_eh_timed_out() due to missing NULL check
-> for fc_rport, contradicting the v2 changelog claim.
-> - [High] Use-After-Free race condition in fc_user_scan_tgt due to
-> unpinned rport pointer.
-> --
->=20
-> --- Patch [1]: [PATCH v2] scsi: storvsc: Support manual scans for all
-> Hyper-V targets ---
-> commit 7a84d34942989f4df1a7195141939c24f221c9ea
-> Author: Laurence Oberman <loberman@redhat.com>
->=20
-> scsi: storvsc: Support manual scans for all Hyper-V targets
->=20
-> This patch provides a storvsc-specific user_scan callback that uses
-> the
-> exported scsi_scan_target() interface to allow explicit scanning of
-> targets
-> without requiring synthetic fc_rports for each target.
->=20
-> > ---
-> > Changes in v2:
-> > - Replace the private, unexported scsi_scan_host_selected() helper
-> > with
-> > =C2=A0 the exported scsi_scan_target() interface.
-> > - Preserve wildcard channel and target scan behavior.
-> > - Verify that storvsc_eh_timed_out() does not use the FC error-
-> > handler
-> > =C2=A0 helpers; the reported missing-rport dereference is not present.
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is the v2 changelog
-> accurate
-> regarding storvsc_eh_timed_out()?
->=20
-> Looking at storvsc_eh_timed_out() in drivers/scsi/storvsc_drv.c, it
-> appears
-> to explicitly route I/O timeouts to the FC transport error handler:
->=20
-> if (scmnd->device->host->transportt =3D=3D fc_transport_template)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return fc_eh_timed_out(scmnd);
->=20
-> When fc_eh_timed_out() handles this, it extracts the fc_rport
-> pointer:
->=20
-> struct fc_rport *rport =3D starget_to_rport(scsi_target(scmd->device));
-> if (rport->port_state =3D=3D FC_PORTSTATE_BLOCKED)
->=20
-> Because storvsc targets are created without an intermediate fc_rport
-> parent,
-> starget_to_rport() returns NULL. Does this mean fc_eh_timed_out()
-> will
-> immediately dereference a NULL pointer during an I/O timeout?
->=20
->=20
-> As a related observation on the FC transport layer scan paths:
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does fc_user_scan_tgt() have a race
-> condition that could lead to a use-after-free?
->=20
-> In drivers/scsi/scsi_transport_fc.c:fc_user_scan_tgt(), the host lock
-> is
-> dropped before scanning the target:
->=20
-> spin_unlock_irqrestore(shost->host_lock, flags);
-> scsi_scan_target(&rport->dev, channel, id, lun,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 SCSI_SCAN_MANUAL);
->=20
-> If a concurrent FC link down event or port removal triggers
-> fc_rport_final_delete(), can the rport device be removed and freed
-> before
-> or during the scsi_scan_target() execution? If so, should a reference
-> be
-> acquired on rport->dev prior to dropping the lock?
+On Fri, Jul 31, 2026 at 09:23:43AM +0100, Marc Zyngier wrote:
+> > FEAT_BBML3 shifts responsibility onto the implementation to reconcile
+> > multihit due to mapping granularity changes. A hypervisor could choose
+> > to do eager page splitting at the beginning of dirty logging and elide
+> > TLBIs.
+> 
+> Sure. We just don't advertise BBML3. and I'm not even sure we always
+> can emulate it.
 
-I do not see any of F/C related calls in what I modified or in the code
-I worked on so for me v2 is the correct and final version of this.
+Well, we'd at minimum need supporting hardware since the feature must
+also exist at stage-1.
 
-Thanks
-Laurence
+> > 
+> > > I think the latent bug here is the way we always walk L1's S2 on S2
+> > > fault, irrespective of the fault type, and that feels wrong. This is
+> > > ignoring the fact that we already have a TLB (the shadow S2) for this
+> > > mapping, and rewalk anyway. Since we now find valid permissions, we
+> > > take it at face value and try to install this new translation (which
+> > > could point to a different OA, and even bigger problem).
+> > > 
+> > > So ideally we'd simply tell the guest to bugger off, but we need to
+> > > solve a few problems first:
+> > > 
+> > > - some permission faults are caused by the host rather than the guest
+> > >   (dirty logging, HAFDBS), and we need to treat those specially.
+> > > 
+> > > - we need to rebuild an ESR based on the content of our TLB, not L1's
+> > >   S2, which is not always easy to obtain (we have some limited TTL
+> > >   caching in the shadow S2, but that's not always reliable).
+> > > 
+> > > All of this strongly intersects with Wei-Lin's reverse map, and
+> > > Oliver's HAFDBS support.
+> > > 
+> > > Oliver?
+> > 
+> > Hmm, I'm more of the mind that we should just keep the memcache topped
+> > up for any fault because clearly the prediction has gotten out of sync
+> > with what happens later down the line. We're bound to screw it up again.
+> > 
+> > Generating faults solely based on the TLB seems to be at odds with
+> > supporting FEAT_ETS* in the shadow stage-2 and practically means we
+> > need to re-walk for most stage-2 aborts anyway. And as you point out, I
+> > need to do this for HAFDBS dirty state updates.
+> > 
+> > BBML3 and ETS2/3 aren't terribly high priority but I'd rather not paper
+> > over a rather straightforward KVM bug by making design decisions that
+> > limit our feature set for nested.
+> 
+> My problem here is not the top-up of the memcache, but the fact that
+> the OA may have changed in L1's S2. This potentially result in an
+> inconsistent S2, and in the future a wonky reverse map. So I'm not
+> advocating we paper over anything. It's exactly the opposite.
 
+AIUI the bug is that a change in mapping granularity (but not
+necessarily OA) can cause a shadow stage-2 permission fault to remap at
+a finer granularity and allocate table pages. This seems like something
+we will eventually have to deal with for BBML3.
+
+OTOH, I completely agree with you about changes to the OA. We should
+synthesize a TLB conflict abort and let the L1 clean up the mess.
+
+I was actually thinking about hardening the stage-2 map path, rejecting
+valid->valid conversions that result in a change of the OA. We'll want
+to have that anyway as Mostafa is adding support for BBML3, that error
+could be propagated as a TLB conflict abort to the L1.
+
+Thanks,
+Oliver
