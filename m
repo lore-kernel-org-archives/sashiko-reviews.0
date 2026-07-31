@@ -1,217 +1,253 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010016.outbound.protection.outlook.com [52.101.69.16])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFCD3EF0C8;
-	Fri, 31 Jul 2026 13:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.16
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785504847; cv=fail; b=cCLHZlyhIcDII792NCwcBYRLql2QazcdUr7dazUPPA8MyQK6+Bxc8lEHwWopvH+yrp5+AEg+a4WztTGrVTMFwj+a7Oxmes74WUK78cSgyMYYhpHmTMvs1utRIqu1G77quKg5Z9OLIoy8wFEcGYbrUtrEqmZUCfHL6mBrjckQSJQ=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785504847; c=relaxed/simple;
-	bh=53omxlqpR6v2+Pt3160r5bJg8dTSFBNDczuLjWhA96c=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=QVrgCoS7GbtLkTDNYlSvpW3N29LPnS45CW929JdvZYgkCInc4cwvjzOJGS2UXV8I4pA4qqXMjsEcQpLP9i0EgDo9Z+kiyWj7DOo+3hyRkfw0//2qadsbuwg1e+Gk8ZnY04RBrkjSH1oEe7Z1cW6Km2XfBBU6XOrVdKy6oNt4DfE=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=NDrhZ+Lf; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=NDrhZ+Lf; arc=fail smtp.client-ip=52.101.69.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E73742642D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 13:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785504924; cv=none; b=XYpo0Z/chydsLcPXdHQm2B+W/5FefCh2RooLK/4M/8wf+bTR0XEklnNlA0KggXn6LatKK1AqhstFv+Yb+m8UcpZUZIHttYTjcHyth6KLp78KCZD94ouzK/3CAhaay/dY7GK8/GQ3Vz61qe2mdoPS24ZmqUhuo9TjTk4w03APxaU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785504924; c=relaxed/simple;
+	bh=DcGNqmPNCSat1QJIXjrNiv9RKcb5pMEdkXr6aIPVOow=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tolPkEEmUNA7JijiyYuHef7GB+6+UO52AM0YdErrt1V8yoD1+KKkvlKnV3mENPueZE3Oy65aiP+sgTwiH7krlgpybCLozFj2SJmQnVD/2z1oSyFheimr9BGNMvsO60XrwYIFqlIGuhiqXdPo75D3I1uzORvqDJMtH7LloxzN0Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wj919ht1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=faU+VUyl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="NDrhZ+Lf";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="NDrhZ+Lf"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=SOlXWZsjKG+doni1rQcl7JLJBbxM+GwW8m8dHeqzbnJNTgYfSjCENKRPJy5fR60Xyj6uncKjKsJ5yOXkiFOzNvJwAhHecGIlMiCjerJxAPNq3hwJoJTNKpRJduULvnaN+9RWMla1nSH/LxXWa3DLleAC2HN9t0TnICy8XT64x870MlDlqI2eT1CABuFO+vB3gZ2oVPx256lJMpWed2rkVKsvhGeufjbgW2xtyjZBsTfcxh8QC66AbMSt3zpQVjgJneR7umNwYhT1ONmFnyO4YKWAV8/XjV8BFzG1YbQdExmgjELl7hpI/3+tS3UIqlOPCQ7txnEqlJC1C36VjNIikA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=53omxlqpR6v2+Pt3160r5bJg8dTSFBNDczuLjWhA96c=;
- b=N/KvbGDQ5XQCijbydXIhpN8lqXWFDagG51HpJWwkb28rucGbNkHrKUWCpB4UeE7IcpaIJIc9sG9tjlFwkWTGEM6EGjkVQDQtUqgLKEDkMzsInJeghujpIqyCtWRiZ8qqTYLug5C1LPCnPxeP0VtcIm1BHUGe68JXQNxk9xQpDhlWsoaAVaNPZWdR0BmDULGcI+E6GqLjjyhzCzQSRTEAcyI+ND7u7nDUXIJd3WZvEahsU/QV+20arOE9WbLizFxTgoOkCA86ZWXTc0YIvMn7VWd+ZpWKDnGtSQsVYh251brF9CzNY5Djf+bojdCwF9KUnllcQkkwGWyOIUWMCN6vlg==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=arm.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
- dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=53omxlqpR6v2+Pt3160r5bJg8dTSFBNDczuLjWhA96c=;
- b=NDrhZ+LfIex0gexST+Jr0Bf+ZOCDwZOsK+OF+62zfGjxTXUR3sUcBRCZkq/WjhafP+b3K2O+MxN6iRxmSpD/vFA2fCP10Yp+0ITYPLBOuNA74CYhiKv/YLX71BnS4S6zLDPR9dFJ2LVH/CvlcMXaUomqXle9d5RAZwUnK/7mJMg=
-Received: from AM0P190CA0013.EURP190.PROD.OUTLOOK.COM (2603:10a6:208:190::23)
- by DB9PR08MB11461.eurprd08.prod.outlook.com (2603:10a6:10:608::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Fri, 31 Jul
- 2026 13:34:00 +0000
-Received: from AMS0EPF0000019E.eurprd05.prod.outlook.com
- (2603:10a6:208:190:cafe::3e) by AM0P190CA0013.outlook.office365.com
- (2603:10a6:208:190::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.270.15 via Frontend Transport; Fri,
- 31 Jul 2026 13:34:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- AMS0EPF0000019E.mail.protection.outlook.com (10.167.16.250) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.8
- via Frontend Transport; Fri, 31 Jul 2026 13:34:00 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gLwzXeINyh75XIvnW1shGXZhKgsFsgt3n92UXvAkMuTg0ASxuXvIARVBkh7BjFn0NxBe+TOMrQFCvBnifJf3Upj06yDMr0yT0Vx7GnY0RNI0W+W/qDNT4AtQuC2mEeX71yK4wzWak+7zRx9SY9+AS9hXqTHTmSCbaE5VKb5Ii9vbXQxLGcdBCmTnx7dnsy2N8yKQPhoZ7kqpGyPnR7K1fbFbF/G7gv2LMWvBKifI7z/QkY9BlevsMDPRKQ8Xrzuwg92adLW9jtFgN6RMWITuxuACI0FwAH86fdDDfT9+wPT4tuJudo9FBiSn6mIFgCvWftnHj1nXXNAMZSrye2vilw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=53omxlqpR6v2+Pt3160r5bJg8dTSFBNDczuLjWhA96c=;
- b=kudg4BbyE7I0raSHOHRLZKo9FIJlmzZGQrJld33lSkMFsWUJMjpju/4LBx+HAR5l2Q3cfPe0dnVn34oAA/p8Yj+LkpLkxqwNgQMAFBzGUymEFYscvPY17HXDtZobSzEIAwM0uVY4D2ndZj5pAFVqeDI+Z1iLvxsl3PNC5WkkiNmn2wzBNtrdRuibyw+Akbm4dzSnK6CVBU4dS5S4lrEczP9IAwy+gNSN23S6BV3VPdRYzZbPNEvJMmdy15ezGfB2uPQl33NJT/8hYt4H+knx9mHbWptKe1iKh2Ps52dbLw8zagXHNtOv7tNpflms0cqXyoz4G+hKXrop/+tcGUN2aQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=53omxlqpR6v2+Pt3160r5bJg8dTSFBNDczuLjWhA96c=;
- b=NDrhZ+LfIex0gexST+Jr0Bf+ZOCDwZOsK+OF+62zfGjxTXUR3sUcBRCZkq/WjhafP+b3K2O+MxN6iRxmSpD/vFA2fCP10Yp+0ITYPLBOuNA74CYhiKv/YLX71BnS4S6zLDPR9dFJ2LVH/CvlcMXaUomqXle9d5RAZwUnK/7mJMg=
-Received: from DU0PR08MB8421.eurprd08.prod.outlook.com (2603:10a6:10:407::19)
- by GV2PR08MB8004.eurprd08.prod.outlook.com (2603:10a6:150:7e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Fri, 31 Jul
- 2026 13:32:57 +0000
-Received: from DU0PR08MB8421.eurprd08.prod.outlook.com
- ([fe80::2158:1cab:1d88:ba2e]) by DU0PR08MB8421.eurprd08.prod.outlook.com
- ([fe80::2158:1cab:1d88:ba2e%5]) with mapi id 15.21.0270.012; Fri, 31 Jul 2026
- 13:32:56 +0000
-From: Sascha Bischoff <Sascha.Bischoff@arm.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "maz@kernel.org" <maz@kernel.org>, "kvm@vger.kernel.org"
-	<kvm@vger.kernel.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
-	"oupton@kernel.org" <oupton@kernel.org>, nd <nd@arm.com>
-Subject: Re: [PATCH v4 23/48] KVM: arm64: gic-v5: Set IRICHPPIDIS based on IRS
- enable state
-Thread-Topic: [PATCH v4 23/48] KVM: arm64: gic-v5: Set IRICHPPIDIS based on
- IRS enable state
-Thread-Index: AQHdG1rHMEBbTcIjEk6cvjvril31W7Z8i+MAgAsfl4A=
-Date: Fri, 31 Jul 2026 13:32:56 +0000
-Message-ID: <f9ce76dacce43a14a31c782068b222f5f17ce1eb.camel@arm.com>
-References: <20260724104819.1296803-1-sascha.bischoff@arm.com>
-	 <20260724104819.1296803-24-sascha.bischoff@arm.com>
-	 <20260724114100.EF0161F000E9@smtp.kernel.org>
-In-Reply-To: <20260724114100.EF0161F000E9@smtp.kernel.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Evolution 3.52.3-0ubuntu1.1 
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-x-ms-traffictypediagnostic:
-	DU0PR08MB8421:EE_|GV2PR08MB8004:EE_|AMS0EPF0000019E:EE_|DB9PR08MB11461:EE_
-X-MS-Office365-Filtering-Correlation-Id: a0c895fc-ffb9-4844-f128-08deef086143
-x-checkrecipientrouted: true
-nodisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|38070700021|56012099006|11063799006|4143699003|6133799003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info-Original:
- Q2nVYprx9nw55XAmW5XiyBj8D0mf+XpHmYQc3Tzfm+zfXZSQ3ILZAXiZG+eHny98lPQEWUPeqDoEjiJXsVVmm4LQKysgjRShC3LbR0NCindccrVR4YcIwi1GpfUEj6Xuq3NEDTNivUuyv7lRW7Yl3TZda0z9mdcS8I752Pr32M1+JLvddLeeMErwpCpRxrjgu2k56FUi6W8ZDTRLaorTiiVEKwtmeNbo1NLz/VqKRlWs41PFjoiotcLltMAx/7YhQzr6ZVVVtLIJrsljYiCm40SlFUJHUBr39IajNdL8R8aZZvvy7ZB3FrIl78IhKWfznRrcGt4OpZNBdYZ/exLaoADzfTgVCdRE6qbxrvO8NrS8gvWgTO2HJJ/lzTvMlKF5iozBK5LmTTZuxNH/rzRBON+ALRKIY0viP0OODqgSq3qp7H8tVyoVequUwMta95guKalrLrViTb9gjxR2SbcaLi41cGrdofHOiDtsrl83VQF+hN3Y2MH/rZJAw5owEJlQc7I3fpQAhZd9orqO/nvjSIV9ydeNbICReP241ePhbdHmOBJ2ukJb0nkRe3J7+6zg56Ko9+i1MkK/LAMl4z3EZJUvp5cMWjJXxZnQ7UJz3884Pp0wngRJvqfbxX0vDpbkHyqvwu5kzSN2uTHwXkhP6UdgeQlIvUcmbRpT35WQIqqSzvFiIWET+YBTcwcwjZlhYerujWImUzhnBPcZakiC7YVGMEiu2tJx6RxQxuSAo7s=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR08MB8421.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(38070700021)(56012099006)(11063799006)(4143699003)(6133799003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <B3E5F6CD20A630498209B9F039C6BA26@eurprd08.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wj919ht1";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="faU+VUyl"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66VBelSP892289
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 13:35:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=pUE7JydRHoj2bR2XQTZhL1X0
+	wyHiUYs8hq0ouIE4owk=; b=Wj919ht1vZTBTg26b2P2nHDsmrpA5znkFKVoHoj7
+	qSDn0DofSQVHue332EnFH596hBVdT6Xd+qnB4atMwtxaszsawd+D2FkczOF+tvj2
+	3OBJM1meGxKqAv5TCMM6jD5KdqUVQpLtap8NglBmUGQPQiL+tessah0ZxIGYmyjr
+	gemIQkrMH6j7nYv5wjOkv6uhqsLrBmAf5av0c8Gmqtvj4uoGUhXFclb4/w9hCSkt
+	pAp/5J9JFwr3bC9tJp5vNf+IaPTvdSC8QEhdcyUfFdr+6UpCH+S0X28GonMz7ZwD
+	5RO+YDauyVSSmFSEm88L5VbuR0PaPDoZteas3yvZrqZfPg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fru1x8ew5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 13:35:21 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-5283df62d68so9093691cf.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 06:35:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1785504921; x=1786109721; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=pUE7JydRHoj2bR2XQTZhL1X0wyHiUYs8hq0ouIE4owk=;
+        b=faU+VUylQsICh2kCERn36tOVlSWy/E2RQBjt7Qei/wHJpo475XWWiPJNR/sMIa0a/p
+         UMj7KCR5gOYjBkq5/5CP3v749s2rXF7AanyO8ldsOz560MMrL/Fog2cQpzd6jb0MGhVT
+         B68rGM5jSpxFvAdWCTDUi/GsCX41jwdHvIS6Djp5jvKW7/i7pAz1Ohuuy+s0ZgDEH9Wj
+         fGT9bFFmWejMySB+0KHMP8OtDH9iepaiIQQeNzH0wLyFU+m06Kb/VGg7iEJ72lN0coTf
+         WUlJU801U49bv26vgdINx2yYyUWAYiHXvXMUiFchKLUCb8KrL9DjRm2cX6if+RdoOS73
+         Vpaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785504921; x=1786109721;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pUE7JydRHoj2bR2XQTZhL1X0wyHiUYs8hq0ouIE4owk=;
+        b=aelep+kyrDEBZhJtiqI9VK/svRP3C2tys4LDWiWXm20i7F5dsA29s2gh4V/bKMUoQ/
+         7BXvFpk5cbHdrt0xOpQpeEDyzZFzAXNl0h3ai8jp+zG2jNwuGiuObUM6zk5c662WCJF0
+         JwbA01NSiHV2sX3hJaofyk7IkFMFiCdjM1TVhAYcPC5pMleAY5Juj/83UHFFRznAT4pj
+         UfD128iOCyDl6XzzaL5kuHdlDwXGtMXnV3lFOrebryfDzrWkPj7carxpoq6B4inWUDuq
+         Ya08lAlugSYB1xAtzJ7DxVJTRsvpWwtJsSxIlc/vNgzeq0pK9KCs8fVWedMDA+xXNHSY
+         je+A==
+X-Gm-Message-State: AOJu0YzCcDaUOtk8M63Rk0U1zpJFlxo2XUe3pNSpk1Rzm8bPLQI5xWti
+	GEKG+1pmbfmb+mglW462k8mubnFDFrhXwmtnNlM+7Ri5TCvxy9dUYdw6RBupWL3xKKjY72zJYXp
+	KkO6MmoRXxs4wev4LLVMBYY0zUi8cSKsZWYdDWDTBhL2Odir+uHRRReiay+VCAn3QrGnWJro=
+X-Gm-Gg: AR+sD12crJ/AXTl/ang+xemR2e4F7Jk8DPHzCpVl0LpllATbc/vw5ljc6cQZT92wRx1
+	4q/X9vYTJ+ArQtRMXTCC6VB6PgEVVUb63rIqTzznrVrlGxZOur4SxSYVm/6UuNq5xA6ghzdxQMH
+	b2nr9ATC5bBuUT8L3CyCAXFnwQtbGcTFELDHvYve4NKg6Zj4+lyXE/Igx0AjLOeKzmGp/tUcNXM
+	KZGz3jXtOStzNwxUot8Kh/52DsPS979715Wd+3nUya0Cs6zZM6IhM11BR43SCYcJLLIFbxtW3jn
+	STZ1SXWp3VG5jzfTmzYKSEAxvpBOns99Zr4SBfvVYmPDxpXJdNhhAZ7WSe4lSPMwOis6X1LCcA5
+	fnEmH/QO+z1ooVVNutI8pEiUwz1n+4IQ8KM6JZXYsLEPKY9q6fDJ0CrT2x2L1T/9qdpd5qAKukr
+	OQX17escgVsKyqEw==
+X-Received: by 2002:a05:622a:1b07:b0:51c:6e:ef23 with SMTP id d75a77b69052e-52b5680e85amr1129101cf.32.1785504920367;
+        Fri, 31 Jul 2026 06:35:20 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b07:b0:51c:6e:ef23 with SMTP id d75a77b69052e-52b5680e85amr1127411cf.32.1785504919360;
+        Fri, 31 Jul 2026 06:35:19 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b2e23cb4f1sm312343e87.18.2026.07.31.06.35.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 06:35:17 -0700 (PDT)
+Date: Fri, 31 Jul 2026 16:35:15 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev,
+        Kumar Anurag <kumar.singh@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-sound@vger.kernel.org
+Subject: Re: [PATCH v1] drm/msm/dp: return 0 from audio_prepare when cable is
+ disconnected
+Message-ID: <fv2gtrgxx6emfdhnw5xowmhouvig6fl6g3ewqbdiw6rrwpfvk5@pdze7uawd5df>
+References: <20260616151252.3599089-2-kumar.singh@oss.qualcomm.com>
+ <20260616152536.D81FB1F000E9@smtp.kernel.org>
+ <5ixuxbgngzobl5c5fsyahdsouohwuykoat7s4hy6sczrye7vwf@rj7nmn7x3c56>
+ <b5c0de1f-75e3-443e-9e29-a70fbdbf4441@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
- kv/1eI+2NfH4yW1gAHj4wUuS7btUvqZG7bAztrmWoJu5zbSuC1Zckw7JF2I7UDdB3Vsa7M2RGg9Itb9CjAZLFp2XkX6tsABXKkSLUwAKVGgTgvMu80i7s6TewmUPexfMY5fgmY+XWxiH9zAlNk7lul+ko5AcN/a33R69/1lG6qfq8SU6ZhCGpAUkyBhN+EskBpeXOqb6snt5ztN0TmPMaQq/HHnzZPuMbTBaqwwv8Zjsmw8SPo3LYUgYallf/o+DutTqOfbwNpwzinEEHIiyIgCkknmBkM8i9RIoyWCb1hmVLs9k3nUjSJTcDVLLH2CJW4nvM5NbIPKPPYQp8bXbLw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR08MB8004
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- AMS0EPF0000019E.eurprd05.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	0ee67c05-ee70-4cc0-5646-08deef083b6b
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|376014|82310400026|1800799024|35042699022|14060799003|23010399003|6133799003|56012099006|11063799006|4143699003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	FRcauD1ofY6zohPPoYk20ZJuL+EktXgJOoPwD4rqsaOlzH2Qo2V1ec5qR62YXj6qgKhm1U9bvRsaIQ1tBHuQRepw8jdy7YcK9kvYDBvKWJRAs//3NqNvPyaTqYkjkYt9Bg8Dr6rgmtBMz5LlYZk0B9SplttjgzJcBhU091cWEfS/unLjXdtGUbmXU5Rq6NqXlByC0MqupssIvu7IE1hjTFaJRaFdTNce0RZAzvrp7U0nWT6i2yxvJdkI5r/opOLX+Qkzgm5uU2uGjNeLJcKTMfa9G0vVVzy/Lpokvp+bYq8LPTA6o7fC1IKXSDaGp/v+Mf9fCGYo7CvajVQ+hL4abn6E6drYyzaMKVkK3c+VplW5YDO2YLsWGgp/LX6b2MlfF84uyfcFBfL643dp9BapJQfB2ldP6kYGFLa9mkQA/1uwS0x3o9+XyeaEAMYVnhcvSlPJSKt0uVgmUXRD0ARZTCcLhRJi7Qgc0hHlZN8UoAsiJlG9dANPJmuzuYuI0QEapM9FRybRrsXKMHRI9VwCkFWfIpGd+CZiUkPxji9DWSeyC9YBUYFZ5KC1ZUVBRTDgtDjSb4z8ghHVeiturPfEli8QE/8zrQD7Lq1aJaJKoSRY2rMq1n3ujx4PV/3xrnSXCD7ZIZqWzq1zA4A1BvJNt25dKhPIo+hoCxvWcpVsPCnHOgR+SL8oDnR+JRCVM6Azp7H9XoWr2ef8CD+hQ4+NJg==
-X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(376014)(82310400026)(1800799024)(35042699022)(14060799003)(23010399003)(6133799003)(56012099006)(11063799006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	fJn+cHJ/ZN360ljxD11xxnxXE+BCAkBKmb5/nwg/rxjOufKXKskjkLe53BjbX4mohr5Ixe0pA8LtGwskSYD58OOzlmTAaq7YnnGIzqVnmdbOMgX+cz7/OkdauazltZTGctYW4KfYm787L4m2gGFfCMWW23q4FTtkws9wwqp43PExX2ANNKpUP73PoH9iiNuWFPcOQENgiWP9CxM5xn1E+4x7FWEfAYTBValG5SWlvCVt5mjydlfD+2nB50ttjjePhVCAL+Ct2EjvxVUwH/XH8PO0cezeMiMCZ4vr0LNpqKs24vXySM5TaKH77N/9lZs++M8PlgF2BlDVvhfIWXBUxa72rJvFRzJY2yhDP6LNYuwRpaQiveDDWTxnHrK/b4KMEQ2h4oubLYQamXeDY/Q1nmi3BIBqsJHAco7KegHcOr+cWR9LOlOXKIzikEa+ixcM
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 13:34:00.2731
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a0c895fc-ffb9-4844-f128-08deef086143
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AMS0EPF0000019E.eurprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB11461
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b5c0de1f-75e3-443e-9e29-a70fbdbf4441@kernel.org>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDEwMyBTYWx0ZWRfXz9t9FDDnyF24
+ UDOZGlxGSxBltvYnfBhMrERun0hoj/HO4uaG4KCa4qKtd1Nxycp6Dp1ydxG/XNoDi12VknF1MGp
+ 6Mb9w/OG7NkJGxfCe5q9Td0MilwWr2k=
+X-Authority-Analysis: v=2.4 cv=GpByPE1C c=1 sm=1 tr=0 ts=6a6ca499 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=eoBTR9oA_HawxltPn1EA:9 a=CjuIK1q_8ugA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDEwMyBTYWx0ZWRfX9/WJcqVog6B0
+ hvZjgSO8Bp7ZcMIOS7v4AnexG3tpPxDsQT7rc+4h8qYRim+9yoVuiuKVBKIP4r51cQQ/PGojA8J
+ daUFYSj1BehP1uxLL8eqoy145l+Z+006lof0URmnaiShzblqO+9Nr4CJnGwET4+ijBOhiEI2S11
+ Sxik6UpMi0f7oCQZs43S4cKvsKhbAl/oarKbNUflhq8kfzLHsVw1fs0iOmdz5mxI9mXq6+qpnTl
+ DFBzmRSOs6F0ZYh3WPS9k6XQXrr37AmK0cDynWv5GwpAN0iyDd8JCZscyHDM6kkg8tset68l0lO
+ QKXZpWEVKoYkV/rQdJJexyn6zRJoAOtz1fTlU946MMiz1HjzxiYHu9SeNA2qkNVMmT2MxSfOeSj
+ WWTOQtoaFDWdZ3C2xSVDADjVjFGFoZXcXWak3xDmbwyput/pkYCzaC6mEKLgvRrhwCVfYhn4JK8
+ vv0qpRzjDxoDFCdLIBQ==
+X-Proofpoint-ORIG-GUID: HHKYomsg3dy9f1w-HUGYmY3BxnDoA1fR
+X-Proofpoint-GUID: HHKYomsg3dy9f1w-HUGYmY3BxnDoA1fR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_04,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310103
 
-T24gRnJpLCAyMDI2LTA3LTI0IGF0IDExOjQxICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
-IHdyb3RlOg0KPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJl
-dmlldyBmb3VuZCAyIHBvdGVudGlhbA0KPiBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbSGln
-aF0gU3B1cmlvdXMgVlBFIGRvb3JiZWxscyBhbmQgaW5maW5pdGUgd2FrZXVwIGxvb3BzIGR1ZSB0
-bw0KPiB1bnByZXNlcnZlZCBJUklDSFBQSURJUyBzdGF0ZS4NCj4gLSBbTG93XSBNaXNzaW5nIFJF
-QURfT05DRSgpIG9uIHZnaWMuZW5hYmxlZCBjYXVzZXMgYSBkYXRhIHJhY2UuDQo+IC0tDQo+IA0K
-PiAtLS0gUGF0Y2ggWzIzXTogW1BBVENIIHY0IDIzLzQ4XSBLVk06IGFybTY0OiBnaWMtdjU6IFNl
-dCBJUklDSFBQSURJUw0KPiBiYXNlZCBvbiBJUlMgZW5hYmxlIHN0YXRlIC0tLQ0KPiBjb21taXQg
-NDBmYmFkNmIzYTJiMTYxN2Q0YmM0YjE2YzNhNmIxNzZlN2JlNTE0Ng0KPiBBdXRob3I6IFNhc2No
-YSBCaXNjaG9mZiA8U2FzY2hhLkJpc2Nob2ZmQGFybS5jb20+DQo+IA0KPiBLVk06IGFybTY0OiBn
-aWMtdjU6IFNldCBJUklDSFBQSURJUyBiYXNlZCBvbiBJUlMgZW5hYmxlIHN0YXRlDQo+IA0KPiBU
-aGUgR0lDdjUgSUNIX0NPTlRFWFRSX0VMMiBoYXMgdGhlIElSSUNIUFBJRElTIGZpZWxkLCB3aGlj
-aCBhbGxvd3MNCj4gdGhlDQo+IGh5cGVydmlzb3IgdG8gZW5hYmxlL2Rpc2FibGUgdGhlIEhQUEkg
-c2VsZWN0aW9uIGZvciBTUElzIGFuZA0KPiBMUElzLiBUaGlzIGNhbiBiZSB1c2VkIHRvIGVtdWxh
-dGUgdGhlIGd1ZXN0IGVuYWJsaW5nL2Rpc2FibGluZyB0aGUNCj4gSVJTLiBUaGVyZWZvcmUsIG1h
-a2UgdGhlIHN0YXRlIG9mIHRoaXMgY29udHJvbGxlZCBieSB0aGUgSVJTIGVuYWJsZQ0KPiBzdGF0
-ZS4gVGh1cywgU1BJcyBhbmQgTFBJcyBjYW4ndCBiZSBkZWxpdmVyZWQgdG8gdGhlIGd1ZXN0LCB1
-bnRpbCBpdA0KPiBlbmFibGVzIHRoZSBlbXVsYXRlZCBJUlMsIHdoaWNoIG1hdGNoZXMgdGhlIGJl
-aGF2aW91ciBvZiB0aGUgcmVhbA0KPiBoYXJkd2FyZS4NCj4gDQo+ID4gZGlmZiAtLWdpdCBhL2Fy
-Y2gvYXJtNjQva3ZtL3ZnaWMvdmdpYy12NS5jDQo+ID4gYi9hcmNoL2FybTY0L2t2bS92Z2ljL3Zn
-aWMtdjUuYw0KPiA+IGluZGV4IDQwNDJkNDY4NDMxYjEuLjc5NTdiOWRhOTVlN2MgMTAwNjQ0DQo+
-ID4gLS0tIGEvYXJjaC9hcm02NC9rdm0vdmdpYy92Z2ljLXY1LmMNCj4gPiArKysgYi9hcmNoL2Fy
-bTY0L2t2bS92Z2ljL3ZnaWMtdjUuYw0KPiA+IEBAIC0xMDY2LDYgKzEwNjYsNyBAQCB2b2lkIHZn
-aWNfdjVfZmx1c2hfcHBpX3N0YXRlKHN0cnVjdCBrdm1fdmNwdQ0KPiA+ICp2Y3B1KQ0KPiA+IMKg
-DQo+ID4gwqB2b2lkIHZnaWNfdjVfbG9hZChzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUpDQo+ID4gwqB7
-DQo+ID4gKwlib29sIGlyaWNocHBpZGlzID0gIXZjcHUtPmt2bS0+YXJjaC52Z2ljLmVuYWJsZWQ7
-DQo+IA0KPiBbU2V2ZXJpdHk6IExvd10NCj4gSXMgYSBSRUFEX09OQ0UoKSBtaXNzaW5nIGhlcmU/
-DQo+IA0KPiBUaGUgdmdpYy5lbmFibGVkIGZsYWcgaXMgdXBkYXRlZCBjb25jdXJyZW50bHkgYnkg
-dGhlIElSUyBNTUlPIGhhbmRsZXINCj4gdXNpbmcNCj4gV1JJVEVfT05DRSgpLCBzbyByZWFkaW5n
-IGl0IGxvY2tsZXNzbHkgaGVyZSBtaWdodCB0cmlnZ2VyIEtDU0FOIGRhdGENCj4gcmFjZQ0KPiB3
-YXJuaW5ncy4NCg0KT0ssIEkgYWdyZWUgdGhhdCB0aGlzIGNvdWxkIHJhY2UgZHVlIHRvIHRoaXMg
-Y29taW5nIGZyb20gZW11bGF0ZWQgTU1JTw0KYWNjZXNzZXMuIEkndmUgYWRkZWQgYSBSRUFEX09O
-Q0UoKSBoZXJlLg0KDQo+IA0KPiA+IMKgCXN0cnVjdCB2Z2ljX3Y1X2NwdV9pZiAqY3B1X2lmID0g
-JnZjcHUtDQo+ID4gPmFyY2gudmdpY19jcHUudmdpY192NTsNCj4gPiDCoAl1MTYgdm0gPSB2Z2lj
-X3Y1X3ZtX2lkKHZjcHUtPmt2bSk7DQo+ID4gwqAJdTE2IHZwZSA9IHZnaWNfdjVfdnBlX2lkKHZj
-cHUpOw0KPiA+IEBAIC0xMDgyLDYgKzEwODMsNyBAQCB2b2lkIHZnaWNfdjVfbG9hZChzdHJ1Y3Qg
-a3ZtX3ZjcHUgKnZjcHUpDQo+ID4gwqAJa3ZtX2NhbGxfaHlwKF9fdmdpY192NV9yZXN0b3JlX3Zt
-Y3JfYXByLCBjcHVfaWYpOw0KPiA+IMKgDQo+ID4gwqAJY3B1X2lmLT52Z2ljX2NvbnRleHRyID0g
-RklFTERfUFJFUChJQ0hfQ09OVEVYVFJfRUwyX1YsDQo+ID4gdHJ1ZSkgfA0KPiA+ICsJCQkJRklF
-TERfUFJFUChJQ0hfQ09OVEVYVFJfRUwyX0lSSUNIUA0KPiA+IFBJRElTLCBpcmljaHBwaWRpcykg
-fA0KPiANCj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBXaWxsIHRoaXMgSVJJQ0hQUElESVMgc3RhdGUg
-Z2V0IGxvc3Qgd2hlbiB0aGUgVkNQVSBlbnRlcnMgV0ZJPw0KPiANCj4gV2hlbiB0aGUgZ3Vlc3Qg
-ZXhlY3V0ZXMgV0ZJLCBLVk0gY2FsbHMgdmdpY192NV9wdXQoKS4gSXQgY3VycmVudGx5DQo+IGNs
-ZWFycw0KPiB2Z2ljX2NvbnRleHRyIGJlZm9yZSBzZXR0aW5nIHRoZSBkb29yYmVsbCBiaXRzOg0K
-PiANCj4gdm9pZCB2Z2ljX3Y1X3B1dChzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUpDQo+IHsNCj4gCS4u
-Lg0KPiAJY3B1X2lmLT52Z2ljX2NvbnRleHRyID0gMDsNCj4gCWlmICh2Y3B1X2dldF9mbGFnKHZj
-cHUsIElOX1dGSSkpIHsNCj4gCQkuLi4NCj4gCQljcHVfaWYtPnZnaWNfY29udGV4dHIgPQ0KPiBG
-SUVMRF9QUkVQKElDSF9DT05URVhUUl9FTDJfREIsIDEpIHwNCj4gCQkJCQlGSUVMRF9QUkVQKElD
-SF9DT05URVhUUl9FTDJfDQo+IERCUE0sIGRicG0pOw0KPiAJLi4uDQo+IH0NCj4gDQo+IElmIHRo
-ZSBndWVzdCBkaXNhYmxlZCB0aGUgSVJTIChzbyBJUklDSFBQSURJUyBzaG91bGQgYmUgMSkgYW5k
-IGVudGVycw0KPiBXRkkNCj4gd2hpbGUgYW4gU1BJIG9yIExQSSBpcyBwZW5kaW5nLCB0aGUgaGFy
-ZHdhcmUgd2lsbCBzZWUgSVJJQ0hQUElESVM9MA0KPiBhbmQgREI9MS4NCj4gDQo+IENvdWxkIHRo
-aXMgY2F1c2UgdGhlIGhhcmR3YXJlIHRvIGluYWR2ZXJ0ZW50bHkgZXZhbHVhdGUgdGhlIGludGVy
-cnVwdA0KPiBhbmQgZmlyZQ0KPiB0aGUgZG9vcmJlbGwsIHdha2luZyB0aGUgZ3Vlc3Q/DQo+IA0K
-PiBJZiB0aGUgZ3Vlc3QgdGhlbiByZXN1bWVzIGZyb20gV0ZJLCBzZWVzIG5vIHBlbmRpbmcgaW50
-ZXJydXB0cywgYW5kDQo+IGV4ZWN1dGVzDQo+IFdGSSBhZ2Fpbiwgd291bGRuJ3QgdGhpcyByZXN1
-bHQgaW4gYW4gaW5maW5pdGUgd2FrZXVwIGxvb3A/DQoNClllcywgdGhpcyB3YXMgYW4gb3ZlcnNp
-Z2h0IG9uIG15IHBhcnQuIFdlIHNob3VsZCBvbmx5IHJlcXVlc3QgYQ0KZG9vcmJlbGwgaWYgdGhl
-IGd1ZXN0IGhhcyBlbmFibGVkIHRoZSBJUlMsIGFzIGl0IG90aGVyd2lzZSB3b3VsZCBiZQ0Kd29r
-ZW4gZm9yIGFuIFNQSSBvciBMUEkgdGhhdCBpdCBjYW5ub3QgcmVjZWl2ZS4NCg0KPiANCj4gPiDC
-oAkJCQlGSUVMRF9QUkVQKElDSF9DT05URVhUUl9FTDJfVlBFLA0KPiA+IHZwZSkgfA0KPiA+IMKg
-CQkJCUZJRUxEX1BSRVAoSUNIX0NPTlRFWFRSX0VMMl9WTSwNCj4gPiB2bSk7DQo+ID4gDQo+IA0K
-DQpUaGFua3MsDQpTYXNjaGENCg==
+On Fri, Jul 17, 2026 at 08:26:18AM +0100, Srinivas Kandagatla wrote:
+> On 7/12/26 11:16 AM, Dmitry Baryshkov wrote:
+> > On Tue, Jun 16, 2026 at 03:25:36PM +0000, sashiko-bot@kernel.org wrote:
+> >> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> >>
+> >> New issues:
+> >> - [High] Returning success (0) from `msm_dp_audio_prepare` when the display is disconnected causes silent audio failures upon hotplug and NoC errors due to unclocked DSP hardware access.
+> >>
+> >> Pre-existing issues:
+> >> - [High] Race condition between `msm_dp_audio_prepare` and `msm_dp_display_disable` causes unclocked MMIO accesses.
+> >> --
+> >>
+> >> commit bfb65364e66313dc1385a42e09172f44a1e1fbd1
+> >> Author: Kumar Anurag <kumar.singh@oss.qualcomm.com>
+> >>
+> >> drm/msm/dp: return 0 from audio_prepare when cable is disconnected
+> >>
+> >> PipeWire treats a non-zero return from prepare as fatal, marking the
+> >> DP audio device as a dummy sink when the cable is unplugged.
+> >>
+> >>> The active_stream_cnt guard already prevents any unclocked hardware access,
+> >>> so return success instead of -EINVAL when the link is not active.
+> >>
+> >> [Severity: High]
+> >> Is this commit message accurate for the upstream tree? There doesn't appear
+> >> to be an active_stream_cnt guard in the mainline driver. Without this guard,
+> >> will the DSP push data to powered-off, unclocked DP hardware and cause NoC
+> >> errors?
+> > 
+> > $ git describe
+> > v7.2-rc2-4669-gb9810cd75b9f
+> > $ git grep active_stream_cnt
+> > $
+> > 
+> > Which tree has this commit message been based on?
+> > 
+> >>
+> >>> diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
+> >>> index 41018e82efa10..df222943ae57f 100644
+> >>> --- a/drivers/gpu/drm/msm/dp/dp_audio.c
+> >>> +++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+> >>> @@ -284,10 +284,8 @@ int msm_dp_audio_prepare(struct drm_bridge *bridge,
+> >>>  	 * such cases check for connection status and bail out if not
+> >>>  	 * connected.
+> >>>  	 */
+> >>> -	if (!msm_dp_display->power_on) {
+> >>> -		rc = -EINVAL;
+> >>> +	if (!msm_dp_display->power_on)
+> >>>  		goto end;
+> >>
+> >> [Severity: High]
+> >> Does returning 0 here trick the ALSA/ASoC framework into marking the stream
+> >> as successfully prepared?
+> >>
+> >> If the stream is marked RUNNING, ALSA won't re-invoke prepare() when the
+> >> display is later connected. Could this regression result in silent playback
+> >> because the DP hardware is never actually configured?
+> >>
+> >> [Severity: High]
+> >> This is a pre-existing issue, but does this lockless check of power_on
+> >> race with msm_dp_display_disable()?
+> >>
+> >> If msm_dp_display_disable() runs concurrently (e.g., from a hotplug interrupt)
+> >> immediately after this check but before audio_enabled is set to true, it will
+> >> skip waiting and disable the DP link and clocks.
+> >>
+> >> When msm_dp_audio_prepare() resumes, it will call msm_dp_audio_setup_sdp() and
+> >> attempt MMIO operations on unclocked DP audio registers. Could this lead to a
+> >> synchronous external abort?
+> > 
+> > I'd agree with Sashiko here. Do we guard against the unlocked access? Or
+> > how do we ensure that the stream will be prepared later?
+> > 
+> > I think this needs to be fixed on the other side of the pipe. Do we need
+> > to define a special prepare error code, which means "working, but not
+> > available now" and make PulseAudio / PipeWire handle those errors
+> > specially? How is it solved for other platforms? I don't think that
+> > msm/dp is unique here.
+> 
+> AFAIU,There is no special error code for prepare to flag that cable is
+> not connected, the standard way is to read Jack events. Wireplumber is
+> is one which deals with Jack event, even before getting to there
+> pipewire will fail to probe the devices on the card if prepare fails.
+> 
+> Once we are at Wireplumber level we are good, and stream will never sent
+> to the sinks which are in disconnected state (via Jack).
+> 
+> This has been a known issue for very long time, most of the codecs like
+> 
+> Its also interesting to note that same Qualcomm SoC drivers deal with
+> this situation by returning zero, so why dp has to be different?
+> 
+> drivers/gpu/drm/msm/hdmi/hdmi_audio.c
+> 
+> Other drivers that do not care about plug state in prepare are.
+> sound/x86/intel_hdmi_audio.c
+> drivers/gpu/drm/mediatek/mtk_hdmi.c
+> sound/hda/codecs/hdmi/hdmi.c
+> drivers/gpu/drm/xlnx/zynqmp_dp_audio.c
+> 
+> 
+> I think there is enough evidence how this is handled in the codec
+> drivers, we should consider this patch.
+
+Let's discuss this at the LPC or some other F2F where we can get other
+parties. I'd like to sort out the issue. Or maybe next year's pipewire
+workshop.
+
+For now:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> # same behaviour
+
+-- 
+With best wishes
+Dmitry
