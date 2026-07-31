@@ -1,146 +1,144 @@
-Received: from mail-ej2-f3.google.com (mail-ej2-f3.google.com [74.125.228.131])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CC843CECF
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48A4431A4C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785511652; cv=none; b=Xmm9v0vPDiFF+m19WOz/+lR50dcZ2udhwai4Zdx9I1zMwZJkJzidnlb4oKplB1cOnlEdZaPrfVi8A83BVnYpz0f2GrCXAia+W7Y3VhQRiy6nfslPgUILaR7Urvb6XwexA2RC7mclsgbbR4IVgGGla7PJXk+kRBwuCcrP/uuAYeE=
+	t=1785512528; cv=none; b=rRBU51yldDgnOcbBLO7TVZT+MIdRcyA9ls8EF/4OCCj/hJzDLNJNCmQjCIYko2dkj9RsJv5r4n7IrfsJyAPnqJDn3AgqiamSawRc1F2ep6hw3oT/pTYb/nakR4QE09NOxtqCXCr6bl1AOiC9c8C1z7fl3QROsqOfXiHX4YtoaEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785511652; c=relaxed/simple;
-	bh=2HCELcOA3DJNbDsYTukshelLlc3dZazcD3VSOVDcQgU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=i+k8704Fp+SC7uVmGNskBV4j6xS7nYH6FvPilDygNVSp17j40+WrRy92TJircoFipR5IqWzCRDeBAMUrAOrfx789U5RKIAbJtO/UtQ4jSrr0TADnfSU9rL63b922R6/z1K/x/fT+QhL2eoAB7YDWCemXpw1AD8XKUqXhQ29jNzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=9elements.com; spf=pass smtp.mailfrom=9elements.com; dkim=pass (2048-bit key) header.d=9elements.com header.i=@9elements.com header.b=RJGi5CCU; arc=none smtp.client-ip=74.125.228.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=9elements.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=9elements.com
+	s=arc-20240116; t=1785512528; c=relaxed/simple;
+	bh=LYlvOTib2FM4S0QhMRDhnJ6ost4UL+qbapvJXXj2/8g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=deKP76w84+GrkWTPh6Edn2UxF1M6k5yaWYhrz4KXaZzYfaF8fbAbPaPE5qsp8KdFX0aEIWcYWy5m6ti+vZyJ8BuqMPyEWwOzyi+fuL2l/xfssH6DdfICHtDnRyToIgaLpyfmEJ1IezXf2S0HHeggiBwfDrXCN9oFHuLQoOj0hcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=HReC0ah9; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=9elements.com header.i=@9elements.com header.b="RJGi5CCU"
-Received: by mail-ej2-f3.google.com with SMTP id a640c23a62f3a-c15ec8d6663so38688266b.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 08:27:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="HReC0ah9"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-4799b3f7c83so881686f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 08:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=9elements.com; s=google; t=1785511648; x=1786116448; darn=lists.linux.dev;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=aaecu9LLR4tlERpL5fMxh+H29z5ZLQOadDtlIB8YJrI=;
-        b=RJGi5CCUnrvhctKSycX7BH/pyPAJmwxy7u3wQaJhHjThAVSA8NLoUUGY+xn3vV1R9p
-         h/uUxdNttst9HlJ+MxtSRr1XgskxM4MXKm8CGp25W1zHCiBk9wrmQnzJ1lPF0PgwDEN0
-         Bdve4wo+2MTry9804gLPS9Rwmu6t9DWL0Sh2VJQKOfNb6Fhcdbhb5DZYVniXbqXrRinW
-         cyuPOJk3uHhr6aTKro3MghbrY0/jhtABMRMxPH02r+WgTwI7vUnTc7H/cNfvVH7vTnmj
-         hT351bRTOxJbLeJ30XYGslm5HV7BeMhmEzclmg/ndKrDdMKLhxCp8PpPm1OG/aHoMaPJ
-         WXcQ==
+        d=baylibre.com; s=google; t=1785512524; x=1786117324; darn=lists.linux.dev;
+        h=content-type:mime-version:message-id:date:user-agent:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=cJARTRpeUTDwH7ZSQm/DfErRwTHcsGyw7SKG2JJKGsw=;
+        b=HReC0ah91mnS1p52Ee6ulMDvgfO7pSabx6YnAQrngEpGI5F6UjKk4q3tz2vh+tWteb
+         Ja1zbp3TR8mYO8OSHKmiA4ezejqoqs+pcNvL5NL8jfU9sa+jEJCb2WvLkEHMAyAunJR3
+         I/s9M2BxzvsY5EUeguL+d0Z4lCxETxctk18RkcAlR7NrRdEeEajqgiWzlnoZoAlyuVcr
+         dzh6sij7Dc4XWFIf06IZiXD6Gy/Rbt1p38c5KTTdw7zHB2HIfxrhf0oRn98MXCA0hkXG
+         kOtgws9flGBnd/8VTH1ra6m2o+Rvr60YfcTUy7UNskq+oWAyFk5nAX+cM1RU5M1E0zd9
+         N0Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785511648; x=1786116448;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aaecu9LLR4tlERpL5fMxh+H29z5ZLQOadDtlIB8YJrI=;
-        b=Iq6YuofqcUHFoqUvquZb2USXLY+51APtVulMG1uxeLlzHZI12ktd1obqdgbOfL2cZJ
-         rHsNdSdhg19GlcGPsZ6D3ATYXEwXmyKDuaofQKUGh7wRYT6gpsPcaPyz7dNlLGODuAIe
-         G2EZ5gGJByR1uPkwsy1lbQJvjRotziKNhiAI0xx4Z1tJQCaGWYWACMANzhKXYo5G2xzc
-         Hnw+8XpiiNxLI+X/sAB+fPDpG00Ju3XAhgZse10Fo3PPGX/PFJJQupls0lEX+mr+Dl6N
-         Gerz39WQPqA3sOaNVNLQqazDTu14KrMa/l3aEWO0s88FvvmJWbgjBTb6RFbSQoPhV9Qd
-         ayGg==
-X-Gm-Message-State: AOJu0YwkRPaaKib7fi+gsqq8rF9nrmX1BnjgGFxZfTtyAqRxlV7GPLPJ
-	ID5oXeJrEH5q62zd6w7he35LYgBh6T67yPf1pS4gMIHfni9xHm5xYigfpKIIvbTXihXXGiKdrHW
-	kH6aMuObduSg=
-X-Gm-Gg: AR+sD13n5shqrIHRmZrmqu+dobQFfHejz16J4DEzq+ss5BdNOsaJk5RKJsFEY86U5DR
-	yZ1xBiKLOtg0IXcvkz+0HaxeubkO4mNVtzL2oOzhDi0jJIIBp01ihda5bJsHaAb+DT7q02Gq0ra
-	0I4muB8zBYROvO6AIpbkEhoEBb2WZj69rpcTjRA5rmVeYJaXTpdMB6BVb2d1WarYuwI7GjKTdY8
-	F27qUgV17UHssnR/70poRGeXCookFcAGqx8WVhl8Mw83UWOc4UBi43nMElewXzMVRUyX5W9SEhx
-	kxi3toQzhBSWk4vHDINWX/Kcw8QCwwbGzZfGzBm+MzhwVQnniSp75YtIilfTHGTGrhBxAaQA6jS
-	hox6YYSMMglU1/EY50ZzUDmEBrf+/8Jux88kuUh+GddwmRmIrigoYSnli2eZW0gXHqZ50YuA910
-	M/qqfXiJSWf3z0LeAJhLiy6JtzcA6n34RhL2yXsy61p3mof9MH6t9NinXxpOIgQ5EYtavT9A==
-X-Received: by 2002:a17:906:1d08:b0:c16:1df9:6eda with SMTP id a640c23a62f3a-c1fe83796femr347266b.49.1785511648121;
-        Fri, 31 Jul 2026 08:27:28 -0700 (PDT)
-Received: from localhost ([2a02:908:1578:7a40:eb03:fa54:642b:57ec])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1fd46836dcsm186119166b.63.2026.07.31.08.27.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Jul 2026 08:27:27 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785512524; x=1786117324;
+        h=content-type:mime-version:message-id:date:user-agent:references
+         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=cJARTRpeUTDwH7ZSQm/DfErRwTHcsGyw7SKG2JJKGsw=;
+        b=FK0ScGG7u9+9gzmOWUDi98qWPoYzRwOveaNQLnqwVjHpxKoVGkYXTGrKTJZdmMcsDx
+         xBbW4oj3boIQKsVKvKvlvOouirBqrQcMSZqwhDQyKzqe6mbHQp+e0nDcfdfZb0LFZiyy
+         WSNJOa7POJZMngDK0tcgiTAvkWYWid4k5T3Zkrnrud/+TvZJvYF4Pa27R/h4FqoDVYp+
+         ozjTxhWd52sCf+37jZCgu8M2zTL4eBxA9d0oymO6sqV9cJCeMMPhZSWjI0Ml3RGC/JYP
+         xqoDnE+4ErLTsRowULvwWug8bUPLws5uXJFLTaArzEjZhgNKESwuyUiSEkhKRSy3+Kl0
+         yX6A==
+X-Gm-Message-State: AOJu0Yy2hMUhg3glOpBgxDhe+CJ57jCoH6Op7Y3nlgABjNmF9yWhpJ2S
+	mDwEYarGSB6zUOGIvHkyXMezGs2FTbOvEuWFGnszSrPgov2wkUFTyPjp6UWV2htAAnA=
+X-Gm-Gg: AR+sD12DMlZnrK7FvVMj4rbzzNnXB1igBnqYJ7RyJX/ijInA9gG86koKQDZdGi6zPNc
+	WWul1cTVBHm+dYOWz8WmcRHJXiQTTaknF7J/LsEQ0hYYX/PM49YhmU2pSluPW0FxY/syxYB+0Sc
+	lJUnWJCnCI/2sr85Sf1L+SNQR8ZGHR+QaaKY8uujrGhq5f1ACdLLluaZDnCnPS/yyL5odlP6Inh
+	SlaS1UJ54pVquwN4AW5i8D8vYmitVqat+dz3qnzD0ZxLa5/MTiIeklm5lBjr2GAux2ZYDMuN8zd
+	lPCEJsx1AkWWVE/FeYaYWv4P/U8kvZJwk8x6Ecyb9FgiSuda6oX6Q1uKniQutGSnxdjES7dfT0G
+	tfNVJSwy5GYDn7lGRcqJQF4u2TVSMj5YfVZ+Yoa+djF1d2Si9Ew01yuuKux+QJucV0gVVjAgXSS
+	MpBOUsYcA6Yg/3ZrHAjFIfC/51DbQ1AGXrDptMq/5OQZ1Bi4GZEpvRRKBylQ==
+X-Received: by 2002:adf:e309:0:b0:47f:7c4d:c9a7 with SMTP id ffacd0b85a97d-47fd72f1f7emr138197f8f.47.1785512524233;
+        Fri, 31 Jul 2026 08:42:04 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:d00b:bc94:65a:a73d])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-47fd456262bsm5488966f8f.17.2026.07.31.08.42.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 08:42:03 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,  conor+dt@kernel.org,
+  devicetree@vger.kernel.org,  robh@kernel.org
+Subject: Re: [PATCH v6 3/5] dt-bindings: mfd: x-powers,axp152: Document AXP318W
+In-Reply-To: <20260731145338.4479A1F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Fri, 31 Jul 2026 14:53:37
+	+0000")
+References: <20260731-axp318-regulator-v6-0-b4e745552a35@baylibre.com>
+	<20260731-axp318-regulator-v6-3-b4e745552a35@baylibre.com>
+	<20260731145338.4479A1F000E9@smtp.kernel.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Fri, 31 Jul 2026 17:42:02 +0200
+Message-ID: <1jh5lfxj1x.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 31 Jul 2026 17:27:27 +0200
-Message-Id: <DKCV1YWVZSTC.I04OWIWKFTUV@9elements.com>
-Subject: Re: [PATCH v2] PCI: imx6: Enable ASPM L1 only iff CLKREQ# is
- supported
-From: "Michal Gorlas" <michal.gorlas@9elements.com>
-To: <sashiko-reviews@lists.linux.dev>, "Michal Gorlas"
- <michal.gorlas@9elements.com>
-Cc: <linux-pci@vger.kernel.org>, <imx@lists.linux.dev>,
- <Frank.Li@kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260731-l1-conditional-imx-v2-1-6016ee9148b2@9elements.com>
- <20260731135449.7A3B51F00A3A@smtp.kernel.org>
-In-Reply-To: <20260731135449.7A3B51F00A3A@smtp.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Fri Jul 31, 2026 at 3:54 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] ASPM L1 is conditionally disabled at boot but unconditionally =
-disabled upon resume, causing state inconsistency across power cycles.
+On ven. 31 juil. 2026 at 14:53, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The compatible string `x-powers,axp318w` is omitted from the
+> conditional block that makes the `interrupts` property optional.
 > --
 >
-> --- Patch [1]: [PATCH v2] PCI: imx6: Enable ASPM L1 only iff CLKREQ# is s=
-upported ---
-> commit 7a899eb7e9f8116a0334832c7490e52f71ae751c
-> Author: Michal Gorlas <michal.gorlas@9elements.com>
+> --- Patch [3]: [PATCH v6 3/5] dt-bindings: mfd: x-powers,axp152: Document AXP318W ---
+> commit 0a2fd6c8b0d8fd1a45bf4a464bf3e71df8fa62f6
+> Author: Andre Przywara <andre.przywara@arm.com>
 >
-> PCI: imx6: Enable ASPM L1 only iff CLKREQ# is supported
+> dt-bindings: mfd: x-powers,axp152: Document AXP318W
 >
-> This commit conditionally disables ASPM L1 capabilities in the LNKCAP
-> register if supports-clkreq is not set in the device tree. It also disabl=
-es
-> L1 during resume for platforms advertising IMX_PCIE_FLAG_BROKEN_SUSPEND.
+> This commit documents the AXP318W PMIC in the x-powers,axp152 bindings.
+> It adds the new compatible string to the lists of PMICs that lack PWM
+> frequency properties, and adds new input supply properties.
 >
-> Link: https://patch.msgid.link/20260719-l1-conditional-imx-v1-1-a55a57915=
-c68@9elements.com
->
->> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/control=
-ler/dwc/pci-imx6.c
->> index 98e1db751132a..1fdcbcd2422e5 100644
->> --- a/drivers/pci/controller/dwc/pci-imx6.c
->> +++ b/drivers/pci/controller/dwc/pci-imx6.c
-> [ ... ]
->> @@ -1442,6 +1458,9 @@ static int imx_pcie_host_init(struct dw_pcie_rp *p=
-p)
->> =20
->>  	imx_setup_phy_mpll(imx_pcie);
->> =20
->> +	if (!imx_pcie->supports_clkreq)
->> +		imx_pcie_disable_l1(pci);
->> +
->>  	return 0;
->> =20
->>  err_phy_off:
-> [ ... ]
->> @@ -1748,6 +1767,7 @@ static int imx_pcie_resume_noirq(struct device *de=
-v)
->>  			return ret;
->>  		imx_pcie_deassert_core_reset(imx_pcie);
->>  		imx_pcie_assert_perst(imx_pcie, false);
->> +		imx_pcie_disable_l1(imx_pcie->pci);
+>> diff --git a/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
+>> b/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
+>> index 45f015d63df16..38556c32417b3 100644
+>> --- a/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
+>> +++ b/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
+>> @@ -83,6 +83,7 @@ allOf:
 >
 > [Severity: Medium]
-> Will this cause an inconsistent ASPM L1 state across power cycles?
+> Was the x-powers,axp318w compatible string intentionally omitted from the
+> interrupt requirement conditional block earlier in this file?
 >
-> During boot in imx_pcie_host_init(), imx_pcie_disable_l1() is only called=
- if
-> imx_pcie->supports_clkreq is false. However, during resume here in
-> imx_pcie_resume_noirq(), the L1 capability is disabled unconditionally fo=
-r
-> platforms with IMX_PCIE_FLAG_BROKEN_SUSPEND.
+> Looking at the block just above this hunk:
 >
-> If a platform has supports_clkreq set to true, it would retain the L1
-> capability at boot, but lose it unconditionally after a suspend/resume cy=
-cle.
+>   - if:
+>       not:
+>         properties:
+>           compatible:
+>             contains:
+>               enum:
+>                 - x-powers,axp15060
+>                 - x-powers,axp305
+>                 - x-powers,axp313a
+>                 - x-powers,axp323
+>     then:
+>       required:
+>         - interrupts
+>
+> Since x-powers,axp318w is missing from this exclusion list, the interrupts
+> property will be strictly enforced during schema validation. Does
+> this match the expected configuration for this PMIC?
 
-Platforms that set IMX_PCIE_FLAG_BROKEN_SUSPEND (i.MX6Q) do not
-set supports-clkreq in their DTs. So no, such scenario won't occur.
+In the case of the cubie a7a it is wired to the NMI controller but NO,
+it is not strictly required. A platform may not wire the IRQ and it
+would be fine
+
+>
+>>            contains:
+>>              enum:
+>>                - x-powers,axp313a
+>> +              - x-powers,axp318w
+>>                - x-powers,axp323
+>>                - x-powers,axp15060
+>>                - x-powers,axp717
+
+-- 
+Jerome
