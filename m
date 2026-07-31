@@ -1,242 +1,207 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B773DD50F;
-	Fri, 31 Jul 2026 14:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E75F3C1D62
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 14:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785506700; cv=none; b=nedVxGkGf6Do/9emJjKt4psyUWGp5Mcpi/XTJNq91Wgqjf45S8s/8kf77faRM48nroQRYmgLXxbdNobnD0JeKP6HP9hUFbQ0qYc3N8lZedavucLKqKm5fAyInRATnQUW908n9Qu9auzZ+GKNhUiy10KYPTlb0cY35fIW9fMr1jc=
+	t=1785506735; cv=none; b=NgPiqwIriG3y9Xj5wDiO4H0cNrapDIp7Y2uvdmJuRMdQKC5Qa8tubrt7Z5BJu2nt7RMny9so3WHgjhVaAsdCcd2W6UxMLCyZqqBWYFHcHKIlAzxrZZ/QnC469ltUey5rq50QiUZTnDNsmG+8oDKNl3uP+bDrcpU6vfEBVMlJ9Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785506700; c=relaxed/simple;
-	bh=hRBQwcPEV6S4I7fui8jAVA2TIgtf9DY9T/VdmQOExOY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tz5PUDIS8rXv75g5HEou0RSbp5gDcT8JCjF/2/xDxQf+XH3ANwGZUsCdTXQ0GQr0glw+ssC1jPAXXxfOaMF0nClZXONXeblRtUjgXm6/tqvu0RFsmEqgAYlH/udMLpWfZcB/Ry5hhel/c2bZe7BUwYvKeD8ZLDzcBaqP1N/rQXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=KT7WHM4g; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1785506735; c=relaxed/simple;
+	bh=098HrdB4qj3uWEtOns0NoI33Krb2EhPBbTVdca7AS/g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uy/leSSYuN8DF0fUwvb6qWZjMYCZaoc8Kg7Liw7Mvcsv/hWW4NBmF4S8R8aC24VALBgBAne9KhQvO5+8ix3Rwd++dUbDVAVhAYjpvVXgITFcoPoDohCQd0sx9AWO8Zx8YNrMXXdPUTiREBE03snQ4IVQY86EldwtEq1adHS+u2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hxoqKk6u; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Yygx1WuJ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="KT7WHM4g"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66VBm7bZ1671705;
-	Fri, 31 Jul 2026 14:04:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=zPRAxS
-	VH5HHy2EZbBlnS7v1gJFjfzSog7k9xBk9Tbrc=; b=KT7WHM4gfT+IknUPQaxoQy
-	43COvfHpiJQWQVU0TfpYXKQsiZjSJxWUn3M9kdLA/nnVnZ6fvlnKBbwJRgratc6g
-	EfjlXbkK3XFK5/Jjqsc39fBbhZEe+a4ecaQX9MjFFHZo81jPC5YLMswZxWetVo5F
-	Z7C3NIv2QltsgSkJYjvPR8RSUHdX5lx2oNyoQYu6bMQTL5b1NPayzgOL2PhDyxYz
-	HI0vGv7klrdrN95jH7QAHZoDB0fTukDEMlYq17dnL7xrYtHkCkFyu5FL7NyZehgG
-	b1MJ4fc6SwBCt+6lHuiERD0xaesqQV2a8LZuAQao3BFZpQ1uDO7MtLUxixkfhyXQ
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyjmc5m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Jul 2026 14:04:57 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66VDuI84019139;
-	Fri, 31 Jul 2026 14:04:56 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fkg6ff-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Jul 2026 14:04:56 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66VE4qne17826154
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 31 Jul 2026 14:04:52 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 632022004F;
-	Fri, 31 Jul 2026 14:04:52 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2736020040;
-	Fri, 31 Jul 2026 14:04:52 +0000 (GMT)
-Received: from [9.111.165.102] (unknown [9.111.165.102])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 31 Jul 2026 14:04:52 +0000 (GMT)
-Message-ID: <e11204eb-0b25-408e-95fd-5676297da484@linux.ibm.com>
-Date: Fri, 31 Jul 2026 16:04:51 +0200
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hxoqKk6u";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Yygx1WuJ"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66VBd7ls4185706
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 14:05:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	343B1/3+b4zF0oyHAPXPcWl8rg0MW19SgLHKxpdb+jY=; b=hxoqKk6uLhpYiQdO
+	yECxHJ8rxjUyhccKYseyFK+80rp9j9fJi8vQLuUeeeotQpO7xWDeZSTEBrBFLBLP
+	zTakhBMrKC+ZNlUvL5ksYm7QwV/gQUEhCN1mU1MnTXaW4lEjQomgJYvyt/macZGX
+	vZXq87Ja1x4OYHEd+2bDilg+wXJoon3/AkjGPidwFEygdCJQINfeniHgvaSGVFew
+	AdNF5SR0DX1Pz9WmrhruMvpaKv4aCMCxhSm5iuJVHfQ8YN8lyLXtEKND4yR26NB/
+	/OKzEub3IRYZwfLP0tSRl+3d0mXln1Ruwzgr+xKeivmV7KcjOqhIjA/gy84IB9UU
+	B9RNcA==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com [209.85.222.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fru130krp-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 14:05:32 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-977dbf3b62dso65244241.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 07:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1785506732; x=1786111532; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=343B1/3+b4zF0oyHAPXPcWl8rg0MW19SgLHKxpdb+jY=;
+        b=Yygx1WuJmstML/ccpD1S9eTACT0OjCAwK8O4+09CZaby+/jUstHHru8RdOdojgVCgD
+         ZLkohbpjAgho3P+DUtViMcpL+JIulyZl5CqS6YSnIvxPPbdgZzvCqj3itM7dtEshco/k
+         YbUjpeoLbw9aZilbu02Ylv9k9F+3OdDD7hj8M71Oa/EAAuT7Xv1K1sFO5FFqPawWxMHW
+         7WUFdJiWyxzTec5nbq+jbQlDdZmkmfB4J9444fUdb3dLhqRI2Pc5Z43cOvOcgiKgCfj4
+         78zV51Rrr9uxTXit2SMdFTXkIY9FusPp8nSJno4xupWDdacQmcXPhCVYMrFpfzKfEAnc
+         LcDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785506732; x=1786111532;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=343B1/3+b4zF0oyHAPXPcWl8rg0MW19SgLHKxpdb+jY=;
+        b=mvZYW/r8g95cNAoRl/H2pe5r/x+dttQfS2oSWYqiNjuKUHAzbGw8fxoxrk1SoDrwrU
+         RJGKL82g3TUIrV2/Af3bdYlPHKrP6CLYYyha9rMOY4dMEHdxCV194oDnaVWeUerTGOz8
+         btcnCW8mRid7sl1+tLU7N8jL7kxRcw6RJED3XotxCZuN0w7K3WPHAOm5j66tRaOv7f9B
+         zglqudhPcEWwi0iCq7EuIMWqGNUVaKCqaa1xqG7T7mHDNHvuqVxK4zyEpb08sZcl4kQV
+         V/eIIjlBwIP5GxPSGJDXoI0WlhzkJCCtBajLHh3vmac9BAySk1EkGdKRzprE8vcRL8kF
+         bvLQ==
+X-Gm-Message-State: AOJu0YyXg4qq/JNZGIfxjQjym4YTe5/RdHciHBYy4a+3raYBBml5QlZy
+	u+6Azw4tujMa+riye5y5YlqcFfK0PYMkjL+VlMpe6tBc6kwDhnxGdPvlQ/h62McDMYplS7XEbjH
+	/8zzkxfxlM4p+CN5zMlUToE9ERjr7FRkvLGmlS5Xm8iPZJU86JNXybXU8hOKcrys8GavfmSi2cA
+	GIh5s=
+X-Gm-Gg: AR+sD10feQeu8Tve3pN3U5oYMrp6PU1qJCJEyiLmfmxYOqrfS/ogUxRs5DjQ5yRsgso
+	HG8FJms/xog5AlQF8z820gWpTnQyQ8X8TaO+3WSP4SIaZIYK2tPP0dzTE3znUvXfApWjSY0KsKn
+	b3lMBvumhKpubcmGPTne5HYXwFnmOM/12ae4m0sbIyNKvquaBtJcLHBs9HYTD6uapyEzQnXb+2a
+	P2FxqeXAjXWCwxM7tIrPr2QaKOFpZHcG1pp2zSoInmC4xWAWgO8Go9Ko/ROQnxrw16g37LfVNOA
+	BMG15eJrraCV+++BDJ1MtgRw/g5lshlbB+oEankrG4Of7MTP53m99ZOsF5Ug/QQov7pAru/5wuu
+	SBJ9uBysR5v/C+zVSFOf87ILfurMvUp4hwfDtGrN4mZPqQEhuEbPO9u9/RDsAn1XGXGpO0YhwmP
+	OKVzoRCD34bGaEjA==
+X-Received: by 2002:a05:6102:549f:b0:73a:128b:ea07 with SMTP id ada2fe7eead31-75b23a635f8mr167394137.14.1785506731612;
+        Fri, 31 Jul 2026 07:05:31 -0700 (PDT)
+X-Received: by 2002:a05:6102:549f:b0:73a:128b:ea07 with SMTP id ada2fe7eead31-75b23a635f8mr167332137.14.1785506731103;
+        Fri, 31 Jul 2026 07:05:31 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39f810dc89dsm1229371fa.12.2026.07.31.07.05.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 07:05:28 -0700 (PDT)
+Date: Fri, 31 Jul 2026 17:05:25 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev, Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>,
+        Simona Vetter <simona@ffwll.ch>
+Cc: Yuho Choi <dbgh9129@gmail.com>, dri-devel@lists.freedesktop.org,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Vladimir Oltean <vladimir.oltean@nxp.com>, Kees Cook <kees@kernel.org>,
+        Dale Whinham <daleyo@gmail.com>, Nathan Chancellor <nathan@kernel.org>,
+        Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] drm/msm/dp: Disable stream clock after video-ready
+ timeout
+Message-ID: <ka3af5qc63pdcvh3uf6ulb25wrsf6udjugm62ooxuscxvz6zhz@mbuivewege2k>
+References: <20260707175212.412699-1-dbgh9129@gmail.com>
+ <20260707180553.78C7F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] dibs: fix double free of dmb_clientid_arr
-To: sashiko-reviews@lists.linux.dev, Hidayath Khan <hidayath@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>
-References: <20260730075624.114778-1-hidayath@linux.ibm.com>
- <20260731075650.C2BA91F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Alexandra Winter <wintera@linux.ibm.com>
-In-Reply-To: <20260731075650.C2BA91F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDEwNSBTYWx0ZWRfXwNRBTKCQYHNI
- UrY8+7lIZWlRkjBcpNAsYHsbAxZiN1dTQjAazcOX9tUYWRVA9Hil88rU/l361MZCumktzyGsTcj
- Rb1fvHdtZTo4Z3muNHsHKeh4B1zqOvQ=
-X-Proofpoint-GUID: GfaP9s2-becm8jpXJYDqODsFWQDjsddj
-X-Proofpoint-ORIG-GUID: GfaP9s2-becm8jpXJYDqODsFWQDjsddj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDEwNSBTYWx0ZWRfX/s2WABmjfNBW
- A3knm1IojuPWC9mi+N6cp8XxT/5s8VWm9QrLimSNJRyYU+pd/RDb6yh+MiOaZiCoS8lJSFXICu5
- oYNC+bCF0WhFaKl6dMol4m1KpyGEOK7HZSYAGTdDUTRBD51VqqpWIzNnXr48IidASJldCpFAnQP
- zuZVsUrEjRfM4uzbQeO2ENW87+lT7VTgb2iHAnHDfyU5LE5H0ip5Jc8XrBOyXf/ijs9mFQBOUx5
- BU0+zPdOt42z0VyEXnGWrFAIlesTJGffg8F86L0iyZ02LKxGOtuE7KOEb7R3LjGeTVII9F5Ahgi
- QCe/bDUCw6lyTvhfGqCEjydDwbH291N3nLA1CB4yWtwV0EzD9ETwp6xyo59GE8UC/R9HQqOQlb5
- DcigPQo5btmLN4doUihVXztccct97fAzz2+JohP2ZB0u7VkDYVBjkZsdd9Vm6BUyVHun7zZXPZu
- dtoAPlWer8swHP0VfZQ==
-X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a6cab89 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=lgRtJKbgxCKMiAZx1u0A:9 a=QEXdDO2ut3YA:10
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260707180553.78C7F1F000E9@smtp.kernel.org>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDEwNyBTYWx0ZWRfX0rYL5uuBPIGD
+ 6li6xAUIAiIKnhtlLz0/J+IhQcThVhqC0LmcLu3O1Yzpxi7IRaEPo2Hy3OEkBGnXTUIZEvvNfo5
+ r1XWVrlANvq9h6RkvKg2UzE5cOfWTag=
+X-Proofpoint-GUID: DqfWYZ-m1xWgaP6vPPtESLX98oou0EgC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDEwNyBTYWx0ZWRfX344ABUxmTc3M
+ lo5gmocQsH17R9FsJczxR3RKSoOHSVRJp9irXOlOZUPTh0s3CMvSfmZAL04d1MjZ+kCwNRxm0jD
+ 8t0QzFVKp9UqvEjCc1W/sO4Az6DqumfJU4bxlzCJ5sDbhaTVZvUKuJ/lYYUPzTK2A77tUW1eMlJ
+ KHgrAX6uYFSvatP6wiA6tm7KcMx5c/AmICpEHfhFfYXAaXcKe0QQ9qz4ORzvVasPGCic4l/YtTQ
+ cgfDBOQ9Eyo7N6/QFpTP1+AXAHLtXlyphx6LaGxcF6NccnFKPRTVEJUpy1yO9hyo6yzc3Mg+vLo
+ VM0lmhCpV0JXGleej+oyc5yEIyLPh/6z00PPfzSKP/tSoaUS+7334FKsxnteo9eZgmBUhuztzZa
+ /p4rcG/huxyu7MP8GNEeaGR3LGgi5mkoq7c/T5II1UsYQ7TOWSIITfpRQiY0BFKo9w635vY9fu3
+ 4OwnL9Ec9xxRUsfzWuw==
+X-Proofpoint-ORIG-GUID: DqfWYZ-m1xWgaP6vPPtESLX98oou0EgC
+X-Authority-Analysis: v=2.4 cv=CYI4Irrl c=1 sm=1 tr=0 ts=6a6cabac cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=c92rfblmAAAA:8
+ a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8 a=YuBhx4MO3GsoJQDmrn8A:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=1WsBpfsz9X-RYQiigVTh:22 a=GvGzcOZaWPEFPQC_NcjD:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-31_04,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607310105
+ priorityscore=1501 suspectscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310107
 
-
-
-On 31.07.26 09:56, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The hardware interrupt handler `ism_handle_irq()` can execute out-of-order with respect to initialization and teardown of critical resources, leading to crashes (UAF, NULL deref, and uninitialized spinlock accesses).
-> - [High] `dibs_unregister_client()` leaves the subsystem in an inconsistent partial state if it aborts midway through its device iteration.
-> - [High] `dibs_lo_attach_dmb` drops the hash table read lock before incrementing the object's reference count, leading to a Use-After-Free.
+On Tue, Jul 07, 2026 at 06:05:53PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Disabling the pixel clock while the DP controller is actively in the SEND_VIDEO state violates the teardown sequence and can lock up the hardware.
 > --
+
+Could you please comment on this Sashiko comment?
+
 > 
-> --- Patch [1]: [PATCH net] dibs: fix double free of dmb_clientid_arr ---
-> commit 45565b8a1cec1239be540b3b54fad60822ae8b57
-> Author: Hidayath Khan <hidayath@linux.ibm.com>
+> --- Patch [1]: [PATCH v1] drm/msm/dp: Disable stream clock after video-ready timeout ---
+> commit d51f59f75198361a5116081d3f135fd586dbcb66
+> Author: Yuho Choi <dbgh9129@gmail.com>
 > 
-> dibs: fix double free of dmb_clientid_arr
+> drm/msm/dp: Disable stream clock after video-ready timeout
 > 
-> dibs_dev_add() frees dibs->dmb_clientid_arr on both of its failure
-> paths, but does not clear the pointer. dibs_lo_dev_probe() then frees
-> the same pointer again in its err_reg path, so a failing device_add()
-> or sysfs_create_group() results in a double free.
+> This commit routes the video-ready timeout path in msm_dp_ctrl_on_stream() 
+> through a cleanup path. It disables the stream pixel clock and clears the
+> stream_clks_on flag if the clock was enabled during the call.
 > 
-> Drop the kfree() from dibs_lo_dev_probe().
-> 
-> Cc: stable@vger.kernel.org
-> 
->> diff --git a/drivers/dibs/dibs_loopback.c b/drivers/dibs/dibs_loopback.c
->> index 0f2e093111526..aeb8787ea9816 100644
->> --- a/drivers/dibs/dibs_loopback.c
->> +++ b/drivers/dibs/dibs_loopback.c
->> @@ -334,7 +334,6 @@ static int dibs_lo_dev_probe(void)
->>  	return 0;
->>  
->>  err_reg:
->> -	kfree(dibs->dmb_clientid_arr);
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > index 86ef8c89ad443..139e9fa25d6a7 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> [ ... ]
+> > @@ -2543,13 +2545,17 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
+> >  
+> >  	ret = msm_dp_ctrl_wait4video_ready(ctrl);
+> >  	if (ret)
+> > -		return ret;
+> > +		goto end;
+> >  
+> >  	mainlink_ready = msm_dp_ctrl_mainlink_ready(ctrl);
+> >  	drm_dbg_dp(ctrl->drm_dev,
+> >  		"mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
+> >  
+> >  end:
+> > +	if (stream_clk_enabled && ret) {
+> > +		clk_disable_unprepare(ctrl->pixel_clk);
+> > +		ctrl->stream_clks_on = false;
+> > +	}
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does dibs_lo_attach_dmb() have
-> a use-after-free if the reference count is incremented after dropping the hash
-> table lock?
+> Does this error path leave the DP controller in an active state without
+> reverting it before disabling the pixel clock?
 > 
-> drivers/dibs/dibs_loopback.c:dibs_lo_attach_dmb() {
-> ...
-> 	read_unlock_bh(&ldev->dmb_ht_lock);
+> Earlier in this function, the controller is programmed to send video:
 > 
-> 	if (!refcount_inc_not_zero(&dmb_node->refcnt))
-> ...
-> }
-
-Fixed by
-a10ea943356b ("dibs: fix use-after-free of dmb_node in loopback attach/detach/unregister")
-that got accepted to net yesterday.
-
-
+> 	msm_dp_write_link(ctrl, REG_DP_STATE_CTRL, DP_STATE_CTRL_SEND_VIDEO);
 > 
-> If a concurrent thread executing dibs_lo_unregister_dmb() acquires the lock
-> and drops the refcount to zero, could it free the node before the first thread
-> resumes, causing refcount_inc_not_zero() to operate on freed memory?
+> 	ret = msm_dp_ctrl_wait4video_ready(ctrl);
 > 
-> [Severity: High]
-> This is a pre-existing issue, but is there an initialization race with the
-> hardware interrupt handler in ism_drv.c?
+> If wait4video_ready times out, the code jumps to the end label and disables
+> the pixel clock. However, if the caller ignores this failure and DRM later
+> disables the bridge, the teardown sequence will invoke msm_dp_ctrl_push_idle().
 > 
-> drivers/s390/net/ism_drv.c:ism_probe() {
-> ...
-> 	ret = dibs_dev_add(dibs);
-> ...
-> }
+> Since the controller was left in DP_STATE_CTRL_SEND_VIDEO but its pixel
+> clock is now disabled, could writing DP_STATE_CTRL_PUSH_IDLE cause a
+> timeout or wedge the hardware because it cannot process the state transition
+> without the clock?
 > 
-> If the hardware interrupt is registered before dibs_dev_add() initializes
-> resources, and a spurious interrupt fires, could ism_handle_irq() access an
-> uninitialized spinlock or dereference a NULL pointer?
+> >  	return ret;
+> >  }
 > 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260707175212.412699-1-dbgh9129@gmail.com?part=1
 
-Hidayath has already sent a fix for the lock initialization:
-https://lore.kernel.org/netdev/20260730124227.167829-1-hidayath@linux.ibm.com/
-
-
-
-> drivers/s390/net/ism_drv.c:ism_handle_irq() {
-> ...
-> 		client_id = dibs->dmb_clientid_arr[bit];
-> ...
-> }
-
-
-No client can have registered a dmb at that point, so
-no dmb interrupt can occur, so this NULL pointer dereference cannot happen irl.
-I plan to restructure with a future cleanup patch.
-
-
-> 
-> Similarly, during teardown:
-> 
-> drivers/s390/net/ism_drv.c:ism_remove() {
-> ...
-> 	dibs_dev_del(dibs);
-> 	ism_dev_exit(ism);
-> ...
-> }
-> 
-> Could freeing resources like dibs->dmb_clientid_arr via dibs_dev_del() before
-> the active IRQ is unregistered create a use-after-free window?
-> 
-
-
-Yes, we will send a fix.
-
-
-> [Severity: High]
-> This is also a pre-existing issue, but does dibs_unregister_client() leave the
-> subsystem in an inconsistent state if it aborts early?
-> 
-> drivers/dibs/dibs_main.c:dibs_unregister_client() {
-> ...
-> 				rc = -EBUSY;
-> 				goto err_reg_dmb;
-> ...
-> }
-> 
-> If the loop successfully processes some devices but then encounters a device
-> with active DMBs, it returns -EBUSY without rolling back the teardown on the
-> previously processed devices. If the caller ignores this return value and
-> proceeds to unload the module, could the detached devices later trigger an
-> event and dereference freed ops function pointers?
-> 
->>  	/* pairs with dibs_dev_alloc() */
->>  	put_device(&dibs->dev);
->>  	kfree(ldev);
-> 
-
-
-Does not happen with smc today.
-But the guard is not clean, it should do a better and safer cleanup,
-should such a situation arise with a future client.
-I will work on an improvement.
-
+-- 
+With best wishes
+Dmitry
