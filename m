@@ -1,221 +1,181 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011019.outbound.protection.outlook.com [52.101.70.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719E2314A60
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 02:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785466099; cv=none; b=iSWaWeNGSBSMnSIwTDmGQPty5p0b+lGAOHC9Q8vtX4HKC8gPMYM/7elK6W7RPxl4wTiFQnKevu+nMektWoDNkz8YD9uBeqMCD/ANM/XJ7V/xfGywEGbUiNC7Op+rSeAQysWJiJ1nxcK23yKGPgt43x+ERaPm+z6F7LUS1vQaVjk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785466099; c=relaxed/simple;
-	bh=ZgwiyRj7FLmHtrjyUzYaLeGUpC30Q31E4oVMlIii8Yw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sny6yBoAWm63BJUu9Prdn/M3SNCjSLwSQcFT2LerJLiJ0DaWWHfpy+bGLAy/JrmyQtrrYIkoBsw8m0LGk8MtryGvNjsBjU0np77tBdhjAAg/Hpe0kVCX4SOWHPPfLWZlD3trfTdBmLWbLrSrcnLpl6Px0bhEQ8UEN2obgzcFSBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Glqe1lM9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UxKylMLz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C8334EEE5;
+	Fri, 31 Jul 2026 03:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785468751; cv=fail; b=WRw5mhGZ0KwN6hRq6IvjVQS5akrwyw7C4TEodi3ZN3/lPmV67et44iKHBesu5Hni/20+JlnfmdjGb7FBfEn4rD/jn7UEPnvZp4oA2GoUodTyjanlwI/ZgXxPTHNHdSM0VXRh7d9EG0/BF8ocMb4qNCCerP5HKGWjTpS2B+wvhEY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785468751; c=relaxed/simple;
+	bh=SETjazkJAcSbRoELXtahJx7OHN5p3D4luW2mgjwfjbY=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=qjlgpZp1ISkSvvmrWpsU41JcN2/5w/duXHvJ0I3g1hH3s+UQ7g7MdjW4FdJB+cn9db1IOK64XvSV/b7GBG65ZX7MPVB0LS4Va2byyy/m9xXW91QXWDp+dqSktCagg2QBWxMjCuRURENGE8EwbIIZJkm4VJfvnbFtgWAwq603ZFM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=TJMEoNIO; arc=fail smtp.client-ip=52.101.70.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Glqe1lM9";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UxKylMLz"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66V2GLUx2637248
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 02:48:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Qt/5MatpNOCdKRPB1kLriXHjIY6fXa5r1g6k9xmfSwE=; b=Glqe1lM9Ja8PpnbQ
-	ipKc+IlP8oSWM8P6FBi0jplvttBdKkaGqxLhbx7w8wJoahhDm9Fk7eW/wEPGH5tf
-	Vlg+6LmKlx3U4B+s47pvSGjm8c0ltwJtPHER883kAUSi0Bjal0Mo0Ipfvqn8jEj9
-	hzal9kWvXL0jDibHavPl5FtBK0WdmZoMlK0K3j/LYliIqtVpwDHpa2jsDS5HCalQ
-	CqUO5jPyr6b442+EnQUg1P1SAZ1RnuaTpT7GfcBr27RxqTNypWdzlmFHG08kP2zU
-	e7lBesF4TkYzOU9TKDDoc0b9pJWck/kqRf7+0yxifGqzydU3oSDCG7nhA89VNflu
-	EZpbsg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4frjsc039t-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 02:48:17 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cacf17c7e0so5817155ad.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 30 Jul 2026 19:48:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1785466096; x=1786070896; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Qt/5MatpNOCdKRPB1kLriXHjIY6fXa5r1g6k9xmfSwE=;
-        b=UxKylMLz2ehn3BRPgPqurFqFGGUhD36p+zwYIGxsjJaxVi2MK2W7PiCmBwhue+dJhK
-         yBgJ/IWOGU1cMG4lp1cl0nsDAKViQsRsaYximOvujpQlIGAE8AIaoFlm1hY97a/7ZZb+
-         Md+cr8co+YPfTZ4UQjSbljqVOetaR3ixy7HnnEOJdMouGVY0MH/zoEN1dSks8ya6SYy9
-         XjPLwsS+KcyewmZdHIr7CnC9NYZzcWlqrGGIRwqPm5Ql4K1FNcRK3uOV8yv2SdsvGYVG
-         81LPfSjcYBdFs+1kidWCD8Mf5M3Y+gyXwsd0OmC0rqMWr8vQJy/hLKruBjTdyiyvysaC
-         m1NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785466096; x=1786070896;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Qt/5MatpNOCdKRPB1kLriXHjIY6fXa5r1g6k9xmfSwE=;
-        b=MVxWatBqh0HKIpHVxMrXZeILiZz627hvsmLtRYkgA+glegfcYEYR9KzGK6ft5aubB4
-         /GqbIbjuMccjVFQUQTGOmsxGkD/16dAhORjTaMZOnNR5CLuml+2WOu7EJrN33IgkeR/L
-         FAMYX2wXuaDNcLAVEVzTE6r/lqx8AnSoQHPvtmGh4JuGuRTJg0cNhnAlsgQAqksrwlgs
-         tatW7pn1y/hBGB9/BZXdmCsmFnObfoklhrYr+4dqcDK4GtnEMjatzEkJvbhG0zQqEFil
-         eHUmyXRXJoLH3os7HkbLidJY5Ma8PXNRCM7iyfeB40CXqsLB4AUccVZ0T0EnPrJgxRSr
-         ldfA==
-X-Gm-Message-State: AOJu0YyTi0/Xdod1Sf2tEn7HcQXLfm9JKVhFkfRjbwT2GjpAyUOjIDyT
-	jwFghtKQ7YnnYcTCETDcTE3IunY4WZW8CL+8LNFn0Z/YvhlvsZ3CWoolaPx/qsADDJ9VIdvxLJJ
-	ZyLHCPf7CaRFg55CjP+mbThg6S+jdWiEAqqygyiEZCiaiELjeoqvBdWixBo0k5aNYK56TgPYh93
-	M7yLpYqQ==
-X-Gm-Gg: AR+sD10GR4gOn/W7pXlNZ0XMRMuKYuvACdzlPyE3WVR3f2IWAtbSYdFOF5Fu48z5APO
-	3o1ZE/T5kDjPFt8JenRWiPu5YMKOtWpCVFTJWyN0voYmRcAJk+Y8qnqdahtKhVlENMHhnvUhTB8
-	kENeirTxCzVeTLyAD9kyCPNfF3FNpbOyD/9Mr2a/lIY1IVze48CZqTVQH+EQ3VHyG/hEe3gsqJI
-	TY5+9+H61YscyKgXHV/0qUowUzefOdw77iw8kUWxUtRxI4HJiE4PFNTlZo2mDsb4Tq2ZQpO1JMB
-	S6iwVtGNFmFOjDGfk8EabRhjDFArE3duF80eF8wty03q6DVObD2Gi9GV7tC9jbLI8G6yZeWCr6f
-	Ur2xIL5LFFqurBwbOw1koSxOG21KMatm58yJLQvNX6Se8Not8IokiJ1Bk85pz6zQ0j56teh8=
-X-Received: by 2002:a17:902:f602:b0:2c0:b6c7:227e with SMTP id d9443c01a7336-2d046d67890mr3472175ad.5.1785466096078;
-        Thu, 30 Jul 2026 19:48:16 -0700 (PDT)
-X-Received: by 2002:a17:902:f602:b0:2c0:b6c7:227e with SMTP id d9443c01a7336-2d046d67890mr3471975ad.5.1785466095585;
-        Thu, 30 Jul 2026 19:48:15 -0700 (PDT)
-Received: from [10.133.33.90] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d047abcadasm588365ad.51.2026.07.30.19.48.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jul 2026 19:48:15 -0700 (PDT)
-Message-ID: <e6906c57-d17f-475f-89d3-d2e8550735ff@oss.qualcomm.com>
-Date: Fri, 31 Jul 2026 10:48:12 +0800
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="TJMEoNIO"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cGOUb8LJtqCEk2PD9kZQLA51ESH3i4qW48S3qnbWr5mMSXRZQtI7a6YsAOKWBFNX251YMCHLoLzHdMoy+1j3jSBfiHXvIqOGf2TbAGnfo0XUYI1iqR3izqjbmlnWKd0fDdMEzdZJpOOoQ0q9WiH97IkEM21V2xuGStaqwtsAkcPesFbfalNcm8T4vjgo8awv0xfqhrm4DC+HMzCYJJe/iecRPeAek43m4Q2S4daxffozYV0MG4CbClO7CpmpXrT515ZIFUx0KB/5VvhUqOWy4ZMme3Dr+N6KhCAjXxrrCfAE2S1eZ8XBJi/1RWZr9QX1Ck8lSvULWdUnzsyfW8xFIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SETjazkJAcSbRoELXtahJx7OHN5p3D4luW2mgjwfjbY=;
+ b=bhvxw/Mb2mGIbaPw02+uke+pEOfDWyWQpfpaexquso6Bhr3QIpQpKIRKUqLhQrJYg0pKRgdvmVYd4yH4zrmBpad7kDgrARe06itOlC8qVH13+lyewIAW7Oza8phbVdZFvtNg+lOY+Khj3XY2niGgR8Ruf5J9HFghJk9/IotHhzDhBdZt/tcBmLEp5Btxw8BOhluZ5cS8JHidXKTcrLTMkenzQnYMyJw9fslixr+LvOgF0Wkin+FPT95AfyBrLr0PRrxLQbSb5EqN55A17UIShgkRNL46GNkNeXwLX17u5PFMfSq8bUT0tIKwDOHIHaW1H7j5n/DOF1WwU1Jf0IlUmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SETjazkJAcSbRoELXtahJx7OHN5p3D4luW2mgjwfjbY=;
+ b=TJMEoNIO7jCimat4tDHRNwzhpjRQKpjLsqiYN4FGqCtKMvHriZ0AersOG9ZES4DAhBTXaeTEUUfZ9I6NL4rFhLh9cuNp4Vvesx5MxZ12ZDxAD+Pc+0BBunEW682PZWSApEeS/0+DsG57c7vUC1/1g3z9OOTDqIb8Ti62XrcY2O/DgBpkZFgvXBXyvWRsqx3emIGp9crGt0HvEgZQZYkT/S8XKV9O9UPhTE3Blrn0N6jV+5VcLeI+y0z7zf2ss5miMFKty8a9ubW4JAbnrHIgp1Sei2EwU6PW/6pShIv/+No3G5m2YTUUmmD0YBAzrh1qUJPLGvVvkWWF+iyG9wClBQ==
+Received: from GV2PR04MB11739.eurprd04.prod.outlook.com
+ (2603:10a6:150:2fc::18) by PA4PR04MB7760.eurprd04.prod.outlook.com
+ (2603:10a6:102:c5::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.15; Fri, 31 Jul
+ 2026 03:32:23 +0000
+Received: from GV2PR04MB11739.eurprd04.prod.outlook.com
+ ([fe80::71c2:937b:d466:174a]) by GV2PR04MB11739.eurprd04.prod.outlook.com
+ ([fe80::71c2:937b:d466:174a%6]) with mapi id 15.21.0270.012; Fri, 31 Jul 2026
+ 03:32:23 +0000
+From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>
+Subject: RE: [PATCH net-next 7/7] net: dsa: netc: add PTP one-step
+ timestamping support
+Thread-Topic: [PATCH net-next 7/7] net: dsa: netc: add PTP one-step
+ timestamping support
+Thread-Index: AQHdHn3TU/SqWYKSAEiUh6EODwjTqLaEUSQAgAKsQpA=
+Date: Fri, 31 Jul 2026 03:32:23 +0000
+Message-ID:
+ <GV2PR04MB1173951117EECE973F4D039DF88C82@GV2PR04MB11739.eurprd04.prod.outlook.com>
+References: <20260728104548.3301214-1-wei.fang@oss.nxp.com>
+ <20260728104548.3301214-8-wei.fang@oss.nxp.com>
+ <20260729104316.EABB81F00AC4@smtp.kernel.org>
+In-Reply-To: <20260729104316.EABB81F00AC4@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2PR04MB11739:EE_|PA4PR04MB7760:EE_
+x-ms-office365-filtering-correlation-id: 72104e00-15e4-4ecb-9834-08deeeb455b7
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|19092799006|10067099003|4143699003|11063799006|5023799004|6133799003|56012099006|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info:
+ OWBwXvFyw+lel2dCZc8UPLXmhFhIs/89UKM1mS4x2ou2SuNUJFZIi8X2+6lnsyTGrFm6Nc7mHD4RRIA5F8x8iCJBrGyslluYlHYWWSZuvEvx2um+FDUPsJw2aNOC9nfOGWNwhY5NEswyy2qnGVPbEoz4jLgB87g30/787XwLfq6xwkiY7ndE7sHY7og3KhEJrZtmEy/7GidwEG1gzI5iiu1FRqXwdYcGXOgnlnnlzuaZI0Vw5sWwW2hDLDqTVvXKwpL8lSTbMJDTfSkKgIpaJywbJO3iOZnkRRSNbciELqwM7ZUosr7p1gPSUzmKBK3TH4BC3/gzTLDR7/3z/h9Dw6QAcs2fKPuohei2M8WXR8DY3Q+LyYr5DRMB1uphCU2BmfZRMgRBKcxO9eakGkZfBa/H1/LnYTYtcKYUB437GQoqEtwmfdza5T3MYutNx7NtNV/0kgDUKU5kWJN2qAJ0uek0bfgI4Y0VnNal+0Pjs5vtVpQZQTv85l1fRtdfVy0/a9b/PHNsJgcGK11d0eFjc3l1ZZZ03ojh1rdGkYxT3r3Od2d5jvnb5rxGGGRgpiSYeVBdkVqFh++dH2PMEXd+pEKNEj4dmStlqm2Ph035BDRW96BJYhORtry2uLLekxINFSwATiVzBUwg7yDEYnJsbWWAiCSqQgBQyhmVyKgiZrzx174Vf7bC3R98h5XCFexAyou/3dZSshJriiXddQHsbRbxRMDwD9AeKQivpFrslpE=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11739.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(19092799006)(10067099003)(4143699003)(11063799006)(5023799004)(6133799003)(56012099006)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?RWtCdE9BdVFDK1pzYVBqaE5ZK2d1cXFHYm1xd0dMUitKeDBxb0EwSnAzaVRh?=
+ =?utf-8?B?OTFyYnRGaFNQU1k0ajFEbWp0czRVUEJ4UzFzVE5JV3hPZkNyc2RNWitDQ1J1?=
+ =?utf-8?B?UjhkL25OeVVYbHE5RDdGdWZYZk0rNzBpY1o5bjBQeVRIb2p2R284R0NwTTBQ?=
+ =?utf-8?B?dHlCWkJCT1RUeVZXeTZCQjc3N01WQjF4S01QWDh0R2VsT1RzeG9GYytjR2pq?=
+ =?utf-8?B?M0l1OTRmaThYRVQ3RlM1bFFIeUxDUkZ1WC94RVQrKzZobFF0OVZTYTBRaWJ6?=
+ =?utf-8?B?NXZGNzBYMG9YN2lmbHpwWVBMS3M1WXZhLzFLdm5mK3JTOE15aURoSHV1VTZW?=
+ =?utf-8?B?aTBOSGEzYXBHZVRSRWxLb3h1Y3FVYVdwT2lQNWJOWlFWUy83RFZFaC9HbTFX?=
+ =?utf-8?B?Mzk3NUtOWFozaEZCNS9YQ1Qwc3JOalA3M2NOMTJOek9lZzRoTW5WL05IN1du?=
+ =?utf-8?B?M2FiZ2JtalVySndyVVZZUVdTT3RLRy92dXJldWU2bUkrWGhHSEt0elJ3ZElu?=
+ =?utf-8?B?M1YyOUNGNHNMZ3Qyd1VQWnJhSEFmak12M21rK1ZGSko1SVBRaW16UGIyUTln?=
+ =?utf-8?B?MDB5N2Q3dGpnaWRzUlBjeVBGQlRuakM3TXM3MlJSZnRBMk9JZFlNU0k5a2RJ?=
+ =?utf-8?B?a2xhSk1EVU95TmdIQ2lxaCtkMVRWNHZMWENmYnNCYnN2K0xHM2hlS2hqTmli?=
+ =?utf-8?B?djNQNXRWTHlqN3ZhZGRMUkJZQ21KUTlBOFowVWlHdmxnVXB4NjhuY0FodXYz?=
+ =?utf-8?B?dnNremZXazJJL3hneEdMWDhzcW85NkV1RDVnVkhzelJxNnR1ZldTUnZIaEpN?=
+ =?utf-8?B?WVFLQlhwbElxazBrak9seXVuQTNNRXNCbU9CVnhsVW5ZekRXV1p3eVVlQXNK?=
+ =?utf-8?B?YWpSdEZ0SStlQkt6ZldSaVA2cXRBbitTWVVLenF1a0ZoMFlGSVpLMEdNWDlI?=
+ =?utf-8?B?Q0lCYUR6YjNLelFpZGpuamxNakppZ2h5VGFLeXFaaVFLekI5VTJob1ExWkJW?=
+ =?utf-8?B?dExiWklUNkZCbzhrT3VxcGllbUlmRWlNaEY1V1NBWkZkUW0xUE1TL1lEZHBR?=
+ =?utf-8?B?RHpxTGhRNlVQRzdFL2F5bjQ3OWRxb3F3akx4cURLcm9HYWdGUTdVNXVncU9V?=
+ =?utf-8?B?bzZJSWVNaStSalBEU3UrSjdYTHVDWU5IUDdEZVBXU21sVDMyc2JvM25ZelQ1?=
+ =?utf-8?B?NGxnbDRTZ3hpa1k3Z1B2blJ2RHhRakM3NzJZc3NRNW1NcWtWZjFUMzArMUJE?=
+ =?utf-8?B?TFlOMGtLN2VDNFpydUY5ZFJxdWN4UWpmYk1DTGhtbi8vclhQZTlWR0xxUXRh?=
+ =?utf-8?B?Y0Q2Mmw3YjdRQkcxdkY3WnQ2TUF1RkhlWkpud0MzS1FOcHV6U3RBbzJ6dTgy?=
+ =?utf-8?B?cmp4Z0lCeHJjZ284eTVzSWltOUtqZ0RSYjBQdmsycVZ2cUcrb2FDREVac2VD?=
+ =?utf-8?B?WnlpYnZMZkNPVE92MDZoZGhGZjZBZERiTG4xZXpNWE9Ga2RyL2JnemJ3SkFV?=
+ =?utf-8?B?b2tOZzkrK05iVUswQmd5M2I1a0JCaE1ldnlNMjRDNkk5VG52dVRyS2pqSnBT?=
+ =?utf-8?B?VkY0QXgxYWdIYU9kMStGVlR0TFZpTUZVRlVnaU1ZK0JjNEZsb1ptK0NDbk5r?=
+ =?utf-8?B?cUdzcVNpbFhWODA0U0I2SkRCMlV0SDB4bjZzcE14a21VS3dYcTB5UVdob0VW?=
+ =?utf-8?B?Vm5FOG14UXF6b1FCT0E2RTF6eFA1UmQwYTJ1MGtsdTRJaWFCMTRJekdwVEF4?=
+ =?utf-8?B?WE1oeUFBZFN0Nm5TMnJRSTdUT3dYT0J4NGdVTWVDQkhLdzdWK2xwV056amhU?=
+ =?utf-8?B?N2Y1ekdPRXZWRjZVUzBubUwrS3dSNWJWbjF3dFR0aGRuVC9aNE4xSzBUelhV?=
+ =?utf-8?B?TGc2aWQ1UTVCdWJPVUMydWF1VWlYUXlhWnVpNGZOcDc0OFJEdWNDMWlQSVVH?=
+ =?utf-8?B?dmFMTzk4ckpiWnExKy8wd2ZHNGlRUk9NT0ZvMDljS2c2cFE0eGZDYXFCU3RP?=
+ =?utf-8?B?NGxZVEt0WERsTXBUSnR5dENseXlnMThlNXdlS1RENHRFc2tlN3JPMGxLSWgv?=
+ =?utf-8?B?L2hVRnJFUG5SRXdIeG0wTjQzbXFyMHNxY0xCenlrMzliS3hpSVFjV3l4cm1o?=
+ =?utf-8?B?d01Rc1lKMUdzeEI0UEhQWE4yZzQyeWVjWW5ITmZPREpWcVhscUNDdTA5MCtu?=
+ =?utf-8?B?a0t1ZHgxZnlMRGpxYzNCVHROUlhhUUZBWS9uMTZQU1Rta1pBcHp5YUtlSHY5?=
+ =?utf-8?B?SnFyRU4zRm9DN0F2dGpQVTZlSzVwSkMxcld4VDJySGN4ZWNmUHVOclJsM0h4?=
+ =?utf-8?Q?8nEMaOM1LdaIw3MKCN?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 1/7] dt-bindings: arm: Add support for Qualcomm TGU
- trace
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260730080704.2903540-1-songwei.chai@oss.qualcomm.com>
- <20260730080704.2903540-2-songwei.chai@oss.qualcomm.com>
- <20260730081507.B1F911F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Songwei.Chai" <songwei.chai@oss.qualcomm.com>
-In-Reply-To: <20260730081507.B1F911F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=GtVyPE1C c=1 sm=1 tr=0 ts=6a6c0cf1 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=FA5ksZJBM4DXSn_ndQAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-GUID: 94B3GrLJ9bo3nT9g4LID7exvXt2De_WJ
-X-Proofpoint-ORIG-GUID: 94B3GrLJ9bo3nT9g4LID7exvXt2De_WJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDAxNSBTYWx0ZWRfX/OyDxXSLe2ZC
- s+VcK+p9SuZQ9Rl/53xuyCt7c05eJdnHpD+RfcY4vHLaFFwaRW2Wr1qMn/uSHpgooN5bncKmWQA
- nvy9ux1TtsPGqIexbuCHZYAGq3YsrAv1/KpKZ4zMsHP2zF5HWTm1tJengfyCUlWfDeH9fuI6+cp
- b+gUCPYE8EKbu87CTyBs+dMhTJwDi+W1cWVN3lqmEiJjiOeaO1op0ifU6ajmQN96bSyzBc8z7NY
- xHOiHaQsMJEbNg1nEKtEn6D3aNX5SpREh1PdsfTfKmL0qDpJ4g6+NqUolmyvqeclcIsxZvOIArN
- fNz0nEd09shDvWLPcvY46wMtjHQzvAtseMT5xdsgMKnwbLgxRFx7aoAjfZWmvaq+S2aPziBkXLh
- 6iXhf+CEi0jC7blOJzb5Ew9wtIAzvBLJpd91C85YE1n5iZYlwvgLyHzmQrL2Cx0XbZSL0OVxAL0
- RU4YoHzj/D/ZTZ4eKJA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDAxNSBTYWx0ZWRfXwnNIv/wUEbsx
- TJ9kiYt7KENqgR2a9XL0OMji0PxupSfyPKlk1nUSoI0z9aLj2rDOr77OqKVZRG4ij4ow749E4od
- kNm4fFLhP27IzRx2IyQxz6E/93BAnqk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-31_01,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 suspectscore=0 malwarescore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310015
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11739.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72104e00-15e4-4ecb-9834-08deeeb455b7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jul 2026 03:32:23.2744
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: k+5PSP3zlRiOb0WuSZRN8ra2zNo49eol0Z45ZKR4l0C1I/LBB8QV/ZNiizoDloAhEgHGfSc+Uk4dBergHl7nJQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7760
 
-
-On 7/30/2026 4:15 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The binding schema omits the `interrupts` property despite the hardware description explicitly stating it can generate interrupts.
-
-Clarification：
-
-The current driver/DTS does not actually use an interrupt line (it only 
-uses CTI trigger outputs), so there is no need for the binding to define 
-an |interrupts| property.
-
-> - [Low] The schema claims `arm,primecell` compatibility but uses `additionalProperties: false` without referencing the standard Primecell schema, incorrectly blocking valid Primecell properties.
-> --
-
-Clarification:
-
- 1. I checked the format of the |arm,coresight-*.yaml| files under
-    |Documentation/devicetree/bindings/arm/| and found that they all
-    claim |arm,primecell| compatibility, yet none of them reference
-    |/schemas/arm/primecell.yaml|.
- 2. In actual DTS files, properties defined by the PrimeCell schema,
-    such as |arm,primecell-periphid|, do not normally appear. Therefore,
-    referencing |/schemas/arm/primecell.yaml| is not mandatory.
-
->
-> --- Patch [1]: [PATCH v16 1/7] dt-bindings: arm: Add support for Qualcomm TGU trace ---
-> commit 1cb0b1557ad8efca643aa36dee2d1b84f9c415b0
-> Author: Songwei Chai <songwei.chai@oss.qualcomm.com>
->
-> dt-bindings: arm: Add support for Qualcomm TGU trace
->
-> This commit introduces the device tree binding schema for the Qualcomm
-> Trigger Generation Unit (TGU). The TGU monitors signals to identify issues
-> and can generate a trigger into the CTI or interrupts to processors.
->
->> diff --git a/Documentation/devicetree/bindings/arm/qcom,tgu.yaml b/Documentation/devicetree/bindings/arm/qcom,tgu.yaml
->> new file mode 100644
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/arm/qcom,tgu.yaml
-> [ ... ]
->> +description: |
->> +  The Trigger Generation Unit (TGU) is a Data Engine which can be utilized
->> +  to sense a plurality of signals and create a trigger into the CTI or
->> +  generate interrupts to processors. The TGU is like the trigger circuit
-> [ ... ]
->> +  preprogrammed state/sequence and then produce a trigger or interrupt.
-> [ ... ]
->> +properties:
->> +  compatible:
->> +    items:
->> +      - const: qcom,tgu
->> +      - const: arm,primecell
-> [Severity: Low]
-> Since this device claims arm,primecell compatibility, shouldn't there be a
-> schema reference to /schemas/arm/primecell.yaml# included to properly
-> inherit standard PrimeCell properties?
->
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 1
->> +
->> +  clock-names:
->> +    items:
->> +      - const: apb_pclk
-> [Severity: Medium]
-> The description above mentions the hardware can "produce a trigger or
-> interrupt", but an interrupts property is missing from this list.
->
-> Will device trees that legitimately specify the hardware's interrupt line
-> fail schema validation when additionalProperties: false is enforced below?
->
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +
->> +additionalProperties: false
-> [Severity: Low]
-> Because arm,primecell compatibility is claimed, should this use
-> unevaluatedProperties: false instead?
->
-> Using additionalProperties: false without inheriting the PrimeCell schema
-> will block valid inherited properties like arm,primecell-periphid from
-> being used in the device tree without validation errors.
->
+PiA+ICtzdHJ1Y3Qgc2tfYnVmZiAqbmV0Y19vbmVzdGVwX3N5bmNfaGFuZGxlcihzdHJ1Y3QgZHNh
+X3N3aXRjaCAqZHMsIGludCBwb3J0LA0KPiA+ICsJCQkJCSAgc3RydWN0IHNrX2J1ZmYgKnNrYikN
+Cj4gPiArew0KPiA+ICsJc3RydWN0IG5ldGNfcG9ydCAqbnAgPSBORVRDX1BPUlQoZHMsIHBvcnQp
+Ow0KPiA+ICsJc3RydWN0IG5ldGNfc3dpdGNoICpwcml2ID0gZHMtPnByaXY7DQo+ID4gKwl1NjQg
+dHN0YW1wOw0KPiA+ICsNCj4gPiArCS8qIFNlcmlhbGl6ZSBvbmUtc3RlcCBTeW5jIHBhY2tldHM6
+IG9ubHkgb25lIGNhbiBiZSBpbi1mbGlnaHQgYXQgYQ0KPiA+ICsJICogdGltZSBiZWNhdXNlIHRo
+ZSBTSU5HTEVfU1RFUCByZWdpc3RlciBpcyBzaGFyZWQgYW5kIG11c3QgbWF0Y2ggdGhlDQo+ID4g
+KwkgKiBwYWNrZXQgY3VycmVudGx5IGJlaW5nIHRyYW5zbWl0dGVkLiBDbGFpbSB0aGUgaW4tZmxp
+Z2h0IHNsb3QgdW5kZXINCj4gPiArCSAqIHB0cF9sb2NrLiBJZiBhbm90aGVyIG9uZS1zdGVwIFN5
+bmMgaXMgYWxyZWFkeSBpbi1mbGlnaHQsIHF1ZXVlIHRoaXMNCj4gPiArCSAqIHNrYiBhbmQgcmV0
+dXJuIE5VTEw7IG93bmVyc2hpcCBpcyB0cmFuc2ZlcnJlZCB0byB0aGUgcXVldWUsIHNvIG5vDQo+
+ID4gKwkgKiBleHRyYSByZWZlcmVuY2UgaXMgbmVlZGVkIGFuZCBuZXRjX3htaXQoKSBzdG9wcyBw
+cm9jZXNzaW5nIGl0Lg0KPiA+ICsJICovDQo+ID4gKwlzcGluX2xvY2tfYmgoJm5wLT5wdHBfbG9j
+ayk7DQo+ID4gKwlpZiAodGVzdF9iaXQoTkVUQ19GTEFHX09ORVNURVBfSU5fUFJPR1JFU1MsICZu
+cC0+ZmxhZ3MpKSB7DQo+ID4gKwkJX19za2JfcXVldWVfdGFpbCgmbnAtPnNrYl9vbmVzdGVwX3F1
+ZXVlLCBza2IpOw0KPiA+ICsJCXNwaW5fdW5sb2NrX2JoKCZucC0+cHRwX2xvY2spOw0KPiA+ICsN
+Cj4gPiArCQlyZXR1cm4gTlVMTDsNCj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gSXMgdGhlcmUg
+YSByaXNrIG9mIG1lbW9yeSBleGhhdXN0aW9uIGlmIGFuIGV4dGVybmFsIHNvdXJjZSBmbG9vZHMg
+dGhlIHBvcnQNCj4gd2l0aCBmb3J3YXJkZWQgUFRQIFN5bmMgcGFja2V0cz8gU2luY2UgdGhpcyBx
+dWV1ZSBoYXMgbm8gbGVuZ3RoIGxpbWl0IGFuZA0KPiByZXR1cm5pbmcgTlVMTCBjb25zdW1lcyB0
+aGUgU0tCLCBkc2FfdXNlcl94bWl0KCkgd2lsbCByZXR1cm4gTkVUREVWX1RYX09LLA0KPiBieXBh
+c3NpbmcgcWRpc2MgYmFja3ByZXNzdXJlIG1lY2hhbmlzbXMuDQo+IA0KDQpUaGUgY29uY2VybiBp
+cyBiYXNlZCBvbiBhbiBpbmNvcnJlY3QgbW9kZWwgb2YgdGhlIGRhdGEgcGF0aC4NCm5ldGNfb25l
+c3RlcF9zeW5jX2hhbmRsZXIoKSBpcyByZWFjaGVkIG9ubHkgdGhyb3VnaCB0aGUgdGFnZ2VyJ3Mg
+LnhtaXQNCihuZXRjX3htaXQg4oaSIG5ldGNfb25lc3RlcF9zeW5jX3Byb2Nlc3MpLCB3aGljaCBE
+U0EgaW52b2tlcyBleGNsdXNpdmVseQ0Kb24gdGhlIFRYIHBhdGggKGRzYV91c2VyX3htaXQpLiBJ
+dCBpcyBub3Qgb24gdGhlIFJYIHBhdGggYW5kIG5vdCBvbiB0aGUNCmhhcmR3YXJlIGZvcndhcmRp
+bmcgcGF0aC4NCg0KRm9yd2FyZGVkL3JlY2VpdmVkIHBhY2tldHMgbmV2ZXIgcmVhY2ggdGhpcyBj
+b2RlLiBBbiBleHRlcm5hbCBzb3VyY2UNCmZsb29kaW5nIHRoZSBwb3J0IHdpdGggUFRQIFN5bmMg
+ZnJhbWVzIHJlc3VsdHMgaW4gZWl0aGVyIFJYIHRvIHRoZSBDUFUNCihuZXRjX3Jjdikgb3Igc3dp
+dGNoLWludGVybmFsIHBvcnQtdG8tcG9ydCBmb3J3YXJkaW5nLiBOZWl0aGVyIGdvZXMNCnRocm91
+Z2ggZHNhX3VzZXJfeG1pdCAvIC54bWl0IC8gbmV0Y19vbmVzdGVwX3N5bmNfaGFuZGxlci4gU28g
+ImV4dGVybmFsDQpzb3VyY2UgZmxvb2RzIHRoZSBwb3J0IHdpdGggZm9yd2FyZGVkIFBUUCBTeW5j
+IHBhY2tldHMiIGNhbm5vdCBleGVyY2lzZQ0KdGhpcyBxdWV1ZSBhdCBhbGwuDQoNCkVucXVldWlu
+ZyByZXF1aXJlcyBsb2NhbCBzZW5kZXIgY29uZmlndXJhdGlvbiwgbm90IGp1c3QgYW55IHBhY2tl
+dC4gVGhlDQpvbmUtc3RlcCBwYXRoIGlzIGVudGVyZWQgb25seSB3aGVuIGFsbCBvZiB0aGUgZm9s
+bG93aW5nIGhvbGQ6IHRoZSBmcmFtZQ0Kb3JpZ2luYXRlcyBmcm9tIGEgbG9jYWwgc2VuZCgpIG9u
+IHRoZSBEU0EgdXNlciBuZXRkZXYsIHRoZSBzZW5kaW5nIHNvY2tldA0KZW5hYmxlZCBoYXJkd2Fy
+ZSBUWCB0aW1lc3RhbXBpbmcgKFNLQlRYX0hXX1RTVEFNUCksIHRoZSBwb3J0IHdhcw0KY29uZmln
+dXJlZCB2aWEgU0lPQ1NIV1RTVEFNUCB0byBIV1RTVEFNUF9UWF9PTkVTVEVQX1NZTkMsIGFuZA0K
+cHRwX2NsYXNzaWZ5X3JhdygpIGlkZW50aWZpZXMgaXQgYXMgUFRQLiBBIHJlbW90ZSBhdHRhY2tl
+ciBvbiB0aGUgd2lyZQ0KY2Fubm90IHNldCBTS0JUWF9IV19UU1RBTVAgb24gYSBsb2NhbCBzb2Nr
+ZXQsIHNvIHRoaXMgcGF0aCBpcyBub3QNCnJlbW90ZWx5IHJlYWNoYWJsZS4NCg0K
