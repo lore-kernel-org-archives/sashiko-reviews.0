@@ -1,121 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF1B3B6BFA;
-	Fri, 31 Jul 2026 19:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4667F349B0D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 19:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785524729; cv=none; b=ipChOZblWs4ukaFXOkxWAq7+yomIxeOaU+KKw5/PY0Kk+EQLWuJgDEPvKsWdI7MDKyuhpteLG8MFA1zre0JzaKnOvf0Xi4OaN4DG3JnulVoIWpKwnFJX/0dP8CTbCQPxWlAnXB2DqTue/8VHyMxPCvSGUyBhGptuUcDUkzthH08=
+	t=1785525904; cv=none; b=MIqz2fbl8Uas3Q8UJLu8fegX8fBjPFnfubVN+xuY7FME1SwQUT12Qj03NnZ70puRoNV93GS7kfgI+HXVlCKcoj8cSbEMfktFhiuzPsnEADCBn9STeZKCUIA+JGkiua/LwWv3/J5Xx3L+M6xWD7lQvYe46eW8ErGlI3ZzpvQhKMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785524729; c=relaxed/simple;
-	bh=Lx054CG9dIzBqszzJAHgFm0MywIatCpgMOlKkkTlTnI=;
+	s=arc-20240116; t=1785525904; c=relaxed/simple;
+	bh=+236ZUiGE1UTZf5D568G34CzbrXLYB0nlzUL2poy9i8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FZuhn5BY6qEuwzU0Z5nAhJLsufpcI/bChMRSjn/HfWKgqOltsnk9Pg9YMK0cfBob9VHwVNHljjWvfCR2S/IZxv7XEaQ9OUp1Ogbs0AHkHmpoVqY2uvRXpphR9QqsuOxV8W40MtYVak8xgnEzGBW8yq9lfKWuruwcYGj+B1uefIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLcEbxJO; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=C8u7Pq41JYwVnFDuu7gB0hrbqoCmQdQKOEwNKfki5SdwbtcH5H9fpUc+yOxSxinmX4d0pXDeRHkwUWaodvIXFng9aHCx0jeAxdbDorMXu/Wbeh+MBhr4cq5NeOF8TVhDqD7R4qsOku0lS5HqYgMJlCMr6bnQyJK3ZRszDDmEcxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rMJZHj3g; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLcEbxJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E750F1F00AC4;
-	Fri, 31 Jul 2026 19:05:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785524728;
-	bh=xTvdhsBpOd7JIOK6/OSC6kWUmgECXFbgK/UrghGZEEY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=NLcEbxJOl8MNq7AhCfiQ210nRKnVN/YTK5UryuGbAQcZPT0hwLXmp/NY+B1/w5uwK
-	 xhSMoC+VVwYojs70W/tkka/7RXEH7ilbPIsdwj8rHBH57xoTNtXYT6BbMw15wDv3tD
-	 HoWs76ecUsUOVon7rXZ5sARUs3x87GtR/DhkaqVcJE8lYtvS+2de4QzFs31TTDx+DG
-	 uQz/T51qsfrrlPT38G2YZ5Z+jOf1ae8BeJJCKAs1DUS3LwpYgYe5ZO84mYEdXTpmP6
-	 ByttCZOzg7IXABrWnuwtXhO2SuqqUcNbHKwqpxpFv+ebTOOiAn8USvc4QoixGxQRbm
-	 /wZ5/B6/c7eAw==
-Date: Fri, 31 Jul 2026 12:05:26 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Fuad Tabba <fuad.tabba@linux.dev>, sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v5 3/7] KVM: arm64: Top up stage-2 memcache for dirty
- logging faults
-Message-ID: <amzx9rqqU58QZBMU@kernel.org>
-References: <20260717130317.1953574-1-fuad.tabba@linux.dev>
- <20260717130317.1953574-4-fuad.tabba@linux.dev>
- <20260717131537.71F531F000E9@smtp.kernel.org>
- <CA+EHjTzZxa7Yb2GJhbJdtnTgGoiPTmSAotWTF7S7acq6M_trwg@mail.gmail.com>
- <87cxwkr8k0.wl-maz@kernel.org>
- <amxKgJ1cCHO97trp@kernel.org>
- <86cxw3d0ts.wl-maz@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rMJZHj3g"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-8114a4542b2so21211707b3.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 12:25:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785525902; x=1786130702; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1w94Tr21pSE0EfOV5IzEh1sDDQbxXsJWYMJqC312JyA=;
+        b=rMJZHj3gUOqWq8I1rYGQZCipSWEUCYxcHdHhr7qOpb1K4WeFCWLzRE9y2ODgyXAN3p
+         HCBSDxHSJp/eEVKL/eo+wI/3GsKaE0Xq3Z+XTQvG410QzUMvTIl2zBvAAn1W4+Vgur51
+         ZxK0ajaYG3YbF3Wf3wrV+P1ickS0m8fCOSfJQkBUfuotqn9qgLO5QYle4oWLeWHgxAQY
+         MafyMGwizEouyG2tGcJZXLVAR6VC8sBAjJ/qz6i9CRe9YVPpYGsfcD568C7tdMsOjbfB
+         sv+qE77ymBXOb+mdySIc/Ux49WkWIGh4dMpvUSXtgQX132D+iGWLGwuJ7uAYIUhx89ae
+         PxyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785525902; x=1786130702;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=1w94Tr21pSE0EfOV5IzEh1sDDQbxXsJWYMJqC312JyA=;
+        b=o7p66H3NHxIXZAs/KCKK8sdcv+HULVuxoJcBbmwOJ18PwIJvr4+tRAWXbm9u199gKQ
+         b6okeDHtZL5kvoGWTMQFmhlA7/8Cu1BoZBvREW+QIRoONMnY7axWqOeq9KvqHSpM+XZ7
+         BTespqfda//tSkxixhDocJ55vXnpqx4wvbbzsML5Be6+uZv4CblEhWe7bibKJOZl7owN
+         zRaoxizHOLDWXAVzIwZnB/Z6ro6N4MtB6t/QrYSOEEHYkUHE3oFpyRY2kPUC3N1UhYTY
+         Fh1xdqwKGxSkbaQrJeprt6Dntyylzly8tvtJ1arxj1QyoxaLL8S/ETgKe4ergH8D1Vf8
+         FeEA==
+X-Gm-Message-State: AOJu0YwNAZpIshYGMe5UAcYv7lLHYzhnhdaOKfEQHOteO3RQXHcKfZwY
+	Lzwp/rBCL/9ZAPaP+3Kfiyv3jCOlAghGMEXM7wUXBwfb15p1Di1rYVktdxtMn8Jn
+X-Gm-Gg: AR+sD11Ab5KV+w7MywJBknGVSSKspqSsbblQjkYdNKApMKqiMrVguJnDSi+zXxPZiyW
+	i37M0XZE2Amrn7geLcKztKfTTlyuzSVYdJGmcmWIITbe1wHgb+fTNRftxK3II++Qc5NuEVxWnPc
+	+QjIOf1mCmctjPqjX55rA+xJuPsGlWoxYfet9rW8N+W9/epzxR/Lh7jjjTtelA5qiL1p+73b73c
+	n8tlHZrShn0UxkJxUInUAwQJnKsQl+WN/rBxSbLewvum8u3umSguABgOHfwK2TilwJvwaBHQpPM
+	vm7Tu9EPDWfSWccYCtdrfZsWEx2UwmsCVeG8e9rHaGqBeqdOLXxj3dYpwwEWZGUlfN8DGqEtRYo
+	LO+8nEABMI15bgVh+A0q/+aZX8Niqqm+AKnVaX3PtYxaNGXVR+5f0Hw5fKkO1E9MVklLiMV8Vq4
+	i64g8nQxjHjAuKu58jnrNiNojXsPO9CmeVL+2h8XjwAryV6w03f2PC5uQ8LivCXYtnRPhTJHXgq
+	FtoKv0v4/ZHnYjsiKcoA6Q=
+X-Received: by 2002:a05:690c:6d0b:b0:7fd:ddb0:2622 with SMTP id 00721157ae682-81fd49bfea7mr14802447b3.6.1785525902064;
+        Fri, 31 Jul 2026 12:25:02 -0700 (PDT)
+Received: from zenbox ([2600:1700:18fb:6011:d52:64e9:32ac:b832])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81fccf30319sm13142527b3.6.2026.07.31.12.25.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 12:25:01 -0700 (PDT)
+Date: Fri, 31 Jul 2026 15:25:01 -0400
+From: Justin Suess <utilityemal77@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next 12/13] landlock: Document the BPF kfunc interface
+Message-ID: <amzzYACkhCpraJLO@zenbox>
+References: <20260731022047.189137-1-utilityemal77@gmail.com>
+ <20260731022047.189137-13-utilityemal77@gmail.com>
+ <20260731024550.A713C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <86cxw3d0ts.wl-maz@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260731024550.A713C1F000E9@smtp.kernel.org>
 
-On Fri, Jul 31, 2026 at 09:23:43AM +0100, Marc Zyngier wrote:
-> > FEAT_BBML3 shifts responsibility onto the implementation to reconcile
-> > multihit due to mapping granularity changes. A hypervisor could choose
-> > to do eager page splitting at the beginning of dirty logging and elide
-> > TLBIs.
+On Fri, Jul 31, 2026 at 02:45:50AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The kfunc filter excessively restricts `bpf_landlock_put_ruleset`, contradicting the documented intent and severely limiting ruleset lifecycle management.
+>
+> [...]
+>
+> [Severity: Medium]
+> Does the kfunc filter excessively restrict bpf_landlock_put_ruleset,
+> contradicting the documented intent?
 > 
-> Sure. We just don't advertise BBML3. and I'm not even sure we always
-> can emulate it.
-
-Well, we'd at minimum need supporting hardware since the feature must
-also exist at stage-1.
-
-> > 
-> > > I think the latent bug here is the way we always walk L1's S2 on S2
-> > > fault, irrespective of the fault type, and that feels wrong. This is
-> > > ignoring the fact that we already have a TLB (the shadow S2) for this
-> > > mapping, and rewalk anyway. Since we now find valid permissions, we
-> > > take it at face value and try to install this new translation (which
-> > > could point to a different OA, and even bigger problem).
-> > > 
-> > > So ideally we'd simply tell the guest to bugger off, but we need to
-> > > solve a few problems first:
-> > > 
-> > > - some permission faults are caused by the host rather than the guest
-> > >   (dirty logging, HAFDBS), and we need to treat those specially.
-> > > 
-> > > - we need to rebuild an ESR based on the content of our TLB, not L1's
-> > >   S2, which is not always easy to obtain (we have some limited TTL
-> > >   caching in the shadow S2, but that's not always reliable).
-> > > 
-> > > All of this strongly intersects with Wei-Lin's reverse map, and
-> > > Oliver's HAFDBS support.
-> > > 
-> > > Oliver?
-> > 
-> > Hmm, I'm more of the mind that we should just keep the memcache topped
-> > up for any fault because clearly the prediction has gotten out of sync
-> > with what happens later down the line. We're bound to screw it up again.
-> > 
-> > Generating faults solely based on the TLB seems to be at odds with
-> > supporting FEAT_ETS* in the shadow stage-2 and practically means we
-> > need to re-walk for most stage-2 aborts anyway. And as you point out, I
-> > need to do this for HAFDBS dirty state updates.
-> > 
-> > BBML3 and ETS2/3 aren't terribly high priority but I'd rather not paper
-> > over a rather straightforward KVM bug by making design decisions that
-> > limit our feature set for nested.
+> Looking at bpf_landlock_kfunc_filter() in kernel/bpf/bpf_lsm.c, it appears
+> to apply -EACCES to bpf_landlock_put_ruleset for most program types and hooks:
 > 
-> My problem here is not the top-up of the memcache, but the fact that
-> the OA may have changed in L1's S2. This potentially result in an
-> inconsistent S2, and in the future a wonky reverse map. So I'm not
-> advocating we paper over anything. It's exactly the opposite.
+> kernel/bpf/bpf_lsm.c:bpf_landlock_kfunc_filter() {
+> 	if (!btf_id_set8_contains(&bpf_landlock_kfunc_ids, kfunc_id))
+> 		return 0;
+> 
+> 	switch (prog->type) {
+> // ...
+> 	case BPF_PROG_TYPE_LSM:
+> // ...
+> 		if (!btf_id_set_contains(&bpf_landlock_kfunc_hooks,
+> 					 prog->aux->attach_btf_id))
+> 			return -EACCES;
+> 
+> 		return 0;
+> 	default:
+> 		return -EACCES;
+> 	}
+> }
+> 
+> This prevents BPF programs of types other than SYSCALL or two specific
+> sleepable LSM hooks from legitimately dropping a reference to a
+> bpf_landlock_ruleset they acquire from a map via bpf_kptr_xchg().
+> 
+> The verifier forces the program to drop the acquired reference, but rejects
+> the call to bpf_landlock_put_ruleset().
+> 
+> Additionally, looking at bpf_landlock_kfunc_ids:
+> 
+> kernel/bpf/bpf_lsm.c:
+> BTF_ID_FLAGS(func, bpf_landlock_put_ruleset, KF_RELEASE | KF_SLEEPABLE)
+> 
+> The KF_SLEEPABLE flag seems to prevent calling the release kfunc from
+> non-sleepable programs, even though the underlying release mechanism
+> (security_policy_kptr_put) is designed to support non-sleepable contexts.
+> 
+> Could this severely limit ruleset lifecycle management by making the kptr
+> functionally unusable across most BPF program types?
+>
+Sashiko repeated this same feedback a few times.
 
-AIUI the bug is that a change in mapping granularity (but not
-necessarily OA) can cause a shadow stage-2 permission fault to remap at
-a finer granularity and allocate table pages. This seems like something
-we will eventually have to deal with for BBML3.
+It seems reasonable.
 
-OTOH, I completely agree with you about changes to the OA. We should
-synthesize a TLB conflict abort and let the L1 clean up the mess.
+I don't see why the bpf_landlock_put_ruleset's allowed calling context
+can't be broadened out.
 
-I was actually thinking about hardening the stage-2 map path, rejecting
-valid->valid conversions that result in a change of the OA. We'll want
-to have that anyway as Mostafa is adding support for BBML3, that error
-could be propagated as a TLB conflict abort to the L1.
+It's probably ok to allow it for all BPF_PROG_TYPE_LSM programs
+(including non-sleepable ones) in addition to BPF_PROG_TYPE_SYSCALL, and
+drop KF_SLEEPABLE in accordance with the security_policy_kptr_put docs
+stating that the hook consumer cannot sleep.
 
-Thanks,
-Oliver
+Same goes for the bpf_landlock_ruleset dtor.
+
+Justin
+
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260731022047.189137-1-utilityemal77@gmail.com?part=12
