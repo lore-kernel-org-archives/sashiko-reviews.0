@@ -1,83 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359513ADB99;
-	Fri, 31 Jul 2026 15:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140DC439F94;
+	Fri, 31 Jul 2026 15:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785511474; cv=none; b=Yq7G2DFASrAEvGs/KVCzu9coIoGumZbPlAhyItBc8pmWYOvp7XAfWftUAv5Xr9XANJw0PMPhccDmTFDyF5F2viI7mGn3+cg1gSRqAogVlreQKzr/OadcpT0NBNHhm04s8clB/xERC+9gfzldA/aomkvzWKz1A6e5brfIxKaUqUs=
+	t=1785511579; cv=none; b=o4mSCV+U7rc2d8Nm6dW6Tgf35Vt2JPViwcRgx1sYbuFFWFo+F5DEqaT2EQkVwPzMkDL84yEEl9E7rQdD1sbEoCflAVnPZmkkIFt7E3JDKNqPYOfLcfCguEKTvSNKzpVd4JtZtgvwVA0cwFKtAhTqEOzLweiBD3oHmZ+4QgFj2vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785511474; c=relaxed/simple;
-	bh=utTJUPyZTY2PS55lTm7qCjv93TKrWvCUoQ9pyTiB2js=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=TRCYYbSTo76LJHo92+a+nwzV48WKDNVYy5+ygw5CCxyBjDo7JVxkC1vZpXQ3ruMbgII3qjizjJjvcjZBLMFRC1IUrMMWRaVlMZu/9ehZHl7bnmX292ZWHoF7QpbVTpWeLQfvetbmV4VrFn+IbKwiXaEjvNSKz0J95KJgIxf25Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QDCAOEAr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785511579; c=relaxed/simple;
+	bh=rgLjxUjNCOG/yZS3/F1cSvxy+hMAauTMwJ4Htm++otE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bjXlEDVShPNFQvNG8uvfWy/mtxO/uYzL0nfrHmzU9WdfDt3MVOLLvzu2v212qLvNZMQksTL/LAG10JR5UUKKkqThdq/pkxuiCriM9gzZh/s/stLhMzJFkmzZfIZ2qlR8GU6SSm2qHjkwZELGc/tLF6/0HNmmWIUwN6DZnNGbGEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mN6wMkFy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QDCAOEAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A523A1F000E9;
-	Fri, 31 Jul 2026 15:24:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mN6wMkFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F025D1F000E9;
+	Fri, 31 Jul 2026 15:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785511472;
-	bh=6xmfwfN/pP2GZ2+CDCsHLvPNKIXsVR24SrczdTwnBpk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To;
-	b=QDCAOEAr7DlEDZ4K/Z61Y4yM9C4uIlmB2NiekJfRpZMzfUjdkV2xxymC0xzaK/M1n
-	 5z1TQ2cOb2jWQWf/gCl9PESdWWxkAaseqs91aUwDs6pqiEP+kFFYxfj5GjqcrY4bYw
-	 v+j4ih21F1AJ8xdr8/Paz7UZMpEydgVQh5lvhl+dTzBFVQsaGnaxvE9WNTwdIuUIyX
-	 XLRxXgLfLjLB2r+ygAzYzeQwcKhkOhD1eEi/u+I2nr7JnZ+d45pCRHpOu+FBABsgWU
-	 TNOCEa0HGfkPoOebdF+zCOURzheOp5ysRsjnOZCv6VnLnrtlPZ6zIrtj3kaWQdsEQI
-	 2W9s+55S3WEKQ==
-Date: Fri, 31 Jul 2026 10:24:31 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>
-Cc: "thierry.reding@kernel.org" <thierry.reding@kernel.org>,
-	"mmaddireddy@nvidia.com" <mmaddireddy@nvidia.com>,
-	"lukas@wunner.de" <lukas@wunner.de>,
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"Korenblit, Miriam Rachel" <miriam.rachel.korenblit@intel.com>,
-	"treding@nvidia.com" <treding@nvidia.com>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
-Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
- wireless BE200
-Message-ID: <20260731152431.GA1566014@bhelgaas>
+	s=k20260515; t=1785511576;
+	bh=rgLjxUjNCOG/yZS3/F1cSvxy+hMAauTMwJ4Htm++otE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=mN6wMkFykMHHLty86efwRSLhzGCxqqgEMJVYkDppQdNUYnnhMi+4G7mbPD8/ci1KX
+	 2P/S6l7zhCOLEWYkyrRoCHJ3GKCfrPdLSExBIHE2nWabGBmviIYjFgdBJj5mBzw9jK
+	 Ar/DP1LFqd7mUV0lNnj754r6G+Zj+fl2S5pPI461tDUcNhZWWq5aMxXtQ1MsXdq0hg
+	 LiRyHQm0E8SDulKiUP1euQth1w/yWsplAUmtIvBUMb3DNaDUnxCLRhk94opPNaYVkH
+	 XaaupodCtV6oZzJ2V14t0zAb20MZq1tK1OcdzU+stH0LXSMgwXaXPO2WQoWAqQc0Y8
+	 W4d3BZ0/zhH8g==
+Date: Fri, 31 Jul 2026 16:26:13 +0100
+From: Mark Brown <broonie@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v17 03/14] KVM: arm64: Manage GCS access and registers
+ for guests
+Message-ID: <36d6d5c1-4db1-4b6f-a49a-8181a233a07a@sirena.org.uk>
+References: <20260731-arm64-gcs-v17-0-5e39ca01b14e@kernel.org>
+ <20260731-arm64-gcs-v17-3-5e39ca01b14e@kernel.org>
+ <20260731125604.CF4B31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="MgGWOou14h2mwOt0"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b314134d7e39eb497a17283ce15467914aa054ae.camel@intel.com>
+In-Reply-To: <20260731125604.CF4B31F000E9@smtp.kernel.org>
+X-Cookie: No shirt, no shoes, no service.
 
-On Thu, Jul 30, 2026 at 08:16:33PM +0000, Grumbach, Emmanuel wrote:
-> On Thu, 2026-07-30 at 15:08 -0500, Bjorn Helgaas wrote:
-> ...
 
-> > I wonder if the PCI core should disable RO and NoSnoop on Root
-> > Ports across the board?
-> > 
-> > I think this would mainly affect MMIO accesses performed by
-> > drivers, and I suspect drivers expect those writes to be performed
-> > in order, e.g., if the driver writes DMA descriptors to the device
-> > followed by a write to a doorbell, those should stay in order.  If
-> > the RP has RO enabled, those writes may be reordered.
-> 
-> As a device writer I'd say we'd be required to add a memory barrier
-> in that case, but we use writel usually.
-> Does that include a write vs write ordering? Hm...
+--MgGWOou14h2mwOt0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Not being an ordering expert, I'm not sure I can make a convincing
-argument for whether RO should be enabled or disabled for Root Ports.
+On Fri, Jul 31, 2026 at 12:56:04PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] GCS register context switch routines are incorrectly nested inside independent CPU feature checks (S1PIE and TCR2/TCRX), causing state corruption.
 
-Maybe it's easier to argue that whatever the RO setting is, it should
-be the same across all platforms because drivers shouldn't have to
-adapt to platform differences.
+This was specifically requested by Marc on prior versions as GCS
+architecturally depends on these features and it may improve code
+generation.
 
-Root Port settings potentially affect several endpoints, and I think it
-would be impractical for drivers to request RO settings that might
-conflict with each other.
+> Is the GCS feature bit still explicitly masked out of the ID_AA64PFR1_EL1
+> register limit?
 
-Do you have any visibility into whether and how other OSes actively
-configure Root Port RO and NoSnoop across the board, independent of
-individual drivers?
+> Looking at sanitise_id_aa64pfr1_el1() in arch/arm64/kvm/sys_regs.c, it appears
+> the GCS bit is unconditionally cleared. If so, when the VMM tries to enable
+> GCS via KVM_SET_ONE_REG, arm64_check_features() will validate against a limit
+> of 0 and reject it with -E2BIG, making it impossible to expose GCS to guests.
+
+This change is in the following enablement patch.
+
+--MgGWOou14h2mwOt0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpsvpQACgkQJNaLcl1U
+h9D4DQf/RZLYi1M2kH9mqhRQuQZZsMuP6/nM+q2GwXMKIiYqekuu9cGnSbzj5em+
+98EMlgO6DCzrO8dgby25rqrXF64D2NTJzsltMi3c3GKUaBEt/z2Ud8x72zSFSHpA
+99NX2+rDIO5Lh5qXdWZAk+iyjuhRmn8acI7AITHqanoYBl63p0Us/6qFKX6uCzu3
+gMJImEZh9FEfiMidHlfdMO6Hp0Xa7AmyQBNRlrFPkCm36lEyWKmAPBE5iyFsuCPs
+vgSahIirRrgpTpPFh2r2q6gLNNC4bhDwG7Ptm+Eetxtv6KuQHc3sqgevbi7zfisf
+/V2p8awwVaRg1gyB+VU7/FU1PUBuGg==
+=R1lN
+-----END PGP SIGNATURE-----
+
+--MgGWOou14h2mwOt0--
