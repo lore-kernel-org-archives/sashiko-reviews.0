@@ -1,169 +1,239 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013030.outbound.protection.outlook.com [52.101.83.30])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CC83B83FE;
-	Fri, 31 Jul 2026 09:36:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.30
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785490607; cv=fail; b=axUOCk/Uzi3qklDEsrCQDL9pPld3TstMtJtKK2kK+r/Skyn7114BfAADPU/Ik5A/N+tahLOVg7EJNV6rvl3tWJ60bYj785QfiQcX5DkpQDDsNnXLrZDFqfbZONGy/1aNMoixTDKB/paKU/GBH7DTW1S9SJjnSGU7XNU+g9Kgb7E=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785490607; c=relaxed/simple;
-	bh=3f+bGByMCRzV3H70ppk92PDlbvg1HeobMnWQ8D7B9mw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KO0ruJ1TaOO6HwljWDA88kcQtyBmT9JGWxRSOJCaFsTwR6c4z4m/gm0BKSuVWtA4PwXIbimb2VKkLCYIPXLbRPi96wvyqv3IEFRiB3jSRpDaTUIWHrlZaFUBjKJ73D97Tbfe0A4PKLiVuX2M0NWXwDuzi4nPLiuC/TBJ58UETM8=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=EA73aZNl; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=EA73aZNl; arc=fail smtp.client-ip=52.101.83.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC536A36B;
+	Fri, 31 Jul 2026 09:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785491385; cv=none; b=Oe6mkRMpVfV6raiRg2E4FOgDEpGUzXDFInSYkBVDU09pOSD5CQcaOSY2JTcNpeLW9bI9ZNdHJdN4+piL8rKDz703lJTPOrTp3X8hNOKHun+O+rZw9BAc7o2uBxu8wcfl1AgmQ8tr9DrcIQBCFTAUa2qCmZFUMf1ExtCDWIu8xNM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785491385; c=relaxed/simple;
+	bh=GSWdHZlRjIn/Wt5BK0wmEwxA9fF36hzyicnhIOmT5jo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ETW1xYEHX2ciQYPXCZCm9N/8yKgIqvZZgAqgeM9xaQ4Wg1SiENyyj/x2PamHeq6Po8JTiX4NLvu73+5sf2W3xWt4hMBiODLuZsmHQqPKEnJObv7hEnwsw2509Fyg1x3KcvEaokR9xMxVpdCmU3Po9XlnfP5AqTuAhZ2KqDuuJd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=YBsrYwtJ; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="EA73aZNl";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="EA73aZNl"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=yBjG5q8HKxclFPG5KHcubdJe/SbaJLzYP0b4I5tae0/uH+fGtse9+qeBMEEl6BQmR7SQyDfck1KxQZMAcaUEgvaC4bdGKTYmrzOb3/D3y1KpG6yMrL9yLKv/+X/+/MAhZ+tiDUr92/xvhMErTax1Yp94ATjsI4iXxARyCdzuGCIALvUQcib4AO+KH+A8k2E6/o7TeLuqx6ep8EI0wKR/Z8o00wljvVDzACTlYWxNa1GwCncxG57TyvG0iwA28d1oJLUSnLyRytAbMsWl+AOYwYOSCvOL7jquA/c8opOT2WCjBcl9+APq+/+cdCWrlm4HtcPGDDj3T2mdpZjr1P2c2Q==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3f+bGByMCRzV3H70ppk92PDlbvg1HeobMnWQ8D7B9mw=;
- b=oDVqfHN5KVtrYBYhN364+OtBY7myN7uLw+IzDmkku4r5EHa/XmFLpMTs6LdJlh/fLQGu9HXtUMyVoGesUTHAV0onKLK1WZ5O3WrpPZegHumnFUE/e+V/AtIY8YE6+sZMdU0GzFdmwxiQbJwQpU98Z1BBauazlnGesdxURO8FYzif6p00UmJNSPBua6TiKEXne8uQKbEZCkMw8S13+OUrquH9JoENdfQQqicTYjj6eWNQlKd3JgkIwlGDJVHxHH3K6M0rox05x3thEqGaIxFSjhR3A13Aul4QJIc0oFREA3ZuY/sy80mtYftpSPC0X0NofsceuWwt/bDEuFRLF1hAFw==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=arm.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
- dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3f+bGByMCRzV3H70ppk92PDlbvg1HeobMnWQ8D7B9mw=;
- b=EA73aZNl531hhBUvNvWuafRneteswoaeKRd2nXgZihMvfxv9dm72PMAbYNkaV/e6KDdRaM7lWzBLdIoWCNsOkxDMa29Tkrl+il/sqsPRucTb+mAny2aBdBJycjYk8qLpLl8SDLTE3R3WbSmOKIQmuEpua24CHnxZtJ8vFgQTIYQ=
-Received: from AS8PR07CA0038.eurprd07.prod.outlook.com (2603:10a6:20b:459::23)
- by AM9PR08MB6225.eurprd08.prod.outlook.com (2603:10a6:20b:2de::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Fri, 31 Jul
- 2026 09:36:41 +0000
-Received: from AMS1EPF00000046.eurprd04.prod.outlook.com
- (2603:10a6:20b:459:cafe::84) by AS8PR07CA0038.outlook.office365.com
- (2603:10a6:20b:459::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.10 via Frontend Transport; Fri,
- 31 Jul 2026 09:36:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- AMS1EPF00000046.mail.protection.outlook.com (10.167.16.43) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.8
- via Frontend Transport; Fri, 31 Jul 2026 09:36:41 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LRYmIENxvi2PN6zwo8uytTdUcgq+QQLJT8r8auRbhu4j35E5DHj3m1uLUCVvwVvBmA1dKIaBzZ9ALkAwwWbYg3R6WQ216vPAgZXboSxg7kRHE7hBd3nfiNx2/9P4STEa+dBgWGY+NZBmypA7Zcgb2kmwShakuIDuc9PGVss9NCXEk027BEr1n71FhHjNpeFKIYCdKpVhRliTJW6Rh2x8bwK6RUqLSA8vrZ1axTfavD2dR3KGnzZbOV6iTGb5mwZSpUdNnUKJ/f8YbldMpmzs8iR1dLkwWFBiwjxN2tkCQAn4I1qN/JDTqAmhnN5a1U3ZaaQ/uv0MuK6sUQWPUIcGrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3f+bGByMCRzV3H70ppk92PDlbvg1HeobMnWQ8D7B9mw=;
- b=n0Xcs6gMKKCHCBo3y9eSIkv1qupHBirZl49ZBzAEXYaJ4WJKXtuH79lPiuCCz+KO2ejWBUKgua018+8OLDOS3S/NgPE77EMo5tUTMYO5Ewp/xbXbOo1TKwxq6IKETN39O/KA5K9PaQIz3FbylTT+xpNFTWSkoULPGmW9qjOgY4XFiI+UHixUU/YHOAiKOKx5mZm2Hgk2z4v66WBRsMYXZE+TaHj60Gjd3v5IOC6VPGIXeMdB/njD/PH5fj9W1Ocj0yBN5GjY3xbYVee959xKxaZwjHv89wFJ+9vSuOEK4o04QRi0T3MsbZ+EpU10Cw9EOzL6GFkTzQCpz6ZTm8lvBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3f+bGByMCRzV3H70ppk92PDlbvg1HeobMnWQ8D7B9mw=;
- b=EA73aZNl531hhBUvNvWuafRneteswoaeKRd2nXgZihMvfxv9dm72PMAbYNkaV/e6KDdRaM7lWzBLdIoWCNsOkxDMa29Tkrl+il/sqsPRucTb+mAny2aBdBJycjYk8qLpLl8SDLTE3R3WbSmOKIQmuEpua24CHnxZtJ8vFgQTIYQ=
-Received: from DU0PR08MB8421.eurprd08.prod.outlook.com (2603:10a6:10:407::19)
- by DBBPR08MB10722.eurprd08.prod.outlook.com (2603:10a6:10:530::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Fri, 31 Jul
- 2026 09:35:35 +0000
-Received: from DU0PR08MB8421.eurprd08.prod.outlook.com
- ([fe80::2158:1cab:1d88:ba2e]) by DU0PR08MB8421.eurprd08.prod.outlook.com
- ([fe80::2158:1cab:1d88:ba2e%5]) with mapi id 15.21.0270.012; Fri, 31 Jul 2026
- 09:35:35 +0000
-From: Sascha Bischoff <Sascha.Bischoff@arm.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "maz@kernel.org" <maz@kernel.org>, "kvm@vger.kernel.org"
-	<kvm@vger.kernel.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
-	"oupton@kernel.org" <oupton@kernel.org>, nd <nd@arm.com>
-Subject: Re: [PATCH v4 07/48] KVM: arm64: gic-v5: Extract host IRS caps from
- IRS config frame
-Thread-Topic: [PATCH v4 07/48] KVM: arm64: gic-v5: Extract host IRS caps from
- IRS config frame
-Thread-Index: AQHdG1o0qOow5djU00KduraRpDffM7Z8hdWAgArjUwA=
-Date: Fri, 31 Jul 2026 09:35:35 +0000
-Message-ID: <837e507425c6a2f4f8d79b87cb5763cd3d482957.camel@arm.com>
-References: <20260724104819.1296803-1-sascha.bischoff@arm.com>
-	 <20260724104819.1296803-8-sascha.bischoff@arm.com>
-	 <20260724111919.7EAB41F000E9@smtp.kernel.org>
-In-Reply-To: <20260724111919.7EAB41F000E9@smtp.kernel.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Evolution 3.52.3-0ubuntu1.1 
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-x-ms-traffictypediagnostic:
-	DU0PR08MB8421:EE_|DBBPR08MB10722:EE_|AMS1EPF00000046:EE_|AM9PR08MB6225:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0d3c04ee-13b8-4f88-9774-08deeee73a21
-x-checkrecipientrouted: true
-nodisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|38070700021|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info-Original:
- /+f44d68wYwn8/ZKbiuR/Sz7tf8rssfq2MY580WyrrAkpbTEttHeDnTc0HzD/ZuHd4syIPOosb5FY2eIMvOS8Lhiyna+2Qi+QYT6+lPCUYPxgxsqrFQ5YKVuw/4wkbO7+nRVMCKsYmq+Y+fyB/L+CNSovY4qe8inOCeeJhu+frnYcEB36I/WaI1uiQOzznSW1nLAwq8qwVkBTFujHXsuK1ryg6fRJUH6pshGJijrXH4ctxJeFCxlXtw2omOGepjj8BwlufxxQW9xIuLy50/z7ZgrkvtfYlh7nQiT4VsYt8RSxGXzfVu0lICT5hSWd8abbcoOfMvaj65oSK+jXqZ1fl3c77YOO9ZknyIA+PmeeCeCMpudwTyceEu8b27Yqgmehn5/YXxLLxv8YeJKHgiReh7o6VmHk1E9xrCSmVfhN6CLLyQ6zt0i49ZS+hylLAmsHzDucC1yQhwfJanLamlV03eyKjfoeIU/TkplpXncN6fa5kuZFNmbrBbtuUbJbH/FMpl3liX8lvvsSeQGOu0Xsddk+lQxzcHdj+MAFrVl9GbCQX2Qo4xRY6ParhUQ67ujAAHchIKNi0koTGs1yGwbKgS0J4O2dXAdfto6itCloVlCjY1v6t4v31TdsD9p2BYkU29u+CHs1d7g6QSdWQSv+BPwewHXnsxEJz3HHZvAnnQ3dV3y2HYER5792xB+n0VUDH4J7Yi2Xb30z/TDfGXpyQ==
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR08MB8421.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(38070700021)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <44C2101DCCBE4B4083A9A09608F99E15@eurprd08.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="YBsrYwtJ"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66V8I7E41231924;
+	Fri, 31 Jul 2026 09:49:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=itNp4R
+	AjF6tyzVYz57YxBvySOrcrGmhu+4kn9i427qg=; b=YBsrYwtJy9n8j0R9Ml+BsO
+	ZtWBL+dLdkgAJ0Y20xRj7Z+A9r+yBUhvRuTcKM23GN30hDjGDWsDDgmEE6+g5/6g
+	rUMBdZsfASCrA6ycSfKA6HqIZNIEw9LgWigipKM2jOZxS8qV4l96l3FyjGu6h7+D
+	Y/+4oLG7G1QOpcSkBxIamBV29ehWPe7TNdPQQdI5Vm4mss8d0ulh9VTEpIufoVGU
+	zbWREBtKRuaHHOLBSCHHsKlXpfIO82U42kNJlwm2e7BlwPMw7VHokvLUDddzbem+
+	FfuBb20xL87m8TAbLfTjxthkZtoLBfQ227jZj/Kkk5hZ9zN5ISBPZy+nVCz/UROA
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0p3c3g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Jul 2026 09:49:42 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66V9fJQJ015259;
+	Fri, 31 Jul 2026 09:49:42 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fkfd49-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Jul 2026 09:49:41 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 66V9nb1u52167054
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 31 Jul 2026 09:49:37 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BD6442004B;
+	Fri, 31 Jul 2026 09:49:37 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 79E1320040;
+	Fri, 31 Jul 2026 09:49:37 +0000 (GMT)
+Received: from [9.111.59.130] (unknown [9.111.59.130])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 31 Jul 2026 09:49:37 +0000 (GMT)
+Message-ID: <f42dd999-e35d-4897-934c-bfa2f75b5066@linux.ibm.com>
+Date: Fri, 31 Jul 2026 11:49:36 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
- oQIP9iRHxwLoBTCqkpgLj3ujYWSw14hhNkRgPQDo3LvWWkdiPwFBjjhmfJYCBPaTc9tXnLCXuKzsn55LXqYt2LkFykvPkrG1WgRDqDpXsyTShoFQW/Vuh+NlUimNdZIvJ+vNvBfGZ0UOL4ZkiUtFdYA4CY50eeZLo9czAlBswoNKOdAmIajD+x5uoBrxd7MR6Sosn6DO7SKuZYFW14AuyiGGdLVaN2O3rqKO0xbxfbTtvu/+CdYDrUNjb+Z96lID+wVXtxpbUl9GUOd2rEnabef1UAH/VI2o8ttud2GWvX85usHzNTNmw8Wr0YsIJX1DTU0Oj5t0HA7lvyYuRpSceA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR08MB10722
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- AMS1EPF00000046.eurprd04.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	8ce3ac20-9a2b-439a-3ae4-08deeee712c4
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|82310400026|376014|35042699022|1800799024|14060799003|23010399003|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	qGYUxhn6R/8LVb0ODcFvJ6FSpAgsBcf2UJ6gjYnAO3nrcMzSU9Z7g+Ocsa2yvAxpIPawyEbLcKls35Oo4akTQVkONWomW+o1S+Z3ELoXOb8nanICndrzzaO7ImS3eoxjwNUg7IFC+e7MAo0MN9R/3aMWLZfFT3r6o6laaRSlqltYbcPWIUNwiUpqJ7ctOB8DUkI1qpQAtoNcKdaD6ZmwciHeRff2IHDefbZgeLwM5Y00ESNA7ZonM8E/aiNoxiJaoiZn1QpHNCkv0XHG9IUfXM+9q94rcXSDLFHsphtbHLLOsh4N43AFGVLxsGUNRk458aMxl+viJpGlyuBjma0TzON/z0imQ2ho+2zj15PBz2jqr9GX4aOTE+skI1sAAyk2VPeFyp/w64856ulDHSUmhejCMfhktB45Cqp+8oXTi17zR+me6zE0NT3uks7BlerWiLX8krGZoJHI9aRrPMlGG1QNdHrwJUggJdGhNm0V1fef13m6+flum06RyRgUjUBmS9R4W+a8H4TpdH3pzPBmftBIgP5JMbFE3Xa8RPlRuOiKwaVZMW+JNdSMvWopYBj3IZOsU9Sj5VtGnOynnQTQAhj4WSvtuDPNN4TLK0aRfCK1Osp2JNmEHtu+VM2XoVaudYtt3AUYLKqXyL/GbTbkMdgZabhwTrbuHSRA+yCBP5BUgv7pmDm+lLmCBQGje1bK
-X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(376014)(35042699022)(1800799024)(14060799003)(23010399003)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	lqXkkuVf2YWOlWtPvByk5xjP5Hzw8Z75dVxmBrp6J1w1zBvq+UAh+kdjpQrAbQv8lRE2C6ZxKlN9sjd5ECqXOl2CcNcikNLCcfEFh1lLbguy6a/6LDWgJ0XSdPBbEqufnmWV5LR8qTVCh3M19GEKxjDwnB1Gufj31C/dCsecHMp3YB191Cv1/g3AqckhI2p+kSq+G9oWnULdvdIkRxixPUxyDvwE5zUupRhJjYw/QMPJ5A25j5RRCr2yE/MvMuKfMuwAGotBrff9KkeZMktwxZBMKlCqhSlTPqfoPrV6+JyHqNPX/dks2oEU/oA1RX83iyMlWRBA9SY0mOjRPROarhgyDBYiK5VaMBRhrJcL3IRhsFbi57OLLnIwPpJBcJi1nLzyKrq6jHFLfB7mn1DEkmj/mHU2VYNPMyU/bUF6NXMPbJoDQfTTASf1XVKFI5A3
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 09:36:41.2375
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d3c04ee-13b8-4f88-9774-08deeee73a21
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AMS1EPF00000046.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB6225
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 2/5] s390/zcrypt: Improve CCA CPRB length and overflow
+ checks
+To: sashiko-reviews@lists.linux.dev
+Cc: Harald Freudenberger <freude@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
+References: <20260730141509.205970-1-freude@linux.ibm.com>
+ <20260730141509.205970-3-freude@linux.ibm.com>
+ <20260730144848.AF66F1F000E9@smtp.kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
+Content-Language: en-US, de-DE
+In-Reply-To: <20260730144848.AF66F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDA3MiBTYWx0ZWRfX4CA2bDegNLBG
+ KlCDIy155mAU1bSISXWV0dEuuyepUMCuDmXa9XbLTEE6rm5es18bS+/JBn+mIkrbKPiISP5phLp
+ iK+16/sXwOBxFZvLW8jsuXjpBiL+XyI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDA3MiBTYWx0ZWRfX5STJvWXZLXg9
+ gLdj60Eb9byYb0cRy4vjlwNPGt1feBwJb8bFf8VKnEIX2XMujmNP8SKsTDYN4YMxNwgmTc5262N
+ YfBo1nYudXhJ+jtXmCBaPwc5BQ2BaxO65uHyMy+5WN031ym7ksaf9urpot9SVUG85hk47qLZLT0
+ JZr3fzdQOckowl41iaqC1581pTe04ZLLhRyvVZi38Tar6M/TVs431Ag26sKAOv9/H1YI50h40UN
+ 4XmMmOpqmpUeUGZK1XRcEpdmj/HZy8HO+1LJ8XzkAsvsLuSlSp73n4lN3T8A/t4FnxTlomBYBsu
+ nasAQ8ZGcN5Gb4IZPGDxEmSw5+vaAEXpNrPvUWlB9wBpOodPevHd+7Rh2EVkgdrHmZzms5aTCHs
+ RY8dBj1AoVCQC/Spf5L38AC0P4vdENnLbQawCb3vSWfKLoQPcJJepjcn5ExoFWWuyP/TaiDGo+8
+ SsnI4gJQqPH7X+i1AQg==
+X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a6c6fb6 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=A0xDiOKYln-bBx9XOqIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Rj0Qj39alSXK9Ophodc89alhkAzT9eJM
+X-Proofpoint-ORIG-GUID: Rj0Qj39alSXK9Ophodc89alhkAzT9eJM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_03,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310072
 
-T24gRnJpLCAyMDI2LTA3LTI0IGF0IDExOjE5ICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
-IHdyb3RlOg0KPiA+ICsJaWRyID0gaXJzX3JlYWRsX3JlbGF4ZWQoR0lDVjVfSVJTX0lEUjMpOw0K
-PiA+ICsNCj4gPiArCWlyc19jYXBzLm1heF92bXMgPQ0KPiA+IEJJVChGSUVMRF9HRVQoR0lDVjVf
-SVJTX0lEUjNfVk1fSURfQklUUywgaWRyKSk7DQo+IA0KPiBbU2V2ZXJpdHk6IE1lZGl1bV0NCj4g
-U2hvdWxkIHRoaXMgaGF2ZSBhICsgMSBhcHBsaWVkIHRvIHRoZSBmaWVsZCB2YWx1ZSwgc2ltaWxh
-ciB0byBob3cNCj4gVlBFX0lEX0JJVFMNCj4gaXMgaGFuZGxlZCBiZWxvdz8gDQo+IA0KPiBHSUMg
-YXJjaGl0ZWN0dXJlIElEIGJpdCBmaWVsZHMgY2Fub25pY2FsbHkgc3RvcmUgdGhlIG51bWJlciBv
-ZiBiaXRzDQo+IG1pbnVzIDEuDQo+IElmIFZNX0lEX0JJVFMgZm9sbG93cyB0aGUgc2FtZSBwYXR0
-ZXJuLCBvbWl0dGluZyB0aGUgKyAxIHdpbGwgcmVzdWx0DQo+IGluIEtWTQ0KPiBjYWxjdWxhdGlu
-ZyBleGFjdGx5IGhhbGYgb2YgdGhlIGFjdHVhbCBtYXhpbXVtIG51bWJlciBvZiBWTXMNCj4gc3Vw
-cG9ydGVkIGJ5IHRoZQ0KPiBoYXJkd2FyZSwgbGVhZGluZyB0byBwcmVtYXR1cmUgcmVzb3VyY2Ug
-ZXhoYXVzdGlvbi4NCg0KVGhlIGZpZWxkIGRvZXMgTk9UIGZvbGxvdyB0aGF0IHBhdHRlcm4uIFNv
-bWUgZmllbGRzIGhhdmUgdGhhdCwgYW5kDQpvdGhlcnMgZG8gbm90LiBUaGlzIG9uZSBkb2VzIG5v
-dCBhcyBhZGRpbmcgYW4gb2Zmc2V0IG9mICsxIHdvdWxkIGJyZWFrDQp0aGluZ3MuDQoNClRoYW5r
-cywNClNhc2NoYQ0K
+On 7/30/26 16:48, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] Uninitialized alignment padding bytes may be read during function code extraction in `xcrb_msg_to_type6cprb_msgx`.
+
+Valid finding, but already handled by patch 5/5 in this series.
+
+> Pre-existing issues:
+> - [Critical] A 64-bit integer overflow in `xcrb_msg_to_type6_ep11cprb_msgx` allows a massive `req_len` to bypass the buffer size check.
+> - [High] The EP11 request path lacks minimum size validation, leading to uninitialized kernel memory access.
+> - [High] A user can bypass administrative domain permission checks by setting the target domain to AUTOSEL_DOM (0xFFFF).
+
+These pre-existing findings will be analyzed and - if valid - covered by
+a separate series.
+
+> --
+> 
+> --- Patch [2]: [PATCH v10 2/5] s390/zcrypt: Improve CCA CPRB length and overflow checks ---
+> commit 168ea93b9d93d40b4d0625f5a9d932544117496a
+> Author: Harald Freudenberger <freude@linux.ibm.com>
+> 
+> s390/zcrypt: Improve CCA CPRB length and overflow checks
+>     
+> This patch improves input validation in the xcrb_msg_to_type6cprb_msgx
+> function. It uses size_t for length calculations, adds bounds checks after
+> alignment, validates the minimum control block size, and detects overflow
+> in sum calculations.
+> 
+>> diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
+>> --- a/drivers/s390/crypto/zcrypt_msgtype6.c
+>> +++ b/drivers/s390/crypto/zcrypt_msgtype6.c
+> 
+> [ ... ]
+> 
+>> @@ -404,8 +395,8 @@ static int xcrb_msg_to_type6cprb_msgx(bool userspace, struct ap_message *ap_msg,
+>>  			     xcrb->request_control_blk_addr,
+>>  			     xcrb->request_control_blk_length))
+>>  		return -EFAULT;
+>> -	if (msg->cprbx.cprb_len + sizeof(msg->hdr.function_code) >
+>> -	    xcrb->request_control_blk_length)
+>> +	/* copy subfunction code into AP msg type 6 function code field */
+>> +	if (msg->cprbx.cprb_len > req_cblen - sizeof(msg->hdr.function_code))
+> 
+> [Severity: Medium]
+> Can this relaxed bounds check result in reading uninitialized alignment
+> padding?
+> 
+> If a userspace caller sends a CCA ioctl where
+> xcrb->request_control_blk_length is not a multiple of 4 (for example, 21),
+> the z_copy_from_user() call copies exactly 21 bytes. Up to 3 bytes of
+> padding might be left uninitialized.
+> 
+> Because the check now compares against req_cblen instead of
+> xcrb->request_control_blk_length, could a crafted cprbx.cprb_len (e.g., 22)
+> pass this validation and point into the uninitialized padding area, allowing
+> the subsequent memcpy() to read uninitialized kernel heap memory into
+> msg->hdr.function_code?
+> 
+>>  		return -EINVAL;
+>>  	function_code = ((unsigned char *)&msg->cprbx) + msg->cprbx.cprb_len;
+>>  	memcpy(msg->hdr.function_code, function_code,
+> 
+> [ ... ]
+> 
+> 
+> While reviewing these length check improvements, I also noticed a few
+> pre-existing issues in related code:
+> 
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but does
+> xcrb_msg_to_type6_ep11cprb_msgx() suffer from a similar 64-bit integer
+> overflow?
+> 
+> In drivers/s390/crypto/zcrypt_msgtype6.c:xcrb_msg_to_type6_ep11cprb_msgx():
+> 
+>     ap_msg->len = sizeof(struct type6_hdr) + CEIL4(xcrb->req_len);
+>     if (ap_msg->len > ap_msg->bufsize)
+>         return -EINVAL;
+> 
+> If a userspace caller passes an ioctl with req_len equal to U64_MAX - 79,
+> CEIL4(req_len) evaluates to U64_MAX - 79. Adding sizeof(struct type6_hdr)
+> wraps the 64-bit value to 8, completely bypassing the buffer bounds check.
+> 
+> Would the subsequent copy_from_user() then zero-fill the kernel heap on
+> failure and cause memory corruption?
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but the EP11 request path seems to lack the
+> minimum size validation that this patch adds to the CCA path.
+> 
+> In drivers/s390/crypto/zcrypt_msgtype6.c:xcrb_msg_to_type6_ep11cprb_msgx():
+> 
+>     if (z_copy_from_user(userspace, msg->userdata,
+>                          (char __force __user *)xcrb->req, xcrb->req_len)) {
+> 
+> If an attacker submits an EP11 ioctl with a small req_len (e.g., 4 bytes),
+> the kernel copies only 4 bytes. Could the function then read EP11 structure
+> fields such as msg->pld_lenfmt and msg->cprbx.flags from uninitialized
+> memory to determine function codes and domains?
+> 
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but looking at the domain
+> permissions, is there a way to bypass administrative checks?
+> 
+> In drivers/s390/crypto/zcrypt_api.c:_zcrypt_send_cprb():
+> 
+>     if (perms != &ap_perms && domain < AP_DOMAINS) {
+>         if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
+>             if (!test_bit_inv(domain, perms->adm)) {
+> 
+> And similarly in _zcrypt_send_ep11_cprb():
+> 
+>     if (perms != &ap_perms && domain < AUTOSEL_DOM) {
+>         if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
+>             if (!test_bit_inv(domain, perms->adm)) {
+> 
+> If a user submits a CPRBX or EP11 request containing an administrative
+> command and sets the embedded domain field to 0xFFFF (AUTOSEL_DOM), the
+> condition domain < AP_DOMAINS evaluates to false.
+> 
+> Does this cause the administrative permission check to be completely skipped,
+> allowing a user with only usage privileges to execute administrative
+> commands on that domain?
+> 
+
+-- 
+Mit freundlichen Grüßen / Kind regards
+Holger Dengler
+
