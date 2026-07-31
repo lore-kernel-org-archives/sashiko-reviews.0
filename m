@@ -1,141 +1,151 @@
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62157368D55
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 20:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB5536B900
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 21:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785531051; cv=none; b=gYNIu3nIhtSN0MYOngsrhsGFXamP8idOy82hcYOWM5aPIlSujjQ67WQ1szu+NTT+HagpZluldV6bjrpTeWHACpMc6eVc04OTcNltTZgDQuiUZQGdmMl8q5LM7taDdZS+tmbBKwn7KPQGhjJiKshvor6m+zUu6mYlN1O/UIDrjQs=
+	t=1785532617; cv=none; b=B263F/YPSPqGr7TJDD19gqyzIo/AnCfwup7U+MZ5N5TADniZnIDEoxSxHMdjYFg8cQq+U3SkLGSnQ3u+murN9W7xcwRmg6mMgamsNKt/l6FAgdnS9iDmFQtiMJDxScOHuu0dQuQH4DyYlZfEnT/JYF2FREaOPADcSM/TJY9c2S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785531051; c=relaxed/simple;
-	bh=Hbhi6+KMjpxoERuBtIxFEqObdZKUIZ5jGtT8v620HxI=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=jAyE4JC6ENlihSH4ZIlLgFC/PyJ2wM1E0Bb2vy3uM5uBPaTVoNNyCH7E5xfRUuKFnDUX7A6ff48pIM88bIGjEANIqg85PVnWzexzBk4SSrgYZApWnnrrgoz1nigV+klbnpF+n8toVSk02FRrQVKSsWdk0a95iBY+JIlCQetEp6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=s2CQz9Pw; arc=none smtp.client-ip=209.85.210.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1785532617; c=relaxed/simple;
+	bh=dybP+Hv4Nu5PEAN4vUSB0UeMsaW1a99AmaKSnCc5bE8=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=HmIuj8AEDtwVOSe4GB6q0lq6O6NduILsFykBVF/Vq7LJLGfetHy1LRy4ktxQ3f7l0LwGcevN5mS6X3KpVNyVSA9XTum/hiBodewdm6Ha464l2p0hr5ZvkDYU/Lx7l3bIYHTmUvMEjGBmvSmQ+rP1vvznHPb1VJtyUPrdr7amTzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gGdNXULR; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s2CQz9Pw"
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8485d853b08so2531405b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 13:50:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gGdNXULR"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-84e27035206so1788428b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 14:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785531050; x=1786135850; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+        d=gmail.com; s=20251104; t=1785532616; x=1786137416; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:to:from:subject:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=MJ+1zz4bd0vi4BfDFozlsEf5MBhzPjdddShFFlbqKaE=;
-        b=s2CQz9Pw09ls1iBGr5yjIcZzzb/JJg+nUOw3JteH7TaBGOgVT3hCf/iFvGNNFJRMS1
-         gjoXxTDxCxKoLLKjBvTKiC65y9IMBjp5dBV3aOjd2V81STj2SKExAefseRoIvo04/5uu
-         9iNDP/YZUm+E+ctsHKGwVSyB/PCAW1ETyb4Q3kp+N82tuqlxvyF++DBe4jbkC7akufZ7
-         ldn1oErQTVneHRlxB4zA7hMVYiNQnX6dzGCv5EjSq6RWXqSzqpXhk6aw25QZAY2ePOJG
-         0oAo+RQarATDJPIpo65GwhKZMTT+93zdN3zPZlIpXxjGq3MKMUxVS+lEzoesMDq+xutY
-         9JQQ==
+        bh=Cfb7EDW++yGGnxVxMHEhslFM3wDz36SQVscZpbW7b90=;
+        b=gGdNXULRNkpYJnw+uNwjU0bM2wAruDAuChNPZf8j41WVJcMkvuESwOnErbePWQMRXP
+         pJWlWa2kAc4S8U5bJuSKTD9osfcoYo+BZk6D5kcEagARQi7Um5Kpl5Pp8dD5MmO4bpMo
+         oFm3cEO87hwr/JegKD7pO5vgWObG0yr3p7a8UW4dAzJEub+3yGaJ+QrnbsZg10TDhi6X
+         3hPRVWagU4i7NpCkH1PzQ8lg+Rk1+fm0RspQjCSSKBh8GNIQCEJ/tDZg5/cNEfAqSPpZ
+         RHE5YbyNlNyoUcxhdeloa7Af0DmTal2nGfCuUR3GiF9ZuEbX8INBXlCCrEWECQLmcS7a
+         zfSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785531050; x=1786135850;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
+        d=1e100.net; s=20251104; t=1785532616; x=1786137416;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=MJ+1zz4bd0vi4BfDFozlsEf5MBhzPjdddShFFlbqKaE=;
-        b=LpcclpHSxfCGSeI48WqpVXKRzGr1E2qq1WhDyDoCBrPXanZydB7QGGROe6vm63/AV/
-         fdofreSW7gwGgjKubuXo6lLKPfkk0DIoWOh8qV5h8VPaELML9JPc/gAI7H23aKM02UX9
-         MIzrd1nXdLJa3aBoKdgXs9UA/hyjHVqkOOfF+GWWVdKplhT18iudQwuY1qElksd6JWB2
-         D6M7405MfXgWJjrFhRYaLvSK2kkJzv9WBLKpkNw708Nn5yGvreo03Vqh+Mk4W+rx0Rdq
-         J3HzhMPXmBIo+IMCjXPbeL3g4o24So2IY8uhCe5v09eV4HHgWZbe1FdxYdLS421xIaAx
-         bLrQ==
-X-Gm-Message-State: AOJu0YwzfRgATq0vZZEnAgX8YsBC7jByEq/X3DW/EzhTllRwYvOBokog
-	hLBhsY5HkAfjgQoshPrdJ7RRMZ+IiCnKMViZedauhRfO34Ziz4zphHxWhWxPidsE9JepXZPc6Vj
-	1bcvtogn4VTdpsrunwO+QEb+cmLS9AwyOvL7nNBQC/rRseb1KE7skhwCCMyrsuDK3ugCLOHS5AR
-	n7Ft3nhA43DyAgqiG9y/jRPdIPBxySk1A4qPiqw6YTicNxQbjh
-X-Received: from pfn38.prod.google.com ([2002:a05:6a00:a226:b0:84b:be30:8d22])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:1785:b0:848:2f84:732
- with SMTP id d2e1a72fcca58-84ee493ea6emr863311b3a.69.1785531049266; Fri, 31
- Jul 2026 13:50:49 -0700 (PDT)
-Date: Fri, 31 Jul 2026 13:50:48 -0700
-In-Reply-To: <20260731201140.5AF0C1F00AC4@smtp.kernel.org>
+        bh=Cfb7EDW++yGGnxVxMHEhslFM3wDz36SQVscZpbW7b90=;
+        b=G2+gU4dbZYp6kS44TwSd0H3ncN23JPfaE3W88i5STANbV6iFwmAqMXFEsYPjgDBodA
+         eAMcuX6v6GWoMUz8eV/hXeW9SxM5pH73pzpc7YwOh0a57FWT5We3Pa7p2/nmE3rnyp4l
+         iUnTSz3C982iDFdSNTKq2HAD2lCyML51AMEisA77ypRndFxj5TR95Mf4attRfih9bOao
+         lIW8A0HWY8foPfmqPsouRt62cbC1+MJ/GcFAcIu+By+iVLJ4xhtuVCB/VrlyEw0amN8S
+         VdWDdHanULyexUwQReB2Yj/NzRMNGWwh4ohIdUZa/W8p6vt3+dOuWZjQH2fKPIJnQpa+
+         /tUw==
+X-Gm-Message-State: AOJu0YyxqNslh/Cao5z0d1JfLL6aC+w8Stz3kLhC1ZXOpoMFSV8xVDHh
+	V40hitJUa6PwnNaw7Wfpd5YuNJVuGSrVnYe2XYgy2hjnfzjId1GLmM+3Ul1+Ied3
+X-Gm-Gg: AR+sD10iWHqmmLemoV+d1PgbWNHA2IHnNEq0wO34PymtK2UKp++fbC1+HTlZsDGJA5p
+	7yxiIwDyzCuQ9MhB44v3dIxBSYdI/WBUsfL4+Zc/iNx+PXDM+vSjldj3UxBsuBoLgOzTcBbvfFq
+	DjVJuO1Y3v9pCknDjVfPa3VJoqLv2ytqwD9HupeXVXwyD8splkk4NPXhbP031ban9kHd1BJcugF
+	G+KK9bL/ZkOFdOf7t9wRzD1ckZmwvH70gi/CnN2huAyCNN+EwjU7/tMAreRn4p/WIDi82cMc6Nn
+	pOEnncG0a47n6/ofZDXXbq1EIMAxbYbPyDz7X1m7LKoPyHNV3awFTae5rcC/yWvV/AD+YRHRbRa
+	m98xWIW/eb3ff6lcLZzN8EhPw99L97zH2PVEB08mhWaNVVZECcr/xe0Y/iKYjOfQYdI04UiEAf3
+	r2iuwWH81I37WUGPwyNHLwStrQ6z+Zg3tnZMBdxvUO1hk7abPk9AoHqOM3x4wuqDG7RX7KFxFTi
+	sxcGra8wWobxoXq0jUg/Hw62D683ZIYrnxRNXdi8aQwjw==
+X-Received: by 2002:a05:6a21:9f10:b0:3b4:931c:3c7c with SMTP id adf61e73a8af0-3c92a7bb452mr1155914637.44.1785532615923;
+        Fri, 31 Jul 2026 14:16:55 -0700 (PDT)
+Received: from ?IPv6:2a03:83e0:115c:1:f5a6:d314:fc37:ae46? ([2620:10d:c090:500::5:7346])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153dd9c1casm9404538eec.10.2026.07.31.14.16.54
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 14:16:55 -0700 (PDT)
+Message-ID: <b76fb3fdb01dc530efca32da98e965e33898fc9e.camel@gmail.com>
+Subject: Re: [PATCH bpf-next 2/5] bpf: track upper 32-bit register halves'
+ liveness in compute_live_registers()
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Date: Fri, 31 Jul 2026 14:16:54 -0700
+In-Reply-To: <20260731191839.AB5E01F00AC4@smtp.kernel.org>
+References: <20260731-static-zext-v1-0-98a4dc73e94b@gmail.com>
+	 <20260731-static-zext-v1-2-98a4dc73e94b@gmail.com>
+	 <20260731191839.AB5E01F00AC4@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260731195612.2697986-1-seanjc@google.com> <20260731195612.2697986-4-seanjc@google.com>
- <20260731201140.5AF0C1F00AC4@smtp.kernel.org>
-Message-ID: <am0KqJOD-FiC9BXs@google.com>
-Subject: Re: [PATCH v3 03/12] KVM: selftests: Pre-set threads affinity in
- hardware disable test when possible
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	kvm@vger.kernel.org, Aqib Faruqui <aqibaf@amazon.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 
-+Aqib
-
-On Fri, Jul 31, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/tools/testing/selftests/kvm/hardware_disable_test.c b/tool=
-s/testing/selftests/kvm/hardware_disable_test.c
-> > index f088b4af3ccc7..b4edeadfa3f45 100644
-> > --- a/tools/testing/selftests/kvm/hardware_disable_test.c
-> > +++ b/tools/testing/selftests/kvm/hardware_disable_test.c
-> > @@ -36,7 +36,9 @@ static void *run_vcpu(void *arg)
-> >  	struct kvm_vcpu *vcpu =3D arg;
-> >  	struct kvm_run *run =3D vcpu->run;
-> > =20
-> > +#ifndef _GNU_SOURCE
-> >  	kvm_sched_setaffinity(0, sizeof(cpu_set_t), &threads_cpu_set);
-> > +#endif
+On Fri, 2026-07-31 at 19:18 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Critical] Critical verifier bug in conditional jump liveness tracking =
+causing missing zero-extensions.
+> - [Low] Suboptimal liveness tracking for 32-bit conditional jumps causes =
+unnecessary zero-extensions.
+> --
 >=20
-> [Severity: Low]
-> Since the KVM selftests build system unconditionally defines _GNU_SOURCE,
-> will this fallback code ever be reached?
+> --- Patch [2]: [PATCH bpf-next 2/5] bpf: track upper 32-bit register halv=
+es' liveness in compute_live_registers() ---
+> commit 977deff7b46d8e36a957595add75da7e58a91c59
+> Author: Eduard Zingerman <eddyz87@gmail.com>
 >=20
+> bpf: track upper 32-bit register halves' liveness in compute_live_registe=
+rs()
+>=20
+> This commit extends compute_live_registers() to track upper and lower
+> register halves' liveness separately. It uses 2 bits per register and
+> updates compute_insn_live_regs() and kfunc call processing to infer usage
+> based on BTF type sizes.
+>=20
+> > diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
+> > index ff1e68cc4bd1c..c996b8a03e792 100644
+> > --- a/kernel/bpf/liveness.c
+> > +++ b/kernel/bpf/liveness.c
 > [ ... ]
+> > @@ -2174,17 +2228,15 @@ static void compute_insn_live_regs(struct bpf_v=
+erifier_env *env,
+> [ ... ]
+> >  		default:
+> >  			def =3D 0;
+> >  			if (BPF_SRC(insn->code) =3D=3D BPF_K)
+> >  				use =3D dst;
 >=20
-> > @@ -80,22 +84,28 @@ static inline void check_join(pthread_t thread, voi=
-d **retval)
-> >  static void run_test(u32 run)
-> >  {
-> >  	struct kvm_vcpu *vcpu;
-> > +	pthread_attr_t attr;
-> >  	struct kvm_vm *vm;
-> >  	pthread_t threads[VCPU_NUM];
-> >  	pthread_t throw_away;
-> >  	void *b;
-> >  	u32 i, j;
-> > =20
-> > +	TEST_ASSERT_EQ(pthread_attr_init(&attr), 0);
-> > +#ifdef _GNU_SOURCE
-> > +	TEST_ASSERT_EQ(pthread_attr_setaffinity_np(&attr, sizeof(cpu_set_t), =
-&threads_cpu_set), 0);
-> > +#endif
-
-Aqib,
-
-Do you happen to definitively know which is the "right" macro to check to d=
-etect
-support for pthread_attr_setaffinity_np()?  Belatedly, I saw that you used =
-__GLIBC__
-in a patch that ultimately wasn't applied[*].
-
-I initially used __USE_GNU here, but then Sashiko yelled at me, so I switch=
-ed to
-_GNU_SOURCE based on Sashiko's suggestion, and now it's yelling at me again=
- :-)
-
-
-[*] https://lore.kernel.org/all/20250829142556.72577-4-aqibaf@amazon.com
-
 > [Severity: Low]
-> Could this break the build on systems using alternative libc implementati=
-ons
-> like musl?
+> Does this unconditionally apply the 64-bit mask for 32-bit jumps?
 >=20
-> If _GNU_SOURCE is unconditionally defined by the Makefile but the libc
-> doesn't provide pthread_attr_setaffinity_np, this might result in a
-> compilation error rather than using the intended fallback.
+> Because dst is defined as the 64-bit mask, using it for BPF_JMP32
+> conditional jumps incorrectly assumes the upper 32 bits are alive.
 >=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260731195612.26=
-97986-1-seanjc@google.com?part=3D3
+> Could this trigger unnecessary zero-extension instructions in the JIT?
+>=20
+> >  			else
+> > -				use =3D dst | src;
+> > +				use =3D dst | (code =3D=3D BPF_JMP32 ? src : src32);
+>=20
+> [Severity: Critical]
+> Are the conditions and logic for tracking 64-bit jumps correct here?
+>=20
+> The variable code is derived using BPF_OP(), which masks out the class bi=
+ts.
+> Because of this, it will never equal the instruction class BPF_JMP32,
+> making the condition always false.
+>=20
+> Additionally, if this were checking the class instead of code, it appears
+> the branches of the ternary operator are reversed. As written, 64-bit jum=
+ps
+> always evaluate to src32, marking only the lower 32 bits of the source
+> register as live.
+>=20
+> Could this cause the verifier to incorrectly omit the zero-extension flag
+> for the preceding instruction that produced the source register, potentia=
+lly
+> leaving garbage data in the upper 32 bits during 64-bit comparisons?
+
+These two issues are the same. So much for testing, need to fix this.
+
+...
