@@ -1,178 +1,164 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com [67.231.153.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A93025A645
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 21:17:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785532664; cv=none; b=uKhIAPWMNXmNJzOz7HxKqu4gW8otd4J1vf/KuHvOcpcAMZ/WBmiq10m9SSP3G5wyJET5IMclY/qUuWKu3q3m1ipxYTqQzVFMbrtqDVlGdFrJvja6Dw3D74kc70euT/T2wYAkFMYx0Emc3ABcUEixQaHMx82E8eEHJ/kuWsCG8s4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785532664; c=relaxed/simple;
-	bh=6zwdZqsLAxLbpUXAqgCODH4XW7KYd2Pe0HqW4jEuDeU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=kFeen2jbJL1aXMrJmAkACttx9IJeib0WcvEQ0Er3jVrizaBB5FazpbNL3dhlKx8gK8eMae13eGesyh/11ryADh1V15vvLaUYLt6odII1wwDCTZPwv4vEG6KwSAUZ1pB2aR6BoM30GJ/JgyihUxLPhb2rQp7vdub7cD9Xf3MgTa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A4kfpjiH; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D354B2DEA7B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 22:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=67.231.153.30
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785538770; cv=pass; b=vAZM/8yWeBwXDzZ4OS18S0bQapV0ardEF9vmFmtB5O5OH56hNBjm/cNMqF/zFl0BvUg3qx0ACk7Atq3WXvvPPMaLgDhCLWYE1+Ysh4KIhRyVb7y+k60qKxQJev6UbYjtAdnlgC/f8uBeDpGe4uBu5zbhfY9lQdebgljEcoABZ6c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785538770; c=relaxed/simple;
+	bh=TWcPtjAG4u7chlP5TyRDKKWblA7wU+NlX2Ibp3AWBks=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CkFOXoU2Wv8rv+JSd9l9/qPiWFtlIfNQdHVqB2twk1x6hRXrdrz9ixu6EwH61coOaujq8flfj3ql/8hbKDIF+4Yal4KjLZ4luQOsdS+7trj7OubaecdDE3fsNQ2OG6SeeyCVc+uYB+PLw45YwXTuEpJKmJjYhcti4mk+ggJ9jUM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=FUF2N0Ff; arc=pass smtp.client-ip=67.231.153.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=meta.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A4kfpjiH"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c9cf07d2df6so1104340a12.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 14:17:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785532662; x=1786137462; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=F1fj8dyyMAmWETpHXezC8DdOLZLfz/lEB4bEENSW9/Y=;
-        b=A4kfpjiHLxLo5boxDta5Nf31FlVlJVf4TVqM2DDuXolMFx2qZuHCDxsrBlGW34Aw3N
-         6YsCBRexdGDBVH1LoK25wiaz1q7d53VFW0CNMh4slikJHHHW7Plg+QXSnO6/qufrunq9
-         L/xBnUsfzxwfT3EI20J0anSZKOrx/jf2iSLSDFwZ295kS/NZIoOdD667F5r0R4mXdo+w
-         ngik+rfN9QEdrTGGEL8GeEsOxpI/jPQ6qVjtOMOSg5U3Dks7H8JjzLleV5fX0FnPsWjz
-         /zA5450CR4oVQLnzFnLH8fBuPKGltlpZ1KBEVqz+Zc+7qWcSyTgCUJ5jMINsmFjsw994
-         h3Fg==
+	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="FUF2N0Ff"
+Received: from pps.filterd (m0528004.ppops.net [127.0.0.1])
+	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66VMWYjc2439284
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:59:28 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	pps82601-s2048-2026-q3; bh=sXFksAHvqmB7jfoZlHKXAtLMdf8uLXt8quqrA
+	vj0i34=; b=FUF2N0Ff8bRoI+Jm4n4FqP0UEtfp2ZafABB+ZLlVHxt3/n4mCu9ji
+	tmyxKNmYnX02kKgIzt0D6oWqHsCR/pV7Siysc8tevnCjpRyn3Gaj8zpE3MTkzEpi
+	JbkNSKFBfbAdcskM38ush7GML4ZLCte0uuKQsbFLbGQfF/KeHa0erD/zloXr2ROI
+	2AcS8a6XIy80Em87RsUtY6SWr0zB5JnmeGRZ6C7E8olWq6tpJQAZIvP+Snodglwa
+	rjz8oiOujIhbDetPlVi+T3Bdit9GkMDR66Mb5drzUvjTtoqwuDn76UsltmTSxKdb
+	FzgJ1fIASoS+LL01Ez+/4cm54Jds0ENhw==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
+	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4fs0dshjgq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:59:27 -0700 (PDT)
+Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-7ebfcb4c999so1753422a34.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:59:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785538767; cv=none;
+        d=google.com; s=arc-20260327;
+        b=TAgdNgPcbjPVIkhB+XPSSlEh6spgvPUyNViD3tXGXoU9bXWcm3ZEkkeOv8ZJhRYFtX
+         puQ1xdITZCMH2fyqOQf24rsB64cSAD5HiZ5ar2Ys9K25yNv/7tUI0b2B5Bbp/nLghCiQ
+         r7XGB5gUyA25vmyZ7WGzq+eVxgfYz1VUbIv+LF5E2f3FduFCMlLo6BJWAG+N3SkTdB7Y
+         UTYspvzl9h4KioONMutKMMlzHlGNylBStDTsy1iqlyz1rwNP9uKV2rwEyTgn3wVcNBCb
+         Shv7AFIHcIgm0+aqmpkjfL5dl8DiiwSXefXWbitOxPAzK6SoFwS6IVyRC20lEjtZFv5I
+         JGuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=sXFksAHvqmB7jfoZlHKXAtLMdf8uLXt8quqrAvj0i34=;
+        fh=sImXpcRDPx5U58yDC/2Ri7tG8zC0m2k+SZgE0QR0TMU=;
+        b=dynns8Z8Eo8e4LCinL3100hakIVEVqVkoc112y25Zcq7ct+qg36MsyjX6sGYhI8QF3
+         /fZa56C/IPHomRh1+FBHR7oIrWl5GnfHQRbMgmzJOeL0c5OdOZEWSgQMrCbGUBws3u1a
+         xq0WQRgjULxTGrU75bluW8ir9ugo37aVHZuabBkym4L9p+h6mEbbbGum7DjWjlBtYHXx
+         HmisaSAWjp8iUG2VigkYSbbzdlBsaKY08PABcCPGod+2cTmyTokEbIy3hx/akSlS1eVt
+         1/ZqGFgmRdp2HycfgllQIm3qSL+KI7inKtYCDiV/LuQerHjOegPYIu+GUt4vScKpgQCq
+         bQIQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785532662; x=1786137462;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1785538767; x=1786143567;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=F1fj8dyyMAmWETpHXezC8DdOLZLfz/lEB4bEENSW9/Y=;
-        b=cOkgp5WvY/L01VbmDs8QQ0crb9Vljyq97jsaEJGmxiZVrROAG/4Q5bzSR/DdB+qrWm
-         GpKywdiqDlNT57b6prGDj0JJN4BS1d+xdWQ+SHrzj26zGLf5e7ZMq0B6x96aXYXlGdmz
-         dQH0GLE1IDlMt+sLhVoWTdcrefT4bdlXN62KxRFtP54y1mqEVEHuMGhd7Tj4Vwjr6kJA
-         j//Lq+rr6frHvSPIV/cJwm3W4OkCEkhHIX6J5GO2xqHkx39tWU3RpnX/5j3c9p8KQE/J
-         wi5QuDxrEVHRD2jtcn1dMWIabuAFuZFy0f7+Q+wsLkmHT8lE6+BThtzlJm3J9sX+3GZJ
-         LQVA==
-X-Gm-Message-State: AOJu0YzXrPe55/usJyM19RDrWaFoYCGTk9dorN+wzHv+zEUbXmcWhi54
-	9vN3E1NwT1AEGiW9WjDEAFj4AwGOOCwv+gcufmFvUf54u70SKxI7tnRqq+EfbrKB
-X-Gm-Gg: AR+sD11qUsNjSYz7bssdJOjmFMCPAlY5l+7qqy09a7QK7xL/05RZs1nBnK9oSaEhBpx
-	GFived24fwFo1RT6Oi/tmkYfGr+xdcZ6BdczVOSxqA3IrC6lWSUcAYp1NYz88SmKf9B+Jfgk8Fr
-	ABtYunw20SMwYMujEj9JHLoHJnrzyXbaNkYUZ36qXtYbMzaK69hEzbSuKAlfLFDXBsyqSEeBZD+
-	PMRpwSE7WNcB6Sv/37hB7aiX9+q6wJ7/X5EvkaQuqxCmcNzv01uCQYEEsr2gmc9SBUKjdzWHg7V
-	dOZ17dklV4ktdFFAOhGNRsrTYwkIhFM6oehd6YMj0BmJ+ZSUMXZ3Tl8XXjJjYQ8qxzNKpZSAdbn
-	Sn80XfUaNLXCqtqBkIL7L5xI3jpowUUR9vMRcvKjWwopdis8yL67nCYHGMiEddrjhBlLr7jlThr
-	CLUu+7n96ycRySw24Bg1TeEoOehjfNyWEmk9AWh2Cw3m+uZ5xyx/RplH2NNXyHnsJjQg+QdJbgf
-	6MqQHwWfErhf/ZfXRvFyX5eRSQ8Hep24xDI/ndw4EI93w==
-X-Received: by 2002:a05:6a21:7a97:b0:3c0:b3f7:e5c9 with SMTP id adf61e73a8af0-3c92a814022mr1172493637.36.1785532662419;
-        Fri, 31 Jul 2026 14:17:42 -0700 (PDT)
-Received: from ?IPv6:2a03:83e0:115c:1:f5a6:d314:fc37:ae46? ([2620:10d:c090:500::5:7346])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153e18d9c6sm9524973eec.30.2026.07.31.14.17.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 14:17:41 -0700 (PDT)
-Message-ID: <bfa89ff4ec80943ffa5567f90779221ff82fa16c.camel@gmail.com>
-Subject: Re: [PATCH bpf-next 3/5] bpf: infer zext_dst based on static
- register liveness analysis
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Date: Fri, 31 Jul 2026 14:17:40 -0700
-In-Reply-To: <20260731192635.8B8111F00AC4@smtp.kernel.org>
-References: <20260731-static-zext-v1-0-98a4dc73e94b@gmail.com>
-	 <20260731-static-zext-v1-3-98a4dc73e94b@gmail.com>
-	 <20260731192635.8B8111F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
+        bh=sXFksAHvqmB7jfoZlHKXAtLMdf8uLXt8quqrAvj0i34=;
+        b=hXYtQXUHyCAEkHYvwR32n9F40xcfeyB8RV6YiKy3RiWGLcGuIOZTEqrLn8JMgEiF3E
+         SwmeC/I61+Iz+x9dtZg072SVs46YeyhCPwQDGCMlKqKA2yJsB1s83ezSUTq+12Km4E5Q
+         n+khTt3ueb5GRaKI4ekNsoLW0R45W/0SEpP7vYMK5MMZlzCorsCXeTuuqy8RtYd9PUcr
+         BMScKSR0QJVIK8X4t6FVhAuuJLaKjWm8lNW0ajsTJxbdMz6XPlbn8Qtuax/ypsfPP6bc
+         oFwSNqjRH8YrSsSCArMXmgigR0A/gFO1L7KyVhm0jW2TbBGtMYd673OfR7214ZX85YiW
+         iOsg==
+X-Gm-Message-State: AOJu0YwjLLIsT/a1FwUOG7tGYK7ItD7gvX9TjxOxKGGBUTdISI7STfmJ
+	Otd6tpFCTo0tq4DY1ZYcyxCDHi40Brr2Ikb8ELgRVXf4gZr71u3o4dsh8Y3NsaEZwRPtSHzI7Eu
+	oYwxuSOqKbR6yEJSTmxTZWFnGPgqCKhdDmRGQBUtOEC1CjI5R+H62JIBR3gkY6sMVvySmAkuKHo
+	iA1Y8oJ9Fqm6cFiKXfd18f/qLk+bZ+mJwNqX7pjFCHCyEHlPZH43PrmQ==
+X-Gm-Gg: AR+sD10wUui87CWhYYSc7QlnFWKFHfFmsdvfgTuepO3BeFlG2yfGcffg4b4y+xTcfjP
+	gcDqWTkdnLrsTFboFqyFDKMvzzWHxlFeW+j0w0NPU8czyxC4B4FzslqTruTV87GyiNyXsFAVr1q
+	deopN3hrAW7hZ8Pwo24Cplz2vVBWMnmAGd7yKIj1+UapPho/KomuMDPTtRPOrv3eFcMp01DuK7
+X-Received: by 2002:a05:6830:67da:b0:7e7:5e4:ee11 with SMTP id 46e09a7af769-7f196f48db7mr3826371a34.16.1785538766992;
+        Fri, 31 Jul 2026 15:59:26 -0700 (PDT)
+X-Received: by 2002:a05:6830:67da:b0:7e7:5e4:ee11 with SMTP id
+ 46e09a7af769-7f196f48db7mr3826328a34.16.1785538766468; Fri, 31 Jul 2026
+ 15:59:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260731211601.3033906-1-zhipingz@meta.com> <20260731211601.3033906-6-zhipingz@meta.com>
+ <20260731214821.2A9AA1F00AC4@smtp.kernel.org>
+In-Reply-To: <20260731214821.2A9AA1F00AC4@smtp.kernel.org>
+From: Zhiping Zhang <zhipingz@meta.com>
+Date: Fri, 31 Jul 2026 15:59:15 -0700
+X-Gm-Features: AUfX_myHxlkqFnSLC9MVeO-2eucc1qmrR-J0Lg2UWhuCZpzuHdreSVtFADd0gQo
+Message-ID: <CAH3zFs1Nhp2vWnoyDT6RpePRM3=JV9JeMuWz4jZwbnSTx=6PaQ@mail.gmail.com>
+Subject: Re: [PATCH v13 5/5] RDMA/mlx5: get tph for p2p access when
+ registering dma-buf mr
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, kvm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDE3MiBTYWx0ZWRfX+kLs8Kz4fesK
+ 1qGPmYKIJmWTPRploa7T8fKYVkLizGok28KlLJXhrQZCxeD2Te1UpX1hjtBG9KSbPBz9vPXv+/J
+ JN3mDzhUOi+CFgcrpB5kM5qhN5s1GCfRCdZFJuoRUJ14fWLFdvZbOO6fhql/3/Q0rDeXAtyK8bx
+ OSxa8Ueul2hbzNBcFU40Y2GkaJ4cLh5waGwyMWABZWQhYEpfabiqTes2/vd0u3KPmH+R0pcw3O9
+ Q4RnUXQRcRP1M/lPFCpZ4V3VrsF5j4fzfVl7LXRt8NwBIBUpmcoBc/OX/ertTUk4kqQ2jRwivB/
+ X56mU7eP4+0qDsK/UQr4DvZaktn5QssV8VChr2DLoDKq9LyhGYLbqkMSF6z6qQHB3mG5bZWK7qT
+ 6zqH9q4C0eCRjk17hal06/4cPlKdlHZ55yJ2eLxZw49Tonn8R+3XnTuWSG3t3LcD1BC/GoU5esn
+ KJ4zlqMiQyjk/KOW+VA==
+X-Authority-Analysis: v=2.4 cv=Du9mPm/+ c=1 sm=1 tr=0 ts=6a6d28cf cx=c_pps
+ a=+3WqYijBVYhDct2f5Fivkw==:117 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22 a=GbPsI2Ihf5RTnMjR_gZv:22
+ a=VwQbUJbxAAAA:8 a=So9IXvp4ApBoCZzCt-gA:9 a=QEXdDO2ut3YA:10
+ a=eYe2g0i6gJ5uXG_o6N4q:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDE3MiBTYWx0ZWRfX4BRK68XctNgm
+ N/XpGiyg4+U4glCFS2JkyxwCnADB8v/L5/IJw0qWNHsaZeyc/5JRKp3EuXNZW74QN9OdQvEWssF
+ 83ZlXLwbADNwQmCjW8HxYK4f9D/B/f0=
+X-Proofpoint-ORIG-GUID: 7Y_B9nWEyMTiOukuhCpY8zbW06noTqxt
+X-Proofpoint-GUID: 7Y_B9nWEyMTiOukuhCpY8zbW06noTqxt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_07,2026-07-30_01,2025-10-01_01
 
-On Fri, 2026-07-31 at 19:26 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Critical] Incorrect static liveness tracking for 64-bit conditional ju=
-mps leads to missing zero-extensions (`zext_dst`), resulting in verifier/ru=
-ntime state divergence and potential privilege escalation.
-> --
->=20
-> --- Patch [3]: [PATCH bpf-next 3/5] bpf: infer zext_dst based on static r=
-egister liveness analysis ---
-> commit ab8592d6a434dbfed0cbb0bd067d9032b308db8d
-> Author: Eduard Zingerman <eddyz87@gmail.com>
->=20
-> bpf: infer zext_dst based on static register liveness analysis
->=20
-> This commit replaces the dynamic subreg_def based zero-extension
-> tracking with static liveness analysis to correctly infer zext_dst
-> and prevent missing zero-extensions on architectures like s390x.
->=20
-> Link: https://lore.kernel.org/bpf/CAGKGUv=3DsOuqQtA1Ub-5JXfA4FPosJFYKAQE4=
-B79cK+P1erxqtg@mail.gmail.com/
->=20
-> > diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
-> > index c996b8a03e792..ea002550671a8 100644
-> > --- a/kernel/bpf/liveness.c
-> > +++ b/kernel/bpf/liveness.c
-> > @@ -2317,9 +2318,18 @@ int bpf_compute_live_registers(struct bpf_verifi=
-er_env *env)
-> >  	}
-> > =20
-> >  	for (i =3D 0; i < insn_cnt; ++i) {
-> > +		int def32 =3D bpf_insn_def32(&insns[i]);
-> > +		u32 out =3D state[i].out;
-> >  		u32 in =3D state[i].in;
-> > =20
-> >  		insn_aux[i].live_regs_before =3D mask_lo(in) | mask_hi(in);
-> > +		/*
-> > +		 * On architectures where 32-bit operations do not reset upper halve=
-s
-> > +		 * of the registers, the verifier needs to zero extend a destination
-> > +		 * register if an instruction defines a 32-bit subregister and the
-> > +		 * upper half of that register is alive after the instruction.
-> > +		 */
-> > +		insn_aux[i].zext_dst =3D def32 >=3D 0 && (mask_hi(out) & BIT(def32))=
-;
->=20
-> [Severity: Critical]
-> Does this code correctly evaluate liveness for 64-bit conditional jumps?
->=20
-> The new zext_dst logic relies on mask_hi(out) accurately reflecting if th=
-e
-> upper half of a register is alive.
->=20
-> However, looking at compute_insn_live_regs() in kernel/bpf/liveness.c for
-> conditional jumps:
->=20
->     const u8 class =3D BPF_CLASS(insn->code);
->     const u8 code =3D BPF_OP(insn->code);
+On Fri, Jul 31, 2026 at 2:48=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+...
+> [Severity: High]
+> This is a pre-existing issue, but this patch introduces a new, heavily-ex=
+ercised
+> reachable path for it.
+>
+> Does mlx5_st_dealloc_index() leak the mlx5_st_idx_data struct when erasin=
+g it
+> from the xarray?
+>
+> When a steering tag's reference count drops to zero, the entry is removed=
+ via
+> xa_erase():
+>
+> drivers/net/ethernet/mellanox/mlx5/core/lib/st.c:mlx5_st_dealloc_index() =
+{
 >     ...
->     case BPF_JMP:
->     case BPF_JMP32:
->         switch (code) {
->         ...
->         default:
->             def =3D 0;
->             if (BPF_SRC(insn->code) =3D=3D BPF_K)
->                 use =3D dst;
->             else
->                 use =3D dst | (code =3D=3D BPF_JMP32 ? src : src32);
+>         if (refcount_dec_and_test(&idx_data->usecount)) {
+>                 xa_erase(&st->idx_xa, st_index);
+>                 /* We leave PCI config space as was before, no mkey will =
+refer to it */
 >         }
->=20
-> Can the code variable ever equal BPF_JMP32?
->=20
-> BPF_OP() extracts the operation code (which is a multiple of 16), while
-> BPF_JMP32 is a class (0x06). This means the check code =3D=3D BPF_JMP32 e=
-valuates
-> to false, and the source register usage always falls back to src32, even =
-for
-> 64-bit jumps (BPF_JMP).
->=20
-> If a 32-bit operation defines a register, and it is followed by a 64-bit
-> conditional jump using that register as a source with no other uses of th=
-e
-> upper 32 bits, the upper half won't be marked as alive.
->=20
-> As a result, zext_dst wouldn't be set, which could lead to the JIT skippi=
-ng
-> the mandatory zero extension. This would cause the 64-bit jump to compare
-> against uninitialized garbage in the upper bits, potentially allowing
-> out-of-bounds access.
->=20
-> Should this check use class =3D=3D BPF_JMP32 instead?
->=20
-> >  	}
+>     ...
+> }
+>
+> However, the underlying idx_data pointer is not freed with kfree(idx_data=
+).
+>
+> Because the next time the same tag is requested, a new struct is allocate=
+d via
+> kzalloc_obj() in mlx5_st_alloc_index_by_tag(), won't repeated allocations=
+ and
+> deallocations lead to an unbounded kernel memory leak?
+>
 
-This is the same (real) issue as reported for the previous patch.
+This is the leak fixed by "net/mlx5: free mlx5_st_idx_data on final
+dealloc" (df6134b527a8). Sashiko appears to have applied the series to
+a tree predating that commit.
