@@ -1,144 +1,137 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48A4431A4C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DF740A92C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 15:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785512528; cv=none; b=rRBU51yldDgnOcbBLO7TVZT+MIdRcyA9ls8EF/4OCCj/hJzDLNJNCmQjCIYko2dkj9RsJv5r4n7IrfsJyAPnqJDn3AgqiamSawRc1F2ep6hw3oT/pTYb/nakR4QE09NOxtqCXCr6bl1AOiC9c8C1z7fl3QROsqOfXiHX4YtoaEU=
+	t=1785512689; cv=none; b=Va5d8rc6k6W+CyTWhhwaSJMsewS2GUY83d8gGPB9d3vBYgdyWZ62rwmuDFjxl/bPedXJs4wEotECG8If5tO9d1FspVMiME/8iWbniHcenEyXZwIqPoa2CD3UhyzcQIxDcEnqhmClMpw1V1b/4pvfQqhmGZFEUdVDZ2MO6RIpv9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785512528; c=relaxed/simple;
-	bh=LYlvOTib2FM4S0QhMRDhnJ6ost4UL+qbapvJXXj2/8g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=deKP76w84+GrkWTPh6Edn2UxF1M6k5yaWYhrz4KXaZzYfaF8fbAbPaPE5qsp8KdFX0aEIWcYWy5m6ti+vZyJ8BuqMPyEWwOzyi+fuL2l/xfssH6DdfICHtDnRyToIgaLpyfmEJ1IezXf2S0HHeggiBwfDrXCN9oFHuLQoOj0hcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=HReC0ah9; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1785512689; c=relaxed/simple;
+	bh=VcL8BXxn3Qq0fLyIIYCp9w7e2Bu7vNh9LjvUbXNwyfc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SsfQ3X8oETdvk9MnPCQVnP8dOOTldm4LYAiGWrI95FTFR7hTjP579s0IzE5qkDgJvwhHr7wQazABmhsdEsPtG93ja2FHgqUXrMlT7CoCJcxxaBaHe4dT06ke9EVpZgJ+q/0Q6HTSuIyeGf5B29yfjx5TuBxkt4gyhWIckEBC8qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=idXP0igI; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="HReC0ah9"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-4799b3f7c83so881686f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 08:42:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="idXP0igI"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47c6e9a694bso748258f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 08:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1785512524; x=1786117324; darn=lists.linux.dev;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=cJARTRpeUTDwH7ZSQm/DfErRwTHcsGyw7SKG2JJKGsw=;
-        b=HReC0ah91mnS1p52Ee6ulMDvgfO7pSabx6YnAQrngEpGI5F6UjKk4q3tz2vh+tWteb
-         Ja1zbp3TR8mYO8OSHKmiA4ezejqoqs+pcNvL5NL8jfU9sa+jEJCb2WvLkEHMAyAunJR3
-         I/s9M2BxzvsY5EUeguL+d0Z4lCxETxctk18RkcAlR7NrRdEeEajqgiWzlnoZoAlyuVcr
-         dzh6sij7Dc4XWFIf06IZiXD6Gy/Rbt1p38c5KTTdw7zHB2HIfxrhf0oRn98MXCA0hkXG
-         kOtgws9flGBnd/8VTH1ra6m2o+Rvr60YfcTUy7UNskq+oWAyFk5nAX+cM1RU5M1E0zd9
-         N0Og==
+        d=chromium.org; s=google; t=1785512686; x=1786117486; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9vJ13y8Hgv8RV6M9Mxzw3aYrgIriTaGFeY14syFHihY=;
+        b=idXP0igIXe4K+ZXMeL3aZXNU5y3YDBvqu9iuFBWUFU3Z8WIm/u53dmVXCkZO9xIFuR
+         l0obMz9hmQZVQJrQiQSmgcGiToYJnU3M83zJul44AwlblhrSkIPwLhFgWOPMLDuTEESw
+         +dBNe/KGGW3ZD5KDq0uiV4CKld9iT9SlryeyU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785512524; x=1786117324;
-        h=content-type:mime-version:message-id:date:user-agent:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=cJARTRpeUTDwH7ZSQm/DfErRwTHcsGyw7SKG2JJKGsw=;
-        b=FK0ScGG7u9+9gzmOWUDi98qWPoYzRwOveaNQLnqwVjHpxKoVGkYXTGrKTJZdmMcsDx
-         xBbW4oj3boIQKsVKvKvlvOouirBqrQcMSZqwhDQyKzqe6mbHQp+e0nDcfdfZb0LFZiyy
-         WSNJOa7POJZMngDK0tcgiTAvkWYWid4k5T3Zkrnrud/+TvZJvYF4Pa27R/h4FqoDVYp+
-         ozjTxhWd52sCf+37jZCgu8M2zTL4eBxA9d0oymO6sqV9cJCeMMPhZSWjI0Ml3RGC/JYP
-         xqoDnE+4ErLTsRowULvwWug8bUPLws5uXJFLTaArzEjZhgNKESwuyUiSEkhKRSy3+Kl0
-         yX6A==
-X-Gm-Message-State: AOJu0Yy2hMUhg3glOpBgxDhe+CJ57jCoH6Op7Y3nlgABjNmF9yWhpJ2S
-	mDwEYarGSB6zUOGIvHkyXMezGs2FTbOvEuWFGnszSrPgov2wkUFTyPjp6UWV2htAAnA=
-X-Gm-Gg: AR+sD12DMlZnrK7FvVMj4rbzzNnXB1igBnqYJ7RyJX/ijInA9gG86koKQDZdGi6zPNc
-	WWul1cTVBHm+dYOWz8WmcRHJXiQTTaknF7J/LsEQ0hYYX/PM49YhmU2pSluPW0FxY/syxYB+0Sc
-	lJUnWJCnCI/2sr85Sf1L+SNQR8ZGHR+QaaKY8uujrGhq5f1ACdLLluaZDnCnPS/yyL5odlP6Inh
-	SlaS1UJ54pVquwN4AW5i8D8vYmitVqat+dz3qnzD0ZxLa5/MTiIeklm5lBjr2GAux2ZYDMuN8zd
-	lPCEJsx1AkWWVE/FeYaYWv4P/U8kvZJwk8x6Ecyb9FgiSuda6oX6Q1uKniQutGSnxdjES7dfT0G
-	tfNVJSwy5GYDn7lGRcqJQF4u2TVSMj5YfVZ+Yoa+djF1d2Si9Ew01yuuKux+QJucV0gVVjAgXSS
-	MpBOUsYcA6Yg/3ZrHAjFIfC/51DbQ1AGXrDptMq/5OQZ1Bi4GZEpvRRKBylQ==
-X-Received: by 2002:adf:e309:0:b0:47f:7c4d:c9a7 with SMTP id ffacd0b85a97d-47fd72f1f7emr138197f8f.47.1785512524233;
-        Fri, 31 Jul 2026 08:42:04 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:d00b:bc94:65a:a73d])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-47fd456262bsm5488966f8f.17.2026.07.31.08.42.03
+        d=1e100.net; s=20251104; t=1785512686; x=1786117486;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9vJ13y8Hgv8RV6M9Mxzw3aYrgIriTaGFeY14syFHihY=;
+        b=q99DuK+AGKNJ05vsWZHQzK/o8TfE6xm+r8zerolMOv4+0dsmYeamlzZ7DxakVirjDG
+         IOC+jsE/uKsfPFYrK9Fo+U0kQxHZaTpgdKgs35Z7+FxDPf0MvHD0CJMBtKEoNhY8g2rb
+         jOCbXwOzzB7VRb7PIwXL+qM8pJq7yMucva02cHwwyNcDiC+mrg0V4ZSLPiUvfbrc1d4u
+         qfaTvk4JjeQLWUy00PFYBBOgV5m+GyR74aDccRVGJIGMZm0cOtyVyVLRkf3Y0Sun0klM
+         +bPKb5ZmEdiRYjH+LvvcewUjsYhuNIvqehKQxDmwQcuoJDu1Xs/S5wUMdcBMsTr06Aog
+         gceA==
+X-Gm-Message-State: AOJu0YyARBTfYPesbKkuQXAswHhwLzdRC3RyiVWwtkCV2qW2wCIz9X8X
+	2eHREyxps8BJfhpU26+/2RJ77CWMMID3VM7yWMkV1y9SgEQg8JFweUAlbriRFHsd2uWDwZWtqqh
+	HIa9qrw==
+X-Gm-Gg: AR+sD13ESQgQ0hYJq+W/2W8ra5Ns5BhUNH9G0h2YOBjweZi9yV0RJfESMNxLaxrSfax
+	nH9zlNqCKCTfF2pZNDcriCraMKFz06hJygK5eCHdm1W7tOslYXG7sikhyntzC14gIL7jitHaPOp
+	E5qo5FYWM7NrqZNbs8z2ZHpvN+CrBpdV67wurnBfisv+KMwCXfSpiHu9nPlU/u8zL4caIzuBc7y
+	fJyz0v9C3LC7tNpoiui2Qkrc50cJbT0ZykYY48VUey8fSWsPKvauNV22BAw6+k0Ev15FT2hKpnP
+	DqdD+RRlYaOnutr3LXfBayR0y3Wr5mmKTdTcXDRjGoUUIjytuLk73mi4i6WguxWnK7iaexPB28s
+	2yH023Aki1J4iy6KlH3mikHTEl8CHRJLCJB0iym90tERRjFyCbNwJuO5FN1hXxRsEL/yc3+rhPJ
+	ER5A8Enf1UX2mJBHX7nV1qIwT4sXh/l5cqtR0ixYiqirGgST9JH4noNb0bwh6kNHd6D3VR4Uarl
+	cQNAYVZ2tkSSBogg1ZWuhHAueWcH+BXNg==
+X-Received: by 2002:a05:6000:1844:b0:47d:fc33:e6bc with SMTP id ffacd0b85a97d-47fd7307ae6mr238895f8f.47.1785512685696;
+        Fri, 31 Jul 2026 08:44:45 -0700 (PDT)
+Received: from google.com ([2a00:79e0:285b:8:4d52:883b:57c3:cdfc])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd4562a38sm5859056f8f.21.2026.07.31.08.44.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 08:42:03 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  conor+dt@kernel.org,
-  devicetree@vger.kernel.org,  robh@kernel.org
-Subject: Re: [PATCH v6 3/5] dt-bindings: mfd: x-powers,axp152: Document AXP318W
-In-Reply-To: <20260731145338.4479A1F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Fri, 31 Jul 2026 14:53:37
-	+0000")
-References: <20260731-axp318-regulator-v6-0-b4e745552a35@baylibre.com>
-	<20260731-axp318-regulator-v6-3-b4e745552a35@baylibre.com>
-	<20260731145338.4479A1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 31 Jul 2026 17:42:02 +0200
-Message-ID: <1jh5lfxj1x.fsf@starbuckisacylon.baylibre.com>
+        Fri, 31 Jul 2026 08:44:44 -0700 (PDT)
+Date: Fri, 31 Jul 2026 17:44:37 +0200
+From: Dmytro Maluka <dmaluka@chromium.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] KVM: selftests: Fix treating KVM_CAP_MAX_VCPU_ID
+ as inclusive
+Message-ID: <amzC5dDVAspfK16u@google.com>
+References: <20260731150846.1728164-1-dmaluka@chromium.org>
+ <20260731150846.1728164-2-dmaluka@chromium.org>
+ <20260731152407.E3EAD1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260731152407.E3EAD1F000E9@smtp.kernel.org>
 
-On ven. 31 juil. 2026 at 14:53, sashiko-bot@kernel.org wrote:
-
+On Fri, Jul 31, 2026 at 03:24:07PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The compatible string `x-powers,axp318w` is omitted from the
-> conditional block that makes the `interrupts` property optional.
+> - [Medium] The patch modifies a KVM selftest to avoid an invalid configuration but sweeps an underlying kernel bug under the rug by failing to fix the kernel and masking the issue in the test suite.
 > --
->
-> --- Patch [3]: [PATCH v6 3/5] dt-bindings: mfd: x-powers,axp152: Document AXP318W ---
-> commit 0a2fd6c8b0d8fd1a45bf4a464bf3e71df8fa62f6
-> Author: Andre Przywara <andre.przywara@arm.com>
->
-> dt-bindings: mfd: x-powers,axp152: Document AXP318W
->
-> This commit documents the AXP318W PMIC in the x-powers,axp152 bindings.
-> It adds the new compatible string to the lists of PMICs that lack PWM
-> frequency properties, and adds new input supply properties.
->
->> diff --git a/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
->> b/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
->> index 45f015d63df16..38556c32417b3 100644
->> --- a/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
->> +++ b/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
->> @@ -83,6 +83,7 @@ allOf:
->
+> 
+> --- Patch [1]: [PATCH v2 1/4] KVM: selftests: Fix treating KVM_CAP_MAX_VCPU_ID as inclusive ---
+> commit 5e2afeaca4e83d31005f9aa5caf94dbbc9f20b8c
+> Author: Dmytro Maluka <dmaluka@chromium.org>
+> 
+> KVM: selftests: Fix treating KVM_CAP_MAX_VCPU_ID as inclusive
+> 
+> This patch modifies the max_vcpuid_cap_test selftest to account for
+> KVM_CAP_MAX_VCPU_ID being exclusive (maximum allowed vcpu_id plus one).
+> It changes the test to use MAX_VCPU_ID + 1 when enabling the capability,
+> avoiding the boundary condition.
+> 
+> > diff --git a/tools/testing/selftests/kvm/x86/max_vcpuid_cap_test.c b/tools/testing/selftests/kvm/x86/max_vcpuid_cap_test.c
+> > index 7e2bfb3c3f3ba..47ee14967873f 100644
+> > --- a/tools/testing/selftests/kvm/x86/max_vcpuid_cap_test.c
+> > +++ b/tools/testing/selftests/kvm/x86/max_vcpuid_cap_test.c
+> [ ... ]
+> > @@ -36,16 +36,19 @@ int main(int argc, char *argv[])
+> >  			    "Setting KVM_CAP_MAX_VCPU_ID below BOOT_CPU_ID should fail");
+> >  	}
+> >  
+> > -	/* Set KVM_CAP_MAX_VCPU_ID */
+> > -	vm_enable_cap(vm, KVM_CAP_MAX_VCPU_ID, MAX_VCPU_ID);
+> > +	/*
+> > +	 * Set KVM_CAP_MAX_VCPU_ID. Note: KVM_CAP_MAX_VCPU_ID is a misnomer,
+> > +	 * it actually represents maximum vcpu_id plus one.
+> > +	 */
+> > +	vm_enable_cap(vm, KVM_CAP_MAX_VCPU_ID, MAX_VCPU_ID + 1);
+> 
 > [Severity: Medium]
-> Was the x-powers,axp318w compatible string intentionally omitted from the
-> interrupt requirement conditional block earlier in this file?
->
-> Looking at the block just above this hunk:
->
->   - if:
->       not:
->         properties:
->           compatible:
->             contains:
->               enum:
->                 - x-powers,axp15060
->                 - x-powers,axp305
->                 - x-powers,axp313a
->                 - x-powers,axp323
->     then:
->       required:
->         - interrupts
->
-> Since x-powers,axp318w is missing from this exclusion list, the interrupts
-> property will be strictly enforced during schema validation. Does
-> this match the expected configuration for this PMIC?
+> Does this patch mask an underlying kernel bug rather than fixing it?
+> 
+> The commit message notes that setting bsp_vcpu_id equal to KVM_CAP_MAX_VCPU_ID
+> is invalid. However, by changing the test to avoid this exact boundary
+> condition, it seems we are leaving the kernel's off-by-one bug unfixed.
+> 
+> Looking at the kernel side in arch/x86/kvm/x86.c:kvm_vm_ioctl_enable_cap():
+> 
+>     if (kvm->arch.bsp_vcpu_id > cap->args[0]) {
+> 
+> This bounds check uses ">" instead of ">=", which appears to incorrectly allow
+> bsp_vcpu_id to equal max_vcpu_ids. 
+> 
+> Should the kernel be fixed to reject this invalid configuration,
 
-In the case of the cubie a7a it is wired to the NMI controller but NO,
-it is not strictly required. A platform may not wire the IRQ and it
-would be fine
+Yes, it is fixed in patch 2 in this series.
 
->
->>            contains:
->>              enum:
->>                - x-powers,axp313a
->> +              - x-powers,axp318w
->>                - x-powers,axp323
->>                - x-powers,axp15060
->>                - x-powers,axp717
+The reason for this selftest patch is not to "mask" the KVM bug but to
+prevent the test from incorrectly failing once the KVM bug is fixed.
 
--- 
-Jerome
+> and the
+> selftest be updated with a negative test to ensure it actually fails?
+
+That is done in patch 3 in this series.
