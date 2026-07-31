@@ -1,163 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBB5390C85;
-	Fri, 31 Jul 2026 08:23:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD8B3D5640
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 08:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785486228; cv=none; b=cvKf3Crr33/fRnvvyPl/iPxzuKCrTEJMcRWQjm4Y3u8gRADu908fF8o6yKiaEGy4R4/4+G4XF8H9lDZJXA5UzPHAR3GgWMhFnwkivuOjZKpTMKRksdH9gJtZQbAoK4108eXGM9wGVUriLcgCzGI0WzzEqaf2O4bXrjV7LW9Un/M=
+	t=1785488047; cv=none; b=ouhzXK8wHmUlGmMC+OEL4uLfFADsODrr+Bxwc74J1l0DrSPDUXPkcgJd3OoL6pBRdom0/QEeKOPIt3Jahn+mtYmAJrbVWdRzqlSN5Zh+HOoF0I0kBXQRRlGoeVABazNVvryaTQnV9W9QOpBORhdNAW0iwqEimAplijz7pbJ3hdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785486228; c=relaxed/simple;
-	bh=u0XzHzHKgDIelDozkivhOpPafuYkC2zE7UgSQ/lkDiY=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iEJ1y7jusPKQB70reXbDE5OKgsvNj2JM8zNRUgfDs7EOh7E0KYbchYU/3Rs72jrW27iza/9x+xoGoPQeJEhIaSQH76Pq6e1gEftytfy0xc03t5ojBVqHaZ5A675ziespRjja0/lJB4vBkBMkKCLLLfdg0hXWWdwDcfjIX4wTaMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BDZLs4f9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785488047; c=relaxed/simple;
+	bh=9hkG8hq7f3EoD94RjJhCYXhfWclpz33msdh4Jv9kHUQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=cO/o0c46JJhbEbR9Z49m6VYkyFbGqyVYepR1VlvFX4wFiW0HNZieM4U7KpGBbKdLwtCxYLHG258vg3ykM3MbECqpFYCf7MFL/Og9qfSfE2zqJ47dSDeUumL2/bJWyhegNtmc5hHZA3eMDpqgxyU3u/kxzP0C8rcaAnf7DL/Ioks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lphkGdfy; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BDZLs4f9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB191F000E9;
-	Fri, 31 Jul 2026 08:23:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785486226;
-	bh=RSdWbM+abWi+vwG5OznmwW0QSMQjk5ndwXEpSTWN+KM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=BDZLs4f90qFg00VaiR414IWSmjBA/tfDMZ7hFoqwE+Sj5M4WRsZFTGtLVaN/wnprk
-	 UhJ/Ig+dK5zUJ2CX49ZL8gSE31xIEkZamFjhvWbR2o6XoCuKkDhxBiQ6YjM4iiH85P
-	 oobABKfRW+S6oyf4RZkYaJEpEp/GgYgOVOUL+hySNhPhtZq+iR1ggc6qPcsbzvUClM
-	 ehNLQUpo5xY3K9N7wQ4yfMFCeVQXSdYXN6QywpZpuaiS9v/qwDbQEEkEi2vVS1HOPq
-	 XJS3TdtPrE9PEzP8PpBJzvwsSPMloy2+ZDr/gsr4u+xQtFWrXEU2fpoNlo09x3Zo2V
-	 0pWZ7mGIIywQg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wpiWu-0000000Aqb9-1kkY;
-	Fri, 31 Jul 2026 08:23:44 +0000
-Date: Fri, 31 Jul 2026 09:23:43 +0100
-Message-ID: <86cxw3d0ts.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Oliver Upton <oupton@kernel.org>
-Cc: Fuad Tabba <fuad.tabba@linux.dev>,
-	sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v5 3/7] KVM: arm64: Top up stage-2 memcache for dirty logging faults
-In-Reply-To: <amxKgJ1cCHO97trp@kernel.org>
-References: <20260717130317.1953574-1-fuad.tabba@linux.dev>
-	<20260717130317.1953574-4-fuad.tabba@linux.dev>
-	<20260717131537.71F531F000E9@smtp.kernel.org>
-	<CA+EHjTzZxa7Yb2GJhbJdtnTgGoiPTmSAotWTF7S7acq6M_trwg@mail.gmail.com>
-	<87cxwkr8k0.wl-maz@kernel.org>
-	<amxKgJ1cCHO97trp@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lphkGdfy"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-4728c12ba97so424785f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 01:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1785488043; x=1786092843; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FJGQeaClS5HVPjwprrOHXs8CtxZCye4wlWhVPeRubIk=;
+        b=lphkGdfyjkOXPByNxxXGxTlnGqApoixRChJ2sPO64JkAjQgSHSmDgxhiURP7F8X2ew
+         ZJCA/wlYw22A6w3tK4HhKkkUYtdOycEBfFiTJ1PvU7rYLVh5hDNOIUnS9JTBY/k2loi6
+         XipD472cz8PqGSS5otu0Nfak9CYUWF4St/s1zFXjduJWBRI7LMb8t3NDmJEnrPZ1Gcqv
+         671gwddoyfXqEThSn1tQtIqrdCRQYMFe4F+xaf58yCiAsJtuimweuKR+GjMGqOU2wQDZ
+         9DK8i1cq0bSUvUe4QqRH20GI7+EynNhOWD0KWmp1oOHG4yStF/tlxfktL+fL6+1sHzpp
+         bWOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785488043; x=1786092843;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FJGQeaClS5HVPjwprrOHXs8CtxZCye4wlWhVPeRubIk=;
+        b=iRyhn7lN0v144ZVD4PXHhRr8Lh3XpDAeOk34otvuxtiqLmsY9N2PVME5CwY0BOmHPU
+         d4dam0BymuHWB2zyxGrXHdbjp4X/OGTpF4XZZ2uGBZzhnexaEbKYDSeK1wv/HlsmRtlw
+         R8WZhTUXXIDkfP40BXRANUD79sPiB9e5cdn8K0KvIVIirTIqedwW2LMFF1J8YPdzDuz8
+         ObiwbW4Pi/UPQPqekSBswg3XwcR9Kot7Y3KH1QHHwL6VLF7DL0d+eJ+DZKTsFnKecIud
+         P/rkmiyr/GgOkSqNLR1zVMlPwnmwUtMCzYNRrVRflCxZZWRR9Ac6H+Go/cP5S0bcP8dB
+         JQ4Q==
+X-Gm-Message-State: AOJu0YzXCwQ2Xj7phBrwHYaMuAYsqtTry6m/VjTsFIbdUPZStZ8CeLN5
+	OmFyCVhC5ots9AzF5l+SJAe6VUA3Z48slYj/uc2cpcTc7qGpxtH/zPMwMHekLvdzc1/BGT7DY9S
+	DAIca
+X-Gm-Gg: AR+sD12eecpcLbJgCU/BuUafV4HPA46RIb9PkSyqx5hoBq3RPtnTAY4MW5EPVqo7llu
+	iOUyAoqkl8vfjI++Ut+OgMTh0k4RfmusWJ/6fMtwQGZxnojkuLPgX0ZgjduGftcMtSA1Lgb5Lh6
+	ykDEh9/OFnT36hfYIls9phwSxOXt3D0vduY6loH6V5hivWpuZCdHD2LuMdnDXUqNoabj0z9RKM6
+	1BnpHqNywnrKpoP/+8neEHFmoYWr77tvfYrAqrysL+xCX1/hP0vzV/ciNJf8LIpsEuOi7GHmhTc
+	YJ0U2/1Y0OsS+9bwuJyW/unnU94X25Cim3cxa5RsS952NiE8MTQzCUQLu6rt0FN6pyTqODilncX
+	PLPMJRx8AfzJ6lkou9sabBofLMhUgi/KbAlvUi5hF8UdZ901B+4hw50vf2Vr4MjyLbwZxU5jaOh
+	n+bleglvVDtYrKhCBfmgHW3s634ttbsIJ9/w7WCkTPrlcT33gyX2MTY9r6SMzWD7+3okoraAVKd
+	MZwcRA8XGVTTgwj9UOdyizSb0pJPp3+apydPiZd3g==
+X-Received: by 2002:a05:6000:26ce:b0:46e:c978:7ddc with SMTP id ffacd0b85a97d-47fd2adbd3emr2706225f8f.24.1785488043145;
+        Fri, 31 Jul 2026 01:54:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:6c49:d2f1:f94:1fb2? ([2a01:e0a:106d:1080:6c49:d2f1:f94:1fb2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd458bf7csm2457413f8f.32.2026.07.31.01.54.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Jul 2026 01:54:02 -0700 (PDT)
+Message-ID: <8c8d977b-6a88-4d7d-ab58-985b915f82be@linaro.org>
+Date: Fri, 31 Jul 2026 10:54:01 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: oupton@kernel.org, fuad.tabba@linux.dev, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sm8650-hdk: Enable I2S for HDMI
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260731-topic-sm8x50-next-hdk-i2s-v2-0-42c1acee5a2d@linaro.org>
+ <20260731-topic-sm8x50-next-hdk-i2s-v2-3-42c1acee5a2d@linaro.org>
+ <20260731082207.A3BBD1F000E9@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260731082207.A3BBD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 31 Jul 2026 08:10:56 +0100,
-Oliver Upton <oupton@kernel.org> wrote:
+On 7/31/26 10:22, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The SoC's native I2S and MCLK pinctrl configurations (`i2s0_default_state`, `audio_mclk0_default_state`) are incorrectly placed in the `pinctrl-0` property of the external `lt9611_codec` I2C bridge node, instead of being managed by the sound card or CPU DAI.
+> - [Low] The `dai@16` node uses an incorrect hexadecimal unit address of `16` (22 in decimal), which does not match the decimal value of its `reg` property `PRIMARY_MI2S_RX` (16, which is 0x10). The node should be named `dai@10`.
+> --
 > 
-> Hey,
+> --- Patch [3]: [PATCH v2 3/3] arm64: dts: qcom: sm8650-hdk: Enable I2S for HDMI ---
+> commit b95de62e9eeaef3502a18beec3e036edf4b8259f
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> Sorry for the latency, stumbled upon this as I was looking for stuff to
-> grab for 7.3...
+> arm64: dts: qcom: sm8650-hdk: Enable I2S for HDMI
 > 
-> On Sat, Jul 18, 2026 at 09:44:31AM +0100, Marc Zyngier wrote:
-> > On Fri, 17 Jul 2026 15:17:00 +0100,
-> > Fuad Tabba <fuad.tabba@linux.dev> wrote:
-> > > 
-> > > On Fri, 17 Jul 2026 at 14:15, <sashiko-bot@kernel.org> wrote:
-> > > >
-> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > >
-> > > > Pre-existing issues:
-> > > > - [High] A malicious nested (L1) guest can crash the KVM host via a Break-Before-Make (BBM) violation that triggers a BUG_ON() due to an empty memory cache during a permission fault.
-> > > 
-> > > From my understanding of NV code, this looks like a real issue. I
-> > > don't think it changes this patch, though: this one only widens the
-> > > top-up for the dirty-logging case, and the path you describe is a
-> > > non-logging permission fault. So, it would be a separate fix, a top up
-> > > for nested permission faults too, the same way we already do for pKVM?
-> > > 
-> > >         if (!perm_fault || memslot_is_logging(s2fd->memslot) ||
-> > >             is_protected_kvm_enabled() || s2fd->nested) {
-> > > 
-> > > If that's right, I'll send a separate fix later. Marc, what do you think?
-> > 
-> > I don't think this is correct. Yes, this papers over the guest being
-> > buggy, but i don't think that's what we should really do.
-> > 
-> > Doing the same thing (changing the output size without a TLBI) on real
-> > HW would result in a permission fault being signalled to EL2, and we
-> > should model our SW MMU the same way.
+> Add the necessary nodes to configure the right I2S interface
+> to output audio via the DSI HDMI bridge.
 > 
-> FEAT_BBML3 shifts responsibility onto the implementation to reconcile
-> multihit due to mapping granularity changes. A hypervisor could choose
-> to do eager page splitting at the beginning of dirty logging and elide
-> TLBIs.
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> index eabc828c05b4c..b62d387b9afa3 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> 
+> [ ... ]
+> 
+>> @@ -861,7 +878,10 @@ lt9611_codec: hdmi-bridge@2b {
+>>   		vdd-supply = <&lt9611_1v2>;
+>>   		vcc-supply = <&lt9611_3v3>;
+>>   
+>> -		pinctrl-0 = <&lt9611_irq_pin>, <&lt9611_rst_pin>;
+>> +		pinctrl-0 = <&lt9611_irq_pin>,
+>> +			    <&lt9611_rst_pin>,
+>> +			    <&i2s0_default_state>,
+>> +			    <&audio_mclk0_default_state>;
+> 
+> [Severity: Medium]
+> Does this place the SoC's native I2S and MCLK pinctrl configurations in the
+> external I2C bridge node?
+> 
+> By placing the SoC I2S pin states in the default property of the external I2C
+> codec node, the pins might be unconditionally driven from the moment the I2C
+> bridge driver probes. This could prevent the ALSA/DAPM subsystem from toggling
+> the pins based on active audio streams.
+> 
+> Should these be managed by the sound card or CPU DAI instead?
 
-Sure. We just don't advertise BBML3. and I'm not even sure we always
-can emulate it.
+
+No
 
 > 
-> > I think the latent bug here is the way we always walk L1's S2 on S2
-> > fault, irrespective of the fault type, and that feels wrong. This is
-> > ignoring the fact that we already have a TLB (the shadow S2) for this
-> > mapping, and rewalk anyway. Since we now find valid permissions, we
-> > take it at face value and try to install this new translation (which
-> > could point to a different OA, and even bigger problem).
-> > 
-> > So ideally we'd simply tell the guest to bugger off, but we need to
-> > solve a few problems first:
-> > 
-> > - some permission faults are caused by the host rather than the guest
-> >   (dirty logging, HAFDBS), and we need to treat those specially.
-> > 
-> > - we need to rebuild an ESR based on the content of our TLB, not L1's
-> >   S2, which is not always easy to obtain (we have some limited TTL
-> >   caching in the shadow S2, but that's not always reliable).
-> > 
-> > All of this strongly intersects with Wei-Lin's reverse map, and
-> > Oliver's HAFDBS support.
-> > 
-> > Oliver?
+>>   		pinctrl-names = "default";
+>>   
+>>   		ports {
 > 
-> Hmm, I'm more of the mind that we should just keep the memcache topped
-> up for any fault because clearly the prediction has gotten out of sync
-> with what happens later down the line. We're bound to screw it up again.
+> [ ... ]
 > 
-> Generating faults solely based on the TLB seems to be at odds with
-> supporting FEAT_ETS* in the shadow stage-2 and practically means we
-> need to re-walk for most stage-2 aborts anyway. And as you point out, I
-> need to do this for HAFDBS dirty state updates.
+>> @@ -1072,6 +1092,19 @@ &pon_resin {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&q6apmbedai {
+>> +	#address-cells = <1>;
+>> +	#size-cells = <0>;
+>> +
+>> +	dai@16 {
 > 
-> BBML3 and ETS2/3 aren't terribly high priority but I'd rather not paper
-> over a rather straightforward KVM bug by making design decisions that
-> limit our feature set for nested.
+> [Severity: Low]
+> Does this trigger a unit_address_vs_reg Device Tree Compiler warning?
+> 
+> Since PRIMARY_MI2S_RX is 16 in decimal (0x10), should the node be named
+> dai@10 to match the hex-formatted first address of the reg property?
 
-My problem here is not the top-up of the memcache, but the fact that
-the OA may have changed in L1's S2. This potentially result in an
-inconsistent S2, and in the future a wonky reverse map. So I'm not
-advocating we paper over anything. It's exactly the opposite.
+Damn !
 
-As for future features, I don't think they should take priority over
-correctness, and taking the guest S2 at face value is incorrect.
+> 
+>> +		reg = <PRIMARY_MI2S_RX>;
+>> +		clocks = <&q6prmcc LPASS_CLK_ID_PRI_MI2S_IBIT LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>> +			 <&q6prmcc LPASS_CLK_ID_MCLK_1 LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>> +		clock-names = "bclk",
+>> +			      "mclk";
+>> +	};
+>> +};
+> 
 
-If you want to hide this from the guest, fine. But that probably means
-that we need to detect this situation, and nuke part (or all) of the
-shadow S2 as a consequence. Today, we're just going to mess things up.
-
-Thanks,
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
