@@ -1,105 +1,127 @@
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E041D23A562
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 06:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.161.220
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF5C382395;
+	Fri, 31 Jul 2026 07:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785480094; cv=none; b=Z0J2RcQP4LvHQpuUqS8/3Q6PbZeoPGqsS+/2vZATj2ab16gz57X9mfZo+ELYMjDvtGOnvgLwupqpmNhlGABJEpS3Ie2KU4P4zZmMapOvBxXuqgnipyoL1a5mXckOxISw9iIrFXjcErBgGAGEn+LXGI0oQsiSqOfaYyZYQ/zDMTc=
+	t=1785481863; cv=none; b=aeerBXGiiwt4eBLtngGicgnOSN+4ZHy8AuqnQFa+zOWMKn4TSxpLlmv8jWHuA0Qy4Ck017EPp2RfylSW5JmxmhSQ8oj+Ag9PUEyMLh1qDIDzp7mBZGmlSAV/HOwTbbrPXV1LoNldagbaeI+gymuOxeCNjx+4iptVOGsPbqQPT8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785480094; c=relaxed/simple;
-	bh=31TR/mFFgqZHjGtCUMnGHxJv7hNJf+Djh8ajwHRaM2Q=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=EYs+rfqiV/r6mQKPCvViGvAT0oRa1SHyA4RUjg8/+gfeLtZZUeEvY8ocKtBtv6nNiDqTUKaVxxKWLxjpT8AVe5wHpORIionUkLybVT2sKHA4EZ5y2WcH18b759LLw5vkFspnaf6Ci5KHFXCAXPZV0k4WYF/bE7I0sDCPUMmmRKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=162.243.161.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from dongxuyang$eswincomputing.com ( [10.12.96.41] ) by
- ajax-webmail-app2 (Coremail) ; Fri, 31 Jul 2026 14:41:27 +0800 (GMT+08:00)
-Date: Fri, 31 Jul 2026 14:41:27 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Xuyang Dong" <dongxuyang@eswincomputing.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: ukleinek@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, ben-linux@fluff.org, ben.dooks@codethink.co.uk,
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, p.zabel@pengutronix.de,
-	daniel.lezcano@kernel.org, tglx@kernel.org,
-	ningyu@eswincomputing.com, linmin@eswincomputing.com,
-	xuxiang@eswincomputing.com, wangguosheng@eswincomputing.com,
-	pinkesh.vaghela@einfochips.com
-Subject: Re: Re: [PATCH v14 5/5] clocksource: dw_apb_timer: Use reset array
- API to handle all resets
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <20260730115229.145411F000E9@smtp.kernel.org>
-References: <20260730111425.1680-1-dongxuyang@eswincomputing.com>
- <20260730111628.1990-1-dongxuyang@eswincomputing.com>
- <20260730115229.145411F000E9@smtp.kernel.org>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1785481863; c=relaxed/simple;
+	bh=MXzkrYuvsCb0qqg0G1EONJG5W5ibP0p+dOf6h7DteOg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lS9wTFHHvzVEb5lxvXpq1FATLjcJQY7595sde4k27McpYtLpG56mVrsChzt/RzKbz1/Zd8aflmbxIJ+ZinsiAu7RhJ54xK/iG2K1+0AmfCziOGVQlkhjaUzKkdrY8QRabpbyoF804PgaJ4tODmjgUOp6IZZ48xapY0QPz0wpkEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=obgnUr6L; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="obgnUr6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368741F000E9;
+	Fri, 31 Jul 2026 07:10:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785481858;
+	bh=dhiyG6dFAiisC771zhYNfSU/aHXT390YSfJ8cCf1xsQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=obgnUr6LEvDaZws8YVFJmgidXu/Q5fXNoZpZfMcZPgN+h11RByhxHJhP8Sl1ZZpGR
+	 7BHEXgB6wdgkP78dF44+2CeVH78Clxkap/Ymyh4gZft1wjpGbPIlT2GLl986t0gP2Y
+	 NTL+xUWrJPdC2gAxxNvyfQt7JxiRaFxAn4FnBUrtI1Ahll1vEexduPE2a+AcAwPiSU
+	 Z5MFRDydvuV0g0h1oJzGLExMTxvuBS2w3E3BVwoGrsfqJ/CJyZ34g4tMQiOzaJhagJ
+	 rKooOCCtH0p0CGN2cDpYQRUlof5ReevjrZbUZf1LT2Jx98u1iWwlGvyIql/gDAN8IX
+	 WzBFYFrEyTe7g==
+Date: Fri, 31 Jul 2026 00:10:56 -0700
+From: Oliver Upton <oupton@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Fuad Tabba <fuad.tabba@linux.dev>, sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH v5 3/7] KVM: arm64: Top up stage-2 memcache for dirty
+ logging faults
+Message-ID: <amxKgJ1cCHO97trp@kernel.org>
+References: <20260717130317.1953574-1-fuad.tabba@linux.dev>
+ <20260717130317.1953574-4-fuad.tabba@linux.dev>
+ <20260717131537.71F531F000E9@smtp.kernel.org>
+ <CA+EHjTzZxa7Yb2GJhbJdtnTgGoiPTmSAotWTF7S7acq6M_trwg@mail.gmail.com>
+ <87cxwkr8k0.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <53385ccd.8eee.19fb6e808f2.Coremail.dongxuyang@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:TQJkCgAHHaCXQ2xqFPA3AA--.9565W
-X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/1tbiAQEFAmprfKgUQ
-	wACsH
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87cxwkr8k0.wl-maz@kernel.org>
 
-PiAKPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBm
-b3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPiAtIFtIaWdoXSBFeGNsdXNp
-dmUgYWNxdWlzaXRpb24gb2YgYSBzaGFyZWQgYnVzIHJlc2V0IGJsb2NrcyBvdGhlciBkZXZpY2Vz
-IG9uIHRoZSBidXMgZnJvbSBwcm9iaW5nIGFuZCBtYXkgaW5hZHZlcnRlbnRseSByZXNldCB0aGUg
-ZW50aXJlIGJ1cy4KPiAtLQo+IAo+IC0tLSBQYXRjaCBbNV06IFtQQVRDSCB2MTQgNS81XSBjbG9j
-a3NvdXJjZTogZHdfYXBiX3RpbWVyOiBVc2UgcmVzZXQgYXJyYXkgQVBJIHRvIGhhbmRsZSBhbGwg
-cmVzZXRzIC0tLQo+IGNvbW1pdCA2NmVmM2U1NGNjMWRhYTY3M2VjMmY2YjY1OGUwYTE3ZmI3ZjM1
-OGFiCj4gQXV0aG9yOiBYdXlhbmcgRG9uZyA8ZG9uZ3h1eWFuZ0Blc3dpbmNvbXB1dGluZy5jb20+
-Cj4gCj4gY2xvY2tzb3VyY2U6IGR3X2FwYl90aW1lcjogVXNlIHJlc2V0IGFycmF5IEFQSSB0byBo
-YW5kbGUgYWxsIHJlc2V0cwo+IAo+IFRoaXMgY29tbWl0IHVwZGF0ZXMgdGhlIHRpbWVyIGluaXRp
-YWxpemF0aW9uIHRvIGZldGNoIGFuZCB0cmlnZ2VyIGFsbAo+IHJlc2V0IGxpbmVzIGxpc3RlZCBp
-biB0aGUgZGV2aWNlIHRyZWUgdXNpbmcgdGhlIGFycmF5IHZhcmlhbnQgb2YgdGhlCj4gcmVzZXQg
-QVBJLiBJdCBpbnRlbnRpb25hbGx5IGhvbGRzIGV4Y2x1c2l2ZSByZWZlcmVuY2VzIHRvIHRoZXNl
-IGxpbmVzCj4gdG8ga2VlcCB0aGVtIGRlYXNzZXJ0ZWQgd2hpbGUgdGhlIHRpbWVyIHJ1bnMuCj4g
-Cj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9jbG9ja3NvdXJjZS9kd19hcGJfdGltZXJfb2YuYyBi
-L2RyaXZlcnMvY2xvY2tzb3VyY2UvZHdfYXBiX3RpbWVyX29mLmMKPiA+IC0tLSBhL2RyaXZlcnMv
-Y2xvY2tzb3VyY2UvZHdfYXBiX3RpbWVyX29mLmMKPiA+ICsrKyBiL2RyaXZlcnMvY2xvY2tzb3Vy
-Y2UvZHdfYXBiX3RpbWVyX29mLmMKPiA+IEBAIC0yOSw5ICsyOSwxNCBAQCBzdGF0aWMgaW50IF9f
-aW5pdCB0aW1lcl9nZXRfYmFzZV9hbmRfcmF0ZShzdHJ1Y3QgZGV2aWNlX25vZGUgKm5wLAo+ID4g
-IAo+ID4gIAkvKgo+ID4gIAkgKiBSZXNldCB0aGUgdGltZXIgaWYgdGhlIHJlc2V0IGNvbnRyb2wg
-aXMgYXZhaWxhYmxlLCB3aXBpbmcKPiA+IC0JICogb3V0IHRoZSBzdGF0ZSB0aGUgZmlybXdhcmUg
-bWF5IGhhdmUgbGVmdCBpdAo+ID4gKwkgKiBvdXQgdGhlIHN0YXRlIHRoZSBmaXJtd2FyZSBtYXkg
-aGF2ZSBsZWZ0IGl0Lgo+ID4gKwkgKiBVc2UgdGhlIGFycmF5IHZhcmlhbnQgdG8gZmV0Y2ggYW5k
-IHRyaWdnZXIgYWxsIHJlc2V0IGxpbmVzCj4gPiArCSAqIChlLmcuLCB0aW1lciBhbmQgQVBCIGlu
-dGVyZmFjZSByZXNldHMpIHRvZ2V0aGVyLCB3aXRob3V0Cj4gPiArCSAqIG9yZGVyaW5nIHJlcXVp
-cmVtZW50cy4KPiA+ICsJICogVGhlIGV4Y2x1c2l2ZSByZWZlcmVuY2VzIGFyZSBpbnRlbnRpb25h
-bGx5IGhlbGQgdG8ga2VlcCB0aGUKPiA+ICsJICogcmVzZXRzIGRlYXNzZXJ0ZWQgd2hpbGUgdGhl
-IHRpbWVyIGlzIHJ1bm5pbmcuCj4gPiAgCSAqLwo+ID4gLQlyc3RjID0gb2ZfcmVzZXRfY29udHJv
-bF9nZXQobnAsIE5VTEwpOwo+ID4gKwlyc3RjID0gb2ZfcmVzZXRfY29udHJvbF9hcnJheV9nZXRf
-b3B0aW9uYWxfZXhjbHVzaXZlKG5wKTsKPiAKPiBbU2V2ZXJpdHk6IEhpZ2hdCj4gSWYgYW55IG9m
-IHRoZXNlIHJlc2V0IGxpbmVzIGFyZSBzaGFyZWQgYnVzIHJlc2V0cywgZG9lcyBhY3F1aXJpbmcg
-dGhlbQo+IGV4Y2x1c2l2ZWx5IGxvY2sgb3V0IG90aGVyIGRldmljZXMgdGhhdCBzaGFyZSB0aGUg
-c2FtZSByZXNldCBsaW5lPwo+IAoKSGkgU2FzaGlrbywKClRoZXNlIHJlc2V0IGxpbmVzIHNob3Vs
-ZCBiZSBleGNsdXNpdmVseSBvd25lZCBieSBlYWNoIHRpbWVyLgoKPiBUaGUgY29tbWl0IG1lc3Nh
-Z2UgbWVudGlvbnMgQVBCIGludGVyZmFjZSByZXNldHMsIHdoaWNoIGFyZSB0eXBpY2FsbHkgc2hh
-cmVkCj4gYWNyb3NzIG11bHRpcGxlIHBlcmlwaGVyYWxzLiBJZiB0aGlzIGRyaXZlciBob2xkcyBh
-IHNoYXJlZCByZXNldCBsaW5lCj4gZXhjbHVzaXZlbHksIHN1YnNlcXVlbnQgcmVzZXRfY29udHJv
-bF9nZXQoKSBjYWxscyBmcm9tIG90aGVyIGRyaXZlcnMgc2hhcmluZwo+IHRoZSBidXMgd2lsbCBm
-YWlsIHdpdGggLUVCVVNZLCBwcmV2ZW50aW5nIHRoZW0gZnJvbSBwcm9iaW5nLgo+IAo+IEZ1cnRo
-ZXJtb3JlLCB1bmNvbmRpdGlvbmFsbHkgYXNzZXJ0aW5nIGEgc2hhcmVkIGJ1cyByZXNldCBoZXJl
-IGluCj4gdGltZXJfZ2V0X2Jhc2VfYW5kX3JhdGUoKSBtaWdodCBpbmFkdmVydGVudGx5IHJlc2V0
-IG90aGVyIHBlcmlwaGVyYWxzIG9uIHRoZQo+IHNhbWUgYnVzIHRoYXQgYXJlIGFscmVhZHkgaW5p
-dGlhbGl6ZWQuIERvZXMgdGhlIHRpbWVyIGRyaXZlciBuZWVkIHRvIHVzZSBhCj4gc2hhcmVkIHJl
-c2V0IEFQSSB0byBhdm9pZCBkaXNydXB0aW5nIG90aGVyIGRldmljZXMgb24gdGhlIGJ1cz8KPiAK
-CklmIHRoZSByZXNldHMgYXJlIGV4Y2x1c2l2ZSwgZG8geW91IHRoaW5rIHVzaW5nIHRoZSBleGNs
-dXNpdmUgcmVzZXQgQVBJwqAKaXMgYmV0dGVyPwoKQmVzdCByZWdhcmRzLApYdXlhbmcgRG9uZwoK
-PiA+ICAJaWYgKCFJU19FUlIocnN0YykpIHsKPiA+ICAJCXJlc2V0X2NvbnRyb2xfYXNzZXJ0KHJz
-dGMpOwo+ID4gIAkJcmVzZXRfY29udHJvbF9kZWFzc2VydChyc3RjKTsKPiAKPiAtLSAKPiBTYXNo
-aWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA3MzAx
-MTE0MjUuMTY4MC0xLWRvbmd4dXlhbmdAZXN3aW5jb21wdXRpbmcuY29tP3BhcnQ9NQo=
+Hey,
+
+Sorry for the latency, stumbled upon this as I was looking for stuff to
+grab for 7.3...
+
+On Sat, Jul 18, 2026 at 09:44:31AM +0100, Marc Zyngier wrote:
+> On Fri, 17 Jul 2026 15:17:00 +0100,
+> Fuad Tabba <fuad.tabba@linux.dev> wrote:
+> > 
+> > On Fri, 17 Jul 2026 at 14:15, <sashiko-bot@kernel.org> wrote:
+> > >
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > >
+> > > Pre-existing issues:
+> > > - [High] A malicious nested (L1) guest can crash the KVM host via a Break-Before-Make (BBM) violation that triggers a BUG_ON() due to an empty memory cache during a permission fault.
+> > 
+> > From my understanding of NV code, this looks like a real issue. I
+> > don't think it changes this patch, though: this one only widens the
+> > top-up for the dirty-logging case, and the path you describe is a
+> > non-logging permission fault. So, it would be a separate fix, a top up
+> > for nested permission faults too, the same way we already do for pKVM?
+> > 
+> >         if (!perm_fault || memslot_is_logging(s2fd->memslot) ||
+> >             is_protected_kvm_enabled() || s2fd->nested) {
+> > 
+> > If that's right, I'll send a separate fix later. Marc, what do you think?
+> 
+> I don't think this is correct. Yes, this papers over the guest being
+> buggy, but i don't think that's what we should really do.
+> 
+> Doing the same thing (changing the output size without a TLBI) on real
+> HW would result in a permission fault being signalled to EL2, and we
+> should model our SW MMU the same way.
+
+FEAT_BBML3 shifts responsibility onto the implementation to reconcile
+multihit due to mapping granularity changes. A hypervisor could choose
+to do eager page splitting at the beginning of dirty logging and elide
+TLBIs.
+
+> I think the latent bug here is the way we always walk L1's S2 on S2
+> fault, irrespective of the fault type, and that feels wrong. This is
+> ignoring the fact that we already have a TLB (the shadow S2) for this
+> mapping, and rewalk anyway. Since we now find valid permissions, we
+> take it at face value and try to install this new translation (which
+> could point to a different OA, and even bigger problem).
+> 
+> So ideally we'd simply tell the guest to bugger off, but we need to
+> solve a few problems first:
+> 
+> - some permission faults are caused by the host rather than the guest
+>   (dirty logging, HAFDBS), and we need to treat those specially.
+> 
+> - we need to rebuild an ESR based on the content of our TLB, not L1's
+>   S2, which is not always easy to obtain (we have some limited TTL
+>   caching in the shadow S2, but that's not always reliable).
+> 
+> All of this strongly intersects with Wei-Lin's reverse map, and
+> Oliver's HAFDBS support.
+> 
+> Oliver?
+
+Hmm, I'm more of the mind that we should just keep the memcache topped
+up for any fault because clearly the prediction has gotten out of sync
+with what happens later down the line. We're bound to screw it up again.
+
+Generating faults solely based on the TLB seems to be at odds with
+supporting FEAT_ETS* in the shadow stage-2 and practically means we
+need to re-walk for most stage-2 aborts anyway. And as you point out, I
+need to do this for HAFDBS dirty state updates.
+
+BBML3 and ETS2/3 aren't terribly high priority but I'd rather not paper
+over a rather straightforward KVM bug by making design decisions that
+limit our feature set for nested.
+
+Thanks,
+Oliver
