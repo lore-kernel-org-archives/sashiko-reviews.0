@@ -1,91 +1,141 @@
-Received: from one.firstfloor.org (one.firstfloor.org [65.21.254.221])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535CA367F21
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 20:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.254.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62157368D55
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 20:50:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785528432; cv=none; b=C52eRfWuNZ6HtUeBtXCwGQqRtfU9QNM+Px/bsK7MnAak8s2H/3zcdO86n98j74L4jrHMJzJEoMGSjjzJvEvlHlCeDgMy1wi7KV3F2LXS3rzFB1EhvUa7bNFuBbxgrksfy7E+nIbUZQEzYhnPY+UNZwkTM3bgLtA6EWuBPY6mY0M=
+	t=1785531051; cv=none; b=gYNIu3nIhtSN0MYOngsrhsGFXamP8idOy82hcYOWM5aPIlSujjQ67WQ1szu+NTT+HagpZluldV6bjrpTeWHACpMc6eVc04OTcNltTZgDQuiUZQGdmMl8q5LM7taDdZS+tmbBKwn7KPQGhjJiKshvor6m+zUu6mYlN1O/UIDrjQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785528432; c=relaxed/simple;
-	bh=dZ5HeMLWNOM5arXMYk0DUQH+oYKXmnyPQU0ZWimVOPY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eQRie3zHduUXkPYRs7U3owwONM5gIjNX/cYZvKQgXrBA8d2skJrxlcSoGovaNEMabT6Nu29kOHfsoyfwK7Keo8Mi1jgtlHm7tWGWwH20MjMaRXMKEAlfriW1cJPT2LplaE93SkCvCKzBSh/RxNMC8PWxa3zrPUfumBaWKdtegq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=firstfloor.org; spf=pass smtp.mailfrom=firstfloor.org; dkim=pass (1024-bit key) header.d=firstfloor.org header.i=@firstfloor.org header.b=aivxJmcD; arc=none smtp.client-ip=65.21.254.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=firstfloor.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=firstfloor.org
+	s=arc-20240116; t=1785531051; c=relaxed/simple;
+	bh=Hbhi6+KMjpxoERuBtIxFEqObdZKUIZ5jGtT8v620HxI=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=jAyE4JC6ENlihSH4ZIlLgFC/PyJ2wM1E0Bb2vy3uM5uBPaTVoNNyCH7E5xfRUuKFnDUX7A6ff48pIM88bIGjEANIqg85PVnWzexzBk4SSrgYZApWnnrrgoz1nigV+klbnpF+n8toVSk02FRrQVKSsWdk0a95iBY+JIlCQetEp6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=s2CQz9Pw; arc=none smtp.client-ip=209.85.210.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=firstfloor.org header.i=@firstfloor.org header.b="aivxJmcD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=firstfloor.org;
-	s=mail; t=1785527963;
-	bh=dZ5HeMLWNOM5arXMYk0DUQH+oYKXmnyPQU0ZWimVOPY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aivxJmcDhf4WPUVeECaPu98Z9CiHXYmXWc15lMcZ6IcI2PqmW770ON2jVAHB0qXmm
-	 up0PWijDrp1dTYBRfHBkjClJElKDrLwsK9tYaVH+6bW6EkhK3qdg4gXRmEGnqehs6q
-	 u/2QkF6iebLCoZiz2NvdKb9qe4fwf2eFdFDE/TIE=
-Received: by one.firstfloor.org (Postfix, from userid 503)
-	id 9D4515E82B; Fri, 31 Jul 2026 21:59:23 +0200 (CEST)
-Date: Fri, 31 Jul 2026 12:59:23 -0700
-From: Andi Kleen <andi@firstfloor.org>
-To: Feng Tang <feng.tang@linux.alibaba.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH] selftests: net: reuseport_bpf_numa: consider cpuless
- numa node
-Message-ID: <amz-m8cu0lYc8LzR@firstfloor.org>
-References: <20260730113040.75718-1-feng.tang@linux.alibaba.com>
- <20260730113738.41C901F000E9@smtp.kernel.org>
- <amv0DwQoeESq2Cp7@U-2FWC9VHC-2323.local>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s2CQz9Pw"
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8485d853b08so2531405b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 13:50:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1785531050; x=1786135850; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MJ+1zz4bd0vi4BfDFozlsEf5MBhzPjdddShFFlbqKaE=;
+        b=s2CQz9Pw09ls1iBGr5yjIcZzzb/JJg+nUOw3JteH7TaBGOgVT3hCf/iFvGNNFJRMS1
+         gjoXxTDxCxKoLLKjBvTKiC65y9IMBjp5dBV3aOjd2V81STj2SKExAefseRoIvo04/5uu
+         9iNDP/YZUm+E+ctsHKGwVSyB/PCAW1ETyb4Q3kp+N82tuqlxvyF++DBe4jbkC7akufZ7
+         ldn1oErQTVneHRlxB4zA7hMVYiNQnX6dzGCv5EjSq6RWXqSzqpXhk6aw25QZAY2ePOJG
+         0oAo+RQarATDJPIpo65GwhKZMTT+93zdN3zPZlIpXxjGq3MKMUxVS+lEzoesMDq+xutY
+         9JQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785531050; x=1786135850;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MJ+1zz4bd0vi4BfDFozlsEf5MBhzPjdddShFFlbqKaE=;
+        b=LpcclpHSxfCGSeI48WqpVXKRzGr1E2qq1WhDyDoCBrPXanZydB7QGGROe6vm63/AV/
+         fdofreSW7gwGgjKubuXo6lLKPfkk0DIoWOh8qV5h8VPaELML9JPc/gAI7H23aKM02UX9
+         MIzrd1nXdLJa3aBoKdgXs9UA/hyjHVqkOOfF+GWWVdKplhT18iudQwuY1qElksd6JWB2
+         D6M7405MfXgWJjrFhRYaLvSK2kkJzv9WBLKpkNw708Nn5yGvreo03Vqh+Mk4W+rx0Rdq
+         J3HzhMPXmBIo+IMCjXPbeL3g4o24So2IY8uhCe5v09eV4HHgWZbe1FdxYdLS421xIaAx
+         bLrQ==
+X-Gm-Message-State: AOJu0YwzfRgATq0vZZEnAgX8YsBC7jByEq/X3DW/EzhTllRwYvOBokog
+	hLBhsY5HkAfjgQoshPrdJ7RRMZ+IiCnKMViZedauhRfO34Ziz4zphHxWhWxPidsE9JepXZPc6Vj
+	1bcvtogn4VTdpsrunwO+QEb+cmLS9AwyOvL7nNBQC/rRseb1KE7skhwCCMyrsuDK3ugCLOHS5AR
+	n7Ft3nhA43DyAgqiG9y/jRPdIPBxySk1A4qPiqw6YTicNxQbjh
+X-Received: from pfn38.prod.google.com ([2002:a05:6a00:a226:b0:84b:be30:8d22])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:1785:b0:848:2f84:732
+ with SMTP id d2e1a72fcca58-84ee493ea6emr863311b3a.69.1785531049266; Fri, 31
+ Jul 2026 13:50:49 -0700 (PDT)
+Date: Fri, 31 Jul 2026 13:50:48 -0700
+In-Reply-To: <20260731201140.5AF0C1F00AC4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <amv0DwQoeESq2Cp7@U-2FWC9VHC-2323.local>
+Mime-Version: 1.0
+References: <20260731195612.2697986-1-seanjc@google.com> <20260731195612.2697986-4-seanjc@google.com>
+ <20260731201140.5AF0C1F00AC4@smtp.kernel.org>
+Message-ID: <am0KqJOD-FiC9BXs@google.com>
+Subject: Re: [PATCH v3 03/12] KVM: selftests: Pre-set threads affinity in
+ hardware disable test when possible
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	kvm@vger.kernel.org, Aqib Faruqui <aqibaf@amazon.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > Will this crash if numa_allocate_cpumask() fails to allocate memory?
-> > 
-> > It looks like cpumask could be NULL here, which is passed directly to
-> > numa_node_to_cpus() and numa_bitmask_weight() without validation.
->  
-> Good point. 
-> 
-> If the allocation fail, will return 'false' to let the code go the
-> original flow.
++Aqib
+
+On Fri, Jul 31, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/tools/testing/selftests/kvm/hardware_disable_test.c b/tool=
+s/testing/selftests/kvm/hardware_disable_test.c
+> > index f088b4af3ccc7..b4edeadfa3f45 100644
+> > --- a/tools/testing/selftests/kvm/hardware_disable_test.c
+> > +++ b/tools/testing/selftests/kvm/hardware_disable_test.c
+> > @@ -36,7 +36,9 @@ static void *run_vcpu(void *arg)
+> >  	struct kvm_vcpu *vcpu =3D arg;
+> >  	struct kvm_run *run =3D vcpu->run;
+> > =20
+> > +#ifndef _GNU_SOURCE
+> >  	kvm_sched_setaffinity(0, sizeof(cpu_set_t), &threads_cpu_set);
+> > +#endif
+>=20
+> [Severity: Low]
+> Since the KVM selftests build system unconditionally defines _GNU_SOURCE,
+> will this fallback code ever be reached?
+>=20
+> [ ... ]
+>=20
+> > @@ -80,22 +84,28 @@ static inline void check_join(pthread_t thread, voi=
+d **retval)
+> >  static void run_test(u32 run)
+> >  {
+> >  	struct kvm_vcpu *vcpu;
+> > +	pthread_attr_t attr;
+> >  	struct kvm_vm *vm;
+> >  	pthread_t threads[VCPU_NUM];
+> >  	pthread_t throw_away;
+> >  	void *b;
+> >  	u32 i, j;
+> > =20
+> > +	TEST_ASSERT_EQ(pthread_attr_init(&attr), 0);
+> > +#ifdef _GNU_SOURCE
+> > +	TEST_ASSERT_EQ(pthread_attr_setaffinity_np(&attr, sizeof(cpu_set_t), =
+&threads_cpu_set), 0);
+> > +#endif
+
+Aqib,
+
+Do you happen to definitively know which is the "right" macro to check to d=
+etect
+support for pthread_attr_setaffinity_np()?  Belatedly, I saw that you used =
+__GLIBC__
+in a patch that ultimately wasn't applied[*].
+
+I initially used __USE_GNU here, but then Sashiko yelled at me, so I switch=
+ed to
+_GNU_SOURCE based on Sashiko's suggestion, and now it's yelling at me again=
+ :-)
 
 
-While it's technically true, checking for out of memory in ring 3
-(or at least other checking than exit(1) on error) is usually 
-useless. Most of the time when this would fail you're as likely
-to just get killed by the OOM killer, as well as the harness that
-called you. Maybe it could happen without that with some very tight
-ulimit settings, but with that not much else will work anyways.
-Also these paths are basically never exercised so likely buggy
-when non trivial.
+[*] https://lore.kernel.org/all/20250829142556.72577-4-aqibaf@amazon.com
 
-For libnuma if you set numa_exit_on_error to 1 it will always
-exiting after printing an error. That includes the allocation
-functions.
-
-
-
-> > > +		ret = true;
-> > 
-> > [Severity: Medium]
-> > What happens if numa_node_to_cpus() fails?
-> > 
-> > It can return a negative error value, leaving the cpumask unmodified with
-> > zero bits set. Because the return value is not checked,
-> > numa_bitmask_weight(cpumask) will evaluate to 0. Does this cause the function
-> > to return true and silently skip testing on nodes where an error occurs,
-> > rather than reporting the infrastructure issue?
-> 
-> From the code logic (with above change), the 'node_id' and 'cpumask' have
-> both been validated, and this numa_node_to_cpus() is very unlikely to fail
-> here upon reading libnuma source code.
-
-Yes it's unlikely to fail.
-
--Andi
+> [Severity: Low]
+> Could this break the build on systems using alternative libc implementati=
+ons
+> like musl?
+>=20
+> If _GNU_SOURCE is unconditionally defined by the Makefile but the libc
+> doesn't provide pthread_attr_setaffinity_np, this might result in a
+> compilation error rather than using the intended fallback.
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260731195612.26=
+97986-1-seanjc@google.com?part=3D3
