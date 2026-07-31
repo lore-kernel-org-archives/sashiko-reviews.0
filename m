@@ -1,222 +1,254 @@
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC483E0245
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 23:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.70
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785539968; cv=none; b=ldXr8v1djad12D5KaNcQCuUk2+MO9/LpC/KRRcBStOPz3IUTGl3qa0VlJ3nVj4ghglsuiBWBfXLaAJKA7vOHRWEy30tlkI2yvA64JZC0siyWZlwWvesUsUo+1gYfuanyPv+Rpy24sxUqYp4ri22Et7PpfyH5hlwiK3sJLb/4pQc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785539968; c=relaxed/simple;
-	bh=MPhtSNdp259YwbhvdnYEIywaz8He+z1aY2Qu+Ib99/4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=oc1actBS2Q6Pzk2+tA8OwYTso63ms9hv6ThBRB5haqXma+01QDAZ7G3fcoeCKUMBF/Xuw2vXnIUKaeEq60Tlu4p7Vukuz4rHgh6pJsXyQNeWBJ2K5+MI3GGX1O1oNtMPjVqLaqsn6pxr7JOcS7LBU9ypFOXnsnzcIO2sfnB7v1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=G29dEYuV; arc=none smtp.client-ip=209.85.218.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D11E34EF11;
+	Fri, 31 Jul 2026 23:24:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785540242; cv=fail; b=RmNHy4+mkmeTOB9zjwkGB541sJTZZXqwpx0jsuOGokWkESNDnkMbyPx2YxBgwhwDtjZtJGWwFO+3u5/BfFULOYpxZql57XqRYXsHpVj9Um7R5TWk9Ih5730jCEiWsqIrD2OvKeDiIEHLIxtma3DMktyWlKrbHfj9WkEwJxd4lEM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785540242; c=relaxed/simple;
+	bh=09tM6nGie53xAoDJblO/miLtmhTqlnh5BgW9pGzGF/k=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Geaa5sUnNNNBFGBrxzPUfaVrXqCBymWznTHMRJSJNJPxOtmdY6MHtp84cYPUfAeImWv3YJW76FgIVmwmi3RivZjGY8MQiIIzkeoOxK0IPQnaSv3ogBLRK4pMmQZSsMQXhQaes3wCGwlCOVmfi6IcsRAf91fE//9yVUDkKynVqWs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=rmFydRgq; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=a9Slt1Ss; arc=fail smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="G29dEYuV"
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c1c4715cf0eso163176466b.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 16:19:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="rmFydRgq";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="a9Slt1Ss"
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66VJtV5p1420092;
+	Fri, 31 Jul 2026 23:23:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=6egB0ksN0wpiQkcST+/c+/XoHiEyaqvVpOiIt3UQ8DY=; b=
+	rmFydRgqHoUV/EF46vuqdy+z32sDNPW1v8L4bVd4E7aY6MZCOfAGkrSHZQqduagr
+	1zB52vt8cFHebJj7stnxCzpKgfE1BzWcyIouhCKthzskso+1kq1hnD1WMwvziToI
+	pax2cxCBy9SWosyyCUlJ1bYuPNxSvCpeWc8hLxYOlS98N0kdoDlO8UiRe8KJHYeA
+	PxgD3HQz3jbSuLYYgOxKlB8I4zuARE/X7m+jCjSfaFap6fm/RPFeqT6svXaKwLWm
+	BJEQGmtQAA8pFpINQGemQCU12EOM8eG1evjtTHCpYmJ0oe+ofkC6nWrrHWPwLvMe
+	JavBym45HH7+QUaWShm+Tw==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fmqyymsc4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 31 Jul 2026 23:23:53 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 66VNKQmS005579;
+	Fri, 31 Jul 2026 23:23:52 GMT
+Received: from byapr05cu005.outbound.protection.outlook.com (mail-westusazon11010058.outbound.protection.outlook.com [52.101.85.58])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4fqjwx1wt5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Fri, 31 Jul 2026 23:23:52 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qL3Ef1JJHjBYKfKW21uVlN1PyqjQ+ucFrR8sAfvBM4VCeyXPnI1ch6P1IcxtLv5oXVaHc8SxyDcn9/aZX45rNf8Xh3moYkYZZB0O1/FQP5GNIDaEBwACCA2/S0uN9JVqUIYVHvTCtEX3M9mh1VL6mHTraOV/g7nZyy8BTg0QHTzIo6epB5+TNxyvFvvbDUnn07QJNe8oLDBYKepLzzjoqilD9RzClLGE0d53rTVIh+q8xABjAfQ4mguUCU5kg9g/UHX7+YUotoDwecJ0epJVnR8eO5Re0NfPIt/24Ba+dk/S1f/1XjfleNcVTW4zFhYg283L7Ma0V71mQu59hkGc9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6egB0ksN0wpiQkcST+/c+/XoHiEyaqvVpOiIt3UQ8DY=;
+ b=YZT4/F/diXm+NcDtgi7Vv6MSSFZAjWVBQHkzVbU3rvfJHhI/T7cxH0r5UaDJ762komAKmNIah1oPPpeOhlM2TxgxRvO5Z+8/VQsc2dAMZHfROXY1yRN/wsGX3FimrUuwLdHRgpOv48mISjTpZoYFeJVzCyXb6PNhiupCEET7b4VQtUQFLd+UVib6u8Ja+Ye9J4HBAYoqd4XI94V6G3ppmRFiYx6zeGhkn5SH4IcRusURudlvCbPBMwRgOC0RShsinL0576VU1JkG1uR343KcnkIhJKGSTFVa3kREU2PtI8TkVwO3/ifMzw1Sr3pCXjvN5e8R3i2RWOzK/UGFaMEQ2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785539964; x=1786144764; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=aZvj0EqkYnWsWC4m/hseqMhPvArHO1cIvq/DRulioko=;
-        b=G29dEYuVHXLD8VOb9dKOa2RS0napVDw6tmgWMhFqQBKBgQrFKGA8P6R9D1HWYzny+T
-         A4M26h7j6Kic05ZYEOYVpuZgatnaq5JHVe4EkMHwXIlhxTvF6EXA8YVTmxvLKz4PrWhu
-         xMNokqUhmngDvheUkHMKPdouCMHTJkv+USdtUIlili/ELV78NhAI0AAkpjD0K2jgrCJG
-         9VSrKDQaKIaRirpNo4vGwtITFTVnZO3ZUF441erlVK/E9ujUag7khKZlr+95oKam8jmX
-         YbgE3I2y3sEJGMBpvWG4vjOnbvyjxR0hdWtyS2XIzOmeiyD5TShGHNW/a0JHka8sLOkw
-         VVvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785539964; x=1786144764;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aZvj0EqkYnWsWC4m/hseqMhPvArHO1cIvq/DRulioko=;
-        b=TX2e1YBYNict/Xm0qUT16sJRfYVTwXtpK0xW+9eB15HXND3QiQgDuS8Lxn0C/qZv3e
-         ZEhuwK4Uc4tOhTFtah+/fwVC9akst6neI/6V8T2smEyiAWAC0k/2VusF+0AaTGC/COb4
-         /lV08PpLumLwqm/cmK/pSxaJkYJl6O8ox7xQYgnTKpJ8L4rmwv5p5Zp42gfgWA+RIqII
-         RuEzZd2zDgiJ5aiGMLaY7niJk2Nuq9VazXe7FVM9rUZ+ZUSwe7lw5rS6yzujBgOSkxWF
-         TK0PYb2H+ZQUiC09hUlBXmq6oeLBHBW/kF1TAt0zHS7V8i6/4kj+6F3XM2CMBM7N1HNT
-         CVxA==
-X-Forwarded-Encrypted: i=1; AHgh+RqwZWFCyyQr3a481rDzl9wgroy6zNemSAKxUDdOzsKhyusJ8y4XHE7g4C6qBoDmVy7uhlMIVjXZBAp0oTYK5w4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwpM93YbZmD/kjJ8X69BNzcaeGeJaOo9Qi4ANjkgbasnk9DPs6V
-	pFiO6AkxCNYLKZnlDGB/08FDdthM5ClgH/2Af8WY9luiQDuy/QVAlshgyVC5goYUPNUpJ++iKRJ
-	UflbLF7lcaUyeqlL7Cg==
-X-Received: from ejjt19.prod.google.com ([2002:a17:906:6093:b0:c1c:4c42:d190])
- (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:906:b79a:b0:c15:b869:e64a with SMTP id a640c23a62f3a-c1fe82ea2d5mr65497866b.56.1785539963663;
- Fri, 31 Jul 2026 16:19:23 -0700 (PDT)
-Date: Fri, 31 Jul 2026 23:19:22 +0000
-In-Reply-To: <CANghDUUFrGN3CiJmRhQS0jtDwNnoWbKv490E=UxDXGgKsy6m7A@mail.gmail.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6egB0ksN0wpiQkcST+/c+/XoHiEyaqvVpOiIt3UQ8DY=;
+ b=a9Slt1Ss+dQpSKGsmsF2uHBmNpSLYsaRPWvtFxnU80V/1wesH7l3pgMo9Ake2CStEzxSIkXb+kskDUOxFHasHXZeu8fk+3rwBJuvqR3dWj2kwHh4TruciHFO1/o2+wou4vZTbo+7U6UPy9duHpZyBmVIp/70l0PReXaZdMdE2i4=
+Received: from CH0PR10MB5114.namprd10.prod.outlook.com (2603:10b6:610:dd::13)
+ by CO6PR10MB5570.namprd10.prod.outlook.com (2603:10b6:303:145::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Fri, 31 Jul
+ 2026 23:23:49 +0000
+Received: from CH0PR10MB5114.namprd10.prod.outlook.com
+ ([fe80::3fd5:7a43:a13a:9aea]) by CH0PR10MB5114.namprd10.prod.outlook.com
+ ([fe80::3fd5:7a43:a13a:9aea%6]) with mapi id 15.21.0270.012; Fri, 31 Jul 2026
+ 23:23:49 +0000
+Message-ID: <ba095baf-8837-4295-868b-891fa812f4a2@oracle.com>
+Date: Fri, 31 Jul 2026 16:23:43 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] vhost-scsi: use kvzalloc for vq array allocation
+To: sashiko-reviews@lists.linux.dev, virtualization@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <20260731221116.236791-1-dongli.zhang@oracle.com>
+ <20260731221116.236791-2-dongli.zhang@oracle.com>
+ <20260731222400.8AC7D1F00AC4@smtp.kernel.org>
+Content-Language: en-US
+From: Dongli Zhang <dongli.zhang@oracle.com>
+In-Reply-To: <20260731222400.8AC7D1F00AC4@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH8PR22CA0015.namprd22.prod.outlook.com
+ (2603:10b6:510:2d1::23) To CH0PR10MB5114.namprd10.prod.outlook.com
+ (2603:10b6:610:dd::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260716230411.2767394-1-tarunsahu@google.com>
- <20260716230411.2767394-5-tarunsahu@google.com> <20260717025913.067B41F000E9@smtp.kernel.org>
- <CANghDUUFrGN3CiJmRhQS0jtDwNnoWbKv490E=UxDXGgKsy6m7A@mail.gmail.com>
-Message-ID: <9huzpl02px1h.fsf@tarunix.c.googlers.com>
-Subject: Re: [PATCH v19 4/7] driver core: do not always lock parent in shutdown
-From: tarunsahu@google.com
-To: David Jeffery <dhjeffery@gmail.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, linux-scsi@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH0PR10MB5114:EE_|CO6PR10MB5570:EE_
+X-MS-Office365-Filtering-Correlation-Id: a1eccaf8-c63a-4905-99f4-08deef5ac4af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|56012099006|4143699003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	xhMO2hrUYNHTWobLdM2Ict54azMaVy0q/2aWMXkbgVtOfs/R2m6oDjr3vh0tAsQKrhsoKaooGv+pi/qF8UjNnCmYdM2FiDcwLSHiVXuZ6QpBj7K532OPMg1xzEv71msOPZYiR1He8CCfwZWy4MZVSoPX8AiHJNvykO3Zcc14PLKMeSzx5TVUUBgzLookPWaRCBOUhRVKuDiZxbRduDZNPF9EoeNAPHkvDpGx5Zs5OIZa4yN0h8QMF7NJsrt73zQwzj1RiLp1rj9UsH01ArBUC9tYbVD35A1nkwoPNvnY2oNTjTfNPapBWg1Yj4nW+4DgWvQJqk4XSCoR6QeYl49SBRh8l30mAqvo1uz0H4yoa/uNeWKFSyj+BDbA+bhwVyjQueQEBe8R1mdtvX/246MtfL95861aDcS0L0gURsxSrJbn7eg6CAdoTb0fSpEXLbUlxTDcUKEFON4j2FDEJq9cUsTU/S7hewnAverDoVw5Xgr6mgtVMlFQKKAgZ/5acuEheGFBe5cnajOOSOn17CsQ6ZPD7wVaWBL5urUZum6gzaBI4+FL6CsCP0839a8eSQksgur69HyVT9VzIOBhmRIOyJ9y9uM2mNw0vDTeYtPcpIoCEccHFST/aKF0sT4v4nIYmguPTmhJ2GwEROpMpH4Vq3qZYnQoTweOZjBcp0ZjQ8c=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR10MB5114.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SHYvMWFoTE5ocEZla0VpOUlJaVpxTndTMFBRNldFakFWaEtGUGl0ZEhIZlF2?=
+ =?utf-8?B?TnVLVFlVY2FzUXhGRCtWVjAyMzlMRFozczJTSXRRbmR4QWIwWnY5ZUZnYjNW?=
+ =?utf-8?B?SytFem0wVHdzVit2U1F5ZnR5Uy8vOTRJQStpYTRGdmFyNGlObjJoYTAyUlpl?=
+ =?utf-8?B?Rkc3ZTJHbnpWVUhTWjNlUlZpbXhOdkRHZWZRa3RkdVZiaWtxa3pMMGw4dGFY?=
+ =?utf-8?B?cWpZYkpRSnlJZFJHNDRhSUdiNDJtbkREWWxJTWFHTkowZFFIWkRaOEdJVllG?=
+ =?utf-8?B?dXpVWU1zVXowRHJ3a2g1R3ljZXZLRTVqS2U3TGhiN0R1b2RCSisyb1VhVEJS?=
+ =?utf-8?B?cmJ5YUxRSnVoWm9xRHI5aVRuL3FpcmlPU2pIelRYa1pMRDZZSWQ2aXRtS2Ix?=
+ =?utf-8?B?bUkzRXJUcm9vdVAwS1lvVjdmOG9iQmFDN3IyeXAxdUJ2Uk1xOEdlVHhBNmtO?=
+ =?utf-8?B?aXFqeEF3ak5Ba1BVMFI2a1RTcW9oRlVsZ3BQeGtmaUFJRXRxUHo4Ym5EM2lW?=
+ =?utf-8?B?VWUxK1R1bE1VaWVFSlJYdG4ycW9QYlI2ajMrWHM4QjYrWHJJUGhPbXJUR09C?=
+ =?utf-8?B?UVhZR3Z4ZDEraGZYQzk5bFQ0N0dGVCt1QmN2SmtxU2U4a25Xc3VtcytubnY3?=
+ =?utf-8?B?T2h3MlVZU2EvYjRBRUlEbWR4VldGTjd0S3NOZkMwY2NFOWxOdldoRHNBUVNm?=
+ =?utf-8?B?dGMvL3ZzTE9FcVBSYVpkTWhrK0dLUkFHdVNvQnk1NnlOUmwwVlZHNGF5T3pm?=
+ =?utf-8?B?N2kwbGsyd3NHTk82RnZsUTEvdThrUGh3SHlqeWJtZTk3azh4ZTFBVEYvWFB5?=
+ =?utf-8?B?RDg1T3RqdTZvQ0lLc1ZYcmR0MWZEa2pla3hBTjdEVTg3NE1wTW43aWFQRXRO?=
+ =?utf-8?B?UGR4STJYUklrQmNuSDhmTXI3TkYxWktVdC96aEtDTVUxcVpYTC9IUTVYb3N4?=
+ =?utf-8?B?cEs2OTZSNGtGalN1ZmZCRnF1dnlwWWxSNEFsRjkvTmwzTHpIN200OHBCYTVL?=
+ =?utf-8?B?TTBHbTlLRUsxRHlkWktISjcxS1lhbzdVUCtPS0szaCtQRGU3SGxsaEJneXgw?=
+ =?utf-8?B?L0Y4Z3Nsa2V4THlYR1dnYzNIN1QrTEVwbVZNbUIxRWNtNlZBTmx2UzZ0SERL?=
+ =?utf-8?B?dG10MW5mWFhrQStpZjJ1VEFxYzRCTVhOb2w4Z2E3TEhYUE9EY0djTFV3aGxk?=
+ =?utf-8?B?RHhlcmlWK1V4MjZ4VDFtdm1sV29iU1l1bVkzUkU2MFVtckEzMWlOR0wzTVh1?=
+ =?utf-8?B?VkVEMjNFTkdnZWNYZmRFdC9XME1HbTR2Z3V6TDE1YngrS1ErOStqRURqcmFx?=
+ =?utf-8?B?RjhPOVFSaTZwY28xSHpyRVZGSHpHbTBnZEpHQmlGTEkyOWE2dmNidDZpd3pV?=
+ =?utf-8?B?RWl4RUFRWEd6VzZCQlg0Q2Y0SWozZlpmZ2c4WStwa2MzbURzWmt1bEQ2RkFv?=
+ =?utf-8?B?aXdEZ1JLRWtzTmxnU0pZdE9kWmI2b3BKYm0xYzZaTW51cjJqM2xSZjFDc21F?=
+ =?utf-8?B?WHhCSHZwd3ZweGVaV3VqZ0pKdE5NWHVrZ1kxc3BnRy9GRVdIR0ltMXp3RkVi?=
+ =?utf-8?B?RGh3MDJjdUdjMWt1MHA2TUJoTjFjbXI1ZXNvT3UzTGkxNmdMVCtBV2EwL0VE?=
+ =?utf-8?B?cTNkSnl4V3VKRUlYVjN2YnJ6T2NiT24xYTluSGdVTkltMjlFSEQ4K1loWTV6?=
+ =?utf-8?B?K2JpMklZV25WRVZRWm84TWVyZXJ4b0VkTktkY3JnVnV5U1dteDFtZXJ2K2dB?=
+ =?utf-8?B?U2ZBb0VqbkpnN3pHN0pJVVlFUzRTRVc0VVh6UjdISFZYOUxZTVZTNFJBM0xh?=
+ =?utf-8?B?c2NTZWpNbmRlTXNkTXRZcGsxa3ZwM1FOS3BvTVhRQ2orVUE5MXYvUnp0c08v?=
+ =?utf-8?B?eU40U2Irakx0ZEJhc1o3dmFDWWNhMnFpV2lLSmo2cDJKeUIraFhadWVPSnM2?=
+ =?utf-8?B?dSszZjZicWkxaS9Sa2VSU0w0anlXNG9reXROajZWZ2dhRTBLVFFSSWxVWnBi?=
+ =?utf-8?B?Q0JIYlozaXAzRXlNd21uc1lJNjg1VTdScDd0R1cvUzZJTGdSQzlFcXlEYUJr?=
+ =?utf-8?B?MXUrUU5UNVk3N0EycVJKd0c4ZFk2Mng2eUtWdzBzWkxPVDFoK2NkWXRLZUsx?=
+ =?utf-8?B?TzF1aU1xQTBLQ1BSTEdiaURoZEMvRm1yOXlBOE1YSGRvdHE0VFo0NDFuZC8x?=
+ =?utf-8?B?M1BSZnFOd0NXZkJNbHJzaWRLajBGOCtqTGxYWEdNZlNEUldxU2tLd04zSU43?=
+ =?utf-8?B?TVo3NUV4V0J6dmpHblVOSTcxUlQ4OURCTkNtWmE1bG5pMUtWbFRvWEcvdmJs?=
+ =?utf-8?B?Y1gvL0ZUV1BtYmtPQVBjV3Z1MnBTVWJLRjJ4b1YwWG4zZU1tRGJMZz09?=
+X-Exchange-RoutingPolicyChecked:
+	Hzum4tU/b4dlgF6n/QFGtlVlq8ZSFHB9scjNE0zrnHXu5PrpUlueEryrTUeERKZ5epwPK2AAwZ9ZqM5MOrO5nsBO2GaUbHFWvIutmPbPT/CR3U5zJ0byzQhIiJywORXvrRSB8PkQnxv17EmAdVu+YeNepcxVMVYDwKBMzXDAedxGmbfcvqIafe5b0e2xFyV6mqgPmH+TKtzipvoyllFXk2byRimhZMb0mJtDdQk+56k/c8SUQCCphXFGLKKapyhNJJnVRyxbrtlNYcjXWT0DwMHHAPX74kzcyAUerDAAfCogEcspgTva6AnhJAlRpXWGdrWhni8l4RA5L1jDv4yT3Q==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	x+OKuuo70La6j9h5GwjcHdygPC9ht0pj6u1pRAwTdS3WshE4WHZtynedfTBWzhId58f/h/tpaLpDmL3TH5YtBcuHxylZsg/j6nwlO0/YzhsQh9i2bwoo/xLlnU6VZKLlAiA8Kt2fkoiau6bs/bvFrX8HVU0SHj041HOj4DpZpkDrqyRKDLAqKhbQGY0246AYjwoGCiH5NkwQ5qVWGNGoM0ElPRdu/88lgMbSmIDKEIkmL2zogK9rJH6CPEMzBd40cHQNMQpP3WcpJb6gJHG7fAnJju5x4rfUm22y1wW8EmwVhQAXJ6GgtC2P2Xbm+3JdAHOZ1g8tsOT7v0URucppZrfJx3J5K5UshXXY7hO0jwUkIdtMpDoZX7mOTmlyCiRLwRtq9gjSexTPXdZvy4YUWvesR7vf9mpaUSPbT9ZdfzAIZF0iRjNjKmwegR+r3EHYnOQlxxpb7IUP+mJYjuAnn8ciYkfy2gXv1Xpgx8C0blLznj4NYWttroYcbmbQqn4ue47zffYeKHT1G3JB9Fwkthp2MWqb/bVf/r5EEggnDE/YP5uoNs1w3Du6dI+RaucT2gBt6shOfPhiJAnMdOxEas2atBykwBrtNecXPkCIViU=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a1eccaf8-c63a-4905-99f4-08deef5ac4af
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR10MB5114.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 23:23:49.1734
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DKEGsu9M9Y0fiY+yPqQBL5sF0qYj884rKXbIbLxnYRNRkylyzSFj5WVW0aW+CEHmbSmpSN3MLRDe5vwG/4BOgQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR10MB5570
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_07,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=999 spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606160000 definitions=main-2607310174
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDE3NCBTYWx0ZWRfX+LRiGvN4VuUh
+ p7IcugdXSW6ksDFbxnYkjGY+VFfcO9M6zq/KGgebuGC/t7KRcdyZiDKVNfab1anmEuiQKDtFDGh
+ OaGBaJl4LGGha33yRCWyR3b+giycUtNmkA70c/BPYDDK1+GtulR+
+X-Proofpoint-GUID: Av0COPkKkMvXM_8io7vBUqgOjuMRTr2U
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDE3NCBTYWx0ZWRfX08mjbKlQzEwD
+ /t5K+bgF1uZadeZPQbbZjaHbTRjm6jXPp3CYj6hKAvAGYfJVOIrAq40ZE3X/pGxwzV1Q4elSYRu
+ MQxxGQrWiQMTjKiyUC1NsZTwCouf/WrzKjoWpNMeVVw3igbuuU9Cct6z8malVynI7DnrWCSsXRp
+ 2cD5IBNI/TsdD/P6Ny87a6IZiBOnclMEZdnXjomNQ5PkxMYPm4FcS20X9rClASHZ+alLLJHkE5L
+ 0S6Fh7fiNnAY1vIKe6BIY/L6CFmOXC1iainis/THX2zYGybfd7uqPUazjTGMCXFrvd21AvnDRV8
+ PFuxBBdzxl2Ls4LgsF088NDC0VuGdXNyEEC4TvO+BmZVU8U9FOe2NqhxsayOgXoMkChybcnb4vR
+ UCwbT1JGWaDp0ucpmjbcvDxIiTBwfsstBugfEKa1hb59PQ6FS81zGD8aKx8SaXuCRiPaVY86A8T
+ kKGiFX17fBz8jjRbAlw==
+X-Authority-Analysis: v=2.4 cv=HNnz0Itv c=1 sm=1 tr=0 ts=6a6d2e89 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=BqU2WV_vvsyTyxaotp0D:22 a=VwQbUJbxAAAA:8
+ a=yPCof4ZbAAAA:8 a=H1cwOaNujXwptSQvFJYA:9 a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19
+ a=QEXdDO2ut3YA:10 a=WmVTiCyuxqgg3mnwYu6p:22
+X-Proofpoint-ORIG-GUID: Av0COPkKkMvXM_8io7vBUqgOjuMRTr2U
 
-David Jeffery <dhjeffery@gmail.com> writes:
++ virtualization@lists.linux.dev.
 
-> On Thu, Jul 16, 2026 at 10:59=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->>
->> Thank you for your contribution! Sashiko AI review found 2 potential iss=
-ue(s) to consider:
->>
->> New issues:
->> - [High] Unprotected read of dev->parent introduces a Use-After-Free rac=
-e with device_move() during reference acquisition.
->>
->> Pre-existing issues:
->> - [High] Dropping and re-acquiring device_lock(dev) allows dev->parent t=
-o change, resulting in locking an obsolete parent.
->
-> We could add additional locking around device_move to exclude moves
-> during these times to quiet both the AI tool's concerns. However, both
-> these concerns are already not possible in reality. The only user of
-> need_parent_lock in the kernel which will use this code path is usb
-> devices, and none of the rare devices which use device_move will move
-> a usb device which has need_parent_lock set. Thus, there is no actual
-> device_move which can cause these conditions the AI tool complains
-> about.
->
-> The AI tool is finding a non-existent issue by applying a very
-> specific special state as a general condition. If really wanted, I
-> could add a patch which locks out moves during these times as a form
-> of future-proofing, but from my view of the code all it would be doing
-> is creating additional code and complexity to the driver core while
-> currently fixing nothing.
->
-
-I agree, it is very special case. device_move is associated with virtual
-devices only and need_parent_lock is used with phsyical bus (Only with
-USB) to prevent port reset during device probe/unbind. Even in future,
-I dont see a need where a virtual device using device_move will need
-need_parent_lock ever.
-
-But I suggest, We can add the comment like:
-
-/*
- * device_move() should not be used on devices with need_parent_lock
- * set, as concurrent reparenting during device_shutdown() introduces
- * a potential race when locking the parent device.
- */
-
-WDYT?
-
-~Tarun
+On 2026-07-31 3:24 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The `max_io_vqs` module parameter is parsed as an unsigned integer but assigned to a signed `int` in `vhost_scsi_open()`. Setting this parameter to a large unsigned value (e.g., `4294967295`) results in a negative value (e.g., `-1`) that bypasses the maximum bound check. This leads to an undersized allocation followed by statically indexed Out-Of-Bounds (OOB) writes.
+> --
 
 
->> --
->>
->> --- Patch [4]: [PATCH v19 4/7] driver core: do not always lock parent in=
- shutdown ---
->> commit 6be56e5bea0fe214a5199c9f806c49e62e60127f
->> Author: David Jeffery <djeffery@redhat.com>
->>
->> driver core: do not always lock parent in shutdown
->>
->> This patch modifies the device shutdown process to only lock a parent de=
-vice
->> if it is strictly needed, rather than unconditionally. It also defers
->> acquiring a reference to the parent device until the point where the par=
-ent
->> needs to be locked.
->>
->> > diff --git a/drivers/base/core.c b/drivers/base/core.c
->> > index 82a7af1f3ba2e..31f95e86856e0 100644
->> > --- a/drivers/base/core.c
->> > +++ b/drivers/base/core.c
->>
->> [ ... ]
->>
->> > @@ -4925,12 +4921,32 @@ static void shutdown_one_device(struct device =
-*dev)
->> >  static void shutdown_one_device(struct device *dev)
->> >  {
->> > +     struct device *parent;
->> > +
->> > +     device_lock(dev);
->> > +
->> > +     /* use parent lock if needed to avoid race with probe/release */
->> > +     if (dev->bus && dev->bus->need_parent_lock && dev->p && !dev->p-=
->dead &&
->> > +         (parent =3D get_device(dev->parent))) {
->>
->> [Severity: High]
->> Does moving the parent reference acquisition out of the list_lock critic=
-al
->> section introduce a race condition where the parent could be freed?
->>
->> In device_shutdown(), get_device(dev->parent) was previously called whil=
-e
->> holding devices_kset->list_lock. Now that it is evaluated locklessly in
->> shutdown_one_device():
->>
->> CPU1
->> shutdown_one_device()
->>     evaluates dev->parent, but is preempted before get_device() is calle=
-d
->>
->> CPU2
->> device_move()
->>     changes dev->parent and calls put_device(old_parent)
->>     dropping the last reference and freeing the memory
->>
->> When CPU1 resumes, could it pass the freed pointer into get_device() and
->> dereference it?
->>
->> > +             /* the parent lock needs to be acquired first, so re-loc=
-k */
->> > +             device_unlock(dev);
->> > +
->> > +             device_lock(parent);
->> > +             device_lock(dev);
->> > +
->> > +             __shutdown_one_device(dev);
->>
->> [Severity: High]
->> This is a pre-existing issue, but does dropping and re-acquiring the dev=
-ice
->> lock here allow the topology to change?
->>
->> If a concurrent device_move() reparents the device while device_lock(dev=
-)
->> is dropped, it appears we might lock the obsolete parent. When we re-loc=
-k
->> dev and call __shutdown_one_device(), we haven't verified that dev->pare=
-nt
->> still matches the locked parent.
->>
->> Could this defeat the need_parent_lock synchronization and allow a
->> concurrent probe or release on the new parent to race with the shutdown?
->>
->> > +             device_unlock(dev);
->> >               device_unlock(parent);
->> > +             put_device(parent);
->> > +     } else {
->> > +             __shutdown_one_device(dev);
->> > +             device_unlock(dev);
->> > +     }
->> >
->> >       put_device(dev);
->> >  }
->>
->> --
->> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716230411.2=
-767394-1-tarunsahu@google.com?part=3D4
->>
+I think this pre-existing issue is implicitly fixed by PATCH 2/2, where
+max_io_vqs is validated by param_set_uint_minmax(val, kp, 1,
+VHOST_SCSI_MAX_IO_VQ) before the value is stored.
+
+Changing the local nvqs variable from int to unsigned int in PATCH 2/2 would
+make the type flow clearer, but the issue should no longer be reachable once
+both patches are applied.
+
+Dongli Zhang
+
+> 
+> --- Patch [1]: [PATCH 1/2] vhost-scsi: use kvzalloc for vq array allocation ---
+> commit 3573b684f78f79b1ae3460e4a7625cb917f76044
+> Author: Dongli Zhang <dongli.zhang@oracle.com>
+> 
+> vhost-scsi: use kvzalloc for vq array allocation
+> 
+> vhost_scsi_open() allocates one struct vhost_scsi_virtqueue for each
+> virtqueue. With large max_io_vqs values, this array can require a
+> high-order contiguous allocation and trigger a page allocator warning.
+> This patch replaces kmalloc_objs with kvzalloc_objs to avoid the
+> warning.
+> 
+>> diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+>> index 9a1253b9d8c50..0c0634eea1443 100644
+>> --- a/drivers/vhost/scsi.c
+>> +++ b/drivers/vhost/scsi.c
+>> @@ -2295,7 +2295,7 @@ static int vhost_scsi_open(struct inode *inode, struct file *f)
+>>  	if (!vs->old_inflight)
+>>  		goto err_inflight;
+>>  
+>> -	vs->vqs = kmalloc_objs(*vs->vqs, nvqs, GFP_KERNEL | __GFP_ZERO);
+>> +	vs->vqs = kvzalloc_objs(*vs->vqs, nvqs);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but could this allocation be undersized due to
+> an integer overflow in the nvqs calculation?
+> 
+> If a privileged user sets the max_io_vqs module parameter to a value that
+> overflows the signed integer nvqs (e.g., 4294967295), nvqs could become
+> negative (e.g., -1). Because it is signed, this bypasses the maximum bounds
+> check against VHOST_SCSI_MAX_IO_VQ.
+> 
+> When VHOST_SCSI_VQ_IO (2) is added, nvqs becomes 1. The allocation is then
+> sized for exactly 1 element:
+> 
+>     vs->vqs = kvzalloc_objs(*vs->vqs, nvqs);
+> 
+> However, the code later unconditionally writes to index 1 (VHOST_SCSI_VQ_EVT),
+> which would cause a heap out-of-bounds write:
+> 
+>     vqs[VHOST_SCSI_VQ_EVT] = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
+> 
+> Would it be safer to use an unsigned type for nvqs and related variables to
+> prevent this bounds check bypass?
+> 
+
