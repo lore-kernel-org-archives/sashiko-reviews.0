@@ -1,125 +1,136 @@
-Received: from out30-130.freemail.mail.aliyun.com (out30-130.freemail.mail.aliyun.com [115.124.30.130])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518AF2D060D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 01:02:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21417262E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 02:36:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785459738; cv=none; b=nNYrvWWypXT+QDj7+zisRAtC/pgXIf6gtukRaNx86DBJNX0+/S09JXFwrtMmoKxwCInLMbkaKVhxwrRMM1Kt5k02DQcnaGNGjaK9C2j4EYXKbPxEpvlx/LS07ktg9rbqTHQOnxFmJg5GA8WV++b8T3c1TRYJ6SMTpyXBMYZOcis=
+	t=1785465416; cv=none; b=EbUdotMHIUgzPNGlpVxgajhcdohlgjkOGqO7H52ltIKFR2nZDsCgwClbQlnPJYxLYomx5Yzy0xJSX8pgXkkjOwpeZ5k7LB6FxILEZUIP/jNPkk/IaL6c1NEL5H6jJo9UYRHBuvnVF6Q5rSwLDotwa3X3GFHBjKOoPkyWDk1iqQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785459738; c=relaxed/simple;
-	bh=HOz4uN4n+bL54A4PkKqrJDZWDdQ6XJWD8wfPEva1sUw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AhM/GMNIQjCd/b8BNYwqWbGmvh1HOM3t6uqxFBUI6cyJg7VRr07EgMr2pPaCiEG1WknRyeQ+j9hJYw1RbxC2y4031vjOxPh0Qo8EpD3Rgn/1ggx8Q4zdon8ikXM/8EGjdlonfTsMJ3XzIiiJ2msVCnSBzbG1RFswd0geMoMogE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=maKEzPYA; arc=none smtp.client-ip=115.124.30.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	s=arc-20240116; t=1785465416; c=relaxed/simple;
+	bh=G6DDbpU/eMan3J4KXWpDKh3EGKH0mKWPHGSIu3+pWbU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ggXXGIAmIlanUI6LSu8JaOaV8nTC5zx1isX4tVs/QQ0+f9x1+ObgRznXEPn8hjow0ttUZxbOhYDJa8CfryRxnoyqlSZjstAQEH//fuO5nlkCjYbTnCQBwKNUnVHA+KY1Bq20LoVnGmj6kwenxd3HJUNbZA0VGEQyhyXG+wnWZcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=EjNqJsVo; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="maKEzPYA"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1785459728; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	bh=V2Uhm2DyoVU7u3oHG6Ka3Uwg6kU8mde481VD3EZjD/k=;
-	b=maKEzPYAkHdKDqO9/FS9UEpc/1XeDXnvljGtsWXepHRIetrq1Y8YpjWN1+O5kFMhvrnXeYaP6Ud6Td4+Yhsr388sWgYXWdqcU0rw9dCqo8ECpPfgIEwN32zYhovDPLkOjYU0O3rdD3SJC3zJZF7HrGTlcZeOf1cuH0lWqY4l/bQ=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037026112;MF=feng.tang@linux.alibaba.com;NM=1;PH=DS;RN=4;SR=0;TI=SMTPD_---0X86N8GH_1785459727;
-Received: from localhost(mailfrom:feng.tang@linux.alibaba.com fp:SMTPD_---0X86N8GH_1785459727 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Fri, 31 Jul 2026 09:02:08 +0800
-Date: Fri, 31 Jul 2026 09:02:07 +0800
-From: Feng Tang <feng.tang@linux.alibaba.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Andi Kleen <andi@firstfloor.org>
-Subject: Re: [PATCH] selftests: net: reuseport_bpf_numa: consider cpuless
- numa node
-Message-ID: <amv0DwQoeESq2Cp7@U-2FWC9VHC-2323.local>
-References: <20260730113040.75718-1-feng.tang@linux.alibaba.com>
- <20260730113738.41C901F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="EjNqJsVo"
+Message-ID: <fcd49b64-d800-4d1d-a08e-90c860ab4b13@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785465412;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3PLcxxm3N/nenQ1bCzi/G1Oztr3FNxNhkRIkO11TYfI=;
+	b=EjNqJsVoxSbLNcp3TsF5fjXU6H6WHt+YbNZTt54p4YJRYQtR6dVeUsdGolo7RRVkEExU3i
+	Ki5ZLGsrsQAdWJEFQsLNYDq/uBSOsNIdwyRSD+KDhnDrwqaTJ8P0bhybohOg3gw4gzUGwO
+	Hi/YjovPKPgyY4pcxEGpU5LT0sKW0Sg=
+Date: Fri, 31 Jul 2026 10:36:42 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260730113738.41C901F000E9@smtp.kernel.org>
+Subject: Re: [PATCH] mm, memcg: fix memory.peak reset clobbering other fds'
+ watermark
+To: sashiko-reviews@lists.linux.dev
+Cc: hannes@cmpxchg.org, tj@kernel.org, mkoutny@suse.com
+References: <20260730115314.1069089-1-ridong.chen@linux.dev>
+ <20260730120627.3B06D1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ridong Chen <ridong.chen@linux.dev>
+In-Reply-To: <20260730120627.3B06D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-Thanks for the review!
 
-Add Andi
 
-On Thu, Jul 30, 2026 at 11:37:37AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing NULL check for cpumask allocation in is_cpuless_node()
-> - [Medium] Missing return value check for numa_node_to_cpus() leading to masked errors
+On 7/30/2026 8:06 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Lockless readers in `peak_show` can transiently observe a lost peak due to an incorrect multi-variable update order and missing memory barriers in `peak_write`.
 > --
 > 
-> --- Patch [1]: [PATCH] selftests: net: reuseport_bpf_numa: consider cpuless numa node ---
-> commit 806931cbf2ad9438843e4d30f69b4887e641f7d2
-> Author: Feng Tang <feng.tang@linux.alibaba.com>
+> --- Patch [1]: [PATCH] mm, memcg: fix memory.peak reset clobbering other fds' watermark ---
+> commit 15d8c2c42e3dd5de2e4db8178cc6e094af81f2fe
+> Author: Ridong Chen <chenridong@xiaomi.com>
 > 
-> selftests: net: reuseport_bpf_numa: consider cpuless numa node
+> mm, memcg: fix memory.peak reset clobbering other fds' watermark
 > 
-> This patch addresses a failure in the 'reuseport_bpf_numa' selftest on
-> platforms with CXL memory where one node is cpuless. It introduces an
-> is_cpuless_node() check to skip memory-only NUMA nodes during the binding
-> test.
+> Writing to memory.peak resets the peak for that fd only. Each fd is a
+> watcher and reads back max(its own value, the shared local_watermark).
+>      
+> peak_write() resets by lowering local_watermark to the current usage.
+> To keep the other watchers' peaks it then walks the watcher list, but it
+> stores the current usage into them instead of the old watermark. So once
+> usage has dropped from a peak, a reset on one fd wrongly drags every
+> other fd's peak down too, even fds that never reset.
 > 
-> > diff --git a/tools/testing/selftests/net/reuseport_bpf_numa.c b/tools/testing/selftests/net/reuseport_bpf_numa.c
-> > index 8ec52fc5ef41b..197dbfc475f65 100644
-> > --- a/tools/testing/selftests/net/reuseport_bpf_numa.c
-> > +++ b/tools/testing/selftests/net/reuseport_bpf_numa.c
-> [ ... ]
-> > @@ -104,13 +104,35 @@ static void attach_bpf(int fd)
-> >  	close(bpf_fd);
-> >  }
-> >  
-> > -static void send_from_node(int node_id, int family, int proto)
-> > +static inline bool is_cpuless_node(int node_id)
-> > +{
-> > +	struct bitmask *cpumask;
-> > +	bool ret = false;
-> > +
-> > +	cpumask = numa_allocate_cpumask();
-> > +
-> > +	numa_node_to_cpus(node_id, cpumask);
-> 
-> [Severity: Medium]
-> Will this crash if numa_allocate_cpumask() fails to allocate memory?
-> 
-> It looks like cpumask could be NULL here, which is passed directly to
-> numa_node_to_cpus() and numa_bitmask_weight() without validation.
- 
-Good point. 
-
-If the allocation fail, will return 'false' to let the code go the
-original flow.
-
-
-> > +	if (!numa_bitmask_weight(cpumask))
-> > +		ret = true;
+>> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+>> index 8ff285e872ca9..7d7b6bf200805 100644
+>> --- a/mm/memcontrol.c
+>> +++ b/mm/memcontrol.c
+>> @@ -4740,7 +4740,7 @@ static ssize_t peak_write(struct kernfs_open_file *of, char *buf, size_t nbytes,
+>>   			  loff_t off, struct page_counter *pc,
+>>   			  struct list_head *watchers)
+>>   {
+>> -	unsigned long usage;
+>> +	unsigned long usage, old_watermark;
+>>   	struct cgroup_of_peak *peer_ctx;
+>>   	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+>>   	struct cgroup_of_peak *ofp = of_peak(of);
+>> @@ -4748,11 +4748,12 @@ static ssize_t peak_write(struct kernfs_open_file *of, char *buf, size_t nbytes,
+>>   	spin_lock(&memcg->peaks_lock);
+>>   
+>>   	usage = page_counter_read(pc);
+>> +	old_watermark = READ_ONCE(pc->local_watermark);
+>>   	WRITE_ONCE(pc->local_watermark, usage);
+>>   
+>>   	list_for_each_entry(peer_ctx, watchers, list)
+>> -		if (usage > peer_ctx->value)
+>> -			WRITE_ONCE(peer_ctx->value, usage);
+>> +		if (peer_ctx != ofp && old_watermark > peer_ctx->value)
+>> +			WRITE_ONCE(peer_ctx->value, old_watermark);
 > 
 > [Severity: Medium]
-> What happens if numa_node_to_cpus() fails?
+> Will this update order create a race window where readers can transiently
+> observe a lower peak?
 > 
-> It can return a negative error value, leaving the cpumask unmodified with
-> zero bits set. Because the return value is not checked,
-> numa_bitmask_weight(cpumask) will evaluate to 0. Does this cause the function
-> to return true and silently skip testing on nodes where an error occurs,
-> rather than reporting the infrastructure issue?
-
-From the code logic (with above change), the 'node_id' and 'cpumask' have
-both been validated, and this numa_node_to_cpus() is very unlikely to fail
-here upon reading libnuma source code.
-
-Thanks,
-Feng
-
-> > +
-> > +	numa_bitmask_free(cpumask);
-> > +	return ret;
-> > +}
+> In mm/memcontrol.c:peak_show(), readers locklessly check these values:
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260730113040.75718-1-feng.tang@linux.alibaba.com?part=1
+> 	u64 fd_peak = READ_ONCE(ofp->value), peak;
+> 
+> 	/* User wants global or local peak? */
+> 	if (fd_peak == OFP_PEAK_UNSET)
+> 		peak = pc->watermark;
+> 	else
+> 		peak = max(fd_peak, READ_ONCE(pc->local_watermark));
+> 
+> If pc->local_watermark is lowered to usage here in peak_write() before the
+> watchers' peer_ctx->value fields are updated to old_watermark, can a
+> concurrent lockless reader in peak_show() interleave to observe the lowered
+> local_watermark while still reading their old lower fd_peak value?
+> 
+
+It seems this issue exsit already, maybe we should add 
+spin_lock(&memcg->peaks_lock) in peak_show()?
+
+> If they observe both lower values, this would temporarily violate the
+> monotonic property of the peak metric and return a lower peak than expected.
+> 
+> Should the watchers be updated with old_watermark before lowering
+> pc->local_watermark to usage, or are memory barriers needed to ensure the
+> correct order?
+> 
+>>   
+>>   	/* initial write, register watcher */
+>>   	if (ofp->value == OFP_PEAK_UNSET)
+> 
+
+-- 
+Best regards
+Ridong
+
