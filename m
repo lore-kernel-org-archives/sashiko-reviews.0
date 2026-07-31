@@ -1,78 +1,139 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350C42E0B5C;
-	Fri, 31 Jul 2026 15:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BCE3EC83E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 16:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785513389; cv=none; b=VOSUkpbMzUPixcBx45r/LOWUrGWeQPmdbCF8meSrT9SksuxS37J+WTysoIE8xYAHDEEcwb1hmeQdU8/jAQR3omtjJn9S2Cuk9pZuDMaYAGetFUAXg+UmNPb0kDyeXHogAL+ob7DGhfXfibUf1jIbpVQ6aF/XvIC5/A8jm84l0pk=
+	t=1785513796; cv=none; b=Ns6ob+K8IqmFlDcPxhYFp4aQouxGFmi1g6DauAPRgyAAb4ykPYdAQcKx/U78kMHdiGDmjQ6y5Fd9PqSvqNcQ8kpvNPO8p5t2nq37pNa/4F1DvpbwPdYnPnmo5GAq/7AadWSS3JSE/wymgWa8w9bpTtyfu282Bdt/kvVcr/eqQkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785513389; c=relaxed/simple;
-	bh=wxYLT89ZumPuz99b6PJmN0odN0KfoDn/BWbg6Q8a92g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qZhbA5K462yaw5ICN8BOVL+6ZaBvPxDKVFEmMDVr9ZLAscM0ZZUxx0nSV1JBqr7IWScZAmgJMV7NWHWXSDXjBdwPiMGCTlEnaqGng+Dn2B5TArv5So5I+SYAYXeW1kxqUYADIje7cxn36snSKmgN9H+jcvxS94vrBE22IUw2q8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=jn+plKJB; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	s=arc-20240116; t=1785513796; c=relaxed/simple;
+	bh=u9Davee5jFiswlNbcoaGtA170sZ3bUH0duryUAj/cpQ=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=H4iZcaaCG6PSwIkvbKazZQmMFP1SSULauYac7Ck0U4p8V+wb9sR+yDkRtW0bJr4yezX6AMZHbm9fzTMxxLBkHvabtht5SeVIUWH5ipDeB4v0e+8e2roZI57uQ99jBhKEiOQFjbQkjp3ks8nFeR28UGely89rsDgeiVig1DSjIOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TOv9HNF7; arc=none smtp.client-ip=209.85.214.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="jn+plKJB"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9FD4111B7FA;
-	Fri, 31 Jul 2026 17:56:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1785513381;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=fibExNx3GiA/92TUygQyn1q09jl45LUKbgRtFxXvShU=;
-	b=jn+plKJBqOLswiPSRrTWLctYK+08CpElZQDOpQK1SdsTrm8vbSZ57WwERGfuOTT/L/JhK0
-	ObvOTtsTSnM02vNpHOrGARhT7YYX6mP9nbzuDx1VaZxiDcmj4CPlsLltxQrpJrYKDFL8+W
-	7zNoTEsWjyIa0N5tJpUWGso5WdP+fy+ZESV3gxdCr3+ESKi0QXI+M/KKwaQxz/gPTkz2Xc
-	E4AUJkoNOfQpcgEbnctCOEpuP3kTF+ODaItSIquzNFRFPxCGks7R9Ked+zlu2/fohwoB3K
-	yo57MD7V2Nr5ZXZ/VS5Q49j3WeNyx+JoekgF6+OW2r4zf/2QYfqamHbMombaSg==
-Message-ID: <a5bab69f-22db-46f4-a039-cc20fe428abf@nabladev.com>
-Date: Fri, 31 Jul 2026 17:56:19 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TOv9HNF7"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cf6acd760cso12911875ad.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 09:03:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1785513794; x=1786118594; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LEYbd8TAWmmMUBeZ9IrKbK+p5wVI9/TTz658UxtH1do=;
+        b=TOv9HNF7dsJO3YSQB6U49qerzifMncPsKLChYOkJFossmlvhvueyPuJGS36X+nGkf3
+         VCz/gqxDhhbjY+LuuqG3QzbfabhWOGKLtMVor+j9iVbuEkNuhcUdGPTQx4AfdFKzvV7R
+         t/BkZ4LvGQOVb9P4y9Jeu/qIyFGFxbC8IkAC8n/Bhsu21ZJF6kMHXcKvflzH7oFqScWW
+         j9AGZpVYH7c6oFgSQXLBz9ovH47SNoyYT26Gr37rVC3czreU/bpT5P9LXHUEdJnnzcEp
+         MJM+INu91ZdaFBIb4VnFU9+kjfUUgCvxmNNvtS+yRzBtUAx0BjfEZUThaZDB5x9SRlX7
+         2voQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785513794; x=1786118594;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=LEYbd8TAWmmMUBeZ9IrKbK+p5wVI9/TTz658UxtH1do=;
+        b=tAJ/AG23HT0eETa3Ago34e8bLkiDxG9g6TedS5RiL39RtY3+B1zG1+F45BVzU35HTx
+         Thcz3jIYXczDdstrdrgY9lDPfjvFQ6itEUPB5Bk2OfuG16hp9piD99bb9Wm+2s5tZu57
+         0rySpE8fAAYL9c6Ql1fTPTy/B5qs1KobOZzwWi1Z6vsUe1Vl8iBbbvt5QI+iY99mYN4U
+         IYEZ4up+j9p85ZPOF4r7O7V++oWrJ1Ygkbvc8VIXGXR6V0exaiClGAp7+Ts0rm/F+FxY
+         UA45JAYREnynzX9a1MN9MQYHmwQDktXe2H2kfA+xsTYeUUQoCoLf1ZARu+vDbn3Bcx1L
+         jGIQ==
+X-Gm-Message-State: AOJu0Yzr4p0Wxzj2yNuYarcIXKXF1mzL2WYAd37A9UfTf7eTth9vzCAK
+	VvsLaaKbEwJtV7hRpqy9k4QSNdJ3nfYCNRyhMdKID/EtDp/j0cEvkyLHpH0FAo5vnSBsgUrXv7C
+	E2a/Ys/MTwSt5o5kQuFSrnYSYNpyAbHmaFXb1wwgdCw77NkiblVWpBuCr0mff8UnVCLxVtCEGvW
+	Y27DiU0BkMszs3OUVLgheM0IJKi7KwgS9kG0GZNCRb+vFucRnQ
+X-Received: from plhz17.prod.google.com ([2002:a17:902:d9d1:b0:2ce:ab97:2844])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:184d:b0:2cc:a853:1311
+ with SMTP id d9443c01a7336-2d05247edd2mr4778715ad.47.1785513793428; Fri, 31
+ Jul 2026 09:03:13 -0700 (PDT)
+Date: Fri, 31 Jul 2026 09:03:12 -0700
+In-Reply-To: <amzFnPEikFTHhW9X@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 7/7] arm64: dts: imx8mm: imx8mp: Add FIO1-Audio DTOs
- for Data Modul i.MX8M Mini and Plus eDM SBC
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, Frank.Li@kernel.org,
- imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org
-References: <20260729214723.557461-1-marex@nabladev.com>
- <20260729214723.557461-7-marex@nabladev.com>
- <20260729221033.3CDB41F000E9@smtp.kernel.org> <amtq-Ukw_dyvavxJ@SMW015318>
- <e4f9ef42-d752-4563-a86b-4c62f47e43ac@nabladev.com>
- <amy96HmlzdtBz4nl@SMW015318>
-Content-Language: en-US
-From: Marek Vasut <marex@nabladev.com>
-In-Reply-To: <amy96HmlzdtBz4nl@SMW015318>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Mime-Version: 1.0
+References: <20260730191908.2084803-1-seanjc@google.com> <20260730191908.2084803-4-seanjc@google.com>
+ <20260730193350.60B801F000E9@smtp.kernel.org> <amzFnPEikFTHhW9X@google.com>
+Message-ID: <amzHQKmGxFf3aeYp@google.com>
+Subject: Re: [PATCH 3/9] KVM: selftests: Affine child tasks to other pCPUs in
+ hardware disable test
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On 7/31/26 5:23 PM, Frank Li wrote:
-
-Hello Frank,
-
->>> at imx8mm.dts, 30050000 is SAI5, here you change to to use clock-controller
->>>
->>> Suppose address here is wrong.
->> This is correct and we already discussed this in V4, the SAI here is not
->> used as an audio controller (not using sound/soc/fsl/fsl_sai.c driver), but
->> as a clock controller (yes using drivers/clk/clk-fsl-sai.c driver), the
->> bindings differ, hence this node.
+On Fri, Jul 31, 2026, Sean Christopherson wrote:
+> On Thu, Jul 30, 2026, sashiko-bot@kernel.org wrote:
+> > > diff --git a/tools/testing/selftests/kvm/hardware_disable_test.c b/tools/testing/selftests/kvm/hardware_disable_test.c
+> > > index 3147f5c97e943..1bcbd13e99947 100644
+> > > --- a/tools/testing/selftests/kvm/hardware_disable_test.c
+> > > +++ b/tools/testing/selftests/kvm/hardware_disable_test.c
+> > [ ... ]
+> > > @@ -84,16 +85,11 @@ static void run_test(u32 run)
+> > [ ... ]
+> > >  		check_create_thread(&threads[i], NULL, run_vcpu, vcpu);
+> > > -		check_set_affinity(threads[i], &cpu_set);
+> > > +		check_set_affinity(threads[i], &child_cpu_set);
+> > >  
+> > >  		for (j = 0; j < SLEEPING_THREAD_NUM; ++j) {
+> > >  			check_create_thread(&throw_away, NULL, sleeping_thread,
+> > >  					    (void *)NULL);
+> > > -			check_set_affinity(throw_away, &cpu_set);
+> > > +			check_set_affinity(throw_away, &child_cpu_set);
+> > >  		}
+> > >  	}
+> > [ ... ]
+> > > @@ -147,12 +143,30 @@ void wait_for_child_setup(pid_t pid)
+> > [ ... ]
+> > > +static void setup_child_cpu_set(void)
+> > > +{
+> > > +	int cpu;
+> > > +
+> > > +	kvm_sched_getaffinity(0, sizeof(child_cpu_set), &child_cpu_set);
+> > > +
+> > > +	if (CPU_COUNT(&child_cpu_set) < 2)
+> > > +		return;
+> > > +
+> > > +	cpu = pin_task_to_random_cpu(pthread_self(), &child_cpu_set);
+> > > +	CPU_CLR(cpu, &child_cpu_set);
+> > > +
+> > > +	while (CPU_COUNT(&child_cpu_set) > VCPU_NUM)
+> > > +		CPU_CLR(kvm_pick_random_cpu(&child_cpu_set), &child_cpu_set);
+> > > +}
+> > 
+> > [Severity: Medium]
+> > Since setup_child_cpu_set() pins the parent thread to a single random CPU
+> > prior to spawning children, won't the newly created threads in run_test()
+> > inherit this single-CPU affinity upon creation?
+> > 
+> > Because check_create_thread() spawns the threads before their affinity is
+> > explicitly updated to child_cpu_set, they might immediately begin executing
+> > on the exact same CPU as the parent.
 > 
-> Thanks, I forget it. Now, may not allow this method. The same hardware
-> have to use one compatible string.
-This was already discussed at length when the drivers/clk/clk-fsl-sai.c 
-was upstreamed, it is clear the two drivers are not ideal. The rationale 
-for having two separate drivers, one for SAI as audio device and one for 
-SAI as clock controller, with separate compatible strings, is to make 
-sound/soc/fsl/fsl_sai.c maintainable. The sound/soc/fsl/fsl_sai.c is 
-already complex enough and folding a clock driver into it would make it 
-difficult to maintain, hence the separate clock driver.
+> Yeah, I was trying to avoid this since pthread_attr_setaffinity_np() is only
+> available with __USE_GNU.
+> 
+> > Could this result in the child threads starving the parent on that single CPU
+> > before the parent gets a chance to execute check_set_affinity()? This seems
+> > like it might heavily delay the migration and trigger the same CPU contention
+> > that this patch aims to fix.
+> 
+> After far too much testing, the problem isn't direct CPU contention, AFAICT it's
+> due to incurring cross-node NUMA penalties, and presumably scheduler contention
+> when the pool of possible CPUs to run on is huge.
+> 
+> I tried a bunch of fancy approaches, e.g. making parent, child, and grandchildren
+> all mutually exclusive, and while the fanciness can provide marginal benefits when
+> pthread_attr_setaffinity_np() isn't available, all that really matters is that the
+> worker threads get affined before they start doing work.
+
+Oh, and I also ruled out wakeup latency, i.e. this isn't the same underlying cause
+that prompted 0297cdc12a87 ("KVM: selftests: Add option to rseq test to override
+/dev/cpu_dma_latency").
