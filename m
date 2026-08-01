@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF591F12FB;
-	Sat,  1 Aug 2026 14:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2BC337105;
+	Sat,  1 Aug 2026 16:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785595655; cv=none; b=dK6JX9k//vAqiroMeq1qAp0ZG7B1Q9kpBE4TUUKE4yb/1FZzm1y4jz0kJqRrGUSzcTzuZ3WbTFgjSRzRuYtRadG0+TgOKvLSs8qxP+4Ltrv33AAsJSpD9JByel0A0/670cRD0TwphHTYKKtvX/ybOamLUcJ1Iwf9GkIaAPW4BDk=
+	t=1785603423; cv=none; b=AmqYPaqox68DwDdsO3rZ4wjNBbTCWx21ILJIu/umgs3wKIp02oBNQsSTcrfVA+6xpVQa+wbSa46SCA3i4cG4FOx1a2QrXyLmHFzeI0+xh1SXQQ31Rtylg4gGPYvOXQxKMo/a+h718u89ev0hJPFu3OEfD7AEUb/YYWmrOXTbMqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785595655; c=relaxed/simple;
-	bh=o2+j2Rvh/QB6ntGMNwz5Wbk1ogYuJkbFbfRG5fv9QmA=;
+	s=arc-20240116; t=1785603423; c=relaxed/simple;
+	bh=d+TTclD9SIWbHf6DvU0ahaB+5z46g21wSuI7omCyHnI=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CM2TnceaKRWjSVdd1d8GHrnwEiQIiieYx5b+M+sJmCkU86Xiw1fsRw3MBhuSSwVMPrVOQZZpo0SRD7t7qqnO8f+naE311H0pM337pDYC7kTj6Xgz2eKXB11d7n4KXTYRwESnHBUDAeqcaB+TB0bj1ZcJ5PFDTt/HP5imseWJHWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YzF1Gh8M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PcvEDon9avTYcWYy+3W+qGsODMStyozWhbG6+yEVNHbDzzQAbRZsQFask7FR8X0eTfC0oTxFKw/1mWc5uvSXwAWk3B5Nw78usgHQFuEu1DV3uGDqLrhQ7inUPWpGlyM06t92UkCOrEW4yGgh0VOctAEUe7fG2YVq70VeZy4KKck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R4hUTV4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YzF1Gh8M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF111F00AC4;
-	Sat,  1 Aug 2026 14:47:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R4hUTV4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B881F00AC4;
+	Sat,  1 Aug 2026 16:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785595653;
-	bh=uj1pnahAMTGeHyW3FVCbLY4C6FmO5B3E/ZqEDKSJPzs=;
+	s=k20260515; t=1785603421;
+	bh=Kymd9GnLiiGDQY+sNKBHnxcjsiopYfYgyw9JAcg7YHo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=YzF1Gh8MOrQHeY31wio6OmitevT2fwCTE9aiENbsEzFyl8QkjNbmFi1RsN4J9KC1f
-	 C2EYHC/tCJFrP3Df809v9YvQWmb3BuSz8oGlXaeFYMHgtje+knhXZd2GRPKVkxi4+3
-	 a0ZIMGNVU9sujTz9oiU5fMCHXn7rTUqKyV4thdU9D4XIwkJHIiZUg88U+vFMw62q3f
-	 NObijq7KDgyIFF8F2tT2Fa1BWzF3c6Xlwep2KRP1UIjYbT4w39JvMxGmAMwPU8e5aw
-	 lJkhgdBhXEnf3EYxMcENxbNH/AD1Ic1Ry9ZIb6Xd+yDKbV3d0XIA55yEjOSRVZoMFp
-	 3NRQD0XyZnp6Q==
+	b=R4hUTV4QkfKl4gG77/QK4xfDNOLysOJurfAk8cJpNagHA0RQVosZ2jHg8Q1KeopJa
+	 IFVmdrWFRe5u4aNO3LLEim2GEb/7CWVULZoy02WBfH2OJBN+qUV4Tp+Q/Zg9oP6XoQ
+	 EhK6MDxxM4YpiFLiFFm7LmX8KRZ2aXdHZRx7Vcc1dUwt95Y1whzkM1rjTvt2uAXKgZ
+	 0nlt1H9RbiST06UTE4gci0Gvpv0l2PlnXrt3J/yXtK8D/OONg9BCqvUtquE9HDWUz3
+	 MjEK7lVr5PWt24re08hGEKx9qzPwBrVNSoK0U71zdeatt8bg4seTeQBt86GqoJOyAs
+	 hjAu+7aZbf6+g==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
 	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <maz@kernel.org>)
-	id 1wqAzr-0000000BHgX-2KFc;
-	Sat, 01 Aug 2026 14:47:31 +0000
-Date: Sat, 01 Aug 2026 15:51:43 +0100
-Message-ID: <87o6flq4g0.wl-maz@kernel.org>
+	id 1wqD19-0000000BIv9-3CMg;
+	Sat, 01 Aug 2026 16:56:59 +0000
+Date: Sat, 01 Aug 2026 18:01:11 +0100
+Message-ID: <87mrv5pyg8.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: "Oliver Upton" <oupton@kernel.org>,
 	kvm@vger.kernel.org,
 	kvmarm@lists.linux.dev
-Subject: Re: [PATCH 5/6] KVM: arm64: Couple VNCR fixmap clearing and CPU number invalidation
-In-Reply-To: <20260801130237.0FD8F1F00ACA@smtp.kernel.org>
+Subject: Re: [PATCH 6/6] KVM: arm64: Add VNCR TLB tracking again
+In-Reply-To: <20260801130454.5D9F11F00AC4@smtp.kernel.org>
 References: <20260801124818.366274-1-maz@kernel.org>
-	<20260801124818.366274-6-maz@kernel.org>
-	<20260801130237.0FD8F1F00ACA@smtp.kernel.org>
+	<20260801124818.366274-7-maz@kernel.org>
+	<20260801130454.5D9F11F00AC4@smtp.kernel.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
  (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -59,219 +59,170 @@ X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvm@vger.
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Sat, 01 Aug 2026 14:02:36 +0100,
+On Sat, 01 Aug 2026 14:04:53 +0100,
 sashiko-bot@kernel.org wrote:
 > 
 > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
-> New issues:
-> - [Critical] By modifying `invalidate_vncr()` to call the new `unmap_l1_vncr()` helper, this patch asynchronously sets `vt->cpu = -1` when invalidating a remote vCPU's VNCR TLB. However, the host CPU's `L1_VNCR_MAPPED` flag remains set on the remote CPU. When the remote vCPU is eventually scheduled out and executes the lockless `this_cpu_reset_vncr_fixmap()`, it observes `L1_VNCR_MAPPED` is true but finds `vt->cpu` has been changed to `-1`. This triggers a deterministic host kernel panic via `BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id())`. A guest can trivially exploit this by issuing a TLBI from one vCPU while another is running.
-> 
 > Pre-existing issues:
-> - [Critical] In `kvm_map_l1_vncr()`, `vt->cpu` is unconditionally set to `smp_processor_id()`. If the mapping has no read permissions (`prot == PAGE_NONE`), the function returns without mapping the fixmap or setting the `L1_VNCR_MAPPED` flag. When the vCPU is scheduled out, `this_cpu_reset_vncr_fixmap()` checks `L1_VNCR_MAPPED` and returns early, failing to reset `vt->cpu` to `-1`. This leaves a stale CPU ID in `vt->cpu`. If the host later invalidates this vCPU's VNCR TLB, `invalidate_vncr()` reads the stale CPU ID and maliciously clears the fixmap for that CPU. If another vCPU is running on that CPU and using the fixmap slot, its VNCR mapping is unexpectedly destroyed, leading to a host Data Abort kernel panic when accessed. This problem wasn't introduced by this patch, but remains a critical vulnerability.
-> - [Critical] A Time-of-Check to Time-of-Use (TOCTOU) race exists on `vt->cpu` between `invalidate_vncr()` and the lockless `this_cpu_reset_vncr_fixmap()`. `invalidate_vncr()` executes `if (vt->cpu != -1)` and then calls `unmap_l1_vncr()`, which evaluates `vncr_fixmap(vt->cpu)`. Because `this_cpu_reset_vncr_fixmap()` is called from `kvm_arch_vcpu_put` without holding `kvm->mmu_lock`, it can run concurrently on the target vCPU's host CPU and set `vt->cpu = -1` exactly between the check and the use. `unmap_l1_vncr()` then evaluates `vncr_fixmap(-1)`, triggering `BUG_ON(__c >= NR_CPUS)` and panicking the host. This problem wasn't introduced by this patch, but remains a critical vulnerability.
+> - [Critical] Cross-CPU invalidation of VNCR TLBs (e.g., via MMU notifiers) clears the fixmap and resets `vt->cpu` but fails to clear the per-CPU `L1_VNCR_MAPPED` flag on the CPU where the vCPU is running. When the vCPU is subsequently scheduled out, `this_cpu_reset_vncr_fixmap()` checks the local flag, finds it set, and hits a `BUG_ON` because `vt->cpu` is `-1`. This allows unprivileged host userspace to panic the host kernel.
+> - [High] The fast-path check in `kvm_hyp_handle_tlbi_el2()` skips VNCR TLB invalidation for EL2 TLBI instructions when `E2H` or `TGE` is 0, leaving stale translations in the software VNCR TLB.
+> - [High] A TOCTOU race exists between lockless guest page table walks and guest TLBI intercepts, allowing stale VNCR translations to survive invalidation.
 > --
 > 
-> --- Patch [5]: [PATCH 5/6] KVM: arm64: Couple VNCR fixmap clearing and CPU number invalidation ---
-> commit 9f716e0407bd9a5d530b0e1d1e94c5434eaeedb6
+> --- Patch [6]: [PATCH 6/6] KVM: arm64: Add VNCR TLB tracking again ---
+> commit bde680578e8485472440ba4858d93cb92173897d
 > Author: Marc Zyngier <maz@kernel.org>
+> Date:   Sat Aug 1 12:48:18 2026 +0000
 > 
-> KVM: arm64: Couple VNCR fixmap clearing and CPU number invalidation
+>     KVM: arm64: Add VNCR TLB tracking again
+>     
+>     This patch re-introduces VNCR TLB tracking to force EL2 S1 TLBI handling
+>     onto the slow path when valid VNCR TLBs exist. It uses a VM-wide atomic
+>     counter to track the presence of valid VNCR TLBs, updating it under the
+>     MMU lock.
 > 
-> A mapped VNCR translation must indicate which CPU it is resident.
-> Unmapping such a translation must make this CPU number -1. Couple the unmap
-> and the setting to -1 in a helper, so that we are always sure they are done
-> together.
+> > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+> > index c09b1d411c584..eb59549ec2172 100644
+> > --- a/arch/arm64/kvm/hyp/vhe/switch.c
+> > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
+> > @@ -424,10 +424,11 @@ static bool kvm_hyp_handle_tlbi_el2(struct kvm_vcpu *vcpu, u64 *exit_code)
+> >  		return false;
+> >  
+> >  	/*
+> > -	 * If we have to check for any VNCR mapping being invalidated,
+> > +	 * If we have to check for any VNCR TLB being invalidated,
+> >  	 * go back to the slow path for further processing.
+> >  	 */
+> > -	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu))
+> > +	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu) &&
+> > +	    atomic_read(&vcpu->kvm->arch.vncr_tlb_count))
+> >  		return false;
 > 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this check skip VNCR TLB
+> invalidation for EL2 TLBI instructions when the guest is in nVHE
+> mode?
+
+nVHE and NV are mutually exclusive in KVM.
+
+[...]
+
 > > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-> > index 69a4652f39336..8d5b0208ad728 100644
+> > index 8d5b0208ad728..2a7dd9f9fb597 100644
 > > --- a/arch/arm64/kvm/nested.c
 > > +++ b/arch/arm64/kvm/nested.c
+> [ ... ]
+> > @@ -998,9 +999,11 @@ u16 get_asid_by_regime(struct kvm_vcpu *vcpu, enum trans_regime regime)
+> >  	return asid;
+> >  }
+> >  
+> > -static void invalidate_vncr(struct vncr_tlb *vt)
+> > +static void invalidate_vncr(struct kvm *kvm, struct vncr_tlb *vt)
+> >  {
+> > +	BUG_ON(!vt->valid);
+> >  	vt->valid = false;
+> > +	atomic_dec(&kvm->arch.vncr_tlb_count);
+> >  	if (vt->cpu != -1)
+> >  		unmap_l1_vncr(vt);
+> >  }
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this cross-CPU invalidation path leave
+> the per-CPU L1_VNCR_MAPPED flag set locally?
+> 
+> If an MMU notifier on CPU B calls kvm_invalidate_vncr_ipa() which reaches
+> invalidate_vncr(), unmap_l1_vncr() will clear the fixmap and set vt->cpu = -1.
+> 
+> When CPU A (which was running the vCPU) exits the guest and calls
+> this_cpu_reset_vncr_fixmap(), won't it see its local L1_VNCR_MAPPED flag still
+> set and trigger BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id()) because
+> vt->cpu is now -1?
+
+Addressed in my reply to the comment on the previous patch.
+
 > 
 > [ ... ]
-> 
-> > @@ -895,6 +895,12 @@ void kvm_vcpu_load_hw_mmu(struct kvm_vcpu *vcpu)
-> >  	}
-> >  }
+> > @@ -1460,6 +1471,8 @@ static int kvm_translate_vncr(struct kvm_vcpu *vcpu, bool *is_gmem)
+> >  		vt->valid = true;
+> >  		vt->cpu = -1;
 > >  
-> > +static void unmap_l1_vncr(struct vncr_tlb *vt)
-> > +{
-> > +	clear_fixmap(vncr_fixmap(vt->cpu));
-> > +	vt->cpu = -1;
-> > +}
+> > +		atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
 > > +
-> >  static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
-> >  {
-> >  	if (!host_data_test_flag(L1_VNCR_MAPPED))
-> >  		return;
+> >  		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
+> >  		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
+> >  	}
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but can a stale CPU ID be left in vt->cpu if 
-> we return early here?
+> [Severity: High]
+> This is a pre-existing issue, but is there a time-of-check to time-of-use race
+> between the lockless guest page table walk and guest TLBI intercepts here?
 > 
-> In kvm_map_l1_vncr(), vt->cpu is unconditionally set to smp_processor_id().
-> If the mapping has no read permissions (prot == PAGE_NONE), the function
-> returns without mapping the fixmap or setting the L1_VNCR_MAPPED flag.
+> CPU1 locklessly resolves the guest virtual address via __kvm_translate_va()
+> earlier in kvm_translate_vncr().
 > 
-> When the vCPU is later scheduled out, this_cpu_reset_vncr_fixmap() returns
-> early at this check because L1_VNCR_MAPPED is unset, failing to reset
-> vt->cpu to -1.
+> Before CPU1 acquires the mmu_lock and increments vncr_tlb_count, CPU2 could
+> modify the guest page table and issue a TLBI.
 > 
-> If the host later invalidates this vCPU's VNCR TLB, invalidate_vncr() reads
-> the stale CPU ID and maliciously clears the fixmap for that CPU. If another
+> The TLBI on CPU2 would see vncr_tlb_count == 0 (or vt->valid == false) and
+> complete. CPU1 would then acquire mmu_lock, pass the mmu_invalidate_retry()
+> check (which only tracks host MMU notifiers), and install the stale
+> translation.
+> 
+> Could this result in caching a stale VNCR mapping?
 
-Maliciously?
+Yup. That's definitely another problem.
 
-> vCPU is running on that CPU and using the fixmap slot, its VNCR mapping is
-> unexpectedly destroyed, leading to a host Data Abort when accessed.
+I think we need something that like the mmu notifier retry
+mechanism. We can hoist the increment of vcpu_tlb_count to the
+beginning of the translation process, sample a counter, and recheck
+this counter once we've acquired the mmu lock.
 
-It is always possible to unmap an VNCR at any point and to handle the
-corresponding abort. That's what a TLBI from another CPU does.
-
-So no, not a bug. The *real* bug is to not correctly handle WO/NONE
-permissions, which will have to wait until we have S1POE support in
-the kernel.
-
-> 
-> >  	BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
-> >  	BUG_ON(is_hyp_ctxt(vcpu));
-> >  
-> > -	clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
-> > -	vcpu->arch.vncr_tlb->cpu = -1;
-> > +	unmap_l1_vncr(vcpu->arch.vncr_tlb);
-> >  	host_data_clear_flag(L1_VNCR_MAPPED);
-> >  }
-> >  
-> > @@ -997,7 +1002,7 @@ static void invalidate_vncr(struct vncr_tlb *vt)
-> >  {
-> >  	vt->valid = false;
-> >  	if (vt->cpu != -1)
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this check have a time-of-check to
-> time-of-use race?
-> 
-> In invalidate_vncr(), we check if vt->cpu != -1 and then call
-> unmap_l1_vncr(vt), which evaluates vncr_fixmap(vt->cpu) internally.
-> 
-> Because this_cpu_reset_vncr_fixmap() is called from kvm_arch_vcpu_put()
-> without holding kvm->mmu_lock, it can run concurrently on the target vCPU's
-> host CPU and set vt->cpu = -1 exactly between the check and the use.
-
-This looks indeed like a disaster waiting to happen. I think upgrading
-this to an atomic variable should do it, as below.
-
-> 
-> If that happens, unmap_l1_vncr() evaluates vncr_fixmap(-1), which triggers
-> BUG_ON(__c >= NR_CPUS) and panics the host.
-> 
-> > -		clear_fixmap(vncr_fixmap(vt->cpu));
-> > +		unmap_l1_vncr(vt);
-> 
-> [Severity: Critical]
-> Can this trigger a BUG_ON() when a remote vCPU is scheduled out?
-> 
-> By modifying invalidate_vncr() to call unmap_l1_vncr(), this path now
-> asynchronously sets vt->cpu = -1 when invalidating a remote vCPU's
-> VNCR TLB. However, the host CPU's L1_VNCR_MAPPED flag remains set on
-> the remote CPU.
-> 
-> When the remote vCPU is eventually scheduled out, it will execute the
-> lockless this_cpu_reset_vncr_fixmap():
-> 
->     if (!host_data_test_flag(L1_VNCR_MAPPED))
->         return;
-> 
->     BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
-> 
-> Since L1_VNCR_MAPPED is still true, the code reaches the BUG_ON(), but
-> vt->cpu has been changed to -1, which deterministicly panics the host
-> kernel. A guest could trivially trigger this by issuing a TLBI from one
-> vCPU while another is running.
-
-Yup, that BUG_ON() needs to go for the same reason as above. I'm
-adding the stuff below (untested).
+I wonder if we can actually use the exact same counter outside of the
+MMU notifiers, bumping it up from the TLBI VA code... Something like
+the untested hack below.
 
 	M.
 
 diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-index 1e3fd98f6589b..be9d233dffac6 100644
+index dfdd1b4abb839..73c7bd4223f13 100644
 --- a/arch/arm64/kvm/nested.c
 +++ b/arch/arm64/kvm/nested.c
-@@ -27,7 +27,7 @@ struct vncr_tlb {
- 	bool			hpa_writable;
- 
- 	/* -1 when not mapped on a CPU */
--	int			cpu;
-+	atomic_t		cpu;
- 
- 	/*
- 	 * true if the TLB is valid. Can only be changed with the
-@@ -895,10 +895,17 @@ void kvm_vcpu_load_hw_mmu(struct kvm_vcpu *vcpu)
- 	}
- }
- 
-+/*
-+ * Unmapping an L1 VNCR can happen concurrently without holding the mmu lock
-+ * (vcpu_put() vs TLBI handling). the atomic_xchg below ensures that only
-+ * CPU set -1 while getting a valid CPU number back.
-+ */
- static void unmap_l1_vncr(struct vncr_tlb *vt)
- {
--	clear_fixmap(vncr_fixmap(vt->cpu));
--	vt->cpu = -1;
-+	int cpu = atomic_xchg_relaxed(&vt->cpu, -1);
-+
-+	if (cpu != -1)
-+		clear_fixmap(vncr_fixmap(cpu));
- }
- 
- static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
-@@ -906,7 +913,6 @@ static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
- 	if (!host_data_test_flag(L1_VNCR_MAPPED))
- 		return;
- 
--	BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
- 	BUG_ON(is_hyp_ctxt(vcpu));
- 
- 	unmap_l1_vncr(vcpu->arch.vncr_tlb);
-@@ -1003,8 +1009,7 @@ static void invalidate_vncr(struct kvm *kvm, struct vncr_tlb *vt)
- 	BUG_ON(!vt->valid);
+@@ -1010,6 +1010,8 @@ static void invalidate_vncr(struct kvm *kvm, struct vncr_tlb *vt)
  	vt->valid = false;
  	atomic_dec(&kvm->arch.vncr_tlb_count);
--	if (vt->cpu != -1)
--		unmap_l1_vncr(vt);
-+	unmap_l1_vncr(vt);
+ 	unmap_l1_vncr(vt);
++	kvm->mmu_invalidate_seq++;
++	smp_wmb();
  }
  
  static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
-@@ -1468,7 +1473,7 @@ static int kvm_translate_vncr(struct kvm_vcpu *vcpu, bool *is_gmem)
- 		vt->hpa = pfn << PAGE_SHIFT;
- 		vt->hpa_writable = writable;
+@@ -1475,8 +1477,6 @@ static int kvm_translate_vncr(struct kvm_vcpu *vcpu, bool *is_gmem)
  		vt->valid = true;
--		vt->cpu = -1;
-+		atomic_set(&vt->cpu, -1);
+ 		atomic_set(&vt->cpu, -1);
  
- 		atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
- 
-@@ -1600,7 +1605,7 @@ static void kvm_map_l1_vncr(struct kvm_vcpu *vcpu)
- 	if (vt->wr.nG && get_asid_by_regime(vcpu, TR_EL20) != vt->wr.asid)
- 		return;
- 
--	vt->cpu = smp_processor_id();
-+	atomic_set(&vt->cpu, smp_processor_id());
- 
- 	if (vt->hpa_writable && vt->wr.pw && vt->wr.pr)
- 		prot = PAGE_KERNEL;
-@@ -1616,7 +1621,7 @@ static void kvm_map_l1_vncr(struct kvm_vcpu *vcpu)
- 	 * FIXME: WO doesn't work at all, need POE support in the kernel.
- 	 */
- 	if (pgprot_val(prot) != pgprot_val(PAGE_NONE)) {
--		__set_fixmap(vncr_fixmap(vt->cpu), vt->hpa, prot);
-+		__set_fixmap(vncr_fixmap(atomic_read(&vt->cpu)), vt->hpa, prot);
- 		host_data_set_flag(L1_VNCR_MAPPED);
+-		atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
+-
+ 		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
+ 		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
  	}
- }
+@@ -1530,7 +1530,17 @@ int kvm_handle_vncr_abort(struct kvm_vcpu *vcpu)
+ 		return -EIO;
+ 	}
+ 
++	/*
++	 * Speculatively increment the TLB count to make sure concurrent
++	 * TLBIs will take the slow path, and will interact with the retry
++	 * mechanism. Drop it again on error.
++	 */
++	atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
++
+ 	ret = kvm_translate_vncr(vcpu, &is_gmem);
++	if (ret)
++		atomic_dec(&vcpu->kvm->arch.vncr_tlb_count);
++
+ 	switch (ret) {
+ 	case -EAGAIN:
+ 		/* Let's try again... */
 
 -- 
 Jazz isn't dead. It just smells funny.
