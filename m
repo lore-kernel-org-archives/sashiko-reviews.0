@@ -1,97 +1,176 @@
-Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D01E30E0D5
-	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 05:36:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71583624DE
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 05:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785562621; cv=none; b=CHseC6jJ3FW6IMV743EVJb4RT3/7sVjkYMKNoH3x2XQciWSbMrwB46iclSdEaZyhf8WtITsRZ8z8Rfpt+AUsv0wdXODLVLvLKezD+P99R6W9cZ+Qv482KCM/fdQhZdJw/l6mWHHpqjc1hPLp7XVAmkAZebf6XE7DSOqJ8el8AZ0=
+	t=1785562919; cv=none; b=jglfHFkd2TaLS1zDwp2ATXdx1fMf+pfK2F252zNJSEywLaF9oGQt+lur3U9XZOZqNRiZMsSY3pc95zFbEpqwlWm9p8Znz+E7I/Zi0avPPy7OTUbSyaaGBMwdfrwKNPjfhW+TPdyvktSsc0+S9i+7XDlpHxA54wUScd9CAM0B/ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785562621; c=relaxed/simple;
-	bh=59nG9aVpiGe8WTx4v24lBgoYq+SAlcJNegUoQ14KnOQ=;
-	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
-	 References:In-Reply-To; b=iG2sJNaPvW77Puid6ylmjN98eh4MXzA8iA17IbJO+GJlISbB0bvTEWDqEIno+27iVNP0+5rXRtdqXexTevOuKX0UKedpjLEV2nV8IV30IxNggaH4+hyE9X0roUeUzpVBfzyNZgI1HkUPjoY2TOnZfslAW/0IuPaLC4bOhWVJzzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=Go6ondOv; arc=none smtp.client-ip=162.62.58.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1785562919; c=relaxed/simple;
+	bh=uFwVacpoBKqf/34/DHwdM2PKG4cpCrot070aByBuvGU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=OAQP8xK7ZXjEZcTVWkj6zhUCQeXfsD0DmMUedIu/ZUHE41/ISA541yBAOYUmpPYposIhr5xxkodwT44rAO5bE8JgirVvlq79XuwMiYMLiU92fusoMRY+siPBfnxyMoyDExD5RPgfZV4t39B0A74XTFDp5vQfWQVHYmJq6QFyqz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dwrWNT/C; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="Go6ondOv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1785562614; bh=59nG9aVpiGe8WTx4v24lBgoYq+SAlcJNegUoQ14KnOQ=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=Go6ondOvX2h05y5eGlj0QFw/gjVjrs0dGEEDAsHT7u9naoHiDmmX5rj7NAogdw6T7
-	 lTVvjqsfr0odWuss9B++KSY3iYhc4CtLqhkklbX2tFy9q9zXAJWG2TRRa9zF00UxAI
-	 wNynee0A1kW+RnWytn9kZs3jV363fcXnUSzEXTFk=
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-XMAILINFO: NWthGbMT/5RHpdKC/bezqCfGvA53eNNAETF/3fVGRxt+Iy5rTD1nG897rlS7ag
-	 P+nDsx+b4QCuSz5pBKvNg6kHrhlm6qp+Qxo3Byf76xSPSLqGObSunOI/gwX3Uv1u2xz4zi+4o7uqx
-	 ZIXMUVtUhzg9IJqayt3lSPkwyhxCXMgf2kCR/aiRNRqvBetlCAionr8BPal2FYG5rCPgbywH7SENU
-	 Cb4WC2AYxy2rLM+9uoGlx4gPGvAxIgaGEBI215tnNYVSt7AkDP2t/U4FW0yKBndgj7sx2U7q1Q6cV
-	 Ar6CexAJdALjUtblB7MnAkEzpoHK8hQhVn3OG49hxygSEGDNYQScpJ31WXKUl36uT9t4Kyuiu1kXp
-	 XCBO1TUaj3IR4wYLh5WKODzZiDynX22sKkQAvRvIzozmk933S/oFBCriUsf8YIrqs1APp25qt2b/t
-	 O8r4r9JNiDev0ICffpMjKfTetffByU+FX6IR2/zqxqAqHfLSjNznKwuZBOhUcNSJlA7/IoTg08Xo1
-	 QnfL3SOR3Ck67aPseB3iNHSXUp6M8ucirEWv9kt5kvs76u1NreLMml2XKIO9GbHnk7pnCA4FwBlu+
-	 sEfKcmwwDMYiciRNST2ObN+X+0MX8eyKdJzk4tw8Wvg0YlEkw+7G0RHhDYn3qYbZbUhDon1/uzmiB
-	 O8+Xm7Tr9eZKBs2EDdBfxcEUiPs63haWA5TVCH+mL+aeQVnrwV3N3vYi3+TcWqgT9E3SiqCCmQj9R
-	 Onx3SDM7XmyIYwRkB6Z2LtAMR1UknoZvlzwIpbiPnYPnbaHZ291NCT4HC1DTZ+jTkckkXK88c6y78
-	 XKSFP/Mu0HU0RIE5E0CpvXYRqlP8fiEdnb3YMGs+g1yjb2LJXoc/3+po09Ax+JKl8KIsNcyN5q/LF
-	 7bVYznw1zOAAlvgqhbtYcMTdq4XnzgUIQ8TcPj7J2L6fYxUknYLQxq9ao7YJFfEjSDEjR+hA/+F06
-	 a56wbjr6WYjvk0BXfJPBeHMujBWsZEIj4YVcpm/4tmgpuXKrEDDTqwpmQ44ufbJvn+Q40MscI+jbj
-	 Frtv0t3FsD0eLZZ8PwTk5mRRikIYbpPPbesnQEUtN4ttg6moCAfZu6DJ57GqGz9jLVn144wijcQ8j
-	 Tc5oPKp40etKKQ==
-From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>
-Subject: Re: [PATCH v5 1/3] can: rockchip_canfd: prevent TX stall on echo skb failure
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dwrWNT/C"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2d02b4c3601so19884585ad.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 22:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785562917; x=1786167717; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=fbpEs4nLlgM9ipjn1m7Vl9bon7gR0+FPoNc51UueVOw=;
+        b=dwrWNT/CVBN4w4Sx+sYEttXmuXY8SC4gSORS1JOgK1t/ThJNvURwr1KLVhN42/Po2o
+         yrYUMP6d9jwYIFl3TFv7oymw0C4VJGKqFwt6QQZxmlRYAR34KBnGhXA49wkZtkhwcXfg
+         coZdQomW365XhGJATfHkO2+o0MVo8AXb8e6v1f2INaVn9MC1VEMVDilZgBuq3J+vOtJG
+         aJI7H/9PZoZSQXrhZUv4R9d1W80HcOsvDqEmCJXJVDEu1hE6lhQUKfFKP0RTXZD3ylPN
+         BnVgelNofTV2DG9U9AIP9kAOkOaU6D/LNKjCyqzEB2j6wh/PH42M6MKEAwWoTELqtznm
+         JihQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785562917; x=1786167717;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fbpEs4nLlgM9ipjn1m7Vl9bon7gR0+FPoNc51UueVOw=;
+        b=EegZL5xqm6h/StdrQEZkVUP/z94lKRteriUl3JJX/Km/aIQa7NciAbQ3tR0OwffBWf
+         tBop9FivKad80wdx6iqKgbR3D7NHQXLwj51grpM+kmGVU8qw4Z6BICbOK1UOP5WvLRrN
+         Fw1wH7Gw85giCZxdfWj8hlydGU4h1GGS9CCLNAQoB4Lnz02U7mFaRxsYxKy4+I2HocAo
+         SjRH1XGkbLwrVGxYUjTE5PBJ+eCE6bQ1LQccqPMH0ZUXdEQMNxuvUxDMKn4WMYn83C6C
+         mwA+LH6S0adotNsX2T0hQNnVPBQ9ZmkYL/jvPVSoyO31e+gmKCu+mqbc+MSjLfIVragU
+         k0YA==
+X-Gm-Message-State: AOJu0YxNtEQFgOi50kR22Sr09KndJrTKcJHjSyxRqgm4meG6pisuZyVc
+	vD75BVm5bHC1y6G0FUH+n/eBpG8kQzB++yZu6SSy/xFhazGnmK1DPt4Lj22DtXV4
+X-Gm-Gg: AR+sD12CJFy4GZFzRwdsc4EsxTN94KvHlmOu3gFg1mz2P942NfxfgDlMnk8YreieI6P
+	44zsDe8Ts8eFwtVbElKpB44RJn3UGACdPGEZ2TBeqMFoUHD0Jt9mMXAI9uEUiR8RN3E/2p1AA1k
+	ct+t8ItxYikX3JCxT+dsv+91eKZttQkUObDoRjvDL4xek2FY2Dnrk1pG8HzCs8efrA0WijCspd1
+	rSctTAtgPQ6ao9ZnCk6bLvSy8LiCUrmu7iZ6UpKgSreEFEm5Wdp1zEf7kuah9CYuwmR+5eCEhGi
+	Ny+/T18WAei8DUFAoy6ggTgoW4dBv9pqkeud1zHyL2gA3jpsSvu9XsMhW4MpuR5NJSLHjmhesba
+	awRbHR8D2ZwEElAdBxU2ln6FnV7X2uaMohURtX1A+F21hqjNLI3V8JA1Gr4maWq4HqT5S0rtbsu
+	XaGrBRFXyxPqlMzeyp6DFRBfaMDXtYXC+6jkGjxlCukZUQ0cCCSrD0JUya9Xp1BgxhBsS1a1zQo
+	sPJlDV7PASbKIsU
+X-Received: by 2002:a17:902:f54e:b0:2cc:6329:b7ba with SMTP id d9443c01a7336-2d05224fa51mr24534955ad.16.1785562917096;
+        Fri, 31 Jul 2026 22:41:57 -0700 (PDT)
+Received: from [192.168.0.13] ([38.34.87.7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d04aea0f8asm13919195ad.35.2026.07.31.22.41.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 22:41:56 -0700 (PDT)
+Message-ID: <9a99c9f390d0caf48b3a523113ca8f71063f9c01.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v2 3/5] bpf: infer zext_dst based on static
+ register liveness analysis
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Date: Fri, 31 Jul 2026 22:41:53 -0700
+In-Reply-To: <20260801014230.CF9891F00AC4@smtp.kernel.org>
+References: <20260731-static-zext-v2-0-da4aa161e8c5@gmail.com>
+	 <20260731-static-zext-v2-3-da4aa161e8c5@gmail.com>
+	 <20260801014230.CF9891F00AC4@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-10 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Sat, 1 Aug 2026 13:36:52 +0800
-X-Priority: 3
-Message-ID: <tencent_9C071822E2F9F135F1D2FCCA4C25488C240A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <20260731-master-v5-0-5b27029dee20@qq.com>
- <tencent_C82C09E7235101CC88A97E154D2534183208@qq.com>
-	<20260731105402.B7A451F000E9@smtp.kernel.org>
-In-Reply-To: <20260731105402.B7A451F000E9@smtp.kernel.org>
-X-QQ-mid: xmsezb41-0t1785562612tam989e4v
+MIME-Version: 1.0
 
-SGksCgo+IElmIGFuIEVUSF9QX0NBTlhMIGZyYW1lIGlzIHNlbnQgdmlhIEFGX1BBQ0tFVCwg
-Y2FuX2Rldl9kcm9wcGVkX3NrYigpIGN1cnJlbnRseQo+IGxhY2tzIGEgY2hlY2sgdG8gZHJv
-cCBDQU4gWEwgZnJhbWVzIGZvciBkZXZpY2VzIHRoYXQgZG9uJ3Qgc3VwcG9ydCBDQU4gWEwu
-Cj4gV2hlbiBzdWNoIGEgZnJhbWUgZW50ZXJzIHJrY2FuZmRfc3RhcnRfeG1pdCgpLCBjYW5f
-aXNfY2FuZmRfc2tiKCkgcmV0dXJucwo+IGZhbHNlLCBjYXVzaW5nIHRoZSBkcml2ZXIgdG8g
-dHJlYXQgaXQgYXMgYSBDbGFzc2ljIENBTiBmcmFtZS4KPgo+IFRoZSBkcml2ZXIgcmVhZHMg
-Y2ZkLT5sZW4gZnJvbSBvZmZzZXQgNCwgd2hpY2ggaW4gYSBjYW54bF9mcmFtZSBjb3JyZXNw
-b25kcyB0bwo+IHRoZSB1c2VyLWNvbnRyb2xsZWQgZmxhZ3MgZmllbGQuIEJlY2F1c2UgdmFs
-aWQgQ0FOIFhMIGZyYW1lcyByZXF1aXJlIENBTlhMX1hMRgo+ICgweDgwKSB0byBiZSBzZXQs
-IGNmZC0+bGVuIGlzIGV2YWx1YXRlZCBhcyBhdCBsZWFzdCAxMjguCj4KPiBDb3VsZCBhIG1p
-bmltYWxseSBzaXplZCBDQU4gWEwgZnJhbWUgdHJpZ2dlciBhIGxvb3Agb2YgMzIgaXRlcmF0
-aW9ucyBoZXJlLAo+IGxlYWRpbmcgdG8gYW4gb3V0LW9mLWJvdW5kcyByZWFkIGZyb20gY2Zk
-LT5kYXRhIGFuZCBhbiBvdXQtb2YtYm91bmRzIHdyaXRlCj4gdG8gZGV2aWNlIG1lbW9yeSBh
-dCBSS0NBTkZEX1JFR19GRF9UWERBVEEwICsgaT8KClllcywgeW91ciBhbmFseXNpcyBpcyBj
-b3JyZWN0LiBBIHZhbGlkIENBTiBYTCBza2IgY2FuIHBhc3MgdGhlIGN1cnJlbnQgY29tbW9u
-CnZhbGlkYXRpb24gYW5kIHJlYWNoIHJrY2FuZmRfc3RhcnRfeG1pdCgpLCBldmVuIHRob3Vn
-aCB0aGUgUm9ja2NoaXAgY29udHJvbGxlcgpkb2VzIG5vdCBzdXBwb3J0IENBTiBYTC4gVGhl
-IENBTlhMX1hMRiBiaXQgaXMgdGhlbiBpbnRlcnByZXRlZCBhcyBjZmQtPmxlbiwgc28KdGhl
-IGRhdGEgbG9vcCBjYW4gcmVhZCBiZXlvbmQgdGhlIHNrYiBmcmFtZSBkYXRhIGFuZCB3cml0
-ZSBiZXlvbmQgdGhlCmNvbnRyb2xsZXIncyA2NC1ieXRlIFRYIGRhdGEgcmVnaXN0ZXIgd2lu
-ZG93LgoKVGhpcyBpc3N1ZSBwcmVkYXRlcyB0aGUgY3VycmVudCBwYXRjaCBhbmQgaXMgaW5k
-ZXBlbmRlbnQgb2YgdGhlIGVjaG8gc2tiCmZhaWx1cmUgaGFuZGxpbmcgYWRkcmVzc2VkIGhl
-cmUuIEkgd2lsbCB0aGVyZWZvcmUgbm90IGZvbGQgaXRzIGZpeCBpbnRvIHRoaXMKcGF0Y2gu
-IEtlZXBpbmcgdGhlIGZpeGVzIHNlcGFyYXRlIGFsc28gYWxsb3dzIHRoZSBDQU4gWEwgdmFs
-aWRhdGlvbiBpc3N1ZSB0byBiZQphZGRyZXNzZWQgaW4gdGhlIGNvbW1vbiBDQU4gdHJhbnNt
-aXQgcGF0aCwgc28gdGhhdCBvdGhlciBub24tQ0FOLVhMIGRyaXZlcnMgYXJlCnByb3RlY3Rl
-ZCBhcyB3ZWxsLgoKSSB3aWxsIHByZXBhcmUgYW5kIHBvc3QgYSBzZXBhcmF0ZSBwYXRjaCB0
-byByZWplY3QgQ0FOIFhMIHNrYnMgd2hlbiBDQU4gWEwgaXMKbm90IGVuYWJsZWQgb24gdGhl
-IHRhcmdldCBDQU4gZGV2aWNlLgoKVGhhbmtzIGFnYWluIGZvciB0aGUgZGV0YWlsZWQgcmVw
-b3J0LgoKQmVzdCByZWdhcmRzLApDdW5oYW8=
+On Sat, 2026-08-01 at 01:42 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>=20
+> New issues:
+> - [High] Dynamically downgraded 64-bit arena operations and pointer casts=
+ are missing explicit zero-extension on architectures requiring it.
+>=20
+> Pre-existing issues:
+> - [High] Kfuncs bpf_mem_cgroup_memory_events and bpf_mem_cgroup_vm_events=
+ do not properly validate negative enum values, leading to out-of-bounds ar=
+ray reads.
+> --
+>=20
+> --- Patch [3]: [PATCH bpf-next v2 3/5] bpf: infer zext_dst based on stati=
+c register liveness analysis ---
+> commit 625c020066cfbb5a384d20ff5e1ad79faa898949
+> Author: Eduard Zingerman <eddyz87@gmail.com>
+>=20
+> bpf: infer zext_dst based on static register liveness analysis
+>=20
+> This commit replaces the verifier's subreg_def based logic with computing
+> zext_dst statically as part of bpf_compute_live_registers(). It tracks th=
+e
+> liveness of the upper and lower halves of registers separately to emit ex=
+plicit
+> zero extensions on architectures that need them.
+>=20
+> Link: https://lore.kernel.org/bpf/CAGKGUv=3DsOuqQtA1Ub-5JXfA4FPosJFYKAQE4=
+B79cK+P1erxqtg@mail.gmail.com/
+>=20
+> [ ... ]
+>=20
+> > diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
+> > index d0bd94c60fee2..77b84b367be74 100644
+> > --- a/kernel/bpf/liveness.c
+> > +++ b/kernel/bpf/liveness.c
+> > @@ -2316,9 +2317,18 @@ int bpf_compute_live_registers(struct bpf_verifi=
+er_env *env)
+> > =C2=A0	}
+> > =C2=A0
+> > =C2=A0	for (i =3D 0; i < insn_cnt; ++i) {
+> > +		int def32 =3D bpf_insn_def32(&insns[i]);
+> > +		u32 out =3D state[i].out;
+> > =C2=A0		u32 in =3D state[i].in;
+> > =C2=A0
+> > =C2=A0		insn_aux[i].live_regs_before =3D mask_lo(in) | mask_hi(in);
+> > +		/*
+> > +		 * On architectures where 32-bit operations do not reset upper halve=
+s
+> > +		 * of the registers, the verifier needs to zero extend a destination
+> > +		 * register if an instruction defines a 32-bit subregister and the
+> > +		 * upper half of that register is alive after the instruction.
+> > +		 */
+> > +		insn_aux[i].zext_dst =3D def32 >=3D 0 && (mask_hi(out) & BIT(def32))=
+;
+> > =C2=A0	}
+>=20
+> [Severity: High]
+> Does this statically evaluate zext_dst before some instructions are dynam=
+ically
+> downgraded?
+>=20
+> If an ALU64 operation with a PTR_TO_ARENA operand is statically evaluated
+> here, zext_dst evaluates to false because it is still a 64-bit instructio=
+n.
+>=20
+> Later during verification, adjust_reg_min_max_vals() sets needs_zext =3D =
+true.
+> Then bpf_do_misc_fixups() downgrades the instruction in-place to a 32-bit=
+ ALU
+> operation:
+>=20
+> kernel/bpf/fixups.c:bpf_do_misc_fixups() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =C2=A0=C2=A0=C2=A0 if (env->insn_aux_data[i + delta].needs_zext)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Convert BPF_CLASS(insn->cod=
+e) =3D=3D BPF_ALU64 to 32-bit ALU */
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 insn->code =3D BPF_ALU | BPF_O=
+P(insn->code) | BPF_SRC(insn->code);
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> Since this bypasses bpf_patch_insn_data(), zext_dst remains false. Could =
+this
+> cause bpf_opt_subreg_zext_lo32_rnd_hi32() to skip injecting the required =
+zero
+> extension, leaving garbage in the upper 32 bits on architectures like s39=
+0x
+> and potentially leading to out-of-bounds accesses?
 
+Yeap, need to figure something out.
+
+...
