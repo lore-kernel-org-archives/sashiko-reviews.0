@@ -1,108 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7364F3AA1AE;
-	Sat,  1 Aug 2026 02:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9B23002CF
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 04:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785551418; cv=none; b=N/0TTAyU5jOSc4gvZwZZqUvYFl5drK+t9kGj33sDsHQDBfo4k/GPAiqfYuQzktIBSXmPa+ZiPInEvOiWhWg9o/OPqv3gP+41do2Y4oteRK7A1GjU3hsxxNyjmv8qYjJKIYPSWAKGvjzzZ8WI9sz7mb6W4DckwnsTuG8SAu5bltw=
+	t=1785558291; cv=none; b=MJzQ734wirxBG7oKo5+6YHrgz+D11dUR9w6jYGVk7Ak8KmFha0wJ9paLPxM/btRhY+jts00MEXK4xOq1yhAy4Ojc7c7HKWaQqNQC0/Kfq0RuqZ5pQAouGCX5HjcM5g/gsfMbIwy55gGeiHxg4+HCm10OFQmdp076xz3PmHZm0Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785551418; c=relaxed/simple;
-	bh=Rq0oBTe+Mcs5biEmmS9SrC3jXkeu48lEvrmGrGx/NQ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RN0t7aO4zTRUa538YH1Dp3IY2EOV5waJrWEig30igEbqyoA2+rYG0/QhnggeSF+vo59CQvOak63HJfDqdFVmv0Pff5ShX0M2rQ1FO/FSNVwM1VhXpTZv1BIT1kkpyINCiPdWF8dROoOMrXnbKM5osrSu3gQuz0zsEUa7/MzsGHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e9yYBGWw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785558291; c=relaxed/simple;
+	bh=lDYUDxP/lDGSCE6hDpFV3ABq3pHahiX/aPaGe7ihCyQ=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Yd8Sss/3FR+qsPlUfPxVdANy9NSqCbEOBIy5UdzRyHz1vObfNIgSuScpbqNl/Rcj5+6gV9JW6DSUUk6XH9edFYH0SGcOBmtGnXXvPGALcZ+WB/dBfrfiv478KleW1AEMEOKvfw3KtTxDrUubkx9pa/zuzO2zT/EFlNWMBEwwE6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NKZIqkor; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e9yYBGWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35E51F00AC4;
-	Sat,  1 Aug 2026 02:30:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785551416;
-	bh=3PHsBdYoVSlgCeOS6877ND0yWjnfwO/dHJ0X8pqb7Ro=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=e9yYBGWwynpwuqkVlhWTaVy4UxS2X98FgEIBOd7mx/7peLMRimi7Y/WdqpD9Ig8Cl
-	 qGmYCi4xM4d4X4z+75ZcZLxRDjiPKMGzCspurWXHM4D3nuGzYzd4/HPRKh8KgGh6oM
-	 C57i6ntAWE1067cNSsvzu3qbWE0v/z2Ieh5xclfyCFZeyiO6duI2zPhXZ2lpeKaeIV
-	 4MQc3s3Kg8wJhERMIB3Op8v8vpkuLFzOEkKwdJt8urANoBLUYXhelttlJpA5p92jQ9
-	 Hp3U5inVS2yYvsvYUTMKRJegIj0vifShohtD2z6Ry7kfdQLXoixPRxqlhACM9k6OL8
-	 MHdpH17NFzFGg==
-Date: Sat, 1 Aug 2026 03:30:13 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Joshua Crofts <joshua.crofts1@gmail.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
- linux-iio@vger.kernel.org, andy@kernel.org, nuno.sa@analog.com,
- dlechner@baylibre.com
-Subject: Re: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device
-Message-ID: <20260801033013.19ef2b2f@jic23-huawei>
-In-Reply-To: <20260728151559.000067ef@gmail.com>
-References: <20260727-mcp47a1-add-support-v2-0-d4591a2ce69e@gmail.com>
-	<20260727-mcp47a1-add-support-v2-2-d4591a2ce69e@gmail.com>
-	<20260727184226.DFC1E1F000E9@smtp.kernel.org>
-	<20260728151559.000067ef@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NKZIqkor"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2cc7e86e7aeso16898655ad.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 21:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785558289; x=1786163089; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=HtMpVhwDnG7mvnwmH5nBVScIT+ojmGeFtLmrnd9auNI=;
+        b=NKZIqkorUZppLWGabx/7MpsE+UaIbtHUPb9dlYyorddiGvOJEAXqu3uF1j65J2GWIf
+         VjunoKsvDZ4zG2dFpPY7EHYIODvi+0LmHW4m/WsbYaQke7IMexyBkQ8cLdy19VcBFmPF
+         w7h5B+VTfD7Z5e0cUmUWwPZS7+MEQDVHrNcTEw3t3TbYJSmOLJk/fBKrJgJRKQj0RRx2
+         lKKckD2ZhAEmrHVs72W2y/Z2TvWTltmHEtqHeIq+V+E7d6R+Vi0gUqBXmiTsbohZIR9Y
+         Spot6OhU3BUMYXIjhqACQCw/aHQRW/fbHnF7feMUg2b3zDymvgdr0+0j3p+amMU5K3yP
+         Datw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785558289; x=1786163089;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=HtMpVhwDnG7mvnwmH5nBVScIT+ojmGeFtLmrnd9auNI=;
+        b=DOGcLLNnQASviob3qRpQEqG2w9+xr78zLFdQ0y21kwGw+bDsEgG0X5ONDrEKvj2cmh
+         N+OmdWvctnN7tzoYh6ZYo/gVLT4sMuaf9WZ29KyktrxU9F1fU7+PZ30QbbvcOWZL4FBN
+         cBaWoOjFO/Q3B9U6ePXtEDpaUkk7CeHpdRoNowlAh+cXeMZRbqFyMXLd03bDOBibxSLj
+         eHtzWKsRW5iSqpw9mAnLVaNinHpTDlmh1LrSDHB9JaMBMLYO4tY4txPC44q2gBD4PCXq
+         ZF8/oZMJ9RwiBQ7WxgDn3jKDtbEzXeWoNtMHz/nceKxt8bBLsIO7gN1+ul72xZSdF0xb
+         Htlg==
+X-Gm-Message-State: AOJu0Yy8PJgeAjg8RapAPkXMU/sKPW2IH+Iauo2fuifEds2RUB60se5n
+	cKA16/stjDWQaMhOK1Y2YtBVutJI2Lvg+Ah+PKc4XX5SxEj9eqVElvJf0PePNzVc
+X-Gm-Gg: AR+sD13IxXbByjvuFbB8sSwPJ2syvjQNz2CVK5bDFoV9GxydmaB8R3e0mTeYZ/+1bzY
+	3mOXJm4lViptYkwL4yCrTusACGoxuewJ3n+9Jsfhn+uYT7nWC8ZU6ZNE0JqO4D68gdQt8ZTkb9e
+	zW0QnUl1bNXudO2aAz6hhfl6urvZSF6jVfvL0KHt+jBRbH4XZVQw2LNAI1V1KseupZcof7TBbm1
+	uX/1IBpBgHS7rUZ6vV2YZVYPhonZFpqUFQ/GZthtmdPpZGlGu2xIIT/oqLp8SqkU5DZ5+zNDEAm
+	t26P2gPGiSQiO63j4GMcyyZGVxNwcZ0vd9QGNumKnHEiKeX79JxWLEEZF6y7XpsHv8DU9STSJyE
+	oOcy6JOC+LFe7hzzf66xHbcM9BVQMoei6QWnCC1ePWVAkW4yogksm9DDD7P30aHASD2LEO6pq/U
+	hPpwncUGu2C2kucEhFDk87Y1KCXp0TtpfvBPHY4q+5oVrdQ1pqfUfzkAHVH2aqjYOM4RERqctwr
+	i2qtJ+a87H67Yzy
+X-Received: by 2002:a17:903:3843:b0:2c6:a012:6241 with SMTP id d9443c01a7336-2d05219f33fmr24041995ad.6.1785558289372;
+        Fri, 31 Jul 2026 21:24:49 -0700 (PDT)
+Received: from [192.168.0.13] ([38.34.87.7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d04b0eb486sm13303955ad.53.2026.07.31.21.24.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 21:24:49 -0700 (PDT)
+Message-ID: <2f158b4b9df959e604edc14603a23782ffed9bed.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v2 5/5] selftests/bpf: verify zext_dst
+ annotations for various instructions
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Date: Fri, 31 Jul 2026 21:24:44 -0700
+In-Reply-To: <20260801013321.6ABC51F00AC4@smtp.kernel.org>
+References: <20260731-static-zext-v2-0-da4aa161e8c5@gmail.com>
+	 <20260731-static-zext-v2-5-da4aa161e8c5@gmail.com>
+	 <20260801013321.6ABC51F00AC4@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-10 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
 
-On Tue, 28 Jul 2026 15:15:59 +0200
-Joshua Crofts <joshua.crofts1@gmail.com> wrote:
+On Sat, 2026-08-01 at 01:33 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Missing bpf_testmod dependency check in test_verifier_zext, ca=
+using spurious test failures when the module is not loaded.
+> --
+>=20
+> --- Patch [5]: [PATCH bpf-next v2 5/5] selftests/bpf: verify zext_dst ann=
+otations for various instructions ---
+> commit 9e656f5e6b04a69526327df6f70d8c362d02d3d4
+> Author: Eduard Zingerman <eddyz87@gmail.com>
+>=20
+> selftests/bpf: verify zext_dst annotations for various instructions
+>=20
+> This commit adds a suite of selftests to verify the verifier's zero exten=
+sion
+> behavior across various instructions and state pruning scenarios. It cove=
+rs
+> cases like 32-bit and 64-bit operations, atomic instructions, kfunc param=
+eters,
+> and CFG edge cases.
+>=20
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/verifier.c b/tools/=
+testing/selftests/bpf/prog_tests/verifier.c
+> > index be97f6887f0e7..fba562c819691 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/verifier.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/verifier.c
+> [ ... ]
+> > @@ -277,6 +278,7 @@ void test_irq(void)			=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 { RUN(irq); }
+> > =C2=A0void test_verifier_mtu(void)		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { RU=
+N(verifier_mtu); }
+> > =C2=A0void test_verifier_jit_inline(void)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { RUN(verifier_jit_i=
+nline); }
+> > =C2=A0void test_verifier_ctx_ptr_param(void)=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 { RUN(verifier_ctx_ptr_param); }
+> > +void test_verifier_zext(void)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { RUN_TESTS(verif=
+ier_zext); }
+>=20
+> [Severity: Medium]
+> Since verifier_zext.c calls bpf_kfunc_call_test4 (an extern kfunc from
+> bpf_testmod), will this test fail spuriously if bpf_testmod is not loaded=
+?
+>=20
+> Should this check env.has_testmod and call test__skip() before RUN_TESTS
+> to gracefully skip the test when the module is unavailable?
 
-> On Mon, 27 Jul 2026 18:42:26 +0000
-> sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] Potential off-by-one in DAC scale calculation denominator.
-> > --  
-> 
-> Responding to Sashiko's comment.
-> 
-> > --- Patch [2]: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device ---
-> > commit 38bec2fbb020c3f749c52a26e5cc3e78e72eeaf5
-> > Author: Joshua Crofts <joshua.crofts1@gmail.com>
-> > 
-> > iio: dac: mcp47a1: add support for new device
-> > 
-> > The Microchip MCP47A1 is a 6-bit volatile Digital-to-Analog converter
-> > which communicates via I2C.
-> >   
-> > > diff --git a/drivers/iio/dac/mcp47a1.c b/drivers/iio/dac/mcp47a1.c
-> > > new file mode 100644
-> > > index 0000000000000..140e93ff2ba01
-> > > --- /dev/null
-> > > +++ b/drivers/iio/dac/mcp47a1.c    
-> > [ ... ]  
-> > > +static int mcp47a1_read(struct iio_dev *indio_dev,
-> > > +			struct iio_chan_spec const *chan,
-> > > +			int *val, int *val2, long mask)
-> > > +{
-> > > +	struct mcp47a1_data *data = iio_priv(indio_dev);
-> > > +	int ret;
-> > > +
-> > > +	switch (mask) {    
-> > [ ... ]  
-> > > +	case IIO_CHAN_INFO_SCALE:
-> > > +		*val = data->vref_mV;
-> > > +		*val2 = MCP47A1_MAX_STEP;    
-> > 
-> > [Severity: Medium]
-> > Does this code use the correct denominator for the scale calculation?
-> > 
-> > Since this is a 6-bit DAC, shouldn't the scale denominator be 64 (2^6)
-> > instead of the maximum step value of 63? Using MCP47A1_MAX_STEP (63) here
-> > introduces an off-by-one error that could cause userspace to calculate
-> > output voltages with a ~1.5% LSB scaling error when reading the sysfs
-> > attribute.  
-> 
-> Yes, the max amount of steps is 64, which should be passed here. I'll
-> add a separate macro for this in v3.
-I'd just use + 1 at this location given the clear relationship between
-the maximum value that can be taken and the number of steps.
-
-> 
-
+Idk, bpf_kfunc_call_test4() is used by the test progs/kfunc_call_test.c
+prog_tests/kfunc_call.c, which itself does not check for env.has_testmod.
+I don't think we enforce this rigorously, nor that we should.
