@@ -1,152 +1,97 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A2C34C806
-	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 05:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D01E30E0D5
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 05:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785562136; cv=none; b=MeuFdk3e3Y4WWEwhrX77O4aNMj2hWHDDBAKPoUAKNofH9G5sdhNa63EFwbieQL1890Jz7aqYhCTDZG2Bu1ugReVIJut9ezFfdl3JxwSHXdx724+WHa3qtj5ZQCNnKBEobH58eI5PRId3Tu43+PkUM6uOfWp0KTWsOoaIAflOtVM=
+	t=1785562621; cv=none; b=CHseC6jJ3FW6IMV743EVJb4RT3/7sVjkYMKNoH3x2XQciWSbMrwB46iclSdEaZyhf8WtITsRZ8z8Rfpt+AUsv0wdXODLVLvLKezD+P99R6W9cZ+Qv482KCM/fdQhZdJw/l6mWHHpqjc1hPLp7XVAmkAZebf6XE7DSOqJ8el8AZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785562136; c=relaxed/simple;
-	bh=NKRiEWM7OmBlcThohq6rD6o3xFY86H5i1xR06buE38k=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ym5cCLYysPkChS789Tp3dh9QW49yrE4NpXa0A4PZXqsDPd++9sxTiuUluae/sihUvJ75Xzmq43UNQlVbwFdt9bJzjmTnh+DlKe6vpdnOhPTGWfkTW1QG7xhelUHqMRbFB2OF8GdrnUBGe6p9HByPCDuEViL86UMS0GqMXgfYt8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qZT1ehbo; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785562621; c=relaxed/simple;
+	bh=59nG9aVpiGe8WTx4v24lBgoYq+SAlcJNegUoQ14KnOQ=;
+	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
+	 References:In-Reply-To; b=iG2sJNaPvW77Puid6ylmjN98eh4MXzA8iA17IbJO+GJlISbB0bvTEWDqEIno+27iVNP0+5rXRtdqXexTevOuKX0UKedpjLEV2nV8IV30IxNggaH4+hyE9X0roUeUzpVBfzyNZgI1HkUPjoY2TOnZfslAW/0IuPaLC4bOhWVJzzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=Go6ondOv; arc=none smtp.client-ip=162.62.58.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZT1ehbo"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47f752b3423so1493227f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 22:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785562133; x=1786166933; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=VGWLDg96xg9X2R8tFVFYr1K1sw/dzYhsye3xehVIvdQ=;
-        b=qZT1ehbo8L8MKD9sblqbT/WT9s/j1lmPa4nnV9Otc9Wt08997+dyyotuzk2mPbE4EE
-         GRo22iKMRuwAIYv084lDBcNe1pUuXE19cpXeS7CR9O1QHTqu0FUy2ov6+jma7AqB0ldi
-         R/UpV8zULpjAcSDl0ph02sQ96SmL3xzfFDoCRgrpfJqSopTsQvDoMDH2k+ByaVAeQYvj
-         4cKaW/KBQKmQSgjFuGiTmm5K9hpGPxk/G/V3T4slR478uzhwToPzC2z2dKq6td021uSF
-         0Jep8PBPZQbyrHvuxnQhlFtrJsBiy81qhsp2qJFj/CzPTwxKkpRF7JbR8C/IcZzsFBxx
-         qnAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785562133; x=1786166933;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VGWLDg96xg9X2R8tFVFYr1K1sw/dzYhsye3xehVIvdQ=;
-        b=VYT1tp7ov3HOS+HOA6Es8gbK4ZGvjaOfujBXQ+y5n/ETczl6xkXhw16Cy5S8HyDwrJ
-         1BsiugCKwIm+eQ6w6PJdyQjyvb5hD8FySLyIdnw8L2uI9zSEz6cbey8p7EIPu/76cKlo
-         EhzP4oJywkQR9dDrFkDEDDfFo8O0BaWKj213N501wnYGRnA80KxSIwzOUHCQne1G9DyL
-         Zijb2bpMSbDq4wYGIXvl8FFAfWz06p0ZGDMAkkDcs3cSsKS8qTXZWCp/deiDnNu1H/Rz
-         bVQ74du2jUQFHhjvR0v86tOD/VJnhFP6fvHqZqSjQLjWQDa5eBPwGGpoZOEk09inOtWD
-         vKzg==
-X-Forwarded-Encrypted: i=1; AHgh+RoAfspLpyZEgIeBHCZw6n7BIe2njDwWlEHe76EHJ50l7A0DQu63gpNtqkXJtMLFxZJachwcbPNRR3PkzFXEOZc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJuRvooLiaX7HYeiVBoXZndD93McUN1C6cU5c0aOwxvh9a4gk1
-	XAdJKyS3Du8Ppo1MX+jwQK6tGW0bL5wVoidSnnubTg0X/9t9YcvuHcpI
-X-Gm-Gg: AR+sD13iP2VIWcfU9jqBRPrcwMm+kHCepPjQnBT+nFdBSoOd/Ajd/UliIFO73bJXY5S
-	IRIgIYuzy0aSxWXKIyhl9vWSRiVKqsrm3yAYPM8M/NbyUDBqufb2gI47qRxoXUpW8SgW/lfw880
-	AXgq6f6zkbw+vAo5Hp4SIK1wGMtmRJ6Jwur+n9MCesU6aJQ10FjfX66NeuMOV0lFOcWtQMLUU+5
-	WFVqrJ2a5tc/++riKCbAn03iXgmxJhOc1hksCgxChZuWX2MtmiF/6ifwNVSdbnGTCydQxr/0GdB
-	bmujrjllj/4PwScZmhNsEg+xbONcXctXQ8fRk/q0ByXIYxqsHBQoF6aKIlcgrxQbxkD6FUQfOke
-	ng20MjvI/JB6gHNgi8nvq+iV+ZXJOqZrf+kZuQQqu2bfBLjmrJ3sRgrcTD6AW5IYabuP1I1ruyR
-	oyPPH0fgZ93ePA47ss70O4Z5Z6twrbVqyJIDMdmyqkCFD5jUNO0PuzxSZhTF+PUYsswCq+390rY
-	pnN499UrC3G8JU3epe4VvPEUOF6ZxYDEty6ixxEpbEQrNikc3yCSn+xfhcFvZzrHHPfDX0ARraf
-	++MDH9cAgEt8mUd2u6uLvMxLiqTQ5Ls1lZSuNTHont3LfC8IoDNpVq3PtP1aVIs0Relk8hgVczC
-	f95m5sikrlDL5QS9YMLfN4wNS6rpPCaBC7mtHyJoMHLsZYYg/xNj6NEImdyS7XQQ=
-X-Received: by 2002:a05:6000:1946:b0:47f:56f7:7a57 with SMTP id ffacd0b85a97d-47fd7309159mr3519771f8f.28.1785562132890;
-        Fri, 31 Jul 2026 22:28:52 -0700 (PDT)
-Received: from systembl0wer (109-81-110-164.rct.o2.cz. [109.81.110.164])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd41e2484sm13028897f8f.11.2026.07.31.22.28.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 22:28:52 -0700 (PDT)
-Date: Sat, 1 Aug 2026 07:28:50 +0200
-From: Joshua Crofts <joshua.crofts1@gmail.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
- linux-iio@vger.kernel.org, andy@kernel.org, nuno.sa@analog.com,
- dlechner@baylibre.com
-Subject: Re: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device
-Message-ID: <20260801072850.6f5d255e@systembl0wer>
-In-Reply-To: <20260801033013.19ef2b2f@jic23-huawei>
-References: <20260727-mcp47a1-add-support-v2-0-d4591a2ce69e@gmail.com>
-	<20260727-mcp47a1-add-support-v2-2-d4591a2ce69e@gmail.com>
-	<20260727184226.DFC1E1F000E9@smtp.kernel.org>
-	<20260728151559.000067ef@gmail.com>
-	<20260801033013.19ef2b2f@jic23-huawei>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="Go6ondOv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1785562614; bh=59nG9aVpiGe8WTx4v24lBgoYq+SAlcJNegUoQ14KnOQ=;
+	h=From:To:Cc:Subject:Date:References:In-Reply-To;
+	b=Go6ondOvX2h05y5eGlj0QFw/gjVjrs0dGEEDAsHT7u9naoHiDmmX5rj7NAogdw6T7
+	 lTVvjqsfr0odWuss9B++KSY3iYhc4CtLqhkklbX2tFy9q9zXAJWG2TRRa9zF00UxAI
+	 wNynee0A1kW+RnWytn9kZs3jV363fcXnUSzEXTFk=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-XMAILINFO: NWthGbMT/5RHpdKC/bezqCfGvA53eNNAETF/3fVGRxt+Iy5rTD1nG897rlS7ag
+	 P+nDsx+b4QCuSz5pBKvNg6kHrhlm6qp+Qxo3Byf76xSPSLqGObSunOI/gwX3Uv1u2xz4zi+4o7uqx
+	 ZIXMUVtUhzg9IJqayt3lSPkwyhxCXMgf2kCR/aiRNRqvBetlCAionr8BPal2FYG5rCPgbywH7SENU
+	 Cb4WC2AYxy2rLM+9uoGlx4gPGvAxIgaGEBI215tnNYVSt7AkDP2t/U4FW0yKBndgj7sx2U7q1Q6cV
+	 Ar6CexAJdALjUtblB7MnAkEzpoHK8hQhVn3OG49hxygSEGDNYQScpJ31WXKUl36uT9t4Kyuiu1kXp
+	 XCBO1TUaj3IR4wYLh5WKODzZiDynX22sKkQAvRvIzozmk933S/oFBCriUsf8YIrqs1APp25qt2b/t
+	 O8r4r9JNiDev0ICffpMjKfTetffByU+FX6IR2/zqxqAqHfLSjNznKwuZBOhUcNSJlA7/IoTg08Xo1
+	 QnfL3SOR3Ck67aPseB3iNHSXUp6M8ucirEWv9kt5kvs76u1NreLMml2XKIO9GbHnk7pnCA4FwBlu+
+	 sEfKcmwwDMYiciRNST2ObN+X+0MX8eyKdJzk4tw8Wvg0YlEkw+7G0RHhDYn3qYbZbUhDon1/uzmiB
+	 O8+Xm7Tr9eZKBs2EDdBfxcEUiPs63haWA5TVCH+mL+aeQVnrwV3N3vYi3+TcWqgT9E3SiqCCmQj9R
+	 Onx3SDM7XmyIYwRkB6Z2LtAMR1UknoZvlzwIpbiPnYPnbaHZ291NCT4HC1DTZ+jTkckkXK88c6y78
+	 XKSFP/Mu0HU0RIE5E0CpvXYRqlP8fiEdnb3YMGs+g1yjb2LJXoc/3+po09Ax+JKl8KIsNcyN5q/LF
+	 7bVYznw1zOAAlvgqhbtYcMTdq4XnzgUIQ8TcPj7J2L6fYxUknYLQxq9ao7YJFfEjSDEjR+hA/+F06
+	 a56wbjr6WYjvk0BXfJPBeHMujBWsZEIj4YVcpm/4tmgpuXKrEDDTqwpmQ44ufbJvn+Q40MscI+jbj
+	 Frtv0t3FsD0eLZZ8PwTk5mRRikIYbpPPbesnQEUtN4ttg6moCAfZu6DJ57GqGz9jLVn144wijcQ8j
+	 Tc5oPKp40etKKQ==
+From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
+To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
+Cc: "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>
+Subject: Re: [PATCH v5 1/3] can: rockchip_canfd: prevent TX stall on echo skb failure
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Date: Sat, 1 Aug 2026 13:36:52 +0800
+X-Priority: 3
+Message-ID: <tencent_9C071822E2F9F135F1D2FCCA4C25488C240A@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <20260731-master-v5-0-5b27029dee20@qq.com>
+ <tencent_C82C09E7235101CC88A97E154D2534183208@qq.com>
+	<20260731105402.B7A451F000E9@smtp.kernel.org>
+In-Reply-To: <20260731105402.B7A451F000E9@smtp.kernel.org>
+X-QQ-mid: xmsezb41-0t1785562612tam989e4v
 
-On Sat, 1 Aug 2026 03:30:13 +0100
-Jonathan Cameron <jic23@kernel.org> wrote:
+SGksCgo+IElmIGFuIEVUSF9QX0NBTlhMIGZyYW1lIGlzIHNlbnQgdmlhIEFGX1BBQ0tFVCwg
+Y2FuX2Rldl9kcm9wcGVkX3NrYigpIGN1cnJlbnRseQo+IGxhY2tzIGEgY2hlY2sgdG8gZHJv
+cCBDQU4gWEwgZnJhbWVzIGZvciBkZXZpY2VzIHRoYXQgZG9uJ3Qgc3VwcG9ydCBDQU4gWEwu
+Cj4gV2hlbiBzdWNoIGEgZnJhbWUgZW50ZXJzIHJrY2FuZmRfc3RhcnRfeG1pdCgpLCBjYW5f
+aXNfY2FuZmRfc2tiKCkgcmV0dXJucwo+IGZhbHNlLCBjYXVzaW5nIHRoZSBkcml2ZXIgdG8g
+dHJlYXQgaXQgYXMgYSBDbGFzc2ljIENBTiBmcmFtZS4KPgo+IFRoZSBkcml2ZXIgcmVhZHMg
+Y2ZkLT5sZW4gZnJvbSBvZmZzZXQgNCwgd2hpY2ggaW4gYSBjYW54bF9mcmFtZSBjb3JyZXNw
+b25kcyB0bwo+IHRoZSB1c2VyLWNvbnRyb2xsZWQgZmxhZ3MgZmllbGQuIEJlY2F1c2UgdmFs
+aWQgQ0FOIFhMIGZyYW1lcyByZXF1aXJlIENBTlhMX1hMRgo+ICgweDgwKSB0byBiZSBzZXQs
+IGNmZC0+bGVuIGlzIGV2YWx1YXRlZCBhcyBhdCBsZWFzdCAxMjguCj4KPiBDb3VsZCBhIG1p
+bmltYWxseSBzaXplZCBDQU4gWEwgZnJhbWUgdHJpZ2dlciBhIGxvb3Agb2YgMzIgaXRlcmF0
+aW9ucyBoZXJlLAo+IGxlYWRpbmcgdG8gYW4gb3V0LW9mLWJvdW5kcyByZWFkIGZyb20gY2Zk
+LT5kYXRhIGFuZCBhbiBvdXQtb2YtYm91bmRzIHdyaXRlCj4gdG8gZGV2aWNlIG1lbW9yeSBh
+dCBSS0NBTkZEX1JFR19GRF9UWERBVEEwICsgaT8KClllcywgeW91ciBhbmFseXNpcyBpcyBj
+b3JyZWN0LiBBIHZhbGlkIENBTiBYTCBza2IgY2FuIHBhc3MgdGhlIGN1cnJlbnQgY29tbW9u
+CnZhbGlkYXRpb24gYW5kIHJlYWNoIHJrY2FuZmRfc3RhcnRfeG1pdCgpLCBldmVuIHRob3Vn
+aCB0aGUgUm9ja2NoaXAgY29udHJvbGxlcgpkb2VzIG5vdCBzdXBwb3J0IENBTiBYTC4gVGhl
+IENBTlhMX1hMRiBiaXQgaXMgdGhlbiBpbnRlcnByZXRlZCBhcyBjZmQtPmxlbiwgc28KdGhl
+IGRhdGEgbG9vcCBjYW4gcmVhZCBiZXlvbmQgdGhlIHNrYiBmcmFtZSBkYXRhIGFuZCB3cml0
+ZSBiZXlvbmQgdGhlCmNvbnRyb2xsZXIncyA2NC1ieXRlIFRYIGRhdGEgcmVnaXN0ZXIgd2lu
+ZG93LgoKVGhpcyBpc3N1ZSBwcmVkYXRlcyB0aGUgY3VycmVudCBwYXRjaCBhbmQgaXMgaW5k
+ZXBlbmRlbnQgb2YgdGhlIGVjaG8gc2tiCmZhaWx1cmUgaGFuZGxpbmcgYWRkcmVzc2VkIGhl
+cmUuIEkgd2lsbCB0aGVyZWZvcmUgbm90IGZvbGQgaXRzIGZpeCBpbnRvIHRoaXMKcGF0Y2gu
+IEtlZXBpbmcgdGhlIGZpeGVzIHNlcGFyYXRlIGFsc28gYWxsb3dzIHRoZSBDQU4gWEwgdmFs
+aWRhdGlvbiBpc3N1ZSB0byBiZQphZGRyZXNzZWQgaW4gdGhlIGNvbW1vbiBDQU4gdHJhbnNt
+aXQgcGF0aCwgc28gdGhhdCBvdGhlciBub24tQ0FOLVhMIGRyaXZlcnMgYXJlCnByb3RlY3Rl
+ZCBhcyB3ZWxsLgoKSSB3aWxsIHByZXBhcmUgYW5kIHBvc3QgYSBzZXBhcmF0ZSBwYXRjaCB0
+byByZWplY3QgQ0FOIFhMIHNrYnMgd2hlbiBDQU4gWEwgaXMKbm90IGVuYWJsZWQgb24gdGhl
+IHRhcmdldCBDQU4gZGV2aWNlLgoKVGhhbmtzIGFnYWluIGZvciB0aGUgZGV0YWlsZWQgcmVw
+b3J0LgoKQmVzdCByZWdhcmRzLApDdW5oYW8=
 
-> On Tue, 28 Jul 2026 15:15:59 +0200
-> Joshua Crofts <joshua.crofts1@gmail.com> wrote:
-> 
-> > On Mon, 27 Jul 2026 18:42:26 +0000
-> > sashiko-bot@kernel.org wrote:
-> >   
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > - [Medium] Potential off-by-one in DAC scale calculation denominator.
-> > > --    
-> > 
-> > Responding to Sashiko's comment.
-> >   
-> > > --- Patch [2]: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device ---
-> > > commit 38bec2fbb020c3f749c52a26e5cc3e78e72eeaf5
-> > > Author: Joshua Crofts <joshua.crofts1@gmail.com>
-> > > 
-> > > iio: dac: mcp47a1: add support for new device
-> > > 
-> > > The Microchip MCP47A1 is a 6-bit volatile Digital-to-Analog converter
-> > > which communicates via I2C.
-> > >     
-> > > > diff --git a/drivers/iio/dac/mcp47a1.c b/drivers/iio/dac/mcp47a1.c
-> > > > new file mode 100644
-> > > > index 0000000000000..140e93ff2ba01
-> > > > --- /dev/null
-> > > > +++ b/drivers/iio/dac/mcp47a1.c      
-> > > [ ... ]    
-> > > > +static int mcp47a1_read(struct iio_dev *indio_dev,
-> > > > +			struct iio_chan_spec const *chan,
-> > > > +			int *val, int *val2, long mask)
-> > > > +{
-> > > > +	struct mcp47a1_data *data = iio_priv(indio_dev);
-> > > > +	int ret;
-> > > > +
-> > > > +	switch (mask) {      
-> > > [ ... ]    
-> > > > +	case IIO_CHAN_INFO_SCALE:
-> > > > +		*val = data->vref_mV;
-> > > > +		*val2 = MCP47A1_MAX_STEP;      
-> > > 
-> > > [Severity: Medium]
-> > > Does this code use the correct denominator for the scale calculation?
-> > > 
-> > > Since this is a 6-bit DAC, shouldn't the scale denominator be 64 (2^6)
-> > > instead of the maximum step value of 63? Using MCP47A1_MAX_STEP (63) here
-> > > introduces an off-by-one error that could cause userspace to calculate
-> > > output voltages with a ~1.5% LSB scaling error when reading the sysfs
-> > > attribute.    
-> > 
-> > Yes, the max amount of steps is 64, which should be passed here. I'll
-> > add a separate macro for this in v3.  
-> I'd just use + 1 at this location given the clear relationship between
-> the maximum value that can be taken and the number of steps.
-
-Good to know, for some reason I thought that this type of stuff was
-discouraged (MACRO_NAME + x would seem messy in most cases).
-
--- 
-Kind regards,
-Joshua Crofts
