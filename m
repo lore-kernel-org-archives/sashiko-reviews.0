@@ -1,200 +1,127 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B7A2F8EA3
-	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 08:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.21
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785572666; cv=pass; b=QQ8S0M0OxFbJ2CFkFYFrOVqMRvE00Y8wfiQo70GkQbObU+GYOrQDWbRkZZfXgztsnVmt/qtPuO0pVeO+5TWUG0qcmzZFrDZuKJaZDZludAHBuhgqTKZ7GNKytnCLAvsfWPIzKrgLMkGDMPJ51MKvNsQ0lP9TBz778azR71bWNS0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785572666; c=relaxed/simple;
-	bh=n2iNb42lmW71fTbBEa0+d7FMOSDGJxaHQlHxUh7L/bk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n2aRP4Nn05SjU7pdEolKDVKKwgYnLi6AOou6fdDK5WfLGM3LOS+0wg/vmJWjPp2KZokicyvTL3sdgaNfp1ZKxOQxWSwUC9CVhX9DOeCXO9rRRx31KOTmCSOqhRizi08QWPYGqPY7FeRFWc9EOGOEri23Ja8nYpywnVDPF4JyygA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=QMiOP/o+; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=2IHf4+84; arc=pass smtp.client-ip=85.215.255.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B7D30D40C
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 09:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785575559; cv=none; b=aiQtM7cAxWyMgelw6VvG/BaTEOTlsd0lExvxhtH+Mwe3+twvWmRxWZb3gnhlQxzl9/dtq6fw99KpxnMQKw46MkIs5QKpgGvDjcbnazAGdAZRiEEyVU6V4MroxvEcK4S+OD6/N4SxF6EboLgCIFsfweG0jmwY5kmWqzQ5OIYzK5U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785575559; c=relaxed/simple;
+	bh=WtKwboX1I6TACBp1mPchjcTdLWsllHrSvbiZnJsT49c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aJyTxdera6MSM8m64EjULcBLo9aJlialls983oGdRP6g0CIZR2ezfEezogXmXW1xVSEPn9hD0a7ItvyYeW1kWDAx1bQ5B6XB84803fD/oST6N6MO/+/OQjBpKhVdK2WkpGzAcvNX6jlMCZ9gowYv2f5Y738XGQ9Zb0Wgy7XCQHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr; spf=none smtp.mailfrom=isslab.korea.ac.kr; dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b=oa9auxww; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="QMiOP/o+";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="2IHf4+84"
-ARC-Seal: i=1; a=rsa-sha256; t=1785572291; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=g0byZn5xyMrWShEeZ32Qts9rITA9W81HQB/SBRA3Cgw2SFMbxaUyPkpk8YSKAmO1EG
-    09irRkwIMh8z7xSB3zldHvyppWzFJuSfSeo/eNuJi28ObG8lxMH7cAMuSG3RN1Vj+7DL
-    aUU6WLXbSnwe23NWsCPttzI2kc0EZkAxiJPZ+8eTp6q7WgArxvHwNR7w1VArxuXFukZ4
-    tS53GB4KT8FXKSy9L8/xycJD/TzVCmbJKA9TmmbC4Lqu7KFZt72hFiQ8K4aJPmvHwVlc
-    WJoV3RlYUK+KrpBLe6LoreJB8/g4gn+m/3RtQuMJ0u8Fij3dLHYj9lxYVJP6YKse8Jmr
-    NRdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1785572291;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=UzFY907uNcf6cMJlWc5IWHFja+Y78bUMwJOMUf/yOsA=;
-    b=KT07LpuwTt2nxUBx2bpyZLN3yAGtXcm/qsoCZD37H3d+nEUyodnEi7iSOh0rbalPIs
-    65TkvE40DkYgudeWqr9mQHGTajFiVcCskkYmRSX5OVL/my+rlR188m++UVXQrjVDZWDs
-    bEt1eCM31wXE36bA3jdm9cAH5EJ0nIDk4RwrgObxQJ5lQpVywnXXc/H+aGi9B/qHS4uk
-    3ixxp35xE+wE7IubENdOrpktENFZ+/Fpme+EP2x5mKspH06KqPrFx2X+kYxu0xSyGiAH
-    UXGm6RccTgpdpcatgCg8Yr55d4sNvvvM8Rm9Md0Ysi4TgXxq04g7sbnDvSQN5welCfTL
-    yZTg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1785572291;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=UzFY907uNcf6cMJlWc5IWHFja+Y78bUMwJOMUf/yOsA=;
-    b=QMiOP/o+vA4QErC39/qREX02IIZKMF7kfNyc0quMTZyXjoPbm9leuvJ4NJ1SMnwoZj
-    EzseoVZbzMtPpnwXb8v3cKVIXTpEggLZWgSAw7UEL80lw9dP1Prhqqx32VbZ43voY585
-    qk3B+abnEe/tP7Js4dlItwhKlTRRdCAii5PHCGMHNE8JnrXe4XmO4rnC1m09vD792ryz
-    lET8EGQXj7YNFiL+SudvgIDh0KXeO6TqgEDbRJVEEFlIYaPLAsAOLolceAvUWVulu4QJ
-    UnlOAv7nB7Iq3JHc5r/coFh59tqsmiywCdEFzYAXy8t3CQaq97NWK8nuX7KUn+1/dukm
-    KAmw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1785572291;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=UzFY907uNcf6cMJlWc5IWHFja+Y78bUMwJOMUf/yOsA=;
-    b=2IHf4+84xXkqWiRuxTA0n+rArVx9g8c07IzXwV0cOK5vEOP79UA+IoSK/NcpWOmjci
-    xiy3GuZdRQ/WdEaemlAQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tRkI16oOSW1Ti/f4PoH8="
-Received: from [192.168.20.231]
-    by smtp.strato.de (RZmta 55.5.6 DYNA|AUTH)
-    with ESMTPSA id K528192718IAhWH
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Sat, 1 Aug 2026 10:18:10 +0200 (CEST)
-Message-ID: <ac22b59e-129b-4883-b9c6-da5e69e4078d@hartkopp.net>
-Date: Sat, 1 Aug 2026 10:18:05 +0200
+	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b="oa9auxww"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cc7e86e7aeso18125975ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 01 Aug 2026 02:12:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isslab-korea-ac-kr.20251104.gappssmtp.com; s=20251104; t=1785575558; x=1786180358; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=diW7eq1K5OgM1EddS3mEle0ywoNtUEUmAHB/nUoYXXI=;
+        b=oa9auxwwTTWupsDZz/90efEffmKd5GTngd6TFltqoMEBkoxWY+fYszjQYb/fIj9inE
+         ZhM1yNZ+rFK1K5SK4Gym1uvPFdbSJs7+nsFCpyj/IGhP2Pp5s+IWHBaUxtJYuJp4SsK/
+         4HlHPUClUg/s05Fz8hh8tNpPvo3BkRY+CsHze6lkN6Op74Ff/BJxBMfmbqBwAZK5K3Hb
+         jopsSl0P7G09qGhxGbwBL9lu9LwT+OqpJR+mcYLbyky8Etaqcie19PMMNIsQLg+HuHfi
+         3ZpJ0wqbiC/3uqEL/WFAow2MVujPNHJ+ThgvtTTi7d6J6ZviyLSDSnxOdJF3OwsKJdcJ
+         UcxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785575558; x=1786180358;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=diW7eq1K5OgM1EddS3mEle0ywoNtUEUmAHB/nUoYXXI=;
+        b=X5I4QORW7it9kua2T8ISdSiMYTlWOdf0+tYcoxmK5lza77TtQ2yvgkDpnPZ0p5VJFX
+         +MdFgueYAZWul2HVqSzXCR1YSsLzJaMQ9UBUzbOamOOrUv/t0l9A2K7To6404vC7OEDv
+         trySk773ZYCHlV10eKqqnAO6ROUqe18C1uiyh+NIiwsk99L/Zp3Q4tMHOJd66e/aq/W4
+         jgBDHAkVb4luI18zDBtk58hHMOHgoyIMF6R3tD0USWCdm77EztVMjVYoBWDdUz21J3nw
+         pnD5q7QU1jFFartW8vsS24hoVQLdwURvH4YczaF8Um/mr1CCWzYGmQNtp7exuMl6KLXn
+         Hg6Q==
+X-Forwarded-Encrypted: i=1; AHgh+Rp3rvmuZJ21ghKm+Avcud0PTBdLBagCKGTOVv6bAoUOldIzvefPxFrU9NwgAmpzk8x0WpdAd8e0D/lNH57p+tg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzwmJS6x7+GrE6Au8S8gBPWRUAxCRsLbVV+cHolqAhflICRPaY/
+	T6uBPHnyg8Agco+6DYVh/FmvQ+s1HD+GoSEcXZ9iZHutDIo6CdMJOQc3zmb7Mc2HlZI=
+X-Gm-Gg: AR+sD101bI2K6mCzo3XZ49ruk6AwurUOfIyl2hmCFrEn4USQmc69oIQGr4ZPCsj+RCo
+	4sidqQQm4zSYDcyD3jnCxm7Zp0Bg/hJWIEIzIrvyZC9Di9yKSiu97jIXIDnYg8tKIcUE4Bxv4y3
+	u/e/ywyhImb4FHg+3QK19QlAgFnR8AbDXI1VNXoyBJF9aevR4kJ/1c796SDE+naMIFXeBtJLuvL
+	2icRqEGT9FZyPh5kCGaNdcKah3kSgjuOwAn/uj/xjzZsVuNK4T+nEDsxABsyvHqUozG7SNZPgNN
+	PwlEaPbn7NPW395MfXC6aY8wAeGxEKetdUtt6jQQHPZAS4nemlN6tsCHte2Hr5ElOJdL5Bw6nf+
+	YTLbK7JdFnWYWGIXQB6DcFw1whGzxKtqBzQ7pSkXz52gtutmVS4j1Z5q/ipD97GAS4tjmgTKmsD
+	agM9z0Qa/1llUQEUyqeJT+6UbZnplbKpkf4R1SHb4vYk51HacbKK/9fnLyZDv8VtqJtz9fK3SgJ
+	CWGYRkA0sk=
+X-Received: by 2002:a17:902:ebc2:b0:2cf:bf32:b754 with SMTP id d9443c01a7336-2d05219f1cfmr29858925ad.8.1785575557981;
+        Sat, 01 Aug 2026 02:12:37 -0700 (PDT)
+Received: from localhost.localdomain ([2406:5900:1044:110c:c329:7b28:fe02:5dc8])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d04ae60139sm16175285ad.29.2026.08.01.02.12.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Aug 2026 02:12:37 -0700 (PDT)
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+To: alibuda@linux.alibaba.com,
+	dust.li@linux.alibaba.com,
+	sidraya@linux.ibm.com,
+	wenjia@linux.ibm.com,
+	kuba@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com
+Cc: Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	sashiko-reviews@lists.linux.dev,
+	horms@kernel.org,
+	mjambigi@linux.ibm.com,
+	tonylu@linux.alibaba.com,
+	guwen@linux.alibaba.com,
+	guangguan.wang@linux.alibaba.com,
+	kees@kernel.org,
+	gustavoars@kernel.org,
+	gor@linux.ibm.com,
+	hca@linux.ibm.com,
+	agordeev@linux.ibm.com,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net v4 2/3] net/smc: bound the peer rkey counts in SMC-Rv2 LLC messages
+Date: Sat,  1 Aug 2026 18:10:47 +0900
+Message-ID: <20260801091109.1933145-1-yhlee@isslab.korea.ac.kr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260801070548.365231F00AC4@smtp.kernel.org>
+References: <20260731070509.1818665-1-yhlee@isslab.korea.ac.kr> <20260731070509.1818665-3-yhlee@isslab.korea.ac.kr> <20260801070548.365231F00AC4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] can: dev: can_dropped_invalid_skb: drop CAN XL frames on
- non-CAN XL devices
-To: sashiko-reviews@lists.linux.dev, Vincent Mailhol <mailhol@kernel.org>
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org,
- Marc Kleine-Budde <mkl@pengutronix.de>
-References: <20260731-drop_canxl_frames-v1-1-7387b70353b3@kernel.org>
- <20260731164529.500821F00AC4@smtp.kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260731164529.500821F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+sashiko-bot@kernel.org wrote:
+> Does this early return cause a permanent protocol failure for devices
+> with a single receive SGE?
 
+The buffer part is right, but smc_llc_save_add_link_rkeys() does not
+read that buffer.  Without a shared v2 rxbuf its llc_msg argument is
+&qentry->msg.add_link, and smc_llc_enqueue() copies only
+sizeof(union smc_llc_msg) into the qentry -- 44 bytes, which is where
+the extension starts.  Same for the delete side.
 
-On 31.07.26 18:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] `can_skb_init_valid()` directly modifies `skb->data` without checking if the SKB is cloned or shared, violating SKB shared buffer rules and causing data corruption.
-> --
-> 
-> --- Patch [1]: [PATCH] can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices ---
-> commit 4602c4bbb604b601116708346040725e0603f25d
-> Author: Vincent Mailhol <mailhol@kernel.org>
-> 
-> can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices
-> 
-> Sending a PF_PACKET bypasses the CAN framework logic and can directly
-> reach a CAN driver's xmit() function. The PF_PACKET framework only
-> checks that skb->len does not exceed the net_device MTU.
-> 
-> For a CAN device that is not CAN XL capable, anything above CANFD_MTU
-> (72 bytes) is therefore dropped before it reaches the driver. However,
-> CAN XL frames are variable length. can_is_canxl_skb() accepts lengths in
-> the range CANXL_HDR_SIZE + CANXL_MIN_DLEN up to CANXL_MTU, i.e. 13 to
-> 2060 bytes.
-> 
-> As a result, an ETH_P_CANXL skb with a length between 13 and 72 bytes
-> can pass both the MTU and the can_dropped_invalid_skb() checks.
-> 
-> A driver that does not support CAN XL will interpret canxl_frame->flags
-> as a length because of the overlap with can_frame->len. And because
-> CANXL_XLF is set, the resulting length is between 128 and 255. For
-> drivers that do not check can_frame->len before copying can_frame->data,
-> as most drivers do, this results in a buffer overflow of up to 247
-> bytes.
-> 
-> Drop ETH_P_CANXL skbs if the device does not have the CAN_CAP_XL
-> capability. Keep can_is_canxl_skb() for the validation of CAN XL skbs.
-> 
-> Closes: https://sashiko.dev/#/patchset/20260731-master-v5-0-5b27029dee20@qq.com?part=1
-> Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-> 
->> diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
->> index 95fcdc1026f80..4f7a189de265d 100644
->> --- a/drivers/net/can/dev/skb.c
->> +++ b/drivers/net/can/dev/skb.c
-> 
-> [ ... ]
-> 
->> @@ -384,7 +385,7 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
->>   		break;
->>   
->>   	case ETH_P_CANXL:
->> -		if (!can_is_canxl_skb(skb))
->> +		if (!can_cap_enabled(dev, CAN_CAP_XL) || !can_is_canxl_skb(skb))
->>   			goto inval_skb;
->>   		break;
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking at can_skb_init_valid()
-> which is called right after this switch statement:
-> 
-> drivers/net/can/dev/skb.c:can_skb_init_valid() {
->      ...
-> 		/* set CANFD_FDF flag for CAN FD frames */
-> 		if (can_is_canfd_skb(skb)) {
-> 			struct canfd_frame *cfd;
-> 
-> 			cfd = (struct canfd_frame *)skb->data;
-> 			cfd->flags |= CANFD_FDF;
-> 		}
->      ...
-> }
-> 
-> Can this modification of skb->data happen without ensuring exclusive ownership
-> via skb_unshare() or skb_cow_head()?
-> 
-> If a local user constructs a linear CANFD packet via AF_PACKET, which is then
-> cloned (e.g., via TC mirred or BPF redirect) and queued to a CAN interface, it
-> seems can_skb_init_valid() will directly modify cfd->flags in the shared data
-> buffer.
-> 
-> Since the network core's validate_xmit_skb() does not unclone an already-linear
-> SKB, could this corrupt other users of the same buffer data and lead to silent
-> data corruption in unrelated code paths?
-> 
+I logged what smc_llc_fill_ext_v2() writes on the sender against what
+smc_rtoken_set() gets on the receiver, over rxe with max_recv_sge
+forced to 1.  Unpatched, the sender wrote four distinct rkeys and the
+receiver called smc_rtoken_set() 427 times, not once with one of them.
+With 1/3 and 2/3 the path is not entered; with 3/3 as well it registers
+six values, all the sender's.
 
-The finding about can_skb_init_valid() modifying skb->data on a 
-potentially shared buffer is not relevant for this (correct) patch.
+So nothing is lost -- what mainline registers there is heap past a
+72-byte kmalloc, which is the out-of-bounds 2/3 fixes.
 
-The FDF-flag write in can_skb_init_valid() only matters for PF_PACKET 
-use: PF_CAN allocators already set CANFD_FDF. The write exists to 
-normalize frames for PF_PACKET observers (tcpdump/Wireshark) so they can 
-distinguish classic CAN from CAN FD at the netdev level, and to 
-compensate for PF_PACKET senders that omit the bit. That normalization 
-is functionally required.
-
-The shared-buffer concern only becomes realistic through a specific 
-chain: a PF_PACKET sender injects a CANFD-sized frame, the CAN driver's 
-loopback puts an echo skb back into can_rcv(), and cgw (without 
-modfuncs) clones it for forwarding to another interface. Only on that 
-second can_skb_init_valid() call is the skb cloned. By then the bit was 
-already set on the exclusive skb during the initial xmit path, so the 
-flags |= CANFD_FDF write is strictly idempotent for any parallel 
-consumer of the shared buffer — no memory-safety or 
-information-disclosure consequence. It's a formal violation of the skb 
-sharing rules without an observable effect, so the current code can stay 
-as-is.
+The changelog is wrong to say "nothing beyond the 44 inline bytes was
+received": it is received, it just never reaches the queue entry.  I
+will fix the wording in a v5.
 
 Best regards,
-Oliver
-
+Yehyeong Lee
