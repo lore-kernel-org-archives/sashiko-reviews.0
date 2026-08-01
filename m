@@ -1,228 +1,182 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2BC337105;
-	Sat,  1 Aug 2026 16:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40691A5B9D
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 17:43:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785603423; cv=none; b=AmqYPaqox68DwDdsO3rZ4wjNBbTCWx21ILJIu/umgs3wKIp02oBNQsSTcrfVA+6xpVQa+wbSa46SCA3i4cG4FOx1a2QrXyLmHFzeI0+xh1SXQQ31Rtylg4gGPYvOXQxKMo/a+h718u89ev0hJPFu3OEfD7AEUb/YYWmrOXTbMqA=
+	t=1785606236; cv=none; b=rP5jQmpWRUd/7/nzn+3bNYCUpW/+15USkdhHOOIe8snJVbZgZn4bxe2marF5fr3Nm/oEn+h59lvuRMsc5TNXq5lzq7dw7twxBptZM8x/BH40mnt0Ooxflu5TPH4vUH9+BJQHMOGu0rFW4++x96EcmUWpE9qUxtO/A+6xfVKSKmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785603423; c=relaxed/simple;
-	bh=d+TTclD9SIWbHf6DvU0ahaB+5z46g21wSuI7omCyHnI=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PcvEDon9avTYcWYy+3W+qGsODMStyozWhbG6+yEVNHbDzzQAbRZsQFask7FR8X0eTfC0oTxFKw/1mWc5uvSXwAWk3B5Nw78usgHQFuEu1DV3uGDqLrhQ7inUPWpGlyM06t92UkCOrEW4yGgh0VOctAEUe7fG2YVq70VeZy4KKck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R4hUTV4Q; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785606236; c=relaxed/simple;
+	bh=PY8InaJHRFcc63/hbEXQx/vDtjSu+8gUmL+v1GZgJHE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UxQhjiCKliLegFwr3oqRl3eLLsK6usp2WUym2f6SXvBpLY9rNJXA+sNCTg8rdWN2RdniXqLrx5f/IU4SC+VQ1vyOuuU9PnFPoIBBRNqPltYbXGqXy9EkeN3LgI0yg/Ko2SVCzkwUQH0tU4EQUPJCZn7a1b9BiOIcCC/dPtfta/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mG7zWnqd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=I3jyXXwM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R4hUTV4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B881F00AC4;
-	Sat,  1 Aug 2026 16:57:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785603421;
-	bh=Kymd9GnLiiGDQY+sNKBHnxcjsiopYfYgyw9JAcg7YHo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=R4hUTV4QkfKl4gG77/QK4xfDNOLysOJurfAk8cJpNagHA0RQVosZ2jHg8Q1KeopJa
-	 IFVmdrWFRe5u4aNO3LLEim2GEb/7CWVULZoy02WBfH2OJBN+qUV4Tp+Q/Zg9oP6XoQ
-	 EhK6MDxxM4YpiFLiFFm7LmX8KRZ2aXdHZRx7Vcc1dUwt95Y1whzkM1rjTvt2uAXKgZ
-	 0nlt1H9RbiST06UTE4gci0Gvpv0l2PlnXrt3J/yXtK8D/OONg9BCqvUtquE9HDWUz3
-	 MjEK7lVr5PWt24re08hGEKx9qzPwBrVNSoK0U71zdeatt8bg4seTeQBt86GqoJOyAs
-	 hjAu+7aZbf6+g==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wqD19-0000000BIv9-3CMg;
-	Sat, 01 Aug 2026 16:56:59 +0000
-Date: Sat, 01 Aug 2026 18:01:11 +0100
-Message-ID: <87mrv5pyg8.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Oliver Upton" <oupton@kernel.org>,
-	kvm@vger.kernel.org,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH 6/6] KVM: arm64: Add VNCR TLB tracking again
-In-Reply-To: <20260801130454.5D9F11F00AC4@smtp.kernel.org>
-References: <20260801124818.366274-1-maz@kernel.org>
-	<20260801124818.366274-7-maz@kernel.org>
-	<20260801130454.5D9F11F00AC4@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mG7zWnqd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="I3jyXXwM"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 671FalTD3148255
+	for <sashiko-reviews@lists.linux.dev>; Sat, 1 Aug 2026 17:43:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Mde5ZJQsvXdc9zC8pk4PCiIyObIUlstkfgcsMyw9rgI=; b=mG7zWnqdeBcxklQA
+	Uw/OB8PAFimi1Xb8kr4TNLGAVZqPkyWUEGOAZCgtp4bq6+aOiB+Ygw56gNgKXGYW
+	EJcFkMSQ+IYWCxP2t1qJCGAQIwoZNtaxzgK2+UpQPsuOgVo/ROb078FUd2zhjHMy
+	CiKjKIODcuHoEA6WRZ2O/3z+6iBqGGcVnvR6OvvVJHFn2D89R5OT1TeITW2LY377
+	N8VWkRVUbf8HLvnbCa4gzTf/3n9s3dHtpkBtmOrR4MILHbQKExTu0YaXQhGRj8Bs
+	6CwBF8f5B2J21KkcBX4odkyfPa1TVXg50bWDAfvjlcYLRwi15mpJJjgsjXTdo626
+	cZA0hQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fs9669bej-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sat, 01 Aug 2026 17:43:53 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-51c1c7f135bso35108761cf.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 01 Aug 2026 10:43:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1785606233; x=1786211033; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Mde5ZJQsvXdc9zC8pk4PCiIyObIUlstkfgcsMyw9rgI=;
+        b=I3jyXXwMTvwt88DA9czw1aFce048J/awXqmE+vJcQJfNglh6Rmai70Xab2zH8E47G8
+         YqbWfjl8M6UPu2QyWk6OGiKA3a3GM5iQ8pB4wK+QMg0i0YFjPDILKxg5g0u8BYzu+gfW
+         f7v6hFGUwvoH9aAvRUYyq9FT0Nnp/Tbl0mspglUkTX7EmyyIwezo2fiybekL3JquRD1q
+         eF+nH489yBI2GM39AHLAnhChNmv/WFMSy7pn6dfNKX6YS7EX7DY7Kygf8j8WaRzuqWgn
+         ns45qEnG0xyQL/AsasOMeUet6xgvDZkyck4+wRjTAb5QqJZTFVw98lL+LvvDPdnky0Fq
+         ZFpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785606233; x=1786211033;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Mde5ZJQsvXdc9zC8pk4PCiIyObIUlstkfgcsMyw9rgI=;
+        b=H1Y+d7uGzXm5HFzdS8epsOdYbmcSWJSe/S3yuqit2T/7g50fbmbqwmERWt0mnBUpT9
+         O/UeqBbINRVbnb1oxphit6zdkXjc0+2lBEOKBEChbcdcvt4+71oTcPHWsNx+UEZ+qfDg
+         xmxE1vsMqq4QrexzAf0hpTKnbJPmlu05/okyNipaTcsTmcHA2vk8IZAqMFNpxPk8z2my
+         vbGh7evmWSMnVzgiwt6VvtdEdwfaUcL6f/swG6r63nhIqd+TmhlQrr9R9t8q8XcUcLoa
+         hZbtN07o6F4fGWCurOE57caUJ1tGKlqboCVQJBGBF3vSTEgi84fUtAanlPfdJjBea0rc
+         lcqg==
+X-Gm-Message-State: AOJu0YyxZG9Y6tjfes99eeibg+H6TfRlPSZidjgP/LJzXmqRHy9kR/CQ
+	HiZz0BGc0LMCvxVy4l9BDkhXZQzby4FFbuLMGb+xz/9VguxNColTT/dhAYpX48xUw145AtEmUjB
+	QgzlEYzfZLO0lRWjOUdyGOcCZ6Q5sMFhTNW2kbVTVNUiT6VcWwgr0ZqNDXUM3rLVDmXzAEc7poe
+	kmJSg=
+X-Gm-Gg: AR+sD10BsUDY92/ZU40WXjqFnshok/CDIlQSYdFfFygywKQTCKySy/x9fzSoLghndHy
+	XZqn4ekQAvXHrsc3YpieMxjbk151R6vQQX/3xsGGPegLg3Y5bkNHuCdmXRFoSVszj39rVnZ+wn9
+	TDLgmHmqrbEC7VQHS+J1B3A+lXlXtJkNtESVB1y81WrE27RovjmdEEPHCa5LPjBoOLZP26EI/Rg
+	ec+qpsTwvpHbxp7FCobIrGtTp7RhIU08sM+mlw/grBcQF+60YOHeNEL7qZiS99ivyKIKqIVYkMN
+	8ViQwp+158u7USrDV3qznsFDHcbtWSaEMJnZsnvU6poz6rYUe9pqEOInRxfsioGlVjuLtdN1eM/
+	Bqzalfv7S4nST4zxUU9Pm/49J3MlAKA==
+X-Received: by 2002:a05:622a:44b:b0:51c:1fd1:e755 with SMTP id d75a77b69052e-52b567915e7mr73366041cf.36.1785606232960;
+        Sat, 01 Aug 2026 10:43:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:44b:b0:51c:1fd1:e755 with SMTP id d75a77b69052e-52b567915e7mr73365801cf.36.1785606232535;
+        Sat, 01 Aug 2026 10:43:52 -0700 (PDT)
+Received: from [192.168.1.110] ([178.197.223.174])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd41e2484sm18039276f8f.11.2026.08.01.10.43.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Aug 2026 10:43:51 -0700 (PDT)
+Message-ID: <98d13cfe-b94e-40bf-bee7-541db92ac12b@oss.qualcomm.com>
+Date: Sat, 1 Aug 2026 19:43:50 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] dtc: dt-check-style: Handle root node in overlays
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260726-n-dts-style-checker-continued-v1-0-b05b8f897670@oss.qualcomm.com>
+ <20260726-n-dts-style-checker-continued-v1-3-b05b8f897670@oss.qualcomm.com>
+ <20260726160058.229B71F000E9@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260726160058.229B71F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: xnafKEjIkMXgoJDoNkR7ZnRMPbDYdnoy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAxMDE0MiBTYWx0ZWRfX4zSrOnxq6+Tl
+ v1ljPN5Bhg6Aii34tDAyNAqwgREzT3frgxGeQX4SROhKkkhGaeGSjS8T5M1TvEaU+jqYGFhkoqF
+ FlcsolN0vgkfL00T7V6940nA6AG++J/Xo/7PgM2HV3N2lNOjOPOgLlYWgptkceBsKWq37jr7PYA
+ 0Y2qeCkW8q6959lqgXB17filfwVCRDSfWshx67iXPhCkvERcNvrhXKjqbcu/jJSuGpUxFPH3ABo
+ 86JYOP7rV1pb5paOh2X6JTJxsW4nyo3HBmysPP8Q2wJiFz3+mGBtFYiwnWlEHWxYPe56kiVOX6q
+ bL8btcvvQPuhAT7HGKhXoHzPD0qlw4+tTPOJZygHzB6ARtGKpViujTmwnocgPzNfJ/rEkG++R8Z
+ zPREStWdIq/vVFRQ0BuJ32R1p/ltnt60lMx8yTvvaIKwiJnr+F0Qoz7GkzfiM/CFHvPpfyL93Gp
+ EJjmzPRSFFHZMxcF4RQ==
+X-Authority-Analysis: v=2.4 cv=TpfWQjXh c=1 sm=1 tr=0 ts=6a6e3059 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=N6niishs+lR9UBL1FN3Qrw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=BdnB_ZxoBvXoPZvaknkA:9 a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: xnafKEjIkMXgoJDoNkR7ZnRMPbDYdnoy
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODAxMDE0MiBTYWx0ZWRfXyc3i3JbbFltA
+ xB4bYVxQeKuTcwD/fhCOeQrt6oDcgLhqrPEniV9y8Td2fY3GpHXEhHOR38hg41hbg/FMSDYXfIt
+ pLlBGjRnvUv+6WwLjA3QVCi3LSci0m0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-01_02,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608010142
 
-On Sat, 01 Aug 2026 14:04:53 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Cross-CPU invalidation of VNCR TLBs (e.g., via MMU notifiers) clears the fixmap and resets `vt->cpu` but fails to clear the per-CPU `L1_VNCR_MAPPED` flag on the CPU where the vCPU is running. When the vCPU is subsequently scheduled out, `this_cpu_reset_vncr_fixmap()` checks the local flag, finds it set, and hits a `BUG_ON` because `vt->cpu` is `-1`. This allows unprivileged host userspace to panic the host kernel.
-> - [High] The fast-path check in `kvm_hyp_handle_tlbi_el2()` skips VNCR TLB invalidation for EL2 TLBI instructions when `E2H` or `TGE` is 0, leaving stale translations in the software VNCR TLB.
-> - [High] A TOCTOU race exists between lockless guest page table walks and guest TLBI intercepts, allowing stale VNCR translations to survive invalidation.
-> --
-> 
-> --- Patch [6]: [PATCH 6/6] KVM: arm64: Add VNCR TLB tracking again ---
-> commit bde680578e8485472440ba4858d93cb92173897d
-> Author: Marc Zyngier <maz@kernel.org>
-> Date:   Sat Aug 1 12:48:18 2026 +0000
-> 
->     KVM: arm64: Add VNCR TLB tracking again
->     
->     This patch re-introduces VNCR TLB tracking to force EL2 S1 TLBI handling
->     onto the slow path when valid VNCR TLBs exist. It uses a VM-wide atomic
->     counter to track the presence of valid VNCR TLBs, updating it under the
->     MMU lock.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-> > index c09b1d411c584..eb59549ec2172 100644
-> > --- a/arch/arm64/kvm/hyp/vhe/switch.c
-> > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
-> > @@ -424,10 +424,11 @@ static bool kvm_hyp_handle_tlbi_el2(struct kvm_vcpu *vcpu, u64 *exit_code)
-> >  		return false;
-> >  
-> >  	/*
-> > -	 * If we have to check for any VNCR mapping being invalidated,
-> > +	 * If we have to check for any VNCR TLB being invalidated,
-> >  	 * go back to the slow path for further processing.
-> >  	 */
-> > -	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu))
-> > +	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu) &&
-> > +	    atomic_read(&vcpu->kvm->arch.vncr_tlb_count))
-> >  		return false;
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this check skip VNCR TLB
-> invalidation for EL2 TLBI instructions when the guest is in nVHE
-> mode?
-
-nVHE and NV are mutually exclusive in KVM.
-
-[...]
-
-> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-> > index 8d5b0208ad728..2a7dd9f9fb597 100644
-> > --- a/arch/arm64/kvm/nested.c
-> > +++ b/arch/arm64/kvm/nested.c
-> [ ... ]
-> > @@ -998,9 +999,11 @@ u16 get_asid_by_regime(struct kvm_vcpu *vcpu, enum trans_regime regime)
-> >  	return asid;
-> >  }
-> >  
-> > -static void invalidate_vncr(struct vncr_tlb *vt)
-> > +static void invalidate_vncr(struct kvm *kvm, struct vncr_tlb *vt)
-> >  {
-> > +	BUG_ON(!vt->valid);
-> >  	vt->valid = false;
-> > +	atomic_dec(&kvm->arch.vncr_tlb_count);
-> >  	if (vt->cpu != -1)
-> >  		unmap_l1_vncr(vt);
-> >  }
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this cross-CPU invalidation path leave
-> the per-CPU L1_VNCR_MAPPED flag set locally?
-> 
-> If an MMU notifier on CPU B calls kvm_invalidate_vncr_ipa() which reaches
-> invalidate_vncr(), unmap_l1_vncr() will clear the fixmap and set vt->cpu = -1.
-> 
-> When CPU A (which was running the vCPU) exits the guest and calls
-> this_cpu_reset_vncr_fixmap(), won't it see its local L1_VNCR_MAPPED flag still
-> set and trigger BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id()) because
-> vt->cpu is now -1?
-
-Addressed in my reply to the comment on the previous patch.
-
+On 26/07/2026 18:00, sashiko-bot@kernel.org wrote:
+>> diff --git a/scripts/dtc/dt-check-style b/scripts/dtc/dt-check-style
+>> --- a/scripts/dtc/dt-check-style
+>> +++ b/scripts/dtc/dt-check-style
 > 
 > [ ... ]
-> > @@ -1460,6 +1471,8 @@ static int kvm_translate_vncr(struct kvm_vcpu *vcpu, bool *is_gmem)
-> >  		vt->valid = true;
-> >  		vt->cpu = -1;
-> >  
-> > +		atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
-> > +
-> >  		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
-> >  		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
-> >  	}
 > 
-> [Severity: High]
-> This is a pre-existing issue, but is there a time-of-check to time-of-use race
-> between the lockless guest page table walk and guest TLBI intercepts here?
+>> @@ -228,7 +229,10 @@ def classify_lines(text):
+>>              continue
+>>  
+>>          if code.endswith('{'):
+>> -            dl = DtsLine(i, raw, LineType.NODE_OPEN, depth, indent_str, code)
+>> +            is_root = False
+>> +            if code == '&{/} {' or code == '/ {':
 > 
-> CPU1 locklessly resolves the guest virtual address via __kvm_translate_va()
-> earlier in kvm_translate_vncr().
+> [Severity: Medium]
+> Will this exact string match handle valid alternative spacings or labels?
+> For example, if the code contains a label like "label: / {" or extra
+
+We don't label root node, but I will add a test for that.
+
+> whitespace like "/  {", it seems this would fail to set is_root to True.
+
+I'll add a test for that.
+
 > 
-> Before CPU1 acquires the mmu_lock and increments vncr_tlb_count, CPU2 could
-> modify the guest page table and issue a TLBI.
+>> +                is_root = True
+>> +            dl = DtsLine(i, raw, LineType.NODE_OPEN, depth, indent_str, code, is_root=is_root)
+>>              parse_node_header(dl)
+>>              out.append(dl)
+>>              depth += 1
 > 
-> The TLBI on CPU2 would see vncr_tlb_count == 0 (or vt->valid == false) and
-> complete. CPU1 would then acquire mmu_lock, pass the mmu_invalidate_retry()
-> check (which only tracks host MMU notifiers), and install the stale
-> translation.
+> [ ... ]
 > 
-> Could this result in caching a stale VNCR mapping?
+>> @@ -550,7 +554,9 @@ def check_child_name_order(ctx):
+>>          for c in children:
+>>              if c.node_addr is not None:
+>>                  continue
+>> -            if c.node_name in (None, '/'):
+>> +            if c.node_name is None:
+>> +                continue
+>> +            if c.is_root:
+> 
+> [Severity: Medium]
+> Since this replaces the previous check for c.node_name in (None, '/'), could
+> it cause valid root nodes that were missed by the exact string match in
+> classify_lines() to incorrectly bypass this skip logic and trigger false
+> positives?
 
-Yup. That's definitely another problem.
+is_root is added, so false positive.
 
-I think we need something that like the mmu notifier retry
-mechanism. We can hoist the increment of vcpu_tlb_count to the
-beginning of the translation process, sample a counter, and recheck
-this counter once we've acquired the mmu lock.
-
-I wonder if we can actually use the exact same counter outside of the
-MMU notifiers, bumping it up from the TLBI VA code... Something like
-the untested hack below.
-
-	M.
-
-diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-index dfdd1b4abb839..73c7bd4223f13 100644
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -1010,6 +1010,8 @@ static void invalidate_vncr(struct kvm *kvm, struct vncr_tlb *vt)
- 	vt->valid = false;
- 	atomic_dec(&kvm->arch.vncr_tlb_count);
- 	unmap_l1_vncr(vt);
-+	kvm->mmu_invalidate_seq++;
-+	smp_wmb();
- }
- 
- static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
-@@ -1475,8 +1477,6 @@ static int kvm_translate_vncr(struct kvm_vcpu *vcpu, bool *is_gmem)
- 		vt->valid = true;
- 		atomic_set(&vt->cpu, -1);
- 
--		atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
--
- 		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
- 		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
- 	}
-@@ -1530,7 +1530,17 @@ int kvm_handle_vncr_abort(struct kvm_vcpu *vcpu)
- 		return -EIO;
- 	}
- 
-+	/*
-+	 * Speculatively increment the TLB count to make sure concurrent
-+	 * TLBIs will take the slow path, and will interact with the retry
-+	 * mechanism. Drop it again on error.
-+	 */
-+	atomic_inc(&vcpu->kvm->arch.vncr_tlb_count);
-+
- 	ret = kvm_translate_vncr(vcpu, &is_gmem);
-+	if (ret)
-+		atomic_dec(&vcpu->kvm->arch.vncr_tlb_count);
-+
- 	switch (ret) {
- 	case -EAGAIN:
- 		/* Let's try again... */
-
--- 
-Jazz isn't dead. It just smells funny.
+Best regards,
+Krzysztof
