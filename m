@@ -1,176 +1,209 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71583624DE
-	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 05:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785562919; cv=none; b=jglfHFkd2TaLS1zDwp2ATXdx1fMf+pfK2F252zNJSEywLaF9oGQt+lur3U9XZOZqNRiZMsSY3pc95zFbEpqwlWm9p8Znz+E7I/Zi0avPPy7OTUbSyaaGBMwdfrwKNPjfhW+TPdyvktSsc0+S9i+7XDlpHxA54wUScd9CAM0B/ZI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785562919; c=relaxed/simple;
-	bh=uFwVacpoBKqf/34/DHwdM2PKG4cpCrot070aByBuvGU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=OAQP8xK7ZXjEZcTVWkj6zhUCQeXfsD0DmMUedIu/ZUHE41/ISA541yBAOYUmpPYposIhr5xxkodwT44rAO5bE8JgirVvlq79XuwMiYMLiU92fusoMRY+siPBfnxyMoyDExD5RPgfZV4t39B0A74XTFDp5vQfWQVHYmJq6QFyqz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dwrWNT/C; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77A3B2FC6
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 07:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785569747; cv=pass; b=pa0HVuIz7BRVpZvLLE1++Z/V15TjIRzvC8dWy37AL/p+zhSN4euDDpjpbAiEOBzjKmZdiUH9z+JiI382xNNmyio3W2V721ba7C7RYxFcwQeCKPTf0pBKFiHvlqZFOYjr8wmwqHWekUTkQpFRcfeG+ce/4hu5tjOLBNQMYnNjQQQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785569747; c=relaxed/simple;
+	bh=3c7cSJmfyPQSNSMzWThpuuHDLhNHEjOoh6KtHZSmSgI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rx6xvhqhx3IkTpvg+5CRS++utN7JKCq6S4Vuy8YX+HJ4xYZPHPATEa9KLrI01xAUM9unWhEHAoLo1fcLGTWxgUQU56yp1kinbechnVQSWivMLt5yocII2gnORg8V6CtaYMUg5gfK1jcGaAm0/uiLI822Dvyfaxnrzjo7YqupEIg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hxr8B1uz; arc=pass smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dwrWNT/C"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2d02b4c3601so19884585ad.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 22:41:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hxr8B1uz"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-848d21bbaffso1976003b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 01 Aug 2026 00:35:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785569741; cv=none;
+        d=google.com; s=arc-20260327;
+        b=IV9Bqkj53QTlxlDwWQ1k6VkqL4SyQO4ijQrXEmDPiIsLKiOysiGFlMb0O+kxf5PL64
+         kSWGiqSgd6oeWsYzjVLrrGmg6YqBTtMlmrl7KDDeWss6u5biId/OReacnKqSJtKU7eXk
+         CHJkfq9wS/ZRuxcF5D8aXR8/ag4MHn3ulsECoVi1Nc1FnhKnAMuw7+pkLBMJ5TXQI2xA
+         TkHMzZKtJArmDcskHzsV6MhHD3XBMmrI7tP5SrSmjAW3PVZSlUO9l1omMyyVKibn69yM
+         B7X0orsq1gQT6VtVbUntqpjHMoFMabDWchbjCocmgjx5jK2fqpXh7NBqe4N1jHtDcRlg
+         M/Mw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=o7GC7J2+xwGFf+p5+42ZnMnP7uNQVjbmbvVlPsFUY+U=;
+        fh=2xfOhBJyN5MrDXDnqEqgkqZlEOPXo6XBQo6m99gnAL4=;
+        b=cQizQfB0b0cSrrUWMzQXaAiERgdJddNCWKg2dlXtM8IC1QSAyJC/r+LQKH22VCBveV
+         gaf2eGdVjQm2czQdQbs85D9oX3QZtFcRI9t2s6xSWuXf+YQaOgmFuUippFPwnfQ7UTM5
+         PdIkPTIjdXDTSDV/B+KOSyU+Wi/XtQYsvm1fk+of2z5C0rG1xhZL173JSE1BBaP7BMr3
+         gjxJL9hSpMfyszGf/65a00Eujzq4iE9maJZmUcQ+sANapeIzotpegiJ7oYysyLy7gqbW
+         VOVkZcM7MwLcgWDUuJOcberyGdO5A9LJMb2cEWcng134PE8uoHEtuCLqpEk/+LSVrj7J
+         lEdg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785562917; x=1786167717; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=fbpEs4nLlgM9ipjn1m7Vl9bon7gR0+FPoNc51UueVOw=;
-        b=dwrWNT/CVBN4w4Sx+sYEttXmuXY8SC4gSORS1JOgK1t/ThJNvURwr1KLVhN42/Po2o
-         yrYUMP6d9jwYIFl3TFv7oymw0C4VJGKqFwt6QQZxmlRYAR34KBnGhXA49wkZtkhwcXfg
-         coZdQomW365XhGJATfHkO2+o0MVo8AXb8e6v1f2INaVn9MC1VEMVDilZgBuq3J+vOtJG
-         aJI7H/9PZoZSQXrhZUv4R9d1W80HcOsvDqEmCJXJVDEu1hE6lhQUKfFKP0RTXZD3ylPN
-         BnVgelNofTV2DG9U9AIP9kAOkOaU6D/LNKjCyqzEB2j6wh/PH42M6MKEAwWoTELqtznm
-         JihQ==
+        d=gmail.com; s=20251104; t=1785569741; x=1786174541; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=o7GC7J2+xwGFf+p5+42ZnMnP7uNQVjbmbvVlPsFUY+U=;
+        b=hxr8B1uzNE6E3hzoNQ6QaCEvAzIYrpYEKBfbMU6vxB3HKGt6uDhipr4iieCLjrpi7B
+         A3WoRX/rVtoZpHo/WyCsOfqm0LgmgOW7k83Zzhs52J3TGyBuorWEK+rNLG5Ag01HcIDl
+         SHvknIVCy81TAA6oaWFvvsuph8zwwQw3SOFuYHW3eUntpmHDMULf/MWVBCRL6LqAfqXl
+         6wayMkXzgmBvpGqVEqcF+9D96q5p9WKzTnzHO799GxQMnNUUiYT51UKYwicq0w2bPy0O
+         R+mqg06QRNXHQmvS130TJCAKPVLBGexZ+nfx2NF8SblvLBXB3igiVtTvnlbuY5/czpiM
+         nQuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785562917; x=1786167717;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1785569741; x=1786174541;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fbpEs4nLlgM9ipjn1m7Vl9bon7gR0+FPoNc51UueVOw=;
-        b=EegZL5xqm6h/StdrQEZkVUP/z94lKRteriUl3JJX/Km/aIQa7NciAbQ3tR0OwffBWf
-         tBop9FivKad80wdx6iqKgbR3D7NHQXLwj51grpM+kmGVU8qw4Z6BICbOK1UOP5WvLRrN
-         Fw1wH7Gw85giCZxdfWj8hlydGU4h1GGS9CCLNAQoB4Lnz02U7mFaRxsYxKy4+I2HocAo
-         SjRH1XGkbLwrVGxYUjTE5PBJ+eCE6bQ1LQccqPMH0ZUXdEQMNxuvUxDMKn4WMYn83C6C
-         mwA+LH6S0adotNsX2T0hQNnVPBQ9ZmkYL/jvPVSoyO31e+gmKCu+mqbc+MSjLfIVragU
-         k0YA==
-X-Gm-Message-State: AOJu0YxNtEQFgOi50kR22Sr09KndJrTKcJHjSyxRqgm4meG6pisuZyVc
-	vD75BVm5bHC1y6G0FUH+n/eBpG8kQzB++yZu6SSy/xFhazGnmK1DPt4Lj22DtXV4
-X-Gm-Gg: AR+sD12CJFy4GZFzRwdsc4EsxTN94KvHlmOu3gFg1mz2P942NfxfgDlMnk8YreieI6P
-	44zsDe8Ts8eFwtVbElKpB44RJn3UGACdPGEZ2TBeqMFoUHD0Jt9mMXAI9uEUiR8RN3E/2p1AA1k
-	ct+t8ItxYikX3JCxT+dsv+91eKZttQkUObDoRjvDL4xek2FY2Dnrk1pG8HzCs8efrA0WijCspd1
-	rSctTAtgPQ6ao9ZnCk6bLvSy8LiCUrmu7iZ6UpKgSreEFEm5Wdp1zEf7kuah9CYuwmR+5eCEhGi
-	Ny+/T18WAei8DUFAoy6ggTgoW4dBv9pqkeud1zHyL2gA3jpsSvu9XsMhW4MpuR5NJSLHjmhesba
-	awRbHR8D2ZwEElAdBxU2ln6FnV7X2uaMohURtX1A+F21hqjNLI3V8JA1Gr4maWq4HqT5S0rtbsu
-	XaGrBRFXyxPqlMzeyp6DFRBfaMDXtYXC+6jkGjxlCukZUQ0cCCSrD0JUya9Xp1BgxhBsS1a1zQo
-	sPJlDV7PASbKIsU
-X-Received: by 2002:a17:902:f54e:b0:2cc:6329:b7ba with SMTP id d9443c01a7336-2d05224fa51mr24534955ad.16.1785562917096;
-        Fri, 31 Jul 2026 22:41:57 -0700 (PDT)
-Received: from [192.168.0.13] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d04aea0f8asm13919195ad.35.2026.07.31.22.41.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 22:41:56 -0700 (PDT)
-Message-ID: <9a99c9f390d0caf48b3a523113ca8f71063f9c01.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v2 3/5] bpf: infer zext_dst based on static
- register liveness analysis
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Date: Fri, 31 Jul 2026 22:41:53 -0700
-In-Reply-To: <20260801014230.CF9891F00AC4@smtp.kernel.org>
-References: <20260731-static-zext-v2-0-da4aa161e8c5@gmail.com>
-	 <20260731-static-zext-v2-3-da4aa161e8c5@gmail.com>
-	 <20260801014230.CF9891F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-10 
+        bh=o7GC7J2+xwGFf+p5+42ZnMnP7uNQVjbmbvVlPsFUY+U=;
+        b=h81vwzjzCVDaM4DUgdH4f9TJ1Upc2PrCTBhg/SXG0ZcCugLywZG5O3XwmkREcK5PSR
+         zNAumwwDzctPXgVtHHq+YViOH7rxYqJwDRocICbAxadM+WUJlWMOG85p5RGECyLV331w
+         q3lon+IBBDd6VNiATi24MWKWXnchj1S8g7XUnGuxGIiZMlm/tUGttkS6GcDBv0/mRGHk
+         RWs/3wvaZGkbivxtzlfdr0qP8QGQtGn51OKmMbixZ5g+l2Fjd/NlPL6DiOBsUwCH/PAv
+         h5g0o/hvN8yK/cSFtoKtxtUW5AsAxSHw+/nvOK5IoIPRtmhjpMOS98GaOFeaCkR7qStj
+         ZHEw==
+X-Gm-Message-State: AOJu0YxELCqmlYn+Ej5fO+gHeNlm89QJ26PeKAPPjxqLs1F29dE6fH36
+	Kraq1Gs5Y/8l8ZzntfJjjP39WvajRLl5GW9DYPzLWLShiPCYYbr7+lhSfiBTfY5Ct6Ws1s21LDA
+	brykkWKOObBxUHJgoKX3k02QH4iBdTyiSH619TWtzTA==
+X-Gm-Gg: AR+sD10sOK0mPKOu9mrZShcDVmi/cwJhA5QCRhhsMnWcZYtH8RcCQ/e9CqYI7C3Ezb5
+	A+X1Ze42GdTTgFEMZNRFTXxEuSqxyL8G9HMjQdPTShdms2ZcJie210bPVaScyVHFZrg9dklAcIW
+	5GB6KdsOs0B/jrE/+J2oqBchzj7XpZ1dBs4P6UikJ9PPHQEBJRMwX68TM9JDlBdVFF7MCoxhZLJ
+	UfJF8nIogkthwOR4fpJkoGAu1YHouTKnmQYgay5Rql1NtjwvP+2EyNJc5/nS1H/PFcrkZ9Kdkoq
+	I3qvTj6uzGQ5R8Y+wNDwbQQI2ujABe/p+NWKqaqazBQslFh1xeDAONg=
+X-Received: by 2002:a05:6a00:8007:b0:848:7f56:1e44 with SMTP id
+ d2e1a72fcca58-84ee47c1e13mr2202882b3a.7.1785569740583; Sat, 01 Aug 2026
+ 00:35:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260725072813.339112-1-mapengyu@gmail.com> <20260725072813.339112-2-mapengyu@gmail.com>
+ <20260725074840.615DA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260725074840.615DA1F000E9@smtp.kernel.org>
+From: Pengyu Ma <mapengyu@gmail.com>
+Date: Sat, 1 Aug 2026 15:35:28 +0800
+X-Gm-Features: AUfX_mycvzhEbi1USa0PGM60Pe01VOc2MAFKX3emwizdL-PSF4E-lawyn8bpKGI
+Message-ID: <CALSz7m2FcQfyR3JyrmcekT=VwbGOB8BuPOoTq4h8ycg-g9W+Vw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Input: xpad - add wired Beitong BTP-KP20D support
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2026-08-01 at 01:42 +0000, sashiko-bot@kernel.org wrote:
+On Sat, Jul 25, 2026 at 3:48=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
->=20
+>
 > New issues:
-> - [High] Dynamically downgraded 64-bit arena operations and pointer casts=
- are missing explicit zero-extension on architectures requiring it.
->=20
+> - [High] Probe error path after input_register_device() causes a Use-Afte=
+r-Free risk because xpad driver data is unconditionally freed while the inp=
+ut device is visible to userspace.
+>
 > Pre-existing issues:
-> - [High] Kfuncs bpf_mem_cgroup_memory_events and bpf_mem_cgroup_vm_events=
- do not properly validate negative enum values, leading to out-of-bounds ar=
-ray reads.
+> - [Critical] The probe error path frees the output URB (irq_out) and its =
+DMA buffer without killing the active URB, causing memory corruption.
 > --
->=20
-> --- Patch [3]: [PATCH bpf-next v2 3/5] bpf: infer zext_dst based on stati=
-c register liveness analysis ---
-> commit 625c020066cfbb5a384d20ff5e1ad79faa898949
-> Author: Eduard Zingerman <eddyz87@gmail.com>
->=20
-> bpf: infer zext_dst based on static register liveness analysis
->=20
-> This commit replaces the verifier's subreg_def based logic with computing
-> zext_dst statically as part of bpf_compute_live_registers(). It tracks th=
-e
-> liveness of the upper and lower halves of registers separately to emit ex=
-plicit
-> zero extensions on architectures that need them.
->=20
-> Link: https://lore.kernel.org/bpf/CAGKGUv=3DsOuqQtA1Ub-5JXfA4FPosJFYKAQE4=
-B79cK+P1erxqtg@mail.gmail.com/
->=20
+>
+> --- Patch [2]: [PATCH 2/2] Input: xpad - add wired Beitong BTP-KP20D supp=
+ort ---
+> commit ec428f1a8b8e609c623920e0839f0af31cf70bb0
+> Author: Aaron Ma <mapengyu@gmail.com>
+>
+> Input: xpad - add wired Beitong BTP-KP20D support
+>
+> The wired BTP-KP20D resets itself when its interrupt-IN pipe is idle
+> for a few seconds, causing periodic re-enumeration whenever no
+> userspace client holds the input device open. Add a FLAG_KEEPALIVE
+> quirk that keeps the input URB running from probe to disconnect,
+> mirroring the XTYPE_XBOX360W URB lifecycle.
+>
+> > diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpa=
+d.c
+> > index 1616047e65f5e..5369b880c6a08 100644
+> > --- a/drivers/input/joystick/xpad.c
+> > +++ b/drivers/input/joystick/xpad.c
+>
 > [ ... ]
->=20
-> > diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
-> > index d0bd94c60fee2..77b84b367be74 100644
-> > --- a/kernel/bpf/liveness.c
-> > +++ b/kernel/bpf/liveness.c
-> > @@ -2316,9 +2317,18 @@ int bpf_compute_live_registers(struct bpf_verifi=
-er_env *env)
-> > =C2=A0	}
-> > =C2=A0
-> > =C2=A0	for (i =3D 0; i < insn_cnt; ++i) {
-> > +		int def32 =3D bpf_insn_def32(&insns[i]);
-> > +		u32 out =3D state[i].out;
-> > =C2=A0		u32 in =3D state[i].in;
-> > =C2=A0
-> > =C2=A0		insn_aux[i].live_regs_before =3D mask_lo(in) | mask_hi(in);
-> > +		/*
-> > +		 * On architectures where 32-bit operations do not reset upper halve=
-s
-> > +		 * of the registers, the verifier needs to zero extend a destination
-> > +		 * register if an instruction defines a 32-bit subregister and the
-> > +		 * upper half of that register is alive after the instruction.
-> > +		 */
-> > +		insn_aux[i].zext_dst =3D def32 >=3D 0 && (mask_hi(out) & BIT(def32))=
-;
-> > =C2=A0	}
->=20
+>
+> > @@ -2227,9 +2232,22 @@ static int xpad_probe(struct usb_interface *intf=
+, const struct usb_device_id *id
+> >               error =3D xpad_init_input(xpad);
+> >               if (error)
+> >                       goto err_deinit_output;
+> > +
+> > +             if (xpad->keepalive) {
+> > +                     /*
+> > +                      * The device resets itself when the interrupt-IN=
+ pipe
+> > +                      * is idle for a few seconds, so keep the URB run=
+ning
+> > +                      * from probe until disconnect.
+> > +                      */
+> > +                     error =3D xpad_start_input(xpad);
+> > +                     if (error)
+> > +                             goto err_deinit_input;
+>
 > [Severity: High]
-> Does this statically evaluate zext_dst before some instructions are dynam=
-ically
-> downgraded?
->=20
-> If an ALU64 operation with a PTR_TO_ARENA operand is statically evaluated
-> here, zext_dst evaluates to false because it is still a 64-bit instructio=
-n.
->=20
-> Later during verification, adjust_reg_min_max_vals() sets needs_zext =3D =
-true.
-> Then bpf_do_misc_fixups() downgrades the instruction in-place to a 32-bit=
- ALU
-> operation:
->=20
-> kernel/bpf/fixups.c:bpf_do_misc_fixups() {
-> =C2=A0=C2=A0=C2=A0 ...
-> =C2=A0=C2=A0=C2=A0 if (env->insn_aux_data[i + delta].needs_zext)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Convert BPF_CLASS(insn->cod=
-e) =3D=3D BPF_ALU64 to 32-bit ALU */
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 insn->code =3D BPF_ALU | BPF_O=
-P(insn->code) | BPF_SRC(insn->code);
-> =C2=A0=C2=A0=C2=A0 ...
-> }
->=20
-> Since this bypasses bpf_patch_insn_data(), zext_dst remains false. Could =
-this
-> cause bpf_opt_subreg_zext_lo32_rnd_hi32() to skip injecting the required =
-zero
-> extension, leaving garbage in the upper 32 bits on architectures like s39=
-0x
-> and potentially leading to out-of-bounds accesses?
+> If xpad_start_input() fails here, we jump to err_deinit_input which
+> unregisters the input device, and eventually falls through to kfree(xpad)
+> in xpad_probe().
+>
+> Because xpad_init_input() has already successfully called
+> input_register_device(), the device is visible to userspace.
+>
+> Could a local user open the evdev node immediately after registration and
+> issue an EVIOCSFF ioctl concurrently? If so, input_ff_upload() would call
+> xpad_play_effect(), which might dereference xpad after it has been freed
+> since input_unregister_device() does not block concurrent ioctls that
+> have already passed the evdev->exist check.
+>
 
-Yeap, need to figure something out.
+The EVIOCSFF UAF is not reachable. EVIOCSFF calls input_ff_upload(),
+whose memless upload callback is ml_ff_upload(), not xpad_play_effect().
+xpad_play_effect() is called later from the memless FF timer. During
+unregistration, ml_ff_stop() calls timer_shutdown_sync() before xpad is
+freed, so that callback cannot outlive xpad.
 
-...
+
+
+> > +             }
+> >       }
+> >       return 0;
+> >
+> > +err_deinit_input:
+> > +     xpad_deinit_input(xpad);
+> >  err_deinit_output:
+> >       xpad_deinit_output(xpad);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but this new fallible xpad_start_input()
+> call creates a new way to trigger it.
+>
+> If we take the error path to err_deinit_output after xpad_init_input()
+> succeeds (which calls xpad_led_probe() and submits the irq_out URB for
+> Xbox 360 controllers), xpad_deinit_output() will free the irq_out URB
+> and its odata DMA buffer.
+>
+> However, it does not appear to call xpad_stop_output() or usb_kill_urb().
+> Can this lead to memory corruption if the USB host controller continues
+> writing to the freed odata DMA buffer, and the URB completion handler
+> xpad_irq_out() executes and dereferences the freed xpad structure?
+>
+
+The output URB issue is valid. I added xpad_stop_output() before
+xpad_deinit_output() in the probe error path, matching xpad_disconnect().
+
+Thanks,
+Aaron
+
+> >  err_free_in_urb:
+> >       usb_free_urb(xpad->irq_in);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260725072813.33=
+9112-1-mapengyu@gmail.com?part=3D2
