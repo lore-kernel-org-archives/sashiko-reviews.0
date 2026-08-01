@@ -1,199 +1,152 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35AF345729
-	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 04:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A2C34C806
+	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 05:28:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785559260; cv=none; b=L2lBnfsHlWCdC+XZhIuszPOEvyXDx+Zqr1ABZ/kHozcs6FlJDwgQTJLK9mpbnFR6AgpoIzFwQdR2qtivSs/ge18fbbseTi3eVspVNf6oin82y3SWRJvDy2cBNNV2/omrM6HSg9QkRiR3xMZd3Rl5TCpniRi3ISqvnUryRH0asFA=
+	t=1785562136; cv=none; b=MeuFdk3e3Y4WWEwhrX77O4aNMj2hWHDDBAKPoUAKNofH9G5sdhNa63EFwbieQL1890Jz7aqYhCTDZG2Bu1ugReVIJut9ezFfdl3JxwSHXdx724+WHa3qtj5ZQCNnKBEobH58eI5PRId3Tu43+PkUM6uOfWp0KTWsOoaIAflOtVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785559260; c=relaxed/simple;
-	bh=s3x8pjbfCq9BuAbE1NyeKpd+q3MhGGcJTXsX3MJcqMg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=RpB1h1K01Fk2/Qgnv53xBv/kvCdLoG9RwOyh2gFQpUiL36Nw44KZb9cPiAUZfkFs8AOJgRQUF9LPCmBZX8iunMOt/yxCjNAKiiDprr3nF/Gm9I/AqPUN6MORxnSCGTbd27GpCKMILcR7lFXCC6nyqNpU8OsD1Fu4z5NEC3buIa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gscmgIt9; arc=none smtp.client-ip=209.85.216.43
+	s=arc-20240116; t=1785562136; c=relaxed/simple;
+	bh=NKRiEWM7OmBlcThohq6rD6o3xFY86H5i1xR06buE38k=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ym5cCLYysPkChS789Tp3dh9QW49yrE4NpXa0A4PZXqsDPd++9sxTiuUluae/sihUvJ75Xzmq43UNQlVbwFdt9bJzjmTnh+DlKe6vpdnOhPTGWfkTW1QG7xhelUHqMRbFB2OF8GdrnUBGe6p9HByPCDuEViL86UMS0GqMXgfYt8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qZT1ehbo; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gscmgIt9"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38101f85591so2147813a91.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 21:40:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZT1ehbo"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47f752b3423so1493227f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 31 Jul 2026 22:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785559258; x=1786164058; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=xrL3kyFlN1rgtn9VZ4SzY44SmT1FcFVaQUll8h6EZ5M=;
-        b=gscmgIt9C9UyGhZaRSuNDU9pblTrDK01nOP+F3qpBo6htFHHZ/XXGFfThjlvdstUb6
-         6z5/HUWPJ6i3eq9h8XFdoD0XTtaAD1bBHP6pg8JaM/4d7q0BCVY6XNZgJm+UCpX3zqrL
-         EQAp2Xv0ASFfaVtbII4yFBXRQB5tbBYD4BBstfNH9rZbNVxa8kzlG8mpbBnShJYHTACz
-         gRqUmALu4hEmVC6U3lqyY9cmABl/b08qWgVtIaLAGr4GrHqTCTmpgVw8sE64DNGOdiy1
-         V+zdkbWV+Kx3TAJQ56Xe8PJ1FLUQ06B+CCS9kwL1n5KSPPYmML+vXBlNTmpyNkJfB9kA
-         OWzA==
+        d=gmail.com; s=20251104; t=1785562133; x=1786166933; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=VGWLDg96xg9X2R8tFVFYr1K1sw/dzYhsye3xehVIvdQ=;
+        b=qZT1ehbo8L8MKD9sblqbT/WT9s/j1lmPa4nnV9Otc9Wt08997+dyyotuzk2mPbE4EE
+         GRo22iKMRuwAIYv084lDBcNe1pUuXE19cpXeS7CR9O1QHTqu0FUy2ov6+jma7AqB0ldi
+         R/UpV8zULpjAcSDl0ph02sQ96SmL3xzfFDoCRgrpfJqSopTsQvDoMDH2k+ByaVAeQYvj
+         4cKaW/KBQKmQSgjFuGiTmm5K9hpGPxk/G/V3T4slR478uzhwToPzC2z2dKq6td021uSF
+         0Jep8PBPZQbyrHvuxnQhlFtrJsBiy81qhsp2qJFj/CzPTwxKkpRF7JbR8C/IcZzsFBxx
+         qnAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785559258; x=1786164058;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1785562133; x=1786166933;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xrL3kyFlN1rgtn9VZ4SzY44SmT1FcFVaQUll8h6EZ5M=;
-        b=PVxsdNrd3qqDzh+c5Ydovqj6AexlLDv1JQHzXjjx1TokxChbzoXnsalNnSmzcyuyaA
-         6zECj5xhKTBmuzEZyll77kgtPrzgqhmckl9IRYweGwTiT4ezpQJoMj1hhmTwMod2QMU6
-         jTZ7naOuH0JoVe8U0d45JCXeLoKOVfG14nN+GXr9NqZKqo9445Vljktj+iJC5PVVLqNC
-         qpD5wwQrfWRXMBvojCiw1OqjatRFxe+3c8nRyz+LJHV7DuCAg2VJ48IUmvsMxgcl1rXT
-         FLXfASDH6pIguwHWqOn/XOym/CfN/YPlsmFtpXme/tmT8DR0zyEdMy90qm6jNeZuJXd6
-         g+MQ==
-X-Gm-Message-State: AOJu0YyaeD7+ruQk+7+oLwTYMICHQxkBBhVXkOfktMZKfSwfFRr5L1Xx
-	MZZBxKmr17ani3Ckz4yqfrSsXcNc4tit96rT5HL69CIWhdETHh7gwa/3CtNodOo0
-X-Gm-Gg: AR+sD108ROcuMaIb8c0Q5sKl9hlHNuCbCp5SH1uNwB+Z+F8LMPY5KGk2a5xxscsSgDd
-	19glNrUE9HqjRSVmm8lKqr6t85aFERHkeOSi1H9v12lW8m9lFKEegFl/2MJF/41x1ToHuLN4MVl
-	s03LQMlkcGnMxJKEZNkWT+g9OAjC44IdavC4sK2Ka11lNqpY550usd5DgWT6MWXpdpp8JIshci4
-	qcpkg7IB+It+dmBdrfdXxMyIzfZBX3yV3C/jXJ6qtfnTNZ6KVGZod7CBJZAN80MrahgAQU/hkFj
-	pNmpcf94uPiDD0Yic8jDQgrfWNvc938VTYfYg3unkcRKQhOGD8YmKPfSAnP/zKurQJ7e5JaLrd1
-	eudg/ZFnmylhwznLEImzipxSCcH0uWj/u5oAkGBAUdNzD92TX5WfZWU9Qx3INcUpE7Yy2RU80Kx
-	KvT0yLpPm/canzmD+JKH2jKrmyo2zK3pS6o319kuLbCSausxRAmKjSyuF55x5lEOudplDBkbykK
-	EnYZKA/xeOkcyWoHQ==
-X-Received: by 2002:a17:90b:1d04:b0:37f:d265:18d2 with SMTP id 98e67ed59e1d1-38fbca2e26emr1649710a91.7.1785559257854;
-        Fri, 31 Jul 2026 21:40:57 -0700 (PDT)
-Received: from [192.168.0.13] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb29836e7sm953217a91.1.2026.07.31.21.40.56
+        bh=VGWLDg96xg9X2R8tFVFYr1K1sw/dzYhsye3xehVIvdQ=;
+        b=VYT1tp7ov3HOS+HOA6Es8gbK4ZGvjaOfujBXQ+y5n/ETczl6xkXhw16Cy5S8HyDwrJ
+         1BsiugCKwIm+eQ6w6PJdyQjyvb5hD8FySLyIdnw8L2uI9zSEz6cbey8p7EIPu/76cKlo
+         EhzP4oJywkQR9dDrFkDEDDfFo8O0BaWKj213N501wnYGRnA80KxSIwzOUHCQne1G9DyL
+         Zijb2bpMSbDq4wYGIXvl8FFAfWz06p0ZGDMAkkDcs3cSsKS8qTXZWCp/deiDnNu1H/Rz
+         bVQ74du2jUQFHhjvR0v86tOD/VJnhFP6fvHqZqSjQLjWQDa5eBPwGGpoZOEk09inOtWD
+         vKzg==
+X-Forwarded-Encrypted: i=1; AHgh+RoAfspLpyZEgIeBHCZw6n7BIe2njDwWlEHe76EHJ50l7A0DQu63gpNtqkXJtMLFxZJachwcbPNRR3PkzFXEOZc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyJuRvooLiaX7HYeiVBoXZndD93McUN1C6cU5c0aOwxvh9a4gk1
+	XAdJKyS3Du8Ppo1MX+jwQK6tGW0bL5wVoidSnnubTg0X/9t9YcvuHcpI
+X-Gm-Gg: AR+sD13iP2VIWcfU9jqBRPrcwMm+kHCepPjQnBT+nFdBSoOd/Ajd/UliIFO73bJXY5S
+	IRIgIYuzy0aSxWXKIyhl9vWSRiVKqsrm3yAYPM8M/NbyUDBqufb2gI47qRxoXUpW8SgW/lfw880
+	AXgq6f6zkbw+vAo5Hp4SIK1wGMtmRJ6Jwur+n9MCesU6aJQ10FjfX66NeuMOV0lFOcWtQMLUU+5
+	WFVqrJ2a5tc/++riKCbAn03iXgmxJhOc1hksCgxChZuWX2MtmiF/6ifwNVSdbnGTCydQxr/0GdB
+	bmujrjllj/4PwScZmhNsEg+xbONcXctXQ8fRk/q0ByXIYxqsHBQoF6aKIlcgrxQbxkD6FUQfOke
+	ng20MjvI/JB6gHNgi8nvq+iV+ZXJOqZrf+kZuQQqu2bfBLjmrJ3sRgrcTD6AW5IYabuP1I1ruyR
+	oyPPH0fgZ93ePA47ss70O4Z5Z6twrbVqyJIDMdmyqkCFD5jUNO0PuzxSZhTF+PUYsswCq+390rY
+	pnN499UrC3G8JU3epe4VvPEUOF6ZxYDEty6ixxEpbEQrNikc3yCSn+xfhcFvZzrHHPfDX0ARraf
+	++MDH9cAgEt8mUd2u6uLvMxLiqTQ5Ls1lZSuNTHont3LfC8IoDNpVq3PtP1aVIs0Relk8hgVczC
+	f95m5sikrlDL5QS9YMLfN4wNS6rpPCaBC7mtHyJoMHLsZYYg/xNj6NEImdyS7XQQ=
+X-Received: by 2002:a05:6000:1946:b0:47f:56f7:7a57 with SMTP id ffacd0b85a97d-47fd7309159mr3519771f8f.28.1785562132890;
+        Fri, 31 Jul 2026 22:28:52 -0700 (PDT)
+Received: from systembl0wer (109-81-110-164.rct.o2.cz. [109.81.110.164])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd41e2484sm13028897f8f.11.2026.07.31.22.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 21:40:57 -0700 (PDT)
-Message-ID: <47bac1633c1b55d6d8b5bfe7fb47f96b3dae6cd0.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v2 2/5] bpf: track upper 32-bit register
- halves' liveness in compute_live_registers()
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Date: Fri, 31 Jul 2026 21:40:53 -0700
-In-Reply-To: <20260801013509.50C781F00AC4@smtp.kernel.org>
-References: <20260731-static-zext-v2-0-da4aa161e8c5@gmail.com>
-	 <20260731-static-zext-v2-2-da4aa161e8c5@gmail.com>
-	 <20260801013509.50C781F00AC4@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-10 
+        Fri, 31 Jul 2026 22:28:52 -0700 (PDT)
+Date: Sat, 1 Aug 2026 07:28:50 +0200
+From: Joshua Crofts <joshua.crofts1@gmail.com>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ linux-iio@vger.kernel.org, andy@kernel.org, nuno.sa@analog.com,
+ dlechner@baylibre.com
+Subject: Re: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device
+Message-ID: <20260801072850.6f5d255e@systembl0wer>
+In-Reply-To: <20260801033013.19ef2b2f@jic23-huawei>
+References: <20260727-mcp47a1-add-support-v2-0-d4591a2ce69e@gmail.com>
+	<20260727-mcp47a1-add-support-v2-2-d4591a2ce69e@gmail.com>
+	<20260727184226.DFC1E1F000E9@smtp.kernel.org>
+	<20260728151559.000067ef@gmail.com>
+	<20260801033013.19ef2b2f@jic23-huawei>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sat, 2026-08-01 at 01:35 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Skipping zero-extension for 32-bit kfunc arguments causes ABI vi=
-olations on architectures that require the caller to extend 32-bit paramete=
-rs.
-> --
->=20
-> --- Patch [2]: [PATCH bpf-next v2 2/5] bpf: track upper 32-bit register h=
-alves' liveness in compute_live_registers() ---
-> commit 2a034896228b7579bf93bf8ae2024cee100ebcba
-> Author: Eduard Zingerman <eddyz87@gmail.com>
->=20
-> bpf: track upper 32-bit register halves' liveness in compute_live_registe=
-rs()
->=20
-> This commit extends compute_live_registers() to track the upper and lower=
-=20
-> register halves' liveness separately. It updates compute_insn_live_regs()=
-=20
-> to track these bits and infers whether the upper half of a parameter=20
-> register is used by a kfunc call based on its BTF type size.
->=20
-> > diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
-> > index ff1e68cc4bd1c..d0bd94c60fee2 100644
-> > --- a/kernel/bpf/liveness.c
-> > +++ b/kernel/bpf/liveness.c
->=20
-> [ ... ]
->=20
-> > +static u32 call_use_mask(struct bpf_verifier_env *env, struct bpf_insn=
- *insn)
-> > +{
-> > +	u32 i, use, size, reg_params_num;
-> > +	struct bpf_call_summary cs;
-> > +	const struct btf_param *p;
-> > +	const struct btf_type *t;
-> > +
-> > +	if (!bpf_get_call_summary(env, insn, &cs))
-> > +		/* e.g. a bpf-to-bpf call, assume that calls use full 64-bit for eac=
-h param */
-> > +		return mask_widen(ALL_CALLER_SAVED_REGS & ~BIT(BPF_REG_0));
-> > +
-> > +	if (cs.func_proto) {
-> > +		use =3D 0;
-> > +		p =3D btf_params(cs.func_proto);
-> > +		reg_params_num =3D min(btf_type_vlen(cs.func_proto), MAX_BPF_FUNC_RE=
-G_ARGS);
-> > +		for (i =3D 0; i < reg_params_num; i++) {
-> > +			t =3D btf_type_by_id(cs.btf, p[i].type);
-> > +			if (IS_ERR(btf_resolve_size(cs.btf, t, &size)))
-> > +				goto fallback;
-> > +			use |=3D size <=3D sizeof(u32) ? reg32_mask(i + 1) : reg64_mask(i +=
- 1);
->=20
-> [Severity: High]
-> Does this break the C ABI on architectures that require the caller to
-> zero-extend or sign-extend 32-bit parameters passed in 64-bit registers?
->=20
-> By only marking the lower 32 bits as used for smaller parameters with
-> reg32_mask, the upper 32 bits are marked as dead before the kfunc call.
-> Consequently, the verifier computes zext_dst =3D false for the instructio=
-n
-> that previously defined the argument.
->=20
-> This causes the JIT to skip inserting a BPF_ZEXT_REG instruction to clear
-> the upper 32 bits on architectures where bpf_jit_needs_zext() is true,
-> such as s390x and PowerPC64.
->=20
-> If a BPF program computes a 32-bit value and passes it to a kfunc expecti=
-ng
-> a 32-bit parameter, the kfunc might operate on garbage data in the upper
-> 32 bits.
+On Sat, 1 Aug 2026 03:30:13 +0100
+Jonathan Cameron <jic23@kernel.org> wrote:
 
-Ok, I misread the original logic:
+> On Tue, 28 Jul 2026 15:15:59 +0200
+> Joshua Crofts <joshua.crofts1@gmail.com> wrote:
+> 
+> > On Mon, 27 Jul 2026 18:42:26 +0000
+> > sashiko-bot@kernel.org wrote:
+> >   
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [Medium] Potential off-by-one in DAC scale calculation denominator.
+> > > --    
+> > 
+> > Responding to Sashiko's comment.
+> >   
+> > > --- Patch [2]: [PATCH v2 2/2] iio: dac: mcp47a1: add support for new device ---
+> > > commit 38bec2fbb020c3f749c52a26e5cc3e78e72eeaf5
+> > > Author: Joshua Crofts <joshua.crofts1@gmail.com>
+> > > 
+> > > iio: dac: mcp47a1: add support for new device
+> > > 
+> > > The Microchip MCP47A1 is a 6-bit volatile Digital-to-Analog converter
+> > > which communicates via I2C.
+> > >     
+> > > > diff --git a/drivers/iio/dac/mcp47a1.c b/drivers/iio/dac/mcp47a1.c
+> > > > new file mode 100644
+> > > > index 0000000000000..140e93ff2ba01
+> > > > --- /dev/null
+> > > > +++ b/drivers/iio/dac/mcp47a1.c      
+> > > [ ... ]    
+> > > > +static int mcp47a1_read(struct iio_dev *indio_dev,
+> > > > +			struct iio_chan_spec const *chan,
+> > > > +			int *val, int *val2, long mask)
+> > > > +{
+> > > > +	struct mcp47a1_data *data = iio_priv(indio_dev);
+> > > > +	int ret;
+> > > > +
+> > > > +	switch (mask) {      
+> > > [ ... ]    
+> > > > +	case IIO_CHAN_INFO_SCALE:
+> > > > +		*val = data->vref_mV;
+> > > > +		*val2 = MCP47A1_MAX_STEP;      
+> > > 
+> > > [Severity: Medium]
+> > > Does this code use the correct denominator for the scale calculation?
+> > > 
+> > > Since this is a 6-bit DAC, shouldn't the scale denominator be 64 (2^6)
+> > > instead of the maximum step value of 63? Using MCP47A1_MAX_STEP (63) here
+> > > introduces an off-by-one error that could cause userspace to calculate
+> > > output voltages with a ~1.5% LSB scaling error when reading the sysfs
+> > > attribute.    
+> > 
+> > Yes, the max amount of steps is 64, which should be passed here. I'll
+> > add a separate macro for this in v3.  
+> I'd just use + 1 at this location given the clear relationship between
+> the maximum value that can be taken and the number of steps.
 
-  static void mark_insn_zext(...)
-  {
-        ...
-	env->insn_aux_data[def_idx - 1].zext_dst =3D true;
-        ...
-  }
+Good to know, for some reason I thought that this type of stuff was
+discouraged (MACRO_NAME + x would seem messy in most cases).
 
-  /* mark_btf_func_reg_size() is used when the reg size is determined by
-   * the BTF func_proto's return value size and argument.
-   */
-  static void __mark_btf_func_reg_size(...)
-  {
-	...
-	if (regno =3D=3D BPF_REG_0) {
-		/* Function return value */
-		...
-	} else if (reg_size =3D=3D sizeof(u64)) {
-		/* Function argument */
-		mark_insn_zext(env, reg);
-	}
-  }
-
-Meaning that the function parameters were always marked for zero
-extension. This is also confirmed by ELF Application Binary Interface
-s390x Supplement [1]:
-
-> =E2=80=B9simple_arg=E2=80=BA: A simple_arg is one of the following:
-> =E2=80=A2 One of the simple integer types no more than 64 bits wide. This=
- includes
-> signed char, short, int, long, long long, _BitInt(=F0=9D=91=81) with =F0=
-=9D=91=81 =E2=89=A4 64,
-> their unsigned counterparts, _Bool, and any enum type. If such an argumen=
-t
-> is shorter than 64 bits, replace it by a full 64-bit integer representing=
- the
-> same number, using sign or zero extension, as appropriate.
-
-This is good news, as it makes changes to liveness tracking much simpler,
-there is no need to inspect BTF after all.
-
-[1] https://github.com/IBM/s390x-abi/blob/main/docs/lzsabi_s390x.pdf
+-- 
+Kind regards,
+Joshua Crofts
