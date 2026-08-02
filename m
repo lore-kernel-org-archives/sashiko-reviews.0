@@ -1,143 +1,162 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9FB3932D3
-	for <sashiko-reviews@lists.linux.dev>; Sun,  2 Aug 2026 14:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494643C09ED
+	for <sashiko-reviews@lists.linux.dev>; Sun,  2 Aug 2026 15:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785680038; cv=none; b=d0eBPCf3JFgzjTmjXj8uh318Qu8xKeAKkMclxKaKBckJDCfKvNHGR+mnkjC6nkgpM9uirD5L5kKLTERYA/EaoUyHJuhObuSJ87jehObC7rCBF/6uZR+leQB9RgXENh/B7BRnPia+RSWHmvcvD777psFFoiMKERXgd060iOJNC/k=
+	t=1785684276; cv=none; b=VAAbpLhTfIu7/kj5XlUiSf6glYosWVsb1afHvVjP6UUN2H6fkF0nZ23SDvW51vL18SHDesiMPMOCPghvbLbO9YqMR6XR8R0+jOODpBiw2EgH1FQc7pJye7nhCHqBdFsPilrEfzfZlFgd1aDCER5AdhxxtuSprC8VP43GwDdYwto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785680038; c=relaxed/simple;
-	bh=Z83Flx6HFaysd4VEjIoQ8wKEjpM7Vev7LGCJs6j7QnQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eGPoiZByG2wsjI4n72Jx4zVcJWlncjkFjRMQyvaCwtn9DPLGMRSV8KuOSBhHN1OJn+ZRG6bFaus1Ir+LfncKsJZDjZxK5htkr4aSWSoF88CPcYYZbZlPvWswC+v2g2Bwiu15o0OHNFD3zK0FT0FaiMrdIsmRbNR1xC8qUDHS+n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqWMGujR; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785684276; c=relaxed/simple;
+	bh=I3UgxVcwvhGVd0HTYTSEfKEsUIGC5xDKAhalzAq0A+A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gfTHnqnQTFqr7FIsLqa50M8l+CFXDzxneZFdF1uRUGCtr2+IUpW3jW8TzfN+F1qBHi85O8x8Sx9nbVRTcuH7/7+2a8Ys0XUXqSUcEVIaKxsWq0qnScCzP6PLlfeoJYschbmGi+8fuUeJIxyj1bozzIm/ILNVMfeIk395l4E6HBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=TGbftCV1; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqWMGujR"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8485bd28dd0so2966178b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 07:13:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="TGbftCV1"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47ddf7b09e5so2891365f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 08:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785680036; x=1786284836; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ED9iSFQsXOfHCU0giH/JV3DDdqC1CLPGUfYqEtZet90=;
-        b=JqWMGujRxn4Y8XDA4jVhKFX76QKMpGlscIu2jvXfmFPhtxW70XXkG1D9DrzVIgw4ef
-         WvIoTGRrEv9d6gAGijKKtan2XimUPvz+ZItrLsKEus2lFn5a0JlW0NSk0ZEHZZXMmTfx
-         ckSKbgdGsvsq4Gpan8px7GXvCZT1K8UVf48lFQ2h/yW8YB6CEERZrctioLcjRWcOyQwb
-         1gpQLHElhkrwLsJBSMEaoyhB0aygcCOch1qHxctx6WZQ++XDgg5fWdu9dDX/sX5zMZDV
-         tpCxiTw21o7rYJ8Os98qu+Buzk3KAz9cKqaypVaQ387TowviQUzAjZeOcNCQnIKDq1h/
-         kt0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785680036; x=1786284836;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+        d=baylibre.com; s=google; t=1785684270; x=1786289070; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ED9iSFQsXOfHCU0giH/JV3DDdqC1CLPGUfYqEtZet90=;
-        b=jR5gPcDcHHPzRCDkR1v1mGsrtklnyC5YWlGOgAsW+hN9NrHK88UW5FEUMIUqWAV5EN
-         R/U0Uutfl27T/LX8zG5ul1VS1TUevsNZjYxNmewSEdt623bKZO3WXTgipJprIpH3WB2o
-         sKPSQHsumtoIlR9ackzNATS8bUkxbYFLiirM5DuRDMFhrcD+dTAWeI15ne2dWmdgBQ/0
-         zv7YzCcY/cannG2ydcujN+v4qOy6H4uV3bIG13nMOwD/BY+vxb4T+3L4j8Y3pEy95ZAO
-         kgGMye4rm0JDsxlE/XRdJkY2PS0jgYfHGVQvrdZXbrNWQC4rKtDWD1lyjbddielbELqR
-         52rg==
-X-Gm-Message-State: AOJu0YxQjFFkVBJNqe+VgmvdWnvoM2ULvf22NCbJu0WkmYQ7+XJwfMQD
-	vy2eXgLowuG2UXe9BKkYaH4lhdihqj/1tykBH/FNY8BJ8Bw9pdBj54ka9SNJvQ==
-X-Gm-Gg: AR+sD12ZqmTOvzwu1BmkNF4Z348rti8rZQVIgA9vXoST50xdU0+daHJXf4gS3HGfLU3
-	3kjus31JaYR9okkN5W6K7hHR26bUWVLhkAjZOaY3EnIG/xopT/gzehI/jOlfXqQODaSDMEceR7k
-	WXITapThnvA1T35c03k7etCbwuyCMl/vVWN9eWRyrrsEWOUWhsjUMtjCI0TewlHmIO/Iedf+BDe
-	aT02GGdJs2iFVwxNMdlQr8MT7GQGq8JA23qVrOizyKemKtYsB+7vnIo60ARKN2OZuWt6wf4sEx0
-	HsZCwiWdMnv3TgQIUidIlzNjpobYqf47GzXmERo3EjSYePCzbsdhoV6YziFwA8rdvFs09tisHRo
-	ckP2QMwSoiPlWGs2m+IxIwg+ydoMo+U/1Ja4fi4LzoFgsadu0hYnqPQjvISMtaBm+T7nmqnmtU7
-	R86VRuuvjrZZk/l1/+Ep+BGVb795U5iBIB8QpafG6gUx16+diCGYSApdGaXZ3sf/bsB0gCVgyHu
-	BNMpNF4TOF5JTmdsRJsyFbRIYD422njxzbe1Q==
-X-Received: by 2002:a05:6a00:807:b0:848:3f91:da82 with SMTP id d2e1a72fcca58-84ee47ea28cmr5757789b3a.32.1785680036436;
-        Sun, 02 Aug 2026 07:13:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84edc29f31dsm2533894b3a.36.2026.08.02.07.13.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Aug 2026 07:13:55 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <a61b320a-1577-4dc5-8b39-3a807c75cd6b@roeck-us.net>
-Date: Sun, 2 Aug 2026 07:13:54 -0700
+        bh=ZIAs7BonL5OHtmcJK5pQoVXNAcT4bPKRZJcULhZO5Is=;
+        b=TGbftCV15yxWzxjWaYXxA1hfG7kFELrVkUfVQUuY3wIacJn1GBEk5ASW2E+nSvk+UH
+         7MqeMuGy7kTdJsx/h7i13BAB/1zfUAe8g/e7G1CV4+ux+2zq7GJvj+Fd4f9wh8s86XWo
+         Rt0k79SmANQgyjeb/GSoCojxvJDn8u2N5YiEEO2wbIIyfrYdpz+PrLuVvf8LxXmB0xHn
+         ggUBNW1T+d5EoBtq6YomsO3Z0fbHSkgyy/56/d+Rcuv8RcdPfVMvoWy/lesLD1c3h0Iu
+         ajO79d4f4fFhBm5BQZPvkutS2t7u4sGvzbKqw99eAhspV025xa088SsWuxbTpAShyWxv
+         vYLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785684270; x=1786289070;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZIAs7BonL5OHtmcJK5pQoVXNAcT4bPKRZJcULhZO5Is=;
+        b=GDUvnaKHPdkIPAfKM88731lduejn5GdhHBPdhrhfR5oqjxerygCl0BtpJYwWZRCIXC
+         GWoXJwROYmziK6avbNG2kHnXU8WBf6PpSj4LOoWwrZogrQG3RYQ6nGot1d0/hQB3n9NH
+         Kk1RQUUjh4ZgtglvW3TzyRa4rCVcpZu0bx4F2dXH+fyegL4BYTnRKCK5lwqqe3Lf7sB6
+         6TRnaEpyEGeS8G7otu80yPjM2M0R0LeDr2+V6Q4zGw4kDtQaZJboRsCv+vMyIOUVrBU3
+         HjZ7y1nJskJTgz3BwJMqYH70t61G6PNiyV9YTrUe/XBpny1PMdGX+ax67gGlA68LVFNW
+         F9NA==
+X-Gm-Message-State: AOJu0Yx9CJ5cB5Y/Uy2Hpo/IDodfS/HJRllUOp5tIXz0GfRcBSxBkXdE
+	Or8NI0o+5z+DJT9Y7DBAPKeLOfAHRlhCxYpF4hPf2WWL6DrdkQWg/4HpKUnkLIoY/xU=
+X-Gm-Gg: AR+sD13UOAM0hMxtn1Q+RNDESli0vfQ77MfWDkSj9ZD2zaqJtk9m7xhspjYgRvNXKNP
+	SPHD/TxEJR83D1T1PVWled6WM9VC4MlGo0TaCJ5mXAUNla4SjaL+ttuDGsBulIhd9dgS8TYin6o
+	BSMhSgndBaD3mNGSqRbxU3tX8yohsKROHYRS35izOJqpHrg3p4Av+6J2GohMsQQ73I9J9dsk3uz
+	xaROF2Lbcy5Z0FtZs2dmG8fbKBTprAMgyucdo4LpDxBRQOqIhgr+mHgMUX5u2kdBdnYonf9IECr
+	8TTNLMEd/NPUMvcbyZMEquQ9F89VL0oL4zHuzLuuf3FpF/B6SEkyimnQEcupETzztu3g8lmAUFP
+	4Wewc02cFttHpeHoNcAK/IaFXJ5XIHyz4UgDPCT3eG2zkCVcnthJd9Pg3LTCgGVwOqQpoVN/7fD
+	q8yhONuyLsd2xEVwtYvtxVWekrS9eIO41PCLaSYidfXEAywLBkpqTUx+JUHHE=
+X-Received: by 2002:a05:6000:29d7:b0:47f:c3a0:eeb9 with SMTP id ffacd0b85a97d-47fd72a8e96mr11079018f8f.3.1785684269987;
+        Sun, 02 Aug 2026 08:24:29 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:8f07:a4d0:36de:3713])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-47fd45a1abfsm24042016f8f.37.2026.08.02.08.24.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Aug 2026 08:24:29 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,  conor+dt@kernel.org,
+  devicetree@vger.kernel.org,  robh@kernel.org,
+  linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH RFC/RFT 2/2] net: stmmac: Add support for Allwinner A733
+ GMAC210
+In-Reply-To: <20260801163100.639F21F00AC4@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Sat, 01 Aug 2026 16:30:59
+	+0000")
+References: <20260731-allwinner-a733-gmac-support-v1-0-d0a8732bfa82@baylibre.com>
+	<20260731-allwinner-a733-gmac-support-v1-2-d0a8732bfa82@baylibre.com>
+	<20260801163100.639F21F00AC4@smtp.kernel.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Sun, 02 Aug 2026 17:24:27 +0200
+Message-ID: <1jv79slf4k.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hwmon: (sg2042-mcu) reject short uptime reads
-To: sashiko-reviews@lists.linux.dev, Ali Ahmet Memis <ali@iusegentoo.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260802130728.25721-1-ali@iusegentoo.com>
- <20260802132411.ADE811F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260802132411.ADE811F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 8/2/26 06:24, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Architectural and locking model violation: custom sysfs attributes are registered directly on the I2C device rather than through the hwmon core.
+On sam. 01 ao=C3=BBt 2026 at 16:30, sashiko-bot@kernel.org wrote:
+>
+>> +	if (!plat->stmmac_rst || !plat->stmmac_ahb_rst) {
+>> +		dev_err(dev, "missing required reset controls\n");
+>> +		return ERR_PTR(-EINVAL);
+>> +	}
+>> +
+>> +	/*
+>> +	 * The configuration registers are inside the controller
+>> +	 * reset domain, so the reset must happen before any write to them
+>> +	 * and should not be done again by stmmac or the configuration will
+>> +	 * be lost.
+>> +	 */
+>> +	ret =3D reset_control_assert(plat->stmmac_rst);
+>> +	if (!ret)
+>> +		ret =3D reset_control_deassert(plat->stmmac_rst);
+>
+> [Severity: High]
+> Will this cause a bus hang when writing to the MMIO registers?
+>
 
-Ok because the atributes are not hwmon attributes but associated with the MCU.
+No it does not. I've checked.
+Actually touching the ahb reset here has negative effect. stmmac does
+not properly detect the link type then (GMII instead of RGMII)
 
-> - [High] Arithmetic overflow when converting user input to degrees in `sg2042_mcu_write` allows bypassing maximum limits.
+> The code checks that plat->stmmac_ahb_rst is present earlier in this
+> function, but only toggles the main mac reset here.=20
+>
+> When sun55i_gmac200_setup() later calls regmap_write(), accessing an IP
+> block over the AHB bus while its AHB interface is still held in reset
+> typically causes a synchronous external abort or bus hang.
+>
+>> +
+>> +	if (ret) {
+>> +		dev_err_probe(dev, ret, "device reset failed\n");
+>
+> [ ... ]
+>
+>>  static int sun55i_gmac200_setup(struct platform_device *pdev,
+>>  				struct plat_stmmacenet_data *plat,
+>>  				const struct sun55i_gmac_data *data)
+>>  {
+>
+> [ ... ]
+>
+>> -	ret =3D regmap_write(regmap, SYSCON_REG, reg);
+>> +	ret =3D regmap_write(regmap, data->offset, reg);
+>>  	if (ret < 0)
+>>  		return dev_err_probe(dev, ret, "Failed to write to syscon\n");
+>>=20=20
+>> +	plat->flags |=3D data->flags;
+>> +	plat->host_dma_width =3D 32;
+>> +
+>>  	return 0;
+>>  }
+>
+> [Severity: High]
+> Are these custom hardware settings lost after a system suspend?
+>
+> The driver configures critical hardware properties like TX/RX delays and
+> PHY interface modes in the MAC's internal glue configuration registers
+> here, but does not appear to assign a plat->resume callback to the
+> plat_stmmacenet_data structure.
+>
+> If the MAC loses power during suspend, won't these registers revert to
+> their default states on resume, leaving the network broken because the
+> generic stmmac_resume() has no way to invoke this glue logic?
 
-Correct
-> - [Medium] The I2C probe function checks for `I2C_FUNC_SMBUS_BLOCK_DATA` but the driver requires `I2C_FUNC_SMBUS_READ_I2C_BLOCK`.
+Assuming there is an issue here, it would be a pre-existing one for this
+driver, same as the sun55i-a523.
 
-Correct, and common issue.
+Let's not get ahead of ourselves. Support for this chip is still in the
+very early phase. I don't think we have the means to test suspend
+yet.
 
-Guenter
-
+--=20
+Jerome
