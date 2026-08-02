@@ -1,165 +1,102 @@
-Received: from mail-wr2-f0.google.com (mail-wr2-f0.google.com [74.125.225.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out30-132.freemail.mail.aliyun.com (out30-132.freemail.mail.aliyun.com [115.124.30.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB34B489882
-	for <sashiko-reviews@lists.linux.dev>; Sat,  1 Aug 2026 23:15:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D0C30649C
+	for <sashiko-reviews@lists.linux.dev>; Sun,  2 Aug 2026 07:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785626120; cv=none; b=G+aXezLJqCP2x55pOYE8e8B83P6XJEI7NDdL+LtV7TFnpzjiQxDXDW/hhMUC25yCJBfXDV0OhDJAi69AMaIs5HPB36GoHUvNoJOyhQDnme7Af311u9gg/LkFLQ30t0/+zEc+qfb9VP0jr5faOC94xRFASG3audR0PRgp0cdYpps=
+	t=1785656881; cv=none; b=AKrp4Iz61djQSSDcHjA4dTNW+MXzGbhtRoUnSo4mmvUoykQn0jur8PorQKKb6Fa4cXUg7tELLu4LzoEYOnlbmRxMf8G0cmkkGYTTKlMW9RZbqvvjTAFHphHZZMqsGuwtZezCrIpS0zK0clF6Pb7uM5zuw/Os5nX8cd0Bds9CX5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785626120; c=relaxed/simple;
-	bh=uYWMWTB2xfhuBvHHIxzDNU0Hyt+RGxbNFHvWkvXIEGg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=V270VybSOED+DupH+wjF0yQY63MAkbeQwdK58kfn3v4ygHN0ht8BzCEW062da4Buccog6wD/Y3ev/aFbjz6G7eHlDwgCk1dHJiVwLzrTAQ3q5xglCzR3fgtYYu0/BUuTdbkyODet+TmRmPJc/qhI8cwkXFJ+4fNffEDjhPcQLlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EgQbcXe6; arc=none smtp.client-ip=74.125.225.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785656881; c=relaxed/simple;
+	bh=XjPQ/xZWThddxTJkuGLtSU3m012G+3vFPGZbmTmZY5Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QB0OOrW1FqYkDtUPFQ91yhQOJ1bI0JWPRX5fiSa7UQWcxFwPEyDNAC4vRwFz0tsjcQvZD5UpSu5n/KMjabZMA8aAX+4looNT+6lbDywQWtixxzs4zxiLz39uVhEtRLKKrjUAjKqe0FBtmtHWF2wfFURzyZhoS2SBJRIZT3FtOMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=Kdtd+QI3; arc=none smtp.client-ip=115.124.30.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EgQbcXe6"
-Received: by mail-wr2-f0.google.com with SMTP id ffacd0b85a97d-47f4c92d1b3so569974f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 01 Aug 2026 16:15:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785626117; x=1786230917; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=UDVgfDsUWPp4vaDuL46w9X9y1PG9/aWOLcGBDuH/lFk=;
-        b=EgQbcXe6m6x5w7r6FNn2ADxjm54dFvVkTQFT3vnulkkcrR9pRZp5sWQfo1AM2YH8cX
-         LqrvWIzGmFS+Rf4HjnWkYmj1QxKjRTbBXASAdE0NupuPijvR0aOOMu7dLVghS8B8G3zu
-         /lnQHZHaYBkNb/3knt8drwd45GyJXICT9BKAl+xNq2FugzigpGMKXhkCOy14rlottGQU
-         H+JQlZSwuWvFY5dW/F41jolMM+bby9s3lWwfYo6ewuxo61xBSyJdxwtgqmDBundeoT7t
-         kxtMYyyKH3nIqCJwjPB7dkS6tvGlCEbtHPTvcb4oHYsfbdAU/ogkkP8ZjeCWzXNh3HhM
-         2wRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785626117; x=1786230917;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UDVgfDsUWPp4vaDuL46w9X9y1PG9/aWOLcGBDuH/lFk=;
-        b=kODnzTIT8xpOcCUUhmQc7oscR6W7JlZk+wI4m6KvAkCTsbIPYh9jc5D0Mzpu4Pop+z
-         AIJpqE5FdJYWTSttjWz5Gd5eeBeva+szPwPDWmcNgOEJ7RHIVtv12AQPbRnlNnI9S1PN
-         rJ/GxY+1RRdS9chkmWEfaJfDxcCKhlzTZ9QlpHuj3EzDiJXjuaBY/wlnPAzsDrJToYP9
-         ZmdRxWmMwojc/lfEOv7WNuqCcHFjSwRpe0tNKUJcrbCHMxnyH4YphAZaV+sG3zoTPHGF
-         yU5rwqaRHFrMwQYueSCoI4bS3hte0MPMYLgkFNyKJ9X9so0sqxEoHwBP9YWg5V7PvcRg
-         0jsg==
-X-Gm-Message-State: AOJu0Yw9a7f+zRIKrvYXFdJRUN7rajymJD5bPffEYpq9hb6fbMteMQi+
-	y7AbP92IzpA9Zt4J9QNGuLemhUkqjYnGn1yD8ghl0/j7uFBX3sypBZZuyQ842+Wi
-X-Gm-Gg: AR+sD13rF4eZN0YVZm+haXxiNuoALsFAtc8/OSVOLOkJ11X+q343EgWGtNqc+UMX30W
-	AOQ37WfinbmFdKNV2/BXYnc9brhcNL8Eve3inXrAsHCK4nGwmiE7a927OAzsDaxy5+hH0S4HWj/
-	sPJay5qPqedJLONmzmFohChWRCEX2WNIhqvn0mH4ehi5EhSmHnsO9dF4TDyAFLA9ebiG/TaqwB7
-	lzucdxTNaoEzmzZJipz51q4vZGuMFEyRSh+MDj1vWDBBobvccf2/AZsasq5X0i0px7/8PjBZxt4
-	MSArjtRgDbftk4hP1/V32/fzXThnav+FKFG+VnSQEb9KdWafHBKFcSGfn5k3HdwrVdk79YzXtni
-	TwfxpIhtDWxH2TUKU8KdOan15QiXoHKjWfq+ubks2zKXYphxgriNYkAxbMb6gX76ce6F1DcNv65
-	vehmRreA8z2qL8q4vcnF2C/lB9cHrHuM7DhcAR76e5TWEnAV2vdDlGUft7VMJ1MHOM8E0gN4AYL
-	cFMWxYN5ebNBNgYMdTf5+w2O5GKOANLqpQwF1Vg33xUPO6UyL/M1OjR4cY4O99BMypsYWfA1+zh
-	h5mnqWsUAm4F8QmwQe2ydUC7pQQ=
-X-Received: by 2002:a05:600c:6989:b0:495:6338:1453 with SMTP id 5b1f17b1804b1-4980c680bd5mr94148515e9.16.1785626116985;
-        Sat, 01 Aug 2026 16:15:16 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b6093fsm53217885e9.1.2026.08.01.16.15.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Aug 2026 16:15:16 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="Kdtd+QI3"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1785656868; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	bh=/NS4NnWVSUKGBz+I/sNmTYwrW0tng0AM1n4B2vTPhSI=;
+	b=Kdtd+QI3f+xGc8p0C/D7L2kMRYyTNqyCgpU4KMm2Ad20CpGkxRgaWHghAHK7h1da6YL4GYPfM2Za65+4O+xSWwyBvW40qdB9yp2+4uB/n+k/NjoXNMuMQHUlAQ+sCPupSNw0Fm+xvyEDRoFbNozc30tLolod4MfR0QLM24zlefs=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R171e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037033178;MF=feng.tang@linux.alibaba.com;NM=1;PH=DS;RN=4;SR=0;TI=SMTPD_---0X8BjgAK_1785656867;
+Received: from localhost(mailfrom:feng.tang@linux.alibaba.com fp:SMTPD_---0X8BjgAK_1785656867 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Sun, 02 Aug 2026 15:47:47 +0800
+Date: Sun, 2 Aug 2026 15:47:46 +0800
+From: Feng Tang <feng.tang@linux.alibaba.com>
+To: Andi Kleen <andi@firstfloor.org>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Subject: Re: [PATCH] selftests: net: reuseport_bpf_numa: consider cpuless
+ numa node
+Message-ID: <am72IsHVw_CuO_RJ@U-2FWC9VHC-2323.local>
+References: <20260730113040.75718-1-feng.tang@linux.alibaba.com>
+ <20260730113738.41C901F000E9@smtp.kernel.org>
+ <amv0DwQoeESq2Cp7@U-2FWC9VHC-2323.local>
+ <amz-m8cu0lYc8LzR@firstfloor.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 02 Aug 2026 01:15:16 +0200
-Message-Id: <DKDZMPBQ6PXU.GQXFOI3BXGJY@gmail.com>
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v1 1/3] bpf: Show more useful info in stack
- depth stats
-X-Mailer: aerc 0.21.0
-References: <20260801230400.850271-1-memxor@gmail.com>
- <20260801230400.850271-2-memxor@gmail.com>
- <20260801231113.D0B711F00AC4@smtp.kernel.org>
-In-Reply-To: <20260801231113.D0B711F00AC4@smtp.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <amz-m8cu0lYc8LzR@firstfloor.org>
 
-On Sun Aug 2, 2026 at 1:11 AM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The new stack depth verifier log format breaks stack metrics p=
-arsing in the `veristat` tool.
-> --
->
-> --- Patch [1]: [PATCH bpf-next v1 1/3] bpf: Show more useful info in stac=
-k depth stats ---
-> commit f7cb915ff02de7a02fe7b2353a1f2d77e1852496
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
->
-> bpf: Show more useful info in stack depth stats
->
-> This commit changes the output format of stack depth statistics in the BP=
-F
-> verifier log. It replaces the old subprogram index-based format with a cl=
-earer
-> name and depth format, avoiding hard-to-read sequences.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 8d0635ee48c7e..51ac0a9ae3394 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -18703,10 +18703,18 @@ static void print_verification_stats(struct bp=
-f_verifier_env *env)
->>  	if (env->log.level & BPF_LOG_STATS) {
->>  		verbose(env, "verification time %lld usec\n",
->>  			div_u64(env->verification_time, 1000));
->> -		verbose(env, "stack depth %d", env->subprog_info[0].stack_depth);
->> -		for (i =3D 1; i < subprog_cnt; i++)
->> -			verbose(env, "+%d", env->subprog_info[i].stack_depth);
->> -		verbose(env, " max %d\n", env->max_stack_depth);
->> +		verbose(env, "stack depth");
->> +		for (i =3D 0; i < subprog_cnt; i++) {
->> +			const char *name =3D env->subprog_info[i].name;
->> +
->> +			if (name && name[0])
->> +				verbose(env, " %s=3D%d", name,
->> +					env->subprog_info[i].stack_depth);
->> +			else
->> +				verbose(env, " subprog[%d]=3D%d", i,
->> +					env->subprog_info[i].stack_depth);
->> +		}
->> +		verbose(env, " max=3D%d\n", env->max_stack_depth);
->
-> [Severity: Medium]
-> Does this change break the veristat tool's parsing of stack depths?
->
-> Looking at tools/testing/selftests/bpf/veristat.c in parse_verif_log(), i=
-t
-> appears to rely on the old format using a hardcoded string and splitting =
-by
-> the plus sign:
->
-> tools/testing/selftests/bpf/veristat.c:parse_verif_log() {
->     ...
->     if (2 =3D=3D sscanf(cur, "stack depth %511s max %ld", stack, &s->stat=
-s[MAX_STACK]))
->     ...
->     while ((token =3D strtok_r(cnt++ ? NULL : stack, "+", &state))) {
->         if (sscanf(token, "%d", &sub_stack) =3D=3D 0)
->             break;
->     ...
-> }
->
-> Since the verifier now outputs max=3D%ld instead of max %ld, and the indi=
-vidual
-> depths are formatted as name=3Ddepth rather than numbers separated by a p=
-lus
-> sign, will veristat silently fail to parse STACK and MAX_STACK metrics wh=
-en
-> processing BPF objects?
->
+On Fri, Jul 31, 2026 at 12:59:23PM -0700, Andi Kleen wrote:
+> > > Will this crash if numa_allocate_cpumask() fails to allocate memory?
+> > > 
+> > > It looks like cpumask could be NULL here, which is passed directly to
+> > > numa_node_to_cpus() and numa_bitmask_weight() without validation.
+> >  
+> > Good point. 
+> > 
+> > If the allocation fail, will return 'false' to let the code go the
+> > original flow.
+> 
+> 
+> While it's technically true, checking for out of memory in ring 3
+> (or at least other checking than exit(1) on error) is usually 
+> useless. Most of the time when this would fail you're as likely
+> to just get killed by the OOM killer, as well as the harness that
+> called you. Maybe it could happen without that with some very tight
+> ulimit settings, but with that not much else will work anyways.
+> Also these paths are basically never exercised so likely buggy
+> when non trivial.
 
-Fixed in patch 2. It is an open question whether we care about format
-compatibility, in that case we will need further adjustments to parse both =
-kinds
-of output (for older and newer kernels).
+Good point.
 
-> [ ... ]
+> 
+> For libnuma if you set numa_exit_on_error to 1 it will always
+> exiting after printing an error. That includes the allocation
+> functions.
+ 
+Good to know that!
 
+> 
+> 
+> > > > +		ret = true;
+> > > 
+> > > [Severity: Medium]
+> > > What happens if numa_node_to_cpus() fails?
+> > > 
+> > > It can return a negative error value, leaving the cpumask unmodified with
+> > > zero bits set. Because the return value is not checked,
+> > > numa_bitmask_weight(cpumask) will evaluate to 0. Does this cause the function
+> > > to return true and silently skip testing on nodes where an error occurs,
+> > > rather than reporting the infrastructure issue?
+> > 
+> > From the code logic (with above change), the 'node_id' and 'cpumask' have
+> > both been validated, and this numa_node_to_cpus() is very unlikely to fail
+> > here upon reading libnuma source code.
+> 
+> Yes it's unlikely to fail.
+ 
+Thanks for confirming it!
+
+- Feng
+
+> -Andi
