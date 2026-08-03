@@ -1,117 +1,112 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983F736494C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 03:41:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785728484; cv=none; b=psU1hM536zpZpq269tz7nx6m1dTu0Qav9xdXscTp4G0lT+CuUdKUFXqT1qfu/8wuY8lkPUP5CY6YbJeFZAru5unO1Pe84vLaOWF9kTqarwD2ai1IJebU3ZYJSydZ++C4cjQ+CyngQatvDYnFf04FczwR96YswkEMBIZE3P0nEoM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785728484; c=relaxed/simple;
-	bh=NCMW4kQRyBWSj2E3oOTBkzWRrKKMpt0eKzLDMpatx9c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHCJ1g/PhQwe3sdbMJ0fXcS7lxEGnASxNIdGnsAG8D3P8qgDRh/IGXtq2cdF82uuiKwAgOBOU4R+401KKAJ6ZC8gtqvTjphM7X7tp76e63GbXxklq9xTmMDhdFy6MCefoYQqBc0xDv3IZzVOtxG1HzgdVMU2DSu7fSWlUE/tJG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr; spf=none smtp.mailfrom=isslab.korea.ac.kr; dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b=0s7cHd5P; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E4C171CD
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 05:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785734906; cv=pass; b=TlO+DS5jtuAfC3JkIa6wDLIKVP43Wj0YOxjtY9fhazVnCWFZ8IIWPGzcT/x2pzQpvup36PhSJLmY/PETgvTRyZ5DAzgRRSBVlt7OXZdgIOE1K04nAXkM3ga7/ZWY7s+c2Cv2vI2tItUZtaw4pKk46jCIYTIfAhjozbOG1lkCpks=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785734906; c=relaxed/simple;
+	bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fOaPnY2lJjlS57YAbL0GPW7NY/TqnHLBccpp6jvRp7hZJIXKqO7H7LPMhgiMXatTwuIXkGR99LdJcH2X2ZASnbNXGIkOoPpueU636X3WVYHgTbWWPx4ypBhi4HlxDsVOuCjQ31l5OHJV26bWscDaR1K4EUucO6HTJ5Rz6pPBgXA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sldw+rc4; arc=pass smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b="0s7cHd5P"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e071ed6aeso2226656a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 20:41:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sldw+rc4"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-81e6f0b4610so33366317b3.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 22:28:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785734904; cv=none;
+        d=google.com; s=arc-20260327;
+        b=i8PDIgYv5IT8nuOGUotVR9JdJF2Oww39sQASoEqDKRhQ8CkUhYR/lUBFR/ciniCRDD
+         DR+PsS/Hh3gMC4iEzs9mJx3uRbc5VsnpuwrjA4vD5IPXqao4kQTMt4HhAairWEpo0ynh
+         rRWucw/zKZskkuCD58TyJVUvmJ1U9D1gdE7VU4X5MM6BN09xuz3PSEMrVuPHu4FzpA7+
+         J8LzAosHgSkHgRL8oPXR7cN6USr/8qkOmAJGfVywFdlOj8z+8z9RQPee6W5JgFcHQzwI
+         qtkF+ZonuAMsogmbp1zvXGUgcU5bXxftOiBjkihtsDk1F8iqibKnQ2WmaHXcD1egpGpZ
+         J2ng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
+        fh=z+NQq8u+M/6HfaLpZE34W1L5DP7Kce1BOfmppHQKf0c=;
+        b=miRQoUuWKtcV+2jBU7Ewp4jHWuwHCm5YR38uyMQl3uqnvo21nlrBiB/unwI+XuTmpF
+         KNze+HVmdvKNQKhnw8NGs9dLKTr3dq2RF1NPUrbGAwUCgMM4qyvyiwXpFweyeW50zh7X
+         mb1gLYo7/QTZnFuOmie52n78HBDaQSuvziks/WuHWpmDpQ4X8kmzWs8Jk38MG/8wx/fu
+         LXOA7fDv+iYjJv0vsUnYzxn9WBnDQySBF43+dMrI4eFGmlIcWVydhr60DRvF3iPvEbUd
+         0KmYB+WsBQdwAbAkOetdn9N+c2UtiK+/Kko2fVbRO07oLKW3InMbwaZodg/0Vm3T7aWx
+         jCig==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=isslab-korea-ac-kr.20251104.gappssmtp.com; s=20251104; t=1785728482; x=1786333282; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NCMW4kQRyBWSj2E3oOTBkzWRrKKMpt0eKzLDMpatx9c=;
-        b=0s7cHd5P9c4CKjT9m99bGgcJtZyPgSmA2lX4StjaD1tyuG/D2l7ERzEDghvj9OTSVS
-         I5L3xY/UqjF77iVzRJ4kT1PRsRixNDQBpKmEfIK7nMmbXE5GJ7VRc6CLi8c1DpeXrHKX
-         ZKt/bob0BTYYJVZY55xWcyZQOpg3ATljr6NDPwpOWeoFEGP7/oz5vFdDjN3f2LzXe/h8
-         Di/+Xb6UGRtKlQj+4uJ9P47zXnhxC1RXrX/WWTldd+hXiLHIv4qUk0Xqpdiuhe6rRR9z
-         g4p+S6kyVE4mWNa32dNmzWxkQElro4N3yMg58m+TojPGnfXdsb7wcCwtNLPot3WeFwLk
-         tQdQ==
+        d=gmail.com; s=20251104; t=1785734904; x=1786339704; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
+        b=Sldw+rc4ODqXD2DVynAJRcuZRtGA2B5zrXhpM3F3fw5X68khEgHlzWpAkcHogVsWLt
+         N9m3GGb7LgSVUFSyfpUIt/30BXlKe0aSBuozZQA7OqDWsZR53NH2yw1hCGdgDmtuZqZq
+         pq1z1RWcMqFq9dmihXbqbxvRPAO3bCQukOJ2rBM11sPcSRmZqihdYnbVv9DKct9ekixO
+         lD2YpZ5ioEQJJrPYAXJpSrWu9FVCmdZNt+re8zlKuLMwCSs2svi/QiiXKYWXlUGMavye
+         YNTB4w7u6J+f6r0X1UtuF+Du2O+wk4rWQ8N5VMgHQ32v4wvaVB0Hqj2ip39tRtjCGlkw
+         JoaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785728482; x=1786333282;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NCMW4kQRyBWSj2E3oOTBkzWRrKKMpt0eKzLDMpatx9c=;
-        b=ln4gYHqK/w2Vk9E61devDNnp4d+sKadQ9beO7E8jgnl0+WQqO21HVRoNb10v6SjDbr
-         Ht+s1zk22WSVFsxega80TXfa2i45Jpmw4+0GAWCSaXr+Jdz1W/I/nHqPmiUdmz9psO5c
-         rHPQsalhOTItEAbHGrEfyFEj3Ho/Kbk6oW9KIC46hi097Zj3j40AZIWG4Q6vbAxK6svR
-         JftUR+1zTdfuY4qWZSpUPyQGFExrjyJRXBu7dsi/sO9BlYRKxOLzASz+kEAAXij3NhcD
-         ze2T3p3xGXtmwGurFF+AodmcfK+iWTJpMeg/2r5lTTQuBHxpzbRUvFjIvSlMrEnjj/Dx
-         8Rpg==
-X-Forwarded-Encrypted: i=1; AHgh+RplopZXXyLbqwSFF+Idh28FUEM++mbEoYF44VtZ3mJwq3j39eCcNgnVoW3bRoEcsMuurXHgmjEm14Qgcl5MYHU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwXYdamASc4+US9nEYBKe4KO57j1HG9zAGlN3XUg/kw/9yIca0U
-	UMsYzpZkkq6aP8nfQtTZ8Nz0qvwthXrqvaE3h5x4n8MFlB55wvyoikcp1k6pQ0fmQK4=
-X-Gm-Gg: AR+sD13wphxO8AyDdxE4Jz+6PiRAzrCdc4ynbZ49Idz49kFpcbNe1x35LGrUMKjVGbq
-	77Di+dBRitqjEslgPfgb379/OphyiPx+u58fBxK7jyaJMbcnQHRZ35raugHToktwHWqFmr48+2U
-	wIdxmHPrAtRTOAMc2HJdVj4F34C9Eove0rgF3GVjSPX0UK7N2nO8n34PigGY00hq08m6OCZOGUg
-	QGLSVbON0bUiGpqafjPGIxdSOVpVhUM1r2M311iyxyphifA+KrTGIsEYKxw8tcEOiYz7nS/BmWd
-	GSxovRFgAsAuJTBu1zObZlKOcDSQeHBweX14lCJjVDIfYXlldk67S9+0DTaHgfyv7YMHmGSYwIT
-	o+DBXE30O8ioW0qa+GuB9fPwXXlmQ1Iq+0w2uh0JSp4eaa7M/11soUomA/BJ3/0cDv6Zy9JsjjS
-	gPkyBaH/jozvRWTW4sSjDc9uOo6kIh3DmHpr0ZMDO9PjhvL7bL83rvx82ad8JQmW/xv9Oi
-X-Received: by 2002:a17:90b:50c4:b0:38e:447c:9a15 with SMTP id 98e67ed59e1d1-38fbc516655mr7151775a91.36.1785728481711;
-        Sun, 02 Aug 2026 20:41:21 -0700 (PDT)
-Received: from yhlee-960QFG.. ([125.131.91.97])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb2bac654sm3299609a91.10.2026.08.02.20.41.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2026 20:41:21 -0700 (PDT)
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-To: alibuda@linux.alibaba.com,
-	dust.li@linux.alibaba.com,
-	sidraya@linux.ibm.com,
-	wenjia@linux.ibm.com,
-	kuba@kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com
-Cc: horms@kernel.org,
-	mjambigi@linux.ibm.com,
-	tonylu@linux.alibaba.com,
-	guwen@linux.alibaba.com,
-	guangguan.wang@linux.alibaba.com,
-	kees@kernel.org,
-	gustavoars@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	linux-s390@vger.kernel.org,
-	linux-hardening@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Subject: Re: [PATCH net v5 2/3] net/smc: bound the peer rkey counts in SMC-Rv2 LLC messages
-Date: Mon,  3 Aug 2026 12:41:05 +0900
-Message-ID: <20260803034105.2051552-1-yhlee@isslab.korea.ac.kr>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260801094208.1937951-3-yhlee@isslab.korea.ac.kr>
-References: <20260801094208.1937951-3-yhlee@isslab.korea.ac.kr>
+        d=1e100.net; s=20251104; t=1785734904; x=1786339704;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
+        b=lR6kRXnUtMuAvK6eSrLFIHtM4YcOA3IuVDdVe0kh3+9JmgrY2lFk56+THrzE0CHmMA
+         mYscvyBA3/obtk146GXKoVo2RZ+x2GEEbodJ2LPnmdh6sz9GW8At1FYba4QWcgPQHcN8
+         bHXnEjumvxQZB1zoqLTUhjGizdm1DQAIyoqZhP+22UAj+0HkdOBUx+rRvs1zWgbzt/oP
+         NOSRLsog1kaqOOfcDuxCv2Vwu7Jk3xjRiOI9z4fBmcGURHQXyhcmGmcXQfuzNwCDzh2O
+         DXNHkPw28b4tWmncC78IEeCznfypOcRx1maFjniISbweacXEb9auGxUAMqvT6QUtMdPX
+         Dd5A==
+X-Gm-Message-State: AOJu0YzzCaU8MhNptCFRrO4K6bdF79P1OuNSebaNo3hg50qmZEZl0eRF
+	F3YrTAsWSDoH2f6pV0MlnAWnrX5cah4n79jsxQElpmhz4B9CAktqU/C82ml5YxNPgam9gVsiCaj
+	tlhA+PVLWP1fvoqpG5G/uwJR8/hDVnxFk9FDGqYY=
+X-Gm-Gg: AR+sD11cstBSGGZS+deb/23xELJNgRqzvCys5PpqQzo3r5vZnCVE6L3qiKDxh9qdEUb
+	4Fq+WbkTfBoncNr8E46+0Sne5rjjpQUOxSL8U2w1qccjaRdNnoeGZs67pGN5X6Unfn6qd+BZlq+
+	hCu81KmUWCqf3+hksPoGVDK1N6BhXD0sPMmuTyh1A2s/wJbFiIApQvxyeb4GIAUoh0PaTBvebM4
+	8LDhd20n8l8Qw3m5MaGgRURAT7h7xR6sZiyCSyUOffQtD7/QFIB+j6Tq2sFD2Nc/z6lqYWcfbgw
+	vCoaeesrwGMI5YgTA8KAodRJGkCRXhlasAMgC5NXlPDpG4fPAgIENX/LHVWh/yJnwPAAYcjb8pd
+	xfh2U+CgtXX/Fjs/SbQy8hzgBMsAPfw==
+X-Received: by 2002:a05:690c:6701:b0:7ff:1a93:be35 with SMTP id
+ 00721157ae682-81fd4a6f84emr111918477b3.16.1785734904411; Sun, 02 Aug 2026
+ 22:28:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260730204604.1729505-1-lyude@redhat.com> <20260730204604.1729505-4-lyude@redhat.com>
+ <20260730205633.9AF051F000E9@smtp.kernel.org>
+In-Reply-To: <20260730205633.9AF051F000E9@smtp.kernel.org>
+From: Dave Airlie <airlied@gmail.com>
+Date: Mon, 3 Aug 2026 15:28:12 +1000
+X-Gm-Features: AUfX_myCuk4f-IKfNaeeSw-seOnjdRXgmvV5zKiXoeio5KdDQO4TXcGu_APjeoI
+Message-ID: <CAPM=9tzFg34jBT7-YYncOoYfvpvXvGnymuYeR6pQ2bQ4qeV4=g@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] drm/nouveau: Fix drm_driver struct/nouveau.atomic
+ parameter handling
+To: sashiko-reviews@lists.linux.dev
+Cc: Lyude Paul <lyude@redhat.com>, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-> Does this bounds check allow processing of stale memory?
+On Fri, 31 Jul 2026 at 07:13, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [Critical] Embedding `drm_driver` inside `nouveau_drm` causes a Use-After-Free of `dev->driver` in the DRM core when the device is unbound or hot-unplugged while userspace holds an open file descriptor.
 
-It does, and 3/3 of this series stops it. This patch bounds by the size
-of the buffer the message landed in; 3/3 copies the tail of the message
-into the queue entry and bounds by its length instead.
+I'm going to agree with sashiko here. We don't want to embed it.
 
-The bound in this patch never fires on a link with a shared v2 receive
-buffer. It works out at 507 rkeys for ADD_LINK and 2046 for
-DELETE_RKEY, and the min_t() above it has already capped both at 255.
-I measured a 44-byte DELETE_RKEY_V2 declaring 255 rkeys: mainline and
-this patch draw the same response, and in two of the four exchanges an
-rkey read past the message was live and was deleted. With 3/3 applied
-the response reports 9.
+Just create two copies of the struct, one with atomic and one without,
+or use some macros to do that, because anything else is just going to
+have messy lifetimes.
 
-It does fire on a link without that buffer, where it becomes 9. That is
-the out-of-bounds read this patch fixes, and why it carries Cc: stable
-while 3/3 does not.
+I think you could also move the atomic flag handling earlier.
 
-Best regards,
-Yehyeong Lee
+Dave.
