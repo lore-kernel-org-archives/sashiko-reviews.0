@@ -1,202 +1,368 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B36140DB54
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 14:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785768050; cv=pass; b=qpRLeH/SvLBeEueBNUiwtMEcmzIPFE/w/KrmveNVNKiTkeM5phYchi4TZy23v8zjbMRVTZ91BksB0LWK126m/Nf/74nyzgeLtgAwWa+FAddz2/M2YOx80sUME4Hx9csi7Z6EGVqt7SfRjVHCfyx7lZEhm/zXHDvXlnbmluwcAfY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785768050; c=relaxed/simple;
-	bh=5kebS8pMZi+Qnu3Pne9n+Gcqlzlf9paHIC1+/HJAbOI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NOCNOq7bfihIGtIHsMKbSBTM5TJ8FTBKZNAZsAIuXLgqmUmqkOE2KFuPu0YApNjDmM2GaSbCUs6se0Wh0xgZyGY5y0jmSg//7khQALTsA4YJHHzyaYaSikUYmnSqxTbGVob+w5nE4O/KHBWlRoJR5DHfiirv+Ab2i1sEmfRjGsw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQvjsF1X; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AEE73B9920;
+	Mon,  3 Aug 2026 14:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785768461; cv=none; b=DS2yuoraFHEGAaeoccqOTlOzrweL/tSqsDKsQlVtJ1i7KbzC/mz7YMrO3wbZ9Az+K8ozgCsar3876p5QOxqnVcWc5XkVS4mQVYiqiCoFEj6iP1aQYOH+DMVEM67zNM7SwfxXc6zae+hwTlfy8Ib90b3JzFn5WvMtjG08/KlLSmk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785768461; c=relaxed/simple;
+	bh=38cWHigXcc4kq3LUHJEhpk1zbpHG87KHCVunwzlvl8Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=WcPo+5t21jPgwMSkOdK0iR80Z1inEAkNuDeZDSlybg6HQC+pbqt0I++alxU+2RXUp2p4wxO6U8z0QwgQkTk5fiUv/xhPF0tpNAF3z7w0lKq/s55zTcZFH0KCjpZm327rKja4Hq1ScWEn93u7sLN0pWgcie0jxA2WiZfq47KQ4K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=XYjPVarq; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQvjsF1X"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c167bda216fso527737866b.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 07:40:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785768047; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ce7lg8w69bTh93eX6C/9FKmbQznhJRdyvA31h89ZrEIvO/hcEp0mkw1+27pJEMt9xt
-         zKZJRIxNe6P2E1+Vxa6S+3TstGHzy50dPLbPuikH73JMLxkZXAQAIC8odkxGtC0+kV6v
-         7fXBKIoOYaiPJmuHhQllrX8hj1byX9aW8cH7h/kv/JlrzR3fA7sM9NYima9UnHTd8u+m
-         QAsaveK5GKn8YQTL30qKhwCdj019UMmob8PFkwagKMaQ3GxNLmxPB2fnldRci5PC2vMS
-         +O+Crqyw6co/gJXQ858niibqRQHU9/MmAysOpMIi5iMyOQQINarGkp6YrcKh9kIKfc9g
-         qnUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=43vcEMd1q8IU7lDqptyYtNca+YC1kL3gqmLuBjWx/68=;
-        fh=W4zgvaciPvu+gyNBZoCQAqBlb+JTJZHKnm39esXowU8=;
-        b=qATAp5hOrzrRvkGUfk6ETiQ2W5xh6Uw+JB0/BH/oHbzS8A5ALDmdjQ59F668Z1Bx3R
-         oZi/Vi+aJu7PHh7Jjlhhf8fTK97Y+FSs+FfL5J9AlIaDvg1KXvmgafSCZJDX8HnORWY3
-         dh7pMT9nA6MX+EziSc+gHiPTXXawTwya92Y78zuQDUtKDtDthI3yYfgxHhI7eyaqD0xU
-         6FKBh/iLzWQjf+FSilHYvT9uv9XwlIyzEamnMV/xsPjn6ISznAzD9zXPXM+qY4N6hlaB
-         6wgi5dAR91dQOpGVvvOcrt6xNrTGLE31525+CS9HRbvhXc2la69/VOMBhx9kZdV1Fq15
-         LRbg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785768047; x=1786372847; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=43vcEMd1q8IU7lDqptyYtNca+YC1kL3gqmLuBjWx/68=;
-        b=HQvjsF1XPR337+fO+N6mScJJE2w7/Ib7s2sG4vN5uTrwTJLcqDr++M6JZDSk9w8vQ8
-         NgqK9G7uXgMrd6uyD8HnA6Pxo6tUcUYPaYJORCFNNgO2c6WhMPtVEFEGjNZaohcJl9o3
-         YVDjg7c3KYomy4r55ploEOxFqESEkOnKuJgAO64jOBOfuRC4p91JIWnHnOBND2X7iLwf
-         bVyLTC2ZY7UMx8zZiNHBzIXOMD9SBoXQjeivxP97vKeyLiRXfx3/o7RZ/bCmp1uSrcHn
-         7wqpH2aF7PFI3v1OkVpzdJ+94b6JJ9czpG8oKRNoJdbzlPezkGznl7GiU6Rle7dEcmyb
-         F4Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785768047; x=1786372847;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=43vcEMd1q8IU7lDqptyYtNca+YC1kL3gqmLuBjWx/68=;
-        b=e0tE2Dp4EFS9Fje0xdCebEBs5okQwTqJqiA75MUNEb2Bm08/c6nRSKxzMsIEvf0sBZ
-         rWYyk1Q7/ZSNYDleifJUsD5Q/W/9qEsFlTJ82wN8mqQeQIFSDHMyYPotMvQIs8THHWH8
-         NdSKk/5uvJUz4i3VNv3+8Tr94zzE4oc3+il9xWkIZa0FDz+RW+YtKlo55o8coFwNCjYT
-         gKFrhwpYpHOTn5T2/mnq6VD/2lh/RG70XsnnkdeTICb6XgwpKcy45tr96zcheRQFN4QK
-         Z6g2RY1ZVEuiFKuBYQRQBPg5g87c5RhoZBGP1U994e+0CBYHcL+7KKQnzkeM3uSp/B6Z
-         AZ9w==
-X-Gm-Message-State: AOJu0YxRnCwhQEJgrOvlRfG8rkXkecXuNE6W0newh8LYlBf8tgAF8C5g
-	puV+uU0Fu+w80KIZGfCO8Cr+pDvyYWPhqoEBavN0XUJ4mkZMePQWBbj8695/oKNIqVJc6sihHpD
-	FaWhXO39NS02jm1n3l0FOQu9al9lVSYPAiUmWbic=
-X-Gm-Gg: AR+sD13zeipTDrHIMpaxsHGnO8HTe/P4fxkJTxptacBeEHH32YlkMS3goSQQrdw1DKr
-	CzCwloWWIgN59/wU9kLXKmdw4/5s7Sk4ZSY7HvjHXzsJ/da54Kdx+W8j+VJAx2LiLTSNGjCTFPj
-	XfSAwNFoJ0fztGN5RtfSztMT+pfckSwd18Q75PvsWi5mP7o/XBxEqRWMpFLaAvA6nKze7iatEKq
-	hDkgCzN9k2EfrRpOAlv2l2s/e+ZlynA2WX3M3li4iPtrZ+dnXGh5PJDiWHkE2h09PgAAob4Dq0L
-	0Z6M+pyz68MB1MD9vBNwalWcQwiCSGYdXBExsLBQosHgl7nTqHTUg/Wv7DpHb95AH1eZuUU=
-X-Received: by 2002:a17:906:7186:b0:c1c:2aa5:322b with SMTP id
- a640c23a62f3a-c1fe8168601mr589342466b.2.1785768046472; Mon, 03 Aug 2026
- 07:40:46 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="XYjPVarq"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 71CE7143D;
+	Mon,  3 Aug 2026 07:47:34 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7F28C3F632;
+	Mon,  3 Aug 2026 07:47:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1785768458; bh=38cWHigXcc4kq3LUHJEhpk1zbpHG87KHCVunwzlvl8Q=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XYjPVarqny0nWZzw1E7KmrYY4oQrQ6COa1NPKF+kAOCPGZouTEIUslF7Ct4ihs8wr
+	 UkdZUBycIs76Wm3q0Xbh1/f5w64NS5xlfp/EbGl9ZbT7Qd6L+GcsaokV5c3VLOJHwy
+	 eBwK+DaH4kxGStG2VTB9GPIgz3jqqhCbKNmL31u0=
+From: Leonardo Bras <leo.bras@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	kvm@vger.kernel.org,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH v3 04/11] KVM: arm64: dirty_bit: Add base FEAT_HACDBS cleaning routine
+Date: Mon,  3 Aug 2026 15:47:35 +0100
+Message-ID: <anCqB-Y7kk_h1qwe@LeoBrasDK>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260729105753.B1E6B1F000E9@smtp.kernel.org>
+References: <20260729104548.3439958-1-leo.bras@arm.com> <20260729104548.3439958-5-leo.bras@arm.com> <20260729105753.B1E6B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260803134839.2103051-1-puranjay@kernel.org> <20260803135329.2327280-2-puranjay@kernel.org>
- <20260803143505.2E3D21F00A3A@smtp.kernel.org>
-In-Reply-To: <20260803143505.2E3D21F00A3A@smtp.kernel.org>
-From: Puranjay Mohan <puranjay12@gmail.com>
-Date: Mon, 3 Aug 2026 15:40:32 +0100
-X-Gm-Features: AUfX_myg5FkRhhwJrWlROWqtotno0-Pomq3l_iqF2gTN_FLgC2KCpZALE0D3KSY
-Message-ID: <CANk7y0g+Yf0Vy0jZCoD6NicDXdJ=wo4WpmiBLo3MPqKaNUXO-w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] rcu: Make Tiny call_rcu() safe to call from any context
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-rt-devel@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 3, 2026 at 3:35=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Relocating `debug_rcu_head_queue()` into `rcu_do_enqueue()` bypa=
-sses double-free detection for deferred callbacks, silently corrupting the =
-lockless list and inducing a permanent hard livelock during `rcu_defer_drai=
-n()`.
-> - [Medium] Invalid `WARN_ON_ONCE` in `call_rcu()` falsely flags safe NMI =
-executions due to a flawed concurrency assumption.
+On Wed, Jul 29, 2026 at 10:57:53AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 8 potential issue(s) to consider:
+> - [Critical] `hacdbs_sched_in` restores a potentially stale VMID from `save.vttbr_el2`, leading to cross-VM memory corruption.
+> - [High] Direct EL2 system register accesses from host code without a VHE check causes kernel panics on nVHE systems.
+> - [High] Writes to control-plane system registers are batched and not immediately followed by an `isb()` barrier.
+> - [High] Missing synchronization barrier (`DSB`) before changing the translation context after disabling the HACDBS asynchronous engine.
+> - [High] The hardware polling loop in `dirty_bit_clear` lacks a timeout or signal check, risking an unkillable task hang.
+> - [Medium] Using `virt_to_phys()` on a dynamic buffer array which could be non-contiguous (e.g. allocated with vmalloc).
+> - [Medium] The commit message explicitly asserts the code runs with preemption disabled, but the implementation explicitly enables preemption.
+> - [Low] Left-shift of a negative integer in macro definition.
 > --
->
-> --- Patch [2]: [PATCH v2 2/6] rcu: Make Tiny call_rcu() safe to call from=
- any context ---
-> commit 866e1596ae5a7314657b9b0164dfabf922016c70
-> Author: Puranjay Mohan <puranjay@kernel.org>
->
-> rcu: Make Tiny call_rcu() safe to call from any context
->
-> Give Tiny call_rcu() the same treatment as Tree RCU.  When interrupts are
-> disabled and the scheduler is up, stage the callback on a lockless list
-> that an irq_work re-issues later.  One global list and irq_work suffice
-> since Tiny RCU is uniprocessor, and there is no CPU-offline drain.
->
-> > diff --git a/kernel/rcu/tiny.c b/kernel/rcu/tiny.c
-> > index dccccd6be9411..5736b964d8ee1 100644
-> > --- a/kernel/rcu/tiny.c
-> > +++ b/kernel/rcu/tiny.c
->
-> [ ... ]
->
-> > @@ -42,8 +44,86 @@ static struct rcu_ctrlblk rcu_ctrlblk =3D {
->
-> [ ... ]
->
-> > +static void call_rcu_defer(struct rcu_head *head, rcu_callback_t func)
-> > +{
-> > +     /* A re-entrant call_rcu() during the drain would livelock it; dr=
-op it. */
-> > +     if (rcu_defer_draining && !in_nmi()) {
-> > +             WARN_ONCE(1, "call_rcu() re-entered during callback drain=
-; leaking callback\n");
-> > +             return;
-> > +     }
-> > +     head->func =3D func;
-> > +     if (llist_add((struct llist_node *)head, &rcu_defer_list))
->
-> [Severity: High]
-> Does moving the debug_rcu_head_queue() check into rcu_do_enqueue() bypass
-> double-free detection for deferred callbacks?
->
-> If a double-free occurs, llist_add() will be called twice on the same nod=
-e here,
-> corrupting the lockless list by creating a circular link (head->next =3D =
-head).
->
-> When the irq_work executes rcu_defer_drain(), won't the llist_for_each_sa=
-fe()
-> iteration infinitely hang on the circular list before the delayed debug c=
-heck
-> can prevent the livelock?
->
-> > +             irq_work_queue(&rcu_defer_iw);
-> > +}
->
-> [ ... ]
->
-> > @@ -157,29 +237,15 @@ EXPORT_SYMBOL_GPL(synchronize_rcu);
-> >   */
-> >  void call_rcu(struct rcu_head *head, rcu_callback_t func)
-> >  {
-> > -     static atomic_t doublefrees;
-> > -     unsigned long flags;
->
-> [ ... ]
->
-> > +     if (should_rcu_defer()) {
-> > +             call_rcu_defer(head, func);
-> >               return;
-> >       }
-> >
-> > -     head->func =3D func;
-> > -     head->next =3D NULL;
-> > -
-> > -     local_irq_save(flags);
-> > -     *rcu_ctrlblk.curtail =3D head;
-> > -     rcu_ctrlblk.curtail =3D &head->next;
-> > -     local_irq_restore(flags);
-> > +     /* An NMI reaching here entered with irqs enabled, so the enqueue=
- can race. */
-> > +     WARN_ON_ONCE(IS_ENABLED(CONFIG_PROVE_RCU) && in_nmi());
->
+> 
+> --- Patch [4]: [PATCH v3 04/11] KVM: arm64: dirty_bit: Add base FEAT_HACDBS cleaning routine ---
+> commit b837f416f1871772a3bac546015e6fcac9c7accb
+> Author: Leonardo Bras <leo.bras@arm.com>
+> 
+> KVM: arm64: dirty_bit: Add base FEAT_HACDBS cleaning routine
+> 
+> Introduce the basic cleaning routine that is going to be used for both
+> dirty-bitmap and dirty-ring routines. It sets the required registers with
+> the input buffer, and wait for HACDBS to finish.
+> 
+> > It is ran with preemption disabled, as a task being scheduled in could
+> > change the translation registers used by HACDBS and end up corrupting the
+> > current dirty-bit tracking and the sched-in task's S2 pagetables.
+> 
 > [Severity: Medium]
-> Is this concurrency assumption backwards?
->
-> If an NMI interrupted a context where IRQs were enabled, that interrupted
-> context could not have been in the middle of rcu_do_enqueue() because
-> rcu_do_enqueue() disables IRQs via local_irq_save().
->
-> Since it's impossible for the NMI to race with rcu_do_enqueue() in this
-> scenario, will this falsely trigger kernel warnings during safe NMI
-> executions?
+> The commit message asserts that the code runs with preemption disabled, but
+> looking at dirty_bit_clear(), preemption is explicitly enabled immediately
+> after registering the notifier:
+> 
+> dirty_bit_clear() {
+>     preempt_disable();
+>     preempt_notifier_register(&save.notifier);
+>     preempt_enable();
+> }
+> 
+> Is this description accurate, or does the implementation contradict the
+> commit message's synchronization premise?
 
-This code assumes that irqs_disabled() returns true in NMI handlers,
-so the execution should not reach this warning in NMI handlers.
+Argh, forgot to update that message.
+Done for next version.
+
+> 
+> > diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
+> > index 32fe938d6bf70..33826bbd16d91 100644
+> > --- a/arch/arm64/kvm/dirty_bit.c
+> > +++ b/arch/arm64/kvm/dirty_bit.c
+> > @@ -5,6 +5,7 @@
+> >   */
+> >  
+> >  #include <asm/kvm_dirty_bit.h>
+> > +#include <asm/kvm_mmu.h>
+> >  
+> >  /* HDBSS entry field definitions */
+> >  #define HDBSS_ENTRY_VALID BIT(0)
+> > @@ -14,3 +15,178 @@
+> >  	(((x) << HDBSS_ENTRY_TTWL_SHIFT) & HDBSS_ENTRY_TTWL_MASK)
+> >  #define HDBSS_ENTRY_TTWL_RESV HDBSS_ENTRY_TTWL(-4)
+> 
+> [Severity: Low]
+> Does this code trigger undefined behavior by left-shifting a negative
+> signed integer (-4) via the HDBSS_ENTRY_TTWL macro?
+> 
+> [ ... ]
+
+This should have been notified in the first patch. 
+But sure, will tackle this.
+
+> 
+> > +static void hacdbs_start(u64 *hw_entries, int size)
+> > +{
+> > +	u64 br;
+> > +	/* Each entry is 8 bytes */
+> > +	int size_b = size * sizeof(hw_entries[0]);
+> > +	int size_p2 = max(roundup_pow_of_two(size_b), PAGE_SIZE);
+> > +
+> > +	/* If not using the full size of the array, put a stop entry at the end */
+> > +	if (size_b < size_p2)
+> > +		hw_entries[size] = HDBSS_ENTRY_VALID | HDBSS_ENTRY_TTWL_RESV;
+> > +
+> > +	sysreg_clear_set_s(SYS_HACDBSCONS_EL2,
+> > +			   HACDBSCONS_EL2_ERR_REASON | HACDBSCONS_EL2_INDEX, 0);
+> 
+> [Severity: High]
+> Can this sequence leave the CPU executing with architecturally undefined
+> pipeline state?
+> 
+> In hacdbs_start(), the write to the control-plane system register
+> SYS_HACDBSCONS_EL2 is followed by pointer arithmetic and a dsb() rather
+> than an isb() as the very next instruction.
+> 
+
+There would be no issue if we reorder writes to HACDBS*_EL2, so no need for 
+an isb() between them.
+
+> > +
+> > +	br = (virt_to_phys(hw_entries) & HACDBSBR_EL2_BADDR_MASK) |
+> > +	     FIELD_PREP(HACDBSBR_EL2_SZ, ilog2(size_p2) - 12) |
+> > +	     FIELD_PREP(HACDBSBR_EL2_EN, 1);
+> 
+> [Severity: Medium]
+> Will this return an invalid physical address if hw_entries is allocated via
+> vmalloc() or kvmalloc()?
+> 
+> Using virt_to_phys() on a dynamic buffer array assumes it resides in the
+> physically contiguous linear map, which could lead to hardware DMA targeting
+> the wrong physical memory pages.
+> 
+
+It will not be fed with *vmalloc() allocations, as one can see in the 
+next patches. 
+
+> > +
+> > +	/* All writes to the array have to complete before starting */
+> > +	dsb(ishst);
+> > +
+> > +	write_sysreg_s(br, SYS_HACDBSBR_EL2);
+> 
+> [Severity: High]
+> Does this code cause a kernel panic on nVHE systems?
+> 
+> In hacdbs_start(), directly writing to the EL2 system register
+> SYS_HACDBSBR_EL2 from the KVM host kernel executing at EL1 without a
+> has_vhe() guard will trigger an immediate Undefined Instruction trap.
+> 
+
+VHE will be tested in the next patches, before getting in this part.
+
+> > +	isb();
+> > +}
+> 
+> [ ... ]
+> 
+> > +static void hacdbs_sched_in(struct preempt_notifier *notifier, int cpu)
+> > +{
+> > +	struct hacdbs_sched_save *save = container_of(notifier,
+> > +						      struct hacdbs_sched_save,
+> > +						      notifier);
+> > +
+> > +	write_sysreg_s(save->save.vtcr_el2, SYS_VTCR_EL2);
+> > +	write_sysreg_s(save->save.vttbr_el2, SYS_VTTBR_EL2);
+> 
+> [Severity: High]
+> Could this direct EL2 register access cause a panic on nVHE systems?
+> 
+> Similar to hacdbs_start(), hacdbs_sched_in() accesses SYS_VTCR_EL2 and
+> SYS_VTTBR_EL2 from EL1 without a VHE check.
+> 
+
+iden above
+
+> [Severity: High]
+> Is a synchronization barrier missing here?
+> 
+> In hacdbs_sched_in(), the write to SYS_VTCR_EL2 is immediately followed by a
+> write to SYS_VTTBR_EL2 rather than an isb(), meaning subsequent instructions
+> may observe undefined pipeline state.
+> 
+
+This should be fine, as __load_stage2() does exactly the same.
+
+
+
+> [Severity: Critical]
+> Can this restore a stale VMID and cause cross-VM memory corruption?
+> 
+> hacdbs_sched_in() restores the cached save.vttbr_el2 (which contains the
+> VMID). Since this is a generic host thread, if KVM's VMID allocator rolls
+> over while the task sleeps, the VMID could be reassigned.
+> 
+> This could cause the HACDBS engine to operate on another VM's memory.
+> 
+
+That would require either that the VMID of the running VM gets assigned to 
+a new VM, which would break a lot more stuff. If this threads gets 
+preempted, then the vm dies another way, I assume this trhead will be 
+removed and have no chance of restoring the values.
+
+> > +	isb();
+> > +
+> > +	if (save->save.hcr_vm_set) {
+> > +		sysreg_clear_set_hcr(0, HCR_EL2_VM);
+> > +		isb();
+> > +	}
+> > +
+> > +	write_sysreg_s(save->save.hacdbscons_el2, SYS_HACDBSCONS_EL2);
+> > +	write_sysreg_s(save->save.hacdbsbr_el2, SYS_HACDBSBR_EL2);
+> 
+> [Severity: High]
+> Does this sequence lack an immediate isb() after writing SYS_HACDBSCONS_EL2,
+> allowing the CPU to execute the SYS_HACDBSBR_EL2 write with undefined
+> pipeline state?
+
+It should not be an issue.
+
+
+> 
+> > +	isb();
+> > +}
+> > +
+> > +static void hacdbs_sched_out(struct preempt_notifier *notifier,
+> > +			     struct task_struct *next)
+> > +{
+> > +	struct hacdbs_sched_save *save = container_of(notifier,
+> > +						      struct hacdbs_sched_save,
+> > +						      notifier);
+> > +
+> > +	if (read_sysreg_s(SYS_HACDBSBR_EL2) & HACDBSBR_EL2_EN) {
+> > +		save->save.hacdbsbr_el2 = HACDBSBR_EL2_EN;
+> > +		sysreg_clear_set_s(SYS_HACDBSBR_EL2, HACDBSBR_EL2_EN, 0);
+> > +		isb();
+> > +	} else {
+> > +		save->save.hacdbsbr_el2 = 0;
+> > +	}
+> > +
+> > +	save->save.hacdbscons_el2 = read_sysreg_s(SYS_HACDBSCONS_EL2);
+> > +	save->save.hacdbsbr_el2 |= read_sysreg_s(SYS_HACDBSBR_EL2);
+> > +	save->save.vttbr_el2 = read_sysreg_s(SYS_VTTBR_EL2);
+> 
+> [Severity: Critical]
+> Is it safe to cache the VTTBR (including the VMID) into task-local memory
+> here in hacdbs_sched_out()?
+> 
+> As mentioned for hacdbs_sched_in(), if a VMID rollover occurs while this
+> task is preempted, the cached VMID becomes stale.
+> 
+
+Again, will the VMID of a running VM be reassigned to a new VM? 
+
+> > +	save->save.vtcr_el2 = read_sysreg_s(SYS_VTCR_EL2);
+> > +
+> > +	if (read_sysreg_s(SYS_HCR_EL2) & HCR_EL2_VM) {
+> > +		sysreg_clear_set_hcr(HCR_EL2_VM, 0);
+> 
+> [Severity: High]
+> Does this code change the translation regime (clearing HCR_EL2_VM) without
+> a preceding dsb()?
+> 
+> The engine was disabled earlier in hacdbs_sched_out() (by clearing
+> HACDBSBR_EL2_EN), but without a dsb(), the asynchronous engine might not be
+> definitively halted before the translation context changes.
+> 
+
+Above code clears HACDBSBR_EL2.EN, then run a isb(), which should make sure 
+HACDBS is not issuing any writes after that. IIUC, any possible pending 
+write by the HACDBS engine should already be physically addressed.
+
+> > +		isb();
+> > +		save->save.hcr_vm_set = true;
+> > +	} else {
+> > +		save->save.hcr_vm_set = false;
+> > +	}
+> > +}
+> 
+> [ ... ]
+> 
+> > +static int dirty_bit_clear(struct kvm *kvm, u64 *hw_entries, int size)
+> > +{
+> > +	int ret;
+> > +	u64 cons;
+> > +	struct hacdbs_sched_save save;
+> > +
+> > +	preempt_notifier_init(&save.notifier, &hacdbs_preempt_ops);
+> > +	preempt_disable();
+> > +	preempt_notifier_register(&save.notifier);
+> > +	preempt_enable();
+> > +
+> > +	__load_stage2(&kvm->arch.mmu);
+> > +	sysreg_clear_set_hcr(0, HCR_EL2_VM);
+> > +	isb();
+> > +
+> > +	hacdbs_start(hw_entries, size);
+> > +
+> > +	do {
+> > +		cons = read_sysreg_s(SYS_HACDBSCONS_EL2);
+> > +		if (FIELD_GET(HACDBSCONS_EL2_ERR_REASON, cons))
+> > +			break;
+> > +
+> > +		if (FIELD_GET(HACDBSCONS_EL2_INDEX, cons) >= size)
+> > +			break;
+> > +
+> > +		udelay(1);
+> > +	} while (true);
+> 
+> [Severity: High]
+> Could this continuous hardware polling loop hang the CPU permanently?
+> 
+> In dirty_bit_clear(), this loop waits for the hardware engine to finish, but
+> it lacks a timeout mechanism, bounded retry, or a fatal_signal_pending()
+> check.
+
+If that happens, it's a hardware bug, and it hanging in that loop allows 
+better debugging. This code is preemptable, so the hardware bug should not 
+cause host crash or keep the cpu busy.
+
+> 
+> > +
+> > +	ret = hacdbs_stop(size);
+> > +
+> > +	sysreg_clear_set_hcr(HCR_EL2_VM, 0);
+> 
+> [Severity: High]
+> Can this translation regime change lead to speculative execution or out of
+> context memory accesses?
+> 
+> In dirty_bit_clear(), hacdbs_stop() clears the enable bit, but clearing
+> HCR_EL2_VM immediately after lacks an intervening dsb() to ensure the
+> hardware engine is definitively halted.
+> 
+
+Above code clears HACDBSBR_EL2.EN, then run a isb(), which should make sure 
+HACDBS is not issuing any writes after that. IIUC, any possible pending 
+write by the HACDBS engine should already be physically addressed.
+
+
+Leo
