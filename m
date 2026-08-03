@@ -1,105 +1,63 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010058.outbound.protection.outlook.com [52.101.56.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D572370ADB
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 14:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4AD387348
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 14:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.58
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785765634; cv=fail; b=S2kZu/zF/DHq2TsjPFyndvro4S38ZY7G6X5qzboJ3Ww0LSqe3TcLCUtsdy9ag2ANK0+fpTiPcq9KePUNytDzOnTBgwgWL2r/DAjDqELcnKHqvQekusRiXvxCmP+LN8TjWYu+HmUShJW9HRlwof/X9dpN35fXVg5HdwK5l4ugffo=
+	t=1785765646; cv=fail; b=qwuEhExjNNsJiee8afHaIx+uil5np809F7f2eumhQXF9upm56QcdpjKZ+qiaVXHksN/2yhULVQQWJF9t927iohqD0eJXYvf0n/z4k5XzBRdTAmJrGTkzF75rPsPT54SITeMIkJhS0Xa6MIw5xQF09ey4AQuZMLH4C4gxbXw1BjE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785765634; c=relaxed/simple;
-	bh=qquLAvqjmjOATdNybcjYC4TTYPXJsF10GcHKlFD5TOw=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=REMt85s0UISieaTOBoU/lTl17fR90hZG2ePNOyUvBK0xPizZ97Ixeuwpl1gWudrdQJaAJiqOHDXLA2eoUE/30QDXSlrKkH1LOkGWRNr5pPoHHp/VCccniq4UGfaYvQrLZz4z4dsTzlEmwl2HptVU5GjMGtTegFWsf/hivL0Tp5k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j8HavwFT; arc=fail smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1785765646; c=relaxed/simple;
+	bh=N7FNF3BEwTEU3iBYTicmZeT95wPzfOjpIVaOKOA91p8=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:MIME-Version; b=FZvGXsfxnAd2cG4wyaAxBxHUczK1NPF+gVL9r8IQfW7aO2/mQ+WmmIJuwkNakmiviTasPqZxk/dSu3BnWA0nM/g13i5am/+nA9vsjewRzhxYEEA9Z1dqYFrhMaQm0JkplcMTmz/2r6P5Jzvr7RLK98i7x+E6G0vQRDom1xYH9/8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Ew4ri4EZ; arc=fail smtp.client-ip=52.101.56.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j8HavwFT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785765631; x=1817301631;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=qquLAvqjmjOATdNybcjYC4TTYPXJsF10GcHKlFD5TOw=;
-  b=j8HavwFTvoF7JkGnStt8NOAtZLWahhoaQVDuuR4C+XwcuT2YeedlAvy8
-   5sGdHsENF8srdrdUbdjXi6kRNxo846PPazcx67paiMxcESCZ7nEjwu5O/
-   Q9eTgGn+EPYta5d6RZ97UtcwsU6ZL0nyof0DpmGl3M2zkW3PB7+Njnm18
-   e7IUeKABFUvSekOm0Cd++2HbYxls+01N+hgEvPdAbhedLZ+k3LmYZ2Zrp
-   ogSoxKkLfosWOTUyVAnqSG6IC2qTpRyCTEkaGuu/XrKVfbSx5qQ0zJtSi
-   cvBvREtzIIPPP10RHIEKdhwhWcMnvTCD5/t0IAl9NeOzK9AroK3sLsYaO
-   w==;
-X-CSE-ConnectionGUID: TXabj4KFSuK3Om3HtxhKig==
-X-CSE-MsgGUID: Y+HYGv+6QPODFKEdCA7nhQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11864"; a="86421783"
-X-IronPort-AV: E=Sophos;i="6.25,202,1779174000"; 
-   d="scan'208";a="86421783"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2026 07:00:30 -0700
-X-CSE-ConnectionGUID: agqmUFLVSG+44S5ewaVVBg==
-X-CSE-MsgGUID: e0waNpEdTpWs4NzpfB4kfQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,202,1779174000"; 
-   d="scan'208";a="264700312"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2026 07:00:30 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 3 Aug 2026 07:00:29 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Mon, 3 Aug 2026 07:00:29 -0700
-Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.54) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 3 Aug 2026 07:00:29 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Ew4ri4EZ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PEZOBbjtNM2x+BjnVEo0SY5E29dZLyJUQyDRsE7E0uREMD2rRzg+FZvC+nDa8cyg/GRqxvi3ixTqHLubpWui1p+n4gUt70fvS/YJ8dZykxllrSvTuOTKlHvQI/Fe1/Qai6F5oI4QqnHRE3Gjlz0r3eO1fIb32QKJiIfbIgZNSLAfdIQtQozhwghCLd2bulm85T7aGpP2SqOryMNYYyvbwzA1Q4NwwqFGA+spv2vnJvdOi5kNDKRkj2qgOL0E7+bpojXRhRlN4dWl0Lvg0ylyTzPfAmB9vz4ke5rcPG2TGx0RHvRxkQj8mUTbe985KEw6I+0XElOv6pPjyNSVJNU5IA==
+ b=WFUeilmEbuYV59QplS2qiuHakPxpxoc3ipALkyy4termznxEuv1jLifaj4EvyBov7O4/oxLtkU7JQfCrGn7Oft6Xl5bV3NI1hMqZd+yhuBqnlrVsp4fWUOHfSXG8sShoS/hS1eXScdQogrCA4Z5pH1Bp/eBA/PYJz12s6AFTWA2mPFai4Zfig9BbKpR/VeHfHcUsziH5HCwqJKooKz474eUEuVF6wlGabzSn5mntMW2EQuKNlfxYxcj5r2E4vMlFmR9lP1UWJZ9Lq0/ar4SJ9h+FjsScRt8KHJTc6CjwyVxtFAf9PDqvRHHjGYVVz9VJG0U7B8ZlEys1apsfELVIVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zWAGflaRJnH1ULoNysMImLPl5odmDhUtgJENoY9dnBw=;
- b=k71YVcY4oBzI2FLGwa7EBXC+EST3/t7+TIiJBOIKlsv8JJebdchwCCXXLelUiplBd+XgM+w2Smsiq1j91j7JhTdG9Hv67shta2rhM9VIFQX0+a74GDF0iEw/X1hgr9o2xYfsAyS6SsVusgAxsOYWZBbA/Gce3Oj8zzUIKEKKoOgDUcDjYnTvynPfLzmFT/tkU9dB17Az+QcRFyYFmYUhj59hc30VQCya/YHpTvYnVzwyrlDhMqKMvFXClqza2jv5Ro9vLlLaqZ8K5V8PXe2+DMk7ks5nvC/64LDPi+T6IMQkSoMH8jyeeh/+wWOOHxjRbUDaGA3bG1IgctBbGgpe6g==
+ bh=u889tsr15nfeos7Scn6iy/tbXksMrh8dF/cuS5Vsvj0=;
+ b=gK49G5JFuvGw9ugGQtTOzHYJcYuVmCPy+86rawG6DdVAaaO1Qz7/APv6ejjRMqdRi4P7Saq44PgKSyOHoSNVUF6gPci9dzrbDk876KmGXXS3Lc0/FyvldJ31YVnWp09Qtm/Xt6iknfULjvhD5ve2zfsTacsT9QOkwNkw1NLjnhNaKyODx0WyEbOXp3QP+x+tfyKfVBiyL5ofxPbrf8L79+H5WUsrI+0n2gKwqjvT3KmDquCnf84QNWd0jElqnuBj4AvkO+hvrLkeMl1CZPEfXVjNR2Uf1JOv3DTvPbToF1mP0iIahlMb18QoKgJ9w8rzoCVlJzMaZD4vGLDwsa64hQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u889tsr15nfeos7Scn6iy/tbXksMrh8dF/cuS5Vsvj0=;
+ b=Ew4ri4EZ6NH8XXCFgSVuMY2MmvPASCqyo6LzJPHFRVYvbAybpKekMYY1YmKYbqvJuPIKusvfkQb9iBfSsCvX8SgOvSTvwb98SZMwdmIm1Y58AU+/NurC3tTog3Hi4r6Q29ys6IMXU/ZoOcN1WUF9HSHSMjMAIjlvYsr7VeOxleOehhoy+7wdXlfAgbXetn4/6MO8defzUjwcgex8wVg8DmlJUoa0qoTCwfnVp0EUE8/sxP6/k8OaRptYXzwuSdcz3u0BV0AG96C3+f/28ZzsVmPYDKUX+p+puatCXSxYdwD9NObUEgfK2Il5NLTV8PCWHhzCBrmKJaC+rLqBMyUftw==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
- by SA1PR11MB5778.namprd11.prod.outlook.com (2603:10b6:806:23f::13) with
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH2PR12MB3990.namprd12.prod.outlook.com (2603:10b6:610:28::18)
+ by DM6PR12MB4314.namprd12.prod.outlook.com (2603:10b6:5:211::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Mon, 3 Aug
- 2026 14:00:26 +0000
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0270.016; Mon, 3 Aug 2026
- 14:00:26 +0000
-Message-ID: <cd96321c-3ca2-4b11-95e1-17d0a411ce8f@intel.com>
-Date: Mon, 3 Aug 2026 17:00:21 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/8] i3c: master: Fix recursive locking during device
- registration
-To: Frank Li <Frank.li@oss.nxp.com>, <sashiko-reviews@lists.linux.dev>
-CC: <Frank.Li@kernel.org>, <linux-pci@vger.kernel.org>,
-	<linux-i3c@lists.infradead.org>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>
-References: <20260728155308.142713-1-adrian.hunter@intel.com>
- <20260728155308.142713-2-adrian.hunter@intel.com>
- <20260728161935.C236F1F00A3A@smtp.kernel.org>
- <amkJi8010zem-2O9@lizhi-Precision-Tower-5810>
-Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
- 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
- 4, Domiciled in Helsinki
-In-Reply-To: <amkJi8010zem-2O9@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: DUZPR01CA0290.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:4b7::28) To IA1PR11MB7198.namprd11.prod.outlook.com
- (2603:10b6:208:419::15)
+ 2026 14:00:39 +0000
+Received: from CH2PR12MB3990.namprd12.prod.outlook.com
+ ([fe80::7de1:4fe5:8ead:5989]) by CH2PR12MB3990.namprd12.prod.outlook.com
+ ([fe80::7de1:4fe5:8ead:5989%4]) with mapi id 15.21.0270.015; Mon, 3 Aug 2026
+ 14:00:38 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 03 Aug 2026 23:00:35 +0900
+Message-Id: <DKFD33JJD080.2N5VWK5MIMXR3@nvidia.com>
+Cc: <sashiko-reviews@lists.linux.dev>, "Timur Tabi" <ttabi@nvidia.com>,
+ "Danilo Krummrich" <dakr@kernel.org>, <ojeda@kernel.org>
+Subject: Re: [PATCH v7 2/8] rust: firmware: add request_into_buf()
+From: "Alexandre Courbot" <acourbot@nvidia.com>
+To: <sashiko-bot@kernel.org>
+References: <20260731201017.2580713-1-ttabi@nvidia.com>
+ <20260731201017.2580713-3-ttabi@nvidia.com>
+ <20260731202451.3A3381F00AC4@smtp.kernel.org>
+In-Reply-To: <20260731202451.3A3381F00AC4@smtp.kernel.org>
+X-ClientProxiedBy: OSTPR01CA0075.jpnprd01.prod.outlook.com
+ (2603:1096:604:21a::7) To CH2PR12MB3990.namprd12.prod.outlook.com
+ (2603:10b6:610:28::18)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -107,210 +65,164 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|SA1PR11MB5778:EE_
-X-MS-Office365-Filtering-Correlation-Id: c584f9d3-a8eb-49a5-c906-08def16791bb
+X-MS-TrafficTypeDiagnostic: CH2PR12MB3990:EE_|DM6PR12MB4314:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8f49336-72b4-432c-6f57-08def1679933
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|6133799003|56012099006|5023799004|11063799006|10067099003|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: wybxTUxZWnp/YZA+3KNWBY3pft3Yol3DjHieFQUAUVYgNVqqnH2oNhwIa38ojkPgKUD6SF39aWi6kHVqOlRNzGQv3a8atdZy/abP5As3HAMTC+pGB80YghT2kwea/KFp4v7y/FHx8HDnIs1nAz1f9mtl+kK09tIrFeLG7S4khK1eY6V+U943YuD18+dY6BZx6zHgqpcES4es7jT3XQjmrrUyVUV2LZac/ds3Ew3HKIGQxXnjjwvcIUGhk4OwrUlD4MVHSbBFp3khfNBDOJiejwlqJtZXdshInfb0NoNr5cy82VP7yS/stwcxHqCY/dic1+aQMx6UJnwKJjmdodd6Gfm4diEm1BE30Jueggq/1H+Sc2M1T5lyaveqPj+x06lVfE6yxD0hzaqne8wg6ImXIh/LBZXE2Vxe71/tKXNqJsHhpnYh1oY4bZzwFAorLXLPayxkosKYJ9aKQgLvy2mYqu8etUyeEeXv5JAe9SiaNpNb4XRsBdHzYyRFIrrLoM8fU0xxcdF3LJhknH/kdFIUEBBeSfM7JXXvk2ruFqdA97WjjYBdJgGDgA+K34lU0p4PMDafS/nq83Ey6rV4HOhdDO5iFNMpTsMorgVnlECR9YY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(6133799003)(56012099006)(5023799004)(11063799006)(10067099003)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MC81MWpZUDBsdkE2M0pCNi9wenlNQytRNWVyNlc1d0ZaWTlidkV3ODVOVG54?=
- =?utf-8?B?U0FLeGovVGhwNW01K1VzdWprUGs0b3J4alVEOTE0VnhJMG55bnZMWDM4UU5h?=
- =?utf-8?B?TUxrUi8rKytCMm5kQkNwNFo4UWtpVmZLUk12NEJvZ2dOaEtkNE14bWhLTTRJ?=
- =?utf-8?B?U2QxRFMraGV4R2FqU2dHY0tuNmNiZEYzdHhJaG5tMDBQUFpVVnpqcDV3Qnp0?=
- =?utf-8?B?alp3SG4xR3NqRUhaK1FvNWZTL1lDSVIxZndBTDhjSHhqdW9Dc1ZjN2crUFhP?=
- =?utf-8?B?L2NsNUJ0Um1MUC96eVdKaDlUQWNGd3RBN2lxZk9Qc0FJdnFQMnZKeldnNmFL?=
- =?utf-8?B?S0dCd2ViZUU0ODFNa3hpWmsyVTNGeDRCMlpKejIxeWFFOER0REtuN0E3Nndz?=
- =?utf-8?B?UDVRRXhpWlE5MGtuckl6YXM2SDBTeTJWSnZxNmRVVW03UEp1MjdORlh5NzZy?=
- =?utf-8?B?NmNReTJJcEJPc2FRL2s5QmxCUHlRNExTYXk4RDFkQnlyREd5OVZrSXJWN095?=
- =?utf-8?B?LzZjRitIU1U5YW03ZThKS0VUTi80L2ErWW9jc1JhdTRFTk5hSy9vTE1KSENx?=
- =?utf-8?B?OVBmcHVtMzRXL1RmMlRIMlJvNkg1b2U1ZjJVL1Rrc0xtZkJTMEZMMEtuNDVK?=
- =?utf-8?B?NklmSUpFQVZjNmJ4ODJuMXhzUGhDWk5rS2dVbmVpM0JCV3NWOHpONW9lcklD?=
- =?utf-8?B?eTVUYVUybW4va1VCbWVRZUJoSExYQWk2ZDV2amNLa3pnOFMrMGFxYThKWXVM?=
- =?utf-8?B?Y1VUMUlmN204SHN5L1VCa2h4STJ1NXRGVmU3Njh4TDdJMTVDTndmRHB3TnpR?=
- =?utf-8?B?R0htNnRMQk9IeWhhT1k3TkRZUWt1ZGppclM1WGZhMHNhejlGL0VPbUQvQ1B2?=
- =?utf-8?B?VjBweUpYY2VVTGpaTEVGcmdJd3J2MUh0SFFGVXQ3TXloaHhQam9ORkhxSEJp?=
- =?utf-8?B?d3oySElMMUthT1YrWWp3UmpZWWNRZHBKMGdJc3ljaGVEa3lGaVhMSWZNeHZn?=
- =?utf-8?B?WFJCSE1UVkdqak12U2lNRVVLWHJiaVB4d1VwRXVmMjArVnliK0ZRRzl1RG1a?=
- =?utf-8?B?WDRRTXlhNVZCM21WZlJKMUJCV1hkd3pMNSs0WE5hZXhaY3ZpN2laWlFWbW1r?=
- =?utf-8?B?NDVvZkpNanlpOTIvei9DbmlFMUVPUkovVElmUk5qdGhlejQ2R2tha2gwWFll?=
- =?utf-8?B?MitIck9KY0dvTFRLSDdFbnVkU09PemdSQXFZdktDTCtUZWlmZnRzZ0w5SCtV?=
- =?utf-8?B?OUdXTWJDR25Sb2t1QytyWHROdHZYQW5wWEM4M2VPQW9qVExZVVhWdGI1aXVN?=
- =?utf-8?B?SmJnM2U2b1VJR0tPZzhneTViRmdHWThlMUM3R1o5b2phWU5XQ1A0NE81aEJh?=
- =?utf-8?B?Q0FNbFp1SVhHT1gxL3dvVEJLRFpKOHhwRTZJZkVkbmNzWU9LTU5LQ2hsVVNu?=
- =?utf-8?B?Z1RTVkY1M0htangyTGxNdjAxMUJLRFgxa2NpZEtFcTJod2hUZE9tVllJOWhU?=
- =?utf-8?B?V2l4VzNXeTZoWDVKeTNKYnc5UHRSSjkvVzBjRnVOd3FxTldmZEIrWEh0NFBB?=
- =?utf-8?B?T0puemVhRmwxT0RVa1crTVA3UUtYRktPYzA3WDR4VEFRWmMxUlNiZFlmamEy?=
- =?utf-8?B?cHpmQTl6bnpqOXhqNmJsblZLTG5mQmhmQnd6T01hd0E3enVPdUZCOHhBTEh4?=
- =?utf-8?B?QjRRSHh3WGZNV1k0ZDJVZmlrL09xK3gyanNveUpVZ01NQ1BBbXhnbHVDeWEx?=
- =?utf-8?B?R2QrZXVsT1JTQjJ5bkQ4SEpXazQ0ejVwZmxDYmh4NlZMalZlWDhBc3lXc1Jz?=
- =?utf-8?B?SjBGMFp0b3NOeWdweGZJK2JwbnlvV3dTMWhKc2xSNVdoVUc2OUNSdjlzS1oy?=
- =?utf-8?B?dW9EMXpUMkZwUzdOWkR5a0xCQm1uRDJiOUdkSTJ0alFBRkdzbmlVWmJWT216?=
- =?utf-8?B?SWtkM1kweEYzOUJzQTlzRnZxbGVHTWRVYmNQWkROdFFGajJJWllCK2pTMi9C?=
- =?utf-8?B?bmEvbG54a2JqcHlUSzZyd3orVEVhYVZka2VSV3BGcjlTR25HY0crUllOc0lI?=
- =?utf-8?B?V3crR1JoMkRKeVFseVpZNEk4R0ovM2c3VnZwNmRzeE1wWENZdlM2RXB0OVA4?=
- =?utf-8?B?bUJ1V1R3Smh5K0pBemJGajQvaUt6dVhkaGFpVGJmaVlkbCtwRFE1MGFteEhN?=
- =?utf-8?B?TDdTMEhHVit4NHFwMmFFMXArbGlSTXMzRU9lVkNURHNtdGN1QnIvZXFaZ3hO?=
- =?utf-8?B?TExDUUFiU3EvL2pHR1dHMWppUkdxSEhUS05oYmNpOWpRRS8wcUEzOWNMbHRy?=
- =?utf-8?B?UUluRUpDa0dJY3NsVEJqVmc4Z3Z6STl0QmJvNVVEcFBHZjN4MkQwRm1QNFht?=
- =?utf-8?Q?9gTYAtCmYgkvQBO4=3D?=
-X-Exchange-RoutingPolicyChecked: VFvGu+2cFZjmPbQGi89uF3ZabURnsp8ugrytcF8zlpesoBBdpexyyf+M6yDeiG9dFSg4kNRoFXY3L3l7WhCFbfjKR6PsKRCsgR6bhSucyaAnk2DX9EA7WmYI/4WU5W5J0sIK/0TXLE2TN6g5ScMysid3mHuEq72RpTtV5XHo9ndZtXN/RjJLBMzFk3PmENODNgCbShIIt2tAqYMOk+Nuw8fEfW4wUaVxkapeqcaVbg4vXf6mMLpt+SLW0svLNNVE/QStnTG55FMTx1uRTwPm3A2PJKrRr5ABh6ADZoLFiwlBA1/oAZVy/dDcESA3/KL+lDfPrIy4Few2TtcMSnKYHw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: c584f9d3-a8eb-49a5-c906-08def16791bb
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|10070799003|23010399003|1800799024|376014|56012099006|10067099003|11063799006|4143699003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	jJB32DL9L67nUVEB4ltUfEWC8hPQySQvUtxfLnZDPTQU+8oi2IpV628P06c2RoCoxkPOIq5GkCR/e/2Tb0sqjTxG391FI3fGP7wwo2OXaXLQTi0ovtOky52381JGsMy4Z1z5siXG8DZKDx8u2AHgJ3X0Hh/O99oupFFEnhFM6CJHNKcRgQVkhUP0blIVHbZc1wancsRJjGm4HXrseuHWGw7Wx+seucqGlxYAe3Qq4eUkTOPdW2adtTL3IS5MCfw2sp4X21WCZxKl1ghRjjAip/gAQtQt4bA9LN1u2dtZ6oFTde4WL1M+UGaoTDGvxLkY+kGDyyJO4KTBxYkOrw/jweXoT09awEoPuqEcPYmZvBow5Uo1nUBpawV2F++2MGdhAX0TmkN8+ZFZXR09cLbb4DOySCIfnVzTHO7vall3IzOaVI7rwManc+1ZVobq/kSYeOIe92/mVaJeizcoxoAC99mO34yNHPb24he6BHvg4JxgYLOwtEx/cnJBjtDc+430KpTWGEqSY8o5amKIM+VkaO+pm/ezx+tBX+r+9eeSb1mvsnJJXuxh8YdvVDtqM2bSJKK0DgwzKyY0Y/P2CPOE5XXWHyvgYLCOO7p1krHZnwZ56w3ER/2/W0/jjbI+hmDC3atu3Fmrn47xNa9rKlV7/M7gte+iH4ii+Lhcc24yaw4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB3990.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(10070799003)(23010399003)(1800799024)(376014)(56012099006)(10067099003)(11063799006)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?azVqQ3I2N0g3eitxbWo0NUZhT2xrS1FTeXM3ZWFTMnpubStMRTF3QzU0SmE4?=
+ =?utf-8?B?SkMrZGdxaW5ENXJjSk1ScEVvR2dQMzUvUHpSTVRDQXJub3dabGVvMmFKQytX?=
+ =?utf-8?B?QmJuSWxHZkR1OUNXaHBaYlZXN1QrTmJ6Yk1pNkZEdXNnemp1YlZIM3RhN2xM?=
+ =?utf-8?B?Zzg2RDF4ampuc0lxWGEwS2h4MVFNK0RCd1AyTVNhQ1JocGo0QXJzTXlNRTF1?=
+ =?utf-8?B?cHJjanF6eFJXMmdnaUwrUXA2bjBQdjVtNDc0RGFSdUV6OGxRNkxTKzQrcmtq?=
+ =?utf-8?B?OFhBTC9pWUpOOW5JM0UrN3VSZE82SkxDSU1XMGtwZGZIby9jQlNEN3p5eGZl?=
+ =?utf-8?B?dVhVVHlMa2JrUXF4K3AxVFg4VUZhYkt3TVdxTEFLNitFVnZ1QUQ0RVI4SFdt?=
+ =?utf-8?B?Z29EVWpIV210czcyTzNDTFpxZHpNN1JuNGxCa0NmU0phdm9YaG1iS1lmRWRR?=
+ =?utf-8?B?VmJWTXIwMmtucjZxQ0RFa205WHQrTGhDNUcrQTF3b2w0N21zV05VYlptZnp1?=
+ =?utf-8?B?QkNpK0JYRUxKWXc4THNmTmY2MXhWdTNDNFVabCs4ZVNBcEZBbmlZdWE4Q3Iz?=
+ =?utf-8?B?S2FKZHVWRnp6TWFkQU5yeGJ3STRYamdQaTkvT21FMlNWZXhyMW9XUExGbnRl?=
+ =?utf-8?B?Vm1ZcDhyRGxiZUFWdWZWT1JkZTNpUmNGUHg3OEFzT2lxUkNpODF4YURtOWUy?=
+ =?utf-8?B?TExiZmdMSVY1VFBuUzlkRXJaNUVjam1YTEtYM3NacDdmeHpRUXh3bXBRMG5z?=
+ =?utf-8?B?OTN2SmNKTXc5VWhJUHZoY2cxQ3d3WDQwaU9WQVZ0R3MvZE41dEhNWFd3MTdr?=
+ =?utf-8?B?NXV1cFFUWi8vVHZ4WVExNGcyeURTbDgrYlA0SkVoaEhFYTZhQ2R5MUxwdVNW?=
+ =?utf-8?B?MGJuTVZMV2poNUNtMXgrRGtDejVRck40ZmErcWZIMHNJcjlxakhLVGJtbVBF?=
+ =?utf-8?B?eFhDbEJsNTZ5TkZHWlkxN2tkY3c0MitCS0ZPaWhuMmdXczVzVXhOK2k2eXpq?=
+ =?utf-8?B?aWxoUVp6NmVrZE5KL3I3ditYWGNUQVc2cC9TTG04KzNNU3FJRm1kL2pHV0dp?=
+ =?utf-8?B?V20wbVZYVXh0cFVKR25hRjdVZEJHaDFkN0hEWXpMTGtiemxOemdLdWQwSjJj?=
+ =?utf-8?B?MlZQZG9qTlN6U3ZxK3J5SnIxMzBEODBuWmU1NCsrY3h0K1I5anVPc1R6K3k4?=
+ =?utf-8?B?a3RKY3hVUTZ0VGpEYWNsRFY5azdmY0dVSDJjd0pQdDhEeWJMUm9saWYvUUx4?=
+ =?utf-8?B?dm8rY2JHdnVRWDRXRkFUNlhLU2ZUSmM5SWNjcUhnRU9DMkhDWXN3djE2WGxt?=
+ =?utf-8?B?eDhiNGdMZUZudFlJV1lhb2pVcHM1MFNSUXlid2Nha2lLUlVTYzRBdTk1QTBs?=
+ =?utf-8?B?ZFRyWnRHNDJmekw3WjFQWVdEeUg3TVZLaFhwTXVaYnZFQ21PQlRFUThYd2pw?=
+ =?utf-8?B?dXVBSThkbzFwYVRnZEl0ditoTC9HNlBxNko3ZWNyMjJtSG1rTGJNcE1mQ1B6?=
+ =?utf-8?B?U1FJeEdsaWVzbXRCbUo5bDdzS2UwcXFqNC9IUlQ4VGM3QkxIT21ncXZTaEV6?=
+ =?utf-8?B?QXNkamJ5c2FNSHpSSXB2ZFhOZ3pyOS92TEk3bS9JQXBsS1JPT0JhSVJlWGFx?=
+ =?utf-8?B?aWRSbzRJbDJlYVhiN2xKSUc2N01ETFRham9CT0dIZW9ZcTFNa1JoWWxLdmRh?=
+ =?utf-8?B?T0hwVnhwYWJUTE50UngzbG5BdmF2L1QyYXMwY0k3Z09ya2xLcUg1SVZiQmM2?=
+ =?utf-8?B?dm92S2NhaEUrZUhtOE94c3pBS2IvMHZzYXVCdUhrdGsvblZRZzR3bldhNnZ6?=
+ =?utf-8?B?cE9PY2FrSjlwY1BtUFRzT0JwUXlUVEszeXBTS1ArK01uZ1RoRWNRUm1Nazgw?=
+ =?utf-8?B?ajVuSHhWL2k0VmQzTVVoaWdROFAwZ3dFYXJ1eU5WRmlDY01VTHhublpsdnlk?=
+ =?utf-8?B?TWdyVHNVWHRpblU1a20zQ0xHdFBhNlpPVm5rRk9nemp4N0ZBd0xWN1VOWEtW?=
+ =?utf-8?B?WXYzNXh6K2lmWFc3OHYvckpsWUp2aU5Oa1VrNDA2dnZiZWtrSDZTK0htY1Mz?=
+ =?utf-8?B?eVAvM1Z5eHU0TzNLM09uYXYyVzVpSTVYT3ZjUXZiR2RINmpidE92bjhqR2E1?=
+ =?utf-8?B?QWRIbmlVeU02TkVtbnhHNmt0SGNoeW9SdFF5RGthbFlWVzBvbzBQQzM4ek9u?=
+ =?utf-8?B?ZkZCWm1Ka3J1WTRSL1FxM3gyRW02Z3lJRk5CQ2oyNE5tUzBpUmhkZjFTTlIz?=
+ =?utf-8?B?WXgzT3VvSFV4R0ZVd2ZVbkt2WXBYSCtaL3UvSG9IbnBNc3MyNlBtdC81L3R0?=
+ =?utf-8?B?TTZ0eEEvZGppb3kxd3ZjeTFsZkIzSmh5TlZQb3dtUElIY1huVE1KR0lUT3Vr?=
+ =?utf-8?Q?uBayFC2Pj/rr2gRARjUQfXb1cCg5WDOuC5ysXqhuWnVBd?=
+X-MS-Exchange-AntiSpam-MessageData-1: B17F4jZTcBwozQ==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8f49336-72b4-432c-6f57-08def1679933
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB3990.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Aug 2026 14:00:26.5730
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Aug 2026 14:00:38.9317
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TPv3ZxAT3h6bJbhT9JCW2sMM4WZoIywzHbYQ8rnLkiejCjBD7I/kjtQ/N3vZT2Ybz46qanZHsyrMbUymfqEE2Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB5778
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: JF85jarFklhUJ4fL6TeRfyEidOZHVodVQ+oMTN0OFIIV8ab857Zd+xK+MbEUyCLRDO7XeUeXW0z5o6QjmNgduQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4314
 
-On 28/07/2026 22:56, Frank Li wrote:
-> On Tue, Jul 28, 2026 at 04:19:35PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>
->> New issues:
->> - [High] Dropping the bus maintenance lock around device_register() exposes i3c_device_uevent() and driver probe functions to a Use-After-Free if a concurrent DAA replaces the device.
->>
->> Pre-existing issues:
->> - [High] i3c_device_uevent() leaks uninitialized stack memory to userspace when i3cdev->desc is NULL.
->> --
->>
->> --- Patch [1]: [PATCH V2 1/8] i3c: master: Fix recursive locking during device registration ---
->> commit 33a4dcd6c5626faef95bc7cd02ec4c56c6710c78
->> Author: Adrian Hunter <adrian.hunter@intel.com>
->>
->> i3c: master: Fix recursive locking during device registration
->>
->> This commit separates device creation from registration to fix a recursive
->> locking issue. It drops the bus maintenance lock around device_register()
->> to prevent deadlocks when probe callbacks invoke I3C helpers.
->>
->> diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
->> index fd3e79d10c840..874f6e11b296d 100644
->> --- a/drivers/i3c/master.c
->> +++ b/drivers/i3c/master.c
->> [ ... ]
->>> @@ -1999,25 +2008,37 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
->>>  		if (desc->boardinfo)
->>>  			desc->dev->dev.of_node = desc->boardinfo->of_node;
->>>
->>> -		ret = device_register(&desc->dev->dev);
->>> -		if (ret) {
->>> -			dev_err(&master->dev,
->>> -				"Failed to add I3C device (err = %d)\n", ret);
->>> -			desc->dev->desc = NULL;
->>> -			put_device(&desc->dev->dev);
->>> -			desc->dev = NULL;
->>> -		}
->>> +		list_add_tail(&desc->dev->node, &i3c_unreg_devs);
->>> +	}
->>> +
->>> +	i3c_bus_maintenance_unlock(&master->bus);
->>> +
->>> +	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
->>> +		ret = device_register(&i3cdev->dev);
->>
->> [Severity: High]
->> Does dropping the maintenance lock around device_register() expose
->> i3c_device_uevent() and driver probes to a use-after-free?
-> 
-> look like make sense.
+On Sat Aug 1, 2026 at 5:24 AM JST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] `request_into_buf` discards the actual size of the loaded firmwa=
+re, exposing the caller to trailing uninitialized or stale data.
+> - [Low] The wrapper unnecessarily casts a mutable pointer to a const poin=
+ter, which is unidiomatic and confusing.
+> --
+>
+> --- Patch [2]: [PATCH v7 2/8] rust: firmware: add request_into_buf() ---
+> commit e3d518ea065bd3aeb4a38939d026df9eef8651b7
+> Author: Timur Tabi <ttabi@nvidia.com>
+>
+> rust: firmware: add request_into_buf()
+>
+> Add request_into_buf(), a Rust wrapper around the request_firmware_into_b=
+uf()
+> function. This variant loads the firmware image directly into a caller-pr=
+ovided
+> buffer rather than a kernel-allocated one.
+>
+>> diff --git a/rust/kernel/firmware.rs b/rust/kernel/firmware.rs
+>> index 1e3dd2e3422db..deb119d4813c0 100644
+>> --- a/rust/kernel/firmware.rs
+>> +++ b/rust/kernel/firmware.rs
+>
+> [ ... ]
+>
+>> @@ -116,6 +116,50 @@ fn drop(&mut self) {
+>>      }
+>>  }
+>> =20
+>> +/// Load firmware directly into the caller-provided `buf`.
+>> +///
+>> +/// On success the firmware image has been copied into `buf`; the calle=
+r accesses the data
+>> +/// through `buf` itself.
+>> +///
+>> +/// This is intentionally a stand-alone function rather than a `Firmwar=
+e` constructor. For
+>> +/// the `into_buf` path, the firmware data lives in the caller's `buf`,=
+ not in a
+>> +/// kernel-owned buffer, so returning a `Firmware` would expose `Firmwa=
+re::data()` as a
+>> +/// second handle aliasing `buf` (and `release_firmware()` does not fre=
+e `buf` anyway).
+>> +pub fn request_into_buf(name: &CStr, dev: &Device, buf: &mut [u8]) -> R=
+esult {
+>
+> [ ... ]
+>
+>> +    let mut fw: *mut bindings::firmware =3D core::ptr::null_mut();
+>> +    let pfw: *mut *mut bindings::firmware =3D &mut fw;
+>> +    let pfw: *mut *const bindings::firmware =3D pfw.cast();
+>
+> [Severity: Low]
+> This isn't a bug, but is it necessary to declare a mutable pointer and th=
+en
+> cast it to a pointer-to-const?=20
+>
+> The FFI function expects a *mut *const bindings::firmware. Declaring
+> let mut fw: *const bindings::firmware =3D core::ptr::null(); would produc=
+e
+> the correct *mut *const address naturally, without requiring these casts.
 
-Yes, but it is not new.  A plain sysfs read like:
+Sashiko is correct here, this can be simplified as follows (on apply if
+no respin is required?):
 
-	cat /sys/bus/i3c/devices/<bus.id>-<pid>/uevent
+diff --git a/rust/kernel/firmware.rs b/rust/kernel/firmware.rs
+index 5b336bd1f09c..bf759c4f8996 100644
+--- a/rust/kernel/firmware.rs
++++ b/rust/kernel/firmware.rs
+@@ -139,16 +139,14 @@ pub fn request_into_buf(name: &CStr, dev: &Device, bu=
+f: &mut [u8]) -> Result {
+         return Err(EINVAL);
+     }
 
-will invoke i3c_device_uevent() without any lock.  It has been that
-way since commit 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead
-of calling i3c_device_get_info() to avoid deadlock")
+-    let mut fw: *mut bindings::firmware =3D core::ptr::null_mut();
+-    let pfw: *mut *mut bindings::firmware =3D &mut fw;
+-    let pfw: *mut *const bindings::firmware =3D pfw.cast();
++    let mut fw: *const bindings::firmware =3D core::ptr::null();
 
-After this patch it should now be possible to take a lock in
-i3c_device_uevent(), or alternatively, put a copy of pid and dcr on
-struct i3c_device for use by i3c_device_uevent() so no lock is needed.
-
-In any case, it is a separate fix.
-
-> 
-> Frank
-> 
->>
->> If a concurrent I3C hot-join event or a sysfs write to do_daa occurs while
->> device_register() is running without the lock,
->> __i3c_master_add_i3c_dev_locked() could find a duplicate PID:
->>
->> __i3c_master_add_i3c_dev_locked() {
->>         olddev = i3c_master_search_i3c_dev_duplicate(newdev);
->>         if (olddev) {
->>                 newdev->dev = olddev->dev;
->>                 if (newdev->dev)
->>                         newdev->dev->desc = newdev;
->>                 ...
->>                 i3c_master_detach_i3c_dev(olddev);
->>                 i3c_master_free_i3c_dev(olddev);
->>         }
->> }
->>
->> Meanwhile, device_register() triggers a KOBJ_ADD uevent. i3c_device_uevent()
->> reads i3cdev->desc locklessly:
->>
->> i3c_device_uevent() {
->>         if (i3cdev->desc)
->>                 devinfo = i3cdev->desc->info;
->> }
->>
->> Could this lead to i3c_device_uevent() or driver probe functions dereferencing
->> the old descriptor while it is being freed?
->>
->>> +		if (ret)
->>> +			dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
->>> +		else
->>> +			list_del_init(&i3cdev->node);
->>> +	}
->>> +
->>> +	i3c_bus_maintenance_lock(&master->bus);
->>> +
->>> +	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
->>> +		list_del(&i3cdev->node);
->>> +		desc = i3cdev->desc;
->>> +		i3cdev->desc = NULL;
->>
->> [Severity: High]
->> This is a pre-existing issue, but does setting i3cdev->desc to NULL before
->> unregistration or cleanup lead to leaking uninitialized stack memory in
->> i3c_device_uevent()?
->>
->> When a device is unregistered (or if registration fails and triggers a uevent),
->> i3cdev->desc is set to NULL. This bypasses the initialization of devinfo
->> in i3c_device_uevent():
->>
->> i3c_device_uevent() {
->>         struct i3c_device_info devinfo;
->>         u16 manuf, part, ext;
->>
->>         if (i3cdev->desc)
->>                 devinfo = i3cdev->desc->info;
->>
->>         manuf = I3C_PID_MANUF_ID(devinfo.pid);
->>         ...
->>         return add_uevent_var(env, "MODALIAS=i3c:dcr%02Xmanuf%04X",
->>                               devinfo.dcr, manuf);
->> }
->>
->> Since devinfo is uninitialized on the stack when desc is NULL, could this
->> broadcast uninitialized kernel stack data to userspace processes listening
->> to netlink uevents?
->>
->>> +		put_device(&i3cdev->dev);
->>> +		desc->dev = NULL;
->>>  	}
->>> +
->>> +	i3c_bus_maintenance_unlock(&master->bus);
->>>  }
->>
->> --
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260728155308.142713-1-adrian.hunter@intel.com?part=1
-
+-    // SAFETY: `pfw` is a valid pointer to a NULL initialized `bindings::f=
+irmware` pointer.
++    // SAFETY: `&mut fw` is a valid pointer to a NULL initialized `binding=
+s::firmware` pointer.
+     // `name` and `dev` are valid as by their type invariants. `buf` is a =
+valid writable
+     // buffer of `buf.len()` bytes.
+     to_result(unsafe {
+         bindings::request_firmware_into_buf(
+-            pfw,
++            &mut fw,
+             name.as_char_ptr(),
+             dev.as_raw(),
+             buf.as_mut_ptr().cast(),
