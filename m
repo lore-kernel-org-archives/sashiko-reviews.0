@@ -1,127 +1,117 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D657483A14
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 02:11:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983F736494C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 03:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785723111; cv=none; b=c1nSy7gg86pbgdvd3jC9J6MxZ6lYuGl6ALEPHrQgOd9EbIXGhHlIfUfG7gYrkJ70TerqpRUhg99psOJWEIrRR93My/Hr/YhmWVYFr1tsDsmAihGqxCkH8hy4vfmt5SdydzU1HatxuMLCfLU/QFy6r0z5JoR5oV0sXBPEH2TIaEk=
+	t=1785728484; cv=none; b=psU1hM536zpZpq269tz7nx6m1dTu0Qav9xdXscTp4G0lT+CuUdKUFXqT1qfu/8wuY8lkPUP5CY6YbJeFZAru5unO1Pe84vLaOWF9kTqarwD2ai1IJebU3ZYJSydZ++C4cjQ+CyngQatvDYnFf04FczwR96YswkEMBIZE3P0nEoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785723111; c=relaxed/simple;
-	bh=vMe+KDs9KpRo1PgVH/I4P2G972B31ZsFlfANzgqY0ls=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MEm12at3UYb7T+Q0+J+XEUe5PCcBkFoDijKb07ORa7F0IkS4QFlqLyNsPZ9v0j4EIV2Z+T8SMJAKXLJ6lvToMQlSMf8iEF2Eq4nYpSOs7XDp/e+Nh7yhA6/5CEIra1TLzjvBISylNWXUZmK8wM0NkhoPQ56Xcvifs8nGik7SYuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hD0Wz0PmPzYQtJZ
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 10:10:55 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id DACC64058D
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 10:11:43 +0800 (CST)
-Received: from [10.67.110.68] (unknown [10.67.110.68])
-	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgBnoUDe+G9qpxKsAw--.21977S2;
-	Mon, 03 Aug 2026 10:11:43 +0800 (CST)
-Message-ID: <94b537d2-2d51-433d-a3e6-7ce9cd3bfd64@huaweicloud.com>
-Date: Mon, 3 Aug 2026 10:11:42 +0800
+	s=arc-20240116; t=1785728484; c=relaxed/simple;
+	bh=NCMW4kQRyBWSj2E3oOTBkzWRrKKMpt0eKzLDMpatx9c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LHCJ1g/PhQwe3sdbMJ0fXcS7lxEGnASxNIdGnsAG8D3P8qgDRh/IGXtq2cdF82uuiKwAgOBOU4R+401KKAJ6ZC8gtqvTjphM7X7tp76e63GbXxklq9xTmMDhdFy6MCefoYQqBc0xDv3IZzVOtxG1HzgdVMU2DSu7fSWlUE/tJG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr; spf=none smtp.mailfrom=isslab.korea.ac.kr; dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b=0s7cHd5P; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b="0s7cHd5P"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e071ed6aeso2226656a91.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 20:41:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isslab-korea-ac-kr.20251104.gappssmtp.com; s=20251104; t=1785728482; x=1786333282; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=NCMW4kQRyBWSj2E3oOTBkzWRrKKMpt0eKzLDMpatx9c=;
+        b=0s7cHd5P9c4CKjT9m99bGgcJtZyPgSmA2lX4StjaD1tyuG/D2l7ERzEDghvj9OTSVS
+         I5L3xY/UqjF77iVzRJ4kT1PRsRixNDQBpKmEfIK7nMmbXE5GJ7VRc6CLi8c1DpeXrHKX
+         ZKt/bob0BTYYJVZY55xWcyZQOpg3ATljr6NDPwpOWeoFEGP7/oz5vFdDjN3f2LzXe/h8
+         Di/+Xb6UGRtKlQj+4uJ9P47zXnhxC1RXrX/WWTldd+hXiLHIv4qUk0Xqpdiuhe6rRR9z
+         g4p+S6kyVE4mWNa32dNmzWxkQElro4N3yMg58m+TojPGnfXdsb7wcCwtNLPot3WeFwLk
+         tQdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785728482; x=1786333282;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=NCMW4kQRyBWSj2E3oOTBkzWRrKKMpt0eKzLDMpatx9c=;
+        b=ln4gYHqK/w2Vk9E61devDNnp4d+sKadQ9beO7E8jgnl0+WQqO21HVRoNb10v6SjDbr
+         Ht+s1zk22WSVFsxega80TXfa2i45Jpmw4+0GAWCSaXr+Jdz1W/I/nHqPmiUdmz9psO5c
+         rHPQsalhOTItEAbHGrEfyFEj3Ho/Kbk6oW9KIC46hi097Zj3j40AZIWG4Q6vbAxK6svR
+         JftUR+1zTdfuY4qWZSpUPyQGFExrjyJRXBu7dsi/sO9BlYRKxOLzASz+kEAAXij3NhcD
+         ze2T3p3xGXtmwGurFF+AodmcfK+iWTJpMeg/2r5lTTQuBHxpzbRUvFjIvSlMrEnjj/Dx
+         8Rpg==
+X-Forwarded-Encrypted: i=1; AHgh+RplopZXXyLbqwSFF+Idh28FUEM++mbEoYF44VtZ3mJwq3j39eCcNgnVoW3bRoEcsMuurXHgmjEm14Qgcl5MYHU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwXYdamASc4+US9nEYBKe4KO57j1HG9zAGlN3XUg/kw/9yIca0U
+	UMsYzpZkkq6aP8nfQtTZ8Nz0qvwthXrqvaE3h5x4n8MFlB55wvyoikcp1k6pQ0fmQK4=
+X-Gm-Gg: AR+sD13wphxO8AyDdxE4Jz+6PiRAzrCdc4ynbZ49Idz49kFpcbNe1x35LGrUMKjVGbq
+	77Di+dBRitqjEslgPfgb379/OphyiPx+u58fBxK7jyaJMbcnQHRZ35raugHToktwHWqFmr48+2U
+	wIdxmHPrAtRTOAMc2HJdVj4F34C9Eove0rgF3GVjSPX0UK7N2nO8n34PigGY00hq08m6OCZOGUg
+	QGLSVbON0bUiGpqafjPGIxdSOVpVhUM1r2M311iyxyphifA+KrTGIsEYKxw8tcEOiYz7nS/BmWd
+	GSxovRFgAsAuJTBu1zObZlKOcDSQeHBweX14lCJjVDIfYXlldk67S9+0DTaHgfyv7YMHmGSYwIT
+	o+DBXE30O8ioW0qa+GuB9fPwXXlmQ1Iq+0w2uh0JSp4eaa7M/11soUomA/BJ3/0cDv6Zy9JsjjS
+	gPkyBaH/jozvRWTW4sSjDc9uOo6kIh3DmHpr0ZMDO9PjhvL7bL83rvx82ad8JQmW/xv9Oi
+X-Received: by 2002:a17:90b:50c4:b0:38e:447c:9a15 with SMTP id 98e67ed59e1d1-38fbc516655mr7151775a91.36.1785728481711;
+        Sun, 02 Aug 2026 20:41:21 -0700 (PDT)
+Received: from yhlee-960QFG.. ([125.131.91.97])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb2bac654sm3299609a91.10.2026.08.02.20.41.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Aug 2026 20:41:21 -0700 (PDT)
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+To: alibuda@linux.alibaba.com,
+	dust.li@linux.alibaba.com,
+	sidraya@linux.ibm.com,
+	wenjia@linux.ibm.com,
+	kuba@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com
+Cc: horms@kernel.org,
+	mjambigi@linux.ibm.com,
+	tonylu@linux.alibaba.com,
+	guwen@linux.alibaba.com,
+	guangguan.wang@linux.alibaba.com,
+	kees@kernel.org,
+	gustavoars@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Subject: Re: [PATCH net v5 2/3] net/smc: bound the peer rkey counts in SMC-Rv2 LLC messages
+Date: Mon,  3 Aug 2026 12:41:05 +0900
+Message-ID: <20260803034105.2051552-1-yhlee@isslab.korea.ac.kr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260801094208.1937951-3-yhlee@isslab.korea.ac.kr>
+References: <20260801094208.1937951-3-yhlee@isslab.korea.ac.kr>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf v3] bpf, cgroup: Fix invalid storage access after
- __cgroup_bpf_attach failed
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260803013934.4036646-1-pulehui@huaweicloud.com>
- <20260803015036.E47F71F00A3D@smtp.kernel.org>
-From: Pu Lehui <pulehui@huaweicloud.com>
-In-Reply-To: <20260803015036.E47F71F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_Ch0CgBnoUDe+G9qpxKsAw--.21977S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDZw4UXFWruw1ftr13urg_yoW5Gr1fpF
-	s8J3WUKw1YgrZYv3Z7K34xZa4S9w4kKr15K395tw18ur43Xr90gryxurWY9a9xZFs7uw1x
-	tr1YvFs2kw1jvaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
-	xhVjvjDU0xZFpf9x07UE-erUUUUU=
-X-CM-SenderInfo: psxovxtxl6x35dzhxuhorxvhhfrp/
+Content-Transfer-Encoding: 8bit
 
+> Does this bounds check allow processing of stale memory?
 
-On 2026/8/3 9:50, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] When updating a cgroup BPF link via `bpf_link_update`, `__cgroup_bpf_replace` does not allocate new `cgroup_storage` for the new program and lacks map compatibility checks, leading to severe out-of-bounds kernel memory access.
-> --
-> 
-> --- Patch [1]: [PATCH bpf v3] bpf, cgroup: Fix invalid storage access after __cgroup_bpf_attach failed ---
-> commit 91e5396c1d1312a251035a5e4902151e56fc5bdf
-> Author: Pu Lehui <pulehui@huawei.com>
-> 
-> bpf, cgroup: Fix invalid storage access after __cgroup_bpf_attach failed
-> 
-> This commit fixes a potential invalid storage access issue when replacing a
-> cgroup BPF program in multi-attach mode fails midway. It saves the old
-> program's state and storage prior to the update, and properly restores them
-> in the cleanup path on error.
-> 
->> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
->> index 4355ccb78a9c6..57fd1d784e440 100644
->> --- a/kernel/bpf/cgroup.c
->> +++ b/kernel/bpf/cgroup.c
-> 
-> [ ... ]
-> 
-> While reviewing this file, I noticed a potential issue in __cgroup_bpf_replace():
-> 
->> static int __cgroup_bpf_replace(struct cgroup *cgrp,
->> 				struct bpf_cgroup_link *link,
->> 				struct bpf_prog *new_prog)
->> {
-> [ ... ]
->> 	cgrp->bpf.revisions[atype] += 1;
->> 	old_prog = xchg(&link->link.prog, new_prog);
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does this function properly handle
-> cgroup_storage when replacing the program?
-> 
-> If a user replaces an existing cgroup BPF program using bpf_link_update with
-> a new program that uses a BPF_MAP_TYPE_CGROUP_STORAGE map with a larger
-> value_size, could this result in an out-of-bounds memory access?
-> 
-> It appears we swap the attached BPF program on the link here without
-> verifying that the new program's cgroup_storage maps have identical
-> value sizes to the old program, nor do we allocate new appropriately
-> sized storage buffers.
-> 
-> Since the verifier authorized the memory access for the new program based on
-> its larger map size, could bpf_get_local_storage return the smaller old
-> buffer leading to out-of-bounds read and write accesses?
+It does, and 3/3 of this series stops it. This patch bounds by the size
+of the buffer the message landed in; 3/3 copies the tail of the message
+into the queue entry and bounds by its length instead.
 
-The following patch has been covered this issue.
+The bound in this patch never fires on a link with a shared v2 receive
+buffer. It works out at 507 rkeys for ADD_LINK and 2046 for
+DELETE_RKEY, and the min_t() above it has already capped both at 255.
+I measured a 44-byte DELETE_RKEY_V2 declaring 255 rkeys: mainline and
+this patch draw the same response, and in two of the four exchanges an
+rkey read past the message was live and was deleted. With 3/3 applied
+the response reports 9.
 
-https://lore.kernel.org/bpf/20260728133058.2858367-1-pulehui@huaweicloud.com/
+It does fire on a link without that buffer, where it becomes 9. That is
+the out-of-bounds read this patch fixes, and why it carries Cc: stable
+while 3/3 does not.
 
-> 
->> 	replace_effective_prog(cgrp, atype, pl);
->> 	bpf_prog_put(old_prog);
->> 	return 0;
->> }
-> 
-
+Best regards,
+Yehyeong Lee
