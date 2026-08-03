@@ -1,112 +1,141 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E4C171CD
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 05:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785734906; cv=pass; b=TlO+DS5jtuAfC3JkIa6wDLIKVP43Wj0YOxjtY9fhazVnCWFZ8IIWPGzcT/x2pzQpvup36PhSJLmY/PETgvTRyZ5DAzgRRSBVlt7OXZdgIOE1K04nAXkM3ga7/ZWY7s+c2Cv2vI2tItUZtaw4pKk46jCIYTIfAhjozbOG1lkCpks=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785734906; c=relaxed/simple;
-	bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fOaPnY2lJjlS57YAbL0GPW7NY/TqnHLBccpp6jvRp7hZJIXKqO7H7LPMhgiMXatTwuIXkGR99LdJcH2X2ZASnbNXGIkOoPpueU636X3WVYHgTbWWPx4ypBhi4HlxDsVOuCjQ31l5OHJV26bWscDaR1K4EUucO6HTJ5Rz6pPBgXA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sldw+rc4; arc=pass smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C493770B
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 06:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785736917; cv=none; b=iYJOPgf6/+2zAS7Qo4yzYF02r3mbrz7UXqAGZRNp/Ac1QQkO7pL2jHJE7Hk+2XGBHuFPXdSvC3lkSH/Wrb7Tgn6Si50QeL9p8TQzz+9u1hjD8oElRyvFdqoIUPSi85cwo1Jz4X1h8G3SoJQfE4hdwpTRZ8AinWdBXvX0QeFhqgs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785736917; c=relaxed/simple;
+	bh=nhqzigJHu2rqL2Px63MJ43z3HN14aip2diXgZ+RPOUg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QiwN47TtgUZ3uWQ5JrUTK47x7SP8k5WpZo9Hyk/afXDkoMPLGedkkFDkFkziB3TWhIxUWrpJ3cSeW5HvOIpBRXfXXRzooc/9pgREA3X8lNlemMsH9JCh+0bD6XB2X3EAfFmgpMDCk1HoyXYx/L3rD41mDvusFmmvJ/6HNhoWbbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UqN2GuC5; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sldw+rc4"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-81e6f0b4610so33366317b3.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 22:28:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785734904; cv=none;
-        d=google.com; s=arc-20260327;
-        b=i8PDIgYv5IT8nuOGUotVR9JdJF2Oww39sQASoEqDKRhQ8CkUhYR/lUBFR/ciniCRDD
-         DR+PsS/Hh3gMC4iEzs9mJx3uRbc5VsnpuwrjA4vD5IPXqao4kQTMt4HhAairWEpo0ynh
-         rRWucw/zKZskkuCD58TyJVUvmJ1U9D1gdE7VU4X5MM6BN09xuz3PSEMrVuPHu4FzpA7+
-         J8LzAosHgSkHgRL8oPXR7cN6USr/8qkOmAJGfVywFdlOj8z+8z9RQPee6W5JgFcHQzwI
-         qtkF+ZonuAMsogmbp1zvXGUgcU5bXxftOiBjkihtsDk1F8iqibKnQ2WmaHXcD1egpGpZ
-         J2ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
-        fh=z+NQq8u+M/6HfaLpZE34W1L5DP7Kce1BOfmppHQKf0c=;
-        b=miRQoUuWKtcV+2jBU7Ewp4jHWuwHCm5YR38uyMQl3uqnvo21nlrBiB/unwI+XuTmpF
-         KNze+HVmdvKNQKhnw8NGs9dLKTr3dq2RF1NPUrbGAwUCgMM4qyvyiwXpFweyeW50zh7X
-         mb1gLYo7/QTZnFuOmie52n78HBDaQSuvziks/WuHWpmDpQ4X8kmzWs8Jk38MG/8wx/fu
-         LXOA7fDv+iYjJv0vsUnYzxn9WBnDQySBF43+dMrI4eFGmlIcWVydhr60DRvF3iPvEbUd
-         0KmYB+WsBQdwAbAkOetdn9N+c2UtiK+/Kko2fVbRO07oLKW3InMbwaZodg/0Vm3T7aWx
-         jCig==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqN2GuC5"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-848595b338cso3753502b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 23:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785734904; x=1786339704; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1785736915; x=1786341715; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
-        b=Sldw+rc4ODqXD2DVynAJRcuZRtGA2B5zrXhpM3F3fw5X68khEgHlzWpAkcHogVsWLt
-         N9m3GGb7LgSVUFSyfpUIt/30BXlKe0aSBuozZQA7OqDWsZR53NH2yw1hCGdgDmtuZqZq
-         pq1z1RWcMqFq9dmihXbqbxvRPAO3bCQukOJ2rBM11sPcSRmZqihdYnbVv9DKct9ekixO
-         lD2YpZ5ioEQJJrPYAXJpSrWu9FVCmdZNt+re8zlKuLMwCSs2svi/QiiXKYWXlUGMavye
-         YNTB4w7u6J+f6r0X1UtuF+Du2O+wk4rWQ8N5VMgHQ32v4wvaVB0Hqj2ip39tRtjCGlkw
-         JoaA==
+        bh=jR6DHa6uHR7CPMwwaGVZjRKeuYi64yZ/mtj7JzFEqlo=;
+        b=UqN2GuC5+5MrQ8SjH10IQDsExUq73Jk/X8T8SgdcgLq1ETLq6J3tE8BVrjnRzQgEcx
+         A/2HPcJLlZdD3kcGYHlQb4I98d7lECfe0HXIUKdWMjxD0DGkz++BXjxLj52Qsaf9/jqD
+         Y4D22Ybqq94rFoL5Cp2IbKq5FuTbGeWLEx9Vzq56dq+pOvwB+7buJycIDq44nXUzRTal
+         IhDQspW8pZlA61xcdbx/WKeiNKaQsZPcZmEYWHMiWpuXowR4ca8MoEgz9+aBIBvT/ltF
+         vokD/+m7oXoKlGYqpF+axYjdKMY96E7V6v+AJz08vLjw2gwsPghP/hnmBHUr+4YsyRyW
+         hPjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785734904; x=1786339704;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=K50g3LVe2JIlyne/f7MYa/IcLR6llYiCcw8Ef17gXBk=;
-        b=lR6kRXnUtMuAvK6eSrLFIHtM4YcOA3IuVDdVe0kh3+9JmgrY2lFk56+THrzE0CHmMA
-         mYscvyBA3/obtk146GXKoVo2RZ+x2GEEbodJ2LPnmdh6sz9GW8At1FYba4QWcgPQHcN8
-         bHXnEjumvxQZB1zoqLTUhjGizdm1DQAIyoqZhP+22UAj+0HkdOBUx+rRvs1zWgbzt/oP
-         NOSRLsog1kaqOOfcDuxCv2Vwu7Jk3xjRiOI9z4fBmcGURHQXyhcmGmcXQfuzNwCDzh2O
-         DXNHkPw28b4tWmncC78IEeCznfypOcRx1maFjniISbweacXEb9auGxUAMqvT6QUtMdPX
-         Dd5A==
-X-Gm-Message-State: AOJu0YzzCaU8MhNptCFRrO4K6bdF79P1OuNSebaNo3hg50qmZEZl0eRF
-	F3YrTAsWSDoH2f6pV0MlnAWnrX5cah4n79jsxQElpmhz4B9CAktqU/C82ml5YxNPgam9gVsiCaj
-	tlhA+PVLWP1fvoqpG5G/uwJR8/hDVnxFk9FDGqYY=
-X-Gm-Gg: AR+sD11cstBSGGZS+deb/23xELJNgRqzvCys5PpqQzo3r5vZnCVE6L3qiKDxh9qdEUb
-	4Fq+WbkTfBoncNr8E46+0Sne5rjjpQUOxSL8U2w1qccjaRdNnoeGZs67pGN5X6Unfn6qd+BZlq+
-	hCu81KmUWCqf3+hksPoGVDK1N6BhXD0sPMmuTyh1A2s/wJbFiIApQvxyeb4GIAUoh0PaTBvebM4
-	8LDhd20n8l8Qw3m5MaGgRURAT7h7xR6sZiyCSyUOffQtD7/QFIB+j6Tq2sFD2Nc/z6lqYWcfbgw
-	vCoaeesrwGMI5YgTA8KAodRJGkCRXhlasAMgC5NXlPDpG4fPAgIENX/LHVWh/yJnwPAAYcjb8pd
-	xfh2U+CgtXX/Fjs/SbQy8hzgBMsAPfw==
-X-Received: by 2002:a05:690c:6701:b0:7ff:1a93:be35 with SMTP id
- 00721157ae682-81fd4a6f84emr111918477b3.16.1785734904411; Sun, 02 Aug 2026
- 22:28:24 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785736915; x=1786341715;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=jR6DHa6uHR7CPMwwaGVZjRKeuYi64yZ/mtj7JzFEqlo=;
+        b=TpSRjYlBiHXDezvHgtRL70Kr+UTZgy6+OleZ15WEzFj+8uRS3hgCxPd9hRTwKc1h/N
+         M/FqmE9xxGigKvG8RJzh4WI6aWKYigbiQ/UagKGXjXib2ZLvJ3lZSqSTTJCgnw3e/8dK
+         DefoeR/dzd+KjSB3gmjQzD8H2yuJHg12ArhUapdZaNwKUtrOhEAzOBakFEPcbEd5ismT
+         U2TeJUUHlIeZQyMZ5dK8SHVdJZPV4vhteJTnRZjD45qcSFsmgOCbi/wzMFgTiAxrCiaj
+         3kpWfnpmVW5D2jhxgc/6Rc1tscgsJYj7TQ66N8gyazNLsUj4GhQc8bfPbZeS2svKSaYO
+         tVuw==
+X-Gm-Message-State: AOJu0YzUqK0z3xcYgli6ckagn5kWfV2XK6ggI/3G1reJxNmhW3fqSXQY
+	OrN7bXfkrIeriiMmJC7cRhn9Gr820NbhuwtXHrmpaYnA9c9VZUjeb33kBXiqGQ==
+X-Gm-Gg: AR+sD13K5OyvYOt+0RmDFO4g0VnneMpoaR/+vCwswcL07ndnUg9LCWCrSQQowjEMK2m
+	PxRgrBBVOPwHvuBToI6LFdPOPL6OYoZepxkq8qsUJWJLIHP72npVVQNfQOFmakM/NyuvMlVqTLu
+	9aYZEKMimbxiduqt2fQVqPgHVfpL+BpRu21EbR1eWvSs2R3CIypvKK7/iemXt0XQ8loxIQ+fMag
+	JMk6P+HmXrSTAaYRyvXhEVbGEByWqhS4c7kVYJf25h6GJ43zoJ3HzX2LuxCXugUWbbzzGiHt/ZK
+	tPIRM3kcTZGUwCLGRqZPp1bK2JMSFEL26cfTa3rWQ6chXZ3I23wCYPK8vV2ftSGoNOrleB2JWze
+	p8zSimeIWoID/udw9bisRLTYBOML3AsywfA6nn5sBM676TRakhX6GSvdzn+F55ikXztCs3cy4Da
+	LTpfQmhpbAIkqmwUkhwFZIWvvizr8S1Sip23Iq+G0OcatK/bo025smFI7y9eMHf3Kap7R+2vl6J
+	ujKP7mMyMnVYVxEyuzTak7bBKLGROl1hlW6Q4wa
+X-Received: by 2002:a05:6a00:cc4:b0:848:2f6e:e52b with SMTP id d2e1a72fcca58-84ee48ea8d3mr8120475b3a.63.1785736915112;
+        Sun, 02 Aug 2026 23:01:55 -0700 (PDT)
+Received: from [172.19.1.42] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84edc2d901csm3106716b3a.48.2026.08.02.23.01.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Aug 2026 23:01:54 -0700 (PDT)
+Message-ID: <a7c2335a-6c63-475e-b11d-12c56c90c212@gmail.com>
+Date: Mon, 3 Aug 2026 14:01:53 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260730204604.1729505-1-lyude@redhat.com> <20260730204604.1729505-4-lyude@redhat.com>
- <20260730205633.9AF051F000E9@smtp.kernel.org>
-In-Reply-To: <20260730205633.9AF051F000E9@smtp.kernel.org>
-From: Dave Airlie <airlied@gmail.com>
-Date: Mon, 3 Aug 2026 15:28:12 +1000
-X-Gm-Features: AUfX_myCuk4f-IKfNaeeSw-seOnjdRXgmvV5zKiXoeio5KdDQO4TXcGu_APjeoI
-Message-ID: <CAPM=9tzFg34jBT7-YYncOoYfvpvXvGnymuYeR6pQ2bQ4qeV4=g@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] drm/nouveau: Fix drm_driver struct/nouveau.atomic
- parameter handling
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: spi: nuvoton,ma35d1-qspi: Disallow GPIO chip
+ selects
 To: sashiko-reviews@lists.linux.dev
-Cc: Lyude Paul <lyude@redhat.com>, dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260803024048.1641756-1-cwweng.linux@gmail.com>
+ <20260803024812.9FBDD1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Chi-Wen Weng <cwweng.linux@gmail.com>
+In-Reply-To: <20260803024812.9FBDD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, 31 Jul 2026 at 07:13, <sashiko-bot@kernel.org> wrote:
+
+sashiko-bot@kernel.org 於 2026/8/3 上午 10:48 寫道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The commit disallows the `cs-gpios` property in the DT binding based solely on a current Linux driver limitation, violating the core Device Tree principle that bindings describe hardware, not software capabilities.
+> --
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> --- Patch [1]: [PATCH] dt-bindings: spi: nuvoton,ma35d1-qspi: Disallow GPIO chip selects ---
+> commit 3aecb6991adf3696410ad69c99107c7d732fd078
+> Author: Chi-Wen Weng <cwweng@nuvoton.com>
 >
-> New issues:
-> - [Critical] Embedding `drm_driver` inside `nouveau_drm` causes a Use-After-Free of `dev->driver` in the DRM core when the device is unbound or hot-unplugged while userspace holds an open file descriptor.
+> dt-bindings: spi: nuvoton,ma35d1-qspi: Disallow GPIO chip selects
+>
+> This commit updates the nuvoton,ma35d1-qspi binding to explicitly disallow
+> the cs-gpios property. The change is made because the current driver only
+> supports native chip selects, preventing the use of GPIO-based chip selects.
+>
+>> diff --git a/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml b/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml
+>> --- a/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml
+>> +++ b/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml
+>> @@ -33,6 +33,8 @@ properties:
+>>       maximum: 2
+>>       default: 2
+>>   
+>> +  cs-gpios: false
+>> +
+> [Severity: Medium]
+> Does this restriction violate the device tree principle that bindings should
+> describe hardware rather than software capabilities?
+>
+> By explicitly disallowing cs-gpios in the properties block based on a current
+> Linux driver limitation, board designers who route a standard GPIO to a SPI
+> peripheral's chip select pin will be incorrectly prevented from describing
+> their actual physical board wiring. When running make dtbs_check on a board
+> device tree that uses cs-gpios for this controller, the schema will reject it.
+>
+> Should the hardware schema allow standard hardware properties like cs-gpios
+> even if the current software driver lacks support for them?
+>
+>>   required:
+>>     - compatible
+>>     - reg
 
-I'm going to agree with sashiko here. We don't want to embed it.
+Hi,
 
-Just create two copies of the struct, one with atomic and one without,
-or use some macros to do that, because anything else is just going to
-have messy lifetimes.
+Thanks for pointing this out.
 
-I think you could also move the atomic flag handling earlier.
+I agree that the binding should describe valid hardware and board wiring 
+rather than the current driver limitation.
 
-Dave.
+I will send a v2 that keeps cs-gpios supported by the binding and 
+instead enables GPIO descriptor-based chip-select handling in the MA35D1 
+QSPI driver. I will also keep active-high chip selects restricted to 
+GPIO-based chip selects, since the controller's native chip selects 
+currently support active-low operation only.
+
+Best regards,
+Chi-Wen
+
