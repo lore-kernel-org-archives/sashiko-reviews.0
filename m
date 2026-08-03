@@ -1,188 +1,123 @@
-Received: from mail-10627.protonmail.ch (mail-10627.protonmail.ch [79.135.106.27])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DA7381AF1
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 11:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46797400E0C;
+	Mon,  3 Aug 2026 11:30:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785755797; cv=none; b=clz0DW/LIJgRCWTb1k4/rNQxwEJmtF7FQ3u8h4IzVdCYWmZK8LQ4qdHZdTJPKbDFGUwxljNWQSYOiihIgFYIW/EDqljio/SlvONMSKb8Nqw/XT8/wifwNOipYQr3mXbElBojfUDfLaP3HAoNGmhBm0bWjo/kPpPH5K/9l5vy4Go=
+	t=1785756607; cv=none; b=WFTCywm3cLeQZTD2OH1/Q2sc78st3H0lvigki9oSOrRsO/RxMHkRdV5J+TDYBfaC5FjpjTnhHlAhAYzwCajq8dBTdu1aBwWlCqgL3xBqSzT6pZ1DgJ++shJZWvQHvY2sGuC+78fmGGtTRibaqSy9sOJJWkdAgtOpgwSjBqKr5jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785755797; c=relaxed/simple;
-	bh=QiW7xw0ZNCqCoK7T3aJJ+nsXpdSQt+rdYJfPwEdAdGs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K/KoPmnzd3L2kwZSGyLk7XgugHJ0b+BgqlCnEyFJJCpHEuIE05OXPY7f5KQ8K1hTERZmudrq3h82ZFwv6nH1bE64jz6BaxMxhZHksXGg+jMXsVCtGG2L3iIMkAyynq99YUTAXmySZpN1a3JaaLrx4fOC8Girncv4TJQg2Z7+3IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=btlEh2Vl; arc=none smtp.client-ip=79.135.106.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1785756607; c=relaxed/simple;
+	bh=FdrjVkk/6pf+4o/OOc9T+Cezgl8CuLsN/UzKWOPz86Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W6wNaNhPvtEeFju5Uwp9JfA2/YAxhP7L/4u3igN/uVWAhhYCvk5kHKfJoe5jMnz3VS1fOaULc2zSTdF4LiBwW1nupKkGGs8e9l8b12CNmgu4a07xg4GSEAcmA0OxTPAf9ueWfz7M1D4hiOTJJGcYLaKpLvEQ9kyVbiqYdi8pa/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=hWIMzGMu; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="btlEh2Vl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail3; t=1785755783; x=1786014983;
-	bh=X285j/+ggX13KHE+9Cxwu0Q0Md7Zif1JbObUrF6J38U=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=btlEh2Vltx6SaOrRmnVf+mLp6zj19iKYKAsr80fMusGMMfjpb5gltfvFbQlNYkFvc
-	 lQqsGBK3WDz/zZOkVPQQ2FHLDpIDoWiGyxfXXnOqhIipGbYVE20i4llZlF0FaHFCn2
-	 iAi0Nj1GPLheGYBCTb/05SjojgQ7MdHKhbabSObiRU5znMvxwjQcUqGiRfb8okoFu4
-	 /1LI/usRVdaaEG51Ot91pYus3ftJE8hf1Ynu6zKLNYaPgQzGQ8c1PVstBpDQhVO0rv
-	 mtWap8qGIxhvXfNkQ+g3vg+qdMm7EHl03I3XoYaoOTrKlSq8+FulSNMt7LoT6rDrkp
-	 Wkf0k81KaF0AA==
-Date: Mon, 03 Aug 2026 11:16:20 +0000
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="hWIMzGMu"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 672LleNM159788;
+	Mon, 3 Aug 2026 11:30:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=xr7UkbgqVUgzcu3Iz9V5Xakc4CpMFw
+	cZ1YKraCKKVKM=; b=hWIMzGMuw28/xK++4v7mRlvyQkXrC+u7WO2Ji4GtX0+mBk
+	jrKZL7l2yY+R2MxGmOvwV14I7Ft4sjkRYDK5BTLGmj+ML9194p6YuO+FaU4h3zh2
+	HoA9u0DT8b8ovZB4FRRUFIlWA/9+53CX+kUDJctXTSRBYn4ldSa6sQ56kxqHqRo8
+	tqTx/a8VJMZSBFg0Oq2dHquHgUhINochAe9oYyiNQse4FvAss3z4YSkEbFaYzsVz
+	/0sT4YqKAi3YjLWxmWSF7sNn/ewtt4jyJdETddKf5x2d72BP5OOCvNRmMaHoHre8
+	Lo9Jci2WooqGXgaDkOz6RH2+IYIuSwJgFSrmx33Q==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs67hgdwj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Aug 2026 11:30:04 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 673BQKj6021150;
+	Mon, 3 Aug 2026 11:30:04 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fsu4qd95w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Aug 2026 11:30:04 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 673BTwKl31588890
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 3 Aug 2026 11:29:58 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 90F4E20063;
+	Mon,  3 Aug 2026 11:29:58 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5C53E2006A;
+	Mon,  3 Aug 2026 11:29:58 +0000 (GMT)
+Received: from osiris (unknown [9.111.54.91])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon,  3 Aug 2026 11:29:58 +0000 (GMT)
+Date: Mon, 3 Aug 2026 13:29:57 +0200
+From: Heiko Carstens <hca@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-From: Sean Nyekjaer <sean@geanix.com>
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: Re: [PATCH v2] can: tcan4x5x: put tcan into sleep when removing driver
-Message-ID: <q3LwALtEs55OqWLslOGbypHDnnUEkEDZlOYrjnxD7LQhiWSkFOOr9zw5_VahYRMVSjShxnODVlL8k34_HGh3vunnQHHPkT28LApT39NeOvo=@geanix.com>
-In-Reply-To: <20260803103319.E155A1F000E9@smtp.kernel.org>
-References: <20260803101927.17122-1-sean@geanix.com> <20260803103319.E155A1F000E9@smtp.kernel.org>
-Feedback-ID: 134068486:user:proton
-X-Pm-Message-ID: 839e74617ac4414366cd53aa8c50e0cffbd333c6
+Cc: Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
+Subject: Re: [PATCH 2/3] s390/pci: Rework__zpci_event_availability() to
+ remove conditional locking
+Message-ID: <20260803112957.14792B73-hca@linux.ibm.com>
+References: <20260803100723.2343688-1-hca@linux.ibm.com>
+ <20260803100723.2343688-3-hca@linux.ibm.com>
+ <20260803101800.552771F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260803101800.552771F00A3D@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODAzMDEwMSBTYWx0ZWRfX3nc3mwD9YwO+
+ 3zgMNqjrsUebpVoCG0hF33jag2SlxwlJVdAs8tw9kGCE3OzRykmEM7ti9SDzI32re/4A6VCl8vB
+ S8b3JuinsjJwtzLiH2NndXXRpbsyioc=
+X-Authority-Analysis: v=2.4 cv=I7VVgtgg c=1 sm=1 tr=0 ts=6a707bbd cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=yR1eWViBl3nv4v3brwEA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAzMDEwMSBTYWx0ZWRfX8E1YJzOA9wvi
+ JPf88U2jNWkcmHYIxwaZ9WwKNKRerNXm9diH2iaY7Ei3Z6miF3pJoLWXt2qsHbvQE29W0YWVdre
+ YbFqbbcZufyK/1A+6BntKeqRUGy/z/1rLeRTZZIjhR+8TyBzNqFcJW1CLW1eJBitu4o+WIMFOh0
+ Hph9S/znMUk4QThHqeRDmxS5gx5YeCVynp00GPXcTS/qqkvizn2sRPAuFoWAIm2yjcM0IdrwaCa
+ DaPLjCymBGXe8zMU5Z6aa0nICF04EdsQAxWFlP+YmCcNNooRiwv/YfpcH/aBpGuEhsW1tt7CXgw
+ 2qjv6CoZo1sPBmhcyINM8y1E2aciwbOdSQY13CVGqYrvyy3+ePQDn9kohtFgkB7TLdxje5+/J+/
+ ssRo+EwKhw5PzbQs/jygoY66EFRkI9udc22qyAHpErv9S+wJM4xLEHY29Ag1R/AHrThhiSv7QCv
+ igl6qrhVulYhGu6LuyA==
+X-Proofpoint-ORIG-GUID: H44tSBUDnBDoLYy2mbrtVk7FbUvf3p9U
+X-Proofpoint-GUID: H44tSBUDnBDoLYy2mbrtVk7FbUvf3p9U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-02_06,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608030101
 
-
-
-
-
-On Monday, 3 August 2026 at 13:05, sashiko-bot@kernel.org <sashiko-bot@kern=
-el.org> wrote:
-
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->=20
-> New issues:
-> - [High] The function signature of `tcan4x5x_power_enable()` was changed =
-to accept a `struct tcan4x5x_priv *` instead of `struct regulator *`, but t=
-he call site in `tcan4x5x_can_remove()` was not updated. This causes a seve=
-re type mismatch leading to a wild pointer dereference.
-
-Will fix for v3 :)
-
-> - [Medium] The transceiver is not explicitly put into sleep mode via SPI =
-during driver removal if it is powered by a regulator, undermining the patc=
-h's intended power savings.
-
-Intended, as the regulator will power it off.
-
->=20
-> Pre-existing issues:
-> - [High] The polling hrtimer is not synchronously cancelled during device=
- teardown, allowing its callback to execute concurrently on freed memory.
-> --
->=20
-> --- Patch [1]: [PATCH v2] can: tcan4x5x: put tcan into sleep when removin=
-g driver ---
-> commit b49d2b844c12ed05e9ff4437bc458dbace9b23e8
-> Author: Sean Nyekjaer <sean@geanix.com>
->=20
-> can: tcan4x5x: put tcan into sleep when removing driver
->=20
-> Put the tcan4x5x transceiver into sleep mode when the driver is
-> removed, instead of leaving it in its current operating mode.
-> This reduces power consumption(3mA@12V) once the driver is
-> no longer bound to the device.
->=20
-> > diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_=
-can/tcan4x5x-core.c
-> > index 31cc9d0abd453..67902b8b0fab4 100644
-> > --- a/drivers/net/can/m_can/tcan4x5x-core.c
-> > +++ b/drivers/net/can/m_can/tcan4x5x-core.c
-> > @@ -211,15 +211,21 @@ static int tcan4x5x_write_fifo(struct m_can_class=
-dev *cdev,
-> >  =09return regmap_bulk_write(priv->regmap, TCAN4X5X_MRAM_START + addr_o=
-ffset, val, val_count);
-> >  }
-> >
-> > -static int tcan4x5x_power_enable(struct regulator *reg, int enable)
-> > +static int tcan4x5x_power_enable(struct tcan4x5x_priv *priv, int enabl=
-e)
-> >  {
->=20
-> [Severity: High]
-> Did this signature change miss updating the call site in
-> tcan4x5x_can_remove()?
->=20
-> When the driver is unloaded, tcan4x5x_can_remove() still passes priv->pow=
-er
-> which is a struct regulator pointer:
->=20
-> drivers/net/can/m_can/tcan4x5x-core.c:tcan4x5x_can_remove() {
-> =09...
-> =09tcan4x5x_power_enable(priv->power, 0);
-> =09...
-> }
->=20
-> Could this cause a panic when tcan4x5x_power_enable() tries to dereferenc=
-e
-> the regulator pointer as a struct tcan4x5x_priv?
->=20
-> > -=09if (IS_ERR_OR_NULL(reg))
-> > +=09if (IS_ERR_OR_NULL(priv->power)) {
-> > +=09=09if (priv->reset_gpio && !enable)
-> > +=09=09=09return regmap_update_bits(priv->regmap, TCAN4X5X_CONFIG,
-> > +=09=09=09=09=09=09  TCAN4X5X_MODE_SEL_MASK,
-> > +=09=09=09=09=09=09  TCAN4X5X_MODE_SLEEP);
-> > +
-> >  =09=09return 0;
-> > +=09}
->=20
-> [Severity: Medium]
-> If the device tree specifies a regulator for the transceiver, will this
-> skip putting the device into sleep mode?
->=20
-> Since the sleep configuration is gated inside the check for
-> IS_ERR_OR_NULL(priv->power), if a regulator is present, the function skip=
-s
-> this block and just disables the regulator.
->=20
-> If this regulator is shared with other components on the board, does it l=
-eave
-> the transceiver powered and in its previous state instead of entering sle=
-ep
-> mode?
->=20
-> [ ... ]
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a race condition
-> with the polling hrtimer during device teardown?
->=20
-> During device teardown, m_can_disable_all_interrupts() uses a non-blockin=
-g
-> cancel:
->=20
-> drivers/net/can/m_can/m_can.c:m_can_disable_all_interrupts() {
-> =09...
-> =09if (!cdev->net->irq) {
-> =09=09netdev_dbg(cdev->net, "Stop hrtimer\n");
-> =09=09hrtimer_try_to_cancel(&cdev->hrtimer);
-> =09}
-> }
->=20
-> If the timer callback m_can_polling_timer() is concurrently running on an=
-other
-> CPU, hrtimer_try_to_cancel() will fail.
->=20
-> If the callback reads the state before it is updated to CAN_STATE_STOPPED=
-,
-> will it reschedule itself and eventually execute on freed memory?
->=20
-> drivers/net/can/m_can/m_can.c:m_can_polling_timer() {
-> =09...
-> =09hrtimer_forward_now(timer, ms_to_ktime(HRTIMER_POLL_INTERVAL_MS));
->=20
-> =09return HRTIMER_RESTART;
-> }
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260803101927.17=
-122-1-sean@geanix.com?part=3D1
->=20
+On Mon, Aug 03, 2026 at 10:17:59AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The `zdev` reference obtained via `get_zdev_by_fid()` is leaked when handling the `0x0306` PCI event.
+> > -	if (existing_zdev)
+> > -		mutex_lock(&zdev->state_lock);
+> > +	if (ccdf->pec == 0x0306) {
+> > +		/* 0x308 or 0x302 for multiple devices */
+> > +		zpci_remove_reserved_devices();
+> > +		zpci_scan_devices();
+> > +		return;
 > 
+> [Severity: High]
+> Does this early return leak the zdev reference?
+> 
+> If get_zdev_by_fid() finds an existing device, it increments its reference
+> count. By returning directly here when the event code is 0x0306, it seems we
+> skip calling zpci_zdev_put() at the end of the function. Could this prevent
+> the device from being properly freed during hot-unplug over time?
+
+This is correct, but trying to fix this I also looked a bit deeper
+into the code and found a "pre-existing" issue. Oh, well..
