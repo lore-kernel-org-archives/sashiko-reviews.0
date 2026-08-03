@@ -1,141 +1,182 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287022F49F6
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 06:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FAB386C3E;
+	Mon,  3 Aug 2026 09:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785738390; cv=none; b=G3sXB2sReOok1Q6x5dJyu7RzaD0+4qtzDRkVDed+RnC0E8mZSZS40pQ+LNpbWLVKFdOR1Qj/zUiAIPjgbVLvtTLSSUnUG9T6yHBz3Nq3Vp98X7bQ3jtkhyDLc8T9oWnUeUUVyymNNtj1R7tUAWc1bKO53CpF1R2AttHV4/54AeE=
+	t=1785748122; cv=none; b=u2tbsvzhZS+Ay7UlfNT4TPnyJVWOnNCqWr20gikUld1OzBUFerCXs9TLyAm9WRyBjIyjSboAmJTU0sQgBtLEAmsNcSIFDaGO/a0cnsXnD40nQ8plwPs+pCl1tZD24ebdd13Uj4LN9Gf++1KozCe9vFctxPlNAEh2xgy49p93Dbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785738390; c=relaxed/simple;
-	bh=nhqzigJHu2rqL2Px63MJ43z3HN14aip2diXgZ+RPOUg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sZxk5pVxVXQ8Use0Mep6r2wKlOgwDGEDAgYav0FtvFmJsH6t0lbMp5PDeuZtdWaFv6wTxKGGwVTvZ57l7lg6gpAtQB1wx1YgqEiLzZEKY3fKbw9TNbOUqKmmODoFbmdCy6ItjRV8PjtfJPQqPj1NJFXaaiGUM4IrsYm9N0gVfBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KW8cRgrX; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785748122; c=relaxed/simple;
+	bh=F489Igwh/DWduFC2ll+3/yC4yhAOHvfCB4gRVFjDlic=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=sPdt+RX4BNl90QVOlc0zniMVkxpb9kKPLz6e45a2HNmZ+v08/1pU+AwjMOgGTqPa5R8c9Jz1RuuHYyk7S4fKzcBBDQEFXIiX+yxfHa4riJwGJR6tjj2dnRL1x+0QctaVU3wCa0K8rDCDZ40gDdq8F1KcoaCNwb47fh2QJaTgdgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=hbU6Dnxw; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KW8cRgrX"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8485ef63b68so3236045b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 23:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785738388; x=1786343188; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jR6DHa6uHR7CPMwwaGVZjRKeuYi64yZ/mtj7JzFEqlo=;
-        b=KW8cRgrXbnDUAsyUZB3tTdZ+cnRNJ7NuTgFOY3wU4kO0OI72BgX20Vp6N55DjyPl24
-         kn91To2pE0OX9BL5JCQUqgogffAxoB/n/vxAvA5bgZYlGzr/qP+DQaAGaJMUVhyYkmvD
-         2pkI1NOEYUwbS47/6AEviV9x+LrJS2QhX1yauZgAfFCxanRjvTUh0xvoM5uSRHtoMTir
-         gxvIUX0aIaHeYG9S7uECesHa7JwGoexYCB3l6UZfb5z4u4tJKFUXSsPyncml0PLoD/Wo
-         8fWHe0pkLtNzb7inoxu5NDz2PxsBfj464fcZwBmpIkH4Qm/lyE2MkXRx9f8xTokdHYZ5
-         ar6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785738388; x=1786343188;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jR6DHa6uHR7CPMwwaGVZjRKeuYi64yZ/mtj7JzFEqlo=;
-        b=WMbUWYiUmPIklc2EnHUBVr+/XyUPdXfLVEnYLowZ4tOv2tLX7dbY7yVAwj6OCZmpn5
-         kHTY3DtbmAjZNkE/yzDegRiBmQ014B8z+Grc8iUKbInQ0E2djLXS8uZYH8C+TfabOpu9
-         TIwWkxMzf6ZUCglQ5ZO96tmSgqNa/RLICp3TXMnPR3o+gOPTMfRobel4mX1Sv4DeJBAl
-         XBhos8jjSTadJt8tF6sxFZTODIRtmDMSq1vGUXQNGRYV8huuQvtnqSGj2re67a7c8iTT
-         +KYsWjhGGxQVhnvS7OakQjoVL59OqrXt+mrCyc7DIxbMbj7BzNZ+84ORSn9wPNUIrCYT
-         Fmew==
-X-Gm-Message-State: AOJu0YzjQgEespwEDRYK0gm9Lf+ZUUPe7N+TyIbOfbvBBgLAFvyebeHi
-	MPod85T4Bok5j5tEPehFQY+WqlNsM2oTkQoSGuy2JDPiK1y+mLzZx3rWkVX0Ew==
-X-Gm-Gg: AR+sD133e5gzbCn+zFcP17YJepVUm6bKxMGbIhOQQ529YuJWIobHqM9G9dsYRjCMuZF
-	hz6Y1jzu/d4BcJJ5pPICzHDtcMXkKdzJmJWyFnvUoSSgBq8gOVMi8FUWwf8lcEYTut7GAEt7dv9
-	KZKOmgYTgIwt900V0uow33ggAqJ36lFlF8YzDkdINfU8HYMaXvd5+Kc0edsLFDLT7YzHRBDhoeM
-	qhD33lLvSo6jaxx/z9WvAYAPRMlu3LSylisfh8M0rRNFEkwnKpzKjlWzwfhLzSBIn3NT0G9FJtv
-	3DMLtySXiSyGVxK1EvrGIGlGfBHIFMFko1Uf60rUTGrTfBbhbvAToU//2xwnvHd0AtkZG+e7Y3v
-	IC/BxJ+99oNCv+qHqVLtODLmc/84ByDDSXMKtmjV6yyW2TAndcL8RFNYyB6iBAaLp3KUryDnonz
-	an9W8J17gbSRYisbDeqQDoD55o2KCz3MemyKDDySrblgQB8FViFMAIwkfAz4877cXZiuzqxmJ78
-	5rwX39VF74/AF3JKEfh3gTacyoj6V0SYkLS6obPH2jc6tM7sxw=
-X-Received: by 2002:a05:6a00:3cd1:b0:847:98ff:4af5 with SMTP id d2e1a72fcca58-84ee47d5328mr8196482b3a.26.1785738388390;
-        Sun, 02 Aug 2026 23:26:28 -0700 (PDT)
-Received: from [172.19.1.42] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84edc51cc95sm3221883b3a.60.2026.08.02.23.26.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Aug 2026 23:26:27 -0700 (PDT)
-Message-ID: <f852bd65-820f-466a-8fd5-52a899cfaff3@gmail.com>
-Date: Mon, 3 Aug 2026 14:26:26 +0800
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="hbU6Dnxw"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 672LlgTS243685;
+	Mon, 3 Aug 2026 09:08:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=pp1;
+	 bh=uRmA8xNWJh+7T9v0zRg/umN3ESUveadlhwJnKsVH6B0=; b=hbU6DnxwuAVh
+	WaOw1MIkoMuUhkKfqfGDXndCp+7tF5JzljWoqzbZf7IoI9ybQePAJx6mMAQyyso0
+	CXfI/vqjpv2gC1Sh0kBR/sL/mgcT69h6F2qmDX9jVB9BAm+MbVg9POOr3NsXPTER
+	YFkzRh28F0EaCa/vVeJamBpUdFiG/iXhNSFn4gFksbkpjUz+DUfgfdykhg1USf0i
+	9m9boVR7i7vbe2g+xUnCMGpwS4ub8ZRtA2XqI/xMSBBv0uG1Be19UwxvfcuS/Lbf
+	PGHHHMZ4/hxqlY0DhP9Ed0HJaYE4VfIme004nJOkJLp4Ekh0vknBZYZiqN8N8ip6
+	XlHn7ULgXg==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8h4qvr8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Aug 2026 09:08:39 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6738uGIw013174;
+	Mon, 3 Aug 2026 09:08:38 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsugvvr5j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Aug 2026 09:08:38 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67398bYK15991386
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 3 Aug 2026 09:08:37 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5C25058062;
+	Mon,  3 Aug 2026 09:08:37 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0325058057;
+	Mon,  3 Aug 2026 09:08:37 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Mon,  3 Aug 2026 09:08:36 +0000 (GMT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: spi: nuvoton,ma35d1-qspi: Disallow GPIO chip
- selects
+Date: Mon, 03 Aug 2026 11:08:36 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-References: <20260803024048.1641756-1-cwweng.linux@gmail.com>
- <20260803024812.9FBDD1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Chi-Wen Weng <cwweng.linux@gmail.com>
-In-Reply-To: <20260803024812.9FBDD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Cc: Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev
+ <agordeev@linux.ibm.com>,
+        linux-s390@vger.kernel.org, Vasily Gorbik
+ <gor@linux.ibm.com>
+Subject: Re: [PATCH v11 5/5] s390/zcrypt: Pad trailing CCA or EP11 message
+ with zeros
+Reply-To: freude@linux.ibm.com
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <20260803084925.617881F000E9@smtp.kernel.org>
+References: <20260803083339.212885-1-freude@linux.ibm.com>
+ <20260803083339.212885-6-freude@linux.ibm.com>
+ <20260803084925.617881F000E9@smtp.kernel.org>
+Message-ID: <68406f4891093fa940b04e51ec4dbe35@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODAzMDA3NyBTYWx0ZWRfXyVFBB3mozrMp
+ rQI3ntfkpvqlKz0wwkSc9Xxcv6wPvXKuJga1322vN+VYcH2YngPSdLAnkc8yu0Srnya0ophJOHp
+ tlPqDjvmABI8Rwef8qAjLw2t53JGMPQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAzMDA3NyBTYWx0ZWRfXxQ5xQmYbah7y
+ DI/bZW+6PyDHYFjxiuD+PTQLYT88gFn6d/IWDDUORUpSGkgZVaT5oLhSFcqTiYg27GrggqybPM7
+ 6LQqLsWRiGVdXsLV9DXDF3HK/ZGUoSQCywU9r7pKXy7F67MZexDpI0D3WtTT3ZkEkAyeNQjwTvR
+ NuVf+zt/E3l5Ieie/hLtSiFL6NS9kyWH3HIEwyKnsheGsY6yWWs1DfZA5UYti0EypQFCETus7dP
+ DxOEhZimPuqR8vd483jmthVZmLlfMrrKRYdK+y2ehE0s6Ns6gFYdiaTBJVmfiwpqJuwJgh3UARb
+ v0vBbV1WvlWu9IquzMFcmFQ8fLwWMazkOdtH/HRAAEU+a3lUEF1b13oLEyggGLferCtkjpcUKKG
+ 9RSur6BlGpCqVRyqj7o6GNwynba0pGY3rOKIH8+VxocaF3e8UI8qECUN2pLm+B65F63Q3RZOjdT
+ iPMvbzXnWmR2CJQcoGQ==
+X-Authority-Analysis: v=2.4 cv=SI1ykuvH c=1 sm=1 tr=0 ts=6a705a98 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=q4dMmv0AQhq5Zt8pHVQA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: qRjqQure6UI7zhtDrNGlOXgX8SP5Devg
+X-Proofpoint-GUID: qRjqQure6UI7zhtDrNGlOXgX8SP5Devg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-02_06,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608030077
 
-
-sashiko-bot@kernel.org 於 2026/8/3 上午 10:48 寫道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The commit disallows the `cs-gpios` property in the DT binding based solely on a current Linux driver limitation, violating the core Device Tree principle that bindings describe hardware, not software capabilities.
+On 2026-08-03 10:49, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Medium] The function `zcrypt_type6_crt_key()` leaves up to 7 bytes
+> of padding uninitialized before sending the key token to the crypto
+> card, leaking kernel memory.
 > --
->
-> --- Patch [1]: [PATCH] dt-bindings: spi: nuvoton,ma35d1-qspi: Disallow GPIO chip selects ---
-> commit 3aecb6991adf3696410ad69c99107c7d732fd078
-> Author: Chi-Wen Weng <cwweng@nuvoton.com>
->
-> dt-bindings: spi: nuvoton,ma35d1-qspi: Disallow GPIO chip selects
->
-> This commit updates the nuvoton,ma35d1-qspi binding to explicitly disallow
-> the cs-gpios property. The change is made because the current driver only
-> supports native chip selects, preventing the use of GPIO-based chip selects.
->
->> diff --git a/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml b/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml
->> --- a/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml
->> +++ b/Documentation/devicetree/bindings/spi/nuvoton,ma35d1-qspi.yaml
->> @@ -33,6 +33,8 @@ properties:
->>       maximum: 2
->>       default: 2
->>   
->> +  cs-gpios: false
->> +
+> 
+> --- Patch [5]: [PATCH v11 5/5] s390/zcrypt: Pad trailing CCA or EP11
+> message with zeros ---
+> commit a6bb8fce2d346e386b1306d838ac36f1853d13f8
+> Author: Harald Freudenberger <freude@linux.ibm.com>
+> 
+> s390/zcrypt: Pad trailing CCA or EP11 message with zeros
+> 
+> This commit pads the gap between the message copied from userspace and
+> the message buffer sent to the CCA/EP11 hardware. This prevents
+> uninitialized kernel memory from being forwarded to the crypto card.
+> 
+>> diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c 
+>> b/drivers/s390/crypto/zcrypt_msgtype6.c
+>> index e79e68b4dd41d..3df1d676de5d8 100644
+>> --- a/drivers/s390/crypto/zcrypt_msgtype6.c
+>> +++ b/drivers/s390/crypto/zcrypt_msgtype6.c
+>> @@ -398,6 +398,10 @@ static int xcrb_msg_to_type6cprb_msgx(bool 
+>> userspace, struct ap_message *ap_msg,
+>>  			     xcrb->request_control_blk_addr,
+>>  			     xcrb->request_control_blk_length))
+>>  		return -EFAULT;
+>> +	/* pad tail with 0 up to req_cblen */
+>> +	if (xcrb->request_control_blk_length < req_cblen)
+>> +		memset(msg->userdata + xcrb->request_control_blk_length,
+>> +		       0, req_cblen - xcrb->request_control_blk_length);
+> 
 > [Severity: Medium]
-> Does this restriction violate the device tree principle that bindings should
-> describe hardware rather than software capabilities?
->
-> By explicitly disallowing cs-gpios in the properties block based on a current
-> Linux driver limitation, board designers who route a standard GPIO to a SPI
-> peripheral's chip select pin will be incorrectly prevented from describing
-> their actual physical board wiring. When running make dtbs_check on a board
-> device tree that uses cs-gpios for this controller, the schema will reject it.
->
-> Should the hardware schema allow standard hardware properties like cs-gpios
-> even if the current software driver lacks support for them?
->
->>   required:
->>     - compatible
->>     - reg
+> This is a pre-existing issue, but while reviewing this fix for 
+> uninitialized
+> memory leaks, I noticed a similar issue in zcrypt_type6_crt_key() where
+> pad_len bytes appear to be left uninitialized:
+> 
+> drivers/s390/crypto/zcrypt_cca_key.h:zcrypt_type6_crt_key() {
+>     ...
+>     memset(key, 0, sizeof(*key));
+>     ...
+>     if (copy_from_user(key->key_parts, crt->np_prime, long_len) ||
+>         copy_from_user(key->key_parts + long_len,
+>                        crt->nq_prime, short_len) ||
+>         copy_from_user(key->key_parts + long_len + short_len,
+>                        crt->bp_key, long_len) ||
+>         copy_from_user(key->key_parts + 2 * long_len + short_len,
+>                        crt->bq_key, short_len) ||
+>         copy_from_user(key->key_parts + 2 * long_len + 2 * short_len,
+>                        crt->u_mult_inv, long_len))
+>         return -EFAULT;
+>     memset(key->key_parts + 3 * long_len + 2 * short_len + pad_len,
+>            0xff, crt->inputdatalength);
+>     ...
+> }
+> 
+> Because sizeof(*key) doesn't include the flexible array member 
+> key_parts[],
+> the memory inside key_parts is uninitialized before the copies.
+> 
+> Does the final memset() skip over pad_len bytes by adding it to the 
+> offset,
+> leaving those padding bytes uninitialized before being sent to the 
+> firmware?
 
-Hi,
-
-Thanks for pointing this out.
-
-I agree that the binding should describe valid hardware and board wiring 
-rather than the current driver limitation.
-
-I will send a v2 that keeps cs-gpios supported by the binding and 
-instead enables GPIO descriptor-based chip-select handling in the MA35D1 
-QSPI driver. I will also keep active-high chip selects restricted to 
-GPIO-based chip selects, since the controller's native chip selects 
-currently support active-low operation only.
-
-Best regards,
-Chi-Wen
-
+Different issue - will be addressed with another patch.
