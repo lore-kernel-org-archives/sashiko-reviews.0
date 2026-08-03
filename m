@@ -1,44 +1,44 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 345DB3E5A20;
-	Mon,  3 Aug 2026 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5394306D3F;
+	Mon,  3 Aug 2026 15:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785770184; cv=none; b=korWvWwEa3q4zhcVpkh6dX2OaQPMkQn8W08r/H0PudGHt65U7SMl+ZUxZuxuh6Akmgu87CaxbQgD6iz0hlcIqb3USjNu+1fMTwlni8HIgN7ZZnKNWDzz6Hdcpc2Xqpj+rDE+b7YIo0+K9usjBFgVlD8fF+rVwP4cxGZE7qlO0Pg=
+	t=1785771315; cv=none; b=BbAPc7Ya8e2xf+LnCmebrKhpNAySy9d4rUonPSZdujKxm3VF/aHcRQaVHrKiHGlI3SLtPtR0ObkRNp1EKnq1WXhnjlL79jwN/4J/dyeCfPCxCJ/efDsNcQ/XrTug1M4OirjG/yByzShmaUnWBJ5Cqy1u2Vdj5CXPNbQ/EyFJnus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785770184; c=relaxed/simple;
-	bh=QPzeVFZmTcpN5j8r7Op2BujUO3JAuEXqZv9yIZcf7x8=;
+	s=arc-20240116; t=1785771315; c=relaxed/simple;
+	bh=85BJQamw9y2FdRKTLjDiCJlerS286kBb4dwb2zM9+gQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=KhhdeC2r5jnfGDzy1CGJAsNyDWQhYzbg5KFpgJWycbJRDEE4CDOHkSIM2oDj8jQvpqh4UceAGFqHOcB/VMveShCQHs30c1NA1QUlhLFTGQix9BSY8ytXfuMa0pJxLYxuxFtNsdzu9IzLRt/jrSRZhzSx/R29vkxAyOanrKug6U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=gSnhFMU2; arc=none smtp.client-ip=217.140.110.172
+	 MIME-Version:Content-Type:Content-Disposition; b=Et9Dxo4nPAY3JAyP0ndYubTTThE6+rZRE7aHB2kDyKT1rPQRQQwOEk3BOIc7KGEK8o7w9AHYmDtJ3NDhHBjLc4gqZ8dtZfl3SDU6uJgM4C1uNC8Lz32z3/5gLgGCPyTIvpBOvWFgoPHQ1lnN+iNw5dKHgVG9Z0XZ2abgc18gjvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Jj5mCLP5; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="gSnhFMU2"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Jj5mCLP5"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 92FFE143D;
-	Mon,  3 Aug 2026 08:16:17 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 58CD2143D;
+	Mon,  3 Aug 2026 08:35:09 -0700 (PDT)
 Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A1B7C3F66F;
-	Mon,  3 Aug 2026 08:16:20 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3CA033F66F;
+	Mon,  3 Aug 2026 08:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1785770181; bh=QPzeVFZmTcpN5j8r7Op2BujUO3JAuEXqZv9yIZcf7x8=;
+	t=1785771313; bh=85BJQamw9y2FdRKTLjDiCJlerS286kBb4dwb2zM9+gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSnhFMU2bW9E/8YC5JxHcRwwTKvqrwkP4+wt0wXgEwpY/gcOSSYjXRMRjdwcU+Qaa
-	 Xx8LGK89Rf1aD/jUzFYrqziDv575PrwvBcvUsehXWJrtDWLLGO8PPZWAKsYrGuUK0W
-	 nSJNhPJQ9JaFb58kGFG8+C/Yn2fH5BHNHquwyPcQ=
+	b=Jj5mCLP5Utf5mXkxCe6B15rcWGW7+tpjZixJddGr6QZSlNbmV3D+m70it9KzpUm28
+	 ocDKGe5vY39Dl3k1XwMn7n0LNyoJZFBckBw6bkGIBhkGu6Og+myPuWN4PParg0d655
+	 D4BZJDo3MFDiuok35J1dUMs05OzNFkk4tQZUlJSc=
 From: Leonardo Bras <leo.bras@arm.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: Leonardo Bras <leo.bras@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
 	kvmarm@lists.linux.dev,
 	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
 	kvm@vger.kernel.org
-Subject: Re: [PATCH v3 05/11] kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning
-Date: Mon,  3 Aug 2026 16:16:18 +0100
-Message-ID: <anCwwnBpnetj53Dt@LeoBrasDK>
+Subject: Re: [PATCH v3 06/11] KVM: arm64: Add hardware-accelerated dirty-bitmap cleaning routine
+Date: Mon,  3 Aug 2026 16:35:09 +0100
+Message-ID: <anC1LcuANek6moBb@LeoBrasDK>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260729110015.372101F00A3A@smtp.kernel.org>
-References: <20260729104548.3439958-1-leo.bras@arm.com> <20260729104548.3439958-6-leo.bras@arm.com> <20260729110015.372101F00A3A@smtp.kernel.org>
+In-Reply-To: <20260729111841.B3A501F000E9@smtp.kernel.org>
+References: <20260729104548.3439958-1-leo.bras@arm.com> <20260729104548.3439958-7-leo.bras@arm.com> <20260729111841.B3A501F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -49,177 +49,124 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 29, 2026 at 11:00:14AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] Successful hardware dirty log extraction completely bypasses the generic software dirty bitmap, dropping internally-dirtied pages.
-> - [Critical] Hardware dirty bits are completely ignored when `KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2` is enabled.
-> - [High] Fallback software loop clobbers partial hardware dirty log output and leaks garbage data if `kvm_arch_dirty_log_clear()` fails.
-> - [Medium] The `kvm_arch_dirty_log_clear` API overloads two distinct behaviors based on an undocumented `NULL` parameter, risking a NULL pointer dereference in arch implementations.
+On Wed, Jul 29, 2026 at 11:18:41AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] Dropping `mmu_lock` during eager page splitting allows concurrent guest writes to be permanently lost.
+> - [Critical] Direct EL2 system register access from EL1 host kernel triggers an UNDEFINED exception on nVHE/pKVM systems.
+> - [High] Infinite hardware polling loop with preemption disabled risks hard lockups and renders the preempt notifier dead code.
 > --
 > 
-> --- Patch [5]: [PATCH v3 05/11] kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning ---
-> commit 4c5b443921b3fcc7c6b76fa46a7c11e8755ad50f
+> --- Patch [6]: [PATCH v3 06/11] KVM: arm64: Add hardware-accelerated dirty-bitmap cleaning routine ---
+> commit 67bd2745169abaea5a656577d6b7add50b3e09f1
 > Author: Leonardo Bras <leo.bras@arm.com>
 > 
-> kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning
+> KVM: arm64: Add hardware-accelerated dirty-bitmap cleaning routine
 > 
-> This patch introduces kvm_arch_dirty_log_clear() to allow architectures
-> to implement hardware-accelerated dirty-bitmap clearing. It adds hooks in
-> both kvm_get_dirty_log_protect() and kvm_clear_dirty_log_protect() to try
-> the hardware implementation first, falling back to the software loop if it
-> fails or is unimplemented.
+> Implement arm64 version of kvm_arch_dirty_log_clear() making use of FEAT_HACDBS.
+> It converts dirty bitmap entries into HDBSS entries in 64-page blocks and feeds
+> them to the HACDBS mechanism to clear dirty states. It also supports hugepage
+> splitting.
 > 
-> > diff --git a/include/linux/kvm_dirty_bit.h b/include/linux/kvm_dirty_bit.h
-> > new file mode 100644
-> > index 0000000000000..fa4f6b67b6235
-> > --- /dev/null
-> > +++ b/include/linux/kvm_dirty_bit.h
-> 
+> > diff --git a/arch/arm64/include/asm/kvm_dirty_bit.h b/arch/arm64/include/asm/kvm_dirty_bit.h
+> > index dd16438f06518..d368a23a84b30 100644
+> > --- a/arch/arm64/include/asm/kvm_dirty_bit.h
+> > +++ b/arch/arm64/include/asm/kvm_dirty_bit.h
 > [ ... ]
-> 
-> > +static inline int kvm_arch_dirty_log_clear(struct kvm *kvm,
-> > +					   struct kvm_memory_slot *memslot,
-> > +					   struct kvm_clear_dirty_log *log,
-> > +					   unsigned long *bitmap,
-> > +					   bool *flush)
-> 
-> [Severity: Medium]
-> The signature here strongly implies the log parameter is a valid clear
-> operation struct. However, when this is called from
-> kvm_get_dirty_log_protect(), NULL is passed for the log parameter.
-> 
-> Could this establish an undocumented API contract where new arch
-> implementations blindly dereference the log pointer and cause a host
-> kernel panic?
-
-Well, there are 2 users of this functions, and one uses a NULL variable, so 
-I don't think anyone will implement something that blingly deferences the 
-log pointer.
-
-In any case, I am open to fixing this. How should I add that information?
-(Just a comment is enough?)
-
-> 
+> > +static inline bool kvm_arch_dirty_clear_enabled(struct kvm *kvm)
 > > +{
-> > +	return -ENXIO;
+> > +	return system_supports_hacdbs() &&  kvm->arch.mmu.pgt &&
+> > +	       (kvm->arch.mmu.pgt->flags & KVM_PGTABLE_S2_DBM);
 > > +}
 > 
-> [ ... ]
-> 
-> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> > index 45e784462ec6e..7a13ef69b6e3e 100644
-> > --- a/virt/kvm/kvm_main.c
-> > +++ b/virt/kvm/kvm_main.c
-> 
-> [ ... ]
-> 
-> > @@ -2262,6 +2263,10 @@ static int kvm_get_dirty_log_protect(struct kvm *kvm, struct kvm_dirty_log *log)
-> >  		dirty_bitmap_buffer = kvm_second_dirty_bitmap(memslot);
-> >  		memset(dirty_bitmap_buffer, 0, n);
-> >  
-> > +		if (kvm_arch_dirty_log_clear(kvm, memslot, NULL,
-> > +					     dirty_bitmap_buffer, &flush) >= 0)
-> 
 > [Severity: Critical]
-> Since this hardware clear is invoked inside the else block of the
-> if (kvm->manual_dirty_log_protect) check, are hardware dirty bits
-> completely ignored when manual protection is enabled?
-> 
-> Modern VMMs often enable manual dirty log protection by default. Will
-> skipping the hardware tracking here result in userspace only receiving
-> the software dirty bitmap, potentially causing silent memory corruption
-> on the destination after a live migration?
-> 
+> Does this check need to verify if the kernel is running in VHE mode?
 
-To skip it, kvm_arch_dirty_log_clear() should return a positive (or zero) 
-value, meaning any error (ret < 0) will cause it to run the software 
-cleaning. If the arch-specific routine skips cleaning and return >=0, then 
-it's an implementation bug. 
-
-> [Severity: Medium]
-> This is the call site passing NULL for the log parameter.
-> 
-> As mentioned above, does this pose a risk of NULL pointer dereferences
-> for architectural implementations expecting a valid
-> struct kvm_clear_dirty_log pointer?
-
-See previous discussion above.
+kvm->arch.mmu.pgt->flags & KVM_PGTABLE_S2_DBM will only be true when HDBSS 
+is enabled, and that only happens in VHE=1.
 
 > 
-> > +			goto out;
+> If this executes on an nVHE or pKVM system (where the host runs at EL1), 
+> and the hardware supports HACDBS, the ioctl will proceed and call 
+> dirty_bit_clear(). That function directly accesses EL2 system registers 
+> like SYS_HACDBSCONS_EL2, which will trap or UNDEF when accessed from EL1.
+> 
+> > diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
+> > index 33826bbd16d91..5a6266205295e 100644
+> > --- a/arch/arm64/kvm/dirty_bit.c
+> > +++ b/arch/arm64/kvm/dirty_bit.c
+> [ ... ]
+> > +int __kvm_arch_dirty_log_clear(struct kvm *kvm,
+> > +			       struct kvm_memory_slot *memslot,
+> > +			       struct kvm_clear_dirty_log *log,
+> > +			       unsigned long *bitmap,
+> > +			       bool *flush)
+> > +{
+> [ ... ]
+> > +	write_lock(&kvm->mmu_lock);
 > > +
+> > +	for (unsigned long i = start; i < end; i++) {
+> > +		unsigned long mask;
+> > +		gfn_t offset;
+> > +		atomic_long_t *p;
+> > +
+> > +		if (log) { /* Clean only what is in the input bitmap */
+> > +			mask = bitmap[i - start];
+> > +			if (!mask)
+> > +				continue;
+> > +
+> > +			p = (atomic_long_t *)&dirty_bitmap[i];
+> > +			mask &= atomic_long_fetch_andnot(mask, p);
+> > +		} else { /* Clean everything, save to output bitmap */
+> [ ... ]
+> > +		if (kvm_dirty_log_manual_protect_and_init_set(kvm))
+> > +			kvm_mmu_split_huge_pages(kvm,
+> > +						 gfn_to_gpa(offset + __ffs(mask)),
+> > +						 gfn_to_gpa(offset + __fls(mask) + 1));
 > 
 > [Severity: Critical]
-> If kvm_arch_dirty_log_clear() succeeds, this goto out bypasses the generic
-> software dirty bitmap processing loop completely.
+> Could this lead to silent memory corruption due to dropped locks?
 > 
+> The software dirty bit is cleared above via atomic_long_fetch_andnot(). 
+> Then we call kvm_mmu_split_huge_pages(), which drops mmu_lock internally:
+> 
+> kvm_mmu_split_huge_pages()
+>   need_split_memcache_topup_or_resched()
+>   write_unlock(&kvm->mmu_lock);
+>   cond_resched();
+> 
+> While the lock is dropped, a vCPU can write to the page without trapping
+> because the hardware DBM bit is still set. Once the lock is reacquired, 
+> dirty_bit_clear() clears the hardware DBM bit. The write gets lost because
+> both software and hardware bits are now clean.
 
-Yeah, that's what the arch-specific version is about.
+If the new bit is set before the atomic read, it will be cleaned and 
+reported as dirty to user. If it's manual cleaning, it will be available 
+for cleaning in the next round.
 
-> Does this mean KVM's internally-dirtied pages, such as those from MMIO
-> emulation or virtual timers marked via mark_page_dirty(), are silently
-> dropped from the dirty log?
+If the new bit is set after the atomic read, it will be there for the next 
+iteration, so no problem. 
 
-No, as those are also cleaned as long as they hit the dirty-log (bitmap).
-
+> 
+> > +		do {
+> > +			idx = mask_to_hdbss(&mask, hw_entries, offset, ttwl, idx, entries_sz);
+> > +			if (idx >= entries_sz) {
+> > +				ret = dirty_bit_clear(kvm, hw_entries, idx);
 > 
 > [Severity: High]
-> If the arch-specific hardware routine fails partway through and returns
-> an error code, could it leave partial hardware bits in dirty_bitmap_buffer?
+> Is there a risk of a hard lockup here during hardware polling?
+> 
+> Looking at dirty_bit_clear(), it polls SYS_HACDBSCONS_EL2 in a while (true)
+> loop without a timeout fallback. 
+> 
+> Since __kvm_arch_dirty_log_clear() takes write_lock(&kvm->mmu_lock) before 
+> calling dirty_bit_clear(), preemption is disabled on non-RT kernels. This 
+> makes the preempt_notifier registered inside dirty_bit_clear() dead code 
+> and guarantees the CPU will spin forever if the hardware hangs.
 
-It could. That's a implementation decision: should it return all bits and 
-clean all using software, or continue where arch-specific version stopped?
-
-> 
-> If it falls through to the software loop, the software loop might overwrite
-> hardware bits with software bits (if the software bit is 1) and preserve
-> garbage hardware bits (if the software bit is 0). Should
-> dirty_bitmap_buffer be cleared on failure?
-> 
-
-Depending on the fallback strategy, it should be restored to initial state, 
-not cleared.
-
-
-> >  		KVM_MMU_LOCK(kvm);
-> >  		for (i = 0; i < n / sizeof(long); i++) {
-> >  			unsigned long mask;
-> 
-> [ ... ]
-> 
-> > @@ -2373,6 +2379,10 @@ static int kvm_clear_dirty_log_protect(struct kvm *kvm,
-> >  	if (copy_from_user(dirty_bitmap_buffer, log->dirty_bitmap, n))
-> >  		return -EFAULT;
-> >  
-> > +	if (kvm_arch_dirty_log_clear(kvm, memslot, log, dirty_bitmap_buffer,
-> > +				     &flush) >= 0)
-> 
-> [Severity: High]
-> If the arch hook modifies dirty_bitmap_buffer before failing and
-> returning an error, does it corrupt the mask used by the fallback
-> clear loop?
-> 
-> The fallback software loop uses dirty_bitmap_buffer to decide which bits
-> to clear. If it contains garbage from a failed hardware clear, could this
-> cause the wrong pages to be cleared?
-
-That's the arch-version responsibility to not put garbage in the buffer, 
-and restore it depending on their strategy.
-
-> 
-> > +		goto out;
-> > +
-> 
-> [Severity: Critical]
-> Similar to the GET path, this goto out bypasses the loop that clears bits
-> in memslot->dirty_bitmap using atomic_long_fetch_andnot().
-> 
-> If the hardware clear succeeds, will the software bits remain set
-> indefinitely since they are bypassed from being cleared from KVM's
-> internal tracking?
-
-Again, it will write-protect all the pages pointed by the dirty-log, which 
-is exactly what the sw routine does.
+Good catch!
+So on non-RT kernels we need no preempt_notifiers.
+OTOH, we will need them on RT kernels, so I suppose we need to find a way 
+of using them seemlessly.
 
 Thanks!
 Leo
