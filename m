@@ -1,74 +1,74 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE1C3AE1AF
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 20:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16A94334DE
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 20:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785790516; cv=none; b=Y7g3S6w03u0uW38wDz9tzqPXAHG22UtMwMUPuBLAMXZO9gT/S47nIudibMu/U+0Ui951UUKQHzjWkGliOxzmYGAYBAmGNBZ8I8S+2tMsbUTk4NJDr3q758TdkPgUbF1rdiIZZSf/NEmfl2QkFTjGEkFJmhlQbm/+WR4JlBVrL0A=
+	t=1785790738; cv=none; b=R+BGK+yudKw17QL5fcBxA5VtVDhfhQyD+EsfKrA4PH5cdPIS4dyRIq5p9/f0y6Tdh1XH+Y36lQUV5UYuwOLwJxiqvssfndBpcINnJKY67Wbr2PNLmplAlvbB3u340YKH02oAk8scaJwX2dHYXSsmapZVFjgML/BHzbCxW5YSuW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785790516; c=relaxed/simple;
-	bh=BgsAwpUzDQBIT+HF1gKLi+DdWbSVovW5ofJCSPcSdjs=;
+	s=arc-20240116; t=1785790738; c=relaxed/simple;
+	bh=WL+ga9AoN/j7RlE3rJ4Q6wn9IKo+XDS+L+c88fic/Qs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WR5xQx4Y8F6yHVEvylJtX4IKb34KHm1yUKV2W89deMzNcquRfzZC4hWCLthHcGSqT9TsA/9zUETgl/XaJnT6/rCv4x2nG9Z5thV3rs/UkdLpluEWbsDWCKjV1loO4C3GvvAGjVG6PRxp5FY1BkP4mqvjelfE5wMafbUnpbkKN44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oMcJmVHw; arc=none smtp.client-ip=209.85.221.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=B5ERaQVqWVceL1wBMPauOtUnF8X3Apcwh58LF/BTgjqLxMTjykb5/OYMeEESajkjICF5xjljPoFWZ9T3h0v3LWk+1tUOO/Sy2+bNfQzh9TrGxQak70sEqxAm0jX3S1ZO/TNHa5bbTjdOnVCBWXkuO+hb+6H5Le3kq6+uDIQ2LwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s4R0ke+h; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oMcJmVHw"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-4720f3bf164so193769f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 13:55:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4R0ke+h"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4954f5e8020so12633455e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 13:58:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785790513; x=1786395313; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785790735; x=1786395535; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=pHA0Rp1gGRF6nGr+o0rQ0J4609nkyA5NKjL7qIfbGSk=;
-        b=oMcJmVHwQZZUEJfiNn7qTudMnOAUiFGo1ztHFc9jMfWtSX025KP93rZ64NUGiRL7yJ
-         OF76062zdFqX9X+1hnmOPH99CXNAh+YxdPEWdrmOXVfH8xZzVZDTPHbPVpKZeOc7tMD9
-         QipSSYg6sLMzgqDO/RJbEhWHScb9i73ZYf+OclKs8PSuPSiNvYo/9RBynz7k6U1HRY26
-         3s0tz3KOpkjafJHrxBKMuTlTC9CDgGRVmJ2WwNd1JjxKpbESotkg4RXn0plIPRE5FDGv
-         YXXfJ15ZmSpYDGTFA62LtFA5t8ibG2jTSNj41EmrTVCb4Hly/Qe6Wx4KUfJbuKNFU02/
-         Oz/w==
+        bh=VTNIwA5rIl7yheggGg5y8ZUCyvaskjkiO8o5tUu1AJc=;
+        b=s4R0ke+hqwnoYlGM5lT/jJ4rhsAp84ZsSwcDbrz+wSlr/bGv3TccTWGIWu1roA0Tev
+         0HJs0amhcGiZcf2POKdATTc0ZQ5lvLaufGIb4DIIfE8/PAxzGmQ5pmcTC1lct3hRIYhA
+         pTxHGFFak6ZFMv2UlVkvPjTPG30S1TXE4lclhm7A/Plx+3nphccQkJ7KIszATqSvxwf9
+         Z9E0ql3T35VPMVp/bVXKBUQeUaD1SS/bEdiOXWcdxXz82YOMta6Jp4ftY3Uw1oyDQpcH
+         +3muui/9fa3IBQrq/rMNXTv07z3Br41sJNtqGi9ZWymbydHDdZ8u9G8UHfysDjqwpLpM
+         Ct7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785790513; x=1786395313;
+        d=1e100.net; s=20251104; t=1785790735; x=1786395535;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=pHA0Rp1gGRF6nGr+o0rQ0J4609nkyA5NKjL7qIfbGSk=;
-        b=ZBdA1OZ2H76PP05QrfvjRWOlg1TZ2PxNBWTSBrSz3Ljo6jHmKL8z7PIFE9JqXJ0yhv
-         wOMFXku5t025w+DbKZcabGP3Rf4wFEBYQPKUDB2ZmD0W9k51+brSPaOI3a6ELSVMVm+a
-         YU54aISoSzhy6ye0l7jyhFRVLrI4eop4EmkX8JQEoYAF+v8Eiy9UrkNa/tv+tLgHi+Av
-         j1wJpzLEat4bH5XikumS+4dnC3NM60JaSe/385xCgxpuwtC575LFsp+pLCOdabtbv0Fg
-         sM9Ob362oGLtMLl0K7ossbRoCzB6PoTmtHjK7QcJjQ/clEuPU5PgIDPK8H8En5fuDKqP
-         HSmw==
-X-Gm-Message-State: AOJu0YxLGwdM4ZWh3c5luElTJ1R50TIj0IgKvmaUj6CQoInf7EScEz5b
-	O6MQhCdiInMYUNDjD9oB0m82nPSnM3jMqs4hKNGAW8U+vjNtcVw0KWmm3wV/YA==
-X-Gm-Gg: AR+sD12j9y9Q4pJaQ6v02rVG5PZ/IfB3Jamo+dD/BgZ9x++OUHEAjtfQpfHk6ErhYa3
-	Dkwa/sT6uPYy/glzLzJDSReiGQ4WIkxxb/jtW6Dfz5g2z38FxcxiXk3Mx/vvKUMS3Y6WwSE3Bbu
-	iQlo1wUlQZUlKr/EEjRMyiHTSPorCiz40dY6MpY7MYJ6l5o88BfqqXN+WkGIV1SeMAoOKn/39o+
-	TLEu23rPmsfL2Ch5ienRz6Hb/lsfuz813uvovEMGbaJu8ALIjVRw3iWlcNjZuV+OmdtEzTsKbAv
-	ixSC/dWFtWbkJbPeKfy8tu5VTtgOKL8kFSe9FheUxX4A7mdGkPT/Cz4pli5qyqemWz+MSJRsKOz
-	MzJa97WJw7PAyi0wHZb8VSNZ1lQWXY3M57DH4iMWCO2+0L4zo/pP2bMkx2/cp8zoXZ5QrMDW+UF
-	gOucwm6Fv25+qxEJHI7be3RsZWawXII2LJRnRqejEECfaEPv4aUtXxsjhp+gOnKsw4Tg==
-X-Received: by 2002:a5d:5412:0:b0:47f:e746:dcab with SMTP id ffacd0b85a97d-47fe81b3b3fmr1985661f8f.10.1785790513110;
-        Mon, 03 Aug 2026 13:55:13 -0700 (PDT)
+        bh=VTNIwA5rIl7yheggGg5y8ZUCyvaskjkiO8o5tUu1AJc=;
+        b=Uzj90VyMsSuPi2YETpHSpQLDVkqwjoT5KFmx7Z8aNi5DyJVwOvRU94nT6ynEObeGfu
+         6zVOo3SF2lS1kz4iJi9vBvzP+Gzz9XVHKgjsnY6VGkTffeEs577gEVl/aeB5mc76iXOS
+         4cLysejZB8twhz5esXgK266ZAmRz3B8harZEQOiPZRmaFj714iS+89fbeXCVS0HeHHCp
+         s8IjH/UjOjb41ducWpo+gFEis6mf/PVWQ6GwSsS9mbx0KXuL0pwLf8ljsSSbWtKl0nEf
+         6jb1bPdreiIHmbuDKHR9Dke2HZMtuJ7YMz4NiUruFRFoHV6obuaCDt+BbWDCl2imNG1u
+         8RFw==
+X-Gm-Message-State: AOJu0YxNb7WdXAs8yaxDcNEXDVa87KU5q5th3xh74JflGoiqnkEbJ6PV
+	kOf6WkQ91pr4SJ83mVW5ePX9uhlCTVMh3MNb2os1RlNapLNvfYgqz14rJEm/CA==
+X-Gm-Gg: AR+sD12CtzDZ+D9idTYuN9NUYaxzVHeGejmLpw3kkfs+ekps7fIxXJe9s+jzAv+rUhl
+	IcTpRVJkBQUxdrzbpWK0WSLfS5aUdwf79bhO/xW5/2O3jPQ48PDgVk+hq6a9T+MMH/FaA7p+/e/
+	oFSaShbkG1WRUTtvLWIZpW35IwdO/3UHqQYa0SJUgpYXB2KmGsgVs0nbcAm8ymsqXSVO4679IsN
+	IEwaXFDpni/V4J+WOaNA+HUOH9quJ8I0PaIW5AGJ2OLsTCgWnH7R9R0CiH0DWq14NqEm7lgVhsS
+	4qL+JX8JYV8ao0ah+yJsNCvu0hDbgPASrbnJ8GJVBfZfqjHeI3o4Ou1dxZxl0jPsY/SZKD9Ign2
+	lFVpPmrASBrG1cDME4OmxOSPfFL4DVO2bgsd3aoP+c8c4PdKEgG4Csl0K341v3GGepW4DVZHwJL
+	3+k/ZSC7pj8VqsdbAuIvGOqO7sjJex4vsvoZMWvKL9DTJ3qGVpcs9HLybElE7xwADW
+X-Received: by 2002:a05:600c:6989:b0:495:4811:7998 with SMTP id 5b1f17b1804b1-4980c664d83mr310149265e9.17.1785790734612;
+        Mon, 03 Aug 2026 13:58:54 -0700 (PDT)
 Received: from antoniarch ([78.209.183.178])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd41e2abbsm36731917f8f.9.2026.08.03.13.55.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fd4bbcsm23236215e9.7.2026.08.03.13.58.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 13:55:12 -0700 (PDT)
-Date: Mon, 3 Aug 2026 22:53:41 +0200
+        Mon, 03 Aug 2026 13:58:54 -0700 (PDT)
+Date: Mon, 3 Aug 2026 22:57:26 +0200
 From: Antoni Pokusinski <apokusinski01@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, 
-	linux-rtc@vger.kernel.org, Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: Re: [PATCH v3 5/8] rtc: abx80x: use regmap instead of I2C specific
- API
-Message-ID: <anD_b4RX2Lz0kHs7@antoniarch>
+Cc: robh@kernel.org, devicetree@vger.kernel.org, linux-rtc@vger.kernel.org, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, conor+dt@kernel.org
+Subject: Re: [PATCH v3 6/8] rtc: abx80x: replace read-modify-write pattern
+ with regmap helpers
+Message-ID: <anEAX5qGZzIGH02T@antoniarch>
 References: <20260731184831.44037-1-apokusinski01@gmail.com>
- <20260731184831.44037-6-apokusinski01@gmail.com>
- <20260731190559.39CCB1F00AC4@smtp.kernel.org>
+ <20260731184831.44037-7-apokusinski01@gmail.com>
+ <20260731190137.E8A701F00AC4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -78,62 +78,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260731190559.39CCB1F00AC4@smtp.kernel.org>
+In-Reply-To: <20260731190137.E8A701F00AC4@smtp.kernel.org>
 
-On Fri, Jul 31, 2026 at 07:05:58PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Variables declared as `int` are passed by reference to `regmap_read`, which expects an `unsigned int *`.
+On Fri, Jul 31, 2026 at 07:01:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Using `guard(mutex)` inside a `switch` statement case without an enclosing block causes a compilation failure (or uninitialized cleanup execution).
+> - [High] Configuration Key unlock sequence is broken by unprotected concurrent reads and newly introduced read-modify-write regmap helpers.
 > --
 > 
-> --- Patch [5]: [PATCH v3 5/8] rtc: abx80x: use regmap instead of I2C specific API ---
-> commit 5bae78c37282c7d7693255ad432126ac7e8c51f8
+> --- Patch [6]: [PATCH v3 6/8] rtc: abx80x: replace read-modify-write pattern with regmap helpers ---
+> commit 68e1add63890d6b130ad7ce142d172f06e590b90
 > Author: Antoni Pokusinski <apokusinski01@gmail.com>
 > 
-> rtc: abx80x: use regmap instead of I2C specific API
+> rtc: abx80x: replace read-modify-write pattern with regmap helpers
 > 
-> This commit reworks the abx80x RTC driver to use regmap API instead of 
-> i2c_smbus functions. This prepares the driver for future ABX81X SPI support.
+> This commit replaces manual read-modify-write register operations in the 
+> rtc-abx80x driver with regmap_update_bits() and regmap_write_bits() 
+> functions to simplify the code.
 > 
 > > diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-> > index 4ac3ace687a1e..23823fc2f5458 100644
+> > index 23823fc2f5458..52f958e2aecd2 100644
 > > --- a/drivers/rtc/rtc-abx80x.c
 > > +++ b/drivers/rtc/rtc-abx80x.c
-> 
 > [ ... ]
-> 
-> > @@ -221,8 +224,7 @@ static int abx80x_rtc_read_time(struct device *dev, struct rtc_time *tm)
-> >  
-> >  static int abx80x_rtc_set_time(struct device *dev, struct rtc_time *tm)
+> > @@ -371,7 +364,7 @@ static int abx80x_rtc_set_autocalibration(struct device *dev,
+> >  					  int autocalibration)
 > >  {
-> > -	struct i2c_client *client = to_i2c_client(dev);
-> > -	struct abx80x_priv *priv = i2c_get_clientdata(client);
-> > +	struct abx80x_priv *priv = dev_get_drvdata(dev);
-> >  	unsigned char buf[8];
-> >  	int err, flags;
+> [ ... ]
+> >  	/* Unlock write access to Oscillator Control Register */
+> >  	if (abx80x_write_config_key(dev, ABX8XX_CFG_KEY_OSC) < 0)
+> >  		return -EIO;
 > >  
+> > -	retval = regmap_write(priv->regmap, ABX8XX_REG_OSC, flags);
+> > -
+> > -	return retval;
+> > +	return regmap_write_bits(priv->regmap, ABX8XX_REG_OSC,
+> > +				 ABX8XX_OSC_ACAL_1024 | ABX8XX_OSC_ACAL_512,
+> > +				 flags);
+> >  }
+> 
+> [Severity: High]
+> Does switching to regmap_write_bits() break the configuration key unlock
+> sequence here?
+> 
+> The hardware requires writing the configuration key immediately before 
+> writing a protected register. If any other register is accessed in between, 
+> the unlock state is cleared. 
+> 
+> Because regmap_write_bits() performs a read operation internally before 
+> writing, does that read happen after the configuration key is written,
+> causing the hardware to relock itself before the write can execute?
+> 
+> Additionally, can an unlocked concurrent read sequence interleave here and
+> clear the unlock state? Looking at abx80x_rtc_read_time(), it performs I2C 
+> reads without taking priv->lock:
+> 
+> abx80x_rtc_read_time() {
+>     ...
+>     err = regmap_bulk_read(priv->regmap, ABX8XX_REG_HTH, buf, sizeof(buf));
+>     ...
+> }
+Same answer as in patch 2 ("rtc: abx80x: add mutex protection for register writes"):
+register reads do not cause a reset of the configuration key, so no
+issue here.
 > 
 > [ ... ]
+> > @@ -566,17 +545,8 @@ static int abx80x_ioctl(struct device *dev, unsigned int cmd, unsigned long arg)
+> >  	case RTC_VL_CLR:
+> >  		guard(mutex)(&priv->lock);
+> >  
+> > -		err = regmap_read(priv->regmap, ABX8XX_REG_STATUS, &status);
+> > -		if (err < 0)
+> > -			return err;
+> > -
+> > -		status &= ~ABX8XX_STATUS_BLF;
+> > -
+> > -		err = regmap_write(priv->regmap, ABX8XX_REG_STATUS, status);
+> > -		if (err < 0)
+> > -			return err;
+> > -
+> > -		return 0;
+> > +		return regmap_update_bits(priv->regmap, ABX8XX_REG_STATUS,
+> > +					  ABX8XX_STATUS_BLF, 0);
+> >  
+> >  	default:
+> >  		return -ENOIOCTLCMD;
+> >  	}
 > 
-> >  	/* Clear the OF bit of Oscillator Status Register */
-> > -	flags = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSS);
-> > -	if (flags < 0)
-> > -		return flags;
-> > +	err = regmap_read(priv->regmap, ABX8XX_REG_OSS, &flags);
+> [Severity: High]
+> Will this cause a compiler error or undefined behavior?
 > 
-> [Severity: Low]
-> Will this cause a compiler error on GCC 14+ due to incompatible pointer types?
+> The guard(mutex) is declared inside the case block, but without an 
+> enclosing scope. If cmd is an unhandled ioctl, the switch statement jumps 
+> to the default label, bypassing the initialization of the guard(mutex) 
+> variable. 
 > 
-> The regmap_read() function expects an "unsigned int *" for its third argument,
-> but "flags" is declared as an "int" here.
-> 
-> It looks like this same issue with passing an "int *" to regmap_read() also
-> happens with the "flags" variable in abx80x_rtc_set_autocalibration() and
-> oscillator_store(), as well as with the "data" variable in abx80x_probe().
->
-I compiled this with arm-linux-gnueabihf-gcc (GCC) 15.2.1 and did not
-experience any issues. But it's no big deal to have make the `flags`
-variable an uint, will change that in v4
-> [ ... ]
+> Does this require adding braces around the RTC_VL_CLR case to restrict the 
+> lifetime of the guard?
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260731184831.44037-1-apokusinski01@gmail.com?part=5
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260731184831.44037-1-apokusinski01@gmail.com?part=6
