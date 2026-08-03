@@ -1,167 +1,103 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2049936923B
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 16:52:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3AA380FEA;
+	Mon,  3 Aug 2026 17:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785775924; cv=none; b=IMju5RD+I649CxUUJYinMV1VUFYu/ERbQcWqqeoU+2Rh2L+h+AhVk90ip6kFiwaIskWpVZSiGWepAikBrwq/L0kauQV1oPOVryrU8kGYcdp8MwZ1Kpk33KAfmbY8kwOcitBejVU7ojeUGI6J6Obs80pcdock+G4mWxQG+rvyylA=
+	t=1785776530; cv=none; b=oi5D0y8guE/8Cxv8nEy3PGw/3Fl8YXCi3LLms9eM9Q/45kZQurEVhEUlDa2hPxL9gZyDi1o46iiZxjI52d595AO5QMQNllW6MzWmF/moW4V1YpJV9fSFSrI/DVoTdwHKZohDhbpEHGSsbOanqmkPzohovhlDUB/KbGppbo6tiww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785775924; c=relaxed/simple;
-	bh=t8GrFVEmP2+TMFS1kIwMJqGnk6LwSp2JqfgYsUYnFAo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=SrIxzqGpfrroTsZfU3Q2WRp38tNcO97c6yhhzOlujBskEFcrRXZ6PeMJrC61McUIfkUSCyxn1YvNFOwXJFN5OwWFPpjYWKJ0vlDFbsIxMFd5a/VF5DHMF095WzZiFR9E8R5iJ29S+Fg8x/i1zU+px5foscYPfTZlJFiw+m7/6AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Bl4txuOs; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=pnrUzDkp; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1785776530; c=relaxed/simple;
+	bh=s8DP0exW6noFakNjmAEoGxt/KjiQ2RcUITJs/qgwVFE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JhKVY3iMPnOIN2y35+AXcXa/odozIaFiklfY9ikWNfY1H5FesBvL+k+1XKycK0LfRFHyWCGlywMB2oK5WLVEMucry0BxR44zOCaGjIHjWUCJIDDswFpVTYyOqanwLTSeW4qs2yo2/jyLUF5r3Xt2m8UelHMDsTFtuUEVDfbLhLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gKyMiGpr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Bl4txuOs";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="pnrUzDkp"
-Message-ID: <95963572ab3aedd2322d76107b70e67cf32db808.camel@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1785775921;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=udeRltbpOSwt06zJe4HtN9yW6onEmLdVDb9SWFSlNro=;
-	b=Bl4txuOsr1iSFn+1p/OE92BUVgXZE0OOpudYTuMRLB19P1t/ofih4PDbmOLsGsylSIC+Dx
-	M4aFUEtLCLjN+Qqpp0R43o0QSRh99VIKF1JaIrHZD57dPD39mMq83li5Ho07rpMNMWPNnu
-	VkL+lK7ezsUSvbUy1jB6dpi6+F7h57KET8I+QYsbISAlVO14ZOEmNR//DkXWGFrQQhbJyM
-	rKI60T1NXeysU5OwTYV3QWdiJ5tn4HtfM2MGiPeW4QhuzfVK/c2UyGlggFbNj++DyS03EJ
-	CAFI317kYs1TfX8zEsT+bz2/FEGSod9I5Nn6r7uzpkoFrpK5eQ76M5lV27l7Kw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1785775921;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=udeRltbpOSwt06zJe4HtN9yW6onEmLdVDb9SWFSlNro=;
-	b=pnrUzDkpH6To88+D4aq3cVAMNz8LT4MM2PpEIiQ3zSsOxrvuoJcNR1/z1o3YQHevp7nuSj
-	mMeOm6EDWZdlIkDw==
-Subject: Re: [PATCH 3/4] net: dsa: Add support for SoC-e SDSA tags
-From: Vasilij Strassheim <v.strassheim@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-Date: Mon, 03 Aug 2026 18:52:00 +0200
-In-Reply-To: <20260730163759.15CD21F000E9@smtp.kernel.org>
-References: 
-	<20260729-devel-vstrassheim-soce-dsa-ml-v1-0-be569dae1b20@linutronix.de>
-	 <20260729-devel-vstrassheim-soce-dsa-ml-v1-3-be569dae1b20@linutronix.de>
-	 <20260730163759.15CD21F000E9@smtp.kernel.org>
-Organization: Linutronix GmbH
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gKyMiGpr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69631F000E9;
+	Mon,  3 Aug 2026 17:02:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785776529;
+	bh=keUiQ6qgpjMHYHUXJ4nroSzC8Q61wU77/5IXJBD3Bnw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=gKyMiGprwABocBeBz69ENTHcAxnb8CgknQFrOVIw3lmqKseh8Ty9y+8o3ShznKraj
+	 Ehs/cIOOOeXqmouPAn7u9bhBufc0DC8r3aYom2tTR5skXL9infdbWqemZ/0/SV5pp1
+	 icU+72K3byYE995xHlnX2FqmlM21s+OyI7Z2CJJqGoOz57/4hbic+1y5Ht9miWFsUa
+	 bZqIJjj8u4mwoqSiHAMwdCBuJHPSl6ezHS3wrYAz4fNFrWq8A23qMRyH4XpT18fA1g
+	 zIzss7u6SBJ0OLW4Egew6cwH3n5J/jK5lnX5VqBU1SXwg+oX8xJTB8/6y/0Jdr0f+T
+	 pQQP+NlPlfw6g==
+Date: Mon, 3 Aug 2026 19:02:04 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] PCI: dwc: ep: Fix unmap potentially unmapping the
+ wrong iATU
+Message-ID: <fjib2gdwwmg3qlvjrwy74dt6on4onkj6ynlueqbbuk7gefffxz@rbl57aj3vpz7>
+References: <20260730133123.1420413-4-cassel@kernel.org>
+ <20260730133123.1420413-6-cassel@kernel.org>
+ <20260730135116.950031F000E9@smtp.kernel.org>
+ <amtcuIHhH5-f1cqd@ryzen>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <amtcuIHhH5-f1cqd@ryzen>
 
-On Thu, 2026-07-30 at 16:37 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The `sdsa_xmit` and `sdsa_rcv` functions leak the SKB on all err=
-or paths by returning `NULL` without freeing the buffer, leading to memory =
-exhaustion.
-> --
->=20
-> --- Patch [3]: [PATCH 3/4] net: dsa: Add support for SoC-e SDSA tags ---
-> commit d07af353633eb9eecc24042cfdf75f9ecf082368
-> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
->=20
-> net: dsa: Add support for SoC-e SDSA tags
->=20
-> Adds a DSA tagger for the SoC-e SDSA header format used between
-> the conduit and SoC-e switch ports.
->=20
-> > diff --git a/net/dsa/tag_sdsa.c b/net/dsa/tag_sdsa.c
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/net/dsa/tag_sdsa.c
->=20
-> [ ... ]
->=20
-> > +static struct sk_buff *sdsa_xmit(struct sk_buff *skb, struct net_devic=
-e *dev)
-> > +{
-> > +	struct dsa_port *dp =3D dsa_user_to_port(dev);
-> > +	u8 *sdsa_header;
-> > +
-> > +	if (skb_cow_head(skb, SDSA_HLEN) < 0)
-> > +		return NULL;
->=20
-> [Severity: High]
-> Does this leak the skb when skb_cow_head() fails? The DSA core expects th=
-e
-> tagger to consume and free the skb if it returns NULL on transmission. Sh=
-ould
-> this call kfree_skb() before returning?
->=20
+On Thu, Jul 30, 2026 at 04:16:24PM +0200, Niklas Cassel wrote:
+> On Thu, Jul 30, 2026 at 01:51:16PM +0000, sashiko-bot@kernel.org wrote:
+> > New issues:
+> > - [High] Using `readl()` on the host's MSI target address to flush posted writes generates a dangerous PCIe Memory Read Request, causing kernel panics.
+> 
+> (snip)
+> 
+> > [Severity: High]
+> > Does using readl() on the host's MSI target address generate a dangerous
+> > non-posted PCIe Memory Read Request?
+> > 
+> > Most host interrupt controllers (like GIC ITS or APIC) do not support reads
+> > to their doorbell addresses and will reply with an Unsupported Request (UR).
+> > 
+> > The DWC controller translates the UR completion into an AXI Slave Error,
+> > which can trigger a synchronous external abort and kernel panic on the
+> > endpoint CPU.
+> > 
+> > This concern applies to flushing posted writes in both
+> > dw_pcie_ep_raise_msix_irq() and dw_pcie_ep_raise_msi_irq().
+> > 
+> > > +		dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
+> > > +		ep->msi_iatu_mapped = false;
+> > > +	}
+> > > +
+> > >  	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
+> > 
+> 
+> I don't see how this comment is valid.
+> 
+> I tested this patch with two Rock 5Bs, one in EP mode and one in RC mode.
+> 
+> The PCIe controller on the host:
+> https://github.com/torvalds/linux/blob/v7.2-rc5/arch/arm64/boot/dts/rockchip/rk3588-extra.dtsi#L370
+> is indeed using GIC ITS, and I saw no issues at all.
+> 
+> Additionally, we have already been doing a readl() on the MSI-X target
+> address, for every single MSI-X, since commit c22533c66cca ("PCI: dwc: ep:
+> Flush MSI-X write before unmapping its ATU entry"), first included in
+> v7.0-rc2, and not a single soul has complained since then.
+> 
+> So personally I am not too concerned.
+> 
 
-Yes, I will fix all this findings.
+So either the readl() is not generating a PCIe MRd TLP or the host is not
+generating UR for the MRd TLP which ends up crashing the Endpoint. In any case,
+since the MSI-X read-back was present for a while, we don't need to worry about
+this theory.
 
-> [ ... ]
->=20
-> > +static struct sk_buff *sdsa_rcv(struct sk_buff *skb, struct net_device=
- *dev)
-> > +{
-> > +	u8 *sdsa_header;
-> > +	int source_port;
-> > +	u8 frame_type;
-> > +
-> > +	if (unlikely(!pskb_may_pull(skb, SDSA_HLEN)))
-> > +		return NULL;
->=20
-> [Severity: High]
-> Does this error path leak the skb? If a malformed packet causes
-> pskb_may_pull() to fail, returning NULL without freeing the buffer could
-> allow network traffic to cause memory exhaustion.
->=20
+- Mani
 
-Yes, I will fix all this findings.
-
-> > +
-> > +	sdsa_header =3D dsa_etype_header_pos_rx(skb);
-> > +
-> > +	/* Check that the frame type is TO_CPU. */
-> > +	frame_type =3D FIELD_GET(SDSA_TAG_FRAME_TYPE_MASK, sdsa_header[4]);
-> > +	if (frame_type !=3D 0)
-> > +		return NULL;
->=20
-> [Severity: High]
-> Should the skb be freed here when the frame type check fails to avoid a
-> memory leak?
->=20
-
-Yes, I will fix all this findings.
-
-> > +
-> > +	/* VLAN-tagged traffic is intentionally unsupported yet. */
-> > +	if (sdsa_header[4] & SDSA_TAG_VLAN_BIT)
-> > +		return NULL;
->=20
-> [Severity: High]
-> Could unsupported VLAN-tagged traffic trigger a memory leak here?
->=20
-
-Yes, I will fix all this findings.
-
-> > +
-> > +	/* Determine the source port from the two port fields. */
-> > +	source_port =3D ((sdsa_header[4] & 0x1f) << 5) |
-> > +		      ((sdsa_header[5] & 0xf8) >> 3);
-> > +
-> > +	skb->dev =3D dsa_conduit_find_user(dev, 0, source_port);
-> > +	if (!skb->dev)
-> > +		return NULL;
->=20
-> [Severity: High]
-> Does this also leak the skb if the conduit cannot find a corresponding us=
-er
-> device?
-
-Yes, I will fix all this findings.
-
-
+-- 
+மணிவண்ணன் சதாசிவம்
