@@ -1,65 +1,65 @@
-Received: from mail-wr2-f2.google.com (mail-wr2-f2.google.com [74.125.225.66])
+Received: from mail-wr2-f0.google.com (mail-wr2-f0.google.com [74.125.225.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC2A2EC09F
-	for <sashiko-reviews@lists.linux.dev>; Sun,  2 Aug 2026 23:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643C2233721
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 01:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785712153; cv=none; b=QaroMgDTzbLnlyRlLA/E167iXXLthGf6+5dEMvwkP2c2O9wSpWwDoRHudKeNr2/6vtDp6IZlos0gzl87+vktZ89kWpQimFSROYpEahRR5E4/cgoST4gjPUQLz/IEvVaYhr6YFnn8e4rFwkAFDhSYbgZ4mRT9WT1IeNy6xcEcQog=
+	t=1785721589; cv=none; b=ZYb/lA3McRcLLwyQ1VyT3ML9Hou3HJlpt3+mh4DX3KSq3L+Wa+Ioxg8mAjwgeF+EIjTG8yo278cnGv4t14GgSWo+RDjNeu8M8xe/e9dia+nhBcnuqi3um7ocXXA0kQsmxiOJPxr0hGxAlKAbMTSoA5HdYel7JiYpQmzYv3hjq5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785712153; c=relaxed/simple;
-	bh=RX1VMfBz7J22ekT4x+p61ELsTSvDTroV4KGXGIm1qp4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=mAZYBOsy2Xbn1fWaYFM2vE5ZG6F6luF+yr4Xdr0Sn8fDcTr6bYCsJlS015+RIft/fS9it7zKk37CKHxt6a1aipXLRVkvEzcbVIxY+VSXTQnH5NS7zTA6LYiIS2Cl31HeKyx1CWU8dMszuALfdUQ4vfww7i2gV5+VY12duVkW3ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AyLd/jci; arc=none smtp.client-ip=74.125.225.66
+	s=arc-20240116; t=1785721589; c=relaxed/simple;
+	bh=1jlWWIcmbOWWWFCr9ip0Pg4XNwbRnANeY4QcpjelTGM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=PET7pn5Q4ZdzNuMDssnIu+UPxYadu6Ax8/OPB0GOGF5POFqDLMIGJH2PpTu06oQcVIpjbo48zNTVKWL+9rKUyKXIS/GDCqBmb2TgXpxLqcbJKHLnIWg6c0h+gzd1G9v9qj04Qw3fGRJSXYuGBHO53UIBPKZqy+KKwTvIwGwdPVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQar53Dw; arc=none smtp.client-ip=74.125.225.64
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AyLd/jci"
-Received: by mail-wr2-f2.google.com with SMTP id ffacd0b85a97d-470713a9053so801958f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 16:09:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQar53Dw"
+Received: by mail-wr2-f0.google.com with SMTP id ffacd0b85a97d-47528970fbdso1254442f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 02 Aug 2026 18:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785712150; x=1786316950; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=gmail.com; s=20251104; t=1785721585; x=1786326385; darn=lists.linux.dev;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=lfeEUlf77ZiQWMgQd598a4lPStxyxdqvSqA/as60x8k=;
-        b=AyLd/jci7p7VmAykiM5EtNPV+6qGwIFijNI+rWb6bXmSet3Rk1qsNf9Ndth/NqIuxi
-         uPbhnBfzxL0XLTKlU40HG5E03OEWX6DLPQuBBricJoj37bDbcup9/LoM+TrpS1a4/0wu
-         IYUy3bQxqJr6kaFsGyCDmtvLdz90+TQN6EjBdHWe+rM5mQkzWqmPEE1aZQrSSVPKYBV4
-         A/t7NoXCihk1zdrT+qbTZZOA6f0MSAUMpzgyi6fSk/KjPt5+zRBTD7QYptqQAJ5NZ5xX
-         H+K+K8/U0H+0NN7UcCCkJm87N02nlGPP6+mi0WZE3v5dXO8N/LhdGT/D5K7Uk3rKnj5r
-         rJXg==
+        bh=vZFaJC56wzmLRHoaME7uR/uEBiTO3ECIXTOB5Z9VqnY=;
+        b=DQar53Dw8iPvtQoEGUhFwd2n/JwmF6uP1KhxdB2ObWddtFGgAwv4PhYx2O1bswq/Ff
+         iX1GQC9wb1lXv5v9DPvEF9DNIdid+SD+UjnjIzX2T+9y6nLdly0GiHIjv3j3VDcXoKqg
+         xWbVLEIy4uEsDey05r1Z7ozNYekoUlDPGuRTYej7xcSL11fylvZMaFXtbDtuqSuqLTa+
+         eaWx+vCY70LV/8u25KD58JXmaj4MUThcYFCtw9lj0sPD6cE95u/j6DKNZ+e6yguebY9W
+         3vX/F7cjqKBEOVKROxYJdqnwTmKuuh9n85Ji/v7oB0y7U8kRcMMOeQViWZnow2/9c670
+         EtpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785712150; x=1786316950;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20251104; t=1785721585; x=1786326385;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=lfeEUlf77ZiQWMgQd598a4lPStxyxdqvSqA/as60x8k=;
-        b=jjvI9cwVWoNhWRDZbdhWPU5zatcwUX4PWiGtD1k+oBhilkVITIFVsTRRuC2AILOU7Z
-         qhgWP5eewk5dkY4dEt+cmAZbI6aPsrGkbE4SiWXArZE4HhqWbddLRNxrQbh+hmTiLLoE
-         q4y281JYtMBW0NwdD7JR5rObwMUgfhPZc1pGJoH1hq5M1JhXumjEs66fUT0HjHOMFhBv
-         vXIPFMruSa+AbV8o/QVFh1b/rWgIqhwAlft3L+2QvAUTzlLSbhyv8Jvf7Ve8MdHiNkPs
-         6ua2B8F5xiS+qOHZmdDq/5jGtzCke7n/btBfWS5ERczQKj/gkvmIxV3GcF5CEpOFjsDb
-         KExw==
-X-Gm-Message-State: AOJu0YxMuc5/yDd0MpvhmPseNr/NrobvWauRDUNEUPrnh7/tUzismQVV
-	xg2zv32mZ9xdiQAE6PJINkU7ERgN1o/DFMfrVt0ul3/e5rYbyDzwG4fZc0Iz9ivV
-X-Gm-Gg: AR+sD10cN9QR2r8V33DNz6kpKMK6mqb5eVjvdZ6mICa2LpuTcwgclH4kKpdMkJFi/r3
-	ZtKaZ1sxEwLb4jmk+PjIbh2lEoaATVIJnZ262EVtbATDV6BDC7dQlG56T0Im3rX3pAQBeNhIwVX
-	L6XWdD9i/i1iWiFinC2Qhu0cLgW1R6xQQKSS17fCYgq0FkkqfjepnysGZbUCNn2CuLjeV0TlJ35
-	N3+yJuQngs30jdo7z/PtlwBO2uCDTlS4CRGalaFodPqGRA6g4tczTgrPxbYmDP15fLZwAprvzNV
-	CbHITffVdTrSbVMzwTW2+AC4qodkERLTNQTZPdRgsx89ovlNUoUnF2ThKd8ubW5XcnkC+WGyGTN
-	3iyL+mPmfEpesibm0rMihFsKStslSgGQpcf88lgILMTOG9flCcuvz22gxuIMX81VivJT0Sd8frH
-	oBM30bqS3ZY3enkgMq0eFZqqTjobPqn7avMergS57uOBaf1R5QWIOMcbppCgq7t3AOELRDZS8Ox
-	yalZ5rbdzE6tqap62KDPMkwA97FUJhXmWYgm6VYF13jMCJaxLJQoF1ExomehGXnooO5CRy39yYu
-	33h5/zqV8iaIvLKonaoGKWlvtfsD
-X-Received: by 2002:a05:6000:178d:b0:47f:86af:8fdd with SMTP id ffacd0b85a97d-47fd72c74bbmr18934300f8f.3.1785712149545;
-        Sun, 02 Aug 2026 16:09:09 -0700 (PDT)
+        bh=vZFaJC56wzmLRHoaME7uR/uEBiTO3ECIXTOB5Z9VqnY=;
+        b=l7ohnUiNOL6RvjAL9PizO7NVHL5g9lZnAPlXU7Xx28VQHvOinpdu2X81sutafmko14
+         LGuwZrsMcmgZgCv1RJ8xj2KoyMUeNaMLECJP7ddS8hEoG4egoWQDvZczWN05rpGq/9PF
+         masQU/lqszjqSXQp7t5BpmMD8FOZUYU61LwRPyBHL0/PubBOs4GWGwO1Yd3vRtTqJVpu
+         B4IjFD6vtLPKmWQtDI0GsGREkL7zY+Qzmxa9gp08WSJl/DDSRA9ctmFCqQ/FyUO0EWsC
+         twG3I3J7UfHnxyAJgezw0CTNhpwSS9oHssIAePsO/XjepvshI7uD/YGqp4xpQv8Kejjf
+         OhGg==
+X-Gm-Message-State: AOJu0Yx0JQwa3eCDnYS8e4/AgiCom45zabNK42aW/r3hu3EDjBlUFhte
+	Dw+gIqSpKim8zT2PAFoAZebox3CjY5Bt4dilZCXSKtkKfx03KbG040xkBto1iLC+
+X-Gm-Gg: AR+sD11hPmTG+W1AHYSZpZE0AbDFeFEfRLP5Me67GbMzPGamsisKTqnM7mrDwxHxR2G
+	9UIUXgsiTSVlFeoVUc+J4bXLM7DC9qJ5yF4dPTq5VywYnbJbHDhEpNHZTYM2K3lMzeEpNbEVYyS
+	meUGmgpjDgtGsCouEFpSJsMIwI3JcB/2t4vYGiQBUJpt+HrXlka7ARYoVrDjPkvj0u/TvoqonyD
+	5GbiaUgtKAFEbDJPOAn2uwypwPGkc0W9KoejVknlcU2wbzwjbsm/OaF9kWDzpI92Gwe9QU4WJYi
+	mgAy3CgyxmtW7jIZopHtYHrutnLaQRolEr8zFfRWPylq0M1iNvSkhoK6rCPr0n307GiKSoYfAIW
+	XspwcBxPCnZN4Ds/QLpAswk4yzQdUHIqfEF5z/hjnzfvMatDrJ61gR8x2b0Uxe0etx16jolvSdA
+	hrKn72j1iQGPkmAWUtzUyT0CK39TPwzv290dKfjlJ+gx6muTvMKA4DQ83FGw5xTf2MLyA4VGxS7
+	TuCvEJ1CYC3E5nngMNP5HvhDeWyRFVB+nx1JgleNP35LL/KesjyqN0Be75cFvlM626X8ADhxyu+
+	Ua1RA5Gn06DPufcO4vLMiD0Gs9Q=
+X-Received: by 2002:adf:eac3:0:b0:47d:dfc6:b28b with SMTP id ffacd0b85a97d-47fd72e1887mr16054070f8f.30.1785721585395;
+        Sun, 02 Aug 2026 18:46:25 -0700 (PDT)
 Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd456a5a4sm27561230f8f.20.2026.08.02.16.09.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd45a1abfsm27302753f8f.37.2026.08.02.18.46.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2026 16:09:09 -0700 (PDT)
+        Sun, 02 Aug 2026 18:46:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,103 +68,81 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 03 Aug 2026 01:09:08 +0200
-Message-Id: <DKEU4K708GAQ.2VC887YB976SN@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 1/3] bpf: Show more useful info in stack
- depth stats
+Date: Mon, 03 Aug 2026 03:46:22 +0200
+Message-Id: <DKEXGY371CL4.1ALKCI5DILNFR@gmail.com>
 From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Roman Gushchin"
- <roman.gushchin@linux.dev>
+To: <sashiko-reviews@lists.linux.dev>, "Shivaji Kant"
+ <shivajikant@google.com>, "Kuniyuki Iwashima" <kuniyu@google.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v2 1/2] bpf: Allow IP_TRANSPARENT and
+ IPV6_TRANSPARENT in bpf_{set,get}sockopt()
 X-Mailer: aerc 0.21.0
-References: <20260802225209.2511758-1-memxor@gmail.com>
- <20260802225209.2511758-2-memxor@gmail.com>
- <20260802230435.7F4331F000E9@smtp.kernel.org>
-In-Reply-To: <20260802230435.7F4331F000E9@smtp.kernel.org>
+References: <20260801051307.478469-1-shivajikant@google.com>
+ <20260801053607.71C201F00AC4@smtp.kernel.org>
+In-Reply-To: <20260801053607.71C201F00AC4@smtp.kernel.org>
 
-On Mon Aug 3, 2026 at 1:04 AM CEST, sashiko-bot wrote:
+On Sat Aug 1, 2026 at 7:36 AM CEST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The commit changes the verifier's 'stack depth' log format fro=
-m a single-line format (`stack depth %d+%d...+%d max %d`) to a multi-line f=
-ormat (`stack depth max %d` followed by per-subprogram lines). However, it =
-fails to update the `veristat` tool in the BPF selftests, which relies on p=
-arsing the old format to collect stack depth statistics. When `veristat` at=
-tempts to parse the new verifier log, the hardcoded `sscanf` string (`"stac=
-k depth %511s max %ld"`) matches only the first word (`"max"`) but fails on=
- the rest, leading to broken and unpopulated `STACK` and `MAX_STACK` metric=
-s.
+> - [Medium] bpf_setsockopt() bypasses MPTCP subflow synchronization for IP=
+_TRANSPARENT and IPV6_TRANSPARENT.
 > --
 >
-> --- Patch [1]: [PATCH bpf-next v2 1/3] bpf: Show more useful info in stac=
-k depth stats ---
-> commit f4a761d5dad941fea12558fab4093ec6ef3e52da
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> --- Patch [1]: [PATCH bpf-next v2 1/2] bpf: Allow IP_TRANSPARENT and IPV6=
+_TRANSPARENT in bpf_{set,get}sockopt() ---
+> commit c5ad31eb12f337883443730bb1839d63112c725e
+> Author: Shivaji Kant <shivajikant@google.com>
 >
-> bpf: Show more useful info in stack depth stats
+> bpf: Allow IP_TRANSPARENT and IPV6_TRANSPARENT in bpf_{set,get}sockopt()
 >
-> This commit updates the BPF verifier's stack depth statistics logging to =
-print
-> the maximum stack depth and each subprogram's stack depth on separate lin=
-es.
-> It also updates various selftests to match the new output format.
+> This commit allows IP_TRANSPARENT and IPV6_TRANSPARENT socket options to =
+be
+> used with bpf_setsockopt() and bpf_getsockopt().
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index e6f35f4e715b6..74a92036d84e7 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -18703,10 +18703,15 @@ static void print_verification_stats(struct bp=
-f_verifier_env *env)
->>  	if (env->log.level & BPF_LOG_STATS) {
->>  		verbose(env, "verification time %lld usec\n",
->>  			div_u64(env->verification_time, 1000));
->> -		verbose(env, "stack depth %d", env->subprog_info[0].stack_depth);
->> -		for (i =3D 1; i < subprog_cnt; i++)
->> -			verbose(env, "+%d", env->subprog_info[i].stack_depth);
->> -		verbose(env, " max %d\n", env->max_stack_depth);
->> +		verbose(env, "stack depth max %d\n", env->max_stack_depth);
->> +		for (i =3D 0; i < subprog_cnt; i++) {
->> +			const char *name =3D env->subprog_info[i].name;
->> +
->> +			if (!name || !name[0])
->> +				name =3D "<unknown>";
->> +			verbose(env, "stack depth subprog %d %s %d\n", i, name,
->> +				env->subprog_info[i].stack_depth);
->> +		}
+>> diff --git a/net/core/filter.c b/net/core/filter.c
+>> index c21c1daecf9d1..04a9f9d8d07b4 100644
+>> --- a/net/core/filter.c
+>> +++ b/net/core/filter.c
+>> @@ -5645,6 +5645,7 @@ static int sol_ip_sockopt(struct sock *sk, int opt=
+name,
+>>
+>>  	switch (optname) {
+>>  	case IP_TOS:
+>> +	case IP_TRANSPARENT:
+>>  		if (*optlen !=3D sizeof(int))
+>>  			return -EINVAL;
+>>  		break;
 >
 > [Severity: Medium]
-> Will this break the veristat tool's ability to collect stack depth statis=
-tics?
+> Does bypassing the protocol-specific sk->sk_prot->setsockopt() handler he=
+re
+> break MPTCP subflow synchronization?
 >
-> Looking at parse_verif_log() in tools/testing/selftests/bpf/veristat.c, t=
-he
-> parser still expects the old single-line format:
+> Since sol_ip_sockopt() calls do_ip_setsockopt(sk) directly, it appears th=
+at
+> IP_TRANSPARENT settings applied via bpf_setsockopt() will not be synchron=
+ized
+> to existing MPTCP subflows. Could this cause the underlying subflows to l=
+ack
+> the transparent attribute after they are instantiated?
 >
->     if (2 =3D=3D sscanf(cur, "stack depth %511s max %ld", stack, &s->stat=
-s[MAX_STACK]))
->         continue;
+> [ ... ]
 >
->     while ((token =3D strtok_r(cnt++ ? NULL : stack, "+", &state))) {
->         if (sscanf(token, "%d", &sub_stack) =3D=3D 0)
->             break;
->         s->stats[STACK] +=3D sub_stack;
->     }
+>> @@ -5671,6 +5672,7 @@ static int sol_ipv6_sockopt(struct sock *sk, int o=
+ptname,
+>>  	switch (optname) {
+>>  	case IPV6_TCLASS:
+>>  	case IPV6_AUTOFLOWLABEL:
+>> +	case IPV6_TRANSPARENT:
+>>  		if (*optlen !=3D sizeof(int))
+>>  			return -EINVAL;
+>>  		break;
 >
-> With the new multi-line format emitted here, it appears this parsing logi=
-c
-> will silently fail to extract the stack depth numbers, leaving the STACK =
-and
-> MAX_STACK metrics unpopulated when comparing regressions. Does veristat.c
-> need to be updated to match the new verifier output format?
+> [Severity: Medium]
+> Will this introduce the same synchronization issue for IPV6_TRANSPARENT o=
+n IPv6
+> MPTCP sockets?
 
-Hi Roman,
-
-I think Sashiko should look at patches later in the stack to see whether th=
-e
-issue it is pointing out will already be addressed later. Bisection related
-concerns are different, but this (and many others) do not fall in that cate=
-gory.
-This is a recurring source of various reports now. It isn't a big deal, but
-would be good to improve upon.
-
-Thanks
+For now I applied the current set. This does seem to be a real concern, but=
+ it
+seems other options have similar problem, so likely requires more thought.
