@@ -1,112 +1,131 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9C530B51E;
-	Tue,  4 Aug 2026 03:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CA0423E9D
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 04:10:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785812648; cv=none; b=YWsMuX+pLJ1L0tq5cpH1Q6tPpUdE+D+cB5RzUB8vj2GXBbIndgh4antk+YjfYAG6wXTQ1Sv/jgKDnScNiL1xveNiayQ38k5h9eZ929EfChh3+1I7S33jjm75p/3GYrrDagOX61oqhSrldtufLn6nLWVigiQLqkzZPobAgKM6P2w=
+	t=1785816658; cv=none; b=TVLIKfk/fJ4iZPnYUcRvs7DV/+w9IulkJK/81BEC9BeSrRzcfCboRvk2l44Yj/rOIAa7yvkWctOsHlwnoHKGt5WptEXNcAyAuicCaUS5asb3QNfy18+D1LBRFqZ8GOn54TjtKzaO0g601fBnkrEWndiL8Gk0PC9F2OzqsUHfug0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785812648; c=relaxed/simple;
-	bh=5F4jpsYYa71VFyNPIUSPDjrll1rr2OurnGlvjFq2/6Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CSkiWqR1AEwbwGvfZ8/DsTTd4dJcN2rUnDss6L1mLLRBP5yC5cbdZ9RdfiovF1tNKcdAPEBMrRKH53vDQWjxXX/tWWxDjY5Uqf3YSulTqCE9QI4AUjltfCPUxmD1ZKlZ/9ZE3xPLNnmE9cAZBe68a/3fmpqRAfT4g3PjWq+8FM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=ehs8/bkh; arc=none smtp.client-ip=220.197.31.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1785816658; c=relaxed/simple;
+	bh=OhD/yEFhUGihcpSsRGs/dbnXlDc4PeCN7WQIqEtisDs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=WstG3oZ/lODUxmRgdwILnG5R1Ma5UudB40n8iZ4yXqYofA+TEhjAa05dBFlqUCvZtg7RBa+HQ0ApiLXGGa0oPS3R1wHXiGcM3T51EHX0T6LMVCVVUYNPqFkr1kpkGFHUy7zxO9hMm9+KgMgNr03g9Sg8tS4uNnemN5WC9zP0Awg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=w+h+sJSG; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="ehs8/bkh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=YKiBIk4wRt6v6NI7XRMCDBJJZejw6wWJNbI2X0Vwybs=;
-	b=ehs8/bkhda2AjPr2bTWWWe8pn/oOuR3Godyaf8dliue5vCE+Hvh81ZacwZukAh
-	B5wggLy2qPyVWcglluPf009vVnI6CXyO8Z5GLeiM0AyCOzOLN/8w/ztI5t7HyO+o
-	+uwxzFvtRA0R7agxFV6mG9q5srWyl4j66mNRZDUuB+gD4=
-Received: from [IPV6:2409:8a62:3e6:1400:e93f:3d77:3322:beb7] (unknown [])
-	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wD3P1uTVnFqxrfcNg--.17519S2;
-	Tue, 04 Aug 2026 11:03:48 +0800 (CST)
-Message-ID: <c5f7df74-5a45-4bd6-b167-b4f970613d9a@163.com>
-Date: Tue, 4 Aug 2026 11:03:47 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="w+h+sJSG"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785768591;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6Idn/88+dNM3THJaU3R/zT+H0rXSmXeg/6ZwPUJ48gU=;
+	b=w+h+sJSGt2IzV6XC7ikdjTvriPeDmidh29HXG3gACWWB8LCNsXbrL8ORsWs3yxZlXGK+hD
+	SygL2nbcsRO3RSfdsX3yIps0oiDlVEl7gfPThiAnTrT3aiTxCPmVdE/vtRKzydMNQMvPr5
+	e1lyGFKGojFMwWb1od5B4xwmI8wvfx8=
+From: Junjie Cao <junjie.cao@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] drm/panel: Add Novatek NT36532 panel driver
+Date: Mon,  3 Aug 2026 07:49:39 -0700
+Message-ID: <20260803144941.1402261-1-junjie.cao@linux.dev>
+In-Reply-To: <20260729162847.9F4A51F00A3A@smtp.kernel.org>
+References: <20260729160804.912826-1-junjie.cao@linux.dev> <20260729160804.912826-3-junjie.cao@linux.dev> <20260729162847.9F4A51F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pinctrl: stm32: use a raw spinlock regmap to program the
- EXTI mux
-To: sashiko-reviews@lists.linux.dev
-Cc: mfd@lists.linux.dev, linux-rt-devel@lists.linux.dev, lee@kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260803061718.43210-1-junan76@163.com>
- <20260803063431.205EC1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Ju Nan <junan76@163.com>
-In-Reply-To: <20260803063431.205EC1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD3P1uTVnFqxrfcNg--.17519S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KFW8Cry3XFWkGry8WrWruFg_yoW8KryDpF
-	WaqayayrsrGrWIvryqvw48J3W09a1IyF43A3Z8WrWIv3s0ga4fGr15KF45AFWDGF4kC3Z0
-	y3WjqryDu3WDZ3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U24iUUUUUU=
-X-CM-SenderInfo: pmxqt0ixw6il2tof0z/xtbC9RSxY2pxVpQtIQAA3m
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
+On Wed, 29 Jul 2026 16:28:47 +0000, sashiko-bot@kernel.org wrote:
+> - [High] Missing Kconfig dependency for DRM_DISPLAY_DSC_HELPER leads
+>   to linker errors.
+> - [High] Improper use of DCS brightness helper inside a vendor
+>   sequence corrupts the initialization payload.
+> - [Medium] Global static DSC configuration structure is assigned to
+>   device context and mutated by host drivers.
+> - [Medium] Missing DRM backlight device registration and OF backlight
+>   mapping.
+> - [Low] Panel physical dimensions are defined but not reported to DRM
+>   userspace.
 
+Thanks for the report. What I'll fix in v3 first, then the two claims
+I disagree with.
 
-On 8/3/26 2:34 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Bypassing standard syscon regmap initialization leaves the syscfg clock disabled, leading to hardware bus faults on platforms where the syscfg node requires a clock.
-> - [High] If another driver sharing the syscon node probes before pinctrl, the generic syscon layer will create a default regmap without `use_raw_spinlock`, causing the PREEMPT_RT sleeping-in-atomic bug to persist.
+Will fix in v3:
 
-> [Severity: High]
-> Does bypassing the standard syscon regmap initialization leave the syscfg
-> clock disabled?
-> 
-> The generic syscon handling normally calls of_clk_get() and 
-> regmap_mmio_attach_clk(). Since this manual initialization skips that, the
-> clock is never attached to the regmap.
-> 
-> On platforms like STM32F4/F7/H7 where the syscfg node explicitly requires a 
-> clock, could writing to the EXTI mux registers in stm32_gpio_domain_activate()
-> with the clock disabled trigger an imprecise external abort (bus fault)?
+1) Kconfig: add select DRM_DISPLAY_DSC_HELPER + DRM_DISPLAY_HELPER (for
+   drm_dsc_pps_payload_pack()) and DRM_KMS_HELPER (for
+   drm_connector_helper_get_modes_fixed()), plus depends on
+   BACKLIGHT_CLASS_DEVICE, like the other DSC panels. Verified on
+   arm64: disable DRM_MSM/amdgpu and the other DSC panels and Kconfig
+   happily gives you NT36532=m with the DSC helper off, leaving
+   drm_dsc_pps_payload_pack without a provider. Most DSI hosts and all
+   the DSI bridges select DRM_MIPI_DSI but not the DSC helper, so this
+   is easy to hit. Good catch.
 
-That's right for STM32F4/F7, I have checked related dts files and the syscfg
-node does require a clock.
+2) The set_display_brightness_multi(0x00d4) call sits in the page 0x23
+   vendor dimming table (0x4e..0x52, one byte each); 0x51 there is a
+   table entry, not the DCS brightness command. The stock OnePlus
+   Pad 2 firmware DT sends it as an 0x15 short write (51 d4), while
+   the helper emits a long write with a trailing 0x00. Will switch to
+   a plain one-byte write. The "51 07 ff" after switching to page 0x10
+   is the real brightness command and stays; I'll write it as
+   MIPI_DCS_SET_DISPLAY_BRIGHTNESS with an explicit 07 ff payload
+   instead of the byte-swapped 0xff07 (same bytes on the wire), and
+   drop the other accidental MIPI_DCS_* macro names in the vendor pages
+   (SET_GAMMA_CURVE, SET_ADDRESS_MODE, set_pixel_format, ...).
 
->> +
->> +	/*
->> +	 * A regmap is already registered for that node, most likely by the
->> +	 * other pinctrl instance sharing it. Drop ours and use that one.
->> +	 */
->> +	if (of_syscon_register_regmap(syscfg_np, regmap)) {
->> +		regmap_exit(regmap);
->> +		iounmap(base);
->> +	}
-> 
-> [Severity: High]
-> If another driver sharing the st,syscfg node (like Ethernet MAC, I2C, or USB)
-> probes before pinctrl, won't the generic syscon layer have already
-> instantiated a default regmap without use_raw_spinlock?
-> 
-> In that scenario, of_syscon_register_regmap() would return an error and the
-> driver silently discards its raw regmap. Since the driver then falls back to
-> the already registered sleeping regmap, does this cause the PREEMPT_RT 
-> sleeping-in-atomic bug to persist when stm32_gpio_domain_activate() writes to
-> the regmap under the raw desc->lock?
-> 
+3) Make the DSC template const and copy it into the instance at probe
+   time (ctx->dsc = *panel_info->dsc_cfg), like panel-novatek-nt36536 does,
+   so the module-global struct is never written.
 
+4) Call drm_panel_of_backlight(). Brightness on this device comes from
+   a separate KTZ8866 backlight controller via the standard
+   'backlight' property (already allowed through panel-common-dual.yaml,
+   so no binding change). Without the hookup the backlight stays on
+   after a panel DPMS off; reproducible on the device here.
 
-True again for STM32F4/H7. But the syscfg node is shared between pinctrl and
-pinctrl_z only on STM32MP series SoC, and that's the platform on which I tested
-this patch.
+5) Move width_mm/height_mm into csot_display_mode; modetest currently
+   reports the connector as 0x0 mm.
 
-Thanks sashiko-bot :P, I will send a V2 later.
+Won't change:
 
->> +
->> +out_put:
->> +	of_node_put(syscfg_np);
->> +}
-> 
+a) "extra byte could shift subsequent commands out of alignment" - no.
+   Each DCS write is its own DSI packet with its own payload length; a
+   longer packet can't corrupt the ones after it. The 0x51 change
+   above is about matching the vendor sequence, not corruption - the
+   panel comes up fine as is.
 
+b) The two DSI devices keep sharing one drm_dsc_config; only its
+   storage moves, per 3). Both links of a bonded panel must run
+   identical DSC parameters, and the host derives the rc parameters
+   deterministically from the same seed values while the pair is
+   brought up sequentially in one thread, so there is nothing to race.
+   Per-link copies would just be two structs that must never diverge.
+
+Thanks,
+Junjie
