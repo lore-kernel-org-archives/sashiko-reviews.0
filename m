@@ -1,150 +1,225 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE2E30C161
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 14:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785768780; cv=pass; b=VsElJFPLDqoNtwgHmqqEETIKongFHU4+lIl/8hldfUANLZap1nfofqC4SXQIPMs3ecHNtN/w34Max8PxSeiOTELW4fshiWJw4Q4kDd/b+v2lGzcyVgPm025WJITOE8bzc91gXVE+cIydnTEGgfzbOgw2wDr2hzn23iKesR9/3y4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785768780; c=relaxed/simple;
-	bh=/s1sQ2l3V+Zh5c4gyB78SFEqAxnr/utg14r4UNS3vFo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CbknhzmpcytcRlNzMLGuw4tt2OcAJP7/8jE75BQOwbjI+yjTCElR0lVCdDQePHxVn0SqIKBVd3+WHAqW9W6ZezRC3lix46hECDPjeCqW1DHUamACfFYxKFqce9wQjktIlpetY4+CKxw6mAfJYJFC9rJk3az/GOpVuAc6szIVyDk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DBZ2J825; arc=pass smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 345DB3E5A20;
+	Mon,  3 Aug 2026 15:16:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785770184; cv=none; b=korWvWwEa3q4zhcVpkh6dX2OaQPMkQn8W08r/H0PudGHt65U7SMl+ZUxZuxuh6Akmgu87CaxbQgD6iz0hlcIqb3USjNu+1fMTwlni8HIgN7ZZnKNWDzz6Hdcpc2Xqpj+rDE+b7YIo0+K9usjBFgVlD8fF+rVwP4cxGZE7qlO0Pg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785770184; c=relaxed/simple;
+	bh=QPzeVFZmTcpN5j8r7Op2BujUO3JAuEXqZv9yIZcf7x8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=KhhdeC2r5jnfGDzy1CGJAsNyDWQhYzbg5KFpgJWycbJRDEE4CDOHkSIM2oDj8jQvpqh4UceAGFqHOcB/VMveShCQHs30c1NA1QUlhLFTGQix9BSY8ytXfuMa0pJxLYxuxFtNsdzu9IzLRt/jrSRZhzSx/R29vkxAyOanrKug6U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=gSnhFMU2; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DBZ2J825"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c15c42a45adso623177866b.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 07:52:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785768777; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rmCbU0AlMyBVYe7/C8K0/fhH21EgnLc6qzRIWjVJlNFiUNJYINShoa1JMQ8lTA1eFP
-         U++iNnNyIPhwBP35iAURVb+K474qGX5xMkC9mI/dAh7/4+mVMVqj7kdVBbVe8jmtkTnI
-         8BsYsFW1MNWvI88WZNlwC2qL5LCE8g1PyhEVHgF1BqzJhO4X/MYYfl8OZpz+MppS5Zj8
-         MQulnMn+ihgQ2bb1htOd815eWH4tjCfNK/ic9s5DkFZ24zr76CNUEMwR4uEuAnxveq7V
-         xFvgurTym/q/ujKzwD+PAgLG3v1K6R/s+Vwu3kYSLHsejJ7f6gmUglWqk7JTZgj53+e1
-         EpHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gaqZa2jsEJ+PXDdqAGoYYjGFntXfTS4TlPa6oioaHio=;
-        fh=W4zgvaciPvu+gyNBZoCQAqBlb+JTJZHKnm39esXowU8=;
-        b=pp7l98VfEUaRtQT2+7F0t9bvP+8Eq/JcbejC/4dAxI739+Kk3bfdFr/jiVwY7R4Xct
-         SPCwqse9/0d/PI7anQNU1v7C0XuYYQNxMlAkurCqLeh1pkrfReRmm0zk0B4l7t93QdgX
-         eqABrWOImkouY42iJ4bvZM9NwncPS1L1NYbIy97WySnbETOFDBs4zH28vsuXEBkI1HWr
-         8QvkLhJ/mpS0djEm3X/W9qcvx3Qw859fu7TTaWsl7dX0RAeAdtoh5xeQHVnd7VFs9SKt
-         iphAF10P9fNqgLIHunz9H7fs7YltOt6RfHW75OELCHfHlK1tqGJzRfRouRIaXAxr2+qr
-         +E8Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785768777; x=1786373577; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gaqZa2jsEJ+PXDdqAGoYYjGFntXfTS4TlPa6oioaHio=;
-        b=DBZ2J825uqR8CSXQ5mv/UVFn0wG8U7YBq3qKqmF4MEycWU6dkpAWU2XNpYObRVvmRO
-         zl2oUhXCxFxC52d23ZQnvbs4QnIH81R14+6SBD0pahlJNTpucYptCfJLwEuAyGMs//po
-         voYcXcHmVHmb24vISCp1VggSX11A6VWBeLNsl86IBkyek8QP0dJKx3Pg0lBnhTJ9TJOt
-         Xkyv2/qpcH/fl5HGG++qyI7nVrs6twQV9kZ7kSdTkpIPrwdw7n0fNr6+NjYzqSSUjm5D
-         xVfcGiB3btLxIhKxVWqyKfGHix+3UQemy6/HwfQQ69O3VnanUn8+0kBSB2EaZeL12WTb
-         bYlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785768777; x=1786373577;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gaqZa2jsEJ+PXDdqAGoYYjGFntXfTS4TlPa6oioaHio=;
-        b=eVAPzyOXTFPWtmp+inRd5ixw7JFdbyVq9LAnMIJ4GdCtvf9+9I3geJVlFFSP2/UpcH
-         FBtzkT/0zibe9XZOMOXKD2t59KQz7iW0z7z8EbIjuFnpRo4FCcGYU+jFYdPce7hnRgw2
-         F7uXaPo2swfJjlA5KnVxhwnMn4yI9KxJs/7HtGIhCUvZdzY5H5rCP1Gz7O4vmf6cFcTo
-         hV1eDEHLRlrbA3quh0e7k2D1YwbtUvFsTXFGh1Wkp6LUtFIltORli42zMSbPU8mCRa4h
-         9IN8qv6E5eFxwvXAZbywLTWMAT4IG7eKmbYMyKAAPbFFAkxWtSv69wQXS1J/jwBYh9yQ
-         ItVA==
-X-Gm-Message-State: AOJu0YzW6VUh1iwy2sXCYOpXoDP0yAXlFOWYgS08F2lXQHr2GA6LXiSv
-	t6ekFALftYsxmzd5gHQczTJ/RM1UeGxpK4Wk8vDBq8Q3Rpk6xzhPFGdjjeMAi7dO+gft+RNTTGh
-	sHO/s2PwC2/CDplBfi/Mt55Rxdr1ePdYHGS5H
-X-Gm-Gg: AR+sD13zjQ/D3X3lEdpY+mS4Mn0HLvnlX4e79Xfwt53qXQxFaM0+F5YQm6yj9h0GVQQ
-	W6EtaqH2EZDd+3gfpTrcTII07criRjfcyUv8zR3osmSgbAcdGR4SX8j9bj2NJYeEyukeplotEL4
-	/hvFCb/Q0aAUvTS/8LRYMkfsmgRYMvvvylgBU75sV1/LT4vjJwVCaQrTLekWmvytQ4RewsWZD6r
-	KkoOwoy7xa+kSGpVqfe3esrZQNFpsO9AuH/Ndh7ld63TsYH6XqNIfbzxKyyP5XsI7Ay76p5OSG2
-	vds9SqIufqN03sN2ZIdtIm924tiKMA/pErkDcHIXFrBDMhXI2pC+uiTPfdFXBGAT7nER6No=
-X-Received: by 2002:a17:907:1c18:b0:beb:d461:7b09 with SMTP id
- a640c23a62f3a-c1fe79cb8d4mr727328766b.11.1785768776864; Mon, 03 Aug 2026
- 07:52:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="gSnhFMU2"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 92FFE143D;
+	Mon,  3 Aug 2026 08:16:17 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A1B7C3F66F;
+	Mon,  3 Aug 2026 08:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1785770181; bh=QPzeVFZmTcpN5j8r7Op2BujUO3JAuEXqZv9yIZcf7x8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=gSnhFMU2bW9E/8YC5JxHcRwwTKvqrwkP4+wt0wXgEwpY/gcOSSYjXRMRjdwcU+Qaa
+	 Xx8LGK89Rf1aD/jUzFYrqziDv575PrwvBcvUsehXWJrtDWLLGO8PPZWAKsYrGuUK0W
+	 nSJNhPJQ9JaFb58kGFG8+C/Yn2fH5BHNHquwyPcQ=
+From: Leonardo Bras <leo.bras@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v3 05/11] kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning
+Date: Mon,  3 Aug 2026 16:16:18 +0100
+Message-ID: <anCwwnBpnetj53Dt@LeoBrasDK>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260729110015.372101F00A3A@smtp.kernel.org>
+References: <20260729104548.3439958-1-leo.bras@arm.com> <20260729104548.3439958-6-leo.bras@arm.com> <20260729110015.372101F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260803134839.2103051-1-puranjay@kernel.org> <20260803135329.2327280-3-puranjay@kernel.org>
- <20260803144919.2D8C31F000E9@smtp.kernel.org>
-In-Reply-To: <20260803144919.2D8C31F000E9@smtp.kernel.org>
-From: Puranjay Mohan <puranjay12@gmail.com>
-Date: Mon, 3 Aug 2026 15:52:42 +0100
-X-Gm-Features: AUfX_mwMzyeDA_Llb19LD0lSRMTtOT-ohduGZiy-4600iqiO6ncPTdl5EcnNmtQ
-Message-ID: <CANk7y0j12i-Ck9h=Lh-tVD2wv=rp-OKydnkX=tz0436Sgr2GdA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] srcu: Make call_srcu() safe to call from any context
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-rt-devel@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 3, 2026 at 3:49=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Tiny SRCU's call_srcu() remains unsafe to call from NMI context,=
- leaving it vulnerable to list corruption.
+On Wed, Jul 29, 2026 at 11:00:14AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Successful hardware dirty log extraction completely bypasses the generic software dirty bitmap, dropping internally-dirtied pages.
+> - [Critical] Hardware dirty bits are completely ignored when `KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2` is enabled.
+> - [High] Fallback software loop clobbers partial hardware dirty log output and leaks garbage data if `kvm_arch_dirty_log_clear()` fails.
+> - [Medium] The `kvm_arch_dirty_log_clear` API overloads two distinct behaviors based on an undocumented `NULL` parameter, risking a NULL pointer dereference in arch implementations.
 > --
->
-> --- Patch [3]: [PATCH v2 3/6] srcu: Make call_srcu() safe to call from an=
-y context ---
-> commit e3be0303432c7c7afdd4ed014dae0987e25bf7d3
-> Author: Puranjay Mohan <puranjay@kernel.org>
->
-> srcu: Make call_srcu() safe to call from any context
->
-> This commit updates Tree SRCU to make call_srcu() safe to call from any
-> context, including NMIs. It defers callbacks via a per-CPU irq_work when
-> interrupts are already disabled to prevent list corruption and deadlocks.
->
-> > srcu: Make call_srcu() safe to call from any context
-> >
-> > call_srcu() has the same constraint as call_rcu(): its callback list an=
-d
-> > locks are only touched with interrupts disabled.  srcu_gp_start_if_need=
-ed()
-> > enqueues under raw_spin_lock_irqsave() and may walk the srcu_node tree,=
- as
-> > do callback invocation and grace-period work.  A call_srcu() with
-> > interrupts disabled can race a list operation in flight on this CPU and
-> > corrupt the list or deadlock.  call_rcu_tasks_trace() is call_srcu() un=
-der
-> > the hood, so a sleepable BPF program freeing an object can reach this.
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does Tiny SRCU also need a
-> similar fix to safely handle NMI contexts?
->
-> In kernel/rcu/srcutiny.c, call_srcu() relies solely on local_irq_save(),
-> which does not mask NMIs:
->
->         local_irq_save(flags);
->         *ssp->srcu_cb_tail =3D rhp;
->         ssp->srcu_cb_tail =3D &rhp->next;
->         local_irq_restore(flags);
->
-> If an NMI interrupts call_srcu() exactly between assigning the tail and
-> updating the tail pointer, and the NMI handler invokes call_srcu()
-> (e.g., via call_rcu_tasks_trace()) on the same srcu_struct, could this
-> overwrite the tail pointer and permanently detach the list?
+> 
+> --- Patch [5]: [PATCH v3 05/11] kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning ---
+> commit 4c5b443921b3fcc7c6b76fa46a7c11e8755ad50f
+> Author: Leonardo Bras <leo.bras@arm.com>
+> 
+> kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning
+> 
+> This patch introduces kvm_arch_dirty_log_clear() to allow architectures
+> to implement hardware-accelerated dirty-bitmap clearing. It adds hooks in
+> both kvm_get_dirty_log_protect() and kvm_clear_dirty_log_protect() to try
+> the hardware implementation first, falling back to the software loop if it
+> fails or is unimplemented.
+> 
+> > diff --git a/include/linux/kvm_dirty_bit.h b/include/linux/kvm_dirty_bit.h
+> > new file mode 100644
+> > index 0000000000000..fa4f6b67b6235
+> > --- /dev/null
+> > +++ b/include/linux/kvm_dirty_bit.h
+> 
+> [ ... ]
+> 
+> > +static inline int kvm_arch_dirty_log_clear(struct kvm *kvm,
+> > +					   struct kvm_memory_slot *memslot,
+> > +					   struct kvm_clear_dirty_log *log,
+> > +					   unsigned long *bitmap,
+> > +					   bool *flush)
+> 
+> [Severity: Medium]
+> The signature here strongly implies the log parameter is a valid clear
+> operation struct. However, when this is called from
+> kvm_get_dirty_log_protect(), NULL is passed for the log parameter.
+> 
+> Could this establish an undocumented API contract where new arch
+> implementations blindly dereference the log pointer and cause a host
+> kernel panic?
 
-See next patch it fixed tiny srcu.
+Well, there are 2 users of this functions, and one uses a NULL variable, so 
+I don't think anyone will implement something that blingly deferences the 
+log pointer.
+
+In any case, I am open to fixing this. How should I add that information?
+(Just a comment is enough?)
+
+> 
+> > +{
+> > +	return -ENXIO;
+> > +}
+> 
+> [ ... ]
+> 
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > index 45e784462ec6e..7a13ef69b6e3e 100644
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> 
+> [ ... ]
+> 
+> > @@ -2262,6 +2263,10 @@ static int kvm_get_dirty_log_protect(struct kvm *kvm, struct kvm_dirty_log *log)
+> >  		dirty_bitmap_buffer = kvm_second_dirty_bitmap(memslot);
+> >  		memset(dirty_bitmap_buffer, 0, n);
+> >  
+> > +		if (kvm_arch_dirty_log_clear(kvm, memslot, NULL,
+> > +					     dirty_bitmap_buffer, &flush) >= 0)
+> 
+> [Severity: Critical]
+> Since this hardware clear is invoked inside the else block of the
+> if (kvm->manual_dirty_log_protect) check, are hardware dirty bits
+> completely ignored when manual protection is enabled?
+> 
+> Modern VMMs often enable manual dirty log protection by default. Will
+> skipping the hardware tracking here result in userspace only receiving
+> the software dirty bitmap, potentially causing silent memory corruption
+> on the destination after a live migration?
+> 
+
+To skip it, kvm_arch_dirty_log_clear() should return a positive (or zero) 
+value, meaning any error (ret < 0) will cause it to run the software 
+cleaning. If the arch-specific routine skips cleaning and return >=0, then 
+it's an implementation bug. 
+
+> [Severity: Medium]
+> This is the call site passing NULL for the log parameter.
+> 
+> As mentioned above, does this pose a risk of NULL pointer dereferences
+> for architectural implementations expecting a valid
+> struct kvm_clear_dirty_log pointer?
+
+See previous discussion above.
+
+> 
+> > +			goto out;
+> > +
+> 
+> [Severity: Critical]
+> If kvm_arch_dirty_log_clear() succeeds, this goto out bypasses the generic
+> software dirty bitmap processing loop completely.
+> 
+
+Yeah, that's what the arch-specific version is about.
+
+> Does this mean KVM's internally-dirtied pages, such as those from MMIO
+> emulation or virtual timers marked via mark_page_dirty(), are silently
+> dropped from the dirty log?
+
+No, as those are also cleaned as long as they hit the dirty-log (bitmap).
+
+> 
+> [Severity: High]
+> If the arch-specific hardware routine fails partway through and returns
+> an error code, could it leave partial hardware bits in dirty_bitmap_buffer?
+
+It could. That's a implementation decision: should it return all bits and 
+clean all using software, or continue where arch-specific version stopped?
+
+> 
+> If it falls through to the software loop, the software loop might overwrite
+> hardware bits with software bits (if the software bit is 1) and preserve
+> garbage hardware bits (if the software bit is 0). Should
+> dirty_bitmap_buffer be cleared on failure?
+> 
+
+Depending on the fallback strategy, it should be restored to initial state, 
+not cleared.
+
+
+> >  		KVM_MMU_LOCK(kvm);
+> >  		for (i = 0; i < n / sizeof(long); i++) {
+> >  			unsigned long mask;
+> 
+> [ ... ]
+> 
+> > @@ -2373,6 +2379,10 @@ static int kvm_clear_dirty_log_protect(struct kvm *kvm,
+> >  	if (copy_from_user(dirty_bitmap_buffer, log->dirty_bitmap, n))
+> >  		return -EFAULT;
+> >  
+> > +	if (kvm_arch_dirty_log_clear(kvm, memslot, log, dirty_bitmap_buffer,
+> > +				     &flush) >= 0)
+> 
+> [Severity: High]
+> If the arch hook modifies dirty_bitmap_buffer before failing and
+> returning an error, does it corrupt the mask used by the fallback
+> clear loop?
+> 
+> The fallback software loop uses dirty_bitmap_buffer to decide which bits
+> to clear. If it contains garbage from a failed hardware clear, could this
+> cause the wrong pages to be cleared?
+
+That's the arch-version responsibility to not put garbage in the buffer, 
+and restore it depending on their strategy.
+
+> 
+> > +		goto out;
+> > +
+> 
+> [Severity: Critical]
+> Similar to the GET path, this goto out bypasses the loop that clears bits
+> in memslot->dirty_bitmap using atomic_long_fetch_andnot().
+> 
+> If the hardware clear succeeds, will the software bits remain set
+> indefinitely since they are bypassed from being cleared from KVM's
+> internal tracking?
+
+Again, it will write-protect all the pages pointed by the dirty-log, which 
+is exactly what the sw routine does.
+
+Thanks!
+Leo
