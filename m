@@ -1,93 +1,121 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8D5423EAD;
-	Mon,  3 Aug 2026 17:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785778320; cv=none; b=HnSWGVsdSzSHQ8znJL0xqygiYpQh1LMl0b1cQhorGQnQVMOVlYt7In4fRd23JAPKOkja54rbCOQEuD/915D+mYn+aW4L1qAenrEO/44LQdMLjHq8yQ6KgB3jXR+C5D5f8PwtnB2eTYUBXlP9NDzRCPry/Io25XR9TjMrJXNWRxA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785778320; c=relaxed/simple;
-	bh=ZmTv11aSUoLZcLqs/EOTw3gAfXe+3/Az12ow0b0KYVY=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=SCNKeMUpZdcgKXKmK6PmXEU0wZ++8czQtmrch2l02T8X/B49Q5T+KpqhlVc7TuprtJHlW6TDl9tllFn+dfarO2xOQXN1iq4zPh2VlmRqiy91/ax46YtAKI0+UMOxj98pUEuzTNMrqBiHfbL5MgmXPObyOlC1ggRpIdZZLrReP68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ML4ARUX+; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6035430CE3
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 18:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785781332; cv=pass; b=Sh3yBMvCz8UizZ7/aIaFZwxniAwFYOyU9e8tqKDhoSNQjFt5E3fhR3exSRqjlYNykfMFjgTeVowTonUmB/fc3Mk8xPzBwEDzyE2zTzSnzh/dzXgvlvr7yY3JyVjV4XEvTanlm1OzCARt03JFqfmrE9xRCLxF088Ux4PmWD/dvrQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785781332; c=relaxed/simple;
+	bh=x9ZImVd/rO7BV0YppEaOdAU/wiWFe96AuvDqT6HskHA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l9tH5CBTaE9BI2AEb1Ujpwd4ju0c0ThCqfQYVDcMNmfruwjAXLP+AkCepFgvQ16tZZHkD17vrfMPoC3cMqoFvk3xj8xNiJxAPqjMmO/vvACYtTUKd74IDdcmyqmPlN4mzK9c2OzwF9dDeW303XPNjmN2hFMVDNWcAF2veRJY1ww=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R6I8iuNS; arc=pass smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ML4ARUX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD1D1F00A3A;
-	Mon,  3 Aug 2026 17:31:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785778319;
-	bh=ZmTv11aSUoLZcLqs/EOTw3gAfXe+3/Az12ow0b0KYVY=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References;
-	b=ML4ARUX+dx2fj7QJge8F0uw6c8QSp1tYgxwcVTSb9YHcQIrWN105UfD2aJdjaZ7yQ
-	 KgByCiZpqDja/EI/ZpU1B3woBBgRY8bDev1f6ErLxL2RP0bQCELW+Vl8n2RLdiek8B
-	 OzzskEO43KvuBGQmbNyJ8b9687MezFwSpr6JUhTGXk/gC/40jgPUtIvVdStv+zNQ0Q
-	 nT7faVZkgmIqa+ykqTNIXfTjalSNJhMHpIehla0IGGaKn5laIWCmUTho9wKzV3HqTT
-	 lqZVZwnljsvaKi4/Y47O2IaMuFYmuM7K7IDPH5p8b61v2a/+GUSubORNHRUa1xNbgZ
-	 86ISGVWtMhEjg==
-Date: Mon, 3 Aug 2026 19:31:56 +0200 (CEST)
-From: Jiri Kosina <jikos@kernel.org>
-To: =?GB2312?Q?=D0=BB=D6=C2=B0=EE_=28XIE_Zhibang=29?= <Yeking@Red54.com>
-cc: linux-input@vger.kernel.org, hansg@kernel.org, dmitry.torokhov@gmail.com, 
-    bentiss@kernel.org, dianders@chromium.org, linux-kernel@vger.kernel.org, 
-    sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, 
-    superm1@kernel.org
-Subject: Re: [PATCH v7] HID: i2c-hid: Refactor _DSM helper and add
- i2c-hid-acpi-prp0001 driver
-In-Reply-To: <tencent_76FCB13C1FB6FBFFA004F2D19AF6E458030A@qq.com>
-Message-ID: <03p5n920-8r8n-nqs5-p353-o7q1qo68sr6o@xreary.bet>
-References: <360r0r52-n546-s91n-s51p-893o79415s74@xreary.bet> <tencent_76FCB13C1FB6FBFFA004F2D19AF6E458030A@qq.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R6I8iuNS"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6a0cb6e96dcso3049400a12.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 11:22:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785781329; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ihK5M2lHoq5MzKj2hxrfpQk/8GAP9JHRXxypa/oSKEfFuGWVk7TXZWNObINUSDRw6F
+         6xldJxCUcNb/bmoi3x+Lv4tzhK/Q/HWvHR9DfCYMxcDWT9tcC8n7ihzkocZdoxKBZFYK
+         O9uwUlmYiKFiqtV5FHOAYatF5/+a0qvz5w7O0Z/knb8sVXKd3pa+lRNsRW068hc26sw2
+         7T5EZfaN41MX6tV66cdXpSs3+PqfGHrtP855f8pO84Dx91lpDjO1/EbHXodayGra2AiE
+         ABrcYytUrHKrPMaDSLVl3hxw2Ucek7KcbQgMoMOv9wG5k4SLWZgI60z9gBnUf93Ybn/V
+         lyNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=x9ZImVd/rO7BV0YppEaOdAU/wiWFe96AuvDqT6HskHA=;
+        fh=mCKC9j567DejzDGvNCXCOOLS6pElQ3xd5d3KNpk7Svs=;
+        b=bKZuyBgV/YSFAYUbV7IqVlhUwYVdDzIrv2ahYu0lZE0Mp3CtMsa/X9/HiLTWkNTjEQ
+         ++sBubE95EntkB1Z9s9bQL6mnDubdHlT2fWVWoOesWEIwIGgiQsUWKTV7xTYyOhqVVqp
+         mnOK7USAUhjvcgi8EJ+dXKHe0FSgJc8ZJDWCujmlIMiVhzZn5/ltZrMYdLmSRkzeDj7u
+         wan4+mnD5qjizQCS2XMNQBu9wtWSvdxo4aypB5Us8+0H0D533DD9VjEm945UZyyQ73Io
+         fl7OZLEVAz2fB8wU8LsUYGzOW7Jz6EcSQCdg4FQhlk1afP8C8wTUzZ9O7Fex2WQq27N5
+         YcKw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785781329; x=1786386129; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=x9ZImVd/rO7BV0YppEaOdAU/wiWFe96AuvDqT6HskHA=;
+        b=R6I8iuNSoC5hdjeMhne2kxlTz8/E6Hhw/bPPQGmPDmLMk4cSGPRvrI/9HwEbk6mw7P
+         1xITgj92pBb7KWjCZBnRROylM/rmRBgK+yE58qSooEAgazqIQ6imeV9uO1FqLGt/K0jd
+         O+8KWXUPddlHx8edo8tL/WDrJGJ/pwU99uGlvFIhVGev3Y8ww6WknZzSdvfj+xWOJFTG
+         C/sQX5gUgtq0HYxsFK7oQbjRpNpvnny7EvfmbrDsZfOn/UhgqIz+2+yzj4QmlZL+KWRO
+         QMPhnKmHG5GIGfi4jmo3m0jrKaJNiX9+DWgAJUVdSNcmqGppJElP3Bxpwdk8sz9MH9ks
+         JUKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785781329; x=1786386129;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=x9ZImVd/rO7BV0YppEaOdAU/wiWFe96AuvDqT6HskHA=;
+        b=fPWwdgPUgAj9r2/SlOTS1bgVjOSZ79W62Oza69exNb1UieYFnaN9bbPkiUfWWvDzIC
+         KLBjhrlYWtPIAFzmCklzoypjHCZ2YrmGUdl8kz5ycFV4ihGuji5qdY0Mjx9LI6/sDZVP
+         bKgZe4IsIjrbx/+X2rwukit2ilj3s2Yxw6GbxKI+7yl/dhfH8tTHqbxpU1h/6JFwWMu3
+         5R5iciRdtuiKkJ0Cjxew8Jc3ygu9NBvSNQZ69zT4DrxXY0Qm9j3dQpBTGI636yjR7wsj
+         Bex5r6Wt4X1Q2FPCb1YMw8E/Ac87a5H4DPqS4LDD/F9orhs9jHl4usVYok0fa0CsLVtt
+         WWMg==
+X-Gm-Message-State: AOJu0YzMXdOAb0bGEyt16m1Ep93ryYYe0gd6wlOliCZTWSJLE5sOhysv
+	PPWth0UMe/lLUPHUn59AYRlqoG4ZtQT+Ukb3702Z4P1URoqeDN7OyaVC4zaEgm4GH/o37m3aVCW
+	Pl0LvcxNEVYO2WRHlAR7YO9pvPw8Vm1g=
+X-Gm-Gg: AR+sD11Cc9zOT92ZKOBxYY3ZIikLnxH8Bf9xF3sac4CpE9VEAkdcWSkndBqYsCmJk0h
+	eOb+HDJqEcKV43D78bh+Qi/Rag2qBFDaJszth9YK9gQq0CnzMPiL308/YgmcNwR3iVIP5iaOCVV
+	DhFWSYObgCkXPE1G5Hv3WB6/F9S67sOt4B4YV36K1tobCRKNIT1jLAhVRoG4T9HC9ZSjs3kL3+J
+	PnINdKohC8sWbbvMgXCpxBxwwc8Thl5B2p8axUio9sq0GO1o6WyOjP8Y1w546ABBYm4kLvTwSFv
+	VGT3gHBg/jKtcz1bzkxVQnkojXpkFM7UiznHKHi8rYmGooQW9bIR3gIVuI5GOkhCjeAdp0XalC5
+	oN/01c32ppwDYFIawmYVsd2ot
+X-Received: by 2002:a17:906:345a:b0:c15:df42:952c with SMTP id
+ a640c23a62f3a-c1fe814f9d3mr623164666b.28.1785781329045; Mon, 03 Aug 2026
+ 11:22:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+References: <20260707175212.412699-1-dbgh9129@gmail.com> <20260707180553.78C7F1F000E9@smtp.kernel.org>
+ <ka3af5qc63pdcvh3uf6ulb25wrsf6udjugm62ooxuscxvz6zhz@mbuivewege2k>
+In-Reply-To: <ka3af5qc63pdcvh3uf6ulb25wrsf6udjugm62ooxuscxvz6zhz@mbuivewege2k>
+From: =?UTF-8?B?7LWc7Jyg7Zi4?= <dbgh9129@gmail.com>
+Date: Mon, 3 Aug 2026 14:21:58 -0400
+X-Gm-Features: AUfX_mxg5JGAIlsbnyi6v5lSwC5pBz1uJRyo3H-rzUgbkZm2NvpqldQcxoYUhKc
+Message-ID: <CACrCO_UUX_A+Z7uCsT9=JkXqqkG0Tp=n0rXO3j+KAzNxGRuVQQ@mail.gmail.com>
+Subject: Re: [PATCH v1] drm/msm/dp: Disable stream clock after video-ready timeout
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	dri-devel@lists.freedesktop.org, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Vladimir Oltean <vladimir.oltean@nxp.com>, 
+	Kees Cook <kees@kernel.org>, Dale Whinham <daleyo@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 30 Jun 2026, =E8=B0=A2=E8=87=B4=E9=82=A6 (XIE Zhibang) wrote:
+On Fri, 31 Jul 2026 at 10:05, Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Tue, Jul 07, 2026 at 06:05:53PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] Disabling the pixel clock while the DP controller is actively in the SEND_VIDEO state violates the teardown sequence and can lock up the hardware.
+> > --
+>
+> Could you please comment on this Sashiko comment?
 
-> Move the _DSM call that gets the HID descriptor address from
-> i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
-> and the new PRP0001 driver can use it. While refactoring, move the
-> blacklist check and the _DSM call to the top of probe() to avoid a
-> pointless alloc when the device is blacklisted or does not implement the
-> _DSM.
->=20
-> Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
-> are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
-> lack "hid-descr-addr" from the _DSD and provide the HID descriptor
-> address only through an ACPI _DSM. The OF driver fails to probe them
-> because it requires hid-descr-addr. Add a new driver that handles these
-> devices by calling the shared _DSM helper.
->=20
-> Link: https://lore.kernel.org/tencent_F6FC553D1BB737FC00062AD0FEF43C580F0=
-A@qq.com
-> Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separat=
-e modules")
-> Signed-off-by: =E8=B0=A2=E8=87=B4=E9=82=A6 (XIE Zhibang) <Yeking@Red54.co=
-m>
-> ---
-> v2: Name the unused parameter and document why
-> acpi_device_fix_up_power() is skipped.
-> v3: Add a dev_warn() asking users to contact vendors for firmware
-> updates, and use existing locals in devm_kzalloc() and
-> acpi_device_fix_up_power().
-> v4: Double the power-up delay from 250ms to 500ms.
-> v5: Document why of_match_ptr() on the of_match_table is safe when
-> CONFIG_OF=3Dn.
-> v6: Increase power-up delay from 500ms to 750ms. During cold boot on low
-> battery, 500ms causes non-fatal I2C transfer errors (-ENXIO). 750ms
-> fixes them.
-> v7: Drop I2C_HID_ACPI_PRP0001 Kconfig entry and build the driver under
-> CONFIG_I2C_HID_ACPI instead. Also wrap acpi_handle_err parameters across
-> two lines.
+Thanks, agreed. The posted patch disables the pixel clock before
+reverting the controller from SEND_VIDEO, and the bridge disable path
+may later issue PUSH_IDLE with the clock disabled. I will send the
+revised patch addressing the comment.
+I appreciate your time for the review.
 
-Applied, thanks.
-
---=20
-Jiri Kosina
-SUSE Labs
-
+Thanks,
+Yuho
