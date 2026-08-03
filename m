@@ -1,155 +1,168 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E624641687A
-	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 17:14:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785777263; cv=none; b=OPXxGBoDbcqyzyzkTH5IZUEVa6QnlLB9gBHkefU8g8LLuuKmh+vHV7MMt79IFfEydp6EYcTtCckfzxT40koQbBELwyROjPD2XBo00ztOaPF8hu84VenxmywnWgJNgsdWSHhxRXh6Hd59LWhGSdKQhqM52ZHT/yUJFiX8c/UcsjI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785777263; c=relaxed/simple;
-	bh=3ARyZ8YwE0T8VWNx+yGfZ4urhJw8OuYUwAcNHAdIGEc=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=izctF6PPMat9xQAKxSuN/QEc4q2nIe8Qj6+jWTIXodVCc6zTu0qE4+ayNgJFpwiCUCJbpns5dBtxLSF+KNjvKwmZb8hIcsTf3TE1P0zv+MkYnTT3xLZJIQGbjV2To3Im/l5myfEI3MGLqlWA/tgeXoroCG5yHWCruUcJloRyaqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVJyrRo1; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D146F41B8CE
+	for <sashiko-reviews@lists.linux.dev>; Mon,  3 Aug 2026 17:17:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785777442; cv=pass; b=IamuM6ked5W84fg5PU+vtECTHjPZlIHTf/Qyk0Gf9dg7L5Ga9G9zpFbSzn+t9o3DLpvIJpZaNtNMV0YVCOj0xUTntV/me0iIq/1z5bTK68szqL2waDm7UnFeBywk23Kvs+6WZeg535yK0sWce207tkfXpGTmnrFzWtHBXXPGfq4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785777442; c=relaxed/simple;
+	bh=/aIP5kdHRv420QYAn8jtf5FUqXXy259JWuHla5LMYPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c8ekCF749lcjDLTV8D2pDjWXkkOzftSXQQ7eJDeS/W0y30XSNgPFWjcGTcQR8FqTWwy33qMurh21gphn8lRQXdikeyXhXYlTaejRCWu0JRjYSBpWrl04cd7YvIOKlIbab0eTfM9LbX2bkJt5/yVtyZm6ezERKKYWMmi6qr+SZ4E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HaHAhK1R; arc=pass smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVJyrRo1"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-ca12086c06eso2899385a12.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 10:14:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HaHAhK1R"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6a051b73866so5894016a12.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 10:17:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785777439; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GZgiqtL+nBtSQc6eVlMAMHBeBU/PbjLOvAb7HDD9s3No/cQLlJ/o1SV0b5t+oW57Ef
+         YUROklhTkyUvpr65myxRAvlUM15tET6YbZIDCuPZB+DjZe4ZTQ/uwfQ75vpbKE6dj79H
+         CPpMMGWfQkTqX5sWswy0Yq6YZo4ZqD2fYzPE5yHQEPJa5Zxtj9Z55I14oqQNvXVjzdyo
+         ouOSKlBq7k/7d9ZIUQ9w6LM8MrEaAVHznSTnFubPmrw6IgRUVnKkiX/M19Le+zbb36TI
+         XsZ90697VJOJeKEifIdy81n8y0QLlw5NOT4fXwGcE8CIn25GXfnD8ZQCA2BOXyrd7dmG
+         skOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=CR0UMYa97mM85aqJSl/JOVNVWw7zagx4FNFrcVMGQkk=;
+        fh=l9vJziDWd0MXyjtmVCV+SfUYONNnafOPqiAc6xzJVLQ=;
+        b=dbpGfnUrRJJSJLco/QpCVFYDH6FggSqWCh93io1riu5IL0/21r18Rs7e7hs7IBEsIu
+         hwN21uz7c6SEQRicxpVmaybxeP1SfCO33vfmwHBwUckN7eooRMTa2XtgVdNG2EgpXURf
+         Fy/af0FkTRq7yMlMm7VBEBUTzLXtIh0fzpoI2e/iiDPqWGnToaSjCHFUbY/Qt8BX9d1x
+         oQHGMYMHe7qiRSLv4GO5FfxYOxc72tbpelSOFzrd+vuLWIOO92Vmt3IfGiDDWPQg7l4+
+         56Cvm9P1pm4cxFyPTLzSElnRQGew4kqfhpy8989g7DWgDIlYT35T2iM99dKXwpgP/C6D
+         aB3Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785777261; x=1786382061; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=tQ+UNxE6uM8fSSYlklXepIB8FuY8kEOpEwFATNyW7No=;
-        b=gVJyrRo1B8Llg1953UT+4g6bLlg9JDD8Sh6VCwEBg/C2a3CAdSC4kotlPZczR1OyAu
-         SIcOnhPc0RBMlf0gyDYqHoP9L9EhEwCZYZfSqfW/4Jp+t+TogN3xaUNmzRR6USkwVgl7
-         xl1xDneSozNjpo+1B4NHU1iMLDTiX0yrXG3BRk38p0czk8Sh5zg5Xc3Q+jGKEdXPMCyQ
-         mJNhj6Y4QzMmtjgiQGJg1BgixYABZ2DJozadsB/T4Oc4xDJ3pCqYI81jcGP/6vF1Egq1
-         ICx4EDeD7qzLVccMRkxdln6taWn3m+zbe/Qs2IIiiiwsWPih/xXvBa4QX4hfK4cSVT2y
-         VjEw==
+        d=gmail.com; s=20251104; t=1785777439; x=1786382239; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=CR0UMYa97mM85aqJSl/JOVNVWw7zagx4FNFrcVMGQkk=;
+        b=HaHAhK1Reak6jT1/ObM5DSkrEb00LqeZqkY0cJ3xG97e6VAEB8qhuXspsj3U2DXYfD
+         KXkgNr//nP4TfTKv08Z5JrtGXfSgn9xu6VA5xVGyTE8EqD1Pmy5b6FaloCVyTAhLDOim
+         6tBaet7m/0rqyOdZphflYTei39lUVM4MLNUpTrQDeBOrChCjXhfSGGlBzGABeEL3Es1F
+         UtwSgYPXig8fW/lJrFHrw40Cs+zmfMTeJvfSCU9FrTtFZNsI60T7fS887SZQmyg75IwT
+         QxzDGWsZCJEUWgqoejyhQ14J8Y0wM41bXwU/N/0A2VHyD+q4ucAkJiX2pKh7dsfLP7KY
+         L3JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785777261; x=1786382061;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=tQ+UNxE6uM8fSSYlklXepIB8FuY8kEOpEwFATNyW7No=;
-        b=HV13enY+8ATEtDSCpdMNSunVPp3WsUlW6998f5K1t1oTZrawRx4d/4NBjshsv+cpSF
-         e8eThiJ520LELuEx3445XBHWID2e02ceNjbElifin2mUh7Yn8P5MWTFWPD8gFXy1wU5h
-         rAIaeYz5ks88h9QFjmpIjjqVnvuU3YH5sHvxpl9Dk8OGsw6YGz9FSBWwVa6G/3OSlazo
-         D+XQaWNYRTZ8pGLftdILwrRdXxRJcltJZ/Gx/X7OZ+acKaxsCtM6+IwpqrpNgTfKJtTQ
-         Xryiur5+0kT3ppyoLaRHEwKCibW4CPN++4rQX0N6tj1Wu0QoO7kzW5tFau5tji8n7XMV
-         NQLg==
-X-Gm-Message-State: AOJu0Yz95mGGR28duUFZCzZPh5uyVClvkWmgrlccmS9PRq/9u7H2CMLb
-	H0+TAegerthMluPyA/MhNdPq8vEVXj0PEdCg4tLDagUYXAQaY6qUmV2x22msjg==
-X-Gm-Gg: AR+sD13DKbjQkkqRWbYg8saXbbY6rehivF9bQaMyAUmYa7rOpxCbAevtWL2tim0OMev
-	WzDds8xim9yN19BxGmHRjepD65d1t6mueRi2wgmGkS8OYpNHCpSUU2MxZaFZCumzxnCeDprz9iH
-	7F05WZi+aZEhl1IY0iLYPaNiGNaIM8ijYlYdn+OWnRh0fva9svhytVHvybvE6/Ar3jNIOF/RY71
-	TZEKPBCed0QW7aaPvprEINafOwdWkUCzdq1QyL6xTVU9tcWYulvx1Ov+UMzrjSDg2UAEh5yb7mG
-	kevoifLcR38yE2MZIpK69UOLXCok9i3Bo5NKhIqP8viwyzFXBoEzTjIv27pMN5wOnDnOTGhC61Y
-	z7/TEozUdfvpaM4050IdzO121hgtarlCVtxpK/1DnlgrbG1JqBq2pfIIgv+Hi4h8cVIfCmCuqqo
-	N4vDrhuRspfBW5BpJbyL6uqDeh1No3A8evBKICapkpNwN2N6EnsBU3
-X-Received: by 2002:a05:6a20:2d09:b0:3b1:cce5:9140 with SMTP id adf61e73a8af0-3c92a75ec8fmr10521733637.33.1785777261007;
-        Mon, 03 Aug 2026 10:14:21 -0700 (PDT)
-Received: from localhost ([2804:388:90d2:b659:18c8:3d0f:fc92:3c1b])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fab050d8csm54545112c88.0.2026.08.03.10.14.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 10:14:20 -0700 (PDT)
-From: Arnaldo Carvalho de Melo <arnaldo.melo@gmail.com>
-X-Google-Original-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-Date: Mon, 3 Aug 2026 14:14:16 -0300
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 1/2] perf c2c: Fix error masking, OOM, and unchecked
- caller errors in hpp_list__parse()
-Message-ID: <anDMaPQdsyn8b4qs@localhost>
-References: <20260803144119.185637-1-acme@kernel.org>
- <20260803144119.185637-2-acme@kernel.org>
- <20260803150230.0AB731F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1785777439; x=1786382239;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CR0UMYa97mM85aqJSl/JOVNVWw7zagx4FNFrcVMGQkk=;
+        b=bv8YyKrKV1G0zGt4uOn5wqmyHg9b9ckxBOakpHrt8DqhsJlnsy54jEjD+7xmeDA+GS
+         tL7HYAyRfGa6o/VBGOUlqZwJeLDTt3nm09Wl2aYNd81wV/FKJgvMFus19K5FTppyAFke
+         8rOme5tH+8Blri8Wgy/9s3Dw66ybQM1mMWUxLPPudNWxQd4khUfkdBD6UXzzj2io4HdH
+         BC5Tn7vbcUiSkCvY4JeEELBrewLEWoy7NAJk1OB2l+f2Lw4oG4RRE9SMUNVp3U5P6gcY
+         9EeZi8ij7lhETAzaFS0xRpamJiG1OBW6TdXElqDoMrl3nyc/BKkXjCvUJm40n331NPZ7
+         iUDQ==
+X-Gm-Message-State: AOJu0YyoxApeyFlQ7Va9FZ1a9++k46yVQhZfo0OKEYgbR4EcNRCRwym0
+	Oj9xOhweHJjewvzvR4m+9H4XqRg6nGBCSliJ3gCUIzbcEJgNGOtq4I1bLzsBqwWU/RBw7LhHkrJ
+	LGX9bg1J3THPu47AWnokCjifl7ys4ki9krsjmv55GsYnj
+X-Gm-Gg: AR+sD10qX26ytpNuOyJBmKU14kmmqxTrjYxMzpuhj1580fB91LHW2l+317HAQ9QqbPs
+	vY1W4pWq8ujbHkHh1VnMK2TYO6FTXk0kVihvnLF9nDoJT6A6RpJvZxbm5DcLFgaxnjybFiFnmR7
+	OWYSl54cMWFC6jts5fwZcHTXbCJul35VehY4/0zyVwVFUkAN8ao3iHboKZzLXHPDd2grVUOmQTf
+	XezzqldmQkctuBfU5HHXVFH6iTbOTb1MScmSjZldNelw3HW4GqJbhDCY7hFdKpq89tG/G+CzAXz
+	jIj30YH1z3MWSn+n+SwMq1EaShRNQGg8xKUdxgaQKZLNkseo+Q1OvhoXJ/pjwzI5lqRD5VbtZVy
+	XNtgwQ0aaezUJVJ1GNRndWAJogbZfboa35UqPe5zj62id
+X-Received: by 2002:a05:6402:a51c:10b0:6a0:c9e1:181d with SMTP id
+ 4fb4d7f45d1cf-6a0c9e12cd2mr4720601a12.14.1785777438858; Mon, 03 Aug 2026
+ 10:17:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260803150230.0AB731F000E9@smtp.kernel.org>
+References: <20260801-hm1092-driver-v6-0-5979f223748a@gmail.com>
+ <20260801-hm1092-driver-v6-1-5979f223748a@gmail.com> <20260801130150.5BDB41F00AC4@smtp.kernel.org>
+ <20260803143241.GA3364728-robh@kernel.org>
+In-Reply-To: <20260803143241.GA3364728-robh@kernel.org>
+From: Ramshouriesh R <rshouriesh@gmail.com>
+Date: Mon, 3 Aug 2026 22:47:07 +0530
+X-Gm-Features: AUfX_mzBSrMqhs8O1alBT0XAhQBr__EPtIEyVLNZtdnsmHlUUvRwv9-x4Su1tZw
+Message-ID: <CAJTcUFQ0iBF=2i3Bqs8PmBRNeqeYjdazNYU4HPzL1eM+UGuhwA@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] media: dt-bindings: Add Himax HM1092 NIR sensor
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
+	devicetree@vger.kernel.org, media-ci@linuxtv.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 03, 2026 at 03:02:29PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The `%m` format specifier is used in `__hpp_list__parse` to log generic callback errors, which can result in incorrect or stale error messages.
-> --
-> 
-> --- Patch [1]: [PATCH 1/2] perf c2c: Fix error masking, OOM, and unchecked caller errors in hpp_list__parse() ---
-> commit 318c268818f1c0f5bf8bb06a4099029b27a33ee1
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> perf c2c: Fix error masking, OOM, and unchecked caller errors in hpp_list__parse()
-> 
-> This commit addresses multiple bugs in hpp_list__parse(). It ensures that errors
-> from output and sort parsing are not silently masked, handles OOM conditions
-> from strdup() correctly, and properly propagates failures out of the strtok loop
-> and up the call chain.
-> 
-> > diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-> > index c9584dbedf77a..b0f2ba8318304 100644
-> > --- a/tools/perf/builtin-c2c.c
-> > +++ b/tools/perf/builtin-c2c.c
-> [ ... ]
-> > @@ -2063,26 +2065,34 @@ static int c2c_hists__init_sort(struct perf_hpp_list *hpp_list, char *name, stru
-> [ ... ]
-> > +static int __hpp_list__parse(struct perf_hpp_list *hpp_list, char *_list, struct perf_env *env,
-> > +			     int (*_fn)(struct perf_hpp_list *hpp_list, char *name, struct perf_env *env))
-> > +{
-> > +	char *tmp, *tok;
-> > +	int ret = 0;
-> > +
-> > +	if (!_list)
-> > +		return 0;
-> > +
-> > +	for (tok = strtok_r(_list, ", ", &tmp); tok; tok = strtok_r(NULL, ", ", &tmp)) {
-> > +		ret = _fn(hpp_list, tok, env);
-> > +		switch (ret) {
-> > +		case 0:
-> > +			continue;
-> > +		case -EINVAL:
-> > +			pr_err("Invalid --fields key: `%s'", tok);
-> > +			goto out;
-> > +		case -ESRCH:
-> > +			pr_err("Unknown --fields key: `%s'", tok);
-> > +			goto out;
-> > +		default:
-> > +			pr_err("%m for --fields key: `%s'", tok);
-> 
-> [Severity: Medium]
-> Will %m print the correct error message here?
-> 
-> The _fn callback returns a negative error code in ret (such as -ENOMEM), but it
-> does not necessarily set errno.
-> 
-> Even if it did, if the callback or its callees log anything, functions called
-> internally by pr_err() (like fprintf or localtime_r) can clobber errno even on
-> success. This could cause %m to print a stale or incorrect error string (e.g.,
-> "No such file or directory" instead of "Cannot allocate memory").
-> 
-> Could we format the string using the actual error code available in ret instead
-> of relying on the implicit global errno variable?
- 
+On Mon, 3 Aug 2026 at 20:02, Rob Herring <robh@kernel.org> wrote:
+>
+> On Sat, Aug 01, 2026 at 01:01:49PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Medium] The schema fails to restrict the `data-lanes` property to a =
+single lane, allowing physically invalid device tree configurations to sile=
+ntly pass validation.
+> > --
+> >
+> > --- Patch [1]: [PATCH v6 1/2] media: dt-bindings: Add Himax HM1092 NIR =
+sensor ---
+> > commit ee5879a0923ec6b56edc74d8a66ff697b111ae09
+> > Author: Ramshouriesh R <rshouriesh@gmail.com>
+> >
+> > media: dt-bindings: Add Himax HM1092 NIR sensor
+> >
+> > This commit adds a device tree binding schema for the Himax HM1092, a 1
+> > megapixel monochrome near-infrared CMOS image sensor. The sensor is des=
+cribed
+> > as outputting 10-bit RAW data over a single MIPI CSI-2 data lane.
+> >
+> > > diff --git a/Documentation/devicetree/bindings/media/i2c/himax,hm1092=
+.yaml b/Documentation/devicetree/bindings/media/i2c/himax,hm1092.yaml
+> > > new file mode 100644
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/media/i2c/himax,hm1092.yaml
+> > [ ... ]
+> > > +  port:
+> > > +    $ref: /schemas/graph.yaml#/$defs/port-base
+> > > +    additionalProperties: false
+> > > +
+> > > +    properties:
+> > > +      endpoint:
+> > > +        $ref: /schemas/media/video-interfaces.yaml#
+> > > +        unevaluatedProperties: false
+> > > +
+> > > +        required:
+> > > +          - link-frequencies
+> >
+> > [Severity: Medium]
+> > The commit message mentions the sensor outputs over a single MIPI CSI-2=
+ data
+> > lane, but does this schema restrict the data-lanes property to a single=
+ lane?
+> >
+> > Without explicitly defining a data-lanes property constraint (such as
+> > maxItems: 1 or items: - const: 1) in this endpoint block, the schema in=
+herits
+> > the permissive defaults from video-interfaces.yaml. This would allow de=
+vice
+> > trees specifying physically impossible multi-lane configurations
+> > (e.g., data-lanes =3D <1 2>;) to silently pass schema validation.
+>
+> data-lanes should not be present, but that's probably an issue on a
+> number of bindings. There's not a great way to so this other than using
+> 'additionalProperties' instead and listing all the properties used from
+> video-interfaces.yaml. But then you have to list 'remote-endpoint'
+> everywhere which is not great either. I'd rather just allow the property
+> even if it doesn't make sense for the h/w.
+>
+> Rob
 
-Indeed, I'll use str_error_r() in v5.
+Thanks for the clarification. I=E2=80=99ll leave the binding as-is and won=
+=E2=80=99t
+add the data-lanes constraint suggested by Sashiko.
 
-- Arnaldo
-> > +			goto out;
-> > +		}
-> > +	}
-> > +out:
-> > +	return ret;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260803144119.185637-1-acme@kernel.org?part=1
+Regards,
+Ramshouriesh
