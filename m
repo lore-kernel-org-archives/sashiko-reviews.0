@@ -1,258 +1,265 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD8E3EC835
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:33:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785857590; cv=none; b=rhoeHTi9SnVxvPkp6hFr6r91aEHPuAKPg+dT3bR1bRfI6AB+Waz2nebyVKkBddOiMalT1sFkwu3KhEsk5gz229W6Cd6boVGC3jjprnqHe25s8DZBuE/D7p8D3YJsqoMR4AJ908llkS63SSle+pWSe7aX8xatg2AgGtAemTjq4EI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785857590; c=relaxed/simple;
-	bh=dYq9jW2R3qmMFaWjd7MbN/kTfJNrAFA9BJigKH6JfpQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kUJ0USc9cmXhx0tlmbOpbwnw6o3PUKW/lv9qqmFMZkDX5JABapdOzpKioJuXRieZzLISYwgsDFW/IidS6aqn5bgK2q7ZRVaRBkdEYy99WCp0xfdg+wb6vnp/U3pJrj3+uE5NYI2kgg1HGrNxnMTdlaOFQFFTSz6IKVDzYqNjbUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=rSgnqMk5; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607573B1029
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785857897; cv=fail; b=LVr5G9zESTKZi8h/jRThFrcXgtHLRzSbuXf+kuSgmW3Rhfy3JTT7uYzP3TZTtedyxkw4bZnLO2kk0Ggtj/XvfJtmm1kb2m48lZTEW75fNrFrqAzhnJcUWEJ9MKskcF5cGrEB+sdjyshJFEKl6KxOFBgIxy5o3F2QJ5zzDkIY+Rc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785857897; c=relaxed/simple;
+	bh=psUQG3xPhb+lFfDN7jgAe41gYG6Y5erY+XATk+1xH8U=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=eemSOKkgoRF7GEUMRTNRLi3Yvwm9wSHG3m7+0zi21YHY9uvgt5FmBs4ulCGQhoZqSEr2/A1Dq8oFHBn5lYW1153DG9Re5mdUZOjJSmTLUWk91bu8gnj6YydwlZ7KQWG5QkQVa/FqeaNIfjgciTOQz1Zo9bvyr0PasBCQKP6VU10=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SMY47Pf5; arc=fail smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="rSgnqMk5"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 674ClfEO3207664;
-	Tue, 4 Aug 2026 15:33:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=XE02UJ
-	Romip4iJZkmfQ5moAwMXSOmCInqtS3WWhoUzM=; b=rSgnqMk5T2C2DGjhWYZhe3
-	7vNiDTx7M/pX+Ivykv8fJx9R8QJF2afOk0dnQDtbbI0b3y0Ilywu7XBEjrFi3wqI
-	mbxaohIst24XFl38RlMJyH9iOpDcDjYi1kKtXksD6vxe0KWKGitiGFUTZEd7XmIV
-	5a0bV45V0le01IblmChgOgkzrRAsd5dB1ll6AKlzEq/wN95CO7btP2AScQVITxQ7
-	sy6QdfKA8POEqv5DjqberuTSz3qf3wvtbRgdGCNI8dEwnBS4iJIWuUfxYoEmc3zF
-	6dxBiOn1Pf6UsitJ+GWtdNAaJRc7V3wlPnIDASHgbMnw1d7t80oLW1wfp7SFmwDA
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqpgx5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Aug 2026 15:33:08 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 674FQEJS010608;
-	Tue, 4 Aug 2026 15:33:07 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgab60-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Aug 2026 15:33:07 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 674FX5sC40763654
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 4 Aug 2026 15:33:05 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6FB9C58057;
-	Tue,  4 Aug 2026 15:33:05 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5930C58062;
-	Tue,  4 Aug 2026 15:33:04 +0000 (GMT)
-Received: from [9.61.89.119] (unknown [9.61.89.119])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  4 Aug 2026 15:33:04 +0000 (GMT)
-Message-ID: <45a47180-06c5-4e0e-90df-1e7f396f0a52@linux.ibm.com>
-Date: Tue, 4 Aug 2026 11:33:03 -0400
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SMY47Pf5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785857894; x=1817393894;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=psUQG3xPhb+lFfDN7jgAe41gYG6Y5erY+XATk+1xH8U=;
+  b=SMY47Pf5pZco/VVXw+AW/vZUbuZ6aZUAIhhz8gQUGEcsrIezGgC1Xonh
+   ajau3hYJjoK4TumR8IWj8w+vkTxFieHAUvoL8UqLipoSjPMhRb8uM2Zv1
+   CpMsiDYaVkzEKY+YRMnIpHd6V6D0sQCQYH5l2HvYy6HKsRKZh0XIzvBGm
+   Vi6xaiy0b877U5+clGoniQMPWg446VsVLvC0a+25EmS6Z2kGQ8DhhAzFX
+   f6APNpxg1mw5Qp904bVNTugCqmP02OVfDOeb100s0trqR9D6U8t5bOGsC
+   jjZ1z9hr3DhxqiVldn4VuJj+fHRMOPFy1dFLw3iNbHlJA6NXhajojraP1
+   w==;
+X-CSE-ConnectionGUID: nJ4Y6D0JS/CcAVHOAVUjxA==
+X-CSE-MsgGUID: ymt+wnWZTHKMkmS1gbA7DQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11865"; a="97918271"
+X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
+   d="scan'208";a="97918271"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 08:38:13 -0700
+X-CSE-ConnectionGUID: xDHMW25HQzCVp6OlZeqh1Q==
+X-CSE-MsgGUID: jOgWrLUISwu1oIUe+Lvv6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
+   d="scan'208";a="260959678"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 08:38:13 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 4 Aug 2026 08:38:12 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Tue, 4 Aug 2026 08:38:12 -0700
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.1) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 4 Aug 2026 08:38:12 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=su//xpkQvYWDoL20zuMw4PSg1M0+yeB45wkPAlAHnQ2mSDr1UZErLzbJiESsSPL3/sa/Uma2a3Wm4y6BrHmeOOG7oOIwbe8fSF9dnpzT7IE7UQxLXdLDl4r1lof1bcndFNqFkNq7BSkn0e5QXNf4uFmnf9rcmUrf37lxjoP41gnpPVhjS2gtPAyfHP1azt8wPxml8ULZ5Hv8eydGTAuNWPxGO4LQZYQ0LLXJKG8T0OWkyEdtJtMQ5+a1yuvqp6KfBZ4rs7dQutPqkNtr4iDucAtTHVDgSL+TfAcmFy6g2aEqdgpK9Y9W/UA5RgFFcPu6TkHqf85Y3/iOd+X4aDFQlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VfNalzrnBliBcgoxOgAg6Kfanq6DobJBZdYj5ATJOmI=;
+ b=SV8SW2zH56Tce4g0KJR0ijpXi5keSCXc1Litc9b3rVfMLvbr3svl0wue8tGWRc4MrQ5ypXWQ+oTJi6Vx8a/IeiUXEmyKbJc3noTsHSSpFnZJtTJsorfV5chIeH13jcHc0dZDGsEwe+1fB9xqbgJPGiVDOmKt4jbFkIydwwXQaHglvDb2HXfQQEeNFllM4FFpznY7d5Em8wL809dgW/E+wD1RoS3HisFbVRDLSGxsdI8dXQPoXz26zIW1MK4kUkBkH7EsyiMcAYNXQ/59slazambauBDuoKgBTJ/2YPcVcfUwM2N9SYpnflIFey7Aj4s890e+tKDfHL1vD5kUQMnIOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
+ by MW6PR11MB8410.namprd11.prod.outlook.com (2603:10b6:303:249::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
+ 2026 15:38:09 +0000
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0292.013; Tue, 4 Aug 2026
+ 15:38:09 +0000
+Message-ID: <bd6a9e30-7536-47cb-aa71-b160ffbf3ccf@intel.com>
+Date: Tue, 4 Aug 2026 18:38:04 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 02/14] i3c: Fix unlocked dereference of dev->desc in
+ i3c_device_get_supported_xfer_mode()
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-i3c@lists.infradead.org>, Alexandre Belloni
+	<alexandre.belloni@bootlin.com>, <Frank.Li@kernel.org>,
+	<linux-pci@vger.kernel.org>
+References: <20260804133810.184905-1-adrian.hunter@intel.com>
+ <20260804133810.184905-3-adrian.hunter@intel.com>
+ <20260804150922.01A091F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
+ 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
+ 4, Domiciled in Helsinki
+In-Reply-To: <20260804150922.01A091F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DU7P251CA0005.EURP251.PROD.OUTLOOK.COM
+ (2603:10a6:10:551::32) To IA1PR11MB7198.namprd11.prod.outlook.com
+ (2603:10b6:208:419::15)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/15] s390/vfio-ap: File ops called to resume the vfio
- device migration
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Halil Pasic <pasic@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
-        Kirti Wankhede <kwankhede@nvidia.com>,
-        Paolo Bonzini <pbonzini@redhat.com>,
-        Claudio Imbrenda <imbrenda@linux.ibm.com>,
-        Janosch Frank <frankja@linux.ibm.com>
-References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
- <20260727173239.2420754-11-akrowiak@linux.ibm.com>
- <20260727181221.355E61F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260727181221.355E61F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: WSecPqoCJy3oRlmhObPKEhvvELTskCB_
-X-Proofpoint-ORIG-GUID: WSecPqoCJy3oRlmhObPKEhvvELTskCB_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDEyMyBTYWx0ZWRfXywTYg6/F/hJj
- VrFOajy8jg593p635Y3bLXZKfSzOaFSZGhy4vzUlPNEuoSXhsqhypb6ZrDQGUCRoMm2h1ntD6bN
- A3ywu7mn0hPUfv3/agp/EEYOprYNMnE=
-X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a720634 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=ydTiwiBtxl0LLes2vgoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDEyMyBTYWx0ZWRfX7qIA4qGuPeTI
- VbP6TfqwoqBfHdgBpDiv93p5fFGDb47YPOj1DCaogr8SD7YTIfLHook2FSKRxUdbPurNJUPZVVW
- 2Q0Tyo62oN4QvysolefRCVvbnQnvi/7RRkYbVPypKIKK+dy5a+/zZREouTdz2EW9X/CDQ0+GbKi
- iZf7anbeY6G3AaNzr0wyvHHFYxQiHbU0db0ua/YaY36RBK2yb8TgKSKSkquoCXyK351hJgtIEoU
- eXX8eUx8LcCf7Xqj55YUKZmW1HQ/9XrdlAmvPqq2KsC3mUVPA0VYWsw5gBDKiqPKD0gr3Rmearf
- TfHoguKPGTTJ4BPnm/VC2hG1VEhs04yTUFUPP1EBkxZAqrhvCJKwcglIoNiL1PkTK4ZZWdszTaF
- MXZF6LP2jVUQNwepKq5DL16A6jtOLT95JnMHqUxaS2hbiVI7CCMSXBLaOMxkV1U43WEpX7JB/4Y
- mjsKL3DKuAckFB9CBWg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-04_03,2026-08-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608040123
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|MW6PR11MB8410:EE_
+X-MS-Office365-Filtering-Correlation-Id: fac6b6e2-d881-4a4f-1dc9-08def23e62d9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|11063799006|5023799004|56012099006|4143699003|10067099003|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info: BmqDwkTv5KnV2Vctl5dGTe9eHoC5ILu5rJReoLHpcTVD8UfklAqHEjs3+yqFcYf4U/qmyOgl+o5yyoOk+wpdys16gcOkf0XvV6QmQ/5ZILWVL+nmfLQMedHJxwfcrRrtAit1MtyH10ZC0kNXmSM5xwCaOEvgNnkjKc78h4IUdnotFR/skbBDCGqkzQjggWnAGP+pas2SFoaWKpKvoDKEqsyHj4TLF4vsZU65SxEHzKwzPED6bm5pRPFV138t9Nqai57T6vKxOC/iCs/zwKFGWO4zZou60noMfic95cie49xTqbwlpl7YmEVpDr50dOCTEvOh/6J7tSwITfI31Emua3VwYkMCVCoG8/f24qK1ein1MgP8rEEnawVFkkX4/CGv0MCB4SmAwWItGNHgre4hjzMSiXUtxPXw33oCPwjYHIwTGvTVm4JzHgCKUDvMeaGVWvdKXbSsOYysyK1RJv8ZLwDIsMhMgHVavEx/iaDOlNawJtn+DVjVGhSiPRsN2eqFP6BMGurVWqmn7w95/ndoDtgiBF6PyLndG28PhIS4q/BOux4XzI2rKj4PY7dmgoKfYhsSl7EjFB/ZylSAd4ekAiE3osH7MTorGHHMAyd37WkAGx5LH+ktuYJqVmXwpItJD1fsXp6w4Pw5Met/auovilTZC/SdCb7n/8CddN+m1hA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(11063799006)(5023799004)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eERQUWhZMUVUMW16VlZ4QXJXb3RkSFVTRHF1TzFHNmQwaFpRWk9ld0J2eTZL?=
+ =?utf-8?B?WDgydTJIMmR4cGVEQ0lmcTkzaEw5Sk9MVHNxbFRDZ00wbGljM1BpWGFrMUFl?=
+ =?utf-8?B?VDlCZmJCZHVUY2FTWGlZVGpOK0RydElLU0ZmMnJUM3ZSblBYWDlwOEdvbWg4?=
+ =?utf-8?B?QXpyWEtTako1RFNidTJiUUJoRmRtWWJNR1puK3MvMGJlVTJUYVpxazZJU1Nu?=
+ =?utf-8?B?WkpSclRSRkEvcWFYNGpPYm40a0hlWHFGUWY0NWhrNnZMaXB5Tm5BbWFCRFJJ?=
+ =?utf-8?B?SndQWWp4NWV0Y2YvWnpXYWw5WnhRTHp2VVJ0QUluUXJVdXRrRmNOVHFTK2Rl?=
+ =?utf-8?B?a3RQTUVtUXhzeC9vT3BCQWYwMmI3YXM0cTA3Tkw1RThoblpVRHhXNmJNT0FD?=
+ =?utf-8?B?TVJZc0pzdG1YcVJvSjJZNytpRzh1TzdpVm5WWXh2NG04dXBSclVTWlRUUVdL?=
+ =?utf-8?B?aHVYUTFlbCtHc2l3WkF4cHMyZERNMVowUUZianEwVzFVVXIyMWVrckU3VFZm?=
+ =?utf-8?B?QjNDWFBnZm9nQUdnUms3YmdZM2oyaFJmNHNTVW9DU2VsUHh3aUJpU0ZqZDRx?=
+ =?utf-8?B?eDJhTUMzYXN4Y21ZdGJDeVYxeUx1K3pXZ0J5VXRqSXJDSTN5VHlGZmhRR05t?=
+ =?utf-8?B?Tjc3RFg1ei82TlU4ZmhxL3VLYW1HRDNmVUwxVnZMeTdjamU2bWV6aFFpZncr?=
+ =?utf-8?B?cXVBNmJGNzlhbkkwZTFJL1NvcVJxWEV1TjlPTWZISUdKOVB3K2prQlhlKzA2?=
+ =?utf-8?B?Wkw5RzJUcTlIY0pLZHY3czB4OE5vUmZRSnkwUXFaaWxSd2lQdU1DUklEcm5p?=
+ =?utf-8?B?a2h6V3J4QkhvQlUwcDZGUStHc3pON3RhdkRqcTJVVnNKblBka1c2MkEzOFhG?=
+ =?utf-8?B?cThCRmtXamdpK04vK0tHbFJLN1c1N1BRTWUvZERYampwMmFpenU3WWNjRFdD?=
+ =?utf-8?B?aVJFSzRUNzRXMXF1Uk9YZUlITFRveWNJWkZrY1hKVmQ0TzB1eUJnYS9xWWE1?=
+ =?utf-8?B?MDNFOUdCRm1vd0tVbExwVTJtVno4YnR1MnAxVDdSTGxiT2dSRzM0Rk94UVhP?=
+ =?utf-8?B?bU5hbGt1M1E3NDdpbmJjTkJuZUhWVE5Za0FnYy9pODdma2d6d0FBSGd1YVhR?=
+ =?utf-8?B?TnBTV1hTeExVZXVJQ0psMStnY2p5VWs4aDB2R3FONHVPOUFjTDhmUDBxQVJC?=
+ =?utf-8?B?TVZqSXJXdHprTDIwOHNqK3BqakZ1QlFMTmNvYnRCUDAxakFlMFRJbU04dVNm?=
+ =?utf-8?B?SStjMlVXSG91dTh5VDRTS214NGlWRUw3RitkazgxajREK25vejVlamhuN3lm?=
+ =?utf-8?B?NzcrdTl0bmFPOUxiR2FoTFRZWTZlbC92SzlOWjlyT0dpcEQvLzM0SXpsTFJK?=
+ =?utf-8?B?aUk5aWk4U1BjclcwRHI3cGl3cGQrUE03eUhiUVVPbGhlOUdWYkt3bnljOUNQ?=
+ =?utf-8?B?dXY4aWR4ajcyWTV4NXZoQXl1Q3dWT1ZKRHNhMDdjTmVSVFpjeWpmdE5GMXJ3?=
+ =?utf-8?B?d3I1Rk5tMDhHZmFkUUZyYTdwdnFaNUkyODkwOGhmRldJOWFjbTRQc0FwS0ow?=
+ =?utf-8?B?MXJKZE1BbGU1aEV3TUxPdGRueFJOclRDOU5YUTFIK1NTMFZZWEdUR3FXTHlm?=
+ =?utf-8?B?ZDBmTnNZcE1oaXc5Q2sxV3Z4Qy90NmRrRERMb2FWUFRBL1pEa2N1ZFhQWFRr?=
+ =?utf-8?B?UW9RVEJrVjZBZGZualNiZGpIczZUQnhBckdnSGtQend3NElnQnpIV2pHUnAx?=
+ =?utf-8?B?N25WSWNjbDRna1lDNGo0d1F0UTJwSFdsWjM2S2txYTgrT2hnOXM1bHJNb0lw?=
+ =?utf-8?B?MXhpb2NsSXMyYlNNbVhBTm9tZW0rcVA1OXNoUXh0aE5lQ3BKWnJ2cUllZ2tB?=
+ =?utf-8?B?bHdKNUxYbW5oNmZVd0NBT2JOdk5tVmZ1ZHJzUVFWY201Q25WMnoweWFueFo3?=
+ =?utf-8?B?Q2pLT2c1bEZlWTFLRi9IZFJPeGJoc2JnWXFlcHRTY0c3akxDQ2NNaFdYY0tW?=
+ =?utf-8?B?ZXp2Y3kvVzdOOHpDWUJEYjlOb0p0aUROYUxMQjJaMFZGVWRQNi9hSEMyNmlU?=
+ =?utf-8?B?RDBvV3FGVzlwbG9wZERRczFnV1FtZmhKNkpFVVZmNGRWN3dLam1rTWtNbDJp?=
+ =?utf-8?B?Nm8zMko3YkpaUHdkMnUxVDlIdmpyZGp6dlBNR2w0V2dROFZiRGZ1MEN0b1hI?=
+ =?utf-8?B?NTF3NVJmQng1Y202Y3BCREF1N0x6ZlMrbG12SzJaNzhzZGFHVVRSZnJsRWE5?=
+ =?utf-8?B?S3pRbko0cElldTJ2VldWc3AxRElMd3Y3Wk5ma3V5SittNnBBeE5wRVlua2xj?=
+ =?utf-8?B?MThjZmlQM2wvTWNGcTVyYk1GTFFKQzcrNkRXem9HaFVvcWhXVm80Y2xJdG9Z?=
+ =?utf-8?Q?Bb7VNrsJsz+lYjsc=3D?=
+X-Exchange-RoutingPolicyChecked: hk8uS76yYOUL7doXWdA0rOqNXQENITrD5xQkdhy2cqyJHA78N15OhrldIY0N649MF4mZt6ZoDCx1BQOSc+Wk9W7+YlzhKGZ7ygOLzKs2DID2zythaBIuzg7Bx1oz3Qj1IBejKhMIl6DyxSlF+rfGm8ktBTBqgXLHgGajNzzKMfcg8KC1mdKi6UQ+tam6mezedPA3upTRb3FQHIsFNcsd65CavgxHSYaiUThzPXd0Lw6OdvTCfs1kR2FYC2oq7n826WOQE2pN0LuwhOpbZEcaBe/R0Q0V6hKgIgXP4KTj5s3KXAZUqOQzTRC2flBgKJ/oJJI9IQ59W/nc5T+puzTjYA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: fac6b6e2-d881-4a4f-1dc9-08def23e62d9
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:38:09.5632
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ITwX1ppfcqi/SJOFJ+3F6umO/fFSqN7HCjTn5GWZa55m5FiR8Uz7cEf8Y7/7XMp/mnwzGw1Os6NGOEhuOk+8AA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR11MB8410
+X-OriginatorOrg: intel.com
 
+On 04/08/2026 18:09, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] The patch transforms a predictable NULL pointer dereference into an exploitable Use-After-Free of `master->this` when an I3C device outlives its master controller's unregistration.
 
+No. 'desc' is never NULL however it could be being changed concurrently
+prior to being freed.  UAF of 'desc' is no different to UAF of master->this
+(which is anyway being addressed by a different patch
+"i3c: master: Fix use-after-free of master->this"),
+so nothing "transforms" here.
 
-On 7/27/26 2:12 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] Double fetch vulnerability in the resuming write path allows out-of-bounds kernel reads.
-> - [Critical] Use-After-Free during concurrent device teardown while executing copy_from_user.
-> - [High] Lack of rate limiting in validation error paths allows userspace to flood the kernel log and cause a Denial of Service.
-> - [High] Unsynchronized concurrent writes can trigger premature configuration validation on uninitialized memory.
+> 
+> Pre-existing issues:
+> - [High] Uninitialized stack memory (`devinfo`) is used for driver matching when `i3cdev->desc` is NULL.
+> - [High] A Time-of-Check to Time-of-Use (TOCTOU) race condition exists when accessing `i3cdev->desc->boardinfo`, leading to a Use-After-Free or NULL pointer dereference.
 > --
->
-> --- Patch [10]: [PATCH v6 10/15] s390/vfio-ap: File ops called to resume the vfio device migration ---
-> commit 56776518d352cfe0d799d4f95bc7d9c8703337bf
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Subject: s390/vfio-ap: File ops called to resume the vfio device migration
->
-> This commit implements the write callback for the vfio-ap device migration
-> file stream. It restores the source guest's AP configuration by validating
-> and hot-plugging it into the destination guest.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index c7fecad0b6769..c12ba82ec5277 100644
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
-> [ ... ]
->
->> @@ -881,14 +881,20 @@
->>   static void report_qinfo_incompatibilities(const char *mdev_name,
->>   					   unsigned long apqn,
->>   					   struct ap_tapq_hwinfo *src_hwinfo,
->>   					   struct ap_tapq_hwinfo *target_hwinfo)
->>   {
->> +	pr_err("vfio_ap_mdev %s: Migration failed: Source and target queue (%02lx.%04lx) not compatible\n",
->> +	       mdev_name, AP_QID_CARD(apqn), AP_QID_QUEUE(apqn));
-> [Severity: High]
-> Is it possible for userspace to flood the kernel log here?
->
-> If a configuration with a large number of incompatible queues is provided,
-> verify_ap_configs_are_compatible() continues processing rather than aborting.
->
-> Since report_qinfo_incompatibilities() and its helpers issue unconditional
-> pr_err() calls for each mismatch, could this cause CPU stalls or a denial
-> of service?
-
-While it is highly unlikely for this to happen since it would require 
-that the
-system have an inordinate number of incompatible queue devices, the
-pr_err calls will be replaced with pr_err_ratelimited calls.
-
->
->> +
->> +	report_facilities_compatibility(mdev_name, apqn, src_hwinfo, target_hwinfo);
->> +	report_mode_compatibility(mdev_name, apqn, src_hwinfo, target_hwinfo);
-> [ ... ]
->
->> @@ -1071,61 +1071,80 @@
->>   static ssize_t vfio_ap_resuming_write(struct file *filp, const char __user *buf,
->>   				      size_t len, loff_t *pos)
->>   {
-> [ ... ]
->
->> +	/*
->> +	 * Snapshot and advance *pos under the lock before dropping it for
->> +	 * copy_from_user().  This prevents concurrent write()s on the same
->> +	 * stream file from computing the same destination offset and clobbering
->> +	 * each other's data or racing to reassign mig_data->resuming_mig_file.
->> +	 */
->> +	write_pos = *pos;
->> +	*pos += len;
->> +
->> +	mutex_unlock(&matrix_dev->mdevs_lock);
->> +
->> +	if (copy_from_user((char *)ap_config + write_pos, buf, len)) {
->> +		if (new_allocation)
->> +			kvfree(ap_config);
->> +		return -EIO;
->> +	}
+> 
+> --- Patch [2]: [PATCH V3 02/14] i3c: Fix unlocked dereference of dev->desc in i3c_device_get_supported_xfer_mode() ---
+> commit 97cfccca08da732124561cbc1aa49b571a84dd8c
+> Author: Adrian Hunter <adrian.hunter@intel.com>
+> 
+> i3c: Fix unlocked dereference of dev->desc in i3c_device_get_supported_xfer_mode()
+> 
+> This patch modifies i3c_device_get_supported_xfer_mode() to use dev->bus
+> instead of dev->desc to obtain the master controller. This avoids a potential
+> unlocked dereference of dev->desc.
+> 
+>> diff --git a/drivers/i3c/device.c b/drivers/i3c/device.c
+>> index 101eaa77de686..a3778282e84c2 100644
+>> --- a/drivers/i3c/device.c
+>> +++ b/drivers/i3c/device.c
+>> @@ -309,7 +309,7 @@ EXPORT_SYMBOL_GPL(i3c_device_match_id);
+>>   */
+>>  u32 i3c_device_get_supported_xfer_mode(struct i3c_device *dev)
+>>  {
+>> -	return i3c_dev_get_master(dev->desc)->this->info.hdr_cap | BIT(I3C_SDR);
+>> +	return i3c_bus_to_i3c_master(dev->bus)->this->info.hdr_cap | BIT(I3C_SDR);
+> 
 > [Severity: Critical]
-> Can a concurrent device teardown cause a use-after-free here?
->
-> The mdevs_lock is dropped to perform copy_from_user(). If a concurrent
-> thread closes the VFIO device, vfio_ap_release_mig_files() will call
-> kvfree(mig_data->resuming_mig_file.ap_config). Would this result in
-> copy_from_user() writing into freed kernel memory?
-
-The vfio_ap_open_file_stream calls vfio_device_try_get_registration()
-(see patch 06/15) which pins the vfio_device reference until
-vfio_ap_release_mig_file() runs — and release only runs when the file
-descriptor is closed. The file descriptor cannot be closed while a write()
-is in progress on it. So matrix_mdev and its mig_data remain valid for
-the lifetime of the write call.
-
->
-> [Severity: Critical]
-> Could this sequence introduce a double-fetch vulnerability?
->
-> The first fetch in allocate_ap_config() reads num_queues to determine the
-> allocation size. The lock is then dropped, and this second copy_from_user()
-> overwrites the entire buffer, including the num_queues field.
->
-> If userspace modifies num_queues between these fetches, could it inflate
-> ap_config->num_queues beyond the allocated size, causing out-of-bounds
-> reads in queues_available() when it loops over source_config->num_queues?
-
-A fix will be provided for this in the next patch series.
-
->
->> +
->> +	/* Check if we've completed writing the entire configuration */
->> +	if (write_pos + len == cfg_sz) {
->> +		/*
->> +		 * do_post_copy_validation() calls ap_tapq() which is a slow
->> +		 * hardware instruction.  Run it before acquiring the update
->> +		 * locks to avoid holding guests_lock, kvm->lock, and
->> +		 * mdevs_lock across the hardware calls.
->> +		 */
->> +		ret = do_post_copy_validation(mdev_name, ap_config);
-> [Severity: High]
-> Does this completion check safely handle concurrent writes?
->
-> If userspace issues asynchronous write() syscalls for different chunks of
-> the payload, they might execute copy_from_user() concurrently. If the
-> thread writing the final chunk completes its copy before threads writing
-> earlier chunks finish theirs, could do_post_copy_validation() be called
-> on a buffer that still contains uninitialized data?
-
-The completion check could theoretically fire early if concurrent writes
-are issued, but in that case the validation in do_post_copy_validation
-would catch any resulting inconsistency and return an error — the worst
-outcome is a failed migration, not a security vulnerability or kernel
-corruption.
-
-However, a write_in_progress flag will be added to vfio_ap_migration_data
-that will be set when the vfio_ap_resuming_write function is called, unless
-the flag has already been set, in which case the function will return 
--EBUSY.write_in_progress
-
->
->> +		if (ret < 0) {
->> +			if (new_allocation)
->> +				kvfree(ap_config);
->> +			return ret;
->> +		}
+> Does this change introduce a use-after-free if the device outlives the master
+> controller?
+> 
+> When a master is unregistered, i3c_master_unregister() calls
+> i3c_master_unregister_i3c_devs() to unregister child devices. If a child
+> device has an elevated refcount (e.g., from an open file descriptor), its
+> struct i3c_device outlives the unregistration.
+> 
+> i3c_master_bus_cleanup() then calls i3c_master_detach_free_devs(), which
+> explicitly frees master->this.
+> 
+> If the child device later calls i3c_device_get_supported_xfer_mode(), it
+> would dereference the explicitly freed master->this pointer. The previous
+> code safely faulted on a NULL dev->desc, but this new path appears to access
+> freed memory.
+> 
 > [ ... ]
->
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does i3c_device_match() have a TOCTOU race
+> condition leading to a use-after-free?
+> 
+> drivers/i3c/master.c:i3c_device_match() {
+>         if (i3cdev->desc && i3cdev->desc->boardinfo)
+>                 static_addr_method = i3cdev->desc->boardinfo->static_addr_method;
+> }
+> 
+> If i3c_device_match() accesses i3cdev->desc without holding the device lock
+> during concurrent master unregistration, a context switch could occur right
+> after i3cdev->desc is checked.
+> 
+> If the unregistration thread then frees the descriptor via kfree() in
+> i3c_master_bus_cleanup(), the subsequent evaluation of
+> i3cdev->desc->boardinfo will dereference a freed pointer.
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can i3c_device_match_id()
+> evaluate uninitialized stack memory?
+> 
+> During concurrent driver registration and master unregistration, if
+> i3c_master_unregister_i3c_devs() sets i3cdev->dev->desc = NULL,
+> i3c_device_match() might still proceed to call i3c_device_match_id().
+> 
+> drivers/i3c/device.c:i3c_device_match_id() {
+>         struct i3c_device_info devinfo;
+>         ...
+>         i3c_device_get_info(i3cdev, &devinfo);
+>         
+>         manuf = I3C_PID_MANUF_ID(devinfo.pid);
+> }
+> 
+> If i3cdev->desc is NULL, i3c_device_get_info() bails out safely without
+> populating devinfo, leaving the stack memory completely uninitialized when
+> it is subsequently read for driver matching.
+> 
 
