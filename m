@@ -1,104 +1,309 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95A53D566B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 09:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B904457A0
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 10:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785835878; cv=none; b=TW49/F1/Hv7rVjZ3HmR16USECRUdFYE4O3CPlB2HWycoVCDzkK98NOOo5oaeVqrbOU/tz0xVx587fE+GLIS2cNpPfXfUbJlo2XRbRGnPs2hUuGElJ+XHI0stoE5Fnq6cqm/S/lR/6Tk52K23KbgVg0KKuycVgEMMIxFKNNjaYqU=
+	t=1785837636; cv=none; b=N50zCEY+pRYdrmhKYO0awJ+hy+zQSFT2MG+Z7Nhssdcl3vm1OTJ0ghKnMP+bnqoBMP/Sqzkp5yMVv0yuTGFdLkyqrpiUqt6ZrgCvzn4YWwMIveV9K8KMj+8DMgt/LJox4SdptrhvlWpBoJINtzQu8s18c1BAejbIvmoF+GcJv9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785835878; c=relaxed/simple;
-	bh=SvhAFQKo0L2Xf0Mrn7YvwV7QtrLUDpBUYPhtf7tQd+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BXdaQnjXW/ntZ838qPGlZtVaddkmvoDGq5iwxjoddadjEbIlEJ0HAqBKryMVmnzRttS5vuXnUPbCcF7R06N4MGUErkyCLaLiwjCxLZ9Fxtb1FKiGn5njSQzhaE9c/fnADKaqKsTWc8Q3nhuI9Wer8HN7As5ojs10sNIN2668YI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 5368F200048;
-	Tue, 04 Aug 2026 11:31:13 +0200 (CEST)
-Received: from pty.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::c5])
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mfe@pengutronix.de>)
-	id 1wrBUP-002qKg-0o;
-	Tue, 04 Aug 2026 11:31:13 +0200
-Received: from mfe by pty.whiteo.stw.pengutronix.de with local (Exim 4.98.2)
-	(envelope-from <mfe@pengutronix.de>)
-	id 1wrBUP-0000000AUTU-0c5e;
-	Tue, 04 Aug 2026 11:31:13 +0200
-Date: Tue, 4 Aug 2026 11:31:13 +0200
-From: Marco Felsch <m.felsch@pengutronix.de>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org, 
-	linux-input@vger.kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v7 4/4] Input: Add TouchNetix aXiom I2C Touchscreen
- support
-Message-ID: <ujewi7j52r5vtgofpkg26brbh767onsahwknuiify4ikyltsev@7gufjzgpeqfd>
-References: <20260703-v6-10-topic-touchscreen-axiom-v7-0-0d2a550a7ee8@pengutronix.de>
- <20260703-v6-10-topic-touchscreen-axiom-v7-4-0d2a550a7ee8@pengutronix.de>
- <20260702224804.E0B0D1F000E9@smtp.kernel.org>
- <anFxs8grhvIVSdNA@google.com>
+	s=arc-20240116; t=1785837636; c=relaxed/simple;
+	bh=OSI0p4IYsahj3xpwmQxjzteg9wplXjq/9qYMa+3h4CU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ee86JUymtrWaLGOkdEugZJ3O3PJAEBLp/PIbsQBkBqh8TbdRJPrVu2w819Hc9IKuN7qFBR4t2FpN1b1DX1ormMIoOg4U6LzPPVzNetncUS7GItOyN/EHYtryezJF7muINg65yEFsxbD5hOFfC4Dwb82okEto7MBYXAGTZftUYIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A3DUazlq; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A3DUazlq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785837632; x=1817373632;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=OSI0p4IYsahj3xpwmQxjzteg9wplXjq/9qYMa+3h4CU=;
+  b=A3DUazlqW6VvaE1ZS+g2oh1A0mPadgB3mOoFpnV2L3OrptA7p/ZNr6xq
+   3cq1dx0RE7voS21IqSOwH1dLAMJtmnp0YSNH2wNXCt/stDI2ZlmUxcg8w
+   qTnbpzMKVFsm+I4OAQchBywjjxs+C4VWq2PDC5ROr14ERoUlNlpu9u+z+
+   az8YTK0j5N7VcAVPway/RGZEaQmXGqj56RFjzCdxKCLiYFI6CzmRU0gHA
+   zX++XKlCbrhNqEEGkl1RDp6eGWJ6tWYKhtalNXDk6vgwVPIxTO463+9jY
+   L1l/Xz8JipsJdwlj0ypONnOhwvaZIUNjy225xOfTJziPOxffCadf86xLW
+   Q==;
+X-CSE-ConnectionGUID: zi3ETwYSRd+02WU43ZjMng==
+X-CSE-MsgGUID: vcRmM+ODT6SrJWZ1QTtoNA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11864"; a="85515309"
+X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
+   d="scan'208";a="85515309"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 03:00:31 -0700
+X-CSE-ConnectionGUID: 8b8iVbRcQLGsr3MkG4bsRw==
+X-CSE-MsgGUID: I03EpEgmThSKr0cJ9bsiAw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
+   d="scan'208";a="265717849"
+Received: from junjie-desk-dev.bj.intel.com (HELO junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 03:00:29 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: Bartosz Golaszewski <brgl@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>
+Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
+	Grant Likely <grant.likely@secretlab.ca>,
+	sashiko-reviews@lists.linux.dev,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-bot <sashiko-bot@kernel.org>
+Subject: [PATCH] gpio: ml-ioh: share the register lock across channels
+Date: Tue,  4 Aug 2026 17:59:35 +0800
+Message-ID: <20260804095935.2132215-1-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAD++jLkAjQG7hFsdX+dy8wZUoKKDCaOzMD0EJ0nn3gYmaEOJDw@mail.gmail.com>
+References: <CAD++jLkAjQG7hFsdX+dy8wZUoKKDCaOzMD0EJ0nn3gYmaEOJDw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <anFxs8grhvIVSdNA@google.com>
+Content-Transfer-Encoding: 8bit
 
-On 26-08-03, Dmitry Torokhov wrote:
-> On Thu, Jul 02, 2026 at 10:48:04PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 18 potential issue(s) to consider:
-> > - [High] Missing bounds checking during firmware chunk parsing allows malformed firmware to trigger integer underflow and out-of-bounds memory accesses.
-> > - [High] Invalid cast of regmap buffer to u16* causes endian-dependent behavior and corrupts register addresses.
-> > - [High] Unbalanced pm_runtime_put in firmware upload cleanup leads to negative PM usage counts.
-> > - [High] Firmware-controlled allocation size allows out-of-bounds heap read when checking touch slots.
-> > - [High] The driver prevents firmware recovery when the device boots in bootloader mode by improperly failing the probe.
-> > - [High] fwupdate_lock is held across system calls violating kernel mutex semantics, and is double-unlocked on error paths.
-> > - [High] Improper devm teardown order causes Use-After-Free of the input device by background firmware upload threads.
-> 
-> I am not sure this is true as sysfs attributes should be removed iand
-> handlers complete before we get to remove() method. 
-> 
-> > - [High] Use-after-free of ts->input in the threaded IRQ handler during config firmware updates and device removal.
-> > - [High] The driver waits on completion primitives for hardware resets and saves without reinitializing them, causing future waits to falsely succeed immediately.
-> > - [High] The driver passes stack-allocated buffers to I2C transfers, which violates DMA requirements and can cause memory corruption.
-> 
-> This is Sashiko's hallucination.
-> 
-> > - [High] NULL pointer dereference in `axiom_remove_axfw_fwl_action` if `devm_add_action_or_reset` fails.
-> > - [Medium] An operator precedence error in subtracting the preamble and postamble causes the calculated report payload length to be artificially inflated.
-> > - [Medium] Probe error paths leak PM runtime references and fail to disable regulators.
-> > - [Medium] I2C read errors are swallowed and falsely reported as success in polling functions.
-> > - [Medium] Missing NULL check on `kasprintf` results in a crash or broken sysfs state when registering the firmware upload interfaces.
-> > - [Medium] The driver lacks system sleep power management callbacks, causing the device to remain powered on during system suspend if not acting as a panel follower.
-> > - [Medium] Dead code in `axiom_register_input_dev` prevents failing initialization when no touchslots are enabled.
-> > - [Low] Typo in the sysfs `device_state` output violates the documented ABI.
-> > --
-> 
-> However there appears to be quite a few items that need addressing.
+Suspend and resume hold channel 0's lock while saving and restoring
+registers for all eight channels. Code paths using the other seven locks
+can therefore run concurrently with PM.
 
-Already on it.
+Use one controller-wide lock shared by all channels.
 
-Regards,
-  Marco
+Fixes: b490fa0bf86e ("gpio-ml-ioh: Fix suspend/resume issue")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260731033956.EE6F61F000E9@smtp.kernel.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ drivers/gpio/gpio-ml-ioh.c | 69 ++++++++++++++++++++------------------
+ 1 file changed, 37 insertions(+), 32 deletions(-)
 
-> 
-> Thanks.
-> 
-> -- 
-> Dmitry
-> 
+diff --git a/drivers/gpio/gpio-ml-ioh.c b/drivers/gpio/gpio-ml-ioh.c
+index 0a9d34b7636e..391188c0f2c2 100644
+--- a/drivers/gpio/gpio-ml-ioh.c
++++ b/drivers/gpio/gpio-ml-ioh.c
+@@ -73,7 +73,7 @@ struct ioh_gpio_reg_data {
+  * @gpio_use_sel:		Save GPIO_USE_SEL1~4 register for PM
+  * @ch:				Indicate GPIO channel
+  * @irq_base:		Save base of IRQ number for interrupt
+- * @spinlock:		Used for register access protection
++ * @spinlock:		Shared register access lock
+  */
+ struct ioh_gpio {
+ 	void __iomem *base;
+@@ -84,7 +84,12 @@ struct ioh_gpio {
+ 	u32 gpio_use_sel;
+ 	int ch;
+ 	int irq_base;
++	raw_spinlock_t *spinlock;
++};
++
++struct ioh_gpio_device {
+ 	raw_spinlock_t spinlock;
++	struct ioh_gpio chip[8];
+ };
+ 
+ static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
+@@ -95,7 +100,7 @@ static int ioh_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+ 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
+ 	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(chip->spinlock, flags);
+ 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
+ 	if (val)
+ 		reg_val |= BIT(nr);
+@@ -103,7 +108,7 @@ static int ioh_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+ 		reg_val &= ~BIT(nr);
+ 
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -123,7 +128,7 @@ static int ioh_gpio_direction_output(struct gpio_chip *gpio, unsigned nr,
+ 	u32 reg_val;
+ 	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
+ 	pm &= BIT(num_ports[chip->ch]) - 1;
+ 	pm |= BIT(nr);
+@@ -136,7 +141,7 @@ static int ioh_gpio_direction_output(struct gpio_chip *gpio, unsigned nr,
+ 		reg_val &= ~BIT(nr);
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+ 
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -147,12 +152,12 @@ static int ioh_gpio_direction_input(struct gpio_chip *gpio, unsigned nr)
+ 	u32 pm;
+ 	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
+ 	pm &= BIT(num_ports[chip->ch]) - 1;
+ 	pm &= ~BIT(nr);
+ 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -256,7 +261,7 @@ static int ioh_irq_type(struct irq_data *d, unsigned int type)
+ 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
+ 		__func__, irq, type, ch, im_pos, type);
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(chip->spinlock, flags);
+ 
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+@@ -296,7 +301,7 @@ static int ioh_irq_type(struct irq_data *d, unsigned int type)
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
+ end:
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -326,11 +331,11 @@ static void ioh_irq_disable(struct irq_data *d)
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien &= ~BIT(d->irq - chip->irq_base);
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(chip->spinlock, flags);
+ }
+ 
+ static void ioh_irq_enable(struct irq_data *d)
+@@ -340,11 +345,11 @@ static void ioh_irq_enable(struct irq_data *d)
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien |= BIT(d->irq - chip->irq_base);
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(chip->spinlock, flags);
+ }
+ 
+ static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
+@@ -407,8 +412,8 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
+ 	int ret;
+ 	int i, j;
+ 	struct ioh_gpio *chip;
++	struct ioh_gpio_device *priv;
+ 	void __iomem *base;
+-	void *chip_save;
+ 	int irq_base;
+ 
+ 	ret = pcim_enable_device(pdev);
+@@ -429,18 +434,18 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
+ 		return -ENOMEM;
+ 	}
+ 
+-	chip_save = devm_kcalloc(dev, 8, sizeof(*chip), GFP_KERNEL);
+-	if (chip_save == NULL) {
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
++	if (!priv)
+ 		return -ENOMEM;
+-	}
+ 
+-	chip = chip_save;
++	raw_spin_lock_init(&priv->spinlock);
++	chip = priv->chip;
+ 	for (i = 0; i < 8; i++, chip++) {
+ 		chip->dev = dev;
+ 		chip->base = base;
+ 		chip->reg = chip->base;
+ 		chip->ch = i;
+-		raw_spin_lock_init(&chip->spinlock);
++		chip->spinlock = &priv->spinlock;
+ 		ioh_gpio_setup(chip, num_ports[i]);
+ 		ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
+ 		if (ret) {
+@@ -449,7 +454,7 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
+ 		}
+ 	}
+ 
+-	chip = chip_save;
++	chip = priv->chip;
+ 	for (j = 0; j < 8; j++, chip++) {
+ 		irq_base = devm_irq_alloc_descs(dev, -1, IOH_IRQ_BASE,
+ 						num_ports[j], NUMA_NO_NODE);
+@@ -466,7 +471,7 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
+ 			return ret;
+ 	}
+ 
+-	chip = chip_save;
++	chip = priv->chip;
+ 	ret = devm_request_irq(dev, pdev->irq, ioh_gpio_handler,
+ 			       IRQF_SHARED, KBUILD_MODNAME, chip);
+ 	if (ret != 0) {
+@@ -474,33 +479,33 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
+ 		return ret;
+ 	}
+ 
+-	pci_set_drvdata(pdev, chip);
++	pci_set_drvdata(pdev, priv);
+ 
+ 	return 0;
+ }
+ 
+ static int ioh_gpio_suspend(struct device *dev)
+ {
+-	struct ioh_gpio *chip = dev_get_drvdata(dev);
++	struct ioh_gpio_device *priv = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
+-	ioh_gpio_save_reg_conf(chip);
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&priv->spinlock, flags);
++	ioh_gpio_save_reg_conf(priv->chip);
++	raw_spin_unlock_irqrestore(&priv->spinlock, flags);
+ 
+ 	return 0;
+ }
+ 
+ static int ioh_gpio_resume(struct device *dev)
+ {
+-	struct ioh_gpio *chip = dev_get_drvdata(dev);
++	struct ioh_gpio_device *priv = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&chip->spinlock, flags);
+-	iowrite32(0x01, &chip->reg->srst);
+-	iowrite32(0x00, &chip->reg->srst);
+-	ioh_gpio_restore_reg_conf(chip);
+-	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&priv->spinlock, flags);
++	iowrite32(0x01, &priv->chip->reg->srst);
++	iowrite32(0x00, &priv->chip->reg->srst);
++	ioh_gpio_restore_reg_conf(priv->chip);
++	raw_spin_unlock_irqrestore(&priv->spinlock, flags);
+ 
+ 	return 0;
+ }
 
+base-commit: a02b8950d619123da64f69b70fe1dadef217dfe4
+prerequisite-patch-id: cebc220b508b7d9216be1fe01348b9989f0b957e
 -- 
-#gernperDu 
-#CallMeByMyFirstName
+2.43.0
 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | https://www.pengutronix.de/ |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-9    |
