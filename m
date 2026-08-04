@@ -1,113 +1,112 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010058.outbound.protection.outlook.com [52.101.46.58])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011040.outbound.protection.outlook.com [40.93.194.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8B53DB31B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 13:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD9E4477EC
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 13:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.40
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785848643; cv=fail; b=ZDwIP9nxNd9eTAOGsgeCeGG7ngTNSnVWG8I5xZJqg2zfcPJ4RabZZcHUijrTi5D2BZgXFoEhSUiV1zxxIV3T9OEETqRsB5LW/ce2NeFFZAhUoL5+zREIf/rlYUFsCYihDp0O015Sv/XTr/QyXaSQSWovW5XOBZvcXbP0byML4Vw=
+	t=1785848832; cv=fail; b=keKewQhR9sIu0rLgnWEXdDaDJX99mzyWiPVvhG7ZFm5NaxELej8gntoGJn/LzRrvCDz2x9BuU3lWeRlBbpwAALj+NPJzjsfMfGNLYOje9WreYYRqG5eBQNTUJZiWTIx1XLPa9tRL/D7qlp4mo5pArb8ABwnASdzHl9S7YoR8xsc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785848643; c=relaxed/simple;
-	bh=iTAIrGoqvlgx+AqTMTyxG+MtljubDUbngZD/NL2NshY=;
+	s=arc-20240116; t=1785848832; c=relaxed/simple;
+	bh=D9RUkDa3kJiW6/0DQ5FDAVJZWgvEMoMWNf8bHj43SmA=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=GYAffMJ9tq7c/8VWToRbl/DI4RJ4NJ/bqmU2VpZoYh5RtRd9fZLPTxgajlcUhdekKFq51ikL5FHHIs0s55441X8FzbN7BIBSoqTcno1hUaEgvbZ1FjEs5jjXzJ139C88XMEabktBRLRrTIGiO0fmnKHPix0Qdx9gDSERcUcWQq0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com; spf=pass smtp.mailfrom=einfochips.com; dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b=YLHhXzGQ; arc=fail smtp.client-ip=52.101.46.58
+	 Content-Type:MIME-Version; b=WicdN8jGOpM9I7iezAyhR+9kAF6GNYJq0gi7URMs552VjJAIcsjJpdb2/avj/RgJSNoeJQ43/tXnFyU+KlDOPu9gltFw+U9lAhANzPpjL2FJ68WocsffbWK3fF5IYrt8YDyT9e3nERNU/48sPpVqSKJfNRek/gp25DOAWrGRtVk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com; spf=pass smtp.mailfrom=einfochips.com; dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b=RgdHWM14; arc=fail smtp.client-ip=40.93.194.40
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=einfochips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b="YLHhXzGQ"
+	dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b="RgdHWM14"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eCKwydNLFZPEa9KP6O9KzPD2r+5Xtmd/6fqhcbtgRAHnM5eDuO8KqQhqza0qxJshPfzz05faHRFvAoqNbLZBPkTMlImyn4ArAnHtSshlemFHdvP3N/7iJqpY1krW+Wwp2UOfrgziU5H46za/PdlwCSuJDY1pf3DlQ3C+dH5+yGJ9m4pnS7kVmxjn8kW+Issx9RRlhFtIU2KzRxoaCXTczkrJLPVOdghg2rzp1gKtNvD+RC6638xkWcqNHvR3Jzp/dh4MJ40KxgUmZf5lzK/LGfqsLfk6Xqkn429l/k+9iSOznoGFWkIvCACV+6E8OymhKweXJzPQmRZvXwyGLVHyXw==
+ b=vW1h4mM90TMVj+ZYfTinfgg+MtxHvbayHWRQQwNQACUvlLlog3Pmuh/Us+QWk/rt5OQErQYDbrWDnMle5ehE5AO6i7zq+9WD744Fvglt/lK4QjdkDbkQLupJjYBfe9RFKxAnWCyThAdfSIc/InyG6gHTv6XJwHn49CQdJ50cbwIF9nZHmblXiBetmDXRzhHOj2a3CzaA5mufk6FdoAzydnlhEe4ApfG72U4OgokdfoefPMl80XuKCSOGJIFECJYtnROqULKDU8phu5a9Ng7cifW+9OHWrRgsDl1N36sFX83sK//cLps2B/aD2lXKeDmUqdZaqid4yCkIjmC3N4AOoA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AynLX9ORB22jQzazbW+mlHMosBtuM3h99INBpIymW/o=;
- b=MHnLUiKJT71pRh+PnpjItxFPePpK+0IIHsU9TChYFCqqK+y+aXJQFRvyKesA4Z6IlbUWoIYlKPL0LwttEj3Olh/OT013CIhNkhhSr4XnCRGNhLMkF5IFeQ8EIpZBhduIhNyYd9ik3SVrR1pAs9VKgwRsRqzvL0wLMPa5Np3savet4V0YBFRNy9TRzlQX+rTWlXaOYLe5DJHxVCfp11J+o6zPofC1BLlZnvqMzc+cpoOuZQ1rPZYp4eIS006bIYZGTs4sRgrCOWM74Xl8nuAmW1stYCAR6EnTVgqc4/iitigYWvFnDeG/y2jdli0dNoqyOE2Zx02z2pq1chtUooHqQw==
+ bh=Yqf4+poSMIEOBZyFYbDAdLKYkRJtjbXpIGL+19TgvBw=;
+ b=I9w+vK+tGfL/ZPB9DopN3znbp6PkF/Y/XXLBg2Uw0IFCEgUb4CxMk9farDXCwBkluLyai4O0k46JvGCVS9t/d2MyAHfQc5NvWJFP8Xmifea1Rs+s3PUGf2zSFZpfaNnDbhDxxmcI1/cP/lgpoFN/dRWFJu44D6adkSq49UYrVy+fLPNheOvW2qDM5CmN1z5rhFIxb9jsA9ScFSoUHdMFtF7qwqRCSc98Rug+LoPTfWOd9CVpfJTXvWk0t5BFT+DVkbxp5yqAJ5HoN3fJz0Oe+KJqiYmtSSGiwH5wFLiaRUkDQCNs7e+D8DWl+OXuGy0395inJMvVBJboadsJScam5g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=einfochips.com; dmarc=pass action=none
  header.from=einfochips.com; dkim=pass header.d=einfochips.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=einfochips.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AynLX9ORB22jQzazbW+mlHMosBtuM3h99INBpIymW/o=;
- b=YLHhXzGQIJx4F3YoOXA/4VPMtlvlTMGSpMY2fvEEKGFFbxA/Apa7LLvfRQcD/FcHpEc07MD7mUmSXsP68y+xE9uMMZsjDKI4Yaf01MB6wub4374NGqsy+KKiAEzu38phpJTRJdxq8UNXPBAQgXo3B6EbjMIlYV0gO88myGYoJLA=
+ bh=Yqf4+poSMIEOBZyFYbDAdLKYkRJtjbXpIGL+19TgvBw=;
+ b=RgdHWM148Hw1qVexEPHpNvHU0lqWNnN4bPs7y3wAX3ZGa8tbhsdwt0EZBFpdmWlrDPU4zyN1Nqn6uRWq3lW3m3pgy4Lh48S33Hjp6CRRj/ehacJR0JogC5wC3BFH2pY7KRwaepIDh6J70qgJIt0r2MsuB6DY44trp6QiH7i3b1Y=
 Received: from SJ2PR04MB8896.namprd04.prod.outlook.com (2603:10b6:a03:53e::6)
- by SA0PR04MB7146.namprd04.prod.outlook.com (2603:10b6:806:e3::16) with
+ by PH0PR04MB7770.namprd04.prod.outlook.com (2603:10b6:510:e3::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.15; Tue, 4 Aug
- 2026 13:03:59 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.16; Tue, 4 Aug
+ 2026 13:07:06 +0000
 Received: from SJ2PR04MB8896.namprd04.prod.outlook.com
  ([fe80::8292:662a:4214:95e0]) by SJ2PR04MB8896.namprd04.prod.outlook.com
  ([fe80::8292:662a:4214:95e0%4]) with mapi id 15.21.0270.016; Tue, 4 Aug 2026
- 13:03:59 +0000
+ 13:07:06 +0000
 From: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
 To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>
-Subject: Re: [PATCH v3 8/8] riscv: dts: eswin: add watchdog support
-Thread-Topic: [PATCH v3 8/8] riscv: dts: eswin: add watchdog support
-Thread-Index: AQHdJBG2uC0ig5R4SEKg+pdtXr8SNA==
-Date: Tue, 4 Aug 2026 13:03:58 +0000
+CC: "robh@kernel.org" <robh@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>
+Subject: Re: [PATCH v3 5/8] riscv: dts: eswin: add hsp bus node
+Thread-Topic: [PATCH v3 5/8] riscv: dts: eswin: add hsp bus node
+Thread-Index: AQHdJBImSUgCwKHzVU6MhoVqNfl80Q==
+Date: Tue, 4 Aug 2026 13:07:05 +0000
 Message-ID:
- <SJ2PR04MB8896E2430AA6A8E96D6787E683D42@SJ2PR04MB8896.namprd04.prod.outlook.com>
+ <SJ2PR04MB8896F33BC36482965EF1196C83D42@SJ2PR04MB8896.namprd04.prod.outlook.com>
 References: <20260804104431.1391839-1-pinkesh.vaghela@einfochips.com>
- <20260804104431.1391839-9-pinkesh.vaghela@einfochips.com>
- <20260804113419.EF11F1F000E9@smtp.kernel.org>
-In-Reply-To: <20260804113419.EF11F1F000E9@smtp.kernel.org>
+ <20260804104431.1391839-6-pinkesh.vaghela@einfochips.com>
+ <20260804111221.261071F000E9@smtp.kernel.org>
+In-Reply-To: <20260804111221.261071F000E9@smtp.kernel.org>
 Accept-Language: en-US, en-GB
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 msip_labels:
- MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ActionId=e336c4e6-192f-4f0d-bb5b-943cc871334d;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ContentBits=0;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Enabled=true;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Method=Standard;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Name=879e395e-e3b5-421f-8616-70a10f9451af;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SetDate=2026-08-04T13:02:41Z;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SiteId=0beb0c35-9cbb-4feb-99e5-589e415c7944;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Tag=10,
+ MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ActionId=75c188c1-cdef-4655-86a7-f241b213ba10;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ContentBits=0;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Enabled=true;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Method=Standard;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Name=879e395e-e3b5-421f-8616-70a10f9451af;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SetDate=2026-08-04T13:04:14Z;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SiteId=0beb0c35-9cbb-4feb-99e5-589e415c7944;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Tag=10,
  3, 0, 1;
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=einfochips.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ2PR04MB8896:EE_|SA0PR04MB7146:EE_
-x-ms-office365-filtering-correlation-id: b0827efb-b2f3-440b-e44b-08def228d94b
+x-ms-traffictypediagnostic: SJ2PR04MB8896:EE_|PH0PR04MB7770:EE_
+x-ms-office365-filtering-correlation-id: f16424e5-5db8-4652-e01b-08def22948a4
 x-ms-exchange-atpmessageproperties: SA
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|10067099003|38070700021|11063799006|56012099006|55112099003|18002099003|22082099003|4133799003|4143699003;
+ BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|38070700021|56012099006|6133799003|10067099003|4143699003|11063799006|5023799004|22082099003|18002099003|55112099003|4133799003;
 x-microsoft-antispam-message-info:
- aqUSNF57t0Ha9dxcr6IwUKC1U+/bv+7GsktWIrKI/OU9kRrrtZk5N3WgPgJK/v4iamXBGjtV4FFa++cvRcbJpiX5xBgwhj5nnUguHn9gcb+JfFJ7Amk5bq57iX+E9z9QsZJOzZlGyhR5s25S3dFloaf9P0lDYZ6ES1yF/+mC8lBFisclwxQgKwNejdI57fvp7V3VRD30I2Q970E5IpMuaGJAOsCmRMnOODJmw4tAhmpUihlNLqts/OR5bBfvqzVDE9QzmSWXD51verhWjOFOtnyDovPIhhQTvz2l8lQB5SVN4/wFWqDvRel1MHFbzPdSZ/FVHxBKu1BDN692Y7Mv0SA812ykdGw7eYzQJXFjZ5p+7oCrTnXRqpHIowq9oo0Bn8D4hcGbdn+bDQVtT66ZCiiwoMQ0tA7AU37axLgdxfckgUKVmj7+t9lnHDWArYo029kFyqrTjV/KX/3zS3uRWXapQy8N6y8nrzLcCtL0V8AB/PnaRuzs5/riuKI5tJJmIBlDq8i6+lg4Y/fUSDGgTFikiXvMocXBA347wqCZSi6766K4fEc4lxsIebfm6PDMZSHDAwNcm7kfFzPojYvEWQSqufPhZLk+SQ8lJfDN32JDYA+7lNG1CR3GrWiUnQR0y84n/NsCEdUgCdpqKJSqHZ+GePci5quMZJ0FSPtAPtII13ahKd2O9Y4UZUloiU3/8vlt1bzHeOaB5mVR8y76hd9Iohx152L7fxKz+VfmujE=
+ IOwf5M1mI6XtQu+u3IT8U1m2XrY9KWIPleWNOuj7qIvWqkIVcpkzk6sGvmdlh1U3UDnMvNdTb2kGOsVGnb0hZTMp1m1vwreRbxSjJvK7jPMLfzn7lzmI19KqBUPbKuciIT1XDEl0X+Sav4/Y2TYzGhUUUy1JVgmW51W9QsLUKyp1OFqLjcJKgmArbswKhm13Y6MsWUkcOeLRtFZDBvVCFcoQ7hSXi1f92xjhjQ/eJLfem2sCf+ccx90gLvvS27CjjjAU8wUXnI4P8KpVKHfLStuONCI41SH+LOq+FBRUhfLWeM6CH2igGmTa86D+2iT0wCW8tusijdZQfSSkAneWc6cncWklijYDv5hr92/PRRZhK5O//if6DB7WZ42qEmG+fbgKGyhXQQeURXDpYhDmi5v7oOK//8EdKT/FN2/TCqfr4yhMGa9+pqRAWj7Qz8QyHtTLTY/LrUIZhtVSgOd76fBA+ZRdUkc0socfn4VH5jpjAajAcSXfhIBcdHuKqcOUfRVHOWUBq2tZRdA6GBw9Q3Ld83PgjQxOCAdWAe38ucKENXUEqJsHOrvEli9gtVQIxHAHDeYfdZFjPBQrnyTuK11+3OMexpY03NS8fRsBDPNnZ4hhE9IPI100k6OO6t4qr8GIluK1wwoif/xQzgmrDTZOzxCb3l8wCe790pQubzhKblsWRPhKGOjm5SCL0h8ZI6tUfcAHov4BfJJLrCAUY+uQjr3Y+iJx78/Cz+QxJRg=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR04MB8896.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(10067099003)(38070700021)(11063799006)(56012099006)(55112099003)(18002099003)(22082099003)(4133799003)(4143699003);DIR:OUT;SFP:1101;
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR04MB8896.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(38070700021)(56012099006)(6133799003)(10067099003)(4143699003)(11063799006)(5023799004)(22082099003)(18002099003)(55112099003)(4133799003);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?QEN+hEcNjvj2us43GKdKND2jRwNE/lhushqxXlNkxdToCt161LNKPU7k7sZI?=
- =?us-ascii?Q?QsI3N9LkFk8QG/n5NsPraaJ+vqI8VzONVKVudp/U70yyunc/5GfoEpr6N366?=
- =?us-ascii?Q?jd574sjLdL5dY0pmGTmXuVnEu/cC9vDd7GvNRq9qtbNC0BlyD9M0y7/bCxFx?=
- =?us-ascii?Q?BD3bY4fENK4Kk71n3XOEacw7y6B/eQjiPeQKjJOQ+Wgil25mGzjtCHNEfZqi?=
- =?us-ascii?Q?mmyLVSs2xhpUUV/ewjleT/qOyLfuwP5Yb8c5A2Ck1ZM2fvsDTTPexPt+Qq1u?=
- =?us-ascii?Q?A6Y1tXhuadT/7y0EtkDOt/rJr3i0i9WYW0ykLxZqcbv5p341x8jbYmxNr3yy?=
- =?us-ascii?Q?ZtujUVnj4vEPYMHpNf3jw3NFGN5IJdzaL/9IrvJPSI361SLSWD6PRi9ytLZF?=
- =?us-ascii?Q?fFnFMTLGJle/u2t3GStCP7a+Ba4oK+Xpc3ubZVxG7Tx1Pk3yFt1bysrHBPEc?=
- =?us-ascii?Q?Vrbgz6Hn/iPgL9XDz0zzcPd8cw4br7cJe8nibw3pK+HvfzVd7BWm5epGXjeU?=
- =?us-ascii?Q?9DgVwUufdEU0eN7JpzywM5xW76hBZZ3Ck5BLvYEZNQ27g5Hiv517bO9WLcQ2?=
- =?us-ascii?Q?Dq3uEr0vM0rk/cbYhFN2Z1sMScmuE704FiY9mxyCmzFkrcW7/MbykySNoStf?=
- =?us-ascii?Q?0mrItQ5VI8nHr8FD/VywyWRo1lxJ4e0CfZE2B0nOWqlTUTIrUJXyKW3PDam+?=
- =?us-ascii?Q?5DzCsrdCNU7vOXmPAPQi3oI8mN9+/u1kktg14sxhjASM+hu9GStXizrMZKDq?=
- =?us-ascii?Q?BvNcCZ4YCDdR9+mai5EAhTV1qcRHx6iRRUMsxjndYz+oWB6UUKmks7nYfUfA?=
- =?us-ascii?Q?mlCZ8CKA+rsrVLEooRvsQ1OM42Bnud0l/kt0VAcs51J8fNp3LgbOhrneda31?=
- =?us-ascii?Q?4FbdFdRyNQMPDgNli7v7hbWAd/Qe+Md/xS8eBX55tow03RwEkkVt9cC9IL39?=
- =?us-ascii?Q?uDadYADNZESjanTDfMrIKM2p1FHUMia3BqJM0LAR/mohjyNm5vDRGwGcH5LB?=
- =?us-ascii?Q?wk422s4ZCbqLQOeCPEDISLgkGPYbDFCAjcE21nrpD+Iedaa8qMenJ01LLk5d?=
- =?us-ascii?Q?fyY/1Gd3YP2iUXXE5LNHEwYdzJ7OGMe7CZHlB09eUN1yrUP9yn/xUQGZN8ku?=
- =?us-ascii?Q?jf+bOm41syvmGgG5NPyZFnx7cZHgs6V3VwVUzLBxTICa1hKnTbmd1Ub5BFYw?=
- =?us-ascii?Q?TqF3W2QI3IbQfYvySRFau54ohFmAkq7iwmgYctTF3kT5i4tYbjE+7WYa0Gle?=
- =?us-ascii?Q?jkhzNiZ3ynrvXraZ5ZJvRGqur82C8H1qDG4QG0h+Tjb2gQaDFy4npBVC/MEQ?=
- =?us-ascii?Q?84cGEHmADv+9jfpL0oWbLrtSb8pvCSd3WY7jOSd8UEKhwu+LEQJCMcCf7xL3?=
- =?us-ascii?Q?D5Ci0JKmEYCHwMoiLAyfom+WCBHZuw1Gswuo5gXehwHHoS6W9FZU+8fRWDGG?=
- =?us-ascii?Q?IAZikW55PHMDQSnX0ceAa/+UXyluSIHJ9O9qvJ9GXUCHbhA7uWidmKw/oicd?=
- =?us-ascii?Q?PZBGJr4KvGrVAD5DpZtO66EoUkG0ocltS3XmbrbY6+2JDW51mkDftKd7mU3+?=
- =?us-ascii?Q?Wfg8+4VRMQKlIeXjbgZulqXKz4k3vhkFH+QYgHrDChtIaeg/URlEVWUZzxcd?=
- =?us-ascii?Q?fSJ+GfUf+bEX2y4MT/41rpVtv6FnHA0wdkcpQI2QE5w9qfGTE3MK9GiAEhRf?=
- =?us-ascii?Q?SD1ieI0CtWGO1D3QFobe5OeIxY6KOR3o4SBPUdk+SbO7bRjbbrHDyuoLZxMX?=
- =?us-ascii?Q?4T1Nv6N+xlfTCYx+3vmTKK/wFcKBYOI=3D?=
+ =?us-ascii?Q?5GWyMJTxS957jtks2hAbur1BcYZaHIkkpXlNeZyxL7cYtuaCnEYcdmMR+ZLd?=
+ =?us-ascii?Q?+u06oaE6PsqJGyqhVpStTuMTa1Ou91t9xU9RCtklWaWvj2/E61eB97nScE5K?=
+ =?us-ascii?Q?XBpRdPNbHX4WF6gj6fKVWvRD/dZLFGqmpHO0/ObcBZRCx/5Rttv2op5vQD+N?=
+ =?us-ascii?Q?xUQE0th7nlA/lEdwggDz1ibcowbZp0W+tGrI3SDoPmlKD/D3pfVN1Ynh1Rs4?=
+ =?us-ascii?Q?5ntP4TO4m279POC7l08mYwZ7NSx2Q3yJC3iJ+mEs27VUP07Xf1/lK+kjyGHs?=
+ =?us-ascii?Q?WQtNfPJNFBFvEYsj0y3cbpBBNJsgtX3qwQcPZuUtaMoRycYBMX2BHWdMGgHT?=
+ =?us-ascii?Q?iaCAvnBjRnhV00FNnPa4a/qmgV4MHPCyghXw3SIKCMiGRwL+0agQZDC031HQ?=
+ =?us-ascii?Q?WqJ/3/OzEIUZ3qEFstWw2pW8nGJDwXvGJtszBi/m1h0TRqskiSIbag5EQUzk?=
+ =?us-ascii?Q?zqC6mQ3SCp80Xd6MaHdFaKr0w3It1r5AU/UH/KpvuVUQ0NaSonXM6vC6l6vY?=
+ =?us-ascii?Q?aC0DM8m0kRfzjH3I9XWIe6kYu4zC1nQiuv+rngxymoAsA+JmZ7SIB2ZQ1ZfJ?=
+ =?us-ascii?Q?IggBxeNxDBhu7ADNoqgaGGF6xlZe3LvFkGS8rtFiF8YO05hSywnyCoUVNnEC?=
+ =?us-ascii?Q?HPk6O7OdxTiMHsCkvpMqJrfNaPldprlSx/xJArzNxHeWMDBVaA+qjXW4DJkd?=
+ =?us-ascii?Q?G6fYb8NI/WEkTtHDwOkmCahPyy+Y98Fxf8/wV3xbnE2OoyWOmszjvtEhHypZ?=
+ =?us-ascii?Q?4uZHdhOVS44tzDVRjM5MrUCLfwnkGPeB/uiCMZDunxS/+sg3HYWDfa75Lchd?=
+ =?us-ascii?Q?UtV4QhjkRUGq6+5Lhe/Qu5WvRQn63Ytaz1eNDEnOUNPZnt6fOr517P5mb6ZM?=
+ =?us-ascii?Q?3Orw2mmU96u79x/iUYSYe27fIi8lH1EYlo8vQurQMEs9++/vPCpbQ3UotpGc?=
+ =?us-ascii?Q?akgbJ1P6tGE8QtW8IfZV4UVa7vIvGEhKiD6lukmSBJjyn7wKzJLD3VYHJtot?=
+ =?us-ascii?Q?p3zqDGomc4I3SRTz3UcPpPqO8GbScgcs4UXT3FCzYSolmKpBq72jwDTQOFHA?=
+ =?us-ascii?Q?F8omYapaoDwQEPtp4y0ce9tyuTmo/KxaS7j0x9gq6IZ8uj48ixZo83h8rhUL?=
+ =?us-ascii?Q?6He7LWj6boEhzlCOQx0sFJs1M4JZupXQ//fWZpuY4reYI/T6nXFsBkxSxMct?=
+ =?us-ascii?Q?HwtzJrFtObYGB3rYvh80mFdyC/CsOAX5pk6DYAVgykUIsQhYUDZuS6abLgfk?=
+ =?us-ascii?Q?KcwJNdgVc4r79CnmiRjA0QrxoYT/ToWRfjVXLTVYJGLp4D44lmeDGC1N8OGW?=
+ =?us-ascii?Q?BJTp0Tvoz8nFQh57Lo2euVw4A9ig2lwVBPhUGYaSAQ5mMVzYUpQZvF8wU3Xn?=
+ =?us-ascii?Q?H0DToGxwSrUCuBR63a29hBOY3mFzu/raKMR8RZC/XcJaJHuU+kvF6KH2ZIne?=
+ =?us-ascii?Q?j8sMNClXibzvv0VI5gjW9s8XAIeqpSpeuRNPXeJgltSIoATxhczyXB0n5AO1?=
+ =?us-ascii?Q?aCKJMiDqEiuSLdsEy5QW3deZEVpL4xDiscrf8TgzlCThBNtgvEl6ZA9SDFxh?=
+ =?us-ascii?Q?nNg6aOp/7IuDtadD3k2Td7bMuqdFg/BvIMO+gQdtLUj/HhgLebgB0hQRAioP?=
+ =?us-ascii?Q?hSbjAdihHsdDnNLw8PUIpTgQe6TfR87N7g6dMrOgPRFEvEKy1DgWR68FEulZ?=
+ =?us-ascii?Q?nN3RKQIzgjGBeQEc9xBzp52aB3TlpKTCPmOLdu5TUuKmilptGoJ5CwBwKuha?=
+ =?us-ascii?Q?yvpaoig7GLEgVxtPGZtDt/ob/0al+FU=3D?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -119,98 +118,118 @@ MIME-Version: 1.0
 X-OriginatorOrg: einfochips.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR04MB8896.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0827efb-b2f3-440b-e44b-08def228d94b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2026 13:03:59.0885
+X-MS-Exchange-CrossTenant-Network-Message-Id: f16424e5-5db8-4652-e01b-08def22948a4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2026 13:07:05.8677
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 0beb0c35-9cbb-4feb-99e5-589e415c7944
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3KL9kuM1OUEhS7MvlEIE/A6N2JrDoUxYFZQZ9wMhgq9Lrj6ShBhLLrgHb6aTneel7PhmNG3RyuuK3zjA/sGtRWn0unNmPj0IeLc2YOOM7Do=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR04MB7146
+X-MS-Exchange-CrossTenant-userprincipalname: 3zn6rDfrlbzwjVhjCo7eTJybfMXp64W8Opambu472H5iPUoJxfwf1x1tIwZK9IDKa0sohm9r00GImRfLmgAoMW/EKzFhVKmnYrr8wIvdKQA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR04MB7770
+
 
 Hi Sashiko,
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s)
 > to consider:
-> - [High] Incorrect timer reference clock mapping for watchdog nodes
+> - [High] Generic `syscon` node under `simple-pm-bus` will be accessed wit=
+h
+> its clock disabled, causing a bus fault.
 > --
 >=20
-> --- Patch [8]: [PATCH v3 8/8] riscv: dts: eswin: add watchdog support ---
-> commit bfe09d553ee566b62eb6947526013fd32a57d405
-> Author: Pritesh Patel <pritesh.patel@einfochips.com>
+> --- Patch [5]: [PATCH v3 5/8] riscv: dts: eswin: add hsp bus node --- com=
+mit
+> 4e57b37c3aadc988b1aed52b079b78ca92be234c
+> Author: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
 >=20
-> riscv: dts: eswin: add watchdog support
+> riscv: dts: eswin: add hsp bus node
 >=20
-> This commit adds watchdog nodes for the ESWIN EIC7700 SoC and enables
-> them for the HiFive Premier P550 board.
+> Add an HSP bus node to manage the HSP CFG clock used by HSP peripherals.
+> This clock is required for accessing both the HSP CSR registers and the r=
+egister
+> spaces of HSP peripheral devices.
 >=20
-> [ ... ]
->=20
-> > diff --git a/arch/riscv/boot/dts/eswin/eic7700.dtsi
-> > b/arch/riscv/boot/dts/eswin/eic7700.dtsi
-> > index c13432d145042..f873e9eeb9290 100644
 > > --- a/arch/riscv/boot/dts/eswin/eic7700.dtsi
 > > +++ b/arch/riscv/boot/dts/eswin/eic7700.dtsi
-> > @@ -265,6 +265,46 @@ syscon: syscon@50440000 {
-> >                       };
-> >               };
-> >
-> > +             wdt0: watchdog@50800000 {
-> > +                     compatible =3D "snps,dw-wdt";
-> > +                     reg =3D <0x0 0x50800000 0x0 0x4000>;
-> > +                     interrupts =3D <87>;
-> > +                     clocks =3D <&clk EIC7700_CLK_GATE_LSP_WDT0_PCLK>;
-> > +                     clock-names =3D "tclk";
+> > @@ -252,6 +252,19 @@ plic: interrupt-controller@c000000 {
+> [ ... ]
+> > +             hsp: bus@50400000 {
+> > +                     compatible =3D "simple-pm-bus";
+> > +                     ranges =3D <0x0 0x50400000 0x0 0x50400000 0x0 0xa=
+0000>;
+> > +                     clocks =3D <&clk EIC7700_CLK_GATE_HSP_CFG_CLK>;
+> > +                     #address-cells =3D <2>;
+> > +                     #size-cells =3D <2>;
+> > +
+> > +                     syscon: syscon@50440000 {
+> > +                             compatible =3D "eswin,eic7700-syscfg", "s=
+yscon";
+> > +                             reg =3D <0x0 0x50440000 0x0 0x2000>;
 >=20
 > [Severity: High]
-> Will this cause the watchdog to calculate timeouts incorrectly or freeze
-> entirely?
+> Will accessing this syscon node cause a bus fault due to the clock being
+> disabled?
 >=20
-> The snps,dw-wdt driver uses the clock named tclk to determine the frequen=
-cy
-> for timeout calculations. Here it is mapped to the APB interface clock
-> (EIC7700_CLK_GATE_LSP_WDT0_PCLK).
+> Because the child syscon@50440000 uses the generic syscon compatible
+> string, it does not bind to a standard platform driver that would invoke
+> pm_runtime_get_sync(). As a result, the parent simple-pm-bus will remain
+> suspended and the clock EIC7700_CLK_GATE_HSP_CFG_CLK will stay disabled.
 >=20
-> Since the ESWIN EIC7700 clock driver defines a separate watchdog referenc=
-e
-> clock (EIC7700_CLK_GATE_NOC_WDREF), providing the faster APB clock
-> frequency to the driver might cause it to calculate extremely large tick =
-counts.
-> This would result in physical timeouts taking much longer than requested.
+> Additionally, since the clocks property is on the parent bus rather than =
+directly
+> on the syscon node, of_syscon_register() cannot fetch the clock to attach=
+ it to
+> the underlying regmap_mmio.
 >=20
-> Additionally, if EIC7700_CLK_GATE_NOC_WDREF is not referenced here, could
-> the common clock framework's clk_disable_unused late initcall gate it and
-> completely freeze the watchdog counter?
->=20
-> This same clock mapping pattern appears in the wdt1, wdt2, and wdt3 nodes
-> introduced below.
 
-Since the watchdog in our hardware is driven directly by the APB clock,
-EIC7700_CLK_GATE_LSP_WDT0_PCLK is used as the watchdog reference clock.
-Therefore, it is specified as tclk in the device tree.
-EIC7700_CLK_GATE_NOC_WDREF is dedicated to the separate NoC watchdog
-and is not applicable to this watchdog instance.
+In this series, we have not yet submitted the DTS patches for the HSP perip=
+heral
+devices. The intention is for all HSP peripherals to be placed under this
+simple-pm-bus node so that the HSP CFG clock can be managed centrally.
+A simplified example is shown below:
+=20
+hsp: bus@50400000 {
+        compatible =3D "simple-pm-bus";
+        ranges =3D <0x0 0x50400000 0x0 0x50400000 0x0 0xa0000>;
+        clocks =3D <&clk EIC7700_CLK_GATE_HSP_CFG_CLK>;
+        #address-cells =3D <2>;
+        #size-cells =3D <2>;
+=20
+        syscon: syscon@50440000 {
+                compatible =3D "eswin,eic7700-syscfg", "syscon";
+                reg =3D <0x0 0x50440000 0x0 0x2000>;
+        };
+=20
+        sdhci_emmc: mmc@50450000 {
+                ...
+        };
+};
+
+> Does this clock need to be placed directly on the syscon node so the gene=
+ric
+> regmap core can manage it during register accesses?
+
+This clock belongs to HSP bus because it is required to access both HSP CSR
+registers and register space of HSP peripheral devices.
+So, we should keep this as it is.
 
 Regards,
 Pinkesh
 
 >=20
-> > +                     resets =3D <&reset EIC7700_RESET_WDT0>;
-> > +                     status =3D "disabled";
+> > +                     };
 > > +             };
->=20
-> [ ... ]
 >=20
 > --
 > Sashiko AI review *
 > https://nam04.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fsashi=
 k
 > o.dev%2F%23%2Fpatchset%2F20260804104431.1391839-1-
-> pinkesh.vaghela%40einfochips.com%3Fpart%3D8&data=3D05%7C02%7Cpinkesh
-> .vaghela%40einfochips.com%7Cfe48de46d29048e4790508def21c5398%7C0be
-> b0c359cbb4feb99e5589e415c7944%7C1%7C0%7C639214400661176845%7CU
+> pinkesh.vaghela%40einfochips.com%3Fpart%3D5&data=3D05%7C02%7Cpinkesh
+> .vaghela%40einfochips.com%7Cf2c475cd29514377c91508def21941fb%7C0be
+> b0c359cbb4feb99e5589e415c7944%7C1%7C0%7C639214387462287117%7CU
 > nknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAw
 > MCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C
-> &sdata=3DvO6SqAlUtK%2F7QM%2FaiH07F5SqH%2BmuSmCjoqk9FyHC4eY%3D&
-> reserved=3D0
+> &sdata=3D0qgID0%2FlnkF1Lugz0W5MhGpiuV2CbrQ3BVxS2gQH2ZM%3D&reser
+> ved=3D0
