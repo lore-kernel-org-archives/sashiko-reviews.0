@@ -1,167 +1,151 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210D7480DE3
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 20:43:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785876208; cv=pass; b=VcElpGfeE+TRolu6+vkCCBKL3+1KOUOwtoUWnjlD6HSTFmvyBiGggmdG4/n1kDK9FwkYaOJrHzngUV20gAHV633vimoJZRxgzDMniPTYKo41/cLixkfGj/pbijJyF5tjeBJCPSzk1Ptr55G387kV3/mBdXrjl1HAGynNcBSi/oY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785876208; c=relaxed/simple;
-	bh=BRgrRn1zPowjhwOLiaZSOQPLt15cU3xIhb+EGJfhcQU=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576343C8197
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 20:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785876609; cv=none; b=tfSTxYtgj9A3V4lS/Uk253yD7lMcyfQUOJAvBJ8bZR0TjKCc+/0+Z+M9C2GGZLxBn8pj+xGy52K1NO+jyNw3d4gUD1NbGwpoe6sFIPKwGHbWHSAORoic5aoCiadXA5CdQKrgBtLGXldAK0DhKfkb2/Ve+SpL/6zk/9CsoDEhz1Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785876609; c=relaxed/simple;
+	bh=JmWiVmd4Nd6WayL2l0rOeGzkd6TqNX1vRIObxONb8yE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nH5GB0xTXhcIoRbWc0tU2r46x0awb/VAx8BeVv4I7RlmAM1gcKMPahHlV6pysyvZL5uw289Rn2ikdWZPytpKSEgUDejnD/MEqPHLk8cFaI/hq1dErycx0ngaXQSqa0nZ9dBx/srRt3/IxQVR7e2c0StAXsYT+6KNRQUYOD/6bLM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/yZYEvY; arc=pass smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=K1Fa0P+wxI7Hw2TBJId4mN1WWxG2BnpSIqV2FUSVinSClsmFTb51rlcKZTz4cEjMCBVePppg2ywP0M+PA2ag0laxqlFzGDkCkEx09x//6cgtkrtw4Xyn290V7uJKihTVe1PH28FTdyyAf8kSyaHyA6E6egGl5M+1y/Wq8GMdrX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=a8Ng7uee; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/yZYEvY"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6a1542cdb53so164985a12.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 13:43:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785876205; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GQYQkli6qkzGgnWMQVCiKXwChQ7UqX+xd6duA2Enu9uhEDcYItIy/V9FW9bU4x/fw6
-         vYSSQjabj+rnLqr40J04CYPtIuUvHwOGr3yeKRJXDXF3nk+BETO7lGBMB06nnOu5PxpC
-         EXWR/kL/PNtAFEED7vGSzh46VHOJFyhaIiEyZeZDmF1MAd9JXLJbzoQtyiXAXOMjtgse
-         VdUfne1wYBhrVU8Art5DPeVh/O+kiRuECIdjKIFb5HQ7ZoKJ8ttfcKmmycVNRSg0Cx/+
-         cHfxJ2Xi8WJ/6flQpULj92mA21fdXObYY6zoCG8lK0SMYpjNj3Vo2EZ5kOEZCZ15iOMH
-         Dldw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cxavE2HhwRG9KnyTUo+TV6fM8Yj2zo1+iL7/LTIuN3k=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=Qk2kUQYCgJNFcSDS/zyRY06xkovTLtCzIN5Z35z+5dUYr0HX2GEUSWGmPtcgWlz9tR
-         pdRnLAxTTsFrPVYdALR/jywAPHZ5mlSHs/VpEtci5BCh/vLzpwdNg87chIzyfgu5kGV4
-         cITpzbm9WMis+ITC30/1tdffJn5NWYiZ8STqTcle69VfD2izSo9GbQhjxmaIah1dZrEm
-         CofvxWzzAOj7dKxK+I1IEYZN/VZjl/1jhnszyD7UL+74SRwuyXszFS3VBtvyKDeKXuI6
-         G2dMhH+C/x40ViZGNOkHDK0WAXCa9jTRUP/udEIX/Gir3p6TPApXFT7No/MYX+zfcJaa
-         Su/g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="a8Ng7uee"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-97622cc1f40so182894241.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 13:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785876205; x=1786481005; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1785876604; x=1786481404; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=cxavE2HhwRG9KnyTUo+TV6fM8Yj2zo1+iL7/LTIuN3k=;
-        b=i/yZYEvY/EFpS8uHKKq9RBw0NmCxZKFWcik5kgsUEfWdcJfaUy0r8fQDmK22nPv2Hw
-         4OB6lZw6RjbZLJ8xmhv+7/g05waLVknlO5w1WGIvFVveooVXqGQhbUnQhNd/9V5hwjWq
-         TIJHyrYEl9QO0svVMO6rrM7pKXSsvQHDDvhgDHW0EkQAqO+EMFtsvYAPa7sqq0AIkBuC
-         26tA6Bm/emLimganpMgaUSRuiDQvf+T34e+AwJAZN58kgPD2aX41Qq3XH1mYpkJAd5dl
-         19zsoGXcYk7tbjJZ5l+I/oHH+vlenqAk/UKAa+H/ANrLl48sn5Rmon2LXZLlycDpHahS
-         bSFQ==
+        bh=JmWiVmd4Nd6WayL2l0rOeGzkd6TqNX1vRIObxONb8yE=;
+        b=a8Ng7ueeW2MseH5ZVNi8o5rS58KMbtcIHwuWaPzP7E+4/QcERpo0I+AvTYod6F8oQk
+         AtcBaiAWKzGeiz1WTj+2S50YmbsQ2UWihNMgGb7+SyouwPf8Qvziw2/CyA04Huv/+uH4
+         FOMTqY2N3+D+lESHt6kfalxffxbL0eoPbsb44=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785876205; x=1786481005;
+        d=1e100.net; s=20251104; t=1785876604; x=1786481404;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cxavE2HhwRG9KnyTUo+TV6fM8Yj2zo1+iL7/LTIuN3k=;
-        b=ViAimbD8J3E0jRGWxIRHZTxorKDjT0lTtqguwXdO78Bt2yDBGkLlTLkZzqmqQbzotj
-         Xep6M+CvAKkTnOZ4BFrfJlJGDENSSfUDnzm5G3mFdDeKqWojJpLylozArzrMBP0G0nQq
-         92aW+pwjAREYcQn4ZuQ/3+t842PlyCEN4HdfYxxDGrjE+wtuyNT5IhOsSbi3TXuAA+Wm
-         e0+aNS9+CQ1NDcV3GiQPFIfE0cJaRhswwv/Q9LYMGYJzi+MS3CQKE6SZ5x4ECqQSY0Ro
-         4DUBtpjEezkoFGPcwtAvKyoeQNXkSkM4Md1+fFeUqRTdZyhiQUBAMsaFVDJrqRfBFXau
-         wBrw==
-X-Gm-Message-State: AOJu0Yx4N2lIWZShcQ5ew9ivnUgt7XjZdRMcr2p+Mcm3MUU77/sSIUHO
-	m/4P6Dye1lyzGtzD/dckaRGfuMbavMmbvQckn5EKu96TInTyGmrJV+ljWjD9L7MX3Z5PM/vNbqA
-	xMLMGEJ5EqGOGkwZ773DYqAS1fc61OD+5KdRy+MTq6A==
-X-Gm-Gg: AR+sD10OIUVdkKQSsECZQ3zp80B6qfy/RVc5TEOhmEAcMATgg9EmHB5PLCY4vZFNhhd
-	RzGeILBGEjZCO4p0Ag9F4xKMKshy1v8lLBu8vktgnKWtWmar7mERSw0ZDgJpBdHAHtSrmuqGWu4
-	JkdozW9V7rSGK/HnDPaWGuBEkZ+ls3uIQGjkiwVRdFs7BqudWlcvVHtCn2fWDSJZJSwVjf//umK
-	ln/KB4vlJub8iZYU9KWmdtv7DzRwnuhhrPt5g+qs2UpYBvHxyorAPQazwz8gd9j5nRtn8tWOYPU
-	UQnbMlKF/VZSDhtpZbRJ5miGb5YjNadwkCCJZZbGmRgaABFaRQUECH1/hzTxkRSodto6t951ksc
-	GKbLCO7922k96rg==
-X-Received: by 2002:a17:907:c14:b0:c16:831c:427d with SMTP id
- a640c23a62f3a-c2039c4af80mr75671666b.21.1785876205109; Tue, 04 Aug 2026
- 13:43:25 -0700 (PDT)
+        bh=JmWiVmd4Nd6WayL2l0rOeGzkd6TqNX1vRIObxONb8yE=;
+        b=f7TMGByD/9dg0zHgYtW/FCfFWsqnGaJFMt2EUQqbBFfk84QzgLcD0Hr875i/IDnR7C
+         5Mu3zkSsLnk69+MUaPqZeMKz5VoSPp83FtHjYha9VRPj6pZl0Gzj4m1X1xx5YOZMQWUn
+         kVQngCrXQycVeWcjEkbIfEGH1vDevggSaLE+QGcceHiRtudwP+DIzj/q8PQqvVnXW4QR
+         17k5jABHQy9QzQp994uM9UOYScF83i/rIYIDDbToTT4A73YJxOOGNzmZbf7wk9rBdb3P
+         WFWIUWbiy/ppGV4K0ER8KnphoCp5bbvj1EYUqcXbtPYY8du8yKqVo/hzt/AbC9c1gNPv
+         Uxag==
+X-Gm-Message-State: AOJu0Yxua5ESFVbP4XrSJn0K86e7uMkjf3+1pKsHuUlot2zQwANvkgzn
+	nNuQFG+TYRsWCdi2u7Eepba9hgLhkGqecOXsLKzK73paYJo+S2qQu+ixhVrfpDU7jTqm5wsTL3i
+	ZKJ4=
+X-Gm-Gg: AR+sD115hnrCg17/fVR+8eCJj/NKf09y7+7zVuyLj4xlZcAP5rH26CYZeWOe0jTpWvY
+	8to/WUd77hv0gQ0IWsi3INJ49CAvK0zAaTk38DL4hj4+pkMZP2jtVhS3qDUyG3IUa/j4O9laJxt
+	BeRqZi8JtJouxxCl3CPkYleYky99lKS7UhfE2HKOV+YRWlIOQ6kKyoA+4QuOEVdUa4dJaYtKFnA
+	DHLQzCPfZfP1zZfYBfQtA3tPb9//Wrl6YU2I/6u7JqJk6mBRj4uEz/glcjRcAEvBPQOJUePP81s
+	mfwQtEcboTUJJ1C1UobNHgJq1daCFb22BHSCwujvejgo0OBgHevzNMe5qQsO9zvmUZzB/yPBPsf
+	6MN7gcpsFO/P0ta8p6wj5y1PWls3IpHPOv2Xjx+QlFe3rLOLa6vJO84Th4q/Plo4f55i0dPNw1V
+	2uFEEPIzWlFMtQ1PK4Jtxghkmzlw3mqhsfxD5R1NWNgNMEtQfqhh+T4LEKd1wSPbjv1jT7W6tc0
+	fP+9uJMwEzdP9Lhh4GORcsEPbg=
+X-Received: by 2002:a05:6102:3706:b0:745:1c72:cf7f with SMTP id ada2fe7eead31-760e78e60b2mr431584137.5.1785876604259;
+        Tue, 04 Aug 2026 13:50:04 -0700 (PDT)
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9782c916788sm649175241.11.2026.08.04.13.50.03
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 13:50:03 -0700 (PDT)
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-97622cc1f40so182880241.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 13:50:03 -0700 (PDT)
+X-Received: by 2002:a05:6102:5345:b0:745:31e9:f3d2 with SMTP id
+ ada2fe7eead31-760e924341emr549143137.10.1785876601279; Tue, 04 Aug 2026
+ 13:50:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260724042600.175440-1-nickolay.lysenko@gmail.com>
- <20260724042600.175440-4-nickolay.lysenko@gmail.com> <20260724043556.BEB5A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260724043556.BEB5A1F000E9@smtp.kernel.org>
-From: Mykola Lysenko <nickolay.lysenko@gmail.com>
-Date: Tue, 4 Aug 2026 13:43:13 -0700
-X-Gm-Features: AUfX_mzjJZj_ihZ8k57XSsgXGRn0MQWZhAkomNBddo_NaicC8B0PWbUw5MsZ3e0
-Message-ID: <CAMtxOX1rW=piosQaHrbv_fTLGHf3QSgMEWnsSE0hO8FJFDf1_w@mail.gmail.com>
-Subject: Re: [RFC PATCH bpf-next v4 3/3] selftests/bpf: build each test runner
- instance in its own sub-make
+References: <20260804133801.1.I8b3ff71c528133e7d6f81fe926fa39e6451d63fd@changeid>
+ <20260804204450.03CC61F000E9@smtp.kernel.org>
+In-Reply-To: <20260804204450.03CC61F000E9@smtp.kernel.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 4 Aug 2026 13:49:50 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XFAM=y2p-AornMprUSN2dRHrrhUinBXy6K6-GAgo+hjQ@mail.gmail.com>
+X-Gm-Features: AUfX_myMue-9Vsq0yOZmJgKRFBa-_y0bCsp87pVyUo1YRYj-fxTpnsKL0Kr5PaA
+Message-ID: <CAD=FV=XFAM=y2p-AornMprUSN2dRHrrhUinBXy6K6-GAgo+hjQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: mailbox: Delete old 'mailbox.txt' bindings file
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	Sudeep Holla <sudeep.holla@kernel.org>, Lee Jones <lee@kernel.org>, 
+	LKML <linux-kernel@vger.kernel.org>, Jassi Brar <jassisinghbrar@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Correct - the message was stale (the derivation was dropped in v4 per
-review); wording fixed in v5, no code change needed:
-https://lore.kernel.org/bpf/20260804170156.1709916-1-nickolay.lysenko@gmail=
-.com/
+Hi,
 
-On Thu, Jul 23, 2026 at 9:35=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 4, 2026 at 1:44=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The commit message claims that light-skeleton demand lists are=
- derived dynamically, but the implementation retains hardcoded lists.
+> - [Low] Deleting `mailbox.txt` without updating references to it in other=
+ binding files leaves dangling, broken documentation references.
 > --
 >
-> --- Patch [3]: [RFC PATCH bpf-next v4 3/3] selftests/bpf: build each test=
- runner instance in its own sub-make ---
-> commit a1ebeec9064cd1ef457a1d6c67e818e26521e31b
-> Author: Mykola Lysenko <nickolay.lysenko@gmail.com>
+> --- Patch [1]: [PATCH] dt-bindings: mailbox: Delete old 'mailbox.txt' bin=
+dings file ---
+> commit 1b70b3f250d6bcf306aca223e0e91c9fb8a20cc2
+> Author: Douglas Anderson <dianders@chromium.org>
 >
-> selftests/bpf: build each test runner instance in its own sub-make
+> dt-bindings: mailbox: Delete old 'mailbox.txt' bindings file
 >
-> This commit replaces the double-expansion test runner logic with a
-> Makefile.runner script invoked per test runner instance. It aims to simpl=
-ify
-> the build system and fixes a latent parallel-build race condition.
+> This commit deletes the old mailbox.txt device-tree bindings file. The
+> documentation contained in the file has been moved to the dt-schema
+> repository.
 >
-> >     standalone binaries and the kselftest lib.mk contract - and delegat=
-es to
-> >     the runner through explicit per-instance rules. Light-skeleton dema=
-nd
-> >     lists are derived from the tests' own '#include "*.lskel.h"' lines;=
- the
-> >     bench object list is derived from $(wildcard benchs/bench_*.c).
+> Link: https://lore.kernel.org/r/20260722140214.GA548057-robh@kernel.org [=
+1]
+> Link: https://lore.kernel.org/r/dc7a2041-50a4-482e-9930-566bb3fd1e72@kern=
+el.org [2]
+> Link: https://lore.kernel.org/r/CAL_JsqKVjQ2m-dzMUENQry-f_YE9QrYSOKoH9CPj=
+1gjj8XkPRA@mail.gmail.com [3]
+> Link: https://github.com/devicetree-org/dt-schema/pull/202 [4]
 >
-> [Severity: Medium]
-> The commit message mentions that the light-skeleton demand lists are deri=
-ved
-> dynamically, but the implementation in Makefile.runner retains the hardco=
-ded
-> lists.
+> > diff --git a/Documentation/devicetree/bindings/mailbox/mailbox.txt b/Do=
+cumentation/devicetree/bindings/mailbox/mailbox.txt
+> > deleted file mode 100644
+> > index af8ecee2ac687..0000000000000
+> > --- a/Documentation/devicetree/bindings/mailbox/mailbox.txt
+> > +++ /dev/null
+> > @@ -1,60 +0,0 @@
+> > -* Generic Mailbox Controller and client driver bindings
 >
-> Was the dynamic derivation logic dropped from this patch, or does the com=
-mit
-> message need to be updated to match the code?
+> [Severity: Low]
+> Does deleting this file leave dangling documentation links in other bindi=
+ngs
+> that still reference it?
 >
-> For reference, Makefile.runner still hardcodes the lists here:
+> For example, there are explicit references to mailbox.txt in:
+> - Documentation/devicetree/bindings/mailbox/ti,omap-mailbox.yaml
+> - Documentation/devicetree/bindings/power/reset/xlnx,zynqmp-power.yaml
+> - Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
+> - Documentation/devicetree/bindings/firmware/nvidia,tegra186-bpmp.yaml
+> - Documentation/devicetree/bindings/mailbox/allwinner,sun6i-a31-msgbox.ya=
+ml
 >
-> > diff --git a/tools/testing/selftests/bpf/Makefile.runner b/tools/testin=
-g/selftests/bpf/Makefile.runner
-> > new file mode 100644
-> > index 0000000000000..ced44aad7eded
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/Makefile.runner
 > [ ... ]
-> > +LSKELS :=3D fexit_sleep.c trace_printk.c trace_vprintk.c map_ptr_kern.=
-c        \
-> > +     core_kern.c core_kern_overflow.c test_ringbuf.c                 \
-> > +     test_ringbuf_n.c test_ringbuf_map_key.c test_ringbuf_write.c    \
-> > +     test_ringbuf_overwrite.c
-> > +
-> > +LSKELS_SIGNED :=3D fentry_test.c fexit_test.c atomics.c
-> > +
-> > +# Generate both light skeleton and libbpf skeleton for these
-> > +LSKELS_EXTRA :=3D test_ksyms_module.c test_ksyms_weak.c kfunc_call_tes=
-t.c \
-> > +     kfunc_call_test_subprog.c
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724042600.17=
-5440-1-nickolay.lysenko@gmail.com?part=3D3
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260804133801.1.=
+I8b3ff71c528133e7d6f81fe926fa39e6451d63fd@changeid?part=3D1
+
+Sashiko makes a good point. I'm happy to send a v2 of this patch
+fixing this, but I'll wait to see if there are any other comments
+first. If I don't hear anything in a week or so, I'll send a v2
+anyway.
+
+-Doug
