@@ -1,157 +1,244 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9043E5A09
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 21:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785877653; cv=none; b=QBJYX7LFfsDlzqtWW2wy9A9W9e49vPe6DMqkgr4EjUfQxid3+fijqNQenUTTfEypeCG2pw6jLCAgsjF4stN7QIka03Mx6zNi5DCkPmhqMit/t/dB5ADXngEqCL22B5o5LU/jkVv3jxuR3mkJ9xhQc3vss1UZMZvw1zPFvK3hGgY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785877653; c=relaxed/simple;
-	bh=MqyZPi/V5NJx6vV2SdV1+IfypwjkafHwDw7xnDQsGLA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kMEamLAOQczj5JP3UI0OF3n3pi3gasSlvYT9jMjUfAnuPy8Q0MLUpZHKv1KgH9TCe4vtCNAdkTE4k7gQnuvBv+XHFpOSsgYpwWCcR/Xu+hMD6kmeY3LMDOdlNrAYYiVtYTUoJf11rRa9PlSss4UJmYZ5AqLNEhGVdZZMe6OpbL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmXFsri6; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DBF44210A
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 21:09:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785877802; cv=pass; b=dkYA/UrtzJS7g4SAiMItg8bDr05w3WCG0t7yNDQ5clS7XeyNp8kkpfIpfbH1F0cLlQ6uR1iUo3Qys52GvBgux9DF3nVLk37NkarCdQfs1CwWyr17NIIUUR1dB3eMgcg/H5TGThds89RYIUtvdQcH80Cp+MiNTpEQxeQxXYazK0M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785877802; c=relaxed/simple;
+	bh=oM6MWlSz2H9anELO3jNp57msCnTEhD0kLk4MQb1nb3U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SRv9jqA1TszXCDN64kf1CjFNBVzxSec+xg+fX3DzZYNeCjv4KKIzfdD4GgnKviBbEb6HxSDxrxzisEntd/GQDwaOL6HlA5hqRmhy/3jyMci1O119ErlUhXHivVLDna9r28HiSHn2r9QuzI/F8hP+qQb/jXR7H+wneT93jSwOXho=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HfkWE0K/; arc=pass smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmXFsri6"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-47f6609c657so109407f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 14:07:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HfkWE0K/"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-382ef647e20so287855a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 14:09:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785877799; cv=none;
+        d=google.com; s=arc-20260327;
+        b=riJDbAKlFIid5kls7Rv8Jy1d7+3M6G0ZciOxfxgE6lDejcCDk7sdLs98rHJmhM6ZxB
+         43YWX4QyZ2dc5n1A6JxCy3fN1Gue+Hp1bSE1mH+rOiZ9SpZpCeGz/6Jxml6JpD+iHH/a
+         OKIfW2LY+dESECVZ/JvIAgpavbaJsKpSetmicb6ODhLYGIWP9QF1KI6GUOi1HZxDFB92
+         8FjQ14TTn5KOR7MIOvt06zHjFSFaTVbu/3QtN3V5hLK5pqf9CEMdmT17BqoJ1zqHIcpj
+         0ZPpIM6OxXBZczojaSwoyapARWtia8xTTiDo1Dmjc59QEdj5zqb4wvDHcLlYCmhQbx5i
+         O+jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Fu4LE192jSvU1r4OOL9+TsH68J29zyG+w9TlNIlg5ag=;
+        fh=5WRQmWey/eNyRfI5g/sWfeAyOoN5rwo1UMEZgJHZ3hQ=;
+        b=YhCs7P8qZGzqtIXhH3FZSBV/dy8bFIpGhrQ9xJlghuwjLzXhvwUiaYNIUfkNTHnZkD
+         Q7tQ3jEOoEHao365a1hPEIHJzxKfhoayQSWhrVWzI1EKP6RtkNFkfsvIJalOHd8i9Vhj
+         A+Dwq/5t5sEszFvPw3hxkhyQKglGZYtEFMFpSIHTLCdMkinC/1iZYdwdfaUnHN1aVxcA
+         VKlXRcKxWEXhfBLnZh1Wh2LXt+eb1n+to/DDHP8UYqcKFXfYcfHSoNYhVZlWIp9O1Bf3
+         HJApXCm+if+P/A+BekhqDI5F+Iv3NZ1Zmfp57+NH2JTg8e0PfMV7m/3F1Odqw8ZDpiIk
+         WHVg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785877650; x=1786482450; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yOWzmUvYZeYNGqxg/uKSDiCHW1g30hB6ShJQ+fmTldE=;
-        b=nmXFsri6LEo1X1UwbmxMdjcNyheXFajPGV8fsBNlCQgP42V2N/US7GHBQIwKvQYxmn
-         Jljj5m9MoK42Et5cg7lJtUbx65B/V6gOqzcVh8VjLMxkPObA/jTb2xmQ5aNKyU7HPxOl
-         DfUW7L+6LrYaD2DaCEZO+4JEAYXvbuq75txEO2Up1I3UY9omYjX7hNVdGwb23GdYKFsh
-         9VMkpLksMw8lLaxayNdkPqBUF7sCbxPdMglUZUoySQl403YEpuKzR20GghgGDLK3Oc6G
-         51+/lxs1R9cr/YpFvbh+Pr84llkM48iGHf16Pao9D1g3bKmWT4n2G2oh6/kcr+J7CNwF
-         66lg==
+        d=google.com; s=20251104; t=1785877799; x=1786482599; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Fu4LE192jSvU1r4OOL9+TsH68J29zyG+w9TlNIlg5ag=;
+        b=HfkWE0K/udmci3ozP54mAt6EzhRXiAw2YitYxkpLP6nrvd87O2ACRQof+Hso9pY82D
+         LvFu3KLEgLZgeDnA0hCpFaIm/HCBEqVqoyPSV+XE0pQzLqYI5VraBMrqU4Zh5LXHul0v
+         jnhPnznRBJgBBpSYurC82ib1tD4IZM+Voa3XE+EG6Huas0szQC9Z1lYytSIFRBAk6p0p
+         0b8kwwbKNMgDUeTnWo7pRJTcpPgfJkJe2i6fpntW6z68N69tDLKHunXmKOyvV2M64vhS
+         ml0C9mS2zzQ0nxCzAYJTGDSWlHai60P6+rIsM2nK3WX9CehUKQu76qqhJB2VYdpsJZGR
+         N9Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785877650; x=1786482450;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=yOWzmUvYZeYNGqxg/uKSDiCHW1g30hB6ShJQ+fmTldE=;
-        b=juP5oCv5ckGeuZvnPwAkUcvnHFaTWE8UHcsewCTNn/R2K+I0fvJ27t0s+Xvfo9GUQ1
-         6RByE77IZ/t+JQcfZ1AJll3wClLOW2fYLX6LYN2qjW4UXIJiUl2dD64U1j6nP89SPVcs
-         upjo6lrmmiYgchdqLawzmsXxN2lm3GmLb3/1BysPzaMD8srDJ43ZuZh6N9GHok7UCd7+
-         AUiTZcTis1sU6x76hg+Lr1boLZxHh8huMDiTDyda+R2pJs01IuYxVkwr2KpeX9e3cc8u
-         JYDM9QekasKNWaHHVx2CDxOWOw8Cr+axST47esFKC5w2WlfPt0K8fvM9qIQjeTyDY3+c
-         z/bA==
-X-Gm-Message-State: AOJu0YxGxmndVcR2E1cLm3Aj+EZPzfLBN5yCUWmDSjVW+Bj4Phwl6UID
-	bjZd/NC7HAiAW3jblTp45IBlD1UYuF4y7OSGtmfsoHf1sQMe5D6vLc4O1GB1ng==
-X-Gm-Gg: AR+sD12kLDr6eTKEgluEFHxlyxyRAl0Gs948LjXo0PyQtxu5WMySzMjicUhoeWlQOpY
-	uDII5USfri8qqbTJtsFEeO+1EwHgqPhDg2F9U/8lQ0sgeMpgzwsJInAYEOXdn22kusMkGXnE8v/
-	OhXt17zeQLYhWglfj1JSRQVd2yFUTLAqEBUh3RsbojP2tiBR7AEVZaDMJCnxQMmQM2Zr/ICk3xD
-	k2imupJEMWv0AJc+ABQox64azl0y3Ccx6/i1QIGaKX7CFa8VfnZXh015RS3si864aw69ACTTfbw
-	e1FUTnJy8EpOvwIcFw5ZIrZJPBI9S5u5SyQWCxdxOekz/piWIpmoiS5kCNYe5a9Le4YE6pGT1E9
-	OjaSwABFOrRC2M7Fk44VorD0oIImLf13mcyWLNwx1csDfCZXMDGq9CYlf4zlgWsPl/hNgtFRp2N
-	t4K7n4amb2rST+7nxdtN6Rofsyt/sM/cSsmAEK+OsSJnXSaInWsqWHlsuPn8X2prXd
-X-Received: by 2002:a05:6000:1889:b0:47f:e377:8d61 with SMTP id ffacd0b85a97d-47fec50fecbmr3306220f8f.11.1785877649864;
-        Tue, 04 Aug 2026 14:07:29 -0700 (PDT)
-Received: from antoniarch ([78.211.212.238])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fec23e533sm2925271f8f.28.2026.08.04.14.07.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 14:07:29 -0700 (PDT)
-Date: Tue, 4 Aug 2026 23:05:59 +0200
-From: Antoni Pokusinski <apokusinski01@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, robh@kernel.org, 
-	devicetree@vger.kernel.org, linux-rtc@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 3/8] rtc: abx80x: properly handle shared IRQs
-Message-ID: <anJQBtfXjktYm6Cw@antoniarch>
-References: <20260731184831.44037-1-apokusinski01@gmail.com>
- <20260731184831.44037-4-apokusinski01@gmail.com>
- <20260731190522.C11D41F00AC4@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1785877799; x=1786482599;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Fu4LE192jSvU1r4OOL9+TsH68J29zyG+w9TlNIlg5ag=;
+        b=q15s0+wKCipiZx2IWVO9CjwplcXk2nhHqGS8ibqNNlf/JyVX+j2GQbZLaDT31JHFQt
+         FdKNIWMs+HQi1QOeRrFnTrg0bcBpxtGfVyhDOJJ99I+WLWWEybCfQ5IS5KSlmtVp3JAr
+         +jnTZRzwWKxgON2Rn7WyPVWOogtGoFwTFfw621gHwOsrlf8VhA0Ee3ZZJlIF7oFLxxEc
+         T4y3GOCwOTM/lp5EKqn9/CTTtZmfF3nPVBT43LEM+o2YxIxW80i5tZsxgpQDlsiQd1E8
+         fmAPH53BJH8r3KWZ+fJajNaeUy9aqFQRxP1VA5OFHNgrotGRuuNa1mAnsgNaC6TV0dj8
+         Psig==
+X-Gm-Message-State: AOJu0Ywbj7nv1fmKrdPEgJYIh9qpL9EmmTeMrjHU7b9OcL1ri8e+4fuh
+	XPYI7CszGQG/GD6ZMISRGlZgQZDzbnAboZQ5LRosAL4BbjQYd8xcQF+pwThd/wsQF/laUmNOLOE
+	htWM5vdR+YIk5+09ZcWVNxM5ptV9nGgLIJwh09pgC
+X-Gm-Gg: AR+sD13JIok2PhWnaDg0E+0uHdk5JjfYt2c/eFp1tzCZodMknBptciB5L0VK9S2AWUY
+	VOx9eQEAHjl5ma1De+x1g066cLSVpeRUuNGuSBAcgZpyM3pF+02TlEAWTTOH8opJA0oV7JtYf53
+	mvf6boCjOmwcltTFyXxbxfzuZG6qOBaB+R7WIOPPEAfmH6hsYljc8LvYaZ9+/4/zRZEYtfrQRiX
+	/OQrktStYQaRqgn/fQXZdtuvoS0AhDwfvO86FpEMYE8VH61+KhBaCvetwshgRdbyCmkBaWBB0o4
+	oEG41hY/9/yQCUxTVZDoNyF7XNX+2FuKLyZM31UOGs3lKn/u9Qk3srZ3hURzIDEhPfelKSTMwLk
+	=
+X-Received: by 2002:a17:90b:5484:b0:37f:c69d:ce69 with SMTP id
+ 98e67ed59e1d1-3903c581f08mr1946363a91.10.1785877797913; Tue, 04 Aug 2026
+ 14:09:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260731190522.C11D41F00AC4@smtp.kernel.org>
+References: <20260729170416.41904-1-ctshao@google.com> <20260729171742.24ABB1F000E9@smtp.kernel.org>
+ <am0sWLrB5tNyTJQK@google.com>
+In-Reply-To: <am0sWLrB5tNyTJQK@google.com>
+From: Chun-Tse Shao <ctshao@google.com>
+Date: Tue, 4 Aug 2026 14:09:21 -0700
+X-Gm-Features: AUfX_myhTeJ4ugAZtdx6HhCnO8mpaOcT2gGkqaQGqvM0OuHHLxd9R4TEhUTlwQg
+Message-ID: <CAJpZYjW3L-E6rhxLg8etDJYbg2XbZ--aH8pP131Gv4WECaDxLg@mail.gmail.com>
+Subject: Re: [PATCH v3] perf stat: Include PMU name and split uncore events
+ per PMU in metric-only JSON output
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 31, 2026 at 07:05:22PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Returning IRQ_NONE without masking or clearing unhandled RTC interrupts can cause an interrupt storm on the shared IRQ line.
-> --
-> 
-> --- Patch [3]: [PATCH v3 3/8] rtc: abx80x: properly handle shared IRQs ---
-> commit e06155ed4aeb662277df57a2324e881c6d065e84
-> Author: Antoni Pokusinski <apokusinski01@gmail.com>
-> 
-> rtc: abx80x: properly handle shared IRQs
-> 
-> This commit modifies the abx80x interrupt handler to only claim the IRQ and
-> clear the status register if the alarm or watchdog flags are explicitly set.
-> It aims to prevent claiming interrupts from other devices sharing the same
-> IRQ line.
-> 
-> > diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-> > --- a/drivers/rtc/rtc-abx80x.c
-> > +++ b/drivers/rtc/rtc-abx80x.c
-> 
-> [ ... ]
-> 
-> > @@ -266,27 +266,34 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
-> 
-> [ ... ]
-> 
-> > -	if (status & ABX8XX_STATUS_WDT)
-> > +	if (status & ABX8XX_STATUS_WDT) {
-> >  		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
-> > +		handled = IRQ_HANDLED;
-> > +	}
-> >  
-> > -	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-> > +	if (handled == IRQ_HANDLED)
-> > +		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-> > +					  status & ~(ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT));
-> >  
-> > -	return IRQ_HANDLED;
-> > +	return handled;
-> 
-> [Severity: High]
-> If the RTC hardware asserts an interrupt for a reason other than AF or WDT
-> (for example, a timer or century interrupt left enabled by a bootloader),
-> will this cause an interrupt storm?
-> 
-> Because handled remains IRQ_NONE, the handler skips the i2c_smbus_write_byte_data()
-> call and returns IRQ_NONE without clearing the unhandled RTC status bits.
-> 
-> Since the unhandled RTC interrupt is never cleared, the IRQ line will remain
-> asserted. This causes the kernel to immediately re-enter the handler until
-> the spurious IRQ detector steps in and completely disables the shared IRQ line.
-> 
-> Could we check if the status register indicates the interrupt originated
-> from this RTC, clear those bits, and return IRQ_HANDLED?
-Ok so it turns out that neither the current nor the newly proposed interrupt
-handling is correct.
+On Fri, Jul 31, 2026 at 4:14=E2=80=AFPM Namhyung Kim <namhyung@kernel.org> =
+wrote:
+>
+> On Wed, Jul 29, 2026 at 05:17:41PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Medium] Flawed line-split transition logic causes spurious empty JSO=
+N objects and incorrect PMU attribution for tool events.
+> > --
+> >
+> > --- Patch [1]: [PATCH v3] perf stat: Include PMU name and split uncore =
+events per PMU in metric-only JSON output ---
+> > commit 20e3cd08fd5e415b458343262ee76bc1f5f6ce85
+> > Author: Chun-Tse Shao <ctshao@google.com>
+> >
+> > perf stat: Include PMU name and split uncore events per PMU in metric-o=
+nly JSON output
+> >
+> > This commit modifies perf stat JSON output in --metric-only and -A mode=
+ to
+> > group metrics by PMU. It achieves this by adding a "pmu" key to the JSO=
+N
+> > output and starting a new JSON line when the underlying PMU instance ch=
+anges.
+> >
+> > > diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-di=
+splay.c
+> > > index b337cc23f4131..6785e2c442bd7 100644
+> > > --- a/tools/perf/util/stat-display.c
+> > > +++ b/tools/perf/util/stat-display.c
+> >
+> > [ ... ]
+> >
+> > > @@ -1146,13 +1149,34 @@ static void print_no_aggr_metric(struct perf_=
+stat_config *config,
+> > >                             if (config->aggr_map->map[aggr_idx].cpu.c=
+pu =3D=3D cpu.cpu)
+> > >                                     break;
+> > >                     }
+> > > +                   if (aggr_idx >=3D config->aggr_map->nr)
+> > > +                           continue;
+> > >
+> > >                     os->evsel =3D counter;
+> > >                     os->id =3D aggr_cpu_id__cpu(cpu, /*data=3D*/NULL)=
+;
+> > > -                   if (first) {
+> > > -                           print_metric_begin(config, evlist, os, ag=
+gr_idx);
+> > > -                           first =3D false;
+> > > +
+> > > +                   if (config->metric_only) {
+> > > +                           struct perf_pmu *pmu =3D counter->pmu;
+> > > +
+> > > +                           if (!evsel__is_tool(counter)) {
+> > > +                                   if (config->json_output && line_o=
+pen &&
+> > > +                                       (!last_pmu || pmu !=3D last_p=
+mu)) {
+> >
+> > [Severity: Medium]
+> > Does this line-split transition logic handle tool events correctly depe=
+nding
+> > on their order in the event list?
+> >
+> > If a tool event is processed first, line_open becomes true, but last_pm=
+u
+> > remains NULL. When the next event (a PMU event) is processed, the condi=
+tion
+> > (!last_pmu || pmu !=3D last_pmu) evaluates to true. This prematurely cl=
+oses
+> > the line and creates a spurious empty JSON object for the tool event.
+>
+> Something like this?
+>
+>   $ sudo ./perf stat -aA -e user_time -M insn_per_cycle -j --metric-only =
+true
+>   {"cpu" : "0", "pmu" : "tool"}
+>   {"cpu" : "0", "pmu" : "cpu_core", "instructions  insn_per_cycle" : "0.8=
+"}
+>   {"cpu" : "1", "pmu" : "tool"}
+>   {"cpu" : "1", "pmu" : "cpu_core", "instructions  insn_per_cycle" : "0.1=
+"}
+>   {"cpu" : "2", "pmu" : "tool"}
+>   {"cpu" : "2", "pmu" : "cpu_core", "instructions  insn_per_cycle" : "0.5=
+"}
+>   {"cpu" : "3", "pmu" : "tool"}
+>   {"cpu" : "3", "pmu" : "cpu_core", "instructions  insn_per_cycle" : "0.3=
+"}
+>   ...
+>
+> Thanks,
+> Namhyung
 
-The current approach is that we write 0 to REG_STATUS so we clear
-e.g. the BL flag which prevents the userspace from detecting a low
-battery. Also, IRQ_HANDLED is returned unconditionally which prevents
-handling a potential interrupt from another shared device.
+Thanks for the test, I sent the v4 patch for fixing this problem:
+lore.kernel.org/20260804210659.112192-1-ctshao@google.com
 
-The new approach that I've added in this v3 is not ok neither
-since (as sashiko points out) any interrupt other than AF or WDT may be
-enabled e.g. by the bootloader and in this case we'd get an interrupt
-storm.
+Test:
+  $ perf stat -aA -e user_time -M insn_per_cycle -j --metric-only true
+  {"cpu" : "0", "instructions  insn_per_cycle" : "0.9"}
+  {"cpu" : "1", "instructions  insn_per_cycle" : "0.6"}
+  {"cpu" : "2", "instructions  insn_per_cycle" : "0.2"}
+  {"cpu" : "3", "instructions  insn_per_cycle" : "0.1"}
+  {"cpu" : "4", "instructions  insn_per_cycle" : "0.2"}
+  {"cpu" : "5", "instructions  insn_per_cycle" : "0.1"}
+  {"cpu" : "6", "instructions  insn_per_cycle" : "0.1"}
+  {"cpu" : "7", "instructions  insn_per_cycle" : "0.1"}
+  {"cpu" : "8", "instructions  insn_per_cycle" : "0.1"}
+  {"cpu" : "9", "instructions  insn_per_cycle" : "0.1"}
+  ...
 
-In v4 I'll improve the new solution with explicitly disabling the
-interrupts that are not used in the probe function. That is:
-* disable EX1, EX2, Timer, BL interrupts in REG_IRQ
-* disable "oscillator fail" and "autocalibration fail" interrupts in REG_OSC
-> 
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260731184831.44037-1-apokusinski01@gmail.com?part=3
+-CT
+>
+> >
+> > Conversely, if a tool event comes after a PMU event, the else-if block =
+below
+> > is taken because !evsel__is_tool(counter) evaluates to false. This bypa=
+sses
+> > the line-splitting check entirely, causing the tool event to silently m=
+erge
+> > into the preceding PMU's JSON object and incorrectly inherit its PMU
+> > attribution.
+> >
+> > > +                                           print_metric_end(config, =
+os);
+> > > +                                           line_open =3D false;
+> > > +                                   }
+> > > +                                   if (!line_open) {
+> > > +                                           print_metric_begin(config=
+, evlist, os,
+> > > +                                                              aggr_i=
+dx, counter);
+> > > +                                           line_open =3D true;
+> > > +                                   }
+> > > +                                   last_pmu =3D pmu;
+> > > +                           } else if (!line_open) {
+> > > +                                   print_metric_begin(config, evlist=
+, os,
+> > > +                                                      aggr_idx, coun=
+ter);
+> > > +                                   line_open =3D true;
+> > > +                           }
+> > >                     }
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729170416.=
+41904-1-ctshao@google.com?part=3D1
