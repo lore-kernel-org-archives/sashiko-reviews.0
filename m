@@ -1,112 +1,115 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011009.outbound.protection.outlook.com [52.101.57.9])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012033.outbound.protection.outlook.com [52.101.48.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB62A3624A9
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 13:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2748D3A9002
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 13:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.33
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785849598; cv=fail; b=ZlUfZ4hwQRxNYoMgNBgwN/EmAv81NqHlF5qOHNEHz2eNMpZBYLbby79LCfEoZAwxh1ripUJvvcc90DL1fD9HEhZKD+rjj83bP8XK1uPjE3qGeGTES7XJhj1r7B1O6ditbQjngpwYImTiapJnzdtiw3qEsFdW9RiQw7ilcXFcN7A=
+	t=1785849968; cv=fail; b=jI2PhLhUMO1+pYSKNPyUICa274ssa8i8Oj2sXLC2k1lb3iVNQ/4f/c+Jx+k0TWRfm11TIePU3A+NgPQ/t2phZjgUjxUeh/S5GOmWl1HNK1NboVrGWYtq4rEqzTBuOEujuvgUsDnl0o3SRffM6T7diMgylferhB3MvnkkP0xplQ0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785849598; c=relaxed/simple;
-	bh=9snpdf3Enthth8dhf5apdCN+Yb+NNK/6GlQSMTk9yfs=;
+	s=arc-20240116; t=1785849968; c=relaxed/simple;
+	bh=mkZsDbwmikvXsGqpyXt8HXIJ5RgjFm0U/e6Pyer6rnE=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=eiIJiJYcFeNUUow1Ahgzbp1BiexSSnMAA5kv8r/MhHtlK8VGFpWXIilIgyx7ikHT2IMlB2CFhZsyeN5Znuqfbc3OD+bx8/WOaX1pv21A2lLFyhfwe118+Vi5OitACEjJ168h7nwaZd2Cza0ZrJElHcMiEzNXr6DHlMzkZkMHWpI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com; spf=pass smtp.mailfrom=einfochips.com; dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b=L5oyqFzZ; arc=fail smtp.client-ip=52.101.57.9
+	 Content-Type:MIME-Version; b=hkbW/w999TKxpx/DvgWIg3Pcml01vuFfKrm9PlHaet2YN2xacHSrGWUfUPxjJnn0D7nJj+OQjta6qG44R9rJtaBfmk3SQXhusTWxv/AwmexOBDu7yd++MP+KIm/pLAAA4DH7/adStygjz4BOpzR5sMTXNysOli4YlysaRcTDwXk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com; spf=pass smtp.mailfrom=einfochips.com; dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b=B6zRWi8a; arc=fail smtp.client-ip=52.101.48.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=einfochips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b="L5oyqFzZ"
+	dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b="B6zRWi8a"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kW0GwfEo+Pt1W61PxuHV//Ni8//k0D1SMJuYlrarmXa9Km+X+kgb2gNsWklqA6pEcPicAEEDUJso2EVN272I2nXlncTqG4XGQ8JWd6KkVypcdmP5BUCA7UP2nP5y0J3QyvpWjpnvQvm5sFE7wKeA1/9xs0CQjRsvANlOpJ2M36FCPti/JYLJF0OjkKvwemB4fx5cQzA5vX/j9kGreryqi2DoaB50SXuitPOdxlaxNlIJfgX8cmeH3Mgcjjume3OtJXh8T7jtaiSWerbNBwEj2xUSL5htP6m721+2pYgrKJn/+7Lt5ZDfbClOEK6q2cm0jGL2/VV3x1u34nmZ/ZAb9Q==
+ b=ncNZCCs1RLIt08JcassQaZCMj2w96vhpfrZclVi1YSTPdZmL+T+YE180zV6tZnIls7OmEwvprqcExPfYewHnsZ09i1qeemRbSJR7PrEa865T+/5GecyXi+UBZ2SvjFeZtYnjgULzQRKJfeXrN9hTUurAx/1J5+5+aS09j4WszWa3KMcAHQHWo9dvgbbGEjvoFEAhsYuc3qD6kGSSoGcf+QZcqMCrgKh9Wm/Vo+ZF0PIah7BBCg6O0mS4uGt2Hw+hw95TWnOSMcFR8JGy+qneiIbgzaKY7vFCsJikSeMuYhp5FsOgzufB3U05AGPlxNtPC4GMnNUNX3ZJFac38i1m/g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yRtrUiDuonSksS1ugQs3Qi9W7vQAJWrFaoPFNUhr3pk=;
- b=pwga9ia4767+JHtyRjy9zXjoUwG2NdcFfP3VfAttV9fe9IwdZ25nw4xw0wZwK5LsJDUzpzpquUyR2F+x4wFOUcBSLJ7P48jPOsr0L4VDcNIkIL5q/Mu5x4Cxzbx0c+k3X2usG/Y17vOD51JGolDG288LSpXptWHcWAIwjIaNiYx0ZJsey+oFiorLR/7rt+YP0p2aU61USW1gc/j5EwpK4T5TQ1dOEKq0qmEaH462IGN2UACo3MNpt4qHN+mGsifxOh4SDMwUX+x5CrXtzwSbl2gnEfGaSbhvtrZHFANRztEYBiWINoZYTajWhXFelkdZ5U/smgVbAWMaTgKOS+sAoQ==
+ bh=2brTbRrCj6YAuV17o/CgTqvNX2bG0NgFNwsAShyqypc=;
+ b=jRPmjUkuwAnIWCk9ebW/Jg+C9qX8OY/BhUhLJzDH+cn6BpGqqcBaGZbVQhp/5XVxZlhvXPJ87kFunxb7XKR8LotUsh4t8tHrC+w9fiB7S5tjonfjMtA37AGx/YclksQk+L+OxNaO981p9HSjwSw6sus87Ei3KbNN1J914NaxdTahjdCrQTh1do+LmrboQd+y3CyRfnRC1fuyEOxdwyjHpa/EaETNlh+xrFrhblKPUD17L90DM7BXzOtB4H+BAKrSvnSRJzOuMBLO+frxaQg7/6e6o7uLg1zTJkN5X99yqg4kRKPNGkEn5sdfIAFW5T25l/mEDVHQoVtbAunM5zksrQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=einfochips.com; dmarc=pass action=none
  header.from=einfochips.com; dkim=pass header.d=einfochips.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=einfochips.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yRtrUiDuonSksS1ugQs3Qi9W7vQAJWrFaoPFNUhr3pk=;
- b=L5oyqFzZ3AQJHxzTygKiSTGvhbi2KwxL5z8ZsuGHFtLK/fAonwjSplyodMFTzoyzdJ7R/tA1nUN5xZls/bTjMDrkH+nd/im8U4jMgslIakdF6pb2NJCTqXQosNUGOMY53UMPl+v4v9MvyetoYljXM0/XQRsZyf9aFLYZqRYp9HQ=
+ bh=2brTbRrCj6YAuV17o/CgTqvNX2bG0NgFNwsAShyqypc=;
+ b=B6zRWi8aNo02OIN63M+hDXfzQNWfPfhHHwLkPGRCeEiPPT06urC4LZZmxDueW24NOD2XGeXRamCWjo6U4Fgc+GZ5mTyXxskFoN1PqX0mtar9dvR0zlM5WjQWtPYOUCCRG0Xpy+qXS16l1dy3Zvju9ExsKLxjPG3oQSW4/SttB58=
 Received: from SJ2PR04MB8896.namprd04.prod.outlook.com (2603:10b6:a03:53e::6)
- by CH2PR04MB6936.namprd04.prod.outlook.com (2603:10b6:610:a2::7) with
+ by DS0PR04MB9463.namprd04.prod.outlook.com (2603:10b6:8:1f3::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.16; Tue, 4 Aug
- 2026 13:19:53 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
+ 2026 13:26:02 +0000
 Received: from SJ2PR04MB8896.namprd04.prod.outlook.com
  ([fe80::8292:662a:4214:95e0]) by SJ2PR04MB8896.namprd04.prod.outlook.com
  ([fe80::8292:662a:4214:95e0%4]) with mapi id 15.21.0270.016; Tue, 4 Aug 2026
- 13:19:53 +0000
+ 13:26:02 +0000
 From: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
 To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v3 7/8] riscv: dts: eswin: add I2C controller support
-Thread-Topic: [PATCH v3 7/8] riscv: dts: eswin: add I2C controller support
-Thread-Index: AQHdJBPvSL7EkAZykEiAEMv5Ys+Xkg==
-Date: Tue, 4 Aug 2026 13:19:53 +0000
+CC: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>
+Subject: Re: [PATCH v3 4/8] dt-bindings: mfd: syscon: add ESWIN EIC7700
+ compatible
+Thread-Topic: [PATCH v3 4/8] dt-bindings: mfd: syscon: add ESWIN EIC7700
+ compatible
+Thread-Index: AQHdJBTLdl29zsq7GEK0VwMsc/o9sw==
+Date: Tue, 4 Aug 2026 13:26:02 +0000
 Message-ID:
- <SJ2PR04MB8896855121A11EB9DE5E2D6083D42@SJ2PR04MB8896.namprd04.prod.outlook.com>
+ <SJ2PR04MB88964582060B8F7CCB807C3E83D42@SJ2PR04MB8896.namprd04.prod.outlook.com>
 References: <20260804104431.1391839-1-pinkesh.vaghela@einfochips.com>
- <20260804104431.1391839-8-pinkesh.vaghela@einfochips.com>
- <20260804112252.9999E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260804112252.9999E1F000E9@smtp.kernel.org>
+ <20260804104431.1391839-5-pinkesh.vaghela@einfochips.com>
+ <20260804110206.E4BF31F000E9@smtp.kernel.org>
+In-Reply-To: <20260804110206.E4BF31F000E9@smtp.kernel.org>
 Accept-Language: en-US, en-GB
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 msip_labels:
- MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ActionId=5e08aeca-e0b7-441d-beaf-2d95a9107ff4;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ContentBits=0;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Enabled=true;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Method=Standard;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Name=879e395e-e3b5-421f-8616-70a10f9451af;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SetDate=2026-08-04T13:07:24Z;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SiteId=0beb0c35-9cbb-4feb-99e5-589e415c7944;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Tag=10,
+ MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ActionId=69cc34fd-3647-4938-b50d-bf55b2ba6f93;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ContentBits=0;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Enabled=true;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Method=Standard;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Name=879e395e-e3b5-421f-8616-70a10f9451af;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SetDate=2026-08-04T13:09:28Z;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SiteId=0beb0c35-9cbb-4feb-99e5-589e415c7944;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Tag=10,
  3, 0, 1;
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=einfochips.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ2PR04MB8896:EE_|CH2PR04MB6936:EE_
-x-ms-office365-filtering-correlation-id: 1dcaaca5-f3f8-40ca-72d0-08def22b1224
+x-ms-traffictypediagnostic: SJ2PR04MB8896:EE_|DS0PR04MB9463:EE_
+x-ms-office365-filtering-correlation-id: 54bda5ee-3235-43d8-1089-08def22bee02
 x-ms-exchange-atpmessageproperties: SA
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|10067099003|38070700021|11063799006|56012099006|55112099003|18002099003|22082099003|4133799003|4143699003;
+ BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|56012099006|10067099003|5023799004|11063799006|4143699003|3023799007|4133799003|6133799003|22082099003|18002099003|55112099003|38070700021;
 x-microsoft-antispam-message-info:
- 3xdNzazB8U/V/ZaSrUuOLuwMZzlw8SlF0B7kFQUDdDXnRxmPdS1EiZ9B7uJWPqUsGvrpi4MNJr8xejAQE4B0JL9Hrxtdm7q8F0CDN3wErwkYzzr8GO1rB51oAhg6Imm8WkiD375IsqY1005/og1yHb41PGIwwfm6cbSPkyyH+x/appicrOxFLVedk3q4K6no1uUlqyFlHkvyLsCP9XRKsC+HeV5EY+FFeKLiXUQgBpLDcIVDbfngplWvHZpkgMo8lmRnSxneVdBzttRt37+AzrFQg84G4WsBkwyhbhxyy3JMssCpqE75xQpHe6b2eiCRZ6l4HTw3U+GojVJpKUPP9qoVuinbHvRI3b4pGD93svyikGK1UOmIW9t6fylN4BDgJgj0ZevD/ynJnlmg6r5bxvTSV+1HYUe1i0UNc6vK7beWM/y7qmOLzKXh7QbrGCJsD+GUSnYhMR7mDw/DCu8xbaqftWgPk3rv9Os2ZkDLOIRxImn0GRFVBEbx7sYWM1rhFdyEKfmP9esBHkd+sHlBEwUF1jbVANoid3s9pA5pYiSpHxfp7YLbi0MdTlbEyuykg5eN9l+HmC5G5TTgtxRLI21+DqLiZd16A8nusi9Rw/V4VRIJeWjFOGLykZJCo+invklI7ouWjGcMJ1JELTbxY3bx0ee90i3hyeRXezLbZEhLrdTZyyfSN/zruptJmnlDVjIz+dDulSMUWfGoxPkeGZHW+oq2So+70XgZSG27tHw=
+ KgzL6bd8tDdR/S9Y2YaaBsy+jFwNxkM3iMJeYk/ipLLh9ooyz0sxyxIGETUqt4fgRhvFbReQ+e8hQN189kICCrAbRlpqoluU7Y0yraCiNd0hKEAtUSI6RLB6T6eOXQj0kXnv01iAZowmdvh0V3xYsmm/3LhKnMQYSYNun6OXZqJkmSHRZjuCanr/HOgs340Z7Rt5JJgGg3776AonB0C33WsRFShWhgRQ1stFMVJDzjyuqnujokjn9JykxcF5ycJkMvy9SaybHCY8ATv0atqqj6xx8x3+RMPBzGmgD9tea26Jd1MdGy4S4u/cmJnPH+LZi3W1pE5Rz2Wxbm7o3n2gy01zN11T8ZqBG0+nW+hQyYTAussZ+oEPpQHe02EJbde2MFj18wXVI6GDvoFGtqbGjx2woyiERk8mTKfMTUANdjMTrZPFOJ91Bcyq5ErUGQJ+X2B95ZWPT4pvf+oeYx5YVdkBHU9Lm2KBEMZtoUhildSm8aVSZukSoVNVbnFKDftEgKnH41RDEOHQMAwyQvT3cHFMCDc+cgLx3Wh7LEabsBizsAuvUsV0w6E4BiGk8HKCNP+NlBQcxq9crh0Q/NXZz0YG0e3/0/w4CsjzhTRWpOJC+gjnQ7Whk1o7G6jZZTNFOJT7KV9DBhxz1gJKzTfuqGer0ibV/68Z6j0HhLFI8hzCDIZMUPzlOUsAOqf7Iu5GEKAZG9mlSzmPjHDTL7qh21p8wKg3yH0uTuqu3ntDutE=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR04MB8896.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(10067099003)(38070700021)(11063799006)(56012099006)(55112099003)(18002099003)(22082099003)(4133799003)(4143699003);DIR:OUT;SFP:1101;
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR04MB8896.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(56012099006)(10067099003)(5023799004)(11063799006)(4143699003)(3023799007)(4133799003)(6133799003)(22082099003)(18002099003)(55112099003)(38070700021);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?uo4r4Z4MGTJEbCToRN28y25Bo66dpjT1HA58+UUOxFFAChZpA709CmwIs632?=
- =?us-ascii?Q?Te/wNwPTsyHMTgEhAoyAUiFhJ34W19s2HD5COtqTkThu/gw6Mz3wpPrtIbNA?=
- =?us-ascii?Q?KBTpro/dL0gBOO3IRIaVFRDnhY8SP7jhy640a2h/dKmgO+eQnI+6XBixTC68?=
- =?us-ascii?Q?KjhbRd+YJut8vKoDx4FOwLvqBOhpgPyiWlc6WRTnS6fbyGh5s0WyQ+5NT0ds?=
- =?us-ascii?Q?CL2/8Dc8QSHW3lTqk55Thn6yPOZBlx3Mrx/Mq+UBvS4Q5qp9LqkwDsOw6Sbb?=
- =?us-ascii?Q?aBIvsbBwzqVU6rzKaGy0Qof8e+C69SqhJ2OCL+HzWN64Xjmmc+02ckAzXcNd?=
- =?us-ascii?Q?saiyrvc1MZ0iHXE/t7SbOX+f5tf5G8FDPUkw03XihEI/DD6eQ4Qz9mE8SoE8?=
- =?us-ascii?Q?mC6oQUxf2y0hf7Z7zpEnTcxC72yP3F/+TVpHO3WAJk8SfECWd8u/oNy+/0WR?=
- =?us-ascii?Q?iBOQKSF20MgRXvQyDmcMM5K+coUqAKV+r0jZ7Nq9taxjGhXev5gwetlIW26T?=
- =?us-ascii?Q?TZQJzlS0b2yh99aZZbtbSLeF7MqmZamVHfxzBFhgDQsNa6ve7nBvF5Ko0u7H?=
- =?us-ascii?Q?Vd/sKIiheEfWbNeqqmCIqldtDD14zzB0bRA1vOjAWCnX+3ccOe72GcIQa5bk?=
- =?us-ascii?Q?e9b8u4EaekpEqiiOxymbDqy0Euulyut+dO3OhkbORjwLWVHHxG+a2ExjLEjs?=
- =?us-ascii?Q?cz9HCc6r0NchhBPMApvXiMTR1TwTJYSyOZVqXBhz3Brdl9oXp6GZvtCvwqXJ?=
- =?us-ascii?Q?ap2jNCAo8BCbZqvhCQZJntJZR4NQnc09BGFllxxnLtJhmUfFZC4y047LZ+f0?=
- =?us-ascii?Q?PkqRcbGpF01M9VTeDc6DExQvd0BmsT8FmVYr4m3Ch3baRgq4mAiuHXsjTLvf?=
- =?us-ascii?Q?Eh5z1A5zjO9Auv/CTTsys6EU2SoI3B79v94cW47YVIyfa2HHaOtSGjZIrhsp?=
- =?us-ascii?Q?l0Nq0YSvUlV2fblocqMyPwDYGWPnrFkXkNxinQz156ZzONp286s+qAdnFS0C?=
- =?us-ascii?Q?lSToghMfaZdKuE7/+mIG0xjGaVR1LP8xWOBjLDA+uosaYOGiiV8T2fEp3dFU?=
- =?us-ascii?Q?myiEKHoARBmi/zXhvz1TaKMShztQR6IcwyJohRrFM63BsrEiQdZ9NE//vmdm?=
- =?us-ascii?Q?aGajE2oa458N2uO7cJ4o90WEUGx1cYvRYyIPRJZnqh7u7XSQrnwEoEP1FKdh?=
- =?us-ascii?Q?gCPAptIBHqqRU78gJfohXoQqQCrKCwzLPVmQbtL8diiQCO3P3YnwzUS8mmeu?=
- =?us-ascii?Q?RxA7Ms/xWqIqm9DSMxYbOEZg39kwIYHkuM023VAPwk5s4LhTcHajs2nSwiXT?=
- =?us-ascii?Q?B/ukKJE/Z5WL4/jm9A4XcQgcXw+Jj9TvGEd3NEYB6Hx3Q5DW0k8skrFspABe?=
- =?us-ascii?Q?SmCNC8xNQdC7kDraBmDI2zWz4kUSDbqvwtdMHOWlSla59SgCQLddJlblGscE?=
- =?us-ascii?Q?wNhqDH9WBHHHFpVzQItRLw58HGGx3l1c+36VLBtxvYrKS1Mp1Pn45U8gb+38?=
- =?us-ascii?Q?DPS4V7pn3pF0nnA9kDqNeDJ8gBGz4S31c/8bv0v33X+ssH5ySQKrh5l9Rd22?=
- =?us-ascii?Q?XuZLU7ML73n6RMZPPA0YzycsH8XXO4G16g+mSlNPzBDj89S0eAqHxZwmNLVM?=
- =?us-ascii?Q?+7hyDrnTbCwCOv9GR1eGKvoEdCzo3LMmqhVnz6pyGS19d0z0KRxc77MuSRHi?=
- =?us-ascii?Q?VDSJT8MPpmVzof5AjuTCpYg/jH1OnXD/ua7mze5wX4dPnLcV0cRE+fnuoun/?=
- =?us-ascii?Q?T9VeSuSbaOsZ466hrbKwaxpZ6WxumlM=3D?=
+ =?us-ascii?Q?lA3oP/s7+6uE3SMImT0ize6GpAGQ9FVa0rZHAvFoEzUIsLbPvyVEDkh7Ggur?=
+ =?us-ascii?Q?5MIwzHrx0HxzwVpsjpn1ZsI3Bt4x5kXca/R6TaftjqrCTO8gpSibZ+PCO2gW?=
+ =?us-ascii?Q?aNpTSyNxaZN8wqYeY4wVIgycXgv/AprfnCnPwQ2gaZzYYBRJ6j5rEA2YKXzi?=
+ =?us-ascii?Q?J3/QoVFveXuM8Ciza4RN1PxvlUZ6KlEw4k4HyQT4xBmLyAuMmkr2W1wapMou?=
+ =?us-ascii?Q?Ign9uQX+GsyI1udinb7VA5t6Ed/wkxGVOT3BxUsa2VX79a0lXaxBfMqXeu+h?=
+ =?us-ascii?Q?SLZz5aLHl7RD8Sfy67MPsCLjbaLs14hqtwzr3mUBYIrcqo4cJEDym7hLbkZn?=
+ =?us-ascii?Q?zmu4XxvtYcPwCzU1vEuBHpD/6Xd+FkmO5FblWKPwrMV+lpQ7jw0j4RXdE2YI?=
+ =?us-ascii?Q?0yZgfYXsqac07+ttEZQEUgnTQiCRIsteGC452IuQgbmwjltGStYGqCczVkdz?=
+ =?us-ascii?Q?1Rzhx7eTn8/iBTUK0VC3kiZXWkXMadwTl8NGkZEXmO/mEv8/dumIpFPR2uKr?=
+ =?us-ascii?Q?V+qAMfRJ1jZQFU4ZvOnzbDG1Kmi4XwX9Cn61xk6tfN4QNNZyOhlaiaoewstn?=
+ =?us-ascii?Q?3V+YOYGSJjLg17YDmPbZlPwXWgICbsbeo8BnJB3kY0o3ZPKtxk2raNHlxX2a?=
+ =?us-ascii?Q?lQiM+1IGiguT5F/whRwVGPaaJMAhoIiOSUE3aZY8oishAYqSiPHUJP0CQWab?=
+ =?us-ascii?Q?wPf5KfxlNAkAr2IM6ep/JEBX6f0UhZo/jGTK9CvYwvUpXSTIGfXUuQHgRT9n?=
+ =?us-ascii?Q?YVFTUpn4NC0mwNl4ouD5NTodqUPZnAMhjtiGuCMoySu26iJRwPzYAhOaUFdx?=
+ =?us-ascii?Q?mLUwBmLZN7M/hcq6rXyRDS6jLI6lfZ7kN7L6fjO7VO41CBamH8pzc0NQwfnx?=
+ =?us-ascii?Q?J+km2P3TGJgcdai7wu/461CdbjDezi+KcyMKFbvVuGCkJML2cEfOfuynA+G9?=
+ =?us-ascii?Q?DsiFkmpWxmD0jS8/fPdw+De99Ik2Gu8hr+jW4tYiPeTRAKocMLVxkBDFvMgN?=
+ =?us-ascii?Q?fz3rn/bFokrm0rX+PPanMvOA6iH9W3wQ22SA0lYvdBpD1S91D4AdVlQ24j9b?=
+ =?us-ascii?Q?iEv0fHO9Xkm9T9bdjyG7b0Mx3zzwt3TxiJCkeOQslgWyRZ02mEboD/gUSc/L?=
+ =?us-ascii?Q?4t55L3Seb+R6FocUCM4F36e4lHrsxzRGXilun0Z2Yxt6/7fjO4eRHK/xM2yq?=
+ =?us-ascii?Q?4h65XFeMaJjF4fqgcf42Ms+I7qNd2nwL7MqXXWsGEIJXWz4M0wN4Ha2oFqe1?=
+ =?us-ascii?Q?1NsIqbGNuRYL5OHY9+9RAoIknoPjcaBk8PDXWCSvi1cJT/6a+41xleXdqptJ?=
+ =?us-ascii?Q?mHshLzYSbUuThXbknxwEAD33L/RWrQM/LYYdNyjqO8FAEK3KeuKl2CaA8+ef?=
+ =?us-ascii?Q?9ZjGuJFAneFs39rOYL0ZTbpOfWzrYhGm3es5MSUdrG8L95wTkIMIQK5ivQEM?=
+ =?us-ascii?Q?4FszeHf1pNTvHr/AWW70mG/zxTGqSCbQJ1aZlXrwSMrV9z8tUyYKNjOn/+FZ?=
+ =?us-ascii?Q?JHVZN+yQDoJFeT84zxRfGlnEWI0rDDc36WYO7IjAS9AFhESNhh6TnySl5NgX?=
+ =?us-ascii?Q?76+IGlcQE0k0YKtyudgTApKPA32uex2TisnmtcAWmGVQIG2CDpm+z3C4+f1q?=
+ =?us-ascii?Q?8P6wM6EgUVDFgvncz6cRA/5WOydoS1BMTRLEdSVbsUQYYnuG61gFdBcNTjrH?=
+ =?us-ascii?Q?J4aL2p8fHUfWCjmmvSoHcSWp2EZR+dyM9SPktWy6scaJwGSR5dVbQKbSRaca?=
+ =?us-ascii?Q?sbHI21XmKfTITHaL4RWxYw4AeuIZ83I=3D?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -118,100 +121,99 @@ MIME-Version: 1.0
 X-OriginatorOrg: einfochips.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR04MB8896.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1dcaaca5-f3f8-40ca-72d0-08def22b1224
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2026 13:19:53.4015
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54bda5ee-3235-43d8-1089-08def22bee02
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2026 13:26:02.3156
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 0beb0c35-9cbb-4feb-99e5-589e415c7944
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: X+L/OWZ+PCYY6eo9fF+ptQHzgsV9LrIXCEZydaLLMOfVhIhEGi5RjhsW0QapnSH4bGi4GgI6nOpFm49ZVwMd7sju/qOQCIYBGgojzrITWIk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR04MB6936
+X-MS-Exchange-CrossTenant-userprincipalname: FNaAncm/n/7S9o+k8L8Q/VAkAtFJjvr2dk2Cn1l942cs75BBj7Rr4ZGI6yHv8oyBwltkChL5KFlL9DJA6XJdcVkIkdeZhNvfLRnv8fuhiLo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR04MB9463
 
 Hi Sashiko,
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s)
 > to consider:
-> - [High] Incorrect pinctrl assignment for AON I2C controllers, mapping th=
-em to
-> LSP I2C pins instead of AON I2C pins.
+> - [Medium] The new compatible string 'eswin,eic7700-syscfg' was omitted
+> from the 'select' block's enum list in `syscon.yaml`.
+> - [Low] The commit message description is not capitalized, violating MFD
+> subsystem guidelines.
 > --
 >=20
-> --- Patch [7]: [PATCH v3 7/8] riscv: dts: eswin: add I2C controller suppo=
-rt ---
-> commit dd055880a3b8b5096248d3b1a4bdcec3e5acbe01
-> Author: Pritesh Patel <pritesh.patel@einfochips.com>
+> --- Patch [4]: [PATCH v3 4/8] dt-bindings: mfd: syscon: add ESWIN EIC7700
+> compatible --- commit b6fbe8a9c92251f8d7a4c290284000e71004ed87
+> Author: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
 >=20
-> riscv: dts: eswin: add I2C controller support
+> dt-bindings: mfd: syscon: add ESWIN EIC7700 compatible
 >=20
-> This commit adds I2C nodes for the EIC7700 SoC and enables corresponding
-> slave devices for the HiFive Premier P550 board.
+> Document ESWIN EIC7700 SoC compatible for syscon registers.
 >=20
-> > diff --git a/arch/riscv/boot/dts/eswin/eic7700-hifive-premier-p550.dts
-> > b/arch/riscv/boot/dts/eswin/eic7700-hifive-premier-p550.dts
-> > index 3101fd90d1714..50c15e08a57f8 100644
-> > --- a/arch/riscv/boot/dts/eswin/eic7700-hifive-premier-p550.dts
-> > +++ b/arch/riscv/boot/dts/eswin/eic7700-hifive-premier-p550.dts
+> > dt-bindings: mfd: syscon: add ESWIN EIC7700 compatible
+>=20
+> [Severity: Low]
+> This isn't a bug, but should the commit description be capitalized after =
+the
+> subsystem prefix to match MFD subsystem guidelines, perhaps using "Add
+> ESWIN EIC7700 compatible"?
 >=20
 > [ ... ]
 >=20
-> > @@ -130,6 +130,62 @@ &gpio111_pins {
-> >       input-disable;
-> >  };
-> >
-> > +&aon_i2c0 {
-> > +     status =3D "okay";
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&i2c0_pins>;
+> > diff --git a/Documentation/devicetree/bindings/mfd/syscon.yaml
+> > b/Documentation/devicetree/bindings/mfd/syscon.yaml
+> > index e228670880631..2bcaaba6948d3 100644
+> > --- a/Documentation/devicetree/bindings/mfd/syscon.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/syscon.yaml
+> > @@ -175,6 +175,7 @@ properties:
+> >                - cirrus,ep7209-syscon3
+> >                - cnxt,cx92755-uc
+> >                - econet,en751221-chip-scu
+> > +              - eswin,eic7700-syscfg
 >=20
-> [Severity: High]
-> Should this use the AON pins (&i2c10_pins) instead of the LSP pins?
+> [Severity: Medium]
+> Does this new compatible string also need to be mirrored in the select bl=
+ock's
+> enum list earlier in the file?
 >=20
-> Assigning &i2c0_pins here configures the pads for the Low Speed Periphera=
-l
-> i2c0 controller, leaving the AON I2C bus disconnected from the external p=
-ads
-> and preventing communication with the EEPROM.
+> If eswin,eic7700-syscfg is omitted from the select list:
+>=20
+>   select:
+>     properties:
+>       compatible:
+>         contains:
+>           enum:
+>             ...
+>             - econet,en751221-chip-scu
+>             - freecom,fsg-cs2-system-controller
+>=20
+> will older tooling like dtschema < 2024.02 fail to select this schema as =
+a
+> fallback, which could silently allow invalid configurations to pass undet=
+ected?
 
-Yes. We will correct this in next version for both I2C.
+We rebased this patch to linux-next. Since custom select is dropped in patc=
+h [1],
+we don't need to add this in select.
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/com=
+mit/Documentation/devicetree/bindings/mfd/syscon.yaml?h=3Dnext-20260803&id=
+=3D6165900f3922f923bb363d58c2893005d26d1b30
 
 Regards,
 Pinkesh
-
 >=20
-> > +
-> > +     eeprom@50 {
-> > +             compatible =3D "atmel,24c02";
-> > +             reg =3D <0x50>;
-> > +     };
-> > +};
-> > +
-> > +&aon_i2c1 {
-> > +     status =3D "okay";
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&i2c1_pins>;
->=20
-> [Severity: High]
-> Similarly, should this use &i2c11_pins for the aon_i2c1 controller?
->=20
-> Routing the AON controller to the LSP i2c1 pins will cause the ADC and po=
-wer
-> sensor to fail on boot due to being physically disconnected.
->=20
-> > +
-> > +     adc@10 {
->=20
-> [ ... ]
+> >                - freecom,fsg-cs2-system-controller
+> >                - fsl,imx93-aonmix-ns-syscfg
+> >                - fsl,imx93-wakeupmix-syscfg
 >=20
 > --
 > Sashiko AI review *
 > https://nam04.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fsashi=
 k
 > o.dev%2F%23%2Fpatchset%2F20260804104431.1391839-1-
-> pinkesh.vaghela%40einfochips.com%3Fpart%3D7&data=3D05%7C02%7Cpinkesh
-> .vaghela%40einfochips.com%7Cd8bc429a6c0946a6b9da08def21ab9f5%7C0b
-> eb0c359cbb4feb99e5589e415c7944%7C1%7C0%7C639214393771766036%7C
-> Unknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDA
-> wMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%
-> 7C&sdata=3D0EXL5kcwVb9qtE8hUzTyjhOYtlomJ2zP5N3MVrMBBmM%3D&reserv
-> ed=3D0
+> pinkesh.vaghela%40einfochips.com%3Fpart%3D4&data=3D05%7C02%7Cpinkesh
+> .vaghela%40einfochips.com%7C0ed0a6e6a57f412e089e08def217d38f%7C0be
+> b0c359cbb4feb99e5589e415c7944%7C1%7C0%7C639214381360842991%7CU
+> nknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAw
+> MCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C
+> &sdata=3D3EBV%2FOCsfYO41uNqK4URl2MK8gMPfGsL80nf3kE1WGs%3D&reser
+> ved=3D0
