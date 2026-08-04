@@ -1,131 +1,169 @@
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CA0423E9D
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 04:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3CB2DB79F
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 04:18:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785816658; cv=none; b=TVLIKfk/fJ4iZPnYUcRvs7DV/+w9IulkJK/81BEC9BeSrRzcfCboRvk2l44Yj/rOIAa7yvkWctOsHlwnoHKGt5WptEXNcAyAuicCaUS5asb3QNfy18+D1LBRFqZ8GOn54TjtKzaO0g601fBnkrEWndiL8Gk0PC9F2OzqsUHfug0=
+	t=1785817110; cv=none; b=Z5HCZcpLlA6pLNskL3H0gZVePFZvLh4Q/FwucFrE1JaVm0hFVbTVcyfSzU+fLzf0AKfUor9NOMDJI+EvlqUV7PtwGm5hrYJTdY0yzf3dR6FB0WqbBBHyKvMhfkWO3WoEwsF6j71W2sm94nXtrAfkAVUIr/22L6lrfb5brwbDz+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785816658; c=relaxed/simple;
-	bh=OhD/yEFhUGihcpSsRGs/dbnXlDc4PeCN7WQIqEtisDs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WstG3oZ/lODUxmRgdwILnG5R1Ma5UudB40n8iZ4yXqYofA+TEhjAa05dBFlqUCvZtg7RBa+HQ0ApiLXGGa0oPS3R1wHXiGcM3T51EHX0T6LMVCVVUYNPqFkr1kpkGFHUy7zxO9hMm9+KgMgNr03g9Sg8tS4uNnemN5WC9zP0Awg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=w+h+sJSG; arc=none smtp.client-ip=91.218.175.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1785817110; c=relaxed/simple;
+	bh=Pzc+stFIC47bcug9qLJKtKBL7CSfTEjOdrZmzZctNpg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OiTPshDJIX/0ULlI3o7hh2vUdO+o5/ob42YinpsIbgu3mVxA5C0k7mrTuXwn/ZuVD9uMXYVrBiUFaa97DaKg03TM6ZgWFzb95vk+/uDd0B9xWHXCHvuw+9HtnqOd/IQJMUMREjR0azpC0B/TAVgey6mlY0qn6lJma21t14ST3SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V9TNlFCL; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="w+h+sJSG"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785768591;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6Idn/88+dNM3THJaU3R/zT+H0rXSmXeg/6ZwPUJ48gU=;
-	b=w+h+sJSGt2IzV6XC7ikdjTvriPeDmidh29HXG3gACWWB8LCNsXbrL8ORsWs3yxZlXGK+hD
-	SygL2nbcsRO3RSfdsX3yIps0oiDlVEl7gfPThiAnTrT3aiTxCPmVdE/vtRKzydMNQMvPr5
-	e1lyGFKGojFMwWb1od5B4xwmI8wvfx8=
-From: Junjie Cao <junjie.cao@linux.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9TNlFCL"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e347638adso4746507a91.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 21:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785817108; x=1786421908; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=HNpfIZ0OfydC6fKax55kUfhD/gOfTNbtFad2cCOF1NQ=;
+        b=V9TNlFCLXyGdeoMQK+iqvxUEm8+l7p3qszTF+NXNwX0K4LGp1Z2WEQNdSZ3rc28Hfk
+         MeAPFB+MuPbczHzpIzwuzrzebDfHR1LHMZaS1kHvR53/xlFxksWo9TVw0J4DfqpyPMHm
+         8/Fux8hAPoAFZAunplgCaNGa3b4LZ8N/ushswzs+tb1J07Mnv4tAMVxK3TxoM6smUGkG
+         DqvvNNtnBGSf0jJWYi1W7G1sm4i4z41xHekPCxDAcjAwp0wql/QO2Tt4OP5NU3yUf35t
+         PjGzTzZivgIGe+OCrrphM995RgfC5YJIiDgiTMKrolroO7rQIBkHcS2380SQ148W/AMC
+         xkuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785817108; x=1786421908;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=HNpfIZ0OfydC6fKax55kUfhD/gOfTNbtFad2cCOF1NQ=;
+        b=q6qpp1M8b392OJQ/Fd2XESMoao252T80qU8mqEkhBojyhj0HaODIkdukKjd+ubNWCU
+         K8z2k9kYc7ZSxzeGKo9Bj5mSzg0/VpEWbLJ3Gpa1ewGlH0o3+9S0OyA7I5QRJHewh7xa
+         EH9rQ3sa56TYkUfOgjHAJMp6fAf71ccO9mcWXUMdZdDTq+fqxXaEQwALY4UKjwab7T9w
+         fApblhkKChXxaDHplZXIQDq/H0YbtIhQmtc5iNWwfNR7DAGFWMLdfcCfzDgUGUUCO7bh
+         QBai55Y7SWizMkxQHP+UvmJrbbKMVumIaOEn3klMUKR3UkXQDoB5nFICDyH8HOdTeyql
+         ipkw==
+X-Gm-Message-State: AOJu0Yzd+AbMzrFFJX7bo5eqY6X1cZNZMH7CIUU5I/iaULiZqusTmCgq
+	uwERrGXVfk5oA65S5AbYXyZSjNCxjFs4cAiCT3+1de18Fnb25viY3jMzA5Qisw==
+X-Gm-Gg: AR+sD10IeVbZaYuQV1v/zLDW8Tr5crTV+GIhNlOCF/yPwi/1Vyr0vqsysiWZYFDlrsi
+	0F4XQtuHeIp4iu/X7eqwvxqf7is9sdNlEOo59wXLfg3WdGb0CGMcJosCdCPP8QQo8KDqMCa6M0u
+	jgameAzgzgdheTc0NEAUK5wFYqaLA7AqkM7cBlVJcvVde+/AxwVAPeXxKQjR7GgaYnHGlLOhFwb
+	ew2tI12yxnQQBgwIIiNgLkOEvO7QCxfajFuml72/MTdHNgWt7t+OuzuaLkJIOsxZ690SHdMvly+
+	S0pOZq1IYWVFFvA7SOl5u+zIcPp2hNRhgsYHwe65KFmKHQEfAuo5yB8YORLTRK/0556ilMgnAhR
+	3iEsklyIsy5XX/zuymMyIoIpjZAy7MlcN6vOPjWaaZlCZyJBFBepOhIi5JuoqTIbfs+860H36WM
+	XrlOvsh1VQudtuHmtQxMPy1bglryLSxMyF9sKs1BJNnfBpw4g3PEtIuFyUtzjHbhpKEz4/HbIwI
+	RWZbXACOOvq3S2ISjgKsoBNJtkGnw==
+X-Received: by 2002:a17:90b:3985:b0:38e:9045:babe with SMTP id 98e67ed59e1d1-38fbc4053d7mr10826936a91.7.1785817108418;
+        Mon, 03 Aug 2026 21:18:28 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:d109:cdba:8a20:74ad])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153e04491dsm58433183eec.16.2026.08.03.21.18.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Aug 2026 21:18:27 -0700 (PDT)
+Date: Mon, 3 Aug 2026 21:18:24 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] drm/panel: Add Novatek NT36532 panel driver
-Date: Mon,  3 Aug 2026 07:49:39 -0700
-Message-ID: <20260803144941.1402261-1-junjie.cao@linux.dev>
-In-Reply-To: <20260729162847.9F4A51F00A3A@smtp.kernel.org>
-References: <20260729160804.912826-1-junjie.cao@linux.dev> <20260729160804.912826-3-junjie.cao@linux.dev> <20260729162847.9F4A51F00A3A@smtp.kernel.org>
+Cc: linux-input@vger.kernel.org
+Subject: Re: [PATCH] Input: evdev - sanitize event type index when fetching
+ event masks
+Message-ID: <anFmI06p-i0vusxe@google.com>
+References: <anFCAfvxwXB5eJF1@google.com>
+ <20260804015414.E04CA1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260804015414.E04CA1F000E9@smtp.kernel.org>
 
-On Wed, 29 Jul 2026 16:28:47 +0000, sashiko-bot@kernel.org wrote:
-> - [High] Missing Kconfig dependency for DRM_DISPLAY_DSC_HELPER leads
->   to linker errors.
-> - [High] Improper use of DCS brightness helper inside a vendor
->   sequence corrupts the initialization payload.
-> - [Medium] Global static DSC configuration structure is assigned to
->   device context and mutated by host drivers.
-> - [Medium] Missing DRM backlight device registration and OF backlight
->   mapping.
-> - [Low] Panel physical dimensions are defined but not reported to DRM
->   userspace.
+On Tue, Aug 04, 2026 at 01:54:13AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Incomplete Spectre v1 mitigation due to misunderstanding of speculative execution on branches.
+> --
+> 
+> --- Patch [1]: [PATCH] Input: evdev - sanitize event type index when fetching event masks ---
+> commit e9eb78cd8dbba1d32ef31f1eec9a5c00e54b5aad
+> Author: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> 
+> Input: evdev - sanitize event type index when fetching event masks
+> 
+> This commit uses array_index_mask_nospec() in evdev_get_mask_cnt() to clamp 
+> out-of-bounds event types to 0. It asserts that this is sufficient to prevent 
+> speculative out-of-bounds memory accesses in functions like evdev_get_mask() 
+> because the returned count is speculatively forced to 0.
+> 
+> > We do not need additional array_index_nospec() calls in evdev_get_mask()
+> > because evdev_get_mask_cnt() speculatively forces the count (and
+> > resulting xfer_size) to 0 for out-of-bounds types, preventing any
+> > speculative memory access to client evmasks array.
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does relying on the returned count being 0 
+> fully prevent speculative out-of-bounds accesses in callers like 
+> evdev_get_mask() and evdev_set_mask()?
+> 
+> When CPU branch predictors mispredict the conditions checking the count, they
+> do not wait for the condition to evaluate. 
+> 
+> For example, if the if (cnt > 0) branch in evdev_get_mask() is mispredicted:
+> 
+> drivers/input/evdev.c:evdev_get_mask() {
+>     ...
+>     cnt = evdev_get_mask_cnt(type);
+>     ...
+>     if (cnt > 0) {
+>         mask = client->evmasks[type];
+>     ...
+> }
+> 
+> The branch predictor will speculatively execute the block using the 
+> original, unclamped type variable, performing an out-of-bounds read on 
+> client->evmasks[type]. The retrieved pointer is then accessed by 
+> bits_to_user().
 
-Thanks for the report. What I'll fix in v3 first, then the two claims
-I disagree with.
+No it will not because xfer_size will be 0 and bits_to_user
+(copy_to_user) will not dereference the pointer at all.
 
-Will fix in v3:
+> 
+> A similar pattern exists in evdev_set_mask(), where a mispredicted if (!cnt) 
+> branch can lead to using the unclamped type:
+> 
+> drivers/input/evdev.c:evdev_set_mask() {
+>     ...
+>     cnt = evdev_get_mask_cnt(type);
+>     if (!cnt)
+>         return 0;
+>     ...
+>     oldmask = client->evmasks[type];
+>     ...
+>     bitmap_free(oldmask);
+> }
+> 
+> The speculative read of oldmask is followed by a dereference in bitmap_free(),
+> which creates an exploitable side-channel gadget.
 
-1) Kconfig: add select DRM_DISPLAY_DSC_HELPER + DRM_DISPLAY_HELPER (for
-   drm_dsc_pps_payload_pack()) and DRM_KMS_HELPER (for
-   drm_connector_helper_get_modes_fixed()), plus depends on
-   BACKLIGHT_CLASS_DEVICE, like the other DSC panels. Verified on
-   arm64: disable DRM_MSM/amdgpu and the other DSC panels and Kconfig
-   happily gives you NT36532=m with the DSC helper off, leaving
-   drm_dsc_pps_payload_pack without a provider. Most DSI hosts and all
-   the DSI bridges select DRM_MIPI_DSI but not the DSC helper, so this
-   is easy to hit. Good catch.
+kfree() can not serve as a side-channel gadget. Additionally there are
+speculation barriers in copy_from_user() and when taking the spinlock.
 
-2) The set_display_brightness_multi(0x00d4) call sits in the page 0x23
-   vendor dimming table (0x4e..0x52, one byte each); 0x51 there is a
-   table entry, not the DCS brightness command. The stock OnePlus
-   Pad 2 firmware DT sends it as an 0x15 short write (51 d4), while
-   the helper emits a long write with a trailing 0x00. Will switch to
-   a plain one-byte write. The "51 07 ff" after switching to page 0x10
-   is the real brightness command and stays; I'll write it as
-   MIPI_DCS_SET_DISPLAY_BRIGHTNESS with an explicit 07 ff payload
-   instead of the byte-swapped 0xff07 (same bytes on the wire), and
-   drop the other accidental MIPI_DCS_* macro names in the vendor pages
-   (SET_GAMMA_CURVE, SET_ADDRESS_MODE, set_pixel_format, ...).
+> 
+> This pattern also appears in __evdev_is_filtered(). A mispredicted bounds 
+> check can lead to speculative out-of-bounds accesses for test_bit(type, mask) 
+> or mask = client->evmasks[type].
 
-3) Make the DSC template const and copy it into the instance at probe
-   time (ctx->dsc = *panel_info->dsc_cfg), like panel-novatek-nt36536 does,
-   so the module-global struct is never written.
+This is internal kernel function and is not user-controlled.
 
-4) Call drm_panel_of_backlight(). Brightness on this device comes from
-   a separate KTZ8866 backlight controller via the standard
-   'backlight' property (already allowed through panel-common-dual.yaml,
-   so no binding change). Without the hookup the backlight stays on
-   after a panel DPMS off; reproducible on the device here.
+> 
+> Do we still need to explicitly use array_index_nospec(type, EV_CNT) inside
+> these caller functions to prevent the unclamped type from being used during 
+> speculative execution?
 
-5) Move width_mm/height_mm into csot_display_mode; modetest currently
-   reports the connector as 0x0 mm.
+So no.
 
-Won't change:
+Thanks.
 
-a) "extra byte could shift subsequent commands out of alignment" - no.
-   Each DCS write is its own DSI packet with its own payload length; a
-   longer packet can't corrupt the ones after it. The 0x51 change
-   above is about matching the vendor sequence, not corruption - the
-   panel comes up fine as is.
-
-b) The two DSI devices keep sharing one drm_dsc_config; only its
-   storage moves, per 3). Both links of a bonded panel must run
-   identical DSC parameters, and the host derives the rc parameters
-   deterministically from the same seed values while the pair is
-   brought up sequentially in one thread, so there is nothing to race.
-   Per-link copies would just be two structs that must never diverge.
-
-Thanks,
-Junjie
+-- 
+Dmitry
