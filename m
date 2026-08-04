@@ -1,183 +1,168 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704003AEB39
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 10:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E47538D41A
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 12:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785840580; cv=none; b=DAqKklJylxPoyEjq0z0bN3bgWKazuChZz15bO3NvFXmX08m54K9N5Yq6Va3Fl3u4wmBQVzdBZDnt0FbsHxCHyKVmhXMJoc6IkCiFDoQ5s79AD2iNW8eSP9Xw8098IDvKH9GagVQobq9fTtVqyhaoRMd8km3s6I15HGMzzP225m8=
+	t=1785844940; cv=none; b=M4xyKrTlwT25UI8wdLFgr5BrVTtnkH+VRQprVU/EWW9IR1DRmx5mjOeLYPnKFjSlJ4Ll2+aSNWluoiRojlhppJ+xNd/SzANxu/ViF7NFY49ylHkn2ANaJU6brJdKwDHZbAUcnrmmA9MeGHGjDUaPHVqxVSum4tna/3YuPYefG+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785840580; c=relaxed/simple;
-	bh=KD9VCIcQkSM8zKdO3tZVGg8xj6KxViKMA32KyxDf4Js=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mTcQ9sY6Wegn+lJ0bV/7T9aH8juBZ6PZYPnlv7do0OpKhl1jMIH04l9cEl288xCBUyzsXTyLRiMit+fMKjMLSJrqvNAZ69gra3exdb6u3PmXKHTrpld4iikPFjrSGry5ioDEqglj92X6QNJscPOqV5ccn8SbfHp7srW2QUc9s+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=SyIphgvZ; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1785844940; c=relaxed/simple;
+	bh=lSLc/k70UPCCdOzCh8NUIoUpWf75XpOu624nl05a5Wc=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QBVAdpH/RRgQ4uqj0y3r7TkaVo0rfX4BvWOdrqrthejeVpj7nxv2KfyQTL/txCSnKGKBnNwfeH1gQMtRPAqxvSmUt6hDkQUIyg8t7J+zxRwoBUeVLk57lbgBrHuD7hUH+CEdGA054r8/PsmL0NvsfAVJiCkgR91/z/KbQqWxwZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ctj/SDST; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="SyIphgvZ"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6748HYHK323748;
-	Tue, 4 Aug 2026 10:49:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=pBEgex
-	hAipZeVO6mAKS9pwHLXOUZrWxtgHwQMlCESuA=; b=SyIphgvZ21Mj7Z2qKpmnom
-	nRUYjzfrrTDMBkstFg0RkPPticwD93lk0hodh9Biza7OwWlRwlX8JIgCRS4iOQD3
-	ZNi2rV4vVp4C/iNbPtOwrJJC5YghZfi5TJqg40iKT2MNjBWHREm9cUKGG6TFzHI9
-	syErOHxQF8dyoinVJr/X0AjmlSm1J4rCbJTBxfuDczTcmZ/Yy/9FYCB53TnxRPps
-	+Q2EiqR+qIEHCaxOeIHVoJ6e4UaYPtX2hdSQRvyUeT4Y4Dq2Vb92KPKQhYzoBvR3
-	8o5tnorCZgwT5I93MAAz8/1cKRtJcU8k8VBD1uUiYKU8LKjSPooRS7qHG3SADaZw
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8h4we19-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Aug 2026 10:49:38 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 674AfIaZ022440;
-	Tue, 4 Aug 2026 10:49:37 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsvmh9grg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Aug 2026 10:49:37 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 674AnaZm24445560
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 4 Aug 2026 10:49:36 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 37EF058059;
-	Tue,  4 Aug 2026 10:49:36 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1ACDE58058;
-	Tue,  4 Aug 2026 10:49:35 +0000 (GMT)
-Received: from [9.61.89.119] (unknown [9.61.89.119])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  4 Aug 2026 10:49:35 +0000 (GMT)
-Message-ID: <f3d5d78c-1992-4027-a1a6-345b76b5b14c@linux.ibm.com>
-Date: Tue, 4 Aug 2026 06:49:34 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ctj/SDST"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c1f758014b8so392303366b.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 05:02:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785844938; x=1786449738; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=SR8sWBi7icKINEBquF/kdhx+8pyyU169Pg6sxLELmQs=;
+        b=ctj/SDST1W14C9UK/YjnH1bNMvNgebsjH78aTGFhR6Z9xEZt54C1LtrM4Pkg4kX7Yr
+         vADaNXDVLLZ8hjYjoHQmNS83/JNKeF8XXv+c2GilGrH9AAwzPCfdWfNzdfu9g6j4hXzM
+         ckA92ox7ipHejQOmvb4lF4wOPmDhda5BJ/66bF45ZOZWYsSw8CjOih7FejbDUyhndoMS
+         PdsyymGANeTLGRC2C22kvElViAtjsu6Ggre/HZmpRy4dHH1sL8EG+zTgG9JlhH/AORZ2
+         0HzRt0+z0OyjkNQIvcaPp9LECisF24nXKu+CY+MQzyMnzSvO+drzf67D+p0/HMdNe3le
+         NgLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785844938; x=1786449738;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=SR8sWBi7icKINEBquF/kdhx+8pyyU169Pg6sxLELmQs=;
+        b=oCTZP4QljgQ9SN8wMnYWtYlj3Dj+dPe5SMfWx4FFYjGZLYnCCBKDPcndSNNNNa29SU
+         2Cu998F+DHXz3vw8luxiFIKHZ0qCbqv3YK9DdGvXi6YFUJs09A1MFryR3IS1ZjlHPVFV
+         k+QcTDcEcuNIl7+AW0GqkAxLLtae284t18oAO2IZqJxESf6wdiGbmfshv513nPEwiDHn
+         SLqu4nBCR4VNyr9C7qwcku3VLqie0SCcQW9bY5snqKoWbQ9ik0S1xMy000cvBqx/zWEx
+         OFPbkbmZJbHmGs/0Z9SNzSCzM2H30ljghl9SH0OrvnpwwH/XxL+wENN5EE2XBFAvu8Om
+         /A0Q==
+X-Gm-Message-State: AOJu0YxkRRe/OtNH2eO7NAuMSZRKhfn/EV3mRlTDm7tHxSwgSfzoEsGw
+	UpaVrAXifmKgoS82O7rODc5kEQqX4bKEcRObcmJ6VP7lpGKkdIp2OKy7QQzkGKPz
+X-Gm-Gg: AR+sD11o7j+sjGHgvZbvy3ydeTNjOz9YPOHNtOTZme2+coP9bQFuNHgd/sK4mc5U7Zh
+	5DVmm0uxyZf94sZukgDHQbWNlhEW/BYI51wPKi9IUdRCQAWMrwVavMsbn/rL2Hopj85nzoynWNY
+	w4t98KpNUhUsFSSk1ZD41ygQa6y7unqijJeGQsCvTMYG6FjJkPlKePW119Qy1fG/0eVJXXz5lB7
+	TJeZtKGC3VBnc1kevmrIdlWdLxelKflaXltgxNCgtN11/sFKsXEnwMCWumGZN090A36WfFxXK39
+	GEbFbVHRU4vW1iSwU9rS2bYONeAMWizssCqgocPdM5OLy91HdS4Q/SGtc5EiqdM0OesqhT2IgQe
+	AY20oQwKXefuaNM13D1wAvqTQwEJrRPLYXd4j6Lve+k0eta5BIdg5D/hP0K000VVUqwNp78mcm5
+	TjxnQc7e+UcJY7ydyEzhnJU+uF5sdfIC4nf+WsliSr2axgwZU=
+X-Received: by 2002:a17:907:9615:b0:c12:b225:bd0e with SMTP id a640c23a62f3a-c202d90adbamr165621966b.9.1785844936918;
+        Tue, 04 Aug 2026 05:02:16 -0700 (PDT)
+Received: from krava ([173.38.220.38])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1fd450d71bsm639710966b.46.2026.08.04.05.02.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Aug 2026 05:02:16 -0700 (PDT)
+From: Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date: Tue, 4 Aug 2026 14:02:14 +0200
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCHv3 bpf-next 06/12] bpf: Factor callchain_store function
+ from __bpf_get_stack
+Message-ID: <anHUxiuMInjr6Zuj@krava>
+References: <20260803210149.296496-1-jolsa@kernel.org>
+ <20260803210149.296496-7-jolsa@kernel.org>
+ <20260803213050.8EF301F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/15] s390/vfio-ap: Data structures for facilitating
- vfio device migration
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
-        kvm@vger.kernel.org, Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Halil Pasic <pasic@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
-        Kirti Wankhede <kwankhede@nvidia.com>,
-        Paolo Bonzini <pbonzini@redhat.com>,
-        Janosch Frank <frankja@linux.ibm.com>,
-        Claudio Imbrenda <imbrenda@linux.ibm.com>
-References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
- <20260727173239.2420754-3-akrowiak@linux.ibm.com>
- <20260727174014.E83231F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260727174014.E83231F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDA4NSBTYWx0ZWRfX0hhQMqoj0v0/
- lyC8Mk6JQ8X7AVyBfgkA0aL6Wrl6LGiOaN7zlu+XnwcK+x1QEpYx2j/hSfruhGaDbJ5TyzG5GRM
- 2PredeTMsnZUk5NWvaWPvkyOAYk8u+c=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDA4NSBTYWx0ZWRfX2Xl6yXL8QBlY
- pVL1QJEdbXPY/zoMu9fRDHlIOHnmeo+mHSmgeFZ2/FcPH7536azoQB7U7x+g3bPZyyU5KWjZ+0+
- TIEsIjnmNzKl7sueqOhVvi6xUSir2Eiw8AGaRjImZXJGUsN1LWwixrHX4kY8POHGzwZgodbIWLw
- LcF0ptscEcqSmFaxMGh3+IX6bz9FmnGLTioSMCi16lfRzdAoRgOOYJl4Q4/pRfUcb6C+EhMtuB7
- 8ZH+ao2a7nL3uCukL45t55nkexr8y6MCmhm9dJvz3nfuE9Az/jFjYUmu6X/OEYauMdTcOJTuGt2
- zJ5gnvhtW60qbJrQVRjePqUp4z0KuiRuxUnZaKAoLR2F6BxiZ/rJgBts+nEZ9oEtIQY2eGTOcwl
- FJCoIvSMFNnkWGvZlrV4gSp7uDYct4pyA3ephWHEMXh/nsEveuP03l0vrVGSSwjuPLe75BTJGZj
- 0DeM2Jqqg2L9nqp76mQ==
-X-Authority-Analysis: v=2.4 cv=SI1ykuvH c=1 sm=1 tr=0 ts=6a71c3c2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=MdEa33EV34lG5rOqodIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: WJpJ4pT4CAY8v9Zox9EB6HFrRWdXcvgN
-X-Proofpoint-GUID: WJpJ4pT4CAY8v9Zox9EB6HFrRWdXcvgN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-04_02,2026-08-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608040085
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260803213050.8EF301F00A3A@smtp.kernel.org>
 
-
-
-On 7/27/26 1:40 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The VFIO migration data structure lacks a magic identifier and version number, and relies on an architectural macro for array sizing, posing a risk to ABI stability.
-> - [Low] Typo and grammatical error in the docstring for `resuming_mig_file`.
+On Mon, Aug 03, 2026 at 09:30:50PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] A Time-of-Check to Time-of-Use (TOCTOU) data race exists in `__bpf_get_stack` when used from a sleepable BPF program, allowing concurrent modification of `trace->nr` that leads to a massive Out-of-Bounds (OOB) memory read and write.
 > --
->
-> --- Patch [2]: [PATCH v6 02/15] s390/vfio-ap: Data structures for facilitating vfio device migration ---
-> commit 1aa240c81b915a9ce3e59c82c532c41c1cab4d99
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Data structures for facilitating vfio device migration
->
-> This commit creates the data structures used to facilitate state transitions
-> during vfio device migration.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> new file mode 100644
->> --- /dev/null
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> 
+> --- Patch [1]: [PATCHv3 bpf-next 06/12] bpf: Factor callchain_store function from __bpf_get_stack ---
+> commit 1569be7d337e247b4d7eb8620dff965cc57a3fc6
+> Author: Jiri Olsa <jolsa@kernel.org>
+> bpf: Factor callchain_store function from __bpf_get_stack
+> 
+> This commit factors out the callchain storage logic into a new
+> callchain_store() function. It handles extracting both just-ip and buildid
+> data into a user-supplied buffer.
+> 
+> > diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+> > index 463f94ba1cc47..e51e03c4b60ed 100644
+> > --- a/kernel/bpf/stackmap.c
+> > +++ b/kernel/bpf/stackmap.c
 > [ ... ]
->> +/**
->> + * struct vfio_ap_migration_data
->> + *
->> + * Manages the migration state for the VFIO device that maintains the AP
->> + * configuration of the guest being migrated.
->> + *
->> + * @mig_state:		the current migration state
->> + * @resuming_mig_file:	the object used to restore the state of the vfio-ap
->> + *			device the destination host:
-> [Severity: Low]
-> This isn't a bug, but there appears to be a missing word here. Should this
-> say "device on the destination host." instead of ending with a colon?
->
->> + * @stop_copy_mig_file: the object used to store the AP configuration of the
->> + *			source guest for transfer to the destination host.
->> + */
->> +struct vfio_ap_migration_data {
+> > @@ -680,6 +680,29 @@ const struct bpf_func_proto bpf_get_stackid_proto_pe = {
+> >  	.arg3_type	= ARG_ANYTHING,
+> >  };
+> >  
+> > +static u32 callchain_store(struct perf_callchain_entry *trace, void *buf,
+> > +			   u32 elem_size, u64 flags)
+> > +{
+> > +	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+> > +	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+> > +	u32 trace_nr, copy_len;
+> > +	u64 *ips;
+> > +
+> > +	trace_nr = trace->nr - skip;
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but could this unprotected re-read of
+> trace->nr lead to an integer underflow and out-of-bounds memory access?
+> 
+> If __bpf_get_stack() is called from a sleepable BPF program, preemption
+> is enabled. Between the bounds check in __bpf_get_stack() and this read,
+> the task could be preempted. If a preempting task running on the same CPU
+> executes a BPF program and reallocates the identical per-CPU buffer, it
+> might overwrite trace->nr with a smaller value.
+> 
+> When the sleepable task resumes, this re-read of trace->nr could result in
+> a value smaller than skip, causing trace_nr to underflow and resulting in
+> a massive copy_len during the memcpy() below.
+> 
+> > +	copy_len = trace_nr * elem_size;
+> > +
+> > +	ips = trace->ip + skip;
+> > +	if (user_build_id) {
+> > +		struct bpf_stack_build_id *id_offs = buf;
+> > +
+> > +		for (u32 i = 0; i < trace_nr; i++)
+> > +			id_offs[i].ip = ips[i];
+> > +	} else {
+> > +		memcpy(buf, ips, copy_len);
+> > +	}
+> > +	return trace_nr;
+> > +}
+> > +
+> >  static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
 > [ ... ]
->> +/**
->> + * struct vfio_ap_config - the guest's AP configuration
->> + *
->> + * @num_queues:	the number of queues passed through to the guest
->> + * @reserved:	padding to ensure proper alignment of @adm
->> + * @adm:	bitmap specifying the control domains in the AP configuration
->> + * @qinfo:	an array of vfio_ap_queue_info objects, each specifying the
->> + *		queue information for a queue passed through to the guest
->> + */
->> +struct vfio_ap_config {
->> +	u32				num_queues;
->> +	u8				reserved[4];
->> +	u64				adm[DIV_ROUND_UP(AP_DOMAINS, 64)];
-> [Severity: Medium]
-> Does this data structure need a version number or magic identifier to safely
-> handle ABI stability across host migrations?
->
-> Since this structure defines the binary layout of the migration data stream,
-> could changing the architectural macro AP_DOMAINS or the structure layout in
-> future kernel versions silently break live migration compatibility between
-> hosts running different kernel versions?
+> > @@ -737,21 +759,10 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+> >  		goto err_fault;
+> >  	}
+> >  
+> > -	trace_nr = trace->nr - skip;
+> > +	trace_nr = callchain_store(trace, buf, elem_size, flags);
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but this is the preemption
+> window mentioned above.
+> 
+> The check if (unlikely(!trace) || trace->nr < skip) happens right before
+> this call. For sleepable BPF programs, preemption can occur between the
+> bounds check and the re-reading of trace->nr inside callchain_store().
+> 
+> Could we cache the validated trace->nr value (e.g., using READ_ONCE())
+> and pass it to callchain_store() to avoid this Time-of-Check to
+> Time-of-Use race?
 
-Will add magic and version fields an check them when userspace sends
-state data to the destination host (RESUMING phase).
+there's preemption fix for this later in the patchset
 
->
->> +	struct vfio_ap_queue_info	qinfo[] __counted_by(num_queues);
->> +};
-
+jirka
