@@ -1,105 +1,106 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-244106.protonmail.ch (mail-244106.protonmail.ch [109.224.244.106])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EA733555F
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 06:10:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785823807; cv=pass; b=pNAtl5/Or9lKiEzImIE7Ygu7FBN5ddpW4kEZgLJOSZozkZyHauQZEbhJgY504SRa+qOTf/UIsUT5EqXB3w2HtV9gSE35IoG4AkBTomoJLT1kWP+zjR2hjg5JpjnNFNUIU2U7tUHasuPTpRUi/BibDiq0SeDWSsd00Jmxo85r2ek=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785823807; c=relaxed/simple;
-	bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GLzL03bMKg6gMjQJrMRbTaR0Zcg6MEEc0H4ti8hB/vYX1IG0gCVFfq3qDfdwJIhvzQB0B6bXYc7pkdL8I0VlcLIIVEf3/6J73VKHUoOJYkjWWcT2B9ax0Arztd3hAxrp36CLdbApEnD/AYLlLQ7V7v/TBNOqOfCGaP0mZzpWCtc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thegoodpenguin.co.uk; spf=pass smtp.mailfrom=thegoodpenguin.co.uk; dkim=pass (2048-bit key) header.d=thegoodpenguin-co-uk.20251104.gappssmtp.com header.i=@thegoodpenguin-co-uk.20251104.gappssmtp.com header.b=y4frb7br; arc=pass smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thegoodpenguin.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thegoodpenguin.co.uk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54C64192F7
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 06:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.106
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785825733; cv=none; b=P892zwsEpJw6D8tLQp9QWTndQUVMB+sBALVGc4yIiNUd/bnjc/mUv8qqKQaBf59GnMzwlJev/U96tCc3PlmSUSB0IdztR95WKu9tEbe0zNqvHumlf5MiJXLouUH2MDI1p1+LH3Xe98wyDLUtPe+zrTxJM8tsI+xn7N6L+7vNo6M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785825733; c=relaxed/simple;
+	bh=yIHdF3PYCZQboJL60wyDz7x7CAlea4w+2XwbHQpw1/A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q/cifRp4iV0DtLvZhPH98Lnsim7tD8/aPxE7qPUGUhmRuhE56TzTFwNIQh6eehYMZsinchBjOtxs0rCOvRZwcuHtoAG+RWudK4mWoJ4wWdTTj8Vmw2ft0jioZ4n/x1EwT+p2wfB42szQ3lZ/DM9conwKQUjssbo6yllHUHP+d9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=Pe7w/ejm; arc=none smtp.client-ip=109.224.244.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thegoodpenguin-co-uk.20251104.gappssmtp.com header.i=@thegoodpenguin-co-uk.20251104.gappssmtp.com header.b="y4frb7br"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-51c0ecfaee7so25755931cf.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 23:10:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785823805; cv=none;
-        d=google.com; s=arc-20260327;
-        b=icDvlJIdj8D0uN/wjIcKmgKWEa3tlOW8xviZdx89+tW9F3V6VtppHFgAzNsMq3NmdT
-         PpjsprfT1VAl930s1Yo768CFKX4VmcZ5sCMBtyhvy3h/nIhvn0npQwGdYXDvO3J1WyKl
-         +onaDV6a7ORmv+8625Wj/Zw59G4SDWpO+6trIMmQce+YvJttrYpKUXzuntZhCYlCCFrK
-         dcErnVFJWNwsMD5BezhbgmjFnlNUkBr59z0/srBl35mBFAEPmgePMI3V68jCboDUFz3e
-         DOU6QujuG0e6E4QiA0rBPhMHBhf08q9tI151BQirFwnK0JBtVO3Y/Tc/xwuGou0+/stX
-         kxZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
-        fh=dDAumcgQ33Fwf79p/1I1EFpRzWzhL3DlykLAU5ChR1E=;
-        b=C8cqf2PnrSj6LyR6fSKsuGJavEBrKYfOHkAsxH7SpVyFfS9vw+NA3saj6RVxg82W2c
-         gmfo7JZ1jHbhBfaRaaUcNtUtjPf/rltJeX+m/wVJWLlEz25gpplg+s5CfKkoWpQhmteB
-         0uIhoBb6zp8PQRUbvxQrwkuPwXC8ysXBDTGS16WaxTNTHlFQY84XwxicyvdLjcb7Z2LS
-         Zaxg9w32x3ezP2Xa+ID4BirK3XARBnMyqsX2d9na92P9eUuo5YzjabF5IzmSEE6JqQgP
-         XYth6vxS8r5nZIqwjRK/QtX37zBl9FcA3xS+M0LpU+P1LjdhDF0I+P0WkUtIu/fX+NBv
-         9c/A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thegoodpenguin-co-uk.20251104.gappssmtp.com; s=20251104; t=1785823805; x=1786428605; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
-        b=y4frb7brhii/D3v0/kxSWTyVuPqVMo3cLhtchVe0fvqkIuLkgFOeAM9qsB/ZxPtQI6
-         rQIYsXbizALXDTn+fs+abw5+v3vPGgwaEPeNxI7vLE+sxWKFBr4EtF9ONS70jSg+QXz7
-         8D8n039pTHLkguq6Z50zA+HXNjiw6coSJFYHRbu17ZR6FbV0uF07RGrennSvL1I+iZpk
-         mdZpUSSDWJXmbdejzVcRBVCMim5xUZfwlFWXI8WnOnukh6PIzQzCgpL9LwOCLCyiViNt
-         r/EZfLxDoEYLfChDAqCAyVSN6jgvQAdTB9KVgVFSuJ+KC+s3maqqCFVWdj3PWVqt8Lct
-         FQrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785823805; x=1786428605;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
-        b=qxHw0KKv/S15rPTnlsW3XLHnuw2Cnf8hJ1Gv0jA7nx164KiR1QUnuxq14BaV5siPBf
-         j5NB4s1ofux+Y2jETKXnFvnA31LcGm+z7zaKholkyZyIN1S0c4GiY9TQyUz/5K5oYle+
-         Q1klfj3bxOp+IWCs8c1vVIM+Ri1qkZ0q2sC0L+RigpuDPtMugf8O1OP6s0ljVn8vZXUo
-         mlXGMsxll4rPQfgfuSuB/yej/EPO23hsLQTV57275XxVsn/7vz8AecrVr8HkyorlFli+
-         HbP06PeuJ8PYUaoxqE1dju2T7s+yZTDnYULNa7QTixZRK1PnD6benalQ/lXxpxKwhTJa
-         pAvQ==
-X-Gm-Message-State: AOJu0YxdICKflH3S1YcZLfLMbsFtaPiOrfbAWAkErfr1DGfyRs8ip5Ou
-	X5GkX9GUeOqiGbHh9vLl7kbPXiEDFdBbi4BUvzQGK2IfNe6CqGiRGsT42b+1nWL70lHj2bndCgx
-	IoviQAT1X2pzZMZfTGJxKLWYtKAc337qGtksQNBujrou9dlnjRllPwm0fBlMQ
-X-Gm-Gg: AR+sD12nzpdO7PP0lLkuYm4kzZIB8mDJ0sG8SZuN6FqvdeAl2fTUG4qLzvSS8oUv6VS
-	SrhtRNQSBokWCZllmgBjshJSSBcIHvCmllj2boXpWGBB2b5JALeQx21balmEYOGbPRKxVjo7Mb+
-	D3CGx573xATiIAv+MVSxwhxwhQHUE1VFDOpy7/5xlDOgyCEBdV1KaY+dKyNzZwl/zQl5rvJmra1
-	ehXzpw3P2g+Aw8F3R7tCB9V1zyNQ+3zWaK4aqvL/iVhgiPmrF7+1emZsbsoo0CmQaEhj8Oe7Qoz
-	AeWXVmC/Acj9rDSp+r5WXCSP0/Dfhuh0kfJMWC8AQzwozvFyZQPs/Lk=
-X-Received: by 2002:a05:622a:53c9:b0:51c:9193:fd9e with SMTP id
- d75a77b69052e-52b566dd26bmr285053611cf.15.1785823805225; Mon, 03 Aug 2026
- 23:10:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="Pe7w/ejm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail3; t=1785825724; x=1786084924;
+	bh=31Ug+fA+RrUX7m+kiXo712hLEFUM8g1A+Ov7N/lwW1w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Pe7w/ejmJtF3Zldi1kAmx1elH6px3iFzJjqppVszQs1k2qJGoSe07sDhioClu7k8t
+	 hfEKu6KbvZEk5dO0gjBSj1Ru4gMqs3xhojbnkDWsxNuNBMIo6ryEO1psWKjk1tIuyc
+	 yOBW7KRCoDwv2LE6nWuemGkjqf/WWobPieVSSaEHudpmQTt9PuPGFIKRYHdGuIUFNk
+	 E/6bveEHGnW5pXboiHwuOMbf8a6CG2qpAKOh+HOXlDUjvbuTGPeLPRstC0B7IUN688
+	 HwQ7Rhs6zwxRKBhj+EKPOphdT68EVrdidaLhGqIBG5C/YcDjvtlA08iWBH9EDGzsGE
+	 RWmM3wv6qPKLw==
+X-Pm-Submission-Id: 4hDkVK0ysCz1DGhD
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH v3 1/3] drm/bridge: ti-sn65dsi83: Propagate error in
+ sn65dsi83_reset_pipe()
+In-Reply-To: <20260803150412.BF11F1F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Mon, 03 Aug 2026 15:04:12
+	+0000")
+References: <20260803-ti-sn65dsi83-fixes-v3-0-9b403a405ccd@geanix.com>
+	<20260803-ti-sn65dsi83-fixes-v3-1-9b403a405ccd@geanix.com>
+	<6QecEBYszLlt-wRCd-IUkmVSkazILKAUnV8GyeWN-yOnVHHlKwWkc1E632SK5diLdL_qS6z4QTHRg1DqEGIY_A==@protonmail.internalid>
+	<20260803150412.BF11F1F000E9@smtp.kernel.org>
+Date: Tue, 04 Aug 2026 08:41:52 +0200
+Message-ID: <87y0embd5b.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260803-ata-acpi-v1-0-f606afaacad1@thegoodpenguin.co.uk>
- <20260803-ata-acpi-v1-1-f606afaacad1@thegoodpenguin.co.uk>
- <20260803151417.3DB001F000E9@smtp.kernel.org> <anDy13qZ6rr1tFqO@ryzen>
-In-Reply-To: <anDy13qZ6rr1tFqO@ryzen>
-From: Pawel Zalewski <pzalewski@thegoodpenguin.co.uk>
-Date: Tue, 4 Aug 2026 07:09:52 +0100
-X-Gm-Features: AUfX_mwWoxNiEiKFO7YpB4PerbiuIoha9b8E02ql7BazlhlXy21NTJ2evt-pFQs
-Message-ID: <CAA6zWZJ_TCa4CyEGFd-a-u_NS=Dv64KV-HONhomER2PC7p+EyQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ata: use named initializers for acpi_device_id
-To: Niklas Cassel <cassel@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-ide@vger.kernel.org, 
-	dlemoal@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
->I do kind of agree with Sashiko that ahci_seattle.c could have been fixed
-> in patch 1/2 (rather than fixing ahci_seattle.c in patch 2/2).
+<sashiko-bot@kernel.org> writes:
 
-Happy to refactor in V2 so that patch 2 would only deal with removing
-driver_data = 0
-in the ahci_seattle module.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Leaking an SRCU read lock on the error path in `sn65dsi83_reset_work()` due to an early return without calling `drm_bridge_exit()`.
+> --
+>
+> --- Patch [1]: [PATCH v3 1/3] drm/bridge: ti-sn65dsi83: Propagate error in sn65dsi83_reset_pipe() ---
+> commit d19637cc30dea31a13c6747fe2aa3733116ec5e5
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> drm/bridge: ti-sn65dsi83: Propagate error in sn65dsi83_reset_pipe()
+>
+> Propagate the error code from drm_bridge_helper_reset_crtc(), so that
+> callers has a chance to handle the failure.
+>
+>> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+>> index 42b451432bbb6..476f255bd34dd 100644
+>> --- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+>> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+>> @@ -403,7 +403,7 @@ static int sn65dsi83_reset_pipe(struct sn65dsi83 *sn65dsi83)
+>>  	drm_modeset_drop_locks(&ctx);
+>>  	drm_modeset_acquire_fini(&ctx);
+>>
+>> -	return 0;
+>> +	return err;
+>>  }
+>>
+>>  static void sn65dsi83_reset_work(struct work_struct *ws)
+>
+> [Severity: High]
+> Does propagating the error here cause an SRCU read lock leak?
+>
+> By propagating the error from sn65dsi83_reset_pipe(), it is now possible
+> to hit the early return path in sn65dsi83_reset_work():
+>
+> 	if (!drm_bridge_enter(&ctx->bridge, &idx))
+> 		return;
+>
+> 	/* Reset the pipe */
+> 	ret = sn65dsi83_reset_pipe(ctx);
+> 	if (ret) {
+> 		dev_err(ctx->dev, "reset pipe failed %pe\n", ERR_PTR(ret));
+> 		return;
+> 	}
+>
+> Because this early return skips the call to drm_bridge_exit(idx) at the
+> end of the function, wouldn't this leak the lock and cause a system hang
+> during drm_bridge_unplug() when synchronize_srcu() is called?
 
-Kind regards,
-Pawel
+Yes. This is resolved in patch 2. I will reorder the patches in next
+version.
+
+/Esben
