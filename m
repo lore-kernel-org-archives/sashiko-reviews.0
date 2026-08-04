@@ -1,83 +1,258 @@
-Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC043C4562
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD8E3EC835
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:33:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785856549; cv=none; b=uop1ueOb1D/W4uj6YkaQRRVKMe4lfBxFdLdyMjnf6elIhuBTpv6rLldILT1ZMPKehROUPrGEG273cquLtjduByxLSsqlJgZhf4QMXb/+ENkev55Zqts9xaEs3FE+fMmWTDhW6cjFnZW4w8rF9l2rTAKkVcS85wWQr5ZwWU9T9kU=
+	t=1785857590; cv=none; b=rhoeHTi9SnVxvPkp6hFr6r91aEHPuAKPg+dT3bR1bRfI6AB+Waz2nebyVKkBddOiMalT1sFkwu3KhEsk5gz229W6Cd6boVGC3jjprnqHe25s8DZBuE/D7p8D3YJsqoMR4AJ908llkS63SSle+pWSe7aX8xatg2AgGtAemTjq4EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785856549; c=relaxed/simple;
-	bh=cq0nHALLi0tMHAVAK/aPY3SV7ESZLUW+ZjXlOpXq2LU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VVu056z31ss8wNwVqLQELaP8fcGV1oEwFIwsStA78j40kh222Z9z0UNRVcm3vdmdyXs9sVo+QYj2WcO4Zekc8o4YnxBIST5ortTOdhMQyDVLqCXiJr7X9LtHxGZF8PPjGw+etn0olV+djECftbvUjQqhugnTYV1Ri4Ke38mdYYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=qAC3W+n1; arc=none smtp.client-ip=161.97.139.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
+	s=arc-20240116; t=1785857590; c=relaxed/simple;
+	bh=dYq9jW2R3qmMFaWjd7MbN/kTfJNrAFA9BJigKH6JfpQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kUJ0USc9cmXhx0tlmbOpbwnw6o3PUKW/lv9qqmFMZkDX5JABapdOzpKioJuXRieZzLISYwgsDFW/IidS6aqn5bgK2q7ZRVaRBkdEYy99WCp0xfdg+wb6vnp/U3pJrj3+uE5NYI2kgg1HGrNxnMTdlaOFQFFTSz6IKVDzYqNjbUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=rSgnqMk5; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="qAC3W+n1"
-Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
-	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <andreas@kemnade.info>)
-	id 1wrGKT-00000001dDg-46dq
-	for sashiko-reviews@lists.linux.dev;
-	Tue, 04 Aug 2026 16:41:17 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kemnade.info; s=20220719; h=References:In-Reply-To:Subject:Cc:To:From:
-	Reply-To:Content-ID:Content-Description;
-	bh=umx+0Xbf1pGIjPYZoWYg8y6Brc8GBYfdVPjn8jMxYQI=; t=1785854477; x=1787064077; 
-	b=qAC3W+n11tlrd1g+Lg7x+pXQ3CBPNwNqV1vUFzgmYkTnc9i0HTWERVyf9LwbHrcg10gUCZz+CEV
-	UuQ9RMT2FMpd/d/qcBnnPLNQouf6hJ/+XaY4PxB4f/9xOwzfera4bDFuBACErW/HQy38T0sS/llrc
-	MpQ3dtNSue9N/mURbKRTmqded9B1XhlQ/AfUuZD0MfdZMHjeVfhnCr1WZEFWFwbVmeYVYZuam8tHn
-	BY8BTLgv0Lx4xTon2mseAqrFQTPjh5Rv0tm+uUx6gs7Np85JliIgwsTaQ38EenHtveA+dVH2GtBh1
-	GtZXCjSxuVLVnSNPClZi4LdDX8SN7FYYg/fw==;
-Date: Tue, 4 Aug 2026 16:41:01 +0200
-From: Andreas Kemnade <andreas@kemnade.info>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, lee@kernel.org,
- linux-leds@vger.kernel.org, "H. Nikolaus Schaller" <hns@goldelico.com>
-Subject: Re: [PATCH v3] leds: is31fl319x: modernize registration
-Message-ID: <20260804164101.43753f1b@kemnade.info>
-In-Reply-To: <20260804135515.5DBFC1F000E9@smtp.kernel.org>
-References: <20260804-led-modern-v3-1-297720eec19f@kemnade.info>
-	<20260804135515.5DBFC1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; aarch64-unknown-linux-gnu)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="rSgnqMk5"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 674ClfEO3207664;
+	Tue, 4 Aug 2026 15:33:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=XE02UJ
+	Romip4iJZkmfQ5moAwMXSOmCInqtS3WWhoUzM=; b=rSgnqMk5T2C2DGjhWYZhe3
+	7vNiDTx7M/pX+Ivykv8fJx9R8QJF2afOk0dnQDtbbI0b3y0Ilywu7XBEjrFi3wqI
+	mbxaohIst24XFl38RlMJyH9iOpDcDjYi1kKtXksD6vxe0KWKGitiGFUTZEd7XmIV
+	5a0bV45V0le01IblmChgOgkzrRAsd5dB1ll6AKlzEq/wN95CO7btP2AScQVITxQ7
+	sy6QdfKA8POEqv5DjqberuTSz3qf3wvtbRgdGCNI8dEwnBS4iJIWuUfxYoEmc3zF
+	6dxBiOn1Pf6UsitJ+GWtdNAaJRc7V3wlPnIDASHgbMnw1d7t80oLW1wfp7SFmwDA
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqpgx5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Aug 2026 15:33:08 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 674FQEJS010608;
+	Tue, 4 Aug 2026 15:33:07 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgab60-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Aug 2026 15:33:07 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 674FX5sC40763654
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 4 Aug 2026 15:33:05 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6FB9C58057;
+	Tue,  4 Aug 2026 15:33:05 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5930C58062;
+	Tue,  4 Aug 2026 15:33:04 +0000 (GMT)
+Received: from [9.61.89.119] (unknown [9.61.89.119])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue,  4 Aug 2026 15:33:04 +0000 (GMT)
+Message-ID: <45a47180-06c5-4e0e-90df-1e7f396f0a52@linux.ibm.com>
+Date: Tue, 4 Aug 2026 11:33:03 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/15] s390/vfio-ap: File ops called to resume the vfio
+ device migration
+To: sashiko-reviews@lists.linux.dev
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
+        linux-s390@vger.kernel.org, Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Halil Pasic <pasic@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
+        Kirti Wankhede <kwankhede@nvidia.com>,
+        Paolo Bonzini <pbonzini@redhat.com>,
+        Claudio Imbrenda <imbrenda@linux.ibm.com>,
+        Janosch Frank <frankja@linux.ibm.com>
+References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
+ <20260727173239.2420754-11-akrowiak@linux.ibm.com>
+ <20260727181221.355E61F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260727181221.355E61F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: WSecPqoCJy3oRlmhObPKEhvvELTskCB_
+X-Proofpoint-ORIG-GUID: WSecPqoCJy3oRlmhObPKEhvvELTskCB_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDEyMyBTYWx0ZWRfXywTYg6/F/hJj
+ VrFOajy8jg593p635Y3bLXZKfSzOaFSZGhy4vzUlPNEuoSXhsqhypb6ZrDQGUCRoMm2h1ntD6bN
+ A3ywu7mn0hPUfv3/agp/EEYOprYNMnE=
+X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a720634 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=ydTiwiBtxl0LLes2vgoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDEyMyBTYWx0ZWRfX7qIA4qGuPeTI
+ VbP6TfqwoqBfHdgBpDiv93p5fFGDb47YPOj1DCaogr8SD7YTIfLHook2FSKRxUdbPurNJUPZVVW
+ 2Q0Tyo62oN4QvysolefRCVvbnQnvi/7RRkYbVPypKIKK+dy5a+/zZREouTdz2EW9X/CDQ0+GbKi
+ iZf7anbeY6G3AaNzr0wyvHHFYxQiHbU0db0ua/YaY36RBK2yb8TgKSKSkquoCXyK351hJgtIEoU
+ eXX8eUx8LcCf7Xqj55YUKZmW1HQ/9XrdlAmvPqq2KsC3mUVPA0VYWsw5gBDKiqPKD0gr3Rmearf
+ TfHoguKPGTTJ4BPnm/VC2hG1VEhs04yTUFUPP1EBkxZAqrhvCJKwcglIoNiL1PkTK4ZZWdszTaF
+ MXZF6LP2jVUQNwepKq5DL16A6jtOLT95JnMHqUxaS2hbiVI7CCMSXBLaOMxkV1U43WEpX7JB/4Y
+ mjsKL3DKuAckFB9CBWg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-04_03,2026-08-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608040123
 
-On Tue, 04 Aug 2026 13:55:14 +0000
-sashiko-bot@kernel.org wrote:
-
-> > leds: is31fl319x: modernize registration  
-> 
-> [Severity: Low]
-> This isn't a bug, but should the description after the subsystem prefix be
-> capitalized? The LED subsystem guidelines recommend formatting commit messages
-> as "leds: <Driver>: <Capitalized description>".
 
 
-~/linux$ grep -R 'leds: <Driver>: <Capitalized description>"' Documentation/
-~/linux$ ls Documentation/leds/
-index.rst                  leds-lp5521.rst      leds-sc27xx.rst
-leds-blinkm.rst            leds-lp5523.rst      leds-st1202.rst
-leds-cht-wcove.rst         leds-lp5562.rst      ledtrig-oneshot.rst
-leds-class-flash.rst       leds-lp55xx.rst      ledtrig-transient.rst
-leds-class-multicolor.rst  leds-lp5812.rst      ledtrig-usbport.rst
-leds-class.rst             leds-mlxcpld.rst     uleds.rst
-leds-el15203000.rst        leds-mt6370-rgb.rst  well-known-leds.txt
-leds-lm3556.rst            leds-qcom-lpg.rst
-leds-lp3944.rst            leds-s2m-rgb.rst
+On 7/27/26 2:12 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Double fetch vulnerability in the resuming write path allows out-of-bounds kernel reads.
+> - [Critical] Use-After-Free during concurrent device teardown while executing copy_from_user.
+> - [High] Lack of rate limiting in validation error paths allows userspace to flood the kernel log and cause a Denial of Service.
+> - [High] Unsynchronized concurrent writes can trigger premature configuration validation on uninitialized memory.
+> --
+>
+> --- Patch [10]: [PATCH v6 10/15] s390/vfio-ap: File ops called to resume the vfio device migration ---
+> commit 56776518d352cfe0d799d4f95bc7d9c8703337bf
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Subject: s390/vfio-ap: File ops called to resume the vfio device migration
+>
+> This commit implements the write callback for the vfio-ap device migration
+> file stream. It restores the source guest's AP configuration by validating
+> and hot-plugging it into the destination guest.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index c7fecad0b6769..c12ba82ec5277 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> [ ... ]
+>
+>> @@ -881,14 +881,20 @@
+>>   static void report_qinfo_incompatibilities(const char *mdev_name,
+>>   					   unsigned long apqn,
+>>   					   struct ap_tapq_hwinfo *src_hwinfo,
+>>   					   struct ap_tapq_hwinfo *target_hwinfo)
+>>   {
+>> +	pr_err("vfio_ap_mdev %s: Migration failed: Source and target queue (%02lx.%04lx) not compatible\n",
+>> +	       mdev_name, AP_QID_CARD(apqn), AP_QID_QUEUE(apqn));
+> [Severity: High]
+> Is it possible for userspace to flood the kernel log here?
+>
+> If a configuration with a large number of incompatible queues is provided,
+> verify_ap_configs_are_compatible() continues processing rather than aborting.
+>
+> Since report_qinfo_incompatibilities() and its helpers issue unconditional
+> pr_err() calls for each mismatch, could this cause CPU stalls or a denial
+> of service?
 
-nothing look like special guidelines for the system. I do not want to
-see such comments without a reference.
-Also MAINTAINERS does not show any additional policy for the LED subsystem.
+While it is highly unlikely for this to happen since it would require 
+that the
+system have an inordinate number of incompatible queue devices, the
+pr_err calls will be replaced with pr_err_ratelimited calls.
 
-Regards,
-Andreas
+>
+>> +
+>> +	report_facilities_compatibility(mdev_name, apqn, src_hwinfo, target_hwinfo);
+>> +	report_mode_compatibility(mdev_name, apqn, src_hwinfo, target_hwinfo);
+> [ ... ]
+>
+>> @@ -1071,61 +1071,80 @@
+>>   static ssize_t vfio_ap_resuming_write(struct file *filp, const char __user *buf,
+>>   				      size_t len, loff_t *pos)
+>>   {
+> [ ... ]
+>
+>> +	/*
+>> +	 * Snapshot and advance *pos under the lock before dropping it for
+>> +	 * copy_from_user().  This prevents concurrent write()s on the same
+>> +	 * stream file from computing the same destination offset and clobbering
+>> +	 * each other's data or racing to reassign mig_data->resuming_mig_file.
+>> +	 */
+>> +	write_pos = *pos;
+>> +	*pos += len;
+>> +
+>> +	mutex_unlock(&matrix_dev->mdevs_lock);
+>> +
+>> +	if (copy_from_user((char *)ap_config + write_pos, buf, len)) {
+>> +		if (new_allocation)
+>> +			kvfree(ap_config);
+>> +		return -EIO;
+>> +	}
+> [Severity: Critical]
+> Can a concurrent device teardown cause a use-after-free here?
+>
+> The mdevs_lock is dropped to perform copy_from_user(). If a concurrent
+> thread closes the VFIO device, vfio_ap_release_mig_files() will call
+> kvfree(mig_data->resuming_mig_file.ap_config). Would this result in
+> copy_from_user() writing into freed kernel memory?
+
+The vfio_ap_open_file_stream calls vfio_device_try_get_registration()
+(see patch 06/15) which pins the vfio_device reference until
+vfio_ap_release_mig_file() runs — and release only runs when the file
+descriptor is closed. The file descriptor cannot be closed while a write()
+is in progress on it. So matrix_mdev and its mig_data remain valid for
+the lifetime of the write call.
+
+>
+> [Severity: Critical]
+> Could this sequence introduce a double-fetch vulnerability?
+>
+> The first fetch in allocate_ap_config() reads num_queues to determine the
+> allocation size. The lock is then dropped, and this second copy_from_user()
+> overwrites the entire buffer, including the num_queues field.
+>
+> If userspace modifies num_queues between these fetches, could it inflate
+> ap_config->num_queues beyond the allocated size, causing out-of-bounds
+> reads in queues_available() when it loops over source_config->num_queues?
+
+A fix will be provided for this in the next patch series.
+
+>
+>> +
+>> +	/* Check if we've completed writing the entire configuration */
+>> +	if (write_pos + len == cfg_sz) {
+>> +		/*
+>> +		 * do_post_copy_validation() calls ap_tapq() which is a slow
+>> +		 * hardware instruction.  Run it before acquiring the update
+>> +		 * locks to avoid holding guests_lock, kvm->lock, and
+>> +		 * mdevs_lock across the hardware calls.
+>> +		 */
+>> +		ret = do_post_copy_validation(mdev_name, ap_config);
+> [Severity: High]
+> Does this completion check safely handle concurrent writes?
+>
+> If userspace issues asynchronous write() syscalls for different chunks of
+> the payload, they might execute copy_from_user() concurrently. If the
+> thread writing the final chunk completes its copy before threads writing
+> earlier chunks finish theirs, could do_post_copy_validation() be called
+> on a buffer that still contains uninitialized data?
+
+The completion check could theoretically fire early if concurrent writes
+are issued, but in that case the validation in do_post_copy_validation
+would catch any resulting inconsistency and return an error — the worst
+outcome is a failed migration, not a security vulnerability or kernel
+corruption.
+
+However, a write_in_progress flag will be added to vfio_ap_migration_data
+that will be set when the vfio_ap_resuming_write function is called, unless
+the flag has already been set, in which case the function will return 
+-EBUSY.write_in_progress
+
+>
+>> +		if (ret < 0) {
+>> +			if (new_allocation)
+>> +				kvfree(ap_config);
+>> +			return ret;
+>> +		}
+> [ ... ]
+>
+
