@@ -1,265 +1,171 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazolkn19013087.outbound.protection.outlook.com [52.103.46.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607573B1029
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:38:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3323FBB6F
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.46.87
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785857897; cv=fail; b=LVr5G9zESTKZi8h/jRThFrcXgtHLRzSbuXf+kuSgmW3Rhfy3JTT7uYzP3TZTtedyxkw4bZnLO2kk0Ggtj/XvfJtmm1kb2m48lZTEW75fNrFrqAzhnJcUWEJ9MKskcF5cGrEB+sdjyshJFEKl6KxOFBgIxy5o3F2QJ5zzDkIY+Rc=
+	t=1785858085; cv=fail; b=hfv5NtxifNDZQEH6cxqGVEqrNw9G9DiR9+ocJkZRKtvVrMp95APfo2wk+5goxXBCxwqcSBt6e1sSX70vMnzMAoWU1UaiAQNeh5SJyHLt+CO4nr6O9nSWPENEhPGVn3LSoz87APdEAlxK8+KsgbfkjB7r4QvrqkMTfQHOgalMLls=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785857897; c=relaxed/simple;
-	bh=psUQG3xPhb+lFfDN7jgAe41gYG6Y5erY+XATk+1xH8U=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=eemSOKkgoRF7GEUMRTNRLi3Yvwm9wSHG3m7+0zi21YHY9uvgt5FmBs4ulCGQhoZqSEr2/A1Dq8oFHBn5lYW1153DG9Re5mdUZOjJSmTLUWk91bu8gnj6YydwlZ7KQWG5QkQVa/FqeaNIfjgciTOQz1Zo9bvyr0PasBCQKP6VU10=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SMY47Pf5; arc=fail smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1785858085; c=relaxed/simple;
+	bh=PdQIs1xm5lE203qvhMJCYvVv6d5qzHt0i1Tf4jBJ8y8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PEaIfQx18hf9AIykvlyCJPtmq07hHFPBRTKyjt6tEmLpi0pkSqpwJG6D/LkKEZPo1UQdcnriypQO5CY0FZZtCmWofK8zNil2b3hTU3YWSVUgrFGxRnE5E2uRozNljhEikzesHKEaxwD2ZYqugd3gkyOgDzN7lmtjPosyOiDQ1TE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=AAXduEih; arc=fail smtp.client-ip=52.103.46.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SMY47Pf5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785857894; x=1817393894;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=psUQG3xPhb+lFfDN7jgAe41gYG6Y5erY+XATk+1xH8U=;
-  b=SMY47Pf5pZco/VVXw+AW/vZUbuZ6aZUAIhhz8gQUGEcsrIezGgC1Xonh
-   ajau3hYJjoK4TumR8IWj8w+vkTxFieHAUvoL8UqLipoSjPMhRb8uM2Zv1
-   CpMsiDYaVkzEKY+YRMnIpHd6V6D0sQCQYH5l2HvYy6HKsRKZh0XIzvBGm
-   Vi6xaiy0b877U5+clGoniQMPWg446VsVLvC0a+25EmS6Z2kGQ8DhhAzFX
-   f6APNpxg1mw5Qp904bVNTugCqmP02OVfDOeb100s0trqR9D6U8t5bOGsC
-   jjZ1z9hr3DhxqiVldn4VuJj+fHRMOPFy1dFLw3iNbHlJA6NXhajojraP1
-   w==;
-X-CSE-ConnectionGUID: nJ4Y6D0JS/CcAVHOAVUjxA==
-X-CSE-MsgGUID: ymt+wnWZTHKMkmS1gbA7DQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11865"; a="97918271"
-X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
-   d="scan'208";a="97918271"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 08:38:13 -0700
-X-CSE-ConnectionGUID: xDHMW25HQzCVp6OlZeqh1Q==
-X-CSE-MsgGUID: jOgWrLUISwu1oIUe+Lvv6Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
-   d="scan'208";a="260959678"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 08:38:13 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 4 Aug 2026 08:38:12 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Tue, 4 Aug 2026 08:38:12 -0700
-Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.1) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 4 Aug 2026 08:38:12 -0700
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="AAXduEih"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=su//xpkQvYWDoL20zuMw4PSg1M0+yeB45wkPAlAHnQ2mSDr1UZErLzbJiESsSPL3/sa/Uma2a3Wm4y6BrHmeOOG7oOIwbe8fSF9dnpzT7IE7UQxLXdLDl4r1lof1bcndFNqFkNq7BSkn0e5QXNf4uFmnf9rcmUrf37lxjoP41gnpPVhjS2gtPAyfHP1azt8wPxml8ULZ5Hv8eydGTAuNWPxGO4LQZYQ0LLXJKG8T0OWkyEdtJtMQ5+a1yuvqp6KfBZ4rs7dQutPqkNtr4iDucAtTHVDgSL+TfAcmFy6g2aEqdgpK9Y9W/UA5RgFFcPu6TkHqf85Y3/iOd+X4aDFQlQ==
+ b=kkbRvBNBHVYm52+gkGa9TYG2WqBnmfzCPTA2nWIG4FbJ4MacCc+Et2XgnT7kOQcfQLhqDRalL8Pl63lKgRrCc2shfRCBhulmQpc4aHMZjKPfGrfoL/uM9yZJExkdWQ/sMumms7cECv1XfnQsWlIMFf/ysoaa98ObSKOpgvg5J8c53q5/EinB5n7tfR8xIo3TNVywgXGRTFzgzSv4G2kEtvQy6UOSRSG8612SIBV1XI84A5HskqUYanfKuQzPGrW9L0lCR72Db4aLVWAw1dLAw4G3MbJ2Y1RFCI+vKRj4K7t2tKf98NiagUPIz6OzkQuKK4sHQONYIps6L+bUSNhv2A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VfNalzrnBliBcgoxOgAg6Kfanq6DobJBZdYj5ATJOmI=;
- b=SV8SW2zH56Tce4g0KJR0ijpXi5keSCXc1Litc9b3rVfMLvbr3svl0wue8tGWRc4MrQ5ypXWQ+oTJi6Vx8a/IeiUXEmyKbJc3noTsHSSpFnZJtTJsorfV5chIeH13jcHc0dZDGsEwe+1fB9xqbgJPGiVDOmKt4jbFkIydwwXQaHglvDb2HXfQQEeNFllM4FFpznY7d5Em8wL809dgW/E+wD1RoS3HisFbVRDLSGxsdI8dXQPoXz26zIW1MK4kUkBkH7EsyiMcAYNXQ/59slazambauBDuoKgBTJ/2YPcVcfUwM2N9SYpnflIFey7Aj4s890e+tKDfHL1vD5kUQMnIOA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
- by MW6PR11MB8410.namprd11.prod.outlook.com (2603:10b6:303:249::17) with
+ bh=PdQIs1xm5lE203qvhMJCYvVv6d5qzHt0i1Tf4jBJ8y8=;
+ b=v/YCVvmxqfeYfMyOd6OkkQBMp1fL4puyx7J+1X9toUdYkog8x/KCBZbtwGf/9Cxqx5akjLQzuXRYf7JBq+Pa8t8j08JK3Erg2DzXYg0G9hekY3Muw+EKYt26Tjmj8/dGL9YTejVdYxc3rpGj2lis1iKR/AI4mBoB+X+bjlM+cD9jzEbzsBI+MhKySADZ/L0m3xzsLXK+6FVSUrFzvpWLw/SPI3vFAU0CeuQEQW1Oa+bAKuh581ozKqW96pVUHCL74CiRNGSJ65tykJIpT1KImTZGPGzScy5x2RFZmyW8kvzd8jsVKG1Lr64man3yA2IAQSNOlXWQzhc6jeKCi8No/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PdQIs1xm5lE203qvhMJCYvVv6d5qzHt0i1Tf4jBJ8y8=;
+ b=AAXduEihTvpwlSAOiQs/Njq065jMPqRoPvIfDnhX8u2ITEsc4TVCGyxjrDGHz7pH+mHfwPeZbJIaent/9OhP5wvygNX8hUt6jMlDAVHmhTw00bf7gXd8kaQ/BxJG0Gvsjr6BC3eAPyWYkT2NB2OD+E7VGZ1nXeMoLz61J+O+lPOZKABAbsg8VtLKfa9gsyxHFm0L01dexA44OffaGmLXA1TELK6OU+LlF0tsNGDJXP6d46eJu4A2KmRZW/D56O63p7S5zQb+7ByR8+ggF1NabB+3EKijbzMxeR+Tv8Ki6FBOqxYsdSlybXl1QjgNTUrstx59AUlp0sv+uZWeAi3cbA==
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com (2603:10a6:150:81::22)
+ by AM0PR08MB5362.eurprd08.prod.outlook.com (2603:10a6:208:180::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
- 2026 15:38:09 +0000
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0292.013; Tue, 4 Aug 2026
- 15:38:09 +0000
-Message-ID: <bd6a9e30-7536-47cb-aa71-b160ffbf3ccf@intel.com>
-Date: Tue, 4 Aug 2026 18:38:04 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 02/14] i3c: Fix unlocked dereference of dev->desc in
- i3c_device_get_supported_xfer_mode()
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-i3c@lists.infradead.org>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>, <Frank.Li@kernel.org>,
-	<linux-pci@vger.kernel.org>
-References: <20260804133810.184905-1-adrian.hunter@intel.com>
- <20260804133810.184905-3-adrian.hunter@intel.com>
- <20260804150922.01A091F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
- 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
- 4, Domiciled in Helsinki
-In-Reply-To: <20260804150922.01A091F000E9@smtp.kernel.org>
+ 2026 15:41:21 +0000
+Received: from GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2]) by GV1PR08MB8497.eurprd08.prod.outlook.com
+ ([fe80::705b:d4a3:1c1f:b9a2%5]) with mapi id 15.21.0292.013; Tue, 4 Aug 2026
+ 15:41:21 +0000
+Message-ID:
+ <GV1PR08MB84971C3DEF172222866DEED3C5D42@GV1PR08MB8497.eurprd08.prod.outlook.com>
+Subject: Re: [PATCH v5 1/1] leds: st1202: Add hardware-accelerated blink
+ support
+From: Manuel Fombuena <fombuena@outlook.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-leds@vger.kernel.org, lee@kernel.org
+Date: Tue, 04 Aug 2026 16:41:19 +0100
+In-Reply-To: <20260804105253.C68661F000E9@smtp.kernel.org>
+References:
+ <GV1PR08MB8497E2498ED9D66AF60A3ACFC5D42@GV1PR08MB8497.eurprd08.prod.outlook.com>
+	 <GV1PR08MB849709A3BE3D1CBB9E28ABD2C5D42@GV1PR08MB8497.eurprd08.prod.outlook.com>
+	 <20260804105253.C68661F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DU7P251CA0005.EURP251.PROD.OUTLOOK.COM
- (2603:10a6:10:551::32) To IA1PR11MB7198.namprd11.prod.outlook.com
- (2603:10b6:208:419::15)
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44app2) 
+X-ClientProxiedBy: LO4P123CA0395.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18f::22) To GV1PR08MB8497.eurprd08.prod.outlook.com
+ (2603:10a6:150:81::22)
+X-Microsoft-Original-Message-ID:
+ <6b8e61a9325e90e1e5d369a842fe8ec2028d36f2.camel@outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|MW6PR11MB8410:EE_
-X-MS-Office365-Filtering-Correlation-Id: fac6b6e2-d881-4a4f-1dc9-08def23e62d9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|11063799006|5023799004|56012099006|4143699003|10067099003|18002099003|22082099003|3023799007;
-X-Microsoft-Antispam-Message-Info: BmqDwkTv5KnV2Vctl5dGTe9eHoC5ILu5rJReoLHpcTVD8UfklAqHEjs3+yqFcYf4U/qmyOgl+o5yyoOk+wpdys16gcOkf0XvV6QmQ/5ZILWVL+nmfLQMedHJxwfcrRrtAit1MtyH10ZC0kNXmSM5xwCaOEvgNnkjKc78h4IUdnotFR/skbBDCGqkzQjggWnAGP+pas2SFoaWKpKvoDKEqsyHj4TLF4vsZU65SxEHzKwzPED6bm5pRPFV138t9Nqai57T6vKxOC/iCs/zwKFGWO4zZou60noMfic95cie49xTqbwlpl7YmEVpDr50dOCTEvOh/6J7tSwITfI31Emua3VwYkMCVCoG8/f24qK1ein1MgP8rEEnawVFkkX4/CGv0MCB4SmAwWItGNHgre4hjzMSiXUtxPXw33oCPwjYHIwTGvTVm4JzHgCKUDvMeaGVWvdKXbSsOYysyK1RJv8ZLwDIsMhMgHVavEx/iaDOlNawJtn+DVjVGhSiPRsN2eqFP6BMGurVWqmn7w95/ndoDtgiBF6PyLndG28PhIS4q/BOux4XzI2rKj4PY7dmgoKfYhsSl7EjFB/ZylSAd4ekAiE3osH7MTorGHHMAyd37WkAGx5LH+ktuYJqVmXwpItJD1fsXp6w4Pw5Met/auovilTZC/SdCb7n/8CddN+m1hA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(11063799006)(5023799004)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-TrafficTypeDiagnostic: GV1PR08MB8497:EE_|AM0PR08MB5362:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7b2c6ff8-2ba5-4549-6972-08def23ed4e6
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|19110799012|25010399006|15080799012|5072599009|6090799003|23021999003|51005399006|24021099003|37011999003|8060799015|440099028|3412199025|40105399003|2607281247196008;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cjV1T0dTYzZuMFEzZDF1SGdpWTVjc1B6a2xUeHhYSGx4YURML3c5R1NLb3lW?=
+ =?utf-8?B?cytCZVdCWW1meEdLVVp5NXdMUzBvN01sQ0hQdWU3VFVpUHhoYlZ0VVNRRnF6?=
+ =?utf-8?B?MTFocUs5TXY5d3ljbDZBSWpUQTVlOU53QzRvM1BaZUNMS2JSTUJtcS9vUC9Y?=
+ =?utf-8?B?ajgxeVVsNksrOWFmRGs0cmtCZm9HQXJkQ0Vic0pBbmFWQS8xbmtOcWdlSTJy?=
+ =?utf-8?B?VFNkcVREaDVadnFVbk4vM3dqaDFOSW8yNXgvZ0ZPRW5nUGQwby85UVg0dzhr?=
+ =?utf-8?B?emlOeEN0RjE2M1o5ZEFpY0dZbWtITnhpOTF3cGRDUGlKdmZkYWxUdTJ6VUx6?=
+ =?utf-8?B?WnNnOFZwcGdHQ0RzWVExZ29rU0gwS0dkTHhMSEpncGhXdWZ6VEJrelU0UTMx?=
+ =?utf-8?B?d3FFOTdBL211S2d4ak1POXU5bUlRbnJBdDZseWxMQ0RlWmZPK1FIaDhQZllP?=
+ =?utf-8?B?QUhzTmNwZjR0MFU0OWU4SXU4ODh5VFZ2a05nbWJNL3ZBaitqRFNpUVQ0SUNk?=
+ =?utf-8?B?clF5OFBINFJmNUpxUWFWSE1OdmVpV0UwVi90VXZJMGpGM1M1eDlBekRBb3Rw?=
+ =?utf-8?B?bXU5c2xkdnJoMmdYdUc3VzhyQkdpODZQbU4wcWFQbUgrUkJjOHAwYmlrZHhq?=
+ =?utf-8?B?Z0p1NzBlR1czUFI1YjVERWxUYW4wcERjalY2ZVYvYnRzTVlmTlZCTEx6L2Y5?=
+ =?utf-8?B?djEzKzRmZDhjemdDbGFLK1Z2ajFhc1V1b1FZaXBSbUVCVlp2ODJjMDV5UEpO?=
+ =?utf-8?B?bVR2YXcvMVJGSjk5bG1hYU9ZZngzRXRIVnVCUStkWjRxZUVvNFpRNklINkN3?=
+ =?utf-8?B?WCt1Z2RkQjZRL0JQdHZGMjUzcWtxcXAycnhGNURGeG11VVVObnFwTXZlL05W?=
+ =?utf-8?B?alpuQ0FvclZHVXMrOVBuend2OXg3VWVCRTRyd2NvS0R6UVJJWEcvN0YxM2xW?=
+ =?utf-8?B?VmtabWtwVTJ5VldWTmFGQmkycHRtT0RKSFJHZmdIb1h6NDRYQXk4T3kyUVFS?=
+ =?utf-8?B?UUFoWkgzWFFjRjBMb2hhczREUjZwSXRNb1RlN0pVb2hQMXV3QzNKVlVYQ3pU?=
+ =?utf-8?B?b0hiNkpyTkRoajlsMXhCa2xDUUlZRnEyN2sxSWZCQWpMU2pFb0ZwUEhjL05Y?=
+ =?utf-8?B?eExvNjlQWW0ya3RDOWUrOWx6cVUwakVtc3hsQkllRHVOWnFrb3dyTWI0NWN2?=
+ =?utf-8?B?WlNteExZcE54dnNaS2V5Q0hYUjJ0R0lsOUdvOU1ybWhuWjBxb25XWmZrcU9L?=
+ =?utf-8?B?SCtJb1crU2NDcThnbFl3TGFDL2ZxeVdFblFLTTQzeEs4UlN4a1d2Zml2dWMz?=
+ =?utf-8?Q?SKvGdBqWUs2yBg7KfR17phFwP4MH25MP2X?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eERQUWhZMUVUMW16VlZ4QXJXb3RkSFVTRHF1TzFHNmQwaFpRWk9ld0J2eTZL?=
- =?utf-8?B?WDgydTJIMmR4cGVEQ0lmcTkzaEw5Sk9MVHNxbFRDZ00wbGljM1BpWGFrMUFl?=
- =?utf-8?B?VDlCZmJCZHVUY2FTWGlZVGpOK0RydElLU0ZmMnJUM3ZSblBYWDlwOEdvbWg4?=
- =?utf-8?B?QXpyWEtTako1RFNidTJiUUJoRmRtWWJNR1puK3MvMGJlVTJUYVpxazZJU1Nu?=
- =?utf-8?B?WkpSclRSRkEvcWFYNGpPYm40a0hlWHFGUWY0NWhrNnZMaXB5Tm5BbWFCRFJJ?=
- =?utf-8?B?SndQWWp4NWV0Y2YvWnpXYWw5WnhRTHp2VVJ0QUluUXJVdXRrRmNOVHFTK2Rl?=
- =?utf-8?B?a3RQTUVtUXhzeC9vT3BCQWYwMmI3YXM0cTA3Tkw1RThoblpVRHhXNmJNT0FD?=
- =?utf-8?B?TVJZc0pzdG1YcVJvSjJZNytpRzh1TzdpVm5WWXh2NG04dXBSclVTWlRUUVdL?=
- =?utf-8?B?aHVYUTFlbCtHc2l3WkF4cHMyZERNMVowUUZianEwVzFVVXIyMWVrckU3VFZm?=
- =?utf-8?B?QjNDWFBnZm9nQUdnUms3YmdZM2oyaFJmNHNTVW9DU2VsUHh3aUJpU0ZqZDRx?=
- =?utf-8?B?eDJhTUMzYXN4Y21ZdGJDeVYxeUx1K3pXZ0J5VXRqSXJDSTN5VHlGZmhRR05t?=
- =?utf-8?B?Tjc3RFg1ei82TlU4ZmhxL3VLYW1HRDNmVUwxVnZMeTdjamU2bWV6aFFpZncr?=
- =?utf-8?B?cXVBNmJGNzlhbkkwZTFJL1NvcVJxWEV1TjlPTWZISUdKOVB3K2prQlhlKzA2?=
- =?utf-8?B?Wkw5RzJUcTlIY0pLZHY3czB4OE5vUmZRSnkwUXFaaWxSd2lQdU1DUklEcm5p?=
- =?utf-8?B?a2h6V3J4QkhvQlUwcDZGUStHc3pON3RhdkRqcTJVVnNKblBka1c2MkEzOFhG?=
- =?utf-8?B?cThCRmtXamdpK04vK0tHbFJLN1c1N1BRTWUvZERYampwMmFpenU3WWNjRFdD?=
- =?utf-8?B?aVJFSzRUNzRXMXF1Uk9YZUlITFRveWNJWkZrY1hKVmQ0TzB1eUJnYS9xWWE1?=
- =?utf-8?B?MDNFOUdCRm1vd0tVbExwVTJtVno4YnR1MnAxVDdSTGxiT2dSRzM0Rk94UVhP?=
- =?utf-8?B?bU5hbGt1M1E3NDdpbmJjTkJuZUhWVE5Za0FnYy9pODdma2d6d0FBSGd1YVhR?=
- =?utf-8?B?TnBTV1hTeExVZXVJQ0psMStnY2p5VWs4aDB2R3FONHVPOUFjTDhmUDBxQVJC?=
- =?utf-8?B?TVZqSXJXdHprTDIwOHNqK3BqakZ1QlFMTmNvYnRCUDAxakFlMFRJbU04dVNm?=
- =?utf-8?B?SStjMlVXSG91dTh5VDRTS214NGlWRUw3RitkazgxajREK25vejVlamhuN3lm?=
- =?utf-8?B?NzcrdTl0bmFPOUxiR2FoTFRZWTZlbC92SzlOWjlyT0dpcEQvLzM0SXpsTFJK?=
- =?utf-8?B?aUk5aWk4U1BjclcwRHI3cGl3cGQrUE03eUhiUVVPbGhlOUdWYkt3bnljOUNQ?=
- =?utf-8?B?dXY4aWR4ajcyWTV4NXZoQXl1Q3dWT1ZKRHNhMDdjTmVSVFpjeWpmdE5GMXJ3?=
- =?utf-8?B?d3I1Rk5tMDhHZmFkUUZyYTdwdnFaNUkyODkwOGhmRldJOWFjbTRQc0FwS0ow?=
- =?utf-8?B?MXJKZE1BbGU1aEV3TUxPdGRueFJOclRDOU5YUTFIK1NTMFZZWEdUR3FXTHlm?=
- =?utf-8?B?ZDBmTnNZcE1oaXc5Q2sxV3Z4Qy90NmRrRERMb2FWUFRBL1pEa2N1ZFhQWFRr?=
- =?utf-8?B?UW9RVEJrVjZBZGZualNiZGpIczZUQnhBckdnSGtQend3NElnQnpIV2pHUnAx?=
- =?utf-8?B?N25WSWNjbDRna1lDNGo0d1F0UTJwSFdsWjM2S2txYTgrT2hnOXM1bHJNb0lw?=
- =?utf-8?B?MXhpb2NsSXMyYlNNbVhBTm9tZW0rcVA1OXNoUXh0aE5lQ3BKWnJ2cUllZ2tB?=
- =?utf-8?B?bHdKNUxYbW5oNmZVd0NBT2JOdk5tVmZ1ZHJzUVFWY201Q25WMnoweWFueFo3?=
- =?utf-8?B?Q2pLT2c1bEZlWTFLRi9IZFJPeGJoc2JnWXFlcHRTY0c3akxDQ2NNaFdYY0tW?=
- =?utf-8?B?ZXp2Y3kvVzdOOHpDWUJEYjlOb0p0aUROYUxMQjJaMFZGVWRQNi9hSEMyNmlU?=
- =?utf-8?B?RDBvV3FGVzlwbG9wZERRczFnV1FtZmhKNkpFVVZmNGRWN3dLam1rTWtNbDJp?=
- =?utf-8?B?Nm8zMko3YkpaUHdkMnUxVDlIdmpyZGp6dlBNR2w0V2dROFZiRGZ1MEN0b1hI?=
- =?utf-8?B?NTF3NVJmQng1Y202Y3BCREF1N0x6ZlMrbG12SzJaNzhzZGFHVVRSZnJsRWE5?=
- =?utf-8?B?S3pRbko0cElldTJ2VldWc3AxRElMd3Y3Wk5ma3V5SittNnBBeE5wRVlua2xj?=
- =?utf-8?B?MThjZmlQM2wvTWNGcTVyYk1GTFFKQzcrNkRXem9HaFVvcWhXVm80Y2xJdG9Z?=
- =?utf-8?Q?Bb7VNrsJsz+lYjsc=3D?=
-X-Exchange-RoutingPolicyChecked: hk8uS76yYOUL7doXWdA0rOqNXQENITrD5xQkdhy2cqyJHA78N15OhrldIY0N649MF4mZt6ZoDCx1BQOSc+Wk9W7+YlzhKGZ7ygOLzKs2DID2zythaBIuzg7Bx1oz3Qj1IBejKhMIl6DyxSlF+rfGm8ktBTBqgXLHgGajNzzKMfcg8KC1mdKi6UQ+tam6mezedPA3upTRb3FQHIsFNcsd65CavgxHSYaiUThzPXd0Lw6OdvTCfs1kR2FYC2oq7n826WOQE2pN0LuwhOpbZEcaBe/R0Q0V6hKgIgXP4KTj5s3KXAZUqOQzTRC2flBgKJ/oJJI9IQ59W/nc5T+puzTjYA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: fac6b6e2-d881-4a4f-1dc9-08def23e62d9
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MFlnQ3h5eWU4UG4yLzJRT0ZtdjhScmRpWUhBODQ0ZEQ5VmhlTTA2VmxsT0ly?=
+ =?utf-8?B?TGg1S1BPNTdpNUNKMHRCVnBEQk4ySHcrMzlGOGxjNU1WS2prbjRiY3g3dUo5?=
+ =?utf-8?B?ZXZqNUVyclFqUG9sZ1lTYm5LelRxUGFzQVFtZEQ5M3ZBSVd6WnBrVVNLRnB2?=
+ =?utf-8?B?cGwxZG5vUVZmeFJvT3Y2djlqTnc1bGljT0YzZ3lRcGdsaGRmeFZtdE5zZzli?=
+ =?utf-8?B?VXIvLzJaQ0lwSjhjeUtYdDhHUFZPcUJ1c2FzckhqMTllUkZlemhMQlVORW5U?=
+ =?utf-8?B?VzZOaU5PcGJQRDB3dnYwVEd5T2FJU1JRUFhIVGVPQjIzdHBKVkJpcVpvUlFu?=
+ =?utf-8?B?T0FtV3dlblZBTnVRL1NETUhyTjZVRzhlcTNTQWtPNWJGejExaDVyaGVabWQv?=
+ =?utf-8?B?M1NHNjNUcnd4bktwU2E4OEtkYzgyOG5jb0cwd2FsQjNiTHd2N3hIOFlaRTlW?=
+ =?utf-8?B?MllDY1NodWhET3YzLzI4QTBybCt5Wk5qY1F2Z3hoTE1sbEN5NW43bnNmcUpF?=
+ =?utf-8?B?aVA4RWZvU0RlM3ZHODBMZ1RXVm9mWURCMjlTSmtEOVBKZ0FDTFQxWG1DSGcy?=
+ =?utf-8?B?L2Z4bTF4Mm9DQmlUemlma25odmdaMUJ6cWlQQkF5WDBvTW1ZZ29qaW84enJZ?=
+ =?utf-8?B?WEhxbEREcHJodlJKSGM5V2grNjRQZ2FXQi9GOEdJSDhxUGFBeHBIWnZtazA2?=
+ =?utf-8?B?TEt3d0d6eGZTMG51WEduUnNoVjI3bnRVcWtmTUwxTGRzMVNLZU9hVlNlRjFP?=
+ =?utf-8?B?b2VwUGJQNTdpZHk3WXNqZnhIR2FZNnhHNVJnK3VSQjlHSTJlVXdCK0puMWdx?=
+ =?utf-8?B?RzZjK2lpaVdiT0RVRUlhMzFYVXB6QzZuSlpWcUJQZWZHZnBpbmk5NzJRWXE0?=
+ =?utf-8?B?enlzR01sN2xQNjk4ZUJ4VWhWeC9BSmtHbGVsdGM3TWN0K1dacW9qUEErSktS?=
+ =?utf-8?B?UENabEg5cGE1WXdvU3lxQ040QkNsc29rYVhxblB2ZWdPWVhOR3E3WFNPSHNN?=
+ =?utf-8?B?VGh3c0xZUDY3Rm8wVnQxK2VKdU8zZU9uUWlHK29jUzlMT0k4dG1IQzU2MDRI?=
+ =?utf-8?B?WEtYZEJSMzhTSUpiNzZTWkZLYzRsQmcxaDVuUEV4Mkg1eGh2VkpzMzZaUlZk?=
+ =?utf-8?B?OW5hSDZRc2d5Yms5ZVF0QngvREwwdVBKemUzV3FSU0NmQjIyTHRJbklXMVZB?=
+ =?utf-8?B?WmcyaTk4WENxOEdXVE9GK29qRmd5eCtNNzRadkVUSFMxTml2ZFhYQTNXMkxa?=
+ =?utf-8?B?RDhwVzRqT0VOZlNQUWZ5dTZ4TWVaR2ZpTG9mL0sxK2Z5S0FMUUxmTTFjL0Zz?=
+ =?utf-8?B?SGJDNEcvTThtQWl2QVp4bXlYSXIyL3dRWlYzZ0FCazQzOHRzcmU4dXJWUzJo?=
+ =?utf-8?B?TXlJNHFIb0VseEQ2Y3R2UHIrTThWa3pnVEl2UjRGMTFJeU54ZHRlVFFyQUpT?=
+ =?utf-8?B?dzFGR1pBTHBmYWRBUWVXWXNDa2FiTUF0Z0RqUGN2Tk5kSlF3ZUd1ZFpmUVlK?=
+ =?utf-8?B?UzhjbnRDZ05pSDlNZVJxVytwdU4zeVFNR0NKamVPMUFPYnlTeDN6OGJzMmdB?=
+ =?utf-8?B?WHQyblp1OUJUQTE2Q1J2MExuZ0xSYWhjY0VrUWQ4UEg5U2wzUjZJNld2cG1Q?=
+ =?utf-8?B?Tmd5aFA0MEk4RlZqUEZMZVVpbTZOeFdKc0pkeVN6bldEU2tCZGlxQW0xN2ll?=
+ =?utf-8?B?VGdTOXhVbTkyY3dnQnpjUDFVSGd6VEZJbEU2QW9sVUtZZEFnZFlEUnlUYkhm?=
+ =?utf-8?B?UEtQK1RRaC8xQWZpN2FtdkppME9jYUt0aDJnQ1lSb2txeHI3UThCSTg3eG9t?=
+ =?utf-8?B?Q1dvNEg5emJyUWhRVHlwbERpM2MzSExmQjB6VFBoSjR4azJaNy9SOUZ3MTRJ?=
+ =?utf-8?B?SGRYdEtUODg1bjZCZEloTFkrR1FsaXQ4eXNFdWphbGdBcDI2QStYWHB3TjhY?=
+ =?utf-8?Q?E1K8ZvudB+NS+eQygGBXegDXcSDv8VUh?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b2c6ff8-2ba5-4549-6972-08def23ed4e6
+X-MS-Exchange-CrossTenant-AuthSource: GV1PR08MB8497.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:38:09.5632
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:41:21.1612
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ITwX1ppfcqi/SJOFJ+3F6umO/fFSqN7HCjTn5GWZa55m5FiR8Uz7cEf8Y7/7XMp/mnwzGw1Os6NGOEhuOk+8AA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR11MB8410
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR08MB5362
 
-On 04/08/2026 18:09, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
+On Tue, 2026-08-04 at 10:52 +0000, sashiko-bot@kernel.org wrote:
+>=20
 > New issues:
-> - [Critical] The patch transforms a predictable NULL pointer dereference into an exploitable Use-After-Free of `master->this` when an I3C device outlives its master controller's unregistration.
-
-No. 'desc' is never NULL however it could be being changed concurrently
-prior to being freed.  UAF of 'desc' is no different to UAF of master->this
-(which is anyway being addressed by a different patch
-"i3c: master: Fix use-after-free of master->this"),
-so nothing "transforms" here.
-
-> 
+> - [High] Hardware-accelerated blink destructively alters the physical
+> state of all other active LEDs by zeroing their PWM slots.
+> - [Medium] Hardware blink overrides user-configured brightness by
+> hardcoding maximum intensity.
+> - [Medium] Updating LED brightness indiscriminately breaks an active
+> hardware blink configuration.
+>=20
 > Pre-existing issues:
-> - [High] Uninitialized stack memory (`devinfo`) is used for driver matching when `i3cdev->desc` is NULL.
-> - [High] A Time-of-Check to Time-of-Use (TOCTOU) race condition exists when accessing `i3cdev->desc->boardinfo`, leading to a Use-After-Free or NULL pointer dereference.
+> - [High] The driver incorrectly assigns a sleeping function to the
+> non-blocking `brightness_set` callback, causing 'scheduling while
+> atomic' panics.
+> - [High] Dangling `fwnode` pointers due to un-incremented scoped
+> device node reference.
 > --
-> 
-> --- Patch [2]: [PATCH V3 02/14] i3c: Fix unlocked dereference of dev->desc in i3c_device_get_supported_xfer_mode() ---
-> commit 97cfccca08da732124561cbc1aa49b571a84dd8c
-> Author: Adrian Hunter <adrian.hunter@intel.com>
-> 
-> i3c: Fix unlocked dereference of dev->desc in i3c_device_get_supported_xfer_mode()
-> 
-> This patch modifies i3c_device_get_supported_xfer_mode() to use dev->bus
-> instead of dev->desc to obtain the master controller. This avoids a potential
-> unlocked dereference of dev->desc.
-> 
->> diff --git a/drivers/i3c/device.c b/drivers/i3c/device.c
->> index 101eaa77de686..a3778282e84c2 100644
->> --- a/drivers/i3c/device.c
->> +++ b/drivers/i3c/device.c
->> @@ -309,7 +309,7 @@ EXPORT_SYMBOL_GPL(i3c_device_match_id);
->>   */
->>  u32 i3c_device_get_supported_xfer_mode(struct i3c_device *dev)
->>  {
->> -	return i3c_dev_get_master(dev->desc)->this->info.hdr_cap | BIT(I3C_SDR);
->> +	return i3c_bus_to_i3c_master(dev->bus)->this->info.hdr_cap | BIT(I3C_SDR);
-> 
-> [Severity: Critical]
-> Does this change introduce a use-after-free if the device outlives the master
-> controller?
-> 
-> When a master is unregistered, i3c_master_unregister() calls
-> i3c_master_unregister_i3c_devs() to unregister child devices. If a child
-> device has an elevated refcount (e.g., from an open file descriptor), its
-> struct i3c_device outlives the unregistration.
-> 
-> i3c_master_bus_cleanup() then calls i3c_master_detach_free_devs(), which
-> explicitly frees master->this.
-> 
-> If the child device later calls i3c_device_get_supported_xfer_mode(), it
-> would dereference the explicitly freed master->this pointer. The previous
-> code safely faulted on a NULL dev->desc, but this new path appears to access
-> freed memory.
-> 
-> [ ... ]
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does i3c_device_match() have a TOCTOU race
-> condition leading to a use-after-free?
-> 
-> drivers/i3c/master.c:i3c_device_match() {
->         if (i3cdev->desc && i3cdev->desc->boardinfo)
->                 static_addr_method = i3cdev->desc->boardinfo->static_addr_method;
-> }
-> 
-> If i3c_device_match() accesses i3cdev->desc without holding the device lock
-> during concurrent master unregistration, a context switch could occur right
-> after i3cdev->desc is checked.
-> 
-> If the unregistration thread then frees the descriptor via kfree() in
-> i3c_master_bus_cleanup(), the subsequent evaluation of
-> i3cdev->desc->boardinfo will dereference a freed pointer.
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can i3c_device_match_id()
-> evaluate uninitialized stack memory?
-> 
-> During concurrent driver registration and master unregistration, if
-> i3c_master_unregister_i3c_devs() sets i3cdev->dev->desc = NULL,
-> i3c_device_match() might still proceed to call i3c_device_match_id().
-> 
-> drivers/i3c/device.c:i3c_device_match_id() {
->         struct i3c_device_info devinfo;
->         ...
->         i3c_device_get_info(i3cdev, &devinfo);
->         
->         manuf = I3C_PID_MANUF_ID(devinfo.pid);
-> }
-> 
-> If i3cdev->desc is NULL, i3c_device_get_info() bails out safely without
-> populating devinfo, leaving the stack memory completely uninitialized when
-> it is subsequently read for driver matching.
-> 
 
+All five findings are either previously answered or already tracked for
+a follow-up submission, as they are not directly related to the feature
+this patch implements.
+
+Unless there are any other reviewer comments, there will not be a v6.
+
+--
+Manuel Fombuena
