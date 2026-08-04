@@ -1,188 +1,288 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011005.outbound.protection.outlook.com [40.93.194.5])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D9447253B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 16:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.5
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785860426; cv=fail; b=esXXHTXVZ95PaT58fQGtdjeyeoRPhZR8Mk0QHA6XJraxtoAOXDbsBu2m5mfCGh1eONzFq/Qnhzo3hqElIbVHU5C9YpDBHEFrIBnRWrij6ihbdaJ81X/p3EX2V1LL44iC0sIRIwhF8CDaBfrC4Sqa6QPy03CARRYRQFVYQwMTYJs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785860426; c=relaxed/simple;
-	bh=C7CKP7Rfb2UuNSpbtJwb+fIhwHn6OYHwbHNndkaC8MM=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=GaJsTQ89eGeOuYHG346OSaX5AlpilqKPAaXIqL+vZo5JLfZIUX/MUj+Bi95Iw91+ALtVP96GxlfnNVTqdLIuo52QeU1pe4WWN5vHGfjJitavaM+9az+BkFuHKsx7N1Ng8DFz+udbclkQLwjSHibRcwDK6hGgOR2V0BwgGhdMurk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=NekRAiz2; arc=fail smtp.client-ip=40.93.194.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C3C48A2AA
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 17:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785863276; cv=none; b=hplh7O+gmW2RmniVw+ATOsnxlAmur0sX9Y/Owy2BwOmEvvEvri5vMGazSGmSXDLCZCJ80dxZQdVlEZSjQ8xsSaY+ccVmeGazp0kIMnY/fvOffB9WNdZhXY3EkJE6C/VqHpXmutl1b5C813MjVQM8hJjduRU8oW2AeWWGt6W2NLo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785863276; c=relaxed/simple;
+	bh=QYDs3FCujOPc3ofDnEDVCR6OjQ2DJk8EsA94um9Ge2M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XDh6q07DiUSIJ1KWdxoDWU/fJsd0Ib9FwT5vebxUVNIzfPsWPHzqto7erR6cmbbbr8O7NLO14Qlv41OSYBzOi4f4Y6jwTz9XPNnaU9UIM7rBDlw1t2CW7KtfonuBlIZaP0N+l3GPSqfE/zDNgd9BACTPPEmIxxkCWB2W3ACHEcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=mlOQqcNL; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="NekRAiz2"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KclcfxkPg7XiEgsg7cG24JjOmyIj0B+h6k62fhgsQNxq70vpGnEslgTs1+HFrnI0U0GUpey9V+B/AckktTQy5CBU3iuPaa3eUqSTdqgpwjTyzHgs5EDIMEeM4EHpUa+jxc7Bv0CS6j1nBo5QutZE1RaQdJcHbwoLHUk1nbfFc8XoH8gHsYQLiVF84gDvaMADFg4o2PKiHklSnQZMPfjcC0txUANGU7EmilSm0GVw8FORKSFoccMGRnALoOBa4FjsM3L+pP3PhsQ4Z0sRhEQ3YJ1eSf2vwxJvmmVZ+WqFg1SE4oaJgEdxzIkszbODzZQ9m/7I4cGGOetOTeR8NFDzcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e6Iq5GjPyMTElVSwyPn03ZcRxVvDJqEJG2TO0x9g0PM=;
- b=SSGm1CY3CUhjkbMS3UJGq//SGOZuKZrXWOzDYhrQXqXBbg6P+Uqb5nhv4m7OVC3eNWMTrAt6cY/W0tL7wH8AX7aC969nZH4DYVU2+1pZqt6yAvNro+p6YSnpeOdCJ5qZ4jxOJWPjg5zIxKTeKoSKYsxEnFVS8kzxZ4d2yc14BV06kp8pgag8OZUYiVkoPyIU9huw/6WTSXHCI2ZzUmf/DGJ74guBqc08S7tBUbES/GHje4X53b7kkIqzXj1U/twlgbgqANErnN7LkSMPcoTxzoFO9a7rYyoFkUoa0KzhjfKL+uMUMvtnaLgm7T3WhDj0amnRtecYPAcKk1YH8CZ0/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e6Iq5GjPyMTElVSwyPn03ZcRxVvDJqEJG2TO0x9g0PM=;
- b=NekRAiz28Arq5oK18fI8LhASHH1jOUqC1nCU6gnWfpUiBP8PrO7LrZQFYS/JhbfisLghv/jrzsNUgPAPKfIhomNXRT/HOWeGZXmgYjybHSw3h+kFKO/dwJfik6HmFBtFf/vzKrTe5mcrD4ZM6mjTqI3E1gehaKzXtHY6+jE3JPE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH8PR12MB9766.namprd12.prod.outlook.com (2603:10b6:610:2b6::10)
- by CY5PR12MB6180.namprd12.prod.outlook.com (2603:10b6:930:23::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
- 2026 16:20:20 +0000
-Received: from CH8PR12MB9766.namprd12.prod.outlook.com
- ([fe80::be0f:431f:5f27:96d9]) by CH8PR12MB9766.namprd12.prod.outlook.com
- ([fe80::be0f:431f:5f27:96d9%5]) with mapi id 15.21.0292.013; Tue, 4 Aug 2026
- 16:20:20 +0000
-Message-ID: <1ca568f6-b9f5-45f6-a362-5ba0be8272f9@amd.com>
-Date: Tue, 4 Aug 2026 11:20:18 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 01/14] cxl/ras: Fix cxl_rch_get_aer_info()
- out-of-bounds AER register read
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, linux-cxl@vger.kernel.org
-References: <20260803221810.3685703-1-terry.bowman@amd.com>
- <20260803221810.3685703-2-terry.bowman@amd.com>
- <20260803224230.85CD81F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Bowman, Terry" <terry.bowman@amd.com>
-In-Reply-To: <20260803224230.85CD81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DSSP220CA0013.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:3d3::8)
- To CH8PR12MB9766.namprd12.prod.outlook.com (2603:10b6:610:2b6::10)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="mlOQqcNL"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 674Fm5Nq1193100;
+	Tue, 4 Aug 2026 17:07:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=9gc2Ma
+	VtBO57GG9GMh77oi1nLpgmIX0qwzp2NA8MFq0=; b=mlOQqcNL2s9CLxjYMMl+kf
+	e3MWUHC2I55QV8gOBVWaSdmeD3cGWLor/VZQe6aB/47crTqqOU14aU/35JN76JSq
+	LQgtJM/RU8QbYWfHp0JQdyVhVCKC8JWOGcP1gSXO35N7eDfs/0ePFllYL8SNLkbN
+	ibTcul8aqT74qJgSSrYbZTTXFCkhHbn18bhcPz8B7q0zA0i+t4MNlX7aob3hM4jR
+	8LYKQZJcn+e6/SISvxf48H+JFvqSqwPTJhVzumYi9csrzKbCeIt0jBz4LNbx/bAF
+	4pubEklKs3rLFjBHU2ZCPNoqVazvX1v6wCLnI5tXpWel7FVknAKa7FqzJSCQuWhA
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs67hpuy9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Aug 2026 17:07:48 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 674GuFjl022714;
+	Tue, 4 Aug 2026 17:07:48 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgaq79-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Aug 2026 17:07:48 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 674H7lSh15794816
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 4 Aug 2026 17:07:47 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3A9A358058;
+	Tue,  4 Aug 2026 17:07:47 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3FB2758059;
+	Tue,  4 Aug 2026 17:07:46 +0000 (GMT)
+Received: from [9.61.89.119] (unknown [9.61.89.119])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue,  4 Aug 2026 17:07:46 +0000 (GMT)
+Message-ID: <cf112813-28dd-4663-9bf0-6f8eb61f0d05@linux.ibm.com>
+Date: Tue, 4 Aug 2026 13:07:45 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH8PR12MB9766:EE_|CY5PR12MB6180:EE_
-X-MS-Office365-Filtering-Correlation-Id: 363e7e5a-8f9a-4293-78e5-08def2444772
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|18002099003|22082099003|56012099006|4143699003|11063799006|10067099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	caWBhTClJEMVpDTf8wYS+FjG+wglVujm/FRLwSfVodwrnjDSNNZ73Z/QhlGsPm1o7G8sSFzKCb/1m0q5grnwBQkYOWA7StOtxg5h7zwx1ObCGnFaErC2ujlH8O0QktV9yNc94fZGb6zVNzoSZL0l3ZDJus3BZhzfvorqi3G22jztXF1mDIUjkaGr3MAvOGHQRNftJ/iLfuTNDzqQrKx27USJKJe4jXUp5+rNzv+5ZKTKunfQunPKCdx+s8PZYwVh4Cal/HIW4cro09A6Ta3uTqI3xc3jbvtJu3Yi2POrL+qKtH6A/PP23qevQbBaGCY5aNvQx+PIQj/7BU1GQjbRK00ojUiitryg8i4ylyUDOyJpcQps9+mRJzvscLyUfMK2SYFj/XlRNbwp98MWu6b5H6Ey/TrR/cNnOXoSzJUZ+qxTimGF+mYtuym1leA5nvRss1QP/7i2C0PVe4HAkMqfFW5y7Gvs5WW4REJHJMlxP+TZAHE6tAmbv/YoerTwnQ4O2XYwcaVUPIuw4T2D0wqRoLCsi3G5fgGSXoU6lgKTh39+1Zdoe495vTuGLv3TpTH7JnGawpDZmPzchGUiPOD4m1QL/+xPgrn9+Uq7gce1kTxqDzgpSIxzWgHfVbqsOL23x2K4xrPIdXqYKqYQP/HX5mhkEOUd+SykfLqphWMFqlg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR12MB9766.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006)(10067099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?N1NuWkNrRWR6RXgyQmsxNE4xWUhIZlN1bzRaa0Q1T3Ftc01rNjhEbVEvSGdG?=
- =?utf-8?B?MzhQK2MzZEJkKzZNTlBBR20xL2N0d212alU1ODMvSW9iSHljd3Evb1RIcU5M?=
- =?utf-8?B?SlYxeUUwVXI5Qkd5S3JZZXZUdm1qSU8ydVBvT1FLbzVmeXZyVnNvSEZkRmMx?=
- =?utf-8?B?YjBuZ05vQTZlcVN3bVQ4L3hSUzBoRnRvQjQxRjduVnFnQk9majUzVi82MnJL?=
- =?utf-8?B?ZWt4QnVwcWFSWlJGSkpjQm1RQ2wyRDIydFkxNSsxQktXRCt3YzJXYmxZUGJl?=
- =?utf-8?B?VEFZQ0dxc0o3VDlxMjdPajhydXZiQXlBR0FjN3VwV2VwY0YyMytDaU1qVHF2?=
- =?utf-8?B?cTZqbzlkR2dwTGliN25udTZ0UnJXU09KUERnNlJtcXh0VWtEQWJkQ2ErSUND?=
- =?utf-8?B?SmxOT1QzejQzOTUyNlU5NThBQ2pXd29XWEJtRjdoVGYrOVJQNHNGQUVRYTgv?=
- =?utf-8?B?STFndzFiUElFbmx2elBwbGk4YlM2N2M0d01wZ2VubVMvNUY5UU9POStyZHd3?=
- =?utf-8?B?SHdZSG9WRSt4WkRaYnlrT0tTSENhb09BRVFsb0dka3J2SFZ3aHJtMG9vcklP?=
- =?utf-8?B?ejZIK1dBT3pQZ0U2bnlOcFgxY2pBK0FOaHNLTmhWWTZEdW43clBxc1NaN1JE?=
- =?utf-8?B?OTliV3dBVlN0SE5LOVAwTVNZNlRYQUpLdWVmUUNPbHhRZU1IUXgyVFpDblRJ?=
- =?utf-8?B?WG1nRUhsMWp2U0ZDWThQNkhiSHRab1l3cThZc0lQTVRHMVRnQys0SmIvcDFm?=
- =?utf-8?B?MFFyTVN4T2N6UlJrU1lIWWY0eTMrUStSVG5nbTI1TkczeU5SV1dRYmNpWHZt?=
- =?utf-8?B?cFpvZi9PL2JLdkJ1azcxQkJpQWVvaElGUFduSDFhc216cW9Lc2RFbzdvQ1d4?=
- =?utf-8?B?RFJ4VmVDdm93cEFLNldISDd1MmZDM3BrZmw0UFpRQlVnK3pGWFVsMU5LUnVm?=
- =?utf-8?B?TWh2elZLS1RsdkxtTzhhZHZzYmQ3am93U0w1eGlqWmhEc2ZacGxxcXZTRURG?=
- =?utf-8?B?R2NQUmErdU5ocjN2Y2xnRFI0NTBJdjIvQXFEL011VHlQZWptK0duaEpQWFNu?=
- =?utf-8?B?cldFckdQdUhCei85R20vSUEvQ2pVS21vVmorekQwRUlsZ1U1MkxhL1FLbE9m?=
- =?utf-8?B?Mmlua01KNlozZC91OFZuUEdsRmVTR1dBTzY0RUN2OXBTeVVja1NVL1FMbFk5?=
- =?utf-8?B?V0g0N1UwdzQ3Y2gvcVVvdVcwYktHQ0tyYkNMSUwxb01sWDRUOWYvbEpuVnNv?=
- =?utf-8?B?aGZXbUhjTHB2V1NieUdNcE5uMmo0a1VRL0VEN2M5QWRjdEhLUm83TnVUcWVR?=
- =?utf-8?B?dnFLYVk2WnpvRDM1MDg2MEdSTjZsNFBoY0djWmVEN1VqUy91alpZZG1KOWVH?=
- =?utf-8?B?WWpCUnlIK0lIeUYwTlROaS9GVXFBa1QzS0YwNnhMV2s0clpFQnhpeVdjRFNu?=
- =?utf-8?B?dExkR3M0MGlmcVZCcDkxc252Zmh3UEUwNmJNd3M4Q2dDdkZHKzU2M2Y1VjIx?=
- =?utf-8?B?WVErbHdLNWxnZHpqNkgxMmFUMGh4SDFrcGxoaW8veGZwVkhqV1gzeXhpUWh5?=
- =?utf-8?B?dkxLT05BT2lrT1Q5YTlLUFF2S1J6N2J2NWc4WXpubkN6R0p4bXE1eWtUbGVI?=
- =?utf-8?B?dFozSW5HOEpqSHBKQUh1ZGthVTQ1NXB5aVF5ODUvNUpNc1hvcXZ5Qi80czJW?=
- =?utf-8?B?L0tCeFV5Zzk0V1puT2hiNWZhT25vdEkzRVhIZGVpZDNUWjB0SGRWUW9IMjVQ?=
- =?utf-8?B?bjQ2VVBkZHNaSFNLNjJVeno3QjREc2JmV3A1MnlKQVMza05ub1MwRjNsZG54?=
- =?utf-8?B?VnFEZmh5aEw4Szd3WmJHNE1DaTUyTlFrV2hSYkU4SmZzVXpIY3FkbThleHZQ?=
- =?utf-8?B?bzFWbzdqUkhtL2hqNVV4N0R6WVJ2NXlNQ0lrUkNRUHArbjVtV25mcXZVUkxj?=
- =?utf-8?B?MmJkUkFoZlFDNDBwRTk5bmpFLzk0NWhzdHNrd3pWNUwrT1VMQ2dXM29wb1V2?=
- =?utf-8?B?OE5wUmRBb0V0bHZXUjNWWDZnckYrNkJjbW5WQ0RsSHdnWDRWN0NscnBrWUVh?=
- =?utf-8?B?MXlGQ1pqRGdTaUh1TjFMT2dqZkFVZzAwNEVEckQ2aG56WHp3b2Q2SkVxdzht?=
- =?utf-8?B?SnNKT2JDTk1FNjRmYU1XSm5WVU5TZXZxYk1QQkNXbFM4NmpEODNvR0NQaFZh?=
- =?utf-8?B?aUtlYW1tS0htU2RvcmlidjFwejRhUlR6MTN0bjROaCtzU2lnaUdEQUFua1Uy?=
- =?utf-8?B?dzREaG1NampZcnZ1UFp4V3hzUnFPNWVtU1JxQ3Z0Rm5OR3R2NDFId3FId0ha?=
- =?utf-8?Q?FSam9HY7L35sMBUMyV?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 363e7e5a-8f9a-4293-78e5-08def2444772
-X-MS-Exchange-CrossTenant-AuthSource: CH8PR12MB9766.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 16:20:20.4724
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZzuxV0t1VruH+lVu1pW9nrD1h+aUdYd9BtfmirJ1RYbb+O/JCImTZeTFyGWAH30iKCNlzTY/ylMDFsX3XtE5Tg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6180
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 07/15] s390/vfio-ap: File ops called to save the vfio
+ device migration state
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>, kvm@vger.kernel.org,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato
+ <mjrosato@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Halil Pasic <pasic@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
+        Kirti Wankhede <kwankhede@nvidia.com>,
+        Paolo Bonzini <pbonzini@redhat.com>
+References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
+ <20260727173239.2420754-8-akrowiak@linux.ibm.com>
+ <20260727180224.027021F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260727180224.027021F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDEzNSBTYWx0ZWRfX+5Blgt/gSRRK
+ 8pJmx31rK+KosOAo/AErFDt/hkP+kN73FTkZPCUe6NnhzyRp21OiE5FRrF4dTlqXFw9cz6ONiP4
+ oMkM3cmt0mr1T0tQzRWbv5NCPVwJWGQ=
+X-Authority-Analysis: v=2.4 cv=I7VVgtgg c=1 sm=1 tr=0 ts=6a721c65 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=_Y9SaUapGFypnFrhP8gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDEzNSBTYWx0ZWRfX1Fg97TXDg1QD
+ uLksmS4v06OqfT4pYHw0V7CAIA3V8rV7BavSRoeUdXUHoS8p5MrfTJ+o4fh/YcWciEbkKNwMv3U
+ 7c4JRQr+877debLs8GqmQtnJ6cR6XRD3p9jwTlV9lotjQJXEx2UWvCAoV7n4DRAam9HbFRVk0jt
+ kbPrLJ5ZTSUmAhaNoVGByfkDEIsLu1paKNH79XLCeYmu0ycPf1KJRgqxfbzOgV/YpyHprp99prD
+ ANO4AgVMC4/AtKrZsg7OtUxfM8ogGtMRhKK/4ExaqT7DQPcuEvvkJ8fGzCCYk17eqC6qYRNghlV
+ mdQV6/OByFHhB7qwq6HfcK16ECEPJxGto8TXco3zSOSUmPdz2TZ+dSJ2Jye3V/dIR3pKMpyeNLX
+ hHCVJHvAWmGPcscBiPQdGoBEQyuq5lWwigo5RpPMeWfJS6bjiyHGhgkkCLq4B3DXGkFzXO25pC5
+ WWReB8Tr9Kav5gTbXWw==
+X-Proofpoint-ORIG-GUID: _CW--dFuk-DQyptLxHtppA2MQ4HhomlM
+X-Proofpoint-GUID: _CW--dFuk-DQyptLxHtppA2MQ4HhomlM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-04_03,2026-08-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608040135
 
-On 8/3/2026 5:42 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] cxl_dport_map_rch_aer() requests an MMIO region using the software-only size of struct aer_capability_regs, over-reserving memory beyond the physical capability.
+
+
+On 7/27/26 2:02 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Pointer casting a 64-bit uninitialized `unsigned long` to a 32-bit `int *` on a big-endian architecture leaves the lower 32 bits uninitialized, leading to massive buffer overflows or a `__counted_by` trap.
+> - [High] Dropping `mdevs_lock` before `copy_to_user()` opens a TOCTOU race window that allows concurrent freeing of the `ap_config` buffer and `mig_data`, causing a double Use-After-Free.
+> - [High] The global `mdevs_lock` is held across potentially tens of thousands of slow hardware instructions, explicitly contradicting documented subsystem design and risking host soft lockups.
+> - [High] The `.read` callback unconditionally rejects all standard read operations because it erroneously assumes the `pos` pointer is NULL.
 > --
-> 
-> --- Patch [1]: [PATCH v19 01/14] cxl/ras: Fix cxl_rch_get_aer_info() out-of-bounds AER register read ---
-> commit b208d5e7d4a18c48dd06f33bc3c5667e9a2c13dd
-> Author: Terry Bowman <terry.bowman@amd.com>
-> 
-> cxl/ras: Fix cxl_rch_get_aer_info() out-of-bounds AER register read
->     
-> cxl_rch_get_aer_info() copies the RCH Downstream Port AER capability from
-> the RCRB MMIO block using a readl() loop bounded by sizeof(struct
-> aer_capability_regs). This struct is a software layout and its embedded
-> struct pcie_tlp_log is larger than the on-wire AER capability. As a
-> result the loop reads past the mapped AER register block.
-> 
->> diff --git a/drivers/cxl/core/ras_rch.c b/drivers/cxl/core/ras_rch.c
->> index 0a8b3b9b63884..8a3965edaa12c 100644
->> --- a/drivers/cxl/core/ras_rch.c
->> +++ b/drivers/cxl/core/ras_rch.c
->> @@ -58,13 +58,28 @@ void cxl_disable_rch_root_ints(struct cxl_dport *dport)
->>  static bool cxl_rch_get_aer_info(void __iomem *aer_base,
->>  				 struct aer_capability_regs *aer_regs)
->>  {
->> -	int read_cnt = sizeof(struct aer_capability_regs) / sizeof(u32);
+>
+> --- Patch [7]: [PATCH v6 07/15] s390/vfio-ap: File ops called to save the vfio device migration state ---
+> commit 6828e02e20841803a7c3d24379ed9d9979222d55
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: File ops called to save the vfio device migration state
+>
+> This commit implements the read callback function for the vfio-ap device
+> migration state file. It copies the guest's AP configuration and hardware
+> queue information to userspace when the device transitions to the STOP_COPY
+> state.
+>
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> [ ... ]
+>
+>> +static int vfio_ap_store_queue_info(const char *mdev_name,
+>> +				    struct vfio_ap_config *ap_config)
+>> +{
+>> +	struct ap_tapq_hwinfo source_hwinfo;
+>> +	unsigned long num_queues;
+>> +	int ret;
+>> +
 >> +	/*
->> +	 * Bound the copy to the physically-defined AER registers (header
->> +	 * through the 16-byte Header Log). struct aer_capability_regs is a
->> +	 * software layout whose embedded struct pcie_tlp_log is larger than
->> +	 * the on-wire AER capability; copying sizeof(*aer_regs) would
->> +	 * over-read the RCRB-mapped MMIO block.
+>> +	 * ap_tapq() is a hardware instruction that may take time to complete.
+>> +	 * It must be called without mdevs_lock held to avoid blocking other
+>> +	 * mdevs. The apqn list was already snapshotted into ap_config->qinfo[]
+>> +	 * by the caller under the lock.
 >> +	 */
->> +	int read_cnt = (PCI_ERR_HEADER_LOG + 16) / sizeof(u32);
-> 
+>> +	for (num_queues = 0; num_queues < ap_config->num_queues; num_queues++) {
+>> +		ret = get_hardware_info_for_queue(mdev_name, &source_hwinfo,
+>> +						  ap_config->qinfo[num_queues].apqn);
 > [Severity: High]
-> This is a pre-existing issue, but since you are fixing the oversized read
-> here, should we also fix the initial mapping size in cxl_dport_map_rch_aer()?
-> 
-> In drivers/cxl/core/ras_rch.c:cxl_dport_map_rch_aer():
-> 
-> 	dport->regs.dport_aer =
-> 		devm_cxl_iomap_block(host, aer_phys,
-> 				     sizeof(struct aer_capability_regs));
-> 
-> This uses the same oversized software struct size to request the MMIO region.
-> 
-> If another CXL Extended Capability is densely packed immediately following the
-> AER block, won't any subsequent driver attempting to map it (e.g.,
-> cxl_dport_map_rcd_linkcap()) fail with a -EBUSY conflict and break device
-> initialization?
-> 
-I will be adding a patch fix to v20 for the existing cxl_dport_map_rch_aer() 
-issue reported by sashiko.
+> Does this loop actually execute with the mdevs_lock held, despite the
+> comment?
+>
+> Looking at the call chain, vfio_ap_stop_copy_read() acquires
+> matrix_dev->mdevs_lock and calls vfio_ap_get_config(), which asserts
+> the lock is held and then calls vfio_ap_store_queue_info().
+>
+> Since the lock is never dropped in this chain, will executing PQAP(TAPQ)
+> in a loop for potentially many queues block other mdev operations across
+> the host?
 
-- Terry 
+The mdevs_lock will be dropped prior by the caller of this function.
+
+>
+> [ ... ]stream_open is used by subsystems that want stream-like file descriptors.
+>   * Such file descriptors are not seekable and don't have notion of position
+>   * (file.f_pos is always 0 and ppos passed to .read()/.write() is always NULL)
+>
+>> +static int vfio_ap_get_config(struct ap_matrix_mdev *matrix_mdev)
+>> +{
+>> +	unsigned long *apm, *aqm, apid, apqi, num_queues;
+>> +	struct vfio_ap_config *ap_configuration;
+>> +	const char *mdev_name;
+>> +	size_t ap_config_size;
+>> +	int ret;
+>> +
+>> +	lockdep_assert_held(&matrix_dev->mdevs_lock);
+>> +
+>> +	ap_config_size = vfio_ap_config_size(matrix_mdev, (int *)&num_queues);
+>> +
+>> +	ap_configuration = kzalloc(ap_config_size, GFP_KERNEL_ACCOUNT);
+>> +	if (!ap_configuration)
+>> +		return -ENOMEM;
+>> +
+>> +	/*
+>> +	 * num_queues must be set before writing qinfo[] elements; the
+>> +	 * __counted_by(num_queues) annotation on qinfo[] causes the compiler to
+>> +	 * insert bounds checks that evaluate against ap_configuration->num_queues.
+>> +	 * Writing through qinfo[i] with num_queues still 0 would trap.
+>> +	 */
+>> +	ap_configuration->num_queues = num_queues;
+> [Severity: Critical]
+> Can casting the uninitialized 8-byte unsigned long num_queues to an
+> int pointer cause uninitialized memory issues on big-endian systems?
+
+The cast of num_queues to (int * ) needs to be removed.
+The vfio_ap_config_size signature takes int *num_queues, and the variable
+is already int. On big-endian s390x, &num_queues now points directly to
+the correctly-sized storage that vfio_ap_config_size writes into.
+
+>
+> On s390x, writing a 32-bit integer to an 8-byte address only initializes
+> the most significant 4 bytes, leaving the least significant 4 bytes as
+> stack garbage.
+>
+> When ap_configuration->num_queues (a u32) is assigned num_queues, will it
+> truncate the 8-byte value, completely discarding the initialized high
+> bytes and storing the uninitialized garbage data? Could this lead to
+> out-of-bounds accesses in the array bounds checks?
+>
+> [ ... ]
+>
+>> +static ssize_t vfio_ap_stop_copy_read(struct file *filp, char __user *buf,
+>> +				      size_t len, loff_t *pos)
+>> +{
+>> +	struct vfio_ap_migration_file *mig_file;
+>> +	struct ap_matrix_mdev *matrix_mdev;
+>> +	loff_t read_pos;
+>> +	ssize_t ret;
+>> +
+>> +	/*
+>> +	 * When userspace calls read() with an explicit offset (pread), pos is
+>> +	 * non-NULL and the function rejects it with -ESPIPE (illegal seek). For
+>> +	 * normal read() calls, pos is NULL, so we'll use the file's internal
+>> +	 * position filp->f_pos
+>> +	 */
+>> +	if (pos)
+>> +		return -ESPIPE;
+> [Severity: High]
+> Is the assumption that pos is NULL for normal read() calls correct?
+>
+> The VFS layer unconditionally passes a valid, non-NULL loff_t pointer
+> (pointing to a local stack variable) to the .read callback for standard
+> reads. Will this check unconditionally reject all standard read operations
+> on the migration state file?
+
+The vfio_ap_open_file_stream calls the stream_open function to open
+the file stream which is passed into the vfio_ap_stop_copy_read
+function. The function comments for stream_open state:
+
+"streamopen is used by subsystems that want stream-like file
+descriptors. Such file descriptors are not seekable and don't have
+notion of position (file.f_pos is always 0 and ppos passed to
+.read()/.write() is always NULL.
+
+>
+> [ ... ]
+>
+>> +	/*
+>> +	 * Drop the lock only for the copy_to_user().  The ap_config buffer is
+>> +	 * stable: it is allocated once in vfio_ap_get_config() and freed only
+>> +	 * in vfio_ap_release_mig_files() / vfio_ap_release_stop_copy_file(),
+>> +	 * both of which require mdevs_lock.  Since we already advanced *pos
+>> +	 * above, no other thread will compute an overlapping region.
+>> +	 */
+>> +	mutex_unlock(&matrix_dev->mdevs_lock);
+>> +
+>> +	if (copy_to_user(buf, (char *)mig_file->ap_config + read_pos, len))
+>> +		return -EFAULT;
+>> +
+>> +	return len;
+>> +}
+> [Severity: High]
+> Could dropping mdevs_lock here open a race condition that leads to a
+> use-after-free?
+>
+> If a concurrent thread triggers a device close or reset (for example,
+> via VFIO_DEVICE_RESET) while this thread is at the copy_to_user() call,
+> the reset path could acquire mdevs_lock and free both the ap_config
+> buffer and the mig_data struct.
+>
+> Since mig_file is a pointer into mig_data, will dereferencing it here to
+> access ap_config cause a double use-after-free, copying freed memory to
+> userspace?
+
+The use-after-free cannot occur because all paths that free ap_config or
+mig_data require mdevs_lock, and the lock is held for the entire window
+except the copy_to_user. mig_data itself (which mig_file is embedded
+in) is also only freed under the lock, so the mig_file pointer remains
+valid across the unlock.
+
+>
+
