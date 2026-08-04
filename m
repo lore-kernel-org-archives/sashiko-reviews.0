@@ -1,113 +1,106 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DE73CA4B2
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 12:44:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EC33DAAAA
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 12:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785847497; cv=none; b=RrMAjxz4qHCJBYrk3wdJwro5j3fkAAi0IEJxUuAQwNkjZaWAGf6qWMmeMRIuXNQKUaWZxd5z0ebxHVqhCntcUbrWSNH1aAAH1Lu95IPT9TXdWADhO6bhau0ZSteAh3rSH4Yn6icIKWqxoWirkx/J0TDC/WDobZ1zNRzebCWY1Lg=
+	t=1785847690; cv=none; b=ghBYGJ82nfDLzCkoR+x56LEUqT0C/SB5AdLQjm1WeZXGYtWDszSDsK6GiP9Yu9nXSJzWnutD0KJUbq5l7nURZq5aPHJinHW7ODjQbbngUq79GJblZplSLr5hSzHaYGsvag37XqKvRzj42l827+99RaUNOMMgxpUj6Jvcvc1axeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785847497; c=relaxed/simple;
-	bh=AhCvAzGz5QWbk/302ntoX0RJ56FBrV8QY/YWkhL/+9Y=;
+	s=arc-20240116; t=1785847690; c=relaxed/simple;
+	bh=V/8cjqgBsD+OEloLI1K1iMex5eqU9Q1Mx8Om0dbP7sg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S1pzlsLoHtLkO+83eC6fSl19yyzoA0ptMzLtAx2uwZpzdCpS8aTZ0c4wG2VgzuUPe57LY01N8fGbenBLS7IrIMB9Hev+pCXYZUmeX6DDfkiT6m8KwbY9ut0aHgQk0Ml+fYLMGdir5mpMAE/kLlOvpsoLtyudwlcHKnY3y3L5hJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OgmpqFg0; arc=none smtp.client-ip=170.10.129.124
+	 To:Cc:Content-Type; b=dRMEIZza+dwQO8RgaOOyopzc8Bzi5/UIK/Y+ORTp5IFWgBhKBOJZcS3j6GYAH/4L0WW4mgO9gQcix2i49F6jm9zb93pCCCuN3g2Wntdp92FQlvNJsDQ/MQEqBiI0YCGJ+isL+457wXnC1bwKVo27nqyOV3Hhsqm5kprRoC+pQcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Ow4TTe4N; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OgmpqFg0"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Ow4TTe4N"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1785847494;
+	s=mimecast20190719; t=1785847687;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AhCvAzGz5QWbk/302ntoX0RJ56FBrV8QY/YWkhL/+9Y=;
-	b=OgmpqFg0ylB/24ZG9TYLHrRlqDCrFG6UCfuwDkJAsBvVxZSXYFqDdC81JK9kGF0/E1Q3hn
-	LqvsGtbHW/Keru8To7RNZ2gKvNzHEhnr7sZzNUs5SxKJqul/3+9WmhP6vMpqP+/b4yhlmJ
-	Lckl3Oqluh443nfnZDTmKLR59dUdi/g=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=V/8cjqgBsD+OEloLI1K1iMex5eqU9Q1Mx8Om0dbP7sg=;
+	b=Ow4TTe4ND3rOojtIJ0d+ym5S2v6N99Cwnckr2cJRswtmsUdY0xvGsh08M01DV0VuFe4Wy6
+	FFGz8pY+9HRcaGzQTEgwu6h2v7mWzFBVrI0TGkRbbi3JkcJMKy/f6ZDEqiw2UkAQgkRwIg
+	3tMSijIkhkFcx4xp+VMd5bRwusRw7xs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-xsS2CNH0NhirBEtsLuX-nA-1; Tue, 04 Aug 2026 08:44:53 -0400
-X-MC-Unique: xsS2CNH0NhirBEtsLuX-nA-1
-X-Mimecast-MFC-AGG-ID: xsS2CNH0NhirBEtsLuX-nA_1785847492
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-47f835ac1aeso3645634f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 05:44:53 -0700 (PDT)
+ us-mta-440-GwRlr36_NgSQNuGT93Ee9Q-1; Tue, 04 Aug 2026 08:48:04 -0400
+X-MC-Unique: GwRlr36_NgSQNuGT93Ee9Q-1
+X-Mimecast-MFC-AGG-ID: GwRlr36_NgSQNuGT93Ee9Q_1785847683
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-47f810c8aebso2786515f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 05:48:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785847492; x=1786452292;
+        d=1e100.net; s=20251104; t=1785847683; x=1786452483;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=AhCvAzGz5QWbk/302ntoX0RJ56FBrV8QY/YWkhL/+9Y=;
-        b=Q5xqh0FrzU5DOYlV9+qIlw5Dkx8eFdTibLY1nuE8CNcfs27YE8WuAuvNuW7YVZzf5h
-         em3ixz8giKK3cr/c2rrh7PgasYWc4S99ZDvSH7oUee3ex/oTWypQuAG77HNxqihUI1jO
-         RGIJeLSkVD+hNJabIFxPhDtH9eCT9q+PDoi220Zw0Rtz0bKDdXYs3TRMICH4ex1yIto2
-         qaWZ6KNXryg2tCgawn2DX+9s3pmxzac9AFfS5i5sC5uVj4TLTMZXfIFKYmnFWbFH41f3
-         6I/EHZPEVddNP9T04G3EwFM5bSeoS2yaFhUIYeVBNG9+WcTEzqbHnrM31uWDK/D1BkCY
-         XNeA==
-X-Gm-Message-State: AOJu0YzWjfyDdkGvSIi73HAprP/2cjIVrYhoHKlyrEuHDBgYeA84VIWq
-	AbuNqNBWxJ4A1Shj+BRHM/z7oRd9I3eUzxgvVfkAaNRDyKeMc0yr3sVnvER9LCDbWFYzKXFrG88
-	kilqGdAil2e6wr4tnDC++pbXgU+ztM/k3HD8/rbfWB+s9CnfM+zDd2JMOycaXVu67qqG06SpQ0w
-	PJAasdwyGkgvlYUcZ1KH0SF6rTymH/pdUj0OtHaHDrAKjFjPj4t8pz
-X-Gm-Gg: AR+sD13Y91dcOWdewp3sYOXzOUaHTPLDvkwJ+M8QzLZETLKb67oNxh/XLlEEImrQhJr
-	JbtiOV8U172EZ+2wAXRhmw4DGe9bD3OITLZTGahxmQMGYxbrIQ/uhLajT48Iabp0/Gveoe5cqB0
-	rxKwoUoVWVRQQU7o3UCgASnvmMPPrWwZkwpXrZ1hS/CzI0zseyb6YU/RwyljEXO8HgTUhOu/YmQ
-	XGIt6szkRpLkgtGnNjjd8CQIpCCysO6Wlp1CWwuS5JDyTknl0YAwh0r+Go=
-X-Received: by 2002:adf:e196:0:b0:47f:91f0:9a8 with SMTP id ffacd0b85a97d-47fd72d9daamr44077320f8f.23.1785847492531;
-        Tue, 04 Aug 2026 05:44:52 -0700 (PDT)
-X-Received: by 2002:adf:e196:0:b0:47f:91f0:9a8 with SMTP id
- ffacd0b85a97d-47fd72d9daamr44077224f8f.23.1785847492081; Tue, 04 Aug 2026
- 05:44:52 -0700 (PDT)
+        bh=V/8cjqgBsD+OEloLI1K1iMex5eqU9Q1Mx8Om0dbP7sg=;
+        b=YCXP6GoP56lMyQrAcEdRoNfE4oc4e8VhHi1c6xkNETBHfb580AJLTi5jZ5dylqVowH
+         xa5N8hN5EvgurrIjYPPNAH0fDXBamsBcXKv2AnqOgm1Oy8Aa/S+PjgQIiTmTfCY8wDlB
+         iDGoSQcpFS4rm+w+lwtPG0+lTFHEHTRvwKTMeSqg0PLFniZF0AsDb0E/1S3Cs6lRwLoX
+         cPZiY+LNTH0bw+3ETdWuSFX42WePyrRSVGwxy4dOHJvlu5PB56Fc5VftvwPNCy+aMHi/
+         23KjuKzSA08Ev6xVT6zIOapgaDaa+s8GKIrfH3yLiVXtCGdytFsLZ/L1IpAEKsOCutql
+         vrUQ==
+X-Gm-Message-State: AOJu0Ywi4T1kbWC9l9WkNGuBElf1/NyhgyjcDMxz2sCnH6U5B+AEwOSw
+	DCI1hPzeNSI2CvW3bMxTLnIja8T78+atifK/H05jZc+r+ETsHNMytRlWjgAMD8hGGDYMgE/xtD3
+	YqNl6HAu/VpusG+qFOROapg6Fk/tG73g+z4ury25UdQ2hhxKCFDo6IN9wvK7SvnMXFQ8Ld25OUJ
+	+Hyg59yOL2dBLfnvlSpfJNkaHP7M77w/TGyHTQ+gxpxd3YVEjpJguhf6c=
+X-Gm-Gg: AR+sD13pZwdg2kDFtL5ZSjYPwW9NwxkkRxlJwW+T8nhIUI3Tqiw8lyLy4W/40RPIhr0
+	SRe34qEXuhHRGohu17kUfFwccY9znQxO5nkwDoEVERKQsHtS/jqIHN9ODZDSc2eeXLX1m1EEu43
+	l4kSAbuP/KkT7UjUQi3v1M4CCObXPsMPJe/7rcboZlKg5/t/zfj9OKfihBU9agrCMsapdYUqJxZ
+	lRXGpm8ZRA7orypY+tD9Hz8vNwa4IFRr2KpC34r0QAYOpLRztpp9NzEtck=
+X-Received: by 2002:a5d:6347:0:b0:47f:7b75:9dfe with SMTP id ffacd0b85a97d-47fd72ba981mr33399483f8f.8.1785847683361;
+        Tue, 04 Aug 2026 05:48:03 -0700 (PDT)
+X-Received: by 2002:a5d:6347:0:b0:47f:7b75:9dfe with SMTP id
+ ffacd0b85a97d-47fd72ba981mr33399406f8f.8.1785847682947; Tue, 04 Aug 2026
+ 05:48:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260804120529.1730187-1-pbonzini@redhat.com> <20260804120529.1730187-5-pbonzini@redhat.com>
- <20260804122348.AC6E51F00A3D@smtp.kernel.org>
-In-Reply-To: <20260804122348.AC6E51F00A3D@smtp.kernel.org>
+References: <20260804120529.1730187-1-pbonzini@redhat.com> <20260804120529.1730187-4-pbonzini@redhat.com>
+ <20260804122128.838941F000E9@smtp.kernel.org>
+In-Reply-To: <20260804122128.838941F000E9@smtp.kernel.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 4 Aug 2026 14:44:40 +0200
-X-Gm-Features: AUfX_mzeBd9D7i9RK65m6Y6i1uzG2a-w4C9IIV172eXDDgUNWsdPG5F7opYXrlc
-Message-ID: <CABgObfbd63O_UkmCcik1z0J847Sr6a5rnFgwttBjBb0am=+2PQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/6] kvm: apply VM_READ/VM_WRITE checks to all VMA types
+Date: Tue, 4 Aug 2026 14:47:49 +0200
+X-Gm-Features: AUfX_mzc1UECOTjr13bdYLDwoSBcmazBIfNKBtso7fBXqj8NWhSnjvnTNjTJWfA
+Message-ID: <CABgObfb9-cEUykbZD5C5LMz8Otk8hJk-OCzgRq=HvU3-s9NSVw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] drm/ttm, drm/vmwgfx: directly create writable PTEs
+ when mkwrite is in use
 To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>, kvm@vger.kernel.org, 
-	linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>, 
-	dri-devel@lists.freedesktop.org
+Cc: Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
+	Alexander Gordeev <agordeev@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, 
+	dri-devel@lists.freedesktop.org, kvm@vger.kernel.org
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: xdeYRMM_f2KA4bfTdIolDzNae-dCSZWM397kHwPH0HU_1785847492
+X-Mimecast-MFC-PROC-ID: Jw304f3i9yQkEjF53VtohtOGXRR2UZa1STnL-asKTPw_1785847683
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 4, 2026 at 2:23=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Aug 4, 2026 at 2:21=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] Write faults on write-only `VM_IO | VM_PFNMAP` VMAs are incorrec=
-tly rejected, breaking guest writes to write-only device memory.
 >
-> If a guest performs a memory write to a guest physical address backed by =
-a
-> write-only host VMA (e.g. VM_IO or VM_PFNMAP mapped with PROT_WRITE but
-> without PROT_READ), get_user_pages() will fail and fall back to this look=
-up.
+> New issues:
+> - [High] Missing dirty page tracking in vmw_bo_vm_fault() when prefaultin=
+g fails, leading to silent data loss.
 >
-> Since the write-only VMA lacks VM_READ, this check will evaluate to true =
-and
-> return KVM_PFN_ERR_FAULT, skipping the VM_IO | VM_PFNMAP handler. Could t=
-his
-> prevent guests from writing to legitimate write-only device memory, such =
-as
-> command ring buffers or write-only PCI BARs?
+> Pre-existing issues:
+> - [High] Inverted error handling logic in ttm_bo_vm_fault_reserved() hide=
+s primary fault errors and propagates prefault errors.
 
-This is theoretical only but actually a bugfix, because KVM does not
-support write-only mappings and therefore it would not be possible to
-enforce !PROT_READ/PROT_WRITE.
+Fixing the preexisting bug avoids the other issue - I sent a patch
+separately at https://lists.freedesktop.org/archives/dri-devel/2026-August/=
+586696.html.
 
 Paolo
 
