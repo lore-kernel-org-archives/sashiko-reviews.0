@@ -1,117 +1,105 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C964D1F8691
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 05:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785819801; cv=none; b=dlowcBPPJRKqmiiuBuxf25ow5rboEywI3EQd1L3mrEcixRRtmtuo/2n8PxULkcM4LbTF+XO85VSiHSuShl2R8N8J/C5xDr963sEhknIPgupToZDV2t3J4DzuRnS7tGiUp5kl3U4OdaOa3okG62AN2eDfxPGLD90pc7QGLNXQ9ZY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785819801; c=relaxed/simple;
-	bh=R2VmxxTs+MpXch2wxSsqwZgW7vlIaZ+bgUcmW+Zx31M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Flb5P7BHZhaRVnGxFmXDarPBIJ9LujtkksFGMeKXocLbu2i1IevJwoOri29VHVs/mvI6ByMil2Ozgc+0dXTGNXSeppiHWascpgHSSzirVL1gPSA/C6ZYNZuopYdW0zkFIr4rKBzilsQH1hOSa5i1L+14VohHfspi2o2W3LN7vpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KIY/0sC4; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EA733555F
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 06:10:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785823807; cv=pass; b=pNAtl5/Or9lKiEzImIE7Ygu7FBN5ddpW4kEZgLJOSZozkZyHauQZEbhJgY504SRa+qOTf/UIsUT5EqXB3w2HtV9gSE35IoG4AkBTomoJLT1kWP+zjR2hjg5JpjnNFNUIU2U7tUHasuPTpRUi/BibDiq0SeDWSsd00Jmxo85r2ek=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785823807; c=relaxed/simple;
+	bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GLzL03bMKg6gMjQJrMRbTaR0Zcg6MEEc0H4ti8hB/vYX1IG0gCVFfq3qDfdwJIhvzQB0B6bXYc7pkdL8I0VlcLIIVEf3/6J73VKHUoOJYkjWWcT2B9ax0Arztd3hAxrp36CLdbApEnD/AYLlLQ7V7v/TBNOqOfCGaP0mZzpWCtc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thegoodpenguin.co.uk; spf=pass smtp.mailfrom=thegoodpenguin.co.uk; dkim=pass (2048-bit key) header.d=thegoodpenguin-co-uk.20251104.gappssmtp.com header.i=@thegoodpenguin-co-uk.20251104.gappssmtp.com header.b=y4frb7br; arc=pass smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thegoodpenguin.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thegoodpenguin.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KIY/0sC4"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c9e0b89e228so2224011a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 22:03:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=thegoodpenguin-co-uk.20251104.gappssmtp.com header.i=@thegoodpenguin-co-uk.20251104.gappssmtp.com header.b="y4frb7br"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-51c0ecfaee7so25755931cf.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 03 Aug 2026 23:10:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785823805; cv=none;
+        d=google.com; s=arc-20260327;
+        b=icDvlJIdj8D0uN/wjIcKmgKWEa3tlOW8xviZdx89+tW9F3V6VtppHFgAzNsMq3NmdT
+         PpjsprfT1VAl930s1Yo768CFKX4VmcZ5sCMBtyhvy3h/nIhvn0npQwGdYXDvO3J1WyKl
+         +onaDV6a7ORmv+8625Wj/Zw59G4SDWpO+6trIMmQce+YvJttrYpKUXzuntZhCYlCCFrK
+         dcErnVFJWNwsMD5BezhbgmjFnlNUkBr59z0/srBl35mBFAEPmgePMI3V68jCboDUFz3e
+         DOU6QujuG0e6E4QiA0rBPhMHBhf08q9tI151BQirFwnK0JBtVO3Y/Tc/xwuGou0+/stX
+         kxZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
+        fh=dDAumcgQ33Fwf79p/1I1EFpRzWzhL3DlykLAU5ChR1E=;
+        b=C8cqf2PnrSj6LyR6fSKsuGJavEBrKYfOHkAsxH7SpVyFfS9vw+NA3saj6RVxg82W2c
+         gmfo7JZ1jHbhBfaRaaUcNtUtjPf/rltJeX+m/wVJWLlEz25gpplg+s5CfKkoWpQhmteB
+         0uIhoBb6zp8PQRUbvxQrwkuPwXC8ysXBDTGS16WaxTNTHlFQY84XwxicyvdLjcb7Z2LS
+         Zaxg9w32x3ezP2Xa+ID4BirK3XARBnMyqsX2d9na92P9eUuo5YzjabF5IzmSEE6JqQgP
+         XYth6vxS8r5nZIqwjRK/QtX37zBl9FcA3xS+M0LpU+P1LjdhDF0I+P0WkUtIu/fX+NBv
+         9c/A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785819799; x=1786424599; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/8CDi2Jj1vQpqhue3/u9PKS7MdffrHoCAeV6rBW/gOw=;
-        b=KIY/0sC4XIf3VKc4CXtU9Y5MeTkZa3qf79AqKiLTyVisdziJo3avj3Ap5K3p1/XkNl
-         pI/1GPGT8KrMHo9ERRAjY3jc3pQopSTF1TeUgBbfB6Va1R15J2LlETCZ/+cLH/sgYFhH
-         rm8aboUi/XRmtMlF6far+fO1svGbqCKhhi+D3f76p9Wy4VrwQ+UB2jWNvSjiHqpW2SBp
-         TquLzHlVeHqTzKInb2A/S4kKf5v9mvT7Ab1LwH0XumYsOXNG9b4SHYD0sng421//iIIh
-         N/ZVt6JjzrczeaqpRo73rOdoyNJLJj1Mz/DSkos1GOPuIxehH6erDuZ49RVn4MfMwj0n
-         h2HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785819799; x=1786424599;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=thegoodpenguin-co-uk.20251104.gappssmtp.com; s=20251104; t=1785823805; x=1786428605; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/8CDi2Jj1vQpqhue3/u9PKS7MdffrHoCAeV6rBW/gOw=;
-        b=S6ZKiAA3z6Z0A+JEBFLRnbEiqNuCTRMjHHUSXd+/+XE+XeyhhNEy2fTuZyi8w4OuU1
-         FwY945GcVlPIdrZdr0i6seKtZMW3fXe1rxU5bX5mUJoAYCF2/Lan0wfmprGnmCFfQBZC
-         uhAwQmU/QMTZ2I0IUR/0PLZYoZVYi9P6G9Bm5F6cgB8uWrtxSTxDEyZBIc7oS3xcyLgQ
-         iJCwPNPRt/u2dgXtPPSnYdTYh4pXF26v7Ni0Qa3cZ63b/HIBJl/rCAyRteoyzsNR8zgD
-         0CGjDCWKkpH2nW0x5WCtmtqcWukk3MDtslMkrWRWKpc4D7AFWJ5+rl67Ak0uAYu3i83y
-         d9PQ==
-X-Gm-Message-State: AOJu0Yw04n1R0rKLHuguQLnEYsaFc99yDZjJmjLWDiFiQuzVjBMk035Q
-	dL1G2VJGjuBJbnKJ7OrZmlPN3DMkkiarZTxRRH79kQoSLR2yG0neFMeI/MBfqQ==
-X-Gm-Gg: AR+sD12Yys/H7Qa2I1UX2WOJQz66jEP0FFmnzDs8dgRiUkf7P3nHTbZb08NL0kZlXec
-	yOHyIXDu1lChvYoORQsGQCaAMOIBvUBmYAAPZ2J7+RPeoiyW2dmF3sgumzkZYl8AJ6cnYwl+uLr
-	iFq9bqiraqZUgKBzGHhZTiR+Egx7+wiOJB3jSPmboRAcQT7q7BmMBz7bb+NEaGnWNFnlPHHDftn
-	nAV9pnmPS3jDBEroTmNnMGkGgq5ZD8NDjj9BQXLCOzr/OCO3pHMM/drRp/qkrbi9cU9qUD71ArC
-	QHSWvHo591ndrPtGTfVwVNxNUvhLo8DVB5e51O6UvDKv+gDUQDcmummog8fO7WXS/Dhuab08wZ/
-	fuB8QEIdaiTqXYkgw9yM7v8bOUMrEDFb9eTOvgOcQq4uzt3HkGpMmi+P5SWu2s+kpwGaxuXQ4Cx
-	Y4EsIlZ6MH6e8lcq7AXetfaD/iu/IAfHxg+RbUvMf07MJ9E2n1pU6WbgGjtQ1T+I9NXtJIqoAfb
-	ShvZw4i9UlQd3nX9brwjxdE5JYYBMynK+GY0Nfu
-X-Received: by 2002:a05:6a21:3a96:b0:3b3:1b38:d9d6 with SMTP id adf61e73a8af0-3c92a89da25mr12660784637.39.1785819799052;
-        Mon, 03 Aug 2026 22:03:19 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:d109:cdba:8a20:74ad])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153db2f911sm49653631eec.0.2026.08.03.22.03.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 22:03:18 -0700 (PDT)
-Date: Mon, 3 Aug 2026 22:03:15 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marco Felsch <m.felsch@pengutronix.de>, robh@kernel.org, 
-	linux-input@vger.kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v7 4/4] Input: Add TouchNetix aXiom I2C Touchscreen
- support
-Message-ID: <anFxs8grhvIVSdNA@google.com>
-References: <20260703-v6-10-topic-touchscreen-axiom-v7-0-0d2a550a7ee8@pengutronix.de>
- <20260703-v6-10-topic-touchscreen-axiom-v7-4-0d2a550a7ee8@pengutronix.de>
- <20260702224804.E0B0D1F000E9@smtp.kernel.org>
+        bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
+        b=y4frb7brhii/D3v0/kxSWTyVuPqVMo3cLhtchVe0fvqkIuLkgFOeAM9qsB/ZxPtQI6
+         rQIYsXbizALXDTn+fs+abw5+v3vPGgwaEPeNxI7vLE+sxWKFBr4EtF9ONS70jSg+QXz7
+         8D8n039pTHLkguq6Z50zA+HXNjiw6coSJFYHRbu17ZR6FbV0uF07RGrennSvL1I+iZpk
+         mdZpUSSDWJXmbdejzVcRBVCMim5xUZfwlFWXI8WnOnukh6PIzQzCgpL9LwOCLCyiViNt
+         r/EZfLxDoEYLfChDAqCAyVSN6jgvQAdTB9KVgVFSuJ+KC+s3maqqCFVWdj3PWVqt8Lct
+         FQrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785823805; x=1786428605;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=a5WRpkzvBDUVr7xugOiFRcaxbPS0kFBbyIpbYm1j7Mk=;
+        b=qxHw0KKv/S15rPTnlsW3XLHnuw2Cnf8hJ1Gv0jA7nx164KiR1QUnuxq14BaV5siPBf
+         j5NB4s1ofux+Y2jETKXnFvnA31LcGm+z7zaKholkyZyIN1S0c4GiY9TQyUz/5K5oYle+
+         Q1klfj3bxOp+IWCs8c1vVIM+Ri1qkZ0q2sC0L+RigpuDPtMugf8O1OP6s0ljVn8vZXUo
+         mlXGMsxll4rPQfgfuSuB/yej/EPO23hsLQTV57275XxVsn/7vz8AecrVr8HkyorlFli+
+         HbP06PeuJ8PYUaoxqE1dju2T7s+yZTDnYULNa7QTixZRK1PnD6benalQ/lXxpxKwhTJa
+         pAvQ==
+X-Gm-Message-State: AOJu0YxdICKflH3S1YcZLfLMbsFtaPiOrfbAWAkErfr1DGfyRs8ip5Ou
+	X5GkX9GUeOqiGbHh9vLl7kbPXiEDFdBbi4BUvzQGK2IfNe6CqGiRGsT42b+1nWL70lHj2bndCgx
+	IoviQAT1X2pzZMZfTGJxKLWYtKAc337qGtksQNBujrou9dlnjRllPwm0fBlMQ
+X-Gm-Gg: AR+sD12nzpdO7PP0lLkuYm4kzZIB8mDJ0sG8SZuN6FqvdeAl2fTUG4qLzvSS8oUv6VS
+	SrhtRNQSBokWCZllmgBjshJSSBcIHvCmllj2boXpWGBB2b5JALeQx21balmEYOGbPRKxVjo7Mb+
+	D3CGx573xATiIAv+MVSxwhxwhQHUE1VFDOpy7/5xlDOgyCEBdV1KaY+dKyNzZwl/zQl5rvJmra1
+	ehXzpw3P2g+Aw8F3R7tCB9V1zyNQ+3zWaK4aqvL/iVhgiPmrF7+1emZsbsoo0CmQaEhj8Oe7Qoz
+	AeWXVmC/Acj9rDSp+r5WXCSP0/Dfhuh0kfJMWC8AQzwozvFyZQPs/Lk=
+X-Received: by 2002:a05:622a:53c9:b0:51c:9193:fd9e with SMTP id
+ d75a77b69052e-52b566dd26bmr285053611cf.15.1785823805225; Mon, 03 Aug 2026
+ 23:10:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260702224804.E0B0D1F000E9@smtp.kernel.org>
+References: <20260803-ata-acpi-v1-0-f606afaacad1@thegoodpenguin.co.uk>
+ <20260803-ata-acpi-v1-1-f606afaacad1@thegoodpenguin.co.uk>
+ <20260803151417.3DB001F000E9@smtp.kernel.org> <anDy13qZ6rr1tFqO@ryzen>
+In-Reply-To: <anDy13qZ6rr1tFqO@ryzen>
+From: Pawel Zalewski <pzalewski@thegoodpenguin.co.uk>
+Date: Tue, 4 Aug 2026 07:09:52 +0100
+X-Gm-Features: AUfX_mwWoxNiEiKFO7YpB4PerbiuIoha9b8E02ql7BazlhlXy21NTJ2evt-pFQs
+Message-ID: <CAA6zWZJ_TCa4CyEGFd-a-u_NS=Dv64KV-HONhomER2PC7p+EyQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ata: use named initializers for acpi_device_id
+To: Niklas Cassel <cassel@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-ide@vger.kernel.org, 
+	dlemoal@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jul 02, 2026 at 10:48:04PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 18 potential issue(s) to consider:
-> - [High] Missing bounds checking during firmware chunk parsing allows malformed firmware to trigger integer underflow and out-of-bounds memory accesses.
-> - [High] Invalid cast of regmap buffer to u16* causes endian-dependent behavior and corrupts register addresses.
-> - [High] Unbalanced pm_runtime_put in firmware upload cleanup leads to negative PM usage counts.
-> - [High] Firmware-controlled allocation size allows out-of-bounds heap read when checking touch slots.
-> - [High] The driver prevents firmware recovery when the device boots in bootloader mode by improperly failing the probe.
-> - [High] fwupdate_lock is held across system calls violating kernel mutex semantics, and is double-unlocked on error paths.
-> - [High] Improper devm teardown order causes Use-After-Free of the input device by background firmware upload threads.
+>I do kind of agree with Sashiko that ahci_seattle.c could have been fixed
+> in patch 1/2 (rather than fixing ahci_seattle.c in patch 2/2).
 
-I am not sure this is true as sysfs attributes should be removed iand
-handlers complete before we get to remove() method. 
+Happy to refactor in V2 so that patch 2 would only deal with removing
+driver_data = 0
+in the ahci_seattle module.
 
-> - [High] Use-after-free of ts->input in the threaded IRQ handler during config firmware updates and device removal.
-> - [High] The driver waits on completion primitives for hardware resets and saves without reinitializing them, causing future waits to falsely succeed immediately.
-> - [High] The driver passes stack-allocated buffers to I2C transfers, which violates DMA requirements and can cause memory corruption.
-
-This is Sashiko's hallucination.
-
-> - [High] NULL pointer dereference in `axiom_remove_axfw_fwl_action` if `devm_add_action_or_reset` fails.
-> - [Medium] An operator precedence error in subtracting the preamble and postamble causes the calculated report payload length to be artificially inflated.
-> - [Medium] Probe error paths leak PM runtime references and fail to disable regulators.
-> - [Medium] I2C read errors are swallowed and falsely reported as success in polling functions.
-> - [Medium] Missing NULL check on `kasprintf` results in a crash or broken sysfs state when registering the firmware upload interfaces.
-> - [Medium] The driver lacks system sleep power management callbacks, causing the device to remain powered on during system suspend if not acting as a panel follower.
-> - [Medium] Dead code in `axiom_register_input_dev` prevents failing initialization when no touchslots are enabled.
-> - [Low] Typo in the sysfs `device_state` output violates the documented ABI.
-> --
-
-However there appears to be quite a few items that need addressing.
-
-Thanks.
-
--- 
-Dmitry
+Kind regards,
+Pawel
