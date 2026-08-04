@@ -1,98 +1,64 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11021079.outbound.protection.outlook.com [52.101.125.79])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F8D2E7185;
-	Tue,  4 Aug 2026 00:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742E635E94F;
+	Tue,  4 Aug 2026 01:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.79
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785803118; cv=fail; b=koEFmz20GQ4CiItx3gjYqbX/90gN9JvKPukC+9DkJkPCFzXZgRuvuKMHRkG8o4EtPt016EmRe3ezfL2EibF0cEEBVNCEh0JcbgRzSW8ymmMnAz24XfuKaaY7vavxO+CJjvnXbUVaeXOwIFFHDQWAgUFG7iRXPDgm1L6yxmrh2s0=
+	t=1785807668; cv=fail; b=t+ajdnDRI/Qh6JX9bu8EJl+RhL8vynIzpfC/5is1dw6cWC/CteVDYvyMCyjOluHsiRQORj8SvcFlCKTBeiIVXJG2TpE+NqH5PledX/VTiVtVVxl7LB5pfbViH3bJ5zx0xGMROWv049ePXCX7YX3Hzs2nqXonUmDKWkssaSy+3zg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785803118; c=relaxed/simple;
-	bh=Q336knBeqpYDdYYUsGPZ2WaJnZsUnUwLBNc8R7Sea60=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Q0/M94tu6MHtr01KmAF4IH3gMeoDM6hdZMw7Cw7f1FslLv9TV6N1HTxIz71IASE4HYqbJQXygZUvPI/ANCmvB5ZYUWwRVCIlnvbDDjIvtVsqzOF42yLgMcar+HU7gvODgSS4bpL2+xRLSUjdcWLfH5yOtuNOyu6Q+0C/leVneb4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ltLO4mgJ; arc=fail smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1785807668; c=relaxed/simple;
+	bh=HitzByGBKrkKaLKLi+/6smXv2wcohOSwB6JrQMW01uI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=jU+ugCRyr2ZDlvh4Sb4Ica6+Lf9sffNpdLIG8ylyE6kzeLiA0wfXTMuS77VBtisTGolZ3XdGpqaOlIMA7ky7kul4hgBjH2WnQYpGOP59f5a60GuW2txcB+rGtFk0anJJBjIIvRixkIKteUy5YMK1wFIl/KKwJyD8vN460MkeVB0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=ICESS+lf reason="signature verification failed"; arc=fail smtp.client-ip=52.101.125.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ltLO4mgJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785803117; x=1817339117;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=Q336knBeqpYDdYYUsGPZ2WaJnZsUnUwLBNc8R7Sea60=;
-  b=ltLO4mgJOfbJuiYP+ecbeJ/OiYrsAH+v7Wdc7xg8NsKIuPTtQB/eHbIt
-   pQVxG7XogXMlnypvJvq8vSNB0V7TAIlM25MP4higdHEljT2HOfG15bp7k
-   EtfSzmIRrSTeAdWwrahWGU47NSEM3cwq1FPaLTIhTtMEKJ2eMuxqI2Ibu
-   dR5yQX6rWd2zE5T5egvF6RXpZx+Tf9ZjpPM07fnNrPUJ6Eo32KES5iknR
-   EaIvYyhV3cx2GgBIsLLW8fbXfQfhxEq2XsSHFnZc/sWX8BvdlGRe13zT3
-   w6KYi6dC4B7JiOzbSc64TbyNbHG4sfKaY25xDNy21UVFHqDM5TZvHVV9n
-   Q==;
-X-CSE-ConnectionGUID: Px9uxNjWQwOXiV2KuepUrQ==
-X-CSE-MsgGUID: yxjKARrBRqe+Ijof2w/gHQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11864"; a="86546068"
-X-IronPort-AV: E=Sophos;i="6.25,203,1779174000"; 
-   d="scan'208";a="86546068"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2026 17:25:16 -0700
-X-CSE-ConnectionGUID: Bjyv6ka/RyG253BqatnTNQ==
-X-CSE-MsgGUID: 8LnSN4NqQD2sI9Ph1IgaDA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,203,1779174000"; 
-   d="scan'208";a="260758147"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2026 17:25:14 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 3 Aug 2026 17:25:11 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Mon, 3 Aug 2026 17:25:11 -0700
-Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.10) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 3 Aug 2026 17:25:11 -0700
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="ICESS+lf"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P/Yz6fNWCx6ZrO0/gVFFIDs1QyFI/HFhw7ualkEMFNTs3977JY8StWtVQbKVEJfcHNoRisHsI1WHNy28EnqgZ1Fw06QQB5KselqyCs425f+XwKQ24M4SG4D4DmuXD/k6ahQdP2XaA9Cl+4pfLh7H9mTMi1Jtu+XWXgrd1pUf7O+VnmxfurF6Br8BMUzhciBA6PKKPms9ULqlYKT2OyoZvv9uGYyHjL0LlCvPoxPZpldveORnRlbjeA3gDOS/TxBqhj0fvwoKNOJSqWQoejPT5aPHnAtm/xHfLMDV31Pxx6aS2do2NTRLB7jf2JdzAdTnZD3+UixHLbl8UO+VL7jiaw==
+ b=ZUyCCkUim6hZx7ZbyteHU+1+9c4B3rNSoecI5vZJDRdW4qJLuyJFhiQNDLXmlPC+X2KrLj8pHZSgr3nFK/ojvRH/q14+4WOW4TM13XZiTa5h/tT6/p5GECaDPmx4Aq7P4SO+cPhpZdMvezxxX5QMikKzwynXWzPmACQk2Lhio4P7j1KM/y8iyJFxnO8HMR/QinYySkKnlXf8qdcquxNYe+Qc2Vw78n/8Z2YKLMJQcKwiPins9NsAat1gyf4vhf7STnuIkZJbBGb7Sx4QxJZrtZHmHyqQtlDEc9vVwMUiq5ulYn0XStbAay9u8F3XDXnK0RSNjWDt14QFjGnz186UNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/k5jMmPVcCP9tUGECmFQMorp42fny6RTzqqyr53V2fA=;
- b=YJxLF+my75pIj2egL0qPsKdXZzdrUwfq332uF2/SYqhpL/Jsq//fyNJ+yX/090U7KNZ6VXfd194i+SPLytAO05RXYjXoIrMIVMWJiAcLR/jnahTqP3bVDxaKEWbAQ4QmCpwoAkb9XVxq3RoiJTnni2hJh2IuF/I1oE0bowzkFTfpS0P/ox3JyuuBqXWGxz74GeX8J0S5PO9JmSumEnEeQv5tdoMkiQvNRDGQYPLS0xuY/mIzT2NmabuCEtoVK7l+3bWaqj8SGF7cMHi0ofIm/24pOLrxBnnuuCegb1T9SHPJ/J4ZEjnPpatVIL3bp1y2bEal76SC8E8GtoftSlbk7g==
+ bh=4AnG8xZP3jbycUTCSQKmvBJU9ylX4BYKiEWnhWrWB9c=;
+ b=MubMjfZctE920d/O36VkC+Ny3oeMBRmaofv2whwzOIJtwtqVzsmM/wlWC4r37WUODeytzE770HwqNPaPqpk/jMN4N1VXsDfGYa+OmYZZO07gqEDbhgJKFuMo/f9nDh3WHWhcKWyzJku4DZbkkVHSre3bGDGfzs3fovqnjGgjdbuAqsyVEUxdliAtSNAcIl1L4dspYvT23LOTnmSTjXkITNg4i5s08tkfw96gRbNwfC9FoymFfnRfY+ksI+ioHF4hHRVdfF89R4tZ7eRn+bOqEhab5jFrSM8L5FffEtgXzGywLBrAIaMU4cF3X/oonPKnbGmzsPFwxPojpnvSiq4TTQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4AnG8xZP3jbycUTCSQKmvBJU9ylX4BYKiEWnhWrWB9c=;
+ b=ICESS+lfKl7hNxxgWXpuyXkT2+vSeqNg4Q+hHu48rJ1+KTnTe3LEZk5E54Uy2NF18W9rmQZGRY8Xbw7r3cNnx3MQGUgAeQt8JeBco6//LXgXtbOjn+4J1l+L1AI49JLciIoq2ABV46wzVh7Fx7JsFsjJ9tYqqWyc0CxuuiwjAd4=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by CH3PR11MB8435.namprd11.prod.outlook.com (2603:10b6:610:169::13) with
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TYCP286MB2974.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:309::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
- 2026 00:25:08 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::e721:90d7:9214:2d53]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::e721:90d7:9214:2d53%6]) with mapi id 15.21.0270.017; Tue, 4 Aug 2026
- 00:25:08 +0000
-Date: Mon, 3 Aug 2026 17:25:04 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: Anisa Su <anisa.su887@gmail.com>
-CC: <sashiko-reviews@lists.linux.dev>, <nvdimm@lists.linux.dev>,
-	<linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v12 6/8] cxl/mem: Configure dynamic capacity interrupts
-Message-ID: <anExYCOu1n0RnYvh@aschofie-mobl2.lan>
-References: <20260731084901.1512819-1-anisa.su@samsung.com>
- <20260731084901.1512819-7-anisa.su@samsung.com>
- <20260731090444.558491F000E9@smtp.kernel.org>
- <am28sIX7a6Z7QaXr@AnisaLaptop.localdomain>
-Content-Type: text/plain; charset="us-ascii"
+ 2026 01:41:01 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.017; Tue, 4 Aug 2026
+ 01:41:01 +0000
+Date: Tue, 4 Aug 2026 10:41:00 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
+Subject: Re: [PATCH 04/11] PCI: endpoint: pci-epf-vntb: Implement MW group
+ translation callbacks
+Message-ID: <hkosyefqeihyinvzj7kc5lq4c3ox7t2kcmmprqkitziic4kpjc@tqbthc4hjl6y>
+References: <20260803180439.1963864-1-den@valinux.co.jp>
+ <20260803180439.1963864-5-den@valinux.co.jp>
+ <20260803182528.750A91F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <am28sIX7a6Z7QaXr@AnisaLaptop.localdomain>
-X-ClientProxiedBy: SJ0PR05CA0045.namprd05.prod.outlook.com
- (2603:10b6:a03:33f::20) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260803182528.750A91F000E9@smtp.kernel.org>
+X-ClientProxiedBy: TY4P286CA0094.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:369::13) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -100,98 +66,162 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|CH3PR11MB8435:EE_
-X-MS-Office365-Filtering-Correlation-Id: 69ca08cb-8616-4209-c41c-08def1bed68e
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYCP286MB2974:EE_
+X-MS-Office365-Filtering-Correlation-Id: b71866d9-caaa-4026-ff8f-08def1c970c4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|56012099006|4143699003|11063799006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: rkhsWq+IXQ/wmoVl3GyUCLnHwhRUKFWYN83i1tfgeRegQ6iuso5BpUT2IBPIuPJprzGpWjZRWwxcaRsO2q4uQA1WR9Yfaj2qH/S5VacTcHpAUVOqMD2lFfrBBZvQyliRiKG6UWlbqU6LLmpNGZQiZ88mE4QcmG5T5W7Nn8kORA/o3D5EnSPyPuQXhoB+WF2vDUqF2y7b4XS+B7+09BzFnMmWyJnBm9GoLciRoG7XjtnlZscVongG71bkqJHomrP2ZBWa+lOx2Rhvof3oXyck+HEuwERyXLZawfbjt248EiLwAdQe+c0yVInq/df0i9qAleTTEP9ATD2eDSjA00qkCWjPQ4R6gJrWyCKCOCJV3NvdYRQaKCF5iCBLIFFWMauFoimFtdGqmeWfl5iBppye4yffGb71FG+wzX4TyIHT+aNusJjcSXijOgBbFZPV42vCkOeuWft5QOr3AHXcZ+h1IfPOZ54Zn75miUO317CUjR6J5FBxe5GjYxW2lN1gYXJhUeXoclBC63U+nYML6UKYawh/Vr0MnJOkfymFiGxPeVZq4uJTtru3R3mWZNXT5vyDVw7f6zbPXVvqrNWt/ddQ+KcYaVKhL3/r0BV1XrzjOM9R+6NWeUE2PZ4AtdQjL6dIk2cjo61StU47R5XLqZj+97jCYkBPHU9ZWoOYFjufpdI=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(56012099006)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|23010399003|376014|1800799024|366016|56012099006|4143699003|6133799003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	RkLObWNQuQH00lI4kstn7l6VUhWPZin3RoME0Ofs4tGcyTy3KIBMTlHbBOlKTIEylmYu4p0cXpinpsU/BbxRkERqHKPT8SuoL2BAHbbtBIkOE4S4+09pFCizT+EdAs1gSF1pgXQe5NUd7Ca+F+RSRJt61QH6plQ6vPNlFaOkj2DhsEsg2rpW2rjdqyZNxtb48+/1d23MP2AFHgTsbqUcnmJIJnxdqTCYEf6cvtiSVfFKsjiI9KiSbnoh9yK7QebE0MH+657vRVKmoioMtsR30uai5MqLlCMTlsmXffjz4BozSOKEUWQwIw5B5Wix9A8RObmJGjcQg042qW8L4Dw5r+/z4kLUmlPIQMZFRvWD/uF87LVcEk885t6bLttZU3t66jXVxQ+yMzH2EY+M3JW+qqajpIFPw9OtaVr0YJfyoXP2z+VLsDoDsO8rGqpGCYEPngG9vIJMwwOsZpgENiJDmEcM9wlHAcMyuIU+XqOF49hEh9w7TstIv540fY1XVV5i9YUexYvA0GktQvmWwnDwqmzV7qA3QTeYHW6oGlfXdvXFPIAWTM/e20+LHUguCsDBjyn/Z05zFzRudDU3GkNMFhrXNLKAn+Ewg2T6Qi/vI2I=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(23010399003)(376014)(1800799024)(366016)(56012099006)(4143699003)(6133799003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WVPrDSx6fvCJYz1pDE3jb0H3PvPZleSBxvkvC5XbvPfEzEBd7iAKPFv2bo9/?=
- =?us-ascii?Q?ZjYB9CsPLWRUBX4TVflhwpE7tKOyzqzGZTrTk1mzGjamb0DYFzqGY5nX0Sqk?=
- =?us-ascii?Q?CpwJ6Zc8f3VH/wTWIlu5OXW30ha2JEAtDk4upBlfoyLZ/8pnCGNzNBhIrhCG?=
- =?us-ascii?Q?DXIGOO5BSzsFTylX7iUVIYcEfyD9OEUvZLP9E6yj5uBj3g3qR1YOwEUA67Sq?=
- =?us-ascii?Q?Ns39xR4Qr3miXmaoU3QQiKEnTt09RCQDsxktY5Y2tnMEcHE0y4ujoI8810+c?=
- =?us-ascii?Q?ygWJAFQ54+eqoNojfKExGvmhaLWJ0I0pB0E3QoT16gDF7pVUeS3U9BQgwZnL?=
- =?us-ascii?Q?ro+kabCSL2aGRxUWWtNVE59rgQGQkPj8xqdIbFJGRE6aPzOZQOzV5O6LKoXG?=
- =?us-ascii?Q?cSh7KXM9jUFLrSDgAUGDa8ynOqCm6zwzPNkeGV9yGkhslJT/ejNi9D6zvER6?=
- =?us-ascii?Q?K9v/X4JNvyaHyMwVSEHqfITroIzLd7yeD1No5CN3gC/JtMjVCUhMoVC74B1F?=
- =?us-ascii?Q?3U27Nri5gtmttMN2MBKVh43nmFIJuPA1pkpjvswzbsWtMHPakFIBUChfqJYG?=
- =?us-ascii?Q?7u8i9MxTtCuT3H+jIL1MAVUa1VomZM/6ru9sZ8DAmZgtXjzAJdkdqBkMSLGU?=
- =?us-ascii?Q?L4XxnFG5LsrYiGVqMg1F1kuj7qYZoc6XC2/JUPHqEzWFwq66CSwLgLkDf70U?=
- =?us-ascii?Q?ftupakxsevPE3qMOtFLilkZFEt8geDQiWxzkPo71erX65V01d/ccaxlP216L?=
- =?us-ascii?Q?/ubJ7sJYDDUS9iPxb55mEXQfapWpz308qrgcXb/RAlo1QF7eRnRuUzl0c0Br?=
- =?us-ascii?Q?yVG7LXuZArkJqHj2tFmtXQyEK1qXltz204I1Hk91UFSFrJoH6ts/C4H6BHKX?=
- =?us-ascii?Q?r4dj0taQDuEl64ZOm12UrpyxWqY4AjoM3jhSLZAOuBiI1G2Wu0JaIeRYUrIe?=
- =?us-ascii?Q?hhaoh5ESE6387tiYSV8wqev3N1g+ZtQMvzMZbypSavcilNyQXuKWcv4A+uq/?=
- =?us-ascii?Q?6xAllHn9U2or8HAdd1xXouAtXXWRN6nnpAf/DWCwuKcOzsm7lkSrzi0HRp57?=
- =?us-ascii?Q?nvtz2BbjLKi1Sp86xqoRSw1v0l1U2xQHuuJW/1SvOmcFrrXQ4r+0lUyMRkVG?=
- =?us-ascii?Q?JppUENuSNcnrgOev4FLgGkgkfuRnitTK5XHkTeRRWR9jF8NwA3viJPrent/n?=
- =?us-ascii?Q?7BkhQHTtftOWaB5SpDfRxc2vZVMJrY1X/FUJJxb+mLfKevEUwuAtfq+L+2zf?=
- =?us-ascii?Q?lkrlRZVpP2C6Mqapw2EQKdPmxay+koxFDOEJHPbnrjyKYrSciEOqruZcoE3+?=
- =?us-ascii?Q?8EISXTi27RL+u3hd2w86Y0cT9Eik8Ucx/qCnnB6w2tnly4NjRkHpkYQg+X8j?=
- =?us-ascii?Q?H7hgYwEyGYe6glzAso9oDSQTNmai6NnB7l1GklyWD196rPDnYGMiDHhWx/pL?=
- =?us-ascii?Q?optsrcZhGX7sJowjXET36BzjDxGh87H+2Tru4esTPsmzvUAfZR7Xr98ywOBH?=
- =?us-ascii?Q?241R6PcX7cLGDX47vdP7OzIcKQ3uXTG1mPtx7pmD3UilAsfed29LemOHi9DK?=
- =?us-ascii?Q?MhpU2xGB0yq6NlBGwYYeAxxwaJY/TxKmVaq/C1F8+5/3TjlyKXXCzvc3yjg+?=
- =?us-ascii?Q?DJRdnjhVXqd3wy+PgKlEFSBwI9L9l32d8DBc955fOLZQb+iIG/0D6gwx8PXN?=
- =?us-ascii?Q?PV0FAKsf6TJgVxwwjqJqrOpZaGGCGdJQMfS+A5ilGHXB4mC9CUKSMC5jOEcD?=
- =?us-ascii?Q?JIEvKYF/2VnnSwC8y87BayEOoiVJ+RM=3D?=
-X-Exchange-RoutingPolicyChecked: ia/XoK5JKp02vdAZQoQwG7QGmrAeKWQdVbdceEK23eTyGatGjYExTqLv5tIN7M+S+D6kQk1RLWxa4Efua6C/QvSln70UHy7w8cVupGSCsmW9jaocaRnrs6lY3iVBLozyOsFjq+a1PPF+r2oFCbwXZRpvhWhcPjllJs9jgS7CwwYOE/GJqayq5PgdYRoB2fmW0MRcfVWCY4jqYX8h/Ch7UIRnmiNwSfbAeJUPWK2rX+bkg7QUFpKGpN1pivBpZ/sGYJiqmeF26kEgfGHbLAkLjHQwXZ9jO6afFyNv6oXskmoXS9M23dDcWgJKbY5KGS5ahV8sA5TPv5lo7TRt+8h+fg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69ca08cb-8616-4209-c41c-08def1bed68e
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?EpP1r/YBW3w4rHo4ur0MGWyrsTNxsdoirDM8T8fKAqxr4W9uLe1uKr7rEX?=
+ =?iso-8859-1?Q?GCRlEhVeryFeztQtDC/Lt3oPibFNhOtaS+JVfCa5n2v9wXTRXXEz/ikFB7?=
+ =?iso-8859-1?Q?eMC/32nwERHEATbs43ZJsupkx2nx2QwHx/O+/quofKuDwCfCNt6ZIvNRYQ?=
+ =?iso-8859-1?Q?H/U9CE1znqQCoF/ET1IDblzIw/ScBcKxMWvKF6xER/oViC93mTkwzHdBBt?=
+ =?iso-8859-1?Q?2QGJaogQ1zWfO6CcWO4vr0B+a80seHdM0X/NEyTLYjlCDbmsbabJopJhzv?=
+ =?iso-8859-1?Q?j+5wSY9AUyii25CT0y0LyCIKzMnsi5l2XjQ9UmTkIcFbQgb3h/f+Ye0s3u?=
+ =?iso-8859-1?Q?oZ/5Ob6Qg8USP5ZueM7CMzyuTChXpsvryADs/g9OZXFbznmx7jWGO9wkBw?=
+ =?iso-8859-1?Q?TU9DN/xsuu8uWHbmMx+OES3mu2MC4dJrH0T4WPeslA9whAlBSxmixvE4UF?=
+ =?iso-8859-1?Q?3/yKqOG+/7yLMhrgSd20O7nCjn2wDr5BRKKJn3jCCxH+QTkNeXLWU9QUuf?=
+ =?iso-8859-1?Q?BCxxvrpG9TQmTTW0H/sEG+xiBLRVd9Rdzm2grZqHvCorvhgBSGFFC+k2HP?=
+ =?iso-8859-1?Q?AaYjuoHorUxCQDCvbGTrJKA5Sa9qKexNDsCV0spfXHMQ5lb2CKH9Jn/gm4?=
+ =?iso-8859-1?Q?XJNcSqjHTLxAVOKo9hcDc3qlE24bCW9Sx5hM9JzEQ45cKs5JP/ky1x/o+n?=
+ =?iso-8859-1?Q?6m3r53oJawT1Eu7T8ogScTmtq2rENPpUF3AF5KPE29L5ZMSUdRWECYO73u?=
+ =?iso-8859-1?Q?n9N81S7H4wSfVjuRUP/31ERr+zOfIBGOdLjdH5q6T1TKiDTU2bX+prQnqy?=
+ =?iso-8859-1?Q?aNawdf8m4TCXnpm/QRH7YG3GR6PyXcOW0yTsix3LKmWXiIMsrMW5jZk6U2?=
+ =?iso-8859-1?Q?/O3gVGBzL+gDFC2fjtNdzhCmftTo63yfjzdlrrkdw8PuIkiU4dOUzAFtGl?=
+ =?iso-8859-1?Q?gSpAIu1UqW2iwgE+ypGkH5Pb4WmbHaT8FzgSUY8FDCIiaFjln/T3dGxYaM?=
+ =?iso-8859-1?Q?UKakZ2QZhDtsMn1E997fGc3GgO3u8rJEI0lUuZ5UtQpxLaHksXx0hpA1V3?=
+ =?iso-8859-1?Q?17ohXr6lkHZzqKb6aUKt1GVy1mIf92BxTB2IF+OYFWVbTX9daAgAQNy0gz?=
+ =?iso-8859-1?Q?BXHM4raxnk5c5o3180vJ1nqfpLz0rvIMz6wQk7Trvy2VDLWitjL1G4ueNJ?=
+ =?iso-8859-1?Q?5wUkP+fDvKFnGPOCtpIXG2WXie+NQSBu6GVyiqXCH3i26v/WPJxYckbsgY?=
+ =?iso-8859-1?Q?BKzF4AcOsI4RDNafwKRBN4d5fklB63c4JpVmIkHydOEw2E9S0iVe8M44fx?=
+ =?iso-8859-1?Q?9jNppM97qOhTWJTOcud/jP8pJ0asCABpnec8xzTX8RTSRI1KU8CSRy0yXC?=
+ =?iso-8859-1?Q?bQVdaxr3hz3Ms4/15P3z4am91m83mLXQfbzyv0P0IEkpMhToC/9QEhGa5P?=
+ =?iso-8859-1?Q?5VJW2Sk7fzXbjPiM4uC/x8keMjwaYsyuzpS1IOfh9WszUz4n0sgFdDsQ1F?=
+ =?iso-8859-1?Q?ypMtwsMh8FQi3En1bclwZSOv+feczu14T8qVoM3eGyp3MrAKfbq1Bg80j2?=
+ =?iso-8859-1?Q?Wu5fyklmehAMBerMnS7X5kJJACf8wforLmIQjdIT6eWhJ+6TCi2G3/NnYA?=
+ =?iso-8859-1?Q?Z62PppQ84PPAcPFT9zRfxgPEwMXGsNZRI1B+0d6ZhThm3zpJ98wfA4fk41?=
+ =?iso-8859-1?Q?z20fCGCaXCpZE3Yqr1kVqZJT+c0BkpmzYKtAPwIczGbduFCN8bugGp9Lnv?=
+ =?iso-8859-1?Q?DcOk46yEwt3UxHTUrwS5W37Ta/3cygnJ2y/nNRrUSE3rq1W3rgFpkPlcLB?=
+ =?iso-8859-1?Q?UgFjzB30OI9pnKmBEXUi+4+jIGV2WKXapn3t2qmI/5qocAgpK9KE?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: b71866d9-caaa-4026-ff8f-08def1c970c4
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 00:25:08.0826
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 01:41:01.7633
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bA4LmVvUOJ1darbWUM4QZYt9ZSTlcutwn5s4Ku3fOh8Z5oKS5RJEXwmeFqsA9cy79K3RDikkl1ZhWdF8fTpGmFOeLX8SlXrRYl2H2me1eeo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8435
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: qt6zaydldPWMjaavbXyCNsJ527fAwlsfrVzSuY9tOqYkk0XtRnv45NHaitk9cLKK9B4ASxyGAfoRS/YApr4bkg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB2974
 
-On Sat, Aug 01, 2026 at 02:30:24AM -0700, Anisa Su wrote:
-> On Fri, Jul 31, 2026 at 09:04:43AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > 
-> > New issues:
-> > - [High] Infinite IRQ Thread Loop / CPU Spin when handling DCD events
-> > 
-> False Positive. DCD events are ignored because DCD is turned off
-> (mds->dcd_supported = false).
-
-Hi Anisa,
-
-I have related review feedback -
-
-
-snip
-
-> > 
-> > [Severity: High]
-> > Since mask now includes CXLDEV_EVENT_STATUS_DCD, status can have this bit set.
-> > However, cxl_mem_get_event_records() does not appear to handle the DCD event:
-> > 
-> The mask never includes CXLDEV_EVENT_STATUS_DCD.
-> Above in cxl_event_drain_mask:
+On Mon, Aug 03, 2026 at 06:25:28PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
-> if (cxl_dcd_supported(mds))
->               mask |= CXLDEV_EVENT_STATUS_DCD;
-> 
-> mds->dcd_supported is set to false in Patch 1 so the DCD bit is never
-> set.
-> 
-> So status &= mask becomes zero and we break from the loop.
-> 
-> - Anisa
+> Pre-existing issues:
+> - [Critical] DMA Use-After-Free due to `vntb_epf_mw_clear_trans_group()` and `vntb_epf_mw_clear_trans()` returning success (0) without actually disabling the inbound hardware translations.
 
-I understand that dcd_supported being forced false makes this unreachable
-today. My concern is that this patch adds the DCD bit to the drain path
-before there is code to consume and clear that log.
+To be clear, vntb_epf_mw_clear_trans_group() is intentionally left as a no-op,
+matching the existing the existing vntb_epf_mw_clear_trans() behavior. This
+series does not try to fix that pre-existing limitation.
+See the "About existing inbound MW clear behavior" note in the cover letter.
 
-As soon as a later patch enables dcd_supported, the bit can enter status
-and the handler can loop without clearing it. Could the DCD bit be added
-to the mask in the same patch that adds the DCD drain handling?
+Koichiro
 
--- Alison
+> - [High] The `vntb_epf_mw_set_trans()` function incorrectly hardcodes `func_no` and `vfunc_no` to 0 when invoking `pci_epc_set_bar()`, whereas other EPF APIs (including the newly added group API) correctly use the endpoint's configured function numbers.
+> - [High] The `vntb_pci_driver` structure is missing a `.remove` callback, causing NTB device leaks and use-after-free conditions when the endpoint function is unbound.
+> --
+> 
+> --- Patch [4]: [PATCH 04/11] PCI: endpoint: pci-epf-vntb: Implement MW group translation callbacks ---
+> commit 419429d9534b2c856c11cb4a4a4107e84a87fe8e
+> Author: Koichiro Den <den@valinux.co.jp>
+> 
+> PCI: endpoint: pci-epf-vntb: Implement MW group translation callbacks
+> 
+> All RC-to-EP MWs in a packed group share one inbound BAR. Setting each
+> MW separately would keep replacing that BAR and could expose a partial
+> group. Add group callbacks that program the shared BAR once for the
+> complete backing range.
+> 
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > index f22459e5a8c69..0c72b907c2896 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > @@ -1622,6 +1622,31 @@ static int vntb_epf_mw_clear_trans(struct ntb_dev *ntb, int pidx, int idx)
+> >  	return 0;
+> >  }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while looking at this context,
+> I noticed that the existing vntb_epf_mw_set_trans() hardcodes the function
+> numbers to 0:
+> 
+> drivers/pci/endpoint/functions/pci-epf-vntb.c:vntb_epf_mw_set_trans() {
+>     ...
+> 	ret = pci_epc_set_bar(ntb->epf->epc, 0, 0, epf_bar);
+>     ...
+> }
+> 
+> Does this incorrectly configure the BAR for function 0 when the virtual NTB
+> device is bound to a non-zero endpoint function or virtual function?
+> 
+> If the device is configured via configfs with a non-zero function, could this
+> lead to silent failures in memory window translation or corrupt the ATU
+> configuration of function 0?
+> 
+> > +
+> > +static int
+> > +vntb_epf_mw_set_trans_group(struct ntb_dev *ndev, int pidx, int widx,
+> > +			    dma_addr_t addr, resource_size_t size)
+> > +{
+> [ ... ]
+> > +	return pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
+> > +			       ntb->epf->vfunc_no, epf_bar);
+> > +}
+> > +
+> > +static int vntb_epf_mw_clear_trans_group(struct ntb_dev *ndev, int pidx,
+> > +					 int widx)
+> > +{
+> > +	return 0;
+> > +}
+> 
+> [Severity: Critical]
+> This is a pre-existing issue perpetuated here by the new group API, but does
+> returning 0 without actually disabling the inbound hardware translations create a
+> DMA use-after-free window?
+> 
+> When an NTB client unmaps a memory window group and frees the backing memory,
+> the hardware BAR mapping will remain active.
+> 
+> If the local host frees this memory, won't the endpoint hardware continue
+> translating incoming PCIe accesses to the freed physical address, allowing a
+> remote peer to access arbitrary new allocations on the endpoint?
+> 
+> [Severity: High]
+> This is another pre-existing issue, but I noticed the vntb_pci_driver structure
+> is missing a .remove callback:
+> 
+> drivers/pci/endpoint/functions/pci-epf-vntb.c:
+> static struct pci_driver vntb_pci_driver = {
+> 	.name           = "pci-vntb",
+> 	.id_table       = pci_vntb_table,
+> 	.probe          = pci_vntb_probe,
+> };
+> 
+> Without a .remove callback, ntb_unregister_device() is never called when the
+> EPF device is unbound via configfs.
+> 
+> Does this cause NTB device leaks and driver state use-after-free?
+> 
+> If the endpoint function is unbound, won't the NTB clients remain active and
+> bound to a device whose backing EPF structures, DMA masks, and hardware
+> mappings have been destroyed?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260803180439.1963864-1-den@valinux.co.jp?part=4
