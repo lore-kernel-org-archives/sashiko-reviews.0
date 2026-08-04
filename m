@@ -1,227 +1,112 @@
-Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11021079.outbound.protection.outlook.com [52.101.125.79])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742E635E94F;
-	Tue,  4 Aug 2026 01:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.79
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785807668; cv=fail; b=t+ajdnDRI/Qh6JX9bu8EJl+RhL8vynIzpfC/5is1dw6cWC/CteVDYvyMCyjOluHsiRQORj8SvcFlCKTBeiIVXJG2TpE+NqH5PledX/VTiVtVVxl7LB5pfbViH3bJ5zx0xGMROWv049ePXCX7YX3Hzs2nqXonUmDKWkssaSy+3zg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785807668; c=relaxed/simple;
-	bh=HitzByGBKrkKaLKLi+/6smXv2wcohOSwB6JrQMW01uI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=jU+ugCRyr2ZDlvh4Sb4Ica6+Lf9sffNpdLIG8ylyE6kzeLiA0wfXTMuS77VBtisTGolZ3XdGpqaOlIMA7ky7kul4hgBjH2WnQYpGOP59f5a60GuW2txcB+rGtFk0anJJBjIIvRixkIKteUy5YMK1wFIl/KKwJyD8vN460MkeVB0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=ICESS+lf reason="signature verification failed"; arc=fail smtp.client-ip=52.101.125.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9C530B51E;
+	Tue,  4 Aug 2026 03:04:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785812648; cv=none; b=YWsMuX+pLJ1L0tq5cpH1Q6tPpUdE+D+cB5RzUB8vj2GXBbIndgh4antk+YjfYAG6wXTQ1Sv/jgKDnScNiL1xveNiayQ38k5h9eZ929EfChh3+1I7S33jjm75p/3GYrrDagOX61oqhSrldtufLn6nLWVigiQLqkzZPobAgKM6P2w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785812648; c=relaxed/simple;
+	bh=5F4jpsYYa71VFyNPIUSPDjrll1rr2OurnGlvjFq2/6Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CSkiWqR1AEwbwGvfZ8/DsTTd4dJcN2rUnDss6L1mLLRBP5yC5cbdZ9RdfiovF1tNKcdAPEBMrRKH53vDQWjxXX/tWWxDjY5Uqf3YSulTqCE9QI4AUjltfCPUxmD1ZKlZ/9ZE3xPLNnmE9cAZBe68a/3fmpqRAfT4g3PjWq+8FM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=ehs8/bkh; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="ICESS+lf"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZUyCCkUim6hZx7ZbyteHU+1+9c4B3rNSoecI5vZJDRdW4qJLuyJFhiQNDLXmlPC+X2KrLj8pHZSgr3nFK/ojvRH/q14+4WOW4TM13XZiTa5h/tT6/p5GECaDPmx4Aq7P4SO+cPhpZdMvezxxX5QMikKzwynXWzPmACQk2Lhio4P7j1KM/y8iyJFxnO8HMR/QinYySkKnlXf8qdcquxNYe+Qc2Vw78n/8Z2YKLMJQcKwiPins9NsAat1gyf4vhf7STnuIkZJbBGb7Sx4QxJZrtZHmHyqQtlDEc9vVwMUiq5ulYn0XStbAay9u8F3XDXnK0RSNjWDt14QFjGnz186UNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4AnG8xZP3jbycUTCSQKmvBJU9ylX4BYKiEWnhWrWB9c=;
- b=MubMjfZctE920d/O36VkC+Ny3oeMBRmaofv2whwzOIJtwtqVzsmM/wlWC4r37WUODeytzE770HwqNPaPqpk/jMN4N1VXsDfGYa+OmYZZO07gqEDbhgJKFuMo/f9nDh3WHWhcKWyzJku4DZbkkVHSre3bGDGfzs3fovqnjGgjdbuAqsyVEUxdliAtSNAcIl1L4dspYvT23LOTnmSTjXkITNg4i5s08tkfw96gRbNwfC9FoymFfnRfY+ksI+ioHF4hHRVdfF89R4tZ7eRn+bOqEhab5jFrSM8L5FffEtgXzGywLBrAIaMU4cF3X/oonPKnbGmzsPFwxPojpnvSiq4TTQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4AnG8xZP3jbycUTCSQKmvBJU9ylX4BYKiEWnhWrWB9c=;
- b=ICESS+lfKl7hNxxgWXpuyXkT2+vSeqNg4Q+hHu48rJ1+KTnTe3LEZk5E54Uy2NF18W9rmQZGRY8Xbw7r3cNnx3MQGUgAeQt8JeBco6//LXgXtbOjn+4J1l+L1AI49JLciIoq2ABV46wzVh7Fx7JsFsjJ9tYqqWyc0CxuuiwjAd4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TYCP286MB2974.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:309::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
- 2026 01:41:01 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.017; Tue, 4 Aug 2026
- 01:41:01 +0000
-Date: Tue, 4 Aug 2026 10:41:00 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
-Subject: Re: [PATCH 04/11] PCI: endpoint: pci-epf-vntb: Implement MW group
- translation callbacks
-Message-ID: <hkosyefqeihyinvzj7kc5lq4c3ox7t2kcmmprqkitziic4kpjc@tqbthc4hjl6y>
-References: <20260803180439.1963864-1-den@valinux.co.jp>
- <20260803180439.1963864-5-den@valinux.co.jp>
- <20260803182528.750A91F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260803182528.750A91F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TY4P286CA0094.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:369::13) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="ehs8/bkh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=YKiBIk4wRt6v6NI7XRMCDBJJZejw6wWJNbI2X0Vwybs=;
+	b=ehs8/bkhda2AjPr2bTWWWe8pn/oOuR3Godyaf8dliue5vCE+Hvh81ZacwZukAh
+	B5wggLy2qPyVWcglluPf009vVnI6CXyO8Z5GLeiM0AyCOzOLN/8w/ztI5t7HyO+o
+	+uwxzFvtRA0R7agxFV6mG9q5srWyl4j66mNRZDUuB+gD4=
+Received: from [IPV6:2409:8a62:3e6:1400:e93f:3d77:3322:beb7] (unknown [])
+	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wD3P1uTVnFqxrfcNg--.17519S2;
+	Tue, 04 Aug 2026 11:03:48 +0800 (CST)
+Message-ID: <c5f7df74-5a45-4bd6-b167-b4f970613d9a@163.com>
+Date: Tue, 4 Aug 2026 11:03:47 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYCP286MB2974:EE_
-X-MS-Office365-Filtering-Correlation-Id: b71866d9-caaa-4026-ff8f-08def1c970c4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|23010399003|376014|1800799024|366016|56012099006|4143699003|6133799003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	RkLObWNQuQH00lI4kstn7l6VUhWPZin3RoME0Ofs4tGcyTy3KIBMTlHbBOlKTIEylmYu4p0cXpinpsU/BbxRkERqHKPT8SuoL2BAHbbtBIkOE4S4+09pFCizT+EdAs1gSF1pgXQe5NUd7Ca+F+RSRJt61QH6plQ6vPNlFaOkj2DhsEsg2rpW2rjdqyZNxtb48+/1d23MP2AFHgTsbqUcnmJIJnxdqTCYEf6cvtiSVfFKsjiI9KiSbnoh9yK7QebE0MH+657vRVKmoioMtsR30uai5MqLlCMTlsmXffjz4BozSOKEUWQwIw5B5Wix9A8RObmJGjcQg042qW8L4Dw5r+/z4kLUmlPIQMZFRvWD/uF87LVcEk885t6bLttZU3t66jXVxQ+yMzH2EY+M3JW+qqajpIFPw9OtaVr0YJfyoXP2z+VLsDoDsO8rGqpGCYEPngG9vIJMwwOsZpgENiJDmEcM9wlHAcMyuIU+XqOF49hEh9w7TstIv540fY1XVV5i9YUexYvA0GktQvmWwnDwqmzV7qA3QTeYHW6oGlfXdvXFPIAWTM/e20+LHUguCsDBjyn/Z05zFzRudDU3GkNMFhrXNLKAn+Ewg2T6Qi/vI2I=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(23010399003)(376014)(1800799024)(366016)(56012099006)(4143699003)(6133799003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?EpP1r/YBW3w4rHo4ur0MGWyrsTNxsdoirDM8T8fKAqxr4W9uLe1uKr7rEX?=
- =?iso-8859-1?Q?GCRlEhVeryFeztQtDC/Lt3oPibFNhOtaS+JVfCa5n2v9wXTRXXEz/ikFB7?=
- =?iso-8859-1?Q?eMC/32nwERHEATbs43ZJsupkx2nx2QwHx/O+/quofKuDwCfCNt6ZIvNRYQ?=
- =?iso-8859-1?Q?H/U9CE1znqQCoF/ET1IDblzIw/ScBcKxMWvKF6xER/oViC93mTkwzHdBBt?=
- =?iso-8859-1?Q?2QGJaogQ1zWfO6CcWO4vr0B+a80seHdM0X/NEyTLYjlCDbmsbabJopJhzv?=
- =?iso-8859-1?Q?j+5wSY9AUyii25CT0y0LyCIKzMnsi5l2XjQ9UmTkIcFbQgb3h/f+Ye0s3u?=
- =?iso-8859-1?Q?oZ/5Ob6Qg8USP5ZueM7CMzyuTChXpsvryADs/g9OZXFbznmx7jWGO9wkBw?=
- =?iso-8859-1?Q?TU9DN/xsuu8uWHbmMx+OES3mu2MC4dJrH0T4WPeslA9whAlBSxmixvE4UF?=
- =?iso-8859-1?Q?3/yKqOG+/7yLMhrgSd20O7nCjn2wDr5BRKKJn3jCCxH+QTkNeXLWU9QUuf?=
- =?iso-8859-1?Q?BCxxvrpG9TQmTTW0H/sEG+xiBLRVd9Rdzm2grZqHvCorvhgBSGFFC+k2HP?=
- =?iso-8859-1?Q?AaYjuoHorUxCQDCvbGTrJKA5Sa9qKexNDsCV0spfXHMQ5lb2CKH9Jn/gm4?=
- =?iso-8859-1?Q?XJNcSqjHTLxAVOKo9hcDc3qlE24bCW9Sx5hM9JzEQ45cKs5JP/ky1x/o+n?=
- =?iso-8859-1?Q?6m3r53oJawT1Eu7T8ogScTmtq2rENPpUF3AF5KPE29L5ZMSUdRWECYO73u?=
- =?iso-8859-1?Q?n9N81S7H4wSfVjuRUP/31ERr+zOfIBGOdLjdH5q6T1TKiDTU2bX+prQnqy?=
- =?iso-8859-1?Q?aNawdf8m4TCXnpm/QRH7YG3GR6PyXcOW0yTsix3LKmWXiIMsrMW5jZk6U2?=
- =?iso-8859-1?Q?/O3gVGBzL+gDFC2fjtNdzhCmftTo63yfjzdlrrkdw8PuIkiU4dOUzAFtGl?=
- =?iso-8859-1?Q?gSpAIu1UqW2iwgE+ypGkH5Pb4WmbHaT8FzgSUY8FDCIiaFjln/T3dGxYaM?=
- =?iso-8859-1?Q?UKakZ2QZhDtsMn1E997fGc3GgO3u8rJEI0lUuZ5UtQpxLaHksXx0hpA1V3?=
- =?iso-8859-1?Q?17ohXr6lkHZzqKb6aUKt1GVy1mIf92BxTB2IF+OYFWVbTX9daAgAQNy0gz?=
- =?iso-8859-1?Q?BXHM4raxnk5c5o3180vJ1nqfpLz0rvIMz6wQk7Trvy2VDLWitjL1G4ueNJ?=
- =?iso-8859-1?Q?5wUkP+fDvKFnGPOCtpIXG2WXie+NQSBu6GVyiqXCH3i26v/WPJxYckbsgY?=
- =?iso-8859-1?Q?BKzF4AcOsI4RDNafwKRBN4d5fklB63c4JpVmIkHydOEw2E9S0iVe8M44fx?=
- =?iso-8859-1?Q?9jNppM97qOhTWJTOcud/jP8pJ0asCABpnec8xzTX8RTSRI1KU8CSRy0yXC?=
- =?iso-8859-1?Q?bQVdaxr3hz3Ms4/15P3z4am91m83mLXQfbzyv0P0IEkpMhToC/9QEhGa5P?=
- =?iso-8859-1?Q?5VJW2Sk7fzXbjPiM4uC/x8keMjwaYsyuzpS1IOfh9WszUz4n0sgFdDsQ1F?=
- =?iso-8859-1?Q?ypMtwsMh8FQi3En1bclwZSOv+feczu14T8qVoM3eGyp3MrAKfbq1Bg80j2?=
- =?iso-8859-1?Q?Wu5fyklmehAMBerMnS7X5kJJACf8wforLmIQjdIT6eWhJ+6TCi2G3/NnYA?=
- =?iso-8859-1?Q?Z62PppQ84PPAcPFT9zRfxgPEwMXGsNZRI1B+0d6ZhThm3zpJ98wfA4fk41?=
- =?iso-8859-1?Q?z20fCGCaXCpZE3Yqr1kVqZJT+c0BkpmzYKtAPwIczGbduFCN8bugGp9Lnv?=
- =?iso-8859-1?Q?DcOk46yEwt3UxHTUrwS5W37Ta/3cygnJ2y/nNRrUSE3rq1W3rgFpkPlcLB?=
- =?iso-8859-1?Q?UgFjzB30OI9pnKmBEXUi+4+jIGV2WKXapn3t2qmI/5qocAgpK9KE?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: b71866d9-caaa-4026-ff8f-08def1c970c4
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 01:41:01.7633
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qt6zaydldPWMjaavbXyCNsJ527fAwlsfrVzSuY9tOqYkk0XtRnv45NHaitk9cLKK9B4ASxyGAfoRS/YApr4bkg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB2974
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pinctrl: stm32: use a raw spinlock regmap to program the
+ EXTI mux
+To: sashiko-reviews@lists.linux.dev
+Cc: mfd@lists.linux.dev, linux-rt-devel@lists.linux.dev, lee@kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260803061718.43210-1-junan76@163.com>
+ <20260803063431.205EC1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Ju Nan <junan76@163.com>
+In-Reply-To: <20260803063431.205EC1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_____wD3P1uTVnFqxrfcNg--.17519S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7KFW8Cry3XFWkGry8WrWruFg_yoW8KryDpF
+	WaqayayrsrGrWIvryqvw48J3W09a1IyF43A3Z8WrWIv3s0ga4fGr15KF45AFWDGF4kC3Z0
+	y3WjqryDu3WDZ3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U24iUUUUUU=
+X-CM-SenderInfo: pmxqt0ixw6il2tof0z/xtbC9RSxY2pxVpQtIQAA3m
 
-On Mon, Aug 03, 2026 at 06:25:28PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] DMA Use-After-Free due to `vntb_epf_mw_clear_trans_group()` and `vntb_epf_mw_clear_trans()` returning success (0) without actually disabling the inbound hardware translations.
 
-To be clear, vntb_epf_mw_clear_trans_group() is intentionally left as a no-op,
-matching the existing the existing vntb_epf_mw_clear_trans() behavior. This
-series does not try to fix that pre-existing limitation.
-See the "About existing inbound MW clear behavior" note in the cover letter.
 
-Koichiro
+On 8/3/26 2:34 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Bypassing standard syscon regmap initialization leaves the syscfg clock disabled, leading to hardware bus faults on platforms where the syscfg node requires a clock.
+> - [High] If another driver sharing the syscon node probes before pinctrl, the generic syscon layer will create a default regmap without `use_raw_spinlock`, causing the PREEMPT_RT sleeping-in-atomic bug to persist.
 
-> - [High] The `vntb_epf_mw_set_trans()` function incorrectly hardcodes `func_no` and `vfunc_no` to 0 when invoking `pci_epc_set_bar()`, whereas other EPF APIs (including the newly added group API) correctly use the endpoint's configured function numbers.
-> - [High] The `vntb_pci_driver` structure is missing a `.remove` callback, causing NTB device leaks and use-after-free conditions when the endpoint function is unbound.
-> --
+> [Severity: High]
+> Does bypassing the standard syscon regmap initialization leave the syscfg
+> clock disabled?
 > 
-> --- Patch [4]: [PATCH 04/11] PCI: endpoint: pci-epf-vntb: Implement MW group translation callbacks ---
-> commit 419429d9534b2c856c11cb4a4a4107e84a87fe8e
-> Author: Koichiro Den <den@valinux.co.jp>
+> The generic syscon handling normally calls of_clk_get() and 
+> regmap_mmio_attach_clk(). Since this manual initialization skips that, the
+> clock is never attached to the regmap.
 > 
-> PCI: endpoint: pci-epf-vntb: Implement MW group translation callbacks
-> 
-> All RC-to-EP MWs in a packed group share one inbound BAR. Setting each
-> MW separately would keep replacing that BAR and could expose a partial
-> group. Add group callbacks that program the shared BAR once for the
-> complete backing range.
-> 
-> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> > index f22459e5a8c69..0c72b907c2896 100644
-> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> > @@ -1622,6 +1622,31 @@ static int vntb_epf_mw_clear_trans(struct ntb_dev *ntb, int pidx, int idx)
-> >  	return 0;
-> >  }
+> On platforms like STM32F4/F7/H7 where the syscfg node explicitly requires a 
+> clock, could writing to the EXTI mux registers in stm32_gpio_domain_activate()
+> with the clock disabled trigger an imprecise external abort (bus fault)?
+
+That's right for STM32F4/F7, I have checked related dts files and the syscfg
+node does require a clock.
+
+>> +
+>> +	/*
+>> +	 * A regmap is already registered for that node, most likely by the
+>> +	 * other pinctrl instance sharing it. Drop ours and use that one.
+>> +	 */
+>> +	if (of_syscon_register_regmap(syscfg_np, regmap)) {
+>> +		regmap_exit(regmap);
+>> +		iounmap(base);
+>> +	}
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but while looking at this context,
-> I noticed that the existing vntb_epf_mw_set_trans() hardcodes the function
-> numbers to 0:
+> If another driver sharing the st,syscfg node (like Ethernet MAC, I2C, or USB)
+> probes before pinctrl, won't the generic syscon layer have already
+> instantiated a default regmap without use_raw_spinlock?
 > 
-> drivers/pci/endpoint/functions/pci-epf-vntb.c:vntb_epf_mw_set_trans() {
->     ...
-> 	ret = pci_epc_set_bar(ntb->epf->epc, 0, 0, epf_bar);
->     ...
-> }
+> In that scenario, of_syscon_register_regmap() would return an error and the
+> driver silently discards its raw regmap. Since the driver then falls back to
+> the already registered sleeping regmap, does this cause the PREEMPT_RT 
+> sleeping-in-atomic bug to persist when stm32_gpio_domain_activate() writes to
+> the regmap under the raw desc->lock?
 > 
-> Does this incorrectly configure the BAR for function 0 when the virtual NTB
-> device is bound to a non-zero endpoint function or virtual function?
+
+
+True again for STM32F4/H7. But the syscfg node is shared between pinctrl and
+pinctrl_z only on STM32MP series SoC, and that's the platform on which I tested
+this patch.
+
+Thanks sashiko-bot :P, I will send a V2 later.
+
+>> +
+>> +out_put:
+>> +	of_node_put(syscfg_np);
+>> +}
 > 
-> If the device is configured via configfs with a non-zero function, could this
-> lead to silent failures in memory window translation or corrupt the ATU
-> configuration of function 0?
-> 
-> > +
-> > +static int
-> > +vntb_epf_mw_set_trans_group(struct ntb_dev *ndev, int pidx, int widx,
-> > +			    dma_addr_t addr, resource_size_t size)
-> > +{
-> [ ... ]
-> > +	return pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
-> > +			       ntb->epf->vfunc_no, epf_bar);
-> > +}
-> > +
-> > +static int vntb_epf_mw_clear_trans_group(struct ntb_dev *ndev, int pidx,
-> > +					 int widx)
-> > +{
-> > +	return 0;
-> > +}
-> 
-> [Severity: Critical]
-> This is a pre-existing issue perpetuated here by the new group API, but does
-> returning 0 without actually disabling the inbound hardware translations create a
-> DMA use-after-free window?
-> 
-> When an NTB client unmaps a memory window group and frees the backing memory,
-> the hardware BAR mapping will remain active.
-> 
-> If the local host frees this memory, won't the endpoint hardware continue
-> translating incoming PCIe accesses to the freed physical address, allowing a
-> remote peer to access arbitrary new allocations on the endpoint?
-> 
-> [Severity: High]
-> This is another pre-existing issue, but I noticed the vntb_pci_driver structure
-> is missing a .remove callback:
-> 
-> drivers/pci/endpoint/functions/pci-epf-vntb.c:
-> static struct pci_driver vntb_pci_driver = {
-> 	.name           = "pci-vntb",
-> 	.id_table       = pci_vntb_table,
-> 	.probe          = pci_vntb_probe,
-> };
-> 
-> Without a .remove callback, ntb_unregister_device() is never called when the
-> EPF device is unbound via configfs.
-> 
-> Does this cause NTB device leaks and driver state use-after-free?
-> 
-> If the endpoint function is unbound, won't the NTB clients remain active and
-> bound to a device whose backing EPF structures, DMA masks, and hardware
-> mappings have been destroyed?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260803180439.1963864-1-den@valinux.co.jp?part=4
+
