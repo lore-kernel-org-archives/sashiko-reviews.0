@@ -1,309 +1,112 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B904457A0
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 10:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0640446A602
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 10:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785837636; cv=none; b=N50zCEY+pRYdrmhKYO0awJ+hy+zQSFT2MG+Z7Nhssdcl3vm1OTJ0ghKnMP+bnqoBMP/Sqzkp5yMVv0yuTGFdLkyqrpiUqt6ZrgCvzn4YWwMIveV9K8KMj+8DMgt/LJox4SdptrhvlWpBoJINtzQu8s18c1BAejbIvmoF+GcJv9I=
+	t=1785838492; cv=none; b=A0Nccv4dcKrhJgswnB4m2cj/D2jT6e4Nk+fTay3D8bBnMevMV5Yp4Q5uHNo/OfcrytoGIuJf4mMRQ6VsP1jHcdVkXXU2EOIrKkOfaMSp57kP5M0NTzMd+cvQ+DfFvX+TuX3sGlbRqIMngl9KpQiAqOi4ipQlEi4HyNIf83mySRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785837636; c=relaxed/simple;
-	bh=OSI0p4IYsahj3xpwmQxjzteg9wplXjq/9qYMa+3h4CU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ee86JUymtrWaLGOkdEugZJ3O3PJAEBLp/PIbsQBkBqh8TbdRJPrVu2w819Hc9IKuN7qFBR4t2FpN1b1DX1ormMIoOg4U6LzPPVzNetncUS7GItOyN/EHYtryezJF7muINg65yEFsxbD5hOFfC4Dwb82okEto7MBYXAGTZftUYIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A3DUazlq; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1785838492; c=relaxed/simple;
+	bh=+XnjuTvdfAj9boKb+hGctEMZRa5tIA5vFS9T9RCWUew=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=BU4DBioXZ8uXh8XDqjozY5TiPkkHHBnadOCKMJP/Co5Wkg9a7Ei0vyAD2PbERcVpJ1JKqfi1Jkfo9EZ46bXbQ+4FhE5dyV+lcOmc+Dsa6V6aE92pR66T/PZrEDmbZwXNdMyGd5SkzemdUNvXnneYgkU/w9TnaiYs2iAOfXqvVNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=da8wkJfb; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A3DUazlq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785837632; x=1817373632;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=OSI0p4IYsahj3xpwmQxjzteg9wplXjq/9qYMa+3h4CU=;
-  b=A3DUazlqW6VvaE1ZS+g2oh1A0mPadgB3mOoFpnV2L3OrptA7p/ZNr6xq
-   3cq1dx0RE7voS21IqSOwH1dLAMJtmnp0YSNH2wNXCt/stDI2ZlmUxcg8w
-   qTnbpzMKVFsm+I4OAQchBywjjxs+C4VWq2PDC5ROr14ERoUlNlpu9u+z+
-   az8YTK0j5N7VcAVPway/RGZEaQmXGqj56RFjzCdxKCLiYFI6CzmRU0gHA
-   zX++XKlCbrhNqEEGkl1RDp6eGWJ6tWYKhtalNXDk6vgwVPIxTO463+9jY
-   L1l/Xz8JipsJdwlj0ypONnOhwvaZIUNjy225xOfTJziPOxffCadf86xLW
-   Q==;
-X-CSE-ConnectionGUID: zi3ETwYSRd+02WU43ZjMng==
-X-CSE-MsgGUID: vcRmM+ODT6SrJWZ1QTtoNA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11864"; a="85515309"
-X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
-   d="scan'208";a="85515309"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 03:00:31 -0700
-X-CSE-ConnectionGUID: 8b8iVbRcQLGsr3MkG4bsRw==
-X-CSE-MsgGUID: I03EpEgmThSKr0cJ9bsiAw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
-   d="scan'208";a="265717849"
-Received: from junjie-desk-dev.bj.intel.com (HELO junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 03:00:29 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andy@kernel.org>
-Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
-	Grant Likely <grant.likely@secretlab.ca>,
-	sashiko-reviews@lists.linux.dev,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-bot <sashiko-bot@kernel.org>
-Subject: [PATCH] gpio: ml-ioh: share the register lock across channels
-Date: Tue,  4 Aug 2026 17:59:35 +0800
-Message-ID: <20260804095935.2132215-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <CAD++jLkAjQG7hFsdX+dy8wZUoKKDCaOzMD0EJ0nn3gYmaEOJDw@mail.gmail.com>
-References: <CAD++jLkAjQG7hFsdX+dy8wZUoKKDCaOzMD0EJ0nn3gYmaEOJDw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="da8wkJfb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=+XnjuTvdfAj9boKb+hGctEMZRa5tIA5vFS9T9RCWUew=; b=d
+	a8wkJfbH/8IgbsL4Yo5NOOgwlmv7rJ8QhApZbPe5mmpmp6QCe85aLyk8FJm1ObLF
+	6UIccgh+LIrOlrJ3j7c6Zlietf91MgN9leZmH/4es/Pq3dnw1jZqaTROGPkI1Tjm
+	9QM1cN8aejPURwfdKTJVWQ+gooh3by8JuqWLg5JGzc=
+Received: from fuqingshuang$kylinos.cn ( [116.128.244.169] ) by
+ ajax-webmail-wmsvr-40-106 (Coremail) ; Tue, 4 Aug 2026 18:14:41 +0800 (CST)
+Date: Tue, 4 Aug 2026 18:14:41 +0800 (CST)
+From: "Qingshuang Fu" <fuqingshuang@kylinos.cn>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Subject: Re:Re: [PATCH] hwmon: (ads7828) Check return value of regmap_read()
+ in probe
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
+Sender: fffsqian@163.com
+In-Reply-To: <20260804092412.59EE91F000E9@smtp.kernel.org>
+References: <20260804091719.651479-1-fffsqian@163.com>
+ <20260804092412.59EE91F000E9@smtp.kernel.org>
+X-NTES-SC: AL_Qu2TB/SYt0wj5yabYOkckk4Vhu49Xcq2vvQv34Fec+EEpR3p2QEQXGNkG1TJ/dOLNwWKoTa9bDNx5ftocKBEnq613dKz781edhallV/g8A==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <48933be.818f.19fcc44b0e9.Coremail.fuqingshuang@kylinos.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:aigvCgD3_1SRu3Fqc7IrAA--.829W
+X-CM-SenderInfo: 5iii21xldqqiywtou0bp/xtbCwhEK1Gpxu5HcUQAA3x
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Suspend and resume hold channel 0's lock while saving and restoring
-registers for all eight channels. Code paths using the other seven locks
-can therefore run concurrently with PM.
-
-Use one controller-wide lock shared by all channels.
-
-Fixes: b490fa0bf86e ("gpio-ml-ioh: Fix suspend/resume issue")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/r/20260731033956.EE6F61F000E9@smtp.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- drivers/gpio/gpio-ml-ioh.c | 69 ++++++++++++++++++++------------------
- 1 file changed, 37 insertions(+), 32 deletions(-)
-
-diff --git a/drivers/gpio/gpio-ml-ioh.c b/drivers/gpio/gpio-ml-ioh.c
-index 0a9d34b7636e..391188c0f2c2 100644
---- a/drivers/gpio/gpio-ml-ioh.c
-+++ b/drivers/gpio/gpio-ml-ioh.c
-@@ -73,7 +73,7 @@ struct ioh_gpio_reg_data {
-  * @gpio_use_sel:		Save GPIO_USE_SEL1~4 register for PM
-  * @ch:				Indicate GPIO channel
-  * @irq_base:		Save base of IRQ number for interrupt
-- * @spinlock:		Used for register access protection
-+ * @spinlock:		Shared register access lock
-  */
- struct ioh_gpio {
- 	void __iomem *base;
-@@ -84,7 +84,12 @@ struct ioh_gpio {
- 	u32 gpio_use_sel;
- 	int ch;
- 	int irq_base;
-+	raw_spinlock_t *spinlock;
-+};
-+
-+struct ioh_gpio_device {
- 	raw_spinlock_t spinlock;
-+	struct ioh_gpio chip[8];
- };
- 
- static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
-@@ -95,7 +100,7 @@ static int ioh_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
- 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
- 	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(chip->spinlock, flags);
- 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
- 	if (val)
- 		reg_val |= BIT(nr);
-@@ -103,7 +108,7 @@ static int ioh_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
- 		reg_val &= ~BIT(nr);
- 
- 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -123,7 +128,7 @@ static int ioh_gpio_direction_output(struct gpio_chip *gpio, unsigned nr,
- 	u32 reg_val;
- 	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
- 	pm &= BIT(num_ports[chip->ch]) - 1;
- 	pm |= BIT(nr);
-@@ -136,7 +141,7 @@ static int ioh_gpio_direction_output(struct gpio_chip *gpio, unsigned nr,
- 		reg_val &= ~BIT(nr);
- 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
- 
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -147,12 +152,12 @@ static int ioh_gpio_direction_input(struct gpio_chip *gpio, unsigned nr)
- 	u32 pm;
- 	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
- 	pm &= BIT(num_ports[chip->ch]) - 1;
- 	pm &= ~BIT(nr);
- 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -256,7 +261,7 @@ static int ioh_irq_type(struct irq_data *d, unsigned int type)
- 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
- 		__func__, irq, type, ch, im_pos, type);
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(chip->spinlock, flags);
- 
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
-@@ -296,7 +301,7 @@ static int ioh_irq_type(struct irq_data *d, unsigned int type)
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
- end:
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -326,11 +331,11 @@ static void ioh_irq_disable(struct irq_data *d)
- 	unsigned long flags;
- 	u32 ien;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(chip->spinlock, flags);
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	ien &= ~BIT(d->irq - chip->irq_base);
- 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(chip->spinlock, flags);
- }
- 
- static void ioh_irq_enable(struct irq_data *d)
-@@ -340,11 +345,11 @@ static void ioh_irq_enable(struct irq_data *d)
- 	unsigned long flags;
- 	u32 ien;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(chip->spinlock, flags);
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	ien |= BIT(d->irq - chip->irq_base);
- 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(chip->spinlock, flags);
- }
- 
- static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
-@@ -407,8 +412,8 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
- 	int ret;
- 	int i, j;
- 	struct ioh_gpio *chip;
-+	struct ioh_gpio_device *priv;
- 	void __iomem *base;
--	void *chip_save;
- 	int irq_base;
- 
- 	ret = pcim_enable_device(pdev);
-@@ -429,18 +434,18 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
- 		return -ENOMEM;
- 	}
- 
--	chip_save = devm_kcalloc(dev, 8, sizeof(*chip), GFP_KERNEL);
--	if (chip_save == NULL) {
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
- 		return -ENOMEM;
--	}
- 
--	chip = chip_save;
-+	raw_spin_lock_init(&priv->spinlock);
-+	chip = priv->chip;
- 	for (i = 0; i < 8; i++, chip++) {
- 		chip->dev = dev;
- 		chip->base = base;
- 		chip->reg = chip->base;
- 		chip->ch = i;
--		raw_spin_lock_init(&chip->spinlock);
-+		chip->spinlock = &priv->spinlock;
- 		ioh_gpio_setup(chip, num_ports[i]);
- 		ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
- 		if (ret) {
-@@ -449,7 +454,7 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
- 		}
- 	}
- 
--	chip = chip_save;
-+	chip = priv->chip;
- 	for (j = 0; j < 8; j++, chip++) {
- 		irq_base = devm_irq_alloc_descs(dev, -1, IOH_IRQ_BASE,
- 						num_ports[j], NUMA_NO_NODE);
-@@ -466,7 +471,7 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
- 			return ret;
- 	}
- 
--	chip = chip_save;
-+	chip = priv->chip;
- 	ret = devm_request_irq(dev, pdev->irq, ioh_gpio_handler,
- 			       IRQF_SHARED, KBUILD_MODNAME, chip);
- 	if (ret != 0) {
-@@ -474,33 +479,33 @@ static int ioh_gpio_probe(struct pci_dev *pdev,
- 		return ret;
- 	}
- 
--	pci_set_drvdata(pdev, chip);
-+	pci_set_drvdata(pdev, priv);
- 
- 	return 0;
- }
- 
- static int ioh_gpio_suspend(struct device *dev)
- {
--	struct ioh_gpio *chip = dev_get_drvdata(dev);
-+	struct ioh_gpio_device *priv = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
--	ioh_gpio_save_reg_conf(chip);
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&priv->spinlock, flags);
-+	ioh_gpio_save_reg_conf(priv->chip);
-+	raw_spin_unlock_irqrestore(&priv->spinlock, flags);
- 
- 	return 0;
- }
- 
- static int ioh_gpio_resume(struct device *dev)
- {
--	struct ioh_gpio *chip = dev_get_drvdata(dev);
-+	struct ioh_gpio_device *priv = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&chip->spinlock, flags);
--	iowrite32(0x01, &chip->reg->srst);
--	iowrite32(0x00, &chip->reg->srst);
--	ioh_gpio_restore_reg_conf(chip);
--	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&priv->spinlock, flags);
-+	iowrite32(0x01, &priv->chip->reg->srst);
-+	iowrite32(0x00, &priv->chip->reg->srst);
-+	ioh_gpio_restore_reg_conf(priv->chip);
-+	raw_spin_unlock_irqrestore(&priv->spinlock, flags);
- 
- 	return 0;
- }
-
-base-commit: a02b8950d619123da64f69b70fe1dadef217dfe4
-prerequisite-patch-id: cebc220b508b7d9216be1fe01348b9989f0b957e
--- 
-2.43.0
-
+CkF0IDIwMjYtMDgtMDQgMTc6MjQ6MTEsIHNhc2hpa28tYm90QGtlcm5lbC5vcmcgd3JvdGU6Cj5U
+aGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAx
+IHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPgo+UHJlLWV4aXN0aW5nIGlzc3VlczoK
+Pi0gW0hpZ2hdIFRoZSBkcml2ZXIgaWdub3JlcyBgLUVQUk9CRV9ERUZFUmAgYW5kIG90aGVyIGVy
+cm9ycyBmcm9tIGBkZXZtX3JlZ3VsYXRvcl9nZXRfb3B0aW9uYWwoKWAsIGltcHJvcGVybHkgZmFs
+bGluZyBiYWNrIHRvIHRoZSBpbnRlcm5hbCBWUkVGLgo+LS0KPgo+LS0tIFBhdGNoIFsxXTogW1BB
+VENIXSBod21vbjogKGFkczc4MjgpIENoZWNrIHJldHVybiB2YWx1ZSBvZiByZWdtYXBfcmVhZCgp
+IGluIHByb2JlIC0tLQo+Y29tbWl0IDJhNzM3Nzk5MmFmNzE3YmI2ZDI1MTEwOWQyOGJhZjAyNmJj
+NGE2NjUKPkF1dGhvcjogUWluZ3NodWFuZyBGdSA8ZnVxaW5nc2h1YW5nQGt5bGlub3MuY24+Cj5T
+dWJqZWN0OiBod21vbjogKGFkczc4MjgpIENoZWNrIHJldHVybiB2YWx1ZSBvZiByZWdtYXBfcmVh
+ZCgpIGluIHByb2JlCj4KPlRoaXMgcGF0Y2ggY2hlY2tzIHRoZSByZXR1cm4gdmFsdWUgb2YgYSBk
+dW1teSByZWdtYXBfcmVhZCgpIHVzZWQgdG8gZW5hYmxlCj50aGUgaW50ZXJuYWwgcmVmZXJlbmNl
+IHZvbHRhZ2UgaW4gYWRzNzgyOF9wcm9iZSgpLiBJZiB0aGUgcmVhZCBmYWlscywgaXQKPmxvZ3Mg
+YW4gZXJyb3IgYW5kIGFib3J0cyB0aGUgcHJvYmUgaW5zdGVhZCBvZiBzaWxlbnRseSBmYWlsaW5n
+IGFuZAo+cmVnaXN0ZXJpbmcgYSBub24tZnVuY3Rpb25hbCBkZXZpY2UuCj4KPj4gZGlmZiAtLWdp
+dCBhL2RyaXZlcnMvaHdtb24vYWRzNzgyOC5jIGIvZHJpdmVycy9od21vbi9hZHM3ODI4LmMKPj4g
+aW5kZXggMTQ5Y2ZjZWM3OGRjYy4uOTFlZjBjNGEwOGM0ZSAxMDA2NDQKPj4gLS0tIGEvZHJpdmVy
+cy9od21vbi9hZHM3ODI4LmMKPj4gKysrIGIvZHJpdmVycy9od21vbi9hZHM3ODI4LmMKPj4gQEAg
+LTExMiw2ICsxMTIsNyBAQCBzdGF0aWMgaW50IGFkczc4MjhfcHJvYmUoc3RydWN0IGkyY19jbGll
+bnQgKmNsaWVudCkKPj4gIAl1bnNpZ25lZCBpbnQgcmVndmFsOwo+PiAgCWVudW0gYWRzNzgyOF9j
+aGlwcyBjaGlwOwo+PiAgCXN0cnVjdCByZWd1bGF0b3IgKnJlZzsKPj4gKwlpbnQgcmV0Owo+PiAg
+Cj4+ICAJZGF0YSA9IGRldm1fa3phbGxvYyhkZXYsIHNpemVvZihzdHJ1Y3QgYWRzNzgyOF9kYXRh
+KSwgR0ZQX0tFUk5FTCk7Cj4+ICAJaWYgKCFkYXRhKQo+Cj5bU2V2ZXJpdHk6IEhpZ2hdCj5UaGlz
+IGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLCBidXQgZG9lcyB0aGUgZHJpdmVyIG1pc2hhbmRsZSBl
+cnJvcnMgbGlrZQo+LUVQUk9CRV9ERUZFUiBmcm9tIGRldm1fcmVndWxhdG9yX2dldF9vcHRpb25h
+bCgpPwo+Cj5Mb29raW5nIHNsaWdodGx5IGZ1cnRoZXIgZG93biBpbiBhZHM3ODI4X3Byb2JlKCkg
+aW4gZHJpdmVycy9od21vbi9hZHM3ODI4LmM6Cj4KPiAgICB9IGVsc2UgaWYgKGRldi0+b2Zfbm9k
+ZSkgewo+ICAgICAgICBkaWZmX2lucHV0ID0gb2ZfcHJvcGVydHlfcmVhZF9ib29sKGRldi0+b2Zf
+bm9kZSwKPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidGksZGlm
+ZmVyZW50aWFsLWlucHV0Iik7Cj4gICAgICAgIHJlZyA9IGRldm1fcmVndWxhdG9yX2dldF9vcHRp
+b25hbChkZXYsICJ2cmVmIik7Cj4gICAgICAgIGlmICghSVNfRVJSKHJlZykpIHsKPiAgICAgICAg
+ICAgIHZyZWZfdXYgPSByZWd1bGF0b3JfZ2V0X3ZvbHRhZ2UocmVnKTsKPgo+SWYgZGV2bV9yZWd1
+bGF0b3JfZ2V0X29wdGlvbmFsKCkgcmV0dXJucyAtRVBST0JFX0RFRkVSIGJlY2F1c2UgdGhlCj5y
+ZWd1bGF0b3IgZHJpdmVyIGhhcyBub3QgeWV0IGNvbXBsZXRlZCBwcm9iaW5nLCB0aGUgZHJpdmVy
+IGlnbm9yZXMgdGhlCj5lcnJvci4gSXQgcHJvY2VlZHMgYXMgaWYgdGhlcmUgaXMgbm8gZXh0ZXJu
+YWwgcmVmZXJlbmNlIGFuZCBpbmNvcnJlY3RseQo+ZmFsbHMgYmFjayB0byBlbmFibGluZyB0aGUg
+aW50ZXJuYWwgcmVmZXJlbmNlLgo+Cj5JZiBhbiBleHRlcm5hbCB2b2x0YWdlIHJlZmVyZW5jZSBp
+cyBwaHlzaWNhbGx5IGNvbm5lY3RlZCBhbmQgc3BlY2lmaWVkIGluCj50aGUgZGV2aWNlIHRyZWUs
+IGNvdWxkIGRyaXZpbmcgdGhlIGludGVybmFsIHJlZmVyZW5jZSBvbnRvIHRoZSBzYW1lIHBpbgo+
+cmVzdWx0IGluIGluY29ycmVjdCBBREMgcmVhZGluZ3Mgb3IgcG90ZW50aWFsbHkgaGFyZHdhcmUg
+ZGFtYWdlIGR1ZSB0byBhbgo+ZWxlY3RyaWNhbCBjb25mbGljdD8KPgo+WyAuLi4gXQo+Cj4+IEBA
+IC0xNjYsOCArMTY3LDEzIEBAIHN0YXRpYyBpbnQgYWRzNzgyOF9wcm9iZShzdHJ1Y3QgaTJjX2Ns
+aWVudCAqY2xpZW50KQo+PiAgCSAqIHZvbHRhZ2UgbmVlZHMgdG8gc2V0dGxlIGJlZm9yZSBnZXR0
+aW5nIHZhbGlkIEFEQyBkYXRhLiBTbyBwZXJmb3JtIGEKPj4gIAkgKiBkdW1teSByZWFkIHRvIGVu
+YWJsZSB0aGUgaW50ZXJuYWwgcmVmZXJlbmNlIHZvbHRhZ2UuCj4+ICAJICovCj4+IC0JaWYgKCFl
+eHRfdnJlZikKPj4gLQkJcmVnbWFwX3JlYWQoZGF0YS0+cmVnbWFwLCBkYXRhLT5jbWRfYnl0ZSwg
+JnJlZ3ZhbCk7Cj4+ICsJaWYgKCFleHRfdnJlZikgewo+PiArCQlyZXQgPSByZWdtYXBfcmVhZChk
+YXRhLT5yZWdtYXAsIGRhdGEtPmNtZF9ieXRlLCAmcmVndmFsKTsKPj4gKwkJaWYgKHJldCkgewo+
+PiArCQkJZGV2X2VycihkZXYsICJkdW1teSByZWFkIGZhaWxlZCB0byBlbmFibGUgaW50ZXJuYWwg
+VlJFRjogJWRcbiIsIHJldCk7Cj4+ICsJCQlyZXR1cm4gcmV0Owo+PiArCQl9Cj4+ICsJfQo+PiAg
+Cj4+ICAJaHdtb25fZGV2ID0gZGV2bV9od21vbl9kZXZpY2VfcmVnaXN0ZXJfd2l0aF9ncm91cHMo
+ZGV2LCBjbGllbnQtPm5hbWUsCj4+ICAJCQkJCQkJICAgZGF0YSwKPgo+LS0gCj5TYXNoaWtvIEFJ
+IHJldmlldyChpCBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA4MDQwOTE3MTku
+NjUxNDc5LTEtZmZmc3FpYW5AMTYzLmNvbT9wYXJ0PTEKCgpUaGFua3MgZm9yIHRoZSByZXZpZXcu
+CgpUaGUgbWlzaGFuZGxpbmcgb2YgLUVQUk9CRV9ERUZFUiBmcm9tIGRldm1fcmVndWxhdG9yX2dl
+dF9vcHRpb25hbCgpIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlIGFuZCBpcyBub3QgYWRkcmVzc2Vk
+IGJ5IHRoaXMgcGF0Y2guIFRoaXMgY2hhbmdlIG9ubHkgYWRkcyBlcnJvciBjaGVja2luZyBmb3Ig
+dGhlIGR1bW15IHJlZ21hcF9yZWFkKCkgY2FsbC4KClFpbmdzaHVhbmcgRnUKCgo=
