@@ -1,275 +1,189 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FF646A601
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 14:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785852071; cv=pass; b=LKvpnnu5A/RB4pcPgj2Agh1RcKhGssFHA/+0Vm2P5pRpmL4hcDvnBu/mWQg0C8XEqeXjkdU9TM53XiPo3DcX71gIN8zC56Qz+vCKXQuu+USPdRZtNNlb4fdO0h1fKtN+ksnG5N3LKZrIULfx/XfOty2sSN60GFkDIifDzlRUc20=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785852071; c=relaxed/simple;
-	bh=Vm5llCv0uwGEuht8g4AIXY1M57YgJMf8Jkqu6WWBja8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lGXgAifmvwoo80gxuokyHyjNM1QOGE68BetjV3RtUKg/ygJel2TnSZXXcWuFS05PhHmRhnuHC8Ctol+foX9lmGH0Ef81pvGwhjSjx/sKzLN4hwyhivD9SqCSYJKiKdCi9ATHWBu6excKrJG8wcl2rQW430+zEki8tc9xrZmTqWE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jNao/TcZ; arc=pass smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F80A46D2C5
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 14:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785853027; cv=none; b=ZuI//L3U+qQYfFjsZw3D2AzJZrpefgBwJ0g83fxPeLWp+ZLlOWJwlGqdaqxU7GdxBDHfmIOS4ljIhiBUC1UtsLTU2zGo1nK30jQ145cJdeTwU6EQrjfgJNV3MODp6h6p3/A2n5tXsUDdn6lRit4ylBiKb1+LFSd+qE2IrVo7yOw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785853027; c=relaxed/simple;
+	bh=CF4JQYiT6iPab8GS3Ok3zSKpq1ydxi01BblBMZFc7Vo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J5tA/I3BelCPwpObvCmU9MyGmGgU0Fb/KjeHMkRnCtC7KeYHJSD+KxthiFhxnKLkik+pbmcN8q9c0r3i1ukOeszIOj2XC8UEnoHhwa3XMHbXb6JqEs8bE69xcSe5EMsDVCILJdxa8UrkqOYYtay7of6Jz/hqATqbtFPcWDIczBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQpVEOv4; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jNao/TcZ"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-384c94c9423so515752a91.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 07:01:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785852068; cv=none;
-        d=google.com; s=arc-20260327;
-        b=I96FcOOujUCb6r40BvxcAo8D0p4D7cC1BLDhoIE6B7EPLjJND3wLpgDv0+JYGl6ZgO
-         v9pvUS/Ojjgk8deXz1P4jWtmUu62IDgcs10h8lSX7gdQFGXoWFf8u9BuWCTbmUYuGgQA
-         x5f08t+JW5wHADY/E28n3137kFjElqmcUzgt0vIMhJo66QJxCEaXuaOVZvheWL0RIEcu
-         /6mlkhLZd6+MnrNVl0xvreYVXNMdElKqmGaI+jB5nrS9EzkM3y7hOnNEnqmk7mdWoF9i
-         KNdL5vH4yLDXf6uDg+Vncl8IOq0Gp+hY5q2omW2N6cX1iKtokH7I9jO4Ye+aHJOMCwMt
-         hPfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Jr5seHTvJXwM5lFrOeXOrJpAk4DxLxwscIyr+3p9G4g=;
-        fh=bYy1gdffJzDCrIK7z4EL5b/4iCdagfa/eUW4B0maKQ0=;
-        b=eOsLEJ3PDvIxtGhWp2nmO89zlx0sKjpn60U8692fteD4jO9HkCtQNkxpzXWC+NiqBe
-         LPdWMDEIJIVISiYe4g6pYfCrs7anBrv2phVlloH2Bg8zkc2kTZlIQrw5jYp7EzbkXKjg
-         jo7/JuqdxnrR74Gtos/ihd4f/5jshy4a8rK7by0a9L/54cTmCwOODDc7fwKZ8F+X8UH7
-         mPwupS10dxMBApTbRAYN6guZJ3nqM+/T3RUEQPnZ0h7usuh1dO0KmDN34sOyEyhRgkEp
-         VE5DYkP2oxhFLfYRRFPtuEBsHTeS0N5fOTwXk08cuMNsrInH6XNR7EsP69C+qWayQJvq
-         6Nlw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQpVEOv4"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so3169584a91.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 07:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785852068; x=1786456868; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Jr5seHTvJXwM5lFrOeXOrJpAk4DxLxwscIyr+3p9G4g=;
-        b=jNao/TcZ/RCRfGznAdupHNeJnVAbkGNLWWRwwTmj18FvG/rHdcWrU6RHu8fzTF4jdt
-         6epfOYLz9trnRHtRqvcLidWhEokIeojy5qXhUkUDlnoku5ratJJby9/4VofcwWHjtnyh
-         nZ3m9ODlYglqTZXVehP5Hn5YQx+JLXk3bgSCtqJW3clC5sa07YOQl50wmYblrljgjjlT
-         QyAckfN2ZEpd+DfEKkPF7NZpDLJZE1jwHNGE/bVgwvZoem24fP82UgSIbXyLr3asTkaP
-         zNDth7NYlPZEszpWnnL9FoaSoVAYH8snVL5wnv+RJH4wnxZa5RXFZva2Q+mgWRGSOVkq
-         0gnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785852068; x=1786456868;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1785853014; x=1786457814; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Jr5seHTvJXwM5lFrOeXOrJpAk4DxLxwscIyr+3p9G4g=;
-        b=WL2DutyMw7b1X31cUTVavfgiNJMMJTUXvl/pz4G6XYAZ0CVykehkZYgm3x6ia5j2zA
-         WUWl1WG9p9ThG0jbCNudmwNnQgXvE+KHDge8z0dDJbHiQkoP7YuY8/R2Fn8OjlDQLpHv
-         nks8PCadPQZKA7UH6XES99gk8n7kIIMuwWRQjh6RlXB++lxEYV9QpsMou6guciuxohx8
-         AbonxF9Ifln2y8hmAbBmH5ub/fsUbQ7Znh5bUJw7ePRv8murBQkvbyzKCSIrtW4PzoX/
-         8tGGWx9RPGqgV0kX9bOoCkFTP6cu5PZT/oppI6t2TSeJgthflkGHPC/lDAUbFxLc6h8P
-         pUhw==
-X-Gm-Message-State: AOJu0Yw4CXTNyM3lavXRrNO2LaY0KGU+qgdvHRVmT+J1D7JzhIcRfESQ
-	S+YsLGqt4rIJkS33+XAg6pe2xKkijZuPuYIaphV8hWeGfQG0pK+iDbgwuDAal8wjK6QgTcvsUGO
-	yOs6ymUQsFZmsej8GkZq5exf/9gKuVTR+pw==
-X-Gm-Gg: AR+sD12cKOuG1MPVNJxgWr0HdUpVGQElA64TRBSactNv/Y+xQZ+ush7xgwgND8wj0v/
-	JCvr0bTdymx98eKyR1BMxE7rCQZE1NB1AomsL02Lh//MduZcFFMrJRbwZ/uvPjaEXQZqvFPFdzO
-	zqws2CwH5LGbz5j6Cr3UZXyhcvwbAbLO3akjv+AdG56Jfj36f9LVlFThRSjPLz7Fr6KnLHKD2f+
-	1c82thgibDJj1kVRXGd1ikiG7Nytoy+vJpiQLRl4F3kZqCV2aE4I8LzJYx2Q9tHPoxu9V3eGb2Q
-	jYN/CJj0M/em/FLLuCPFt7qrxndqj/JEowgmHjOdCBBVPe6QnHVF0XXivbEYgu0EKDkn0iJ5+ID
-	/iCoDtoR0wprkNB8vRW0TTw/T5VfZ070=
-X-Received: by 2002:a17:90b:584d:b0:38e:480b:99a5 with SMTP id
- 98e67ed59e1d1-38fbc52adf6mr18937864a91.2.1785852065736; Tue, 04 Aug 2026
- 07:01:05 -0700 (PDT)
+        bh=QAwaOU6zpTEosTow2YJoyoo65T4Qo1mttVUneF6unqI=;
+        b=RQpVEOv4EHXt0rpX5SvuEt5NUdSWZg7k2Hd9BRDWcUPwo0tzelxRs/n6jjegKz0ukX
+         2PoBV2pTXF+QHfVj1V2lOMejcVFmIiBf8WY4u9gLi8pLRKTZ5siVIMsrMX7TYU84e0ra
+         hvLJ+3D7aiNHIlAiH97Grs8vw9JTQzSbRYW0055Gn6tqf2/YoQ37qgf4i+GlSTlB56tN
+         xsM9KN04migLHh91NXfMdBbJMY1Q997YVU7RuWtAIdmD11Je+JsPYMFTmKrD/9eP5ZMZ
+         /WAbqDlQBCSD2A6mDTPKMBGGoG8Q5RHvNl8Ioq72WKvJ7aKgVHp9LzVC6pPrKiCjfHWH
+         luhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785853014; x=1786457814;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=QAwaOU6zpTEosTow2YJoyoo65T4Qo1mttVUneF6unqI=;
+        b=VwlW8Q+V6LlQknfugGtOakv6O/8Ebpg96GaLfPMTs5+cpSu5bOVvs5qjX4jPtp4Zic
+         UoqpUrVpY984VtbVKe+jCYvlbRy6QF2ZZ03h0fbpYFHwj2GSZVdJHuNjFztXm28zQZmp
+         9+IT1lxVJplDuoh9iwvD2nr/CHNjpj0/1bow2XtCboAVQSrWwt0Lh7yT6kfjxvabYkzH
+         EEdIlPjlyo90FsbF4iWCC37h8y+f3+TXOEKaUb02UvI2yRD6TxLExd+AVNT75xnydNsx
+         f7faAkxRsq2f3AeItxvDAF5Z0TMPqn3Mwv+w5Xc/zFtdulUcd/PBA1JK/huBc9lYJnZx
+         MkyA==
+X-Gm-Message-State: AOJu0YwkNafvqSaugTzkUlnh/o9kNOH/SkZDq9ik7P3Rw+FsjVNxXbOl
+	fw8bFiHAdHgbZOKCCrAFxxaXnPVvw8fhdfe3QiXXzOiTOwp2QNvtUjOq
+X-Gm-Gg: AR+sD12OyT1+HDVWuVnR7vtyaxasZwXj0PXNprtR1WUEyWzZeLk4Og8g7EHVbs1Pimf
+	o2BejeG2ZdqOD4ZVPCFDARg3MTP4Cdo1uKkM6+FgQ7dWPtVNMmyXrhnqXxLXQ5w537XYoE0gRlT
+	UEKKkWiMTdikKneZ6CyWm6SSJH3C7zYkT8GucQ6QMDw/3r1lkUmC6Hb2TJwH3CO1Ni6OCzwqKhG
+	mHijd1qP4fr8D1QE0Jkm0DHysBR0I+x6MDSc5OU49oHWb/rYsxw//2vqqTj1fef9k8XdKODv45+
+	5Pm//ZQmsa3rk4UtMQcQz1CeCvHx2sRZDN7vUZP32ANm3gAhNTkWtQcnAJVom4k/5ElzC2gsR4u
+	pz5pXWn/GoK/q4XAfYNG6GvVHGuWDmgAzXOPTm+OqIKW2BOJe8HhkeCCS2yJCax27eya7aY5rWv
+	S7qUGeKdZhh2ijrr+WuFRVqopTDvzn1ElD4upMB3vM1Dsmk4EEp5NJcQFNfzCQTtPSC7EvhVi5Z
+	yS5CqcyppiO3myE+Jo7dXLPt+lfHZdnEJWsf+DnQK6k7FV9
+X-Received: by 2002:a17:90b:58a3:b0:38f:efed:5445 with SMTP id 98e67ed59e1d1-38fefed5911mr2268839a91.4.1785853014260;
+        Tue, 04 Aug 2026 07:16:54 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3158678ec37sm5144048eec.23.2026.08.04.07.16.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 07:16:53 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <58dfd8a9-1502-46d7-a32e-d7b9b9c1ce81@roeck-us.net>
+Date: Tue, 4 Aug 2026 07:16:51 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260730170011.28915-1-harimishal1@gmail.com> <20260730171458.ED8481F000E9@smtp.kernel.org>
-In-Reply-To: <20260730171458.ED8481F000E9@smtp.kernel.org>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Tue, 4 Aug 2026 10:00:54 -0400
-X-Gm-Features: AUfX_mwCaiVsPcXhRnX6KyhVMHYfZNjobvIYbx4-30KYLLssVMrG8IahYQ69xqA
-Message-ID: <CADnq5_PZ2i9d+eOdMEkSYynxzqO5E0iO0fXX77PRhZ420eBVNA@mail.gmail.com>
-Subject: Re: [PATCH] drm/amdgpu: bound ATOM bytecode cursor within the VBIOS image
-To: sashiko-reviews@lists.linux.dev, Hari Mishal <harimishal1@gmail.com>
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] hwmon: (pmbus/core) Add mapping function to
+ pmbus_read_block_data()
+To: =?UTF-8?Q?Nuno_S=C3=A1?= <noname.nuno@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, =?UTF-8?Q?Nuno_S=C3=A1?=
+ <nuno.sa@analog.com>, conor+dt@kernel.org, linux-hwmon@vger.kernel.org,
+ devicetree@vger.kernel.org, robh@kernel.org
+References: <20260728-hwmon-max20826-support-v1-0-224766e0acd1@analog.com>
+ <20260728-hwmon-max20826-support-v1-3-224766e0acd1@analog.com>
+ <20260728162749.A42051F000E9@smtp.kernel.org>
+ <e8ba1c8a-cf68-421e-9974-f31f31e90e59@roeck-us.net> <anGrNyrEX5GX9lYJ@nsa>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <anGrNyrEX5GX9lYJ@nsa>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 30, 2026 at 1:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 6 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] The newly added bounds check in `atom_op_switch` breaks out of t=
-he loop on malformed data without setting the abort flag, allowing garbage =
-execution.
->
-> Pre-existing issues:
-> - [Critical] Kernel stack buffer overflow due to unit mismatch between `p=
-s_size` (passed in bytes) and parameter array indexing (processed in dwords=
-).
-> - [Critical] Nested ATOM command tables can underflow `ps_size` and bypas=
-s bounds checks, causing an arbitrary kernel stack buffer overflow.
-> - [Critical] The bounds check for `ATOM_ARG_FB` scratch memory accesses i=
-s vulnerable to an off-by-one error and integer overflow, allowing arbitrar=
-y out-of-bounds kernel memory corruption.
-> - [High] The patch bounds-checks the initial opcode fetch but fails to bo=
-und variable-length operand fetches, leaving the interpreter vulnerable to =
-out-of-bounds reads.
-> - [High] Command table directory index `base` is read from the VBIOS imag=
-e without bounds checking the index calculation itself.
-> --
->
-> --- Patch [1]: [PATCH] drm/amdgpu: bound ATOM bytecode cursor within the =
-VBIOS image ---
-> commit e34469f5366554f7ff6d1ad26ef62ec969ed0a40
-> Author: Hari Mishal <harimishal1@gmail.com>
-> drm/amdgpu: bound ATOM bytecode cursor within the VBIOS image
->
-> The commit bounds-checks several ATOM interpreter opcode fetch and table
-> jump paths against the VBIOS image size to prevent out-of-bounds reads
-> on malformed images. It utilizes the existing ctx->bios_size infrastructu=
-re.
->
-> > diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/am=
-dgpu/atom.c
-> > --- a/drivers/gpu/drm/amd/amdgpu/atom.c
-> > +++ b/drivers/gpu/drm/amd/amdgpu/atom.c
->
-> [ ... ]
->
-> > @@ -1032,8 +1032,12 @@ static void atom_op_switch(atom_exec_context *ct=
-x, int *ptr, int arg)
-> >       uint32_t src, val, target;
-> >       SDEBUG("   switch: ");
-> >       src =3D atom_get_src(ctx, attr, ptr);
-> > -     while (U16(*ptr) !=3D ATOM_CASE_END)
-> > +     while ((uint32_t)*ptr + 2 <=3D ctx->ctx->bios_size &&
-> > +            U16(*ptr) !=3D ATOM_CASE_END)
-> >               if (U8(*ptr) =3D=3D ATOM_CASE_MAGIC) {
-> > +                     /* magic byte + immediate (up to 4) + 2-byte targ=
-et */
-> > +                     if ((uint32_t)*ptr + 7 > ctx->ctx->bios_size)
-> > +                             break;
->
-> [Severity: High]
-> Does breaking out of this loop without setting ctx->abort =3D true allow =
-the
-> interpreter to continue execution?
->
-> It seems the function advances the pointer and returns normally when this
-> bounds check fails, which might cause the interpreter loop to fetch the n=
-ext
-> byte from the middle of the switch data and execute it as garbage opcodes=
-.
->
+On 8/4/26 02:05, Nuno Sá wrote:
+> On Tue, Jul 28, 2026 at 11:13:26AM -0700, Guenter Roeck wrote:
+>> On 7/28/26 09:27, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>>>
+>>> New issues:
+>>> - [High] Stack buffer overflow in `pmbus_debugfs_block_read` due to unbounded return value from custom `read_block_data` callback.
+>>>
+>>> Pre-existing issues:
+>>> - [High] TOCTOU data race on PMBus hardware page selection during probe.
+>>> --
+>>>
+>>> --- Patch [3]: [PATCH 3/5] hwmon: (pmbus/core) Add mapping function to pmbus_read_block_data() ---
+>>> commit c4bd4d03203a9fd14a7a2bcff69ec842b441fa68
+>>> Author: Nuno Sá <nuno.sa@analog.com>
+>>>
+>>> hwmon: (pmbus/core) Add mapping function to pmbus_read_block_data()
+>>>
+>>> This commit introduces a mapping function to pmbus_read_block_data() in
+>>> preparation for adding support to a device which needs to use its own
+>>> read_block implementation.
+>>>
+>>>> diff --git a/drivers/hwmon/pmbus/pmbus.h b/drivers/hwmon/pmbus/pmbus.h
+>>>> index 3d5586c67f840..d697939ec8921 100644
+>>>> --- a/drivers/hwmon/pmbus/pmbus.h
+>>>> +++ b/drivers/hwmon/pmbus/pmbus.h
+>>>> @@ -459,6 +459,9 @@ struct pmbus_driver_info {
+>>>>    	int (*read_byte_data)(struct i2c_client *client, int page, int reg);
+>>>>    	int (*read_word_data)(struct i2c_client *client, int page, int phase,
+>>>>    			      int reg);
+>>>> +	/* size of data_buf is I2C_SMBUS_BLOCK_MAX + 2 */
+>>>> +	int (*read_block_data)(struct i2c_client *client, int page, u8 reg,
+>>>> +			       char *data_buf);
+>>>
+>>> [Severity: High]
+>>> Does this API need a size limit parameter? The comment specifies the buffer
+>>> size is 34, without providing a limit parameter to the callback, which might
+>>> encourage callbacks to return values up to 34.
+>>>
+>>
+>> The maximum amount of data returned must be 32 bytes, not 34. Callers define
+>> a larger buffer size to be able to append, for example, '\n\0'. The function
+>> itself, however, must not return more than 32 bytes of data, plus the data
+>> length in the first byte.
+> 
+> Curious, do you want me to drop the comment or your reply is also about
+> giving AI context so it does not come up again with the comment?
+> 
 
-Hari, can you double check this and respin if necessary?
+Point was that the comment isn't accurate. The data buffer length must be at least
+I2C_SMBUS_BLOCK_MAX, not I2C_SMBUS_BLOCK_MAX + 2, and the function must never return
+more than I2C_SMBUS_BLOCK_MAX bytes of data (and the number of bytes as return value).
+
+Having a comment is fine, only it must reflect the actual API.
 
 Thanks,
+Guenter
 
-Alex
-
-> [ ... ]
->
-> > @@ -1237,6 +1248,13 @@ static int amdgpu_atom_execute_table_locked(stru=
-ct atom_context *ctx, int index,
-> >       if (!base)
-> >               return -EINVAL;
-> >
-> > +     /* the table offset itself comes from the VBIOS master table */
-> > +     if ((uint32_t)base + ATOM_CT_CODE_PTR >=3D ctx->bios_size) {
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is the retrieval of base i=
-tself
-> bounds-checked before this new check?
->
-> The command table directory index is read via:
-> CU16(ctx->cmd_table + 4 + 2 * index)
->
-> If index is arbitrarily large and controlled by the VBIOS, could the macr=
-o
-> perform an out-of-bounds heap read before reaching this newly added valid=
-ation?
->
-> [ ... ]
->
-> >       if (ctx->execute_depth >=3D ATOM_EXECUTE_MAX_DEPTH) {
-> >               DRM_ERROR("atombios command table nesting exceeded limit =
-(%u)\n",
-> >                         ATOM_EXECUTE_MAX_DEPTH);
->
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but are nested ATOM command ta=
-bles
-> safe from size underflows?
->
-> When atom_op_calltable() recursively calls amdgpu_atom_execute_table_lock=
-ed(),
-> it passes ctx->ps_size - ctx->ps_shift for the params_size.
->
-> If a malformed VBIOS specifies a ps_shift larger than ps_size, could this
-> uncontrolled subtraction underflow and promote to a large unsigned bound
-> during execution, bypassing bounds checks like idx < ctx->ps_size?
->
-> [Severity: Critical]
-> This is another pre-existing issue, but do atom_get_src_int() and
-> atom_put_dst() incorrectly process ps_size as a dword limit instead of by=
-tes?
->
-> External callers pass a stack-allocated structure and its byte size to
-> amdgpu_atom_execute_table(). If the VBIOS-supplied idx is used to index t=
-he
-> uint32_t *ps array, could passing idx =3D 7 for an 8-byte structure pass =
-the
-> idx < 8 check but access the 7th dword, leading to out-of-bounds stack
-> reads and writes?
->
-> [ ... ]
->
-> > @@ -1273,6 +1291,13 @@ static int amdgpu_atom_execute_table_locked(stru=
-ct atom_context *ctx, int index,
-> >
-> >       debug_depth++;
-> >       while (1) {
-> > +             /* jump/skip targets are bytecode-supplied; stay inside t=
-he image */
-> > +             if ((uint32_t)ptr >=3D ctx->bios_size) {
-> > +                     DRM_ERROR("atombios cursor 0x%x outside VBIOS ima=
-ge (table %04X)\n",
-> > +                               ptr, base);
-> > +                     ret =3D -EINVAL;
-> > +                     goto free;
-> > +             }
-> >               op =3D CU8(ptr++);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this bounds check onl=
-y
-> protect the opcode byte itself?
->
-> The individual opcode handlers executed later via opcode_table[op].func()
-> appear to unconditionally fetch subsequent variable-length arguments. If =
-the
-> image ends immediately after an opcode, could these operand fetches perfo=
-rm
-> out-of-bounds reads?
->
-> [Severity: Critical]
-> This is a pre-existing issue, but is the bounds check for ATOM_ARG_FB scr=
-atch
-> memory accesses in atom_put_dst() susceptible to integer overflow?
->
-> The bounds check appears to be:
-> if ((gctx->fb_base + (idx * 4)) > gctx->scratch_size_bytes)
->
-> Since it uses > instead of >=3D, it might allow an off-by-one access. Mor=
-e
-> importantly, if gctx->fb_base and idx are 32-bit values controlled by the
-> VBIOS, could their addition wrap around a 32-bit integer and bypass the
-> bounds check entirely?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260730170011.28=
-915-1-harimishal1@gmail.com?part=3D1
