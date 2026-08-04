@@ -1,100 +1,98 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A853F211A
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 07:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE7C42EEAB
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 08:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785827759; cv=pass; b=p8RwKQiTlBctIRq3W8g/K8u0cr3gPx3ms1DmR0mNmRo7FnRE5YRotBIkWnL8OJK+wlxA22E87lPgQGfdezSFN2r0L0SdogjHH6htgxVD98OSBtqr9xxXexsx4dYIeeGKTdnlIXzyp5SclkHL9sdE29Oc0kPZ0qgIQwNG3+9eJFg=
+	t=1785830445; cv=pass; b=CHoOcEFbEPz0SCdUxtG5lSuJBV9oz6TPDTHj7Gb5XAgdxArHOJt/LP6vzvHAbsbwb+jwPRTzFmvcrdVdDFBh18u539V6N93RJcCtnukv68W71fWpOx4cevUEDLFqPhaj0FXDZr62i4b8f8UCehxLylidPCG0XBVL6Vh9nXugdrk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785827759; c=relaxed/simple;
-	bh=8X1/tFmkNvucKU55SD9C0MQcuAuBHd6BgGuyErlYnmE=;
+	s=arc-20240116; t=1785830445; c=relaxed/simple;
+	bh=OGVS8gsiozxEdjWEPDQzeoafxc/DPHmM78nhgq5r6/Y=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nKFbIlwDVxiVQHmd+CTw7VYKXhDuR7mXV2y6hpW7zD204hpRMHZK2d76qM4zqHCOSPtHzVw3JGBo6RKBttDzG56KobCCXlD0rDFvL6RMnTTKefjzpwnIWhXg1szBp0qiut+1RXltsFDPbQ9jSQc3TikBPKa5rc/dNzfPFuu0RaQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=etM//6yT; arc=pass smtp.client-ip=209.85.128.182
+	 To:Cc:Content-Type; b=Vmv/ZLCd9PrTXcTXN9BHbF2xfOKHKvKlansMvfQSGaDYLU/f3bei4De57f5GEoSD/N8BOA4gtb38bC6w29weHI8OkTIl/Fg+w2Cc19uXRo9icYFGRj0/IjYyfhR54YAG1qRVU0mg4yv0k6eSQWRugTXMMTBQu8Xar58hB8u6OzQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apgJBTls; arc=pass smtp.client-ip=74.125.224.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etM//6yT"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81ff017d420so10731477b3.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 00:15:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785827757; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apgJBTls"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-668005ba03cso5821501d50.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 01:00:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785830443; cv=none;
         d=google.com; s=arc-20260327;
-        b=N3nAFLmKvRtJjlVz2Dz61UVhTufOWgUsFASWUlpn7bTk8Ne1TCFeM3AZPmAqJl3Rqe
-         k+AkiKGWDrYSsa15YHRnad5VYIFFjcy20wfkUfjf19LVmBmiFUGNnRe/82oJD0oteksv
-         2+HKYGnNEKS4VGfwPqZCfUP5Cp2DoL/WckbKvuVghhx36r++tbGCVTApICUE8BiM6dmd
-         Vu0wiToTSSc95heqRPCl/8b9eXcJ0+FSvfeeAxcTkf65knn3lHYRlcoUDCiGpp/Bs1Mv
-         1ZFOqov/oamhjp7LKLhxEvA/iJQdu430QcThj22owugrW6jCqT+xXKvO8MZFcwa/ewOq
-         86QQ==
+        b=qJZyztUnbYSuquOUHUyTzVAcjv6w/4Rw2KWC+xURqjHcsCJCnmXFeBM1zFZ4gv3ptg
+         Wqhpm3F1IlAo0sFas8xO3hsNzS90FIGDGeRzoUlooDmK4RzTsWHuDIbzE8Cant/wI8SC
+         p0a3dqwlyoYCILt09Y68nZ8CcvoAQMXmql9MLbJJIt6aC3sGTLsYfsLAyidlswuSaOzs
+         xyBj2dbG84qpJqXsCjUjlyLjZw5Er9Z1PsLUYyd6SXJ5Q7blXX694z1gmGcJBy9K6svG
+         nu5dgdoiD0WMrrzFkchBDIjHKEvVtISjmf3u7RHsfqsb/f1yh0rrI/PhPZYFE5NXqNgv
+         dkSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=UZdXVSYuS8SOnebG5/dNG4Br4MK+c8iN1GqhwiKB41U=;
-        fh=myfyTS+96RL1CYke+TvHidoU78tjDkYzQN2QzJVyJYs=;
-        b=LkhlbZhKcIvwqa9QKMjCdfLCGs5klFwuqqk8x39sxDZRzq0NTUKp/NLZBXlF9jNx8w
-         betBF2cpODNRtnoysjZHV0xpN4Y92XD4rc75NqdNw6YsDNaJL+OyrFhY0naOr8pB0CyU
-         EKijhV4ChzxfFUwcWb+V1ePWtMlSuUzt50Bl6Wq8SqWbdGa30GovgRJB8TC1fP09kkDR
-         xQpxbQ//YShKxwFxo4KWPuh7wLKqnxtUMZjkHsyqNt0CXyRzsbEDFFw1aQCAQtZJYIiv
-         MLgGeI6/HuDFqkWhC9Ik0EZ51pZdsMrfosNLbIgFAEsUnratDJ313Qxe1Kxkfkf2+YeP
-         WzBA==;
+        bh=6sN7hyGeF3/QBGyqG1sqeR8O1GAdeZpGRRACa/xNXes=;
+        fh=jN8VodyhAI7zYna9JzV1QjHjWbE/Mn6J5bWeUXC0oQM=;
+        b=dyD4qomBucxLLCCrCpo/VTF7CrtUtwnAHcrUi/naqgG2sIMTW262cs8q8AfSQWbpAd
+         0drzGQSRJ0FEkannCjtS7hsgg8HsfnB+dgKZ2Q3TsfPCmqIJdZ6EXxhcDHrvGYsqwMyZ
+         jnq1L0pQQTEa4RW1n6Usx5RpvibOnNLRKlWo1cx7Y3WTCLAcirIqqw1Gpaoe31kAcFIL
+         nrYpq4NwarL3+fjCbkMdH9Gqcc4v9naSL2cK6Gs7H5v12auY1ldxVIgrJu8mx/SoDSMh
+         DrI99P4hElNF6EcYnUO9jhi56/p6CjOuL2jSQ80L9ToByPFtyZ7Or8R1Pqy5rwr1lPzb
+         jU3Q==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785827757; x=1786432557; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785830443; x=1786435243; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=UZdXVSYuS8SOnebG5/dNG4Br4MK+c8iN1GqhwiKB41U=;
-        b=etM//6yTYz2tzBpIGha7rkQWcqhMW30qhyZLFPre/+rdojEAgTxhDg4o8lQAaU9VU6
-         A1bYqBMyIQEou58v36Wn1PujQ17oxmLlQYMtQBsoxcrutqv1IHK5E3ohkX1j9y1/tnMr
-         Dwrb7pPwxdRV6+6p9xoqysPd9thvaoGXu9REfGvFLvzxM+8UW6Z93CjVSZPOmNM36z94
-         +K6LAw4dH1NKvkBSG1BWu+9uyqIPXoB664Ow1OIoEqLi1QA8Upn+F2PUH21LonSFd8F8
-         HalapXIgBGc9mcZF6tMsuyKbYMHzQ6des4Xov7JyjHvGj7USQWypD4fcJ8pdPbo8FJnD
-         Juug==
+        bh=6sN7hyGeF3/QBGyqG1sqeR8O1GAdeZpGRRACa/xNXes=;
+        b=apgJBTlsvU5WLhls7LwDyrr/tGl+uV9LADZUMiGgDj1NI3p7bez3Nzx9hL6OCBlgPD
+         AVzRbh5ErSPuNFv3OK7vwVmQNv3tZldj5kK+Ltu5ncrupnsIqjsqo/myuIx1oOpF0HUH
+         vRv8GDoxKm2OtncZuSHTAgCLk8vMgy0wc8HEdEjoEg4DdnkH2wEQBWZXG3hbMICxVhZR
+         qqqV9UOQSFqxYN4+saPuThtZXCpRj8mdo8OhkhET1IORgDryG03s/WkiDkMrXBA5t9PP
+         lK+tOnQRy09rXmY2lHapvbgmgfx1gyCLYdNGdEVhakIbhgX2u3UYBpbhrFLVVQHUn9Ve
+         yiHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785827757; x=1786432557;
+        d=1e100.net; s=20251104; t=1785830443; x=1786435243;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=UZdXVSYuS8SOnebG5/dNG4Br4MK+c8iN1GqhwiKB41U=;
-        b=lfHVZAPJi/4cESilH2RmTclVSFu1GqRBGLGZXysAe8Sh/ZuWPuX1napJbBJU8icbVC
-         BXrRVImLoi42KwWTNjTxjs8L5gMAJVjDnGeCIL/kPnFhO5fgmVuC7bWkpQ3kqnRVmI0k
-         yVq+AQHe/0ITIjCvKTfYR8b8E1OM7iDz+xH1RrOXZ+bYbFgwliVT1gT7YGhh9K16fF7G
-         VzejLNFHC8wbY3nXzRQawklQYRM4pN6XIWhnOXaaboxdSfrDwj2CEWzCrRPxUewNo3QA
-         vq3Suw4l6W6gkpHXexcLLLcTKDzroot0YGO8mzL26BYO+TQ5jPJjWJ2jCK6fQ1871clR
-         PsiA==
-X-Gm-Message-State: AOJu0YxGcr8vMzTX/sn7if1ntaMRDU4hc/d+AARZHNhkiI7MyXLyFJlX
-	WmBtrvvJhXFwfiUQJozJlIhCDdKb3HmR0oL7tQMfV6pWT4mMD6S3tbQ1SHVPSzN57ZMt0Scl45T
-	s/71q2GpfwUC8zOsN4EbzrGbunGv2AW4t7NbFJG4=
-X-Gm-Gg: AR+sD12fe+5167W432KHpthtEjHjgLYw5EczQmiPpjqbs9i4ZnnBdjeidH/AN380O63
-	VV54VKMoInasA9ysHEPoAoF6aAS3hHED4LgilZKVEtPBek3Y6PqNX7xYNjKgjkoIyhGUlkdwPbI
-	401btPy5egmKL3mhPwZ0hhp7K194Yb6SwsFV+muDhoNndgHShM1mf6qOOIB5H0a1J1Qf5KoPPGy
-	Ng8OTKUmOIdWj2WQBMM3A3aocdAGUWGWRSw4tp+8w3ItNX5gsRc2y8aj5Bw9ecBVxh9CcedMlCZ
-	vIZBFDzll9910R+7jqLscA7J60SQPVcbW1m90LFBJEGjGCB4+Yrv0rOMxB+8g5MqSdXphJlohQZ
-	eYg==
-X-Received: by 2002:a05:690c:3387:b0:7ef:9fd9:db07 with SMTP id
- 00721157ae682-81fd4e786c0mr156961537b3.12.1785827756762; Tue, 04 Aug 2026
- 00:15:56 -0700 (PDT)
+        bh=6sN7hyGeF3/QBGyqG1sqeR8O1GAdeZpGRRACa/xNXes=;
+        b=PPKWjKCDv2H7X00B9FxEsp9wrLIMQfL/b9KG5fsQwDpntQfYDvSamEYmyBfJNHAArm
+         tgVWT0ZiGPw4MzAui1Pa8xD+d2eYiopV6uaj8L/U3+wncshLQE45Ws57CWjlW/CMUvo5
+         VlJZfGL0SyEgdtoy7jaty7QTwMTmoUrcGOlwn3G6cdKFr3k1pScjajQndQB405n6WFmh
+         vrivz7TeyomWQFuesgeH1McE7bbVQ/yPT6K4DnQPMBXVUaRrGvgIeual6/csEHNpXmU8
+         jb2fuhtXfMDlCQDAlU/cXVJTWa7nRNUq8ppRyMO4ii4TVnwxu6VIppNWaxGdppeyIWqG
+         IRYw==
+X-Gm-Message-State: AOJu0YyrcPPm0EZJfE1E9MBigdVSafrQE0zCcx9m8ZkgcKBDYVW12Yju
+	TIXU1IF6KOfAMyfTeJ2LHOZcMipuizH4rKpp9mweb5ijj69pyc1p0QOIHuZMYpJf8YcCL/vmKNO
+	Hh/Gh2cZ/ZIzg/aH0x10e0FYUBdWkBlDi6TwM2Tc=
+X-Gm-Gg: AR+sD124pK0GgbqPGk2hBwo3AhfU0HrXMAZf0V3gh7We2F1oCR9EI3IjPeG+lwEQgtX
+	23hZUzr616kwO+e80WFBXOV6VM8tekJgDzBDsaGMAr7njN7AGC1QP7MIQgp2YK1DprXbzLdoF3V
+	8S8LeNw84P8zJu7YnMqc8GTTxnEXCcwvnXQ/pnyGuLkqQ3GyrNOkOxORt/GTl/d/MGeTxq3ig8g
+	jsVuXX/F2dPQ9UrFcvGcXbCjWWNOxDmPJcacWSKXHoS3/RS8bDXlJ88mxnHKzRkf49eMGuIuo3d
+	2Hq5BxfdP9YH8aENTUDB/gQULGpDBzrSRirj9F3aF5eumotF4k+Y8GwTaz6ppx1F2mM9Z5mkTtP
+	bQg==
+X-Received: by 2002:a05:690c:6387:b0:81f:650c:98ce with SMTP id
+ 00721157ae682-81fd4bf4886mr174550617b3.31.1785830441484; Tue, 04 Aug 2026
+ 01:00:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260804065010.44922-1-laoar.shao@gmail.com> <20260804065010.44922-4-laoar.shao@gmail.com>
- <20260804070310.4EBB21F000E9@smtp.kernel.org>
-In-Reply-To: <20260804070310.4EBB21F000E9@smtp.kernel.org>
+References: <20260804065010.44922-1-laoar.shao@gmail.com> <20260804065010.44922-3-laoar.shao@gmail.com>
+ <20260804070336.5878F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260804070336.5878F1F000E9@smtp.kernel.org>
 From: Yafang Shao <laoar.shao@gmail.com>
-Date: Tue, 4 Aug 2026 15:15:18 +0800
-X-Gm-Features: AUfX_mz0mPAcZttxPV8arJ9zHdDybvfjJB3aD6W_N_l7e8YsDdlZKGrKPkEdwkE
-Message-ID: <CALOAHbDmZBahx3Qsvfs5Y-qV+CvMg7FDaXoN1bj+m+EcKd04CA@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 3/4] livepatch: Implement replace set for scoped
- atomic replace
+Date: Tue, 4 Aug 2026 16:00:05 +0800
+X-Gm-Features: AUfX_mxGSk-xETKXTtNYxe5sKvhCIlGzr52N7RGo-baY3Ws7lFHISe3-JXv4JWg
+Message-ID: <CALOAHbDvXRY9cfHQxDdsT+=CSOePvSgG5JF=uNK_A3dP9noLXw@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 2/4] livepatch: Call klp_init_patch_early() earlier
 To: sashiko-reviews@lists.linux.dev
-Cc: pmladek@suse.com, jpoimboe@kernel.org, joe.lawrence@redhat.com, 
-	jikos@kernel.org, mbenes@suse.cz, song@kernel.org, 
-	live-patching@vger.kernel.org
+Cc: jpoimboe@kernel.org, jikos@kernel.org, mbenes@suse.cz, pmladek@suse.com, 
+	joe.lawrence@redhat.com, song@kernel.org, live-patching@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -102,118 +100,99 @@ On Tue, Aug 4, 2026 at 3:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] Dynamically allocated `funcs` arrays are leaked on KLP_OBSOLET=
-ES parsing failure.
+> - [Medium] Moving klp_init_patch_early() before early failure checks viol=
+ates the kobject API lifecycle and introduces missing cleanup on error path=
+s.
 > --
 >
-> --- Patch [3]: [RFC PATCH v4 3/4] livepatch: Implement replace set for sc=
-oped atomic replace ---
-> commit d186609c1a3dbe210857d0040f657fa918504faf
+> --- Patch [2]: [RFC PATCH v4 2/4] livepatch: Call klp_init_patch_early() =
+earlier ---
+> commit 6b8df20b82104d4c61053ebea3721f1d77891456
 > Author: Yafang Shao <laoar.shao@gmail.com>
-> Subject: livepatch: Implement replace set for scoped atomic replace
 >
-> This commit introduces a more flexible atomic replace model for livepatch=
-es
-> using provides and obsoletes fields. A new patch will replace any existin=
-g
-> patch with a matching provides ID or any ID listed in its obsoletes array=
-.
-> The klp-build script and init code are updated to parse and validate thes=
-e
-> new fields.
+> livepatch: Call klp_init_patch_early() earlier
 >
-> > diff --git a/scripts/livepatch/init.c b/scripts/livepatch/init.c
-> > --- a/scripts/livepatch/init.c
-> > +++ b/scripts/livepatch/init.c
-> [ ... ]
-> > @@ -72,10 +73,73 @@ static int __init livepatch_mod_init(void)
-> [ ... ]
-> > +#ifdef KLP_OBSOLETES
-> > +     /*
-> > +      * Parse KLP_OBSOLETES string (format: "0,1,2" or "0" or empty)
-> > +      * and convert to unsigned int array for patch->obsoletes
-> > +      *
-> > +      * Note: KLP_OBSOLETES is always defined and includes at least th=
-e
-> > +      * provides ID, ensuring the patch replaces old patches with same=
- ID.
-> > +      */
-> > +     {
-> > +             unsigned int *obs_array;
-> > +             unsigned int count =3D 1;
-> > +             char *obsoletes_str;
-> > +             char *token, *str;
-> > +             int i =3D 0;
+> This commit moves the invocation of klp_init_patch_early() earlier in the
+> livepatch initialization process. This prepares the code for an upcoming
+> patch by avoiding mixing iteration variants later in the sequence.
+>
+> > diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+> > index e07c41a0f3ac8..c98cbcf59566d 100644
+> > --- a/kernel/livepatch/core.c
+> > +++ b/kernel/livepatch/core.c
+> > @@ -1135,6 +1135,8 @@ int klp_enable_patch(struct klp_patch *patch)
+> >
+> >       mutex_lock(&klp_mutex);
+> >
+> > +     klp_init_patch_early(patch);
 > > +
-> > +             for (str =3D (char *)KLP_OBSOLETES; *str; str++) {
-> > +                     if (*str =3D=3D ',')
-> > +                             count++;
-> > +             }
-> > +
-> > +             obsoletes_str =3D kstrdup(KLP_OBSOLETES, GFP_KERNEL);
-> > +             if (!obsoletes_str) {
-> > +                     ret =3D -ENOMEM;
-> > +                     goto err_free_objs;
-> > +             }
-> > +
-> > +             obs_array =3D kmalloc_array(count, sizeof(unsigned int), =
-GFP_KERNEL);
-> > +             if (!obs_array) {
-> > +                     kfree(obsoletes_str);
-> > +                     ret =3D -ENOMEM;
-> > +                     goto err_free_objs;
-> > +             }
-> > +
-> > +             str =3D obsoletes_str;
-> > +             while ((token =3D strsep(&str, ",")) !=3D NULL) {
-> > +                     unsigned int val;
-> > +
-> > +                     ret =3D kstrtouint(token, 10, &val);
-> > +                     if (ret) {
-> > +                             kfree(obsoletes_str);
-> > +                             kfree(obs_array);
-> > +                             goto err_free_objs;
-> > +                     }
-> > +                     obs_array[i++] =3D val;
-> > +             }
+> >       if (!klp_is_patch_compatible(patch)) {
+> >               pr_err("Livepatch patch (%s) is not compatible with the a=
+lready installed livepatches.\n",
+> >                       patch->mod->name);
+> > @@ -1147,8 +1149,6 @@ int klp_enable_patch(struct klp_patch *patch)
+> >               return -ENODEV;
+> >       }
 >
 > [Severity: Medium]
-> Does this code leak the funcs arrays on error?
+> Since klp_init_patch_early() initializes kobjects for the patch, does
+> returning directly on compatibility or try_module_get() failures leak
+> these resources?
 >
-> Earlier in livepatch_mod_init(), the funcs arrays are dynamically allocat=
-ed
-> for each object in a loop:
+> The kobject API requires that once kobject_init() is called, kobject_put(=
+)
+> must be used to release the object. Because klp_init_patch_early() is now
+> called before these checks, if we hit the early return paths in
+> klp_enable_patch(), we bypass cleaning up the initialized kobjects.
 >
->         funcs =3D kzalloc(sizeof(struct klp_func) * (nr_funcs + 1), GFP_K=
-ERNEL);
->         ...
->         obj->funcs =3D funcs;
+> Also, would simply changing these early returns to jump to the err label
+> cause issues with klp_free_patch_finish()?
 >
-> If KLP_OBSOLETES parsing fails during string duplication, array allocatio=
-n,
-> or integer conversion, the error paths jump to err_free_objs. It appears
-> that the cleanup label only frees the objs array itself but leaves the
-> individual obj->funcs arrays allocated:
+> kernel/livepatch/core.c:klp_enable_patch() {
+>     ...
+> err:
+>         klp_free_patch_start(patch);
+>         mutex_unlock(&klp_mutex);
+>         klp_free_patch_finish(patch);
+>         return ret;
+> }
 >
-> err_free_objs:
->         kfree(objs);
-> err_free_patch:
->         kfree(patch);
+> It looks like klp_free_patch_finish() calls module_put(patch->mod)
+> unconditionally. If try_module_get() failed, jumping to the err label
+> might underflow the module reference count.
 
-You are right.
-Furthermore, there is a pre-existing bug in the error path that should
-be fixed as well:
+Good point. It seems we need the following additional change:
 
---- a/scripts/livepatch/init.c
-+++ b/scripts/livepatch/init.c
-@@ -52,7 +52,7 @@ static int __init livepatch_mod_init(void)
-                if (!funcs) {
-                        ret =3D -ENOMEM;
-                        for (int j =3D 0; j < i; j++)
--                               kfree(objs[i].funcs);
-+                               kfree(objs[j].funcs);
-                        goto err_free_objs;
-                }
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -1168,19 +1168,20 @@ int klp_enable_patch(struct klp_patch *patch)
+
+        mutex_lock(&klp_mutex);
+
++       if (!try_module_get(patch->mod)) {
++               mutex_unlock(&klp_mutex);
++               return -ENODEV;
++       }
++
+        klp_init_patch_early(patch);
+
+        if (!klp_is_patch_compatible(patch)) {
+                pr_err("Livepatch patch (%s) is not compatible with
+the already installed livepatches.\n",
+                        patch->mod->name);
+-               mutex_unlock(&klp_mutex);
+-               return -EINVAL;
++               ret =3D -EINVAL;
++               goto err;
+        }
+
+-       if (!try_module_get(patch->mod)) {
+-               mutex_unlock(&klp_mutex);
+-               return -ENODEV;
+-       }
+
+        ret =3D klp_init_patch(patch);
+        if (ret)
 
 --=20
 Regards
