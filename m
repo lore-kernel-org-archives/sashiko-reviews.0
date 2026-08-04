@@ -1,180 +1,214 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390DA32E729
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 19:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B023A75A8
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 20:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785873469; cv=none; b=nTNplJrSS0IGs8jvPyDWiKbT8TuWe3HfDq1BMHhV+7f9k2GGfDHUX7lhrINIii/l1oUOog/Tg15vE2Zsvw+7pTrMcQasbnBK6fibVHH8Vni9ZZlsi86OGFn59ufcNaVWPH9sIMbhk84LqrEmMGZx4/9cokdfisG4TWNPB4Pt/G4=
+	t=1785875417; cv=none; b=KP3+ekZRXhGWBGs7GV5mkbw9R3FfkrdWNKm9dcKVKgqQ2nk+McgQYB4D+uvN20Tke+hxKeptaati3b9Ypm+sxeFGBSRHhtfxVIDmssJLnx7UDmJn0vInJqpGk8vF2/DxOSi6dX+9IixiwI3iEMDGFYDzO+WYT37HvBdzlvy1z3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785873469; c=relaxed/simple;
-	bh=G3c42QNT69hdDNPQyXUvScdW6KhSXKl64YqUReQxUvI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L8MMhfwToV3sfTgQDBi3SQt9P2JW2tseykwHjiIGhLLvIQKLwFvusUsqjyAqy5YyM0mZqdjLH530ipVeHCfkuPVoRLR8Yn9iWImTUr/ntrz51gN0B3QrwCUGcS1/wiuGpf+uYWPHSFNMZKx0dQnR/hBZ5PBgfEdeUhwsv7+8xWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=EgDUdLEI; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1785875417; c=relaxed/simple;
+	bh=pAL7Jt7JEoG+sXUktWsb3YcHGphg8fKAkAB08qgNi5w=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GP1QhCNRhgRe6IOdikG5YIEZ2cGaZOKrrpDwKX1k7NNORbA0LKFDXuoAe7NBc4PFDR7zTdpNAXUAyCSTIyhHFkkM21yzgfwZLZlEjSvgVtv3sqJJDbxoVzZBq0iLL9pH1i+LpjptzqwZeJx9lPtPgQB1YZjDd8x4+sFo/h8Foy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SUAr7UuL; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="EgDUdLEI"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 674JmXWO4116455;
-	Tue, 4 Aug 2026 19:57:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=qLppjq
-	4kr6zhlfFvgJ4Tb0MDK6NCpw0tvAvHlE5evCA=; b=EgDUdLEIxX5ykF1JXfvT8Z
-	wlUMvDY/f9o8y/vehIKCWMMytqya/kYaEXdCcjus4yEsZrBEfSqDAjIOUFGec+eW
-	jYmn9JM5NBu5qITxhEyn8vQQMpqm9MwhhM6DDthCJfJ4NGwB2uIHfFjBgF/MotOo
-	IrRD0fuaEa2T0zl3agOlkxsBTnsCu5EjY4R30aJyy6omUq3BS7VPOuh8k+W+ITg3
-	ep9eBfZuWUMdlqHTm4sjGVCqzaixwOf8k1lCuIhuT68g8fvBH3RcovD/SNhuTJ8m
-	fuahgO0/Vh2jqmDwrNqtUt2OJAo8G8ebZnbks35yVT9tVUMVE/0xaLeQ37qNSdyA
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqqnwb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Aug 2026 19:57:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 674JugC2024765;
-	Tue, 4 Aug 2026 19:57:46 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fsu4qkp7m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Aug 2026 19:57:46 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 674Jvjem61473062
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 4 Aug 2026 19:57:45 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8635F58058;
-	Tue,  4 Aug 2026 19:57:45 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 93B1F58057;
-	Tue,  4 Aug 2026 19:57:44 +0000 (GMT)
-Received: from [9.61.89.119] (unknown [9.61.89.119])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  4 Aug 2026 19:57:44 +0000 (GMT)
-Message-ID: <20c2f649-10d7-469f-94ea-02cfeb767c1b@linux.ibm.com>
-Date: Tue, 4 Aug 2026 15:57:44 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SUAr7UuL"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2cfbbdfa60bso2575255ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 13:30:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785875413; x=1786480213; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=HMK58JoOn7YGNS7NZv+R4Qi006QH3IO2iTxFSl8Hiwo=;
+        b=SUAr7UuLw3VDq57H1uojvR7b9R0FX9R2Pzff/iXoTX7W1I54ZS2cwkgTQyrFdmDi0N
+         uSlDiICxB5QBo3EsyFk/0pS5BdwwF3l5kjUTSEB7e6vTgs5d3VElkjyoUp/JRA98demB
+         Pfh1VPvWpb+U4Hg2JsT8Lre60JtP/670WUzFjnDBoWeO0qn27GfGf0QSYtq6kmXdcaZA
+         PeALF3CgxHqUSu5kecGq1JNwACve6S++IzuioSoVvtzdSNkas/2LE+FuShvd0hjaPt7n
+         zyC/Uc0twp43BegCeMMwXdHk7djgxeQFewt7nlCJms0g/m5xJL4dWQiflduvGjWRN5ag
+         MolQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785875413; x=1786480213;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=HMK58JoOn7YGNS7NZv+R4Qi006QH3IO2iTxFSl8Hiwo=;
+        b=pLdOKF4kG3c0GuTDsX7sd9pQTvUvZnwgRFoxWvLXNmslGaG/fF+lzp1QFXgLoEuLOC
+         v0khM1PnLTNjQbNfvjNWNeJvrCzhEKItzKZgDgnoUBDJo+jnw8dxdFJPyv7OnfsQk6zt
+         VIgd13LxksJ/y+w3CGvLF49kkZd4XYsEKJsZLQE201c+51Fzw7izyHFDV/xjHZ1vydkS
+         Ssw3pln9bV/FAag3tczMmsAlArplfzlc5QxBmOkiMbrc0++Upwp4iyibEaiuVcBOWXmL
+         5o3X+GzRZ0LrnGS9iLFZ+yNxdu1aPuJg9oVyGFJyzSPieXvRiUMwvSrVyKnjP8zYlwOV
+         AifQ==
+X-Gm-Message-State: AOJu0YwNFx85TF0tLY7Jh5XXyw0/HV97Lq4TBDHlnKlAi8AAiLhpapkz
+	TRIq/9nTfB6NVSRKQZWHrvXYV79O7aOQIwC0RKNKQZwnfDS91DHgustnZPskHpyV
+X-Gm-Gg: AR+sD11DfJleD70P71yrku63e61CdI6BUqGAQosEmqdstYUBbAAfTUxGqv3tZLilF0e
+	3JgTqX3kM6PX/ZD/dvczQ3SywHP4kqx3Uv+gscVt+K4QBws6lnNokzVrMUUaDRb+dPoX/iBGlQ6
+	AZRdVkuB2RpaQkLE81FEAqKqELcwlcBoHDBnpPUTm+0c0MfAGiYy7slUxmKCl85CRrOdohLnVT8
+	Zm+VVgDOimlW4Z1t3q8uwuNYohQWVVbp6QY55cXOeBlYivqQgizsXjAVTo7otPB7PX2a1GJBltS
+	c/osnC//M+/Dc4DOp6j/FEPp4fQ1AFeKiTlQTG8c9WJ2W6r3xsN7z+xBLDi9uDTSRsTgj/SpoEl
+	rN24snOYcRmuF+5SA8NKaRch7OlTwlk0cB2hZcOtLHENIXBwEBrARHaILLx/55thnLnfzFOgbpM
+	6Kx32lQZcICZDr5WPL00nf0LZ3PINkhP6rTjIs+GRZWCgCF7xHKeRxGz6e
+X-Received: by 2002:a17:90b:5823:b0:38e:485c:ebd3 with SMTP id 98e67ed59e1d1-3903c5b727cmr1313940a91.15.1785875412933;
+        Tue, 04 Aug 2026 13:30:12 -0700 (PDT)
+Received: from cxlqual ([220.120.90.131])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38febfdae78sm1969930a91.4.2026.08.04.13.30.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Aug 2026 13:30:12 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 5 Aug 2026 05:30:43 +0900
+To: sashiko-reviews@lists.linux.dev
+Cc: Anisa Su <anisa.su887@gmail.com>, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v12 2/8] cxl/mem: Read dynamic capacity configuration
+ from the device
+Message-ID: <anJL81OcYeZn0BA1@cxlqual>
+References: <20260731084901.1512819-1-anisa.su@samsung.com>
+ <20260731084901.1512819-3-anisa.su@samsung.com>
+ <20260731090106.1472D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/15] s390/vfio-ap: Data structures for facilitating
- vfio device migration
-To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
-        kvm@vger.kernel.org, Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Halil Pasic <pasic@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Alex Williamson <alex@shazbot.org>,
-        Kirti Wankhede <kwankhede@nvidia.com>,
-        Paolo Bonzini <pbonzini@redhat.com>
-References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
- <20260727173239.2420754-3-akrowiak@linux.ibm.com>
- <20260727174014.E83231F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260727174014.E83231F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: S1qkl2IYLwe5drhoukdIK9aTtss7I3Gy
-X-Proofpoint-ORIG-GUID: S1qkl2IYLwe5drhoukdIK9aTtss7I3Gy
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDE2MCBTYWx0ZWRfX1pqhoRs4zuaD
- oZj6+NgL4IbPBMek9/parsLXIFtsIeWZRl1VKf3i+/VATScAcMLaSFuGlzS7IKgFsInpFwGhnXR
- MOxIykjoDLmG/OwKny4gIsu2nXdfpeg=
-X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a72443b cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=MdEa33EV34lG5rOqodIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDE2MCBTYWx0ZWRfX00t/a+XkgP+A
- f6Sx6vDblxtFC1nsXxjfJAxHRoNYvXM8sxnQeqMXs6DpN7vTkV8dLniuL/kxoK/CwG9rAy70AZW
- YauHQaCNC/hqUdOll9d3kQrEgmHvOIeKJ8PeYqAFsTC3UgWW2Q88g/90PKyqPOzFjX8CC2r5qHz
- psTkBhPu+dYyBk2U8bh1xT2r3Vm/krNNcZX3uyWWxXmEktO9m3GLGkDrPIv0bV7lOFJxmfmGLWi
- DXKmQusmH5LKDGrdtKMONFOb5T+pSMln3AkE9PE3Tei9LzOGNydUWoZ3It0Vb1krHFhcMjEJgym
- wKplhZ09fAewNbM6Kaww9ZCVFvSr55Dg488EBuIcVQxnPTzSwSAqlBnjmEWzEi+enYlXcrwwW3I
- 3sGFicpHeIrBD5PlcUfsCTIDnbezDNRXIw5Io0THG2qmqwrPg4OtswjRZZe4CQZf6BtRua9xagi
- JlgGjO+LxTC/mmllgDw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-04_05,2026-08-04_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608040160
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260731090106.1472D1F000E9@smtp.kernel.org>
 
-
-
-On 7/27/26 1:40 PM, sashiko-bot@kernel.org wrote:
+On Fri, Jul 31, 2026 at 09:01:05AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The VFIO migration data structure lacks a magic identifier and version number, and relies on an architectural macro for array sizing, posing a risk to ABI stability.
-> - [Low] Typo and grammatical error in the docstring for `resuming_mig_file`.
+> - [Medium] False-positive error logging and initialization failure when a device has 0 dynamic capacity partitions configured.
+
+Incorrect: Table 8-346 says "A DCD shall report between 1 and 8 regions.
+All other values are reserved". 0 is illegal so failing is correct.
+
+> - [Medium] The validation check `is_power_of_2(blk_size)` truncates the 64-bit block size on 32-bit architectures, allowing invalid block sizes to pass validation.
+
+Fixed. is_power_of_2(unsigned long n) indeed truncates on 32 bit. Replaced
+with (blk_size & (blk_size - 1)).
+
 > --
->
-> --- Patch [2]: [PATCH v6 02/15] s390/vfio-ap: Data structures for facilitating vfio device migration ---
-> commit 1aa240c81b915a9ce3e59c82c532c41c1cab4d99
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Data structures for facilitating vfio device migration
->
-> This commit creates the data structures used to facilitate state transitions
-> during vfio device migration.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> new file mode 100644
->> --- /dev/null
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> 
+> --- Patch [2]: [PATCH v12 2/8] cxl/mem: Read dynamic capacity configuration from the device ---
+> commit 7a0233410b5ae133da2a756fa11cf61b2145cace
+> Author: Ira Weiny <iweiny@kernel.org>
+> 
+> cxl/mem: Read dynamic capacity configuration from the device
+> 
+> This commit implements the Dynamic Capacity (DC) mailbox commands to read
+> and store the DCD configuration information from a CXL device. It reads
+> and validates all partitions but configures only the first one.
+> 
+> > diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+> > --- a/drivers/cxl/core/mbox.c
+> > +++ b/drivers/cxl/core/mbox.c
+> 
 > [ ... ]
->> +/**
->> + * struct vfio_ap_migration_data
->> + *
->> + * Manages the migration state for the VFIO device that maintains the AP
->> + * configuration of the guest being migrated.
->> + *
->> + * @mig_state:		the current migration state
->> + * @resuming_mig_file:	the object used to restore the state of the vfio-ap
->> + *			device the destination host:
-> [Severity: Low]
-> This isn't a bug, but there appears to be a missing word here. Should this
-> say "device on the destination host." instead of ending with a colon?
->
->> + * @stop_copy_mig_file: the object used to store the AP configuration of the
->> + *			source guest for transfer to the destination host.
->> + */
->> +struct vfio_ap_migration_data {
+> 
+> > +static int cxl_dc_check(struct device *dev, struct cxl_dc_partition_info *part_array,
+> > +			u8 index, struct cxl_dc_partition *dev_part)
+> > +{
+> > +	u64 blk_size = le64_to_cpu(dev_part->block_size);
+> 
 > [ ... ]
->> +/**
->> + * struct vfio_ap_config - the guest's AP configuration
->> + *
->> + * @num_queues:	the number of queues passed through to the guest
->> + * @reserved:	padding to ensure proper alignment of @adm
->> + * @adm:	bitmap specifying the control domains in the AP configuration
->> + * @qinfo:	an array of vfio_ap_queue_info objects, each specifying the
->> + *		queue information for a queue passed through to the guest
->> + */
->> +struct vfio_ap_config {
->> +	u32				num_queues;
->> +	u8				reserved[4];
->> +	u64				adm[DIV_ROUND_UP(AP_DOMAINS, 64)];
+> 
+> > +	if (blk_size == 0 || blk_size % CXL_DCD_BLOCK_LINE_SIZE ||
+> > +	    !is_power_of_2(blk_size)) {
+> 
 > [Severity: Medium]
-> Does this data structure need a version number or magic identifier to safely
-> handle ABI stability across host migrations?
->
-> Since this structure defines the binary layout of the migration data stream,
-> could changing the architectural macro AP_DOMAINS or the structure layout in
-> future kernel versions silently break live migration compatibility between
-> hosts running different kernel versions?
+> Could passing the 64-bit blk_size to is_power_of_2() cause silent truncation
+> on 32-bit architectures?
+> 
+> is_power_of_2() takes an unsigned long, which might allow an invalid 64-bit
+> block size that is not a power of 2 (but whose lower 32 bits form a power of 2)
+> to bypass the validation check.
+> 
 
-The next version of the patch will incorporate magic and version fields.
+Fixed:
 
->
->> +	struct vfio_ap_queue_info	qinfo[] __counted_by(num_queues);
->> +};
+	/*
+	 * Block size is a power of 2 and a multiple of 40h. is_power_of_2()
+	 * takes an unsigned long, which truncates blk_size on 32 bit.
+	 */
+	if (blk_size == 0 || (blk_size & (blk_size - 1)) ||
+	    blk_size % CXL_DCD_BLOCK_LINE_SIZE) {
 
+> > +		dev_err(dev, "DC partition %d invalid block size %llu\n",
+> > +			index, blk_size);
+> > +		return -EINVAL;
+> > +	}
+> 
+> [ ... ]
+> 
+> > +int cxl_dev_dc_identify(struct cxl_mailbox *mbox,
+> > +			struct cxl_dc_partition_info *dc_info)
+> > +{
+> 
+> [ ... ]
+> 
+> > +	do {
+> > +		int rc, i, j;
+> > +
+> > +		rc = cxl_get_dc_config(mbox, start_partition, partition_count,
+> > +				       dc_resp, dc_resp_size);
+> > +		if (rc < 0) {
+> > +			dev_err(dev, "Failed to get DC config: %d\n", rc);
+> > +			return rc;
+> > +		}
+> > +
+> > +		if (rc == 0) {
+> > +			dev_err(dev,
+> > +				"Device reported %u partitions available but returned none at index %u\n",
+> > +				dc_resp->avail_partition_count, start_partition);
+> > +			return -EIO;
+> > +		}
+> 
+> [Severity: Medium]
+> Does this code incorrectly fail initialization when a valid CXL device has 0
+> dynamic capacity partitions configured?
+> 
+No, such a device is not valid. CXL r4.0 Table 8-346, Number of Available
+Regions: "The device shall report the total number of available Dynamic
+Capacity Regions. Each region may be unconfigured or configured with a
+different block size and capacity. A DCD shall report between 1 and 8
+regions. All other values are reserved."
+
+So 0 is a reserved value and failing is the right response. Note the
+distinction the table draws: a DCD always reports at least one region,
+but the regions it reports may be unconfigured. An unconfigured region
+reports zeros for decode length, length and block size, and v13 skips
+those rather than rejecting them, after Richard Cheng raised the issue
+on this patch.
+
+Alison asked separately for the count to be range checked, so v13 also
+validates it where the payload is parsed, before it is used as the read
+loop bound:
+	/* A DCD reports between 1 and 8 partitions */
+	if (dc_resp->avail_partition_count == 0 ||
+	    dc_resp->avail_partition_count > CXL_MAX_DC_PARTITIONS) {
+		dev_err(mbox->host,
+			"Device reported %u available DC partitions, expected 1 to %u\n",
+			dc_resp->avail_partition_count, CXL_MAX_DC_PARTITIONS);
+		return -EIO;
+	}
+A device reporting 0 now fails there with a message naming the field,
+rather than reaching the rc == 0 path you quoted.
+
+- Anisa
+
+> Since this loop is implemented as a do-while loop, it will always execute at
+> least once. If a device has 0 available partitions, it will return 0
+> partitions (rc == 0), which causes this path to log an error and abort
+> initialization with -EIO.
+> 
+> > +
+> > +		num_partitions += rc;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260731084901.1512819-1-anisa.su@samsung.com?part=2
