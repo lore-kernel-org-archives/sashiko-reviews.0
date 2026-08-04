@@ -1,208 +1,410 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD3E47012F
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 15:58:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.7
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785859084; cv=fail; b=J7bWZORNt7UecwscREMqdvd6h1ZbcgzZC4sTXyzhSMPmg/WimPXj6nQqkf3x6hFH5BCdrvxeuwfcmO69nMwemXN7g481NuAWCuWTwYL1f09u5CMZh7kEeOynam/Kh29/7yw0999X3T4R6YpEtVP16DeYU39osVru3+SIPGv/VZI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785859084; c=relaxed/simple;
-	bh=lAMbc03m/VN6qPW4PlG1z1p8hOsqh8W6j9zF+iwcehs=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=qzR0qJNrTAWK76qoqgl/rzwd3rKRUqxcidiQP5kMbypR4n9WS6ToGRJubjwXBLPVSkjwROBXUMgYCWjfVZodH/BgjMzdeWkEF0m9yc0geMVvLQyGriegD0yS1cKz/uMSRzD4jG6uXJphDsJjmTbj1kBfmpFFuiKR2ZtY4ZgkGuo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GYR0lL4d; arc=fail smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13EA476059
+	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 16:11:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785859878; cv=none; b=DF5gASIur6EICZtPCZChMSvOOxIlk4egzJBNVYCJ1A96touxs8hlL9+IhYCNk11UBSH6zrF7rQd/0jEagTE8rPwq1nK7MvHkK6Kfp84YatLvmMjkDAA725lMuc3+XSy0Q2+HNzWX9/2/6VVdqfaqBh8j/GjbCYCNkO/Vs5RUkGs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785859878; c=relaxed/simple;
+	bh=ZP3KH57ZR7DYSSfY/GQK1FfefC8tW7EZbiLzIbD9N/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZDyln1mRbAbfHrLb6XM52/4zaRicH4K3cflg/PlryWf/czshjNQvvxyBg9fcjqhJIYdLBljGEoLt/e5Fyxeb3HUw7S2jPBzdO9hXdpxl6iEjLZvKcYcU/r2qOAKD+zLJh0+olcMpiqbm+vVi/DDmdNP8kzRBCE6IjmBm8DljzrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SmAQTP5d; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Oq35HUht; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GYR0lL4d"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785859082; x=1817395082;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=lAMbc03m/VN6qPW4PlG1z1p8hOsqh8W6j9zF+iwcehs=;
-  b=GYR0lL4dxYF2prkTTig8zqyoOfr4ymfrG27mbVaTZ6588cQS2UMRjm/c
-   JDoAhvkAbP4Z0gEil2Je7Idnl2dOUMBBRkPtsKTKtWB7dXCT0+HKA4OJZ
-   YwMmlH/juQ/5bgvw4KwCzweBulh38nWScckw06QDLrbeabHHmsvRZb6Oy
-   hSBF6Hlq1nG8yd6+szr5l610o+nqhRUtdEB0RcYbesD7HrlJw2cU3X6KD
-   9KWY7FUP8s2Cj2Bm03tpUJytgViWjw41NOjpzC7cbCyiy1ZGhHKau30pc
-   Qy7nt+XgHN4rGQZw0cjUDCQK5u7kUC/fZJgAgkqETeBV/1mCKzuqU7Ssz
-   g==;
-X-CSE-ConnectionGUID: 3APZ8e2WSimbhpCf6dYVnw==
-X-CSE-MsgGUID: cqoLm122RIiec6sTWFFEfw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11865"; a="111966183"
-X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
-   d="scan'208";a="111966183"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 08:58:00 -0700
-X-CSE-ConnectionGUID: ly0QgdCTQJu2pFzfDi6a1w==
-X-CSE-MsgGUID: 2O0JnXUpQBSDNTMMFShdHA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,204,1779174000"; 
-   d="scan'208";a="291482762"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2026 08:57:59 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 4 Aug 2026 08:57:59 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Tue, 4 Aug 2026 08:57:59 -0700
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.53) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 4 Aug 2026 08:57:55 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RcEDYMMF8KJapnLOE3xk6AfaHXr7KGXcpYVNvYubsdNu0lDdLzThgkMZyA2OCcal4kCcsShIXX2IVQ4Nhjv7742Ug3DpYVAV0kQIgLhyi2Rz5FyC9u97scf2IL/oRIZkQRQ3qvm+R/lBx18CkGILtzfPabcXGuDZQC0h/zME8vsGyOzUEV6jCl1SAjdjZj875vLyiu8Jm8sBoQJ2DHx+lF3QCIfLuGAyjHGMnI3ZhKbw9D887j2ZQ+RoB0kfsZCtaO5XFVYljhaFH83Vt6YfApqvEoCOQQ8ZNsYFrJTOgc5e8ERl3mqgPgD/X2GTuYMe0/SHTxCSJ1xyWVLCOwoBCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lAMbc03m/VN6qPW4PlG1z1p8hOsqh8W6j9zF+iwcehs=;
- b=v+WM+ePvqUn8AJP8K4pekfK/zz22ZLeIf5+mZouPp9YvTlXNe5zw7QgxqjPrtRiqZpOyb6HnHK2jZRYAZiM7znVtHQVlob/yGesYQSGcDZIvbfzH/FZW8VXNpm1z0WRRuhVAW8rT0KJ9UnIr2+WNCDD1RPAcMCIUq5W4DLRRP3WEkCCYFtU4jUuNq3aZV7vPz7G+r9Nh8M6R7dKOg+oUfPsKl6byP7sXWT8dK7xBKvbnRwRqw+UXu4YRDLiLdfeFp0OrFft9mSaV0s2DvYftDsrM7SyF+ae37gUOg+fRIbtVQTN69zWT3y1f/0vcNgHHQYeFFon61YIyAMw5sci0pg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from PH0PR11MB7494.namprd11.prod.outlook.com (2603:10b6:510:283::18)
- by CH3PR11MB8545.namprd11.prod.outlook.com (2603:10b6:610:1bc::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.15; Tue, 4 Aug
- 2026 15:57:52 +0000
-Received: from PH0PR11MB7494.namprd11.prod.outlook.com
- ([fe80::e642:c73c:6d80:5083]) by PH0PR11MB7494.namprd11.prod.outlook.com
- ([fe80::e642:c73c:6d80:5083%5]) with mapi id 15.21.0270.017; Tue, 4 Aug 2026
- 15:57:51 +0000
-From: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>
-To: "helgaas@kernel.org" <helgaas@kernel.org>
-CC: "thierry.reding@kernel.org" <thierry.reding@kernel.org>,
-	"mmaddireddy@nvidia.com" <mmaddireddy@nvidia.com>, "lukas@wunner.de"
-	<lukas@wunner.de>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>, "Korenblit, Miriam Rachel"
-	<miriam.rachel.korenblit@intel.com>, "treding@nvidia.com"
-	<treding@nvidia.com>, "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
-Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
- wireless BE200
-Thread-Topic: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
- wireless BE200
-Thread-Index: AQHdAUruh/HWEZwEC0iMA6tK8iUSn7ZImB0AgAAE6oCAMTTxAIAABOIAgAAe6wCAARjQAIAAHZOAgAhH+4CAAAUPAIAAEYwAgAAGZYCAAAi/gIAAsEyAgAFxSwCAANOCgIAAFZ0AgAAXJoCAAAJLAIABQL+AgAZSnQA=
-Date: Tue, 4 Aug 2026 15:57:51 +0000
-Message-ID: <6c067883cd68a835a4ab5432e2b509b3686257b5.camel@intel.com>
-References: <20260731152431.GA1566014@bhelgaas>
-In-Reply-To: <20260731152431.GA1566014@bhelgaas>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Evolution 3.60.2 (3.60.2-1.fc44) 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR11MB7494:EE_|CH3PR11MB8545:EE_
-x-ms-office365-filtering-correlation-id: c1ac4dc2-2c0f-46ed-01ec-08def2412396
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|18002099003|22082099003|11063799006|38070700021|6133799003|10067099003|56012099006;
-x-microsoft-antispam-message-info: /J4j4nJmXBSacDIqjbXKryEZwV7ndi1ILb/e4dK6yggA5M1VWeKUKBon1iotcZlWjsMPcPoS5Rnk+4iHRAGgtOTKm9xIH7aYA3f3VAFdF0gnTOinqYp9XCgEgw+kbGfdrwUW7Cds5kXIfb4RlOTnEi779ecIkNdjU0kbyqgg0/Dft18Y9lk0aZNxr/8PStXq76wx7gcsZWg0je8BIeFv28gycLeXR9tcmDUC8ZWGsZQE7g8B6xb9S/pEX1NJOixYO6iO9VafWXUAwtiEMIGlPVOjxg/1TjYTE/qhpyh8EgJTvuC3qdH0Gzg15LkCAZhDuxGmhIKi+FNmTj+2eBYjJEwE3qWgbH1GD0zSs6ya8z6i0pq7UpSAbLUGCkCMTwrARfJpbJ+VKYSLFRNrQAS7LBo89vi6Sm2SRGTWICLr2CE5kgdXf3tkp8nRTlycDVobxLJAbJ6eMii5VaeoQNJUp8xgTjQJgcYJ/qiPcYVBrp4I6DC0tffHoddrSodEEoX8KfnQKnoztdwr8O4W7zW1kU9lxCsrOcH3z0nvM+eKMfmTZKwp2vowTvbAiA1A2A/L+mfRd/LkUwhrz+JQy/jMF1ZwDmNzNp/T+Uxi6foxw+ItLYSH+TtTw+2erNWmhHaqelqVDok/Gr4tjiNliA+CtElFSrB7KIBVrM/4pTmlY5lvVhgu4PSXTWdqLo3NGpCpEiWMMKUOAmn+y6B1jL+WV15Z59N1lMobtu3nvSenS0E=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB7494.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(18002099003)(22082099003)(11063799006)(38070700021)(6133799003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WmhwblZHQXZQekVxcHBieTF4azVTdWtIK2NQU3lod01lWUpOdzdreWI5dlE4?=
- =?utf-8?B?aTB5dlZEZTVjUDIzQkdaTlV5eUx0M3NPUTZmTllSZGhxVkJaMmVqenN3RzBG?=
- =?utf-8?B?MkpPdkhDNHM5Nk90M0ZibEFiZE80cCs2Y0dUbzFUQ1FPV0tGa0QrdStFbU5D?=
- =?utf-8?B?Y0t5bVFvR1prck15MS9YcS85V0RiN0ZEVVdwaFhWUnlZZW5lT1RRa094dGlQ?=
- =?utf-8?B?S2JqeXI1YTFVNERBM3ZRY0JNeTJtQ3NVUEVtQ2oxTlgvTU0wQmF3MW8yM0cv?=
- =?utf-8?B?SHFOYVgrR1ZCOS9lQ0NKU2VyZWNHNkozVllOa3pPUk5FQjFKVnhjQ0x3a1RD?=
- =?utf-8?B?V1JObzFKRjBnL0RxR1FGaFBkRExZQVEvdXdSSUdSdFZTWnhEWHdQT2luS3Zw?=
- =?utf-8?B?TjJzTmRaQ2hiMHRvbnRCc015OGpzbzhscFV4bGhKWnIrRDlNTFBmc3Z6Q0J3?=
- =?utf-8?B?amY3eFNpU1BkSUVLOW5IalZxRG1BUWZHTTg2bFVQQitKNDZaVWtGbzlGMlFn?=
- =?utf-8?B?NjQ4bW9CbFozdno2UzhXUGMyM0RtTGF2Mm5IdHZpQnlwRGEyYVJiVDNIZ0Uw?=
- =?utf-8?B?VHgwSXRHTFkvVFlSNkRJQkNQK08wUFNON3RRbnZUZ1VvcEpvOXdCTjFzWVFS?=
- =?utf-8?B?aUpQUkMrN3h0ZzI3dW9EejBhd0VESE9YakRKQklrQlU0VlBnTXhXZDk0M3dV?=
- =?utf-8?B?NnorZDR3V2dMZnlLTnpOQ0RMZXdESUZ3NHh6UTNhQ1FGMVc4Um1sbUxjcHBv?=
- =?utf-8?B?cEkrZDd3QzNra0NTNUFNazBBaCtnR25qVm1pa0pyelpweUlIc3B6M2Vwak90?=
- =?utf-8?B?YTFETFhOd2VLQ1RSODBOenl0NmJWdkg0amxwVXF4ekJ1Z2lPako4NXVKNlVz?=
- =?utf-8?B?aUNaQ0hwQmcvZG9PTUsvZXRSeXVRVkpUZlRGajc0Q08yS3poVko0WUllVlJq?=
- =?utf-8?B?RTJ6VG9JK1JSR2dKOE9LTjA4ZmIwcTZWdkFQT2V0ZStvU3BZd3hxZmk0aVRX?=
- =?utf-8?B?ZHdOd2xLMmQrS013djJWOHFLd1RaUlhHVXdFRXZxOUszdmhqdUdMQlpyVXFw?=
- =?utf-8?B?WW9zVnF3Nnd3QUxmWTJDeEdWK2lDS29XQXk2cEFUSm9qTEl4bHB0V2U3SXJ3?=
- =?utf-8?B?S0ZzM2V3aGN2azkxcUxQbGs1MVIxWFhSR3dBOUJ0LzdMT2UrZFZ3MjhIbFB3?=
- =?utf-8?B?eVZweDR3Y1M4U2xKYjVwREQ5T0wvTW9mYmFHVjl6U0pxcHRxSktiRzdwNHlZ?=
- =?utf-8?B?VDhldlpZNnRCWnVXUWI5UEkyeDkzaitWQXdlVDNXT3VEMzFmeE5SclhEL3NU?=
- =?utf-8?B?MUFWam5Ja0FMTDY5YWFhTjVJcDMyVjA0dU1neXdSZTlINU5Ub1dhMEFrQUNp?=
- =?utf-8?B?SFlta3IxNkpQRnh5MElSRVNubFNGR3FOaTdEQnhvKzZrcDlsSWRTSVJDaGJI?=
- =?utf-8?B?d2pFOVpoVW1qY2JkblV5Z1dmcnZaOW5pUXpPZFlZRFBtQU05K1VVblZzTFVF?=
- =?utf-8?B?Y3JaZmo0Q2dIVVhMMzUwQ2pTZzBVQnRkTzdISlY0RmZQTG9lVzdjL0ZEOFA3?=
- =?utf-8?B?SDJiNExkRW9rcW1vcmd6SlhrK2FSdlhsMUd6Y3ZneDVGNHJpZXVzc3VHOFg4?=
- =?utf-8?B?OUFNWXFNUXVMcTk3dzJlV2RrVzhZajZnNnpUeFNYSXphVnNRRnUwQjNnQlpK?=
- =?utf-8?B?dm9ZTkFuSDR4eEpEV3lZaXE5TmRxK3VWWHBhYmEwV3dNUTZ5c05XTDNHV3Bw?=
- =?utf-8?B?QTFWQjJnWUdoeUJYSEpwMTFHRERDZzJZNHQ2ZHg2bzIxdks3bWxnWitkQlc3?=
- =?utf-8?B?N2Jwc2oyWElSVjBXb2hqTzdadFZ6ck9jN1NrY3p3YjhLS2NoRkI2VXEwSTRM?=
- =?utf-8?B?ZWUwWHo5UitmT3ZrbjJkWksvWStZWHA1ZURkblFjamVCeHpoYkJHRWw4MFph?=
- =?utf-8?B?MjlOMHlJZCthS3ZXL2d6eEp2TFl6T0hENTk4dTRvUEV2Q3ZzR25kL1FudkhW?=
- =?utf-8?B?VjE4aENPWmtaNjd4SDQ5OXA3cjJuWnVJRC9VSFdMTEJ3QnFFM1FTekFTSWwr?=
- =?utf-8?B?QkQzK1VPRTYvSTdrQVR5L0JyNjFZNDg1V1dpZDgyTy96NGo3R2ZkNE93UDlW?=
- =?utf-8?B?VWtUeFczSzd5cnYzNjVWMXVuQ3pUYk1Sd1JzS0Ewc05pTlVpZ3IyWE1sL25n?=
- =?utf-8?B?VmdrSXd4Q1dBTURlQ2tSYUlIVVBGNU1YMHQyL0MzRVRpaUN4cTVsZTF1VXdo?=
- =?utf-8?B?K21yMllCYTBDS0xRci9kV2U4YkUzN2VKREladFpkSkxMbEs0M0ZSVEwzekRJ?=
- =?utf-8?B?c01wUjJEVEtxdWh4MnpqU1R0Ry9xN29nZU45a2xqcVAzbWwwUTdMUTZBY3dq?=
- =?utf-8?Q?lVp9c8nTn5lgTgZ4=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DC91F2FBF25D374EA7EEBC17B1A3A65B@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SmAQTP5d";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Oq35HUht"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 674FfeIQ3643768
+	for <sashiko-reviews@lists.linux.dev>; Tue, 4 Aug 2026 16:11:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	te+2b+J4wuZdOreQbWtcR1gW8u417OS8wKw5ezP58Ho=; b=SmAQTP5dD0nWzWWL
+	1uz2PGUclWIcbSaYkWP7qW57fC1YdhdDI0Lz5dAzU1LScvkTt1imsPAB0UOMSw4h
+	qWSDkMBCuDX2sIsfcUGhjwNgbkLRPuCtZyJ2m5wU8JDdhtd/UneMb795K5XUPuYp
+	czzsppnezT2Jk3SLywqwUpHVqzALCg0vYaK0Q84bzfba/nduWUjdmTaF8+nTNLWg
+	lx6tNzTdO7WCmMHK/836euOJUcUpOKXk6P+tgdeEfUa8VD/gfdKaRF7jbfBh8pLv
+	GLO9B1Nx/RIzY9jbbSKFOmDLu4pPuTtyxZ1GUsJJ+xpzHvz3qhV4QfZgjt/MUoDW
+	ZpXxTg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fud23hv6m-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 16:11:10 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2d04908139bso224455ad.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 09:11:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1785859870; x=1786464670; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=te+2b+J4wuZdOreQbWtcR1gW8u417OS8wKw5ezP58Ho=;
+        b=Oq35HUhtEJgLx+Qqs7Lo6XyAm6HNfNq5ssmmsFPwWQthW7sHsKuJq0uPDb9SizCpQj
+         CGc5Li81q3ZsZ1hUZ9FGX+49j+kKtQP06LujycMEvwxr7481EpdkI0De/MuoF0RKV/ad
+         FheuYYf8KCvs/YffuBybhp/BnsHy4mCCczKJNdt4BwiA+f05zbwzju6rSJhyn82AKntB
+         2rLwMrem2XcUUHTkbbbHaf/pHnJxOQWbC+/tt+7jUWXshbWJh9TiIBiIzCuJZ5Twz5yE
+         3TV8biv0n0IZ5aYxv+3H+IJ9HjCebQ/YgQNfuk/PEc6AMBw3bKTpteifM65TMmBuU2AD
+         +DTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785859870; x=1786464670;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=te+2b+J4wuZdOreQbWtcR1gW8u417OS8wKw5ezP58Ho=;
+        b=P+VUAXO0KyA1tmL4bf+USdsoeO2GJxtBCOblJ+FrYm+5DsVuzYy6hAzkFde6d6gJk3
+         57iSBXMELZYkLxRPgiisdwD/ZFxI3dQF7Rx0cSdjgb+xNruBbh3YV48gjZjDkZGgTjED
+         QOA/3EAzfbMkWsXxRnSLCN8S69kUL058bd2ZpDot33mzEn0o484jeN7Fs7HZWIjsE+ib
+         sKpKO7MXdSncpan5oGQW3GbHmg4XsHnVsGLNTWZo6f3qqHER3OA9Mahu7v3LjTIgaTCV
+         LFWvPnSVaiURC/KsMVIVJrJkAx12QIKT5DDJFSQf67RxnYrLL4C/WBkbG9wFVNhldnsT
+         bWLQ==
+X-Gm-Message-State: AOJu0YwL42lLAY+OOitMtTdPU59T3f8iSl9+4PneNdzZE2uL5e0OM4AJ
+	f70hybWpbri9r9rOGGDHnGaqzIySLTmFpb2VRIoQbqnss1yofUYWLUcOsHvBLzY3BD7uqtBKS6B
+	mwkQQ02HoqzvyZ+blLxvh+i3kjR9w73uHi2llpmHD0SULedHujs2uG9TnDxI7zYkNKmBu0ndN88
+	7j+ac=
+X-Gm-Gg: AR+sD112rgmG2qaliBM4GuYNU45IvJf7ortXaNDebs8It46nCaImdqt9ZKC4a1pG9tI
+	NUcFV5gqUFK0kV2TsADeU97o9cBBFtho5F0v/4gjAlpwRCWcMm2NFP5jKEBKz9YcOynk1cJWer2
+	FjYOA8s2mb99DwP40bPHTTmn+oTDzJwJbU3+ncREcecNxxlVd2FK0qmF6knDqY0JzAUAkBNRisE
+	7CAdzFIsJtg6yChR8mjq4KrHCABcucIkxzUzHCN9Gdr1EUM1Q3GYlaCPwlP/WnyPL+OV9EZ1Hsn
+	Nw0Qhu++8rZvsdVH9ZbRiDqLB2M/GbKxtCyXDsp49knEuNsMzGwVF7dPu0Ozu+cJ5FnRyfaQyRd
+	z3HnrpzJKA6ZgtaDOS7dH2bPVzoQbn3ZY+w==
+X-Received: by 2002:a17:902:cf09:b0:2cc:9179:32e with SMTP id d9443c01a7336-2d0521e90c3mr157918115ad.10.1785859870114;
+        Tue, 04 Aug 2026 09:11:10 -0700 (PDT)
+X-Received: by 2002:a17:902:cf09:b0:2cc:9179:32e with SMTP id d9443c01a7336-2d0521e90c3mr157917035ad.10.1785859869402;
+        Tue, 04 Aug 2026 09:11:09 -0700 (PDT)
+Received: from [192.168.29.63] ([49.43.230.78])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d0aa013dafsm10095525ad.35.2026.08.04.09.11.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 09:11:08 -0700 (PDT)
+Message-ID: <720fd45f-fa5e-4c64-b3a3-05b33004815c@oss.qualcomm.com>
+Date: Tue, 4 Aug 2026 21:41:04 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: SrYAmfzTubVQml4NV2pfnx9R0yWey2nZ+GRqvEVQNrPR03mjRmLipHvljbtF4QVu9pSkpCkPMIa2af/QGqFvk1EjJYJ6aPaqIdlfoBykWEriz7jjhNEZX1EvBf45EBHh68AsR+RZpDquFLWiXEL3zmTbP1hS9XV7uDOk/JDMFiGestoGXPWd91tfFHw4qXnMrwblp6tYazXj5FF+HJWceklH4+NbkJ1o8pVw3YOPrE50C/Si3O4QNikuLMW48fZqGM0TtjlCuRm4LR6Uh7iFytXnp/uFfws8Hy6PPuSCMKWqRAnUMzBmeGuchFeyG5Uwd+soggKaTDa6mtRPG1TP/w==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB7494.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c1ac4dc2-2c0f-46ed-01ec-08def2412396
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2026 15:57:51.6900
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: e+SAdDkbq0brnUwc8DKSBN9XSrct3w2tfIEI+ER2/01Cc0PC7Udh0QjHb/ir1UVGjk/VVH07XgsxWhRkbDi6rnEeoASBEkcrwERGVMN2tCs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8545
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: dwc: Add sysfs for local loopback interface
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+References: <20260803-loopback-v1-1-508f7f19e47a@oss.qualcomm.com>
+ <20260803094710.5F1301F00A3A@smtp.kernel.org>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20260803094710.5F1301F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 4q1Y7zRxpeIlqv2SbowDgpb_ZkoCsJuM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDEyOSBTYWx0ZWRfX1SzjiLhvjopj
+ VzZ/NMeTxmUMXAZgWYORABSIyDLtv4pAsp4ZWkDhhu57J+leQeW+4N61/lRZsPQNm+JrIYXvqkS
+ z4DWpupDfqsu26k9dcgXWrnmVcDoNvE=
+X-Authority-Analysis: v=2.4 cv=XIkAjwhE c=1 sm=1 tr=0 ts=6a720f1e cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=81uY1gJ5F700u46DBsPqIQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=iYw6Kr4hDCYGKP7cAK0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: 4q1Y7zRxpeIlqv2SbowDgpb_ZkoCsJuM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDEyOSBTYWx0ZWRfXxyMcyb6x6ide
+ OCm3oQhHS4QDbdTgdNwkm9R9rykQvqX024GhhAI4GoK3G1dSha5I1DJBzjv7Cq+UskpiJ/UShg8
+ wTO4XAn4qjHOeE9ajeYi3NVH9Ky+0YwzeZj3IkV279tzbHd74LV5TbjmlMyZ/tR8c3/lb0xCGRK
+ MKBXifMCENoEswMCSuFaFzdO+hqsHLFDgCQsWPJybKyDPj5iKRU6z1FADZGG/Bje9mjZkEaj60x
+ jOvnpx/z2RiSCX3n4zdbzTaSVFhON0fViLs5P/stutZb5S5LZppfNDFQwQtuHBwmBecX55+cY/6
+ dh2Nf5XRhBltwjU34NL2yPcrSTdNNu9JnUzWJTJBDsqKNYs44hGlV5wrkoM2ZxAxrVxWy6LZT7B
+ Qhs83+c0S53rqnnsCa/VFIhsx7tHWUBn7PhwgreQmMGybp82as1vwipEROQfD+L2bX6VuS0Kx7B
+ H7EAJgBr/ZQsXucCsDA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-04_03,2026-08-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608040129
 
-T24gRnJpLCAyMDI2LTA3LTMxIGF0IDEwOjI0IC0wNTAwLCBCam9ybiBIZWxnYWFzIHdyb3RlOg0K
-PiBPbiBUaHUsIEp1bCAzMCwgMjAyNiBhdCAwODoxNjozM1BNICswMDAwLCBHcnVtYmFjaCwgRW1t
-YW51ZWwgd3JvdGU6DQo+ID4gT24gVGh1LCAyMDI2LTA3LTMwIGF0IDE1OjA4IC0wNTAwLCBCam9y
-biBIZWxnYWFzIHdyb3RlOg0KPiA+IC4uLg0KPiANCj4gPiA+IEkgd29uZGVyIGlmIHRoZSBQQ0kg
-Y29yZSBzaG91bGQgZGlzYWJsZSBSTyBhbmQgTm9Tbm9vcCBvbiBSb290DQo+ID4gPiBQb3J0cyBh
-Y3Jvc3MgdGhlIGJvYXJkPw0KPiA+ID4gDQo+ID4gPiBJIHRoaW5rIHRoaXMgd291bGQgbWFpbmx5
-IGFmZmVjdCBNTUlPIGFjY2Vzc2VzIHBlcmZvcm1lZCBieQ0KPiA+ID4gZHJpdmVycywgYW5kIEkg
-c3VzcGVjdCBkcml2ZXJzIGV4cGVjdCB0aG9zZSB3cml0ZXMgdG8gYmUNCj4gPiA+IHBlcmZvcm1l
-ZA0KPiA+ID4gaW4gb3JkZXIsIGUuZy4sIGlmIHRoZSBkcml2ZXIgd3JpdGVzIERNQSBkZXNjcmlw
-dG9ycyB0byB0aGUNCj4gPiA+IGRldmljZQ0KPiA+ID4gZm9sbG93ZWQgYnkgYSB3cml0ZSB0byBh
-IGRvb3JiZWxsLCB0aG9zZSBzaG91bGQgc3RheSBpbiBvcmRlci7CoA0KPiA+ID4gSWYNCj4gPiA+
-IHRoZSBSUCBoYXMgUk8gZW5hYmxlZCwgdGhvc2Ugd3JpdGVzIG1heSBiZSByZW9yZGVyZWQuDQo+
-ID4gDQo+ID4gQXMgYSBkZXZpY2Ugd3JpdGVyIEknZCBzYXkgd2UnZCBiZSByZXF1aXJlZCB0byBh
-ZGQgYSBtZW1vcnkgYmFycmllcg0KPiA+IGluIHRoYXQgY2FzZSwgYnV0IHdlIHVzZSB3cml0ZWwg
-dXN1YWxseS4NCj4gPiBEb2VzIHRoYXQgaW5jbHVkZSBhIHdyaXRlIHZzIHdyaXRlIG9yZGVyaW5n
-PyBIbS4uLg0KPiANCj4gTm90IGJlaW5nIGFuIG9yZGVyaW5nIGV4cGVydCwgSSdtIG5vdCBzdXJl
-IEkgY2FuIG1ha2UgYSBjb252aW5jaW5nDQo+IGFyZ3VtZW50IGZvciB3aGV0aGVyIFJPIHNob3Vs
-ZCBiZSBlbmFibGVkIG9yIGRpc2FibGVkIGZvciBSb290IFBvcnRzLg0KPiANCj4gTWF5YmUgaXQn
-cyBlYXNpZXIgdG8gYXJndWUgdGhhdCB3aGF0ZXZlciB0aGUgUk8gc2V0dGluZyBpcywgaXQgc2hv
-dWxkDQo+IGJlIHRoZSBzYW1lIGFjcm9zcyBhbGwgcGxhdGZvcm1zIGJlY2F1c2UgZHJpdmVycyBz
-aG91bGRuJ3QgaGF2ZSB0bw0KPiBhZGFwdCB0byBwbGF0Zm9ybSBkaWZmZXJlbmNlcy4NCg0KVGhh
-dCdzIHBsYXlpbmcgc2FmZSwgd2hpY2ggaXMgbmV2ZXIgYSBiYWQgb3B0aW9uIGlmIHRoZSBwZXJm
-b3JtYW5jZSBoaXQNCmlzIG5vdCBzaWduaWZpY2FudCwgYnV0IEkgY2FuJ3QgdGVsbCBJIGNhbiBj
-bGFpbSB0aGF0IGhhdmUgYW55DQpleHBlcnRpc2UgaGVyZS4NCg0KPiANCj4gUm9vdCBQb3J0IHNl
-dHRpbmdzIHBvdGVudGlhbGx5IGFmZmVjdCBzZXZlcmFsIGVuZHBvaW50cywgYW5kIEkgdGhpbmsN
-Cj4gaXQNCj4gd291bGQgYmUgaW1wcmFjdGljYWwgZm9yIGRyaXZlcnMgdG8gcmVxdWVzdCBSTyBz
-ZXR0aW5ncyB0aGF0IG1pZ2h0DQo+IGNvbmZsaWN0IHdpdGggZWFjaCBvdGhlci4NCj4gDQo+IERv
-IHlvdSBoYXZlIGFueSB2aXNpYmlsaXR5IGludG8gd2hldGhlciBhbmQgaG93IG90aGVyIE9TZXMg
-YWN0aXZlbHkNCj4gY29uZmlndXJlIFJvb3QgUG9ydCBSTyBhbmQgTm9Tbm9vcCBhY3Jvc3MgdGhl
-IGJvYXJkLCBpbmRlcGVuZGVudCBvZg0KPiBpbmRpdmlkdWFsIGRyaXZlcnM/DQoNCkkgYXNrZWQg
-aW50ZXJuYWxseSBhbmQgd2UgZG9uJ3QgcmVhbGx5IGtub3cgd2hhdCBXaW5kb3dzIGRvZXMgd2hl
-biB0aGUNClBDSSByb290IHBvcnQgaGFzIHRob3NlIGJpdHMgc2V0cy4gV2UgbW9zdGx5IHRlc3Qg
-d2l0aCBJbnRlbCAvIEFNRA0Kc3lzdGVtcyBhbmQgdGhvc2Ugc3lzdGVtcyBoYXZlIHRob3NlIGJp
-dHMgY2xlYXIuDQoNCkJUVyAtIGNhbiB5b3UgcGxlYXNlIHBvaW50IHRvIHRoZSByZWxldmFudCBw
-YXJhZ3JhcGggaW4gdGhlIFBDSSBzcGVjDQp0aGF0IHN0YXRlcyBSZWxheGVkT3JkZXIgYW5kIE5v
-U25vb3Agc2hvdWxkIGJlIHNldCBieSBkZWZhdWx0IG9uIHRoZQ0KUlA/DQo=
+
+
+On 8/3/2026 3:17 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 9 potential issue(s) to consider:
+> - [Critical] `pcibios_align_resource` is used as an alignment callback but receives a `struct device *` instead of a `struct pci_dev *`.
+> - [High] The inbound iATU is programmed with the CPU physical address instead of the PCIe bus address.
+> - [High] Inbound ATU window configuration is overwritten and permanently disabled, silently destroying prior hardware mappings.
+> - [High] Hardware recovery via `dw_pcie_resume_noirq()` will unconditionally fail and mask test outcomes.
+> - [High] The inbound iATU window programmed for the loopback test is not disabled if the controller requires reinitialization, leaving a hardware mapping to freed memory active.
+> - [High] Missing pm_runtime_get_sync() before accessing hardware registers in the sysfs handler.
+> - [High] Calling `deinit` and `resume_noirq` during active system operation without blocking concurrent config space accesses will cause a system crash.
+> - [Medium] The loopback test uses `kmalloc()` to allocate an arbitrarily large test buffer (up to 1 MiB), which is highly susceptible to allocation failure due to fragmentation.
+> - [Medium] TOCTOU race in link status check can cause disruption of an active link.
+> --
+>
+> --- Patch [1]: [PATCH] PCI: dwc: Add sysfs for local loopback interface ---
+> commit 4f4d57ae54b60f668971d41c20d2d0f542109200
+> Author: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>
+> PCI: dwc: Add sysfs for local loopback interface
+>
+> This patch adds a loopback sysfs interface to trigger a local
+> data-integrity test on DesignWare PCIe root ports. It works by allocating
+> a DMA buffer, redirecting PCIe writes to it via an inbound iATU window,
+> and verifying the data byte-by-byte. It also includes a recovery mechanism
+> to handle LTSSM state issues after the test completes.
+>
+>> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+>> index 06722259d2e37..f0cfe9e885204 100644
+>> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+>> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> [ ... ]
+>
+>> @@ -567,6 +569,297 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+>>  	return 0;
+>>  }
+>>  
+>> +#define DW_PCIE_LB_BUF_SIZE_MIN	SZ_4K
+>> +#define DW_PCIE_LB_BUF_SIZE_MAX	SZ_1M
+>> +#define DW_PCIE_LB_SETTLE_MS		100
+>> +#define DW_PCIE_LB_LTSSM_SETTLE_US	(DW_PCIE_LB_SETTLE_MS * USEC_PER_MSEC)
+>> +#define DW_PCIE_LB_LTSSM_POLL_US	1000
+>> +
+>> +static int dw_pcie_loopback_run(struct dw_pcie_rp *pp, size_t buf_size)
+>> +{
+>> +	struct resource lb_res = { .name = "pcie-loopback",
+>> +				   .flags = IORESOURCE_MEM };
+>> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>> +	enum dw_pcie_ltssm ltssm;
+>> +	void __iomem *src_base;
+>> +	u32 plc, gen3, pipe_lb;
+>> +	dma_addr_t dst_dma;
+>> +	void *dst_virt;
+>> +	int ret, rret;
+>> +	void *tx_buf;
+>> +	int ib_index;
+>> +
+>> +	ib_index = pci->num_ib_windows - 1;
+> [Severity: High]
+> Does this code safely reserve the inbound ATU window? It seems the index
+> is hardcoded to the last available window without checking if it is already
+> in use.
+>
+> If the platform driver or PCIe host core had previously programmed this
+> window (for example, to map system RAM for incoming endpoint DMA or to
+> route MSI interrupts), could this unconditionally overwrite and permanently
+> destroy that configuration?
+Ack,  I will create new element to track the number of inbound iatu's used.
+>> +
+>> +	ret = pci_bus_alloc_resource(pp->bridge->bus, &lb_res,
+>> +				     buf_size, buf_size,
+>> +				     PCIBIOS_MIN_MEM, 0,
+>> +				     pcibios_align_resource,
+>> +				     &pp->bridge->dev);
+> [Severity: Critical]
+> Is the alignment data parameter passed to pci_bus_alloc_resource()
+> correct here?
+>
+> The pcibios_align_resource callback expects a struct pci_dev pointer, but
+> &pp->bridge->dev is a struct device pointer. Architecture implementations
+> often cast this parameter directly to struct pci_dev and access its fields.
+>
+> Since struct device is embedded inside struct pci_dev at a non-zero offset,
+> could this cause out-of-bounds memory accesses?
+ack.
+>> +	if (ret) {
+>> +		dev_err(pci->dev, "loopback: failed to alloc PCIe MEM resource: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	src_base = ioremap(lb_res.start, buf_size);
+>> +	if (!src_base) {
+>> +		dev_err(pci->dev, "loopback: ioremap of PCIe source window failed\n");
+>> +		ret = -ENOMEM;
+>> +		goto err_release_res;
+>> +	}
+>> +
+>> +	dst_virt = dma_alloc_coherent(pci->dev, buf_size, &dst_dma, GFP_KERNEL);
+>> +	if (!dst_virt) {
+>> +		ret = -ENOMEM;
+>> +		goto err_iounmap;
+>> +	}
+>> +
+>> +	ret = dw_pcie_prog_inbound_atu(pci, ib_index, PCIE_TLP_TYPE_MEM_RDWR,
+>> +				       dst_dma, lb_res.start, buf_size);
+> [Severity: High]
+> Does the inbound ATU programming use the correct address space?
+>
+> pci_bus_alloc_resource() populates lb_res.start with a CPU physical
+> address, and this is passed directly to dw_pcie_prog_inbound_atu() as the
+> PCIe bus address.
+>
+> On platforms where the CPU physical address space has an offset from the
+> PCIe bus address space (such as those specifying dma-ranges), will the ATU
+> expect the wrong address and cause the loopback test to fail?
+I will check from dma-ranges perspective and fix it if required.
+>
+>> +	if (ret) {
+>> +		dev_err(pci->dev, "loopback: inbound iATU programming failed: %d\n", ret);
+>> +		goto err_free_dma;
+>> +	}
+>> +
+>> +	plc = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
+>> +
+>> +	gen3 = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+>> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF,
+>> +			   gen3 | GEN3_RELATED_OFF_GEN3_EQ_DISABLE);
+>> +
+>> +	pipe_lb = dw_pcie_readl_dbi(pci, PCIE_PIPE_LOOPBACK_CONTROL);
+>> +	dw_pcie_writel_dbi(pci, PCIE_PIPE_LOOPBACK_CONTROL,
+>> +			   pipe_lb | PCIE_PIPE_LOOPBACK_EN);
+>> +
+>> +	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, plc | PORT_LINK_LOOPBACK_EN);
+>> +
+>> +	msleep(DW_PCIE_LB_SETTLE_MS);
+>> +
+>> +	tx_buf = kmalloc(buf_size, GFP_KERNEL);
+> [Severity: Medium]
+> Could this memory allocation fail on systems with fragmented memory?
+>
+> The loopback test can request a buffer up to 1 MiB via the sysfs attribute,
+> which requires an order-8 physically contiguous page block.
+>
+> Since tx_buf is solely used as a virtual buffer to hold random data before
+> copying via memcpy_toio(), would it be more reliable to use kvmalloc() to
+> avoid disruptive page allocator warnings?
+ack
+>> +	if (!tx_buf) {
+>> +		ret = -ENOMEM;
+>> +		goto err_restore_link;
+>> +	}
+> [ ... ]
+>
+>> +err_restore_link:
+>> +	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, plc);
+>> +	dw_pcie_writel_dbi(pci, PCIE_PIPE_LOOPBACK_CONTROL, pipe_lb);
+>> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, gen3);
+>> +
+>> +	if (read_poll_timeout(dw_pcie_get_ltssm, ltssm,
+>> +			      ltssm == DW_PCIE_LTSSM_DETECT_QUIET,
+>> +			      DW_PCIE_LB_LTSSM_POLL_US, DW_PCIE_LB_LTSSM_SETTLE_US,
+>> +			      false, pci)) {
+>> +		/*
+>> +		 * LTSSM has been observed stuck outside DETECT_QUIET on some
+>> +		 * platforms; only a full controller reinit (mirroring system
+>> +		 * suspend/resume) reliably recovers it.
+>> +		 */
+>> +		dev_warn(pci->dev,
+>> +			 "loopback: LTSSM did not settle in DETECT_QUIET (in %s), reinitializing controller\n",
+>> +			 dw_pcie_ltssm_status_string(ltssm));
+>> +
+>> +		if (pp->ops->deinit)
+>> +			pp->ops->deinit(pp);
+>> +
+>> +		pci->suspended = true;
+> [Severity: High]
+> Does powering down the controller here pose a risk of a system crash?
+>
+> This recovery runs in a sysfs handler while the rest of the system is fully
+> active, without blocking concurrent accesses to the PCIe config space.
+>
+> If another task attempts a config read (for example, from lspci) while the
+> clocks are disabled by the deinit callback, could the unclocked access
+> trigger an AXI bus fault?
+Will not expect user to do this test and in parallel he will run lspci and also
+expects this deinit and reinit happens quickly before axi detects this as a
+error.
+>> +
+>> +		rret = dw_pcie_resume_noirq(pci);
+>> +		if (rret) {
+>> +			dev_err(pci->dev, "loopback: controller reinit failed: %d\n", rret);
+>> +			if (!ret)
+>> +				ret = rret;
+>> +		}
+> [Severity: High]
+> Will this hardware recovery unconditionally fail?
+>
+> The loopback test runs strictly when the PCIe link is down (no endpoint is
+> connected). However, dw_pcie_resume_noirq() starts the link and waits for
+> it to become UP. Because no endpoint is physically connected, this wait
+> will time out and return -ETIMEDOUT.
+>
+> This seems to overwrite a potentially successful test result with -ETIMEDOUT
+> and abandon the controller in a broken, suspended state.
+ack 
+>> +
+>> +		ltssm = dw_pcie_get_ltssm(pci);
+>> +	} else {
+>> +		dw_pcie_disable_atu(pci, PCIE_ATU_REGION_DIR_IB, ib_index);
+>> +	}
+>> +
+>> +	dev_info(pci->dev, "PCIe LTSSM state after loopback exit: %s\n",
+>> +		 dw_pcie_ltssm_status_string(ltssm));
+>> +
+>> +err_free_dma:
+>> +	dma_free_coherent(pci->dev, buf_size, dst_virt, dst_dma);
+> [Severity: High]
+> Does this leave a hardware mapping to freed memory active?
+>
+> When the LTSSM poll times out, the code skips the else block containing
+> dw_pcie_disable_atu(). Execution falls through to err_free_dma, where
+> dma_free_coherent() frees the DMA buffer back to the kernel.
+>
+> If the link later becomes active, could incoming memory writes from an
+> endpoint corrupt kernel memory through the still-active inbound ATU window?
+>
+> [ ... ]
+as part resume_noirq IATU will be cleared.
+>> +static ssize_t run_store(struct device *dev,
+>> +			 struct device_attribute *attr,
+>> +			 const char *buf, size_t count)
+>> +{
+>> +	struct dw_pcie_loopback *lb =
+>> +		container_of(attr, struct dw_pcie_loopback, attr_run);
+>> +	struct dw_pcie_rp *pp = lb->pp;
+>> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>> +	size_t buf_size;
+>> +	int ret;
+>> +
+>> +	if (!sysfs_streq(buf, "local"))
+>> +		return -EINVAL;
+>> +
+>> +	if (dw_pcie_link_up(pci)) {
+>> +		dev_err(pci->dev,
+>> +			"loopback: refusing to run while the link is up\n");
+>> +		return -EBUSY;
+>> +	}
+> [Severity: High]
+> Are the power domains and clocks guaranteed to be active here?
+>
+> The run_store() handler directly checks the link state by reading the
+> PCIE_PORT_DEBUG1 MMIO register via dw_pcie_link_up(), and then proceeds
+> to modify numerous controller registers in dw_pcie_loopback_run().
+>
+> Since the test intentionally runs when the link is down, is it possible
+> the driver core has runtime-suspended the PCIe controller to save power?
+> Accessing MMIO registers without calling pm_runtime_get_sync() first
+> could trigger a synchronous bus fault.
+>
+> [Severity: Medium]
+> Is there a race condition between checking the link status and executing
+> the test?
+>
+> The code locklessly checks dw_pcie_link_up() here, and later acquires
+> lb->lock and performs sleeping allocations in dw_pcie_loopback_run(),
+> such as dma_alloc_coherent() and kmalloc().
+>
+> If an endpoint is hotplugged or finishes link training during this sleep
+> window, the link will transition to the UP state. Will the loopback test
+> then blindly overwrite the PCIE_PORT_LINK_CONTROL register, forcefully
+> disrupting the newly active link?
+User might not do link init and do a hotplug of a devcie.
+
+- Krishna Chaitanya.
+>> +
+>> +	if (mutex_lock_interruptible(&lb->lock))
+>> +		return -ERESTARTSYS;
+> [ ... ]
+>
+
