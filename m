@@ -1,139 +1,70 @@
-Received: from mail-106112.protonmail.ch (mail-106112.protonmail.ch [79.135.106.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0181FFC59
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 06:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6466305675;
+	Tue,  4 Aug 2026 07:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785826118; cv=none; b=YK2Wcibp5EnOzPLxyplJg0xcvKk/AyDsTunUQCtl0oturOLT5maB1swnwYtJ9dcpNP6JKnt9t5bQziCCaQM36YqlBrq7KBRrtuNiMjLEFge+kI/PdbmXilIRa+Tx832pZnnufwvBQRQC1TIqCek8+rnDlNHzmo1dTie06RXF1nU=
+	t=1785826872; cv=none; b=RedQtA+MsFo9fMhzUoNI0i8+Igf414RjbR7ULYBmPViUr2TRKOBlf2g4XmwCITxkajrAbhLhD3D/M+sujX9kGFWnDs6PztpWW0Cuu090jdh5FFK28qj1yNqj3dN8nOA3JDEaq02X+vcJu+hEVMwAIa6Wl5KcYg+cAFy7NXYOkj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785826118; c=relaxed/simple;
-	bh=wUkpNdpKdxRDIbfR+IaMpAunaWT3UT3aEPOoz/RhSPg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fxu3JlXWjw91TSspbdoo+fz/62mNbRJrjIrIhiPRNL95Npjh5LMSCj1n0OX5665YJHDsSufQ59sQXS5cKKyHFdX0uV9HpQOVqhfEs/Ac8+P/7xNh/S5z1gZbG+lIihpbw5ZJj0zGdn4PfxBDxNnwqlqPTpvpeXIFCVbddOL8tCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=Nn8YHZBx; arc=none smtp.client-ip=79.135.106.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1785826872; c=relaxed/simple;
+	bh=zJYYEKL1JC8Hg4h51kbCvQPeNDawU0h3B2zCxZ4QNmQ=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=fllR0c6EPFJV31fKLpcj+mobOR1OZcTYxcN87s8+VcC8MvjTKn7zLcYCxZ1J1RP9xG/xw4CKZddxv8DeS1AzO4lVSWkI6myMM76ahgtxV25H5eqT0EaSzSP87EwAHTEXZqZB+hyaCxnY8yO6tl5xJk/WHU8w8Y9F7lldYmde/10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TVRE6qDn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="Nn8YHZBx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail3; t=1785826110; x=1786085310;
-	bh=KqfKYGJNjUhLaSbht+pZlWC4kNkno5tAwM66cjF7pOo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=Nn8YHZBxoxcm8q3IdKc0RZvj4sZ1ZWU1Zkg+S/aq3JRl55xBChJoBDqdBQ2Yg22L/
-	 blueCFboPS3fBp1B6cykoqG5EL+aHLI5//+F0on4OIfFUgMWKM52932g1DneIZ6FXN
-	 U2rc0UfXeocagPRhOv98GvF6rqBPgefqIKWTPWgQZU790VhBWgJT6ZmAEYXinGsnlP
-	 Y/bEqGs4QHmX4LJ1EXVCLw2q71i/A+N4a45WgeOfeFo2LtYZsxld8pbv+jw4hMFLEL
-	 1o0FMUqNYeGfAN7/Wwhz6ydlXk3F4QcY92kr2D41DwKC2i4Vv4spaSw4c0B0wv9OYK
-	 RdV2bP+tSKZ/g==
-X-Pm-Submission-Id: 4hDkdn21mVz2Sdm1
-From: Esben Haabendal <esben@geanix.com>
-To: <sashiko-bot@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <dri-devel@lists.freedesktop.org>
-Subject: Re: [PATCH v3 2/3] drm/bridge: ti-sn65dsi83: Fix error handling in
- sn65dsi83_reset_work()
-In-Reply-To: <20260803152112.5CC281F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 03 Aug 2026 15:21:11
-	+0000")
-References: <20260803-ti-sn65dsi83-fixes-v3-0-9b403a405ccd@geanix.com>
-	<20260803-ti-sn65dsi83-fixes-v3-2-9b403a405ccd@geanix.com>
-	<TKBCK7kXBFomt3_G6e_k5x4Azce7mNJH-pBKtQftoFH2IaNTAU1lbZd0nwutvpQD9ZhjDZGOxBjCFfBJG0fFmA==@protonmail.internalid>
-	<20260803152112.5CC281F000E9@smtp.kernel.org>
-Date: Tue, 04 Aug 2026 08:48:25 +0200
-Message-ID: <87tspabcue.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TVRE6qDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCA81F000E9;
+	Tue,  4 Aug 2026 07:01:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785826871;
+	bh=zJYYEKL1JC8Hg4h51kbCvQPeNDawU0h3B2zCxZ4QNmQ=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References;
+	b=TVRE6qDne3al8A9qkzs+pomWzZo5uJQP0QZn5HeKhG+QR6XhEKFJL3jnCpT+fe53E
+	 6+c+r2+Yq3ydnE0tbGVf1dvRrGAnvqaX9lsns9kvz8PGNezKngI7fmirEQRgz1tFVq
+	 bCXVKqh81jhXlTHNnoTrbinis6g7YQGb0sup0gvkaIQSzUO/RIxtOke6VOngBTMIVd
+	 3ehLKRQ+eG9nATxAB9SbzuN7pSuopaJqFYXE1hfzIbw/inn5jCX0XYX3EkfKnEjTh4
+	 IbTD2JBsCIQQrXjrhC9Yumhuvj0i4dmf7zqCuIKEoP7TOal4g3Z+s/JQWp6t0b6Kug
+	 hHm+19UyjHBMA==
+Date: Tue, 04 Aug 2026 09:01:09 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Pawel Zalewski <pzalewski@thegoodpenguin.co.uk>
+CC: sashiko-reviews@lists.linux.dev, linux-ide@vger.kernel.org,
+ dlemoal@kernel.org
+Subject: Re: [PATCH 1/2] ata: use named initializers for acpi_device_id
+User-Agent: Thunderbird for Android
+In-Reply-To: <CAA6zWZJ_TCa4CyEGFd-a-u_NS=Dv64KV-HONhomER2PC7p+EyQ@mail.gmail.com>
+References: <20260803-ata-acpi-v1-0-f606afaacad1@thegoodpenguin.co.uk> <20260803-ata-acpi-v1-1-f606afaacad1@thegoodpenguin.co.uk> <20260803151417.3DB001F000E9@smtp.kernel.org> <anDy13qZ6rr1tFqO@ryzen> <CAA6zWZJ_TCa4CyEGFd-a-u_NS=Dv64KV-HONhomER2PC7p+EyQ@mail.gmail.com>
+Message-ID: <90FE7BC8-5432-49C8-9748-E958E89FF25A@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-<sashiko-bot@kernel.org> writes:
+On 4 August 2026 08:09:52 CEST, Pawel Zalewski <pzalewski@thegoodpenguin=2E=
+co=2Euk> wrote:
+>>I do kind of agree with Sashiko that ahci_seattle=2Ec could have been fi=
+xed
+>> in patch 1/2 (rather than fixing ahci_seattle=2Ec in patch 2/2)=2E
+>
+>Happy to refactor in V2 so that patch 2 would only deal with removing
+>driver_data =3D 0
+>in the ahci_seattle module=2E
+>
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Missing cancel_work_sync() for ctx->reset_work during driver=
- teardown leads to a Use-After-Free.
-> - [High] Skipping enable_irq() on the error path causes an IRQ disable de=
-pth leak, leaving the interrupt permanently disabled.
-> --
->
-> --- Patch [2]: [PATCH v3 2/3] drm/bridge: ti-sn65dsi83: Fix error handlin=
-g in sn65dsi83_reset_work() ---
-> commit 58246b5ef131d7aeea7b5c2b693088e7255aa435
-> Author: Esben Haabendal <esben@geanix.com>
->
-> drm/bridge: ti-sn65dsi83: Fix error handling in sn65dsi83_reset_work()
->
-> This commit fixes the error path in sn65dsi83_reset_work() by adding a
-> goto to ensure drm_bridge_exit() is called when sn65dsi83_reset_pipe()
-> fails, safely closing the critical section.
->
->> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bri=
-dge/ti-sn65dsi83.c
->> --- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
->> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
->> @@ -419,11 +419,12 @@ static void sn65dsi83_reset_work(struct work_struc=
-t *ws)
->
-> [Severity: Critical]
-> This is a pre-existing issue, but could this work function execute after
-> the device is unbound, resulting in a use-after-free?
->
-> If the driver is removed and devres frees the ctx structure, the work
-> could still be pending since sn65dsi83_remove() does not appear to call
-> cancel_work_sync() before returning:
->
-> sn65dsi83_remove() {
->         ...
->         drm_bridge_unplug(&ctx->bridge);
->         // missing cancel_work_sync(&ctx->reset_work);
-> }
->
-> If the workqueue executes sn65dsi83_reset_work() after teardown,
-> dereferencing ctx for drm_bridge_enter() might access freed memory.
->
->>  	ret =3D sn65dsi83_reset_pipe(ctx);
->>  	if (ret) {
->>  		dev_err(ctx->dev, "reset pipe failed %pe\n", ERR_PTR(ret));
->> -		return;
->> +		goto err_exit;
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but doesn't jumping to err_exit
-> here leave the interrupt permanently disabled?
->
-> If a hardware error triggers the IRQ handler, sn65dsi83_handle_errors()
-> calls disable_irq_nosync(), which increments the IRQ disable depth. By
-> skipping the enable_irq() call on this error path, the depth counter
-> remains unbalanced.
->
-> Would it be better to mask the interrupt source via hardware registers
-> on failure, and still call enable_irq() so the kernel's depth counter
-> remains balanced?
+I am usually the one who prefer things to be split into multiple patches=
+=2E
 
-Nah. I would rather just balance the counter here.
-Calling enable_irq() on error should be the safe choice.
-As sn65dsi83_reset_pipe() have always been returning 0 until now, we
-have in practise been doing that unconditionally anyway.
+But in this case, I think you can do everything in the same patch=2E
 
-I will do that in next version.
+Still seems like the same logical change, clarifying/cleaning up the initi=
+alizers=2E
 
->
->>  	}
->>  	if (ctx->irq)
->>  		enable_irq(ctx->irq);
->>
->> +err_exit:
->>  	drm_bridge_exit(idx);
->>  }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260803-ti-sn65d=
-si83-fixes-v3-0-9b403a405ccd@geanix.com?part=3D2
+
+Kind regards,
+Niklas
