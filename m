@@ -1,125 +1,192 @@
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011070.outbound.protection.outlook.com [52.101.70.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE130444717
-	for <sashiko-reviews@lists.linux.dev>; Tue,  4 Aug 2026 21:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.197
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785878480; cv=none; b=gC4+DdQ7mGLhyLJl5URdFbPyRPLVYoAm8eklo9UdKUqxe5c6akKJIDFxOTfLkg1dOngZcH0PcWY1pAbPS2AkySxDQozvqqn1UFeoPXOBXAgWfGGmASsIJD7zcy6692PA/O7bmdooJWlqoX2rbm4e6FpMkXCE2IvlxFMsD7spZx0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785878480; c=relaxed/simple;
-	bh=xzRPCs/rv1FhtkiR8oU1AWkWRGI+B37AVWNvL9stlSo=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Fa1/++UopCh3EWJaoFupqaQYCAczJ1QFJRjYu8WCeq0aJd4jhQI01xFQOAFWQ/S1UEmEsz5OkF3W3BLjwtAkvliUmOAyptOQwtp/Nx6NQIIsrrTv1p3zWwQDbi8bGRUDQGosQHWFG3iSUT5X8EnZaoVNh6rjXf5d/qRStWsWf/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GYXrEpxy; arc=none smtp.client-ip=209.85.210.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73825305691;
+	Tue,  4 Aug 2026 22:06:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785881215; cv=fail; b=XnJZTakvs/A/7U7Qm42Tvz2+bmZO3y0VydUOpkFgsBRcdP8pxASjGrgYgOu0lqfWEmc/TJODAV+G37ulDnPKl9ZGsdE5E9wurRZFaNRS/YOt27bRcHuWXduPdr+/VXJ3nYvqYXZhIELh6O18eSLuEz3f+tTwEiLmsbHme7On3TY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785881215; c=relaxed/simple;
+	bh=RSPbifJbVl25vmyrx7EjIKkG+SN3rFgu2bsoZUmoSF0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=PE19RcfKaiacIiRPymlD1n9Ps6lVyVuh02Ss5FAwWD9ovKhYBsJSt+JgylXYCKBbh2DcRahc1ui08/835ggUntjDgloTwNSAQu9tbErHLPmsHykQ3oxWAL6LZFImSH7JGdLYagckSQ+hupHdayNwE2DiBqWAR6jTsnh9JS2YgIA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=fLjePC/9 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GYXrEpxy"
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-84e04598adeso192131b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 14:21:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785878477; x=1786483277; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WFgMw4fiBgrQ1xsL5NWX1WqzYPj0vpROk8XmbnyUdOw=;
-        b=GYXrEpxyi1gu3w0Njxkrak97sk8i7CxQsXEPduJmpsxWZE6Y2tYEz0ZL4C1wWc+fvk
-         R/VPAnZJD9FEK95fr4JRCclALuZWvuBTm9PFdf4EXVa+bX+VUYtdULxo0Tf+GqdYYEli
-         HvjatxvjkJAx4ucfxyXLO1RY29gRYwFu1DOhjBvYYVVxQCEWNAq3HdVaXzKGvgAn0Tbd
-         JmjEC/YCDdvyGpbtHF3Z8Vycq15Ju8dNb4Wu1tXkX9O5N8ZQWgrh8R8+bIAJUUukiCKQ
-         GgAT4wmsQJToGKIvYpdZ3aMglb6fOZ5OYF+CgA0RxZMzsya3uz4dnaLWgD8cS9xsaiRy
-         w5aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785878477; x=1786483277;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WFgMw4fiBgrQ1xsL5NWX1WqzYPj0vpROk8XmbnyUdOw=;
-        b=hF9bDpnUanPrAlUKKQdgiw+4qkhKS7WnBMnIeG2v69INvwDkSbMRl6LigRxKghgyw+
-         /lRxRSFbihWqdEgmrrD0kkSpVDHZiyEqlB7Y/GA5rgZ1AMmj1v3YULp7QpHvvmZY8X2P
-         4ZCyTrR18hsBBmac2RfOj0+s9xxUIUALHHrOY5Io934/cUdj9YAef/JUHXgqgRKcuJZs
-         +2tdmCc4UveEI3sUcSQzuMaIXUvp6PyU7WmyIwSBCXrfk8KXpwq89PD8rsKJa1Etd3Kk
-         qez5+u+GLUVOV1ZSiFRg/KZnPcXy1Jd8v4g6vUbFOdtdDXHwGeKOebb99SEcYpKnfOcI
-         2xvg==
-X-Gm-Message-State: AOJu0YzdWs2WfmcIfHxBV5Iee4IjOv2F6rwCTNEUxv04iaA6u9uC/o/j
-	7z2sAmm8jtpTkTw7hrTPor+5hhunq/j5waCmM2uqRiXwMt1f6WKYm/DePBFXQA1PwHbJLMHv2uT
-	LSkb7LfLxOmDBiKBf07TsjY43U/fSlzzviGIPa64qae/TWMy+Q9UuMzyswSB9frQWvCpQrC4huK
-	JXY3MDTYS4Tv48AHhRMTKxO2UdyHXWYZpk83S+vXP6HqWVet86
-X-Received: from pfw16.prod.google.com ([2002:a05:6a00:a270:b0:847:840c:ba17])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:3a20:b0:84e:f90e:492f
- with SMTP id d2e1a72fcca58-84f2dfc338fmr1489489b3a.7.1785878476592; Tue, 04
- Aug 2026 14:21:16 -0700 (PDT)
-Date: Tue, 4 Aug 2026 14:21:16 -0700
-In-Reply-To: <20260804211300.668C01F000E9@smtp.kernel.org>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="fLjePC/9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lp4XriHHoCgpKWul1XJ9U6pFSI3ttKlRjDdjN4iS0c/N74I6DyJnVc0QSsvE3DGxcaoKG4m7x5mUCsR9mkaI8SabjMqSPGMheSzdKpbpcD/KVmUKQ1IJQBo6XMU2TXJrUATepHa/cUx1mNYEbu6pn5xWjmYW8xCC8tW3W3AGbmXy3sKtEbZ3M+E5ZL2Uw4QbCZ7vj3RNqgTjx451BLPKZVG0px/lfhd9cN8ySPHNaT51Tlpy3gugZ9sH6w27wtlRD3Q4/Xs+IUIesMyRLi7CbgwdCvCZlOS176c93tsxqAalcscUMrBcQI+hvVl7OlFfg9scL40IPBRgfImrIFwfFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7ZAwz/n0dKGIFUUU9ovbIShIsOGKC4JZpL/4QKF/ENI=;
+ b=dR/FKkHRj+Y83vYKfxKneOSbp+CNB6OTAHEEyHWuqwfznEJ7oCJWi+KFHsWHi4BX8RIVp5epnaELr/Z1asXikj5Ri5jV8g8c4aXTHJpEgsrSqdCdZhLfFy6tz0Fjpej5vudsNOCNqhWnOrmlnIQUq/JLoakou9rxo0kvywakvWPYBH0uSJtVvT0zkzYkBN25wSOkDQCrJisq1sT9qfTZdl+Fp5Zg/Xpfsjb+DswYeUSOXVStUn7RORjhrya1Tqu/nth2VfiENizZCLxRhJO1hgPEt5Yzw7RRZ75fkvbxv/03MAgUk38zyLIo9zATJzRNNeHAbgluiTHZf2u6xbsm5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7ZAwz/n0dKGIFUUU9ovbIShIsOGKC4JZpL/4QKF/ENI=;
+ b=fLjePC/9ZPHnWN3/1qxE2ZKpXANUrPtE2Dp3dAGE58fHvgf20zGpdvuxUrYOW8kn6kGPaJfRLqVWqx+5QpeQ8tNY3ccqfWg/q1v30eGPstXVo/bJiNphb+7sNaNYRynuuvV36FcbKvVWPZ8ENdy1j6LWFf2Z3pfp+XQXPSCP0c6UgyPEPJWDpTt5uih943nq0R39AC1ZW2yR1L0OVeFKbxGfzAxE9Hksi+Br7x7vC/Mn5swOse7nW4ZTm927lIQbn2fmOETN0NXfgZAwcHnF86qYjEpvSNrwGGqD/UYwNSHGexLWLzOAvKgOt5yuyrEqwM70js2R7wCN7FTlIw3S/Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB8596.eurprd04.prod.outlook.com (2603:10a6:20b:427::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.16; Tue, 4 Aug
+ 2026 22:06:51 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.015; Tue, 4 Aug 2026
+ 22:06:50 +0000
+Date: Tue, 4 Aug 2026 17:06:42 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
+	Frank.Li@kernel.org, vkoul@kernel.org, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v8 2/2] dmaengine: fsl-edma: Support dynamic
+ scatter/gather chaining
+Message-ID: <anJicljn3M1ARmkQ@SMW015318>
+References: <20260803-fsl-edma-dyn-sg-v8-0-dc2b0317206d@bootlin.com>
+ <20260803-fsl-edma-dyn-sg-v8-2-dc2b0317206d@bootlin.com>
+ <20260803162821.70BF31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260803162821.70BF31F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8PR02CA0004.namprd02.prod.outlook.com
+ (2603:10b6:510:2d0::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260804210046.3413149-1-seanjc@google.com> <20260804210046.3413149-3-seanjc@google.com>
- <20260804211300.668C01F000E9@smtp.kernel.org>
-Message-ID: <anJXzBxq6fbPuoQC@google.com>
-Subject: Re: [PATCH v3 2/2] KVM: selftests: Create one VM with many vCPUs for
- each major PMU counters test
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8596:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0da32fcd-2501-412d-144d-08def274af47
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|19092799006|376014|23010399003|4143699003|11063799006|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	mB7P+VxHO7Qjb8figQ7gvxJs142EwFYIQf91cbGUGNej+mT35oGoquj3qE9qnevHqadRSYL0FAr0NJWxYuTg3dC15hD/4Gcw9OqqVnM8ifIR7tZWqsEwD4cuQM4H8gkBIytrzSXSb9D9TWdFmlTzbC4lrye1sOMhIIdY+6z+4Rho555sl36CvoXMZtNHlXI9s/DmqP0zLWlKsrrEpKZaTGB+324iCD+swoYcaXVOUy5R/ZrlIZVtdIdL2tJ5GBdccu9OQktLeWphUeqr82TbCyPjeEEtHGopCYzRhgd9rUwpcxfDtn0TS3fandq41qNuyX2g7i2Kc8zAZnRQJTlrVWHIyHBAztIfdp04dEfdQ+hmEjLldhhiCkBu7NAzMEDchRJ9UfUNr7YGkAMNs/ruYNzTwdWJ9XV8R6zuAB96i9QsCx35i3F8GfjzlkNGADBOvqdXVSV+x4xqXP3HhzQTM2BogseWtU13HqRbdEg3cr2JC9EYXROzLovOSGRwSwn1tqJIYFSm/h+mTxgeto8H3p7pU3MMM/CEC7KuRcPx7rJEGVLy1J7l+pntRJcxqQv9oyZE9968lAiGDHEJTCUPlLaJggEf3DtdrnAuVPvbTFw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(376014)(23010399003)(4143699003)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?BJ7UwV9rr9snflgK5TEfTYal+sE3axHyRQ+UfPbXNsiUiATlYmZdWBGGJc?=
+ =?iso-8859-1?Q?QWhegYBiTM/IG3u6I8Pt5o0N3ouafMojnrFwdYjNBGMI6gebCjaL5EO9uY?=
+ =?iso-8859-1?Q?3meexBZdSl4sgvi4flqYFSu9b0A/x672yw2smMcKGVtJNcXVnVfbfu8fsZ?=
+ =?iso-8859-1?Q?iQLzHkdMZ+cJjusVqQP+HwclEX1x2uQzwuGUffedSSQDgwPOtpuyJWd2aw?=
+ =?iso-8859-1?Q?Gi1DbzfakpUNbpKHPYzMcn26h+3A9N7qtfg9QKHpBxg9iqbMxHv3ZQLXXW?=
+ =?iso-8859-1?Q?t7hiiz0rhMfsubFDE7mEorcUjUthWN7ck0jNl7VT75cOLEQ9SJK1fpwnfB?=
+ =?iso-8859-1?Q?tCWMOS7WIW/Mo4cLZdy25h/PZsLnnp8/oCCKjgFApy3fQk+COLP9icludk?=
+ =?iso-8859-1?Q?psyuubUiJbYXKYP5JG4nwlNaBxD1cywk9D2YE1VAnvmdjCF3cApUNI2vYF?=
+ =?iso-8859-1?Q?giJNrrwoWH9YmxG1m8YXdf+ANhvdu58f4Ga7LQD2nb8X0zxROo/C97lT6I?=
+ =?iso-8859-1?Q?JzONhN/A/zLqZPj2zxF3d1MbYxuL4gvyy/di1qlNZqLfGmlRaPUW9Vedo5?=
+ =?iso-8859-1?Q?SkY8y2aohUxf9c2BaksZEei/o1HBdkU44Fh2Z0EcHBnErOntmlpHd2RJtt?=
+ =?iso-8859-1?Q?jBN0TnFro9HakCb0KZDcdPyA4SmCNziHI0uYXPhegtgCZ56YXMCYu//mPl?=
+ =?iso-8859-1?Q?NEwoKt77afuzcou2BajchwhBCcb3Hl2TPNE71gPFKULhN1f7rcEZmMRRjm?=
+ =?iso-8859-1?Q?xLKzt1wwyr5pbLoR9gSvVWdPc7pjrcF0TCqaeP+BxeqPMARj2jKiRpkooC?=
+ =?iso-8859-1?Q?Im7Acr3nRevz2ncKPVyFVUeNR6vnCaeDVrkjNoJn12s7Opcy/QxgUWqwTV?=
+ =?iso-8859-1?Q?nd2mMFJ+AQ6tXMALrYQRDjnMDZrkilaYdDmuVM8dnljO95ZxVaa1xpqgaL?=
+ =?iso-8859-1?Q?Xgfa9efxOFZ7m7RRRf/up+66wzP8mbn1dezn5WmYPgHBk+B8ArEjjBDtgk?=
+ =?iso-8859-1?Q?H51blrMrsChiHlusHJLKCqjCimL9BbQxf7B0/xXPCcSIym10ARSoDNZCUQ?=
+ =?iso-8859-1?Q?SkA6r/IPKQKXBvwJd8u7yw/GihWuZgHMrSWIDqD2idU4pcLRsAIsEmXTFb?=
+ =?iso-8859-1?Q?LqU4H399gmZoPWM9spRmkcf2NtSEZqeexm/ltLL+y1U3JfYDWb+390yVFN?=
+ =?iso-8859-1?Q?o8njhhOAkm3uJZ7urFY1OQ6vMWxhncQTFCsfmFxLr8/qYOm3YxNTWfurgh?=
+ =?iso-8859-1?Q?txp4T6MtYU9/7CZPRlA1pBuRlxu+G1ZZPzDy2dTcGQvwEHyq/WevtVa21Q?=
+ =?iso-8859-1?Q?RHUDvFfGD5LrJPcUqilbmFnPScbLTfEdfqlMORPfoWvYOXidzevLutx0OB?=
+ =?iso-8859-1?Q?69qaJFTgc2RADf39RnSFpW03UjYbMvTZDH0cGxcqS4g5gULFJUe4hL4fsP?=
+ =?iso-8859-1?Q?A+S0IZnwZNBfQGorTN+qnFe8HIEnmgneJxz8Wr6Y1qpLIOijBmMC5xA6k7?=
+ =?iso-8859-1?Q?xFWCAceB5Uha6wT2glaAsFQgWUQ52sYiyDiKQBSZxCQ6euSa3afkYt7IeS?=
+ =?iso-8859-1?Q?B8cj1bG2obVUevksLkWMtO6o2aRy2W966RkH9hn0kbEY6VekwToiQxDbLc?=
+ =?iso-8859-1?Q?tNKocgZQjrYKYNjCqm59zMEFNZ7+TnJBk4e7a3TIgPhaHuzA3A0TWgdzmb?=
+ =?iso-8859-1?Q?+NNohvjVe7TCDdeM6bcsfW0Kez21KkSg9e5QoojghdDnL5/K05VKZokXxc?=
+ =?iso-8859-1?Q?Dnv6RqkkVMUbYpTGmQODvUbZMQY76eK25kJSXIoq+sX3dJWya6VCuvr7Fg?=
+ =?iso-8859-1?Q?tfwJwIL8HByWgEVLKLXbXoA/WE5K9hR6G2q95Xh2IqU+mfQp1cKl?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0da32fcd-2501-412d-144d-08def274af47
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 22:06:50.7592
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RgjRJM1idZYy0MSHIF5tL0fagzSFcE2928dKO8VATBkH62PVnH/xcQo/90okcGg/fw8UM1P5bkbgjZwQZTmI+zy+T2xC+B9nSmR/vaRfqH5PamxehEkYtFn6dYok1sGe
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8596
 
-On Tue, Aug 04, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > +	pr_info("Testing arch events, PMU version %u, perf_caps = %lx\n",
-> > +		pmu_version, perf_capabilities);
-> > +
-> > +	/* Testing arch events requires a vPMU (there are no negative tests). */
-> > +	if (!pmu_version)
+On Mon, Aug 03, 2026 at 04:28:20PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] O(N^2) algorithmic complexity inside a spinlock during scatter-gather descriptor submission can cause severe IRQ latency.
+> --
+>
+> --- Patch [2]: [PATCH v8 2/2] dmaengine: fsl-edma: Support dynamic scatter/gather chaining ---
+> commit f4efa8f669813b67983a5bf98e40939bbc5e00b4
+> Author: Benoît Monin <benoit.monin@bootlin.com>
+>
+> dmaengine: fsl-edma: Support dynamic scatter/gather chaining
+>
+> This commit implements dynamic linking of scatter/gather transfers to enable
+> chaining multiple DMA descriptors without stopping the channel. It adds
+> fsl_edma_link_sg() to dynamically link the last TCD of a previously issued
+> descriptor to the first TCD of a new descriptor.
+>
+> > diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+> > index c5f5951c988be..189eb9d1269ea 100644
+> > --- a/drivers/dma/fsl-edma-common.c
+> > +++ b/drivers/dma/fsl-edma-common.c
+> [ ... ]
+> > @@ -931,14 +958,93 @@ void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan)
+> [ ... ]
+> > +static void fsl_edma_link_sg(struct fsl_edma_chan *fsl_chan, struct fsl_edma_desc *fsl_desc)
+> > +{
+> [ ... ]
+> > +	if (!(last_csr & EDMA_TCD_CSR_D_REQ) ||
+> > +	    last_csr & EDMA_TCD_CSR_E_LINK ||
+> > +	    list_count_nodes(&fsl_chan->vchan.desc_issued) >= FIELD_MAX(EDMA_TCD_CSR_LINKCH))
 > > +		return;
-> > +
-> > +	vm = pmu_vm_create_with_vcpus((NR_INTEL_ARCH_EVENTS + 2) * (ARRAY_SIZE(unavailable_masks) - 1),
-> > +				      guest_test_arch_events, pmu_version,
-> > +				      perf_capabilities, &vcpus);
-> 
-> [Severity: Medium]
-> Could this cause the test to assert on hosts with lower vCPU limits?
-> 
-> This calculation requests up to 144 vCPUs per VM ((14 + 2) * (10 - 1)). If the 
-> host has a KVM_CAP_MAX_VCPUS limit lower than 144 (which is common in nested
-> virtualization or lightweight VMs), 
+>
+> [Severity: High]
+> Could this list_count_nodes() call cause severe IRQ latency spikes?
+>
+> list_count_nodes() unconditionally iterates over the entire list to compute
+> its length. If the list contains hundreds or thousands of nodes, it will
+> traverse all of them, well past the limit of 31 checked here.
 
-No, it's not.  Unless userspace overwrites the VM's max vCPUs, KVM x86's *minimum*
-value for KVM_CAP_MAX_VCPUS is 1024.
+Nice work, only left this issue by found AI.
 
-	case KVM_CAP_MAX_VCPUS:
-		r = KVM_MAX_VCPUS;
-		if (kvm)
-			r = kvm->max_vcpus;
-		break;
+>
+> [ ... ]
+> > @@ -949,7 +1055,12 @@ void fsl_edma_issue_pending(struct dma_chan *chan)
+> [ ... ]
+> > -	if (vchan_issue_pending(&fsl_chan->vchan) && !fsl_chan->edesc)
+> > +	list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_submitted, node) {
+> > +		fsl_edma_link_sg(fsl_chan, to_fsl_edma_desc(vdesc));
 
-  #ifdef CONFIG_KVM_MAX_NR_VCPUS
-  #define KVM_MAX_VCPUS CONFIG_KVM_MAX_NR_VCPUS
-  #else
-  #define KVM_MAX_VCPUS 1024
-  #endif
+You check return value, if > 31, use list_splice to whole submitted queue
+to pending queue.
 
+but this is small optimzation.
 
-  config KVM_MAX_NR_VCPUS
-	int "Maximum number of vCPUs per KVM guest"
-	depends on KVM_X86
-	range 1024 4096
-	default 4096 if MAXSMP
-	default 1024
+Frank
 
-
-KVM_CAP_NR_VCPUS incorporates the number of CPUs in the system, but that's purely
-a "suggestion" for userspace.
-
-	case KVM_CAP_NR_VCPUS:
-		r = min_t(unsigned int, num_online_cpus(), KVM_MAX_VCPUS);
-		break;
-
-> vm_create_with_vcpus() might fail with a hard assertion.
-> 
-> Should this check against the host limit and either skip via TEST_REQUIRE()
-> or batch the creations into smaller groups of vCPUs?
+> > +		list_move_tail(&vdesc->node, &fsl_chan->vchan.desc_issued);
+> > +	}
+>
+> Since fsl_edma_link_sg() is called here in a loop over desc_submitted, while
+> holding the vchan.lock spinlock with interrupts disabled, submitting a large
+> batch of N descriptors (e.g., from network or ALSA drivers) could result in
+> O(N^2) list node traversals.
+>
+> Could this heavily stall the CPU and potentially cause soft lockups?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260803-fsl-edma-dyn-sg-v8-0-dc2b0317206d@bootlin.com?part=2
