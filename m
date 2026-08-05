@@ -1,95 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100EE3DB640;
-	Wed,  5 Aug 2026 07:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F963E1D16
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 07:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785913980; cv=none; b=EkkZwSiHtGKVaFHjQX1ws8KcxlxF/5MGI47Fv4+OtyOc/M1KFpmURYmCBYhaDpkuI2Hg1CtOGTP1zoofMpb8Eap7h8t0cEOROw6F5zdrqX4Eu1wywMGcuLmT2DPC3rYCtdo7hEw8DzqJLnDeSo6sB5fbYMq/YZM8LggN5Q7AOKE=
+	t=1785914818; cv=none; b=V2PIDtsS0NcIo1bwIl0BIMrwhNwfx54JZZ6kM+uDwENaybEosXTlVhEXVErfKFwZ/Dvd5zVHn6Ig4AxahvS6U4LhQ0yrNXdws2WPhvxa9Rhi0qZfB7BYMoCjE+wkHvJ1n4oB1AYG8sccYG3hz2aAfpF5sj0hK2jxPq6NRiYXiUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785913980; c=relaxed/simple;
-	bh=XyjdQw5vHv15miHITuqhLViV0PeC4EhnBTkPzrqYcxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FQp4/kdp4RCorK0voKKn5CF7k884MPI7ppDKg29zUpqTxD9S04jzz1kLiKkDD4HhxWwgUq60UYaiuy0MNeHDTtx+GpPIKz2eis0lOc4GiYnQYtHI7tMjZ0gRuz+0sS4+aSuGvcoI3LtBANap3QPCDal5nAC5UrdYsRIt7aqqIBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WyAYyd0X; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785914818; c=relaxed/simple;
+	bh=asK73d7GfDyhVd78GqzGQPrvU1ODMVZuA2la3QyxruQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PJZm4yfGbLvbnqqTKNG+bihycgZ+afNa+o6LuqSiwxWUy7dJs4C22Cuvs+CaMd0jSeuHCUG53HCRtfveex3b1Slk0UwSV+izJshNJc5QXvjmSpKnMUAnODKBDOPZmt2YvOe+0jekPZasbqTYQXWNvMIEzXtarRaDCLWW47TJTDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at; spf=pass smtp.mailfrom=sigma-star.at; dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b=fB2X6HY8; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sigma-star.at
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WyAYyd0X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E201F000E9;
-	Wed,  5 Aug 2026 07:12:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785913978;
-	bh=o59jN68wgLw3YD6yQjMfoBUtaqcxWg8Nf0mXb6+LxHQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=WyAYyd0XkmwQg4h3Xi3yNxPIKBdkK5A3qPh8B6GR1wwLAHnAlHqCY+2hJfUvS8Tau
-	 7FJ69WVTZh7E32chnRUZoIeNa/FJnZk0JT/T3LKHbTc1VeTbdA13RSMEAQ//8hgn15
-	 TSVIyq8DicuniAhrttXweRBUaDGI5l8H5h8dMsB4xSLr8wsXjrOkMYLBJ4/64V5IT0
-	 HSxZnJ/LUQ0vWkauN4R9TQehVxOlvPw28xuMS1jgNChP9kPNC+e17Xwe9tQ19TuFFL
-	 pxgcSbjAGnAH0NIjUYAMrAmj700XgDKPfB9McEJj/e8HWg3DF48CssVZEZqcgA6mul
-	 jDpJ1wbJpQ9gg==
-Date: Wed, 5 Aug 2026 09:12:54 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH v3 10/11] dtc: dt-check-style: Add warning for redundant
- white-spaces
-Message-ID: <20260805-durable-swinging-skylark-f687f3@quoll>
-References: <20260803-n-dts-style-checker-continued-v3-0-6c9776928cea@oss.qualcomm.com>
- <20260803-n-dts-style-checker-continued-v3-10-6c9776928cea@oss.qualcomm.com>
- <20260803091332.53D661F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b="fB2X6HY8"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49553515a8bso8769725e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 00:26:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sigma-star.at; s=google; t=1785914813; x=1786519613; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=twTeQfheFVdLzfrMuJjB8uMdt+x4381kwqcX7wxLE60=;
+        b=fB2X6HY8wrqrdGt02ZYLckDgTmiwDcelpJ0iIyXtExOicBSWBRiR46c/YIGCDLABtX
+         KraggrLsZ3xFBB4nnLJyOdeC8ZCgP12RBDnWZjFkfMoGd3EsGDGHxEN4QHhpVhUlM0Ks
+         ILBcKwh/qZjLU2SISx1LwQxHyr+cSb+9n76JEOSKtDr7NtS/LhuUwDaa0i0KRjZCS9o1
+         weyJymp/pWApOCUUDPYcSYUV/4/l4qT+An408/5Tjodcx+gmJkHMOWGXNfrQJh3tFXkD
+         iabTrvKQiVFEGUqQndhdZT+7DRI+MXfsAp1wP6gGU1W/PpXL1X8ZaMMa62zT+OCrSYwg
+         FRow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785914813; x=1786519613;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=twTeQfheFVdLzfrMuJjB8uMdt+x4381kwqcX7wxLE60=;
+        b=XY2diohC1sUDC88R3cu0l8MLI42YPNNpuHB207R4L4lwYB06NJe4QRxElwSYi+WsZm
+         sD5DQGbZ4AjeX+WSgc+JXTXbJqsItigb00qSUC0HX2j/q2M8jfLq5EqJBQITFZqVMhLL
+         0U7umm/ZasgI6NdaWRe4mrrqDtqlRAvHjwo4Hk4M3vckozarAQCrpQ3d1wNGD1cgjibg
+         bQMX5mFu5jWaSHG0++g5nqUjDYLqXFhx94Ba2ZXKLSJnWFcUB2jef/DhuJKPQJze8BeL
+         NPVBats9ghE09fQQbKbu0QwMnp7ZXEhqMDH7dCOyR3eJtG5pXuI3nd+MZalxP7svNxkT
+         PDgA==
+X-Gm-Message-State: AOJu0YwXVxd45bo1/BjAi/SAI0PCoZqwLbWNldDkbDzs36M6rhPn7c/z
+	5LMLnsXPXLm/ERiXYz97EDTKAxE0Obmdk0k7E2cjBnlU0V4ad9XeAZlOfa/tNZxPOkcE1+4qNvR
+	TnI4WtBHVWw==
+X-Gm-Gg: AR+sD137M50mvgg1Kpd0WF+nKh5qXuZAzvP1iLi2wabI3X0DCGPckHuQGpC0jvl4e6S
+	0q7JQSY2LHqxslw7LhNVE7Nocj/Z0maVVNFeyTKhiiLR7CjT0wlPfHrOcNI0BzQiJhO78lBK9xu
+	AJBkjpHEDf2xgnnGsuRLvsbiUTGrzFa2qpgK7O8UAkFKGh1IMxzwn08VP/hFuGhZv8yVdX8pLYd
+	w7xRDmClsv4Ch23kQ0y1ELfcCZ8bKhxnUKLFmPvdqWCA6jIrVvbnZ284aRMdb+hu3Jy4/uwJRgE
+	1XSJP78bB2DkaDghTMqyLVUtPhG7/5fdUoH+Po5GviqRApvCbePNOZTLCNTJ+ppy5x8IUaBiD4a
+	l8cKipBsd2I1m9wHmMLkyXVfr1R82tNA3Y0NACdM4h84g/zD9NLTM3jclsJmDRvdfxB7+ztHNv6
+	gQVc1ZM7/fyieKCWxAc1Zw13SNsUdwCfAe/ezU0iV8ARtRGn/J3RzzN8teDIHaKXPf8AS4ITBrt
+	A11zpBay6c=
+X-Received: by 2002:a05:600c:3589:b0:493:c845:bc20 with SMTP id 5b1f17b1804b1-4994e79ab0emr51987475e9.4.1785914813464;
+        Wed, 05 Aug 2026 00:26:53 -0700 (PDT)
+Received: from [10.115.255.165] ([82.150.214.1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fcb345sm153939695e9.6.2026.08.05.00.26.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Aug 2026 00:26:53 -0700 (PDT)
+Message-ID: <a88bbbb3-2a6b-4b2b-85ec-479d3ba5299a@sigma-star.at>
+Date: Wed, 5 Aug 2026 09:26:52 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260803091332.53D661F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] phy: ti: ti-pipe3: allow configuring ACSPCIe TX/RX
+ mode
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com,
+ robh@kernel.org, conor+dt@kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org
+References: <20260804111849.92046-1-david.oberhollenzer@sigma-star.at>
+ <20260804111849.92046-2-david.oberhollenzer@sigma-star.at>
+ <20260804112702.497CF1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+In-Reply-To: <20260804112702.497CF1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Aug 03, 2026 at 09:13:31AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] False positives in dt-check-style whitespace checks due to unstripped strings and inline comments.
-> --
-> 
-> --- Patch [10]: [PATCH v3 10/11] dtc: dt-check-style: Add warning for redundant white-spaces ---
-> commit f5a3cbd31bda433ce990bca1b2244f3a3da27d87
-> Author: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> 
-> dtc: dt-check-style: Add warning for redundant white-spaces
-> 
-> This commit adds a warning in dt-check-style to catch excessive spaces or
-> tabs around '=', before '{', and before ';'. The checking is split between
-> relaxed and strict modes to accommodate existing in-tree usage.
-> 
-> > diff --git a/scripts/dtc/dt-check-style b/scripts/dtc/dt-check-style
-> > index 1430c675bd951..aa2072957a1a0 100755
-> > --- a/scripts/dtc/dt-check-style
-> > +++ b/scripts/dtc/dt-check-style
-> > @@ -348,6 +348,36 @@ def check_trailing_whitespace(ctx):
-> >              yield (dl.lineno, 'trailing whitespace')
-> >  
-> >  
-> > +def check_redundant_whitespace(ctx):
-> > +    """No whitespace between brackets or other code elements.
-> > +    See also check_value_whitespace() for more checks."""
-> > +    for dl in ctx.lines:
-> > +        if dl.linetype in (LineType.COMMENT, LineType.COMMENT_BODY,
-> > +                           LineType.COMMENT_END, LineType.COMMENT_START,
-> > +                           LineType.PREPROCESSOR):
-> > +            continue
-> > +        if re.search(r'(\s\s+|\t){', dl.raw):
-> > +            yield (dl.lineno, 'extra whitespace before {')
-> > +        if re.search(r':(\s\s+|\t)', dl.raw):
-> > +            yield (dl.lineno, 'extra whitespace after :')
-> > +        if re.search(r'\s+;', dl.raw):
-> 
-> [Severity: Medium]
-> Does using dl.raw directly here cause false positives for inline comments or
-> string literals?
+Hi,
 
-Ack
+On 8/4/26 1:27 PM, sashiko-bot@kernel.org wrote:
+>> +
+>> +	regmap = syscon_regmap_lookup_by_phandle_args(np,
+>> +						      "syscon-acspcie-tx-rx",
+>> +						      2, args);
+>> +	if (IS_ERR(regmap)) {
+>> +		dev_warn(phy->dev, "can't get syscon-acspcie-tx-rx\n");
+>> +		return -EINVAL;
+> 
+> [Severity: High]
+> Does this code inadvertently break probe deferral?
+> 
+> If the syscon provider is not yet ready, syscon_regmap_lookup_by_phandle_args()
+> will return -EPROBE_DEFER.
 
-Best regards,
-Krzysztof
+It will not. syscon_regmap_lookup_by_phandle_args() internally wraps
+of_parse_phandle_with_fixed_args(), the implementation of which can
+either return -EINVAL or -ENODEV.
+
+The only additional error path in syscon_regmap_lookup_by_phandle_args()
+also returns -ENODEV. At worst, this will mask -ENODEV as -EINVAL.
+
+> 
+>> +	if (phy->mode == PIPE3_MODE_PCIE) {
+>> +		ret = ti_pipe3_acspcie_tx_rx_mode(phy);
+>> +		if (ret)
+>> +			dev_warn(dev, "failed to set ACSPCIe TX/RX mode\n");
+>> +	}
+>> +
+>>   	ret = ti_pipe3_get_pll_base(phy);
+> > Is it intentional that the error returned from ti_pipe3_acspcie_tx_rx_mode()
+> is ignored?
+
+Yes, I tried to following established convention by modeling the implementation
+after other drivers that need to set syscon register bits during probe.
+
+For instance, the dra7 pcie driver. See: dra7xx_pcie_unaligned_memaccess() or
+dra7xx_pcie_configure_two_lane(). Those follow the same structure,
+returning -EINVAL on lookup failure or the result from regmap_update_bits().
+
+Where the setting is optional, a warning is issued on failure, but the probe
+then simply continues.
+
+Thanks,
+
+David
 
