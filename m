@@ -1,105 +1,172 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E263E168C
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 08:25:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930C23DAADE
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 08:28:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785918304; cv=none; b=XKXlcrhH0KX1syuLmxlvOHkHbtaW30pQzoEkl7HW5QJfAL4ZqYL+NAI5oj2VfnD1+ttKoE7FyESpuE/y/hNRfaBuN80a58sZ6wfJ75thwRTnUAbBQBoY2mgt/lMfs4hAHRnVO9e5AAxYMlhsqdjkHT0TF7wv9kRcZoax2CkQFtM=
+	t=1785918516; cv=none; b=RXt2bIUwNBYa/z2w5O21TJRlvEx2Z4L2KYi2UY7MhmBDFF7G6KnjxN9SCV57kvLSeW+VP+CnaeaQEJBKFpd0GlbrA/p6gEy0+L0QWW+NH4i+NmhxSirDB71WCWrd+UDFRuTxNBbTxZL8o8YG5GVc7doudBYUXe8jl6jz86w/7rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785918304; c=relaxed/simple;
-	bh=j7pg1eQ8bwfhdZWt7vrmy2tAkRrPgKImJQlDd8A8ksY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=NjuGLK8JMOg4xoTf8jpYzIVJ2P3wZRAvJBSUmGtITEnmNgiK36DJw6PqwRgiOZmJA6FznGQNlrtLFT0t62CcrrCui1c4rl9ni5uZ+ecVOWjsTitmCPZxyBklK1KpMpBOehnS4ybrEXH/kyK5qtss4QJ8pQuACmKdUpYOPcvUgxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=1zBsVh5B; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1785918516; c=relaxed/simple;
+	bh=PX7By4zeDo2HgbnlZbo6iqNdru4CTHDyE1Od/gCRqZI=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sAPt8LbAYLQrl97m/YTJ3NXEquDUJR/WrKhUzezdRU747yAaqe17nrTDdnQf5a4Helg2pZxTijUx+iCABXbDmJRahu/zUjYoZn041dGjYKR3KSOUnQUN3DUfysWa12KD73Rb3fhAXjdVZqfs54IceiXWcLMmPYhBpt6ONB8zkqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lC+Ldoxr; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="1zBsVh5B"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id B41F61A0494
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 08:24:59 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 8085B602AB;
-	Wed,  5 Aug 2026 08:24:59 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 90AA611C34397;
-	Wed,  5 Aug 2026 10:24:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1785918299; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=/fgYSdKnrDojrnMpuodU72uOJdhwVUwt+MqzVMP9kI8=;
-	b=1zBsVh5BufIcqCt507tCwbmWMw+SnHOlbduaqY0jWWxoaWBCFqd1h3pJAu/D+nneVGY13E
-	63MNQ1FAQoGJV05TGOwo723pH++2gJ6rNjCw708ME1wF4UQ+JpjQL26YrTefha/3B+3IKD
-	A+r4LG/JP3sEdNo4i5edNSMc2paoQmyh4EWTy3viOpYg5iWzHNoAsdE3lQ87IrSQ/4wjFD
-	cPYcxay95m1EUCXuWYJG8VghUpLjnmF4u2Gs5wIL1BHkc4N9lQ1LQMfIA7fkQR639g68Id
-	arGcEKRsLA+msvqFdIs4Dpr1zb3dUiAxjoXsXloOPLy8O52sIHvwXRB+EH+xyg==
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lC+Ldoxr"
+Message-ID: <b4343223-a221-4cc3-aee2-cb79c556bcb0@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785918512;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3HhgnZYRXj0g/pjMUG8Oa4nhud1GQ6qpbjBU13+rTKc=;
+	b=lC+LdoxrVf/VMQK042vRrMhoKMUXlUhEYwean6p1u3TymfQItYTZspEyvgP6fxuXzII/yT
+	8noe4u3l8mch4DzquSFouMcdnvXUX9yLmqZQ6/eKkVOgfUqbdkTGDT6c6zpXma1HnzqeN4
+	9tzr0ggLTdXUAZHiPRPc3P99/TxQj28=
+Date: Wed, 5 Aug 2026 16:28:01 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Cc: cui.tao@linux.dev, kvm@vger.kernel.org
+Subject: Re: [PATCH v2] LoongArch: KVM: Advertise already-supported
+ capabilities
+To: sashiko-reviews@lists.linux.dev, Bibo Mao <maobibo@loongson.cn>
+References: <20260805054549.287648-1-cui.tao@linux.dev>
+ <20260805060636.A0FB11F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <20260805060636.A0FB11F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 05 Aug 2026 10:24:57 +0200
-Message-Id: <DKGV77RFHLUM.1SCIGQ894DYQ3@bootlin.com>
-Subject: Re: [PATCH bpf-next v6 9/9] selftests/bpf: add tests to validate
- KASAN on JIT programs
-Cc: <bpf@vger.kernel.org>
-From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
-To: <sashiko-reviews@lists.linux.dev>,
- =?utf-8?b?QWxleGlzIExvdGhvcsOpIChlQlBGIEZvdW5kYXRpb24p?=
- <alexis.lothore@bootlin.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260804-kasan-v6-0-549ef845f491@bootlin.com>
- <20260804-kasan-v6-9-549ef845f491@bootlin.com>
- <20260804183540.464031F000E9@smtp.kernel.org>
-In-Reply-To: <20260804183540.464031F000E9@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Tue Aug 4, 2026 at 8:35 PM CEST, sashiko-bot wrote:
 
-[...]
+Hi Bibo,
 
->> @@ -2449,6 +2583,11 @@ static int do_jit(struct bpf_verifier_env *env, s=
-truct bpf_prog *bpf_prog, int *
->>  				/* populate jmp_offset for JAE above to jump to start_of_ldx */
->>  				start_of_ldx =3D prog;
->>  				end_of_jmp[-1] =3D start_of_ldx - end_of_jmp;
->> +			} else if (!accesses_stack_only) {
->> +				err =3D emit_kasan_check(env, &prog, src_reg,
->> +						       insn, ip, false);
->> +				if (err)
->> +					return err;
->>  			}
->
+The Sashiko automated review of this patch flagged two pre-existing items
+— neither is from this patch. Wanted to get your thoughts,
+
+在 2026/8/5 14:06, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The unsafe user-access macros (`unsafe_put_user()` and `unsafe_get_user()`) are used without the required `user_access_begin()` and `user_access_end()` guards, violating the kernel API contract.
+The steal-time code uses unsafe_put_user()/unsafe_get_user() without
+   the usual user_access_begin()/end() around them. On LoongArch it
+   doesn't actually cause any trouble — there's no hardware user-access
+   protection (user_access_begin() just resolves to access_ok()),
+   __put_user is a plain store, and the ghc->hva address is already
+   validated by kvm_gfn_to_hva_cache_init(), so the access_ok() is
+   redundant anyway. So I see it more as a convention inconsistency /
+   style nit than a real bug. I'd be happy to put together a small
+   cleanup wrapping those in user_access_begin()/end() (or switching to
+   kvm_write_guest_cached()). Does that sound like just cleanup to you,
+   and would you want it?
+> - [High] A lockless read-modify-write on the shared VM state `kvm->arch.pv_features` allows userspace to bypass the validation check that requires all vCPUs to share identical PV features.
+The check-then-set on kvm->arch.pv_features in cpucfg_set_attr() is a
+   genuine TOCTOU — again pre-existing, unrelated to this patch. It's not
+   really reachable in practice: 0/3000 with two vCPUs hammering it
+   concurrently, though a debug widening of the window does reproduce it
+   every time (3000/3000). It'd basically need a userspace firing
+   KVM_SET_DEVICE_ATTR with different values on two vCPUs at once. The
+   odds are low, but I do think edge cases like this are still worth
+   fixing — happy to send a separate patch using a mutex or cmpxchg.
+
+Neither of these affects v2 itself, so I'd leave it as-is.
+
+Thanks,
+Tao
+> --
+> 
+> --- Patch [1]: [PATCH v2] LoongArch: KVM: Advertise already-supported capabilities ---
+> commit 91e3758510b96f271c2589373d1340c246fab45a
+> Author: Tao Cui <cui.tao@linux.dev>
+> 
+> LoongArch: KVM: Advertise already-supported capabilities
+>     
+> This commit advertises KVM_CAP_STEAL_TIME and KVM_CAP_VCPU_ATTRIBUTES on
+> LoongArch, making existing features discoverable to userspace.
+> 
+>> diff --git a/arch/loongarch/kvm/vm.c b/arch/loongarch/kvm/vm.c
+>> index 1317c718f896a..0a51931d6f6e0 100644
+>> --- a/arch/loongarch/kvm/vm.c
+>> +++ b/arch/loongarch/kvm/vm.c
+>> @@ -122,6 +122,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+>>  	case KVM_CAP_IOEVENTFD:
+>>  	case KVM_CAP_MP_STATE:
+>>  	case KVM_CAP_SET_GUEST_DEBUG:
+>> +	case KVM_CAP_VCPU_ATTRIBUTES:
+> 
 > [Severity: High]
-> Does this code emit KASAN checks for BPF_PROBE_MEM and BPF_PROBE_MEMSX
-> instructions?
->
-> Tracing programs frequently probe pointers that may be NULL or point to
-> userspace memory using BPF_PROBE_MEM. The verifier emits these
-> instructions to use the BPF exception table, which safely faults without
-> crashing or logging.
->
-> If emit_kasan_check() is called here unconditionally, it evaluates the
-> pointer using __asan_load*, which will call kasan_report() on NULL or
-> userspace pointers. Won't this bypass the exception table entirely and
-> print a KASAN BUG report to dmesg for every expected invalid pointer,
-> potentially causing log spam?
-
-Aside from the usual r10/r11 complain: I am confused about why the bot
-is raising this concern in an answer to the selftests patch, I guess it
-should have been an answer to patch 4/9.
-
-Anyway, no, this is not instrumenting BPF_PROBE_MEM/BPF_PROBE_MEMSX
-insns, and it should not. We are in the else branch of the if
-actually checking if we are dealing with PROBE_MEM/PROBE_MEMSX.
-
-Alexis
-
---=20
-Alexis Lothor=C3=A9, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+> This is a pre-existing issue, but does advertising KVM_CAP_VCPU_ATTRIBUTES
+> expose a data race in kvm_loongarch_cpucfg_set_attr()?
+> 
+> Looking at arch/loongarch/kvm/vcpu.c, there is a lockless read-modify-write
+> sequence on the shared VM state:
+> 
+> arch/loongarch/kvm/vcpu.c:kvm_loongarch_cpucfg_set_attr() {
+> ...
+> 	/* All vCPUs need set the same PV features */
+> 	if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED)
+> 			&& ((kvm->arch.pv_features & valid) != val))
+> 		return -EINVAL;
+> 	kvm->arch.pv_features = val | LOONGARCH_PV_FEAT_UPDATED;
+> ...
+> }
+> 
+> If multiple threads concurrently call KVM_SET_DEVICE_ATTR on different vCPUs,
+> can they bypass this validation check by both reading before either writes,
+> resulting in divergent configurations being silently applied globally instead
+> of returning -EINVAL?
+> 
+>>  		r = 1;
+>>  		break;
+>>  	case KVM_CAP_NR_VCPUS:
+> 
+> [ ... ]
+> 
+>> @@ -136,6 +137,9 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+>>  	case KVM_CAP_NR_MEMSLOTS:
+>>  		r = KVM_USER_MEM_SLOTS;
+>>  		break;
+>> +	case KVM_CAP_STEAL_TIME:
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does advertising
+> KVM_CAP_STEAL_TIME expose an issue with unsafe memory accesses?
+> 
+> In arch/loongarch/kvm/vcpu.c, unsafe_put_user() is used without the required
+> user_access_begin() and user_access_end() guards:
+> 
+> arch/loongarch/kvm/vcpu.c:kvm_update_stolen_time() {
+> ...
+> 	unsafe_put_user(0, &st->preempted, out);
+> ...
+> }
+> 
+> And similarly in kvm_vcpu_set_pv_preempted():
+> 
+> arch/loongarch/kvm/vcpu.c:kvm_vcpu_set_pv_preempted() {
+> ...
+> 	unsafe_put_user(KVM_VCPU_PREEMPTED, &st->preempted, out);
+> ...
+> }
+> 
+> Since omitting user_access_begin() skips the access_ok() check at the access
+> site, could this cause a kernel fault if hardware-enforced user access
+> protections are introduced?
+> 
+>> +		r = kvm_pvtime_supported();
+>> +		break;
+>>  	default:
+>>  		r = 0;
+>>  		break;
+> 
 
