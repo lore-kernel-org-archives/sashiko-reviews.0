@@ -1,60 +1,87 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957AF2BDC0F;
-	Wed,  5 Aug 2026 13:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF01A471275
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 13:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785935683; cv=none; b=SJAAdMgJY8Ard63uJSUwSJCqy6Xb5jLDAOeX214jKWTTQ1D/2PY8ah55eTHFDba0h0ftqDs9T214UdH8knapHFi1J98TVE+gYG5LmtuQwbqbiqBrPbRMPUThj7sTfGHINcySdV/Wkar/WiBiaigUh5SdEw6hw9m6DPcRPeh9BdE=
+	t=1785935764; cv=none; b=qcKFAzHuW+5o9u6uLAh9VyEo1BRTiz7+J+zBep6Lbmy69/eovZBS9FbKPOm0jVXYg06oXH7DPrBo6zDpoi227NvioUPi4V2biJZziX5hZ/xlkxIgIokGNYTac52EhYIGNOOQmgsUmdwJcna92fdIfD7lzSGXHC1kHesu832vZP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785935683; c=relaxed/simple;
-	bh=1upffbS6T6+L5b1jXkxWDuMHXx4j7qqm+y/mFpQT11c=;
+	s=arc-20240116; t=1785935764; c=relaxed/simple;
+	bh=MCHR5bHaUz1jgjPvf2+S+pxP7wSBueHnoUoV9aIhEZg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GP4kao5ppzPB4BAVq2w/l5GemMuKSMIsTrtsIYrLSPfyQEBzyo3RPWrl7omfvrT9b4wb4DgDvJpKKA0n+L+v5n5ti4ecMNl2b4Xpw8cJYupoG5q68mtl+EkPmeYtL3Md4e+Q4QS0VkiHQne+ehLVyTRdP9kmKuyQ76DeOQILGOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=HU/zsaxV; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=B16KXVcxDsKHu8NMdF7UIgM2hVDX/EG4ltVU/1TaBdRtS6BF8ZZFJdCa6+i1XbdTqdrLtyDh+Rrr+mNlr6ofzELZEtjDbFg9uNwnNbB/P4UvhyKaSD/UZhz8LCkd6IQKAE89w4ELG1MBkwmgzHs8vjjw1S3HUggS3nHjyZXjFBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a0KSbExV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E+OZ1yio; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="HU/zsaxV"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 675CHfQ61940678;
-	Wed, 5 Aug 2026 13:14:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=PNWbA9
-	mFx/Ff+b2UyvAAw0TKu3AJCLpFPyiHJdIQ4iY=; b=HU/zsaxVi8mfT9CUoj8xdd
-	GU/pHY86O7XCtoa6GK9z8DKEwBlbkW8z78W5tz1d4qcUe7DX+dIDxAjUdmQbVRIZ
-	wFOdxhq5LwwR1cPKub3NjVAw0JWc/iwevn6+sRGVWmcJ6zG31wYNr/YE6dVojIrT
-	riPD6xZVfj+7h62KoTxtjKLz+Ac1R07JKG+WzZiY0qV6gwdaZzuaXQSO4xFzAphr
-	EZDXJVR4+XkOb6SdE+xkXxZXREWr5JpDa3/GagmpZEvh9RfllkhYWINFzQ9mN4HS
-	MNadtUZUhWvXMv70Sjr3SiET1+gtFQK9wV/7uzYK1IsEirf76Fqf89gBmC5/AZ4A
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqu3d3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Aug 2026 13:14:40 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 675DBKLh019497;
-	Wed, 5 Aug 2026 13:14:39 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgeg4y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Aug 2026 13:14:39 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 675DEb4v49479936
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 5 Aug 2026 13:14:38 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BCF625805F;
-	Wed,  5 Aug 2026 13:14:37 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DFA405805C;
-	Wed,  5 Aug 2026 13:14:36 +0000 (GMT)
-Received: from [9.61.13.108] (unknown [9.61.13.108])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed,  5 Aug 2026 13:14:36 +0000 (GMT)
-Message-ID: <74826403-39d5-48f1-809b-d5ff62b790e8@linux.ibm.com>
-Date: Wed, 5 Aug 2026 09:14:36 -0400
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a0KSbExV";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E+OZ1yio"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 675BvuCV3124689
+	for <sashiko-reviews@lists.linux.dev>; Wed, 5 Aug 2026 13:16:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S5PD355OhZIEocJcFj+xdm1rv7mreAZ7LtNr5C3z80E=; b=a0KSbExVtEUhh16q
+	GT3IViHBt5wdStuL5u2Q9f7VysY5hQA1HAXTOIKoVlDind3/KIA2VeFpZCvmptH/
+	PEfp6dFhR01VfkokdCiqNYVlleBPt0kkC10Xn0GV1WA5RwG4eZIvH3gjqkuSFOUm
+	QPe08jZONHJrm/wLASA0hdiL4UOavAkofJxWWi9OkeqWSZPt63V2hxHms1shZD+Z
+	5XQT8nvyFxQDgBmtkHR38Fx+PP5g/OkQ1+C+PiQUeoWalHiXDk57QtUOHsz2bmsP
+	UC/3ObqOFZhiJ+N3FZLXgeuDcpESQlD8RHDVHAgUXSB/V4+UYcbldfP+QIj3oaox
+	fCSCGg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fv14w9ceu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 13:16:01 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2cf6acd760cso12210495ad.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 06:16:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1785935761; x=1786540561; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=S5PD355OhZIEocJcFj+xdm1rv7mreAZ7LtNr5C3z80E=;
+        b=E+OZ1yioGPc1jJtL+NSfv9tMomO9qDAoGFGHBZRUaCXk5X8HjCtQuY8/i8C4eP3QM0
+         ZifZRCdRkQo9y6ih9AGcY8b1QrzpyeuVXofJ8vVazarH7yoaIhYOlJ1G73X13CGOOLK5
+         +ztwrM2bAQqkS9/HF3f5TTLsmnVoEZa3OmtRwl8vjkRsDZwH1o0pvO2GF9jnzYwJFJ8P
+         aygl2ZzHpPNdxIIv48oDQ4AjnXP0IJRPcLbr9AhkLhXrWIOPJn06ilWYaUDjbr7tAinB
+         b+cIqJJ/v0nHnYAdjCY+4ezcLAF/Fof0/Svt284UTZCduXk4inhjq8su0+rMg/SM5ul1
+         bpRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785935761; x=1786540561;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=S5PD355OhZIEocJcFj+xdm1rv7mreAZ7LtNr5C3z80E=;
+        b=BIImoWS57YqAf85EDLLAY2r6izrnXqD7AlghHnuEO2TEILe0wWAo++K7Nyyvk9oXxo
+         KbBNidCucwtJERSffTqKU9ce0zxssgfXDTwsx2ZXT+esniLzIHpcLblzRacqqtBiQzMt
+         4akDcqA7iCuKKUTSM3qLrl6Z/iPK+MXH7cX37fQEfLA6lxPVQSRPxF4LW95ZyE6hBK1j
+         qElDzqYe4tHG/YvOK/ewafZTRDUbl6AJBN8xrP/92hwjWVXjA0QaaGlrgj9HiMG+vJOb
+         UvdZvbYASPMGvJi0Z6LUFAiBU+6RXwLH0jPYBPLM5B94rw8VOCoUE/cv4C1tDNcFrOUK
+         L73g==
+X-Gm-Message-State: AOJu0YwapHJb/TM1Xht6bIolL19W3BncqtQu8EvSmMK1oKsELPqqfTqg
+	tLOW3C8t55iER5xyLu1x06/6ww3P0BEw3tSFf8D4oWzR/zUKkdxzHM0Ght24cTFRkkp8yDy4Vpf
+	5Ky+cjs527a+VMbIG+wKJ8dSjEMvPUHSbmwOPGohygEB8jvur9llB4BtFav0QwIjDa6QOz6/e8y
+	Rw5v8=
+X-Gm-Gg: AR+sD13YgwVrPF8iaeskFfs75XpF23apCBRKJN44BAvtE4w9E+sAsfbazPVAaEwhYER
+	en6iQLJQ2lQzvNOpKv1QfqNBcUxvr4WpDywjoT/o8E1EAViBP1kYRNg36aMojdaAXnXMSc96B37
+	su3LaqZOqVWo+TbhnnISQtiMQJYf4TW3ZLKhjKmQ10IfPLtt2Vf8RYg2hhMs0cH7uCXohVX3nrG
+	rmAJBg0bC4xVgIHFRT9OpM9i9VobnVnCbXm/1fDHvsd5ICiFKIxVMadj3sjxcSNXvlWnfMHA2cf
+	c9q8tXd+LWjnBy0rCla5uY2lt/xfrRLX75kHbg41JB9sg2y3htwXZAX3gC52H8QDwgQWEOKKO7+
+	pQZixIZS7Tkpx2BEqAznKZdw=
+X-Received: by 2002:a17:902:ea01:b0:2d0:8b28:517c with SMTP id d9443c01a7336-2d0ca712ed0mr69851385ad.3.1785935760742;
+        Wed, 05 Aug 2026 06:16:00 -0700 (PDT)
+X-Received: by 2002:a17:902:ea01:b0:2d0:8b28:517c with SMTP id d9443c01a7336-2d0ca712ed0mr69850635ad.3.1785935760206;
+        Wed, 05 Aug 2026 06:16:00 -0700 (PDT)
+Received: from [192.168.1.6] ([171.76.80.242])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d0a9f9362esm17387865ad.12.2026.08.05.06.15.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Aug 2026 06:15:59 -0700 (PDT)
+Message-ID: <6b59bf0d-c98c-4004-a117-7f5dde20d625@oss.qualcomm.com>
+Date: Wed, 5 Aug 2026 18:45:56 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,204 +89,148 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 12/15] s390/vfio-ap: Transition device migration state
- from STOP to RUNNING and vice versa
+Subject: Re: [PATCH 4/8] platform: arm64: qcom-hamoa-ec: Add fan RPM query and
+ LUT calibration
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Claudio Imbrenda <imbrenda@linux.ibm.com>,
-        Janosch Frank <frankja@linux.ibm.com>,
-        Halil Pasic <pasic@linux.ibm.com>
-References: <20260727173239.2420754-1-akrowiak@linux.ibm.com>
- <20260727173239.2420754-13-akrowiak@linux.ibm.com>
- <20260727182852.ABF2A1F000E9@smtp.kernel.org>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260728-ec_add_more_commands-v1-0-771abd65ee1a@oss.qualcomm.com>
+ <20260728-ec_add_more_commands-v1-4-771abd65ee1a@oss.qualcomm.com>
+ <20260728181543.AB3131F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260727182852.ABF2A1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: V0JhO58-YzNqUaIDoZP2wlo-WK-MxQK0
-X-Proofpoint-ORIG-GUID: V0JhO58-YzNqUaIDoZP2wlo-WK-MxQK0
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDEwMyBTYWx0ZWRfX5i4sjvrVbOMB
- kvMVE68PUQ2KQmFfPtj/GqV0q0WB3HCLi19np42YDfYMQE41VbN3fSB2eHxhtXpF9I6SB8Clb87
- E5zJSctmM6lST8euyfn+Qr6ut+Ysk08=
-X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a733740 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=_UpRN81A3srhLPRKp3oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDEwMyBTYWx0ZWRfX8Bn1GWt/yMU7
- ++/lyTvWv10xhMRHCBQrQya2RJqqpebRG7f/vwHlRe1EpP2vRjUs/n2RWLDaakslDVW0wdC3Duo
- k/FCknFbHmJIKYIybYSyfVEd73FIDXoGFFPNxzvvQdHSrc2/KdI7gi2XRuRL3AWN4CL5OOLc21J
- lBECnAnJxu0kka4ZnBIGtvvtP+KnvxZCKfw/4j+VMBlBM1Jys3j/HVcb7416O/DVxB45wn2Z04K
- NhEFVUfBhKaeDPUGbYeOx/qIfGRhOcFfaIDpdCiWWxeaaEMFkZAF3BM6YUQb/1//133eFQqbVwy
- cz7GQ/K8V8TLXiXZ5JXw7CRABrrJpDUUmHhxq36xvTiYNpMnnCc3GioamrnRs1HUsM2xkTLvESn
- OCxC8xhqWWjJ8t35RlOAnq0u1h4/DV0r1+ZBh94Deb6qS0ePl71yO9XQjbOt1aiTu+TOfoTYWJw
- yRZpBHnIl3lW8ZUUTcg==
+From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+In-Reply-To: <20260728181543.AB3131F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDEwNiBTYWx0ZWRfX/4o5aLQuhs3g
+ gN/qdyhaaBMBEUi2V4vcwYi17a9da1XejmNfPRBbMUnB9XJbekCZdd94u7DTjjD8D6FoAkiPQLz
+ OBqkuJ+9mpP60/H8V2Jmp0bFDnrCshg=
+X-Proofpoint-ORIG-GUID: 4FwcS3pZbrW1oVQEbnLLMZbeD_T1J2VG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDEwNiBTYWx0ZWRfXxzo8T48+oNtC
+ yRrTSfnKsfetGz84/AJ7o5VGweegtNuCukVCnNwVVQ6H0cDVAYtLNhp3zRUakwt9ikvzlcvoE2/
+ YpczPjJbdwsWCKf3bv5xxGYovqJZk8dBhcyS/ObnX+rhI8dxLNKHrnTnc8FSKYI9i/Eiahwz5Wz
+ azeAnwbOMj70148J+vEvMeCj0p39XrRrwnNhyFS3LK8tTQVg1WK4Tx4tlyMRkmrL/K9NvwWkAfT
+ YW8t1y6WHVTRcEv45RoSfY1bLVaLsiKv8v5nHDbLwXMsAkAdc7i7Q0F+6mmaO4ehnmlZoogu/rY
+ bNixwqXlyKIIIB/DlAlv1b7no7hJFoLZRctxg1lSZuKX0zwaCFuClDqTfx2D3BFg+GVp9dLwpUW
+ /wQPSmJDF6KIRlWhFWeMXycuarIGueP/XIYYBe1djbEnJFF9STQHwXYHB1k5oFVT+8CmBq7VtaB
+ MYyBLAmfehEKbjgxEKw==
+X-Proofpoint-GUID: 4FwcS3pZbrW1oVQEbnLLMZbeD_T1J2VG
+X-Authority-Analysis: v=2.4 cv=Cu+PtH4D c=1 sm=1 tr=0 ts=6a733791 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=UcsMPGGDBby+oECK+wqMZw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=MTEsSbWAnu0fgz7AP8kA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-05_04,2026-08-04_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050103
+ phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608050106
 
 
 
-On 7/27/26 2:28 PM, sashiko-bot@kernel.org wrote:
+On 7/28/2026 11:45 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] Concurrent device reset, closure, or state transitions during migration data transfer cause Use-After-Free or Write-After-Free of `ap_config`.
-> - [High] Overwriting the active migration file descriptor during state transitions allows silent migration of stale state and leaks file references.
+> - [High] Race condition between suspend/remove paths and `fan_calib_work_fn` can cause a 10 to 20-second hang.
+> - [High] `psy_work` can be queued and executed while the device is in suspend, leading to I2C transfer failures.
 > --
->
-> --- Patch [12]: [PATCH v6 12/15] s390/vfio-ap: Transition device migration state from STOP to RUNNING and vice versa ---
-> commit 2b837152c9f64c5082507b5aa41ffc56027c1e29
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Transition device migration state from STOP to RUNNING and vice versa
->
-> The transition from STOP to RUNNING and vice versa indicates that
-> the vfio device is operating normally and migration is not
-> currently taking place. In this case, just set the new state.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index fc4cb893f0f00..1c385908fc39b 100644
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
->> @@ -1280,12 +1280,17 @@ vfio_ap_transition_to_state(struct ap_matrix_mdev *matrix_mdev,
+> 
+> --- Patch [4]: [PATCH 4/8] platform: arm64: qcom-hamoa-ec: Add fan RPM query and LUT calibration ---
+> commit e49733d2c63b28585a159eb3f465f9613c0aec7d
+> Author: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+> 
+> platform: arm64: qcom-hamoa-ec: Add fan RPM query and LUT calibration
+> 
+> This commit adds EC command definitions and handler functions for querying
+> fan RPM and programming per-fan LUTs mapping SoC temperature to target RPM.
+> It implements a runtime calibration work item to determine the maximum RPM,
+> and programs the LUT once calibration finishes and upon power-supply changes.
+> 
+>> diff --git a/drivers/platform/arm64/qcom-hamoa-ec.c b/drivers/platform/arm64/qcom-hamoa-ec.c
+>> index f6ff77d4e8f69..d0c45d9970eee 100644
+>> --- a/drivers/platform/arm64/qcom-hamoa-ec.c
+>> +++ b/drivers/platform/arm64/qcom-hamoa-ec.c
 > [ ... ]
->> +	/*
->> +	 * These states indicate migration has either not been initiated or
->> +	 * has completed and the vfio-ap device is operating normally. Since the
->> +	 * vfio-ap device does not virtualize a DMA device, there is no internal
->> +	 * device state to incorporate into the vfio-ap device on the target.
->> +	 */
->>   	if ((cur_state == VFIO_DEVICE_STATE_STOP &&
->>   	     new_state == VFIO_DEVICE_STATE_RUNNING) ||
->>   	    (cur_state == VFIO_DEVICE_STATE_RUNNING &&
->>   	     new_state == VFIO_DEVICE_STATE_STOP)) {
->> -		/* TODO */
->> -		return ERR_PTR(-EOPNOTSUPP);
->> +		return NULL;
+>> @@ -665,6 +1097,49 @@ static void qcom_ec_soc_tj_work_fn(struct work_struct *work)
+>>  	queue_delayed_work(system_percpu_wq, &ec->soc_tj_work, EC_SOC_TJ_TEMP_POLL_JIFFIES);
+>>  }
+>>  
+>> +static void qcom_ec_fan_calib_work_fn(struct work_struct *work)
+>> +{
+>> +	struct qcom_ec *ec = container_of(work, struct qcom_ec, fan_calib_work);
+>> +	struct device *dev = &ec->client->dev;
+>> +	int i, ret;
+>> +
+>> +	reinit_completion(&ec->calib_abort);
+> 
 > [Severity: High]
-> Does returning NULL here instead of -EOPNOTSUPP allow userspace to silently
-> leak the active migration file and state?
+> Can this race with the suspend or remove paths and cause a long delay?
+> 
+> If qcom_ec_fan_calib_work_fn() begins executing concurrently with
+> qcom_ec_suspend() or qcom_ec_remove(), the suspend/remove thread calls
+> complete_all(&ec->calib_abort) to signal the worker to abort.
+> 
+> However, if the worker executes reinit_completion() immediately after the
+> suspend thread's complete_all(), the abort signal is erased. The suspend
+> thread then blocks in cancel_work_sync(), waiting for the worker to finish,
+> and the worker will block in wait_for_completion_interruptible_timeout()
+> for the full timeout per fan (up to 10-20 seconds total).
 >
-> If a live migration is aborted and transitioned gracefully from STOP to
-> RUNNING, the old file descriptor could remain active in mig_data because
-> the driver still holds a reference to the file.
->
-> If the process later starts a new migration and transitions to STOP_COPY
-> again, it looks like vfio_ap_transition_to_state() unconditionally
-> overwrites mig_data->stop_copy_mig_file.filp:
->
-> vfio_ap_transition_to_state() {
->      ...
->      if (cur_state == VFIO_DEVICE_STATE_STOP &&
->          new_state == VFIO_DEVICE_STATE_STOP_COPY) {
->          ...
->          mig_data->stop_copy_mig_file.filp = filp;
->          return filp;
->      }
->      ...
-> }
->
-> Will this cause the driver's reference to the old file to be permanently lost?
 
->
-> If the old fd is read, vfio_ap_stop_copy_read() might observe that
-> mig_file->ap_config is already populated and skip updating it, serving
-> stale configuration to the target.
->
-> Additionally, when userspace closes the old fd, its release handler might
-> fail to match the overwritten filp pointer, which would skip
-> vfio_device_put_registration() and permanently pin the device.
+I'll guard against this, probably by checking completion state before
+reinit or using a separate abort flag instead of relying on
+reinit_completion() alone.
 
-The NULL return for STOP<->RUNNING transitions is the correct
-VFIO API response when no data fd needs to be handed to
-userspace — it does not touch any filp field in mig_data.
-The scenario you describe — a new STOP->STOP_COPY transition
-silently overwriting a still-live stop_copy_mig_file.filp —
-cannot happen, for the following reasons:
+>> +
+>> +	mutex_lock(&ec->io_lock);
+>> +	ec->calibrating = true;
+>> +	mutex_unlock(&ec->io_lock);
+>> +
+> [ ... ]
+>> @@ -690,7 +1169,16 @@ static int qcom_ec_suspend(struct device *dev)
+>>  	struct qcom_ec *ec = i2c_get_clientdata(client);
+>>  	int ret;
+>>  
+>> -	disable_delayed_work_sync(&ec->soc_tj_work);
+>> +	if (ec->lut_cfg && ec->thermal_cap.fan_cnt) {
+>> +		complete_all(&ec->calib_abort);
+>> +		cancel_work_sync(&ec->fan_calib_work);
+>> +	}
+>> +
+>> +	if (ec->lut_cfg)
+>> +		cancel_work_sync(&ec->psy_work);
+> 
+> [Severity: High]
+> Does this allow psy_work to be re-queued and executed during suspend?
+> 
+> While cancel_work_sync() stops currently pending work, the system-wide
+> power supply notifier qcom_ec_psy_notifier() is not unregistered during
+> suspend. 
+> 
+> If a power supply event occurs during the suspend process after
+> cancel_work_sync() has run, the notifier can immediately queue psy_work
+> back to the non-freezable system_long_wq.
+> 
+> This could cause the work to run and attempt I2C transfers while the
+> I2C controller is suspended or the EC is in Modern Standby, potentially
+> leading to bus lockups or suspend failures.
+>
 
-File descriptor cleanup is always performed before a new fd
-can be opened. vfio_ap_release_mig_files() is called by
-both vfio_ap_reset_migration_state() (on VFIO_DEVICE_RESET)
-and vfio_ap_release_migration_data() (on device close),
-both under mdevs_lock. Either path nulls out
-stop_copy_mig_file.filp before any subsequent
-STOP->STOP_COPY transition can reach the code that writes
-to it.
+I'll switch that to disable_work_sync() so the notifier can't requeue it
+mid-suspend.
 
-vfio_device_put_registration() is always balanced.
-vfio_ap_release_mig_file() — the file_operations.release
-handler invoked when userspace closes the fd —
-unconditionally calls vfio_device_put_registration()
-regardless of mig_data state. There is no code path that
-causes it to be skipped.
+>> +
+>> +	if (ec->lut_cfg && ec->lut_cfg->send_soc_tj)
+>> +		disable_delayed_work_sync(&ec->soc_tj_work);
+>>  
+>>  	mutex_lock(&ec->io_lock);
+>>  	ret = i2c_smbus_write_byte_data(client, EC_MODERN_STANDBY_CMD,
+> 
 
-The stale-data scenario does not apply.
-validate_stop_copy_read_parms() rejects any read where
-mig_data->stop_copy_mig_file.filp != filp. A fd from a
-previous session will fail that check with -EINVAL and
-never serve any data.
-
->
-> [Severity: Critical]
-> With these new state transitions, is there also a risk of use-after-free or
-> write-after-free regressions during concurrent migration data transfers?
->
-> If a userspace process calls read() or write() on the migration file
-> descriptor, mdevs_lock is temporarily dropped during the data copy:
->
-> vfio_ap_stop_copy_read() {
->      ...
->      mutex_unlock(&matrix_dev->mdevs_lock);
->
->      if (copy_to_user(buf, (char *)mig_file->ap_config + read_pos, len))
->      ...
-> }
->
-> Similarly in vfio_ap_resuming_write():
->
-> vfio_ap_resuming_write() {
->      ...
->      mutex_unlock(&matrix_dev->mdevs_lock);
->
->      if (copy_from_user((char *)ap_config + write_pos, buf, len)) {
->      ...
-> }
->
-> Can a concurrent thread issue a VFIO_DEVICE_RESET ioctl, close the
-> device fd, or trigger a state transition that acquires mdevs_lock and
-> frees ap_config and mig_data?
->
-> If so, when the read/write thread resumes execution, it appears it
-> would access the freed ap_config memory, leading to arbitrary kernel
-> memory corruption or information leaks.
-
-This is a valid observation. At the commit under review,
-vfio_ap_resuming_write() drops mdevs_lock for
-copy_from_user() while holding a raw pointer to an
-ap_config buffer that has not yet been stored into mig_data.
-For subsequent writes (non-new-allocation path), the pointer
-is retrieved from mig_data->resuming_mig_file.ap_config
-under the lock but then used after the lock is dropped. A
-concurrent VFIO_DEVICE_RESET calling
-vfio_ap_release_mig_files() under the same lock could
-kvfree() that buffer while the write path is copying into
-it.
-
-This will be addressed in the next patch series.
-
->
->>   	}
->>   
->>   	/* vfio_mig_get_next_state() does not use arcs other than the above */
+-- 
+Best Regards,
+Anvesh
 
