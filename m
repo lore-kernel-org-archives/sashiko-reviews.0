@@ -1,68 +1,50 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F963E1D16
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 07:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FA3B47FB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 07:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785914818; cv=none; b=V2PIDtsS0NcIo1bwIl0BIMrwhNwfx54JZZ6kM+uDwENaybEosXTlVhEXVErfKFwZ/Dvd5zVHn6Ig4AxahvS6U4LhQ0yrNXdws2WPhvxa9Rhi0qZfB7BYMoCjE+wkHvJ1n4oB1AYG8sccYG3hz2aAfpF5sj0hK2jxPq6NRiYXiUY=
+	t=1785916418; cv=none; b=dRjec+1w/gvRrHVzvlsp2diOd3PhkkulOVclX5JO1NGmDmnbySt5e344vopHDX9S+8/VV5BUJDzlRPugz2hc6U8jOhj2cSPhk6zbdNBfAN+QicQewCCfJge0c/FFXHShP/l+9JRyolf0kwRKUuwNlyIgtbbGj8sA7pyizcDOkUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785914818; c=relaxed/simple;
-	bh=asK73d7GfDyhVd78GqzGQPrvU1ODMVZuA2la3QyxruQ=;
+	s=arc-20240116; t=1785916418; c=relaxed/simple;
+	bh=pknl9TYvrxvyOFWsgkanW5sgMZO4eSyzokheV0jIqaA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PJZm4yfGbLvbnqqTKNG+bihycgZ+afNa+o6LuqSiwxWUy7dJs4C22Cuvs+CaMd0jSeuHCUG53HCRtfveex3b1Slk0UwSV+izJshNJc5QXvjmSpKnMUAnODKBDOPZmt2YvOe+0jekPZasbqTYQXWNvMIEzXtarRaDCLWW47TJTDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at; spf=pass smtp.mailfrom=sigma-star.at; dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b=fB2X6HY8; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sigma-star.at
+	 In-Reply-To:Content-Type; b=ZmIDDrk/6Gn42S8q7PeYWBpBf0KlbihGGlA70RDi+1XFBXhamTOuvYzfHk8jiQuOrulaR43rX8IlpPb75f2I4SqeGuB5XAyoWc7KsbXQ6qtRhlX9UOl+A4A82Ygx29QQeGahRa9yiradP/5chS78cSdP/LVJ+w2bydqJpB9HdLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hwjPFYgc; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b="fB2X6HY8"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49553515a8bso8769725e9.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 00:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sigma-star.at; s=google; t=1785914813; x=1786519613; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=twTeQfheFVdLzfrMuJjB8uMdt+x4381kwqcX7wxLE60=;
-        b=fB2X6HY8wrqrdGt02ZYLckDgTmiwDcelpJ0iIyXtExOicBSWBRiR46c/YIGCDLABtX
-         KraggrLsZ3xFBB4nnLJyOdeC8ZCgP12RBDnWZjFkfMoGd3EsGDGHxEN4QHhpVhUlM0Ks
-         ILBcKwh/qZjLU2SISx1LwQxHyr+cSb+9n76JEOSKtDr7NtS/LhuUwDaa0i0KRjZCS9o1
-         weyJymp/pWApOCUUDPYcSYUV/4/l4qT+An408/5Tjodcx+gmJkHMOWGXNfrQJh3tFXkD
-         iabTrvKQiVFEGUqQndhdZT+7DRI+MXfsAp1wP6gGU1W/PpXL1X8ZaMMa62zT+OCrSYwg
-         FRow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785914813; x=1786519613;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=twTeQfheFVdLzfrMuJjB8uMdt+x4381kwqcX7wxLE60=;
-        b=XY2diohC1sUDC88R3cu0l8MLI42YPNNpuHB207R4L4lwYB06NJe4QRxElwSYi+WsZm
-         sD5DQGbZ4AjeX+WSgc+JXTXbJqsItigb00qSUC0HX2j/q2M8jfLq5EqJBQITFZqVMhLL
-         0U7umm/ZasgI6NdaWRe4mrrqDtqlRAvHjwo4Hk4M3vckozarAQCrpQ3d1wNGD1cgjibg
-         bQMX5mFu5jWaSHG0++g5nqUjDYLqXFhx94Ba2ZXKLSJnWFcUB2jef/DhuJKPQJze8BeL
-         NPVBats9ghE09fQQbKbu0QwMnp7ZXEhqMDH7dCOyR3eJtG5pXuI3nd+MZalxP7svNxkT
-         PDgA==
-X-Gm-Message-State: AOJu0YwXVxd45bo1/BjAi/SAI0PCoZqwLbWNldDkbDzs36M6rhPn7c/z
-	5LMLnsXPXLm/ERiXYz97EDTKAxE0Obmdk0k7E2cjBnlU0V4ad9XeAZlOfa/tNZxPOkcE1+4qNvR
-	TnI4WtBHVWw==
-X-Gm-Gg: AR+sD137M50mvgg1Kpd0WF+nKh5qXuZAzvP1iLi2wabI3X0DCGPckHuQGpC0jvl4e6S
-	0q7JQSY2LHqxslw7LhNVE7Nocj/Z0maVVNFeyTKhiiLR7CjT0wlPfHrOcNI0BzQiJhO78lBK9xu
-	AJBkjpHEDf2xgnnGsuRLvsbiUTGrzFa2qpgK7O8UAkFKGh1IMxzwn08VP/hFuGhZv8yVdX8pLYd
-	w7xRDmClsv4Ch23kQ0y1ELfcCZ8bKhxnUKLFmPvdqWCA6jIrVvbnZ284aRMdb+hu3Jy4/uwJRgE
-	1XSJP78bB2DkaDghTMqyLVUtPhG7/5fdUoH+Po5GviqRApvCbePNOZTLCNTJ+ppy5x8IUaBiD4a
-	l8cKipBsd2I1m9wHmMLkyXVfr1R82tNA3Y0NACdM4h84g/zD9NLTM3jclsJmDRvdfxB7+ztHNv6
-	gQVc1ZM7/fyieKCWxAc1Zw13SNsUdwCfAe/ezU0iV8ARtRGn/J3RzzN8teDIHaKXPf8AS4ITBrt
-	A11zpBay6c=
-X-Received: by 2002:a05:600c:3589:b0:493:c845:bc20 with SMTP id 5b1f17b1804b1-4994e79ab0emr51987475e9.4.1785914813464;
-        Wed, 05 Aug 2026 00:26:53 -0700 (PDT)
-Received: from [10.115.255.165] ([82.150.214.1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fcb345sm153939695e9.6.2026.08.05.00.26.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Aug 2026 00:26:53 -0700 (PDT)
-Message-ID: <a88bbbb3-2a6b-4b2b-85ec-479d3ba5299a@sigma-star.at>
-Date: Wed, 5 Aug 2026 09:26:52 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hwjPFYgc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785916415; x=1817452415;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=pknl9TYvrxvyOFWsgkanW5sgMZO4eSyzokheV0jIqaA=;
+  b=hwjPFYgchtT7tCYmePh1y9CzTEBXfNpe6bEZjuryffLlncAlkPR2OT8F
+   hl7/gvql/ARQY6b3cwUtttbvMB/+oyBmWVKkcUui2S3woRSeGn6pG+Qni
+   Q10sUTx5UukxU8CqjfLQQVfdHqrnZYbELaci+C3ppklD0Husfy5iKCbsx
+   wLCfwV8GlID9loUdJ5Pf054c8fynd2CkqcWLFJyjj87/SGV6ZZ7Dxmwj7
+   ZZqv9GQxoih6CpFlW5kjo3YM3zNnPNGq3C5OGPT/dUkg3AwCWJfbYeJMp
+   n/cnyJzGneYjp48e4CWbfK77xMh8L8+OTM417sEO7yyUIhsytADGq6H1H
+   Q==;
+X-CSE-ConnectionGUID: 04j+bUYzQC6ACpro/y7+3w==
+X-CSE-MsgGUID: Wtql58i0QGOGY2U2Hu86pA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11865"; a="97643026"
+X-IronPort-AV: E=Sophos;i="6.25,206,1779174000"; 
+   d="scan'208";a="97643026"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2026 00:53:34 -0700
+X-CSE-ConnectionGUID: vYnFk2RDSXG54R7vQ54xqA==
+X-CSE-MsgGUID: qRVFZR06QYWKWpAvvGwsgw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,206,1779174000"; 
+   d="scan'208";a="261166542"
+Received: from fuxiaogu-mobl1.ccr.corp.intel.com (HELO [10.238.208.47]) ([10.238.208.47])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2026 00:53:34 -0700
+Message-ID: <4fedcaa6-d710-48f8-84c4-de682350bb2f@intel.com>
+Date: Wed, 5 Aug 2026 15:53:31 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,67 +52,183 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] phy: ti: ti-pipe3: allow configuring ACSPCIe TX/RX
- mode
+Subject: Re: [PATCH 2/2] KVM: TDX: Enable Bus Lock VM exit
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com,
- robh@kernel.org, conor+dt@kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org
-References: <20260804111849.92046-1-david.oberhollenzer@sigma-star.at>
- <20260804111849.92046-2-david.oberhollenzer@sigma-star.at>
- <20260804112702.497CF1F000E9@smtp.kernel.org>
+Cc: kvm@vger.kernel.org
+References: <20260805031257.1844914-1-xiaoyao.li@intel.com>
+ <20260805031257.1844914-3-xiaoyao.li@intel.com>
+ <20260805034602.5B2BB1F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: David Oberhollenzer <david.oberhollenzer@sigma-star.at>
-In-Reply-To: <20260804112702.497CF1F000E9@smtp.kernel.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20260805034602.5B2BB1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 8/4/26 1:27 PM, sashiko-bot@kernel.org wrote:
->> +
->> +	regmap = syscon_regmap_lookup_by_phandle_args(np,
->> +						      "syscon-acspcie-tx-rx",
->> +						      2, args);
->> +	if (IS_ERR(regmap)) {
->> +		dev_warn(phy->dev, "can't get syscon-acspcie-tx-rx\n");
->> +		return -EINVAL;
+On 8/5/2026 11:46 AM, sashiko-bot@kernel.org wrote:
+>> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+>> index cdc0d24657acb..c037e9cb5bdfc 100644
+>> --- a/arch/x86/kvm/vmx/tdx.c
+>> +++ b/arch/x86/kvm/vmx/tdx.c
+>> @@ -2031,7 +2031,7 @@ int tdx_complete_emulated_msr(struct kvm_vcpu *vcpu, int err)
+>>   }
+>>   
+>>   
+>> -int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+>> +static int __tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+>>   {
+>>   	struct vcpu_tdx *tdx = to_tdx(vcpu);
+>>   	u64 vp_enter_ret = tdx->vp_enter_ret;
 > 
 > [Severity: High]
-> Does this code inadvertently break probe deferral?
+> Does this code handle the bus_lock_detected bit (bit 26) being set in
+> vp_enter_ret or the raw 32-bit exit reason?
 > 
-> If the syscon provider is not yet ready, syscon_regmap_lookup_by_phandle_args()
-> will return -EPROBE_DEFER.
+> If userspace triggers a bus lock concurrently with an exit, the hardware can
+> set bit 26.  Will strict equality checks on vp_enter_ret (such as checking for
+> EXIT_REASON_EPT_MISCONFIG later in this function) fail because the bit is
+> unmasked?
 
-It will not. syscon_regmap_lookup_by_phandle_args() internally wraps
-of_parse_phandle_with_fixed_args(), the implementation of which can
-either return -EINVAL or -ENODEV.
+Sashiko is correct. I think the handling like
 
-The only additional error path in syscon_regmap_lookup_by_phandle_args()
-also returns -ENODEV. At worst, this will mask -ENODEV as -EINVAL.
+   (vp_enter_ret == EXIT_REASON_EPT_MISCONFIG)
 
+is not safe, we need to first mask vp_enter_ret. Will add a separate 
+patch for it.
+
+> This also appears to affect tdx_to_vmx_exit_reason(), where comparing the raw
+> exit reason directly against 16-bit constants like EXIT_REASON_TDCALL will
+> fail to match if the bus lock bit is set, leading to incorrect emulation.
+
+This is valid. We need to adjust tdx_to_vmx_exit_reason().
+
+However, there is a more important problem. Since Bus Lock VM exit makes 
+bit 26 possible in EXIT REASON, the trick of "return -1" in 
+tdx_to_vmx_exit_reason() will introduce false-positive in the following 
+check of if(vmx_get_exit_reason(vcpu).bus_lock_detected) added by this 
+patch.
+
+how about something like below:
+
+---8<---
+diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+index c037e9cb5bdf..54598dcda938 100644
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -927,7 +927,7 @@ static __always_inline u32 
+tdcall_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+  static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+  {
+         struct vcpu_tdx *tdx = to_tdx(vcpu);
+-       u32 exit_reason;
++       union vmx_exit_reason exit_reason;
+
+         switch (tdx->vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
+         case TDX_SUCCESS:
+@@ -937,28 +937,29 @@ static __always_inline u32 
+tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+         case TDX_NON_RECOVERABLE_TD_WRONG_APIC_MODE:
+                 break;
+         default:
+-               return -1u;
++               return (u16)-1u;
+         }
+
+-       exit_reason = tdx->vp_enter_ret;
++       exit_reason.full = tdx->vp_enter_ret;
+
+-       switch (exit_reason) {
++       switch (exit_reason.basic) {
+         case EXIT_REASON_TDCALL:
+                 if (tdvmcall_exit_type(vcpu))
+-                       return EXIT_REASON_VMCALL;
++                       exit_reason.basic = EXIT_REASON_VMCALL;
+
+-               return tdcall_to_vmx_exit_reason(vcpu);
++               exit_reason.basic = tdcall_to_vmx_exit_reason(vcpu);
++               break;
+         case EXIT_REASON_EPT_MISCONFIG:
+                 /*
+                  * Defer KVM_BUG_ON() until tdx_handle_exit() because 
+this is in
+                  * non-instrumentable code with interrupts disabled.
+                  */
+-               return -1u;
++               return (u16)-1u;
+         default:
+                 break;
+         }
+
+-       return exit_reason;
++       return exit_reason.full;
+  }
+
+  static noinstr void tdx_vcpu_enter_exit(struct kvm_vcpu *vcpu)
+
+> [ ... ]
 > 
->> +	if (phy->mode == PIPE3_MODE_PCIE) {
->> +		ret = ti_pipe3_acspcie_tx_rx_mode(phy);
->> +		if (ret)
->> +			dev_warn(dev, "failed to set ACSPCIe TX/RX mode\n");
->> +	}
+>> @@ -2141,6 +2143,21 @@ int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+>>   	return 0;
+>>   }
+>>   
+>> +int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+>> +{
+>> +	int ret = __tdx_handle_exit(vcpu, fastpath);
 >> +
->>   	ret = ti_pipe3_get_pll_base(phy);
-> > Is it intentional that the error returned from ti_pipe3_acspcie_tx_rx_mode()
-> is ignored?
+>> +	/* Exit to user space when bus lock was detected */
+>> +	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
+>> +		if (ret > 0)
+>> +			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
+>> +
+>> +		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
+>> +		return 0;
+> 
+> [Severity: High]
+> Does this code silently drop negative error codes?
+> 
+> If __tdx_handle_exit() returns a negative error code (like -EIO or -EFAULT)
+> while bus_lock_detected is true, it skips setting vcpu->run->exit_reason but
+> still returns 0.
+> 
+> Could this cause KVM to return success to userspace with an uninitialized or
+> stale exit_reason instead of propagating the error?
 
-Yes, I tried to following established convention by modeling the implementation
-after other drivers that need to set syscon register bits during probe.
+It won't return uninitialized or stale exit_reason. But changing the 
+negative error codes to 0 is a wrong behavior. I will fix it.
 
-For instance, the dra7 pcie driver. See: dra7xx_pcie_unaligned_memaccess() or
-dra7xx_pcie_configure_two_lane(). Those follow the same structure,
-returning -EINVAL on lookup failure or the result from regmap_update_bits().
+The VMX handler looks to have the issue. I'll cook a separate patch to 
+fix it.
 
-Where the setting is optional, a warning is issued on failure, but the probe
-then simply continues.
+>> +	}
+>> +	return ret;
+>> +}
+> 
+> [ ... ]
+> 
+>> @@ -3167,6 +3184,10 @@ static int tdx_vcpu_init(struct kvm_vcpu *vcpu, struct kvm_tdx_cmd *cmd)
+>>   				vcpu->kvm->arch.notify_window);
+>>   	}
+>>   
+>> +	if (vcpu->kvm->arch.bus_lock_detection_enabled)
+>> +		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
+>> +				 SECONDARY_EXEC_BUS_LOCK_DETECTION);
+> 
+> [Severity: High]
+> Is it safe to write this execution control to the TD VMCS without verifying if
+> the TDX module supports it?
+> 
+> If a host userspace process enables KVM_CAP_X86_BUS_LOCK_EXIT but the TDX
+> module restricts this capability, could td_vmcs_setbit32() fail on TDH.VP.WR,
+> triggering the KVM_BUG_ON() macro and destroying the VM?
 
-Thanks,
+Same for the patch 1. This is not possible, TDX module itself should 
+always support Bus Lock VM exit unless the hardware doesn't support it. 
+But in the case of hardware doesn't it, KVM doesn't set 
+kvm_caps.has_bus_lock_exit thus userspace cannot enable 
+KVM_CAP_X86_BUS_LOCK_EXIT.
 
-David
+>> +
+>>   	tdx->state = VCPU_TD_STATE_INITIALIZED;
+>>   
+>>   	return 0;
+> 
 
