@@ -1,221 +1,236 @@
-Received: from mx1.zhaoxin.com (MX1.ZHAOXIN.COM [210.0.225.12])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8403042E8E9
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 11:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.0.225.12
+Received: from mail-106113.protonmail.ch (mail-106113.protonmail.ch [79.135.106.113])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95314477ED
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 11:56:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.113
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785930008; cv=none; b=Uhxra9mKk74Quv/OKlEjYelUraUmILj4Dfg0L8EfZfNi7hzgH+NZnupWcmIbILJk0VLgF5llMSWljBMaQeJ+hYERDS3TPA6pBXbG5wDmM8vXBabjzZqL1pGBbkgQZHm9LStVBhXmsdoYEjnI65cHjtx6rES1D/crjG0tLV6nkcc=
+	t=1785930972; cv=none; b=qdSRnmqhr06GH5UA5nBo5oiylp7jOvWLnFt2gEnof1KW1Tmo4zCiFLkZ17wGRLbDIHmmJ1FmF1qy6I6IwvU7q6HWGqi/JTZ+EHMYSkQ4UN3MXFGfyWAVWpSABrfrXiJL591TQfqRm6bdXSVQs5lfM6Cb7fkt1d4T/Ghmfa3nWx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785930008; c=relaxed/simple;
-	bh=7xiAm8lZp+LxRkGd/643XnqYU0Rwk4DKYHPOda4fVPY=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lFChyqHpyrADvyrsKBDmBSoimw3GUbyhltRPvbZW5HTA6bX1Xehk7SCbZf7xaGCLToHvnEA6pdMkMGmdb/OCXTdAyEDcKUTwG2fRy3Mw6Bw7p+2Y7MCj72te60/WfIaXfzcnp2+mmEMbf9JUQ8b/zLhZtA/lXjGRi4t114q2oeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zhaoxin.com; spf=pass smtp.mailfrom=zhaoxin.com; arc=none smtp.client-ip=210.0.225.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zhaoxin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zhaoxin.com
-Received: from zhaoxin.com (unknown [127.0.0.1])
-	by mx1.zhaoxin.com (MTA) with ESMTP id 4hFT3V4KQXzb0thx;
-	Wed,  5 Aug 2026 19:39:50 +0800 (CST)
-Received: from zhaoxin.com (unknown [10.28.208.166])
-	by mx1.zhaoxin.com (MTA) with ESMTP id 4hFT3T3htvzb0thx;
-	Wed,  5 Aug 2026 19:39:49 +0800 (CST)
-Received: from [10.32.68.20] ([10.32.68.20] [10.32.68.20])
-	by zhaoxin.com (8.30) with ESMTP93a415de1611863306424c967f4850be
-	Wed, 05 Aug 2026 19:39:48 +0800
-X-Eyou-Smtpauth: tonywwangoc@zhaoxin.com
-X-Eyou-EnvelopeSender: TonyWWang-oc@zhaoxin.com
-X-Eyou-From: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
-From: "=?UTF-8?B?VG9ueSBXIFdhbmctb2M=?=" <TonyWWang-oc@zhaoxin.com>
-Message-ID: <9fa90a4a-6b92-49f3-926d-ce6c2175524f@zhaoxin.com>
-Date: Wed, 5 Aug 2026 19:39:40 +0800
+	s=arc-20240116; t=1785930972; c=relaxed/simple;
+	bh=3X/1lVqY+9zNgEXc/kg6B+XvFs/cq8FSVO+5z7oIFDU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t0R2cIxVNdT1lnUBj6t7yAv2lHWAEqgtSCy2p940ZV7iObg5f7bnBb0qaTz9c/imRNrKpRmU4ApVa0ec6KjoBILJotd8h+6CqCT87dFACqs08ZzFVv2hvtYe3AK2bh5g2dyxwnvJWOZynmbrdQfdKhiwngUTw6CqOX498SL3ojE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=NAtATt9S; arc=none smtp.client-ip=79.135.106.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="NAtATt9S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
+	s=protonmail3; t=1785930958; x=1786190158;
+	bh=ef4IKq/Nf56uy8mZ1Q1ksYePcXwrZuQmrMmAHhPUl5Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=NAtATt9SiNAs6AgK/19tSy+T0jW/i/kWDCexImHfrcmbEKsJeRR3USgd0bH0Wl+2G
+	 TDR6LGfVCfZYq46JSCyTZro1FLHmy/IvCALBE28zj/cD3oGdMHMrNvLQeSVu3SY1bl
+	 rwgNGRY5XyPUMh60TxHcHFwsCESrG1RYUtvKymIYsMscJOPPYLhFhedwTBswfCzQa2
+	 oSZmJe5uiPNVMeXFIkyGQkZBFZqi9kGyVccNX545l6GHJXVb5ziNfJDOanepiivMHm
+	 n97BKNBoZ/8NwsrwGsAvqSD1sDeyODfICKuANtscrOirFBV+NE2IrgDZZFedl0RPUV
+	 PrxN53+UpcefA==
+X-Pm-Submission-Id: 4hFTQ50KnXz2Sd3K
+From: Esben Haabendal <esben@geanix.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>,  <robh@kernel.org>,
+  <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v3 4/4] iio: accel: mma8452: Allow open drain interrupt
+ pin configuration
+In-Reply-To: <20260805074101.BB8AC1F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Wed, 05 Aug 2026 07:41:01
+	+0000")
+References: <20260805-mma8452-open-drain-v3-0-6149f406a409@geanix.com>
+	<20260805-mma8452-open-drain-v3-4-6149f406a409@geanix.com>
+	<3CCt4oSYfAV5imS4quqVYLl2kEKTbJA-ytiLMNS_HYVb0p9cXIa87Rmig08wlrwL6qkBEetTqYddmtMWCs5Ijw==@protonmail.internalid>
+	<20260805074101.BB8AC1F000E9@smtp.kernel.org>
+Date: Wed, 05 Aug 2026 13:55:55 +0200
+Message-ID: <875x1obx2s.fsf@geanix.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] perf/x86: Do not read fixed counter control register
- if there is none
-To: Petr Tesarik <ptesarik@suse.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org,
- x86@kernel.org, linux-kernel@vger.kernel.org,
- "CobeChen@zhaoxin.com" <CobeChen@zhaoxin.com>, LouisQi@zhaoxin.com,
- SilviaZhao@zhaoxin.com
-References: <20260717150315.2868314-1-ptesarik@suse.com>
- <20260717151858.8ED701F000E9@smtp.kernel.org>
- <20260717175135.450f2788@mordecai>
-Content-Language: en-US
-In-Reply-To: <20260717175135.450f2788@mordecai>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Eyou-Sender: <tonywwang-oc@zhaoxin.com>
+Content-Type: text/plain
 
+<sashiko-bot@kernel.org> writes:
 
-
-On 2026/7/17 23:51, Petr Tesarik wrote:
-> On Fri, 17 Jul 2026 15:18:58 +0000
-> sashiko-bot@kernel.org wrote:
-> 
->> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->>
->> New issues:
->> - [Medium] Using `x86_pmu.fixedctr` as a capability flag is conceptually flawed and suppresses valid debug output on Zhaoxin.
->>
->> Pre-existing issues:
->> - [High] Zhaoxin PMU fails to initialize `x86_pmu.fixedctr`, leading to broken fixed counters and unsafe RDMSR accesses.
->> - [High] Undefined behavior in `GENMASK_ULL` during Zhaoxin PMU initialization if fixed counters are missing.
->> --
->>
->> --- Patch [1]: [PATCH 1/1] perf/x86: Do not read fixed counter control register if there is none ---
->> commit d0dd53a6709a65141e2d105b19abad4d851825d4
->> Author: Petr Tesarik <ptesarik@suse.com>
->>
->> perf/x86: Do not read fixed counter control register if there is none
->>
->> This patch skips reading the MSR_ARCH_PERFMON_FIXED_CTR_CTRL register
->> during perf debug output if fixed counters are not implemented. This avoids
->> a #GP on AMD CPUs with PerfMonV2 that do not implement this register.
->>
->>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
->>> index 576baa9a52c5b..3055d59e0e82f 100644
->>> --- a/arch/x86/events/core.c
->>> +++ b/arch/x86/events/core.c
->>> @@ -1572,13 +1572,16 @@ void perf_event_print_debug(void)
->>>   		rdmsrq(MSR_CORE_PERF_GLOBAL_CTRL, ctrl);
->>>   		rdmsrq(MSR_CORE_PERF_GLOBAL_STATUS, status);
->>>   		rdmsrq(MSR_CORE_PERF_GLOBAL_OVF_CTRL, overflow);
->>> -		rdmsrq(MSR_ARCH_PERFMON_FIXED_CTR_CTRL, fixed);
->>>   
->>>   		pr_info("\n");
->>>   		pr_info("CPU#%d: ctrl:       %016llx\n", cpu, ctrl);
->>>   		pr_info("CPU#%d: status:     %016llx\n", cpu, status);
->>>   		pr_info("CPU#%d: overflow:   %016llx\n", cpu, overflow);
->>> -		pr_info("CPU#%d: fixed:      %016llx\n", cpu, fixed);
->>> +
->>> +		if (x86_pmu.fixedctr) {
->>
->> [Severity: Medium]
->> Is it safe to use x86_pmu.fixedctr as a capability flag here?
-> 
-> Good question. In fact, I thought about it, and yes, introducing a new
-> flag would be the cleanest solution, but it seemed overkill just for
-> this debugging output.
-> 
-> AFAIK the MSR offset of the fixed perf counters cannot be zero, because
-> those MSR addresses have been assigned to other architectural MSRs since
-> Pentium times...
-> 
->> The x86_pmu.fixedctr field is an MSR address, not a boolean capability
->> flag. While this check works for most architectures, the Zhaoxin PMU driver
->> fails to initialize this field, leaving it as 0. Because of this, the check
->> evaluates to false and inadvertently suppresses the debug output of
->> MSR_ARCH_PERFMON_FIXED_CTR_CTRL on Zhaoxin systems.
-> 
-> I don't know about Zhaoxin. Do these syste have fixed performance
-> counters and a corresponding global control register?
-> 
-Yes, Zhaoxin system have fixed performance counters and a corresponding 
-global control register.
-
-> Adding Tony W Wang to the recipient list...
-> 
-> Petr T
-> 
+> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
+>
+> New issues:
+> - [High] Shared IRQ handler unconditionally accesses I2C bus while the device may be runtime-suspended.
+> - [Medium] Incorrect shared interrupt handling falsely claims unrouted interrupts, masking spurious IRQs.
+>
+> Pre-existing issues:
+> - [High] Volatile register context is not fully restored after PM runtime resume.
+> - [High] Unbalanced regulator disable and unpowered I2C access during device removal.
+> - [High] Sysfs callbacks modify cached state and access I2C without a PM runtime reference.
+> - [High] Reference count leak of the IIO trigger device due to unbalanced iio_trigger_get().
+> - [High] The driver ignores the requested IRQ polarity, leading to a hardware/software mismatch.
 > --
-> 
->>> +			rdmsrq(MSR_ARCH_PERFMON_FIXED_CTR_CTRL,
->>> fixed);
->>> +			pr_info("CPU#%d: fixed:      %016llx\n",
->>> cpu, fixed);
->>> +		}
->>>   		if (pebs_constraints) {
->>>   			rdmsrq(MSR_IA32_PEBS_ENABLE, pebs);
->>>   			pr_info("CPU#%d: pebs:       %016llx\n",
->>> cpu, pebs);
->> [ ... ]
+>
+> --- Patch [4]: [PATCH v3 4/4] iio: accel: mma8452: Allow open drain interrupt pin configuration ---
+> commit 6358f754e42af1003c7e9459771157fe3985f6bb
+> Author: Esben Haabendal <esben@geanix.com>
+>
+> iio: accel: mma8452: Allow open drain interrupt pin configuration
+>
+> This patch allows configuring the MMA8452 interrupt pin in open-drain
+> mode. It reads the "drive-open-drain" device property and sets the PP_OD
+> bit in CTRL_REG3. It also adds the IRQF_SHARED flag to allow sharing the
+> interrupt line with other devices.
+>
+>> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+>> index 723ca3d9cb96b..fa0915530f953 100644
+>> --- a/drivers/iio/accel/mma8452.c
+>> +++ b/drivers/iio/accel/mma8452.c
+>
+> [ ... ]
+>
+>> @@ -1688,7 +1712,7 @@ static int mma8452_probe(struct i2c_client *client)
+>>  		irq_flags = irq_get_trigger_type(client->irq);
+>>  		if (irq_flags == IRQ_TYPE_NONE)
+>>  			irq_flags = IRQF_TRIGGER_LOW;
+>
+> [Severity: High]
+> This is a pre-existing issue, but the driver appears to ignore the requested
+> IRQ polarity.
+>
+> While mma8452_probe() retrieves the requested IRQ trigger type to configure
+> the OS handler, does the driver ever set the hardware IPOL bit (bit 1) in
+> CTRL_REG3 to match it?
+>
+> The chip defaults to active-low, which might prevent interrupts from being
+> delivered if the platform specifies an active-high interrupt.
+
+This is per design. If IPOL bit is set based on the requested IRQ
+polarity, support for system designs with additional hardware changing
+the irq polarity (like a NOT gate) would not be possible.
+
+If IPOL bit should be configurable, we probably need to add a dedicate
+device-tree binding for it.
+
+>> -		irq_flags |= IRQF_ONESHOT;
+>> +		irq_flags |= IRQF_ONESHOT | IRQF_SHARED;
+>
+> [Severity: High]
+> Does adding IRQF_SHARED here make it possible for the interrupt handler to
+> run while the MMA8452 device is runtime-suspended?
+>
+> When another device on the shared line triggers an interrupt,
+> mma8452_interrupt() is invoked and unconditionally reads MMA8452_INT_SRC
+> over I2C:
+>
+> mma8452_interrupt()
+>     src = i2c_smbus_read_byte_data(data->client, MMA8452_INT_SRC);
+>
+> If the device utilizes runtime PM and powers off its regulators when
+> suspended, would this unpowered I2C access cause transfer failures or lock
+> up the bus?
+
+Oh. That does look like a problem.
+
+I will add a fix for this for v4 of this series. And I will split the
+shared interrupt support into a separate patch, as it is now supposed to
+be usable without open-drain mode also.
+
+> [Severity: Medium]
+> Additionally, is the interrupt handler equipped to properly reject spurious
+> interrupts on a shared line?
+>
+> With IRQF_SHARED, mma8452_interrupt() will run for other devices'
+> interrupts. It unconditionally checks the DRDY bit:
+>
+> mma8452_interrupt()
+>     if (src & MMA8452_INT_DRDY) {
+>         iio_trigger_poll_nested(indio_dev->trig);
+>         ret = IRQ_HANDLED;
+>     }
+>
+> Since DRDY indicates data is ready even if the DRDY interrupt is not routed
+> to the pin in CTRL_REG4, could this falsely claim unrouted interrupts and
+> mask IRQ storms from a faulty shared line?
+
+Maybe. I will send a patch with a fix for this when this series is merged.
+
+>>  		ret = request_threaded_irq(client->irq, NULL, mma8452_interrupt,
+>>  					   irq_flags, client->name, indio_dev);
+>>  		if (ret)
+>
+> [ ... ]
+>
+>> @@ -1806,6 +1830,10 @@ static int mma8452_runtime_resume(struct device *dev)
+>>  		return ret;
+>>  	}
 >>
->>
->> [Severity: High]
->> This is a pre-existing issue and was not introduced by the patch under
->> review, but the lack of initialization for x86_pmu.fixedctr causes
->> other issues.
->>
->> In the Zhaoxin PMU driver setup:
->>
->> arch/x86/events/zhaoxin/core.c:zhaoxin_pmu
->> static const struct x86_pmu zhaoxin_pmu __initconst = {
->>      ...
->>      /* missing .fixedctr = MSR_ARCH_PERFMON_FIXED_CTR0 */
->> };
->>
-This issue has indeed resulted in an “perf -e instructions” bug on 
-Zhaoxin processors. Although Tanze submitted a patch in 2025, it seems 
-it has not yet been merged to mainstream.
-https://lkml.org/lkml/2025/6/19/141
+>> +	ret = mma8452_set_interrupt_pin_mode(data);
+>> +	if (ret)
+>> +		goto runtime_resume_failed;
+>> +
+>>  	ret = mma8452_active(data);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does mma8452_runtime_resume() fully restore
+> the volatile register context after a PM runtime suspend cycle?
+>
+> mma8452_runtime_suspend() disables regulators, cutting power to the chip.
+> When resuming, CTRL_REG3 and CTRL_REG1 are restored, but are other volatile
+> registers like DATA_CFG, TRANSIENT_THS, CTRL_REG4/5, and FF_MT_CFG left
+> unconfigured?
+>
+> Could this cause the device to lose its sample rate, thresholds, and
+> interrupt routing after the first auto-suspend cycle?
+>
+> While reviewing the PM runtime and cleanup paths, a few other pre-existing
+> issues were noticed:
+>
+> [Severity: High]
+> This is a pre-existing issue, but does mma8452_remove() safely handle
+> removing a runtime-suspended device?
+>
+> mma8452_remove()
+>     mma8452_standby(iio_priv(indio_dev));
+>     regulator_disable(data->vddio_reg);
+>     regulator_disable(data->vdd_reg);
+>
+> This unconditionally writes to I2C and disables regulators without
+> guaranteeing the device is in an active PM state via pm_runtime_get_sync().
+> If the device is already runtime-suspended, the regulators were already
+> disabled. Could this double-disable regulators and cause unpowered I2C
+> access?
+>
+> [Severity: High]
+> This is a pre-existing issue, but do sysfs callbacks like
+> __mma8452_write_raw() modify cached state and access I2C without a PM
+> runtime reference?
+>
+> __mma8452_write_raw()
+>     data->ctrl_reg1 &= ~MMA8452_CTRL_DR_MASK;
+>     data->ctrl_reg1 |= i << MMA8452_CTRL_DR_SHIFT;
+>     ...
+>     return mma8452_change_config(data, MMA8452_CTRL_REG1, data->ctrl_reg1);
+>
+> If the device is in auto-suspend (regulators off) when user-space writes to
+> sysfs attributes, would the I2C writes fail and corrupt the cached driver
+> state?
 
 
->> Because this remains 0, x86_pmu_fixed_ctr_addr() returns 0 + idx
->> instead of the correct MSR. This causes fixed counter 0 to silently
->> return without updating in x86_perf_event_update():
->>
->> arch/x86/events/core.c:x86_perf_event_update() {
->>      ...
->>      if (unlikely(!hwc->event_base))
->>          return 0;
->>      ...
->> }
->>
->> It also leads to unsafe MSR reads when iterating over the fixed
->> counter mask in perf_event_print_debug():
->>
->> arch/x86/events/core.c:perf_event_print_debug() {
->>      ...
->>      for_each_set_bit(idx, fixed_cntr_mask, X86_PMC_IDX_MAX) {
->>          ...
->>          rdmsrq(x86_pmu_fixed_ctr_addr(idx), pmc_count);
->>          ...
->>      }
->> }
->>
->> Could this lead to reads from arbitrary low MSRs like MSR 0, 1, or 2,
->> potentially triggering a system crash if a user programs fixed counter
->> events or triggers SysRq-P?
->>
->>
->> [Severity: High]
->> This is a pre-existing issue and was not introduced by the patch under
->> review, but does this bitmask generation in the Zhaoxin PMU
->> initialization risk undefined behavior?
->>
->> arch/x86/events/zhaoxin/core.c:zhaoxin_pmu_init() {
->>      ...
->>      x86_pmu.fixed_cntr_mask64 =
->> GENMASK_ULL(edx.split.num_counters_fixed - 1, 0); ...
->> }
->>
->> If a hypervisor configures the CPU to report 0 fixed counters,
->> edx.split.num_counters_fixed - 1 wraps to -1. Expanding
->> GENMASK_ULL(-1, 0) results in a right-shift by 64, which is undefined
->> behavior in C. On x86, this yields ~0ULL, making the kernel assume 64
->> fixed counters exist.
->>
->> Could this cause the kernel to attempt reading 64 undefined MSRs
->> during debug output or event initialization, leading to #GP
->> exceptions?
->>
-This issue may exist. Can the code be changed as follows?
+As I am actually not using runtime PM with this device, I prefer to not
+investigate these 3 issues further for now.
 
-if (edx.split.num_counters_fixed == 0) {
-     x86_pmu.fixed_cntr_mask64 = 0;
-} else {
-     x86_pmu.fixed_cntr_mask64 = 
-GENMASK_ULL(edx.split.num_counters_fixed - 1, 0);
-}
+> [Severity: High]
+> This is a pre-existing issue, but is there a reference count leak of the IIO
+> trigger device?
+>
+> In mma8452_trigger_setup(), an extra reference is acquired:
+>
+>     indio_dev->trig = iio_trigger_get(trig);
+>
+> However, mma8452_trigger_cleanup() unregisters the trigger but does not
+> appear to drop the reference with iio_trigger_put(). Could this permanently
+> elevate the reference count and prevent the module from being unloaded?
 
+Maybe. But in that case, this is a problem for basically all iio
+drivers, as there are no explicit calls to iio_trigger_put() in any iio
+drivers as of now.
 
-In addition, this issue also appears to exist in the Intel PMU driver, 
-should we fix them together?
-
-Sincerely!
-TonyWWang-oc
-
+/Esben
