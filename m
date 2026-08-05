@@ -1,208 +1,189 @@
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021101.outbound.protection.outlook.com [40.107.74.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2423BBFBE
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 02:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.101
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785896130; cv=fail; b=RdIMzsfcyn5+HJHGzR/Q3CM4Tg2HjjlMfijWjnptZHmsgORecBWrcLfXbGfndmx8Y3v+GtGJLMrUsc/LDN/sLs7N/XYZxq1l7tNQlZKhK1sNYx1eEKz6egDmVKalK3uv4GCAkYM8PNvurePldQvrYf7FuscQXUNjzb70MvaPEzc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785896130; c=relaxed/simple;
-	bh=oGtbDbDN+qi0FKR5Aq3KCnDOijDzPPiViTsfXZCwFao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=l1aIAJbLH+VYsIXlul/cwERtvVPPbtpMavPWXkKT0Lv5/jLDMEYSqOCNo5sKdR8wE9d3ixEr2EdNphJvjCd7DPgy3oyEWSY8yecsL3bZ4EVtjouXfmQTsXtVHHsgEulZuxIpGid+lM0G8Q2hOGRHyTPyWR5E3zZLygpyvp2BLxc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=c2B+ogon reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFD42931D2
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 02:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785898281; cv=none; b=I9j6ZAi2ObB0VifTLWhhnB8WL2zfF+SW0RB35bnZ8SSzz9KDwhgp35v3/iNKrrpwkB3fRWgrKdJIWTy/31Ik7g6JPb3eF4NjTIZeVnFnRR4lt2WAG3mMS4qhujXQr3xSj1MroFFtpKU6lLTR75/vgAtHt6p+9qySNKbE1S/JHrQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785898281; c=relaxed/simple;
+	bh=7/2LB3Av9kHtvKKEFbTym3NGe/DZzLMld9p2wFxgLOk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EDG5AyGwCaU/b95epyOHN3JzaR4dABnii0E/z8Fr0e5QqhesdaCkxaWc8LN6ymIiAa7DMf15VjFL7z0hMXpAAQvf4gLjS6RQY/F9yJEahgofPg8cO+ON9ZgFvAouS+nNfshx8TpYBXtFzv0Bea4c44MsoJOYS4AgtrS4c0WdvY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gCW4JZsE; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="c2B+ogon"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YTWYlWbpuVg8v0dqJZMHbOcDE/dvc2P/khQ8lSwX3JePKb5fwEAOWSLvGhIjaah5m/yForQBvSJPb3484X8+hAu5+9dJ1vsBScDK6cbqeOsItmDN8YB0Buk1rqBttrjT8IEOSWZcRvb+m9ISQDIwdss8kXcxoG3nNyGPqPPzEa0G+7KIpUqkwxh7GdPW7ZZrHXOpEjYteh/RGui1gVg6ocJPF5H35tPmaYfAyy/KZbrlqfH3o/U7KdSCj2gw+fEhWo2g5/PZdFJR4pkR9tKze8G+tSkJ+PxIYCeD/dyZ4tDg9kAdVDhZUvEKgZxeMk6ucMBoHnTj26A/dJw06uN3vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ufnu1cyJ1PqdxaJ8xlROMTwtI0CkYUNpMFCJbar1TI8=;
- b=zFCcDWcS1jYEYomycJJpvZunfdeWlZZ6Xod3afY+KpmPCQ87iT3W/zENHNYD6lLmWTcfV3sGtbC4klee6Rl9iKnR1mOTpBUBvlcTFxeYlmkQCXt0AvG7HeOUg9g/5ekrr11iGJ+fpKA0ss7Tdi3j3l4qw8MZTSxKt3D4iQx9J8Dpi9DnTeulDU+IA7LMEj1VH0uS/N4gmLrcU6LnLX2Hg4nR6pVOCzR8ODlgDXVWAse8IV0w1XXHqLddyJsrvvGjBNRlWLhkGZmsIXH9QMEHZOcE8tOk6TdMWsQL9V2YbKPnX2565MHZHX4B9NtvZt7lb3s0byVT6HrCpCsfh0DPoQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ufnu1cyJ1PqdxaJ8xlROMTwtI0CkYUNpMFCJbar1TI8=;
- b=c2B+ogon7sGuoKpVDqSF5IcKMWbhlAiUbIYuII+9L0WnWxiNN9X86Knw9TVFH11feoMF3Kb+2eJ3chT3RWVqHjbQdyTGzNGoSWhp4cL2Ardot9mXz/VoDt7hglIEPElTGQQOvUgVDFGIglVrltGszn3l1WodnyNb/+e5weazaco=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TY7P286MB5326.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:1f4::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.16; Wed, 5 Aug
- 2026 02:15:24 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.017; Wed, 5 Aug 2026
- 02:15:24 +0000
-Date: Wed, 5 Aug 2026 11:15:23 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v6 4/6] dmaengine: dw-edma: Add delegated channel request
- helpers
-Message-ID: <6squdujudud4uhgr72wzhnbiq6rg3b56vsazdxztgscbhpehsz@nz4njedhvcdy>
-References: <20260804033855.2115817-1-den@valinux.co.jp>
- <20260804033855.2115817-5-den@valinux.co.jp>
- <20260804035230.538CD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260804035230.538CD1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TYWPR01CA0004.jpnprd01.prod.outlook.com
- (2603:1096:400:a9::9) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gCW4JZsE"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38deea72eebso399051a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 19:51:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785898279; x=1786503079; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Hb7cpiF1haPDfic8xNq1MIp0OroCt8boGG/yMAW7dr4=;
+        b=gCW4JZsE/R4S/jb1JyvlP5nl+kSk7hNNDd4Xz9asvEXMDSWyy6VSApLZOrKMTTlUuj
+         PCoXgxjBhyj997SlYWHpgPupTujnZgZTgNNmz/Q/Tiz7yleDPgZ/24jXASgeFlH8+lmH
+         ju5SsNKjCQkuUasErimSCV2HNi0AoqbbhZGx8SSKa674RFPhSG7pmN5J7p7Zco2LIR81
+         QRxwij4SbPWfJDQEoRvaCKX3ArnFMBCwYmJMuTJFRan3mdYco/quRtWqqM3kPom0OiMM
+         lPBRS80ZMUl1ZTCjy9+9RYfKKKH3WwUi5P5Y078HOIY99Cv7fjc4d+IuMoLJmUnpqZbl
+         3AIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785898279; x=1786503079;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Hb7cpiF1haPDfic8xNq1MIp0OroCt8boGG/yMAW7dr4=;
+        b=PUKlWsCDoBTIjnKyHdlykxnOScIylez+Ux5DuOQOyPqsOLT6rfEVFqWqhPM1vJS1V9
+         SeM0dAvCpvXFK3vUeHrnl407zBgjKSaCSQzVNrHJpJ5CIDHrMfLioC8MApnJIv+qy2uU
+         y1sPyIgtdbI0xx6C51eSHzyb/FcNXf7tAyDmvSa2S+fJYekUSgaEJP8qd1N9oC2ng2vX
+         bKFj8Y/QfCu72lp3HkrZawuIrjqnVrTO8DYaDnlPQ/jmXYyMOWhXOi6UdIF8qry+4T5V
+         fxPt9ts0WAR3podUHGBN8duCbvWACnozF2+s0qdceEmoCZct+ZWpTbpUOGKoFcmGB18C
+         cvzg==
+X-Gm-Message-State: AOJu0YyPOe22dE/eOWjxwHpAgtpGVewmSqhMmAoE0tMcHWwPd3QJQuaH
+	6v/T2RZ44eVlcGYZ5DPIsAsBXAL1X/EODnhBSzxmilwgxEbOPmBWUTGHVQhKQg==
+X-Gm-Gg: AR+sD13TcMRFok+LpsNgmDdAUOS2MjbQoTpLpDaBqRoDOCqYCXjBk/JkdV9FYLHhAwX
+	ScXHgWw5n7bj4EB43HZwkiJ1LbW6YXcM/frazpdg5LS9mFEznToSxveaotLPH0geEr8HTvQg3zc
+	v7+tx24ehUvIFRymZO8fR1iL9rT3bQ4qUWwIx5qt/uKXznisj0oMV3vOXKidF+iAWPyW1armKKq
+	0rLovfNGGYpN4teqPwxibqtxor3YwPsRUzUFb4Dl/e2c1QvnzOKAhP1onWBtVV/9AH7VZWx2it1
+	6vOFcWO6SNau5BWV5HGnXRmeBhXaD9QD33tp6GLCpuPRermWTITGkYZgzU2vsaEmLJcR0lZ21Mh
+	Zf6z+KNAt9uWj/tg/wgQgXh1tJXJr+LeogC7LBqpKASEgbq5AF8uXL/7k9y0KoroJlZ3oPd4r36
+	FAHNkrTgsWSBgtW0UVjk5QQkeYz39uIShr1GPlfHIIauaTyZArUWnJA5UtBzJ8vBSps11ujycun
+	WxO8BVXF3MiFArGAKll7HdnvHEeH0EaWcLq4w==
+X-Received: by 2002:a17:90b:2747:b0:37f:eafd:3505 with SMTP id 98e67ed59e1d1-3903c5588d4mr3503110a91.6.1785898279305;
+        Tue, 04 Aug 2026 19:51:19 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38febffb2ecsm2792333a91.8.2026.08.04.19.51.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 19:51:18 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <19d0921a-b09f-4af4-8e21-a4d31f09fa07@roeck-us.net>
+Date: Tue, 4 Aug 2026 19:51:17 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY7P286MB5326:EE_
-X-MS-Office365-Filtering-Correlation-Id: f2025f98-22db-469d-06f7-08def29768b4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|10070799003|376014|56012099006|4143699003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	eVo7n2orHCsoPDIziHMrp3wgsGr+9j/J5qEEg3j/zqcPEN+qF/hXIb0xEj08RFoRfPudM0QWtnCT5nCVFfCU1//4XAKbK5fE4NlHYvnHmB9T66je6uvxIYH1/DvtwMy1eJ41M8WSpfsUDODbpni8gan8Sgwkwox1WbrXzoXTT6HFMjBNgWfGExztcoj77HBVNT+VnpmpAXRePmJ9Uz/G1fIUE/CcokeK38hftydOleY3y9H7RULDuur9e6KnGsE+LHdZkezO3o3gsrGxe764l8Dtl2AVGdGql+zzEwzaIomZ7Szq9IU7Ty/IOIpti0WCWD+JkioLcSknViliF2w5qPayadDAX2sIRFw0D1zQwbw2k1qpo92wldadVMX45Q+skqi+YFK/BpunGBvudNK/GemhSRo0H71pY9xvjA4s+opqOoX03/AK20fmPAueU4M13fYjUiu7YoU0pES5hZockerkKEelNkga5YjgJAmpPV9AaXwSIB2smkFJ66jYmUO1ZPvxeJbu4PTujlAWyTGWgqhpF+UZgLqTX7Aot6xVS18BJSStnaXuaSTXoWzdx1r8CYx+3p8ejRAqm0LnrbcKtIN+E249Dhx2GBCQ4fUzgRU=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(10070799003)(376014)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?MgE3zMqIcRmidrdkQxIfHgjQyOjxOTTgKNm+FBGQ14Hm6XEkiiOdweBuzd?=
- =?iso-8859-1?Q?ril9T2sth16GyzAK0PypVpXdu3UUq6hE3vJl7aPwaXb6xv3llLehk9XU0/?=
- =?iso-8859-1?Q?V2C0N8J47lR3Fyf5gPRPkZW6lKappjN7oGvN1plBFwu8zhoxmEiPE8jPia?=
- =?iso-8859-1?Q?trudSDekQLISNAK68ZZNuUEyhCrcauYPEIFdoeLyAME2XoH4yjhzlUAqeg?=
- =?iso-8859-1?Q?6WeHyeJ5Gg7o4ZlaGktrLgvJAvSgnu3qrwbcyFb3JuLcCVgmQEiEAh/Eel?=
- =?iso-8859-1?Q?j/t7Luq2+NGxl0GZKJKTjmZrF1m02lsgm7d6IcyAkaMc0ZZwkPBHhMv6zc?=
- =?iso-8859-1?Q?03PlwFpiKJ2nTXvn8leTDdQRk7oaQoGUinpc/gn6maNLX9iz3IU+XvY9ad?=
- =?iso-8859-1?Q?w8iHYQEuiqOEmUa2WRoa6hGsfJAFReziluns43NgHbyWR0zPsWSsPq8frF?=
- =?iso-8859-1?Q?7uOexzNagoQRCfeRzij+pqjfPeTceTVx+0+uk7KW1OwwYRQabWJIsbv+4H?=
- =?iso-8859-1?Q?+MqsxlMMiTk93jtWZFNGEfCAA1/zRhOSvdoXuWmCxKyYmoosm/cVNCPa2X?=
- =?iso-8859-1?Q?te8qWXFF0tTsJSKRWxUSWS9XxS92zhKlbHo3agSW9wcCp+o2/FjmTCYLmF?=
- =?iso-8859-1?Q?7MWCmaRSoUYx9TLHzp1IKYh8Ec/xFoJT7o4VDEshqL2KfbJV/x3cvmHSaE?=
- =?iso-8859-1?Q?uaDH0qX6EtHjZUdErQFs5y3ZQiNvxEMqOxuyNmWCtxB9PaEawy+dWr+vdt?=
- =?iso-8859-1?Q?YZbsD51H/2fWNhZQfvo30OONZVXuKdcRmQn7HjtZ+VhdJhazgoY4bWykUO?=
- =?iso-8859-1?Q?Oo7hwPBGOIo8nw/AmQM6/dOLJfXMnuka6Pub0rvilRLAp3D/9Aykx5Izl1?=
- =?iso-8859-1?Q?dIRu86bf40gPuwnvM/4lhfEDr5px0ITkuEdx9GOBJUtn9tI65LiQgOamcL?=
- =?iso-8859-1?Q?oGe0n2ljx1dIBkK6+ctL8Q8j/K+fBnj/WQmWeGII7952iY1bray9o0332F?=
- =?iso-8859-1?Q?4g9wY0E54GFQVCJJEt3nPTRxSQPJXToyiIYOj4DmBT9Y1fQgLNX7ODD6Rk?=
- =?iso-8859-1?Q?5WqlCFZvUTvV0ZzKAfbbDz9TB9F3VupFnnrBMmwptrsSKOAAXVGD8fpogU?=
- =?iso-8859-1?Q?GrYXnQAdwofGckRWely081T9ObeoPa3bx83yEyaKfBXkG/NbAw0QuJI19n?=
- =?iso-8859-1?Q?Q6uOYQGpXWogYb/k7+gM3iLBvcblR7J2iWmsoePxm4ZWJ8w6jnNQXNmgwr?=
- =?iso-8859-1?Q?xGnixoCbuvQQ4fYlrKLOEpQO56gWth79LJReIVGD72Whjzc8ZWgEaPIFkX?=
- =?iso-8859-1?Q?tYWXwGhr8O1r8uxXinikEzqXQggSPN0ucHbGGOlnrnElNwEsK4WNARNRZB?=
- =?iso-8859-1?Q?X2zdERRNWX9SRRg+wz7+dzXEi5fuDzU+ng+QDMt065KF7l0pi4HVE39nvP?=
- =?iso-8859-1?Q?gb17WKVPp9b37sNTymlvu2bHysUEyAnUrZTZu5+tm1oYHAMqegnY87wcbt?=
- =?iso-8859-1?Q?NzeCFd5R9AFQTIBjT0NLEHwBMVshzMiRgFW6NDEsPaEI/1GABYC+GdAGj4?=
- =?iso-8859-1?Q?JeAmga9saaY4qIKH5oXlqn0MrmmMRhp+dqEbhYoxuQKoENMR+6vsV2IttW?=
- =?iso-8859-1?Q?XiOYT7X0SRUYPS8mUIACL07UiG8jvGyDJktjEtdDTGY9l5FHQjw1OmzCOd?=
- =?iso-8859-1?Q?FojswevLKGFgO46n/BhDy+TiIZnQi3NvbUT/3wPoX+zigD7hUz58DtNWA0?=
- =?iso-8859-1?Q?qiHfg78W/MQYbGpECXbf2U+vt4P+Miv9yjH5lpmg5gOBxBTzuIjFo+83bz?=
- =?iso-8859-1?Q?1Cx89sheDmWSEoAF5+rF0NN7jw18rGqhkcjRPAti9chr9cYVXJMv?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: f2025f98-22db-469d-06f7-08def29768b4
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 02:15:24.4609
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6iMhq/R05A8W6OXGmzsikKVF50iINxg+XVJEbJdL7pfU35G+thwyVTBO10E8tWH2fa/TPLrXY67ta5Q7OOy0Lg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY7P286MB5326
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hwmon: (ads7828) Properly handle -EPROBE_DEFER from
+ devm_regulator_get_optional()
+To: sashiko-reviews@lists.linux.dev, Qingshuang Fu <fffsqian@163.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260805020506.958722-1-fffsqian@163.com>
+ <20260805021158.79FC71F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260805021158.79FC71F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 04, 2026 at 03:52:29AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Releasing a single delegated channel with `quiesce=true` on eDMA v0 hardware causes a data race on `engine_en` and incorrectly shuts down the entire DMA direction, disrupting all other local channels.
+On 8/4/26 19:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The driver masks genuine errors from `devm_regulator_get_optional()` by explicitly only checking for `-EPROBE_DEFER`.
+> - [High] The driver fetches an optional external VREF regulator but never calls `regulator_enable()` to turn it on.
 > --
 > 
-> --- Patch [4]: [PATCH v6 4/6] dmaengine: dw-edma: Add delegated channel request helpers ---
-> commit 0987248b986738e4870e25b1f36d8c9f2eb69d8b
-> Author: Koichiro Den <den@valinux.co.jp>
+> --- Patch [1]: [PATCH] hwmon: (ads7828) Properly handle -EPROBE_DEFER from devm_regulator_get_optional() ---
+> commit 78230277b5f05df9416cedbd8b4b4816183523e1
+> Author: Qingshuang Fu <fuqingshuang@kylinos.cn>
 > 
-> dmaengine: dw-edma: Add delegated channel request helpers
+> hwmon: (ads7828) Properly handle -EPROBE_DEFER from devm_regulator_get_optional()
 > 
-> This commit adds DesignWare eDMA-specific helpers to request and release
-> hardware channels for delegation to a remote host. The release helper
-> supports quiescing the channel before restoring default routing and
-> releasing the DMAengine reservation.
+> This commit explicitly checks for -EPROBE_DEFER when calling
+> devm_regulator_get_optional() in ads7828_probe(). It ensures the error is
+> propagated to trigger probe deferral, rather than incorrectly falling back
+> to the internal VREF.
 > 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index 1f893dc54c793..4c0d2bba755b5 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> [ ... ]
-> > +void dw_edma_release_delegated_chan(struct dma_chan *dchan, bool quiesce)
-> > +{
-> > +	struct dw_edma_chan *chan;
-> > +
-> > +	if (!dchan)
-> > +		return;
-> > +
-> > +	chan = dchan2dw_edma_chan(dchan);
-> > +	if (quiesce && dw_edma_core_ch_quiesce(chan))
+>> diff --git a/drivers/hwmon/ads7828.c b/drivers/hwmon/ads7828.c
+>> index 149cfcec78dcc..1c4a04cb023c0 100644
+>> --- a/drivers/hwmon/ads7828.c
+>> +++ b/drivers/hwmon/ads7828.c
+>> @@ -133,6 +133,8 @@ static int ads7828_probe(struct i2c_client *client)
+>>   			    vref_mv > ADS7828_EXT_VREF_MV_MAX)
+>>   				return -EINVAL;
+>>   			ext_vref = true;
 > 
 > [Severity: High]
-> Does releasing a delegated channel with quiesce set to true unintentionally
-> disrupt all other active local channels in the same direction?
+> This is a pre-existing issue, but does this code need to enable the external
+> regulator?
 > 
-> If an endpoint driver uses some channels locally while delegating others to a
-> remote host, this call to dw_edma_core_ch_quiesce() appears to escalate to a
-> direction-wide shutdown on eDMA v0 hardware:
+> After retrieving the optional regulator, the driver queries its voltage but
+> never calls regulator_enable() to turn it on. If the external regulator is
+> not configured as 'always-on' in the device tree, the VREF pin will remain
+> unpowered, causing the ADC to return zero or floating conversion results.
 > 
-> drivers/dma/dw-edma/dw-edma-v0-core.c:dw_edma_v0_core_ch_quiesce() {
->     ...
->     return dw_edma_v0_core_dir_off(chan->dw, chan->dir);
-> }
-> 
-> dw_edma_v0_core_dir_off() forcefully masks interrupts for all channels in the
-> direction and locklessly clears the engine_en register via
-> dw_edma_v0_core_engine_disable():
-> 
-> drivers/dma/dw-edma/dw-edma-v0-core.c:dw_edma_v0_core_engine_disable() {
->     ...
->     SET_RW_32(dw, dir, engine_en, 0);
-> }
-> 
-> Since the per-channel delegation API does not enforce exclusive ownership of
-> the direction, does this cause a data race and abort ongoing DMA transfers on
-> unrelated active local channels?
 
-That does not happen with the current consumer.
+This should probably call devm_regulator_get_enable_optional().
 
-Patch 3 documents that the caller must own the whole provider sharing group and
-stop peer programming before reclaim. pci_epf_dma follows it, ie. for eDMA
-unroll and HDMA compatibility maps, it rejects partial delegation of a
-direction. Native HDMA quiesce is per-channel.
-
-A future consumer could miss this rule, yes. But adding group tracking to this
-generic per-channel API feels too much. I think the documented caller
-requirement is enough and keeps the design simple.
-
-Best regards,
-Koichiro
-
+>> +		} else if (PTR_ERR(reg) == -EPROBE_DEFER) {
+>> +			return PTR_ERR(reg);
 > 
-> > +		dev_warn(chan->dw->chip->dev,
-> > +			 "failed to quiesce delegated %s channel %u\n",
-> > +			 chan->dir == EDMA_DIR_WRITE ? "write" : "read",
-> > +			 chan->id);
-> > +
-> > +	scoped_guard(spinlock_irqsave, &chan->vc.lock)
-> > +		chan->irq_mode = dw_edma_get_default_irq_mode(chan);
-> > +
-> > +	dma_release_channel(dchan);
-> > +}
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this error handling mask
+> genuine failures from the regulator core?
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260804033855.2115817-1-den@valinux.co.jp?part=4
+> By only propagating -EPROBE_DEFER, legitimate errors from
+> devm_regulator_get_optional() like -ENOMEM or -EINVAL are treated as if no
+> regulator exists (-ENODEV). This causes the driver to incorrectly fall back
+> to the internal VREF.
+> 
+> If the pin is physically connected to an external regulator, driving it
+> internally could create a voltage conflict and lead to hardware damage.
+> Should we check for -ENODEV to decide whether to fall back, and propagate
+> all other errors?
+> 
+
+My point from the other reply.
+
+Guenter
+
