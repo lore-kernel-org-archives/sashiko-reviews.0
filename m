@@ -1,213 +1,258 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3232B3DBD51;
-	Wed,  5 Aug 2026 09:11:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795213EAC84
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 09:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785921125; cv=none; b=mGTqMEeHc5w5AetbGNte7vp1pnyOcupu0Ck+u1u41lH8/zbFmIfjnPaPUfimVOBmUeLXH9IflyS0Jfeu0fodTJZtCSzvRtw6HE9zD83linzBx/U5Nvo18G7hmexF5EmW3NHWKx0zQDm6VwKcttrVp17o1A3XEfVSYH7fvAD3w9k=
+	t=1785921705; cv=none; b=PtNHymXjrNweJI9h2mz7c0izpQRczklguN23qOjlX6ExfCGKz6t6uE7nKSHMCJ05dPeeMGAMOfzFrE2c2YMyGqKdwNqUrod+25BnAKYTDIJnlK8MfTubwLEWxIihBE1G+ZpatgLc7N6B8+8jKHHAyB/2j5DaAHlBid53q3oOMzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785921125; c=relaxed/simple;
-	bh=LGtnwH2uUkVEkSBaFSZmZrbbGvm04tqW3pIP5EY2BQs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:Content-Type:
-	 MIME-Version; b=EnW1OcNa7zEekK7kJtNaCgaqvimc/s0Tz5G7Wxi3VMj83tLdnny6h4tk4Bs8eoi1xW8nPDnsUPMD4nvbZynxZP3ywfw6hXklqiRPyR2+RXvlsyUAqNpgAtkry2zJRs7/DOgL4IkYyzhycTGmncgqgnK1WWt7C/6HXsgbTRHbv2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=lUtnuMg4; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	s=arc-20240116; t=1785921705; c=relaxed/simple;
+	bh=06GM06RMXNj1CMZ/fuLjt/+XEZVnfkbqtv78k0uCzag=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TuP876GGibak0Fqy1JRF0Xo7SaCZzz6iruyIxDID6GFwAgsS3UQ78v9SxdvNqVSbjCpQpB9VVlQ4v9et94CnbNrJ2rlHwCJ4v2ezC+nhyNjUZOYvBi1qncjHDcsNw/z12TAMgHOzRPuPSeTxA4wteNlgErau+g+iyPWxI/sFf1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N65bEnVL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=W+WyQuh0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="lUtnuMg4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:In-Reply-To:
-	Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:References;
-	bh=CGjM2GzhKurM2X2fdPCSVCB4H6j9EApYt5Ds+P4svwI=; b=lUtnuMg4VrJh0x3Q3f7G+1Vkfm
-	k2U2OyOHkzVuB90FcyLxbPZY2F9i1Vrh2R7uE6qsRVEZGsCzjiuzaeJPbTCYhXwJ6Clz7EiXnzQke
-	vSs7E5vwFC2bNY0V6UkOcR1CUTMsiNAv1xx/OPMgUjpF5FWopCrR0bJVCk09PQb3aMEI2g1xqwcxf
-	wN1UD7iDunIUkRhZFRnXgPauSrJXs86dXtBED7HI7bCjq+adIQgiVbahpGLfIg8fKw7pPbKh/+Y9S
-	q4GuSnIQP0KziyWg+kbyrzHoYKK4gq+2wdeMykhQ2DU4TOnLefsARFexw1AsI7hJdimivcJwweNya
-	/6Imv78g==;
-Received: from [2a07:aa00:8c:e0:2ef0:7ea2:4f15:3280] (helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wrXf1-00000000igw-1blK;
-	Wed, 05 Aug 2026 09:11:40 +0000
-Message-ID: <88a9c8a0ccd2268216b9ac7af708cd2d7ad1a986.camel@infradead.org>
-Subject: Re: [PATCH v8 04/17] KVM: x86: Activate master clock immediately on
- vCPU creation
-From: David Woodhouse <dwmw2@infradead.org>
-To: seanjc@google.com
-Cc: kvm@vger.kernel.org, sashiko-reviews@lists.linux.dev, pbonzini@redhat.com
-Date: Wed, 05 Aug 2026 11:11:37 +0200
-In-Reply-To: <20260805000640.827BF1F00A3A@smtp.kernel.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-CMhBHduKg4nVTA5WOqLN"
-User-Agent: Evolution 3.60.3-0ubuntu1~ppa9~24.04 
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N65bEnVL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="W+WyQuh0"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6758dZMM1713196
+	for <sashiko-reviews@lists.linux.dev>; Wed, 5 Aug 2026 09:21:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	17gNOg/IJCDj1TVREVlKHTlpRu+kYYeF1zlXTMH9cdM=; b=N65bEnVLCN0IgCtr
+	do/8ey41FYb0KPQrPb/cl/uXZPlPSNcXXmeXM4JjtAGv0D3g8qSXCre+zZQ60kUY
+	+ivAbGgcMCAdrh1sp29sbh/Z5ulWH8VRfRskvBOsnHA2XN2SSLVdWlmEj4Ut5f2M
+	e4qWfK7TXNrgbMayD5N+aiaXrhUJdV/JQg8EKJh5ZLkB/7fjq/pg/ulWopJNOdcU
+	2K+ufSwkVBk1xmbGWpIbDCI2Klpknne+HCY/mpCT6t5t7Ibv0gzGU7+yKd909cdi
+	P95Fgczv8THNnDvpQIqsz51ujYQdi+mgbIKrjNOeiMRfpYJNr32vG+Dt7b2lUmSD
+	EduKPw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fuwbqsc6h-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 09:21:43 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-84859a64079so1452086b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 02:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1785921703; x=1786526503; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=17gNOg/IJCDj1TVREVlKHTlpRu+kYYeF1zlXTMH9cdM=;
+        b=W+WyQuh0dxDda4Ld63Rl4xgEfbBDOOH9O1i4rPWgVIZdTSb4nat/Bfldr37g0DjJx9
+         LwPwcDI5lTg55He5QHke9X4K5xtSR43N4V22pGGTya4eHjHygla0ps52wc9fIQAW4gkg
+         3eHAXLLrtpJ7GHBuqIpY5X6bV0zHa56FcwakllvvZ/giuWAjk2YslL3YHt8dRAP0AxuL
+         PtzhycLQ6wHyFw+g1QfDdOBAl+BIrlnVmkMLUkDLPuZN6J1YiwKTtcsK544OUj6sMebX
+         5AFzZvWpzBIKJWR6D8xi6dVcafB7Xsmch3Nc0vURFCpoH/0djd3foAheAihFV/Fjn+45
+         +s/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785921703; x=1786526503;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=17gNOg/IJCDj1TVREVlKHTlpRu+kYYeF1zlXTMH9cdM=;
+        b=GCiiaR+TxaM1evS1ByhpVnOtGjZ2avM0DKRuexfg1wR6NScONx2ERJBYXxWNohwjAH
+         Js5i+hfYFEdd31wgysjvJLRzi4vcI4XZUkpjts5HF+Vv0UrmOAnLH2VsP9Zj0DRb57av
+         77K5qyYorTGYR0VlHihqctfmFdHIO80lg2yN2Nv9JsVVDeWFBaCXwCi/Rcv8k61wuOIq
+         ZEnjo1uh/Y3CrREG0pshvHeLmuln8QgyBJqXH+s9SzVG666FCKa2KtFg6+zSRgCZ+ZzH
+         Wk32z+zfKXd9ftdmrbTLO1hfWeXXdOymKWJGbTjpsTgvRAzlbscO0to/laiHSnyZ6Csz
+         XBvw==
+X-Gm-Message-State: AOJu0YygCLWEbji0yPVTn0bNa2J51blZ9/bM0A5OaYv75OmjhIN272rL
+	DpjmuKbj2ve7U8aTvGh+3l9PXxQHLFLUEoqukRleCgXLEz/1I3dMPHGF0u7GFJD6yzyW9bSOS9i
+	sfq3n43choG7kdI0S/jBXXI3Rv4oODfP9gMYuvuaXIGrsxwQ8lRHJIjK4qtrHXJCvSioHxVrMni
+	JZbYM=
+X-Gm-Gg: AR+sD11AH0eLRuLwdNAExAe2e/sbgiQ7wSM02lkX3oq8c9urWXa9zi7jR5BH7x3x8td
+	9EGjPm3X6n+DtDBn+a24VtZTQoi64faxKGwnNdSxZO83K2tjE1NlQTGXHWXHUeSHeYNKzYu9FnZ
+	4bykzornqq1EjlCe7duLDDY0kptIcFmylaIRd9a7A+ZpA57XsyVGCR6MzXLgMUTXqh3zrD3hhbH
+	Ex13OcD6d5Ca0O/M3hgnpqHr1iDrKGJdiHe4EImAPNtlBPfNBPrpucheVtED9lq8k/WC3Klm4Bq
+	nkdMw9M1B49MqGlLSsXJiHY269oKuh3wO4dIcc1HdKYYQ1kKRy+dvmhh8/5nvuR1ojN14M1YajT
+	i+o8nIlB8jwtPSZ0ifTg5BUG6opgn6lRbH+vPkECa+CdjDkY=
+X-Received: by 2002:a05:6a20:a10a:b0:3c4:3ada:384d with SMTP id adf61e73a8af0-3cb85f42d97mr5462053637.30.1785921702791;
+        Wed, 05 Aug 2026 02:21:42 -0700 (PDT)
+X-Received: by 2002:a05:6a20:a10a:b0:3c4:3ada:384d with SMTP id adf61e73a8af0-3cb85f42d97mr5461999637.30.1785921702278;
+        Wed, 05 Aug 2026 02:21:42 -0700 (PDT)
+Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe70928ba2sm1169429a12.29.2026.08.05.02.21.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2026 02:21:41 -0700 (PDT)
+Date: Wed, 5 Aug 2026 02:21:39 -0700
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        vkoul@kernel.org, neil.armstrong@linaro.org, robh@kernel.org,
+        conor+dt@kernel.org, olteanv@gmail.com
+Subject: Re: [PATCH v8 2/6] phy: qcom: qmp-pcie: Add QMP PCIe Multi-PHY driver
+Message-ID: <anMAo+DNmtbAvKyf@hu-qianyu-lv.qualcomm.com>
+References: <20260730-glymur_linkmode_0731-v8-0-a455265ad8bf@oss.qualcomm.com>
+ <20260730-glymur_linkmode_0731-v8-2-a455265ad8bf@oss.qualcomm.com>
+ <20260731052639.81FF61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260731052639.81FF61F000E9@smtp.kernel.org>
+X-Proofpoint-ORIG-GUID: eqSQbdJRvs-i5V8HI495KTdYol_Zh829
+X-Authority-Analysis: v=2.4 cv=B+uJFutM c=1 sm=1 tr=0 ts=6a7300a7 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=seLki_t14JjGgSYVy8sA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: eqSQbdJRvs-i5V8HI495KTdYol_Zh829
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDA3MyBTYWx0ZWRfX/JR8oop4xtOO
+ DMmfwvgIXW/wvOPpIuQZr8se4qxQf7tQh012fUEVhLuX7G349foMv8xdbu5NAk+xlmfJpO0DVrj
+ uyypE1CxXzRpUDBGzHeZ3RuDkGeSDa8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDA3MyBTYWx0ZWRfX+P5N5ZJElNHO
+ 51WZhwzK/1A+8TC1jIiNLwfvqzFnkFq2EFvztIdvSc/pVjFEwBYzOWjBT2AznkVQZdryHzF8zsk
+ a4ID4X4CiMkWNVlk55NY6bRciniKnaHQJBEYCAghT59oM1FqshXefmxZjWKSFsa/XQJ2st6z0Vc
+ lvwpResVANdYShvC0mACgMNUEn8hbXIZah5h5+Bz+5KT/IFw3YauCVgVD6QJJSK+vYVmtSqdn7e
+ fLxagTjpbZj0u70JL5frzysRJnlBe14friMQKcXqBy3k1LGXrm1q4vYde96SauZJsMeoQ3OYY9v
+ r04LRqJc4npeZmy9pFxzAGvEkZ1E70Jx5Vf7b4GoWvpTyLFe719CdDoBHQoWTyamgIlJYxD0eNO
+ N+eluDCroHvRwpPxzjMCgjPfC3F/aBJR4RyRvLdBgG7Vy4iYy8GYj5n1ZIQd2GXLPtHwmXxrCMS
+ Wffplhoqr35dcBVZJug==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-05_03,2026-08-04_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050073
 
+On Fri, Jul 31, 2026 at 05:26:39AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] Asynchronous pm_runtime_put() during PHY power off leaves hardware powered on if device is removed.
+> - [Medium] Unchecked return value of of_property_count_strings() leads to massive allocation attempt and incorrect error masking.
+> --
+> 
+> --- Patch [2]: [PATCH v8 2/6] phy: qcom: qmp-pcie: Add QMP PCIe Multi-PHY driver ---
+> commit 512c48acf91e02b02ae430362c2348d1ce2fb525
+> Author: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> 
+> phy: qcom: qmp-pcie: Add QMP PCIe Multi-PHY driver
+> 
+> This patch introduces a dedicated QMP PCIe PHY driver for hardware blocks
+> that support multiple link topologies. It reads the current link mode from
+> the hardware and instantiates the necessary sub-PHYs, inheriting firmware
+> configurations.
+> 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-multiphy.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-multiphy.c
+> > new file mode 100644
+> > index 0000000000000..739c7c96aeed6
+> > --- /dev/null
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-multiphy.c
+> [ ... ]
+> > +static int qmp_pcie_pd_power_on(struct qmp_pcie *qmp)
+> > +{
+> > +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> > +	int i, ret;
+> > +
+> > +	for (i = 0; i < cfg->num_pds; i++) {
+> > +		ret = pm_runtime_resume_and_get(qmp->pd_devs[i]);
+> > +		if (ret < 0) {
+> > +			dev_err(qmp->dev, "failed to power on %s domain: %d\n",
+> > +				cfg->pd_names[i], ret);
+> > +			goto err_power_off;
+> > +		}
+> > +	}
+> > +
+> > +	return 0;
+> > +
+> > +err_power_off:
+> > +	while (--i >= 0)
+> > +		pm_runtime_put(qmp->pd_devs[i]);
+> 
+> [Severity: Medium]
+> Will using an asynchronous pm_runtime_put() here (and in 
+> qmp_pcie_pd_power_off) race with device unbind?
+> 
+> If the PHY provider unbinds, device links will cause the consumer to unbind
+> first, which calls phy_power_off() and phy_exit(), queuing an asynchronous
+> suspend. The PHY provider's devres cleanup then calls dev_pm_domain_detach(),
+> which executes pm_runtime_disable() and cancels the pending suspend.
+> 
+> Does this leave the hardware powered on? Should pm_runtime_put_sync() be used
+> instead to ensure the hardware powers down before the domain detaches?
 
---=-CMhBHduKg4nVTA5WOqLN
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This driver has no .remove callback so there's no unbind path for
+qmp_pcie_pd_power_off()'s async put to race with. And even if
+dev_pm_domain_detach is somehow called. qmp_pcie_pd_detach()'s
+dev_pm_domain_detach(dev, true) handles any still-pending async request
+internally (pm_runtime_disable() → __pm_runtime_barrier()).
 
-On Wed, 2026-08-05 at 00:06 +0000, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Instead of checking the boolean use_master_clock, should this check and
-> consume the pending KVM_REQ_MASTERCLOCK_UPDATE request via kvm_check_requ=
-est?
+> 
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static void qmp_pcie_pd_power_off(struct qmp_pcie *qmp)
+> > +{
+> > +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> > +	int i;
+> > +
+> > +	for (i = cfg->num_pds - 1; i >= 0; i--)
+> > +		pm_runtime_put(qmp->pd_devs[i]);
+> 
+> [Severity: Medium]
+> As mentioned above, can this asynchronous put race with the devres teardown
+> during removal?
+> 
+> > +}
+> [ ... ]
+> > +static int qmp_pcie_multiphy_register_clocks(struct device *dev,
+> > +					      struct device_node *np,
+> > +					      struct qmp_pcie_multiphy *qmp_data)
+> > +{
+> > +	int num_pipe_outputs;
+> > +	int i, ret;
+> > +
+> > +	num_pipe_outputs = of_property_count_strings(np, "clock-output-names");
+> > +
+> > +	qmp_data->num_pipe_outputs = num_pipe_outputs;
+> > +	qmp_data->pipe_out_clks = devm_kcalloc(dev, num_pipe_outputs,
+> > +					       sizeof(*qmp_data->pipe_out_clks),
+> > +					       GFP_KERNEL);
+> 
+> [Severity: Medium]
+> Does this code properly handle missing or malformed device tree properties?
+> 
+> If "clock-output-names" is missing, of_property_count_strings() will return
+> a negative error code (e.g., -EINVAL). This negative value is passed as the
+> count parameter to devm_kcalloc(), underflowing into a massive size_t. 
+> 
+> While the internal size_mul checks in the allocator safely return NULL, this
+> causes the driver to fail probe with -ENOMEM rather than the actual device
+> tree parsing error. Should num_pipe_outputs be checked for a negative value
+> before attempting the allocation?
 
-Oh, all right then :)
+As Konrad commented, clock-output-names is required via bindings, so the
+check is not required.
 
-Sean suggested exactly that in a previous round=C2=B9 and I said I thought
-I'd tried it and the request wasn't set. Having paged back in some of
-that context... the thing which didn't work was a different variant =E2=80=
-=94
-deferring with a bare kvm_make_request()=C2=B2, which fails because
-KVM_GET_CLOCK doesn't process vCPU requests, so calling it before the
-first KVM_RUN still didn't work. That isn't what's being suggested
-here.
+- Qiang Yu
 
-With the code as it stands in this series, the first vCPU's
-kvm_synchronize_tsc() reliably queues KVM_REQ_MASTERCLOCK_UPDATE via
-the use_master_clock toggle in kvm_track_tsc_matching(). So
-
-	if (kvm_check_request(KVM_REQ_MASTERCLOCK_UPDATE, vcpu))
-		kvm_update_masterclock(vcpu->kvm);
-
-should work, and is better than checking the boolean: it avoids the
-repeated masterclock update that Sashiko is whining about, while still
-honouring the case where a mismatched new vCPU should *disable* the
-master clock.
-
-By the end of my full series, this call gets removed entirely in favour
-of setting up the whole clock epoch from kvm_arch_init_vm()=C2=B3, which is
-why I didn't care much before. But that's now on the far side of the
-part 1 / part 2 split, so it's worth fixing here.
-
-=C2=B9 https://lore.kernel.org/all/amPW1eAPpUuxLoj_@google.com/
-=C2=B2 https://lore.kernel.org/all/58c5a521b94e8d90e101602cfe160d1fb128a5dd=
-.camel@infradead.org/
-=C2=B3 https://lore.kernel.org/all/20260728144954.355376-29-dwmw2@infradead=
-.org/
-
---=-CMhBHduKg4nVTA5WOqLN
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-NDA5NlNIQTM4NDIwMjRDQTEuY3J0MA0GCSqGSIb3DQEBCwUAA4ICAQChxpuuHVw93mze9jmueUFV
-BJNzvOzZlazrt0AiW1H7TlYQutgKVXPNSEyz8s4k+WsRSjjlQMOiZerfwPEV6lo9336I0uNd+ffc
-Rf8gbjiPTiVT+gX9GD1V5AguRgtsJn/H3A6M0dlzhI3J1jsOG9/+xPloHPzy7sPn5rNkntB/VTnv
-Bix4IfUy3ScOu2vnLX0gnwP3EknfdEUvq9+kdkEEBDz7dGqQo3EuhXZoW9CHF2GM0sOpO/cuNQh2
-JzA+to3smTES7sJXYuRrt5GomCRYvtIrRiYGMalFp+z6Jw/843lEIIpNNvpWVfx5Mbawkl+wWG8k
-0IK3rF7FtbNa0it8/s288G/AEHvfsDIQYFmRLlo2LNMxxREkZO/1Qq8GHUsX/602Fi0u88I3uh5w
-bOEIeG32NzBKTKBOjdjpiUrdCA676dyaIFt967CUtnUvFti8bqGA2pe/u7pjIANthqMBAlcnY5B6
-ff2mbdD8BBLItgb4HyUOCVawzy1hc+UR2tglySwYroWeohfoG6afjesGigsl2JmnhaZ9Z0vanF74
-vFEOOmuaq7VamuLEPFQtJM4olmipOW6CzrLcFz6J/6yAecEG3P1ZDoy08eSHvM40MAUgpwGa/w6o
-9ALHQXda/c4TJvAylfHQ6wqArzAuV1pfWldwy7IOBMtKqzQBXQ4dSDGCBCAwggQcAgEBMHYwYjEL
-MAkGA1UEBhMCVVMxFzAVBgNVBAoTDkRpZ2lDZXJ0LCBJbmMuMTowOAYDVQQDEzFEaWdpQ2VydCBB
-c3N1cmVkIEcyIFNNSU1FIFJTQTQwOTYgU0hBMzg0IDIwMjQgQ0ExAhADNSi2uzJskfEdOMo4hV0g
-MA0GCWCGSAFlAwQCAQUAoIIBezAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNjA4MDUwOTExMzdaMC8GCSqGSIb3DQEJBDEiBCBDUE3TQ7fI2x5VnZqWGU/d3CWsV+33
-hgGkNfg3LKTNMTCBhQYJKwYBBAGCNxAEMXgwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGln
-aUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBT
-SEEzODQgMjAyNCBDQTECEAM1KLa7MmyR8R04yjiFXSAwgYcGCyqGSIb3DQEJEAILMXigdjBiMQsw
-CQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFz
-c3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQgMjAyNCBDQTECEAM1KLa7MmyR8R04yjiFXSAw
-DQYJKoZIhvcNAQEBBQAEggIAk8UrPS6UOGLO6XRRSNR2dGKLSPLHzS9xZZaWYGw5Sux4Tw7sdqTo
-OqwJbw52PxCW8a3jspwimguyDpBnVh+qqmV07G0s+rwbUeKh0fXlbWF3O8WF6n9T0B5Wzwd0eWNS
-5IuIlkTWPzasD/Au4pIFmfl5J3ilwnoJ4IBOFq4YPV11uVdLcvyix6CrzlBAb68g6j1fkr2bLP6x
-x2H31+McvFWnovzl2DoNV8X0n/xKRegstCOOoC+KxC1celfkI5ZsL5fn0P9h2YA28byFWH4nYZHY
-uriWugb+LJfWe/JQmic/pKmwZxuQDbwWTCw7tIBdu48DsAzULiJ2qdDaHGiV27WsBXMSigTo8JB4
-POMhYVl1r6czKcXjL1MVSXnCFdImcWRhH38nV8y2wmVyL8TSK0V86XPmrsua478tzj1HlVWUaMWi
-cW/jnopMQrar41szKmsRE3qz5Y5DhYOHvQI2ooe0U4PAW3UuTa2NW+1gnPeoIocJU/FTEAGU3y4S
-wTzQgkzZnqF4CW+uDWP8+DEUA7PflbMyVUNd0Cf6y4Cii4/XOhwjiJnJH7US0CanWBpAuHUhH1Th
-CzvR+ok7C861KGAZTc7TkW9YGtdNheIL0oCw9pmnLftNQfJJ7CwrnVUh1FaI8TO3w7D82YgZmleI
-guhQtxPtygdjQNrX52yhLycAAAAAAAA=
-
-
---=-CMhBHduKg4nVTA5WOqLN--
+> 
+> > +	if (!qmp_data->pipe_out_clks)
+> > +		return -ENOMEM;
+> > +
+> > +	for (i = 0; i < num_pipe_outputs; i++) {
+> > +		ret = __phy_pipe_clk_register(dev, np, i,
+> > +					      &qmp_data->pipe_out_clks[i]);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> > +
+> > +	return devm_of_clk_add_hw_provider(dev, qmp_pcie_multiphy_clk_hw_get, qmp_data);
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260730-glymur_linkmode_0731-v8-0-a455265ad8bf@oss.qualcomm.com?part=2
