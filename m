@@ -1,64 +1,66 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010002.outbound.protection.outlook.com [52.101.84.2])
+Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021093.outbound.protection.outlook.com [52.101.100.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18D3484226;
-	Wed,  5 Aug 2026 17:01:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA863C3F4B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 17:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.93
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785949312; cv=fail; b=H7hfTWwtBEehwvmmlRKjqHckaRaFEcwWmcoDvUZlm8lIr6ySF6/v1Iw9jiF6n61bpAPueIXTQWRHu6wP84IPBEXY3EC3C+ZPN3P5hS9HUa6VnJqmHgFIvZB1OeJQUgn8nj4F8bm1xs5ibmNOjQT03tk4MxGOLN6HwY8H0MLndbU=
+	t=1785949542; cv=fail; b=Rb4CoXvu1rAyHRnM+GjpyHo10sWEA3ElssJ2j1wkjaJU/kWCoseLBq6XYChPz/wkD45MBo0EY+xNZ6BFnpcFhEbqt5ykfin+UZCHJFSz2Wgl50cHb9IQhRgYj+mux1NHgwBlG2peLHBYZ2lcE4pyHIWmI57cI3CChWoNMSipaH0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785949312; c=relaxed/simple;
-	bh=awhuEOWS+mce9cHZ2S8wbd8gsFKH237v436uGnrI4Is=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=GzES4tfyHHmO8HJw527/3gStk+Cdo2D9PCy3hb84iz7KT+q0COXgxmrQytp0jSVnYXAQSO81eKNIvvtT4H4TQxrOz7wB3sD3qQeozlcBXCc9qKZJimptL2DArTbkVXrS+WlO9fuyAL9wvz4RNQipRcDb9ienO2KKD1Elkna+VaQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=WaipHrke reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1785949542; c=relaxed/simple;
+	bh=VMRFHYLIjphyOc7mwGIFmL7HUiw5O9CU0U9fp/DWSWQ=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:MIME-Version; b=J7mUrCokMN86XBqWwOyXhV8w51ahbyT65NoOv5KmAyXbo4AG+u9wA8XSACiurIAuea/P2MBi1Wj++clZ8+xu09+IlEqKx9VxRVsWfguPgCD2N9+HBT3tBxNm/ffiyrxZGmJ+JEdEBDIDoOW2I4W+ne+Vv0hxwgTL/PN0GzVc5Q0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=FItXcexz; arc=fail smtp.client-ip=52.101.100.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="WaipHrke"
+	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="FItXcexz"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gekBbvhbOiojGy/vNHvZdxd/0N+wi/SW37dq00ozDZQa8Xo8O6f/JNp+HIgyToXF87kKOwbn6jNCXQOsnuZTooJz2WvEJ2QdN2TDfKPrHfKg3weutWmObUe/LClOtAtBEatLwc8Vxyd9LJLiJVkErO2+eBgoGkTiDsSaHH5VQpSTovmG37C8ioBwc5qbM6tc0A5L0zur0e6QxmTI2GnUA1J+M99GM+8wWY0o7DspsEqEnpFmlicnXM8SMvFE/qTUpmIF/59bjsxu9FcJCUOSUJhkTj3XdW56b+v7DzTTUe/qe+zP/zP3Z2+zYvAzpkIX/bRGJuF1RwaDmXrQZ800WQ==
+ b=gM1onhiK3fL5QfHRzISnoLLfjfakailvJt7XBBhNMWTvC/JzdLz6FOUm+jWU2VXL6ANjXjRgJMzkysAXm1f36d9qxMAec6uzfbjbYv2TRDhTKE8v8MX+ONsnkwKpw9/wYJffmoai/wlGkFXBiD97xhDo1516fpU+hkPT4GnTyfV4r/6wERCCo6LOb67dgsWE9w4XQoCikAgRBuuLJ0VV/qjoX/GWiyvtRS/TDdEwftdsIqQt+yxTu5ewrC+i1YxhDoxFPvxZbYS6bBSnfhxu7cMHYKebyrR5EocdepOKBeLrlETimDgUUTSxDil7or99WPlvHvAZQaTwygUiCnmN0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qLISJcBcDqINAy6j4UDKMKR8yBX+bMBfZr6jYDR/hBE=;
- b=uCs97vurE8/pH3ODKbRMD7IW45TQo6lt9/01WYx6rRG52PGegey0fJINzahlSl1IiORrzzs3hSGzDwy7MdmiOainxc8cQ2sulnAdAZyjCCVU1wCXy8TMFbPn4CVZ2SNDUlj1tzH8fZTocxAZ9u8yqVngAAryXUSmSSBat6alQhomePgniuRz5KyS+2Mamx2ULboFSzpFpldv2R+r0kgSvjQ1C0z1sGN0HeA1fHPKAqsNN11AUp9dePV1iNGmUHLRjU3HIRBf+6XfxIYqkgzLJQVXfnSySJHzLJRzGw0JlEEQSvXqzLxT63T72EF181ZPXAsMhWgwF+dmoCC4UCeVzw==
+ bh=zecMo195vCvXeznk3I1l7++ccgV7UJyYgTMbS5esC/I=;
+ b=wwXfcJfqs6PD18dY4O2F3YW1bRCjKD4aMADGJEH8Y/jdeWo7j21u6gTvLahqlRgN6XY7ftPYv+uI8WgXT15+cryYlWyWoj8dUPp1erWZFRVzifg9VvBVwiP3wD2nO9JEPKQTYbHAhGhiAqF8mim9LOE60B63iJ4x0egkkZFcShvIhlIVKfD7mG/7q3TajY48VYSLBR0K+VeBGCC7ExeA5TmG6vKumFBtm812EmvHAIEMQOUC/l4RiucrqLvEeytKYKIOLB1G6MAHUwzsoV+n22Gf8fhDtSb2jD2vBRFftO0zuaK1RiWq7rhk62cxmPz4JBmYOOzVGe2Bf7fIjVhffw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qLISJcBcDqINAy6j4UDKMKR8yBX+bMBfZr6jYDR/hBE=;
- b=WaipHrkeLxrS6S09QHgmQgg24Oaxnbvxh/2ub4VpLgEfFvPGN8a1Hp9dpFA9DzR8oEfo+Jns04JKjwwniSureqbYUy7NQ9yMIw6/lOmTQNNRmJjIGLZvcXbi2JN1yrUoryUgTwf5ounXm9L1c90toPphhg7AfwJYzdf8UUQri8Z/wdsJH9Ic5FZUCOiEWld0lqGoQ3Y/SRLMnRQ36z38sbcx6Jb8Slag57Fz6+PvHJfHRzDCMg/c+FAu0fC/cSlJCN4/wEDnOtV3gkgDpfJNjU72lPL49iiYyIvFW4QsoUfd8WEVQHXqzLkN3nQVbtzbaicbQdt3zp2qhPnGbRItBQ==
+ bh=zecMo195vCvXeznk3I1l7++ccgV7UJyYgTMbS5esC/I=;
+ b=FItXcexz3orq57oWADBDk3t9FlB8GM/YL8Z/GNzupCMH1etj0KVtZa+2mvT++cyNLNcIaBmqYPmwvtTzMDIg1S8OOj1xdsns+8anJbu1Pftc5R+GAHViwqK1cVMQoViV1bIbP7OS/ItbY0YGzMBCMwrNjGI7iqYyjky12KvRhwg=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV2PR04MB11351.eurprd04.prod.outlook.com (2603:10a6:150:2a3::12) with
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4b4::24)
+ by CWXP265MB2133.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:85::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Wed, 5 Aug
- 2026 17:01:47 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.018; Wed, 5 Aug 2026
- 17:01:47 +0000
-Date: Wed, 5 Aug 2026 12:01:39 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Fabio Estevam <festevam@gmail.com>, Frank.Li@kernel.org,
-	imx@lists.linux.dev
-Subject: Re: [PATCH v2] irqchip: imx-irqsteer: Convert to
- devm_pm_runtime_enable()
-Message-ID: <anNsc8nBkOTuSbH3@SMW015318>
-References: <20260729221416.499781-1-festevam@gmail.com>
- <20260729222246.24B551F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729222246.24B551F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH8PR02CA0001.namprd02.prod.outlook.com
- (2603:10b6:510:2d0::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Wed, 5 Aug
+ 2026 17:05:35 +0000
+Received: from LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::c07d:488c:d4aa:2a4a]) by LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::c07d:488c:d4aa:2a4a%4]) with mapi id 15.21.0270.017; Wed, 5 Aug 2026
+ 17:05:35 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 05 Aug 2026 18:05:35 +0100
+Message-Id: <DKH69TWL1U4Q.2LS506JVSYR8K@garyguo.net>
+Cc: "Alexandre Courbot" <acourbot@nvidia.com>, <linux-pci@vger.kernel.org>,
+ <ojeda@kernel.org>, <dri-devel@lists.freedesktop.org>, "Danilo Krummrich"
+ <dakr@kernel.org>
+Subject: Re: [PATCH v2 11/16] rust: io: register: support fixed offset
+ register without bitfield
+From: "Gary Guo" <gary@garyguo.net>
+To: <sashiko-reviews@lists.linux.dev>, "Gary Guo" <gary@garyguo.net>
+X-Mailer: aerc 0.21.0
+References: <20260805-typed_register-v2-0-c3ca142220a0@garyguo.net>
+ <20260805-typed_register-v2-11-c3ca142220a0@garyguo.net>
+ <20260805165043.0F7161F000E9@smtp.kernel.org>
+In-Reply-To: <20260805165043.0F7161F000E9@smtp.kernel.org>
+X-ClientProxiedBy: LO4P123CA0092.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:191::7) To LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:4b4::24)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -66,132 +68,186 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV2PR04MB11351:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1629cb37-387b-4d42-cfe6-08def3133bd7
+X-MS-TrafficTypeDiagnostic: LOZP265MB8551:EE_|CWXP265MB2133:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8a89d9ed-4f96-40ca-0875-08def313c42d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|19092799006|1800799024|366016|23010399003|4143699003|56012099006|11063799006|10067099003|18002099003|22082099003;
+	BCL:0;ARA:13230040|376014|23010399003|10070799003|366016|1800799024|6133799003|10067099003|5023799004|56012099006|4143699003|18002099003|22082099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	Isr93sJuU9t6eGvpU3wu94p0UfFwprP3FgcOzai99TSuEqu6G62kyzSGcwyIcZXG/9ftFqBqYPyYSzPKGleBo/P1g3PsBeHHvfqdRX8hST8acxT/6g7PT8jtjR3xEqkWgXiNEwc2VoyKlv9pqowkF6VeaA8ZpwbEC8IkIWdmzLJveYv3g9mxmkjqtLIJcOW4T9gs6i2nAPKFuTN7RRSxuA7+Un3aBsj4ATTb1fWtHgjs9WbcTH88M7MuGAJsc+fHxNomzUBXoWsj4D3+ar0bJa29y8cVbWQyy4T2BmnPH+59MP9swxAR9r/5zTD3W67bVuZzZEdxft6XSrBv7STxuajmlTrbpmzQAhdEYsZH5e2m644TuNQrbScqBujjuvuNykHLark44ReRfY6dRVanUw1/uHlPAsrvqgNwjkYsn4gzXIjEbTtHEjbwDDC6i46ynZPpHMB6EBsJYGf0BOWS8QW3S5UQCyDVtA3l+/T5s5FZ3kZ85i1Bk8k5TiUE/Wr7R4JyactHkPWPB9aDHdoqUjw8w2y7rxSXgfDqFk0mbhl4b2gvP0uUCIRTC/WFWc5Bv1FMK1yv5HkH6ZCJhglEDG/ox0ZfmtEW8A2EjoVUbas=
+	XE/fWCmgXlD/hkQz7R/Dq+ZzrQsRU5d/W6TMt7+8F6GDXvdOMIkNMO6eAi96MaMyTSc68ATEvOpBsQTw5pZ6l4oGypDyHJy03bfW815ddQAS0stPnVr0uXMjl4M4R07+FzhPKHgZ9ScyhMHj1aN7IoKncPU5goYjiKSzk7pg7Sr6f4k4AmgBAfbSEsrKSoWppcK3AI2mB+SCjwy/oFatIDj9nKKe9DVlDPen8Lm5rDKl8dTn+UCoXAN4XPBsdc70f4O9wgaw89cUgmlZaGK8xWmjVKOORKxMroUJ9HdqnCASKlOSZ/EKXyoBY8yhS95A1dz8sSkdfnFRwYp9GY3W5hBXkS1YReZrZQB2jB7Ee6SMz3+55t7AX6BekR/zBrvwBnW3IJ+ao8hdvzhrd+5yBfozDIG8tejETa4Y8o6p5aDE+3oC5dXMlRmJSgLPy3OPZ75afkXOkExEyP+7fYwye1DbKjZgjG9Cfw57Wa7Y0qvJ+XAOXmgBL8MpnWBxaIwjuc2MqQAHuo6H2ifFFloG3ZU+lzMxSayLMLxCqU1fW1TXWrbeUe4Oyzem4a2oFCGEqXzkdIT7BQaP+gMuuf8koTnQjT5PMCWAnZVTCbP1Erb3wSMHaaVOVi/dX7RJEpPIldP1QxS6Q0zlyZoT2zJAZk79AeREhb8xqiO9Kqr5GqI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(1800799024)(366016)(23010399003)(4143699003)(56012099006)(11063799006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(10070799003)(366016)(1800799024)(6133799003)(10067099003)(5023799004)(56012099006)(4143699003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?DfDEvyTxt7S2nFwyEKbuf2fXlLissfbszpPC3g64jcNIMmcPysOrvdvMXG?=
- =?iso-8859-1?Q?bFxD3lNBZhtM7dHYGK4kfPjV37VraL+fGbs+/j5Axw+rg62P2R5aMSRv9q?=
- =?iso-8859-1?Q?SyrsEvnlmeyh6fH7s6IuilhJp2wlygKg72aZ5VhoIuFPGsA8DhAvZ3WdqC?=
- =?iso-8859-1?Q?HFSFuthKyyYUalVoaC37WxVB+W8iP17cba+OkY5PggUx8J9Goakl1udf0i?=
- =?iso-8859-1?Q?zPWoTtgeWAEO8Gn15TqEEzIlNZOM0BJrDVWHV5wrcN/kpaF+R3z56J5aBE?=
- =?iso-8859-1?Q?//DdnImAPNZ3i+XWqaOVJXzRgZiNpXluoDFYo2uTncwuRsPSOdfpMCm5lY?=
- =?iso-8859-1?Q?pyUNEd2i3dFmHnCu9DeVab1toCnsguuYFj/xKI13XzSKkqCbzlsud6nkl8?=
- =?iso-8859-1?Q?3n50GSjgI05OoLXQKqUI/mjPel/3F49QNl3+CYbs1By0p299mURog7ZDdG?=
- =?iso-8859-1?Q?EFL3f+ueJ07dtAoO5x4VabgfeyN84KM1nN9qfYA51RqEwjH/ZcV0WePmu/?=
- =?iso-8859-1?Q?8Q2L66XIw3ASup4sl3lnNzNK//p3hHfpPCU+Q0p2zlo5C2JZfmuAbtfcTL?=
- =?iso-8859-1?Q?Kp+EnAvnHuvNC1Oh/0ssWxksMOQVFccQ9EAtSE5yiaYuNXstdT0/MBHiGP?=
- =?iso-8859-1?Q?om7LSpioQFr20ZIhy3CTjIE81NEyFM8/8vZwolT9WQmsGp8UgUjZ2k3zsr?=
- =?iso-8859-1?Q?ygY3cvYB3mgdhj5U456A0epxkgHwUTTbmHUR+R83309iI1z7YZjWi/+ljM?=
- =?iso-8859-1?Q?94dRNl9pbfMQ2bEeMiJ3oDT6Z5FqNIvHFKxo3NEfsiJ5OkDD6yoCvzKIt0?=
- =?iso-8859-1?Q?CdiQjlKy+jpW8/+JpED8tgHQkUckf8O57UGK090t1mqhNn2NOJMMP6bMtv?=
- =?iso-8859-1?Q?0+SEWsxjrXkEssokNLJ78BQLIfZyFmJN1VWWBCLvEaXMrTUL1T4eZlHkpb?=
- =?iso-8859-1?Q?a90Ei0EW8gw0oAVn7ggxH0HhzkrzTMfj2EJSI87ARVpKzcLWXZyFtRCtqI?=
- =?iso-8859-1?Q?ouKIBwj+5Oz11Hf+XAmnMzsSR1HvtTxFN6iyFkDub9+fwF40K/0L0Jtm3r?=
- =?iso-8859-1?Q?LKdBkMWALx1Ecii7LjV0NQ0CoE21fk8AFtYBXo/JQKy8Psxf9B/0WIm25P?=
- =?iso-8859-1?Q?DrYLn6gKPvzQYV8926k+l6NKBdEW0AFJUpVRV45jj6/enRl75TacdhAi36?=
- =?iso-8859-1?Q?pMoRoW4bwnZCLMne63eHte4oF6ENrS2eNcBcvRO9rTByO8IhUXebo9ztH/?=
- =?iso-8859-1?Q?qb8iIygoSqDuCcxv4uflMQhKwiYN7RzId4kHxdnrxFXVQ/b0Iwx6+lfjeQ?=
- =?iso-8859-1?Q?OK8R5Kl4pWR16dH0Q12DxdhhKDNwIQ9ka95wji6d7doPXbOW2TYLWEGGP4?=
- =?iso-8859-1?Q?CbuTWRE0Sns7hSumtRYOVemhe28ohFuVC4h5Ec82Ej4YDTMclgzn7BTuWS?=
- =?iso-8859-1?Q?AnQ7hKb6UtOHpcOLTxrbi3uHpgOfv4uPUVIa5QCg68tWnHr4qXoJ0hSPSh?=
- =?iso-8859-1?Q?sw2MzqYBmMAE2wWeczp4ibkSxkcBlEwnRQtkEAUlRM0ZHxPzO8yjzHZByV?=
- =?iso-8859-1?Q?edHB44xbSL855u7251Sq2Da6AZqrCVRrkV+QQGxEwPW933iBVNDm7sFYoh?=
- =?iso-8859-1?Q?B4CVwPQ001B4i4znmzaiD7vMIR0a1BtZS1B0kUi9m1Da8a8j5UtXpuvmKB?=
- =?iso-8859-1?Q?dV3jq4yDg5mv2pKwncTtuPqnZlLwTmpQKHBgTqhglBY0mye0cFx2Nu/+P7?=
- =?iso-8859-1?Q?7NflnpQnaWzjRebj9YVreQMmiVq+38DeFXcvk1MRQsZXAaKDbDYXG/Q9D3?=
- =?iso-8859-1?Q?PU7QTq25zf7Af3PxZAG5pBHtxNnq9tFFFBMqsNsm0jnM/JFcYbyb?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1629cb37-387b-4d42-cfe6-08def3133bd7
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+	=?utf-8?B?K0Y3NkdMK0Rub09OWElvc0lDU2h0L1RnOThmS3kzdlg4UUQwcHdCT1ZabGVB?=
+ =?utf-8?B?ZExTNnlkWG8wZ21LOXVDa2lKUDFBQ3FuSXU4aXVOSHNjeXFuYU5iN2xGNzRW?=
+ =?utf-8?B?Mnl2dGNOR0I1cnEvaE5ZS3E2Q0EzQWhXa3FTeVFOM1JWZUI0akxyaVUwdjFH?=
+ =?utf-8?B?aVpZZkR6aGRlZ0gyTUhLbFlrU3RZeFllL29sR3YyRm05RGtNWjljQ0NYWlNr?=
+ =?utf-8?B?VnMwRXVMUytpUFA2S1ZoN0xhdWp1WU9rOHNQVWQxVUpPRXRDMjZFa0VXMnc4?=
+ =?utf-8?B?RjU1aTZPdVlDOVFNazZWQituNnF3QXJSNnNUU29SZEhwckk2QlpyWnR4eVov?=
+ =?utf-8?B?M1dPaWNHTkdNdW1LeEY4aEtnM0Y5STl2cE1rVlZoZU5zd1RJMFZFdkJ2OVpX?=
+ =?utf-8?B?QzUyOEhZd09Zalc4NTd1TU1BYlgvbDN4ZlUyeGYzTmFWb2tmRnlzTFhDZEVy?=
+ =?utf-8?B?dUQ2cEk4VjFJRGFabnVOck9aUHE4N3VQdTRkK0laL0FXMzZSRm5qKzNsdmRM?=
+ =?utf-8?B?MmZGM0V5Mjh0WVVBQTdhcXdHTHZMTGtoMTVVYmRKL3JYSk5KWGFKcm5HOVBR?=
+ =?utf-8?B?TkZTUUowNm1uSkI4aEdIa3NHbHJTREM3WjNmTnI1cERqN1NGdjRyZHVOZGlI?=
+ =?utf-8?B?MjdqaXBBbXJDU3FHVHovK0tHWXRrOVZQNEtCa3NHOFI4OXN3UkZGZ3ZsQkgv?=
+ =?utf-8?B?Njh4eW1CeDVZZVd4aDlpUnlWSy9JMmdoSXh2M3E1d3NsbVk4QnhvSGplTTRR?=
+ =?utf-8?B?eWMraG9MS3VYdEJkTktiY0VpV1BLNlV3Zm5vTFJvUEhxRWtWKytDOW5UNWsr?=
+ =?utf-8?B?MHE0c281bWlGdFhoTERuOFlsRnhTdW9wdndhWnFyejRxR1ZhQlgrZzhyL0VJ?=
+ =?utf-8?B?Wko0MFNMSmF0WjNnZ3RRbDZaZUxEeXdrU09TcndNKzN2eDZlL0hNS0Vndy9o?=
+ =?utf-8?B?NDRyS1B0Mk1LVjlCV0FrTUMzRU1GUFJVQmFoYUF6UzlUMjAvK3E1d3graVNy?=
+ =?utf-8?B?WUtDZVA1czFlaTRxdll3MWxhcDJ4ZVBWdURJUThCVXBzMGNOSnNIbEJieUxw?=
+ =?utf-8?B?a1VqUDlmR3llMmlEK25TV0t3dTI3SGo0d2pSR0E2NWxVbXhtSGtUYlRGQlBr?=
+ =?utf-8?B?eDYrVE5WMTlLS3IxRnJHWEM4QUlwZkxKWTJaelU0Q29ZU3ZjUkVmMXRoZ1JD?=
+ =?utf-8?B?MmozQ1RpOEd2RUx6Mm1YdmNlOVI1TWYyOVdjcERxRW1tYlZlUklHWjJLL1pE?=
+ =?utf-8?B?WXgreDVUamNjZlVoOGpnV296ZzlXa1N2LzVpaE5sWmtRK0ZySTZ6ckFXclVY?=
+ =?utf-8?B?U0c4QitIWi92RnZoRktLbzFrd0Q3SS83UHgxV1czVEowcHJEL2w4cHpldkpX?=
+ =?utf-8?B?VVhFVkt1MjZURmhaWGh6bkNGbUMwWW1kOTJGcEtBSEg0ekJLVy8zK0czWmds?=
+ =?utf-8?B?MTloOWY4V1ZUQWdiYlArWEtLaVZadFNzVEZLWWxDMmZqNW84Zkl1M2puWXFF?=
+ =?utf-8?B?STdiZFhLMVQyMVQzODA3eFNBWjVVejlHUkNjTFdaVkZKTTN2K2s3b1hBTVlh?=
+ =?utf-8?B?NndTdmFGQjE0T1NRdUN4UXg4UW5ySjlkVjV6d0dIN21iaHV5MUwyd2hKMVBS?=
+ =?utf-8?B?NS9wcmdGeDFaVVdrVjg5WDh4TXNGMkkrKythWVNsajdxVWh6WmNHYUliNTVk?=
+ =?utf-8?B?d3hGM3ZESVFId0JhclZwcm9VMHNDaWFTV3kreWpPbWNXcm04aVM0aHdmb2lE?=
+ =?utf-8?B?dUVqMTFUdURmaDdJODhLOHV6Qmo5bXVVSWZldWFBa3RKc2p6TVNNK1R1MXo5?=
+ =?utf-8?B?MktYNndhODRWbGV3NHVkcHZuamZvWkVnU0hWUXZ1UWhVN1pBYzg0VW5qVW1H?=
+ =?utf-8?B?OGpFdWtaR2ZmSVBQM210R0dyY3ZrSjcybWVlUlg5bWIvNWdjVmNQcHRGcDBm?=
+ =?utf-8?B?WXpjdm5ZekEzVFpySjJyVTA3a212UHQ5cXAwMUE2OEZTWmR6WmxmbUlKM3Nx?=
+ =?utf-8?B?WndRbEQ0ZlVRTFlCRjd2dG1VU1crRDhjbUN2RUg4R3gzb2Z6WVYxMzJuYlJ2?=
+ =?utf-8?B?alJYSlMrT1Zucm1NcHFzUVp1UlBCU1lKb3JyTmhMNDZBb3IzbkFqTk11cWY1?=
+ =?utf-8?B?VWk0eTVyZGUxR2NITXAySlF2TVl5bWxXN0lPZ3Q0L2lmd3pBRG15SGNjUDFC?=
+ =?utf-8?B?MUc1NElEMGF2aVphNUhFcE5yb2ZiZDJ2K0lITmg4bFdNaE11RmpRR0RDNEQ0?=
+ =?utf-8?B?dThvUHBDQTFRV250NlVPSXpQS1NqcDQveVEyQ2tJb0RHeU0yTFBIZmFVZ0JM?=
+ =?utf-8?B?QkRQd3FJd044R1ovOGJ5aDVhdVR6Q3poM0dlbWpoYjF5c01PLzhEdz09?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8a89d9ed-4f96-40ca-0875-08def313c42d
+X-MS-Exchange-CrossTenant-AuthSource: LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 17:01:47.0493
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 17:05:35.5185
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yyajTS0iHSTCb+eEFh88fPLXIJKcaTCaoevF8tcTci660vUtYzBAXu5cVvUvZHECiz/7rvf2wIGIqL37Td/FkbrPJ3Ecn0RX+1JsXH1UDL8gt78N3vqPvqAWxnF8Omcw
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB11351
+X-MS-Exchange-CrossTenant-UserPrincipalName: grrxf6/Nxf5HrkD0S00Z71yGR8y/wNzdAK8MfBNKB3CghpKs3OybK0exBJtF472ktqou5TdIyLfMtjRc3PX4iA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB2133
 
-On Wed, Jul 29, 2026 at 10:22:45PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] Adding devm_pm_runtime_enable() introduces a failure path that fails to deregister chained IRQ handlers, leading to a Use-After-Free.
->
-> Pre-existing issues:
-> - [High] The irq_domain created during probe is leaked and left registered on error paths, creating a dangling pointer risk.
+On Wed Aug 5, 2026 at 5:50 PM BST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The `register!` macro documentation provides an example defining =
+a FIFO register (`TX_FIFO`) with a `u32` type. This violates the subsystem =
+guidelines which mandate that FIFOs must use stream accessors (no byteswapp=
+ing). Using a `u32` register type implies standard register access (e.g., `=
+writel`), which will byteswap on big-endian architectures and corrupt strea=
+m data. Additionally, the macro's syntax rule `$ty: ident $(:: $path_frag:i=
+dent)*` restricts the type to paths, preventing developers from directly sp=
+ecifying a byte array (e.g., `[u8; 4]`) as the type to properly model a byt=
+eswap-free stream.
 > --
 >
-> --- Patch [1]: [PATCH v2] irqchip: imx-irqsteer: Convert to devm_pm_runtime_enable() ---
-> commit 3959004c7e2715ec92cba0eb90ac30fdaf1b65c2
-> Author: Fabio Estevam <festevam@gmail.com>
-> Subject: irqchip: imx-irqsteer: Convert to devm_pm_runtime_enable()
+> --- Patch [11]: [PATCH v2 11/16] rust: io: register: support fixed offset=
+ register without bitfield ---
+> commit a13a899311e93c249f5925eff4ce304f82a4cb69
+> Author: Gary Guo <gary@garyguo.net>
 >
-> This commit converts the driver to use devm_pm_runtime_enable() to
-> automatically disable runtime PM when the device is removed, fixing an
-> unbalanced pm_runtime_enable warning.
+> rust: io: register: support fixed offset register without bitfield
 >
-> > diff --git a/drivers/irqchip/irq-imx-irqsteer.c b/drivers/irqchip/irq-imx-irqsteer.c
-> > index 87b07f517be35..ba1203d3edd4d 100644
-> > --- a/drivers/irqchip/irq-imx-irqsteer.c
-> > +++ b/drivers/irqchip/irq-imx-irqsteer.c
-> > @@ -263,7 +263,9 @@ static int imx_irqsteer_probe(struct platform_device *pdev)
-> >  	platform_set_drvdata(pdev, data);
-> >
-> >  	pm_runtime_set_active(&pdev->dev);
-> > -	pm_runtime_enable(&pdev->dev);
-> > +	ret = devm_pm_runtime_enable(&pdev->dev);
-> > +	if (ret)
-> > +		goto out;
+> Add a rule to allow creating `IoLoc` in `regiser!()` using an existing ty=
+pe
+> and not create a bitfield. Add an example to demonstrate this for FIFO
+> registers.
 >
-> [Severity: High]
-> If devm_pm_runtime_enable() fails, does this new error path leave the chained
-> IRQ handlers registered?
+>> diff --git a/rust/kernel/io/register.rs b/rust/kernel/io/register.rs
+>> index dc800fc711722..49a61da106c7d 100644
+>> --- a/rust/kernel/io/register.rs
+>> +++ b/rust/kernel/io/register.rs
+>
+> [ ... ]
+>
+>> @@ -499,6 +516,19 @@ fn into_io_op(self) -> (FixedRegisterLoc<T>, T) {
+>>  /// In this example, `SCRATCH_BOOT_STATUS` uses the same I/O address as=
+ `SCRATCH`, while providing
+>>  /// its own `completed` field.
+>>  ///
+>> +/// If you do not wish to have a bitfield defined, you can also create =
+a register using an existing
+>> +/// type.
+>> +///
+>> +/// ```no_run
+>> +/// # use kernel::io::*;
+>> +/// register! {
+>> +///     base: Region<0x1000>;
+>> +///
+>> +///     /// TX FIFO register.
+>> +///     pub TX_FIFO: u32 @ 0x00001000;
+>
+> [Severity: Low]
+> Does this example promote an anti-pattern for FIFO access?
+>
+> Using u32 for a FIFO implies standard register I/O accessors (like writel=
+ or
+> readl), which will perform byte-swapping on big-endian architectures.
+> According to the I/O accessor subsystem guidelines, FIFOs should use stre=
+am
+> accessors without byteswapping to prevent data corruption.
 
-I think move this before irq_domain_create_linear() and use
-devm_pm_runtime_set_active_enabled() should fix this problem
+Sashiko is misunderstanding the use case here, this is for intent here is f=
+or
+PIO FIFO where you read one word as a time for a fixed location, not stream=
+ing
+(otherwise the signature here would be `pub TX_FIFO: [u32; FIFO_SIZE] @ ...=
+`).
 
-Frank
+I'll see if I can have a better example in the next version. Perhaps
+
+    pub UART_RX: u8 @ ...;
+
+?
+
+Best,
+Gary
 
 >
-> Earlier in imx_irqsteer_probe(), we register the chained handlers:
+> Would it be better to avoid using a FIFO as the example here, or use a ty=
+pe
+> that enforces stream semantics?
 >
->     for (i = 0; i < data->irq_count; i++) {
->         ...
->         irq_set_chained_handler_and_data(data->irq[i],
->                                          imx_irqsteer_irq_handler,
->                                          data);
->     }
+>> +/// }
+>> +/// ```
+>> +///
+>>  /// ## Relative registers
 >
-> When we jump to the "out" label on failure, devres will free the "data"
-> structure. If a parent IRQ fires after this, could imx_irqsteer_irq_handler()
-> dereference the freed pointer?
+> [ ... ]
 >
-> >
-> >  	return 0;
-> >  out:
+>> @@ -826,6 +856,23 @@ fn into_io_op(self) -> (FixedRegisterLoc<T>, T) {
+>>  macro_rules! register {
+>>      (base: $reg_base:ty;) =3D> {};
+>> =20
+>> +    // Creates a register at a fixed offset of the MMIO space with prov=
+ided type.
+>> +    (
+>> +        base: $reg_base:ty;
+>> +        // `$ty` cannot be `:ty` due to follow-set restrictions.
+>> +        $(#[$attr:meta])* $vis:vis $name:ident: $ty: ident $(:: $path_f=
+rag:ident)*
 >
-> [Severity: High]
-> This is a pre-existing issue, but does this error path also leak the IRQ
-> domain?
+> [Severity: Low]
+> Does this macro rule prevent developers from specifying inline byte array=
+s
+> (like [u8; 4]) as the register type?
 >
-> Earlier in probe, the domain is created:
+> Since the type matcher is restricted to identifiers and paths, it seems
+> developers wouldn't be able to directly define a byte array to properly m=
+odel
+> a byteswap-free stream without defining a separate type alias first.
 >
->     data->domain = irq_domain_create_linear(dev_fwnode(&pdev->dev), ...
+> Could this be adjusted to support array syntax, or is the limitation stri=
+ct
+> enough to require type aliases for stream buffers?
 >
-> The "out" label only disables the IPG clock, but doesn't call
-> irq_domain_remove(). Is it possible that the IRQ domain is left registered
-> in the system with its host_data pointing to the freed "data" structure,
-> leading to a use-after-free if IRQ mappings are attempted later?
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260729221416.499781-1-festevam@gmail.com?part=1
+>> +            $(@ $offset:literal)?
+>> +            $(=3D> $alias:path $([$alias_idx:expr])? )?;
+>> +        $($rest:tt)*
+>> +    ) =3D> {
+
+
