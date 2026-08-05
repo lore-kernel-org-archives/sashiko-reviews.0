@@ -1,200 +1,164 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013027.outbound.protection.outlook.com [40.107.159.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716BF39DBE5
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 19:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.27
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785956838; cv=fail; b=nGhbFtNAXxo8PHC3PHMXQlTDALcSlVKdUoXAy3tYU2XNQkF/qYTkQYO53g6nyCYpvRlBebtjiWZ6h36bKbr+pNelRBZs1lYbA+qEEWo8Bizf8JxICTAEOL0tHrh/KjmUI9dGZp+5T14tOgk/EogKEDq2vWfeA8y8Y2wADikH7Ao=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785956838; c=relaxed/simple;
-	bh=IyXZqVGIzGfaLswvc1RBQ5dPbH5ecRUB+YrXsC9URP8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=AsrGA0J1e2Tc5q8aHZJOc6KNqWc/Dx5w2NuvY/ALNMu/DbYr5+GsCG1qhvHV71zvByrll7ogrK8C+j6lJDHxPr+wecf+hi1xWsX389kn7n0z0kPwXdLuytljUG9t/8fUTazD7zdiUXNfpTSjEFesHtcZGDn6kR2KiYJMbPKi7rg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ubQLltq2 reason="signature verification failed"; arc=fail smtp.client-ip=40.107.159.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFD83F1AD3
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 21:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785964819; cv=none; b=D8lDHQ1FB6RW2k64H3+fE0Te2MyPBtQm05o87PpT38J2GBhbTb32O46q5lSx8mU8pIFA2/6JmNd0JSv8231NNvIu4gNxHG5t0TgeDFCdL0OZqWFeE4uDqaEMM9HLezolfCwQoc5ZcfRM0dPfKo5mhTc0pS2vXfIfi93QU8mRF2s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785964819; c=relaxed/simple;
+	bh=bodGLDm1Rt56s5tXjFBbBoMGwxs2Za5OPGiF0FirFq4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=onE+m+jdgOqRYYtRvarJIjqDnAV6R5Krq60j8lYuJrV3E9dGQwtIoNbmznsKCgm7YXmQ16TD1as/HGKDlt3IUrM8c4C01ZDA38pRQtEJlbM9I/Fh34bsAAdcX1ejbgXSI2KIMu1egedtvYxJk4l4g6J9C/sO0OIVIOsIAcKRe/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WpmCP6az; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ubQLltq2"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YXMW6XG/eHoteFsbfnzZzBMDFAIHr4CuxyhfY/0OwDo9o+NkJf9f7oiel98MDdv0tRGmoyyErLXaixa1dCRsnS5+7M9ODImaCqqtGYyVHcKhzky66XnKFI0k0lanzONCAfwHNQvBDiXrXgZFLrSJ/9R1QZrUBkdsvEqZlqUWjpmmEjNH+DznbmHthcdI/WFghoyuxTFtF5hmlmYy0jg+LBO+u0YA8PI0/hCR/NZz2wLSLJ5YqzDYNzdX78bo4kw+QWLZ+fqxIwvvB6rgxzuq1Zf6azjVN2uU6p2W7zkKuCL1xE+tYI0HHnEILH9k8DoLst9q5vlWMqpB2ct7CBqxEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QumcG1ztB1jam4K/K36FUqw+26CMkW9Dal3Su8pSscs=;
- b=vtj8YDb/PmgPxIUE8O5Un5XjITAc/GZ+Oe5uiMu/Ot10Y6D2tBBYB/fOQBxsvkdqQP7ZCOhNnpqfPw69V2RIYmnVKwF7scd7KBmAMQzMuyvCXdeb4ZFQxOXbqtgpX3HZOqtn8fgEWaEMYO9JTaSwaPZW7Cypoo7ZHhM1C8/h4L00Bocp/GUF6yZ/zNQ0AqpcfzcRKNDop8Wyh1sr7yLXWrS+h7Nd1RA80oK7grnh1DU9vlZ+wa9EdBat4Ei31+z5fxLaYTjwQM6c6w9dIsgFtvwFI/Js2ce1CCUSJk+7G7Z8Sv5sQanEG7GNpPTfRoXyqaEUme5/QWjXhnfjFHzpQA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QumcG1ztB1jam4K/K36FUqw+26CMkW9Dal3Su8pSscs=;
- b=ubQLltq2buWhMjg4I/PV+L8/t2MaIiQ3gQjWTpQR3ZZyl7+MaP8qtF56JntQ8scYOyp+5xoaiugP0SDe4d/lOC5hcqq9+Rv7ZmHDZpHUTZ0Hlw9lN1RszR5nvVBeplL3yNu4JYlZYBablOWxfbboTNhNX5/ZtlmxsL6RuZ7uxVPrpAS9KnzXYhbatKB219+hroHlEoGdP7IqUYEO0sZ+LJBlMbzwJTB5mjZmNAIJfeAUcfxlHDOMHUHMe2P7Ju2gesyrS9439Wd5X4sNjDyqnjRURUIVP0iYbiVIxb6S9ojvoJFW8EIgzIS4hVdXYMbaMzqiQM8oWe5g83r1tx2W/g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM9PR04MB7667.eurprd04.prod.outlook.com (2603:10a6:20b:2d5::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Wed, 5 Aug
- 2026 19:07:13 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.018; Wed, 5 Aug 2026
- 19:07:13 +0000
-Date: Wed, 5 Aug 2026 15:07:05 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Akhil R <akhilrajeev@nvidia.com>, Frank.Li@kernel.org,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	linux-i3c@lists.infradead.org
-Subject: Re: [PATCH 1/5] i3c: master: Release the fwnode of i2c boardinfo
-Message-ID: <anOJ2V4_R0KFM_aQ@lizhi-Precision-Tower-5810>
-References: <20260804101301.2975911-1-akhilrajeev@nvidia.com>
- <20260804101301.2975911-2-akhilrajeev@nvidia.com>
- <20260804103306.A89B81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260804103306.A89B81F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH0PR07CA0101.namprd07.prod.outlook.com
- (2603:10b6:510:4::16) To DU4PR04MB11791.eurprd04.prod.outlook.com
- (2603:10a6:10:623::11)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpmCP6az"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-38e88b60121so1209326a91.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 14:20:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785964807; x=1786569607; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=U2l+MBd1zwpDTBmfsmYRM7PALg3r8zuiLtOkVsobznI=;
+        b=WpmCP6azm7YDT9r2Bxm8FjAaCByy8nVbr9qToXWBbGeWkzDtLYp9oUYhSQfsF3h2hf
+         56xKONvq87kpGKvdsHVTl99stPsbvwsIbyy7+wD37ABoQioBWk8qryVtqTK+/zqJJhNY
+         +9daZdsbQJC7pH5ezEug8Hm+BwG2vsuAZfK9dpHnhnQLgGBLBdVqgoPO8TVVXpa/2chG
+         Fc4dMvyjTqgMehI1Eh74xUoxixuehB69otGl3Qqw2DH53TS+c2n+uI743XCh4v1jyZhL
+         Cm5Vu+Z5SLhj4PLoaZ2Q2Mfa3+st38nTDLnY7YjtEUiyjl+HWbThDjZaUSpYrhXQYmM0
+         ed+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785964807; x=1786569607;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=U2l+MBd1zwpDTBmfsmYRM7PALg3r8zuiLtOkVsobznI=;
+        b=VtYpHF2/DDOuLMftdN4JTHd85HnDKKPOaiq8KKHvgRazFcfD59vMp2KEux2CavF2Eu
+         TNwus+fiyhwhPqMDZiil3kXNcpKFsgGPmkqBIH1LGNtJOcv2VWy5QqzEUjj5aabJcP/a
+         dr4LcylZ29FE4TMGppitg9r8Z6k/llSiUAXN/wEBwV0M7yPCFJqRKegwm41h7kg0ZgxT
+         9kXNSccSe+mpIJrQ7sewGrE1Yj4Q2RYNs7ocDjTBqUxphi4dyVnMf5Tlo+mtgp4DvhX5
+         HiNwBsKitJfmdk7UvJyqjUrMPtMfAf8mzg2TG0RsI1o/48WK3wZw91tj6wC4weHFDzz1
+         cZeQ==
+X-Gm-Message-State: AOJu0YxFQ7IBIB+U9UFs9q9xUEPJDpApfSFF9N5IWKtvuw/ILbchg0Hs
+	VP5aASD60gO2j5fNHWrOIKlYcPr7Va7Uw4/B2bSX8oGEd0N8QYt+f1tmvfzecw==
+X-Gm-Gg: AR+sD115kPDum9UPY47wPS4/XGejXlVCB6qItfmZS/2UDOmBTH7eWVKte67oyBtgbG/
+	SPgYDd+NMJ681hKY9NiN86+nmklvoOwYYLDoc3x2dIyybrw1oGtnQaLfsIQA6reTRi5JJVqK2kx
+	FpOTsPsm6DLfOaf2nd0nqi5TXpwuQ73zwc9rQPNtynpwiQYV0TG6rY7gzaHIJcbX9GyqUaksAJT
+	fIz/wEyC4PL5MnJL1si9f7BEyz2WKy3fky7mWEtZ3JdhAbyKZKHQfp+cCHcHiNY0JUy5vjsZhMD
+	ehE7qYP+3tS6IxOSd06+g+5QW9vmAM3brrkhanmGf/9CH5fc6Ndbhk/AetLkRF1ss7Hi9yPPDtp
+	G4KDhc6e1zoVPypONqY+rolaXApqlz7GZvZwpUW9tCwssM3Lid0Y94TW28OoQC6b5E3faucnmTp
+	bxXXirDpll60M7CFsZvQ922yIpzL0nNL8h1EdIstS+rtS1cqea7cG8AamIVfE7Gr8iEM8BV299C
+	8oxgcgdhSgyYQRao4JkUKI7d0AuRqbuh8lxgmY=
+X-Received: by 2002:a17:90b:3c06:b0:381:a766:efcc with SMTP id 98e67ed59e1d1-3903c5bcd66mr10087884a91.14.1785964807410;
+        Wed, 05 Aug 2026 14:20:07 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39085f2b2fdsm186728a91.12.2026.08.05.14.20.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Aug 2026 14:20:06 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <3900c082-e098-4be8-8832-db2c2836993a@roeck-us.net>
+Date: Wed, 5 Aug 2026 14:20:05 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB7667:EE_
-X-MS-Office365-Filtering-Correlation-Id: d54c6344-546c-4e88-c74f-08def324c160
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|19092799006|366016|1800799024|6133799003|10067099003|11063799006|56012099006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	gf/sMSzqplf+RkQ53jiOLt2bF0pD94gQL0GpMKNbRcoMB699Hpy7AQNywO3wRJq9la6+BrbRax6axMi+mHQMqXSGmcTcpwNi44vlf1MGFG3bpFHPpEtIfajvpdzWzLKCZj/Dfl7wc3fPc/npBSn1eeGmdOKi0P56tYDIFIjcQDcGeMeMz8IPGVxwdd52pjCtfead/7Z6hkQcCtuhroQHM9udFuG73ZG+a6WvIko46UW+wtrEA+yQZAuPhyA7rEIJGhmPP1oTFTiUoqz6pa587+UT+QOtUdZnfAWwUtY+a5tbFSV9BzA66OEmRbN/7nnIOgKppEd2B3i/10xPkvy/jvQ5YpTeAHvq6/I/nXYV1zTkr4pqEOqOeGv9s2sRvcUR5u9noJZjLW9W824sFGXM5QNHPUVPNd792MsV+3nJjXjd6UgT2Osav++z4c78JYVv8f38a6rlwdMt1xi3PtAerfwRPp5uW03j/V8zPiG0hLVS/vB/ZiiBdAKhi5QKCDUcPFk3rvdc/J5GOV0F2LS+qcP0TT2vvuNHe3Csrw4TlY8bZLHZ7K7jEb3sohfDtqppBx97a62jtK3vE7nPIWbyU4RRjhFRF8q3d2ja0nsHQKw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(19092799006)(366016)(1800799024)(6133799003)(10067099003)(11063799006)(56012099006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?qVWuoSkmisfqIeR177MH8UsF9uvGMYn+Ddyfq0HzFoM88FL0YuEJmWNKW+?=
- =?iso-8859-1?Q?v/y24Oo6cYLxXVqgwDXS+dlBVmzxrNQ66ZW5FzdtkQ+qnPrE/CS/XDuX2m?=
- =?iso-8859-1?Q?yZ/g1Zh4RfgG194Zci4Imf/iFHtGVeSUlBUzLcarRr19Vcyb6/xVo+Jcof?=
- =?iso-8859-1?Q?/P09m6h+KD6+hZtBKS9KGx1uO+vzbaIlxOhW6Xm9ZxXhDveSHepfb6ZnUF?=
- =?iso-8859-1?Q?3CfI47+u33TqdDqjke0KFTnwPFUBFAFR4t0/LbDIFFUcrNuiAq3KOOfGip?=
- =?iso-8859-1?Q?mIh1anfnuTYCD6UlW1Swo+5MIX5DCOo9Cyu2Wuok0l/ddnrliLOp6ZMX9X?=
- =?iso-8859-1?Q?g8FRyCGqImXbp3utS0w22VebCYQRT7vMa69mvFzcAkozT57A77m479j0xg?=
- =?iso-8859-1?Q?RqQO1F+TcIv1qYNUy/reiKwoBDG3N+nMAUDgkwn8oOvnMELX4fg8Xaat8+?=
- =?iso-8859-1?Q?FFrMoretOUtj7ss+ZToWYLZ9wxeTCg96eudz5tbhcRxwfM+iFx+G0eflYV?=
- =?iso-8859-1?Q?y2OIucoN+vlj6N8I5DrckznhUBw2rWNv0KqraBxQEcKSFXJvv9bPAAxs8F?=
- =?iso-8859-1?Q?VQghKEtmR+fjjdRaVDGXrciGR2D0NQKgk0rvCZwrRP9zGVuRv0bxQ1IMs3?=
- =?iso-8859-1?Q?wLSmA8ioWLmVkF9G/DTtb2JTz9sT0LaHWNVr9sOxN8x1yTsM41cqhlXlAl?=
- =?iso-8859-1?Q?gCY9cFrwr+QPgIZRGiM5HNO5PcAc0kfk2R5lo6L3W6Rst6jJ6cK71Sir3P?=
- =?iso-8859-1?Q?cAYWS6dpuaQSNriMGumBsPQqqF88/Ch2lbL2avsNinpAgNePtE6DhTxGtv?=
- =?iso-8859-1?Q?TQoRF2lkL2nUlwJiThrl5myuwGNfzztdd9sM0sf/FOstGALORVRPooLopd?=
- =?iso-8859-1?Q?Pw13zxJYgwlA9Dq/ESPdQ1Nk2S4q6r3K6JIqvqT+tmV45UInEcMgS+nhWd?=
- =?iso-8859-1?Q?ai2hnAwImyAZXvC4glCXZPuMVYNCPDN9yzCLom3lB1CgO1XtreAaHRiNmZ?=
- =?iso-8859-1?Q?pj1+9jbh8YYJMEhJbIZFBeS0eG9to/nTJ5leJNeJgMY52gbRTqjKQaRaR+?=
- =?iso-8859-1?Q?gT6VjJu8/gBrKlYmWthNCL6OV69IoUPBznyKKsRyVrfeEzcYuKPU2V35ll?=
- =?iso-8859-1?Q?2ymrMgHoC3PzIfdnjyEdLQSLCpRHusFmwQW9p9roOJtZgJSy3+1twtgdtF?=
- =?iso-8859-1?Q?6D7GvdBYTA+TjYUzgswTiDThrHPcsuWzh+CeGsDHhcpVrJwYB69Ged429D?=
- =?iso-8859-1?Q?mrbLXH10giH9NdpA5eryYQV501l5wc8BzxOE33ZUIQ8IU2wXk6k1NkpPcG?=
- =?iso-8859-1?Q?gaRgj+Pz5NClsGouBNimmx4PU1nNgL5zJUe/8dkJou22eumSMuCE2JXnGg?=
- =?iso-8859-1?Q?OF7EkDzc/yF+IN4f8cvDGS2xwmrXcPg3bPH5TgzNXahhBWRoAsq4CF45hq?=
- =?iso-8859-1?Q?yeIsRF9NkxtbzcURhy0+nLKWBoPHfg1IB78hlr1b+okhHpbQhlklFHHeK3?=
- =?iso-8859-1?Q?96B1ZwdSTMNCAlu56DtwBul+N1tv3DwQKm7vrqA4frYKjnhyDDiCx7jklT?=
- =?iso-8859-1?Q?rzyCdsj7iwi8nq/iCOE4S8HRkkuE0leySkEJLgpXZDC0IjM2LzvNTvnMtE?=
- =?iso-8859-1?Q?aJAd8PlKwnJiFSfcf1Gq1jZ2VCqqBqcT/4tHYIpojeUXtbOnUorkLM+XkS?=
- =?iso-8859-1?Q?Fm5BDXQo7h53ZIDzidgboTb130i7QmgVC3Muxur3/l6g20BIydiJySYTRd?=
- =?iso-8859-1?Q?rmLhopQ/ojiFM3XiLrR5GGP7MyzvyILVErzWNU4kJ4WKI7euDftPn43AbJ?=
- =?iso-8859-1?Q?Y+aTYcj0W2Ej5rn3nZXf2lhZ+meK0YudsoZmo8wXwnH0dv/hscnO?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d54c6344-546c-4e88-c74f-08def324c160
-X-MS-Exchange-CrossTenant-AuthSource: DU4PR04MB11791.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 19:07:12.9869
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 31Y3XstfIJfQfQ+JV+JO1SeXbF8wDitGAUPt2X4rsUv2EeQvuwbgxOyip1CVJFhzTHutejv0Xx0VgveffeUDoFL7MmT4jRbK4V9loqvrnWwJ+FxsB+55Zr4K9J5Q6gvs
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7667
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] hwmon: (sysfs) Allow drivers to register const
+ attributes
+To: sashiko-reviews@lists.linux.dev, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?=
+ <linux@weissschuh.net>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260805-sysfs-const-attr-hwmon-v1-0-4c0cb2b290a1@weissschuh.net>
+ <20260805-sysfs-const-attr-hwmon-v1-3-4c0cb2b290a1@weissschuh.net>
+ <20260805200755.588371F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
+ oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
+ VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
+ 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
+ onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
+ DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
+ rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
+ WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
+ qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
+ 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
+ qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
+ H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
+ njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
+ dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
+ j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
+ scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
+ zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
+ RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
+ F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
+ FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260805200755.588371F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 04, 2026 at 10:33:05AM +0000, sashiko-bot@kernel.org wrote:
+On 8/5/26 13:07, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] The patch fixes a fwnode reference leak in `i3c_master_add_i2c_boardinfo()` but completely misses the identical leak in `i3c_master_add_i3c_boardinfo()`. Furthermore, there is a structural lifecycle flaw: `i3c_master_register_new_i3c_devs()` assigns the boardinfo's fwnode to the new I3C device without taking a reference, and `i3c_device_release()` unconditionally drops it. This means if one merely blindly copies the devm fix to `i3c_master_add_i3c_boardinfo()`, it would trigger a double-put UAF for instantiated devices. To fix the subsystem fully, both the devm action must be added and a `fwnode_handle_get()` must be taken in `i3c_master_register_new_i3c_devs()`.
+> - [Low] The commit message incorrectly states that the patch switches to the `__DRIVER_ATTR()` macro, while the code actually switches to the `__DEVICE_ATTR()` macro.
 > --
->
-> --- Patch [1]: [PATCH 1/5] i3c: master: Release the fwnode of i2c boardinfo ---
-> commit 9b7e7e5dd15b80d230fc0e52c4d7b8ef9dea16c9
-> Author: Akhil R <akhilrajeev@nvidia.com>
->
-> i3c: master: Release the fwnode of i2c boardinfo
->
-> This commit fixes a fwnode reference leak in i3c_master_add_i2c_boardinfo().
-> It adds a devm action to automatically drop the firmware node reference taken
-> for every I2C child device when the controller device is unbound.
->
-> Closes: https://lore.kernel.org/all/97465893-3650-4f37-98b7-1db76fc6fd03@intel.com/
->
-> > diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-> > index f485b98805cf6..08dc10f172aab 100644
-> > --- a/drivers/i3c/master.c
-> > +++ b/drivers/i3c/master.c
-> > @@ -2913,7 +2918,8 @@ i3c_master_add_i2c_boardinfo(struct i3c_master_controller *master,
-> >  	list_add_tail(&boardinfo->node, &master->boardinfo.i2c);
-> >  	fwnode_handle_get(fwnode);
-> >
-> > -	return 0;
-> > +	return devm_add_action_or_reset(dev, i3c_master_put_boardinfo_fwnode,
-> > +					fwnode);
-> >  }
->
-> [Severity: High]
-> This is a pre-existing issue, but while fixing the leak for I2C devices, it
-> looks like the identical leak was left behind in the I3C counterpart,
-> i3c_master_add_i3c_boardinfo().
->
-> However, would applying the same devm_add_action_or_reset() fix there
-> trigger a double-put use-after-free for instantiated I3C devices?
->
-> Looking at how the I3C devices are created, i3c_master_register_new_i3c_devs()
-> assigns the boardinfo fwnode to the new device without taking an additional
-> reference:
->
-> drivers/i3c/master.c:i3c_master_register_new_i3c_devs() {
->     ...
->     device_set_node(&desc->dev->dev, desc->boardinfo->fwnode);
->     ...
-> }
->
-> And when the device is unregistered, i3c_device_release() unconditionally
-> drops it:
->
-> drivers/i3c/master.c:i3c_device_release() {
->     ...
->     fwnode_handle_put(dev->fwnode);
->     ...
-> }
->
-> If a devm action is added to i3c_master_add_i3c_boardinfo() to drop the
-> reference on teardown, wouldn't we also need to add a fwnode_handle_get()
-> in i3c_master_register_new_i3c_devs() to ensure i3c_device_release()
-> doesn't consume the reference the devm action expects to drop?
+> 
 
-Make sense, please make i2c/i3c handle fwnode consisent.
+I see no evidence that __DRIVER_ATTR actually exists anywhere ...
 
-Frank
+Guenter
 
->
-> --
-> Sashiko AI review ∑ https://sashiko.dev/#/patchset/20260804101301.2975911-1-akhilrajeev@nvidia.com?part=1
->
-> --
-> linux-i3c mailing list
-> linux-i3c@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-i3c
+> --- Patch [3]: [PATCH 3/3] hwmon: (sysfs) Allow drivers to register const attributes ---
+> commit 91e4cdd2e4ad9f4eaa7572f21133759d5e925d9e
+> Author: Thomas Wei√üschuh <linux@weissschuh.net>
+> 
+> hwmon: (sysfs) Allow drivers to register const attributes
+> 
+> This commit updates the hwmon-sysfs macros to use container_of_const() and
+> __DEVICE_ATTR(). This change supports callbacks taking both const and
+> non-const attribute arguments, allowing for a step-wise migration of drivers.
+> 
+>> Switch to the __DRIVER_ATTR() macro which can handle callbacks taking
+>> both const and non-const attribute structure arguments.
+> 
+> [Severity: Low]
+> This isn't a bug, but the commit message states the patch switches to the
+> __DRIVER_ATTR() macro. However, the code actually switches to the
+> __DEVICE_ATTR() macro:
+> 
+> include/linux/hwmon-sysfs.h:SENSOR_ATTR()
+>      { .dev_attr = __DEVICE_ATTR(_name, _mode, _show, _store),
+> 
+> Could the commit message be updated to accurately reflect the macro used in
+> the code?
+> 
+
