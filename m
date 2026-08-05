@@ -1,248 +1,208 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021101.outbound.protection.outlook.com [40.107.74.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FB134CFC7
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 01:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2423BBFBE
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 02:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.101
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785894058; cv=pass; b=acPc+AG12qMX0agcndgmxe6GolUfdZUJm2uABpEtJu4noYCr2Tguz/7hN0Vgtj04Dnt2dbdJYyr161tyu3KTAsr0hzvPkU1JfTH/8/3NOsVdXa1Ge/YzzzRKlSoGQjAJ4pLSvENOz5YyRBlGSfNX/s7M5dBqiEdRsYKXVHe7pVI=
+	t=1785896130; cv=fail; b=RdIMzsfcyn5+HJHGzR/Q3CM4Tg2HjjlMfijWjnptZHmsgORecBWrcLfXbGfndmx8Y3v+GtGJLMrUsc/LDN/sLs7N/XYZxq1l7tNQlZKhK1sNYx1eEKz6egDmVKalK3uv4GCAkYM8PNvurePldQvrYf7FuscQXUNjzb70MvaPEzc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785894058; c=relaxed/simple;
-	bh=pPyg7K2vslrzk0vHWbu4dVkgZmi+23mzJxE0mTnTsA4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RsursjdHz5hJFB3S6JvkGEQuUXPcgubGNV730nGlFDN/l/trBrAdyJwjtAiXJKVvBa+Heh37X2P7y9e0skgF61H8BMcROi4FAF9YmPO4I6aHlccoi4wKl4Cu/T2Va7UDZGzw7ORurJgQNWUeaF/yIT+S1k+Xu3+nNCW/KrFsezM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gk8zxUyJ; arc=pass smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785896130; c=relaxed/simple;
+	bh=oGtbDbDN+qi0FKR5Aq3KCnDOijDzPPiViTsfXZCwFao=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=l1aIAJbLH+VYsIXlul/cwERtvVPPbtpMavPWXkKT0Lv5/jLDMEYSqOCNo5sKdR8wE9d3ixEr2EdNphJvjCd7DPgy3oyEWSY8yecsL3bZ4EVtjouXfmQTsXtVHHsgEulZuxIpGid+lM0G8Q2hOGRHyTPyWR5E3zZLygpyvp2BLxc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=c2B+ogon reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gk8zxUyJ"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6a0794669a6so319648a12.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 04 Aug 2026 18:40:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785894055; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AoXUwwhG5qzzSX1qXxGXhoyZ3DMeD8Bt0nWV200LWPQkXn0akKScDUXA1I06GvEKkB
-         QJCj7p01hNg5h6BEZ6hySRmxuh3POB/WyDyBLor7j2XHd+jDkidn+v76IgHpOMXSzIrr
-         zPRm+h/FuZ5veXwyHhVtwYyc6U4vN0Bv2haAJU/JUqkK0v4H6e2aaereQRBOBPudj4xm
-         K7+V+gWVcRHJJ75jzm/Fm7AtF1CTBjcT4t88cX9QJhTiZUJ1l+rBzdKMWQnWTOUzCU6f
-         CnY1EmKElyVAWsdi9MU18qxH3Advff0/9XX6Oeu1NAlFeZPLTaARWuUE0IsaKpWrrXsJ
-         A5ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tCe1PHBV2z5lmY55d+MmZeq9ngGC4whGPN9INfCQUbw=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=rJvHKwhtylCpr8aLTwX1RSYbPqa++RKa32Jv0YWESS4lQPgZ/mNyvo7xZ9/a8A9cwR
-         9uqfv89Ll3dLRyfzmUsA3hNex+GGvGyRPPueBNjFnGw3hNfNNTUM4phvwArIOfHqBXv0
-         nrY7PGFF7FsUK5S7/C7F+X3xFYswvpcQM4dtw0Pn2PUfOyL8bD6tPbS+giGbEFyJxxxb
-         8f6RzzgJXM3NHZt4Ua1RRPfOIoudAST3vmpAmF00akdOG9UusWrKJ2neM/lLRt5M5r9p
-         XcTYFuCrp69tKEkfj5G8nsz/IQ8rdVRaCvrFSMeWwx/OCYx7FpohMZIbv1dcsZFpPl6D
-         m7HQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785894055; x=1786498855; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tCe1PHBV2z5lmY55d+MmZeq9ngGC4whGPN9INfCQUbw=;
-        b=gk8zxUyJcRL6Gr35w8BVUj4cI4XDntcQrq5qxX7PtaMzs8gTG703uaHaHuFiEc3Iw1
-         Bctty0HfDGk3AsW+YfESNkeSX1BpxvoRfUOW4vkPahsvk8G5yua/tz5LLoa3+O3bxP1Y
-         2ux0obOf9JnpxGI/qTtKhUmZp+aFkY811bzEVZDLkWLPP5XQqUaqXW6kzpnD1PWKkL49
-         y6uLD5hDjkNWYEyLqjeM+1C/Mr5VpxeILLBWDq02S91CW1BjBW+N3Lx8j9lOj3r+B9lf
-         D9FLprPfyMzXSNOuROQW82+QmFXPJmvvo5TG3BM4Yw5+CEbPTL6LL7Yw2DJHGMOVFoFM
-         BAqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785894055; x=1786498855;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tCe1PHBV2z5lmY55d+MmZeq9ngGC4whGPN9INfCQUbw=;
-        b=UO2uZTaI0NPjhYoVUIyu6qWxVe7aRO0laZ7mBkkdKp6iUbDAnJ46WuLH+0zwMmMQDj
-         gHwykn2CT350KAEzW/NhItuA5UtAGSpWk/FvKNm0aCl+sdypCZg53NZog4UKsaXuuDq/
-         FF02Fn4CwzpmSCH8uClTROhWWDL8QlEfka1zWFQ/PIFtdGhcnxw1JPnAHFVXJDkMprKK
-         KxaYEBvKJCoNKrEBrfpiTU/+uqL5MtbPZd46TwnaeKho/CyM8RcJrNdLVKHNhMb/aLpj
-         HTnxVmkiDGgv3v6wpHc3rwRkOMLPu7R3oko77ndEadTBslJaqMUVKg+bcfL+v8rkIpSt
-         1IJg==
-X-Gm-Message-State: AOJu0YyWLO8hQ6HU7zW9clPnCgoeDJXtncLbxLbUpIOg0A5OeUX3kw7f
-	3VyqXftG+nxqd3gL098U73iILHtqyF3N4hvxKgzI/Q1MIFB/JWY690s/hFLlbIvyUt7Am9ayHad
-	bWKF5exvH6RWaD0Ap5cR/Ke465k9iMtgccO8l3pXN3A==
-X-Gm-Gg: AR+sD10olPdRDbUBiv2I2lJEfOM4tae3vurjk7N1c9SsGJAf2XAuMXSxF/N4b0WM9oe
-	8AU7XqwaoWiEwsF9XemcszAqeFLgeY5U38mZ1IhKnlM8Kz/++h3JJDrVIKs4ySLpEwXFZXL7mL9
-	0LoxDzIbtWRjWeCrUiVueJO/5XxmjP3D9AqJmQFkx8YoJtC/xnmfGGKMZM2QKcxE57uxePtZIx9
-	JtUmY+pfa8233Ln7nOuozznwcKgiwI65If9FDD+LRIHqzJYMA1HzToAZlaaNOfnvjur9O4kX4Ip
-	WhWRZSHOHLObfdCuWqda2GCBbImZHSZqz5orKlHyt+UZ6dPg29hFugJnv8NIR/vXhTPNk2hdl09
-	Sc8TvaIpAjwpb
-X-Received: by 2002:a17:907:3e8d:b0:c20:2d38:e518 with SMTP id
- a640c23a62f3a-c2039ce5eafmr131391866b.2.1785894054463; Tue, 04 Aug 2026
- 18:40:54 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="c2B+ogon"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YTWYlWbpuVg8v0dqJZMHbOcDE/dvc2P/khQ8lSwX3JePKb5fwEAOWSLvGhIjaah5m/yForQBvSJPb3484X8+hAu5+9dJ1vsBScDK6cbqeOsItmDN8YB0Buk1rqBttrjT8IEOSWZcRvb+m9ISQDIwdss8kXcxoG3nNyGPqPPzEa0G+7KIpUqkwxh7GdPW7ZZrHXOpEjYteh/RGui1gVg6ocJPF5H35tPmaYfAyy/KZbrlqfH3o/U7KdSCj2gw+fEhWo2g5/PZdFJR4pkR9tKze8G+tSkJ+PxIYCeD/dyZ4tDg9kAdVDhZUvEKgZxeMk6ucMBoHnTj26A/dJw06uN3vg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ufnu1cyJ1PqdxaJ8xlROMTwtI0CkYUNpMFCJbar1TI8=;
+ b=zFCcDWcS1jYEYomycJJpvZunfdeWlZZ6Xod3afY+KpmPCQ87iT3W/zENHNYD6lLmWTcfV3sGtbC4klee6Rl9iKnR1mOTpBUBvlcTFxeYlmkQCXt0AvG7HeOUg9g/5ekrr11iGJ+fpKA0ss7Tdi3j3l4qw8MZTSxKt3D4iQx9J8Dpi9DnTeulDU+IA7LMEj1VH0uS/N4gmLrcU6LnLX2Hg4nR6pVOCzR8ODlgDXVWAse8IV0w1XXHqLddyJsrvvGjBNRlWLhkGZmsIXH9QMEHZOcE8tOk6TdMWsQL9V2YbKPnX2565MHZHX4B9NtvZt7lb3s0byVT6HrCpCsfh0DPoQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ufnu1cyJ1PqdxaJ8xlROMTwtI0CkYUNpMFCJbar1TI8=;
+ b=c2B+ogon7sGuoKpVDqSF5IcKMWbhlAiUbIYuII+9L0WnWxiNN9X86Knw9TVFH11feoMF3Kb+2eJ3chT3RWVqHjbQdyTGzNGoSWhp4cL2Ardot9mXz/VoDt7hglIEPElTGQQOvUgVDFGIglVrltGszn3l1WodnyNb/+e5weazaco=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY7P286MB5326.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:1f4::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.16; Wed, 5 Aug
+ 2026 02:15:24 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.017; Wed, 5 Aug 2026
+ 02:15:24 +0000
+Date: Wed, 5 Aug 2026 11:15:23 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH v6 4/6] dmaengine: dw-edma: Add delegated channel request
+ helpers
+Message-ID: <6squdujudud4uhgr72wzhnbiq6rg3b56vsazdxztgscbhpehsz@nz4njedhvcdy>
+References: <20260804033855.2115817-1-den@valinux.co.jp>
+ <20260804033855.2115817-5-den@valinux.co.jp>
+ <20260804035230.538CD1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260804035230.538CD1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: TYWPR01CA0004.jpnprd01.prod.outlook.com
+ (2603:1096:400:a9::9) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260804170156.1709916-1-nickolay.lysenko@gmail.com>
- <20260804170156.1709916-7-nickolay.lysenko@gmail.com> <20260804175948.3AFF11F000E9@smtp.kernel.org>
-In-Reply-To: <20260804175948.3AFF11F000E9@smtp.kernel.org>
-From: Mykola Lysenko <nickolay.lysenko@gmail.com>
-Date: Tue, 4 Aug 2026 18:40:42 -0700
-X-Gm-Features: AUfX_mwNkS3kz9QKXZvh_atQ8kHPSx-Jv81lPBEPMvjZcwdqAHj7BQQjJ6y2lVc
-Message-ID: <CAMtxOX2Kpzom-r7rEBJ4AWsBf67XdCfavR2GaOyXqo7Pe+ZDiA@mail.gmail.com>
-Subject: Re: [RFC PATCH bpf-next v5 6/8] selftests/bpf: extract BPF skeleton
- generation into a helper script
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY7P286MB5326:EE_
+X-MS-Office365-Filtering-Correlation-Id: f2025f98-22db-469d-06f7-08def29768b4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|10070799003|376014|56012099006|4143699003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	eVo7n2orHCsoPDIziHMrp3wgsGr+9j/J5qEEg3j/zqcPEN+qF/hXIb0xEj08RFoRfPudM0QWtnCT5nCVFfCU1//4XAKbK5fE4NlHYvnHmB9T66je6uvxIYH1/DvtwMy1eJ41M8WSpfsUDODbpni8gan8Sgwkwox1WbrXzoXTT6HFMjBNgWfGExztcoj77HBVNT+VnpmpAXRePmJ9Uz/G1fIUE/CcokeK38hftydOleY3y9H7RULDuur9e6KnGsE+LHdZkezO3o3gsrGxe764l8Dtl2AVGdGql+zzEwzaIomZ7Szq9IU7Ty/IOIpti0WCWD+JkioLcSknViliF2w5qPayadDAX2sIRFw0D1zQwbw2k1qpo92wldadVMX45Q+skqi+YFK/BpunGBvudNK/GemhSRo0H71pY9xvjA4s+opqOoX03/AK20fmPAueU4M13fYjUiu7YoU0pES5hZockerkKEelNkga5YjgJAmpPV9AaXwSIB2smkFJ66jYmUO1ZPvxeJbu4PTujlAWyTGWgqhpF+UZgLqTX7Aot6xVS18BJSStnaXuaSTXoWzdx1r8CYx+3p8ejRAqm0LnrbcKtIN+E249Dhx2GBCQ4fUzgRU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(10070799003)(376014)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?MgE3zMqIcRmidrdkQxIfHgjQyOjxOTTgKNm+FBGQ14Hm6XEkiiOdweBuzd?=
+ =?iso-8859-1?Q?ril9T2sth16GyzAK0PypVpXdu3UUq6hE3vJl7aPwaXb6xv3llLehk9XU0/?=
+ =?iso-8859-1?Q?V2C0N8J47lR3Fyf5gPRPkZW6lKappjN7oGvN1plBFwu8zhoxmEiPE8jPia?=
+ =?iso-8859-1?Q?trudSDekQLISNAK68ZZNuUEyhCrcauYPEIFdoeLyAME2XoH4yjhzlUAqeg?=
+ =?iso-8859-1?Q?6WeHyeJ5Gg7o4ZlaGktrLgvJAvSgnu3qrwbcyFb3JuLcCVgmQEiEAh/Eel?=
+ =?iso-8859-1?Q?j/t7Luq2+NGxl0GZKJKTjmZrF1m02lsgm7d6IcyAkaMc0ZZwkPBHhMv6zc?=
+ =?iso-8859-1?Q?03PlwFpiKJ2nTXvn8leTDdQRk7oaQoGUinpc/gn6maNLX9iz3IU+XvY9ad?=
+ =?iso-8859-1?Q?w8iHYQEuiqOEmUa2WRoa6hGsfJAFReziluns43NgHbyWR0zPsWSsPq8frF?=
+ =?iso-8859-1?Q?7uOexzNagoQRCfeRzij+pqjfPeTceTVx+0+uk7KW1OwwYRQabWJIsbv+4H?=
+ =?iso-8859-1?Q?+MqsxlMMiTk93jtWZFNGEfCAA1/zRhOSvdoXuWmCxKyYmoosm/cVNCPa2X?=
+ =?iso-8859-1?Q?te8qWXFF0tTsJSKRWxUSWS9XxS92zhKlbHo3agSW9wcCp+o2/FjmTCYLmF?=
+ =?iso-8859-1?Q?7MWCmaRSoUYx9TLHzp1IKYh8Ec/xFoJT7o4VDEshqL2KfbJV/x3cvmHSaE?=
+ =?iso-8859-1?Q?uaDH0qX6EtHjZUdErQFs5y3ZQiNvxEMqOxuyNmWCtxB9PaEawy+dWr+vdt?=
+ =?iso-8859-1?Q?YZbsD51H/2fWNhZQfvo30OONZVXuKdcRmQn7HjtZ+VhdJhazgoY4bWykUO?=
+ =?iso-8859-1?Q?Oo7hwPBGOIo8nw/AmQM6/dOLJfXMnuka6Pub0rvilRLAp3D/9Aykx5Izl1?=
+ =?iso-8859-1?Q?dIRu86bf40gPuwnvM/4lhfEDr5px0ITkuEdx9GOBJUtn9tI65LiQgOamcL?=
+ =?iso-8859-1?Q?oGe0n2ljx1dIBkK6+ctL8Q8j/K+fBnj/WQmWeGII7952iY1bray9o0332F?=
+ =?iso-8859-1?Q?4g9wY0E54GFQVCJJEt3nPTRxSQPJXToyiIYOj4DmBT9Y1fQgLNX7ODD6Rk?=
+ =?iso-8859-1?Q?5WqlCFZvUTvV0ZzKAfbbDz9TB9F3VupFnnrBMmwptrsSKOAAXVGD8fpogU?=
+ =?iso-8859-1?Q?GrYXnQAdwofGckRWely081T9ObeoPa3bx83yEyaKfBXkG/NbAw0QuJI19n?=
+ =?iso-8859-1?Q?Q6uOYQGpXWogYb/k7+gM3iLBvcblR7J2iWmsoePxm4ZWJ8w6jnNQXNmgwr?=
+ =?iso-8859-1?Q?xGnixoCbuvQQ4fYlrKLOEpQO56gWth79LJReIVGD72Whjzc8ZWgEaPIFkX?=
+ =?iso-8859-1?Q?tYWXwGhr8O1r8uxXinikEzqXQggSPN0ucHbGGOlnrnElNwEsK4WNARNRZB?=
+ =?iso-8859-1?Q?X2zdERRNWX9SRRg+wz7+dzXEi5fuDzU+ng+QDMt065KF7l0pi4HVE39nvP?=
+ =?iso-8859-1?Q?gb17WKVPp9b37sNTymlvu2bHysUEyAnUrZTZu5+tm1oYHAMqegnY87wcbt?=
+ =?iso-8859-1?Q?NzeCFd5R9AFQTIBjT0NLEHwBMVshzMiRgFW6NDEsPaEI/1GABYC+GdAGj4?=
+ =?iso-8859-1?Q?JeAmga9saaY4qIKH5oXlqn0MrmmMRhp+dqEbhYoxuQKoENMR+6vsV2IttW?=
+ =?iso-8859-1?Q?XiOYT7X0SRUYPS8mUIACL07UiG8jvGyDJktjEtdDTGY9l5FHQjw1OmzCOd?=
+ =?iso-8859-1?Q?FojswevLKGFgO46n/BhDy+TiIZnQi3NvbUT/3wPoX+zigD7hUz58DtNWA0?=
+ =?iso-8859-1?Q?qiHfg78W/MQYbGpECXbf2U+vt4P+Miv9yjH5lpmg5gOBxBTzuIjFo+83bz?=
+ =?iso-8859-1?Q?1Cx89sheDmWSEoAF5+rF0NN7jw18rGqhkcjRPAti9chr9cYVXJMv?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: f2025f98-22db-469d-06f7-08def29768b4
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 02:15:24.4609
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6iMhq/R05A8W6OXGmzsikKVF50iINxg+XVJEbJdL7pfU35G+thwyVTBO10E8tWH2fa/TPLrXY67ta5Q7OOy0Lg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY7P286MB5326
 
-On Tue, Aug 4, 2026 at 10:59=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The patch introduces a behavior change in permissive mode that=
- results in noisy build logs and redundant error messages, contradicting th=
-e commit message claim that 'behavior is unchanged'. Additionally, a script=
- comment references a non-existent file.
+On Tue, Aug 04, 2026 at 03:52:29AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Releasing a single delegated channel with `quiesce=true` on eDMA v0 hardware causes a data race on `engine_en` and incorrectly shuts down the entire DMA direction, disrupting all other local channels.
 > --
->
-> --- Patch [6]: [RFC PATCH bpf-next v5 6/8] selftests/bpf: extract BPF ske=
-leton generation into a helper script ---
-> commit e4a593d3d0bfe3675d723364cb65f81a2812b866
-> Author: Mykola Lysenko <nickolay.lysenko@gmail.com>
->
-> selftests/bpf: extract BPF skeleton generation into a helper script
->
-> This commit extracts the BPF skeleton generation steps into a dedicated s=
-hell
-> script (gen_bpf_skel.sh) to reduce Makefile complexity and escaping issue=
-s. It
-> handles regular, light, signed light, and linked skeletons through script
-> flags.
->
-> > diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selft=
-ests/bpf/Makefile
-> > index 0ee02eeac6bca..dbde2f6bd044d 100644
-> > --- a/tools/testing/selftests/bpf/Makefile
-> > +++ b/tools/testing/selftests/bpf/Makefile
->
+> 
+> --- Patch [4]: [PATCH v6 4/6] dmaengine: dw-edma: Add delegated channel request helpers ---
+> commit 0987248b986738e4870e25b1f36d8c9f2eb69d8b
+> Author: Koichiro Den <den@valinux.co.jp>
+> 
+> dmaengine: dw-edma: Add delegated channel request helpers
+> 
+> This commit adds DesignWare eDMA-specific helpers to request and release
+> hardware channels for delegation to a remote host. The release helper
+> supports quiescing the channel before restoring default routing and
+> releasing the DMAengine reservation.
+> 
+> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > index 1f893dc54c793..4c0d2bba755b5 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
 > [ ... ]
->
-> > -$(TRUNNER_BPF_SKELS): %.skel.h: %.bpf.o $(BPFTOOL) | $(TRUNNER_OUTPUT)
-> > -     $(Q)$(if $(PERMISSIVE),if [ ! -f $$< ]; then                    \
-> > -             $$(RM) $$@ $$(@:.skel.h=3D.subskel.h);                   =
- \
-> > -             printf '  %-12s %s\n' 'SKIP-SKEL' '$$(notdir $$@)' 1>&2; =
-\
-> > -             exit 0;                                                 \
-> > -     fi;)                                                            \
-> > -     printf '  %-12s %s\n' 'GEN-SKEL' '[$(TRUNNER_BINARY)] $$(notdir $=
-$@)' 1>&2; \
-> > -     $$(BPFTOOL) gen object $$(<:.o=3D.linked1.o) $$< &&              =
- \
->
-> [ ... ]
->
-> > +$(TRUNNER_BPF_SKELS): %.skel.h: %.bpf.o $(BPFTOOL) gen_bpf_skel.sh | $=
-(TRUNNER_OUTPUT)
-> > +     $$(call msg,GEN-SKEL,$(TRUNNER_BINARY),$$@)
-> > +     $(Q)BPFTOOL=3D$$(BPFTOOL) ./gen_bpf_skel.sh                      =
-         \
-> > +             --name $$(notdir $$(<:.bpf.o=3D))                        =
-         \
-> > +             --skel $$@ --subskel $$(@:.skel.h=3D.subskel.h) $$< $$(ca=
-ll skip_on_fail,SKEL,$$(@:.skel.h=3D.subskel.h))
->
-> [Severity: Medium]
-> Does this change in permissive mode behavior contradict the commit messag=
-e
-> which states "behavior is unchanged"?
->
-> Previously, if a .bpf.o file failed to compile in permissive mode, the
-> skeleton generation recipe would quietly check for the missing file, prin=
-t
-> SKIP-SKEL, and exit early without executing bpftool.
->
-> With the missing-file guard removed, the recipe now unconditionally print=
-s
-> GEN-SKEL and calls gen_bpf_skel.sh. This invokes bpftool on a missing fil=
-e,
-> causing it to fail loudly to stderr before the skip_on_fail suffix catche=
-s
-> the exit code. This results in noisy build logs and redundant error messa=
-ges.
-
-It does - good catch. Reproduced:
-
-prozak@powertower$ touch progs/fentry_test.c && $MK LLVM=3D BPF_STRICT_BUIL=
-D=3D0 \
- "progs/fentry_test.c-CFLAGS=3D--definitely-bogus-flag" \
- $PWD/fentry_test.bpf.o $PWD/fentry_test.lskel.h 2>&1 | tail -15
-...
-  CLNG-BPF [test_progs] fentry_test.bpf.o
-clang: error: unknown argument: '--definitely-bogus-flag'
-  SKIP-BPF     fentry_test.bpf.o
-  GEN-SKEL [test_progs (signed)] fentry_test.lskel.h
-libbpf: failed to open file '.../fentry_test.bpf.o': -ENOENT
-Error: failed to link '.../fentry_test.bpf.o': No such file or directory (2=
-)
-  SKIP-SKEL    fentry_test.lskel.h
-
-The GEN-SKEL line and the two error lines are new - the old recipe's
-missing-input guard skipped silently before bpftool ever ran. The
-final state is identical (outputs removed, build reports success and
-continues):
-
-prozak@powertower$ touch progs/fentry_test.c && $MK LLVM=3D
-BPF_STRICT_BUILD=3D0 2>&1
-...
-  CLNG-BPF [test_progs] fentry_test.bpf.o
-  GEN-SKEL [test_progs (signed)] fentry_test.lskel.h
-...
-  CLNG-BPF [test_progs-no_alu32] fentry_test.bpf.o
-  GEN-SKEL [test_progs-no_alu32 (signed)] fentry_test.lskel.h
-...
-  CLNG-BPF [test_progs-cpuv4] fentry_test.bpf.o
-  GEN-SKEL [test_progs-cpuv4 (signed)] fentry_test.lskel.h
-...
-
-While the output differs, on reflection the extra printing is
-derivative - the compile failure is
-already reported in full where it happens - so the next revision will
-restore the quiet skip
-(and with it, the 'behavior is unchanged' claim becomes accurate).
-
->
-> > diff --git a/tools/testing/selftests/bpf/gen_bpf_skel.sh b/tools/testin=
-g/selftests/bpf/gen_bpf_skel.sh
-> > new file mode 100755
-> > index 0000000000000..e234f3a57d46b
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/gen_bpf_skel.sh
-> > @@ -0,0 +1,93 @@
-> > +#!/bin/bash
-> > +# SPDX-License-Identifier: GPL-2.0
->
-> [ ... ]
->
-> > +# The bpftool binary is taken from $BPFTOOL (default: bpftool from PAT=
-H).
-> > +# On failure all outputs and intermediates are removed and the script
-> > +# exits non-zero; permissive-mode skipping is the caller's business
-> > +# (see skip_on_fail in Makefile.buildvars).
->
-> [Severity: Medium]
-> Is the reference to Makefile.buildvars correct here?
->
-> The file Makefile.buildvars does not exist. It looks like skip_on_fail is
-> actually defined directly in tools/testing/selftests/bpf/Makefile.
-
-Fair, will fix before re-spin.
-
->
+> > +void dw_edma_release_delegated_chan(struct dma_chan *dchan, bool quiesce)
+> > +{
+> > +	struct dw_edma_chan *chan;
 > > +
-> > +set -u
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260804170156.17=
-09916-1-nickolay.lysenko@gmail.com?part=3D6
+> > +	if (!dchan)
+> > +		return;
+> > +
+> > +	chan = dchan2dw_edma_chan(dchan);
+> > +	if (quiesce && dw_edma_core_ch_quiesce(chan))
+> 
+> [Severity: High]
+> Does releasing a delegated channel with quiesce set to true unintentionally
+> disrupt all other active local channels in the same direction?
+> 
+> If an endpoint driver uses some channels locally while delegating others to a
+> remote host, this call to dw_edma_core_ch_quiesce() appears to escalate to a
+> direction-wide shutdown on eDMA v0 hardware:
+> 
+> drivers/dma/dw-edma/dw-edma-v0-core.c:dw_edma_v0_core_ch_quiesce() {
+>     ...
+>     return dw_edma_v0_core_dir_off(chan->dw, chan->dir);
+> }
+> 
+> dw_edma_v0_core_dir_off() forcefully masks interrupts for all channels in the
+> direction and locklessly clears the engine_en register via
+> dw_edma_v0_core_engine_disable():
+> 
+> drivers/dma/dw-edma/dw-edma-v0-core.c:dw_edma_v0_core_engine_disable() {
+>     ...
+>     SET_RW_32(dw, dir, engine_en, 0);
+> }
+> 
+> Since the per-channel delegation API does not enforce exclusive ownership of
+> the direction, does this cause a data race and abort ongoing DMA transfers on
+> unrelated active local channels?
+
+That does not happen with the current consumer.
+
+Patch 3 documents that the caller must own the whole provider sharing group and
+stop peer programming before reclaim. pci_epf_dma follows it, ie. for eDMA
+unroll and HDMA compatibility maps, it rejects partial delegation of a
+direction. Native HDMA quiesce is per-channel.
+
+A future consumer could miss this rule, yes. But adding group tracking to this
+generic per-channel API feels too much. I think the documented caller
+requirement is enough and keeps the design simple.
+
+Best regards,
+Koichiro
+
+> 
+> > +		dev_warn(chan->dw->chip->dev,
+> > +			 "failed to quiesce delegated %s channel %u\n",
+> > +			 chan->dir == EDMA_DIR_WRITE ? "write" : "read",
+> > +			 chan->id);
+> > +
+> > +	scoped_guard(spinlock_irqsave, &chan->vc.lock)
+> > +		chan->irq_mode = dw_edma_get_default_irq_mode(chan);
+> > +
+> > +	dma_release_channel(dchan);
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260804033855.2115817-1-den@valinux.co.jp?part=4
