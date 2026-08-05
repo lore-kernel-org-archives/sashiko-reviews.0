@@ -1,283 +1,197 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010002.outbound.protection.outlook.com [52.101.84.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE5F3F12EF
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 16:36:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785947819; cv=none; b=m6k0P1aAIsWXtGUtlefQnD6+SoiQj/EOAwmcT3/aCwIwE1ZUJPMu9kRMi9X7qV6AoP7gB9Ghc9sXGy9/bvU2KpTG5fQ2Tbu2+s2NS71qqyRH+H+1bryjsg7ZoOTq1D/SINXrDp1WuD4U9GNJZL+/QJEDChOTJM2+fIb9VZES8Io=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785947819; c=relaxed/simple;
-	bh=siZXWbYQWMIg/+8AhVVPOzWO+rx6FEab5fiKZcAyGZo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U250PGaM0zF9E2D4La3a2pZ91OIFix1eaz1GzHJFaxZTG/OIaBxDj0Whrib17daglfRX5ZLToC9IV1aUAloHVYFVIJoV/1JeitAyVBdlkQd1Qzi5Efxngc4Fy3Rko+yvhMjPeL6YEdN1WIqX9VDMxKsFKhcFKA+k2rm6xLroxFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Z4lguewy; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18D3484226;
+	Wed,  5 Aug 2026 17:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.2
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785949312; cv=fail; b=H7hfTWwtBEehwvmmlRKjqHckaRaFEcwWmcoDvUZlm8lIr6ySF6/v1Iw9jiF6n61bpAPueIXTQWRHu6wP84IPBEXY3EC3C+ZPN3P5hS9HUa6VnJqmHgFIvZB1OeJQUgn8nj4F8bm1xs5ibmNOjQT03tk4MxGOLN6HwY8H0MLndbU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785949312; c=relaxed/simple;
+	bh=awhuEOWS+mce9cHZ2S8wbd8gsFKH237v436uGnrI4Is=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GzES4tfyHHmO8HJw527/3gStk+Cdo2D9PCy3hb84iz7KT+q0COXgxmrQytp0jSVnYXAQSO81eKNIvvtT4H4TQxrOz7wB3sD3qQeozlcBXCc9qKZJimptL2DArTbkVXrS+WlO9fuyAL9wvz4RNQipRcDb9ienO2KKD1Elkna+VaQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=WaipHrke reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Z4lguewy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785947817; x=1817483817;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=siZXWbYQWMIg/+8AhVVPOzWO+rx6FEab5fiKZcAyGZo=;
-  b=Z4lguewyiP7IaksxTc1xmV9v62bXTLnuLAvbp2QGWBBaIZXjTpb7ESOR
-   n6Eg1qIIJB9RtbpG6gV6ynSiIf0VUYAbbEpmho35HB98b9fEEyJePswBn
-   oDIKnXZVV9DE7O0rG0XIiJlpXGAALW+Nkb22QW2aF3CtlZA2cebmtW+Dr
-   c1irB0Yib+dFXBiE7/jXhy1KeFsGcg+lJz3DnSpXmwjRRySv0zgdTkL+3
-   dj5nm/pvJXOQiLkAJUWTBph9iNRbinMvYB4bHbqYKr+olmi4Qfqx4OS/7
-   +8fC7Mi4aB33sqPEIpS7iwlUIKaDBA1wQU9M/lZqCaxpuJp0hVaG2ZmXQ
-   w==;
-X-CSE-ConnectionGUID: eaR8rb4mSWKzgJcfl5BRJA==
-X-CSE-MsgGUID: drbWbU+tRtSW9K5gqGWsyQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11866"; a="103931843"
-X-IronPort-AV: E=Sophos;i="6.25,206,1779174000"; 
-   d="scan'208";a="103931843"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2026 09:36:55 -0700
-X-CSE-ConnectionGUID: +5+ijJ8wTTixWH9+2MpD6g==
-X-CSE-MsgGUID: nqbD+/ORQcK7mmmW9RcuhA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,206,1779174000"; 
-   d="scan'208";a="258521262"
-Received: from sghuge-mobl2.amr.corp.intel.com (HELO [10.125.109.42]) ([10.125.109.42])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2026 09:35:33 -0700
-Message-ID: <74b88c40-c40a-464b-b6e9-9ee4f7f91145@intel.com>
-Date: Wed, 5 Aug 2026 09:35:31 -0700
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="WaipHrke"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gekBbvhbOiojGy/vNHvZdxd/0N+wi/SW37dq00ozDZQa8Xo8O6f/JNp+HIgyToXF87kKOwbn6jNCXQOsnuZTooJz2WvEJ2QdN2TDfKPrHfKg3weutWmObUe/LClOtAtBEatLwc8Vxyd9LJLiJVkErO2+eBgoGkTiDsSaHH5VQpSTovmG37C8ioBwc5qbM6tc0A5L0zur0e6QxmTI2GnUA1J+M99GM+8wWY0o7DspsEqEnpFmlicnXM8SMvFE/qTUpmIF/59bjsxu9FcJCUOSUJhkTj3XdW56b+v7DzTTUe/qe+zP/zP3Z2+zYvAzpkIX/bRGJuF1RwaDmXrQZ800WQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qLISJcBcDqINAy6j4UDKMKR8yBX+bMBfZr6jYDR/hBE=;
+ b=uCs97vurE8/pH3ODKbRMD7IW45TQo6lt9/01WYx6rRG52PGegey0fJINzahlSl1IiORrzzs3hSGzDwy7MdmiOainxc8cQ2sulnAdAZyjCCVU1wCXy8TMFbPn4CVZ2SNDUlj1tzH8fZTocxAZ9u8yqVngAAryXUSmSSBat6alQhomePgniuRz5KyS+2Mamx2ULboFSzpFpldv2R+r0kgSvjQ1C0z1sGN0HeA1fHPKAqsNN11AUp9dePV1iNGmUHLRjU3HIRBf+6XfxIYqkgzLJQVXfnSySJHzLJRzGw0JlEEQSvXqzLxT63T72EF181ZPXAsMhWgwF+dmoCC4UCeVzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qLISJcBcDqINAy6j4UDKMKR8yBX+bMBfZr6jYDR/hBE=;
+ b=WaipHrkeLxrS6S09QHgmQgg24Oaxnbvxh/2ub4VpLgEfFvPGN8a1Hp9dpFA9DzR8oEfo+Jns04JKjwwniSureqbYUy7NQ9yMIw6/lOmTQNNRmJjIGLZvcXbi2JN1yrUoryUgTwf5ounXm9L1c90toPphhg7AfwJYzdf8UUQri8Z/wdsJH9Ic5FZUCOiEWld0lqGoQ3Y/SRLMnRQ36z38sbcx6Jb8Slag57Fz6+PvHJfHRzDCMg/c+FAu0fC/cSlJCN4/wEDnOtV3gkgDpfJNjU72lPL49iiYyIvFW4QsoUfd8WEVQHXqzLkN3nQVbtzbaicbQdt3zp2qhPnGbRItBQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by GV2PR04MB11351.eurprd04.prod.outlook.com (2603:10a6:150:2a3::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Wed, 5 Aug
+ 2026 17:01:47 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0292.018; Wed, 5 Aug 2026
+ 17:01:47 +0000
+Date: Wed, 5 Aug 2026 12:01:39 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Fabio Estevam <festevam@gmail.com>, Frank.Li@kernel.org,
+	imx@lists.linux.dev
+Subject: Re: [PATCH v2] irqchip: imx-irqsteer: Convert to
+ devm_pm_runtime_enable()
+Message-ID: <anNsc8nBkOTuSbH3@SMW015318>
+References: <20260729221416.499781-1-festevam@gmail.com>
+ <20260729222246.24B551F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260729222246.24B551F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8PR02CA0001.namprd02.prod.outlook.com
+ (2603:10b6:510:2d0::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH v4 08/11] perf/cxl: Unfreeze counters after
- handling an overflow interrupt
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org, linux-perf-users@vger.kernel.org
-References: <20260805155911.1304807-1-dave.jiang@intel.com>
- <20260805155911.1304807-9-dave.jiang@intel.com>
- <20260805161558.D1C471F000E9@smtp.kernel.org>
-From: Dave Jiang <dave.jiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20260805161558.D1C471F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV2PR04MB11351:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1629cb37-387b-4d42-cfe6-08def3133bd7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|19092799006|1800799024|366016|23010399003|4143699003|56012099006|11063799006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	Isr93sJuU9t6eGvpU3wu94p0UfFwprP3FgcOzai99TSuEqu6G62kyzSGcwyIcZXG/9ftFqBqYPyYSzPKGleBo/P1g3PsBeHHvfqdRX8hST8acxT/6g7PT8jtjR3xEqkWgXiNEwc2VoyKlv9pqowkF6VeaA8ZpwbEC8IkIWdmzLJveYv3g9mxmkjqtLIJcOW4T9gs6i2nAPKFuTN7RRSxuA7+Un3aBsj4ATTb1fWtHgjs9WbcTH88M7MuGAJsc+fHxNomzUBXoWsj4D3+ar0bJa29y8cVbWQyy4T2BmnPH+59MP9swxAR9r/5zTD3W67bVuZzZEdxft6XSrBv7STxuajmlTrbpmzQAhdEYsZH5e2m644TuNQrbScqBujjuvuNykHLark44ReRfY6dRVanUw1/uHlPAsrvqgNwjkYsn4gzXIjEbTtHEjbwDDC6i46ynZPpHMB6EBsJYGf0BOWS8QW3S5UQCyDVtA3l+/T5s5FZ3kZ85i1Bk8k5TiUE/Wr7R4JyactHkPWPB9aDHdoqUjw8w2y7rxSXgfDqFk0mbhl4b2gvP0uUCIRTC/WFWc5Bv1FMK1yv5HkH6ZCJhglEDG/ox0ZfmtEW8A2EjoVUbas=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(1800799024)(366016)(23010399003)(4143699003)(56012099006)(11063799006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?DfDEvyTxt7S2nFwyEKbuf2fXlLissfbszpPC3g64jcNIMmcPysOrvdvMXG?=
+ =?iso-8859-1?Q?bFxD3lNBZhtM7dHYGK4kfPjV37VraL+fGbs+/j5Axw+rg62P2R5aMSRv9q?=
+ =?iso-8859-1?Q?SyrsEvnlmeyh6fH7s6IuilhJp2wlygKg72aZ5VhoIuFPGsA8DhAvZ3WdqC?=
+ =?iso-8859-1?Q?HFSFuthKyyYUalVoaC37WxVB+W8iP17cba+OkY5PggUx8J9Goakl1udf0i?=
+ =?iso-8859-1?Q?zPWoTtgeWAEO8Gn15TqEEzIlNZOM0BJrDVWHV5wrcN/kpaF+R3z56J5aBE?=
+ =?iso-8859-1?Q?//DdnImAPNZ3i+XWqaOVJXzRgZiNpXluoDFYo2uTncwuRsPSOdfpMCm5lY?=
+ =?iso-8859-1?Q?pyUNEd2i3dFmHnCu9DeVab1toCnsguuYFj/xKI13XzSKkqCbzlsud6nkl8?=
+ =?iso-8859-1?Q?3n50GSjgI05OoLXQKqUI/mjPel/3F49QNl3+CYbs1By0p299mURog7ZDdG?=
+ =?iso-8859-1?Q?EFL3f+ueJ07dtAoO5x4VabgfeyN84KM1nN9qfYA51RqEwjH/ZcV0WePmu/?=
+ =?iso-8859-1?Q?8Q2L66XIw3ASup4sl3lnNzNK//p3hHfpPCU+Q0p2zlo5C2JZfmuAbtfcTL?=
+ =?iso-8859-1?Q?Kp+EnAvnHuvNC1Oh/0ssWxksMOQVFccQ9EAtSE5yiaYuNXstdT0/MBHiGP?=
+ =?iso-8859-1?Q?om7LSpioQFr20ZIhy3CTjIE81NEyFM8/8vZwolT9WQmsGp8UgUjZ2k3zsr?=
+ =?iso-8859-1?Q?ygY3cvYB3mgdhj5U456A0epxkgHwUTTbmHUR+R83309iI1z7YZjWi/+ljM?=
+ =?iso-8859-1?Q?94dRNl9pbfMQ2bEeMiJ3oDT6Z5FqNIvHFKxo3NEfsiJ5OkDD6yoCvzKIt0?=
+ =?iso-8859-1?Q?CdiQjlKy+jpW8/+JpED8tgHQkUckf8O57UGK090t1mqhNn2NOJMMP6bMtv?=
+ =?iso-8859-1?Q?0+SEWsxjrXkEssokNLJ78BQLIfZyFmJN1VWWBCLvEaXMrTUL1T4eZlHkpb?=
+ =?iso-8859-1?Q?a90Ei0EW8gw0oAVn7ggxH0HhzkrzTMfj2EJSI87ARVpKzcLWXZyFtRCtqI?=
+ =?iso-8859-1?Q?ouKIBwj+5Oz11Hf+XAmnMzsSR1HvtTxFN6iyFkDub9+fwF40K/0L0Jtm3r?=
+ =?iso-8859-1?Q?LKdBkMWALx1Ecii7LjV0NQ0CoE21fk8AFtYBXo/JQKy8Psxf9B/0WIm25P?=
+ =?iso-8859-1?Q?DrYLn6gKPvzQYV8926k+l6NKBdEW0AFJUpVRV45jj6/enRl75TacdhAi36?=
+ =?iso-8859-1?Q?pMoRoW4bwnZCLMne63eHte4oF6ENrS2eNcBcvRO9rTByO8IhUXebo9ztH/?=
+ =?iso-8859-1?Q?qb8iIygoSqDuCcxv4uflMQhKwiYN7RzId4kHxdnrxFXVQ/b0Iwx6+lfjeQ?=
+ =?iso-8859-1?Q?OK8R5Kl4pWR16dH0Q12DxdhhKDNwIQ9ka95wji6d7doPXbOW2TYLWEGGP4?=
+ =?iso-8859-1?Q?CbuTWRE0Sns7hSumtRYOVemhe28ohFuVC4h5Ec82Ej4YDTMclgzn7BTuWS?=
+ =?iso-8859-1?Q?AnQ7hKb6UtOHpcOLTxrbi3uHpgOfv4uPUVIa5QCg68tWnHr4qXoJ0hSPSh?=
+ =?iso-8859-1?Q?sw2MzqYBmMAE2wWeczp4ibkSxkcBlEwnRQtkEAUlRM0ZHxPzO8yjzHZByV?=
+ =?iso-8859-1?Q?edHB44xbSL855u7251Sq2Da6AZqrCVRrkV+QQGxEwPW933iBVNDm7sFYoh?=
+ =?iso-8859-1?Q?B4CVwPQ001B4i4znmzaiD7vMIR0a1BtZS1B0kUi9m1Da8a8j5UtXpuvmKB?=
+ =?iso-8859-1?Q?dV3jq4yDg5mv2pKwncTtuPqnZlLwTmpQKHBgTqhglBY0mye0cFx2Nu/+P7?=
+ =?iso-8859-1?Q?7NflnpQnaWzjRebj9YVreQMmiVq+38DeFXcvk1MRQsZXAaKDbDYXG/Q9D3?=
+ =?iso-8859-1?Q?PU7QTq25zf7Af3PxZAG5pBHtxNnq9tFFFBMqsNsm0jnM/JFcYbyb?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1629cb37-387b-4d42-cfe6-08def3133bd7
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 17:01:47.0493
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yyajTS0iHSTCb+eEFh88fPLXIJKcaTCaoevF8tcTci660vUtYzBAXu5cVvUvZHECiz/7rvf2wIGIqL37Td/FkbrPJ3Ecn0RX+1JsXH1UDL8gt78N3vqPvqAWxnF8Omcw
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB11351
 
-
-
-On 8/5/26 9:15 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> 
+On Wed, Jul 29, 2026 at 10:22:45PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
 > New issues:
-> - [High] A cross-CPU TOCTOU race condition during CPU migration can leave the PMU permanently unfrozen when it is supposed to be disabled, leading to a specification violation where a running counter is written to.
-
-The window is real but the spec conclusion is not. CXL r4.0 8.2.7.1.1,
-Counters Writable while Frozen, ties writability to enabled or frozen,
-not to running:
-
-  1 = ... software is permitted to write and modify any Fixed-function
-      Counter Data register or any Configurable Counter Data register while
-      it is frozen.
-
-cxl_pmu_parse_caps() refuses to probe unless that bit is set, so the write
-event_start() does is explicitly permitted. The stray unfreeze takes away
-the frozen state, which the grant does not cover. We get a garbage initial
-count on one event, on a CPU that is going away, and the destination's
-pmu_enable() unfreezes a moment later anyway.
-
-A lock would close the gap between the flag read and the freeze write, but
-the handler still races event_start() on the other CPU, so it narrows the
-race rather than removing it.
-
-The real fix is not depending on same-CPU semantics at all. Moving
-prev_count and event->count off local64_t makes this class of question go
-away. Needs follow changes if that is the direction we want to go.
-
-DJ
-
-> 
+> - [High] Adding devm_pm_runtime_enable() introduces a failure path that fails to deregister chained IRQ handlers, leading to a Use-After-Free.
+>
 > Pre-existing issues:
-> - [High] `__cxl_pmu_read` is vulnerable to a cross-CPU data race on `hwc->prev_count` during CPU migration because it relies on `local64_cmpxchg`.
-> - [High] Pending overflow interrupts can be incorrectly attributed to newly scheduled events on the same counter, corrupting their counts by adding a spurious full period.
-> - [High] Writing 1s to RsvdZ (Reserved, must be zero) bits in the Freeze register violates the CXL specification and risks fatal hardware errors.
-> - [High] Concurrent PMU reads and overflows cause massive double-counting or loss of events due to stateless overflow handling.
+> - [High] The irq_domain created during probe is leaked and left registered on error paths, creating a dangling pointer risk.
 > --
-> 
-> --- Patch [8]: [RESEND PATCH v4 08/11] perf/cxl: Unfreeze counters after handling an overflow interrupt ---
-> commit 77054eb72889cfc4fca68e72d632bb6f5cfbe02d
-> Author: Dave Jiang <dave.jiang@intel.com>
-> 
-> perf/cxl: Unfreeze counters after handling an overflow interrupt
-> 
-> The counters run with Freeze on Overflow set, so one overflow freezes every
-> counter in the block. cxl_pmu_irq() reads the overflowed counters and clears
-> the overflow status but never unfreezes, so everything stays frozen until the
-> next pmu_enable(). This patch unfreezes after clearing the status, unless the
-> PMU has been disabled in the meantime.
-> 
-> Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
-> 
->> diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
->> index 448e1da3d59f9..a081fcba69917 100644
->> --- a/drivers/perf/cxl_pmu.c
->> +++ b/drivers/perf/cxl_pmu.c
-> 
-> [ ... ]
-> 
->> @@ -604,6 +607,7 @@ static void cxl_pmu_disable(struct pmu *pmu)
->>  	struct cxl_pmu_info *info = pmu_to_cxl_pmu_info(pmu);
->>  	void __iomem *base = info->base;
->>  
->> +	WRITE_ONCE(info->enabled, false);
->>  	/*
->>  	 * Whilst bits above number of counters are RsvdZ
->>  	 * they are unlikely to be repurposed given
->>  	 * number of counters is allowed to be 64 leaving
->>  	 * no reserved bits.  Hence this is only slightly
->>  	 * naughty.
->>  	 */
->>  	writeq(GENMASK_ULL(63, 0), base + CXL_PMU_FREEZE_REG);
-> 
+>
+> --- Patch [1]: [PATCH v2] irqchip: imx-irqsteer: Convert to devm_pm_runtime_enable() ---
+> commit 3959004c7e2715ec92cba0eb90ac30fdaf1b65c2
+> Author: Fabio Estevam <festevam@gmail.com>
+> Subject: irqchip: imx-irqsteer: Convert to devm_pm_runtime_enable()
+>
+> This commit converts the driver to use devm_pm_runtime_enable() to
+> automatically disable runtime PM when the device is removed, fixing an
+> unbalanced pm_runtime_enable warning.
+>
+> > diff --git a/drivers/irqchip/irq-imx-irqsteer.c b/drivers/irqchip/irq-imx-irqsteer.c
+> > index 87b07f517be35..ba1203d3edd4d 100644
+> > --- a/drivers/irqchip/irq-imx-irqsteer.c
+> > +++ b/drivers/irqchip/irq-imx-irqsteer.c
+> > @@ -263,7 +263,9 @@ static int imx_irqsteer_probe(struct platform_device *pdev)
+> >  	platform_set_drvdata(pdev, data);
+> >
+> >  	pm_runtime_set_active(&pdev->dev);
+> > -	pm_runtime_enable(&pdev->dev);
+> > +	ret = devm_pm_runtime_enable(&pdev->dev);
+> > +	if (ret)
+> > +		goto out;
+>
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does writing a full 64-bit mask
-> to the freeze register risk fatal hardware errors on strict CXL implementations?
-> 
-> In cxl_pmu_disable(), the driver writes GENMASK_ULL(63, 0) to
-> CXL_PMU_FREEZE_REG to freeze all counters.
-> 
-> According to the CXL 3.0 specification, bits above the implemented number
-> of counters (info->num_counters) are RsvdZ, and software is strictly
-> required to write 0 to these fields.
-> 
-> Writing 1s to reserved fields could cause AER faults or Poisoned transactions.
-> 
-> [ ... ]
-> 
->> @@ -802,6 +806,21 @@ static irqreturn_t cxl_pmu_irq(int irq, void *data)
->>  
->>  	writeq(overflowed, base + CXL_PMU_OVERFLOW_REG);
->>  
->> +	/*
->> +	 * An overflow freezes every counter in the CPMU, so unfreeze once the
->> +	 * overflowed ones have been read and their status cleared. Otherwise
->> +	 * they stay frozen until the next pmu_enable() and events are lost.
->> +	 *
->> +	 * Not while the PMU is disabled, so as not to undo an intentional freeze.
->> +	 * The check is advisory, not exclusive: pmu_disable() normally runs on
->> +	 * info->on_cpu with interrupts off, where the pinned handler cannot
->> +	 * preempt it. In the one window where it does not - the migration in
->> +	 * cxl_pmu_offline_cpu() - the counters are legitimately running again,
->> +	 * so unfreezing is correct there anyway.
->> +	 */
->> +	if (READ_ONCE(info->enabled))
-> 
-> [Severity: High]
-> Could this advisory check on info->enabled cause a cross-CPU race condition
-> during CPU migration?
-> 
-> During CPU hotplug migration, perf_pmu_migrate_context() in
-> cxl_pmu_offline_cpu() moves events to the target CPU, but the IRQ
-> affinity is not updated until afterwards.
-> 
-> If the IRQ fires on the old CPU, it can read a stale true for info->enabled
-> concurrently with the target CPU executing cxl_pmu_disable(), which sets
-> it to false and freezes the PMU.
-> 
-> The old CPU would then write 0 to unfreeze the PMU here. The target CPU,
-> expecting the PMU to be frozen, proceeds to cxl_pmu_event_start(), enabling
-> the counter via CXL_PMU_COUNTER_CFG_ENABLE and writing 0 to
-> CXL_PMU_COUNTER_REG.
-> 
-> Because the PMU was incorrectly unfrozen, the counter starts immediately,
-> leading to a write to a running counter, which violates the CXL 3.0 spec.
-> 
->> +		writeq(0, base + CXL_PMU_FREEZE_REG);
->> +
->>  	return IRQ_HANDLED;
->>  }
-> 
-> I also noticed a few other pre-existing issues in this file while reviewing.
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is the use of local64_cmpxchg
-> in __cxl_pmu_read() safe across multiple CPUs?
-> 
-> drivers/perf/cxl_pmu.c:__cxl_pmu_read() {
->     ...
->     do {
->         prev_cnt = local64_read(&hwc->prev_count);
->         new_cnt = cxl_pmu_read_counter(event);
->     } while (local64_cmpxchg(&hwc->prev_count, prev_cnt, new_cnt) != prev_cnt);
->     ...
-> }
-> 
-> During the CPU hotplug migration window in cxl_pmu_offline_cpu(), events
-> are migrated to the target CPU before IRQ affinity is updated via
-> irq_set_affinity().
-> 
-> If an overflow IRQ fires in this window, it runs on the old CPU while the
-> target CPU can concurrently execute cxl_pmu_read().
-> 
-> Since local64_t only guarantees atomicity for local CPU accesses, both CPUs
-> iterating over the same event and concurrently executing local64_cmpxchg()
-> could cause a data race and silent counter corruption.
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can pending overflow interrupts
-> be incorrectly attributed to newly scheduled events?
-> 
-> When a counter overflows, the hardware asserts an interrupt and sets the
-> corresponding bit in CXL_PMU_OVERFLOW_REG.
-> 
-> If the current event is deleted before the IRQ is serviced, neither
-> cxl_pmu_event_del() nor cxl_pmu_event_start() clears the overflow bit:
-> 
-> drivers/perf/cxl_pmu.c:cxl_pmu_event_start() {
->     ...
->     local64_set(&hwc->prev_count, 0);
->     writeq(0, base + CXL_PMU_COUNTER_REG(hwc->idx));
->     ...
-> }
-> 
-> When cxl_pmu_event_add() maps a new event to the same counter index, and
-> the pending IRQ is serviced, cxl_pmu_irq() calls __cxl_pmu_read(event, true).
-> 
-> For the new event, both new_cnt and prev_cnt are near 0, meaning the
-> following check is satisfied:
-> 
-> drivers/perf/cxl_pmu.c:__cxl_pmu_read() {
->     ...
->     if (overflow && new_cnt >= prev_cnt)
->         delta += mask + 1;
->     ...
-> }
-> 
-> Could this cause the driver to falsely believe a wrap occurred and corrupt
-> the count by adding a spurious full period?
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the stateless overflow
-> handling in __cxl_pmu_read() cause double-counting or lost events?
-> 
-> drivers/perf/cxl_pmu.c:__cxl_pmu_read() {
->     ...
->     delta = (new_cnt - prev_cnt) & mask;
->     if (overflow && new_cnt >= prev_cnt)
->         delta += mask + 1;
->     ...
-> }
-> 
-> If a polled read (overflow = false) occurs after the counter wraps and
-> freezes, but before the IRQ handler runs, it adds the correct delta and
-> updates prev_cnt.
-> 
-> When the IRQ handler subsequently runs, new_cnt and prev_cnt will be equal,
-> satisfying new_cnt >= prev_cnt.
-> 
-> Wouldn't the IRQ handler then erroneously add a full period on top of the
-> already correct count? Conversely, if the event is deleted before the IRQ
-> handler runs, could the full period be permanently lost?
-> 
+> If devm_pm_runtime_enable() fails, does this new error path leave the chained
+> IRQ handlers registered?
 
+I think move this before irq_domain_create_linear() and use
+devm_pm_runtime_set_active_enabled() should fix this problem
+
+Frank
+
+>
+> Earlier in imx_irqsteer_probe(), we register the chained handlers:
+>
+>     for (i = 0; i < data->irq_count; i++) {
+>         ...
+>         irq_set_chained_handler_and_data(data->irq[i],
+>                                          imx_irqsteer_irq_handler,
+>                                          data);
+>     }
+>
+> When we jump to the "out" label on failure, devres will free the "data"
+> structure. If a parent IRQ fires after this, could imx_irqsteer_irq_handler()
+> dereference the freed pointer?
+>
+> >
+> >  	return 0;
+> >  out:
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this error path also leak the IRQ
+> domain?
+>
+> Earlier in probe, the domain is created:
+>
+>     data->domain = irq_domain_create_linear(dev_fwnode(&pdev->dev), ...
+>
+> The "out" label only disables the IPG clock, but doesn't call
+> irq_domain_remove(). Is it possible that the IRQ domain is left registered
+> in the system with its host_data pointing to the freed "data" structure,
+> leading to a use-after-free if IRQ mappings are attempted later?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260729221416.499781-1-festevam@gmail.com?part=1
