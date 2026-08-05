@@ -1,40 +1,40 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991833E3DBD
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 08:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1155148988B;
+	Wed,  5 Aug 2026 08:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785919007; cv=none; b=q6jo89EJd3SNNA0XB7xITDGoKJggoYzW7jsKLkCJc94aanmrlW6NAPP6XMnFtkKqhUJ7MkAvF3rH6F2Z7bzR3UKwUtgkPYxVkOUJqqNwvvBskZ0qhBTlFkFJn4vaEP1vYaCiJtw+mUDabHuz7zCz88edisFN27KczUR7zcDSNJU=
+	t=1785919044; cv=none; b=q482ep9t4wtO2pTCjn6AIv+75NaGTjb8FQ34V4Jc/Q8IZaIjkaKkxDnVoCC92OOAxFLTsGc8hCXpoKr5oO1kh+WxAX/271nOajFA+4iXAAGDXMLrrMbxNf6hJ4Oehj1oAeefkNZuY2VB7GB0QxAsT+nuDyU4YyALOGPXOnjxpyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785919007; c=relaxed/simple;
-	bh=MOn7oxXrZL+xFemqjbz74heu3oMn07FLvq27q11l8C8=;
+	s=arc-20240116; t=1785919044; c=relaxed/simple;
+	bh=hceH8L6K34krT/6tB2UoMyLkuRnZhg+ZcVUiuxXUIIQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U4Fb4g9Quo4Lh/Ts05qOaa959AKBXBH06wjc5xHccvAenh55poNDbOnkuER6dGaFk4vglyigzViaUX/RbdjtxDkb+d05DUcJFw0gV1EsPyrFA4xBDveA6WJ6nhEpspDKG1FoWsaJge99Mb7OgfwF6SOcOK/g2MH6arPsMNeFjHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=fe62Jeyo; arc=none smtp.client-ip=185.246.85.4
+	 In-Reply-To:Content-Type; b=uqEIdczsxfU89E+Vt2ozKucP9F5R3BKvtAyQ15xTCj1jORsERVI/uFrCJ5EOLzKHuD14TA8UkRYoYTaNT3AjP8MFbvVfbZdQZBqWGVwGCGdWnC3ithKfOzMp31dE7x8buj210vrnQmBkxAryONyRbKCRdq1XzeXWpqYPht2xmOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=1wA0+ooI; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="fe62Jeyo"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="1wA0+ooI"
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 325E54E410C9
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 08:36:43 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id A32A41A13E4;
+	Wed,  5 Aug 2026 08:37:21 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 083E1602AB;
-	Wed,  5 Aug 2026 08:36:43 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id EE5B211C34457;
-	Wed,  5 Aug 2026 10:36:37 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 7950C602AB;
+	Wed,  5 Aug 2026 08:37:21 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A71B411C34460;
+	Wed,  5 Aug 2026 10:37:20 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1785918998; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1785919041; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=UR6p8JxnAkaMDEy6WixJCA4H8SM+sl2ouOrm3h2Sd2Q=;
-	b=fe62JeyoEmImowwQ3kgCle/gnjwYUoiTliqUJvz/dmgrbje40siEXkiMfPXIqUvfJC2HcJ
-	jQyLCAemVm4tTENaMPKg/d71rEnDBjJnjgm8oa7LcGusiorVuKp1Z+nC+QdJzS5gP4Qs1N
-	DdQLgWJYK2qEZ4hTKW7dTCQMnZa6QSXwZKIzVH5H5cVmaPBNfM8MiiSuKYmzWGd/XBLYOH
-	AOT72LlVXJT3U/sUx26A+DtQI/zPd+NC2hHH8jpV0Zsu1kWE+yN9/oYrc0vGyNwlmRe1ge
-	qiKoolm2vodnzkM8QbT/Wat1qedVd0Hr2IkZdeNZbuqv+B6oFz+d/tLL7p7TJA==
-Message-ID: <dd5d7a15-2448-426c-83eb-2783c62e82d1@bootlin.com>
-Date: Wed, 5 Aug 2026 10:36:37 +0200
+	bh=t6BhRZrm9O0B16oif8MmgPfQT9bd239hRN/utKHecFg=;
+	b=1wA0+ooIGl5PVhJdRnAEU17PytvcBz5QXATPyI8oqGyc6PUZfsyr0hNzA/jB0Ynti+pbuq
+	7AnJuWWzyIUPT5Av4UwuzZlManlNSk2lvy6mvCCt2mZ/OCyrR92O2SSNmB66z3WBD1VTlC
+	9eyDwMTkcF00zd3QgB3mYdxbEqfHidwOnlS8YmpJPLp7d4kz8IL3WtPw9oS4j6J3co+TPn
+	9L26HOK9K8omG0J1IegDOLW4xnV+6F04W0VBgbt8vtteobkLBfq8hiJZ056nzCvp5kJpDy
+	W3Cx0jIHd6qTvzu6cL3TEvR83aToD6AUh00tVBb6QEIXqEPy1aKLzoLRZnNcCg==
+Message-ID: <82ce3cf8-de3d-47a4-9b35-dab49977b702@bootlin.com>
+Date: Wed, 5 Aug 2026 10:37:20 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,137 +42,119 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] mfd: cgbc: Fix use of negative error code as valid
- session handle
+Subject: Re: [PATCH 2/4] i2c: cgbc: Add virtual I2C bus support
 To: sashiko-reviews@lists.linux.dev
 Cc: lee@kernel.org, mfd@lists.linux.dev
 References: <20260804-cgbc-i2c-storage-devices-support-v1-0-fed38510671c@bootlin.com>
- <20260804-cgbc-i2c-storage-devices-support-v1-1-fed38510671c@bootlin.com>
- <20260804152943.B83AB1F000E9@smtp.kernel.org>
+ <20260804-cgbc-i2c-storage-devices-support-v1-2-fed38510671c@bootlin.com>
+ <20260804154317.5766E1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Thomas Richard <thomas.richard@bootlin.com>
-In-Reply-To: <20260804152943.B83AB1F000E9@smtp.kernel.org>
+In-Reply-To: <20260804154317.5766E1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-On 8/4/26 5:29 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On 8/4/26 5:43 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Hardcoded `.id` values are used in the `mfd_cell` array `cgbc_devs` instead of relying on `PLATFORM_DEVID_AUTO`.
-> - [High] Uninitialized kernel stack memory can be leaked to userspace via sysfs if the board controller firmware returns fewer than 3 bytes of data.
-> - [Medium] The `mfd_cell` array `cgbc_devs` is missing the `const` qualifier.
+> - [High] Uninitialized stack variable `data` used as a denominator, leading to a potential division by zero panic.
 > --
 > 
-> --- Patch [1]: [PATCH 1/4] mfd: cgbc: Fix use of negative error code as valid session handle ---
-> commit d37d718d69c4fd9448146a18eac17c7d57dcefc2
-> Author: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
+> --- Patch [2]: [PATCH 2/4] i2c: cgbc: Add virtual I2C bus support ---
+> commit 68db5c3b940f7f50540127b0266b86e6b3d69b22
+> Author: Thomas Richard <thomas.richard@bootlin.com>
 > 
-> mfd: cgbc: Fix use of negative error code as valid session handle
+> i2c: cgbc: Add virtual I2C bus support
 > 
-> The cgbc_session_command() return value was directly cast to u8 and used
-> as session handle without error checking. Casting a negative error to u8
-> produces a valid-looking session handle. So check if return value is
-> positive before to cast and use it.
+> Internally the Board Controller has a virtual I2C bus with some virtual
+> storage devices on it. Add support for it by defining a i2c_adapter entry.
+> This virtual bus has a fixed frequency that cannot be changed.
 > 
-> Cc: stable@vger.kernel.org
-> Reported-by: Sashiko <sashiko-bot@kernel.org>
-> Closes: https://sashiko.dev/#/patchset/20260713-cgbc-core-fix-cgbc-remove-v1-1-79274ad62b3a%40bootlin.com?part=1
-> Fixes: 6f1067cfbee7 ("mfd: Add Congatec Board Controller driver")
-> 
->> diff --git a/drivers/mfd/cgbc-core.c b/drivers/mfd/cgbc-core.c
->> index 2becaf797646d..4a409234e66c8 100644
->> --- a/drivers/mfd/cgbc-core.c
->> +++ b/drivers/mfd/cgbc-core.c
+>> diff --git a/drivers/i2c/busses/i2c-cgbc.c b/drivers/i2c/busses/i2c-cgbc.c
+>> index 25a74fa51aa00..c3f1c83b105a8 100644
+>> --- a/drivers/i2c/busses/i2c-cgbc.c
+>> +++ b/drivers/i2c/busses/i2c-cgbc.c
 > 
 > [ ... ]
 > 
->>  static struct mfd_cell cgbc_devs[] = {
->>  	{ .name = "cgbc-wdt"	},
-> 
-> [Severity: Medium]
-> This is a pre-existing issue, but should cgbc_devs be declared with the
-> const qualifier?
-> 
-> The MFD subsystem guidelines require mfd_cell arrays to be static const
-> so they are placed in .rodata rather than mutable memory.
-
-yes indeed. Not a big deal, I can add a patch to fix this in v2.
-
-> 
-> [ ... ]
-> 
->>  	{ .name = "cgbc-i2c", .id = 1 },
->>  	{ .name = "cgbc-i2c", .id = 2 },
+>> @@ -147,11 +148,14 @@ static int cgbc_i2c_set_frequency(struct i2c_adapter *adap,
+>>  	cmd[0] = CGBC_I2C_CMD_SPEED | algo_data->bus_id;
+>>  	cmd[1] = cgbc_i2c_freq_to_reg(bus_frequency);
+>>  
+>> -	ret = cgbc_command(cgbc, &cmd, sizeof(cmd), &data, 1, NULL);
+>> -	if (ret)
+>> -		return dev_err_probe(i2c->dev, ret,
+>> -				     "Failed to initialize I2C bus %s",
+>> -				     adap->name);
+>> +	/* Virtual bus has a fixed frequency */
+>> +	if (algo_data->bus_id != CGBC_I2C_VIRTUAL_BUS_ID) {
+>> +		ret = cgbc_command(cgbc, &cmd, sizeof(cmd), &data, 1, NULL);
+>> +		if (ret)
+>> +			return dev_err_probe(i2c->dev, ret,
+>> +					     "Failed to initialize I2C bus %s",
+>> +					     adap->name);
+>> +	}
+>>  
+>>  	cmd[1] = 0x00;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but could this cause device naming collisions
-> in sysfs?
+> This is a pre-existing issue, but I noticed a potential problem in how
+> cgbc_i2c_set_frequency() handles the data variable.
 > 
-> The cells use hardcoded .id values instead of allowing the MFD core to handle
-> auto-indexing. The subsystem guidelines recommend using PLATFORM_DEVID_AUTO
-> to prevent driver load failures.
+> Could this lead to a division by zero panic? The data variable is allocated on
+> the stack uninitialized:
+> 
+> drivers/i2c/busses/i2c-cgbc.c:cgbc_i2c_set_frequency() {
+>     ...
+>     u8 cmd[2], data;
+>     ...
+> }
+> 
+> When passed to cgbc_command(), if the board controller firmware returns a
+> successful status but provides a zero byte count, cgbc_command() skips reading
+> into data and returns 0:
+> 
+> drivers/mfd/cgbc-core.c:cgbc_command() {
+>     ...
+>     case CGBC_STATUS_DATA_READY:
+>         if (istatus > data_size)
+>             istatus = data_size;
+>         for (i = 0; i < istatus; i++) {
+>             _data[i] = ioread8(cgbc->io_cmd + CGBC_CMD_DATA + ((i + 1) % 4));
+>     ...
+> }
+> 
+> If istatus is 0, the loop is skipped and data remains untouched.
+> 
+> When execution continues in cgbc_i2c_set_frequency(), this uninitialized
+> value is converted to a frequency:
+> 
+> drivers/i2c/busses/i2c-cgbc.c:cgbc_i2c_set_frequency() {
+>     ...
+>     ret = cgbc_command(cgbc, &cmd, sizeof(cmd), &data, 1, NULL);
+>     if (ret)
+>         return dev_err_probe(...);
+> 
+>     bus_frequency = cgbc_i2c_reg_to_freq(data);
+>     ...
+>     algo_data->read_maxtime_us = (BITS_PER_BYTE + 1) * CGBC_I2C_READ_MAX_LEN
+>         * USEC_PER_SEC / bus_frequency;
+>     ...
+> }
+> 
+> If the uninitialized stack memory evaluates to 0, or if the hardware
+> explicitly returns a frequency of 0, would this result in a division by zero
+> during the read_maxtime_us calculation?
 
-PLATFORM_DEVID_NONE (-1) is used and id starts from 1.
-The first I2C bus receives a platform_id of 0 (cgbc-i2c.0, cgbc-i2c.1),
-so no collision. While this design is maybe not ideal, but it works for
-now. Also the plan is to add support for additional boards and I2C
-busses in the future. And since some boards won't support all I2C
-busses, so this scheme will probably be reworked.
+The answer is still no. If CGBC_I2C_CMD_SPEED succeeds (and we check
+cgbc_command's return code), it returns exactly 1 byte. We provided a
+data buffer with size 1 to cgbc_command, so there is no way for
+uninitialized stack memory to be read if the command succeeded.
 
-> 
-> [ ... ]
-> 
->>  static int cgbc_get_version(struct cgbc_device_data *cgbc)
->>  {
->>  	...
->> 	ret = cgbc_command(cgbc, &cmd, 1, &data, sizeof(data), NULL);
->> 	if (ret)
->> 		return ret;
->>
->> 	cgbc->version.feature = data[0];
->> 	cgbc->version.major = data[1];
->> 	cgbc->version.minor = data[2];
-> 
-> [Severity: High]
-> This is a pre-existing issue, but can this leak uninitialized stack memory
-> to userspace?
-> 
-> If the board controller hardware returns fewer than 3 bytes during the
-> CGBC_CMD_GET_FW_REV command, cgbc_command() might still successfully verify
-> the truncated response and return 0.
-> 
-> The code then unconditionally reads data[0], data[1], and data[2], storing
-> potentially uninitialized stack bytes into cgbc->version, which is later
-> exposed via the cgbc_version sysfs attribute.
+To prevent buffer overflow, cgbc_command verifies that the buffer is
+large enough to hold all received data.
 
-No. If CGBC_CMD_GET_FW_REV command succeeds (and we check cgbc_command's
-return code), it returns exactly 4 bytes. So there is no way to get
-uninitialized values in data buffer.
-
-Also to prevent buffer overflow, cgbc_command verifies that the buffer
-is large enough to hold all received data.
-
-> 
-> [ ... ]
-> 
->>  static int cgbc_init_device(struct cgbc_device_data *cgbc)
->>  {
->>  	...
->> 	ret = mfd_add_devices(cgbc->dev, -1, cgbc_devs, ARRAY_SIZE(cgbc_devs),
->> 			      NULL, 0, NULL);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but should this pass PLATFORM_DEVID_AUTO
-> instead of -1 (PLATFORM_DEVID_NONE)?
-> 
-> Using PLATFORM_DEVID_NONE combined with hardcoded .id values in the mfd_cell
-> array violates MFD guidelines.
-
-Ditto (see above)
-
--- 
-Thomas Richard, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Best Regards,
+Thomas
