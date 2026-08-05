@@ -1,50 +1,68 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FA3B47FB
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 07:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2553E717A
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 08:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785916418; cv=none; b=dRjec+1w/gvRrHVzvlsp2diOd3PhkkulOVclX5JO1NGmDmnbySt5e344vopHDX9S+8/VV5BUJDzlRPugz2hc6U8jOhj2cSPhk6zbdNBfAN+QicQewCCfJge0c/FFXHShP/l+9JRyolf0kwRKUuwNlyIgtbbGj8sA7pyizcDOkUg=
+	t=1785917062; cv=none; b=dtmjsTguVKZDF8FRCOGEGN4CY1sI8cdVf93fXgry8xp9BDtuHZYlc0aeqJXGwLF9O3mwUMT5LZ3PcsnxBPpoYqeaxwhKqlRven2hLzpJKT/elUI1DW0gaynw8kjcwhT/q7lrFsFQowUyXRE9wV/oMHil5MQ6J81+GcIhlMgjspA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785916418; c=relaxed/simple;
-	bh=pknl9TYvrxvyOFWsgkanW5sgMZO4eSyzokheV0jIqaA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZmIDDrk/6Gn42S8q7PeYWBpBf0KlbihGGlA70RDi+1XFBXhamTOuvYzfHk8jiQuOrulaR43rX8IlpPb75f2I4SqeGuB5XAyoWc7KsbXQ6qtRhlX9UOl+A4A82Ygx29QQeGahRa9yiradP/5chS78cSdP/LVJ+w2bydqJpB9HdLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hwjPFYgc; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1785917062; c=relaxed/simple;
+	bh=Aa1JaFtz8MlSsKVnE0g16Mz6N9GzVfKUfZiLujMz4q4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qSHmkz460FqO1rCqjTsAaIA4/tKZkp7Wl0z6p7aGU0T3XK4X3L11U/ntBDV7DwxPue3QQJ1bT0kbhJ39ZlP7VFkHcQAncbtyPoofh6QUd41B2wXDbbc40uAkDn4dFqNILJKr4SKGGySJkqB085WMgPOvaoTrFOgR3au8QJmTqMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jLzOg3wm; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hwjPFYgc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785916415; x=1817452415;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=pknl9TYvrxvyOFWsgkanW5sgMZO4eSyzokheV0jIqaA=;
-  b=hwjPFYgchtT7tCYmePh1y9CzTEBXfNpe6bEZjuryffLlncAlkPR2OT8F
-   hl7/gvql/ARQY6b3cwUtttbvMB/+oyBmWVKkcUui2S3woRSeGn6pG+Qni
-   Q10sUTx5UukxU8CqjfLQQVfdHqrnZYbELaci+C3ppklD0Husfy5iKCbsx
-   wLCfwV8GlID9loUdJ5Pf054c8fynd2CkqcWLFJyjj87/SGV6ZZ7Dxmwj7
-   ZZqv9GQxoih6CpFlW5kjo3YM3zNnPNGq3C5OGPT/dUkg3AwCWJfbYeJMp
-   n/cnyJzGneYjp48e4CWbfK77xMh8L8+OTM417sEO7yyUIhsytADGq6H1H
-   Q==;
-X-CSE-ConnectionGUID: 04j+bUYzQC6ACpro/y7+3w==
-X-CSE-MsgGUID: Wtql58i0QGOGY2U2Hu86pA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11865"; a="97643026"
-X-IronPort-AV: E=Sophos;i="6.25,206,1779174000"; 
-   d="scan'208";a="97643026"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2026 00:53:34 -0700
-X-CSE-ConnectionGUID: vYnFk2RDSXG54R7vQ54xqA==
-X-CSE-MsgGUID: qRVFZR06QYWKWpAvvGwsgw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,206,1779174000"; 
-   d="scan'208";a="261166542"
-Received: from fuxiaogu-mobl1.ccr.corp.intel.com (HELO [10.238.208.47]) ([10.238.208.47])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2026 00:53:34 -0700
-Message-ID: <4fedcaa6-d710-48f8-84c4-de682350bb2f@intel.com>
-Date: Wed, 5 Aug 2026 15:53:31 +0800
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jLzOg3wm"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49548e01d02so3521315e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 01:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1785917059; x=1786521859; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3cRhrleIU3+1JG/NfXXlVvS5CznbPxrAOhcYmmtvzeY=;
+        b=jLzOg3wm+Oj3U2QgrdAlgRi4ICRiDvZSNtMxuJ6qbOFBKAa+IW1hnN8GSZRRSoXwyW
+         3ka7E87WlGX9yREBmtFAWmsInkTuJpdcsl6mDlo3rl+kbvPqG323CYFnrDP5Yh+FU0rw
+         nm+RNq9KnceL57qV/Wb0KV3Gq2HNF2rf/m3xgolKTXoah9QV6G2hFTeOB+iAhuG/LjS9
+         BVVWeMWVoXwWPgJcT/KeFIDKeeOU26giAlu79D+MbrOnKhCU2kBJwA5r049rFYbTWNOi
+         QxXrAY/ZYk5PPxOyD7Us4mD81qREnHRgK5thIQm+eh7SyTg3+ZrLI8bPhEbI9cFu1tD6
+         u6GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785917059; x=1786521859;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3cRhrleIU3+1JG/NfXXlVvS5CznbPxrAOhcYmmtvzeY=;
+        b=OdsO8LIzkJqQ7imQpfq+Ke9Ir6vr7xaDZS0dJRSDCoRZBJRdpcNMFnN0uO2SfDZ18k
+         ZtGR94RbfK5zTGN5PHu0zGedc1hONzX5ft+lOYmZdM8ff5CZUypNGs3ORfrqOoxvWPgF
+         HTHaOFTKax8HVG7CeCcqEli+sJ7VfJm9vR2W7wjJynMPi9Y6V7/GrQdgh2g8m60/oouP
+         4gbkgsYnV7vpQAaqbybO6uzG0+LH7qGwZAuDOUfIgOe5TDVTyCbn+9rUw/rq+vkIW9dk
+         2PdcBFyv6Lfko1cAOgM/epmaQFVWLbXTcqSu8WT1NyQuuB8AQfLrUZ4kZus92rTHb/CP
+         8E/Q==
+X-Gm-Message-State: AOJu0Yynm2rVVZE4sqZN1J461juhjZ8NVFtIbPdRsQgyWBv0+RbXHj7Z
+	pAkZESGIVpeaz79oZ+BOo1alXe2b/D0NgFonSMBjXKd9CG3hHB1+lD9JQ0IYYPrOixBahNzdMD2
+	vRC5jeag=
+X-Gm-Gg: AR+sD11TTFbt+h1PeFM7rDrZdYSh+SQmk/xdPC8kfWsytUoos564Uj6e6Rva54b3hir
+	NcRz520N5jyX/GQnwJkDEcXDfsT4GpsK8dpul4bad47mz1MBIWn5Zu1xT/oHYbm+56FeJdYW8k4
+	FK+zRY26A6nSl6PZUEuo8g//rpsu1d/w+oev/4DJTFZ/baFvoAy5/jPI4Dx0IrKUHQNi5y+OuHZ
+	Rm/OKSys140H1KRuvfxaAzxOoyCpZU9AZHY7M4YNwkwBwvs3wzp4HbJAGjJ/UwirLVPZBlUWxbq
+	0lZ98j9fDGFa8NEO2KoWK5mT+GahnKRm2UaEq5MGYT33I57BYTQDGIbqzEh+jOLUM22qKOeDX/p
+	nyshHFCAB8F7sFU06hrLz7X/HbMC4rSwOkf9P86oEmVRVcs8ycCNG7KZXUZslqkgdzkRqfTIYOa
+	4DIxY+NwhPiaAs2NAMysD12ywIWE9TN8lvQ3XThTDJW2hEECbSHj9pJmSuLt8GvGoXqJpdNZZIY
+	b8UkjqyNfIsrnXXSkzj9UQLQozQ/+rEMgVm48vFCivV
+X-Received: by 2002:a05:600d:4448:20b0:495:5e3d:15e1 with SMTP id 5b1f17b1804b1-4994e7d21fdmr42969565e9.16.1785917058566;
+        Wed, 05 Aug 2026 01:04:18 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:b524:aa27:5120:b778? ([2a01:e0a:106d:1080:b524:aa27:5120:b778])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994a101ac9sm147307405e9.15.2026.08.05.01.04.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Aug 2026 01:04:18 -0700 (PDT)
+Message-ID: <800c66ff-4c91-4afd-8681-0d7d24376d18@linaro.org>
+Date: Wed, 5 Aug 2026 10:04:17 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,183 +70,90 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] KVM: TDX: Enable Bus Lock VM exit
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260805031257.1844914-1-xiaoyao.li@intel.com>
- <20260805031257.1844914-3-xiaoyao.li@intel.com>
- <20260805034602.5B2BB1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20260805034602.5B2BB1F000E9@smtp.kernel.org>
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+References: <20260805-topic-sm8x50-next-hdk-i2s-v3-0-07a6483c430f@linaro.org>
+ <20260805-topic-sm8x50-next-hdk-i2s-v3-1-07a6483c430f@linaro.org>
+ <20260805075925.D09111F000E9@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260805075925.D09111F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/5/2026 11:46 AM, sashiko-bot@kernel.org wrote:
->> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
->> index cdc0d24657acb..c037e9cb5bdfc 100644
->> --- a/arch/x86/kvm/vmx/tdx.c
->> +++ b/arch/x86/kvm/vmx/tdx.c
->> @@ -2031,7 +2031,7 @@ int tdx_complete_emulated_msr(struct kvm_vcpu *vcpu, int err)
->>   }
+On 8/5/26 09:59, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Device Tree topological violation: SoC I2S and MCLK pinctrl states are incorrectly assigned to an external I2C codec node.
+> --
+> 
+> --- Patch [1]: [PATCH v3 1/3] arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI ---
+> commit 1e06799a0230632b985134cd0731cc4a2e53b31d
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> arm64: dts: qcom: sm8450-hdk: Enable I2S for HDMI
+> 
+> This commit adds the necessary Device Tree nodes and configurations to enable
+> I2S audio output via the DSI HDMI bridge on the SM8450 HDK. It defines the
+> audio clock and pin configurations, links the DAI components, and assigns
+> the pinctrl states to the HDMI bridge node.
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> index b37998cd9a2c3..6bc2e8630dc37 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> @@ -665,7 +665,12 @@ lt9611_codec: hdmi-bridge@2b {
+>>   		vcc-supply = <&lt9611_3v3>;
 >>   
->>   
->> -int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
->> +static int __tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
->>   {
->>   	struct vcpu_tdx *tdx = to_tdx(vcpu);
->>   	u64 vp_enter_ret = tdx->vp_enter_ret;
+>>   		pinctrl-names = "default";
+>> -		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
+>> +		pinctrl-0 = <&lt9611_irq_pin>,
+>> +			    <&lt9611_rst_pin>,
+>> +			    <&i2s0_default_state>,
+>> +			    <&audio_mclk0_default_state>;
 > 
-> [Severity: High]
-> Does this code handle the bus_lock_detected bit (bit 26) being set in
-> vp_enter_ret or the raw 32-bit exit reason?
+> [Severity: Low]
+> Are the SoC's I2S and MCLK pinctrl states being assigned to the correct
+> node here?
 > 
-> If userspace triggers a bus lock concurrently with an exit, the hardware can
-> set bit 26.  Will strict equality checks on vp_enter_ret (such as checking for
-> EXIT_REASON_EPT_MISCONFIG later in this function) fail because the bit is
-> unmasked?
-
-Sashiko is correct. I think the handling like
-
-   (vp_enter_ret == EXIT_REASON_EPT_MISCONFIG)
-
-is not safe, we need to first mask vp_enter_ret. Will add a separate 
-patch for it.
-
-> This also appears to affect tdx_to_vmx_exit_reason(), where comparing the raw
-> exit reason directly against 16-bit constants like EXIT_REASON_TDCALL will
-> fail to match if the bus lock bit is set, leading to incorrect emulation.
-
-This is valid. We need to adjust tdx_to_vmx_exit_reason().
-
-However, there is a more important problem. Since Bus Lock VM exit makes 
-bit 26 possible in EXIT REASON, the trick of "return -1" in 
-tdx_to_vmx_exit_reason() will introduce false-positive in the following 
-check of if(vmx_get_exit_reason(vcpu).bus_lock_detected) added by this 
-patch.
-
-how about something like below:
-
----8<---
-diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-index c037e9cb5bdf..54598dcda938 100644
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -927,7 +927,7 @@ static __always_inline u32 
-tdcall_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-  static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-  {
-         struct vcpu_tdx *tdx = to_tdx(vcpu);
--       u32 exit_reason;
-+       union vmx_exit_reason exit_reason;
-
-         switch (tdx->vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
-         case TDX_SUCCESS:
-@@ -937,28 +937,29 @@ static __always_inline u32 
-tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-         case TDX_NON_RECOVERABLE_TD_WRONG_APIC_MODE:
-                 break;
-         default:
--               return -1u;
-+               return (u16)-1u;
-         }
-
--       exit_reason = tdx->vp_enter_ret;
-+       exit_reason.full = tdx->vp_enter_ret;
-
--       switch (exit_reason) {
-+       switch (exit_reason.basic) {
-         case EXIT_REASON_TDCALL:
-                 if (tdvmcall_exit_type(vcpu))
--                       return EXIT_REASON_VMCALL;
-+                       exit_reason.basic = EXIT_REASON_VMCALL;
-
--               return tdcall_to_vmx_exit_reason(vcpu);
-+               exit_reason.basic = tdcall_to_vmx_exit_reason(vcpu);
-+               break;
-         case EXIT_REASON_EPT_MISCONFIG:
-                 /*
-                  * Defer KVM_BUG_ON() until tdx_handle_exit() because 
-this is in
-                  * non-instrumentable code with interrupts disabled.
-                  */
--               return -1u;
-+               return (u16)-1u;
-         default:
-                 break;
-         }
-
--       return exit_reason;
-+       return exit_reason.full;
-  }
-
-  static noinstr void tdx_vcpu_enter_exit(struct kvm_vcpu *vcpu)
-
-> [ ... ]
+> These pins belong to the host SoC and are driven by its audio controller,
+> rather than the external LT9611 HDMI bridge. Assigning the SoC's pin
+> configuration to the external bridge's node makes the codec driver
+> responsible for configuring the host SoC's hardware, which seems to cross
+> topological boundaries in the Device Tree.
 > 
->> @@ -2141,6 +2143,21 @@ int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
->>   	return 0;
->>   }
->>   
->> +int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
->> +{
->> +	int ret = __tdx_handle_exit(vcpu, fastpath);
->> +
->> +	/* Exit to user space when bus lock was detected */
->> +	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
->> +		if (ret > 0)
->> +			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
->> +
->> +		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
->> +		return 0;
-> 
-> [Severity: High]
-> Does this code silently drop negative error codes?
-> 
-> If __tdx_handle_exit() returns a negative error code (like -EIO or -EFAULT)
-> while bus_lock_detected is true, it skips setting vcpu->run->exit_reason but
-> still returns 0.
-> 
-> Could this cause KVM to return success to userspace with an uninitialized or
-> stale exit_reason instead of propagating the error?
+> Should these pins be assigned to the sound card node or the CPU DAI node
+> instead?
 
-It won't return uninitialized or stale exit_reason. But changing the 
-negative error codes to 0 is a wrong behavior. I will fix it.
+No
 
-The VMX handler looks to have the issue. I'll cook a separate patch to 
-fix it.
-
->> +	}
->> +	return ret;
->> +}
 > 
 > [ ... ]
-> 
->> @@ -3167,6 +3184,10 @@ static int tdx_vcpu_init(struct kvm_vcpu *vcpu, struct kvm_tdx_cmd *cmd)
->>   				vcpu->kvm->arch.notify_window);
->>   	}
->>   
->> +	if (vcpu->kvm->arch.bus_lock_detection_enabled)
->> +		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
->> +				 SECONDARY_EXEC_BUS_LOCK_DETECTION);
-> 
-> [Severity: High]
-> Is it safe to write this execution control to the TD VMCS without verifying if
-> the TDX module supports it?
-> 
-> If a host userspace process enables KVM_CAP_X86_BUS_LOCK_EXIT but the TDX
-> module restricts this capability, could td_vmcs_setbit32() fail on TDH.VP.WR,
-> triggering the KVM_BUG_ON() macro and destroying the VM?
-
-Same for the patch 1. This is not possible, TDX module itself should 
-always support Bus Lock VM exit unless the hardware doesn't support it. 
-But in the case of hardware doesn't it, KVM doesn't set 
-kvm_caps.has_bus_lock_exit thus userspace cannot enable 
-KVM_CAP_X86_BUS_LOCK_EXIT.
-
->> +
->>   	tdx->state = VCPU_TD_STATE_INITIALIZED;
->>   
->>   	return 0;
 > 
 
