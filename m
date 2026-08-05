@@ -1,263 +1,139 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2242B393DE6
-	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 15:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C375F3B8409
+	for <sashiko-reviews@lists.linux.dev>; Wed,  5 Aug 2026 15:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785942625; cv=none; b=h9E0dMI19LjsKBpRErkNRqZLgkJcDqF/auN209+3lk5+gUpnqKOWl5Zc+90daj4P5UrphRaF9yBtxwsDieWRMIuVZai4BTn6hMvA9QHV/P4rF9HyfzqaKDslG7RwZuk5Gh4YcC4u6JOsMHEiE7GvxtdTMdZz3HDZET3O1rF0oCw=
+	t=1785942969; cv=none; b=SOloM32vVuBF8/UQIDtCclRxhmbuXQR+ahYCkZMeiPxJQ1UJKY4FvEIjvi+M60r/6imcIbYDl4pPttGZvvlI9H7S6WVTCloWxVwHZy3E3INB+4JyUSEZ+SdgGCNfoi/c/lpQZ6W7dzjuHwu3KWKit3ZO3lXzxHHk08DIJ3yuRDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785942625; c=relaxed/simple;
-	bh=L+5tXYPtUhRaNL0B+rgIRcgv8+FzWrIwWS9NcMN3aEk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=etHVRt0J/l7n0eJbh1L7ktiyxy4RrQzTkPQurz5W3uH4M/6GqWozd5O6uNTifevJxwHi11W/GfFwXNpR4QCuPaadnZkrw7YtleG6RSnmhUay1hCurcih4zrRg6Gg6gFnp+uj0GQT99W7f4HxhUSxaOozDBBfXH5v//6Nr2t/tDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=koZwwlGB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Vl5Mv0R0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1785942969; c=relaxed/simple;
+	bh=/jsnyeL31Ho9o2A2RGw3IIZL5oIJUrAhbAI6FLENcnk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Iu6WoB7WfxXBt1fsSvxtKJoMEjTfqPucs3ra719nAy6oZn8JdCK/WLWaPYv+x24Iwsj75xdVkApDea3pAtVVEbbhb1cBo0+h9xGIAV5fIuCF5MnohOrCdoDyVQ9o+bON8KLh94t7rm5mpR9ST9o3qTAWF0LtzR0X2T59fgS6G4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cgTHIT4K; arc=none smtp.client-ip=209.85.214.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="koZwwlGB";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Vl5Mv0R0"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 675Cg2Dx3472485
-	for <sashiko-reviews@lists.linux.dev>; Wed, 5 Aug 2026 15:10:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VQtXNJQp1VB5MSHelQbg0WHY6EAG35/lwGSn0XAXIxc=; b=koZwwlGBCetyD3er
-	k5gRz7bToU0NORNDqCJyyTzsDpQDhaerHwGO3U8KUG/KdWBRVEUoHQpZ0Ea/ffWp
-	LTNJohZHDEeKrMEpaQM9As5xupE65IRSU3Ibu6wKB7e5zlJGzNe719oA1rrqZVu/
-	dGpWodZ7XApPcGVpdMVqAjRScWGj34m9Dnrb0uAQd1RGNrK0iZ2nbIDglhpeTKGQ
-	u9tqkmJhc7eDGPBc33pRD13ywdrK/PQgUxxWa5zQSFQMkxmqTzuhEiyo1Ih2izAy
-	4Tv36iJSQpgtBaxwG6LTJzaMPhKs+acSz2uVpyFkUn02Uo2mnRikBUDVbYLtujdq
-	rFbHWQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fv5dk0rae-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 15:10:23 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c856470fe9fso848343a12.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 08:10:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cgTHIT4K"
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2d004f13426so14303985ad.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 05 Aug 2026 08:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1785942622; x=1786547422; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1785942965; x=1786547765; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VQtXNJQp1VB5MSHelQbg0WHY6EAG35/lwGSn0XAXIxc=;
-        b=Vl5Mv0R0tNue65nGIVkCAxiZOgWuSYbG1bXX+to71Q6iadAiV1XXYoDlLiKsPuGCne
-         gcJYEGeu8Acgiw1y3VF8Q+20F4GYl2/esZsV3e6UNe0O4ggcHYXZj0CDj6bEI4dfYD7d
-         Y2tdlzGuC+1qva+sWf8tnnSIVV+7BJE3yr+uWVW6aGB+PXP6YYcZbXB1fzigwY5m94Rd
-         dlsngrG13XFj4ppykoedCM5aF3mHMrlTblxNNw7Va1zZSvOAOOvoOcclEataOXGURHlf
-         hyDbcl+oVQT+BhBPELnUKWueZ0AIzueJT48L3kEE8J6+Vl2p1LzRzOVSfYKwA81m7afZ
-         M9TQ==
+        bh=4yhOJIAa5pFjp3z2I6OHq3rdcIlnjtUlrPTkzMvt2+A=;
+        b=cgTHIT4KNg3nduMb+d787pZHcmd+x7hnXjForEBg3rjH4nXet/YMhBBf63Qs4UsLrP
+         oCLuxcUMU/+CWjVQCjXxFKTyGByrZYSRYUed/j8funDqoMOeFTbIBpV/l9qwf1/xlZKa
+         opb1WZan/3ZV9GnioA8tis+9x07AMe6fKjUVkS9HiWdruN0a89Q3V/r2zxgSWsNbNBDz
+         OwEnW402kZSJlr2YLJuTD+R/N7MzHoA3Vz7ahcHqhtV5zRQaU7HuPZ/t9lBrQc+omwDf
+         2v2TeB4Kg4riigb3giXEGnvN1ns0R+yL64d7xyJY0MHWVCvmnj+DNcDB7V36Fxvj9eNh
+         S9xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785942622; x=1786547422;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1785942965; x=1786547765;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=VQtXNJQp1VB5MSHelQbg0WHY6EAG35/lwGSn0XAXIxc=;
-        b=JT5ROw+hDdxNNdDe1GeTWkus1ewIXTijnxVALmCqdWRZu6t5p6KeiwihA/6bKgi8cV
-         i77jkNG+/dkIXShP0c16eWD9zEop77GjjxHyzYlojfIdom2A92crO5S5kvqnEL+WsdGi
-         Pr5aGjq6Vc3mHGj85qRH+r3IDyais6fpIPukx1/V44smv8UJixtoSHQ9YtFev5KpWlxs
-         l0/jLrhl2yFAeXR49DyGhuk53vSs1Ag033GUkrezR66JTcaix5rQj+wNCjrGjRBxcU7J
-         ENpv3FsYYnJCKy4ovDDtOxU7v3qF7RlO12UMxTHC9Tki6+VcMAD85SE/uGHB0QQkktaw
-         eD+w==
-X-Gm-Message-State: AOJu0Yxo/AcDd2x1OILPS2pdwJPRjCV11lj02gKsH0lwVHIQGMbDycNm
-	bpv7M5Bvb86pJMKYH5PDfbaY5V3Sn9SDsrRgmk6Ukx+wuVgY7QMTWxtKb2ktpVjFt7BB5rj73yg
-	oh9NzPIhi8eAGS3m4qsW/q1tMxgmpX7pF6e93vPtrg1EhM+amVeDCj6oaWF9kPgyQjTlC+oPDMG
-	wzuX0=
-X-Gm-Gg: AR+sD11yOlbU3LoR5LeUrNBn0S3LVEWLNTVPALfp2O2VS9MoILMO5saE0+/Rp3fb2Dr
-	xTn2iKze+rchNuDioqUqaDUKpTeB99umJotlR9Ot/Oztw9K6EvS65h35ylJr85BUvKaFXaxX/TP
-	7JnPUJn5EZf4BF1f9XEE88OZq8YqXXckLHLkz+TBihu9IbzDTqDdcjO0v+PHHiNay62w9stBndc
-	pPjN9JDMMfH2yKy/du3v671h1FG3dbEp33lCzb3CZgQ+l5MPm9NQESU2e2JJ+Z2i5HGMl6eI5XE
-	wdJPwbes5/cWNExvxuZur+lupt5VXP3UPbQFUOS5kvtQUMCyr4P0lRtCESKHhmg5EZhtBPL5cb3
-	m+4EjO6iK6p1qCbJqauGl+IM=
-X-Received: by 2002:a17:90b:17c6:b0:38f:1a2e:6e56 with SMTP id 98e67ed59e1d1-3903c59330amr7100321a91.9.1785942622342;
-        Wed, 05 Aug 2026 08:10:22 -0700 (PDT)
-X-Received: by 2002:a17:90b:17c6:b0:38f:1a2e:6e56 with SMTP id 98e67ed59e1d1-3903c59330amr7100240a91.9.1785942621794;
-        Wed, 05 Aug 2026 08:10:21 -0700 (PDT)
-Received: from [192.168.1.6] ([171.76.80.242])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca50ad27sm14996315c88.2.2026.08.05.08.10.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Aug 2026 08:10:21 -0700 (PDT)
-Message-ID: <dd445279-3e1b-4d2e-9a6f-e73b67c33a10@oss.qualcomm.com>
-Date: Wed, 5 Aug 2026 20:40:17 +0530
+        bh=4yhOJIAa5pFjp3z2I6OHq3rdcIlnjtUlrPTkzMvt2+A=;
+        b=Q8tzrCUQ0U0+uk+aQIVyVgUDMSZ7xOVba4MwjDyjbHjRZ3R8ypNORqz8bgpSNZqsdM
+         5IFzPHfoisBX+IabdM1bUTX0G+z+hReQgyYovfUyLBjJ17ojSeWQ/fpMc6N8NMHTNsuZ
+         naRGcUiQPUTziY83nlOOOAb3NJOwpqd7qGX7psPyEGZl7ohRsGQnQ2yJkaGISW0MR4s+
+         /WjJ0sgT7ZvJRmuX/FvnZIXx84UrSR9AtmIVdfHirjidVvPJ5Htq/7XmNJQYvHguxQvQ
+         fensOQz3JW6SW8tQplLUCIjyEomfgyoqkpSJC/pugnR/K/RKbz4kCSORXW7xKWCieSXN
+         cZPA==
+X-Gm-Message-State: AOJu0YymnqP8TVBjtRSeMZ4z0PpxKxr0LAwYxbEz9650kiS0WQebpiEy
+	ai8mwYugksl6Obn3zAdoEgmt6MLFYi6iBNC0BHHKZomNOATxXnT3EhqHZWJmoB2e1ou4KL5vXnC
+	+xtBz77DKmAjulv2mNyG5s3/FzyI5of2hW19JezDdsaoLW0zWUkqnbL4gHu81Zk5Mf6cwybR9wj
+	l+T7C6YyXb0ESSDxwovxPYFAaVHtN7511U7UnpmT4SdQ9i6CGy
+X-Received: from plbmu15.prod.google.com ([2002:a17:903:b4f:b0:2cf:7a5b:f7ad])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2290:b0:2c0:db23:4c4
+ with SMTP id d9443c01a7336-2d0ca78d505mr81371305ad.16.1785942964856; Wed, 05
+ Aug 2026 08:16:04 -0700 (PDT)
+Date: Wed, 5 Aug 2026 08:16:04 -0700
+In-Reply-To: <20260804235652.56E811F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] platform: arm64: qcom-hamoa-ec: Retry I2C transfers
- on NACK
+Mime-Version: 1.0
+References: <20260804233923.3504629-1-seanjc@google.com> <20260804233923.3504629-14-seanjc@google.com>
+ <20260804235652.56E811F00A3A@smtp.kernel.org>
+Message-ID: <anNTtCYh7BpURA3n@google.com>
+Subject: Re: [PATCH v8 13/17] KVM: x86: Disable preemption, not IRQs, when
+ getting TSC+freq pair
+From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-References: <20260728-ec_add_more_commands-v1-0-771abd65ee1a@oss.qualcomm.com>
- <20260728-ec_add_more_commands-v1-6-771abd65ee1a@oss.qualcomm.com>
- <20260728182642.AFF0E1F00A3A@smtp.kernel.org>
-Content-Language: en-US
-From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-In-Reply-To: <20260728182642.AFF0E1F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: R8RjZyh_EZr0gsO8coVsv6N-PZqfQDOr
-X-Authority-Analysis: v=2.4 cv=Or9/DS/t c=1 sm=1 tr=0 ts=6a73525f cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=UcsMPGGDBby+oECK+wqMZw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ajF3hhvFhjBU8BI-8GAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDEyMyBTYWx0ZWRfXzNdxJPg7dtiZ
- guwEUWM4/nlbJsAngmG1a4miSOnXOe5Y7625aB5ODDnRyMwhOR90lXufL56d4OGw+ES9nqJilow
- 0596P4XLiLvm9Lm7MJwYe6am/JEkLCJiiScpz2tJ2mlfRrEQ38VnGkk7lhvYOKXFnaIcepzuTF0
- ISgNWgwUgyNUuVbx2DVPQNnE1Zxdd+YttE2rz9x0oKcpRiG4n+HjUU1x71Ii2I0X4tyTFtaQiSe
- 24Lj87yFxCrcb+Yv+Zl7mYFnPdafgka/E3Sle3STzS/8an6xa+iSFycZ7Djgp3pLNSekxcYo0MG
- vTanxbLXAyPQXcoozY3/uP1qvPeF7gIrRnA1iiujQ3EunR0Hn3cpJ/WTsYjmx6wxEwIbIHL90EB
- 1l/NwvxmVFuznxtnG51aVHL8Bt4/ry8z3u8k0UDV6b1fplrPmm5RrLLaHtFSR8AwvjpVCKqNCmN
- QadgfylzRWUb8fEB4Eg==
-X-Proofpoint-GUID: R8RjZyh_EZr0gsO8coVsv6N-PZqfQDOr
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDEyMyBTYWx0ZWRfXy3jCOn2cGGFL
- WX3xETjPqxp4D/TZJvMt7k3nN9/G6+dcz8Q9fcyy8qjfZrP4Vuv+M4ejIUO5XM9l9G7efUHarE9
- 5hx8rmYURvCXU5DMwJXky/BZl9lorzI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-05_04,2026-08-04_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050123
+Cc: kvm@vger.kernel.org, David Woodhouse <dwmw2@infradead.org>
+Content-Type: text/plain; charset="us-ascii"
 
++David
 
-
-On 7/28/2026 11:56 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The patch adds retry logic for EC NACKs to `qcom_ec_write()` and `qcom_ec_read()`, but fails to add equivalent retries for the numerous `i2c_smbus_*` calls made throughout the driver, leaving them vulnerable to the exact same failure.
-> - [High] Race condition during device removal where cooling device callbacks can execute after debug mode is disabled.
-> - [Low] Initialized arrays of type `struct i2c_device_id` must use named initializers rather than positional initializers.
-> --
-> 
-> --- Patch [6]: [PATCH 6/8] platform: arm64: qcom-hamoa-ec: Retry I2C transfers on NACK ---
-> commit 42a41f4860b9d5a24932df8c69069cb7fd89b4d1
-> Author: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-> 
-> platform: arm64: qcom-hamoa-ec: Retry I2C transfers on NACK
-> 
-> The patch adds bounded retry logic to qcom_ec_write() and qcom_ec_read()
-> to handle EC firmware NACKs that occur during busy windows right after
-> boot or during SCI event bursts.
-> 
->> The EC firmware NACKs the bus instead of clock-stretching while it is
->> busy servicing internal work (e.g. right after boot, when it is also
->> emitting a burst of SCI events). A transfer issued in that window fails
->> with -ENXIO even though the EC is otherwise healthy.
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but since the EC NACKs the bus
-> right after boot and during SCI event bursts, will the un-retried i2c_smbus
-> calls also fail?
-> 
-> For example, qcom_ec_sci_evt_control() is called directly during probe and
-> uses i2c_smbus_write_byte_data() without retry logic:
-> 
-> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_sci_evt_control() {
->     ...
->     ret = i2c_smbus_write_byte_data(client, EC_SCI_EVT_CONTROL_CMD, enable ? 1 : 0);
->     ...
-> }
-> 
-> Similarly, qcom_ec_irq() reads events during an SCI burst using
-> i2c_smbus_read_byte_data():
-> 
-> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_irq() {
->     ...
->     val = i2c_smbus_read_byte_data(ec->client, EC_SCI_EVT_READ_CMD);
->     ...
-> }
-> 
-> Should these SMBus calls also be updated to retry on NACK?
->
-
-I'll add the same NACK-retry loop to qcom_ec_sci_evt_control()'s write
-and qcom_ec_irq()'s SCI event read.
-
->> diff --git a/drivers/platform/arm64/qcom-hamoa-ec.c b/drivers/platform/arm64/qcom-hamoa-ec.c
->> index a420a180a1948..122ae27c2b483 100644
->> --- a/drivers/platform/arm64/qcom-hamoa-ec.c
->> +++ b/drivers/platform/arm64/qcom-hamoa-ec.c
-> 
+On Tue, Aug 04, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > index fa00799ba13da..e0e8c6883b831 100644
+> > --- a/arch/x86/kvm/x86.c
+> > +++ b/arch/x86/kvm/x86.c
 > [ ... ]
-> 
->> @@ -281,11 +302,18 @@ static int qcom_ec_read(struct qcom_ec *ec, u8 cmd, const u8 *subcmd,
->>  	msgs[1].len   = resp_len;
->>  	msgs[1].buf   = read_buf;
->>  
->> -	ret = i2c_transfer(client->adapter, msgs, 2);
->> -	if (ret != 2) {
->> -		ret = ret < 0 ? ret : -EIO;
->> -		goto out;
->> +	for (int i = 0; i < EC_I2C_NACK_MAX_ATTEMPTS; i++) {
->> +		ret = i2c_transfer(client->adapter, msgs, 2);
->> +		ret = ret == 2 ? 0 : (ret < 0 ? ret : -EIO);
->> +		if (ret != -ENXIO || i == EC_I2C_NACK_MAX_ATTEMPTS - 1)
->> +			break;
->> +
->> +		dev_dbg(&client->dev,
->> +			"EC busy (NACK), retrying read of cmd 0x%02x\n", cmd);
->> +		msleep(EC_I2C_NACK_RETRY_DELAY_MS);
->>  	}
->> +	if (ret)
->> +		goto out;
->>  
->>  	if (read_buf[0] == 0 || read_buf[0] == 0xff) {
->>  		ret = -EOPNOTSUPP;
+> > @@ -1805,11 +1804,14 @@ int kvm_guest_time_update(struct kvm_vcpu *v)
+> >  		}
+> >  	} while (read_seqcount_retry(&ka->pvclock_sc, seq));
+> >  
+> > -	/* Keep irq disabled to prevent changes to the clock */
+> > -	local_irq_save(flags);
+> > +	/*
+> > +	 * Ensure reading the TSC+frequency pair is done on the same CPU.  When
+> > +	 * NOT using the master clock, the TSC frequency may vary between CPUs.
+> > +	 */
+> > +	preempt_disable();
+> >  	tgt_tsc_hz = (u64)get_cpu_tsc_khz() * HZ_PER_KHZ;
+> >  	if (unlikely(tgt_tsc_hz == 0)) {
+> > -		local_irq_restore(flags);
+> > +		preempt_enable();
+> >  		kvm_make_request(KVM_REQ_CLOCK_UPDATE, v);
+> >  		return 1;
+> >  	}
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does the cooling device teardown have a
-> race condition that could leave the fan stuck in debug (manual PWM) mode?
+> Could replacing local_irq_save() with preempt_disable() allow hardware
+> interrupts to break the temporal atomicity of the fallback clock reads?
 > 
-> In qcom_ec_remove(), the driver turns off debug mode:
+> If KVM falls back to the non-master clock path just below this code,
+> host_tsc and kernel_ns are read sequentially:
 > 
-> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_remove() {
->     ...
->     qcom_ec_fan_debug_mode_off(ec_cdev);
->     ...
-> }
+>         if (!use_master_clock) {
+>                 host_tsc = rdtsc();
+>                 kernel_ns = get_kvmclock_base_ns();
+>         }
 > 
-> However, since the thermal cooling device is managed by devres, it remains
-> registered until after remove() completes. Can the thermal core invoke
-> qcom_ec_fan_set_cur_state() during this window, which re-enables debug mode?
+> If an interrupt fires between these two reads, it would cause kernel_ns
+> to be sampled later than host_tsc.
 > 
-> drivers/platform/arm64/qcom-hamoa-ec.c:qcom_ec_fan_set_cur_state() {
->     ...
->     ret = qcom_ec_fan_write_pwm(ec_cdev, state);
->     ...
-> }
+> Could this inflated kernel_ns then falsely trigger a catch-up adjustment
+> later in kvm_guest_time_update():
 > 
+>         if (vcpu->tsc_catchup) {
+>                 u64 tsc = compute_guest_tsc(v, kernel_ns);
+>                 if (tsc > tsc_timestamp) {
+>                         adjust_tsc_offset_guest(v, tsc - tsc_timestamp);
+>                         tsc_timestamp = tsc;
+>                 }
+>         }
+> 
+> and permanently advance the guest's TSC offset or cause temporary time freezes?
 
-This one's tied to how the cooling device gets registered — devm was
-specifically requested there during the initial driver review
+Hmm, yes?  Though it's worth pointing out that NMIs can introduce the same issue,
+and that's not really a solvable problem.
 
-> [Severity: Low]
-> This is a pre-existing issue, but does qcom_ec_i2c_id_table violate the I2C
-> subsystem API guidelines by using positional initializers?
-> 
-> drivers/platform/arm64/qcom-hamoa-ec.c:
-> static const struct i2c_device_id qcom_ec_i2c_id_table[] = {
-> 	{ "qcom-hamoa-ec", },
-> 	{}
-> };
-> 
-> The subsystem guidelines state that initialized arrays of type
-> struct i2c_device_id must use named initializers.
-> 
+And if we keep the "disable IRQs" logic, then I think we should also disable IRQs
+when doing kvm_get_time_and_clockread() for the same reasons, because that too
+grabs a TSC+nanoseconds pair.  And that would mean disabling IRQs in get_kvmclock(),
+so that kvm_vm_ioctl_get_clock() in particular provides an atomic-as-possible pair.
 
-Yeah, I'll switch that to a named initializer instead of positional.
-
--- 
-Best Regards,
-Anvesh
-
+David, any thoughts?  I'm leaning towards keeping IRQs disabled to minimize the
+chances of introducing a regression, even though I highly doubt disabling IRQs
+to provide an atomic-ish pair was ever done deliberately.  My main concern with
+disabling IRQs is that it will further muddy the waters with respect to what is
+actually necessary, versus weird things KVM does for historical reasons.  Though
+that can largely be solved with a verbose changelog.
