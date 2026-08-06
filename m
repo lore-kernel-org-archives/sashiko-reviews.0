@@ -1,160 +1,182 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AFBC37701A;
-	Thu,  6 Aug 2026 13:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786023508; cv=none; b=tpXP3ckTKwqGywyC8BpBAS2josazC9VnGPmdRWzgErp4chscalTi8dLY7/tjuEKbIHbffmKMQIft5KiUv+U8fx8SzDF27suLGjL7RxVu7nPpb4AcClrsa8vefOp9Aqrbn3qpccYOULksjvIku5rMt3ZbGSda3WsVj0Z2l4Glf2o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786023508; c=relaxed/simple;
-	bh=z3YSwN8nqDB8zYRT69/e2wdRfS99GYmTQ0XA1iOkQ2w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eKttiMEo/9lbA0QxEMBYPshKUmJD9v9gtGQIMlOUp9f2kvXyNreU0X1aVQ92GydE3QJDwVJ66yD8wwOKewxOb8rAYmyvDpoCEwsyaH7bZ4+9kXzhSxETXGNRHkSFuMB5Ux/QOXLBD52dw8dkOhePUJgEzGMq/H7HiO32s7vFV28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=UVfd6IF+; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8910390990
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 13:45:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786023937; cv=pass; b=jnSI7rzThMMhjlXZDq2T0onOKmeBnDRkdv7RQwA3DdxZKvoeh4Ub++6AXJjldDS0jbTiAJWs8clUjrFGA5xjfgZT29UDj3otYRvgijojiBjxhueQ9xQC6fey1r3JBbemMTk4+U2TXIR6pFUApjyHrpuMTdQyAjufHElgl6WcAG0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786023937; c=relaxed/simple;
+	bh=BKWJTReTdw+LMAVvVwFW5qLVtx7m6cVom+p9AYVg2D4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tBdkDDnuI9A8lGCse0P/crCkQLt7dcIodjoTc28yAFrYWTnNkImH1rmgc5GjG+xsZ+vCa4BiTGoZN0tZJ3qN7wcudH/XsbUG/o3j+lpBqikLrK9zZQDmdeOa7hfNHVq7J0srTB/eFulYRaGNTCs7Fioa85+zyCQ8hdeA8ls4WLQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SQayNvey; arc=pass smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="UVfd6IF+"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EE6B7153B;
-	Thu,  6 Aug 2026 06:38:21 -0700 (PDT)
-Received: from thinkpad-e142931.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6229B3F632;
-	Thu,  6 Aug 2026 06:38:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1786023506; bh=z3YSwN8nqDB8zYRT69/e2wdRfS99GYmTQ0XA1iOkQ2w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UVfd6IF+LfO2/xp+dekn/5dzNIRMwsGQeIDnk2fI4wBlDDu/yHb3vJEoQvuAj8/3z
-	 ZksRHB/5Rh3cVAj3QdC/iHW1Xp0iBoOJir8DDBvd8GzS+KQPgtj38lvKoQNxKxQmGT
-	 mlXqYa48AyygWRGdmKfnHTnt/lcJyyGYUrxfII2E=
-Date: Thu, 6 Aug 2026 14:38:11 +0100
-From: Wei-Lin Chang <weilin.chang@arm.com>
-To: sashiko-reviews@lists.linux.dev, 
-	Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>, 
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v2] KVM: arm64: nv: Keep the shadow S2 MMUs at fixed
- addresses
-Message-ID: <ump35q2osiduwshuz2qoawpeirjwawch3prm4odto4mgzr37sg@3x7jvpivobji>
-References: <20260806062352.93489-1-kmehltretter@gmail.com>
- <20260806063900.66A981F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SQayNvey"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-92e50979c71so219866385a.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 06:45:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786023935; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ARvlCSzf92bDgbGmJcwPzVX2XhId7wiB9l52i17J/poCm+HdtWwKacbGMe0ruT0kqt
+         fBdRCupTD4sHxY8kLaE9GIsD5w1li7ElSlUbd3pQYrtX93r5i39AjHRgbRIX/Zn4mbHp
+         AD0nY3CXQ88oGNqYjfJm/ZrE8LAYJKqZBGlQ0WXUYcv4hvXGQHmLbmzCl+vVSApiBzYQ
+         ab2Q1DJbqLcLNd/tBfTHgbKXSL8TKYVW3FMqbcf+/eKmuBGeKFqk3vIY7pgxgAI9BEzc
+         NeP1i0rnieR+jmcDt2fbUQam8yMgYDj0NtqRYlIBMUddG3IAGKrE7GIFBQiRqoLb9kkt
+         yQrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BSeHeIOsrbYVt/cFGZ3Mudq1FYtZux95e0DZcHfkyoA=;
+        fh=eYeHeE2hobW86QTEBoWWTZ7t8YdhNVI2iRfiXg9mdBM=;
+        b=rYVgU0wBLR4TXKyrLFv2/Ep19qZ/6k/CtBtykx/Asen/3ung+bo4AZsuJ5yetqnFPx
+         zDfVbQzyEDQKH0ZvaQ/weDa+LB/R+6Yf/igfKHIrtgGHO2lilYR6OVScR0AWUrXDWpg8
+         nhSGT5PT85ZDqv7E1AIe8XX/wD3DBrcgEtmv+1V7lWVZI1yLQg0fgXcN9jrlPlhZtEeO
+         0iUPU5puVkDILxU9NuDgJrLEG/YCFfNxrYssSAEDjW7jtH/ivxaFLJ6AwyMg3Nd6uNbE
+         HcjRad7c1OFMBipAz4klenIiG3hOK5T6ZH+/fjl9vgrjUYhPPP2oB7SyL6PbT8Md5gr2
+         D5OQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786023935; x=1786628735; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=BSeHeIOsrbYVt/cFGZ3Mudq1FYtZux95e0DZcHfkyoA=;
+        b=SQayNveyiMg8AY4oYQHr4A0oAQVYt299uABANMdBB5mbq/9sDobTB2xVoGCMwJo+Al
+         RwSexaylwVe9MjgOQgG6DzZ8lK0OHXOHUfgkZQEpnc0TxFaU9neCh0Xuq7ExX7DJpseA
+         eRGZP/6cQEyCYEerGV+SCq+N4PYuqDG5LK3zPBqW2ZUbCcAMrLu7KABhPdpiSosycBhV
+         ZmL1tRhEG5IHPLeZgjnTLfV5csR9oN9iJ6nDlaNoZfctGq2XlMR2YWq1vUYBG7roViX0
+         XdnsaVfO6plN111T5ufjMDaUa2PXWNVdohN9HyS7dnJmuUupxfC27z44n3FGgRmw3dCD
+         D3zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786023935; x=1786628735;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BSeHeIOsrbYVt/cFGZ3Mudq1FYtZux95e0DZcHfkyoA=;
+        b=ary4qO1ghIApjcz4qOQZaHyPm2RBccLp5i2cjeGbcGuVz7wIHqoLSc2HxjqVZmSdIT
+         Iu+zpBDEKv6834MqL66VWzrpX4+qbscRuQ1a1EDctdCn7KOVGZUYsM7OP3+8NsNbDzoA
+         9dbvqvOjEWqZD9bTmGCFrIhe1xDIDzikskkLNcbz5tvCjIxSlDaM5PZSaByaJ2Zs8FJe
+         m/c9atQ/gsA8DdtlbZYuxv4uXOuPsiAE5bEVRjsopZI0jjxC1nFgGH4AAZWTHXyA2hVz
+         AsT1ePpkF15TzWpnBC5Iz9zVBiqORMqqsjx9AN59ZgT8bQxMgBLLGbBHgDZVs+RDtzQv
+         v/aQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rp5rDXXFWZzaenWR7KufIR4chGOZQc214GAskDWZMKT4/iE1p46ly0WQTnC4Oub6HGMmY09DE+ZQeUBTzwYQuA=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzx4uGzqYNQ0fwxHLYOIACv3uWXjdWSyByj2KT6TjEtRZsG8RMn
+	e/c5Mxjwy22Fylus1gb3iLzNu0kcBxFC8GrOzav32/9epfRQM+91gRKl3VqpXoALBBk1+8MNomD
+	aBKHnunzDfWcYlaoOoyYldHtzca6Ar69PizDDz3e2
+X-Gm-Gg: AR+sD12EZPjhmcq0Sv4lq4P13McXfvKHrYUvq6MbWOxWXnq4ehFVuaQ2Uceyn8AwHC0
+	rntloNcbOqOQIXYKCQztjcDlkzucTdejEPmknzPZjan8maqWqBgGnTHPVd1v3L1nIQvjnZuPwny
+	QJMxVP+Oq1GZsYE4jGPQBHwx1WAh4QA6tlFsJZR5uy2KmYdJxMWARn74F78fDGLaLLY/ivMuE76
+	NPsEbCg5pAnRCNm78Aigsstr0ustwc6x6LkcSMiw4kBO4gAWl8FvPpDLFdFJ08c+Ja/UFXh9WNC
+	E1q2YTIgoiMpM544uY4i5fJqYH+PYrLA9c7Rl2kW21b7La8tqG4OY0ILcSNqW563Uj/cPlsoL3x
+	dRCfYkLY8RrC0BRkxniFFwHINSbwmRqtZMt5SKF44PigzBasat56WCTQ=
+X-Received: by 2002:a05:620a:8c89:b0:92e:541e:632b with SMTP id
+ af79cd13be357-93649056dc5mr1186003185a.2.1786023933857; Thu, 06 Aug 2026
+ 06:45:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260806063900.66A981F000E9@smtp.kernel.org>
+References: <20260730220055.2946171-1-tejasbirajdar@meta.com>
+ <20260731220124.B0C621F00AC4@smtp.kernel.org> <1f36d5be-906a-4ba5-8679-24cbcf899254@redhat.com>
+In-Reply-To: <1f36d5be-906a-4ba5-8679-24cbcf899254@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
+Date: Thu, 6 Aug 2026 15:45:22 +0200
+X-Gm-Features: AUfX_mwdvTEom7e3WZw1jtKlW4Jx4hI_DGQwZjfU5OQKTgLw-QKbrPG4mz7zWVg
+Message-ID: <CANn89i+P6Y+uBSKa4S7CAqJWrZNqHOTKY2A2jaVs2iFG4_wRhA@mail.gmail.com>
+Subject: Re: [PATCH net-next v3] tcp: honor BPF_SOCK_OPS_RWND_INIT on the
+ active connect path
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: Tejas Birajdar <tejasbirajdar@meta.com>, bpf@vger.kernel.org, 
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>, sashiko-reviews@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 06, 2026 at 06:38:59AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] Deterministic NULL pointer dereference and Use-After-Free race on the `nested_mmus` array after `kvm_arch_flush_shadow_all` executes.
-> 
-> Pre-existing issues:
-> - [Critical] Deterministic NULL pointer dereference in `get_s2_mmu_nested` when `nested_mmus_size` is 0.
-> --
-> 
-> --- Patch [1]: [PATCH v2] KVM: arm64: nv: Keep the shadow S2 MMUs at fixed addresses ---
-> commit 70c0982ec06bd8ebb390c1b7ff665dae83887bb8
-> Author: Karl Mehltretter <kmehltretter@gmail.com>
-> KVM: arm64: nv: Keep the shadow S2 MMUs at fixed addresses
-> 
-> This patch turns the nested_mmus array into a fixed-size pointer table
-> allocated once during VM creation. The S2 MMUs are allocated individually
-> during vCPU initialization to keep their addresses stable, fixing a
-> slab-use-after-free issue.
-> 
-> v1: https://lore.kernel.org/r/20260803224405.41468-1-kmehltretter@gmail.com/
-> 
-> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-> > --- a/arch/arm64/kvm/nested.c
-> > +++ b/arch/arm64/kvm/nested.c
-> > @@ -90,44 +104,44 @@ int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
-> 
-> [ ... ]
-> 
-> >  	for (i = 0; i < S2_MMU_PER_VCPU; i++) {
-> >  		mmu = kzalloc_obj(*mmu, GFP_KERNEL_ACCOUNT);
-> >  		if (!mmu) {
-> >  			ret = -ENOMEM;
-> >  			goto err_free_mmus;
-> >  		}
-> >  
-> >  		ret = init_nested_s2_mmu(kvm, mmu);
-> >  		if (ret) {
-> >  			kfree(mmu);
-> >  			goto err_free_vncr;
-> >  		}
-> >  
-> >  		kvm->arch.nested_mmus[kvm->arch.nested_mmus_size + i] = mmu;
-> 
-> [Severity: Critical]
-> Can this lead to a NULL pointer dereference or use-after-free?
-> 
-> The patch shifts the allocation of kvm->arch.nested_mmus to VM creation in
-> kvm_init_nested(), but kvm_arch_flush_shadow_all() still frees the array and
-> sets the pointer to NULL and size to 0.
-> 
-> If an unprivileged user process triggers kvm_mmu_notifier_release(), for
-> example by passing the file descriptor to a child process and exiting,
-> kvm_arch_flush_shadow_all() will free the array.
-> 
-> A subsequent KVM_ARM_VCPU_INIT ioctl will bypass the size check in
-> kvm_vcpu_init_nested() because num_mmus is greater than 0 and
-> nested_mmus_size is 0. It will allocate an MMU and write it directly to
-> kvm->arch.nested_mmus[kvm->arch.nested_mmus_size + i], which dereferences
-> the now NULL pointer.
-> 
-> Additionally, since this write happens outside mmu_lock, it could race with
-> a concurrent kvm_arch_flush_shadow_all() execution and write into freed
-> memory.
+On Thu, Aug 6, 2026 at 11:15=E2=80=AFAM Paolo Abeni <pabeni@redhat.com> wro=
+te:
+>
+> On 8/1/26 12:01 AM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> >
+> > Pre-existing issues:
+> > - [Medium] The `SOCK_RCVBUF_LOCK` check executes before the BPF program=
+ runs and before `full_space` is inflated, silently defeating BPF-requested=
+ windows and bypassing dynamic `SO_RCVBUF` adjustments.
+> > --
+> >
+> > --- Patch [1]: [PATCH net-next v3] tcp: honor BPF_SOCK_OPS_RWND_INIT on=
+ the active connect path ---
+> > commit 2cf5d1d17ae1c7488533ecaa0fcbb83ae4591ec8
+> > Author: Tejas Birajdar <tejasbirajdar@meta.com>
+> >
+> > tcp: honor BPF_SOCK_OPS_RWND_INIT on the active connect path
+> >
+> > This commit updates tcp_connect_init() to honor the initial TCP receive
+> > window requested by a BPF_SOCK_OPS_RWND_INIT program on the active conn=
+ect
+> > path. It inflates full_space if the program returns a non-zero window,
+> > matching the listener path's behavior, and uses u64 arithmetic to preve=
+nt
+> > overflows.
+> >
+> > Link: https://lore.kernel.org/netdev/20260723214208.3655474-1-tejasbira=
+jdar@meta.com/
+> > Link: https://lore.kernel.org/netdev/20260722170033.2763794-1-tejasbira=
+jdar@meta.com/
+> >
+> >> diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+> >> index d7c1444b5e304..fcaa04e65189b 100644
+> >> --- a/net/ipv4/tcp_output.c
+> >> +++ b/net/ipv4/tcp_output.c
+> >
+> > [ ... ]
+> >
+> >> @@ -4137,10 +4138,13 @@ static void tcp_connect_init(struct sock *sk)
+> >>              WRITE_ONCE(tp->window_clamp, tcp_full_space(sk));
+> >>
+> >>      rcv_wnd =3D tcp_rwnd_init_bpf(sk);
+> >> +    full_space =3D tcp_full_space(sk);
+> >>      if (rcv_wnd =3D=3D 0)
+> >>              rcv_wnd =3D dst_metric(dst, RTAX_INITRWND);
+> >> +    else if (full_space < (u64)rcv_wnd * tp->advmss)
+> >> +            full_space =3D min_t(u64, (u64)rcv_wnd * tp->advmss, INT_=
+MAX);
+> >
+> > [Severity: Medium]
+> > This is a pre-existing issue, but does the SOCK_RCVBUF_LOCK check happe=
+ning
+> > before the BPF program runs defeat the purpose of allowing BPF to adjus=
+t
+> > the receive window?
+> >
+> > If an application sets SO_RCVBUF prior to connect(), SOCK_RCVBUF_LOCK i=
+s
+> > set. In tcp_connect_init(), this caps tp->window_clamp to the old
+> > tcp_full_space() before tcp_rwnd_init_bpf() is invoked.
+> >
+> > When the BPF program returns a large requested window and full_space is
+> > inflated, tcp_select_initial_window() bounds space by
+> > min(window_clamp, space).
+> >
+> > This caps it right back to the pre-BPF full_space and discards the BPF
+> > request.
+> >
+> > Conversely, if the application did not set SO_RCVBUF but the BPF progra=
+m
+> > adjusts it dynamically (which sets SOCK_RCVBUF_LOCK),
+>
+> I read the above alike: 'a badly written bpf program could be
+> ineffective'; not much relevant.
+>
+> This version LGTM; Eric do you have some comments?
 
-I don't think so. KVM_ARM_VCPU_INIT can not be run after
-kvm_arch_flush_shadow_all() have started. kvm_arch_flush_shadow_all() starts
-after the last use count of mm_struct is gone. Additionally vCPU/VM ioctls
-require current->mm == kvm->mm. A non CLONE_VM child will fail, while a CLONE_VM
-child keeps the mm_struct alive and kvm_arch_flush_shadow_all() can not run.
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 
-> 
-> [ ... ]
-> 
-> > @@ -805,7 +819,7 @@ static struct kvm_s2_mmu *get_s2_mmu_nested(struct kvm_vcpu *vcpu)
-> >  	for (i = kvm->arch.nested_mmus_next;
-> >  	     i < (kvm->arch.nested_mmus_size + kvm->arch.nested_mmus_next);
-> >  	     i++) {
-> > -		s2_mmu = &kvm->arch.nested_mmus[i % kvm->arch.nested_mmus_size];
-> > +		s2_mmu = kvm->arch.nested_mmus[i % kvm->arch.nested_mmus_size];
-> >  
-> >  		if (atomic_read(&s2_mmu->refcnt) == 0)
-> >  			break;
-> >  	}
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but can this lead to a NULL pointer
-> dereference when nested_mmus_size is 0?
-> 
-> If kvm_arch_flush_shadow_all() executes while a vCPU is active, it sets
-> kvm->arch.nested_mmus_size to 0.
-> 
-> When the vCPU subsequently enters get_s2_mmu_nested(), lookup_s2_mmu()
-> evaluates the empty array and returns NULL, assigning NULL to s2_mmu.
-> The for loop condition i < (0 + next) evaluates to false, causing the loop
-> to be completely bypassed.
-> 
-> The function then executes BUG_ON(atomic_read(&s2_mmu->refcnt)) just below
-> this loop, which dereferences the uninitialized or NULL s2_mmu pointer.
-> This can be reliably triggered by terminating a VM process while it is
-> executing nested virtualization workloads.
-
-Same as the above.
-
-Thanks,
-Wei-Lin Chang
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260806062352.93489-1-kmehltretter@gmail.com?part=1
+Thanks.
