@@ -1,68 +1,60 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EC63BCD27
-	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 19:17:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E064CA27C;
+	Thu,  6 Aug 2026 19:18:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786043856; cv=none; b=YhgRScxvkC0HgYa/Xto/j+8kouO6SeSNUj6Jv3G6Y0aGqtDl12frviQ3NqOwDDy2jGXtEchs6rfdmeakfC7XbJsRSYfdK45sLZxzdNoLhjhI6u1BUNamnl88R9u2ERkgY/+TBNm48XV8gbED3wXkGoKFu9VFksDy5bKeHy6a/Rg=
+	t=1786043901; cv=none; b=bjNiV5MifAapwk4DPRG2OxJkSur/ow8gxGlJ9TkzdhPXquiAsQY4jfTnEsu12aJiT62e89x2HSWnJiJ/hhBEK13dAUh0a60wq6qjUuAN5xfPqtdepHmEycnGUTVtP8nnaUsioUzgWkh6+4PeStvkS41pqJkmrDa5CsOGIR6UObM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786043856; c=relaxed/simple;
-	bh=/EaieSvFrRkr9azTwg0L+lRZYx4M8CIG5/sA9LhQOx4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qNohw31mzIz9KdRPZdKXXw7Fio/JpAbb4fTKrjHPgE6JBgGEjFJpLUuFWDOLRzE/cuxoIW527brLktAC7abO/X1kvOdsWK2lfC6oXffKYYR6KNNFBOqqTh5AHGQs2GtIVIpPfbnzsXv1pPnzvbt0u6neJHz3SrnkXOssmHaOSxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RBNTE4aa; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786043901; c=relaxed/simple;
+	bh=uR2aLL4cdM/7jO9WlJ2TM1dvL4U9A4Fc8CEuqOWehR8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=hZTkQqIGoT2skglhmtcyad0I3uoD6By9nstaBalzIQ4obi5JmosTtevUekhJ17FPAYbcYIbSObR+IxgUVwpE5REU5yT+KS9GIO7IVltGxHgg+HdoxxBk5Oz8aXq9MOGGHNjaY7e802WdJ1OjOy1sfFPoc/sK2FcNlDVnLHtA8TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=dVjZqTbO; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBNTE4aa"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cbb7926836eso1944986a12.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 06 Aug 2026 12:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786043855; x=1786648655; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PV21MAhcjbCpKEfp7iHgiEKWEs7SXbwWKXnvMBb01xQ=;
-        b=RBNTE4aaGN6enGswdNy7l9ZAaZJGVAmbAHQfxCufExo+ToJqcbBJJJzl+vzBJoi30y
-         G2DRggwY7eDIHHbFu7E/nw8Hls8sy7tSoRswBYgQVzzuD4zmXKK5Vaa3ueI2OblsEYlA
-         cW7uyHE86AXmAO+o8DgTA7nAsNWeRmwP/srW3q9SQvQxaksT6URF4dnIKC2smro/sflU
-         DuHNg0h/xTLKmGwUManLfKZRCkvI+aDdlt5NGVhbeV6oQVf9mCI/sGOyHxDRZXu4TvGV
-         0/mICO3GatxUgmGHuKlcysbGovpTqHWlOBxmZkW7Uueiu1BDs2SuVq14UISyaMTmYspO
-         dLMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786043855; x=1786648655;
-        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=PV21MAhcjbCpKEfp7iHgiEKWEs7SXbwWKXnvMBb01xQ=;
-        b=QQLQq/lMT572g/5nDYPRUNMlSraI1aZYngDXYLWYoboQWTYYF2oZF6rDf93pWFe5xW
-         kwSA9fC5rxav0pM5oHzlYhTxJ6m1mo1s13IqCkBZ57NT6yfCK5ud2C+emwqouLfxvsis
-         UcO7YF7r2CjDm6ztYqATFfnVZ8NcBse+dEQcNN9irIauCM4h1AUWBUkMqgk4AIHliswu
-         CfeO+ZV+KI1T+OYfNnH70tQiP3yfxlSkFnXsokKolZaPdf+DwZ2rpjSo55jLXEU56TLN
-         0kz8qe+/GQg5iyHxZ/m1LAZ9ZOJwSFyiu5gf+npWfbzi9otWjGLkKO1OzZif//McXwr8
-         caeg==
-X-Gm-Message-State: AOJu0YwEJUOv8XQPUWz0wCzGF+wH28vMaCwABGyKaIi+WV5B/X7K1Twu
-	8yhlcc5rYw8bn4MZ1HaRhpL8JRf/y6kymaRHHwaysVK9wieMa1p753lz
-X-Gm-Gg: AR+sD10yE34OFE1blx+B5/NNt5UQQhcG33FC057Ly3doJJZ9jC0cIFVM4lxZcC5RYf2
-	ZksjIaghHIN0R3CkaprJMRN6Rh7TFIS2MRH3ml7Btgy12X9TSP7Y3m+0c/rG4W1BDCx8UOhRg13
-	WDhqoyMMr+VRE84ty5G9rJ4uiV7BpeXE5Mptez+0d8Vamf6Tnu4YOlgJq2q8cSN5ktL7sCTpVZ3
-	uDgIyLZh3YXnPhkLkW9w7yA4SXulmeOneE4ZySHunwIasoBO3LohI+4u+Ztaxyr5/JI/j3JxW9w
-	yxfP2dUz3BIa3hzWJ3L8DzvWDEIALmVTJuXnaVlJqAKfQIkrDazHbGsqq6Y1fwxS7nDYY2YIb0C
-	tuR1nwZDJ+ovqQxjOAEHMQlCzqp0mCmsMB1QpMwUCSGsL10MnyevmCJsVlVIng3TCiBJ728FADN
-	YgXB8IsoQX+ea9HP4rzdB06ZqvAj8MlWi/wF+0gdih5DGjO9HfT7r8yIHqu2UrO/vLJyABZqddl
-	ROu1D9TyENBQJ0NcU4a+QAnsadLfhtB3Hq9vw==
-X-Received: by 2002:a05:6a00:8083:b0:847:8e98:9a4b with SMTP id d2e1a72fcca58-84f2e12db9cmr21283646b3a.34.1786043854516;
-        Thu, 06 Aug 2026 12:17:34 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f4538bc10sm1962493b3a.3.2026.08.06.12.17.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 12:17:34 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <4b0305a8-f2a1-428f-85f8-b1b731fc2ae9@roeck-us.net>
-Date: Thu, 6 Aug 2026 12:17:33 -0700
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="dVjZqTbO"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 676II6Zj3322849;
+	Thu, 6 Aug 2026 19:18:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=JaQBqx
+	8qh+fa5LZ3Uub8Ung51pwfZ0vHV2/PGNaDaAE=; b=dVjZqTbOFhWSFNacy2YqWF
+	QtxYUD1q4jikadW9Geywa9QDyvANiXaVkcYMAXT95SlHs5SgI5cb0dixK/YP098g
+	z/lcFjIU7BEy4uQDXP0NIj3xubM7V7e607a+FRnMbVWpf5Fc8frFSyUmHhdqgF7A
+	4pnWqM0QEXBRucn+j7PvrCQuXxCPZmVPhnF7e/R04cjSdqsdP6eYNHhIe0EUhne9
+	j1viGvU/G21Bi/G7xO7THxsKsBBgn5aK/rZYZORAmHbBa3KQ6JX72KCIvBSlOa58
+	UhREy5wYl06B+gkiOgLI+uC3d33TKcOP808xuRr4oRR1VVEQCTNBzWjODGYnuF5w
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fvy028cr0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 19:18:18 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 676JBHok013555;
+	Thu, 6 Aug 2026 19:18:18 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsugwcqdw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Aug 2026 19:18:18 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 676JIG7328443370
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 6 Aug 2026 19:18:17 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E206D58051;
+	Thu,  6 Aug 2026 19:18:16 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 09A055805C;
+	Thu,  6 Aug 2026 19:18:16 +0000 (GMT)
+Received: from [9.61.80.66] (unknown [9.61.80.66])
+	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Thu,  6 Aug 2026 19:18:15 +0000 (GMT)
+Message-ID: <f8034239-55de-453b-813e-abc582cbb1b2@linux.ibm.com>
+Date: Thu, 6 Aug 2026 15:18:15 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,111 +62,170 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hwmon: (yogafan) Add support for new Lenovo models
-To: Sergio Melas <sergiomelas@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
-References: <20260806131103.19104-1-sergiomelas@gmail.com>
- <20260806132452.80AD21F000E9@smtp.kernel.org>
- <f96884d5-7bb2-4646-9175-1b385789690b@roeck-us.net>
- <CAP8e=sJbD21FyeU+9w_CVGLOXhxdWmsCwcrS5uNB0Z+9qQ4gLQ@mail.gmail.com>
+Subject: Re: [PATCH v4] s390/vfio-ap: fix stale pqap_hook pointer on error in
+ vfio_ap_mdev_set_kvm()
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, kvm@vger.kernel.org,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Claudio Imbrenda <imbrenda@linux.ibm.com>,
+        Janosch Frank <frankja@linux.ibm.com>
+References: <20260806140342.611294-1-akrowiak@linux.ibm.com>
+ <20260806141848.4F3061F000E9@smtp.kernel.org>
+ <705034db-69a7-4e61-ab43-978f2dcb66f1@linux.ibm.com>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <CAP8e=sJbD21FyeU+9w_CVGLOXhxdWmsCwcrS5uNB0Z+9qQ4gLQ@mail.gmail.com>
+In-Reply-To: <705034db-69a7-4e61-ab43-978f2dcb66f1@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=G6ws1dk5 c=1 sm=1 tr=0 ts=6a74ddfb cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=gRCtSY3o5l3VFvqAjWcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDE1MSBTYWx0ZWRfX+/cESKY6rydy
+ K1JiytHjYDfT9VIEmtNaAbJQCAw6BT8ndgARFFe9vqtJw5zInkC8vo/w3vzsOnYsMW+dIKgSzrT
+ lFsv8/lF4u4eu+UPKpXN8eNHLeTeqAUnVChMzf8V++IdVTzW5EGYTr+0K0BXpWEiGJnXEYRM8nF
+ yEpAB5p4dJApMniZahjPmL3cCTp9x+5Yb4cv1Hk2ugQmTESDXNk2f4ewQED2xSdBC4hvtqzhC0G
+ EihImwUqHkrvl2pDUTDH8JqBl3DlY/1CER2ynTTbA4SxxqE+4E5zNbjicSd9koaAUR0Z2kqvpM1
+ 3Jk0aExeI55+wMNToQRYVYRS6vZtrDVNXOsScLMGmA66fUIZmJlcA2K2z9WCIAScazQibLKIyCQ
+ EKfhWEDpO9Ig4szdg+kFE18cgj8PvvAXiNIGXyNhEpuK9zQ+NjhocRdEDAnV3Je70ngoR0gPZ3g
+ ralNxBIVqGoA0NWtCDA==
+X-Proofpoint-ORIG-GUID: WGzfnOo2dbQ0nhE8960YbLOmxYO_q10o
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDE1MSBTYWx0ZWRfX3kKK99gG+6PV
+ ZB3XeV4+gcppKb7LH3+CLqx3ZDJjSsTyvXPadOZeB1tAMSPO2jI8s3xuzbSE2n5B8lZ0lCar9ly
+ wUnoH0i4CKp6Vr7vT/6VxpAa+jDuacs=
+X-Proofpoint-GUID: WGzfnOo2dbQ0nhE8960YbLOmxYO_q10o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-06_02,2026-08-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060151
 
-On 8/6/26 11:26, Sergio Melas wrote:
-> Hi Guenter,
-> 
-> Confirming that at my knowledge this is a non-issue.
-> However, using the 4-letter machine type code DMI_PRODUCT_NAME could
-> theoretically
-> offer even tighter precision, but up to now, the current matching
-> method has never failed in our
-> testing and field deployment users of my github:
-> https://github.com/sergiomelas/lenovo-linux-drivers/tree/main
-> 
-> Anyway, I am compiling a full database for complete data of Lenovo
-> machines from PSREF:
-> https://psref.lenovo.com/
-> For reference, the complete mapping matrix and DSDT traces can be
-> found in the Yogafan Master Quirk Database.
-> My database on based on this source and others is here:
-> https://github.com/sergiomelas/lenovo-linux-drivers/blob/main/Lenovo_Drivers/Prototype/PSREF/yogafan_v3_quirks_database.ods
-> and
-> https://github.com/sergiomelas/lenovo-linux-drivers/tree/main/Lenovo_Drivers/Prototype/DSDT
-> 
-> I propose to switch to this identification method when we have more
-> machine references.
-> What do yo think?
-> 
 
-No need from my perspective, if the current code works.
-I'll go ahead and apply your patch.
 
-Thanks,
-Guenter
+On 8/6/26 2:13 PM, Anthony Krowiak wrote:
+>
+>
+> On 8/6/26 10:18 AM, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>>
+>> Pre-existing issues:
+>> - [High] Host AP configuration changes trigger a NULL pointer 
+>> dereference when accessing unassigned matrix mediated devices.
+>> -- 
+>>
+>> --- Patch [1]: [PATCH v4] s390/vfio-ap: fix stale pqap_hook pointer 
+>> on error in vfio_ap_mdev_set_kvm() ---
+>> commit aef5cc63216cb49a3fd8ebd1da1a8d39b4fabb7b
+>> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>>
+>>      s390/vfio-ap: fix stale pqap_hook pointer on error in 
+>> vfio_ap_mdev_set_kvm()
+>>
+>> In vfio_ap_mdev_set_kvm(), kvm->arch.crypto.pqap_hook is set to
+>> &matrix_mdev->pqap_hook before the update locks are acquired and the
+>> mdev list is checked for a conflicting assignment. If another mdev is
+>> already attached to the same KVM instance, the function returns -EPERM
+>> without restoring the hook pointer. This patch rearranges lock 
+>> acquisition
+>> to prevent this stale pointer issue and potential deadlocks.
+>>
+>>> diff --git a/drivers/s390/crypto/vfio_ap_ops.c 
+>>> b/drivers/s390/crypto/vfio_ap_ops.c
+>>> index 44b3a1dcc1b36..99a0efd999ef9 100644
+>>> --- a/drivers/s390/crypto/vfio_ap_ops.c
+>>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+>> [ ... ]
+>>
+>>> @@ -1883,18 +1881,15 @@ static void vfio_ap_mdev_unset_kvm(struct 
+>>> ap_matrix_mdev *matrix_mdev)
+>>>       struct kvm *kvm = matrix_mdev->kvm;
+>>>         if (kvm && kvm->arch.crypto.crycbd) {
+>>> -        down_write(&kvm->arch.crypto.pqap_hook_rwsem);
+>>> -        kvm->arch.crypto.pqap_hook = NULL;
+>>> -        up_write(&kvm->arch.crypto.pqap_hook_rwsem);
+>>> -
+>>>           get_update_locks_for_kvm(kvm);
+>>> +        kvm->arch.crypto.pqap_hook = NULL;
+>>>             kvm_arch_crypto_clear_masks(kvm);
+>>>           vfio_ap_mdev_reset_queues(matrix_mdev);
+>>> -        kvm_put_kvm(kvm);
+>>>           matrix_mdev->kvm = NULL;
+>>>             release_update_locks_for_kvm(kvm);
+>>> +        kvm_put_kvm(kvm);
+>>>       }
+>>>   }
+>> While reviewing this file, I noticed a couple of related issues.
+>>
+>> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_cfg_remove() {
+>>     ...
+>>     list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+>>         mutex_lock(&matrix_mdev->kvm->lock);
+>>         mutex_lock(&matrix_dev->mdevs_lock);
+>>     ...
+>> }
+>>
+>> [Severity: High]
+>> This is a pre-existing issue, but if a mediated device is unassigned
+>> (matrix_mdev->kvm is NULL) when the host AP configuration is modified,
+>> will this unconditional lock of matrix_mdev->kvm->lock trigger a NULL 
+>> pointer
+>> dereference?
+>>
+>>
+>> drivers/s390/crypto/vfio_ap_ops.c:vfio_ap_mdev_hot_plug_cfg() {
+>>     ...
+>>     DECLARE_BITMAP(apm_filtered, AP_DEVICES);
+>>     bool filter_domains, filter_adapters, filter_cdoms, do_hotplug = 
+>> false;
+>>
+>>     mutex_lock(&matrix_mdev->kvm->lock);
+>>     mutex_lock(&matrix_dev->mdevs_lock);
+>>     ...
+>> }
+>>
+>> [Severity: High]
+>> This isn't a bug introduced by this patch, but similar to the above, 
+>> does this
+>> function also dereference matrix_mdev->kvm without checking if it's 
+>> NULL,
+>> potentially leading to a crash when unassigned matrix mediated 
+>> devices are
+>> accessed during host AP configuration changes?
+>
+> Both of the above the concerns above are legitimate for the case whereby
+> the matrix_mdev->kvm was never set via the vfio_ap_mdev_set_kvm()
+> function which is called only when a guest is started with the mdev 
+> attached
+> and the mdev fd is opened. If the mdev is not attached to a guest, then
+> matrix_mdev->kvm will be NULL.
+>
+> The matrix_mdev->kvm pointer is set to NULL
+> in the vfio_ap_mdev_unset_kvm; however, all three functions (the 
+> unset_kvm
+> and the two above) all take the matrix_dev->guests_lock before 
+> proceeding,
+> so the matrix_dev->kvm pointer is guaranteed to not be NULL due to a
+> race condition.
+>
+> Having said that, it is clear that a check must be introduced to 
+> verify that
+> matrix_mdev->kvm is not NULL before taking the matrix_mdev->kvm->lock
+> in the two functions above.
 
-> Thanks, Sergio
-> 
-> 
-> 
-> On Thu, Aug 6, 2026 at 5:44 PM Guenter Roeck <linux@roeck-us.net> wrote:
+The fix for this bug will be posted via a separate patch.
+
+>
 >>
->> Sergio,
->>
->> On 8/6/26 06:24, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>> - [High] Specific Lenovo model DMI quirks incorrectly use `DMI_PRODUCT_FAMILY` for exact model string matching, causing all specific quirks to fail and fall back to incorrect generic profiles.
->>> --
->>
->> Please confirm that this is a non-issue.
->>
->> Thanks,
->> Guenter
->>
-> 
+>
+>
 
