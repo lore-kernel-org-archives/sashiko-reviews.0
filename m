@@ -1,113 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E53947277C;
-	Thu,  6 Aug 2026 11:54:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48B5477995
+	for <sashiko-reviews@lists.linux.dev>; Thu,  6 Aug 2026 11:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786017270; cv=none; b=kF7Ooavud05Ux5Ia4/lswK4QMDVf5KrUA+taNpxl/g+s9Bm9w2tcJYCWxyPsAFyFqRCTE9aYssz6VSJtr29ES3ZsX88Exw6UrkpxaKSElsnry7mTwfnfdbY787zpiVyZoFOf5SbP5XNq3IYcRYHz+unIlx4jv7OsDQj8HF2NSYI=
+	t=1786017436; cv=none; b=bcbePcFC7x8pMe8hJRpx3FtCJtsjeuvqtzVCWKZP+rkFr0wAGQLl1ODPDCe0u8lbKQbxgSL9yYQ4GC6CfjKobidfbx9+BlJ+t89EIrBz9fpPkk+UkwBuAGvKMIGn9M68mscAN7Vv2KcK8Bl6iRJ2W+RsTKYBOfWFeqr2wKjpDoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786017270; c=relaxed/simple;
-	bh=tUjltdGNUCuuTO6mZEJ6dIrEbKM9BGEhKNJLNYQyZe0=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pcLvoh9VCgrMvtAFXz+Yu9CNECBkOSCmip2gA/dT6sORrJYatVqPRcGekiMlB7NPGpon39ctwk7inhg9k0BD999uPd/XBym21HFd/aE6NJxlewaPOl/Kx0YCha1oLgeeQSXHMyZPu/Acl3iVZaH3cioiYaX7lujXVmTPJwHl3Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XXRxPohz; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786017436; c=relaxed/simple;
+	bh=u9DsFEropX/azWpQq0ZKgp0gvOe+LMuO2ny55HM6RWM=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NLRzLnspRLlfr3yvs0fxS3rAzEj0EHgipXM7CqCAsAiEfM/vTHFH2xd44iiFale/m/IjYNL2hXU+9jBZkl9f/vrDRrLzlFJPiVnxYkEhoe/a5nPitVqKAt6xHmcm16hPSbgY6ckhtjRDWF50Pjt8ZBZmcl1vGox0L9Elc6mxyQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=HKbK/KKH; arc=none smtp.client-ip=161.97.139.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XXRxPohz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCAC1F000E9;
-	Thu,  6 Aug 2026 11:54:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786017269;
-	bh=Yllfnt8G0ssXpgimC9rEoN1keyuJ11edo+mCKKLdbTQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=XXRxPohzF6NZPJXvyTsqENa03bnV6nSMIHhWm0ZjNfFrECGtNgaBQgXi+u6lvhqau
-	 h0N0q1sHjMZM4ecPFSiIKQibPQILOlBLRLSTnOJ0N17nIwJlx/WicGSQu5sjMBoPPb
-	 bdAp3lhiKtE2a53QD8siz06qK+6qQGz+Rik/gWrfPCoP2wzpVMwzmUro+dE/dc7uIu
-	 jA4LRn6yLJDuQ/CoHhSCa1N79UGhVsM35SGkZu33ab/E6cDRN78FETSUH7pTBOR/YP
-	 0gxyIm+5n47AxjW7EzFm0v5lkxK9et6A7Lpk1GmnJQR3u5/B2C+7dEJYg3eUy9vZJc
-	 eShr6c8zBBSfg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="HKbK/KKH"
+Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
+	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wrwg7-0000000Cwf4-0eJa;
-	Thu, 06 Aug 2026 11:54:27 +0000
-Date: Thu, 06 Aug 2026 12:54:26 +0100
-Message-ID: <865x1nbh1p.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org,
-	"Oliver\
- Upton" <oupton@kernel.org>
-Subject: Re: [PATCH v2 8/8] KVM: arm64: Add VNCR TLB tracking again
-In-Reply-To: <20260806093552.C9F4B1F00A3A@smtp.kernel.org>
-References: <20260806091026.620700-1-maz@kernel.org>
-	<20260806091026.620700-9-maz@kernel.org>
-	<20260806093552.C9F4B1F00A3A@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	(envelope-from <andreas@kemnade.info>)
+	id 1wrwie-00000001ic6-3DbK
+	for sashiko-reviews@lists.linux.dev;
+	Thu, 06 Aug 2026 13:57:04 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=kemnade.info; s=20220719; h=References:In-Reply-To:Subject:Cc:To:From:
+	Reply-To:Content-ID:Content-Description;
+	bh=mzqiDwx/X6pLHYrTCt+QZwp3gtizoxKhbLnGniWuVAw=; t=1786017424; x=1787227024; 
+	b=HKbK/KKHibqhZ1ognRFH6H1NbcqBRy8a4o9aqLbXn14tHdhzxl53KcLd/gskBjMGB19/uArW2zf
+	hQdecVOONfQNydYsi5fGTz7exxUIeA1v8DhIzm14egQVsgQ4ZBG2G9MEezsTDXAcNmlrjD0XSWujO
+	FnfIVQ7btE2Hm+6RcoaGgU0zpGvtoNaXFv197oEG6Xi8VRky5jcyuCpKgNcMU6BlaWoFg9UHvJISA
+	NQojMi6bEyt9p7GCW7uWvZbABIPnSuRS4DWwXdcjri8aXuZyZXQwaobM72yr9CldhjlFggb4LvXBv
+	lwqhJvit7mXRA6Dfahl4IRloxZbEt3w9cjZg==;
+Date: Thu, 6 Aug 2026 13:55:50 +0200
+From: Andreas Kemnade <andreas@kemnade.info>
+To: Lee Jones <lee@kernel.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ linux-leds@vger.kernel.org, "H. Nikolaus Schaller" <hns@goldelico.com>
+Subject: Re: [PATCH v3] leds: is31fl319x: modernize registration
+Message-ID: <20260806135550.2d57682c@kemnade.info>
+In-Reply-To: <20260806104525.GC10716@google.com>
+References: <20260804-led-modern-v3-1-297720eec19f@kemnade.info>
+	<20260804135515.5DBFC1F000E9@smtp.kernel.org>
+	<20260804164101.43753f1b@kemnade.info>
+	<20260806104525.GC10716@google.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; aarch64-unknown-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Content-Transfer-Encoding: 7bit
 
-On Thu, 06 Aug 2026 10:35:52 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The fast-path TLBI handler incorrectly skips the slow path for native EL2 TLBI instructions when E2H or TGE is clear, bypassing software VNCR TLB invalidation and leaving stale mappings.
-> --
-> 
-> --- Patch [8]: [PATCH v2 8/8] KVM: arm64: Add VNCR TLB tracking again ---
-> commit 65741607ee5db3e8d57cf0e1773bb1031e83a3ee
-> Author: Marc Zyngier <maz@kernel.org>
-> 
-> KVM: arm64: Add VNCR TLB tracking again
-> 
-> This commit introduces a VM-wide counter to track valid VNCR TLBs. It aims
-> to improve performance by taking the TLBI slow path only when there are
-> active VNCR TLBs that need invalidation.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-> > --- a/arch/arm64/kvm/hyp/vhe/switch.c
-> > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
-> [ ... ]
-> > @@ -424,10 +424,15 @@ static bool kvm_hyp_handle_tlbi_el2(struct kvm_vcpu *vcpu, u64 *exit_code)
-> >  		return false;
-> >  
-> >  	/*
-> > -	 * If we have to check for any VNCR mapping being invalidated,
-> > -	 * go back to the slow path for further processing.
-> > +	 * If we have to check for any VNCR TLB being invalidated, go back
-> > +	 * to the slow path for further processing.
-> > +	 *
-> > +	 * The synchronisation betweem TLBI and walk is provided by the
-> > +	 * speculative increment of the TLB counter on walk, and the
-> > +	 * invalidation counter. Yes, this is fiddly.
-> >  	 */
-> > -	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu))
-> > +	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu) &&
-> > +	    atomic_read(&vcpu->kvm->arch.vncr_tlb_count))
-> >  		return false;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this condition incorrectly skip the
-> slow path for native EL2 TLBI instructions when E2H or TGE is clear?
+On Thu, 6 Aug 2026 11:45:25 +0100
+Lee Jones <lee@kernel.org> wrote:
 
-See answer to the patch #1 review.
+> On Tue, 04 Aug 2026, Andreas Kemnade wrote:
+> 
+> > On Tue, 04 Aug 2026 13:55:14 +0000
+> > sashiko-bot@kernel.org wrote:
+> >   
+> > > > leds: is31fl319x: modernize registration    
+> > > 
+> > > [Severity: Low]
+> > > This isn't a bug, but should the description after the subsystem prefix be
+> > > capitalized? The LED subsystem guidelines recommend formatting commit messages
+> > > as "leds: <Driver>: <Capitalized description>".  
+> > 
+> > 
+> > ~/linux$ grep -R 'leds: <Driver>: <Capitalized description>"' Documentation/
+> > ~/linux$ ls Documentation/leds/
+> > index.rst                  leds-lp5521.rst      leds-sc27xx.rst
+> > leds-blinkm.rst            leds-lp5523.rst      leds-st1202.rst
+> > leds-cht-wcove.rst         leds-lp5562.rst      ledtrig-oneshot.rst
+> > leds-class-flash.rst       leds-lp55xx.rst      ledtrig-transient.rst
+> > leds-class-multicolor.rst  leds-lp5812.rst      ledtrig-usbport.rst
+> > leds-class.rst             leds-mlxcpld.rst     uleds.rst
+> > leds-el15203000.rst        leds-mt6370-rgb.rst  well-known-leds.txt
+> > leds-lm3556.rst            leds-qcom-lpg.rst
+> > leds-lp3944.rst            leds-s2m-rgb.rst
+> > 
+> > nothing look like special guidelines for the system. I do not want to
+> > see such comments without a reference.
+> > Also MAINTAINERS does not show any additional policy for the LED subsystem.  
+> 
+> `git log --oneline -- <subsystem>` is your friend.
+> 
+That is looking at common practice, not guidelines, which is of course
+often a good idea.
 
-	M.
+So Sahiko is hallucinating about non-existant guidelines which
+cannot be referenced of course. Well, at least it gives quite an amount of
+useful hintse.
 
--- 
-Without deviation from the norm, progress is not possible.
+Regards,
+Andreas
